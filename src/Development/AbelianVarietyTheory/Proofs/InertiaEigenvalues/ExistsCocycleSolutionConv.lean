@@ -237,7 +237,6 @@ theorem bded_blk {κ : Type} (A : Matrix κ κ (↥LL.1)⟦X⟧) (u : κ → (�
   · exact (show C 0 = blk A u (Sum.inr a) (Sum.inl c) by simp [blk]) ▸ bded_C 0
   · exact (show C 1 = blk A u (Sum.inr a) (Sum.inr c) by simp [blk]) ▸ bded_C 1
 
-set_option maxHeartbeats 1000000 in
 
 theorem letterwise (s r n m k : ℕ) [NeZero n] (hs : 1 ≤ s) (h2 : l = 2 → 2 ≤ s) (u : ℤ_[l]ˣ)
     (hu : ‖(u : ℤ_[l]) - 1‖ = (l : ℝ) ^ (-(s : ℤ))) (J : Multiset ℕ) (Λ : (↥(OL LL))⟦X⟧)
@@ -343,7 +342,6 @@ theorem const_of_mem {O : Type} [CommRing O] {n : ℕ} {a : LetA O n} (h : a ∈
   obtain ⟨b, rfl⟩ := Ideal.mem_span_singleton.1 h
   simp [letπ]
 
-set_option maxHeartbeats 1000000 in
 
 theorem over_letters (s r n m k : ℕ) [NeZero n] (hs : 1 ≤ s) (h2 : l = 2 → 2 ≤ s) (u : ℤ_[l]ˣ)
     (hu : ‖(u : ℤ_[l]) - 1‖ = (l : ℝ) ^ (-(s : ℤ))) (J : Multiset ℕ) (Q Λ : LetA ↥(OL LL) n)
@@ -406,7 +404,6 @@ namespace GlobalTheory.NL
 
 open WCont GlobalTheory.HWL.InvCont
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_cocycle_solution_conv : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let W := (HW l).W K s LL h; ∀ (r m k : ℕ) (J : Multiset ℕ) (G Pm Pm' : Matrix (Fin r) (Fin r) (AA K LL)) (y z : Fin r → AA K LL), let Λ : AA K LL := (J.map fun j => (W.φA ^ j) W.Q).prod; let γL : LetA ↥LL.1 (Module.finrank ℚ_[l] ↥(K0 K)) → LetA ↥LL.1 (Module.finrank ℚ_[l] ↥(K0 K)) := fun a i => PowerSeries.subst (PowerSeries.map (algebraMap ↥(OL LL) ↥LL.1) (W.γ₀ W.gam PowerSeries.X)) (a i); (∀ i j, (G - 1) i j ∈ Ideal.span {(letπ : AA K LL)}) → Pm * Pm' = (W.Q ^ k) • (1 : Matrix (Fin r) (Fin r) (AA K LL)) → (W.γA W.gam W.Q ^ m) • (Pm * G.map W.φA) = (W.Q ^ m) • (G * Pm.map (W.γA W.gam)) → (∀ j, z j ∈ Ideal.span {(letπ : AA K LL)}) → (W.Q ^ m * Λ) • G.mulVec (fun j => W.γA W.gam (y j)) - (W.Q ^ m * W.γA W.gam Λ) • y = (Λ * W.γA W.gam Λ) • (Pm.mulVec (fun j => W.φA (z j)) - (W.Q ^ m) • z) → ∃ (w : Fin r → LetA ↥LL.1 (Module.finrank ℚ_[l] ↥(K0 K))) (p : ℕ), (∀ j i, PowerSeries.constantCoeff (w j i) = 0) ∧ (∀ j i, GlobalTheory.HWL.Conv (GlobalTheory.HWL.logS LL ^ p * w j i)) ∧ (G.map GlobalTheory.HWL.toLL).mulVec (fun j => γL (w j)) - w = fun j => GlobalTheory.HWL.toLL (z j) := by
   intro D HW l _ K s LL h W r m k J G Pm Pm' y z Λ γL hG hP hGP hz hy

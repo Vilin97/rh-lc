@@ -16,7 +16,6 @@ section Per
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
-open Classical in
 
 def bdet (X : Data E r) (b : Frame X.Ψ r) : ℂ :=
   ∏ τ : X.Ψ, ∏ j : Fin r, b τ j j ^ (if X.p0 ≤ (j : ℕ) then (1 : ℤ) else -1)
@@ -50,7 +49,6 @@ abbrev IsGenSec (s : GenSec e F M) : Prop :=
   ∀ k (x : (M.X k).dom) (s' : LB.Sec (PPx (S := CAt σ) (F.u k (pmOf e M k x.1)))),
     ∃! a : CAt σ, ∀ i, s'.f i = scal (S := CAt σ) (F.u k (pmOf e M k x.1)) a i * (s k x).f i
 
-variable {e F M} in
 
 end Fam
 
@@ -94,7 +92,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => relab c σ (e j).1)}
   {M : ModelsOf F r}
 
-variable (e F M) in
 
 end GamL
 

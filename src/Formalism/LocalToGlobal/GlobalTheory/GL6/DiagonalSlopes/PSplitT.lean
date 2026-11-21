@@ -275,7 +275,6 @@ theorem host_conj_involutive (x : D.host.E) : D.host.conj (D.host.conj x) = x :=
     | (letI := D.host.cmStar; rw [← Formalism.L2.Herm.star_conj, ← Formalism.L2.Herm.star_conj, star_star])
     | (letI := D.host.cmStar; rw [← Formalism.L2.Herm.star_conj, ← Formalism.L2.Herm.star_conj]; exact star_star x)
 
-set_option maxHeartbeats 1000000 in
 
 theorem splitAtT_of_tied (A : AtTTied u) : SplitAtT A := by
   intro v

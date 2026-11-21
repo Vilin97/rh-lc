@@ -140,7 +140,6 @@ theorem inId_iff (S : Finset (Pl D.host.E)) (c : Pl D.host.E → ℕ) {z : EAf D
   · intro H
     exact ⟨hz, mem_idS_of_v_le (w := fun w => w) h0 h (s := ⟨z, hz⟩) H⟩
 
-open Classical in
 
 theorem stdA_eq {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (ν : kˣ →* ℂˣ) (ϖ : kˣ) (hϖ : ValuativeRel.valuation k (ϖ : k) ≤ 1) (c : ℕ) {a b a₁ a₂ : ℕ} (ha : a = a₁) (hb : b = a₁ + a₂)
@@ -209,7 +208,6 @@ theorem valuation_unifAt_le (w : Pl D.host.E) : ValuativeRel.valuation (Kw w) (u
   rw [(vEq w).le_one_iff_le_one, h, ← WithZero.exp_zero, WithZero.exp_le_exp]
   omega
 
-open Classical in
 
 theorem std_eq_prod (ν : (AE D)ˣ →* Circle) {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e S) (c : Pl D.host.E → ℕ)
     {a b : ℕ} (N : Matrix (Fin b) (Fin a) (EAf D)) (h0 : ∀ w ∉ S, ∀ i j, cpt (D := D) w (N i j) = 0) :

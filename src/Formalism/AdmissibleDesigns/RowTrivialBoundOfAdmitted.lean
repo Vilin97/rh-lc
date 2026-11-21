@@ -64,7 +64,6 @@ theorem eW_inert {w : HeightOneSpectrum (𝓞 D.host.E)} (hw : w ∈ placesOver 
   rw [hx]
   exact hg
 
-set_option maxHeartbeats 1000000 in
 
 theorem tbTarget_of (cB : ℕ) (hTB : TrivialBoundAtRows i dc r π cB) (hd : TBDict i dc r π Dd)
     (hlen : TBLen i dc Dd cB) : TBTarget i dc Dd cB := by

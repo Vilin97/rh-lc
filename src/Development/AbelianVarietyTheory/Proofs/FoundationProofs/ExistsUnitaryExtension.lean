@@ -133,4 +133,3 @@ theorem infChar_eq_one (c : ℤ) (a : D.host.Eˣ) (h : ratio D (incU D a) ∈ in
 
 end GlobalTheory.NormSum.UnramHecke
 
-open GlobalTheory.NormSum.UnramHecke in

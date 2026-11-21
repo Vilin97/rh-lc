@@ -206,7 +206,6 @@ theorem lifts_of_isLev (d : DeltaDat Xo c 0) (hl : d.IsLev) : Lifts d := by
   obtain ⟨-, -, -, -, -, -, hlift, -, -⟩ := hl
   exact hlift
 
-open Classical in
 
 def ruleDown (d : DeltaDat Xo c 0) (g : Rul d.Xo₂ d.c₂) : Rul Xo c := fun p y =>
   if h : ∃ v, Val d g p y v then h.choose else 0

@@ -46,7 +46,6 @@ structure CmpLeft : Prop where
 
 variable {D sc Ce Lc I ψ hd H0 hL T B hBs hB}
 
-set_option maxHeartbeats 8000000 in
 
 theorem CmpLeft.core (N : CmpLeft D sc Ce Lc I ψ hd H0 hL T B hBs hB)
     (pos : ∀ u w hg v (s : Fin (((recC D sc Ce Lc I ψ hd).gat u w hg).P.n' v)) (x : D.host.E),
@@ -62,7 +61,6 @@ theorem CmpLeft.core (N : CmpLeft D sc Ce Lc I ψ hd H0 hL T B hBs hB)
   pos := pos
   chi := N.chi
 
-set_option maxHeartbeats 8000000 in
 
 theorem CmpLeft.toHyp0P (N : CmpLeft D sc Ce Lc I ψ hd H0 hL T B hBs hB)
     (pos : ∀ u w hg v (s : Fin (((recC D sc Ce Lc I ψ hd).gat u w hg).P.n' v)) (x : D.host.E),

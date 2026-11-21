@@ -41,7 +41,6 @@ theorem zpow_contDiffOn {f : Mat n → ℂ} {s : Set (Mat n)} (hf : ContDiffOn �
   · simp only [_root_.zpow_neg, zpow_natCast]
     exact (hf.pow k).inv fun x hx => pow_ne_zero k (h x hx)
 
-open scoped ComplexOrder in
 
 theorem gm_ne_zero (j : Fin n) {g : Mat n} (hg : g ∈ GLs n) : gm j g ≠ 0 := by
   intro h0
@@ -100,7 +99,6 @@ end GlobalTheory.CompanionTheory.ModelS.FMem
 
 namespace GlobalTheory.CompanionTheory.ModelS
 
-open FMem in
 
 theorem fRaw_mem_SmF : ∀ (n : ℕ) (lam : Fin n → ℤ), Antitone lam → ∀ lev : Fin n → ℕ, IsLev lam lev →
     GlobalTheory.CompanionTheory.ModelS.fRaw lam lev ∈ GlobalTheory.CompanionTheory.ModelS.SmF n := by

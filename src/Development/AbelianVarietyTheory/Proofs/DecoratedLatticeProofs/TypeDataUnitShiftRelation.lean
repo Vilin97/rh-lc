@@ -36,7 +36,6 @@ theorem exists_finM (V : HSp D) {n : ℕ} (hn : V.rank = n)
   have e3 := congrArg Units.val e2
   exact e3
 
-set_option maxHeartbeats 2000000 in
 
 theorem rdS_inj (θ : InfFam D) (V : HSp D) {n : ℕ} (hn : V.rank = n) {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 D.host.F))}
     (S : StepLevel D.host.F D.host.E (sigD D) (V.gram.reindex (finCongr hn) (finCongr hn)) T f bad) {cl : Type}
@@ -130,4 +129,3 @@ open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Unf GlobalTheory.MiS
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.MiTop GlobalTheory.SeeSaw GlobalTheory.Fam ValuativeRel IsLocalRing GlobalTheory.FinPl
 
-set_option maxHeartbeats 1000000 in

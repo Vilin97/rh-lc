@@ -50,6 +50,5 @@ theorem ord_pow' {f : X.functionField} (h0 : f ≠ 0) (z : X) (n : ℕ) :
 
 end Ord
 
-open GlobalTheory.CoverNorm.Isom in
 
 end GlobalTheory.VertOrd

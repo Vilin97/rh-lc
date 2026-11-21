@@ -24,7 +24,6 @@ theorem finiteDimensional_muK_one (l : ℕ) [Fact l.Prime] : FiniteDimensional �
   show FiniteDimensional ℚ_[l] (IntermediateField.adjoin ℚ_[l] {x : PadicAlgCl l | x ^ (l ^ 1) = 1})
   exact IntermediateField.finiteDimensional_adjoin fun x _ => Algebra.IsIntegral.isIntegral x
 
-open Classical in
 
 def bridgeLow (D : D7) (l : ℕ) [Fact l.Prime] (w : HeightOneSpectrum (𝓞 D.host.E)) : Loc.FinExt l :=
   if hw : w ∈ placesOver D.host.E l then

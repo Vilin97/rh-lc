@@ -22,9 +22,6 @@ noncomputable section
 
 namespace GlobalTheory.AdTh.SerAll
 
-open NumberField Matrix Complex MeasureTheory IsDedekindDomain in
-open scoped TensorProduct Classical ComplexConjugate in
-attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar in
 
 theorem _root_.GlobalTheory.AdTh.SerAll.lieFac_eq_pow {E : Type} [Field E] [NumberField E] [IsCMField E]
     {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} (Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) {x : ℝ} (hx : 0 < x)
@@ -38,6 +35,5 @@ theorem _root_.GlobalTheory.AdTh.SerAll.lieFac_eq_pow {E : Type} [Field E] [Numb
   push_cast
   ring
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.AdTh.SerAll

@@ -29,7 +29,6 @@ section Alg
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r n : ℕ} {X : Data E r} (L : SW.Level X)
 
-omit [IsCMField E] in
 
 end Alg
 

@@ -36,8 +36,6 @@ def indLeft [TopologicalSpace G] [IsTopologicalGroup G] {P Q : Subgroup G}
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-open ValuativeRel MeasureTheory in
-variable {F G M V : Type} [Field F] [Group G] [Group M] [AddCommGroup V] [Module F V] in
 
 theorem _root_.GlobalTheory.SmGL.Placing.smInd_equiv [TopologicalSpace G] [IsTopologicalGroup G]
     {P Q : Subgroup G}
@@ -57,8 +55,6 @@ theorem _root_.GlobalTheory.SmGL.Placing.smInd_equiv [TopologicalSpace G] [IsTop
   · refine LinearMap.ext fun f => Subtype.ext (Subtype.ext (funext fun x => ?_))
     exact congrArg f.1.1 (mul_assoc w x g)
 
-open ValuativeRel MeasureTheory in
-variable {F G M V : Type} [Field F] [Group G] [Group M] [AddCommGroup V] [Module F V] in
 
 lemma _root_.GlobalTheory.SmGL.Placing.twKer_le (π : Representation F G V)
     {N N' : Subgroup G} (w : G) (h : ∀ u ∈ N, w * u * w⁻¹ ∈ N') :
@@ -71,8 +67,6 @@ lemma _root_.GlobalTheory.SmGL.Placing.twKer_le (π : Representation F G V)
   simp only [MonoidHom.one_apply, Units.val_one, one_smul, map_sub, map_mul, Module.End.mul_apply]
   rw [← Module.End.mul_apply (π w⁻¹), ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
 
-open ValuativeRel MeasureTheory in
-variable {F G M V : Type} [Field F] [Group G] [Group M] [AddCommGroup V] [Module F V] in
 
 theorem _root_.GlobalTheory.SmGL.Placing.jacquet_equiv (π : Representation F G V) {N N' : Subgroup G}
     {s s' : M →* G}
@@ -128,9 +122,7 @@ theorem _root_.GlobalTheory.SmGL.Placing.exists_moves {ι : Type} (e e' : ι ≃
 
 variable {e e' : (Σ a, m a) ≃ n} {w : GL n R}
 
-omit [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] in
 
-omit [LinearOrder α] in
 
 end Blocks
 
@@ -197,7 +189,6 @@ private theorem leviEmb_conj_of_moves (hw : _root_.GlobalTheory.SmGL.Placing.Mov
   rw [hw]
   simp [_root_.GlobalTheory.SmGL.leviEmb, Matrix.reindex_apply]
 
-open ValuativeRel MeasureTheory in
 
 theorem _root_.GlobalTheory.SmGL.Placing.parInd_jac_placing : ∀ (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] (α n : Type) (m : α → Type) [Fintype α]

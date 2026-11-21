@@ -25,7 +25,6 @@ variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K �
 def blockMonomial (i : ∀ k, ι k) (m : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι :=
   ∏ k, X ⟨k, i k⟩ ^ m k
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem blockMonomial_isMultiHomog (i : ∀ k, ι k) (m : K → ℕ) :
     IsMultiHomog (blockMonomial (F := F) i m) m := by
@@ -38,13 +37,11 @@ theorem blockMonomial_isMultiHomog (i : ∀ k, ι k) (m : K → ℕ) :
   rw [hm] at h
   exact h
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem blockMonomial_add (i : ∀ k, ι k) (m n : K → ℕ) :
     blockMonomial (F := F) i (m + n) = blockMonomial i m * blockMonomial i n := by
   simp [blockMonomial, pow_add, Finset.prod_mul_distrib]
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem blockMonomial_mk_ne_zero (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (i : ∀ k, ι k)
     (hi : ∀ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P) (m : K → ℕ) :

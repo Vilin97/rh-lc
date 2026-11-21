@@ -336,7 +336,6 @@ end GlobalTheory.CompanionTheory.Ar.Flat.LinePointFrame
 
 namespace GlobalTheory.CompanionTheory.Ar.Flat
 
-open LinePointFrame in
 
 theorem line_function_norm_zero_away : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (U : Set (Xo.XF c)) (τ : E →+* ℂ) (φ : FrameFn Xo c), τ (H.rt : E) = H.rt0 → IsOpen U → U.Nonempty → IsLineFn U τ φ → ∃ n : ℕ, 0 < n ∧ ∀ (p : Nat.Primes) (κ : c.F →+* ℂ_[p]) (t : ℝ), ¬ (p : ℕ) ∣ n → HasFinNorm U τ φ p κ t → t = 0 := by
   intro E _ _ _ H D l Xo c U τ φ hτ hU hne hφ

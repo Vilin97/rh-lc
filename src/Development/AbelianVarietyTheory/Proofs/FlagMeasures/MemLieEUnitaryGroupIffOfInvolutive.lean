@@ -13,7 +13,6 @@ noncomputable section
 
 namespace GlobalTheory.TubeLie
 
-open scoped Matrix.Norms.Operator in
 
 theorem skew_of_mem_lieOf {N : ℕ} (H X : Matrix (Fin N) (Fin N) ℂ) (h : X ∈ lieOf (UH H)) :
     Xᴴ * H + H * X = 0 := by

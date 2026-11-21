@@ -25,7 +25,6 @@ abbrev clo (z : X) : Closeds X := ⟨closure {z}, isClosed_closure⟩
 instance isIntegral_clo (z : X) : IsIntegral (Scheme.IdealSheafData.vanishingIdeal (clo z)).subscheme :=
   isIntegral_red (Z := clo z) isIrreducible_singleton.closure
 
-open Classical in
 
 structure FlagSp (E : X.Modules) (r : ℕ) : Type 1 where
 
@@ -85,9 +84,7 @@ attribute [instance] int cl
 
 variable {D : D7} {O : Setup D} {c : O.s.Comp} (M : DRBase O c)
 
-variable {M} in
 
-variable {M} in
 
 end DRBase
 

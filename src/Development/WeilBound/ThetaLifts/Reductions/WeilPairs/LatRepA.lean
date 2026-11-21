@@ -111,7 +111,6 @@ def sng (i : Fin nT) (k : Fin nS) : E →ₗ[F] Matrix (Fin nT) (Fin nS) E where
     simp only [sngG, Matrix.of_apply, Matrix.smul_apply, RingHom.id_apply]
     split_ifs <;> simp
 
-variable (F) in
 
 def tm (a : R) (γ : Matrix (Fin nT) (Fin nS) E) : Matrix (Fin nT) (Fin nS) (R ⊗[F] E) :=
   γ.map fun e => a ⊗ₜ[F] e
@@ -142,7 +141,6 @@ theorem tm_nsmul (n : ℕ) (a : R) (γ : Matrix (Fin nT) (Fin nS) E) : n • tm 
   | zero => simp [tm_zero_left]
   | succ n ih => rw [succ_nsmul, ih, succ_nsmul, tm_add_left]
 
-variable (R) in
 
 def coordM (l : Matrix (Fin nT) (Fin nS) E →ₗ[F] F) (z : Matrix (Fin nT) (Fin nS) (R ⊗[F] E)) : R :=
   ∑ i, ∑ k, cE R (l ∘ₗ sng i k) (z i k)

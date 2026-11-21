@@ -716,7 +716,6 @@ end GlobalTheory.CompanionTheory.RealCountG.LemmaHG
 
 namespace GlobalTheory.CompanionTheory.RealCountG
 
-open GlobalTheory.CompanionTheory.RealCount.LemmaH GlobalTheory.CompanionTheory.RealCountG.LemmaHG in
 
 theorem mem_harmZ_of_norm_ge {n : ℕ} (lam : Fin n → ℤ) (hl : Antitone lam) (ν : Fin n → ℤ)
     (hν : Antitone ν) (hD : DomLE (wtR ν) (m0 lam)) (w : Equiv.Perm (Fin n))

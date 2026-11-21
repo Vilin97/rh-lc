@@ -42,11 +42,8 @@ theorem inCC_compSh (q : KB.Pl (shP P u u') Wp Wq') {f : B.Mat P.k P.r â†’ (Wq â
 
 end sh
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end
 

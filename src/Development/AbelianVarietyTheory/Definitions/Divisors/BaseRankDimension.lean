@@ -27,8 +27,6 @@ protected abbrev zsc {D : D7} {O : Obj D} (P : RowSideFamily O.ex) (Del h0 : ℕ
     DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3 :=
   GlobalTheory.Fc.zsc P Del h0 c
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure Part (D : D7) (O : Obj D) (c : ℝ) : Type 1 where
   R : Formalism.L2.RecT O.ex
@@ -78,6 +76,5 @@ theorem ev_of_atAll {𝒜 : FamClass} {σ : RawSel Bd 𝒜} {q : BdP Bd} (h : At
 
 end GlobalTheory.Fc.Ind
 
-open GlobalTheory.Fc GlobalTheory.Fc.Ind in
 
 end

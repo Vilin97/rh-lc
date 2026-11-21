@@ -102,8 +102,6 @@ def lMat (A : FamIn D.what₂.LL G Pl0 T D.R.m) (P : Subgroup G) (ψ : P →* D.
 
 variable {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure Hd (R : RealDat D A Ks) : Type where
   tup : T → D.what₂.Tup
@@ -156,9 +154,6 @@ def levP (F : Face D A) : Bool → Σ P : Subgroup G, P →* D.what₂.LLˣ
   | true => ⟨F.P1, F.ψ1⟩
   | false => ⟨F.P0, F.ψ0⟩
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 2000000 in
 
 structure ChT {R : RealDat D A Ks} (y : Hd R) (F : Face D A) (b : Bool) {Φ : Type} (rep : Φ → Formalism.L2.NG.FinTyp D.host.E D.R.r)
     {Top : D.what₂.Tup → Hs} (jA : ∀ t, (Fin (rDim D A (levP F b).1 (levP F b).2 t) → D.what₂.LL) → (Top (y.tup t)).T)
@@ -189,9 +184,6 @@ structure ChT {R : RealDat D A Ks} (y : Hd R) (F : Face D A) (b : Bool) {Φ : Ty
   top : ∀ t, y.Us (y.tup t) → ∀ x,
     jX (y.tup t) (jA t x) = R.cX.toMap R.prX ((R.HX t).e (R.jX t (rowForm A (levP F b).1 (levP F b).2 t x)))
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 2000000 in
 
 structure LfT {R : RealDat D A Ks} (y : Hd R) (F : Face D A) {Φ : Type} (rep : Φ → Formalism.L2.NG.FinTyp D.host.E D.R.r)
     {Mt : D.what₂.Tup → ℕ → Hs}
@@ -255,9 +247,6 @@ def RrT {R : RealDat3 D A3 Ks} (F : Face3 D A3) (y : Hd R.toRealDat) (b : Bool) 
 abbrev PkD (D : D7) (G : Type) [Group G] : Type 1 :=
   Pk D.what₂.LL D.what₂.embLL D.what₂.O (D.what₂.embLL.comp D.what₂.OtoLL) D.what₂.Tup G D.R.m
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 2000000 in
 
 structure PkT {R : RealDat3 D A3 Ks} (F : Face3 D A3) (y : Hd R.toRealDat) (mA : Bool → D.what₂.Tup → Mat1 D.what₂.LL G)
     (p : PkD D G) : Type where
@@ -281,9 +270,6 @@ def etaOf (R : RealDat3 D A3 Ks) (F : Face3 D A3) (j : ℕ) (w : D.what₂.place
       A3.A.fam.etaJ F.P0 F.ψ0 (A3.fam3.toSub2 (R.toCx3 F).zs) ⟨j - 1, by omega⟩ (R.mu (D.plEq w)) (D.plEq w) else 0
   else 0
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 4000000 in
 
 structure RationalReadingWithoutCongruence (R : RealDat3 D A3 Ks) (F : Face3 D A3) (X0 : BaseLevelRowSide D) (Y : Read (A3 := A3) R.toRealDat F.lv2 X0) : Type where
   eRR : (Fin ((R.toCx3 F).data F.cr true).D → D.what₂.LL) ≃ₗ[D.what₂.LL] D.div.RR.V
@@ -348,7 +334,6 @@ structure Nums (p : PkB B C G) (W₀ : RowsRest B C) : Type where
   Ij : C.Tup → ℕ → B.places.Pl → ℤ
   jw : C.Tup → ℕ → B.places.Pl → ℤ
 
-open Classical in
 
 def perOf (p : PkB B C G) (e : PerD p) (W₀ : RowsRest B C) (u : B.Word) (μ : C.Tup) (φ : W₀.Mu u) (F : (p.sA true μ).A.T) : ℂ :=
   if h : μ = C.mu0 then

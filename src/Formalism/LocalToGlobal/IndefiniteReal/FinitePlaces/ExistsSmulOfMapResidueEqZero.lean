@@ -75,7 +75,6 @@ section Red
 
 variable [IsDiscreteValuationRing O]
 
-open Classical in
 
 def resL (x : L) : IsLocalRing.ResidueField O :=
   if h : x ∈ O then IsLocalRing.residue O ⟨x, h⟩ else 0
@@ -463,7 +462,6 @@ theorem exists_GLint_map {n : Type} [Fintype n] [DecidableEq n] {M : Matrix n n 
   congr 1
   rw [← Matrix.toLin'_apply', Matrix.toLin'_toMatrix']
 
-open Classical in
 
 def dgl {ϖ : L} (hϖ : ϖ ≠ 0) (n e : ℕ) : GL (Fin n) L :=
   ⟨Matrix.diagonal fun i => if (i : ℕ) < e then ϖ else 1, Matrix.diagonal fun i => if (i : ℕ) < e then ϖ⁻¹ else 1,
@@ -501,7 +499,6 @@ theorem isType_dgl {ϖ : O} (hϖ : Irreducible ϖ) {n e : ℕ} (he : e ≤ n) :
       card_filter_lt n e he]
     simp
 
-open Classical in
 
 theorem card_filter_reps {ϖ : O} (hϖ : Irreducible ϖ) {n e : ℕ} {γ : GL (Fin n) L} (hγ : IsType O ϖ e γ)
     {R : Finset (GL (Fin n) L)} (hR : IsReps (Formalism.UG.GLint (Fin n) O) γ R)

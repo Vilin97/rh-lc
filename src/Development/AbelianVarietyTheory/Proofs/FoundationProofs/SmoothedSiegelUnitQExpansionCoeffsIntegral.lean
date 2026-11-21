@@ -660,9 +660,6 @@ theorem _root_.GlobalTheory.SiegQ.unitPart_zero_ne {c M a : ℕ} (hc : 0 < c) (h
     · rw [zero_pow h0.ne']
       simp
 
-open scoped UpperHalfPlane MatrixGroups Manifold Topology in
-open Filter in
-variable {R : Subring ℂ} in
 
 theorem _root_.GlobalTheory.SiegQ.sg_expansion_int : ∀ (c M a : ℕ), 0 < M → a < M →
     ∃ k : ℤ, ∀ b : ℕ, _root_.GlobalTheory.Sieg.admitted c ![(a : ℚ) / M, (b : ℚ) / M] →

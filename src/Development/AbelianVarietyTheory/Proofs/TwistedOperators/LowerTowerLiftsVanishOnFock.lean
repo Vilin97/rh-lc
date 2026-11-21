@@ -90,7 +90,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension (kFin KVec maxCpt)
 open GlobalTheory.LowerMembers (frame_fock_orbit signCard_signed ptF_zero)
 open scoped TensorProduct InnerProductSpace
 
-set_option maxHeartbeats 1000000 in
 
 theorem lowFock : ∀ (D : D7) (X : ProvA), GlobalTheory.PairLift.Inputs D X → GlobalTheory.PairLift.LowFock D X := by
   classical

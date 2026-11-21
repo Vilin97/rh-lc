@@ -85,7 +85,6 @@ theorem finite_vert (σ : Setup) :
 
 end GlobalTheory.DescSpan
 
-open GlobalTheory.DescSpan in
 
 theorem GlobalTheory.Desc.sec_eq_spanBy_N : ∀ (σ : Setup) (k : ℕ), Sec σ.D k = spanBy (GlobalTheory.Desc.cst σ.A.hom) (σ.N k) := by
   intro σ k

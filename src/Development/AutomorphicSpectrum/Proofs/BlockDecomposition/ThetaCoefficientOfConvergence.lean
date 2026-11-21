@@ -34,7 +34,6 @@ instance countable_hermE (D : D7) (r : ℕ) : Countable (HermE D r) := by
     inferInstanceAs (Countable (Fin r → Fin r → D.host.E))
   exact inferInstanceAs (Countable {b : Matrix (Fin r) (Fin r) D.host.E // _})
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem setIntegral_char_eq_zero {lam : Measure (hermA D r)} {𝓖 : Set (hermA D r)} (hl : IsCovolOneH lam 𝓖)
     (e : hermA D r → ℂ) (hadd : ∀ x y, e (x + y) = e x * e y)

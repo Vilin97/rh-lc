@@ -136,7 +136,6 @@ theorem two_not_mem_of_inert {v : HeightOneSpectrum (𝓞 D.host.F)}
   rw [he0, map_zero, add_zero] at hse
   exact sA_one_ne_zero v (algebraMap_AE_eq_zero hse.symm)
 
-set_option maxHeartbeats 1000000 in
 
 theorem loc_fix (hSL : SplitLin D) (hPM : PlaceModelAt D) (hSOI : SplitOrInert D) {ψ : AddChar (AF D.host.F) ℂ}
     {S T : HSp D} {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)}

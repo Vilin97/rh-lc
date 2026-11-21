@@ -112,7 +112,6 @@ theorem IsRecip.inv {a : Kˣ} {g : GK p K} (h : IsRecip p K L a g) : IsRecip p K
 theorem isRecip_one_of_mem {g : GK p K} (hg : g ∈ subG p K L) : IsRecip p K L 1 g := fun χ hχ => by
   rw [pairK_one, hχ g hg]
 
-variable (p K L) in
 
 def recipImage (H : Subgroup Kˣ) : Subgroup (GK p K) where
   carrier := {g | ∃ a ∈ H, IsRecip p K L a g}

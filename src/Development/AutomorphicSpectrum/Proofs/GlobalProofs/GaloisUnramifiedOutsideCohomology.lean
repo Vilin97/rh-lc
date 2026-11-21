@@ -17,7 +17,6 @@ section
 variable {F K Ω : Type*} [Field F] [NumberField F] [Field K] [NumberField K] [Algebra F K]
   [Field Ω] [Algebra F Ω] [Algebra K Ω] [IsScalarTower F K Ω]
 
-omit [NumberField F] [NumberField K] in
 
 theorem restrictScalars_smul (h : Ω ≃ₐ[K] Ω) (A : ValuationSubring Ω) :
     (h.restrictScalars F) • A = h • A := by
@@ -26,7 +25,6 @@ theorem restrictScalars_smul (h : Ω ≃ₐ[K] Ω) (A : ValuationSubring Ω) :
     ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem]
   rfl
 
-omit [NumberField K] [Field K] [Algebra F K] [Algebra K Ω] [IsScalarTower F K Ω] in
 
 theorem mem_inertia_of_integers [IsAlgClosure F Ω] {A : ValuationSubring Ω} {σ : Ω ≃ₐ[F] Ω}
     (hd : σ • A = A) (hb : ∀ b : Ω, IsIntegral ℤ b → A.valuation (σ b - b) < 1) :

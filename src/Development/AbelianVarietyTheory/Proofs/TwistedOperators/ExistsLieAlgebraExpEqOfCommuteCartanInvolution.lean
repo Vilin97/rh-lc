@@ -11,7 +11,6 @@ namespace GlobalTheory.ExpCartan
 
 open scoped Matrix.Norms.L2Operator ComplexOrder
 
-open scoped MatrixOrder in
 
 theorem exists_posDef_mul_self {n : ℕ} {P : Matrix (Fin n) (Fin n) ℂ} (hP : P.PosDef) :
     ∃ S : Matrix (Fin n) (Fin n) ℂ, S.PosDef ∧ S * S = P := by

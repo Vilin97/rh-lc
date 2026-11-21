@@ -108,7 +108,6 @@ theorem continuous_proj (hφ : GlobalTheory.CMVal.IsCMType φ) : Continuous (pro
 
 end UnitLogPartition
 
-open NumberField.Units NumberField.Units.dirichletUnitTheorem NumberField.InfinitePlace UnitLogPartition in
 
 theorem exists_measurable_nonneg_hasSum_ulog_translates : ∀ (K : Type) [Field K] [NumberField K]
     [NumberField.IsTotallyComplex K] (I : Type) [Fintype I] (φ : I → K →+* ℂ), GlobalTheory.CMVal.IsCMType φ →

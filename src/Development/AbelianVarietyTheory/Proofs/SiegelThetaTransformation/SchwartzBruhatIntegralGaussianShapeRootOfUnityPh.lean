@@ -18,7 +18,6 @@ private theorem quotient_out_sub_mem' {G : Type} [AddCommGroup G] (N : AddSubgro
   have h := QuotientAddGroup.eq.mp (QuotientAddGroup.out_eq' (x : G ⧸ N)).symm
   rwa [neg_add_eq_sub] at h
 
-open Classical in
 
 theorem ph_finsum_quotient {A : Type} [AddCommGroup A] (P S : AddSubgroup A) (φ f : A → ℂ) (c : ℂ) (a : A)
     (hper : ∀ x, ∀ y ∈ P, φ (x + y) = φ x)

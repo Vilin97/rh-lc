@@ -179,7 +179,6 @@ end Compl
 
 end AdicCompl
 
-open AdicCompl in
 
 theorem locFld : Formalism.L2.PjFree.LocFld := by
   intro K L _ _ _ _ j la

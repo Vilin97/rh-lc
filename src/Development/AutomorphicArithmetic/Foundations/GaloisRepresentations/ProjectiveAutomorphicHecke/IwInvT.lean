@@ -106,7 +106,6 @@ private theorem comm_of_fin (K : Subgroup G) (hfin : ∀ x, (cosets K x).Finite)
   rw [Subgroup.relIndex, e, MulAction.index_stabilizer]
   exact ((Set.ncard_pos h).2 ⟨_, MulAction.mem_orbit_self _⟩).ne'
 
-open ValuativeRel GlobalTheory.SmGL GlobalTheory.GLDoubling in
 
 theorem iwInvT (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ) (ϖ : kˣ)
     (hϖ : valuation k (ϖ : k) = uniformizer k) (ν : Fin n → ℤ) (hν : Antitone ν) :

@@ -183,7 +183,6 @@ def Frame.IsLat (β : Frame p S n) (L : Lat S) (Λ : Submodule 𝒪[k] (n → k)
 def rd (α : Frame p S n') (β : Frame p T n) (t : WO S T) : Matrix n n' k :=
   β.b' ⬝ Matrix.map t p.pr ⬝ α.b
 
-open Classical in
 
 def extFun (α : Frame p S n') (β : Frame p T n) (Ψ : Matrix n n' k → ℂ) (t : WO S T) : ℂ :=
   if IsHalf p.e t then Ψ (rd α β t) else 0
@@ -215,11 +214,9 @@ def tensCol (Ψ : Matrix n n' k → ℂ) (a : (n → k) → ℂ) (x : Matrix n (
 def tensRow (Ψ : Matrix n n' k → ℂ) (b : (n' → k) → ℂ) (x : Matrix (n ⊕ Fin 1) n' k) : ℂ :=
   Ψ (x.submatrix Sum.inl id) * b (x (Sum.inr 0))
 
-open Classical in
 
 def vecInd (Λ : Submodule 𝒪[k] (n → k)) (y : n → k) : ℂ := if y ∈ Λ then 1 else 0
 
-open Classical in
 
 def dualInd (Λ : Submodule 𝒪[k] (n → k)) (η : n → k) : ℂ := if GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.InDual Λ η then 1 else 0
 

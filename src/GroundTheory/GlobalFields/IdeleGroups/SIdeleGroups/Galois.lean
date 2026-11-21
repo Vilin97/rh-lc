@@ -23,7 +23,6 @@ theorem continuous_finiteCompletionMap {M M' : Type*} [Field M] [NumberField M] 
   letI : Algebra M M' := (τ : M →+* M').toAlgebra
   SemiLocal.continuous_completionMap (below M w') w'
 
-omit [NumberField K] in
 
 theorem valued_finiteCompletionMap (σ : L ≃ₐ[K] L) (w : HeightOneSpectrum (𝓞 L))
     (y : (comapPrime (σ : L ≃+* L) w).adicCompletion L) :
@@ -57,7 +56,6 @@ theorem valued_finiteCompletionMap (σ : L ≃ₐ[K] L) (w : HeightOneSpectrum (
   exact (HeightOneSpectrum.denseRange_algebraMap L (comapPrime (σ : L ≃+* L) w)).induction_on
     (p := fun y ↦ Valued.v (finiteCompletionMap (σ : L ≃+* L) w y) = Valued.v y) y hclosed hL
 
-omit [NumberField K] [NumberField L] in
 
 theorem below_smul (σ : L ≃ₐ[K] L) (w : HeightOneSpectrum (𝓞 L)) :
     below K (σ • w) = below K w :=
@@ -67,14 +65,12 @@ end AdeleBaseChange
 
 namespace IdeleGroup
 
-omit [NumberField K] in
 
 theorem ord_smul (σ : L ≃ₐ[K] L) (x : IdeleGroup L) (w : HeightOneSpectrum (𝓞 L)) :
     ord w (σ • x) = ord (σ⁻¹ • w) x := by
   simp only [ord]
   rw [coe_smul_idele, smul_snd, valued_finiteCompletionMap, comapPrime_eq_inv_smul]
 
-variable (L) in
 
 def placesAbove (S : Set (HeightOneSpectrum (𝓞 K))) : Set (HeightOneSpectrum (𝓞 L)) :=
   below K ⁻¹' S
@@ -95,7 +91,6 @@ theorem placesAbove_finite {S : Set (HeightOneSpectrum (𝓞 K))} (hS : S.Finite
     (Set.finite_range (Subtype.val : SemiLocal.PlacesOver L v → HeightOneSpectrum (𝓞 L))).subset
       fun w hw ↦ ⟨⟨w, (below_eq_iff w v).1 hw⟩, rfl⟩
 
-omit [NumberField K] [NumberField L] in
 
 theorem smul_mem_placesAbove_iff (S : Set (HeightOneSpectrum (𝓞 K))) (σ : L ≃ₐ[K] L)
     (w : HeightOneSpectrum (𝓞 L)) : σ • w ∈ placesAbove L S ↔ w ∈ placesAbove L S := by
@@ -103,7 +98,6 @@ theorem smul_mem_placesAbove_iff (S : Set (HeightOneSpectrum (𝓞 K))) (σ : L 
 
 variable (S : Set (HeightOneSpectrum (𝓞 K)))
 
-omit [NumberField K] in
 
 theorem smul_mem_sIdeles_placesAbove (σ : L ≃ₐ[K] L) {x : IdeleGroup L}
     (hx : x ∈ sIdeles (placesAbove L S)) : σ • x ∈ sIdeles (placesAbove L S) := fun w hw ↦ by
@@ -123,14 +117,12 @@ theorem coe_smul_sIdeles (σ : L ≃ₐ[K] L) (x : sIdeles (placesAbove L S)) :
     ((σ • x : sIdeles (placesAbove L S)) : IdeleGroup L) = σ • (x : IdeleGroup L) :=
   rfl
 
-omit [NumberField K] in
 
 theorem sIdelesToIdeleClassGroup_smul (σ : L ≃ₐ[K] L) (x : sIdeles (placesAbove L S)) :
     sIdelesToIdeleClassGroup (placesAbove L S) (σ • x) =
       σ • sIdelesToIdeleClassGroup (placesAbove L S) x := by
   rw [sIdelesToIdeleClassGroup_apply, sIdelesToIdeleClassGroup_apply, smul_mk, coe_smul_sIdeles]
 
-omit [NumberField K] in
 
 theorem exists_finset_superset_sup_sIdeles_placesAbove_eq_top
     (S₀ : Finset (HeightOneSpectrum (𝓞 K))) :
@@ -143,7 +135,6 @@ theorem exists_finset_superset_sup_sIdeles_placesAbove_eq_top
   exact Finset.mem_coe.2
     (Finset.mem_union_right _ (Finset.mem_image_of_mem _ (Finset.mem_coe.1 hw)))
 
-omit [NumberField K] in
 
 theorem sUnits_sIdeles_placesAbove_exact
     (h : (diagonal L).range ⊔ sIdeles (placesAbove L S) = ⊤) :

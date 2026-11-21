@@ -39,7 +39,6 @@ theorem heckeVec_dosetInd {σ : Representation ℂ G V} (hσ : IsSmooth σ) (hc 
       show dosetInd ℂ K g c.out • _ = 0
       rw [dosetInd, Set.indicator_of_notMem (fun h' => h ((hmem c).1 h')), zero_smul])
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem card_ne_zero (hK : IsCommensurated K) (g : G) :
     ((P.finite_cosets_in_doset hK g).toFinset.card : ℂ) ≠ 0 := by

@@ -177,7 +177,6 @@ theorem inf_surj (z : D.what₂.Tau → ℂ) : ∃ y : Ainf D.host.F ⊗[D.host.
   push_cast
   field_simp
 
-variable (D) in
 
 def cmpAt (τ : D.what₂.Tau) : AE D →+* ℂ := (th0 D τ).comp (infPart D)
 

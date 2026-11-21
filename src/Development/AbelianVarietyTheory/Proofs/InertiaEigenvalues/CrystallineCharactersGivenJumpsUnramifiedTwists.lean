@@ -124,7 +124,6 @@ theorem hasJumps_prod (hT : LocTied l P AI)
 
 end GlobalTheory.CrysCharJumps
 
-open GlobalTheory.CrysCharJumps Classical in
 
 theorem GlobalTheory.CrysCharJumps.adm20_of_fonOf :
     ∀ (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), Formalism.MainNotions.tableLineDegreeTwo.adm20 D HW F := by

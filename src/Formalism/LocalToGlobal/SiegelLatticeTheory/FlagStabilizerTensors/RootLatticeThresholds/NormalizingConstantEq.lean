@@ -203,7 +203,6 @@ theorem weightConst_nonneg (u : D.what₂.Word) : 0 ≤ Formalism.MainNotions.S.
   unfold Formalism.MainNotions.S.c0
   exact div_nonneg (mul_nonneg (hF.volPos u).1.le (hF.volPos u).2.le) (dimPi_nonneg u)
 
-include hF in
 
 theorem normalizing_constant_eq_of_dimTie {u : D.what₂.Word} (hd : DimTie (X := X) u) : c0X X u (Y.FN u) = Formalism.MainNotions.S.c0 (sOf hF) u := by
   rw [Y.poincare_constant_eq u, hd]
@@ -236,7 +235,6 @@ theorem kmat_eq {u u' : D.what₂.Word} (hd : DimTie (X := X) u) (hd' : DimTie (
     rfl
   exact ContinuousLinearMap.ext fun T' => ext_inner_left ℂ fun T => aux T T'
 
-include hF in
 
 theorem normTie (u u' : D.what₂.Word) : NormTie hF u u' := by
   intro hd hd' hE hA hId hK2

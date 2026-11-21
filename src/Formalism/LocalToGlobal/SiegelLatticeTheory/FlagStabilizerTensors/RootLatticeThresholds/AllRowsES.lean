@@ -79,7 +79,6 @@ theorem Ea_mul (a b : CV D) : Ea a * Ea b = if a = b then Ea a else 0 := by
     rw [Finset.prod_eq_zero (Finset.mem_univ kv) (by rw [h0]; simp)]
     simp
 
-open Classical in
 
 theorem ES_idem (S : Set (Tup2 D)) : ES S * ES S = ES S := by
   rw [ES_eq, Finset.sum_mul_sum]

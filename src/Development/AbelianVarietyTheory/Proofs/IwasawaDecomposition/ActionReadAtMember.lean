@@ -39,14 +39,12 @@ theorem liftForm_lvlAct (hok : A3.fam3.Ok3 1) (k : Fin D.R.m) (s : T) (a : Monoi
       ∑ g : G, a.coeff g • A3.A.fam.amb.opL k s (Sum.inr g) (liftForm A3.A F.lv2.P0 F.lv2.ψ0 k s x) :=
   GlobalTheory.ClassSumIdentity.lvlE_lvlOp hok.ok2.conj _ ((hok.ok2.lifts k s).hpos _) _ (hok.ok2.lifts k s).act _ _ a ha x
 
-variable (R) in
 
 theorem jV_sum (k : Fin D.R.m) (s : T) (c : G → D.what₂.LL) (v : G → A3.A.fam.amb.FL k s) :
     R.jV k s (∑ g, c g • v g) = ∑ g, D.what₂.embLL (c g) • R.jV k s (v g) :=
   (map_sum (R.jV k s) (fun g => c g • v g) Finset.univ).trans
     (Finset.sum_congr rfl fun g _ => (R.jV k s).map_smulₛₗ (c g) (v g))
 
-variable (R) in
 
 theorem extV_sum (k : Fin D.R.m) (s : T) (c : G → ℂ) (w : G → (R.HV k s).H) (y : GA D (Vc D k)) :
     R.extV k s (∑ g, c g • w g) y = ∑ g, c g • R.extV k s (w g) y := by

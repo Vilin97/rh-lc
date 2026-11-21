@@ -45,7 +45,6 @@ def LatInv (Λ : AddSubgroup K) (Om : Set K) (f : K → ℂ) : Prop :=
 def LatInvN (Λ : AddSubgroup K) {d : ℕ} (f : (Fin d → K) → ℂ) : Prop :=
   ∀ x l : Fin d → K, (∀ i, l i ∈ Λ) → f (x + l) = f x
 
-open Classical in
 
 def intLat (R : Subring K) (Λ : AddSubgroup K) (Om : Set K) (f : K → ℂ) : ℂ :=
   (volL R Λ : ℂ) * ∑ᶠ y : K ⧸ Λ, if (Quotient.out y : K) ∈ Om then f (Quotient.out y) else 0
@@ -61,7 +60,6 @@ def IsShift (t t₁ : Kˣ) (σ : K) : Prop := ((t₁⁻¹ : Kˣ) : K) = ((t⁻¹
 def IsCr (R : Subring K) (cr : K ⧸ R.toAddSubgroup → Kˣ) : Prop :=
   ∀ x, ((cr x : K) : K ⧸ R.toAddSubgroup) = x
 
-open Classical in
 
 def NsK (R : Subring K) (ψ : AddChar K ℂ) (s : ℕ) (h h' : Point K) (z : K) : ℂ :=
   if hz : IsUnit z then Ns R ψ s h h' hz.unit hz.unit else 0
@@ -73,7 +71,6 @@ def pt2 (h : Point K) (m : ℕ) (t c : Kˣ) : Point K := addBlock (addBlock h m 
 def cutSet (m : ℕ) (Om : Set K) (t : Kˣ) : Set K :=
   {c | ∃ z ∈ Om, z ^ (m + 1) = (-(t : K)) ^ m * c}
 
-open Classical in
 
 def uGram (R : Subring K) (ψ : AddChar K ℂ) (m : ℕ) (cr : K ⧸ R.toAddSubgroup → Kˣ) (S : Set K)
     (h h' : Point K) (t t' : Kˣ) : ℂ :=
@@ -87,7 +84,6 @@ def thx (R : Subring K) (ψ : AddChar K ℂ) (m : ℕ) (cr : K ⧸ R.toAddSubgro
     ψ (-(z * b)) * conj (ψ (-(z * b'))) *
       uGram R ψ m cr Set.univ h h' (τ (ρ + b)) (τ (ρ + b'))
 
-open Classical in
 
 def bbZ (R : Subring K) (ψ : AddChar K ℂ) (w : Point K) {n' : ℕ}
     (Z' : Matrix (Fin n') (Fin n') K) : ℂ :=
@@ -109,7 +105,6 @@ def PhiHyp (R : Subring K) (s : ℕ) (L₀ Λ₀ : AddSubgroup K) (Q : Set K)
 def hessM (m : ℕ) (a : Kˣ) : Matrix (Fin m) (Fin m) K :=
   ((a⁻¹ : Kˣ) : K) • (1 + Matrix.of fun _ _ => (1 : K))
 
-open Classical in
 
 def gaussF (ψ : AddChar K ℂ) (L : AddSubgroup K) {m : ℕ} (M : Matrix (Fin m) (Fin m) K)
     (ξ : Fin m → K) : ℂ :=
@@ -132,7 +127,6 @@ def germCoef (R : Subring K) (ψ : AddChar K ℂ) (m : ℕ) (γ : Kˣ → ℂ) (
     ((modK R ((m + 1 : ℕ) : K) ^ (-(1 : ℝ) / 2) * modK R (z : K) ^ ((m : ℝ) ^ 2 / 2) : ℝ) : ℂ) *
     ψ (((m + 1 : ℕ) : K) * (z : K) * ((t⁻¹ : Kˣ) : K))
 
-open Classical in
 
 def germSum (R : Subring K) (ψ : AddChar K ℂ) (m : ℕ) (γ : Kˣ → ℂ) (t c : Kˣ) (f : Kˣ → ℂ) : ℂ :=
   ((modK R (t : K) ^ (-((m : ℝ) ^ 2) / 2) : ℝ) : ℂ) *
@@ -227,7 +221,6 @@ def PerpLat : Prop :=
     ∀ L : AddSubgroup K, IsLat L →
       IsLat (perp ψ L) ∧ perp ψ (perp ψ L) = L ∧ volL R L * volL R (perp ψ L) = 1
 
-open Classical in
 
 def CharMean : Prop :=
   ∀ (K : Type) [CommRing K] (ψ : AddChar K ℂ) (L₁ L₂ : AddSubgroup K) (S : Finset K),
@@ -317,7 +310,6 @@ def GaussAdmSmall : Prop :=
     ∃ V ∈ 𝓝 (0 : K), ∀ t z : Kˣ, (t : K) ∈ V → (z : K) ^ (m + 1) ∈ Q →
       GaussAdm ψ L (hessM m (z * t))
 
-open Classical in
 
 def NonStationary : Prop :=
   ∀ (K : Type) [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] (R : Subring K)
@@ -346,7 +338,6 @@ def MorseLemma : Prop :=
           g0 ((z : K) ^ (m + 1)) (fun k => (z : K) + φ ξ k) =
             ((m + 1 : ℕ) : K) * (z : K) + Ring.inverse 2 * (ξ ⬝ᵥ (hessM m z *ᵥ ξ))
 
-open Classical in
 
 def StationaryPhase : Prop :=
   ∀ (K : Type) [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] (R : Subring K)
@@ -428,7 +419,6 @@ def Germ : Prop :=
 
 def GermAssemble : Prop := HeadReduction → GermPhi → Germ
 
-open Classical in
 
 def KpFromBB : Prop :=
   ∀ (K : Type) [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] (R : Subring K)
@@ -498,7 +488,6 @@ def LocConst : Prop :=
     ∃ Λ : AddSubgroup K, IsLat Λ ∧ ∀ z z' : Kˣ, (z : K) ∈ Om → (z' : K) - (z : K) ∈ Λ →
       ∀ w' : Point K, Kp R ψ (addBlock h s z') w' = Kp R ψ (addBlock h s z) w'
 
-open Classical in
 
 def ChangeVar : Prop :=
   ∀ (K : Type) [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] (R : Subring K)
@@ -512,7 +501,6 @@ def ChangeVar : Prop :=
       (((modK R (t : K) ^ m)⁻¹ * modK R ((m + 1 : ℕ) : K) : ℝ) : ℂ) *
         intLat R Λ Om (fun z => ((modK R z ^ m : ℝ) : ℂ) * f z)
 
-open Classical in
 
 def CrossVanish : Prop :=
   ∀ (K : Type) [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] (R : Subring K)
@@ -646,7 +634,6 @@ def ThxBasic : Prop :=
       (∀ z, ∀ r ∈ R, thx R ψ m cr A B τ (z + r) = thx R ψ m cr A B τ z) ∧
       ∀ z, IsPSD F (thx R ψ m cr A B τ z)
 
-open Classical in
 
 def ThxSum : Prop :=
   ParsevalGroup → PerpDual → PerpLat → LatFinite → GramRealiseCut → CutPSD → KpGram → SingleBlockParseval →

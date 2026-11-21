@@ -225,7 +225,6 @@ theorem kill_geom {g r : ℕ} (C : AddMonoid.End A) (s : ℕ)
 
 end FiniteOrderUnipotent
 
-open FiniteOrderUnipotent in
 
 theorem finite_order_unipotent_eq_id : ∀ (A : Type) [AddCommGroup A] (β : A →+ A) (n g r m : ℕ),
     0 < n → (∀ x : A, β^[n] x = x) → g.Prime → r + 2 ≤ g → (∀ x : A, ∃ y : A, g • y = x) →

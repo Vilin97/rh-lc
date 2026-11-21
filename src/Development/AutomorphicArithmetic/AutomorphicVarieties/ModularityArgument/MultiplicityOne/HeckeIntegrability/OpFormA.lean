@@ -136,7 +136,6 @@ private theorem hecke_cont {Γ : Type} [Group Γ] [TopologicalSpace Γ] [IsTopol
   have := hh _ hx g
   simpa using this.symm
 
-open PositivityTheory.Rg.BcB PositivityTheory.Rg.BcB.CG in
 
 private def split0 (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) :
     (InfinitePlace E → G n) × GL (Fin n) (Af E) ≃ₜ* PositivityTheory.Rg.BcB.E.H E n 0 where

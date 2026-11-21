@@ -253,7 +253,6 @@ private theorem discr_CMDatum_eq_prod_places_lemma_6 {p : ℕ} [Fact p.Prime] {R
       LinearMap.inr_apply]
     rw [hsplit, map_zero, zero_add, hs]
 
-open UpperTheory.PlacesDiscr in
 
 theorem UpperTheory.discr_CMDatum_eq_prod_places :
     ∀ (E : Type) [Field E] [NumberField E] [StarRing (𝓞 E)] (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C], v.Integers O → ∀ [Fact (¬ IsUnit (p : O))] [Algebra ℤ_[p] O]

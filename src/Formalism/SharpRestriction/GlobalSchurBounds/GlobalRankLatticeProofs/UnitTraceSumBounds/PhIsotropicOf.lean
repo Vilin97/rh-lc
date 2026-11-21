@@ -143,6 +143,5 @@ theorem jetsPh_of (HH : JetsHigh) (H1 : JetsOne) (H2 : JetsTwo) (D : D7) (hc : c
     rw [← mul_assoc, mul_inv_cancel₀ hpos.ne', one_mul, mul_one] at h3
     exact h3
 
-set_option maxHeartbeats 400000 in
 
 end Formalism.MainNotions.Ext.CutA

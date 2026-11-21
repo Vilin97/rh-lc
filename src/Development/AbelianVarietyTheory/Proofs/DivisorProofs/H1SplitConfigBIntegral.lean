@@ -25,7 +25,6 @@ namespace GlobalTheory.IndLine.SplitB
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-omit [NumberField E] in
 
 theorem one_mem_UAt' {n : ℕ} (Y : Spc F E n) (v : Pl F) : (1 : UA σ Y.J) ∈ UAt σ Y (evFin F v) := fun u _ => by
   rw [show mat (1 : UA σ Y.J) = 1 from rfl, sub_self, smul_zero]
@@ -52,7 +51,6 @@ theorem isPair_big' {B : Base F E} {a a' : ℕ} {G : Geo σ a a'} {X : Chars F E
 
 end GlobalTheory.IndLine.SplitB
 
-open GlobalTheory.IndLine.SplitB in
 
 theorem GlobalTheory.IndLine.SplitB.indLineFin_beta_of_isMatched_of_nonempty_algHom : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a b : ℕ) (G : Geo σ a (b + 2)) (G₁ : Geo σ a b) (H : Plane E (b + 2) b)

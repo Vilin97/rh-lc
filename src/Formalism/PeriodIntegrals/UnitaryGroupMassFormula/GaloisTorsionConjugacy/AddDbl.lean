@@ -104,7 +104,6 @@ lemma dblB (L : PeriodPair) {z : ℂ} (hz : z ∉ L.lattice) (h2 : 2 * z ∉ L.l
 
 end ZetaDoubling
 
-open OriginCoordinatesAdd ZetaDoubling in
 
 theorem dblLaw : DblLaw := by
   intro L z hz h2

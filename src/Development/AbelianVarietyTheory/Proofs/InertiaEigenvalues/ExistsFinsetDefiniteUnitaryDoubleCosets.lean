@@ -121,7 +121,6 @@ theorem finGL_mem_UA {n : ℕ} (x : GL (Fin n) (FiniteAdeleRing (𝓞 E) E))
   · simp only [Matrix.one_apply]
     split_ifs <;> simp
 
-variable (E) in
 
 def psi (n : ℕ) : HA (FiniteAdeleRing (𝓞 F₀) F₀) (IsCMField.complexConj E : E →ₐ[F₀] E) (1 : Matrix (Fin n) (Fin n) E) →*
     GL (Fin n) (FiniteAdeleRing (𝓞 E) E) :=
@@ -163,13 +162,11 @@ theorem psi_mem {n : ℕ}
       (HA.mat _ _ _ x).val.map (GlobalTheory.LFun.finAdEquiv F₀ E).toRingHom = 1
   rw [← e, ← Matrix.map_mul, hx, Matrix.map_one _ (map_zero _) (map_one _)]
 
-variable (E) in
 
 def jU (n : ℕ) : HA (FiniteAdeleRing (𝓞 F₀) F₀) (IsCMField.complexConj E : E →ₐ[F₀] E) (1 : Matrix (Fin n) (Fin n) E) →*
     UA E n :=
   ((finGL E n).comp (psi E n)).codRestrict (UA E n) fun x => finGL_mem_UA _ (psi_mem x)
 
-variable (E) in
 
 def jF (n : ℕ) : HA (FiniteAdeleRing (𝓞 F₀) F₀) (IsCMField.complexConj E : E →ₐ[F₀] E) (1 : Matrix (Fin n) (Fin n) E) →*
     finU E n :=

@@ -48,7 +48,6 @@ theorem selfDual_map (e : X ≃ₜ+ Y) {ν : Measure X} {χ : X → X → ℂ} {
         rw [hinner t, ← hχ t (e.symm z), e.apply_symm_apply]
     _ = Φ (-z) := by rw [key, map_neg, e.apply_symm_apply]
 
-omit [IsTopologicalAddGroup X] [IsTopologicalAddGroup Y] in
 
 theorem density_comp {V Z : Type} [MeasurableSpace V] (e : X ≃ₜ+ Y) {μ : Measure V} {ν : Measure X}
     {f : V → Z} {ι : Y → Z} (hι : Function.Injective ι) {f' : V → X} (hf : ∀ v, f v = ι (e (f' v)))

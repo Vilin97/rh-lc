@@ -26,9 +26,7 @@ abbrev KK (i : D.ntw.Tw) : Type := FractionRing (D.ntw.O i)
 variable (A : ∀ (i : D.ntw.Tw) (j : ℕ), ℕ → PlE D.host → Module.End (KK D i) (Pt D j → KK D i))
   (s : ∀ i : D.ntw.Tw, ℕ → KK D i)
 
-open Classical in
 
-open Classical in
 
 end GlobalTheory.SupLaw.Model
 

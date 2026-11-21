@@ -36,7 +36,6 @@ noncomputable section
 
 namespace GlobalTheory.ThK.CuspTransfer.Smooth
 
-attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 
 end GlobalTheory.ThK.CuspTransfer.Smooth
 
@@ -55,17 +54,11 @@ theorem line_fam (h : IsCMExt F E σ) {γ : ℝ → GAd σ J} (hγ : IsRealLine 
   exact GlobalTheory.Orb.isSmoothRealFam_embArch h τ fun i j => by
     simp only [e2]; exact GlobalTheory.Orb.contDiff_exp_smul_entry Z i j
 
-omit [NumberField E] in
 
-attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
-open Classical in
 
 end GlobalTheory.ThK.CuspTransfer.Smooth
 
-open GlobalTheory.ThK.CuspTransfer.Smooth in
 
 end

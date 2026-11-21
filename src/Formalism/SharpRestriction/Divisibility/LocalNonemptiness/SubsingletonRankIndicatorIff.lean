@@ -184,7 +184,6 @@ theorem beK_posDef (k : ℕ) (c : (Σ _ : Fin k, Module.Free.ChooseBasisIndex �
   exact Finset.sum_pos' (fun _ _ => Complex.normSq_nonneg _)
     ⟨σ, Finset.mem_univ _, Complex.normSq_pos.mpr hσ⟩
 
-open Classical in
 
 def rk01 (P : Prop) : ℕ := if P then 0 else 1
 

@@ -19,9 +19,6 @@ namespace GlobalTheory.Square.AwayClosure
 
 variable {K : Type} [Field K] [NumberField K]
 
-open NumberField IsDedekindDomain Finset in
-open scoped nonZeroDivisors in
-variable {K : Type} [Field K] [NumberField K] in
 
 theorem _root_.GlobalTheory.Square.AwayClosure.of_integral {m k l : ℕ} {x : K} (hx : x ≠ 0) {a b : 𝓞 K}
     (ha : x * (m : K) ^ k = a) (hb : x⁻¹ * (m : K) ^ l = b) : _root_.GlobalTheory.Square.IsAwayUnit m x := by
@@ -174,9 +171,6 @@ private lemma exists_mul_pow_integer_of_count_eq_zero_coprime {m : ℕ} (hm : 0 
         positivity
   exact ⟨n, b, hb⟩
 
-open NumberField IsDedekindDomain Finset in
-open scoped nonZeroDivisors in
-variable {K : Type} [Field K] [NumberField K] in
 
 theorem _root_.GlobalTheory.Square.isAwayUnit_closure : ∀ (K : Type) [Field K] [NumberField K]
     [StarRing K] (m : ℕ), 0 < m →

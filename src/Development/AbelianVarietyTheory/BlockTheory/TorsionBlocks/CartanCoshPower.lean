@@ -47,7 +47,6 @@ def CoshIntegral : Prop := CoshFinite ∧ CoshLocUnif ∧ CoshBound
 theorem pOf_herm {p q : ℕ} (B : Matrix (Fin p) (Fin q) ℂ) : (pOf B).IsHermitian := by
   simp [pOf, Matrix.IsHermitian, Matrix.fromBlocks_conjTranspose]
 
-open scoped Matrix.Norms.L2Operator in
 
 theorem cartanB_eq {p q : ℕ} {g : UpqT p q} {B : Matrix (Fin p) (Fin q) ℂ} (h : IsCartan g B) :
     cartanB g = B := by
@@ -70,7 +69,6 @@ theorem cartanB_eq {p q : ℕ} {g : UpqT p q} {B : Matrix (Fin p) (Fin q) ℂ} (
   simp [pOf, Matrix.toBlocks₁₂]
   ring
 
-open scoped Matrix.Norms.L2Operator ComplexOrder in
 
 theorem isCartan_cartanB {p q : ℕ} (g : UpqT p q) : IsCartan g (cartanB g) := by
   set J : Mat p q := Formalism.UG.Jpq p q with hJ

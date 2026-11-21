@@ -91,7 +91,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 local instance modTopAEF : IsModuleTopology (AF F) (AF F ⊗[F] E) := ⟨rfl⟩
 local instance topRingAEF : IsTopologicalRing (AF F ⊗[F] E) := IsModuleTopology.isTopologicalRing (AF F) _
 
-variable (F) in
 
 def eInfF : AF F := pairA F 1 0
 

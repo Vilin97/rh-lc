@@ -91,7 +91,6 @@ end Par
 
 end GlobalTheory.RealGal.TwistUnr
 
-open GlobalTheory.RealGal.TwistUnr in
 
 theorem GlobalTheory.RealGal.unrAt_of_isoTwist : GlobalTheory.Mem.LiteralAutomorphy.LitN → AdmissibleReal → ∀ (F : Type) [Field F] [NumberField F]
     [IsTotallyReal F] (a : ℕ), 1 ≤ a → ∀ (π : TR.CuspSub F a) (η : HChar F), IsoTwist π η →

@@ -222,5 +222,3 @@ theorem piS_unitary : ∀ (k r : ℕ) {Wp : Type} [NormedAddCommGroup Wp] [Inner
   · exact continuousOn_clm_apply.2 hrep.2.2
 
 end GlobalTheory.SgInf.PiUnitary
-
-open MeasureTheory Matrix Formalism.QuantumDeterminants Formalism.MainNotions.S GlobalTheory.SgInf in

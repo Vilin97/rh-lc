@@ -20,7 +20,6 @@ section Fields
 
 variable {T : Type} {n : ℕ}
 
-open Classical in
 
 def matDer (τ : T) (X : Matrix (Fin n) (Fin n) ℂ) :
     Derivation ℂ (MvPolynomial (T × Fin n × Fin n) ℂ) (MvPolynomial (T × Fin n × Fin n) ℂ) :=
@@ -133,7 +132,6 @@ theorem placeRep_comm (V : HSp D) {τ τ' : D.what₂.Tau} (h : τ ≠ τ') (x :
       rw [placeRep_tmul, placeRep_tmul]
       exact ((matDer_commute h X.1 Y.1).smul_left c).smul_right c'
 
-open Classical in
 
 def polyLie (V : HSp D) : GlobalTheory.AutFinLit.LieC V →ₗ⁅ℂ⁆ Module.End ℂ (PolyE V) :=
   DirectSum.toLieAlgebra _ (fun τ => (placeRep V τ).toLieHom.comp (UniversalEnvelopingAlgebra.ι ℂ)) fun τ τ' h x y => by

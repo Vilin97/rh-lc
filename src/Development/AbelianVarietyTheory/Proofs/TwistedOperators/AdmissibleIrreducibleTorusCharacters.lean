@@ -126,7 +126,6 @@ theorem cosetInd_mul (t : Fin r → kˣ) {x : GL (Fin r) k} (hx : x ∈ iwahori 
   · rw [indicator_of_mem h, indicator_of_mem (key.2 h)]
   · rw [indicator_of_notMem h, indicator_of_notMem fun h' => h (key.1 h')]
 
-variable (k r) in
 
 theorem relation_gl (hI : IwahoriTrace) (hE : ExponentsSeparate) (ϖ : kˣ)
     (hϖ : valuation k (ϖ : k) = uniformizer k)

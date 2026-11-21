@@ -219,7 +219,6 @@ theorem secThrough_pullB (j : ℕ) (α : a.D₀.X) (s : SecBMod a.D₀ j α) :
 
 variable (F : Type) [Field F] [Algebra (FractionRing (PowerSeries k)) F]
 
-omit hW in
 
 abbrev constF (k : Type) [Field k] (F : Type) [Field F] [Algebra (FractionRing (PowerSeries k)) F] : k →+* F :=
   (toF (R := PowerSeries k) F).comp (PowerSeries.C (R := k))
@@ -278,7 +277,6 @@ theorem eq_constFam {α : a.D₀.X} {s₀ : SecBMod a.D₀ j α} {s : Fam P.toPr
   · exact FamFree.eq_of_eq_add_nsmul hG _ _ hχ (h₁.trans (constFam_self hW F hG hj α s₀).symm)
   · exact (h₂ χ fun mu h => hχ ⟨mu, h⟩).trans (constFam_off hW F hG hj α s₀ χ fun mu h => hχ ⟨mu, h⟩).symm
 
-omit hW in
 
 def expo (a : ArcIn D l β k b) (j : ℕ) (α mu : a.D₀.X) : ℤ := j * (a.be mu mu / 2) + a.be mu α
 

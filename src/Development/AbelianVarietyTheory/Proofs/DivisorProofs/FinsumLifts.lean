@@ -30,6 +30,5 @@ theorem isPreimmersion_j : IsPreimmersion V.j :=
   have h : IsPreimmersion (spMap (algebraMap (𝓞 F) F)) := IsPreimmersion.of_isLocalization (nonZeroDivisors (𝓞 F))
   MorphismProperty.of_isPullback (P := @IsPreimmersion) V.pb.flip h
 
-open Classical in
 
 end GlobalTheory.Mean4O.CoverHt

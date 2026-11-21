@@ -78,7 +78,6 @@ theorem isClopen_away (v : Pl F) : IsClopen (away v ι) :=
     isOpen_set_pi Set.finite_univ fun _ _ => (PI.IntAdCpctOpenWork.main F).1⟩
     (continuous_id.sub ((continuous_sgl v).comp (continuous_prj v)))
 
-omit [Fintype ι] in
 
 theorem exists_compact (v : Pl F) {K : Set (ι → Fv F v)} (hK : IsCompact K) :
     ∃ C : Set (ι → Af F), IsCompact C ∧ prj v ⁻¹' K ∩ away v ι ⊆ C := by

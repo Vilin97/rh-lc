@@ -31,7 +31,6 @@ theorem unrChar_apply_of_isUnitAt {L : Type} [Field L] [NumberField L] (w : Heig
 
 end GlobalTheory.CompanionTheory.MuOpen
 
-open GlobalTheory.CompanionTheory.MuOpen in
 
 theorem GlobalTheory.CompanionTheory.MuOpen.muEx_of_exists :
     (∀ (E : Type) [Field E] [NumberField E] [IsCMField E], GlobalTheory.BCT.Unr E → ∃ (μ : HChar E) (e : InfinitePlace E → ℤ), IsMu μ e) → MuEx := by

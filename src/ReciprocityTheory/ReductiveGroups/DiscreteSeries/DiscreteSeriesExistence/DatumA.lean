@@ -281,7 +281,6 @@ theorem pdA_eab_compact {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : S7.KType
   simp only [map_add (f := _), map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
     inner_add_right, inner_smul_right]
 
-open scoped Classical in
 
 theorem toL2_congr_of_forall_inUJ_eq {ε : Fin n → Bool} {F G : Matrix (Fin n) (Fin n) ℂ → ℂ}
     (h : ∀ g, inUJ ε g → F g = G g) : toL2 ε F = toL2 ε G := by

@@ -111,6 +111,5 @@ end GlobalTheory.FamTrace.RedAt
 
 namespace GlobalTheory.FamTrace.RedAt
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.FamTrace.RedAt

@@ -24,7 +24,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.AmpleRigid
 
-open GlobalTheory.SerreField in
 
 theorem serreAmple_of_finiteOrder_of_separated :
     FiniteOrderSt → SeparatedSt → SerreAmpleSt := by

@@ -24,7 +24,6 @@ theorem blockWeight_cast_eq_unitDeg {K : Type} [DecidableEq K] (ι : K → Type)
   simp only [blockWeight, unitDeg, Pi.single_apply]
   split_ifs <;> rfl
 
-open Classical in
 
 theorem IntersectionRecursion.proof : IntersectionRecursion.Statement.{u} := by
   intro F _ K _ _ ι _ q d hq hdim b i hX bs

@@ -105,7 +105,6 @@ theorem nrm_algEquiv (σ : Ω ≃ₐ[K] Ω) (x : Ω) : nrm K (σ x) = nrm K x :=
   letI := normedField K
   exact (spectralNorm_eq_of_equiv σ x).symm
 
-variable (K Ω) in
 
 variable [ValuativeRel Ω] [ValuativeExtension K Ω]
 
@@ -114,7 +113,6 @@ theorem nrm_le_nrm_iff (x y : Ω) : nrm K x ≤ nrm K y ↔ x ≤ᵥ y :=
 
 variable [TopologicalSpace Ω] [IsValuativeTopology Ω]
 
-variable (K Ω) in
 
 end Nrm
 

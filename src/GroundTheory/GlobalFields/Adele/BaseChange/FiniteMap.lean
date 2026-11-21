@@ -19,7 +19,6 @@ open SemiLocal
 
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-variable (K) in
 
 def below (w : HeightOneSpectrum (𝓞 L)) : HeightOneSpectrum (𝓞 K) where
   asIdeal := w.asIdeal.under (𝓞 K)
@@ -30,7 +29,6 @@ instance liesOver_below (w : HeightOneSpectrum (𝓞 L)) :
     w.asIdeal.LiesOver (below K w).asIdeal :=
   ⟨rfl⟩
 
-omit [NumberField K] [NumberField L] in
 
 theorem below_eq_iff (w : HeightOneSpectrum (𝓞 L)) (v : HeightOneSpectrum (𝓞 K)) :
     below K w = v ↔ w.asIdeal.LiesOver v.asIdeal := by
@@ -60,7 +58,6 @@ theorem mapsTo_completionMap (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpec
   rw [valued_completionMap]
   exact pow_le_one' hx _
 
-variable (K L) in
 
 def finiteAdeleMap : FiniteAdeleRing (𝓞 K) K →+* FiniteAdeleRing (𝓞 L) L :=
   RestrictedProduct.mapAlongRingHom (fun v : HeightOneSpectrum (𝓞 K) ↦ v.adicCompletion K)

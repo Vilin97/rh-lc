@@ -50,7 +50,6 @@ theorem aeval_genPt_eq_zero_iff' (P : Ideal (MvPolynomial (Fin n) F)) (f : MvPol
 
 end ChartZeroTrdeg
 
-open ChartZeroTrdeg in
 
 theorem ChartZeroTrdeg.proof (hA : AffineChartTrdeg.Statement) : ChartZeroTrdeg.Statement := by
   intro F _ n d Q hQ hdim Ω _ _ y j hy hyj

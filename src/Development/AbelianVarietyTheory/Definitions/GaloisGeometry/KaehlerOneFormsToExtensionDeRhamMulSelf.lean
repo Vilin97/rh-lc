@@ -32,7 +32,6 @@ def mapDR : DR k K →ₐ[K] DR k L := ExteriorAlgebra.lift K ⟨map1 k K L, kae
 def IsTrDR (T : DR k L →ₗ[k] DR k K) : Prop :=
   ∀ (b : L) (ω : DR k K), T (b • mapDR k K L ω) = Algebra.trace K L b • ω
 
-open Classical in
 
 def trDR : DR k L →ₗ[k] DR k K := if h : ∃ T, IsTrDR k K L T then h.choose else 0
 

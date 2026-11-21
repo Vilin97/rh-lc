@@ -32,9 +32,7 @@ variable {e e' : ℕ} {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
 
 end Pull
 
-open scoped Classical in
 
-open scoped Classical in
 
 def diagSec (x y : OnePoint ℂ × OnePoint ℂ) : ℂ :=
   if x.1 = ∞ then

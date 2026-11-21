@@ -56,7 +56,6 @@ open Formalism.IndefR.Links Formalism.IndefR.Links.RealDat
 variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
 variable {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
 
-open Classical in
 
 end R
 

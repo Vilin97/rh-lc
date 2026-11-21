@@ -43,9 +43,7 @@ theorem isNoetherianRing_chartRing [IsNoetherianRing S] {i : Fin (N + 1)} (hi : 
 
 variable {i : Fin (N + 1)} (hi : x i ≠ 0) {j : Fin (N' + 1)} (hj : x' j ≠ 0)
 
-omit [Algebra S Ω] in
 
-variable (x') in
 
 end Charts
 
@@ -54,7 +52,6 @@ section Clauses
 variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N N' : ℕ}
   {x : Fin (N + 1) → Ω} {x' : Fin (N' + 1) → Ω}
 
-omit [Algebra S Ω] in
 
 end Clauses
 

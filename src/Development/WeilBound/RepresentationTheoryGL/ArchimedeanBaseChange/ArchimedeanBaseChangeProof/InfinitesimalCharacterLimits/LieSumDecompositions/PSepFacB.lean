@@ -37,7 +37,6 @@ theorem factor_roots (e : B) (P : B[X]) (J : Finset ℂ) (h : ∀ α ∈ J, e * 
     conv_lhs => rw [← (mul_divByMonic_eq_iff_isRoot).2 h0]
     ring
 
-omit [Algebra ℂ B] in
 
 theorem factor_deg {e : B} {P Pi Rm : B[X]} (hP : P.Monic) (hPi : Pi.Monic) (h : C e * P = Pi * Rm) :
     (Pi.natDegree ≤ P.natDegree ∨ e = 0) ∧ (Pi.natDegree = P.natDegree → ∀ k, e * P.coeff k = Pi.coeff k * e) := by
@@ -199,7 +198,6 @@ theorem IsSS.adjoin {s : Set A} (hs : ∀ x ∈ s, IsSS x) (hc : ∀ x ∈ s, �
   | add x y hx hy ihx ihy => exact ihx.add ihy (hcomm x hx y hy)
   | mul x y hx hy ihx ihy => exact ihx.mul ihy (hcomm x hx y hy)
 
-set_option linter.deprecated false in
 
 theorem isSS_coeff_fun (m : Multiset ℂ) (hm : m.Nodup) (r s : ℕ) (_hrs : Multiset.card m = r + s) (c₁ c₂ : ℂ)
     (a b : ℕ → A) (ha : a r = 1) (hb : b s = 1)

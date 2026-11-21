@@ -15,7 +15,6 @@ namespace UpperTheory.CBC.SConjSpaceCAux
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 
-open Classical in
 
 def cc (τ : E →+* ℂ) : Cinf E →+* ℂ :=
   if (InfinitePlace.mk τ).embedding = τ then Pi.evalRingHom (fun _ => ℂ) (InfinitePlace.mk τ)
@@ -580,7 +579,6 @@ end Pull
 
 end UpperTheory.CBC.SConjSpaceCAux
 
-open UpperTheory.CBC.SConjSpaceCAux in
 
 theorem UpperTheory.CBC.SConjSpaceC_holds : UpperTheory.CBC.SConjSpaceC := by
   intro M _ _ _ σ s hs n P

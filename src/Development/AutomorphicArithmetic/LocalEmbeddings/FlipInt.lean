@@ -226,7 +226,6 @@ theorem phiA_mem {A D : Type} [Fintype A] [DecidableEq A] {n : ℕ} [Fintype D] 
     simpa using Lo_mul (chiZ_KO hϖ hν q ((Fintype.card D : ℂ) / 2) hu) this
   · by_cases h : j ∈ P <;> simp [blockUnits, h]
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem chiZ_unif {ν : kˣ →* ℂˣ} {ϖ : kˣ} (hϖ : IsUnif ϖ) (hq : resCard k ≠ 0) {B : ℕ} (d : ℕ)
     (h1 : (ν ϖ : ℂ) ∈ Lo (resCard k) B) (h2 : (ν ϖ⁻¹ : ℂ) ∈ Lo (resCard k) B) :

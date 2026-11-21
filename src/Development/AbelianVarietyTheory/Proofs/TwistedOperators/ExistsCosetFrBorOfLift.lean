@@ -32,7 +32,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.HeckePointIdent
 
-set_option maxHeartbeats 800000 in
 
 theorem levG_cong {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (hL : R.toLevCh.Is A.μ0)
@@ -94,7 +93,6 @@ theorem map_sub_one {A B : Type} [CommRing A] [CommRing B] {n : ℕ} (f : A →+
   rw [Matrix.sub_apply, Matrix.sub_apply, map_sub, Matrix.one_apply, Matrix.one_apply]
   split_ifs <;> simp
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_split_of_suppAt {D : D7} (V : HSp D) {e : AE D} {P : Pl D.host.E} (he : Formalism.L2.NTheta.IsIdemAt e P)
     {a : GA D V} (ha : SuppAt e V a) {M : ℕ} (hM : (M : 𝓞 D.host.E) ∉ P.asIdeal) :
@@ -146,7 +144,6 @@ theorem exists_split_of_suppAt {D : D7} (V : HSp D) {e : AE D} {P : Pl D.host.E}
     rw [TensorProduct.sub_tmul]
     exact this
 
-set_option maxHeartbeats 800000 in
 
 theorem mark_keep {D : D7} (V : HSp D) {e : AE D} {P : Pl D.host.E} (he : Formalism.L2.NTheta.IsIdemAt e P)
     {a a₀ : GA D V} (ha : SuppAt e V a₀) {M p p' : ℕ} (hp : (p : 𝓞 D.host.E) ∈ P.asIdeal) (hpp : p * p' ≡ 1 [MOD M])
@@ -248,7 +245,6 @@ theorem frBor_one_of_eq {c : Coeff l} {S : Type} [CommRing S] [Algebra c.F S] (y
   · rw [hu, hu' τ, hcomb]
     simp [Pi.single_apply]
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_lift_all {σ' : KA l →+* ℂ} {g : ℕ} {ty : Fin g → (E →+* ℂ)} (F : FamilyUnif Xo σ' ty)
     (i j : Fin F.n) (P : (F.Di i).La →+ (Fin g → ℂ)) (P' : (F.Di j).La →+ (Fin g → ℂ))
@@ -361,7 +357,6 @@ def trForm {n : ℕ} (G : Matrix (Fin n) (Fin n) E) (ξ : E) : (Fin n → E) →
 theorem trForm_apply {n : ℕ} (G : Matrix (Fin n) (Fin n) E) (ξ : E) (v y : Fin n → E) :
     trForm G ξ v y = Algebra.trace ℚ E (ξ * herm G v y) := rfl
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_quot_lattice {n : ℕ} (G : Matrix (Fin n) (Fin n) E) (ξ : E) (A A' : Datum H)
     (Λ : Submodule (𝓞 E) (Fin n → E)) (φ : A.La ≃ₗ[𝓞 E] Λ)
@@ -474,7 +469,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Hecke
 
 namespace GlobalTheory.HeckePointIdent
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_frBor_of_dictLat {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {V W : HSp D} (hV : V = W)
     {l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} {Xo : Moduli Dw l}
@@ -666,7 +660,6 @@ theorem conjP_asIdeal {D : D7} (Hh : ReciprocityTheory.ChartRestriction.G.Geo.To
     rw [Hh.bar_eq]
     rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_coset_frBor : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m)
     (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F),
@@ -711,7 +704,6 @@ theorem exists_coset_frBor : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 
     · rw [hlat, ← Nat.cast_smul_eq_nsmul (𝓞 D.host.E)]
       exact h1 (Submodule.smul_mem_smul hpP hv)
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_coset_frBor_of_lift : ∀ (D : D7), GlobalTheory.IndefiniteRowSideFullHecke.HeckePrimeDetection.HeckePointLaws → GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.SplitLinearModel D → GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.VacFixed D →
     ∀ (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m)

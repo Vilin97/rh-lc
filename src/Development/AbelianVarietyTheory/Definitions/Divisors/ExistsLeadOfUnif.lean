@@ -33,7 +33,6 @@ structure Ext (D : DegPre R) : Type 1 where
 
 attribute [instance] Ext.grp Ext.comm
 
-open ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.Semi.Rosenlicht GlobalTheory.TorusModel GlobalTheory.TorusExt GlobalTheory.Serre in
 
 instance (D : DegPre R) : Nonempty (Ext D) := by
   have hL := GlobalTheory.allSixLaws.1.globalFns
@@ -145,6 +144,5 @@ theorem LabCover.exists_trait (C : LabCover D) (W : Type) [CommRing W] [IsDomain
       cart := hc, D' := D', A := A', U := U', hD := hD, ℓ := ℓ, ℓ_gen := hℓ, lab := hlab }, hi, hf, rfl, rfl⟩
   rw [Category.assoc, hξ, ← Spec.map_comp]; rfl
 
-open ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.DVR.TG in
 
 end GlobalTheory.Mum

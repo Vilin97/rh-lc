@@ -117,7 +117,6 @@ theorem ιfun_emb' {i : ℕ} (J : Cech.Idx (Finset.univ : Finset (Fin (N + 1))) 
     UT.toL (locEmb η M₀ J.1.1 h (ιfun η M₀ n c hG hB (downI J h).1 z)) = single ((n : ℤ), c) (z : Ω) :=
   ιfun_emb η M₀ n c hG hB (downI J h).1 z
 
-open Classical in
 
 def Fmap (i : ℕ) (t : Cech.Cochain (fun K : Chart x => ↥(((G.twist (B.pow n)).twist (twistSys S x c)).sub K)) i) :
     Cech.Cochain (locSys (MvPolynomial (Fin (r + 1)) S) N (TwM η M₀)) i :=

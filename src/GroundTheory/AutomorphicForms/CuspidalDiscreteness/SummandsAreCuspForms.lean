@@ -117,7 +117,6 @@ theorem eq_integral_of_integrated_eq {v : CuspL2 μ} {Φ : normOneGL K n → ℂ
   congrFun (hrep.unique ((isContRep_integrated_archRepT μ ν hrep hb hκt.continuous hκt.2).of_eq
     (congrArg (toLp μ) hκv))) y
 
-omit [μ.IsHaarMeasure] in
 
 theorem slice_eq_integral {Φ : normOneGL K n → ℂ} {κ : archGroup K n → ℂ}
     (hΦκ : ∀ y, Φ y = ∫ a, κ a * Φ (y * archP K n a) ∂ν) (y : normOneGL K n) :
@@ -128,7 +127,6 @@ theorem slice_eq_integral {Φ : normOneGL K n → ℂ} {κ : archGroup K n → �
   show κ a * Φ (y * archP K n x * archP K n a) = Φ (y * archP K n (x * a)) * κ a
   rw [map_mul, mul_assoc y, mul_comm]
 
-omit [μ.IsHaarMeasure] in
 
 theorem isSmoothFun_slice {Φ : normOneGL K n → ℂ} (hΦc : Continuous Φ) {κ : archGroup K n → ℂ}
     (hκt : (isExpLieAlgebra K n).IsTestFunction κ)
@@ -175,7 +173,6 @@ def IsZKFinite (v : CuspL2 μ) : Prop :=
     FiniteDimensional ℂ (Submodule.span ℂ ((fun z => (isExpLieAlgebra K n).uAction (archRepT μ) z
       ⟨v, hs⟩) '' ((isExpLieAlgebra K n).centerU : Set _)))
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_cuspForm_of_isZKFinite (v : CuspL2 μ) (hv : IsZKFinite μ v) :
     ∃ φ : cuspForms K n,

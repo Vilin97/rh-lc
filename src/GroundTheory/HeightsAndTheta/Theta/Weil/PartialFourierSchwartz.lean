@@ -134,12 +134,10 @@ theorem exists_bound_partialFourierSnd (F : 𝓢(V₁ × (EuclideanSpace ℝ ι)
     _ ≤ C₀ * (s.sup (schwartzSeminormFamily ℝ (EuclideanSpace ℝ ι) E)) g := h3
     _ ≤ C₀ * M := by gcongr
 
-variable (V₁ ι) in
 
 abbrev fstIncl : V₁ × (EuclideanSpace ℝ ι) →L[ℝ] V₁ × (EuclideanSpace ℝ ι) :=
   (ContinuousLinearMap.inl ℝ V₁ (EuclideanSpace ℝ ι)).comp (ContinuousLinearMap.fst ℝ V₁ (EuclideanSpace ℝ ι))
 
-variable (V₁ ι) in
 
 def sndInnerCLM : V₁ × (EuclideanSpace ℝ ι) →L[ℝ] (V₁ × (EuclideanSpace ℝ ι) →L[ℝ] ℝ) :=
   ((ContinuousLinearMap.compL ℝ (V₁ × (EuclideanSpace ℝ ι)) (EuclideanSpace ℝ ι) ℝ).flip (ContinuousLinearMap.snd ℝ V₁ (EuclideanSpace ℝ ι))).comp

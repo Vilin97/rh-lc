@@ -16,7 +16,6 @@ open Polynomial
 
 variable {d : ℕ}
 
-open Classical in
 
 noncomputable def partialProd (p : Polynomial (MvPolynomial (Fin d) ℂ))
     (u : Set ((Fin d → ℂ) × ℂ)) (x : Fin d → ℂ) : ℂ[X] :=

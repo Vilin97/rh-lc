@@ -85,7 +85,6 @@ def OrdPolynomialLocalization.Statement : Prop :=
         (algebraMap (MvPolynomial σ R) _ (C x)) =
       Ring.ord (Localization.AtPrime p) (algebraMap R _ x)
 
-open Classical in
 
 def SectionOrder.Statement : Prop :=
   ∀ (F : Type) [Field F] [CharZero F] (n e : ℕ) (I : Ideal (MvPolynomial (Fin n) F))

@@ -98,6 +98,5 @@ end Add
 
 end RowTiePCEqSum
 
-open RowTiePCEqSum in
 
 end Formalism.L2.FormalSeriesBounds

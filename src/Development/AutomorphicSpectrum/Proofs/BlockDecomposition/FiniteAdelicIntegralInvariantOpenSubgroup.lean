@@ -196,7 +196,6 @@ theorem tube_zero {H Y A : Type} [AddGroup H] [TopologicalSpace H] [TopologicalS
     generalized_tube_lemma isCompact_singleton hK (hV.preimage hph) hsub
   exact ⟨W, hWo.mem_nhds (h0W rfl), fun u hu X hX => hWW (Set.mk_mem_prod hu (hKW hX))⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem starLoc_periodic : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
     IsCMExt F E σ → ∀ (M : ℕ) (J : Matrix (Fin M) (Fin M) E) (n : ℕ) (ψ : AddChar (AF F) ℂ), IsCharAF F ψ →

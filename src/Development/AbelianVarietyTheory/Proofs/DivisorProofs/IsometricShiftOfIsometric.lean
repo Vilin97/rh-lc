@@ -179,9 +179,7 @@ section Shift
 
 variable {k : Type} [CommRing k] {X Y : Scheme.{0}} {p : X ⟶ Sp k} {q : Y ⟶ Sp k}
 
-variable (p) in
 
-variable (p) in
 
 theorem gdeg_shift_const (L : HermLB p) (t : (k →+* ℂ) → ℝ) (ht : ∀ σ, t ((starRingEnd ℂ).comp σ) = t σ) (D : ℕ) :
     gdeg (L.shift t ht) D = gdeg L D := by

@@ -41,7 +41,6 @@ theorem isOpenImmersion_desc {T T' Y Y' : Scheme.{0}} {σ : G →* Aut T} {σ' :
   rw [this]
   infer_instance
 
-omit [Finite G] in
 
 theorem app_of_chart {T Y Y' : Scheme.{0}} {ρ : G →* Aut X} {σ : G →* Aut T}
     {q : T ⟶ Y'} (h : IsAffineQuotient σ q) (π : X ⟶ Y) (i : T ⟶ X) [IsOpenImmersion i]
@@ -70,7 +69,6 @@ theorem app_of_chart {T Y Y' : Scheme.{0}} {ρ : G →* Aut X} {σ : G →* Aut 
     obtain ⟨r, rfl⟩ := b1.2 t
     exact ⟨r, b2.1 ((sq' r).trans ht)⟩
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
     (hbas : ∀ U ∈ 𝒰, ∀ V ∈ 𝒰, ∀ x : X, x ∈ U → x ∈ V → ∃ W ∈ 𝒰, x ∈ W ∧ W ≤ U ∧ W ≤ V)

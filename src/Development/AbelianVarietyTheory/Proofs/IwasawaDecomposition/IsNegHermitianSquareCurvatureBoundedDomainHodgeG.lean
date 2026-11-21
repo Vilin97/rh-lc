@@ -112,7 +112,6 @@ end GlobalTheory.PointFormSign.DomCurv
 
 namespace GlobalTheory.PointFormSign
 
-open DomCurv in
 
 theorem curv_domGram_isNegSq (m r : ℕ) (x : Fin m → Fin r → ℂ)
     (hx : (1 - Matrix.of x * (Matrix.of x)ᴴ).PosDef) : IsNegSq (curv (domGram m r) x) r := by

@@ -43,7 +43,6 @@ section One
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
-variable (F E) in
 
 def csGlobN : Submodule (𝓞 F) E where
   carrier := {e | ι e ∈ 𝒮}
@@ -134,7 +133,6 @@ section OneMain
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
-omit [NumberField F] [Algebra F E] in
 
 theorem csGlob_single (Λ : Submodule (𝓞 E) (n → E))
     (hspan : Submodule.span E (Λ : Set (n → E)) = ⊤) :

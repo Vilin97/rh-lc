@@ -111,7 +111,6 @@ theorem conj_point_eq (F : FamilyUnif Xo σ ty) (hD : 1 ≤ D.p + D.q) (hσ : σ
         fun v => congr_of_section F τ hP' hu.symm l.A_pos _ (F.ex_etaA i P hP v) (F.ex_etaA i' P' hP' v)
           (key _ l.A_pos (Nat.dvd_lcm_right _ _) _), hL⟩).symm
 
-open Polynomial GlobalTheory.CompRat.FixedConst in
 
 theorem fnAlgClosed_of_fixed_points (F : FamilyUnif Xo (algebraMap (KA l) ℂ) ty) (h1 : 1 ≤ D.p + D.q)
     (hty : IsTypeFn H D.p D.q ty) (c : Coeff l)

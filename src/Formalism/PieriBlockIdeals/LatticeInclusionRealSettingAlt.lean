@@ -143,7 +143,6 @@ def JW [Fintype ι] [DecidableEq ι] (l : ℕ) : ℕ :=
   ∑ τ, cTau W.T2 (fun τ => W.ex P τ l)
     (cFloorShort6 l P.Nr (kc P) P.t (h0 P) W.lam W.j W.q W.xm W.xp (fun τ => W.ecl P τ l) (W.iW P l)) τ
 
-open Classical in
 
 end Wts
 
@@ -358,7 +357,6 @@ def Wts.coarseWeightBound {ι : Type} [Fintype ι] [DecidableEq ι] (W : Wts ι)
   ∑ τ, cTau W.T2 (fun τ => W.ex P τ l)
     (cFloorCoarse l P.Nr (kc P) P.t (h0 P) W.lam W.j W.q W.xm W.xp (fun τ => W.ecl P τ l) (W.iW P l)) τ
 
-open Classical in
 
 def Wts.Jrec7 {ι : Type} [Fintype ι] [DecidableEq ι] (W : Wts ι) (P : Par) (l : ℕ) : ℕ :=
   if (l : ℝ) ≤ P.lJ ∨ P.Excl l ∨ l ∈ W.Sp then W.JA P l else W.coarseWeightBound P l

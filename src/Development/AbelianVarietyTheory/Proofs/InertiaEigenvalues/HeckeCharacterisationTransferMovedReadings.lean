@@ -43,7 +43,6 @@ abbrev fullHeckeRealDatMovedReadings : RealDat3 D A3 Ks := (realDatMovedReadings
 
 variable {Rl w kap lam}
 
-set_option maxHeartbeats 4000000 in
 
 theorem heckeCharacterisation_transfer_movedReadings {F : Face3 D A3} (h : Rl.Char3 F) (hs : (fullHeckeRealDatMovedReadings Rl w kap lam).IsScal F) : (fullHeckeRealDatMovedReadings Rl w kap lam).Char3 F := by
   obtain ⟨h1, h2, h5, hi, h6, h7, h8, f1, f2, f3, -, ht, hp, ha⟩ := h

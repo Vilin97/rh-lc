@@ -108,7 +108,6 @@ theorem exists_coefficientField (S : Type) [CommRing S] [IsLocalRing S] [IsAdicC
 
 end Algebra
 
-open MvPowerSeries GlobalTheory.CohenStructure in
 
 theorem exists_finite_over_normal (S : Type) [CommRing S] [IsDomain S] [IsLocalRing S] [CharZero S]
     [IsNoetherianRing S] [hc : IsAdicComplete (maximalIdeal S) S] :
@@ -206,8 +205,6 @@ theorem exists_factor {R W : Type} [CommRing R] [IsLocalRing R] [IsNoetherianRin
       CompleteFiniteExtension.isAdicComplete_of_finite_local S _, RingHom.charZero g'⟩, inferInstance, hinj, fun r => ?_⟩
   exact IsFractionRing.injective W (FractionRing W) ((hg' _).trans (hK _))
 
-open GlobalTheory.TraitChartForm in
 
-open GlobalTheory.TraitChartForm in
 
 end GlobalTheory.FarTrait

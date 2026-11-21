@@ -38,5 +38,3 @@ theorem hatL_cong_of_hat {D : D7} (V : HSp D) (κ : GA D V) (Λ Λ' : Submodule 
 
 end GlobalTheory.BaseLevelInj
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.BaseLevelInj in

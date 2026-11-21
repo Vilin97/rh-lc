@@ -261,7 +261,6 @@ theorem exists_rep [FiniteDimensional K V] (h : V →ₗ⋆[K] V →ₗ[K] K) (h
 
 variable [NumberField K]
 
-omit [StarRing K] in
 
 theorem exists_form {M L : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) {P : Ideal (𝓞 K)}
     (φ : (↥M ⧸ L.comap M.subtype) ≃ₗ[𝓞 K] (𝓞 K ⧸ P)) :

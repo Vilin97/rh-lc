@@ -35,7 +35,6 @@ private theorem exists_pow_unit {R : Type} [CommRing R] [IsDomain R] [IsLocalRin
     exact hb (Ideal.mem_span_singleton.1 (h ▸ (IsLocalRing.mem_maximalIdeal b).2 hu))
   exact ⟨n, this.unit, e⟩
 
-open GlobalTheory.PrimeSection in
 
 private theorem exists_unit_near {Y C : Scheme.{0}} (p : Y ⟶ C) [IsIntegral Y] [IsLocallyNoetherian Y] (y : Y)
     (π : C.presheaf.stalk (p y))

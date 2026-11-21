@@ -64,7 +64,6 @@ variable {X : Data F} {s : Fin X.D → Fin X.N → F} {hs : X.IsGood s} {δ : �
 def totRes (Co : Coord X.toGeo hs δ) : Tot X.toGeo →ₗ[F] (Fin δ → F) :=
   (Co.ev 0).toLinearMap ∘ₗ hs.res 0 ∘ₗ LinearMap.proj 0
 
-variable (X s) in
 
 def totFil (a : ℕ) : Submodule F (Tot X.toGeo) := (filV X s a).map (incl X X.T)
 

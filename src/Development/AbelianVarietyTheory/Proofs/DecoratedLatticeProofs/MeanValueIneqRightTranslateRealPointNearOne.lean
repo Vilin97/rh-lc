@@ -107,7 +107,6 @@ theorem continuous_expInf (hθ : IsInfFam θ) (R : RealPoints θ V) : Continuous
     (DerLinear.contDiff_exp H).continuous
   exact (GlobalTheory.Mem.DerClosed.continuousOn_secInf hθ V).comp_continuous h1 fun X => DerLinear.exp_unitary H X
 
-open Classical in
 
 theorem exists_basis (V : HSp D) : ∃ (ι : Type) (_ : Fintype ι) (b : Module.Basis ι ℝ (LieN V)) (p : ι → D.what₂.Tau)
     (X : ∀ i, LieAt V (p i)), ∀ i, b i = atPlace V (p i) (X i) := by

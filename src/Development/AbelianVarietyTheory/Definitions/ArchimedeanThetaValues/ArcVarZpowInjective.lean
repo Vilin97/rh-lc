@@ -191,22 +191,18 @@ theorem arcVar_zpow_injective : Function.Injective fun n : ℤ => arcVar k ^ n :
   have h2 := congrArg PowerSeries.constantCoeff h1
   simp [hn.ne'] at h2
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
 theorem arcExp_eq (y : X) : arcExp k be y = arcVar k ^ (be y y / 2) := rfl
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
 theorem arcExp_val (y : X) : (arcExp k be y : FractionRing (PowerSeries k)) =
     algebraMap (PowerSeries k) (FractionRing (PowerSeries k)) PowerSeries.X ^ (be y y / 2) :=
   Units.val_zpow_eq_zpow_val _ _
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
 theorem arcExp_neg (y : X) : arcExp k be (-y) = arcExp k be y := by
   simp only [arcExp_eq, map_neg, LinearMap.neg_apply, neg_neg]
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
 theorem polar_arcExp (hs : ∀ y z, be y z = be z y) (he : ∀ y, (2 : ℤ) ∣ be y y) (y z : X) :
     polar (arcExp k be) y z = arcVar k ^ (be y z) := by
@@ -356,7 +352,6 @@ theorem pointF_baseMap
     b'.left ≫ baseMap q f q' = b.left :=
   (left_baseMap q f q' b').trans ((jFK_spMap f F hF).trans (left_eq_hom b).symm)
 
-omit [Algebra (FractionRing K') F] in
 
 theorem genRel_pt_iff
     (hF : ∀ x, algebraMap (FractionRing K) F (algebraMap K _ x) = algebraMap (FractionRing K') F (algebraMap K' _ (f x)))

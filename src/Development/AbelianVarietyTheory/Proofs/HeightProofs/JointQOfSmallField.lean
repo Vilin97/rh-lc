@@ -35,6 +35,5 @@ theorem curveOver_of_weberSet (D : D7) (F : IntermediateField ℚ ℂ) {n : ℕ}
     ⟨h L hL (Set.mem_insert _ _), fun s hs =>
       h L hL (Set.mem_insert_of_mem _ ⟨_, (hL _).2 ⟨s, rfl⟩, hs, rfl⟩)⟩
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.FieldSize

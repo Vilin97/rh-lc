@@ -82,7 +82,6 @@ theorem IsProportional.thFr_eq {κ : ℂ} {a₀ b₀ a₀' b₀' : Fin g → ℝ
   rw [polyDeriv_prod_canFn_eq_mul hr hs hx hc P]
   exact halg _ hμ
 
-omit hs hs' hn in
 
 theorem norm_pow_mul_prod_translConst {κ : ℂ} (hκ : ‖κ‖ = 1) (j : ℕ) (b b' : Fin g → ℝ)
     (s t s' t' : Fin n → Fin g → ℝ) :
@@ -91,7 +90,6 @@ theorem norm_pow_mul_prod_translConst {κ : ℂ} (hκ : ‖κ‖ = 1) (j : ℕ) 
   exact Finset.prod_eq_one fun k _ => by
     rw [norm_div, GlobalTheory.CanTh.norm_translConst, GlobalTheory.CanTh.norm_translConst, div_one]
 
-variable (idx) in
 
 theorem exists_thFr_eq_mul (a b : Fin n → Fin g → ℝ) :
     ∃ (a' b' : Fin n → Fin g → ℝ) (c : ℂ), ‖c‖ = 1 ∧

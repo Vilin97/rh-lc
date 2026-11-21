@@ -50,6 +50,5 @@ theorem finiteDimensional_of_lat {K V : Type} [Field K] [NumberField K] [AddComm
   rw [← Submodule.span_span_of_tower (𝓞 K) K (s : Set V)]
   exact hs
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.BadIndef

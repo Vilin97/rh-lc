@@ -18,7 +18,6 @@ noncomputable section
 
 universe u
 
-set_option maxHeartbeats 400000 in
 
 theorem ConeLocalLength.proof (h₁ : LocalizedQuotientLength.Statement.{u, u})
     (h₂ : ConeLocalFlat.Statement.{u}) : ConeLocalLength.Statement.{u} := by

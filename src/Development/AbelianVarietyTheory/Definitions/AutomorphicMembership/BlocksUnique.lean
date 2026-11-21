@@ -79,7 +79,6 @@ structure RowWD (D : D7) where
   dim : ∀ σ w, (par σ w).lpDim = D.R.r
   tame : ∀ σ k v, (par σ (D.naut.plGw k v)).tame
 
-set_option maxHeartbeats 2000000 in
 
 def setAut (D : D7) (hE : IsEmpty D.nd.Loc) (lab : ∀ k, D.what₂.FT → D.nd.PlG k → Polynomial (ZMod (D.host.g k)))
     (h : ∀ k σ v, (lab k σ v).Monic ∧ (lab k σ v).natDegree = D.R.r) (A : NAut (ndLab D.nd lab h)) (C : NBC A)
@@ -102,7 +101,6 @@ def setAut (D : D7) (hE : IsEmpty D.nd.Loc) (lab : ∀ k, D.what₂.FT → D.nd.
     mtpar_tie := fun i => hE.elim i, Z_tie := fun i => hE.elim i, Zgood_tie := fun i => hE.elim i
     etaJ_tie := D.etaJ_tie }
 
-set_option maxHeartbeats 2000000 in
 
 def setCG (D : D7) (hE : IsEmpty D.nd.Loc) (K : CGK D.naut) : D7 :=
   { D with

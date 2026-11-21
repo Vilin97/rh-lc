@@ -34,7 +34,6 @@ theorem ofSgn_symm_mem_GQ (S : HSp D) (γ : GA D S) (h : γ ∈ GQ S) : (ofSgn t
   erw [Subgroup.mem_subgroupOf] at h ⊢
   convert h using 2 <;> first | rfl | exact (GlobalTheory.ConjWeil.UJ_neg _ _)
 
-open GlobalTheory.ConjWeil in
 
 theorem weil_conjRep_of_neg : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (χS χT : (AE D)ˣ →* Circle)
     (ω : GlobalTheory.Grid.WRep S T), GlobalTheory.Grid.IsWeil ψ true S T χS χT ω → IsWeilDatumO ψ S T χS⁻¹ χT⁻¹ (GlobalTheory.AdjTr.conjRep ω) := by

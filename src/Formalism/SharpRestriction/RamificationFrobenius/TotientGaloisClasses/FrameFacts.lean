@@ -283,17 +283,11 @@ theorem cc_mem_zpowers_iff (g : φ.GG) : φ.cc ∈ Subgroup.zpowers g ↔ g.1 = 
     · show g.2 ^ orderOf g.2 = 1
       exact pow_orderOf_eq_one g.2
 
-variable {φ} in
 
-variable {φ} in
 
-variable {φ} in
 
-variable {φ} in
 
-variable {φ} in
 
-variable {φ} in
 
 theorem even_orderOf_of_hH_ne_one {a : φ.MA} (ha : φ.hH a ≠ 1) : Even (orderOf a) := by
   have h1 := φ.orderOf_hH_dvd a
@@ -359,7 +353,6 @@ theorem chC_ne_one : φ.chC ≠ 1 := by
   rw [φ.chC_apply] at h1
   norm_num [iod] at h1
 
-open Classical in
 
 theorem hostCharSum :
     (∀ χ : φ.GG →* ℂˣ,
@@ -553,7 +546,6 @@ theorem thick_key {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s < φ.n
   have hz := Int.eq_zero_of_abs_lt_dvd hD (abs_lt.2 ⟨by linarith, by linarith⟩)
   linear_combination hz
 
-open Classical in
 
 theorem thick_part_one {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s < φ.n0) (hR : NoRel T L)
     (u₀ t x : φ.A) (hord : 4 * L < addOrderOf x) (i₀ : ℤ) :
@@ -607,7 +599,6 @@ theorem thick_part_two {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s <
     · omega
   rw [h1, h2, hs]
 
-open Classical in
 
 theorem hostThickOrbit {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s < φ.n0) (hR : NoRel T L)
     (u₀ t x : φ.A) :
@@ -618,7 +609,6 @@ theorem hostThickOrbit {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s <
   refine ⟨fun h i₀ => φ.thick_part_one T hT hR u₀ t x h i₀, fun h => φ.thick_part_two T hT u₀ t x ?_⟩
   exact le_trans (Nat.le_of_dvd (addOrderOf_pos x) (φ.addOrderOf_h_dvd x)) h
 
-open Classical in
 
 end Formalism.HC.Frame
 

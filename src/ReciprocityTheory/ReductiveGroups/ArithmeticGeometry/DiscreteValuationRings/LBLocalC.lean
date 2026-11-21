@@ -24,7 +24,6 @@ def gw {X Y : Scheme.{0}} (L : LB X) {K : Type} [Fintype K] (ψ : K → (Y ⟶ X
       LB.wchart L ψ j ⊓ LB.wchart L ψ j' ≤ ψ k ⁻¹ᵁ (L.U (j k) ⊓ L.U (j' k)))
     (pullU (ψ k) _ (L.g (j k) (j' k)))) ^ (ε k)
 
-set_option maxHeartbeats 1000000 in
 
 lemma eq_top_of_closedPoint_mem {V : Type} [CommRing V] [IsLocalRing V] (U : (Spec (CommRingCat.of V)).Opens)
     (hU : (IsLocalRing.closedPoint V : Spec (CommRingCat.of V)) ∈ U) : U = ⊤ := by
@@ -151,7 +150,6 @@ lemma genHasVal_units {X : Scheme.{0}} (L : LB X) {Ix : Type} [Fintype Ix]
       | simp
   · exact (inv_mul_cancel_right _ _).symm
 
-set_option maxHeartbeats 1000000 in
 
 lemma genHasVal_top {X : Scheme.{0}} (L : LB X) {Ix : Type} [Fintype Ix]
     (φ : Ix → (Spec (CommRingCat.of V) ⟶ X)) (ε : Ix → ℤ) (t : LB.Gen (LB.LinComb L (fun k => jK V ≫ φ k) ε)) {n : ℤ}
@@ -190,7 +188,6 @@ lemma genHasVal_top {X : Scheme.{0}} (L : LB X) {Ix : Type} [Fintype Ix]
     rw [CommRingCat.comp_apply]
     congr 1
 
-omit [IsDiscreteValuationRing V] in
 
 theorem isDominant_jK : IsDominant (jK V) := by
   constructor

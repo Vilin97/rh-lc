@@ -31,8 +31,6 @@ private lemma exists_unitary_fix_proj_of_gram_eq_of_mul_eq_zero {n m : ℕ} (Q :
   rw [mul_fromCols, fromCols_inj.eq_iff] at hW
   exact ⟨W, hWu, hW.2, hW.1⟩
 
-open Matrix MeasureTheory in
-open scoped ENNReal ComplexOrder in
 
 theorem _root_.GlobalTheory.HCXi.exists_unitary_comm_mul_eq_of_gram {n m : ℕ} (H : Matrix (Fin n) (Fin n) ℂ)
     (hH : Hᴴ = H) (hHH : H * H = 1)

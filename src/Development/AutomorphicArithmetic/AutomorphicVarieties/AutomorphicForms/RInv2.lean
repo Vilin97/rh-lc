@@ -103,7 +103,6 @@ theorem isUnit_invTL {x : Fin a → Fin a → A} (hx : IsUnit (Matrix.of x)) : I
   rw [e, invTL_val]
   exact (invT a A u).isUnit
 
-omit [NormedAlgebra ℝ A] in
 
 theorem norm_transpose (x : Matrix (Fin a) (Fin a) A) : ‖Matrix.of.symm xᵀ‖ = ‖Matrix.of.symm x‖ := by
   have h : ∀ x : Matrix (Fin a) (Fin a) A, ‖Matrix.of.symm xᵀ‖ ≤ ‖Matrix.of.symm x‖ := fun x =>

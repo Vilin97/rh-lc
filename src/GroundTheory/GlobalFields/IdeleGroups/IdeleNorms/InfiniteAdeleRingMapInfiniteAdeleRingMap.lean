@@ -33,7 +33,6 @@ theorem completionMap_completionMap (v : HeightOneSpectrum (𝓞 K)) (w : Height
       IsScalarTower.algebraMap_apply L M (u.adicCompletion M),
       IsScalarTower.algebraMap_apply K M (u.adicCompletion M), ← IsScalarTower.algebraMap_apply K L M]
 
-omit [NumberField K] [NumberField L] [NumberField M] in
 
 theorem below_below (u : HeightOneSpectrum (𝓞 M)) : below K (below L u) = below K u :=
   HeightOneSpectrum.ext (Ideal.under_under (A := 𝓞 K) (B := 𝓞 L) u.asIdeal)
@@ -47,7 +46,6 @@ theorem finiteAdeleMap_finiteAdeleMap (x : FiniteAdeleRing (𝓞 K) K) :
     completionMap_completionMap (below K (below L u)) (below L u) u]
   exact completionMap_congr hb u x
 
-omit [NumberField K] [NumberField L] [NumberField M] in
 
 theorem algebraMap_completion_algebraMap (v : InfinitePlace K) (w : InfinitePlace L)
     (u : InfinitePlace M) [w.LiesOver v] [u.LiesOver w] [u.LiesOver v] (a : v.Completion) :
@@ -75,7 +73,6 @@ theorem algebraMap_completion_congr {v v' : InfinitePlace K} (h : v = v') (u : I
   subst h
   rfl
 
-omit [NumberField K] [NumberField L] [NumberField M] in
 
 theorem infiniteAdeleRingMap_infiniteAdeleRingMap (x : InfiniteAdeleRing K) :
     GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap (K := L) (L := M)

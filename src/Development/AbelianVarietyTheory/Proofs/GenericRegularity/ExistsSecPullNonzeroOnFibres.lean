@@ -13,7 +13,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 
 namespace GlobalTheory
 
-open ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.H1 in
 
 theorem exists_sec_pull_nonzero_on_fibres :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (S S' : Scheme.{0}) (t : SAB H S) (t' : SAB H S') (f : S' ⟶ S) (m : SABMap t' t f) (U : S.Opens), ⊤ ≤ f ⁻¹ᵁ U → ∀ θ ∈ secOn t.PP.L (t.G.hom ⁻¹ᵁ U), (∀ y ∈ U, ∃ (g : t.G.left) (i : t.PP.L.ι), t.G.hom g = y ∧ g ∈ t.G.left.basicOpen (θ i)) → ∃ (w : LB.Iso t'.PP.L (t.PP.L.pull m.φ)) (θ' : LB.Sec t'.PP.L), IsRigIso m.cm t'.PP t.PP w ∧ (∀ (j : t.PP.L.ι) (k : t'.PP.L.ι) (W : t'.G.left.Opens) (h₁ : W ≤ m.φ ⁻¹ᵁ (t.G.hom ⁻¹ᵁ U ⊓ t.PP.L.U j)) (h₂ : W ≤ (t.PP.L.pull m.φ).U (fun _ => j) ⊓ t'.PP.L.U k), (m.φ.appLE _ _ h₁).hom (θ j) = resG _ h₂ (w.s (fun _ => j, k)).val * resG _ (h₂.trans inf_le_right) (θ'.f k)) ∧ ∀ y' : S', ∃ (g : t'.G.left) (i : t'.PP.L.ι), t'.G.hom g = y' ∧ g ∈ t'.G.left.basicOpen (θ'.f i) := by

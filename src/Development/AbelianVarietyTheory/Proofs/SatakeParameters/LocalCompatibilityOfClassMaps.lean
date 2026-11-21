@@ -51,8 +51,6 @@ theorem rt_mem_isoTyp {L : Type} [Field L] [NumberField L] [IsCMField L] {n : â„
     exact le_sSup hS' (hS'.1.1.stable h y hy)
   exact this hf
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.LocCompTy

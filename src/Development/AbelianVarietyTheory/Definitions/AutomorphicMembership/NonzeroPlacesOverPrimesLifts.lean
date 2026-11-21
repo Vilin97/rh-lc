@@ -45,8 +45,6 @@ structure ReadPk.Pin {m : Moved o} {s : Side0 o} (r : ReadPk m s) : Prop where
   eW : ∀ i x, HEq (r.Y.mj.eW i x) (m.t.lf.eW i x)
   jMt : ∀ μ h i x, HEq (r.Y.IL.jMt μ h i x).1 (m.t.lf.jMt μ i x)
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure Pre2 (K : Ctx) (w : ColW B f T) : Type 1 where
   Z₀ : w.Lt

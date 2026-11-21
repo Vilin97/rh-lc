@@ -24,7 +24,6 @@ theorem toLp_mulVec_intVec {g : ℕ} (B : Matrix (Fin g) (Fin g) ℝ) (k : Fin g
 
 end PGaussLatticeCoords
 
-open PGaussLatticeCoords in
 
 theorem GaussLatticeCoords.proof : GaussLatticeCoords.Statement := by
   intro g B hB

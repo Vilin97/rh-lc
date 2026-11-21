@@ -94,7 +94,6 @@ end GlobalTheory.NormalStrictHens
 
 namespace GlobalTheory
 
-open GlobalTheory.NormalStrictHens in
 
 theorem exists_strictlyHenselian_normal_between : ∀ (T : Type) [CommRing T] [IsDomain T] [IsLocalRing T],
     GlobalTheory.LocAcyc.AbsIntClosed T →

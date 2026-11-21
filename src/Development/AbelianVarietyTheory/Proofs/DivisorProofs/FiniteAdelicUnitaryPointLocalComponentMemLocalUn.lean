@@ -56,7 +56,6 @@ theorem cj_pLoc_pFin (w : Pl E) (hw : ¬ IsSplitAt w) (a : Ad E) :
 
 end GlobalTheory.BCT.LocMem
 
-open GlobalTheory.BCT.LocMem in
 
 theorem GlobalTheory.BCT.cLoc_mem_UL : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ,
     ∀ (w : Pl E) (x : finU E n), cLoc w (x : UA E n) ∈ UL n w := by

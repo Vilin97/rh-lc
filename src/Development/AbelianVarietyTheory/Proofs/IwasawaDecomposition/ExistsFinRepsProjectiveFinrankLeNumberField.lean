@@ -107,7 +107,6 @@ theorem exists_equiv_model : ∀ (r : ℕ) (X : Type) [AddCommGroup X] [Module R
       ⟨e.trans ((LinearEquiv.prodComm R K I).trans ((eI.prodCongr eK).trans (consLin _ c)))⟩⟩
 
 end ProjModClasses
-open ProjModClasses in
 
 theorem exists_fin_reps_projective_finrank_le :
     ∀ (E : Type) [Field E] [NumberField E] (q : ℕ), ∃ (n : ℕ) (R : Fin n → ModuleCat.{0} (𝓞 E)),

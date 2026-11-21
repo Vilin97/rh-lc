@@ -30,7 +30,6 @@ open GlobalTheory.Mem.AutSpace
 
 variable {D : D7} {θ : InfFam D} {V : HSp D}
 
-variable (θ V) in
 
 def CommOnSm (A B : (GA D V → ℂ) → (GA D V → ℂ)) : Prop := ∀ f ∈ SmFun θ V, A (B f) = B (A f)
 

@@ -43,6 +43,5 @@ theorem infTensAt_of_places {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T 
 
 end GlobalTheory.ArchTens
 
-open GlobalTheory.ArchTens in
 
 end

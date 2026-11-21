@@ -70,7 +70,6 @@ theorem isCpl_self (O : Type) [CommRing O] [IsLocalRing O] :
     IsCpl (algebraMap O (AdicCompletion (maximalIdeal O) O)) :=
   ⟨RingEquiv.refl _, fun _ => rfl⟩
 
-open Classical in
 
 def MatOn {o' Ω : Type} [CommRing o'] [Field Ω] [Algebra o' Ω] {S : ThetaSys o' Ω} {ρ : S.Real} {M : RatModel o' Ω}
     {U₀ : M.Z.Opens} {EE : M.Lat S.J} (FinalForm : ZHOut ρ M U₀ EE) {C : Over (Sp S.R)} [GrpObj C] (pr : Fin 8 → (ρ.P.A ⟶ C))

@@ -48,7 +48,6 @@ theorem grpSchemeSquareProductMap_eq_pullback_map {A A' : Over S} [GrpObj A] [Is
 
 end GlobalTheory.UPel.HT.Hecke.ProdGalois
 
-open GlobalTheory.UPel.HT.Hecke.ProdGalois in
 
 theorem GlobalTheory.UPel.HT.Hecke.isGaloisCover_grpSchemeSquareProductMap : ∀ (S : Scheme.{0}) (A A' : Over S) [GrpObj A] [IsCommMonObj A] [GrpObj A'] [IsCommMonObj A'] (G : Subgroup (𝟙_ (Over S) ⟶ A)) (ψ : A ⟶ A'), IsMonHom ψ → GlobalTheory.ZM.IsGaloisCover G (fun h => (GlobalTheory.UPel.HT.Hecke.transl h.1).left) ψ.left → GlobalTheory.ZM.IsGaloisCover (G × G) (fun h => (GlobalTheory.UPel.HT.Hecke.transl (lift h.1.1 h.2.1 : 𝟙_ (Over S) ⟶ G2 A)).left) (GlobalTheory.UPel.HT.Hecke.sq2 ψ) := by
   intro S A A' _ _ _ _ G ψ _ hψ

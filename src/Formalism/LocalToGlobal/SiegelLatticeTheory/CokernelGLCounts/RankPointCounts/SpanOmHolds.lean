@@ -14,7 +14,6 @@ namespace Formalism.L2.SG.Pf.FrameGlobalPatching.FStar
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-open SpanOmPf in
 
 theorem spanOm_holds (D : Formalism.BasicNotions.D7) : SpanOm D := by
   intro T T' F F' hdet hG m hm

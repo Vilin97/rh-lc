@@ -16,7 +16,6 @@ open IsLocalRing Topology
 variable {l : ℕ} [Fact l.Prime] (K : IntermediateField ℚ_[l] (PadicAlgCl l))
   [FiniteDimensional ℚ_[l] K]
 
-omit [FiniteDimensional ℚ_[l] K] in
 
 theorem dvd_iff_norm_le {a : integralClosure ℤ_[l] K} (ha : a ≠ 0) (x : integralClosure ℤ_[l] K) :
     a ∣ x ↔ ‖((x : K) : PadicAlgCl l)‖ ≤ ‖((a : K) : PadicAlgCl l)‖ := by

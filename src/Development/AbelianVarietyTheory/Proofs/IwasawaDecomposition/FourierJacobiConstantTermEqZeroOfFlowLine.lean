@@ -10,7 +10,6 @@ open NumberField Complex ReciprocityTheory.ChartRestriction.G ReciprocityTheory.
 
 namespace GlobalTheory.CuspLimit
 
-open Classical in
 
 theorem tendsto_dirichlet {ι : Type*} (A : ι → ℂ) (a : ι → ℝ) (F : ℝ → ℂ) (T : ℝ)
     (ha : ∀ i, A i ≠ 0 → 0 ≤ a i)

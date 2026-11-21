@@ -191,7 +191,6 @@ private theorem smul_sub_mulVR_mem_compKer (ι : LL →ₐ[Qp] BdR) (c : LL) (x 
   unfold _root_.Formalism.BasicNotions.compKer
   exact Submodule.subset_span ⟨c, x, rfl⟩
 
-open TensorProduct in
 
 theorem _root_.GlobalTheory.HWL.Cmp.filt_expansion_component : ∀ {G : Type} [Group G]
     [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K] [Algebra Qp K₀]

@@ -57,7 +57,6 @@ section Line
 
 variable {S : HSp D} [Subsingleton (Fin S.rank)] (i : Fin S.rank)
 
-variable (p N) in
 
 end Line
 

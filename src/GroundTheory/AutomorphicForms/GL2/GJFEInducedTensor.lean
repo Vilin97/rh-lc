@@ -50,7 +50,6 @@ section Unip
 
 variable [MeasurableSpace F] [BorelSpace F] (ψ : AddChar F Circle)
 
-variable (β) in
 
 def unipMeasure : Measure (UnipotentIndex n β → F) :=
   Measure.pi fun _ => LocalField.selfDualMeasure ψ
@@ -59,7 +58,6 @@ instance : (unipMeasure β ψ).IsAddHaarMeasure := by
   unfold unipMeasure
   infer_instance
 
-variable (β) in
 
 def tensorConst (g : Fin n × Fin n → F → ℂ) : ℂ :=
   (∏ s : UnipotentIndex n β,
@@ -159,7 +157,6 @@ theorem integral_norm_matrixTensor_add_unip (g : Fin n × Fin n → F → ℂ)
   congr 1
   simp [leviTensor, norm_prod]
 
-variable {ψ} in
 
 theorem integral_norm_fourier_matrixTensor_add_unip (g : Fin n × Fin n → F → ℂ) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ {Y : Matrix (Fin n) (Fin n) F}, (∀ i j, β i ≠ β j → Y i j = 0) →
@@ -171,7 +168,6 @@ theorem integral_norm_fourier_matrixTensor_add_unip (g : Fin n × Fin n → F �
   rw [localMatrixFourier_matrixTensor_eq, integral_norm_matrixTensor_add_unip ψ g' hY,
     leviTensor_swap_eq_hat]
 
-variable {ψ} in
 
 theorem integral_fourier_matrixTensor_add_unip (hψ : Continuous ψ) (hψ1 : ψ ≠ 1)
     {g : Fin n × Fin n → F → ℂ} (hg : ∀ ij, g ij ∈ LocalField.schwartzBruhat F)
@@ -218,7 +214,6 @@ section Translate
 
 variable [MeasurableSpace F] [BorelSpace F] (ψ : AddChar F Circle)
 
-omit [TopologicalSpace F] [IsNonarchimedeanLocalField F] [MeasurableSpace F] [BorelSpace F] in
 
 theorem mul_mem_integer_iff {y : GL (Fin n) F} (hy : y ∈ integralGL F n)
     (X : Matrix (Fin n) (Fin n) F) :

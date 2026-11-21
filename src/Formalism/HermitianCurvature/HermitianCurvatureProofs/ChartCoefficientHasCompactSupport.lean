@@ -22,7 +22,6 @@ section mk
 variable {k j ρ : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
   [InnerProductSpace ℂ Wq]
 
-open Classical in
 
 def chartCoefficient (b b' : RC k j ρ → ℝ) (Φ : (Fin j → Fin j → ℂ) → Mt k ρ → (Wq →L[ℂ] Wp)) (g : B.Mat k (j + ρ)) :
     Wq →L[ℂ] Wp :=

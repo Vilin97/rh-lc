@@ -122,7 +122,6 @@ section Dict
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {v : HeightOneSpectrum (𝓞 F)}
 
-open Formalism.UG (bc UJ cT) in
 
 theorem exists_equiv_UG {L : Type} [Field L] [TopologicalSpace L] (e : (Fv F v ⊗[F] E) ≃+* L) (he : Continuous e)
     (he' : Continuous e.symm) :
@@ -158,7 +157,6 @@ theorem exists_equiv_UG {L : Type} [Field L] [TopologicalSpace L] (e : (Fv F v �
 
 end Dict
 
-open GlobalTheory.LFun.InertChart in
 
 theorem stDict : CompanionTheory.Rg.Fl.StDict := by
   intro F E _ _ _ _ _ σ h n J hJ v

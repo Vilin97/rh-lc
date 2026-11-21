@@ -157,7 +157,6 @@ theorem ev_gam (H : EvLaw l (O := O) v inferInstance) {ζ : L} {j a : ℕ} (h : 
       exact (rescaleAlgHom _).commutes _)
   exact (AlgHom.congr_fun this b).trans (hr _)
 
-omit [Fact l.Prime] [CharZero L] [Algebra ℤ_[l] O] [Algebra ℤ_[l] L] [IsScalarTower ℤ_[l] O L] in
 
 theorem exists_ev (H : EvLaw l (O := O) v inferInstance) : ∃ ev : L → (O⟦X⟧ →ₐ[O] L⟦X⟧),
     (∀ ζ, (∃ j : ℕ, IsPrimitiveRoot ζ (l ^ j)) → ev ζ X = C ζ * exp L - 1) ∧
@@ -182,7 +181,6 @@ theorem exists_ev (H : EvLaw l (O := O) v inferInstance) : ∃ ev : L → (O⟦X
     simp only [z, if_neg h, ite_self]
   · simp only [hev]; exact hz ζ
 
-omit [CharZero L] [Algebra ℚ L] [Algebra ℤ_[l] L] in
 
 theorem exists_primitive_pow {ζ : L} {j : ℕ} (h : IsPrimitiveRoot ζ (l ^ j)) (a : ℕ) :
     ∃ k : ℕ, IsPrimitiveRoot (ζ ^ a) (l ^ k) := by

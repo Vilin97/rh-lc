@@ -69,7 +69,6 @@ theorem subsingleton_cohomology_one_galUnits_open :
     Subsingleton (cohomology (Rep.res (V : Subgroup Gal(Ksep/K)).subtype (galUnits.{0} K Ksep)) 1) :=
   (ModuleCat.isZero_iff_subsingleton).1 ((localClassFormationOfIsSepClosure K Ksep).isZero_H1_open_subgroups V)
 
-include hn in
 
 theorem finite_cohomology_one_rootsOfUnity_open :
     Finite (cohomology (Rep.res (V : Subgroup Gal(Ksep/K)).subtype (galRootsOfUnity.{0} K Ksep n)) 1) := by
@@ -134,7 +133,6 @@ theorem finite_cohomology_one_rootsOfUnity_open :
   rw [QuotientGroup.lift_mk]
   rfl
 
-include hn in
 
 theorem finite_cohomology_two_rootsOfUnity_open :
     Finite (cohomology (Rep.res (V : Subgroup Gal(Ksep/K)).subtype (galRootsOfUnity.{0} K Ksep n)) 2) := by
@@ -154,7 +152,6 @@ theorem finite_cohomology_two_rootsOfUnity_open :
   exact Finite.of_injective (fun x => (⟨_, htors x⟩ : {q : QZ | n • q = 0}))
     fun x y h => hinj ((F.inv_bijective V).1 (congrArg Subtype.val h))
 
-include hn in
 
 theorem subsingleton_cohomology_three_rootsOfUnity_open
     (h3 : Subsingleton (cohomology (Rep.res (V : Subgroup Gal(Ksep/K)).subtype (galUnits.{0} K Ksep)) 3)) :
@@ -177,7 +174,6 @@ theorem subsingleton_cohomology_three_rootsOfUnity_open
   rw [← hz, hzw]
   exact congrArg (fun φ => φ.hom w) (comp_δ hS 2 3 rfl)
 
-include hn in
 
 theorem finite_cohomology_rootsOfUnity_open (r : ℕ) (hr : r ≤ 2) :
     Finite (cohomology (Rep.res (V : Subgroup Gal(Ksep/K)).subtype (galRootsOfUnity.{0} K Ksep n)) r) := by

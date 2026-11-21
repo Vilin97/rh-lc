@@ -58,7 +58,6 @@ theorem lpDim_wdAt {a : ℕ} (r : ↥(Dec (F := E) A) →* GL (Fin a) (Om l)) :
     simp
   · rw [wdAt_of_not_isPstAt ι Bw h hj hr, lpDim_trivWD]
 
-omit P ι in
 
 theorem exists_induces (hw : w ∈ placesOver E l) (h : IsPlaceOver A w) :
     ∃ (LL : FinExt l) (Bw : LocBridge l E Ω (Dec (F := E) A) ↥(OL LL)), Induces Bw := by
@@ -66,6 +65,5 @@ theorem exists_induces (hw : w ∈ placesOver E l) (h : IsPlaceOver A w) :
   obtain ⟨Bw, hB, -⟩ := hL L0 le_rfl
   exact ⟨L0, Bw, fun x => by rw [hB]; exact hj x⟩
 
-omit P ι in
 
 end GlobalTheory.Pst.Test

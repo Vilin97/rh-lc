@@ -109,7 +109,6 @@ theorem pairD_linSub (Q : DA X Kc j) (f : MvPowerSeries (X.ZA j) Kc) :
   classical
   exact pr_sub Lk (GoodDeg X j) (hGd X Kc j Lk hne) Q f
 
-omit hne in
 
 theorem evD_linT (d0 : X.ZA j → Kc) (Q : DA X Kc j) :
     evD X Kc j d0 (aeval (linT fun x y => algebraMap Kc (XspC (X.Pj (j + 1)) Kc) (Lk x y)) Q) =

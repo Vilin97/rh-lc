@@ -404,7 +404,6 @@ theorem smulS_congr_shift {V : Type} [AddCommGroup V] [Module LL V] {m₁ : ℤ}
   · rw [hg j hj, zero_smul, zero_smul]
   · rw [h (r - j) (by omega)]
 
-variable (W levB) in
 
 def ExpFrame0 : Prop :=
   ∀ (A : ArcP n), A.OK → ∀ c' ∈ A.cuts, ∀ (T : LocLat G Qp LL O), Win W A T →
@@ -418,7 +417,6 @@ def ExpFrame0 : Prop :=
           (fun k => if k = 0 then ((PD.p : LL) ^ κ) •
             ((Formalism.WeaklyAdmissibleFiltrations.φVB PD (LL := LL) (V := T.V)) ^ (e + 1)) (cmpD W T (b j)) else 0) r
 
-variable (W levB) in
 
 def ExpNoNeg0 : Prop :=
   ∀ (A : ArcP n), A.OK → ∀ c' ∈ A.cuts, ∀ (T : LocLat G Qp LL O), Win W A T →
@@ -465,7 +463,6 @@ theorem expNoNeg0_of (Ti : Comparison₂ W levB) (hs : W.s = 1) (hR : Formalism.
     LB_resc (LB_map _ (fun k hk => by rw [← hyl]; exact Ti.hneg T hT.1 c' _ k hk)) _
   exact smulS_vanish hLB (fun i hi => by rw [map_mul]; exact coeff_lev_q_pow Ti _ ζ hζ m _ i hi) r hr
 
-omit [IsDomain O] in
 
 theorem hneg_of (hs : W.s = 1) {Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop} (h4 : Formalism.MainNotions.DeltaInvariantLattices.P4W W Pt)
     (hEq : ∀ (T : LocLat G Qp LL O) (i : ZMod n) (ζ : LL) (x : ↥(W.N T)) (k : ℤ),

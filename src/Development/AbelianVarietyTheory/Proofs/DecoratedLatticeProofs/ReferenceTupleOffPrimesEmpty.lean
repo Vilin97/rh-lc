@@ -69,8 +69,6 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE
 
 variable {B : Base} {X : PreX B.toPre} {I : TC B X}
 
-open GlobalTheory.GO.ChSrc (trueWt nuEnd sS sD polFn fnPol) in
-open Formalism.L2.Forms (fnOf shiftOf ValC) in
 
 theorem kmap_mem_valC {X : Fields} {R : Ranks} (I : ChainIn X.E X.K X.Tau R) (σ : X.K →+* ℂ) (h : I.Ok) (hc : X.Tau → HCParam R) {i : ℕ}
     (hi : i < R.m) (c : (I.S i).Cl) (c' : (I.S (i + 1)).Cl) (J : (DVar X.Tau (R.N i) (R.N (i + 1)) →₀ ℕ) → ℂ)

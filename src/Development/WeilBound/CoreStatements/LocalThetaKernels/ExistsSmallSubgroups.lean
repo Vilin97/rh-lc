@@ -17,7 +17,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem continuous_evFin' (v : Pl F) : Continuous (evFin F v) :=
   (RestrictedProduct.continuous_eval v).comp continuous_snd
 
-variable (E) in
 
 theorem exists_small_lattices (v : Pl F) :
     ∃ Λ : ℕ → AddSubgroup (AE F E), Antitone Λ ∧ (∀ n, ∀ z ∈ Λ n, ∀ z' ∈ Λ n, z * z' ∈ Λ n) ∧

@@ -108,7 +108,6 @@ theorem finAvg_eq_self (U : Subgroup (AdelicGLn.integralFiniteGL K n))
   simp_rw [e]
   simp
 
-variable (K n) in
 
 def archGroupEquiv : archGroup K n ≃ₜ* ArchUnits K n where
   toMulEquiv := Subgroup.topEquiv
@@ -126,8 +125,6 @@ theorem integral_map_val {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 section Conversion
 
-variable (K n) in
-open scoped Classical in
 
 def matExt (κ : archGroup K n → ℂ) (M : ArchMatrix K n) : ℂ :=
   if h : IsUnit M then κ ⟨h.unit, Subgroup.mem_top _⟩ else 0

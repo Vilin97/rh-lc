@@ -18,7 +18,6 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
 
 section ResLE
 
-omit [IsTopologicalGroup G] in
 
 theorem continuous_subgroup_inclusion {U V : Subgroup G} (h : V ≤ U) :
     Continuous (Subgroup.inclusion h) :=
@@ -30,7 +29,6 @@ def resResHom {U V : Subgroup G} (h : V ≤ U) :
     Rep.res (Subgroup.inclusion h) (Rep.res U.subtype A) ⟶ Rep.res V.subtype A :=
   Rep.ofHom ⟨LinearMap.id, fun _ => rfl⟩
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 variable [IsDiscreteRep A]
 

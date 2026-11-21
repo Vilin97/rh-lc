@@ -47,7 +47,6 @@ def CupL {X : Scheme.{0}} {i j : ℕ} (x : TT l X i) (y : TT l X j) (z : TT l X 
 
 def castL {X : Scheme.{0}} {i j : ℕ} (h : i = j) (x : TT l X i) : TT l X j := h ▸ x
 
-variable (l) in
 
 def DiagQ (d : ℕ) {X P W : Scheme.{0}} (p₁ p₂ : P ⟶ X) (π : W ⟶ P) (e : V l W ((2 : ℕ) : ℤ)) : Prop :=
   ∃ (δ : V l P ((2 + 2 * d : ℕ) : ℤ)) (m : V l W ((2 * d : ℕ) : ℤ)) (s : ℕ) (a : Fin s → V l X ((2 + 2 * d : ℕ) : ℤ))
@@ -57,7 +56,6 @@ def DiagQ (d : ℕ) {X P W : Scheme.{0}} (p₁ p₂ : P ⟶ X) (π : W ⟶ P) (e
     δ = ∑ c, cupV l P (add_zero _) (pb l p₁ _ (a c)) (pb l p₂ _ (b c)) +
       ∑ c, cupV l P (by rw [← h c, Nat.cast_add]) (pb l p₁ _ (u c)) (pb l p₂ _ (v c))
 
-variable (l) in
 
 def DiagL (d : ℕ) {X P W : Scheme.{0}} (p₁ p₂ : P ⟶ X) (π : W ⟶ P) (v : TT l W 2) : Prop :=
   ∃ (c : TT l P (2 + 2 * d)) (w : TT l W (2 * d)) (z : TT l W (2 + 2 * d))

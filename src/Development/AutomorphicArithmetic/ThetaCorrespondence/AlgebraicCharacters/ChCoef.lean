@@ -58,7 +58,6 @@ private theorem dQ_inv {ρ₁ : Representation ↥L₁.1 ↥(GK K) V₁} {ρ₂ 
   | tmul v b => rw [tensQ_tmul, tensQ_tmul, e]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
-open EnlargeCoeff in
 
 private theorem dQ_bij {ρ₁ : Representation ↥L₁.1 ↥(GK K) V₁} {ρ₂ : Representation ↥L₂.1 ↥(GK K) V₂}
     (f : V₁ ≃ₗ[ℚ_[l]] V₂) (hf : ∀ g v, f.toLinearMap (ρ₁ g v) = ρ₂ g (f.toLinearMap v)) :
@@ -115,7 +114,6 @@ private theorem exists_semi {K L₁ L₂ : FinExt l}
   rw [← hθ]
   exact @LinearMap.map_smul _ _ _ _ _ _ _ (Module.compHom _ θ) Φ _ _
 
-open EnlargeCoeff in
 
 private theorem eig_conj {L₁ L₂ : FinExt l}
     {V₁ V₂ : Type} [AddCommGroup V₁] [Module ↥L₁.1 V₁] [Module ℚ_[l] V₁] [IsScalarTower ℚ_[l] ↥L₁.1 V₁]

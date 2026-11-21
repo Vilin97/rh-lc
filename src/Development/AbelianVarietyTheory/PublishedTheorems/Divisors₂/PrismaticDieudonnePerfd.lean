@@ -50,6 +50,5 @@ def CycPerfd.ofIntegers (p : ℕ) [Fact p.Prime] {C : Type} [Field C] [IsAlgClos
   surj := ReciprocityTheory.PGsh.Ainf.theta_surj p O hv
   ker_eq := ReciprocityTheory.PGsh.Ainf.ker_theta p O hv ε hε
 
-open scoped Formalism.Per in
 
 end GlobalTheory.Published

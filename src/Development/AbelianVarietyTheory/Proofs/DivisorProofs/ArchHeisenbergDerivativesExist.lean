@@ -130,7 +130,6 @@ def trL (c : κ → mixedEmbedding.mixedSpace F) : (κ → mixedEmbedding.mixedS
 theorem trL_apply (c y : κ → mixedEmbedding.mixedSpace F) :
     trL c y = Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (y ⬝ᵥ c) := rfl
 
-variable (F) in
 
 def evH : AF F →+* mixedEmbedding.mixedSpace F :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp (RingHom.fst _ _)
@@ -231,7 +230,6 @@ theorem rho_pureA [Invertible (2 : AF F)] {W : Type} [AddCommGroup W] [Module (A
 
 end Adelic
 
-open scoped Classical in
 
 theorem derEx : GlobalTheory.RealLift.DerEx := by
   intro F E _ _ _ _ _ σ α β κ _ _ _ _ _ ψ JA JB d hψ

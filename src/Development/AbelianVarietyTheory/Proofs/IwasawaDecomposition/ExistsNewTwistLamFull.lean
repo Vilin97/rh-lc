@@ -106,7 +106,6 @@ def bsP : SideB (DN x (nP p)) (((kwP p).cf cf)) (((kwP p).row Rw)) (lowAll (DN x
 
 end Install
 
-open GlobalTheory.Mem.Top.GroupRetwisting in
 
 end GlobalTheory.HeightCounting.SerCopy
 

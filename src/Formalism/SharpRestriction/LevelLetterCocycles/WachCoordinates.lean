@@ -110,7 +110,6 @@ def CrysLat (T : LocLat G Qp LL O) : Prop :=
   FiniteDimensional LL T.V ∧ IsModuleTopology LL T.V ∧ (∀ x, Continuous fun g => T.ρ g x) ∧
     IsCrys PD T.ρ
 
-variable (LL O) in
 
 def HodgeExact : Prop :=
   (∀ (T₁ T₂ : LocLat G Qp LL O) (F : LatHom T₁.L T₂.L), CrysLat PD T₁ → CrysLat PD T₂ → F.Onto →
@@ -142,7 +141,6 @@ def ThmELiftAt (n : ℕ) [NeZero n] (emb : ZMod n → (K₀ →ₐ[Qp] LL))
         arcLen →
       F.LiftF PD (ePar PD.p n j (gPar Gp S η) h (Mb₁ + hb₁) (Mb₂ + hb₂) cuts arcLen)
 
-open Classical in
 
 def hCor {n : ℕ} (b w S η : ℕ) (sz : ZMod n → ℕ) : ℕ :=
   if ∃ i, b ≤ sz i ∧ sz i ≤ b + η then b + η + S else w + S + η

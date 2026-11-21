@@ -13,7 +13,6 @@ universe u
 
 variable {F : Type u} [Field F] {E E' : WeierstrassCurve F} [E.IsElliptic] [E'.IsElliptic]
 
-omit [E.IsElliptic] in
 
 theorem D_comap_mem_span (φ : Isogeny E E') (f : E'.toAffine.FunctionField) :
     D F E.toAffine.FunctionField (φ.comap f) ∈

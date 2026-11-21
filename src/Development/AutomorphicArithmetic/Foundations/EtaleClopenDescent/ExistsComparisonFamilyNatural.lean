@@ -370,7 +370,6 @@ theorem cechOpen_le (f : Z' ⟶ Z) (τ : κ → ι) (hτ : ∀ i, U' i ≤ f ⁻
   obtain ⟨j, hj, rfl⟩ := Finset.mem_image.1 hi
   exact (Finset.inf_le hj).trans (hτ j)
 
-set_option maxHeartbeats 800000 in
 
 theorem gm_pull (hinst : inst = ffAlg p) (hinst' : inst' = ffAlg p') (hU : IsAffCover p U B)
     (hU' : IsAffCover p' U' B') (f : Z' ⟶ Z) (hf : f ≫ p = p')
@@ -741,7 +740,6 @@ private theorem mapDR_eq_semiHom_mDR (K L : Type) [Field K] [Field L] [Algebra �
   | mul x y hx hy => rw [map_mul, map_mul, hx, hy]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
-set_option maxHeartbeats 800000 in
 
 theorem gm_trace (hc : c ≫ p = p') (hinst : inst = ffAlg p) (hinst' : inst' = ffAlg p')
     (hU : IsAffCover p U B) (hU' : IsAffCover p' (fun i => c ⁻¹ᵁ U i) B')

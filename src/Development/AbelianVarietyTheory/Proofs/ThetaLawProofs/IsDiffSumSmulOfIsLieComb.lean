@@ -82,7 +82,6 @@ theorem evalPt_of_eq {X : Scheme.{0}} (x : Sp (JetR R (Fin n) 1) ⟶ X) (U : X.O
 
 end DiffLin
 
-open GlobalTheory.TangentOrigin DiffLin in
 
 theorem isDiff_sum_smul_of_isLieComb :
     ∀ (A : Over (Sp ℂ)) [GrpObj A], IsAbelianScheme A → ∀ (L : LB A.left) (g n : ℕ) (u : HolUnif A L g)

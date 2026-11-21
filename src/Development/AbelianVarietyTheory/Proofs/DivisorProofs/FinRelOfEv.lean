@@ -20,7 +20,6 @@ namespace GlobalTheory.ThK.IsoUniq
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁} {W₁ : Spc F E d₁}
 
-open scoped Classical in
 
 theorem finRel_of_ev {B : Base F E} {M : Model σ X W} {M₁ : Model σ X₁ W₁} {ι : Matrix (Fin n) (Fin n₁) E}
     {ι' : Matrix (Fin d) (Fin d₁) E} {I : Set (Matrix (Fin n) (Fin d) (AE F E))} (hM : M.IsGood B.ψ) (hM₁ : M₁.IsGood B.ψ)
@@ -103,8 +102,6 @@ theorem finRel_of_ev {B : Base F E} {M : Model σ X W} {M₁ : Model σ X₁ W�
     rw [hA ρ (hRest φ hφ), key φ₁ hφ₁, key φ hφ] at h1
     exact canc _ _ h1
 
-open GlobalTheory.ThK.EvUniqInf in
-open scoped Classical in
 
 theorem infRel_of_ev {B : Base F E} {M : Model σ X W} {M₁ : Model σ X₁ W₁} {ι : Matrix (Fin n) (Fin n₁) E}
     {ι' : Matrix (Fin d) (Fin d₁) E} {I : Set (Matrix (Fin n) (Fin d) (AE F E))} (hM : M.IsGood B.ψ) (hM₁ : M₁.IsGood B.ψ)

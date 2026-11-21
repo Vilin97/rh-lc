@@ -177,7 +177,6 @@ section Isogeny
 variable [IsAlgClosed F] [DecidableEq F] {E E' E'' : WeierstrassCurve F} [E.IsElliptic]
   [E'.IsElliptic] [E''.IsElliptic]
 
-omit [IsAlgClosed F] [DecidableEq F] in
 
 theorem valuation_le_one_of_isIntegral {K : Type*} [Field K] [Algebra F K]
     (M : IntermediateField F K) (v : Valuation K ℤᵐ⁰) (hM : ∀ m : M, v (m : K) ≤ 1) {z : K}

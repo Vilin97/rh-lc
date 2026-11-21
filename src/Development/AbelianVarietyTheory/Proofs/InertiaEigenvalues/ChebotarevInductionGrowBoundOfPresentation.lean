@@ -242,11 +242,9 @@ def lowIdeal {O : Type} [CommRing O] {ι : Type} (I : Ideal O) (K : Set ι) (c :
       rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, Finsupp.add_apply] at this
       omega
 
-variable (X i) in
 
 abbrev Red (M : ℕ) (ι : Type) : Type := abelian₂ X i M ι ⧸ (idl i).map (algebraMap (X.O0 i) (abelian₂ X i M ι))
 
-variable (X i) in
 
 abbrev toRed (M : ℕ) (ι : Type) : abelian₂ X i M ι →ₐ[X.O0 i] Red X i M ι := Ideal.Quotient.mkₐ _ _
 

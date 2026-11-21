@@ -44,7 +44,6 @@ variable {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] {X X' X'' :
   {s : X ⟶ Sp R} {s' : X' ⟶ Sp R'} {s'' : X'' ⟶ Sp R''} {σ : R →+* R'} {τ : R' →+* R''}
   {ψ : X'' ⟶ X'} {φ : X' ⟶ X}
 
-variable (ψ φ) in
 
 theorem cechTripleRestrictComposite_comp_pairRestrict (s'' : X'' ⟶ Sp R'') :
     (∀ c : HO1 s'', (cechTripleRestrictComposite ψ φ s'').pull1 ((pairRes (ψ ≫ φ) s'').pull1 c) =
@@ -61,7 +60,6 @@ theorem cechTripleRestrictComposite_comp_pairRestrict (s'' : X'' ⟶ Sp R'') :
   · rw [← pullGlob1_comp]
     exact pullGlob1_eq_of_natTrans _ _ { app U := 𝟙 _ } (fun U b ↦ mp_id (OAff s'') _ b) c
 
-variable (ψ φ) in
 
 theorem cechTripleRestrictComposite_injective_cohomology_forms (s'' : X'' ⟶ Sp R'') :
     Function.Injective (cechTripleRestrictComposite ψ φ s'').pull1 ∧ Function.Injective (cechTripleRestrictComposite ψ φ s'').pull2 ∧
@@ -135,7 +133,6 @@ theorem tri_res_pullO (h' : ψ ≫ s' = s'' ≫ spMap τ) :
   · rw [← pullGlob1_comp, ← pullGlob1_comp]
     exact pullGlob1_eq_of_natTrans _ _ { app U := 𝟙 _ } (fun U b ↦ by erw [mp_id]) a
 
-variable (ψ φ) in
 
 theorem tri_res_resO (s'' : X'' ⟶ Sp R'') :
     (∀ a : HO1 s'', (cechTripleRestrictFirst ψ φ s'').pull1 ((pairRes ψ s'').pull1 a) =

@@ -32,7 +32,6 @@ section Frames
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_intFr_frBor (T : CDVR) (io : c.F →+* T.Fr) (O : Type) [CommRing O] (β : O →+* c.F)
     (Y : Model Xo c β) (yt : Sp T.V ⟶ Y.X) (z : Sp T.Fr ⟶ Xo.XF c)
@@ -117,6 +116,5 @@ namespace GlobalTheory.UnifTrait
 
 open IsLocalRing
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.UnifTrait

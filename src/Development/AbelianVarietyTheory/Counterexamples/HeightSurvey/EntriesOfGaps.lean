@@ -77,8 +77,6 @@ private lemma mul_toNat_fdiv_le_of_le_of_nonneg {T K : ℕ} (hK : T + 2 ≤ K) {
   · rw [Int.toNat_of_nonpos (by omega)]
     simpa using ha
 
-set_option autoImplicit false in
-variable {D : _root_.Formalism.BasicNotions.D7} {j : ℕ} in
 
 theorem _root_.GlobalTheory.RunWeightTest.isF'_fWt (ka : _root_.Formalism.MainNotions.WeightFamilies.Wt D j) (T nW nP : ℕ) (hW : Even nW)
     (hP : Even nP) :

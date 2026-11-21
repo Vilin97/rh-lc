@@ -97,7 +97,6 @@ theorem _root_.GlobalTheory.AppellHumbertTrivial.re_hermForm_add_self {B : Matri
 
 end AppellHumbertTrivial
 
-variable {g : ℕ} in
 
 theorem _root_.GlobalTheory.appellHumbert_trivial_of_nowhere_vanishing :
     ∀ (g : ℕ) (Λ : Submodule ℤ (Fin g → ℂ)) [DiscreteTopology Λ], Submodule.span ℝ (Λ : Set (Fin g → ℂ)) = ⊤ →

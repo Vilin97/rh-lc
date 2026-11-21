@@ -44,7 +44,6 @@ theorem isPullback_jO : IsPullback (jO hϖ hv (D := D)).left (fst (TF (R := V) F
   rw [← jO_snd hϖ hv, ← Over.w (ιS hϖ hv)] at H₀
   exact H₀.of_right (jO_fst hϖ hv) H₁
 
-include hϖ hv in
 
 theorem exists_vge (hTW : TwistBCSpanStatement) {k : ℕ} (hk : 1 ≤ k) {α : D.toPre.X}
     (s : LB.Sec (LB.LinComb D.toPre.P.L (DegPre.famφ D.toPre F α) (DegPre.famε k))) : ∃ r : ℚ, VGe D F v k α s r := by
@@ -95,7 +94,6 @@ theorem exists_vge (hTW : TwistBCSpanStatement) {k : ℕ} (hk : 1 ≤ k) {α : D
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [g, gs_jO, sval_pullSec _ _ _ _ _ y hJ, Category.assoc, jO_snd, secScal_sval (hσF i) _ y hJ, _root_.mul_assoc]
 
-include hϖ hv in
 
 theorem exists_nuGe (hTW : TwistBCSpanStatement) {Q : D.toPre.X → ℤ} (hQ : QForm.IsQ D.toPre ϖ Q) {k : ℕ} (hk : 1 ≤ k)
     (s : Fam D.toPre F k) : ∃ r : ℚ, NuGe D Q F v k s r := by
@@ -112,7 +110,6 @@ theorem exists_nuGe (hTW : TwistBCSpanStatement) {Q : D.toPre.X → ℤ} (hQ : Q
   have := hm ⟨i, rfl⟩
   exact VGe.mono (hr i) (by linarith)
 
-include hϖ in
 
 theorem finite_sublevel {Q : D.toPre.X → ℤ} (hQ : QForm.IsQ D.toPre ϖ Q) {k : ℕ} (hk : 1 ≤ k) (l : D.toPre.X →+ ℚ)
     (q : ℚ) : {χ | (Q χ : ℚ) / k + l χ ≤ q}.Finite := by

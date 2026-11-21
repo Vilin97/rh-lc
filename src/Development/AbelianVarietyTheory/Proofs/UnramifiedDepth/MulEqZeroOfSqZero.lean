@@ -86,7 +86,6 @@ structure Coord (g : ℕ)
 variable {G} {g : ℕ}
   {x : ∀ (S : Type) [CommRing S] [Algebra R₀ S], (Fin g → S) → (sp (R₀ := R₀) S ⟶ G)}
 
-open TrivSqZeroExt in
 
 theorem Coord.mul_inr (h : Coord G g x) {K : Type} [AddCommGroup K] [Module R₀ K]
     [Module R₀ᵐᵒᵖ K] [IsCentralScalar R₀ K] (a b : Fin g → K) :
@@ -128,7 +127,6 @@ theorem Coord.mul_inr (h : Coord G g x) {K : Type} [AddCommGroup K] [Module R₀
   simp only [snd_inr, snd_map, LinearMap.fst_apply, LinearMap.snd_apply] at e1 e2
   exact Prod.ext e1.symm e2.symm
 
-open TrivSqZeroExt in
 
 theorem Coord.mul_eq (h : Coord G g x) {S : Type} [CommRing S] [Algebra R₀ S]
     (K : Submodule R₀ S) (hK : ∀ a ∈ K, ∀ b ∈ K, a * b = 0) (a b : Fin g → K) :

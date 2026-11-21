@@ -66,7 +66,6 @@ theorem exists_pair (H : Host E) {r : ℕ} (X : FD.DataX E r) (𝔄 : Fractional
       simp [FD.cc]
     · exact he x y
 
-omit [IsCMField E] in
 
 theorem exists_nsmul_mem (𝔄 : Submodule (𝓞 E) E) (h : 𝔄 ≠ ⊥) {J : Type} [Fintype J] (c : J → E) :
     ∃ n : ℕ, 0 < n ∧ ∀ i, (n : E) * c i ∈ 𝔄 := by

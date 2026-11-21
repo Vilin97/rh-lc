@@ -92,11 +92,9 @@ variable (X₁ : Setup F W i)
 theorem div : X₁.M.HasDiv X₁.S.th :=
   X₁.thetaInt X₁.o₁ X₁.Ω₁ X₁.S X₁.ρ X₁.u X₁.sharp X₁.gen X₁.M X₁.π X₁.normal X₁.comp
 
-include X₁ in
 
 theorem posW : PosW W := X₁.e8.1
 
-include X₁ in
 
 theorem diag_pos (a : Fin 8) : 0 < W a a := by
   have := X₁.e8.1.diag_pos (i := a)

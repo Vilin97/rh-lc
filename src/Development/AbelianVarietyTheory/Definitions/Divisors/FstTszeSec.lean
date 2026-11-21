@@ -33,7 +33,6 @@ theorem _root_.GlobalTheory.AnPer.Charts.tsze_nil {O : Type} [CommRing O] [Algeb
   rw [Ideal.mem_bot]
   ext <;> simp [hx, hy]
 
-variable (K) in
 
 @[reducible] def jet (k : K.K) : K.Obj where
   k := k

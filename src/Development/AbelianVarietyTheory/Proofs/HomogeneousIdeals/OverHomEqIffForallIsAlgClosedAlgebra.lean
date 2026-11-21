@@ -247,13 +247,9 @@ theorem exists_eq_ptOver [IsLocalRing A]
   obtain ⟨P, h, e⟩ := exists_eq_pt W f.left (Over.w f)
   exact ⟨P, h, Over.OverMorphism.ext e⟩
 
-variable (A) in
 
-variable (A) in
 
-variable (A) in
 
-variable (A) in
 
 end Local
 
@@ -284,7 +280,6 @@ def ofProjectivePoint (p : (W.baseChange k).toProjective.Point) :
           (e.imp fun _ e => e.symm)).symm)
     p.nonsingular
 
-variable {k} in
 
 @[simp] theorem ofProjectivePoint_zero : ofProjectivePoint W k 0 = zeroOver W k :=
   (zeroOver_eq_ptOver W k).symm
@@ -301,20 +296,14 @@ def ofAffinePoint (p : (W.baseChange k).toAffine.Point) :
 @[simp] theorem ofAffinePoint_zero : ofAffinePoint W k 0 = zeroOver W k :=
   ofProjectivePoint_zero W k
 
-variable {k} in
 
 @[simp] theorem ofAffinePoint_some {a b : k} (h : (W.baseChange k).toAffine.Nonsingular a b) :
     ofAffinePoint W k (.some a b h) = ptOver W ![a, b, 1] (isUnimodularSol_some h.left) := rfl
 
-variable {k} in
 
-variable {k} in
 
-variable {k} in
 
-variable {k K} in
 
-variable {k K} in
 
 variable [(W.baseChange k).IsElliptic] [(W.baseChange K).IsElliptic]
 
@@ -337,7 +326,6 @@ def affinePointEquiv : (W.baseChange k).toAffine.Point ≃
     (Over.mk (Spec.map (CommRingCat.ofHom (algebraMap R k))) ⟶ schemeOver W) :=
   Equiv.ofBijective _ (ofAffinePoint_bijective W k)
 
-variable {k} in
 
 theorem projectivePointEquiv_symm_ptOver (P : Fin 3 → k)
     (h : IsUnimodularSol (W.baseChange k) P) :
@@ -345,9 +333,7 @@ theorem projectivePointEquiv_symm_ptOver (P : Fin 3 → k)
       ⟨(WeierstrassCurve.Projective.nonsingularLift_iff P).mpr h.nonsingular⟩ :=
   (Equiv.symm_apply_eq _).mpr rfl
 
-variable {k} in
 
-variable {k K} in
 
 end Field
 

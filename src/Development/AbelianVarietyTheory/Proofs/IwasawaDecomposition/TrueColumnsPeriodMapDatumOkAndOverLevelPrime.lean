@@ -37,7 +37,6 @@ theorem stX_ok (a : I.ι) : (I.stX a).Ok :=
     (base_fields_primes_ok B X).1 (fun _ => levQX_finiteIndex I.sel (I.tup a))
     (fun _ P g => (levQX_root (R := B.R) I.sel (I.tup a) P).imp fun _ hm => ⟨hm.1, hm.2 g⟩) fun _ _ => Set.finite_singleton _
 
-set_option maxHeartbeats 1600000 in
 
 theorem perIn_ok (h : I.Ok) (u : B.Word) (a : I.ι) : (I.perIn u a).Ok where
   step := stX_ok a
@@ -72,7 +71,6 @@ theorem perIn_ok (h : I.Ok) (u : B.Word) (a : I.ι) : (I.perIn u a).Ok where
   H_idx _ := (inferInstance : (⊤ : Subgroup _).FiniteIndex)
   H_rat _ g := ⟨g, Subgroup.mem_top _, rfl⟩
 
-set_option maxHeartbeats 1600000 in
 
 theorem perIn_over (h : I.Ok) (u : B.Word) (a : I.ι) : (I.perIn u a).Over (I.atIn u a) where
   norm_tz := by

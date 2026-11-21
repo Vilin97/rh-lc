@@ -183,7 +183,6 @@ theorem f_osmul {P : HeightOneSpectrum (𝓞 E)} {M : Submodule (𝓞 E) (Fin n 
 theorem toO_smul (P : HeightOneSpectrum (𝓞 E)) (r : 𝓞 E) (x : Fin n → E) : toO P r • x = r • x :=
   algebraMap_smul E r x
 
-open Classical in
 
 def redL (M : Submodule (𝓞 E) (Fin n → E)) (P : HeightOneSpectrum (𝓞 E)) (x : Fin n → E) : TDat.Red M P :=
   if h : ∃ s : 𝓞 E, s ∉ P.asIdeal ∧ s • x ∈ M then
@@ -342,11 +341,9 @@ theorem TAt.ne (h : TAt T ST) (P : ST) : conjPrime₂ P.1 ≠ P.1 := (h.st P P).
 theorem TAt.move (h : TAt T ST) (P : ST) : MoveHyp ST ∅ P :=
   ⟨h.ne P, h.st P, fun w => absurd w.2 (Finset.notMem_empty _)⟩
 
-variable (ST) in
 
 def OffT (w : HeightOneSpectrum (𝓞 E)) : Prop := ∀ P : ST, w ≠ P.1 ∧ w ≠ conjPrime₂ P.1
 
-variable (ST) in
 
 def AgreeOff (N N' : Submodule (𝓞 E) (Sp E n)) : Prop := ∀ w, OffT ST w → localization₂ w.asIdeal N = localization₂ w.asIdeal N'
 

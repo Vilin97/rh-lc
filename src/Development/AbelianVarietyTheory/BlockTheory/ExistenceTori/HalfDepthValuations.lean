@@ -18,9 +18,7 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions F
 
 variable {D : D7}
 
-open Classical in
 
-open Classical in
 
 section Rec
 

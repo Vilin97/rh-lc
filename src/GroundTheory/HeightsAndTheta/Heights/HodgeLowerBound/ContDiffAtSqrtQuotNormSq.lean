@@ -53,7 +53,6 @@ variable {II : IntersectionSystem} {Ψ : Type} [Fintype Ψ] {K : Type} [Fintype 
   [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [Algebra ℚ Ω] {E : Ψ → Type} [∀ τ, AddCommGroup (E τ)]
   [∀ τ, Module Ω (E τ)]
 
-omit [Algebra ℚ Ω] in
 
 end Chart
 

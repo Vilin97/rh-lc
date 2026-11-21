@@ -185,7 +185,6 @@ theorem isAddFundamentalDomain_levelDomain :
       exact hm'
     exact Subtype.ext (by simp only [this])
 
-variable {N} in
 
 instance isAddHaarMeasure_map_realHomeomorph :
     ((infiniteAdeleMeasure ℚ).map realHomeomorph).IsAddHaarMeasure :=

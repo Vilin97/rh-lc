@@ -343,7 +343,6 @@ def pull (n : ℕ) : H L n →ₛₗ[σ] H L' n :=
       τ := fun _ => { toFun := fun z => z, map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl }
       nat := fun _ _ => rfl } n
 
-open Classical in
 
 def id (L : b.Fun) : Mor L L (RingHom.id b.R) where
   hp := rfl
@@ -415,7 +414,6 @@ abbrev J : Ideal D := Ideal.span {DualNumber.eps}
 theorem J_sq : J ^ 2 = 0 := by
   rw [Ideal.span_singleton_pow, pow_two, DualNumber.eps_mul_eps, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]
 
-open Classical in
 
 def δJ : DividedPowers J := RatAlgebra.dividedPowers J
 

@@ -68,8 +68,6 @@ theorem Bplus_smul_right {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : 
     simp only [besInt, Pi.smul_apply, smul_eq_mul]; ring
   simp only [Bplus, e, integral_const_mul]
 
-set_option maxHeartbeats 1000000 in
-open Classical in
 
 end GlobalTheory.SepRows.SepProof
 

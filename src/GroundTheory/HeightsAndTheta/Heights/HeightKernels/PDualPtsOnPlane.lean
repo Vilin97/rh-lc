@@ -36,7 +36,6 @@ theorem mulMat_sum (b : Module.Basis T ℤ (dualLattice F)) (α : 𝓞 K) (s : T
     zsmul_eq_mul, smul_eq_mul] at h2
   exact h2
 
-omit [Fintype T] in
 
 theorem recover_spec (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (Z : T → ℂ) (t : T) :
@@ -153,7 +152,6 @@ theorem agree (b : Module.Basis T ℤ (dualLattice F))
 
 end DualPointsOnPlane
 
-open DualPointsOnPlane in
 
 theorem DualPtsOnPlane.proof : DualPtsOnPlane.Statement := by
   intro K _ _ i F T _ _ b hb z hz

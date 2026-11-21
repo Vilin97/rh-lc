@@ -31,7 +31,6 @@ theorem sigma_rem (I : ∀ k, Finset (ι k)) (p : Σ k, ι k) :
   · rw [Function.update_of_ne hk]
     simp [hk]
 
-omit [Fintype K] in
 
 theorem rem_rem_comm (I : ∀ k, Finset (ι k)) (p q : Σ k, ι k) :
     rem (rem I p) q = rem (rem I q) p := by
@@ -44,7 +43,6 @@ theorem rem_rem_comm (I : ∀ k, Finset (ι k)) (p q : Σ k, ι k) :
     rw [Function.update_of_ne hk, Function.update_of_ne (Ne.symm hk),
       Function.update_comm (Ne.symm hk)]
 
-omit [∀ k, LinearOrder (ι k)] in
 
 theorem offset_update (I : ∀ k, Finset (ι k)) (k : K) (X : Finset (ι k)) :
     ∑ l ∈ Finset.univ.filter (· < k), ((Function.update I k X l).card - 1) =
@@ -163,7 +161,6 @@ theorem double_sum_eq_zero {Ω : Type} [AddCommGroup Ω] (I : ∀ k, Finset (ι 
 
 variable (S : Type) [CommRing S] [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [Algebra S Ω]
 
-open Classical in
 
 def ext (m : ℕ) (t : Cell K ι m → Ω) (J : ∀ k, Finset (ι k)) : Ω :=
   if h : (∀ l, (J l).Nonempty) ∧ ∑ l, ((J l).card - 1) = m then t ⟨J, h⟩ else 0
@@ -193,7 +190,6 @@ theorem cellD_apply_not (y : (Σ k, ι k) → Ω) (m : ℕ) (t : Cell K ι m →
     (hJ : ¬ CellMeets y J.1) : cellD S y m t J = 0 := by
   simp only [cellD, LinearMap.pi_apply, if_neg hJ, LinearMap.zero_apply]
 
-omit [∀ k, Fintype (ι k)] [Fintype K] [Algebra S Ω] in
 
 theorem meets_rem {y : (Σ k, ι k) → Ω} {I : ∀ k, Finset (ι k)} (hI : CellMeets y I) (p : Σ k, ι k) :
     CellMeets y (rem I p) := by
@@ -206,7 +202,6 @@ theorem meets_rem {y : (Σ k, ι k) → Ω} {I : ∀ k, Finset (ι k)} (hI : Cel
   · rw [rem_apply_of_ne _ hl] at hj
     exact hI l j hj
 
-omit [∀ k, Fintype (ι k)] [Algebra S Ω] in
 
 theorem rem_isCell {m : ℕ} (J : Cell K ι (m + 1)) {k : K} {i : ι k} (hi : i ∈ J.1 k)
     (hne : ((J.1 k).erase i).Nonempty) :
@@ -232,7 +227,6 @@ theorem ext_of_empty {m : ℕ} (t : Cell K ι m → Ω) {J : ∀ k, Finset (ι k
 
 end CellDSq
 
-open CellDSq in
 
 theorem CellDSq.proof : CellDSq.Statement := by
   intro S _ K _ _ ι _ _ Ω _ _ y n s

@@ -150,7 +150,6 @@ end GlobalTheory.CompanionTheory.Ar.Cusp.Univ.MemBall
 
 namespace GlobalTheory.CompanionTheory.Ar.Cusp.Univ
 
-open MemBall in
 
 theorem mem_ballDom_iff_posDef_bigZe {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {j j' n g : ℕ} (e : Ix Ψ j j' ≃ Fin g)
     (q : Ψ × Fin j × Fin j' ≃ Fin n) (t : Fin n → ℂ) :

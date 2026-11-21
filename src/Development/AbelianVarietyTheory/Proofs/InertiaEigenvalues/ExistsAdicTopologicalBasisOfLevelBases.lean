@@ -70,7 +70,6 @@ theorem approx_unique (hc : IsCompl i (J.map s))
 
 end GlobalTheory.BSP.LevelBasis
 
-open GlobalTheory.BSP.LevelBasis in
 
 theorem GlobalTheory.BSP.exists_topBasis_of_levels (A : Type) [CommRing A] (L : Type) [CommRing L] (Q : Type) [CommRing Q]
     (s : A →+* L) (i : L →+* Q) (J : Ideal A) (ι : Type) (m : ι → L) (k₀ : ι) (h1 : m k₀ = 1)

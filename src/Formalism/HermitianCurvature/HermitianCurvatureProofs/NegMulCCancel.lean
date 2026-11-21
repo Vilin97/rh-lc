@@ -27,7 +27,6 @@ def muXP (Bj : B.RealPlaceData k ρ Wp Wq) : Measure (XP k p ρ) := (Bj.μW.prod
 def GoodP (Bj : B.RealPlaceData k ρ Wp Wq) (x : XP k p ρ) : Prop :=
   (Matrix.of x.1.1 : B.Mat k ρ) ∈ UWset k ρ Bj.z ∧ (Matrix.of x.1.2 : B.Mat k ρ) ∈ Nset k ρ
 
-open Classical in
 
 def sP (Bj : B.RealPlaceData k ρ Wp Wq) (x : XP k p ρ) : B.Mat k (p + ρ) :=
   if GoodP Bj x then

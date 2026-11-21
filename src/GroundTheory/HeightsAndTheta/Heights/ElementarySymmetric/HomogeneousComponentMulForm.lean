@@ -79,13 +79,11 @@ section Tilde
 variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : ℕ} {x : Fin (N + 1) → Ω}
   {E : Type v} [AddCommGroup E] [Module Ω E] [Module S E] [IsScalarTower S Ω E]
 
-omit [IsScalarTower S Ω E] in
 
 theorem tilde_mono {M M' : FinGradedSub (S := S) (x := x) E} (h : ∀ c, M.piece c ≤ M'.piece c) (c : ℤ)
     (I : Chart x) : M.tilde c I ≤ M'.tilde c I :=
   Submodule.span_mono fun _ ⟨m, s, a, e, hs, hse, hm, hae, hy⟩ => ⟨m, s, a, e, hs, hse, h a hm, hae, hy⟩
 
-omit [IsScalarTower S Ω E] in
 
 def tildeFam (M : FinGradedSub (S := S) (x := x) E) : SubFamily S x E where
   toSubSystem := M.tildeSys 0
@@ -146,9 +144,7 @@ def tildeFam (M : FinGradedSub (S := S) (x := x) E) : SubFamily S x E where
       rw [hy]
       exact Submodule.smul_mem _ _ hJ
 
-omit [IsScalarTower S Ω E] in
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem fg_of_single (F : SubFamily S x E) (I : Chart x) {i : Fin (N + 1)} (hi : i ∈ I.1) (hxi : x i ≠ 0)
     (hfg : (F.sub (singleChart hxi)).FG) : (F.sub I).FG := by
@@ -179,7 +175,6 @@ theorem fg_of_single (F : SubFamily S x E) (I : Chart x) {i : Fin (N + 1)} (hi :
     rw [hy']
     exact Submodule.smul_mem _ _ h2
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem fg_of_le [IsNoetherianRing S] (F G : SubFamily S x E) (hF : ∀ I, (F.sub I).FG)
     (hle : ∀ I, G.sub I ≤ F.sub I) (I : Chart x) : (G.sub I).FG := by
@@ -216,7 +211,6 @@ def gsup (M M' : FinGradedSub (S := S) (x := x) E) : FinGradedSub (S := S) (x :=
       · rintro _ ⟨j, f, e, hf, he, rfl⟩
         exact ⟨Fin.natAdd n j, f, e, hf, by rw [Fin.append_right]; exact he, by rw [Fin.append_right]⟩
 
-omit [IsScalarTower S Ω E] in
 
 theorem tilde_gsup (M M' : FinGradedSub (S := S) (x := x) E) (c : ℤ) (I : Chart x) :
     (gsup M M').tilde c I = M.tilde c I ⊔ M'.tilde c I := by

@@ -32,13 +32,10 @@ section Gram
 
 variable (E : Type) [Field E] [CharZero E] [StarRing E]
 
-omit [CharZero E] in
 
-omit [CharZero E] in
 
 end Gram
 
-open GlobalTheory.Unf.Inhab in
 
 section Place
 
@@ -74,7 +71,6 @@ theorem pr_le_one {o : AE D} (ho : o ∈ intAt D (· = q.v)) : valuation k (q.pr
 
 end Place
 
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 
 end GlobalTheory.LocMod.DblInhab
 

@@ -176,7 +176,6 @@ theorem part1 (f : Z1 F) : δ F 1 (zc f) = 0 := by
 
 end GlobalTheory.CechPoset.CechPosetH1Surjective
 
-open GlobalTheory.CechPoset.CechPosetH1Surjective in
 
 theorem GlobalTheory.CechPoset.exists_cech_cocycle_cohomologous : ∀ {κ : Type} [LinearOrder κ] {R : Type} [CommRing R]
     (F : (NE κ)ᵒᵖ ⥤ CommAlgCat.{0} R) (f : Z1 F),

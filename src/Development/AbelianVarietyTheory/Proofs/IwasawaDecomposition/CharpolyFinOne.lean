@@ -130,14 +130,10 @@ namespace GlobalTheory.HeightCounting.FitRho
 
 open Formalism.L2.NR
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.HeightCounting.FitRho
 
 namespace GlobalTheory.HeightCounting
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.HeightCounting

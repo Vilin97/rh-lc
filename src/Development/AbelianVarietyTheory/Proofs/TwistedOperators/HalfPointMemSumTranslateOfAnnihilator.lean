@@ -88,8 +88,6 @@ theorem hat_le_std {D : D7} (S T : HSp D) {A : Submodule (𝓞 D.host.E) (Fin S.
   rintro _ ⟨α, hα, x, hx, rfl⟩
   exact ⟨α, hα, x, Submodule.smul_le_right hx, rfl⟩
 
-set_option maxHeartbeats 800000 in
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem act_le_std (D : D7) (S T : HSp D) (g : GA D T) : ∃ N : ℕ, 0 < N ∧
     ∀ u ∈ GlobalTheory.AdForm.stdHom S T, N • actO S T 1 g u ∈ GlobalTheory.AdForm.stdHom S T := by
@@ -152,8 +150,6 @@ theorem nsmul_smul_comm' {m n : ℕ} (k : ℕ) (c : AE D) (v : Mx D m n) : k •
   simp only [Matrix.smul_apply, smul_eq_mul, nsmul_eq_mul]
   ring
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem ann_sum_gen (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1)) (S T : HSp D)
     (Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (e : AE D) (he : IsIdemSum e Q) (g : GA D T) (Mh : AddSubgroup (WO S T))

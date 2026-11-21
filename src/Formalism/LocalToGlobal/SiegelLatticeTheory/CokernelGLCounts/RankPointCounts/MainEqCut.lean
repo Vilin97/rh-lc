@@ -143,7 +143,6 @@ def NOfG (νL νB : X.B.I.Ginf → Measure X.B.I.Ginf) (ng : PN.Pts D.host.E D.R
 
 end Conc
 
-open Formalism.L2.SG.NormCut in
 
 def DegLeftActC : Prop :=
   ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u : D.what₂.Word), ConcTie X Y →
@@ -152,7 +151,6 @@ def DegLeftActC : Prop :=
     Formalism.L2.SG.Pf.SatGram.LeftAct (X.Fu u) (X.Fu u) Y.TR (Y.cs u) (Y.cs u) (Y.FN u) (Y.FN u) (Y.tO u u).degSet
       (Aset Y.TR (Y.cs u))
 
-open Formalism.L2.SG.NormCut in
 
 def DegRightActC : Prop :=
   ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u : D.what₂.Word), ConcTie X Y →
@@ -161,11 +159,9 @@ def DegRightActC : Prop :=
     Formalism.L2.SG.Pf.SatGram.RightAct (X.Fu u) (X.Fu u) Y.TR (Y.cs u) (Y.cs u) (Y.FN u) (Y.FN u) (Y.tO u u).degSet
       (Aset Y.TR (Y.cs u))
 
-open Formalism.L2.SG.NormCut in
 
 def ChiNBiC : Prop := ∀ (D : D7) (X : HidaSetting D), ChiNBi X
 
-open Formalism.L2.SG.NormCut in
 
 def ColFreeC : Prop :=
   ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u : D.what₂.Word), ConcTie X Y →
@@ -292,7 +288,6 @@ namespace Formalism.L2.SG.Pf
 
 open Formalism.L2.SG.Pf.MainEqCut
 
-open Formalism.L2.SG.NormCut in
 
 theorem normExpDegC_of (hHS : HSBlocks) (hFo : FoldOKC) (hO : OOIntAllC) (hA : AbsConvC) (hAW : AmpWellDefC)
     (hOF : OOFundIndepC) (hB : ChiNBiC) (hF : ColFreeC) (hLA : DegLeftActC) (hRA : DegRightActC) : NormExpDegC := by

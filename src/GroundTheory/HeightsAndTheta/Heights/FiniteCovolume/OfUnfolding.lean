@@ -44,30 +44,24 @@ section OneSpace
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 variable (h : HermitianForm F E W) (v : Basis ι E W)
 
-omit [NumberField F] [IsTotallyReal F] [DecidableEq ι] in
 
 theorem ArchCovolumeBound.full : ArchCovolumeBound.Statement h v :=
   ArchCovolumeBound.proof h v (CoordEmbedBasis.proof E ι) (IntegralFormCovolume.proof _ _ _)
     (TraceHermNondegenerate.proof h v) (DualLatticeMultiple.proof h) (CoordLatticeFullRank.proof v)
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem MajorantTransport.full : MajorantTransport.Statement h v := MajorantTransport.proof h v
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem ComplementExtension.full : ComplementExtension.Statement h := ComplementExtension.proof h
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem LineNormalForm.full : LineNormalForm.Statement h := LineNormalForm.proof h
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem ComplementLattice.full [FiniteDimensional E W] : ComplementLattice.Statement h :=
   ComplementLattice.proof h
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem LatticePointsBelowFinite.full : LatticePointsBelowFinite.Statement h v :=
   LatticePointsBelowFinite.proof h v

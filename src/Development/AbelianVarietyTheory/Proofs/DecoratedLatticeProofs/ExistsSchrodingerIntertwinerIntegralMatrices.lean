@@ -140,7 +140,6 @@ theorem inv_nsmul_nsmul {k : Type} [Field k] [CharZero k] {Y Y' : Type} (n : ℕ
     (m : Matrix Y Y' k) : (n : k)⁻¹ • (n • m) = m := by
   rw [← Nat.cast_smul_eq_nsmul k n m, smul_smul, inv_mul_cancel₀ (Nat.cast_ne_zero.2 hn.ne'), one_smul]
 
-open Classical in
 
 def liftZ {A Z : Type} [AddCommGroup Z] [TopologicalSpace A] : SB A →ₗ[ℂ] (A × Z → ℂ) where
   toFun := fun Φ g => if g.2 = 0 then Φ.1 g.1 else 0

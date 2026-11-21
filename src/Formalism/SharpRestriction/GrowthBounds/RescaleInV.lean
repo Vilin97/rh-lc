@@ -86,7 +86,6 @@ theorem rescale_HH (X : RawChart C d I κ) (x z : κ → PowerSeries C) (hx : �
 
 end SelfConjPoints
 
-open SelfConjPoints in
 
 theorem r1sHResc (C : Type) [Field C] (d : ℕ) (I : Fin 2 → Type) [∀ g, Fintype (I g)] (κ : Type) [Fintype κ]
     (X : RawChart C d I κ) (x z : κ → PowerSeries C) (hx : ∀ i, PowerSeries.constantCoeff (x i) = 0)

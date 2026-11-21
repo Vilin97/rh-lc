@@ -146,7 +146,6 @@ theorem bc_map {R R' X X' Y Y' : Type*} [CommRing R] [CommRing R'] [AddCommGroup
   congr 1
   exact Set.image_congr fun a _ => (hT a).symm
 
-include hφ in
 
 theorem bc_nablaLTw (m : ℕ) (lam : Fin (m + 1) → ℤ) (g : Matrix (Fin (m + 1)) (Fin (m + 1)) K)
     (hg : IsUnit g.det) :
@@ -162,7 +161,6 @@ theorem map_blockEmb {S : Type} {k n : ℕ} (s : S) (F : MvPolynomial (Fin k × 
   unfold blockEmb
   exact (MvPolynomial.map_rename φK _ F)
 
-include hφ in
 
 theorem bc_tensorLat {S : Type} [Fintype S] {k n : ℕ} (M : S → Submodule R (MvPolynomial (Fin k × Fin n) K))
     (M' : S → Submodule R' (MvPolynomial (Fin k × Fin n) K'))
@@ -209,7 +207,6 @@ theorem bc_tensorLat {S : Type} [Fintype S] {k n : ℕ} (M : S → Submodule R (
     rw [map_prod]
     exact Finset.prod_congr rfl fun s _ => map_blockEmb φK s (F s)
 
-include hφ in
 
 theorem bc_colSpan {k : ℕ} (g : Matrix (Fin k) (Fin k) K) :
     BC (vecS φ φK hφ k) (colSpan R g) (colSpan R' (g.map φK)) := by
@@ -220,7 +217,6 @@ theorem bc_colSpan {k : ℕ} (g : Matrix (Fin k) (Fin k) K) :
   rw [h1] at h0
   exact h0
 
-include hφ in
 
 theorem base_change_H0 (hinj : Function.Injective (algebraMap R K)) (hinj' : Function.Injective (algebraMap R' K'))
     (m : ℕ) (lam : Fin (m + 1) → ℤ) (hlam : Antitone lam)

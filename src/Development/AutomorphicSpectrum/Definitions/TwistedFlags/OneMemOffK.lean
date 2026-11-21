@@ -38,9 +38,7 @@ variable {V : HSp D} {PS : D.what₂.Tau → SPar} (θ : InfFam D) (M : DSModel 
 
 end Real
 
-open GlobalTheory.LFun Formalism.UG in
 
-open GlobalTheory.LFun Formalism.UG in
 
 end GlobalTheory.CompanionTheory.Ipf.Loc
 

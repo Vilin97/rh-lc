@@ -49,7 +49,6 @@ theorem contMDiffAt_iff_expG {E' : Type*} [NormedAddCommGroup E'] [NormedSpace â
     rfl
   rw [e1, e2, modelWithCornersSelf_coe, range_id, contDiffWithinAt_univ]
 
-include h in
 
 theorem locallyCompactSpace : LocallyCompactSpace G := by
   let := h.chartedSpace

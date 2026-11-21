@@ -59,8 +59,6 @@ section Addv
 variable {S L : Type*} [CommRing S] [IsDedekindDomain S] [Field L] [Algebra S L]
   [IsFractionRing S L] (v : HeightOneSpectrum S)
 
-variable (L) in
-open Classical in
 
 noncomputable def addv : AddValuation L (WithTop ℤ) :=
   AddValuation.of (fun x => if x = 0 then ⊤ else (((-log (v.valuation L x) : ℤ)) : WithTop ℤ))
@@ -295,7 +293,6 @@ def valPl_hv (Q : {Q : Ideal (integralClosure O L) // Q.IsMaximal}) :
   have := Q.2
   ⟨Q.1, Q.2.isPrime, valPl_ne_bot Q.1⟩
 
-variable (O L) in
 
 noncomputable def plOf (Q : {Q : Ideal (integralClosure O L) // Q.IsMaximal}) :
     AddValuation L (WithTop ℤ) :=

@@ -44,4 +44,3 @@ theorem not_both_mem {D : D7} {p q : ℕ} (hp : p.Prime) (hq : q.Prime) (hne : p
 
 end GlobalTheory.Fam.UnrWeil
 
-open GlobalTheory.Fam.UnrWeil in

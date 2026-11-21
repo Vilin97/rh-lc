@@ -31,7 +31,6 @@ open scoped TensorProduct
 
 namespace ArcLengthFourSecond
 
-open PowerSeries in
 
 theorem mem_span_of_coeff {R : Type*} [CommRing R] (F : PowerSeries R) (t : R) (B' : ℕ)
     (h : ∀ j < B', t ∣ coeff j F) : F ∈ Ideal.span {C t, (X : PowerSeries R) ^ B'} := by

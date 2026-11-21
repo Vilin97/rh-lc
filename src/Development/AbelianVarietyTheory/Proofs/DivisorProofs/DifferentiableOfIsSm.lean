@@ -82,7 +82,6 @@ theorem foldr_smul (l : List (ℝ → GAd σ J)) (a : ℂ) (f : GAd σ J → ℂ
   | nil => rfl
   | cons γ l ih => simp only [List.foldr_cons, ih, lineDer_smul]
 
-omit [NumberField E] in
 
 end GlobalTheory.UAut
 

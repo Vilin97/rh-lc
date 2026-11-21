@@ -34,7 +34,6 @@ theorem differentiable_mulVec {d n : ℕ} (A : Matrix (Fin d) (Fin n) ℂ) :
     Differentiable ℂ (fun x : Fin n → ℂ => A *ᵥ x) :=
   (Matrix.mulVecLin A).toContinuousLinearMap.differentiable
 
-open Classical in
 
 theorem chartDens_indicator_image {n d : ℕ} (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin d) (Fin n) ℂ)
     {p : Fin n → ℂ} (γ : VarBranch J d p) (g : (Fin n → ℂ) → ℝ) (φ : Fin d → (Fin n → ℂ) → ℝ)
@@ -132,7 +131,6 @@ theorem integrableOn_branch {n d : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)} {
 
 end BranchChartInt
 
-open BranchChartInt in
 
 theorem BranchChartInt.proof (hA : HolomorphicFibreSumInt.Statement) (hS : BranchSheetAE.Statement)
     (hF : ComplexSets.FibreBound.Statement) : BranchChartInt.Statement := by

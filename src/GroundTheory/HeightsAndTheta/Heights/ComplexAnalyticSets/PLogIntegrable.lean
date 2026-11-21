@@ -88,7 +88,6 @@ theorem lintegral_lt_top (hS : VarSlabMeasure.Statement) (hF : MassFinite.Statem
 
 end LogIntegrableProof
 
-open LogIntegrableProof in
 
 theorem LogIntegrable.proof (hM : SheetSumMeasurable.Statement) (hD : ChartMassCompare.Statement)
     (hS : VarSlabMeasure.Statement) (hF : MassFinite.Statement) : LogIntegrable.Statement := by

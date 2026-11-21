@@ -21,6 +21,5 @@ theorem card_linearEquiv_le : Formalism.SLP.GlobalBoundRefinements.AutCount := b
   calc Nat.card (M ≃ₗ[R] M) ≤ Nat.card (Fin e → M) := Nat.card_le_card_of_injective _ hinj
     _ = Nat.card M ^ e := by rw [Nat.card_fun, Nat.card_fin]
 
-set_option maxHeartbeats 800000 in
 
 end Formalism.SLP.GlobalBoundRefinements.P

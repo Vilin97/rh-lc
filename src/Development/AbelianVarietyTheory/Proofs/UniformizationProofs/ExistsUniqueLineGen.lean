@@ -34,7 +34,6 @@ variable {F : Type} [Field F] [Algebra (FractionRing R) F] {k : ℕ}
 
 theorem hG : GlobalFnsSt := GlobalTheory.abelianSchemeLaws_all.1.globalFns
 
-variable (D F k) in
 
 theorem phiRel_total (hB : D.TauBimult) (q : QkPt D F k)
     {w : LB.Gen (LB.LinComb D.P.L (DegPre.lineφ D F q.g.b) (DegPre.lineε k))} (hw : w.IsGen) (s : Fam D F k) :

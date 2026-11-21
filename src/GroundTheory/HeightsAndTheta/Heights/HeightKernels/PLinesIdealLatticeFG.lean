@@ -48,7 +48,6 @@ theorem single_mem_span (K : Type) [Field K] [NumberField K] {n : ℕ}
 
 end KLinesIdealLatticeFG
 
-open KLinesIdealLatticeFG in
 
 theorem LinesIdealLatticeFG.proof : LinesIdealLatticeFG.Statement := by
   intro K _ _ n a ha

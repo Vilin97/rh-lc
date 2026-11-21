@@ -36,7 +36,6 @@ private theorem val_rigPow' {S : Scheme.{0}} (P : PolAV S) (rig : LB.Gen (P.L.pu
   · exact map_zpow _ _ _
   · exact (one_zpow k).symm
 
-open CommPairing in
 
 theorem exists_root_stalk_pull (hG : GlobalFnsSt) (P : PolAV S) {T : Over S} {N M m : ℕ}
     {rig : LB.Gen (P.L.pull (eSec P.A))}

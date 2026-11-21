@@ -50,7 +50,6 @@ namespace PositivityTheory.Groth
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable [Fact (Assoc k)] [Fact (Comm k)] [Fact (One k)]
 
-open GrothendieckPhiBijection in
 
 theorem phiZ_bijective (hk : Steps k) (h1 : TriAut) (h2 : UniTri)
     (Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)) (hZ : IsSegmentClass k Z) :

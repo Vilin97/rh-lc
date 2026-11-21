@@ -802,7 +802,6 @@ theorem colOne_good {ν : Fin n → ℕ} {F : MvPolynomial (Fin r × Fin n) K} (
     (hβ : ∀ w s, s < w → β w s = 0) (t : Fin n) : colOne β t F = (β t t ^ ν t) • F := by
   rw [colOne_eq β hβ, AlgHom.comp_apply, colAddS_inv hF t _ _ (fun l hl => (Finset.mem_filter.1 hl).2), colSc_hom (lsat_mem_dualWeyl.1 hF).1]
 
-open Classical in
 
 def cutCol (β : Matrix (Fin n) (Fin n) K) (t : Fin n) : Matrix (Fin n) (Fin n) K :=
   fun w s => if s = t then (if w = t then 1 else 0) else β w s
@@ -1052,7 +1051,6 @@ variable {K : Type} [Field K] {n : ℕ} {ι : Type}
 
 abbrev Off (ι : Type) (n : ℕ) (τ : ι) : Type := {v : ι × Fin n × Fin n // v.1 ≠ τ}
 
-open Classical in
 
 def psi (τ : ι) : Pol K ι n →ₐ[K] MvPolynomial (Off ι n τ) (MvPolynomial (Fin n × Fin n) K) :=
   aeval fun v => if h : v.1 = τ then C (X v.2) else X ⟨v, h⟩

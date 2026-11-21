@@ -16,7 +16,6 @@ open Formalism.ELL (InFormalGroupPoints)
 open Formalism.L2.Th1.F (MulStable IsKerReps taylor0 pSeries)
 open Formalism.L2.Th1.E (Unif ptW inW px py IntCurve OneUnit GaussOne)
 
-open Classical in
 
 def TwoTorsionKernelUnique : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] (W : WeierstrassCurve K), IntCurve W →
@@ -24,9 +23,7 @@ def TwoTorsionKernelUnique : Prop :=
     ∀ P Q : W.toAffine.Point, P ≠ 0 → P + P = 0 → InFormalGroupPoints P →
       ‖px W P‖ = 4 ∧ (Q ≠ 0 → Q + Q = 0 → InFormalGroupPoints Q → P = Q)
 
-open Classical in
 
-open Classical in
 
 def TorsBound : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] (W : WeierstrassCurve K), IntCurve W →

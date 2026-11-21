@@ -133,7 +133,6 @@ theorem smul_conj' {N : ℕ} (l : ℝ) (A B : Matrix (Fin N) (Fin N) ℝ) :
 
 end GlobalTheory.CuspGeo.RedBasisPf
 
-open GlobalTheory.CuspGeo.RedBasisPf in
 
 theorem GlobalTheory.CuspGeo.redBasis_holds : ∀ I : AutInst, RedBasis I := by
   intro I

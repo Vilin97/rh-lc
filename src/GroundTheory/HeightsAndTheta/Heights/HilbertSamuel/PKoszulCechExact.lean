@@ -264,7 +264,6 @@ theorem homotopy_mem {α c : K → ℤ} {n : ℕ}
 
 end KoszulCechExact
 
-open KoszulCechExact in
 
 theorem KoszulCechExact.proof : KoszulCechExact.Statement := by
   intro S _ K _ _ ι _ _ V α R z hz c n

@@ -43,7 +43,6 @@ private theorem isMonHom_comp_comp {C : Type*} [Category C] [CartesianMonoidalCa
     (hc : IsMonHom c.hom) : IsMonHom (a.hom ≫ b.hom ≫ c.hom) := by
   infer_instance
 
-open GlobalTheory.CechPic in
 
 theorem isPrincipal_tB_of (hU : GlobalTheory.LN.UDvrSt) : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V] (r : V →+* ℂ) (tV : SAB H (Sp V)), GlobalTheory.LN.CDvr V → Function.Surjective r → RingHom.ker r = IsLocalRing.maximalIdeal V → GlobalTheory.LN.PolAt tV (Out.jK V) → ∀ P : AbPart tV (spMap r), IsPrincipal P.tB := by
   intro E _ _ _ H V _ _ _ r tV hC hr hker hpol P

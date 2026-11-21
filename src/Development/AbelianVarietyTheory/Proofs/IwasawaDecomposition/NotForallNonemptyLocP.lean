@@ -25,7 +25,6 @@ def evFam (s : ∀ i, N i) (ξ : ∀ i, N i) : AdmFun s → ℂ := fun l => ∏�
 def RTens (s : ∀ i, N i) : Submodule ℂ (AdmFun s → ℂ) :=
   Submodule.span ℂ {z | ∃ ξ, Restr s ξ ∧ z = evFam s ξ}
 
-open Classical in
 
 def pureT (s : ∀ i, N i) (ξ : ∀ i, N i) : RTens s :=
   if h : Restr s ξ then ⟨evFam s ξ, Submodule.subset_span ⟨ξ, h, rfl⟩⟩ else 0

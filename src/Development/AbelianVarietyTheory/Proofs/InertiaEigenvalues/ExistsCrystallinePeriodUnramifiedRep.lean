@@ -29,11 +29,9 @@ def act (g : G) : Matrix n n (WittVector p R) →+* Matrix n n (WittVector p R) 
 theorem act_apply (g : G) (M : Matrix n n (WittVector p R)) (i j : n) :
     act ρ g M i j = WittVector.map (ρ g).toRingHom (M i j) := rfl
 
-variable (p) in
 
 def Dv (N : ℕ) (M : Matrix n n (WittVector p R)) : Prop := ∀ i j, (p : WittVector p R) ^ N ∣ M i j
 
-variable (p) in
 
 def Jset : Set G := {g : G | ∀ m, 0 < m → g ∈ fixer ρ p m}
 

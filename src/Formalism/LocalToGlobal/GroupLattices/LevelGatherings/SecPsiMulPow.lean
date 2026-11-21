@@ -115,7 +115,6 @@ theorem secPsi_const (φ : Formalism.HC.Frame) (z g : φ.Psi) (hz : (z : φ.GG).
   show (_, _) = (_, _)
   rw [h1, h2, bsA_add_nsmul]
 
-open Classical in
 
 instance orbSecPsi (φ : Formalism.HC.Frame) : OrbSec φ.Psi where
   sec z g := if (z : φ.GG).1 = 1 then secPsi φ z g else Quotient.out (QuotientGroup.mk g : φ.Psi ⧸ Subgroup.zpowers z)

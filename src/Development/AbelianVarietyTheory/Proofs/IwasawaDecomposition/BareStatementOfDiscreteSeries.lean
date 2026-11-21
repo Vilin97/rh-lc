@@ -117,7 +117,6 @@ def bareLayer (B : Base) (C : Cols B) (W : RowsRest B C) {rows₁ : Rows.Data B.
   chiT := χ
   restN_card_levelGroup_eq := rfl
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_nStage_over {B : Base} {C C₀ : Cols B} {W₀ : RowsRest B C₀} (N₀ : NStage B C₀ W₀) {f : Fr B.toPre}
     (h₀ : GrpTrue N₀ f) (W : RowsRest B C) (heta : ∀ j w, W.etaJ j w = 0)
@@ -196,7 +195,6 @@ theorem exists_nStage_over {B : Base} {C C₀ : Cols B} {W₀ : RowsRest B C₀}
 
 variable {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T}
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_bare_over {K : Ctx} (P : Pre2 K w) {rows₁ : Rows.Data B.R} (Y : NData B.R B.host rows₁) (A₁ : NAut Y)
     (hpl : ∀ k v, f.P.Div k (A₁.plGw k v)) (L : LocStage) :
@@ -242,7 +240,6 @@ namespace GlobalTheory.HeightCounting.Up
 
 open Formalism.MainNotions.N Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting GlobalTheory.HeightCounting.Up GlobalTheory.TwistChoice GlobalTheory.Mem.R3.Rw.Bare
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.HeightCounting.Up
 

@@ -44,7 +44,6 @@ end GlobalTheory.GaussTransport
 
 namespace GlobalTheory.GaussTransport
 
-open LineDeriv in
 
 theorem transport : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V]
     (E : Type) [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]

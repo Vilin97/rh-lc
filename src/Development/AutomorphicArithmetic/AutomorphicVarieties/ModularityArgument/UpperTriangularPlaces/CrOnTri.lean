@@ -269,7 +269,6 @@ private theorem key (hP : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {Γ :
 
 end UpperTheory.V.Z.Keep.PotentialOfUnlocked
 
-open UpperTheory.V.Z.Keep.PotentialOfUnlocked in
 
 theorem UpperTheory.V.Z.Keep.crOnTri (hP : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {Γ : Type} [Group Γ] [TopologicalSpace Γ]
     [IsTopologicalGroup Γ] (φ : Γ →* GQ l) (hφ : IsOpenEmbedding φ) {E : Type} [Field E] [Algebra ℚ_[l] E]
@@ -373,7 +372,6 @@ private theorem cr_descend (hP : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime
 
 end UpperTheory.V.Z.Keep.PotentialOfUnlocked
 
-open UpperTheory.V.Z.Keep.PotentialOfUnlocked in
 
 theorem UpperTheory.V.Z.Keep.crDescend (hP : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {Γ : Type} [Group Γ] [TopologicalSpace Γ]
     [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] (φ : Γ →* GQ l) (hφ : IsOpenEmbedding φ)

@@ -275,7 +275,6 @@ theorem pureA_inj {κ : Type} [Fintype κ] {f₁ f₂ : SInf F κ} {g : (κ → 
 
 variable {M : Model σ Y W} {ψ : AddChar (AF F) ℂ} {om : Rep σ Y W} {k : UA σ W.J}
 
-open scoped Classical in
 
 def Impl (om : Rep σ Y W) (k : UA σ W.J) (A : SInf F (Fin n × Fin d) →ₗ[ℂ] SInf F (Fin n × Fin d)) : Prop :=
   ∀ f : SInf F (Fin n × Fin d), ∀ g ∈ SB (Fin n × Fin d → FiniteAdeleRing (𝓞 F) F), om (1, k) (pureA F f g) = pureA F (A f) g

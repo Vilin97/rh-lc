@@ -71,7 +71,6 @@ open Formalism.BasicNotions (D7)
 open Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity (IsLat jL Uniformization CMTransitive)
 open Formalism.MainNotions.TaylorLogMetric (lamOf)
 
-open Filter Topology in
 
 theorem weierstrassP_eventuallyEq (L L' : PeriodPair) (h2 : L.g₂ = L'.g₂) (h3 : L.g₃ = L'.g₃) :
     L.weierstrassP =ᶠ[𝓝[≠] 0] L'.weierstrassP := by

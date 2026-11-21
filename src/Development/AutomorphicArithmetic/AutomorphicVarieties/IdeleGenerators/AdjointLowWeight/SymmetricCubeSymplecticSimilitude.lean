@@ -49,9 +49,7 @@ theorem symmetric_cube_mul (g h : M2 R) : s3 u (g * h) = s3 u g * s3 u h := by
   simp only [s3, map_mul, mul_assoc]
   rw [← mul_assoc (Matrix.diagonal ![1, 1, -1, u]), e, one_mul]
 
-omit hu in
 
-omit hu in
 
 def rep {Γ : Type} [Group Γ] (δ : Γ →* Rˣ) (ρ : Γ →* M2 R) : Γ →* M4 R where
   toFun g := (δ g : R) • s3 u (ρ g)

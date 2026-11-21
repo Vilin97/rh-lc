@@ -59,17 +59,11 @@ section Herm
 variable [StarRing E] (σ : E →ₐ[F] E) (hσ : ∀ e, σ e = star e)
   (h : (n → E) →ₗ⋆[E] (n → E) →ₗ[E] E)
 
-include hσ in
 
-include hσ in
 
-include hσ in
 
-include hσ in
 
-include hσ in
 
-include hσ in
 
 section Mass
 
@@ -78,15 +72,10 @@ variable (hsymm : h.IsSymm) (hpos : ∀ x : n → E, x ≠ 0 → 0 < Algebra.tra
   (hIn : ∀ g ∈ UPts σ (Formalism.UG.gram h) (FiniteAdeleRing (𝓞 F) F), globLat g Λ ∈ Formalism.HermitianLatticesTheory.genus h Λ)
   (hSurj : ∀ M ∈ Formalism.HermitianLatticesTheory.genus h Λ, ∃ g ∈ UPts σ (Formalism.UG.gram h) (FiniteAdeleRing (𝓞 F) F), globLat g Λ = M)
 
-include hσ hsymm hpos hΛ in
 
-include hσ hsymm hpos hΛ hIn in
 
-include hσ hΛ in
 
-include hσ hΛ hIn hSurj in
 
-include hσ hsymm hpos hΛ hIn hSurj in
 
 end Mass
 
@@ -98,17 +87,12 @@ open Formalism.MainNotions.StandardLattice
 
 variable {k : ℕ} [StarRing E] (σ : E →ₐ[F] E) (hσ : ∀ e, σ e = star e)
 
-include hσ in
 
 variable (hc : ∀ (φ : E →+* ℂ) (a : E), φ (star a) = starRingEnd ℂ (φ a))
 
-include hσ hc in
 
-include hσ hc in
 
-include hσ hc in
 
-include hσ hc in
 
 end Std
 

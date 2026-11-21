@@ -116,7 +116,6 @@ def rmax : Real (Kmax u) s σ where
 
 variable {u} {K : Charts F} {r : Real K s σ}
 
-omit [IsSeparated s] in
 
 def toMax (hr : r.IsFor u) : K.Obj ⥤ (Kmax u).Obj where
   obj T :=
@@ -133,7 +132,6 @@ def toMax (hr : r.IsFor u) : K.Obj ⥤ (Kmax u).Obj where
       mem := Charts.Hom.mem f
       close := Charts.Hom.close f }
 
-omit [IsSeparated s] in
 
 def toMaxCoef (hr : r.IsFor u) : CoefMap (RingHom.id (Hol F.V)) (Kmax u).Oc K.Oc where
   G := toMax hr
@@ -156,7 +154,6 @@ end GlobalTheory.AnPer.PerExist
 
 namespace GlobalTheory.AnPer
 
-open PerExist in
 
 theorem periods_exist : PExist := by
   intro I _ g Λ _ F B _ X s _ σ u hu c

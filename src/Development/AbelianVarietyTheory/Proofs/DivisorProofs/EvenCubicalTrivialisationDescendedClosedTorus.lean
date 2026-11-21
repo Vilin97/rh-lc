@@ -89,7 +89,6 @@ theorem normal_of_isInvariant (A B G : Type) [CommRing A] [CommRing B] [Algebra 
   obtain ⟨σ, rfl⟩ := IsFractionRing.stabilizerHom_surjective G P Q k K τ
   exact ⟨σ.1, fun x => (IsFractionRing.stabilizerHom_apply_apply_mk G P Q k K σ x).symm⟩
 
-open GlobalTheory.UU GlobalTheory.SplitTorus in
 
 theorem exists_baseChange {S S' : Scheme.{0}} {f : S' ⟶ S} {X : Type} [AddCommGroup X] {G B : Over S} [GrpObj G]
     [GrpObj B] {G' B' : Over S'} [GrpObj G'] [GrpObj B'] {F : G'.left ⟶ G.left} {p : B'.left ⟶ B.left}
@@ -137,7 +136,6 @@ variable {k K : Type} [Field k] [Field K] [Algebra k K] {G₀ B₀ : Over (Sp k)
   (hinv : ∀ (τ : K ≃ₐ[k] K) (s : G.left ⟶ G.left), s ≫ φG = φG → s ≫ G.hom = G.hom ≫ spMap (τ : K →+* K) →
     s ≫ q.left ≫ φ = q.left ≫ φ ∧ bcMap (spMap (τ : K →+* K)) X ≫ i.left = i.left ≫ s)
 
-include hB₀ hG hB H hinv in
 
 theorem agree_artinian {A : Type} [CommRing A] [IsLocalRing A] [IsArtinianRing A] (a b : K →+* A) (τ : K ≃ₐ[k] K)
     (hab : a.comp (algebraMap k K) = b.comp (algebraMap k K))
@@ -221,7 +219,6 @@ theorem agree_artinian {A : Type} [CommRing A] [IsLocalRing A] [IsArtinianRing A
     · rw [Category.assoc, hgb.1.w, reassoc_of% ez, hy]
   rw [← ex, ← ey, Category.assoc, Category.assoc, ← fa, ← fb, eq]
 
-include hB₀ hG hB H hinv in
 
 theorem nonempty_tq_of_normal [FiniteDimensional k K] [Normal k K] [Module.Free ℤ X] [Module.Finite ℤ X] :
     Nonempty (TQ G₀ X) := by
@@ -292,7 +289,6 @@ theorem nonempty_tq_of_normal [FiniteDimensional k K] [Normal k K] [Module.Free 
 
 end Descent
 
-set_option maxHeartbeats 800000 in
 
 theorem nonempty_tq {R R' : Type} [CommRing R] [IsDomain R] [IsLocalRing R] [CommRing R'] [IsDomain R'] [IsLocalRing R']
     {ρ : R →+* R'} (hfin : ρ.Finite) (hgal : IsGal ρ) {D : DegData R (maximalIdeal R)}

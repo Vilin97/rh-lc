@@ -15,15 +15,11 @@ open Formalism.L2.DIV NumberField
 
 variable {E : Type} [Field E] [NumberField E]
 
-open NumberField in
-variable {E : Type} [Field E] [NumberField E] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.CuspidalProductMultiplicity.finite_kP (PP : _root_.Formalism.L2.DIV.Pl E) : Finite (_root_.Formalism.L2.DIV.kP PP) := by
   unfold _root_.Formalism.L2.DIV.kP
   exact Ideal.finiteQuotientOfFreeOfNeBot PP.asIdeal PP.ne_bot
 
-open NumberField in
-variable {E : Type} [Field E] [NumberField E] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.CuspidalProductMultiplicity.finite_boundedLevelClassGroupFamily (Pg : Finset (_root_.Formalism.L2.DIV.Pl E)) (r : ℕ) :
     Finite (_root_.Formalism.L2.DIV.G0 Pg r) := by

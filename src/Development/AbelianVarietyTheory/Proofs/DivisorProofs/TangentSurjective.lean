@@ -41,7 +41,6 @@ theorem val_res {W W' : X.Opens} (k : W' ≤ W) (f : Γ(X, W)) :
     val D (le_refl (e ⁻¹ᵁ W')) (resG X k f) = resG S (e.preimage_mono k) (val D le_rfl f) :=
   (D.app_res _ k f).trans (D.res_app le_rfl (e.preimage_mono k) f).symm
 
-include hε in
 
 theorem res_sq (U : T.Opens) : resG T (le_top : U ≤ ⊤) ε * resG T (le_top : U ≤ ⊤) ε = 0 := by
   rw [← map_mul, hε, map_zero]

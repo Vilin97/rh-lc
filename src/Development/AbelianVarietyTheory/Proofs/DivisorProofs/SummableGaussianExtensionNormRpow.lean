@@ -46,7 +46,6 @@ theorem eq_zero_of_add_mul_ii {x y : F}
 theorem isIntegral_ii : IsIntegral ℤ (ii F) :=
   ⟨X ^ 2 + 1, by monicity!, by simp [ii_sq]⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem summable_norm_rpow (𝔞 𝔟 : Frac F) {t : ℝ} (ht : 1 < t)
     (hQ : Finite ((𝓞 (Ext F))ˣ ⧸ (Units.map (algebraMap (𝓞 F) (𝓞 (Ext F))).toMonoidHom).range)) :

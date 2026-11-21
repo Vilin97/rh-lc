@@ -89,7 +89,6 @@ noncomputable def galFixingEquiv : Gal(M/F) ≃* galFixing K F M :=
   (MonoidHom.ofInjective (galRestrictScalars_injective K F M)).trans
     (MulEquiv.subgroupCongr (range_galRestrictScalars K F M))
 
-omit [FiniteDimensional K M] [IsGalois K M] in
 
 noncomputable def galFixingCohomologyIso (n : ℕ) :
     groupCohomology (galUnits.{u} F M) n ≅

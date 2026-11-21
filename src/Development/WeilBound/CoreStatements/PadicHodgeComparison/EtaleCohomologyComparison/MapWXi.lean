@@ -98,11 +98,9 @@ def mapU (f : A ⟶ B) : A.U →+* B.U :=
 
 end PAlg
 
-variable (l) in
 
 def IsBase (A : PAlg l) : Prop := Function.Bijective A.s
 
-variable (l) in
 
 abbrev Test : Type 1 := ObjectProperty.FullSubcategory fun A : PAlg l => A.IsTest
 

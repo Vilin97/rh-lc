@@ -86,7 +86,6 @@ theorem r_eq (D : D7) : D.R.r = D.R.k + 2 * (D.R.m / 2 - 1) + 1 := by
   show D.R.k + D.R.m - 1 = _
   omega
 
-open Classical in
 
 def JJ (P : G0g D.nd) : Finset (G0g D.nd) :=
   Finset.univ.filter fun γ => ∀ kv, JPred D.R.k (D.R.m / 2 - 1) (cjM P γ kv)

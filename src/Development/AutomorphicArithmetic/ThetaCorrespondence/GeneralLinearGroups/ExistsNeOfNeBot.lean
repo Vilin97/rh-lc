@@ -162,7 +162,6 @@ end Abstract
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open GroundTheory.Automorphic.Parabolic (isotypicPart isotypicKernel) in
 
 private theorem exists_irr_quot {G V W : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup V]
     [Module ℂ V] [AddCommGroup W] [Module ℂ W] {b : ℕ} (ψ : GL (Fin b) k →* G) (hψ : Continuous ψ)
@@ -235,7 +234,6 @@ private theorem exists_irr_quot {G V W : Type} [Group G] [TopologicalSpace G] [I
   obtain rfl : X = ⊤ := top_le_iff.1 hle
   exact isSimpleOrder_iff_isAtom_top.2 hX
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_emb (hG : GlobalTheory.Published.GeometricLemma) (hBZ : GlobalTheory.Published.BernsteinZelevinskyFiniteness) (x : IrrGL k)
     {h : ℕ} (q : Fin h → IrrGL k) (hq : ∑ a, (q a).1 = x.1) (c : Fin h) (hc : (q c).IsCusp)

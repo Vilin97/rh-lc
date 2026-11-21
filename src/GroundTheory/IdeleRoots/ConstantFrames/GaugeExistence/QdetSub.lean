@@ -78,7 +78,6 @@ theorem natDegree_prod_ne_one {n : ℕ} (E : Fin n → Fin n → A) {σ : Equiv.
   have h3 := Equiv.Perm.two_le_card_support_of_ne_one hσ
   omega
 
-omit [Algebra ℂ A] in
 
 theorem prod_linear (m : ℕ) (c : Fin m → A) :
     (List.ofFn fun k : Fin m => X + C (c k)).prod.natDegree ≤ m ∧

@@ -29,7 +29,6 @@ private theorem ringKrullDim_finite_of_finiteType_int (A : Type) [CommRing A]
   push_cast [ENat.card_eq_coe_natCard]
   exact h
 
-open IsLocalRing in
 
 theorem _root_.GlobalTheory.ringKrullDim_lt_top_of_essFiniteType (D : Type) [CommRing D] [Algebra.EssFiniteType ℤ D] :
     ringKrullDim D < ⊤ :=

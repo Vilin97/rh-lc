@@ -151,7 +151,6 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
 
 variable {J i}
 
-variable (J i) in
 
 theorem even_ranks (R : Ranks) (j : ℕ) (h : j + 2 < R.m) :
     Even (R.N j + Formalism.L2.Col.cOf R j + (R.N (j + 1 + 1) + Formalism.L2.Col.cOf R (j + 1 + 1))) := by
@@ -162,7 +161,6 @@ theorem even_ranks (R : Ranks) (j : ℕ) (h : j + 2 < R.m) :
   show Even (R.k + j * (R.t + 1) + (c + 2) + (R.k + (j + 1 + 1) * (R.t + 1) + c))
   exact ⟨R.k + (j + 1) * (R.t + 1) + c + 1, by ring⟩
 
-variable (i) in
 
 end Steps
 

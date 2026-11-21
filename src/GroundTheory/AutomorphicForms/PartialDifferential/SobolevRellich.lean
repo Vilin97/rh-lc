@@ -42,7 +42,6 @@ variable {s N : ℝ} (χ : 𝓢(E, ℂ))
 
 end Identity
 
-open Filter Topology in
 
 end
 

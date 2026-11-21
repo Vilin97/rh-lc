@@ -56,13 +56,11 @@ def Ties (D : D7) : Prop :=
     (ι : D.s.HH ≃ₗᵢ[ℂ] Formalism.L2.SG.PoincareInHH.PoincareSetting.HHX X),
     Formalism.MainNotions.S.AutTie D X.B X.pl ∧ Formalism.L2.SG.RowDict.RowDictTie X G ι ∧ GlobalTheory.LabPin.LabTie X ι
 
-set_option maxHeartbeats 2000000 in
 
 section Rows
 
 open Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.NX
 
-set_option maxHeartbeats 1000000 in
 
 end Rows
 
@@ -71,6 +69,5 @@ theorem lab_of_rows {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : Col
     GlobalTheory.SerSys.LabTie (w.D Z) fun k => @GlobalTheory.Mem.TypePl.labDat ((w.D Z).host.g k) ⟨(w.D Z).host.g_prime k⟩ :=
   fun k => ⟨(t.grp.teich k).symm, t.grp.ser k⟩
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.Fc.LabLinked

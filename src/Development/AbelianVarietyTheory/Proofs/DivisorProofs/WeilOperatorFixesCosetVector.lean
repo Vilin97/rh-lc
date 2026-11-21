@@ -33,7 +33,6 @@ theorem zeroAt_zero (q : ℕ) : ZeroAt D q 0 :=
 theorem trivAt_one {N : ℕ} (q : ℕ) : TrivAt D q ((1 : GA D N) : GL (Fin N) (AE D)) := fun i j => by
   simpa using zeroAt_zero (D := D) q
 
-set_option maxHeartbeats 1000000 in
 
 theorem fix_of_prop {δ t0 : ℂ} {Q : ℕ} (P : Pair D ⊤ δ t0 Q) (hT : P.e0 ∈ TT D (tor0 D ⊤ δ) P.a P.d) {g' : GA D P.d}
     {H : VC D P.a P.d → ℂ} {c : ℂ} (hc' : P.W.Om 1 g' P.e0 = c • H) :

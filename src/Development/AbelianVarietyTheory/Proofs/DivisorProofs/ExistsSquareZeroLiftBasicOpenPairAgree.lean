@@ -143,8 +143,6 @@ end GlobalTheory.SecGlue.Pair
 
 namespace GlobalTheory.SecGlue
 
-open GlobalTheory.SecGlue.Pair in
-set_option maxHeartbeats 1000000 in
 
 theorem exists_pair_lift_comb : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (π : R →+* R₀), Function.Surjective π → RingHom.ker π ^ 2 = ⊥ →
     ∀ (X : Over (Sp R)), Smooth X.hom → ∀ g₀ : Sp R₀ ⟶ X.left, g₀ ≫ X.hom = spMap π →

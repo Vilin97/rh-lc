@@ -102,7 +102,6 @@ theorem nS_inv (t : F) : (nS t)⁻¹ = nS (-t) := by
   show (!![1, t; 0, 1] : Matrix (Fin 2) (Fin 2) F) * !![1, -t; 0, 1] = 1
   simp [Matrix.mul_fin_two, Matrix.one_fin_two]
 
-variable (E) in
 
 theorem submonoid_eq_top [Unram F E] (S : Submonoid (SpecialLinearGroup (Fin 2) F)) (hw : wS F ∈ S)
     (hn : ∀ t : F, (∀ y : F, ‖y‖ < 1 → ‖t * y‖ ≤ 1) → nS t ∈ S) (x : SpecialLinearGroup (Fin 2) F) : x ∈ S := by

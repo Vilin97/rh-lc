@@ -30,18 +30,15 @@ theorem mem_sIdelesSubmodule {S : Finset (HeightOneSpectrum (𝓞 K))} {a : idel
       a.toMul ∈ sIdeles (placesAbove L (S : Set (HeightOneSpectrum (𝓞 K)))) :=
   Iff.rfl
 
-omit [NumberField K] in
 
 theorem sIdelesSubmodule_mono : Monotone (sIdelesSubmodule K L) := fun _ _ h _ ha =>
   sIdeles_mono (placesAbove_mono (Finset.coe_subset.2 h)) ha
 
-omit [NumberField K] in
 
 theorem sIdelesSubmodule_stable (S : Finset (HeightOneSpectrum (𝓞 K))) (g : Gal(L/K)) :
     sIdelesSubmodule K L S ≤ (sIdelesSubmodule K L S).comap ((ideleRep K L).ρ g) := fun _ ha =>
   smul_mem_sIdeles_placesAbove _ g ha
 
-omit [NumberField K] in
 
 theorem exists_mem_sIdelesSubmodule (a : ideleRep K L) :
     ∃ S : Finset (HeightOneSpectrum (𝓞 K)), a ∈ sIdelesSubmodule K L S := by

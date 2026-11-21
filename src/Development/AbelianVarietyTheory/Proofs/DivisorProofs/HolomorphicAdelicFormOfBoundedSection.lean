@@ -129,7 +129,6 @@ noncomputable def trFr {E : Type} [Field E] {Ψ : Finset (E →+* ℂ)} {n : ℕ
     (x : ι → Fin n → Fin n → ℂ) : ReciprocityTheory.ChartRestriction.G.FD.Frame Ψ n :=
   fun τ => (A (e.symm τ) * Matrix.of (x (e.symm τ)) : Mt n)
 
-open ReciprocityTheory.ChartRestriction.G.FD in
 
 theorem holSec_of_isSec {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (X : Data E n) (la : Wt X.Ψ n)
     (P : Frame X.Ψ n → ℂ) (hP : X.IsSec la P) {ι : Type} [Fintype ι] [DecidableEq ι] (e : ι ≃ X.Ψ) (Hm : ι → Mt n)

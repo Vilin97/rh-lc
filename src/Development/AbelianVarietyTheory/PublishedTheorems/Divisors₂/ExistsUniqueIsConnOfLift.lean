@@ -76,7 +76,6 @@ end Pred
 variable (M : Type) [AddCommGroup M] [Module R M] [Module Rᵐᵒᵖ M] [IsCentralScalar R M]
   {M' : Type} [AddCommGroup M'] [Module R' M'] [Module R'ᵐᵒᵖ M'] [IsCentralScalar R' M']
 
-variable (R) in
 
 abbrev pr : TrivSqZeroExt R M →+* R := (fstHom R R M).toRingHom
 
@@ -138,7 +137,6 @@ theorem fst_extDP (κ : DividedPowers I) (n : ℕ) (x : TrivSqZeroExt R M) :
 theorem snd_extDP (κ : DividedPowers I) (n : ℕ) (x : TrivSqZeroExt R M) :
     ((extDP M κ).dpow n x).snd = dpPred κ n x.fst • x.snd := zero_add _
 
-variable (M) in
 
 theorem isDPNilpotent_extend {κ : DividedPowers I} (h : IsNilDP κ) : IsNilDP (extDP M κ) := by
   obtain ⟨N, hN⟩ := h
@@ -249,7 +247,6 @@ theorem IsDPDer.isDPMorphism {κ : DividedPowers I} {D : Derivation T R M} (h : 
     | zero => simp [dpPred, κ.dpow_zero ha]
     | succ n => exact (h n a ha).symm
 
-variable (M) in
 
 theorem isDPMorphism_inl (κ : DividedPowers I) :
     IsDPMorphism κ (extDP M κ) (algebraMap R (TrivSqZeroExt R M)) := by
@@ -260,9 +257,7 @@ section Conn
 
 variable {S S' : Scheme.{0}} (κ : DividedPowers I) (t : S ⟶ Sp R) (A : Over S) [GrpObj A]
 
-variable (M) in
 
-variable (M) in
 
 variable {κ}
 

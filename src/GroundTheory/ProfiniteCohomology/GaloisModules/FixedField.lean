@@ -72,14 +72,12 @@ theorem quotientEquivGal_mk_apply (σ : Gal(L/K)) (x : fixedField (U : Subgroup 
     ((quotientEquivGal U (σ : Gal(L/K) ⧸ (U : Subgroup Gal(L/K))) x : _) : L) = σ x :=
   AlgEquiv.restrictNormal_commutes σ _ x
 
-omit [IsGalois K L] in
 
 theorem mem_invariants_galAdd_iff (x : L) :
     x ∈ Representation.invariants ((galAdd K L).ρ.comp (U : Subgroup Gal(L/K)).subtype) ↔
       x ∈ fixedField (U : Subgroup Gal(L/K)) :=
   ⟨fun h σ => h σ, fun h σ => h σ⟩
 
-omit [IsGalois K L] in
 
 def invariantsGalAddEquiv :
     Representation.invariants ((galAdd K L).ρ.comp (U : Subgroup Gal(L/K)).subtype) ≃ₗ[K]

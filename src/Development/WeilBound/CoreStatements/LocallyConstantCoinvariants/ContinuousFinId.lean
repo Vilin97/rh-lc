@@ -76,7 +76,6 @@ theorem exists_pow_eq_one {w : HeightOneSpectrum (𝓞 E)} (f : (w.adicCompletio
   · exact key i j h e
   · exact key j i h e.symm
 
-variable (F E) in
 
 def finId : Ideles E →* (AF F ⊗[F] E)ˣ :=
   (ofFinIdele F E).comp ((Units.map (finAdEquiv F E).symm.toRingHom.toMonoidHom).comp

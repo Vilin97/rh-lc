@@ -195,7 +195,6 @@ theorem algebraMap_eq_zero {r : A} (hr : r ∈ maximalIdeal A) : algebraMap A (F
   rw [algebraMap_fibreCone, toFC_eq_zero_iff]
   exact Ideal.mem_map_of_mem _ hr
 
-variable (I) in
 
 def clsPreimage (n : ℕ) (T : Ideal (FibreCone I)) : Ideal A where
   carrier := {x | x ∈ I ^ n ∧ cls I n x ∈ T}
@@ -278,7 +277,6 @@ section Reduction
 
 variable {A : Type u} [CommRing A] [IsLocalRing A] {I : Ideal A}
 
-omit [IsLocalRing A] in
 
 theorem form_mem {d : ℕ} {x y : A} (hx : x ∈ I ^ d) (hy : y ∈ I ^ d) (D : ℕ) (r : ℕ → A) :
     ∑ i ∈ Finset.range (D + 1), r i * x ^ i * y ^ (D - i) ∈ I ^ (d * D) := by
@@ -379,7 +377,6 @@ theorem exists_radical_of_finset {e : ℕ} (he : ∀ n : ℕ, (I ^ n).spanFinran
     · exact h2
     · exact Ideal.radical_le_radical_iff.2 ((Ideal.span_singleton_le_iff_mem _).2 h1) (hall y hy)
 
-omit [IsNoetherianRing A] in
 
 theorem cls_mem_pow (n : ℕ) {x : A} (hx : x ∈ I ^ n) :
     cls I n x ∈ (Ideal.span {u | ∃ x ∈ I, u = cls I 1 x}) ^ n := by

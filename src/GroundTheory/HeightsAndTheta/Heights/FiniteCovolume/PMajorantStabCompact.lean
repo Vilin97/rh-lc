@@ -32,7 +32,6 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
   [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem MajorantStabCompact.proof (h : HermitianForm F E W) (v : Basis ι E W) :
     MajorantStabCompact.Statement h v := by

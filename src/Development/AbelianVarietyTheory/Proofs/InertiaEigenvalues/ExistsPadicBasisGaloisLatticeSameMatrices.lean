@@ -50,13 +50,10 @@ variable {G : Type} [Group G] [TopologicalSpace G] {R Qp LL O : Type} [CommRing 
   (hφ : ∀ c, algebraMap O LL (φ c) = algebraMap Qp LL (algebraMap R Qp c))
   (hint : ∀ a : LL, ∃ c : R, c ≠ 0 ∧ ∃ o : O, algebraMap O LL o = algebraMap R Qp c • a)
 
-include hφ in
-omit [IsDomain R] in
 
 theorem smul_eq (c : R) (v : T.V) : φ c • v = algebraMap R Qp c • v := by
   rw [← algebraMap_smul LL (φ c) v, ← algebraMap_smul LL (algebraMap R Qp c) v, hφ]
 
-include hφ hint in
 
 theorem exists_smul_mem (v : T.V) : ∃ c : R, c ≠ 0 ∧ algebraMap R Qp c • v ∈ T.L.T := by
   have kl : ∀ (c : R) (x : T.V), x ∈ T.L.T → algebraMap R Qp c • x ∈ T.L.T := by
@@ -84,7 +81,6 @@ theorem exists_smul_mem (v : T.V) : ∃ c : R, c ≠ 0 ∧ algebraMap R Qp c •
     rw [map_mul, mul_smul]
     exact h3
 
-include hφ hint in
 
 theorem exists_basis_compHom [IsFractionRing R Qp] {ι : Type} :
     letI : Module R ↥T.L.T := Module.compHom ↥T.L.T φ

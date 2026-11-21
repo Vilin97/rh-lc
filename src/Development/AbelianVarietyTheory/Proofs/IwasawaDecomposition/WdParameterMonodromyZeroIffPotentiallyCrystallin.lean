@@ -179,13 +179,11 @@ theorem isSst_of_ineTriv (hV : IsPst P ρ) (hI : IneTriv P ρ) : IsSst P ρ := b
   rw [IsSst, mul_comm]
   exact Nat.eq_of_mul_eq_mul_left finrank_pos h1
 
-omit [FiniteDimensional ↥LL.1 V] in
 
 theorem finrank_map_crisIncl :
     finrank ↥LL.1 ↥((Dcris (P.PD K) ρ).map (crisIncl P ↥LL.1 V)) = finrank ↥LL.1 ↥(Dcris (P.PD K) ρ) :=
   (Submodule.equivMapOfInjective _ (crisIncl_injective P) _).finrank_eq.symm
 
-omit [FiniteDimensional ↥LL.1 V] in
 
 theorem isCrys_of_isSst (hV : IsSst P ρ) (hN : ∀ x ∈ Dpst P ρ, monV P ↥LL.1 V x = 0) :
     IsCrys (P.PD K) ρ := by
@@ -229,7 +227,6 @@ theorem ineTriv_of_isCrys (hV : IsPst P ρ) (hc : IsCrys (P.PD K) ρ) : IneTriv 
   · intro y z _ _ hy hz; rw [map_add (f := _), hy, hz]
   · intro y _ hy; rw [map_neg, hy]
 
-omit [FiniteDimensional ↥LL.1 V] in
 
 theorem isPst_resTo_iff {K' : FinExt l} (h : K.1 ≤ K'.1) : IsPst P (resTo ρ h) ↔ IsPst P ρ := by
   let e : DpstUr P (resTo ρ h) ≃ₗ[↥(MaximalUnramifiedExtension l)] DpstUr P ρ :=
@@ -260,7 +257,6 @@ theorem isPotCrys_iff (hV : IsPst P ρ) :
 
 variable (ι : Om l ≃+* ℂ)
 
-omit [FiniteDimensional ↥LL.1 V] in
 
 theorem wdN_eq_zero_iff : wdN P ι ρ = 0 ↔ monD P ρ = 0 := by
   constructor
@@ -279,7 +275,6 @@ theorem wdN_eq_zero_iff : wdN P ι ρ = 0 ↔ monD P ρ = 0 := by
     rw [wdN_mk, h]
     exact wdMk_zero P ι ρ
 
-omit [FiniteDimensional ↥LL.1 V] in
 
 theorem actD_eq_one_of_wdMk (g : ↥(GK K)) (h : ∀ x, wdMk P ι ρ (actD P ρ g x) = wdMk P ι ρ x) :
     actD P ρ g = 1 := by
@@ -301,7 +296,6 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω]
   (Bw : LocBridge l E Ω (Dec (F := E) A) O) (h : IsPlaceOver A w) (hj : Induces Bw)
 include hj
 
-omit [IsAlgClosure E Ω] in
 
 theorem exists_ine_of_fix (g : ↥(GK Bw.Kw)) (hg : (g : GQ l) ∈ (MaximalUnramifiedExtension l).fixingSubgroup) :
     ∃ σ : ↥(Ine (F := E) A), weilToGK Bw h (ineIncl h σ) = g := by

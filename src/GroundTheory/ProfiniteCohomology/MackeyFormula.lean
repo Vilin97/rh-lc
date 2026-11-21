@@ -160,7 +160,6 @@ theorem mackeyLift_single_ρ [DecidableEq (MackeyDoubleCoset U ι)] (d : MackeyD
     simp
   · simp [Pi.single_eq_of_ne hd]
 
-open scoped Classical in
 
 noncomputable def mackeyIncl (d : MackeyDoubleCoset U ι) :
     mackeySummand U ι N d.out ⟶ Rep.res ι (Rep.coind U.subtype N) :=

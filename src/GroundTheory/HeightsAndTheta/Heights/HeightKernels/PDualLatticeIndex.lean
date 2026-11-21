@@ -303,7 +303,6 @@ theorem eq_of_le_of_prod {a₁ a₂ a₃ b₁ b₂ b₃ : ℕ} (h₁ : a₁ ≤ 
 
 end DualLatticeIndexAlt
 
-open DualLatticeIndexAlt in
 
 theorem DualLatticeIndex.proof : DualLatticeIndex.Statement := by
   intro K _ _ i F F' hle

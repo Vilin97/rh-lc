@@ -425,7 +425,6 @@ theorem exists_dual {r : ℕ} (C : Matrix (Fin n) (Fin r) E) (hC : LinearIndepen
       Matrix.smul_mul, Matrix.smul_mul, Matrix.mul_smul, e3, Matrix.mul_assoc s, hcd1, ← hs, Matrix.mul_one]
     module
 
-variable (σ J) in
 
 def adj : Matrix (Fin n) (Fin n) (AF F ⊗[F] E) →+ Matrix (Fin n) (Fin n) (AF F ⊗[F] E) where
   toFun X := J⁻¹.map (inclR (F := F) (AF F)) * cT (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AF F) σ) X *
@@ -522,7 +521,6 @@ theorem perp_iff_idem {r : ℕ} (C : Matrix (Fin n) (Fin r) E) (L : Matrix (Fin 
       Matrix.sub_mulVec, sub_eq_zero, Matrix.map_mul, Matrix.mul_assoc] at h2
     rw [h2, Matrix.mulVec_mulVec]
 
-variable (σ J) in
 
 def radSet {r : ℕ} (C : Matrix (Fin n) (Fin r) E) (d : Fin r → ℕ) : Set (HA (AF F) σ J) :=
   {g | (∀ i, ∃ a : Fin r → AF F ⊗[F] E, (∀ j, d i ≤ d j → a j = 0) ∧
@@ -778,13 +776,11 @@ theorem cocompact_of_mem_iff_adelic {r : ℕ} (e : Fin r → Fin n → E) (he : 
     ∃ K : Set N, IsCompact K ∧ ∀ m : N, ∃ γ : N, HA.mat _ σ J γ.1 ∈ HFin (AF F) σ J ∧ ∃ k ∈ K, m = γ * k :=
   cocompact_of_mem_iff hσ hJ e he h0 N fun g => by rw [hN, perp_adelic_iff hσ hJ e he]
 
-omit hσ hJ in
 
 theorem conj_invol (h : IsCMExt F E σ) (x : E) : σ (σ x) = x := by
   obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
   exact τ.injective (by rw [h.2.2.2, h.2.2.2, star_star])
 
-omit hσ hJ in
 
 theorem linearIndependent_of_dual {r : ℕ} (e f : Fin r → Fin n → E) (h : ∀ a b, hE σ J (f a) (e b) = if a = b then 1 else 0) :
     LinearIndependent E e := by

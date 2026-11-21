@@ -52,7 +52,6 @@ theorem h1_vanish_generated_of_localized_subsingleton
     rw [one_smul, Fin.sum_univ_zero]
     exact (h 0 I).elim _ _
 
-omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 
 theorem isMGraded_punit : KH.IsMGraded S ι (fun _ : K → ℤ => (⊥ : Submodule S PUnit)) := by
   refine ⟨DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top (fun _ => disjoint_bot_left)

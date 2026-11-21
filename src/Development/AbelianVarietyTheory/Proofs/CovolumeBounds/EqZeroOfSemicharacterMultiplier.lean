@@ -458,7 +458,6 @@ def thetaLevelCharBasis (a b : ι → ℝ) (hτ : τ ∈ SiegelH ι) (hN : 0 < N
     (thetaLevelCharBasis a b hτ hN hr k : (ι → ℂ) → ℂ) = levelTheta a b N τ (r k) := by
   simp [thetaLevelCharBasis]
 
-omit [Fintype ι] in
 
 theorem bijective_fin_zmod (hN : 0 < N) :
     Function.Bijective fun (c : ι → Fin N) i => ((((c i : ℕ) : ℤ)) : ZMod N) := by

@@ -17,7 +17,6 @@ section LtLog
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-open Classical in
 
 end LtLog
 

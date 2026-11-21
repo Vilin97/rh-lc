@@ -126,7 +126,6 @@ theorem ser : GlobalTheory.TypeLeaf.SerLoc D := I.named.ser
 
 theorem typeNZ : ∀ j t, GlobalTheory.DownLift.TypeNZ I.X.R j t := I.named.typeNZ
 
-set_option linter.unusedSectionVars false in
 
 end Inputs
 

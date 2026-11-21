@@ -27,7 +27,6 @@ def phf {P : M.Par} (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)
     (e : Wd.Ix (Fin w.length)) (τ : ℂ) : Wq →L[ℂ] Wp :=
   D.uwG P.k P.r p.T.base.z p.T.base.z' (pbT p j (by omega) F) j (by omega) w e (x0 P.k P.r j hj (zxH h j hs v) τ γ)
 
-open Classical in
 
 def phx {P : M.Par} (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (j : ℕ) (hj : j + 1 ≤ P.r)
     (w : List C.Letter) (h : C.LPt) (hs : D.ptSize h = j) (γ : B.Mat P.k (P.r - (j + 1))) (v : XH h)

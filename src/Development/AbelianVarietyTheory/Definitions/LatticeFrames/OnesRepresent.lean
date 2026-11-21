@@ -80,7 +80,6 @@ def OneIndex : Prop :=
   ∀ j c (h : j + 1 + c = s), ∀ β ∈ (S.T t).idx S.ψ ν j c h 1,
     β = DoubleCoset.mk (R k (XIx (Fin κ) t (j + 1)) (c + 1) 1) ((S.T t).lev (j + 1) (c + 1) (by omega)).J 1
 
-open Classical in
 
 end SymData
 

@@ -19,7 +19,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.SelfReciprocalLocalField
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-omit [IsCMField E] in
 
 theorem eq_of_not_split {w : Pl E} (hw : ¬ IsSplitAt w) {v : HeightOneSpectrum (𝓞 (maximalRealSubfield E))}
     (hv : w.under (𝓞 (maximalRealSubfield E)) = v) :
@@ -27,7 +26,6 @@ theorem eq_of_not_split {w : Pl E} (hw : ¬ IsSplitAt w) {v : HeightOneSpectrum 
   by_contra h
   exact hw ⟨u, h, hu.trans hv.symm⟩
 
-omit [IsCMField E] in
 
 theorem toCompl_bijective {w : Pl E} (hw : ¬ IsSplitAt w) {v : HeightOneSpectrum (𝓞 (maximalRealSubfield E))}
     (hv : w.under (𝓞 (maximalRealSubfield E)) = v) : Function.Bijective (GlobalTheory.LFun.toCompl hv) := by

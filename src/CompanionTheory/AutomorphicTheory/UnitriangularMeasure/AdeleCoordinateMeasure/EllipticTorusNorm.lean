@@ -21,7 +21,6 @@ namespace EllipticTorus
 
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-variable (K L) in
 
 def adeleCoordEquiv : 𝔸[L] ≃ₗ[𝔸[K]] (Fin (Module.finrank K L) → 𝔸[K]) :=
   (adeleBasis (Module.finBasis K L)).equivFun
@@ -34,7 +33,6 @@ theorem continuous_adeleCoordEquiv_symm : Continuous (adeleCoordEquiv K L).symm 
   have := isModuleTopology_adeleRing (K := K) (L := L)
   exact IsModuleTopology.continuous_of_linearMap (adeleCoordEquiv K L).symm.toLinearMap
 
-variable (K L) in
 
 def adeleCoordHomeomorph : 𝔸[L] ≃ₜ (Fin (Module.finrank K L) → 𝔸[K]) where
   toEquiv := (adeleCoordEquiv K L).toEquiv
@@ -63,7 +61,6 @@ theorem adeleCoordEquiv_mul (x : (𝔸[L])ˣ) (y : 𝔸[L]) :
   rw [Matrix.vecMul_transpose, adeleCoordEquiv, Module.Basis.equivFun_apply, Module.Basis.equivFun_apply,
     Algebra.leftMulMatrix_mulVec_repr]
 
-variable (K L) in
 
 def coordMeasure : Measure 𝔸[L] :=
   (adeleMeasurePi K (ι := Fin (Module.finrank K L))).map (adeleCoordEquiv K L).symm

@@ -40,7 +40,6 @@ theorem natCast_mem_Mb {E : Type} [Field E] [NumberField E] [IsCMField E] {H : R
     (l.M : 𝓞 E) ∈ l.Mb :=
   Ideal.mul_le_left (l.prod.ge (Ideal.mem_span_singleton_self _))
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_root_value (l : Level H) {V : HSp D} {k : GA D V} (hk : k ∈ GfC V) {c : (AE D)ˣ →* Circle}
     {χ : HChar D.host.E} (hc : ChrEq c χ) (ht : ∀ P, χ.TameAt P) (Q : Finset (Pl D.host.E))
@@ -112,7 +111,6 @@ theorem exists_of_mem_closure {A B k : Type} [CommRing A] [CommRing B] [CommRing
     obtain ⟨X, h1, h2⟩ := hx
     exact ⟨-X, by rw [Subring.coe_neg, map_neg, h1], by rw [map_neg, h2, neg_zero]⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem resS_eq_zero {I : Ideal (𝓞 D.host.E)} {P : Pl D.host.E} (hP : I ≤ P.asIdeal)
     {z : Af D.host.F ⊗[D.host.F] D.host.E}
@@ -128,7 +126,6 @@ theorem resS_eq_zero {I : Ideal (𝓞 D.host.E)} {P : Pl D.host.E} (hP : I ≤ P
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one]
   · rw [RingHom.map_mul, resS_oToS, Ideal.Quotient.eq_zero_iff_mem.2 (hP hx), zero_mul]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_psi (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n : ℕ} (d : DeltaDat Xo c n)
     (io : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)) (hι : LatEmb V io) (hrk : Dw.p + Dw.q = V.rank)
@@ -192,7 +189,6 @@ theorem exists_psi (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n
   rw [hdet]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem psiTie_of_values (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n r : ℕ}
     (d : DeltaDat Xo c n) (hr : V.rank = r) (io : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E))
@@ -296,7 +292,6 @@ theorem adjoint_eq {l l₂ : Level H} (hM : l.M ∣ l₂.M) (hb : l₂.Mb ≤ l.
 
 end Pairing
 
-set_option maxHeartbeats 1000000 in
 
 theorem datEq_of_values (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D))
     {Λ : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} (hβ : IsSDFrame T βT Λ 1) (e : AE D) {l : Level H}
@@ -361,6 +356,5 @@ theorem datEq_of_values (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)) (βT : GL 
   classical
   exact if_congr (forall₂_congr fun P hP => by beta_reduce; rw [hK P hP]) rfl rfl
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.PinnedClassSum

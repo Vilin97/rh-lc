@@ -52,7 +52,6 @@ end Expand
 section PD
 variable (X : PT E) (bs : Fin nb → Block E n X.dim)
 
-open Classical in
 
 def lst (T : Choice bs) : List (Fin n × Vsp X.dim) :=
   (Multiset.map (letter bs T) Finset.univ.val).toList.map
@@ -101,7 +100,6 @@ theorem polyDeriv_determinantPoly_tensor (s : Fin n → (Fin 1 → Vsp X.dim) �
   rw [Pi.zero_apply, itD_col (hs k)]
   rfl
 
-open Classical in
 
 end PD
 

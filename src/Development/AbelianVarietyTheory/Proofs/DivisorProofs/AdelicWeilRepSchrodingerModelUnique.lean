@@ -20,7 +20,6 @@ namespace GlobalTheory.WeilSchUnique
 
 variable {F : Type} [Field F] [NumberField F]
 
-open scoped Classical in
 
 theorem evalZero_mem_adelicSchwartzAdmittedForms (κ : Type) [Fintype κ] :
     (LinearMap.proj (R := ℂ) (φ := fun _ : (κ → AF F) => ℂ) 0) ∈ (adeleClass F).adm κ := by

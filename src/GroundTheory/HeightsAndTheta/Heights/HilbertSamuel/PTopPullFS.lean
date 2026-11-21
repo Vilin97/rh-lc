@@ -49,7 +49,6 @@ theorem fs_linApply (e : Fin (D + 1) → Ix κ) (z : Ix κ → ℂ) :
 
 end TopPullFS
 
-open TopPullFS in
 
 theorem TopPullFS.proof (hCM : ChangeOfModelStatement) (hBP : ProjFrameBasePtFree.Statement)
     (hIm : ProjFrameImage.Statement) (hDeg : ProjFrameGraphDeg.Statement) : TopPullFS.Statement := by

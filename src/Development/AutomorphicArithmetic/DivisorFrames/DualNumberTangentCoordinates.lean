@@ -150,7 +150,6 @@ private theorem lieLat_loc : ∀ (K : Type) [Field K] [NumberField K] (F : SemiF
       exact Finset.sum_congr rfl fun l _ => by
         rw [Pi.smul_apply, smul_eq_mul, map_mul, ← IsScalarTower.algebraMap_apply, mul_smul, algebraMap_smul K t]
 
-open Formalism.L2.Pj GlobalTheory.ShFam.Pad in
 
 private theorem comb_push {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {X : Scheme.{0}} (t : SAB H X) {S : Type} [CommRing S] (x : Sp S ⟶ X) (G' : Over (Sp S)) [GrpObj G']
@@ -162,7 +161,6 @@ private theorem comb_push {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
   obtain ⟨u, hu, rfl⟩ := h
   exact ⟨fun i => pushPt hp.1.w (u i), fun i => (congrArg (· ≫ φ) (hu i)).trans (Category.assoc _ _ _), (pr u).symm⟩
 
-open Formalism.MainNotions.DIV.Cons (intO) in
 
 private theorem norm_int_le {K C : Type} [Field K] [NumberField K] [NontriviallyNormedField C] [IsUltrametricDist C]
     (j : K →+* C) (a : 𝓞 K) : ‖j (algebraMap (𝓞 K) K a)‖ ≤ 1 := by
@@ -197,7 +195,6 @@ private theorem exists_norm_one {K C : Type} [Field K] [NumberField K] [Nontrivi
       exact mul_lt_one_of_nonneg_of_lt_one_right (norm_int_le j s) (norm_nonneg _) hx
   simpa using key 1 h1
 
-open Formalism.MainNotions.DIV.Cons (intO) in
 
 private theorem local_basis {K C : Type} [Field K] [NumberField K] [NontriviallyNormedField C] [IsUltrametricDist C]
     (F : SemiFib K) (j : K →+* C) :
@@ -238,8 +235,6 @@ private theorem local_basis {K C : Type} [Field K] [NumberField K] [Nontrivially
     refine ⟨algebraMap (𝓞 K) K (r i ^ m), by simp only [map_pow, norm_pow, hi, one_pow], ?_⟩
     rwa [algebraMap_smul]
 
-open Formalism.L2.Pj GlobalTheory.ShFam.Pad in
-open Formalism.MainNotions.DIV.Cons (intO) in
 
 private theorem mem_latDR_iff_span {E : Type} [Field E] [NumberField E] [IsCMField E]
     {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {X : Scheme.{0}} (t : SAB H X) (hX : X.IsSeparated)

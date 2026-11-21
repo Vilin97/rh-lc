@@ -50,6 +50,5 @@ lemma pG_act {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I
     | (unfold DegPre.prBe; simp; done)
     | (unfold DegPre.prBe; simp; exact pullback.lift_fst _ _ _)
 
-set_option maxHeartbeats 4000000 in
 
 end ReciprocityTheory.ChartRestriction.G.DVR

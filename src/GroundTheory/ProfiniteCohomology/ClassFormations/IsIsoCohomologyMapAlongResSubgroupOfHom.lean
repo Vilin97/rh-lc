@@ -36,7 +36,6 @@ theorem cohomologyMapAlong_congr {φ ψ : H →* G} (hφ : Continuous φ) (hψ :
     (n : ℕ) : cohomologyMapAlong φ hφ f n = cohomologyMapAlong ψ hψ g n := by
   rw [cohomologyMapAlong, cohomologyMapAlong, cochainsMapAlong_congr hφ hψ f g h hfg]
 
-omit [IsTopologicalGroup H] in
 
 theorem cohomologyMapAlong_eq_id {φ : G →* G} (hφ : Continuous φ) (f : Rep.res φ A ⟶ A)
     (h : φ = MonoidHom.id G) (hf : ∀ a : A, f.hom a = a) (n : ℕ) :
@@ -111,12 +110,10 @@ section SubgroupOf
 
 variable {U V : Subgroup G} (h : V ≤ U)
 
-omit [IsTopologicalGroup G] in
 
 theorem continuous_subgroupOfEquivOfLe : Continuous (Subgroup.subgroupOfEquivOfLe h).toMonoidHom :=
   (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _
 
-omit [IsTopologicalGroup G] in
 
 theorem continuous_subgroupOfEquivOfLe_symm :
     Continuous (Subgroup.subgroupOfEquivOfLe h).symm.toMonoidHom :=
@@ -131,7 +128,6 @@ def resSubgroupOfHom :
 
 variable [IsDiscreteRep A]
 
-omit h in
 
 instance isDiscreteRep_res_res (W : Subgroup G) (S : Subgroup W) :
     IsDiscreteRep (Rep.res S.subtype (Rep.res W.subtype A)) :=

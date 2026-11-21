@@ -39,7 +39,6 @@ end Basis
 
 section Characters
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem eq_one_of_forall_norm_sub_one_lt (χ : AddChar K Circle) (H : AddSubgroup K)
     (h : ∀ x ∈ H, ‖(χ x : ℂ) - 1‖ < 1 / 2) {x : K} (hx : x ∈ H) : χ x = 1 := by
@@ -139,7 +138,6 @@ omit hψ [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem mulShift_ne_one {a : K} (ha : a ≠ 0) : ψ.mulShift a ≠ 1 :=
   AddChar.IsPrimitive.of_ne_one hψ1 ha
 
-omit hψ [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem addCharConductor_mulShift {a : K} (ha : a ≠ 0) :
     addCharConductor (ψ.mulShift a) = addCharConductor ψ - ord a := by
@@ -167,7 +165,6 @@ section SelfDual
 
 variable {ψ : AddChar K Circle} (hψ : Continuous ψ) (hψ1 : ψ ≠ 1)
 
-include hψ1 in
 
 end SelfDual
 

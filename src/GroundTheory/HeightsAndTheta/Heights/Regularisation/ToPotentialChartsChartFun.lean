@@ -102,7 +102,6 @@ namespace PotentialCharts
 
 variable (P : PotentialCharts A)
 
-open Classical in
 
 end PotentialCharts
 

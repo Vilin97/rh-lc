@@ -132,8 +132,6 @@ variable {ρ : W → Module.End ℂ V} {χ : W → W → ℂ} {L X Y : AddSubgro
   (hfinX : ∀ k, 0 < k → Finite (Qt k (L ⊓ X))) (hfinY : ∀ k, 0 < k → Finite (Qt k (L ⊓ Y)))
   (htf : ∀ k : ℕ, 0 < k → ∀ t : W, k • t = 0 → t = 0)
 
-include hχl hχr hχ0 hLL hdY in
-open Classical in
 
 theorem chi_sum_X {k : ℕ} [Fintype (Qt k (L ⊓ X))] {y : W} (hy : y ∈ Yk L Y k) :
     ∑ b : Qt k (L ⊓ X), χ ((b.out : ↥(L ⊓ X)) : W) y =
@@ -171,7 +169,6 @@ theorem chi_sum_X {k : ℕ} [Fintype (Qt k (L ⊓ X))] {y : W} (hy : y ∈ Yk L 
     · exact absurd (sub_eq_zero.1 h).symm hχu
     · exact h
 
-include hXY hχl hχr hχ0 hLL hdY in
 
 theorem piK_vac {k : ℕ} [Finite (Qt k (L ⊓ X))] [Finite (Ik L Y k)] {w : V} (hwX : ∀ u ∈ L ⊓ X, ρ u w = w)
     (hwY : ∀ u ∈ L ⊓ Y, ρ u w = w) : ∃ c : ℂ, c ≠ 0 ∧ piK ρ L X Y k w = c • w := by
@@ -217,9 +214,7 @@ theorem piK_vac {k : ℕ} [Finite (Qt k (L ⊓ X))] [Finite (Ik L Y k)] {w : V} 
     exact L.nsmul_mem (AddSubgroup.mem_inf.1 hv).1 k
   exact_mod_cast (Finset.card_pos.2 ⟨_, h0⟩).ne'
 
-include hY hXY hχl hχr hχ0 hLL in
 
-include hY hXY hχl hχr hχ0 hLL hdY hfinX hfinY htf in
 
 theorem vac_eq_zero_of_mem_span (hoY : ∀ y ∈ Y, ∃ k : ℕ, 0 < k ∧ k • y ∈ L) (Θ : Set V)
     (hlev : ∀ G ∈ Θ, ∃ k : ℕ, 0 < k ∧ IsLev ρ L X Y k G) {w : V}

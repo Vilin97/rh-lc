@@ -26,7 +26,6 @@ variable {X : Scheme.{0}} [IsIntegral X]
 theorem gen_mem {U : X.Opens} {x : X} (hx : x ∈ U) : genericPoint X ∈ U :=
   ((genericPoint_spec X).mem_open_set_iff U.isOpen).2 ⟨x, trivial, hx⟩
 
-omit [IsIntegral X] in
 
 theorem memInf {U V : X.Opens} {x : X} (h : x ∈ U) (h' : x ∈ V) : x ∈ U ⊓ V := ⟨h, h'⟩
 
@@ -231,7 +230,6 @@ theorem germOf_eq_iff {x : X} {f g : X.functionFieldˣ} :
   change UnitAt x ((f⁻¹ * g : X.functionFieldˣ) : X.functionField) ↔ _
   rw [Units.val_mul, Units.val_inv_eq_inv_val, div_eq_inv_mul]
 
-variable (X) in
 
 def cartierGroup : AddSubgroup (∀ x : X, Germ x) where
   carrier := {D | ∀ x, ∃ U : X.Opens, x ∈ U ∧ ∃ f, ∀ y ∈ U, D y = germOf y f}
@@ -244,7 +242,6 @@ def cartierGroup : AddSubgroup (∀ x : X, Germ x) where
     have ⟨U, hU, f, hf⟩ := hD x
     ⟨U, hU, f⁻¹, fun y hy => congrArg (- ·) (hf y hy)⟩
 
-variable (X) in
 
 def CartierDiv : Type := cartierGroup X
 
@@ -605,7 +602,6 @@ theorem Presents.unique (h : Presents D L r) (h' : Presents E L r) : D = E := by
   obtain ⟨i, hi⟩ := exists_chart h.isLB x
   exact ⟨r i, h.isEqn i x hi, h'.isEqn i x hi⟩
 
-open Classical in
 
 def frameRat (L : LB X) (i₀ : L.ι) (h₀ : genericPoint X ∈ L.U i₀) (i : L.ι) : X.functionFieldˣ :=
   if h : genericPoint X ∈ L.U i then
@@ -1006,7 +1002,6 @@ theorem isDivOfForm_canonical : IsDivOfForm (canonical p d) (baseForm p d) := by
   rw [hE.iff_unitAt, key, mul_div_cancel_left₀ _ (Units.ne_zero _)]
   exact hu
 
-variable {p d} in
 
 theorem IsDivOfForm.unique {η : RatForms p d} (hη : η ≠ 0) (h : IsDivOfForm D η)
     (h' : IsDivOfForm E η) : D = E := by
@@ -1021,8 +1016,6 @@ theorem IsDivOfForm.unique {η : RatForms p d} (hη : η ≠ 0) (h : IsDivOfForm
   exact ⟨Units.mk0 a ha0, h U ω hω x hx _ (by rw [Units.val_mk0, ha]),
     h' U ω hω x hx _ (by rw [Units.val_mk0, ha])⟩
 
-omit [SmoothOfRelativeDimension d p] in
-variable {p d} in
 
 theorem IsDivOfForm.smul {η : RatForms p d} (h : IsDivOfForm D η) (g : X.functionFieldˣ) :
     IsDivOfForm (D + principal g) ((g : X.functionField) • η) := by

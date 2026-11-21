@@ -345,7 +345,6 @@ def hDeltaEquiv (m : ℕ) : Sheaf.H.{w'} S.X₃ (m + 1) ≃+ Sheaf.H.{w'} S.X₁
         rw [← hx, H.eq_zero_of_injective S.X₂ x, map_zero],
       fun x => H.exact₁ hS rfl x (H.eq_zero_of_injective S.X₂ _)⟩
 
-include hS in
 
 theorem nonempty_cechH_one_equiv (U : ι → Opens X) (hU : iSup U = ⊤)
     (hC : IsCechShortExact U S.f.hom S.g.hom) (hI : CechAcyclic S.X₂.obj U) :

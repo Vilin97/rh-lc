@@ -34,7 +34,6 @@ section Lin
 variable {O O' V : Type} [CommRing O] [IsDomain O] [CommRing O'] [Algebra O O'] [AddCommGroup V]
   [Module (FractionRing O) V] [Module O V] [IsScalarTower O (FractionRing O) V]
 
-variable (O') in
 
 end Lin
 

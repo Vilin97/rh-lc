@@ -15,8 +15,6 @@ open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.
 
 namespace GlobalTheory.PDivGroup.KerGrp
 
-set_option autoImplicit false in
-open CategoryTheory TensorProduct Coalgebra Bialgebra in
 
 theorem _root_.GlobalTheory.PDivGroup.KerGrp.isCocomm_of_surjective {k A B : Type} [CommRing k] [CommRing A] [CommRing B]
     [Bialgebra k A] [Bialgebra k B] [IsCocomm k A] (f : A →ₐc[k] B)
@@ -37,8 +35,6 @@ theorem _root_.GlobalTheory.PDivGroup.KerGrp.isCocomm_of_surjective {k A B : Typ
   simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply]
   rw [← CoalgHomClass.map_comp_comul_apply, hcomm, hA]
 
-set_option autoImplicit false in
-open CategoryTheory TensorProduct Coalgebra Bialgebra in
 
 theorem _root_.GlobalTheory.PDivGroup.KerGrp.map_res_kerIdeal {p : ℕ} {k : Type} [CommRing k] {G H : _root_.GlobalTheory.PDivGroup p k} (u : G ⟶ H)
     (n : ℕ) : Ideal.map (G.res n : G.A (n + 1) →ₐ[k] G.A n) (_root_.GlobalTheory.PDiv.kerIdeal (u.app (n + 1))) =
@@ -120,8 +116,6 @@ theorem exists_of_family {p : ℕ} {k : Type} [Field k] (G : PDivGroup p k)
           rw [hr, ha', map_zero] }
   exact ⟨K, ⟨π, fun n => BialgHom.ext fun a => hr n a⟩, fun n => ⟨hπ n, hk n⟩⟩
 
-set_option autoImplicit false in
-open CategoryTheory TensorProduct Coalgebra Bialgebra in
 
 theorem _root_.GlobalTheory.PDivGroup.KerGrp.exists_kernel (p : ℕ) [Fact p.Prime] (k : Type) [Field k] (G : _root_.GlobalTheory.PDivGroup p k)
     (u : G ⟶ G) (h₀ : ℕ)

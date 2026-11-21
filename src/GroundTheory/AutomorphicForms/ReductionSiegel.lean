@@ -207,7 +207,6 @@ def siegelTorus (n : ℕ) (t : ℝ) : Set (AdelicGLn.AdelicGL K n) :=
 def siegelSet (n : ℕ) (ω : Set (AdelicGLn.AdelicGL K n)) (t : ℝ) : Set (AdelicGLn.AdelicGL K n) :=
   {g | ∃ b ∈ ω, ∃ a ∈ siegelTorus n t, ∃ k ∈ maxCompact, g = b * a * k}
 
-open scoped Pointwise in
 
 theorem exists_siegelSet (n : ℕ) :
     ∃ ω : Set (AdelicGLn.AdelicGL K n), IsCompact ω ∧
@@ -319,7 +318,6 @@ theorem exists_siegelSet (n : ℕ) :
           rw [hdiag]; simp only [mul_assoc]
       _ = _ := by rw [hνu]
 
-open scoped Pointwise in
 
 end Reduction
 

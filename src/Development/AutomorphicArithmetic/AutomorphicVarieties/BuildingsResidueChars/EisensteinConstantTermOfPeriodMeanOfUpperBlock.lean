@@ -19,7 +19,6 @@ private theorem cb_rat_aff (F : Type) [Field F] [NumberField F] (a : Fˣ) (y : F
   ext i j
   fin_cases i <;> fin_cases j <;> simp [aff, ratGL]
 
-open NumberField GlobalTheory.CuspRep in
 
 private noncomputable def cb_scale (F : Type) [Field F] [NumberField F] (u : (Ad F)ˣ) : NA F ≃ₜ+ NA F where
   toFun x p := (u : Ad F) * x p

@@ -149,21 +149,13 @@ variable (hAlg : FmAlg) (hAt : FmAtP) (hCM : Tail.ConvMul) (hAct : ActAlg) (hId 
   (ht : ∀ w, L.t w = idem (U₂ w))
   (hinv : ∀ w ∈ P, ∀ x y, ∀ u ∈ U₁ w, ∀ g, L.m w x y (u * g) = L.m w x y g ∧ L.m w x y (g * u) = L.m w x y g)
 
-include hAt hId hS hP hU₁ hU₂ hok hs ht in
 
-include hAt hId hS hP hU₁ hU₂ hok hs ht in
 
-include hAt hId hS hP hU₁ hU₂ hok hs ht in
 
-include hAct hAt hId hS hP hU₁ hU₂ hok hs ht hinv in
 
-include hAct hAt hId hS hP hU₁ hU₂ hok hs ht hinv in
 
-include hAlg hCM hok hS hP hU₁ hU₂ hs ht hinv in
 
-include hAlg hAt hCM hAct hId hS hP hU₁ hU₂ hok hs ht hinv in
 
-include hAlg hAt hCM hAct hId hS hP hU₁ hU₂ hok hs ht hinv in
 
 end Main
 

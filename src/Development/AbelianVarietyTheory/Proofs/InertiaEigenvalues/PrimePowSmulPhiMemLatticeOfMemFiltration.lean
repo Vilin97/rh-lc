@@ -44,7 +44,6 @@ section Padic
 variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebra O K]
   [IsUnitBall O K] (l : ℕ) [Fact l.Prime] [NormedAlgebra ℚ_[l] K]
 
-omit [IsUltrametricDist K] in
 
 theorem norm_pow_sub_le_norm_factorial {i j : ℕ} (hji : j ≤ i) (hjl : j < l) :
     ‖(l : K)‖ ^ (i - j) ≤ ‖(i.factorial : K)‖ := by

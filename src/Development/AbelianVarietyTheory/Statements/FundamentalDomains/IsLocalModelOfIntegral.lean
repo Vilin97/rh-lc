@@ -85,8 +85,6 @@ theorem isLieBasis_of_isDiff (P : Out.PolAV (Sp ℂ)) (u : HolUnif P.A P.L P.g)
   refine ⟨_, hw', fun d h => ?_⟩
   rw [← hu _ (key d _ h), inv_smul_smul₀ hc]
 
-open NumberField IsDedekindDomain in
 
-open NumberField IsDedekindDomain in
 
 end GlobalTheory.KeyPow.Test

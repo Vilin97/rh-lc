@@ -199,7 +199,6 @@ namespace Model
 
 variable [MeasurableSpace E]
 
-open scoped Classical in
 
 def bbIntegrand (M : Model F E) {m : ℕ} (w : Pt E (m + 1)) (c : M.Cls m)
     (xy : (IL (m + 1) → E) × (IN w → E)) : ℂ :=
@@ -242,7 +241,6 @@ variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableS
 
 namespace Model
 
-open scoped Classical in
 
 theorem Kk_succ (M : Model F E) (m : ℕ) (w w' : Pt E (m + 1)) :
     M.Kk (m + 1) w w' = ∑' c : M.Cls m, M.BB w c * conj (M.BB w' c) / (M.nAut c : ℂ) := rfl

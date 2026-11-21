@@ -38,9 +38,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : Formalis
 def cmpConst (D : D7) (ka : ℂ) (δ : ℤˣ) (d : ℕ) : ℂ :=
   ka * (((δ : ℤ) : ℂ) ^ d * (-1) ^ d * ((Real.sqrt (2 * Real.pi * xiR D) : ℝ) : ℂ)⁻¹ ^ d)
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 2000000 in
 
 theorem cmpConst_ne_zero {ka : ℂ} (hka : ka ≠ 0) (δ : ℤˣ) (d : ℕ) : cmpConst D ka δ d ≠ 0 := by
   have h1 : 0 < xiR D := norm_pos_iff.2 ((_root_.map_ne_zero _).2 (GlobalTheory.DualPairCompare.embedding_xi_zero_ne_zero D))
@@ -49,7 +47,6 @@ theorem cmpConst_ne_zero {ka : ℂ} (hka : ka ≠ 0) (δ : ℤˣ) (d : ℕ) : cm
   have h3 : ((δ : ℤ) : ℂ) ≠ 0 := Int.cast_ne_zero.2 δ.ne_zero
   exact mul_ne_zero hka (mul_ne_zero (mul_ne_zero (pow_ne_zero _ h3) (pow_ne_zero _ (by norm_num))) (pow_ne_zero _ (inv_ne_zero h2)))
 
-omit [Algebra T.Q.c.F D.what₂.LL] in
 
 theorem ccIs_transport {θ : InfFam D} {V W : HSp D} {hr : W.rank = D.R.r} {j : ℕ} {σ σ' : T.Q.c.F →+* ℂ} (e : σ = σ')
     (hV : T.V j σ = W) (hV' : T.V j σ' = W) {om : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} {f₀ : WO V W → ℂ}
@@ -61,7 +58,5 @@ theorem ccIs_transport {θ : InfFam D} {V W : HSp D} {hr : W.rank = D.R.r} {j : 
   subst e
   exact ⟨cst, h, fun _ => rfl⟩
 
-set_option maxHeartbeats 2000000 in
-open Formalism.L2.DIV GlobalTheory.OneMapTuples in
 
 end GlobalTheory.PtId

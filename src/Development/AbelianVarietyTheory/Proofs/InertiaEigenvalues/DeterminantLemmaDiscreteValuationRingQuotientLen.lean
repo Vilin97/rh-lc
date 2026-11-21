@@ -150,7 +150,6 @@ theorem addVal_det_le_length {ι V : Type} [Fintype ι] [DecidableEq ι] [AddCom
     rw [Matrix.mulVecLin_apply, RingHom.map_mulVec]
     exact h5
 
-omit [IsDiscreteValuationRing O] in
 
 omit [IsDiscreteValuationRing O] in
 theorem mk_eq_zero_iff {k : ℕ} (y : Fin k → FractionRing O) :

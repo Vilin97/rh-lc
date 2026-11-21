@@ -279,7 +279,6 @@ namespace GlobalTheory.Dict.VacForm
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r g n : ℕ} {X : Data E r}
   {bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ} (idx : Fin g ≃ X.Ψ × Fin r)
 
-variable (X bas) in
 
 noncomputable def spB (b : Fin g ⊕ Fin g → Fin r → E) : Matrix (Fin g ⊕ Fin g) (Fin g ⊕ Fin g) ℚ :=
   Matrix.of fun p q => crd X bas (b p.swap) q.swap

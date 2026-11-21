@@ -123,7 +123,6 @@ theorem mem_dualFr_tauLat {E : Type} [Field E] [NumberField E] (emb : ι → E �
     | add y z _ _ hy hz => rw [dotProduct_add]; exact Submodule.add_mem _ hy hz
     | smul c y _ hy => rw [dotProduct_smul]; exact Submodule.smul_mem _ c hy
 
-omit [Fintype ι] in
 
 theorem dualFr_tauLat_tilN {E : Type} [Field E] [NumberField E] [StarRing E] (emb : ι → E →+* K) (τ : ι)
     (L : Submodule (𝓞 E) (Sp E n)) :

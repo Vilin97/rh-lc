@@ -24,4 +24,3 @@ private theorem ratVal_add' {k : Type} [CommRing k] {Z : Scheme.{0}} [AlgebraicG
 
 end
 
-open GlobalTheory.Cartier GlobalTheory.CxPts in

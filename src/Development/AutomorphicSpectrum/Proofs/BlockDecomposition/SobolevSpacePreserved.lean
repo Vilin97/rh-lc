@@ -107,7 +107,6 @@ theorem limit_sob (hS : SobG) (g : ℕ → Mat n → V) (x : List (Bool × Fin n
 
 end GlobalTheory.CompanionTheory.PresSobA
 
-open GlobalTheory.CompanionTheory.PresSobA in
 
 theorem GlobalTheory.CompanionTheory.PresSobA.presSob : PresSob := by
   intro n _ _ μ _ V _ _ _ S hLg hU hRC hS hcomm f hf

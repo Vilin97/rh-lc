@@ -136,8 +136,6 @@ theorem units_square_index : UnitsSquareIndex := by
     Nat.card_eq_fintype_card, Fintype.card_fun, ZMod.card, Fintype.card_fin, ← hrank, pow_succ,
     mul_comm]
 
-open UniqueFactorizationMonoid in
 
-open UniqueFactorizationMonoid in
 
 end Formalism.HermitianLatticeCounting.P

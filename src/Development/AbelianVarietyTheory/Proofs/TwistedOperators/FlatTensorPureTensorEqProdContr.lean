@@ -202,13 +202,11 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   [BorelSpace k] {n n' n'' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] [Fintype n''] [DecidableEq n'']
   {ψ : AddChar k Circle} (ν : Measure k) [ν.IsAddHaarMeasure]
 
-omit [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [BorelSpace k] [ν.IsAddHaarMeasure] in
 
 theorem measurePreserving_comp_equiv {A B : Type} [Fintype A] [Fintype B] [SigmaFinite ν] (e : A ≃ B) :
     MeasurePreserving (MeasurableEquiv.piCongrLeft (fun _ : B => k) e).symm (Measure.pi fun _ => ν)
       (Measure.pi fun _ => ν) := (measurePreserving_piCongrLeft (fun _ : B => ν) e).symm
 
-omit [DecidableEq n] [DecidableEq n'] in
 
 theorem integrable_col {Ψ : Matrix n (n' ⊕ Unit) k → ℂ} (hΨ : Ψ ∈ SB _) (x : Matrix n n' k) :
     Integrable (fun y : n → k => Ψ (fromCols x (Matrix.of fun r _ => y r))) (Measure.pi fun _ => ν) := by
@@ -221,7 +219,6 @@ theorem integrable_col {Ψ : Matrix n (n' ⊕ Unit) k → ℂ} (hΨ : Ψ ∈ SB 
     · exact continuous_apply r
   exact (hΨ.1.continuous.comp h.continuous).integrable_of_hasCompactSupport (hΨ.2.comp_isClosedEmbedding h)
 
-omit [DecidableEq n] [DecidableEq n''] in
 
 theorem integrable_row {Ψ : Matrix (n'' ⊕ Unit) n k → ℂ} (hΨ : Ψ ∈ SB _) (x : Matrix n'' n k) :
     Integrable (fun u : n → k => Ψ (fromRows x (Matrix.of fun _ => u))) (Measure.pi fun _ => ν) := by
@@ -250,7 +247,6 @@ theorem integral_pair_eq_contr (hψ : Continuous ψ) {Ψ₁ : Matrix n (n' ⊕ U
   refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
   ring
 
-open Classical in
 
 theorem integral_double_step (hψ : Continuous ψ) {c c' : ℕ} (hc : Even c) (hc' : Odd c')
     {Φ₁ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ} {Φ₂ : Matrix (n'' ⊕ Fin c') (n ⊕ Fin (c' + 1)) k → ℂ}
@@ -270,7 +266,6 @@ theorem integral_double_step (hψ : Continuous ψ) {c c' : ℕ} (hc : Even c) (h
   simp only [flatStep_eq_flCol ψ ν hc, flatStep_eq_flRow ψ ν hc']
   rfl
 
-open Classical in
 
 theorem integral_last_step {c : ℕ} (hc : Even c) (Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ) (x : Matrix n n' k)
     (z : n → k) :

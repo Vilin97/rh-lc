@@ -45,7 +45,6 @@ def IsFormOrd (η : Forms c n) (a : ℤ) : Prop :=
   ∃ ω : Forms E.const n, IsFreeGen E.ring ω ∧
     ∃ f : Kˣ, η = (f : K) • E.toRat n ω ∧ E.ord f = a
 
-open Classical in
 
 def formOrd (η : Forms c n) : ℤ := if h : ∃ a, E.IsFormOrd η a then h.choose else 0
 

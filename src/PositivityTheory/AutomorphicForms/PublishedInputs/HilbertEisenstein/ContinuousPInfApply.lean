@@ -19,7 +19,6 @@ namespace UpperTheory.HilbertEisensteinWeightOne.EisensteinIntegrability
 
 variable {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
 
-variable (F) in
 
 def gauss : 𝓢(NumberField.mixedEmbedding.mixedSpace F, ℂ) :=
   SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (mixedToEuclidean F)
@@ -30,7 +29,6 @@ def gJ (J : (FractionalIdeal (𝓞 F)⁰ F)ˣ) : Ad F → ℂ := schwartzBruhatT
 theorem gJ_mem (J : (FractionalIdeal (𝓞 F)⁰ F)ˣ) : gJ J ∈ schwartzBruhat F :=
   schwartzBruhatTensor_mem _ (cosetIndicator_mem_finiteSchwartzBruhat J 0)
 
-variable (F) in
 
 def invN (N : ℕ) : IdeleGroup F :=
   diagonal F (Units.mk0 ((N : F) + 1)⁻¹ (inv_ne_zero (Nat.cast_add_one_ne_zero N)))
@@ -126,7 +124,6 @@ private theorem sq_lin_le {a b p q H : ℝ} (hp : |p| ≤ H) (hq : |q| ≤ H) :
   nlinarith [sq_nonneg (a * p - b * q), mul_le_mul_of_nonneg_left hp2 (sq_nonneg a),
     mul_le_mul_of_nonneg_left hq2 (sq_nonneg b)]
 
-open Classical in
 
 theorem dom_gen {Kc : Set (Matrix (Fin 2) (Fin 2) (Ad F))} (hK : IsCompact Kc) {L : Set (Af F)} (hL : IsCompact L) :
     ∃ (J : (FractionalIdeal (𝓞 F)⁰ F)ˣ) (N : ℕ), ∀ A ∈ Kc, ∀ y : Fin 2 → Ad F,

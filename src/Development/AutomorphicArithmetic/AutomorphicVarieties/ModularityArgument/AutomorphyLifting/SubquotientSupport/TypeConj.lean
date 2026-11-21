@@ -369,4 +369,3 @@ end Gal
 
 end UpperTheory.V.Z.Win.T2.TypeConj
 
-open UpperTheory.V.Z.Win.T2.TypeConj in

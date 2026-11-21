@@ -116,17 +116,11 @@ theorem disjoint_vT (hI : I.Ok) (u : B.Word) (b : I.ι) : Disjoint ((B.primes X)
     rw [map_natCast]
     exact h3
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 theorem dead_moved (hI : I.Ok) {b : I.ι} {Ch₀ Ch : ℕ → Type} {A A' : TwDat I l Z u b Ch₀} {ι : ∀ j, Ch j → Ch₀ j} (hl : A.Live ι)
     (hb : A'.b0 = A.b0) (hne : ∀ i, i + 1 ≠ B.R.m → A'.p0 i = A.p0 i)
@@ -164,14 +158,12 @@ theorem dead_moved (hI : I.Ok) {b : I.ι} {Ch₀ Ch : ℕ → Type} {A A' : TwDa
     subst hz'
     exact (map_eq_zero_iff _ B.embLL.injective).1 h
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.Fam.Rebase
 
 namespace GlobalTheory.Fam
 open GlobalTheory.Fam.Rebase
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.Fam
 

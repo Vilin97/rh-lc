@@ -160,7 +160,6 @@ theorem htLe_of_real [StarRing K] (g : Formalism.PairingDivisionLocalBalance.Pl 
 end GlobalTheory.HeightMeanValueBounds
 
 namespace GlobalTheory.SqTop
-open GlobalTheory.FunObj GlobalTheory.FunObj.SqNum GlobalTheory.ChiGrid in
 
 theorem thbSt_of_inputs : GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds.ToricDenominator → FieldDat → TorEx → DenEx → DenSum → BetaArch → ThbSt := by
   intro hTD hFD hTor _ hDS hBA

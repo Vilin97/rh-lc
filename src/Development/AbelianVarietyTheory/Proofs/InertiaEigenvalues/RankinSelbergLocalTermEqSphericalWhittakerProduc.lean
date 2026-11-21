@@ -42,7 +42,6 @@ theorem wtS_eq_sum (n : ℕ) (a : Fin n → ℤ) :
   push_cast
   ring
 
-open GlobalTheory.JSW in
 
 theorem localTerm_eq : ∀ (q : ℕ), 0 < q → ∀ (n : ℕ) (α β : Fin n → ℂ) (x : ℝ) (v : Fin n → ℤ), (∀ i, 0 ≤ v i) → Antitone v →
     (((q : ℝ) ^ GlobalTheory.CellDec.wtS n v : ℝ) : ℂ) *

@@ -37,7 +37,6 @@ def sumH {J : Matrix (Fin m) (Fin m) E} {J' : Matrix (Fin n) (Fin n) E} {Q : Mat
 
 variable {J : Matrix (Fin n) (Fin n) E} (Q : Matrix (Fin (n + n)) (Fin (n + n)) E)
 
-variable {Q} in
 
 def ioH (h : Q = dblGram finSumFinEquiv J) : HA R σ J × HA R σ J →* HA R σ Q :=
   ioU (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR R σ) finSumFinEquiv (J := JR R J) (Q := JR R Q) (h ▸ JR_dblGram R J)
@@ -93,7 +92,6 @@ theorem isUnit_det_JR (hJ : J.det ≠ 0) : IsUnit (JR (F := F) R J).det := by
   rw [e1]
   exact (isUnit_iff_ne_zero.2 hJ).map _
 
-include h in
 
 theorem sigR_det_quot_mul_aH (hJ : J.det ≠ 0) (p : siegelH R σ Q) :
     Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR R σ (quotMat finSumFinEquiv (matHom R σ Q p).1).det * (aH R σ Q p).1 = 1 := by
@@ -147,7 +145,6 @@ theorem aH_mapH (p : siegelH R σ Q) : aH R' σ Q ⟨mapH σ Q φ p, mapH_mem_si
   exact (congrArg Matrix.det (leviMat_map finSumFinEquiv (Algebra.TensorProduct.map φ (AlgHom.id F E)).toRingHom _)).trans
     (RingHom.map_det _ _).symm
 
-variable (σ Q) in
 
 abbrev siegelRat : Subgroup (UJ (σ : E →+* E) Q) := siegelOf finSumFinEquiv (UJ (σ : E →+* E) Q).subtype
 
@@ -295,7 +292,6 @@ theorem aH_embP (v : HeightOneSpectrum (𝓞 F)) (p : siegelH (Fv F v) σ Q) :
         Subtype.ext (by rw [coe_projP, coe_embP]; exact proj_emb_ne σ Q e _)
       rw [e1, map_one]
 
-omit [NumberField E] in
 
 theorem exists_aH_eq_of_mem_ratPts (p : siegelH (AF F) σ Q) (hp : (p : GAd σ Q) ∈ AdelicU.ratPts σ Q) :
     ∃ x : Eˣ, aH _ σ Q p = Units.map (inclR (F := F) (AF F)).toMonoidHom x := by
@@ -332,7 +328,6 @@ instance isLattice_sumLat (L : Submodule (𝓞 E) (Fin m → E)) (L' : Submodule
     Submodule.span_prod_eq E (zero_mem L) (zero_mem L'), h.span_eq_top, h'.span_eq_top, Submodule.prod_top,
     Submodule.map_top, LinearEquiv.range]
 
-omit [NumberField E] in
 
 theorem latLoc_sumLat (L : Submodule (𝓞 E) (Fin m → E)) (L' : Submodule (𝓞 E) (Fin n → E)) (v : HeightOneSpectrum (𝓞 F)) :
     latLoc F (sumLat finSumFinEquiv L L') v = sumLat finSumFinEquiv (latLoc F L v) (latLoc F L' v) := by
@@ -465,7 +460,6 @@ theorem isLatticeFrame_dbl (ha : IsLatticeFrame L a) :
     · rw [pairVec_inr]
       exact h2 i
 
-include h in
 
 theorem isMajorantFrame_dbl (ha : IsMajorantFrame σ J a) : IsMajorantFrame σ Q (blkGL finSumFinEquiv (a, a)) := by
   intro w
@@ -480,7 +474,6 @@ theorem isMajorantFrame_dbl (ha : IsMajorantFrame σ J a) : IsMajorantFrame σ Q
   simp only [Equiv.symm_apply_apply]
   rcases k with i | i <;> simp <;> split_ifs <;> simp_all
 
-include h in
 
 theorem isSelfDualAt_dbl {v : HeightOneSpectrum (𝓞 F)} (hL : IsSelfDualAt σ J L v) :
     IsSelfDualAt σ Q (sumLat finSumFinEquiv L L) v := by

@@ -50,8 +50,6 @@ private theorem residueFieldCard_adicCompletion_lemma :
   rw [← _root_.Formalism.UG.P.tjcosets_card_residue v]
   exact Nat.card_congr (IsLocalRing.ResidueField.mapEquiv e).toEquiv
 
-open ValuativeRel MeasureTheory NumberField IsDedekindDomain in
-variable {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) in
 
 theorem _root_.GlobalTheory.SmGL.SphCompletion.ord_completion (x : (v.adicCompletion F)ˣ) :
     letI := _root_.GlobalTheory.LocalData.complRel v
@@ -68,8 +66,6 @@ theorem _root_.GlobalTheory.SmGL.SphCompletion.ord_completion (x : (v.adicComple
   have := zpow_right_injective₀ (by linarith) hq.ne' h
   omega
 
-open ValuativeRel MeasureTheory NumberField IsDedekindDomain in
-variable {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) in
 
 theorem _root_.GlobalTheory.SmGL.SphCompletion.KO_completion (n : ℕ) :
     letI := _root_.GlobalTheory.LocalData.complRel v
@@ -99,8 +95,6 @@ private theorem natCast_zpow_neg_cpow_eq_cpow_mul (q : ℕ) (m : ℤ) (n : ℕ) 
   push_cast
   rfl
 
-open ValuativeRel MeasureTheory NumberField IsDedekindDomain in
-variable {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) in
 
 theorem _root_.GlobalTheory.SmGL.SphCompletion.law_completion (n : ℕ) (α : Fin n → ℂˣ)
     (b : _root_.GlobalTheory.SmGL.borel (v.adicCompletion F) (Fin n)) (c : ℂ) :
@@ -138,8 +132,6 @@ theorem _root_.GlobalTheory.SmGL.SphCompletion.law_completion (n : ℕ) (α : Fi
     _root_.GlobalTheory.LGrp.nabs_eq_zpow, hord, residueFieldCard_adicCompletion_lemma, mul_comm]
   rw [Units.val_zpow_eq_zpow_val, natCast_zpow_neg_cpow_eq_cpow_mul]
 
-open ValuativeRel MeasureTheory NumberField IsDedekindDomain in
-variable {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) in
 
 theorem _root_.GlobalTheory.SmGL.SphCompletion.exists_fixed_iff {k : Type} [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n : ℕ} (χ : Fin n → kˣ →* ℂˣ)
@@ -182,8 +174,6 @@ theorem _root_.GlobalTheory.SmGL.SphCompletion.exists_fixed_iff {k : Type} [Fiel
     ext x
     exact (_root_.GlobalTheory.SmGL.parInd_apply _ _ g x _).trans (hinv g hg x)
 
-open ValuativeRel MeasureTheory NumberField IsDedekindDomain in
-variable {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) in
 
 theorem _root_.GlobalTheory.SmGL.SphCompletion.isSpherical_iff : ∀ (F : Type) [Field F] [NumberField F]
     (v : HeightOneSpectrum (𝓞 F)) (n : ℕ) (α : Fin n → ℂˣ)

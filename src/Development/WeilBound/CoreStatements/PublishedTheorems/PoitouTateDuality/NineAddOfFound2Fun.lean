@@ -16,7 +16,6 @@ namespace PositivityTheory.Lit1.PTN
 
 attribute [local instance 2000] Rep.hV2
 
-set_option maxHeartbeats 1000000 in
 
 theorem nineAdd_of_found2 {N : ℕ} [NeZero N]
     {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]

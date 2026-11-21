@@ -82,4 +82,3 @@ end SlopeTestRemainingChoices
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing Polynomial UpperTheory.V UpperTheory.V.HV GlobalTheory.GalOfCusp UpperTheory.V.Th
 
-open Formalism.GaloisCohomology UpperTheory.V.Base in

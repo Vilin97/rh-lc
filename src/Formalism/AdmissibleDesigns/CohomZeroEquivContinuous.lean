@@ -151,7 +151,6 @@ theorem finrank_invariants_eq :
     Module.finrank (FractionRing O) ↥(LinearMap.ker (cobK ρ)) = Module.finrank LL ↥(H0V (repL e ρ ι)) := by
   exact congrArg Cardinal.toNat (rank_invariants_eq e ρ hι)
 
-omit hι [TopologicalSpace LL] in
 
 theorem finDim_TrV [FiniteDimensional (FractionRing O) V] : FiniteDimensional LL (TrV e V) := by
   have h : Module.rank (FractionRing O) V = Module.rank LL (TrV e V) :=
@@ -423,7 +422,6 @@ def GoodW (l : K.Col i dc) : Prop :=
     (∀ v, Continuous fun g => repW i dc ρ π (K.colIdx i dc l) (col_over i dc l) g v) ∧
     FilLow (Br.PD D.loc D.nbr i _ (col_over i dc l)) (repW i dc ρ π (K.colIdx i dc l) (col_over i dc l))
 
-omit [DecidableEq d] in
 
 theorem invariants_twist_eq_bot (rX : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (hG2 : TruncatedSeriesCountingIdentities.admG2 i rX ρ π)
     (n : ℕ) (hn : K.plOf i dc n ∈ placesOver D.host.E (D.nd.l i)) :
@@ -463,7 +461,6 @@ private theorem iota_bijective_col (l : K.Col i dc) :
     Function.Bijective (Br.iota D.nbr i _ (col_over i dc l)) :=
   (D.nbr i _ (col_over i dc l)).e.symm.bijective
 
-set_option maxHeartbeats 800000 in
 
 theorem dimLx_of (rX : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (x' : X') (l : K.Col i dc)
     (hBK : TruncatedSeriesCountingIdentities.admBK i) (hG2 : TruncatedSeriesCountingIdentities.admG2 i rX ρ π)

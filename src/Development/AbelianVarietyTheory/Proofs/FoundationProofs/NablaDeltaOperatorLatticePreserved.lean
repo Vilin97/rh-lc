@@ -54,7 +54,6 @@ theorem exists_smul_mem_of_fg (T A : Submodule (𝓞 K) V) (hA : A.FG)
   | add x y _ _ hx hy => rw [smul_add]; exact T.add_mem hx hy
   | smul a x _ hx => rw [smul_comm]; exact T.smul_mem _ hx
 
-omit [Module K V] [IsScalarTower (𝓞 K) K V] in
 
 theorem mem_of_forall_mem_locP (T : Submodule (𝓞 K) V) {x : V}
     (hx : ∀ w : HeightOneSpectrum (𝓞 K), x ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T) : x ∈ T := by

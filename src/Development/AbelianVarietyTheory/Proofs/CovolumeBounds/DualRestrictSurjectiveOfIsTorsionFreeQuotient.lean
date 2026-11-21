@@ -128,7 +128,6 @@ section Frobenius
 variable {R M : Type*} [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] [AddCommGroup M]
   [Module R M]
 
-omit [IsDomain R] in
 
 theorem exists_pair_dvd_of_bilinForm (B : LinearMap.BilinForm R M) (N : Submodule R M) :
     ∃ e ∈ N, ∃ f ∈ N, (∀ y ∈ N, B e f ∣ B e y) ∧ (∀ x ∈ N, B e f ∣ B x f) ∧
@@ -599,7 +598,6 @@ theorem exists_isSymplecticBasis_extend [Module.Free R M] {ι : Type*} [Finite �
       · exact ⟨Sum.inr (Sum.inr i), rfl⟩) hp.2
   exact ⟨g, b, hb, fun i => hbe _⟩
 
-omit [IsDomain R] [IsPrincipalIdealRing R] [Module.Finite R M] in
 
 theorem IsSymplecticBasis.mem_orthogonal_iff {ι κ : Type*} [Finite ι] [Finite κ]
     {b : Basis ((ι ⊕ κ) ⊕ (ι ⊕ κ)) R M} (hb : IsSymplecticBasis B b) {v : Basis ι R I}
@@ -614,7 +612,6 @@ theorem IsSymplecticBasis.mem_orthogonal_iff {ι κ : Type*} [Finite ι] [Finite
       simp [← hv, hb.apply_left, hx]
     exact LinearMap.congr_fun this ⟨n, hn⟩
 
-omit [IsDomain R] [IsPrincipalIdealRing R] [Module.Finite R M] in
 
 theorem IsSymplecticBasis.orthogonal_eq_span {ι κ : Type*} [Finite ι] [Finite κ]
     {b : Basis ((ι ⊕ κ) ⊕ (ι ⊕ κ)) R M} (hb : IsSymplecticBasis B b) {v : Basis ι R I}

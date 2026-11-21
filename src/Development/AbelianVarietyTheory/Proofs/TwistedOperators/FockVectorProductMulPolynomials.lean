@@ -241,7 +241,6 @@ theorem sum_tens {P Q Z Y Pl : Type} [AddCommGroup P] [Module ℂ P] [AddCommGro
 
 end Real
 
-open GlobalTheory.FockAdjoint GlobalTheory.RouteSeesaw in
 
 theorem realA : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T}, L.Is μ₀ → ∀ (W : G.Weil) (i j : Fin D.R.m)
     (A : Fr (G.V (.grid (↑i + 1) (↑j + 1)))) (AV : Fr (G.V (.grid ↑i (↑j + 1)))) (AV₁ : Fr (G.V (.grid (↑i + 1) ↑j))),
@@ -292,7 +291,6 @@ theorem realA : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridD
   rw [← hJ' _ (w₂ d hd), ← e₁, ← e₂] at key
   exact congrArg (τ d • ·) key.symm
 
-open GlobalTheory.FockAdjoint GlobalTheory.RouteSeesaw GlobalTheory.SquareDict.AlgSmall in
 
 theorem realB : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T}, L.Is μ₀ → ∀ (W : G.Weil) (i j : Fin D.R.m)
     (A₁ : Fr (G.V (.grid ↑i ↑j))) (AV : Fr (G.V (.grid ↑i (↑j + 1)))) (AV₁ : Fr (G.V (.grid (↑i + 1) ↑j))),

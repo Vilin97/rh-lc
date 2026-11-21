@@ -235,7 +235,6 @@ structure ThTie {P0 : Subgroup G} {ψ0 : P0 →* D.what₂.LLˣ} {Zs : DefSub A.
     D.what₂.thetaP (tup t) ((i : ℕ) + 1) (D.what₂.jMt (tup t) ((i : ℕ) + 1) (eMt i t x)) =
       jW i ((S0.θ i t).mulVec ((lPrj D A P0 ψ0 Zs i t).mulVec x))
 
-open Classical in
 
 structure NumTie {P0 : Subgroup G} {ψ0 : P0 →* D.what₂.LLˣ} {Zs : DefSub A.fam.amb}
     (S0 : IndefData (A.side P0 ψ0 Zs)) (tup : T → D.what₂.Tup) : Prop where

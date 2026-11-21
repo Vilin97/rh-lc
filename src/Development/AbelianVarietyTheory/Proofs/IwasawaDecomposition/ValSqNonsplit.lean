@@ -80,7 +80,6 @@ theorem cpow_sqrt (q r t : ℕ) :
   rw [e, ← Complex.ofReal_natCast, ← Complex.ofReal_cpow h0, Real.rpow_mul h0, Real.rpow_intCast, Real.sqrt_eq_rpow,
     Complex.ofReal_zpow]
 
-set_option maxHeartbeats 1000000 in
 
 theorem psiL_gal {D : D7} {cf : CharFrame D} {C : NChoice D} {tp : TupTied D cf C} (T : NCharTied D cf C tp)
     (nct : NChTie D C) (hψ : PsiChoiceCompatible D cf C tp) (a : D.nd.Loc) (H1 : NC.HC D.host.E)

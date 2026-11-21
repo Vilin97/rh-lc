@@ -126,7 +126,6 @@ theorem sub_vq (q : ℕ) (ψ : HahnSeries ℚ Ω) : sub ε (q : ℚ) 0 1 ψ = vq
 
 theorem sl_pos (g : SL(2, ℤ)) : 0 < (g : Matrix (Fin 2) (Fin 2) ℤ).det := by rw [g.det_coe]; exact one_pos
 
-open StabHecke in
 
 theorem PP_conj {N l : ℕ} {m : Matrix (Fin 2) (Fin 2) ℤ} (hm : PP N l m) (δ : SL(2, ℤ)) (hN : (N : ℤ) ∣ δ 1 0)
     (hl : (l : ℤ) ∣ δ 1 0) : PP N l (((δ⁻¹ : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) * m * δ) := by
@@ -152,7 +151,6 @@ theorem PP_conj {N l : ℕ} {m : Matrix (Fin 2) (Fin 2) ℤ} (hm : PP N l m) (δ
       (dvd_mul_of_dvd_left h3 (δ 0 1 * δ 0 0))
     rw [ht]; exact h4.add_mul_left_left t
 
-open StabHecke in
 
 theorem mem_coset {N l q : ℕ} (hq : q.Prime) {σ : SL(2, ℤ)} (hσ : IsDiam N l q σ) (hql : IsCoprime (q : ℤ) (l : ℤ))
     (m : Matrix (Fin 2) (Fin 2) ℤ) (hm : m.det = q) (hPm : PP N l m) :
@@ -171,7 +169,6 @@ theorem mem_coset {N l q : ℕ} (hq : q.Prime) {σ : SL(2, ℤ)} (hσ : IsDiam N
     have hd : g.det = 1 := det_eq_one_of_mul hq.pos g _ _ he (det_repT q σ _) hm
     exact ⟨some ⟨k, hk⟩, ⟨g, hd⟩, mem_Gam_of_PP N l ⟨g, hd⟩ _ _ he (congruenceCondition_heckeRepresentative hσ hql _) hPm, he.symm⟩
 
-open StabHecke in
 
 theorem perm_rep {N l q : ℕ} (hq : q.Prime) {σ : SL(2, ℤ)} (hσ : IsDiam N l q σ) (hql : IsCoprime (q : ℤ) (l : ℤ))
     (δ : SL(2, ℤ)) (hN : (N : ℤ) ∣ δ 1 0) (hl : (l : ℤ) ∣ δ 1 0) :
@@ -206,7 +203,6 @@ theorem isDiam_one_of_mem {N l : ℕ} {g : SL(2, ℤ)} (hg : g ∈ Gam N l) : Is
   rw [CongruenceSubgroup.Gamma1_mem] at h1
   simpa [en] using h1.2.1
 
-open StabHecke in
 
 theorem coset_decomp (X : Tower Ω ε) (N l : ℕ) [hl : Fact l.Prime] (w d q : ℕ) (hq : q.Prime) (hqNl : ¬ q ∣ N * l)
     (hd : d.Coprime N) (b : X.Fn l) (hb : b ∈ X.B N l w) :

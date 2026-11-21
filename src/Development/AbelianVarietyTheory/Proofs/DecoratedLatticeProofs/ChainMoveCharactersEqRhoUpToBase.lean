@@ -26,7 +26,6 @@ open GlobalTheory.SeeSaw GlobalTheory.Unf
 noncomputable section
 namespace GlobalTheory.AdForm.TwDat
 
-set_option maxHeartbeats 800000 in
 
 theorem chr_root_mul_base {B : Base} {X : PreX B.toPre} {I : TC B X} (hI : I.Ok) {l : I.Laws} {Z : TC.Later B (I.cols l)}
     {u : B.Word} {a : I.ι} {Ch : ℕ → Type} {A : TwDat I l Z u a Ch} (hA : A.Is) (j : Fin B.R.m) (k : ℕ) (hk : k ≤ B.R.m)

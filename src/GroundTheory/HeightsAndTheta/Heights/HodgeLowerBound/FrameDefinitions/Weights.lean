@@ -95,7 +95,6 @@ def BoundedRegularisationSetting.bregWeight {M : CxModel P d} {Xo : Set ((Σ k, 
     {w : ((Σ k, ι k) → ℂ) → ℝ} (S : BoundedRegularisationSetting M Xo a w) (t : ℝ) : M.Xc → ℝ :=
   S.B.regularised S.ρ t (S.e1 t) S.η
 
-open Classical in
 
 def smoothRep (P : Ideal (MRing ι)) (A : HermLine ι) : HermLine ι :=
   if h : ∃ A' : HermLine ι, A'.a = A.a ∧ IsSmoothHerm A' ∧ ∀ z ∈ mcPts P, A'.h z = A.h z then h.choose
@@ -126,7 +125,6 @@ namespace ComponentData
 
 def SB (D : ComponentData II Ψ K ι Ω E) (B : ℕ) : Finset ℕ := D.S.filter (· ≤ B)
 
-open Classical in
 
 def vertFactor (D : ComponentData II Ψ K ι Ω E) (p : ℕ) (z : (Σ k, ι k) → ℂ) : ℝ :=
   if hc : ∃ c : (k : K) → ι k, ∀ k, z ⟨k, c k⟩ ≠ 0 then

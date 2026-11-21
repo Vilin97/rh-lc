@@ -131,7 +131,6 @@ variable (B : Pre)
 
 def uI : ℂˣ := Units.mk0 Complex.I Complex.I_ne_zero
 
-open Classical in
 
 @[reducible] def ch (u : B.Word) : ColumnChain B.R (Tau B.R) (B.hcW u) :=
   haveI : Fact (B.T u).Prime := ⟨B.T_prime u⟩
@@ -141,7 +140,6 @@ open Classical in
     rho_norm := fun _ _ _ => by simp [uI]
     rho'_norm := fun _ _ _ => by simp [uI] }
 
-open Classical in
 
 @[reducible] def member (u : B.Word) : Member B.R (Tau B.R) (B.hcW u) :=
   haveI : Fact (B.T u).Prime := ⟨B.T_prime u⟩
@@ -183,7 +181,6 @@ open Classical in
   rhoDet_eq_inv_muTilde_chiD_pow _ _ _ := rfl
   rhoDetPrime_eq_muTilde_mul_chi_pow _ _ _ := rfl
 
-open Classical in
 
 def cols (B : Base) : Cols B where
   toCols0 := cols0 B.toPre
@@ -196,7 +193,6 @@ theorem two_lt_alt (u : B.Word) : 2 < B.T u := by
   have h2 := (B.T_prime u).two_le
   omega
 
-open Classical in
 
 end Chain
 

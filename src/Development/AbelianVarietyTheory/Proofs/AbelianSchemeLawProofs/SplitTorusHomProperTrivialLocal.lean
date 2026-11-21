@@ -52,7 +52,6 @@ theorem eq_zero_of_forall_mem_map_pow {A C : Type} [CommRing A] [IsLocalRing A] 
   rw [Algebra.algebraMap_self, Ideal.map_id] at this
   exact Ideal.pow_le_pow_right (Nat.le_succ n) this
 
-open TorusNil in
 
 theorem pt_ext_of_quotients {A C : Type} [CommRing A] [CommRing C] [Algebra A C] {N : Type}
     (I : N → Ideal C) (hI : ∀ x, (∀ i, x ∈ I i) → x = 0)
@@ -80,7 +79,6 @@ theorem pt_ext_of_quotients {A C : Type} [CommRing A] [CommRing C] [Algebra A C]
 
 end TorusLocal
 
-open TorusNil TorusLocal in
 
 theorem splitTorus_hom_proper_trivial_local (A : Type) [CommRing A] [IsLocalRing A]
     [IsNoetherianRing A] (X : Type) [AddCommGroup X] [Module.Free ℤ X] [Module.Finite ℤ X]

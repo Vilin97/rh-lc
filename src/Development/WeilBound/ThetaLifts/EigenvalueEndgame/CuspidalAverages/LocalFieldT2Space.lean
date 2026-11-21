@@ -34,7 +34,6 @@ theorem loc_neBot : NeBot (𝓝[≠] (0 : k)) := by
   rw [map_mul]
   exact mul_lt_of_lt_one_right (zero_lt_iff.2 hr) hp
 
-variable (k n d) in
 
 def intM : AddSubgroup (Matrix (Fin n) (Fin d) k) where
   carrier := {Y | ∀ a b, ValuativeRel.valuation k (Y a b) ≤ 1}

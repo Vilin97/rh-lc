@@ -252,7 +252,6 @@ theorem integral_diag :
 
 end GlobalTheory.PartialFourierFin
 
-open GlobalTheory.PartialFourierFin in
 
 theorem GlobalTheory.PartialFourierFin.exists_partialFourier_diag : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∀ (κ : Type) [Fintype κ],
     ∃ B : ((κ ⊕ κ → FiniteAdeleRing (𝓞 F) F) → ℂ) →ₗ[ℂ] ((κ ⊕ κ → FiniteAdeleRing (𝓞 F) F) → ℂ),

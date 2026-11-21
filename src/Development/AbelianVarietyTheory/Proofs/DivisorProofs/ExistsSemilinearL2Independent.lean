@@ -65,7 +65,6 @@ open MeasureTheory ReciprocityTheory.ChartRestriction.G.FD Formalism.BasicNotion
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ} {D : D7}
 
-set_option maxHeartbeats 2000000 in
 
 theorem exists_semilinear_L2_independent (hS : Out.SecBaseChangeSt) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (σ : c.F →+* ℂ)
     (hσ : GoodEmb c σ) (hU : IsUnf (U σ)) (V : HSp D)
@@ -153,7 +152,6 @@ theorem exists_semilinear_L2_independent (hS : Out.SecBaseChangeSt) (U : ∀ σ 
 
 end Gen
 
-set_option maxHeartbeats 2000000 in
 
 theorem hasGram_nrm_of_good (D : D7) (T : Core D) (j : ℕ) (Y : Deep T j) (e : ℕ) (o : ℝ) (hY : Y.Good e o)
     (G : WTZ D.host.E) : GlobalTheory.AllWt.HasGram (Y.nrm G) := by
@@ -178,6 +176,5 @@ theorem hasGram_nrm_of_good (D : D7) (T : Core D) (j : ℕ) (Y : Deep T j) (e : 
     refine ((Classical.choose_spec hex).1 a x).trans ?_
     exact congrArg (· • Classical.choose hex x) (congrArg (fun τ : Y.d.c₂.F →+* ℂ => τ a) (if_neg h))
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.HSApp

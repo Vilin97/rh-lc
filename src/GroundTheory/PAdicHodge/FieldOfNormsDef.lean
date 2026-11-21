@@ -20,19 +20,16 @@ section Def
 
 variable {K : Type*} [Field K] {Ω : Type*} [Field Ω] [Algebra K Ω] {L : IntermediateField K Ω}
 
-variable (K Ω L) in
 
 abbrev FinSub : Type _ := {E : IntermediateField K Ω // E ≤ L ∧ FiniteDimensional K E}
 
 abbrev inclAlgebra {E E' : IntermediateField K Ω} (h : E ≤ E') : Algebra E E' :=
   (IntermediateField.inclusion h).toRingHom.toAlgebra
 
-open Classical in
 
 def relNorm {E E' : IntermediateField K Ω} (h : E ≤ E') (y : Ω) : Ω :=
   if hy : y ∈ E' then ((@Algebra.norm E E' _ _ (inclAlgebra h) ⟨y, hy⟩ : E) : Ω) else 0
 
-variable (K Ω L) in
 
 def FieldOfNorms : Type _ :=
   {x : FinSub K Ω L → Ω //
@@ -52,9 +49,7 @@ variable (t : NormTower K Ω p) (L : IntermediateField K Ω)
 
 variable {t L}
 
-open Classical in
 
-variable (t L) in
 
 end NormTower
 

@@ -36,7 +36,6 @@ theorem specialIdeal_le_contractPrime {O : Type*} [CommRing O] [IsDomain O] [IsD
 
 end SegreFlagCutProjection
 
-open SegreFlagCutProjection in
 
 theorem SegreFlagCutProjection.proof (hLies : SegreFlagCutLiesOver.Statement)
     (hDim : SegreFlagProjSpecialDim.Statement) : SegreFlagCutProjection.Statement := by

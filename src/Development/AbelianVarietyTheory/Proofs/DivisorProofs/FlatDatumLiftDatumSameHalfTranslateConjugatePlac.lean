@@ -213,7 +213,6 @@ theorem exists_idF_of_fixed {D : D7} (V : HSp D) (y : (AE D)ˣ) (hy : cA D (y : 
   obtain ⟨a, ha⟩ := (GlobalTheory.Member.isDetRoot_laws D V).2.1 1 1 y (h1 1 (map_one _)) (h1 y hy)
   exact ⟨a, by rw [ha, one_mul]⟩
 
-open GlobalTheory.ConjTwist in
 
 theorem isLocUnit_conj {D : D7} {PP : Pl D.host.E} (h : Formalism.L2.NTheta.IsIdemAt (idemAt PP) PP) {u : (kP PP)ˣ} {x : (AE D)ˣ}
     (hx : IsLocUnit PP u x) :
@@ -235,7 +234,6 @@ theorem isLocUnit_conj {D : D7} {PP : Pl D.host.E} (h : Formalism.L2.NTheta.IsId
     rw [resS_conj PP ⟨_, k1⟩ _ (GlobalTheory.AdelicLatMove.toEAf_cA _), k2]
     rfl
 
-open GlobalTheory.ConjTwist in
 
 theorem X_chr : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.Hk3.Core R F → ∀ (i : Fin D.R.m) (t : T0) (B : Base (Vc D i) (Wc D i)) (ψ : Twist D Circle), B.Good → ψ.Good → B.admitted ψ.Q → R.xi t = B.de.chi * ψ.chi → ∀ PP ∈ R.Q t, conjPl PP ∈ B.de.Q ∪ ψ.Q → ∀ u : (kP PP)ˣ, (B.de.locC (conjPl PP) * ψ.locC (conjPl PP)) (Units.map (conjK PP).toMonoidHom u) = (R.xiR t PP u)⁻¹ := by
   intro D G _ _ Pl0 T0 A Ks _ _ _ R F hC i t B ψ hB hψ hQ hxi PP hPP hm u
@@ -334,7 +332,6 @@ theorem isRes_one {D : D7} {χ : Formalism.L2.Host.HChar D.host.E} {P : Pl D.hos
   rw [GlobalTheory.TypeValues.val_atFin P k a hk]
   exact (P.intValuation_eq_one_iff).2 ha
 
-open GlobalTheory.ChiUnit GlobalTheory.DilChi in
 
 theorem X_det : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.Hk3.Core R F → ∀ (i : Fin D.R.m) (t : T0) (Q : Finset (Pl D.host.E)), Q ⊆ R.Q t → ∀ N : ℕ, (∀ PP ∈ Q, (N : 𝓞 D.host.E) ∈ PP.asIdeal) → ∀ e : AE D, IsIdemSum e Q → ∀ ϖ : 𝓞 D.host.E, ϖ ≠ 0 → (∀ PP ∈ Q, ϖ ∈ PP.asIdeal ∧ ϖ ∉ PP.asIdeal ^ 2) → ∀ (m : ℕ) (d d' : Datum.EAf D), d ∈ Formalism.L2.Herm.intAf D.host.F D.host.E → d' ∈ Formalism.L2.Herm.intAf D.host.F D.host.E → d * d' = 1 → ∀ x : (AE D)ˣ, (1 - e) * (x : AE D) = 1 - e → toEAf D e * toEAf D (x : AE D) = toEAf D e * (eToEAf D (ϖ : D.host.E) ^ m * d) → UnitOff N ((((Lift.chrTh (Lift.tup R.mu0 (R.xi t)) R.eta ((i : ℕ) + 1)).2 x : Circle) : ℂ))⁻¹ := by
   intro D G _ _ Pl0 T0 A Ks _ _ _ R F hC i t Q hQ N hNQ e he ϖ hϖ0 hϖ m d d' hd hd' hdd x hx1 hx2

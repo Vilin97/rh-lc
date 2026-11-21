@@ -335,7 +335,6 @@ theorem latCo_le_locP (sp : Spaces R F E) (J : Matrix (Fin N) (Fin N) E) (co : G
 
 end Glue
 
-set_option maxHeartbeats 1000000 in
 
 theorem lat_eq : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a => ∀ (j : ℕ) (hj : j ≤ D.R.m) (β : (St j hj).Ch) (x x₁ : UA D j hj)
   (p p₁ : ChPt (R := D.R) t.sel (t.tup μ) (t.word u) j), IsPtAd A a j hj β x p → IsPtAd A a j hj β x₁ p₁ →

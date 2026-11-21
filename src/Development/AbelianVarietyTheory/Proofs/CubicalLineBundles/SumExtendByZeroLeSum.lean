@@ -42,7 +42,6 @@ theorem sum_extendByZero_le_sum {p : ℕ} (f : Fin p → ℕ) (m : ℕ) : ∑ i 
 
 variable {D : D7} {j : ℕ}
 
-open Classical in
 
 def tot (w : WeightFamilies.Wt D j) (b : D.host.E →+* ℂ) : ℕ :=
   ∑ t : D.what₂.Tau, ((if b = DV.tauEmb D t then ∑ i, w.aP t i else 0) +

@@ -18,7 +18,6 @@ section Ring
 
 variable {R S : Type} [CommRing R] [CommRing S] {a b : ℕ}
 
-variable (R) in
 
 def incl (f : Fin b ↪ Fin a) : Matrix (Fin a) (Fin b) R := Matrix.of fun i p => if f p = i then 1 else 0
 
@@ -31,7 +30,6 @@ theorem transpose_mul_incl (f : Fin b ↪ Fin a) : (incl R f)ᵀ * incl R f = 1 
     rw [if_neg (Ne.symm hi), zero_mul]
   · simp
 
-variable (R) in
 
 def extN (f : Fin b ↪ Fin a) : Matrix (Fin b) (Fin b) R →ₙ+* Matrix (Fin a) (Fin a) R where
   toFun X := incl R f * X * (incl R f)ᵀ
@@ -209,7 +207,6 @@ theorem embGL_infGL (y : GL (Fin b) (Cinf E)) : embGL f (infGL E b y) = infGL E 
 theorem embGL_finGL (k : GL (Fin b) (Af E)) : embGL f (finGL E b k) = finGL E a (embGL f k) :=
   ga_ext (by simp [map_embGL]) (by simp [map_embGL])
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 def embK (k : Kinf E b) : Kinf E a :=
   ⟨(embGL f (Unitary.toUnits k)).val, Matrix.mem_unitaryGroup_iff.2 (by
@@ -220,8 +217,6 @@ def embK (k : Kinf E b) : Kinf E a :=
 omit [NumberField E] [IsTotallyComplex E] in
 theorem toUnits_embK (k : Kinf E b) : Unitary.toUnits (embK f k) = embGL f (Unitary.toUnits k) := Units.ext rfl
 
-omit [IsTotallyComplex E] in
-variable (E) in
 
 def extL : Lie E b →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap

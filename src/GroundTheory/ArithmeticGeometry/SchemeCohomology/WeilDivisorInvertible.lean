@@ -94,7 +94,6 @@ lemma ratVal_ne_zero_of_isBasisOn {U : X.Opens} {s : P.obj (op U)} (hs : IsBasis
   have h10 : (1 : ringOn X (U ⊓ U₀)) = 0 := hb (by simp only [hz, smul_zero])
   exact one_ne_zero (α := Γ(X, U ⊓ U₀)) h10
 
-omit hs₀ in
 
 variable {L : X.Modules} (hL : IsInvertibleSheaf L)
 

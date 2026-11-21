@@ -29,7 +29,6 @@ def kerTr {t : ColT w Z} {Gy : G.LatInst (w.D Z)} (ker : KerFam (w.D Z) t.Gt t.c
     KerFam (w.D (setDivZ Z N h)) (colTTr w Z N h t).Gt (colTTr w Z N h t).cmp (w.tw (setDivZ Z N h)) (latTr (D := w.D Z) N h Gy) :=
   fun u v g => { ker u v g with }
 
-set_option maxHeartbeats 4000000 in
 
 def ktTr {t : ColT w Z} {X : DivX (w.D Z)} {Gy : G.LatInst (w.D Z)} {ker : KerFam (w.D Z) t.Gt t.cmp (w.tw Z) Gy}
     (kt : KerT t X Gy ker) :
@@ -40,7 +39,6 @@ def ktTr {t : ColT w Z} {X : DivX (w.D Z)} {Gy : G.LatInst (w.D Z)} {ker : KerFa
     std := { kt.std with }
     ok := ⟨⟨fun u μ v hv => { (kt.ok.1.choose u μ v hv) with }, fun u μ v hv => kt.ok.1.choose_spec u μ v hv⟩, kt.ok.2⟩ }
 
-set_option maxHeartbeats 8000000 in
 
 theorem entC_tr {t : ColT w Z} {X : DivX (w.D Z)} {Gy : G.LatInst (w.D Z)} {ker : KerFam (w.D Z) t.Gt t.cmp (w.tw Z) Gy}
     (kt : KerT t X Gy ker)

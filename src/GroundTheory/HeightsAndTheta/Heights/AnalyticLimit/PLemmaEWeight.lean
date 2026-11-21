@@ -137,7 +137,6 @@ theorem eventually_le_rSec {A : FinHolAtlas D X} {L : LocPot X} {s : X → X →
 def eWeightPair (L : LocPot X) (s : X → X → ℂ) (c₀ l : ℝ) (z : X) : Fin 2 → ℝ :=
   ![-(c₀ * rSec L s z), -l]
 
-open Classical in
 
 def eWeight (L : LocPot X) (s : X → X → ℂ) (c₀ l : ℝ) (z : X) : ℝ :=
   if z ∈ secOpen s then regMax 1 (eWeightPair L s c₀ l z) - 1 else -l - 1

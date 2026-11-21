@@ -75,7 +75,6 @@ theorem ev_detChg_mul_frameDet (M M' : GlobalTheory.Reg.MChart Z) (h : ⊤ ≤ x
     ev x _ hh (detChg M M').val * frameDet M' h' g = frameDet M h g := by
   rw [GlobalTheory.FlagMod.ev_detChg M M' x h h' hh, frameDet, frameDet, GlobalTheory.FlagMod.rdet_toMatrix_mul]
 
-open Classical in
 
 theorem eigBasis_toMatrix (g g' : EigFrame Z φ x) :
     (eigBasis g).toMatrix (eigBasis g') = Matrix.blockDiagonal' fun τ => g.co g' τ := by
@@ -141,7 +140,6 @@ variable {C}
 
 variable (C)
 
-open Classical in
 
 end Flag
 

@@ -35,7 +35,6 @@ theorem bchar_ne (la : Wt X.Ψ r) {b : Frame X.Ψ r} (hb : b ∈ Bor X.Ψ r) : b
   have hi := hd i (Finset.mem_univ _)
   exact zpow_ne_zero _ hi
 
-open Classical in
 
 def phiF (f0 : Frame X.Ψ r → ℂ) (W : Frame X.Ψ r → ℝ≥0∞) : Frame X.Ψ r → ℝ≥0∞ :=
   fun y => X.dom.piecewise (fun y => ENNReal.ofReal (‖f0 y‖ ^ 2)) 0 y * W y

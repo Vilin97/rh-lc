@@ -31,7 +31,6 @@ section HalfElement
 
 variable {K : Type*} [Field K] [CharZero K] [StarRing K] {d : ℤ} {s : K}
 
-omit [StarRing K] in
 
 end HalfElement
 

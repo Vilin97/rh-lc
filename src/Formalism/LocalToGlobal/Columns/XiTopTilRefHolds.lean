@@ -126,7 +126,6 @@ theorem xtPhiTop_int {m2 : ℕ} (hm : R.m = m2 + 2) (sharp : Bool) {P : HeightOn
   · simp only [if_true] at h
     exact xtPhiGS_int _ _ x h p p' hp (ha.symm ▸ hp')
 
-open Classical in
 
 theorem xtRepY_int {n : ℕ} {ST : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E n ST Pr.vGs) (Y : Set (Sp X.E n))
     (hY : Y ∈ ybSet sel mu cst d.1.N) (P : rowSG Pr sel mu) (hP : P.1 ∈ Pr.vGs) (j : Fin n) :

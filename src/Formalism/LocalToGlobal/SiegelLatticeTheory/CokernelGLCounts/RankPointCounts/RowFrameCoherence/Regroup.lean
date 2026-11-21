@@ -99,7 +99,6 @@ open Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.Loca
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option linter.deprecated false in
 
 theorem rowRegroupC_of {D : D7} (X : HidaSetting D) (Y : Formalism.L2.SG.Full.Full X) (u u' : D.what₂.Word)
     (κ : Term D u u' (X.Fu u) (Y.what₂ u) → ℕ)

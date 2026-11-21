@@ -103,7 +103,6 @@ theorem index_residue (w : Pl D.host.E) {n n' r s : ℕ} (h : n = r + s) (h' : n
     (Eq.trans ?_ (GlobalTheory.ParabIndex.index_maxParabolic_GL_finiteField (kP w) n' r s h').symm)
   rw [hq, hq', h, h']
 
-open Classical in
 
 theorem relIndex_lev (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (N : ℕ)
     (hN : Lev.IsBaseFrame V β Λ N) {r t j : ℕ} (hr : r ≤ V.rank) (Pg Q : Finset (Pl D.host.E))
@@ -187,7 +186,6 @@ theorem Q_base (h : L.Is μ₀) : L.Q μ₀ = ∅ := by
   rw [h.xi_base] at h1
   exact h1 fun _ _ => rfl
 
-open Classical in
 
 theorem not_conj (h : L.Is μ₀) (t : T) : ∀ P ∈ L.Pg ∪ L.Q t, ∀ P' ∈ L.Pg ∪ L.Q t, ¬ Lev.IsConjPl P P' := by
   intro P hP P' hP' hc

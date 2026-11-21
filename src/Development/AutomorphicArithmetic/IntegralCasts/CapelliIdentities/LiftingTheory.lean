@@ -29,4 +29,3 @@ private theorem hpk_sq (k r : ℕ) : Formalism.QuantumDeterminants.Hpk k r * For
   · intro h
     exact absurd (Finset.mem_univ s) h
 
-open Matrix in

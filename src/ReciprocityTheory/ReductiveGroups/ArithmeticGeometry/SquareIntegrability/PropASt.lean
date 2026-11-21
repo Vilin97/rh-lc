@@ -14,7 +14,6 @@ def GT.Coc {ι : Type} [Fintype ι] (Y : GT ι) (q : ℕ) : Prop :=
   ∀ γ ∈ lat Y.b, ∀ γ' ∈ lat Y.b,
     Y.ka (γ + γ') = Y.ka γ * Y.ka γ' * cexp (-(Real.pi * q * (Hf γ γ').im) * I)
 
-open Classical in
 
 def PropAStatement : Prop :=
   ∀ (ι : Type) [Fintype ι] (Y : GT ι) (q c : ℕ) (R0 : ℝ), 1 ≤ q → Y.Coc q → 0 < R0 →

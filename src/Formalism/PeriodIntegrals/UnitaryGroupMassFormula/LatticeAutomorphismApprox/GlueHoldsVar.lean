@@ -70,7 +70,6 @@ theorem mem_mL (I : AutInst) (m : ℕ) {W : Fin I.n → I.E ⊗[I.F] Af I.F} (hW
     (m : I.E ⊗[I.F] Af I.F) • W ∈ mL I m :=
   Submodule.subset_span ⟨W, hW, rfl⟩
 
-open Classical in
 
 theorem matV_listProd (I : AutInst) (loc : ∀ v, GL (Fin I.n) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv I.F v ⊗[I.F] I.E))
     (Y : HeightOneSpectrum (𝓞 I.F) → I.Gf)

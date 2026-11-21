@@ -448,7 +448,6 @@ theorem iso_of_hwAt (a a' : AlgWt L n) (lam : ι → Fin n → ℤ) (ha : ∀ τ
 
 end Wt
 
-open Formalism.BasicNotions Formalism.L2 Formalism.L2.DIV Formalism.L2.Col in
 
 theorem exists_equiv_VV : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (ι : Type) [Fintype ι]
     (emb : ι → L →+* ℂ), Function.Injective emb → (∀ t t', emb t ≠ ComplexEmbedding.conjugate (emb t')) →

@@ -111,7 +111,6 @@ theorem isAutFunDef_adFun (hθ : IsInfFam θ) (hG : V.gram = 1) (he : ∀ τ, em
     rw [map_mul]
     group
 
-variable (emb σ lam) in
 
 def adForm (hθ : IsInfFam θ) (hG : V.gram = 1) (hs : V.SigOK) (hd : V.IsDefinite) (he : ∀ τ, embAt σ emb τ = tauE D (t τ))
     (hx : x₀ ∈ UAd D.sp.cm n) (hp : PtLaw S b pt c) : (S.Cl → Fr emb σ n → ℂ) →ₗ[ℂ] CuspS θ V :=
@@ -244,7 +243,6 @@ theorem embAt_eq (τ : Tau B.R) : embAt B.embLL B.fields.emb τ = tauE (I.rec7 l
 def finX {j : ℕ} (hj : j ≤ B.R.m) : Formalism.L2.Theta.GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j) →* GL (Fin (B.R.N j)) (AfE B.host.F B.host.E) :=
   finN (D := I.rec7 l Z) _ (B.sp.X_rank j hj)
 
-variable (θ) in
 
 def infX {j : ℕ} (hj : j ≤ B.R.m) : Formalism.L2.Theta.GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j) →* (Tau B.R → GL (Fin (B.R.N j)) ℂ) :=
   infN θ _ (B.sp.X_rank j hj) (eT l Z)
@@ -300,7 +298,6 @@ theorem colTop_apply (u : B.Word) (a : I.ι) (w) (φ : Z.W.Mu u)
     (adFun_eq (D := I.rec7 l Z) θ _ _ _ (h.gram_X _) (h.xTop_spec u a).uni (I.ptLaw_top u a) hφ
       (Near.change B.sp.cm hx (h.xTop_spec u a).uni h₀ (near_of_isPtOf (h.xTop_spec u a) _) hp))
 
-include l in
 
 theorem idx_zero_eq (u : B.Word) (a : I.ι) (b : Idx I.sel (I.tup a) (I.idx a) 0) (c : (I.stp u a 0).Cl) : c.1 = b := by
   obtain ⟨c', rfl⟩ := (l.bij0 u a b).2 c

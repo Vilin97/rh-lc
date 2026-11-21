@@ -49,6 +49,5 @@ theorem ideleTop : IsTopologicalGroup (AE F E)ˣ ∧ LocallyCompactSpace (AE F E
   exact ⟨inferInstance, Units.isClosedEmbedding_embedProduct.locallyCompactSpace,
     Units.isEmbedding_embedProduct.secondCountableTopology, inferInstance⟩
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.IwInt

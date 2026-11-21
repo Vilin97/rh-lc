@@ -87,7 +87,6 @@ theorem isClosed_line {d : ℕ} (x : Fin d → E) :
     rw [this]
     exact isClosed_eq continuous_id (((continuous_apply i).mul continuous_const).smul continuous_const)
 
-variable (σ) in
 
 def unipSet {d d₁ : ℕ} (W : Spc F E d) (H' : Plane E d d₁) : Subgroup (UA σ W.J) where
   carrier := {u | mat u *ᵥ incV F H'.x = incV F H'.x ∧

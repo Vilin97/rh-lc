@@ -63,7 +63,6 @@ private theorem exists_prime_mem {A : Type} [CommRing A] (P : Ideal A) (hP : P.I
     · obtain ⟨l, h1, h2, h3⟩ := ih (fun h0 => hN (by rw [h0, mul_zero])) h
       exact ⟨l, h1, h2.mul_left _, h3⟩
 
-open Classical in
 
 theorem etaT_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), EtaTExists H := by
   intro R H

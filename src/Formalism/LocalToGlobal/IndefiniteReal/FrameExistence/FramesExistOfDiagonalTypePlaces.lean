@@ -18,25 +18,15 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E]
 
 variable (n a c : ℕ) (neg : Fin n → Bool) (hn : n = a + c) (hneg : ∀ x : Fin n, neg x = decide (a + c / 2 ≤ (x : ℕ)))
 
-include hn hneg in
 
-include hn hneg in
 
-include hn hneg in
 
-include hn in
 
-include hn in
 
-include hn hneg in
 
-include hn hneg in
 
-include hn hneg in
 
-include hn hneg in
 
-include hn in
 
 end Vec
 
@@ -149,17 +139,12 @@ variable {E : Type} [Field E] [NumberField E]
 
 variable (O : Subring E) (n k a c : ℕ) (l1 l2 : E) (sc : ℕ → E) (pz : E)
 
-include n in
 
-include n in
 
-include n in
 
 end Unimod
 
-open Classical in
 
-open Classical in
 
 theorem N_zero (D : D7) : D.R.N 0 = D.R.k := by simp [Ranks.N]
 
@@ -169,7 +154,6 @@ variable {E : Type} [Field E] [NumberField E]
 
 end Val
 
-open Classical in
 
 end Formalism.IndefR.Seed.FrmC
 

@@ -61,7 +61,6 @@ theorem vertFactor_local (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p �
   filter_upwards [hHa.continuousAt.eventually_ne hHz] with y hy hyP
   exact VertFactorSmooth.vertFactor_eq D hp hyP hG hH hdeg hrel hy
 
-open MuRegSmooth TopNPoly NbarSmooth in
 
 theorem regNbarQ_smooth_eq [DecidableEq Ψ] (hE : HermExtend.Statement) (hP : ProjSmoothAlong.Statement)
     (D : ComponentData II Ψ K ι Ω E) (H : HodgeData D) (M : XModel D) (S : LogLogRegularisationSetting M D.Xo (muLine H))
@@ -126,6 +125,5 @@ theorem regNbarQ_smooth_eq [DecidableEq Ψ] (hE : HermExtend.Statement) (hP : Pr
 
 end NbarLeviChartReg
 
-open NbarLeviChartReg in
 
 end GroundTheory.Heights₂.Heights.NineStatements

@@ -187,7 +187,6 @@ theorem isUnramifiedIn_of_algebraMap_mem
   subst e
   exact h
 
-omit [IsGalois F Ω] in
 
 theorem isUnramifiedOutside_restrictScalars_iff_of_isUnramifiedIn
     (hL : ∀ v ∉ S, Algebra.IsUnramifiedIn (𝓞 L) v.asIdeal) (M : IntermediateField L Ω)

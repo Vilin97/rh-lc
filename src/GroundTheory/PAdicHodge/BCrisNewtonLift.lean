@@ -20,7 +20,6 @@ open _root_.WittVector
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-variable (K p) in
 
 def incl : AInf K p →+* WittVector p K♭ := WittVector.map (algebraMap 𝒪♭ K♭)
 
@@ -48,11 +47,9 @@ theorem natCast_p_ne_zero : (p : WittVector p K♭) ≠ 0 := by
 theorem p_mem_nonZeroDivisors : (p : WittVector p K♭) ∈ nonZeroDivisors (WittVector p K♭) :=
   mem_nonZeroDivisors_of_ne_zero natCast_p_ne_zero
 
-variable (K p) in
 
 def intSubring : Subring (WittVector p K♭) := (incl K p).range
 
-variable (K p) in
 
 def teichLift : TeichLift p K♭ (WittVector p K♭) where
   π := p
@@ -140,7 +137,6 @@ theorem isUnit_incl_p : IsUnit (algebraMap (WittVector p K♭) (teichLift K p).B
   rw [map_natCast]
   exact IsLocalization.Away.algebraMap_isUnit (teichLift K p).π
 
-variable (K p) in
 
 def toB : 𝔸 →+* (teichLift K p).B :=
   Localization.awayLift ((algebraMap (WittVector p K♭) (teichLift K p).B).comp (incl K p))

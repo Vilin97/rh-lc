@@ -137,7 +137,6 @@ theorem stdLat_eq (V : HSp D) : stdLat V = GlobalTheory.SW.stdL D.host.E V.rank 
 
 end GlobalTheory.NormRatio.StdLevel
 
-open GlobalTheory.NormRatio.StdLevel in
 
 theorem GlobalTheory.NormRatio.selfDual_and_mem_intG_iff : ∀ {D : D7} (V : HSp D) (n : ℕ) (g : GA D V) (x : Formalism.MainNotions.StandardLatticesGL3.GA D n),
     V.gram = 1 → V.rank = n → GlobalTheory.BotFormula.IsFinPt V g x →

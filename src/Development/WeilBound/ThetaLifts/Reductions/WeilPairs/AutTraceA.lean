@@ -208,7 +208,6 @@ theorem gam_periodic {R X M : Type} [CommRing R] [AddCommGroup X] [Module R X] [
   rw [H.add_right, H.iso hA (A.smul_mem r (e1 ▸ A.add_mem hy (A.sub_mem hc' hc))) hc, mul_one, e1, smul_add,
     H.add_left, e3, mul_one]
 
-variable (σ JS JT ξ₀) in
 
 def gaussQF (ψ : AddChar (AF F) ℂ) (Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) E)) (w : 𝓞 E)
     (a : Matrix (Fin nS) (Fin nS) E) (b : Matrix (Fin nT) (Fin nT) E) (y : Matrix (Fin nT) (Fin nS) E) : ℂ :=

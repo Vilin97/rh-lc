@@ -9,7 +9,6 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Automorphic
 
 open NumberField GlobalTheory.CuspRep UpperTheory.V
 
-open Matrix in
 
 private theorem exists_contRep {K I : Type} [Group K] [TopologicalSpace K] {d : ℕ} (ξ : K →* Matrix (Fin d) (Fin d) ℂ)
     (ev : I → Module.Dual ℂ (Fin d → ℂ)) (hc : ∀ i v, Continuous fun k => ev i (ξ k *ᵥ v))

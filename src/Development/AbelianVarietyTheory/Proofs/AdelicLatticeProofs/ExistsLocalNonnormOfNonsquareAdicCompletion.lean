@@ -78,8 +78,6 @@ private theorem not_norm_of_odd_valuation_of_norm_mul {K : Type} [Field K]
     · exact main (-c) (by ring) h2
   · exact main c rfl h1
 
-open NumberField IsDedekindDomain in
-open scoped WithZero in
 
 theorem _root_.GlobalTheory.QNorm.exists_local_nonnorm : ∀ (F : Type) [Field F] [NumberField F]
     (v : HeightOneSpectrum (𝓞 F)) (δ : v.adicCompletion F), δ ≠ 0 → ¬ IsSquare δ →

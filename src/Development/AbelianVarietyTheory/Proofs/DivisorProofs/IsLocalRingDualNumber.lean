@@ -50,7 +50,6 @@ theorem tv_closedPoint (v : TanM (𝟙 (Sp R)) G) :
   refine h2.trans ?_
   exact congrArg (fun y => (η[G]).left y) e1
 
-open Classical in
 
 def tanDer (v : TanM (𝟙 (Sp R)) G) (f : G.left.presheaf.stalk (origin G)) : R :=
   if h : (tv v).left (IsLocalRing.closedPoint (DualNumber R)) = origin G then

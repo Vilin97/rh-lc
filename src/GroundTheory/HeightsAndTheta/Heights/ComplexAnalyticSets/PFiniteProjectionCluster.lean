@@ -77,7 +77,6 @@ theorem fibre_finite (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin d) 
 
 end FiniteProjectionCluster
 
-open FiniteProjectionCluster in
 
 theorem FiniteProjectionCluster.proof : FiniteProjectionCluster.Statement := by
   intro n d J A w U hA hw hU

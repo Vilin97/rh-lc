@@ -73,7 +73,6 @@ theorem exists_vec (v : epsR A ⟶ D₀.P.A) (hv : IsTangent v) :
 
 end Scale
 
-open Classical in
 
 theorem map_proj {E : Type} [Field E] [NumberField E] {g : ℕ} (ty : Fin g → (E →+* ℂ))
     (L : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) (S : Set (Fin g → ℂ)) (hS : Submodule.span ℝ S = ⊤)

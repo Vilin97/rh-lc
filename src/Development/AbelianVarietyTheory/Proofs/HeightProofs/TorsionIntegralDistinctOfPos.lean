@@ -13,7 +13,6 @@ open scoped IntermediateField
 namespace GlobalTheory.TorsionIntegralPos
 open GlobalTheory.TorsionIntegral
 
-open IsLocalRing in
 
 theorem torsion_integral_distinct_of_pos : ∀ (L : PeriodPair) (W : ValuationSubring ℂ) (m : ℕ),
     (2 : ℂ)⁻¹ ∈ W → (3 : ℂ)⁻¹ ∈ W → L.g₂ ∈ W → L.g₃ ∈ W → (L.g₂ ^ 3 - 27 * L.g₃ ^ 2)⁻¹ ∈ W →

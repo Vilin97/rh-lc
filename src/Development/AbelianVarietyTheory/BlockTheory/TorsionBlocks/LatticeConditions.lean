@@ -77,7 +77,6 @@ variable {tw} (L : LocTheory) (nbt : Br.NBrTw tw) (i : tw.Tw) (s : tw.Sig i)
   (Q : Finset (PlE H)) {O' : Type} [CommRing O'] [IsDomain O'] (f : tw.O0 i →+* O')
   (hf : Function.Injective f) (ψ : GE N →* O'ˣ)
 
-open Classical in
 
 def condL : ∀ v, Submodule O'
     (H1 ((WKG (latTpsi tw i s f ψ)).comp (Dec (F := H.E) (N.plOm.1 v)).subtype)) :=

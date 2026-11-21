@@ -12,7 +12,6 @@ open Formalism.MainNotions Formalism.MainNotions.S
 
 theorem discrete_series_exists_gapped [Fact Formalism.MainNotions.DiscreteSeriesWeylDimension.DiscreteSeriesExistsG] : DiscreteSeriesWeylDimension.DiscreteSeriesExistsG := Fact.out
 
-variable [Fact Formalism.MainNotions.DiscreteSeriesWeylDimension.DiscreteSeriesExistsG] in
 
 end Formalism.MainNotions.BridgeDS3
 

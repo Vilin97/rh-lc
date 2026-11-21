@@ -23,25 +23,21 @@ def pMinus (M : DSModel W S) (τ : D.what₂.Tau) : Set (Matrix (Fin W.rank) (Fi
 abbrev KMap (M : DSModel W S) : Type :=
   MultilinearMap ℂ (fun τ : D.what₂.Tau => lowT M τ) (GA D W → ℂ)
 
-variable (W) in
 
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 
-variable (W) in
 
 def IsSmoothFn (φ : GA D W → ℂ) : Prop :=
   ∀ (k : ℕ) (τs : Fin k → D.what₂.Tau) (Xs : Fin k → Matrix (Fin W.rank) (Fin W.rank) ℂ),
     (∀ i, Xs i ∈ lieAt W (τs i)) → ∀ g,
       ContDiff ℝ ∞ fun t : Fin k → ℝ => φ (g * (List.ofFn fun i => oneP θ W (τs i) (Xs i) (t i)).prod)
 
-variable (W) in
 
 def IsUnifModGrowth (φ : GA D W → ℂ) : Prop :=
   ∃ N : ℕ, ∀ l : List (D.what₂.Tau × Matrix (Fin W.rank) (Fin W.rank) ℂ), (∀ p ∈ l, p.2 ∈ lieAt W p.1) →
     ∀ x, ∃ C : ℝ, ∀ g ∈ GinfC W,
       ‖(l.foldr (fun p f => Rder θ W p.1 p.2 f) φ) (x * g)‖ ≤ C * normInf θ W g ^ N
 
-open Classical in
 
 def RestrictsTo (M : DSModel W S) (T : MMap M) (U : KMap M) : Prop :=
   ∀ e : ∀ τ, lowT M τ, T (fun τ => (e τ : M.sm τ)) = U e

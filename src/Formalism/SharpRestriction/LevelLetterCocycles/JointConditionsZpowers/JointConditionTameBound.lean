@@ -103,7 +103,6 @@ def kerY [IsDomain O] [IsPrincipalIdealRing O] (hp : ∀ g v, p (Yt.ρ g v) = p 
     (hint : ∀ v ∈ Yt.L.T, p v ∈ Set.range (algebraMap O LL)) (he₀ : e₀ ∈ Yt.L.T) : LocLat G Qp LL O :=
   LocLat.ofGRep ((GRep.ofLat Yt).sub (LinearMap.ker p) (ker_stable Yt p hp)) (kerLat Yt p e₀ hpe hp hint he₀)
 
-variable (G Qp LL O) in
 
 def trivZ (hinj : Function.Injective (algebraMap O LL)) : LocLat G Qp LL O :=
   { V := LL

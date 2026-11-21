@@ -21,7 +21,6 @@ section
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {F : Type u} [Field F]
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem relDim_of_ringKrullDim_eq (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ)
     (h : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = (d : WithBot ℕ∞)) :
@@ -30,7 +29,6 @@ theorem relDim_of_ringKrullDim_eq (I : Ideal (ReciprocityTheory.ChartRestriction
   rw [h]
   rfl
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem relDim_map_injective :
     Function.Injective (WithBot.map (fun d : ℕ∞ =>

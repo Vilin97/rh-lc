@@ -188,7 +188,6 @@ variable {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 I0 T0 : Type} {A3 : FamIn3 D.w
   {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {Rl : RealDat3 D A3 T.Q.c.F} {cG : G0 Rl.Pg D.R.r ≃* G0g D.nd}
   {S : NX.RatDat D.ntw} (YS : NX.NExpRealS Rl cG S)
 
-include YS in
 
 theorem exists_goodCover_bigF (hRF : GlobalTheory.NT.RayField) (hT : LawsJ T) (ha : AlgTie T) (hs : SmallHas D Rl.C) {pd : ℕ}
     (haux : IsAuxiliarySplitSquarefreeLevel D (D.host.g 0 * D.host.g 1) pd) (hd : pd ∣ D.host.pde * D.host.pde') (j : Fin D.R.m) (n : ℕ) :
@@ -215,7 +214,6 @@ theorem exists_goodCover_bigF (hRF : GlobalTheory.NT.RayField) (hT : LawsJ T) (h
 
 end Cover
 
-set_option linter.unusedVariables false in
 
 theorem exists_adForm_eq_phase_smul : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt →
   ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 I0 T0 : Type) (A3 : FamIn3 D.what₂.LL Γ Pl0 I0 (List ℕ) T0 D.R.m)

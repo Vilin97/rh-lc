@@ -23,7 +23,6 @@ theorem hasSubst_add_sqZero {σ τ S : Type} [Fintype σ] [CommRing S]
   have h1 : IsNilpotent (constantCoeff e) := ⟨2, by rw [pow_two, ← map_mul, he, map_zero]⟩
   exact (Commute.all _ _).isNilpotent_add (ha s) ((Commute.all _ _).isNilpotent_mul_right h1)
 
-open scoped MvPowerSeries.WithPiTopology in
 
 theorem subst_add_sqZero {σ τ S : Type} [Fintype σ] [CommRing S]
     (a b : σ → MvPowerSeries τ S) (e : MvPowerSeries τ S) (he : e * e = 0)

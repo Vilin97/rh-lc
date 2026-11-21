@@ -158,7 +158,6 @@ theorem zero_mem_upq : (0 : Mat p q) ∈ upq p q := by
   show (0 : Mat p q)ᴴ * Jm p q + Jm p q * 0 = 0
   simp
 
-open Classical in
 
 def exptStd (X : Mat p q) : covSub p q :=
   if h : X ∈ upq p q then ⟨(expU X, expC (X.trace / 2)), exp_pair_mem h⟩ else 1

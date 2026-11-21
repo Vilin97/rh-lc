@@ -27,7 +27,6 @@ theorem hform_snd (z y : n → T) :
   set_option synthInstance.maxHeartbeats 100000 in
     simp [hform, map_sum, map_mul, Prod.snd_sum, hσ, swapR]
 
-include hσ hS hΛ in
 
 theorem map_of_first (x : GL n T) (hx : x ∈ UJ σ J)
     (h1 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ (((x : Matrix n n T) *ᵥ y) a)).1)
@@ -73,7 +72,6 @@ theorem map_of_first (x : GL n T) (hx : x ∈ UJ σ J)
     rw [e]
     exact ((hS _).1 ((hΛ y).1 hy z' hz'Λ)).2
 
-include hσ hS hΛ in
 
 theorem stab_of_first (x : GL n T) (hx : x ∈ UJ σ J)
     (h1 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ (((x : Matrix n n T) *ᵥ y) a)).1)

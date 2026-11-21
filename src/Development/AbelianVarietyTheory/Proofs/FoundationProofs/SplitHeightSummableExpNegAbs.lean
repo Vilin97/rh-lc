@@ -8,7 +8,6 @@ namespace GlobalTheory
 
 open Finset
 
-open Finset in
 
 theorem _root_.GlobalTheory.splitHeight_summable_pi_prod {ι : Type} [Fintype ι] {α : ι → Type} {f : ∀ i, α i → ℝ}
     (h0 : ∀ i x, 0 ≤ f i x) (hf : ∀ i, Summable (f i)) :

@@ -245,7 +245,6 @@ def cupₗ (h : p + q = n) :
     (fun f g g' => by funext x; simp [cupCochain_apply, TensorProduct.tmul_add])
     (fun c f g => by funext x; simp [cupCochain_apply, TensorProduct.tmul_smul])
 
-variable (A B p q) in
 
 theorem tensorHom_cupCochain {A' B' : Rep k G} (φ : A ⟶ A') (ψ : B ⟶ B') (h : p + q = n)
     (f : (Fin p → G) → A) (g : (Fin q → G) → B) (x : Fin n → G) :

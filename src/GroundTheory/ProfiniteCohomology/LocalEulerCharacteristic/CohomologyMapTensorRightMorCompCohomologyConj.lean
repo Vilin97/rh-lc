@@ -22,12 +22,10 @@ variable (T : Rep.{u} k G) [IsDiscreteRep T] {M : Rep.{u} k G} [IsDiscreteRep M]
 
 include hM
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep T] [IsDiscreteRep M] in
 
 theorem form_invariant_of_forall_eq (f : M →ₗ[k] k) (g : G) (m : M) : f (M.ρ g m) = f m := by
   rw [hM]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep T] [IsDiscreteRep M] in
 
 theorem tensorRightMor_comp_tensorFormMor (m : M) (f : M →ₗ[k] k) :
     tensorRightMor T m (fun g => hM g m) ≫
@@ -36,7 +34,6 @@ theorem tensorRightMor_comp_tensorFormMor (m : M) (f : M →ₗ[k] k) :
   change f m • t = f m • t
   rfl
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep T] [IsDiscreteRep M] in
 
 theorem sum_tensorFormMor_comp_tensorRightMor {ι : Type*} [Fintype ι] (b : Module.Basis ι k M) :
     ∑ i, tensorFormMor T (b.coord i) (form_invariant_of_forall_eq hM _) ≫

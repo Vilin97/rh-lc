@@ -170,7 +170,6 @@ end Formalism.FourierDecayAlt.P.CutMP.SmoothTransferRegularity.ChartCovPf
 
 namespace Formalism.FourierDecayAlt.P.CutMP.SmoothTransferRegularity
 
-open ChartCovPf in
 
 theorem chart_covariance_holds : ChartCov := by
   intro k r d O U κ Φ hC x hx ξ

@@ -166,7 +166,6 @@ section Classes
 
 variable {D : D7} {X : HidaSetting D} {Y : Full X} {hF : FinX Y} {hI : SIso D.s (sOf hF)}
 
-open Formalism.MainNotions.BridgeLemma in
 
 theorem ampSum_le_of_rows (T : TermTie D) (hJ : JtPin hF hI T) (hW : WRowPin hF hI T) (hC : FibreCount Y)
     {large₂ : SizeData₂ D} {u u' : D.what₂.Word} {C1 : ℝ} (L : LoopTie D large₂ T u u' C1) (Q : D.s.Pair u u' → Prop) (B : ℝ)
@@ -186,7 +185,6 @@ theorem ampSum_le_of_rows (T : TermTie D) (hJ : JtPin hF hI T) (hW : WRowPin hF 
       obtain ⟨⟨x, hx⟩, -, rfl⟩ := Finset.mem_image.1 hp
       exact (hQ x (Finset.mem_filter.1 hx).2).choose_spec
 
-open Formalism.MainNotions.BridgeLemma in
 
 theorem rowBound_or (T : TermTie D) {large₂ : SizeData₂ D} {u u' : D.what₂.Word} {C1 : ℝ} (L : LoopTie D large₂ T u u' C1)
     {Q₁ Q₂ : D.s.Pair u u' → Prop} {B₁ B₂ : ℝ} (h₁ : RowBound T L Q₁ B₁) (h₂ : RowBound T L Q₂ B₂) :

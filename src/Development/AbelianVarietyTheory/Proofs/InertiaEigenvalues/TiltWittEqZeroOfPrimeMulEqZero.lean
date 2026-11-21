@@ -60,7 +60,6 @@ theorem mem_pow_iff (w : W) (n : ℕ) (x : O ⊗[Z] W) :
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hc i, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
 
-include b in
 
 theorem complete_tensor (w : W) [h : IsAdicComplete (Ideal.span {w}) W] :
     IsAdicComplete (Ideal.span {(1 : O) ⊗ₜ[Z] w}) (O ⊗[Z] W) := by

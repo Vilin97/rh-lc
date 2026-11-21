@@ -261,7 +261,6 @@ private lemma polyOp_comp_lemma_2 {o₂ κ₁ κ₂ : ℕ} {Θb : _root_.Formali
     · rw [opApply_append', opApply_cons', hE2 F g, ← hE1 F hF g hg, hEr F hF g hg, hc]
       simp
 
-open MeasureTheory in
 
 theorem _root_.GlobalTheory.HatNF.polyLift_closed : ∀ (Wp Wq : Type) [NormedAddCommGroup Wp]
     [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]

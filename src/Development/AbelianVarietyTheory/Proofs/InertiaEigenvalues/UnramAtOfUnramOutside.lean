@@ -43,4 +43,3 @@ theorem placeIdem_mul_eq_zero {v v' : HeightOneSpectrum (𝓞 D.host.F)} {ε ε'
 
 end GlobalTheory.SingleDatum.BasePair
 
-open GlobalTheory.SingleDatum.BasePair in

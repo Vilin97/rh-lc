@@ -148,7 +148,6 @@ theorem exists_isSymplecticFamily {M : ℕ} [NeZero M] {V : Type*} [AddCommGroup
     · exact hf
     · exact (hf' _).1
 
-open ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem exists_stdSymp_zmod {M g : ℕ} [NeZero M] {V : Type*} [AddCommGroup V] [Module (ZMod M) V]
     {B : LinearMap.BilinForm (ZMod M) V} (hB : B.IsAlt) (hN : ∀ x, (∀ y, B x y = 0) → x = 0)
@@ -171,7 +170,6 @@ end GlobalTheory.SympMod
 
 namespace GlobalTheory
 
-open ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem exists_stdSymp_of_alternating_pairing :
     ∀ (M g : ℕ) (G : Type) [CommGroup G] (R : Type) [CommRing R] [IsDomain R] (ζ : Rˣ), 0 < M →

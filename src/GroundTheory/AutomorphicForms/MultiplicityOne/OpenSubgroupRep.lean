@@ -27,11 +27,8 @@ set_option linter.unusedSectionVars false
 
 variable [IsTopologicalGroup G] [T2Space G]
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 variable [MeasurableSpace G] [BorelSpace G]
 

@@ -29,7 +29,6 @@ lemma trd (i j : ℕ) :
     HomologicalComplex.extend_d_eq _ _ rfl rfl, HomologicalComplex.restriction]
   erw [eqToIso_refl, eqToIso_refl]; simp
 
-open Classical in
 
 def iotaf (p : ℤ) : (K.stupidTrunc (E M)).X p ⟶ K.X p :=
   if h : ∃ i, (E M).f i = p then (K.stupidTruncXIso (E M) h.choose_spec).hom else 0

@@ -55,7 +55,6 @@ theorem vecMul_cG (Y : Ix r → O) :
   unfold cG
   rw [Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul _ hG, Matrix.vecMul_one]
 
-include hG in
 
 theorem inl_eq (Y : Ix r → O) :
     (fun j => (Y (Sum.inl j) : E)) = (Z.map O.subtype).mulVec (fun a => cG O cj Z T T' Y (Sum.inr a)) -
@@ -66,7 +65,6 @@ theorem inl_eq (Y : Ix r → O) :
   rw [← h]
   simp [Matrix.mulVec, dotProduct, Pi.single_apply, mul_comm]
 
-include hG in
 
 theorem inr_eq (Y : Ix r → O) :
     (fun j => (Y (Sum.inr j) : E)) =
@@ -78,7 +76,6 @@ theorem inr_eq (Y : Ix r → O) :
   rw [← h]
   simp [Pi.single_apply, mul_comm]
 
-include hu hG in
 
 theorem lam_cG (Y : Ix r → O) :
     lamC (Z.map O.subtype) (fun j => (Y (Sum.inl j) : E)) =
@@ -87,7 +84,6 @@ theorem lam_cG (Y : Ix r → O) :
   rw [lamC, inl_eq O cj Z T T' hG Y, Matrix.mulVec_sub, Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ hu,
     Matrix.one_mulVec, Pi.sub_apply, mulVec_single_apply']
 
-include hu hG in
 
 theorem lamS_cG (Y : Ix r → O) :
     lamStarC cj (Z.map O.subtype) (fun j => (Y (Sum.inr j) : E)) =
@@ -100,7 +96,6 @@ theorem lamS_cG (Y : Ix r → O) :
   congr 1
   simp [Pi.single_apply]
 
-include hcj hu hG in
 
 theorem formC_eqG (Y W : Ix r → O) :
     formC O cj (Z.map O.subtype) T T' Y W =
@@ -187,7 +182,6 @@ variable (hcj : ∀ x, cj (cj x) = x) (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) O)
   (hu : IsUnit (Z.map O.subtype).det) (T T' : E)
   (hG : IsUnit (gramC cj (Z.map O.subtype) T T').det)
 
-include hcj hu hG in
 
 theorem uniq_core (d d' : E)
     (h1 : d = (Z.map O.subtype)⁻¹ (Fin.last r) (Fin.last r) * (T * d'))

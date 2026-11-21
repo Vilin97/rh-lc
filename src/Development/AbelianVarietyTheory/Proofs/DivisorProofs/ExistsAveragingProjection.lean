@@ -149,4 +149,3 @@ theorem avg_smul {x : V} (hx : (stab π L x).FiniteIndex) (c : ℂ) :
 
 end GlobalTheory.OrbitAvg
 
-open GlobalTheory.OrbitAvg in

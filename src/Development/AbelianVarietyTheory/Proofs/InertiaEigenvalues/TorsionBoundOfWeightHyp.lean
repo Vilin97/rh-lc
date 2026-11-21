@@ -271,7 +271,6 @@ theorem tors_descend {P : LocPrime l} (AI : LocAinf l P) (K : FinExt l) {i j : �
   tors_repQ AI (Gj K i) (Gj K j) (Gj_anti K hij) _ _ (comp_inclusion (Gj_anti K hij) hle hle' ρ) a b _ _
     (relIndex_Gj K hi hij) h
 
-set_option maxHeartbeats 1000000 in
 
 theorem tors_combine {P : LocPrime l} (AI : LocAinf l P) (K : FinExt l) {i j : ℕ} (hi : 1 ≤ i)
     (hij : i ≤ j) (G : Subgroup (GQ l)) (hle : Gj K i ≤ G) (hle' : Gj K j ≤ G)
@@ -313,7 +312,6 @@ theorem vdeg_eq (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (K : FinExt l)
   rw [vdegMs, h1, h2]
   exact val_deg K h.1 hsm
 
-set_option maxHeartbeats 1000000 in
 
 theorem torsion_bound_at_level : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), adm5 D → adm7 D → ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let S := sit D.loc HW l (D.locA l) K s LL h; let E : S.Comparison₂ := ((F l).E K s LL h).tie; ∀ (T : LocLat S.G S.Qp S.LL S.O) (M0 h0 : ℕ) (a b : ℤ) (hle : Gj K s ≤ GK K), a < b → HypW S E T M0 h0 → letI := zlMod LL T; letI : TopologicalSpace (TensorProduct ℤ_[l] ↥T.L.T (Qab (AinfSub l) (xiU (D.locA l)) a b)) := (Ideal.span {(l : ℤ_[l])}).adicModuleTopology _; TorsKilledBy (repQ (D.locA l) (Gj K s) ((actTZ LL T).comp (Subgroup.inclusion hle)) a b) (l : ℤ_[l]) ((l : ℤ_[l]) ^ cLL l (mN l s (M0 + h0)) (vdegMs S (mN l s (M0 + h0))) (Jset S T) a b) := by
   intro D HW F h5 h7 l _ K s LL h S E T M0 h0 a b hle hab hW

@@ -276,7 +276,6 @@ theorem exists_solution {ϖ : 𝒪[F]} (hϖ : Irreducible ϖ) {m i : ℕ} (hi : 
   rw [← h', ← h]
   module
 
-omit [CharZero F] in
 
 theorem exists_pow_mul_mem {ϖ : 𝒪[F]} (hϖ : Irreducible ϖ) (x : E) :
     ∃ c : ℕ, algebraMap F E ϖ ^ c * x ∈ L.O := by
@@ -292,7 +291,6 @@ theorem exists_pow_mul_mem {ϖ : 𝒪[F]} (hϖ : Irreducible ϖ) (x : E) :
 
 end GlobalTheory.CongTrans
 
-open GlobalTheory.CongTrans GlobalTheory.UnramOrder in
 
 theorem GlobalTheory.CongTrans.congK_transitive : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ (ϖ : 𝒪[F]), Irreducible ϖ → ∀ (m : ℕ) (Γ : Matrix (Fin m) (Fin m) E), IsHerm L Γ → IsUnit Γ.det → ∀ i : ℕ, 1 ≤ i → ∃ j : ℕ, ∀ X ∈ horb L ϖ Γ i, ∀ D : Matrix (Fin m) (Fin m) E, IsHerm L D → IsIntM L D → ∃ A ∈ congK L ϖ m i, X + algebraMap F E ((ϖ : F) ^ j) • D = cT L A * X * A := by
   intro F _ _ _ _ _ E _ _ _ L ϖ hϖ m Γ hΓ hdet i hi

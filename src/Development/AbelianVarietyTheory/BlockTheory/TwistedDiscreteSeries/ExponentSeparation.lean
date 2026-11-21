@@ -17,7 +17,6 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 def strictCone (ϖ : kˣ) (r : ℕ) : Set (Fin r → kˣ) :=
   {t | ∃ a : Fin r → ℤ, StrictAnti a ∧ t = fun i => ϖ ^ a i}
 
-open Classical in
 
 def IsExp {r : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin r) k) V)
     (E : Multiset ((Fin r → kˣ) →* ℂˣ)) : Prop :=
@@ -56,6 +55,5 @@ theorem IsExp.unramified {r : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
   ext
   simpa using h1
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.ExponentSeparationTwistedDiscreteSeries

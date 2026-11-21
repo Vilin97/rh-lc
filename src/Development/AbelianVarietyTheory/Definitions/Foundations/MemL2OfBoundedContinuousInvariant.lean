@@ -29,7 +29,6 @@ section Span
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
   {hc : CMData F E} {V : HSpace E} {R : Type} [CommRing R] [Algebra F R]
 
-omit [NumberField F] in
 
 theorem act_sub_mem_of_mem_span {S : Set V.V} {A : Submodule E V.V} {g : HA R hc.sig V.gram}
     (h : ∀ x ∈ S, act hc V g (coordR V R x) - coordR V R x ∈ extSub (F := F) V R A) {x : V.V}
@@ -130,7 +129,6 @@ theorem isCuspFun_of_forall_flag (hφ : LeftInv (GQ V) φ) (h : ∀ 𝔉 : IsoFl
 theorem isCuspFun_rTr (h : IsCuspFun V φ) (k : GA D V) : IsCuspFun V (rTr V k φ) :=
   fun r C hC μ 𝓕 hμ h𝓕 g => by simpa only [rTr, mul_assoc] using h r C hC μ 𝓕 hμ h𝓕 (g * k)
 
-variable (V) in
 
 def cuspCont : Submodule ℂ (GA D V → ℂ) where
   carrier := {φ | Continuous φ ∧ LeftInv (GQ V) φ ∧ IsCuspFun V φ}
@@ -184,7 +182,6 @@ theorem isSubrep_L2cusp : IsSubrep (RG V μ) (L2cusp V μ) :=
   isSubrep_topologicalClosure fun g F ⟨_, h, e⟩ => ⟨_, rTr_mem_cuspCont h g,
     (lift_R g F).trans ((measurePreserving_mul_right μ g).quasiMeasurePreserving.ae e)⟩
 
-omit [μ.IsMulRightInvariant] in
 
 instance : CompleteSpace (L2cusp V μ) := (Submodule.isClosed_topologicalClosure _).completeSpace_coe
 
@@ -303,7 +300,6 @@ theorem memL2_of_cusp_form (hP : Published.CuspRapidDecay) (hθ : IsInfFam θ) [
   let ⟨_, hC⟩ := CuspDecay.bounded_of_cuspForm hP hθ h.1 h.2
   memL2_of_bounded_continuous_invariant h.1.left h.1.cont hC
 
-variable (K μ) in
 
 def cuspToL2 (hP : Published.CuspRapidDecay) (hθ : IsInfFam θ) [μ.IsHaarMeasure] : cuspForms θ V K →ₗ[ℂ] L2cusp V μ where
   toFun φ := ⟨_, toL2_mem_cuspidal (memL2_of_cusp_form hP hθ (mem_cuspForms.1 φ.2).1) φ.2.2⟩
@@ -373,7 +369,6 @@ theorem exists_isWittLower_iff {i : ℕ} : (∃ V' : HSp D, IsWittLower V V' i �
   ⟨fun ⟨_, ⟨_, _, _, C, hC, _⟩, _⟩ => le_wittIndex_iff_isIsoSub.2 ⟨C, hC⟩,
     fun h => WittLow.wittLowEx D V i (le_wittIndex_iff_isIsoSub.1 h)⟩
 
-variable (V) in
 
 def minusHyp (i : ℕ) (h : i ≤ wittIndex V) : HSp D := (exists_isWittLower_iff.2 h).choose
 
@@ -383,7 +378,6 @@ theorem isWittLower_minusHyp {i : ℕ} (h : i ≤ wittIndex V) : IsWittLower V (
 theorem rank_minusHyp {i : ℕ} (h : i ≤ wittIndex V) : (minusHyp V i h).rank + 2 * i = V.rank :=
   (isWittLower_minusHyp h).1
 
-variable (V) in
 
 theorem two_mul_wittIndex_le : 2 * wittIndex V ≤ V.rank := Nat.le_add_left _ _ |>.trans (rank_minusHyp le_rfl).le
 

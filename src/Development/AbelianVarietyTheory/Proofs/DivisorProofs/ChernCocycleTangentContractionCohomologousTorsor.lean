@@ -174,7 +174,6 @@ end GlobalTheory.PtExt.ChernContr
 namespace GlobalTheory.PtExt.ChernContr
 open ContrMor
 
-set_option maxHeartbeats 1000000 in
 
 theorem contr_cohom : ∀ (R : Type) [CommRing R] (A B : Over (Sp R)) [GrpObj A] [GrpObj B] (P : LB (A ⊗ B).left), P.IsLB →
     ∀ v : epsR R ⟶ B, IsTangent v → ∀ (j : ∀ (D : Type) [CommRing D] [Algebra R D], Pt A D → P.ι), IsChoice P j →

@@ -250,7 +250,6 @@ theorem limRA_of_ample (h : IsAmpleLB M.L.lb) : M.LimRA := by
   · rw [Category.id_comp]; exact IsPullback.of_hasPullback _ _
   · rw [if_neg (Finset.notMem_empty p)]; exact logBd_pullGenLB t _ p
 
-open GlobalTheory.CechPic in
 
 def scaledTwistingSheaf (Z : Code Y c hg) (m : ℕ) : QLB Y c hg :=
   ⟨Z, FinLB.pull ⟨Z.n + 1, (GlobalTheory.ProjSpace.O1 _ Z.n).U, (GlobalTheory.ProjSpace.O1 _ Z.n).g, GlobalTheory.ProjSpace.O1_isLB _ Z.n⟩
@@ -272,7 +271,6 @@ abbrev CodeAt (S : Sig A N j) (κ : Lv A) : Type := Code S.sys.Y κ.c κ.good
 def IsBCAt {S : Sig A N j} {κ : Lv A} {p : ℕ} (ct : At S κ p) (Z : CodeAt S κ) (Z' : ct.Mdl) : Prop :=
   Z.IsBC (hp := ct.hp) (hW := ct.hW) Z'
 
-open Classical in
 
 instance nonempty_codeAt (S : Sig A N j) (κ : Lv A) : Nonempty (CodeAt S κ) :=
   (exists_code (Y := S.sys.Y) _ (S.tor.glob κ.l κ.c κ.good).2.1).elim fun Z _ => ⟨Z⟩

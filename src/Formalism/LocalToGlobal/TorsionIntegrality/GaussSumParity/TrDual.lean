@@ -19,7 +19,6 @@ section Alg
 
 variable {K : Type} [Field K]
 
-open Classical in
 
 def expF (K : Type) [Field K] (l : ℕ) : PowerSeries K :=
   if h : IsUnit (PowerSeries.coeff 1 (lgF K l)) then PowerSeries.substInvOfIsUnit (lgF K l) h else 0

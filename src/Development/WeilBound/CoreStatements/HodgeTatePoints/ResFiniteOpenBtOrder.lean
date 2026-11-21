@@ -25,7 +25,6 @@ include hE
 theorem sub_eq_top_of : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (U : Γ.G.left.Opens), Γ.IsFinOpenSub U → Γ.btOrder U = Γ.btOrder ⊤ :=
   Htat.bt_sub_eq_top_of @Htat.hens_normal hE @Htat.reg_pull
 
-omit hE in
 
 theorem exists_ind {R T H : Type} [CommRing R] [CommGroup T] [CommGroup H] (K : Subgroup T) (A : Subalgebra R (K → R))
     (hA : ∀ f ∈ A, ∀ t, (fun h => f (t * h)) ∈ A) (α : H →* T) (g : H → R)

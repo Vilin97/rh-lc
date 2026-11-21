@@ -43,7 +43,6 @@ theorem distribHaarChar_norm {k k' : Type} [Field k] [ValuativeRel k] [Topologic
   rw [LinearMap.det_conj]
   rfl
 
-open GlobalTheory.SmGL GlobalTheory.SplitWeil in
 
 theorem absPow_comp_norm {k k' : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] [Field k'] [ValuativeRel k'] [TopologicalSpace k']

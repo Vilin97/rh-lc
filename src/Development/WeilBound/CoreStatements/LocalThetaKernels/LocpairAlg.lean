@@ -55,7 +55,6 @@ abbrev Qv : Type := AF F ⧸ Ideal.span {atPlace v (1 : Fv F v)}
 
 def awF : AF F →ₐ[F] Qv v := Ideal.Quotient.mkₐ F _
 
-variable (E) in
 
 def aw : AE F E →+* Qv v ⊗[F] E := (Algebra.TensorProduct.map (awF v) (AlgHom.id F E)).toRingHom
 
@@ -122,7 +121,6 @@ theorem comp_cA (z : AE F E) : compFin F E v (cA σ z) = cV σ v (compFin F E v 
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul b x => rfl
 
-variable (σ) in
 
 def cQ : Qv v ⊗[F] E →ₐ[Qv v] Qv v ⊗[F] E := Algebra.TensorProduct.map (AlgHom.id _ _) σ
 
@@ -133,7 +131,6 @@ theorem aw_cA (z : AE F E) : aw E v (cA σ z) = cQ σ v (aw E v z) := by
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul b x => rfl
 
-variable (E) in
 
 def liftE : Ev E v →* AE F E where
   toFun y := 1 + tensAt E v (y - 1)
@@ -216,7 +213,6 @@ omit [NumberField E] [Fintype β] in
 theorem aw_lift' (m : Matrix β β (Ev E v)) : (1 + (m - 1).map (tensAt E v)).map (aw E v) = 1 := by
   rw [Matrix.map_add _ (map_add _), aw_up, Matrix.map_one _ (map_zero _) (map_one _), add_zero]
 
-variable (E β) in
 
 def liftM : Matrix β β (Ev E v) →* Matrix β β (AE F E) where
   toFun m := 1 + (m - 1).map (tensAt E v)
@@ -261,7 +257,6 @@ theorem exists_liftU {J : Matrix β β (AE F E)} {Jv : Matrix β β (Ev E v)} (h
     rw [Matrix.map_sub _ (map_sub _), Matrix.map_one _ (map_zero _) (map_one _), sub_eq_zero] at this
     exact (aw_liftM v _).trans this.symm
 
-variable (v) in
 
 def locW (w : (κ → AF F) × (κ → AF F)) : (κ → Fv F v) × (κ → Fv F v) := (evA κ v w.1, evA κ v w.2)
 

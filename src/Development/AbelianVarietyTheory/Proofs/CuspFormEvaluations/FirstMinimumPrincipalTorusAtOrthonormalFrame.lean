@@ -130,7 +130,6 @@ theorem pnorm_thFr_rmul (hs : IsSympl X bas) (hP : P ∈ Harm.rowHighest ℂ c c
 
 section Torus
 
-variable (X) in
 
 def scaleUp : (Fin g → ℂ) ≃ₗ[ℂ] EuclideanSpace ℂ (Fin g) where
   toFun z := WithLp.toLp 2 fun i => (√(X.c (idx i).1) : ℂ) * z i
@@ -157,7 +156,6 @@ theorem Hf_scaleUp (z w : Fin g → ℂ) : Hf (scaleUp X idx z) (scaleUp X idx w
   rw [← h]
   ring
 
-variable (X bas) in
 
 def canSec (a b : Fin g → ℝ) (x : Frame X.Ψ r) (v : EuclideanSpace ℂ (Fin g)) : ℂ :=
   canFn X bas idx a b x fun i => v i / (√(X.c (idx i).1) : ℂ)
@@ -241,7 +239,6 @@ theorem l2_canSec_pos : 0 < (frameTorus idx hs ho a b).l2 1 (canSec X bas idx a 
   rw [l2_canSec_eq_inv_sqrt_two_pow_mul_det_im]
   positivity
 
-include ho in
 
 theorem norm_scaleUp_per (v : Fin r → E) : ‖scaleUp X idx (per X x v ∘ idx)‖ =
     √(∑ τ, X.c τ * X.maj x τ (Data.emb τ.1 v)) := by
@@ -252,7 +249,6 @@ theorem norm_scaleUp_per (v : Fin r → E) : ‖scaleUp X idx (per X x v ∘ idx
   congr 1
   exact ofReal_injective (by rw [← h, ofReal_pow]; rfl)
 
-include hs ho in
 
 theorem per_ne_zero {v : Fin r → E} (hv : v ∈ X.Λ) (h0 : v ≠ 0) : per X x v ∘ idx ≠ 0 := by
   intro h
@@ -291,12 +287,10 @@ theorem firstMinimum_principalTorusAtOrthonormalFrame : (frameTorus idx hs ho a 
 
 end Torus
 
-variable (X) in
 
 def orthoDir (l : Harm.Var X.Ψ q0 X.p0 (Fin n)) : Fin n → EuclideanSpace ℂ (Fin g) :=
   Pi.single l.2.2 (EuclideanSpace.single (idx.symm (rowOf X hr (l.1, l.2.1))) 1)
 
-variable (X bas) in
 
 def orthoJet (P : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) (x : Frame X.Ψ r) : ℂ :=
   polyDeriv P (orthoDir X idx hr) (fun w => ∏ k, canSec X bas idx (a k) (b k) x (w k)) 0

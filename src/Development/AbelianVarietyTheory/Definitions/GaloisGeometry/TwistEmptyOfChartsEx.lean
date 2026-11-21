@@ -42,7 +42,6 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G
 
 variable {t μ} {St : ChainCharts D u μ} {A : AdData t u μ St} {dtU : Formalism.L2.Herm.unitaryOneFiniteAdeles D.sp.cm →* D.Dt} {a : 𝓞 D.host.E}
 
-set_option maxHeartbeats 1000000 in
 
 end Central
 
@@ -60,7 +59,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : D7} {T : ℕ} {bad : Set (HeightOneSpectrum (𝓞 D.host.F))} {i : ℕ} {hi : i ≤ D.R.m} {cl : Type}
   {stab : cl → Type} [∀ c, Group (stab c)] {lat : cl → Submodule (𝓞 D.host.E) (Fin (D.R.N i) → D.host.E)}
 
-set_option maxHeartbeats 1000000 in
 
 end Charts
 
@@ -70,9 +68,7 @@ open GlobalTheory.TwU.AtTrue
 
 attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end True
 
@@ -94,7 +90,6 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G
   {ex : Extra D L hT Gi Gl Kc Y cX} {t : KerEntTied ex} {u : D.what₂.Word} {μ : D.what₂.Tup} {St : ChainCharts D u μ}
   {A : AdData t u μ St} {dtU : Formalism.L2.Herm.unitaryOneFiniteAdeles D.sp.cm →* D.Dt} {a : 𝓞 D.host.E}
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.TwU.Rigid
 

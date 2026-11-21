@@ -51,7 +51,6 @@ def pull (g : T' ⟶ T) (h : g ≫ y = y') : (Over.mk y ⟶ G) →* (Over.mk y' 
 omit [GrpObj G] in
 theorem over_w (w : Over.mk y ⟶ G) : w.left ≫ G.hom = y := Over.w w
 
-omit [GrpObj G] in
 
 def mkPt (w : T ⟶ G.left) (h : w ≫ G.hom = y) : Over.mk y ⟶ G := Over.homMk w h
 
@@ -75,7 +74,6 @@ end Pull
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {X : Scheme.{0}}
   {t : SAB H X} {A : Type} [CommRing A] {x₀ : Sp A ⟶ X} {q : ℕ}
 
-variable (t x₀ q) in
 
 structure FP : Type 1 where
   f : A
@@ -151,13 +149,10 @@ theorem At.mul {φ : A →+* S} {y : Sp S ⟶ X} {w w' : Over.mk y ⟶ t.G} {β 
   subst hy
   exact (at_iff _ _).2 (P.fin.mul S φ' w w' ((at_iff _ _).1 ⟨_, h⟩) ((at_iff _ _).1 ⟨_, h'⟩))
 
-variable (P) in
 
 end FP
 
-variable (t x₀ q) in
 
-variable (x₀ q) in
 
 section Dom
 
@@ -169,9 +164,7 @@ variable (P : FP t x₀ q)
 
 variable {P}
 
-omit [IsDomain A] in
 
-variable (P) in
 
 end FP
 
@@ -225,7 +218,6 @@ variable {O : Type} [CommRing O] [IsLocalRing O] {x : A →+* O} {P : FP t x₀ 
 
 end Char
 
-variable (t x₀ q) in
 
 theorem cast_quot (R : Type) [CommRing R] (p n : ℕ) : ((p ^ n : ℕ) : R ⧸ Ideal.span {(p : R) ^ n}) = 0 := by
   rw [← map_natCast (Ideal.Quotient.mk _), Ideal.Quotient.eq_zero_iff_mem, Nat.cast_pow]

@@ -60,7 +60,6 @@ theorem isUnit_gamma (q : ℕ) (A : Type) [CommRing A] (hq : IsUnit (q : A)) :
 
 end GmPhiNat
 
-open GmPhiNat in
 
 theorem gmPhi_nat (h6 : DivisorNaturality) (q : ℕ) [NeZero q] {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (hq : IsUnit (q : A))
     (i : ℤ) (a : Ht q (sp A) 0 (i - 1)) :

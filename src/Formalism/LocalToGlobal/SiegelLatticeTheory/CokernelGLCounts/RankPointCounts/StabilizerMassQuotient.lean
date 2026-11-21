@@ -38,14 +38,12 @@ section Fibre
 variable {A B : Type*} [MulAction Γ A] [MulAction Γ B] (f : A → B)
   (hf : ∀ (g : Γ) (a : A), f (g • a) = g • f a)
 
-include hf in
 
 @[reducible] def fibAct (b : B) : MulAction (MulAction.stabilizer Γ b) {a : A // f a = b} where
   smul s a := ⟨(s : Γ) • a.1, by rw [hf, a.2]; exact s.2⟩
   one_smul a := Subtype.ext (one_smul Γ a.1)
   mul_smul s t a := Subtype.ext (mul_smul (s : Γ) (t : Γ) a.1)
 
-include hf in
 
 def qmap : Quotient (MulAction.orbitRel Γ A) → Quotient (MulAction.orbitRel Γ B) :=
   Quotient.map' f fun a a' ⟨g, hg⟩ => ⟨g, by
@@ -55,7 +53,6 @@ def qmap : Quotient (MulAction.orbitRel Γ A) → Quotient (MulAction.orbitRel �
 
 theorem qmap_mk (a : A) : qmap f hf (Quotient.mk _ a) = Quotient.mk (MulAction.orbitRel Γ B) (f a) := rfl
 
-include hf in
 
 def stabEquiv (b : B) (x : {a : A // f a = b}) :
     (letI := fibAct f hf b; MulAction.stabilizer (MulAction.stabilizer Γ b) x) ≃ MulAction.stabilizer Γ x.1 := by
@@ -77,7 +74,6 @@ def stabEquiv (b : B) (x : {a : A // f a = b}) :
       left_inv := fun s => rfl
       right_inv := fun g => rfl }
 
-include hf in
 
 def orbEquiv (oB : Quotient (MulAction.orbitRel Γ B)) :
     (letI := fibAct f hf oB.out; Quotient (MulAction.orbitRel (MulAction.stabilizer Γ oB.out) {a : A // f a = oB.out})) ≃

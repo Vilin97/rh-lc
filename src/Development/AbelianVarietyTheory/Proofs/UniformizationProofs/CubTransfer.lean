@@ -45,7 +45,6 @@ theorem exists_baseChange (hB : PolBaseChangeSt) {S S' : Scheme.{0}} (f : S' ⟶
     rw [← he]
     exact ⟨w, (isGen_iff w).2 (Tw.pgen_comp A.isLB h₁ h₂)⟩
 
-open SelfUnif in
 
 end GlobalTheory.GoodReductionUnif
 

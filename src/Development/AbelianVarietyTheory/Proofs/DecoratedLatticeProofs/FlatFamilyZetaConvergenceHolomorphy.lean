@@ -13,7 +13,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.FlatZetaIntegral
 
 variable {X : Type} [MeasurableSpace X]
 
-omit [MeasurableSpace X] in
 
 theorem flatIntegrand_rebase (f : X → ℂ) {a : X → ℝ} (ha : ∀ x, 0 < a x) (s₀ s₁ s : ℂ) (x : X) :
     flatIntegrand f a s₀ s x = flatIntegrand f a s₀ s₁ x * ((a x : ℝ) : ℂ) ^ (s - s₁) := by
@@ -23,7 +22,6 @@ theorem flatIntegrand_rebase (f : X → ℂ) {a : X → ℝ} (ha : ∀ x, 0 < a 
   congr 2
   ring
 
-omit [MeasurableSpace X] in
 
 theorem norm_flatIntegrand_le (f : X → ℂ) {a : X → ℝ} (ha : ∀ x, 0 < a x) (ha1 : ∀ x, a x ≤ 1)
     (s₀ : ℂ) {s₁ s : ℂ} (hs : s₁.re ≤ s.re) (x : X) :

@@ -27,7 +27,6 @@ theorem pt_swap {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
   rw [e] at this
   exact (one_smul _ q : ((1, 1, 1) : UF E n × GLG E n SG × GLQ E n Q') • q = q) ▸ this
 
-set_option maxHeartbeats 2000000 in
 
 theorem reads_le {B : Base} {X : PreX B.toPre} (I : TC B X) (u : B.Word) (i : ℕ) {Lb Lb'} {U U' : Subgroup (GA B (B.R.N i))}
     {chi : U →* ℂˣ} {chi' : U' →* ℂˣ} {y y' st st' k k'} (hy : y' = y)
@@ -74,7 +73,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T}
 
-set_option maxHeartbeats 4000000 in
 
 theorem U_le (Z : w.Lt) (u : B.Word) (F : Forms0 (w.D Z) u) :
     (show Subgroup (GA B (B.R.N 0)) from F.cls0.lev.U) ≤ UAd B.sp.cm (B.R.N 0) := by
@@ -86,13 +84,11 @@ theorem U_le (Z : w.Lt) (u : B.Word) (F : Forms0 (w.D Z) u) :
 abbrev Car (B : Base) : Type :=
   Submodule (𝓞 B.host.E) (Fin (B.R.N 0) → B.host.E) × Σ U : Subgroup (GA B (B.R.N 0)), (U →* ℂˣ)
 
-set_option maxHeartbeats 4000000 in
 
 def car (Z : w.Lt) (u : B.Word)
     (S : StepLevel (w.D Z).host.F (w.D Z).host.E (sigD (w.D Z)) (gramN (w.D Z) 0 (Nat.zero_le _)) ((w.D Z).mem u).A.T (w.D Z).R.f
       (badG (w.D Z))) : Car B := (S.Lb, ⟨S.U, S.chi⟩)
 
-set_option maxHeartbeats 4000000 in
 
 theorem car_eq {Z Z' : w.Lt} (t : ColT w Z) (t' : ColT w Z') (u : B.Word) :
     car Z' u (t'.C.forms u).to0.cls0.lev = car Z u (t.C.forms u).to0.cls0.lev := by
@@ -112,7 +108,6 @@ theorem eY_eq {Z Z' : w.Lt} (t : ColT w Z) (t' : ColT w Z') (u : B.Word) :
     (t'.C.forms u).to0.val0.eY = ((t.C.forms u).to0.val0.eY) :=
   Equiv.ext fun c => Subtype.ext (((t'.std u).eY 0 (Nat.zero_le _) (Or.inl rfl) c).trans ((t.std u).eY 0 (Nat.zero_le _) (Or.inl rfl) c).symm)
 
-set_option maxHeartbeats 4000000 in
 
 theorem sameStd : SameStd := by
   intro B f T w Z Zn col col' F₁ h u
@@ -130,7 +125,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7} {F F' : ∀ u, Forms0 D u}
 
-set_option maxHeartbeats 4000000 in
 
 def trCar (h : SameCar F F') {X : HidaSetting D} {u} (t : Transport X u (F u)) : Transport X u (F' u) :=
   { t with
@@ -156,7 +150,6 @@ theorem lev_car (h : SameCar F F') {X : HidaSetting D} {u} {t : Transport X u (F
   · rw [(h u).2.1]; exact (l.2 g y hr).1
   · rw [chi_of_heq (h u).2.1 (h u).2.2.1]; exact (l.2 g y hr).2 hk _
 
-set_option maxHeartbeats 4000000 in
 
 def packCar (h : SameCar F F') (P : SPack D F) : SPack D F' :=
   { P with
@@ -166,7 +159,6 @@ def packCar (h : SameCar F F') (P : SPack D F) : SPack D F' :=
     lev := fun u => lev_car h (P.lev u)
     isom := fun u a b => by rw [colDictL_car]; exact P.isom u a b }
 
-set_option maxHeartbeats 4000000 in
 
 def restCar (h : SameCar F F') {P : SPack D F} (S : SRest P) : SRest (packCar h P) where
   hI := S.hI
@@ -176,7 +168,6 @@ def restCar (h : SameCar F F') {P : SPack D F} (S : SRest P) : SRest (packCar h 
   rowPin := S.rowPin
   locTied := S.locTied
 
-set_option maxHeartbeats 4000000 in
 
 def satCar (h : SameCar F F') (p : RowPk D) (s : p.SAt F) : p.SAt F' :=
   { P := packCar h s.P, S := restCar h s.S, t := s.t, c := s.c, c_pos := s.c_pos, see := s.see, ev := s.ev, rowJ := s.rowJ }
@@ -188,19 +179,13 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.L2.Theta Formali
   IsDedekindDomain GlobalTheory.Mem GlobalTheory.Mem.R3.Tr GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Mem.Top.GroupRetwisting GlobalTheory.Mem.Top.Bl
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 8000000 in
 
-set_option maxHeartbeats 4000000 in
 
 variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T}
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end Slot
 

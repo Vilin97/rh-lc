@@ -32,7 +32,6 @@ theorem locCompact_secondCountable [CompleteSpace L] {ϖ : L} {σ : L →+* L} {
   · open scoped Valued in exact inferInstance
   · open scoped Valued in exact inferInstance
 
-open UpLatIndex in
 
 theorem distribHaarChar_eq [CompleteSpace L] [LocallyCompactSpace L] {ϖ : L} {σ : L →+* L} {q : ℕ}
     (h : IsUnramInv ϖ σ q) (u : Lˣ) : (distribHaarChar L u : ℝ) = (q : ℝ) ^ (-2 * ordL (u : L)) := by
@@ -80,17 +79,10 @@ end Mat
 
 variable {σ : L →+* L} (hσ : ∀ x, σ (σ x) = x) (hc : Continuous σ)
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
-include hσ in
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
-include hσ in
 
 variable {θ d : L} (hθ : θ + σ θ = 1) (hd : σ d = -d) (hd0 : d ≠ 0)
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
-include hσ hθ hd in
 
-include hσ in
 
 end GlobalTheory.LineUMod

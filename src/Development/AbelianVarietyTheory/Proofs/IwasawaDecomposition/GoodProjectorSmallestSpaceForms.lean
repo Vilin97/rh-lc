@@ -54,7 +54,6 @@ theorem mem_CCP_cast (C : ChainReal D) (b : Bool) (μ : D.what₂.Tup) :
   subst h
   exact hw
 
-set_option maxHeartbeats 2000000 in
 
 theorem iota_eq_gen (X : RowSide D EE) (C : ChainReal D) (b : Bool) (I : RowIds X C b) {n : ℕ}
     {bs : OrthonormalBasis (Fin n) ℂ EE} {ty : Fin n → D.what₂.FT} (hR : RowSideReal X C b I bs ty)
@@ -336,7 +335,6 @@ theorem thDn_eq_dnFrom (R : RealDat D A Ks) (F : Face D A) (tupT : D.what₂.Tup
     (R.ioX (tupT μ) ((R.cX.toMap R.prX ∘ₗ (R.HX (tupT μ)).e).rangeRestrict y'))
     ((ioX_val R F tupT hm hTop b μ u hu').trans (congrArg (fun z => (R.ioX (tupT μ) z).1) e2))
 
-set_option maxHeartbeats 2000000 in
 
 theorem iota_eq_real (R : RealDat D A Ks) (F : Face D A) (tupT : D.what₂.Tup → T) (hm : 0 < D.R.m)
     (hTop : TopMultH R) (hch : R.IsChain) (hS : StepLev R F) (hT : TopLev R F) (hP : RowProj R F)

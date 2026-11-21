@@ -13,13 +13,10 @@ variable (G : Type*) [CommGroup G] [TopologicalSpace G] [IsTopologicalGroup G]
 def openFiniteIndex : Set (Subgroup G) :=
   {H | IsOpen (H : Set G) ∧ H.FiniteIndex}
 
-variable {G} in
 
 def quotientMapOfLE {H H' : Subgroup G} (h : H ≤ H') : G ⧸ H →* G ⧸ H' :=
   QuotientGroup.map H H' (MonoidHom.id G) h
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
-variable {G} in
 
 def openCompletion : Subgroup (∀ H : openFiniteIndex G, G ⧸ (H : Subgroup G)) where
   carrier := {a | ∀ (H H' : openFiniteIndex G) (h : (H : Subgroup G) ≤ H'), quotientMapOfLE h (a H) = a H'}
@@ -31,15 +28,10 @@ namespace openCompletion
 
 variable {G}
 
-omit [IsTopologicalGroup G] in
 
-omit [IsTopologicalGroup G] in
 
-omit [IsTopologicalGroup G] in
 
-variable (G) in
 
-omit [IsTopologicalGroup G] in
 
 theorem discreteTopology_quotient (H : openFiniteIndex G) : DiscreteTopology (G ⧸ (H : Subgroup G)) :=
   QuotientGroup.discreteTopology H.2.1

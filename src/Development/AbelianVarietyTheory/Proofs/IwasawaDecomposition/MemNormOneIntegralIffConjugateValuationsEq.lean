@@ -31,7 +31,6 @@ theorem mem_u1int_iff_entry (u : GL (Fin 1) (AfE F E)) :
   rw [hl, hl]
   simp [Matrix.mulVec, dotProduct]
 
-omit [StarRing E] in
 
 theorem rInt_mul_iff {c d : AfE F E} (hcd : c * d = 1) :
     (∀ y : AfE F E, y ∈ RInt F E ↔ c * y ∈ RInt F E) ↔ ∀ P : HeightOneSpectrum (𝓞 E), Valued.v (adAt F P c) = 1 := by

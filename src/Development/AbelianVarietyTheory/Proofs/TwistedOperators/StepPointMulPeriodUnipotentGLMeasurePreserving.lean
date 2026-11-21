@@ -22,7 +22,6 @@ section Alg
 
 variable {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
 
-open Classical in
 
 def varPart (e : StepVar n c n' → k) : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
   Matrix.of fun r s => if h : Free (c / 2 + 1) (r, s) ∨ Kept (r, s) then e ⟨(r, s), h⟩ else 0
@@ -39,14 +38,12 @@ theorem varPart_nonvar (e : StepVar n c n' → k) {r : n ⊕ Fin c} {s : n' ⊕ 
     (h : ¬ (Free (c / 2 + 1) (r, s) ∨ Kept (r, s))) : varPart e r s = 0 := by
   simp [varPart, h]
 
-omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] in
 
 theorem basePt_var (x₀ : Matrix n n' k) {r : n ⊕ Fin c} {s : n' ⊕ Fin (c + 1)}
     (h : Free (c / 2 + 1) (r, s) ∨ Kept (r, s)) : basePt c x₀ r s = 0 := by
   rcases r with r | r <;> rcases s with s | s <;> simp [Free, Kept, basePt] at h ⊢
   all_goals omega
 
-omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] in
 
 theorem eq_stepPt_of (x₀ : Matrix n n' k) (Y : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k)
     (h : ∀ r s, ¬ (Free (c / 2 + 1) (r, s) ∨ Kept (r, s)) → Y r s = basePt c x₀ r s) :
@@ -76,7 +73,6 @@ theorem varPart_mul_apply (e : StepVar n c n' → k) (g : Matrix (n' ⊕ Fin (c 
     simp [hr]
   · simp
 
-open Classical in
 
 theorem det_linV {q : ℕ} {g : GL (n' ⊕ Fin (c + 1)) k} (hg : InN q g) : (linV (n := n) g.val).det = 1 := by
   rw [← det_transpose]
@@ -87,7 +83,6 @@ theorem det_linV {q : ℕ} {g : GL (n' ⊕ Fin (c + 1)) k} (hg : InN q g) : (lin
   rw [hg _ _ hab]
   by_cases h1 : r = r' <;> by_cases h2 : s = s' <;> simp [Matrix.one_apply, h1, h2]
 
-omit [Fintype n] [DecidableEq n] in
 
 theorem mul_gen_nonvar {q : ℕ} (hq : q = c / 2 + 1 ∨ (c % 2 = 1 ∧ q = c / 2 + 2)) {g : GL (n' ⊕ Fin (c + 1)) k}
     (hg : InN q g) (x₀ : Matrix n n' k) (e : StepVar n c n' → k) (r : n ⊕ Fin c) (s : n' ⊕ Fin (c + 1))
@@ -209,7 +204,6 @@ theorem symN_le_movers : symN k n' (c + 1) ≤ movers ν n c n' := by
   · omega
   · omega
 
-open Classical in
 
 theorem exists_embX_mp (κ : GL n' k) (hκ : valuation k (gdet κ : k) = 1) (x₀ : Matrix n n' k) :
     ∃ φ : (StepVar n c n' → k) ≃ᵐ (StepVar n c n' → k), MeasurePreserving φ (stepVol ν n c n') (stepVol ν n c n') ∧

@@ -132,7 +132,6 @@ theorem map_smul_eToEAf {m n : ℕ} (c : D.host.E) (Y : Matrix (Fin m) (Fin n) D
     (c • Y).map (eToEAf D) = eToEAf D c • Y.map (eToEAf D) := by
   ext p q; simp only [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_mul]
 
-set_option maxHeartbeats 1000000 in
 
 theorem local_le {μ₀ : T} (hL : L.Is μ₀) (hO : OffQ D) (G : GridData L sc) (B : GlobalTheory.FunObj.Frames G) {i : ℕ} (hi : i < D.R.m)
     {w : Pl D.host.E} (hw : w ∈ G.pl.W0) {u : WO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0))} (hu : u ∈ latBig G i)

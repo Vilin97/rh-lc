@@ -55,7 +55,6 @@ variable {R : Ranks} (H : Host R)
 
 end Host
 
-open Classical in
 
 section PrimesOk
 

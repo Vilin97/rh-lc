@@ -46,7 +46,6 @@ end Tate
 
 variable {R : Type} [CommRing R]
 
-variable (D K) in
 
 def multSub : AddSubgroup D.La where
   carrier := {x | ∃ z, x = K • z}
@@ -58,10 +57,8 @@ def multSub : AddSubgroup D.La where
     rintro _ ⟨a, rfl⟩
     exact ⟨-a, (smul_neg _ _).symm⟩
 
-variable (D K) in
 
 abbrev LQ := D.La ⧸ multSub D K
 
-variable (D N K) in
 
 end GlobalTheory.UPel.HT

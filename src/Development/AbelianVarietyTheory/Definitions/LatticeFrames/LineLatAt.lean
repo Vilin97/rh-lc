@@ -47,9 +47,7 @@ variable {a : XPart D u}
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {ι : Type}
   {o : OffX a k ι} {b : YPart a}
 
-open GlobalTheory.LocMod in
 
-open GlobalTheory.LocMod in
 
 theorem idV_mono {𝔞 𝔟 : FI D} (h : 𝔞 ≤ 𝔟) (v : Pl D) : idV 𝔞 v ≤ idV 𝔟 v := by
   apply AddSubgroup.closure_mono

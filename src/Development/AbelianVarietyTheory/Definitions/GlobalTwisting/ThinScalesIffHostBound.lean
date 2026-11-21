@@ -35,7 +35,6 @@ abbrev baseOf (s : Scale) (cD ch : ℝ) (H : Host R) : Arith.Base :=
   { R := R, sc := s, q := H.q, d := H.d, cls := H.cls, TT := H.TT, Sc := (R.k : ℝ) * (4 * (Delv s cD : ℝ)),
     eta := (R.m : ℝ) * (h0v s ch : ℝ) }
 
-open Classical in
 
 def BadOK (s : Scale) (Cb : ℝ) (H : Host R) : Prop :=
   let B := baseOf s 0 0 H
@@ -110,7 +109,6 @@ def WinOK (s : Scale) (K : G.Consts) (H : Host R) (a b : R.A → ℤ) : Prop :=
   ∀ t ∈ H.TT, (s.a ≤ (a t : ℝ) ∧ (a t : ℝ) ≤ s.a + s.a / ((R.k : ℝ) * s.x ^ (Scale.A / 2))) ∧
     s.b' ≤ (b t : ℝ) ∧ (b t : ℝ) ≤ s.b' + 2 * (R.n : ℝ) * s.delta1 * s.x ^ s.eps * G.La K s * s.b' / (R.k : ℝ)
 
-open Classical in
 
 def WOK (s : Scale) (cD ch : ℝ) (K : G.Consts) (H : Host R) (a b : R.A → ℤ) : Prop :=
   let B := baseOf s cD ch H

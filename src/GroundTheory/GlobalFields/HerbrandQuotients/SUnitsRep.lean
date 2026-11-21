@@ -23,7 +23,6 @@ variable [NumberField L]
 def unitsMap (g : L ≃ₐ[K] L) : (𝓞 L)ˣ →* (𝓞 L)ˣ :=
   Units.map (MulSemiringAction.toRingHom (L ≃ₐ[K] L) (𝓞 L) g : 𝓞 L →* 𝓞 L)
 
-variable (K L) in
 
 def unitsRep : Representation ℤ (L ≃ₐ[K] L) (Additive (𝓞 L)ˣ) where
   toFun g := (unitsMap g).toAdditive.toIntLinearMap

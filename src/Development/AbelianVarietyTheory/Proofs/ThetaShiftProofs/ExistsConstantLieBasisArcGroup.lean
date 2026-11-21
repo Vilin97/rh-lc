@@ -266,7 +266,6 @@ theorem exists_bar (w : epsR R ⟶ G) : ∃ w' : epsR A ⟶ (Over.pullback (spMa
       rw [Category.assoc, Over.w w]; exact LieCombBaseChange.dualMap_over f)) (pullback.lift_snd _ _ _),
     pullback.lift_fst _ _ _⟩
 
-omit [IsCommMonObj G] in
 
 theorem red_eq_of_comb {n : ℕ} {v v' : Fin n → (epsR R ⟶ G)} {c c' : Fin n → R} {w w' : epsR R ⟶ G}
     (h : IsLieComb c v w) (h' : IsLieComb c' v' w') (e : ∀ i, f (c i) = f (c' i))

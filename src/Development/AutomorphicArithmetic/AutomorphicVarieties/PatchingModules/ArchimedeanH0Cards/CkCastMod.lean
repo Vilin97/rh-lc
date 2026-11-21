@@ -72,7 +72,6 @@ private theorem ck_castMod (l : ℕ) [Fact l.Prime] (x : ℤ_[l]) :
     rw [ZMod.natCast_self]; simp
   exact RingHom.congr_fun h x
 
-open GlobalTheory.Published GlobalTheory.Published.PoitouTate in
 
 private theorem ck_pt (hP : GlobalTheory.Published.PoitouTateNormalised) (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
     [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (h2 : l ≠ 2) (S : Set (HeightOneSpectrum (𝓞 F))) (hf : S.Finite)

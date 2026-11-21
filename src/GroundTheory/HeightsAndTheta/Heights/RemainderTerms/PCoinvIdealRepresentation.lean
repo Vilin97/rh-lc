@@ -13,7 +13,6 @@ open MvPolynomial Finset
 
 noncomputable section
 
-open Coinv in
 
 theorem CoinvIdealRepresentation.proof : CoinvIdealRepresentation.Statement := by
   intro K _ f n J hJ

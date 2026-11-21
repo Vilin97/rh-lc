@@ -159,8 +159,6 @@ private lemma half_add_half_notMem_lattice (L : PeriodPair) :
   rw [Int.cast_eq_zero] at h'
   omega
 
-open Filter PeriodPair in
-open scoped Topology in
 
 lemma _root_.GlobalTheory.PeriodicWeierstrass.exists_eq_of_sq_mul_tendsto (L : PeriodPair) {g : ℂ → ℂ} {a : ℂ}
     (hd : ∀ z ∉ L.lattice, DifferentiableAt ℂ g z) (hp : ∀ z, ∀ l ∈ L.lattice, g (z + l) = g z)
@@ -304,8 +302,6 @@ private lemma tendsto_pow_three_mul_derivWeierstrassP (L : PeriodPair) :
   field_simp
   ring
 
-open Filter PeriodPair in
-open scoped Topology in
 
 lemma _root_.GlobalTheory.PeriodicWeierstrass.exists_eq_of_cube_mul_tendsto (L : PeriodPair) {g : ℂ → ℂ}
     (hd : ∀ z ∉ L.lattice, DifferentiableAt ℂ g z) (hp : ∀ z, ∀ l ∈ L.lattice, g (z + l) = g z)
@@ -330,8 +326,6 @@ lemma _root_.GlobalTheory.PeriodicWeierstrass.exists_eq_of_cube_mul_tendsto (L :
   simp only [hf₀] at this
   linear_combination this
 
-open Filter PeriodPair in
-open scoped Topology in
 
 lemma _root_.GlobalTheory.PeriodicWeierstrass.tendsto_leading (W : WeierstrassCurve ℂ)
     {x y t : ℂ → ℂ} {c : ℂ} (hc : c ≠ 0)
@@ -391,8 +385,6 @@ lemma _root_.GlobalTheory.PeriodicWeierstrass.tendsto_leading (W : WeierstrassCu
 
 end PeriodicWeierstrass
 
-open Filter PeriodPair in
-open scoped Topology in
 
 theorem _root_.GlobalTheory.invariants_eq_of_periodic_solution :
     ∀ (L : PeriodPair) (W : WeierstrassCurve ℂ) (x y t : ℂ → ℂ) (c : ℂ), c ≠ 0 →

@@ -12,11 +12,9 @@ open scoped nonZeroDivisors
 namespace GlobalTheory.ZetaDenom
 variable {F : Type} [Field F] [NumberField F]
 
-open Classical in
 
 def cls (I : Ideal (𝓞 F)) : ClassGroup (𝓞 F) := if h : I ∈ (Ideal (𝓞 F))⁰ then ClassGroup.mk0 ⟨I, h⟩ else 1
 
-open Classical in
 
 def wideInd (C : ClassGroup (𝓞 F)) : Ideal (𝓞 F) → ℚ := fun I => if cls I = C then 1 else 0
 

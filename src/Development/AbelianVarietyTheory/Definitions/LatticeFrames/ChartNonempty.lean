@@ -92,9 +92,7 @@ theorem exists_dec (hy : Function.Surjective (fun c => (Quotient.mk'' (yc c) : C
   simp only at this
   rw [e]; exact this
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 2000000 in
 
 end Gen
 

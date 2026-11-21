@@ -27,7 +27,6 @@ private theorem len_le_of_ker_le {R P A B : Type} [CommRing R] [AddCommGroup P] 
 variable {R G M : Type} [CommRing R] [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup M] [Module R M]
   [TopologicalSpace M] [IsTopologicalAddGroup M] [ContinuousConstSMul R M] [DiscreteTopology M]
 
-omit [IsTopologicalAddGroup M] [DiscreteTopology M] in
 
 instance continuousConstSMul_sub (N : Submodule R M) : ContinuousConstSMul R N :=
   ⟨fun c => (continuous_subtype_val.const_smul c).subtype_mk _⟩
@@ -156,7 +155,6 @@ private theorem exists_normal_conj_inclusion {K : Type} [Group K] {U' U : Subgro
   apply Subtype.ext
   simp [mul_assoc]
 
-omit [IsTopologicalGroup G] [DiscreteTopology M] in
 
 private theorem exists_infl (ρ : Representation R G M) {U' U : Subgroup G} [U'.Normal] (h : U' ≤ U)
     [DiscreteTopology (U ⧸ U'.subgroupOf U)] (z : U' → M) (y : U → M)
@@ -281,7 +279,6 @@ private theorem mem_range_resU (ρ : Representation R G M) {U' U : Subgroup G} (
   show y (Subgroup.inclusion h u) - c (Subgroup.inclusion h u) = z.1 u
   rw [hz u, hc1 u, hc0, sub_zero]
 
-set_option maxHeartbeats 800000 in
 
 theorem length_restriction_coker_le_H2 (ρ : Representation R G M) (hρ : ContAction ρ) {U' U : Subgroup G} [U'.Normal]
     (h : U' ≤ U) (ho : IsOpen (U'.subgroupOf U : Set U)) :

@@ -35,7 +35,6 @@ end GlobalTheory
 
 namespace GlobalTheory
 
-open Algebra.TensorProduct in
 
 theorem exists_finset_mem_range_map_val {F A K : Type*} [Field F] [CommRing A] [Algebra F A]
     [Field K] [Algebra F K] (x : A ⊗[F] K) :

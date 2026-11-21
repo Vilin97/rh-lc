@@ -199,7 +199,6 @@ noncomputable def modNIntegerEquiv : ModN 𝒪[E] p ≃ₗ[ℤ] 𝒪[E] ⧸ Idea
 
 variable [Fact p.Prime]
 
-omit [TopologicalSpace E] [IsNonarchimedeanLocalField E] in
 
 theorem finrank_modN_integer {n : ℕ} (hn : Nat.card (𝒪[E] ⧸ Ideal.span {(p : 𝒪[E])}) = p ^ n) :
     Finite (ModN 𝒪[E] p) ∧ Module.finrank (ZMod p) (ModN 𝒪[E] p) = n := by
@@ -317,7 +316,6 @@ attribute [local instance] integerAction unitFiltrationAction
 
 attribute [local instance] maxPowAction normalSubAction
 
-omit [FiniteDimensional E F] in
 
 theorem valuation_le_of_mem_maxPow {ϖ : 𝒪[F]} (hϖ : Irreducible ϖ) {k : ℕ} {x : 𝒪[F]}
     (hx : x ∈ 𝓂[F] ^ k) : valuation F (x : F) ≤ valuation F (ϖ : F) ^ k := by

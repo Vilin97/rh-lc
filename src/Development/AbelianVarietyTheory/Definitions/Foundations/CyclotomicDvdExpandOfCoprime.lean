@@ -242,7 +242,6 @@ theorem ev_binomialSeries (m : ℕ) (b : ℤ_[p]) (n : ℕ) (hn : b - n ∈ Idea
     map_pow, levZeta]
   simp
 
-omit hp [Algebra ℤ_[p] R] in
 
 theorem cyclotomic_dvd_expand_of_coprime (N : ℕ) : ∀ n : ℕ, n ≠ 0 → n.Coprime N →
     Polynomial.cyclotomic N R ∣ Polynomial.expand R n (Polynomial.cyclotomic N R) := by

@@ -96,7 +96,6 @@ theorem log_T_lt (D : D7) (u : D.what₂.Word) :
     mul_pos (by positivity) (Real.log_pos (D.mem u).A.one_lt_gammaP)
   linarith
 
-set_option maxHeartbeats 1600000 in
 
 section Rank
 
@@ -104,7 +103,6 @@ variable {R : Ranks} {Tau : Type} [Fintype Tau] (hc : Tau → HCParam R) (N : �
 
 variable (T : ℕ) [Fact T.Prime] (Dst : ℝ) (hD : 0 < Dst) (hT : T ≠ 2) (s : ℂ)
 
-include hT in
 
 end Rank
 

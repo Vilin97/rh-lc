@@ -33,7 +33,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 section ClassField
 
-variable (K Ω) in
 
 def classField (H : openFiniteIndex Kˣ) : finiteAbelianExtensions K Ω :=
   (normGroupOrderIso K Ω).symm (OrderDual.toDual ⟨H.1, H.2⟩)
@@ -47,7 +46,6 @@ end ClassField
 
 section Coord
 
-variable (K Ω) in
 
 def artinCoord (H : openFiniteIndex Kˣ) :
     (maximalAbelianExtension K Ω ≃ₐ[K] maximalAbelianExtension K Ω) →* Kˣ ⧸ H.1 :=
@@ -84,9 +82,7 @@ end Coord
 
 section Completion
 
-variable (K Ω) in
 
-variable (K Ω) in
 
 end Completion
 

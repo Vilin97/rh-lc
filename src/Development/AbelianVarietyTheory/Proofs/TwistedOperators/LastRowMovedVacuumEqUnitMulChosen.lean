@@ -48,7 +48,6 @@ theorem fwd_gen (V : HSp D) (k : Formalism.L2.Theta.GA D V) (C Λ : Submodule (�
   rw [GlobalTheory.MovedHomLat.bridge]
   exact (hb _).1 (eToEAf_mem_hatL_of_mem C s hs)
 
-set_option maxHeartbeats 1000000 in
 
 theorem bwd_gen (V : HSp D) (k : Formalism.L2.Theta.GA D V) (C Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E))
     (hb : ∀ v, v ∈ Formalism.L2.Herm.hatL (F := D.host.F) C ↔
@@ -117,7 +116,6 @@ theorem neg_mem_GfC (V : HSp D) {g : Formalism.L2.Theta.GA D V} (hg : g ∈ GfC 
   rw [MonoidHom.mem_ker] at hg ⊢
   exact hg
 
-set_option maxHeartbeats 1000000 in
 
 theorem moved_isVac (W : G.Weil) (N : Std G U) (Z : Normal W N) (i : ℕ) (hi : i < D.R.m) :
     W.IsVac (.chi i D.R.m) (W.om (.chi i D.R.m) (G.toPair (.chi i D.R.m) (N.u (Pair.chi i D.R.m : Pair T).small).1

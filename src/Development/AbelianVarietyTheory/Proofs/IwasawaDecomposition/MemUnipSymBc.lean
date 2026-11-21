@@ -20,7 +20,6 @@ variable {D : D7}
 def EwAt (X : HidaSetting D) (w : HeightOneSpectrum (𝓞 D.host.E)) : Prop :=
   ∀ y ∈ X.B.I.Lf, (1 - X.ew) • y ∈ wLf X w
 
-open Classical in
 
 def epsW (X : HidaSetting D) (w : HeightOneSpectrum (𝓞 D.host.E)) : Fin D.R.k → VA X.B.I :=
   if EwAt X w then X.bw else fun i => X.bwd (Fin.rev i)

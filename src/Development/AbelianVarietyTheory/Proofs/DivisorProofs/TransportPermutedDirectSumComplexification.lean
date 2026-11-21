@@ -94,7 +94,6 @@ theorem transport_general {H G X : Type} [Group G] [Group H] [DecidableEq X] [Mu
 
 end General
 
-open GlobalTheory.DefRead in
 
 theorem transport : ∀ (Ks LL WL C H G X : Type) [Field Ks] [Field LL] [Algebra Ks LL] [AddCommGroup WL] [Module LL WL] [Module Ks WL]
     [IsScalarTower Ks LL WL] [AddCommGroup C] [Module Ks C] [Group G] [Group H] [Fintype X] [DecidableEq X] [MulAction H X]

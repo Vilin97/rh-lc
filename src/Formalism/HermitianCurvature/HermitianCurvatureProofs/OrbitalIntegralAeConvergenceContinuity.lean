@@ -372,7 +372,6 @@ theorem measurable_xi (D : RealPlaceData k r Wp Wq) : Measurable fun a : (ℝ ×
 def JM (D : RealPlaceData k r Wp Wq) (F : Mat k r → (Wq →L[ℂ] Wp)) (τ : ℝ × ℝ) (q : (Fin r → ℂ) × ℂ) :
     Wq →L[ℂ] Wp := ∫ p, xiTau D τ p • RM D F p (gqM D q) ∂D.μSS
 
-set_option maxHeartbeats 800000 in
 
 theorem sm_A (D : RealPlaceData k r Wp Wq) {F : Mat k r → (Wq →L[ℂ] Wp)} (hF : ContinuousOn F (GV k r)) :
     StronglyMeasurable fun b : ((ℝ × ℝ) × ((Fin r → ℂ) × ℂ)) × SS k r => RM D F b.2 (gqM D b.1.2) := by
@@ -1078,7 +1077,6 @@ theorem measurable_PhiM (D : RealPlaceData k r Wp Wq) : Measurable (PhiM D) := b
     (measurable_invM.comp measurable_snd.fst.snd)) ((measurable_gqM D).comp measurable_fst))
     measurable_snd.snd.snd) measurable_snd.snd.fst
 
-set_option maxHeartbeats 800000 in
 
 theorem sfNu (D : RealPlaceData k r Wp Wq) : SigmaFinite (nuQ D) := by
   unfold nuQ

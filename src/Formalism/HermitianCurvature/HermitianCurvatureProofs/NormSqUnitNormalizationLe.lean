@@ -63,7 +63,6 @@ lemma eI_inj {n : ℕ} : Function.Injective (eI (n := n)) := by
   unfold eI at this
   by_cases hI : i ∈ I <;> by_cases hJ : i ∈ J <;> simp_all
 
-open Classical in
 
 def aF {n : ℕ} (S : Finset (Finset (Fin n))) (co : Finset (Fin n) → ℂ) : (Fin n → ℤ) →₀ ℂ :=
   Finsupp.mapDomain eI (Finsupp.onFinset S (fun I => if I ∈ S then co I else 0)

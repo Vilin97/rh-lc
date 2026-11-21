@@ -52,7 +52,6 @@ def XLeavesP : Prop :=
       XLeafAt T.X Ch u u' e hPl (host_v D) CA (deOf D τ u) (deOf D τ u') (lOf D (deOf D τ u) (deOf D τ u')) i0 i0' 1
         (T.Y.FN u) (T.Y.FN u') νq (massDataY T.X T.hb T.Y u u' X0 T.ψ sd C Th vR Q i0 i0' νq).IntN a b ξ ξ' cc
 
-variable [Fact Formalism.L2.SG.Pf.CarrierT.CoefCapAll] in
 
 theorem carrierXSideP_of_leaves (Cb : ℝ) (hLift : LiftAt3 Cb) (hX : XLeavesP) : CarrierSideBoundPositive Cb := by
   intro C₆ Cc hC6
@@ -193,7 +192,6 @@ def XPinsP : Prop :=
       (∀ j, CoefPin hB u u' (e (plE D j)) (a j) (b j) (ξ j) (ξ' j) 1) ∧
       (∀ j, sclOf hB u u' (e (plE D j)) ≠ 0) ∧ (∀ j, cOf hB u (e (plE D j)) ≠ 0)
 
-variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 
 def KFinNZ : Prop :=
   ∀ (D : D7) (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (θ : ℝ) (C : Choice X θ) (hB : WuBessel C) (u : D.what₂.Word) (τ : D.what₂.Tau),
@@ -217,11 +215,8 @@ theorem inner_normalize_left {V : Type*} [NormedAddCommGroup V] [InnerProductSpa
   push_cast
   exact inv_mul_cancel₀ h
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
-variable [Fact Formalism.L2.SG.Pf.CarrierT.CoefCapAll] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
-variable [Fact Formalism.L2.SG.Pf.CarrierT.CoefCapAll] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
 def KFinDense : Prop :=
   ∀ (k r : ℕ) (ε : Fin (2 * r + k + 1) → Bool) (lam : Fin (2 * r + k + 1) → ℝ) (H : Type) [NormedAddCommGroup H]
@@ -232,7 +227,6 @@ def KFinDense : Prop :=
     ∀ δ : ℝ, 0 < δ → ∃ a : H, PI.UpqRep.IsKFinHpk (k := k) (r := r) σ a ∧
       (Ws.map fun w => ‖dsigW σ w (v - a)‖).sum < δ
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
 theorem kFinNZ_of (hD : KFinDense) : KFinNZ := by
   intro D X θ C hB u τ hG
@@ -294,8 +288,6 @@ theorem kFinNZ_of (hD : KFinDense) : KFinNZ := by
     nlinarith [abs_nonneg Cw]
   linarith
 
-variable [Fact Formalism.L2.SG.Pf.CarrierT.CoefCapAll] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
-variable [Fact Formalism.L2.SG.Pf.CarrierT.CoefCapAll] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
 end Formalism.L2.SG.Pf.CarrierXAll

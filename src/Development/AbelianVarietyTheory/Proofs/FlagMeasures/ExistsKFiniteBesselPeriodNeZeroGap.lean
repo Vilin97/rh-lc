@@ -23,7 +23,6 @@ namespace GlobalTheory.BesselPeriodNonzeroGap
 
 open Formalism.FourierDecayAlt.P.MatrixMultiplicationContinuity GlobalTheory.BesselPeriodNonzero
 
-set_option maxHeartbeats 1600000 in
 
 theorem nzOn_of_mass (hy : GlobalTheory.GapIn.Hyp) {k r : ℕ} {ε : Fin (2 * r + k + 1) → Bool} {mu : Fin (2 * r + k + 1) → ℝ} {h : ℝ}
     {R : Rep k r}

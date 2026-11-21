@@ -66,7 +66,6 @@ def IsSymLevel (ψ : AddChar k Circle) (ϖ : kˣ) (ρ : ℕ) {κ l : ℕ} (P : T
 def colPos (κ : ℕ) (t : Type) : XIx (Fin κ) t 0 → ℕ :=
   Sum.elim (Sum.elim (fun i => i.val) (fun i => i.elim0)) (fun p => p.1.elim0)
 
-variable (k) in
 
 def colGroup (κ : ℕ) (t : Type) [Fintype t] [DecidableEq t] : Set (GL (XIx (Fin κ) t 0) k) :=
   {γ | ∃ gb, Reduces γ gb ∧ IsUpperUnip (colPos κ t) gb.val}

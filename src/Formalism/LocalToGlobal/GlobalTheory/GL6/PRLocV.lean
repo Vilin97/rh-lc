@@ -278,26 +278,13 @@ theorem rlv_norm (A : AtTTied u) (v : (D.mem u).A.vT) (a : 𝓞 D.host.E) (ha : 
   rw [A.res_v v, hr, map_mul]
   exact mul_ne_zero hb' ha'
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 4000000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 4000000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 2000000 in
 
 end Tied
 

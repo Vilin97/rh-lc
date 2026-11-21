@@ -40,7 +40,6 @@ theorem prodMapPairTimesIdentity_eq_comp_whiskers {A A' : Over S} (q : A ⟶ A')
 
 end GlobalTheory.CharKer.PmapTwo
 
-open GlobalTheory.CharKer.PmapTwo in
 
 theorem GlobalTheory.CharKer.pmap2_flat_surjective_isAffineHom :
     ∀ (S : Scheme.{0}) (A A' T : Over S) (q : A ⟶ A'), Flat q.left → Surjective q.left → IsAffineHom q.left →

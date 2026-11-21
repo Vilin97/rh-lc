@@ -27,7 +27,6 @@ def IsEffectiveVertical (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRi
   IsVerticalDivisor P ϖ b f g ∧ ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W.IsPrime → P ≤ W → IsRelevant W →
     ∃ u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, u ∉ W ∧ u * f - v * g ∈ P
 
-open Classical in
 
 def cutIdentity (ϖ : O) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (c : K → ℕ)
     (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) {d : ℕ} (L : Fin d → K → ℤ) : Prop :=
@@ -85,7 +84,6 @@ def GenericFibProps.Statement : Prop :=
       IsMultiHomog (MvPolynomial.map (algebraMap O (FractionRing O)) s) c ∧
         MvPolynomial.map (algebraMap O (FractionRing O)) s ∉ genFib P
 
-open Classical in
 
 def GenericCycleCorresp.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →

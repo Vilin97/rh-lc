@@ -19,7 +19,6 @@ noncomputable section
 
 namespace GlobalTheory.SameCoord
 
-set_option maxHeartbeats 1600000 in
 
 theorem psiCoord_of_isPullDeg_id {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {D D' : DegPre R}
     (hD : IsPullDeg (RingHom.id R) D D') (x : D'.X) (r : R) (hr : PsiCoord D (hD.xe x) r) :
@@ -80,7 +79,6 @@ theorem psiCoord_of_isPullDeg_id {R : Type} [CommRing R] [IsDomain R] [IsLocalRi
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_move (hU : UnifBaseChangeSt) (h5 : Laws5) {R : Type} [CommRing R] [IsDomain R] {I : Ideal R}
     (hR : AdmBase R I) {t t' : SAB H (Sp R)} (m : SABMap t' t (𝟙 _)) (P : PELUnif I t) :

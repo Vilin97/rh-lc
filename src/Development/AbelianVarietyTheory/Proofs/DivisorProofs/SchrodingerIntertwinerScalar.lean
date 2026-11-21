@@ -60,6 +60,5 @@ namespace GlobalTheory.SubstIntertw
 
 open GroundTheory.Global
 
-open scoped Classical in
 
 end GlobalTheory.SubstIntertw

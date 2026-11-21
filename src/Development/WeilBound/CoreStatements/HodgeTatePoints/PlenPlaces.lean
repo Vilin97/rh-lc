@@ -39,7 +39,6 @@ theorem deg_eq_of_surjective (B : Type) [CommRing B] [Algebra k B] [Algebra B K]
   rw [Place.deg, ← hker]
   exact (Ideal.quotientKerAlgEquivOfSurjective hs).toLinearEquiv.finrank_eq.symm
 
-omit [IsFunctionField k K] in
 
 theorem deg_ofHeightOneSpectrum (B : Type) [CommRing B] [IsDedekindDomain B] [Algebra B K]
     [IsFractionRing B K] [Algebra k B] [IsScalarTower k B K]

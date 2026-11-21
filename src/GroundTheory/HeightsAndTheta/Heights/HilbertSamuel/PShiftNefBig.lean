@@ -43,7 +43,6 @@ theorem geoNum_one_one_nonneg (W : Ideal (MRing ι)) : 0 ≤ geoNum 1 W (fun _ =
 
 end ShiftedNefBig
 
-open ShiftedNefBig in
 
 theorem ShiftNefBig.proof (hD : GroundTheory.Heights₂.Heights.Inter.DegreeGeneric.Statement)
     (hB : NefPlusAmpleDegree.Statement) : ShiftNefBig.Statement := by

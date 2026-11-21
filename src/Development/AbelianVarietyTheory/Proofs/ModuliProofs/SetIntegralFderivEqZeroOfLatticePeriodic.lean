@@ -16,7 +16,6 @@ section General
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
   [MeasurableSpace E] [BorelSpace E] (μ : Measure E) [μ.IsAddHaarMeasure]
 
-omit [NormedSpace ℝ E] [FiniteDimensional ℝ E] in
 
 theorem setIntegral_comp_add_of_lattice_periodic [SecondCountableTopology E]
     (L : Submodule ℤ E) [Countable L] {D : Set E}

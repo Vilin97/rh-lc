@@ -97,7 +97,6 @@ theorem smul_homLat_mul {m n : ℕ} (I : Ideal (𝓞 D.host.E)) {Λ : Submodule 
 
 end GlobalTheory.AscFin.SplitX
 
-open GlobalTheory.AscFin.SplitX in
 
 theorem GlobalTheory.AscFin.SplitX.latRow_extX : OnStd fun {D} _ _ {sc} {G} _ F => ∀ σ (h : 2 * (σ + 1) + 2 ≤ D.R.m), ∀ u ∈ latRow G (2 * σ + 2), (F.dJ (σ + 1) h).extX _ (u ⬝ (F.dJ (σ + 1) h).jX) ∈ latRow G (2 * σ + 2) := by
   intro D hq T L μ0 hL sc G W M hM F hF σ h u hu

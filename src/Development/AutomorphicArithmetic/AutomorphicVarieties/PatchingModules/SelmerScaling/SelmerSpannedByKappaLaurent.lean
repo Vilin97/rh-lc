@@ -33,7 +33,6 @@ variable {l : ℕ} [Fact l.Prime] {L : Loc} {G G0 : Glob l L} (h : G.Hom G0) {n 
 
 abbrev NP.Fr {F : GFrame l} (x : NP F n) : Type := FractionRing x.A
 
-variable (x) in
 
 def BdP (X : Type) [CommRing X] [Algebra x.A X] := Bd G.frame (fun g => x.ρX X (h.p₀ g)) (Ev x.A X n x.a)
 

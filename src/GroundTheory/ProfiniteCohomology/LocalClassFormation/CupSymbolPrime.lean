@@ -58,7 +58,6 @@ section Subgroups
 
 variable {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] [IsSepClosure K Ω]
 
-omit [IsSepClosure K Ω] in
 
 instance isDiscreteRep_res_galUnitsZ (S : Subgroup Gal(Ω/K)) :
     IsDiscreteRep (Rep.res S.subtype (galUnitsZ K Ω)) :=

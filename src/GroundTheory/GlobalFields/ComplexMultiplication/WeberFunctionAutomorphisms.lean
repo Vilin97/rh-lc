@@ -13,7 +13,6 @@ open WeierstrassCurve OnePoint ShortWeierstrass
 
 variable {F : Type*} [Field F]
 
-open scoped Classical in
 
 noncomputable def automorphismOrder (W : WeierstrassCurve F) : ℕ :=
   if W.a₆ = 0 then 4 else if W.a₄ = 0 then 6 else 2
@@ -59,7 +58,6 @@ theorem mem_range_automorphismScale (hW : IsShortForm W) (u : Fˣ) :
 
 variable [W.IsElliptic]
 
-omit [CharZero F] in
 
 theorem scale_conditions_iff (hW : IsShortForm W) (w : F) :
     (w⁻¹ ^ 4 * W.a₄ = W.a₄ ∧ w⁻¹ ^ 6 * W.a₆ = W.a₆) ↔ w ^ automorphismOrder W = 1 := by
@@ -104,7 +102,6 @@ section Fibres
 
 variable [CharZero F] {W : WeierstrassCurve F} [W.IsElliptic]
 
-omit [CharZero F] [W.IsElliptic] in
 
 theorem IsShortForm.sq_eq (hW : IsShortForm W) {x y : F} (h : W.toAffine.Nonsingular x y) :
     y ^ 2 = x ^ 3 + W.a₄ * x + W.a₆ := by
@@ -155,7 +152,6 @@ theorem exists_scale_of_weberValue_eq [IsAlgClosed F] (hW : IsShortForm W) {x₁
     have h : x₁ = x₂ := mul_left_cancel₀ hc hx
     exact ⟨1, one_ne_zero, by simp, by simp, by simp [h]⟩
 
-omit [W.IsElliptic] in
 
 theorem exists_automorphismPoint_of_scale (hW : IsShortForm W) {v x₁ y₁ x₂ y₂ : F} (hv : v ≠ 0)
     (h4 : v ^ 4 * W.a₄ = W.a₄) (h6 : v ^ 6 * W.a₆ = W.a₆) (hx : v ^ 2 * x₁ = x₂)

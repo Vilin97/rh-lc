@@ -56,7 +56,6 @@ private theorem unit_of (hr : r < 1) (hA : Bd r (A - 1)) : IsUnit A := by
     exact congrFun h i) fun i j => by simp
   exact hx (funext fun i => by simpa using h1 i i)
 
-variable (E n) in
 
 private def Js : Matrix (Fin n) (Fin n) E := Matrix.of fun i j => if (i : ℕ) = j + 1 then 1 else 0
 

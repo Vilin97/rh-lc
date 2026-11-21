@@ -30,7 +30,6 @@ theorem divCycle_of_not_mem {P W : Ideal (MRing ι)} {s : MRing ι} (hW : W ∉ 
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
   simp [Finsupp.ofSupportFinite_coe, hW]
 
-open Classical in
 
 theorem divCycle_eq_ite {P : Ideal (MRing ι)} [P.IsPrime] {s u : MRing ι} (hu : u ∉ P)
     (W : Ideal (MRing ι)) :
@@ -58,7 +57,6 @@ theorem divCycle_eq_ite {P : Ideal (MRing ι)} [P.IsPrime] {s u : MRing ι} (hu 
 
 end DiagonalDivisor
 
-open DiagonalDivisor in
 
 end
 

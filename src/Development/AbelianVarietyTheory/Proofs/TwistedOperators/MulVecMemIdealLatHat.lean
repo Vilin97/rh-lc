@@ -111,7 +111,6 @@ variable {Dw : Datum H} {l : Level H} {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.r
 
 end
 
-set_option maxHeartbeats 800000 in
 
 end Lifts
 
@@ -132,14 +131,12 @@ theorem one_le_rank (h : LawsJ T) (hj : InR D j) : 1 ≤ (T.Q.Dw j).p + (T.Q.Dw 
   have := hj.1; have := hj.2; have := D.R.m_add_three_le_k
   simp only [Ranks.sigW]; omega
 
-set_option maxHeartbeats 1000000 in
 
 section
 
 variable {g : LevGrp T j} {k : GA D (T.V j σ)} {hr : (T.V j σ).rank = D.R.r} {a : (D.host.E →+* ℂ) × ℕ → ℕ} {n : ℕ}
   {ρ : LevGrp T j →* (T.cuspA j a n →ₗ[T.Q.c.F] T.cuspA j a n)}
 
-variable (T σ) in
 
 end
 

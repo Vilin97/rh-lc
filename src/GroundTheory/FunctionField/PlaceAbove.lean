@@ -132,7 +132,6 @@ theorem LiesOver.isTorsionFree {w : Place k K'} {v : Place k K} (h : w.LiesOver 
   exact Module.isTorsionFree_iff_algebraMap_injective.2 fun a b hab =>
     Subtype.ext ((algebraMap K K').injective (congrArg Subtype.val hab))
 
-omit [IsScalarTower k K K'] in
 
 theorem LiesOver.valuation_algebraMap {w : Place k K'} {v : Place k K} (h : w.LiesOver v) (x : K) :
     letI := h.algebra
@@ -173,7 +172,6 @@ theorem LiesOver.ord_algebraMap {w : Place k K'} {v : Place k K} (h : w.LiesOver
     WithZero.exp_inj, nsmul_eq_mul, h.ramificationIdx'_eq] at h1
   linarith
 
-omit [IsFunctionField k K'] in
 
 theorem LiesOver.deg_mul_finrank {w : Place k K'} {v : Place k K} (h : w.LiesOver v) :
     letI := h.algebra
@@ -184,7 +182,6 @@ theorem LiesOver.deg_mul_finrank {w : Place k K'} {v : Place k K} (h : w.LiesOve
   have := h.isScalarTower
   exact (letI : Module.Free v.ResidueField w.ResidueField := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank k v.ResidueField w.ResidueField)
 
-omit [IsFunctionField k K'] in
 
 theorem LiesOver.finrank_residueField {w : Place k K'} {v : Place k K} (h : w.LiesOver v) :
     letI := h.algebra

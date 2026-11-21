@@ -19,7 +19,6 @@ local instance measFv (v : Pl F) : MeasurableSpace (Fv F v) := borel _
 
 local instance borelFv (v : Pl F) : BorelSpace (Fv F v) := ⟨rfl⟩
 
-open Classical in
 
 def oneMaps (v : Pl F) (P : Type) [AddCommGroup P] [Module ℂ P]
     (p : ((Fin a × Fin (a + a') → Fv F v) → ℂ) →ₗ[ℂ] P) (p' : ((Fin a' × Fin (a + a') → Fv F v) → ℂ) →ₗ[ℂ] P) :

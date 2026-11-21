@@ -188,7 +188,6 @@ theorem jacobiToBesselFlatMap_core_translate (s : StFB ψ J B) {Φ : WO J.W B.V 
     (GlobalTheory.T.flag_unipotent_bessel_character_laws D ψ s.weil.std.1 B.V B.V₀ B.A B.L σ B.d B.o B.ζ 1).2.1 _ 1 (one_mem _), star_one, one_smul] at c
   exact c
 
-set_option maxHeartbeats 1000000 in
 
 theorem unf_measurable (s : StFB ψ J B) (vL : VolM D B.L.rank J.W₀.rank)
     {x₀ : Matrix (Fin B.V.rank) (Fin (σ + 1)) D.host.E} (hx : (rat x₀ : Mx D B.V.rank (σ + 1)) = xLast B.d (vecB B.o B.ζ))
@@ -236,7 +235,6 @@ theorem unf_measurable (s : StFB ψ J B) (vL : VolM D B.L.rank J.W₀.rank)
   rw [e]
   exact hG.measurable.mul m3.measurable
 
-set_option maxHeartbeats 1000000 in
 
 theorem vanFB : ∀ D : D7, VanFB D := by
   intro D ψ σ J B s 𝒮 Γ₀ K hL vL χ χz omz hz φ G Φ₀ hφ hG h₀ hGK hvan Φ hΦ𝒮

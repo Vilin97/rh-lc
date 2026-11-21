@@ -202,7 +202,6 @@ open Formalism.MainNotions.BlochKatoReduction (scalGL)
 
 variable (D)
 
-open Classical in
 
 variable {D}
 

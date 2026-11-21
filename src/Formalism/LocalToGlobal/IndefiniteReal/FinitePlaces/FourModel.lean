@@ -27,7 +27,6 @@ abbrev QX : Type _ := W ⧸ (L ⊓ X)
 
 abbrev QY : Type _ := W ⧸ (L ⊓ Y)
 
-open Classical in
 
 def tfun (Φ : W → ℂ) : V :=
   ∑ᶠ q : QX L X × QY L Y, if q.2.out ∈ Y then term ρ χ L X f₀ Φ q.1.out q.2.out else 0

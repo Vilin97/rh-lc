@@ -49,7 +49,6 @@ theorem range_eq_comap_iff {X H M : Type} [AddCommGroup X] [Module ℂ X] [AddCo
   · intro h
     rw [← h, Submodule.comap_map_eq_of_injective hinj]
 
-set_option maxHeartbeats 1000000 in
 
 theorem goodRangeAt_iff {R : RealDat D A Ks} (hW : R.models_HW) (hG : R.thP_thG) (i : Fin D.R.m) (t : T) :
     GoodRangeAt R i t ↔

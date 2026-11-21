@@ -239,7 +239,6 @@ theorem glueTwoCochain_apply_of_tower (g : ∀ n, (M.res (Q n).ι).c2)
 
 end Glue
 
-open ObjectProperty in
 
 theorem tower_two : ∀ (C : Type 1) [Category.{0} C] (D : Type) [Category.{0} D] (K : Cx C)
     (P : ℕ → ObjectProperty C) (ℓ : D ⥤ C) (N₀ : ℕ), (∀ m n T, m ≤ n → P m T → P n T) →

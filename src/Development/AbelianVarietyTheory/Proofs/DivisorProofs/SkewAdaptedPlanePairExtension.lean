@@ -21,7 +21,6 @@ open GlobalTheory.Doubling (absE)
 noncomputable section
 namespace GlobalTheory.MixWOne
 
-open scoped Classical in
 
 theorem evAt_mem_adm {F : Type} [Field F] [NumberField F] (κ : Type) [Fintype κ] (x₀ : κ → AF F) :
     (LinearMap.proj (R := ℂ) (φ := fun _ : (κ → AF F) => ℂ) x₀) ∈ (adeleClass F).adm κ := by

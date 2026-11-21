@@ -25,7 +25,6 @@ section Lemmas
 
 variable {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E))
 
-variable {w} in
 
 theorem diagJ_det_ne {n : ℕ} {ϖ : w.adicCompletion E} (hϖ : IsUnifV E w ϖ) (j : ℕ) :
     (diagJ n ϖ j).det ≠ 0 := by

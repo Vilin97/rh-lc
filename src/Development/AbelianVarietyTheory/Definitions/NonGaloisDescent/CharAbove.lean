@@ -20,7 +20,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.RayClassPrimeCounting (IsGaloisRepO
 def rk1 {Γ K : Type} [Group Γ] [CommRing K] (χ : Γ →* Kˣ) : Γ →* GL (Fin 1) K :=
   (Units.map (Matrix.scalar (Fin 1) : K →+* Matrix (Fin 1) (Fin 1) K).toMonoidHom).comp χ
 
-open Classical in
 
 def GalAbove (D : D7) : Prop :=
   ∀ (π : D.naut.CG D.R.r), D.naut.csd π → D.naut.ralg π → ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ)

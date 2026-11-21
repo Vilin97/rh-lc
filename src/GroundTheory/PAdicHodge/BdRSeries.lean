@@ -157,7 +157,6 @@ theorem seriesEval_subst {z : B} (hz : z ∈ I) {g : ℚ⟦X⟧} (hg : constantC
         rw [AlgHom.comp_apply, AlgHom.comp_apply, coe_substAlgHom, subst_X hS, hgw])]
   rw [key, AlgHom.comp_apply, coe_substAlgHom]
 
-omit [IsAdicComplete I B] in
 
 theorem map_partialSum {B' : Type*} [CommRing B'] [Algebra ℚ B'] (F : B →+* B') (z : B)
     (f : ℚ⟦X⟧) (n : ℕ) :
@@ -231,7 +230,6 @@ theorem log_subst_one_add_X_pow_sub_one (k : ℕ) :
 
 variable {B : Type*} [CommRing B] [Algebra ℚ B] {I : Ideal B} [IsAdicComplete I B]
 
-variable (I) in
 
 def logOnePlus (z : B) (hz : z ∈ I) : B :=
   seriesEval I z hz (log ℚ)

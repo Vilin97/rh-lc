@@ -16,7 +16,6 @@ open scoped CategoryTheory.Obj CategoryTheory.MonObj
 
 namespace GlobalTheory.CompanionTheory.Ar.Approx
 
-open TopologicalSpace in
 
 theorem isIntegral_subscheme_vanishingIdeal {X : Scheme.{0}} (Z : Closeds X)
     (h : IsIrreducible (Z : Set X)) :
@@ -32,7 +31,6 @@ theorem isIntegral_subscheme_vanishingIdeal {X : Scheme.{0}} (Z : Closeds X)
     Function.Surjective.irreducibleSpace f.symm.continuous f.symm.surjective
   exact isIntegral_of_irreducibleSpace_of_isReduced _
 
-open TopologicalSpace in
 
 theorem exists_integral_closed_cover :
     ∀ (X : Scheme.{0}) [IsNoetherian X], ∃ (n : ℕ) (Z : Fin n → Scheme.{0}) (j : ∀ i, Z i ⟶ X),

@@ -48,7 +48,6 @@ theorem translPt_snd {T : Over S} (x : T ⟶ A ⊗ A) :
 
 variable {hL}
 
-include hL in
 
 theorem exists_theta_left
     (hB : ∀ (T : Over S) (x x' y : T ⟶ A), qc hL (x * x') y = qc hL x y + qc hL x' y)
@@ -75,7 +74,6 @@ theorem exists_theta_left
     simp
   exact ⟨⟨_, u, hu⟩, rfl⟩
 
-include hL in
 
 theorem exists_theta_right
     (hB' : ∀ (T : Over S) (x y y' : T ⟶ A), qc hL x (y * y') = qc hL x y + qc hL x y')

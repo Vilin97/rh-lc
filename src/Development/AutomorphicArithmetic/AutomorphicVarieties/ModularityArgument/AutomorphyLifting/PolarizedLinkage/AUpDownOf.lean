@@ -406,4 +406,3 @@ private theorem good_all (h : Hyp) (d : ℕ) :
 
 end UpperTheory.V.Z.Win
 
-open UpperTheory.V.Z.Win in

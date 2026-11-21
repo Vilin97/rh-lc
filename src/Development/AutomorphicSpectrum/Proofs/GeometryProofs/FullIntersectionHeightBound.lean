@@ -340,7 +340,6 @@ end GlobalTheory.CompanionTheory.Ar.Plug.Count
 
 namespace GlobalTheory.CompanionTheory.Ar.Plug.Count
 
-open MvPolynomial in
 
 theorem charZero_of_arith {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
     (y : (Σ k, ι k) → Ω) {d : ℕ} (h : ReciprocityTheory.ChartRestriction.G.Geo.IsArithVar (mCoordIdeal y) d) : CharZero Ω := by
@@ -383,7 +382,6 @@ theorem indep_mul {Ω : Type} [Field Ω] [CharZero Ω] {r : ℕ} (v : Fin r → 
 
 end GlobalTheory.CompanionTheory.Ar.Plug.Count
 
-open GlobalTheory.CompanionTheory.Ar.Plug.Count in
 
 theorem GlobalTheory.CompanionTheory.Ar.Plug.many_sections : GlobalTheory.CompanionTheory.Ar.Pub.NefRR → Top.Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), ∀ (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) [DecidableEq (CMType H)] (T : Top.RootTower (CMType H) (Dw.p + Dw.q)) (o : Top.GoodOrigin Y T) (B : ℕ) (b : T.Comp) (II : IntersectionSystem) (u : GlobalTheory.AllWt.Weight Dw) (g : ℝ), IsFullIntersectionSystem II → T.T1 II → Top.WeightHyp T.j (reW u) g → Top.bigB0 (reW u) g < B + 1 → ∀ ε : ℝ, 0 < ε → ∃ᶠ τ : ℕ in atTop, ∃ (n : ℕ) (f : Fin n → (T.M B b).Ω), LinearIndependent ℤ f ∧ (∀ i, ∃ R, f i ∈ modelSmall (o.toTowerOrigin.Or B b) (τ • u) R) ∧ ((T.M B b).δ * (T.vol b * Top.flagDeg (reW u)) - ε) * (τ : ℝ) ^ (Top.dimFl (CMType H) (Dw.p + Dw.q)) ≤ ((Top.dimFl (CMType H) (Dw.p + Dw.q)).factorial : ℝ) * n := by
   intro hRR hG E _ _ _ H Dw l Xo c Y _ T o B b II u g hII hT1 hW hB ε hε

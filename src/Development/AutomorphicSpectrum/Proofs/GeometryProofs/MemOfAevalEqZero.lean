@@ -225,7 +225,6 @@ theorem zpow_factor_inv {a b : K → ℕ} (Y : K → Ω) (hY : ∀ k, Y k ≠ 0)
 
 end UnitChart
 
-open UnitChart in
 
 theorem isUnitSec_iff_chart (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     (y : (Σ k, ι k) → Ω) (f g : MRing ι) (df dg : K → ℕ) (_hy : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0)

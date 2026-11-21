@@ -36,9 +36,7 @@ def FibreNormMax.Statement : Prop :=
                   ‖eval z (map (Int.castRingHom ℂ) h)‖) →
             ‖eval ζ (map (Int.castRingHom ℂ) F)‖ ≤ B ^ (τ + 1) * M ^ n
 
-open ProjLine in
 
-open ProjLine in
 
 end
 

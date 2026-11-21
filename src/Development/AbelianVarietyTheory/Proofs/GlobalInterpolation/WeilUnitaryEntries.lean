@@ -60,7 +60,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.RT Globa
 
 namespace GlobalTheory.Fc.RL.DefSide
 
-open Formalism.MainNotions.Lnk Formalism.MainNotions.GlobalTheoryTheory Formalism.L2.GlobalTheoryTheory in
 
 theorem full_rank {eps : ℝ} (Fm : FamP eps) (CH : ℝ) (tie : RealPlaceSecondLayerConditions Fm) (hTu : TuSize Fm) (hCh : ChosenE Fm 3 CH) :
     NuFullF Fm ∧ J.MuRank Fm := by

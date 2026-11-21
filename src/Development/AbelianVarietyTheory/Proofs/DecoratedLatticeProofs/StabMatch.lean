@@ -390,7 +390,6 @@ theorem stab_of_frame (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (h : X.B.I
     rw [← map_inv, ← map_mul, ← map_mul, inv_inv, e0]
   rw [e1, mem_St_mul, e2, ← (hR _).2, e3, kset_conj _ (X.xu_K u), (hR κ).1]
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.Core.Mi.LatMatch
 

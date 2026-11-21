@@ -12,7 +12,6 @@ universe u
 
 namespace GlobalTheory.GaloisDescent
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem ideal_le_comap_appLE {X Y : Scheme.{u}} (f : Y ⟶ X) {J : X.IdealSheafData}
     {I : Y.IdealSheafData} (h : J.comap f ≤ I) (U : X.affineOpens) (V : Y.affineOpens)
@@ -43,7 +42,6 @@ theorem isPushout_app {U : X.Opens} (hU : IsAffineOpen U) :
   · simp [Scheme.Hom.app_eq_appLE]
   · simp [baseRingHom]
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem idealSheaf_comap_map_of_stable (s : G → L →+* L)
     (hs : ∀ x, (∀ g, s g x = x) → x ∈ Set.range (algebraMap K L))

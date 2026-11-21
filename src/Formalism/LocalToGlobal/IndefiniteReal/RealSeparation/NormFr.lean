@@ -53,7 +53,6 @@ def ColAt (j : ℕ) (β : Matrix (Fin (D.sp.Y j).rank) (Fin (D.sp.Y j).rank) (EA
     (v : Fin (D.sp.Y j).rank → D.host.E) : Prop :=
   ∀ r : Fin (D.sp.Y j).rank, toEAf D ei * β r col = toEAf D ei * eToEAf D (v r)
 
-open Classical in
 
 def NormalFrames (βY : ∀ j : ℕ, GL (Fin (D.sp.Y j).rank) (EAf D)) (e ev : ∀ j : ℕ, ℕ → Fin (D.sp.Y j).rank → D.host.E)
     (z : ∀ j : ℕ, Fin (D.sp.Y j).rank → D.host.E) (κ : ℕ → ℕ → D.host.E) (s : ℕ → D.host.E)

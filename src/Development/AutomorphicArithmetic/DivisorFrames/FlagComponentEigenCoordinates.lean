@@ -20,7 +20,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {lv : Level H} {Xo : Moduli Dw lv} {c : Coeff lv} {O : Type} [CommRing O] {β : O →+* c.F}
   {Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β} {F : Type} [Field F] [NumberField F] {ε : F ≃+* c.F} (C : GlobalTheory.ShFam.FlagCpt Z ε)
 
-open Classical in
 
 private theorem single_spec (b : ℕ → Bool) (R : Option ℝ) (σ : E →+* ℂ) (k : Fin (Dw.mult σ)) (n : ℤ)
     {w : Pad.Sym E →₀ ℤ} (hw : w = Finsupp.single (b, R, .inl (σ, (k : ℕ))) n) :

@@ -83,7 +83,6 @@ end GlobalTheory.ZarhinUniqBundle
 
 namespace GlobalTheory.ZarhinUniqBundle
 
-open ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem cancel_pow : ∀ (S : Scheme.{0}) (A B : Over S) [GrpObj A] [GrpObj B], IsAbelianScheme A → ∀ d : ℕ, 0 < d →
     ∀ f g : A ⟶ B, (𝟙 A ^ d) ≫ f = (𝟙 A ^ d) ≫ g → f = g := by

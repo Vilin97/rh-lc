@@ -236,7 +236,6 @@ section Uniq
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
-open GlobalTheory.CuspRep.LocUniq in
 
 theorem isoPart_opD {V : Submodule ℂ (Sm E N)} (hs : IsStable V) (w : HeightOneSpectrum (𝓞 E)) {X : Type}
     [AddCommGroup X] [Module ℂ X] (σ : Representation ℂ (GL (Fin N) (w.adicCompletion E)) X) (o : Op E N) {x : V}
@@ -252,7 +251,6 @@ theorem isoPart_opD {V : Submodule ℂ (Sm E N)} (hs : IsStable V) (w : HeightOn
     refine isoPart_comm σ _ _ (fun g y => Subtype.ext ?_) hx
     exact LinearMap.congr_fun (lie_rt_fin X (locGL E N w g)) y.1
 
-open GlobalTheory.CuspRep.LocUniq in
 
 theorem isLocCompGL_unique {V : Submodule ℂ (Sm E N)} (hV : IsDiscrete V) (w : HeightOneSpectrum (𝓞 E))
     (σ σ' : SmIrr (GL (Fin N) (w.adicCompletion E))) (h : IsLocCompGL V w σ) (h' : IsLocCompGL V w σ') :
@@ -286,7 +284,6 @@ section Iso
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
-variable (E N) in
 
 abbrev OpAlg : Subalgebra ℂ (Module.End ℂ (Sm E N)) := Algebra.adjoin ℂ (Set.range (act : Op E N → _))
 

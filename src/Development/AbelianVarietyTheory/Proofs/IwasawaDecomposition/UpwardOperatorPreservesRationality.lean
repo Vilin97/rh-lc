@@ -132,7 +132,6 @@ theorem exists_ratSpan_fnOf_atInf (lam : D.what₂.Tau → DomWeight n) (G : D.w
 
 end Span
 
-set_option maxHeartbeats 1000000 in
 
 theorem chi_mem_range {D : D7} {u : D.what₂.Word} (T : Forms0 D u)
     (h : ∀ i v h x, ∃ r : D.what₂.LL, D.what₂.embLL r = T.gl.psi0 i v h x) (κ : T.cls0.lev.U) :
@@ -146,7 +145,6 @@ theorem chi_mem_range {D : D7} {u : D.what₂.Word} (T : Forms0 D u)
   rw [Finset.range_zero, Finset.prod_empty, mul_one]
   exact h i v hv _
 
-set_option maxHeartbeats 1000000 in
 
 theorem uop_rat (D : D7) (u : D.what₂.Word) (T : Forms0 D u)
     (h : ∀ i v h x, ∃ r : D.what₂.LL, D.what₂.embLL r = T.gl.psi0 i v h x)

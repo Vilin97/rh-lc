@@ -15,7 +15,6 @@ variable {R : Type*} [CommRing R] {m n : Type*}
 def minorIdeal (k : ℕ) (A : Matrix m n R) : Ideal R :=
   Ideal.span {x | ∃ (r : Fin k → m) (c : Fin k → n), x = (A.submatrix r c).det}
 
-variable (R) in
 
 end Minors
 

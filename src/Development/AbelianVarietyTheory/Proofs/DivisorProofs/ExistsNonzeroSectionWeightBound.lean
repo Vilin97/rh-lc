@@ -55,7 +55,6 @@ open GlobalTheory.ThetaConst
 open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
-set_option maxHeartbeats 1000000 in
 
 theorem phiC_le_valuation (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Geo.Tor.Host E) (Dw : Datum H) (l : Level H)
     (Xo : Moduli Dw l) (c : Coeff l) (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V]
@@ -258,7 +257,6 @@ theorem exists_tied_integral {κ : KeyRule} (hκ : IsKeyRule κ) (hpq : 1 ≤ Dw
   rw [map_mul, map_pow, RingHom.map_det]
   exact h
 
-variable (Xo c) in
 
 theorem exists_key (hpq : 1 ≤ Dw.p + Dw.q) (hg : ∀ p : ℕ, p.Prime → l.GoodAt p) :
     ∃ K : (Rul Xo c)ˣ, (K : Rul Xo c) ∈ AllWt.secZ Xo c ((4 : ℤ) • keyEx Dw) ∧
@@ -437,11 +435,9 @@ theorem exists_centred {Y : Scheme.{0}} (y : Y) [IsDomain (Y.presheaf.stalk y)]
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Geo.Tor.Host E} {Dw : Datum H} {l : Level H}
   {Xo : Moduli Dw l} {c : Coeff l}
 
-open GlobalTheory.ThetaConst GlobalTheory.FlatLine GlobalTheory.FlatCore GlobalTheory.AllWt in
 
 variable {Y : Model Xo c (RingHom.id c.F)} (X : FlagCover Y) (Z : Comp Xo c)
 
-set_option maxHeartbeats 1000000 in
 
 theorem through_point (y : Y₀ X Z) (T : CDVR) (io : c.F →+* T.Fr) (y' : IntFr Xo c T io)
     (g : (Y₀ X Z).presheaf.stalk y →+* T.V)
@@ -512,8 +508,6 @@ theorem mul_mem_vanBd {a b s : AllWt.Weight Dw} (h : a + b = s) (θ : H0 (str₀
   rw [H0.germ_change i _ y _ hi hc, ProdChart.germ_mul _ _ _ t y _ ha hb hc]
   exact Ideal.mul_mem_left _ _ (Ideal.mul_mem_left _ _ (hf y hy _ hb))
 
-variable {X} in
-set_option maxHeartbeats 1000000 in
 
 end Geometry
 
@@ -531,6 +525,5 @@ theorem four_le_expL {L : ℝ} (hL : 10 ≤ L) : 4 ≤ expL L := by
   push_cast
   linarith
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.ThetaSteep

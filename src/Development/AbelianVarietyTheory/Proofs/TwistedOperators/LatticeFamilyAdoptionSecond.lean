@@ -88,7 +88,6 @@ variable {O K K'' Fm : Type} [CommRing O] [Field K] [Algebra O K] [IsFractionRin
   [Field K''] [Algebra O K''] [Algebra K K''] [IsScalarTower O K K'']
   [AddCommGroup Fm] [Module K Fm] [Module O Fm] [IsScalarTower O K Fm]
 
-variable (O K'') in
 
 def ext (A : Module.End K Fm) : Module.End K'' (K'' ⊗[O] Fm) :=
   LinearMap.baseChange K'' (A.restrictScalars O)
@@ -699,8 +698,6 @@ theorem heq_cast {R : Type} {n m : ℕ} (h : n = m) (z : Fin m → R) : HEq z (z
   subst h
   rfl
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.CompanionTheory.LatSpan
 

@@ -117,7 +117,6 @@ theorem mat_mul_inv {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (g κ : UA σ J) : 
 
 end LatticeQuotientCompactness
 
-open LatticeQuotientCompactness in
 
 theorem latCpt_of : LatCpt := by
   intro F E _ _ _ _ _ σ _ τ n d J J' _ _ Ω Ω' hΩ hΩ' C N hC

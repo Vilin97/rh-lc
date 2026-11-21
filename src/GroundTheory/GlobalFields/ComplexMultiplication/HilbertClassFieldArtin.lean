@@ -95,7 +95,6 @@ section Main
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
   [IsTotallyComplex K]
 
-include hK in
 
 theorem galClassOf_eq_artin (L : IntermediateField K ℂ) [FiniteDimensional K L] [IsGalois K L]
     (hHL : hilbertClassField K ℂ ≤ L) (hL : ∀ x : ELL K, ELL.j x ∈ L)

@@ -58,7 +58,6 @@ theorem twistPows_snoc_sub {n : ℕ} (L : Fin n → LineBundle k x) (M : LineBun
 
 end MixedTwistShiftAlt
 
-open MixedTwistShiftAlt in
 
 theorem MixedTwistShift.proof (hH : SnapperHyperplane.Statement.{u, w}) (hS : SnapperSection.Statement.{u, w})
     (hP : SnapperDiffPoly.Statement) (hR : RestrLenEuler.Statement.{u, w}) (hD : SubsetDiffConst.Statement) :

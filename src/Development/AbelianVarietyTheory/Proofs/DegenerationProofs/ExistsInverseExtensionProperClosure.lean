@@ -174,7 +174,6 @@ end GlobalTheory.InvExt
 
 namespace GlobalTheory
 
-open InvExt in
 
 theorem exists_inv_extension : ∀ C : Core, C.HasTests → SmoothOfRelativeDimension C.g C.GG.hom → C.TestCart → C.FibLaw → ∃ i : C.GG ⟶ C.GG, C.a ≫ i.left = (ι[C.A]).left ≫ C.a := by
   intro C hT hS _ hF

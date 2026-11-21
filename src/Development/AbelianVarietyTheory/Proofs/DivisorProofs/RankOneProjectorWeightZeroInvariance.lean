@@ -60,7 +60,6 @@ end GlobalTheory.LeviCut
 
 namespace GlobalTheory.LeviCut
 
-open RankOnePf in
 
 theorem rankOne : RankOne := by
   intro W _ _ N K D hG hB o q ho hq hoq T hoT hqT

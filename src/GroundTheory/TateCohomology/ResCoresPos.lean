@@ -50,7 +50,6 @@ lemma barInclF_comm (j : ℕ) :
   rw [barInclF_single, OneMemClass.coe_one]
   exact congrArg (fun v => Finsupp.single v _) (contractNth_subtype S i x)
 
-set_option backward.isDefEq.respectTransparency false in
 
 noncomputable def barIncl :
     (barResolution k S).complex ⟶ (resBarResolution (k := k) S).complex where
@@ -65,7 +64,6 @@ noncomputable def barIncl :
     rw [barComplex.d_def, barComplex.d_def]
     exact h
 
-set_option backward.isDefEq.respectTransparency false in
 
 lemma barIncl_π : barIncl (k := k) S ≫ (resBarResolution (k := k) S).π = (barResolution k S).π := by
   ext : 1
@@ -90,7 +88,6 @@ section Key
 
 variable {k G : Type u} [CommRing k] [Group G] (S : Subgroup G)
 
-set_option backward.isDefEq.respectTransparency false in
 
 noncomputable def resHomComplex (A : Rep.{u} k G) :
     (barComplex k G).linearYonedaObj k A ⟶
@@ -104,7 +101,6 @@ noncomputable def resHomComplex (A : Rep.{u} k G) :
     simp [resBarResolution, Functor.mapProjectiveResolution]
     rfl
 
-set_option backward.isDefEq.respectTransparency false in
 
 lemma freeLift_cochainsMap_subtype (A : Rep.{u} k G) (n : ℕ) (y : (Fin n → G) → A) :
     freeLift k S (res S.subtype A) (((cochainsMap S.subtype (𝟙 (res S.subtype A))).f n).hom y) =
@@ -116,7 +112,6 @@ lemma freeLift_cochainsMap_subtype (A : Rep.{u} k G) (n : ℕ) (y : (Fin n → G
   exact (show (freeLift k G A y).hom (Finsupp.single (Subtype.val ∘ w) (MonoidAlgebra.single 1 1)) =
     y (Subtype.val ∘ w) by simp).symm
 
-set_option backward.isDefEq.respectTransparency false in
 
 lemma cochainsMap_subtype_comp_iso (A : Rep.{u} k G) :
     cochainsMap S.subtype (𝟙 (res S.subtype A)) ≫ (inhomogeneousCochainsIso (res S.subtype A)).hom =
@@ -125,7 +120,6 @@ lemma cochainsMap_subtype_comp_iso (A : Rep.{u} k G) :
   ext n y : 3
   exact freeLift_cochainsMap_subtype S A n y
 
-set_option backward.isDefEq.respectTransparency false in
 
 lemma iso_resHomComplex_adj_iso (A : Rep.{u} k G) :
     (inhomogeneousCochainsIso A).hom ≫ resHomComplex S A ≫

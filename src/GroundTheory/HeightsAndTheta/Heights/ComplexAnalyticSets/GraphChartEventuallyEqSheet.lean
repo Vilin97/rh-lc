@@ -37,7 +37,6 @@ theorem maDens_congr_of_eventuallyEq {D : ℕ} {φ ψ : Fin D → (Fin D → ℂ
   unfold ReciprocityTheory.AnForm.maDens
   simp only [hH]
 
-open Classical in
 
 end
 

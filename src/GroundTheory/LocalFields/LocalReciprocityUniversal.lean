@@ -26,7 +26,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 section Top
 
-variable (K Ω) in
 
 def topSubtype : ((⊤ : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)) →* (Ω ≃ₐ[K] Ω) :=
   Subgroup.subtype _
@@ -34,7 +33,6 @@ def topSubtype : ((⊤ : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K
 theorem continuous_topSubtype : Continuous (topSubtype K Ω) :=
   continuous_subtype_val
 
-variable (K Ω) in
 
 def topSubtypeInv : (Ω ≃ₐ[K] Ω) →* ((⊤ : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)) where
   toFun g := ⟨g, Subgroup.mem_top g⟩
@@ -44,7 +42,6 @@ def topSubtypeInv : (Ω ≃ₐ[K] Ω) →* ((⊤ : OpenSubgroup (Ω ≃ₐ[K] Ω
 theorem continuous_topSubtypeInv : Continuous (topSubtypeInv K Ω) :=
   continuous_id.subtype_mk _
 
-variable (K Ω) in
 
 noncomputable def topAbelianizationEquiv :
     TopologicalAbelianization ((⊤ : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)) ≃*
@@ -127,7 +124,6 @@ end Restrict
 
 section Universal
 
-variable (K Ω) in
 
 noncomputable def localReciprocityLimit : Kˣ →* TopologicalAbelianization (Ω ≃ₐ[K] Ω) :=
   haveI := isDiscreteModule_units (K := K) (Ω := Ω)
@@ -222,7 +218,6 @@ section Degree
 
 open ProfiniteInteger
 
-variable (K Ω) in
 
 noncomputable def unramifiedOpenSubgroup (n : ℕ+) : OpenSubgroup (Ω ≃ₐ[K] Ω) where
   toSubgroup := (AddSubgroup.toSubgroup (multiples n)).comap (unramifiedDegree K Ω)

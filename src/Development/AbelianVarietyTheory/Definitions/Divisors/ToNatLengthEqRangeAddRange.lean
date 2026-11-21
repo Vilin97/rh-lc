@@ -172,7 +172,6 @@ def interLen {ι : Type} [Fintype ι] (F : X.Modules) (L : ι → LB X) : ℤ :=
 
 variable {F G : X.Modules} {M N : LB X} {S : ShortComplex X.Modules}
 
-variable (F) in
 
 @[simp] theorem chiLenPic_cls (hM : M.IsLB) : chiLenPic R F (cls M hM) = chiLen R (twist F M) := rfl
 
@@ -181,7 +180,6 @@ theorem chiLenPic_congr (e : F ≅ G) : chiLenPic R F = chiLenPic R G := by
   obtain ⟨M, hM, rfl⟩ := cls_surj c
   exact chiLen_congr R ((twistFunctor M).mapIso e)
 
-variable (F) in
 
 theorem chiLenPic_twist (hM : M.IsLB) (c : Pic X) :
     chiLenPic R (twist F M) c = chiLenPic R F (cls M hM + c) := by
@@ -193,7 +191,6 @@ theorem chiLenPic_eq_zero_of_isZero (h : IsZero F) : chiLenPic R F = 0 := by
   obtain ⟨M, hM, rfl⟩ := cls_surj c
   exact chiLen_eq_zero_of_isZero R ((isZero_twist_iff hM).2 h)
 
-variable (F) in
 
 theorem interLen_eq_multiDiff {ι : Type} [Fintype ι] {L : ι → LB X} (hL : ∀ i, (L i).IsLB) :
     interLen R F L = multiDiff (fun i => cls (L i) (hL i)) (chiLenPic R F) 0 :=
@@ -316,7 +313,6 @@ section Sym
 
 variable {G H : Type*} [AddCommGroup G] [AddCommGroup H]
 
-variable (G) in
 
 abbrev SymQ : Type _ := SymmetricAlgebra ℚ (ℚ ⊗[ℤ] G)
 
@@ -337,7 +333,6 @@ def symMap (f : G →+ H) : SymQ G →ₐ[ℚ] SymQ H := symLift (symOf.comp f)
 @[simp] theorem symMap_symOf (f : G →+ H) (g : G) : symMap f (symOf g) = symOf (f g) :=
   symLift_symOf _ g
 
-variable (G) in
 
 def symDeg (n : ℕ) : Submodule ℚ (SymQ G) :=
   Submodule.span ℚ (Set.range fun g : Fin n → G => ∏ i, symOf (g i))
@@ -482,11 +477,9 @@ instance small_pic : Small.{0} (Pic X) := by
   exact ⟨⟨⟨_, _⟩, h⟩, (cls_eq_iff h hL).2
     (iso_of_chart hL ⟨j, fun _ => le_rfl, fun _ _ _ _ _ => rfl⟩)⟩
 
-variable (X) in
 
 abbrev SmallPic : Type := Shrink.{0} (Pic X)
 
-variable (X) in
 
 def smallPicEquiv : SmallPic X ≃+ Pic X := Shrink.addEquiv
 
@@ -510,7 +503,6 @@ theorem smallPull_smallCls (f : Y ⟶ X) {L : LB X} (hL : L.IsLB) (h : (L.pull f
     smallPull f (smallCls L hL) = smallCls (L.pull f) h := by
   simp [smallPull, smallCls, cls_pull hL]
 
-variable (X) in
 
 abbrev PicSym : Type := SymQ (SmallPic X)
 

@@ -59,7 +59,6 @@ end Split
 
 variable (hR : SumInvRestriction)
 
-include hR in
 
 theorem idelesToClasses_surjective_of (K : FiniteSubfield) (ι : LocalEmbeddings K) :
     Function.Surjective (idelesToClasses K 2).hom := by

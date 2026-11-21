@@ -26,7 +26,6 @@ def exceptionalPlaces (l : ℕ) : Set (HeightOneSpectrum (𝓞 H.E)) :=
 def GenAt0 (l : ℕ) (Q : Finset (HeightOneSpectrum (𝓞 H.E))) (v : HeightOneSpectrum (𝓞 H.E)) (k : ℕ) : Prop :=
   IsSplitPl H v ∧ v ∉ placesOver H.E l ∧ v ∉ exceptionalPlaces H l ∧ v ∉ Q ∧ 1 ≤ k ∧ k ≤ R.nV
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure LocBase0 where
   Oc : ℕ → what₂.places.Pl → Type

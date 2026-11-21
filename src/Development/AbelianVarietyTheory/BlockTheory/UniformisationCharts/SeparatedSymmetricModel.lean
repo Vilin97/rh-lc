@@ -98,7 +98,6 @@ def bcMap (f : H ⟶ (Over.pullback p).obj G) [IsMonHom f] : CubeMap H G where
     rw [foldr_padd_comp, dn_foldr, ← foldr_padd_pre]
     simp only [downThree_comp_proj]
 
-omit [IsCommMonObj G] [IsCommMonObj H] in
 
 end BaseChange
 
@@ -135,11 +134,8 @@ def toB {e : ℕ} (j : CanonicalRigidImages.GtIso D I e G) : CubeMap (thickObj R
   haveI := j.q_hom
   bcMap (thick R I e) j.q
 
-omit [IsDomain R] in
 
-omit [IsDomain R] in
 
-omit [IsDomain R] in
 
 end Levels
 

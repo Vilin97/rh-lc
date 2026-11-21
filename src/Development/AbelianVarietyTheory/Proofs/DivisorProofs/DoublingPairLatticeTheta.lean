@@ -84,7 +84,6 @@ theorem integral_mul_star_eq (μ : Measure (κ → AF F)) (hμ : μ.IsAddHaarMea
   rw [pol _ (hp _ h₁) _ (hp _ h₂), pol _ h₁ _ h₂]
   simp only [← hn _ (hm _ h₁ _ h₂ _), map_add (f := _), map_smul]
 
-open GlobalTheory.GaugeEx in
 
 end Meas
 
@@ -104,9 +103,7 @@ section Lagr
 variable {R A α β m κ : Type} [CommRing R] [CommRing A] [Algebra R A] [Fintype α] [DecidableEq α] [Fintype κ]
   {Bf : Matrix α β A → Matrix α β A → R} (co : Darboux Bf κ)
 
-omit [DecidableEq α] in
 
-variable (R) in
 
 end Lagr
 

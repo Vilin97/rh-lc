@@ -136,7 +136,6 @@ theorem card_not_squarefree (n : ℕ) : ((monicSet g (n + 1)).filter fun f => ¬
 
 end GlobalTheory.BadShare.SqCount
 
-open GlobalTheory.BadShare.SqCount in
 
 theorem GlobalTheory.BadShare.card_sqSet_ge : ∀ (g : ℕ) [Fact g.Prime], ∀ N : ℕ, 1 ≤ N →
     (g : ℝ) ^ N - 2 * (g : ℝ) ^ (N - 1) ≤ ((sqSet g N).card : ℝ) := by

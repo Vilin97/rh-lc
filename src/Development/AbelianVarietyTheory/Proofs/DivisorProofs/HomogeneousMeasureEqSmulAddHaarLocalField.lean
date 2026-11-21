@@ -32,7 +32,6 @@ theorem isOpen_sphere {γ : ValueGroupWithZero F} (hγ : γ ≠ 0) :
   have : z = y + (z - y) := by ring
   rw [this, (valuation F).map_add_eq_of_lt_left (by rw [hy]; exact hz), hy]
 
-open Classical in
 
 def absE (x : F) : ℝ≥0∞ := if h : x = 0 then 0 else (distribHaarChar F (Units.mk0 x h) : ℝ≥0∞)
 

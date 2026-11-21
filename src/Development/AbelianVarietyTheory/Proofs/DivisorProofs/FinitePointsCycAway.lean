@@ -289,7 +289,6 @@ theorem exists_act {W : Matrix (Fin 8) (Fin 8) ℤ} {J : Type} {a : J → Matrix
 
 end Sharp
 
-open GlobalTheory.SiegLevCalc in
 
 theorem finite_of_hasTh (h g ℓ : ℕ) (hℓ : ℓ.Prime) (ho : Odd ℓ) {W : Matrix (Fin 8) (Fin 8) ℤ}
     (bas : (Fin (2 * g) → ℤ) ≃ₗ[ℤ] (Fin 8 → (Fin h ⊕ Fin h → ℤ))) (hW : IsE8 W) :

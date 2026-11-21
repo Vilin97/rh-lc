@@ -10,7 +10,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
 namespace GlobalTheory
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry in
 
 theorem _root_.GlobalTheory.over_points_ext_of_injective (S : Scheme.{0}) (G : Over S) [IsSeparated G.hom]
     (W F : Type) [CommRing W] [CommRing F] (φ : W →+* F) (hφ : Function.Injective φ)

@@ -128,7 +128,6 @@ end GlobalTheory.CompanionTheory.Ar.Top.HhLabel
 
 namespace GlobalTheory.CompanionTheory.Ar.Top
 
-open HhLabel in
 
 theorem hhFl_labelInv : ∀ II : IntersectionSystem, IsFullIntersectionSystem II → ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ]
     (N : ℕ) [Nonempty Ψ], 2 ≤ N → IsArithVar (GroundTheory.Heights₂.Heights.LowerBoundFree.PFl Ψ N) (dimFl Ψ N + 1) →

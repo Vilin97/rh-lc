@@ -13,7 +13,6 @@ open Formalism.BasicNotions Formalism.MainNotions.Lnk Formalism.MainNotions.Glob
 
 variable {eps : ℝ}
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem Wire.famGLmin_of_realPlaceSecondLayer (𝒞 : FamClass) (tie : Closed 𝒞 fun Fm _ => RealPlaceSecondLayerConditions Fm)
     (hU : ∀ D, MassRatioUnderVolume D) (hG : ∀ D, GenusMassVolumes.GenusMassAt D 2) :

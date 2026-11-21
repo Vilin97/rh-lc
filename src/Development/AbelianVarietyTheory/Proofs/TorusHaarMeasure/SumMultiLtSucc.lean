@@ -27,8 +27,6 @@ theorem _root_.GlobalTheory.JetsPure.monomial_isBigO {n D : ℕ} (σ : Fin D →
     IsBigO.finsetProd fun q _ => (h1 q).pow (α q)
   simpa only [Finset.prod_pow_eq_pow_sum] using h2
 
-open MeasureTheory Topology Filter Asymptotics in
-open scoped ContDiff ENNReal Matrix in
 
 theorem _root_.GlobalTheory.JetsPure.main : ∀ (J I : Type) [Fintype I] (D T a : ℕ),
     a ≤ T + 1 → ∀ (n : J → ℕ) (e : ∀ p, Fin (n p) ≃ Fin D)

@@ -181,7 +181,6 @@ open GlobalTheory.Cris GlobalTheory.Published GlobalTheory.Published.AbelianDeRh
 
 variable {R : Type} [CommRing R] {A : Over (Sp R)} [GrpObj A]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_retraction_of_isKSValue_one (P : AbelianDeRham) (GD : GrothendieckDeformation)
     {A' : Over (Sp (DualNumber R))} [GrpObj A'] {i : A.left ⟶ A'.left} (h : IsGrpPullback A A' (epsRed R) i)

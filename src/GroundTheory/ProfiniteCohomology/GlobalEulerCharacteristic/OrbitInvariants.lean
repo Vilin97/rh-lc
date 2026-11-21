@@ -312,7 +312,6 @@ theorem dualLineEquiv_comm [Module.Finite k M] (g : G) (f : M →ₗ[k] T) :
     dualLineEquiv T M hT ((dualRep T M).ρ g f) = (homRep T M).ρ.dual g (dualLineEquiv T M hT f) :=
   dualLineMap_comm T M hT g f
 
-include hT in
 
 theorem finrank_invariants_dualRep_comp [Module.Finite k M] (P : Subgroup G) [P.Normal]
     (hN : ∀ (g : P) (n : homRep T M), (homRep T M).ρ g n = n)

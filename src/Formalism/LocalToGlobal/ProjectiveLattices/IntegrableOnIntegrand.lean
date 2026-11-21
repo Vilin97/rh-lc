@@ -58,7 +58,6 @@ def OrbInt (act : (Fin N → ℝ) → Ω → Ω) (S : Set Ω) : Submodule ℂ (�
     rw [integrand_smul]
     exact (hP ph x hx).const_mul a
 
-open Classical in
 
 def coefL (act : (Fin N → ℝ) → Ω → Ω) (S : Set Ω) (ph : Fin N → ℝ) :
     OrbInt act S →ₗ[ℂ] (Ω → ℂ) where

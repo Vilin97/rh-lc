@@ -26,7 +26,6 @@ def sZ (D : Dat ℚ E) (z : (A E)ˣ) : GL (Fin 2) (A E) := aE z * dM (Units.map 
 def SLP (M : Meas ℚ) (φ : GL (Fin 2) (A E) → ℂ) : ℂ := ∫ g in M.D, φ (em E (gl g)) ∂M.μ
 
 def UPer (D : Dat ℚ E) (M : Meas ℚ) (φ : GL (Fin 2) (A E) → ℂ) : ℂ := UI fun z => SLP M fun x => φ (x * sZ D z)
-variable (E) in
 
 structure MeasE where
   μ : Measure (G1 E)

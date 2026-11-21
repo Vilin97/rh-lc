@@ -190,7 +190,6 @@ private def toS (y : GL (Fin 2) (A ℚ)) (h : Dt y = 1) : G1 ℚ := ⟨y.val, co
 private theorem toS_eq {y y' : GL (Fin 2) (A ℚ)} {h : Dt y = 1} {h' : Dt y' = 1} (g : G1 ℚ) (e : y = gl g * y') :
     toS y h = g * toS y' h' := Subtype.ext (congrArg Units.val e)
 
-open GroundTheory.Automorphic.Reduction in
 
 private def Mx (Q : IdeleGroup ℚ → ℚˣ) (S : IdeleGroup ℚ → {r : ℝ // 0 < r}) (T : IdeleGroup ℚ → IdeleGroup ℚ)
     (x : GL (Fin 2) (A ℚ)) : GL (Fin 2) (A ℚ) :=

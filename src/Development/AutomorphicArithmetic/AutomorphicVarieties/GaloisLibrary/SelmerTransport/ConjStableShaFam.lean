@@ -183,7 +183,6 @@ section Tower
 
 variable {k Ω : Type} [Field k] [NumberField k] [Field Ω] [Algebra k Ω] (l : ℕ) [Fact l.Prime]
 
-variable (k Ω) in
 
 def chiO (O : Type) [CommRing O] [Algebra ℤ_[l] O] : G k Ω →* Oˣ :=
   (Units.map (algebraMap ℤ_[l] O).toMonoidHom).comp (cycZ k Ω l)

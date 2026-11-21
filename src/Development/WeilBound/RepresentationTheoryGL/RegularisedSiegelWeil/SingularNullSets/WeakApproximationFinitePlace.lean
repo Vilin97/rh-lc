@@ -27,14 +27,12 @@ abbrev cv (D : D7) (v : Pl D) : AE D →+* Fv D.host.F v ⊗[D.host.F] D.host.E 
 
 abbrev mm (x : Mx D a b) (y : Mx D b c) : Mx D a c := HMul.hMul x y
 
-open Classical in
 
 def IsIdem (S : Finset (Pl D)) (e : AE D) : Prop :=
   (∀ w, compInf D.host.F D.host.E w e = 1) ∧ ∀ v, cv D v e = if v ∈ S then 1 else 0
 
 def IntOff (S : Finset (Pl D)) (x : Mx D a b) : Prop := ∀ v ∉ S, ∀ i j, cv D v (x i j) ∈ intLoc D.host.F D.host.E v
 
-open Classical in
 
 def Good (S : Finset (Pl D)) (e : AE D) (Φ : Mx D a b → ℂ) : Prop := ∀ x, Φ x = if IntOff S x then Φ (e • x) else 0
 

@@ -99,7 +99,6 @@ section main
 variable {R : Type} [CommRing R] {ι : Type} {r : ℕ} [NeZero r] (LL : Letters ι) (S : Set ι)
   {k1 : Type} [CommRing k1]
 
-open Classical in
 
 def mul_ew (v : ι × Fin r) : ℤ := if v.2 = lastIdx r ∧ v.1 ∈ S then (if LL.vec v.1 then 1 else -1) else 0
 
@@ -148,7 +147,6 @@ theorem mul_dl_coeff (H : MvPolynomial (ι × Fin r) k1) (m : ι × Fin r →₀
 def mul_Dg (B : Type*) [CommRing B] (r : ℕ) [NeZero r] (k : ℤ) : Matrix (Fin r) (Fin r) (LaurentPolynomial B) :=
   Matrix.diagonal (fun a => if a = lastIdx r then LaurentPolynomial.T k else 1)
 
-open Classical in
 
 def mul_xx (g0 g0inv : Matrix (Fin r) (Fin r) k1) (v : ι × Fin r) : MvPolynomial (ι × Fin r) k1 :=
   if v.1 ∈ S then

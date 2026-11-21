@@ -14,7 +14,6 @@ section Etale
 variable {O S : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [CommRing S] [IsLocalRing S]
   [IsNoetherianRing S] [Algebra O S]
 
-omit [IsNoetherianRing O] in
 
 theorem finite_quotient (hm : (maximalIdeal O).map (algebraMap O S) = maximalIdeal S)
     [Module.Finite O (S ⧸ maximalIdeal S)] (n : ℕ) :
@@ -28,7 +27,6 @@ theorem finite_quotient (hm : (maximalIdeal O).map (algebraMap O S) = maximalIde
   have hx' : x ∈ maximalIdeal S := Ideal.Quotient.eq_zero_iff_mem.1 hx
   exact mem_nilradical.2 ⟨n + 1, by rw [← map_pow, Ideal.Quotient.eq_zero_iff_mem]; exact Ideal.pow_mem_pow hx' _⟩
 
-omit [IsNoetherianRing O] in
 
 theorem formallyUnramified_quotient (hm : (maximalIdeal O).map (algebraMap O S) = maximalIdeal S)
     [Module.Finite O (S ⧸ maximalIdeal S)] [Algebra.FormallyUnramified O (S ⧸ maximalIdeal S)] (n : ℕ) :

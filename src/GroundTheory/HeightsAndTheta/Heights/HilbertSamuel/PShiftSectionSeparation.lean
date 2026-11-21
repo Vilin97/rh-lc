@@ -48,7 +48,6 @@ theorem zcomb_eq [∀ k, Fintype (ι k)] (A H : ReciprocityTheory.ChartRestricti
 
 end ShiftSectionSeparation
 
-open ShiftSectionSeparation in
 
 theorem ShiftSectionSeparation.proof (h₁ : ArithIntersectionSystemStatement)
     (h₂ : IndefiniteRowSideFullHecke.HeightsSet.DenseBoundedHeight.Statement) (h₃ : SmallSectionPointHeight.Statement) :

@@ -33,7 +33,6 @@ theorem exists_finsum {D : DegPre R} {a : D.P.A ⟶ D.P.A} {n j : ℤ} {Ix : Typ
     rw [Finset.sum_insert hi, ← hg Z r z J hJ]
     exact gs_add r z _ (hJ.mem _ r) _ _
 
-open Classical in
 
 theorem sum_indep (I : Ideal R) {D : DegPre R} {a : D.P.A ⟶ D.P.A} {n j : ℤ} {Ix : Type} {w : Ix → D.X}
     (s : ∀ i, SecT D a n j (w i)) (e : ℕ) (S S' : Finset Ix) (hS : ∀ i ∉ S, Van I (s i) e)

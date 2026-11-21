@@ -32,7 +32,6 @@ end Charts
 variable {S S' : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] {G' : Over S'} [GrpObj G'] [IsCommMonObj G']
   {f : S' ⟶ S} {F : G'.left ⟶ G.left}
 
-omit [IsCommMonObj G] [IsCommMonObj G'] in
 
 theorem exists_rigidified (he : eSec G' ≫ F = f ≫ eSec G) (L : RigLB G) (L' : RigLB G')
     (h : LBIso L'.L (L.L.pull F)) : ∃ w : LB.Iso L'.L (L.L.pull F), PGen w ∧

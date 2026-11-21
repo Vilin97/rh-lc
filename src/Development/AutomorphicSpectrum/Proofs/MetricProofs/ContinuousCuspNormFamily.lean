@@ -59,7 +59,6 @@ theorem span_charVec : Submodule.span ℂ (Set.range (charVec (E := E))) = ⊤ :
   rw [LinearMap.pi_apply_eq_sum_univ f v, LinearMap.zero_apply]
   exact Finset.sum_eq_zero fun s _ => (congrArg (v s • ·) (hl s)).trans (smul_zero _)
 
-open Classical in
 
 theorem exists_coeff (s : E →+* ℂ) : ∃ c : 𝓞 E →₀ ℂ, ∀ s' : E →+* ℂ,
     ∑ a ∈ c.support, c a * s' (algebraMap (𝓞 E) E a) = if s' = s then 1 else 0 := by
@@ -79,7 +78,6 @@ theorem mem_eigSp_iff (R : RiemLat E g Λ) {s : 𝓞 E →+* ℂ} {x : Fin g →
     x ∈ eigSp R.B s ↔ ∀ a, R.B a x = s a • x := by
   simp [eigSp, Submodule.mem_iInf, sub_eq_zero]
 
-open Classical in
 
 theorem eigComp_eq (R : RiemLat E g Λ) (s : E →+* ℂ) (c : 𝓞 E →₀ ℂ)
     (hc : ∀ s' : E →+* ℂ, ∑ a ∈ c.support, c a * s' (algebraMap (𝓞 E) E a) = if s' = s then 1 else 0)

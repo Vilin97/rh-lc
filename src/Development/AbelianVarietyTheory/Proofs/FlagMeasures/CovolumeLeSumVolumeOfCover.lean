@@ -9,7 +9,6 @@ open MeasureTheory NumberField Finset
 
 namespace GlobalTheory
 
-open Pointwise in
 
 theorem covolume_le_sum_volume_of_cover (ι : Type) [Fintype ι] (L : Submodule ℤ (ι → ℝ))
     [DiscreteTopology L] [IsZLattice ℝ L] (κ : Type) (T : Finset κ) (A : κ → Set (ι → ℝ))

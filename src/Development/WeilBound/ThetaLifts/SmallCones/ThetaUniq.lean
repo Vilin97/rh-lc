@@ -22,20 +22,17 @@ section Notions
 
 variable {n d n₁ d₁ m : ℕ}
 
-variable (σ) in
 
 abbrev sy (X : Spc F E n) (W : Spc F E d) : Ten F E n d → Ten F E n d → AF F :=
   symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)
 
 def lin (u : Fin m → Matrix (Fin n) (Fin d) E) (y : Fin m → AF F) : Ten F E n d := ∑ j, y j • incM F (u j)
 
-variable (σ) in
 
 structure Dual (X : Spc F E n) (W : Spc F E d) (I : Set (Ten F E n d)) (u z : Fin m → Matrix (Fin n) (Fin d) E) : Prop where
   mem : ∀ j (a : AF F), a • incM F (z j) ∈ I
   pair : ∀ i j, sy σ X W (incM F (z i)) (incM F (u j)) = if i = j then 1 else 0
 
-variable (σ) in
 
 structure Polar (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (ι : Matrix (Fin n) (Fin n₁) E)
     (ι' : Matrix (Fin d) (Fin d₁) E) (I : Set (Ten F E n d)) (u z : Fin m → Matrix (Fin n) (Fin d) E) : Prop
@@ -48,7 +45,6 @@ structure Polar (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Sp
   span : ∀ x : Matrix (Fin n) (Fin d) E, ∃ (a b : Fin m → F) (x₁ : Matrix (Fin n₁) (Fin d₁) E),
     x = ∑ j, a j • u j + ∑ j, b j • z j + ι * x₁ * ι'ᵀ
 
-variable (σ) in
 
 abbrev IsoV (X : Spc F E n) : Type := {x : Fin n → E // x ≠ 0 ∧ form σ X.J x x = 0}
 

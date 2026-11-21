@@ -21,7 +21,6 @@ variable {K F V V' : Type} [Field K] [NumberField K] [StarRing K] [Field F] [Num
   [Module (𝓞 K) V'] [IsScalarTower (𝓞 K) K V']
 variable {h : V →ₗ⋆[K] V →ₗ[K] K} {h' : V' →ₗ⋆[K] V' →ₗ[K] K}
 
-omit [NumberField K] [FiniteDimensional K V] [FiniteDimensional K V'] in
 
 def prodEquiv (S : VecSplit h h') : (K × V') ≃ₗ[K] V :=
   LinearEquiv.ofBijective ((LinearMap.toSpanSingleton K V S.x₀).coprod S.ι) (by

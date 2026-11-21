@@ -168,6 +168,5 @@ end Two
 
 end Cond
 
-open Cond in
 
 end Formalism.FrobeniusOrbits

@@ -172,7 +172,6 @@ end Local
 
 end L5
 
-open L5 in
 
 theorem st5 : St5 := by
   intro k W _ _ _ _ _ _ _ n τ hτ π j hj

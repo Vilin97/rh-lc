@@ -21,8 +21,6 @@ theorem theta_cast (j : ℕ) (μ ν : D.what₂.Tup) (h : μ = ν) (x : D.what�
     D.what₂.thetaP ν j (D.what₂.jMt ν j (h ▸ x)) = D.what₂.thetaP μ j (D.what₂.jMt μ j x) := by
   subst h; rfl
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.ExportPin.Model

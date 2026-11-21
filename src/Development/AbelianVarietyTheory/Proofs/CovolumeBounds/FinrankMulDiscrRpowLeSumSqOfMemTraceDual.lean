@@ -97,14 +97,12 @@ theorem finrank_mul_absNorm_rpow_le_sum_sq {J : FractionalIdeal (𝓞 K)⁰ K} {
     exact_mod_cast FractionalIdeal.absNorm_nonneg J
   gcongr
 
-variable (K) in
 
 theorem dual_one_eq_inv_differentIdeal :
     FractionalIdeal.dual ℤ ℚ (1 : FractionalIdeal (𝓞 K)⁰ K)
       = (differentIdeal ℤ (𝓞 K) : FractionalIdeal (𝓞 K)⁰ K)⁻¹ := by
   rw [coeIdeal_differentIdeal ℤ ℚ K (𝓞 K), inv_inv]
 
-variable (K) in
 
 theorem absNorm_inv_differentIdeal :
     FractionalIdeal.absNorm (differentIdeal ℤ (𝓞 K) : FractionalIdeal (𝓞 K)⁰ K)⁻¹
@@ -138,7 +136,6 @@ theorem finrank_mul_discr_rpow_le_sum_sq_of_mem_traceDual {x : K}
   rw [← dual_one_eq_inv_differentIdeal, ← FractionalIdeal.mem_coe, FractionalIdeal.coe_dual_one]
   exact hx
 
-omit [NumberField K] in
 
 end General
 
@@ -146,8 +143,6 @@ section TotallyReal
 
 variable {F : Type*} [Field F] [NumberField F] [IsTotallyReal F]
 
-omit [NumberField F] in
-variable (F) in
 
 theorem bijective_ofRealHom_comp :
     Function.Bijective (fun σ : F →+* ℝ => Complex.ofRealHom.comp σ) := by
@@ -155,7 +150,6 @@ theorem bijective_ofRealHom_comp :
   · simpa using RingHom.congr_fun h x
   · exact ⟨(IsTotallyReal.complexEmbedding_isReal φ).embedding, RingHom.ext fun x => by simp⟩
 
-variable (F) in
 
 theorem card_realEmbeddings : Fintype.card (F →+* ℝ) = finrank ℚ F := by
   rw [← Embeddings.card F ℂ]

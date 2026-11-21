@@ -175,7 +175,6 @@ theorem isInfEmb_unique (τ : E →+* ℂ) (θ θ' : Ainf F ⊗[F] E →+* ℂ) 
 def evW (w : InfinitePlace F) : Ainf F →ₐ[F] w.Completion :=
   Pi.evalAlgHom F (fun w : InfinitePlace F => w.Completion) w
 
-open Classical in
 
 def sgW (w : InfinitePlace F) : w.Completion →ₗ[F] Ainf F :=
   LinearMap.single F (fun w : InfinitePlace F => w.Completion) w
@@ -205,9 +204,7 @@ theorem infTens_ext {z z' : Ainf F ⊗[F] E} (h : ∀ w : InfinitePlace F,
   rw [key z, key z']
   exact Finset.sum_congr rfl fun w _ => by rw [h w]
 
-include hc in
 
-include hc in
 
 end Groups
 

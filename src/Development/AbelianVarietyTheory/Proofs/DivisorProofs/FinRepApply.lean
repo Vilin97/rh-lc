@@ -68,7 +68,6 @@ def cuspMult (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+*
     (M : DSModel V S) {W : Type} [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (GfC V) W) : Cardinal :=
   Module.rank ℂ (homInto σ (finRep M) (allMaps θ M))
 
-variable (D) in
 
 def CuspDecomp : Prop :=
   ∀ (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsInfFam θ →

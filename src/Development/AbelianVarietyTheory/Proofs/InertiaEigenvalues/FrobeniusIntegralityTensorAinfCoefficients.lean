@@ -86,7 +86,6 @@ theorem blow_mul {p q r : Type} [Fintype q] (Z : Matrix p q (O ⊗[R] W))
   set_option synthInstance.maxHeartbeats 100000 in
     simp [blow, Matrix.mul_apply, map_sum, Matrix.sum_apply, Fintype.sum_prod_type]
 
-omit b [Fintype I] [DecidableEq I] in
 
 theorem integrality_baseChange [Module.Free R O] [Module.Finite R O] (f : W →ₐ[R] W')
     (φ : W' →ₐ[R] W')

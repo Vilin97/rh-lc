@@ -82,7 +82,6 @@ end GlobalTheory.EtC.GalSmooth
 
 namespace GlobalTheory.EtC
 
-open GalSmooth in
 
 theorem galois_sec_isLocallyConstant : ∀ (R : Type) [CommRing R] (F : Shv R), Finitary F →
     ∀ (K Ω : Type) [Field K] [Field Ω] [Algebra K Ω] [Algebra.IsAlgebraic K Ω]

@@ -20,7 +20,6 @@ def RatAt (Q : Finset (HeightOneSpectrum (𝓞 E))) : Set (GL (Fin n) (AfE F E))
 
 variable [StarRing E] {SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-variable (hc : CMData F E) in
 
 def RdLevOn {K : Type} [Field K] (A : Set (GL (Fin n) (AfE F E))) (U : Subgroup (GL (Fin n) (AfE F E))) (chi : U →* ℂˣ)
     (Λ : LevFam E K n SG) (emb : K →+* ℂ) (Q : Finset (HeightOneSpectrum (𝓞 E)))

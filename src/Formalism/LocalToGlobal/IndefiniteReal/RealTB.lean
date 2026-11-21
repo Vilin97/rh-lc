@@ -24,8 +24,6 @@ def phEff {G Pl0 I0 T0 : Type} [Group G] [Fintype G] {A3 : FamIn3 D.what₂.LL G
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (Rl : RealDat3 D A3 Ks) : Fin D.R.m → ℂ :=
   fun i => cj (twAt D.what₂.embLL A3.A.v0) (Rl.phs i)
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure RealTB (Rc : Formalism.L2.RecT ex) (P : RowSideFamily ex) (Dcf : ∀ Zs : DefSub P.A3.fam3.amb3, DefCols (P.A3.side3 P.Ps P.ψs Zs))
     (Spf : ∀ Zs : DefSub P.A3.fam3.amb3, SPer (Dcf Zs)) (Zscf : DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3)

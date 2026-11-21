@@ -91,7 +91,6 @@ theorem tensorSub_eq_twistPows {n : ℕ} (L : Fin n → SubSystem k x Ω) (T : F
 
 end InterNumEventual
 
-open InterNumEventual in
 
 theorem InterNumEventual.proof (hH : SnapperHyperplane.Statement.{u, w})
     (hS : SnapperSection.Statement.{u, w}) : InterNumEventual.Statement.{u, w} := by

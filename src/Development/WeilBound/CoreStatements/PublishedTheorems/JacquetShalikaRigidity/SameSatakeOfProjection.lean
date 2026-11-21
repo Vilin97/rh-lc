@@ -22,7 +22,6 @@ namespace PositivityTheory.AdelicQuotientData.QORTX
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
   {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
-variable (μ) in
 
 def rhoL (w : Pl E) : Representation ℂ (GL (Fin a) (w.adicCompletion E)) (L2 (latticeGL E a) μ) :=
   (ContinuousLinearMap.toLinearMapRingHom.toMonoidHom.comp (R (latticeGL E a) μ)).comp ((finGL E a).comp (locGL E a w))

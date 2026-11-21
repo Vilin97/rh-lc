@@ -14,7 +14,6 @@ open MvPolynomial
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
   [∀ k, DecidableEq (ι k)]
 
-variable (ι) in
 
 def segMono (i : (k : K) → ι k) : MvPolynomial (Σ k, ι k) ℂ := ∏ k, X ⟨k, i k⟩
 
@@ -58,7 +57,6 @@ theorem psiPoly_homog (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1
     exact Submodule.smul_mem _ _ ((mem_weightedHomogeneousSubmodule _ _ _ _).mpr (segMono_homog i))
   exact (mem_weightedHomogeneousSubmodule _ _ _ _).mp hmem
 
-variable (ι) in
 
 def idealC (P : Ideal (MRing ι)) : Ideal (MvPolynomial (Σ k, ι k) ℂ) :=
   Ideal.map (map (Int.castRingHom ℂ)) P

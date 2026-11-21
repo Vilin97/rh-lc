@@ -88,7 +88,6 @@ theorem intw_ph {S : Eu l →L[ℝ] Eu l} (hS : ∀ x y, ⟪x, S y⟫ = ⟪y, S 
     simp only [inner_add_left, inner_add_right, map_add (f := _), hS p x, real_inner_comm x (S p)]
     ring
 
-open Classical in
 
 def dil (B : Eu l →L[ℝ] Eu l) : Sch l →L[ℂ] Sch l :=
   if h : IsUnit B then compCLMOfContinuousLinearEquiv ℂ (ContinuousLinearEquiv.ofUnit h.unit) else 0

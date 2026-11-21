@@ -29,8 +29,6 @@ theorem index_range_powMonoidHom_of_mulEquiv {G H : Type*} [CommGroup G] [CommGr
     (powMonoidHom n : G →* G).range.index = (powMonoidHom n : H →* H).range.index := by
   rw [← map_range_powMonoidHom e n, Subgroup.index_map_equiv]
 
-omit [NumberField K] in
-open Classical in
 
 theorem index_range_powMonoidHom_infinitePlaceCompletion (w : InfinitePlace K) {n : ℕ}
     (hn : n ≠ 0) :

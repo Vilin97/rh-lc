@@ -72,8 +72,6 @@ private theorem exists_rep_add_natCast_smul_zm_of_intM_smul {κ ι : Type} [Fint
     congr 1
     rw [mul_assoc, mul_div_cancel_left₀ _ hRq]
 
-open Matrix Complex in
-open scoped ComplexConjugate Real in
 
 theorem _root_.GlobalTheory.SW.FourierJ.tsum_level_eq_sum_cosets : ∀ (κ ι : Type) [Fintype κ] [Fintype ι]
     [DecidableEq κ]

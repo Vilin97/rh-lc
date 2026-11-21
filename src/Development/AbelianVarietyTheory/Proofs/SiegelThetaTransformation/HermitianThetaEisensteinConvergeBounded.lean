@@ -20,7 +20,6 @@ namespace GlobalTheory.SW.EisBdd
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {Ψ : Finset (E →+* ℂ)} {n N : ℕ}
 
-omit [IsCMField E] in
 
 theorem approx_entry (hΨ : IsType Ψ) : ∃ K : ℝ, ∀ w : Ψ → ℂ, ∃ a : E, IsIntegral ℤ a ∧
     ∀ τ : Ψ, ‖w τ - τ.1 a‖ ≤ K := by
@@ -123,7 +122,6 @@ omit [NumberField E] [IsCMField E] in
 theorem mem_Hn {δ : ℝ} (hδ : 0 < δ) {Z : CM Ψ N N} (hZ : Z ∈ HnGe Ψ N δ) : Z ∈ Hn Ψ N := fun τ => by
   simpa using (posDef_scalar hδ).add_posSemidef (hZ τ)
 
-open Classical in
 
 theorem theta_bdd (hΨ : IsType Ψ) {R : ℕ} {δ : ℝ} (hR : 0 < R) (hδ : 0 < δ) :
     ∃ C : ℝ, ∀ φ : Matrix (Fin n) (Fin N) E → ℂ, HasLevel R φ → ∀ B : ℝ, (∀ x, ‖φ x‖ ≤ B) →
@@ -178,7 +176,6 @@ theorem transl_mem {β : Matrix (Fin N) (Fin N) E} (h : ccT β = β) :
   rw [e, Matrix.J, fromBlocks_multiply, fromBlocks_multiply]
   simp
 
-omit [NumberField E] [IsCMField E] in
 
 theorem botSpan_mul (γ t : M2 E N) : botSpan (γ * t) = (botSpan γ).map (vecMulLinear t) := by
   unfold botSpan
@@ -288,7 +285,6 @@ theorem eis_bdd (hΨ : IsType Ψ) (hn : Even n) (hN : 4 * N < n) {R : ℕ} {δ :
 
 end GlobalTheory.SW.EisBdd
 
-open GlobalTheory.SW.EisBdd in
 
 theorem GlobalTheory.SW.theta_eis_bounded : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), Even n → 4 * N < n → ∀ (R : ℕ) (δ : ℝ), 0 < R → 0 < δ → ∃ C : ℝ, ∀ φ : Matrix (Fin n) (Fin N) E → ℂ, HasLevel R φ → ∀ B : ℝ, (∀ x, ‖φ x‖ ≤ B) → ∀ Z ∈ HnGe Ψ N δ, (Summable fun U : Lag E N => ‖eisTerm Ψ U.2.choose φ Z 0 0‖) ∧ ‖thH Ψ φ Z 0 0‖ ≤ C * B ∧ ‖eis Ψ φ Z 0 0‖ ≤ C * B := by
   intro E _ _ _ Ψ hΨ n N hn hN R δ hR hδ

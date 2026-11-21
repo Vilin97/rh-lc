@@ -17,7 +17,6 @@ namespace GlobalTheory.Core.Rk
 
 def IdE {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) : Prop := ∀ x : X.B.I.E, HEq (X.ιE x) x
 
-open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 
 def TrueE (D : D7) : Prop :=
   ∃ (B : Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)),
@@ -26,7 +25,6 @@ def TrueE (D : D7) : Prop :=
 theorem TrueE.trueD {D : D7} (h : TrueE D) : TrueD D :=
   let ⟨B, X, I, l, Z, e, w, _⟩ := h; ⟨B, X, I, l, Z, e, ⟨w⟩⟩
 
-open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 
 def HD (D : D7) (L C' Cl Cg cb Cu cT CT : ℝ) : Prop :=
   Formalism.BasicNotions.Ties D ∧ Formalism.MainNotions.LocalBesselAndTopKernel.FamilyMidVolume D ∧ Deg.HypL D L C' Cl Cg cb Cu cT CT ∧ Deg.DataNW D ∧ Formalism.L2.SG.RowsConc.TFrameAt D

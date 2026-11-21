@@ -22,7 +22,6 @@ theorem split_of_dvd {D : D7} {Q Q' p : ℕ} [hp : Fact p.Prime] (hQ : GoodLevel
   have hpQ : p ^ 1 ∣ Q := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hQ0.ne').2 (h1.trans h)
   exact hQs p hpp (by simpa using hpQ)
 
-open GlobalTheory.NormSum.Term in
 
 theorem term_bound_of_jets (hJ : type_of% @GlobalTheory.T.jets_torsion_translates_cm_theta_product) (D : D7) (hI : Inp D) (S : Finset ℕ) (dl : ℕ → ℝ) (hL : Letters D S dl) (δ t0 : ℂ) (Q : ℕ)
     (P : Pair D ⊤ δ t0 Q) (p : ℕ) [Fact p.Prime] (hQ : p ∣ Q → SplitIn D p) (lam : Qbar →+* ℂ_[p]) (g : GA D P.a)
@@ -92,8 +91,6 @@ private theorem bd_finsum {p : ℕ} [Fact p.Prime] {ι : Type*} {r : ℝ} (hr : 
   · rw [finsum_of_infinite_support hf]
     exact GlobalTheory.NormVal.Bd.zero hr
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.NormVal in
 
 theorem coordInt_of_jets (hJ : type_of% @GlobalTheory.T.jets_torsion_translates_cm_theta_product) (D : D7) (hI : Inp D) (S : Finset ℕ) (dl : ℕ → ℝ) (hL : Letters D S dl) (Q N : ℕ) (B : ℝ)
     (hQ : GoodLevel D Q) (_hB : 0 ≤ B) :

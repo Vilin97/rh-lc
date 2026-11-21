@@ -25,7 +25,6 @@ namespace FibreIncompressibility
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)] in
 
 theorem card_add_card_forgottenBlocks [Fintype K] {κ : K → K'} (hκ : Function.Injective κ) :
     Fintype.card K + Fintype.card (FibreBlock κ) = Fintype.card K' := by
@@ -37,7 +36,6 @@ theorem card_add_card_forgottenBlocks [Fintype K] {κ : K → K'} (hκ : Functio
     Fintype.card_congr (Equiv.refl _)
   omega
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem algebraMap_injective_of_horizontal (I : Ideal (MRing ι)) (h : IsHorizontal I) :
     Function.Injective (algebraMap ℤ (MRing ι ⧸ I)) := by
@@ -48,7 +46,6 @@ theorem algebraMap_injective_of_horizontal (I : Ideal (MRing ι)) (h : IsHorizon
   rw [h] at h'
   exact h'
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 
 theorem comap_C_imageZ (v : (Σ k, ι k) → (Σ k', ι' k')) (W' : Ideal (MRing ι')) :
     (imageZ v W').comap (C : ℤ →+* MRing ι) = W'.comap (C : ℤ →+* MRing ι') := by
@@ -116,7 +113,6 @@ theorem dim_add_card_le {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (
 
 end FibreIncompressibility
 
-open FibreIncompressibility in
 
 theorem FibreIncomp.full : Inter.FibreIncomp.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' n s α W hv hP' hQ hs hsQ hW W₁ W₂ hW₁ hW₂ h12

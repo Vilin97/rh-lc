@@ -60,7 +60,6 @@ theorem exists_compact_support {K B : Set (Mat n)} (hK : IsCompact K) (hKs : K �
 
 end GlobalTheory.CompanionTheory.PresSobA.MolDiff
 
-open GlobalTheory.CompanionTheory.PresSobA.MolDiff in
 
 theorem GlobalTheory.CompanionTheory.PresSobA.mol_differentiableAt :
     ∀ (n : ℕ) [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure] (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V], Unimod → ∀ φ : Mat n → ℝ, IsTest φ → ∀ x : Lp V 2 μ, ∀ z ∈ GLs n, DifferentiableAt ℝ (Mol μ φ (⇑x)) z := by

@@ -36,7 +36,6 @@ theorem closure_preimage_eq_top {Γ G : Type} [Group Γ] [Group G] [TopologicalS
   have h3 : h⁻¹ * γ ∈ H := Subgroup.subset_closure (by simpa using hx)
   simpa using H.mul_mem hh h3
 
-open Formalism.UG GlobalTheory.UnRep.WeakApprox in
 
 theorem preconnected_unitary {K R A : Type} [Field K] [CharZero K] [CommRing R] [TopologicalSpace R]
     [IsTopologicalRing R] [IsArtinianRing R] (ι : K →+* R) (c : K →+* K) (σ : R →+* R)

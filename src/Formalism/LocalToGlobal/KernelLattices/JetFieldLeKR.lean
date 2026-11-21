@@ -20,7 +20,6 @@ variable {X : Fields} (A : Amb X) (a b : ℕ) (Sall : Finset (HeightOneSpectrum 
 
 end Field
 
-open Cardinal in
 
 section KR
 
@@ -55,7 +54,6 @@ section Choice
 
 end Choice
 
-open Classical in
 
 def degAt {ι : Type} {a b : ℕ} (m : DVar ι a b →₀ ℕ) (τ : ι) : ℕ := (m.support.filter fun k => k.1 = τ).sum fun k => m k
 

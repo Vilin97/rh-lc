@@ -241,8 +241,6 @@ theorem regSS_of_conj {γ δ : GF V} (h : IsConj γ δ) (hγ : IsRegSS γ.1.1) :
 theorem conj_id {G : Type} [Group G] (a ω d n : G) :
     (a * ω)⁻¹ * (d * n) * (a * ω) = ω⁻¹ * (a⁻¹ * d * a) * (a⁻¹ * n * a) * ω := by group
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.SiegelSet in
 
 theorem class_bound {X Y : Matrix (Fin V.rank) (Fin r) D.host.E} (hW : IsWittFrame D.sp.cm.sig V.gram X Y)
     {K : Subgroup (GA D V)} {Ω : Set (GA D V)} {c : ℝ} (hK : IsCompact (K : Set (GA D V))) (hΩ : IsCompact Ω)
@@ -410,7 +408,6 @@ theorem class_bound {X Y : Matrix (Fin V.rank) (Fin r) D.host.E} (hW : IsWittFra
 end MainStatements.WeightKernel.RegInt
 
 namespace MainStatements.WeightKernel.RegInt
-open GlobalTheory.SiegelSet in
 
 theorem regClassInt : PositivityTheory.ThKR.SiegelCore → MainStatements.RegularCuspidalTrace.RegClassInt := by
   intro hcore D V μ _ f hf hcusp γ hreg

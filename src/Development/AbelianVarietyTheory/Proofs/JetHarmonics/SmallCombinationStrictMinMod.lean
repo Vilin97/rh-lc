@@ -76,7 +76,6 @@ private lemma quad_nsmul' (hQ : ∀ x, 2 * Q x = Bf x x) (m : ℕ) (x : X) :
   have h := quad_zsmul' hQ (m : ℤ) x
   rwa [natCast_zsmul] at h
 
-variable {X : Type} [AddCommGroup X] {Bf : X →+ X →+ ℤ} {Q : X → ℤ} in
 
 theorem _root_.GlobalTheory.small_combination_strict_min_mod :
     ∀ (X : Type) [AddCommGroup X] (Bf : X →+ X →+ ℤ) (Q : X → ℤ), (∀ x y, Bf x y = Bf y x) →

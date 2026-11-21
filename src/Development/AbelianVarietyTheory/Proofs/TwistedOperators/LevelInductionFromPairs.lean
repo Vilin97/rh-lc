@@ -116,6 +116,5 @@ theorem exp_att {χ η : (AE D)ˣ →* Circle} {τ : D.what₂.Tau} {c : ℚ} (h
 
 end GlobalTheory.RowArrow
 
-open GlobalTheory.RowArrow in
 
 end

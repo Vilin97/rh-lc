@@ -44,7 +44,6 @@ theorem ofW_zero : ofW t K e (0 : ℕ × ℕ → Wq l a) = 0 := by
 theorem ofW_neg (w : ℕ × ℕ → Wq l a) : ofW t K e (-w) = -ofW t K e w := by
   funext τ; ext i n; simp [coeff_ofW, neg_div]
 
-variable (K e) in
 
 def ofWHom : (ℕ × ℕ → Wq l a) →+ (ZMod a → K⟦X⟧⟦X⟧) where
   toFun := ofW t K e

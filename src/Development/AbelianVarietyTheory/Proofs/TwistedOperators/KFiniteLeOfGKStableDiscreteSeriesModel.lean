@@ -163,7 +163,6 @@ theorem dense_of_stable (hHC : GlobalTheory.Published.HarishChandraModules) (hU 
 
 end Model
 
-open Formalism.IndefR.Mult in
 
 theorem kFin_le_of_stable : GlobalTheory.Published.HarishChandraModules → ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar)
     (M : DSModel V S) (τ : D.what₂.Tau) (W : Submodule ℂ (M.H τ)), W ≤ GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension.kFin M τ →

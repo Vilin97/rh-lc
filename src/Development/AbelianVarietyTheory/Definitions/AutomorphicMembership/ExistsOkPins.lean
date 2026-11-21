@@ -39,7 +39,6 @@ end Normal
 
 variable {B : Base} {X : PreX B.toPre} {I : TC B X}
 
-set_option maxHeartbeats 1600000 in
 
 section Gen
 variable {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] [StarRing K] [Fintype ι] {n : ℕ}
@@ -62,7 +61,6 @@ theorem mt_finite {R : Ranks} {J : ChainIn E K ι R} (Q : PerIn J) (h : Q.Ok) (h
   exact (congrArg (F.1 b) (Q.S'.mv_smul b d)).symm.trans h1
 end Gen
 
-set_option maxHeartbeats 1600000 in
 
 theorem ipC_herm (l : I.Laws) (u : B.Word) (x y) :
     starRingEnd ℂ (((I.cols l).fm u).ipC 0 y x) = ((I.cols l).fm u).ipC 0 x y := by

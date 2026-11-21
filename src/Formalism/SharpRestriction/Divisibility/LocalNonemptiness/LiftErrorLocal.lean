@@ -11,11 +11,8 @@ namespace Formalism.MainNotions.DIV.Inh
 
 open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 private theorem eventually_abs_le_half_add_of_doubling_bounds (x y w : ℚ) (hx : ∃ z : ℤ, x = z) (hy : ∃ z : ℤ, y = z + 1 / 2)
     (hw : ∃ z : ℤ, w = z) (h1 : x < y) (h2 : y < w) : x + 1 ≤ w := by

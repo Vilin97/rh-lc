@@ -54,7 +54,6 @@ section Forms
 
 variable {R : Ranks} {H : Host R} {n : ℕ}
 
-open Classical in
 
 end Forms
 

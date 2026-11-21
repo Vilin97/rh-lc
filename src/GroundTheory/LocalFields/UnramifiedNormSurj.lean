@@ -52,7 +52,6 @@ section Residue
 
 variable [IsUnramified K L]
 
-variable (K L) in
 
 def residueBasis : Module.Basis (Module.Free.ChooseBasisIndex 𝒪[K] 𝒪[L]) 𝓀[K] 𝓀[L] :=
   basisOfTopLeSpanOfCardEqFinrank (fun i ↦ residue 𝒪[L] (Module.Free.chooseBasis 𝒪[K] 𝒪[L] i))
@@ -198,7 +197,6 @@ end Residue
 
 section NormGroup
 
-variable (K L) in
 
 omit [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L] [ValuativeExtension K L]
   [FiniteDimensional K L] in
@@ -223,7 +221,6 @@ theorem mem_range_normUnits_iff (x : Kˣ) :
     ext
     simp [Algebra.norm_algebraMap]
 
-variable (K L) in
 
 end NormGroup
 

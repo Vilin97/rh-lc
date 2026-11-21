@@ -37,7 +37,6 @@ theorem g_mem_core {F : Face D A} (h : GlobalTheory.Hk3.Core R F) {PP : Pl D.hos
   have h2 : algebraMap (𝓞 D.host.K) (𝓞 D.host.E) (D.host.g k : ℕ) ∈ PP.asIdeal := h1
   simpa using h2
 
-open Classical in
 
 theorem isConjChars_core {F : Face D A} (h : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) (t : T) :
     IsConjChars R i t (RingEquiv.refl ℂ) (R.toLevCh.mu t ((i : ℕ) + 1)) R.eta
@@ -77,7 +76,6 @@ theorem isConjChars_core {F : Face D A} (h : GlobalTheory.Hk3.Core R F) (i : Fin
       rw [locK_eq_one hun a k hk ha, one_mul]
       exact h.lev.xiR t PP hq a k u hk hu
 
-open Classical in
 
 theorem isLevelVec_core {F : Face D A} (h : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) (t : T) :
     IsLevelVec R.ψ R.θ (Vc D i) (Wc D i) (cart (R.MW i (sg0 D A))) (R.ΛV i) (R.ΛW i) (R.βV i) (R.βW i) (R.datWp i R.triv) (R.Q t)
@@ -101,7 +99,6 @@ theorem isLevelVec_core {F : Face D A} (h : GlobalTheory.Hk3.Core R F) (i : Fin 
   simp only [omegaG_triv, hQ]
   exact h1
 
-open Classical in
 
 theorem chr_core {F : Face D A} (h : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) (t : T) :
     chrOf (Vc D i) (R.βV i) (datV i R.Pg (R.Q t) R.triv
@@ -153,7 +150,6 @@ theorem primeToHost_core {F : Face D A} (h : GlobalTheory.Hk3.Core R F) (hc : D.
     rw [Nat.cast_mul _ D.sp.T]
     exact PP.asIdeal.mul_mem_right _ h3
 
-open Classical in
 
 theorem isLiftDataC_base {F : Face D A} (h : GlobalTheory.Hk3.Core R F) (hc : D.host.ccK = ⊤) (i : Fin D.R.m) (t : T) :
     IsLiftDataC R F i t (sg0 D A) (RingEquiv.refl ℂ) R.triv (R.toLevCh.mu t ((i : ℕ) + 1)) R.eta

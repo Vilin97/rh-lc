@@ -65,7 +65,6 @@ section AbsDet
 
 variable {B : Type} [Ring B] [Algebra ℂ B]
 
-open Matrix in
 
 end AbsDet
 

@@ -19,13 +19,11 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
   {Xo : Moduli Dw l} {c : Coeff l}
 
-variable (Xo c) in
 
 def FrBC : Prop :=
   ∀ (S T : Type) [CommRing S] [Algebra c.F S] [CommRing T] [Algebra c.F T] (φ : S →ₐ[c.F] T) (y : FrPt Xo c S),
     ∃ z : FrPt Xo c T, FrMap φ y z
 
-variable (Xo c) in
 
 structure EvLaws : Prop where
   wd : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z)
@@ -33,7 +31,6 @@ structure EvLaws : Prop where
   wt : WtField Xo c
   bc : FrBC Xo c
 
-variable (Xo c) in
 
 structure PChart {O : Type} [CommRing O] (β : O →+* c.F) where
   Ω : Type
@@ -77,7 +74,6 @@ def PChart.Fam (P : PChart Xo c β) {m : ℕ} (ws : Fin m → Rul Xo c) : Prop :
   ∃ k, evR Xo c (ws k) P.yg ≠ 0 ∧ (∀ i, evR Xo c (ws i) P.yg / evR Xo c (ws k) P.yg ∈ P.B) ∧
     ∀ e ∈ P.es, (evR Xo c (ws k) P.yg)⁻¹ ∈ P.R e
 
-variable (Xo c) in
 
 def ModelAt (la : HeightOneSpectrum (𝓞 c.F)) : Prop :=
   ∃ Y : Model Xo c (la.valuation c.F).valuationSubring.subtype, PushInvertible Y.t.G Y.t.PP.L

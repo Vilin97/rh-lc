@@ -24,11 +24,8 @@ theorem blockIncl_injective (k₀ : ι) : Function.Injective (blockIncl (n := n)
   simp only [blockIncl, Sigma.mk.injEq, heq_eq_eq, true_and] at h
   subst h; rfl
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] in
 
-omit [Fintype ι] in
 
 end
 

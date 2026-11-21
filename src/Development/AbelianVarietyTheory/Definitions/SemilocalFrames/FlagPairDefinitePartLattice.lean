@@ -274,7 +274,6 @@ variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCo
 open NumberField in
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
-variable [FiniteDimensional K V] in
 
 theorem _root_.GlobalTheory.HermLat.autCard_eq_natCard {H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V} (hH : _root_.GlobalTheory.HermLat.IsTraceDef H)
     {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) :
@@ -327,7 +326,6 @@ end Mass
 
 section Examples
 
-omit [IsScalarTower R K V] [Algebra R K] [StarRing K] [Field K] [Module K V] in
 
 def ratLine : HermSpace ℚ ℚ where
   B := LinearMap.mk₂'ₛₗ (RingHom.id ℚ) (starRingEnd ℚ) (fun x y => x * y)

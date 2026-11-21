@@ -135,7 +135,6 @@ theorem pt_one (C : Type) [CommRing C] [Algebra A C] :
     spm ((Algebra.ofId A C).comp ε) ≫ j = 1 := by
   rw [spm_comp, Category.assoc, hε, MonObj.comp_one]
 
-include hε in
 
 theorem exists_pt {C D : Type} [CommRing C] [Algebra A C] [CommRing D] [Algebra A D]
     (π : C →ₐ[A] D) (hs : Function.Surjective π) (hn : ∀ x, π x = 0 → IsNilpotent x)
@@ -154,7 +153,6 @@ theorem exists_pt {C D : Type} [CommRing C] [Algebra A C] [CommRing D] [Algebra 
   apply Over.OverMorphism.ext
   exact IsOpenImmersion.lift_fac _ _ _
 
-include hε in
 
 theorem mul_pt {C : Type} [CommRing C] [Algebra A C] (K : Ideal C) (hK : ∀ x ∈ K, IsNilpotent x)
     (φ₁ φ₂ φ : R →ₐ[A] C) (h₁ : ∀ a, φ₁ a - algebraMap A C (ε a) ∈ K)
@@ -415,7 +413,6 @@ theorem map_mem_map {C D : Type} [CommRing C] [Algebra A C] [CommRing D] [Algebr
 
 end TorusNil
 
-open TorusNil in
 
 theorem splitTorus_hom_eq_one_of_nilpotent (A : Type) [CommRing A] [IsLocalRing A] (J : Ideal A)
     (hJ : IsNilpotent J) (X : Type) [AddCommGroup X] (B : Over (Spec (CommRingCat.of A)))

@@ -30,10 +30,7 @@ theorem rep_ext {B S' Y : Over S} {b : B ⟶ S'} {P : LB (A ⊗ B).left} (h : Re
   have hu := fam_ev h.fam u
   exact (h.univ Y (u ≫ b) _ hu).unique ⟨rfl, (cls_eq_iff hu.isLB hu.isLB).1 rfl⟩ ⟨hb.symm, e⟩
 
-omit [GrpObj A] in
 
-omit [GrpObj A] in
 
-omit [GrpObj A] in
 
 end GlobalTheory.DualCon.Model

@@ -210,7 +210,6 @@ theorem sdot_meet_join (e e' : Fin m → SignType) (a : Fin m → ℝ) :
   simp only [sMeet, sJoin]
   cases h1 : e i <;> cases h2 : e' i <;> simp <;> ring
 
-open Classical in
 
 theorem gam_eq_sum (y : (Fin m → SignType) → ℝ) (a : Fin m → ℝ) (h0 : ¬ y 0 < sdot 0 a) :
     gam y a = ∑ s ∈ (Finset.univ : Finset (Finset (Fin m → SignType))).filter

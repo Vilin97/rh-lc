@@ -8,7 +8,6 @@ open Matrix Polynomial
 
 namespace GlobalTheory
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem quadratic_preimage_compact_on_subspace
     (K : Type) [NontriviallyNormedField K] [ProperSpace K] [StarRing K]

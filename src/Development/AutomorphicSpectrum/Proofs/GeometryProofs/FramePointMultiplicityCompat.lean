@@ -137,7 +137,6 @@ theorem exists_spread {S : Type} [CommRing S] (q : Ideal S) [hq : q.IsPrime] (g�
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
   {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
 
-open MonoidalCategory CartesianMonoidalCategory MonObj in
 
 theorem one_left_eq {X : Scheme.{0}} {A : Type} [CommRing A] (G : Over X) [GrpObj G] (x : Sp A ⟶ X) :
     (1 : Over.mk x ⟶ G).left = x ≫ η[G].left := by
@@ -153,7 +152,6 @@ theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : 
   RingHom.ext fun a => by
     ext <;> simp [Formalism.L2.Pj.dualMap]
 
-open MonoidalCategory CartesianMonoidalCategory MonObj in
 
 theorem exists_tied (Y : Model Xo c β) {B : Type} [CommRing B] (y : Sp B ⟶ Xo.XF c)
     (v' : Sp (DualNumber B) ⟶ Y.t.G.left)
@@ -233,7 +231,6 @@ theorem isTanAt_of_comb {B : Type} [CommRing B] {xB : Sp B ⟶ Xo.X} {m : ℕ}
   rw [(hcomb _ b _ _).1 h]
   exact (htan _).2 ⟨_, rfl⟩
 
-open MonoidalCategory CartesianMonoidalCategory MonObj in
 
 theorem tan_pull (Y : Model Xo c β) {R B : Type} [CommRing R] [CommRing B] {x : Sp R ⟶ Y.X} (θ₀ : R →+* B)
     (y : Sp B ⟶ Xo.XF c) (h : spMap θ₀ ≫ x = y ≫ Y.j) (v : epsAt x ⟶ Y.t.G) (hv : IsTanAt Y.t.G x v) :

@@ -293,7 +293,6 @@ theorem prod_push (h : IsGrpPullback G₂ G f φ) {a₂ : Z ⟶ X₂} {a : Z ⟶
   obtain rfl : u = ρ ∘ u₂ := funext fun i => Over.OverMorphism.ext ((hu i).trans (hρ _).symm)
   rw [← hρ, map_list_prod, List.map_ofFn]
 
-omit [GrpObj G] [GrpObj G₂] in
 
 theorem exists_pm {W W' : Scheme.{0}} {x : W ⟶ X} (a : W' ⟶ W) (g : W' ⟶ G.left) (e : a ≫ x = g ≫ G.hom) :
     ∃ p : W' ⟶ (Over.mk x ⊗ G).left, p ≫ (snd (Over.mk x) G).left = g ∧ p ≫ (fst (Over.mk x) G).left = a :=

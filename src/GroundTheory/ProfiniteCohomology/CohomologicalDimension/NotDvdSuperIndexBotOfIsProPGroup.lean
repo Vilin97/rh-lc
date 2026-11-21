@@ -23,7 +23,6 @@ section Simple
 
 attribute [local instance 2000] Rep.hV2
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem exists_bijective_hom_of_isProPGroup {p : ℕ} (hp : p.Prime) (hG : IsProPGroup p G)
     (A : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep A] (hsimple : IsSimpleOrder (Subrepresentation A.ρ))

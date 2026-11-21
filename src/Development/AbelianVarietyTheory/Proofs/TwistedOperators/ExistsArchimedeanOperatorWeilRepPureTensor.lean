@@ -19,7 +19,6 @@ open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.Genus
 open scoped Matrix
 open scoped Classical
 
-open GlobalTheory.ArchFactor in
 
 theorem GlobalTheory.ArchFactorPair.exists_archOperator_pair :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ →

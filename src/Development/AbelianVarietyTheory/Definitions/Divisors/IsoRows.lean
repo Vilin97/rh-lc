@@ -41,7 +41,6 @@ end Frame
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F) in
 
 def IsRat {α β κ : Type} [Fintype κ] {B : Matrix α β (AE F E) → Matrix α β (AE F E) → AF F} (d : Darboux B κ) : Prop :=
   ∀ x : Matrix α β E, ∃ y z : κ → F, d.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i))
@@ -50,7 +49,6 @@ variable (σ : E →ₐ[F] E)
 
 variable {σ}
 
-variable (σ) in
 
 end GlobalTheory.TowU
 

@@ -25,7 +25,6 @@ noncomputable abbrev sub0 (x : Fin (d.N + 1) → K) : KTp K d.D d.N →ₐ[K] KT
   MvPolynomial.aeval (fun v : TVar d.D d.N =>
     if v.1 = 0 then MvPolynomial.C (x v.2) else MvPolynomial.X v)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem finYX4 (hd : d.AxH 𝒜) (h : d.S1) (c : ι) :
     letI := d.algLE h c

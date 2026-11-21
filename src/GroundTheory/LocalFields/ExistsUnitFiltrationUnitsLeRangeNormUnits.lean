@@ -56,7 +56,6 @@ theorem ord_unitsOfIntProd {ϖ : 𝒪[K]} (hϖ : Irreducible ϖ) (n : Multiplica
     (u : 𝒪[K]ˣ) : ord ((unitsOfIntProd hϖ (n, u) : Kˣ) : K) = n.toAdd := by
   simp [ord, normalizedValuation_unitsOfIntProd]
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem unitsOfIntProd_eq {ϖ : 𝒪[K]} (hϖ : Irreducible ϖ) (n : Multiplicative ℤ)
     (u : 𝒪[K]ˣ) : unitsOfIntProd hϖ (n, u) = uniformizerUnit hϖ ^ n.toAdd * unitsIncl K u := by
@@ -67,7 +66,6 @@ theorem ord_eq_zero_iff_mem {x : Kˣ} : ord (x : K) = 0 ↔ x ∈ unitFiltration
     normalizedValuation_eq_exp_ord x.ne_zero, map_one, ← WithZero.exp_zero, WithZero.exp_inj,
     neg_eq_zero]
 
-variable (K) in
 
 instance locallyCompactSpace_units : LocallyCompactSpace Kˣ :=
   (isCompact_unitFiltrationUnits 0).locallyCompactSpace_of_mem_nhds_of_group
@@ -102,7 +100,6 @@ theorem norm_mem_integer {x : L} (hx : x ∈ 𝒪[L]) : Algebra.norm K x ∈ �
   rw [← h]
   exact (Algebra.norm 𝒪[K] (⟨x, hx⟩ : 𝒪[L])).2
 
-variable (K L) in
 
 def normIntegerUnits : 𝒪[L]ˣ →* 𝒪[K]ˣ :=
   Units.map (Algebra.norm 𝒪[K] : 𝒪[L] →* 𝒪[K])
@@ -237,7 +234,6 @@ section Separable
 
 variable [Algebra.IsSeparable K L]
 
-variable (K L) in
 
 theorem exists_trace_integer_ne_zero : ∃ z : 𝒪[L], Algebra.trace 𝒪[K] 𝒪[L] z ≠ 0 := by
   obtain ⟨w, hw⟩ : ∃ w : L, Algebra.trace K L w ≠ 0 := by
@@ -268,7 +264,6 @@ theorem exists_trace_integer_ne_zero : ∃ z : 𝒪[L], Algebra.trace 𝒪[K] �
   have hϖ0 : (ϖ : K) ≠ 0 := by exact_mod_cast hϖ.ne_zero
   exact mul_ne_zero (pow_ne_zero _ hϖ0) hw h2
 
-variable (K L) in
 
 theorem exists_unitFiltrationUnits_le_range_normUnits :
     ∃ n, unitFiltrationUnits K n ≤ (normUnits K L).range := by
@@ -292,13 +287,11 @@ theorem exists_unitFiltrationUnits_le_range_normUnits :
   ext
   rw [coe_normUnits, Units.val_mk0, ← hN, coe_unitsIncl]
 
-variable (K L) in
 
 theorem isOpen_range_normUnits : IsOpen ((normUnits K L).range : Set Kˣ) := by
   obtain ⟨n, hn⟩ := exists_unitFiltrationUnits_le_range_normUnits K L
   exact Subgroup.isOpen_mono hn (isOpen_unitFiltrationUnits n)
 
-variable (K L) in
 
 theorem finiteIndex_range_normUnits : (normUnits K L).range.FiniteIndex := by
   obtain ⟨n, hn⟩ := exists_unitFiltrationUnits_le_range_normUnits K L

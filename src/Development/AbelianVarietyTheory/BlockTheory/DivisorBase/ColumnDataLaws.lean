@@ -91,7 +91,6 @@ abbrev σ' : Y.c'.F →+* ℂ := Y.c'.F.val.toRingHom
 
 abbrev σ : T.Q.c.F →+* ℂ := Y.σ'.comp (incF T.Q.c Y.c' Y.hle)
 
-omit [Group G] [Fintype G] in
 
 abbrev U : Unf (T.Q.Xo ((i : ℕ) + 1)) T.Q.c Y.σ D.R.r := T.U ((i : ℕ) + 1) Y.σ
 
@@ -100,11 +99,9 @@ def dict : GA D (Wc D i) → Σ k, Frame (Y.U.X k).Ψ D.R.r := castDict Y.hV (T.
 def ι (_Y : RowDat T G i) : (T.Q.Dw ((i : ℕ) + 1)).La →ₗ[𝓞 D.host.E] (Fin (Wc D i).rank → D.host.E) :=
   LinearMap.funLeft (𝓞 D.host.E) D.host.E (Fin.cast (rank_Wc i)) ∘ₗ T.iota ((i : ℕ) + 1)
 
-omit [Group G] [Fintype G] in
 
 variable (R : RealDat D A Ks)
 
-omit [Group G] [Fintype G] in
 
 end RowDat
 

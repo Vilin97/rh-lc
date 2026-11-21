@@ -58,7 +58,6 @@ theorem hasDP_of_mem {R : Type} [CommRing R] {I : Ideal R} (γ : DividedPowers I
 
 variable (J : Ideal B) (h : ∀ x ∈ J, HasDP J x)
 
-open Classical in
 
 def dpOf (n : ℕ) (x : B) : B := if hx : x ∈ J then (h x hx).choose n else 0
 
@@ -84,7 +83,6 @@ theorem dpOf_eq (hn : ∀ n : ℕ, n ≠ 0 → ∀ x : B, (n : B) * x = 0 → x 
     (e : (n.factorial : B) * z = x ^ n) : dpOf J h n x = z :=
   cancel hn n.factorial_ne_zero ((dpOf_spec n hx).trans e.symm)
 
-variable (J h) in
 
 def dpExt (hn : ∀ n : ℕ, n ≠ 0 → ∀ x : B, (n : B) * x = 0 → x = 0) : DividedPowers J where
   dpow := dpOf J h

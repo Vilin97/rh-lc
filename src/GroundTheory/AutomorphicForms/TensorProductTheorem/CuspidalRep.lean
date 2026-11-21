@@ -99,7 +99,6 @@ theorem isIrreducible_cuspSubmodule_of (U : Submodule ℂ (cuspForms K n))
     obtain ⟨y', hy', e⟩ := this
     rwa [← Subtype.ext e]
 
-variable (K n) in
 
 structure CuspidalAutomorphicRepresentation where
 
@@ -139,9 +138,7 @@ theorem nonempty_adelicDecomposition (π : CuspidalAutomorphicRepresentation K n
 
 end CuspidalAutomorphicRepresentation
 
-open GL2Classical ModularForm CongruenceSubgroup in
 
-open GL2Classical ModularForm CongruenceSubgroup in
 
 end AutomorphicForm
 

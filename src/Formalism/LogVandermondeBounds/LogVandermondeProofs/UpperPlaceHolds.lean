@@ -289,7 +289,6 @@ private theorem linear_log_bound_le_K_mul_M (K M L lC l4 lB lQ lK E1 E : ℝ) (h
   have h4 : 0 ≤ K * M * L := mul_nonneg hKM0 hL
   nlinarith
 
-set_option maxHeartbeats 800000 in
 
 theorem UpperPlace_holds : UpperPlace := by
   unfold UpperPlace

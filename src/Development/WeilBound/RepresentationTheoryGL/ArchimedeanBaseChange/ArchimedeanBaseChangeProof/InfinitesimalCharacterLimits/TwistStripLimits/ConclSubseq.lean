@@ -29,7 +29,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 def Gap {N : ℕ} (ε : ℝ) (V : Submodule ℂ (Sm E N)) : Prop :=
   ∀ r, 0 < r → r < N → ∀ c ∈ ExpV r V, pE E N r c ≤ -ε * (r * ((N : ℝ) - r))
 
-variable (E) in
 
 def RepAll : Prop :=
   ∀ (M : ℕ) [MeasurableSpace (GA E M)] [BorelSpace (GA E M)] (ν : Measure (GA E M)) [ν.IsHaarMeasure]

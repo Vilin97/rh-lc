@@ -206,7 +206,6 @@ end GlobalTheory.MulUnramified
 
 namespace GlobalTheory
 
-open MulUnramified in
 
 theorem formallyUnramified_mulN (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (n : ℕ)
     (hn : IsUnit (n : Γ(S, ⊤))) : FormallyUnramified (mulN G n).left := by

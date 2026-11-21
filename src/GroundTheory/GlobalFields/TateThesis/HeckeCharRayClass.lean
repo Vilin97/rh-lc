@@ -28,15 +28,12 @@ def complexUnitsHom {w : InfinitePlace K} (hw : w.IsComplex) : ℂˣ →ₜ* (w.
   toMonoidHom := Units.map ((ringEquivComplexOfIsComplex hw).symm : ℂ →+* w.Completion).toMonoidHom
   continuous_toFun := Units.continuous_map (isometryEquivComplexOfIsComplex hw).symm.continuous
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
 theorem realUnitsHom_surjective {w : InfinitePlace K} (hw : w.IsReal) (a : (w.Completion)ˣ) :
     realUnitsHom hw (Units.map (ringEquivRealOfIsReal hw : w.Completion →+* ℝ).toMonoidHom a) = a :=
   Units.ext ((ringEquivRealOfIsReal hw).symm_apply_apply _)
 
-omit [NumberField K] in
 
 theorem complexUnitsHom_surjective {w : InfinitePlace K} (hw : w.IsComplex) (a : (w.Completion)ˣ) :
     complexUnitsHom hw
@@ -95,7 +92,6 @@ theorem ofInfinite_eq_prod (x : (InfiniteAdeleRing K)ˣ) :
   rw [map_prod]
   simp only [ofInfinite_map_infiniteAdeleSingle]
 
-variable (K) in
 
 def infinitePositive : Subgroup (InfiniteAdeleRing K)ˣ where
   carrier := {x | ∀ (w : InfinitePlace K) (hw : w.IsReal),
@@ -126,7 +122,6 @@ theorem mem_infinitePositive {x : (InfiniteAdeleRing K)ˣ} :
       0 < InfinitePlace.Completion.extensionEmbeddingOfIsReal hw ((x : InfiniteAdeleRing K) w) :=
   Iff.rfl
 
-variable (K) in
 
 def infiniteSign : (InfiniteAdeleRing K)ˣ →* ({w : InfinitePlace K // w.IsReal} → SignTypeˣ) :=
   MonoidHom.pi fun w ↦ (Units.map (signHom : ℝ →*₀ SignType).toMonoidHom).comp
@@ -140,7 +135,6 @@ theorem infiniteSign_apply_val (x : (InfiniteAdeleRing K)ˣ) (w : {w : InfiniteP
         ((x : InfiniteAdeleRing K) w.1)) :=
   rfl
 
-omit [NumberField K] in
 
 theorem infinitePositive_eq_ker : infinitePositive K = (infiniteSign K).ker := by
   ext x
@@ -159,7 +153,6 @@ instance : (infinitePositive K).FiniteIndex := by
   rw [infinitePositive_eq_ker]
   exact Subgroup.finiteIndex_ker _
 
-variable (K) in
 
 def rayGroup (𝔪 : Ideal (𝓞 K)) : Subgroup (IdeleGroup K) :=
   (diagonal K).range ⊔ (idealLevel 𝔪).map ofFinite ⊔ (infinitePositive K).map ofInfinite
@@ -226,7 +219,6 @@ end IdeleGroup
 
 open IdeleGroup
 
-variable (K) in
 
 abbrev RayClassGroup (𝔪 : Ideal (𝓞 K)) : Type _ := IdeleGroup K ⧸ rayGroup K 𝔪
 

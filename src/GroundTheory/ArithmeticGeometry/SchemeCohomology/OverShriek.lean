@@ -62,7 +62,6 @@ noncomputable def shriekPresheaf : Cᵒᵖ ⥤ AddCommGrpCat.{v} where
       ← op_comp]
     exact shriek_of_eq_of P (by simp) _ _ (by simp) x
 
-variable {P} in
 
 noncomputable def shriekPresheafMap {Q : (Over U)ᵒᵖ ⥤ AddCommGrpCat.{v}} (φ : P ⟶ Q) :
     shriekPresheaf P ⟶ shriekPresheaf Q where
@@ -90,7 +89,6 @@ lemma shriekPresheafMap_app_of {P Q : (Over U)ᵒᵖ ⥤ AddCommGrpCat.{v}} (φ 
 
 end Presheaf
 
-variable (U) in
 
 noncomputable def shriekFunctor : ((Over U)ᵒᵖ ⥤ AddCommGrpCat.{v}) ⥤ (Cᵒᵖ ⥤ AddCommGrpCat.{v}) where
   obj P := shriekPresheaf P
@@ -158,7 +156,6 @@ noncomputable def shriekHomOfRestrict (β : P ⟶ (Over.forget U).op ⋙ Q) :
     refine Eq.trans ?_ (congrArg (Q.map g) (shriekHomOfRestrictApp_of β X s x).symm)
     exact NatTrans.naturality_apply β _ x
 
-variable (U) in
 
 noncomputable def shriekAdjunction :
     shriekFunctor U ⊣ (Functor.whiskeringLeft _ _ AddCommGrpCat.{v}).obj (Over.forget U).op :=

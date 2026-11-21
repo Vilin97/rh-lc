@@ -287,7 +287,6 @@ theorem affineCombination_squareZero_lifts_cocycle {R R₀ : Type} [CommRing R] 
 
 end GlobalTheory.SecGlue.Red
 
-open GlobalTheory.SecGlue GlobalTheory.SecGlue.Red IsLocalization.Away in
 
 theorem GlobalTheory.SecGlue.exists_pow_cocycle : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (π : R →+* R₀), Function.Surjective π → RingHom.ker π ^ 2 = ⊥ →
     ∀ (X : Over (Sp R)), Smooth X.hom → ∀ g₀ : Sp R₀ ⟶ X.left, g₀ ≫ X.hom = spMap π →

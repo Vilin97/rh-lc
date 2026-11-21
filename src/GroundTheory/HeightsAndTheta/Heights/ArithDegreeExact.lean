@@ -55,7 +55,6 @@ theorem mem_span_fibreVec {ι : Type*} [Fintype ι] {s : ι → E} (hs : LinearI
 
 end Span
 
-omit [NumberField K] in
 
 theorem lTensor_complex_smul (σ : K →+* ℂ) {M N : Type*} [AddCommGroup M] [Module (𝓞 K) M]
     [AddCommGroup N] [Module (𝓞 K) N] (f : M →ₗ[𝓞 K] N) (c : ℂ) (x : Fibre σ M) :
@@ -110,7 +109,6 @@ variable {E' E E'' : HermitianBundle K} (X : HermitianExtension E' E E'')
 
 theorem proj_incl (y : E'.carrier) : X.proj (X.incl y) = 0 := X.exact.apply_apply_eq_zero y
 
-include X in
 
 theorem finrank_eq : Module.finrank (𝓞 K) E.carrier =
     Module.finrank (𝓞 K) E'.carrier + Module.finrank (𝓞 K) E''.carrier := by
@@ -295,7 +293,6 @@ theorem gramDet_sumElim (σ : K →+* ℂ) {s' : m → E'.carrier} {s'' : n → 
   rw [hfam, det_gram_sumElim a b q _ hq horth, hga, hgq, Complex.mul_re, det_gram_im,
     det_gram_im, mul_zero, sub_zero]
 
-include X in
 
 theorem arithDegree_eq_add : E.arithDegree = E'.arithDegree + E''.arithDegree := by
   obtain ⟨s', hs'⟩ := exists_linearIndependent_fin (K := K) (E := E'.carrier)

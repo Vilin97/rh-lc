@@ -43,7 +43,6 @@ theorem sec_etale [IsFinite f] [Etale f] {U : X.Opens} (hU : IsAffineOpen U) :
 
 variable [IsFinite f] [Etale f]
 
-variable (s s') in
 
 def secTrace {U : X.Opens} (hU : IsAffineOpen U) : Sec s' (f ⁻¹ᵁ U) →+ Sec s U :=
   letI := secAlg s s' f U
@@ -248,7 +247,6 @@ theorem secTrace_appSec_of_bijective {U : X.Opens} (hU : IsAffineOpen U)
   haveI := projective_of_etale (Sec s U) (Sec s' (f ⁻¹ᵁ U))
   exact algTrace_algebraMap_of_bijective h b
 
-variable (s) in
 
 theorem secTrace_id {U : X.Opens} (hU : IsAffineOpen U) (b : Sec s U) :
     secTrace (f := 𝟙 X) s s hU b = b := by
@@ -260,7 +258,6 @@ theorem secTrace_id {U : X.Opens} (hU : IsAffineOpen U) (b : Sec s U) :
   conv_lhs => rw [← e]
   exact secTrace_appSec_of_bijective hU h b
 
-variable (s) in
 
 theorem omegaTrace_id (j : ℕ) :
     omegaTrace (f := 𝟙 X) (Category.id_comp s) j =
@@ -272,7 +269,6 @@ theorem omegaTrace_id (j : ℕ) :
   erw [secTrace_id s hU, formPull_id]
   rfl
 
-variable (s) in
 
 theorem hodgeTrace_id (j q : ℕ) (x : hodgeH s j q) :
     hodgeTrace (f := 𝟙 X) (Category.id_comp s) j q x = x := by

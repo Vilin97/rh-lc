@@ -27,7 +27,6 @@ lemma IsInvariant.iSup {ι : Sort*} {V : ι → Submodule ℂ H} (h : ∀ i, π.
     (fun i x hx => Submodule.mem_iSup_of_mem i (h i g x hx)) (by simp)
     (fun x y hx hy => by simpa using add_mem hx hy)
 
-variable (π) in
 
 section decomposition
 

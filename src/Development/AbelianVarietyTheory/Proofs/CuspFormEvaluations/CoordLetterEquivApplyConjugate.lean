@@ -120,7 +120,6 @@ section Rows
 
 variable {ι : Type*} {σ : ι → ι} {Ψ : ι → Prop} {dim : ι → ℕ} {p q : ℕ}
 
-open Classical in
 
 noncomputable def halfRowEquiv (hσ : Function.Involutive σ) (hΨ : ∀ τ, ¬ Ψ τ ↔ Ψ (σ τ))
     (hp : ∀ τ, Ψ τ → dim τ = p) (hq : ∀ τ, Ψ τ → dim (σ τ) = q) :
@@ -155,9 +154,7 @@ section Host
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-omit [NumberField E] [IsCMField E] in
 
-omit [NumberField E] [IsCMField E] in
 
 @[simp] theorem conjEmb_conjEmb (τ : E →+* ℂ) : Tor.conjEmb (Tor.conjEmb τ) = τ :=
   ComplexEmbedding.involutive_conjugate E τ

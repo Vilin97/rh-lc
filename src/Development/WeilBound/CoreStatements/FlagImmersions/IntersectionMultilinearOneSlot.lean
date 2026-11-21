@@ -28,7 +28,6 @@ theorem hermLine_ext {A B : HermLine ι} (ha : A.a = B.a) (hh : A.h = B.h) : A =
   subst ha hh
   rfl
 
-open Classical in
 
 noncomputable def indLine (ι : K → Type) [∀ k, Fintype (ι k)] : HermLine ι where
   a := 0

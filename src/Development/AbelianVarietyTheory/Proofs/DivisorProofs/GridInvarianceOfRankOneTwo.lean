@@ -260,7 +260,6 @@ lemma fill (hD : GlRel N D) (x : W) (hZ : ∀ c < N, D c c x = 0) (hup : ∀ k, 
 
 end GlobalTheory.LeviCut.GridProof
 
-open GlobalTheory.LeviCut.GridProof in
 
 theorem GlobalTheory.LeviCut.gridInv_of_rankOne_rankTwo (h1 : RankOne) (h2 : RankTwo) : GridInv := by
   intro W _ _ a b K D hD hB T hT

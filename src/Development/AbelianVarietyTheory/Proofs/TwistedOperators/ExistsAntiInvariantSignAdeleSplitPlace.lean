@@ -76,7 +76,6 @@ theorem liftV_mul_liftV (v : Pl F) (a b : Fv F v) :
 
 end GlobalTheory.SplitSign
 
-open GlobalTheory.SplitSign in
 
 theorem GlobalTheory.SplitSign.exists_split_sign : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E), B.IsGood σ →
     ∀ (v : Pl F), Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v → ∃ c : AE F E, cA σ c = -c ∧ At (evFin F v) c ∧

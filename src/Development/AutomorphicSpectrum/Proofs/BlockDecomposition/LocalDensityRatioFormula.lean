@@ -67,7 +67,6 @@ theorem summable_ge (v : HeightOneSpectrum (𝓞 F)) (e : ℝ) (s : Fv F v) :
   by_contra h
   exact hi (if_neg (hN i (not_le.1 h)))
 
-open Classical in
 
 theorem rv_form {v : HeightOneSpectrum (𝓞 F)} (s : Fv F v) :
     (¬ Ge v 0 s ∧ ∀ e, rv v e s = 0) ∨
@@ -207,7 +206,6 @@ theorem ge_pow {v : HeightOneSpectrum (𝓞 F)} {u : (Fv F v)ˣ} (hu : Valued.v 
   | succ k ih =>
     rw [ge_shift hu, ih, pow_succ, Units.val_mul, mul_assoc]
 
-open Classical in
 
 theorem rv_one_series {v : HeightOneSpectrum (𝓞 F)} {u : (Fv F v)ˣ} (hu : Valued.v (u : Fv F v) = WithZero.exp (1 : ℤ))
     (s : Fv F v) : rv v 1 s = ∑' k : ℕ, rv v 0 ((((u ^ k : (Fv F v)ˣ)) : Fv F v) * s) := by
@@ -499,7 +497,6 @@ section Limit
 variable {S : Finset (HeightOneSpectrum (𝓞 F))} {G : Ainf F → ℝ} {g : ∀ v : HeightOneSpectrum (𝓞 F), Fv F v → ℝ}
   {e : HeightOneSpectrum (𝓞 F) → ℝ}
 
-open Classical in
 
 def wT (e : HeightOneSpectrum (𝓞 F) → ℝ) (S : Finset (HeightOneSpectrum (𝓞 F))) (T : Finset (Off S))
     (v : HeightOneSpectrum (𝓞 F)) : Fv F v → ℝ :=

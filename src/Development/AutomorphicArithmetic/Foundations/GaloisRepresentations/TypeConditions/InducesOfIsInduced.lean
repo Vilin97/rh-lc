@@ -44,6 +44,5 @@ theorem induces_of_isInduced {l : ℕ} [Fact l.Prime] {E Ω : Type} [Field E] [N
   rw [hτ, norm_algHom]
   exact (hj.valuation_lt_one_iff _).symm.trans (h x)
 
-set_option maxHeartbeats 2000000 in
 
 end UpperTheory.GalS.Prod

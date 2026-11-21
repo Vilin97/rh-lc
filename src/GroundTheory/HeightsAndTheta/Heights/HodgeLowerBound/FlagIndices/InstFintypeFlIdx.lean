@@ -18,7 +18,6 @@ section FS
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-variable (ι) in
 
 def fsHerm (a : K → ℤ) : HermLine ι where
   a := a

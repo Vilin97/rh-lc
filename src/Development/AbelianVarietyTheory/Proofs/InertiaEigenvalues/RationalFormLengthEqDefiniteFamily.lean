@@ -32,7 +32,6 @@ theorem length_quot_map {R M M' : Type} [CommRing R] [AddCommGroup M] [Module R 
     subst this
     exact ⟨⟨x, hx'⟩, hxQ, rfl⟩
 
-open scoped Formalism.L2.Col in
 
 theorem lenUW_map {K : Type} [Field K] [NumberField K] {V V' : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] [AddCommGroup V'] [Module K V'] [Module (𝓞 K) V'] [IsScalarTower (𝓞 K) K V']

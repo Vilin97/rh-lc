@@ -35,7 +35,6 @@ def kapZ (p : ℕ) {n' : ℕ} (m : ℕ) (TT : Finset (Fin n')) (aT bT : Fin n' �
 def zTen (K : Type) [Field K] (p : ℕ) {n' : ℕ} (m : ℕ) (TT : Finset (Fin n')) (aT bT : Fin n' → ℕ) : K :=
   (p : K) ^ kapZ p m TT aT bT / ∏ x : TT × Bool, ((hhDegs TT aT bT x).factorial : K)
 
-open Classical in
 
 def FormAt (C0 CYb Cde Ck CD Cb CE1 CE2 Cm Cc : ℝ) : Prop :=
   ∀ (X : Loc) [NeZero X.m] (W Qq O Kf : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [Field Qq]

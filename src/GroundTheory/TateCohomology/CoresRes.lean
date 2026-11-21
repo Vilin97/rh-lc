@@ -32,7 +32,6 @@ variable (S : Subgroup G) [S.FiniteIndex] [DecidableRel (QuotientGroup.rightRel 
 
 attribute [local instance] Subgroup.fintypeQuotientOfFiniteIndex
 
-omit [S.FiniteIndex] [DecidableRel (QuotientGroup.rightRel S)] in
 
 theorem indResAdjunction_counit_app_hom_mk (A : Rep.{u} k G) (g : G) (a : A) :
     ((indResAdjunction k S.subtype).counit.app A).hom
@@ -67,7 +66,6 @@ section Tate
 
 variable [Fintype G] (S : Subgroup G) [Fintype S]
 
-open scoped Classical in
 
 theorem tateIndIso_inv_eq (B : Rep.{u} k S) (n : ℤ) :
     (tateIndIso S B n).inv =

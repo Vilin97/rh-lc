@@ -23,11 +23,9 @@ def IsDer {n : ℕ} (ε : Fin n → Bool) {H : Type} [NormedAddCommGroup H] [Inn
 def at1 {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (G : Arr V n 1) (a b : Fin n) : V :=
   arrOf V n 1 G (fun _ => (a, b))
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 namespace StdDer
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end StdDer
 

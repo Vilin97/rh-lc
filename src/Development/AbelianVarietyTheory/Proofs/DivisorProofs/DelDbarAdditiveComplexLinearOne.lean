@@ -42,7 +42,6 @@ theorem loc_one_eventuallyEq (x : A.Pt) : A.loc 1 x.1.1 =ᶠ[𝓝 x.crd] fun _ =
 
 end GlobalTheory.CxForm.GlobLin
 
-open GlobalTheory.CxForm.GlobLin in
 
 theorem GlobalTheory.CxForm.HolAtlas.del_dbar_linear : ∀ (M : Type) [TopologicalSpace M] (n : ℕ) (A : HolAtlas M n),
     (A.del 1 = 0 ∧ A.dbar 1 = 0) ∧

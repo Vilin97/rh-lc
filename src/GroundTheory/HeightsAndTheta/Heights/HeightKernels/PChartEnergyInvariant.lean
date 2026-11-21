@@ -131,7 +131,6 @@ theorem invariantUnder_of_row_one (hS : ChartEnergySwapInvariant.Statement)
 
 end ChartEnergyInvariance
 
-open ChartEnergyInvariance in
 
 theorem ChartEnergyLinearInvariant.proof (hS : ChartEnergySwapInvariant.Statement) :
     ChartEnergyLinearInvariant.Statement := by

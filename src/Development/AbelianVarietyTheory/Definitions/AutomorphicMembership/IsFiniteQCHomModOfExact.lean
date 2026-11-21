@@ -22,7 +22,6 @@ namespace GlobalTheory.PtNorm
 
 variable {X : Scheme.{0}} {F G : X.Modules} {U : X.Opens} {p : ℕ} {C : SCF p} (z : Sp (intO C.S) ⟶ X) (hp : p ≠ 0)
 
-include hp in
 
 section Coherent
 
@@ -109,7 +108,6 @@ theorem isFiniteQC_homMod_cokernel [IsLocallyNoetherian X] {r r' : ℕ} (hQ : Is
   isFiniteQC_homMod_of_exact hQ hP φ (cokernel.π φ) (fun _ hT => QCoh.exact_cokernel_π_app φ hT)
     (fun _ hT => QCoh.surjective_cokernel_π_app φ hT) (cokernel.condition φ)
 
-variable (F) in
 
 end Coherent
 

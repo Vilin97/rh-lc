@@ -28,7 +28,6 @@ theorem fac_self (k : Fin 2) (t : Tup D k) (v : D.nd.PlG k) : fac D k t ⟨k, v�
 theorem fac_ne (k : Fin 2) (t : Tup D k) (kv : Σ k : Fin 2, D.nd.PlG k) (h : kv.1 ≠ k) : fac D k t kv = 1 := by
   simp [fac, h]
 
-open Classical in
 
 theorem prod_fac_coeff (k : Fin 2) (t : Tup D k) (g : G0g D.nd) :
     ∏ kv : (Σ k : Fin 2, D.nd.PlG k), (fac D k t kv).coeff (g kv) =

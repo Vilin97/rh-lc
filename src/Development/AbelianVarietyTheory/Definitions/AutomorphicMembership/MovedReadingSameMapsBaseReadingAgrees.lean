@@ -23,8 +23,6 @@ variable (D : D7) {G : Type} [Group G] [Fintype G] {Pl0 T : Type} (A : FamIn D.w
   (P0 : Subgroup G) (ψ0 : P0 →* D.what₂.LLˣ) (P1 : Subgroup G) (ψ1 : P1 →* D.what₂.LLˣ) (X0 : BaseLevelRowSide D) (tp : D.what₂.Tup → T)
   (eG : G ≃* G0g D.nd)
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure AllT : Type where
   jA : ∀ μ, (Fin (rDim D A P1 ψ1 (tp μ)) → D.what₂.LL) →ₛₗ[D.what₂.embLL] D.what₂.Amb μ
@@ -89,9 +87,6 @@ variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B}
 abbrev famAll {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl} {p0 : BaseLevelRowSide (w.D Z)} (t : RowsT K w Z Wt p0) :=
   (R3.famR (w.st Z) w.I t.hX Set.univ t.r.z.Xg t.r.z.tr).A
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 1000000 in
 
 structure RXs {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl} {p0 : BaseLevelRowSide (w.D Z)} (t : RowsT K w Z Wt p0) : Type 1 where
   all : AllT (w.st Z).toD7 (famAll t) (R3.lev0 w.I) (R3.chr0 w.I) (R3.lev1 w.I) (R3.chr1 w.I) p0 (tAll w.I)

@@ -23,7 +23,6 @@ theorem val_inv_mul_le_one (a : kˣ) (z : k) :
 
 variable [MeasurableSpace k] [BorelSpace k]
 
-open Classical in
 
 theorem opE_step (ν : Measure k) (hν : IsUnitVol ν) {s κ : ℕ} (S : SymData k s κ) (t : Type) [Fintype t]
     [DecidableEq t] (hP : S.Pattern t) (j c : ℕ) (H : j + c = s) (q : Fin c) (hq : q.val + 1 ≤ S.ρ)

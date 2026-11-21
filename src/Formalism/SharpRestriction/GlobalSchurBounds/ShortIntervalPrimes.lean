@@ -130,7 +130,6 @@ theorem zero_symm {N : ℕ} [NeZero N] {χ : DirichletCharacter ℂ N} (hχ : χ
     hprim.completedLFunction_one_sub ρ, inv_inv, hc]
   simp
 
-open Classical in
 
 def GoodAll (Q : ℝ) (f : ℕ → ℂ) (M : ℕ) : Prop :=
   ∀ (N : ℕ) [NeZero N] (χ : DirichletCharacter ℂ N), Induces χ f M → GoodFor Q χ

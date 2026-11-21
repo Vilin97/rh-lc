@@ -27,7 +27,6 @@ open scoped CategoryTheory.Obj
 
 namespace GlobalTheory
 
-open Geo.Tor in
 
 theorem isSymmetric_of_symmetry_generator {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] (L : RigLB G)
     (sy : LB.Gen (LB.LinComb L.L (K := Fin 2) ![(ι[G]).left, 𝟙 G.left] ![1, -1])) (hsy : sy.IsGen)

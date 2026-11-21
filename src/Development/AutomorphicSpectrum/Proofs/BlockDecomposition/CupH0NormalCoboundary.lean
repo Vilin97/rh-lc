@@ -259,7 +259,6 @@ theorem lifts_sub (Λ Λ' : LiftsT q) (x : Γ(X, ⊤)) (T : Thick (smFun X q)) :
   rw [fil_one]
   exact Ideal.Quotient.eq.1 ((Λ'.hv T x).trans (Λ.hv T x).symm)
 
-variable (q) in
 
 def liftsTopBot : LiftsT q where
   v T g := Function.surjInv Ideal.Quotient.mk_surjective
@@ -274,7 +273,6 @@ theorem form_eq (Λ : LiftsT q) {a : ℕ} (g₀ : Γ(X, ⊤)) (g : Fin a → Γ(
 
 end Conc
 
-open CrystallineSemistableComparison.HT CrystallineSemistableComparison.Om.L2 in
 
 theorem main : ∀ {K : Type} [CommRing K] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K)) {a : ℕ} (g₀ : Γ(X, ⊤)) (g : Fin a → Γ(X, ⊤)),
     ∃ c : CrystallineSemistableComparison.HT.Hdg q a a, CrystallineSemistableComparison.Om.L2.IsFormT q g₀ g c := by

@@ -30,7 +30,6 @@ theorem hom_ext {A : Type} [CommRing A] {f g : AddMonoidAlgebra L ℤ →+* A}
     (g := g.toMonoidHom.comp (AddMonoidAlgebra.of L ℤ)) h₁
   exact AddMonoidAlgebra.ringHom_ext h₀ fun n ↦ DFunLike.congr_fun this (Multiplicative.ofAdd n)
 
-variable (R) in
 
 noncomputable def var : (AddMonoidAlgebra R ℤ)ˣ where
   val := single 1 1
@@ -38,7 +37,6 @@ noncomputable def var : (AddMonoidAlgebra R ℤ)ˣ where
   val_inv := by simp [single_mul_single, one_def]
   inv_val := by simp [single_mul_single, one_def]
 
-variable (R) in
 
 noncomputable def svar : (LaurentSeries R)ˣ where
   val := HahnSeries.single 1 1
@@ -54,11 +52,9 @@ theorem svar_zpow (n : ℤ) : ((svar R ^ n : (LaurentSeries R)ˣ) : LaurentSerie
   | pred n ih =>
     rw [zpow_sub_one, Units.val_mul, ih]; simp [svar, HahnSeries.single_mul_single, sub_eq_add_neg]
 
-variable (R) in
 
 noncomputable def atZero : AddMonoidAlgebra R ℤ →+* LaurentSeries R := evalAt HahnSeries.C (svar R)
 
-variable (R) in
 
 noncomputable def atInf : AddMonoidAlgebra R ℤ →+* LaurentSeries R := evalAt HahnSeries.C (svar R)⁻¹
 

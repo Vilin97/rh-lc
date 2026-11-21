@@ -102,7 +102,6 @@ lemma relIndex_ideal_smul {R U : Type*} [CommRing R] [IsDedekindDomain R] [AddCo
     h2', Submodule.map_toAddSubgroup, Submodule.map_toAddSubgroup]
   exact AddSubgroup.relIndex_map_map_of_injective _ _ hφ
 
-open TensorProduct in
 
 end DualLatticeIndexBis
 
@@ -235,7 +234,6 @@ end DualLatticeIndexBis
 
 namespace DualLatticeIndexBis
 
-open scoped Pointwise in
 
 lemma exists_codiff (E : Type) [Field E] [NumberField E] [StarRing E] :
     ∃ (δ : 𝓞 E) (K : Ideal (𝓞 E)), δ ≠ 0 ∧ K ≠ ⊥ ∧ ∀ z : E,

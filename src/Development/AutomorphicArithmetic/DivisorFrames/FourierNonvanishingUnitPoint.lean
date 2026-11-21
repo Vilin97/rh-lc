@@ -32,4 +32,3 @@ private theorem continuous_FT {ι : Type} [Fintype ι] (φ : (ι → ℂ) → �
   · exact Filter.Eventually.of_forall fun s =>
       continuous_const.mul (continuous_ec.comp (continuous_const.mul continuous_id))
 
-open FourierTransform in

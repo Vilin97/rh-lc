@@ -125,9 +125,7 @@ variable {ι : Type*}
 
 end SlopeTestRemainingChoices
 
-open Classical in
 
-open Classical in
 
 theorem scaleOff_comp_self (x : κ → Ω) (e : Fin (D + 1) → κ) (m : ℕ) : scaleOff e m x ∘ e = x ∘ e := by
 

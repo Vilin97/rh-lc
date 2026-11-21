@@ -16,8 +16,6 @@ open scoped CategoryTheory.Obj UpperHalfPlane
 
 namespace GlobalTheory
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj UpperHalfPlane in
 
 theorem _root_.GlobalTheory.cmCurve_closed : _root_.GlobalTheory.CMCurve :=
   _root_.GlobalTheory.cmCurve_of_uniformisation _root_.GlobalTheory.thetaUnifAV_all

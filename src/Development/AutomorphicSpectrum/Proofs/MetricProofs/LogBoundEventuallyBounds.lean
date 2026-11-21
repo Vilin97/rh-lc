@@ -185,7 +185,6 @@ theorem logBound_inv_diffOn {n k : ℕ} {S : Set (Fin n → ℂ)} (A : (Fin n �
 
 end LogBoundAux
 
-open scoped MatrixOrder in
 
 theorem logBound_subframe : ∀ (n a g m : ℕ) (Λ : Type) [AddCommGroup Λ] (L : Flat.LogPeriods n a g Λ) (u : Fin m → (Fin n → ℂ) → Fin g → ℂ) (Γ : (Fin n → ℂ) → Matrix (Fin m) (Fin m) ℂ), (∀ i, DifferentiableOn ℂ (u i) (Metric.ball 0 1)) → LinearIndependent ℂ (fun i => u i 0) → (∀ z i j, Γ z i j = Real.pi * (u j z ⬝ᵥ L.H z *ᵥ star (u i z))) → ∃ ρ c C : ℝ, 0 < ρ ∧ 0 < c ∧ 0 < C ∧ ∀ z ∈ Flat.punct n a ρ, ((Γ z)⁻¹ - (c : ℂ) • (1 : Matrix (Fin m) (Fin m) ℂ)).PosSemidef ∧ (((C * (Real.exp 1 + ∑ i : Fin n, if (i : ℕ) < a then Real.log (1 / ‖z i‖ ^ 2) else 0) : ℝ) : ℂ) • (1 : Matrix (Fin m) (Fin m) ℂ) - (Γ z)⁻¹).PosSemidef ∧ ∀ p q, ‖fderiv ℝ (fun t => Γ t p q) z‖ ≤ C * Real.exp ((Real.exp 1 + ∑ i : Fin n, if (i : ℕ) < a then Real.log (1 / ‖z i‖ ^ 2) else 0) / 2) := by
   intro n a g m Λ _ L u Γ hu hli hΓ

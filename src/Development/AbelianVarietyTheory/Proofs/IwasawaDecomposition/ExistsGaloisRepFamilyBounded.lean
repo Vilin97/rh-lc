@@ -170,12 +170,10 @@ variable (hA : GlobalTheory.Published.GlobalArtinReciprocity) (D : D7) (cf : Cha
 def GoodOcc (σ : D.what₂.FT) : Prop :=
   (∃ k, 1 ≤ k ∧ k ≤ D.R.m ∧ D.what₂.isot k σ ≠ ⊥) ∧ D.nd.goodRow σ
 
-open Classical in
 
 def pickL (l : ℕ) [Fact l.Prime] (j : ↥D.LL0 →+* PadicAlgCl l) (σ : D.what₂.FT) : Loc.FinExt l :=
   if h : GoodOcc D σ then (core hA D cf jE A hG hR hC l j σ h.1 h.2).choose else ⟨⊥, inferInstance⟩
 
-open Classical in
 
 def starRestrictSubfield (hstar : ∀ x : D.LL0, star (x : D.what₂.LL) ∈ D.LL0) : ↥D.LL0 →+* ↥D.LL0 where
   toFun x := ⟨star (x : D.what₂.LL), hstar x⟩
@@ -225,7 +223,5 @@ theorem kap_emb0 (Sp : RingSpec D cf b0 b1 Sx T) (i : T.Tw) (x : ↥D.LL0) : kap
 
 end HidaSetting
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.HeightCounting.RowRhoInt

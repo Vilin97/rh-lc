@@ -110,7 +110,6 @@ theorem rmul_mem_dom (X : Data E r) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (b : F
   · have : ∀ c, mat b τ a (f c) = 0 := fun c => h0 τ a (f c) c.2 ha
     simp [this]
 
-open GlobalTheory.TrueCx in
 
 theorem domPt_rmul_block (X : Data E r) {j : ℕ} (hj : j ≤ r) {Tau : Type} (ι : Tau → X.Ψ) (x b : Frame X.Ψ r)
     (hb : ∀ τ, (mat b τ).det ≠ 0) (h0 : ∀ τ (a c : Fin r), (c : ℕ) < r - j → ¬ (a : ℕ) < r - j → b τ a c = 0) :
@@ -223,7 +222,6 @@ theorem exists_frame_mulVec (X : Data E r) {p : ℕ} (hr : r = p + X.p0) (ρ : (
     · rw [hK0 τ a c (by simp [ha, hc]), zero_mul, zero_mul]
     · rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_adapted {H : Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ}
     {g : ℕ} (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ))

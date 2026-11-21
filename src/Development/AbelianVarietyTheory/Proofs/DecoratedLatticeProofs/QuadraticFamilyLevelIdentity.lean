@@ -194,6 +194,5 @@ theorem conj_list_prod {G ι : Type} [Group G] (b : G) (h : ι → G) (l : List 
   | nil => simp
   | cons i l ih => rw [List.map_cons, List.map_cons, List.prod_cons, List.prod_cons, ← ih]; group
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.RowLevel

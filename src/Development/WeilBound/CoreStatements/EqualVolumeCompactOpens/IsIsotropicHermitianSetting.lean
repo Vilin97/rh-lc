@@ -28,7 +28,6 @@ def IsCO (c : E ≃ₐ[F] E) (J : Matrix (Fin N) (Fin N) E) (K : Subgroup (GL (F
   K ≤ SUA c J ∧ IsCompact (K : Set (GL (Fin N) (Adf F E))) ∧
     ∃ O : Set (GL (Fin N) (Adf F E)), IsOpen O ∧ O ∩ (SUA c J : Set (GL (Fin N) (Adf F E))) = K
 
-variable (F) in
 
 def diagGL : GL (Fin N) E →* GL (Fin N) (Adf F E) := Matrix.GeneralLinearGroup.map (inclAd F E)
 

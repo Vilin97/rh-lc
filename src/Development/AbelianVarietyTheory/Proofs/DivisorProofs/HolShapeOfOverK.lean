@@ -34,7 +34,6 @@ open Matrix Formalism.MainNotions.S GlobalTheory.DefLift
 
 variable {D : D7}
 
-open Classical in
 
 theorem eq_on_low {θ : InfFam D} {V : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel V S} (h1 : LowSm M)
     (h2 : GlobalTheory.IndefiniteRowSideFullHecke.HolomorphicLowestType.LowIrr M) {J : Set (GA D V)} {χ : GA D V → ℂ} {T : MMap M} (hT : T ∈ Mult θ M J χ)
@@ -150,7 +149,6 @@ theorem proj_apply (R : RealDat D A Ks) (hg : R.models_gW) (i : Fin D.R.m) (σ :
     MultilinearMap.smul_apply, hg i σ, postOn_apply]
   rfl
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.GalLift.ProjLift
 

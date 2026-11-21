@@ -20,7 +20,6 @@ section Cone
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
 
-omit [DecidableEq K] in
 
 theorem primeCompl_map_le_nonZeroDivisors (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] [W.IsPrime]
     (hPW : P ≤ W) :
@@ -34,7 +33,6 @@ def coneLocal (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F
     Subalgebra (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) :=
   Localization.subalgebra.ofField _ _ (primeCompl_map_le_nonZeroDivisors P W hPW)
 
-omit [DecidableEq K] in
 
 instance coneLocal.isLocalization (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] [W.IsPrime] (hPW : P ≤ W) :
     IsLocalization (W.primeCompl.map (Ideal.Quotient.mk P)) (coneLocal P W hPW) :=

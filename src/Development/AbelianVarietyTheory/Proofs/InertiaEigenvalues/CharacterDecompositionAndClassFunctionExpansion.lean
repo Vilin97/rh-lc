@@ -257,7 +257,6 @@ theorem char_norm_one {G : Type} [Group G] [Fintype G] (χ : G → ℂ) (hχ : I
 
 end GlobalTheory.CharDec
 
-open GlobalTheory.CharDec in
 
 theorem GlobalTheory.charDec : ∀ (G : Type) [Group G] [Fintype G] (χ : G → ℂ), (IsChar χ → ∃ L : List (G → ℂ), (∀ ρ ∈ L, IsIrr ρ) ∧ χ = L.sum) ∧ (IsClass χ → χ = ∑ᶠ ρ ∈ {ρ : G → ℂ | IsIrr ρ}, ip χ ρ • ρ) ∧ (IsChar χ → IsClass χ) ∧ (IsChar χ → ip χ χ = 1 → IsIrr χ) ∧ (∀ L : List (G → ℂ), (∀ ρ ∈ L, IsChar ρ) → IsChar L.sum) := by
   intro G _ _ χ

@@ -25,15 +25,10 @@ section Linear
 
 variable {C M : Type} [NormedField C] [IsUltrametricDist C] [AddCommGroup M] [Module C M] {m : ℕ}
 
-variable (C) in
 
-omit [IsUltrametricDist C] in
 
-omit [IsUltrametricDist C] in
 
-omit [IsUltrametricDist C] in
 
-omit [IsUltrametricDist C] in
 
 end Linear
 
@@ -52,11 +47,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 variable {y}
 
-variable (y) in
 
-variable (y) in
 
-variable (y) in
 
 end Free
 
@@ -64,6 +56,5 @@ variable {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} {κ : Lv A} {p : ℕ} 
 
 variable {ct}
 
-variable (ct) in
 
 end GlobalTheory.LocM.Frm

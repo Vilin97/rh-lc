@@ -14,7 +14,6 @@ namespace GlobalTheory.Mem.Col2.Splice
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [StarRing E]
 
-omit [StarRing E] in
 
 theorem hasRes_of_mul {P : HeightOneSpectrum (𝓞 E)} {s : 𝓞 E} (hs : s ∉ P.asIdeal) {z : P.adicCompletion E}
     {c : 𝓞 E ⧸ P.asIdeal}
@@ -67,13 +66,11 @@ theorem adAt_pullV_osmul {n : ℕ} (g : GL (Fin n) (AfE F E)) (w : HeightOneSpec
   have e' : pullV g (s • x) i = Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F) (algebraMap (𝓞 E) E s) * pullV g x i := e
   rw [e', map_mul, adAt_inclE]
 
-omit [StarRing E] in
 
 theorem mat_ext {n : ℕ} {M N : Matrix (Fin n) (Fin n) (AfE F E)} (h : ∀ w, M.map (adAt F w) = N.map (adAt F w)) : M = N := by
   ext i j
   exact PtExist.ad_ext fun w => congrFun (congrFun (h w) i) j
 
-omit [StarRing E] in
 
 theorem adAt_pullV_congr {n : ℕ} {g k : GL (Fin n) (AfE F E)} {w : HeightOneSpectrum (𝓞 E)}
     (hw : ((g⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)).map (adAt F w) =
@@ -131,7 +128,6 @@ def splice {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) (A B : Matrix (Fin n) (Fin
   Matrix.of fun i j => (1 - PtExist.idem F P - σ (PtExist.idem F P)) * A i j +
     (PtExist.idem F P + σ (PtExist.idem F P)) * B i j
 
-open Classical in
 
 theorem map_splice {n : ℕ} {P : HeightOneSpectrum (𝓞 E)} (hP : conjPrime₂ P ≠ P) (A B : Matrix (Fin n) (Fin n) (AfE F E))
     (w : HeightOneSpectrum (𝓞 E)) :

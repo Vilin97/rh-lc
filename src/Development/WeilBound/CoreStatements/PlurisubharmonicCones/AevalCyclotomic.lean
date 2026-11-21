@@ -165,7 +165,6 @@ theorem val_mem_eig {s : CMType H ⊕ CMType H} {σ : 𝓞 E →+* R} (hσ : ∀
   rw [mem_eigSp.1 he a] at h1
   exact MC.inj (h1.unique 𝔐.tie.gen h2)
 
-include hact in
 
 theorem off_S (σ : CMType H ⊕ CMType H → (𝓞 E →+* R)) (hσ : ∀ s a, ValAt 𝔐.ξ z (𝔐.emb s a) (σ s a))
     (hinj : Function.Injective fun s => (algebraMap R C).comp (σ s)) (hS : ∀ p ∈ S, IsUnit (p : R))
@@ -230,7 +229,6 @@ theorem off_S (σ : CMType H ⊕ CMType H → (𝓞 E →+* R)) (hσ : ∀ s a, 
   obtain ⟨x', h1, h2⟩ := key e (hs1 ▸ he)
   rwa [MC.inj (hw.unique hξ h2)]
 
-include hact in
 
 theorem on_S {p : ℕ} (hpS : p ∈ S) (κ : Ω) (hfree : HT.HTFree 𝔐 p) (hsand : HT.Sandwich 𝔐 p κ)
     (v : Valuation C NNReal) (hv : v.Integers R) (hvp : v (p : C) < 1) (s : CMType H ⊕ CMType H)

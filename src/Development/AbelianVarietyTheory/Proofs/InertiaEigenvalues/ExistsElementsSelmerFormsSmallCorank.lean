@@ -200,7 +200,6 @@ def Body (cj : Γ →* Γ) (S : Submodule K (H1 ρ)) (S' : Submodule K (H1 ρ'))
     (∀ a (y : Z1 ρ'), (Submodule.Quotient.mk y : H1 ρ') ∈ S' → ∑ b, c b * fm cj (x a) y (φ b) = 0) →
     ¬ LinearIndependent K (fun a => (Submodule.Quotient.mk (x a) : H1 ρ))
 
-omit [IsTopologicalGroup Γ] in
 
 theorem Body.succ {cj : Γ →* Γ} {S : Submodule K (H1 ρ)} {S' : Submodule K (H1 ρ')} {R : ℕ} {φ : Fin R → Γ} {e : ℕ}
     (h : Body cj S S' φ e) : Body cj S S' φ (e + 1) := by
@@ -413,7 +412,6 @@ theorem resTriv_red (hK : IsRes i K) {ρ : GE N →* GL (Fin D.R.r) (X.O0 i)} (h
   · refine LinearMap.ext fun v => ?_
     rw [red_apply, hρ, h2, Matrix.one_mulVec]; rfl
 
-omit [TopologicalSpace K] [DiscreteTopology K] in
 
 theorem nu_pos_of_resIso (hsd : SelfDual i s) (h : ResIso i s K) : 0 < nu X i := by
   obtain ⟨A₀, hA₀⟩ := hsd

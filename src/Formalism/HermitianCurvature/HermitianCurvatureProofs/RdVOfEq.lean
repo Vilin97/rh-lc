@@ -15,7 +15,6 @@ open Formalism.FourierDecayAlt Formalism.REAL Formalism.QuantumDeterminants Form
 
 variable {k r : ℕ}
 
-open Formalism.FourierDecayAlt.Q.QRR in
 
 theorem rdV_of_eq {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] (z' : Fin (2 * r + k + 1) → ℂ)
     (hz : inWb k r z') (Φ : Q.Mx k r → E) (g : Q.Mx k r)

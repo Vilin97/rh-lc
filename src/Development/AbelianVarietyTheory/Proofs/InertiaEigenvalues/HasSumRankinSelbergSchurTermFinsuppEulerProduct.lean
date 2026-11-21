@@ -40,7 +40,6 @@ theorem rsTerm_partVec (q : ℕ) {n : ℕ} (α β : Fin n → ℂ) (x : ℝ) (l 
   rw [rsTerm, if_pos (partVec_valid l)]
   simp [partVec]
 
-open Classical in
 
 def sqTerm (q : ℕ) {n : ℕ} (α : Fin n → ℂ) (x : ℝ) (v : Fin n → ℤ) : ℝ :=
   if (∀ i, 0 ≤ v i) ∧ Antitone v then

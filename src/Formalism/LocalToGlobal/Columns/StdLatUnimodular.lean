@@ -97,15 +97,12 @@ structure Deco.Ok (d : Deco E n ST SG) : Prop where
   be_surj : ∀ (w : SG) (c : Fin n → 𝓞 E ⧸ w.1.asIdeal), ∃ x ∈ d.N, d.be w x = c
   be_ker : ∀ (w : SG), ∀ x ∈ d.N, d.be w x = 0 → x ∈ w.1.asIdeal • d.N
 
-variable (E n ST SG) in
 
 abbrev DecoSet : Type := {d : Deco E n ST SG // d.Ok}
 
-variable (E n SG) in
 
 abbrev GLG : Type := ∀ w : SG, GL (Fin n) (𝓞 E ⧸ w.1.asIdeal)
 
-variable (E ST) in
 
 abbrev DiaG : Type := ∀ P : ST, (𝓞 E ⧸ P.1.asIdeal)ˣ
 
@@ -127,11 +124,9 @@ def Deco.L (d : Deco E n ST SG) : Submodule (𝓞 E) (Sp E n) :=
 
 def Deco.Lsh (d : Deco E n ST SG) : Submodule (𝓞 E) (Sp E n) := dual (hStd E n) d.L
 
-variable (E n) in
 
 def stdLat : Submodule (𝓞 E) (Sp E n) := Submodule.pi Set.univ fun _ => (1 : Submodule (𝓞 E) E)
 
-variable (E n ST SG) in
 
 def Deco.base [NeZero n] : Deco E n ST SG where
   N := stdLat E n
@@ -646,7 +641,6 @@ theorem Deco.base_ok [NeZero n] : (Deco.base E n ST SG).Ok where
     exact Submodule.sum_mem _ fun i _ =>
       Submodule.smul_mem_smul (hmem i) (single_mem_stdLat i 1)
 
-variable (E n ST SG) in
 
 def DecoSet.base [NeZero n] : DecoSet E n ST SG := ⟨Deco.base E n ST SG, Deco.base_ok⟩
 

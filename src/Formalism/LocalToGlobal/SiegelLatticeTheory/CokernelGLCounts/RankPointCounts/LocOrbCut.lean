@@ -276,7 +276,6 @@ end Assembly
 
 section Wt
 
-open Formalism.DoubleCosetMeasures Formalism.DoubleCosetMeasures.P.Supp Matrix Topology in
 
 theorem isCompact_intLocus (K : Type) [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] [T2Space K]
     (R : Subring K) (hRc : IsCompact (R : Set K)) (s : List ℕ) (t : ℕ → Kˣ) :

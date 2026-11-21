@@ -129,7 +129,6 @@ open GlobalTheory.FunObj.Comparison₂ GlobalTheory.StdFrames
 
 variable {D : D7} {S T : GlobalTheory.Grid.Node D} {e : AE D} {x : WO S.V T.V}
 
-set_option maxHeartbeats 1000000 in
 
 theorem frMapO_sub_mem {I : Ideal (𝓞 D.host.E)} (hS : IsFrame S.β S.Λ) (hT : IsFrame T.β T.Λ) (eS : OA D)
     (heS : eS.1 = toEAf D e) (he1 : 1 - eS ∈ idS D.host.F I)
@@ -169,7 +168,6 @@ open GlobalTheory.FunObj.Comparison₂ GlobalTheory.StdFrames
 
 variable {D : D7} {S T : GlobalTheory.Grid.Node D} {e : AE D}
 
-set_option maxHeartbeats 1000000 in
 
 theorem cosetInd_eq_of {P : Finset (Pl D.host.E)} {I : Ideal (𝓞 D.host.E)} (hS : IsFrame S.β S.Λ)
     (hT : IsFrame T.β T.Λ) (he : IsIdemSum e P) (he1 : (1 - ⟨toEAf D e, idem_mem_OA he⟩ : OA D) ∈ idS D.host.F I)

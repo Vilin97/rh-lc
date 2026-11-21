@@ -129,7 +129,6 @@ theorem theta_finsum (hr : X.p0 + q0 = r) (idx : Fin g ≃ X.Ψ × Fin r) (hs : 
     fun q => ((heisG_laws E r X g bas idx n hs hn).2.2.2 (Y q) u hu).1, Finset.mul_sum]
   exact Finset.sum_congr rfl fun q _ => _root_.mul_assoc _ _ _
 
-omit [IsCMField E] in
 
 theorem index_Ln (Λ : GenLat E n) :
     (Λ.Ln.toAddSubgroup.addSubgroupOf Λ.La.toAddSubgroup).index =
@@ -137,7 +136,6 @@ theorem index_Ln (Λ : GenLat E n) :
   rw [← GenLatCmp.std_eq, ← AddSubgroup.inf_relIndex_left]
   rfl
 
-omit [IsCMField E] in
 
 theorem zCard_eq (Λ : GenLat E n) {N M : ℕ} (hN : Λ.LevOK N M) (r : ℕ) :
     Λ.zCard N r = Λ.mIdx N r * ((stdL E n).toAddSubgroup.relIndex Λ.La.toAddSubgroup) ^ r := by

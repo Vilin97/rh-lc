@@ -135,7 +135,6 @@ theorem dUnit_mul (h : V ≤ unitSec G ⁻¹ᵁ W) (f g : Γ(G.left, W)) : dUnit
 theorem dUnit_base (h : V ≤ unitSec G ⁻¹ᵁ W) (k : W ≤ G.hom ⁻¹ᵁ U) (a : Γ(S, U)) :
     dUnit G h (G.hom.appLE U W k a) = 0 := d_base _ h k a
 
-variable {G} in
 
 theorem omega_hom_ext {F : S.Modules} {φ ψ : omega G ⟶ F}
     (H : ∀ (W : G.left.Opens) (f : Γ(G.left, W)),
@@ -163,9 +162,7 @@ variable [QuasiSeparated G.hom]
 
 instance isQuasicoherent_omega : (omega G).IsQuasicoherent := isQuasicoherent_conormal _
 
-open scoped TensorProduct in
 
-open scoped TensorProduct in
 
 theorem isVB_omega (g : ℕ) [SmoothOfRelativeDimension g G.hom] : IsVB (omega G) g :=
   isVB_conormal (sec_hom η[G]) g
@@ -178,15 +175,12 @@ theorem exists_isVB [Smooth G.hom] [PreconnectedSpace S] :
     ∃ g, IsVB (omega G) g ∧ IsVB (Lie G) g :=
   (exists_isVB_conormal (sec_hom η[G])).imp fun _ h => ⟨h, h.dual⟩
 
-omit [QuasiSeparated G.hom] in
 
 theorem exists_isVB_of_isSemiAbelian [h : IsSemiAbelian G] [PreconnectedSpace S] :
     ∃ g, IsVB (omega G) g ∧ IsVB (Lie G) g :=
   have := h.smooth
   exists_isVB G
 
-omit [QuasiSeparated G.hom] in
-variable {G} in
 
 end Def
 
@@ -329,7 +323,6 @@ section
 
 variable {ε : omega G ⟶ omega G} (hε : IsEigenProj (omegaAct i) σ ε D)
 
-include hg hf hε in
 
 end
 
@@ -452,7 +445,6 @@ theorem tangent_scale (a : O) (x : LieG G) (h) :
   refine dual_ext fun W _ s => ?_
   exact (congr((epsIso O).hom.app W (($e).app W s))).symm.trans ((epsIso O).hom.app_smul _ _)
 
-variable (G) in
 
 end Affine
 
@@ -470,7 +462,6 @@ def dlogChar : X →+ Γ(omega (splitTorus S X), ⊤) :=
     rw [← SplitTorus.val_id, SplitTorus.val_add, SplitTorus.val_id, SplitTorus.val_id, dUnit_mul,
       h, h, one_smul, one_smul, add_comm]
 
-variable {X Y} in
 
 theorem omegaMap_dlogChar (u : Y →+ X) (b : Y) :
     (omegaMap (SplitTorus.torusMap S u)).app ⊤ (dlogChar S Y b) = dlogChar S X (u b) :=

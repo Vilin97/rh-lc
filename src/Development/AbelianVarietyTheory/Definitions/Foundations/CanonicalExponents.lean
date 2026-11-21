@@ -16,7 +16,6 @@ section Gram
 variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {V : Type} [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [StarRing K]
 
-omit [StarRing K] in
 
 end Gram
 

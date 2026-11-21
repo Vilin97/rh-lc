@@ -99,7 +99,6 @@ theorem gtφ_eq (hc : u.ex c = D₀.c α₀) {b₀ : Out.TF (R := ℂ) ℂ ⟶ D
   · exact hb
   · exact (toUnit_comp_left _).trans (congrArg (·.left) h0.symm)
 
-omit [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
 theorem isLift_famφB (hc : u.ex c = D₀.c α₀) (z : Fin n → ℂ) :
     IsLift u (D₀.famφB α₀) (u.ex z).left ![z, z + c, c, 0] := fun k => by

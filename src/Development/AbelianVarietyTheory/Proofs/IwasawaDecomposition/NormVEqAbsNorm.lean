@@ -17,7 +17,6 @@ section General
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω]
 
-open Pointwise in
 
 theorem isFrob_conj {A : ValuationSubring Ω} {q : ℕ} {g σ : G E Ω} (hσ : IsFrob (F := E) (g • A) q σ) :
     IsFrob (F := E) A q (g⁻¹ * σ * g) := by

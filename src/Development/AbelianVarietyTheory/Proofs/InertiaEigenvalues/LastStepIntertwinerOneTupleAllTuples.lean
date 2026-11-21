@@ -56,7 +56,6 @@ theorem isItW_transfer (θ : InfFam D) (M : DSModel V S) (M' : DSModel W S')
     exact GlobalTheory.CompactIntertwiner.hasDerivAt_pol pt₁ hpt₁ (fun t : ℝ => ρ' τ (NormedSpace.exp (t • X)) φ) _
       (fun t => hd' τ _ φ) φ' h (LinearMap.proj z ∘ₗ pt)
 
-open Classical in
 
 theorem isItW_lastStep_transfer (k : Fin D.R.m) (hk : (k : ℕ) + 1 = D.R.m) (a : ℕ) (ha : a = k) (hV : V.SigOK)
     (hW : W.SigOK) (rV : V.rank = D.R.r + k * D.R.t) (rW : W.rank = V.rank + D.R.t)

@@ -73,7 +73,6 @@ theorem cuspOn_comap_indep {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Ge
         (GlobalTheory.CuspSplit.idem_mul_of_mem_cuspOn (Submodule.mem_comap.1 hx)).symm
     _ = 0 := h0
 
-set_option maxHeartbeats 1000000 in
 
 theorem rankW_eq_finsum_rankOn : ∀ (D : D7) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E) (Dw : Datum H) (l : Level H)
     (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (x : ℝ)

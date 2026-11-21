@@ -44,7 +44,6 @@ theorem finAlg_allSet (P : Pre) (χ : Formalism.L2.Host.HChar P.host.E) {Ξ : Se
   refine finAlg_biUnion ?_ fun k hk => hk.2
   exact (Set.finite_univ.prod ((Set.finite_Iio P.R.m).prod (hs.prod hs))).subset fun k hk => ⟨trivial, hk.1⟩
 
-open Classical in
 
 def gens (P : Pre) (χ : Formalism.L2.Host.HChar P.host.E) (Ξ : Set (Formalism.L2.Host.HChar P.host.E)) : Finset ℂ :=
   if h : FinAlg (allSet P χ Ξ) then h.choose else ∅

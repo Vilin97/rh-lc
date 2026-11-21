@@ -87,7 +87,6 @@ lemma linComb_cover : ⨆ j, (LB.LinComb L φ ε).U j = ⊤ := by
   choose j hj using hc
   exact TopologicalSpace.Opens.mem_iSup.mpr ⟨j, Set.mem_iInter.mpr hj⟩
 
-include hL in
 
 theorem linComb_isLB : (LB.LinComb L φ ε).IsLB where
   cover := linComb_cover L hL φ ε

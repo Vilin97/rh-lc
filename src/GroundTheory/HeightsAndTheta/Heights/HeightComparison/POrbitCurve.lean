@@ -21,7 +21,6 @@ variable {ι : Type} [Fintype ι] [DecidableEq ι] {n : ι → ℕ}
 
 def tDeg (ι : Type) [DecidableEq ι] : ι → ι → ℕ := fun k ↦ Pi.single k 1
 
-omit [Fintype ι] in
 
 theorem isWeightedHomogeneous_mConeMap (x : Cone n (AlgebraicClosure ℚ))
     {f : MvPolynomial (Coord n) ℤ} {b : ι → ℕ} (hf : IsWeightedHomogeneous (coordDeg n) f b) :
@@ -39,7 +38,6 @@ theorem isWeightedHomogeneous_mConeMap (x : Cone n (AlgebraicClosure ℚ))
     (isWeightedHomogeneous_X (AlgebraicClosure ℚ) (tDeg ι) p.1)).pow (m p)
   rwa [zero_add] at h
 
-omit [Fintype ι] in
 
 theorem mConeMap_weightedHomogeneousComponent (x : Cone n (AlgebraicClosure ℚ))
     (f : MvPolynomial (Coord n) ℤ) (b : ι → ℕ) :
@@ -62,12 +60,10 @@ theorem mConeMap_weightedHomogeneousComponent (x : Cone n (AlgebraicClosure ℚ)
       exact hb ((Set.Finite.mem_toFinset _).mpr h)
     rw [h0, map_zero, map_zero]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem isPrime_orbitIdeal (x : Cone n (AlgebraicClosure ℚ)) : (orbitIdeal x).IsPrime :=
   RingHom.ker_isPrime _
 
-omit [Fintype ι] in
 
 theorem weightedHomogeneousComponent_mem_orbitIdeal (x : Cone n (AlgebraicClosure ℚ))
     {f : MvPolynomial (Coord n) ℤ} (hf : f ∈ orbitIdeal x) (b : ι → ℕ) :
@@ -93,7 +89,6 @@ theorem isRelevant_orbitIdeal {x : Cone n (AlgebraicClosure ℚ)} (hx : BlockNon
   rw [orbitIdeal, Geo.mCoordIdeal, RingHom.mem_ker, Geo.mConeMap, aeval_X] at h
   exact mul_ne_zero (C_ne_zero.mpr (hc k)) (X_ne_zero _) h
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem isHorizontal_orbitIdeal (x : Cone n (AlgebraicClosure ℚ)) :
     Geo.IsHorizontal (ι := blockIdx n) (orbitIdeal x) := by
@@ -113,14 +108,12 @@ theorem coneMapQ_map (x : Cone n (AlgebraicClosure ℚ)) (f : MvPolynomial (Coor
   rw [← algebraMap_int_eq, coneMapQ, aeval_map_algebraMap]
   rfl
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem comap_ker_coneMapQ (x : Cone n (AlgebraicClosure ℚ)) :
     (RingHom.ker (coneMapQ x)).comap (map (Int.castRingHom ℚ)) = orbitIdeal x := by
   ext f
   rw [Ideal.mem_comap, RingHom.mem_ker, coneMapQ_map, orbitIdeal, Geo.mCoordIdeal, RingHom.mem_ker]
 
-omit [DecidableEq ι] in
 
 theorem ker_coneMapQ (x : Cone n (AlgebraicClosure ℚ)) :
     RingHom.ker (coneMapQ x) = ReciprocityTheory.AnForm.R.extQ (orbitIdeal x) := by
@@ -137,7 +130,6 @@ theorem ker_coneMapQ (x : Cone n (AlgebraicClosure ℚ)) :
   simp only [hc, comap_ker_coneMapQ] at h
   exact lt_irrefl _ h
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem algebraicIndependent_C_mul_X (a : ι → AlgebraicClosure ℚ) (ha : ∀ k, a k ≠ 0) :
     AlgebraicIndependent ℚ (fun k ↦ (C (a k) * X k : MvPolynomial ι (AlgebraicClosure ℚ))) := by

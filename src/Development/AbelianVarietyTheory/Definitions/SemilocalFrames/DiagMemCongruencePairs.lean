@@ -47,44 +47,30 @@ section Basic
 
 variable {σ : E →+* E} {n m r : ℕ} {J : Matrix (Fin n) (Fin n) E} {Jb : Matrix (Fin m) (Fin m) E}
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
 theorem mem_perpX (P : Matrix (Fin n) (Fin (r + 1)) E) (v : Fin n → E) :
     v ∈ perpX σ J P ↔ (cT σ (eOf P) * J) *ᵥ v = 0 := Iff.rfl
 
-omit [NumberField E] in
 
 theorem mem_perpX_iff_form (P : Matrix (Fin n) (Fin (r + 1)) E) (v : Fin n → E) :
     v ∈ perpX σ J P ↔ ∀ a : Fin r, form σ J v (fun i => P i a.castSucc) = 0 := by
   rw [mem_perpX, ← Matrix.mulVec_mulVec, funext_iff]
   rfl
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
 theorem mem_latMap (γ : Matrix (Fin n) (Fin n) E) (Λ : Submodule (𝓞 E) (Fin n → E)) (v : Fin n → E) :
     v ∈ latMap γ Λ ↔ ∃ w ∈ Λ, γ *ᵥ w = v := Iff.rfl
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
 end Basic
 
@@ -98,9 +84,7 @@ section Iso
 
 variable {σ : E →+* E} {n m r : ℕ} {J : Matrix (Fin n) (Fin n) E} {Jb : Matrix (Fin m) (Fin m) E}
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
 theorem isUn_mul {γ δ : Matrix (Fin n) (Fin n) E} (hγ : IsUn σ J γ) (hδ : IsUn σ J δ) :
     IsUn σ J (γ * δ) := by
@@ -108,7 +92,6 @@ theorem isUn_mul {γ δ : Matrix (Fin n) (Fin n) E} (hγ : IsUn σ J γ) (hδ : 
   rw [IsUn, e, show cT σ δ * cT σ γ * J * (γ * δ) = cT σ δ * (cT σ γ * J * γ) * δ by
     simp only [Matrix.mul_assoc], hγ, hδ]
 
-omit [NumberField E] in
 
 theorem latMap_one (Λ : Submodule (𝓞 E) (Fin n → E)) : latMap 1 Λ = Λ := by
   ext v

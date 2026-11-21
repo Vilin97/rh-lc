@@ -149,7 +149,6 @@ theorem form_nondeg {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) (N : ℕ) :
     (form E N).Nondegenerate :=
   ⟨fun X hX => form_self hΨ X (hX X), fun X hX => form_self hΨ X (hX X)⟩
 
-omit [IsCMField E] in
 
 theorem exists_den {ι : Type} [Fintype ι] {N : ℕ} (X : ι → Matrix (Fin N) (Fin N) E) :
     ∃ c : ℕ, 0 < c ∧ ∀ i, IntM ((c : E) • X i) := by

@@ -158,7 +158,6 @@ namespace GlobalTheory.IwaPlace.BuildQ
 
 variable {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ)
 
-set_option maxHeartbeats 1000000 in
 
 theorem smul_sub_one {ε : AE D} (M : Mx D S.rank S.rank)
     (hX : ε • (M ⬝ d.jX - d.jX) = M ⬝ d.jX - d.jX) (h0 : ε • (M ⬝ d.j0 - d.j0) = M ⬝ d.j0 - d.j0)
@@ -182,8 +181,6 @@ theorem scalar_X {R : Type*} [CommRing R] {ε a b x y : R} (ha : ε * a = a) (ha
 
 end GlobalTheory.IwaPlace.BuildQ
 
-open GlobalTheory.IwaPlace.BuildQ in
-set_option maxHeartbeats 1000000 in
 
 theorem GlobalTheory.IwaPlace.exists_grpAt_of_dual_frames : ∀ (D : D7) (S S₀ : HSp D) (ρ : ℕ) (d : HypDec S S₀ ρ) (v : Pl D) (ε : AE D) (hεε : ε * ε = ε) (hεc : cA D ε = ε) (hεI : ε ∈ intAt D (· = v)) (hε : ∀ a, a ∈ idAt D (· = v) ↔ ε * a = a) (α β : Fin ρ → AE D) (b : Mx D ρ ρ) (c' : Mx D S.rank ρ), (∀ i, α i ∈ idAt D (· = v)) → (∀ i, β i ∈ idAt D (· = v)) → (∀ i, α i * β i = ε) → (∀ i j, b i j ∈ idAt D (· = v)) → (∀ i j, c' i j ∈ idAt D (· = v)) → adj c' ⬝ (gA S ⬝ (d.jX ⬝ b)) = ε • (1 : Mx D ρ ρ) → adj c' ⬝ (gA S ⬝ c') = 0 → ∃ q ∈ grpAt S (· = v), mt S q ⬝ d.jX = d.jX ⬝ (b ⬝ Matrix.diagonal β + (1 - ε) • (1 : Mx D ρ ρ)) ∧ (∀ i, mt S q *ᵥ colMul d.jX i (α i) = fun k => (d.jX ⬝ b) k i) ∧ (∀ i, mt S q *ᵥ colMul d.jY i (cA D (β i)) = fun k => c' k i) := by
   intro D S S₀ ρ d v ε hεε hεc _ hε α β b c' hα hβ hαβ hb hc' H1 H2

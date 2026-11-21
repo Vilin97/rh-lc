@@ -44,7 +44,6 @@ theorem inf_eq_prod (ν : HChar L) (k : Lˣ) :
     ν.inf k = ∏ w ∈ (Finset.univ : Finset (InfinitePlace L)), ν.locInf w (atInf w k) := by
   simp only [HChar.inf, HChar.locInf, infDiag, MonoidHom.comp_apply, MonoidHom.finset_prod_apply, map_prod]
 
-set_option maxHeartbeats 400000 in
 
 theorem eq_one (ν : HChar L) (h : ∀ᶠ w in cofinite, ν.val w = 1) : ν = 1 := by
   classical

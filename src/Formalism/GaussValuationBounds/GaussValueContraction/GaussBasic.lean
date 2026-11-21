@@ -45,6 +45,5 @@ theorem gaussValUnit : GaussUnit := by
   rw [PowerSeries.coeff_zero_eq_constantCoeff_apply, ← hw, addVal_eq_zero_of_unit]
   simp
 
-open IsDiscreteValuationRing in
 
 end Formalism.NOK

@@ -29,7 +29,6 @@ def haarAt (R : ℕ) (φ : Matrix κ ι K → ℂ) : ℂ :=
   ((R : ℂ) ^ (Module.finrank ℚ K * (Fintype.card κ * Fintype.card ι)))⁻¹ *
     ∑ᶠ q : Matrix κ ι K ⧸ perSub K κ ι R, φ q.out
 
-open Classical in
 
 def haar (φ : Matrix κ ι K → ℂ) : ℂ := if h : IsSB φ then haarAt h.choose φ else 0
 

@@ -44,7 +44,6 @@ section LatBasis
 variable {O C : Type} [CommRing O] [Field C] [Algebra O C]
   {U : Type} [AddCommGroup U] [Module C U] [Module O U] [IsScalarTower O C U] {n : ℕ}
 
-variable (C) in
 
 def IsLatBasis (La : Submodule O U) (w : Fin n → U) : Prop :=
   LinearIndependent C w ∧
@@ -78,7 +77,6 @@ section Val
 variable {K : Type} [Field K] [NumberField K] (la : HeightOneSpectrum (𝓞 K)) (p : ℕ)
   {C : Type} [Field C] (v : Valuation C ℝ≥0)
 
-open Classical in
 
 def val_vw (x : C) : EReal :=
   if x = 0 then ⊤ else (((vLa la (p : K) : ℝ) * (Real.log (v x) / Real.log (v (p : C))) : ℝ) : EReal)
@@ -247,9 +245,7 @@ theorem LieTie.unique {Y S : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {s : Y ⟶ S} {
     simpa using h.map (TrivSqZeroExt.fstHom O O O))
   exact Subtype.ext ((existsUnique_left hp (isAdicComplete_dualNumber p) xG.1).unique h1 (e2 ▸ h1'))
 
-variable (P) in
 
-variable (P) in
 
 def evLie (x : LieG P.Gt) : P.OmC →ₗ[C] C :=
   (Algebra.linearMap O C ∘ₗ LinearMap.proj x ∘ₗ (omega P.Gt).subtype).liftBaseChange C
@@ -279,15 +275,12 @@ section Frames
 variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] [Algebra c.F C] {v : Valuation C ℝ≥0} {O : Type} [CommRing O]
   [Algebra O C] [StarRing (𝓞 E)]
 
-variable (c C) in
 
 def embAt (τ : E →+* ℂ) : E →+* C := (algebraMap c.F C).comp (embF c τ)
 
-variable (c) in
 
 def embInt (hv : v.Integers O) (τ : E →+* ℂ) : 𝓞 E →+* O := embO hv (embAt c C τ)
 
-omit [StarRing (𝓞 E)] in
 
 theorem algebraMap_embInt (hv : v.Integers O) (τ : E →+* ℂ) (a : 𝓞 E) :
     algebraMap O C (embInt c hv τ a) = algebraMap c.F C (embK c τ a) := algebraMap_embO hv _ a
@@ -328,15 +321,12 @@ end Over
 
 variable [IsAlgClosed C] [CharZero C] [Algebra ℤ_[p] C] [Algebra ℤ_[p] O] [IsScalarTower ℤ_[p] O C]
 
-open Classical in
-variable (c) in
 
 def htLat (τ : E →+* ℂ) : Submodule O P.V :=
   if τ (H.rt : E) = H.rt0 then
     P.latTQuot (σ := fun φ : E →+* C => embO P.integers φ) (isSplitting_embO P.integers) (embAt c C τ)
   else P.latTSub (embInt c P.integers τ)
 
-open Classical in
 
 theorem latTSub_le_htLat (τ : E →+* ℂ) : P.latTSub (embInt c P.integers τ) ≤ htLat c P τ := by
   classical
@@ -351,8 +341,6 @@ variable [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]
 theorem wRec_le_htLat (τ : E →+* ℂ) : P.wRec (embInt c P.integers τ) ≤ htLat c P τ :=
   (P.wRec_le_latTSub _).trans (latTSub_le_htLat P τ)
 
-omit [IsAlgClosed C] [CharZero C] [Algebra ℤ_[p] C] [Algebra ℤ_[p] O] [IsScalarTower ℤ_[p] O C] in
-variable {P} in
 
 theorem LieTie.isEig {V F : Type} [CommRing V] [Field F] [Algebra V F] {x₀ : Sp F ⟶ Xo.X} {k : F →+* C} {kO : V →+* O}
     {ψ : P.A.A.left ⟶ Xo.univ.t.G.left} (hP : PointOver P x₀ k kO ψ) {x : LieG P.Gt}
@@ -366,9 +354,7 @@ def IsHTChange (ψ : P.A.A.left ⟶ Xo.univ.t.G.left) (z y : FrPt Xo c C) : Prop
     FrChg g a z y ∧ (∀ τ i j, i < j → g τ i j = 0) ∧ v a = 1 ∧ (∀ τ j, LieTie P ψ (x τ j) (z.u τ j)) ∧
       ∀ τ, IsLatBasis C (htLat c P τ) fun i => ∑ j, g τ i j • P.bLie (x τ j)
 
-variable {P} in
 
-variable (p v O) in
 
 def IsHTFrame {T : CDVR} {io : c.F →+* T.Fr} (y₀ : IntFr Xo c T io)
     (k : letI := io.toAlgebra; T.Fr →ₐ[c.F] C) (y : FrPt Xo c C) : Prop :=
@@ -426,7 +412,6 @@ def IsHTFrameCp (p : ℕ) [Fact p.Prime] [Algebra c.F ℂ_[p]] {T : CDVR} {io : 
   letI := H.starRing
   IsHTFrame p (Valued.v : Valuation ℂ_[p] ℝ≥0) 𝓞_ℂ_[p] y₀ k y
 
-variable (Xo c) in
 
 def htValSet (la : HeightOneSpectrum (𝓞 c.F)) : Set (Rul Xo c → EReal) :=
   {w | ∃ (p : ℕ) (_ : Fact p.Prime) (_ : Algebra c.F ℂ_[p]) (T : CDVR) (io : c.F →+* T.Fr) (e : ℕ)
@@ -434,7 +419,6 @@ def htValSet (la : HeightOneSpectrum (𝓞 c.F)) : Set (Rul Xo c → EReal) :=
     OverLa la T.V io e ∧ y₀.IsAlg ∧ IsHTFrameCp p y₀ k y ∧
       w = fun f => val_vw la p (Valued.v : Valuation ℂ_[p] ℝ≥0) (evR Xo c f y)}
 
-variable (Xo c) in
 
 def htVals : ValFam Xo c :=
   ⟨htValSet Xo c, by
@@ -464,7 +448,6 @@ theorem IsHTFrameCp.mem {p : ℕ} [Fact p.Prime] [Algebra c.F ℂ_[p]] {T : CDVR
   refine h3.ne (h1.trans ?_)
   simp
 
-variable (l) in
 
 def htPrimes (B : ℝ) : Set ℕ := {p | p.Prime ∧ ((p : ℝ) ≤ B ∨ p ∣ 2 * (discr E).natAbs * l.M')}
 
@@ -481,7 +464,6 @@ theorem htPrimes_eq (B : ℝ) : htPrimes l B = ↑(((Finset.range (⌊B⌋₊ + 
 
 theorem htPrimes_finite (B : ℝ) : (htPrimes l B).Finite := htPrimes_eq (l := l) B ▸ Finset.finite_toSet _
 
-variable (Xo c) in
 
 def mixVals (B : ℝ) : ValFam Xo c := ValFam.patch (htPrimes l B) (htVals Xo c) (recVals Xo c)
 

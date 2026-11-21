@@ -227,7 +227,6 @@ theorem hermFlag_pairing_cramer_of_leadingCoeffs (F F' : FlagD H r) (Λ : Submod
   congr 1
   exact (congrFun hv b).symm
 
-open GlobalTheory.DegCnt.IdealPow in
 
 theorem cramer (F F' : FlagD H r) (Λ : Submodule (𝓞 K) V)
     (hint : ∀ x ∈ Λ, ∀ y ∈ Λ, H.B x y ∈ (1 : Submodule (𝓞 K) K)) {𝔡 : Ideal (𝓞 K)} (h : 𝔡 ≠ ⊥)
@@ -274,7 +273,6 @@ open GlobalTheory.DegCnt.IdealPow GlobalTheory.UnimodQuot
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] {H : HermSpace K V}
 
-omit [StarRing K] in
 
 omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem B_smul (a b : K) (x y : V) : H.B (a • x) (b • y) = a * star b * H.B x y := by

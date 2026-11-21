@@ -19,7 +19,6 @@ namespace GlobalTheory.VacCjNeg
 
 variable {D : D7}
 
-open GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger in
 
 theorem dRho_cj {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) (S T : HSp D) (θ : InfFam D)
     (τ : D.what₂.Tau) (z : Matrix (Fin T.rank) (Fin S.rank) ℂ) (f : WO S T → ℂ) :

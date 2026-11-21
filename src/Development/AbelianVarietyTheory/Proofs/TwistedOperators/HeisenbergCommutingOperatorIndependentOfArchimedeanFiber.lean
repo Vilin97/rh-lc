@@ -21,7 +21,6 @@ def mkv (a : κ → Ainf F) (w : κ → Af F) : κ → AF F := fun i => (a i, w 
 
 def chi (ψ : AddChar (AF F) ℂ) (q : κ → Af F) (w : κ → Af F) : ℂ := GlobalTheory.HeisSchA.finChar ψ (w ⬝ᵥ q)
 
-variable (κ) in
 
 def alg (ψ : AddChar (AF F) ℂ) : Submodule ℂ ((κ → Af F) → ℂ) := Submodule.span ℂ (Set.range (chi (κ := κ) ψ))
 
@@ -235,7 +234,6 @@ theorem main (ψ : AddChar (AF F) ℂ) (T : Module.End ℂ ((κ → AF F) → �
 
 end GlobalTheory.FinFibre
 
-open GlobalTheory.FinFibre in
 
 theorem GlobalTheory.FinFibre.fibre_zero : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (T : Module.End ℂ ((κ → AF F) → ℂ)),
     IsStd ψ → (∀ Φ ∈ schA F κ, T Φ ∈ schA F κ) →

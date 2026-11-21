@@ -16,7 +16,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-open Classical in
 
 def NormalClausesG (Pg : Finset (Pl D.host.E)) (βY : ∀ j, GL (Fin (Yc D j).rank) (EAf D))
     (βW : ∀ i : Fin D.R.m, GL (Fin (Wc D i).rank) (EAf D)) : Prop :=
@@ -27,9 +26,7 @@ def NormalClausesG (Pg : Finset (Pl D.host.E)) (βY : ∀ j, GL (Fin (Yc D j).ra
       (ι : GL (Fin (D.sp.W ((i : ℕ) + 1)).rank) (EAf D)),
       VertexAt ((i : ℕ) + 1) (betaYOf βY 0) (βW i) eW ι Pg
 
-variable (D) in
 
-open Classical in
 
 end Formalism.IndefR.Seed.Frm
 

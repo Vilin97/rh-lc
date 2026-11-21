@@ -1001,11 +1001,9 @@ section Gen
 variable {Wp Wq : Type} [NormedAddCommGroup Wp] [NormedSpace ℂ Wp] [FiniteDimensional ℂ Wp] [NormedAddCommGroup Wq]
   [NormedSpace ℂ Wq] [FiniteDimensional ℂ Wq]
 
-open Classical in
 
 end Gen
 
-open Classical in
 
 end Formalism.MainNotions.LowestKTypeMultiplicity
 

@@ -119,7 +119,6 @@ theorem pi {LL : FinExt l} {m : ℕ} (ρ : Representation ↥LL.1 ↥(GK K) (Fin
   haveI := LL.2
   h.of_coords T ρ (fun v f => (LinearMap.continuous_of_finiteDimensional f).comp (hc v)) hV
 
-omit K in
 
 theorem isPstAt {E Ω : Type} [Field E] [Field Ω] [Algebra E Ω] {Gw : Subgroup (Ω ≃ₐ[E] Ω)}
     {O : Type} [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω Gw O) {a : ℕ}

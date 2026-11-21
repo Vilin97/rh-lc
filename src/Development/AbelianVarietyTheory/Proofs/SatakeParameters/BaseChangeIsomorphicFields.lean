@@ -135,7 +135,6 @@ theorem mapOp_symm (o : Op K a) : mapOp e.symm (mapOp e o) = o := by
   | cpt k => exact congrArg Op.cpt (Subtype.ext (Matrix.ext fun i j => cInf_symm e _))
   | lie X => exact congrArg Op.lie (funext₂ fun i j => cInf_symm e _)
 
-variable (a) in
 
 def mapA : GA K a →* GA M a := GeneralLinearGroup.map (cAd e)
 
@@ -168,7 +167,6 @@ theorem map_mem_Sm {φ : GA M a → ℂ} (hφ : φ ∈ Sm M a) : (fun g => φ (m
   ((hφ (mapA a e g)).comp (mapL (a := a) e).contDiff.contDiffOn
     fun _ hx => (chart_map e φ g hx).2).congr fun _ hx => (chart_map e φ g hx).1
 
-variable (a) in
 
 def pull : Sm M a ≃ₗ[ℂ] Sm K a where
   toFun φ := ⟨fun g => φ.1 (mapA a e g), map_mem_Sm e φ.2⟩
@@ -262,7 +260,6 @@ theorem Zalg_pull {z : Module.End ℂ (Sm K a)} (hz : z ∈ Zalg K a) :
     obtain ⟨y', h3, h4⟩ := hy
     exact ⟨x' * y', mul_mem h1 h3, fun φ => by simp [h2, h4]⟩
 
-omit [IsTotallyComplex K] [IsTotallyComplex M] in
 
 theorem height_map_le (y : GL (Fin a) (Cinf K)) : height (GeneralLinearGroup.map (cInf e) y) ≤ height y := by
   have h1 : ∀ y : GL (Fin a) (Cinf K), ‖toL (GeneralLinearGroup.map (cInf e) y).val‖ ≤ ‖toL y.val‖ := fun y =>
@@ -306,7 +303,6 @@ theorem map_mem_ratN {r : ℕ} {x : BlockIx a r → Ad K} (hx : x ∈ ratN K a r
   obtain ⟨y, rfl⟩ := hx
   exact ⟨fun p => e (y p), funext fun p => (cAd_algebraMap e (y p)).symm⟩
 
-open MeasureTheory in
 
 theorem isCuspidal_pull {φ : GA M a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal fun g => φ (mapA a e g) := by
   intro r h0 h1 _ _ μ 𝓕 hμ hF g

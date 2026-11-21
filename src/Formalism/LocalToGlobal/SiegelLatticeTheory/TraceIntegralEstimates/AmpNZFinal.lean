@@ -93,6 +93,5 @@ theorem coefficients_in_compact_closure : Formalism.MainNotions.S.Pv.BetaCut.Coe
 theorem ampNZ_of_parts (hE : AmpOrbCoefDD) (hBI : Formalism.MainNotions.S.Pv.BetaCut.BetaInfCoefNZ) : AmpNZ :=
   ampNZ_of (ampNZCoef_of hE coefficients_in_compact_closure hBI)
 
-variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 
 end Formalism.MainNotions.S.Pv.LemmaJ

@@ -179,7 +179,6 @@ def NuGoodSt : Prop :=
           if N.sc.X'' N.R.n < (resCharOf la : ℝ) then N.R.k * w / (resCharOf la : ℝ) ^ 2 else 0) ∧
       (DF Dw a < resCharOf la → nuW Xo c la lv.M a nW = 0)
 
-open Formalism.L2.Indef Formalism.L2.Indef.Tree in
 
 structure NumTie {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase K} {Df : DefSide Bs} {S : IndefData Df}
     {P : Type} [Group P] [Finite P] {oc : OnConst} (O : OnObj S P oc) (N : NumDatum) (ι : Bs.J → ℕ) (DL : Bs.J → ℕ) : Prop where
@@ -194,7 +193,6 @@ structure NumTie {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase
   wt_b : ∀ j, O.b ≤ O.wt j
   DF_ge : ∀ j, (DL j : ℝ) ≤ O.DF
 
-open Formalism.L2.Indef Formalism.L2.Indef.Tree Formalism.L2.Indef.Tree.DepthCond in
 
 def LeafGoodSt : Prop :=
   ∀ C1 : ℝ, 0 ≤ C1 → ∃ C0 : ℝ,

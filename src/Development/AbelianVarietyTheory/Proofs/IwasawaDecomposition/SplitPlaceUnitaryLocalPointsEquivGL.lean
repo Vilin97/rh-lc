@@ -15,7 +15,6 @@ namespace GlobalTheory.SplitPts
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-variable (E) in
 
 abbrev conjE : E ≃+* E := (IsCMField.complexConj E).toRingEquiv
 
@@ -216,7 +215,6 @@ theorem continuous_invT (R : Type) [CommRing R] [TopologicalSpace R] [IsTopologi
 
 end GlobalTheory.SplitPts
 
-open GlobalTheory.SplitPts in
 
 theorem GlobalTheory.locU_equiv_GL : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ)
     (w : HeightOneSpectrum (𝓞 E)), IsSplitAt w →

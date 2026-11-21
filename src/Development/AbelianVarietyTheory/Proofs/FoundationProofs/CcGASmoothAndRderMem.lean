@@ -22,12 +22,10 @@ def IsSmoothRealFam (u : P → GAd σ J) : Prop :=
   (∀ t, projFin σ J (u t) = 1) ∧
     ∀ (w : InfinitePlace F) (τ : EmbOver E w) i j, ContDiff ℝ ∞ fun t => archMat σ J τ (projArch σ J w (u t)) i j
 
-omit [NumberField E] in
 
 theorem isSmoothRealFam_one : IsSmoothRealFam fun _ : P => (1 : GAd σ J) :=
   ⟨fun _ => map_one _, fun _ _ _ _ => contDiff_const⟩
 
-omit [NumberField E] in
 
 theorem IsSmoothRealFam.mul {u v : P → GAd σ J} (hu : IsSmoothRealFam u) (hv : IsSmoothRealFam v) :
     IsSmoothRealFam fun t => u t * v t := by
@@ -35,13 +33,11 @@ theorem IsSmoothRealFam.mul {u v : P → GAd σ J} (hu : IsSmoothRealFam u) (hv 
   simp only [map_mul, Matrix.mul_apply]
   exact ContDiff.sum fun k _ => (hu.2 w τ i k).mul (hv.2 w τ k j)
 
-omit [NumberField E] in
 
 theorem IsSmoothRealFam.comp {Q : Type} [NormedAddCommGroup Q] [NormedSpace ℝ Q] {u : P → GAd σ J}
     (hu : IsSmoothRealFam u) {p : Q → P} (hp : ContDiff ℝ ∞ p) : IsSmoothRealFam fun t => u (p t) :=
   ⟨fun _ => hu.1 _, fun w τ i j => (hu.2 w τ i j).comp hp⟩
 
-omit [NumberField E] in
 
 theorem isSmoothRealFam_prod {k : ℕ} {u : Fin k → P → GAd σ J} (hu : ∀ i, IsSmoothRealFam (u i)) :
     IsSmoothRealFam fun t => (List.ofFn fun i => u i t).prod := by
@@ -51,7 +47,6 @@ theorem isSmoothRealFam_prod {k : ℕ} {u : Fin k → P → GAd σ J} (hu : ∀ 
     simp only [List.ofFn_succ, List.prod_cons]
     exact (hu 0).mul (ih fun i => hu i.succ)
 
-omit [NumberField E] in
 
 theorem infCoord_mul (x : GInf σ J) (y : GAd σ J) : infCoord σ J (x * projInf σ J y) =
     fun w τ i j => ∑ k, infCoord σ J x w τ i k * archMat σ J τ (projArch σ J w y) k j := by

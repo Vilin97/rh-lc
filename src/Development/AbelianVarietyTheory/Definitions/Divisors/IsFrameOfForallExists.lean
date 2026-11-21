@@ -258,7 +258,6 @@ theorem isFrame_one (U : X.Opens) :
   isFrame_of_basis (fun V _ => Module.Basis.singleton (Fin 1) Γ(X, V)) fun V h i =>
     (Module.Basis.singleton_apply (Fin 1) Γ(X, V) i).trans (map_one (resG X h)).symm
 
-variable (X) in
 
 def freeFrame (ι : Type) (i : ι) : Γ(freeModule X ι, ⊤) :=
   Scheme.Modules.Hom.app (M := structureModule X) (N := freeModule X ι)
@@ -278,7 +277,6 @@ theorem isFrame_biproduct (ι : Type) [Fintype ι] [HasBiproduct fun _ : ι => s
   · exact (congrArg _ (Pi.single_eq_of_ne hj _)).trans (map_zero _)
   · exact congrArg _ ((Pi.single_eq_same _ _).trans (map_one (resG X h)).symm)
 
-variable (X) in
 
 theorem isFrame_freeFrame (ι : Type) [Fintype ι] : IsFrame (freeFrame X ι) := by
   have := Abelian.hasFiniteBiproducts (C := X.Modules)
@@ -294,7 +292,6 @@ theorem isFrame_freeFrame (ι : Type) [Fintype ι] : IsFrame (freeFrame X ι) :=
   rw [funext e] at this
   exact this
 
-variable (F) in
 
 def IsVB (r : ℕ) : Prop := ∀ x : X, ∃ (U : X.Opens) (e : Fin r → Γ(F, U)), x ∈ U ∧ IsFrame e
 
@@ -308,17 +305,14 @@ theorem isVB_of_frames (hr : Fintype.card ι = r)
 theorem IsFrame.isVB {e : ι → Γ(F, ⊤)} (he : IsFrame e) : IsVB F (Fintype.card ι) :=
   isVB_of_frames rfl fun _ => ⟨⊤, e, trivial, he⟩
 
-variable (X) in
 
 theorem isVB_freeModule (ι : Type) [Fintype ι] : IsVB (freeModule X ι) (Fintype.card ι) :=
   (isFrame_freeFrame X ι).isVB
 
-variable (X) in
 
 theorem isVB_freeModule_fin (r : ℕ) : IsVB (freeModule X (Fin r)) r := by
   simpa using isVB_freeModule X (Fin r)
 
-variable (X) in
 
 theorem isVB_structureModule : IsVB (structureModule X) 1 :=
   fun _ => ⟨⊤, _, trivial, isFrame_one ⊤⟩
@@ -357,7 +351,6 @@ theorem isFiniteQC (h : IsVB F r) : IsFiniteQC F :=
     have ⟨U, _, hU, hx, _, he⟩ := h.exists_affine (V := ⊤) (x := x) trivial
     ⟨U, hU, hx, Module.Finite.of_basis (he.basis le_rfl)⟩
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem nonempty_basis_stalk (h : IsVB F r) (x : X) :
     Nonempty (Module.Basis (Fin r) (X.presheaf.stalk x) (F.presheaf.stalk x :)) :=
@@ -413,7 +406,6 @@ theorem isVB_zero_iff : IsVB F 0 ↔ IsZero F := by
   · have := QCoh.subsingleton_sections_of_isZero h V
     exact ⟨fun _ _ _ => Subsingleton.elim _ _, fun _ => ⟨0, Subsingleton.elim _ _⟩⟩
 
-variable (F) in
 
 structure Sub where
 

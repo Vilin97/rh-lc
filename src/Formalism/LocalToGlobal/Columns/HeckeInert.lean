@@ -61,7 +61,6 @@ variable {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 def DecoSet.inertSet (P : Ideal (𝓞 E)) (s : List ℕ) (d : DecoSet E n ST SG) : Set (DecoSet E n ST SG) :=
   {d' | IsInertNbr P s d.1.N d'.1.N ∧ d'.1.f = d.1.f ∧ d'.1.be = d.1.be}
 
-open Classical in
 
 def DecoSet.inertNb (P : Ideal (𝓞 E)) (s : List ℕ) (d : DecoSet E n ST SG) : Finset (DecoSet E n ST SG) :=
   if h : (d.inertSet P s).Finite then h.toFinset else ∅
@@ -148,7 +147,6 @@ abbrev LevOffI (ST SG : Finset (HeightOneSpectrum (𝓞 E))) (S0 : Set (HeightOn
 def heckeFamI (c : DecoPts S E n ST SG) (S0 : Set (HeightOneSpectrum (𝓞 E))) :
     LevOffI ST SG S0 × List ℕ → End K S.EqFun := fun x => (heckeI c x.1.1.asIdeal x.2).op
 
-variable (ST SG) in
 
 abbrev HeckeIx (S0 : Set (HeightOneSpectrum (𝓞 E))) : Type :=
   (LevOff ST SG S0 × ℕ) ⊕ (LevOffI ST SG S0 × List ℕ)

@@ -28,7 +28,6 @@ def band : Set (GA E a) :=
   {g | a = 0 ∨ (1 ≤ Reduction.detModule E a g ∧
     Reduction.detModule E a g < Reduction.detModule E a (splitCentre E a 1))}
 
-variable {E a} in
 
 def muOne (μ : Measure (GA E a)) : Measure (G1 E a) := Measure.map retractOne (μ.restrict (band E a))
 

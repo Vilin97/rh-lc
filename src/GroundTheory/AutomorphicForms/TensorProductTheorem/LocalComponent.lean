@@ -19,7 +19,6 @@ variable {L : Type*} [Group L] [TopologicalSpace L] [IsTopologicalGroup L]
 
 section General
 
-variable (σ) in
 
 def genSubrep (N : Submodule ℂ V) : Subrepresentation σ where
   toSubmodule := ⨆ g : L, N.map (σ g)
@@ -102,7 +101,6 @@ section Simple
 variable (hNK : N ≤ fixedVectors σ K)
   (hNst : ∀ g, ∀ n ∈ N, (fixedProj σ hσ hKc hKo (σ g n) : V) ∈ N)
 
-include hNK hNst in
 
 theorem mem_of_mem_genSubrep_fixed {u : V} (hu : u ∈ (genSubrep σ N).toSubmodule)
     (huK : u ∈ fixedVectors σ K) : u ∈ N := by
@@ -131,7 +129,6 @@ theorem genQuotMk_injective : Function.Injective (genQuotMk hσ hKc hKo N) := by
   rw [this]
   rfl
 
-include hNK in
 
 theorem genQuotMk_mem_fixedVectors (n : N) :
     genQuotMk hσ hKc hKo N n ∈ fixedVectors (genQuotRep hσ hKc hKo N) K := by
@@ -141,7 +138,6 @@ theorem genQuotMk_mem_fixedVectors (n : N) :
   congr 1
   exact Subtype.ext (hNK n.2 k hk)
 
-include hNK hNst in
 
 theorem isIrreducible_genQuotRep (hN0 : N ≠ ⊥)
     (hNmin : ∀ N₁ : Submodule ℂ V, N₁ ≤ N → N₁ ≠ ⊥ →

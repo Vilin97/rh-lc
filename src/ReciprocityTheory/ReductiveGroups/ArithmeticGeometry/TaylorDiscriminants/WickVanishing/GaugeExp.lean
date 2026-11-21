@@ -27,6 +27,5 @@ def WickExpSt : Prop :=
       constantCoeff (DpolyOf F u P (G * FB.expS k (t • q))) =
         constantCoeff (DpolyOf F u (expSecond k c (t * algebraMap ℚ k (1 / 2)) P.totalDegree P) G)
 
-open G2 in
 
 end ReciprocityTheory.ChartRestriction.G.TB.GE

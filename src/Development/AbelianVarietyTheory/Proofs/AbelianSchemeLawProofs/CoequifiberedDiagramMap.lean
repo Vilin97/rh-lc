@@ -47,7 +47,6 @@ lemma map_mem_invariants {U V : Y.Opens} (h : U ≤ V) {x : Γ(X, f ⁻¹ᵁ V)}
     map_pullOver _ _ _ _ h, CommRingCat.comp_apply, CommRingCat.comp_apply,
     (mem_invariants ..).1 hx]
 
-set_option backward.isDefEq.respectTransparency false in
 
 def diagram : Y.Opensᵒᵖ ⥤ CommRingCat where
   obj U := .of (invariants f g a ha p hp U.unop)
@@ -150,8 +149,6 @@ def toQuotPiece (U : Y.affineOpens) : (f ⁻¹ᵁ U.1).toScheme ⟶ quot f g a h
   (f ⁻¹ᵁ U.1).toSpecΓ ≫ Spec.map (invariantsInclusion f g a ha p hp U.1) ≫
     (cover f g a ha p hp).f U
 
-set_option backward.defeqAttrib.useBackward true in
-set_option backward.isDefEq.respectTransparency false in
 
 def toQuot : X ⟶ quot f g a ha p hp :=
   Scheme.OpenCover.glueMorphismsOfLocallyDirected
@@ -209,7 +206,6 @@ lemma toQuot_fromQuot : toQuot f g a ha p hp ≫ fromQuot f g a ha p hp = f := b
 
 set_option backward.isDefEq.respectTransparency false
 
-omit [QuasiCompact f] [QuasiSeparated f] [QuasiCompact g] [QuasiSeparated g] in
 
 lemma of_charts (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget P] {ι : Type}
     (X' Y' : ι → Scheme.{0}) (u : ∀ i, X' i ⟶ X) (v : ∀ i, Y' i ⟶ Y) (f' : ∀ i, X' i ⟶ Y' i)
@@ -221,7 +217,6 @@ lemma of_charts (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget P] {ι
   rw [← this, MorphismProperty.cancel_left_of_respectsIso P]
   exact hP i
 
-omit [QuasiCompact f] [QuasiSeparated f] [QuasiCompact g] [QuasiSeparated g] in
 
 lemma isPullback_of_charts {Z Q : Scheme.{0}} (b : W ⟶ Z) (q : X ⟶ Q) (q' : Z ⟶ Q) {ι : Type}
     (W' X' : ι → Scheme.{0}) (u : ∀ i, W' i ⟶ W) (v : ∀ i, X' i ⟶ X) (a' : ∀ i, W' i ⟶ X' i)
@@ -296,7 +291,6 @@ lemma isFinite_fromQuot [IsFinite f] [IsLocallyNoetherian Y] :
       (IsScalarTower.toAlgHom Γ(Y, U.1) (invariants f g a ha p hp U.1)
         Γ(X, f ⁻¹ᵁ U.1)).toLinearMap Subtype.val_injective
 
-omit [QuasiCompact f] [QuasiSeparated f] [QuasiCompact g] [QuasiSeparated g] in
 
 theorem exists_quotient [IsFinite f] [IsAffineHom g] [IsLocallyNoetherian Y]
     (H : ∀ U : Y.affineOpens, (invariants f g a ha p hp U.1).subtype.FaithfullyFlat ∧

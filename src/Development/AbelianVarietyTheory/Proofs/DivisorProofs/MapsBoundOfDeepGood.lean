@@ -100,6 +100,5 @@ end GlobalTheory.CovTop.DescentMaps
 
 namespace GlobalTheory.CovTop.DescentMaps
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.CovTop.DescentMaps

@@ -18,7 +18,6 @@ section Complete
 variable {Z : Type} [CommRing Z] (π : Z) {A : Type} [CommRing A] [Algebra Z A] {N : ℕ}
   (β : Module.Basis (Fin N) Z A)
 
-include β in
 
 end Complete
 

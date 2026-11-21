@@ -432,7 +432,6 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
 
 omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel L] [TopologicalSpace L]
   [IsNonarchimedeanLocalField L] [ValuativeExtension K L] [FiniteDimensional K L] [IsGalois K L] in
-open scoped Pointwise in
 
 theorem normalLattice_eq_smul_span (π : 𝒪[K]) (θ : L) (s : ℕ) :
     normalLattice π θ s = π ^ s • Submodule.span 𝒪[K] (Set.range fun σ : Gal(L/K) => σ θ) := by
@@ -460,7 +459,6 @@ theorem isOpen_units (j : ℕ) : IsOpen (D.units j : Set 𝒪[L]ˣ) := by
 
 attribute [local instance] action
 
-omit [TopologicalSpace L] [IsNonarchimedeanLocalField L] [IsGalois K L] in
 
 theorem subsingleton_tate :
     Subsingleton (TateZero Gal(L/K) (D.units 0)) ∧ Subsingleton (TateNegOne Gal(L/K) (D.units 0)) :=
@@ -469,7 +467,6 @@ theorem subsingleton_tate :
 
 end NormalLatticeData
 
-open scoped Pointwise in
 
 theorem exists_openSubgroup_units_tateTrivial :
     ∃ (π : 𝒪[K]) (θ : L) (k : ℕ), Irreducible π ∧ (LinearIndependent K fun σ : Gal(L/K) => σ θ) ∧

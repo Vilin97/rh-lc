@@ -62,7 +62,6 @@ open GlobalTheory.SplitFlip GlobalTheory.SplitWeil Matrix MeasureTheory
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open Classical in
 
 theorem stdA_mul {ν : kˣ →* ℂˣ} {ϖ : kˣ} {c a a' : ℕ} {X : Matrix (Fin a) (Fin (a + a')) k} {g₀ : GL (Fin a) k}
     (hg₀ : g₀.val = blk₁ X) (g : GL (Fin a) k) :
@@ -113,7 +112,6 @@ open GlobalTheory.SplitFlip GlobalTheory.SplitWeil Matrix MeasureTheory
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open Classical in
 
 theorem stdB_mul {ν : kˣ →* ℂˣ} {ϖ : kˣ} {c a a' : ℕ} {Y : Matrix (Fin a') (Fin (a + a')) k} {g₀ : GL (Fin a') k}
     (hg₀ : g₀.val = blk₂ Y) (g : GL (Fin a') k) :
@@ -165,7 +163,6 @@ open GlobalTheory.SplitFlip GlobalTheory.SplitWeil Matrix MeasureTheory
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable [MeasurableSpace k] [BorelSpace k]
 
-open Classical in
 
 theorem bigF_stdA {ν : kˣ →* ℂˣ} {ϖ : kˣ} (hϖ : IsUnif ϖ) (c : ℕ) {a a' : ℕ} {X : Matrix (Fin a) (Fin (a + a')) k}
     {g₀ : GL (Fin a) k} (hg₀ : g₀.val = blk₁ X) :
@@ -219,7 +216,6 @@ theorem bigF_stdA_of_det_eq_zero (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c : ℕ) {a a
     exact hd (by rw [blk₁_mul, det_mul, hX, mul_zero])
   simp [bigF, shellSum, shell, h0]
 
-open Classical in
 
 theorem smallF_stdB {ν : kˣ →* ℂˣ} {ϖ : kˣ} (c : ℕ) {a a' : ℕ} {Y : Matrix (Fin a') (Fin (a + a')) k}
     {g₀ : GL (Fin a') k} (hg₀ : g₀.val = blk₂ Y) :
@@ -320,8 +316,6 @@ theorem matrixLastColumnBlock_standardFrame_eq_zero {a a' : ℕ} : blk₂ (X0 k 
 
 end GlobalTheory.StdPairMatch
 
-open GlobalTheory.SplitFlip GlobalTheory.SplitWeil GlobalTheory.StdPairMatch in
-open Classical in
 
 theorem GlobalTheory.StdPairMatch.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k]
     (α β ν : kˣ →* ℂˣ) (ϖ : kˣ) (c m a a' : ℕ), GlobalTheory.SplitFlip.IsUnif ϖ → ν = α / β → 1 ≤ c → GlobalTheory.SplitFlip.CondLE ϖ c ν →

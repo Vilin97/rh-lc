@@ -103,7 +103,6 @@ theorem map_emb_fin (x : Mx D t n) (a : Mx D T'.rank n) :
       lmul n (d.jX.map (finPart D)) (fun i j => finPart D (x i j)) +
         lmul n (d.j0.map (finPart D)) (fun i j => finPart D (a i j)) := map_emb d (finPart D) x a
 
-set_option maxHeartbeats 800000 in
 
 theorem pure {θ : InfFam D} (hθ : IsInfFam θ) (μ : Measure (Mx D t n)) [μ.IsAddHaarMeasure]
     (f : SchwartzMap (D.what₂.Tau → Fin T.rank → Fin n → ℂ) ℂ) (g : (Fin T.rank → Fin n → AEf D) → ℂ)

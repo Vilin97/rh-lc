@@ -51,6 +51,5 @@ theorem rowRhoReal : StatRowRhoReal := by
     · exact clause5Row O VT VT' A T' _ M r χ (Aw.decompositionSubgroup Ek) ε T₁ T₂ ρ₁ ρ₂ π γ
         (withInv D inv.toLinearMap invF.toLinearMap) u hu v hε hD.contT hπ hv hγ hk C₁ c3'
 
-set_option maxHeartbeats 1000000 in
 
 end Formalism.RepresentationBoundsCohomology.FIN

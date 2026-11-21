@@ -170,7 +170,6 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   {ι : Type u} {H : ι → Type u} [∀ v, Group (H v)] [∀ v, TopologicalSpace (H v)]
   [∀ v, IsTopologicalGroup (H v)]
 
-omit [IsTopologicalGroup G] in
 
 theorem continuous_toMonoidHom {H' : Type u} [Group H'] [TopologicalSpace H'] (ψ : H' →ₜ* G) :
     Continuous ψ.toMonoidHom :=

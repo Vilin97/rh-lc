@@ -25,7 +25,6 @@ theorem isReduced_tensor_domain_of_formallyEtale (E L D : Type*) [Field E] [Fiel
     (Algebra.TensorProduct.map (AlgHom.id E L) (IsScalarTower.toAlgHom E D (FractionRing D)))
     (Module.Flat.lTensor_preserves_injective_linearMap _ (IsFractionRing.injective D _))
 
-open scoped IntermediateField.algebraAdjoinAdjoin in
 
 theorem isReduced_tensor_field_of_perfectField (K L F : Type*) [Field K] [PerfectField K]
     [Field L] [Algebra K L] [Algebra.EssFiniteType K L] [Field F] [Algebra K F] :

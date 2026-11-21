@@ -36,7 +36,6 @@ theorem commute_cap_Eop (τ τ' : InfinitePlace E) (u : ℂ) (i j : Fin a) : Com
   · subst h; exact cap_comm τ u i j
   · exact commute_cap_of_commute_Eop τ u _ fun k l => Eop_comm h k l i j
 
-open Classical in
 
 theorem lieS_single (v : InfinitePlace E) (i j : Fin a) (t : ℝ) :
     lieS E a i j (Pi.single v t) = (t : ℂ) • Eop v i j := by

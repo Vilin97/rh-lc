@@ -45,7 +45,6 @@ theorem map_aeval_int {S T : Type*} [CommRing S] [CommRing T] [Algebra ℤ S] [A
 
 end CurveVerticalPointMultiplicity
 
-open CurveVerticalPointMultiplicity GroundTheory.Heights₂.Heights.VerticalPointMultiplicityChart in
 
 theorem CurveVertPointMultChart.proof (hCh : CurveVertPointChart.Statement)
     (hN : CurveVertPointNagata.Statement) : CurveVertPointMultChart.Statement := by

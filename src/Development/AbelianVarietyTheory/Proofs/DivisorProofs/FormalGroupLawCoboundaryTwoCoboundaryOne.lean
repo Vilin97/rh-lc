@@ -140,8 +140,6 @@ private theorem op_addLaw_eq_add_of_hasSubst {u v : Fin d → MvPowerSeries τ R
     at2_X_of_hasSubst h]
   rfl
 
-set_option autoImplicit false in
-open CategoryTheory TensorProduct MvPowerSeries in
 
 theorem _root_.GlobalTheory.Katz.formalGroupLawCoboundaryTwo_coboundaryOne_alt : ∀ (R : Type) [CommRing R] (d : ℕ)
     (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) R), (∀ i, constantCoeff (μ i) = 0) →

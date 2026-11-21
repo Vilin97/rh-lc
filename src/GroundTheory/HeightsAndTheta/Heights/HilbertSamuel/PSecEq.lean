@@ -22,7 +22,6 @@ namespace SecEqProof
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
-variable (ι) in
 
 abbrev Mono (a : K → ℕ) : Type := {μ : (Σ k, ι k) → ℕ // ∀ k, ∑ i, μ ⟨k, i⟩ = a k}
 
@@ -177,7 +176,6 @@ theorem piece_le_secM (y : (Σ k, ι k) → Ω) {a : K → ℕ} {N : ℕ} (e : M
 
 end SecEqProof
 
-open SecEqProof in
 
 theorem SecEq.proof : SecEq.Statement := by
   intro K _ ι _ Ω _ y a ha hy

@@ -18,7 +18,6 @@ namespace GlobalTheory.ExportSeries
 
 variable {D : D7}
 
-open Classical in
 
 def restrictHalf {m n : ℕ} (a' b : AE D) (Λ : AddSubgroup (Mx D m n)) : (Mx D m n → ℂ) →ₗ[ℂ] (Mx D m n → ℂ) where
   toFun Φ x := Φ (a' • x) * halfInd b Λ (b • x) * (if IsHalf (a' + b) x then 1 else 0)

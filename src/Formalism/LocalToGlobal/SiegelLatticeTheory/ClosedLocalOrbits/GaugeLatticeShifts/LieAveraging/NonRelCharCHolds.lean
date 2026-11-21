@@ -118,7 +118,6 @@ theorem trace_zero (X : HidaSetting D) {y : D.host.E} (hy : y + star y = 0) : Al
   · exact absurd h5 two_ne_zero
   · exact h5
 
-open Formalism.L2.SG.TermOp.Vanish in
 
 theorem nonRelCharC_holds : NonRelCharC := by
   intro D X Yf u u' t ht

@@ -240,7 +240,6 @@ end
 
 end GlobalTheory.CompanionTheory.Ar.LieFibre
 
-open GlobalTheory.CompanionTheory.Ar.LieFibre GroundTheory.Heights₂.Heights in
 
 theorem GlobalTheory.CompanionTheory.Ar.lie_fibre_exists : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω) (ξ : Sp Ω ⟶ X), ∀ (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] (Li : Type) [AddCommGroup Li] [Module Ω Li] (M : LieModel G ξ Li) (h : LieMetric M y) (L : Type) [Field L] [NumberField L] (z : Sp (𝓞 L) ⟶ X), ∃ (B : GroundTheory.Heights₂.Heights.HermitianBundle.{0} L) (MB : LieModel G z B.carrier), IsFibre (fun z v w c => c = h.ip z v w) z B MB := by
   intro X Ω _ K _ J _ y ξ G _ _ _ Li _ _ M h L _ _ z

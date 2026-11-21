@@ -37,7 +37,6 @@ theorem pow_eq_one_iff (n : ℕ) (y : d.A.X) : D₀.c (d.eX y) ^ n = 1 ↔ n •
     | succ k ih => rw [succ_nsmul, d.u.ex_add, ih, d.ex_ct, pow_succ]
   rw [← h, d.u.ker, d.lam_eq]
 
-omit [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
 theorem ah_ratio (A : AnArc O) (l m : A.abelian₂) :
     A.ah (l + m) 0 = A.ah l 0 * A.ah m 0 * Complex.exp (Real.pi * A.H l m) := by

@@ -20,7 +20,6 @@ theorem choose_dite_congr {α E : Type*} [Zero E] (P Q : α → Prop) (hPQ : P =
   subst hPQ
   split_ifs with h1 <;> first | rfl | exact hfg _ h1.choose_spec
 
-open Classical in
 
 theorem one_mem_UW (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) :
     (1 : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) ∈ UWset k r z := by
@@ -99,7 +98,6 @@ end
 
 end Formalism.FourierDecayAlt.P.TBBx2
 
-open Formalism.FourierDecayAlt in
 
 namespace Formalism.FourierDecayAlt.P.TBBx2
 
@@ -270,7 +268,6 @@ end
 
 end Formalism.FourierDecayAlt.P.TBBx2.Tri
 
-open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.TBB Formalism.FourierDecayAlt.P.TBBx2.Tri in
 
 namespace Formalism.FourierDecayAlt.P.TBBx2.Bp
 

@@ -108,7 +108,6 @@ section Witt
 
 variable (p : ℕ) [Fact p.Prime] {k : Type} [Field k] [CharP k p] {σ : Type} {d : ℕ}
 
-variable (k) in
 
 abbrev Fr : Type := FractionRing (WittVector p k)
 
@@ -127,7 +126,6 @@ theorem _root_.GlobalTheory.Katz.constantCoeff_lift {f : MvPowerSeries σ k}
   rw [← coeff_zero_eq_constantCoeff_apply, _root_.GlobalTheory.Katz.coeff_lift,
     coeff_zero_eq_constantCoeff_apply, h, WittVector.teichmuller_zero, map_zero]
 
-variable (k σ) in
 
 def intBy (c : WittVector p k) : Submodule (WittVector p k) (MvPowerSeries σ (Fr p k)) where
   carrier := {f | ∀ α, ∃ w : WittVector p k, coeff α f = algebraMap _ (Fr p k) (c * w)}
@@ -142,7 +140,6 @@ def intBy (c : WittVector p k) : Submodule (WittVector p k) (MvPowerSeries σ (F
     change r • coeff α f = _
     rw [hw, Algebra.smul_def, ← map_mul, mul_left_comm]
 
-variable (k σ) in
 
 def quasiInt : Submodule (WittVector p k) (MvPowerSeries σ (Fr p k)) where
   carrier := {f | ∀ α i, ∃ w : WittVector p k, (α i : Fr p k) * coeff α f = algebraMap _ (Fr p k) w}
@@ -187,7 +184,6 @@ section Chart
 
 variable {k : Type} [CommRing k] {σ : Type} [Finite σ]
 
-variable (k) in
 
 def evA {A : Type} [CommRing A] [Algebra k A] (x : σ → A) (hx : ∀ i, IsNilpotent (x i)) :
     MvPowerSeries σ k →ₐ[k] A :=
@@ -200,7 +196,6 @@ def evA {A : Type} [CommRing A] [Algebra k A] (x : σ → A) (hx : ∀ i, IsNilp
         (hasSubst_of_constantCoeff_nilpotent fun i => by simpa using hx i)) r)).trans ?_
       rw [MvPowerSeries.algebraMap_apply, constantCoeff_C] }
 
-variable (k) in
 
 def Presents {B : ℕ → Type} [∀ n, CommRing (B n)] [∀ n, Algebra k (B n)] (y : ∀ n, σ → B n)
     (hy : ∀ n i, IsNilpotent (y n i)) : Prop :=

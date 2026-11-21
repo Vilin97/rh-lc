@@ -142,7 +142,6 @@ theorem rel_filDR_properties :
     rw [Algebra.smul_def]
     exact Ideal.mul_mem_left _ _ hc
 
-attribute [local instance] GlobalTheory.Cris.opModule GlobalTheory.Cris.isCentralScalar_kaehler GlobalTheory.Cris.isScalarTower_kaehler in
 
 theorem rel_eq_bot_of_map (I : Ideal R) (κ : DividedPowers I) (h : IsDPMorphism κ δ (algebraMap R B))
     (hJ : J ≤ I.map (algebraMap R B)) : rel R δ = ⊥ := by

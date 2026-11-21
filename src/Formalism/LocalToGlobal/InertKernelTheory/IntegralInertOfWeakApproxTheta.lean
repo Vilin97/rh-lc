@@ -49,10 +49,7 @@ theorem unit_substitution_local : UnitSubstLoc :=
     (ModelP.biaddInertAll_of (Dict.biaddInert_of (Sigma.sigmaCurveInert_of Sigma.invAlg' Sigma.secondEisensteinAlgebraic))
       genus_one_witt_exists)
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
 end Formalism.L2.KerInert

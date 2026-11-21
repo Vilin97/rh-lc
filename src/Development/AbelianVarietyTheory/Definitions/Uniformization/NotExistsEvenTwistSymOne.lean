@@ -120,7 +120,6 @@ theorem TQ.Desc.exists_even {Q : TQ G X} {P : CP G} (D : Q.Desc P) : ∃ σ : Cu
     rw [key T x⁻¹ z J J' hJ hJ', key T x z J J' hJ hJ', hs]
     exact mul_inv_eq_mul_mul_mul_inv _ _ _
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.UU
 end

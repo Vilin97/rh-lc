@@ -61,7 +61,6 @@ def psiAt {Pg : Finset (Pl D.host.E)} (pl : (Σ k : Fin 2, D.nd.PlG k) ≃ ↥Pg
   exact (AddChar.zmodChar (D.host.g kv.1) (hζ kv.1)).compAddMonoidHom
     ((res kv).toRingHom.toAddMonoidHom.comp (AddMonoidHom.mulLeft (xiBar D (pl kv).1)))
 
-open Classical in
 
 end Txt
 
@@ -72,8 +71,6 @@ variable {D : Formalism.BasicNotions.D7} {G : Type} [Group G] {P0 : Subgroup G} 
   {pl : (Σ k : Fin 2, D.nd.PlG k) ≃ ↥Pg} {res : ∀ kv : (Σ k : Fin 2, D.nd.PlG k), kP (pl kv).1 ≃+* ZMod (D.host.g kv.1)}
   {ψ : ∀ PP : Pl D.host.E, AddChar (kP PP) D.what₂.LL} {eC : G ≃* G0 Pg D.R.r}
 
-variable (D) in
-open Classical in
 
 theorem res_unique {R : Type} [Semiring R] {n : ℕ} (r r' : R ≃+* ZMod n) : r = r' := by
   have hs : r.symm = r'.symm := RingEquiv.toRingHom_injective (Subsingleton.elim _ _)

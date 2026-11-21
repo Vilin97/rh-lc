@@ -46,7 +46,6 @@ variable (K L : FiniteSubfield) [Fact (K ≤ L)]
 instance isGalois_of_fact : IsGalois K.1 L.1 :=
   isGalois_of_normal
 
-omit [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal] in
 
 theorem isScalarTower_of_le (E : FiniteSubfield) [Fact (K ≤ E)] [Fact (L ≤ E)] :
     IsScalarTower K.1 L.1 E.1 :=

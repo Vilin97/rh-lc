@@ -30,7 +30,6 @@ theorem hermLine_ext {ι : Unit → Type} [∀ k, Fintype (ι k)] {L M : Recipro
 
 variable {T T₂ : Type} [Fintype T] [DecidableEq T] [Fintype T₂] [DecidableEq T₂]
 
-omit [DecidableEq T₂] in
 
 theorem subst_subst {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B = 1) (f : MRing (dualBlocks T)) :
     intCoordSubst A (intCoordSubst B f) = f := by
@@ -54,7 +53,6 @@ theorem subst_subst {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B
     simp_rw [h1, hAB, Matrix.one_apply]
     simp
 
-omit [DecidableEq T₂] in
 
 theorem subst_surjective {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B = 1) :
     Function.Surjective (intCoordSubst A) :=
@@ -73,7 +71,6 @@ theorem map_eq_comap {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * 
   · rw [← subst_subst hAB x]
     exact Ideal.mem_map_of_mem _ hx
 
-omit [DecidableEq T] in
 
 theorem weight_one_eq (m : (Σ _ : Unit, T) →₀ ℕ) : Finsupp.weight 1 m = ∑ i : T, m ⟨(), i⟩ := by
   have h : Finsupp.weight 1 m = m.degree := by
@@ -82,7 +79,6 @@ theorem weight_one_eq (m : (Σ _ : Unit, T) →₀ ℕ) : Finsupp.weight 1 m = �
   rw [h, Finsupp.degree_eq_sum, Fintype.sum_sigma]
   simp
 
-omit [DecidableEq T] in
 
 theorem isMultiHomog_iff (f : MRing (dualBlocks T)) (d : Unit → ℕ) :
     Geo.IsMultiHomog f d ↔ f.IsHomogeneous (d ()) := by
@@ -95,7 +91,6 @@ theorem isMultiHomog_iff (f : MRing (dualBlocks T)) (d : Unit → ℕ) :
     rw [← weight_one_eq]
     exact h (mem_support_iff.mp hm)
 
-omit [DecidableEq T] [DecidableEq T₂] in
 
 theorem isMultiHomog_subst (M : Matrix T T₂ ℤ) {f : MRing (dualBlocks T₂)} {d : Unit → ℕ}
     (hf : Geo.IsMultiHomog f d) : Geo.IsMultiHomog (intCoordSubst M f) d := by
@@ -106,7 +101,6 @@ theorem isMultiHomog_subst (M : Matrix T T₂ ℤ) {f : MRing (dualBlocks T₂)}
   rw [one_mul] at h
   exact h
 
-omit [DecidableEq T₂] in
 
 theorem isRelevant_comap {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B = 1)
     (W : Ideal (MRing (dualBlocks T))) : Geo.IsRelevant (W.comap (intCoordSubst A)) ↔ Geo.IsRelevant W := by
@@ -143,7 +137,6 @@ theorem isMultiHomogIdeal_comap {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} 
     exact ⟨a, isMultiHomog_subst B ha⟩
   · rw [← map_eq_comap hBA hAB, Ideal.map_span]
 
-omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 
 theorem comap_C_comap (A : Matrix T T₂ ℤ) (W : Ideal (MRing (dualBlocks T))) :
     (W.comap (intCoordSubst A)).comap (C : ℤ →+* MRing (dualBlocks T₂)) = W.comap C := by
@@ -221,20 +214,17 @@ theorem divSupp_comap {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A *
     rw [sup_span_comap hAB hBA, hm]
     exact ⟨W, hW, rfl⟩
 
-omit [DecidableEq T] [DecidableEq T₂] in
 
 theorem contDiff_intCoordPt (A : Matrix T T₂ ℤ) : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (intCoordPt A) := by
   refine contDiff_pi.2 fun p => ?_
   exact ContDiff.sum fun t _ => (contDiff_apply ℝ (fun _ => ℂ) _).mul contDiff_const
 
-omit [DecidableEq T₂] in
 
 theorem isSmoothHerm_intCoordLine (A : Matrix T T₂ ℤ) (hA : ∃ B : Matrix T₂ T ℤ, A * B = 1)
     {L : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (dualBlocks T₂)} (hL : Geo.IsSmoothHerm L) :
     Geo.IsSmoothHerm (intCoordLine A hA L) :=
   hL.comp (contDiff_intCoordPt A).contDiffOn fun _ hz => intCoordPt_ne_zero hA hz
 
-omit [DecidableEq T] in
 
 theorem pt_pt {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hBA : B * A = 1) (z : (Σ _ : Unit, T₂) → ℂ) :
     intCoordPt A (intCoordPt B z) = z := by
@@ -255,7 +245,6 @@ theorem line_line {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B =
     change L.h (intCoordPt A (intCoordPt B z)) = L.h z
     rw [pt_pt hBA])
 
-omit [DecidableEq T₂] in
 
 theorem line_tensor (A : Matrix T T₂ ℤ) (hA : ∃ B : Matrix T₂ T ℤ, A * B = 1)
     (L M : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (dualBlocks T₂)) :
@@ -267,7 +256,6 @@ def transFam (A : Matrix T T₂ ℤ) (B : Matrix T₂ T ℤ) (hBA : B * A = 1)
     Ideal (MRing (dualBlocks T)) → (n : ℕ) → (Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine (dualBlocks T)) → ℝ :=
   fun Q m M => I (Q.comap (intCoordSubst A)) m (fun j => intCoordLine B ⟨A, hBA⟩ (M j))
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem C_charOf_mem (V : Ideal (MRing (dualBlocks T))) :
     (C ((Geo.charOf V : ℕ) : ℤ) : MRing (dualBlocks T)) ∈ V := by
@@ -331,7 +319,6 @@ theorem isRFamily_trans {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A
 
 end IntegralCoordinateChange
 
-open IntegralCoordinateChange in
 
 theorem IntCoordChange.proof (hU : AI.I2.UniqueStatement) (hG : IntCoordGeoNum.Statement)
     (hI : IntCoordArInt.Statement) : IntCoordChange.Statement := by

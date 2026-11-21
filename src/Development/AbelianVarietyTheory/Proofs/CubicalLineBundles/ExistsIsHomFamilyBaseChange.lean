@@ -58,7 +58,6 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open scoped CategoryTheory.Obj in
 variable {S S' : Scheme.{0}} {f : S' ⟶ S} {B G : Over S} {B' G' : Over S'}
   {β : B'.left ⟶ B.left} {π : G'.left ⟶ G.left} in
-variable [GrpObj B] [GrpObj G] [GrpObj B'] [GrpObj G'] in
 
 theorem _root_.GlobalTheory.PureType.isMonHom_over (hβ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsGrpPullback B' B f β) (hπ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsGrpPullback G' G f π) {φ : B ⟶ G}
     [IsMonHom φ] {φ' : B' ⟶ G'} (h : φ'.left ≫ π = β ≫ φ.left) : IsMonHom φ' := by
@@ -85,7 +84,6 @@ theorem _root_.GlobalTheory.PureType.isMonHom_over (hβ : _root_.ReciprocityTheo
   · have := key (B' ⊗ B') (fst B' B') (snd B' B')
     simpa [Hom.mul_def] using this
 
-omit [GrpObj B] [GrpObj B'] in
 
 end Grp
 

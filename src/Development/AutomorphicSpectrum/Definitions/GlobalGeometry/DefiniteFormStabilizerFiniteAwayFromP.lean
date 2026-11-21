@@ -26,9 +26,7 @@ def IsGen (W : Submodule (𝓞 K) V) (ev : V → Ω) (g : Gens V) : Prop :=
 
 def xs (ev : V → Ω) (g : Gens V) (k : Fin g.1) : Ω := ev (g.2 k.succ) / ev (g.2 0)
 
-open Classical in
 
-open Classical in
 
 end Tuple
 

@@ -163,7 +163,6 @@ section U
 
 variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω]
 
-variable (n : ℕ) (s : HidaSetting l L Ω) in
 
 private def kS : Subgroup (UA L n) :=
   GlobalTheory.UnitaryBC.finU L n ⊓ (⨅ (u : Plc L) (_ : u.under (𝓞 (Lp L)) ∉ s.S), (KO (u.adicCompletion L) (Fin n)).comap (cLoc u)) ⊓

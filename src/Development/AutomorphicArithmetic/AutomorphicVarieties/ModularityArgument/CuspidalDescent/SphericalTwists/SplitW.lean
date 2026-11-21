@@ -112,5 +112,3 @@ private theorem chi_map {A A' H : Type} [CommRing A] [CommRing A'] [Group H] (D 
 
 end UpperTheory.V.Hi.Up
 
-set_option maxHeartbeats 1000000 in
-open UpperTheory.V.Hi.Up in

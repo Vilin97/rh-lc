@@ -413,7 +413,6 @@ theorem hasSumLocallyUniformlyOn_iteratedFDeriv (hU : IsOpen U)
   exact iteratedFDeriv_fun_sum_apply fun i _ =>
     contDiffAt_of_differentiableOn (hF i) (hU.mem_nhds hz) _
 
-omit [NormedSpace ℂ E] [FiniteDimensional ℂ E] [NormedSpace ℂ V] in
 
 theorem hasSumLocallyUniformlyOn_of_locally_normal
     (hle : ∀ x ∈ U, ∃ t ∈ 𝓝 x, ∃ u : ι → ℝ, Summable u ∧ ∀ i, ∀ z ∈ t, ‖F i z‖ ≤ u i) :

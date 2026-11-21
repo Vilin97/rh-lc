@@ -177,7 +177,6 @@ theorem evR_pow_ne {f : Rul Xo c} {y : FrPt Xo c (CAt σ)} (h : toC (evR Xo c f 
     rw [pow_succ, evR_mul']
     exact mul_ne_zero (M₀ := ℂ) ih h
 
-open GlobalTheory.AllWt GlobalTheory.ShFam in
 
 theorem tw_of_dec {V : Unf Xo c σ r} (hσ : GoodEmb c σ) (hU : IsUnf V) (κ : KeySec Xo c)
     (hNV : ∀ a n, Dom a n → NV Xo c σ a n) (G : WTZ E) (hG : G.2 = 0)

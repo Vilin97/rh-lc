@@ -67,7 +67,6 @@ lemma natDegree_eq_zero_of_inv {F : Type} [Field F] (a b : F[X])
   rw [h3, natDegree_mul_X_pow _ ha] at h4
   omega
 
-set_option backward.isDefEq.respectTransparency false in
 
 lemma exists_extension {W Z Y S : Scheme.{0}} [IsIntegral Z]
     (hZ : ∀ x : Z, ValuationRing (Z.presheaf.stalk x)) (w : W ⟶ Z) [IsOpenImmersion w] [Nonempty W]
@@ -347,15 +346,12 @@ noncomputable def ev {A : Type} [CommRing A] [Algebra K A] (c : L →ₐ[K] A) (
     rw [LaurentPolynomial.eval₂_C]
     exact c.commutes r
 
-variable (K L) in
 
 noncomputable def inc : L[X] →ₐ[K] L[T;T⁻¹] := (toLaurentAlg : L[X] →ₐ[L] L[T;T⁻¹]).restrictScalars K
 
-variable (K L) in
 
 noncomputable def cst : L →ₐ[K] L[T;T⁻¹] := (inc K L).comp CAlgHom
 
-variable (L) in
 
 noncomputable def tU : (L[T;T⁻¹])ˣ := (isUnit_T (R := L) 1).unit
 

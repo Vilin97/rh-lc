@@ -17,13 +17,9 @@ variable {k G : Type u} [CommRing k] [Group G] [Fintype G]
 
 section Naturality
 
-omit [Fintype G] in
 
-omit [Fintype G] in
 
-omit [Fintype G] in
 
-omit [Fintype G] in
 
 theorem tateIsoH_map_apply {X Y : Rep.{u} k G} (φ : X ⟶ Y) (n : ℕ) [NeZero n]
     (x : tateCohomology X n) :

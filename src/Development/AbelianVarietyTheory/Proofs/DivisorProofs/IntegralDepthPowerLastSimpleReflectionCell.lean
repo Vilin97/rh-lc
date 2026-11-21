@@ -59,7 +59,6 @@ theorem sums_over_levels {X : Type} [MeasurableSpace X] (μ : Measure X) (f : X 
 
 end GlobalTheory.WeylCell.WeylUnipotentShell.Atone
 
-open GlobalTheory.WeylCell.WeylUnipotentShell.Atone in
 
 theorem _root_.GlobalTheory.WeylCell.WeylUnipotentShell.integral_depth_cell : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] [CompleteSpace L] (ϖ : L)
     (σ : L →+* L) (q : ℕ), IsUnramInv ϖ σ q →

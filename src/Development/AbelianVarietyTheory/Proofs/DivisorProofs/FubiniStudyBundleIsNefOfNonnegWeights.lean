@@ -23,7 +23,6 @@ section Sec
 
 variable {X : Scheme.{0}} [IsIntegral X]
 
-open Classical in
 
 def fnOnOpen (U : X.Opens) (g : X.functionField) (hg : ∀ x ∈ U, RegAt x g) : Γ(X, U) :=
   if h : genericPoint X ∈ U then (exists_fnOf_eq h hg).choose else 0

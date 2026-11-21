@@ -80,7 +80,6 @@ theorem dcSingleE (Γ S S' : Subgroup G) [Countable Γ] (hS : S ≤ Γ) (hS' : S
 
 end DC
 
-open PI.PoincareSeriesInner.W in
 
 theorem double_coset_single_unfolding : Formalism.L2.SG.TermOp.KExpCut.DCSingle := by
   intro G _ _ _ μ _ _ Γ S S' _ hS hS' D' hD' R hR Fs hFs F hF f g hfm hgm hfi hgi hfin hsum
@@ -372,7 +371,6 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
   {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)} {F0' : FlagG (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)}
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
-variable (X u u' F0 F0' what₂ rows') in
 
 def OOLintSum : Prop :=
   ∑' t : GTerm X u u' F0 F0' what₂ rows',

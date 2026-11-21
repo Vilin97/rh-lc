@@ -249,7 +249,6 @@ theorem transcendental_frame (hF : IsProjFrame x e) : Transcendental G.Φ (G.x' 
 
 end ProjFrameFibrePt
 
-open ProjFrameFibrePt in
 
 theorem ProjFrameFibrePt.proof : ProjFrameFibrePt.Statement := by
   intro D Ω _ _ κ _ x e _ hF G

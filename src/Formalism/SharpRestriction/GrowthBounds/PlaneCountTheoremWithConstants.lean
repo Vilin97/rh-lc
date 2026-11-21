@@ -1494,7 +1494,6 @@ theorem eventually_large_scale_bound {eps : ℝ} (Fm : FamP eps) : Ev Fm fun x i
   rw [Real.rpow_neg hx0.le, one_div]
   exact inv_anti₀ (by norm_num) h4
 
-open Classical in
 
 theorem windows_of (K : Consts) (P : ParameterChoice' D L) (hLa : La K L.sc = L.LaG) (p : ℕ) (t0 : HH D) :
     ∀ s ∈ topsPos D p t0, wPos D p t0 (aL L) s ∈ winA D L.sc ∧ wPos D p t0 (bL L) s ∈ winB D K L.sc := by

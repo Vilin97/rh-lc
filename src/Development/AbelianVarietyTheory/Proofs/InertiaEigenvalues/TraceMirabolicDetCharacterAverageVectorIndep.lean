@@ -100,7 +100,6 @@ theorem tr_mirEl_conj {r : ℕ} (ψ : Gn g r → ℂ) (hψ : IsClass ψ) (θ : (
 
 end GlobalTheory.MirAvg
 
-open GlobalTheory.GLq GlobalTheory.MirAvg Matrix in
 
 theorem GlobalTheory.MirAvg.tr_mirEl_indep : ∀ (g : ℕ) [Fact g.Prime] (n : ℕ) (ψ : Gn g (n + 1) → ℂ), IsClass ψ → ∀ (θ : (ZMod g)ˣ →* ℂˣ)
     (a : Fin (n + 1) → ZMod g), a ≠ 0 → ∀ b : Bool,

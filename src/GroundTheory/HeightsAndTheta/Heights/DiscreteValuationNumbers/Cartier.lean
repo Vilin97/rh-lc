@@ -118,7 +118,6 @@ section Vertical
 variable {K : Type*} [DecidableEq K] {ι : K → Type*}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-omit [IsDomain O] [IsDiscreteValuationRing O] in
 
 theorem IsVerticalDivisor.of_unit_off_special {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {ϖ : O} {b : K → ℤ}
     {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}

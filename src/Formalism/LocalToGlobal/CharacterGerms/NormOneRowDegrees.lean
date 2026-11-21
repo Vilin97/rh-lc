@@ -140,17 +140,11 @@ variable (X : RowData C V d (IIof r tau o0) J0) (F : Flag X)
   (hty : ∀ g (x : IIof r tau o0 g), (X.G g).ty (Sum.inl x) = x.1)
   (std : ∀ g t (c : Fin (X.rkF g t)), ((F.en g t c).2 : ℕ) = c.val)
 
-include hty in
 
-include hty in
 
-include hty std in
 
-include hty std in
 
-include hty in
 
-include hty in
 
 end Block
 

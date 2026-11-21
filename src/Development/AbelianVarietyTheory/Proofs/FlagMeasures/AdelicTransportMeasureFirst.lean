@@ -385,7 +385,6 @@ theorem adele_tens_eq_zero {F E A B : Type} [Field F] [Field E] [Algebra F E] [C
       rw [add_add_add_comm, ← hx, ← hy]
   rw [hz z, a, b, map_zero, map_zero, add_zero]
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes (HA AF Ainf inclR fstA sndA) in
 
 theorem mem_NA_iff (I : AutInst) (θ : InfinitePlace I.F → (Ainf I.F ⊗[I.F] I.E →+* ℂ))
     (hθ : ∀ v, Formalism.MainNotions.StandardLattice.IsInfEmb (I.φ v) (θ v)) (h : HA (AF I.F) I.cm.sig I.J) (x : I.GA)

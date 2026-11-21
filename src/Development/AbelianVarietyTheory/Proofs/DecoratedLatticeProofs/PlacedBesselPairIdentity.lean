@@ -79,7 +79,6 @@ theorem redFn_scalar_eq_one {F E : Type} [Field F] [NumberField F] [Field E] [Nu
   rw [hyij, Matrix.one_apply]
   split_ifs <;> simp [h1]
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.MiTop
 

@@ -19,7 +19,6 @@ noncomputable section
 
 namespace GlobalTheory.SeeConjScale
 
-open Classical in
 
 noncomputable def forestLift {G : Type} [Group G] {r : ℕ} (Ed : Fin r → Fin r → Prop) (hlt : ∀ i j, Ed i j → i < j)
     (w : Fin r → Fin r → G) (j : Fin r) : G :=

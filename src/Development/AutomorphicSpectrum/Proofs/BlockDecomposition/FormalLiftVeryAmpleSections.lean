@@ -110,7 +110,6 @@ variable (Y : ∀ e : ℕ, Over (Spec (CommRingCat.of (R ⧸ I ^ (e + 1)))))
   (β : ∀ e, (Y e).left ⟶ (Y (e + 1)).left)
   (hβ : ∀ e, IsPullback (β e) (Y e).hom (Y (e + 1)).hom (thickTrans R I e))
 
-include hβ in
 
 theorem surjective_tower (e : ℕ) : Function.Surjective (β e) := by
   exact (MorphismProperty.of_isPullback (P := @Surjective) (hβ e).flip (surjective_thickTrans I e)).surj

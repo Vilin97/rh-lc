@@ -57,7 +57,6 @@ end GlobalTheory.EndLoc.HomFixUnr
 
 namespace GlobalTheory.EndLoc
 
-open GlobalTheory.EndLoc.HomFixUnr in
 
 theorem formallyUnramified_homFixRep : ∀ (S : Scheme.{0}) (A B : Over S) [GrpObj A] [IsCommMonObj A] [GrpObj B]
     [IsCommMonObj B] (L : LB A.left) (M : LB B.left) (R : HomFixRep A B L M), IsAbelianScheme A → IsAbelianScheme B →

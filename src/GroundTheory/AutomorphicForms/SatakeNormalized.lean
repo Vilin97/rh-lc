@@ -26,7 +26,6 @@ theorem prod_zpow_eq_zpow_sum {G₀ : Type*} [CommGroupWithZero G₀] {a : G₀}
   | empty => simp
   | insert j s hj ih => rw [Finset.prod_insert hj, Finset.sum_insert hj, ih, zpow_add₀ ha]
 
-variable (F) in
 
 theorem modulus_uniformizer :
     Measures.modulus (GLnLocal.uniformizer F : F) = ((qF F : ℝ≥0))⁻¹ := by
@@ -47,12 +46,10 @@ theorem rhoPair_single (i : Fin n) :
     (fun h => absurd (Finset.mem_univ i) h)]
   simp
 
-variable (F n) in
 
 def torusBorel (l : Fin n → ℤ) : blockUpper F n (id : Fin n → Fin n) :=
   ⟨torusPow F n l, torusPow_mem_borel F n l⟩
 
-variable (F) in
 
 def halfModulus (l : Fin n → ℤ) : ℂ :=
   sqrtModular F n id (torusBorel F n l)
@@ -68,7 +65,6 @@ theorem halfModulus_zero : halfModulus F (0 : Fin n → ℤ) = 1 := by
   congr 1
   exact Subtype.ext torusPow_zero
 
-variable (F) in
 
 def sqrtQ : ℂ := ((NNReal.sqrt (qF F : ℝ≥0) : ℝ) : ℂ)
 
@@ -109,7 +105,6 @@ theorem halfModulus_ne_zero (l : Fin n → ℤ) : halfModulus F l ≠ 0 := by
   rw [halfModulus_eq]
   exact zpow_ne_zero _ sqrtQ_ne_zero
 
-variable (F n) in
 
 def halfPoint : Fin n → ℂˣ :=
   fun i => Units.mk0 (halfModulus F (Pi.single i 1)) (halfModulus_ne_zero _)
@@ -123,7 +118,6 @@ theorem monomialChar_halfPoint (l : Fin n → ℤ) : monomialChar l (halfPoint F
   congr 1
   ring
 
-variable (F n) in
 
 def normHom : Multiplicative (Fin n → ℤ) →* LaurentRing n where
   toFun l := single (Multiplicative.toAdd l) (halfModulus F (Multiplicative.toAdd l))
@@ -133,7 +127,6 @@ def normHom : Multiplicative (Fin n → ℤ) →* LaurentRing n where
   map_mul' a b := by
     rw [toAdd_mul, halfModulus_add, single_mul_single]
 
-variable (F n) in
 
 def normalize : LaurentRing n →ₐ[ℂ] LaurentRing n :=
   AddMonoidAlgebra.lift ℂ (LaurentRing n) (Fin n → ℤ) (normHom F n)
@@ -175,13 +168,11 @@ theorem evalAt_normalize (z : Fin n → ℂˣ) (p : LaurentRing n) :
     ring
   exact AlgHom.congr_fun this p
 
-variable (F n) in
 
 def torusLevi (l : Fin n → ℤ) : levi F n (id : Fin n → Fin n) :=
   ⟨torusPow F n l, mem_levi.2 fun i j hij => by
     rw [coe_torusPow, Matrix.diagonal_apply_ne _ (by simpa using hij)]⟩
 
-variable (F) in
 
 def paramChar (z : Fin n → ℂˣ) : levi F n (id : Fin n → Fin n) →* ℂ :=
   unramifiedChar (z * halfPoint F n)
@@ -222,7 +213,6 @@ theorem normalize_esymm_yElt (k : ℕ) :
 variable [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)]
   {μ : Measure (GL (Fin n) F)} [μ.IsHaarMeasure]
 
-variable (μ) in
 
 def satakeTransform : SphericalHecke μ (F := F) (n := n) →ₐ[ℂ] LaurentRing n :=
   (normalize F n).comp (satakeHom μ)

@@ -15,8 +15,6 @@ variable {k : Type} [Field k]
 
 variable {n m : ℕ}
 
-open Classical in
 
-open Classical in
 
 end GlobalTheory.OrbitsGLParab

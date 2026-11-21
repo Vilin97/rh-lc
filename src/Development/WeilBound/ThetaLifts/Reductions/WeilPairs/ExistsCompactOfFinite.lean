@@ -194,7 +194,6 @@ theorem isClosed_conjHalf (e : AEF F E) : IsClosed (conjHalf σ e nS nT : Set (W
   rw [hs]
   exact isClosed_eq hcs continuous_id
 
-variable (σ nS nT) in
 
 def projH {e : AEF F E} (he : e * e = e) : WOF F E nS nT →+ conjHalf σ e nS nT where
   toFun y := ⟨cAF σ e • y, fun i j => by

@@ -77,7 +77,6 @@ private lemma sum_mulVec_one_eq_sum_entries {n : ℕ} (P : Matrix (Fin n) (Fin n
     ∑ i, (P *ᵥ fun _ => (1 : ℂ)) i = ∑ a, ∑ b, P a b := by
   simp [Matrix.mulVec, dotProduct]
 
-open Polynomial in
 
 theorem trace_transpose_pow {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ} (E : Fin n → Fin n → Module.End ℂ V)
     (hE : Formalism.REAL.GlRel E) (χ : Fin n → ℂ) (v : V)
@@ -173,7 +172,6 @@ theorem trace_transpose_pow {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ}
 
 variable {n : ℕ}
 
-open GlobalTheory.CapelliCentral in
 
 lemma word_apply {ε : Fin n → Bool} (w : List (Fin n × Fin n)) (F : smoothSpace ε ℂ) {f : Matrix (Fin n) (Fin n) ℂ → ℂ}
     (h : ∀ g, inUJ ε g → F.1 g = f g) :
@@ -232,7 +230,6 @@ lemma sum_cycWord {A : Type} [Ring A] (E : Fin n → Fin n → A) (m : ℕ) :
       simp [Fin.val_add_one_of_lt (Fin.lt_last_iff_ne_last.2 ht)]
     rw [hs, Fin.snoc_castSucc, Fin.snoc_castSucc]
 
-open GlobalTheory.CapelliCentral in
 
 lemma gelf_apply {ε : Fin n → Bool} (m : ℕ) (F : smoothSpace ε ℂ) {f : Matrix (Fin n) (Fin n) ℂ → ℂ}
     (h : ∀ g, inUJ ε g → F.1 g = f g) {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g) :
@@ -421,7 +418,6 @@ lemma Eab_perm (ε : Fin n → Bool) (s : Equiv.Perm (Fin n)) (a b : Fin n) (f :
     simp [Matrix.single_apply, s.injective.eq_iff]
   simp only [Formalism.REAL.Eab, Formalism.REAL.Ec, rd_submatrix_perm, cpart1_submatrix_perm, cpart2_submatrix_perm, hsg]
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem trWord : ∀ (n : ℕ) (ε : Fin n → Bool) (χ : Fin n → ℂ) (f : Matrix (Fin n) (Fin n) ℂ → ℂ), SmoothOnG ε f → IsZEigen ε χ f → ∀ m : ℕ, ∀ g ∈ UJset ε, ∑ a : Fin (m + 1) → Fin n, Eword ε ((cycWord a).map Prod.swap) f g = (-1) ^ (m + 1) * gelfVal (fun a => -χ a) (m + 1) * f g := by
   intro n ε χ f hf hz m g hg

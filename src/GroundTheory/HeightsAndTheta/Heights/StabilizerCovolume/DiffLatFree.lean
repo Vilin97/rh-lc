@@ -47,7 +47,6 @@ theorem idealLat_relIndex {w : Fin ρ → Fin N → F} (hw : LinearIndependent F
   rw [AddSubgroup.index_pi, AddSubgroup.index_pi] at h
   simpa [Ideal.absNorm_eq_index] using h
 
-omit [NumberField F] in
 
 theorem idealLat_smul (w : Fin ρ → Fin N → F) (r : 𝓞 F) (a : Ideal (𝓞 F)) :
     idealLat (fun i => r • w i) a = idealLat w (Ideal.span {r} * a) := by
@@ -64,7 +63,6 @@ theorem idealLat_smul (w : Fin ρ → Fin N → F) (r : 𝓞 F) (a : Ideal (𝓞
     refine ⟨d, hd, Finset.sum_congr rfl fun i _ => ?_⟩
     rw [← hdc i, smul_smul, mul_comm]
 
-omit [NumberField F] in
 
 theorem idealLat_top (w : Fin ρ → Fin N → F) :
     idealLat w ⊤ = Submodule.span (𝓞 F) (Set.range w) := by
@@ -76,7 +74,6 @@ section DiffLatSpan
 
 variable {Em K : Type} [Field Em] [NumberField Em] [Field K] [NumberField K] {N ρ : ℕ}
 
-omit [NumberField K] in
 
 theorem diffLat_mono (s : Em →+* K) {M M' : Submodule (𝓞 Em) (Fin N → Em)} (h : M ≤ M') :
     diffLat s M ≤ diffLat s M' :=

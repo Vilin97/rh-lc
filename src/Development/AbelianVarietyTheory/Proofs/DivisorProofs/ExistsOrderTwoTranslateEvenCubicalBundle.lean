@@ -378,9 +378,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.AlgebraLevelSetting (FormalTorus Lv
 variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]
   {X : Type} [AddCommGroup X]
 
-set_option hygiene false in
 
-omit [IsDomain R] in
 
 theorem exists_points [IsAdicComplete 𝔪 R] {i₀ : splitTorus (Lv 𝔪 0) X ⟶ thickObj R 𝔪 0 G} (F : FormalTorus 𝔪 i₀) :
     ∃ t : (Multiplicative X →* ℤˣ) →* (𝟙_ (Over (Sp R)) ⟶ G), ∀ φ e,
@@ -414,7 +412,6 @@ theorem exists_points [IsAdicComplete 𝔪 R] {i₀ : splitTorus (Lv 𝔪 0) X �
     rw [MonObj.comp_mul, e₁, e₁, e₁, map_mul, MonObj.mul_comp, map_mul]
   exact congrArg (fun q => q.left) e₂
 
-omit [IsDomain R] in
 
 theorem exists_two_ne_zero [IsAdicComplete 𝔪 R] [CharZero R] : ∃ e, (2 : Γ(Lv 𝔪 e, ⊤)) ≠ 0 := by
   by_contra hn
@@ -424,7 +421,6 @@ theorem exists_two_ne_zero [IsAdicComplete 𝔪 R] [CharZero R] : ∃ e, (2 : Γ
   have b := congrArg (Scheme.ΓSpecIso (CommRingCat.of R)).hom.hom a
   exact two_ne_zero (α := R) ((map_ofNat _ 2).symm.trans (b.trans (map_zero _)))
 
-omit [IsLocalRing R] in
 
 theorem val_level {I : Ideal R} {P : CP G} {e : ℕ} {Pe : CP (thickObj R I e G)} (h : IsLevelCP I e Pe P) {Z : Scheme.{0}}
     {t : Z ⟶ G.left} {w} (hw : SymVal P t w) {T : Over (Lv I e)} {x : T ⟶ thickObj R I e G} (hx : x⁻¹ = x)

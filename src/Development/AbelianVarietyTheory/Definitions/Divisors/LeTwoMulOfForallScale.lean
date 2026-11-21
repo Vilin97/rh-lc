@@ -310,11 +310,9 @@ def quotGram (H : Matrix (m ⊕ l) (m ⊕ l) ℂ) : Matrix l l ℂ :=
 
 def orthCoeff (H : Matrix (m ⊕ l) (m ⊕ l) ℂ) : Matrix m l ℂ := H.toBlocks₁₁ᵀ⁻¹ * H.toBlocks₂₁ᵀ
 
-variable (m l) in
 
 def incl : Matrix (m ⊕ l) m ℂ := fromRows 1 0
 
-variable (m l) in
 
 def quotMap : Matrix l (m ⊕ l) ℂ := fromCols 0 1
 
@@ -359,16 +357,13 @@ theorem det_eq_det_subGram_mul (hu : IsUnit (subGram H).det) :
 theorem isUnit_det_quotGram (h : IsUnit H.det) (hu : IsUnit (subGram H).det) :
     IsUnit (quotGram H).det := isUnit_of_mul_isUnit_right (det_eq_det_subGram_mul hu ▸ h)
 
-omit [Fintype m] [Fintype l] [DecidableEq m] [DecidableEq l] in
 
 theorem isHermitian_subGram (h : H.IsHermitian) : (subGram H).IsHermitian := h.submatrix Sum.inl
 
-omit [Fintype m] [Fintype l] [DecidableEq m] [DecidableEq l] in
 
 theorem conjTranspose_toBlocks₁₂ (h : H.IsHermitian) : H.toBlocks₁₂ᴴ = H.toBlocks₂₁ := by
   ext i j; exact h.apply _ _
 
-omit [Fintype l] [DecidableEq l] in
 
 theorem isHermitian_quotGram (h : H.IsHermitian) : (quotGram H).IsHermitian := by
   have h1 : H.toBlocks₁₁.IsHermitian := isHermitian_subGram h
@@ -378,7 +373,6 @@ theorem isHermitian_quotGram (h : H.IsHermitian) : (quotGram H).IsHermitian := b
   rw [IsHermitian, conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose, h1.inv.eq,
     Matrix.mul_assoc]
 
-omit [DecidableEq m] [DecidableEq l] in
 
 theorem posDef_subGram (h : H.PosDef) : (subGram H).PosDef :=
   h.submatrix Sum.inl_injective

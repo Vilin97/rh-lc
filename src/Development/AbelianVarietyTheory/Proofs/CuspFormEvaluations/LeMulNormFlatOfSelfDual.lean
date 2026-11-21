@@ -53,7 +53,6 @@ theorem le_mul_norm_flat (X : PT E) (Λ' : Submodule (𝓞 E) (Fin n → E)) {ι
   obtain ⟨i, hi⟩ := exists_contr_ne_zero v hspan h0
   exact (hlam _ (hγ _ (hv i)) hi).trans (norm_contr_le γ (v i) hρ (hlen i))
 
-omit [IsCMField E] in
 
 theorem span_eq_top_of_rat {S : Set (Fin n → E)} (h : Submodule.span ℚ S = ⊤) :
     Submodule.span E S = ⊤ :=

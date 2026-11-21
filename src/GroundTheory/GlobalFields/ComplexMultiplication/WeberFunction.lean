@@ -41,7 +41,6 @@ theorem IsShortForm.a₄_ne_zero_or_a₆_ne_zero {W : WeierstrassCurve F} [W.IsE
   rw [hW.Δ_eq, h.1, h.2] at this
   simp at this
 
-open scoped Classical in
 
 noncomputable def weberValue (W : WeierstrassCurve F) (x : F) : F :=
   if W.a₆ = 0 then g₂ W ^ 2 / W.Δ * x ^ 2

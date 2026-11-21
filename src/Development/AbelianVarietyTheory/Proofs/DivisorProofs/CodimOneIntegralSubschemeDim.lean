@@ -35,7 +35,6 @@ theorem height_le_one_of_forall_le {A : Type} [CommRing A] [IsDomain A] [IsNoeth
   · exact absurd (h ▸ (Ideal.span_singleton_le_iff_mem _).1 hq'.2) (by simpa using hf0)
   · exact h.ge
 
-attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 
 theorem trdeg_le_succ_trdeg_quotient (A : Type) [CommRing A] [IsDomain A]
     [Algebra.FiniteType ℤ A] (q : Ideal A) [q.IsPrime] (hq1 : q.height ≤ 1)

@@ -206,7 +206,6 @@ theorem ampleRing_twist_subset (G H : SubSystem S x Ω) {r₁ r₂ : ℕ} (g : F
 
 end GraphClosedAlt
 
-open GraphClosedAlt in
 
 theorem GraphClosed.proof : GraphClosed.Statement.{u, w} := by
   intro k _ Ω _ _ N x G H hG hH

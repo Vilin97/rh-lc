@@ -91,8 +91,6 @@ private lemma measure_eq_index_subgroupOf_mul_measure {G : Type} [Group G] [Topo
   rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, Subgroup.index,
     Nat.card_eq_fintype_card]
 
-open MeasureTheory ValuativeRel Matrix Topology in
-open scoped Pointwise in
 
 theorem _root_.GlobalTheory.VolPow.vol_div_eq_zpow : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [MeasurableSpace G] [BorelSpace G] (μ : Measure G) [μ.IsHaarMeasure] (q : ℕ), q.Prime → (∀ u : G, ∀ U ∈ 𝓝 (1 : G), ∃ m : ℕ, u ^ (q ^ m) ∈ U) → ∀ H₁ H₂ : Subgroup G, _root_.GlobalTheory.IndefiniteRowSideFullHecke.FramePositiveSum.IsCO H₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.FramePositiveSum.IsCO H₂ → ∃ z : ℤ, (μ H₁).toReal / (μ H₂).toReal = (q : ℝ) ^ z := by
   intro G _ _ _ _ _ μ _ q hq hpow H₁ H₂ h₁ h₂

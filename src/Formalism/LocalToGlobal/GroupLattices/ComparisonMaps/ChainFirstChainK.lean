@@ -26,7 +26,6 @@ variable {c Tw u w h Lv}
 theorem CmpMaps.inj (M : CmpMaps c Tw u w h Lv) (j : ℕ) (hj : j ≤ D.R.m) : Function.Injective (M.cmp j) :=
   inj_of_li (M.cmp j) ((Tw.fm u (D.what₂.muAt w)).lat j).b (M.li j hj)
 
-variable (Tw u w) in
 
 def KLx (j : ℕ) : ((Tw.fm u (D.what₂.muAt w)).lat j).V →ₗ[D.what₂.LL] ((Tw.fm u (D.what₂.muAt w)).lat (j + 1)).V :=
   ratMap ((Tw.fm u (D.what₂.muAt w)).emb j) ((Tw.fm u (D.what₂.muAt w)).emb (j + 1))
@@ -37,9 +36,7 @@ theorem KLx_eq (j : ℕ) (x : ((Tw.fm u (D.what₂.muAt w)).lat j).V) (y : ((Tw.
       (D.chTw u (D.what₂.muAt w)).K j ((Tw.fm u (D.what₂.muAt w)).emb j x)) : KLx Tw u w j x = y :=
   ratMap_eq _ _ _ _ x y hxy
 
-variable (Tw) in
 
-open Classical in
 
 def chainFirst (M : CmpMaps c Tw u w h Lv) : Chain Lv where
   Kz j := if hj : j < D.R.m then

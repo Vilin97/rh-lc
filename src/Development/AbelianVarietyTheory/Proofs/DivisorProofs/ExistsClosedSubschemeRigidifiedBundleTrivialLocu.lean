@@ -16,7 +16,6 @@ open scoped CategoryTheory.Obj
 
 namespace GlobalTheory.TrivLocusLocal
 
-open ReciprocityTheory.ChartRestriction.G.Pdiv.PullbackComparison in
 
 theorem exists_gen_pull_pull_iff {X Y Z : Scheme.{0}} (N : LB X) (a : Y ⟶ X) (b : Z ⟶ Y) :
     (∃ s : ((N.pull a).pull b).Gen, s.IsGen) ↔ ∃ s : (N.pull (b ≫ a)).Gen, s.IsGen := by

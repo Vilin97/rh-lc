@@ -121,7 +121,6 @@ instance isDiscreteRep_coind_zmodRep_openSubgroup (W : OpenSubgroup G) (n : ℕ)
     IsDiscreteRep (Rep.coind (W : Subgroup G).subtype (zmodRep.{u} (W : Subgroup G) n)) :=
   isDiscreteRep_coind W _
 
-omit [CompactSpace G] in
 
 theorem eq_zero_tateCompactCohomologyRes_of_subsingleton {k : Type u} [CommRing k]
     {A B : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep B] [Subsingleton A] (n : ℕ)

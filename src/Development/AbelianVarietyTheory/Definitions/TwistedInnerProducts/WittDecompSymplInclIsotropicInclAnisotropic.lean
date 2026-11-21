@@ -345,7 +345,6 @@ theorem col_gram {N : ℕ} (neg : Fin N → Bool) (a b : Matrix (Fin N) (Fin 1) 
   rw [Subsingleton.elim i 0, Subsingleton.elim j 0, ← h, Matrix.mul_apply]
   simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
 
-omit [CharZero E] in
 
 theorem three_gram (e e' i : Matrix (Fin 3) (Fin 1) E) (he : e = !![0; 1; 1]) (he' : e' = !![0; 1 / 2; -(1 / 2)])
     (hi : i = !![1; 0; 0]) :

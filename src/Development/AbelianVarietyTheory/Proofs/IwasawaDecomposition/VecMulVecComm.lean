@@ -38,7 +38,6 @@ instance : CommRing (EvenPart n) :=
 def toEven : MvPolynomial (Fin n × Fin n) ℂ →ₐ[ℂ] EvenPart n :=
   aeval fun x => ⟨gen n x, Algebra.subset_adjoin ⟨x, rfl⟩⟩
 
-open Classical in
 
 def topForm (i : ℕ) : (Fin n → ℂ) [⋀^Fin i]→ₗ[ℂ] ℂ :=
   if h : i = n then (Pi.basisFun ℂ (Fin n)).det.domDomCongr (finCongr h.symm) else 0

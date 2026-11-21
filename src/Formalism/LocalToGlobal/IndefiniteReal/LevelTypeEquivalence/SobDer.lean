@@ -37,9 +37,7 @@ variable {ψ : AddChar (AF D.host.F) ℂ} {Λ : Ainf D.host.F →+ ℂ} (hΛ : C
   (hψΛ : ∀ z : AF D.host.F, z.2 = 0 → ψ z = Complex.exp (Λ z.1))
   {L : (Fin k → ℝ) →+ WO S T} (hL : IsRealFrame L)
 
-include hΛ hψΛ hL in
 
-include hΛ hψΛ hL in
 
 end Bound
 

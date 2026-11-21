@@ -31,6 +31,5 @@ theorem GNonnegAt_holds : Formalism.L2.SG.GramJoint.GNonnegAt := by
 
 theorem DNeZeroAt_holds : Formalism.L2.SG.GramJoint.DNeZeroAt := Formalism.L2.SG.GramJoint.dNeZeroAt_of GNonnegAt_holds
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Formalism.L2.SG.Closed

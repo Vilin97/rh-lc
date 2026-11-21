@@ -29,7 +29,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Form
 open scoped TensorProduct Classical ComplexConjugate
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-open GlobalTheory.AdTh.MovedDatum in
 
 end GlobalTheory.DatumFourier
 
@@ -54,7 +53,6 @@ theorem isThPVecOf_empty {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam 
   simp only [e]
   exact h
 
-open GlobalTheory.OneMapRef.FinDatum in
 
 end GlobalTheory.GalOne
 

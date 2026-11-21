@@ -58,7 +58,6 @@ section
 set_option allowUnsafeReducibility true in
 attribute [local irreducible] Per.Acris Per.Bcris
 
-open GlobalTheory.MemLoc in
 
 theorem norm_of_ratio {l : ℕ} [Fact l.Prime] (C : Core l) (a b : Per.Bcris l) (x : Om l) (hb : b ≠ 0)
     (hx : x ≠ 0) (e : C.ι a = C.oD x * C.ι b) : ∃ k : ℤ, ‖x‖ = (l : ℝ) ^ k := by

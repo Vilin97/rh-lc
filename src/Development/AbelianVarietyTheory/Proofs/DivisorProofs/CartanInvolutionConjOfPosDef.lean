@@ -10,7 +10,6 @@ open scoped RealInnerProductSpace ContDiff Real ComplexOrder
 
 namespace GlobalTheory
 
-open scoped MatrixOrder in
 
 theorem cartanInvolution_conj_of_posDef (ι : Type) [Fintype ι] [DecidableEq ι]
     (s s' : Matrix ι ι ℂ) (hs : sᴴ = s) (hss : s * s = 1) (hs's' : s' * s' = 1)

@@ -96,8 +96,6 @@ open GlobalTheory.TwInputs Formalism.ConjugateSelfDual ReciprocityTheory.Gal Glo
 theorem exists_heq_of_eq {F : D7 → Sort _} {D₁ D₂ : D7} (h : D₁ = D₂) (x : F D₁) : ∃ y : F D₂, HEq y x := by
   subst h; exact ⟨x, HEq.rfl⟩
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.RowTriple.Lay
 
@@ -105,10 +103,7 @@ namespace GlobalTheory.RowTriple.Lay
 
 open GlobalTheory.TwInputs Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.HeightCounting.FitRho
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.RowTriple.Lay
 
@@ -120,7 +115,5 @@ theorem heq_cf_of_pack {p q : Σ (D₁ : D7) (c₁ : CharFrame D₁) (C₁ : NCh
     HEq p.2.1 q.2.1 := by
   subst h; rfl
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.RowTriple.Lay

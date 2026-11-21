@@ -73,7 +73,6 @@ theorem measurePreserving_transvection (ν : Measure R) [ν.IsAddHaarMeasure] {i
       (Filter.Eventually.of_forall fun a => map_add_left_eq_self _ _)
   exact (A.symm e).comp (B.comp A)
 
-open Classical in
 
 noncomputable def scale (A : Matrix ι ι R) : ℝ≥0 :=
   if h : IsUnit A.det then addEquivAddHaarChar (mulVecEquiv A h) else 1

@@ -57,7 +57,6 @@ theorem psiPlaces : PsiPlaces := by
   obtain ⟨h1, h2, h3⟩ := infFam_spec D θ h.hθ
   exact ⟨h.hψ, h1, h3, h2, GlobalTheory.ResAniso.VacSchwartz.realPar_ne_zero D θ h.hθ ψ h.hψ l h.hl, h.hl⟩
 
-open GlobalTheory.CompanionTheory.SiegelND.ThetaGlue in
 
 theorem valueSide : ValueSide := by
   intro D r V ν hν φ β hβ μH 𝓕 hμ h𝓕

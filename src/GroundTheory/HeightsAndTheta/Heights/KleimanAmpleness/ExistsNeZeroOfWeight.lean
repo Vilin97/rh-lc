@@ -159,7 +159,6 @@ theorem vals_eq_prod [Fintype K] (y : (Σ k, ι k) → Ω) (d : K → ℕ) :
     rw [Finset.prod_eq_single k (fun j _ hj => by simp [hj]) (by simp)]
     simp
 
-omit [DecidableEq K] in
 
 theorem prod_span_blocks [Fintype K] (y : (Σ k, ι k) → Ω) :
     ∏ k, Submodule.span F (Set.range fun i => y ⟨k, i⟩) =
@@ -185,7 +184,6 @@ theorem mapDomain_fst (a : (Σ k, ι k) →₀ ℕ) :
     ext k'
     simp [NumbersDVR.blockWeight, Pi.single_apply]
 
-omit [DecidableEq K] in
 
 theorem cone_monomial (y : (Σ k, ι k) → Ω) (a : (Σ k, ι k) →₀ ℕ) (c : F) :
     mConeMapOver F y (monomial a c) = monomial (a.mapDomain Sigma.fst) (aeval y (monomial a c)) := by
@@ -363,7 +361,6 @@ end Segre
 
 end SegreNum
 
-open SegreNum in
 
 theorem SegreNum.proof : SegreNum.Statement := by
   intro F _ K _ _ ι _ Ω _ _ y _ n μs

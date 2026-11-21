@@ -19,7 +19,6 @@ section Cp
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-variable (p) in
 
 def pRootSeq : ℕ → ℂ_[p]
   | 0 => p
@@ -44,7 +43,6 @@ theorem norm_pRootSeq_le (n : ℕ) : ‖pRootSeq p n‖ ≤ 1 := by
   have : 1 < ‖pRootSeq p n‖ ^ p ^ n := one_lt_pow₀ hlt (pow_ne_zero _ hp.out.ne_zero)
   linarith
 
-variable (p) in
 
 def pRootSeqInt (n : ℕ) : 𝒪 :=
   ⟨pRootSeq p n, mem_normInteger.2 (norm_pRootSeq_le n)⟩
@@ -52,7 +50,6 @@ def pRootSeqInt (n : ℕ) : 𝒪 :=
 theorem pRootSeqInt_succ_pow (n : ℕ) : pRootSeqInt p (n + 1) ^ p = pRootSeqInt p n :=
   Subtype.ext (by simp [pRootSeqInt, pRootSeq_succ_pow])
 
-variable (p) in
 
 def pFlat : 𝒪♭ :=
   IsPerfectoidField.ofCompatible p (pRootSeqInt p) pRootSeqInt_succ_pow
@@ -83,7 +80,6 @@ theorem qBdR_mem : qBdR (p := p) ∈ 𝔪 := by
   simp only [eq_ratCast, Rat.cast_inv, Rat.cast_natCast, h]
   rw [inv_mul_cancel₀ natCast_p_ne_zero_cp, sub_self]
 
-variable (p) in
 
 def uBdR : 𝔹 := logOnePlus 𝔪 (qBdR (p := p)) qBdR_mem
 

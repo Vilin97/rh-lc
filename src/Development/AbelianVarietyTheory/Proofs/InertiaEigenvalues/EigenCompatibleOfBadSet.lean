@@ -82,7 +82,6 @@ theorem rank_eq (hQ : StdPsi hF Q) (w : HeightOneSpectrum (𝓞 D.host.E)) : n =
   rw [Matrix.rank_one, Fintype.card_fin] at a b
   exact le_antisymm (b.trans (Matrix.rank_le_width _)) (a.trans (Matrix.rank_le_width _))
 
-set_option maxHeartbeats 1000000 in
 
 theorem sphEig_eq_satEig (hQ : StdPsi hF Q) (π : NG.FinTyp D.host.E n) (s : SplitPlace D.host.E)
     (hs : Formalism.MainNotions.SchurIrreducible.IsSplit (E := D.host.E) (s.w.under (𝓞 D.host.F)))
@@ -231,9 +230,7 @@ theorem satEig_eq (Rk : Ranks) (q : ℕ) (B : Multiset ℂˣ) {k : ℕ} (hk : k 
     rw [← Nat.cast_sub hk, ← Nat.cast_mul, hc]; push_cast; ring
   rw [GlobalTheory.LFun.satEig, h1, Complex.cpow_natCast, hc, show (c + c) / 2 = c by omega]
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_rat (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (hlev : R.toLevCh.Is A3.A.μ0) (hU : R.toRealDat.LUnif)
     (hW : R.toRealDat.models_HW) {eig : ℕ → D.what₂.FT → ℕ → PlE D.host → ↥D.LL0} (he : EigAd Y Sb eig) (hsub : Sb ⊆ Sb')
@@ -316,7 +313,6 @@ theorem exists_rat (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (hlev : R.toLev
 
 variable {cG : G0 R.Pg D.R.r ≃* G0g D.nd} {θ : ∀ kk : Fin 2, Multiplicative (ZMod (D.host.g kk)) →* (↥D.LL0)ˣ}
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_goodL (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (hlev : R.toLevCh.Is A3.A.μ0) (hU : R.toRealDat.LUnif)
     (hW : R.toRealDat.models_HW)

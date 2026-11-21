@@ -78,7 +78,6 @@ theorem apply_self_eq_two_mul {β : LinearMap.BilinForm ℤ X} (h : β ∈ level
   rw [HostModel.cmHost_bar_halfIntegerGenerator, sub_smul, one_smul, map_sub] at e
   linarith
 
-variable (H N X) in
 
 end Forms
 

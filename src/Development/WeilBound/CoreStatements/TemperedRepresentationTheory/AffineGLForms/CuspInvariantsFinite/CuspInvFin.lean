@@ -13,7 +13,6 @@ namespace PositivityTheory.Affgl
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E a) in
 
 def UnifAlpha : Prop :=
   ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (ρ : Representation ℂ (Kinf E a) W),
@@ -24,7 +23,6 @@ def UnifAlpha : Prop :=
         ∀ (L : Subgroup (GL (Fin a) (Af E))), ∀ φ ∈ genSpace L ρ J, ∀ g : GA E a,
           φ.1 g = ∫ y, φ.1 (g * infGL E a y) * α y ∂μ
 
-variable (E a) in
 
 def CuspInvFin : Prop :=
   ∀ (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) →

@@ -46,7 +46,6 @@ theorem hypIncl_tail {d : ℕ} (t : Fin (d + 1) → ℂ) (ht : t 0 = 0) :
 
 end SliceBranchInt
 
-open ReciprocityTheory.AnForm.A (hypIncl densHyp) in
 
 theorem SliceBranchInt.proof (hBP : IndefiniteRowSideFullHecke.ComplexSets.BranchProperAtPoint.Statement)
     (hPCI : ParamChartInt.Statement) : SliceBranchInt.Statement := by

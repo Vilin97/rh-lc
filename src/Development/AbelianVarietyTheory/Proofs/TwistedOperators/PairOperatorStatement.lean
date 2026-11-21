@@ -306,7 +306,6 @@ theorem FF_FFStar [Fintype n] (hχ : χ ≠ 1) (φ : Form k n M) :
   simp only [hinner, sub_smul, ite_smul, zero_smul, one_smul, Finset.sum_sub_distrib, Finset.sum_ite_eq',
     Finset.mem_univ, if_true]
 
-variable (χ) in
 
 theorem FFStar_eq_U_GsStar {φ : Form k n M} (h : φ ∈ Mram k n M) : FFStar q χ φ = U q (GsStar χ φ) := by
   classical
@@ -448,13 +447,11 @@ theorem U_D_ram [Fintype n] (hχ : χ ≠ 1) {φ : Form k n M} (h : φ ∈ Mram 
   simp only [LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply, hN, sub_zero, map_smul] at h3
   exact eq_zpow_smul h3
 
-variable (χ) in
 
 theorem unit_FFStar_FF (c : 𝓀[k]ˣ) :
     (dia c * FFStar q χ * (dia c⁻¹ * FF q χ) : Module.End ℂ (Form k n M)) = FFStar q χ * FF q χ := by
   rw [← FFStar_dia q χ c, mul_assoc, ← mul_assoc (dia c), ← map_mul, mul_inv_cancel, map_one, one_mul]
 
-variable (χ) in
 
 theorem unit_FF_FFStar (c : 𝓀[k]ˣ) :
     (dia c⁻¹ * FF q χ * (dia c * FFStar q χ) : Module.End ℂ (Form k n M)) = FF q χ * FFStar q χ := by

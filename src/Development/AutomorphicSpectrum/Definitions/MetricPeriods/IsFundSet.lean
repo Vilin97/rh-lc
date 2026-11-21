@@ -48,7 +48,6 @@ def RiemLat.HasSig {Ψ : Type} (R : RiemLat E g Λ) (σ : Ψ → (𝓞 E →+* �
 def RiemLat.EqvBy (R R' : RiemLat E g Λ) (γ : Λ ≃ₗ[𝓞 E] Λ) : Prop :=
   ∃ h : (Fin g → ℂ) ≃ₗ[ℂ] (Fin g → ℂ), ∀ x, R'.P (γ x) = h (R.P x)
 
-variable (E) in
 
 structure UnivFam (Ψ : Type) [Fintype Ψ] (j j' n g : ℕ) (Λ : Type) [AddCommGroup Λ] [Module (𝓞 E) Λ] where
 

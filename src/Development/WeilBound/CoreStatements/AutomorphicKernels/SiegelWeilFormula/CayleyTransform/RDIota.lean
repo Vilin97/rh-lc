@@ -31,7 +31,6 @@ theorem sc_fin (x : InfinitePlace F → ℂ) : finOne F • sc d x = 0 := (Place
 
 variable {p : Type} [Fintype p] [DecidableEq p]
 
-open Classical in
 
 def fam (w : InfinitePlace F) (Z : Matrix p p ℂ) (w' : InfinitePlace F) : Matrix p p ℂ := if w' = w then Z else 1
 

@@ -179,7 +179,6 @@ theorem tensor_self {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι
 
 end VeroneseTop
 
-open VeroneseTop in
 
 theorem VeroneseTop.proof (hCM : GraphChangeOfModel.Statement) (hA : VeroneseArith.Statement)
     (hIm : VeroneseGraphImage.Statement) (hDeg : VeroneseGraphDeg.Statement) : VeroneseTop.Statement := by

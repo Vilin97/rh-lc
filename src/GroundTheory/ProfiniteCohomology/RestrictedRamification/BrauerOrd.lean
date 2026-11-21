@@ -19,7 +19,6 @@ noncomputable section
 
 variable {K : FiniteSubfield}
 
-variable (K) in
 
 def levelOf (y : ℚ̄) : FiniteSubfield :=
   ⟨K.1 ⊔ IntermediateField.adjoin ℚ {y}, by

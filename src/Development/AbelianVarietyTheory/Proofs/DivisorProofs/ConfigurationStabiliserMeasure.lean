@@ -19,7 +19,6 @@ noncomputable section
 
 namespace GlobalTheory.ConeSchwartz
 
-open scoped Classical in
 
 theorem comp_mem_schA' {F : Type} [Field F] [NumberField F] {κ κ' : Type} [Fintype κ] [Fintype κ'] (σ : κ ≃ κ')
     {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) : (fun x : κ' → AF F => Φ (x ∘ σ)) ∈ schA F κ' := by
@@ -41,8 +40,6 @@ end GlobalTheory.ConeSchwartz
 
 namespace GlobalTheory.ConeSchwartz
 
-open GlobalTheory.ThetaTransform in
-open scoped Classical in
 
 theorem mem_schA_of_level_gen (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] (Φ : (κ → AF F) → ℂ)
     (hU : ∃ U : AddSubgroup (κ → AF F), IsOpen (U : Set (κ → AF F)) ∧ ∀ u ∈ U, (∀ i, (u i).1 = 0) → ∀ x, Φ (x + u) = Φ x)

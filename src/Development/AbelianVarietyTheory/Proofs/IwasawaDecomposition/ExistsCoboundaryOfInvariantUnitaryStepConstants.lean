@@ -365,7 +365,6 @@ section Cob
 
 variable {E : Type} [Field E] {s : E →+* E} {Γ : Type} [CommGroup Γ]
 
-open Classical in
 
 def pot (s : E →+* E) (C : ∀ n : ℕ, E → Matrix (Fin n) (Fin n) E → Γ) :
     ∀ n : ℕ, Matrix (Fin n) (Fin n) E → Γ :=

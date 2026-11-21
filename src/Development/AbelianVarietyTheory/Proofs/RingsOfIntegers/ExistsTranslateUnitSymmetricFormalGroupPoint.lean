@@ -129,7 +129,6 @@ variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [IsAdi
   {d : ℕ} {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} [StarRing (𝓞 E)] {B : FB V d (𝓞 E)}
   {k n : ℕ}
 
-variable (B) in
 
 def toSm (u : Q V d n) : Sm B n := ⟨u.1, fun i => by rw [u.2 i]; exact zero_mem _⟩
 
@@ -478,7 +477,6 @@ theorem unit_ext_pref (j : t.PP.L.ι) {f g : (PS V n d)ˣ}
     obtain ⟨J, hJ⟩ := exists_pref t.PP.L j t.PP.isLB z
     exact congrArg Units.val (h ⟨z, J, hJ⟩))
 
-omit hX hc hj hε in
 
 theorem model_unit {tg : Fin d → (Sp (DualNumber V) ⟶ t.G.left)}
     (hc : IsChartG t (𝟙 (Sp V)) d B.G.F B.A.act tg (fun j : Fin d => Pi.single j (1 : V)) x)

@@ -75,6 +75,5 @@ theorem weyl_dim_eq_gelfand_tsetlin : WeylGT := by
     intro m hm
     exact le_trans (hI (m + 1) hm).1 (hI m (by omega)).2
 
-open WGT in
 
 end Formalism.InvariantFactorPaths.BranchingDimensions

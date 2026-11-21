@@ -262,7 +262,6 @@ theorem unitsLocalRes_gsBrauerInfl_sUnitsToUnitsZ (r : ℕ)
   · intro a
     rfl
 
-set_option maxHeartbeats 2000000 in
 
 theorem unitsLocalRes_sUnitsInfl (r : ℕ) (y : cohomology (galSUnitsMax K.1 ℚ̄ S) r) :
     (unitsLocalRes Kv ι r).hom (sUnitsInfl K S r y) =

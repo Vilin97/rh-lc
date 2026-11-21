@@ -36,7 +36,6 @@ theorem carrier_subset (μ : D.what₂.Tup) (j : ℕ) : ∀ m ∈ (D.what₂.MtL
 
 variable {R : RealDat D A Ks} {F : Face D A}
 
-set_option maxHeartbeats 1000000 in
 
 end Main
 

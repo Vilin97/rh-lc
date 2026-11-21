@@ -13,7 +13,6 @@ namespace GlobalTheory.Mem.Col2.RatMove
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [StarRing E]
   (hc : Formalism.BasicNotions.CMData F E) {n : ℕ}
 
-omit [NumberField E] [StarRing E] in
 
 theorem glEquiv_apply_mulVec (g : GL (Fin n) E) (x : Sp E n) : Formalism.UG.glEquiv g x = (g : Matrix (Fin n) (Fin n) E) *ᵥ x := by
   simp [Formalism.UG.glEquiv]
@@ -29,7 +28,6 @@ theorem ufGL_eq (γ : UF E n) : ufGL E n γ = (((ratEquiv hc n).symm γ : URat h
   show Formalism.UG.glEquiv (toGLm E n γ.1) _ i = _
   rw [glEquiv_toGLm]
 
-omit [NumberField E] [StarRing E] in
 
 theorem glEquiv_symm_apply (γ : GL (Fin n) E) (v : Sp E n) :
     (Formalism.UG.glEquiv γ).symm v = ((γ⁻¹ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) *ᵥ v := by

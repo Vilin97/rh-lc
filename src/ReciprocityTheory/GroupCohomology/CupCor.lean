@@ -17,7 +17,6 @@ open ReciprocityTheory.Gal Cx Function
 
 universe u
 
-set_option maxHeartbeats 800000 in
 
 theorem cupCor_holds : CupCorStatement.{u} := by
   unfold CupCorStatement

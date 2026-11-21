@@ -75,7 +75,6 @@ theorem exists_proj (U : Submodule E (Fin d → E)) : ∃ e : Matrix (Fin d) (Fi
   · exact (p z).2
   · exact congrArg Subtype.val (LinearMap.congr_fun hp ⟨u, hu⟩)
 
-variable (σ) in
 
 def perp (J : Matrix (Fin d) (Fin d) E) (U : Submodule E (Fin d → E)) : Submodule E (Fin d → E) where
   carrier := {z | ∀ u ∈ U, form σ J z u = 0}
@@ -145,7 +144,6 @@ theorem gen_iff (e1 : ∀ z, e *ᵥ z ∈ U) (e2 : ∀ u ∈ U, e *ᵥ u = u) (f
       rw [op_smul_eq_smul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, e1 (Pi.single j 1), (col_eq e j).symm⟩)
 
-variable (σ W e f) in
 
 def triG : Subgroup (UA σ W.J) where
   carrier := {m | Tri (incM F e) (incM F f) (mat m - 1)}
@@ -163,7 +161,6 @@ theorem triG_closed : IsClosed (triG σ W e f : Set (UA σ W.J)) := by
     ((isClosed_eq (continuous_const.matrix_mul (c.matrix_mul continuous_const)) (c.matrix_mul continuous_const)).inter
       (isClosed_eq (continuous_const.matrix_mul c) c))
 
-variable (F E) in
 
 def incL : Matrix (Fin d) (Fin d) E →ₗ[F] Matrix (Fin d) (Fin d) (AE F E) :=
   ((TensorProduct.mk F (AF F) E 1).compLeft (Fin d)).compLeft (Fin d)
@@ -191,7 +188,6 @@ theorem lie_cocompact (p : Matrix (Fin d) (Fin d) E) : ∃ C : Set (Matrix (Fin 
   obtain ⟨v, hv, h⟩ := h3 x hx
   exact ⟨v, (eqs_zero.1 hv).2.1, (comm v).trans (by rw [hv, map_zero]), h⟩
 
-variable (σ W e f) in
 
 def lie : Set (Matrix (Fin d) (Fin d) (AE F E)) :=
   {x | xᵀ * incM F W.J + incM F W.J * x.map (cA σ) = 0 ∧ Tri (incM F e) (incM F f) x}

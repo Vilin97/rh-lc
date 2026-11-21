@@ -348,7 +348,6 @@ theorem end_ext {U P ι : Type} [AddCommGroup U] [Module ℂ U] [AddCommGroup P]
   rw [funext hφ1] at this
   exact this
 
-set_option maxHeartbeats 2000000 in
 
 end Main
 

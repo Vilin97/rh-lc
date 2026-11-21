@@ -35,7 +35,6 @@ section Local
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {a d : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem piTensor_twist_tprod (ρ : Representation ℂ (GL (Fin a) k) V) (χ : Fin d → GL (Fin a) k →* ℂˣ)
     (g : Fin d → GL (Fin a) k) (x : Fin d → V) :
@@ -73,7 +72,6 @@ end Local
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem loc_eq_absPow {ν : HChar E} {s : ℝ} (hν : ν.IsAbsPow s) (w : HeightOneSpectrum (𝓞 E)) :
     ν.loc w = GlobalTheory.SmGL.absPow (w.adicCompletion E) s := by

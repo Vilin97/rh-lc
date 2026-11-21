@@ -75,7 +75,6 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   {Aᵥ Cᵥ : ∀ v, Rep.{u} k (H v)} [∀ v, IsDiscreteRep (Aᵥ v)] [∀ v, IsDiscreteRep (Cᵥ v)]
   {a : ∀ v, Rep.res (φ v).toMonoidHom A ⟶ Aᵥ v} {c : ∀ v, Rep.res (φ v).toMonoidHom C ⟶ Cᵥ v}
 
-omit [IsDiscreteRep A] [IsDiscreteRep B] [∀ v, IsDiscreteRep (Aᵥ v)] in
 
 theorem homologyδ_homologyπ_eq_localToCompact {m : ℕ}
     (w : (piComplex fun v => cochainsComplex (Cᵥ v)).cycles m) :

@@ -8,7 +8,6 @@ public import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBoun
 open NumberField
 open scoped TensorProduct NNReal
 
-open scoped Pointwise in
 
 private theorem val_nat_eq_one {R : Type} [CommRing R] (w : Valuation R ℝ≥0)
     (hw : ∀ x, w x ≤ 1) {p : ℕ} (hp : p.Prime) (hv : w (p : R) < 1) {m : ℕ} (hm : ¬ p ∣ m) :

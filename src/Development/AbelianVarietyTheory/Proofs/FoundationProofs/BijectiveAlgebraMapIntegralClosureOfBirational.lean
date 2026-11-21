@@ -14,8 +14,6 @@ section Normal
 
 variable {X Y : Scheme.{u}}
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.isIntegrallyClosed_sections_of_stalks [IsIntegral Y]
     (hY : ∀ y : Y, IsIntegrallyClosed (Y.presheaf.stalk y)) {U : Y.Opens} (hU : IsAffineOpen U)
@@ -32,8 +30,6 @@ theorem _root_.GlobalTheory.isIntegrallyClosed_sections_of_stalks [IsIntegral Y]
     (IsLocalization.algEquiv p.primeCompl (Y.presheaf.stalk (hU.fromSpec q))
       (Localization.AtPrime p)).toRingEquiv
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.apply_genericPoint_of_isDominant (f : X ⟶ Y) [IsDominant f] [IrreducibleSpace X]
     [IrreducibleSpace Y] : f (genericPoint X) = genericPoint Y := by
@@ -41,8 +37,6 @@ theorem _root_.GlobalTheory.apply_genericPoint_of_isDominant (f : X ⟶ Y) [IsDo
   rw [Set.image_univ, f.denseRange.closure_range] at h
   exact h.eq (genericPoint_spec Y)
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.isFractionRing_stalk_of_eq_genericPoint [IsIntegral Y] {U : Y.Opens} (hU : IsAffineOpen U)
     (y : Y) (hyU : y ∈ U) (hy : y = genericPoint Y) :
@@ -113,8 +107,6 @@ private lemma bijective_algebraMap_integralClosure_of_isIntegrallyClosed (f : X 
     obtain ⟨r, hr⟩ := hex b.1 b.2
     exact ⟨r, Subtype.ext hr⟩
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.isIso_fromNormalization_of_birational (f : X ⟶ Y) [QuasiCompact f] [QuasiSeparated f]
     [IsIntegral X] [IsIntegral Y] [IsDominant f] [IsIso (f.stalkMap (genericPoint X))]
@@ -180,8 +172,6 @@ private lemma isIso_stalkMap_of_comp_isOpenImmersion {W : Scheme.{u}} (f : X ⟶
   haveI : IsIso (f.stalkMap (c w) ≫ c.stalkMap w) := h' ▸ this
   exact IsIso.of_isIso_comp_right _ (c.stalkMap w)
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.birational_of_isIso_morphismRestrict (f : X ⟶ Y) [IsIntegral X] [IsIntegral Y]
     (U : Y.Opens) (hU : Nonempty U) [IsIso (f ∣_ U)] :
@@ -198,8 +188,6 @@ theorem _root_.GlobalTheory.birational_of_isIso_morphismRestrict (f : X ⟶ Y) [
     simpa using isIso_stalkMap_of_comp_isOpenImmersion f (f ⁻¹ᵁ U).ι (f ∣_ U ≫ U.ι)
       (morphismRestrict_ι f U).symm ⟨_, hg⟩
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.isOpenImmersion_of_quasiFinite_of_isIso_stalkMap (f : X ⟶ Y) [IsSeparated f]
     [QuasiCompact f] [LocallyOfFiniteType f] [LocallyQuasiFinite f] [IsIntegral X] [IsIntegral Y]
@@ -225,8 +213,6 @@ theorem _root_.GlobalTheory.isOpenImmersion_of_quasiFinite_of_isIso_stalkMap (f 
   rw [← f.toNormalization_fromNormalization]
   infer_instance
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.isIso_of_isIntegralHom_of_isIso_stalkMap (f : X ⟶ Y) [IsIntegralHom f]
     [IsIntegral X] [IsIntegral Y] [IsDominant f] [IsIso (f.stalkMap (genericPoint X))]
@@ -235,8 +221,6 @@ theorem _root_.GlobalTheory.isIso_of_isIntegralHom_of_isIso_stalkMap (f : X ⟶ 
   rw [← f.toNormalization_fromNormalization]
   infer_instance
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.isIso_of_isProper_of_quasiFinite_of_isIso_stalkMap (f : X ⟶ Y) [IsProper f]
     [LocallyQuasiFinite f] [IsIntegral X] [IsIntegral Y] [IsDominant f]
@@ -249,8 +233,6 @@ theorem _root_.GlobalTheory.isIso_of_isProper_of_quasiFinite_of_isIso_stalkMap (
     exact Set.range_nonempty _
   exact IsOpenImmersion.isIso f
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.isIso_of_isFinite_of_birational (f : X ⟶ Y) [IsFinite f]
     [IsIntegral X] [IsIntegral Y] (hY : ∀ y : Y, IsIntegrallyClosed (Y.presheaf.stalk y))
@@ -258,8 +240,6 @@ theorem _root_.GlobalTheory.isIso_of_isFinite_of_birational (f : X ⟶ Y) [IsFin
   obtain ⟨hd, hs⟩ := _root_.GlobalTheory.birational_of_isIso_morphismRestrict f U hU
   exact _root_.GlobalTheory.isIso_of_isIntegralHom_of_isIso_stalkMap f hY
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.isIso_of_isProper_of_quasiFinite_of_birational (f : X ⟶ Y) [IsProper f]
     [LocallyQuasiFinite f] [IsIntegral X] [IsIntegral Y]
@@ -268,8 +248,6 @@ theorem _root_.GlobalTheory.isIso_of_isProper_of_quasiFinite_of_birational (f : 
   obtain ⟨hd, hs⟩ := _root_.GlobalTheory.birational_of_isIso_morphismRestrict f U hU
   exact _root_.GlobalTheory.isIso_of_isProper_of_quasiFinite_of_isIso_stalkMap f hY
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Topology in
-variable {X Y : Scheme.{u}} in
 
 theorem _root_.GlobalTheory.isOpenImmersion_of_quasiFinite_of_isOpenImmersion_restrict (f : X ⟶ Y) [IsSeparated f]
     [QuasiCompact f] [LocallyOfFiniteType f] [LocallyQuasiFinite f] [IsIntegral X] [IsIntegral Y]

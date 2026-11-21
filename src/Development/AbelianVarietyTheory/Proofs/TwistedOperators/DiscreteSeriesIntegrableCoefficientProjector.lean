@@ -79,7 +79,6 @@ theorem hw_kill {V : Type*} [AddCommGroup V] [Module ℂ V] {act : Mat p q →�
   have := (Submodule.mem_iInf _).1 ((Submodule.mem_iInf _).1 ((Submodule.mem_iInf _).1 hv.2.2 a) b) hab
   simpa using this
 
-open GlobalTheory.RealPar.HwGen in
 
 theorem ofType_of_isHW (D : DSRep T) {μ : Ix p q → ℚ} {v : D.HK.V} (hv : IsHW D.HK.act μ v) :
     OfType D.HK.act μ v := by

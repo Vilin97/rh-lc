@@ -63,7 +63,6 @@ private theorem fixB {ι : Type} [Fintype ι] (r c : ValueGroupWithZero E) (hc :
     exact Valuation.map_sub_lt _ (Valuation.map_add_lt _ h3 (hm1 j)) h2
   exact lt_irrefl _ this
 
-omit [TopologicalSpace E] [IsNonarchimedeanLocalField E] in
 
 private theorem boundB {n : ℕ} {r : ValueGroupWithZero E} (hr : r < 1) (M : Matrix (Fin n) (Fin n) E)
     (hM : ∀ i j, valuation E (M i j - (1 : Matrix (Fin n) (Fin n) E) i j) ≤ r) (y : Fin n → E)

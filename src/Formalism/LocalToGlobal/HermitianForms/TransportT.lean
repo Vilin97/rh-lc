@@ -13,11 +13,8 @@ open scoped TensorProduct
 
 variable {D : D7} {u : D.what₂.Word} {A : AtTTied u} {i : ℕ} {hi : i ≤ D.R.m}
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
 theorem UpNatTie.upTie {P : LvTied u A i hi} {K : ClsTied u i hi} {W : ValTied u A.eV i hi K} (h : UpNatTie P K W) :
     UpTie P K W := by
@@ -31,6 +28,5 @@ theorem UpNatTie.upTie {P : LvTied u A i hi} {K : ClsTied u i hi} {W : ValTied u
   rw [h6 _ s _ hs]
   exact (AdFun_transport K.lev (embT D) g hg γ.1 γ.2 (K.y c * η) _ κ h2 _ _ hs).symm
 
-set_option maxHeartbeats 4000000 in
 
 end Formalism.L2.Forms

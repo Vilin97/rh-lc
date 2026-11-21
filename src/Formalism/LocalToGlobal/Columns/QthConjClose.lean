@@ -39,7 +39,6 @@ theorem qth_conj_close {m : ℕ} (h r : Sp E m ≃ₗ[E] Sp E m) (a b N e : ℕ)
   refine h1.trans (le_trans ?_ he)
   exact WithZero.exp_le_exp.mpr (by omega)
 
-include hq0 in
 
 theorem qth_mem_JQ {n c : ℕ} (kj : ℕ) (y : Sp E (n + c) ≃ₗ[E] Sp E (n + c)) (hy : QClose P q y) (hy' : QClose P q y⁻¹) :
     y ∈ LocE.JQ P q kj n c := by
@@ -56,7 +55,6 @@ theorem qth_mem_JQ {n c : ℕ} (kj : ℕ) (y : Sp E (n + c) ≃ₗ[E] Sp E (n + 
   · have := qth_close_scl P q hq0 _ he y⁻¹ hy' hx
     rwa [hinv] at this
 
-include hq0 in
 
 theorem qth_red_entry (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) {m : ℕ} {y : Sp E m ≃ₗ[E] Sp E m} (hy : QClose P q y) (i j : Fin m) :
     IntAt P (((toGLm E m y : GL (Fin m) E) : Matrix (Fin m) (Fin m) E) i j) ∧

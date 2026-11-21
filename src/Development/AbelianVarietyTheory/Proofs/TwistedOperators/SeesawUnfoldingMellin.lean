@@ -53,6 +53,5 @@ theorem algebraicDatum_eq_sum_pureTensors_vacua {F E : Type} [Field F] [NumberFi
 
 end GlobalTheory.SquareAgree.LineDerFun
 
-open GlobalTheory.SquareAgree.LineDerFun in
 
 end

@@ -81,7 +81,6 @@ theorem vacuum_isCombOf {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L
 
 end GlobalTheory.VacComb
 
-open GlobalTheory.VacComb in
 
 theorem GlobalTheory.VacComb.main : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (t : T) (j : Fin D.R.m), IsCombOf ch.W (FinDatum.vacuum ch.G t (.top t j)) (Finsupp.single 0 1) := by
   refine ⟨0, fun _ _ _ => ⟨0, ?_⟩⟩

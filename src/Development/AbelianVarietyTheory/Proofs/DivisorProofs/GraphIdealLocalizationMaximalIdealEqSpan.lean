@@ -85,7 +85,6 @@ theorem exists_mul_mem_radical {R : Type} [CommRing R] {I p : Ideal R} (hp : p �
 
 variable {K κ' : Type} [Field K] [Field κ'] [Algebra ℂ K] [Algebra ℂ κ']
 
-variable (κ') in
 
 def inl (E : Place (algebraMap ℂ K)) : E.ring →+* tens (κ' := κ') (placeAlg E) where
   toFun e := ⟨(e : K) ⊗ₜ 1, tmul_mem e.2 1⟩

@@ -79,7 +79,6 @@ def q1 (k : ℕ) (z w : P) : ℂ :=
 
 def kap (z w : P) : ℝ := if 0 < z.1.im * w.1.im then 4 * (z.1.im * w.1.im) / ‖z.1 - conj w.1‖ ^ 2 else 0
 
-open Classical in
 
 def ext1 (f : P → ℂ) (t : ℂ) : ℂ := if h : t.im ≠ 0 then f ⟨t, h⟩ else 0
 

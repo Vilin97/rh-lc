@@ -111,7 +111,6 @@ def IsThetaFrame (P : PolAV S) (rig : LB.Gen (P.L.pull (eSec P.A))) (k : ℤ) {T
     LB.Gen.Corr P.L _ _ _ _ (LB.mulGen P.L _ _ _ _ (LB.pullGen P.L _ _ θ.φ (ptSecT P.A 1).left) τ)
       (rigT P.A P.L rig T k)
 
-open Classical in
 
 def EvValSt : Prop :=
   ∀ (P : PolAV S) (N : ℕ) {T : Over S} (z : T ⟶ P.A)

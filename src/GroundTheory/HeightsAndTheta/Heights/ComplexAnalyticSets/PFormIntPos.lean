@@ -39,7 +39,6 @@ theorem analyticAt_sheet {d : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : M
 
 end FormIntegralPositivity
 
-open FormIntegralPositivity in
 
 end
 

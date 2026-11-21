@@ -177,7 +177,6 @@ def IsSpehQuot {a d N : ℕ} (h : ∑ _ : Fin d, a = N) {w : HeightOneSpectrum (
 def spehInf (d : ℕ) (m : Multiset ℂ) : Multiset ℂ :=
   ((List.range d).map fun k : ℕ => m.map (· + (((d : ℂ) - 1) / 2 - k))).sum
 
-variable (E) in
 
 end Discrete
 
@@ -258,7 +257,6 @@ theorem isoInf_eq (Pa : List (Part A.CG)) (τ : H.E →+* ℂ) :
     isoInf N A Pa τ = (Pa.map fun p => spehInf p.d (A.infG p.π τ)).sum := by
   simp only [isoInf, spehInf, bind_pure_comp, List.map_eq_map, List.map_map, Function.comp_def]
 
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 
 end GlobalTheory.DefiniteBC
 

@@ -112,6 +112,5 @@ def push (γ : (Fin n → E) ≃ₗ[E] (Fin n → E)) :
 
 end Poly
 
-omit [NumberField E] [IsCMField E] in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.AdmissibleHarmonicLattice

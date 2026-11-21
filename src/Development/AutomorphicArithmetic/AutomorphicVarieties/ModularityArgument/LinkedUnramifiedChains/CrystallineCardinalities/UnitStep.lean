@@ -109,7 +109,6 @@ def ZN (B : Box F 3 O) (k : ℕ) : Set (F.Γ → Matrix (Fin 3) (Fin 3) (Ok l O 
 
 end Pt
 
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal in
 
 end UpperTheory.V.Z.J
 

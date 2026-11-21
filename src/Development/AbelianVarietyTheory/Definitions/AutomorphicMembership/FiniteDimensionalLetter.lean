@@ -114,7 +114,6 @@ def Induces : Prop := ∀ x, x ∈ A ↔ ‖Bw.j x‖ ≤ 1
 
 variable {Bw}
 
-omit [NumberField E] in
 
 theorem Induces.valuation_lt_one_iff (hj : Induces Bw) (x : Ω) : A.valuation x < 1 ↔ ‖Bw.j x‖ < 1 := by
   rw [valuation_lt_one_iff', hj, hj, map_inv₀, norm_inv]
@@ -140,7 +139,6 @@ theorem weilToGK_j (σ : ↥(Weil h)) (x : Ω) :
 
 variable {Bw h} [IsAlgClosure E Ω]
 
-variable (l) in
 
 def alpha (σ : ↥(Weil h)) : ℤ := resDeg l w * deg σ
 
@@ -191,7 +189,6 @@ theorem commute_actD_phiU (g : ↥(GK K)) (n : ℤ) :
     Commute (actD P ρ g) ((phiU P ρ ^ n : (End LL ↥(Dpst P ρ))ˣ) : End LL ↥(Dpst P ρ)) :=
   Commute.units_zpow_right (u := phiU P ρ) (phiD_actD P ρ g).symm n
 
-omit [FiniteDimensional ↥(MaximalUnramifiedExtension l) (DpstUr P ρ)] in
 
 theorem phiD_pow_mulD (n : ℕ) (c : ↥(MaximalUnramifiedExtension l)) :
     phiD P ρ ^ n * mulD P ρ c = mulD P ρ ((frobUr l ^ n) c) * phiD P ρ ^ n := by

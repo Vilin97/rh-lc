@@ -12,8 +12,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 
 namespace GlobalTheory.CongruenceDet
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.CongruenceDet.isIntegral_root {R E K : Type} [CommRing R] [Field E]
     [Field K] [CharZero K]
@@ -75,8 +73,6 @@ theorem _root_.GlobalTheory.CongruenceDet.isIntegral_root {R E K : Type} [CommRi
   rw [smul_eq_mul, hvw]
   exact Submodule.mem_map_of_mem hw
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.CongruenceDet.isIntegral_det_sub_one {R E : Type} [CommRing R] [Field E]
     [CharZero E]
@@ -119,8 +115,6 @@ theorem _root_.GlobalTheory.CongruenceDet.isIntegral_det_sub_one {R E : Type} [C
     simpa [map_div₀, map_sub, map_one, map_natCast] using hK
   exact (isIntegral_algHom_iff _ (algebraMap E K).injective).1 hK'
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.CongruenceDet.det_mul_conj {E : Type} [Field E] [NumberField E]
     [IsCMField E] {r : ℕ}
@@ -153,8 +147,6 @@ theorem _root_.GlobalTheory.CongruenceDet.det_mul_conj {E : Type} [Field E] [Num
   rw [← e]
   linear_combination hdet
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.CongruenceDet.det_eq_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r M : ℕ) (Gm : Matrix (Fin r) (Fin r) E) (Λ : Submodule (𝓞 E) (Fin r → E)) (γ : GL (Fin r) E), Gm.det ≠ 0 → Λ.FG → Submodule.span E (Λ : Set (Fin r → E)) = ⊤ → 3 ≤ M → _root_.ReciprocityTheory.ChartRestriction.G.FD.IsUStab Gm Λ γ → (∀ v ∈ Λ, ∃ w ∈ Λ, (γ : Matrix (Fin r) (Fin r) E) *ᵥ v = v + M • w) → (γ : Matrix (Fin r) (Fin r) E).det = 1 := by
   intro E _ _ _ r M Gm Λ γ hG hfg hspan hM hU hγ

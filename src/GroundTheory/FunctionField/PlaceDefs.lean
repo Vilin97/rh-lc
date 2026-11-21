@@ -20,7 +20,6 @@ class IsFunctionField : Prop where
 
 variable {k K}
 
-open scoped IntermediateField.algebraAdjoinAdjoin in
 
 theorem isTranscendenceBasis_singleton {y : K} (hy : Transcendental k y)
     (hfin : FiniteDimensional (IntermediateField.adjoin k {y}) K) :

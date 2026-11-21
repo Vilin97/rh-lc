@@ -57,6 +57,5 @@ theorem bnd_inv_of_hLat_std (D : D7) (ι : (Af D.host.F ⊗[D.host.F] D.host.E) 
   rw [Nat.cast_one, one_mul]
   exact this
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.StdAtPrime

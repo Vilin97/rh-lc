@@ -14,13 +14,11 @@ open scoped InnerProductSpace ENNReal
 
 namespace Formalism.L2.SG.RealObj.EnergyFinal
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
 theorem stepIntG_holds (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) : Formalism.L2.SG.RealObj.EnergyInt.StepIntG :=
   Formalism.L2.SG.RealObj.EnergyIntLoc.stepIntG_of hI Formalism.L2.SG.Pf.WuBL.reproduction_translation Formalism.L2.SG.Pf.WuBL.l2RightTranslation_thm
     Formalism.L2.SG.Pf.WuBL.parameter_gap_of_hypothesis (fun _ hG _ _ C => Formalism.L2.SG.Pf.LocF.locFactor_holds hG C)
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
 theorem weilPairJ_holds (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) {D : D7} (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D)
     (X : HidaSetting D) (τ : D.what₂.Tau) :

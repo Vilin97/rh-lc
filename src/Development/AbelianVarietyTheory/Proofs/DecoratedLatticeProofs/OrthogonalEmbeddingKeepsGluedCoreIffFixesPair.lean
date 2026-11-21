@@ -98,7 +98,6 @@ theorem glued_zero {n : Type} [Fintype n] [DecidableEq n] {q : GlobalTheory.LatP
 
 end GlobalTheory.Core.Mi.LatMatch.StabPair
 
-open GlobalTheory.Core.Mi.LatMatch.StabPair in
 
 theorem GlobalTheory.Core.Mi.LatMatch.moves_emb_iff_smul_eq : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : SplitPt D k) (S A L : HSp D) (o : OrthDec S A L) (ζ : Fin L.rank → D.host.E) (n : Type) [Fintype n] [DecidableEq n] (β : GlobalTheory.FinPl.Frame p A n) (β₀ : GlobalTheory.FinPl.Frame p S (n ⊕ Fin 1)) (M : Lat S) (q : GlobalTheory.LatPair.Unif k) (m : k) (P : GlobalTheory.LatPair.Pair k n), IsSumFrame o ζ β β₀ → IsSelfDualC S M → m ≠ 0 → GluedW β₀ M q m P → ∀ g : GL n k, Moves S (o.emb (β.gl g, 1)) M M (· = p.v) ↔ g • P = P := by
   intro D k _ _ _ _ p S A L o ζ n _ _ β β₀ M q m P hs hM hm hG g

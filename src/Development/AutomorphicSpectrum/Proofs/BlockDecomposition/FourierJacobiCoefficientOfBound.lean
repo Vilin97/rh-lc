@@ -48,8 +48,6 @@ theorem ker_eq (d : Polynomial ℂ) (F : ℂ → ℂ) (s₀ : ℂ) (ε : ℝ) (k
       (2 * Real.pi * Complex.I)⁻¹ * ((w - s₀) ^ (k - 1) * (F w / d.eval w)) := fun w => by ring
   simp only [h, circleIntegral.integral_const_mul]
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 theorem cfFJ_of_pcBound : PcBound → CfFJ := by
   intro hPc D n H φ s₀ U d E σ hC ε hR

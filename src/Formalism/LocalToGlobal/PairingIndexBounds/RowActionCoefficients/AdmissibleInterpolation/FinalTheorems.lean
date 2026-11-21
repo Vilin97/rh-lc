@@ -30,7 +30,6 @@ variable {O K Kc : Type} [CommRing O] [Field K] [Algebra O K] [Infinite K] [Fiel
   (hnum : ∀ x : τx → K, Φ (∏ b, rename (em b) (rowAct K (hi b) (evX (fun s => x (xm b s)) (Hg b)))) =
     eval (fun t => algebraMap K Kc (x t)) A)
 
-include hxm hh hM hQ hA hnum in
 
 theorem src_abs (hI : Interp) (hCP : CoefProd) (F : B → MvPolynomial (Fin n × Fin n) K)
     (hF : ∀ b, F b ∈ deltaL O K n (ν b) (h b)) : Φ (∏ b, rename (em b) (F b)) ∈ M := by

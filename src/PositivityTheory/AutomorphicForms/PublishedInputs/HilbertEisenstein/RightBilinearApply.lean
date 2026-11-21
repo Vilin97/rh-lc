@@ -50,13 +50,11 @@ def rowv (g : GA F 2) (a : Ideles F) (ξ : Fin 2 → F) : Fin 2 → Ad F :=
 def colv (g : GA F 2) (a : Ideles F) (ξ : Fin 2 → F) : Fin 2 → Ad F :=
   ((Mcol g a : GA F 2) : Matrix (Fin 2) (Fin 2) (Ad F)) *ᵥ rowA ξ
 
-open Classical in
 
 def finRow (c : HeightOneSpectrum (𝓞 F) → ℕ) (y : Fin 2 → Ad F) : ℂ :=
   if ∀ w, Valued.v (pLoc F w (pFin F (y 0))) ≤ WithZero.exp (-(c w : ℤ)) ∧
       Valued.v (pLoc F w (pFin F (y 1)) - 1) ≤ WithZero.exp (-(c w : ℤ)) then 1 else 0
 
-open Classical in
 
 def finCol (c : HeightOneSpectrum (𝓞 F) → ℕ) (y : Fin 2 → Ad F) : ℂ :=
   if ∀ w, Valued.v (pLoc F w (pFin F (y 0))) ≤ WithZero.exp ((c w : ℤ) + dd w) ∧

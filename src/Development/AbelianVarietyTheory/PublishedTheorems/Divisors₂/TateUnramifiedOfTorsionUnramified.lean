@@ -93,7 +93,6 @@ def galTate (l : ℕ) [Fact l.Prime] : (Ω ≃ₐ[K] Ω) →* Module.End ℤ_[l]
 theorem lev_galTate (l : ℕ) [Fact l.Prime] (σ : Ω ≃ₐ[K] Ω) (t : Tate l (ptOver K Ω ⟶ A)) (n : ℕ) :
     (galTate A l σ t).lev n = galPts A σ (t.lev n) := rfl
 
-variable (K) in
 
 def inertia (V : ValuationSubring Ω) : Subgroup (Ω ≃ₐ[K] Ω) :=
   (V.inertiaSubgroup K).map (V.decompositionSubgroup K).subtype

@@ -286,7 +286,6 @@ theorem finrank_eq (n : ℕ) : Module.finrank ℝ (Fin (n + 1) → ℂ) = 2 * n 
 
 end ChartCutoffEnergyAlt
 
-open ChartCutoffEnergyAlt in
 
 theorem ChartCutoffEnergy.proof : ChartCutoffEnergy.Statement := by
   intro n T hT

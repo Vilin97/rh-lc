@@ -34,7 +34,6 @@ theorem blockUpper_le_parab : blockUpper k (∑ a, d a) (pos d) ≤ parab k (std
   intro g hg
   exact hg
 
-variable (k d) in
 
 def leviTo : levi k (∑ a, d a) (pos d) →* Levi k (fun a => Fin (d a)) :=
   (leviProj k (stdE d)).comp (Subgroup.inclusion (levi_le_blockUpper.trans (blockUpper_le_parab k d)))
@@ -63,7 +62,6 @@ theorem leviTo_leviProj (p : blockUpper k (∑ a, d a) (pos d)) :
     ((p : GL (Fin (∑ a, d a)) k) : Matrix (Fin (∑ a, d a)) (Fin (∑ a, d a)) k) (stdE d ⟨a, i⟩) (stdE d ⟨a, j⟩)
   simp [GroundTheory.Automorphic.Parabolic.blockDiagPart, pos_stdE]
 
-variable (k d) in
 
 def invHalf : levi k (∑ a, d a) (pos d) →* ℂˣ :=
   ((invSqrtModular k (∑ a, d a) (pos d)).comp leviIncl).toHomUnits
@@ -82,7 +80,6 @@ theorem isSmoothChar_invHalf : IsSmoothChar (invHalf k d) := by
   show (invSqrtModular k (∑ a, d a) (pos d)) (leviIncl m) = 1
   exact GroundTheory.Automorphic.Parabolic.invSqrtModular_leviIncl_of_mem m hm
 
-variable (k d) in
 
 def adj : levi k (∑ a, d a) (pos d) →* ℂˣ :=
   invHalf k d * (deltaHalf k (fun a => Fin (d a))).comp (leviTo k d)
@@ -246,7 +243,6 @@ theorem hasFiniteLength_parInd_std (ρ : Representation ℂ (Levi k fun a => Fin
   have hφ : StrictMono φ := hmono.strictMono_of_injective hinj
   exact ⟨hφ.wellFoundedGT, hφ.wellFoundedLT⟩
 
-open GlobalTheory.BlockReorder in
 
 theorem inductionFiniteLength : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k], GlobalTheory.SmGL.InductionFiniteLength k := by

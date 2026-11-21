@@ -36,8 +36,6 @@ private theorem exists_quotient_side_of_isType_lemma (k r : ℕ) (W : Type) [Nor
   obtain ⟨u₀, hu₀⟩ := _root_.GlobalTheory.besType_hcParam k r W z π u hz hT hπ
   exact ⟨ν, hz, hT, ⟨u₀, hu₀⟩, hπ.2.2.2.2.2, hW', hN', hG', hν⟩
 
-open Matrix MeasureTheory Finset in
-open scoped InnerProductSpace ENNReal in
 
 theorem _root_.GlobalTheory.exists_sideG_both_of_isType : ∀ (k r : ℕ) (Wp : Type) [NormedAddCommGroup Wp]
     [InnerProductSpace ℂ Wp] [CompleteSpace Wp] [FiniteDimensional ℂ Wp] (Wq : Type)

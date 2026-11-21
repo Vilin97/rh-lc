@@ -123,22 +123,16 @@ structure AbelianUnramifiedExtensionConditions : Prop where
   unram : ∀ P : HeightOneSpectrum (𝓞 X.E),
     ¬ (P.asIdeal.comap (algebraMap (𝓞 X.F) (𝓞 X.E))).map (algebraMap (𝓞 X.F) (𝓞 X.E)) ≤ P.asIdeal ^ 2
 
-variable {X} in
 
-variable {X} in
 
 theorem Ok.f_pos (h : X.Ok) : 0 < X.f := by
   show 0 < Fintype.card X.Tau
   rw [h.card_Tau]
   exact Module.finrank_pos
 
-variable {X} in
 
-variable {X} in
 
-variable {X} in
 
-variable {X} in
 
 def IsCond (N : ℕ) : Prop := ∀ j : X.E →ₐ[ℚ] Qb, Formalism.L2.Host.IsCond j.fieldRange N
 
@@ -146,7 +140,6 @@ def embC (σ₀ : X.K →+* ℂ) (τ : X.Tau) : X.E →+* ℂ := σ₀.comp (X.e
 
 end Fields
 
-open Classical in
 
 def divs {A : Type} [CommRing A] [IsDedekindDomain A] (a : A) : Finset (HeightOneSpectrum A) :=
   if h : {P : HeightOneSpectrum A | a ∈ P.asIdeal}.Finite then h.toFinset else ∅
@@ -177,7 +170,6 @@ def vT (u : Pr.Word) : Finset (HeightOneSpectrum (𝓞 X.E)) := divs (Pr.piT u)
 
 def vG (i : Fin 2) : Finset (HeightOneSpectrum (𝓞 X.E)) := divs (X.conjO (Pr.piG i))
 
-open Classical in
 
 def vGs : Finset (HeightOneSpectrum (𝓞 X.E)) := Pr.vG 0 ∪ Pr.vG 1
 
@@ -228,7 +220,6 @@ theorem natCast_dvd_intCast {E : Type} [Field E] [NumberField E] {c : ℕ} {n : 
     exact Module.finrank_pos.ne'
   exact (Int.pow_dvd_pow_iff hpos).1 hd
 
-variable {Pr} in
 
 theorem PiGCong.g_cong (h : Pr.PiGCong) (hn : ∀ i, Pr.piG i * X.conjO (Pr.piG i) = (Pr.g i : 𝓞 X.E)) (i : Fin 2) :
     Pr.g i ≡ 1 [MOD Pr.cond] := by
@@ -328,7 +319,6 @@ structure Ok : Prop where
 
   xi_ne : ∀ P, Z.xi P ≠ 1
 
-open Classical in
 
 end QDat
 
@@ -347,7 +337,6 @@ theorem spread_shiftW {N : ℕ} (lam : DomWeight N) (c : ℤ) : (shiftW lam c).s
     ring
   · rfl
 
-open Classical in
 
 def ofQ {N : ℕ} (x : Fin N → ℚ) : DomWeight N :=
   if h : Antitone x then ⟨fun i => ⌊x i⌋, fun _ _ hij => Int.floor_mono (h hij)⟩ else ⟨fun _ => 0, fun _ _ _ => le_rfl⟩
@@ -526,7 +515,6 @@ instance normal_sqQ (m : ℤ) : Normal ℚ (sqQ m) := normal_adjoin fun s x hx =
   show (s x) ^ 2 = (m : Qb)
   rw [← map_pow, show x ^ 2 = (m : Qb) from hx, map_intCast]
 
-open Classical in
 
 def embQ {φ : Formalism.HC.Frame} (H : Formalism.HC.HostRaw φ) (g : φ.GG) : H.EQ →ₐ[ℚ] Qb :=
   if h : ∃ s : H.EQ →ₐ[ℚ] Qb, H.ActsAs s g then h.choose else H.EQ.val
@@ -545,6 +533,5 @@ def hostFields {φ : Formalism.HC.Frame} (H : Formalism.HC.HostRaw φ) (ι : Qb 
   Tau := φ.Psi
   emb := fun g => (tauLL hE (embQ H (g : φ.GG))).toRingHom
 
-open Classical in
 
 end Formalism.L2.Col

@@ -17,7 +17,6 @@ variable {ι : Type} [LinearOrder ι] {R : Type u} [CommRing R]
 
 namespace Cube
 
-omit [LinearOrder ι] in
 
 theorem exists_smul_eq_zero_of_forall [Finite ι] (A : Cube.{v} ι R) (S : Submonoid R) {p : ℕ}
     (x : Term A p) (h : ∀ s, ∃ c ∈ S, c • x s = 0) : ∃ c ∈ S, c • x = 0 := by
@@ -295,9 +294,7 @@ theorem isLocalizedModule_toLocCube_singleton (i : ι) :
   have := isLocalizedModule_toLocCube f M {i}
   rwa [Finset.prod_singleton] at this
 
-variable {M} in
 
-variable {M} in
 
 variable [LinearOrder ι] [Finite ι]
 
@@ -307,7 +304,6 @@ theorem locCube_exactAt (hf : Ideal.span (Set.range f) = ⊤) (p : ℕ) :
     (cubeComplex (locCube f M)).ExactAt p :=
   cubeComplex_exactAt_of_isLocalizedModule_res _ f (isLocalizedModule_res_locCube f M) hf p
 
-variable (f) in
 
 end Loc
 

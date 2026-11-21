@@ -197,7 +197,6 @@ theorem tameRep_zpow {A : ValuationSubring Ω} {P : HeightOneSpectrum (𝓞 E)} 
 
 end Gal
 
-open Formalism.IndefR.Datum in
 
 theorem eq_res_locU {D : D7} {M : Type} [CommGroup M] {χ : (AE D)ˣ →* M} {PP : Pl D.host.E}
     (h : Formalism.L2.NTheta.IsIdemAt (idemAt PP) PP) {c : (kP PP)ˣ →* M} (hc : IsResAt χ PP c) (a : 𝓞 D.host.E)

@@ -20,10 +20,6 @@ def dpFil (δ : DividedPowers J) (m : ℕ) : Ideal B :=
 
 variable (δ : DividedPowers J)
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-variable (δ : DividedPowers J) in
 
 theorem _root_.GlobalTheory.Cris.ExpBij.dpFil_anti {m n : ℕ} (h : m ≤ n) :
     _root_.GlobalTheory.Cris.ExpBij.dpFil δ n ≤ _root_.GlobalTheory.Cris.ExpBij.dpFil δ m := by
@@ -31,20 +27,12 @@ theorem _root_.GlobalTheory.Cris.ExpBij.dpFil_anti {m n : ℕ} (h : m ≤ n) :
   rintro x ⟨l, hl, hs, rfl⟩
   exact ⟨l, hl, h.trans hs, rfl⟩
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-variable (δ : DividedPowers J) in
 
 theorem _root_.GlobalTheory.Cris.ExpBij.mem_dpFil_zero (a : B) : a ∈ _root_.GlobalTheory.Cris.ExpBij.dpFil δ 0 := by
   have h1 : (1 : B) ∈ _root_.GlobalTheory.Cris.ExpBij.dpFil δ 0 :=
     Ideal.subset_span ⟨[], by simp, by simp, by simp⟩
   simpa using Ideal.mul_mem_left _ a h1
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-variable (δ : DividedPowers J) in
 
 theorem _root_.GlobalTheory.Cris.ExpBij.mul_mem_dpFil {m n : ℕ} {a b : B} (ha : a ∈ _root_.GlobalTheory.Cris.ExpBij.dpFil δ m)
     (hb : b ∈ _root_.GlobalTheory.Cris.ExpBij.dpFil δ n) :
@@ -64,10 +52,6 @@ theorem _root_.GlobalTheory.Cris.ExpBij.mul_mem_dpFil {m n : ℕ} {a b : B} (ha 
     · simp [List.map_append, List.prod_append]
   exact key (Ideal.mul_mem_mul ha hb)
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-variable (δ : DividedPowers J) in
 
 theorem _root_.GlobalTheory.Cris.ExpBij.pow_mem_dpFil {m : ℕ} {a : B} (ha : a ∈ _root_.GlobalTheory.Cris.ExpBij.dpFil δ m)
     (n : ℕ) : a ^ n ∈ _root_.GlobalTheory.Cris.ExpBij.dpFil δ (n * m) := by
@@ -77,19 +61,11 @@ theorem _root_.GlobalTheory.Cris.ExpBij.pow_mem_dpFil {m : ℕ} {a : B} (ha : a 
     rw [pow_succ, Nat.succ_mul]
     exact _root_.GlobalTheory.Cris.ExpBij.mul_mem_dpFil δ ih ha
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-variable (δ : DividedPowers J) in
 
 theorem _root_.GlobalTheory.Cris.ExpBij.dpow_mem_dpFil {a : B} (ha : a ∈ J) (n : ℕ) :
     δ.dpow n a ∈ _root_.GlobalTheory.Cris.ExpBij.dpFil δ n :=
   Ideal.subset_span ⟨[(n, a)], by simpa using ha, by simp, by simp⟩
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-variable (δ : DividedPowers J) in
 
 theorem _root_.GlobalTheory.Cris.ExpBij.dpFil_le {m : ℕ} (hm : 1 ≤ m) : _root_.GlobalTheory.Cris.ExpBij.dpFil δ m ≤ J := by
   refine Ideal.span_le.2 ?_
@@ -108,19 +84,11 @@ theorem _root_.GlobalTheory.Cris.ExpBij.dpFil_le {m : ℕ} (hm : 1 ≤ m) : _roo
   rw [SetLike.mem_coe, hc]
   exact J.mul_mem_right _ (δ.dpow_mem hp0 (hl p hp))
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-variable (δ : DividedPowers J) in
 
 theorem _root_.GlobalTheory.Cris.ExpBij.mem_dpFil_one {a : B} (ha : a ∈ J) : a ∈ _root_.GlobalTheory.Cris.ExpBij.dpFil δ 1 := by
   have h := _root_.GlobalTheory.Cris.ExpBij.dpow_mem_dpFil δ ha 1
   rwa [δ.dpow_one ha] at h
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-variable (δ : DividedPowers J) in
 
 theorem _root_.GlobalTheory.Cris.ExpBij.dpow_mem_dpFil_mul {m : ℕ} (hm : 1 ≤ m) {a : B}
     (ha : a ∈ _root_.GlobalTheory.Cris.ExpBij.dpFil δ m) (n : ℕ) :
@@ -183,11 +151,6 @@ theorem _root_.GlobalTheory.Cris.ExpBij.dpow_mem_dpFil_mul {m : ℕ} (hm : 1 ≤
 
 variable {δ}
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-variable (δ : DividedPowers J) in
-variable {δ} in
 
 theorem _root_.GlobalTheory.Cris.ExpBij.dpExp_bijOn : ∀ (B : Type) [CommRing B] (J : Ideal B) (δ : DividedPowers J),
     _root_.GlobalTheory.Cris.IsNilDP δ → Set.BijOn (_root_.GlobalTheory.Cris.dpExp δ) (J : Set B) {u | u - 1 ∈ J} := by

@@ -121,11 +121,9 @@ variable {M₁ : Model σ X₁ W₁} {om₁ : Rep σ X₁ W₁} {P₁ : Type} [A
   {S₁ : ∀ v : Pl F, Submodule ℂ (Fl F v n₁ d₁)} {H' : Plane E d d₁} {χ : Chr F E} {r : ℝ} {Ev : Fn F n d → Fn F n₁ d₁}
   {L : SInf F (Fin n × Fin d) →L[ℂ] SInf F (Fin n₁ × Fin d₁)} {Λ : ∀ v : Pl F, Fl F v n d →ₗ[ℂ] Fl F v n₁ d₁}
 
-variable (B M₁ om₁ pi₁ p₁ S₁) in
 
 def Inj : Prop := ∀ f ∈ M₁.Pol B.ψ B.emb, ∀ φ, admitted M₁ S₁ φ → pi₁ f ≠ 0 → (∀ v, p₁ v (φ v) ≠ 0) → M₁.I om₁ (pure f φ) ≠ 0
 
-variable (B M S L Λ pi₁ p₁) in
 
 def Pt : Prop := ∃ f ∈ M.Pol B.ψ B.emb, ∃ φ, admitted M S φ ∧ pi₁ (L f) ≠ 0 ∧ ∀ v, p₁ v (Λ v (φ v)) ≠ 0
 

@@ -10,7 +10,6 @@ open NumberField Formalism.L2.NG ReciprocityTheory.Aut Matrix
 
 namespace PI.UnitaryGroupMassFormula.HwConjInf
 
-open Classical in
 
 def repPt {L : Type} [Field L] [NumberField L] {n : ℕ} (Y : InfinitePlace L → Matrix (Fin n) (Fin n) ℂ) :
     (L →+* ℂ) × Fin n × Fin n → ℂ := fun p =>

@@ -180,10 +180,7 @@ variable (hv : ℝ) (vol : @HSpace H.E _ _ H.cmStar → ℝ) (hvol : ∀ W, 0 < 
   (G : LocalGap H)
   (kb : ∀ j, Tau2 R → Fin (R.sigW j).1 → ℤ) (ks : ∀ j, Tau2 R → Fin (R.sigW j).2 → ℤ)
 
-set_option synthInstance.maxHeartbeats 200000 in
-set_option maxHeartbeats 1600000 in
 
-omit kb ks in
 
 end Record
 

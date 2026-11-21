@@ -25,7 +25,6 @@ namespace CxPts
 
 variable {A B : LB Y} {y : CxPts p σ} {U W : Y.Opens}
 
-variable (p σ) in
 
 def gv (B : LB Y) (i j : B.ι) : CxPts p σ → ℂ := ev p σ (B.U i ⊓ B.U j) (B.g i j).val
 
@@ -173,7 +172,6 @@ section Ratio
 variable {D : ℕ} {U' U'' : Y.Opens} {η : FormsOn p D U} {η' : FormsOn p D U'}
   {η'' : FormsOn p D U''}
 
-variable (σ) in
 
 def rv (hη : IsFrame η) (hη' : IsFrame η') : CxPts p σ → ℂ := ev p σ (U ⊓ U') (hη.ratio hη').val
 
@@ -204,7 +202,6 @@ theorem rv_chart (c c' : AlgChart p σ D) (hy : y ∈ c.e.source) (hy' : y ∈ c
 
 end Ratio
 
-variable (p σ B) in
 
 def fibSec : Submodule ℂ (B.ι → CxPts p σ → ℂ) where
   carrier := {s | (∀ i j y, y ∈ ptsIn p σ (B.U i) → y ∈ ptsIn p σ (B.U j) →
@@ -217,7 +214,6 @@ def fibSec : Submodule ℂ (B.ι → CxPts p σ → ℂ) where
     simp only [Pi.smul_apply, hs.1 i j y hi hj, smul_eq_mul, mul_left_comm],
     fun i y h => by simp only [Pi.smul_apply, hs.2 i y h, smul_zero]⟩
 
-variable (p σ) in
 
 def secVal : B.Sec →+ (B.ι → CxPts p σ → ℂ) where
   toFun s i := ev p σ (B.U i) (s.f i)
@@ -300,7 +296,6 @@ instance : Module ℂ (SecC p σ B) :=
   letI := secModuleBase p B
   (inferInstance : Module ℂ (ℂ ⊗[k] B.Sec))
 
-variable (p σ) in
 
 def of : B.Sec →+ SecC p σ B :=
   letI := σ.toAlgebra
@@ -541,12 +536,10 @@ theorem sum_nsq_fs {hB : B.IsLB} {he : ∀ a, e a ∈ fibSec p σ B} {h : NoComm
 
 variable [DecidableEq α]
 
-variable (p σ) in
 
 def combVal (b : α → B.Sec) (M : Matrix α α ℂ) (a : α) : B.ι → CxPts p σ → ℂ :=
   ∑ j, M j a • secVal p σ (b j)
 
-omit [DecidableEq α] in
 
 theorem combVal_eq (b : α → B.Sec) (M : Matrix α α ℂ) (a : α) :
     combVal p σ b M a = SecC.val (∑ j, M j a • SecC.of p σ (b j)) := by
@@ -568,7 +561,6 @@ theorem noCommonZero_combVal {b : α → B.Sec} (hb : ⨆ j, nonzeroLocus (b j) 
     simp [combVal, Matrix.vecMul, dotProduct, Finset.sum_apply, mul_comm]
   exact hj' (congrFun (Matrix.eq_zero_of_vecMul_eq_zero hM hv) j)
 
-variable (p σ) in
 
 def fsBasis (hB : B.IsLB) (b : α → B.Sec) (hb : ⨆ j, nonzeroLocus (b j) = ⊤) (M : Matrix α α ℂ)
     (hM : M.det ≠ 0) : Weight p σ B :=

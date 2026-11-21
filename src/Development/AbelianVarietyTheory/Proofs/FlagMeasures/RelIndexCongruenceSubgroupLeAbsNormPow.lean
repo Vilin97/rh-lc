@@ -13,7 +13,6 @@ open scoped Pointwise ENNReal Classical
 
 namespace GlobalTheory.CongIndex
 
-open scoped TensorProduct in
 
 theorem quot_smul_top_span_card {R N : Type} [CommRing R] [IsDomain R] [AddCommGroup N] [Module R N]
     [Module.Finite R N] [Module.Projective R N] (I : Ideal R) [Finite (R ⧸ I)] :

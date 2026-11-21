@@ -19,26 +19,22 @@ section Level
 
 variable {F : FiniteSubfield} [Fact (K ≤ F)] [F.1.fixingSubgroup.Normal]
 
-variable (K F) in
 
 def unitsLevelMor :
     Rep.res (restrictHom (F := K) (E := F)) (galUnitsZ K.1 F.1) ⟶ unitsLimitRep K :=
   Rep.ofHom ⟨(MonoidHom.toAdditive (IdeleLimit.unitsIncl F)).toIntLinearMap, fun _ => LinearMap.ext fun _ =>
     congrArg Additive.ofMul (Units.ext rfl)⟩
 
-variable (K F) in
 
 def unitsLevelInfl (n : ℕ) : cohomology (galUnitsZ K.1 F.1) n ⟶ cohomology (unitsLimitRep K) n :=
   cohomologyMapAlong restrictHom continuous_restrictHom (unitsLevelMor K F) n
 
-variable (K F) in
 
 def levelDiag : galUnitsZ K.1 F.1 ⟶ ideleRep K.1 F.1 :=
   Rep.ofHom ⟨(MonoidHom.toAdditive (IdeleGroup.diagonal F.1)).toIntLinearMap, fun σ => LinearMap.ext fun x =>
     congrArg Additive.ofMul ((congrArg (IdeleGroup.diagonal F.1) (Units.ext rfl)).trans
       (smul_diagonal σ x.toMul).symm)⟩
 
-omit [F.1.fixingSubgroup.Normal] in
 
 theorem levelDiag_cochains_comp :
     cochainsMap (levelDiag K F) ≫ cochainsMapAlong restrictHom continuous_restrictHom (levelMor K F) =

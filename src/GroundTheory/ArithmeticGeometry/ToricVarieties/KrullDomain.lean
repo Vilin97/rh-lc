@@ -10,7 +10,6 @@ namespace GroundTheory.Arith.Toric
 
 variable {A : Type*} [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A]
 
-omit [IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A] in
 
 theorem smul_mk_eq_zero_iff {b r y : A} :
     r • (Ideal.Quotient.mk (Ideal.span {b}) y) = 0 ↔ b ∣ r * y := by

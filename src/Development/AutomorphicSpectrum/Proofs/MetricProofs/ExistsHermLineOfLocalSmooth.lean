@@ -96,7 +96,6 @@ theorem exists_smooth_on_matrices {P : Ideal (MRing ι)} {u : ((Σ k, ι k) → 
       exact absurd ⟨z, hz, hzy⟩ hy)
   exact ⟨g, contMDiff_iff_contDiff.1 g.contMDiff, fun z hz => hg _ z hz rfl⟩
 
-variable (ι) in
 
 def expLine (g : ((Σ k, ι k × ι k) → ℂ) → ℝ) : HermLine ι where
   a := 0

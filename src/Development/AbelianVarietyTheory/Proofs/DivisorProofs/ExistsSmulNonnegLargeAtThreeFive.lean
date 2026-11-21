@@ -33,7 +33,6 @@ namespace GlobalTheory.LargeCover
 
 open IsDedekindDomain Formalism.MainNotions GlobalTheory.IntCuspLat
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_smul_nonneg_of_dvd (D : D7) (T : Core D) (j : ℕ) (Y : Deep T j) (e : ℕ) (o : ℝ) (hG : Y.Good e o) (w : ℕ)
     (hw : ∀ (u : D.host.E) (n : ℕ), 0 < n → u ^ n = 1 → u ^ w = 1) (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ) (hdom : Dom a n)

@@ -29,7 +29,6 @@ section Idem
 
 variable {K : Type} [Field K] {A : Type} [Group A] {M : Type} [Group M] [Fintype M]
 
-open Classical in
 
 end Idem
 
@@ -60,7 +59,6 @@ section StabPt
 
 variable {X : Fields} {n : ℕ} [NeZero n] {SG : Finset (HeightOneSpectrum (𝓞 X.E))}
 
-open Classical in
 
 end StabPt
 
@@ -68,9 +66,7 @@ section Scal
 
 variable {E : Type} [Field E] [NumberField E]
 
-open Classical in
 
-open Classical in
 
 end Scal
 
@@ -79,9 +75,7 @@ section Rows
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
-open Classical in
 
-open Classical in
 
 end Rows
 
@@ -130,7 +124,6 @@ section RhoScal2
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {K : Type} [Field K] {ι : Type} [Fintype ι] {n : ℕ} [NeZero n]
 
-omit [NeZero n] in
 
 end RhoScal2
 
@@ -139,9 +132,7 @@ section RowsScal
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
-open Classical in
 
-open Classical in
 
 end RowsScal
 
@@ -154,11 +145,8 @@ section RowsMain
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end RowsMain
 
@@ -167,11 +155,8 @@ section RowsMainV
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end RowsMainV
 
@@ -193,9 +178,7 @@ section NotFaithful
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
-open Classical in
 
-open Classical in
 
 end NotFaithful
 

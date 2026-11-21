@@ -83,7 +83,6 @@ theorem exists_typeSpace (H : Submodule ℂ (L2 (latticeGL E a) μ)) (hH : H ≤
             B v ∈ H ∧ ∀ u ∈ U, R (latticeGL E a) μ (finGL E a u) (B v) = B v) →
           ∀ v ∈ X, B v ∈ X := GlobalTheory.T.k_finite_irreducible_fixed_vectors E a μ H hH hI F hFH hF
 
-omit μ in
 
 theorem Zalg_comm_cptRep {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) (k : Kinf E a) :
     z * cptRep E a k = cptRep E a k * z := by
@@ -92,7 +91,6 @@ theorem Zalg_comm_cptRep {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) (k 
   rw [h1] at h
   exact h
 
-omit μ in
 
 theorem Zalg_le (S : Subalgebra ℂ (Module.End ℂ (Sm E a))) (h : ∀ X, lie E a X ∈ S) : Zalg E a ≤ S := by
   have hE : ∀ τ i j, Eop (a := a) τ i j ∈ S := fun τ i j =>

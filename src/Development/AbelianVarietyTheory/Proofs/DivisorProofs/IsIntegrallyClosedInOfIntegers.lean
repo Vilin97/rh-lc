@@ -44,16 +44,11 @@ theorem free_tate (hv : v.Integers O) (G : PDivGroup p O) : Module.Free ℤ_[p] 
 variable [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O]
   {ε : PreTilt O p} {hε : GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta.IsPrimitiveSystem ε}
 
-omit [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O] in
 
-omit [IsAlgClosed C] [CharZero C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O] in
 
 variable [Algebra ℤ_[p] O]
 
-omit [IsDomain O] in
 
-omit [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] in
 
-omit [IsDomain O] in
 
 end GlobalTheory.PointGroup

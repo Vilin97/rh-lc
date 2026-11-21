@@ -124,7 +124,6 @@ def dimMM {s : ℕ} (k : ℕ) (A0 : ℤ) (A C : Fin s → ℕ) : ℕ :=
 
 def digitBlock {s r : ℕ} (rz ry : Fin s → Fin (r + 1) → ℕ) : SegBlock s r := ⟨rz, ry, 0, 0, 0, 0⟩
 
-open Classical in
 
 def rankOnDigits (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (C0 CE1 CE2 : ℝ) (X : Loc)
     [NeZero X.m] (j : Fin (numSeg X.TT)) (m : ℝ) (rz ry : Fin (segS X.TT j) → Fin (X.m + 1) → ℕ) : ℕ :=

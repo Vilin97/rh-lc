@@ -30,7 +30,6 @@ def secAt (z₀ : (Σ k, ι k) → ℂ) (Q : (Σ k, ι k × ι k) → ℂ) : (Σ
 def coefAt (z₀ w : (Σ k, ι k) → ℂ) (k : K) : ℂ :=
   (∑ j, starRingEnd ℂ (w ⟨k, j⟩) * z₀ ⟨k, j⟩) * ((blkSq w k : ℝ) : ℂ)⁻¹
 
-variable (ι) in
 
 def blocksNe : Set ((Σ k, ι k) → ℂ) :=
   {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}
@@ -197,7 +196,6 @@ theorem logRatio_smul
   rw [hF z hz c hc, refNorm_smul, mul_div_mul_left _ _
     (Finset.prod_ne_zero_iff.2 fun k _ => zpow_ne_zero _ (norm_ne_zero_iff.2 (hc k)))]
 
-open Classical in
 
 def descend (P : Ideal (MRing ι)) (a : K → ℤ) (F : ((Σ k, ι k) → ℂ) → ℝ) (Q : (Σ k, ι k × ι k) → ℂ) : ℝ :=
   if h : ∃ z ∈ mcPts P, proj z = Q then logRatio a F h.choose else 0
@@ -248,7 +246,6 @@ theorem local_ext (hP : IsMultiHomogIdeal P) (hpos : ∀ z ∈ mcPts P, 0 < F z)
     rw [e, ← hGF _ ⟨hU', hmem⟩]
     exact logRatio_smul hF hw hc
 
-open scoped Manifold in
 
 theorem exists_smooth_descend (hP : IsMultiHomogIdeal P) (hpos : ∀ z ∈ mcPts P, 0 < F z)
     (hF : ∀ z ∈ mcPts P, ∀ c : K → ℂ, (∀ k, c k ≠ 0) → F (torusSmul c z) = (∏ k, ‖c k‖ ^ a k) * F z)

@@ -24,7 +24,6 @@ theorem T_add (Φ Ψ : d.Fn) (X : Mx F E d.m d.n) : d.T (Φ + Ψ) X = d.T Φ X +
   funext z
   exact mul_add _ _ _
 
-variable (d) in
 
 abbrev b1 : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) (AE F E) := incM F d.b.1.toCols₁
 

@@ -15,7 +15,6 @@ open GlobalTheory.CompanionTheory.Ar.Num GlobalTheory.CompanionTheory.Ar.GR Reci
 noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.Num.PtInj
 
-open Matrix in
 
 theorem val_mul_le_of_cyclic_ker {C : Type} [Field C] {v : Valuation C NNReal} {R : Type} [CommRing R]
     [Algebra R C] (hv : v.Integers R) {B D : Type} [AddCommGroup B] [Module R B] [AddCommGroup D]

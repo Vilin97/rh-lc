@@ -18,7 +18,6 @@ namespace Conservation
 
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem ptsIntegral_const {e : ℕ} (P : Ideal (MRing ι)) (φ : Fin e → ((Σ k, ι k) → ℂ) → ℝ) (c : ℝ) :
     ptsIntegral P φ (fun _ => c) = c * ptsIntegral P φ (fun _ => 1) := by
@@ -34,7 +33,6 @@ theorem ptsIntegral_const {e : ℕ} (P : Ideal (MRing ι)) (φ : Fin e → ((Σ 
     split_ifs <;> simp
   · simp
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem C_not_mem {P : Ideal (MRing ι)} (hP : IsHorizontal P) {a : ℤ} (ha : a ≠ 0) : C a ∉ P := by
   intro h
@@ -42,7 +40,6 @@ theorem C_not_mem {P : Ideal (MRing ι)} (hP : IsHorizontal P) {a : ℤ} (ha : a
   rw [show P.comap (C : ℤ →+* MRing ι) = ⊥ from hP, Ideal.mem_bot] at this
   exact ha this
 
-omit [Fintype K] in
 
 theorem isMultiHomog_C (a : ℤ) : IsMultiHomog (C a : MRing ι) 0 := by
   classical
@@ -52,7 +49,6 @@ theorem isMultiHomog_C (a : ℤ) : IsMultiHomog (C a : MRing ι) 0 := by
   · subst h; simp
   · exact absurd rfl hm
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem comap_eq_of_mem {P W : Ideal (MRing ι)} {p : ℕ} (hp : p.Prime) (hW : W ∈ divSupp P (C (p : ℤ))) :
     W.comap (C : ℤ →+* MRing ι) = Ideal.span {(p : ℤ)} := by
@@ -63,7 +59,6 @@ theorem comap_eq_of_mem {P W : Ideal (MRing ι)} {p : ℕ} (hp : p.Prime) (hW : 
   exact (hmax.eq_of_le (Ideal.IsPrime.comap C).ne_top
     ((Ideal.span_singleton_le_iff_mem _).mpr hpW)).symm
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem not_horizontal {P W : Ideal (MRing ι)} {p : ℕ} (hp : p.Prime) (hW : W ∈ divSupp P (C (p : ℤ))) :
     ¬ IsHorizontal W := by
@@ -72,7 +67,6 @@ theorem not_horizontal {P W : Ideal (MRing ι)} {p : ℕ} (hp : p.Prime) (hW : W
   rw [show W.comap (C : ℤ →+* MRing ι) = ⊥ from h, eq_comm, Ideal.span_singleton_eq_bot] at this
   exact hp.ne_zero (by exact_mod_cast this)
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem charOf_eq {P W : Ideal (MRing ι)} {p : ℕ} (hp : p.Prime) (hW : W ∈ divSupp P (C (p : ℤ))) :
     charOf W = p := by

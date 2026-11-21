@@ -7,7 +7,6 @@ public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.ExistsAlg
 
 namespace GlobalTheory
 
-open MvPolynomial in
 
 theorem aeval_mul_of_isHomogeneous_cone {K L ι : Type} [CommRing K] [CommRing L] [Algebra K L]
     {Q : MvPolynomial ι K} {d : ℕ} (hQ : Q.IsHomogeneous d) (c : L) (x : ι → L) :
@@ -23,7 +22,6 @@ theorem aeval_mul_of_isHomogeneous_cone {K L ι : Type} [CommRing K] [CommRing L
     Finset.prod_pow_eq_pow_sum, ← hd]
   ring
 
-open MvPolynomial in
 
 theorem aeval_eq_pow_mul_aeval_dehomogenise {K L : Type} [CommRing K] [Field L] [Algebra K L]
     {m : ℕ} {Q : MvPolynomial (Fin (m + 1)) K} {d : ℕ} (hQ : Q.IsHomogeneous d)
@@ -45,7 +43,6 @@ theorem aeval_eq_pow_mul_aeval_dehomogenise {K L : Type} [CommRing K] [Field L] 
   rw [aeval_mul_of_isHomogeneous_cone hQ,
     aeval_eq_bind₁ (Fin.cons 1 X : Fin (m + 1) → MvPolynomial (Fin m) K), aeval_bind₁, key]
 
-open MvPolynomial in
 
 theorem dehomogenise_ne_zero_of_isHomogeneous {K : Type} [Field K]
     {m : ℕ} {Q : MvPolynomial (Fin (m + 1)) K} {d : ℕ} (hQ : Q.IsHomogeneous d) (h0 : Q ≠ 0) :

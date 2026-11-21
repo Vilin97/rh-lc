@@ -41,7 +41,6 @@ variable {p : ℕ} [Fact p.Prime] {X : Sys p} {D : D7}
 def FrInv (fd : Formalism.L2.PairingIndexBounds.F.FData X D) : Prop :=
   ∀ j (La : X.Lt j) (v : X.Pl), IsUnit (fd.frM j La v).det
 
-open Classical in
 
 def frGL (fd : Formalism.L2.PairingIndexBounds.F.FData X D) (j : ℕ) (La : X.Lt j) (v : X.Pl) : GL (Fin ((X.Pj j).m + 1)) (X.G.P.Qq v) :=
   if h : IsUnit (fd.frM j La v).det then Matrix.nonsingInvUnit _ h else 1
@@ -49,14 +48,12 @@ def frGL (fd : Formalism.L2.PairingIndexBounds.F.FData X D) (j : ℕ) (La : X.Lt
 def BOf (fd : Formalism.L2.PairingIndexBounds.F.FData X D) (j : ℕ) (La : X.Lt j) : ∀ v : X.Pl, GL (Fin ((X.Pj j).m + 1)) (X.G.P.Qq v) :=
   fun v => (frGL fd j La v)⁻¹
 
-variable (X) in
 
 def glInv : (j : ℕ) → (∀ v : X.Pl, GL (Fin ((X.Fl.Pj j).m + 1)) (X.G.P.Qq v)) →
     ∀ v : Fin (X.Fl.Pj j).nV, GL (Fin ((X.Fl.Pj j).m + 1)) ((X.Fl.Pj j).Qq v)
   | 0, B => B
   | _ + 1, B => B
 
-open Classical in
 
 def VOf (Kc : Type) [Field Kc] [Algebra (K0 p) Kc] [Algebra X.G.Kf Kc] (fd : Formalism.L2.PairingIndexBounds.F.FData X D) (c : Kc) (j : ℕ)
     (La' : X.Lt (j + 1)) (x y : X.ZA j) : Kc :=

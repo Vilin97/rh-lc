@@ -59,6 +59,5 @@ theorem blk_ko {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] 
   obtain ⟨hu⟩ := Fintype.card_eq_one_iff_nonempty_unique.1 h
   exact ⟨(LinearEquiv.funUnique {a // bl a = k} O (KO O) : ({a // bl a = k} → KO O) ≃ₗ[O] KO O)⟩
 
-set_option maxHeartbeats 8000000 in
 
 end Formalism.RepresentationBoundsCohomology.FIN

@@ -205,7 +205,6 @@ end GlobalTheory.GradedFixed
 
 namespace GlobalTheory
 
-open GlobalTheory.GradedFixed in
 
 theorem fixed_mem_of_orbit_height : ∀ {G ι M : Type} [Group G] [MulAction G ι] [AddCommGroup M] [Module ℂ M]
     (π : G →* Module.End ℂ M) (V : ι → Submodule ℂ M), iSupIndep V → (⨆ i, V i) = ⊤ →

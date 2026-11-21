@@ -44,7 +44,6 @@ theorem logWeight_nonneg (w : D.what₂.places.Pl) : 0 ≤ SizeData₂.lwP w := 
   apply div_nonneg (Real.log_natCast_nonneg _)
   positivity
 
-open Classical in
 
 theorem etaSum_eq_sum (L : SizeData₂ D) (j : ℕ) :
     etaSum L j = ∑ l ∈ (L.supp.filter (fun w => D.what₂.muAt w ≠ D.what₂.mu0)).image
@@ -237,7 +236,6 @@ section Bound
 
 variable (L : SizeData₂ D) (tb : Tab L) (C : ℝ)
 
-open Classical in
 
 def bandI (l : ℕ) : ℝ :=
   if ∃ s : ℝ, L.sc.w'' D.R.n ≤ s ∧ s ≤ wB L ∧
@@ -248,7 +246,6 @@ def flatB (l : ℕ) : ℝ := (wP L + eta₃ L) / l + L.Sc + large₂ L + eta₃ 
 def rowBr (l : ℕ) : ℝ :=
   hB L / ((l : ℝ) - 1) ^ (jA L l + 1) + (GP L + 1) * ((jA L l : ℝ) + 1) + large₂ L
 
-open Classical in
 
 def lenB (l : ℕ) : ℝ :=
   if SplitK D l then (2 * (D.R.f : ℝ) * D.R.m + D.R.f) * eP L C l
@@ -258,7 +255,6 @@ def lenB (l : ℕ) : ℝ :=
 
 def bbB : ℝ := C * D.R.f * D.R.n * (D.R.t : ℝ) ^ 2 * D.R.nV * (large₂ L) ^ 2
 
-open Classical in
 
 def lamB (l : ℕ) : ℝ :=
   if l ∈ D.host.small ∨ l = 3 then C * D.R.f * D.R.m * L.sc.b * Real.log L.sc.x + C * L.sc.x ^ C * (large₂ L) ^ 2
@@ -527,7 +523,6 @@ theorem vvTerm_nonneg (D : D7) (l : ℕ) : 0 ≤ vvTerm D l := by
 
 theorem vhE_nonneg (D : D7) (l : ℕ) : 0 ≤ vhE D l := by unfold vhE; positivity
 
-open Classical in
 
 def lamG (L : SizeData₂ D) (tb : Tab L) (C : ℝ) (l : ℕ) : ℝ :=
   if l ∈ gset D then C * L.sc.x ^ C * L.etaSz else lamB L tb C l
@@ -557,7 +552,6 @@ theorem lamB_nonneg (L : SizeData₂ D) (tb : Tab L) {C : ℝ} (hC : 0 < C) {l :
       split_ifs <;> positivity
     linarith
 
-open Classical in
 
 theorem etaSum_le (L : SizeData₂ D) (tb : Tab L) (C : ℝ) (P : ParameterChoice' D L) (hA : AdmT L tb C P)
     (_hg2 : ∀ l ∈ gset D, l ≠ 2) (hsumm : Summable (vvTerm D)) {j : ℕ} (hj : j ∈ SizeData₂.lifts D) :

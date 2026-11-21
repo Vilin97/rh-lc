@@ -117,7 +117,6 @@ theorem exists_lift (hcm : IsCMExt F E σ) (hdet : J.det ≠ 0) (τ : EmbOver E 
 theorem archMat_injective (hcm : IsCMExt F E σ) (τ : EmbOver E w) : Function.Injective (archMat σ J τ) :=
   fun a b e => (GlobalTheory.Orb.isEmbedding_archMat J hcm τ).injective (congrArg (fun m i j => m i j) e)
 
-variable (σ) in
 
 def stabAt (τ : EmbOver E w) (P : Matrix (Fin n) (Fin n) ℂ) : Subgroup (GArch σ J w) where
   carrier := {y | (archMat σ J τ y)ᴴ * P * archMat σ J τ y = P}
@@ -161,7 +160,6 @@ theorem isCompact_stabAt (hcm : IsCMExt F E σ) (hdet : J.det ≠ 0) (τ : EmbOv
 
 def evC (τ : EmbOver E w) : AF F ⊗[F] E →+* ℂ := (infEmb τ).comp (compInf F E w)
 
-variable (F E) in
 
 def finPart : AF F ⊗[F] E →+* Af F ⊗[F] E := (Algebra.TensorProduct.map (sndA F) (AlgHom.id F E)).toRingHom
 
@@ -282,7 +280,6 @@ theorem exists_diag (hcm : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOve
         rw [this, map_zero, Matrix.one_apply_ne e]
   exact ⟨fun i => B i i, by rw [← hB]; exact h1⟩
 
-variable (σ) in
 
 def kInf (τ : ∀ w : InfinitePlace F, EmbOver E w) (P : InfinitePlace F → Matrix (Fin n) (Fin n) ℂ) :
     Subgroup (GAd σ J) :=

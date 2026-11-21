@@ -19,9 +19,7 @@ namespace PositivityTheory.Pf1.SegRepC.PiLocalization₂
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem isSubquotient_jac_of_le {d l : ℕ} (σ : IrrRep (GL (Fin d) k))
     {S T : Subrepresentation (multiProd (consecBlocks l d) (segTerm σ.ρ l))} (hST : S.toSubmodule ≤ T.toSubmodule)

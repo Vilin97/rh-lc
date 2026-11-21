@@ -188,7 +188,6 @@ theorem chartMixedEnergy_eq (X Y : Matrix (Fin (e + 1)) (Fin (e + 1)) ℂ) (k : 
 
 end ChartEnergyCocycleAlt
 
-open ChartEnergyCocycleAlt in
 
 theorem ChartEnergyCocycle.proof (hS : ChartEnergySymm.Statement) : ChartEnergyCocycle.Statement := by
   intro e M N P hM hN hP

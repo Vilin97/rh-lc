@@ -12,7 +12,6 @@ namespace GlobalTheory.KummerEisensteinGalois.UnitPiece
 
 variable {K : Type} [Field K] [CharZero K]
 
-omit [CharZero K] in
 
 theorem sum_antidiag (n : ℕ) (G : ℤ → ℤ → K) :
     ∑ q ∈ (n : ℤ).divisorsAntidiag, G q.1 q.2 =
@@ -60,7 +59,6 @@ theorem eePos_eq (N p m : ℕ) (ψ : DirichletCharacter K (p ^ m)) (t : ℤ) (ζ
 
 def primeTo (p m : ℕ) [NeZero p] : Finset (ZMod (p ^ m)) := univ.filter fun c => ¬ p ∣ c.val
 
-omit [CharZero K] in
 
 theorem sum_unitSet (p m : ℕ) [NeZero p] (ψ : DirichletCharacter K (p ^ m))
     (H : ZMod (p ^ m) → ZMod (p ^ m) → ZMod (p ^ m) → ZMod (p ^ m) → K) :
@@ -273,7 +271,6 @@ theorem entry_sum (p m N k : ℕ) [Fact p.Prime] (hm : 1 ≤ m) (hN : 0 < N) (ψ
       mul_zero, zero_mul, false_and]
   ring
 
-omit [CharZero K] in
 
 theorem sum_affine (p m : ℕ) [Fact p.Prime] (hm : 1 ≤ m) (ψ : DirichletCharacter K (p ^ m))
     (hψ : ψ.IsPrimitive) (u c : ZMod (p ^ m)) (hu : IsUnit u) : ∑ b : ZMod (p ^ m), ψ (u * b + c) = 0 := by
@@ -291,7 +288,6 @@ theorem isUnit_of_mem (p m : ℕ) [Fact p.Prime] {u : ZMod (p ^ m)} (hu : u ∈ 
   rw [← ZMod.natCast_zmod_val u, ZMod.isUnit_iff_coprime]
   exact ((hp.coprime_iff_not_dvd.mpr (mem_filter.mp hu).2).symm).pow_right m
 
-omit [CharZero K] in
 
 theorem sum_zero_left (p m : ℕ) [Fact p.Prime] (hm : 1 ≤ m) (ψ : DirichletCharacter K (p ^ m))
     (hψ : ψ.IsPrimitive) (f : ZMod (p ^ m) → K) (g : ZMod (p ^ m) → ZMod (p ^ m) → K) :
@@ -306,7 +302,6 @@ theorem sum_zero_left (p m : ℕ) [Fact p.Prime] (hm : 1 ≤ m) (ψ : DirichletC
   congr 1
   exact sum_congr rfl fun a _ => by congr 1; ring
 
-omit [CharZero K] in
 
 theorem sum_zero_right (p m : ℕ) [Fact p.Prime] (hm : 1 ≤ m) (ψ : DirichletCharacter K (p ^ m))
     (hψ : ψ.IsPrimitive) (f : ZMod (p ^ m) → ZMod (p ^ m) → K) (g : ZMod (p ^ m) → K) :

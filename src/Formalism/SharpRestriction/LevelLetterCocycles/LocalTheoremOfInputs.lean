@@ -25,7 +25,6 @@ def levBOfSit {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {K : 
   mem := S.tie.levB_mem
   supp := S.tie.levB_supp
 
-set_option maxHeartbeats 1000000 in
 
 theorem local_theorem_of_inputs (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F) (C : ℝ)

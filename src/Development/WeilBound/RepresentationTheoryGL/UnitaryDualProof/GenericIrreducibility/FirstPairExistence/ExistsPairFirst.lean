@@ -43,8 +43,6 @@ private theorem nonempty_prodIrr_equiv_of_eq_comp_cast {m n N : ℕ} (e : m = n)
   subst hfg'
   exact ⟨Representation.Equiv.refl _⟩
 
-set_option maxHeartbeats 1600000 in
-set_option maxHeartbeats 1600000 in
 
 theorem pair_irr (hF : FactorIrr k) {h N : ℕ} (y : Fin h → IrrGL k) (i j : Fin h) (hij : (j : ℕ) = i + 1)
     (hd : ∑ a, (y a).1 = N) (hirr : (prodIrr y hd).IsIrreducible) (q : ℕ) (hq : ∑ t, (![y i, y j] t).1 = q) :
@@ -97,7 +95,6 @@ def PR {h : ℕ} (f g : Fin h → IrrGL k) : Prop :=
     ∀ (N : ℕ) (hf : ∑ a, (f a).1 = N) (hg : ∑ a, (g a).1 = N),
       (prodIrr f hf).IsIrreducible → Nonempty ((prodIrr f hf).Equiv (prodIrr g hg))
 
-set_option maxHeartbeats 1600000 in
 
 theorem pr_swap (hF : FactorIrr k) (hC : Comm2Irr k) {h : ℕ} (f : Fin h → IrrGL k) (i j : Fin h)
     (hij : (j : ℕ) = i + 1) : PR f (f ∘ Equiv.swap i j) := by
@@ -122,7 +119,6 @@ private theorem PR_trans {h : ℕ} {f g g' : Fin h → IrrGL k} (h1 : PR f g) (h
   obtain ⟨e2⟩ := h2.2 N hg hg' hirr2
   exact ⟨e1.trans e2⟩
 
-set_option maxHeartbeats 1600000 in
 
 theorem pr_perm (hF : FactorIrr k) (hC : Comm2Irr k) {h : ℕ} (f : Fin h → IrrGL k) (σ : Equiv.Perm (Fin h)) :
     PR f (f ∘ σ) := by
@@ -183,7 +179,6 @@ theorem comp_firstPerm {r : ℕ} {α : Type*} (x : Fin (r + 1) → α) (j : Fin 
   · simp [firstPerm]
   · simp [firstPerm]
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_pair_last (x₀ : IrrGL k) {M : ℕ} {V W U : Type} [AddCommGroup V] [Module ℂ V]
     [AddCommGroup W] [Module ℂ W] [AddCommGroup U] [Module ℂ U] (A : Representation ℂ (GL (Fin M) k) V)
@@ -198,7 +193,6 @@ theorem exists_pair_last (x₀ : IrrGL k) {M : ℕ} {V W U : Type} [AddCommGroup
   obtain ⟨e3⟩ := nonempty_prod₂_equiv_prodIrr_pair (IrrGL.of A hAs hAi) x₀ hp
   exact ⟨IrrGL.of A hAs hAi, hp, ⟨e.symm.trans ((prod₂Equiv (IrrGL.equivOf A hAs hAi) eB.symm).trans e3)⟩⟩
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_pair_first (x₀ : IrrGL k) {M : ℕ} {V W U : Type} [AddCommGroup V] [Module ℂ V]
     [AddCommGroup W] [Module ℂ W] [AddCommGroup U] [Module ℂ U] (A : Representation ℂ (GL (Fin x₀.1) k) V)

@@ -56,7 +56,6 @@ theorem gs_secChart {A' : LB X'} {A : LB X} {h : X' ⟶ X} (a : ChartPull A' A h
 variable (L : LB Y) {K : Type} [Fintype K] (φ : K → (X ⟶ Y)) (ε : K → ℤ) (π : X' ⟶ X) (ψ : K → (X' ⟶ Y))
   (e : ∀ k, ψ k = π ≫ φ k)
 
-include e in
 
 theorem mem_wchart_iff (j : K → L.ι) (y : X') : y ∈ LB.wchart L ψ j ↔ π y ∈ LB.wchart L φ j := by
   obtain rfl : ψ = fun k => π ≫ φ k := funext e
@@ -89,7 +88,6 @@ def Rep (c : R' →+* Γ(X', ⊤)) (v : Fin F.a → R') (s : ∀ j, Γ(X', LB.wc
 
 variable {F π ψ}
 
-include e in
 
 theorem Rep.sec_eq {c : R' →+* Γ(X', ⊤)} {v : Fin F.a → R'} {s s' : LB.Sec (LB.LinComb L ψ ε)}
     (h : Rep π ψ F c v s.f) (h' : Rep π ψ F c v s'.f) : s = s' := by
@@ -99,7 +97,6 @@ theorem Rep.sec_eq {c : R' →+* Γ(X', ⊤)} {v : Fin F.a → R'} {s s' : LB.Se
   exact (sec_trans s (𝟙 X') y hy hm).trans ((congrArg _ ((h _ (𝟙 X') y i hi).trans (h' _ (𝟙 X') y i hi).symm)).trans
     (sec_trans s' (𝟙 X') y hy hm).symm)
 
-include e in
 
 theorem Rep.sum {c : R' →+* Γ(X', ⊤)} {I : Type} [Fintype I] {w : I → Fin F.a → R'}
     {b : I → ∀ j, Γ(X', LB.wchart L ψ j)} (h : ∀ l, Rep π ψ F c (w l) (b l)) (a : I → R') :
@@ -114,7 +111,6 @@ theorem Rep.sum {c : R' →+* Γ(X', ⊤)} {I : Type} [Fintype I] {w : I → Fin
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => by ring
 
-include e in
 
 theorem Rep.pull {X'' : Scheme.{0}} {R'' : Type} [CommRing R''] {c : R' →+* Γ(X', ⊤)} {c' : R'' →+* Γ(X'', ⊤)}
     {v : Fin F.a → R'} {v' : Fin F.a → R''} {s : ∀ j, Γ(X', LB.wchart L ψ j)} (h : Rep π ψ F c v s)
@@ -132,7 +128,6 @@ theorem Rep.pull {X'' : Scheme.{0}} {R'' : Type} [CommRing R''] {c : R' →+* Γ
   rw [hv, Category.assoc]
   exact congrArg (· * _) (gs_pull r ρ z ⊤ trivial _).symm
 
-include e in
 
 theorem rep_main (g : R →+* R') (f' : X' ⟶ Spec (CommRingCat.of R'))
     (H : IsPullback π f' f (Spec.map (CommRingCat.ofHom g))) (c : R' →+* Γ(X', ⊤))
@@ -187,29 +182,24 @@ variable {S : Scheme.{0}} (A : Over S) [GrpObj A] (L : LB A.left) (n : ℤ) {R :
 def cfun (h : T ⟶ Over.mk t₀) : R →+* Γ(T.left, ⊤) :=
   h.left.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom
 
-omit [GrpObj A] in
 
 theorem snd_eq (h : T' ⟶ T) : (snd T' A).left = (h ▷ A).left ≫ (snd T A).left := by
   rw [← Over.comp_left, whiskerRight_snd]
 
-omit [GrpObj A] in
 
 theorem fst_eq (h : T' ⟶ T) : (h ▷ A).left ≫ (fst T A).left = (fst T' A).left ≫ h.left := by
   rw [← Over.comp_left, whiskerRight_fst, Over.comp_left]
 
-omit [GrpObj A] in
 
 theorem isPullback_snd (T : Over S) : IsPullback (snd T A).left (fst T A).left A.hom T.hom :=
   (IsPullback.of_hasPullback T.hom A.hom).flip
 
-omit [GrpObj A] in
 
 theorem isPullback_whisker (h : T' ⟶ T) : IsPullback (h ▷ A).left (fst T' A).left (fst T A).left h.left := by
   refine IsPullback.of_right ?_ (fst_eq A h) (isPullback_snd A T)
   rw [← snd_eq, Over.w]
   exact isPullback_snd A T'
 
-omit [GrpObj A] in
 
 theorem isPullback_affine [IsAffine T.left] (h : T ⟶ Over.mk t₀) :
     IsPullback (h ▷ A).left ((fst T A).left ≫ T.left.toSpecΓ) (fst (Over.mk t₀) A).left

@@ -11,7 +11,6 @@ namespace GlobalTheory.FrameDeco
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
-omit [StarRing E] in
 
 theorem exists_inv_mod (P : HeightOneSpectrum (𝓞 E)) {s : 𝓞 E} (hs : s ∉ P.asIdeal) :
     ∃ a p : 𝓞 E, p ∈ P.asIdeal ∧ a * s + p = 1 := by

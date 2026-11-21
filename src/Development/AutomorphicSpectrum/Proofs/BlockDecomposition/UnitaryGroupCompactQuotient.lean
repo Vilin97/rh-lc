@@ -141,7 +141,6 @@ theorem exists_compact_cover (H : Matrix (Fin n) (Fin n) E) (hnd : Formalism.Mai
   congr 1
   group
 
-omit [IsCMField E] in
 
 theorem algebraMap_injective (E : Type) [Field E] [NumberField E] : Function.Injective (algebraMap E (Af E)) := by
   haveI : Nontrivial (Af E) := by

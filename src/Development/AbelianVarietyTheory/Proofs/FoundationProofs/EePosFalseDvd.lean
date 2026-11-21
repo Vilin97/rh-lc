@@ -46,6 +46,5 @@ end GlobalTheory.KummerEisensteinGalois.UpSplit
 
 namespace GlobalTheory.KummerEisensteinGalois
 
-open GlobalTheory.KummerEisensteinGalois.UpSplit in
 
 end GlobalTheory.KummerEisensteinGalois

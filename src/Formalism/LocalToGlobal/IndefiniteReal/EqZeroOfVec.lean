@@ -19,7 +19,6 @@ variable {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar}
 
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 
-open Classical in
 
 structure EqCont (M : DSModel V S) (T : MMap M) : Prop where
   equiv : ∀ τ, ∀ g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ), ∀ (v : M.Vec) (w : M.sm τ),
@@ -29,7 +28,6 @@ structure EqCont (M : DSModel V S) (T : MMap M) : Prop where
 
 variable {θ}
 
-open Classical in
 
 theorem eqCont_of_mem {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ} {T : MMap M}
     (hT : T ∈ Mult θ M J χ) : EqCont θ M T := by
@@ -53,12 +51,8 @@ theorem eqCont_of_mem {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ}
       exact ⟨a • ℓ, sobCont_smul a hℓ, fun w => by
         rw [LinearMap.smul_apply, e, MultilinearMap.smul_apply, Pi.smul_apply]⟩
 
-open Classical in
 
-open Classical in
 
-variable (θ) in
-open Classical in
 
 end Formalism.IndefR.AutomorphicEvaluation
 

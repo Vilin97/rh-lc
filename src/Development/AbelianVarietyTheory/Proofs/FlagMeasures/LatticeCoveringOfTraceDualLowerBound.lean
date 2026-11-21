@@ -79,7 +79,6 @@ theorem trace_eq_sum (a : K) :
     (IsTotallyComplex.isComplex w).mult_eq_two]
   simp
 
-omit [IsTotallyComplex K] in
 
 theorem exists_basis {ι : Type} [Fintype ι] (L : Submodule (𝓞 K) (ι → K)) (hfg : L.FG)
     (hsp : Submodule.span K (L : Set (ι → K)) = ⊤) :
@@ -125,7 +124,6 @@ theorem exists_basis {ι : Type} [Fintype ι] (L : Submodule (𝓞 K) (ι → K)
   rw [Module.Basis.coe_mk]
   exact hmem y
 
-omit [IsTotallyComplex K] in
 
 theorem exists_trace_form {ι : Type} [Fintype ι] (φ : (ι → K) →ₗ[ℚ] ℚ) :
     ∃ f : ι → K, ∀ y, Algebra.trace ℚ K (f ⬝ᵥ y) = φ y := by

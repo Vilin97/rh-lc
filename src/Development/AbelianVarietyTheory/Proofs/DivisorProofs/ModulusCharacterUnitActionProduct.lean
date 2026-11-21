@@ -278,7 +278,6 @@ theorem cobd_laurent (q : ℕ) [NeZero q] (hint : Algebra.IsIntegral A A')
 
 end GlobalTheory.EtC.KerLaurent
 
-open GlobalTheory.EtC.KerLaurent in
 
 theorem GlobalTheory.EtC.kerLaurent : ∀ (q : ℕ) [NeZero q] (A A' : Type) [CommRing A] [CommRing A'] [Algebra A A'],
     Algebra.IsIntegral A A' → RingHom.ker (algebraMap A A') ≤ nilradical A → IsUnit (q : A) →

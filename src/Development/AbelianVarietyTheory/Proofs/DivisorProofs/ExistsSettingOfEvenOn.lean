@@ -27,7 +27,6 @@ namespace GlobalTheory.Mum.TraitSetting
 
 open GlobalTheory.UU GlobalTheory.LN
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_setting_of_evenOn (laws : Laws) {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R]
     {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G] (P : CP G) (hS : IsSemiAbelian G) (hE : EvenOn P)

@@ -81,12 +81,10 @@ theorem herm_eq_zero_of_EF {v w : Fin r → E} (h : ∀ α : 𝓞 E, EF X ((α :
     rw [← EF_smul_eq_sum X (α : E) v w, h, Rat.cast_zero]) τ).2
   simpa [(c_pos X τ).ne'] using h1
 
-open Classical in
 
 def perLt (x : Frame X.Ψ r) (v : Fin r → E) (τ : X.Ψ) : X.Ψ × Fin r → ℂ := fun p =>
   if p.1 = τ ∧ (p.2 : ℕ) < X.p0 then per X x v p else 0
 
-open Classical in
 
 def perGe (x : Frame X.Ψ r) (v : Fin r → E) (τ : X.Ψ) : X.Ψ × Fin r → ℂ := fun p =>
   if p.1 = τ ∧ X.p0 ≤ (p.2 : ℕ) then per X x v p else 0
@@ -255,7 +253,6 @@ theorem EF_bas_inl (v : X.Λ) (j : Fin g) :
 variable {S : Finset (Fin g)} (hA : IsAdapted X bas ξ S)
 include hA
 
-omit hs in
 
 theorem IsAdapted.symm_apply_eq_zero {v : X.Λ} (hv : (v : Fin r → E) ∈ Submodule.span E {ξ})
     {t : Fin g ⊕ Fin g} (ht : ∀ k ∈ S, t ≠ Sum.inl k) : bas.symm v t = 0 := by
@@ -269,7 +266,6 @@ theorem IsAdapted.symm_apply_eq_zero {v : X.Λ} (hv : (v : Fin r → E) ∈ Subm
   | add u v _ _ hu hv => rw [map_add (f := _), Pi.add_apply, hu, hv, add_zero]
   | smul c u _ hu => rw [map_smul, Pi.smul_apply, hu, smul_zero]
 
-omit hs in
 
 theorem IsAdapted.symm_smul_eq_zero (hξ : ξ ∈ X.Λ) (α : 𝓞 E) {t : Fin g ⊕ Fin g}
     (ht : ∀ k ∈ S, t ≠ Sum.inl k) : bas.symm (α • ⟨ξ, hξ⟩) t = 0 :=
@@ -430,7 +426,6 @@ variable {bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ} (hs : IsSympl X bas)
   (hA : IsAdapted X bas ξ S) (idx : Fin g ≃ X.Ψ × Fin r)
 include hs hA
 
-include idx in
 
 theorem IsAdapted.part_ne_zero (hξ : X.IsIso ξ) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (τ : X.Ψ) :
     perLt X x ξ τ ≠ 0 ∧ perGe X x ξ τ ≠ 0 := by
@@ -635,7 +630,6 @@ theorem IsAdapted.flowCoeff_eq_zero (hξ : X.IsIso ξ) (n : ℕ) (a b : Fin n �
       simp only [dotProduct, (hA.hMat_mulVec_part hs idx hξ.1 hy τ _).2, Pi.add_apply]
       rw [Finset.sum_congr rfl fun j _ => mul_left_comm _ _ _, ← Finset.mul_sum, h1, mul_zero]
 
-include idx in
 
 theorem IsAdapted.exists_unip (hξ : X.IsIso ξ) {x : Frame X.Ψ r} (hx : x ∈ X.dom) :
     ∃ K, coper X (rmul x (unip X K)) ξ = 0 :=

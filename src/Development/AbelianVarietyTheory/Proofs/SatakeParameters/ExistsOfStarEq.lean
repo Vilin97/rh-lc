@@ -55,7 +55,6 @@ theorem locK_tame {χ : HChar E} {P : HeightOneSpectrum (𝓞 E)} (h : χ.TameAt
 
 variable [StarRing E] {F : Type} [Field F] [NumberField F] [Algebra F E]
 
-omit [NumberField E] [NumberField F] in
 
 theorem exists_of_star_eq (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x) (hr : Module.finrank F E = 2)
     (hc : ∃ a : E, star a ≠ a) {x : E} (hx : star x = x) : ∃ k : F, algebraMap F E k = x := by
@@ -148,7 +147,6 @@ theorem under_eq_iff (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x
       show star (((algebraMap (𝓞 F) (𝓞 E) c : 𝓞 E) : E)) = ((algebraMap (𝓞 F) (𝓞 E) c : 𝓞 E) : E)
       rw [hcoe, hF]
 
-omit [StarRing E] in
 
 theorem valuation_up (hr : Module.finrank F E = 2)
     (hu : ∀ v : HeightOneSpectrum (𝓞 F), v.asIdeal.ramificationIdxIn (𝓞 E) = 1) (Q : HeightOneSpectrum (𝓞 E)) (x : F) :
@@ -230,7 +228,6 @@ theorem split_prod (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x) 
     rw [eq_mul_inv_iff_mul_eq₀ hyb0]; exact hyz.symm
   rw [hz, map_mul, map_inv, ← hPK, inv_eq_of_mul_eq_one_right htriv, hQK]
 
-open Classical in
 
 theorem place_prod (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x) (hr : Module.finrank F E = 2)
     (hc : ∃ a : E, star a ≠ a) (hu : ∀ v : HeightOneSpectrum (𝓞 F), v.asIdeal.ramificationIdxIn (𝓞 E) = 1)
@@ -918,7 +915,6 @@ theorem prod_twist (hX : X.Ok) (hsel : IsSel X sel)
 
 end Main
 
-open Classical in
 
 theorem prod_muAt : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m) (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu)) (σ₀ : X.K →+* ℂ) (e : Fin R.m → X.Tau → ℤ) (m0 : Fin R.m → Formalism.L2.Host.HChar X.E) (eta : Formalism.L2.Host.HChar X.E), X.Ok → Pr.Ok → IsSel X sel → (∀ i, Pr.g i ∈ S) → (∀ v : HeightOneSpectrum (𝓞 X.F), v.asIdeal.ramificationIdxIn (𝓞 X.E) = 1) → Ch.Tied σ₀ (fun j τ => (e j τ : ℚ)) m0 eta → ∀ (j : Fin R.m) (z : X.E), z * star z = 1 → IsIntegral ℤ z → σ₀ (∏ P : rowSG Pr sel mu, muAt Ch sel mu cst j.1 P z) = ∏ τ, X.embC σ₀ τ z ^ (-(e j τ)) := by
   intro X Pr R Ch sel S mu cs σ₀ e m0 eta hX hPr hsel hS hu hT j z hz hzi

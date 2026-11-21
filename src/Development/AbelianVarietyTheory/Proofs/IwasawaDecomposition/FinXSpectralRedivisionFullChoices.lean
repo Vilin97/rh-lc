@@ -15,13 +15,11 @@ open MeasureTheory NumberField IsDedekindDomain Formalism.BasicNotions Formalism
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 4000000 in
 
 theorem toTerm_eTT_symm {D : D7} (Z : New D) {X : HidaSetting D} (Y : Full X) (u u' : D.what₂.Word)
     (s : TT (reY Z Y) (wd Z u) (wd Z u')) :
     ((eTT Z Y u u').symm s).toTerm = (eRT Z Y u u').symm s.toTerm := (by with_unfolding_all exact (Eq.refl ((eRT Z Y u u').symm s.toTerm) :))
 
-set_option maxHeartbeats 4000000 in
 
 def eFib {D : D7} (Z : New D) {X : HidaSetting D} (Y : Full X) (u u' : D.what₂.Word)
     (t : RT (reY Z Y) (wd Z u) (wd Z u')) :
@@ -30,14 +28,12 @@ def eFib {D : D7} (Z : New D) {X : HidaSetting D} (Y : Full X) (u u' : D.what₂
     rw [toTerm_eTT_symm]
     exact ((eRT Z Y u u').symm.injective.eq_iff).symm).symm
 
-set_option maxHeartbeats 4000000 in
 
 theorem fibFin_re {D : D7} (Z : New D) {X : HidaSetting D} {Y : Full X} (h : FinX Y) (u u' : D.what₂.Word)
     (t : RT (reY Z Y) (wd Z u) (wd Z u')) : Finite (fib (reY Z Y) t) := by
   have := h.fibFin u u' ((eRT Z Y u u').symm t)
   exact Finite.of_equiv _ (eFib Z Y u u' t)
 
-set_option maxHeartbeats 4000000 in
 
 theorem pairIndep_re {D : D7} (Z : New D) {X : HidaSetting D} {Y : Full X} (h : FinX Y) (u u' : D.what₂.Word)
     (s₁ s₂ s₁' s₂' : TT (reY Z Y) (wd Z u) (wd Z u')) (e₁ : s₁.toTerm = s₁'.toTerm) (e₂ : s₂.toTerm = s₂'.toTerm)
@@ -52,7 +48,6 @@ theorem pairIndep_re {D : D7} (Z : New D) {X : HidaSetting D} {Y : Full X} (h : 
     ((eTT Z Y u u').symm s₁') ((eTT Z Y u u').symm s₂') e₁' e₂' ((by with_unfolding_all exact (r₁ :))) ((by with_unfolding_all exact (r₂ :)))
   kexactB this
 
-set_option maxHeartbeats 4000000 in
 
 theorem finX_reY : ∀ (D : D7) (Z : New D) (X : HidaSetting D) (Y : Full X), FinX Y → FinX (reY Z Y) := by
   intro D Z X Y h

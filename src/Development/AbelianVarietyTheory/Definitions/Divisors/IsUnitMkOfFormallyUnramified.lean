@@ -92,7 +92,6 @@ theorem isUnit_mk_of_formallyUnramified {k A : Type*} [CommRing k] [CommRing A] 
   have h1 : c * Ideal.Quotient.mk I J = 1 := hgen.1 (hcoef.trans (one_smul _ _).symm)
   exact isUnit_iff_exists_inv.2 ⟨c, by rw [mul_comm]; exact h1⟩
 
-variable (p) in
 
 theorem resG_comp_algX {U V : Y.Opens} (h : V ≤ U) : (resG Y h).comp (algX p U) = algX p V := by
   ext a
@@ -101,11 +100,9 @@ theorem resG_comp_algX {U V : Y.Opens} (h : V ≤ U) : (resG Y h).comp (algX p U
   exact congrArg (fun φ : Γ(Sp k, ⊤) ⟶ Γ(Y, V) => φ.hom ((Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom a))
     (Scheme.Hom.appLE_map p _ (homOfLE h).op)
 
-variable (p D) in
 
 abbrev FormsOn (U : Y.Opens) : Type := Forms (algX p U) D
 
-variable (p) in
 
 abbrev dOn {U : Y.Opens} (f : Fin D → Γ(Y, U)) : FormsOn p D U := dForm (algX p U) f
 
@@ -269,7 +266,6 @@ theorem res_ratio_mul (hω : IsFrame ω) (hω' : IsFrame ω') (hω'' : IsFrame �
 
 end IsFrame
 
-variable (p D) in
 
 theorem exists_isFrame [SmoothOfRelativeDimension D p] (x : Y) :
     ∃ (U : Y.Opens) (ω : FormsOn p D U), x ∈ U ∧ IsFrame ω := by
@@ -324,7 +320,6 @@ def ofFrames {ι : Type} (U : ι → Y.Opens) (ω : ∀ i, FormsOn p D (U i)) (h
   gen i := (h i).gen
   trans i j _ hW hi hj := (h i).resForm_eq_ratio_smul (h j) hW hi hj
 
-variable (p D) in
 
 def all : CanonLB p D :=
   ofFrames (ι := Σ U : Y.Opens, {ω : FormsOn p D U // IsFrame ω}) (fun a => a.1) (fun a => a.2.1)
@@ -603,7 +598,6 @@ namespace TopForm
 
 variable {p : Y ⟶ Sp k} {D : ℕ} {U V : Y.Opens}
 
-variable (p) in
 
 def jacOn (f : Fin (D + 1) → Γ(Y, U)) : FormsOn p D U := letI := (algX p U).toAlgebra; jac k f
 
@@ -688,7 +682,6 @@ instance smooth_affStr : SmoothOfRelativeDimension D (affStr k D) := by
     ((RingHom.isStandardSmoothOfRelativeDimension_algebraMap D).2
       (P₂.isStandardSmoothOfRelativeDimension (by simp [Algebra.Presentation.dimension])))
 
-variable {k D} in
 
 def polyFn : MvPolynomial (Fin D) k →+* Γ(Sp (MvPolynomial (Fin D) k), ⊤) :=
   (Scheme.ΓSpecIso (CommRingCat.of (MvPolynomial (Fin D) k))).inv.hom
@@ -752,7 +745,6 @@ def affineSpace : CanonLB (affStr k D) D :=
   ofFrames (ι := PUnit) (fun _ => ⊤) (fun _ => dOn _ fun a => polyFn (X a))
     (fun _ => isFrame_dX k D) iSup_const
 
-variable {k D} in
 
 theorem jacobian_affineSpace (f : Fin D → MvPolynomial (Fin D) k) :
     (affineSpace k D).jacobian PUnit.unit le_rfl (fun a => polyFn (f a)) =
@@ -765,7 +757,6 @@ theorem jacobian_affineSpace (f : Fin D → MvPolynomial (Fin D) k) :
     RingHom.map_det]
   rfl
 
-variable {k D} in
 
 def polySec (f : MvPolynomial (Fin D) k) :
     LB.Sec (Out.Inh.trivLB (Sp (MvPolynomial (Fin D) k))) :=

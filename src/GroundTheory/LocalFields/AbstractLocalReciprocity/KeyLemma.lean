@@ -17,7 +17,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Comp
 
 section SlopeTestRemainingChoices
 
-omit [TotallyDisconnectedSpace G] in
 
 def powLift {φ : G} (hφK : φ ∈ (K : Subgroup G))
     (hdφ : D.deg φ = Multiplicative.ofAdd (inertiaDegree D.deg K : ℤ̂)) (m : ℕ) (hm : 0 < m) :
@@ -32,7 +31,6 @@ def powLift {φ : G} (hφK : φ ∈ (K : Subgroup G))
     push_cast
     rw [nsmul_eq_mul]
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem mem_fixedModule_of_smul_eq [IsDiscreteModule G A] (K : OpenSubgroup G) {φ : G}
     (hφK : φ ∈ (K : Subgroup G)) (hdφ : D.deg φ = Multiplicative.ofAdd (inertiaDegree D.deg K : ℤ̂))
@@ -59,14 +57,12 @@ theorem mem_fixedModule_of_smul_eq [IsDiscreteModule G A] (K : OpenSubgroup G) {
   calc τ • w = (φ ^ m * ((φ ^ m)⁻¹ * τ)) • w := by group
     _ = w := by rw [mul_smul, h2, h1]
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem map_conj_inf_ker (hLK : L ≤ K) [((L : Subgroup G).subgroupOf K).Normal] {g : G}
     (hg : g ∈ (K : Subgroup G)) :
     ((L : Subgroup G) ⊓ D.deg.ker).map (MulAut.conj g).toMonoidHom = (L : Subgroup G) ⊓ D.deg.ker :=
   Subgroup.mem_normalizer_iff_map_conj_eq.1 (FrobeniusLift.mem_normalizer hLK hg)
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem map_conj_inf_ker_self {g : G} (hg : g ∈ (K : Subgroup G)) :
     ((K : Subgroup G) ⊓ D.deg.ker).map (MulAut.conj g).toMonoidHom =
@@ -76,7 +72,6 @@ theorem map_conj_inf_ker_self {g : G} (hg : g ∈ (K : Subgroup G)) :
     infer_instance
   exact map_conj_inf_ker le_rfl hg
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem smul_mem_fixedModule_inf_ker (hLK : L ≤ K) [((L : Subgroup G).subgroupOf K).Normal] {g : G}
     (hg : g ∈ (K : Subgroup G)) {y : A} (hy : y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker)) :
@@ -84,7 +79,6 @@ theorem smul_mem_fixedModule_inf_ker (hLK : L ≤ K) [((L : Subgroup G).subgroup
   have := smul_mem_fixedModule hy g
   rwa [map_conj_inf_ker hLK hg] at this
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem smul_norm_inf_ker (hLK : L ≤ K) [((L : Subgroup G).subgroupOf K).Normal] {g : G}
     (hg : g ∈ (K : Subgroup G)) (y : fixedModule A ((L : Subgroup G) ⊓ D.deg.ker)) :
@@ -93,7 +87,6 @@ theorem smul_norm_inf_ker (hLK : L ≤ K) [((L : Subgroup G).subgroupOf K).Norma
         ⟨g • (y : A), smul_mem_fixedModule_inf_ker hLK hg y.2⟩ :=
   smul_norm_of_map_eq g (map_conj_inf_ker_self hg) (map_conj_inf_ker hLK hg) y
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem smul_smul_comm (hLK : L ≤ K) [hN : ((L : Subgroup G).subgroupOf K).Normal] {δ ψ : G}
     (hδ : δ ∈ (K : Subgroup G) ⊓ D.deg.ker) (hψ : ψ ∈ (L : Subgroup G)) {y : A}
@@ -129,7 +122,6 @@ end SlopeTestRemainingChoices
 
 section Helpers
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem normal_inf_ker (hLK : L ≤ K) [hN : ((L : Subgroup G).subgroupOf K).Normal] :
     (((L : Subgroup G) ⊓ D.deg.ker).subgroupOf ((K : Subgroup G) ⊓ D.deg.ker)).Normal := by
@@ -138,7 +130,6 @@ theorem normal_inf_ker (hLK : L ≤ K) [hN : ((L : Subgroup G).subgroupOf K).Nor
   have h := (Subgroup.mem_normalizer_iff.1 (FrobeniusLift.mem_normalizer (D := D) hLK g.2.1) n).1 hn
   simpa using h
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem prod_range_prod_range_eq {M : Type*} [CommMonoid M] (f : ℕ → M) (g D0 : ℕ) :
     ∏ i ∈ Finset.range g, ∏ j ∈ Finset.range D0, f (D0 * i + j) =
@@ -196,7 +187,6 @@ theorem coe_norm_field_field (s1 s2 : D.FrobeniusLift K) (k : ℕ) (hk : 0 < k)
     have hqJ : q ∈ (L : Subgroup G) ⊓ D.deg.ker := (s1.field_inf_ker hLK).le hq
     exact ⟨fun _ => hqJ, fun h => le_frobeniusClosure h⟩
 
-omit [TotallyDisconnectedSpace G] [((L : Subgroup G).subgroupOf K).Normal] in
 
 theorem coe_norm_inf_ker_prod {ι : Type*} (s : Finset ι) (f : ι → A)
     (hf : ∀ i, f i ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker)) :
@@ -211,7 +201,6 @@ theorem coe_norm_inf_ker_prod {ι : Type*} (s : Finset ι) (f : ι → A)
   rw [h, map_prod]
   simp
 
-omit [TotallyDisconnectedSpace G] [((L : Subgroup G).subgroupOf K).Normal] in
 
 theorem coe_norm_inf_ker_mul {y z : A} (hy : y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker))
     (hz : z ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker)) :

@@ -25,7 +25,6 @@ section Core
 variable {K : Type} [Field K] [NumberField K] [StarRing K] {σ : K →+* ℂ} {M W : Type} [NormedAddCommGroup M]
   [InnerProductSpace ℂ M] [AddCommGroup W] [Module ℂ W]
 
-omit [NumberField K] [StarRing K] in
 
 theorem mulVec_map_injective {a b : ℕ} (Θ : Matrix (Fin a) (Fin b) K) (hΘ : Function.Injective Θ.mulVec) :
     Function.Injective (Θ.map σ).mulVec := by

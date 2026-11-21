@@ -222,8 +222,6 @@ end GlobalTheory.HTRealise.LieCond
 
 namespace GlobalTheory.HTRealise
 
-set_option maxHeartbeats 2000000 in
-open LieCond in
 
 theorem eigen_decomp_graphFil : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p) (R : Type) [CommRing R]
     (b : GlobalTheory.UPel.HT.Base D R) (N : ℕ) (k : Type) [Field k] (β : R →+* k) (s : Sp k ⟶ Sp R)

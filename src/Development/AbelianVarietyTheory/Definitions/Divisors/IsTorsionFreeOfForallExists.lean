@@ -62,11 +62,9 @@ variable [IsIntegral X]
 theorem genericPoint_mem {x : X} (hx : x ∈ V) : genericPoint X ∈ V :=
   (genericPoint_specializes x).mem_open V.isOpen hx
 
-variable (F) in
 
 abbrev genStalk : Type := (F.presheaf.stalk (genericPoint X) :)
 
-variable (F) in
 
 def genRank : ℕ := Module.finrank X.functionField (genStalk F)
 
@@ -101,7 +99,6 @@ theorem genRank_cokernel (i : G ⟶ F) [Mono i] [h : IsFiniteQC F] :
   have := @genRank_shortExact _ _ _ hS h
   this
 
-variable (F) in
 
 def IsTorsionFree : Prop :=
   ∀ (V : X.Opens) (h : genericPoint X ∈ V) (s : Γ(F, V)), F.presheaf.germ V _ h s = 0 → s = 0
@@ -142,7 +139,6 @@ theorem IsTorsionFree.isZero [IsFiniteQC F] (h : IsTorsionFree F) (h0 : genRank 
   obtain ⟨V, hV, s, rfl⟩ := F.presheaf.exists_germ_eq t
   rw [h V (genericPoint_mem hV) s (Subsingleton.elim _ _), map_zero]
 
-variable (F) in
 
 end Integral
 
@@ -186,7 +182,6 @@ theorem IsProjCurve.isNoetherian (h : IsProjCurve k C) : AlgebraicGeometry.IsNoe
 theorem IsProjCurve.finiteCoh (h : IsProjCurve k C) (F : C.Modules) [IsFiniteQC F] :
     FiniteCoh k F := finiteCoh_of_isProjOver (algebraMap_eq_strHom k C) F h.isProjOver
 
-omit [Field k] [Algebra k Γ(C, ⊤)] in
 
 theorem suppDim_le_zero [IsIntegral C] (hd : topologicalKrullDim C = 1) {F : C.Modules} [IsFiniteQC F]
     (h : genRank F = 0) : QCoh.suppDim F ≤ 0 := by
@@ -208,7 +203,6 @@ def degOfRank (F : X.Modules) (r : ℕ) : ℤ := chi k F - r * chi k (structureM
 theorem degOfRank_congr (φ : F ≅ G) : degOfRank k F r = degOfRank k G r := by
   rw [degOfRank, degOfRank, chi_congr k φ]
 
-variable {k} in
 
 theorem degOfRank_shortExact {S : ShortComplex X.Modules} (hS : S.ShortExact)
     (h₁ : FiniteCoh k S.X₁) (h₃ : FiniteCoh k S.X₃) :
@@ -266,7 +260,6 @@ theorem deg_le_of_genRank_eq (i : G ⟶ F) [Mono i] [IsFiniteQC G] [IsFiniteQC F
 
 end IsProjCurve
 
-variable (k) in
 
 def degLB (L : LB X) : ℤ := deg k (toMod L)
 
@@ -309,21 +302,16 @@ def IsProjCurve.degPic (hC : IsProjCurve k X) : CechPic.Pic X →+ ℤ :=
       obtain ⟨M, hM, rfl⟩ := CechPic.cls_surj b
       exact hC.degLB_of_cls_eq_add (CechPic.isLB_tens hL hM) hL hM rfl
 
-omit [IsIntegral X] in
 
-variable (k) in
 
 def subDegs (F : X.Modules) : Set ℤ :=
   {d | ∃ (G : X.Modules) (i : G ⟶ F), IsCohSub i ∧ deg k G = d}
 
-variable (k) in
 
 def IsMaxSubDeg (F : X.Modules) (P : ℤ) : Prop := IsGreatest (subDegs k F) P
 
 theorem IsCohSub.deg_mem {i : G ⟶ F} (h : IsCohSub i) : deg k G ∈ subDegs k F := ⟨G, i, h, rfl⟩
 
-variable (k) in
-open ZeroObject in
 
 theorem zero_mem_subDegs (F : X.Modules) : 0 ∈ subDegs k F :=
   ⟨0, 0, isCohSub_of_isZero (isZero_zero _) _, deg_eq_zero_of_isZero k (isZero_zero _)⟩
@@ -390,7 +378,6 @@ end Line
 
 section Prod
 
-variable (F G) in
 
 end Prod
 

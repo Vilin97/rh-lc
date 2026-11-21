@@ -194,9 +194,7 @@ def model {C : Cols B} {d : C.Tup → ℕ} (h : Fits C d) (n n₀ a : ℕ) : Row
     rw [dite_eq_right hμ]; rfl
   eMu_isom _ _ _ := rfl
 
-open GlobalTheory.MemberTorsor in
 
-open GlobalTheory.MemberTorsor in
 
 end GlobalTheory.Mem.RowsRestModel
 

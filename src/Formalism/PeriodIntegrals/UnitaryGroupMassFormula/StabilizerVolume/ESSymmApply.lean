@@ -76,7 +76,6 @@ lemma Pn_prob {i : ι} (h : m i (L i) ≠ 0 ∧ m i (L i) ≠ ⊤) : IsProbabili
   simp only [Pn, Measure.smul_apply, Measure.restrict_apply_univ, smul_eq_mul]
   exact ENNReal.inv_mul_cancel h.1 h.2
 
-open Classical in
 
 def Qm (S : Finset ι) : Measure (∀ i : {i // i ∉ S}, W i) :=
   if h : ∀ i, i ∉ S → m i (L i) ≠ 0 ∧ m i (L i) ≠ ⊤ then
@@ -94,7 +93,6 @@ instance Qm_fin (S : Finset ι) : IsFiniteMeasure (Qm m L S) := by
 def Rm (S : Finset ι) : Measure (∀ i : {i // i ∈ S}, W i) :=
   Measure.pi (fun i : {i // i ∈ S} => (m i.1).restrict (L i.1)ᶜ)
 
-open Classical in
 
 def eS (S : Finset ι) : (∀ i, W i) ≃ᵐ (∀ i : {i // i ∈ S}, W i) × (∀ i : {i // i ∉ S}, W i) :=
   MeasurableEquiv.piEquivPiSubtypeProd W (fun i => i ∈ S)
@@ -102,7 +100,6 @@ def eS (S : Finset ι) : (∀ i, W i) ≃ᵐ (∀ i : {i // i ∈ S}, W i) × (�
 def kap [∀ i, SigmaFinite (m i)] (S : Finset ι) : Measure (∀ i, W i) :=
   ((Rm m L S).prod (Qm m L S)).map (eS S).symm
 
-open Classical in
 
 def mu (S : Finset ι) (i : ι) : Measure (W i) :=
   if i ∈ S then (m i).restrict (L i)ᶜ else (m i).restrict (L i)

@@ -74,7 +74,6 @@ instance : Module K (HdR p n) := inferInstanceAs (Module (infBase K).R (H (smFun
 
 def FilR (r : ℕ) : Set (HdR p n) := Fil (smFun X p) n r
 
-variable {p} in
 
 def pullR {q : Y ⟶ Spec (CommRingCat.of K)} (u : X ⟶ Y) (hu : u ≫ q = p) : HdR q n →ₗ[K] HdR p n := (smMor u hu).pull n
 end

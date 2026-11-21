@@ -166,7 +166,6 @@ structure FullTie : Type where
 
 variable (hF : ∀ i j b, Faithful (rd i j b))
 
-open Classical in
 
 variable (hL : ρ.LatFG)
 

@@ -70,7 +70,6 @@ section Limit
 variable {I : Type} [Category.{0} I] [IsCofiltered I] (D : I ⥤ Scheme.{0}) (c : Cone D)
   (hc : IsLimit c) [∀ {i j} (f : i ⟶ j), IsAffineHom (D.map f)]
 
-include hc in
 
 theorem exists_finite_cover [∀ i, CompactSpace (D.obj i)] (M : LB c.pt) (hM : M.IsLB) :
     ∃ (j : I) (S : Type) (_ : Finite S) (W : S → (D.obj j).Opens) (a : S → M.ι),
@@ -110,7 +109,6 @@ theorem exists_finite_cover [∀ i, CompactSpace (D.obj i)] (M : LB c.pt) (hM : 
     rw [this, hpre k]
     exact hle k
 
-include hc in
 
 theorem exists_units_stage [∀ i, QuasiSeparatedSpace (D.obj i)] {j : I} {A : Type} [Finite A]
     (U : A → (D.obj j).Opens) (hU : ∀ p, IsCompact (U p : Set (D.obj j)))
@@ -151,7 +149,6 @@ theorem exists_units_stage [∀ i, QuasiSeparatedSpace (D.obj i)] {j : I} {A : T
   choose t ht using hnf
   exact ⟨n, f, t, ht⟩
 
-include hc in
 
 theorem exists_cocycle_stage {n : I} {S : Type} [Finite S] [∀ i, QuasiSeparatedSpace (D.obj i)]
     (V : S → (D.obj n).Opens) (hV : ∀ k, IsCompact (V k : Set (D.obj n)))
@@ -204,7 +201,6 @@ theorem exists_cocycle_stage {n : I} {S : Type} [Finite S] [∀ i, QuasiSeparate
     (fun q n₁ n₂ g' g h => hmono q n₁ n₂ g' g h) hexist
   exact ⟨n', g, fun k l m y hk hl hm => hg (k, l, m) y hk hl hm⟩
 
-include hc in
 
 theorem exists_lb_stage [∀ i, CompactSpace (D.obj i)] [∀ i, QuasiSeparatedSpace (D.obj i)]
     (M : LB c.pt) (hM : M.IsLB) :

@@ -94,7 +94,6 @@ end GlobalTheory.CrysPrism.DpGood
 
 namespace GlobalTheory.CrysPrism
 
-open DpGood in
 
 theorem dpS_frob_good : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O K : Type) [CommRing O]
     [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [NormedField K] [IsUltrametricDist K]

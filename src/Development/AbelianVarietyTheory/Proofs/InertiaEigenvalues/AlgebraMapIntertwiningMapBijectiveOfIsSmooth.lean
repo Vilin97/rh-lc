@@ -81,7 +81,6 @@ end General
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {n : Type} [Fintype n] [DecidableEq n] {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
-variable (k n) in
 
 theorem secondCountableTopology_GL : SecondCountableTopology (GL n k) := by
   have : SecondCountableTopology k := by
@@ -107,13 +106,11 @@ theorem algebraMap_intertwiningMap_bijective_GL {π : Representation ℂ (GL n k
   haveI := secondCountableTopology_GL k n
   algebraMap_intertwiningMap_bijective_of_isSmooth hs hi
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 
 theorem continuous_glScalar : Continuous (GeneralLinearGroup.scalar n : kˣ → GL n k) := by
   refine Units.continuous_map (f := (Matrix.scalar n : k →+* Matrix n n k).toMonoidHom) ?_
   exact (continuous_pi fun _ => continuous_id).matrix_diagonal
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 
 theorem isSmoothChar_of_hasCentralChar [Nontrivial V] {π : Representation ℂ (GL n k) V} (hs : IsSmooth π)
     {ω : kˣ →* ℂˣ} (h : HasCentralChar π ω) : IsSmoothChar ω := by

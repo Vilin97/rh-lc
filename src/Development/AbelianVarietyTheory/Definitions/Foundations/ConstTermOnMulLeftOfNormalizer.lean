@@ -97,7 +97,6 @@ namespace Cocompact
 variable (hc : Cocompact Γ N)
 include hc
 
-omit [LocallyCompactSpace N] in
 
 theorem integrableOn [μ.IsHaarMeasure] (h : IsFundamentalDomain (Γ.subgroupOf N) 𝓕 μ) (hφ : LeftInv Γ φ)
     (hφc : Continuous φ) (x : G) : IntegrableOn (fun n : N => φ (n * x)) 𝓕 μ :=
@@ -105,7 +104,6 @@ theorem integrableOn [μ.IsHaarMeasure] (h : IsFundamentalDomain (Γ.subgroupOf 
   GlobalTheory.integrableOn_fundamentalDomain_of_cocompact N _ K hK hs μ inferInstance 𝓕 h _ (by fun_prop)
     (leftInv_integrand hφ x)
 
-omit [LocallyCompactSpace N] in
 
 theorem measure_ne_top [μ.IsHaarMeasure] (h : IsFundamentalDomain (Γ.subgroupOf N) 𝓕 μ) : μ 𝓕 ≠ ⊤ :=
   ((integrableOn_const_iff (C := (1 : ℂ))).1

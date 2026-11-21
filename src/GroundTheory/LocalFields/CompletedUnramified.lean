@@ -16,7 +16,6 @@ section Lift
 
 variable {R : Type*} [CommRing R] {I : Ideal R}
 
-variable (I) in
 
 theorem factorPow_evalₐ {k n : ℕ} (hle : k ≤ n) (x : AdicCompletion I R) :
     Ideal.Quotient.factorPow I hle (AdicCompletion.evalₐ I n x) = AdicCompletion.evalₐ I k x := by
@@ -95,7 +94,6 @@ section DVR
 
 variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
 
-variable (R) in
 
 theorem algebraMap_adicCompletion_injective : Function.Injective (algebraMap R 𝔅) :=
   AdicCompletion.of_injective _ _
@@ -269,7 +267,6 @@ variable [IsAdicComplete (maximalIdeal A) A] [Finite (ResidueField A)]
   (hσ : ∀ x : B, residue B (σ x) = residue B x ^ Nat.card (ResidueField A))
 include hunr hσ
 
-omit [IsAdicComplete (maximalIdeal A) A] in
 
 theorem exists_sub_algebraMap_mem_of_fixed {c : B} (hc : σ c = c) :
     ∃ d : A, c - algebraMap A B d ∈ maximalIdeal B := by
@@ -424,7 +421,6 @@ theorem completedUnramifiedAlgEquiv_algebraMap (ρ : 𝔼 ≃ₐ[K] 𝔼) (x : �
 
 variable [IsGalois K Ω]
 
-variable (K Ω) in
 
 def completedFrobenius : 𝔹 ≃ₐ[𝒪[K]] 𝔹 :=
   completedUnramifiedAlgEquiv K Ω (maximalUnramifiedExtensionFrobenius K Ω)
@@ -456,7 +452,6 @@ theorem mem_range_algebraMap_iff_completedFrobenius (b : 𝔹) :
   mem_range_algebraMap_iff_fixed (map_maximalIdeal_completedUnramifiedIntegers K Ω)
     (completedFrobenius K Ω).toAlgHom (residue_completedFrobenius) b
 
-variable (K Ω) in
 
 theorem completedUnramifiedIntegers_spec :
     IsDiscreteValuationRing 𝔹 ∧ IsAdicComplete (maximalIdeal 𝔹) 𝔹 ∧

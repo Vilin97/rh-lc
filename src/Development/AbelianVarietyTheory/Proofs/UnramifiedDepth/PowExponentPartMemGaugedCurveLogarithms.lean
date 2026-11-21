@@ -73,7 +73,6 @@ theorem sum_pow_root {ζ : C} {p : ℕ} (hζ : IsPrimitiveRoot ζ p) (m : ℕ) :
     rw [← pow_mul, mul_comm m p, pow_mul, hζ.pow_eq_one, one_pow, sub_self] at this
     exact (mul_eq_zero.1 this).resolve_right hne
 
-open Classical in
 
 def filt (P : ℕ → Prop) (f : PowerSeries C) : PowerSeries C :=
   PowerSeries.mk fun m => if P m then PowerSeries.coeff m f else 0
@@ -200,7 +199,6 @@ theorem filt_good_mem (hX : RLaw X V) (g : Fin 2)
 
 end GlobalTheory.RowLaw.TypPart
 
-open GlobalTheory.RowLaw.TypPart in
 
 theorem GlobalTheory.RowLaw.typ_mem_Cv : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I : Fin 2 → Type) [∀ g, Fintype (I g)] (κ : Type) [Fintype κ] (X : RawChart C d I κ), RLaw X V → ∀ g, ∀ a ∈ Cv X V g, ((fun i => typ V.l (a.1 i), fun q => typ V.l (a.2 q)) : ((κ → PowerSeries C) × (JJ I g → PowerSeries C))) ∈ Cv X V g := by
   intro C _ V d _ I _ κ _ X hX g a ha

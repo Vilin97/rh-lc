@@ -192,7 +192,6 @@ end Finite
 
 section Infinite
 
-variable {F} (E) in
 
 abbrev EmbOver (w : InfinitePlace F) : Type := {τ : E →+* ℂ // τ.comp (algebraMap F E) = w.embedding}
 
@@ -237,7 +236,6 @@ theorem opNorm_one_le {n : Type} [Fintype n] [DecidableEq n] : opNorm (1 : Matri
 
 variable (F w)
 
-open Classical in
 
 def normInf {n : Type} [Fintype n] [DecidableEq n] (y : Matrix n n (w.Completion ⊗[F] E)) : ℝ≥0 :=
   Finset.univ.sup fun τ : EmbOver E w => opNorm (y.map (infEmb τ))
@@ -282,7 +280,6 @@ theorem opNorm_map_conj_le {n : Type} [Fintype n] [DecidableEq n] (y : Matrix n 
   rw [h1, ← h2]
   exact ContinuousLinearMap.le_opNNNorm _ _
 
-variable {F w} in
 
 theorem infEmb_eq_or_conj {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ τ' : EmbOver E w) :
     infEmb τ' = infEmb τ ∨ infEmb τ' = (starRingEnd ℂ).comp (infEmb τ) := by
@@ -339,7 +336,6 @@ theorem infEmb_eq_or_conj {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ τ' : Em
       try rfl
     | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
-variable {F w} in
 
 theorem normInf_eq_opNorm {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ : EmbOver E w) {n : Type} [Fintype n] [DecidableEq n]
     (y : Matrix n n (w.Completion ⊗[F] E)) : normInf F w y = opNorm (y.map (infEmb τ)) := by
@@ -359,12 +355,10 @@ def evFin (v : HeightOneSpectrum (𝓞 F)) : AF F →ₐ[F] Fv F v := (Formalism
 
 def evInf (w : InfinitePlace F) : AF F →ₐ[F] w.Completion := (GlobalTheory.AutFunCompare.evW w).comp (fstA F)
 
-variable (E) in
 
 def compFin (v : HeightOneSpectrum (𝓞 F)) : AF F ⊗[F] E →+* Fv F v ⊗[F] E :=
   (Algebra.TensorProduct.map (evFin F v) (AlgHom.id F E)).toRingHom
 
-variable (E) in
 
 def compInf (w : InfinitePlace F) : AF F ⊗[F] E →+* w.Completion ⊗[F] E :=
   (Algebra.TensorProduct.map (evInf F w) (AlgHom.id F E)).toRingHom

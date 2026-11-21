@@ -398,4 +398,3 @@ end Res
 
 end UpperTheory.V.Z.Ord.ExtensionCharacterAlt
 
-open UpperTheory.V.Z.Ord.ExtensionCharacterAlt GroundTheory.Global.SemiLocal in

@@ -78,7 +78,6 @@ theorem hJ_e (a : Fin D.R.rS) (y : Fin X.B.I.n → ℂ) :
   rw [star_smul, smul_dotProduct, ← Formalism.L2.SG.Pf.LTL.star_dot_conjT, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hH,
     Pi.star_single, star_one, single_dotProduct, one_mul, Formalism.L2.SG.RootCoordinatesIndex.hpk_eI, smul_eq_mul]
 
-include hT hl in
 
 theorem inN_iff (z : Fin X.B.I.n → ℂ) (hz : Formalism.QuantumDeterminants.inWb D.R.k D.R.rS (Qi *ᵥ z))
     (g : Matrix (Fin X.B.I.n) (Fin X.B.I.n) ℂ) (hg : gᴴ * Formalism.REAL.Jm (X.B.I.ε v) * g = Formalism.REAL.Jm (X.B.I.ε v)) :

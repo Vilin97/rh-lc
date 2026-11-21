@@ -110,7 +110,6 @@ def placeMapFin (v : HeightOneSpectrum (𝓞 F)) : PlaceMap F (Fv F v) where
   cont_proj := StrongApprox.continuous_evalV v
   cont_inj := continuous_const.prodMk (continuous_singleV' v)
 
-open Classical in
 
 def singleI (w : InfinitePlace F) (y : w.Completion) : Ainf F :=
   (Pi.single (M := fun u : InfinitePlace F => u.Completion) w y : ∀ u : InfinitePlace F, u.Completion)
@@ -127,7 +126,6 @@ theorem singleI_ne {w u : InfinitePlace F} (h : u ≠ w) (y : w.Completion) :
 theorem ainf_ext {x y : Ainf F} (h : ∀ u, (x : ∀ u : InfinitePlace F, u.Completion) u = (y : ∀ u : InfinitePlace F, u.Completion) u) : x = y :=
   funext h
 
-open Classical in
 
 def placeMapInf (w : InfinitePlace F) : PlaceMap F w.Completion where
   proj := (Pi.evalAlgHom F (fun u : InfinitePlace F => u.Completion) w).comp (fstA F)

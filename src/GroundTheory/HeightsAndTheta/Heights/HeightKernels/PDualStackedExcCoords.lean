@@ -203,7 +203,6 @@ theorem mem_span_of_forall {𝔪 B : Ideal (𝓞 K)} {π : 𝓞 K} (hπ0 : π �
 
 end StackedExceptionalCoordinates
 
-open StackedExceptionalCoordinates in
 
 theorem DualStackedExcCoords.proof : DualStackedExcCoords.Statement := by
   intro K _ _ i F F' T _ _ b b' a _ hlt hcov _

@@ -293,7 +293,6 @@ variable {D : D7} {L : SizeData₂ D}
 theorem lE_nonneg (w : D.what₂.places.Pl) : 0 ≤ Lnk.lE w :=
   mul_nonneg (J.logWeight_nonneg w) (Nat.cast_nonneg _)
 
-open Classical in
 
 theorem places_at_of (C26 CMu C : ℝ) (hC26 : C26 ≤ C) (hCMu : CMu ≤ C)
     (hN' : DV.NprimeDef D L) (hNu : DV.NuDef D L) (hc : Lnk.NuCommens D L)

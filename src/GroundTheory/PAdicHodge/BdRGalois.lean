@@ -35,7 +35,6 @@ namespace IsPerfectoidField
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
-variable (K p) in
 
 def evalB (n : ℕ) : 𝔹 →+* 𝔸 ⧸ J ^ n := (AdicCompletion.evalₐ J n).toRingHom
 
@@ -50,9 +49,7 @@ omit [CharZero K] in
 theorem evalB_ext {x y : 𝔹} (h : ∀ n, evalB K p n x = evalB K p n y) : x = y :=
   AdicCompletion.ext_evalₐ h
 
-omit [CharZero K] in
 
-variable (K p) in
 
 theorem map_ker_fontaineThetaInvertP :
     Ideal.map (toBDeRhamPlus 𝒪 p) J = maximalIdeal 𝔹 := by

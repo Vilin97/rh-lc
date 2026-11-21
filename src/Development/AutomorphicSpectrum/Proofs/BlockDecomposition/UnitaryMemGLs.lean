@@ -38,7 +38,6 @@ theorem fderiv_post {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [No
   have e : (fun y => L (h y)) = (L.restrictScalars ℝ) ∘ h := rfl
   rw [e, this]; rfl
 
-variable (n V) in
 
 def Sm : Submodule ℂ (Mat n → V) where
   carrier := {f | ContDiffOn ℝ ∞ f (GLs n) ∧ ∀ g, g ∉ GLs n → f g = 0}
@@ -78,7 +77,6 @@ def Dm (X : Mat n) : Module.End ℂ (Sm n V) where
 theorem Dm_apply (X : Mat n) (h : Sm n V) {g : Mat n} (hg : g ∈ GLs n) : (Dm X h).1 g = Rd X h.1 g :=
   Dmf_apply X h hg
 
-variable (n V) in
 
 def DA : Mat n →+ Module.End ℂ (Sm n V) where
   toFun := Dm

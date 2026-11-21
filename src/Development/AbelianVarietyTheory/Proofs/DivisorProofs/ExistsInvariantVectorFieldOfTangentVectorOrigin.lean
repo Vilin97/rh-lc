@@ -152,7 +152,6 @@ variable {R : Type} [CommRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (
 def transl : tEpsG (𝟙 (Sp R)) ⊗ G ⟶ G :=
   snd _ G * (fst _ G ≫ tv v)
 
-variable (R) in
 
 def redPt : Over.mk (𝟙 (Sp R)) ⟶ tEpsG (𝟙 (Sp R)) :=
   Over.homMk (spMap (TrivSqZeroExt.fstHom R R R).toRingHom) (by

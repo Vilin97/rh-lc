@@ -22,7 +22,6 @@ open AmpleAffineGen AmpleTwistLocal
 variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : ℕ} {x : Fin (N + 1) → Ω}
   {E : Type v} [AddCommGroup E] [Module Ω E] [Module S E] [IsScalarTower S Ω E]
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem smul_mem_twist_pow (F : SubSystem S x E) (H : SubSystem S x Ω) (I : Chart x) {c d : ℕ}
     {y : E} {w : Ω} (hy : y ∈ (F.twist (H.pow c)).sub I) (hw : w ∈ (H.pow d).sub I) :
@@ -52,13 +51,11 @@ theorem prod_mem_pow (H : SubSystem S x Ω) (I : Chart x) {r : ℕ} {h : Fin (r 
       rw [SubSystem.pow_sub, pow_one]; exact (Submodule.mem_iInf _).mp (hh a) I
     exact mul_mem_pow H I ih 1 h1
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem ratio_pow_smul_mem (F : SubSystem S x E) (I K : Chart x) (k : ℕ) {y : E} (hy : y ∈ F.sub I) :
     chartRatio I K ^ k • y ∈ F.sub I :=
   Submodule.smul_mem (F.sub I) (⟨_, pow_mem (chartRatio_mem I K) k⟩ : chartRing S x I) hy
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem loc_subFamily (G : SubFamily S x E) (I K : Chart x) {y : E}
     (hy : y ∈ G.sub (unionChart I K)) : ∃ c : ℕ, chartRatio I K ^ c • y ∈ G.sub I := by
@@ -73,7 +70,6 @@ theorem loc_subFamily (G : SubFamily S x E) (I K : Chart x) {y : E}
   rw [e]
   exact Submodule.smul_mem _ _ hay
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem loc_twist (G : SubFamily S x E) (H : LineBundle S x) (I K : Chart x) (q : ℕ) {y : E}
     (hy : y ∈ (G.toSubSystem.twist (H.toSubSystem.pow q)).sub (unionChart I K)) :
@@ -110,7 +106,6 @@ theorem loc_twist (G : SubFamily S x E) (H : LineBundle S x) (I K : Chart x) (q 
 
 end ZChartLocal
 
-open AmpleAffineGen AmpleTwistLocal ZChartLocal in
 
 theorem ZChartLocal.proof (hSmul : ZChartSmul.Statement.{u, v, w}) : ZChartLocal.Statement.{u, v, w} := by
   intro S _ Ω _ _ N x E _ _ _ _ G H r h hh J j hj b hb K hK j₀ hj₀ I I' hI' z hz

@@ -87,7 +87,6 @@ structure IsLocUnit (PP : Pl D.host.E) (u : (kP PP)ˣ) (x : (AE D)ˣ) : Prop whe
   int' : finPart D ((x⁻¹ : (AE D)ˣ) : AE D) ∈ intAE D
   res : ∃ hx : toEAf D (x : AE D) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, resS D.host.F PP ⟨_, hx⟩ = u
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_isLocUnit {PP : Pl D.host.E} (h : Formalism.L2.NTheta.IsIdemAt (idemAt PP) PP) (u : (kP PP)ˣ) :
     ∃ x : (AE D)ˣ, IsLocUnit PP u x := by
@@ -205,7 +204,6 @@ structure BaseOf (B : Base (Vc D i) (Wc D i)) : Prop where
 
 variable {i}
 
-open Classical in
 
 def IsTupOf (B : Base (Vc D i) (Wc D i)) (ψ : Twist D Circle) (t : T0) : Prop :=
   R.xi t = B.de.chi * ψ.chi ∧ R.Q t = B.de.Q ∪ ψ.Q
@@ -330,7 +328,6 @@ theorem isUnit_of_isONBasis {k p : ℕ} {J s B : Matrix (Fin k) (Fin k) ℂ} (h 
   obtain ⟨a, -, ha⟩ := Finset.prod_eq_zero_iff.1 this.symm
   rcases h1 a with k | k <;> simp [k.1] at ha
 
-variable (i) in
 
 def baseAt (hB : R.models_BV) (δ : Twist D Circle) (P : LevelP R.Pg (Wc D i).rank ℂ) : Base (Vc D i) (Wc D i) where
   hr := (rank_Wc i).trans_le (r_le_V i)

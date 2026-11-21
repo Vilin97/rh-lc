@@ -386,7 +386,6 @@ theorem germTop_specMap {W F : Type} [CommRing W] [Field F] (f : W →+* F) (z :
 
 end TorsionIntegral
 
-open TorsionIntegral in
 
 theorem torsion_points_integral :
     ∀ (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V], CDVR V → ∀ (D : DegPre V) (N : ℕ), 1 ≤ N →

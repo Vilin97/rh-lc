@@ -87,7 +87,6 @@ theorem ev_fderiv (hψ : IsStdChar D ψ (-1)) (F : BB ψ S T)
   have h3 := ((ev _ _ w).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) (h1.comp_hasDerivAt (0 : ℝ) h2)
   exact h3.deriv.symm
 
-open Classical in
 
 theorem fderiv_vac (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) (F : BB ψ S T)
     (hF : GlobalTheory.RealWeil.Sm (rhoV hψ σ S T) F)
@@ -261,7 +260,6 @@ theorem detPlus_pairMatrix (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.ra
   rw [mM_apply]
   exact detPlus_blockDiagonal _ _ _ _
 
-open Classical in
 
 theorem exists_isInfWeil : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ θ : InfFam D, IsInfFam θ →
     ∀ S T : HSp D, ∃ om, GlobalTheory.WeilParts.IsInfWeil ψ θ S T om := by

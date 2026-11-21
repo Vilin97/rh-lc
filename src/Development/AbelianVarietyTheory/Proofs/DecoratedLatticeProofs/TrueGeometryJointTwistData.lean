@@ -74,4 +74,3 @@ theorem eps_mem_grpAt {D : D7} {c : Comm D} {v : VCom c} {t : Tup c} (F : QFam v
 
 end GlobalTheory.QPl.EpsSupp
 
-open GlobalTheory.QPl.EpsSupp in

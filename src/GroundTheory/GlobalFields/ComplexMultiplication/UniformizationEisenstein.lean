@@ -68,7 +68,6 @@ end Recursion
 
 variable {L : PeriodPair}
 
-variable (L) in
 
 def weierstrassLaurentCoeff (j : ℕ) : ℂ := if j = 0 then 0 else (j + 1) * L.G (j + 2)
 

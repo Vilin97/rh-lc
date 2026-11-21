@@ -17,16 +17,12 @@ namespace GlobalTheory.CompanionTheory.ProdStage
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open GlobalTheory.ProdFlatten in
-unseal GlobalTheory.ProdFlatten.Iso GlobalTheory.ProdFlatten.pr GlobalTheory.ProdFlatten.mp GlobalTheory.ProdFlatten.one GlobalTheory.ProdFlatten.two in
 
 theorem equiv_of_iso_two {p q c r t N : ℕ} (x : Fin p → IrrGL k) (y : Fin q → IrrGL k) (w : Fin c → IrrGL k)
     (hx : ∑ a, (x a).1 = r) (hy : ∑ a, (y a).1 = t)
     (hz : ∑ a, (w a).1 = N) (e : r + t = N) (H : Iso (two e (pr x hx) (pr y hy)) (pr w hz)) :
     Nonempty ((ind₂ (stdSum e) (extTensor (prodIrr x hx) (prodIrr y hy))).Equiv (prodIrr w hz)) := H
 
-open GlobalTheory.ProdFlatten in
-unseal GlobalTheory.ProdFlatten.Iso GlobalTheory.ProdFlatten.pr GlobalTheory.ProdFlatten.mp GlobalTheory.ProdFlatten.one in
 
 theorem equiv_of_iso {q c N : ℕ} (y : Fin q → IrrGL k) (w : Fin c → IrrGL k)
     (hy : ∑ a, (y a).1 = N) (hz : ∑ a, (w a).1 = N) (H : Iso (pr y hy) (pr w hz)) :

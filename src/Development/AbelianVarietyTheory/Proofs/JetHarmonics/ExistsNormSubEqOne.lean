@@ -8,7 +8,6 @@ open NumberField
 
 namespace GlobalTheory.SplitEmbSep
 
-open NumberField in
 
 theorem _root_.GlobalTheory.SplitEmbSep.norm_le_one_of_isIntegral {C : Type*} [NormedField C] [IsUltrametricDist C]
     {x : C} (hx : IsIntegral ℤ x) : ‖x‖ ≤ 1 := by
@@ -40,7 +39,6 @@ theorem _root_.GlobalTheory.SplitEmbSep.norm_le_one_of_isIntegral {C : Type*} [N
   have h2 : ‖x‖ ^ i < ‖x‖ ^ n := pow_lt_pow_right₀ h (Finset.mem_range.mp hi)
   exact absurd h1 (not_le.mpr h2)
 
-open NumberField in
 
 theorem _root_.GlobalTheory.SplitEmbSep.norm_det_lt_one {C ι : Type*} [NormedField C] [IsUltrametricDist C]
     [Fintype ι] [DecidableEq ι] (M : Matrix ι ι C) (hM : ∀ i j, ‖M i j‖ ≤ 1) (k : ι)
@@ -57,7 +55,6 @@ theorem _root_.GlobalTheory.SplitEmbSep.norm_det_lt_one {C ι : Type*} [NormedFi
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hs | hs <;>
     simpa [hs, Units.smul_def] using hprod
 
-open NumberField in
 
 theorem _root_.GlobalTheory.SplitEmbSep.one_le_norm_intCast {C : Type*} [NormedField C] [IsUltrametricDist C] {g : ℕ}
     (hg : g.Prime) (hgC : ‖(g : C)‖ < 1) {d : ℤ} (hd : ¬ (g : ℤ) ∣ d) : 1 ≤ ‖(d : C)‖ := by
@@ -83,7 +80,6 @@ theorem _root_.GlobalTheory.SplitEmbSep.one_le_norm_intCast {C : Type*} [NormedF
       exact IsUltrametricDist.norm_intCast_le_one C b
     _ = ‖(d : C)‖ := one_mul _
 
-open NumberField in
 
 theorem _root_.GlobalTheory.SplitEmbSep.not_dvd_discr_of_split {g : ℕ} (hg : g.Prime) (E : Type*) [Field E]
     [NumberField E]

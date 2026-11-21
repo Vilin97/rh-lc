@@ -23,7 +23,6 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 local instance t2SpaceLocalField : T2Space k := GlobalTheory.SplitWeil.t2Space k
 
-variable (k) in
 
 def ModH : Prop :=
   TraceForm k → ∀ (n : ℕ) (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)), CR Z → 0 < dB0 Z → ∀ (p : Sp k n) (P : GL (Fin n) k)
@@ -232,7 +231,6 @@ end Main
 
 section Final
 
-variable (k) in
 
 theorem orbQ_of (h3 : Reps0 k) (h4 : StepModH k) (h5 : ModH k) : OrbQ k := by
   classical

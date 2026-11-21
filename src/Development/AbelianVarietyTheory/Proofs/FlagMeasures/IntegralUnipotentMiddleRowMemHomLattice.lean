@@ -106,9 +106,6 @@ section Lat
 
 variable {E : Type} [Field E] [NumberField E] {n : ℕ} (σ : E →+* E) (J : Matrix (Fin n) (Fin n) E)
 
-open NumberField IsDedekindDomain MeasureTheory Matrix in
-open scoped TensorProduct ENNReal nonZeroDivisors in
-variable {E : Type} [Field E] [NumberField E] {n : ℕ} (σ : E →+* E) (J : Matrix (Fin n) (Fin n) E) in
 
 theorem _root_.GlobalTheory.SnMass.VolN.form_mem_inv (hσ : ∀ x, σ (σ x) = x)
     {Λ : Submodule (𝓞 E) (Fin n → E)}
@@ -202,8 +199,6 @@ variable {E : Type} [Field E] [NumberField E]
 
 end Main
 
-open NumberField IsDedekindDomain MeasureTheory Matrix in
-open scoped TensorProduct ENNReal nonZeroDivisors in
 
 theorem _root_.GlobalTheory.SnMass.VolN.row_mem_homLat : ∀ (F E : Type) [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (k r : ℕ)

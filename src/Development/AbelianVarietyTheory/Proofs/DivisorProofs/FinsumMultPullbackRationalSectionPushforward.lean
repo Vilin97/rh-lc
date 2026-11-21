@@ -114,7 +114,6 @@ variable {X Y : Scheme.{0}} [IsIntegral X] [IsIntegral Y] [IsLocallyNoetherian X
   {r : B.ι → X.functionFieldˣ} (hr : IsRatSec B r)
   {k : Type} [CommRing k] {p : X ⟶ Sp k} {q : Y ⟶ Sp k}
 
-open Classical in
 
 theorem fiber_sum (hp : IsAmb p) (hq : IsAmb q) (hg : g ≫ p = q)
     (hη : g (genericPoint Y) = genericPoint X) [CompactSpace Y] (z : X) :

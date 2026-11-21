@@ -20,6 +20,5 @@ theorem refines_ofDeg (D : DegPre R) (hB : D.TauBimult) :
     Refines (ofDeg D hB) (RingHom.id R) D (AddEquiv.refl _) :=
   Wit.refines_ofDeg D hB
 
-open GlobalTheory.ToricData ReciprocityTheory.ChartRestriction.G.Out.InhTate in
 
 end GlobalTheory.PolDeg

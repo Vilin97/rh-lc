@@ -355,7 +355,6 @@ theorem step_form [ν.IsAddHaarMeasure] (hs : 1 ≤ G.s) (hψ : HasConductor ψ 
     rw [one_mul] at hfin
     exact hfin
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] in
 
 theorem frameGL_stair (hs : 1 ≤ G.s) (ϖ : kˣ) (e : ℕ) {j c : ℕ} (hj : j < G.m)
     (h : topRank G j + c = G.rank (G.m, j)) :
@@ -366,7 +365,6 @@ theorem frameGL_stair (hs : 1 ≤ G.s) (ϖ : kˣ) (e : ℕ) {j c : ℕ} (hj : j 
   subst hc
   exact toFrame_stair (hs := hs) ϖ e hj
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] in
 
 theorem mem_rowR (hs : 1 ≤ G.s) {j c : ℕ} (hj : j < G.m) (h : topRank G j + c = G.rank (G.m, j))
     {g : GL (Fin (G.rank (G.m, j))) k} (hg : frameGL h g ∈ symR k _ c) : g ∈ rowR hs hj := by
@@ -376,7 +374,6 @@ theorem mem_rowR (hs : 1 ≤ G.s) {j c : ℕ} (hj : j < G.m) (h : topRank G j + 
   subst hc
   exact hg
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem mem_KO_of_frameGL {a c b : ℕ} (h : a + c = b) {g : GL (Fin b) k} (hg : frameGL h g ∈ KO k _) :
     g ∈ KO k _ := by

@@ -62,7 +62,6 @@ theorem finite_classes_row_eq_generic {n : ℕ} (hn : K.plOf i dc n ∈ placesOv
 variable (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i)))
   (ρ : D.nd.X i → (GE D.nd →* GL (Fin D.R.r) (D.nd.O i))) (πx : D.nd.X i)
 
-set_option maxHeartbeats 1000000 in
 
 theorem rowLenD_eq_gen {n : ℕ} (hw : K.plOf i dc n ∈ placesOver D.host.E (D.nd.l i)) :
     rowLenD i dc VT VT' Dat ρ₁ π vD hpD heD n =
@@ -75,7 +74,6 @@ theorem rowLenD_eq_gen {n : ℕ} (hw : K.plOf i dc n ∈ placesOver D.host.E (D.
   unfold rowLenD
   exact len_congr (fs_eq i dc VT VT' Dat hw) (by unfold imRow; rw [finite_classes_row_eq_generic i dc ρ₁ hw]; rfl)
 
-set_option maxHeartbeats 1000000 in
 
 theorem rowLenD_eq {n : ℕ} (hw : K.plOf i dc n ∈ placesOver D.host.E (D.nd.l i))
     [Module.Finite (D.nd.O i) T₁] [Module.Free (D.nd.O i) T₁]
@@ -101,7 +99,6 @@ theorem rowLenD_eq {n : ℕ} (hw : K.plOf i dc n ∈ placesOver D.host.E (D.nd.l
       (Br.PD D.loc D.nbr i _ hw) (Br.iota D.nbr i _ hw) (Dat n) (resRep ρ₁ (Γn i dc n)) π (vD n) (hpD n) (heD n) hsp
       hbij hcobn htopV htop1)
 
-set_option maxHeartbeats 1000000 in
 
 theorem rowTie_disp (hπ : Function.Surjective π)
     (hSub : RowSub (ρ₁ := ρ₁) i dc r) (hOrb : RowOrb (ρ₁ := ρ₁) i dc)
@@ -160,7 +157,6 @@ theorem rowTie_disp (hπ : Function.Surjective π)
   simp only [ENat.toNat_coe]
   exact hmk
 
-variable (lenRow : HeightOneSpectrum (𝓞 D.host.E) → ℚ) in
 
 end Rec
 

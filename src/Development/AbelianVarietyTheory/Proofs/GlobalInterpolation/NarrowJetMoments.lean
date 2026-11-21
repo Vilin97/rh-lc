@@ -21,7 +21,6 @@ section Notions
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ}
 
-omit [NumberField E] in
 
 variable {ST SG SG' : Finset (HeightOneSpectrum (𝓞 E))}
 

@@ -57,7 +57,6 @@ abbrev recC : D7 := recG D sc Ce Lc (packC D Lc I ψ) hd
 
 abbrev gatTiesC : GatTies (recC D sc Ce Lc I ψ hd) := gatTiesG D sc Ce Lc (packC D Lc I ψ) hd
 
-set_option maxHeartbeats 4000000 in
 
 theorem ringTied_recC (u : D.what₂.Word) (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w))
     (v : Fin ((recC D sc Ce Lc I ψ hd).gat u w hg).P.nV) : RingCompatibleAt (recC D sc Ce Lc I ψ hd) u w hg v := by
@@ -77,7 +76,6 @@ theorem gatIs_recC (H0 : Formalism.L2.Herm.Herm0 (recC D sc Ce Lc I ψ hd)) (hL 
     GatIs (recC D sc Ce Lc I ψ hd) (hermitianLevelZeroOfRecursion D sc Ce Lc I ψ hd H0 hL).lev0 u w hg := by
   exact gatIs_recG D sc Ce Lc (packC D Lc I ψ) hd _ hL hH u w hg
 
-set_option maxHeartbeats 4000000 in
 
 theorem frRat_C (H0 : Formalism.L2.Herm.Herm0 (recC D sc Ce Lc I ψ hd)) (hL : ∀ u, H0.lev0 u = Lc u)
     (B : GL (Fin D.R.k) D.host.E)
@@ -92,7 +90,6 @@ theorem frRat_C (H0 : Formalism.L2.Herm.Herm0 (recC D sc Ce Lc I ψ hd)) (hL : �
     levTieOf_spl (hL u) (levTieG D sc Ce Lc (packC D Lc I ψ) hd u w hg)]
   exact hB u w hg w' h
 
-set_option maxHeartbeats 4000000 in
 
 def cmpInC (H0 : Formalism.L2.Herm.Herm0 (recC D sc Ce Lc I ψ hd)) (hL : ∀ u, H0.lev0 u = Lc u)
     (B : GL (Fin D.R.k) D.host.E) (hBs : Cmp.StdB (recC D sc Ce Lc I ψ hd) B)
@@ -106,7 +103,6 @@ def cmpInC (H0 : Formalism.L2.Herm.Herm0 (recC D sc Ce Lc I ψ hd)) (hL : ∀ u,
   B_std := hBs
   fr_B := fun u w hg => frRat_C D sc Ce Lc I ψ hd H0 hL B hB u w hg
 
-set_option maxHeartbeats 4000000 in
 
 def groupCompatibilityOfRecursion (H0 : Formalism.L2.Herm.Herm0 (recC D sc Ce Lc I ψ hd)) (hL : ∀ u, H0.lev0 u = Lc u)
     (T : ∀ u : D.what₂.Word, Forms0 (recC D sc Ce Lc I ψ hd) u)

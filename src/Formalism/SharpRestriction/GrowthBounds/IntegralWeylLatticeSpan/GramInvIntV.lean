@@ -36,7 +36,6 @@ theorem fst_mulVec' (M : GL (Fin n) (E ⊗[F] v.adicCompletion F)) (x : Fin n �
   funext a
   exact RingHom.map_mulVec (piF v φ) _ _ _
 
-include halg in
 
 theorem fst_latB (B' : GL (Fin n) E) (t : Fin n → v.adicCompletion F) :
     (∃ x ∈ Formalism.L2.Herm.locL v (latB B'), ∀ a, (φ (x a)).1 = t a) ↔
@@ -46,7 +45,6 @@ theorem fst_latB (B' : GL (Fin n) E) (t : Fin n → v.adicCompletion F) :
     (by rw [Nat.cast_one]; exact v.asIdeal.ne_top_iff_one.1 v.isPrime.ne_top)
     (fun i => by rw [Nat.cast_one, one_smul]; exact latB_col B' i) t
 
-include halg in
 
 theorem int_of_move {Lb : Submodule (𝓞 E) (Fin n → E)} (B B' : GL (Fin n) E)
     (hb : ∀ t : Fin n → v.adicCompletion F, (∃ x ∈ Formalism.L2.Herm.locL v Lb, ∀ a, (φ (x a)).1 = t a) ↔

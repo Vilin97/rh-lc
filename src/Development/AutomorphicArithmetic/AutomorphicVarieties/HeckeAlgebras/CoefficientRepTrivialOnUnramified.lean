@@ -25,7 +25,6 @@ section Alg
 
 variable {L : Type} [Field L] [NumberField L] {l : ℕ} [Fact l.Prime] (n : ℕ) {V : Type} [Fintype V] (S : V → Plc L)
 
-omit [Fintype V] in
 
 abbrev GV : Type := ∀ v : V, GLw n (S v)
 
@@ -41,24 +40,19 @@ def eV (v : V) (i : Fin n) (y : Uo ((S v).adicCompletion L)) : (iwS n S).T := by
     · rw [Pi.mulSingle_eq_of_ne h]
       exact (glIwa ((S v').adicCompletion L) n).T.one_mem⟩
 
-omit [Fintype V] in
 
 def alV (v : V) (j : ℕ) : GV n S := by
   classical
   exact Pi.mulSingle v (al ((S v).adicCompletion L) n j)
 
-omit [Fintype V] in
-variable (l) in
 
 abbrev Emb : Type := Σ v : V, W.Emb l (S v)
 
 variable {n S}
 
-omit [Fintype V] in
 
 def Emb.res (e : Emb l S) : L →+* Qbar l := e.2.1.comp (algebraMap L _)
 
-variable (S) in
 
 def algRep (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) :
     Representation ℂ (GV n S) (⨂[ℂ] e : Emb l S, nablaSq ℂ n (lam e.res)) :=

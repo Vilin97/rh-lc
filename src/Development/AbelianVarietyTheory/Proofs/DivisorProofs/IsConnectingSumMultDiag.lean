@@ -19,17 +19,14 @@ namespace PDiv
 variable {R A B : Type} [CommRing R] [CommRing A] [CommRing B] [Bialgebra R A] [Bialgebra R B]
   [IsCocomm R A] [IsCocomm R B]
 
-variable (R A) in
 
 abbrev multDiag (i : ℕ) : A ⊗[R] A →ₐ[R] A :=
   Algebra.TensorProduct.lift (mulBy R A i : A →ₐ[R] A) (AlgHom.id R _) (fun _ _ ↦ Commute.all _ _)
 
-variable (R A) in
 
 abbrev valZero : A ⊗[R] A →ₐ[R] R :=
   Algebra.TensorProduct.lift (counitAlgHom R A) (counitAlgHom R A) (fun _ _ ↦ Commute.all _ _)
 
-omit [IsCocomm R A] [IsCocomm R B] in
 
 theorem pullTwo_mulBy_eq (c : A ⊗[R] A) (hc : c ∈ symCocycles R A) (k : ℕ) :
     pullbackTwo (mulBy R A k) c = algebraMap R _ (valZero R A c) + k • c +

@@ -68,7 +68,6 @@ theorem dvd_map_of_dvd_map {A Φ K : Type*} [CommRing A] [Field Φ] [CommRing K]
 
 end ChartSpecCount
 
-open ChartSpecCount in
 
 theorem ChartSpecCount.proof (hPE : ChartPrimElt.Statement) (hLA : LocAwaySpec.Statement) :
     ChartSpecCount.Statement := by

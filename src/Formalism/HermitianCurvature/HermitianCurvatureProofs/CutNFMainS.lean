@@ -53,7 +53,6 @@ theorem domination_measurability_holds : NFDomMeas := by
   unfold topD TBB.Ew TBB.NP
   exact (Complex.continuous_re.tendsto _).comp (h.const_mul _)
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end
 

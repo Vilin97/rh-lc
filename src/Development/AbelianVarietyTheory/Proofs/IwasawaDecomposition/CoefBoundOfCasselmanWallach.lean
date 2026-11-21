@@ -88,7 +88,6 @@ theorem continuous_wt (N : ℕ) : Continuous (wt N : Mx n → ℝ) := (continuou
 theorem norm_wt (N : ℕ) (g : Mx n) : ‖(wt N g : ℂ)‖ = wt N g := by
   rw [Complex.norm_real, Real.norm_of_nonneg (wt_pos N g).le]
 
-open Classical in
 
 def rt (ε : Fin n → Bool) (Λ : Type) (N : ℕ) (h : Mx n) : Bd (Λ × UJset ε) →L[ℂ] Bd (Λ × UJset ε) :=
   if hh : h ∈ UJset ε then
@@ -253,7 +252,6 @@ end GlobalTheory.TypeSum.CoefLow
 
 namespace GlobalTheory.TypeSum
 
-open CoefLow in
 
 theorem coefBound_of_casselmanWallach : GlobalTheory.Published.CasselmanWallach → ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type)
     [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (σ : Mx n → (H →L[ℂ] H)), Std ε σ →

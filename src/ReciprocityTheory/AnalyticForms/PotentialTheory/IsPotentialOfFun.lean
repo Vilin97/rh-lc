@@ -126,7 +126,6 @@ def integralWith (A : FinHolAtlas e X) (P : ChartPartition A) (Φ : Fin e → Lo
   ∑ j, ∫ y in (A.chart j).target,
     P.χ j ((A.chart j).symm y) * g ((A.chart j).symm y) * locDens A Φ j y
 
-open scoped Classical in
 
 def mInt (A : FinHolAtlas e X) (Φ : Fin e → LocPot X) (g : X → ℝ) : ℝ :=
   if h : Nonempty (ChartPartition A) then integralWith A h.some Φ g else 0
@@ -171,7 +170,6 @@ def pushDens (A : FinHolAtlas e X) (Φ : Fin e → LocPot X) (q : X → Fin e �
     ‖LinearMap.det (fderiv ℂ (q ∘ (A.chart (chartIdx A x)).symm) (A.chart (chartIdx A x) x) :
       (Fin e → ℂ) →ₗ[ℂ] (Fin e → ℂ))‖ ^ 2
 
-open scoped Classical in
 
 def maMeasure [MeasurableSpace X] (A : FinHolAtlas e X) (Φ : Fin e → LocPot X) : Measure X :=
   if h : Nonempty (ChartPartition A) then

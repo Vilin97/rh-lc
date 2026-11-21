@@ -86,6 +86,5 @@ theorem continuous_pm {X K : Type} [TopologicalSpace X] [CommRing K] [Topologica
   exacts [ha, hb, (continuous_apply j).comp hr, continuous_const, hd, continuous_const, continuous_const,
     (continuous_apply i).comp hw, hU.matrix_elem i j]
 
-set_option maxHeartbeats 1600000 in
 
 end PositivityTheory.PlacePermOperatorBicommutantSpan

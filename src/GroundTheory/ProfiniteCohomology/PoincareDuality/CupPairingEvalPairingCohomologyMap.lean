@@ -32,7 +32,6 @@ theorem cohomologyMap_finsetSum {B C : Rep.{u} k G} [IsDiscreteRep B] [IsDiscret
   | empty => simp [cohomologyMap_zero]
   | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, cohomologyMap_add, ih]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem dualMap_add (D : Rep.{u} k G) {A B : Rep.{u} k G} (f₁ f₂ : A ⟶ B) :
     dualMap D (f₁ + f₂) = dualMap D f₁ + dualMap D f₂ := by
@@ -57,7 +56,6 @@ theorem dualMap_zero (D : Rep.{u} k G) {A B : Rep.{u} k G} :
   show g ((0 : A ⟶ B).hom a) = 0
   rw [Rep.zero_hom, Representation.IntertwiningMap.coe_zero, Pi.zero_apply, map_zero]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem dualMap_finsetSum (D : Rep.{u} k G) {A B : Rep.{u} k G} {ι : Type*} (s : Finset ι)
     (f : ι → (A ⟶ B)) : dualMap D (∑ i ∈ s, f i) = ∑ i ∈ s, dualMap D (f i) := by

@@ -68,7 +68,6 @@ theorem unitAt_natCast_of_dvd {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec
   rw [he]
   exact mul_mem (natCast_mem _ w) hinv
 
-variable {Ω' : Type} [Field Ω'] in
 
 theorem div_mem_of_mem_span {R : Subring Ω'} {v w : Ω'} (hw : w ≠ 0) (h : v ∈ Submodule.span R {w}) :
     v / w ∈ R := by

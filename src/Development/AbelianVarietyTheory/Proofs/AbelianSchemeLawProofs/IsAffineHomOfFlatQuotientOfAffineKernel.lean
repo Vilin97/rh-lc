@@ -21,10 +21,6 @@ section Descent
 
 set_option backward.isDefEq.respectTransparency.types false
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
-set_option backward.isDefEq.respectTransparency.types false in
 
 theorem _root_.GlobalTheory.quasiCompact_descendsAlong_fpqc :
     MorphismProperty.DescendsAlong (@QuasiCompact : MorphismProperty Scheme.{u})
@@ -52,10 +48,6 @@ theorem _root_.GlobalTheory.quasiCompact_descendsAlong_fpqc :
   rw [this]
   exact h1.image snd.continuous
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
-set_option backward.isDefEq.respectTransparency.types false in
 
 theorem _root_.GlobalTheory.quasiSeparated_descendsAlong_fpqc :
     MorphismProperty.DescendsAlong (@QuasiSeparated : MorphismProperty Scheme.{u})
@@ -87,10 +79,6 @@ theorem _root_.GlobalTheory.quasiSeparated_descendsAlong_fpqc :
     exact (QuasiSeparatedSpace.inter_isCompact _ _ (hU.preimage s.continuous) (hpre U hU hUc)
       (hV.preimage s.continuous) (hpre V hV hVc)).image s.continuous
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
-set_option backward.isDefEq.respectTransparency.types false in
 
 theorem _root_.GlobalTheory.isAffine_of_isPullback_of_flat_surjective {X Y S T : Scheme.{u}} {f : T ⟶ S} {g : Y ⟶ X}
     {p : X ⟶ S} {q : Y ⟶ T} (H : IsPullback g q p f) [IsAffine S] [IsAffine T] [Flat f]
@@ -125,10 +113,6 @@ theorem _root_.GlobalTheory.isAffine_of_isPullback_of_flat_surjective {X Y S T :
       (MorphismProperty.isomorphisms.infer_property _)
   exact ⟨this⟩
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
-set_option backward.isDefEq.respectTransparency.types false in
 
 theorem _root_.GlobalTheory.isAffineHom_descendsAlong_fpqc :
     MorphismProperty.DescendsAlong (@IsAffineHom : MorphismProperty Scheme.{u})
@@ -152,9 +136,6 @@ theorem _root_.GlobalTheory.isAffineHom_descendsAlong_fpqc :
 
 end Descent
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
 
 theorem _root_.GlobalTheory.isAffineHom_of_flatQuotient_of_affine_kernel :
     ∀ (S : Scheme.{0}) (G B T : Over S) [GrpObj G] [GrpObj B] [GrpObj T] (q : G ⟶ B) (i : T ⟶ G),

@@ -25,7 +25,6 @@ namespace CurveSectionQuotientFinite
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem charZero (y : (Σ k, ι k) → Ω) (hP : IsHorizontal (mCoordIdeal y)) : CharZero Ω := by
   refine charZero_of_inj_zero fun n hn => ?_
@@ -45,7 +44,6 @@ theorem aeval_ne_zero (y : (Σ k, ι k) → Ω) {s : MRing ι} {d : K → ℕ} (
   erw [HilbertSamuel.SectionBounded.mConeMap_homog y hs]
   rw [h0, map_zero, zero_mul]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem mem_ratioField [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) {b : Ω}
     (hb : b ∈ chartRingZ y c) : b ∈ ratioField y c := by
@@ -73,7 +71,6 @@ theorem exists_nat_mul_mem_chartRingZ [CharZero Ω] (y : (Σ k, ι k) → Ω) (h
     exact hq
   exact CurveAffineCharts.exists_nat_mul_mem_adjoin hq'
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem div_mem_ratioField [CharZero Ω] (y : (Σ k, ι k) → Ω) (a : K → ℤ) (c : ∀ k, ι k)
     (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {m x : Ω} (hm : m ∈ chartLat y a 1) (hx : x ∈ chartLat y a 1) :
@@ -127,7 +124,6 @@ theorem finite_curveSectionMod (y : (Σ k, ι k) → Ω) (hP : IsArithVar (mCoor
 
 end CurveSectionQuotientFinite
 
-open CurveSectionQuotientFinite in
 
 theorem CurveSectionQuotFinite.proof : CurveSectionQuotFinite.Statement := by
   intro K _ ι _ Ω _ y s d hP hs hsP

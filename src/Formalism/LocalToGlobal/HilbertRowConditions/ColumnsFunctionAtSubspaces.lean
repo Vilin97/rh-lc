@@ -77,7 +77,6 @@ variable {ex : Extra D L hT Gi Gl Kc Y cX}
 
 def cjS (b : Bool) : ℂ →+* ℂ := Formalism.IndefR.Links.cj b
 
-open Classical in
 
 structure RowSideDetermined (T : TiedDataSK ex) (P : RowSideFamily ex) : Prop where
 
@@ -105,7 +104,6 @@ structure RowsHold0_3 (P : RowSideFamily ex) : Prop where
 
 def RowsHoldKap3 (P : RowSideFamily ex) : Prop := ∀ e : D.what₂.LL →+* ℂ, Y.kapR e = P.S1.κ (InfinitePlace.mk e)
 
-open Classical in
 
 def RowsHoldLam3 (P : RowSideFamily ex) : Prop :=
   ∃ cOf : D.what₂.FT → P.A3.fam3.base3.Ix,

@@ -80,7 +80,6 @@ theorem isCompact_Kres (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDim
   rw [e]
   exact Units.isClosedEmbedding_embedProduct.isCompact_preimage (hBc.prod hB')
 
-open Polynomial in
 
 theorem rho_charpoly_sep (G : HTGroup p) (w : Fin G.m) (y : G.C) (hdeg : (minpoly G.F y).natDegree = G.n)
     (hsep : (minpoly G.F y).Separable) : (G.rho w y).charpoly.Separable := by

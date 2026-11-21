@@ -18,9 +18,6 @@ open scoped Pointwise ENNReal Classical
 
 namespace GlobalTheory.HL.CoordSq
 
-open scoped Pointwise ENNReal Classical in
-open ValuativeRel in
-open scoped Pointwise ENNReal Classical in
 
 theorem _root_.GlobalTheory.HL.CoordSq.sums_eq : ∀ {F : Type} [Field F] [ValuativeRel F]
     [TopologicalSpace F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableSpace E]

@@ -153,6 +153,5 @@ end Val
 
 end TorusCube
 
-open TorusCube Geo.Tor in
 
 end GlobalTheory

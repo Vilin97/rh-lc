@@ -122,9 +122,7 @@ theorem smul_valuation_lt_one_iff (g : Ω ≃ₐ[F] Ω) (A : ValuationSubring Ω
     ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem, AlgEquiv.smul_def, map_inv₀,
     map_eq_zero_iff _ (g⁻¹ : Ω ≃ₐ[F] Ω).injective]
 
-omit [NumberField F] [IsAlgClosure F Ω] in
 
-variable (F Ω) in
 
 abbrev IntCl := integralClosure (𝓞 F) Ω
 
@@ -185,7 +183,6 @@ section profinite
 
 variable {F Ω : Type*} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
 
-variable (F Ω) in
 
 theorem continuousSMul_intCl :
     @ContinuousSMul (Ω ≃ₐ[F] Ω) (IntCl F Ω) _ _ ⊥ := by
@@ -203,7 +200,6 @@ theorem continuousSMul_intCl :
   rw [← h]
   exact Subtype.ext hg
 
-variable (F Ω) in
 
 theorem isInvariant_intCl : Algebra.IsInvariant (𝓞 F) (IntCl F Ω) (Ω ≃ₐ[F] Ω) := by
   refine ⟨fun b hb => ?_⟩

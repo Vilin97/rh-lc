@@ -21,7 +21,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 variable {σ : E →ₐ[F] E} {nS nT : ℕ} {JS : Matrix (Fin nS) (Fin nS) E} {JT : Matrix (Fin nT) (Fin nT) E} {xi0 : E}
   {ψ : AddChar (AF F) ℂ}
 
-variable (σ) in
 
 def conjHalf (e : AEF F E) (nS nT : ℕ) : AddSubgroup (WOF F E nS nT) where
   carrier := {u | ∀ i j, cAF σ e * u i j = u i j}
@@ -33,14 +32,12 @@ def conjHalf (e : AEF F E) (nS nT : ℕ) : AddSubgroup (WOF F E nS nT) where
     simp only [Set.mem_setOf_eq] at ha
     rw [Matrix.neg_apply, mul_neg, ha i j]
 
-variable (σ JS JT xi0 ψ) in
 
 def heisL (w : WOF F E nS nT) : (WOF F E nS nT → ℂ) →ₗ[ℂ] (WOF F E nS nT → ℂ) where
   toFun := heisOF σ JS JT xi0 ψ w
   map_add' := GlobalTheory.WeilPartsF.heisOF_add w
   map_smul' := fun c f => GlobalTheory.WeilPartsF.heisOF_smul c w f
 
-variable (σ JS JT xi0 ψ) in
 
 def commF (u y : WOF F E nS nT) : ℂ :=
   ψ (symplOHF σ JS JT xi0 u y - symplOHF σ JS JT xi0 y u)

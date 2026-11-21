@@ -47,8 +47,6 @@ private theorem eq_of_continuousAt_mul_eq_eventually {E : Type} [TopologicalSpac
   refine (hnz.and_eventually (e₁.and e₂)).mono fun y hy ↦ ?_
   exact mul_right_cancel₀ hy.1 (hy.2.1.trans hy.2.2.symm)
 
-open Filter Set in
-open scoped Topology in
 
 theorem _root_.GlobalTheory.ThetaValueCont.continuousAt_constant {V V' K ι : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [FiniteDimensional ℂ V]
     [NormedAddCommGroup V'] [NormedSpace ℂ V'] [FiniteDimensional ℂ V'] {B : Set V} {b₀ : V}
@@ -174,9 +172,6 @@ theorem _root_.GlobalTheory.ThetaValueCont.continuousAt_constant {V V' K ι : Ty
   show Fs b 0 / r j b = c b
   rw [heq, h0 rfl, mul_div_cancel_right₀ _ hrb]
 
-open Filter Set in
-open scoped Topology in
-open Complex Matrix in
 
 theorem _root_.GlobalTheory.ThetaValueCont.exists_coordinates_of_relations {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.IsHermitian)
     (hpos : ∀ z : Fin g → ℂ, z ≠ 0 → 0 < (z ⬝ᵥ Hm.mulVec (star z)).re) (e f : Fin g → Fin g → ℂ)

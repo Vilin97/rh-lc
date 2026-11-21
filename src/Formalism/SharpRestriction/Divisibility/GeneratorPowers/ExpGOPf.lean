@@ -15,7 +15,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 
 attribute [local instance] Over.cartesianMonoidalCategory
 
-set_option maxHeartbeats 800000 in
 
 theorem bqOrigin : BqOriginSt := by
   unfold BqOriginSt

@@ -181,7 +181,6 @@ theorem foldCont_holds : FoldCont := by
       fun t => OrbStPf.pds (L.map (Fin.castAdd d)) (OrbStPf.orb π W w 0) (Fin.append 0 t) from funext key]
   exact (OrbStPf.contDiff_pds _ hG).continuous.comp (continuous_append_right 0)
 
-attribute [local instance] Formalism.BasicNotions.Host.cmStar in
 
 end Formalism.IndefR.Tow.SobPf
 

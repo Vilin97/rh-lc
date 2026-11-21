@@ -29,7 +29,6 @@ open GlobalTheory.HeisDeriv GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory
 
 variable {F : Type} [Field F] [NumberField F]
 
-variable (F) in
 
 def liftInf (z : mixedEmbedding.mixedSpace F) : AF F :=
   LinearMap.inl F (Ainf F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm z)

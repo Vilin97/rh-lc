@@ -88,7 +88,6 @@ section Points
 variable {S S' : Scheme.{0}} {B : Over S} {B' : Over S'} [GrpObj B] [IsCommMonObj B] [GrpObj B'] [IsCommMonObj B']
   {f : S' ⟶ S} {b : B'.left ⟶ B.left}
 
-omit [IsCommMonObj B] [IsCommMonObj B'] in
 
 theorem exists_lift (h : IsGrpPullback B' B f b) (T : Over S') (x : Over.mk (T.hom ≫ f) ⟶ B) :
     ∃ x' : T ⟶ B', pushPt h.1.w x' = x :=
@@ -143,7 +142,6 @@ theorem triv_sym_of_levels [∀ e, GrpObj (Y e)] [∀ e, IsCommMonObj (Y e)] (P 
     fun e => triv_sym hM (P e) (h e) (w e) (thickObj V _ e B)
       (Over.homMk (pullback.fst B.hom (thick V _ e)) pullback.condition)
 
-omit [IsCommMonObj B] in
 
 theorem lbIso_of_levels {H : LB B.left} (hH : H.IsLB) (hb : ∀ e, IsPullback (b e) (Y e).hom B.hom (thick V _ e))
     (w : ∀ e, LBIso (M.pull (b e)) (H.pull (b e))) : LBIso M H :=

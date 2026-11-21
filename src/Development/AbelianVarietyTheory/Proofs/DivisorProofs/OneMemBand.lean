@@ -27,7 +27,6 @@ theorem absDetA_one : absDetA (1 : GA E a) = 1 := by
   rw [GroundTheory.Automorphic.Reduction.adeleAbs_units (K := E) (Matrix.GeneralLinearGroup.det (1 : GA E a)), map_one, map_one]
   rfl
 
-variable (E a) in
 
 def band : Set (GA E a) := {g | 1 ≤ absDetA g ∧ absDetA g ≤ 2}
 

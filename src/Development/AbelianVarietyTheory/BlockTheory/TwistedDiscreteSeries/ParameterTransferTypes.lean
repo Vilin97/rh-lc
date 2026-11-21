@@ -28,7 +28,6 @@ def SpanAt (V : HSp D) (e : AE D) (M : Matrix (Fin V.rank) (Fin V.rank) (Formali
   (∀ z, IntVec z → ∃ y ∈ Formalism.L2.NTheta.LamHat V,
     (fun a => finPart D e * (finMat D.sp.cm.sig V.gram γ).mulVec y a) = fun a => finPart D e * M.mulVec z a)
 
-open Classical in
 
 def sphVal {n : ℕ} (inert : Prop) (q : ℕ) (α : Fin n → ℂ) (a : Fin n → ℤ) : ℂ :=
   ∏ i : Fin n, if inert → 2 * (i : ℕ) + 1 < n then
@@ -44,7 +43,6 @@ section Spaces
 variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A)
 
-open Classical in
 
 def badS (t : T) : Finset (HeightOneSpectrum (𝓞 D.host.F)) :=
   (R.Pg ∪ R.Q t).image fun PP => PP.under (𝓞 D.host.F)

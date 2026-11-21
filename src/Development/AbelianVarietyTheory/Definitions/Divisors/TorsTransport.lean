@@ -40,7 +40,6 @@ def LatIntRam : Prop := AllLat fun E _ _ I _ d φ s z 𝔣 Λ l L => c_vp 𝔣 l
 def LatIntUnr : Prop := AllLat fun E _ _ I _ d φ s z 𝔣 Λ l L => c_vp 𝔣 l = 0 → ∀ (κ : I → ℕ) (S : ℂ → ℂ),
   IsLatSum φ (2 * s) κ L S → ValGe_vp l (betaBound_vp d s κ 𝔣 z l) (beta E d s κ Λ (S 0))
 
-open Classical in
 
 def Expansion : Prop := AllLat fun _ _ _ I _ d φ s z 𝔣 Λ l L => c_vp 𝔣 l ≠ 0 →
   ∀ [Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (Ω : ℂ), Ω ^ 12 = latDisc Λ →

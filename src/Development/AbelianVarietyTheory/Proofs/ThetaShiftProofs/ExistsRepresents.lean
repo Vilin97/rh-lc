@@ -45,7 +45,6 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegPre R} {e : 
   {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G] (c : GtCoord I D e G)
   {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]
 
-open CoordToExt in
 
 theorem holAt_of_coord {x : V → (Sp ℂ ⟶ (thickObj R I e G).left)} {z : V}
     (hb : HolAt (fun t => x t ≫ c.q.left) z)

@@ -99,7 +99,6 @@ end GlobalTheory.PowGerm.BoxGerm
 namespace GlobalTheory.PowGerm
 open GlobalTheory.BoxFamily FrameN BoxGerm
 
-set_option maxHeartbeats 1000000 in
 
 theorem boxGermSt_holds : Laws → Laws2 → Laws4 → TwistBaseChangeStatement → BoxGermSt := by
   intro h₁ h₂ h₄ hT E _ _ _ H V _ _ _ _ t P d FT act ph1 ph2 sy ad tg xT eT wPT hch hfr hpr τ₁ g₁ el n D' A' G' _ _

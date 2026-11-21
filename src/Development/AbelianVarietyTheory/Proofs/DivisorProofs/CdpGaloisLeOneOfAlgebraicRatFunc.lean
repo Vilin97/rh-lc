@@ -164,7 +164,6 @@ instance isDiscreteRep_artinSchreierSequence_X₃ :
     IsDiscreteRep (artinSchreierSequence E Ω p).X₃ :=
   inferInstanceAs (IsDiscreteRep (galAddInt.{0} E Ω))
 
-omit [Fact p.Prime] [CharP Ω p] in
 
 theorem subsingleton_cohomology_galAddInt {n : ℕ} (hn : n ≠ 0) :
     Subsingleton (cohomology (galAddInt.{0} E Ω) n) := by

@@ -23,7 +23,6 @@ theorem ad_ext {a b : AfE F E} (h : ∀ P, adAt F P a = adAt F P b) : a = b :=
 def idem (F : Type) [Field F] [NumberField F] [Algebra F E] (P : HeightOneSpectrum (𝓞 E)) : AfE F E :=
   (finAf F E (localIdele E P (atFin P (Units.mk0 2 two_ne_zero))) : AfE F E) - 1
 
-open Classical in
 
 theorem adAt_idem (P w : HeightOneSpectrum (𝓞 E)) : adAt F w (idem F P) = if w = P then 1 else 0 := by
   unfold idem
@@ -66,7 +65,6 @@ variable [StarRing E] (hc : CMData F E)
 
 theorem sig_sig (z : AfE F E) : σ (σ z) = z := DetClass.sigR_sigR (fun x => star_star x) z
 
-open Classical in
 
 theorem adAt_sig_idem (P w : HeightOneSpectrum (𝓞 E)) : adAt F w (σ (idem F P)) = if conjPrime₂ w = P then 1 else 0 := by
   split_ifs with h
@@ -87,7 +85,6 @@ theorem sig_glue (z : AfE F E) (a b : HeightOneSpectrum (𝓞 E) → E) : σ (gl
   rw [map_add (f := _), map_add (f := _), map_mul, map_sub, map_sub, sig_sig, sig_sig, map_one]
   ring
 
-open Classical in
 
 theorem adAt_glue (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) (z : AfE F E) (a b : HeightOneSpectrum (𝓞 E) → E)
     (w : HeightOneSpectrum (𝓞 E)) : adAt F w (glue hc Q z a b) =
@@ -152,7 +149,6 @@ theorem int_of_uni (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {k : GL (Fin n) (AfE
 
 def mat (f : Sp E n ≃ₗ[E] Sp E n) : Matrix (Fin n) (Fin n) E := Matrix.of fun i j => f (Pi.single j 1) i
 
-omit [NumberField E] [StarRing E] in
 
 theorem mat_mulVec (f : Sp E n ≃ₗ[E] Sp E n) (v : Sp E n) (i : Fin n) : ∑ j, mat f i j * v j = f v i := by
   set_option synthInstance.maxHeartbeats 100000 in
@@ -163,7 +159,6 @@ theorem mat_mulVec (f : Sp E n ≃ₗ[E] Sp E n) (v : Sp E n) (i : Fin n) : ∑ 
   rw [this, map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
   rfl
 
-omit [NumberField E] [StarRing E] in
 
 theorem mat_symm_mul (f : Sp E n ≃ₗ[E] Sp E n) : mat f.symm * mat f = 1 := by
   ext i j
@@ -212,7 +207,6 @@ theorem carries_globLat (x : GL (Fin n) (AfE F E)) :
   Formalism.UG.P.span_recovery_of_integral_adelic_approx Formalism.UG.P.integral_adele_approximation_holds F E (Fin n) (stdLat E n)
     (Module.Finite.iff_fg.2 stdLat_lattice.fg) stdLat_lattice.span_eq_top x
 
-omit [StarRing E] in
 
 theorem mulVec_int {k : Matrix (Fin n) (Fin n) (AfE F E)} (hk : ∀ i j, k i j ∈ RInt F E) {z : Fin n → AfE F E}
     (hz : ∀ i, z i ∈ RInt F E) (i : Fin n) : k.mulVec z i ∈ RInt F E := by
@@ -307,7 +301,6 @@ theorem exists_modify (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {x : GL (Fin n) (
     · simp only [pullV, Formalism.L2.Col.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, g, Units.inv_mk, hG', if_neg h,
       if_neg h']
 
-variable (hc) in
 
 theorem exists_isPtOf_cm (n : ℕ) (ST SG Q : Finset (HeightOneSpectrum (𝓞 E))) (p : DecoF E n ST SG Q)
     (h1 : Disjoint ST SG) (h2 : Disjoint ST Q) (h3 : Disjoint SG Q)

@@ -62,7 +62,6 @@ def GoodVt (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i t).H) : Pro
     gaL (Vc D i) (R.βV i) (R.datVt i t) R.eG (RealDat.eC (A := A) (sg0 D A)) (fun h => l (R.extV i t y h)) =
       fun h => l (R.extV i t y h)
 
-open Classical in
 
 def mirC (R : RealDat D A Ks) (i : Fin D.R.m) (PP : R.Pg) (a : Fin D.R.r → kP PP.1) (tr : Bool) (ε : ℤ) (g : G) : ℂ :=
   if (∀ PP', PP' ≠ PP → R.eG g PP' = 1) ∧

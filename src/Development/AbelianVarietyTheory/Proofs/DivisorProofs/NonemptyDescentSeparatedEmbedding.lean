@@ -135,7 +135,6 @@ end GlobalTheory.Desc.EmbeddingLemmas
 
 namespace GlobalTheory.Desc
 
-open GlobalTheory.Desc.EmbeddingLemmas in
 
 theorem nonempty_emb : ∀ σ : Setup, σ.Common → Nonempty (Emb σ) := by
   intro σ _

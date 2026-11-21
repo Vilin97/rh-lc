@@ -20,12 +20,10 @@ namespace GlobalTheory.RSnm
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem invT_invT (g : GA E a) : invT a (Ad E) (invT a (Ad E) g) = g :=
   Units.ext (by change ((g.val)ᵀ)ᵀ = g.val; exact transpose_transpose _)
 
-omit [IsTotallyComplex E] in
 
 theorem continuous_invT : Continuous (invT a (Ad E)) := by
   refine Units.continuous_iff.2 ⟨?_, ?_⟩
@@ -80,7 +78,6 @@ theorem decays_smoothInf_invT {F : GA E a → ℂ} (hF : Decays fun g => F (invT
     exact mul_le_mul_of_nonneg_left (h g _ (Set.mul_mem_mul hcC ⟨_, ⟨u, hx, rfl⟩, rfl⟩) ξ hξ hm) (norm_nonneg _)
   · simp [image_eq_zero_of_notMem_tsupport hx]
 
-variable (a) in
 
 def goodFns : Submodule ℂ (GA E a → ℂ) where
   carrier := {F | Continuous F ∧ Decays F ∧ Decays fun g => F (invT a (Ad E) g)}
@@ -112,14 +109,12 @@ namespace GlobalTheory.RSnm
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a n m : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem mul_apply_of_row {R : Type} [CommRing R] {A B : Matrix (Fin n) (Fin n) R} {j : Fin n}
     (hA : ∀ t, A j t = (1 : Matrix (Fin n) (Fin n) R) j t) (l : Fin n) : (A * B) j l = B j l := by
   rw [Matrix.mul_apply, ← one_mul B, Matrix.mul_apply]
   simp only [hA, one_mul]
 
-omit [IsTotallyComplex E] in
 
 theorem mul_apply_of_col {R : Type} [CommRing R] {A B : Matrix (Fin n) (Fin n) R} {l : Fin n}
     (hB : ∀ t, B t l = (1 : Matrix (Fin n) (Fin n) R) t l) (i : Fin n) : (A * B) i l = A i l := by
@@ -127,7 +122,6 @@ theorem mul_apply_of_col {R : Type} [CommRing R] {A B : Matrix (Fin n) (Fin n) R
   simp only [hB]
   rw [← Matrix.mul_apply, mul_one]
 
-omit [IsTotallyComplex E] in
 
 theorem colGL_row_last {R : Type} [CommRing R] (k : ℕ) (y : Fin k → R) {j : Fin n} (hj : j.val + 1 = n) (t : Fin n) :
     (colGL (n := n) k y : Matrix (Fin n) (Fin n) R) j t = (1 : Matrix (Fin n) (Fin n) R) j t := by
@@ -137,7 +131,6 @@ theorem colGL_row_last {R : Type} [CommRing R] (k : ℕ) (y : Fin k → R) {j : 
   · exact absurd h2 (by rw [Fin.lt_def]; omega)
   · rfl
 
-omit [IsTotallyComplex E] in
 
 theorem colGL_col {R : Type} [CommRing R] {k : ℕ} (hk : k ≠ m) (y : Fin k → R) {l : Fin n} (hl : l.val = m)
     (i : Fin n) : (colGL (n := n) k y : Matrix (Fin n) (Fin n) R) i l = (1 : Matrix (Fin n) (Fin n) R) i l := by
@@ -222,7 +215,6 @@ omit [IsTotallyComplex E] in
 theorem detAbs_blockGL (hmn : m ≤ n) (h : GA E m) : detAbs (blockGL hmn h : GA E n) = detAbs h := by
   rw [detAbs, detAbs, det_blockGL]
 
-variable (m) in
 
 def InS (g : GA E n) : Prop :=
   (∀ j t : Fin n, j.val + 1 = n → g.val j t = (1 : Matrix (Fin n) (Fin n) (Ad E)) j t) ∧
@@ -362,7 +354,6 @@ theorem inS_colGL_mul {k : ℕ} (hk : k ≠ m) (y : Fin k → Ad E) {g : GA E n}
 theorem inS_blockGL (hmn : m < n) (h : GA E m) : InS m (blockGL hmn.le h : GA E n) :=
   ⟨fun j t hj => blockGL_row_last hmn h hj t, fun i l hl => blockGL_col hmn h hl i⟩
 
-variable (m) in
 
 def colSmooth (F : (Fin m → Ad E) → ℂ) (φ : GA E n → ℂ) (g : GA E n) : ℂ :=
   ∫ x, F x * φ (g * colGL m x) ∂GJMatrix.adeleMeasurePi E
@@ -428,7 +419,6 @@ open scoped ComplexConjugate nonZeroDivisors
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n m : ℕ}
 
-variable (m) in
 
 def rsIntegrand (hmn : m ≤ n) (F : (Fin m → Ad E) → ℂ) (φ : GA E n → ℂ) (φ' : GA E m → ℂ) (s : ℂ) (h : GA E m) : ℂ :=
   FourierWhittaker.partialCoeff (colSmooth m F φ) (m + 1) (blockGL hmn h) * conj (φ' h) *

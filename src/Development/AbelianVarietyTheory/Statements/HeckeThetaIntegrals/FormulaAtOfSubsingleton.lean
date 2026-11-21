@@ -28,15 +28,10 @@ theorem guard (h : HidaSetting large₂ R F) : Guard R := guard_of_qGuard h.guar
 
 variable {ch : Choice R} {κ κ' : ℂ} {ze ze' : T → D.what₂.LL}
 
-set_option maxHeartbeats 1600000 in
 
-set_option maxHeartbeats 1600000 in
 
-set_option maxHeartbeats 1600000 in
 
-set_option maxHeartbeats 1600000 in
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.RowClaim.Test
 

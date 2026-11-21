@@ -34,4 +34,3 @@ theorem norm_mixedEmbedding_nat_mul_le {κ : Type} [Fintype κ] (M : ℕ) (ξ : 
 
 end GlobalTheory.RatPointSum
 
-open GlobalTheory.RatPointSum in

@@ -36,4 +36,3 @@ private theorem polTwo {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω
       rw [MonoidHom.comp_apply, MonoidHom.comp_apply, h']
       exact hQ _ _ rfl⟩
 
-open UpperTheory.V.Pr.LkAut2 in

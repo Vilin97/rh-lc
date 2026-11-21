@@ -138,7 +138,6 @@ def Free (U : Subgroup X.Ub) : Prop :=
   ∀ g γ, ∀ u ∈ U, ∀ b ∈ X.I.Iw 0, X.glob γ * g = g * ((u : Ga), b) →
     b ∈ Subgroup.center Gp ∧ ∃ hb : b ∈ X.I.T, (θ ⟨b, hb⟩ : A) • (τ u : Matrix (Fin m) (Fin m) A) = 1
 
-variable (A m) in
 
 def rp : Representation A Gp (X.Fn A m) := (rtr A (Ga × Gp) (Fin m → A)).comp (MonoidHom.inr Ga Gp)
 
@@ -153,13 +152,11 @@ def ra : Representation A X.Ub (X.Fn A m) where
 theorem ra_apply (u : X.Ub) (f : X.Fn A m) (g : Ga × Gp) :
     X.ra τ u f g = (τ u : Matrix (Fin m) (Fin m) A) *ᵥ f (g * ((u : Ga), 1)) := rfl
 
-variable (A m) in
 
 def U (a : Gp) : Module.End A (X.Fn A m) := X.I.uOp (X.rp A m) a
 
 variable [IsLocalRing A]
 
-variable (m) in
 
 def Amb : Submodule A (X.Fn A m) where
   carrier := {f | (∀ γ g, f (X.glob γ * g) = f g) ∧ f ∈ fixd (X.rp A m) X.I.N ∧
@@ -186,7 +183,6 @@ def Amb : Submodule A (X.Fn A m) where
 
 def Sp (U : Subgroup X.Ub) : Submodule A (X.Fn A m) := X.Amb m θ ⊓ fixd (X.ra τ) U
 
-variable (A m) in
 
 def valIn (k : ℕ) : Submodule A (X.Fn A m) :=
   Submodule.pi Set.univ fun _ => Submodule.pi Set.univ fun _ => maximalIdeal A ^ k
@@ -210,16 +206,13 @@ variable {A M ι : Type} [CommRing A] [IsLocalRing A] [AddCommGroup M] [Module A
 def locPart (Y : Submodule A M) (op : ι → Module.End A M) (a : ι → A) : Submodule A M :=
   Y ⊓ ⨅ (i : ι) (k : ℕ), ⨆ n : ℕ, (maximalIdeal A ^ k • Y).comap ((op i - algebraMap A _ (a i)) ^ n)
 
-omit [IsLocalRing A] in
 
 def Restr {Y : Submodule A M} (t : Module.End A Y) (φ : Module.End A M) : Prop := ∀ y : Y, (t y : M) = φ y
 
-omit [IsLocalRing A] in
 
 def heckeAlg (Y : Submodule A M) (op : ι → Module.End A M) : Subalgebra A (Module.End A Y) :=
   Algebra.adjoin A {t | ∃ i, Restr t (op i)}
 
-omit [IsLocalRing A] in
 
 def CommOn (Y : Submodule A M) (op : ι → Module.End A M) : Prop :=
   (∀ i, ∀ y ∈ Y, op i y ∈ Y) ∧ ∀ i j, ∀ y ∈ Y, op i (op j y) = op j (op i y)
@@ -261,14 +254,12 @@ def AF (ξ : Gp →* GL (Fin d) Ω) : Submodule Ω (X.Fn Ω d) where
   zero_mem' γ g := by simp
   smul_mem' c F h γ g := by simp [h γ g, mulVec_smul]
 
-variable (Ω d m) in
 
 def rpF : Representation Ω Gp (Fin m → X.Fn Ω d) where
   toFun b := LinearMap.compLeft (X.rp Ω d b) (Fin m)
   map_one' := by ext1 F; simp; rfl
   map_mul' b b' := by ext1 F; simp; rfl
 
-variable (d) in
 
 def raF (τ : X.Ub →* GL (Fin m) Ω) : Representation Ω X.Ub (Fin m → X.Fn Ω d) where
   toFun u :=
@@ -290,7 +281,6 @@ def Cl (τ : X.Ub →* GL (Fin m) Ω) (ξ : Gp →* GL (Fin d) Ω) (U : Subgroup
 
 variable {O : Type} [CommRing O] [IsLocalRing O] [Algebra O Ω] (W : WtRep X.I O Ω)
 
-variable (m) in
 
 def UF (a : X.I.P) : Module.End Ω (Fin m → X.Fn Ω (W.d + 1)) :=
   (((W.χ ⟨a, X.I.P_le a a.2⟩)⁻¹ : Ωˣ) : Ω) • X.I.uOp (X.rpF Ω (W.d + 1) m) a
@@ -299,7 +289,6 @@ def ClOrd (τ : X.Ub →* GL (Fin m) Ω) (U : Subgroup X.Ub) (c : ℕ) (φ : X.I
     Submodule Ω (Fin m → X.Fn Ω (W.d + 1)) :=
   ⨆ μ : {μ : Ω // IsIntUnit O μ}, X.Cl τ W.ξ U c φ ⊓ (X.UF m W ⟨X.I.z, X.I.z_mem⟩).maxGenEigenspace μ.1
 
-variable (m) in
 
 def ctrl : (Fin m → X.Fn Ω (W.d + 1)) →ₗ[Ω] X.Fn Ω m where
   toFun F g i := (((W.ξ g.2)⁻¹).val *ᵥ F i g) 0

@@ -69,7 +69,6 @@ namespace US
 
 variable {n : ℕ} {X : Spc F E n}
 
-variable (σ X) in
 
 def uSub (v : Pl F) : Subgroup (UA σ X.J) where
   carrier := UAt σ X (evFin F v)

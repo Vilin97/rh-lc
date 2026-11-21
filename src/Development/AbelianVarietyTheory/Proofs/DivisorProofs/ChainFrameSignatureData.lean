@@ -37,4 +37,3 @@ theorem GlobalTheory.RealQuotBot.det_unitary_ne_zero {n : ℕ} (g : Matrix.unita
   rw [Matrix.det_mul, h, mul_zero, Matrix.det_one] at h1
   exact zero_ne_one h1
 
-set_option maxHeartbeats 1000000 in

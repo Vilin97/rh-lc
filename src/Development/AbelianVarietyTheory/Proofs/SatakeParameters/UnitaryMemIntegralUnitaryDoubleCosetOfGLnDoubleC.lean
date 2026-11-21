@@ -63,9 +63,6 @@ private theorem cT_aeval_eq_aeval_cT_map (c : O →+* O) (B : Matrix n n O) (q :
       simpa only [map_mul, Polynomial.aeval_X] using this
     simp only [_root_.Formalism.UG.cT, ← Matrix.transpose_mul, ← Matrix.map_mul, hcomm]
 
-open IsDedekindDomain NumberField in
-open scoped TensorProduct Matrix in
-variable {O L : Type} [CommRing O] [CommRing L] {n : Type} [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.UnitaryDoubleCoset.exists_poly_norm {c : O →+* O} (hc : ∀ x, c (c x) = x)
     (hN : ∀ f : Polynomial O, f.Monic → f.map c = f → IsUnit (f.coeff 0) →

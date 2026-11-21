@@ -156,7 +156,6 @@ open GlobalTheory.LiftLevel GlobalTheory.LiftDat
 
 variable {D : D7}
 
-set_option maxHeartbeats 3000000 in
 
 theorem exists_row {S T : HSp D} (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (e : AE D) (he : IsIdemSum e (Pg ∪ Q))
     (i0 : Fin S.rank) (t : ∀ PP : Formalism.L2.DIV.Pl D.host.E, Fin T.rank → Formalism.L2.DIV.kP PP) :
@@ -220,7 +219,6 @@ theorem exists_row {S T : HSp D} (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) 
     · intro h; exact absurd (Finset.mem_attach _ _) h
   exact ⟨R, hRint, hRe, hRred⟩
 
-set_option maxHeartbeats 3000000 in
 
 theorem rowReduction_surjective_over_adelicFrames {S T : HSp D} (C : Ctx S T) (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D))
     (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (e : AE D) (he : IsIdemSum e (Pg ∪ Q)) (a b : AE D) (hb : a * b = e)

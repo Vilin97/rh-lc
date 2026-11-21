@@ -117,11 +117,9 @@ theorem mem_intL_iff_mul {ϖ : L} {σ : L →+* L} {q : ℕ} (hU : IsUnramInv ϖ
   · rw [← WithZero.exp_log hz, ← WithZero.exp_add, ← WithZero.exp_zero, WithZero.exp_le_exp, WithZero.exp_lt_exp]
     omega
 
-variable (L) in
 
 abbrev OV : ValuationSubring L := (Valued.v : Valuation L (WithZero (Multiplicative ℤ))).valuationSubring
 
-variable (L) in
 
 abbrev ResF : Type := OV L ⧸ IsLocalRing.maximalIdeal (OV L)
 

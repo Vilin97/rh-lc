@@ -128,7 +128,6 @@ theorem idemAt_mul_idem {Q K : Finset (Pl D.host.E)} (hQ : SplitSet Q) (hK : K �
   rw [idem, Finset.mul_sum]
   exact Finset.sum_eq_zero fun j hj => hQ.mul_eq_zero hP (hK hj) fun e => hn (e ▸ hj)
 
-open GlobalTheory.ExportSeries.Model GlobalTheory.AdelicLatMove in
 
 theorem tensorHalf_dat (F : Frame S T) {Q J K : Finset (Pl D.host.E)} (hQ : SplitSet Q) (hd : Disjoint J K)
     (hU : ∀ P, P ∈ Q ↔ P ∈ J ∨ P ∈ K) {ω ω' : Reds D T.rank S.rank → ℂ}

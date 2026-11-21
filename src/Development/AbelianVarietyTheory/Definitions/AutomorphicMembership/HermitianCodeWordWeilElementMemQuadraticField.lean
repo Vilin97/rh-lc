@@ -109,13 +109,11 @@ section Seen
 
 variable {X : Fields} {Pr : Primes X} (hPr : Pr.Ok) (u : Pr.Word)
 
-open Classical in
 
 def tauAt (w : HeightOneSpectrum (𝓞 X.K)) : Pr.vT u ≃ X.Tau :=
   if h : ∃ e : Pr.vT u ≃ X.Tau, ∀ P, SeesP w (e P) P.1 ∨ SeesPbar w (e P) P.1 then h.choose
   else Fintype.equivOfCardEq (by rw [Fintype.card_coe, hPr.vT_card u]; rfl)
 
-include hPr in
 
 theorem eq_of_sees {w : HeightOneSpectrum (𝓞 X.K)} {τ : X.Tau} {P P' : Pr.vT u} (h : SeesP w τ P.1 ∨ SeesPbar w τ P.1)
     (h' : SeesP w τ P'.1 ∨ SeesPbar w τ P'.1) : P = P' := by
@@ -132,7 +130,6 @@ theorem eq_of_sees {w : HeightOneSpectrum (𝓞 X.K)} {τ : X.Tau} {P P' : Pr.vT
     rw [← GlobalTheory.CharVal.conjP_conjP' P.1, ← GlobalTheory.CharVal.conjP_conjP' P'.1]
     exact congrArg conjPrime₂ (h.symm.trans h')
 
-include hPr in
 
 theorem T_mem_vT (P : Pr.vT u) : ((Pr.T u : ℕ) : 𝓞 X.E) ∈ P.1.asIdeal := hPr.vT_norm u P.1 P.2 ▸ Ideal.absNorm_mem _
 
@@ -247,7 +244,6 @@ theorem exists_embQbar : ∃ ρ : TaylorLogMetric.Qbar →ₐ[ℚ] ℂ, ∀ x : 
   rw [← h _ (emb_mem_Qbar σ₀ x) ⟨x, rfl⟩, GlobalTheory.ThetaConj.cj_of_mem (GlobalTheory.Glob.imM σ₀) _ (x := σ₀ x) ⟨x, rfl⟩]
   exact GlobalTheory.Glob.rhoOf_imEquiv σ₀ s x
 
-open Classical in
 
 def embQbar : TaylorLogMetric.Qbar →ₐ[ℚ] ℂ := if s = σ₀ then TaylorLogMetric.Qbar.val else (exists_embQbar σ₀ s).choose
 
@@ -307,7 +303,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks}
 
 variable (hPr : Pr.Ok) (W : Wts X Pr.Word R) (A : Amb X) {Pl : Rows.Places X.K} (plEq : Pl.Pl ≃ HeightOneSpectrum (𝓞 X.K))
 
-open Classical in
 
 section Val
 

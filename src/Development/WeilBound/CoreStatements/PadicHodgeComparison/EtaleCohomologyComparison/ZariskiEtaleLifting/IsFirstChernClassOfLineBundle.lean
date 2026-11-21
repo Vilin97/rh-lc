@@ -45,7 +45,6 @@ def CLift.r (Λ : CLift G D) (s : ComposableArrows C 2) : ((G.obj (s.obj (Fin.la
 def CLift.coc (Λ : CLift G D) {R : Type} [CommRing R] (c : R →+* b.R) (N : ℕ) : Cn (G ⋙ OM _ c) 2 :=
   fun s => (dlog (G.obj (s.obj (Fin.last 2))).δ N (Λ.r s).val : (G.obj (s.obj (Fin.last 2))).B)
 
-variable (D) in
 
 def IsFirstChernClassOfLineBundle {R : Type} [CommRing R] (c : R →+* b.R) (N : ℕ) (x : H (OM ((schFn q).cr b ht κ) c) 2) : Prop :=
   ∀ (C : Type 1) [Category.{0} C] (G : C ⥤ Thick ((schFn q).cr b ht κ)) (Λ : CLift G D),
@@ -53,12 +52,10 @@ def IsFirstChernClassOfLineBundle {R : Type} [CommRing R] (c : R →+* b.R) (N :
 
 variable {l : ℕ} [Fact l.Prime]
 
-variable (q D) in
 
 def IsFirstChernFamily (κ : O →+* OC l) (k : Bool) (x : ∀ n, Hc (schFn q) κ k n 2) : Prop :=
   ∀ n, IsFirstChernClassOfLineBundle (q := q) (b := bs l k n) (ht := rfl) (κ := κb κ k n) D ((PAlg.base l).cris n) (l * n) (x n)
 
-variable (l) in
 
 def FirstChernCompatible : Prop := ∀ {O : Type} [CommRing O] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of O)) (κ : O →+* OC l) (k : Bool)
   (D : LineData X) (x : ∀ n, Hc (schFn q) κ k n 2), IsFirstChernFamily q D κ k x → E.IsFirstChernClassOfLineBundle q κ D fun n => β (schFn q) κ k n 2 (x n)

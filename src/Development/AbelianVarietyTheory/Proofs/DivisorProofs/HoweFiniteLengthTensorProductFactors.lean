@@ -86,7 +86,6 @@ end GlobalTheory.HoweR.TensAlg
 
 namespace GlobalTheory.HoweR
 
-open GlobalTheory.HoweR.TensAlg in
 
 theorem howeAlg_tensAny : ∀ (T : Type) [Fintype T] [DecidableEq T] (V : T → Type) [∀ w, AddCommGroup (V w)]
     [∀ w, Module ℂ (V w)], ∀ (R S : T → ℕ) (a : ∀ w, Mat (R w) (S w) →ₗ[ℂ] Module.End ℂ (V w))

@@ -26,7 +26,6 @@ theorem discrNormConductor_one : (1 : HeckeCharacter K).discrNormConductor = |(d
   rw [discrNormConductor, conductor_eq_top_of_forall one_toIdele_eq_cpow, Ideal.absNorm_top]
   simp
 
-open Classical in
 
 theorem gammaFactor_one (s : ℂ) :
     (1 : HeckeCharacter K).gammaFactor s =
@@ -171,7 +170,6 @@ theorem normOneClassMeasure_univ_toReal_eq :
   rw [← h, Real.sqrt_eq_rpow, ← mul_assoc, ← Real.rpow_add ha]
   norm_num
 
-open NumberField.Units in
 
 theorem completedDedekindZeta_one_sub {s : ℂ} (hs₀ : s ≠ 0) (hs₁ : s ≠ 1) :
     completedDedekindZeta K (1 - s) = completedDedekindZeta K s := by

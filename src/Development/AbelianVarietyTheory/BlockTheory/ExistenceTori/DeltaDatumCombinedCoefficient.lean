@@ -230,7 +230,6 @@ section Trivial
 
 variable {D : Datum H} {l : Level H}
 
-open Classical in
 
 end Trivial
 

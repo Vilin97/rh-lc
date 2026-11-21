@@ -18,7 +18,6 @@ universe u
 
 namespace GlobalTheory.HTSummand
 
-set_option maxHeartbeats 800000 in
 
 theorem summand_of_liftedCoords : ∀ {C : Type} [CommRing C] (I : Ideal C), I ^ 2 = ⊥ →
   ∀ {A : Type} [CommRing A] {H : Type u} [AddCommGroup H] [Module C H]

@@ -43,7 +43,6 @@ open Neutral.B1 ReciprocityTheory.Neutral.Bridge.HCFR Formalism.L2.Host GlobalTh
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-variable (E) in
 
 end Char
 

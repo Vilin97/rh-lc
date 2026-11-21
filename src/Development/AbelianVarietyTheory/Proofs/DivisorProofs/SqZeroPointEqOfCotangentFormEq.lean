@@ -113,7 +113,6 @@ namespace GlobalTheory.SqZeroPt
 variable {O : Type} [CommRing O] {M : Type} [AddCommGroup M] [Module O M] [Module Oᵐᵒᵖ M]
   [IsCentralScalar O M]
 
-variable (M) in
 
 abbrev preimTop (U : (Sp O).Opens) : (TM O M).left.Opens :=
   (𝟙 (TM O M).left) ⁻¹ᵁ ⊤ ⊓ (TM O M).hom ⁻¹ᵁ U

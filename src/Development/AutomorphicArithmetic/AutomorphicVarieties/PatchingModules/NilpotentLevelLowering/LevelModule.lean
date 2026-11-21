@@ -100,7 +100,6 @@ def IsTheta (ρ : Representation A (GL (Fin n) k) M) (C : Subgroup 𝓀[k]ˣ)
     (θ : (Fin n → kˣ) →* (Module.End A (fixd ρ (iwC k n C)))ˣ) : Prop :=
   ∀ t, Dom t → (θ t : Module.End A (fixd ρ (iwC k n C))) = hk ρ (iwC k n C) (diagT k (Fin n) t)
 
-variable (k) in
 
 def IsGenMod (C : Subgroup 𝓀[k]ˣ) (δ : kˣ) : Prop :=
   ∃ d : 𝒪[k]ˣ, Units.map (algebraMap 𝒪[k] k).toMonoidHom d = δ ∧

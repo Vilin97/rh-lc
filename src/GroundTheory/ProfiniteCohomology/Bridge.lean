@@ -53,16 +53,12 @@ end Invariant
 
 variable (X : TopRep.{u} k G) [DiscreteTopology X] [IsDiscreteRep (underlyingRep X)]
 
-omit [IsDiscreteRep (underlyingRep X)] in
 
-omit [LocallyCompactSpace G] [DiscreteTopology X] in
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G] [DiscreteTopology X]
   [IsDiscreteRep (underlyingRep X)] in
 
-omit [DiscreteTopology X] in
 
-omit [IsDiscreteRep (underlyingRep X)] in
 
 section Discrete
 

@@ -61,20 +61,15 @@ abbrev AlgClass (k : Type) [CommRing k] : Type 1 :=
 
 variable {𝒯 𝒯' : AlgClass k} {X : Over (Spec (CommRingCat.of k))}
 
-variable (𝒯 X) in
 
-variable (𝒯 X) in
 
 section
 variable (A : Type) [CommRing A] [Algebra k A] (hA : 𝒯 A) (x : sp A ⟶ X)
 
 end
 
-variable (𝒯 X) in
 
-set_option backward.isDefEq.respectTransparency false in
 
-set_option backward.isDefEq.respectTransparency false in
 
 end Families
 

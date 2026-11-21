@@ -403,4 +403,3 @@ theorem descend_integral (D : D7) (T : TwR D.LL0 D.nd) (S : RatDat D.ntw) (In : 
 
 end GlobalTheory.HeightCounting.HeckeLat
 
-open GlobalTheory.HeightCounting.HeckeLat in

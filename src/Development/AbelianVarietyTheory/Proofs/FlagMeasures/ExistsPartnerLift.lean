@@ -290,7 +290,6 @@ theorem idx_le_of_rel {R V W : Type} [CommRing R] [AddCommGroup V] [Module R V] 
   rw [← c.out_eq', ← c'.out_eq', QuotientAddGroup.eq]
   exact h2 _ _ _ _ (hR _ c.out.2) (hR _ c'.out.2) (QuotientAddGroup.eq.1 h)
 
-open GlobalTheory.Mass GlobalTheory.LoopC.DetCard Formalism.HermitianLatticesTheory in
 
 theorem det_sq {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
     [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (h : V →ₗ⋆[K] V →ₗ[K] K)

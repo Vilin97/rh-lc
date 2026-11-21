@@ -39,7 +39,6 @@ def relProj (f : ∀ i, (Σ j, c i j) ≃ m i) : relParab k f →* ∀ i, Levi k
 def relEmb (f : ∀ i, (Σ j, c i j) ≃ m i) : (∀ i, Levi k (c i)) →* Levi k m :=
   MonoidHom.pi fun i => (leviEmb k (f i)).comp (Pi.evalMonoidHom (fun i => Levi k (c i)) i)
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] in
 
 theorem relEmb_mem_normalizer (f : ∀ i, (Σ j, c i j) ≃ m i) (g : ∀ i, Levi k (c i)) :
     relEmb k f g ∈ Subgroup.normalizer (relUnip k f : Set (Levi k m)) :=
@@ -67,7 +66,6 @@ def relInd (f : ∀ i, (Σ j, c i j) ≃ m i) (ρ : Representation ℂ (∀ i, L
       (smoothPart (ind (relParab k f) ((twist ρ (relDeltaHalf k c)).comp (relProj k f)))) :=
   smInd (relParab k f) ((twist ρ (relDeltaHalf k c)).comp (relProj k f))
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] [LinearOrder β] in
 
 theorem relEmb_apply (f : ∀ i, (Σ j, c i j) ≃ m i) (g : ∀ i, Levi k (c i)) (i : α) :
     relEmb k f g i = leviEmb k (f i) (g i) := rfl
@@ -138,17 +136,14 @@ def IrrRep.det (n : Type) [Fintype n] [DecidableEq n] (χ : kˣ →* ℂˣ) (h :
 def Segment.ofChar (χ : kˣ →* ℂˣ) (h : IsSmoothChar χ) (l : ℕ) (hl : 0 < l) : Segment k :=
   ⟨1, one_pos, (IrrRep.det (Fin 1) χ h).cl, ⟨_, rfl, isCuspidal_detRep_one h⟩, l, hl⟩
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 
 theorem isSmoothChar_one {G : Type} [Group G] [TopologicalSpace G] : IsSmoothChar (1 : G →* ℂˣ) := by
   unfold IsSmoothChar; simp
 
-variable (k) in
 
 def GrothGL.unit : GrothGL k :=
   Finsupp.single ⟨0, (IrrRep.det (Fin 0) 1 isSmoothChar_one).cl⟩ 1
 
-variable (k) in
 
 def JacquetOfInducedFiltration : Prop :=
   ∀ (α β n : Type) [Fintype α] [LinearOrder α] [Fintype β] [LinearOrder β] [Fintype n] [DecidableEq n]
@@ -163,7 +158,6 @@ def JacquetOfInducedFiltration : Prop :=
               (g : ∀ j, (Σ i, Fin ((b t).1 i j)) ≃ m' j),
               Nonempty ((subQuot (S t.succ) (S t.castSucc)).Equiv (cellFunctor f g ρ))
 
-variable (k) in
 
 def CellSemisimplification : Prop :=
   ∀ (α β : Type) [Fintype α] [LinearOrder α] [Fintype β] [LinearOrder β]
@@ -181,7 +175,6 @@ def CellSemisimplification : Prop :=
             ∑ s ∈ T, (∏ i, jhMult (piTensor fun j => (s i j).rep.ρ) (jac (f i) (ρ i))) *
               jhMult τ.ρ (piTensor fun j => multiProd (g j) fun i => (s i j).rep.ρ)
 
-variable (k) in
 
 def IsSegmentClass (Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)) : Prop :=
   ∀ (Δ : Segment k) (σ : IrrRep (GL (Fin Δ.d) k)), σ.cl = Δ.start →
@@ -190,7 +183,6 @@ def IsSegmentClass (Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)) 
         Function.Injective φ) ∧
       (π.cl = Z Δ ↔ Nonempty ((jac e π.ρ).Equiv (piTensor (segTerm σ.ρ Δ.len))))
 
-variable (k) in
 
 def IsProductIso {A : Type 1} [CommRing A] (Ψ : GrothGL k ≃+ A) : Prop :=
   Ψ (GrothGL.unit k) = 1 ∧

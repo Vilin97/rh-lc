@@ -42,13 +42,11 @@ def thetaSub (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) : Submodule ℂ (WO 
       simp only [heisO, Pi.smul_apply, smul_eq_mul] at e₁ ⊢
       rw [← e₁]; ring
 
-variable (t : T) in
 
 def positionPair (m : ℕ) : Fin m ⊕ Fin m → Pair T
   | .inl j => .top t j
   | .inr i => .chi i m
 
-variable (G) in
 
 abbrev FactorFn (t : T) (a : Fin D.R.m ⊕ Fin D.R.m) : Type :=
   WO (G.pS (positionPair t D.R.m a)) (G.pT (positionPair t D.R.m a)) → ℂ

@@ -141,7 +141,6 @@ namespace GlobalTheory.RealFreq
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 open Matrix
 
-variable (F) in
 
 def realTr : E →+ ℝ :=
   (Algebra.trace ℝ (mixedEmbedding.mixedSpace F)).toAddMonoidHom.comp (evIHom.comp

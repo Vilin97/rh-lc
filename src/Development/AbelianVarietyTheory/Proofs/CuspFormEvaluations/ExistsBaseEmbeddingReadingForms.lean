@@ -58,7 +58,6 @@ theorem sumParts_smul (K R M : Type) [Field K] [CommRing R] [Algebra K R] [AddCo
   rw [← algebraMap_smul R a x, ← algebraMap_smul R a (sumParts R M x)]
   exact map_smul (AddMonoidAlgebra.lift R R M 1) _ _
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem exists_isRdgU : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j) (n : SecNorm (recB h.toLawsCore)), ∃ (R : Rdg (recPlusN h j hj n)) (e : R.Y ≃ DomPt T j), IsRdgU h j hj n R e := by
   intro D T h j hj n

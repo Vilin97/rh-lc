@@ -9,7 +9,6 @@ open MeasureTheory NumberField Finset
 
 namespace GlobalTheory
 
-open MeasureTheory NumberField Finset in
 
 theorem _root_.GlobalTheory.rootDiscr_ge_three_halves_of_totallyComplex :
     ∀ (K : Type) [Field K] [NumberField K], IsTotallyComplex K →

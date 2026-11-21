@@ -91,10 +91,8 @@ theorem rank_map_conj {F : Type*} [Field F] (f : O →+* F) (P Q : Matrix r r O)
   apply Fintype.card_congr
   exact Equiv.subtypeEquivRight fun j => by rcases hd j with h | h <;> simp [h]
 
-open Polynomial in
 
 end Normal
 
-open Polynomial in
 
 end Formalism.RepresentationBoundsCohomology.ringDataObjects

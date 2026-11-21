@@ -28,7 +28,6 @@ private def subG {C : Type} [Field C] {T Orb : Type} (r : T → ℕ) (tau : Orb 
   MvPolynomial.aeval fun x => ∑ col : Fin 2, MvPolynomial.C (gm x.2.1 x.2.2.2.1 col x.2.2.1) *
     MvPolynomial.X (⟨tau x.2.1 x.2.2.2.1, x.2.2.2.2, plc (x.1, col)⟩ : Letter T r n)
 
-variable (hd) in
 
 private structure SelfConjugatePlaceSetting {C : Type} [Field C] {V : VF C} {T : Type} (r : T → ℕ) (cc : T → T) (a : T → ℕ → ℕ)
     {Orb : Type} [Fintype Orb] (tau : Orb → ZMod d → T) (gm : Orb → ZMod d → Matrix (Fin 2) (Fin 2) C)
@@ -55,7 +54,6 @@ private structure SelfConjugatePlaceSetting {C : Type} [Field C] {V : VF C} {T :
   tie : WtTieS r tau gaC a
   plinj : Function.Injective pl
 
-variable (hd) in
 
 private def IsotropicToStdSubstHarmonic : Prop :=
   ∀ (C : Type) [Field C] (V : VF C) (T : Type) (r : T → ℕ) (cc : T → T) (a : T → ℕ → ℕ)
@@ -67,7 +65,6 @@ private def IsotropicToStdSubstHarmonic : Prop :=
     SelfConjugatePlaceSetting hd r cc a tau gm X F gaC N L pl → ∀ (n : ℕ) (plc : Fin N × Fin 2 ↪ Fin n) (isX : T → Prop),
       subG r tau gm plc (blkProd X F N L pl) ∈ harmK r n C cc isX (fun _ => 1)
 
-variable (hd) in
 
 private def IsotropicToStdSubstLineInvariant : Prop :=
   ∀ (C : Type) [Field C] (V : VF C) (T : Type) (r : T → ℕ) (cc : T → T) (a : T → ℕ → ℕ)
@@ -79,7 +76,6 @@ private def IsotropicToStdSubstLineInvariant : Prop :=
     SelfConjugatePlaceSetting hd r cc a tau gm X F gaC N L pl → ∀ (n : ℕ) (plc : Fin N × Fin 2 ↪ Fin n),
       RowInv r n C (subG r tau gm plc (blkProd X F N L pl))
 
-variable (hd) in
 
 private def IsotropicToStdSubstLineDegree : Prop :=
   ∀ (C : Type) [Field C] (V : VF C) (T : Type) (r : T → ℕ) (cc : T → T) (a : T → ℕ → ℕ)
@@ -91,7 +87,6 @@ private def IsotropicToStdSubstLineDegree : Prop :=
     SelfConjugatePlaceSetting hd r cc a tau gm X F gaC N L pl → ∀ (n : ℕ) (plc : Fin N × Fin 2 ↪ Fin n),
       RowDeg r n C a (subG r tau gm plc (blkProd X F N L pl))
 
-variable (d) in
 
 private def IsotropicToStdSubstIntegral : Prop :=
   ∀ (C : Type) [Field C] (V : VF C) (T : Type) (r : T → ℕ)
@@ -197,7 +192,6 @@ private theorem gram_matrix_mul_left (gm_hyp : ∀ o t (s s' : Fin 2), ∑ q, gm
 
 variable (r tau gm)
 
-variable (hd) in
 
 private def coS (ℓ : Letter T r n) (y : Fin N × WVO fun o (_ : Fin 2) => IIs r tau o) : C :=
   ∑ col, if ℓ = lam r tau plc ((eW r tau N y).1, col) then Mm hd r tau gm (eW r tau N y).1 col (eW r tau N y).2 else 0
@@ -362,7 +356,6 @@ variable {C : Type} [Field C] {V : VF C} {T : Type} {r : T → ℕ} {cc : T → 
   {gaC : Orb → ZMod d → ℕ → ℕ} {N : ℕ} {L : Orb → List (GlobalTheory d × ℝ)}
   {pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt X L o i)) → Fin N} {n : ℕ} (plc : Fin N × Fin 2 ↪ Fin n)
 
-variable (hd) in
 
 private def trueT (g : Fin 2) (s : ZMod d) : ZMod d := if g = 0 then s else s + hd
 
@@ -376,7 +369,6 @@ private theorem SelfConjugatePlaceSetting.en_fst (H : SelfConjugatePlaceSetting 
   · calc ((F o).en g s q).1 = ((F o).en g s q).1 + hd + hd := by rw [add_assoc, H.hd2, add_zero]
       _ = s + hd := by rw [h]
 
-variable (r tau gm) in
 
 private def PsiS (o : Orb) {M : ℕ} (col : Fin M → Fin N) :
     MvPolynomial (Fin M × WV fun _ => IIs r tau o) C →ₐ[C] MvPolynomial (Letter T r n) C :=

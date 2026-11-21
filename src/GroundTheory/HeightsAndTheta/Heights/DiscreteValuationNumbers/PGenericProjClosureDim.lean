@@ -84,7 +84,6 @@ theorem exists_ne_zero_of_span {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup
 
 end GenericProjClosureDim
 
-open GenericProjClosureDim in
 
 theorem GenericProjClosureDim.proof (hDim : DvrConeDimTrdeg.Statement) (hTr : PairBundleTrdeg.Statement) :
     GenericProjClosureDim.Statement := by

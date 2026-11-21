@@ -140,7 +140,6 @@ def Adapted {X : Type} [AddCommGroup X] (k : ℕ) (Q : X → ℤ) {r : ℕ} (cls
 section Dvr
 variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] (D : DegData V (maximalIdeal V))
   (Q : D.toPre.X → ℤ)
-open Classical in
 
 def AdFam (k : ℕ) {r : ℕ} (cls : Fin r → D.toPre.X) (mu : ℕ) (f : Fin r → ∀ α, D.toPre.SecB k α) : Prop :=
   Adapted k Q cls mu ∧ (∀ i, ∃ s : Fam D.toPre (FractionRing V) k, GlobalTheory.ZH.FamOf D.toPre _ (f i) s) ∧

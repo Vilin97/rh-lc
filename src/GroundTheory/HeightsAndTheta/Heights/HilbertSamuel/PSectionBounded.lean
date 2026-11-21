@@ -374,7 +374,6 @@ theorem exists_lower (y : (Σ k, ι k) → Ω) (A : HermLine ι) (q : ℕ) (w : 
 
 end SectionBounded
 
-open SectionBounded in
 
 theorem SectionBounded.proof : SectionBounded.Statement := by
   intro K _ ι _ Ω _ y A q w hw hgen hsm n s hs

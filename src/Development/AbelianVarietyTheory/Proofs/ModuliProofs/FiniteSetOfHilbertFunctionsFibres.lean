@@ -217,7 +217,6 @@ theorem finite_of_le_ker {R σ : Type} [CommRing R] [IsNoetherianRing R] [Finite
 
 end HilbertFamily
 
-open GlobalTheory.ZM in
 
 theorem finite_setOf_dimDeg_map : ∀ (R σ : Type) [CommRing R] [IsNoetherianRing R] [Finite σ] (I : Ideal (MvPolynomial σ R)), (∀ F ∈ I, ∀ e, MvPolynomial.homogeneousComponent e F ∈ I) → {φ : ℕ → ℕ | ∃ (K : Type) (_ : Field K) (x : R →+* K), φ = dimDeg (I.map (MvPolynomial.map x))}.Finite := by
   intro R σ _ _ _ I hI

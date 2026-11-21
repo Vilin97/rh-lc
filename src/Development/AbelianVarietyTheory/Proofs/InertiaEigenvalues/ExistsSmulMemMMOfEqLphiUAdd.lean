@@ -115,8 +115,6 @@ open PowerSeries Filter Topology Matrix in
 variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebra O K]
   [_root_.GlobalTheory.BK.IsUnitBall O K] {l e a : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι]
   [Fact l.Prime] [NormedAlgebra ℚ_[l] K] in
-variable (P : _root_.GlobalTheory.BK.PhiMod O K l e a ι) in
-variable [NeZero e] in
 
 theorem _root_.GlobalTheory.BK.PhiMod.l_pow_smul_phi_mem_MM {k : ℕ} {v : _root_.GlobalTheory.BK.Vec K a ι}
     (hv : _root_.GlobalTheory.BK.E K l e ^ k • v ∈

@@ -17,19 +17,12 @@ namespace Formalism.L2.GlobalTheoryTheory.FiltrationCocycleLiftCriterion
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.GlobalTheoryTheory Formalism.MainNotions.ShortIntervalPrimes NumberField
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 def CycSplit : Prop :=
   ∀ (N p : ℕ) (K : Type) [Field K] [NumberField K] [Algebra K (CyclotomicField N ℚ)], 0 < N → p.Prime →

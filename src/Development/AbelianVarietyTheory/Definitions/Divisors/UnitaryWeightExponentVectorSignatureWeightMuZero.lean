@@ -36,7 +36,6 @@ theorem ev_pull_g (j j' : PUnit → L.ι) (w : Sp S ⟶ Z') (hw : ⊤ ≤ w ⁻�
   rw [hg]
   exact ev_appLE w f _ hw hh _
 
-variable {L} in
 
 def secPull (s : L.Sec) : (L.pull f).Sec where
   f j := (f.appLE (L.U (j PUnit.unit)) _ (fun _ hp => mem_pull.1 hp)).hom (s.f (j PUnit.unit))
@@ -318,7 +317,6 @@ def coord (M : GChart Y) (h : ∀ σ, Dw.mult σ ≤ M.n) : Frames Y M.U.ι wher
     rw [e, Matrix.map_one _ (map_zero _) (map_one _)]
     exact (Matrix.one_mul _).trans (Matrix.mul_one _).symm⟩
 
-open Classical in
 
 end Frames
 
@@ -352,7 +350,6 @@ theorem exOf_ext {la : Weight Dw} {e : Ix Dw → ℤ} (h0 : e none = 0)
         ⟨⟨conjEmb σ, GlobalTheory.AllWt.conj_mem h⟩, (GlobalTheory.AllWt.conjEmb_conjEmb σ).symm⟩
       exact (exOf_small la τ i).trans (h2 τ i _)
 
-variable (Dw) in
 
 def mu0 : Weight Dw := fun _ i => if (i : ℕ) < Dw.p then 1 else -1
 
@@ -461,7 +458,6 @@ theorem le_pull {w : Sp S ⟶ X.Yo} {k : X.F.J} (hz : ⊤ ≤ (w ≫ X.inc) ⁻�
 def coef (s : X.SecO e) (k : X.F.J) (w : Sp S ⟶ X.Yo) (hz : ⊤ ≤ (w ≫ X.inc) ⁻¹ᵁ X.F.U k) : S :=
   ev w _ (le_pull hz) (s.f fun _ => k)
 
-omit [Algebra c.F S] in
 
 omit [Algebra c.F S] in
 open Classical in
@@ -483,7 +479,6 @@ theorem coef_spMap (s : X.SecO e) (k : X.F.J) (φ : S →+* S') (w : Sp S ⟶ X.
   rw [coef, ev_spMap φ w _ (le_pull hz)]
   rfl
 
-open Classical in
 
 def IsValAt (s : X.SecO e) (P : FrPt Xo c S) (a : S) : Prop :=
   ∀ (k : X.F.J) (hz : ⊤ ≤ (X.pt P ≫ X.inc) ⁻¹ᵁ X.F.U k) (Q : FrPt Xo c S) (t : Ix Dw → Sˣ),
@@ -501,7 +496,6 @@ theorem exists_chartFr_frBor (P : FrPt Xo c S) (k : X.F.J) (hz : ⊤ ≤ (X.pt P
   obtain ⟨t, ht⟩ := hQ.exists_frBor hl
   exact ⟨Q, t, hQ, ht⟩
 
-open Classical in
 
 theorem isValAt_of_chart (s : X.SecO e) {P Q : FrPt Xo c S} {k : X.F.J} {hz : ⊤ ≤ (X.pt P ≫ X.inc) ⁻¹ᵁ X.F.U k}
     {t : Ix Dw → Sˣ} (hQ : X.F.ChartFr k (X.pt P ≫ X.inc) hz Q) (ht : FrBor t Q P) :
@@ -565,7 +559,6 @@ theorem isVal_val (s : X.SecO e) (P : FrPt Xo c S) : IsVal s P (val s P) := (exi
 theorem IsVal.eq_val {s : X.SecO e} {P : FrPt Xo c S} {a : S} (h : IsVal s P a) : a = val s P :=
   (existsUnique_isVal s P).unique h (isVal_val s P)
 
-open Classical in
 
 theorem val_eq (s : X.SecO e) {P Q : FrPt Xo c S} {k : X.F.J} {hz : ⊤ ≤ (X.pt P ≫ X.inc) ⁻¹ᵁ X.F.U k}
     {t : Ix Dw → Sˣ} (hQ : X.F.ChartFr k (X.pt P ≫ X.inc) hz Q) (ht : FrBor t Q P) :
@@ -620,9 +613,7 @@ theorem evR_toRule_of_isReduced [_root_.IsReduced S] (s : X.SecO e) (P : FrPt Xo
 
 variable (X)
 
-open Classical in
 
-open Classical in
 
 end FlagCover
 

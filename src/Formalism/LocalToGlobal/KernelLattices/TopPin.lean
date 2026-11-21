@@ -22,7 +22,6 @@ section Row
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ}
   (mu : Tup X.F X.E X.K S) (v : Pr.Word)
 
-open Classical in
 
 def AtRow (d : RowPt Pr R sel mu) (p' : DecoF X.E (R.N R.m) (Pr.vT v) Pr.vGs (QE sel (mu : Chr X.F X.E X.K))) : Prop :=
   p'.deco = tilC sel mu v d ∧ ∀ (P : HeightOneSpectrum (𝓞 X.E)) (hP : P ∈ QE sel (mu : Chr X.F X.E X.K)),

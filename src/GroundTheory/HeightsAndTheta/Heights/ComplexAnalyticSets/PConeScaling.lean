@@ -22,6 +22,5 @@ theorem eval_smul_of_isHomogeneous {n i : ℕ} {φ : MvPolynomial (Fin n) ℂ} (
     Finset.prod_pow_eq_pow_sum, hdeg]
   ring
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 end GroundTheory.Heights₂.Heights.ComplexSets

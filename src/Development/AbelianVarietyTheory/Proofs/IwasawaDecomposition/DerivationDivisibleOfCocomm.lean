@@ -146,7 +146,6 @@ theorem tensor_ext {f g : WithConv (A ⊗[R] A →ₗ[R] C)}
 theorem extProd_one : extProd (1 : WithConv (A →ₗ[R] C)) 1 = 1 :=
   tensor_ext fun a b => by simp [mul_comm]
 
-variable (R C A) in
 
 def inlHom : WithConv (A →ₗ[R] C) →ₐ[C] WithConv (A ⊗[R] A →ₗ[R] C) :=
   AlgHom.ofLinearMap
@@ -155,7 +154,6 @@ def inlHom : WithConv (A →ₗ[R] C) →ₐ[C] WithConv (A ⊗[R] A →ₗ[R] C
       map_smul' := fun c f => tensor_ext fun a b => by simp [mul_assoc] }
     extProd_one fun f g => by simp [extProd_mul]
 
-variable (R C A) in
 
 def inrHom : WithConv (A →ₗ[R] C) →ₐ[C] WithConv (A ⊗[R] A →ₗ[R] C) :=
   AlgHom.ofLinearMap
@@ -164,7 +162,6 @@ def inrHom : WithConv (A →ₗ[R] C) →ₐ[C] WithConv (A ⊗[R] A →ₗ[R] C
       map_smul' := fun c f => tensor_ext fun a b => by simp [mul_left_comm] }
     extProd_one fun f g => by simp [extProd_mul]
 
-variable (R C A) in
 
 def mulHom : WithConv (A →ₗ[R] C) →ₐ[C] WithConv (A ⊗[R] A →ₗ[R] C) :=
   AlgHom.ofLinearMap
@@ -174,7 +171,6 @@ def mulHom : WithConv (A →ₗ[R] C) →ₐ[C] WithConv (A ⊗[R] A →ₗ[R] C
     (tensor_ext fun a b => by simp [mul_comm])
     fun f g => congrArg toConv (LinearMap.convMul_comp_coalgHom_distrib f g _)
 
-variable (R C A) in
 
 def extendHom : WithConv (A →ₗ[R] R) →ₐ[R] WithConv (A →ₗ[R] C) :=
   AlgHom.ofLinearMap

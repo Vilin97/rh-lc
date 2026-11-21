@@ -63,7 +63,6 @@ section Unit
 
 variable {X Y : Scheme.{u}}
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 end Unit
 
@@ -120,7 +119,6 @@ end AlgebraStatements
 
 section NumberStatements
 
-open GroundTheory.Heights₂.Heights.NumbersDVR in
 
 def MertensUpper.Statement : Prop :=
   ∃ C : ℝ, ∀ B : ℝ, 2 ≤ B →
@@ -136,7 +134,6 @@ end NumberStatements
 
 section Inhabitants
 
-open GroundTheory.Heights₂.Heights.NumbersDVR MvPolynomial in
 
 end Inhabitants
 

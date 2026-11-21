@@ -98,7 +98,6 @@ abbrev rs {n : ℕ} (s : Sx (hoc Z) n T) : Sx (hoc Z) n W := ((hoc Z).obj (op (S
 
 def Good {n : ℕ} (s : Sx (hoc Z) n T) : Prop := Nonempty (e (π n s) ⟶ (ch Z (rs Z f s)).obj 0)
 
-open Classical in
 
 def L (R : Type) [CommRing R] (n : ℕ) (s : Sx (hoc Z) n T) : (((chainsP R).obj (hoc Z)).X (n+1)).obj W :=
   if h : Good Z f π e s then gen (hoc Z) (n+1) W (cone Z (rs Z f s) (e (π n s)) h.some) else 0

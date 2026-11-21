@@ -378,7 +378,6 @@ theorem th_cond (hψ : IsStdChar D ψ (-1)) (h : Chart e σ π) (hσ : ∀ x, Va
     have h1 := (latO_dual hψ _ _ _ (h.half_fin (kap_half h _))).1 ((hs _).2 (mul_mem hz hu)) _ ((hs 1).2 (one_mem _))
     rwa [key, Matrix.single_apply_same, σ.map_one, mul_one] at h1
 
-open GlobalTheory.FinWeilO GlobalTheory.FinWeil in
 
 theorem span_vacua (hψ : IsStdChar D ψ (-1)) (he : e * e = e) (hce : cA D e = e)
     (h2 : ∀ u ∈ latO S T (L0c D S) (L0c D T) (fun _ => True), IsHalf e u →

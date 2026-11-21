@@ -218,7 +218,6 @@ theorem intNum_eq_geoNum_comap (n : ℕ) : ∀ Q : Ideal (MRing ι (ZMod p)), Is
 
 end GeoNum
 
-open GeoNum in
 
 theorem intNum_map_eq_geoNum {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
     [∀ k, Fintype (ι k)] (p : ℕ) [Fact p.Prime] (n : ℕ) (V : Ideal (Geo.MRing ι))
@@ -249,7 +248,6 @@ theorem intNum_map_eq_geoNum {K : Type} [Fintype K] [DecidableEq K] {ι : K → 
   have := intNum_eq_geoNum_comap p n _ hQ hd a
   rwa [hcm] at this
 
-open GeoNum in
 
 theorem intNum_map_eq_geoNum_hyps (p : ℕ) [Fact p.Prime] (D : ℕ) :
     Geo.IsMultiProjPrime (RingHom.ker (red (ι := fun _ : Unit => Fin (D + 1)) p)) ∧

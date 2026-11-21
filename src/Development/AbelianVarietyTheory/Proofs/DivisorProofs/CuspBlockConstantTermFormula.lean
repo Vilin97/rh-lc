@@ -45,7 +45,6 @@ theorem continuous_unip (E : Type) [Field E] [NumberField E] (d r' : ℕ) :
   · exact continuous_const.add hn
   · exact continuous_const.sub hn
 
-open GlobalTheory.Cusp GlobalTheory.AutomorphicL2Unitary in
 
 theorem isCuspidal_comp_blockEmb : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
     (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J →

@@ -15,7 +15,6 @@ namespace DeterminantVector
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem mem_fixed_iff {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (ρ : Representation ℂ (GL (Fin N) k) V) (K : Subgroup (GL (Fin N) k)) (v : V) :
@@ -26,7 +25,6 @@ theorem mem_fixed_iff {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
   · intro h g
     simpa using h g g.2
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem hasDetVec_twist {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (ρ : Representation ℂ (GL (Fin N) k) V) (η : kˣ →* ℂˣ) (h : IsSpherical ρ) :
@@ -35,7 +33,6 @@ theorem hasDetVec_twist {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
   refine ⟨v, hv0, fun g hg => ?_⟩
   rw [twist_apply, detChar_apply, (mem_fixed_iff ρ _ v).1 hv g hg]
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem isSpherical_twist {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (ρ : Representation ℂ (GL (Fin N) k) V) (η : kˣ →* ℂˣ) (h : HasDetVec ρ η) :

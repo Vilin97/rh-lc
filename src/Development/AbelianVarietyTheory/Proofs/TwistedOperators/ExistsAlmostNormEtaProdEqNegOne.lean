@@ -128,7 +128,6 @@ private theorem exists_place_notMem_not_isSquare (F : Type) [Field F] [NumberFie
     (Finset.mem_image_of_mem _ (Finset.mem_univ _)))))
     (Subgroup.mem_sup_right (hle (Subgroup.inv_mem _ h.2)))
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.QuadSymbol.exists_almostNorm_etaProd_eq_neg_one :
     ∀ (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]

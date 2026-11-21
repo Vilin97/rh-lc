@@ -35,7 +35,6 @@ theorem heckeIdeal_prime_pow (χ : (L ≃ₐ[K] L) →* ℂˣ) (𝔮 : HeightOne
       (HeightOneSpectrum.associates_irreducible 𝔭) (HeightOneSpectrum.associates_irreducible 𝔮) hne,
       mul_zero, pow_zero]
 
-omit [NumberField K] [NumberField L] in
 
 theorem pow_smul_sub_mem (P : Ideal (𝓞 L)) {σ : L ≃ₐ[K] L} {q : ℕ} (h : ∀ x : 𝓞 L, σ • x - x ^ q ∈ P) (k : ℕ)
     (x : 𝓞 L) : σ ^ k • x - x ^ q ^ k ∈ P := by

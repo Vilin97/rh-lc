@@ -136,7 +136,6 @@ theorem exists_perm_of_cell {d l : ℕ} (hd : 0 < d) (σ : IrrRep (GL (Fin d) k)
 
 end SrPerm
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem exists_perm_of_isSubquotient_jac (hG : GeometricLemma) {d l : ℕ} (hd : 0 < d) (hl : 0 < l)
     (σ : IrrRep (GL (Fin d) k)) (hσ : IsCuspidal σ.ρ)
@@ -150,7 +149,6 @@ theorem exists_perm_of_isSubquotient_jac (hG : GeometricLemma) {d l : ℕ} (hd :
   exact SrPerm.exists_perm_of_cell hd σ b (PositivityTheory.Pf1.SegRepC.Perm.entries_zero_or_d hd σ hσ b f s hs) f g s hs
     π hπ hπs
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem constituents_jac_sub (hG : GeometricLemma) {d : ℕ} (hd : 0 < d)
     (σ : IrrRep (GL (Fin d) k)) (hσ : IsCuspidal σ.ρ)

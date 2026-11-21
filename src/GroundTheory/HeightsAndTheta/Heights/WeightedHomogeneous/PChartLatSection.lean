@@ -20,13 +20,10 @@ namespace ChartLatSection
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {n : ι → ℕ} {Ω : Type} [Field Ω]
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [DecidableEq ι] in
 
 end ChartLatSection
 
-open ChartLatSection in
 
 end
 

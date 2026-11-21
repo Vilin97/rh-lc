@@ -19,7 +19,6 @@ section Index
 
 variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem ιMulti_comb {m : ℕ} (b : Fin m → V) (c : Matrix (Fin m) (Fin m) K) :
     exteriorPower.ιMulti K m (fun i => ∑ j, c i j • b j) = c.det • exteriorPower.ιMulti K m b := by
@@ -38,7 +37,6 @@ theorem ιMulti_comb {m : ℕ} (b : Fin m → V) (c : Matrix (Fin m) (Fin m) K) 
     congr 1
   exact AlternatingMap.congr_fun h c
 
-omit [NumberField K] in
 
 theorem ιMulti_comb_int {m : ℕ} (b : Fin m → V) (c : Matrix (Fin m) (Fin m) (𝓞 K)) :
     exteriorPower.ιMulti K m (fun i => ∑ j, c i j • b j) = algebraMap (𝓞 K) K c.det • exteriorPower.ιMulti K m b := by
@@ -49,7 +47,6 @@ theorem ιMulti_comb_int {m : ℕ} (b : Fin m → V) (c : Matrix (Fin m) (Fin m)
   funext i
   exact Finset.sum_congr rfl fun j _ => (algebraMap_smul K _ _).symm
 
-omit [NumberField K] in
 
 theorem detSpan_span {m : ℕ} (b : Fin m → V) :
     detSpan K m (Submodule.span (𝓞 K) (Set.range b)) = Submodule.span (𝓞 K) {exteriorPower.ιMulti K m b} := by
@@ -61,9 +58,7 @@ theorem detSpan_span {m : ℕ} (b : Fin m → V) :
   · rintro _ rfl
     exact ⟨b, fun i => Submodule.subset_span ⟨i, rfl⟩, rfl⟩
 
-omit [NumberField K] in
 
-omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 
 end Index
 

@@ -16,7 +16,6 @@ namespace GlobalTheory.CentralLine
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F) in
 
 def mk (x : mixedEmbedding.mixedSpace F) (y : Af F) : AF F := ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm x, y)
 
@@ -124,11 +123,9 @@ theorem exists_anti (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) (τ : E →+* �
     rw [← hsum, this, map_zero, zero_mul, add_zero]
   · exact absurd h hθ0
 
-variable (F) in
 
 def aF (i₀ : {w : InfinitePlace F // w.IsReal}) (t : ℝ) : AF F := mk F (Function.update 1 i₀ (Real.cos t), 1) 1
 
-variable (F) in
 
 def bF (i₀ : {w : InfinitePlace F // w.IsReal}) (c t : ℝ) : AF F := mk F (Function.update 0 i₀ (Real.sin t / c), 0) 0
 
@@ -197,7 +194,6 @@ theorem mul_bF (i₀ : {w : InfinitePlace F // w.IsReal}) (c t : ℝ) (u : AF F)
     u * bF F i₀ c t = 0 := by
   rw [bF, mul_mk_zero, show InfiniteAdeleRing.ringEquiv_mixedSpace F u.1 = 0 from hu, zero_mul, mk_zero]
 
-variable (E) in
 
 def Z (i₀ : {w : InfinitePlace F // w.IsReal}) (c : ℝ) (θ : E) (t : ℝ) : AE F E :=
   aF F i₀ t ⊗ₜ[F] (1 : E) + bF F i₀ c t ⊗ₜ[F] θ

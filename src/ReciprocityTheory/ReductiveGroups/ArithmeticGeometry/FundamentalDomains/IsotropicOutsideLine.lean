@@ -46,7 +46,6 @@ def IsLZBasis (g : ℕ) (ω : Fin (4 * Fintype.card X.Ψ) → X.Ψ → Fin 2 →
   (∀ j, ω j ∈ X.LZ g) ∧ (∀ b ∈ X.LZ g, ∃! n : Fin (4 * Fintype.card X.Ψ) → ℤ, b = ∑ j, (n j : ℂ) • ω j) ∧
     LinearIndependent ℝ ω
 
-open Classical in
 
 def fz (u : Fin 2 → Fin r → E) (g : ℕ) (χ : X.Ψ → Fin 2 → Fin 2 → ℂ) (G : Frame X.Ψ r → ℂ)
     (x : Frame X.Ψ r) : ℂ :=

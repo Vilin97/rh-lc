@@ -115,9 +115,6 @@ private theorem matrix_eq_of_map_fst_snd {K E p q : Type*} [Field K] [CommRing E
   apply e.injective
   exact Prod.ext (congrFun (congrFun h₁ a) b) (congrFun (congrFun h₂ a) b)
 
-open ValuativeRel MeasureTheory in
-open scoped Pointwise ENNReal Classical in
-open Matrix Module in
 
 theorem _root_.GlobalTheory.HermTuple.exists_matrix_split {K E n m : Type*} [Field K] [CommRing E]
     [Fintype n] [DecidableEq n]
@@ -279,9 +276,6 @@ private theorem isField_or_exists_swap_ringEquiv {F : Type} [Field F] [Valuative
   change eφ.symm (L.cj (φ w)) = (eφ.symm (φ w)).swap
   rw [hcj, hsymm, hsymm]
 
-open ValuativeRel MeasureTheory in
-open scoped Pointwise ENNReal Classical in
-open Matrix Module in
 
 theorem _root_.GlobalTheory.HermTuple.witt_tuples : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : _root_.Formalism.MainNotions.S.Loc.LocE F E), ∀ {n : ℕ} (Hm : Matrix (Fin n) (Fin n) E), _root_.GlobalTheory.HL.IsHermND L Hm → ∀ (m : ℕ) (x y : Fin m → Fin n → E), (∀ i j, _root_.GlobalTheory.HL.hf L Hm (x i) (x j) = _root_.GlobalTheory.HL.hf L Hm (y i) (y j)) → IsUnit (Matrix.of fun i j => _root_.GlobalTheory.HL.hf L Hm (x i) (x j)).det → ∃ g ∈ _root_.GlobalTheory.HL.isomG L Hm, ∀ i, g (x i) = y i := by
   intro F _ _ _ _ _ E _ _ _ L n Hm hHm m x y hxy hunit

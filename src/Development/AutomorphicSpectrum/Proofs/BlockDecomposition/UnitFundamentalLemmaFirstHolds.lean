@@ -409,7 +409,6 @@ theorem unit_fundamental_lemma_nonintegral (hD : D0a) (hL2 : L2) (hun : IsUnrami
       exact isUnitIntegral_of_incl hO γ h2))
   rw [twOrbIntegral, orbIntegral, quotLIntegral_zero' _ _ _ _ zE, quotLIntegral_zero' _ _ _ _ zk]
 
-open ValuativeRel in
 
 theorem t2Space_of_nonarchimedeanLocalField (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F]
     [IsNonarchimedeanLocalField F] : T2Space F := by

@@ -57,7 +57,6 @@ lemma evC_map (p : MvPolynomial (ι × ι) ℚ) (y : Matrix ι ι ℂ) :
     evC (MvPolynomial.map (algebraMap ℚ ℂ) p) y = ev p y := by
   rw [evC, ev, MvPolynomial.eval_map, MvPolynomial.aeval_def]
 
-omit [DecidableEq ι] in
 
 lemma exists_fg_rtr (f : MvPolynomial (ι × ι) ℂ) :
     ∃ V : Submodule ℂ (MvPolynomial (ι × ι) ℂ), V.FG ∧ ∀ g, rtr g f ∈ V := by
@@ -81,7 +80,6 @@ lemma exists_fg_rtr (f : MvPolynomial (ι × ι) ℂ) :
     rw [rtr, MvPolynomial.aeval_X]
     exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
 
-omit [DecidableEq ι] in
 
 lemma exists_finset_rtr (Γ : Set (Matrix ι ι ℂ)) (f : MvPolynomial (ι × ι) ℂ) :
     ∃ s : Finset (MvPolynomial (ι × ι) ℂ), (∀ p ∈ s, ∃ g ∈ Γ, p = rtr g f) ∧
@@ -127,7 +125,6 @@ lemma exists_common_zero (D : Ideal (MvPolynomial (ι × ι) ℂ)) (hD : D ≠ �
 
 end GlobalTheory.ClassFin.FibreDescent
 
-open GlobalTheory.ClassFin.FibreDescent in
 
 theorem GlobalTheory.ClassFin.exists_evC_blk_of_fibre_const : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (Γ : Set (Matrix ι ι ℂ)) (e : Matrix ι ι ℚ), IsQGroup Γ → e * e = e → (∀ g ∈ Γ, (1 - e.map (algebraMap ℚ ℂ)) * g * e.map (algebraMap ℚ ℂ) = 0) → ∀ f : MvPolynomial (ι × ι) ℂ, (∀ x ∈ Γ, ∀ x' ∈ Γ, blk e x = blk e x' → evC f x = evC f x') → ∃ b : MvPolynomial (ι × ι) ℂ, ∀ x ∈ Γ, evC f x = evC b (blk e x) := by
   intro ι _ _ Γ e hΓ he htri f hf

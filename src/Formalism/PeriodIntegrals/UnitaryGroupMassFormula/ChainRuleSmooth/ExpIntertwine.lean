@@ -63,6 +63,5 @@ theorem lie_smul (H X : Matrix (Fin n) (Fin n) ℂ) (hX : Xᴴ * H + H * X = 0) 
 
 end expo
 
-open scoped Matrix.Norms.Frobenius in
 
 end CCRuleCW

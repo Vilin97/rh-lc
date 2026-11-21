@@ -108,7 +108,6 @@ theorem detOn_unitary {n : ℕ} {k : Matrix (Fin n) (Fin n) ℂ} (hk : k ∈ Mat
   have h0 := GlobalTheory.LeviPolar.detOn_nonneg k V
   nlinarith
 
-open GlobalTheory.RealInd in
 
 theorem iwaOn_leviOne : ∀ {n a : ℕ} (ε : Fin n → Bool) (j : Fin a → ℕ) (W : GlobalTheory.RealInd.Flag n a),
     GlobalTheory.FlagMeas.IsIsoFlag ε j W → (∀ i, 1 ≤ j i) →

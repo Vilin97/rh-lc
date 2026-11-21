@@ -19,7 +19,6 @@ noncomputable section
 
 namespace GlobalTheory.CompHS
 
-open TrivSqZeroExt in
 
 theorem exists_spMap_fst_eq {S : Type} [CommRing S] (s : Sp (DualNumber S)) :
     ∃ t : Sp S, spMap (fstHom S S S).toRingHom t = s := by

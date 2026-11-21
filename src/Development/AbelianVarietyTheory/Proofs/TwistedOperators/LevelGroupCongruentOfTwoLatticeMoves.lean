@@ -37,7 +37,6 @@ open Formalism.MainNotions.StandardLattice (latHat intAf)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
 
-omit [NumberField E] in
 
 theorem int_smul_mem (L : Submodule (𝓞 E) (Fin n → E)) {f : FiniteAdeleRing (𝓞 F) F} (hf : f ∈ intAf F)
     {z : Fin n → FiniteAdeleRing (𝓞 F) F ⊗[F] E} (hz : z ∈ latHat F E (L : Set (Fin n → E))) :
@@ -54,7 +53,6 @@ theorem int_smul_mem (L : Submodule (𝓞 E) (Fin n → E)) {f : FiniteAdeleRing
   | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [smul_neg]; exact neg_mem hx
 
-omit [NumberField E] in
 
 theorem ideal_smul_mem (L : Submodule (𝓞 E) (Fin n → E)) (𝔪 : Ideal (𝓞 E)) {c : 𝓞 E} (hc : c ∈ 𝔪)
     {z : Fin n → FiniteAdeleRing (𝓞 F) F ⊗[F] E} (hz : z ∈ latHat F E (L : Set (Fin n → E))) :

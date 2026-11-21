@@ -23,7 +23,6 @@ theorem Pos.e1 : EulerAdditivityExactSequence := euler_additivity_of_rules ruleG
 
 theorem Pos.dev : RuleDev := ruleDev ruleGr
 
-open E4 in
 
 theorem rulePos : RulePos := by
   intro k X ts

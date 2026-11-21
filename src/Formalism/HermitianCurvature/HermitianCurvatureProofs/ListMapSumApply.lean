@@ -70,7 +70,6 @@ section mk
 
 variable [FiniteDimensional ℂ Wp]
 
-open Classical in
 
 def mkTerm (D : RealPlaceData k r Wp Wq) {nf : ℕ} (fib : Fin nf → Mat k r → C6.EndH Wp Wq)
     (e : CT k r nf × List (Mat k r)) : DTerm k r Wp Wq where

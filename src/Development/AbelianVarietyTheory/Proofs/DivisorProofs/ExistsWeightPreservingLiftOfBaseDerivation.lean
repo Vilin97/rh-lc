@@ -31,7 +31,6 @@ variable {X A : Type} [AddCommGroup X] [CommRing A] (P : X → A → Prop)
   (hmul : ∀ χ ψ a b, P χ a → P ψ b → P (χ + ψ) (a * b))
   (hdec : ∀ f : A, ∃! F : X →₀ A, (∀ χ, P χ (F χ)) ∧ f = F.sum (fun _ t => t))
 
-include hdec in
 
 def dec (f : A) : X →₀ A := (hdec f).exists.choose
 
@@ -96,7 +95,6 @@ theorem proj_of_wt (hz : δ₀ 0 = 0) {α : X} {f : A} (hf : P α f) : proj P hd
   unfold proj; rw [dec_single P hzero hdec hf, Finsupp.sum_single_index]
   rw [hz, dec_zero P hzero hdec]; rfl
 
-include hzero hdec in
 
 theorem induction_wt (Qp : A → Prop) (q0 : Qp 0) (qadd : ∀ a b, Qp a → Qp b → Qp (a + b))
     (qw : ∀ χ a, P χ a → Qp a) (f : A) : Qp f := by

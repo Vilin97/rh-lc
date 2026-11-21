@@ -29,7 +29,6 @@ variable {Zl Ai : Type} [CommRing Zl] [CommRing Ai] [Algebra Zl O] [Algebra Zl A
     {W : LocWach PD LL O v n} {E : EtTie W (O ⊗[Zl] Ai) RW inclR φR gR πA}
     {ιdR : Ai →+* BdR} {p1 : Ai} {tS zS : BdR}
 
-set_option maxHeartbeats 1000000 in
 
 theorem tmul_cancel (hO : Function.Injective (algebraMap O LL)) (W : LocWach PD LL O v n)
     (e₀ : ↥W.one.L.T) (h₀ : Submodule.span O {e₀} = ⊤) {r r' : RW}
@@ -80,13 +79,9 @@ theorem ioE_γ (hO : Function.Injective (algebraMap O LL))
     h2] at h1
   exact tmul_cancel hO W e₀ h₀ h1
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end Generic
 
@@ -94,7 +89,6 @@ section Concrete
 
 variable {l : ℕ} [Fact l.Prime]
 
-set_option maxHeartbeats 2000000 in
 
 end Concrete
 

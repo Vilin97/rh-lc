@@ -50,7 +50,6 @@ def DRhoLin (D : D7) : Prop :=
       ∀ (z : Matrix (Fin T.rank) (Fin S.rank) ℂ) (c : ℂ) (f g : WO S T → ℂ), IsThetaFunO ψ S T f → IsThetaFunO ψ S T g →
         dRho (heisO ψ S T) θ τ z (f + c • g) = dRho (heisO ψ S T) θ τ z f + c • dRho (heisO ψ S T) θ τ z g
 
-open Classical in
 
 end DRho
 
@@ -69,7 +68,6 @@ structure PairSetup (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp 
   onbS : ∀ τ, IsONBasis (gramAt D S τ) (sS τ) (BS τ) (pS τ)
   onbT : ∀ τ, IsONBasis (gramAt D T τ) (sT τ) (BT τ) (pT τ)
 
-open Classical in
 
 end CCR
 
@@ -95,7 +93,6 @@ def nCoef (sS BS XS : Matrix (Fin n) (Fin n) ℂ) (sT BT XT : Matrix (Fin m) (Fi
   fCoord BS BT pS pT ((1 / 2 : ℂ) • (adX XS XT (unitMap BS BT l.1 l.2) +
     cplxO sS sT (adX XS XT (cplxO sS sT (unitMap BS BT l.1 l.2))))) k
 
-open Classical in
 
 def quadOp (τ : D.what₂.Tau) (sS BS XS : Matrix (Fin n) (Fin n) ℂ) (sT BT XT : Matrix (Fin m) (Fin m) ℂ) (pS pT : ℕ)
     (P : MvPolynomial (FVar D m n) ℂ) : MvPolynomial (FVar D m n) ℂ :=

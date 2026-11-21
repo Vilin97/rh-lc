@@ -299,7 +299,6 @@ def YY (C6 C18 : ℝ) (G : MvPolynomial (ML J Dt.nL r × Fin r) (KK O)) : Prop :
 
 end SignedChainData
 
-open SignedChainData in
 
 def ProjectionDerivativeEstimate (p : ℕ) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (CH CE C6 C18 : ℝ) : Prop :=
   ∀ (r : ℕ) [NeZero r] (J : ℕ) [NeZero J] (Dt : SignedChainData p O r J),

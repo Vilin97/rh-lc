@@ -10,7 +10,6 @@ namespace CompanionTheory.WaveGrid
 
 open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P Formalism.FourierDecayAlt.P.CutBP Formalism.FourierDecayAlt.P.CutBP2 Formalism.FourierDecayAlt.P.CutBPEq Formalism.FourierDecayAlt.TBB Formalism.QuantumDeterminants
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 def AsmDiff : Prop :=
   ∀ Cb C₃ CΛ C₀ : ℝ, 0 ≤ C₃ → 0 ≤ CΛ → 1 / 2 ≤ C₀ →
@@ -36,7 +35,6 @@ def AsmDiff : Prop :=
       LimBd p nn (TBBx4.fpm p f (fun _ => ContinuousLinearMap.id ℂ Wq) p₀) Y N →
       TBB.ThmBpAt p f b C₄ 0 p₀
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 def AsmEq : Prop :=
   ∀ Cb C₃ CΛ C₀ : ℝ, 0 ≤ C₃ → 0 ≤ CΛ → 1 / 2 ≤ C₀ →

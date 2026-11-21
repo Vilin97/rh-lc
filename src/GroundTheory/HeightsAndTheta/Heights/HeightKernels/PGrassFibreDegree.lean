@@ -93,7 +93,6 @@ theorem geoNum_span :
 
 end GrassmannianFibreDegree
 
-open GrassmannianFibreDegree in
 
 theorem GrassFibreDegree.proof : GrassFibreDegree.Statement := by
   intro n p hp

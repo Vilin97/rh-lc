@@ -38,7 +38,6 @@ theorem transfer {H K ι : Type} [AddCommGroup H] [TopologicalSpace H] [IsTopolo
       exact (Integrable.fintype_prod (μ := fun _ => ν) hf).smul_measure ENNReal.coe_ne_top
     exact hemb.integrable_map_iff.mp h2
 
-open GlobalTheory.CompanionTheory.SiegelND.Coef.TestN in
 
 theorem hCo_smul {F E R : Type} [Field F] [Field E] [Algebra F E] [CommRing R] [Algebra F R] (σ : E →ₐ[F] E)
     {d n : ℕ} (b : Module.Basis (Fin d) F E) (r : R) (X X' : HermR R σ n)

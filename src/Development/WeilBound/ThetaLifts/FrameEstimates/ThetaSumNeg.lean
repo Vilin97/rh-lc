@@ -39,7 +39,6 @@ theorem latSum_mono {τ : ∀ w : InfinitePlace F, EmbOver E w} {C C' : Set (Ten
     rw [if_neg hx]
     exact sq_maj_nonneg _ _ _ _
 
-variable (B om) in
 
 def Qb (N : ℕ) (Φ : SInf F (Fin n × Fin d) → Fn F n d) : Prop :=
   (∀ f, Φ f ∈ schA F (Fin n × Fin d)) ∧ ∃ (p : Seminorm ℂ (SInf F (Fin n × Fin d))) (C : Set (Ten F E n d)), Continuous p ∧
@@ -97,8 +96,6 @@ theorem theta_neg (hP : Parity) (hp : IsPair B M χX χW om r s r' s') {Φ : Fn 
   unfold theta
   rw [smul_right_injective _ hc0 e1, thetaSum_neg]
 
-set_option maxHeartbeats 800000 in
-open scoped Classical in
 
 theorem qb_piece (hP : Parity) (hS : CoefSum) (hE : CoefEq) (hB : CoefBd) (hp : IsPair B M χX χW om r s r' s') (N : ℕ)
     {φ : (Fin n × Fin d → Af F) → ℂ} (hφ : φ ∈ SB _)

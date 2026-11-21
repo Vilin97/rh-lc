@@ -73,7 +73,6 @@ theorem conAt_last_lin (hM : M.Is t) (P : PolDown G) (h : Pts G) (Φ : SchDown G
 
 end GlobalTheory.LastPositionLin
 
-open GlobalTheory.RowClaim GlobalTheory.ConnectionLinear in
 
 theorem GlobalTheory.LastPositionLin.lastLin_zero : Big fun ch => GlobalTheory.ConnectionLinear.LastLin ch 0 := by
   refine ⟨0, fun _ _ _ => ⟨0, ?_⟩⟩

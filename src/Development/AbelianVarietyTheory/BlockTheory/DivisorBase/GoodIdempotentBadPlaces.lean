@@ -26,7 +26,6 @@ abbrev typePl (pb : Fin 2 → 𝓞 D.host.E) : Finset (Pl D.host.E) := primesOf 
 instance finite_kP (w : Pl D.host.E) : Finite (kP w) :=
   Ideal.finiteQuotientOfFreeOfNeBot w.asIdeal w.ne_bot
 
-variable (D) in
 
 def badPl : Finset (HeightOneSpectrum (𝓞 D.host.F)) := primesOf ((D.host.g 0 * D.host.g 1 : ℕ) : 𝓞 D.host.F)
 

@@ -20,7 +20,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : D7} {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Tau (D.hcW u)} {A : ColumnsAtT D.R C} {P : PeriodMap D.R C}
   (M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.what₂.Tau (D.hcW u) C A P) {p : ℕ}
 
-set_option maxHeartbeats 1000000 in
 
 structure StepIn (i : ℕ) (hi : i ≤ D.R.m) (G : GAtP p) where
   T : ℕ
@@ -122,7 +121,6 @@ theorem adExt (β : S.Ch) : AdExt (S.K β).lev (embT D) D.what₂.embLL (S.embN 
 
 def ChRat (β : S.Ch) : Prop := ∀ cl, ∃ r : D.what₂.LL, D.what₂.embLL r = ((S.tw β).ch ((S.K β).y cl) : ℂ)
 
-set_option maxHeartbeats 4000000 in
 
 theorem evRatRep (β : S.Ch) (hr : S.ChRat β)
     (hb : BlockRational G.P (S.loc β).rk S.pos (gramC (gramN D i hi) (embT D)) (crdB (embT D) (S.loc β).B) D.what₂.embLL (M.lam i)) :
@@ -138,7 +136,6 @@ theorem evRatRep (β : S.Ch) (hr : S.ChRat β)
   congr 2
   exact (detF_fnOf_one (D.R.N_pos i) _ (M.lam i) (cTw D i) Pp z).symm
 
-set_option maxHeartbeats 2000000 in
 
 structure Core (e : D.what₂.LL →+* G.Kf) (β : S.Ch) : Prop where
 

@@ -460,7 +460,6 @@ theorem exists_matrix_lift {R T : Type} [CommRing R] [CommRing T] {n : ℕ} (ψ 
   rw [RingHom.map_det, RingHom.mapMatrix_apply, e]
   exact (Matrix.isUnits_det_units k).ne_zero
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_local_lift {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
     {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} {N : ℕ} (hB : IsBaseFrame V β Λ N)

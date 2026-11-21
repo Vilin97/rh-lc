@@ -41,6 +41,5 @@ theorem cm_frame_of_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {r : �
   obtain ⟨x, lam, hx, hL, hP, -⟩ := cm_frame Xx la P z0 M w hSS hM hw hw1 hr htr hz0 hhalf hpos
   exact ⟨x, lam, hx, hL, hP⟩
 
-open Classical in
 
 end Formalism.L2.Pj.abelian₂

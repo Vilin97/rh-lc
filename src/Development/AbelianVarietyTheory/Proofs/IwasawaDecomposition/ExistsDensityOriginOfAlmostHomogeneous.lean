@@ -85,7 +85,6 @@ private theorem limsup_ball_ratio_le_ofReal_pow_mul (l ν : Measure V) [l.IsAddH
   rw [← closedBall_smul_div_ball_eq_ofReal_pow_mul l ν x hs hr0]
   exact ENNReal.div_le_div_right hr _
 
-open MeasureTheory Filter Topology Matrix in
 
 theorem _root_.GlobalTheory.exists_density_origin_of_almost_homogeneous : ∀ (V : Type) [NormedAddCommGroup V]
     [NormedSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (l ν : Measure V)

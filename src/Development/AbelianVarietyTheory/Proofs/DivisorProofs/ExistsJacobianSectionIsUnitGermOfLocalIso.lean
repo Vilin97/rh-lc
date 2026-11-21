@@ -73,7 +73,6 @@ open TopForm
 variable {k : Type} [CommRing k] {Y X : Scheme.{0}} {p : Y ⟶ Sp k} {σ : X ⟶ Y} {D : ℕ}
   [SmoothOfRelativeDimension D p] [SmoothOfRelativeDimension D (σ ≫ p)]
 
-variable (p σ) in
 
 theorem comp_eq : σ ≫ p = (σ ≫ p) ≫ spMap (RingHom.id k) := by
   rw [spMap, CommRingCat.ofHom_id, Spec.map_id, Category.comp_id]

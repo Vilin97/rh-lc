@@ -78,7 +78,6 @@ def SizeAt (D : D7) (i : Fin 2) : Prop :=
 def TwistTie {D : D7} (Dx : DivX D) (μ : D.what₂.Tup) (ξ : Twist D) : Prop :=
   ((Dx.Qp μ : Set ℕ) = QprimeN (ξ : Chr (recFields D).F (recFields D).E (recFields D).K)) ∧ (μ = D.what₂.mu0 → ξ = 1)
 
-open Classical in
 
 def JetsRatDeg {X : Fields} (A : Amb X) (a b : ℕ) (Sb : Finset (HeightOneSpectrum (𝓞 X.E))) (M : ℕ) (deg : X.Tau → ℤ) : Prop :=
   ∀ (N : Submodule (𝓞 X.E) (Sp X.E a)) (N' : Submodule (𝓞 X.E) (Sp X.E b)) (c : ℕ) (x : HomE X.E a b),

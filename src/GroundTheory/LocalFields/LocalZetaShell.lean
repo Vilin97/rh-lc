@@ -22,7 +22,6 @@ theorem exists_units_ord_eq_one : ∃ π : Kˣ, ord (π : K) = 1 := by
   have h0 : (ϖ : K) ≠ 0 := by exact_mod_cast hϖ.ne_zero
   exact ⟨Units.mk0 _ h0, by rw [Units.val_mk0]; exact ord_uniformizer hϖ⟩
 
-variable (K) in
 
 def unifUnit : Kˣ := (exists_units_ord_eq_one K).choose
 
@@ -65,7 +64,6 @@ end Order
 
 section Shell
 
-variable (K) in
 
 def ordShell (k : ℤ) : Set Kˣ := {u | ord (u : K) = k}
 

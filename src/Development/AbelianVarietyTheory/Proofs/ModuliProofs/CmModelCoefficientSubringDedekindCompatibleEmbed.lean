@@ -50,7 +50,6 @@ theorem aeval_derivative_mul_mem_adjoin (A K : Type*) {L : Type*} [CommRing A] [
   rw [this]
   exact Subalgebra.mul_mem _ (aeval_mem_adjoin_singleton _ _) h1
 
-open IntermediateField in
 
 theorem natCast_mul_mem_of_isIntegral (K : IntermediateField ℚ ℂ) [FiniteDimensional ℚ K]
     (T : Subring ℂ) (hT : ∀ w ∈ K, IsIntegral ℤ w → w ∈ T) {ζ : ℂ} {n : ℕ} (hn : 0 < n)
@@ -85,7 +84,6 @@ theorem natCast_mul_mem_of_isIntegral (K : IntermediateField ℚ ℂ) [FiniteDim
   simp [derivative_X_pow, hxc]
   linear_combination (-(m + 1 : ℂ) * z) * hζ
 
-open IntermediateField in
 
 theorem mem_of_isIntegral_quadratic {d : ℕ} (hd : d.Prime) (hd4 : d % 4 = 3) {r : ℂ}
     (hr : r ^ 2 = -(d : ℂ)) (T : Subring ℂ) (hT : (1 + r) / 2 ∈ T) {z : ℂ} (hzK : z ∈ ℚ⟮r⟯)
@@ -134,7 +132,6 @@ theorem RZ_le_KA (l : Level H) (S : ℕ) : RZ H S l.A ≤ (KA l).toSubalgebra.to
   · exact show _ ∈ KA l from inv_mem (natCast_mem (KA l) S)
   · exact IntermediateField.subset_adjoin ℚ {H.rt0, zeta l.A} (by simp)
 
-open IntermediateField in
 
 theorem mem_RZ_of_isIntegral (l : Level H) {S e : ℕ} (hS : 0 < S) (hA : l.A ∣ S ^ e) {z : ℂ}
     (hzK : z ∈ KA l) (hz : IsIntegral ℤ z) : z ∈ RZ H S l.A := by

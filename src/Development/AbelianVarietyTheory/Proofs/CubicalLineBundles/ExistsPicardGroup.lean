@@ -15,7 +15,6 @@ open GlobalTheory GlobalTheory.CM
 
 namespace GlobalTheory.CechPicMul
 
-open Classical in
 
 def cl {X : Scheme.{0}} (L : LB X) : Multiplicative (CechPic.Pic X) :=
   if h : L.IsLB then Multiplicative.ofAdd (CechPic.cls L h) else 1

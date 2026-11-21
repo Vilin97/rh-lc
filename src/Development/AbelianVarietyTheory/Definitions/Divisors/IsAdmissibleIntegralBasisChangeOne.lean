@@ -67,13 +67,11 @@ namespace Lib
 open scoped WithZero
 open IsDedekindDomain GroundTheory.FunctionField
 
-open scoped Classical in
 
 section Line
 
 variable (k)
 
-open scoped Classical in
 
 variable {k}
 

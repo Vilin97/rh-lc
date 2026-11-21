@@ -105,7 +105,6 @@ abbrev Tgt (s r : ℕ) := (Fin (2 * s + 1 + 1) → Fin (r + 1) → ℤ) × (Fin 
 def Inter {r : ℕ} (mu : Fin (r + 1) → ℤ) (lam : Fin r → ℤ) : Prop :=
   ∀ i : Fin r, mu i.succ ≤ lam i ∧ lam i ≤ mu i.castSucc
 
-open Classical in
 
 def Gt {s r : ℕ} (LLk : ChainLetters (2 * s + 1)) (B : ℕ) (t : Tgt s r) : ℚ :=
   if IsChain LLk t.1 ∧ Inter (t.1 (Fin.last _)) t.2.1 ∧ t.2.2 ≤ B then wdim t.2.1 * (sdXi r (B - t.2.2) : ℚ) else 0
@@ -264,7 +263,6 @@ def SrcOK (C0 CE1 CE2 : ℝ) (X : Loc) [NeZero X.m] (j : Fin (numSeg X.TT)) (m :
     IsChain ((BD C0 CE1 CE2 X j m z.1).lettersAt z.2.1.1 z.2.1.2) z.2.2 ∧
     ChainOK (BD C0 CE1 CE2 X j m z.1).T.J (BD C0 CE1 CE2 X j m z.1).T.thr z.2.2
 
-open Classical in
 
 def Fs (C0 CE1 CE2 : ℝ) (X : Loc) [NeZero X.m] (j : Fin (numSeg X.TT)) (m : ℝ)
     (rz ry : Fin (segS X.TT j) → Fin (X.m + 1) → ℕ) (z : FinalTheorems (segS X.TT j) X.m (X.seg C0 CE1 CE2 j).t) : ℚ :=

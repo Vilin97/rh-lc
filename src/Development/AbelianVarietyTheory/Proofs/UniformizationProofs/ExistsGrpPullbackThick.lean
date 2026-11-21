@@ -224,7 +224,6 @@ theorem mono_thick (I : Ideal R) (e : ℕ) : Mono (thick R I e) := by
   have : IsClosedImmersion (thick R I e) := IsClosedImmersion.spec_of_surjective _ Ideal.Quotient.mk_surjective
   infer_instance
 
-omit [IsDomain R] [IsDomain R'] in
 
 theorem exists_grpPullback_thick (φ : R →+* R') (I : Ideal R) (I' : Ideal R')
     {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G]

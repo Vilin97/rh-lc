@@ -52,7 +52,6 @@ def d2 (Φ : MvPowerSeries (Fin 2) K) : PowerSeries K :=
 
 end Abstract
 
-open Classical in
 
 def lgS {K : Type} [Field K] (g2 g3 : K) : PowerSeries K :=
   if h : ∃ t : PowerSeries K, constantCoeff t = 0 ∧ (uSer g2 g3).subst t = X then h.choose else 0

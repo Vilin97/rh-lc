@@ -67,6 +67,5 @@ theorem finite_TDual_pow : Finite (TDual (ZMod (l ^ r)) M) :=
 
 end Global
 
-open GlobalTheory.Published GlobalTheory.Published.PoitouTate in
 
 end GlobalTheory.DualSide

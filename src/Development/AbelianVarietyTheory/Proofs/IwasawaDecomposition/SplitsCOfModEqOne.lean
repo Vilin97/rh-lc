@@ -12,7 +12,6 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.FrobeniusOrbi
 
 namespace GlobalTheory.Mem.Chr
 
-open Classical in
 
 theorem splitsC_of_modEq_one : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (p : ℕ), p.Prime →
     p ≡ 1 [MOD H.QS * H.q * H.d] → SplitsC H.E p := by

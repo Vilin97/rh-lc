@@ -15,7 +15,6 @@ open MvPolynomial
 
 noncomputable section
 
-open ChartResidueDegree in
 
 theorem ChartResidueDegreeAlgClosed.proof (h₁ : ChowFormBirationalAlgClosed.Statement) (h₂ : ChartFinite.Statement)
     (h₃ : ChartKernel.Statement) (h₄ : ConeDimOfChowForm.Statement) (h₅ : ConeDimComponent.Statement)

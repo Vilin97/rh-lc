@@ -26,7 +26,6 @@ theorem zmodCocycleHom_one (z : cocycles (zmodRep.{0} (galUnramifiedOutside K.1 
   rw [mul_one] at h
   exact (add_eq_left.1 h.symm)
 
-omit [Fintype S] in
 
 def gsCharOfCocycle (z : cocycles (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1) :
     ContinuousMonoidHom (galUnramifiedOutside K.1 ℚ̄ S) (Multiplicative (ZMod n)) where
@@ -40,7 +39,6 @@ theorem toAdd_gsCharOfCocycle (z : cocycles (zmodRep.{0} (galUnramifiedOutside K
     (g : galUnramifiedOutside K.1 ℚ̄ S) : Multiplicative.toAdd (gsCharOfCocycle S n z g) = zmodCocycleHom z g :=
   rfl
 
-omit [Fintype S] [NeZero n] in
 
 theorem eq_zero_of_gsCharOfCocycle_eq_one (z : cocycles (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1)
     (hz : gsCharOfCocycle S n z = 1) : z = 0 := by
@@ -53,7 +51,6 @@ theorem eq_zero_of_gsCharOfCocycle_eq_one (z : cocycles (zmodRep.{0} (galUnramif
   exact e.trans (congrArg (fun w => (cochainOf (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) w ![v 0]).down)
     (map_zero (cocycleι (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1))).symm
 
-omit [Fintype S] [NeZero n] in
 
 theorem exists_gsCharOfCocycle_eq
     (χ : ContinuousMonoidHom (galUnramifiedOutside K.1 ℚ̄ S) (Multiplicative (ZMod n))) :
@@ -85,7 +82,6 @@ theorem hnS_of_hS : ∀ v ∉ S, ((n : ℕ) : 𝓞 K.1) ∉ v.asIdeal := fun v h
   subst hnk
   exact pow_notMem_asIdeal_of_forall S ℓ k hS v hv
 
-include hℓ hnk hS in
 
 theorem gsCompactInv_gsCupClass (hnS : ∀ v ∉ S, ((n : ℕ) : 𝓞 K.1) ∉ v.asIdeal) (d : GsUnitsDatum S)
     (z : cocycles (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1) :
@@ -95,7 +91,6 @@ theorem gsCompactInv_gsCupClass (hnS : ∀ v ∉ S, ((n : ℕ) : 𝓞 K.1) ∉ v
   zmodToQZ_injective (n := n) (zmodToQZ_gsCompactInv_gsCupClass S ιs n hnS ℓ k hℓ hnk hS hodd h3 d z
     (gsCharOfCocycle S n z) (fun _ => rfl))
 
-omit [Fintype S] [NeZero n] in
 
 theorem eq_zero_of_coprime_nsmul_zmod (hnk : n = ℓ ^ k) {m : ℕ} (hm : m.Coprime ℓ) {u : ZMod n}
     (h : m • u = 0) : u = 0 := by
@@ -103,8 +98,6 @@ theorem eq_zero_of_coprime_nsmul_zmod (hnk : n = ℓ ^ k) {m : ℕ} (hm : m.Copr
   rw [nsmul_eq_mul] at h
   exact (ZMod.unitOfCoprime m hmn).isUnit.mul_right_eq_zero.1 h
 
-set_option maxHeartbeats 1600000 in
-include hℓ hnk hS in
 
 theorem gsCompactInv_ker_left (x : cohomology (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1)
     (hx : ∀ y : compactCohomologyRes (gsFinFamily S ιs) (gsRoots S n) 2,
@@ -151,8 +144,6 @@ theorem exists_nsmul_eq_of_forall_zmod {A : Type*} [AddCommGroup A] (a : A)
   obtain ⟨f, hf⟩ := zmod_exists_apply_ne_zero htors hq
   exact hf (h (f.comp (QuotientAddGroup.mk' N)))
 
-set_option maxHeartbeats 4000000 in
-include hℓ hnk hS in
 
 theorem gsCompactInv_ker_right (y : compactCohomologyRes (gsFinFamily S ιs) (gsRoots S n) 2)
     (hy : ∀ x : cohomology (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1,

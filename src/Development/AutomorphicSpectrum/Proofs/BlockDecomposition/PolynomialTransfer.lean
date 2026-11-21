@@ -27,7 +27,6 @@ section Thickening
 
 variable (T : Thick (nlFun γ 0 X q κ)) {l s : ℕ} (hT : TF l s T)
 
-include hT in
 
 theorem tr_facts : fil (trD T s) s = ⊥ ∧
     (∀ (r : ℕ) (x : trB T s), (l : trB T s) * x ∈ fil (trD T s) r → x ∈ fil (trD T s) r) ∧

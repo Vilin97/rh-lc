@@ -24,8 +24,6 @@ open Formalism.InvariantFactorPaths.G7 (UnrOK IsLawOfLog cob)
 
 namespace GlobalTheory.KerStd.HostInert
 
-open Formalism.InvariantFactorPaths.G7 (lgF at1) in
-open Formalism.L2.G.Pend (k0ToC wittFractionAlgebraCp) in
 
 theorem inParamK_eq {l : ℕ} [Fact l.Prime] {ι : Type} (f : MvPowerSeries ι ℂ_[l]) :
     @Formalism.MainNotions.FormalGroupSystem.inParamK l _ ι ℂ_[l] _ (wittFractionAlgebraCp l) f = MvPowerSeries.subst (fun i => at1 i (lgF ℂ_[l] l)) f := by

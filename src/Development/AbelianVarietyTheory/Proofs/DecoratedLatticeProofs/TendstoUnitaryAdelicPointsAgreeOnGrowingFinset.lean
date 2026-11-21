@@ -16,7 +16,6 @@ section Basis
 
 variable {F E : Type} [Field F] [Field E] [Algebra F E] [FiniteDimensional F E]
 
-set_option maxHeartbeats 800000 in
 
 theorem repr_map {R R' : Type} [CommRing R] [CommRing R'] [Algebra F R] [Algebra F R'] (α : R →ₐ[F] R')
     (z : R ⊗[F] E) (k : Fin (Module.finrank F E)) :
@@ -88,7 +87,6 @@ theorem repr_compAt (w : Pl D) (z : AE D) (k : Fin (Module.finrank D.host.F D.ho
       (Algebra.TensorProduct.map (sndA D.host.F) (AlgHom.id D.host.F D.host.E) z)) k = _
   rw [repr_map, repr_map]
 
-set_option maxHeartbeats 800000 in
 
 theorem tendsto_entry (a : Finset (Pl D) → AE D) (b c : AE D) (hinf : ∀ T, infPart D (a T) = infPart D b)
     (hin : ∀ T, ∀ w ∈ T, compAt D w (a T) = compAt D w b)
@@ -136,7 +134,6 @@ theorem map_inv_entries {A R : Type} [CommRing A] [Ring R] {n : ℕ} (φ : A →
 
 end Entry
 
-set_option maxHeartbeats 800000 in
 
 theorem tendsto_of_agree (D : D7) (S : HSp D) (κ : GA D S) (x : Finset (Pl D) → GA D S)
     (h1 : ∀ Fs i j, infPart D (Formalism.L2.Theta.mt S (x Fs) i j) = infPart D (Formalism.L2.Theta.mt S κ i j))

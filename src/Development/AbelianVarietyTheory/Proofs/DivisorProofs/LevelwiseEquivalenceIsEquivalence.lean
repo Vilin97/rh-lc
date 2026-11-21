@@ -39,7 +39,6 @@ theorem cpull_bij_of_iso {K L : Cx R} (f : K ‚ü∂ L) [IsIso f] (I : Cx R) (n : ‚Ñ
 
 end GlobalTheory.EtC.LevelCmp
 
-open GlobalTheory.EtC.LevelCmp in
 
 theorem GlobalTheory.EtC.levelwise_eqv : GlobalTheory.EtC.A3 := by
   intro R _ E E' f F hlev

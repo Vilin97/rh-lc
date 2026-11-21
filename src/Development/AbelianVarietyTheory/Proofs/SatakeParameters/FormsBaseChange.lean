@@ -21,7 +21,6 @@ theorem mapDR_ιMulti (n : ℕ) (v : Fin n → Ω[K⁄k]) :
     show mapDR k K L (ExteriorAlgebra.ι K (v i)) = _
     rw [mapDR, ExteriorAlgebra.lift_ι_apply]; rfl))
 
-variable {k K L} in
 
 theorem mapDR_basis {I : Type} [LinearOrder I] (bK : Module.Basis I K Ω[K⁄k]) (bL : Module.Basis I L Ω[L⁄k])
     (h : ∀ i, bL i = KaehlerDifferential.map k k K L (bK i)) (s : Finset I) :
@@ -30,7 +29,6 @@ theorem mapDR_basis {I : Type} [LinearOrder I] (bK : Module.Basis I K Ω[K⁄k])
     ExteriorAlgebra.ιMulti_family, ExteriorAlgebra.ιMulti_family, mapDR_ιMulti]
   exact congrArg _ (funext fun i => (h _).symm)
 
-variable {k K L} in
 
 theorem repr_mapDR {I : Type} [LinearOrder I] (bK : Module.Basis I K Ω[K⁄k]) (bL : Module.Basis I L Ω[L⁄k])
     (h : ∀ i, bL i = KaehlerDifferential.map k k K L (bK i)) (ω : DR k K) (s : Finset I) :

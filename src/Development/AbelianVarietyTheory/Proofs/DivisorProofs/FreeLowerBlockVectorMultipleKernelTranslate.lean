@@ -366,8 +366,6 @@ theorem eq_std_iff {κ : Type} [CommRing κ] {n r : ℕ} (hr : r ≤ n) (y : Mat
 variable {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-open Classical in
-include h1 h2 in
 
 theorem datum_eq (R : RealDat D A Ks) (i : Fin D.R.m) (hr : (Wc D i).rank ≤ (Vc D i).rank) (hd : Disjoint R.Pg Q)
     (ξR : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ) {u u' : Matrix (Fin (Vc D i).rank) (Fin (Wc D i).rank) (Datum.EAf D)}

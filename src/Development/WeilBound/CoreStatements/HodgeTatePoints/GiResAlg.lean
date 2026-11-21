@@ -62,7 +62,6 @@ theorem isLoc_of_ind {H : Subgroup T} {B : Subalgebra R (T → R)}
   funext x
   simp [GlobalTheory.CompanionTheory.Ar.BT.pullFun, hbf x x.2]
 
-open Classical in
 
 def cosetInd (R : Type) [CommRing R] (H : Subgroup T) (c : T ⧸ H) : T → R :=
   fun t => if (t : T ⧸ H) = c then 1 else 0

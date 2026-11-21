@@ -22,7 +22,6 @@ def raw : Gen.Raw D :=
 
 theorem tiesTr (h : Ties D) : Ties (raw c).rec' := Gen.tiesTr (raw c) h h.tw_cover
 
-set_option maxHeartbeats 1600000 in
 
 def extraTr {L : SizeData₂ D} {gatT : GatTies D} {Gx : G.Inst D L} {Gy : G.LatInst D} {K : G.Consts} {X : DivX D} {cX : ExtraC}
     (ex : Extra D L gatT Gx Gy K X cX) :

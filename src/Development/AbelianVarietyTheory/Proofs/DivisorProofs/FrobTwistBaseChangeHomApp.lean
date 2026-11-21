@@ -72,7 +72,6 @@ abbrev frobRing (h : (p : R) = 0) : R →+* R := SS.FrobField.powHom R p 1 hp.ou
 @[simp] theorem frobRing_apply (h : (p : R) = 0) (r : R) : frobRing h r = r ^ p :=
   congrArg (r ^ ·) (pow_one p)
 
-omit hp in
 
 theorem natCast_eq_zero_of_algebra (h : (p : R) = 0) (A : Type) [CommRing A] [Algebra R A] :
     (p : A) = 0 := by
@@ -118,7 +117,6 @@ def SemiHom.liftOver {G'' : PDivGroup p O''} {ρ : O →+* O''} (s : SemiHom ρ 
     (τ : O' →+* O'') (h : ∀ r, ρ r = τ (algebraMap O O' r)) (n : ℕ) (r : O') (a : G.A n) :
     (s.liftOver τ h).app n (r ⊗ₜ a) = τ r • s.app n a := (s.app n).liftOver_tmul τ h r a
 
-variable (O') in
 
 theorem baseChange_induction (n : ℕ) {P : (G.baseChange O').A n → Prop} (h0 : P 0)
     (h1 : ∀ (r : O') a, P (r • (G.toBase O').app n a)) (h2 : ∀ x y, P x → P y → P (x + y))
@@ -171,13 +169,11 @@ def frobProj : SemiHom (frobRing h) (frobTwist h G) G :=
   letI := (frobRing h).toAlgebra
   G.toBase R
 
-variable {G} in
 
 def frobLift (s : SemiHom (frobRing h) H G) : H ⟶ frobTwist h G :=
   letI := (frobRing h).toAlgebra
   SemiHom.lift (O := R) (O' := R) s
 
-variable {G} in
 
 @[simp] theorem frobLift_app_frobProj (s : SemiHom (frobRing h) H G) (n : ℕ) (a : G.A n) :
     (frobLift h s).app n ((frobProj h G).app n a) = s.app n a :=

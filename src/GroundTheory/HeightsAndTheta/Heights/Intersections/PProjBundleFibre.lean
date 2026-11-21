@@ -84,11 +84,8 @@ section Main
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 end Main
 
@@ -96,11 +93,8 @@ section Fibre
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] in
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 end Fibre
 

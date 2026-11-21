@@ -174,7 +174,6 @@ theorem precomplete_pi {R : Type*} [CommRing R] (π : R) [IsPrecomplete (Ideal.s
   rw [SModEq.sub_mem, key1] at h2
   simpa using h2
 
-omit [NeZero n] in
 
 omit [NeZero n] in
 theorem jW_coeff (x : WQ p n) (k : ℕ) : (jW p n x).coeff k = algebraMap (F1 p n) (F2 p n) (x.coeff k) :=

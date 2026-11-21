@@ -47,7 +47,6 @@ def Pv (p : ℕ) (τ : Equiv.Perm (Fin (m + 1))) : A :=
 
 def Mv (p : ℕ) : A := ∑ τ, ((Equiv.Perm.sign τ : ℤ) : A) * Pv E y a b w p τ
 
-omit [Algebra ℂ A] in
 
 def symV (x c d : Fin n) : A := (if x = d then y c else 0) + (if x = c then y d else 0)
 

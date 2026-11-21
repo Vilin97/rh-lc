@@ -21,7 +21,6 @@ variable (v : ℕ) [Fact v.Prime]
 
 def Iq : Subgroup (GQ v) := (MaximalUnramifiedExtension v).fixingSubgroup
 
-variable {v} in
 
 def IsFrob (σ : GQ v) : Prop := ∀ x : Om v, ‖x‖ ≤ 1 → ‖σ x - x ^ v‖ < 1
 
@@ -105,7 +104,6 @@ def Dcr : Submodule A (V ⊗[ℚ_[l]] Bcr l) := ⨅ g : G, LinearMap.ker (actC �
 
 def Ddr : Submodule A (V ⊗[ℚ_[l]] Bdr l) := ⨅ g : G, LinearMap.ker (actD φ ρ g - LinearMap.id)
 
-variable (A V) in
 
 def FilT (a : ℤ) : Submodule A (V ⊗[ℚ_[l]] Bdr l) :=
   LinearMap.range (AlgebraTensorModule.map (LinearMap.id : V →ₗ[A] V)
@@ -143,14 +141,12 @@ def Crys (K : FinExt l) (ρ : Representation A ↥(GK K) V) : Prop := IsCrys ((P
 
 def DeRham (K : FinExt l) (ρ : Representation A ↥(GK K) V) : Prop := IsDR ((PP l).PD K) (resCoef ℚ_[l] ρ)
 
-variable (V) in
 
 def smulD (K : FinExt l) : A ⊗[ℚ_[l]] ↥K.1 →ₗ[ℚ_[l]] Module.End ℚ_[l] (V ⊗[ℚ_[l]] Bdr l) :=
   (TensorProduct.homTensorHomMap (RingHom.id ℚ_[l]) V (Bdr l) V (Bdr l)).comp
     (TensorProduct.map (Algebra.lsmul ℚ_[l] ℚ_[l] V : A →ₐ[ℚ_[l]] Module.End ℚ_[l] V).toLinearMap
       (Algebra.lsmul ℚ_[l] ℚ_[l] (Bdr l) : ↥K.1 →ₐ[ℚ_[l]] Module.End ℚ_[l] (Bdr l)).toLinearMap)
 
-variable (V) in
 
 def smulC (K : FinExt l) : A ⊗[ℚ_[l]] ↥(K0 K) →ₗ[ℚ_[l]] Module.End ℚ_[l] (V ⊗[ℚ_[l]] Bcr l) :=
   (TensorProduct.homTensorHomMap (RingHom.id ℚ_[l]) V (Bcr l) V (Bcr l)).comp

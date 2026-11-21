@@ -481,7 +481,6 @@ theorem exists_block (B : GL (Fin n) K) {t : K} (ht : t ≠ 0) : ∃ B' : GL (Fi
   exact ⟨Matrix.GeneralLinearGroup.mkOfDetNeZero _ (by
     rw [h.det]; exact mul_ne_zero (Matrix.GeneralLinearGroup.det B).ne_zero ht), h⟩
 
-variable (K) in
 
 end Compare
 

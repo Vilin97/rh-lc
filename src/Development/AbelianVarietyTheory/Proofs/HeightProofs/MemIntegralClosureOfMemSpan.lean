@@ -289,7 +289,6 @@ end Rings
 
 end PlaceExt
 
-open PlaceExt in
 
 theorem exists_unique_place_baseChange : ∀ (R R' F F' : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [CommRing R'] [IsDomain R'] [IsDiscreteValuationRing R'] [Algebra R R'] [Module.Flat R R'] [IsLocalHom (algebraMap R R')] [Field F] [Algebra R F] [IsFractionRing R F] [Field F'] [Algebra R' F'] [IsFractionRing R' F'] [Algebra F F'] [Algebra R F'] [IsScalarTower R F F'] [IsScalarTower R R' F'], Ideal.map (algebraMap R R') (IsLocalRing.maximalIdeal R) = IsLocalRing.maximalIdeal R' → Function.Surjective (IsLocalRing.ResidueField.map (algebraMap R R')) → ∀ (L : Type) [Field L] [Algebra F L] [FiniteDimensional F L] [Algebra.IsSeparable F L] [Algebra R L] [IsScalarTower R F L], (∀ x : F' ⊗[F] L, IsIntegral R' x ↔ x ∈ Submodule.span R' ((fun b : L => (1 : F') ⊗ₜ[F] b) '' (integralClosure R L : Set L))) → ∃ w' : ValPl.PlacesOver R L → AddValuation (F' ⊗[F] L) (WithTop ℤ), (∀ w (g : L), w' w ((1 : F') ⊗ₜ[F] g) = w.1 g) ∧ (∀ x : F' ⊗[F] L, IsIntegral R' x ↔ ∀ w, 0 ≤ w' w x) ∧ (∀ w (x : F' ⊗[F] L), 0 ≤ w' w x → ∃ g : L, 0 ≤ w.1 g ∧ 0 < w' w (x - (1 : F') ⊗ₜ[F] g)) ∧ ∀ (w : ValPl.PlacesOver R L) (u : AddValuation (F' ⊗[F] L) (WithTop ℤ)), (∀ g : L, u ((1 : F') ⊗ₜ[F] g) = w.1 g) → (∀ r : R', 0 ≤ u (algebraMap R' F' r ⊗ₜ[F] (1 : L))) → u = w' w := by
   intro R R' F F' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ hmax hres L _ _ _ _ _ _ hB

@@ -38,7 +38,6 @@ def HalfPerf {O : Type} [Ring O] {bar : O → O} (p : ℕ) (D' : PLat O bar) : P
 def Datum.Cls (D : Datum p) (N : ℕ) (D' : PLat D.O D.inv) (t : D.La → D'.La) : Prop :=
   Genus p N D.plat D' t ∧ HalfPerf p D'
 
-open Classical in
 
 def Base.IsType {D : Datum p} {R : Type} [CommRing R] (b : Base D R) (σ : R →+* ℂ)
     (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) : Prop :=

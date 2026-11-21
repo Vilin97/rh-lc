@@ -114,9 +114,7 @@ section Checks
 
 variable {ι : Type} [Fintype ι]
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end Checks
 

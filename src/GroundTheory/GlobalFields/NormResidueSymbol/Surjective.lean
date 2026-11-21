@@ -60,7 +60,6 @@ variable {K L : Type u} [Field K] [NumberField K] [Field L] [NumberField L] [Alg
 
 attribute [local instance] galCommGroup
 
-omit [NumberField K] [NumberField L] [IsMulCommutative (L ≃ₐ[K] L)] in
 
 theorem restrictNormal_fixedField_eq_one {N : Subgroup (L ≃ₐ[K] L)} [N.Normal] {σ : L ≃ₐ[K] L}
     (hσ : σ ∈ N) : σ.restrictNormal (fixedField N) = 1 := by

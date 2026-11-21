@@ -211,7 +211,6 @@ def sz (w : D.what₂.places.Pl) (y : ℝ) : ℝ :=
 
 def lifts (D : D7) : Finset ℕ := Finset.Icc 1 D.R.m
 
-open Classical in
 
 def gainD (j : ℕ) (w : D.what₂.places.Pl) : ℝ :=
   if D.what₂.places.resChar w ∈ L.drop then 0 else L.gain j w

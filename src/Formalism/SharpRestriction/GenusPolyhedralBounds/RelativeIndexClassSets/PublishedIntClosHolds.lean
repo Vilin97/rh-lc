@@ -82,7 +82,6 @@ private theorem fld_lemma_3 (O K A : Type) [CommRing O] [IsDomain O] [IsDiscrete
     exact (algebraMap K (A ⧸ M)).injective.comp (IsFractionRing.injective O K)
   exact hinj (congrArg Subtype.val hab)
 
-set_option maxHeartbeats 800000 in
 
 private theorem dvr_lemma_4 (Cr Dr : Type) [CommRing Cr] [CommRing Dr] [IsDomain Dr] [IsDedekindDomain Dr]
     (hD : ¬IsField Dr) (φ : Cr →+* Dr) (hφ : Function.Surjective φ) (e : Cr) (he1 : φ e = 1)
@@ -187,7 +186,6 @@ private theorem fin_lemma_5 (O K A : Type) [CommRing O] [IsDomain O] [IsDiscrete
     exact congrArg Subtype.val (congrFun hxy M)
   exact Module.Finite.of_injective ψ hψ
 
-set_option maxHeartbeats 800000 in
 
 private theorem pt_lemma_6 (O K A : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K]
     [Algebra O K] [IsFractionRing O K] [CharZero K] [CommRing A] [Algebra K A] [Algebra O A]

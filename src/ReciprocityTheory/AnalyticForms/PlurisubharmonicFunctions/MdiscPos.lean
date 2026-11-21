@@ -149,7 +149,6 @@ theorem pm_exists_gram_of_posSemidef {A : Matrix (Fin D) (Fin D) ℂ} (hA : A.Po
   rw [hB, star_eq_conjTranspose, Matrix.mul_apply]
   simp [conjTranspose_apply]
 
-open scoped MatrixOrder in
 
 theorem pm_mdisc_of_gram (A : Fin D → Matrix (Fin D) (Fin D) ℂ) (w : Fin D → ι → Fin D → ℂ)
     (h : ∀ k a b, A k a b = ∑ r, w k r a * star (w k r b)) :

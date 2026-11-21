@@ -28,7 +28,6 @@ theorem hom_ext' {T T' : CC D n} {f g : T ⟶ T'} (h : f.hom.hom.1 = g.hom.hom.1
 
 def opn (T : CC D n) : AffOp D.X := Opposite.op ⟨T.obj.obj.U, T.obj.property⟩
 
-variable (D n) in
 
 def qq : CC D n ⥤ AffOp D.X where
   obj T := opn T

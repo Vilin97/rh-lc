@@ -180,6 +180,5 @@ theorem inputs_from_selmer_inj : SelmerInjConditions := by
   exact selmer_inj_column_place O A T' G M L V r χ (D (colIdx l)) iL qV tens a1 a2 a3 a4 a5 a6 a7 (Ff l)
     (j (colIdx l)) (κ l) (κz l) b1 b2 b3 b4 b5
 
-set_option maxHeartbeats 4000000 in
 
 end Formalism.RepresentationBoundsCohomology.BR

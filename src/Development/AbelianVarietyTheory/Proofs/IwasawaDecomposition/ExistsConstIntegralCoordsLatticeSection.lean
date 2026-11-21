@@ -82,8 +82,6 @@ private theorem exists_pos_int_combination_eq_zero_near_of_linearIndependent {g 
   have : |c j| < 1 := by exact_mod_cast hj'
   simpa using Int.abs_lt_one_iff.1 this
 
-open Topology in
-set_option autoImplicit false in
 
 theorem _root_.GlobalTheory.ShFam.Hor.LogCh.exists_const_coords (n g r : ℕ) (B : Set (Fin n → ℂ))
     (K : (Fin n → ℂ) → Set (Fin g → ℂ))

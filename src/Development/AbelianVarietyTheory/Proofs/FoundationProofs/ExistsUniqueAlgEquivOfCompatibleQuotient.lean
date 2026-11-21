@@ -66,7 +66,6 @@ variable {A B : Type*} [Ring A] [Ring B] [Algebra R A] [Algebra R B]
 
 end
 
-omit [IsNoetherianRing R] [IsAdicComplete I R] in
 
 section
 

@@ -12,7 +12,6 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Ho
 
 namespace GlobalTheory.PerDecAtRef
 
-open Formalism.BasicNotions in
 
 theorem vAdd_nonneg_of_int {K : Type} [Field K] [NumberField K] (la : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K))
     (a : NumberField.RingOfIntegers K) : 0 ≤ vAdd la (a : K) := by
@@ -27,7 +26,6 @@ theorem vAdd_nonneg_of_int {K : Type} [Field K] [NumberField K] (la : IsDedekind
 
 end GlobalTheory.PerDecAtRef
 
-set_option maxHeartbeats 1000000 in
 
 theorem GlobalTheory.PerDecAtRef.perDec0At_std : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), GlobalTheory.PerQ.RowInt I l Z → ∀ (u : B.Word) (Ch : ℕ → Type) (chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i) (F : FormsTiedSym (I.rec7 l Z) u Ch chOf), I.StdF l Z u F → Formalism.MainNotions.RT.PeriodPointConditions.PerDec0At F := by
   intro B X I hI l Z hZ u Ch chOf F hF

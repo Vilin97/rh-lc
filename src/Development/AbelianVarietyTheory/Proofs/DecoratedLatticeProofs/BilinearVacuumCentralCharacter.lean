@@ -190,7 +190,6 @@ theorem sm_mean (hom : IsWeilDatumO ψ S T χS χT om) (hc : Chart θ σ) {K : T
 
 end Smooth
 
-open scoped ComplexOrder in
 
 theorem exists_haar {S : HSp D} {y : DefSp S} (hy : y.Is) : CompactSpace ↥(GinfC S ⊓ Subgroup.center (GA D S)) ∧
     ∃ ν : Measure ↥(GinfC S ⊓ Subgroup.center (GA D S)), IsProbabilityMeasure ν ∧ ν.IsMulLeftInvariant := by

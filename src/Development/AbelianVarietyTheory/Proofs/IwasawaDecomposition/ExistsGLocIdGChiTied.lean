@@ -40,7 +40,6 @@ section Orient
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-omit [NumberField E] in
 
 theorem exists_oriented (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (x : E) (p : ℕ) (hv : (p : 𝓞 F) ∈ v.asIdeal)
     (hx : x * σ x = (p : E)) (sp : E ⊗[F] v.adicCompletion F ≃+* v.adicCompletion F × v.adicCompletion F)

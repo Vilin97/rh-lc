@@ -191,7 +191,6 @@ theorem exists_vecMul_eq {v : Fin r → Fin r → E} (hv : LinearIndependent E v
   ⟨x ᵥ* (Matrix.of v)⁻¹, by
     rw [vecMul_vecMul, nonsing_inv_mul _ (det_of_ne_zero hv).isUnit, vecMul_one]⟩
 
-omit [NumberField E] [IsCMField E] in
 
 theorem exists_gl_mulVec {v w : Fin r → Fin r → E} (hv : LinearIndependent E v)
     (hw : LinearIndependent E w) : ∃ γ : GL (Fin r) E, ∀ c : Fin r → E,

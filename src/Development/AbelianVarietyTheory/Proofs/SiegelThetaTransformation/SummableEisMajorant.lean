@@ -115,7 +115,6 @@ theorem norm_embAll_sq_le {m : Type} [Fintype m] {Ψ : Finset (E →+* ℂ)} (h�
   exact Finset.single_le_sum (f := fun j => ‖τ.1 (w j : E)‖ ^ 2)
     (fun _ _ => by positivity) (Finset.mem_univ j)
 
-omit [NumberField E] [IsCMField E] in
 
 theorem span_rows_mul {m : Type} (a : Matrix (Fin N) (Fin N) E) (ha : a.det ≠ 0)
     (W : Matrix (Fin N) m E) :
@@ -176,7 +175,6 @@ theorem exists_short_generators {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) (N
 
 end GlobalTheory.SW.EisConv
 
-open GlobalTheory.SW.EisConv in
 
 theorem GlobalTheory.SW.summable_eis_majorant : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), 4 * N < n → ∀ (c : ℕ) (rep : Lag E N → M2 E N), 0 < c → (∀ U, rep U ∈ UU E N ∧ Den c (rep U) ∧ botSpan (rep U) = U.1) → Summable fun U : Lag E N => ∏ τ : Ψ, (‖(hDen Ψ (rep U) (fun _ => I • (1 : Matrix (Fin N) (Fin N) ℂ)) τ).det‖ ^ n)⁻¹ := by
   intro E _ _ _ Ψ hΨ n N hn c rep hc hrep

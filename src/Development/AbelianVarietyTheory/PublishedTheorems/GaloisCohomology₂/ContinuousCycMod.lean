@@ -21,7 +21,6 @@ theorem mem_proKer {l : ℕ} {H : Type*} [Group H] [TopologicalSpace H] {x : H} 
 
 variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
 
-variable (F) in
 
 def ineKer (A : ValuationSubring Ω) (l : ℕ) : Subgroup (G F Ω) :=
   (proKer l (Ine (F := F) A)).map (Ine (F := F) A).subtype
@@ -33,19 +32,16 @@ theorem coe_mem_ineKer {A : ValuationSubring Ω} {l : ℕ} {σ : Ine (F := F) A}
     (σ : G F Ω) ∈ ineKer F A l ↔ σ ∈ proKer l (Ine (F := F) A) :=
   Subgroup.mem_map_iff_mem (Ine (F := F) A).subtype_injective
 
-variable (F) in
 
 def IsProGen (A : ValuationSubring Ω) (l : ℕ) (γ : G F Ω) : Prop :=
   γ ∈ Ine (F := F) A ∧
     Ine (F := F) A ≤ (Subgroup.zpowers γ ⊔ ineKer F A l).topologicalClosure
 
-variable (F) in
 
 abbrev trivDec (A : ValuationSubring Ω) (l n : ℕ) :
     Representation (ZMod (l ^ n)) (Dec (F := F) A) (ZMod (l ^ n)) :=
   Representation.trivial (ZMod (l ^ n)) (Dec (F := F) A) (ZMod (l ^ n))
 
-variable (F) in
 
 abbrev muDec (A : ValuationSubring Ω) (l : ℕ) [Fact l.Prime] (n : ℕ) :
     Representation (ZMod (l ^ n)) (Dec (F := F) A) (ZMod (l ^ n)) :=
@@ -68,7 +64,6 @@ theorem contAction_muDec (A : ValuationSubring Ω) (l : ℕ) [Fact l.Prime] (n :
     ContAction (muDec F A l n) :=
   (((continuous_cycMod l n).comp continuous_subtype_val).comp continuous_fst).mul continuous_snd
 
-variable (F) in
 
 def cupMu (A : ValuationSubring Ω) (l : ℕ) [Fact l.Prime] (n : ℕ) :
     H1 (trivDec F A l n) →ₗ[ZMod (l ^ n)] H1 (muDec F A l n) →ₗ[ZMod (l ^ n)] H2 (muDec F A l n) :=

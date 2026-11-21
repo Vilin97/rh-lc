@@ -171,7 +171,6 @@ variable (TF : TorFlag Xo c) (Z : Comp Xo c) [IsIntegral (X₀ TF.Y Z)] {φ₀ :
   (f₀ : EigFrame TF.Y φ₀ ((X₀ TF.Y Z).fromSpecStalk (genericPoint (X₀ TF.Y Z)) ≫ (barComp TF.Y Z).ι))
   (a : (E →+* ℂ) → ℤ)
 
-omit [IsIntegral (X₀ TF.Y Z)] in
 
 theorem stalk_pt (y : Y₀ TF.X Z) : ((Y₀ TF.X Z).fromSpecStalk y ≫ inc₀ TF.X Z) ≫ TF.X.π =
     spMap ((π₀ TF.X Z).stalkMap y).hom ≫ (X₀ TF.Y Z).fromSpecStalk (π₀ TF.X Z y) ≫ (barComp TF.Y Z).ι := by

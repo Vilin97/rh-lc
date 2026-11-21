@@ -14,7 +14,6 @@ namespace GlobalTheory.FinPl.ShapeSecond
 
 variable {D : D7}
 
-set_option maxHeartbeats 2000000 in
 
 theorem ae_charUnramAt (χ : (AE D)ˣ →* Circle) (hχ : Continuous χ) :
     ∀ᶠ v : GlobalTheory.FinPl.Pl D in Filter.cofinite, GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.CharUnramAt D χ v := by

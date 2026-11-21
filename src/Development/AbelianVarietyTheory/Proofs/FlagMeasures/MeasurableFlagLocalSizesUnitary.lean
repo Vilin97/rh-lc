@@ -9,7 +9,6 @@ open MeasureTheory NumberField Matrix Finset Formalism.MainNotions.S GlobalTheor
 
 namespace GlobalTheory.FlagMeas
 
-open MeasureTheory NumberField Matrix Finset in
 
 theorem _root_.GlobalTheory.FlagMeas.measurable_detOn_comp {X : Type} [TopologicalSpace X] [MeasurableSpace X]
     [BorelSpace X] {n : ℕ}
@@ -53,7 +52,6 @@ theorem _root_.GlobalTheory.FlagMeas.measurable_detOn_comp {X : Type} [Topologic
   rw [heq]
   exact Measurable.ite hS.measurableSet hg.norm.measurable measurable_const
 
-open MeasureTheory NumberField Matrix Finset in
 
 theorem _root_.GlobalTheory.FlagMeas.measurable_locSize_uMat (n : ℕ) (ε : Fin n → Bool) (a : ℕ) (j : Fin a → ℕ)
     (W : Fin (a + 1) → Submodule ℂ (Fin n → ℂ)) (i : Fin a) :

@@ -37,8 +37,6 @@ theorem sub_mem_of_ker_eq {O A : Type} [CommRing O] [IsLocalRing O] [Ring A] [Al
   rw [← IsLocalRing.residue_eq_zero_iff]
   simpa using h1
 
-set_option maxHeartbeats 2000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem main : ∀ {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (B : LocBase0 H what₂) (hs : HeckeStd0 B) (hd : FinDimV B)
     (i : LocT B), IsLocalRing (TOf B i) := by

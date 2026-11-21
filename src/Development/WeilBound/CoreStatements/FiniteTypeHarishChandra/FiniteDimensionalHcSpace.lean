@@ -30,9 +30,7 @@ def centralIdem [Fintype Γ] {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Re
 
 theorem zIdem_eq_centralIdem [Fintype Γ] (τ : FDRep ℂ Γ) : zIdem τ = centralIdem τ.ρ := rfl
 
-open Classical in
 
-open Classical in
 
 end Gen
 
@@ -43,20 +41,15 @@ variable (K : Type) [Field K] [Fintype K] [DecidableEq K]
 abbrev IsCuspidal {ι : Type} [Fintype ι] [DecidableEq ι] (τ : FDRep ℂ (GL ι K)) : Prop :=
   Formalism.IrreducibleCountingLemmas.TYPES.IsCuspidal K τ
 
-omit [Fintype K] [DecidableEq K] in
 
-variable {K} in
 
 variable {K}
 
-open Classical in
 
-variable (K) in
 
 def pm {ι : Type} [Fintype ι] [DecidableEq ι] (σ : Equiv.Perm ι) : GL ι K :=
   (Matrix.permMatrixHom (n := ι) (R := K)).toHomUnits σ
 
-variable (K) in
 
 def patSet {ι : Type} [Fintype ι] [DecidableEq ι] (Φ : ι → ι → Prop) : Set (GL ι K) :=
   {u | ∀ i j, (i = j → (u : Matrix ι ι K) i j = 1) ∧ (i ≠ j → ¬ Φ i j → (u : Matrix ι ι K) i j = 0)}
@@ -64,7 +57,6 @@ def patSet {ι : Type} [Fintype ι] [DecidableEq ι] (Φ : ι → ι → Prop) :
 def patChar {ι : Type} [Fintype ι] [DecidableEq ι] (E : ι → ι → K) (ψ₀ : AddChar K ℂ) (u : GL ι K) : ℂ :=
   ψ₀ (∑ i, ∑ j, E i j * (u : Matrix ι ι K) i j)
 
-open Classical in
 
 def wh {ι : Type} [Fintype ι] [DecidableEq ι] (Φ : ι → ι → Prop) (E : ι → ι → K) (ψ₀ : AddChar K ℂ)
     (χ : GL ι K → ℂ) : ℂ :=
@@ -72,18 +64,12 @@ def wh {ι : Type} [Fintype ι] [DecidableEq ι] (Φ : ι → ι → Prop) (E : 
 
 def IsPat {ι : Type} (Φ : ι → ι → Prop) : Prop := (∀ i, ¬ Φ i i) ∧ ∀ i j k, Φ i j → Φ j k → Φ i k
 
-variable (K) in
-open Classical in
 
-variable (K) in
 
 def cutE (N k : ℕ) (i j : Fin N) : K := if (j : ℕ) = i + 1 ∧ (j : ℕ) ≠ k then 1 else 0
 
-variable (K) in
 
-variable (K) in
 
-variable (K) in
 
 end GeneralLinearIntegers
 

@@ -34,7 +34,6 @@ variable (n : ℕ) [NeZero n]
 
 def Mu (A : Type) [CommRing A] : Type := Additive (rootsOfUnity n A)
 
-omit [NeZero n] in
 
 end Mu
 

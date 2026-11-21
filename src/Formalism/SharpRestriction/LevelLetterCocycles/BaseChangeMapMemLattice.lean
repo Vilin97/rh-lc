@@ -17,7 +17,6 @@ section Rep
 
 variable {G : Type} [Group G] {LL LL' : Type} [Field LL] [Field LL'] [Algebra LL LL']
 
-variable (LL') in
 
 def bρ {V : Type} [AddCommGroup V] [Module LL V] (ρ : Representation LL G V) :
     Representation LL' G (LL' ⊗[LL] V) where
@@ -35,7 +34,6 @@ section Top
 variable {LL LL' : Type} [Field LL] [Field LL'] [Algebra LL LL'] [TopologicalSpace LL]
   [TopologicalSpace LL'] [IsTopologicalRing LL']
 
-set_option warn.classDefReducibility false in
 
 def bTop (V : Type) [AddCommGroup V] [Module LL V] : TopologicalSpace (LL' ⊗[LL] V) :=
   moduleTopology LL' (LL' ⊗[LL] V)

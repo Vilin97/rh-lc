@@ -65,7 +65,6 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
 
 section Residue
 
-variable (L) in
 
 theorem natCast_residueField_ne_zero {m : ℕ} (hm : (m : 𝓀[K]) ≠ 0) : (m : 𝓀[L]) ≠ 0 := by
   rw [← map_natCast (algebraMap 𝓀[K] 𝓀[L])]
@@ -80,7 +79,6 @@ variable {m : ℕ} {ζ : L}
 private def rootInteger (hm : m ≠ 0) (hζ : ζ ^ m = 1) : 𝒪[L] :=
   ⟨ζ, mem_integer_of_pow_eq_one hm hζ⟩
 
-variable (K L) in
 
 theorem residueAlgEquiv_injective_of_adjoin_eq_top (hm : (m : 𝓀[K]) ≠ 0) (hζ : ζ ^ m = 1)
     (htop : K⟮ζ⟯ = ⊤) : Function.Injective (residueAlgEquiv K L) := by

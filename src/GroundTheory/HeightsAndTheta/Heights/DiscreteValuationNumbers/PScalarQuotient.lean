@@ -62,7 +62,6 @@ theorem classNum_monomial {σ : Type*} (cls : σ → K → ℤ) (μ : σ →₀ 
     simp
   · rw [support_monomial, if_neg hc, Finset.sum_singleton, coeff_monomial, if_pos rfl]
 
-omit [DecidableEq K] in
 
 theorem classList_diag {N : ℕ} (x : Fin N → K → ℤ) (i : Fin N) (j l : ℕ) :
     classList (Sum.elim x x) (Finsupp.single (Sum.inl i) j + Finsupp.single (Sum.inr i) l) =
@@ -120,7 +119,6 @@ theorem divCycle_support_finite (P : Ideal (ReciprocityTheory.ChartRestriction.G
   · exact h.1
   · exact absurd rfl hW
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [IsDomain O] [IsDiscreteValuationRing O] in
 
 theorem divCycle_unit (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (u : Oˣ) : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (u : O))) W : ℤ)) = 0 := by
   funext W
@@ -159,7 +157,6 @@ theorem ratDiv_const (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingO
 
 variable [DecidableEq K]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [IsDomain O] [IsDiscreteValuationRing O] in
 
 theorem isVerticalDivisor_const (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [P.IsPrime] (ϖ : O) (u : Oˣ) (n : ℕ)
     (hP : (C ((u : O) * ϖ ^ n) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P) :

@@ -44,7 +44,6 @@ theorem det_ne_zero_of_map {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (f : E →+*
   apply h
   rw [show J.map f = f.mapMatrix J from rfl, ← RingHom.map_det, h0, map_zero]
 
-omit [NumberField E] in
 
 theorem cA_apply (y : AF F ⊗[F] E) : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ y = sigR (AF F) σ y := by
   induction y using TensorProduct.induction_on with
@@ -52,7 +51,6 @@ theorem cA_apply (y : AF F ⊗[F] E) : GlobalTheory.IndefiniteRowSideFullHecke.W
   | tmul a x => rfl
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-omit [NumberField F] in
 
 theorem isHermND_smul_transpose {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hs : ∀ i j, σ (J j i) = -J i j)
     (hd : J.det ≠ 0) {δ : E} (hδ : δ ≠ 0) (hσδ : σ δ = -δ) : IsHermND σ (δ • Jᵀ) := by

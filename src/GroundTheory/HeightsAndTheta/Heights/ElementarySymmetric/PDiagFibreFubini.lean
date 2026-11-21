@@ -47,7 +47,6 @@ theorem linProd_word (k i : ℕ) (hik : i < k) :
 
 end DiagonalFibreFubini
 
-open DiagonalFibreFubini in
 
 end
 

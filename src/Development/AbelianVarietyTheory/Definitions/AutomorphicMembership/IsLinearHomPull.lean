@@ -54,7 +54,6 @@ instance : AddCommGroup (Chr D) := inferInstanceAs (AddCommGroup D.X)
 
 instance : Module O (Chr D) := Module.compHom D.X (starRingEnd O)
 
-variable (D O) in
 
 def torAct : OAct O (splitTorus (Sp R) (Chr D)) := Diag.diagAct (Sp R) O (Chr D)
 
@@ -92,7 +91,6 @@ variable {oa : D.OAct O} (Y : Ray oa)
 
 def act : OAct O Y.H := ofRingAct Y.ρ
 
-variable (oa) in
 
 def actB : OAct O D.P.A := ofRingAct oa.onB.toRingAct
 

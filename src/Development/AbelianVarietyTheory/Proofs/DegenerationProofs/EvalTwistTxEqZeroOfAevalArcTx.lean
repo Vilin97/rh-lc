@@ -17,7 +17,6 @@ variable {C : Type} [NontriviallyNormedField C] [CompleteSpace C]
 def AbsSumAt (u : C) (f : PowerSeries C) (c : C) : Prop :=
   (Summable fun n => ‖PowerSeries.coeff n f * u ^ n‖) ∧ ∑' n, PowerSeries.coeff n f * u ^ n = c
 
-omit [CompleteSpace C] in
 
 theorem AbsSumAt.add {u : C} {f g : PowerSeries C} {a b : C} (hf : AbsSumAt u f a) (hg : AbsSumAt u g b) :
     AbsSumAt u (f + g) (a + b) := by
@@ -328,7 +327,6 @@ private theorem absSumAt_arcTx_twist_tx {C : Type} [NontriviallyNormedField C]
   · rw [htw]
     exact hfib.tsum_eq
 
-open scoped BigOperators in
 
 theorem _root_.GlobalTheory.eval_twist_tx_eq_zero_of_aeval_arcTx : ∀ (C : Type) [NontriviallyNormedField C]
     [IsUltrametricDist C] [CompleteSpace C] (N : _root_.GlobalTheory.Ex.NumD C) (k : ℕ)

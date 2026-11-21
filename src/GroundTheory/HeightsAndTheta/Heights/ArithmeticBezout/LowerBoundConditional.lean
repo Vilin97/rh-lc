@@ -172,13 +172,10 @@ theorem chowHt_C_mul_prod (hMul : ChowHeightMul.Statement) (H : ArchData K n) {k
   rw [zero_add] at this
   rw [this, chowHeightConst K n k H c hc, zero_add, hprod s le_rfl]
 
-open Matrix in
 
-omit [NumberField K] in
 
 end Height
 
-open Classical in
 
 end
 

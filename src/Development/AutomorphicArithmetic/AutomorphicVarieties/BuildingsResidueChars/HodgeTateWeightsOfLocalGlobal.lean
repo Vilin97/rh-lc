@@ -19,7 +19,6 @@ private theorem norm_hom {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l]
     minpoly.algHom_eq σ σ.injective, ← minpoly.algHom_eq K.val K.val.injective]
   rfl
 
-open Formalism.BasicNotions.Loc in
 
 private theorem ex_emb {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] {l : ℕ}
     [Fact l.Prime] {A : ValuationSubring Ω} {w : Plc F} (h : IsPlaceOver A w) {O : Type} [CommRing O]

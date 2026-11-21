@@ -17,7 +17,6 @@ open scoped InnerProductSpace ComplexOrder
 
 namespace GlobalTheory.DerEx
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem smoothOnG_comb {n : ℕ} {ε : Fin n → Bool} {f g : Matrix (Fin n) (Fin n) ℂ → ℂ} (c : ℂ)
     (hf : SmoothOnG ε f) (hg : SmoothOnG ε g) : SmoothOnG ε (fun x => c * f x + g x) := by
@@ -29,7 +28,6 @@ theorem smoothOnG_comb {n : ℕ} {ε : Fin n → Bool} {f g : Matrix (Fin n) (Fi
   intro y hy hyJ
   simp only [hFf y hy.1 hyJ, hGg y hy.2 hyJ]
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem smoothOnG_zero {n : ℕ} (ε : Fin n → Bool) : SmoothOnG ε (fun _ => 0) := fun _ _ =>
   ⟨Set.univ, fun _ => 0, isOpen_univ, trivial, contDiffOn_const, fun _ _ _ => rfl⟩

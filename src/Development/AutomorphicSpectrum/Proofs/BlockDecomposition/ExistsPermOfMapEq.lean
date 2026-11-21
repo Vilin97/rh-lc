@@ -445,6 +445,5 @@ theorem chain_list (E : Fin n → Fin n → Module.End ℂ V) (hE : GlRel E) (j 
 
 end
 
-open CompanionTheory.D.LK (LocFin) in
 
 end GlobalTheory.CompanionTheory.RealMult.Kost

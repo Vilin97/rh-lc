@@ -35,14 +35,12 @@ variable {ι : Type} {k : Type} [CommRing k]
 
 def cechSign [LinearOrder ι] (J : Finset ι) (j : ι) : ℤ := (-1) ^ (J.filter (· < j)).card
 
-open Classical in
 
 def cechD [LinearOrder ι] (C : CechSystem ι k) : (∀ I, C.V I) →ₗ[k] (∀ I, C.V I) :=
   LinearMap.pi fun J => if C.good J then
     ∑ j ∈ J, cechSign J j • ((C.res (Finset.erase_subset j J)).comp (LinearMap.proj (J.erase j)))
   else 0
 
-open Classical in
 
 def cechC (C : CechSystem ι k) (i : ℕ) : Submodule k (∀ I, C.V I) :=
   Submodule.pi Set.univ fun I => if C.good I ∧ I.card = i + 1 then C.piece I else ⊥
@@ -171,7 +169,6 @@ abbrev gradedH (G : GradedMod S N M) (i : ℕ) (c : ℤ) : Type := cechH (graded
 
 abbrev gradedZ (G : GradedMod S N M) (i : ℕ) (c : ℤ) := cechZ (gradedSys S N M G c) i
 
-open Classical in
 
 def unitCochain (m : M) : ∀ I : Finset (Fin (N + 1)), LocM S N M I :=
   fun I => if I.card = 1 then locFrac S N M I m 0 else 0
@@ -267,7 +264,6 @@ open ReciprocityTheory.ChartRestriction.G.Geo
 variable (S : Type) [CommRing S] (N : ℕ)
 variable {M : Type} [AddCommGroup M] [Module (Poly S N) M] [Module S M] [IsScalarTower S (Poly S N) M]
 
-open Classical in
 
 variable {S N}
 variable {Ω : Type} [Field Ω] [Algebra S Ω]
@@ -282,7 +278,6 @@ open ReciprocityTheory.ChartRestriction.G.Geo
 
 variable {S : Type} [CommRing S] {σ : Type} {Ω : Type} [Field Ω] [Algebra S Ω]
 
-open GroundTheory.Heights₂.Heights.NumbersDVR in
 
 end Comparison₂
 
@@ -302,7 +297,6 @@ open ReciprocityTheory.ChartRestriction.G.Geo
 
 variable {S : Type} [CommRing S] {N : ℕ} {Ω : Type} [Field Ω] [Algebra S Ω]
 
-open Classical in
 
 variable (S N)
 

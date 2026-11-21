@@ -26,7 +26,6 @@ def nrm (k : K) (x : (Σ k, ι k) → ℂ) : ℝ := ∑ i, ‖x ⟨k, i⟩‖ ^ 
 
 def Nd (d : K → ℕ) (x : (Σ k, ι k) → ℂ) : ℝ := ∏ k, nrm k x ^ d k
 
-variable (ι) in
 
 def blockNZ : Set ((Σ k, ι k) → ℂ) := {x | ∀ k, ∃ i, x ⟨k, i⟩ ≠ 0}
 

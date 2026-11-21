@@ -71,7 +71,6 @@ end GlobalTheory.HSAmp.HomInj
 
 namespace GlobalTheory.HSAmp
 
-open GlobalTheory.HSAmp.HomInj in
 
 theorem homogComb_eq_zero : ∀ (K : Type) [Field K] [CharZero K] (D : ℕ) (x : Fin (D + 1) → K), (∀ j, x j ≠ 0) →
     AlgebraicIndependent ℤ (fun j : Fin D => x j.succ / x 0) → FiniteDimensional (ratF x) K →

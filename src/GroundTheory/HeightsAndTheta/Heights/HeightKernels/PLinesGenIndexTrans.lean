@@ -17,7 +17,6 @@ theorem toAddSubgroup_span {V : Type} [AddCommGroup V] (s : Set V) :
 
 end KLinesGenIndexTrans
 
-open KLinesGenIndexTrans in
 
 theorem LinesGenIndexTrans.proof (h1 : LinesLatticeBasis.Statement)
     (h2 : LinesGenIndexDet.Statement) : LinesGenIndexTrans.Statement := by

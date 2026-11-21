@@ -64,7 +64,6 @@ theorem ord_le_ord_iff {x y : K} (hx : x ≠ 0) (hy : y ≠ 0) :
   rw [← normalizedValuation_le_iff, normalizedValuation_eq_exp_ord hx,
     normalizedValuation_eq_exp_ord hy, WithZero.exp_le_exp, neg_le_neg_iff]
 
-variable (K) in
 
 theorem exists_ord_eq (n : ℤ) : ∃ x : K, x ≠ 0 ∧ ord x = n := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
@@ -139,7 +138,6 @@ section Rat
 variable (K : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ω : Type*} [Field Ω] [ValuativeRel Ω] [Algebra K Ω] [ValuativeExtension K Ω]
 
-open Classical in
 
 def ordRat (x : Ω) : ℚ :=
   if h : ∃ p : ℕ × K, 0 < p.1 ∧ p.2 ≠ 0 ∧ valuation Ω x ^ p.1 = valuation Ω (algebraMap K Ω p.2)
@@ -147,7 +145,6 @@ def ordRat (x : Ω) : ℚ :=
 
 variable {K}
 
-omit [ValuativeExtension K Ω] in
 
 theorem ordRat_congr {x y : Ω} (h : valuation Ω x = valuation Ω y) : ordRat K x = ordRat K y := by
   unfold ordRat
@@ -172,7 +169,6 @@ theorem ordRat_eq_of_pow {x : Ω} {m : ℕ} {a : K} (hm : 0 < m) (ha : a ≠ 0)
   push_cast at hv'
   linarith
 
-omit [ValuativeExtension K Ω] in
 
 @[simp]
 theorem ordRat_zero : ordRat K (0 : Ω) = 0 := by
@@ -280,9 +276,7 @@ theorem ordRat_eq_ordRat_iff {x y : Ω} (hx : x ≠ 0) (hy : y ≠ 0) :
 theorem ordRat_algEquiv (σ : Ω ≃ₐ[K] Ω) (x : Ω) : ordRat K (σ x) = ordRat K x :=
   ordRat_congr (valuation_algEquiv_apply_of_isAlgebraic σ x)
 
-variable (K Ω) in
 
-variable (K Ω) in
 
 def valueGroupRat (L : Type*) [Field L] [Algebra L Ω] : AddSubgroup ℚ where
   carrier := Set.range fun y : Lˣ ↦ ordRat K (algebraMap L Ω y)
@@ -306,7 +300,6 @@ theorem mem_valueGroupRat {L : Type*} [Field L] [Algebra L Ω] {q : ℚ} :
   · rintro ⟨y, hy, rfl⟩
     exact ⟨Units.mk0 y hy, rfl⟩
 
-variable (K Ω) in
 
 theorem valueGroupRat_base : valueGroupRat K Ω K = AddSubgroup.zmultiples (1 : ℚ) := by
   ext q
@@ -322,7 +315,6 @@ variable (L : Type*) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
     [Algebra L Ω] [IsScalarTower K L Ω] [ValuativeExtension L Ω]
 
-variable (K Ω) in
 
 theorem valueGroupRat_eq :
     valueGroupRat K Ω L = AddSubgroup.zmultiples (((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℚ)⁻¹) := by
@@ -337,9 +329,7 @@ theorem valueGroupRat_eq :
 
 omit [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L] [ValuativeExtension K L]
   [FiniteDimensional K L] [ValuativeExtension L Ω] in
-variable (K Ω) in
 
-variable (K Ω) in
 
 theorem relIndex_valueGroupRat :
     (valueGroupRat K Ω K).relIndex (valueGroupRat K Ω L) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by

@@ -48,14 +48,12 @@ theorem mem_exactForms_succ {k : ℕ} {α : A.Fld} :
   · rintro ⟨η, hη, hk, rfl⟩
     exact ⟨hk.dExt, η, hη, rfl⟩
 
-variable (A) in
 
 theorem exactForms_zero : A.exactForms 0 = ⊥ := by
   refine eq_bot_iff.2 fun α ⟨h, η, hη, e⟩ => ?_
   rw [Submodule.mem_bot, ← h.degFld_eq, e]
   exact (degFld_dExt hη 0).2
 
-variable (A) in
 
 def HSm (k : ℕ) : Type := A.closedForms k ⧸ (A.exactForms k).submoduleOf (A.closedForms k)
 
@@ -65,7 +63,6 @@ instance (k : ℕ) : Module ℂ (A.HSm k) := inferInstanceAs (Module ℂ (_ ⧸ 
 
 namespace HSm
 
-variable (A) in
 
 def mk (k : ℕ) : A.closedForms k →ₗ[ℂ] A.HSm k := Submodule.mkQ _
 
@@ -75,7 +72,6 @@ theorem mk_surjective (k : ℕ) : Function.Surjective (mk A k) := Submodule.mkQ_
   obtain ⟨α, rfl⟩ := mk_surjective k c
   exact h α
 
-variable (A) in
 
 def fil (p k : ℕ) : Submodule ℂ (A.HSm k) where
   carrier := {c | ∃ α : A.closedForms k, A.TypeGe p α ∧ mk A k α = c}
@@ -87,20 +83,14 @@ def fil (p k : ℕ) : Submodule ℂ (A.HSm k) where
     rintro _ ⟨α, hα, rfl⟩
     exact ⟨c • α, typeGe_iff.2 fun x => Submodule.smul_mem _ c (typeGe_iff.1 hα x), map_smul _ _ _⟩
 
-variable (A) in
 
 theorem fil_zero (k : ℕ) : fil A 0 k = ⊤ :=
   eq_top_iff.2 fun c _ => induction_on c fun α => ⟨α, fun _ _ _ => Nat.zero_le _, rfl⟩
 
-variable (A) in
 
-variable (A) in
 
-variable (A) in
 
-variable (A) in
 
-variable (A) in
 
 variable {A'}
 

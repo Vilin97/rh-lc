@@ -213,7 +213,6 @@ theorem heisG_add_two {bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ} (hs : I
   rw [h2fix, hexp, one_smul] at hcomp
   exact hcomp.symm
 
-omit [IsCMField E] in
 
 theorem mul_mem_tens {Λ Λ' : Lt E n} {h : Matrix (Fin n) (Fin n) E} (hh : ∀ v ∈ Λ, h *ᵥ v ∈ Λ')
     {y : Matrix (Fin n) (Fin r) E} (hy : y ∈ tens Λ L) : h * y ∈ tens Λ' L := by
@@ -232,7 +231,6 @@ theorem mul_mem_tens {Λ Λ' : Lt E n} {h : Matrix (Fin n) (Fin n) E} (hh : ∀ 
     exact TensLat.pure_mem (hh v hv) hu
   exact key hy
 
-omit [IsCMField E] in
 
 theorem smul_mem_tens' {Λ Λ' : Lt E n} {s : E} (hh : ∀ v ∈ Λ, s • v ∈ Λ')
     {y : Matrix (Fin n) (Fin r) E} (hy : y ∈ tens Λ L) : s • y ∈ tens Λ' L := by

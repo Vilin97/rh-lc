@@ -32,9 +32,7 @@ theorem mtildeL_rep_mem {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.W
 open GlobalTheory.PerQ
 variable {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws)
 
-open Classical in
 
-open GlobalTheory.Mem.Col2.TrueColsTest in
 
 section G
 open GlobalTheory.PeriodOnStep
@@ -48,7 +46,6 @@ theorem span_mtildeL (hX : X.Ok) : Submodule.span X.K (MtildeL W Ch sel mu P : S
 
 theorem span_toMtP (hX : X.Ok) : Submodule.span ℂ (Set.range fun z : MtildeL W Ch sel mu P => toMtP W Ch sel mu P σ z.1) = ⊤ :=
     toCForm_span_of_span σ W.sgTrue _ _ hX (φ := fun z : MtildeL W Ch sel mu P => z.1) (eq_top_iff.2 ((span_mtildeL W Ch sel mu P hX).ge.trans (Submodule.span_mono fun z hz => ⟨⟨z, hz⟩, rfl⟩)))
-include hd in
 
 theorem exists_form_of_mt (F : (perOn W Ch sel mu P b0 til ext tz (fun _ => ⊤)).Mt X.emb σ) : ∃ G : MtP W Ch sel mu P σ, ∀ b d, F.1 b d = G.1 (toRow sel mu d.1.1) := by
   have hl : FrLaw σ W.sgTrue (rowTyG Ch P) (levQX R sel mu) ⊤ fun p : XPt Pr R sel mu => F.1 () (trivPt X _ _ _ _ p) := by

@@ -337,7 +337,6 @@ def inc (j : ℕ) (w : WeightFamilies.Wt D j) : P.Cusp j w →ₗ[P.KO] P.Forms 
     change ((P.incS j w (a • F) : P.FormsS j) : P.Amb j) = a • (P.incS j w F : P.Amb j)
     rw [map_smul]; rfl)
 
-open Classical in
 
 def vAt (la : HeightOneSpectrum (𝓞 P.KO)) (y : P.Pt j la) (x : P.Forms j) : EReal :=
   P.vAtS la y (x : P.FormsS j)

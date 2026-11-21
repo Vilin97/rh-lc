@@ -24,7 +24,6 @@ def lowU (ν : Matrix D A k) : GL (A ⊕ D) k where
 
 theorem val_lowU (ν : Matrix D A k) : (lowU ν).1 = fromBlocks 1 0 ν 1 := rfl
 
-open Classical in
 
 def blockDet (j : GL (A ⊕ D) k) : kˣ :=
   if h : j.1.toBlocks₂₂.det ≠ 0 then Units.mk0 _ h else 1
@@ -97,7 +96,6 @@ theorem emb_mem {κ : GL D k} (h : κ ∈ KO k D) : emb₂ k (Equiv.refl (A ⊕ 
     · exact zero_mem _
     · exact h2 i j
 
-variable (k D) in
 
 def mLat : AddSubgroup (D → k) where
   carrier := {v | ∀ i, valuation k (v i) < 1}

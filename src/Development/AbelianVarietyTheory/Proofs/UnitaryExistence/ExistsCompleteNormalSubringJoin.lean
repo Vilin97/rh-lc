@@ -20,7 +20,6 @@ namespace CompleteJoin
 
 variable {C : Type} [NormedField C] [IsUltrametricDist C]
 
-omit [IsUltrametricDist C] in
 
 theorem not_isUnit_of_norm_lt_one {R : Type*} [CommRing R] (f : R →+* C) (hf : ∀ a, ‖f a‖ ≤ 1)
     {a : R} (ha : ‖f a‖ < 1) : ¬ IsUnit a := by
@@ -89,7 +88,6 @@ theorem subring_of_finite {R : Type} [CommRing R] [IsLocalRing R] [IsNoetherianR
   rw [← eq_maximalIdeal hm] at hz
   exact hz
 
-omit [IsUltrametricDist C] in
 
 theorem exists_subring_finite {R V : Type} [CommRing R] [CommRing V] {p : ℕ} [Fact p.Prime]
     [Algebra ℤ_[p] V] [Module.Finite ℤ_[p] V] (f : R →+* C) (g : V →+* C) (φ : ℤ_[p] →+* R)
@@ -117,7 +115,6 @@ theorem exists_subring_finite {R V : Type} [CommRing R] [CommRing V] {p : ℕ} [
     rw [this]
     exact Subalgebra.algebraMap_mem _ _
 
-omit [IsUltrametricDist C] in
 
 theorem exists_normal_subring (S : Subring C)
     (h : Module.Finite S (integralClosure S (FractionRing S))) :
@@ -137,7 +134,6 @@ theorem exists_normal_subring (S : Subring C)
 
 end CompleteJoin
 
-open CompleteJoin in
 
 theorem exists_complete_normal_subring_join : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [CharZero R] (T : Formalism.L2.Pj.CDVR) (C : Type) [NormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] (f : R →+* C) (g : T.V →+* C) (p : ℕ), p.Prime → ‖(p : C)‖ < 1 → T.FinRes → IsNoetherianRing R → IsAdicComplete (maximalIdeal R) R → (∀ a, ‖f a‖ ≤ 1) → (∀ a ∈ maximalIdeal R, ‖f a‖ < 1) → (∀ a, ‖g a‖ ≤ 1) → (∀ a ∈ maximalIdeal T.V, ‖g a‖ < 1) → ∃ (S : Subring C) (_ : IsLocalRing S), IsNoetherianRing S ∧ IsIntegrallyClosed S ∧ IsAdicComplete (maximalIdeal S) S ∧ (∀ a, f a ∈ S) ∧ (∀ a, g a ∈ S) ∧ (∀ z : S, ‖(z : C)‖ ≤ 1) ∧ ∀ z : S, z ∈ maximalIdeal S ↔ ‖(z : C)‖ < 1 := by
   intro R _ _ _ _ T C _ _ _ _ f g _ _ _ hT hN hR hf1 hf2 hg1 hg2

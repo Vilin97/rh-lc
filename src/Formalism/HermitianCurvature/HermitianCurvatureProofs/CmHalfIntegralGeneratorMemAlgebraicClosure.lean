@@ -265,7 +265,6 @@ lemma Hpk_unit (k r : ℕ) : IsUnit (Hpk k r).det := by
   exact isUnit_iff_ne_zero.mpr (fun h0 => by rw [h0, zero_mul] at h; exact zero_ne_one h)
 
 lemma herm_self_im (k r : ℕ) (y : Fin (2 * r + k + 1) → ℂ) : (herm (Hpk k r) y y).im = 0 := (Complex.conj_eq_iff_im).mp (herm_conj (Hpk k r) (Hpk_herm k r) y y)
-open scoped ComplexOrder in
 
 lemma herm_nondeg (k r : ℕ) (y : Fin (2 * r + k + 1) → ℂ) (h : ∀ x, herm (Hpk k r) x y = 0) : y = 0 := by
   have h1 : star y ᵥ* Hpk k r = 0 := by

@@ -12,8 +12,6 @@ namespace GlobalTheory.CuspGL
 
 variable {F : Type} [Field F] [Finite F]
 
-open Polynomial in
-variable {F : Type} [Field F] [Finite F] in
 
 theorem _root_.GlobalTheory.CuspGL.minpoly_natDegree_dvd_iff_pow (α : AlgebraicClosure F) (m : ℕ) :
     (minpoly F α).natDegree ∣ m ↔ α ^ Nat.card F ^ m = α := by
@@ -21,8 +19,6 @@ theorem _root_.GlobalTheory.CuspGL.minpoly_natDegree_dvd_iff_pow (α : Algebraic
     minpoly.dvd_iff]
   simp [sub_eq_zero]
 
-open Polynomial in
-variable {F : Type} [Field F] [Finite F] in
 
 theorem _root_.GlobalTheory.CuspGL.roots_minpoly_eq_map_range (α : AlgebraicClosure F) :
     ((minpoly F α).map (algebraMap F (AlgebraicClosure F))).roots =
@@ -78,8 +74,6 @@ private theorem sum_range_mul_eq_nsmul_of_periodic {M : Type} [AddCommMonoid M] 
     congr 1
     exact Finset.sum_congr rfl fun i _ => hf i e
 
-open Polynomial in
-variable {F : Type} [Field F] [Finite F] in
 
 theorem _root_.GlobalTheory.CuspGL.torus_minpoly : ∀ (F : Type) [Field F] [Finite F]
     (θ : AlgebraicClosure F →* ℂ) (n : ℕ), 0 < n →

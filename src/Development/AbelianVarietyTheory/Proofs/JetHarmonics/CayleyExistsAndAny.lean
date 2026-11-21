@@ -190,8 +190,6 @@ theorem _root_.GlobalTheory.CayleyChoice.isDS_conj {lam : Fin n → ℝ} (hσ : 
   · intro μ T hT
     exact hmin μ _ (isKTypeOf_map_of_intertwining e.symm he' hT)
 
-open Matrix MeasureTheory Finset in
-open scoped InnerProductSpace ENNReal in
 
 theorem _root_.GlobalTheory.CayleyChoice.cayley_exists_and_any : ∀ (k r : ℕ),
     (1 ≤ k → ∃ Q, _root_.PI.UpqRep.IsCayleyU k r (_root_.PI.BesselPeriodGGP.eps48 k r) Q) ∧

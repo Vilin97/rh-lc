@@ -15,7 +15,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-open Classical in
 
 theorem idemSum_of_noConj (S : Finset (Formalism.L2.DIV.Pl D.host.E))
     (hnc : ∀ P ∈ S, ∀ P' ∈ S, ¬ Lev.IsConjPl (D := D) P P') :

@@ -205,7 +205,6 @@ theorem trdeg_quotient_eq_of_mem_minimalPrimes (k : Type u) [Field k] [Algebra O
   rw [trdeg_eq_of_isAlgebraic_top k (MvPolynomial (Fin s) k), trdeg_eq_of_isAlgebraic_top O (MvPolynomial (Fin s) O) A,
     MvPolynomial.trdeg_of_isDomain, MvPolynomial.trdeg_of_isDomain]
 
-omit [IsDiscreteValuationRing O] [FaithfulSMul O A] [IsDomain A] in
 
 theorem exists_trdeg_eq_natCast : ∃ d : ℕ, Algebra.trdeg O A = d :=
   Cardinal.lt_aleph0.mp trdeg_lt_aleph0_of_finiteType
@@ -220,7 +219,6 @@ theorem ringKrullDim_quotient_eq_of_mem_minimalPrimes {q : Ideal A}
   refine ringKrullDim_eq_of_trdeg_eq (O ⧸ maximalIdeal O) _ ?_
   rw [trdeg_quotient_eq_of_mem_minimalPrimes O _ Ideal.Quotient.mk_surjective hq, hd]
 
-omit [Algebra.FiniteType O A] [IsDiscreteValuationRing O] in
 
 theorem trdeg_fractionRing_eq (K F : Type u) [Field K] [Algebra O K] [IsFractionRing O K]
     [Field F] [Algebra A F] [IsFractionRing A F] [Algebra O F] [Algebra K F]
@@ -230,8 +228,6 @@ theorem trdeg_fractionRing_eq (K F : Type u) [Field K] [Algebra O K] [IsFraction
   have : Algebra.IsAlgebraic A F := IsLocalization.isAlgebraic _ (nonZeroDivisors A)
   rw [← trdeg_eq_of_isAlgebraic_bot O K F, trdeg_eq_of_isAlgebraic_top O A F]
 
-attribute [local instance] Algebra.TensorProduct.rightAlgebra in
-omit [IsDiscreteValuationRing O] in
 
 theorem ringKrullDim_genericFibre_eq (K : Type u) [Field K] [Algebra O K] [IsFractionRing O K]
     {d : ℕ} (hd : Algebra.trdeg O A = d) : ringKrullDim (K ⊗[O] A) = d := by
@@ -412,7 +408,6 @@ open AlgebraicGeometry CategoryTheory Topology Limits
 variable {O : Type u} [CommRing O] [IsDomain O]
   {Y : Scheme.{u}} [IsIntegral Y] (f : Y ⟶ Spec (.of O)) [LocallyOfFiniteType f] [Flat f]
 
-attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 
 theorem topologicalKrullDim_preimage_genericPoint_eq {d : ℕ}
     (hd : letI := (Spec.preimage (Y.fromSpecStalk (genericPoint Y) ≫ f)).hom.toAlgebra
@@ -454,7 +449,6 @@ theorem topologicalKrullDim_preimage_genericPoint_eq {d : ℕ}
 
 variable [IsDiscreteValuationRing O]
 
-omit [IsIntegral Y] [LocallyOfFiniteType f] [Flat f] in
 
 theorem mem_minimalPrimes_of_mem_irreducibleComponents {S : Type*} [TopologicalSpace S]
     {i : S → Y} (hi : IsEmbedding i) (hr : Set.range i = f ⁻¹' {closedPoint O})
@@ -484,7 +478,6 @@ theorem mem_minimalPrimes_of_mem_irreducibleComponents {S : Type*} [TopologicalS
   exact (PrimeSpectrum.le_iff_specializes q ⟨p, hp.1⟩).mpr
     (j.isOpenEmbedding.isInducing.specializes_iff.mp h₄)
 
-omit [IsIntegral Y] [LocallyOfFiniteType f] [Flat f] in
 
 theorem isClosed_image_of_mem_irreducibleComponents {S : Type*} [TopologicalSpace S]
     {i : S → Y} (hi : IsEmbedding i) (hr : Set.range i = f ⁻¹' {closedPoint O})
@@ -554,7 +547,6 @@ theorem exists_topologicalKrullDim_fibres_eq_of_isEmbedding
     (topologicalKrullDim_preimage_genericPoint_eq f hd),
     fun Z hZ ↦ topologicalKrullDim_eq_of_mem_irreducibleComponents_of_trdeg_eq f hi hr hZ hd⟩
 
-omit [IsDomain O] [IsDiscreteValuationRing O] [IsIntegral Y] [LocallyOfFiniteType f] [Flat f] in
 
 theorem isEmbedding_and_range_eq_of_isPullback {T P : Scheme.{u}} {g : T ⟶ Spec (.of O)}
     [IsPreimmersion g] {i : P ⟶ Y} {p : P ⟶ T} (h : IsPullback i p f g) :

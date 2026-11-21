@@ -304,7 +304,6 @@ theorem cut_conj {R : Type} [CommRing R] {e e' z z' : R} (h : (1 - (e + e')) * z
     e * z + (1 - e) = z * (e' * z' + (1 - e')) := by
   linear_combination -h - e' * h'
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_half_det {ε : AE D} (hε : GlobalTheory.RatAut.IsHalfIdem D ε) (V : HSp D) (gV : V.gram = 1) {g : GA D V}
     {x : Formalism.MainNotions.StandardLatticesGL3.GA D V.rank} (hg : IsFinPt V g x) (sx : Formalism.MainNotions.StandardLatticesGL3.SuppSplit D (x : GL (Fin V.rank) (Formalism.MainNotions.StandardLatticesGL3.AE D))) :

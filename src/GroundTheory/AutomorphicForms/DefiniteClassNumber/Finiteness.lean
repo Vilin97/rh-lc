@@ -52,7 +52,6 @@ variable {E : Type*} [CommRing E] [Algebra K E] [Algebra.IsQuadraticExtension K 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {H : Matrix ι ι E}
 variable {κ : Type*} [Fintype κ] [DecidableEq κ] (b : Basis κ K E)
 
-omit [Fintype κ] [DecidableEq κ] in
 
 end ShortBasis
 
@@ -63,19 +62,12 @@ variable {E : Type*} [CommRing E] [Algebra K E] [Algebra.IsQuadraticExtension K 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {H : Matrix ι ι E}
 variable {κ : Type*} [Fintype κ] [DecidableEq κ] (b : Basis κ K E)
 
-omit [DecidableEq ι] [DecidableEq κ] in
 
-omit [DecidableEq ι] in
 
-omit [DecidableEq ι] in
 
-omit [Algebra.IsQuadraticExtension K E] [DecidableEq ι] [DecidableEq κ] in
 
-omit [Algebra.IsQuadraticExtension K E] [DecidableEq ι] [DecidableEq κ] in
 
-omit [Algebra.IsQuadraticExtension K E] [DecidableEq ι] [DecidableEq κ] in
 
-omit [DecidableEq κ] in
 
 end Coordinates
 
@@ -86,9 +78,7 @@ variable {E : Type*} [CommRing E] [Algebra K E] [Algebra.IsQuadraticExtension K 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {H : Matrix ι ι E}
 variable {κ : Type*} [Fintype κ] (b : Basis κ K E)
 
-omit [NumberField K] in
 
-omit [NumberField K] [DecidableEq ι] in
 
 end EBound
 

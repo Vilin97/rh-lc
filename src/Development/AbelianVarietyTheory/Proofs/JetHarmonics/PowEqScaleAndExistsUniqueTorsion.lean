@@ -31,7 +31,6 @@ theorem ptMap_id' (A : Type) [CommRing A] [Algebra O A] : ptMap (AlgHom.id O A) 
   ext1
   exact Spec.map_id _
 
-variable (O) in
 
 noncomputable abbrev scale (a : R) : specO O (DualNumber R) ⟶ specO O (DualNumber R) :=
   ptMap ((TrivSqZeroExt.map (a • (LinearMap.id : R →ₗ[R] R))).restrictScalars O)
@@ -49,13 +48,11 @@ theorem scale_zero : scale O (0 : R) =
   refine AlgHom.ext fun x => ?_
   ext <;> simp
 
-variable (O) in
 
 noncomputable abbrev toTwo (l : R →ₗ[R] R × R) :
     specO O (TrivSqZeroExt R (R × R)) ⟶ specO O (DualNumber R) :=
   ptMap ((TrivSqZeroExt.map l).restrictScalars O)
 
-variable (O) in
 
 noncomputable abbrev ofTwo (l : R × R →ₗ[R] R) :
     specO O (DualNumber R) ⟶ specO O (TrivSqZeroExt R (R × R)) :=

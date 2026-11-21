@@ -52,7 +52,6 @@ theorem fg_extLat {M : Submodule (𝓞 K) X} (h : M.FG) : (extLat ι M).FG := by
   obtain ⟨S, rfl⟩ := h
   exact extLat_span ι S ▸ Submodule.fg_span (S.finite_toSet.image ι)
 
-variable {ι} in
 
 theorem IsExtension.span_extLat (hι : IsExtension ι) {M : Submodule (𝓞 K) X}
     (h : Submodule.span K (M : Set X) = ⊤) : Submodule.span E (extLat ι M : Set X') = ⊤ := by
@@ -135,7 +134,6 @@ theorem finite_top (hp : IsProjOver p) (hB : B.IsLB) : Module.Finite k (H0 p B �
 variable [Algebra k E] {q : T ⟶ Sp E} {r : T ⟶ Y} (H : IsPullback r q p (spMap (algebraMap k E)))
   {B' : LB T} (hB : B.IsLB) (hB' : B'.IsLB) (a : ChartPull B' B r) {W : T.Opens}
 
-include hB hB' in
 
 theorem linearIndependent_pullChart (h : W ≤ r ⁻¹ᵁ O) (h' : r ⁻¹ᵁ O ≤ W) {ι : Type*} [Fintype ι]
     {f : ι → H0 p B O} (hf : LinearIndependent k f) :
@@ -169,7 +167,6 @@ theorem linearIndependent_pullChart (h : W ≤ r ⁻¹ᵁ O) (h' : r ⁻¹ᵁ O 
   refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) e₃
   exact congrArg (· * _) (ger_algX y hyV _).symm
 
-include hB hB' in
 
 theorem isExtension_pullChart_top (hp : IsProjOver p) (hq : IsProjOver q) :
     IsExtension (pullChart (O := ⊤) (W := ⊤) a H.w le_top) := by
@@ -214,7 +211,6 @@ def polarMap (C : ProdChart P B N) (t : P.Sec) (ht : O ≤ nonzeroLocus t) : H0 
   (C.mulEquiv (σ := H0.ofSec p O t) fun y hy i hi => by
     rw [germ_ofSec, isUnit_ger_iff]; exact ht hy).symm.toLinearMap ∘ₗ restr le_top
 
-variable (p B) in
 
 def polar (hP : P.IsLB) (hB : B.IsLB) (t : P.Sec) (ht : O ≤ nonzeroLocus t) : Submodule k (H0 p B O) :=
   LinearMap.range (polarMap (tensChart hP hB) t ht)
@@ -323,7 +319,6 @@ theorem linearIndependent_cval (hq : Etale q) (hB : B.IsLB) (τ : E →+* ℂ) {
 
 variable (hf : IsFinite q) (he : Etale q) (φ : ∀ τ, Weight q τ B)
 
-open Classical in
 
 def pointHerm : HermFam E (H0 q B ⊤) :=
   letI : ∀ τ, Fintype (CxPts q τ) := fun τ => @Fintype.ofFinite _ (finite_cxPts hf τ)

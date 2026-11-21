@@ -65,7 +65,6 @@ theorem aeval_C_mul_X {T : Type} [Fintype T] {S : Type*} [CommRing S] (r : (Σ _
 
 end VerticalPointMultiplicityChart
 
-open VerticalPointMultiplicityChart in
 
 theorem VertPointMultChart.proof (hCh : VertPointChart.Statement) (hN : VertPointNagata.Statement) :
     VertPointMultChart.Statement := by

@@ -144,7 +144,6 @@ omit [CharZero k] in
 theorem act_act (g h : GL (Fin n) k) (p : Sp k n) : act g (act h p) = act (g * h) p := by
   simp only [act, _root_.mul_inv_rev, Units.val_mul, Matrix.mulVec_mulVec, mul_assoc]
 
-omit [CharZero k] in
 
 def actH (g : GL (Fin n) k) : Sp k n ≃ₜ Sp k n where
   toFun := act g

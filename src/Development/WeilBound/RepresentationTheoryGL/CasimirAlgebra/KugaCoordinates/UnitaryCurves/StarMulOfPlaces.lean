@@ -34,7 +34,6 @@ theorem continuous_eval (y : Sm E a) (g : GA E a) :
   rw [h1]
   exact (y.2 g).continuousOn.comp_continuous continuous_subtype_val fun k => val_mem_invSet (Unitary.toUnits k)
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem star_mul_of_places (D : InfinitePlace E → Matrix (Fin a) (Fin a) ℂ) (h : ∀ w, star (D w) * D w = 1) :
     star (Matrix.of fun i j w => D w i j : Matrix (Fin a) (Fin a) (Cinf E)) * Matrix.of (fun i j w => D w i j) = 1 := by
@@ -46,7 +45,6 @@ theorem star_mul_of_places (D : InfinitePlace E → Matrix (Fin a) (Fin a) ℂ) 
   rw [this, Matrix.one_apply, Matrix.one_apply]
   split_ifs <;> rfl
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem atEmb_apply (τ : E →+* ℂ) (z : ℂ) (w : InfinitePlace E) :
     atEmb τ z w = if w = InfinitePlace.mk τ then

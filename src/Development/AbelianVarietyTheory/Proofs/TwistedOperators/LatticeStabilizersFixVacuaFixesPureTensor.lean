@@ -60,7 +60,6 @@ end GlobalTheory.SphGlob
 
 namespace GlobalTheory.SphGlob
 
-open scoped Classical in
 
 theorem ev_mem_adm {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (x : κ → AF F) :
     (LinearMap.proj x : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) ∈ (GlobalTheory.WeilM.adeleClass F).adm κ := by
@@ -74,7 +73,6 @@ theorem ev_mem_adm {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
 end GlobalTheory.SphGlob
 
-open GlobalTheory.SphGlob in
 
 theorem GlobalTheory.SphGlob.fixes_pure : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n d : ℕ)
     (X : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n) (W : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d) (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ X W) (ψ : AddChar (AF F) ℂ)

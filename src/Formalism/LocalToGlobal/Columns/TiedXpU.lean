@@ -139,8 +139,6 @@ variable {d : ColDat} (a : ColArgs d) (hS : SpStd d.toColBase) (hH : HostHyp d)
 abbrev ColDat.tilC (d : ColDat) (u : d.what₂.Word) (c : PCl d) : StCl (Pr := d.Pr) d.W d.lev u d.R.m :=
   tilCl (Pr := d.Pr) d.W d.lev (Finset.Subset.refl _) d.levP u c
 
-include hS hH in
-set_option maxHeartbeats 1000000 in
 
 theorem xp_Ld_eq (u : d.what₂.Word) (c : StCl (Pr := d.Pr) d.W d.lev u d.R.m) :
     CF.Ld (d.colRec a) u d.R.m le_rfl c = (d.repr u d.R.m c).1.Lsh :=
@@ -148,7 +146,6 @@ theorem xp_Ld_eq (u : d.what₂.Word) (c : StCl (Pr := d.Pr) d.W d.lev u d.R.m) 
 
 variable (hP : PtSurjP d)
 
-set_option maxHeartbeats 2000000 in
 
 def tildeLatticeAgreement (u : d.what₂.Word) :
     CF.TilTied (D := d.colRec a) u (atTTied a hH u) (parabolicClassAgreement a hS hH hP u) (levelAgreement a hS hH u d.R.m le_rfl) where

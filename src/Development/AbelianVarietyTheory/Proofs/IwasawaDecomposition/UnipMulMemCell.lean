@@ -23,7 +23,6 @@ variable [ValuativeRel k]
 def cell (ϖ : kˣ) (a : Fin m → ℤ) : Set (GL (Fin m) k) :=
   {g | ∃ u ∈ unipB k (Fin m), ∃ κ ∈ KO k (Fin m), g = u * tD ϖ a * κ}
 
-variable (m) in
 
 theorem val_tD (ϖ : kˣ) (a : Fin m → ℤ) : (tD ϖ a).val = Matrix.diagonal fun i => ((ϖ ^ a i : kˣ) : k) :=
   val_diagT k _

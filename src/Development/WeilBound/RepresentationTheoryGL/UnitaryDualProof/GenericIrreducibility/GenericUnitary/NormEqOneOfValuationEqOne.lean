@@ -14,7 +14,6 @@ namespace PositivityTheory.RgUd.Exp.Rpow
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 theorem exists_unit_uniformizer : ∃ ϖ : kˣ, valuation k (ϖ : k) = uniformizer k := by
   obtain ⟨x, hx⟩ := valuation_surjective (uniformizer k)
@@ -41,7 +40,6 @@ def normHom (χ : kˣ →* ℂˣ) : kˣ →* ℝ where
   map_one' := by simp
   map_mul' x y := by simp
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem mem_units_integer {u : kˣ} (hu : valuation k (u : k) = 1) :
     u ∈ (𝒪[k]).toSubmonoid.units := by

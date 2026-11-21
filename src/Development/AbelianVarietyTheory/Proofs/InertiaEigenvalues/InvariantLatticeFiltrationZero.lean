@@ -113,7 +113,6 @@ end GlobalTheory.BKGal.XiFil.ImageFil
 
 namespace GlobalTheory.BKGal.XiFil
 
-open GlobalTheory.BKGal.XiFil.ImageFil in
 
 theorem iB_mem_filO_zero : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O K : Type) [CommRing O]
     [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [NormedField K] [IsUltrametricDist K]

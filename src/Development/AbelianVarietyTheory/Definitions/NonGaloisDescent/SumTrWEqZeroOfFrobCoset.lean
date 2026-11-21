@@ -99,7 +99,6 @@ def wdOfRep (ρ : Representation ℂ (Weil h) V) (hρ : IsSmooth ρ)
   nilpotent := IsNilpotent.zero
   comm σ := by simp
 
-variable (h) in
 
 abbrev IrrW : Type := {x : WD h // IsIrrWD x}
 
@@ -161,17 +160,13 @@ theorem isIrrWD_lpOfChar (χ : Weil h →* ℂˣ) (hχ : IsSmooth χ) : IsIrrWD 
 def IrrW.ofChar (χ : Weil h →* ℂˣ) (hχ : IsSmooth χ) : IrrW h :=
   ⟨WD.lpOfChar h χ hχ, isIrrWD_lpOfChar χ hχ⟩
 
-variable (h) in
 
 def frobCoset (r : ℕ) : Set (Weil h) := {τ | deg τ = -(r : ℤ)}
 
 @[simp] theorem mem_frobCoset {r : ℕ} {τ : Weil h} : τ ∈ frobCoset h r ↔ deg τ = -(r : ℤ) := Iff.rfl
 
-variable (w) in
 
-omit [IsAlgClosure E Ω] in
 
-variable (h) in
 
 section Artin
 
@@ -179,21 +174,15 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 end Artin
 
-variable (h) in
 
 abbrev VR : Type := IrrW h →₀ ℚ
 
 namespace VR
 
-variable (h) in
 
-variable (h) in
 
-variable (h) in
 
-variable (h) in
 
-variable (h) in
 
 end VR
 

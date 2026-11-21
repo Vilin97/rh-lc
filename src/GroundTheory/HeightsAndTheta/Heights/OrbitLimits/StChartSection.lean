@@ -24,7 +24,6 @@ def chartSection {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → 
   bind₁ (fun p : Σ k, ι k => (X (σ.symm (Function.update i p.1 p.2)) : MvPolynomial (Fin m) ℂ))
     (map (Int.castRingHom ℂ) s)
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem eval_chartSection {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (s : MRing ι)
     (x : Fin m → ℂ) :

@@ -49,7 +49,6 @@ theorem eq_zero_of_isRes {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : Col
   obtain ⟨ok', h⟩ := h
   exact (LinearEquiv.map_eq_zero_iff _).1 (eq_of_heq h)
 
-set_option maxHeartbeats 2000000 in
 
 theorem eq_zero_twArgs (K : Ctx) (B : GlobalTheory.Mem.Base) (f : Fr B.toPre) (T : TwDat B) (w : Bl.ColW B f T) (Z : w.Lt)
     (Wt : Set B.places.Pl) (L : SizeData₂ (w.st Z).toD7) (hT : GatTies (w.st Z).toD7) (Gi : G.Inst (w.st Z).toD7 L)
@@ -84,6 +83,5 @@ theorem eq_zero_of_hasMat {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Typ
   exact (exists_hasMat gP g).elim fun g' h1 => h1.elim fun y h2 =>
     (congrArg ((R.HX t).e (R.jX t x)) h2.2.2).trans (hx g' y h2.1 h2.2.1)
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.TopVal.Inj

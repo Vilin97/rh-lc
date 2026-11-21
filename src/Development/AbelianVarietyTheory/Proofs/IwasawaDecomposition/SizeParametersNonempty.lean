@@ -25,7 +25,6 @@ end GlobalTheory.HeightCounting.Up.SizePar
 
 namespace GlobalTheory.HeightCounting.Up.SizePar
 
-set_option maxHeartbeats 2000000 in
 
 theorem ev_params_withLoc : Ev fun K => ∀ X : Stages, K.Over X.B.toPre → X.V.div.etaF = 6 * K.s.x ^ (-K.C.P.CF) →
     (∀ w, X.toD7.what₂.muAt w = X.toD7.what₂.mu0 → ∀ j, 1 ≤ j → j ≤ X.toD7.R.m → X.toD7.what₂.Aj j w = 0) →

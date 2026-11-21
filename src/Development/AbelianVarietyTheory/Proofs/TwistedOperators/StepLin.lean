@@ -18,7 +18,6 @@ namespace GlobalTheory.StepLeft
 
 variable {k : Type} [Field k] {n : Type} [Fintype n] [DecidableEq n] {c : ℕ}
 
-open Classical in
 
 def stepLin (n' : Type) [Fintype n'] (g : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k) :
     Matrix (StepVar n c n') (StepVar n c n') k :=

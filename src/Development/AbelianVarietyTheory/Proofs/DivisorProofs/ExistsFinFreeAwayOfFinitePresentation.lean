@@ -110,7 +110,6 @@ theorem resG_tr [IsFinite f] {V W : Y.Opens} (hV : IsAffineOpen V) (hW : IsAffin
 
 variable [IsFinite f] [Flat f] [LocallyOfFinitePresentation f]
 
-omit [Flat f] [LocallyOfFinitePresentation f] in
 
 theorem exists_finFree_app_of_finitePresentation {y : Y} {U : Y.Opens} (hy : y ∈ U) :
     ∃ V : Y.Opens, IsAffineOpen V ∧ y ∈ V ∧ V ≤ U ∧ FinFree (f.app V).hom := by
@@ -272,7 +271,6 @@ theorem resG_cst_comp {V : Y.Opens} {V' : X.Opens} (e : f ⁻¹ᵁ V ≤ V') (r 
 
 variable [IsFinite f] [Flat f] [LocallyOfFinitePresentation f] {L : LB Y}
 
-variable (L) in
 
 def trR (V : Y.Opens) (V' : X.Opens) (e : f ⁻¹ᵁ V ≤ V') :
     SecOnR (f ≫ q) (L.pull f) V' →ₗ[R] SecOnR q L V where
@@ -283,7 +281,6 @@ def trR (V : Y.Opens) (V' : X.Opens) (e : f ⁻¹ᵁ V ≤ V') :
     erw [resG_cst_comp f q e r, trSec_smul]
     rfl
 
-variable (L) in
 
 def trCube {κ : Type} (D : κ → Y.Opens) :
     secCube (f ≫ q) (L.pull f) (fun i => f ⁻¹ᵁ D i) ⟶ secCube q L D :=
@@ -298,7 +295,6 @@ def trCube {κ : Type} (D : κ → Y.Opens) :
       exact (SecOn.restrict_restrict (M := L.pull f) _ _ (x : SecOn (L.pull f) (⨅ i ∈ s, f ⁻¹ᵁ D i))).trans
         (SecOn.restrict_restrict _ _ _).symm
 
-variable (L) in
 
 def pullCube {κ : Type} (D : κ → Y.Opens) :
     secCube q L D ⟶ secCube (f ≫ q) (L.pull f) (fun i => f ⁻¹ᵁ D i) :=
@@ -327,7 +323,6 @@ section Cech
 variable {X Y : Scheme.{0}} (f : X ⟶ Y) {R : Type} [CommRing R] (q : Y ⟶ Spec (CommRingCat.of R))
   [IsFinite f] [Flat f] [LocallyOfFinitePresentation f]
 
-omit [IsFinite f] [Flat f] [LocallyOfFinitePresentation f] in
 
 def funCube (a : Γ(Y, ⊤)) (L : LB Y) {κ : Type} (D : κ → Y.Opens) : secCube q L D ⟶ secCube q L D :=
   secCubeMap q D (fun V => LinearMap.lsmul Γ(Y, V) (SecOn L V) (rs Y (le_top : V ≤ ⊤) a))

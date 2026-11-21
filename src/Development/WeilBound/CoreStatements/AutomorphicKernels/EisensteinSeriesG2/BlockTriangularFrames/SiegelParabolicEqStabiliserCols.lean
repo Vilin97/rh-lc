@@ -65,7 +65,6 @@ def lev (S : Finset (Fin n)) : Fin n ⊕ Fin n → ℕ
   | Sum.inl i => below S i
   | Sum.inr i => 2 * S.card - below S i
 
-variable (σ Y) in
 
 def parS (b : GL (Fin n ⊕ Fin n) E) (S : Finset (Fin n)) : Subgroup (G2 σ Y) where
   carrier := {g | (inFrame b g).BlockTriangular (lev S)}
@@ -80,7 +79,6 @@ def parS (b : GL (Fin n ⊕ Fin n) E) (S : Finset (Fin n)) : Subgroup (G2 σ Y) 
 theorem mem_parS {b : GL (Fin n ⊕ Fin n) E} {S : Finset (Fin n)} {g : G2 σ Y} :
     g ∈ parS σ Y b S ↔ (inFrame b g).BlockTriangular (lev S) := Iff.rfl
 
-variable (σ Y) in
 
 section Siegel
 
@@ -186,19 +184,14 @@ theorem isPar_of_mem_siegelS {b : GL (Fin n ⊕ Fin n) E} {t0 : GL (Fin n) E}
   · rw [map_mul, map_mul, mul_comm (Matrix.GeneralLinearGroup.det (glA (F := F) t0)), mul_assoc, map_inv, mul_inv_cancel, mul_one,
       Matrix.GeneralLinearGroup.val_det_apply]
 
-open scoped Classical in
-variable (F) in
 
-variable (F) in
 
-variable (F E) in
 
 theorem conj_mul_conj (b : GL (Fin n ⊕ Fin n) E) (X Z : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E)) :
     incM F b.1 * X * incM F (b⁻¹).1 * (incM F b.1 * Z * incM F (b⁻¹).1) = incM F b.1 * (X * Z) * incM F (b⁻¹).1 := by
   simp only [Matrix.mul_assoc]
   rw [← Matrix.mul_assoc (incM F (b⁻¹).1) (incM F b.1), incM_inv_mul, Matrix.one_mul]
 
-variable (F) in
 
 theorem incM_alt_alt (e : E) :
     incM F (Matrix.fromBlocks 0 1 (e • 1) 0 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) E) =
@@ -229,6 +222,5 @@ theorem frame_adelic {b : GL (Fin n ⊕ Fin n) E} {ε : ℤˣ}
   rw [← incM_alt_alt]
   exact this
 
-variable (σ Y) in
 
 end SiegelEisensteinSeries.Grp

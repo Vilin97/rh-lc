@@ -38,7 +38,6 @@ theorem hasInfExp_inv {χ : (AE D)ˣ →* Circle} {τ : D.what₂.Tau} {a : ℚ}
 theorem hasInfExp_one (τ : D.what₂.Tau) : HasInfExp D (1 : (AE D)ˣ →* Circle) τ 0 :=
   ⟨0, by simp, allSome_fam.2 fun x _ _ => by simp⟩
 
-variable (D) in
 
 def chrA : Subgroup ((AE D)ˣ →* Circle) where
   carrier := {χ | IsHeckeChar D χ ∧ ∀ τ, ∃ a, HasInfExp D χ τ a}
@@ -79,7 +78,6 @@ def schC (ψ : AddChar (AF D.host.F) ℂ) (V W : HSp D) : Submodule ℂ (WA V W 
       exact ⟨U, hU, fun u hu h0 => by rw [heis_smul, e u hu h0]⟩,
     hf.cont.const_smul c, fun k L h1 h2 w => (hf.smooth k L h1 h2 w).const_smul c⟩
 
-open Classical in
 
 def admitted (V W : HSp D) (χ χ' : chrA D) : Prop := ResEta D χ.1 V.rank ∧ ResEta D χ'.1 W.rank
 
@@ -141,9 +139,7 @@ structure FormGaps (D : D7) : Prop where
 
 variable {ψ : AddChar (AF D.host.F) ℂ}
 
-open Classical in
 
-open Classical in
 
 def cptC (V : HSp D) (τ : D.what₂.Tau) :
     Matrix (Fin (V.sig (tauE D τ)).1 ⊕ Fin (V.sig (tauE D τ)).2) (Fin V.rank) ℂ :=

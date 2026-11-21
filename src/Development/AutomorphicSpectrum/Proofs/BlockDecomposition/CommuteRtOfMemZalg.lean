@@ -52,7 +52,6 @@ theorem lev_mem_unitary (k : Kinf E r) :
   rw [Matrix.mem_unitaryGroup_iff, star_val_lev, ← Units.val_mul, ← map_mul, Prod.mk_mul_mk, ← map_mul,
     Unitary.mul_star_self, map_one, one_mul, Prod.mk_one_one, map_one, Units.val_one]
 
-variable (E r s) in
 
 def levK : Kinf E r →* Kinf E (r + s) where
   toFun k := ⟨_, lev_mem_unitary (s := s) k⟩
@@ -83,7 +82,6 @@ theorem continuous_levK : Continuous (levK E r s) := by
   rw [e]
   exact (continuous_subtype_val.matrix_fromBlocks continuous_const continuous_const continuous_const).matrix_reindex _ _
 
-variable (s) in
 
 def levelOne (L : Subgroup (GL (Fin (r + s)) (Af E))) (t : GL (Fin (r + s)) (Af E)) : Subgroup (GL (Fin r) (Af E)) :=
   L.comap ((MulAut.conj t⁻¹).toMonoidHom.comp ((lev (Af E) r s).comp (MonoidHom.inl _ _)))

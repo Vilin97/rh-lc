@@ -68,7 +68,6 @@ theorem exists_good : ∃ m, Good Ξ e m := by
   have h2 : u = 1 := Units.ext (by rw [h1, Units.val_one])
   rw [h2, map_one]
 
-open Classical in
 
 def QS : ℕ := Nat.find (exists_good Ξ e)
 

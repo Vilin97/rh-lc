@@ -465,7 +465,6 @@ theorem unitary_inv_transpose {n : ℕ} (κ : Matrix.unitaryGroup (Fin n) ℂ) :
 
 end Fock
 
-open Matrix in
 
 theorem row_transport : ∀ (D : D7) (M M' X : HSp D) (A : GlobalTheory.ChainFr.Fr M) (A' : GlobalTheory.ChainFr.Fr M') (B : GlobalTheory.ChainFr.Fr X)
     (eS eS' : D.what₂.Tau → ℚ) (n₀ : D.what₂.Tau → ℕ) (Q : Type) [AddCommGroup Q] [Module ℂ Q]

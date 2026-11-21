@@ -10,8 +10,6 @@ open scoped RealInnerProductSpace ContDiff Real ComplexOrder
 
 namespace GlobalTheory
 
-open MeasureTheory Complex Matrix in
-open scoped RealInnerProductSpace ContDiff Real ComplexOrder in
 
 theorem _root_.GlobalTheory.hermitian_congr_involution (ι : Type) [Fintype ι] [DecidableEq ι]
     (H : Matrix ι ι ℂ) (hH : Hᴴ = H) (hd : H.det ≠ 0) :

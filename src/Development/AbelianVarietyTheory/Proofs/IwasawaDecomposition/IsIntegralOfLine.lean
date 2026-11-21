@@ -23,7 +23,6 @@ section Alg
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
-omit [NumberField K] in
 
 theorem repr_map_mem {V V' ι ι' : Type} [AddCommGroup V] [Module K V] [AddCommGroup V'] [Module K V'] [Fintype ι]
     (b : Basis ι K V) (b' : Basis ι' K V') (f : V →ₗ[K] V') (hf : ∀ i j, b'.repr (f (b i)) j ∈ cmMax K) {x : V}
@@ -34,7 +33,6 @@ theorem repr_map_mem {V V' ι ι' : Type} [AddCommGroup V] [Module K V] [AddComm
   rw [map_smul, map_smul, Finsupp.smul_apply, smul_eq_mul]
   exact mul_mem (hx i) (hf i j)
 
-omit [StarRing K] in
 
 theorem isIntegral_of_line {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     (N : Submodule (𝓞 K) V) (hN : Submodule.IsLattice K N) {v : V} (hv : v ≠ 0) (l : K)
@@ -77,7 +75,6 @@ theorem exists_inv_rat {V ι Γ : Type} [AddCommGroup V] [Module K V] [Fintype �
   rw [← Nat.cast_smul_eq_nsmul K] at h1
   exact smul_ne_zero (Nat.cast_ne_zero.2 Fintype.card_ne_zero) hv h1
 
-omit [NumberField K] [StarRing K] in
 
 theorem repr_of_smul {V' W ι' : Type} [AddCommGroup V'] [Module K V'] [AddCommGroup W] [Module ℂ W] [Fintype ι'] (σ : K →+* ℂ)
     (b' : Basis ι' K V') (c0 : V' →ₛₗ[σ] W) (hli : LinearIndependent ℂ fun i => c0 (b' i)) {x y : V'} {μ : ℂ}
@@ -171,7 +168,6 @@ section Coef
 
 variable {E K : Type} [Field E] [NumberField E] [Field K] [NumberField K] [StarRing K] {ι : Type} [Fintype ι]
 
-open scoped TensorProduct in
 
 theorem mem_globLat_swap {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] {n : ℕ}
     {Λ : Submodule (𝓞 E) (Fin n → E)} (hfr : IsFrame (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) Λ)

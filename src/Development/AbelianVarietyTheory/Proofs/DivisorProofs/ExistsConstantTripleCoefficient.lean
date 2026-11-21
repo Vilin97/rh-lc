@@ -119,8 +119,6 @@ theorem tmul_ne_zero' {Pr Pf : Type} [AddCommGroup Pr] [Module ℂ Pr] [AddCommG
   simp only [LinearMap.comp_apply, LinearMap.lTensor_tmul, LinearEquiv.coe_coe, TensorProduct.rid_tmul, map_zero] at this
   exact hx ((smul_eq_zero.1 this).resolve_left hφ)
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.SqTop GlobalTheory.SquareComm in
 
 end GlobalTheory.BotMatch
 

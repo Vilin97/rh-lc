@@ -94,7 +94,6 @@ def chiX (A : ∀ p : HeightOneSpectrum (𝓞 F), LocAt F E sig p) (p : HeightOn
   (A p).psiE.compAddMonoidHom
     (((A p).ιE.toAddMonoidHom.comp (AddMonoidHom.mulLeft x)).comp (algebraMap (𝓞 E) E).toAddMonoidHom)
 
-omit H in
 
 theorem psi_of_approx (p : HeightOneSpectrum (𝓞 F)) (x : E) (y : (A p).Ep) (z : 𝓞 E)
     (h1 : (A p).ιE (z : E) - y ∈ Uw A δ p ((A p).ιE x)) (h2 : (A p).psiE ((A p).ιE (x * (z : E))) = 1) :
@@ -194,7 +193,6 @@ theorem exists_common (p : HeightOneSpectrum (𝓞 F)) (S : Finset E) (c : E)
     · rw [cmul, map_mul, mul_assoc]; exact int_smul_mem _ a _ hx
     · rw [cmul, mul_comm (a : F), map_mul, mul_assoc]; exact int_smul_mem _ b _ (hS y hy)
 
-omit H in
 
 theorem memLocalizedAt_inv (p : HeightOneSpectrum (𝓞 F)) (I : FractionalIdeal (𝓞 E)⁰ E) (hI : I ≠ 0) (c : E)
     (h : ∀ x ∈ I, atP p (1 : FractionalIdeal (𝓞 E)⁰ E) (x * c)) : atP p I⁻¹ c := by
@@ -221,7 +219,6 @@ theorem memLocalizedAt_inv (p : HeightOneSpectrum (𝓞 F)) (I : FractionalIdeal
     rw [mul_smul_comm]
     exact ((1 : FractionalIdeal (𝓞 E)⁰ E) : Submodule (𝓞 E) E).smul_mem r ih1
 
-omit H in
 
 theorem exists_val_eq (p : HeightOneSpectrum (𝓞 F)) (hδ : δ p ≠ 0) :
     ∃ c : F, valuation (A p).Fp ((A p).ιF c) = valuation (A p).Fp (δ p) := by
@@ -397,7 +394,6 @@ theorem locGen_diff (p : HeightOneSpectrum (𝓞 F)) :
   · have := memLocalization_mul hx hb
     rwa [one_mul, div_mul_cancel₀ _ hac] at this
 
-omit H in
 
 theorem LocGen.inv {p : HeightOneSpectrum (𝓞 F)} {I : FractionalIdeal (𝓞 E)⁰ E} {c : E} (hI : I ≠ 0) (h : LocGen p I c) :
     LocGen p I⁻¹ c⁻¹ := by

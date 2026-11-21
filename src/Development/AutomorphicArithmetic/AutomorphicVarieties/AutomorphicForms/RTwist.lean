@@ -16,7 +16,6 @@ namespace UpperTheory.V.TR
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyReal E] {a : ℕ}
 
-variable (E a) in
 
 def lieS (i j : Fin a) : Rinf E →ₗ[ℝ] Module.End ℂ (Sm E a) :=
   (lie E a).comp (Matrix.singleLinearMap ℝ i j : Rinf E →ₗ[ℝ] Matrix (Fin a) (Fin a) (Rinf E))
@@ -36,7 +35,6 @@ theorem lieS_comm (i j k l : Fin a) (x y : Rinf E) :
     · subst h; rw [mul_comm x]; exact congrArg (fun X => lie E a (toL X)) (Matrix.single_mul_single_same _ _ _ _ _)
     · exact (congrArg (fun X => lie E a (toL X)) (Matrix.single_mul_single_of_ne _ _ _ _ h _)).trans (map_zero _)
 
-open Classical in
 
 theorem Eop_eq (v : InfinitePlace E) (i j : Fin a) : Eop v i j = lieS E a i j (Pi.single v 1) := rfl
 
@@ -88,7 +86,6 @@ theorem dchi_eq_of_exp (χ : HChar E) (d : Rinf E →ₗ[ℝ] ℂ)
   rw [dchi, fderiv_extZero (L := LinearMap.toContinuousLinearMap d) (continuous_chiInf χ) h]
   rfl
 
-open Classical in
 
 def expo (χ : HChar E) (v : InfinitePlace E) : ℂ := dchi χ (Pi.single v 1)
 
@@ -105,7 +102,6 @@ theorem chiInf_expU_eq (χ : HChar E) (z : Rinf E) :
     ((chiInf χ (expU z) : ℂˣ) : ℂ) = Complex.exp (∑ v, expo χ v * (z v : ℂ)) := by
   rw [chiInf_expU, dchi_eq_sum]
 
-open Classical in
 
 theorem expo_eq_of_exp (χ : HChar E) (v : InfinitePlace E) (p : ℂ)
     (h : ∀ t : ℝ, ((chiInf χ (expU (Pi.single v t)) : ℂˣ) : ℂ) = Complex.exp (p * t)) : expo χ v = p := by
@@ -152,7 +148,6 @@ theorem mul_chi_mem_Sm (χ : HChar E) {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a
   rw [chart_mul_chi]
   exact (hφ g).mul (contDiffOn_const.mul fun x hx => (contDiffAt_chi_det χ hx).contDiffWithinAt)
 
-variable (a) in
 
 def mulChi (χ : HChar E) : Sm E a ≃ₗ[ℂ] Sm E a where
   toFun φ := ⟨fun x => φ.1 x * (chiDet a χ x : ℂˣ), mul_chi_mem_Sm χ φ.2⟩
@@ -175,7 +170,6 @@ theorem rt_mulChi (χ : HChar E) (h : GA E a) (φ : Sm E a) :
   Subtype.ext <| funext fun g => by
     simp only [rt_apply, mulChi_apply, map_mul, Units.val_mul, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul]; ring
 
-omit [IsTotallyReal E] in
 
 theorem fderiv_det_one (X : Lie E a) :
     fderiv ℝ (fun x : Lie E a => (Matrix.of x).det) (oneL E a) X = (Matrix.of X).trace := by
@@ -277,12 +271,10 @@ theorem isOpen_ker_chiDet (χ : HChar E) : IsOpen {k : GL (Fin a) (Af E) | chiDe
   ext k
   exact Iff.of_eq (congrArg (fun u => χ.1 u = 1) (det_finGL k))
 
-omit [IsTotallyReal E] in
 
 theorem one_le_height (y : GL (Fin a) (Rinf E)) : 1 ≤ height y := by
   unfold height; linarith [norm_nonneg (toL y.val), norm_nonneg (toL (y⁻¹).val)]
 
-omit [IsTotallyReal E] in
 
 theorem norm_det_le (x : Matrix (Fin a) (Fin a) (Rinf E)) {B : ℝ} (hx : ‖toL x‖ ≤ B) :
     ‖x.det‖ ≤ a.factorial * B ^ a := by
@@ -374,7 +366,6 @@ variable {π π'} in
 theorem Iso.trans {π'' : CuspSub E a} (h : Iso π π') (h' : Iso π' π'') : Iso π π'' :=
   h.elim fun T h => h'.elim fun T' h' => ⟨T.trans T', fun o φ => by simp [h, h']⟩
 
-variable (E a) in
 
 def twist (χ : HChar E) : CuspSub E a where
   V := π.V.map (mulChi a χ).toLinearMap
@@ -399,7 +390,6 @@ theorem op_toTwist (χ : HChar E) (o : Op E a) (φ : π.V) :
     (π.twist χ).op o (π.toTwist χ φ) = π.toTwist χ (((opMul χ o : ℂˣ) : ℂ) • π.op o φ + opAdd χ o • φ) :=
   Subtype.ext (act_mulChi χ o φ.1)
 
-variable {π π'} in
 
 theorem Iso.twist (h : Iso π π') (χ : HChar E) : Iso (π.twist χ) (π'.twist χ) := by
   obtain ⟨T, hT⟩ := h
@@ -484,14 +474,12 @@ theorem finPart_eq (k : GL (Fin a) (Af E)) : π.finPart k = π.op (.fin k) := rf
 theorem locRep_eq (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicCompletion E)) :
     π.locRep w g = π.op (.fin (locGL E a w g)) := rfl
 
-variable (π) in
 
 theorem isSmooth_finPart : GlobalTheory.PRep.IsSmooth π.finPart := fun φ => by
   convert (π.cusp _ φ.2).1.level using 1
   ext k
   exact Subtype.ext_iff
 
-variable (π) in
 
 theorem isSmooth_locRep (w : HeightOneSpectrum (𝓞 E)) : GlobalTheory.PRep.IsSmooth (π.locRep w) := fun φ =>
   (π.isSmooth_finPart φ).preimage (GlobalTheory.CuspRep.CuspSub.continuous_locGL w)

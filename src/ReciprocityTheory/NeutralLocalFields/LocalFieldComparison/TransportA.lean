@@ -114,7 +114,6 @@ theorem dn_comp (n : ℕ) (f : (Fin n → G) → M) (g : Fin (n + 1) → H) :
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [hc' j]
 
-include hphi hc in
 
 def pairZn (n : ℕ) : Zn rho n →ₗ[R] Zn rho' n where
   toFun f := ⟨fun x => f.1 (phi ∘ x), by

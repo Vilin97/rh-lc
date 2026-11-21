@@ -60,7 +60,6 @@ theorem exists_pair {n : Type} [Fintype n] [DecidableEq n] {G : Matrix n n E} (h
       cc_neg, cc_div_two, haa, ← ha]
     ring
 
-set_option maxHeartbeats 1600000 in
 
 theorem split {n : Type} [Fintype n] [DecidableEq n] {G : Matrix n n E} (hG : ∀ a b, FD.cc (G a b) = G b a)
     (hd : G.det ≠ 0) {z : n → E} (hz0 : z ≠ 0) (hz : hf G z z = 0) :

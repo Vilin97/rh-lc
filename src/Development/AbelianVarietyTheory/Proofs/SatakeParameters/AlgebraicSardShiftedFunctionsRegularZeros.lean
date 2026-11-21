@@ -49,7 +49,6 @@ theorem countable_charts [SmoothOfRelativeDimension d p] {U : X.Opens} (hU : IsA
 
 end GlobalTheory.AlgSard
 
-open GlobalTheory.AlgSard in
 
 theorem GlobalTheory.AlgSard.main : ∀ (X : Scheme.{0}) (p : X ⟶ Sp ℂ) (d : ℕ) [SmoothOfRelativeDimension d p] (U : X.Opens), IsAffineOpen U →
     ∀ φ : Fin d → Γ(X, U), ∃ E : Set (Fin d → ℂ), MeasureTheory.volume E = 0 ∧

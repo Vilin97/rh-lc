@@ -60,7 +60,6 @@ omit [NumberField E] in
 theorem mem_latMoved {g : GLoc σ J v} {x : Fin n → Fv F v ⊗[F] E} :
     x ∈ latMoved σ J L v g ↔ (matHom (Fv F v) σ J g⁻¹).1 *ᵥ x ∈ latLoc F L v := Iff.rfl
 
-omit [NumberField E] in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.GraphHeightLattice
 

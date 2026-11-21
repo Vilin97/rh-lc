@@ -86,7 +86,6 @@ theorem rk_le {m : ℕ} (hm : 3 ≤ m) (ε : Fin m → Bool) :
 
 end GlobalTheory.SepReal.LieWords
 
-open GlobalTheory.SepReal.LieWords in
 
 theorem GlobalTheory.SepReal.lieBound : LieBound := by
   intro m ε lam B hm hc hgap hB H _ _ π hDS v₀ hv₀

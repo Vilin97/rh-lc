@@ -18,11 +18,8 @@ def IsPosReal (z : ℂ) : Prop := z.im = 0 ∧ 0 < z.re
 
 variable {D : D7}
 
-variable (D) in
 
-variable (D) in
 
-variable (D) in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.UnitarySphericalReps
 

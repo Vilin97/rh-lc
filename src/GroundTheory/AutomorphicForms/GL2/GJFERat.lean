@@ -89,7 +89,6 @@ theorem eq_of_eval_qs_eq_left {R₁ R₂ : RatFunc ℂ} {s₁ : ℝ}
   have : (0 : ℝ) ≤ t := Nat.cast_nonneg t
   linarith
 
-variable (F) in
 
 def RatFE (γ : RatFunc ℂ) (a b : ℂ → ℂ) : Prop :=
   ∃ (R : RatFunc ℂ) (s₁ : ℝ), (∀ s : ℂ, s₁ < s.re → a s = R.eval (RingHom.id ℂ) (qs F s)) ∧

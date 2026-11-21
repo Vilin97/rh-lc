@@ -184,7 +184,6 @@ theorem iso_integral_structure_equivariant (N : S.D → Submodule (𝓞 K) S.V) 
   simp only [LinearMap.comp_apply, LinearMap.restrictScalars_apply, LinearEquiv.coe_coe]
   exact e.rho g x
 
-include e in
 
 theorem ok (h : S.Ok) : S'.Ok where
   fin_orb := by
@@ -245,7 +244,6 @@ theorem ipOf_onForms (h : S.Ok) (h' : S'.Ok) (s : S.Sec) (s' : S'.Sec) (φ ψ : 
       (e.eV ((ψ : S.D → S.V) (e.eD.symm (e.eD (s.rep (e.onCl.symm c')))))) = _
   rw [e.card_stab, Equiv.symm_apply_apply, e.pair]
 
-include e in
 
 def refl (S : GSD K) : GSD.Iso S S where
   eG := MulEquiv.refl _

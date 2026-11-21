@@ -68,7 +68,6 @@ end GlobalTheory.Nef.TorExt
 
 namespace GlobalTheory.Nef
 
-open TorExt in
 
 theorem ratRigid_of_torusExtension : ∀ (Ω : Type) [Field Ω] [CharZero Ω] (G : Over (Sp Ω)) [GrpObj G],
     Nonempty (TorusExtension G) → RatRigid G (𝟙 (Sp Ω)) := by

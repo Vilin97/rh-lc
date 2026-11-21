@@ -136,6 +136,3 @@ theorem det_rhoMat_pow : ∀ (K : Type) [Field K] [CharZero K] (n : ℕ) (la : F
   exact matChar_pow_eq_det_pow (rhoDetHom la K) _ hs g
 
 end GlobalTheory.DefPt
-
-open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Pj GlobalTheory.DualWeyl GlobalTheory.AllWt GlobalTheory.FlatLine GlobalTheory.DefPt MvPolynomial in
-open scoped Matrix in

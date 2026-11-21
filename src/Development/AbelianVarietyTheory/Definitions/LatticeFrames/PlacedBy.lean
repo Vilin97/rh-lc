@@ -65,9 +65,7 @@ variable {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst
 
 variable {W : RealPack ex} {u : D.what₂.Word}
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.LevZero
 

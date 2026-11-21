@@ -71,7 +71,6 @@ theorem isDPMorphism_of_eq_bot (δ : DividedPowers J) (hJ : J = ⊥) (δ' : Divi
   · rw [δ.dpow_zero (Ideal.zero_mem _), δ'.dpow_zero J'.zero_mem, map_one]
   · rw [δ.dpow_eval_zero hn, δ'.dpow_eval_zero hn, map_zero]
 
-open Classical in
 
 def divided₂ (h : J ^ 2 = 0) : DividedPowers J := OfSquareZero.dividedPowers h
 

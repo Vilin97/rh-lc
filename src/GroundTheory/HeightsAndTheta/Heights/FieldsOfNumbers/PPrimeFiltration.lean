@@ -340,7 +340,6 @@ theorem ringKrullDim_quotient_prime {R : Type*} [CommRing R] (Q : Ideal R) [hQ :
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {F : Type u} [Field F]
 
-omit [DecidableEq K] in
 
 theorem relDim_cases {I Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [hQ : Q.IsPrime] (hIQ : I ≤ Q) :
     relDim Q < relDim I ∨ (Q ∈ I.minimalPrimes ∧ relDim Q = relDim I) := by
@@ -396,7 +395,6 @@ theorem hilbFn_top (m : K → ℤ) : hilbFn (⊤ : Ideal (ReciprocityTheory.Char
   · simp [Module.finrank_zero_of_subsingleton]
   · rfl
 
-open Classical in
 
 theorem filtration (h1 : HilbExactDivide.Statement.{u}) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
     (hJ : IsMultiHomogIdeal J) :

@@ -26,5 +26,3 @@ def of_sigma_eq {α : Type*} {β : α → Type*} {a b : Σ x, β x} (h : a = b) 
 
 end GlobalTheory.Mem.Top.Bl.WitSK
 
-open Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Ker Formalism.UG Formalism.L2.Forms GlobalTheory.Mem.Chr GlobalTheory.Mem.Col2.TC Matrix in
-set_option maxHeartbeats 1600000 in

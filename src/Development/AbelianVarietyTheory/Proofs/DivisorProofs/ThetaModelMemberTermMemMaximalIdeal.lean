@@ -24,7 +24,6 @@ noncomputable section
 
 namespace GlobalTheory.Poinc.Sep.HighTerms
 
-attribute [local instance] GlobalTheory.TorusExt.gtGroup in
 
 theorem exists_integral (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V] (hV : IsCN V)
     (D : DegData V (maximalIdeal V)) (A : PolAV (Sp (FractionRing V))) (G : Over (Sp V)) [GrpObj G] [IsCommMonObj G]

@@ -36,6 +36,5 @@ variable {B B' B'' : Type} [CommRing B] [CommRing B'] [CommRing B'']
 
 end
 
-open Classical in
 
 end CrystallinePoints.Pd

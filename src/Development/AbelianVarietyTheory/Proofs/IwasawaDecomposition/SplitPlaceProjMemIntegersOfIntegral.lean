@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.AUTREP Formali
 
 namespace GlobalTheory
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.splitPlace_proj_mem_integers_of_integral {L : Type} [Field L] [NumberField L] [IsCMField L]
     (s : _root_.ReciprocityTheory.Aut.SplitPlace L) {y : _root_.ReciprocityTheory.Aut.AL L} (hy : y ∈ _root_.ReciprocityTheory.Aut.ALint L) :
@@ -32,7 +31,6 @@ theorem _root_.GlobalTheory.splitPlace_proj_mem_integers_of_integral {L : Type} 
       exact ha s.v
   exact key hy
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.splitPlace_loc_congr_one :
     ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (s : _root_.ReciprocityTheory.Aut.SplitPlace L) (N : ℕ) (x : _root_.Formalism.AUTREP.GAf L n),

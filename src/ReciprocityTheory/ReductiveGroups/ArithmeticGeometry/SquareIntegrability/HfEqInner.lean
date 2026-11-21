@@ -19,7 +19,6 @@ def VP {dim : (E →+* ℂ) → ℕ} (σ : E →+* ℂ) : Submodule ℂ (Vsp dim
   zero_mem' := fun j _ => rfl
   smul_mem' := fun c v hv j hj => by simp [hv j hj]
 
-open Classical in
 
 def prj {dim : (E →+* ℂ) → ℕ} (σ : E →+* ℂ) (v : Vsp dim) : Vsp dim :=
   WithLp.toLp 2 fun j => if j.1 = σ then v j else 0

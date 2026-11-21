@@ -46,6 +46,5 @@ variable (D : D7)
 
 variable {D}
 
-set_option maxHeartbeats 4000000 in
 
 end Formalism.MainNotions.N.LocalShareBounds

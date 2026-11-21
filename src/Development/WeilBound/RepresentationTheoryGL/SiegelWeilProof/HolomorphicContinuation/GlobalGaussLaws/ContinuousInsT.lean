@@ -71,7 +71,6 @@ def sIns (τ : D.what₂.Tau) (fr : Matrix (Fin m) (Fin m) ℂ) : (Fin m → Fin
   map_add' u v := by
     rw [show Matrix.of (u + v) = Matrix.of u + Matrix.of v from rfl, Matrix.mul_add, insT_add]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def piF (θ : InfFam D) (τ : D.what₂.Tau) (fr : Matrix (Fin m) (Fin m) ℂ) : Mx D m n →+ (Fin m → Fin n → ℂ) where
   toFun y := Matrix.of.symm (fr⁻¹ * compAt θ τ y)

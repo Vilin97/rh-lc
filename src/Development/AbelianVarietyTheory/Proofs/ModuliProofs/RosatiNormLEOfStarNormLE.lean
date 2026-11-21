@@ -49,13 +49,9 @@ open CechPic MulOpposite
 
 variable {K : Type} [Field K] {P : PolAV (Sp K)}
 
-variable (P) in
 
-variable (P) in
 
-variable (P) in
 
-variable (P) in
 
 end AdjRing
 

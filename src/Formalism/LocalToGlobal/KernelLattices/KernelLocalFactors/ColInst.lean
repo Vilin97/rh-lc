@@ -917,7 +917,6 @@ section Phi
 
 variable {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {P : HeightOneSpectrum (𝓞 E)} {q : ℕ}
 
-variable (P) in
 
 end Phi
 

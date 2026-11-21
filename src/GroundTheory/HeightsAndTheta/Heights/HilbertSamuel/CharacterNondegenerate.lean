@@ -84,7 +84,6 @@ namespace NormCountBounded
 
 end NormCountBounded
 
-open NormCountBounded in
 
 end
 

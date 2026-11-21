@@ -23,7 +23,6 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 
 namespace GlobalTheory.CompanionTheory.Ar.Giv
 
-open GroundTheory.Heights₂.Heights.LowerBoundFree in
 
 theorem hodgeFlagArith : HodgeFlagArith.Statement :=
   HodgeFlagArith.proof HodgeFlagNeZero.proof

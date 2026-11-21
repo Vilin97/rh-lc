@@ -19,8 +19,6 @@ open scoped nonZeroDivisors
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
   [IsTotallyComplex K]
 
-omit [Algebra K ℂ] in
-include hK in
 
 theorem finite_units : Finite (𝓞 K)ˣ := by
   have h1 := InfinitePlace.card_add_two_mul_card_eq_rank K
@@ -38,7 +36,6 @@ theorem finite_units : Finite (𝓞 K)ˣ := by
   exact Finite.of_injective (fun x ↦ (⟨x, htors x⟩ : Units.torsion K)) fun a b h ↦
     congrArg Subtype.val h
 
-omit [Algebra K ℂ] [IsTotallyComplex K] in
 
 theorem exists_nat_mul_mem (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (t : K) :
     ∃ k : ℕ, 0 < k ∧ (k : K) * t ∈ (𝔞 : FractionalIdeal (𝓞 K)⁰ K) := by
@@ -66,7 +63,6 @@ theorem exists_nat_mul_mem (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (t : K) :
   rw [this, ← Algebra.smul_def]
   exact (𝔞 : Submodule (𝓞 K) K).smul_mem b ha
 
-include hK in
 
 theorem main_theorem_complexMultiplication (σ : ℂ ≃ₐ[K] ℂ) (s : IdeleGroup K)
     (hs : ∀ x : maximalAbelianExtension K (algebraicClosure K ℂ),

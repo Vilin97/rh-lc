@@ -423,7 +423,6 @@ theorem redM_add_nsmul {b c : ℕ} (PP : Formalism.L2.DIV.Pl D.host.E) {n : ℕ}
     exact hn
   rw [e, RingHom.map_add (f := _), nsmul_eq_mul, RingHom.map_mul, map_natCast, h0, zero_mul, add_zero]
 
-open Classical in
 
 theorem isSBHalf_of_red (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) {a : AE D}
     (hinf : infPart D a = 0) {b c : ℕ} (G : WO S T → Matrix (Fin b) (Fin c) (EAf D))

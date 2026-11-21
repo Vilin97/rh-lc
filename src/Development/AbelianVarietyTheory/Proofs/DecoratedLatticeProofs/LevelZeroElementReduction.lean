@@ -98,7 +98,6 @@ theorem edge_sum_typeFrame {K : Type} [Field K] (κ τ s N r p : ℕ) (hr : r �
   simp only [A, B, Finset.sum_const_zero, zero_add, ← Finset.mul_sum]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem redFn_conj_eq_one {D : D7} {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {a e : AE D} {P : Finset (Pl D.host.E)}
     {PP Q : Pl D.host.E} (ha : IsIdemSum a P) (hPP : PP ∈ P) (he : Formalism.L2.NTheta.IsIdemAt e PP) {n : GA D V}

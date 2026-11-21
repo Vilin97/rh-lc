@@ -232,7 +232,6 @@ theorem continuous_cA' : Continuous (cA (F := F) (E := E) σ) := by
   haveI : IsModuleTopology (AF F) (AE F E) := ⟨rfl⟩
   exact IsModuleTopology.continuous_of_linearMap (cA (F := F) (E := E) σ).toLinearMap
 
-variable (σ) in
 
 def leviMat {n₁ : ℕ} {J₁ : Matrix (Fin n₁) (Fin n₁) E} (H : Plane E (n₁ + 2) n₁) (s t : Fin (n₁ + 2) → E)
     (u : Fin (n₁ + 2) → Fin n₁ → E) (l : (AE F E)ˣ) (g : UA σ J₁) : Matrix (Fin (n₁ + 2)) (Fin (n₁ + 2)) (AE F E) :=

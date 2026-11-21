@@ -12,7 +12,6 @@ open scoped ENNReal
 
 noncomputable section
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 section sh
 
@@ -39,7 +38,6 @@ theorem isBoundedBilinearMap_compSh :
     exact ContinuousLinearMap.map_smul_of_tower x c (y v)
   bound := ⟨1, one_pos, fun x y => by simpa using ContinuousLinearMap.opNorm_comp_le x y⟩
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem ckOn_compSh {k r : ℕ} {f : B.Mat k r → (Wq →L[ℂ] Wp)} {A : B.Mat k r → (Wq' →L[ℂ] Wq)}
     (hf : B.CkOn ⊤ (B.GV k r) f) (hA : B.CkOn ⊤ (B.GV k r) A) :
@@ -57,7 +55,6 @@ theorem ckOn_compSh {k r : ℕ} {f : B.Mat k r → (Wq →L[ℂ] Wp)} {A : B.Mat
     | exact (hc1.mono Set.inter_subset_left).prod (hc2.mono Set.inter_subset_right)
   exact isBoundedBilinearMap_compSh.contDiff.comp_contDiffOn hp
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem ckOn_fpmSh (q : KB.Pl (shP P u u') Wp Wq') {f : B.Mat P.k P.r → (Wq →L[ℂ] Wp)}
     {A : B.Mat P.k P.r → (Wq' →L[ℂ] Wq)} (p₀ : ℕ) (hf : B.CkOn ⊤ (B.GV P.k P.r) f)
@@ -84,7 +81,6 @@ def FpmShDecay : Prop :=
     (∀ m : ℕ, B.InCC A₀ m f) → PolyOp d A →
     ∀ m : ℕ, B.InCC (A₀ - (((2 * P.r + 2) * p₀ : ℕ) : ℝ) - d) m (fpmSh q f A p₀)
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end
 

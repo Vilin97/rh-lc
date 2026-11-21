@@ -84,7 +84,6 @@ variable (F E : Type) [Field F] [Field E] [Algebra F E]
 
 def IsNm {A : Type} [CommRing A] [Algebra F A] (x : A) : Prop := ∃ z : A ⊗[F] E, Algebra.norm A z = x
 
-open Classical in
 
 variable {F E}
 

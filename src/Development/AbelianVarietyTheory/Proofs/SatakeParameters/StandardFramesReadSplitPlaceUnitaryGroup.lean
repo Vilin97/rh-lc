@@ -25,7 +25,6 @@ theorem gen_supp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (fin : A 
   rw [Matrix.map_sub _ (map_sub _), hM, Matrix.map_one _ (map_zero _) (map_one _), Matrix.map_sub _ (map_sub _),
     Matrix.map_mul, Matrix.map_mul, hK, Matrix.mul_one, ← Matrix.map_mul, h1, sub_self]
 
-set_option maxHeartbeats 1000000 in
 
 theorem side_loc (D : D7) (s : SplitPlace D.host.E) (hF : D.host.F = maximalRealSubfield D.host.E)
     (p : GlobalTheory.LocMod.Place D (s.w.adicCompletion D.host.E))

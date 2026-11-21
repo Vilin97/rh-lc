@@ -73,7 +73,6 @@ theorem Place.finite_not_mem_ring (x : K) : {v : Place k K | x ∉ v.ring}.Finit
     intro h
     exact hv ((v.ord_nonneg_iff hx0).1 (by rw [h]))
 
-variable (k K) in
 
 def repartitions : Submodule k (Place k K → K) where
   carrier := {a | {v : Place k K | a v ∉ v.ring}.Finite}
@@ -88,7 +87,6 @@ def repartitions : Submodule k (Place k K → K) where
     rw [Algebra.smul_def] at hv
     exact hv (mul_mem (v.algebraMap_mem c) h)
 
-variable (k K) in
 
 def Repartition : Type _ := repartitions k K
 
@@ -105,7 +103,6 @@ instance : FunLike (Repartition k K) (Place k K) K where
 def mk (f : Place k K → K) (hf : {v : Place k K | f v ∉ v.ring}.Finite) : Repartition k K :=
   (⟨f, hf⟩ : repartitions k K)
 
-omit [IsFunctionField k K] in
 
 omit [IsFunctionField k K] in
 theorem finite_not_mem (a : Repartition k K) : {v : Place k K | a v ∉ v.ring}.Finite :=
@@ -125,7 +122,6 @@ omit [IsFunctionField k K] in
 theorem sub_apply (a b : Repartition k K) (v : Place k K) : (a - b) v = a v - b v :=
   rfl
 
-omit [IsFunctionField k K] in
 
 omit [IsFunctionField k K] in
 @[simp]
@@ -144,7 +140,6 @@ noncomputable def diag : K →ₗ[k] Repartition k K where
   map_add' _ _ := rfl
   map_smul' c x := by ext v; simp [Algebra.smul_def]
 
-variable (k K) in
 
 noncomputable def principal : Submodule k (Repartition k K) :=
   LinearMap.range (diag (k := k) (K := K))
@@ -176,7 +171,6 @@ theorem A_mono {D E : Divisor k K} (h : D ≤ E) : A D ≤ A E := fun _a ha v =>
 theorem diag_mem_A_iff {D : Divisor k K} {x : K} : diag x ∈ A D ↔ x ∈ L D :=
   Iff.rfl
 
-omit [IsFunctionField k K] in
 
 theorem add_single_apply_self (D : Divisor k K) (P : Place k K) :
     (D + Finsupp.single P 1 : Divisor k K) P = D P + 1 := by

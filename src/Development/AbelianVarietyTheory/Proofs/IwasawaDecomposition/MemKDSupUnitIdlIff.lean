@@ -20,7 +20,6 @@ namespace GlobalTheory.Mem.Chr.KDVal
 
 variable {L : Type} [Field L] [NumberField L] (F : Type) [Field F] [NumberField F] [Algebra F L]
 
-open Classical in
 
 theorem valAt_locF (w : HeightOneSpectrum (𝓞 L)) (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) :
     valAt w (locF (L := L) F v k) =
@@ -90,8 +89,6 @@ theorem mem_sup_of_balanced
 
 end GlobalTheory.Mem.Chr.KDVal
 
-open GlobalTheory.Mem.Chr.KDVal in
-open Classical in
 
 theorem GlobalTheory.Mem.Chr.mem_KD_sup_unitIdl_iff : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (a : Ideles H.E), a ∈ KD H ⊔ unitIdl H.E ↔ ∀ w w', IsConjPl H w w' → Valued.v ((a : AdeleRing (𝓞 H.E) H.E).2 w) = Valued.v ((a : AdeleRing (𝓞 H.E) H.E).2 w') := by
   intro R H a

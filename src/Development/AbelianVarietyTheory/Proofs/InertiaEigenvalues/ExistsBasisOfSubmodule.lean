@@ -115,7 +115,6 @@ theorem exists_mul_mem (LL : FinExt l) (a : ↥LL.1) :
 theorem continuous_algebraMap_ext (LL : FinExt l) : Continuous (algebraMap ℚ_[l] ↥LL.1) :=
   continuous_induced_rng.2 (continuous_algebraMap ℚ_[l] (Om l))
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem exists_basis (l : ℕ) [Fact l.Prime] (G : Type) [Group G] [TopologicalSpace G]
     (LL : FinExt l) (T : LocLat G ℚ_[l] ↥LL.1 ↥(OL LL)) :

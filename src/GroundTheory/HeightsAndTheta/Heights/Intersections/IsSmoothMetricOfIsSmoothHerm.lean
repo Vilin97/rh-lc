@@ -20,11 +20,8 @@ open GroundTheory.Heights₂.Heights.NumbersDVR (MRing)
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
-omit [DecidableEq K] in
 
 theorem isProjVarQ_of_isArithVar {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRing ι)} {e : ℕ}
     (hP : ReciprocityTheory.ChartRestriction.G.Geo.IsArithVar P (e + 1)) :

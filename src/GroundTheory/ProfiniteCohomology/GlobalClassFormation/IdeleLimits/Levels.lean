@@ -24,7 +24,6 @@ variable {F E : FiniteSubfield} [Fact (K ≤ F)] [Fact (K ≤ E)] [Fact (F ≤ E
 
 instance : IsScalarTower K.1 F.1 E.1 := IsScalarTower.of_algebraMap_eq fun _ ↦ rfl
 
-variable (K F E) in
 
 def levelRestrict : (E.1 ≃ₐ[K.1] E.1) →* (F.1 ≃ₐ[K.1] F.1) :=
   AlgEquiv.restrictNormalHom (F := K.1) (K₁ := E.1) F.1
@@ -49,13 +48,11 @@ theorem ideleMap_smul (τ : E.1 ≃ₐ[K.1] E.1) (x : IdeleGroup F.1) :
   exact (ideleEquiv_ideleEmbedding_of_comm ((levelRestrict K F E τ : F.1 ≃ₐ[K.1] F.1) : F.1 ≃+* F.1)
     (τ : E.1 ≃+* E.1) (fun y ↦ (coe_levelRestrict_apply τ y).symm) x).symm
 
-variable (K F E) in
 
 def levelMap : Rep.res (levelRestrict K F E) (ideleRep K.1 F.1) ⟶ ideleRep K.1 E.1 :=
   Rep.ofHom ⟨(MonoidHom.toAdditive (ideleMap (Fact.out : F ≤ E))).toIntLinearMap,
     fun τ => LinearMap.ext fun x => congrArg Additive.ofMul (ideleMap_smul τ x.toMul)⟩
 
-variable (K F E) in
 
 def levelTransition (n : ℕ) : cohomology (ideleRep K.1 F.1) n ⟶ cohomology (ideleRep K.1 E.1) n :=
   cohomologyMapAlong (levelRestrict K F E) continuous_levelRestrict (levelMap K F E) n

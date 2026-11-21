@@ -13,7 +13,6 @@ namespace GlobalTheory.ClassFin
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem ptsGroup_map_ev {A B : Type} [CommRing A] [Algebra ℚ A] [CommRing B] [Algebra ℚ B]
     (φ : A →ₐ[ℚ] B) (f : MvPolynomial (ι × ι) ℚ) (g : Matrix ι ι A) :

@@ -169,7 +169,6 @@ private theorem spl_int {B : Type} [CommRing B] [Algebra B K] (X : M4 B) (u : (M
 
 end Fld
 
-open Polynomial in
 
 private theorem spl_near {l : ℕ} [Fact l.Prime] {O B : Type} [CommRing O] [Algebra ℤ_[l] O]
     [Algebra O (PadicAlgCl l)] [IsScalarTower ℤ_[l] O (PadicAlgCl l)] [CommRing B] [IsDomain B] [HenselianLocalRing B]

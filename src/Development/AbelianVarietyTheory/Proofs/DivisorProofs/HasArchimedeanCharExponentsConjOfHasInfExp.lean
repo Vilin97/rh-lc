@@ -94,7 +94,6 @@ namespace GlobalTheory.ConjInfExp
 
 open GlobalTheory.FockCompare GlobalTheory.AdelicU
 
-set_option maxHeartbeats 1000000 in
 
 theorem hasExp_conj_of_hasInfExp : ∀ {D : D7} (c : (AE D)ˣ →* Circle) (a : D.what₂.Tau → ℚ), (∀ τ, HasInfExp D c τ (a τ)) →
     ∀ (τf : InfinitePlace D.host.F → D.what₂.Tau)

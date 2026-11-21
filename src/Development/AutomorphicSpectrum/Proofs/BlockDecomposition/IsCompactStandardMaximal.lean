@@ -50,7 +50,6 @@ theorem evI_finOne_mul (a : AF F) : evI F (finOne F * a) = 0 := by
   unfold evI
   rw [e, map_zero]
 
-variable (F E) in
 
 def finInt : AddSubgroup (AE F E) :=
   (intHat F E).comap (DistribSMul.toAddMonoidHom (AE F E) (finOne F))

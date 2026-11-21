@@ -40,7 +40,6 @@ theorem rowLie_X (τ : ι) (k l : Fin m) (v : ι × Fin m × Fin n) :
     rw [pderiv_X_of_ne (by simp [hb.symm]), mul_zero]
   · simp
 
-open Classical in
 
 theorem rowLie_diag_comm (t t' : ι) (i k l : Fin m) :
     rowLie n t i i * rowLie n t' k l - rowLie n t' k l * rowLie n t i i =

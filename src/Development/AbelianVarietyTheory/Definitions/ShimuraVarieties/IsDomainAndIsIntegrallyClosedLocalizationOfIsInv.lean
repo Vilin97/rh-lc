@@ -56,7 +56,6 @@ theorem isIntegrallyClosed_of_injective_of_dvd {R S : Type*} [CommRing R] [CommR
   have : algebraMap R (FractionRing R) b ≠ 0 := by simpa using hb0
   rw [map_mul, mul_div_cancel_left₀ _ this]
 
-variable (G A) in
 
 theorem isDomain_and_isIntegrallyClosed_localization_of_isInvariant (B : Type*) [CommRing B]
     [Algebra B A] [FaithfulSMul B A] [SMulCommClass G B A] [Algebra.IsInvariant B A G]

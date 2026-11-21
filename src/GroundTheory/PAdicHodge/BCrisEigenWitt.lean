@@ -20,7 +20,6 @@ open Polynomial
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-variable (p) in
 
 abbrev Fpbar : Type := AlgebraicClosure (ZMod p)
 

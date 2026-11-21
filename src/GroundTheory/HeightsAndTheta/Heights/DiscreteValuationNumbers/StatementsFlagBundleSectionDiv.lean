@@ -15,7 +15,6 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 
 noncomputable section
 
-open Classical in
 
 def FlagBundleSectionDiv.Statement : Prop :=
   ∀ (F : Type) [Field F] (Ω : Type) [Field Ω] [Algebra F Ω]

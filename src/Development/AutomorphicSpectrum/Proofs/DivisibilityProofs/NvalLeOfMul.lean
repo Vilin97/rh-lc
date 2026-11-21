@@ -123,7 +123,6 @@ theorem prod_exZ_nsmul {M : Type} [CommGroup M] (t : Ix Dw → M) (G : WTZ E) (n
     cases i <;> simp [exZ, mul_comm]
   rw [this, zpow_mul, zpow_natCast]
 
-set_option maxHeartbeats 2000000 in
 
 end Main
 

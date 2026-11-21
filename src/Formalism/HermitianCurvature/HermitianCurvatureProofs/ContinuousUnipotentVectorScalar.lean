@@ -22,7 +22,6 @@ theorem continuous_unipotent_vector_scalar (n : ℕ) (v : G.UT (n + 1) → ℂ) 
     exact (continuous_id.smul continuous_const).matrix_mul continuous_const
   exact continuous_pi fun i => continuous_pi fun j => (continuous_apply j).comp ((continuous_apply i).comp h)
 
-set_option maxHeartbeats 1000000 in
 
 theorem posCoreCont : ∃ Cc : ℝ, 0 ≤ Cc ∧
   ∀ (k ph n ρ : ℕ) (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]

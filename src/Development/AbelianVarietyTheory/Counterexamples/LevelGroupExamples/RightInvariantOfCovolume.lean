@@ -14,9 +14,6 @@ variable {G : Type} [Group G] (Γ : Subgroup G)
 
 abbrev cls (g : G) : Quotient (QuotientGroup.rightRel Γ) := Quotient.mk _ g
 
-open MeasureTheory in
-open scoped Pointwise in
-variable {G : Type} [Group G] (Γ : Subgroup G) in
 
 theorem _root_.GlobalTheory.AutQuotCheck.cls_eq_iff (g g' : G) :
     _root_.GlobalTheory.AutQuotCheck.cls Γ g = _root_.GlobalTheory.AutQuotCheck.cls Γ g' ↔ ∃ γ ∈ Γ, g' = γ * g := by
@@ -42,9 +39,6 @@ variable {G : Type} [Group G] (Γ : Subgroup G) in
 theorem _root_.GlobalTheory.AutQuotCheck.measurable_cls [MeasurableSpace G] :
     Measurable (_root_.GlobalTheory.AutQuotCheck.cls Γ) := fun _ hs => hs
 
-open MeasureTheory in
-open scoped Pointwise in
-variable {G : Type} [Group G] (Γ : Subgroup G) in
 
 theorem _root_.GlobalTheory.AutQuotCheck.map_restrict_eq [MeasurableSpace G] [Countable Γ]
     [MeasurableConstSMul Γ G] (μ : Measure G) [SMulInvariantMeasure Γ G μ] {F F' : Set G}

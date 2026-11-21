@@ -48,7 +48,6 @@ theorem res_sum (ψ : S →+* T) (hx : spMap ψ ≫ x = x') {κ : Type} [Fintype
   exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ (tv (n k)).left) (FrCov.eps_dual ψ (a k))).trans
     (Category.assoc _ _ _))
 
-variable (t) in
 
 end Alg
 

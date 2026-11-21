@@ -138,7 +138,6 @@ theorem evalTop_of_eq {A B : Type} [CommRing A] [CommRing B] (f : A →+* B)
 
 variable {V : Type} [CommRing V] [IsDomain V] (F : Type) [Field F] [Algebra (FractionRing V) F]
 
-set_option maxHeartbeats 800000 in
 
 theorem evalTop_comp {Y : Scheme.{0}} (g : Spec (CommRingCat.of F) ⟶ Y) (e : Spec (CommRingCat.of V) ⟶ Y)
     (hg : g = DegPre.jFR (R := V) F ≫ e) (U : Y.Opens) (hU : e ⁻¹ᵁ U = ⊤) (hU' : g ⁻¹ᵁ U = ⊤)

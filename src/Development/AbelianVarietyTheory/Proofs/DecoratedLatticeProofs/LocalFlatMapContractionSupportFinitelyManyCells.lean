@@ -44,7 +44,6 @@ theorem om_eq_const_mul {a b : Type} [Fintype a] [DecidableEq a] [Fintype b] [De
 end
 end GlobalTheory.LocFlat.CellsContr
 
-open GlobalTheory.LocFlat.CellsContr in
 
 theorem GlobalTheory.LocFlat.contr_support_finite_cells :
     ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]

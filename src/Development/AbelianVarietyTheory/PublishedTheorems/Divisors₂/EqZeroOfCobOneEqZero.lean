@@ -17,14 +17,12 @@ section Level
 
 variable {O A B : Type} [CommRing O] [CommRing A] [CommRing B] [Bialgebra O A] [Bialgebra O B]
 
-variable (O A) in
 
 def cobOne : A →ₗ[O] A ⊗[O] A :=
   comul - (TensorProduct.mk O A A).flip 1 - TensorProduct.mk O A A 1
 
 theorem cobOne_apply (b : A) : cobOne O A b = comul b - b ⊗ₜ 1 - 1 ⊗ₜ b := rfl
 
-variable (O A) in
 
 def cobTwo : A ⊗[O] A →ₗ[O] A ⊗[O] (A ⊗[O] A) :=
   TensorProduct.mk O A (A ⊗[O] A) 1 - (TensorProduct.assoc O A A A).toLinearMap ∘ₗ comul.rTensor A
@@ -34,7 +32,6 @@ theorem cobTwo_apply (c : A ⊗[O] A) : cobTwo O A c =
     1 ⊗ₜ c - TensorProduct.assoc O A A A (comul.rTensor A c) + comul.lTensor A c
       - ((TensorProduct.mk O A A).flip 1).lTensor A c := rfl
 
-variable (O A) in
 
 def symCocycles : Submodule O (A ⊗[O] A) :=
   LinearMap.ker (cobTwo O A) ⊓ LinearMap.ker ((TensorProduct.comm O A A).toLinearMap - LinearMap.id)
@@ -231,11 +228,9 @@ theorem rigToExt_rigExtMap (f : G ⟶ H) (x : H.RigExt) :
   obtain ⟨⟨c, w⟩, rfl⟩ := Submodule.mkQ_surjective _ x
   rfl
 
-variable (G) in
 
 abbrev LieUniv : Type := Module.Dual O G.RigExt
 
-variable (G) in
 
 def lieUnivToLie : G.LieUniv →ₗ[O] G.Lie := G.rigOfOmega.dualMap
 

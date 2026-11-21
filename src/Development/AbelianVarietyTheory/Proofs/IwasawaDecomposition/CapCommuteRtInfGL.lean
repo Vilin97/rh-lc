@@ -63,7 +63,6 @@ theorem rt_lie (y : GL (Fin a) (Cinf E)) (X : Matrix (Fin a) (Fin a) (Cinf E)) :
     ContinuousLinearMap.fderiv, ContinuousLinearMap.fderiv]
   exact congrArg (fun Z => fderiv ℝ (chart φ.1 g) (toL y.val) (toL Z)) (Units.inv_mul_cancel_right (y.val * X) y).symm
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem mul_atEmb (τ : E →+* ℂ) (x : Cinf E) (z : ℂ) : x * atEmb τ z = atEmb τ (coord τ x * z) := by
   classical

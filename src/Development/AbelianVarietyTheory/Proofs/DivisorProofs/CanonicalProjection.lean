@@ -21,8 +21,6 @@ namespace GlobalTheory.BigOn.Exp.ProjRd
 
 attribute [local instance] GroupAverageFixedPoints.GlobalTheory.CompanionTheory.LatSpan.algKK
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in
 
 theorem rd_eOp {D : D7} {c : NChoice D} {w : D.what₂.places.Pl} (ht : NChTie D c) {Gp : Type} [Group Gp] [Fintype Gp]
     (I : Gp ≃* G0g D.nd) (S : RatDat D.ntw) (j : ℕ)
@@ -100,5 +98,3 @@ end GlobalTheory.BigOn.Exp.ProjRd
 
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in

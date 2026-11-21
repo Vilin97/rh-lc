@@ -164,7 +164,6 @@ end GlobalTheory.BSP.StrictIndep
 
 namespace GlobalTheory.BSP
 
-open GlobalTheory.BSP.StrictIndep in
 
 theorem strict_indep_pow : ∀ (S A : Type) [CommRing S] [CommRing A] (s : S →+* A) (p q : S)
     (ι : Type) (b : ι → A), (∀ x : A, s p * x = 0 → x = 0) →

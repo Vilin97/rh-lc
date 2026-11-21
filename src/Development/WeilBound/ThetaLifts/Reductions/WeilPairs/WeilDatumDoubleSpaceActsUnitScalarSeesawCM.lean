@@ -50,7 +50,6 @@ theorem continuous_glue : Continuous fun p : WOF F E nS nT × WOF F E nS nT => (
   · exact ((continuous_apply j).comp ((continuous_apply k).comp continuous_snd)).congr fun p : WOF F E nS nT × WOF F E nS nT =>
       (congrFun (congrFun (bot_glue p.1 p.2) k) j).symm
 
-variable (F E nS nT) in
 
 def glueE : (WOF F E nS nT × WOF F E nS nT) ≃+ WOF F E nS (nT + nT) where
   toFun p := glue p.1 p.2

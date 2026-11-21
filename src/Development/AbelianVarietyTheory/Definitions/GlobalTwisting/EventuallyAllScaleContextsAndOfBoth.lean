@@ -53,11 +53,9 @@ theorem LargeBaseCondition.and (h : LargeBaseCondition KP Q R) (h' : LargeBaseCo
   eventuallyAllScaleContexts_mono_of_imp (fun _ H => (H.1.inter H.2).imp fun _ _ _ _ t k C W V S N G c q => ⟨t.1 k C W V S N G c q, t.2 k C W V S N G c q⟩)
     (eventuallyAllScaleContexts_and_of_both h h')
 
-variable (KP Q Q' Lk) in
 
 def RowL (H : ∀ 𝒜 : FamClass, RawSel Bd 𝒜 → Prop) : Prop := ∃ R : V4.Slot, LargeBaseCondition KP Q R ∧ Row (sAnd Q' R) Lk H
 
-variable (KP Q Q' Lk) in
 
 def ExBL : Prop := ∃ R : V4.Slot, LargeBaseCondition KP Q R ∧ ExB (sAnd Q' R) Lk
 

@@ -62,7 +62,6 @@ theorem exists_bessel_scale (hH : GlobalTheory.GapIn.Hyp) {k r : ℕ} {Wp : Type
 
 end scale
 
-open BranchingSupport GlobalTheory.CellAmp GlobalTheory.Amp Formalism.BasicNotions in
 
 theorem exists_coef (hH : GlobalTheory.GapIn.Hyp) {Cg cb Cu cT CT C0 Cn : ℝ} (D : D7) (large₂ : SizeData₂ D) {C' Cl : ℝ}
     (hCl : 1000 ≤ Cl) (hm₀ : Cn ≤ D.R.m) (hcd : cdScaleTie D) (hZ : HypZ D large₂ C' Cl Cg cb Cu cT CT C0) τ w w'
@@ -139,7 +138,6 @@ theorem exists_coef (hH : GlobalTheory.GapIn.Hyp) {Cg cb Cu cT CT C0 Cn : ℝ} (
   rw [inner_smul_right]
   field_simp
 
-open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.Amp in
 
 theorem ampIsBessel : GlobalTheory.GapIn.Hyp → ∀ Cg cb Cu cT CT C0 C1 : ℝ, ∃ Ca : ℝ, 0 ≤ Ca ∧ ∀ Cn : ℝ, ∃ m₀ : ℝ, ∀ (D : D7) (large₂ : SizeData₂ D) (C' Cl : ℝ), 1000 ≤ Cl → D.host.rdE ≤ large₂.sc.b → m₀ ≤ D.R.m → cdScaleTie D → Bridge.AmpIsBessel D large₂ C' Cl Cg cb Cu cT CT C0 Cn C1 Ca := by
   intro hH Cg cb Cu cT CT C0 C1

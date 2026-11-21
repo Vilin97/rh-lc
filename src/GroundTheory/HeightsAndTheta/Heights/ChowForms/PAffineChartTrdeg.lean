@@ -16,7 +16,6 @@ namespace AffineChartTrdeg
 
 variable {F : Type} [Field F] {n : ℕ} (P : Ideal (MvPolynomial (Fin n) F)) [P.IsPrime]
 
-omit [P.IsPrime] in
 
 theorem aeval_genPt (f : MvPolynomial (Fin n) F) :
     aeval (genPt P) f = algebraMap (MvPolynomial (Fin n) F ⧸ P)
@@ -27,7 +26,6 @@ theorem aeval_genPt (f : MvPolynomial (Fin n) F) :
   rw [h]
   rfl
 
-omit [P.IsPrime] in
 
 theorem aeval_genPt_eq_zero_iff (f : MvPolynomial (Fin n) F) :
     aeval (genPt P) f = 0 ↔ f ∈ P := by

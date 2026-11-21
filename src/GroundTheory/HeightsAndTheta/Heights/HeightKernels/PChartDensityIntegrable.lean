@@ -136,7 +136,6 @@ theorem integrable_comp_affine {D : ℕ} {f : (Fin D → ℂ) → ℝ} (hf : Int
 
 end ChartDensityIntegrableAlt
 
-open ChartDensityIntegrableAlt in
 
 theorem ChartDensityIntegrable.proof : ChartDensityIntegrable.Statement := by
   intro e M hM

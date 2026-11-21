@@ -48,7 +48,6 @@ theorem rho_comm (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (u u' : Matrix (Fi
   simp only [sy, M.co.2]
   linear_combination ((M.co.e u).1 ⬝ᵥ (M.co.e u').2 - (M.co.e u').1 ⬝ᵥ (M.co.e u).2) * h2
 
-variable (σ) in
 
 def bA (J : Matrix (Fin n) (Fin n) E) (x y : Fin n → AE F E) : AE F E := x ⬝ᵥ incM F J *ᵥ fun i => cA σ (y i)
 
@@ -120,7 +119,6 @@ theorem pv_opI (hA : ArchOp) {M : Model σ X W} {χX χW om r s r' s'} (hP : IsP
   rw [opI, dite_eq_left h]
   exact (pv_act hP.good h.choose_spec).symm
 
-open Classical in
 
 def unp (M : Model σ X W) (l : SInf F (Fin n × Fin d) →L[ℂ] ℂ) (Ψ : Fn F n d) : ℂ :=
   if h : ∃ g, Ψ = PV M g then l h.choose else 0

@@ -49,7 +49,6 @@ theorem isFrame_tr {D : D7} {V V' : HSp D} (e : V' = V) {Λ : Submodule (𝓞 D.
     (h : IsFrame β Λ) : IsFrame (trGL e β) Λ' := by
   subst e; cases hΛ; exact h
 
-open Matrix in
 
 theorem uLat_tr {D : D7} {V V' : HSp D} (e : V' = V) {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)}
     {Λ' : Submodule (𝓞 D.host.E) (Fin V'.rank → D.host.E)} (hΛ : HEq Λ' Λ) {f : GL (Fin V.rank) D.host.E}
@@ -75,7 +74,6 @@ theorem uSupp_tr {D : D7} {V V' : HSp D} (e : V' = V) {u : GfC V} {u' : GfC V'} 
     ∃ (P : Finset (Pl D.host.E)) (e : AE D), IsIdemSum e P ∧ SuppAt e V' u'.1 ∧ ∀ w ∈ P, Off S w := by
   subst e; cases hu; exact h
 
-open Matrix in
 
 theorem top_tr {D : D7} {A A' B B' : HSp D} (eA : A' = A) (eB : B' = B) {ι : A.V →ₗ[D.host.E] B.V}
     {ι' : A'.V →ₗ[D.host.E] B'.V} (hι : HEq ι' ι) {a : Matrix (Fin B.rank) (Fin 1) D.host.E}
@@ -97,7 +95,6 @@ theorem top_tr {D : D7} {A A' B B' : HSp D} (eA : A' = A) (eB : B' = B) {ι : A.
 
 abbrev dOf {D : D7} {T : Type} (_ : LevCh D T) : D7 := D
 
-open Matrix in
 
 theorem sumFrame_tr {D : D7} {A A' B B' : HSp D} (eA : A' = A) (eB : B' = B) {c : ℕ} {ι : A.V →ₗ[D.host.E] B.V}
     {ι' : A'.V →ₗ[D.host.E] B'.V} (hι : HEq ι' ι) {a : Matrix (Fin B.rank) (Fin c) D.host.E}
@@ -176,7 +173,6 @@ namespace GlobalTheory.RowEx
 
 open GlobalTheory.Mem GlobalTheory.RowEx.CarryTr
 
-set_option maxHeartbeats 4000000 in
 
 theorem carryS : CarryS := by
   intro X X' T T' L L' μ₀ μ₀' ι hL sc G G' hG W W' hW S

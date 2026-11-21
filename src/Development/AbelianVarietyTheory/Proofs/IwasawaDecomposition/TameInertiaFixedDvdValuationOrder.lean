@@ -71,9 +71,6 @@ private lemma one_le_valuation_root_of_unity_sub_one {F : Type} [Field F] (O : V
   rw [← hvk, hkF, map_mul]
   exact mul_le_of_le_one_right' ((O.valuation_le_one_iff _).2 hcO)
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField IsLocalRing in
-open scoped CategoryTheory.Obj in
-set_option autoImplicit false in
 
 theorem _root_.GlobalTheory.Member.TameDivOrd.tame_fixed_dvd_ord : ∀ (W : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W]
     (F : Type) [Field F] [Algebra (FractionRing W) F] (ϖ : W), Irreducible ϖ →

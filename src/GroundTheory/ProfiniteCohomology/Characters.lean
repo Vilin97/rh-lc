@@ -32,7 +32,6 @@ theorem cochainsMap_nsmul (f : A ⟶ B) (m : ℕ) : cochainsMap (m • f) = m �
     funext x
     rfl
 
-variable (A) in
 
 theorem cohomologyMap_nsmul_id (m n : ℕ) : cohomologyMap (m • 𝟙 A) n = m • 𝟙 (cohomology A n) := by
   change HomologicalComplex.homologyMap (cochainsMap (m • 𝟙 A)) n =
@@ -96,8 +95,6 @@ theorem cochainsComplex_d_zero_one_trivial :
   simp [inhomogeneousCochains.d_hom_apply, h]
   rfl
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
-variable {G M} in
 
 theorem d_one_trivial_apply (f : (Fin 1 → G) → M) (g : Fin 2 → G) :
     (inhomogeneousCochains.d (Rep.trivial ℤ G M) 1).hom f g =
@@ -114,7 +111,6 @@ theorem d_one_trivial_apply (f : (Fin 1 → G) → M) (g : Fin 2 → G) :
   rw [e2, e3]
   abel
 
-variable {G M} in
 
 theorem dLocallyConstant_one_trivial_eq_zero_iff
     (f : locallyConstantCochains (Rep.trivial ℤ G M) 1) :
@@ -151,7 +147,6 @@ theorem ker_sc_one_g_trivial :
   rw [map_eq_zero_iff _ hinj]
   rfl
 
-variable {G M} in
 
 theorem mem_ker_sc_one_trivial_iff (f : ((cochainsComplex (Rep.trivial ℤ G M)).sc 1).X₂) :
     f ∈ LinearMap.ker ((cochainsComplex (Rep.trivial ℤ G M)).sc 1).g.hom ↔

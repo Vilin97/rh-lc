@@ -27,6 +27,5 @@ end GlobalTheory.DetInv.PsiPhi
 
 namespace GlobalTheory.DetInv
 
-open PsiPhi in
 
 end GlobalTheory.DetInv

@@ -75,7 +75,6 @@ theorem conj_vecMulVec {K : Type} [Field K] {a : ℕ} (W : Submodule K (Fin a �
   · rw [key]; exact W.smul_mem _ hp
   · rw [key, hq _ (by rw [Matrix.mulVec_mulVec, hgg', Matrix.one_mulVec]; exact hv), zero_smul]
 
-open GlobalTheory.CongW.TypeExists in
 
 theorem exists_congruence_surj : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {l : ℕ} [Fact l.Prime] {a : ℕ}, 1 ≤ a → ∀ (w₀ : HeightOneSpectrum (𝓞 E)), ((l : ℕ) : 𝓞 E) ∈ w₀.asIdeal → ∀ (m : ℕ) (N : Set (GL (Fin a) (w₀.adicCompletion E))), IsOpen N → (1 : GL (Fin a) (w₀.adicCompletion E)) ∈ N → ∃ (J : Subgroup (GL (Fin a) (w₀.adicCompletion E))) (θ : J →* Multiplicative (ZMod (l ^ m))), (J : Set (GL (Fin a) (w₀.adicCompletion E))) ⊆ N ∧ IsOpen (J : Set (GL (Fin a) (w₀.adicCompletion E))) ∧ IsCompact (J : Set (GL (Fin a) (w₀.adicCompletion E))) ∧ (∀ x ∈ J, ∀ k : ℕ, 0 < k → x ^ k = 1 → x = 1) ∧ Function.Surjective θ := by
   intro E _ _ _ l _ a ha w hlw m N hNo h1N

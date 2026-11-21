@@ -57,7 +57,6 @@ section Summand
 
 attribute [local instance 2000] Rep.hV2
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem finite_of_isSimpleOrder {p : ℕ} (hp : p.Prime) (A : Rep.{u} (ULift.{u} ℤ) G)
     [IsDiscreteRep A] (hsimple : IsSimpleOrder (Subrepresentation A.ρ))
@@ -86,7 +85,6 @@ section Coinduction
 
 variable {k : Type u} [CommRing k] (H V : Subgroup G) [hVn : V.Normal] (A : Rep.{u} k H)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] in
 
 noncomputable def coindFixed : Submodule k (Rep.coind H.subtype A) :=
   Representation.invariants ((Rep.coind H.subtype A).ρ.comp V.subtype)
@@ -117,7 +115,6 @@ theorem isDiscreteRep_coindFixedRep (hV : IsOpen (V : Set G)) :
     IsDiscreteRep (coindFixedRep H V A) :=
   ⟨fun m => Subgroup.isOpen_mono (fun v hv => Subtype.ext (m.2 ⟨v, hv⟩)) hV⟩
 
-omit [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] hVn in
 
 noncomputable def coindFixedEval : Rep.res H.subtype (coindFixedRep H V A) ⟶ A :=
   Rep.ofHom ⟨{ toFun := fun m => m.1.1 1
@@ -141,7 +138,6 @@ theorem rho_eq_of_inv_mul_mem (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.
 variable (H V) in
 omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]
   hVn in
-open scoped Classical in
 
 noncomputable def summandFun (a : A) (x : G) : A :=
   if hx : x ∈ H ⊔ V then A.ρ (supSection H V ⟨x, hx⟩) a else 0
@@ -224,7 +220,6 @@ theorem summandFun_smul (r : k) (a : A) (x : G) :
   simp only [summandFun]
   split_ifs <;> simp [map_smul]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] in
 
 noncomputable def summandMap (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.ρ h a = a) :
     A ⟶ Rep.res H.subtype (coindFixedRep H V A) :=
@@ -236,7 +231,6 @@ noncomputable def summandMap (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.�
     fun h => LinearMap.ext fun a => Subtype.ext (Subtype.ext (funext fun x =>
       (summandFun_mul_right hfix a h x).symm))⟩
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] in
 
 theorem summandMap_comp_coindFixedEval (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.ρ h a = a) :
     summandMap hfix ≫ coindFixedEval H V A = 𝟙 A := by

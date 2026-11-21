@@ -19,7 +19,6 @@ section Gen
 variable {O : Type} [CommRing O] {bar : O → O} {φ : InvFun O} {X : Type} [AddCommGroup X] [Module O X]
   [Module.Finite O X] {m : ℕ}
 
-omit [Module.Finite O X] in
 
 theorem smul_cancel {β β' : LinearMap.BilinForm ℤ X} {k : ℤ} (hk : k ≠ 0) (h : k • β = k • β') : β = β' := by
   ext x y
@@ -27,7 +26,6 @@ theorem smul_cancel {β β' : LinearMap.BilinForm ℤ X} {k : ℤ} (hk : k ≠ 0
   simp only [LinearMap.smul_apply, smul_eq_mul] at h1
   exact mul_left_cancel₀ hk h1
 
-omit [Module.Finite O X] in
 
 theorem isPrim_of_isPartOfBasis {v : Fin m → balForms bar X} (h : IsPartOfBasis v) (i : Fin m) : IsPrim bar (v i) := by
   intro k β' hk
@@ -36,7 +34,6 @@ theorem isPrim_of_isPartOfBasis {v : Fin m → balForms bar X} (h : IsPartOfBasi
   · exact_mod_cast h2
   · omega
 
-omit [Module.Finite O X] in
 
 theorem eq_of_isPrim {x y : LinearMap.BilinForm ℤ X} (hx : x ∈ balForms bar X) (hy : y ∈ balForms bar X)
     (px : IsPrim bar ⟨x, hx⟩) (py : IsPrim bar ⟨y, hy⟩) {k n : ℕ} (hk : 0 < k) (hn : 0 < n)
@@ -550,7 +547,6 @@ theorem isPolFan_of_maxMult_le_one (hD : ∀ (X : Type) [AddCommGroup X] [Module
 
 end GlobalTheory.PolFan.SmoothEnd
 
-open GlobalTheory.PolFan.SmoothEnd in
 
 theorem GlobalTheory.PolFan.smoothEnd : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (q : ℕ) (φ lab : InvFun (𝓞 E)), (∀ (X : Type) [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X] [Module.Projective (𝓞 E) X], Dominates H.bar X) → IsPolyFan H.bar q φ → SimpLab H.bar q φ lab → maxMult H.bar q φ ≤ 1 → IsPolFan H.bar q φ ∧ NoSelfInt H.bar q φ := by
   intro E _ _ _ H q φ lab hD hPF hSL hM

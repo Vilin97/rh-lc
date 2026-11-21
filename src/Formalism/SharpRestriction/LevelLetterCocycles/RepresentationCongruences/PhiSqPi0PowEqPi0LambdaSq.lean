@@ -130,7 +130,6 @@ theorem coeff_p1_pow_top_isUnit {O : Type*} [CommRing O] [IsDomain O] [IsDiscret
   rw [add_sub_cancel_right] at this
   exact (IsLocalRing.mem_maximalIdeal _).1 this hu
 
-open Formalism.MainNotions.UnusedSlot80.SatW in
 
 theorem isUnit_ps [FiniteDimensional Qp LL] (W : LocWach PD LL O v n) (hcase : Formalism.MainNotions.LiftingTheory.CaseA W)
     (hP9 : Formalism.MainNotions.DeltaInvariantLattices.P9W W) (T : LocLat G Qp LL O) (hT : IsCrys PD T.ρ) (s : ℕ) :

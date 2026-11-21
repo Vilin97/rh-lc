@@ -63,7 +63,6 @@ theorem eq_zero_of_label_nonpos {ψ lab : InvFun O} (hlab : IsCarrierDim bar q �
   simp [hz, LinearMap.sum_apply] at this
   simpa using this
 
-variable (O bar q) in
 
 theorem simpLab_of_isBaryStage_zero (ψ lab φ : InvFun O) (hlab : IsCarrierDim bar q ψ lab)
     (hφ : IsBaryStage bar q ψ lab φ 0) : SimpLab bar q φ lab := by

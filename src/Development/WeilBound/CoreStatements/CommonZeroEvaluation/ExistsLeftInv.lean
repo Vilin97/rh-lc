@@ -321,7 +321,6 @@ theorem eventually_ne {h : S} (hh : ψ h ≠ 0) : ∀ᶠ ψ' in closeF V ψ, ψ'
   rw [h0, zero_sub, Valuation.map_neg] at h1
   exact lt_irrefl _ h1
 
-open Classical in
 
 def ext (h : S) (χ₀ : Localization.Away h →+* K) (ψ' : S →+* K) : Localization.Away h →+* K :=
   if hh : ψ' h = 0 then χ₀ else IsLocalization.Away.lift h (Ne.isUnit hh)

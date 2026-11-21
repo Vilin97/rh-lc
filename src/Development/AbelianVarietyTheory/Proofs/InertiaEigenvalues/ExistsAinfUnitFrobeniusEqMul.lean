@@ -115,7 +115,6 @@ namespace GlobalTheory.Per
 
 open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem OCb_exists_root (l : ℕ) [Fact l.Prime] (f : (OCb l)[X]) (hf : f.Monic)
     (hd : 0 < f.natDegree) : ∃ x, f.IsRoot x := by

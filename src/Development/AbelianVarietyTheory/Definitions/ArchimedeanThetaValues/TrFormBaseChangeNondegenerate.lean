@@ -41,7 +41,6 @@ theorem trForm_mul_left (H : Host E) (a y z : 𝓞 E) : trForm H (a * y) z = trF
 theorem embedding_bar (H : Host E) (τ : E →+* ℂ) (a : 𝓞 E) : τ (H.bar a : 𝓞 E) = conj (τ a) := by
   rw [H.bar_eq, IsCMField.complexEmbedding_complexConj]
 
-omit [IsCMField E] in
 
 theorem coe_trace_eq_sum (a : 𝓞 E) : (Algebra.trace ℤ (𝓞 E) a : ℂ) = ∑ τ : E →+* ℂ, τ a := by
   have h : (Algebra.trace ℤ (𝓞 E) a : ℂ) = algebraMap ℚ ℂ (Algebra.trace ℚ E (a : E)) := by
@@ -82,7 +81,6 @@ def realEmb (τ : E →+* ℂ) : ℝ ⊗[ℤ] 𝓞 E →ₐ[ℝ] ℂ :=
   Algebra.TensorProduct.lift (Algebra.ofId ℝ ℂ) (τ.comp (algebraMap (𝓞 E) E)).toIntAlgHom
     fun _ _ => Commute.all _ _
 
-omit [NumberField E] [IsCMField E] in
 
 @[simp] theorem realEmb_tmul (τ : E →+* ℂ) (r : ℝ) (a : 𝓞 E) : realEmb τ (r ⊗ₜ a) = r * τ a := rfl
 

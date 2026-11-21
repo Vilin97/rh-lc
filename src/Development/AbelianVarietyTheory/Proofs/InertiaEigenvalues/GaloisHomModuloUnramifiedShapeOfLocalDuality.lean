@@ -141,7 +141,6 @@ private theorem card_ker_smul_id_eq_of_linearEquiv {O P Q : Type} [CommRing O] [
       left_inv := fun x => by simp
       right_inv := fun y => by simp }
 
-set_option maxHeartbeats 400000 in
 
 theorem _root_.GlobalTheory.ShapeUnrTriv.shapeUnr_of_localDuality (hT : _root_.Formalism.GaloisCohomology.LocalTateDualityK) (hE : _root_.Formalism.GaloisCohomology.LocalEulerCharK) :
     _root_.ReciprocityTheory.ChartRestriction.T2.ShapeUnr := by

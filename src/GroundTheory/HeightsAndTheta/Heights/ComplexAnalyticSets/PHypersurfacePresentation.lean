@@ -24,7 +24,6 @@ variable {R A E L : Type} [CommRing R] [IsDomain R] [CommRing A] [IsDomain A] [A
   [Field L] [Algebra A L] [IsFractionRing A L] [Algebra R L] [IsScalarTower R A L]
   [Algebra E L] [IsScalarTower R E L]
 
-omit [CharZero E] [IsDomain A] in
 
 theorem exists_clear_denominators (p : Polynomial E) :
     ∃ b : R, b ≠ 0 ∧ ∃ p' : Polynomial R,
@@ -32,8 +31,6 @@ theorem exists_clear_denominators (p : Polynomial E) :
   obtain ⟨b, hb, h⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors R) p
   exact ⟨b, nonZeroDivisors.ne_zero hb, _, by rw [h, Algebra.smul_def, Polynomial.algebraMap_apply]⟩
 
-omit [IsDomain A] in
-include E L in
 
 theorem minpoly_separable_up_to [IsIntegrallyClosed R] {θ : A} (hθ : IsIntegral R θ) :
     ∃ δ : R, δ ≠ 0 ∧ ∃ u v : Polynomial R,
@@ -52,7 +49,6 @@ theorem minpoly_separable_up_to [IsIntegrallyClosed R] {θ : A} (hθ : IsIntegra
   simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C, ha', hb', map_mul]
   linear_combination (Polynomial.C (algebraMap R E ba) * Polynomial.C (algebraMap R E bb)) * hab
 
-omit [CharZero E] [IsDomain A] in
 
 theorem exists_mul_eq_aeval {θ : A} (hθ : IsIntegral R θ)
     (hgen : IntermediateField.adjoin E {algebraMap A L θ} = ⊤) (x : A) :
@@ -71,7 +67,6 @@ theorem exists_mul_eq_aeval {θ : A} (hθ : IsIntegral R θ)
     IsScalarTower.algebraMap_apply R E L]
   exact congrArg _ hp
 
-omit [IsDomain R] [IsDomain A] in
 
 theorem exists_integral_primitive [FaithfulSMul R A] [Algebra.IsAlgebraic R A] {n : ℕ} (x : Fin n → A)
     (hgen : IntermediateField.adjoin E (Set.range fun j => algebraMap A L (x j)) = ⊤) :
@@ -198,8 +193,6 @@ section Main
 
 variable {σ ι : Type} [Finite σ] [Finite ι] (K : Ideal (MvPolynomial ι (MvPolynomial σ ℂ))) [K.IsPrime]
 
-omit [Finite σ] in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem hypersurfacePresentation_of (hKS : ∀ s : MvPolynomial σ ℂ, C s ∈ K → s = 0) :
     ∃ (d : ℕ) (y : Fin d → MvPolynomial ι (MvPolynomial σ ℂ)) (θ : MvPolynomial ι (MvPolynomial σ ℂ))

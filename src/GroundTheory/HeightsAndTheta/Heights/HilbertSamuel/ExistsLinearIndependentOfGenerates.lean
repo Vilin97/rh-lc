@@ -27,7 +27,6 @@ section Basis
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [CharZero Ω]
 
-omit [∀ k, Fintype (ι k)] in
 
 end Basis
 

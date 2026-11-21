@@ -15,7 +15,6 @@ namespace CompanionTheory.Pf1.SegRepC.Uniq
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem exists_unique_irred_sub {d l : ℕ} (hd : 0 < d) (hl : 0 < l) (σ : IrrRep (GL (Fin d) k))
     (hσ : IsCuspidal σ.ρ)

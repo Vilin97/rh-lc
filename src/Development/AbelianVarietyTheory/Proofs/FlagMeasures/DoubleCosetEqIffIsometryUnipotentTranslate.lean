@@ -133,7 +133,6 @@ end GlobalTheory.HL.NmlCoset
 
 namespace GlobalTheory.HL
 
-open GlobalTheory.HL.NmlCoset in
 
 theorem nmlOf_eq_iff_lin : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word),
     Formalism.MainNotions.S.Cnt.Stand D u u' → ∀ t₀ t : TauC Y u u', nmlOf Y u u' t = nmlOf Y u u' t₀ ↔

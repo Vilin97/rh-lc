@@ -91,7 +91,6 @@ theorem inV_of {V : X.Opens} {s : ℕ} {T : Thick (smFun X q)} (h : KS q s {V} T
   obtain rfl := Set.mem_singleton_iff.1 hV'
   exact hT
 
-variable (q) in
 
 def mF (V : X.Opens) (s : ℕ) : (KS q s {V}).FullSubcategory ⥤ (KS (V.ι ≫ q) s {⊤}).FullSubcategory where
   obj T := ⟨liftT V T.obj (inV_of T.property), T.property.1, ⊤, rfl, fun _ _ => trivial⟩
@@ -100,7 +99,6 @@ def mF (V : X.Opens) (s : ℕ) : (KS q s {V}).FullSubcategory ⥤ (KS (V.ι ≫ 
   map_id _ := ObjectProperty.hom_ext _ (sm_ext rfl)
   map_comp _ _ := ObjectProperty.hom_ext _ (sm_ext rfl)
 
-variable (q) in
 
 def mV (V : X.Opens) (s a : ℕ) :
     CH.Mor ((KS (V.ι ≫ q) s {⊤}).ι ⋙ HT.grT (smFun V.toScheme (V.ι ≫ q)) a)

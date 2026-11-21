@@ -133,7 +133,6 @@ end Nef
 
 end NefAmpleFibreAlt
 
-open NefAmpleFibreAlt in
 
 theorem NefAmpleFibre.proof (hK : KleimanScheme.Statement)
     (hGeo : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)], GeoNumStatement ι)

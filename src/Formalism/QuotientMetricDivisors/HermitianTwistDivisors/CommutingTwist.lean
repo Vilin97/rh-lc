@@ -91,7 +91,6 @@ theorem Fnl.sum (ρ : Fnl j) {ι : Type} (s : Finset ι) (f : ι → Ω) :
     ρ.toFun (∑ i ∈ s, f i) = ∑ i ∈ s, ρ.toFun (f i) := by
   exact map_sum ({ toFun := ρ.toFun, map_zero' := ρ.zero, map_add' := ρ.add } : Ω →+ K) f s
 
-variable (j) in
 
 variable (j) in
 theorem eq_zero_of_fnl (c : Ω) (h : ∀ ρ : Fnl j, ρ.toFun c = 0) : c = 0 := by
@@ -152,7 +151,6 @@ end Ext
 
 end FinitelyNonzeroLinear
 
-open FinitelyNonzeroLinear in
 
 namespace FinitelyNonzeroLinear
 
@@ -237,7 +235,6 @@ theorem aniso {v0 : InfinitePlace K} (hv0 : IsConjAt v0) {n : ℕ}
   rw [e, h, map_zero] at hp
   exact lt_irrefl _ hp
 
-open ConjugateWeightGram in
 
 theorem exists_proj {v0 : InfinitePlace K} (hv0 : IsConjAt v0) {n : ℕ}
     {H : Matrix (Fin n) (Fin n) K} (hpos : (H.map v0.embedding).PosDef)
@@ -421,7 +418,6 @@ theorem commuting_twist : CommTwist := by
   show extSpan σ Z = extSpan (twist σ) Z
   rw [extSpan_eq_range Z e h1 h2, extSpan_eq_range Z e h1 h2, heq]
 
-open ConjugateWeightGram FinitelyNonzeroLinear in
 
 namespace FinitelyNonzeroLinear
 
@@ -449,8 +445,6 @@ end Dich
 
 end FinitelyNonzeroLinear
 
-open FinitelyNonzeroLinear in
 
-open FinitelyNonzeroLinear in
 
 end Formalism.DivisionValues

@@ -17,7 +17,6 @@ section
 variable {F E : Type} [Field F] [Field E] [Algebra F E]
   (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R] [IsTopologicalRing R]
 
-omit [IsTopologicalRing R] in
 
 theorem isModTop : IsModuleTopology R (R ⊗[F] E) := ⟨rfl⟩
 

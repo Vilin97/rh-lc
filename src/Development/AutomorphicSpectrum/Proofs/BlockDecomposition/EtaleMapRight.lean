@@ -327,7 +327,6 @@ end Ft
 
 section Main
 
-set_option maxHeartbeats 2000000 in
 
 theorem kunAff (hU : FormUniq) (hS : SiteLaws) (hA : AffOm) (hN : OmNat) (hL : FormLaws) (hC : FormCup) (hK : OmKun) : KunAff := by
   intro K _ _ X X' P q q' p₁ p₂ hP V V' d d' ⟨cV⟩ ⟨cV'⟩

@@ -129,7 +129,6 @@ lemma gs_dfun {f : ∀ k, Γ(Y, V k)} (hf : dfun L V c hVc f = 0) (k l : Fin n) 
   rw [gs_res _ y _ hy, gs_mul _ y _ hy, gs_res _ y _ hy, gs_unit _ y _ hy, gm_res _ y _ hy] at e2
   exact e2
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 
 theorem exists_glue (hL : L.IsLB) (hcov : ⨆ k, V k = ⊤) (f : ∀ k, Γ(Y, V k)) (hf : dfun L V c hVc f = 0) :
     ∃ σ : LB.Sec L, ev L V c hVc σ = f := by
@@ -178,7 +177,6 @@ lemma gs_sec (σ : LB.Sec L) (i j : L.ι) (y : Y) (hi : y ∈ L.U i) (hj : y ∈
   rw [gs_res _ y _ hy, gs_mul _ y _ hy, gs_res _ y _ hy, gs_unit _ y _ hy] at e
   exact e
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 
 theorem ev_inj (hcov : ⨆ k, V k = ⊤) {σ τ : LB.Sec L} (h : ev L V c hVc σ = ev L V c hVc τ) : σ = τ := by
   have hf : σ.f = τ.f := by
@@ -208,7 +206,6 @@ variable {R S : Type} [CommRing R] [CommRing S] [Algebra R S] {X X' : Scheme.{0}
 def algX (U : X.Opens) : R →+* Γ(X, U) :=
   (p.appLE ⊤ U (by simp)).hom.comp (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom
 
-include H in
 
 theorem isPushout_sections (U : X.Opens) (hU : IsAffineOpen U) :
     IsPushout (CommRingCat.ofHom (algX p U)) (CommRingCat.ofHom (algebraMap R S))
@@ -261,7 +258,6 @@ lemma eTens_tmul (U : X.Opens) (hU : IsAffineOpen U) (a : Γ(X, U)) (s : S) :
   rw [e, map_mul]
   exact congrArg₂ (· * ·) h1 h2
 
-omit [Algebra R S] in
 
 def rsL (U U' : X.Opens) (h : U' ≤ U) :
     letI := (algX p U).toAlgebra; letI := (algX p U').toAlgebra
@@ -273,7 +269,6 @@ def rsL (U U' : X.Opens) (h : U' ≤ U) :
       simp only [Algebra.smul_def, RingHom.algebraMap_toAlgebra, RingHom.id_apply]
       rw [ReciprocityTheory.ChartRestriction.G.DVR.rs_mul, rs_algX] }
 
-omit [Algebra R S] in
 
 def mulL (U : X.Opens) (u : Γ(X, U)) :
     letI := (algX p U).toAlgebra
@@ -326,7 +321,6 @@ variable {R S : Type} [CommRing R] [CommRing S] [Algebra R S] {X X' : Scheme.{0}
   (p : X ⟶ Spec (CommRingCat.of R)) (p' : X' ⟶ Spec (CommRingCat.of S)) (φ : X' ⟶ X)
   (H : IsPullback φ p' p (Spec.map (CommRingCat.ofHom (algebraMap R S))))
 
-omit [Algebra R S] in
 
 def smulSec (L : LB X) (a : R) (θ : LB.Sec L) : LB.Sec L where
   f i := algX p (L.U i) a * θ.f i
@@ -343,7 +337,6 @@ lemma ev_smulSec (L : LB X) {n : ℕ} (V : Fin n → X.Opens) (c : Fin n → L.�
     ev L V c hVc (smulSec p L a θ) k = algX p (V k) a * ev L V c hVc θ k := by
   simp only [ev, smulSec, rs_mul, rs_algX]
 
-include H in
 
 theorem flatBC_gen [Module.Flat R S] [CompactSpace X]
     (hinter : ∀ U W : X.Opens, IsAffineOpen U → IsAffineOpen W → IsAffineOpen (U ⊓ W))
@@ -592,7 +585,6 @@ lemma isoRel_smul {L M : LB X} {w : LB.Iso L M} {s : LB.Sec L} {s' : LB.Sec M} (
   rw [e]
   exact mul_left_comm _ _ _
 
-include H in
 
 theorem flatBC_iso [Module.Flat R S] [CompactSpace X]
     (hinter : ∀ U W : X.Opens, IsAffineOpen U → IsAffineOpen W → IsAffineOpen (U ⊓ W))

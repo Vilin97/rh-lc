@@ -41,7 +41,6 @@ end GlobalTheory.AffinePointValues
 
 namespace GlobalTheory
 
-open AffinePointValues in
 
 theorem existsUnique_point_of_ringHom :
     (∀ (X : Over (Sp ℂ)) (U : X.left.Opens), IsAffineOpen U → ∀ e : Γ(X.left, U) →+* ℂ, (∀ a, e (constFn X.hom U a) = a) → ∃! x : (𝟙_ (Over (Sp ℂ)) ⟶ X), ⊤ ≤ (x).left ⁻¹ᵁ U ∧ ∀ f, valAt' x.left U f = e f) := by

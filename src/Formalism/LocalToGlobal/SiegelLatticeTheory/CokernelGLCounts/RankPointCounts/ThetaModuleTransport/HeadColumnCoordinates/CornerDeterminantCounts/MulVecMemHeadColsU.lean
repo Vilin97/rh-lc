@@ -342,9 +342,7 @@ theorem ellU_comp (g : MbMod Z₁.Z →ₗ[M.R] MbMod Z₂.Z) (he : g (eCl Z₁.
 theorem ellU_equiv (γ : MbMod Z₁.Z ≃ₗ[M.R] MbMod Z₂.Z) (he : γ (eCl Z₁.Z) = eCl Z₂.Z) (m : MbMod Z₁.Z) :
     ellU hY₂ hal₂ (γ m) = ellU hY₁ hal₁ m := ellU_comp hY₁ hal₁ hY₂ hal₂ γ.toLinearMap he m
 
-include hY₁ hal₁ in
 
-include hY₁ hal₁ in
 
 include hY₁ hal₁ in
 theorem range_le_ker_indU (g : MbMod Z₁.Z →ₗ[M.R] MbMod Z₂.Z) (he : g (eCl Z₁.Z) = eCl Z₂.Z) :

@@ -154,7 +154,6 @@ theorem chart_equiv (α : T → k) (M : T → Fin 1 → k) (hα : Submodule.span
 
 end LinearPrimeBase
 
-open LinearPrimeBase in
 
 theorem LinPrimeBase.proof : LinPrimeBase.Statement := by
   intro T _ k _ α M hα _hM c hc

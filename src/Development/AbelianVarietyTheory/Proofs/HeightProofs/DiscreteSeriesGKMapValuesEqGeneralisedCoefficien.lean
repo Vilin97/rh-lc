@@ -28,7 +28,6 @@ open GlobalTheory.SmoothGlob GlobalTheory.LowTypeDetermined GlobalTheory.PointAt
 
 namespace GlobalTheory.TypeSum.GKCoef
 
-open CoefLow in
 
 theorem values_eq_coef : ∀ {D : D7} (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (V : HSp D)
     (τ : D.what₂.Tau), IsInfFam (D := D) θ → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CasselmanWallach →

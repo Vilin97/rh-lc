@@ -21,7 +21,6 @@ section Alg
 variable {R : Type} [CommRing R] {E : Type} [CommRing E] [Algebra R E] (c : E →ₐ[R] E)
   {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
 
-omit [DecidableEq α] in
 
 theorem symp_dbl_toCols (ξ : E) (JA : Matrix α α E) (JB : Matrix β β E) (x y : Matrix α (β ⊕ β) E) :
     symp (R := R) c ξ JA (dbl JB) x y =

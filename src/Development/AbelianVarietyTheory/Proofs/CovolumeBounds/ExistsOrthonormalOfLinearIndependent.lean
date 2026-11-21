@@ -61,7 +61,6 @@ theorem det_gram_nonneg (x : ι → E) : 0 ≤ (gram 𝕜 x).det :=
 theorem re_det_gram_nonneg (x : ι → E) : 0 ≤ RCLike.re (gram 𝕜 x).det :=
   (RCLike.nonneg_iff.mp (det_gram_nonneg x)).1
 
-omit [DecidableEq ι] [Fintype κ] [DecidableEq κ] in
 
 theorem gram_sum_smul [Fintype κ] (e : ι → E) (m : Matrix ι κ 𝕜) :
     gram 𝕜 (fun j => ∑ i, m i j • e i) = mᴴ * gram 𝕜 e * m := by
@@ -110,13 +109,11 @@ theorem re_det_gram_le_prod (x : ι → E) : RCLike.re (gram 𝕜 x).det ≤ ∏
     rw [hx, map_zero]
     positivity
 
-omit [DecidableEq ι] in
 
 theorem det_gram_comp_equiv [DecidableEq ι] (x : ι → E) (σ : κ ≃ ι) :
     (gram 𝕜 (x ∘ σ)).det = (gram 𝕜 x).det :=
   det_submatrix_equiv_self σ (gram 𝕜 x)
 
-omit [DecidableEq ι] [Fintype κ] [DecidableEq κ] in
 
 theorem sum_norm_apply_sq_le {e : ι → E} (he : Orthonormal 𝕜 e) (φ : E →L[𝕜] 𝕜) :
     ∑ i, ‖φ (e i)‖ ^ 2 ≤ ‖φ‖ ^ 2 := by

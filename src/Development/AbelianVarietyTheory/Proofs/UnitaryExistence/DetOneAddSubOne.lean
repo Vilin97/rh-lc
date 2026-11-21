@@ -161,6 +161,5 @@ theorem gLat_eq_of_finCong {D : D7} {V : HSp D} {N : ℕ} {u : GA D V} (hu : Fin
     rw [Matrix.mulVec_mulVec, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one,
       Matrix.one_mulVec]
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.MarkDet

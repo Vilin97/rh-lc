@@ -64,10 +64,8 @@ theorem prod_end (φ : A ⟶ A) {a b : ℕ} {a' b' : ℤ} (ha : a' = a) (hb : b'
   rw [Fin.prod_univ_two]
   simp [Over.comp_left, zpow_neg, zpow_natCast]
 
-set_option maxHeartbeats 4000000 in
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
-set_option maxHeartbeats 800000 in
 
 end ReciprocityTheory.ChartRestriction.G.Geo.Tor

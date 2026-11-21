@@ -21,7 +21,6 @@ theorem one_add_pow_le_two_pow_mul_one_add_pow (a : ℝ) (ha : 0 ≤ a) (n : ℕ
         have : 0 ≤ (2:ℝ) ^ n := by positivity
         nlinarith
 
-open Real in
 
 theorem fourier_inversion_real_linear_forms :
     ∀ {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] (ψ : SchwartzMap V ℂ),

@@ -68,7 +68,6 @@ theorem word_rt (h : GA E a) : ∀ (l : List (Lie E a)) (φ : Sm E a),
   | [], φ => by simp [GlobalTheory.GLFin.word]
   | X :: l, φ => by rw [word_cons, word_rt h l, lie_rt, List.map_cons, word_cons]
 
-variable (E a) in
 
 def bccSub : Submodule ℂ (GA E a → ℂ) where
   carrier := {F | IsBCC F}

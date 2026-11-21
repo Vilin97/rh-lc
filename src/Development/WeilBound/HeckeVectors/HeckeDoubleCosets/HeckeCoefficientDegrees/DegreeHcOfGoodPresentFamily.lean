@@ -64,7 +64,6 @@ theorem fdeg_gap (n : ℕ) (ε : Fin n → Bool) : ∃ c : ℝ, 0 < c ∧
 
 end UJ
 
-open PI.UpqRep PI.UnitaryGroupMassFormula.FdegHpk in
 
 open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Formalism.FourierDecayAlt.P.CutBP Formalism.FourierDecayAlt.P.CutBP.Jmu
 

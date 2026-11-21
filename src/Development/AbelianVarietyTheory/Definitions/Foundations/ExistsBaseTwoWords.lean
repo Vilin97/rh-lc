@@ -28,7 +28,6 @@ section host
 
 variable {R : Ranks} (H : Host R)
 
-open Classical in
 
 end host
 

@@ -38,14 +38,12 @@ theorem classZetaVals_unique {E : Type} [Field E] [NumberField E] {k : ℕ} (hk 
 section Twist
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc)
 
-open Classical in
 
 theorem twist_val {μ₀ : T} (hL : L.Is μ₀) (t : T) (i j : Fin D.R.m) {s : ℕ} (hs : s ≤ halfRank D i j) :
     IsValChar (cmPhi D) s (kap D sc.cGap i j s) (condF G.pl)
       ((GlobalTheory.SqTop.twPl G t).image fun P => P.under (𝓞 D.host.F)) (nuH G t i j) :=
   GlobalTheory.T.square_nu_twisted_tuple_isCMValueHeckeCharacter G hL t i j hs
 
-open Classical in
 
 theorem squareTopTwistPlaces_coprime_splitPlaces {μ₀ : T} (hL : L.Is μ₀) (t : T) :
     IsFinSetSplitPlacesCoprimeConductor (condF G.pl) ((GlobalTheory.SqTop.twPl G t).image fun P => P.under (𝓞 D.host.F)) :=
@@ -55,7 +53,6 @@ theorem twist_ram {μ₀ : T} (hL : L.Is μ₀) (t : T) (i j : Fin D.R.m) :
     ∀ P ∈ GlobalTheory.SqTop.twPl G t, ¬ (nuH G t i j).UnrAt P :=
   GlobalTheory.T.square_nu_twisted_tuple_ramified_at_twist_place G hL t i j
 
-open Classical in
 
 theorem twist_prime (t : T) {l : ℕ} (hl : l.Prime) {w : Formalism.PairingDivisionLocalBalance.Pl D.what₂.LL} (hlw : (l : 𝓞 D.what₂.LL) ∈ w.asIdeal)
     (hQ : (GlobalTheory.SqTop.Qn G t : 𝓞 D.what₂.LL) ∉ w.asIdeal) :
@@ -72,8 +69,6 @@ theorem vw_pow {K : Type} [Field K] [NumberField K] (w : Formalism.PairingDivisi
 theorem over_under {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E)) :
     Over P (P.under (OF E)) := rfl
 
-set_option maxHeartbeats 1000000 in
-open Classical in
 
 theorem core (hTD : GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds.ToricDenominator) {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} {μ₀ : T}
     (hL : Lc.Is μ₀) (G : GridData Lc sc) (hcm : IsCMField D.host.E) (hab : IsAbelianGalois ℚ D.host.E)

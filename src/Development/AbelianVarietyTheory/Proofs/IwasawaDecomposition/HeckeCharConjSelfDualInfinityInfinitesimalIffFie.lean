@@ -85,7 +85,6 @@ theorem field_iff (χ : HChar L) :
 
 end GlobalTheory.CuspRep.CsdInf
 
-open GlobalTheory.CuspRep.CsdInf in
 
 theorem GlobalTheory.CuspRep.csdInf_iff : ∀ {R : Ranks} (H : Formalism.BasicNotions.Host R) (χ : HChar H.E), haveI := host_isCMField H;
     (∀ z, dchi χ (-star z) = dchi χ z) ↔

@@ -15,8 +15,6 @@ open PDiv
 
 variable {p : ℕ} {O : Type} [CommRing O]
 
-open TensorProduct Coalgebra Bialgebra WithConv Module CategoryTheory in
-variable {p : ℕ} {O : Type} [CommRing O] in
 
 theorem _root_.GlobalTheory.PDivGroup.Test.mulP_injective (G : _root_.GlobalTheory.PDivGroup p O) (n : ℕ) :
     Function.Injective (G.mulP n) := by

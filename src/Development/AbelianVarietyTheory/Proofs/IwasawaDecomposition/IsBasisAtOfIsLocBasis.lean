@@ -97,7 +97,6 @@ theorem lattice_sup_smul {d : Deco E n ST SG} (hd : d.Ok) (I : Ideal (𝓞 E)) :
     Submodule.IsLattice E (d.L ⊔ I • d.Lsh : Submodule (𝓞 E) (Sp E n)) :=
   lattice_between hd.L_lattice hd.Lsh_lattice le_sup_left (sup_le hd.L_le_Lsh Submodule.smul_le_right)
 
-open Classical in
 
 theorem mem_localization_ker (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : ι → DomWeight n) (w : HeightOneSpectrum (𝓞 K))
     {T : ℕ} (hT : T.Prime) (hST : ∀ P : ST, (T : 𝓞 E) ∈ P.1.asIdeal) (e : ST ≃ ι) (he : ∀ P, bcBelow (emb (e P)) w = P.1)
@@ -179,7 +178,6 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Ho
 
 open GlobalTheory.Mem.Col2.BwLat GlobalTheory.LvT.Built.ValLat Formalism.HermitianLatticesTheory
 
-set_option maxHeartbeats 1000000 in
 
 theorem bw_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (I.rec7 l Z) i hi), I.IdY l Z u a i hi eY → BwTieG (D := (I.rec7 l Z)) (I.fm l u a) (B.T u) (I.resT l u a) eY (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c)) := by
   intro B X I hI hP l Z u a i hi eY hY w hw hs v x

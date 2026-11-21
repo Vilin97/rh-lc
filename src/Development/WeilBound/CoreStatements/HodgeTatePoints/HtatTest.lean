@@ -190,6 +190,5 @@ end PositivityTheory.HtPt.Htat.TestPts
 
 namespace PositivityTheory.HtPt.Htat
 
-open PositivityTheory.HtPt.Htat.TestPts in
 
 end PositivityTheory.HtPt.Htat

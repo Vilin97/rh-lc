@@ -14,7 +14,6 @@ open GlobalTheory.AdmLoc GlobalTheory.TopSteps Formalism.WeaklyAdmissibleFiltrat
 
 namespace GlobalTheory.FontaineExtensionCriteria
 
-open GlobalTheory.Per.FontaineBound in
 
 theorem fontCore_of_tied {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} (T : LocTied l P AI)
     (K : FinExt l) : LocalSituation.fontCore (P.PD K) := by

@@ -21,7 +21,6 @@ variable {K : Type*} [Field K] {n : ℕ} [NeZero n] [HasEnoughRootsOfUnity K n]
   {F E : Type*} [Field F] [Field E] [Algebra K F] [Algebra F E] [Algebra K E]
   [IsScalarTower K F E]
 
-omit [NeZero n] [HasEnoughRootsOfUnity K n] [IsScalarTower K F E] in
 
 theorem kummerExtension_pow_eq {y : kummerExtension K n Ω Δ} {a : K}
     (hy : (y : Ω) ^ n = algebraMap K Ω a) :
@@ -72,7 +71,6 @@ theorem algHom_kummerExtension_mem_fieldRange (ι : kummerExtension K n Ω Δ �
     rw [map_mul]
     exact mul_mem ihx ihy
 
-omit [Algebra K E] [IsScalarTower K F E] in
 
 theorem finrank_eq_one_of_tensor_surjective {A : Type*} [CommRing A] [Algebra K A]
     (g : F ⊗[K] A →ₐ[F] E) (hg : Function.Surjective g)
@@ -124,7 +122,6 @@ variable {K : Type*} [Field K] [NumberField K] {n : ℕ} [NeZero n] [HasEnoughRo
 instance numberField_kummerExtension : NumberField (kummerExtension K n Ω Δ) :=
   NumberField.of_module_finite K _
 
-open SemiLocal in
 
 theorem splitsCompletely_kummerExtension_iff (v : HeightOneSpectrum (𝓞 K)) :
     SplitsCompletely (kummerExtension K n Ω Δ) v ↔
@@ -139,7 +136,6 @@ theorem splitsCompletely_kummerExtension_iff (v : HeightOneSpectrum (𝓞 K)) :
   obtain ⟨w⟩ := nonempty_placesOver (kummerExtension K n Ω Δ) v
   exact (key w).1 (h w)
 
-open scoped NumberField.LiesOver in
 
 theorem InfinitePlace.splitsCompletely_kummerExtension_iff (v : NumberField.InfinitePlace K) :
     InfinitePlace.SplitsCompletely (kummerExtension K n Ω Δ) v ↔

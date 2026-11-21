@@ -22,7 +22,6 @@ open GlobalTheory.RowEx
 
 namespace GlobalTheory.RowEx
 
-set_option maxHeartbeats 1000000 in
 
 theorem trEasy : TrEasy := by
   intro X X' T T' L L' sc G G' W W' S S' μ₀ μ₀' ι h M σ

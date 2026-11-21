@@ -15,15 +15,12 @@ namespace GlobalTheory.ChainStepSupp
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open MeasureTheory ValuativeRel Matrix in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem _root_.GlobalTheory.ChainStepSupp.det_lower_ne_zero {A D : Type} [Fintype A] [DecidableEq A]
     [Fintype D] [DecidableEq D]
     {j : GL (A ⊕ D) k} (hj : j ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection.parahoric k A D) : j.1.toBlocks₂₂.det ≠ 0 :=
   (_root_.GlobalTheory.ParahoricLowerBlock.lower_block_tame k A D 1 (fun _ _ => rfl) j hj).1
 
-variable (k) in
 
 def reGL {m n : Type} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n] (e : m ≃ n) : GL m k ≃* GL n k :=
   Units.mapEquiv (Matrix.reindexAlgEquiv k k e).toMulEquiv
@@ -62,8 +59,6 @@ theorem _root_.GlobalTheory.ChainStepSupp.reGL_reGL_symm {m n : Type} [Fintype m
   ext i j
   simp [_root_.GlobalTheory.ChainStepSupp.val_reGL, Matrix.reindex_apply]
 
-open MeasureTheory ValuativeRel Matrix in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem _root_.GlobalTheory.ChainStepSupp.emb₂_mem_parahoric {A D : Type} [Fintype A] [DecidableEq A]
     [Fintype D] [DecidableEq D]
@@ -83,8 +78,6 @@ theorem _root_.GlobalTheory.ChainStepSupp.emb₂_mem_parahoric {A D : Type} [Fin
       simp [_root_.GlobalTheory.SmGL.val_emb₂, hx₂, hy₂]
   · simp [_root_.GlobalTheory.SmGL.val_emb₂]
 
-open MeasureTheory ValuativeRel Matrix in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem _root_.GlobalTheory.ChainStepSupp.emb₂_one_torusElt {A D : Type} [Fintype A] [DecidableEq A]
     [Fintype D] [DecidableEq D] (ϖ : kˣ)
@@ -99,8 +92,6 @@ theorem _root_.GlobalTheory.ChainStepSupp.emb₂_one_torusElt {A D : Type} [Fint
     simp [_root_.GlobalTheory.SmGL.val_emb₂, _root_.GlobalTheory.GLDoubling.val_torusElt, Matrix.diagonal_apply,
       Matrix.one_apply]
 
-open MeasureTheory ValuativeRel Matrix in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem _root_.GlobalTheory.ChainStepSupp.support_dcell : ∀ (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ϖ : kˣ),

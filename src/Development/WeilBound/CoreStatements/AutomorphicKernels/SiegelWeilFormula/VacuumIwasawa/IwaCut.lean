@@ -20,7 +20,6 @@ open GlobalTheory.Doubling (absE)
 
 def I0 {n : ℕ} (i₀ : Fin n) : Set (Fin n ⊕ Fin n) := {Sum.inl i₀, Sum.inr i₀}
 
-variable (F E) in
 
 structure IsQ {n : ℕ} (i₀ : Fin n) (M : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E)) (lam : (AE F E)ˣ) : Prop where
   off : ∀ a b, a ∉ I0 i₀ → b ∉ I0 i₀ → M a b = (1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E)) a b

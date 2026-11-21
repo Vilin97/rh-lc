@@ -24,7 +24,6 @@ theorem normC_one (w : List C.Letter) : TBB.normC (fun _ => (1 : ℝ)) w = 1 := 
   | nil => simp
   | cons a w ih => simp [ih]
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end place
 
@@ -42,7 +41,6 @@ theorem nfHyp_mono {Cb c c' : ℝ} {P : M.Par} {Wp Wq : Type} [NormedAddCommGrou
   rw [e, e]
   exact mul_le_mul_of_nonneg_right hc hX
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end
 

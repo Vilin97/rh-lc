@@ -105,7 +105,6 @@ lemma app_compat_generic (h : Z ⟶ Y) {Ui Uj : Y.Opens} {Wi Wj : Z.Opens} (hi :
   rw [e1, e2, hc, map_mul, hm, hg']
   rfl
 
-variable (L) in
 
 def pullSec (φ : K → (Y ⟶ X)) (ε : K → ℤ) (s : LB.Sec (LB.LinComb L φ ε)) (h : Z ⟶ Y) :
     LB.Sec (LB.LinComb L (fun k => h ≫ φ k) ε) where
@@ -218,7 +217,6 @@ lemma mul_compat_generic {Ui Uj Ui' Uj' Wi Wj : Y.Opens} (hi : Wi ≤ Ui) (hi' :
   rw [hm, hm, e1, e2, e3, e4, hc, hc', hm, hm, hG, Units.val_mul, hres, hres]
   ring
 
-variable (L) in
 
 def mulSec (φ : K → (Y ⟶ X)) (ε : K → ℤ) (φ' : K' → (Y ⟶ X)) (ε' : K' → ℤ)
     (s : LB.Sec (LB.LinComb L φ ε)) (s' : LB.Sec (LB.LinComb L φ' ε')) :

@@ -32,7 +32,6 @@ theorem exists_card : ∃ a : ℕ, a ≠ 0 ∧ Nat.card (ResidueField ↥(OL K))
 
 variable {K} {a : ℕ} [NeZero a]
 
-omit [NeZero a] in
 
 theorem res_pow (h : Nat.card (ResidueField ↥(OL K)) = l ^ a) (x : ResidueField ↥(OL K)) : x ^ l ^ a = x := by
   have := OL_resFinite K
@@ -121,7 +120,6 @@ theorem Kunr_eq (h : Nat.card (ResidueField ↥(OL K)) = l ^ a) : Kunr l a = K0 
   · exact key c hc h1
   · exact inv_mem_iff.1 (key _ (inv_mem hc) (by rw [norm_inv]; exact inv_le_one_of_one_le₀ h1))
 
-variable (l a) in
 
 theorem free_Wq : Module.Free ℤ_[l] (Wq l a) := by
   have := GlobalTheory.TameFrob.finite_Wq l a
@@ -131,7 +129,6 @@ theorem free_Wq : Module.Free ℤ_[l] (Wq l a) := by
     exact Subtype.val_injective ((algebraMap ℚ_[l] (Om l)).injective this)
   infer_instance
 
-variable (l a) in
 
 theorem finrank_Wq : Module.finrank ℤ_[l] (Wq l a) = a := by
   have := free_Wq l a
@@ -139,8 +136,6 @@ theorem finrank_Wq : Module.finrank ℤ_[l] (Wq l a) = a := by
   rw [Module.finrank_baseChange] at h
   simpa using h
 
-attribute [local instance] GlobalTheory.TameFrob.algK GlobalTheory.TameFrob.isFractionRing in
-variable (l a) in
 
 theorem finrank_Kunr : Module.finrank ℚ_[l] ↥(Kunr l a) = a := by
   have := GlobalTheory.TameFrob.finite_Wq l a

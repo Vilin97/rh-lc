@@ -33,7 +33,6 @@ open scoped TensorProduct NNReal NumberField Pointwise in
 variable {O C : Type} [CommRing O] [Field C] [Algebra O C]
   {V : Type} [AddCommGroup V] [Module C V] [Module O V] [IsScalarTower O C V]
   {Λ : Type} [CommRing Λ] (ρ : Λ →+* Module.End C V) in
-variable {ι : Type} [DecidableEq ι] {σ : ι → Λ →+* C} (h : _root_.GlobalTheory.EigenSplit.IsSplitting σ) in
 
 theorem _root_.GlobalTheory.HTLat.eigSubLat_le_eigQuotLat (i : ι) (X : Submodule O V) :
     _root_.GlobalTheory.HTLat.eigSubLat ρ (σ i) X ≤ _root_.GlobalTheory.HTLat.eigQuotLat ρ h i X := by
@@ -137,8 +136,6 @@ set_option autoImplicit false in
 open scoped TensorProduct NNReal NumberField Pointwise in
 variable {O C : Type} [CommRing O] [Field C] [Algebra O C]
   {U : Type} [AddCommGroup U] [Module C U] [Module O U] [IsScalarTower O C U] in
-variable (v : Valuation C ℝ≥0) in
-variable {v} in
 
 theorem _root_.GlobalTheory.HTLat.fg_inf (hv : v.Integers O) {La : Submodule O U} (hfg : La.FG)
     (F : Submodule C U) : (La ⊓ F.restrictScalars O).FG := by
@@ -192,7 +189,6 @@ section Frames
 variable {O C : Type} [CommRing O] [Field C] [Algebra O C]
   {U : Type} [AddCommGroup U] [Module C U] [Module O U] [IsScalarTower O C U] {N : ℕ}
 
-variable (C) in
 
 def step (f : Fin N → U) (i : ℕ) : Submodule C U := Submodule.span C (f '' {k | (k : ℕ) < i})
 
@@ -223,7 +219,6 @@ theorem _root_.GlobalTheory.HTLat.mem_step_succ (f : Fin N → U) (i : Fin N) :
     f i ∈ _root_.GlobalTheory.HTLat.step C f (i + 1) :=
   Submodule.subset_span ⟨i, Nat.lt_succ_self _, rfl⟩
 
-variable (C) in
 
 def grAt (La : Submodule O U) (f : Fin N → U) (i : Fin N) : Submodule O (U ⧸ step C f i) :=
   grLat La (step C f i) (step C f (i + 1))

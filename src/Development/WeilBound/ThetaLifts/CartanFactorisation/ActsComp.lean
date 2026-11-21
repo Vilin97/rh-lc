@@ -50,7 +50,6 @@ theorem exists_L (hp : IsPair B M χX χW om r s r' s') {𝓒} (hc : Cls B M om 
         rw [this, PositivityTheory.ThKG.I_smul]; rfl
       cont := hc.contf ψ hψ h𝓒 h }, fun _ _ => rfl⟩
 
-set_option maxHeartbeats 1000000 in
 
 end PositivityTheory.ThKF
 

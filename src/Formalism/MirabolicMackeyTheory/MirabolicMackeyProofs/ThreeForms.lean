@@ -498,7 +498,6 @@ end Ram
 
 end ThreeFormsAlt
 
-open ThreeFormsAlt in
 
 open ThreeFormsAlt in
 theorem threeForms_of (hS : IdxScaleIn) : ThreeForms := by
@@ -585,6 +584,5 @@ theorem threeForms_of (hS : IdxScaleIn) : ThreeForms := by
 
 theorem three_forms : ThreeForms := threeForms_of index_scale_inclusion
 
-open IsLocalRing in
 
 end Formalism.EigenvalueLevelCeiling

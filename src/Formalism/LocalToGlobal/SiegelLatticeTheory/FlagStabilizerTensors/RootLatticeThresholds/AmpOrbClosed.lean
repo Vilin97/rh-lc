@@ -20,16 +20,12 @@ namespace Formalism.L2.SG.AmpOrbClosed
 
 open Formalism.BasicNotions Formalism.MainNotions.S
 
-variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 
-variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
 theorem ampDD_thm : Formalism.MainNotions.S.Pv.AmpDD.AmpDD :=
   Formalism.MainNotions.S.Pv.AmpDDPf.amplitude_orbital_integral Formalism.FourierDecayAlt.P.schur_hermitian Formalism.FourierDecayAlt.P.norm_inverse_bound
     Formalism.FourierDecayAlt.P.growth_group_bound Formalism.FourierDecayAlt.P.double_coset_decomposition Formalism.MainNotions.S.Pv.AmpDDPf.right_stabilizer_invariance
 
-variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 
-variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
 end Formalism.L2.SG.AmpOrbClosed

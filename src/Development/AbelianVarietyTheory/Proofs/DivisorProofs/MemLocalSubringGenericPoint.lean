@@ -172,7 +172,6 @@ theorem exists_polynomial [Algebra.IsAlgebraic k[X] K] {a : K} (ha : a ≠ 0) :
   rw [map_mul, ← e, mul_assoc, map_mul] at h1
   exact (mul_lt_one_of_lt_of_le h ((V.valuation_le_one_iff _).2 (mul_mem hbV (hp r)))).ne h1
 
-omit [Algebra k[X] K] in
 
 theorem exists_polynomial_integral (A : Type) [CommRing A] [IsDomain A] [Algebra k A]
     [Algebra.FiniteType k A] (h : ringKrullDim A = 1) :
@@ -204,7 +203,6 @@ theorem mem_localSubring_genericPoint (t : C.functionField) : t ∈ localSubring
   obtain ⟨U, hU, s, rfl⟩ := C.presheaf.exists_germ_eq t
   exact germ_mem hU hU s
 
-omit [IsIntegral C] in
 
 theorem krullDim_eq : Order.krullDim C = topologicalKrullDim C :=
   (Order.krullDim_eq_of_orderIso (irreducibleSetEquivPoints (α := C))).symm

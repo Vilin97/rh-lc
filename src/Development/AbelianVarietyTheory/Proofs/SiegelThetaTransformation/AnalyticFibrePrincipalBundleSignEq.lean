@@ -195,7 +195,6 @@ theorem chi_add (hs : IsSympl X bas) (hx : x ∈ X.dom) {u v : Fin r → E} (hu 
 
 end GlobalTheory.Dict.FrameSign
 
-open GlobalTheory.Dict.FrameSign GlobalTheory.SelfCube in
 
 theorem GlobalTheory.Dict.analyticFibre_principalBundle_sign_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) [Algebra c.F ℂ] (r g : ℕ) (X : Data E r) (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (idx : Fin g ≃ X.Ψ × Fin r) (e : Fin g ≃ Lt1 Dw) (x : Frame X.Ψ r) (L : Lt E r) (y : FrPt Xo c ℂ) (A : AnFib X bas idx e x L y), IsSympl X bas → x ∈ X.dom → SelfD X L → ∀ v ∈ L, A.χ v = eps1 X (H.w0 : E) v := by
   intro E _ _ _ H Dw l Xo c _ r g X bas idx e x L y A hs hx hL

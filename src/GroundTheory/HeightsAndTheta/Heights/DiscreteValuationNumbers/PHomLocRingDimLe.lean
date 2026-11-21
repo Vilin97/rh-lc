@@ -253,7 +253,6 @@ theorem primeAbove_strictMono [Fintype K] (hmem : HomLocRingMem.Statement.{u}) (
 
 end HomLocRingDimLe
 
-open HomLocRingDimLe in
 
 theorem HomLocRingDimLe.proof (h₁ : HomLocRingMem.Statement.{u})
     (h₂ : HomLocRingIsLocal.Statement.{u}) : HomLocRingDimLe.Statement.{u} := by

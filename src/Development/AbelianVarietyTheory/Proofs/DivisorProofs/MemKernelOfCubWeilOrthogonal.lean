@@ -30,7 +30,6 @@ theorem fibreDescent_transport' {X : Scheme.{0}} {m m' : X ⟶ X} (e : m = m')
       ∃! a' : Γ(X, V), (m.app V).hom a' = a := by
   subst e; exact H
 
-open ReciprocityTheory.PGsh ReciprocityTheory.ChartRestriction.G.Chart in
 
 theorem descends_fibre (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (hG : IsAbelianScheme G)
     (K : Type) [Field K] [IsAlgClosed K] (f : Spec (CommRingCat.of K) ⟶ S) (N : ℕ) (hN : (N : K) ≠ 0)

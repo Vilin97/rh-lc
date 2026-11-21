@@ -313,7 +313,6 @@ def NumII (D : D7) (L : SizeData₂ D) (K : Consts) (p n' N : ℕ) : Prop :=
             2 * (rG L.sc : ℝ) * ((n' : ℕ) : ℝ) * cG L)) *
         L.sc.x ^ Scale.A ≤ L.sc.a - cG L
 
-set_option maxHeartbeats 2000000 in
 
 theorem numII_ev (eps : ℝ) (K : Consts) (hK : K.Nonneg) (C31 : ℝ) (h31 : 0 < C31) :
     ∀ᶠ x : ℝ in atTop, ∀ (D : D7) (L : SizeData₂ D), L.sc.x = x → L.sc.eps = eps → Formalism.MainNotions.SizesAt L →
@@ -566,7 +565,6 @@ theorem numII_ev (eps : ℝ) (K : Consts) (hK : K.Nonneg) (C31 : ℝ) (h31 : 0 <
     rw [hab]
     nlinarith
 
-set_option maxHeartbeats 1000000 in
 
 theorem hypIIAt_ev (eps ez : ℝ) (hez0 : 0 < ez) (K : Consts) (hK : K.Nonneg) (C31 : ℝ) (h31 : 0 < C31) :
     ∀ᶠ x : ℝ in atTop, ∀ (D : D7) (L : SizeData₂ D) (X : Inst D L), L.sc.x = x → L.sc.eps = eps → L.sc.ez = ez → Formalism.MainNotions.SizesAt L →

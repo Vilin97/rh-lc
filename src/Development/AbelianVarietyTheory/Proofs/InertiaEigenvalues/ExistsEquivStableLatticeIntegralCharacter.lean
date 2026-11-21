@@ -69,7 +69,6 @@ end GlobalTheory.CharLat
 
 namespace GlobalTheory.CharLat
 
-set_option maxHeartbeats 2000000 in
 
 theorem exists_equiv_charLattice : ∀ {l : ℕ} [Fact l.Prime] (LL : FinExt l) {G : Type} [Group G] [TopologicalSpace G]
     (θ : G →* (↥(OL LL))ˣ) (Lc : Lattice (O := ↥(OL LL)) (charRep (tableLineDegreeTwo.charL (LL := ↥LL.1) θ))),

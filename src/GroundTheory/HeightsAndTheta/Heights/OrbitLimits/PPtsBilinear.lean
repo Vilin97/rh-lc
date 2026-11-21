@@ -102,7 +102,6 @@ theorem maDensity_cons_sum {n : ℕ} (L : Fin n → HermLine ι) {T : Type} [Fin
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [cxHessian_cons L (u t) (fun _ => 0) γ y]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem sheetDensity_sum_left {n : ℕ} (P : Ideal (MRing ι))
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (n + 1) → ℂ)) (φ : Fin n → ((Σ k, ι k) → ℂ) → ℝ)
@@ -179,7 +178,6 @@ theorem integrable_fibreSum (hInt : PtsIntegrableStatement) {P : Ideal (MRing ι
 
 end PointsBilinear
 
-open PointsBilinear in
 
 theorem PtsBilinear.proof (hAbs : Inter.PtsAbsIntegrable.Statement) (hMeas : PtsSumMeasurable.Statement) :
     PtsBilinear.Statement := by

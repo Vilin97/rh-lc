@@ -9,7 +9,6 @@ open NumberField
 
 namespace GlobalTheory.RationalSpan
 
-open Classical in
 
 theorem expand {K L : Type} [Field K] [Field L] [Algebra K L] {n : ℕ} {s : Type}
     (b : Module.Basis s K L) (v : Fin n → L) :

@@ -137,7 +137,6 @@ theorem fockInner_colLie (t : T) (k l : κ) (P Q : Poly ℂ T p q κ) :
 
 variable [Fintype T] (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ)
 
-variable (R) in
 
 noncomputable def colWord (w : List (T × Fin n × Fin n)) : Poly R T p q (Fin n) :=
   w.foldr (fun i P => colLie R p q i.1 i.2.1 i.2.2 P) (basePoly R h c c')
@@ -247,7 +246,6 @@ theorem rowHighest_eq_orbitSpan [Field K] [CharZero K] :
   rintro _ ⟨w, rfl⟩
   exact colWord_mem_orbitSpan h c c' w
 
-include h in
 
 theorem span_map_rowHighest_int [CommRing K] [Algebra ℚ K] :
     Submodule.span K (MvPolynomial.map (Int.castRingHom K) ''

@@ -49,7 +49,6 @@ theorem exists_denom (p : ℕ) [Fact p.Prime] : ∀ (m : ℕ) (d : Fin m → ℂ
             simp only [Fin.tail]; ring]
           exact (𝓞_ℂ_[p]).mul_mem _ _ hinv (hl l)
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.FlatModel
 

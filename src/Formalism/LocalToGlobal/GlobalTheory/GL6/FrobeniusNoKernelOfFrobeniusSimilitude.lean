@@ -104,9 +104,7 @@ theorem forms_from_adelic_function (Tf : FormsTied D u) (i : ℕ) (hi : i ≤ D.
   simp only [Equiv.symm_apply_apply] at this
   exact this.symm
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end Formalism.L2.GlobalTheoryTheory.LocalLatticeBases
 

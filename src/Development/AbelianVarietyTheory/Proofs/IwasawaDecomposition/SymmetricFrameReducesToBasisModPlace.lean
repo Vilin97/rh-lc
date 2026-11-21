@@ -190,7 +190,6 @@ open Formalism.MainNotions.S Formalism.L2.SG.Pf.RowDictPf PIW.AdelClassFin Forma
 
 variable {D : D7}
 
-open Classical in
 
 def epsD (X : HidaSetting D) (w : HeightOneSpectrum (𝓞 D.host.E)) : Fin D.R.k → VA X.B.I :=
   if GlobalTheory.Mem.SymFrame.EwAt X w then X.bwd else fun i => X.bw (Fin.rev i)

@@ -195,9 +195,7 @@ namespace Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.ClosedKudlaFamilyStan
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.StandardLattice Formalism.L2.GlobalTheoryTheory.ConcTop
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.ClosedKudlaFamilyStandardLattice
 

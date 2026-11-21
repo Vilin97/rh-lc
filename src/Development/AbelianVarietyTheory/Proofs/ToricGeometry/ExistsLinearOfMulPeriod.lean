@@ -157,7 +157,6 @@ theorem exists_functional {ι : Type*} (δ : ι → R) (hδ : ∃ i, δ i ≠ 0)
   refine ⟨lam, ⟨i, hlam⟩, fun j r hr => ?_⟩
   exact hker (Submodule.subset_span ⟨r, hr, j, rfl⟩)
 
-omit [IsLocalRing R] in
 
 theorem differentiableOn_mul {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] {S : Set E} {F G : E → R}
     (hF : ∀ lam : R →ₗ[ℂ] ℂ, DifferentiableOn ℂ (fun z => lam (F z)) S)

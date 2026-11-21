@@ -75,7 +75,6 @@ theorem aeval_uAction_cuspVecL {φ : cuspForms K n} (hφ : φ ∈ centralCuspFor
       Module.algebraMap_end_apply, Module.algebraMap_end_apply, ← map_pow, ← map_pow,
       Submodule.coe_smul, uAction_cuspToL2 μ hφ, map_smul]
 
-set_option maxHeartbeats 1000000 in
 
 theorem isInvariant_topologicalClosure_map {W : Submodule ℂ (cuspForms K n)}
     (hW : W ≤ centralCuspForms K n)
@@ -144,7 +143,6 @@ theorem isInvariant_topologicalClosure_map {W : Submodule ℂ (cuspForms K n)}
   rw [archRepT_apply] at this
   exact this
 
-set_option maxHeartbeats 1000000 in
 
 theorem sup_orthRel_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (ι : cuspForms K n →ₗ[ℂ] H)
@@ -251,7 +249,6 @@ section Summand
 variable {V : Submodule ℂ (CuspL2 μ)} (hVc : IsClosed (V : Set (CuspL2 μ)))
   (hV : (cuspRepT μ).IsInvariant V)
 
-include hVc hV in
 
 theorem summandCuspForms_stable_ρ :
     ∀ X, ∀ φ ∈ summandCuspForms V, (gkModuleCusp K n).ρ X φ ∈ summandCuspForms V := by
@@ -263,7 +260,6 @@ theorem summandCuspForms_stable_ρ :
   rw [← e]
   exact derivOp_mem μ hVc hV hφ.2 (isSmoothVector_cuspToL2 μ hφ.1) _
 
-include hV in
 
 theorem summandCuspForms_stable_σ :
     ∀ k, ∀ φ ∈ summandCuspForms V, (gkModuleCusp K n).σ k φ ∈ summandCuspForms V := by
@@ -273,7 +269,6 @@ theorem summandCuspForms_stable_σ :
   rw [cuspToL2_sigma μ k hφ.1, archRepT_apply]
   exact hV _ _ hφ.2
 
-include hV in
 
 theorem summandCuspForms_stable_τ :
     ∀ g, ∀ φ ∈ summandCuspForms V, finRepCusp K n g φ ∈ summandCuspForms V := by
@@ -287,7 +282,6 @@ theorem eq_zero_of_cuspVecL_eq_zero {φ : cuspForms K n} (hφ : φ ∈ centralCu
     (h0 : cuspVecL μ φ = 0) : φ = 0 :=
   injOn_cuspToL2 μ (hφ : _) (fun _ _ => rfl) (h0.trans (map_zero (cuspToL2 μ)).symm)
 
-include hV in
 
 theorem le_topologicalClosure_map [CompleteSpace V] (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible)
     {W : Submodule ℂ (cuspForms K n)} (hWU : W ≤ summandCuspForms V)
@@ -316,7 +310,6 @@ theorem le_topologicalClosure_map [CompleteSpace V] (hirr : ((cuspRepT μ).restr
     have : (⟨v, hv⟩ : V) ∈ Y' := h ▸ Submodule.mem_top
     exact this
 
-include hVc hV in
 
 theorem eq_summandCuspForms [CompleteSpace V] (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible)
     {W : Submodule ℂ (cuspForms K n)} (hWU : W ≤ summandCuspForms V)
@@ -349,7 +342,6 @@ theorem eq_summandCuspForms [CompleteSpace V] (hirr : ((cuspRepT μ).restrict V 
     _ = W ⊔ O ⊓ summandCuspForms V := sup_inf_assoc_of_le O hWU
     _ ≤ W := by rw [hO, sup_bot_eq]
 
-include hVc hV in
 
 theorem topologicalClosure_map_summandCuspForms [CompleteSpace V]
     (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible) (hne : summandCuspForms V ≠ ⊥) :

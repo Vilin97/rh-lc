@@ -86,7 +86,6 @@ private theorem dualMap_mem_scale_dualLat_of_maps_to_scale {O Kf V0 V1 : Type} [
     field_simp
   · rw [smul_smul, mul_inv_cancel₀ (mul_ne_zero ht hd), one_smul]
 
-set_option maxHeartbeats 1000000 in
 
 theorem cloudBAt_of_rho {p n' : ℕ} {W Qq O Kf : Type} [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [Field Qq]
     [Algebra W Qq] [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field Kf] [Algebra O Kf]

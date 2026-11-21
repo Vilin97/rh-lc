@@ -68,7 +68,6 @@ theorem inv_natCast_mem (v : HeightOneSpectrum (𝓞 F)) (n : ℕ) (hn : (n : �
   have h2 := v.valuedAdicCompletion_eq_valuation' (n : F)⁻¹
   exact le_of_eq (h2.trans (by rw [map_inv₀, h1, inv_one]))
 
-omit [NumberField E] in
 
 theorem inv_mem_intLoc (v : HeightOneSpectrum (𝓞 F)) (n : ℕ) (hn : (n : 𝓞 F) ∉ v.asIdeal) [CharZero E] (x y : 𝓞 E)
     (h : x * y = n) : (1 : Fv F v) ⊗ₜ[F] (x : E)⁻¹ ∈ intLoc F E v := by
@@ -84,7 +83,6 @@ theorem inv_mem_intLoc (v : HeightOneSpectrum (𝓞 F)) (n : ℕ) (hn : (n : �
   rw [this, ← TensorProduct.smul_tmul, ← Algebra.algebraMap_eq_smul_one]
   exact tmul_mem_intLoc (inv_natCast_mem v n hn) y
 
-open Classical in
 
 noncomputable def idemAt (F : Type) [Field F] [NumberField F] (q : ℕ) : AF F :=
   (0, ⟨fun v => if (q : 𝓞 F) ∈ v.asIdeal then 1 else 0, Filter.Eventually.of_forall fun v => by

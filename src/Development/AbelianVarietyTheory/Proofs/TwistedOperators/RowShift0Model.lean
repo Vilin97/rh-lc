@@ -85,7 +85,6 @@ theorem vac_first : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : G
 
 end GlobalTheory.FirstRowShift
 
-open GlobalTheory.FirstRowShift in
 
 theorem GlobalTheory.FirstRowShift.rowShift0_model : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {μ₀ : T}, L.Is μ₀ → ∀ {t : T} {e : AE D},
     t ∈ U → IsIdemSum e (locPl G t) →

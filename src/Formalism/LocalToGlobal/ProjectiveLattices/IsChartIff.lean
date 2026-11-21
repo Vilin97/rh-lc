@@ -170,7 +170,6 @@ theorem isChart_iff (F : Fin d → MvPowerSeries (Fin 2 × Fin d) S)
   ⟨fun h => ⟨h.zero, h.trunc, h.law, h.act, h.tan, h.basis⟩,
     fun h => ⟨h.zero, h.trunc, h.law, h.act, h.tan, h.basis⟩⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem isFrame_iff (x : ∀ m, jO y d m 1 ⟶ Xo.univ.t.G) (F : Fin d → MvPowerSeries (Fin 2 × Fin d) S)
     (act : 𝓞 E → Fin d → MvPowerSeries (Fin 1 × Fin d) S)
@@ -181,7 +180,6 @@ theorem isFrame_iff (x : ∀ m, jO y d m 1 ⟶ Xo.univ.t.G) (F : Fin d → MvPow
 
 theorem isPrim_iff (wP : PrimTy H Xo) : IsPrim wP ↔ IsPrimG Xo.univ.t wP := Iff.rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem isGerm_iff (x : ∀ m, jO y d m 1 ⟶ Xo.univ.t.G)
     (act : 𝓞 E → Fin d → MvPowerSeries (Fin 1 × Fin d) S) (e : ∀ m, FrTy y d x m) (wP : PrimTy H Xo)

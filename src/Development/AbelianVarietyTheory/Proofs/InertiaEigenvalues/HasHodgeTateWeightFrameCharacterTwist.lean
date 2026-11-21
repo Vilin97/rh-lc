@@ -107,7 +107,6 @@ end GlobalTheory.PMon.Twist
 
 namespace GlobalTheory.PMon.Twist
 
-set_option maxHeartbeats 1000000 in
 
 theorem framed_twist : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (_ : LocTied l P AI) (n : Type)
     [Fintype n] [DecidableEq n] (K K' : FinExt l) (hK : K.1 ≤ K'.1) (r N : ℕ) (hr : 0 < r)

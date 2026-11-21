@@ -107,7 +107,6 @@ variable {n : ℕ} {x : ∀ m : ℕ, sp (R₀ := k) (JetR k (Fin n) m) ⟶ (Over
   (act' : O → ((Over.pullback g).obj G ⟶ (Over.pullback g).obj G)) [∀ a, IsMonHom (act' a)]
   (hact' : ∀ a, act' a = (Over.pullback g).map (b a)) (τ : O →+* k)
 
-include hc hg hab hact' in
 
 theorem finrank_of_lieMult {N : ℕ} (hL : Geo.Tor.LieMult act tk τ N) :
     Module.finrank k (eigLat hx act' (fun a => τ a)) = N := by

@@ -33,7 +33,6 @@ theorem mem_fixed_iff {ρ : Representation ℂ G V} {K : Subgroup G} {v : V} :
   · intro h k
     simpa using h k k.2
 
-open Classical in
 
 def GelPair (K : Subgroup G) : Prop :=
   (∀ g : G, (K.map (MulAut.conj g).toMonoidHom).relIndex K ≠ 0) ∧

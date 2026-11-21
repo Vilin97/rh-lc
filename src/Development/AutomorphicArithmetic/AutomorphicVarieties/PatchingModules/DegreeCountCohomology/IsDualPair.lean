@@ -58,7 +58,6 @@ def LocCount (D : Type) [Group D] [TopologicalSpace D] (ε : D →* ℤ_[l]ˣ) (
     (ρ : Representation R D M) (ρ' : Representation R D M') (b : M →+ M' →+ ZMod l), LC ρ → IsDualPair ε ρ ρ' b →
     Finite (Zl ρ) ∧ Nat.card (Zl ρ) = Nat.card M ^ (1 + d) * Nat.card ρ'.invariants
 
-variable (l) in
 
 def UnrCount (D : Type) [Group D] [TopologicalSpace D] (J : Subgroup D) : Prop :=
   ∀ (R M : Type) [CommRing R] [AddCommGroup M] [Module R M] [Finite M] (ρ : Representation R D M), LC ρ →

@@ -176,6 +176,5 @@ private theorem mem_of_prod {M : Type} [Monoid M] {n : ℕ} (f g : Fin n → (M 
 
 end UpperTheory.V.Z.Ord.OrdinaryPolarizedFromFlag
 
-open UpperTheory.V.Z.Ord.OrdinaryPolarizedFromFlag GroundTheory.Global.SemiLocal UpperTheory.V.Z.Win UpperTheory.V.Z.Gam UpperTheory.Zero.LLC UpperTheory.V.Af in
 
 end

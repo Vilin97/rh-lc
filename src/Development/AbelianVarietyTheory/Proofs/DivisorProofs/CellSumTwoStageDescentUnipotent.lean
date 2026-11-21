@@ -10,7 +10,6 @@ open Formalism.UG GlobalTheory.SatakeWeyl
 
 namespace GlobalTheory.SatakeWeyl
 
-open Classical in
 
 theorem finsum_partition {X Y : Type} (f : X → ℂ) (Q : X → Prop) (R : Y → X → Prop)
     (hf : (Function.support f).Finite) (hQ : ∀ x, Q x ↔ ∃ y, R y x)

@@ -19,7 +19,6 @@ section General
 
 variable {E K ι : Type} [Field E] [NumberField E] [Field K] [NumberField K] [Fintype ι] (emb : ι → E →+* K)
 
-omit [Fintype ι] in
 
 theorem mem_dualFr_tauLat {n : ℕ} (τ : ι) (L : Submodule (𝓞 E) (Fin n → E)) (φ : Fin n → K) :
     φ ∈ dualFr (tauLat emb τ L) ↔ ∀ y ∈ L, φ ⬝ᵥ (fun a => emb τ (y a)) ∈ (1 : Submodule (𝓞 K) K) := by
@@ -33,7 +32,6 @@ theorem mem_dualFr_tauLat {n : ℕ} (τ : ι) (L : Submodule (𝓞 E) (Fin n →
     | add y z _ _ hy hz => rw [dotProduct_add]; exact Submodule.add_mem _ hy hz
     | smul c y _ hy => rw [dotProduct_smul]; exact Submodule.smul_mem _ c hy
 
-omit [Fintype ι] in
 
 theorem dualFr_tauLat_sum {N n : ℕ} (hN : N = n + 1) (τ : ι) {t : E} (ht : t ≠ 0) (L : Submodule (𝓞 E) (Fin N → E))
     (L' : Submodule (𝓞 E) (Fin n → E))
@@ -74,7 +72,6 @@ theorem dualFr_tauLat_sum {N n : ℕ} (hN : N = n + 1) (τ : ι) {t : E} (ht : t
     rw [hc, mul_assoc, ← map_mul, ← hr]
     exact Submodule.mem_one.2 ⟨c * RingOfIntegers.mapRingHom (emb τ) r, by rw [map_mul]; rfl⟩
 
-omit [NumberField E] [NumberField K] [Fintype ι] in
 
 theorem invTrK_embGL_apply {n : ℕ} (γ : GL (Fin n) E) (τ : ι) (a b : Fin n) :
     ((invTrK (embGL emb γ) τ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) a b =
@@ -83,7 +80,6 @@ theorem invTrK_embGL_apply {n : ℕ} (γ : GL (Fin n) E) (τ : ι) (a b : Fin n)
     transpose_apply, ← map_inv]
   rfl
 
-omit [NumberField E] in
 
 theorem brAt_rhoVr {N n : ℕ} (hN : N = n + 1) {lam : ι → DomWeight N} {sg : ι → DomWeight n}
     (hI : ∀ τ, Br.Interlace hN (lam τ) (sg τ)) (hS : ∀ τ, Br.SameShift (lam τ) (sg τ)) (t : ι → K)
@@ -130,7 +126,6 @@ theorem evV_rho {n : ℕ} (S : GStep E K n) (lam : ι → DomWeight n) (b : S.β
   intro τ
   exact (congrFun this τ).symm
 
-omit [NumberField E] [NumberField K] [StarRing E] [StarRing K] in
 
 theorem polOf_evV {n : ℕ} (lam : ι → DomWeight n) (v : Formalism.L2.DIV.VV K lam) :
     polOf (Gr emb σ n) (shiftOf lam) (fr0 emb σ n) (evV emb (1 : Matrix (Fin n) (Fin n) E) lam σ v) =
@@ -141,7 +136,6 @@ theorem polOf_evV {n : ℕ} (lam : ι → DomWeight n) (v : Formalism.L2.DIV.VV 
 
 variable {R : Ranks} {I : ChainIn E K ι R} (Q : PerIn I) (hc : ι → HCParam R)
 
-omit [StarRing E] [StarRing K] in
 
 theorem br_map (v : Formalism.L2.DIV.VV K (lamT hc R.m)) :
     Q.br emb σ hc (MvPolynomial.map σ v.1) =
@@ -195,7 +189,6 @@ theorem exists_image (h6 : Formalism.MainNotions.PrimeDegreeVariant.Conclusion6)
     rw [← evV_rho, polOf_evV, br_map]
     rfl
 
-omit [StarRing K] in
 
 theorem weights_ok (emb : ι → E →+* K) [StarRing K] (h : ∀ τ, Q.sg τ = (RowPar.of (hc τ)).sg) (τ : ι) :
     Br.Interlace (N_m_succ R) (lamT hc R.m τ) (Q.sgT τ) ∧ Br.SameShift (lamT hc R.m τ) (Q.sgT τ) := by

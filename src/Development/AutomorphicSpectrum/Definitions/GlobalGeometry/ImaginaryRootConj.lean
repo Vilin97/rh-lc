@@ -43,7 +43,6 @@ variable {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c
 
 theorem V_isVB (s) : (𝔐.V s).IsVB (labelRk D s) (𝔐.Vgen s) := 𝔐.vb s
 
-include 𝔐 in
 
 theorem flagStep_top {F : Type} [AddCommGroup F] [Module Ω F] {r : ℕ} (b : Fin r → F) :
     flagStep Ω b r = Submodule.span Ω (Set.range b) := by

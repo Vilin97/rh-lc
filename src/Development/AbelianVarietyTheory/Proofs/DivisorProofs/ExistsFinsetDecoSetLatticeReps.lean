@@ -41,7 +41,6 @@ theorem mem_one_iff [NumberField E] (a : E) :
 
 end DecoLatticeClasses
 
-open DecoLatticeClasses in
 
 theorem exists_finset_decoSet_lattice_reps :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] [StarRing E],

@@ -53,7 +53,6 @@ theorem trace_mul_smul_middle_eq_smul_trace {R : Type} [CommRing R] {m n : ℕ} 
     (a ⬝ (b ⬝ ((c • g) ⬝ y))).trace = c * (a ⬝ (b ⬝ (g ⬝ y))).trace := by
   rw [Matrix.smul_mul, Matrix.mul_smul, Matrix.mul_smul, trace_smul, smul_eq_mul]
 
-set_option maxHeartbeats 1600000 in
 
 theorem hO_ofAdj (L L' S : HSp D) (τ : Matrix (Fin L.rank) (Fin L'.rank) D.host.E) (c : D.host.E)
     (hτ : τᴴ ⬝ (L.gram ⬝ τ) = (c * (D.host.xi0 * star D.host.xi0)) • L'.gram) (x y : WO S L') :

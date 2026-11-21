@@ -120,7 +120,6 @@ theorem prime_eq_of_mem {A : Type} [CommRing A] {v : Ideal A} (hv : v.IsPrime) {
   simp only [map_natCast] at *
   exact v.add_mem (v.mul_mem_left _ hpv) (v.mul_mem_left _ hqv)
 
-open GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds (c_vp delta_vp IsFieldData) in
 
 theorem ne_d_of_c_eq_zero {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I] {d : ℕ} {φ : I → E →+* ℂ}
     (hF : IsFieldData d φ) {𝔣 : Ideal (OF E)} (h𝔣 : IsBaseCond 𝔣) {l : ℕ} (hc : c_vp 𝔣 l = 0) : l ≠ d := by
@@ -231,7 +230,6 @@ theorem per_factor (a b Ω r π : ℂ) (k n : ℕ) (ha : a ≠ 0) (hb : b ≠ 0)
   field_simp
   ring
 
-open GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds (ValGe_vp betaBound_vp c_vp cE_vp a0 n_vp) in
 
 theorem latIntUnr : GlobalTheory.IndefiniteRowSideFullHecke.DefiningCoordinates.Statement → JetInt → LatIntUnr := by
   intro hSt hJ E _ _ _ _ I _ d φ s hF hs z hz 𝔣 Λ h𝔣 hΛ l hl Q hQ hQl y hy hc κ S hS

@@ -26,7 +26,6 @@ theorem linearMap_ext_on_weightSpaces {V' : Type} [AddCommGroup V'] [Module K V'
   have : x ∈ (⨆ mu, weightSp E mu) := by rw [hE.2.2]; trivial
   exact hle this
 
-open Classical in
 
 def lagrangeWeightFactor (E : GLOps n K V) (mu nu : Fin n → ℤ) : Module.End K V :=
   if h : ∃ a, nu a ≠ mu a then

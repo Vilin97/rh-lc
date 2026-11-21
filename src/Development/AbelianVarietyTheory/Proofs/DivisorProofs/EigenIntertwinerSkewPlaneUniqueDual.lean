@@ -69,7 +69,6 @@ theorem eq_of_pure_std (g g' : SInf F κ)
 
 end GlobalTheory.ThK.EvUniqInf
 
-open GlobalTheory.ThK.EvUniqInf in
 
 theorem GlobalTheory.ThK.EvUniq.infRel_of_isEv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d d₁ r s r' s' i₀ i₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (M : Model σ X W)

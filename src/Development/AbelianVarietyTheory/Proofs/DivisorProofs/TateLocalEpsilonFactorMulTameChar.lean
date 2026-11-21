@@ -88,7 +88,6 @@ theorem locK_eq_of_levelLe {ξ : HChar E} {w : HeightOneSpectrum (𝓞 E)} {m : 
   have h2 : ξ.locK w (a * b⁻¹) = 1 := h1
   rwa [map_mul, map_inv, mul_inv_eq_one] at h2
 
-open Classical in
 
 def twInv (ξ : HChar E) (w : HeightOneSpectrum (𝓞 E)) (y : E) : ℂ :=
   if h : y = 0 then 0 else (((ξ.locK w (Units.mk0 y h))⁻¹ : ℂˣ) : ℂ)

@@ -131,7 +131,6 @@ theorem exists_fixed_ne_zero : ∀ (G : Type) [Group G] (H : Type) [NormedAddCom
     have h6 : ‖y - z‖ = 0 := by nlinarith [norm_nonneg (y - z)]
     exact (sub_eq_zero.1 (norm_eq_zero.1 h6)).symm
 
-open GlobalTheory.AutomorphicL2Unitary GlobalTheory.OpTrace GlobalTheory.AutMult in
 
 theorem isIrreducible_isAdmissible_smRep : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [NonarchimedeanGroup G] [LocallyCompactSpace G] (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H]

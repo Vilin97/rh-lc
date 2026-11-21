@@ -18,7 +18,6 @@ noncomputable section
 
 namespace GlobalTheory.TwV.FacQPt
 
-set_option maxHeartbeats 400000 in
 
 theorem facQ_isPt {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n p : ℕ} {G : GAtP p} (A : LocAt F E n G) (i : G.comp) (g : ∀ v, GL (Fin (G.P.m + 1)) (G.P.Qq v)) (y : GL (Fin n) (E ⊗[F] (FiniteAdeleRing (𝓞 F) F))) : A.IsPt i g y → ∀ v, facQ A v y = bc (A.iw v) A.B * castGL A.rk (G.P.Qq v) (g v) * (bc (A.iw v) A.B)⁻¹ := by
   intro h v

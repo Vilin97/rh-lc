@@ -22,7 +22,6 @@ variable {D : D7}
 
 section Local
 
-variable (D) in
 
 abbrev Oh : Subring (Datum.EAf D) := Formalism.L2.Herm.intAf D.host.F D.host.E
 
@@ -40,7 +39,6 @@ section Models
 
 variable (ψ : AddChar (AF D.host.F) ℂ)
 
-open Classical in
 
 def IsDatOwn (ε : Bool) (S T : Node D) (e : AE D) (f₀ : WO S.V T.V → ℂ)
     (φ : Matrix (Fin T.V.rank) (Fin S.V.rank) (Datum.EAf D) → ℂ) (f : WO S.V T.V → ℂ) : Prop :=
@@ -49,7 +47,6 @@ def IsDatOwn (ε : Bool) (S T : Node D) (e : AE D) (f₀ : WO S.V T.V → ℂ)
     IsThetaAt ψ (symplO (sgn ε S.V) T.V) (heisO ψ (sgn ε S.V) T.V) e (latO (sgn ε S.V) T.V S.Λ T.Λ fun _ => True) 1 f₀
       (fun x : WO S.V T.V => if IsHalf e x then φ (frMapO S.V T.V S.β T.β x) else 0) f
 
-open Classical in
 
 end Models
 
@@ -58,13 +55,9 @@ section Grid
 variable {G₀ : Type} [Group G₀] [Fintype G₀] {Pl0 T : Type} {A : FamIn D.what₂.LL G₀ Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} (G : GridDat R)
 
-open Classical in
 
-open Classical in
 
-variable (D) in
 
-variable {G} in
 
 end Grid
 

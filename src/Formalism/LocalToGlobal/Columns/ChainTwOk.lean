@@ -80,11 +80,9 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m)
 
 open Classical
 
-variable (X) in
 
 def TwDegOne (P : HeightOneSpectrum (𝓞 X.E)) : Prop := (qOf P).Prime ∧ ((qOf P : ℕ) : 𝓞 X.E) ∉ P.asIdeal ^ 2
 
-variable (X Pr R) in
 
 def TwFinQ (sharp : Bool) : Prop :=
   ∀ (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)), P ∉ Pr.vGs → TwDegOne X P →

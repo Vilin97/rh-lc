@@ -27,7 +27,6 @@ def IsSmoothF (f : Formalism.AUTREP.GAf L n → ℂ) : Prop :=
 def cyc (f : Formalism.AUTREP.GAf L n → ℂ) : Submodule ℂ (Formalism.AUTREP.GAf L n → ℂ) :=
   Submodule.span ℂ (Set.range fun h => Formalism.L2.NG.rt L n h f)
 
-variable (L n) in
 
 def CongConj : Prop :=
   ∀ (h : Formalism.AUTREP.GAf L n) (N : ℕ), 0 < N → ∃ N' : ℕ, 0 < N' ∧
@@ -285,7 +284,6 @@ structure RowPsi where
 
 variable {V n}
 
-open Classical in
 
 def pre (P : RowPsi V n) (γ : GA D V) : Formalism.AUTREP.GAf D.host.E n :=
   if h : ∃ x, P.ψ x = γ then h.choose else 1

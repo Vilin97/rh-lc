@@ -50,15 +50,10 @@ section Act
 
 variable {M : Type} [AddCommGroup M] [Module (𝓞 E) M]
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
 end Act
 

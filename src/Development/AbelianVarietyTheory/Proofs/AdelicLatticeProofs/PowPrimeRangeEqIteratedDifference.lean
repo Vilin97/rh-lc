@@ -89,8 +89,6 @@ private lemma exists_pow_factor_of_aeval_cyclotomic {S : Type*} [Ring S] (p : �
   · have h := congrArg (aeval y) e4
     rwa [map_add, map_mul, map_mul, map_natCast, hy, mul_zero, add_zero, map_pow, aeval_X] at h
 
-open NumberField IsDedekindDomain Polynomial in
-open scoped WithZero TensorProduct in
 
 theorem _root_.GlobalTheory.CNorm.pows_eq_range_dif_pow : ∀ (p : ℕ) (M : Type) [CommGroup M] (τ : M →* M)
     (lam : Monoid.End M), p.Prime → (∀ a, lam a = τ a / a) →

@@ -96,9 +96,6 @@ private theorem finite_GL_of_integral_bounded_scaled_entries (c : E) (hc : c ≠
   simp only [Set.mem_preimage, Set.mem_pi, Set.mem_univ, true_implies, Set.mem_setOf_eq]
   exact fun a b => hγ a b
 
-open NumberField in
-open scoped ComplexConjugate ComplexOrder Matrix in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.Member.LatData.exists_data_lattice : ∀ (E : Type) [Field E] [NumberField E] [NumberField.IsCMField E] (r : ℕ)
     (Λ : Submodule (𝓞 E) (Fin r → E)), Λ.FG → Submodule.span E (Λ : Set (Fin r → E)) = ⊤ →

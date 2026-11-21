@@ -75,7 +75,6 @@ structure Laws (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) 
   depth : ∀ x : IrrGL (w.adicCompletion E),
     fixed x.rep (KOne (w.adicCompletion E) (Fin x.1)) ≠ ⊥ ↔ IsTameWD (rc x)
 
-variable (h) in
 
 def IsRec (rc : IrrGL (w.adicCompletion E) → WD h) : Prop :=
   ∃ (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) (ε : EpsFamily A), IsDeligneEps ε ∧ Laws a ha ε rc
@@ -129,7 +128,6 @@ theorem lpChar_lpOfChar (x : WD h) (ξ : Weil h →* ℂˣ) (hξ : WeilDeligne.I
     | tmul x y => simp
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-variable (w) in
 
 theorem resCard_eq_normV : resCard (w.adicCompletion E) = normV w := by
   have : (Valued.v : Valuation (w.adicCompletion E) (WithZero (Multiplicative ℤ))).Compatible :=

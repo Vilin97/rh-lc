@@ -29,7 +29,6 @@ theorem repr_map {F E A B ι : Type} [Field F] [Field E] [Algebra F E] [CommRing
     simp [Algebra.TensorProduct.basis_repr_tmul, Algebra.algebraMap_eq_smul_one]
   | add x y hx hy => simp [map_add (f := _), hx, hy]
 
-open Classical in
 
 def ePl (D : D7) (P : Pl D → Prop) : Af D.host.F :=
   RestrictedProduct.mk (fun v => if P v then 1 else 0)

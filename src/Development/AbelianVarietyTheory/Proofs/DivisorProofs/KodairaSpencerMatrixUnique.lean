@@ -65,7 +65,6 @@ theorem isDPMorphism_red : IsDPMorphism (epsDP R) (dp0 R) (TrivSqZeroExt.fstHom 
     · have e : (epsDP R).dpow (n + 1 + 1) a = 0 := squareZeroDividedPowers_dpow _ (by omega) a
       rw [e, map_zero]
 
-variable (A : Over (Sp R)) [GrpObj A] in
 
 theorem redMor : GrpMor (epsDP R) (epsRed R) A (dp0 R) (𝟙 _) A (TrivSqZeroExt.fstHom R R R).toRingHom (𝟙 _)
     (Over.Hom.left (𝟙 A)) :=
@@ -107,7 +106,6 @@ theorem constMor_surjective (P : AbelianDeRham) {A : Over (Sp R)} [GrpObj A] {g 
     rw [liftSemi_tmul, liftSemi_tmul, map_smul,
       ← GrpMor.pull_pull (bcMor hφ) (liftMor (epsDP R) hic) (constMor A) (fun _ => rfl) (by simpa using e1) c]
 
-set_option maxHeartbeats 1000000 in
 
 theorem IsKSValue.unique (P : AbelianDeRham) {A : Over (Sp R)} [GrpObj A] {A' : Over (Sp (DualNumber R))} [GrpObj A']
     {g : ℕ} (hA : IsAbelianScheme A') (hg : SmoothOfRelativeDimension g A'.hom) {i : A.left ⟶ A'.left}
@@ -161,7 +159,6 @@ section Frame
 variable {y : FrPt Xo c K} {B : Over (Sp K)} [GrpObj B] [IsCommMonObj B] {ρ : B.left ⟶ Xo.univ.t.G.left}
   (hρ : IsGrpPullback B Xo.univ.t.G y.x ρ)
 
-include hρ in
 
 theorem exists_sub_mem_Fil (hL : LieExact B) {vb : (Σ σ : E →+* ℂ, Fin (Dw.mult σ)) → (epsR K ⟶ B)}
     {kb : (Σ σ : E →+* ℂ, Fin (Dw.mult σ)) → HdR B} (hv : ∀ k, pushHom hρ (epsR K) (vb k) = tv (fullB y k))
@@ -186,7 +183,6 @@ theorem exists_sub_mem_Fil (hL : LieExact B) {vb : (Σ σ : E →+* ℂ, Fin (Dw
   obtain rfl := push_inj hρ ew
   exact hh.sub_mem hw
 
-include hρ in
 
 theorem coef_unique {τ : E →+* ℂ} {u : Fin (Dw.mult τ) → (epsR K ⟶ B)}
     (hu : ∀ i, pushHom hρ (epsR K) (u i) = tv (fullB y ⟨τ, i⟩)) {a b : Fin (Dw.mult τ) → K} {w : epsR K ⟶ B}

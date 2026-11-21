@@ -42,7 +42,6 @@ include hker in
 theorem theta_mu : fontaineTheta O p (mu ε) = 0 := by
   rw [← xi_mul_nu, map_mul, theta_xi hker, zero_mul]
 
-include hker in
 
 theorem theta_nu_dvd : fontaineTheta O p (nu ε) ∣ (p : O) := by
   obtain ⟨c, hc⟩ := nu_dvd_xi_sub ε
@@ -50,7 +49,6 @@ theorem theta_nu_dvd : fontaineTheta O p (nu ε) ∣ (p : O) := by
   rw [map_sub, map_natCast, map_mul, theta_xi hker] at h
   exact ⟨-fontaineTheta O p c, by linear_combination -h⟩
 
-include hker hsurj in
 
 theorem mem_X (x : Ainf p O) :
     x ∈ span {(p : Ainf p O), xi ε} ↔ (p : O) ∣ fontaineTheta O p x := by
@@ -68,7 +66,6 @@ theorem mem_X (x : Ainf p O) :
     obtain ⟨w, hw⟩ := h
     exact mem_span_pair.2 ⟨z, w, by linear_combination hw⟩
 
-include hker hsurj hnzd hsat in
 
 theorem mul_xi_mem (x : Ainf p O) :
     x * xi ε ∈ span {(p : Ainf p O), mu ε} ↔

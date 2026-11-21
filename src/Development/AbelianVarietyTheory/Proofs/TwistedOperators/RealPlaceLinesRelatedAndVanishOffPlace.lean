@@ -83,7 +83,6 @@ theorem det_ne (ε : Bool) (S : HSp D) (τ : D.what₂.Tau) :
   refine mul_ne_zero (pow_ne_zero _ ?_) (gram_det_ne S)
   split_ifs <;> norm_num
 
-open Classical in
 
 theorem read_line (θ : InfFam D) (hθ : IsInfFam θ) (ε : Bool) (S X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d)
     (cS : Matrix (Fin S.rank) (Fin d) (AE D) ≃+ WO S X)
@@ -145,7 +144,6 @@ theorem submatrix_triple_mul_of_triangular {n d k : ℕ} (e : Fin k ≃ Fin d) (
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun l _ => ?_
   ring
 
-open Classical in
 
 theorem at_place (θ : InfFam D) (hθ : IsInfFam θ) (ε : Bool) (S X : HSp D) (A : Fr S) (B : Fr X) {d : ℕ}
     (e : Fin X.rank ≃ Fin d) (cS : Matrix (Fin S.rank) (Fin d) (AE D) ≃+ WO S X)

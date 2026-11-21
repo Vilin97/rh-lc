@@ -22,7 +22,6 @@ variable {E : Type*} [CommRing E] [Algebra K E] [Algebra.IsQuadraticExtension K 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 variable {κ : Type*} [Fintype κ] (b : Basis κ K E)
 
-variable (K) in
 
 abbrev FinAdele := FiniteAdeleRing (𝓞 K) K
 
@@ -70,7 +69,6 @@ theorem vecCoords_stdVec [DecidableEq κ] (a c : ι × κ) :
 
 end Coordinates
 
-variable (K E ι) in
 
 def toFinAdele : (ι → K ⊗[K] E) →+ (ι → FinAdele K ⊗[K] E) :=
   AddMonoidHom.compLeft (tensorMap E (Algebra.ofId K (FinAdele K))).toRingHom.toAddMonoidHom ι
@@ -107,7 +105,6 @@ theorem toFinAdele_mulVec {H : Matrix ι ι E} (γ : unitaryPoints K E H K)
   rw [toFinAdele_apply, finDiag, unitaryMat_unitaryMap]
   exact RingHom.map_mulVec (tensorMap E (Algebra.ofId K (FinAdele K))).toRingHom (unitaryMat γ) x i
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem denseRange_toFinAdele : DenseRange (toFinAdele K E ι) := by
   let b := Module.finBasis K E
@@ -178,7 +175,6 @@ section Lattice
 
 variable (H : Matrix ι ι E)
 
-variable (K) in
 
 abbrev intAdeles : Subring (FinAdele K) := integralFiniteAdeles (𝓞 K) K
 
@@ -271,7 +267,6 @@ theorem mem_adelicLattice {g : unitaryPoints K E H (FinAdele K)} {x : ι → K �
     x ∈ adelicLattice b H g ↔
       unitaryMat g⁻¹ *ᵥ toFinAdele K E ι x ∈ stdLattice ι (FinAdele K) b (intAdeles K) := Iff.rfl
 
-omit [Fintype κ] in
 
 theorem intSmul_mem_adelicLattice {g : unitaryPoints K E H (FinAdele K)} {x : ι → K ⊗[K] E}
     (hx : x ∈ adelicLattice b H g) (z : 𝓞 K) : (z : K) • x ∈ adelicLattice b H g := by
@@ -296,7 +291,6 @@ theorem continuous_vecCoords_finAdele (a : ι × κ) :
   exact (continuous_apply a.2).comp ((tensorCoordsHomeomorph (FinAdele K) b).continuous.comp
     (continuous_apply a.1))
 
-variable (b H) in
 
 def transLattice (g : unitaryPoints K E H (FinAdele K)) : Set (ι → FinAdele K ⊗[K] E) :=
   {z | unitaryMat g⁻¹ *ᵥ z ∈ stdLattice ι (FinAdele K) b (intAdeles K)}
@@ -356,7 +350,6 @@ theorem algebraMap_mem_of_isIntegral {t : K} (h : IsIntegral ℤ t) :
     algebraMap K (FinAdele K) t ∈ intAdeles K :=
   algebraMap_integers_mem_integralFiniteAdeles K ⟨t, h⟩
 
-variable (H b) in
 
 theorem exists_int_isIntegral_hermTrace : ∃ d : ℤ, d ≠ 0 ∧
     ∀ (g : unitaryPoints K E H (FinAdele K)) (x y : ι → K ⊗[K] E), x ∈ adelicLattice b H g →
@@ -399,7 +392,6 @@ theorem continuous_sum_coords_mul (p : ι → FinAdele K ⊗[K] E)
   continuous_finsetSum _ fun _ _ => continuous_finsetSum _ fun c _ =>
     (continuous_const.mul (continuous_vecCoords_finAdele c)).mul continuous_const
 
-variable (H b) in
 
 theorem exists_int_smul_mem_of_forall_isIntegral [DecidableEq κ] (hM : IsUnit (traceGram H b).det) (c : K)
     (hc : c ≠ 0) :
@@ -529,7 +521,6 @@ theorem exists_int_smul_mem_adelicLattice [DecidableEq κ] (g : unitaryPoints K 
   rw [this]
   exact hd _ (algebraMap_mem_of_isIntegral ((RingOfIntegers.isIntegral_coe e).mul (hx a))) a
 
-variable (H b) in
 
 theorem exists_int_smul_includeRight_mem (β : E) : ∃ D : ℤ, D ≠ 0 ∧
     ∀ (g : unitaryPoints K E H (FinAdele K)) (x : ι → K ⊗[K] E), x ∈ adelicLattice b H g →

@@ -15,7 +15,6 @@ section SS
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 variable {A : Type} [AddCommGroup A] [Module ℂ A]
 
-variable (L n) in
 
 def fixN (ρ : Formalism.AUTREP.GAf L n →* Module.End ℂ A) (N : ℕ) : Submodule ℂ A where
   carrier := {a | ∀ κ, Formalism.L2.NG.Cong L n N κ → ρ κ a = a}

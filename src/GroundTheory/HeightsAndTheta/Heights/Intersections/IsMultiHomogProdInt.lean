@@ -18,7 +18,6 @@ namespace GenericPointsAvoidBadLocus
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
-omit [Fintype K] in
 
 theorem isMultiHomog_prod_int {β : Type*} (s : Finset β) (f : β → MRing ι) (a : β → K → ℕ)
     (h : ∀ b ∈ s, IsMultiHomog (f b) (a b)) : IsMultiHomog (∏ b ∈ s, f b) (∑ b ∈ s, a b) := by
@@ -37,7 +36,6 @@ theorem isMultiHomog_prod_int {β : Type*} (s : Finset β) (f : β → MRing ι)
     have h2 := ih (fun b' hb' => h b' (Finset.mem_insert_of_mem hb')) m2 hm2 k
     simp only [Finsupp.add_apply, Finset.sum_add_distrib, Pi.add_apply, h1, h2]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 
 theorem adjoin_chart_le {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' : Ideal (MRing ι')}
     (G : GenFibre v P') (i j : ∀ k : FibreBlock κ, ι' k.1) (hi : ∀ k : FibreBlock κ, G.x' ⟨k.1, i k⟩ ≠ 0) :
@@ -57,7 +55,6 @@ theorem adjoin_chart_le {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {
 
 end GenericPointsAvoidBadLocus
 
-open GenericPointsAvoidBadLocus in
 
 theorem GenericPointsAvoidBadLocus.proof (hChart : GenericPointsInAffineChart.Statement) : GenericPointsAvoidBadLocus.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' n G i hv hP' hZ hi

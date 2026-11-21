@@ -23,13 +23,11 @@ def ChBadp_at (X : G.Inst D L) : Prop :=
 
 variable (L)
 
-open Classical in
 
 def cands (K : G.Consts) : Finset ℕ := (Finset.range ⌈L.sc.X'⌉₊).filter (fun p => G.Cand D L K p)
 
 variable {L}
 
-open Classical in
 
 def ChW_at (X : G.Inst D L) (K : G.Consts) : Prop :=
   ∑ p ∈ cands L K, Real.log p / p *

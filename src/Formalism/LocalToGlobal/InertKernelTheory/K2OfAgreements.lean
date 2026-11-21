@@ -63,7 +63,6 @@ def TieDel (R : RecSide X Y) : Prop :=
     ∀ (La : ↥(Y.Rep j)), ∀ x ∈ R.Sh j, ∀ (c' : X.Lv.comp (j + 1)) (L' : (X.Pj (j + 1)).Tup), (X.Pj (j + 1)).IsLatTup L' →
       R.Rd j c' L' (R.E j (R.e j La) x) = cK • Y.DelF j (R.cmp j x La.1.1 La.1.2) (R.Sr j La.1 (c', L'))
 
-variable (X Y) in
 
 def KerOfSmul : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (X : Sys p) (Y : Pend X) (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1))
@@ -82,7 +81,6 @@ def SharpQ (t : KerEntTied ex) (Tw : TwForms D) (u : D.what₂.Word) (μ : D.wha
     (x : ((Tw.fm u μ).lat i).V) (Q : (D.chTw u μ).cls i → MvPolynomial (GL3Theta.FrV D (D.R.N i)) ℂ) : Prop :=
   (∀ c, Q c ∈ WtPol ℂ (nuT D u i)) ∧ ∀ c, (D.chTw u μ).sharp i ((Tw.fm u μ).emb i x c) = frPoly (t.O u μ) i (Q c)
 
-open Classical in
 
 def qOf (t : KerEntTied ex) (Tw : TwForms D) (u : D.what₂.Word) (μ : D.what₂.Tup) (i : ℕ) (x : ((Tw.fm u μ).lat i).V) :
     (D.chTw u μ).cls i → MvPolynomial (GL3Theta.FrV D (D.R.N i)) ℂ :=

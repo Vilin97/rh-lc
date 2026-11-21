@@ -214,12 +214,10 @@ theorem heisO_thetaTr {S T : HSp D} {JA : Matrix (Fin T.rank) (Fin T.rank) D.hos
   rw [thetaSum_rho_rho, ← GlobalTheory.ThetaTransform.symplO_eq_symp hA hB, GlobalTheory.ThetaTransform.invOf_two_eq]
   rfl
 
-variable (ψ ε) in
 
 abbrev th (Φ : (Fin M.rank × Fin X.rank → AF D.host.F) → ℂ) : WO (sgn ε M) X → ℂ :=
   GlobalTheory.TripleRead.thO Mo ψ (sgn ε M).gram (Equiv.refl (Fin X.rank)) Φ
 
-variable (ε M X) in
 
 abbrev dir (θ : InfFam D) (τ : D.what₂.Tau) (z : Matrix (Fin X.rank) (Fin M.rank) ℂ) :
     Matrix (Fin M.rank) (Fin X.rank) (AE D) :=
@@ -388,7 +386,6 @@ theorem dRho_thL {g : (Fin M.rank × Fin X.rank → Formalism.MainNotions.Global
       thL Mo hψ hθ hX hW hM hg (Dr (dir ε M X θ t z) f) :=
   (th_laws Mo hψ hθ hX hW hM).2.2.2.2 t z _ (pureA_mem f hg) _ (pureA_mem _ hg) (hD _ (dir_at hθ t z) f _ (rest_fin f hg))
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_vacuum (A : Fr (sgn ε M)) (B : Fr X) : ∃ g₀ : SInf D.host.F (Fin M.rank × Fin X.rank), g₀ ≠ 0 ∧
     ∀ t z, Dr (dir ε M X θ t z) g₀ + Complex.I • Dr (dir ε M X θ t (cplxO (A.cart t) (B.cart t) z)) g₀ = 0 := by
@@ -451,7 +448,6 @@ theorem exists_vacuum (A : Fr (sgn ε M)) (B : Fr X) : ∃ g₀ : SInf D.host.F 
 
 end Main
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_fockMap_of (hψ : IsStdChar D ψ (-1)) {θ : InfFam D} (hθ : IsInfFam θ) (A : Fr M) (B : Fr X)
     {τ : ∀ w : InfinitePlace D.host.F, EmbOver D.host.E w} (hCM : IsCMExt D.host.F D.host.E D.sp.cm.sig)

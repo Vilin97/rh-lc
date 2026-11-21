@@ -73,7 +73,6 @@ theorem exists_EN_bas_rankOne (j : ℤ) : ∃ γ ∈ S O K e,
   congr 1
   ring
 
-variable (O K l e a) in
 
 def rankOneDat (η H : ℕ) (j : ℤ) (h₁ : -(η : ℤ) ≤ j) (h₂ : j ≤ H) (χ : TameGal K l e a →* O) :
     BKDat O K l e a Unit η H where
@@ -127,7 +126,6 @@ structure IsOfType (Sig : Set (ZMod e)) (U : Set ℤ) : Prop where
   chars_subset : ∀ τ, D.desc.chars τ ⊆ Sig
   jumps_subset : D.jumps ⊆ U
 
-omit [NeZero e] in
 
 theorem exists_conn_eq {m : Vec K a ι} (hm : m ∈ D.MM) : ∃ w ∈ D.MM, D.conn m = (X : K⟦X⟧) • w :=
   ⟨_, D.nabla_mem m hm, rfl⟩
@@ -145,9 +143,7 @@ theorem EN_mem_divE {n : ℕ} {y : Vec K a ι} (hy : y ∈ divE l e n D.Man) :
   exact sub_mem (D.EN_mem_Man hy) (D.smul_mem_Man
     (mul_mem (natCast_mem _ n) (N_mem (derivative_mem_R l (E_mem l e _)))) hy)
 
-omit [NeZero e] in
 
-omit [NeZero e] in
 
 theorem smul_mem_Mext {B : Subalgebra O K⟦X⟧} (hB : A O K ≤ B) {m : Vec K a ι} (hm : m ∈ D.ext B) :
     E K l e ^ η • m ∈ D.Mext B :=
@@ -195,12 +191,10 @@ abbrev plusMod (hy : y ∈ D.Y) : PhiMod O K l e a (ι ⊕ Unit) := D.plus (mem_
 
 abbrev plusDesc (hy : y ∈ D.Y) : Descent (plusMod hy) := D.desc.plus (mem_invE_of_mem_Y hy) hy.2
 
-omit [NeZero e] in
 
 theorem plusMod_upper (hy : y ∈ D.Y) : ∀ v ∈ (plusMod hy).L, E K l e ^ η • v ∈ (plusMod hy).M :=
   D.plus_upper _ D.upper hy.1
 
-omit [NeZero e] in
 
 def plusDat (hy : y ∈ D.Y) (hMon : D.Mon y = 0) (hz : ∃ w ∈ D.MM, D.zeta y = (X : K⟦X⟧) • w)
     (hH : E K l e ^ H • y ∈ D.L) : BKDat O K l e a (ι ⊕ Unit) η H where
@@ -390,11 +384,8 @@ omit [NeZero a] [TameDescentExponentData K l e a]
 
 variable [TameDescentExponentData K l e 1]
 
-omit [IsUltrametricDist K] in
 
-variable (O) in
 
-omit [IsUltrametricDist K] in
 
 end Omega
 

@@ -73,7 +73,6 @@ def DepthEq : Prop :=
 
 end Chart
 
-variable (Dw c) in
 
 def ColsExist (p : ℕ) (la : PointsOfFlagModel.abelian₂ p c) : Prop :=
   ∀ (cx : Lt1 Dw → ℕ) (n : ℕ), blockCols cx ≤ n →
@@ -83,9 +82,7 @@ def ColsExist (p : ℕ) (la : PointsOfFlagModel.abelian₂ p c) : Prop :=
           ∀ (N : ℕ) (f : Lt1 Dw) (b : Fin (rk f)) (j : Fin n), ∃ z : T.V,
             io (embK c f.1 (x N f b j)) = algebraMap T.V T.Fr (B f b j + (p : T.V) ^ N * z)
 
-variable (Dw c) in
 
-variable (Xo c) in
 
 def LocalDepth (p : ℕ) [Fact p.Prime] (la : PointsOfFlagModel.abelian₂ p c) : Prop :=
   ∀ (T : CDVR) (io : c.F →+* T.Fr) (e : ℕ), OverLa la.1 T.V io e →
@@ -93,8 +90,6 @@ def LocalDepth (p : ℕ) [Fact p.Prime] (la : PointsOfFlagModel.abelian₂ p c) 
       (B : ∀ f : Lt1 Dw, Fin (rk f) → Fin n → T.V), IsCols c T io p cx B →
       Trivial Ch X cx B ∧ DepthEq Ch X cx B
 
-variable (Xo c) in
 
-omit [StarRing (𝓞 E)] in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.LocalValuationColumns

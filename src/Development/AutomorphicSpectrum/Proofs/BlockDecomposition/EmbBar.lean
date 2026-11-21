@@ -29,7 +29,6 @@ def supBar (v : Pl F) (τ : E →ₐ[F] FvBar F v) (u : J → E) : ℝ≥0 :=
 def locFin (σ : E →ₐ[F] E) (v : Pl F) (u : J → E) : ℝ≥0 :=
   supBar v (embBar F E v) u * supBar v ((embBar F E v).comp σ) u
 
-open Classical in
 
 def locInf (w : InfinitePlace F) (u : J → E) : ℝ≥0 :=
   (Finset.univ.sup fun p : EmbOver E w × J => ‖p.1.1 (u p.2)‖₊) ^ 2

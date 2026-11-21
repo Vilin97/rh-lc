@@ -95,7 +95,6 @@ theorem exists_field_adjoin_roots (k : Subfield ℂ) {Z : Set ℂ} (hZ : Z.Finit
 
 variable {D : D7}
 
-open scoped Pointwise in
 
 theorem absNorm_ccK_not_mem {P : Pl D.host.E} (h : FractionalIdeal.count D.host.E P D.host.AA = 0)
     (h' : FractionalIdeal.count D.host.E (Formalism.L2.DIV.conjPl P) D.host.AA = 0) :
@@ -209,7 +208,6 @@ section Datum
 
 variable {S T : HSp D}
 
-open Classical in
 
 theorem isIdemSum_halfIdem {Pg Q : Finset (Pl D.host.E)} (h : PlacesOK Pg Q) :
     IsIdemSum (halfIdem Pg Q) (Pg.image Formalism.L2.DIV.conjPl ∪ Q) := by
@@ -238,7 +236,6 @@ theorem frMapO_add_nsmul (F : Frame S T) (k : ℕ) (x u : WO S T) :
   ext a c
   rw [GlobalTheory.PlaceDatum.frMapO_add, Matrix.add_apply, Matrix.smul_apply, nsmul_eq_mul]
 
-open Classical in
 
 theorem isLevDatum_vecAt {B : Base S T} (hB : B.Good) {Q : Finset (Pl D.host.E)} (hQ : B.admitted Q)
     (hbad : ∀ PP, PP ∈ B.G.Pg ∨ PP ∈ B.de.Q ∪ Q →
@@ -362,7 +359,6 @@ theorem isRat_sum {ι : Type} [Fintype ι] {φ : ι → GA D (Wc D j) → ℂ} (
   rw [castDict_sum]
   exact Finset.sum_congr rfl fun a _ => h2 a
 
-open Classical in
 
 theorem isRat_fibre (hRF : GlobalTheory.NT.RayField) (hT : LawsJ T) (hU : C.IsUnif)
     (hray : RayIn D (T.Q.l.M * C.d.pd) C.σ₂.fieldRange) {A : Type} [AddCommGroup A] {u : UnivTwist D A}
@@ -530,7 +526,6 @@ variable {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 I0 T0 : Type} {A3 : FamIn3 D.w
   (v₀ : ∀ (j : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (Rl.MW j σ).Vec) {ρ : Setup D.ntw} (hρ : ρ.Good)
   (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool)
 
-omit [Algebra T.Q.c.F D.what₂.LL] in
 
 theorem type_mem_range (hU : ρ.LevelOf D.nexp) (g : (ρ.B i j b).G.P.H) :
     (((ρ.B i j b).G.P.chi g : ℂˣ) : ℂ) ∈ (ρ.e i b).fieldRange := by
@@ -542,7 +537,6 @@ theorem type_mem_range (hU : ρ.LevelOf D.nexp) (g : (ρ.B i j b).G.P.H) :
   rw [← h3]
   exact ⟨_, h2.symm⟩
 
-include YS hρ in
 
 theorem exists_cover (hRF : GlobalTheory.NT.RayField) (hT : LawsJ T) (halg : AlgTie T) (hgal : IsGalois ℚ D.LL0)
     (hval : Formalism.L2.Host.ValLL0 D Rl.C)

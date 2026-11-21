@@ -23,7 +23,6 @@ open GlobalTheory.SeeSaw (FI idV dI)
 
 variable {D : D7}
 
-set_option maxHeartbeats 800000 in
 
 theorem line_mem_iff {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : HermitianOrthogonalExtensionData A B c ε)
     (Λ : Submodule (𝓞 D.host.E) (Fin A.rank → D.host.E)) (𝔟 : Fin c → FI D) (q : Fin c) (hq : 2 * q.1 + 1 ≠ c)

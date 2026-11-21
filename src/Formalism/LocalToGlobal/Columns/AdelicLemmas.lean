@@ -740,7 +740,6 @@ end Inj2
 
 section Ok
 
-open Formalism.UG in
 
 theorem globLat_defUnimod {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
     {hc : Formalism.BasicNotions.CMData F E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {L : Submodule (𝓞 E) (Fin n → E)}
@@ -1219,7 +1218,6 @@ section SurjThm
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E))
 
-open Classical in
 
 theorem decoPtSurj_of (hG : UnimodGenus hc n) (hR : Formalism.L2.DIV.RedSurj) (hT : Formalism.L2.DIV.IsSplitSet (ST ∪ SG))
     (hD : Disjoint ST SG) : DecoPtSurj hc n ST SG := by
@@ -1379,7 +1377,6 @@ theorem decoPtSurj_of (hG : UnimodGenus hc n) (hR : Formalism.L2.DIV.RedSurj) (h
         rwa [hNx, hN] at hv
       exact (ok.be_off w v hv').symm
 
-open Classical in
 
 end SurjThm
 

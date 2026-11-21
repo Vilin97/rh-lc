@@ -70,11 +70,9 @@ end Second
 
 variable [Algebra T.Q.c.F D.what₂.LL] {R : RealDat D A T.Q.c.F} {Tp : Type} {tup : Tp → T0}
 
-variable (R) in
 
 variable {O : OMDat T.toCore R i Tp tup} {Y : RowDat T G i}
 
-variable (O) in
 
 end Compare
 

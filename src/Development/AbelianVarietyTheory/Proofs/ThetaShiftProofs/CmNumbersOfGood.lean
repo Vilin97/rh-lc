@@ -26,7 +26,6 @@ open scoped LaurentSeries
 
 namespace GlobalTheory.ArcCM
 
-open scoped nonZeroDivisors in
 
 theorem exists_locGen_at {K : Type} [Field K] [NumberField K] (p : HeightOneSpectrum (𝓞 K))
     (I : FractionalIdeal (𝓞 K)⁰ K) : ∃ c : K, IsLocGen p c I := by

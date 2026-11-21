@@ -16,18 +16,15 @@ section RowAdd
 
 variable [Fintype κ]
 
-open Classical in
 
 noncomputable def rowAdd (t : T) (r r' : Fin p ⊕ Fin q) (s : R) :
     Poly R T p q κ →ₐ[R] Poly R T p q κ :=
   bind₁ fun v => X v + ∑ k : κ, if v = (t, r', k) then C s * X (t, r, k) else 0
 
-open Classical in
 
 noncomputable def rowAddX (t : T) (a b : Fin p) (s : R) : Poly R T p q κ →ₐ[R] Poly R T p q κ :=
   bind₁ fun v => X v + ∑ k : κ, if v = xVar t b k then C s * X (xVar t a k) else 0
 
-open Classical in
 
 noncomputable def rowAddY (t : T) (a b : Fin q) (s : R) : Poly R T p q κ →ₐ[R] Poly R T p q κ :=
   bind₁ fun v => X v + ∑ k : κ, if v = yVar t b k then C s * X (yVar t a k) else 0
@@ -236,7 +233,6 @@ end RowAdd
 
 section RowDegree
 
-open Classical in
 
 noncomputable def rowInd (t : T) (r : Fin p ⊕ Fin q) : Var T p q κ → ℕ :=
   rowWeight fun t' r' => if t' = t ∧ r' = r then 1 else 0
@@ -281,7 +277,6 @@ section Space
 
 variable [Fintype κ]
 
-variable (R) in
 
 noncomputable def rowHighest (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) :
     Submodule R (Poly R T p q κ) :=
@@ -345,7 +340,6 @@ theorem mem_rowHighest_iff_rowAdd : P ∈ rowHighest R c c' ↔ IsHarmonic P ∧
 theorem isHarmonic_of_mem_rowHighest (hP : P ∈ rowHighest R c c') : IsHarmonic P :=
   (mem_rowHighest_iff.1 hP).1
 
-variable (R c c') in
 
 theorem isWeightedHomogeneous_of_mem_rowHighest [Fintype T] {M : Type*} [AddCommMonoid M]
     (w : T → Fin p ⊕ Fin q → M) (hP : P ∈ rowHighest R c c') :
@@ -362,7 +356,6 @@ theorem isHomogeneous_of_mem_rowHighest [Fintype T] (hP : P ∈ rowHighest R c c
   simp only [smul_eq_mul, mul_one, sum_partOf] at this
   exact this
 
-variable (R c c') in
 
 instance finite_rowHighest [Finite T] [IsNoetherianRing R] :
     Module.Finite R (rowHighest R c c' : Submodule R (Poly R T p q κ)) := by
@@ -385,7 +378,6 @@ theorem mem_rowHighest_of_rowWeight [Fintype T] (h : IsHarmonic P)
   · funext v; rw [rowInd_apply]; rfl
   · rcases r with a | b <;> simp
 
-variable (c c') in
 
 theorem minorProd_mem_rowHighest [Fintype T] {ε : T → Fin p → κ → R} {φ : T → Fin q → κ → R}
     (h : IsPerp ε φ) : minorProd c c' ε φ ∈ rowHighest R c c' :=
@@ -393,7 +385,6 @@ theorem minorProd_mem_rowHighest [Fintype T] {ε : T → Fin p → κ → R} {φ
     (fun w => minorProd_isWeightedHomogeneous w c c' ε φ)
     fun t _ _ hr _ => rowAdd_minorProd t hr _ c c' ε φ
 
-variable (c c') in
 
 theorem colSubst_mem_rowHighest [Fintype κ'] [DecidableEq κ] {A : T → Matrix κ κ' R}
     {B : T → Matrix κ' κ R} (h : ∀ t, A t * B t = 1) (hP : P ∈ rowHighest R c c') :
@@ -407,7 +398,6 @@ theorem colAct_mem_rowHighest [DecidableEq κ] (g : T → GL κ R) (hP : P ∈ r
     colAct R T p q κ g P ∈ rowHighest R c c' :=
   colSubst_mem_rowHighest (fun t => Units.inv_mul (g t)) hP
 
-variable (R κ c c') in
 
 theorem map_mem_rowHighest (f : R →+* S) (hP : P ∈ rowHighest R c c') :
     MvPolynomial.map f P ∈ rowHighest S c c' := by
@@ -439,7 +429,6 @@ theorem orbitSpan_le_rowHighest : orbitSpan R h c c' ≤ rowHighest R c c' := by
   rintro _ ⟨g, rfl⟩
   exact colAct_mem_rowHighest g (basePoly_mem_rowHighest h c c')
 
-include h in
 
 theorem rowHighest_ne_bot [Nontrivial R] :
     (rowHighest R c c' : Submodule R (Poly R T p q (Fin n))) ≠ ⊥ := fun e =>

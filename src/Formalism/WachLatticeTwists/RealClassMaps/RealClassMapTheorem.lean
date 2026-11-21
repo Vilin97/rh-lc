@@ -90,6 +90,5 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 end Defs2
 
-set_option maxHeartbeats 2000000 in
 
 end Formalism.RepresentationBoundsCohomology.FIN

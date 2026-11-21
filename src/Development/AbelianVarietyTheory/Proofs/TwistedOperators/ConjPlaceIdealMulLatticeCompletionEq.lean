@@ -27,7 +27,6 @@ noncomputable section
 
 namespace GlobalTheory.ConjPlaceLat
 
-set_option maxHeartbeats 1000000 in
 
 theorem cA_mul_mem_latV_smul : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   (p : GlobalTheory.FinPl.SplitPt D k) (w : HeightOneSpectrum (𝓞 D.host.E)), Formalism.L2.NTheta.IsIdemAt p.e w →

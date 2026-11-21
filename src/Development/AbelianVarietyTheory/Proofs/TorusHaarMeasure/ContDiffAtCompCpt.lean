@@ -77,6 +77,5 @@ theorem exists_s_ne_zero {Xa : ArchInM X} (Fl : FlatM X Xa) {x0 : Frame X.Ψ r} 
 
 end DivLeviPf
 
-open DivLeviPf in
 
 end GlobalTheory.Up

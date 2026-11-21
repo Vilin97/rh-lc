@@ -76,7 +76,6 @@ theorem hasDerivAt_transl (H : IsLieData σ j s) {φ : G → ℂ} (hφ : Sm (exp
   change φ (x * expMap j s (u • X)) = φ (x * expMap j s (t • X) * expMap j s ((u - t) • X))
   rw [mul_assoc, ← expMap_add_smul H, add_sub_cancel]
 
-omit [FiniteDimensional ℝ 𝔸] in
 
 theorem contDiff_deriv_param {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] {K : E × ℝ → ℂ}
     (hK : ContDiff ℝ ∞ K) : ContDiff ℝ ∞ fun q => deriv (fun r => K (q, r)) 0 := by
@@ -203,7 +202,6 @@ attribute [local instance 100] LieRing.ofAssociativeRing
 
 variable {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)} {V : HSp D}
 
-open Classical in
 
 theorem envRepAll_ι_of_tmul (R : RealPoints θ V) (τ : D.what₂.Tau) (c : ℂ) (X : LieAt V τ) :
     envRepAll R (UniversalEnvelopingAlgebra.ι ℂ (DirectSum.of (fun τ => ℂ ⊗[ℝ] LieAt V τ) τ (c ⊗ₜ X))) =
@@ -237,9 +235,6 @@ theorem envRepAll_mem (R : RealPoints θ V) (u : GlobalTheory.AutFinLit.Env V) :
 
 end Concrete
 
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta GlobalTheory.SmoothForms GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraExponentialFamilies GlobalTheory.CentralOps in
-attribute [local instance] Formalism.BasicNotions.Host.cmStar in
-attribute [local instance 100] LieRing.ofAssociativeRing in
 
 theorem envRepAll_comm_lie : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsInfFam θ →
     ∀ (V : HSp D) (R : RealPoints θ V) (u : GlobalTheory.AutFinLit.Env V), (∀ a ∈ GinfC V, ∀ (f : SmF θ V)

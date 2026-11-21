@@ -132,7 +132,6 @@ end GlobalTheory.SepReal.BoostHilbertSchmidtTrace
 
 namespace GlobalTheory.SepReal
 
-open BoostHilbertSchmidtTrace in
 
 theorem boost_of_embLaws : EmbLaws → Boost := by
   intro hE n e ε ε' hS g hg

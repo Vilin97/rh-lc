@@ -63,7 +63,6 @@ variable {o : Type} [CommRing o] {k0 : Type} [Field k0] [Algebra o k0] {r k : â„
 
 variable [IsDomain o] [IsDiscreteValuationRing o] [IsFractionRing o k0]
 
-omit [IsFractionRing o k0] in
 
 end Forcing
 

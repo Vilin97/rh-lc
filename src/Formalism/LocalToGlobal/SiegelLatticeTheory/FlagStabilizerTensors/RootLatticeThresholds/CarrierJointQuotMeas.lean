@@ -21,7 +21,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 section PiProd
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem lintegral_fin_nat_prod {n : ℕ} {E : Fin n → Type*} {mE : ∀ i, MeasurableSpace (E i)}
     {μ : (i : Fin n) → Measure (E i)} [∀ i, SigmaFinite (μ i)] (f : (i : Fin n) → E i → ℝ≥0∞)

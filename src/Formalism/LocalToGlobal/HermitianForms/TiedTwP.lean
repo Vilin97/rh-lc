@@ -16,9 +16,7 @@ variable {D : D7} {inQ : D.what₂.Tup → HeightOneSpectrum (𝓞 D.host.F) →
 def okPT (D : D7) (Q : Finset (HeightOneSpectrum (𝓞 D.host.F))) (T : ℕ) (w : D.what₂.places.Pl) : Prop :=
   okQ D Q w ∨ D.what₂.places.resChar w = T
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end Formalism.L2.Forms
 

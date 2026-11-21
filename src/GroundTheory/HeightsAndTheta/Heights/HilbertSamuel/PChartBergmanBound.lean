@@ -137,7 +137,6 @@ lemma det_smul_re {D : ℕ} {H : Matrix (Fin D) (Fin D) ℂ} {lam : Fin D → �
 
 end ChartBergmanBound
 
-open ChartBergmanBound in
 
 theorem ChartBergmanBound.proof (hP : PolydiscSubmean.Statement) (hT : ComplexTaylorTwo.Statement) :
     ChartBergmanBound.Statement := by

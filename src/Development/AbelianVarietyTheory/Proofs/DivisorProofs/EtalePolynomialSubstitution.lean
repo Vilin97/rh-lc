@@ -6,7 +6,6 @@ public import Mathlib
 
 namespace GlobalTheory
 
-open MvPolynomial in
 
 theorem _root_.GlobalTheory.etale_mvPolynomial_map_of_etale {B A N : Type} [CommRing B] [CommRing A] (g : B →+* A)
     (hg : g.Etale) : (MvPolynomial.map (σ := N) g).Etale := by
@@ -14,6 +13,5 @@ theorem _root_.GlobalTheory.etale_mvPolynomial_map_of_etale {B A N : Type} [Comm
   letI : Algebra (MvPolynomial N B) (MvPolynomial N A) := MvPolynomial.algebraMvPolynomial
   exact RingHom.Etale.isStableUnderBaseChange B A (MvPolynomial N B) (MvPolynomial N A) hg
 
-open MvPolynomial in
 
 end GlobalTheory

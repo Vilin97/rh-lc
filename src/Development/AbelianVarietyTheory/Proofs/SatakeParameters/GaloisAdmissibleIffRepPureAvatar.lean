@@ -53,6 +53,5 @@ theorem exists_inducesW (i : N.Loc) (τ : H.E →+* Qbar (N.l i)) :
   rw [h, Ideal.mem_bot] at hl
   exact (N.lPrime i).out.ne_zero (by exact_mod_cast hl)
 
-open Classical in
 
 end GlobalTheory.GaloisInputCompare

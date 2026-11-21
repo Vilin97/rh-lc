@@ -135,7 +135,6 @@ structure RapidDecSm (φ : GA D V → ℂ) : Prop extends IsAutFun V φ where
   smooth : φ ∈ SmFun θ V
   decay : ∀ l, IsLieWord V l → RapidDec V (rWord θ V l φ)
 
-open scoped ComplexOrder in
 
 def posSp (D : D7) (n : ℕ) : HSp D := Examples₂.posSpace Examples₂.star_isIntegral n
 
@@ -149,7 +148,6 @@ theorem gramAt_posSp (n : ℕ) (τ : D.what₂.Tau) : gramAt D (posSp D n) τ = 
   rw [hg]
   exact Matrix.map_one _ (map_zero _) (map_one _)
 
-open scoped ComplexOrder in
 
 variable {θ V} {φ φ' : GA D V → ℂ} {N : ℕ}
 
@@ -213,7 +211,6 @@ theorem growthSob_add_le (h : φ ∈ SmFun θ V) (h' : φ' ∈ SmFun θ V) (d N 
 theorem growthSob_smul (c : ℂ) (d N : ℕ) : growthSob θ V d N (c • φ) = ‖c‖ₑ * growthSob θ V d N φ :=
   wordSum_eq_mul fun l => by rw [(linOnSm_glWord l).smul, growthSize_smul]
 
-variable (θ V) in
 
 def allDer (M : Submodule ℂ (GA D V → ℂ)) : Submodule ℂ (GA D V → ℂ) where
   carrier := {φ | φ ∈ SmFun θ V ∧ ∀ l, IsLieWord V l → rWord θ V l φ ∈ M}
@@ -250,7 +247,6 @@ theorem exists_growthSob_ne_top (hs : φ ∈ SmFun θ V) (h : UnifModGrowth V θ
   exact (wordAct_rel (A := glDer θ V) (B := glDer θ V) (R := fun f _ => f ∈ allDer θ V M) l
     (fun a _ _ _ hf => RderC_mem_allDer hf a.1 _) (y := φ) ⟨hs, hN⟩).2 [] (fun _ h => by simp at h)
 
-variable (V) in
 
 def rapidSub : Submodule ℂ (GA D V → ℂ) where
   carrier := {φ | RapidDec V φ}
@@ -321,7 +317,6 @@ def heisDer (a : D.what₂.Tau × Fin W.rank × Fin V.rank × Bool) (f : WO V W 
 
 def sobO (d : ℕ) (f : WO V W → ℂ) : ℝ≥0∞ := wordSum (heisDer ψ θ) (l2O μ 𝓕) d f
 
-variable (V W) in
 
 def thetaLevel (U : AddSubgroup (WO V W)) : Submodule ℂ (WO V W → ℂ) where
   carrier := {f | IsThetaFunO ψ V W f ∧ ∀ u ∈ U, u.map (infPart D) = 0 → heisO ψ V W u f = f}
@@ -359,7 +354,6 @@ theorem sqNormIntegralFundamentalDomain_eq_l2Norm_sq {f : WO V W → ℂ} (h : C
   have : BorelSpace (WO V W) := ⟨rfl⟩
   rw [← ENNReal.toReal_pow, l2O_sq_eq_lintegral, nrm2, GlobalTheory.Ker.ScalarProduct.integral_normSq_eq _ h.measurable]
 
-variable (V W) in
 
 theorem exists_isCovolOne : ∃ (μ : Measure (WO V W)) (𝓕 : Set (WO V W)), IsCovolOne (ratL W V) μ 𝓕 := by
   obtain ⟨i1, i2, i3, i4, i5, K, hK, hKc⟩ := GlobalTheory.AdelicMatrixLattice.lattice D W V
@@ -543,7 +537,6 @@ section Examples
 
 variable {D : D7}
 
-open scoped ComplexOrder in
 
 theorem exists_theta_posSp (D : D7) (m n : ℕ) : ∃ (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D)
     (μ : Measure (WO (posSp D m) (posSp D n))) (𝓕 : Set (WO (posSp D m) (posSp D n)))

@@ -44,9 +44,6 @@ private lemma tendsto_eval_div_pow_atTop_coeff_of_degree_le (Q : Polynomial ℝ)
     have := Polynomial.div_tendsto_leadingCoeff_div_of_degree_eq Q (Polynomial.X ^ D) (by rw [hX, heq])
     simpa [hc] using this
 
-set_option autoImplicit false in
-open Filter Topology in
-open scoped ENNReal in
 
 theorem _root_.GlobalTheory.CompHt.growth_of_eventually_eq_eval :
     ∀ (D a : ℕ) (h : ℕ → ℕ) (H : Polynomial ℚ), 1 ≤ a → (∀ᶠ n : ℕ in atTop, (h n : ℚ) = H.eval (n : ℚ)) →

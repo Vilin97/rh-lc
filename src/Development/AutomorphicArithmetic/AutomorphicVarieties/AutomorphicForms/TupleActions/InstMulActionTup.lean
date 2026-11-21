@@ -39,7 +39,6 @@ def pmap {X Y : Type} [MulAction Γ X] [MulAction Γ Y] (f : X → Y) (hf : ∀ 
     (pmap f hf).hom (Finsupp.single x c) = Finsupp.single (f x) c :=
   Finsupp.mapDomain_single
 
-variable (Γ) in
 
 def augC (X : Type) [MulAction Γ X] : PC Γ X ⟶ Rep.trivial ℂ Γ ℂ :=
   Rep.ofHom ⟨Finsupp.linearCombination ℂ (fun _ : X => (1 : ℂ)), fun g => by ext x; simp⟩
@@ -54,7 +53,6 @@ theorem PC_ext {X : Type} [MulAction Γ X] {A : Rep.{0} ℂ Γ} {φ ψ : PC Γ X
   ext x
   exact h x
 
-variable (Γ) in
 
 def FinOrb (X : Type) [MulAction Γ X] : Prop := ∃ R : Set X, R.Finite ∧ ∀ x : X, ∃ g : Γ, g • x ∈ R
 
@@ -213,11 +211,9 @@ variable {L N}
 
 def sLat (σ : 𝓞 L →+* 𝓞 L) (y : Lat L N) : Lat L N := fun a => σ (y a)
 
-variable (N) in
 
 def sGm (σ : 𝓞 L →+* 𝓞 L) : Gm L N →* Gm L N := Matrix.GeneralLinearGroup.map σ
 
-variable (N) in
 
 def Fix (σ : 𝓞 L →+* 𝓞 L) : Subgroup (Gm L N) := (sGm N σ).eqLocus (MonoidHom.id _)
 
@@ -255,14 +251,12 @@ def SpanRe : Prop :=
   ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (σ : 𝓞 L →+* 𝓞 L), IsConj L σ →
     ∀ (p : ℕ), ∀ t ∈ ConeExtensionAcyclic.simp (qr L N) (Tr L N) (p + 1), Spans {y : Lat L N | ∀ j, q (t j).1.1 y = 1}
 
-open Pointwise in
 
 def MinOrb : Prop :=
   ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N p : ℕ), ∃ R : Set (Fin (p + 1) → Set (Lat L N)), R.Finite ∧
     ∀ h : Fin (p + 1) → HS L N, (∀ j, h j ∈ Ry L N) → Spans {y : Lat L N | ∀ j, q (h j) y = 1} →
       ∃ g : Gm L N, g • (fun j => minVec (h j)) ∈ R
 
-open Pointwise in
 
 def MinStab : Prop :=
   ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ), ∀ h ∈ Ry L N, Spans (minVec h) →

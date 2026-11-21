@@ -122,7 +122,6 @@ theorem exists_inert_chart (h : w.under (𝓞 F) = v) (hv : IsInertAt F E v w) :
   obtain ⟨e, he⟩ := H n J L hJ hL.fg hL.span_eq_top hd
   exact ⟨c, ϖ, e, hU, he⟩
 
-omit hc hJ hL hd in
 
 end Local
 

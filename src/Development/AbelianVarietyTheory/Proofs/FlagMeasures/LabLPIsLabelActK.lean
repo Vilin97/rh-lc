@@ -60,7 +60,6 @@ theorem norm_symm_le (z : w.adicCompletion F) (hz : ‖z‖ ≤ 1) : ‖i.symm z
   have := (one_le_inv₀ (norm_pos_iff.2 hz0)).2 hz
   linarith
 
-omit hw in
 
 theorem norm_symm_lt (z : w.adicCompletion F) (hz : ‖z‖ < 1) : ‖i.symm z‖ < 1 := by
   by_contra h
@@ -170,4 +169,3 @@ theorem tame_of_isTameWD {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Alg
 
 end GlobalTheory.SerSys.LabDepth
 
-open GlobalTheory.WeilDeligne GlobalTheory.SerSys.LabDepth in

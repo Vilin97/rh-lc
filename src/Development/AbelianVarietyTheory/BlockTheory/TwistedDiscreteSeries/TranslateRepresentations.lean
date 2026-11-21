@@ -43,7 +43,6 @@ def Commutes {G E E' : Type} [Group G] [AddCommGroup E] [Module ℂ E] [AddCommG
 variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
 
-variable (D) in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.TranslateRepresentations
 

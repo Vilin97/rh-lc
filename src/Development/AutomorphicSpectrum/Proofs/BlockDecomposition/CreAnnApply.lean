@@ -263,7 +263,6 @@ theorem freeQ (n : ℕ) : ∃ (W : Type) (_ : AddCommGroup W) (_ : Module ℂ W)
   · intro i z hz
     simp [d', hF.d_zero _ z hz]
 
-open scoped TensorProduct in
 
 theorem coverQ (lev : Fin n → ℕ) {V : Type} [AddCommGroup V] [Module ℂ V] (E1 E2 : Fin n → Fin n → Module.End ℂ V)
     (hE : PairRel E1 E2) :

@@ -198,7 +198,6 @@ theorem exists_transport (hG : GlobalFnsSt) {n : ℕ} (hn : n ∣ l.M') (q₀ : 
     simp only [Nat.cast_one, _root_.one_mul] at this
     exact (gtRel_zpow h0 _ _ _).1 this
 
-omit [IsAlgClosed F] hW hF hu in
 
 theorem IsTransport.b_comp {n : ℕ} {q₀ : QkPt a.D₀ F n} {q : QkPt P F n} (h : IsTransport a w e uF q₀ q) :
     q.g.b.left ≫ φ = q₀.g.b.left := (h.2 0).1 2

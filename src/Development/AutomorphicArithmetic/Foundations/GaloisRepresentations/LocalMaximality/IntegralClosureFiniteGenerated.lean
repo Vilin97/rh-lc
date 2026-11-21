@@ -15,7 +15,6 @@ open scoped TensorProduct
 
 namespace UpperTheory.Gal.productCup_of_system
 
-open scoped IntermediateField.algebraAdjoinAdjoin in
 
 private theorem tb_F {F : Type} [Field F] [Algebra ℂ F] {d : ℕ} {x : Fin (d + 1) → F} (pd : IsPd ℂ x) :
     IsTranscendenceBasis ℂ (fun j : Fin d => x j.succ / x 0) := by

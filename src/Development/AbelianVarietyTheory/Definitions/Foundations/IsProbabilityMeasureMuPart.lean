@@ -31,19 +31,16 @@ def HasGram (N : (K →+* ℂ) → V → ℝ) : Prop := Nonempty (GramFr N)
 
 variable [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-open Classical in
 
 def slope_sq (N : (K →+* ℂ) → V → ℝ) (L : Submodule (𝓞 K) V) : ℝ :=
   letI : StarRing K := starRingOfComm
   if h : HasGram N then Formalism.HN.muDef h.some.2.1.1 h.some.2.1.2 L else 0
 
-open Classical in
 
 def slopeMax_sq (N : (K →+* ℂ) → V → ℝ) (L : Submodule (𝓞 K) V) : ℝ :=
   letI : StarRing K := starRingOfComm
   if h : HasGram N then Formalism.HN.muMaxDef h.some.2.1.1 h.some.2.1.2 L else 0
 
-open Classical in
 
 def slopeMin_sq (N : (K →+* ℂ) → V → ℝ) (L : Submodule (𝓞 K) V) : ℝ :=
   letI : StarRing K := starRingOfComm
@@ -57,7 +54,6 @@ section Indep
 
 variable [StarRing K]
 
-omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem norm_realize_sq {ι : Type} [Fintype ι] [DecidableEq ι] (b : Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ) (x : V) :
@@ -69,7 +65,6 @@ theorem norm_realize_sq {ι : Type} [Fintype ι] [DecidableEq ι] (b : Basis ι 
   rw [Complex.sq_norm, Complex.normSq_apply]
   simp [Formalism.HermitianLatticesTheory.realize, Formalism.HermitianLatticesTheory.realizeRaw, sq]
 
-omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem IsGram.norm_realize {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] {b : Basis ι K V}
     {X : InfinitePlace K → Matrix ι ι ℂ} {b' : Basis κ K V} {X' : InfinitePlace K → Matrix κ κ ℂ}
@@ -96,7 +91,6 @@ theorem IsGram.rk_deg {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] 
     (fun y => ⟨fun ⟨m, hm, e⟩ => ⟨⟨m, hm⟩, e⟩, fun ⟨m, e⟩ => ⟨m.1, m.2, e⟩⟩)
     (fun m => h.norm_realize h' m.1)]
 
-omit [NumberField K] [StarRing K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem IsGram.hasGram {ι : Type} [Fintype ι] [DecidableEq ι] {b : Basis ι K V} {X : InfinitePlace K → Matrix ι ι ℂ}
     {N : (K →+* ℂ) → V → ℝ} (h : IsGram b X N) : HasGram N := by
@@ -175,7 +169,6 @@ abbrev Psi (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) : Type := {
 
 abbrev Weight (Dw : Datum H) : Type := Psi H → Fin (Dw.p + Dw.q) → ℤ
 
-open Classical in
 
 def wtOf (Dw : Datum H) (la : Weight Dw) (m : ℤ) : WTZ E :=
   (fun x =>
@@ -289,7 +282,6 @@ theorem exOf_weightOf (a : (E →+* ℂ) × ℕ → ℤ) (m : ℤ) : exOf Dw (we
 
 variable (Xo : Moduli Dw l) (c : Coeff l)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def secZ (e : Ix Dw → ℤ) : Submodule c.F (Rul Xo c) where
   carrier := {f | IsNatural (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) f ∧
@@ -312,7 +304,6 @@ theorem mem_secZ {e : Ix Dw → ℤ} {f : Rul Xo c} : f ∈ secZ Xo c e ↔
 
 theorem mem_secZ_exZ {G : WTZ E} {f : Rul Xo c} : f ∈ secZ Xo c (exZ Dw G) ↔ GlobalTheory.IndefiniteRowSideFullHecke.ZeroWeightSections.IsSecZ G f := Iff.rfl
 
-variable (Xo c) in
 
 theorem secZ_nat (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) : secZ Xo c (fun i => (ex Dw a n i : ℤ)) = sec Xo c a n := by
   ext f
@@ -328,7 +319,6 @@ theorem mul_mem_secZ {e e' : Ix Dw → ℤ} {f g : Rul Xo c} (hf : f ∈ secZ Xo
     simp only [Pi.add_apply, zpow_add, Finset.prod_mul_distrib, Units.val_mul]
     ring
 
-variable (Xo c) in
 
 theorem secZ_mul_le (e e' : Ix Dw → ℤ) : secZ Xo c e * secZ Xo c e' ≤ secZ Xo c (e + e') :=
   Submodule.mul_le.2 fun _ hf _ hg => mul_mem_secZ hf hg
@@ -361,7 +351,6 @@ section Cusp
 
 variable {r : ℕ}
 
-open Classical in
 
 def modelWt {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (G : WTZ E) (k : U.Comp) : Wt (U.X k).Ψ r :=
   fun τ j => if (U.X k).p0 ≤ (j : ℕ) then

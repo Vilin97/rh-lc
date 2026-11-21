@@ -21,7 +21,6 @@ def ordH {n : ℕ} (h : ZMod n) : ℕ := addOrderOf h
 
 def rho (D : D7) (τ g : D.R.GG) : D.R.GG := D.R.cc * g * τ
 
-open Classical in
 
 def frob (D : D7) (p : ℕ) : D.R.GG :=
   if h : ∃ σ : D.host.E ≃ₐ[ℚ] D.host.E, ∃ P : Ideal (𝓞 D.host.E),

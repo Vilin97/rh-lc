@@ -355,7 +355,6 @@ theorem exists_basis_field (hLaw : Laws) {g m r N N' : ℕ} (hN : N = m ^ 2) (hN
 
 end ThetaCoord
 
-open ThetaCoord in
 
 theorem theta_coordinates : Laws → ∀ (g m r N N' : ℕ), N = m ^ 2 → N' = r * m →
     (∀ (S : Scheme.{0}) [IsLocallyNoetherian S] [Subsingleton S] [Nonempty S] (P : PolAV S) (hg : P.g = g)

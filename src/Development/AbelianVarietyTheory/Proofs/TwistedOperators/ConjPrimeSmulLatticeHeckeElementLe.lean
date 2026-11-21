@@ -70,7 +70,6 @@ theorem ratio_int {P : HeightOneSpectrum (𝓞 D.host.E)} {e : Formalism.L2.Thet
 
 open scoped Matrix
 
-set_option maxHeartbeats 1000000 in
 
 theorem keeps {V : HSp D} {P : HeightOneSpectrum (𝓞 D.host.E)} {e : Formalism.L2.Theta.AE D} (he : IsIdemAt e P)
     {ϖ : 𝓞 D.host.E} (hP : ϖ ∈ P.asIdeal) (hP2 : ϖ ∉ P.asIdeal ^ 2) {k : ℕ} {a₀ : GA D V}
@@ -128,7 +127,6 @@ end GlobalTheory.HeckeConjPart
 
 open scoped Matrix
 
-open GlobalTheory.SplitPlace in
 
 theorem GlobalTheory.HeckeConjPart.conj_part : ∀ (D : D7) (V : HSp D) (P : Formalism.L2.DIV.Pl D.host.E) (e : AE D) (ϖ : 𝓞 D.host.E)
     (k : ℕ) (g a₀ : GA D V),

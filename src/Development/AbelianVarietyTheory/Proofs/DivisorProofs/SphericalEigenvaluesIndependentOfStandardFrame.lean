@@ -159,7 +159,6 @@ theorem loc_iff (hQ : StdPsi hF Q) (hQ' : StdPsi hF Q') (f : Formalism.L2.Theta.
     Q.ψ κ ∈ {k | k ∈ KsphC V ∅ ∧ SuppF V f k} ↔ Q'.ψ κ ∈ {k | k ∈ KsphC V' ∅ ∧ SuppF V' f k} :=
   and_congr (ksph_iff hQ hQ' κ) (suppF_iff hQ hQ' f κ)
 
-open Classical in
 
 theorem sphOp_image (hQ : StdPsi hF Q) (hQ' : StdPsi hF Q') {Pr : Pl D.host.E} {d : List ℤ} {B : Finset (GA D V)}
     (hB : SphOp V Pr d B) : SphOp V' Pr d (B.image fun γ => Q'.ψ (principalLevelFrame.pre Q γ)) := by

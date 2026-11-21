@@ -112,7 +112,6 @@ theorem bound_le {p : PtAt ex Csz} {CF C : ℝ} (d : FunIn p CF) (hC0 : 0 ≤ C)
 
 end Bound
 
-open GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SumSize in
 
 end GlobalTheory.QuotientNormCoisometry
 

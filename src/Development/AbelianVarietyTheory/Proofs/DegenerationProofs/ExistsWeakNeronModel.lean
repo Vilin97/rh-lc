@@ -133,7 +133,6 @@ section Alg
 variable (R K : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [Field K] [Algebra R K] [IsFractionRing R K]
   {D : Type} [CommRing D] [Algebra K D] [Algebra R D] [IsScalarTower R K D]
 
-include K in
 
 theorem flat_sub (B : Subalgebra R D) : Module.Flat R B := by
   rw [Module.Flat.flat_iff_torsion_eq_bot_of_isBezout, Submodule.eq_bot_iff]
@@ -149,7 +148,6 @@ theorem flat_sub (B : Subalgebra R D) : Module.Flat R B := by
 def gen (B : Subalgebra R D) : TensorProduct R K B →ₐ[K] D :=
   Algebra.TensorProduct.lift (Algebra.ofId K D) B.val (fun _ _ => Commute.all _ _)
 
-omit [IsDomain R] [IsDiscreteValuationRing R] in
 
 theorem gen_injective (B : Subalgebra R D) : Function.Injective (gen R K B) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -169,7 +167,6 @@ theorem gen_injective (B : Subalgebra R D) : Function.Injective (gen R K B) := b
   rw [hb, map_zero] at e
   exact (IsLocalization.map_units (TensorProduct R K B) c).mul_left_eq_zero.1 e
 
-omit [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K] in
 
 theorem gen_surjective {I : Type} (r : I → D)
     (h : Function.Surjective (MvPolynomial.eval₂Hom (algebraMap K D) r)) :

@@ -239,7 +239,6 @@ theorem one_lt_ratio {f : ℕ} (hf : 0 < f) {D P n : ℝ} (hD : 0 < D) (hP : 0 <
         rw [div_lt_div_iff_of_pos_right hP]
         nlinarith [mul_pos h4 hD]
 
-open ReciprocityTheory.GeometryOfNumbersTheory in
 
 theorem exists_short_vector : ∀ (E : Type) [Field E] [NumberField E] [StarRing E], Formalism.HermitianLatticesTheory.IsCMUnram E → ∀ (J : Matrix (Fin 2) (Fin 2) E), Jᴴ = J → (∀ (φ : E →+* ℂ) (y : Fin 2 → E), y ≠ 0 → 0 < (φ (star y ⬝ᵥ (J *ᵥ y))).re) → ∀ Λ : Submodule (𝓞 E) (Fin 2 → E), Submodule.IsLattice E Λ → (∀ x, x ∈ Λ ↔ ∀ y ∈ Λ, star y ⬝ᵥ (J *ᵥ x) ∈ (algebraMap (𝓞 E) E).range) → ∃ u ∈ Λ, u ≠ 0 ∧ ∀ φ : E →+* ℂ, (φ (star u ⬝ᵥ (J *ᵥ u))).re ≤ 2 * Formalism.HermitianLatticesTheory.vInv E := by
   intro E _ _ _ hCM J hJ hp Λ hΛ hdual

@@ -144,7 +144,6 @@ variable {D : DegPre R} {D' : DegPre R'} (eB : D'.P.A ≅ (Over.pullback (specOf
   {G' : Over (Spec (CommRingCat.of R'))} [GrpObj G'] [IsCommMonObj G']
   (bc : G' ≅ (Over.pullback (specOf φ)).obj G) [IsMonHom bc.hom]
 
-omit [IsCommMonObj G] [IsCommMonObj G'] in
 
 variable {e} (g : GtCoord I D e G)
 

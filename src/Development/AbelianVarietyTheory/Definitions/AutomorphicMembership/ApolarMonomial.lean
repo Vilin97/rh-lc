@@ -46,11 +46,9 @@ variable {X : Scheme.{0}} {G : Over X} [GrpObj G] [IsCommMonObj G] {O : Type} [C
 
 variable (bar : O → O) (L : LB G.left) (rig : LB.Gen (LB.LinComb L (K := PUnit) (fun _ => eSec G) fun _ => 1))
 
-variable (G) in
 
 abbrev Pw (n : ℕ) : Over X := Over.mk x0 ⊗ powObj G n
 
-variable (G) in
 
 abbrev pr {n : ℕ} (b : Fin n) : (Pw G x0 n).left ⟶ G.left := (snd _ _ ≫ powPr G b).left
 

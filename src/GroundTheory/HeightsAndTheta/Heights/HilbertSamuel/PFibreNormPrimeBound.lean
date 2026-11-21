@@ -30,7 +30,6 @@ theorem FibreNormPrimeBound.block_ne_zero {y : (Σ k, ι k) → Ω} {e : K → �
   refine mul_eq_zero_of_right _ (Finset.prod_eq_zero (Finset.mem_univ ⟨k, i⟩) ?_)
   rw [h i, zero_pow hi]
 
-omit [Fintype K] in
 
 theorem FibreNormPrimeBound.exists_chart (V : ValuationSubring Ω) {y : (Σ k, ι k) → Ω}
     (hblk : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0) :

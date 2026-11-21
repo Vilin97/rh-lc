@@ -150,6 +150,5 @@ theorem rule_eq_of_rootVal {κ : GlobalTheory.KeyCl.Rule} (h₁ : GlobalTheory.K
     rfl
   rw [e₄, div_pow, mul_left_comm, div_mul_eq_mul_div, e₃, div_self hπ, mul_one]
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.KeyFourth

@@ -42,7 +42,6 @@ section Lin
 
 variable [Module B A] [IsScalarTower S B A] (hsm : ∀ (b : B) (a : A), b • a = e b * a)
 
-include hsm in
 
 def derOf (h : B →ₐ[S] DualNumber A) (hh : IsTanAt e h) : Derivation S B A where
   toFun b := (h b).snd
@@ -57,7 +56,6 @@ def derOf (h : B →ₐ[S] DualNumber A) (hh : IsTanAt e h) : Derivation S B A w
 
 theorem derOf_apply (h : B →ₐ[S] DualNumber A) (hh : IsTanAt e h) (b : B) : derOf e hsm h hh b = (h b).snd := rfl
 
-include hsm in
 
 def ofLin (g : Ω[B⁄S] →ₗ[B] A) : B →ₐ[S] DualNumber A where
   toFun b := TrivSqZeroExt.inl (e b) + TrivSqZeroExt.inr (g (KaehlerDifferential.D S B b))

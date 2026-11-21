@@ -221,7 +221,6 @@ namespace GlobalTheory.VacSchurFin
 variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} {μ : Measure (WO S T)}
   {𝓕 : Set (WO S T)}
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem lev (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
     (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)

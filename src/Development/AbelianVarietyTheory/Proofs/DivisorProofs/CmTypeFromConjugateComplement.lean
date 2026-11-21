@@ -40,6 +40,5 @@ theorem tauE_or' (D : D7) (φ : D.host.E →+* ℂ) :
       rw [ComplexEmbedding.conjugate_coe_eq, h, map_neg, map_mul, Complex.conj_I, Complex.conj_ofReal]; ring)
     exact ⟨ρ, Or.inr e⟩
 
-open Classical in
 
 end GlobalTheory.MassLink

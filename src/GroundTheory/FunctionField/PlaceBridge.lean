@@ -147,13 +147,9 @@ section RatFunc
 
 open scoped Polynomial
 
-omit [Algebra k K] in
 
-omit [Algebra k K] in
 
-omit [Algebra k K] in
 
-omit [Algebra k K] in
 
 end RatFunc
 
@@ -179,7 +175,6 @@ section Separating
 
 open scoped IntermediateField.algebraAdjoinAdjoin
 
-omit [Algebra k K] in
 
 theorem isPrincipalIdealRing_adjoin [Algebra k K] (t : K) :
     IsPrincipalIdealRing (Algebra.adjoin k {t}) := by
@@ -216,13 +211,9 @@ theorem isFractionRing_closure_adjoin :
 
 attribute [local instance] isDedekindDomain_closure_adjoin isFractionRing_closure_adjoin
 
-omit [IsFunctionField k K] [Algebra.IsSeparable (IntermediateField.adjoin k {t}) K] in
 
-omit [IsFunctionField k K] [Algebra.IsSeparable (IntermediateField.adjoin k {t}) K] in
 
-omit [IsFunctionField k K] [Algebra.IsSeparable (IntermediateField.adjoin k {t}) K] in
 
-omit [IsFunctionField k K] in
 
 end Separating
 

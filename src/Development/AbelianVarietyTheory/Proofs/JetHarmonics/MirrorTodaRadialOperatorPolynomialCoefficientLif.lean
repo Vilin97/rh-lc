@@ -697,7 +697,6 @@ section main
 
 open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.R Formalism.FourierDecayAlt.Wd Formalism.FourierDecayAlt.Fr Formalism.REAL Formalism.QuantumDeterminants MeasureTheory GlobalTheory.HatNF
 
-open scoped Classical in
 
 def coefV (k r : ℕ) (Bi : Fin r → Fin (2 * r + k + 1)) (g : B.Mat k r) : ℂ :=
   if StrictMono (fun l => C3.keyS k r (Bi l)) then

@@ -23,7 +23,6 @@ section Coalg
 
 variable [AddCommGroup B] [Module R B] [Coalgebra R B] [IsCocomm R B]
 
-variable (B) in
 
 def postcomp (h : C →ₐ[R] F) : WithConv (B →ₗ[R] C) →+* WithConv (B →ₗ[R] F) where
   toFun f := toConv (h.toLinearMap ∘ₗ f.ofConv)

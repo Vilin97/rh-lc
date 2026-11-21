@@ -141,7 +141,6 @@ theorem str_cmap (i : Fin 2) (x : Sp (Polynomial R)) :
 
 end GlobalTheory.ProjLineOpen
 
-open GlobalTheory.ProjLineOpen GlobalTheory.ProjSpace in
 
 theorem GlobalTheory.isOpen_setOf_charts_mem (R : Type) [CommRing R] (Y : Scheme.{0}) (g₀ g₁ : Sp (Polynomial R) ⟶ Y)
     (hg : spMap (algebraMap (Polynomial R) (Localization.Away (Polynomial.X : Polynomial R))) ≫ g₀ =

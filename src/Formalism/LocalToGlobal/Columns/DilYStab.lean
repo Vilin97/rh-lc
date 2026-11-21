@@ -18,7 +18,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} {W : Wts X Pr.Word R}
   {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} {S : Set ℕ}
   {mu : Tup X.F X.E X.K S} {cst : LocCst X (rowSG Pr sel mu)} {L : ChIdx X Pr R (QE sel (mu : Chr X.F X.E X.K))} {u : Pr.Word} {m2 j : ℕ}
 
-variable (W cst L u m2 j) in
 
 abbrev PtY (b : L.β j) : Type := (cplAt W sel mu cst L u m2 j b).Pts
 
@@ -47,7 +46,6 @@ def PtY.repl {b : L.β j} (x : PtY W cst L u m2 j b) (d' : DecoSet X.E (R.N j) (
     (h : DecoSet.SameOn (rowSG Pr sel mu) x.deco d') : PtY W cst L u m2 j b :=
   ⟨(x.1.1.mv d', x.1.2), by rw [cplAt_ys_mv b x.1.1 h]; exact x.2⟩
 
-open Classical in
 
 def PtY.mv {b : L.β j} (x : PtY W cst L u m2 j b) (d' : DecoSet X.E (R.N j) (Pr.vT u) Pr.vGs) : PtY W cst L u m2 j b :=
   if h : DecoSet.SameOn (rowSG Pr sel mu) x.deco d' then x.repl d' h else x

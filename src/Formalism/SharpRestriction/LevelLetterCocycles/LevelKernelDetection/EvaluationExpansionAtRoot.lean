@@ -51,7 +51,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {Lb : LevB W} {hR : Ring9 W} {uZ : ℤ_[PD.p]ˣ} {ιZ : ℤ_[PD.p] →+* O}
     {T : LocLat G Qp LL O} {C : Coord W (baseIdOf hR) T} {c : ZMod n}
 
-open Classical in
 
 theorem evaluation_expansion_at_root (s : ℕ) (D : Type) [AddCommGroup D] [Module LL D]
     (g : Rs LL PD.p s → D) (ζ : Rs LL PD.p s) : evK ζ (toKsD W s D g) = g ζ := by
@@ -81,7 +80,6 @@ theorem rho_product_unit_mul {ell : ℕ}
   push_cast
   ring
 
-open Classical in
 
 theorem levelCond_iff (ell : ℕ)
     (hk1b : ∀ s < ell, ∃ ε : (PowerSeries (KsW W s))ˣ,

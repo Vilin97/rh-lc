@@ -19,7 +19,6 @@ namespace PositivityTheory.Rg.Rs.C3.UC
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {N : ℕ}
 
-set_option maxHeartbeats 1000000 in
 
 theorem spehCosocle_uc (hG : PositivityTheory.RgUd.Exp.GenUnitCC) (hSC : GlobalTheory.Published.StandardCosocleGL)
     [CharZero k] (x : GlobalTheory.LocGL.IrrGL k) (hg : GlobalTheory.LocGL.IsGeneric x.rep)

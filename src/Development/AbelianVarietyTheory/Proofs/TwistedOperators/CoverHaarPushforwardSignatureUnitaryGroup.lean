@@ -36,7 +36,6 @@ theorem haar_of_proper {p q n : ℕ} (T : GrpData p q) (ε : Fin n → Bool) (μ
     hc.measurable, ?_⟩
   exact Measure.isMulLeftInvariant_eq_smul _ μ
 
-open GlobalTheory.RealPar.SqInt (reixHom continuous_reixHom) in
 
 noncomputable def reixUJ {p q n : ℕ} {ε : Fin n → Bool} {e : Ix p q ≃ Fin n} (h : SignCompat ε e) :
     Formalism.UG.Upq p q ≃ₜ* Formalism.REAL.UJ ε where

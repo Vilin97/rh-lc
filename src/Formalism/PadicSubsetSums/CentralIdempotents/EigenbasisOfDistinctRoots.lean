@@ -36,11 +36,8 @@ def AdmissibleCount : Prop :=
     c₀ * B ^ (-5 : ℤ) * X / (h * Real.log X) ≤ P → P ≤ 2 * A →
     8 * c ^ (-20 : ℤ) * X ≤ A
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 def LemmaPSubSum : Prop :=
   ∀ N a : ℕ, 0 < a → a < N →
@@ -60,7 +57,6 @@ def eqvSpace {G V ι : Type} [Monoid G] [AddCommGroup V] [Module ℂ V] (ρ : Re
     intro a x hx u
     rw [map_smul, hx u, smul_comm]
 
-open Classical in
 
 def twistedIdem {G : Type} [Group G] [Fintype G] (J : Subgroup G) (χ : J →* ℂˣ) :
     MonoidAlgebra ℂ G :=
@@ -90,7 +86,6 @@ def besselSet (K : Type) [Field K] (s k N : ℕ) : Set (GL (Fin N) K) :=
     ∀ i j : Fin N, s ≤ (i : ℕ) → (i : ℕ) < s + k → (j : ℕ) = s + k →
       (u : Matrix (Fin N) (Fin N) K) i j = 0}
 
-open Classical in
 
 def besselChar {K : Type} [Field K] (ψ₀ : AddChar K ℂ) (s k N : ℕ) (u : GL (Fin N) K) : ℂ :=
   ψ₀ (∑ i : Fin N, ∑ j : Fin N,
@@ -106,7 +101,6 @@ def GelfandGraevMultOne : Prop :=
     (N : ℕ) (ψ₀ : AddChar K ℂ) (ρ : Representation ℂ (GL (Fin N) K) V), ψ₀ ≠ 1 → IsIrr ρ →
     Module.finrank ℂ (besselSpace ρ ψ₀ 0 0) ≤ 1
 
-open Classical in
 
 def IrredCountUpperUnit : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (d : ℕ), 1 ≤ d →
@@ -127,18 +121,15 @@ def ComparisonTransfer : Prop :=
     (∀ v t, (1 - 1 / g) * wU v t ≤ wJ v t) →
     ∑ x ∈ A, ∏ v, wJ v (x v) ≤ ∑ x ∈ A, ∏ v, wU v (x v) + (Fintype.card ι : ℝ) / g
 
-open Classical in
 
 def sqWeight {K : Type} [Field K] [Fintype K] (f : K[X]) : ℝ :=
   ((UniqueFactorizationMonoid.normalizedFactors f).map
     (fun P => ((Fintype.card K : ℝ) ^ P.natDegree - 1)⁻¹)).prod
 
-open Classical in
 
 def sqSet (K : Type) [Field K] [Fintype K] (N : ℕ) : Finset (Fin N → K) :=
   Finset.univ.filter (fun c => Squarefree (monicOf c) ∧ (monicOf c).coeff 0 ≠ 0)
 
-open Classical in
 
 def degType {K : Type} [Field K] (f : K[X]) : Multiset ℕ :=
   (UniqueFactorizationMonoid.normalizedFactors f).map Polynomial.natDegree
@@ -150,9 +141,7 @@ def SqMassLower : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (N : ℕ), 1 ≤ N →
     1 - 2 / (Fintype.card K : ℝ) ≤ ∑ c ∈ sqSet K N, sqWeight (monicOf c)
 
-open Classical in
 
-open Classical in
 
 def TypeWeightExact : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (N : ℕ) (n : ℕ → ℕ), ∑ d ∈ Finset.Icc 1 N, d * n d = N →
@@ -163,7 +152,6 @@ def TypeWeightExact : Prop :=
           (fun c => Irreducible (monicOf c) ∧ (monicOf c).coeff 0 ≠ 0)).card).choose (n d) : ℕ) : ℝ) /
           ((Fintype.card K : ℝ) ^ d - 1) ^ (n d)
 
-open Classical in
 
 def TypeSetWeight : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (N : ℕ) (A : Multiset ℕ → Prop),
@@ -171,7 +159,6 @@ def TypeSetWeight : Prop :=
       (((Finset.univ : Finset (Equiv.Perm (Fin N))).filter
         (fun σ => A σ.partition.parts)).card : ℝ) / (N.factorial : ℝ)
 
-open Classical in
 
 def SameFactorCount : Prop :=
   ∀ (K L : Type) [Field K] [Fintype K] [Field L] [Algebra K L] [IsAlgClosed L] (δ l : ℕ),
@@ -181,7 +168,6 @@ def SameFactorCount : Prop :=
       ¬ Set.InjOn (primeToPart l) ((monicOf c).rootSet L))).card : ℝ) ≤
       (Fintype.card K : ℝ) ^ (3 * (δ : ℝ) / 4)
 
-open Classical in
 
 def CrossFactorCount : Prop :=
   ∀ (K L : Type) [Field K] [Fintype K] [Field L] [Algebra K L] [IsAlgClosed L] (δ l : ℕ)
@@ -192,7 +178,6 @@ def CrossFactorCount : Prop :=
         primeToPart l x = primeToPart l y)).card : ℝ) ≤
       (Fintype.card K : ℝ) ^ ((δ : ℝ) / 4)
 
-open Classical in
 
 def LocalEstimateII : Prop :=
   ∀ (K L : Type) [Field K] [Fintype K] [Field L] [Algebra K L] [IsAlgClosed L] (N : ℕ),
@@ -212,7 +197,6 @@ def PrimePowerOrderCount : Prop :=
     ∑ l ∈ (g ^ δ - 1).primeFactors, l ^ padicValNat l (g ^ δ - 1) ≤
       δ * (g - 1) + (g ^ δ - 1) / (g - 1)
 
-open Classical in
 
 def LocalEstimateIII : Prop :=
   ∀ (K L : Type) [Field K] [Fintype K] [Field L] [Algebra K L] [IsAlgClosed L] (N q₁ d : ℕ)
@@ -223,14 +207,12 @@ def LocalEstimateIII : Prop :=
           primeToPart l x = primeToPart l (algebraMap K L (c₀ : K))), sqWeight (monicOf c) ≤
       1 / (4 * (min q₁ d : ℕ)) + (1 + Real.log N) / ((Fintype.card K : ℝ) - 1)
 
-open Classical in
 
 def LocalEstimateIV : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (N a : ℕ), 0 < a → a < N →
     ∑ c ∈ (sqSet K N).filter (fun c => ∃ h : K[X], h ∣ monicOf c ∧ h.natDegree = a),
       sqWeight (monicOf c) ≤ 7 / 8
 
-open Classical in
 
 def LocalEstimateV : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (N : ℕ), 100 ≤ N →
@@ -238,7 +220,6 @@ def LocalEstimateV : Prop :=
         P.natDegree.Prime ∧ N < 2 * P.natDegree ∧ P.natDegree + 3 ≤ N), sqWeight (monicOf c) ≤
       1 - 1 / (5 * Real.log N)
 
-open Classical in
 
 def PropW : Prop :=
   ∀ (K L ι J : Type) [Field K] [Fintype K] [Field L] [Algebra K L] [IsAlgClosed L] [Fintype ι]

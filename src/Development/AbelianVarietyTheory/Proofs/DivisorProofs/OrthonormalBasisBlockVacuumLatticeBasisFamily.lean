@@ -95,7 +95,6 @@ theorem orthonormal_bas (B : Base D cc δ) (n n' : ℕ) : TaylorLogMetric.Orthon
     intro h
     exact hk (by rw [h])
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem sum_g_smul_xv (B : Base D cc δ) (y : Fin 4 → D.host.E) :
     ∑ w, B.γ₀.g y w • xv B w = y := by

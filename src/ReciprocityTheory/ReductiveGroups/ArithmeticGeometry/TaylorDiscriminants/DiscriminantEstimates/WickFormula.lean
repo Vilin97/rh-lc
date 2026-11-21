@@ -21,7 +21,6 @@ noncomputable def delta {k : Type} [CommRing k] {r s : ℕ} (κ : Fin r → Fin 
 
 end WickFormula
 
-open WickFormula in
 
 def WickFormula : Prop :=
   ∀ (k AA M : Type) [CommRing k] [Algebra ℚ k] [Ring AA] [Algebra k AA] [AddCommGroup M]

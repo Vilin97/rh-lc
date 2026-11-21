@@ -30,7 +30,6 @@ variable {G H V W : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] 
 def FinFixed (ρ : Representation ℂ G V) : Prop :=
   ∀ K : Subgroup G, IsOpen (K : Set G) → FiniteDimensional ℂ (fixed ρ K)
 
-omit [IsTopologicalGroup G] [IsTopologicalGroup H] in
 
 theorem FinFixed.comp {ρ : Representation ℂ G V} (h : FinFixed ρ) (φ : H →* G) (hφ : IsOpenMap φ) :
     FinFixed (ρ.comp φ : Representation ℂ H V) := by

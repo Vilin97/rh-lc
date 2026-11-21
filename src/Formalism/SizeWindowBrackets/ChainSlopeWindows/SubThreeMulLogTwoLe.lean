@@ -12,7 +12,6 @@ open Formalism.RankGapBounds.WeightedMeanData Formalism.LFunctionChainParameters
 
 set_option linter.unusedVariables false
 
-set_option maxHeartbeats 1000000 in
 
 theorem core_ineq {nT a b b' k L La B0 Nc M sA lW lk lH dI et Xpp y yD yL K h g
     cDiv cE cH cCount cSlope cSl1 cLoss : ℝ}
@@ -248,7 +247,6 @@ lemma inv_one_sub_le_two {d : ℝ} (hd : d ≤ 1 / 2) : 0 ≤ (1 - d)⁻¹ ∧ (
   have := inv_anti₀ (by norm_num : (0 : ℝ) < 1 / 2) hd12
   simpa using this
 
-set_option maxHeartbeats 1000000 in
 
 theorem large_x_eventually : LargeXEv := by
   intro ε K cHH eK hε

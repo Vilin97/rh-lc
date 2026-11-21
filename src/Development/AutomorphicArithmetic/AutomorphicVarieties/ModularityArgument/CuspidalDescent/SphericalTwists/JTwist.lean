@@ -203,7 +203,6 @@ private theorem autP (hP : Af.HypothesesH) (hn : 1 ≤ n) (r : Resid V.frame c.O
 
 end Pt
 
-set_option maxHeartbeats 1600000 in
 
 private theorem pt_part (PH : Af.HypothesesH) {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [Field Ω]
     [Algebra L Ω] [IsAlgClosure L Ω] {s : HidaSetting l L Ω} {n : ℕ} (hn : 1 ≤ n) {V : s.Lev} {Q : QData V} {c : Coef l}
@@ -229,4 +228,3 @@ private theorem pt_part (PH : Af.HypothesesH) {l : ℕ} [Fact l.Prime] {L Ω : T
   refine ⟨ω, w1, fun i => ?_⟩
   exact ord_congr (w2 i) fun g => hy _
 
-set_option maxHeartbeats 1000000 in

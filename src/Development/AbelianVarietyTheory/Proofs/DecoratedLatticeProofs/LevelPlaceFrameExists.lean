@@ -30,7 +30,6 @@ noncomputable section
 
 namespace GlobalTheory.LineAtG
 
-set_option maxHeartbeats 1600000 in
 
 theorem mem_latLoc_line_iff {D : D7} (V : Formalism.BasicNotions.TH.HSp D) (L : GlobalTheory.FinPl.Lat V) (hL : L.FG) (v : GlobalTheory.FinPl.Pl D) (t : GA D V)
     (ε : Fin V.rank → D.host.E) (y : AE D) (hy : y ∈ GlobalTheory.FinPl.idAt D (· = v)) :
@@ -49,6 +48,5 @@ theorem mem_latLoc_line_iff {D : D7} (V : Formalism.BasicNotions.TH.HSp D) (L : 
     congr 1
   rw [hv]
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.LineAtG

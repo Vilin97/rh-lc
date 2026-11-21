@@ -44,7 +44,6 @@ def OnLocalJ : Prop :=
         ((E : ℝ) - (vw w σ : ℝ) + (vw w ((Nat.card U : ℕ) : K) : ℝ)) * (d : ℝ) +
           (r + (finrank K Z : ℝ) * (vw w ((Nat.card U : ℕ) : K) : ℝ)) / (U.index : ℝ) + ε
 
-open Classical in
 
 def TwistSetDouble : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (J : Type) [Fintype J]
@@ -52,7 +51,6 @@ def TwistSetDouble : Prop :=
     ∑ j, (ε0 w j + (if conjPl w = w then 0 else ε0 (conjPl w) j)) ≤ 1 / (plc w : ℝ) ^ 2 →
       ∑ j, (ε0 w j + ε0 (conjPl w) j) ≤ 2 / (plc w : ℝ) ^ 2
 
-open Classical in
 
 def OnExportSet : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (D : ℕ), 0 < D →

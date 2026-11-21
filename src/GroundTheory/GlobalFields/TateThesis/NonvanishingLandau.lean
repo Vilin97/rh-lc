@@ -18,7 +18,6 @@ variable {K : Type*} [Field K] [NumberField K]
 
 open IdeleGroup
 
-variable (K) in
 
 theorem continuedDedekindZeta_neg_two : continuedDedekindZeta K (-2) = 0 := by
   rw [continuedDedekindZeta_of_ne_zero K (by norm_num), normalizedDedekindZeta]

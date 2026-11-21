@@ -66,7 +66,6 @@ theorem covol_lt_top {γ : GRat D.sp.cm.sig V.gram} (hγ : IsNonFieldAniso D.sp.
   obtain ⟨hreg, k, K, iF, iA, he, -, hK⟩ := hγ
   exact GlobalTheory.T.anisotropic_torus_fundamentalDomain_finite_measure GlobalTheory.T.regularSemisimple_unitaryGroup_concrete D V γ hreg k K he hK dt 𝓣 h𝓣
 
-set_option maxHeartbeats 4000000 in
 
 instance discreteTopology_subgroupOf_cent (γ : GA D V) : DiscreteTopology ((GQ V).subgroupOf (cent γ)) :=
   DiscreteTopology.of_continuous_injective (f := fun t : (GQ V).subgroupOf (cent γ) => (⟨t.1.1, t.2⟩ : GQ V))
@@ -109,6 +108,5 @@ theorem zeroClause {T : TypeDataG V} (hH : HypH (k := fun v : T.S => ResF v.1) T
   have h := hcls 𝓕 h𝓕
   rwa [hfp, mul_zero, mul_zero] at h
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.NonFieldType

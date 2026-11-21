@@ -55,7 +55,6 @@ private theorem four_mod (T : Fv F v ⊗[F] E → ℂ) (c t : Fv F v ⊗[F] E) :
   rw [sub_mul, map_sub, sub_eq_add_neg, AddChar.map_add_eq_mul]
   ring
 
-omit [NumberField E] in
 
 variable [BorelSpace (Fv F v ⊗[F] E)] [m.IsAddHaarMeasure]
 
@@ -88,6 +87,3 @@ private theorem det_ne_zero_herm {F E : Type} [Field F] [NumberField F] [Field E
   apply h
   rw [show (X.J.map (B.emb w).1).det = (B.emb w).1 X.J.det from (RingHom.map_det (B.emb w).1 X.J).symm, h0, map_zero]
 
-open GlobalTheory.ConeBumpB GlobalTheory.LatVac in
-open GlobalTheory.Doubling (absE) in
-open scoped GlobalTheory.VacAny in

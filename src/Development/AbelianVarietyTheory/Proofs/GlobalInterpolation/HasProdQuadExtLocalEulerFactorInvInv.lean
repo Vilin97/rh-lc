@@ -212,7 +212,6 @@ def below (F : Type) [Field F] [NumberField F] [Algebra F E] (P : {P : Ideal (�
   HeightOneSpectrum.under (𝓞 F) (⟨P.1, P.2.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField P.2
     (RingOfIntegers.not_isField E)⟩ : HeightOneSpectrum (𝓞 E))
 
-omit [StarRing E] in
 
 def fibreEquiv (v : HeightOneSpectrum (𝓞 F)) :
     {P : {P : Ideal (𝓞 E) // P.IsMaximal} // below F P = v} ≃ v.asIdeal.primesOver (𝓞 E) where

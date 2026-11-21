@@ -107,7 +107,6 @@ theorem isInt_mul {τ : Type} {f g : MvPowerSeries τ C} (hf : MvIsInt v f) (hg 
   rw [v.map_mul]
   exact add_nonneg (hf _) (hg _)
 
-open Classical in
 
 def intSub (τ : Type) : Subring (MvPowerSeries τ C) where
   carrier := {f | MvIsInt v f}

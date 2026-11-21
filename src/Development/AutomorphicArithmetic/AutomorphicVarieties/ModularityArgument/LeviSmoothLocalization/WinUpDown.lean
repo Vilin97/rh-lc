@@ -21,7 +21,6 @@ section Loc
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 def unif : kˣ := Classical.epsilon fun p : kˣ => ValuativeRel.valuation k (p : k) < 1 ∧
   ∀ x : k, ValuativeRel.valuation k x < 1 → ValuativeRel.valuation k x ≤ ValuativeRel.valuation k (p : k)

@@ -126,7 +126,6 @@ theorem smul_mulVec' {m n : ℕ} (c : AE D) (M : Mx D m n) (v : Fin n → AE D) 
   funext i
   simp only [Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, Pi.smul_apply, Finset.mul_sum, mul_assoc]
 
-set_option maxHeartbeats 800000 in
 
 theorem mem_latV_of_pairH {S : HSp D} {MS : Lat S} (hS : IsSelfDualC S MS) {P : Pl D → Prop}
     {x : Fin S.rank → AE D} (hx : ∀ b, x b ∈ idAt D P)
@@ -196,7 +195,6 @@ namespace GlobalTheory.KapLat2
 
 open GlobalTheory.FinPl GlobalTheory.KapLat
 
-set_option maxHeartbeats 800000 in
 
 theorem kap_mem_latO : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (q : GlobalTheory.FinPl.SplitPt D k) (S L L'' : HSp D) (τ : Matrix (Fin L.rank) (Fin L''.rank) D.host.E) (MS : GlobalTheory.FinPl.Lat S) (LL : GlobalTheory.FinPl.Lat L) (LZ : GlobalTheory.FinPl.Lat L''), q.UnitAA → IsSelfDualC S MS → IsSelfDualC L LL → IsSelfDualC L'' LZ → (∀ y ∈ GlobalTheory.FinPl.latV L'' LZ (· = q.v), (rat τ : Mx D L.rank L''.rank) *ᵥ y ∈ GlobalTheory.FinPl.latV L LL (· = q.v)) → ∀ w ∈ latO S L'' (MS : Set _) (LZ : Set _) (· = q.v), GlobalTheory.FinPl.kap τ S w ∈ latO L S (LL : Set _) (MS : Set _) (· = q.v) := by
   intro D k _ _ _ _ q S L L'' τ MS LL LZ hU hS hL hZ hτ w hw

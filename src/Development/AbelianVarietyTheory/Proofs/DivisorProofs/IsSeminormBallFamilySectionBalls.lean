@@ -71,7 +71,6 @@ end Pair
 
 end GlobalTheory.VolBr.BallFam
 
-open GlobalTheory.VolBr.BallFam in
 
 theorem GlobalTheory.VolBr.Pair.isBallFam : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k) (P : Pair p), ∀ a b : ℤ, IsBallFam (P.H a b) (P.Bl a b) := by
   intro k _ X _ p P a b

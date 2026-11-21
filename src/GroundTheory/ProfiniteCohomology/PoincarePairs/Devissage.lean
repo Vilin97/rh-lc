@@ -24,7 +24,6 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   [∀ v, IsTopologicalGroup (Hv v)] (φ : ∀ v, Hv v →ₜ* G)
   {S : ShortComplex (Rep.{u} k G)} [IsDiscreteRep S.X₁] [IsDiscreteRep S.X₂] [IsDiscreteRep S.X₃]
 
-omit [IsDiscreteRep S.X₂] [IsDiscreteRep S.X₃] in
 
 instance isDiscreteRep_map_resFunctor_X₁ {K : Type u} [Group K] [TopologicalSpace K]
     (ψ : K →ₜ* G) :
@@ -50,7 +49,6 @@ noncomputable def compactδRes (hS : S.ShortExact) (n : ℕ) :
 
 variable (hS : S.ShortExact)
 
-include hS in
 
 theorem compactRes_exact₃ (n : ℕ) :
     (ShortComplex.mk (compactCohomologyResMap φ S.g n) (compactδRes φ hS n)
@@ -197,7 +195,6 @@ include H in
 theorem nsmul_D (d : D) : n • d = 0 :=
   nsmul_eq_zero_of_nonempty_addEquiv H.nonempty_addEquiv d
 
-include H in
 
 theorem exists_devissage (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) :
@@ -247,7 +244,6 @@ namespace CompactGroupDualityHypotheses
 
 variable (H : CompactGroupDualityHypotheses φ n D t U₀)
 
-include H in
 
 theorem injective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) :
@@ -265,7 +261,6 @@ theorem injective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite
     (injective_iff_map_eq_zero _).1 (hI (rfl : 0 + 3 = 3)).1 _ h1
   exact (injective_iff_map_eq_zero _).1 (injective_cohomologyMap_zero i hi) x h2
 
-include H in
 
 theorem surjective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) :
@@ -310,7 +305,6 @@ theorem bijective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite
 
 variable {r s : ℕ} (h₁ : r + 1 + s = 3) (h₀ : r + (s + 1) = 3)
 
-include H in
 
 theorem injective_succ
     (ih : ∀ (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M], (∀ m : M, n • m = 0) →
@@ -352,7 +346,6 @@ theorem injective_succ
   rw [← hq, ← hpv]
   exact congrArg (fun F => F.hom v) (comp_δ hS r (r + 1) rfl)
 
-include H in
 
 theorem surjective_succ
     (ih : ∀ (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M], (∀ m : M, n • m = 0) →
@@ -424,7 +417,6 @@ namespace CompactGroupDualityHypotheses
 
 variable (H : CompactGroupDualityHypotheses φ n D t U₀)
 
-include H in
 
 theorem bijective_compactDualityMap (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 3) :

@@ -29,7 +29,6 @@ theorem span_eq (m : ℕ) (𝒱 : Set X.Opens) (c : WittVector l k) (T : (stF q 
   rw [bot_sup_eq]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 def scQ (m : ℕ) (𝒱 : Set X.Opens) (c : WittVector l k) :
     CH.Mor (sq (IdF.top (sV q ρ m 𝒱).A) (IdF.span (sV q ρ m 𝒱).A c))
@@ -105,7 +104,6 @@ theorem top_res (m : ℕ) (c : WittVector l k) (j : ℕ) : Function.Bijective ((
 
 end Main
 
-set_option maxHeartbeats 1000000 in
 
 theorem main : ∀ {l : ℕ} [Fact l.Prime] {k : Type} [Field k] [CharP k l] [PerfectRing k l] {O : Type} [CommRing O] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of O)) (ρ : O →+* k) (m : ℕ) (𝒱 : Set X.Opens) (c : WittVector l k), sSup 𝒱 = ⊤ → ∀ j, Function.Bijective ((resVq q ρ m 𝒱 c).pull j) := by
   intro l _ k _ _ _ O _ X q ρ m 𝒱 c hU j

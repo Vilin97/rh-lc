@@ -108,7 +108,6 @@ theorem rankTorus_conj_apply_mem {e : ℕ} {u : GL (Fin n) F} (hu : u ∈ unipot
   · rw [hP h, mul_zero]
     exact zero_mem _
 
-variable (F n β) in
 
 def unipotentCompact (e : ℕ) : Subgroup (unipotentRadical F n β) :=
   ((integralGL F n).comap (MulAut.conj (rankTorus F n β e)).toMonoidHom).subgroupOf
@@ -168,7 +167,6 @@ theorem exists_compactOpen_unipotentRadical (s : Finset (unipotentRadical F n β
   · exact Or.inl ⟨x, hx, rfl⟩
   · exact Or.inr ⟨x, hx, rfl⟩
 
-open MeasureTheory Measure in
 
 theorem modularCharacter_eq_one_of_mem (p : blockUpper F n β)
     (hp : (p : GL (Fin n) F) ∈ unipotentRadical F n β) : modularCharacter p = 1 := by

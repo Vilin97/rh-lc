@@ -20,7 +20,6 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] [FiniteDimensional F E] 
   {P : PPol σ r} {J : Matrix (Fin n) (Fin n) E}
   {k : Type} [CommRing k] [Algebra F k] [TopologicalSpace k] [IsTopologicalRing k]
 
-omit [FiniteDimensional F E] [TopologicalSpace k] [IsTopologicalRing k] in
 
 theorem isScalarTower_base : IsScalarTower k (k ⊗[F] E) (k ⊗[F] Fld P) :=
   IsScalarTower.of_algebraMap_eq fun c => by

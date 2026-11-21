@@ -24,7 +24,6 @@ open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.Basi
 
 namespace GlobalTheory.LocInputs
 
-open TensorProduct in
 
 theorem _root_.GlobalTheory.LocInputs.ties_and_inputs_of_duality_euler :
     _root_.Formalism.GaloisCohomology.LocalTateDualityK → _root_.Formalism.GaloisCohomology.LocalEulerCharK →

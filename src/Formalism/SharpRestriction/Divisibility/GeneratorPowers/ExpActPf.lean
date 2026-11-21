@@ -36,7 +36,6 @@ theorem subst_family_comp {τ : Type} {d : ℕ} {χ : Fin d → MvPowerSeries τ
     subst (fam1 χ) (subst (fam1 ψ) g) = subst (fam1 fun j => subst (fam1 χ) (ψ j)) g :=
   subst_comp_subst_apply (has_subst_family_of_const hψ) (has_subst_family_of_const hχ) g
 
-open Formalism.FG.SolveVAux in
 
 theorem coeff_single_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] [DecidableEq τ]
     (a : σ → MvPowerSeries τ S) (ha : ∀ s, constantCoeff (a s) = 0) (f : MvPowerSeries σ S) (t : τ) :
@@ -67,7 +66,6 @@ theorem coeff_single_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] [Decidab
         exact hl _ (by rw [Finsupp.degree_single]; omega)
     rw [hz, smul_zero]
 
-open Formalism.FG.SolveVAux in
 
 theorem eq_linear {N : ℕ} (g : MvPowerSeries (Fin 1 × Fin N) S)
     (h : ∀ n : Fin 1 × Fin N →₀ ℕ, n.degree ≠ 1 → coeff n g = 0) :

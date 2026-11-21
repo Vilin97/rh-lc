@@ -28,7 +28,6 @@ theorem _root_.GlobalTheory.BorelUMod.mem_upLat {c : Fin n → Fin n → ℤ}
       (∀ i j, j ≤ i → X i j = 0) ∧ ∀ i j, i < j → Valued.v (X i j) ≤ WithZero.exp (-c i j) :=
   Iff.rfl
 
-variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] {n : ℕ} in
 
 theorem _root_.GlobalTheory.BorelUMod.mul_mem_upLat {a b c : Fin n → Fin n → ℤ}
     (h : ∀ i j k, i < j → j < k → c i k ≤ a i j + b j k)
@@ -136,8 +135,6 @@ theorem _root_.GlobalTheory.BorelUMod.adjJ_adjJ {σ : L →+* L} (hσ : ∀ x, �
   ext i j
   simp [_root_.GlobalTheory.BorelUMod.adjJ, hσ]
 
-variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] {n : ℕ} in
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
 theorem _root_.GlobalTheory.BorelUMod.mem_GU_iff_adjJ (σ : L →+* L) (g : GL (Fin n) L) :
     g ∈ _root_.Formalism.UG.GU σ n ↔ (g⁻¹).val = _root_.GlobalTheory.BorelUMod.adjJ σ g.val := by
@@ -207,7 +204,6 @@ theorem _root_.GlobalTheory.BorelUMod.mem_unipLat {σ : L →+* L}
       (u.1.1.val : Matrix (Fin n) (Fin n) L) - 1 ∈ _root_.GlobalTheory.BorelUMod.upLat L c :=
   Iff.rfl
 
-variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] {n : ℕ} in
 
 theorem _root_.GlobalTheory.BorelUMod.exists_trace_one {ϖ : L} {σ : L →+* L} {q : ℕ}
     (h : _root_.Formalism.UG.IsUnramInv ϖ σ q) :

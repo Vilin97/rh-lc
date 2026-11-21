@@ -59,8 +59,6 @@ theorem isProper_of_isArithVar {D : ℕ} (h : IsArithVar p D) : IsProper p := by
   have := isProper_str k N
   exact hj ▸ inferInstance
 
-omit [IsIntegral B] in
 
-open scoped Classical in
 
 end GlobalTheory.FibreProj

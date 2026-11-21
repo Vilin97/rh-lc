@@ -72,7 +72,6 @@ end GlobalTheory.PolDeg.SymCoc
 
 namespace GlobalTheory.PolDeg
 
-open GlobalTheory.PolDeg.SymCoc in
 
 theorem half_symm_cocycle : ∀ (R : Type) [CommRing R] [IsDomain R] (R' : Type) [CommRing R'] [IsDomain R'] (Q : Data R) (ρ : R →+* R') (D : DegPre R') (e : D.X ≃+ Q.X) (f : D.X → D.X → (FractionRing R')ˣ), Function.Injective ρ → Half Q ρ D e f → (∀ a b, f a b = f b a) ∧ ∀ a b c, f (a + b) c * f a b = f a (b + c) * f b c := by
   intro R _ _ R' _ _ Q ρ D e f hρ hH

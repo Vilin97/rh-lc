@@ -48,7 +48,6 @@ theorem exists_psi_loc_ne_one (w : HeightOneSpectrum (𝓞 E)) :
   rw [AddChar.one_apply]
   exact (psi_loc_eq_one_iff w y).1 (h y)
 
-variable (E) in
 
 theorem stdPsi_psi : StdPsi (psi E) := by
   have hc : Continuous (psi E) := continuous_subtype_val.comp (GroundTheory.Global.continuous_adelicChar (K := E))

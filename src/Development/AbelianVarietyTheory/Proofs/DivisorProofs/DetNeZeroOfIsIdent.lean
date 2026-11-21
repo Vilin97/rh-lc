@@ -40,7 +40,6 @@ def boxEnt (d : Fin r → ℝ) (z a b a' b' : Fin r) : ℂ :=
     (if a' = b ∧ b' = a then Complex.I else if a' = a ∧ b' = b then Complex.I * ((d a * d b : ℝ) : ℂ) else 0)
   else (if a' = a ∧ b' = a then Complex.I else if a' = z ∧ b' = z then -Complex.I else 0)
 
-open Classical in
 
 def boxVec {Ψ : Finset (E →+* ℂ)} (d : Ψ → Fin r → ℝ) (z : Fin r) (k : Ψ × {ab : Fin r × Fin r // ab ≠ (z, z)}) :
     EuclideanSpace ℂ (Ψ × Fin r × Fin r) :=

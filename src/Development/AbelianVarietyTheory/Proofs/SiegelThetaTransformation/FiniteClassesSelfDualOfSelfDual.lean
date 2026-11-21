@@ -111,7 +111,6 @@ theorem finite_linearMap {R M T : Type} [CommRing R] [AddCommGroup M] [Module R 
 
 end SelfDualClasses
 
-open SelfDualClasses in
 
 theorem finite_classes_selfDual_of_selfDual (n : ℕ) :
     ∃ S : Finset (Submodule (𝓞 E) (Fin n → E)),

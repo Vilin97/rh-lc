@@ -184,7 +184,6 @@ theorem card_ne_zero_of_bij {C : Type*} (A U : Set I) (s : C → I)
   haveI : Nonempty U := ⟨u⟩
   exact ⟨by exact_mod_cast (Nat.card_pos (α := A)).ne', by exact_mod_cast (Nat.card_pos (α := U)).ne'⟩
 
-set_option maxHeartbeats 800000 in
 
 theorem normExp_abs {τ Rw H K Q1 Q2 R R' : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     [NormedAddCommGroup K] [InnerProductSpace ℂ K] [CompleteSpace K] [Fintype Q1] [Fintype Q2] [Fintype R]

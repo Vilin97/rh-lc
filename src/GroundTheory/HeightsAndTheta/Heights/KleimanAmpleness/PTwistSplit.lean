@@ -22,7 +22,6 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
   {G B : SubSystem S x Ω} (hG : ∀ I, M₀.tilde 0 I = G.sub I)
   (hB : ∀ I, Submodule.span (chartRing S x I) (Set.range η) = B.sub I)
 
-include hG hB in
 
 theorem twist_retract (i : ℕ) :
     ∃ (ι : ((G.twist (B.pow n)).twist (twistSys S x c)).H i →+ cohom (twGraded η M₀) i c)

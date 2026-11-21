@@ -25,7 +25,6 @@ section PermConj
 
 variable {β : Fin n → ℕ} (w : Equiv.Perm (Fin n))
 
-variable (F β) in
 
 def permConj : blockUpper F n (β ∘ w) →* blockUpper F n β where
   toFun x := ⟨permGL F w * x * (permGL F w)⁻¹, (conj_permGL_mem_blockUpper_iff w).2 x.2⟩
@@ -39,7 +38,6 @@ theorem coe_permConj (x : blockUpper F n (β ∘ w)) :
 
 variable {W : Type*} [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (levi F n β) W)
 
-variable (β) in
 
 def cellRep : Representation ℂ (blockUpper F n (β ∘ w)) W :=
   (inflateTwist F n β σ).comp (permConj F β w)
@@ -90,12 +88,10 @@ theorem conj_mem_cellUnipotent {b a : GL (Fin n) F} (hb : b ∈ cellLeviParaboli
 
 variable {W : Type*} [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (levi F n β) W)
 
-variable (β γ w) in
 
 def cellRepA : Representation ℂ (cellUnipotent F β γ w) W :=
   (cellRep β w σ).comp (Subgroup.inclusion cellUnipotent_le_blockUpper)
 
-variable (β γ w) in
 
 def cellRepM : Representation ℂ (cellLeviParabolic F β γ w) W :=
   (cellRep β w σ).comp (Subgroup.inclusion cellLeviParabolic_le_blockUpper)

@@ -71,9 +71,7 @@ theorem isBaseChange_of_forall_eq [Module.Flat R S] {ι : Type*} [Finite ι]
 
 variable {G : Type*} [Group G]
 
-variable {S} in
 
-variable {S} in
 
 end FlatModule
 
@@ -86,7 +84,6 @@ variable {R S A A' : Type*} [CommRing R] [CommRing S] [CommRing A] [CommRing A']
   [Algebra R S] [Algebra R A] [Algebra R A'] [Algebra S A'] [IsScalarTower R S A']
   [MulSemiringAction G A] [SMulCommClass G R A] [MulSemiringAction G A'] [SMulCommClass G S A']
 
-variable (S) in
 
 def fixedSubalgebraMap (f : A →ₐ[R] A') (hf : ∀ (g : G) a, f (g • a) = g • f a) :
     FixedPoints.subalgebra R A G →ₐ[R] FixedPoints.subalgebra S A' G where
@@ -250,11 +247,8 @@ end
 section
 variable {M : Type*} [AddCommGroup M] [Module A M] [DistribMulAction G M] {ι : Type*}
 
-omit [MulSemiringAction G A] in
 
-omit [MulSemiringAction G A] in
 
-omit [MulSemiringAction G A] in
 
 variable [SMulDistribClass G A M]
 

@@ -47,7 +47,6 @@ private theorem sigmaCompactSpace_of_isNonarchimedeanLocalField' (k : Type) [Fie
     map_pow, map_pow]
   exact hm
 
-open MeasureTheory ValuativeRel Matrix in
 
 theorem _root_.GlobalTheory.StepData.mul_mem_of_hat_cosetInd_ne_zero : ∀ (k : Type) [Field k]
     [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k]

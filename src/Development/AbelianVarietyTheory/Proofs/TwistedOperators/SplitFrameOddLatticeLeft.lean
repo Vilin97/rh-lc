@@ -228,8 +228,6 @@ theorem ideal_smul_auxiliary_vector_mem_lattice {A B : HSp D} {c : ℕ} {ε : D.
 
 end GlobalTheory.AscFin.DepthColumn
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.AscFin.DepthColumn GlobalTheory.FinPl.FrameLat in
 
 theorem GlobalTheory.AscFin.DepthColumn.scaled_column_mem : OnStd fun {D} _ _ {sc} {G} W F => ∀ σ (h : 2 * (σ + 1) + 2 ≤ D.R.m), ∀ v ∈ G.pl.S0, ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p : GlobalTheory.FinPl.SplitPt D k) (β : GlobalTheory.FinPl.Frame p (G.V (.grid (2 * (σ + 1) + 1) 0)) (Fin (G.V (.grid (2 * (σ + 1) + 1) 0)).rank)) (ϖ : 𝒪[k])

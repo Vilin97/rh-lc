@@ -28,6 +28,5 @@ theorem vV_alg_nonneg (T : CDVR) (r : T.V) : 0 ≤ vV T.V (algebraMap T.V T.Fr r
 variable {T T' : CDVR} (iT : T.Fr →+* T'.Fr) {e' : ℕ}
   (hv : ∀ a : T.Fr, a ≠ 0 → vV T'.V (iT a) = (e' : ℤ) * vV T.V a)
 
-include hv in
 
 end ReciprocityTheory.ChartRestriction.G.PullbackSections

@@ -37,7 +37,6 @@ theorem bwdN_znotX : F0.z ∉ Xsp (lf D F0) := by
 
 variable (u u' F0 what₂)
 
-set_option maxHeartbeats 1000000 in
 
 theorem bwdN_holds : BwdN Zd u u' F0 what₂ := by
   intro hC γ Z hZ F'₂ φ φ' hS Λ₂ hΛ₂

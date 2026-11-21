@@ -71,7 +71,6 @@ def sJoin {m : ℕ} (e e' : Fin m → SignType) : Fin m → SignType :=
 
 def PosFam {m : ℕ} (y : (Fin m → SignType) → ℝ) : Prop := y 0 = 0 ∧ ∀ e e', y (sMeet e e') + y (sJoin e e') ≤ y e + y e'
 
-open Classical in
 
 def gamOn {m : ℕ} (S : Finset (Fin m → SignType) → Prop) (y : (Fin m → SignType) → ℝ) (a : Fin m → ℝ) : ℝ :=
   ∑ s ∈ (Finset.univ : Finset (Finset (Fin m → SignType))).filter

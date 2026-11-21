@@ -37,7 +37,6 @@ theorem isCoherent_pushforward {F : X.Modules} (hF : IsCoherent F) :
     IsCoherent ((Scheme.Modules.pushforward i).obj F) :=
   isCoherent_pushforward_of_isClosedImmersion i hF
 
-omit [IsClosedImmersion i] in
 
 theorem isInvertibleSheaf_twistingSheaf (k : ℤ) : IsInvertibleSheaf (twistingSheaf i k) := by
   intro x

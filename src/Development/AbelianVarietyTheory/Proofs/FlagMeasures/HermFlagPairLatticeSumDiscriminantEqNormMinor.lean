@@ -34,7 +34,6 @@ theorem idx_sum {R W : Type} [CommRing R] [AddCommGroup W] [Module R W] {A A' B 
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] {H : HermSpace K V} {r : ℕ}
 
-omit [StarRing K] in
 
 theorem idx_ipow {𝔡 : Ideal (𝓞 K)} (h : 𝔡 ≠ ⊥) (n : ℤ) (hn : 0 ≤ n) :
     (1 : K) ∈ ipow 𝔡 (-n) ∧ (idx (ipow 𝔡 (-n)) 1 : ℝ) = (Ideal.absNorm 𝔡 : ℝ) ^ n := by
@@ -54,7 +53,6 @@ theorem idx_ipow {𝔡 : Ideal (𝓞 K)} (h : 𝔡 ≠ ⊥) (n : ℤ) (hn : 0 �
   have := congrArg (fun q : ℚ => (q : ℝ)) this
   simpa [idx] using this.symm
 
-omit [NumberField K] in
 
 theorem norm_star [NumberField K] (x : K) : Algebra.norm ℚ (star x) = Algebra.norm ℚ x :=
   Algebra.norm_eq_of_algEquiv ((starRingAut : K ≃+* K).toRatAlgEquiv) x
@@ -132,7 +130,6 @@ theorem idx_free {ι : Type} [Fintype ι] [DecidableEq ι] (x x' : ι → V) (hx
   · rw [rep (x p) (Submodule.subset_span ⟨p, rfl⟩)]
     simp only [← hg, algebraMap_smul, Matrix.of_apply]
 
-omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem Xa_succ (F : FlagD H r) (a : Fin r) :
     F.Xa (a.val + 1) = F.Xa a.val ⊔ Submodule.span K {F.e a.castSucc} := by
@@ -143,7 +140,6 @@ theorem Xa_succ (F : FlagD H r) (a : Fin r) :
   simp only [Set.mem_setOf_eq, Set.mem_union, Set.mem_singleton_iff, Fin.ext_iff]
   omega
 
-omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem eq_zero_of_smul_mem (F : FlagD H r) (a : Fin r) {t : K} (h : t • F.e a.castSucc ∈ F.Xa a.val) : t = 0 := by
   by_contra ht
@@ -151,7 +147,6 @@ theorem eq_zero_of_smul_mem (F : FlagD H r) (a : Fin r) {t : K} (h : t • F.e a
   rw [inv_smul_smul₀ ht] at this
   exact F.indep.notMem_span_image (s := {b | b.val < a.val}) (x := a) (lt_irrefl a.val) this
 
-omit [NumberField K] in
 
 theorem idx_flag (F : FlagD H r) (Λ : Submodule (𝓞 K) V) (y : Fin r → V) (hy : ∀ a, y a ∈ Λ)
     (he : ∀ a, F.e a.castSucc - y a ∈ F.Xa a.val) (n : ℕ → ℝ)
@@ -250,7 +245,6 @@ theorem idx_flag (F : FlagD H r) (Λ : Submodule (𝓞 K) V) (y : Fin r → V) (
       idx_sup le_sup_right, ← e2]
     exact (AddSubgroup.relIndex_comap T.toAddSubgroup f.toAddMonoidHom (lead F Λ a.castSucc).toAddSubgroup).symm
 
-omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem exists_unitri (F : FlagD H r) (y : Fin r → V) (he : ∀ a, F.e a.castSucc - y a ∈ F.Xa a.val) {l : ℕ}
     (hr : l ≤ r) (hl : l ≤ r + 1) : ∃ M : Matrix (Fin l) (Fin l) K, M.det = 1 ∧
@@ -265,7 +259,6 @@ theorem exists_unitri (F : FlagD H r) (y : Fin r → V) (he : ∀ a, F.e a.castS
       ite_smul, one_smul, zero_smul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
     exact (sub_sub_cancel _ _).symm
 
-omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem iso_Xa (F : FlagD H r) (l : ℕ) {v w : V} (hv : v ∈ F.Xa l) (hw : w ∈ F.Xa l) : H.B v w = 0 := by
   induction hv using Submodule.span_induction with

@@ -108,7 +108,6 @@ theorem continuous_ofIntegerUnits :
         (continuous_pi fun v ↦
           Units.continuous_coe_inv.comp ((continuous_apply v).comp continuous_snd)))
 
-variable (K) in
 
 def standardOpenSubgroupEquiv :
     standardOpenSubgroup K ≃ₜ* (InfiniteAdeleRing K)ˣ ×

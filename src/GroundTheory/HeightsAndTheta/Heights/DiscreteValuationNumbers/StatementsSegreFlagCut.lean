@@ -25,7 +25,6 @@ def flagLineCoord (b w e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ) (k : �
 
 end Objects
 
-open Classical in
 
 def SegreFlagCutSection.Statement : Prop :=
   ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →

@@ -48,7 +48,6 @@ def VolTieG (D : D7) : Prop :=
     AllSome (fun 𝓕 => IsFundamentalDomain (GQ W) 𝓕 μ) fun 𝓕 =>
       μ 𝓕 = ENNReal.ofReal (D.vol W)
 
-open Classical in
 
 def rhoOfIndex {p q : ℕ} (a : Ix p q) : ℚ :=
   ((Finset.univ.filter fun b => posC a b).card : ℚ) - ((Finset.univ.filter fun b => posC b a).card : ℚ)

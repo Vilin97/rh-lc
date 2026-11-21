@@ -624,7 +624,6 @@ theorem diagGL_sign_mem_KO {n : Type} [Fintype n] [DecidableEq n] (p : n → Pro
     split_ifs <;> simp
   · rw [diagonal_apply_ne _ hij, diagonal_apply_ne _ hij, map_zero]
 
-omit [ValuativeRel k] in
 
 theorem diag_normalises {n : Type} [Fintype n] [DecidableEq n] {c : ℕ} {y : GL (n ⊕ Fin c) k} {f : n ⊕ Fin c → k}
     (hy : y.val = diagonal f) (x : GL (n ⊕ Fin c) k) : x ∈ symN k n c ↔ y⁻¹ * x * y ∈ symN k n c := by
@@ -657,7 +656,6 @@ theorem conjLevel_eq (G : GridData L sc) (t : T) (w : Pl D.host.E) {j : ℕ} (h1
   refine map_conj_map (toFrame (G := locGrid G t w) one_le_sLen hj) (fun x => (frameGL_mem_KO _ x).trans ?_) _
   exact (givenLevel_eq G t w h1 hj.le) ▸ Iff.rfl
 
-set_option maxHeartbeats 1600000 in
 
 theorem idxRatio_row {μ₀ : T} (hL : L.Is μ₀) (S : GridChoice W U) {t : T} (ht : t ∈ U) {j : ℕ} (hi : j ∈ idx D)
     (hj : j ≤ D.R.m) (hj' : j < D.R.m)
@@ -705,7 +703,6 @@ theorem idxRatio_row {μ₀ : T} (hL : L.Is μ₀) (S : GridChoice W U) {t : T} 
 
 end Main
 
-set_option maxHeartbeats 1600000 in
 
 theorem cell_volume_mul_coef : Big fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => ∀ (s : ℤˣ), ∀ j ∈ idx D,
     ∀ la : Measure ((GlobalTheory.CellMass.rowN ch.G j).subgroupOf (GfC (ch.G.V (.grid D.R.m j)))), la.IsHaarMeasure →

@@ -111,6 +111,5 @@ theorem kerRat_framed (hP : GlobalTheory.Published.CuspRapidDecay) (hA : GlobalT
     show sg0 D A3.A c⁻¹ * adForm Rl.toRealDat j x (fun τ => u τ) g = _
     rw [e2, map_inv₀, hcph, ← mul_assoc, inv_mul_cancel₀ hph0, one_mul]
 
-open GlobalTheory.RealGeo GlobalTheory.Unframe GlobalTheory.UnframePt in
 
 end GlobalTheory.BigOn.Exp.SerBase

@@ -120,7 +120,6 @@ variable {O Ω O' Ω' : Type} [CommRing O] [Field Ω] [Algebra O Ω] [CommRing O
   [Field Ω'] [Algebra Ω Ω'] [Algebra O' Ω'] [Algebra O Ω'] [IsScalarTower O O' Ω']
   [IsScalarTower O Ω Ω'] {K : Type} [Fintype K] {J : K → Type}
 
-variable (Ω') in
 
 abbrev bcPt (y : (Σ k, J k) → Ω) : (Σ k, J k) → Ω' := fun v => algebraMap Ω Ω' (y v)
 
@@ -348,7 +347,6 @@ theorem isMultiHomog_map {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver
   rw [coeff_map] at hd
   exact h fun h0 => hd (by rw [h0, map_zero])
 
-open GroundTheory.Heights₂.Heights.NumbersDVR in
 
 theorem isVerticalDivisor_ext [Fintype K] [IsDomain O] [IsDiscreteValuationRing O] [IsDomain O']
     [IsDiscreteValuationRing O'] (y : (Σ k, J k) → Ω)

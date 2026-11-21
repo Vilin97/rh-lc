@@ -43,7 +43,6 @@ abbrev LieAt (V : HSp D) (τ : D.what₂.Tau) : Type := lieU (gramAt D V τ)
 
 abbrev LieInf (V : HSp D) : Type := ∀ τ : D.what₂.Tau, LieAt V τ
 
-open Classical in
 
 def atPlace (V : HSp D) (τ : D.what₂.Tau) (X : LieAt V τ) : LieInf V := Pi.single τ X
 

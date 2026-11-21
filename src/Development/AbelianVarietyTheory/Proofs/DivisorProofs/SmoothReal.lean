@@ -31,7 +31,6 @@ def unitLie {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (X : Da
 def expFr {E : Type} [Field E] {Ψ : Finset (E →+* ℂ)} {r : ℕ} (Z : Frame Ψ r) : Frame Ψ r :=
   fun τ => (NormedSpace.exp (mat Z τ) : Matrix (Fin r) (Fin r) ℂ)
 
-open Classical in
 
 def unitFr {E : Type} [Field E] {Ψ : Finset (E →+* ℂ)} {r : ℕ} (τ : Ψ) (c d : Fin r) : Frame Ψ r :=
   fun τ' a b => if τ' = τ ∧ a = c ∧ b = d then 1 else 0

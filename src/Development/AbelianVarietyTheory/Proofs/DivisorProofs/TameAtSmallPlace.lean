@@ -78,7 +78,6 @@ theorem finite_conj (ι : Γ →* G) (J : Subgroup G) {I : Type} (y : I → G) (
 
 end Groups
 
-set_option maxHeartbeats 1600000 in
 
 theorem rat_eq_one {D : D7} (V : TH.HSp D) (l : ℕ) (hl : l.Prime) (hN : V.rank + 1 < l)
     (hirr : Irreducible (Polynomial.cyclotomic l D.host.E)) (x : Bridge.Gf V) (hx : x ∈ (Bridge.ratF V).range)

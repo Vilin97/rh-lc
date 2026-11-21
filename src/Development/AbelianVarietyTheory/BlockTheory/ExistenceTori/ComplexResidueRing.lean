@@ -77,7 +77,6 @@ def IsComb (h : c.F ≤ c'.F) {m : ℕ} (b : Fin m → c'.F) (f : Fin m → Rul 
   ∀ (p : TRing c'.F) (y : FrPt Xo c' p.R),
     f' p y = ∑ i, algebraMap c'.F p.R (b i) * unRes (evR Xo c (f i) (ptDown h y))
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 variable (Xo)
 

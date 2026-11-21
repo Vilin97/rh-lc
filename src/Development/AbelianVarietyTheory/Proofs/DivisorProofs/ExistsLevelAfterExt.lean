@@ -119,6 +119,5 @@ theorem exists_ext_level (K : Type) [Field K] [CharZero K] (P₀ : PolAV (Sp K))
   · rw [ht, ht, map_zpow]
     exact h₃ a b
 
-open GlobalTheory.ArcPull ReciprocityTheory.ChartRestriction.G.DVR in
 
 end GlobalTheory.LevelAfterExt

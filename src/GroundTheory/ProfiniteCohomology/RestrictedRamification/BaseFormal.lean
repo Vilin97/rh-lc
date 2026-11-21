@@ -523,7 +523,6 @@ theorem nsmul_local_cohomology_D (hD' : ∀ d : D, n • d = 0) (q : ℕ)
     (c : ∀ v, cohomology (Rep.res (φ v).toMonoidHom D) q) : n • c = 0 :=
   funext fun v => nsmul_cohomology_eq_zero (Rep.res (φ v).toMonoidHom D) (fun d => hD' d) q (c v)
 
-omit [CompactSpace G] [TotallyDisconnectedSpace G] [Nonempty ι] in
 
 theorem injective_two (h : 2 + 1 = 3) : Function.Injective (compactZmodDualityMap φ D hD T h) := by
   classical
@@ -612,7 +611,6 @@ theorem resFunctor_map_zmodToCyclic (e : D ≃+ ZMod n) (v : ι)
   obtain ⟨a⟩ := a
   rw [zmodMulPairing_tmul, ZMod.cast_eq_val, natCast_zsmul, ← map_nsmul, nsmul_one, ZMod.natCast_zmod_val]
 
-omit [CompactSpace G] [TotallyDisconnectedSpace G] [Nonempty ι] in
 
 theorem surjective_two (h : 2 + 1 = 3) : Function.Surjective (compactZmodDualityMap φ D hD T h) := by
   classical
@@ -743,7 +741,6 @@ theorem surjective_two (h : 2 + 1 = 3) : Function.Surjective (compactZmodDuality
   rw [hΛ']
   abel
 
-omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 
 theorem bijective_compactZmodDualityMap {r s : ℕ} (h : r + s = 3) :
     Function.Bijective (compactZmodDualityMap φ D hD T h) := by

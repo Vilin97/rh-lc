@@ -17,7 +17,6 @@ open NumberField IsDedekindDomain GlobalTheory.AdelicU Formalism.UG
 
 variable {m n : Type} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
 
-open scoped Matrix.Norms.L2Operator in
 
 theorem exists_opNorm_le (J : Matrix n m ℂ) (P : Matrix m n ℂ) (K : Matrix n n ℂ) :
     ∃ c : ℝ≥0, ∀ (x : Matrix m m ℂ) (h : ℝ≥0), 1 ≤ h → opNorm x ≤ h → opNorm (J * x * P + K) ≤ c * h := by
@@ -72,7 +71,6 @@ private lemma normFin_add_le_max (v : HeightOneSpectrum (𝓞 F)) {p q : Type} [
   intro i j
   exact (absFin_add_le F v _ _).trans (max_le_max (absFin_le_normFin F v a i j) (absFin_le_normFin F v b i j))
 
-omit [DecidableEq m] [DecidableEq n] in
 
 theorem normFin_le (v : HeightOneSpectrum (𝓞 F)) (J : Matrix n m (Fv F v ⊗[F] E))
     (P : Matrix m n (Fv F v ⊗[F] E)) (K : Matrix n n (Fv F v ⊗[F] E))
@@ -93,7 +91,6 @@ theorem normFin_le (v : HeightOneSpectrum (𝓞 F)) (J : Matrix n m (Fv F v ⊗[
                 (le_max_right _ _).trans (le_max_right _ _)
             _ ≤ _ := le_mul_of_one_le_right (by positivity) h1
 
-omit [DecidableEq m] [DecidableEq n] in
 
 theorem eventually_normFin_le (y : Matrix m n (AF F ⊗[F] E)) :
     ∀ᶠ v in Filter.cofinite, normFin F v (y.map (compFin F E v)) ≤ 1 := by

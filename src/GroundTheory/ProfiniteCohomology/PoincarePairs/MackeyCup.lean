@@ -205,7 +205,6 @@ theorem cupCochain_comp_monoidHom (ι : H →* G) {A B : Rep.{u} k G} {r s n : �
   rw [cupCochain_apply, cupCochain_apply, partialProd_comp_monoidHom]
   rfl
 
-omit [Group H] in
 
 theorem hom_conjHomotopyFun {X Y : Rep.{u} k G} (P : X ⟶ Y) (g : G) (m : ℕ)
     (K : (Fin (m + 1) → G) → X) (γ : Fin m → G) :
@@ -213,14 +212,12 @@ theorem hom_conjHomotopyFun {X Y : Rep.{u} k G} (P : X ⟶ Y) (g : G) (m : ℕ)
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [conjHomotopyFun, map_sum, map_smul]
 
-omit [Group H] in
 
 theorem cupCochain_neg_left {A B : Rep.{u} k G} {r s n : ℕ} (h : r + s = n)
     (F : (Fin r → G) → A) (E : (Fin s → G) → B) (σ : Fin n → G) :
     cupCochain h (fun τ => -F τ) E σ = -cupCochain h F E σ := by
   rw [cupCochain_apply, cupCochain_apply, neg_tmul]
 
-omit [Group H] in
 
 theorem cupCochain_neg_right {A B : Rep.{u} k G} {r s n : ℕ} (h : r + s = n)
     (F : (Fin r → G) → A) (E : (Fin s → G) → B) (σ : Fin n → G) :

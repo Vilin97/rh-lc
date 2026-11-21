@@ -168,17 +168,12 @@ abbrev omRow (W : G.Weil) (i : ℕ) : Om (G.V (.grid (i + 1) 0)) (G.V (.grid i 0
 
 abbrev omCore (W : G.Weil) (i : ℕ) : Om (G.V (.core (i + 1))) (G.V (.core i)) := cjOm (W.om (.core i))
 
-variable (G) in
 
 abbrev latRow (i : ℕ) : AddSubgroup (WO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0))) := depLat G (.chi i 0)
 
-variable (G) in
 
 abbrev latCore (i : ℕ) : AddSubgroup (WO (G.V (.core (i + 1))) (G.V (.core i))) := depLat G (.core i)
 
-set_option genSizeOfSpec false in
-set_option genInjectivity false in
-variable (G) in
 
 structure Frames where
   Lz : HSp D

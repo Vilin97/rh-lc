@@ -16,7 +16,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-variable (D) in
 
 def labLL (τ : D.what₂.Tau) : D.host.E →+* D.what₂.LL :=
   D.embE.comp (D.host.sigmaOf (D.eTau τ).1 : D.host.E →+* D.host.E)
@@ -37,17 +36,12 @@ def ArchLab.emb (A : ArchLab D) (τ : D.what₂.Tau) : D.host.E →+* ℂ :=
 
 def IsLabOf (σ : D.what₂.LL →+* ℂ) (A : ArchLab D) : Prop := ∀ τ, labE σ τ = A.emb τ
 
-variable (D) in
 
-variable (D) in
 
 def LabExists : Prop := ∀ σ : D.what₂.LL →+* ℂ, ∃ A : ArchLab D, IsLabOf σ A
 
-variable (D) in
 
-open Classical in
 
-variable (D) in
 
 end Formalism.IndefR.Conj
 

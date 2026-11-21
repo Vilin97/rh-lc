@@ -173,7 +173,6 @@ theorem blockBasis_apply (R : InfinitePlace I.F → Matrix (Fin j) (Fin j) ℂ) 
     (p : Σ _ : Fin j, Free.ChooseBasisIndex ℤ (𝓞 I.E)) : blockBasis R hR p = t8T R (t8B0 I j p) := by
   simp [blockBasis]
 
-set_option maxRecDepth 20000 in
 
 theorem covolume_blockBasis (R : InfinitePlace I.F → Matrix (Fin j) (Fin j) ℂ) (hR : ∀ v, (R v).det ≠ 0) :
     ZLattice.covolume (Submodule.span ℤ (Set.range (blockBasis R hR))) =

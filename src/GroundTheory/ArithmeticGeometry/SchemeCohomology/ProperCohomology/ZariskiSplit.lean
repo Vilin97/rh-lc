@@ -79,7 +79,6 @@ lemma existsUnique_glue_of_supportedIn {F : X.Modules} {T : Set X}
 variable {W₁ W₂ : X.Opens} (hcov : W₁ ⊔ W₂ = ⊤)
   (hdisj : Disjoint ((W₁ ⊓ W₂ : X.Opens) : Set X) (closedFibre (A := A) X))
 
-variable (A) in
 
 def splitSection (n : ℕ) : Γ(fibreQuot A X n, ⊤) :=
   (existsUnique_glue_of_supportedIn (supportedIn_fibreQuot_closedFibre n) hcov hdisj
@@ -109,7 +108,6 @@ lemma quotPowMap_splitSection (n : ℕ) :
   · rw [resF_app, h₁, ← resF_app, quotPowMap_fibreOne]
   · rw [resF_app, h₂, map_zero]
 
-variable (A X) in
 
 abbrev fibreTower : ∀ n, Sheaf.H.{u} (modulesAb (fibreQuot A X (n + 1))) 0 →ₗ[A]
     Sheaf.H.{u} (modulesAb (fibreQuot A X n)) 0 :=
@@ -124,7 +122,6 @@ lemma mem_towerLimit_splitSection :
   exact (Sheaf.H.equiv₀_symm_naturality isTerminalTop _ _).trans
     (congrArg _ (quotPowMap_splitSection hcov hdisj n))
 
-include hcov hdisj in
 
 theorem false_of_split (hΓ : Function.Surjective (algebraMap A Γ(X, ⊤)))
     (hsurj : ∀ x : (∀ n, Sheaf.H.{u} (modulesAb (fibreQuot A X n)) 0),
@@ -176,7 +173,6 @@ section Connected
 variable {A : Type u} [CommRing A] [IsNoetherianRing A] [IsLocalRing A] {X : Scheme.{u}}
   [X.Over (Spec (.of A))]
 
-omit [IsNoetherianRing A] in
 
 lemma isClosed_closedFibre : IsClosed (closedFibre (A := A) X) :=
   (isClosed_singleton_closedPoint A).preimage (X ↘ Spec (.of A)).base.hom.continuous

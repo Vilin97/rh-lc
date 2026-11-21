@@ -61,7 +61,6 @@ def ConstEquiv : Prop :=
         ((rdU (T.U ((i : ℕ) + 1) (res T σ))).comp (T.cuspA ((i : ℕ) + 1) (wtA w) w.n).subtype)
         (T.dict ((i : ℕ) + 1) (res T σ)) (T.mu ((i : ℕ) + 1) (res T σ)) (T.cE ((i : ℕ) + 1) (res T σ)) ρ chi ℓ
 
-omit [Algebra T.Q.c.F D.what₂.LL] in
 
 def IsKappa : Prop :=
   ∀ τ : D.what₂.Tau,

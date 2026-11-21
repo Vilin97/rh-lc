@@ -29,7 +29,6 @@ section Half
 
 variable (P : Formalism.L2.Host.PiBar D.host)
 
-open Pointwise in
 
 variable (hF : OFull D) (hz : OZeta D) (hN : N1ab)
 
@@ -83,9 +82,7 @@ section Unif
 variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
   {σ : c.F →+* ℂ} {r : ℕ}
 
-variable (Xo c σ) in
 
-variable (Xo c σ) in
 
 variable {U : Unf Xo c σ r} {V : HSp D} {dict : GA D V → Σ k, Frame (U.X k).Ψ r} {mu : GA D V → ℂ}
 
@@ -103,9 +100,7 @@ section Rec
 
 variable (Q : Par D)
 
-variable (D) in
 
-variable (D) in
 
 variable {Q}
 
@@ -158,13 +153,11 @@ variable (L : LB X)
 
 variable {K : Type} [Fintype K] (φ : K → (Y ⟶ X)) (ε : K → ℤ)
 
-omit L in
 
 end Cech
 
 variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E}
 
-open scoped MonObj in
 
 end IdMap
 
@@ -186,9 +179,7 @@ section OM
 
 variable {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
 
-variable (D) in
 
-variable (D) in
 
 variable (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (i : Fin D.R.m) (v₀ : (R.MW i (sg0 D A)).Vec)
   (c' : Coeff T.Q.l) (jL : D.what₂.LL →+* c'.F) (lev : G → (T.Q.Dw ((i : ℕ) + 1)).La →ₗ[𝓞 D.host.E] (T.Q.Dw ((i : ℕ) + 1)).La)

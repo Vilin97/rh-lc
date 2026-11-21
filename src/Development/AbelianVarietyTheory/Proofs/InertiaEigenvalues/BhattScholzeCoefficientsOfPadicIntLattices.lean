@@ -97,7 +97,6 @@ namespace GlobalTheory
 
 open GlobalTheory.PstCoeff GlobalTheory.BkCoeff GlobalTheory.BSCoeff
 
-set_option maxHeartbeats 1600000 in
 
 theorem bhattScholze_coeff : GlobalTheory.Published.BhattScholzeIntegral → GlobalTheory.Published.BhattScholzeCrystallineLattices := by
   intro h l _ K P₀ e hA

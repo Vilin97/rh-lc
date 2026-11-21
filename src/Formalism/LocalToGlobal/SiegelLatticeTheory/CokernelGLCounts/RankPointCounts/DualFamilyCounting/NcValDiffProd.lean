@@ -112,7 +112,6 @@ lemma absV_dV (v : HeightOneSpectrum (𝓞 F)) :
   rw [absV_of_valued_eq v _ _ (valued_dV v), IsDedekindDomain.HeightOneSpectrum.maxPowDividing, map_pow,
     zpow_neg, zpow_natCast, Nat.cast_pow]
 
-variable (F) in
 
 theorem hasProd_absV_dV :
     HasProd (fun v : HeightOneSpectrum (𝓞 F) => absV v (dV v)) (|(discr F : ℝ)|⁻¹) := by

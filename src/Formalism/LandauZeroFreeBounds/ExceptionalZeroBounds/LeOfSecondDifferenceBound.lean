@@ -8,7 +8,6 @@ noncomputable section
 
 namespace Formalism.ZeroFreeDirichlet
 
-set_option maxHeartbeats 800000 in
 
 lemma le_of_second_difference_bound {y c₀ C N eY ey h : ℝ} (hy : 2 ≤ y) (hc0 : 0 < c₀) (hc01 : c₀ ≤ 1) (hC : 0 ≤ C)
     (hh : h = Real.exp (-(c₀ / 2) * Real.sqrt (Real.log y)))

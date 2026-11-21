@@ -39,10 +39,7 @@ theorem psiGen_const {k r : ℕ} (z : Fin (2 * r + k + 1) → ℂ) (c : ℂ) :
   unfold psiGen psi ell ellA
   rw [Finset.mul_sum]
 
-variable [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 
-variable [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 
-variable [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 
 end Formalism.L2.S.Pv.Mom

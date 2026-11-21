@@ -56,7 +56,6 @@ theorem torsFrame_dvd {S : Scheme.{0}} (P : PolAV S) {T : Over S} {m d : ℕ}
   push_cast at a b c ⊢
   linear_combination (norm := module) a - (d ^ 2) • b + c
 
-set_option maxHeartbeats 1000000 in
 
 theorem tower_frames {g n : ℕ} {F : SFam g n (zetaAway n)} {W : Matrix (Fin 8) (Fin 8) ℤ} {Z : Scheme.{0}} {i : F.X ⟶ Z}
     {X₁ : Setup F W i} {act : Matrix (Fin 8) (Fin 8) ℤ → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)} (𝔗 : Tower X₁ act)

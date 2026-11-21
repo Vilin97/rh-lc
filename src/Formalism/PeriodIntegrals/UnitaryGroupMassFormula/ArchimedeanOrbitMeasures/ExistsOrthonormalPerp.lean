@@ -139,7 +139,6 @@ private theorem card_true_ge_lemma_2 {k : ℕ} (u : Fin k → Fin n → ℂ)
   rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, card_true_ge_lemma ε u huo c l, smul_eq_mul,
     starRingEnd_apply]
 
-open Formalism.L2.SG.HidaSetting Formalism.L2.SG.PoincareInHH.Cut in
 
 theorem card_true_ge {k : ℕ} (u : Fin k → Fin n → ℂ) (huo : ∀ i j, BJ ε (u i) (u j) = if i = j then 1 else 0) :
     k ≤ (univ.filter fun i => ε i = true).card := by

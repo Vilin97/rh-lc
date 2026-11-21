@@ -202,6 +202,5 @@ variable {R : Type*} [CommRing R] {n : Type*} [Fintype n] [DecidableEq n]
 
 end GLact
 
-open IsDedekindDomain NumberField in
 
 end Formalism.UG.P

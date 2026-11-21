@@ -39,14 +39,12 @@ theorem exists_mem_dom (X : Data E r) : ∃ x, x ∈ X.dom := by
   have h0 : psgn X.p0 i ≠ 0 := Finset.prod_ne_zero_iff.2 fun a _ => hs a
   exact mul_self_pos.2 h0
 
-omit [NumberField E] [IsCMField E] in
 
 theorem lact_one' {Ψ : Finset (E →+* ℂ)} (x : Frame Ψ r) : lact (1 : GL (Fin r) E) x = x := by
   funext τ
   change (1 : Matrix (Fin r) (Fin r) E).map τ.1 * mat x τ = mat x τ
   rw [Matrix.map_one _ (map_zero _) (map_one _), Matrix.one_mul]
 
-omit [NumberField E] [IsCMField E] in
 
 theorem lact_mul' {Ψ : Finset (E →+* ℂ)} (γ' γ : GL (Fin r) E) (x : Frame Ψ r) :
     lact (γ' * γ) x = lact γ' (lact γ x) := by

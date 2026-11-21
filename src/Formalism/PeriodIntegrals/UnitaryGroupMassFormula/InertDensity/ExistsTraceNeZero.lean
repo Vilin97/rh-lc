@@ -16,11 +16,9 @@ theorem card_L (h2 : Module.finrank K L = 2) : Fintype.card L = Fintype.card K ^
 omit [Fintype L] [Algebra K L] in
 theorem one_lt_q : 1 < Fintype.card K := Fintype.one_lt_card
 
-variable (K) in
 
 def conj : L →+* L := (FiniteField.frobeniusAlgHom K L).toRingHom
 
-omit [Fintype L] in
 
 omit [Fintype L] in
 theorem frob_add (x y : L) :

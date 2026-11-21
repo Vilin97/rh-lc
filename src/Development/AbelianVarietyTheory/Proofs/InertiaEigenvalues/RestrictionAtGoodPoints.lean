@@ -47,4 +47,3 @@ theorem chiRat_isCrys (D : D7) (i : D.nd.Loc) (w : HeightOneSpectrum (𝓞 D.hos
 
 end GlobalTheory.RestPtAssembly
 
-open GlobalTheory.RestPtAssembly in

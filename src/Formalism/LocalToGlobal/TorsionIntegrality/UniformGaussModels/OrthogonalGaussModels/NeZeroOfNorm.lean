@@ -372,7 +372,6 @@ theorem dense (hmod : dK % 4 = 3) (u : (OO ι hmod)ˣ) : (u : OO ι hmod) ∈ cl
 
 end CalcPAux
 
-open CalcPAux in
 
 theorem CalcP_of (hD : CMDatum) : CalcP := by
   intro dK L hmod hcm p _ h5 ι hW

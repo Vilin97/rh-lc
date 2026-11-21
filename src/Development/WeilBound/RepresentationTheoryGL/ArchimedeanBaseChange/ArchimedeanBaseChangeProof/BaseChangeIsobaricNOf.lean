@@ -51,7 +51,6 @@ def BaseChangeIsobaricN : Prop :=
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-open GlobalTheory.PfBCI in
 
 end PositivityTheory.Rg.BcN
 

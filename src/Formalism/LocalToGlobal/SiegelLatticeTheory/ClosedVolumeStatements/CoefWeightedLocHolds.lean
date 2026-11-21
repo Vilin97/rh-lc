@@ -426,7 +426,6 @@ theorem BunExists_holds (D : D7) : BunExists D :=
 
 theorem CoefWeightedLoc_holds [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] : CoefWeightedLoc := Fact.out
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.BesselNVGap] in
 theorem BesselNVGap_holds : BesselNVGap := Formalism.L2.SG.BesselDiscreteSeries.besselNVGap

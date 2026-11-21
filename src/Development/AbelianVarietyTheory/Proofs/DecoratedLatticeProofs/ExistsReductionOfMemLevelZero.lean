@@ -61,7 +61,6 @@ theorem eq_map_of_moved {S K n : Type} [CommRing S] [CommRing K] [Fintype n] [De
   calc M = ((β⁻¹).val.map π * T') * (N * M) := by rw [← Matrix.mul_assoc, h4, Matrix.one_mul]
     _ = y.map π := by rw [h3, ← Matrix.mul_assoc, h4, Matrix.one_mul]
 
-set_option maxHeartbeats 1000000 in
 
 theorem red_of_movedTo (q : SplitPt D k) (PP : Formalism.L2.DIV.Pl D.host.E) (hPP : Formalism.L2.NTheta.IsIdemAt q.e PP)
     (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (t h : GA D V) (N M : Matrix (Fin V.rank) (Fin V.rank) k)

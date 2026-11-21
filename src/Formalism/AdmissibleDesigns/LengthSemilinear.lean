@@ -333,7 +333,6 @@ def quotSL {R S : Type} [CommRing R] [CommRing S] (e : R ≃+* S) [RingHomInvPai
     rw [Algebra.smul_def, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, Ideal.Quotient.algebraMap_eq, map_mul]
     rfl
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem lenOlSelf {D : D7} (i : D.nd.Loc) : LenOlSelf i := by
   intro w hw

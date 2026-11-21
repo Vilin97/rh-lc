@@ -107,7 +107,6 @@ theorem const {z : Cech.Cochain (fun _ : StdCell N => V) 0}
 
 end Cech.Cone
 
-open Cech.Cone in
 
 theorem Cech.Cone.proof : Cech.Cone.Statement.{u, v} := by
   intro R _ V _ _ N J

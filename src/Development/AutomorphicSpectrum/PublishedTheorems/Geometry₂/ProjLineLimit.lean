@@ -11,9 +11,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Pub.NefRRModel
 open ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.ArakelovGeometry GroundTheory.Heights₂.Heights.HilbertSamuel Filter Topology
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet
 
-open ProjLine in
 
-open ProjLine in
 
 section DimZero
 

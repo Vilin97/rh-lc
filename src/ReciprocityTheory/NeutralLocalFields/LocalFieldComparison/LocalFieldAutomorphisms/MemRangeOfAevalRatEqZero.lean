@@ -192,8 +192,6 @@ theorem finiteDimensional_Kloc (ι : Ω →+* PadicAlgCl p) : FiniteDimensional 
 theorem isAlgClosure_Kloc (ι : Ω →+* PadicAlgCl p) : IsAlgClosure (Kloc F ι) (PadicAlgCl p) := by
   exact ⟨inferInstance, inferInstance⟩
 
-variable (F) in
-include F in
 
 theorem denseRange (ι : Ω →+* PadicAlgCl p) : DenseRange ι := by
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed F

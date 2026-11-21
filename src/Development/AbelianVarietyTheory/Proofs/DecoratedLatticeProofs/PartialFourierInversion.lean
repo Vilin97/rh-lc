@@ -36,7 +36,6 @@ theorem eventually_add_invariant {X : Type*} [TopologicalSpace X] [AddCommGroup 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   [MeasurableSpace k] [BorelSpace k]
 
-omit [BorelSpace k] in
 
 theorem partial_mem_SB {I J : Type} [Fintype I] [Fintype J] (ν : Measure k) {f : (I → k) × (J → k) → ℂ}
     (hf : f ∈ SB ((I → k) × (J → k))) :

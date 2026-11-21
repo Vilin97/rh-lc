@@ -28,11 +28,9 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 section Idele
 
-variable (F E) in
 
 def infTens : AF F ⊗[F] E →+* Ainf F ⊗[F] E := (Algebra.TensorProduct.map (fstA F) (AlgHom.id F E)).toRingHom
 
-variable (F E) in
 
 def finTens : AF F ⊗[F] E →+* Af F ⊗[F] E := (Algebra.TensorProduct.map (sndA F) (AlgHom.id F E)).toRingHom
 
@@ -182,7 +180,6 @@ theorem unrAt_of_unramEverywhere (h : UnramEverywhere D c) (w : HeightOneSpectru
 
 variable {χ : HChar D.host.E}
 
-set_option maxHeartbeats 800000 in
 
 theorem locChar_eq_of_chrEq (h : ChrEq c χ) (w : HeightOneSpectrum (𝓞 D.host.E)) : locChar c w = χ.loc w := by
   obtain ⟨e, he, h0, h1, h2⟩ := GlobalTheory.PlaceIdem.exists_isPlIdem D (finAdEquiv D.host.F D.host.E)
@@ -399,7 +396,6 @@ theorem mem_normGroup_of_isSplit (h2 : Module.finrank F E = 2) (hv : IsSplit (E 
   field_simp
   ring
 
-open scoped WithZeroTopology in
 
 theorem not_mem_normGroup_of_inert (h2 : Module.finrank F E = 2) (hv : ¬ IsSplit (E := E) v)
     (hu : IsUnram (E := E) v) {x : (Fv F v)ˣ} (hx : IsUnifAt v x) : x ∉ normGroup F E (Fv F v) := by

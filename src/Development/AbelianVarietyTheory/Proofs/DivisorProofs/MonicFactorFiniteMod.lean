@@ -30,7 +30,6 @@ def restrictQ (f : stabAlg M' K) : Module.End ℂ (M' ⧸ K.comap M'.subtype) :=
     simp only [Submodule.mem_comap, Submodule.coe_subtype, LinearMap.restrict_apply] at hx ⊢
     exact (f.2 x x.2).2 hx
 
-variable (M' K) in
 
 def quotRep : stabAlg M' K →ₐ[ℂ] Module.End ℂ (M' ⧸ K.comap M'.subtype) where
   toFun := restrictQ
@@ -50,7 +49,6 @@ def quotRep : stabAlg M' K →ₐ[ℂ] Module.End ℂ (M' ⧸ K.comap M'.subtype
     refine LinearMap.ext fun y => Submodule.Quotient.induction_on _ y fun x => ?_
     rfl
 
-variable (M' K) in
 
 def quotIncl : (M' ⧸ K.comap M'.subtype) →ₗ[ℂ] M ⧸ K :=
   (K.comap M'.subtype).liftQ (K.mkQ ∘ₗ M'.subtype) fun x hx => by simpa using hx
@@ -66,7 +64,6 @@ end GlobalTheory.LeviHC.QuotMonic
 
 namespace GlobalTheory.LeviHC.QuotMonic
 
-open Algebra in
 
 theorem monicFactorFiniteMod_of (H : MonicFactorFinite) : MonicFactorFiniteMod := by
   intro M _ _ M' K c p q hp hq hpp hqq hpq hM hK hc v hv hfin

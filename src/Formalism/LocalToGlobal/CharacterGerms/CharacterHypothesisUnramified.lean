@@ -83,7 +83,6 @@ theorem vV_pos (T : CDVR) {t : T.V} (ht : ¬ IsUnit t) (h0 : t ≠ 0) : 0 < vV T
     (WithZero.log_lt_iff_lt_exp hne).2 (by simpa using h1)
   omega
 
-variable {Xo c} in
 
 theorem chart_ties {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io} {C3 : IntChart T io y}
     {C : Type} [Field C] [CharZero C] {V : VF C} {ie : T.Fr →+* C} (hie : EmbOK T V ie)
@@ -128,11 +127,8 @@ theorem chart_ties {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io} {C3 : 
     ext mu
     simp only [MvPowerSeries.coeff_map, RingHom.comp_apply]
 
-variable {Xo c} in
 
-variable {Xo c} in
 
-variable {Xo c} in
 
 end Chart
 

@@ -127,7 +127,6 @@ theorem mapVec_mem (φ : R →ₐ[F] R') {W : Submodule E V.V} {y : Fin V.rank �
   rw [map_mulVec_mapVec, hy]
   funext i; simp [mapVec]
 
-omit [NumberField E] [StarRing E] in
 
 theorem repr_map {ι : Type} (b : Module.Basis ι F E) (φ : R →ₐ[F] R') (u : R ⊗[F] E) (j : ι) :
     (Algebra.TensorProduct.basis R' b).repr (Algebra.TensorProduct.map φ (AlgHom.id F E) u) j =
@@ -386,7 +385,6 @@ theorem le_perp (i j : Fin (𝔉.k + 1)) : 𝔉.X i ≤ perp V (𝔉.X j) :=
 theorem isIsotropic {i : Fin (𝔉.k + 1)} (hi : i ≠ 0) : IsIsotropic V (𝔉.X i) :=
   ⟨𝔉.zero ▸ (𝔉.strictMono (Fin.pos_iff_ne_zero.2 hi)).ne', 𝔉.le_perp i i⟩
 
-variable (V) in
 
 def single {W : Submodule E V.V} (hW : IsIsotropic V W) : IsoFlag V :=
   ⟨1, ![⊥, W], rfl, Fin.strictMono_iff_lt_succ.2 fun i => by fin_cases i; exact bot_lt_iff_ne_bot.2 hW.1, hW.2⟩
@@ -442,7 +440,6 @@ variable (𝔉 hc R)
 theorem unip_le_par : 𝔉.unip hc R ≤ 𝔉.par hc R := fun _ hg => mem_par.2 fun i =>
   Fin.lastCases (mem_unip.1 hg).2.1 (fun j => ((mem_unip.1 hg).1 j).1) i
 
-variable {𝔉 hc R} in
 
 theorem conj_mem_unip {p : HA R hc.sig V.gram} (hp : p ∈ 𝔉.par hc R) (hg : g ∈ 𝔉.unip hc R) :
     p * g * p⁻¹ ∈ 𝔉.unip hc R :=

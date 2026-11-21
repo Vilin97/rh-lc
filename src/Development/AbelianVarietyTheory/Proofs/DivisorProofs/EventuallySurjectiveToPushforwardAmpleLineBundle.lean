@@ -48,7 +48,6 @@ def kernelIso (M : LB X) (hM : M.IsLB) :
 
 end GlobalTheory.SerreOnto
 
-open CategoryTheory.Limits in
 
 theorem GlobalTheory.surjective_toPushforward_app_top_lbPow : ∀ (k : Type) [CommRing k] [IsNoetherianRing k]
     (X : Scheme.{0}) (p : X ⟶ Sp k), IsProjOver p → ∀ (L : LB X), IsAmpleLB L →

@@ -105,8 +105,6 @@ variable (Lb : Lbl H) (hT2 : ∀ u, T u ≠ 2) (per : ∀ u : W, Bool → FK ((K
     Formalism.MainNotions.G.GAtP ((@placesOf H.E _ _ H.cmStar).resChar w))
   (hgat : ∀ u w h, (gat u w h).d = Fintype.card ((K u).cls 0))
 
-set_option synthInstance.maxHeartbeats 200000 in
-set_option maxHeartbeats 1600000 in
 
 end Record
 

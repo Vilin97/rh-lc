@@ -24,13 +24,11 @@ variable (V : Opens T) (U : ι → Opens T)
 theorem cechOpen_eq_inf (s : Finset ι) : cechOpen V U s = V ⊓ s.inf U := by
   rw [cechOpen, Finset.inf_eq_iInf]
 
-variable {V U} in
 
 theorem le_cechOpen_iff {W : Opens T} {s : Finset ι} :
     W ≤ cechOpen V U s ↔ W ≤ V ∧ ∀ i ∈ s, W ≤ U i := by
   simp [cechOpen]
 
-variable {V U} in
 
 theorem mem_cechOpen {x : T} {s : Finset ι} :
     x ∈ cechOpen V U s ↔ x ∈ V ∧ ∀ i ∈ s, x ∈ U i := by
@@ -70,14 +68,12 @@ theorem cechOpen_union [DecidableEq ι] (s t : Finset ι) :
 
 theorem cechOpen_top (s : Finset ι) : cechOpen ⊤ U s = ⨅ i ∈ s, U i := top_inf_eq _
 
-variable {V U} in
 
 theorem cechOpen_of_nonempty (h : ∀ i, U i ≤ V) {s : Finset ι} (hs : s.Nonempty) :
     cechOpen V U s = ⨅ i ∈ s, U i := by
   obtain ⟨i, hi⟩ := hs
   exact inf_eq_right.2 ((biInf_le U hi).trans (h i))
 
-variable {V U} in
 
 theorem cechOpen_mono {V' : Opens T} {U' : ι → Opens T} (hV : V' ≤ V) (hU : ∀ i, U' i ≤ U i)
     (s : Finset ι) : cechOpen V' U' s ≤ cechOpen V U s :=
@@ -96,7 +92,6 @@ theorem cechOpen_insert_map [DecidableEq ι] (e : κ ↪ ι) (i : ι) (s : Finse
     cechOpen V U (insert i (s.map e)) = cechOpen (V ⊓ U i) (fun k => U (e k)) s := by
   rw [cechOpen_insert, cechOpen_map, inf_comm V, cechOpen_inf_left]
 
-variable {V U} in
 
 theorem cechOpen_empty_le_iSup (h : V ≤ ⨆ i, U i) :
     cechOpen V U ∅ ≤ ⨆ i, cechOpen V U {i} := by
@@ -136,7 +131,6 @@ def presheafCongr {W W' : Opens T} (h : W = W') : P.obj (op W) ≃ₗ[R] P.obj (
     left_inv := fun x => by simp
     right_inv := fun x => by simp }
 
-variable {P} in
 
 theorem app_presheafRes (φ : P ⟶ Q) {W W' : Opens T} (h : W' ≤ W) (x : P.obj (op W)) :
     (φ.app (op W')).hom (presheafRes P h x) = presheafRes Q h ((φ.app (op W)).hom x) :=
@@ -146,14 +140,11 @@ variable (V : Opens T) (U : ι → Opens T)
 
 def presheafCube : Cube.{v} ι R := cechOpenFunctor V U ⋙ P
 
-variable {P} in
 
 def presheafCubeMap (φ : P ⟶ Q) : presheafCube P V U ⟶ presheafCube Q V U :=
   Functor.whiskerLeft (cechOpenFunctor V U) φ
 
-variable {P} in
 
-variable (R) in
 
 section Restrict
 
@@ -165,7 +156,6 @@ def presheafCubeRes (h : ∀ s, cechOpen V' U' s ≤ cechOpen V U s) :
     (presheafRes_presheafRes P _ _ x).trans
       (presheafRes_presheafRes P _ (cechOpen_anti V' U' hst) x).symm
 
-variable {P} in
 
 theorem presheafCubeRes_naturality (φ : P ⟶ Q) (h : ∀ s, cechOpen V' U' s ≤ cechOpen V U s) :
     presheafCubeMap V U φ ≫ presheafCubeRes Q h = presheafCubeRes P h ≫ presheafCubeMap V' U' φ :=
@@ -200,20 +190,14 @@ def presheafCech : CochainComplex (ModuleCat.{v} R) ℕ := cechComplex (presheaf
 
 def presheafCechH (n : ℕ) : ModuleCat.{v} R := (presheafCech P V U).homology n
 
-variable {V U} in
 
-variable {V U} in
 
-variable {V U} in
 
-omit [LinearOrder ι] in
 
 def presheafCechAug : P.obj (op V) →ₗ[R] Cube.Term (presheafCube P V U) 1 :=
   LinearMap.pi fun s => presheafRes P (cechOpen_le V U s.1)
 
-omit [LinearOrder ι] in
 
-omit [LinearOrder ι] in
 
 theorem aug_presheafCubeEmptyEquiv (x : P.obj (op V)) :
     Cube.aug (presheafCube P V U) (presheafCubeEmptyEquiv P V U x) = presheafCechAug P V U x :=
@@ -233,7 +217,6 @@ theorem presheafToCechH_apply (x : P.obj (op V)) :
   (cechAugHomology_apply _ _).trans
     (congrArg _ (Subtype.ext (aug_presheafCubeEmptyEquiv P V U x)))
 
-variable {P} in
 
 theorem homologyMap_presheafToCechH (φ : P ⟶ Q) (x : P.obj (op V)) :
     (HomologicalComplex.homologyMap (cechComplexMap (presheafCubeMap V U φ)) 0).hom
@@ -241,7 +224,6 @@ theorem homologyMap_presheafToCechH (φ : P ⟶ Q) (x : P.obj (op V)) :
   rw [presheafToCechH_apply, presheafToCechH_apply]
   exact homologyMap_cechClass _ 0 _ _ (funext fun _ => app_presheafRes φ _ x)
 
-variable {V U} in
 
 theorem presheafRes_eq_of_d_eq_zero (x : Cube.Term (presheafCube P V U) 1)
     (hx : Cube.d (presheafCube P V U) 1 x = 0) (i j : ι) {W : Opens T}
@@ -325,12 +307,10 @@ variable {T : Type w} [TopologicalSpace T] {ι : Type}
 
 def cechAbCube : Cube.{v} ι ℤ := presheafCube (P ⋙ abToIntModule) V U
 
-variable {P} in
 
 def cechAbCubeMap (φ : P ⟶ Q) : cechAbCube P V U ⟶ cechAbCube Q V U :=
   presheafCubeMap V U (Functor.whiskerRight φ abToIntModule)
 
-variable {P} in
 
 def cechAbCubeFunctor : ((Opens T)ᵒᵖ ⥤ AddCommGrpCat.{v}) ⥤ Cube.{v} ι ℤ where
   obj P := cechAbCube P V U
@@ -347,11 +327,9 @@ def cechAb : CochainComplex (ModuleCat.{v} ℤ) ℕ := cechComplex (cechAbCube P
 
 def cechAbH (n : ℕ) : ModuleCat.{v} ℤ := (cechAb P V U).homology n
 
-variable {P} in
 
 def cechAbMap (φ : P ⟶ Q) : cechAb P V U ⟶ cechAb Q V U := cechComplexMap (cechAbCubeMap V U φ)
 
-variable {P} in
 
 def cechAbHMap (φ : P ⟶ Q) (n : ℕ) : cechAbH P V U n ⟶ cechAbH Q V U n :=
   HomologicalComplex.homologyMap (cechAbMap V U φ) n
@@ -374,9 +352,7 @@ def cechAbHFunctor (n : ℕ) : ((Opens T)ᵒᵖ ⥤ AddCommGrpCat.{v}) ⥤ Modul
 @[simp]
 theorem cechAbHMap_id (n : ℕ) : cechAbHMap V U (𝟙 P) n = 𝟙 _ := (cechAbHFunctor V U n).map_id P
 
-variable {P} in
 
-variable {P} in
 
 theorem cechAbFunctor_shortExact (S : ShortComplex ((Opens T)ᵒᵖ ⥤ AddCommGrpCat.{v}))
     (h : ∀ s : Finset ι, s.Nonempty →
@@ -387,11 +363,9 @@ theorem cechAbFunctor_shortExact (S : ShortComplex ((Opens T)ᵒᵖ ⥤ AddCommG
   cechFunctor_shortExact (S.map (cechAbCubeFunctor V U)) fun s hs =>
     ModuleCat.shortComplex_shortExact _ (h s hs).2.1 (h s hs).1 (h s hs).2.2
 
-variable {V U} in
 
 def toCechAbH : P.obj (op V) →ₗ[ℤ] cechAbH P V U 0 := presheafToCechH (P ⋙ abToIntModule) V U
 
-variable {P} in
 
 theorem cechAbHMap_toCechAbH (φ : P ⟶ Q) (x : P.obj (op V)) :
     (cechAbHMap V U φ 0).hom (toCechAbH P V U x) = toCechAbH Q V U (φ.app (op V) x) :=

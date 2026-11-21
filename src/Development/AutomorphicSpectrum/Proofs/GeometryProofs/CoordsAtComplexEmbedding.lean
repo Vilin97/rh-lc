@@ -23,7 +23,6 @@ theorem centre_field (ψ : L →+* L') (z : Sp L ⟶ X) : centre (spMap ψ ≫ z
 theorem centre_specializes (ψ : L →+* L') (z : Sp L ⟶ X) : centre (spMap ψ ≫ z) ⤳ centre z :=
   specializes_of_eq (centre_field ψ z)
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem stalk_comp (ψ : L →+* L') (z : Sp L ⟶ X) :
     X.presheaf.stalkSpecializes (centre_specializes ψ z) ≫ Scheme.stalkClosedPointTo (spMap ψ ≫ z) =

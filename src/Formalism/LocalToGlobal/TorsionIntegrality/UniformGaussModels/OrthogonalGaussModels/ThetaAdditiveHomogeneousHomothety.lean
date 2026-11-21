@@ -21,7 +21,6 @@ namespace ThetaHomothety
 
 open Formalism.L2.Th1.F (scalePair opU herm th0 area taylor0 sgStar)
 
-open Classical in
 
 theorem herm_scale (L : PeriodPair) (c : ℂ) (hc : c ≠ 0) (z x : ℂ) :
     herm (scalePair L c hc) (c * z) (c * x) = herm L z x := by

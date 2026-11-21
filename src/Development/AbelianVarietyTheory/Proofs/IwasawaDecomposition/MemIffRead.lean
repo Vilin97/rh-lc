@@ -23,7 +23,6 @@ variable {B : Base} {X : PreX B.toPre} {I : TC B X} {u : B.Word} {j : ℕ} {Ch :
   {y : (I.stp u I.mu0 j).Cl → GA B (B.R.N j)} {st : ∀ c, (I.stp u I.mu0 j).Stab c → GL (Fin (B.R.N j)) B.host.E}
   {k : Ch → GA B (B.R.N j)}
 
-set_option maxHeartbeats 2000000 in
 
 theorem mem_iff_read (H : I.Reads u I.mu0 j chOf Lb U chi y st k) (c : (I.stp u I.mu0 j).Cl) (x : GA B (B.R.N j))
     (hx : x ∈ UAd B.sp.cm (B.R.N j)) :

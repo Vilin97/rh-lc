@@ -36,7 +36,6 @@ theorem weight_factor_eq_automorphy (p q : ℕ) (e : ℤ) (y : GR n) : F0 p q e 
   simp only [F0, f0, jF, u1, u2, Matrix.mul_smul, Matrix.mul_one, conjTranspose_smul, conjTranspose_one, Complex.star_def,
     Complex.conj_I, neg_smul, Matrix.mul_neg, mul_assoc]
 
-open PositivityTheory.Rg.Sw.Glob.DRealH in
 
 theorem gf_real (e : ℤ) (p q : ℕ) (t : ℝ) {m : ℕ} (X : Fin n → ℝ) (a : ℝ → GR n)
     (ha : ∀ s, IsDil X s (a s)) (y : GR n) (s : ℝ) :

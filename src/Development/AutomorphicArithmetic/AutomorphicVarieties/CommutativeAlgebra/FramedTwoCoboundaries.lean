@@ -48,7 +48,6 @@ def gw (j : X) : Submodule R (Matrix ι ι R) :=
       zero_mem' := fun _ _ _ => rfl
       smul_mem' := fun c Y h a b e => by simp [h a b e] }
 
-variable {R} in
 
 def Normalises {Γ : Type} [Group Γ] (ρ : Γ →* Matrix ι ι R) : Prop :=
   (∀ g, ∃ ν : R, (ρ g)ᵀ * Φ.JR R * ρ g = ν • Φ.JR R) ∧
@@ -90,7 +89,6 @@ theorem ad_mem {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Norm
     have k6 : w d = w b := by_contra fun n => k3 (h3 s⁻¹ d b n)
     exact e (by rw [k5, ← k6, k4])
 
-variable {Φ R} in
 
 def adRep {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Normalises ρ) (j : X) :
     Representation R Γ (Φ.gw R j) where
@@ -103,7 +101,6 @@ def adRep {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Normalise
 
 variable [IsLocalRing O]
 
-variable {R} in
 
 def HH [IsCO O R] (h : Matrix ι ι R) : Prop :=
   hᵀ * Φ.JR R * h = Φ.JR R ∧ (∀ a b, Φ.blk a ≠ Φ.blk b → h a b = 0) ∧ h.map (res O R) = 1

@@ -19,10 +19,6 @@ namespace GlobalTheory.HilbFam
 
 variable {F : Type} [Field F] [NumberField F]
 
-set_option autoImplicit false in
-open NumberField UpperHalfPlane in
-open scoped Classical MatrixGroups nonZeroDivisors in
-variable {F : Type} [Field F] [NumberField F] in
 
 theorem _root_.GlobalTheory.HilbFam.exists_eq_split_of_hasLevel (F : Type) [Field F] [NumberField F] [IsTotallyReal F]
     (N : ℕ) (L : _root_.GlobalTheory.HilbFam.Lat F) (hN : 0 < N) (hL : _root_.GlobalTheory.HilbFam.HasLevel N L) :

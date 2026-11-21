@@ -27,7 +27,6 @@ theorem mem_normInteger {x : K} : x ∈ normInteger K ↔ ‖x‖ ≤ 1 := by
 theorem normInteger_integers : (NormedField.valuation (K := K)).Integers (normInteger K) :=
   Valuation.integer.integers _
 
-open scoped NormedField in
 
 theorem mem_span_singleton_pow_iff {a x : normInteger K} (n : ℕ) :
     x ∈ Ideal.span {a} ^ n ↔ ‖(x : K)‖ ≤ ‖(a : K)‖ ^ n := by
@@ -154,7 +153,6 @@ namespace IsPerfectoidField
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 
-omit [IsUltrametricDist K] in
 
 theorem exists_norm_mem_Ioo_of_exists_pow_eq
     (h : ∀ (x : K) (n : ℕ), 0 < n → ∃ y : K, y ^ n = x) :

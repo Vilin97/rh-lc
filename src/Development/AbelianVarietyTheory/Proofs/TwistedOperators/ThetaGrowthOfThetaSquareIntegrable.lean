@@ -118,7 +118,6 @@ theorem actO_nsmul (g : GA D S) (h : GA D T) (n : ℕ) (u : WO S T) : actO S T g
   | zero => unfold actO; rw [zero_nsmul, zero_nsmul, Matrix.mul_zero, Matrix.zero_mul]
   | succ n ih => rw [succ_nsmul, succ_nsmul, ← ih]; unfold actO; rw [Matrix.mul_add, Matrix.add_mul]
 
-open GlobalTheory.AdelicU Formalism.UG in
 
 theorem exists_level_multiple {U : AddSubgroup (WO S T)} (hU : IsOpen (U : Set (WO S T))) :
     ∃ K₀ ∈ 𝓝 (0 : WO S T), IsCompact K₀ ∧ ∃ m : ℕ, ∀ (g : GA D S) (h : GA D T), ∃ n : ℕ, 0 < n ∧
@@ -193,7 +192,6 @@ theorem norm_mov_le_normInf (g : GA D S) (h : GA D T) (u : RW T S) :
   exact mul_le_mul_of_nonneg_left ((norm_le_pi_norm _ l).trans ((norm_le_pi_norm _ k).trans (norm_le_pi_norm u τ)))
     (norm_nonneg _)
 
-open Classical in
 
 def letter (a : D.what₂.Tau × Fin T.rank × Fin S.rank × Bool) : RW T S :=
   fun τ i j => if τ = a.1 then if i = a.2.1 then if j = a.2.2.1 then (if a.2.2.2 then Complex.I else 1) else 0 else 0 else 0

@@ -204,7 +204,6 @@ private theorem rho_idem {p q : ℕ} [Fact p.Prime] (hq : q.Prime) (hqp : q ≠ 
   rw [(he u).1 hu] at this
   exact one_ne_zero this
 
-open Classical in
 
 private def secAdd {p : ℕ} (v₀ : AwayP p) : v₀.1.adicCompletion ℚ →+ AfP p where
   toFun x := ⟨Pi.single v₀ x, by

@@ -36,7 +36,6 @@ variable {N N₂ Q Q₂ M : Type} [AddCommGroup N] [Module R N] [AddCommGroup N�
   [AddCommGroup Q] [Module R' Q] [AddCommGroup Q₂] [Module R' Q₂]
   [AddCommGroup M] [Module R' M] [Module R M] [IsScalarTower R R' M]
 
-variable (M) in
 
 def tw (E : R' ⊗[R] N ≃ₗ[R'] Q) : M ⊗[R] N ≃+ M ⊗[R'] Q :=
   ((AlgebraTensorModule.cancelBaseChange R R' R' M N).symm.trans (LinearEquiv.lTensor M E)).toAddEquiv

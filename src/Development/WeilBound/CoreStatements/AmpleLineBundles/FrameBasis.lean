@@ -164,7 +164,6 @@ theorem co_iff (M : LieModel G ξ Li) (B : Fin r → Li) (z : Sp ℂ ⟶ X) {V :
   · rintro rfl
     exact ⟨V, inferInstance, inferInstance, Mz, β, fun i => (hβ i _).2 rfl, by rw [β.sum_repr]⟩
 
-open Classical in
 
 def co (M : LieModel G ξ Li) (B : Fin r → Li) (z : Sp ℂ ⟶ X) (v : epsAt z ⟶ G) : Fin r → ℂ :=
   if h : ∃ c, Co M B z v c then h.choose else 0

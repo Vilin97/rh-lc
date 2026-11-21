@@ -87,7 +87,6 @@ theorem mem_congrL {r m n : ℕ} {u : GL (Fin (r + m)) k} :
     simpa [map_inv, mul_assoc] using this
   · exact GroundTheory.Automorphic.Parabolic.permGL_conj_mem_congruenceSubgroup
 
-set_option maxHeartbeats 1000000 in
 
 theorem vol_conj_aDiag (ψ : AddChar k Circle) {r m : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
     (ρ : Representation ℂ (Levi k fun a => Fin (dd r m a)) W) (J : openFns (dd r m) (hdd r m) ρ →ₗ[ℂ] W)

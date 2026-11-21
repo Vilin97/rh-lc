@@ -23,7 +23,6 @@ def ofCols (v : Idx r k → Idx r k → K) : Matrix (Idx r k) (Idx r k) K := fun
 
 section Gen
 
-open Classical in
 
 def IntO (M : Matrix (Idx r k) (Idx r k) K) : Prop := ∀ i j, M i j ∈ O
 

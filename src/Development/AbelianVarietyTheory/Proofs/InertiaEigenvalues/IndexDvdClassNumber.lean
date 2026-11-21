@@ -151,7 +151,6 @@ theorem eq_one_of_class [IsTotallyComplex E] {art : Ideles E →* Gab E Ω} (ha 
   have := MonoidHom.mem_ker.1 (hle (ker_classHom_le E hx))
   rwa [MonoidHom.comp_apply, e, liftAb_toAb] at this
 
-omit [IsAlgClosure E Ω] in
 
 theorem index_dvd_classNumber {art : Ideles E →* Gab E Ω} (ha : IsGlobalArtin art) :
     ((classHom E).ker.map art).index ∣ classNumber E := by

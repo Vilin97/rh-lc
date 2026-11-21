@@ -314,7 +314,6 @@ variable (S : SymData k s κ) {O : Type} [CommRing O] {I : Ideal O} (pr : O →+
   (e : Fin κ ⊕ Fin (s + 1) ≃ Fin r) (he : ∀ a, (e a).val = framePos _ _ a) {π : Equiv.Perm (Fin r)} (hπ : IsSymOrd S.ρ κ π)
   (g g' : GL (Fin r) (O ⧸ I)) (hg : ∀ i j, g'.val i j = g.val (π i) (π j))
 
-include h1 h2 he hπ hg in
 
 theorem sym_grp : (∃ x : S.P.J, ∀ a b z, Ideal.Quotient.mk I z = g.val (e a) (e b) →
     valuation k ((x : GL (Fin κ ⊕ Fin (s + 1)) k).val a b - pr z) < 1) ↔ g' ∈ unipSym (O ⧸ I) r S.ρ κ := by
@@ -357,7 +356,6 @@ theorem sym_grp : (∃ x : S.P.J, ∀ a b z, Ideal.Quotient.mk I z = g.val (e a)
     refine hx a b _ ?_
     rw [← (one a b).2, ← h _ _ ((sym_order S.odd e he hπ a b).1.1 hab), hg, Equiv.apply_symm_apply, Equiv.apply_symm_apply]
 
-include he hπ hg in
 
 theorem sym_chr (ψ₀ : AddChar (O ⧸ I) ℂ) (hψ : ∀ z, (S.ψ (((S.ϖ⁻¹ : kˣ) : k) * pr z) : ℂ) = ψ₀ (Ideal.Quotient.mk _ z))
     (x : S.P.J) (hx : ∀ a b z, Ideal.Quotient.mk I z = g.val (e a) (e b) →

@@ -104,7 +104,6 @@ theorem exists_hom_descent {R₀ K C : Type} [CommRing R₀] [CommRing K] [CommR
   · rw [reassoc_of% hjm, reassoc_of% h₂, Iso.hom_inv_id_assoc, hφ₁]
   · rw [Category.assoc, Category.assoc, pullback.condition, reassoc_of% h₁, reassoc_of% hm₁, reassoc_of% n₂, hgb]
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 theorem exists_iso_of_cover {S S' S'' : Scheme.{0}} (b : S' ⟶ S) (i : S'' ⟶ S') [Flat i] [Surjective i]
     [QuasiCompact i] [IsSchemeTheoreticallyDominant i] (A : Over S) [GrpObj A] [IsSeparated A.hom] (H : Over S')

@@ -243,7 +243,6 @@ section Ring
 
 variable {A : Type*} [CommRing A] {X : Type*}
 
-open Classical in
 
 theorem coeff_mul_coeff {u : AddMonoidAlgebra A X} (hu : IsGroupLikeElem A u) (x y : X) :
     u.coeff x * u.coeff y = if x = y then u.coeff x else 0 := by
@@ -335,7 +334,6 @@ theorem pull_one_chi {s : Spec B ⟶ S} (a : X) :
     pull (1 : Over.mk s ⟶ splitTorus S X) (chi X a) = 1 := by
   rw [pull_chi, val_one]; exact map_one _
 
-variable (X) in
 
 def univPt (t : Spec A ⟶ S) :
     Over.mk (Spec.map (CommRingCat.ofHom (algebraMap A (torusRing A X))) ≫ t) ⟶ splitTorus S X :=
@@ -519,9 +517,7 @@ theorem exists_eq_torusMap [ConnectedSpace S] (f : splitTorus S X ⟶ splitTorus
   · rw [← hφ, val_add, hφ, hφ, ← val_id, ← val_id, ← val_id, val_add]
   · rw [val_torusMap, hφ]; rfl
 
-variable (S X Y) in
 
-variable (X) in
 
 def uliftMultiples : X ≃ (ULift.{u} ℤ →+ X) where
   toFun a := (zmultiplesHom X a).comp (AddEquiv.ulift : ULift.{u} ℤ ≃+ ℤ).toAddMonoidHom
@@ -535,7 +531,6 @@ def uliftMultiples : X ≃ (ULift.{u} ℤ →+ X) where
     ext
     simp
 
-variable (S X) in
 
 end Characters
 
@@ -663,7 +658,6 @@ theorem pullback_map_torusMap (φ : Y →+ X) :
       (bcIso f X).inv ≫ torusMap S' φ ≫ (bcIso f Y).hom := by
   rw [(comm_bcMap_iff f _ _).1 (torusMap_bcMap f φ), Iso.inv_hom_id_assoc]
 
-variable (X Y) in
 
 end BaseChange
 

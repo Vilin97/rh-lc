@@ -24,7 +24,6 @@ namespace GlobalTheory.PlcAtW
 
 variable {D : D7}
 
-open Classical in
 
 theorem cpt_atPl_self (w : Pl D.host.E) (x : Kw w) : cpt w (toEAf D (atPl w x)) = x := by
   rw [(atPl_spec w x).2 w, Pi.single_eq_same]
@@ -79,7 +78,6 @@ namespace GlobalTheory.PlcAtW
 
 variable {D : D7}
 
-open scoped Topology in
 
 theorem continuous_cpt_toEAf (w : Pl D.host.E) : Continuous fun a : AE D => cpt w (toEAf D a) := by
   letI tf : TopologicalSpace (Af D.host.F ⊗[D.host.F] D.host.E) :=

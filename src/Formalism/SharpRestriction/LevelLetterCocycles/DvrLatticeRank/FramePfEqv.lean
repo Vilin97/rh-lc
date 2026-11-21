@@ -242,7 +242,6 @@ theorem framepf_γ_LamLA {x : LA W T π' c} (hx : x ∈ LamLA W T π' Eπ h' c �
   rw [smul_smul, ← map_mul, map_pow (W.γA W.gamK), ← mul_pow, mul_comm, ← ht'] at h
   exact h
 
-include ht'Δ ht' in
 
 theorem framepf_Ψα_γ (hu : IsUnit (algebraMap (LetA O n) W.EE π'))
     (huE : IsUnit (algebraMap (LetA O n) W.EE Eπ)) (hΔπ : ∀ δ ∈ W.DelF, W.γA δ π' = π')
@@ -305,7 +304,6 @@ theorem framepf_Ψα_γ (hu : IsUnit (algebraMap (LetA O n) W.EE π'))
     show Eπ ^ h' * (π' ^ M * Eπ ^ (3 * h')) * t' ^ h' - t' ^ h' * (π' ^ M * Eπ ^ (4 * h')) = 0 by ring,
     zero_smul]
 
-include hfΔ hf htΔ ht ht'Δ ht' in
 
 theorem framepf_Ψβ_γ (Ψ : W.EE ⊗[O] LcQ W T π' c →ₗ[W.EE] W.DD T)
     (Φ : W.DD T →ₗ[W.EE] W.EE ⊗[O] LcQ W T π' c) (lam : O)

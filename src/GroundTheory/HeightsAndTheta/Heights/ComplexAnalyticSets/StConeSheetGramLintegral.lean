@@ -17,7 +17,6 @@ open scoped ENNReal
 
 noncomputable section
 
-open Classical in
 
 def sheetThrough {n d : ℕ} (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin d) (Fin n) ℂ)
     (x : Fin n → ℂ) : (Fin d → ℂ) → Fin n → ℂ :=

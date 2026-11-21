@@ -71,4 +71,3 @@ theorem actK_one_of_mem {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
 
 end GlobalTheory.SerSys.LabLoc
 
-open GlobalTheory.SerSys.LabLoc in

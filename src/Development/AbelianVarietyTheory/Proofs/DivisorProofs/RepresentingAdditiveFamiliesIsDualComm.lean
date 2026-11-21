@@ -42,7 +42,6 @@ def resCls {T' T : Over S} (u : T' ⟶ T) : addCls A T →+ addCls A T' :=
         ← Over.comp_left, comp_lift, lift_fst, lift_snd_assoc]
       exact c.2 Y a a' (t ≫ u)
 
-variable (A) in
 
 def famFunctor : (Over S)ᵒᵖ ⥤ CommGrpCat.{1} where
   obj T := CommGrpCat.of (Multiplicative (addCls A T.unop))

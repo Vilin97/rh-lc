@@ -25,7 +25,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 abbrev cpl (w : HeightOneSpectrum (𝓞 E)) : HeightOneSpectrum (𝓞 E) := conjSrc (GlobalTheory.SplitPts.conjE E) w
 
-omit [NumberField E] [IsCMField E] in
 
 def SameK (x : E) (w w' : HeightOneSpectrum (𝓞 E)) : Prop :=
   ∀ y : 𝓞 E, (y : E) ∈ IntermediateField.adjoin ℚ {x} → (y ∈ w.asIdeal ↔ y ∈ w'.asIdeal)

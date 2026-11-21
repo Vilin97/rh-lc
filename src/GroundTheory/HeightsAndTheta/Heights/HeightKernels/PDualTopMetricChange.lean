@@ -98,7 +98,6 @@ theorem degree_withStdMetric_sub (F : HermLattice K i) :
 
 end TopDualMetricChange
 
-open TopDualMetricChange in
 
 theorem DualTopMetricChange.proof (hTel : TelescopeStatement) (hEnergy : DualMetricEnergy.Statement) :
     DualTopMetricChange.Statement := by

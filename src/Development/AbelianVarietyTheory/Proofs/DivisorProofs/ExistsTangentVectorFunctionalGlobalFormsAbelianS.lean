@@ -289,7 +289,6 @@ theorem exists_lift_of_basis {K : Type} [Field K] [Algebra R K]
   obtain ⟨u, hu, hv⟩ := h i
   exact (S.smul_mem_iff hu).1 hv
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_tangent_residue (hC : GlobalTheory.Published.CrystallineSmoothLift)
     (hH : GlobalTheory.Published.AbelianHodgeDeRham) (K : Type) [Field K] [Algebra R K]

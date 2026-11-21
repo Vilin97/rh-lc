@@ -44,7 +44,6 @@ theorem mem_stabLoc_std_iff (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) {g : 
   · rintro ⟨H1, H2⟩ y
     exact and_congr (H1 _) (H2 _)
 
-omit [NumberField E] in
 
 theorem transpose_splitHom_comp (τ : E →ₐ[F] Fv F v) (hJ : J.map τ * J.map τ = -1) (g : GLoc σ J v) :
     (splitHom σ J (τ.comp σ) g).1ᵀ = -(J.map τ * (splitHom σ J τ g⁻¹).1 * J.map τ) := by
@@ -66,7 +65,6 @@ theorem mul_entry_mem {ι : Type} [Fintype ι] {X Y : Matrix ι ι (Fv F v)}
   rw [Matrix.mul_apply]
   exact sum_mem fun l _ => mul_mem (hX i l) (hY l j)
 
-omit [NumberField E] in
 
 theorem comp_mem_GLint (τ : E →ₐ[F] Fv F v) (hJ : J.map τ * J.map τ = -1)
     (hint : ∀ i j, J.map τ i j ∈ v.adicCompletionIntegers F) {g : GLoc σ J v}

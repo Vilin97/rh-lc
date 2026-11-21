@@ -20,7 +20,6 @@ open Filter
 
 namespace GlobalTheory.AddApproxPlaces
 
-open NumberField.mixedEmbedding MeasureTheory in
 
 theorem exists_small_of_infinitePlace (F : Type) [Field F] [NumberField F] (w₀ : InfinitePlace F)
     (f : InfinitePlace F → NNReal) (hf : ∀ w, f w ≠ 0) :
@@ -36,7 +35,6 @@ theorem exists_small_of_infinitePlace (F : Type) [Field F] [NumberField F] (w₀
   refine ⟨a, RingOfIntegers.coe_ne_zero_iff.2 ha, fun w hw => ?_, fun v => v.valuation_le_one a⟩
   rw [← hg w hw]; exact hlt w
 
-open NumberField.mixedEmbedding MeasureTheory nonZeroDivisors in
 
 theorem exists_small_of_finitePlace (F : Type) [Field F] [NumberField F] (p : HeightOneSpectrum (𝓞 F))
     (f : InfinitePlace F → NNReal) (hf : ∀ w, f w ≠ 0) :

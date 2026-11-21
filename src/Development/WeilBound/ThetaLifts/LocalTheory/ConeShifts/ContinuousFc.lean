@@ -29,7 +29,6 @@ theorem id_borel : BorelSpace (AE F E)ˣ := ⟨rfl⟩
 
 attribute [local instance] id_lc id_sc id_borel
 
-variable (F E) in
 
 def fc : AE F E →+* FiniteAdeleRing (𝓞 E) E := (finAdEquiv F E).toRingHom.comp (finTens F E)
 
@@ -77,7 +76,6 @@ theorem io_mul (a b : AF F) : (io a * io b : AE F E) = io (a * b) := (map_mul _ 
 theorem io_idem {a : AF F} (h : a * a = a) : (io a * io a : AE F E) = io a := by rw [io_mul, h]
 theorem io_orth {a b : AF F} (h : a * b = 0) : (io a * io b : AE F E) = 0 := by rw [io_mul, h]; exact map_zero _
 
-variable (F) in
 
 def ew (w : HeightOneSpectrum (𝓞 E)) : AE F E := extZero F E ((finAdEquiv F E).symm (1 - Neutral.B1.finiteSingle E w 0))
 
@@ -142,7 +140,6 @@ theorem vw_one (w) : vw w (1 : (AE F E)ˣ) = 1 := by simp [vw]
 theorem vw_inv (w) (l : (AE F E)ˣ) : vw w l * vw w l⁻¹ = 1 := by rw [← vw_mul, mul_inv_cancel, vw_one]
 theorem vw_ne (w) (l : (AE F E)ˣ) : vw w l ≠ 0 := left_ne_zero_of_mul_eq_one (vw_inv w l)
 
-variable (F E) in
 
 def UI : Subgroup (AE F E)ˣ where
   carrier := {l | ∀ w, vw w l = 1}

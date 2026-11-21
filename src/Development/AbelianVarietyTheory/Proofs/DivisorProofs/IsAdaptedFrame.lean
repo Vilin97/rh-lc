@@ -118,7 +118,6 @@ theorem fockOp_apply {q : Tens F p₁ q₁ r s →ₗ[ℂ] P} {w : InfinitePlace
     fockOp q w Y (q t) = q (atPl w (fockAct2 p₁ q₁ r s Y) t) := by
   rw [fockOp_eq hq hK, indOp_apply hq (hK Y)]
 
-variable (r s) in
 
 def negT : Mat r s →ₗ[ℂ] Mat r s where
   toFun Y := -Yᵀ

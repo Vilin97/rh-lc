@@ -81,7 +81,6 @@ theorem relIndex_stacked {T : Type} [Fintype T] [DecidableEq T] {F F' : HermLatt
 
 end DualStackedDegreeAlt
 
-open DualStackedDegreeAlt in
 
 theorem DualStackedDegree.proof (hIdx : DualLatticeIndex.Statement) : DualStackedDegree.Statement := by
   intro K _ _ i F F' T _ _ b b' a h hab

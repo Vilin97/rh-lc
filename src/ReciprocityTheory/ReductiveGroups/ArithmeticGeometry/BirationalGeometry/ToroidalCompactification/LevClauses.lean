@@ -18,6 +18,5 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
 theorem univ_isAb : IsAbelianScheme Xo.univ.t.G :=
   ⟨Xo.univ.t.semi.comm, Xo.univ.t.semi.smooth, Xo.univ.proper, Xo.univ.t.semi.geomConnected⟩
 
-set_option backward.isDefEq.respectTransparency false in
 
 end ReciprocityTheory.ChartRestriction.G.Geo.Tor

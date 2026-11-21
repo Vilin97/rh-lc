@@ -41,8 +41,6 @@ theorem infGL_mem_UA {n : ℕ} (y : GL (Fin n) (Cinf E)) (hy : y.valᴴ * y.val 
   · simp only [Matrix.one_apply]
     split_ifs <;> simp
 
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
-omit [IsCMField E] in
 
 end GlobalTheory.UnitaryBC
 

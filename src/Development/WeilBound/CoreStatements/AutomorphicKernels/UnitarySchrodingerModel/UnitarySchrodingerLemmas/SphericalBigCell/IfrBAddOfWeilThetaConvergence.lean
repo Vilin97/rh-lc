@@ -105,7 +105,6 @@ end Abstract
 
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 theorem ifrB_finset_sum {V : HSp D} {ν : Measure (GA D V)} (hν : ν.IsHaarMeasure) {r : ℕ} (β : HermE D r)
     {N : ℕ} (φs : Fin N → Mx D V.rank r → ℂ) (hc : ∀ j, Continuous (φs j))
@@ -219,9 +218,7 @@ theorem ifrBAdd_of_weilThetaConvergence (hW : GlobalTheory.Published.WeilThetaCo
   simp only [Finset.sum_apply]
   exact map_sum (Pi.evalAddMonoidHom (fun _ : Mx D V.rank n => ℂ) _) φs Finset.univ
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end PositivityTheory.PfSWUS.HandIAdd
 

@@ -274,7 +274,6 @@ theorem IsHarmonic.colAct (g : T → GL κ R) {P : Poly R T p q κ} (hP : IsHarm
     IsHarmonic (colAct R T p q κ g P) := fun t a b => by
   rw [laplacian_colAct, hP, map_zero]
 
-variable (R T p q κ) in
 
 end Action
 

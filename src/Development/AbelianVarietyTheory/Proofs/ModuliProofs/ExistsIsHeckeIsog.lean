@@ -65,7 +65,6 @@ theorem comp_act_natCast {O : Type} [CommRing O] {S : Scheme.{0}} {G : Over S} [
     rw [Nat.cast_zero, pow_zero, left_eq_mul.1 h, MonObj.comp_one]
   | succ n ih => rw [Nat.cast_succ, a.add, MonObj.comp_mul, ih, a.one, Category.comp_id, pow_succ]
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_isHeckeIsog [IsAlgClosed k] [CharZero k] (hL : Out.Laws)
     (hfacts : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (B : Type) [CommRing B] (b : Base l B) (S : Scheme.{0}) (s : S ⟶ Sp B) (o : Obj D l b s), IsAbelianScheme o.t.G ∧ SmoothOfRelativeDimension (Module.finrank ℚ E / 2 * (D.p + D.q)) o.t.G.hom ∧ Out.Rigidified o.t.G o.t.PP.L ∧ Out.Sym o.t.G o.t.PP.L)

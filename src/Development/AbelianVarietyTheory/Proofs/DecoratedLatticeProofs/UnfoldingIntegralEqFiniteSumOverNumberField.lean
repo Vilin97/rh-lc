@@ -193,7 +193,6 @@ theorem affPt_free (x₀ : Matrix U U' k) (u : {rs : (U ⊕ Fin c) × (U' ⊕ Fi
   simp only [affPt, Matrix.add_apply, Matrix.of_apply, basePt_free x₀ rs h, zero_add]
   rw [dif_pos h]
 
-open Classical in
 
 def freeMat (y : {rs : (U ⊕ Fin c) × (U' ⊕ Fin (c + 1)) // Free 1 rs} → k) : Matrix (U ⊕ Fin c) (U' ⊕ Fin (c + 1)) k :=
   Matrix.of fun r s => if h : Free 1 (r, s) then y ⟨(r, s), h⟩ else 0

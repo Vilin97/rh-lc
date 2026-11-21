@@ -63,7 +63,6 @@ theorem multIn_eq_zero_iff : multIn π ρ U = 0 ↔ homIn π ρ U = ⊥ := Submo
 theorem multIn_lt_aleph0_iff : multIn π ρ U < Cardinal.aleph0 ↔ FiniteDimensional ℂ (homIn π ρ U) :=
   Module.rank_lt_aleph0_iff
 
-variable (π) in
 
 def homInEquiv (hU : IsSubrep ρ U) : homIn π ρ U ≃ₗ[ℂ]
     ContIntertwiningMap (.ofMonoidHom π : ContRepresentation ℂ G H) (.ofMonoidHom hU.rep : ContRepresentation ℂ G U) where
@@ -145,19 +144,15 @@ theorem IsIsotypic.homIn_ne_bot [Nontrivial K] (h : IsIsotypic π ρ) : homIn π
   (top_ne_bot (α := Submodule ℂ K)) (le_bot_iff.1 (h ▸ isoPart_le (by simp) fun T hT x => by
     rw [e, Submodule.mem_bot] at hT; simp [hT]))
 
-variable (H) in
-open Classical in
 
 def unitVec : H := if h : ∃ x : H, ‖x‖ = 1 then h.choose else 0
 
-variable (H) in
 
 theorem norm_unitVec [Nontrivial H] : ‖unitVec H‖ = 1 := by
   have h : ∃ x : H, ‖x‖ = 1 := exists_norm_eq H zero_le_one
   rw [unitVec, dite_eq_left h]
   exact h.choose_spec
 
-variable (H K) in
 
 def beForm : (H →L[ℂ] K) →ₗ[ℂ] (H →L[ℂ] K) →ₛₗ[starRingEnd ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun T T' => ⟪T' (unitVec H), T (unitVec H)⟫_ℂ)
@@ -190,7 +185,6 @@ theorem isIrrUnitary_charRep {χ : G →* Circle} (hχ : Continuous χ) : IsIrrU
 
 variable [CompleteSpace K]
 
-omit [TopologicalSpace G] in
 
 theorem inner_eq_be_of_norm [CompleteSpace H] (h1 : ∀ g x, ‖π g x‖ = ‖x‖) (h2 : IsTopIrreducible π)
     (h3 : ∀ g x, ‖ρ g x‖ = ‖x‖) (hT : T ∈ homIn π ρ U) (hT' : T' ∈ homIn π ρ U') (x y : H) :
@@ -255,7 +249,6 @@ theorem uEquiv_of_multIn_ne_zero (hπ : IsIrrUnitary π) (hρ : IsIrrUnitary ρ)
   obtain ⟨e, he, h2⟩ := isCopy_iff.1 hW
   exact ⟨.ofSurjective e (LinearMap.range_eq_top.1 (h2.trans h1)), he⟩
 
-omit [CompleteSpace K] in
 
 theorem inner_eq_zero_of_not_uEquiv (hπ : IsIrrUnitary π) (hπ' : IsIrrUnitary π') (hρ : IsUnitaryRep ρ)
     (h : ¬ UEquiv π π') (hT : T ∈ homIn π ρ U) {S : H' →L[ℂ] K} (hS : S ∈ homIn π' ρ U') (x : H) (y : H') :
@@ -301,13 +294,11 @@ instance (R : IrrU G) : Nontrivial R.H := R.isIrr.irred.1
 
 def IrrU.ofChar (χ : G →* Circle) (hχ : Continuous χ) : IrrU G := ⟨ℂ, charRep χ, isIrrUnitary_charRep hχ⟩
 
-variable (G) in
 
 instance IrrU.setoid : Setoid (IrrU G) where
   r R R' := UEquiv R.π R'.π
   iseqv := ⟨fun _ => .refl _, .symm, .trans⟩
 
-variable (G) in
 
 def UDual : Type 1 := Quotient (IrrU.setoid G)
 

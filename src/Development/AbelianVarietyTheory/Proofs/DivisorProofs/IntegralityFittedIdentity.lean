@@ -42,4 +42,3 @@ theorem integralNormBound_mono {K : Type} [Field K] [NumberField K] {ι : Type} 
 
 end GlobalTheory.BigTop.Fun.IntTie
 
-open GlobalTheory.BigTop.Fun.IntTie in

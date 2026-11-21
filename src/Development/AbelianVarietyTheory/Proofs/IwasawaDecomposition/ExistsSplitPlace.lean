@@ -100,8 +100,6 @@ theorem val_fin_principal (D : D7) (c : IdC D) (χ : HChar D.host.E) (hc : ChrEq
   rw [h5, mul_one] at h4
   rw [h3, ← Units.coe_prod, ← Units.val_mul, h4, Units.val_one]
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.FockCompare in
 
 theorem val_inf (D : D7) [Fintype D.what₂.Tau] (c : IdC D) (χ : HChar D.host.E) (hc : ChrEq c χ)
     (T : Finset (HeightOneSpectrum (𝓞 D.host.E))) (hT : ∀ v, v ∉ T → χ.UnrAt v) (n : D.what₂.Tau → ℤ)
@@ -167,7 +165,6 @@ theorem sign_zpow_even {w : ℂ} (hw : starRingEnd ℂ w = w) (h0 : w ≠ 0) (m 
     exact div_self (mul_ne_zero h0 h0)
   rw [show -2 * m = 2 * -m by ring, _root_.zpow_mul, h2, _root_.one_zpow]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_char : ∀ (D : D7) (j : Fin D.R.m),
     ∃ χ : IdC D, IsHeckeChar D χ ∧ (∀ τ, HasInfExp D χ τ (-(D.hc τ).e j)) ∧ ResEta D χ 0 := by

@@ -27,12 +27,8 @@ def IntegralInverse : Prop :=
       (∀ i, Formalism.G.IntegralMv (X' i)) ∧ (∀ i, MvPowerSeries.subst X' (T i) = MvPowerSeries.X i) ∧
       ∀ i, MvPowerSeries.subst T (X' i) = MvPowerSeries.X i
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Complex in
 
 end Formalism.HermitianLattices.ExpSeriesBivariate

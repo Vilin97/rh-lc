@@ -93,7 +93,6 @@ theorem torusToLevi_surjective (hf : Function.Injective (blk f)) :
   rw [val_torusToLevi, diagonal_apply_eq, blk_apply, GeneralLinearGroup.val_det_apply,
     det_unique, hs default x]
 
-omit [LinearOrder β] [DecidableEq n] [∀ j, DecidableEq (c j)] in
 
 theorem sum_card_blocks (P : β → Prop) [DecidablePred P] :
     ∑ b with P b, (Fintype.card (c b) : ℤ) = ∑ i with P (blk f i), (1 : ℤ) := by
@@ -104,7 +103,6 @@ theorem sum_card_blocks (P : β → Prop) [DecidablePred P] :
 
 variable [LinearOrder n]
 
-omit [DecidableEq n] [∀ j, DecidableEq (c j)] in
 
 theorem modExp_blk (hf : StrictMono (blk f)) (i : n) :
     modExp c (blk f i) = modExp (fun _ : n => Unit) i := by

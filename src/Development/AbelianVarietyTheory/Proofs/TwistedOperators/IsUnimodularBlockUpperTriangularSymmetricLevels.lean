@@ -31,7 +31,6 @@ theorem map_mul_right_eq (μ : Measure G) [μ.IsHaarMeasure] (g : G) :
     μ.map (fun x => x * g) = Measure.modularCharacter g • μ :=
   Measure.map_right_mul_eq_modularCharacterFun_smul μ g
 
-omit [T2Space G] in
 
 theorem modular_aut (e : G ≃* G) (hc : Continuous e) (hc' : Continuous e.symm) (g : G) :
     Measure.modularCharacter (e g) = Measure.modularCharacter g := by

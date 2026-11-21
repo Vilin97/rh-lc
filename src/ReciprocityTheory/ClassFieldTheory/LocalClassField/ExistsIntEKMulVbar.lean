@@ -114,7 +114,6 @@ def degLK : ℕ := (subG p K L).index
 
 abbrev GalLK : Type := GK p K ⧸ subG p K L
 
-variable {p K L} in
 
 def resGK (h : K ≤ L) : GK p L →* GK p K where
   toFun σ := { σ.toRingEquiv with commutes' := fun x => σ.commutes ⟨x.1, h x.2⟩ }
@@ -151,7 +150,6 @@ theorem resGK_continuous (h : K ≤ L) : Continuous (resGK h) := by
   rw [Algebra.smul_def, map_mul, AlgEquiv.commutes]
   exact congrArg _ (Set.mem_iInter.1 hσ i)
 
-variable {p K L} in
 
 theorem subG_normal_of_stable (h : ∀ (σ : GK p K), ∀ x ∈ L, σ x ∈ L) : (subG p K L).Normal := by
   refine ⟨fun n hn g x hx => ?_⟩
@@ -256,7 +254,6 @@ def layerUIncl [(subG p K L).Normal] : Pair (layerU p K L) (layer p K L) :=
       induction g using QuotientGroup.induction_on with
       | H σ => rfl)
 
-variable {p K} in
 
 def layerInfl {L L' : IntermediateField ℚ_[p] (PadicAlgCl p)} (h : L ≤ L') [(subG p K L).Normal]
     [(subG p K L').Normal] : Pair (layer p K L) (layer p K L') where
@@ -271,7 +268,6 @@ def layerInfl {L L' : IntermediateField ℚ_[p] (PadicAlgCl p)} (h : L ≤ L') [
     induction g using QuotientGroup.induction_on with
     | H σ => rfl
 
-open Classical in
 
 def vLayerMap [(subG p K L).Normal] : (layer p K L).V →+ ℤ :=
   if h : ∃ f : (layer p K L).V →+ ℤ, ∀ x, (f x : ℝ) = eK p L * vbar p x.1 then h.choose else 0
@@ -296,7 +292,6 @@ abbrev Br : Type := (kbarT p K).H 2
 
 def BrLK [(subG p K L).Normal] : Submodule ℤ (Br p K) := LinearMap.range ((layerInf p K L).hom.H 2)
 
-variable {p K L} in
 
 def resPair (h : K ≤ L) : Pair (kbarT p K) (kbarT p L) where
   φ := resGK h
@@ -305,7 +300,6 @@ def resPair (h : K ≤ L) : Pair (kbarT p K) (kbarT p L) where
   u_cont := continuous_id
   equiv _ _ := rfl
 
-variable {p K L} in
 
 def BrKer (h : K ≤ L) : Submodule ℤ (Br p K) := LinearMap.ker ((resPair h).hom.H 2)
 
@@ -318,7 +312,6 @@ def IsInv (f : (urT p K).H 2 →+ QZ) : Prop :=
     (∀ g, (m g : ℚ) = t (g 0) + t (g 1) - t (g 0 * g 1)) → (∀ g, z.1 g = m g • π) →
     f ((urT p K).coch.cls 2 z hz) = QuotientAddGroup.mk (t (frobLK p K (MaximalUnramifiedExtension p K)))
 
-open Classical in
 
 def invUr : (urT p K).H 2 →+ QZ := if h : ∃ f, IsInv p K f then h.choose else 0
 

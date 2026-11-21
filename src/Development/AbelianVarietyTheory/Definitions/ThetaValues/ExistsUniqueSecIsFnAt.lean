@@ -86,7 +86,6 @@ theorem res_appLE (h : Z ⟶ Y) {U U' : Y.Opens} {V V' : Z.Opens} (hU : U' ≤ U
     ((Scheme.Hom.appLE_map h e (homOfLE hV).op).trans
       (Scheme.Hom.map_appLE h e' (homOfLE hU).op).symm)
 
-omit [Unique K] in
 
 theorem wchart_le_of_comp {φ : Y ⟶ X} {ψ : Z ⟶ X} {h : Z ⟶ Y} (e : h ≫ φ = ψ) (j : K' → L.ι) :
     LB.wchart L (fun _ : K' => ψ) j ≤
@@ -133,15 +132,11 @@ section Fibre
 variable {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {g : ℕ} (u : HolUnif A L g)
   {T : Over (Sp ℂ)} (p : 𝟙_ (Over (Sp ℂ)) ⟶ T)
 
-variable (A) in
 
 def fibreIncl : A ⟶ T ⊗ A := lift (toUnit A ≫ p) (𝟙 A)
 
-omit [GrpObj A] in
 
-omit [GrpObj A] in
 
-omit [GrpObj A] in
 
 def exAt (z : Fin g → ℂ) : Sp ℂ ⟶ (T ⊗ A).left := (lift p (u.ex z)).left
 
@@ -204,7 +199,6 @@ theorem fr_zpow_ne_zero {k : ℤ} {j : Fin 1 → L.ι} {z : Fin g → ℂ}
     (hj : ⊤ ≤ exAt u p z ⁻¹ᵁ (LPow A L k T).U j) (m : ℤ) : u.fr (j 0) z ^ m ≠ 0 :=
   zpow_ne_zero m (u.fr_ne _ z ((exAt_mem_chart_iff u p k j z).1 hj))
 
-variable {u p} in
 
 theorem IsFnAt.eq_div {k : ℤ} {s : LB.Sec (LPow A L k T)} {θ : (Fin g → ℂ) → ℂ}
     (h : IsFnAt u p k s θ) {j : Fin 1 → L.ι} {z : Fin g → ℂ}
@@ -223,7 +217,6 @@ theorem isFnAt_of_exists_chart {k : ℤ} {s : LB.Sec (LPow A L k T)} {θ : (Fin 
   rw [valAt'_sec _ s j j' hj hj', valAt'_LPow_g u p k j j' z hj hj', e, hc, mul_zpow]
   ring
 
-variable {u p} in
 
 theorem IsFnAt.unique (hL : L.IsLB) {k : ℤ} {s : LB.Sec (LPow A L k T)}
     {θ θ' : (Fin g → ℂ) → ℂ} (h : IsFnAt u p k s θ) (h' : IsFnAt u p k s θ') : θ = θ' := by
@@ -255,7 +248,6 @@ theorem isFnAt_zero (k : ℤ) : IsFnAt u p k (H1.SectionArithmetic.secZero (LPow
   rw [Pi.zero_apply, zero_mul, valAt'_eq_valHom _ hj]
   exact map_zero _
 
-variable (A L) in
 
 def secOfFun (r : Γ(T.left, ⊤)) : LB.Sec (LPow A L 0 T) where
   f j := liftFun A _ r
@@ -272,15 +264,10 @@ theorem isFnAt_secOfFun (r : Γ(T.left, ⊤)) :
   rw [zpow_zero, _root_.mul_one]
   exact valAt'_liftFun u p hj r
 
-variable (L) in
 
-variable (A L T) in
 
-omit [GrpObj A] in
 
-omit [GrpObj A] in
 
-variable (L) in
 
 variable {u p}
 
@@ -290,12 +277,10 @@ theorem mem_ptChart_iff {x : T ⟶ A} {z : Fin g → ℂ} (hx : p ≫ x = u.ex z
   rw [← Over.comp_left, hx]
   rfl
 
-variable (u p) in
 
 theorem comp_one_eq_ex_zero : p ≫ (1 : T ⟶ A) = u.ex 0 := by
   rw [ex_zero, MonObj.comp_one]
 
-variable (p) in
 
 theorem valAt'_rigT {rig : LB.Gen (L.pull (eSec A))} (hrig : u.IsRig rig) (k : ℤ)
     (j : Fin 1 → L.ι) (hj : ⊤ ≤ (u.ex 0).left ⁻¹ᵁ L.U (j 0)) :

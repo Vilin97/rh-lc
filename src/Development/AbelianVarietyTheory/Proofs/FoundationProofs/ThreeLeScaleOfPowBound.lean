@@ -106,7 +106,6 @@ variable {T : Core D} {EX : ErrX D} {Tp : ParamsT D L Pm} {hK : DV.KapDef D} [St
   [Algebra.IsIntegral (𝓞 T.Q.c.F) (𝓞 K)] [Algebra (𝓞 D.host.E) K]
   {Bs : DefBase K} {Df : DefSide Bs} {S : IndefData Df} {P : Type} [Group P] [Finite P] {c : OnConst}
 
-variable (Tp hK) in
 
 def NumTie (O : OnObj S P c) : Prop :=
   O.rr = (D.R.r : ℝ) ∧ O.T2 = D.host.T2.card ∧ O.Nc = budgetNc D.R L.sc.x L.sc.eps D.host.T2.card ∧

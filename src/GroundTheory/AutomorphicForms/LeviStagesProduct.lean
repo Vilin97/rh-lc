@@ -111,7 +111,6 @@ theorem levi_blockDiag {m : GL (Fin n) F} (hm : m ∈ levi F n β) :
     ∀ i j, β i ≠ β j → (m : Matrix (Fin n) (Fin n) F) i j = 0 :=
   mem_levi.1 hm
 
-variable (F) in
 
 def leviBlock (m : levi F n β) (a : Set.range β) : GL (Fiber β a) F where
   val := blocks β F ((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) a
@@ -127,7 +126,6 @@ theorem coe_leviBlock (m : levi F n β) (a : Set.range β) :
     ((leviBlock F m a : GL (Fiber β a) F) : Matrix (Fiber β a) (Fiber β a) F) =
       blocks β F ((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) a := rfl
 
-variable (F) in
 
 def leviAssemble (x : ∀ a : Set.range β, GL (Fiber β a) F) : levi F n β :=
   ⟨⟨blockAssemble β F fun a => (x a : Matrix (Fiber β a) (Fiber β a) F),
@@ -161,7 +159,6 @@ theorem continuous_blockAssemble_apply {X : Type*} [TopologicalSpace X]
     rw [e]
     exact continuous_const
 
-variable (F β) in
 
 def leviEquivBlocks : levi F n β ≃ₜ* (∀ a : Set.range β, GL (Fiber β a) F) where
   toFun m a := leviBlock F m a
@@ -208,7 +205,6 @@ theorem blockSize_pos (a : Set.range β) : 0 < blockSize β a := by
   obtain ⟨i, hi⟩ := a.2
   exact Fintype.card_pos_iff.2 ⟨⟨i, Subtype.ext hi⟩⟩
 
-variable (F) in
 
 def leviEquivPi : levi F n β ≃ₜ* (∀ a : Set.range β, GL (Fin (blockSize β a)) F) :=
   (leviEquivBlocks F β).trans

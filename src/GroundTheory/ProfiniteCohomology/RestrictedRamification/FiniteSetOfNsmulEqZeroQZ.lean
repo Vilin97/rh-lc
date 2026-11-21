@@ -68,8 +68,6 @@ theorem exists_place_above (ℓ : ℕ) (hℓ : ℓ.Prime) :
 variable (S : Set (HeightOneSpectrum (𝓞 K.1))) (ℓ : ℕ) (hℓ : ℓ.Prime)
   (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S) (ιs : LocalEmbeddings K)
 
-open Classical in
-include hℓ hS in
 
 theorem exists_gsLocalRes_eq_single (v : HeightOneSpectrum (𝓞 K.1)) (hv : v ∉ S)
     (t : localGaloisCohomology K 2 (.inr v)) (k : ℕ) (ht : ℓ ^ k • t = 0) :

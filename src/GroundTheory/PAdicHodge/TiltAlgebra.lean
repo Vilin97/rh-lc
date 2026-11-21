@@ -45,7 +45,6 @@ section Density
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p]
 
-omit [IsUltrametricDist K] in
 
 end Density
 
@@ -71,11 +70,8 @@ variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [IsPerfectoidField C p
 
 variable (F : IntermediateField K C) [IsPerfectoidField F p]
 
-omit [IsUltrametricDist K] [IsUltrametricDist C] in
 
-variable (p) in
 
-variable (p) in
 
 end TiltIntermediate
 

@@ -70,7 +70,6 @@ theorem continuous_tsum_inv {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ}
   simp only [Equiv.inv_apply]
   rw [e]
 
-set_option maxHeartbeats 1600000 in
 
 theorem globalZeta_entire_functionalEquation (hn : 2 ≤ n) (μ : Measure (normOneGL K n))
     [μ.IsHaarMeasure] (ν : Measure (AdelicGLn.AdelicGL K n)) [ν.IsHaarMeasure]

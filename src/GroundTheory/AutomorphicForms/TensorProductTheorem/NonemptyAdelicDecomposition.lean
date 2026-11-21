@@ -77,7 +77,6 @@ variable {V : Type u} [AddCommGroup V] [Module ℂ V] {Mx : AdelicGKModule K n V
 
 end AdelicDecomposition
 
-variable (K n) in
 
 def cuspSubmodule (U : Submodule ℂ (cuspForms K n))
     (hρ : ∀ X, ∀ φ ∈ U, (gkModuleCusp K n).ρ X φ ∈ U)
@@ -90,7 +89,6 @@ def cuspSubmodule (U : Submodule ℂ (cuspForms K n))
   comm_σ k g := LinearMap.ext fun φ => Subtype.ext
     (gkModuleCusp_σ_finRepCusp k g φ)
 
-variable (K n) in
 
 structure CuspidalAutomorphicRep where
 

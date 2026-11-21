@@ -41,7 +41,6 @@ theorem trace_eq_add_quot {V : Type} [AddCommGroup V] [Module ℂ V] [FiniteDime
   conv_lhs => rw [h1]
   rw [map_add (f := _), map_smul, LinearMap.trace_comp_comm', h2, LinearMap.trace_smulRight, hl, smul_eq_mul, mul_one]
 
-open scoped Classical in
 
 theorem exists_exponents {G : Type} [CommGroup G] (d : ℕ) : ∀ (V : Type) [AddCommGroup V] [Module ℂ V]
     [FiniteDimensional ℂ V] (ρ : Representation ℂ G V), Module.finrank ℂ V = d →
@@ -170,7 +169,6 @@ theorem hasTrace_indicator (μ : Measure G) [IsFiniteMeasureOnCompacts μ] [μ.I
   let q : fixed π I →ₗ[ℂ] LinearMap.range A := A.rangeRestrict ∘ₗ (fixed π I).subtype
   exact LinearMap.trace_comp_comm' j q
 
-open scoped ENNReal in
 
 theorem measure_mul_eq [SecondCountableTopology G] (μ : Measure G) [SFinite μ] [μ.IsMulLeftInvariant]
     {N I : Subgroup G} [MeasurableSpace N] [BorelSpace N] (ν : Measure N) [SFinite ν] [ν.IsMulLeftInvariant]

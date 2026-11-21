@@ -109,7 +109,6 @@ private theorem exists_irreducible_subrep_le_of_ne_bot {G V : Type} [Group G] [A
     rw [← this]
     exact hu
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem exists_irred_le {d l : ℕ} (hd : 0 < d) (hl : 0 < l) (σ : IrrRep (GL (Fin d) k))
     (hσ : IsCuspidal σ.ρ) (T : Subrepresentation (multiProd (consecBlocks l d) (segTerm σ.ρ l)))
@@ -120,7 +119,6 @@ theorem exists_irred_le {d l : ℕ} (hd : 0 < d) (hl : 0 < l) (σ : IrrRep (GL (
   rw [hasFiniteLength_iff_wellFounded] at hfl
   exact exists_irreducible_subrep_le_of_ne_bot hfl.2 T hT
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem isIrreducible_segTensor {d : ℕ} (hd : 0 < d) (σ : IrrRep (GL (Fin d) k)) :
     (piTensor (segTerm σ.ρ 2)).IsIrreducible :=
@@ -134,7 +132,6 @@ private theorem hasFiniteLength_subrepresentation {G V : Type} [Group G] [AddCom
       (fun _ _ => rfl))
     (fun a b h => Subtype.ext h) hπ
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem hasFiniteLength_jac_sub {d : ℕ} (hd : 0 < d)
     (σ : IrrRep (GL (Fin d) k)) (hσ : IsCuspidal σ.ρ)

@@ -12,7 +12,6 @@ open MvPolynomial
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {e : ℕ}
 
-open Classical in
 
 set_option maxHeartbeats 1600000 in
 theorem exists_monic_rel (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ))

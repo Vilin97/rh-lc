@@ -73,7 +73,6 @@ theorem isNilpotent_wdN [FiniteDimensional ↥(MaximalUnramifiedExtension l) (Dp
     | succ k ih => intro x; rw [pow_succ, pow_succ, End.mul_apply, End.mul_apply, wdN_mk, ih]
   exact ⟨n, wd_ext P ι ρ fun x => by rw [hp, hn]; simp⟩
 
-variable {P ρ} in
 
 theorem IsPst.finite [FiniteDimensional ↥LL.1 V] (hV : IsPst P ρ) :
     FiniteDimensional ↥(MaximalUnramifiedExtension l) (DpstUr P ρ) :=
@@ -148,7 +147,6 @@ end Fin
 
 variable [FiniteDimensional ↥LL.1 V]
 
-open Classical in
 
 def wdPst : WD h :=
   if hV : IsPst P ρ then haveI := hV.finite; WD.mk (wdRep P ι Bw h hj ρ) else trivWD h (finrank ↥LL.1 V)
@@ -203,13 +201,11 @@ def IsJumpsAt (τ : E →+* Om l) (J : Multiset ℤ) : Prop :=
   ∃ LL' r', IsModel Bw r LL' r' ∧ Bw.IsdRE P LL' r' ∧ ∃ τ' : ↥Bw.Kw.1 →ₐ[ℚ_[l]] ↥LL'.1,
     IsInduced Bw τ τ' ∧ ∀ n : ℤ, (J.count n : ℤ) = Bw.multE P LL' r' τ' n
 
-omit [NumberField E] in
 
 theorem IsCrysAt.isPotCrysAt (hr : IsCrysAt P Bw r) : IsPotCrysAt P Bw r := by
   obtain ⟨LL', r', h1, h2⟩ := hr
   exact ⟨LL', r', h1, Bw.Kw, le_rfl, h2⟩
 
-omit [NumberField E] in
 
 theorem IsModel.unique {LL' : FinExt l} {r₁ r₂ : ↥Gw →* GL (Fin a) ↥LL'.1} (h₁ : IsModel Bw r LL' r₁)
     (h₂ : IsModel Bw r LL' r₂) : r₁ = r₂ := by
@@ -217,7 +213,6 @@ theorem IsModel.unique {LL' : FinExt l} {r₁ r₂ : ↥Gw →* GL (Fin a) ↥LL
   exact congrArg (fun f : ↥Gw →* GL (Fin a) (Om l) => (f g : Matrix (Fin a) (Fin a) (Om l)) i j)
     (h₁.2.trans h₂.2.symm)
 
-omit [NumberField E] in
 
 end Model
 
@@ -227,7 +222,6 @@ variable [IsAlgClosure E Ω] {A : ValuationSubring Ω} {w : HeightOneSpectrum (�
   (Bw : LocBridge l E Ω (Dec (F := E) A) O) (h : IsPlaceOver A w) (hj : Induces Bw) {a : ℕ}
   (r : ↥(Dec (F := E) A) →* GL (Fin a) (Om l))
 
-open Classical in
 
 def wdAt : WD h :=
   if hr : IsPstAt P Bw r then wdPst P ι Bw h hj (Bw.repE hr.choose hr.choose_spec.choose) else trivWD h a
@@ -260,7 +254,6 @@ def IsdRW (w : HeightOneSpectrum (𝓞 E)) : Prop := ∃ hw, IsdRAt P (br w hw) 
 def IsJumpsW (τ : E →+* Om l) (J : Multiset ℤ) : Prop :=
   ∃ w hw, IsJumpsAt P (br w hw) (resDec pl r w) τ J
 
-open Classical in
 
 def jumpsW (τ : E →+* Om l) : Multiset ℤ :=
   if hJ : ∃ J, IsJumpsW P pl br r τ J then hJ.choose else 0

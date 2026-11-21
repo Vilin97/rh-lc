@@ -61,7 +61,6 @@ theorem logReg_contDiffOn {D : ℕ} {U : Set (Fin D → ℂ)} (hU : IsOpen U) {F
 
 end PolydiscLelongLimit
 
-open PolydiscLelongLimit in
 
 theorem PolydiscLelongLimit.proof : PolydiscLelongLimit.Statement := by
   intro d m r ρ F χ ψ hρ hF hχ hsupp hψ

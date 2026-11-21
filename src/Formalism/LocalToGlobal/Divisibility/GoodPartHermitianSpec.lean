@@ -27,7 +27,6 @@ def chiIdem (χ : G → K) : MonoidAlgebra K G :=
 
 def idemOf (X : Finset (G → K)) : MonoidAlgebra K G := ∑ χ ∈ X, chiIdem χ
 
-open Classical in
 
 def lvlIdem (P : Subgroup G) (ψ : P →* Kˣ) : MonoidAlgebra K G :=
   ∑ h : P, MonoidAlgebra.single (h : G) ((Nat.card P : K)⁻¹ * ((ψ h⁻¹ : Kˣ) : K))
@@ -49,7 +48,6 @@ def subDim (Z : Submodule K (Fin n → K)) : ℕ := finrank K Z
 def SubHasRatBasis (Z : Submodule K (Fin n → K)) : Prop :=
   ∃ b : Basis (Fin (subDim Z)) K Z, ∀ j i, (b j : Fin n → K) i ∈ cmMax K
 
-open Classical in
 
 def subBasis (Z : Submodule K (Fin n → K)) : Basis (Fin (subDim Z)) K Z :=
   if h : SubHasRatBasis Z then h.choose else finBasis K Z

@@ -23,14 +23,12 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
   {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁} {W₁ : Spc F E d₁}
 
-variable (σ t) in
 
 structure PE (J : Matrix (Fin n) (Fin n) E) (J₁ : Matrix (Fin n₁) (Fin n₁) E) (b : GL (Fin n) (Fv F v)) (b₁ : GL (Fin n₁) (Fv F v))
     (ι : Matrix (Fin n) (Fin n₁) E) (sk : Fin n₁ → Fin n) : Prop where
   p1 : (b⁻¹).1 * ι.map t = emb (Fv F v) sk * (b₁⁻¹).1
   p2 : b.1ᵀ * J.map t * ι.map (t.comp σ) = emb (Fv F v) sk * (b₁.1ᵀ * J₁.map t)
 
-variable (σ t) in
 
 structure PX (J : Matrix (Fin n) (Fin n) E) (b : GL (Fin n) (Fv F v)) (x y : Fin n → E) (j₀ j₁ : Fin n) (ε : Fv F v) : Prop where
   x1 : (b⁻¹).1 *ᵥ (fun i => t (x i)) = Pi.single j₀ 1
@@ -132,11 +130,9 @@ theorem emb_c (h : IsSec σ t sec) {ι ι' jr jc} (a : PE σ t X.J X₁.J b b₁
           rw [a.p2, a'.p2]
           simp only [ext, cB, transpose_mul, transpose_transpose, Matrix.mul_assoc, Matrix.mul_neg, Matrix.neg_mul]
 
-variable (t) in
 
 def v1 (b : GL (Fin n) (Fv F v)) (p : Fin n → AE F E) : Fin n → Fv F v := (b⁻¹).1 *ᵥ fun i => piW t (p i)
 
-variable (σ t) in
 
 def v2 (J : Matrix (Fin n) (Fin n) E) (b : GL (Fin n) (Fv F v)) (p : Fin n → AE F E) : Fin n → Fv F v :=
   (b.1ᵀ * J.map t) *ᵥ fun i => piW (t.comp σ) (p i)

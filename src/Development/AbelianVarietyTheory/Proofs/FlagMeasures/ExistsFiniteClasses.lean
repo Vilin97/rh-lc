@@ -268,7 +268,6 @@ theorem isIntM_mul {A B : Matrix (Fin m) (Fin m) E} (hA : IsIntM L A) (hB : IsIn
   rw [Matrix.mul_apply]
   exact L.O.sum_mem fun k _ => L.O.mul_mem (hA i k) (hB k j)
 
-omit [CharZero F] in
 
 theorem exists_conj_int (L : LocE F E) {ϖ : 𝒪[F]} (hϖ : Irreducible ϖ)
     {A : Matrix (Fin m) (Fin m) E} (hA : IsUnit A.det) :
@@ -337,7 +336,6 @@ theorem rel_equiv (K : Subgroup ((Fin n → E) ≃ₗ[E] (Fin n → E))) (x : Fi
   ⟨fun _ => (torb_equiv K).refl _, fun h => (torb_equiv K).symm h,
     fun h h' => (torb_equiv K).trans h h'⟩
 
-omit [IsNonarchimedeanLocalField F] [CharZero F] in
 
 theorem rel_iff (Λs : Submodule L.O (Fin n → E)) (x : Fin m → Fin n → E)
     {g g' : (Fin n → E) ≃ₗ[E] (Fin n → E)} (hg : g ∈ isomG L Hm) (hg' : g' ∈ isomG L Hm) :

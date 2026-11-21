@@ -39,7 +39,6 @@ theorem exists_form_not_mem {P : Ideal (MRing ι)} {d : ℕ} {g : (Σ k, ι₂ k
 
 end GraphChangeOfModel
 
-open GraphChangeOfModel IndefiniteRowSideFullHecke.Inter in
 
 theorem GraphChangeOfModel.proof (hAI3 : Inter.PushforwardArithIntersection.Statement) (hGr : GraphStatement)
     (hGF : GenFibreExistsStatement)

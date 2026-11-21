@@ -18,9 +18,6 @@ section Blocks
 
 variable {n : Type} [Fintype n] [DecidableEq n]
 
-open ValuativeRel Matrix MeasureTheory in
-variable {n : Type} [Fintype n] [DecidableEq n] in
-omit [DecidableEq n] in
 
 theorem _root_.GlobalTheory.InertSupp.exists_blocks (c : n → ℤ) :
     ∃ (s : ℕ) (d : Fin s → ℕ) (e : (Σ a, Fin (d a)) ≃ n),
@@ -50,10 +47,6 @@ def unipOf (c : n → ℤ) : Subgroup (GL n R) :=
 
 variable {R}
 
-open ValuativeRel Matrix MeasureTheory in
-variable {n : Type} [Fintype n] [DecidableEq n] in
-variable (R : Type) [CommRing R] in
-variable {R} in
 
 theorem _root_.GlobalTheory.InertSupp.mem_unipOf {c : n → ℤ} {g : GL n R} :
     g ∈ _root_.GlobalTheory.InertSupp.unipOf R c ↔
@@ -68,7 +61,6 @@ variable (R : Type) [CommRing R] in
 variable {R} in
 variable {α : Type} {m : α → Type} [Fintype α] [LinearOrder α] [∀ a, Fintype (m a)]
   [∀ a, DecidableEq (m a)] in
-variable (R) in
 
 theorem _root_.GlobalTheory.InertSupp.unipRad_eq_unipOf {e : (Σ a, m a) ≃ n}
     {c : n → ℤ} (h : ∀ i j, _root_.GlobalTheory.SmGL.blk e i < _root_.GlobalTheory.SmGL.blk e j ↔ c i < c j) :

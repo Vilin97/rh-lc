@@ -43,6 +43,5 @@ end GlobalTheory.CovTop.MeasRd
 
 namespace GlobalTheory.CovTop.MeasRd
 
-open GlobalTheory.IndefiniteRowSideFullHecke.OneMeasureSizes in
 
 end GlobalTheory.CovTop.MeasRd

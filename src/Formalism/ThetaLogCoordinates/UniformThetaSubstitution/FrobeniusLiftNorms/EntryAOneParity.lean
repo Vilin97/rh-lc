@@ -176,7 +176,6 @@ lemma level_le {ν r0 r1 E : ℕ} [NeZero ν] (p : ℕ) (e : TpV ν r1 → ℕ) 
 
 end ValuationParity
 
-open ValuationParity in
 
 theorem entryExcessBound_of (hS : EntryStar) (hC : HitsCapPos) (hA : ExcessGainBound) (hL : ChargeLemma) : EntryExcessBound := by
   intro K _ _ p ν r0 r1 C _ u F TT ξ e l sf T I hyp

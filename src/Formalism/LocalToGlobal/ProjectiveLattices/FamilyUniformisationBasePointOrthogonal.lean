@@ -128,7 +128,6 @@ variable {Comp : Type}
 variable {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l}
   {c : Coeff l} {σ : c.F →+* ℂ} {r : ℕ}
 
-open Classical in
 
 def DictSpec (U : Unf Xo c σ r) (V : HSp D) (hr : V.rank = r)
     (ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)) {g : ℕ} (e : Fin g ≃ Σ τ : D.host.E →+* ℂ, Fin (Dw.mult τ))
@@ -146,9 +145,7 @@ def DictSpec (U : Unf Xo c σ r) (V : HSp D) (hr : V.rank = r)
       ∀ τ : (U.X p.1).Ψ, mat p.2 τ =
         Matrix.reindex (finCongr hr) (finCongr hr) (archM V (th p.1 τ) (γ * h)) * x₀ τ.1
 
-open Classical in
 
-open Classical in
 
 def DetRootMul (V : HSp D) : Prop :=
   ∀ g g' x x', IsDetRoot V g x → IsDetRoot V g' x' → IsDetRoot V (g * g') (x * x')
@@ -166,7 +163,6 @@ section Base
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
-open Classical in
 
 end Base
 
@@ -209,7 +205,6 @@ variable {D : D7}
 variable {hN : N1c} {Q : Par D} {hpq : ∀ j, 1 ≤ (Q.Dw j).p + (Q.Dw j).q}
   {chiW : ℕ → (Q.c.F →+* ℂ) → (AE D)ˣ →* Circle}
 
-open Classical in
 
 end J
 

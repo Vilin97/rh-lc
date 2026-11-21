@@ -100,7 +100,6 @@ lemma hasCompactSupport_smallF : HasCompactSupport smallF := by
 
 end GlobalTheory.CompanionTheory.TestBump
 
-open GlobalTheory.CompanionTheory.TestBump in
 
 theorem GlobalTheory.CompanionTheory.TestBump.cplxBump : CplxBump := by
   classical

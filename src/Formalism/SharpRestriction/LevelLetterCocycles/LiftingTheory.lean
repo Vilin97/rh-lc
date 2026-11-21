@@ -358,7 +358,6 @@ def coreDss (W : LocWach PD LL O v n) : Prop :=
             W.γD T W.gam (seq k) - seq k) ∧
         seq (xList W T (Mmax n Mi) (Mmax n hi) Y).length ∈ W.N T
 
-variable (PD LL O) in
 
 def coreJumps : Prop :=
   ∀ (T₀ T₁ T₂ : LocLat G Qp LL O) (ι : LatHom T₀.L T₁.L) (π : LatHom T₁.L T₂.L),

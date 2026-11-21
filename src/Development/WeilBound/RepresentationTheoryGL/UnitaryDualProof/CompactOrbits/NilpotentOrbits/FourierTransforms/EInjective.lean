@@ -99,7 +99,6 @@ theorem G_symm : (G Z)ᵀ = G Z := by
   simp only [G, transpose_apply, of_apply]
   exact trace_mul_comm _ _
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem orth {z w : Matrix (Fin n) (Fin n) k} (hz : z ∈ Z) (hw : w ∈ B0 Z) : trace (z * w) = 0 := by
   obtain ⟨-, hwq⟩ := Submodule.mem_inf.mp hw
@@ -196,7 +195,6 @@ omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem Pr_of_D (hZ : CR Z) (h : Hyp Z) {x : Matrix (Fin n) (Fin n) k} (hx : D Z x = 0) : Pr Z x = 0 := by
   simp [Pr, hx, E]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem piZ_eq_sub (hZ : CR Z) (h : Hyp Z) {x : Matrix (Fin n) (Fin n) k} (hx : x ∈ Bz Z) :
     piZ Z x = x - Pr Z x := by

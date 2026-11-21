@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain
 
 namespace GlobalTheory
 
-open NumberField.InfinitePlace NumberField.mixedEmbedding in
 
 theorem totallyComplex_span_embeddings_and_finrank :
     ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E],

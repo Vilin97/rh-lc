@@ -64,7 +64,6 @@ theorem finPart_realAd_smul (D : D7) (t : ℝ) (y : AE D) :
     exact TensorProduct.zero_tmul _ _
   rw [Algebra.smul_def, map_mul, h0, zero_mul]
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_line (D : D7) (S X : HSp D) {d : ℕ} (e : Fin d ≃ Fin X.rank)
     (Bs : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (hBs : Bs.IsGood D.sp.cm.sig)
@@ -138,7 +137,6 @@ theorem exists_line (D : D7) (S X : HSp D) {d : ℕ} (e : Fin d ≃ Fin X.rank)
   have hder := GlobalTheory.ThetaLineDeriv.hasDerivAt_thetaSum_rho M.co Bs.ψ hF hψc u₀ _ hΦ _ h1 hd u
   exact (hder.deriv.symm.trans (congrArg (fun g => deriv g 0) (funext hkey)).symm)
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.ThetaRealDeriv
 

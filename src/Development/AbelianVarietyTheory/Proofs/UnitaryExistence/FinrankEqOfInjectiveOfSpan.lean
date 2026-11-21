@@ -12,8 +12,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 
 namespace GlobalTheory.HermModel
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.HermModel.finrank_eq_of_injective_of_span {R K M V : Type} [CommRing R] [IsDomain R]
     [Field K] [Algebra R K] [IsFractionRing R K] [AddCommGroup M] [Module R M] [AddCommGroup V]
@@ -45,9 +43,6 @@ section Trace
 
 variable {E : Type} [Field E] [NumberField E]
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
-variable {E : Type} [Field E] [NumberField E] in
 
 theorem _root_.GlobalTheory.HermModel.eq_zero_of_trace_mul_integer {t : E}
     (ht : ∀ a : 𝓞 E, Algebra.trace ℚ E (t * a) = 0) : t = 0 := by
@@ -103,9 +98,6 @@ theorem _root_.GlobalTheory.HermModel.herm_zero_right (G : Matrix (Fin r) (Fin r
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.herm _root_.ReciprocityTheory.ChartRestriction.G.FD.cc
   simp
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.HermModel.eq_zero_of_herm_eq_zero {G : Matrix (Fin r) (Fin r) E}
     (hG : G.det ≠ 0) {w : Fin r → E} (hw : ∀ u, _root_.ReciprocityTheory.ChartRestriction.G.FD.herm G w u = 0) : w = 0 := by

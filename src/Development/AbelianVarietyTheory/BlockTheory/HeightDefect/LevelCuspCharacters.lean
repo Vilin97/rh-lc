@@ -118,7 +118,6 @@ variable {p} {K : Type} [Field K]
 def torVal {d : ℕ} (θ : Tor p d →* Kˣ) : Fbar p → K :=
   Function.extend (fun u : Tor p d => ((u : (Fbar p)ˣ) : Fbar p)) (fun u => ((θ u : Kˣ) : K)) 0
 
-open Classical in
 
 def cuspChar {ι : Type} [Fintype ι] [DecidableEq ι] (θ : Tor p (Fintype.card ι) →* Kˣ) (h : Matrix ι ι (ZMod p)) : K :=
   if ∃ (φ : (ZMod p)[X]) (n : ℕ), Irreducible φ ∧ h.charpoly = φ ^ n then
@@ -139,7 +138,6 @@ theorem cycLen_pos {r : ℕ} (b : Fin r → Fin r) (c : Cyc b) : 0 < cycLen b c 
 theorem cycLen_dvd {r : ℕ} (b : Fin r → Fin r) (c : Cyc b) : cycLen b c ∣ r.factorial :=
   Nat.dvd_factorial (cycLen_pos b c) (by simpa using Fintype.card_subtype_le (fun i : Fin r => b i = c.1))
 
-variable (p K) in
 
 abbrev SSParam (r : ℕ) : Type := Σ b : Fin r → Fin r, ∀ c : Cyc b, (Tor p (cycLen b c) →* Kˣ)
 
@@ -161,7 +159,6 @@ def cycChar (s : SSParam p K r) (c : Cyc s.1) : Tor p r.factorial →* Kˣ :=
 def rootChar (s : SSParam p K r) (x : Σ c : Cyc s.1, Fin (cycLen s.1 c)) : Tor p r.factorial →* Kˣ :=
   cycChar s x.1 ^ (p ^ x.2.val)
 
-open Classical in
 
 def typeChar (s : SSParam p K r) (x : GL (Fin r) (ZMod p)) : K :=
   haveI := Fintype.ofFinite (GL (Fin r) (ZMod p))
@@ -255,7 +252,6 @@ def goodIdem (om : ∀ i : Fin 2, (ZMod (H.g i))ˣ →* Kˣ) : MonoidAlgebra K (
 def goodIdemTw (om : ∀ i : Fin 2, (ZMod (H.g i))ˣ →* Kˣ) (j : Fin R.m) : MonoidAlgebra K (LevelGroup H) :=
   twistInv (chiDet om j) (goodIdem om)
 
-variable (H K) in
 
 end Level
 

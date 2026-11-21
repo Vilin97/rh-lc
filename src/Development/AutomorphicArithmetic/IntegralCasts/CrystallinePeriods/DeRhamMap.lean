@@ -23,7 +23,6 @@ theorem AinfInv.kerTheta_le_comap (f : R →+* S) :
   intro x hx
   rw [Ideal.mem_comap, RingHom.mem_ker, AinfInv.theta_map, RingHom.mem_ker.1 hx, map_zero]
 
-variable {p} in
 
 namespace BdRPlus
 
@@ -69,7 +68,6 @@ theorem theta_map (f : R →+* S) (x : BdRPlus p R) :
   apply theta_eq_of_eval_one
   rw [eval_map, ← ha, Ideal.quotientMap_mk]
 
-variable (p) in
 
 def mapEquiv (e : R ≃+* S) : BdRPlus p R ≃+* BdRPlus p S :=
   RingEquiv.ofRingHom (map p e.toRingHom) (map p e.symm.toRingHom)

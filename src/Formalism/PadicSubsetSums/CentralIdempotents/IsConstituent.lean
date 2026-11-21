@@ -145,7 +145,6 @@ structure LabelConv where
 def rootsBar (f : K[X]) : Multiset (AlgebraicClosure K) :=
   (f.map (algebraMap K (AlgebraicClosure K))).roots
 
-variable {K} in
 
 def HasCuspLabel (C : LabelConv K) {ι : Type} [Fintype ι] [DecidableEq ι] (τ : FDRep ℂ (GL ι K))
     (P : K[X]) : Prop :=
@@ -158,7 +157,6 @@ def HasCuspLabel (C : LabelConv K) {ι : Type} [Fintype ι] [DecidableEq ι] (τ
         (-1) ^ (Fintype.card ι - 1) *
           ∑ a ∈ Finset.range (Fintype.card ι), C.ι x ^ (m * Fintype.card K ^ a)
 
-variable {K} in
 
 def HasLabel (C : LabelConv K) {ι : Type} [Fintype ι] [DecidableEq ι] (τ : FDRep ℂ (GL ι K))
     (f : K[X]) : Prop :=
@@ -179,12 +177,8 @@ def CuspParam (C : LabelConv K) : Prop :=
     (∀ (τ τ' : FDRep ℂ (GL (Fin d) K)) (P : K[X]), Simple τ → IsCuspidal K τ → Simple τ' → IsCuspidal K τ' →
       HasCuspLabel C τ P → HasCuspLabel C τ' P → Nonempty (τ ≅ τ'))
 
-variable {K} in
 
-variable {K} in
 
-open Classical in
 
-open Classical in
 
 end Formalism.IrreducibleCountingLemmas.TYPES

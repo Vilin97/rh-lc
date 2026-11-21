@@ -92,13 +92,11 @@ variable {k k' : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarc
 
 def diagU (b : borel k (Fin n)) (i : Fin n) : kˣ := GeneralLinearGroup.det (leviProj k (points (Fin n)) b i)
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem val_diagU (b : borel k (Fin n)) (i : Fin n) : (diagU b i : k) = b.1.val i i := by
   rw [diagU, GeneralLinearGroup.val_det_apply, Matrix.det_unique]
   rfl
 
-variable (k) in
 
 def borelChar (α : Fin n → ℂˣ) : borel k (Fin n) →* ℂˣ :=
   (deltaHalf k (fun _ : Fin n => Unit) * (torusChar fun i => SmGL.unrChar k (α i)).comp
@@ -142,7 +140,6 @@ theorem exists_hasSatake (α : Fin n → ℂˣ) : ∃ π : IrrRep (GL (Fin n) k)
 
 def flip (j : k' →+* k) (n : ℕ) : GL (Fin n) k' →* GL (Fin n) k := invRevT.comp (GeneralLinearGroup.map j)
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] [ValuativeRel k'] [IsNonarchimedeanLocalField k'] in
 
 theorem continuous_flip {j : k' →+* k} (hj : Continuous j) : Continuous (flip j n) :=
   Units.continuous_iff.2 ⟨continuous_matrix fun a b => hj.comp (Units.continuous_coe_inv.matrix_elem b.rev a.rev),
@@ -267,7 +264,6 @@ theorem lpDim_locPar (π : CG E a) (h : IsPlaceOver A w) : (locPar hL π h).lpDi
   obtain ⟨_, _, _, -, H⟩ := isRec_locRec hL h
   exact H.dim _
 
-include hF in
 
 theorem eventually_unr (π : CG E a) : ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite,
     ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w), (locPar hL π h).unr := by
@@ -293,7 +289,6 @@ theorem locPar_ofChar (χ : HChar E) (h : IsPlaceOver A w) :
     locPar hL (CG.ofChar χ) h = locRec hL h (.ofChar (χ.loc w) (isSmoothChar_loc χ w)) :=
   locPar_mk hL (CG.isLoc_ofChar χ w) h
 
-include hF in
 
 theorem locPar_twist (π : CG E a) (χ : HChar E) (h : IsPlaceOver A w) :
     locPar hL (π.twist χ) h = (locPar hL π h).lpChar (locPar hL (CG.ofChar χ) h) := by
@@ -304,7 +299,6 @@ theorem locPar_twist (π : CG E a) (χ : HChar E) (h : IsPlaceOver A w) :
   rw [locPar_ofChar, show locPar hL (Quotient.mk _ π) h = _ from locPar_mk hL hσ h, ← H.twist]
   exact congrArg _ (IrrGL.tw_of σ.ρ σ.smooth σ.irred _ _).symm
 
-include hF in
 
 theorem locPar_tw (π : CG E a) (χ : CG E 1) (h : IsPlaceOver A w) :
     locPar hL (π.tw χ) h = (locPar hL π h).lpChar (locPar hL χ h) := by

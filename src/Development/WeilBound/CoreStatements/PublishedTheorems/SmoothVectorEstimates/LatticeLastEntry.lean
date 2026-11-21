@@ -132,7 +132,6 @@ theorem det_sMat (hk : m + 1 < a) (ξ : UnipotentBlockColumnIndex a (m + 1) (m +
       simp [sMat, extR, hj]
     · simp [sMat, Matrix.updateRow_ne hi, Matrix.one_apply_ne (ne_of_lt hij')]
 
-open Classical in
 
 def sM (hk : m + 1 < a) (ξ : UnipotentBlockColumnIndex a (m + 1) (m + 1) → F) : GL (Fin a) F :=
   if hξ : ξ (t0 hk) ≠ 0 then

@@ -47,7 +47,6 @@ section Main
 variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl}
   {p0 : BaseLevelRowSide (w.D Z)}
 
-set_option maxHeartbeats 1000000 in
 
 theorem cenRat_of (t : RowsT K w Z Wt p0) (r : RXs t) : GlobalTheory.CenLocAt.CenRat t.r.Y t.r.z.cG := by
   intro s k z a ha x

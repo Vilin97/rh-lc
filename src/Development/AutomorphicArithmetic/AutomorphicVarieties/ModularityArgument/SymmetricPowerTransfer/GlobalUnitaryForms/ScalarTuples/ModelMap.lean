@@ -92,7 +92,6 @@ private lemma quo_star (z : (Etau K τ)ˣ) : quo z * star (quo z) = 1 := by
         (star (z : Etau K τ) * star ((z⁻¹ : (Etau K τ)ˣ) : Etau K τ)) := by ring
     _ = 1 := by rw [e, e', one_mul]
 
-variable (Δ) in
 
 private def torL (z : (Etau K τ)ˣ) : Sp Δ τ →ₗ[Lsq K Δ] Sp Δ τ where
   toFun := tor Δ z
@@ -243,7 +242,6 @@ section Main
 
 variable {K K' : Type} [Field K] [Field K'] (f : K →+* K') {Δ τ : K}
 
-variable (Δ τ) in
 
 private def cdE : Sp Δ τ ≃ₗ[Lsq K Δ] (Fin 3 → Lsq K Δ) where
   toFun x := ![x.1, x.2.re, x.2.im]

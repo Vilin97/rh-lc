@@ -22,7 +22,6 @@ def tEval {σ : Type} [Fintype σ] [DecidableEq σ] {S : Type} [CommRing S] [Alg
   ∑ e : σ → Fin N, algebraMap R₀ S (MvPowerSeries.coeff
     (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ)) f) * ∏ i, a i ^ (e i : ℕ)
 
-open Classical in
 
 def nEval {σ : Type} [Fintype σ] [DecidableEq σ] {S : Type} [CommRing S] [Algebra R₀ S]
     (f : MvPowerSeries σ R₀) (a : σ → S) : S :=

@@ -40,7 +40,6 @@ theorem isCartanInv_neg {V : HSp D} {τ : D.what₂.Tau} {s : Matrix (Fin V.rank
   refine ⟨by rw [neg_mul_neg, h.1], ?_, by rw [neg_mul_neg]; exact h.2.2⟩
   rw [conjTranspose_neg, neg_mul_neg, mul_neg, h.2.1]
 
-open Classical in
 
 structure Places (L : LevCh D T) where
 
@@ -67,15 +66,12 @@ namespace Places
 
 variable {L : LevCh D T} (P : Places L)
 
-open Classical in
 
 def S0 : Finset (Pl D.host.F) := insert P.v0 (S1 D)
 
-open Classical in
 
 def W0 : Finset (Pl D.host.E) := P.S0.image P.w
 
-open Classical in
 
 def depth (sc : Consts) (v : Pl D.host.F) : ℕ := if v = P.v0 then depth0 D sc.cDep sc.b else 2
 
@@ -199,7 +195,6 @@ def Node.InRange (m : ℕ) : Node → Prop
   | .core i => i ≤ m
   | .top j => j ≤ m
 
-variable (D) in
 
 def Node.rank : Node → ℕ
   | .grid i j => rankV D i j
@@ -211,14 +206,12 @@ def Node.neg (m : ℕ) : Node → ℕ
   | .core i => (m - i + 1) / 2
   | .top _ => 0
 
-variable (D) in
 
 def Node.par0 (C : ℝ) : Node → D.what₂.Tau → SPar
   | .grid i j, τ => (num D C τ).parD i j
   | .core i, τ => (num D C τ).parPi i
   | .top j, τ => (num D C τ).parX j
 
-variable (D) in
 
 def Node.par (C : ℝ) : Node → D.what₂.Tau → SPar
   | .grid i j, τ => parV D C i j τ
@@ -251,9 +244,7 @@ namespace Pair
 
 def InRange (m : ℕ) (p : Pair T) : Prop := p.big.InRange m
 
-variable (D) in
 
-variable (D) in
 
 theorem InRange.small {m : ℕ} {p : Pair T} (h : p.InRange m) : p.small.InRange m := by
   cases p <;> simp only [InRange, Node.InRange] at h ⊢ <;> omega

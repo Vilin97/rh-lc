@@ -390,7 +390,6 @@ end Shape
 
 section Adapted
 
-open GlobalTheory.LeviElem in
 
 theorem span_det (σ : E →ₐ[F] E) (hσ : ∀ z, σ (σ z) = z) (B : Base F E) {b : ℕ} {Y : Spc F E (b + 2)}
     {Y₁ : Spc F E b} (herm : ∀ i j, σ (Y.J j i) = Y.J i j) {H : Plane E (b + 2) b} {i₀ i₁ : ℕ}
@@ -455,7 +454,6 @@ theorem cont_uMat (σ : E →ₐ[F] E) (J : Matrix (Fin d) (Fin d) E) (H : Plane
 
 end Cont
 
-open GlobalTheory.LeviElem in
 
 theorem unip_homeo_coords : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → B.IsGood σ → G.IsGood B → G₁.IsGood B →

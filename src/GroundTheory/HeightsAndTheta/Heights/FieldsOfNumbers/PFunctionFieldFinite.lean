@@ -28,7 +28,6 @@ def chartGens (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F �
   Set.range fun v => algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P (X v)) /
     algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P (X ⟨v.1, u v.1⟩))
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem range_chartMap (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (u : ∀ k, ι k) :
     (chartMap P u).range = Algebra.adjoin F (chartGens P u) :=
@@ -58,7 +57,6 @@ theorem homFracDegZero_eq (hD : MChartDehomog.Statement.{u}) (P : Ideal (Recipro
     exact IntermediateField.subset_adjoin _ _ ⟨blockWeight ι v, X v, X ⟨v.1, u v.1⟩,
       isWeightedHomogeneous_X _ _ _, isWeightedHomogeneous_X _ _ _, hu v.1, rfl⟩
 
-open IntermediateField.algebraAdjoinAdjoin in
 
 theorem trdeg_homFracDegZero (hD : MChartDehomog.Statement.{u}) (hT : MChartTrdeg.Statement.{u})
     [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (hP : IsMultiHomogIdeal P)
@@ -90,7 +88,6 @@ theorem relDim_eq_trdeg (hD : MChartDehomog.Statement.{u}) (hT : MChartTrdeg.Sta
 
 end FunctionFieldFinite
 
-open FunctionFieldFinite in
 
 theorem FunctionFieldFinite.proof (hD : MChartDehomog.Statement.{u})
     (hT : MChartTrdeg.Statement.{u}) : FunctionFieldFinite.Statement.{u} := by

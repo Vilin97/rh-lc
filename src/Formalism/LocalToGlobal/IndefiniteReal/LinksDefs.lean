@@ -137,11 +137,9 @@ end Tw
 
 variable {K : Type} [Field K]
 
-open Classical in
 
 def sgAt (σ₀ : K →+* ℂ) (v : InfinitePlace K) : K →+* ℂ := if v = InfinitePlace.mk σ₀ then σ₀ else v.embedding
 
-open Classical in
 
 def twAt (σ₀ : K →+* ℂ) (v : InfinitePlace K) : Bool := if v.embedding = sgAt σ₀ v then false else true
 
@@ -296,18 +294,15 @@ def IsRes (χ : HChar D.host.E) (P : Pl D.host.E) (c : (kP P)ˣ →* ℂˣ) : Pr
   ∀ (a : 𝓞 D.host.E) (k : D.host.Eˣ) (u : (kP P)ˣ), (k : D.host.E) = a → (u : kP P) = Ideal.Quotient.mk _ a →
     c u = χ.locK P k
 
-variable (D) in
 
 abbrev Ptw : TPar D := tparRec D
 
-variable (D) in
 
 def labLL (τ : D.what₂.Tau) : D.host.E →+* D.what₂.LL :=
   D.embE.comp (D.host.sigmaOf (D.eTau τ).1 : D.host.E →+* D.host.E)
 
 def labE (σ : D.what₂.LL →+* ℂ) (τ : D.what₂.Tau) : D.host.E →+* ℂ := σ.comp (labLL D τ)
 
-open Classical in
 
 def lab (σ : D.what₂.LL →+* ℂ) (ρ : D.what₂.Tau) : D.what₂.Tau :=
   if h : ∃ τ, labE σ τ = tauE D ρ ∨ labE σ τ = (starRingEnd ℂ).comp (tauE D ρ) then h.choose else ρ
@@ -316,7 +311,6 @@ def kapAt (W : HSp D) (σ : D.what₂.LL →+* ℂ) (ρ : D.what₂.Tau) :
     Fin (W.sig (tauE D ρ)).1 ⊕ Fin (W.sig (tauE D ρ)).2 → ℤ :=
   Formalism.L2.NTheta.kapW (D.hc (lab σ ρ)) _ _
 
-open Classical in
 
 def parAt (W : HSp D) (σ : D.what₂.LL →+* ℂ) (ρ : D.what₂.Tau) : SPar :=
   if labE σ (lab σ ρ) = tauE D ρ then Formalism.L2.NTheta.holPar _ _ (kapAt W σ ρ)
@@ -340,12 +334,10 @@ abbrev SmT (M : DSModel V S) : Type := ⨂[ℂ] τ, M.sm τ
 
 abbrev LowT (M : DSModel V S) : Type := ⨂[ℂ] τ, lowT M τ
 
-variable (D) in
 
 def aPl (i : Fin D.R.m) (p : ℕ) (τ : D.what₂.Tau) (n : ℕ) : ℕ :=
   if n < p then ⌊Formalism.L2.NTheta.lamAt (D.hc τ) n + (D.hc τ).e i - ((p : ℚ) - (n + 1)) - ((D.R.t : ℚ) + 1) / 2⌋.toNat else 0
 
-variable (D) in
 
 def aMi (i : Fin D.R.m) (p q : ℕ) (τ : D.what₂.Tau) (n : ℕ) : ℕ :=
   if n < q then ⌊-((D.hc τ).e i + Formalism.L2.NTheta.lamAt (D.hc τ) (p + (q - n) - 1) + ((q - n : ℕ) : ℚ) + ((D.R.t : ℚ) - 1) / 2)⌋.toNat
@@ -357,15 +349,12 @@ section Spaces
 
 open Formalism.IndefR.Lev
 
-variable (D) in
 
 abbrev Yc (j : ℕ) : HSp D := D.sp.Y (min j D.R.m)
 
-variable (D) in
 
 abbrev Wc (i : Fin D.R.m) : HSp D := D.sp.W ((i : ℕ) + 1)
 
-variable (D) in
 
 abbrev Vc (i : Fin D.R.m) : HSp D := D.sp.V ((i : ℕ) + 1)
 
@@ -387,7 +376,6 @@ theorem r_le_V (i : Fin D.R.m) : D.R.r ≤ (Vc D i).rank := by
   rw [D.sp.V_rank _ (Nat.succ_pos _) i.2]
   exact Nat.le_add_right _ _
 
-variable (D) in
 
 structure LevCh (T : Type) where
 
@@ -478,8 +466,6 @@ open Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism
 
 variable (D) {G : Type} [Group G] [Fintype G] {Pl0 T : Type} (A : FamIn D.what₂.LL G Pl0 T D.R.m)
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure Face where
 
@@ -513,9 +499,6 @@ abbrev sg0 : D.what₂.LL →+* ℂ := sgAt D.what₂.embLL A.v0
 
 abbrev PolF (a b : ℕ) : Type := MvPolynomial (FVar D a b) ℂ
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 2000000 in
 
 structure RealDat (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] extends LevCh D T where
 

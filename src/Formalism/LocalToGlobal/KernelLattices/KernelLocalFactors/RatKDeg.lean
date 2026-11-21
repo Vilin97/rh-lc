@@ -178,8 +178,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 
 end ChainN
 
-open Classical in
 
-open Classical in
 
 end Formalism.L2.Ker

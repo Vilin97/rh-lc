@@ -30,7 +30,6 @@ def JnumOneLetter (s : ZMod d) : ℕ :=
 
 def kaMaxOneLetter : ℕ := max (TT.sup nu1) (Finset.univ.sup (capL d TT nu1 nu2))
 
-open Classical in
 
 def oddLevelGainSum (s : ZMod d) : ℝ :=
   ∑' e : ℕ,

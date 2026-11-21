@@ -237,7 +237,6 @@ theorem exists_gen_carried (cb : CubicalStr G L) (hF : ∀ σ, IsGrpPullback G G
 
 end Grp
 
-open RigidIsoCube in
 
 theorem pmaps_cub (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D : DegData R I)
     (A : PolAV (Sp (FractionRing R))) (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (U : UnifPre I D A G)

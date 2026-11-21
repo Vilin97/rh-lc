@@ -21,15 +21,12 @@ variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
 abbrev phiH (P : PAlg l ⥤ Type) (n j : ℕ) : MH P n j → MH P n j := (phiMor P n).pull j
 
-variable (l) in
 
 def tA : Acris l := ACris.periodT (untilt_epsilon (p := l))
 
-variable (l) in
 
 def galA (g : K.fixingSubgroup) : Acris l →+* Acris l := ACris.galCris (IntermediateField.fixingSubgroupEquiv K g)
 
-variable (l) in
 
 structure PBg (l : ℕ) [Fact l.Prime] {A Γ : Type} [CommRing A] (t : A) (φA : A →+* A) (σA : Γ → (A →+* A)) (z : ℤ_[l] →+* A) : Type 1 where
   C : Type
@@ -47,7 +44,6 @@ structure PBg (l : ℕ) [Fact l.Prime] {A Γ : Type} [CommRing A] (t : A) (φA :
 
 attribute [instance] PBg.ring PBg.alg
 
-variable (l K) in
 
 abbrev MuMor (r : Res l K) (M : Model l K) (n : ℕ) :=
   CH.Mor (Wc.OM l (B.schFn M.p) r.ρ n) (B.Oc (B.schFn M.p) (okToOC l K) true n) r.w

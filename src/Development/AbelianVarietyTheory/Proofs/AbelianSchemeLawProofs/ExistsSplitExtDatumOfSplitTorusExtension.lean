@@ -363,7 +363,6 @@ theorem IsFrame.trans_id {χ : X} {O : RigLB B} {u : ∀ j, Γ(G.left, q.left �
 
 include hk
 
-omit [IsMonHom i] in
 
 theorem IsFrame.exists_gen_zero {O : RigLB B} {u : ∀ j, Γ(G.left, q.left ⁻¹ᵁ O.L.U j)ˣ}
     (h : IsFrame q i 0 O u) : ∃ t : LB.Gen O.L, t.IsGen := by
@@ -374,7 +373,6 @@ theorem IsFrame.exists_gen_zero {O : RigLB B} {u : ∀ j, Γ(G.left, q.left ⁻�
   · rw [map_inv, map_inv, h.trans_id j j' y h₁ h₂]
     exact inv_eq_div_mul_inv _ _
 
-omit [IsMonHom i] in
 
 theorem IsFrame.exists_iso_add {χ χ' : X} {O O' O'' : RigLB B}
     {u : ∀ j, Γ(G.left, q.left ⁻¹ᵁ O.L.U j)ˣ} {u' : ∀ j, Γ(G.left, q.left ⁻¹ᵁ O'.L.U j)ˣ}
@@ -432,7 +430,6 @@ theorem cover_tensorHom : (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismPro
   rw [MonoidalCategory.tensorHom_def, Over.comp_left]
   exact ⟨⟨inferInstance, inferInstance⟩, inferInstance⟩
 
-omit hk [IsMonHom q] [IsMonHom i] [Flat q.left] [Surjective q.left] [QuasiCompact q.left] in
 
 theorem IsFrame.exists_gen_linComb {χ : X} {O : RigLB B}
     {u : ∀ j, Γ(G.left, q.left ⁻¹ᵁ O.L.U j)ˣ} (h : IsFrame q i χ O u) {Y Y' : Over S} (π : Y' ⟶ Y)

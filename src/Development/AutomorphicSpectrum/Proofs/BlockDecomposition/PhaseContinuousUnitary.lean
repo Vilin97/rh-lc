@@ -32,7 +32,6 @@ theorem psiFin_continuous_unit (F : Type) [Field F] [NumberField F] (ψ : AddCha
   have : Continuous fun y : Af F => pairA F 0 y := continuous_const.prodMk continuous_id
   exact hψ.1.comp this
 
-set_option maxHeartbeats 1000000 in
 
 theorem phaseB_pairB_props : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (M : ℕ) (J : Matrix (Fin M) (Fin M) E)

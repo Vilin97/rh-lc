@@ -155,7 +155,6 @@ theorem isL_single_unrChar [CharZero k] (x : IrrGL k) (α : Fin x.1 → ℂˣ) (
 
 end GlobalTheory.CompanionTheory.OneSat
 
-open GlobalTheory.CompanionTheory.OneSat in
 
 theorem GlobalTheory.CompanionTheory.OneSat.lOneSat : PositivityTheory.SphericalProduct.LOneSat := by
   intro k _ _ _ _ _ n ξ hξ V _ _ π hs

@@ -53,7 +53,6 @@ theorem isBalancedSpace (h : IsConj cj) : IsBalancedSpace E (SymB cj Y) := by
     rw [hc']
     exact hb c x y
 
-variable (Y) in
 
 def formsEquiv (h : IsConj cj) : SymB cj Y ≃ₗ[ℝ] balancedForms E Y where
   toFun β := ⟨AddMonoidHom.mk' (fun x => ((β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) x).toAddMonoidHom)

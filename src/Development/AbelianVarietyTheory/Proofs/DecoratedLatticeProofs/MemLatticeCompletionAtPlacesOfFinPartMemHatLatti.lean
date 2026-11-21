@@ -39,7 +39,6 @@ theorem cut_tmul (P : Pl D → Prop) (a : Af D.host.F) (x : D.host.E) :
   rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul]
   rfl
 
-set_option maxHeartbeats 800000 in
 
 theorem cut_finPart (P : Pl D → Prop) (u : AE D) (hu : u ∈ idAt D P) : cut P (finPart D u) = u := by
   unfold idAt at hu

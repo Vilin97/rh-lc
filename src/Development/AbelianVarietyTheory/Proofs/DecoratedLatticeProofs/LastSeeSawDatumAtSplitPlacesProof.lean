@@ -117,7 +117,6 @@ theorem vac_of_list {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1))
     have M := (GlobalTheory.DisjComb.main D ψ hψ S T (· = x) (· ∈ l) (fun y hy hy' => hx (hy ▸ hy'))).2.2.2.2 LS LT f hLS hLT
     exact M.2 ⟨hv x List.mem_cons_self, ih hl (· ∈ l) (fun _ => Iff.rfl) fun y hy => hv y (List.mem_cons_of_mem _ hy)⟩
 
-open GlobalTheory.SeeSawFold in
 
 theorem biComb_eq_foldr_vac {ψ : AddChar (AF D.host.F) ℂ} {A S A' : HSp D} {LA : Lat A} {LS : Lat S} {LA' : Lat A'}
     {P : Pl D → Prop} (c : WO A S →₀ ℂ) (c' : WO S A' →₀ ℂ) (l : List ((WO A S →₀ ℂ) × (WO S A' →₀ ℂ)))
@@ -243,7 +242,6 @@ end GlobalTheory.LastTAllPf
 
 namespace GlobalTheory.LastTAllPf
 
-set_option maxHeartbeats 1000000 in
 
 theorem main : ∀ D : D7, GlobalTheory.FinPl.LastTAll D := by
   intro D k _ _ _ _ ι p I P hP q ψ hψ χ hχ hchar n n' n'' _ _ _ _ _ _ V₀ A L S X T L'' o o'' ζ ζ₀ hζ hζ₀ τ lam hlam

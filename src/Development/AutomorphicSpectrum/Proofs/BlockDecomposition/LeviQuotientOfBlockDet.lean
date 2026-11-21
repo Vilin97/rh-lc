@@ -20,7 +20,6 @@ variable {α κ β : Type} [Fintype α] [DecidableEq α] [Fintype κ] [Decidable
 
 def Pm (R : Type) [CommRing R] (e : κ → α) : Matrix α κ R := (1 : Matrix α α R).submatrix id e
 
-open Classical in
 
 def Dm (R : Type) [CommRing R] (e : κ → α) : Matrix α α R :=
   Matrix.diagonal fun a => if a ∈ Set.range e then 0 else 1

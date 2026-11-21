@@ -292,7 +292,6 @@ theorem exists_symLift [IsCommMonObj A] {k : ℤ} {n : ℕ} (hk : ∀ θ : Theta
   · obtain ⟨t, ht⟩ := exists_isTwistPull A (ψ := translT A x) (hm := lift_snd _ _) hL₁ hu s
     exact ⟨t, ht, secRel_twist (tr hx) hv ha ht hs⟩
 
-omit h₁ h₂ in
 
 theorem exists_normMul {ρ₀ : LB.Gen (L₀.pull (eSec G))} {ρ : LB.Gen (L₁.pull (eSec A))}
     {e : (𝟙_ (Over S')).left ⟶ (𝟙_ (Over S)).left} (he : eSec A ≫ φ = e ≫ eSec G)

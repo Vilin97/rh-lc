@@ -82,7 +82,6 @@ section Phi
 variable {F Ω : Type u} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsGalois F Ω]
 variable (S : Set (HeightOneSpectrum (𝓞 F)))
 
-omit [IsGalois F Ω] in
 
 theorem mk_mem_invariants_iff (x : (maxUnramifiedOutside F Ω S)ˣ) :
     (Rep.mkQ _ (sUnitsSubmodule F Ω S) (sUnitsSubmodule_le_comap F Ω S)).hom

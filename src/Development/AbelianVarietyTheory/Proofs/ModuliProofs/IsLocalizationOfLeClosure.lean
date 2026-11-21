@@ -95,7 +95,6 @@ theorem isLocalization_of_le_closure {p : ℕ} (hp : p.Prime) (A : Type) [CommRi
 theorem inv_mem_ZP {p m : ℕ} (k : ℕ) (hm : m.Coprime p) : (m : ℂ)⁻¹ ∈ ZP p k :=
   Subring.subset_closure (Or.inr ⟨m, hm, rfl⟩)
 
-open CycBase in
 
 theorem isDedekindDomain_ZP {n p : ℕ} (e : ℕ) (hn : n.Prime) (hp : p.Prime) : IsDedekindDomain (ZP p (n ^ e)) := by
   haveI := Fact.mk hn

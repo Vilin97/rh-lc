@@ -65,7 +65,6 @@ theorem pow_div_xProd_mem {r : ℕ} {h : Fin (r + 1) → Ω} (J : Chart h) (j : 
 
 end VeryAmpleZChartRing
 
-open VeryAmpleZChartRing in
 
 theorem VeryAmpleZChartRing.proof : VeryAmpleZChartRing.Statement.{u, w} := by
   intro S _ Ω _ _ N x H r h hv J j hjJ c hc K hrat α hα

@@ -27,6 +27,5 @@ def Reads (hL : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)) 
           ((((Rl.C.mu0 i).val P : ℂˣ) : ℂ)⁻¹ ^ k * (((Nat.card (Formalism.L2.DIV.kP P) : ℕ) : ℂ) ^ (k * (D.R.nV / 2)))⁻¹) •
             heckeOn (Rl.MW i (sg0 D A3.A)) R ((Rl.HW i (sg0 D A3.A)).e ((Rl.FW i).j (sg0 D A3.A) ((Y.fi i).e x)))
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.ExportPin

@@ -28,7 +28,6 @@ theorem perExt_eq_sum (R : RiemLat E g Λ) (y : Ψ → Fin (j + j') → ℂ) :
     C.perExt R y = ∑ k, C.bas.repr y k • R.P (C.lam k) := by
   simp [perExt, Module.Basis.constr_apply_fintype]
 
-omit [IsCMField E] in
 
 theorem form_antisymm {M : Type} [AddCommGroup M] (f : M →ₗ[ℤ] M →ₗ[ℤ] ℤ) (hf : ∀ x, f x x = 0) (x y : M) :
     f x y = - f y x := by
@@ -80,7 +79,6 @@ theorem perExt_latPt (R : RiemLat E g Λ) (x : Λ) : C.perExt R (C.latPt x) = R.
     rw [map_sum]
   simp only [map_smul, hb, Int.cast_smul_eq_zsmul, map_zsmul]
 
-omit [NumberField E] in
 
 theorem sgI_mul_self : sgI j j' * sgI j j' = 1 := by
   simp [sgI, fromBlocks_multiply]
@@ -114,7 +112,6 @@ theorem aPart_add_bPart {A : Ψ → Matrix (Fin (j + j')) (Sg j j') ℂ}
 def cxStr (A : Ψ → Matrix (Fin (j + j')) (Sg j j') ℂ) (y : Ψ → Fin (j + j') → ℂ) (τ : Ψ) : Fin (j + j') → ℂ :=
   (-Complex.I) • C.aPart A y τ + Complex.I • C.bPart A y τ
 
-open Classical in
 
 theorem perExt_single_I_of_pPart (R : RiemLat E g Λ) (τ : Ψ) (w : Fin (j + j') → ℂ) (h : C.pPart R τ w = 0) :
     C.perExt R (Pi.single τ (Complex.I • w)) = (-Complex.I) • C.perExt R (Pi.single τ w) := by
@@ -122,7 +119,6 @@ theorem perExt_single_I_of_pPart (R : RiemLat E g Λ) (τ : Ψ) (w : Fin (j + j'
   rw [sub_eq_zero.1 h2, smul_smul]
   simp
 
-open Classical in
 
 theorem perExt_single_I_of_pBar (R : RiemLat E g Λ) (τ : Ψ) (w : Fin (j + j') → ℂ) (h : C.pBar R τ w = 0) :
     C.perExt R (Pi.single τ (Complex.I • w)) = Complex.I • C.perExt R (Pi.single τ w) := by
@@ -130,7 +126,6 @@ theorem perExt_single_I_of_pBar (R : RiemLat E g Λ) (τ : Ψ) (w : Fin (j + j')
   rw [eq_neg_of_add_eq_zero_left h2, smul_neg, smul_smul]
   simp
 
-open Classical in
 
 theorem perExt_single_cxStr {R : RiemLat E g Λ} {A : Ψ → Matrix (Fin (j + j')) (Sg j j') ℂ} (hA : C.IsAdapted R A)
     (y : Ψ → Fin (j + j') → ℂ) (τ : Ψ) :
@@ -144,7 +139,6 @@ theorem perExt_single_cxStr {R : RiemLat E g Λ} {A : Ψ → Matrix (Fin (j + j'
   rw [neg_smul, Pi.single_add, map_add (f := _), Pi.single_neg, map_neg, ha, hb, hy, smul_add]
   simp
 
-open Classical in
 
 theorem perExt_eq_sum_single (R : RiemLat E g Λ) (y : Ψ → Fin (j + j') → ℂ) :
     C.perExt R y = ∑ τ, C.perExt R (Pi.single τ (y τ)) := by

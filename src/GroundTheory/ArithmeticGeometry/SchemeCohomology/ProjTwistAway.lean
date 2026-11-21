@@ -55,7 +55,6 @@ lemma locMap_comp {f f' : A} (φ : Localization.Away f →+* Localization.Away f
     rw [← RingHom.comp_apply φ, hφ, locMap_algebraMap, locMap_algebraMap]
   exact congrArg (fun F => F z) this
 
-variable (𝒜) in
 
 def awayDeg {f : A} {d : ℕ} (hf : f ∈ 𝒜 d) (hd : 0 < d) (k : ℤ) :
     AddSubgroup (Localization.Away f) where
@@ -154,8 +153,6 @@ lemma isLocallyFraction_locMap {f : A} {d : ℕ} (hf : f ∈ 𝒜 d) (hd : 0 < d
         locMap x.1 (nmem_of_mem x) z) :=
   (toSection hf hd k ⟨z, hz⟩).2
 
-set_option backward.isDefEq.respectTransparency.types false in
-open ProjectiveSpectrum in
 
 lemma exists_section_of_isLocallyFraction_zero {U : Opens (ProjectiveSpectrum.top 𝒜)}
     (t : ∀ x : U, Loc 𝒜 x.1) (ht : (isLocallyFraction 𝒜 0).pred t) :

@@ -106,7 +106,6 @@ end GlobalTheory.LocAcyc
 
 namespace GlobalTheory.LocAcyc
 
-open CategoryTheory in
 
 theorem keyAll_of_keyLocal : KeyLocal → KeyAll := by
   intro hL T O _ _ _ _ _ _ _ hAIC P _ φ hφ hSH q hq hqu

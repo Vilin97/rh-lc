@@ -31,7 +31,6 @@ theorem gm_ext_g {Z : Scheme.{0}} (r : Z ⟶ X') (z : Z) (a b : L.ι) (ha : r z 
   exact (gm_res (r ≫ f) z (image_inf_le f L a b) hm _).trans
     (GlobalTheory.GlueLineBundle.gm_imU f r z (L.U a ⊓ L.U b) ⟨ha, hb⟩ _)
 
-variable {f} in
 
 theorem gm_eq_map {Y : Scheme.{0}} (g : Y ⟶ X) (y : Y) (U : X.Opens) (h : g y ∈ U) (a : Γ(X, U)ˣ) :
     gm g y U a = Units.map (g.stalkMap y).hom.toMonoidHom (gm (𝟙 X) (g y) U a) := by
@@ -72,7 +71,6 @@ theorem isOn_extLB (hL : L.IsLB) : IsOn f.opensRange (extLB f L) where
 
 end GlobalTheory.PicGlue.OpenExt
 
-open GlobalTheory.PicGlue.OpenExt in
 
 theorem GlobalTheory.PicGlue.exists_isOn_of_openImmersion : ∀ (X X' : Scheme.{0}) (f : X' ⟶ X) [IsOpenImmersion f] (L : LB X'),
     L.IsLB → ∃ L' : LB X, IsOn f.opensRange L' ∧ LBIso (L'.pull f) L := by

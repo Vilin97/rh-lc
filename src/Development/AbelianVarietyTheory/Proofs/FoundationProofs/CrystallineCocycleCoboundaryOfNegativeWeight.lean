@@ -23,7 +23,6 @@ private theorem fd_adjoin_range (l : ℕ) [Fact l.Prime] {ι : Type} [Finite ι]
   exact IntermediateField.finiteDimensional_adjoin fun z _ =>
       (Algebra.IsAlgebraic.isAlgebraic z).isIntegral
 
-open TensorProduct in
 
 private theorem desc {l : ℕ} [Fact l.Prime] {H : Type} [Group H] [TopologicalSpace H] (φ : H →* GQ l)
     (κ : H →* (PadicAlgCl l)ˣ) (E₀ : IntermediateField ℚ_[l] (PadicAlgCl l)) [FiniteDimensional ℚ_[l] E₀]
@@ -101,7 +100,6 @@ private theorem coef_finext {l : ℕ} [Fact l.Prime] (c : Coef l) :
 
 end GlobalTheory.NegVan
 
-open GlobalTheory.NegVan in
 
 theorem GlobalTheory.NegVan.crys_cocycle_coboundary_of_neg_weight :
     Loc.LocalPublishedTheorems → ∀ (l : ℕ) [Fact l.Prime] (κ : GQ l →* (Qbar l)ˣ), Continuous (fun σ => (κ σ : Qbar l)) →

@@ -47,7 +47,6 @@ structure Raw.Ok (p : Raw Lc n) : Prop where
   off : ∀ x, x ∉ p.L → p.f x = 0
   ne : ∃ x, p.f x ≠ 0
 
-variable (Lc n) in
 
 def PP : Type := {p : Raw Lc n // p.Ok}
 

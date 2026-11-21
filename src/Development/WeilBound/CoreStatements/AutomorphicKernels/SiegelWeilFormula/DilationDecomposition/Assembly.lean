@@ -23,7 +23,6 @@ theorem iteratedDeriv_mul_const' (f : ℂ → ℂ) (c : ℂ) :
     funext z
     exact deriv_mul_const_field _
 
-set_option maxHeartbeats 400000 in
 
 theorem gIdil_of (hT : TAll) (hAux : AuxiliaryPrimeFunction) (hLE : LocOpEx) (hTP : ThetaPt) (hFP : FPSw) (hMC : MatCount)
     (hSD : SplitDom) (hTB : ThetaBdd) (hLF : LocFamG) (hBD : BigDense) (hHM : HolMean)

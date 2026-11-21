@@ -18,7 +18,6 @@ namespace GlobalTheory.HeisDerivFormula
 
 variable {F : Type} [Field F] [NumberField F]
 
-variable (F) in
 
 def evIHom : AF F →+* mixedEmbedding.mixedSpace F :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp (RingHom.fst _ _)
@@ -35,7 +34,6 @@ theorem evI_realAd (t : ℝ) : evI F (realAd F t) = algebraMap ℝ _ t := by sim
 
 theorem snd_realAd (t : ℝ) : (realAd F t).2 = 0 := by simp [realAd]
 
-variable (F) in
 
 def ofInf (y : mixedEmbedding.mixedSpace F) : AF F :=
   (((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm y, 0) : InfiniteAdeleRing F × FiniteAdeleRing (𝓞 F) F)
@@ -44,7 +42,6 @@ theorem evI_ofInf (y : mixedEmbedding.mixedSpace F) : evI F (ofInf F y) = y := b
 
 theorem snd_ofInf (y : mixedEmbedding.mixedSpace F) : (ofInf F y).2 = 0 := rfl
 
-variable (F) in
 
 def rInt (κ : Type) (z : κ → AF F) : ℂ := (GlobalTheory.SchANonzero.intPts F κ).indicator 1 (fun i => (z i).2)
 

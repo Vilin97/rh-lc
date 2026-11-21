@@ -72,7 +72,6 @@ theorem glue_const (b : B) : glue c f (fun _ => b) = f b := by
 theorem idem_mul_glue (x : ZMod a → B) (τ : ZMod a) : idem c τ * glue c f x = idem c τ * f (x τ) :=
   idem_mul_sum c _ τ
 
-variable {c f} in
 
 theorem map_glue {B' R' : Type} [CommRing B'] [CommRing R'] [Algebra O B'] [Algebra O R']
     {c' : (ZMod a → O) →ₐ[O] R'} {f' : B' →ₐ[O] R'} (s : R →+* R') (k : ZMod a)
@@ -138,7 +137,6 @@ section Sigma
 
 variable (a : ℕ) [NeZero a]
 
-variable (l) in
 
 def sigmaNeg (τ : ZMod a) : Wq l a ≃ₐ[ℤ_[l]] Wq l a := sigma l a ^ (-τ).val
 
@@ -241,32 +239,25 @@ def galA (g : GQ l) : Ainf l →ₐ[ℤ_[l]] Ainf l where
       ((galW_inclW g _).symm.trans (((congrArg (galW l g) ((inclWA l).commutes r)).trans
         ((galW l g).commutes r)).trans ((inclWA l).commutes r).symm))
 
-variable (l O) in
 
 abbrev OA : Type := O ⊗[ℤ_[l]] Ainf l
 
-variable (l O) in
 
 abbrev OW : Type := O ⊗[ℤ_[l]] WCb l
 
-variable (l O) in
 
 def inclO : OA l O →ₐ[O] OW l O := Algebra.TensorProduct.map (AlgHom.id _ _) (inclWA l)
 
-variable (l O) in
 
 def frobOW : OW l O →ₐ[O] OW l O := Algebra.TensorProduct.map (AlgHom.id _ _) (frobW l)
 
-variable (l O) in
 
 def frobOA : OA l O →ₐ[O] OA l O :=
   Algebra.TensorProduct.map (AlgHom.id _ _) (GlobalTheory.Cyc.IoMap.frobA l)
 
-variable (O) in
 
 def galOA (g : GQ l) : OA l O →ₐ[O] OA l O := Algebra.TensorProduct.map (AlgHom.id _ _) (galA g)
 
-variable (O) in
 
 def galOW (g : GQ l) : OW l O →ₐ[O] OW l O :=
   Algebra.TensorProduct.map (AlgHom.id _ _) (galW l g).toAlgHom
@@ -367,12 +358,10 @@ theorem galOA_constA {g : GQ l} (hg : ∀ x ∈ Kunr l a, g x = x) (x : ZMod a �
 
 variable (K : Type) [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K]
 
-variable {K} (l) in
 
 def frobAc (f : ZMod a → A O K) : ZMod a → A O K :=
   fun τ => ⟨frob _ l (f (τ - 1)), frob_mem_A l (f (τ - 1)).2⟩
 
-omit [NeZero a] [Algebra ℤ_[l] O] in
 
 theorem coe_frobAc (f : ZMod a → A O K) (τ : ZMod a) :
     (frobAc l f τ : K⟦X⟧) = frobTot _ a l (fun σ => (f σ : K⟦X⟧)) τ := rfl
@@ -431,7 +420,6 @@ theorem iA_u : ϖ.iA O K (uIn _) = ϖ.teichR O := by
   rw [← evO_X, ← ϖ.iA_equivA O K]
   exact congrArg _ (Subtype.ext (PowerSeries.map_X _).symm)
 
-variable (a) in
 
 theorem iA_E : ϖ.iA O K (EIn l e _) = 1 ⊗ₜ ϖ.ev a (eis l a e) := by
   have : EIn l e (A O K) = uIn _ ^ e + (l : A O K) := Subtype.ext (by simp [E])
@@ -463,7 +451,6 @@ theorem iTot_toAc (x : (Wq l a)⟦X⟧) : ϖ.iTot t K (toAc t K x) = 1 ⊗ₜ ϖ
   · change ϖ.iTot t K (toAc t K X) = 1 ⊗ₜ ϖ.ev a X
     rw [hX, ev_X, teichR]
 
-variable (O) in
 
 theorem iA_frob (f : A O K) : ϖ.iA O K ⟨frob _ l f, frob_mem_A l f.2⟩ = frobOA l O (ϖ.iA O K f) := by
   obtain ⟨f, rfl⟩ := (equivA O K).surjective f
@@ -486,7 +473,6 @@ theorem iTot_frob (f : ZMod a → A O K) : ϖ.iTot t K (frobAc l f) = frobOA l O
 
 variable [NeZero e]
 
-variable (O) in
 
 theorem galOA_teichR (g : GQ l) : galOA O g (ϖ.teichR O) = (1 + 1 ⊗ₜ ϖ.mu g) * ϖ.teichR O := by
   rw [teichR, galOA_tmul, gal_teich, Algebra.TensorProduct.one_def, ← tmul_add,
@@ -500,7 +486,6 @@ theorem galOA_iTot {g : GQ l} (hg : g ∈ ϖ.GfieldInf a) (f : ZMod a → A O K)
 
 variable (O)
 
-omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] in
 
 theorem isUnit_inclO_teichR : IsUnit (inclO l O (ϖ.teichR O)) :=
   ϖ.isUnit_inclW_teich.map (Algebra.TensorProduct.includeRight : WCb l →ₐ[ℤ_[l]] OW l O)

@@ -127,7 +127,6 @@ theorem tensorEquiv'_tmul_mul (a : v.adicCompletion K) (y : L ⊗[K] v.adicCompl
       algebraMap (v.adicCompletion K) (CompletionsOver L v) a * tensorEquiv' L v y := by
   rw [map_mul, tensorEquiv'_tmul, map_one, one_mul]
 
-open scoped Valued in
 
 instance isModuleTopology_completionsOver :
     IsModuleTopology (v.adicCompletion K) (CompletionsOver L v) :=

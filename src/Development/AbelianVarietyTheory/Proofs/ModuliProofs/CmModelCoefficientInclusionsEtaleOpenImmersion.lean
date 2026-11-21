@@ -21,7 +21,6 @@ noncomputable section
 
 namespace GlobalTheory.BaseRing
 
-open Polynomial in
 
 theorem etale_of_adjoin_root_of_unity {R B : Type} [CommRing R] [CommRing B] [IsDomain R] [IsDomain B]
     [IsIntegrallyClosed R] [Algebra R B] (hinj : Function.Injective (algebraMap R B)) (x : B)

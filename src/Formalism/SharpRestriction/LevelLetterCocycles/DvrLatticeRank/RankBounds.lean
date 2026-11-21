@@ -20,7 +20,6 @@ section Flag
 
 variable {O V : Type*} [CommRing O] [IsDomain O] [AddCommGroup V] [Module O V]
 
-open Formalism.MainNotions.N.Ln34.RankInverseBounds in
 
 theorem rank_inv_le_lt (γ : V →ₗ[O] V) (K' : Submodule O V) (hK : ∀ x ∈ K', γ x ∈ K') :
     ∀ (N : ℕ) (F : ℕ → Submodule O V) (c : ℕ → O), (∀ k < N, F (k + 1) ≤ F k) →
@@ -336,7 +335,6 @@ omit [IsDomain O] in
 theorem mem_DelS (x : W.DD T) : x ∈ DelS W T ↔ ∀ δ ∈ W.DelF, W.γD T δ x = x := by
   simp [DelS, Submodule.mem_iInf, LinearMap.mem_ker, sub_eq_zero]
 
-omit [IsDomain O] in
 
 theorem lcq_finite_local (hπ0 : ∀ i, PowerSeries.constantCoeff (π' i) = 0)
     (hexp : ∀ a ∈ W.AΔ, ∃ F : ZMod n → PowerSeries O, ∀ i, a i = PowerSeries.subst (π' i) (F i))
@@ -420,8 +418,6 @@ theorem lcq_finite_local (hπ0 : ∀ i, PowerSeries.constantCoeff (π' i) = 0)
 
 end Local
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in
 
 theorem lcq_finite (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F) (h1 : adm1 D HW F Cm) (l : ℕ) [Fact l.Prime] (hl : l ≠ 2)
@@ -448,8 +444,6 @@ theorem lcq_finite (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
       ∀ i, a i = PowerSeries.subst (π' i) (F i) := fun a ha => (hR.2.1 a ha).exists
   exact lcq_finite_local hπ0 hexp r b hbΔ hspan
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 theorem u2rank_of_ring (hR : Formalism.MainNotions.N.Ln34.SecondRingHypothesis) : Formalism.MainNotions.N.Ln34.SecondRankHypothesis := by
   intro D HW F Cm CA CB CK hA hML l _ hl K LL hG π' E hπ T h' hh' hc hj c

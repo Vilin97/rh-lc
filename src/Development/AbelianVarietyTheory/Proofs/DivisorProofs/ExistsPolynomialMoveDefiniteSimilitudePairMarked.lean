@@ -335,7 +335,6 @@ theorem dell (Q : DPair G) (φ : G.F →+* ℂ) (z : ℂ) (hz : Q.pol.eval₂ φ
 section Fld2
 variable {M : Type} [Field M] [NumberField M] [Algebra G.F M]
 
-omit [NumberField M] in
 
 theorem dexists_basis (Q : DPair G) (pb : PowerBasis G.F M) (hpol : Q.pol = minpoly G.F pb.gen)
     (j : M →ₐ[G.F] G.C) (hj : j pb.gen = Q.γ) (w : InfinitePlace G.F) :
@@ -442,7 +441,6 @@ theorem emb_index (pb : PowerBasis G.F M) (w : InfinitePlace G.F) (pol : Polynom
   obtain ⟨i, hi⟩ := hsurj _ h0
   exact ⟨i, emb_ext pb _ _ (fun x => (he i x).trans (hη x).symm) hi⟩
 
-omit [NumberField M] in
 
 theorem dreal_move (ha : G.a = 1) (Q : DPair G) (pb : PowerBasis G.F M) (hpol : Q.pol = minpoly G.F pb.gen)
     (j : M →ₐ[G.F] G.C) (hj : j pb.gen = Q.γ) (v : InfinitePlace G.F) (hv : sigPosH (G.gram_herm v) = 1)
@@ -502,7 +500,6 @@ theorem dreal_move (ha : G.a = 1) (Q : DPair G) (pb : PowerBasis G.F M) (hpol : 
     rw [quad_conj, hD', quad_single]
     exact mul_pos (hdp i₀ hv) (hi₀ ▸ hb1)
 
-omit [NumberField M] in
 
 theorem real_back (ha : G.a = 1) (P : Pair G) (pb : PowerBasis G.F M) (hpol : P.pol = minpoly G.F pb.gen)
     (j : M →ₐ[G.F] G.C) (hj : j pb.gen = P.γ) (v : InfinitePlace G.F) (hv : sigPosH (G.gram_herm v) = 1)

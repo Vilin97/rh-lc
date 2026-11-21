@@ -31,6 +31,5 @@ theorem u_sum_re (η : ℝ) {N : ℕ} (w : Fin N → ℂ) (j : ℕ) :
     rw [div_pow, div_eq_mul_one_div, Complex.ofReal_pow]
   rw [h, Complex.re_ofReal_mul]
 
-set_option maxHeartbeats 1000000 in
 
 end Formalism.HermitianLattices.Ext.PrimesInProgressions.DHF

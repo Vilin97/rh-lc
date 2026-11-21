@@ -39,9 +39,7 @@ lemma phiSet_card : (PhiSet (H := H)).card = 2 * Fintype.card H := by
       | rfl
   rw [h1, Finset.card_product, h2, Finset.card_univ]
 
-open Classical in
 
-open Classical in
 
 lemma thick_filter (T2 : Finset H) (u0 t : H) :
     univ.filter (fun g : E0 × H => ¬ InPhi (g + topPl t) ∧ IsThickAt T2 u0 (cconj + g + topPl t))
@@ -57,7 +55,6 @@ lemma thick_inj (u0 t : H) :
   intro x _ y _ hxy
   simpa using hxy
 
-open Classical in
 
 end
 

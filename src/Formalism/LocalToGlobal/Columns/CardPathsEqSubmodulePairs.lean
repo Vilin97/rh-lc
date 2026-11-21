@@ -278,7 +278,6 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Fi
 theorem inf_toAddSubgroup {R V : Type} [Ring R] [AddCommGroup V] [Module R V] (p q : Submodule R V) :
     (p ⊓ q).toAddSubgroup = p.toAddSubgroup ⊓ q.toAddSubgroup := rfl
 
-open Classical in
 
 theorem pathCount_eq_card_middle (P Q : HeightOneSpectrum (𝓞 E)) (i j : ℕ) (d f : DecoSet E n ST SG) :
     decorationPathCount P.asIdeal Q.asIdeal i j d f =

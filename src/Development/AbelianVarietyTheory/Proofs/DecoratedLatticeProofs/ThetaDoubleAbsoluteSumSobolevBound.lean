@@ -52,7 +52,6 @@ theorem mixS_smul (c : ℂ) (f : WO S T → ℂ) (x : Mx D T.rank ρ) :
   funext w
   simp only [HypDec.mixS, HypDec.integrandS_eq, Pi.smul_apply, smul_eq_mul, mul_left_comm _ c, integral_const_mul]
 
-variable (T) in
 
 def dualPt (ρ : ℕ) : Mx D ρ T.rank →+ Mx D T.rank ρ where
   toFun b := adj (incA D D.host.xi0⁻¹ • (b ⬝ giA T))
@@ -81,7 +80,6 @@ section Double
 variable {S S₀ T T₀ : HSp D} {ρ σ : ℕ} (d : HypDec S S₀ ρ) (d' : HypDec T T₀ σ) (v : VolM D T.rank ρ)
   (v' : VolM D σ S₀.rank)
 
-variable (ψ) in
 
 end Double
 

@@ -30,7 +30,6 @@ lemma isAffineOpen_inter {m : ℕ} (t : Fin (m + 1) → ι) :
   rw [inter_eq_iInf]
   exact hU m t
 
-set_option maxHeartbeats 2000000 in
 
 lemma reesCoef_res {V V' : X.Opens} (hle : V' ≤ V) (hV : IsAffineOpen V) (hV' : IsAffineOpen V')
     (n : ℕ) (x : Γ(reesSheaf I F, reesPr I X ⁻¹ᵁ V)) :
@@ -75,14 +74,12 @@ def reesCoefFam (n : ℕ) : CechFamily (X := X.toTopCat) 𝔘 (reesPre I F) (mod
   φ t := reesCoef I hF (isAffineOpen_inter 𝔘 hU t) n
   res_comm _ _ h x := reesCoef_res' I hF h _ _ n x
 
-set_option maxHeartbeats 2000000 in
 
 def reesDegFam (n : ℕ) : CechFamily (X := X.toTopCat) 𝔘 (reesPre I F)
     (modulesAb (idealPow I F n)).obj where
   φ t := reesDeg I hF (isAffineOpen_inter 𝔘 hU t) n
   res_comm _ _ h x := reesDeg_res' I hF h _ _ n x
 
-set_option maxHeartbeats 2000000 in
 
 def reesIncFam (n : ℕ) : CechFamily (X := X.toTopCat) 𝔘 (modulesAb (idealPow I F n)).obj
     (reesPre I F) where

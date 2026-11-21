@@ -86,7 +86,6 @@ private theorem lam_eq_evc_toBase_of_LBIso [IsCommMonObj A] {P : LB (A ⊗ B).le
   unfold evc
   rw [h2, Over.comp_left, h1, Category.assoc, pull_comp, pull_comp, h3, h4, pull_lam, lift_fst, lift_snd]
 
-set_option maxHeartbeats 800000 in
 
 theorem ceLam_zb_pt (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) {P : LB (A ⊗ B).left} (hD : IsDual A B P)
     (hD' : IsDual B A (swap P)) (l : A ⟶ B) [IsMonHom l] (mu : B ⟶ A) [IsMonHom mu] (α : Matrix (Fin 4) (Fin 4) ℤ)
@@ -407,7 +406,6 @@ theorem ceZcPair_eMap (hD : IsDual A B P) (hD' : IsDual B A (swap P)) (l : A ⟶
 
 end Alg
 
-set_option maxHeartbeats 800000 in
 
 theorem two_cls_eMap {Ω : Type} [Field Ω] [IsAlgClosed Ω] (hA : IsAbelianScheme A) (hB : IsAbelianScheme B)
     {P : LB (A ⊗ B).left} (hD : IsDual A B P)

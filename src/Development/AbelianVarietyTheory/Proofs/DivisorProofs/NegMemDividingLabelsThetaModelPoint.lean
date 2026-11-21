@@ -64,7 +64,6 @@ theorem neg_mem_supI_of_parity {o Ω : Type} [CommRing o] [Field Ω] [Algebra o 
 
 end GlobalTheory.Poinc.Sep.SupISymm
 
-open GlobalTheory.Poinc.Sep.SupISymm in
 
 theorem GlobalTheory.Poinc.Sep.neg_mem_supI : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (Fin 8) ℤ) (Z : Scheme.{0}) (i : F.X ⟶ Z) (X₁ : Setup F W i) (z₁ : X₁.M.Z) (a : X₁.S.Gam), a ∈ X₁.S.supI X₁.M z₁ → -a ∈ X₁.S.supI X₁.M z₁ := by
   intro g n F W Z i X₁ z₁ a ha

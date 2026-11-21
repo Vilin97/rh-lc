@@ -36,7 +36,6 @@ theorem finite_and_mem (hstd : HeckeStdPlain) {D : D7} {M : MtFam D} (HT : Hecke
     exact GlobalTheory.FitHecke.mt_transport M (fun μ j m => ptSys D i x ∈ EigSet m (D.nd.l i) (D.nd.Q i)) (D.nd.mu_w i) rfl
       (D.nd.j_range i).1 (D.nd.j_range i).2 _ _ (GlobalTheory.PointEigen.ptSys_mem_eigSet D M av i x)
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.EigPlace
 

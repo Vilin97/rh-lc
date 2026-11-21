@@ -229,7 +229,6 @@ theorem TAt_mul (k k' k'' : F.J) (z : Sp S ⟶ Z) (h₁ : ⊤ ≤ z ⁻¹ᵁ (F.
       ((ev_thRat_mul _ _ _ _ _ _ (le_preimage_inf a d)).trans (F.ev_T_none k k'' z h₃ rfl _).symm)
   · exact F.ev_B_diag_mul k k' k'' z h₁ h₂ h₃ σ i
 
-open Classical in
 
 def LL (e : Ix Dw → ℤ) : LB Z := ⟨F.J, F.U, fun k k' => ∏ ix, F.T k k' ix ^ (-e ix)⟩
 
@@ -270,9 +269,7 @@ theorem LL_add_g (e e' : Ix Dw → ℤ) (k k' : F.J) :
   rw [← Finset.prod_mul_distrib]
   exact Finset.prod_congr rfl fun ix _ => by rw [Pi.add_apply, neg_add, zpow_add]
 
-open Classical in
 
-open Classical in
 
 def step (z : Sp S ⟶ Z) {x : Sp S ⟶ Y.X} (_hx : z ≫ π = x) (σ : E →+* ℂ) (i : ℕ) : Submodule S (TanM x Y.t.G) where
   carrier := {v | ∀ (S' : Type) [CommRing S'] (φ : S →+* S') (x' : Sp S' ⟶ Y.X) (e : spMap φ ≫ x = x') (k : F.J)

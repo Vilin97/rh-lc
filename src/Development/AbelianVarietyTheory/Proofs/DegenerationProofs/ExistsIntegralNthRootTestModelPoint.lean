@@ -61,7 +61,6 @@ theorem exists_open_flat {X Y : Scheme.{0}} [IrreducibleSpace X] [IsIntegral Y]
     rw [Scheme.Hom.stalkMap_comp] at h4
     exact (RingHom.Flat.respectsIso.cancel_right_isIso (f.stalkMap (j v)) (j.stalkMap v)).mp h4
 
-open UnramifiedEndFlat in
 
 theorem flat_of_quasiFinite_grpEnd (K : Type) [Field K] [IsAlgClosed K]
     (G : Over (Spec (CommRingCat.of K))) [GrpObj G] [IsIntegral G.left]

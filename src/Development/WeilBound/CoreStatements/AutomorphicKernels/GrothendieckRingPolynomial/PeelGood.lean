@@ -130,7 +130,6 @@ end PositivityTheory.Groth.ClsOfF
 
 namespace PositivityTheory.Groth
 
-open ClsOfF in
 
 theorem cls_of (hZ : GlobalTheory.Published.SegmentRepresentation) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (hI : Zc.Cos.LUnlinkedIrr k)

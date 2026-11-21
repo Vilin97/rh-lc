@@ -296,7 +296,6 @@ theorem cobd_eq (X : PS C 1 dd) :
 
 end ZeroPointGroupLaw
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ PartialDerivEval MaximalIdealCongruence ZeroPointGroupLaw in
 
 theorem first_step_second_half : FirstStepSecondHalfCondition := by
   intro C _ _ V hac dd G hF A c hA hc hlin hfe

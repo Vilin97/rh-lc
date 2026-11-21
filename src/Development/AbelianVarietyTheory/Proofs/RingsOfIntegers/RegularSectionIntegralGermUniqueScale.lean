@@ -211,7 +211,6 @@ theorem germIs_smul (C : IntegralChartA3 Xo c T io y) (k : ℕ) (F F' : SecN Xo 
   rw [← e] at q
   exact (isGerm_iff y.1 _ _ _ _ _ _ _ _).2 q
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_germIs (hFT : ReciprocityTheory.ChartRestriction.G.PullbackSections.FrameTieSt Xo c) (C : IntegralChartA3 Xo c T io y)
     (hC : FrTrunc C.I.G (𝟙 (Sp T.V)) (chD C.ch) C.xT C.eT) (k : ℕ) (F : SecN Xo (xOf y) k) (hF : Regular C k F) :

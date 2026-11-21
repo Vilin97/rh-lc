@@ -120,7 +120,6 @@ theorem exists_iotaQ_ne_zero {a : ACris K p} (ha : a ≠ 0) : ∃ m, iotaQ K p (
   · rw [← iotaQ_compat (Nat.zero_le 1), RingHom.comp_apply, h 0, map_zero]
   · exact h m
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_lower_bound {a : ACris K p} (ha : a ≠ 0) :
     ∃ (B : ℝ) (N₀ : ℕ), 0 < B ∧ ∀ N ≥ N₀, ∀ c : ACrisZero K p,
@@ -199,7 +198,6 @@ theorem exists_lower_bound {a : ACris K p} (ha : a ≠ 0) :
   rw [hiota, hmk, hpN]
   ring
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_stable {a : ACris K p} (ha : a ≠ 0) :
     ∃ (ρ₂ : ℝ) (N₀ : ℕ) (c₀ : ACrisZero K p), ‖(p : K)‖ < ρ₂ ∧ ρ₂ < 1 ∧

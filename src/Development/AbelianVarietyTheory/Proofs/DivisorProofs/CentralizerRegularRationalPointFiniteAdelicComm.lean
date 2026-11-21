@@ -92,7 +92,6 @@ theorem map_snd_finPt (γ : UE E n) :
 
 end GlobalTheory.BCT.FinCentComm
 
-open GlobalTheory.BCT.FinCentComm in
 
 theorem GlobalTheory.BCT.finCent_comm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (γ : UE E n),
     γ.1.val.charpoly.Separable → ∀ a ∈ twCent (MonoidHom.id (finU E n)) (finPt γ),

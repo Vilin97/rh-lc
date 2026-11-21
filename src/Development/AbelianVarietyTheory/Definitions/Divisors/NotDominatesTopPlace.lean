@@ -37,8 +37,6 @@ structure IsEtTower (cK : k →+* K) (R : Subring K) (cL : k →+* L) (T : Subri
 
   etale : (MvPolynomial.eval₂Hom ι τ).FormallyEtale
 
-set_option autoImplicit false in
-variable {k K L : Type} [Field k] [Field K] [Field L] in
 
 theorem _root_.GlobalTheory.FieldPair.nonUnit_iff {R : Subring K} (f : R) :
     _root_.GlobalTheory.FieldPair.NonUnit R f ↔ ¬ IsUnit f := by
@@ -59,22 +57,16 @@ theorem _root_.GlobalTheory.FieldPair.nonUnit_iff {R : Subring K} (f : R) :
     apply hnu
     exact IsUnit.of_mul_eq_one (b := (⟨_, h.2⟩ : R)) (Subtype.ext (by simp [h.1]))
 
-set_option autoImplicit false in
-variable {k K L : Type} [Field k] [Field K] [Field L] in
 
 theorem _root_.GlobalTheory.FieldPair.nonUnit_zero (R : Subring K) : _root_.GlobalTheory.FieldPair.NonUnit R 0 :=
   ⟨R.zero_mem, Or.inl rfl⟩
 
-set_option autoImplicit false in
-variable {k K L : Type} [Field k] [Field K] [Field L] in
 
 theorem _root_.GlobalTheory.FieldPair.not_nonUnit_one (R : Subring K) : ¬ _root_.GlobalTheory.FieldPair.NonUnit R 1 := by
   rintro ⟨-, h | h⟩
   · exact one_ne_zero h
   · exact h (by rw [inv_one]; exact R.one_mem)
 
-set_option autoImplicit false in
-variable {k K L : Type} [Field k] [Field K] [Field L] in
 
 theorem _root_.GlobalTheory.FieldPair.Dominates.trans {M : Type} [Field M] {ρ : K →+* L} {σ : L →+* M}
     {O : Subring K} {B : Subring L} {C : Subring M} (h : _root_.GlobalTheory.FieldPair.Dominates ρ B O)
@@ -85,8 +77,6 @@ theorem _root_.GlobalTheory.FieldPair.Dominates.trans {M : Type} [Field M] {ρ :
   obtain ⟨h3, h4⟩ := h' (ρ f) h1
   exact ⟨h3, fun hn => h4 (h2 hn)⟩
 
-set_option autoImplicit false in
-variable {k K L : Type} [Field k] [Field K] [Field L] in
 
 theorem _root_.GlobalTheory.FieldPair.ratRes_self : _root_.GlobalTheory.FieldPair.RatRes (RingHom.id k) ⊤ := by
   intro r _

@@ -21,7 +21,6 @@ theorem hom_pos {H : Type} [Group H] (δ : H →* ℝ≥0) (p : H) : 0 < δ p :=
 
 def IsIwasawa : Prop := (∀ g : G, ∃ p : P, ∃ k ∈ K, g = p * k) ∧ ∀ p : P, (p : G) ∈ K → δ p = 1
 
-open Classical in
 
 def iwAbs (g : G) : ℝ≥0 := if h : ∃ p : P, ∃ k ∈ K, g = p * k then δ h.choose else 1
 
@@ -66,7 +65,6 @@ end IsIwasawa
 
 variable [TopologicalSpace G] [IsTopologicalGroup G]
 
-omit [IsTopologicalGroup G] in
 
 theorem triv_of_isCompact (hP : IsClosed (P : Set G)) (hδ : Continuous δ) (hK : IsCompact (K : Set G)) (p : P)
     (hp : (p : G) ∈ K) : δ p = 1 := by

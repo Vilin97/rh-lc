@@ -14,7 +14,6 @@ open ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction
 
 noncomputable section
 
-open StandardModelDualRank in
 
 theorem DualStdModelRank.proof : DualStdModelRank.Statement := by
   intro K _ _ i T _ _ b Φ₀ _ _ hΦ _ c

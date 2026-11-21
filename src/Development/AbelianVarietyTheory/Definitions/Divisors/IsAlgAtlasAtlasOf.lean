@@ -32,15 +32,11 @@ namespace GlobalTheory.Mean4O
 
 variable {F : Type} [Field F] [NumberField F] {C : CxSt F} {Y : Var F}
 
-variable (F) in
 
 instance compactSpace_pts (σ : F →+* ℂ) : CompactSpace (Pts Y σ) := CxPts.compactSpace σ Y.isProjOver
 
-variable (Y) in
 
-variable (Y) in
 
-variable (Y) in
 
 section Norms
 
@@ -48,7 +44,6 @@ variable {σ : F →+* ℂ} {Δ : Y.Dv}
 
 abbrev genAt (Δ : Y.Dv) (x : Y.X) : Y.Fn := ((eqn Δ x)⁻¹ : Y.Fnˣ)
 
-omit [NumberField F] in
 
 theorem generatesAt_genAt (Δ : Y.Dv) (x : Y.X) : Δ.GeneratesAt x (genAt Δ x) := by
   rw [genAt, Units.val_inv_eq_inv_val]

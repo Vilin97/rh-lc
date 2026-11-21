@@ -194,7 +194,6 @@ theorem eq_of_exp_mul_pow_eq {e i i' : ℕ} (hi : i < e) (hi' : i' < e) {a b : �
   have := Int.eq_zero_of_abs_lt_dvd hdvd (by rw [abs_lt]; constructor <;> omega)
   omega
 
-omit [Fintype ι] in
 
 theorem linearIndependent_uniformizer_pow_mul [Finite ι] (ω : ι → 𝓞 L)
     (hω : LinearIndependent (𝓞 K ⧸ v.asIdeal) (fun j ↦ Ideal.Quotient.mk w.asIdeal (ω j)))

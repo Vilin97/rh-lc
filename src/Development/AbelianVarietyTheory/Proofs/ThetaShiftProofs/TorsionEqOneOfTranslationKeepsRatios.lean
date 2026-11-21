@@ -392,7 +392,6 @@ theorem nontrivial_of_laws (hH : GlobalSectionsRankAlgClosed) (P : PolAV (Spec (
     (Scheme.ΓSpecIso (CommRingCat.of F)).commRingCatIsoToRingEquiv.toEquiv.nontrivial
   Module.nontrivial_of_finrank_pos (finrank_pos_of_laws hH P hk)
 
-omit [IsAlgClosed F] in
 
 theorem exists_theta (hW : WeilSt) (P : PolAV (Spec (CommRingCat.of F))) (k : ℕ)
     (d : baseOver (Spec (CommRingCat.of F)) ⟶ P.A) (hd : d ^ k = 1) :

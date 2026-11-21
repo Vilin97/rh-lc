@@ -52,7 +52,6 @@ theorem ratInf_vec (a : F) (i : κ) (k : Module.Free.ChooseBasisIndex ℤ (𝓞 
 
 end GlobalTheory.BoxLattice.DualRat
 
-open GlobalTheory.BoxLattice.DualRat in
 
 theorem GlobalTheory.BoxLattice.dual_rat : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] (a : F), a ≠ 0 →
     ∀ μ : κ → mixedEmbedding.mixedSpace F, (∀ l ∈ boxLat F κ a, ∃ k : ℤ, GlobalTheory.VacLn.trPair F κ l μ = k) →

@@ -26,9 +26,7 @@ section Step
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Λ : LevCh X Pr R)
 
-variable {W Λ} in
 
-open Classical in
 
 end Step
 
@@ -36,7 +34,6 @@ section RhoPt
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks}
 
-open Classical in
 
 def rhoPt (Dc : DetChr X R.m) {u : Pr.Word} (i : ℕ) (p : DecoSet X.E (R.N i) (Pr.vT u) Pr.vGs) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
@@ -46,7 +43,6 @@ def rhoPt (Dc : DetChr X R.m) {u : Pr.Word} (i : ℕ) (p : DecoSet X.E (R.N i) (
         (-((R.N (i + 1) / 2 : ℕ) : ℤ))
   else 1
 
-open Classical in
 
 def rhoPt' (Dc : DetChr X R.m) {u : Pr.Word} (i : ℕ) (p : DecoSet X.E (R.N (i + 1)) (Pr.vT u) Pr.vGs) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
@@ -79,7 +75,6 @@ abbrev XiFamC (Λ : LevCh X Pr R) (u : Pr.Word) : Type :=
 
 variable (Ξ : XiFamC Λ u)
 
-variable {W Λ Ch sel mu cst Am u Ξ} in
 
 variable {W Λ Ch sel mu cst Am u Ξ}
 

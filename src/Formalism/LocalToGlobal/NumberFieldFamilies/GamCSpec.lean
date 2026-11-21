@@ -58,8 +58,6 @@ section Assemble
 
 variable {R : Ranks} (H : Host R) (what₂ : Rows.Data R) (B : LocBase0 H what₂)
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in
 
 end Assemble
 

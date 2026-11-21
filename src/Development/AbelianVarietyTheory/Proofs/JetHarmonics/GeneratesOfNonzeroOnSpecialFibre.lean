@@ -189,7 +189,6 @@ theorem eig_iff (hv : IsLieBasis v) (f : G ⟶ G) [IsMonHom f] {M : Matrix (Fin 
       tan_ext hy (isTan_comp tw f) (isTan_scale r tw) (by rw [e1, e2, q])
     exact congrArg (fun t => t.left) q'
 
-omit hy in
 
 theorem exists_lift {R : Type} [CommRing R] {G₀ : Over (Spec (CommRingCat.of R))} [GrpObj G₀]
     (f : R →+* S) {φ : G.left ⟶ G₀.left} (h : IsGrpPullback G G₀ (Geo.Tor.spMap f) φ) (w : epsR R ⟶ G₀) :

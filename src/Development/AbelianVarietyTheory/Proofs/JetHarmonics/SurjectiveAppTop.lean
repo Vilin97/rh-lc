@@ -71,7 +71,6 @@ variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]
 omit [IsDomain V] [IsDiscreteValuationRing V] [GrpObj G] [IsCommMonObj G] in
 theorem endK_gK (f : G ⟶ G) : endK f ≫ gK = gK ≫ f.left := pullback.lift_fst _ _ _
 
-omit [IsDomain V] [IsDiscreteValuationRing V] [IsCommMonObj G] in
 
 theorem exists_generic (Lr : RigLB G) (f : G ⟶ G) (N k : ℕ)
     (mu : LB.Gen (LB.LinComb Lr.L (K := Fin 2) ![𝟙 G.left, f.left] ![(N : ℤ), -1])) (hmu : mu.IsGen)
@@ -98,7 +97,6 @@ theorem exists_generic (Lr : RigLB G) (f : G ⟶ G) (N k : ℕ)
   rw [val_pull hJ, val_pull hJ, vu' _ _ y J hJ, e, hn _ _ y J hJ, FrameGeo.val_powGen, FrameGeo.val_powGen,
     ← pow_mul, mul_comm]
 
-omit [IsDiscreteValuationRing V] [GrpObj G] [IsCommMonObj G] in
 
 theorem sval_of_generic [Flat G.hom] {L : LB G.left} (hL : L.IsLB) (f : G ⟶ G) (N k : ℕ)
     (mu : LB.Gen (LB.LinComb L (K := Fin 2) ![𝟙 G.left, f.left] ![(N : ℤ), -1])) (hmu : mu.IsGen)

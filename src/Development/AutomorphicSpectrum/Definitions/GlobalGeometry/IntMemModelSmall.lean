@@ -75,7 +75,6 @@ theorem aeval_of_mem (y : (Σ k, ι k) → Ω) {g : MRing ι} (hg : g ∈ mCoord
   simp only [RingHom.toIntAlgHom_apply, map_mul, eval_C, eval_X, mul_one, map_zero] at h1
   exact h1
 
-open Cardinal in
 
 end Cone
 

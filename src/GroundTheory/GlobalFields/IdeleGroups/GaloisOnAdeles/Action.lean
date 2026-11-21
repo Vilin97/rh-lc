@@ -16,7 +16,6 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 
 namespace AdeleBaseChange
 
-variable (K L) in
 
 def adeleRingAut : (L ≃ₐ[K] L) →* RingAut 𝔸[L] where
   toFun σ := adeleRingEquiv (σ : L ≃+* L)
@@ -29,7 +28,6 @@ def adeleRingAut : (L ≃ₐ[K] L) →* RingAut 𝔸[L] where
 instance : MulSemiringAction (L ≃ₐ[K] L) 𝔸[L] :=
   MulSemiringAction.compHom _ (adeleRingAut K L)
 
-omit [NumberField K] in
 
 @[simp]
 theorem smul_algebraMap (σ : L ≃ₐ[K] L) (l : L) :
@@ -51,7 +49,6 @@ section Galois
 
 variable [IsGalois K L]
 
-open Classical in
 
 theorem isUnit_det_conjugates (b : Module.Basis (L ≃ₐ[K] L) K L) :
     IsUnit (Matrix.of fun σ τ : L ≃ₐ[K] L ↦ σ (b τ)).det := by
@@ -150,7 +147,6 @@ theorem coe_smul_idele (σ : L ≃ₐ[K] L) (x : IdeleGroup L) :
     ((σ • x : IdeleGroup L) : 𝔸[L]) = σ • (x : 𝔸[L]) :=
   rfl
 
-omit [NumberField K] in
 
 theorem smul_idele_eq_ideleEquiv (σ : L ≃ₐ[K] L) (x : IdeleGroup L) :
     σ • x = ideleEquiv (σ : L ≃+* L) x :=
@@ -163,7 +159,6 @@ instance : ContinuousConstSMul (L ≃ₐ[K] L) (IdeleGroup L) where
     rw [h]
     exact (ideleEquiv (σ : L ≃+* L)).continuous
 
-omit [NumberField K] in
 
 @[simp]
 theorem smul_diagonal (σ : L ≃ₐ[K] L) (l : Lˣ) :
@@ -203,11 +198,9 @@ theorem forall_smul_eq_iff_mem_range_ideleEmbedding (x : IdeleGroup L) :
   · rintro ⟨y, rfl⟩ σ
     exact smul_ideleEmbedding σ y
 
-variable (K L) in
 
 end Galois
 
-variable (K L) in
 
 def ideleClassAut : (L ≃ₐ[K] L) →* MulAut (IdeleClassGroup L) where
   toFun σ := (ideleClassEquiv (σ : L ≃+* L)).toMulEquiv
@@ -217,7 +210,6 @@ def ideleClassAut : (L ≃ₐ[K] L) →* MulAut (IdeleClassGroup L) where
 instance : MulDistribMulAction (L ≃ₐ[K] L) (IdeleClassGroup L) :=
   MulDistribMulAction.compHom _ (ideleClassAut K L)
 
-omit [NumberField K] in
 
 @[simp]
 theorem smul_mk (σ : L ≃ₐ[K] L) (x : IdeleGroup L) :

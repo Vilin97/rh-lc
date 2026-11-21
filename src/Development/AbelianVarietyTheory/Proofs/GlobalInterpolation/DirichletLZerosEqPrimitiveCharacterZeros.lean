@@ -10,8 +10,6 @@ open scoped Classical
 
 namespace GlobalTheory.Lin
 
-open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
-open scoped Classical in
 
 theorem _root_.GlobalTheory.Lin.zeros_eq_zeros_primitiveCharacter :
     ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q) (s : ℂ), 0 < s.re → (χ ≠ 1 ∨ s ≠ 1) →

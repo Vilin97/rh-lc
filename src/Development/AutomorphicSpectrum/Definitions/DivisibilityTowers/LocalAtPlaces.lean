@@ -15,7 +15,6 @@ open GroundTheory.Heights₂.Heights.NumbersDVR (pointIdeal (fun W => ((Reciproc
 
 noncomputable section
 
-open Classical in
 
 def vertAt {K : Type} [DecidableEq K] {ι : K → Type} (p : Nat.Primes) (P : Ideal (MvPolynomial (Σ k, ι k) ℤ))
     (f : MvPolynomial (Σ k, ι k) ℤ) (l : List (K → ℤ)) : ℤ :=
@@ -51,12 +50,10 @@ def SecondRoots.model (R : SecondRoots M) : RootModel Ψ N :=
 
 def SecondRoots.pairs (R : SecondRoots M) : LocPair M.ι ℤ (Ψ × Fin N) := ⟨M.xdeg, R.xdeg, R.f, R.g⟩
 
-open Classical in
 
 def SecondRoots.IsChange (R : SecondRoots M) (S : Finset Nat.Primes) : Prop :=
   R.pairs.IsVertOff M.P S ∧ ∀ t, 0 < t → R.pairs.IsIsometric M.P (M.x t) (R.x t)
 
-open Classical in
 
 def SecondRoots.LocalAt [DecidableEq Ψ] (R : SecondRoots M) (j p : ℕ) (φ : Equiv.Perm (Ψ ⊕ Ψ)) (O : Type) [CommRing O]
     [IsDomain O] [IsDiscreteValuationRing O] (P : Ideal (MvPolynomial (Σ k, M.ι k) O)) : Prop :=
@@ -69,7 +66,6 @@ def SecondRoots.LocalAtPlaces [DecidableEq Ψ] (R : SecondRoots M) (j : ℕ) (S 
     Function.Injective (algebraMap A M.Ω) ∧ HasConstants ℤ A M.y ∧
     ∀ p ∈ S, AtPlacesOver A M.Ω p fun O _ _ _ _ => R.LocalAt j p (φ p) O (pointIdeal O M.y)
 
-open Classical in
 
 def LinkedTower [DecidableEq Ψ] (T : RootTower Ψ N) (II : IntersectionSystem) (φ : ℕ → Equiv.Perm (Ψ ⊕ Ψ)) : Prop :=
   ∀ B₀ B : ℕ, 2 ≤ B₀ → B₀ ≤ B → ∀ c, ∃ (M : RootModel Ψ N) (R : SecondRoots M) (S : Finset Nat.Primes),

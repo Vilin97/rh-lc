@@ -39,15 +39,10 @@ def FrobArith : Prop :=
         (((galE e ζ a b σ).1.2 : ℤˣ) : ℤ) = jacobiSym (-(d : ℤ)) p ∧
         (galE e ζ a b σ).2 = (hcl e u)⁻¹))
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 def DiffStable : Prop :=
   ∀ (e q d : ℕ), HostHyp q d →

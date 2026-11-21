@@ -116,7 +116,6 @@ theorem ext_of_infMat {θ : InfFam D} (hθ : IsInfFam θ) (W : HSp D) {g h : GA 
   · rw [RingHom.map_sub, RingHom.map_sub, sub_eq_zero]
     exact congrFun (congrFun (e τ) i) j
 
-open Classical in
 
 theorem infMat_prod {θ : InfFam D} (W : HSp D) (m : D.what₂.Tau → Matrix (Fin W.rank) (Fin W.rank) ℂ)
     (x : D.what₂.Tau → GA D W) (hx : ∀ τ, IsAtTau θ W τ (m τ) (x τ)) (τ : D.what₂.Tau) (l : List D.what₂.Tau)

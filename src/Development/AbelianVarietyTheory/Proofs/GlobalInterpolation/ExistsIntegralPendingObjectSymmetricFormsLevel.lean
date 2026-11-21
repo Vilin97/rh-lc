@@ -94,7 +94,6 @@ section Dual
 
 open Matrix Formalism.L2.GlobalTheoryTheory.Br Formalism.UG
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_dual_tilde_iff {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
     (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (a : Fin (D.R.N D.R.m - 1) → D.host.E) (t : D.host.E) :
@@ -132,7 +131,6 @@ theorem mem_dual_tilde_iff {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {ch
     refine add_mem (hSD.1 ha x hx) (mul_mem ?_ ht)
     exact ⟨⟨_, r.2.map (sigD D : D.host.E →+* D.host.E).toIntAlgHom⟩, rfl⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_isLocBasis_dual (D : D7) (u : D.what₂.Word) (Ch : ℕ → Type) (chOf : ∀ i, (D.mem u).C.cls i → Ch i)
     (Tf : FormsTiedSym D u Ch chOf) (w : D.what₂.places.Pl) (c : (D.fm u).clsP) (B : GL (Fin (D.R.N D.R.m - 1)) D.host.E)
@@ -209,7 +207,6 @@ theorem local_of_mem_delAtr {E K : Type} [Field E] [NumberField E] [Field K] [Nu
   subst he
   exact (vl_mem_delAtr_iff Pl pw hval emb s hpw J lam lam' hn M hM F).1 hF w B hB
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_SP_of_coord_integral (D : D7) (u : D.what₂.Word) (Ch : ℕ → Type) (chOf : ∀ i, (D.mem u).C.cls i → Ch i)
     (Tf : FormsTiedSym D u Ch chOf) (B : D.what₂.places.Pl → (D.fm u).clsP → GL (Fin (D.R.N D.R.m - 1)) D.host.E)
@@ -289,7 +286,6 @@ theorem root_mem_intW (D : D7) (w : D.what₂.places.Pl) (r : D.what₂.LL) (n :
   rw [h1] at this
   exact lt_irrefl _ this
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_integralPendingObject_symmetricFormsLevel : ∀ (D : D7) (u : D.what₂.Word) (Ch : ℕ → Type) (chOf : ∀ i, (D.mem u).C.cls i → Ch i) (Tf : FormsTiedSym D u Ch chOf), Formalism.L2.Rows.LowerMapTieS Tf → Formalism.L2.Ker.BeOnTie D u → (∃ n : ℕ, 0 < n ∧ ∀ x : (Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.U, (((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi x : ℂˣ) : ℂ) ^ n = 1 ∧ ∃ r : D.what₂.LL, D.what₂.embLL r = (((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi x : ℂˣ) : ℂ)) → ∃ P : Formalism.MainNotions.product_first_zeroth_parts.Pend D u, Formalism.MainNotions.product_first_zeroth_parts.ArchimedeanSignatureMatching P := by
   intro D u Ch chOf Tf hMap hBe hχ

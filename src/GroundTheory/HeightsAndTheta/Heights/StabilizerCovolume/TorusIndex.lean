@@ -25,7 +25,6 @@ def baseChangeLat (K : Type) [Field K] [NumberField K] (I : Submodule (𝓞 Em) 
     Submodule (𝓞 K) ((Em →+* K) → Fin N → K) :=
   Submodule.span (𝓞 K) ((fun v σ a => σ (v a)) '' (I : Set (Fin N → Em)))
 
-open Classical in
 
 def eigenLat (I : Submodule (𝓞 Em) (Fin N → Em)) (s : Em →+* K) : Submodule (𝓞 K) (Fin N → K) :=
   (baseChangeLat K I).comap (LinearMap.single (𝓞 K) (fun _ : Em →+* K => Fin N → K) s)

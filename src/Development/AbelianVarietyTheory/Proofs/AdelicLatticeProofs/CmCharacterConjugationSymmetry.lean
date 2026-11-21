@@ -12,8 +12,6 @@ open scoped TensorProduct ContDiff nonZeroDivisors
 
 namespace GlobalTheory
 
-open NumberField IsDedekindDomain NumberField.mixedEmbedding Complex Classical in
-open scoped TensorProduct ContDiff nonZeroDivisors in
 
 theorem _root_.GlobalTheory.cA_incA_apply {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] (σ : E →ₐ[F] E) (x : E) :

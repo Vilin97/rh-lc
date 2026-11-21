@@ -33,7 +33,6 @@ end SumRepresentations
 end Formalism.MainNotions.N.T2
 
 namespace Formalism.MainNotions.N.T2
-open Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations in
 
 theorem litGoodO : Formalism.MainNotions.N.LitGoodO := by
   intro l _ LL

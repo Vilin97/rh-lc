@@ -89,7 +89,6 @@ end GlobalTheory.RowLaw.CvDiv
 
 namespace GlobalTheory.RowLaw
 
-open CvDiv in
 
 theorem cv_inv_natCast_smul_mem : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I : Fin 2 → Type) [∀ g, Fintype (I g)] (κ : Type) [Fintype κ] (X : RawChart C d I κ), RLaw X V → ∀ g (N : ℕ), V.v (N : C) = 0 → ∀ a ∈ Cv X V g, (N : C)⁻¹ • a ∈ Cv X V g := by
   intro C _ V d _ I _ κ _ X hX g N hN a ha

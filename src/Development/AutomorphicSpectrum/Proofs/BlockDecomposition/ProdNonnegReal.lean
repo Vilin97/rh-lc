@@ -107,7 +107,6 @@ theorem xiP_cond {S : Finset (Pl D)} {e : AE D} (he : e * e = e) (hc : cA D e = 
     rw [if_neg (fun hh => h ((intOff_jn hn _ _).1 hh))] at a1
     simp [xiP, a1]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem cell_id {S : Finset (Pl D)} {e : AE D} (he : e * e = e) (hc : cA D e = e) {ψ : AddChar (AF D.host.F) ℂ}
     (hψ : IsCharAF D.host.F ψ) [BorelSpace (Mx D V.rank r × Mx D V.rank t)]

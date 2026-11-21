@@ -52,7 +52,6 @@ theorem bd_X : Bd 1 (X : K⟦X⟧⟦X⟧) := by
   · rw [coeff_one, if_neg (by omega)]
   · simp
 
-variable (K) in
 
 def fin : Subring K⟦X⟧⟦X⟧ where
   carrier := {F | ∃ M, Bd M F}

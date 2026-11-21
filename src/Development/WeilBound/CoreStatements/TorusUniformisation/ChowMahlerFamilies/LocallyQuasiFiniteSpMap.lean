@@ -20,7 +20,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 
 namespace PositivityTheory.Xgn.GeometricOfPeriods
 
-open Polynomial in
 
 theorem exists_point {F R : Type} [Field F] [Algebra F ℂ] [CommRing R] [IsDomain R] [Algebra F R]
     [Algebra.FiniteType F R] (f : R) (hf : IsIntegral F f) (r : ℂ) (hr : aeval r (minpoly F f) = 0) :
@@ -51,7 +50,6 @@ theorem exists_point {F R : Type} [Field F] [Algebra F ℂ] [CommRing R] [IsDoma
   rw [ha, hb] at this
   exact this
 
-open Polynomial TensorProduct in
 
 theorem mem_range_of_idem {F R : Type} [Field F] [CharZero F] [Algebra F ℂ] [CommRing R] [IsDomain R] [Algebra F R]
     [Algebra.FiniteType F R]

@@ -131,7 +131,6 @@ end GlobalTheory.BirigLift
 
 namespace GlobalTheory.BirigLift
 
-open GlobalTheory.Published.GrothendieckMessing in
 
 theorem exists_lift_lam : ∀ (R R₀ : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] [CommRing R₀] [IsLocalRing R₀] (π : R →+* R₀), Function.Surjective π → RingHom.ker π ^ 2 = ⊥ → IsUnit (2 : R) → ∀ P₀ : PolAV (Sp R₀), ∃ (A : Over (Sp R)) (_ : GrpObj A) (i : P₀.A.left ⟶ A.left) (l : (P₀.A ⊗ P₀.A).left ⟶ (A ⊗ A).left) (Q : LB (A ⊗ A).left), IsAbelianScheme A ∧ IsGrpPullback P₀.A A (spMap π) i ∧ IsSquare i l ∧ Q.IsLB ∧ GlobalTheory.AbDual.IsAdditive Q ∧ GlobalTheory.AbDual.IsAdditive (GlobalTheory.AbDual.swap Q) ∧ LBIso (Q.pull l) (abelian₂ P₀.A P₀.L) := by
   intro R R₀ _ _ _ _ _ π hπ hI2 h2 P₀

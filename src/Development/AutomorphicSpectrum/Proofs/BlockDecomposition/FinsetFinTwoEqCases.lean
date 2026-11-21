@@ -188,7 +188,6 @@ theorem blk_mul_stabG {g h : GL (Fin (M + 2)) A} (hg : g ∈ stabG s J) (hh : h 
   rw [Units.val_mul]
   exact blk_mul (stabG_rest_zero hg) (stabG_row hh)
 
-variable (s J) in
 
 def piG : stabG s J →* GL (Fin M) A :=
   MonoidHom.mk' (fun g =>

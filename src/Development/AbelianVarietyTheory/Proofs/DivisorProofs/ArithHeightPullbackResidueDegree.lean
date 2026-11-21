@@ -23,7 +23,6 @@ noncomputable section
 
 namespace GlobalTheory.ProjFormulaVert
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_affine_finite_free (k : Type) [Field k] (X Y : Scheme.{0}) [IsIntegral X] [IsIntegral Y]
     (p : X ⟶ Sp k) (q : Y ⟶ Sp k) (hX : IsProjOver p) (hY : IsProjOver q) (π : Y ⟶ X) (hπ : π ≫ p = q)

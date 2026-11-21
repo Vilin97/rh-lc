@@ -20,7 +20,6 @@ section Real
 
 variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {κ : Type} [Fintype κ]
 
-variable (V κ) in
 
 def dgL : (κ → V) →L[ℝ] (κ ⊕ κ → V) := GlobalTheory.SchwartzBox.restr V (Sum.elim id id)
 

@@ -67,7 +67,6 @@ theorem relIndex_smul {K : Type} [Field K] [NumberField K]
   have h0 : FractionalIdeal.absNorm J ≠ 0 := fun h' => hJ (FractionalIdeal.absNorm_eq_zero_iff.1 h')
   exact_mod_cast (mul_right_cancel₀ h0 h).symm
 
-open GlobalTheory.NormSum.MovedLattice in
 
 theorem coefLat_eq (D : D7) (cc : Ideal (𝓞 D.host.K)) :
     coefLat D cc = ((ext D cc * D.host.AA0 : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) :
@@ -92,4 +91,3 @@ theorem coefLat_eq (D : D7) (cc : Ideal (𝓞 D.host.K)) :
 
 end GlobalTheory.MatrixLatticeIndex
 
-open GlobalTheory.NormSum.MovedLattice GlobalTheory.MatrixLatticeIndex in

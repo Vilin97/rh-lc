@@ -86,6 +86,5 @@ end GlobalTheory.FieldSize.Capit
 
 namespace GlobalTheory.FieldSize
 
-open Capit in
 
 end GlobalTheory.FieldSize

@@ -158,7 +158,6 @@ theorem isEig_lieScale {τ : Λ →+* O} (c : O) {x : LieG G} (hx : AvDefs.IsEig
 
 variable {p : ℕ} [IsAdicComplete (Ideal.span {(p : O)}) O]
 
-omit [IsCommMonObj G] in
 
 def dlogTv (χ : Tv G p) : omega G :=
   ⟨(existsUnique_isAl χ).choose, (existsUnique_isAl χ).choose_spec.1.1⟩
@@ -183,7 +182,6 @@ theorem dlogTv_mul {χ χ' χ'' : Tv G p} (h : ∀ n, χ''.χ n = χ.χ n * χ'.
     one_smul, MulOpposite.op_one, one_smul, add_comm]
   exact map_add (algebraMap O R) _ _
 
-omit [IsCommMonObj G] in
 
 theorem map_span_dlogTv :
     (Submodule.span O (Set.range (dlogTv (G := G) (p := p)))).map (omega G).subtype = htSpan G p := by
@@ -208,7 +206,6 @@ section Points
 
 variable [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]
 
-variable (p O) in
 
 abbrev red (m : ℕ) : O →ₐ[O] O ⧸ Ideal.span {(p : O) ^ m} := Ideal.Quotient.mkₐ O _
 
@@ -233,7 +230,6 @@ theorem factor_red (m : ℕ) : ptMap (Ideal.Quotient.factorₐ O (Ideal.span_sin
   rw [GlobalTheory.TangentPow.ptMap_comp_ptMap]
   exact congrArg (fun φ => ptMap φ) (AlgHom.ext fun _ => rfl)
 
-include P in
 
 theorem hom_ext_red {X : Over (Sp O)} {Q Q' : specO O O ⟶ X}
     (h : ∀ m, ptMap (red p O m) ≫ Q = ptMap (red p O m) ≫ Q') : Q = Q' := by

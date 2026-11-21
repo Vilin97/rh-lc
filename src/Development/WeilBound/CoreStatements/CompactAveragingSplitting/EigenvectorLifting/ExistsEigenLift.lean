@@ -33,7 +33,6 @@ theorem inv_mem_UAt {X : Spc F E n} {v : Pl F} {g : UA σ X.J} (hg : g ∈ UAt �
   have e : mat g⁻¹ - 1 = -(mat g⁻¹ * (mat g - 1)) := by rw [mul_sub, mat_inv_mul, mul_one, neg_sub]
   rw [e, smul_neg, ← Matrix.mul_smul, hg u hu, Matrix.mul_zero, neg_zero]
 
-variable (σ) in
 
 def KSub (W : Spc F E d) (v : Pl F) : Subgroup (UA σ W.J) where
   carrier := KAt σ W v

@@ -64,7 +64,6 @@ theorem exists_pair (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X
       simp [FD.cc]
     · exact he x y
 
-omit [IsCMField E] in
 
 theorem exists_nsmul_mem (𝔄 : Submodule (𝓞 E) E) (h : 𝔄 ≠ ⊥) {J : Type} [Fintype J] (c : J → E) :
     ∃ n : ℕ, 0 < n ∧ ∀ i, (n : E) * c i ∈ 𝔄 := by
@@ -224,7 +223,6 @@ theorem eq_zero_of_trace {z : E} (h : ∀ b : 𝓞 E, Algebra.trace ℚ E ((b : 
   rw [smul_mul_assoc, inv_mul_cancel₀ hz, map_zsmul, ← map_one (algebraMap ℚ E), Algebra.trace_algebraMap] at this
   simp [hn, Module.finrank_pos.ne'] at this
 
-omit [IsCMField E] in
 
 theorem eq_zero_of_rank_one {X : Type} [AddCommGroup X] [Module.Free ℤ X] [Module.Finite ℤ X] [Module (𝓞 E) X]
     (hrk : Module.finrank (𝓞 E) X = 1) (ξ : Module.Dual ℤ X) (hξ : ξ ≠ 0) {y : X} (hy : ∀ b : 𝓞 E, ξ (b • y) = 0) :
@@ -256,7 +254,6 @@ theorem eq_zero_of_rank_one {X : Type} [AddCommGroup X] [Module.Free ℤ X] [Mod
     rw [← h1, map_nsmul] at h2
     simp [hn, hx] at h2
 
-omit [IsCMField E] in
 
 theorem apply_eq_zero {g g' : ℕ} {M : Type} (ty : Fin g → (E →+* ℂ)) (ty' : Fin g' → (E →+* ℂ))
     (π : (Fin g → ℂ) →ₗ[ℂ] (Fin g' → ℂ)) (P : M → Fin g → ℂ) (hP : Submodule.span ℝ (Set.range P) = ⊤)

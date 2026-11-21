@@ -366,7 +366,6 @@ def cubeComplexMap {A B : Cube.{v} ι R} (φ : A ⟶ B) : cubeComplex A ⟶ cube
     rw [cubeComplex_d, cubeComplex_d]
     exact ModuleCat.hom_ext (LinearMap.ext fun x => (Cube.termMap_d φ p x).symm)
 
-variable (ι R) in
 
 def cubeFunctor : Cube.{v} ι R ⥤ CochainComplex (ModuleCat.{v} R) ℕ where
   obj := cubeComplex
@@ -387,7 +386,6 @@ theorem cechComplex_d (A : Cube.{v} ι R) (p : ℕ) :
 def cechComplexMap {A B : Cube.{v} ι R} (φ : A ⟶ B) : cechComplex A ⟶ cechComplex B :=
   CochainComplex.truncate.map (cubeComplexMap φ)
 
-variable (ι R) in
 
 def cechFunctor : Cube.{v} ι R ⥤ CochainComplex (ModuleCat.{v} R) ℕ where
   obj := cechComplex
@@ -405,7 +403,6 @@ noncomputable def cechAug (A : Cube.{v} ι R) :
       rw [cechComplex_d A 0]
       exact ModuleCat.hom_ext (LinearMap.ext (Cube.d_aug A))⟩
 
-variable (ι R) in
 
 theorem cubeComplex_exactAt_succ_iff (A : Cube.{v} ι R) (p : ℕ) :
     (cubeComplex A).ExactAt (p + 1) ↔ Function.Exact (Cube.d A p) (Cube.d A (p + 1)) := by
@@ -659,9 +656,7 @@ instance isIso_cechComparison [Finite ι] (A : Cube.{v} ι R) : IsIso (cechCompa
   haveI : ∀ p, IsIso ((cechComparison F A).f p) := fun p => Cube.isIso_termComparison F A (p + 1)
   HomologicalComplex.Hom.isIso_of_components _
 
-variable (ι) in
 
-variable (ι) in
 
 end ChangeOfRings
 
@@ -669,9 +664,7 @@ section RestrictScalars
 
 variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] (f : R →+* S)
 
-omit [LinearOrder ι] in
 
-omit [LinearOrder ι] in
 
 theorem Cube.isIso_termComparison_restrictScalars (A : Cube.{v} ι S) (p : ℕ) :
     IsIso (Cube.termComparison (ModuleCat.restrictScalars f) A p) := by
@@ -718,7 +711,6 @@ noncomputable def cechExtendScalarsIso [LinearOrder ι] [Finite ι] {S : Type u'
       cechComplex (A ⋙ ModuleCat.extendScalars f) :=
   asIso (cechComparison _ A)
 
-open ChangeOfRings in
 
 variable (S : Type u') [CommRing S] [Algebra R S]
 
@@ -823,7 +815,6 @@ theorem homology_directSum_bijective {K : κ → CochainComplex (ModuleCat.{v} R
 
 variable {ι : Type}
 
-omit [DecidableEq κ] in
 
 noncomputable def Cube.directSum (A : κ → Cube.{v} ι R) : Cube.{v} ι R :=
   Cube.mk (fun s => ModuleCat.of R (⨁ k, (A k).obj s))
@@ -831,15 +822,12 @@ noncomputable def Cube.directSum (A : κ → Cube.{v} ι R) : Cube.{v} ι R :=
     (fun s x => by ext k; simp)
     (fun h h' x => by ext k; simp)
 
-omit [DecidableEq κ] in
 
-omit [DecidableEq κ] in
 
 noncomputable def Cube.directSumIncl (A : κ → Cube.{v} ι R) (k : κ) : A k ⟶ Cube.directSum A :=
   Cube.homMk (fun s => DirectSum.lof R κ (fun k => (A k).obj s) k)
     fun h x => (DirectSum.lmap_lof (fun k => Cube.res (A k) h) k x).symm
 
-omit [DecidableEq κ] in
 
 noncomputable def Cube.directSumProj (A : κ → Cube.{v} ι R) (k : κ) : Cube.directSum A ⟶ A k :=
   Cube.homMk (fun s => DirectSum.component R κ (fun k => (A k).obj s) k) fun _ _ => rfl
@@ -880,7 +868,6 @@ noncomputable def cubeHomologyDirectSumEquiv (A : κ → Cube.{v} ι R) (p : ℕ
     (fun _ _ h => congrArg cubeComplexMap (Cube.directSumIncl_proj_of_ne A h)) p
     (Cube.exists_sum_directSum A p))
 
-omit [DecidableEq κ] in
 
 theorem cubeComplex_directSum_exactAt_iff (A : κ → Cube.{v} ι R) (p : ℕ) :
     (cubeComplex (Cube.directSum A)).ExactAt p ↔ ∀ k, (cubeComplex (A k)).ExactAt p := by
@@ -890,7 +877,6 @@ theorem cubeComplex_directSum_exactAt_iff (A : κ → Cube.{v} ι R) (p : ℕ) :
   exact ⟨fun _ k => (DirectSum.of_injective (β := fun k => (cubeComplex (A k)).homology p)
     k).subsingleton, fun _ => ⟨fun _ _ => DFinsupp.ext fun _ => Subsingleton.elim _ _⟩⟩
 
-omit [DecidableEq κ] in
 
 end DirectSum
 

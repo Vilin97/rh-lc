@@ -71,7 +71,6 @@ theorem stdMat_mem (hp : X.p0 = r - j) {z : Pt Tau j (r - j)} (hz : z ∈ DomI T
   rw [h3]
   exact (PosDef.submatrix (hz (κ.symm τ)) (finCongr hp).injective).transpose
 
-open Classical in
 
 def stdFrame (hp : X.p0 = r - j) (z : Pt Tau j (r - j)) : X.dom :=
   if h : z ∈ DomI Tau j (r - j) then ⟨stdMat X hj κ z, stdMat_mem X hj κ hp h⟩
@@ -120,7 +119,6 @@ theorem torPt_pr (y : FrPt Xo c (CAt σ)) : (torPt Y y).1 ≫ torPr Y σ = ptC y
 
 abbrev LieAt (y : TorPts Y σ) : Type := TanM (y.1 ≫ torPr Y σ) Y.t.G
 
-variable (σ) in
 
 abbrev LieForm : Type := ∀ y : TorPts Y σ, LieAt Y y →ₗ[ℂ] LieAt Y y →ₗ⋆[ℂ] ℂ
 
@@ -136,15 +134,12 @@ variable {H : Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff
 
 variable (U : Unf Xo c σ r) (hU : IsUnf U) (e : Dw.p = j) (hσ : GoodEmb c σ) (T : Tau ≃ Psi H)
 
-include hU e in
 
 def letter (t : Tau) : Psi H := (letterAt hσ).symm (T t)
 
-include hσ in
 
 variable [Fintype Tau]
 
-include hσ in
 
 variable (B : ∀ k, BdData Tau j (r - j) (gammaU (U.X k) (le_of_isUnf U hU e) (cmEquiv U hU T k)))
 

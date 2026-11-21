@@ -22,7 +22,6 @@ omit [NumberField F] [NumberField E] in
 theorem int_units_sq (ε : ℤˣ) {R : Type} [CommRing R] : ((ε : ℤ) : R) * ((ε : ℤ) : R) = 1 := by
   rw [← Int.cast_mul, ← Units.val_mul, Int.units_mul_self, Units.val_one, Int.cast_one]
 
-variable (E) in
 
 def w0 (n : ℕ) (ε : ℤˣ) : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) E := Matrix.fromBlocks 0 1 (((ε : ℤ) : E) • 1) 0
 
@@ -45,7 +44,6 @@ omit [NumberField E] in
 theorem mapσ_mul {α : Type} [Fintype α] (M N : Matrix α α E) : (M * N).map σ = M.map σ * N.map σ :=
   Matrix.map_mul (f := (σ : E →+* E))
 
-variable (E) in
 
 def w0GL (n : ℕ) (ε : ℤˣ) : GL (Fin n ⊕ Fin n) E where
   val := w0 E n ε
@@ -70,7 +68,6 @@ theorem wE_unitary {b : GL (Fin n ⊕ Fin n) E} {ε : ℤˣ} (hε : b.1ᵀ * dbl
     _ = ((b⁻¹).1ᵀ * b.1ᵀ) * dbl Y.J * (b.1.map σ * (b⁻¹).1.map σ) := by simp only [Matrix.mul_assoc]
     _ = dbl Y.J := by rw [hb1, hb2, Matrix.one_mul, Matrix.mul_one]
 
-variable (σ Y) in
 
 def wA (b : GL (Fin n ⊕ Fin n) E) (ε : ℤˣ) (hε : b.1ᵀ * dbl Y.J * b.1.map σ = w0 E n ε) : G2 σ Y :=
   ⟨Matrix.GeneralLinearGroup.map (inclR (F := F) (E := E) (AF F)) (wE b ε), by

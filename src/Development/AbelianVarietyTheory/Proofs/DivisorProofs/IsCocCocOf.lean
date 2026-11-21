@@ -29,7 +29,6 @@ theorem Sm.map {W : K → X.left.Opens} {D D' : Type} [CommRing D] [Algebra R D]
   obtain ⟨i, hi⟩ := h
   exact ⟨i, (trivMap φ x).le_preimage hi⟩
 
-open Classical in
 
 def cocOf (W : K → X.left.Opens) (n : C1 ((IsSmall (dp0 R) (X.hom ≫ 𝟙 _) W).ι ⋙ O (dp0 R) (X.hom ≫ 𝟙 _))) :
     Fn1 X := fun _ _ _ _ _ _ φ x ↦

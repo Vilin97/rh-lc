@@ -54,6 +54,5 @@ namespace GlobalTheory.MassLinkConj
 open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes IsDedekindDomain
 open scoped Matrix
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.MassLinkConj

@@ -260,13 +260,11 @@ instance isClosedImmersion_component_ι (Z : irreducibleComponents X) :
     IsClosedImmersion (component Z).ι :=
   .of_isPreimmersion _ (by simpa using isClosed_component Z)
 
-variable (X) in
 
 theorem iSup_component : ⨆ Z : irreducibleComponents X, component Z = ⊤ :=
   eq_top_iff.mpr fun x _ ↦ Opens.mem_iSup.mpr
     ⟨⟨_, irreducibleComponent_mem_irreducibleComponents x⟩, mem_irreducibleComponent⟩
 
-variable (X) in
 
 theorem pairwise_disjoint_component :
     Pairwise fun Z W : irreducibleComponents X ↦ Disjoint (component Z) (component W) := by
@@ -274,16 +272,13 @@ theorem pairwise_disjoint_component :
   rw [← Opens.coe_disjoint]
   exact pairwiseDisjoint_irreducibleComponents X Z.2 W.2 (fun h ↦ hne (Subtype.ext h))
 
-variable (X) in
 
-variable (X) in
 
 theorem nonempty_isColimit_component :
     Nonempty (IsColimit (Cofan.mk X fun Z : irreducibleComponents X ↦ (component Z).ι)) :=
   nonempty_isColimit_cofanMk_of _ (by simpa using iSup_component X)
     (by simpa [Function.onFun] using pairwise_disjoint_component X)
 
-variable (X) in
 
 end Components
 

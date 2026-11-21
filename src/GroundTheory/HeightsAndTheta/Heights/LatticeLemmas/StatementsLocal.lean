@@ -31,7 +31,6 @@ structure FullLattice (K : Type*) [Field K] [NumberField K] (V : Type*) [AddComm
 variable {K : Type*} [Field K] [NumberField K]
 variable {V : Type*} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-omit [NumberField K] in
 
 theorem isTorsionFree_of_vectorSpace : Module.IsTorsionFree (𝓞 K) V :=
   Module.IsTorsionFree.of_smul_eq_zero fun a x hax ↦ by

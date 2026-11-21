@@ -42,7 +42,6 @@ namespace Link
 
 variable {D : D7} {u : D.what₂.Word} {W : Tower D} (L : Link D u W)
 
-open Classical in
 
 end Link
 

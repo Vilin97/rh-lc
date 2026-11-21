@@ -320,7 +320,6 @@ theorem pres (N l : ℕ) (k : ℤ) (hN : 0 < N) (hl : l.Prime) :
 
 end GlobalTheory.HeckeFamilyMatrices.Semi
 
-open GlobalTheory.HeckeFamilyMatrices.Semi in
 
 theorem GlobalTheory.HeckeFamilyMatrices.hecke_semisimple_at_newform : ∀ (k : ℕ) (g : UpperTheory.V.Af.Newform k) (N l : ℕ) (hN : g.M ∣ N), 5 ≤ N → l.Prime → ¬ l ∣ N → Odd k → 3 ≤ k →
   ∀ α : ℂ, α ^ 2 - g.a l * α + g.χ (l : ZMod g.M) * (l : ℂ) ^ (k - 1) = 0 →

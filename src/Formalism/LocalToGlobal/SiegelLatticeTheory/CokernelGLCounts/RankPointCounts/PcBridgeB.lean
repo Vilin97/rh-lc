@@ -109,7 +109,6 @@ theorem hb_corner : alQ M Y al (Submodule.Quotient.mk be) + (Rs M.R).mkQ u = 0 :
   rw [add_sub_cancel]
   rfl
 
-include hY hbe hal hsch in
 
 theorem schur_M (v : Fin (m + 1) → E) :
     toE M al ⬝ᵥ ((Y.Z.map M.R.subtype)⁻¹ *ᵥ fun a => v a.castSucc) + u * ((Z.Z.map M.R.subtype)⁻¹ *ᵥ v) (Fin.last m) =
@@ -219,7 +218,6 @@ theorem toE_inj {k : ℕ} {x y : Fin k → M.R} (h : toE M x = toE M y) : x = y 
   funext j
   exact Subtype.ext (congrFun h j)
 
-include hY hbe in
 
 theorem head_rows (x : Fin (m + 1) → M.R) :
     toE M (fun a => (Z.Z *ᵥ x) a.castSucc) = Y.Z.map M.R.subtype *ᵥ toE M (fun a => x a.castSucc) +

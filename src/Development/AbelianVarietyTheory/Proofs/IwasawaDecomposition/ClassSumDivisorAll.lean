@@ -45,6 +45,5 @@ theorem twAllAt_tr {D : D7} (N : ∀ u, Submodule (NumberField.RingOfIntegers D.
 
 theorem twAll_pt {K : Ctx} (β : BPt K) : DQ.TwAllAt β.D β.O.ex.nch β.O.ex.xd := twAllAt_tr (nPrime β.p.L) β.p.ht β.twAll
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.GeoTies

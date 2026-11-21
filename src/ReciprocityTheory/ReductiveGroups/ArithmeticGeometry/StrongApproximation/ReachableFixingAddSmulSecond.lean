@@ -12,7 +12,6 @@ open Matrix
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {K : Type*} [CommRing K] {σ : K →+* K}
   {J : Matrix ι ι K}
 
-variable (σ J) in
 
 def Reach (e f : ι → K) {s : ℕ} (a : Fin s → ι → K) (b b' : ι → K) : Prop :=
   ∃ p ∈ Good σ J e f, (∀ j, p *ᵥ a j = a j) ∧ p *ᵥ b = b'

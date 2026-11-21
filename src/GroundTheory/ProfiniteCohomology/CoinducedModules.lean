@@ -65,7 +65,6 @@ noncomputable def coindEval : LocallyConstant G X →ₗ[k] X where
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-omit [IsTopologicalGroup G] in
 
 section Embedding
 

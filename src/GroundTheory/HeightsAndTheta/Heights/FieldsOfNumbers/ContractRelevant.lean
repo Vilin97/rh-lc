@@ -33,7 +33,6 @@ theorem extend_zero_inj {K K' : Type*} {j : K → K'} (hj : Function.Injective j
 variable {K K' : Type*} [DecidableEq K] [DecidableEq K'] {ι : K → Type*} {ι' : K' → Type*}
   {j : K → K'} {g : (Σ k, ι k) → (Σ k, ι' k)} (hgj : ∀ v, (g v).1 = j v.1)
 
-include hgj in
 
 theorem weight_mapDomain (hj : Function.Injective j) (d : (Σ k, ι k) →₀ ℕ) :
     Finsupp.weight (blockWeight ι') (Finsupp.mapDomain g d) =
@@ -53,7 +52,6 @@ theorem weight_mapDomain (hj : Function.Injective j) (d : (Σ k, ι k) →₀ �
     refine Finset.sum_eq_zero fun v _ => ?_
     rw [if_neg fun h => hk ⟨v.1, h.symm⟩, smul_zero]
 
-include hgj in
 
 theorem rename_weightedHomogeneousComponent (hj : Function.Injective j)
     (hg : Function.Injective g) {R : Type*} [CommSemiring R] (b : K → ℕ)
@@ -73,7 +71,6 @@ theorem rename_weightedHomogeneousComponent (hj : Function.Injective j)
     · rw [coeff_rename_eq_zero _ _ _ fun u hu => absurd hu (hd u)]
     · rfl
 
-include hgj in
 
 theorem isMultiProjPrime_comap_rename (hj : Function.Injective j) (hg : Function.Injective g)
     (hsurj : ∀ w : Σ k, ι' k, w.1 ∈ Set.range j → ∃ v, g v = w) {R : Type*} [CommRing R]

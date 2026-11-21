@@ -56,7 +56,6 @@ end GlobalTheory.FinPl.OverSwap
 
 namespace GlobalTheory.FinPl
 
-open GlobalTheory.FinPl.OverSwap in
 
 theorem overSwap : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p p' : SplitPt D k) (n n' m m' : Type) [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] [Fintype m]

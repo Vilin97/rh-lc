@@ -44,7 +44,6 @@ theorem cd_rel {W : Y.Opens} (σ : Γ(twist (GlobalTheory.structureModule Y) (to
   rw [fnOf_resG, fnOf_resG, fnOf_resG, fnOf_toLB_g] at e
   exact e
 
-open Classical in
 
 def ratOf {W : Y.Opens} (σ : Γ(twist (GlobalTheory.structureModule Y) (toLB D), W)) : Y.functionField :=
   if h : genericPoint Y ∈ W then
@@ -145,13 +144,11 @@ theorem fnMap_fnOf {U : X.Opens} {y : Y} (hy : y ∈ s ⁻¹ᵁ U) (a : Γ(X, U)
   congr 1
   exact Scheme.Hom.germ_stalkMap_apply s U y hy a
 
-variable (s D) in
 
 def tw {V : X.Opens}
     (σ : Γ((Scheme.Modules.pushforward s).obj (twist (GlobalTheory.structureModule Y) (toLB D)), V)) :
     Γ(twist (GlobalTheory.structureModule Y) (toLB D), s ⁻¹ᵁ V) := σ
 
-variable (s D) in
 
 def untw {V : X.Opens} (σ : Γ(twist (GlobalTheory.structureModule Y) (toLB D), s ⁻¹ᵁ V)) :
     Γ((Scheme.Modules.pushforward s).obj (twist (GlobalTheory.structureModule Y) (toLB D)), V) := σ
@@ -180,7 +177,6 @@ theorem regAt_finv {V : X.Opens} (σ : Γ(twist (GlobalTheory.structureModule Y)
     rw [fnMap_finv]
     exact regularAt_ratOf σ (show s y ∈ V from hy.mem_open V.isOpen hx)
 
-open Classical in
 
 def funOf (V : X.Opens) (σ : Γ(twist (GlobalTheory.structureModule Y) (toLB D), s ⁻¹ᵁ V)) : Γ(X, V) :=
   if hV : genericPoint X ∈ V then

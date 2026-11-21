@@ -26,7 +26,6 @@ section Add
 variable {E K k : Type} [Field E] [NumberField E] [Field K]
   [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-omit [Field K] in
 
 end Add
 

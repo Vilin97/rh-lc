@@ -49,6 +49,5 @@ def SerreAmpleSt : Prop :=
       (∀ (Ω : Type) [Field Ω] [IsAlgClosed Ω] (t : Sp Ω ⟶ Sp K) (x : Over.mk t ⟶ A), x ^ N = 1 → x ≫ σ.hom = x) →
       σ.hom = 𝟙 A
 
-open GlobalTheory.RealMult in
 
 end GlobalTheory.AmpleRigid

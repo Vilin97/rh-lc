@@ -19,7 +19,6 @@ section Unit
 variable {K Ω : Type} [Field K] [NumberField K] [Field Ω] [Algebra K Ω]
   {v : AddValuation Ω (WithTop ℤ)} {la : HeightOneSpectrum (𝓞 K)}
 
-omit [NumberField K] in
 
 theorem nonneg_int (v : AddValuation Ω (WithTop ℤ)) (a : 𝓞 K) : 0 ≤ v (algebraMap K Ω (a : K)) := by
   have h : IsIntegral ℤ (algebraMap K Ω (a : K)) := map_isIntegral_int (algebraMap K Ω) a.isIntegral_coe

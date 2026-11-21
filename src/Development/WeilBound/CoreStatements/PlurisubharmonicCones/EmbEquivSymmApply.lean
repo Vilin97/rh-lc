@@ -38,7 +38,6 @@ theorem extE_apply (s : 𝓞 E →+* ℂ) (a : 𝓞 E) : extE s (algebraMap (�
 
 theorem extE_comp (s : 𝓞 E →+* ℂ) : (extE s).comp (algebraMap (𝓞 E) E) = s := RingHom.ext (extE_apply s)
 
-variable (E) in
 
 def embEquiv : (E →+* ℂ) ≃ (𝓞 E →+* ℂ) where
   toFun t := t.comp (algebraMap (𝓞 E) E)
@@ -52,7 +51,6 @@ omit [NumberField E] in
 theorem cj_cj (s : 𝓞 E →+* ℂ) : (starRingEnd ℂ).comp ((starRingEnd ℂ).comp s) = s :=
   RingHom.ext fun _ => Complex.conj_conj _
 
-variable (E) in
 
 def cjEquiv : (𝓞 E →+* ℂ) ≃ (𝓞 E →+* ℂ) where
   toFun s := (starRingEnd ℂ).comp s

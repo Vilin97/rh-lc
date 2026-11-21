@@ -98,7 +98,6 @@ section Push
 
 variable {f : X' ⟶ X} (m : SABMap t' t f) (x' : Sp S ⟶ X') (hx : x' ≫ f = x)
 
-include hx in
 
 theorem isTan_push {v : Sp (DualNumber S) ⟶ t'.G.left} (hv : IsTanAtG t' x' v) : IsTanAtG t x (v ≫ m.φ) := by
   subst hx
@@ -188,7 +187,6 @@ instance finite_tanM (y : Sp ℂ ⟶ X) : Module.Finite ℂ (TanM y t.G) := by
   rw [(isComb_iff (fun i => tanOf (isTan_map _ e (hD i))) a w).1 ha]
   exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
 
-variable (t) in
 
 theorem exists_isBlockMetric (y : Sp ℂ ⟶ X) : ∃ h : TanM y t.G →ₗ[ℂ] TanM y t.G →ₗ⋆[ℂ] ℂ, IsBlockMetric h := by
   classical

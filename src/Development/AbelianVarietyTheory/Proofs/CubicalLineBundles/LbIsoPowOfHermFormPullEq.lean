@@ -150,7 +150,6 @@ lemma exists_generating_sections (P : Out.PolAV (Sp ℂ)) :
 
 end PullIso
 
-open PullIso CubeValues SymmetricSemicharacter in
 
 theorem lbIso_pow_of_hermForm_pull_eq :
     ∀ (P P' : Out.PolAV (Sp ℂ)) (u : HolUnif P.A P.L P.g) (u' : HolUnif P'.A P'.L P'.g)

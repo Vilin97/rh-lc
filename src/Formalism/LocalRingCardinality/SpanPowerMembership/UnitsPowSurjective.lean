@@ -91,7 +91,6 @@ end ToC
 
 section ExtZero
 
-open Classical in
 
 def extZeroHom {K L : Type*} [Field K] [Field L] (χ : Kˣ →* Lˣ) : K →* L where
   toFun x := if h : x = 0 then 0 else (χ (Units.mk0 x h) : L)

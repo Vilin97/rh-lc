@@ -27,7 +27,6 @@ theorem lattice_of_idx {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K 
   refine ⟨hA.fg.of_le hle, ?_⟩
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli
-omit [NumberField K] in
 
 theorem lattice_map {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
     {A : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (f : V →ₗ[K] W) (hf : Function.Surjective f) :
@@ -155,7 +154,6 @@ omit [NumberField K] [StarRing K] [FiniteDimensional K V] [Module (𝓞 K) V] [I
 theorem mem_fixSp (η : V ≃ₗ[K] V) (x : V) : x ∈ fixSp η ↔ η x = x := by
   simp [fixSp, sub_eq_zero]
 
-omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem exists_proj_aut {H : HermSpace K V} (hK : IsCMUnram K) (hP : PD H.B.flip) {η : V ≃ₗ[K] V}
     (hη : ∀ x y, H.B (η x) (η y) = H.B x y) {g : ℕ} (hg : 0 < g) :
@@ -266,7 +264,6 @@ theorem disc_latIn {H : HermSpace K V} (hP : PD H.B.flip) {U : Submodule K V} (p
   exact (AddSubgroup.relIndex_comap (latIn U A).toAddSubgroup (p.restrictScalars (𝓞 K)).toAddMonoidHom
     (Formalism.HermitianLatticesTheory.dual H.B.flip A).toAddSubgroup).symm
 
-omit [StarRing K] [FiniteDimensional K V] in
 
 theorem exists_same_index {U : Submodule K V} (p : V →ₗ[K] U) (p1 : ∀ t : U, p t = t)
     {D : Submodule (𝓞 K) V} (hD : Submodule.IsLattice K D) :

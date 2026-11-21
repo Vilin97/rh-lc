@@ -39,7 +39,6 @@ theorem e_one : X.B.e 1 = 1 / (X.volK2 : ℂ) := by
   rw [hc, star_one]
   rfl
 
-open Formalism Formalism.L2 Formalism.L2.SG in
 
 theorem dstarD_eq
     (hI : (X.B.μf X.B.I.Kset).toReal / X.volK2 = Formalism.MainNotions.StandardLattice.idxSig D (D.host.g 0) (D.host.g 1))

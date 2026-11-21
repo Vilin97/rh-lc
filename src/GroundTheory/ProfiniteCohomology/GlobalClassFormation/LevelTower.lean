@@ -19,7 +19,6 @@ section Tower
 variable (K F M : Type) [Field K] [NumberField K] [Field F] [NumberField F] [Field M]
   [NumberField M] [Algebra K F] [Algebra K M] [Algebra F M] [IsScalarTower K F M]
 
-omit [NumberField K] in
 
 theorem smul_ideleClassMap_restrictNormal [Normal K F] (σ : Gal(M/K)) (c : IdeleClassGroup F) :
     σ • ideleClassMap F M c = ideleClassMap F M (AlgEquiv.restrictNormalHom F σ • c) :=
@@ -34,14 +33,12 @@ noncomputable def classFixingCohomologyIso (n : ℕ) :
   groupCohomology.mapIso (galFixingEquiv K F M) (LinearEquiv.refl _ _)
     (fun _ => LinearMap.ext fun _ => rfl) n
 
-omit [NumberField K] [NumberField F] [IsGalois K M] in
 
 theorem isZero_groupCohomology_one_classFixing
     (h : IsZero (groupCohomology (ideleClassRep F M) 1)) :
     IsZero (groupCohomology (Rep.res (galFixing K F M).subtype (ideleClassRep K M)) 1) :=
   h.of_iso (classFixingCohomologyIso K F M 1).symm
 
-omit [NumberField K] [IsGalois K M] in
 
 theorem smul_ideleClassMap_of_mem_galFixing (g : galFixing K F M) (c : IdeleClassGroup F) :
     (g : Gal(M/K)) • ideleClassMap F M c = ideleClassMap F M c := by
@@ -56,7 +53,6 @@ noncomputable def classToInvariants :
     congrArg Additive.ofMul
       (smul_ideleClassMap_of_mem_galFixing K F M g (Additive.toMul (α := IdeleClassGroup F) x))
 
-omit [NumberField K] in
 
 theorem classToInvariants_bijective : Function.Bijective (classToInvariants K F M) := by
   have : IsGalois F M := IsGalois.tower_top_of_isGalois K F M
@@ -98,7 +94,6 @@ noncomputable def classQuotientCohomologyIso (n : ℕ) :
 
 variable {K F M}
 
-omit [NumberField K] in
 
 theorem isZero_groupCohomology_one_ideleClassRep_of_tower
     (hF : IsZero (groupCohomology (ideleClassRep K F) 1))

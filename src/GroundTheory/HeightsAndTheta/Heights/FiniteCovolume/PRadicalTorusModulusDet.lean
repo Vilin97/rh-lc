@@ -108,7 +108,6 @@ theorem det_heisScale (hp : IsHyperbolicPair h x₀ w₀) (c : InfinitePlace E �
 def placeScale (r : InfinitePlace E → ℝ) : (InfinitePlace E → ℝ) →ₗ[ℝ] (InfinitePlace E → ℝ) :=
   LinearMap.pi fun w => (r w • LinearMap.id).comp (LinearMap.proj w)
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem det_placeScale (r : InfinitePlace E → ℝ) : LinearMap.det (placeScale r) = ∏ w, r w := by
   rw [placeScale, LinearMap.det_pi]

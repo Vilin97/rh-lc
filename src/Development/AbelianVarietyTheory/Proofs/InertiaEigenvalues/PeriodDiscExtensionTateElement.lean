@@ -52,7 +52,6 @@ theorem _root_.GlobalTheory.HWL.Cmp.actS_one_tmul (b : B) (m : V ⊗[Qp] B) :
 open TensorProduct in
 variable {Qp LL : Type} [Field Qp] [Field LL] [Algebra Qp LL] (V : Type) [AddCommGroup V] [Module LL V]
   [Module Qp V] [IsScalarTower Qp LL V] (B : Type) [CommRing B] [Algebra Qp B] in
-variable {V B} in
 
 theorem _root_.GlobalTheory.HWL.Cmp.map_actS {V' : Type} [AddCommGroup V'] [Module LL V'] [Module Qp V'] [IsScalarTower Qp LL V']
     {B' : Type} [CommRing B'] [Algebra Qp B'] (f : V →ₗ[LL] V') (h : B →ₐ[Qp] B') (a : LL ⊗[Qp] B)

@@ -93,6 +93,5 @@ theorem smul_eq_zero_of_smul_rep {E : Type} [Field E] [NumberField E] [IsCMField
   rw [e]
   exact sub_mem (Submodule.smul_mem_smul hM trivial) (Submodule.smul_mem_smul (LevelPairing.cSep_spec _).2 trivial)
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.OneMapRef.FinDatum

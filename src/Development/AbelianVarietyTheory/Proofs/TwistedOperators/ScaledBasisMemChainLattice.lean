@@ -69,7 +69,6 @@ theorem _root_.GlobalTheory.RootEx.UnfoldShape.mem_smul_iff {ϖ : 𝒪[k]} {M : 
   rw [Submodule.mem_smul_pointwise_iff_exists]
   rfl
 
-omit [Fintype ι] [DecidableEq ι] in
 
 open MeasureTheory ValuativeRel Matrix in
 open scoped Pointwise in
@@ -150,7 +149,6 @@ theorem _root_.GlobalTheory.RootEx.UnfoldShape.scaled_basis_mem_chainLattice (ϖ
 def colMat (n' : Type) (y : Fin c → (n ⊕ Fin c → k)) : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
   Matrix.of fun r s => Sum.elim (fun _ => 0) (fun j : Fin (c + 1) => Fin.cases 0 (fun i => y i r) j) s
 
-open Classical in
 
 def col (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free 1 rs} → k) (i : Fin c) : n ⊕ Fin c → k :=
   fun r => if h : Free (n' := n') 1 (r, Sum.inr i.succ) then e ⟨_, h⟩ else 0
@@ -186,7 +184,6 @@ omit [ValuativeRel k] [Fintype n] [DecidableEq n] [DecidableEq n']
 
 end
 
-omit [Fintype n] [DecidableEq n] [DecidableEq n'] in
 
 variable [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
@@ -214,11 +211,9 @@ theorem _root_.GlobalTheory.RootEx.UnfoldShape.mapsInto_colMat {ϖ : 𝒪[k]} {L
   rw [hsum]
   exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (hy i)
 
-omit [Fintype n] in
 
 variable [MeasurableSpace k] [BorelSpace k]
 
-open Classical in
 
 open MeasureTheory ValuativeRel Matrix in
 open scoped Pointwise in
@@ -320,12 +315,6 @@ private theorem ch_add_colMat (x : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k)
       _root_.GlobalTheory.RootEx.ch x + ∑ i, y i (Sum.inr i) := by
   simp [_root_.GlobalTheory.RootEx.ch, Finset.sum_add_distrib, _root_.GlobalTheory.RootEx.UnfoldShape.colMat]
 
-open MeasureTheory ValuativeRel Matrix in
-open scoped Pointwise in
-variable {k : Type} [Field k] [ValuativeRel k] in
-variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ} in
-variable [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
-variable [MeasurableSpace k] [BorelSpace k] in
 
 theorem _root_.GlobalTheory.RootEx.UnfoldShape.opE_translate (ψ : AddChar k Circle) (ν : Measure k) [ν.IsAddHaarMeasure]
     {Ψ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ} {y : Fin c → (n ⊕ Fin c → k)}
@@ -342,10 +331,7 @@ theorem _root_.GlobalTheory.RootEx.UnfoldShape.opE_translate (ψ : AddChar k Cir
     Circle.coe_mul]
   ring
 
-open Classical in
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 end GlobalTheory.RootEx.UnfoldShape

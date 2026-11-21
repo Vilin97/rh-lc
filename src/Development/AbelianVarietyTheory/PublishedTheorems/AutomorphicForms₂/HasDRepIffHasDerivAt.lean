@@ -51,7 +51,6 @@ def IsSmoothGMap (ε : Fin n → Bool) (σ : Matrix (Fin n) (Fin n) ℂ → (H �
 
 end Target
 
-attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 
 end GlobalTheory.SmoothGlob
 

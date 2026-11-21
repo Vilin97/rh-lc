@@ -148,7 +148,6 @@ theorem perTorus_toTorus (f : 𝓢(E, ℂ)) (x : ι → ℝ) :
 
 variable [MeasurableSpace E] [BorelSpace E]
 
-omit [DecidableEq ι] in
 
 theorem integral_fundamentalDomain (f : 𝓢(E, ℂ)) {μ : E} (hμ : μ ∈ dualLattice L) :
     ∫ y in ZSpan.fundamentalDomain (b.ofZLatticeBasis ℝ L),
@@ -190,7 +189,6 @@ theorem integral_fundamentalDomain (f : 𝓢(E, ℂ)) {μ : E} (hμ : μ ∈ dua
   rw [← tsum_mul_left]
   exact tsum_congr fun ℓ => by rw [add_comm y]
 
-omit [DecidableEq ι] in
 
 theorem setIntegral_cube (φ : E → ℂ) :
     ∫ x in {x : ι → ℝ | ∀ i, x i ∈ Ico (0 : ℝ) 1}, φ ((b.ofZLatticeBasis ℝ L).equivFun.symm x) =
@@ -298,7 +296,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDim
   [MeasurableSpace E] [BorelSpace E]
 variable (L : Submodule ℤ E) [DiscreteTopology L] [IsZLattice ℝ L]
 
-omit [MeasurableSpace E] [BorelSpace E] [IsZLattice ℝ L] in
 
 theorem lattice_summable_norm (f : 𝓢(E, ℂ)) (a : E) : Summable fun ℓ : L => ‖f (ℓ + a)‖ := by
   simpa [add_comm] using summable_norm_comp_add L f a

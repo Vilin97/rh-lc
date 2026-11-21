@@ -133,7 +133,6 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I}
 abbrev IntSec (k : ℕ) : Type :=
   SecOver G.hom (LB.LinComb U.LG.L (K := Fin 1) (fun _ => 𝟙 G.left) (fun _ => (k : ℤ)))
 
-variable (D) in
 
 abbrev IntTerm (k : ℕ) (α : D.toPre.X) : Type :=
   SecOver D.toPre.P.A.hom (LB.LinComb D.toPre.P.L (D.toPre.famφB α) (DegPre.famε k))
@@ -199,12 +198,10 @@ theorem noetherianSpace_generic : NoetherianSpace (pullback G.hom (jK R) : Schem
 
 variable (F : Type) [Field F] [Algebra (FractionRing R) F]
 
-variable (G) in
 
 def groupBase : (UnifPre.GF (G := G) F).left ⟶ Spec (CommRingCat.of F) :=
   (fst (TFK (R := R) F) ((Over.pullback (jK R)).obj G)).left
 
-variable (A) in
 
 def abelianBase : (TFK (R := R) F ⊗ A.A).left ⟶ Spec (CommRingCat.of F) := (fst (TFK (R := R) F) A.A).left
 
@@ -220,7 +217,6 @@ def genericSec (k : ℕ) : IntSec U k →ₛₗ[algebraMap R (FractionRing R)] S
     (LB.LinComb U.LG.L (K := Fin 1) (fun _ => pullback.fst G.hom (jK R)) (fun _ => (k : ℤ))) :=
   pullOver U.LG.L _ (p := pullback.fst G.hom (jK R)) pullback.condition (fun _ => (Category.comp_id _).symm)
 
-variable (D) in
 
 def genericTerm (k : ℕ) (α : D.toPre.X) :
     IntTerm D k α →ₛₗ[algebraMap R (FractionRing R)] FamTerm D.toPre (FractionRing R) k α :=

@@ -80,7 +80,6 @@ theorem Sep.exists_near {e : Λ →+ V} {r R : ℝ} (hr : 0 < r) {s : Finset Λ}
 
 end GlobalTheory.CompanionTheory.Adelic.Packing
 
-open GlobalTheory.CompanionTheory.Adelic.Packing in
 
 theorem GlobalTheory.CompanionTheory.Adelic.tsum_indicator_norm_le_packing :
     ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] (Λ : Type)

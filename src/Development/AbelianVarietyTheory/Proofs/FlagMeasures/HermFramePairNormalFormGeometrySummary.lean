@@ -488,7 +488,6 @@ theorem _root_.GlobalTheory.DegCnt.NFGeom.mem_perp_sup (S T : Submodule K V) (y 
   intro x hx
   exact _root_.Formalism.HermitianLatticeCounting.P.perp_sup H h.1 h.2 x hx
 
-omit [NumberField K] in
 
 open NumberField in
 open scoped Pointwise ENNReal Classical in

@@ -82,7 +82,6 @@ section Typed2
 
 variable {D : D7} (X : HidaSetting D) (hb : AdBridgeIso X.B.I) (p : TypX X)
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.SG.Sub Formalism.L2.SG.Measures in
 
 theorem level_compression_chain (u : D.what₂.Word) :
     MassDataIdxSteps.KgX X p ⊆ compSet X.B.I.cm.sig X.B.I.J (K2u X hb u) p.1 ∧

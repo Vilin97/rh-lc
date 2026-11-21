@@ -245,7 +245,6 @@ theorem senOp_of_diag [CharZero LL] (hinj : Function.Injective (algebraMap O LL)
 
 end Generic
 
-set_option maxHeartbeats 1000000 in
 
 theorem senOp_of_lines {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {H : LocHW l P}
     {E : LocFon l P AI H} (C : LocCmpT l P AI H E) {K LL : FinExt l} (hA : CaseA K LL)

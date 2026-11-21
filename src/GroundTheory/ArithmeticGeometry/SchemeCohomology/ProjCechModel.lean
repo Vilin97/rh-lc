@@ -22,7 +22,6 @@ namespace ProjSpace
 
 variable {A : Type u} [CommRing A] {n : ℕ}
 
-variable (A n) in
 
 abbrev twistAb (k : ℤ) : (Opens (projectiveSpace A n).toTopCat)ᵒᵖ ⥤ AddCommGrpCat.{u} :=
   (modulesAb (twistingSheaf (grading A n) k)).obj
@@ -56,7 +55,6 @@ def resEquiv {X : TopCat.{u}} (P : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}) {V W :
   right_inv x := by rw [res_res, res_refl]
   map_add' := map_add _
 
-variable (A n) in
 
 abbrev cover : Fin (n + 1) → Opens (projectiveSpace A n).toTopCat := stdOpen A n
 

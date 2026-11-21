@@ -41,7 +41,6 @@ theorem bound_eq (K₁ s x q : ℝ) (a b : ℕ) (hs : s ≠ 0) (hx : x ≠ 0) (h
 
 variable [IsTotallyReal F]
 
-open scoped Classical in
 
 theorem norm_mixedEmbedding_le (x : F) : ‖mixedEmbedding F x‖ ≤ absSum x := by
   rw [mixedEmbedding.norm_eq_sup'_normAtPlace]
@@ -56,7 +55,6 @@ theorem absSum_pos {x : F} (hx : x ≠ 0) : 0 < absSum x := by
     hx ((mixedEmbedding F).injective (h.trans (map_zero _).symm))
   exact h.trans_le (norm_mixedEmbedding_le x)
 
-open scoped Classical in
 
 theorem summable_absSum_inv_pow (I : Frac F) {k : ℕ} (hk : Module.finrank ℚ F < k) :
     Summable (fun x : NZ (I : FractionalIdeal (𝓞 F)⁰ F) => ((absSum x.1) ^ k)⁻¹) := by
@@ -122,7 +120,6 @@ theorem exists_absSum_lower (I : FractionalIdeal (𝓞 F)⁰ F) :
 
 end GlobalTheory.HeckeTwo.LatSum
 
-open GlobalTheory.HeckeTwo.LatSum in
 
 theorem GlobalTheory.HeckeTwo.summable_balanced_latSum :
     ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (𝔞 𝔟 : Frac F) (C₀ : ℝ) (m : ℕ), ∃ N : ℕ,

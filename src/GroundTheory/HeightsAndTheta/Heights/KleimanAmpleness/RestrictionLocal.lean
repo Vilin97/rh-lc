@@ -24,7 +24,6 @@ def locAt : Set Ω :=
   {a | ∃ (f s : Poly k N) (e : ℕ), f.IsHomogeneous e ∧ s.IsHomogeneous e ∧ aeval y s ≠ 0 ∧
     a = aeval x f / aeval x s}
 
-open Classical in
 
 def redAt (a : Ω) : K' :=
   if h : ∃ (p : Poly k N × Poly k N) (e : ℕ), p.1.IsHomogeneous e ∧ p.2.IsHomogeneous e ∧

@@ -173,7 +173,6 @@ theorem linInd_of_basis {v : Fin m → (Sp (DualNumber k) ⟶ t.G.left)} (hv : �
     ((hb _ (isTan_tv (∑ i, c i • tanOf (hv i)))).unique ((isComb_iff (fun i => tanOf (hv i)) c _).2 rfl)
       ((isComb_iff (fun i => tanOf (hv i)) c' _).2 h))
 
-variable (t y) in
 
 def DiagAt (p q : Fin m → (Sp (DualNumber k) ⟶ t.G.left)) (d : Fin m → k) : Prop :=
   ∀ a, ∃ cf : Fin m → k, cf a = d a ∧ (∀ b, a < b → cf b = 0) ∧ IsCombAtG t y p cf (q a)

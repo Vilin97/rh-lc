@@ -122,7 +122,6 @@ noncomputable def tensL (R : (κ → AF F) → ℂ) : SInf F κ →ₗ[ℂ] ((κ
 
 end Tens
 
-set_option maxHeartbeats 1000000 in
 
 theorem fockDeg_le_span_eigen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (om : Rep σ X W) (χ₁ χ₂ : Chr F E) (r s r' s' : ℕ),

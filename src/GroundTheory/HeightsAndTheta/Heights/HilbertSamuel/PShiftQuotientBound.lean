@@ -20,7 +20,6 @@ section Mul
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [CharZero Ω]
   {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k}
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem mul_mem_chartLatQ_add {B γ : K → ℤ} {g s : Ω} (hg : g ∈ chartLatQ y γ 1) (hs : s ∈ chartLatQ y B 1) :
     g * s ∈ chartLatQ y (B + γ) 1 := by

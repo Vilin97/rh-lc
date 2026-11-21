@@ -17,7 +17,6 @@ noncomputable section
 
 namespace GlobalTheory.LocalComponentChar
 
-open Classical in
 
 theorem continuous_singleV (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) :
     Continuous (singleV F v) := by

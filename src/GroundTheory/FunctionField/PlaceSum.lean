@@ -120,7 +120,6 @@ noncomputable def primeHS (q : (maximalIdeal v.ring).primesOver (integralClosure
     HeightOneSpectrum (integralClosure v.ring K') :=
   ⟨q.1, q.2.1, v.ne_bot_of_mem_primesOver q.2⟩
 
-omit [IsScalarTower k K K'] [IsFunctionField k K] [FiniteDimensional K K'] [Algebra.IsSeparable K K'] in
 
 theorem mem_of_isIntegral_of_liesOver {w : Place k K'} (h : w.LiesOver v) {x : K'}
     (hx : IsIntegral v.ring x) : x ∈ w.ring := by
@@ -296,7 +295,6 @@ theorem ramificationIdx_primeOfPlace_eq
     ← WithZero.exp_nsmul, ← WithZero.exp_nsmul, WithZero.exp_inj] at e1
   simpa using e1
 
-omit [IsFunctionField k K'] in
 
 theorem inertiaDeg_primeOfPlace_eq
     (q : (maximalIdeal v.ring).primesOver (integralClosure v.ring K')) :

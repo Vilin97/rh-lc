@@ -400,7 +400,6 @@ theorem mu_diff (D : D7) (L : SizeData₂ D) (hdef : DV.NprimeDef D L) (u : D.wh
   rw [Finset.sum_congr rfl this, ← Finset.sum_div, ← Finset.mul_sum]
   ring
 
-open Classical in
 
 theorem round_le (D : D7) (L : SizeData₂ D) (hdef : DV.NprimeDef D L) (u : D.what₂.Word)
     (hX : ∀ v, IsUnit ((D.div.Nu u).X v).det)
@@ -585,7 +584,6 @@ theorem log_T_le (hT : SizeTu L) (u : D.what₂.Word) :
     _ ≤ 2 * D.R.n * L.sc.x := mul_le_mul_of_nonneg_right hm hx.le
     _ ≤ 2 * L.sc.X'' D.R.n := by linarith
 
-set_option maxHeartbeats 800000 in
 
 theorem fN_le (hN : SizeN L) (hEta : SizeEta L) (hNodes : SizeNodes L) :
     (D.R.f : ℝ) * D.R.N D.R.m * Real.log ((D.R.f : ℝ) * D.R.N D.R.m) ≤ 10 * L.sc.X'' D.R.n ∧

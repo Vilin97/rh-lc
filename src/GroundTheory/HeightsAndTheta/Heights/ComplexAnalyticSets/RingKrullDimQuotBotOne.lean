@@ -38,7 +38,6 @@ def ProjectionFormula.Statement : Prop :=
             (({z | z ∈ coordGraph P Ω F ∩ B ∧ frameProj e I z = x}.encard : ℕ∞) : ℝ≥0∞)
             ∂(Measure.hausdorffMeasure ((2 * d : ℕ) : ℝ))
 
-open Classical in
 
 def PolySublevel.Statement : Prop :=
   ∀ (d : ℕ) (Q : MvPolynomial (Fin d) ℂ), Q ≠ 0 → ∀ R : ℝ, 0 < R →

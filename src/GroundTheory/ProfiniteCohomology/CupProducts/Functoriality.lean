@@ -52,7 +52,6 @@ section Naturality
 variable {A A' B B' : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep A'] [IsDiscreteRep B]
   [IsDiscreteRep B'] {p q n : ℕ}
 
-omit [TopologicalSpace H] [IsTopologicalGroup H] in
 
 theorem cohomologyMap_tensorHom_cup (f : A ⟶ A') (g : B ⟶ B') (h : p + q = n)
     (x : cohomology A p) (y : cohomology B q) :
@@ -69,7 +68,6 @@ theorem cohomologyMap_tensorHom_cup (f : A ⟶ A') (g : B ⟶ B') (h : p + q = n
   funext s
   exact tensorHom_cupCochain f g h _ _ s
 
-omit [TopologicalSpace H] [IsTopologicalGroup H] in
 
 theorem cohomologyMap_whiskerRight_cup (f : A ⟶ A') (h : p + q = n) (x : cohomology A p)
     (y : cohomology B q) :
@@ -145,7 +143,6 @@ def invariantsTensorLinearMap :
       rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 def invariantsTensorHom :
     A.quotientToInvariants N ⊗ B.quotientToInvariants N ⟶ (A ⊗ B).quotientToInvariants N :=
@@ -155,7 +152,6 @@ def invariantsTensorHom :
     intro a b
     exact Subtype.ext rfl⟩
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 variable {A B} [IsDiscreteRep A] [IsDiscreteRep B] {p q n : ℕ}
 

@@ -51,7 +51,6 @@ theorem factor_ne_zero (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) (
 
 end GlobalTheory.BCT.HSupp
 
-open GlobalTheory.BCT.HSupp in
 
 theorem GlobalTheory.BCT.finite_globFn_ne_zero : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (n : ℕ)
     (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)),

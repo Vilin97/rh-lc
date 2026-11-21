@@ -120,7 +120,6 @@ end Coord
 
 end GlobalTheory.SiegelCov
 
-open GlobalTheory.GaugeEx in
 
 theorem GlobalTheory.SiegelCov.integral_mulVec_inv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ)
     (μ : @Measure (Fin n → AE F E) (borel _)), GlobalTheory.SiegelAvg.IsHaarB μ →

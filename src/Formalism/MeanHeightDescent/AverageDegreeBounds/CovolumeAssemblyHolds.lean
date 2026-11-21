@@ -41,6 +41,5 @@ theorem log_covolume_slope_mu : LcvMu := by
   rw [hmu, Formalism.HN.size, Real.log_rpow hht, hrk, Formalism.DivisionValues.lcv, hn]
   field_simp
 
-set_option maxHeartbeats 800000 in
 
 end Formalism.ExtensionFiltration

@@ -120,7 +120,6 @@ lemma coeff_XDii {σ : Type*} (i : σ) (f : MvPolynomial σ F) (mm : σ →₀ �
       rw [← h2, Nat.cast_add, Nat.cast_one]
     rw [h3, mul_comm]
 
-open Classical in
 
 def wtA (mm : Fin N × Fin k →₀ ℕ) (a : Fin m) : ℤ :=
   ∑ l : Fin N, if l ∈ S then (if LL.vec l then (mm (l, e a) : ℤ) else -(mm (l, e a) : ℤ)) else 0

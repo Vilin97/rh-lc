@@ -158,6 +158,5 @@ end GlobalTheory.CompanionTheory.Ar.Rec.OS
 
 namespace GlobalTheory.CompanionTheory.Ar.Rec
 
-open OS in
 
 end GlobalTheory.CompanionTheory.Ar.Rec

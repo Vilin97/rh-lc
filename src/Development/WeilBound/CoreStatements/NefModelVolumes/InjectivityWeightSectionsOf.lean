@@ -89,7 +89,6 @@ theorem eq_zero_of_genVal' {E : Type} [Field E] [NumberField E] [IsCMField E] {H
   · rw [hZ, h0]
   · exact evC_eq_zero (GlobalTheory.Reg.genFrEx_and_genFromTest _ _ _ _ _ _).1 hZ hf.2
 
-set_option maxHeartbeats 1000000 in
 
 end PositivityTheory.Xj7N.Inj
 

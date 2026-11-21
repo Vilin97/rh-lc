@@ -123,7 +123,6 @@ theorem exists_den {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) : ∃ D : ℕ, 0 <
     rw [mul_left_comm]
     exact mul_mem r.2 hx
 
-omit [NumberField E] in
 
 theorem hTens_vecMulVec {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin d) (Fin d) E)
     (x x' : Fin n → E) (y y' : Fin d → E) (l t : AE F E) :

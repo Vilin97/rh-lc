@@ -76,7 +76,6 @@ end GlobalTheory.JR.FourGUnit
 
 namespace GlobalTheory.JR
 
-open FourGUnit in
 
 theorem fourG_unitG : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E]
     [StarRing E] [Unram F E] (r : ℕ) (M : Meas r F E) (ψ : AddChar F ℂ), IsStdChar ψ →

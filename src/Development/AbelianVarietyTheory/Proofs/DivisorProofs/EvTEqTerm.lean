@@ -260,7 +260,6 @@ end
 
 namespace GlobalTheory.MBLow.Cl
 
-open Ev in
 
 theorem evT_eq_term : AllCD fun {N} {g'} {r} {g} {bX} d σ => ∀ m : ℕ, Odd m → ∀ M Nn (p : N.QT (m ^ 2)),
     d.Rep σ (m ^ 2) M Nn p → ∀ Z h, d.IsPt σ Z h → ∀ χ,

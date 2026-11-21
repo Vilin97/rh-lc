@@ -20,25 +20,17 @@ variable {ι : Type} [Fintype ι] [DecidableEq ι]
 
 variable [Invertible (2 : K)]
 
-omit [Invertible (2 : K)] in
 
-omit [Invertible (2 : K)] in
 
-omit [Invertible (2 : K)] in
 
-omit [Invertible (2 : K)] in
 
 variable [Fintype K]
 
 variable [TopologicalSpace K] [DiscreteTopology K] [IsTopologicalRing K]
 
-omit [Invertible (2 : K)] in
 
-omit [Invertible (2 : K)] in
 
-omit [Invertible (2 : K)] [Fintype K] [TopologicalSpace K] [DiscreteTopology K] [IsTopologicalRing K] in
 
-omit [Invertible (2 : K)] [Fintype K] [TopologicalSpace K] [DiscreteTopology K] [IsTopologicalRing K] in
 
 end GlobalTheory.WeilM.SplitModel
 
@@ -62,7 +54,6 @@ variable {R : Type} [CommRing R] {E : Type} [CommRing E] [Algebra R E] {c : E �
 
 variable [Invertible (2 : R)]
 
-omit [DecidableEq α] in
 
 theorem rho_diag (ψ : AddChar R ℂ) {ξ : E} {JA : Matrix α α E} {JB : Matrix β β E} {d : Darboux (symp c ξ JA JB) κ}
     {dd : Darboux (symp c ξ JA (dbl JB)) (κ ⊕ κ)} (h : IsDblCoord c ξ JA JB d dd) (z : Matrix α β E)
@@ -80,11 +71,8 @@ section Forms
 variable {R : Type} [CommRing R] [Invertible (2 : R)] {E : Type} [CommRing E] [Algebra R E] {c : E →ₐ[R] E}
   {α β κ : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ]
 
-omit [Invertible (2 : R)] in
 
-omit [DecidableEq α] in
 
-omit [DecidableEq α] in
 
 end Forms
 
@@ -93,17 +81,13 @@ section RankZero
 variable {R : Type} [CommRing R] [Invertible (2 : R)] {E : Type} [CommRing E] [Algebra R E] {c : E →ₐ[R] E}
   {α β κ : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ]
 
-omit [Invertible (2 : R)] in
 
 variable [TopologicalSpace R] [TopologicalSpace E] [IsTopologicalRing E] [IsModuleTopology R E] {C : TestClass R}
 
-omit [IsModuleTopology R E] [DecidableEq α] in
 
-omit [DecidableEq α] in
 
 end RankZero
 
-open scoped Pointwise in
 
 end GlobalTheory.WeilM.SiegelModel
 end

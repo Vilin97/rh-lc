@@ -16,7 +16,6 @@ namespace CrystallineSemistableComparison
 
 namespace GeoD
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem isProper_pspace (R : Type) [CommRing R] (N : ℕ) : IsProper (PSpace.str R N) := by
   have : IsScalarTower R (MvPolynomial.homogeneousSubmodule (Fin (N + 1)) R 0) (MvPolynomial (Fin (N + 1)) R) :=

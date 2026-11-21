@@ -24,7 +24,6 @@ namespace GlobalTheory.Dict.CoverFourier
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r n : ℕ}
 
-omit [IsCMField E] in
 
 theorem row_mem {Λ : Lt E n} {L : Lt E r} {s : E} (hs : ∀ v ∈ Λ, ∀ b, IsIntegral ℤ (s * v b))
     {y : Matrix (Fin n) (Fin r) E} (hy : y ∈ tens Λ L) (b : Fin n) : s • y b ∈ L := by
@@ -43,7 +42,6 @@ theorem row_mem {Λ : Lt E n} {L : Lt E r} {s : E} (hs : ∀ v ∈ Λ, ∀ b, Is
     have : s • (-y) b = -(s • y b) := by funext j; simp
     rw [this]; exact L.neg_mem h
 
-omit [IsCMField E] in
 
 theorem smul_mem_tens {Λ : Lt E n} {L : Lt E r} {s : E} (hs : ∀ b, (Pi.single b s : Fin n → E) ∈ Λ)
     {z : Matrix (Fin n) (Fin r) E} (hz : ∀ b, z b ∈ L) : s • z ∈ tens Λ L := by
@@ -75,7 +73,6 @@ theorem mem_mul_smul {L : Lt E r} {𝔞 𝔟 : Ideal (𝓞 E)} (h : IsCoprime �
   · rw [Submodule.mul_smul]; exact Submodule.smul_mem_smul ha' hb
   · rw [mul_comm, Submodule.mul_smul]; exact Submodule.smul_mem_smul hb' ha
 
-omit [IsCMField E] in
 
 theorem finsum_tens {Λ : Lt E n} {L : Lt E r} {𝔟 𝔪 : Ideal (𝓞 E)} (hcop : IsCoprime 𝔟 𝔪) {s : 𝓞 E}
     (hs : s - 1 ∈ 𝔪) (hs1 : ∀ v ∈ Λ, ∀ b, IsIntegral ℤ ((s : E) * v b))
@@ -414,7 +411,6 @@ theorem zetaM_pow (d : DeltaDat Xo c n) (h : d.IsLev) : zetaM d.c₂ ^ l.M =
   congr 1
   rw [hk, Nat.mul_div_cancel_left _ hM, h.2.1, mul_comm l.M, _root_.mul_assoc, Nat.mul_div_cancel_left _ hp, mul_comm]
 
-set_option maxHeartbeats 1000000 in
 
 theorem w_eq_sum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (n : ℕ) (d : DeltaDat Xo c n) [Algebra c.F ℂ] [Algebra d.c₂.F ℂ], (∀ t : c.F, algebraMap d.c₂.F ℂ (d.eF t) = algebraMap c.F ℂ t) → d.IsLev → ∀ (ph : (Fin n → LaJ Xo c d) → c.F) (ψ : (LaI Xo c d ≃ₗ[𝓞 E] LaI Xo c d) →* c.Fˣ) (x₀ : Fin n → LaJ Xo c d), d.PhiPin ph ψ x₀ → ∀ (r : ℕ) (X : Data E r) (D : SW.Level X) (hn : r ≤ n), r = Dw.p + Dw.q → LevTie d (algebraMap c.F ℂ) ph D hn → ∀ L ∈ D.lats, ∀ (mk mk₂ δ : Dw.La →ₗ[𝓞 E] (Fin r → E)) (x0 : Fin n → Dw.La), IsMark l L mk → IsMark d.l₂ L mk₂ → MarkOver l d.l₂ L mk mk₂ → IsDual X l (algebraMap c.F ℂ (zetaM c)) L mk δ → IsBaseClassLevelAdapted d D hn x0 δ → ∃ t : ℂ, ‖t‖ = 1 ∧ ∀ Λ ∈ Vset E n d.l₂.M, ∀ N : ℕ, NOK Λ N d.l₂.M → ∀ Y : (Fin n → LevQ Dw d.l₂) → Matrix (Fin n) (Fin r) E, IsRoots d.l₂ L mk₂ N Y → ∀ q, algebraMap d.c₂.F ℂ (d.w x0 q) = t * ∑ᶠ cl : tens Λ ((Ideal.span {2} * conjI D.𝔪) • L) ⧸ (tens Λ ((Ideal.span {2} * conjI D.𝔪 * D.𝔪) • L)).addSubgroupOf _, datF D (Mfr l) hn (cl.out : Matrix (Fin n) (Fin r) E) * cexp (-(2 * Real.pi * I * ((∑ b, EF X ((cl.out : Matrix (Fin n) (Fin r) E) b) (Y q b) : ℚ) : ℂ))) := by
   intro E _ _ _ H Dw l Xo c n d _ _ halg hlev ph ψ x₀ hpin r X D hn hr hT L hL mk mk₂ δ x0 hmk hmk₂ hov hδ hx0

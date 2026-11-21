@@ -19,7 +19,6 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 section Lat
 
-variable (k) in
 
 def lat0 (m : ℕ) : AddSubgroup (Fin (m + 1) → k) where
   carrier := {x | ∀ i, valuation k (x i) ≤ valuation k ((1 : kˣ) : k)}
@@ -79,7 +78,6 @@ end Transport
 
 section Chain
 
-open Classical in
 
 def chain (hUD : UDens k) {ψ : AddChar k Circle} (hψc : Continuous ψ) (hψ1 : ψ ≠ 1) {N : ℕ} {V : Type}
     [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V) (hs : IsSmooth π)

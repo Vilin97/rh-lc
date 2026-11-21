@@ -150,7 +150,6 @@ theorem ct_dK_le (hI : IsSplit P I) : Col.dK (IR I) ≤ dstar (E := E) P.m := by
   rw [h1, dstar]
   exact Nat.mul_le_mul_left _ hρ
 
-set_option maxHeartbeats 1000000 in
 
 theorem ct_deriv (hP : Ext.PackingCount) (hGT : Ext.GaussianTailBound) (hI : IsSplit P I)
     (c : ℕ) (hc : c ≤ DF) (σ : E →+* ℂ) (x0 u : Vsp X.dim) (hu : u = Col.uc (IR I) x0)

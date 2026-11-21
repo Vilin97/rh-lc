@@ -79,7 +79,6 @@ variable {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 X.E))
   {y : Ys X n} {β : Type} [Fintype β] [DecidableEq β] {Λ : β → LevFam X.E X.K n SG} {Θ : β → LevQFam X.E X.K n Q}
   (pref : DecoF X.E n ST SG Q → Prop) (lam : X.Tau → DomWeight n) {Λ₀ : LevFam X.E X.K n SG}
 
-variable (ST Λ₀) in
 
 abbrev base : GSD X.K := formGSD (roundPk X lam fun d : DecoSet X.E n ST SG => d.1.Lsh) Λ₀
 

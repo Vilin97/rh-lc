@@ -42,7 +42,6 @@ theorem kap_bs_pos {I : Type} (z : X I) (v : I) :
 theorem Kap_nonneg {I : Type} [Fintype I] (hk0 : ∀ z w : P, 0 ≤ kap z w) (k : I → ℕ) (z w : X I) : 0 ≤ Kap k z w :=
   Finset.prod_nonneg fun v _ => Real.rpow_nonneg (hk0 _ _) _
 
-open Classical in
 
 def uX {I : Type} [Fintype I] (z : X I) : ℝ := ∑ e : I → Bool, Kap (fun _ => 4) (bs e) z
 

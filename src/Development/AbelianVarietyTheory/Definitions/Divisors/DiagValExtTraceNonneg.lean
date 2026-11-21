@@ -28,7 +28,6 @@ namespace HermFrame
 variable {m l n n' : Type} [Fintype m] [Fintype l] [Fintype n] [Fintype n'] [DecidableEq m]
   [DecidableEq l]
 
-omit [Fintype n'] in
 
 theorem chg_submatrix {m' : Type} [Fintype m'] (A : Matrix n n' ℂ) (H : Matrix n n ℂ) (e : m' ≃ n)
     {l' : Type} (f : l' → n') :
@@ -40,7 +39,6 @@ theorem chg_submatrix {m' : Type} [Fintype m'] (A : Matrix n n' ℂ) (H : Matrix
 
 variable (A₁ : Matrix m m ℂ) (B : Matrix m l ℂ) (A₂ : Matrix l l ℂ) (H : Matrix (m ⊕ l) (m ⊕ l) ℂ)
 
-omit [DecidableEq m] [DecidableEq l] in
 
 theorem chg_fromBlocks : chg (fromBlocks A₁ B 0 A₂) H = fromBlocks (chg A₁ H.toBlocks₁₁)
     (A₁ᵀ * (H.toBlocks₁₁ * Bᴴᵀ + H.toBlocks₁₂ * A₂ᴴᵀ)) ((Bᵀ * H.toBlocks₁₁ + A₂ᵀ * H.toBlocks₂₁) * A₁ᴴᵀ)
@@ -49,10 +47,7 @@ theorem chg_fromBlocks : chg (fromBlocks A₁ B 0 A₂) H = fromBlocks (chg A₁
   simp [chg, fromBlocks_transpose, fromBlocks_conjTranspose, fromBlocks_multiply, Matrix.mul_add,
     Matrix.mul_assoc]
 
-omit [DecidableEq m] [DecidableEq l] in
 
-omit [DecidableEq l] in
-variable {A₁ H} in
 
 theorem quotGram_chg (hA : IsUnit A₁.det) (hH : IsUnit (subGram H).det) :
     quotGram (chg (fromBlocks A₁ B 0 A₂) H) = chg A₂ (quotGram H) := by
@@ -67,7 +62,6 @@ theorem quotGram_chg (hA : IsUnit A₁.det) (hH : IsUnit (subGram H).det) :
     Matrix.mul_sub, Matrix.sub_mul]
   abel
 
-open scoped MatrixOrder in
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedSpace ℝ E]
   [IsScalarTower ℝ ℂ E] {K : E → Matrix (m ⊕ l) (m ⊕ l) ℂ} {z : E}
@@ -152,7 +146,6 @@ theorem crd_frame (hy : y ∈ ptsIn p σ a.U) (i j : Fin r ⊕ Fin s) :
   have := congrFun ((a.mid hS).crd_frame hy (finSumFinEquiv j)) (finSumFinEquiv i)
   simpa [mid, Pi.single_apply, one_apply] using this
 
-variable (p σ) in
 
 def tr (y : CxPts p σ) : Matrix (Fin r ⊕ Fin s) (Fin r ⊕ Fin s) ℂ :=
   ((a.mid hS).tr p σ (a'.mid hS) y).submatrix finSumFinEquiv finSumFinEquiv
@@ -199,7 +192,6 @@ namespace Met
 variable {S : ShortComplex X.Modules} {r s : ℕ} (h : Met p σ S.X₂ (r + s)) (hS : S.ShortExact)
   (h₁ : IsVB S.X₁ r) (h₃ : IsVB S.X₃ s) {y : CxPts p σ} (a a' : AdaptedChart S r s)
 
-include hS in
 
 theorem gram_frame (hy : y ∈ ptsIn p σ a.U) :
     h.gram a.frame y = (h.G (a.mid hS) y).submatrix finSumFinEquiv finSumFinEquiv := by
@@ -207,7 +199,6 @@ theorem gram_frame (hy : y ∈ ptsIn p σ a.U) :
   rw [submatrix_apply, ← h.form_frame _ hy]
   simp [gram, AdaptedChart.mid]
 
-include hS in
 
 theorem posDef_gram_frame (hy : y ∈ ptsIn p σ a.U) : (h.gram a.frame y).PosDef := by
   rw [h.gram_frame hS a hy]
@@ -218,7 +209,6 @@ theorem gram_frame_trans (hy : y ∈ ptsIn p σ a.U) (hy' : y ∈ ptsIn p σ a'.
   rw [h.gram_frame hS a hy, h.gram_frame hS a' hy', AdaptedChart.tr, chg_submatrix,
     ← h.trans _ _ y hy]
 
-include hS h₁ h₃ in
 
 theorem exists_adapted (y : CxPts p σ) : ∃ a : AdaptedChart S r s, y ∈ ptsIn p σ a.U :=
   (VBExt.exists_adaptedChart hS h₁ h₃ _).imp fun _ => mem_ptsIn.2
@@ -274,11 +264,9 @@ variable {S : ShortComplex X.Modules} {r s : ℕ} (h : Met p σ S.X₂ (r + s)) 
   (h₁ : IsVB S.X₁ r) (h₃ : IsVB S.X₃ s) {y : CxPts p σ} (a a' : AdaptedChart S r s)
   {D : ℕ} (c c' : AlgChart p σ D)
 
-include hS in
 
 variable {h}
 
-include hS in
 
 variable (h) (c c' : AlgChart p σ 1)
 
@@ -296,7 +284,6 @@ variable {S : ShortComplex X.Modules} {r s : ℕ} (h : VMetric p S.X₂ (r + s))
 def quot : VMetric p S.X₃ s :=
   ⟨h₃, fun σ => (h.met σ).quot hS h₁ h₃, fun σ σ' => (h.conj σ σ').quot hS h₁ h₃⟩
 
-variable {h} in
 
 theorem IsCInf.quot (H : h.IsCInf) : (h.quot hS h₁ h₃).IsCInf := fun σ => (H σ).quot hS h₁ h₃
 
@@ -304,7 +291,6 @@ end Seq
 
 variable {E F : X.Modules} {r s : ℕ} (h : VMetric p E r)
 
-variable {h} in
 
 variable (fl : Vert.Flag E r) (i : Fin r)
 

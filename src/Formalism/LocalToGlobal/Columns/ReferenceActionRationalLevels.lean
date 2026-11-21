@@ -401,22 +401,14 @@ structure ColArg where
 
 variable {W Ch} (hX : X.Ok) (A : ColArg W Ch)
 
-open Classical in
 
 def ColArg.tau (w : HeightOneSpectrum (𝓞 X.K)) : ℝ := if prW w ∈ A.served then (A.tauP (prW w) : ℝ) else 0
 
-variable (W Ch) in
 
-variable (W Ch) in
 
-variable (W Ch) in
 
-variable (W Ch) in
-open Classical in
 
-variable (W Ch) in
 
-variable (W Ch) in
 
 end Conc
 

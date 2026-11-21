@@ -54,12 +54,10 @@ theorem typeSubspace_eq_iInf_ker {LL Ks : Type} [Field LL] [NumberField LL] [Fie
   ext F
   simp [Formalism.IndefR.Arith.FormsL.mem_typeP, Submodule.mem_iInf, sub_eq_zero]
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.DefRead
 
 namespace GlobalTheory.DefRead
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.DefRead

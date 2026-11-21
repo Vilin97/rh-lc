@@ -55,11 +55,9 @@ theorem arInt_eq_sum {P : Ideal (MRing ι)} (hP : IsArithVar P 1) {X : Reciproci
   exact PtsIntegralPoints.homogProof K ι P _ hP.2.1.2.1 (HilbertSamuel.CurvePointsFinite.proof K ι P hP)
     fun c z hc _ => logNorm_smul hXa hs c z hc
 
-omit [∀ k, Fintype (ι k)] in
 
 end CurveRationalSectionSum
 
-open CurveRationalSectionSum in
 
 end
 

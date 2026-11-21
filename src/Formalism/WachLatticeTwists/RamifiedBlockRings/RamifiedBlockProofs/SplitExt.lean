@@ -42,8 +42,6 @@ theorem exists_ramification (O O' : Type) [CommRing O] [IsDomain O] [IsDiscreteV
     simp only [zero_add, nsmul_eq_mul, mul_one]
     ring
 
-open Polynomial in
 
-set_option maxHeartbeats 1000000 in
 
 end Formalism.RepresentationBoundsCohomology.ringDataObjects

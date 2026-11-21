@@ -20,7 +20,6 @@ private theorem Rl.left {x y : K} (h : Rl x y) : ‖x‖ ≤ 1 := by
   rw [sub_add_cancel] at this
   exact this.trans (max_le h.2.le h.1)
 
-omit [IsUltrametricDist K] in
 
 private theorem Rl.mul {x y z w : K} (h : Rl x y) (h' : Rl z w) : Rl (x * z) (y * w) := by
   refine ⟨by rw [norm_mul]; exact mul_le_one₀ h.1 (norm_nonneg _) h'.1, ?_⟩

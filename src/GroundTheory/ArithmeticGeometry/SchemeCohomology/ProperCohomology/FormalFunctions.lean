@@ -140,7 +140,6 @@ lemma exists_towerComp_formalτQ_eq_zero (q : ℕ) :
     (cechHMap 𝔘 (modulesAbMap (transMap I F n c)).hom (q + 1) yČ) = 0
   rw [hc n yČ hι, map_zero]
 
-include hF in
 
 theorem formalFunctions_mem_range (q : ℕ) {x : ∀ n, Sheaf.H.{u} (modulesAb (quotPow I F n)) q}
     (hx : x ∈ towerLimit (E := fun m => Sheaf.H.{u} (modulesAb (quotPow I F m)) q)

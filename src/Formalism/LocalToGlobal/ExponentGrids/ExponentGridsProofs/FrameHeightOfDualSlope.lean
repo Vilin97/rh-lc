@@ -206,6 +206,5 @@ theorem grid_function_of_lemma_A (hA : SlopeInequalityDenominators) : LargestSlo
 
 theorem grid_function_bound : LargestSlopeLatticeFrames := grid_function_of_lemma_A grid_lemma_A
 
-open Classical in
 
 end Formalism.AtG

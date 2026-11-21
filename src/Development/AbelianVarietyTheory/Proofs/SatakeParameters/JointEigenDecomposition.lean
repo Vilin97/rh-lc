@@ -8,7 +8,6 @@ open Polynomial
 
 namespace GlobalTheory.CommSemisimpleChars
 
-open Classical in
 
 theorem card_eq_of_sum_eq {H ι κ : Type} [Monoid H] [Fintype ι] [Fintype κ]
     (a : ι → (H →* ℂ)) (c : κ → (H →* ℂ)) (h : ∀ g, ∑ j, a j g = ∑ i, c i g) (ψ : H →* ℂ) :

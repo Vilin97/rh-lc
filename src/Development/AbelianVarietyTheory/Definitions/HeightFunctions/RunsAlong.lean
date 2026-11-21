@@ -30,8 +30,6 @@ structure Tied (EX : ErrX D) (J : CoreJ D) (C : CharFrame D) : Prop where
   field : FieldTies D C
   half : HalfAt EX C
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure CF (D : D7) : Type 1 where
   J : CoreJ D

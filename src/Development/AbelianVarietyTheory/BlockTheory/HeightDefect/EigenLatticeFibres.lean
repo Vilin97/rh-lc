@@ -55,9 +55,7 @@ structure CxFib (σ : K →+* ℂ) where
 
 attribute [instance] CxFib.grp
 
-variable {F} in
 
-variable {F} in
 
 end GenFib
 

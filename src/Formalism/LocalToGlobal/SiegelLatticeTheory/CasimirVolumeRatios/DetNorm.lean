@@ -16,7 +16,6 @@ variable (I : AutInst)
 
 abbrev AEf : Type := I.E ⊗[I.F] Af I.F
 
-open Classical in
 
 end Formalism.L2.S.S7.GLOne
 

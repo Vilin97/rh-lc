@@ -36,7 +36,6 @@ theorem biUnion_balls_subset {n : ℕ} (s : Finset (EuclideanSpace ℝ (Fin n)))
 
 end PGaussPacking
 
-open PGaussPacking in
 
 theorem GaussPacking.proof : GaussPacking.Statement := by
   intro n s δ r hδ hr hsep hs

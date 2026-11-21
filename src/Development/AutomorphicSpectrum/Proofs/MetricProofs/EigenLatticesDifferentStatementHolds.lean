@@ -17,7 +17,6 @@ open scoped nonZeroDivisors
 
 variable {E : Type} [Field E] [NumberField E] {K : Type} [Field K] [NumberField K] {N : ℕ}
 
-open Classical in
 
 theorem sum_dual_mul (σ τ : E →+* K) :
     ∑ k, σ (HT.dualInt E k) * τ ((RingOfIntegers.basis E k : 𝓞 E) : E) = if τ = σ then 1 else 0 := by
@@ -47,7 +46,6 @@ theorem card_embeddings [Fintype (E →+* K)] (ι : K →+* ℂ)
 def diffIm (s : E →+* K) : Submodule (𝓞 K) K :=
   Submodule.span (𝓞 K) ((fun x : 𝓞 E => s (x : E)) '' (differentIdeal ℤ (𝓞 E) : Set (𝓞 E)))
 
-variable (E K) in
 
 def intLat : Submodule (𝓞 K) ((E →+* K) → K) :=
   Submodule.span (𝓞 K) (Set.range fun (b : 𝓞 E) (σ : E →+* K) => σ (b : E))

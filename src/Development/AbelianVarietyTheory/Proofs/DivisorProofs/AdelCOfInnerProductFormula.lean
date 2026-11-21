@@ -52,7 +52,6 @@ theorem exists_covol_lowC : ∃ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓧 : Se
   obtain ⟨p, hp⟩ := hd.2.2.2.2.2.2.2.1.1.2.norm.1
   exact ⟨p.1, p.2, hp⟩
 
-include hd hν in
 
 theorem scalar_bound_lowC (h7 : LevelIndexNormC R F) (h8 : MassLower D) (h9 : FormalDegreeUpperC R F) {b : ℝ} (hb : Sizes D i b)
     {μ : @Measure (Datum.WO (Vc D i) (Wc D i)) (Datum.measMx _ _)} {𝓧 : Set (Datum.WO (Vc D i) (Wc D i))}
@@ -90,7 +89,6 @@ theorem scalar_bound_lowC (h7 : LevelIndexNormC R F) (h8 : MassLower D) (h9 : Fo
     (fun ρ => by exact_mod_cast one_le_dimK i σ ρ) (fun ρ => (a6 ρ).2.1) (fun ρ => ⟨Nat.cast_nonneg _, s5 σ ρ⟩)
     fun ρ => (a6 ρ).2.2
 
-include hd hν in
 
 theorem term_eval_lowC (h3 : InnerProductFormulaC R F) (h4 : FockCoefficientC R F)
     {μ : @Measure (Datum.WO (Vc D i) (Wc D i)) (Datum.measMx _ _)} {𝓧 : Set (Datum.WO (Vc D i) (Wc D i))}
@@ -142,7 +140,6 @@ theorem integrableOn_isLift_lowC (x : HV.H) (v : ∀ ρ, lowT (R.MW i σ) ρ) (g
   simp only [ptL_apply] at this
   convert this using 10
 
-include hd hν hV in
 
 theorem exists_isLift_lowC (h1 : LiftIsCuspC R F) : ∃ th, IsLift R i σ ω (ptAt R i σ BW f) c io ν 𝓕 HV th := by
   refine exists_linear_lift ν 𝓕 (R.HW i σ).e (fun (v : ∀ ρ, lowT (R.MW i σ) ρ) (g : GA D (Wc D i)) U => U (fun ρ => v ρ) g)
@@ -159,8 +156,6 @@ theorem exists_isLift_lowC (h1 : LiftIsCuspC R F) : ∃ th, IsLift R i σ ω (pt
     unfold Lift.thetaPInt
     rfl
 
-include hd hν hV in
-set_option maxHeartbeats 800000 in
 
 theorem form_key_lowC (hy : Bridge.IsReps (Bridge.ratF (Vc D i)) (grpOf (Vc D i) (R.βV i) (datV i R.Pg (R.Q t) P m)) y)
     (h2 : SourceLevelLawC R F) (h3 : InnerProductFormulaC R F)
@@ -214,7 +209,6 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL
     (hd : IsLiftDataC R F i t σ s P cμ cη m ω BW f₀ f c io)
     {ν : Measure (GA D (Vc D i))} {𝓕 : Set (GA D (Vc D i))} (hν : IsMeasDef (Vc D i) (levV R i t P m) ν 𝓕)
 
-include hd hν in
 
 theorem scalar_of_form_key_lowC (h3 : InnerProductFormulaC R F) (h4 : FockCoefficientC R F) (h5 : DeltaNorm D)
     (h6 : FiniteZetaC R F) (h7 : LevelIndexNormC R F) (h8 : MassLower D) (h9 : FormalDegreeUpperC R F) {b : ℝ} (hb : Sizes D i b)

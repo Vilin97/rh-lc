@@ -41,7 +41,6 @@ theorem translT_mul (a b : T ⟶ A) : translT A (a * b) = translT A b ≫ transl
 theorem translT_one : translT A (1 : T ⟶ A) = 𝟙 _ := by
   rw [translT, translPt_eq, MonObj.comp_one, _root_.one_mul, lift_fst_snd]
 
-variable (A) in
 
 def transKer {Z : Scheme.{0}} (Ψ : (T ⊗ A).left ⟶ Z) : Subgroup (T ⟶ A) where
   carrier := {c | (translT A c).left ≫ Ψ = Ψ}
@@ -135,7 +134,6 @@ theorem isCarried_of_val (h : ∀ z J, Good L.L z J →
     sv A L t (𝟙 _) z J = sv A L s' (𝟙 _ ≫ Ψ) z J * (val β (𝟙 _) z J).val) : IsCarried A L Ψ k β s' t :=
   (secRel_iff L.isLB _ _ t _ _ s' Ψ _ _ β).2 h
 
-omit [GrpObj A] in
 
 theorem sec_ext {X : Scheme.{0}} {M : LB X} {a b : LB.Sec M} (h : ∀ j, a.f j = b.f j) : a = b := by
   cases a; cases b; congr; exact funext h

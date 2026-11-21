@@ -663,7 +663,6 @@ theorem piU_aesm (u : D.what₂.Word) (x : X.Vpi u) : AEStronglyMeasurable (fun 
     rw [ae_iff]; exact (X.muH_haar u).2.2.1
   rwa [Measure.restrict_eq_self_of_ae_mem hae] at hm
 
-variable (X) in
 
 def PiIrr (u : D.what₂.Word) : Prop := IrrOn ((Hinf X u : Subgroup X.B.I.Ginf) : Set X.B.I.Ginf) (X.piU u)
 
@@ -734,7 +733,6 @@ theorem blk_of (cs : ColSys X u what₂) (cs' : ColSys X u' rows') (FdN FdN' : S
       (X.chi2 (kOf X u u' (cs.h ρ : X.B.I.Gf) (cs'.h ρ' : X.B.I.Gf) t.pt) • OOt t) := by
   unfold blk; exact if_pos h
 
-variable (F0) in
 
 def IdMeetOne (cs : ColSys X u what₂) : Prop :=
   (∀ (ρ ρ' : cs.Cl) (t : GTerm X u u F0 F0 what₂ what₂), t.isId → Meets cs cs t ρ ρ' → ρ = ρ') ∧
@@ -742,21 +740,18 @@ def IdMeetOne (cs : ColSys X u what₂) : Prop :=
       Meets cs cs t' ρ ρ → t = t') ∧
     ∀ ρ : cs.Cl, ∃ t : GTerm X u u F0 F0 what₂ what₂, t.isId ∧ Meets cs cs t ρ ρ
 
-variable (F0) in
 
 def IdMeetPhase (cs : ColSys X u what₂) : Prop :=
   ∀ (ρ : cs.Cl) (t : GTerm X u u F0 F0 what₂ what₂), t.isId → Meets cs cs t ρ ρ →
     t.pt.1⁻¹ ∈ X.NinfU u ∧
       X.chi2 (kOf X u u (cs.h ρ : X.B.I.Gf) (cs.h ρ : X.B.I.Gf) t.pt) * starRingEnd ℂ (X.psiInfU u t.pt.1⁻¹) = 1
 
-variable (F0) in
 
 def IdMeetRO (cs : ColSys X u what₂) : Prop :=
   ∀ (ρ : cs.Cl) (t : GTerm X u u F0 F0 what₂ what₂), t.isId → Meets cs cs t ρ ρ →
     (ROinf t).Countable ∧ (∀ a ∈ ROinf t, ∀ b ∈ ROinf t, a * b ∈ ROinf t) ∧ (∀ a ∈ ROinf t, a⁻¹ ∈ ROinf t) ∧
       ROinf t ⊆ X.NinfU u
 
-variable (F0) in
 
 def IdMeetVol (cs : ColSys X u what₂) (FdN : Set X.B.I.Ginf) : Prop :=
   ∀ (ρ : cs.Cl) (t : GTerm X u u F0 F0 what₂ what₂), t.isId → Meets cs cs t ρ ρ →
@@ -867,7 +862,6 @@ variable {D : D7} {X : HidaSetting D} {u u' : D.what₂.Word}
   {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)} {F0' : FlagG (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)}
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
-variable (F0 F0' what₂ rows') in
 
 def IdOffConj : Prop :=
   u ≠ u' → ∀ t : GTerm X u u' F0 F0' what₂ rows', t.isId →
@@ -875,14 +869,12 @@ def IdOffConj : Prop :=
       X.psiInfU u' (t.pt.1⁻¹ * s * t.pt.1) = X.psiInfU u s) ∧
     ∀ n ∈ X.NinfU u, t.pt.1⁻¹ * n * t.pt.1 ∈ X.NinfU u'
 
-variable (F0 F0' what₂ rows') in
 
 def IdOffIneq : Prop :=
   u ≠ u' → ∀ t : GTerm X u u' F0 F0' what₂ rows', t.isId →
     ∀ T : X.Vpi u' →ₗ[ℂ] X.Vpi u, (∀ h ∈ ((Hinf X u : Subgroup X.B.I.Ginf) : Set X.B.I.Ginf), ∀ x,
       T (X.piU u' (t.pt.1⁻¹ * h * t.pt.1) x) = X.piU u h (T x)) → T = 0
 
-variable (F0 F0' what₂ rows') in
 
 def IdOffRO : Prop :=
   u ≠ u' → ∀ t : GTerm X u u' F0 F0' what₂ rows', t.isId →

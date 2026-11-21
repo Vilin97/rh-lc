@@ -144,7 +144,6 @@ end Gen
 
 open NumberField Formalism.BasicNotions
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
 theorem genus_one_datum_exists (hInv : Formalism.L2.KerInert.Sigma.InvAlg) : Formalism.L2.KerInert.GenusOneModelExists := by
   intro D cc δ hcurve hδ12 p _ hcop h5 hIn lam
@@ -210,6 +209,5 @@ theorem genus_one_datum_exists (hInv : Formalism.L2.KerInert.Sigma.InvAlg) : For
     datum_of_short h5 lam (Formalism.MainNotions.TaylorLogMetric.lamOf D cc δ) C g2' g3' hW k2 k3 n2 n3 nd ε hε1 hεint
   exact ⟨g, hgl, ⟨hcurve, hcop, hδ12, hgL, hOk⟩, hM, hLT⟩
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
 end Formalism.L2.KerInert.GenusOneDatumExistence

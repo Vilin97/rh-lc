@@ -63,7 +63,6 @@ theorem baseRingHom_algebraMap (V : Y.Opens) (r : R) :
     baseRingHom q V (algebraMap R L r) = baseRingHom (g ≫ p) V r := by
   rw [H.w, baseRingHom_comp_SpecMap]; rfl
 
-omit S in
 
 theorem isLocalization_app {V : X.Opens} (hV : IsAffineOpen V) :
     letI := (g.app V).hom.toAlgebra

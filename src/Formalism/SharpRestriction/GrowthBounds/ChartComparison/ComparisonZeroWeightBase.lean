@@ -94,7 +94,6 @@ theorem CmpUpMu.inj (S : CmpUpMu c Tw u μ w h Lv) (j : ℕ) (hj : j ≤ D.R.m) 
 theorem CmpUpMu.cmp_zero (S : CmpUpMu c Tw u μ w h Lv) (x : ((D.fm u).lat 0).V) :
     S.cmp 0 (Tw.e0 u μ x) = c.cmp u w h x := comparison_zero_weight_base c Tw u μ w h x
 
-open Classical in
 
 def chainMu (S : CmpUpMu c Tw u μ w h Lv) : Chain Lv where
   Kz j := if hj : j < D.R.m then

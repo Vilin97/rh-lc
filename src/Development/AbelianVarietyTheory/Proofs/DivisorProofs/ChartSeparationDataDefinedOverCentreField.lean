@@ -143,7 +143,6 @@ theorem mem_balForms_of_symm {X : Type} [AddCommGroup X] (i : Module ℤ X)
 
 end GlobalTheory.Poinc.Sep.Assembly
 
-open GlobalTheory.Poinc.Sep.Assembly in
 
 theorem GlobalTheory.Poinc.Sep.sepSt : SepSt := by
   intro g hg n hn hodd F Z z i hTC φ hpol hnsi d J S π j hd hJ hval hbl hji V _ _ _ Q ξ hU m N s ε τ₀ hrk hcone hdef

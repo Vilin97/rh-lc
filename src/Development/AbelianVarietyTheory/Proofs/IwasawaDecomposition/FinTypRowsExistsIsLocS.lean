@@ -199,7 +199,6 @@ namespace GlobalTheory.RowLocalRows
 
 open Formalism.IndefR.principalLevelFrame Formalism.IndefR.Mult
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.RowLocalRows
 

@@ -66,9 +66,7 @@ def IsFactor (lin : ℂ → A.La → A.V →ₗ[ℂ] ℂ) (cst : ℂ → A.La �
     A.term j α th m (v + A.Pw w la) * eTwoPi (w * A.exponent j α m) = Complex.exp (lin w la v + cst w la) ^ j *
       (A.term j α th (m + la.y) v * eTwoPi (w * A.exponent j α (m + la.y)))
 
-variable {A} in
 
-variable {A} in
 
 theorem IsFactor.sum {lin : ℂ → A.La → A.V →ₗ[ℂ] ℂ} {cst : ℂ → A.La → ℂ} (h : IsFactor A lin cst) (w : ℂ)
     (la : A.La) (v : A.V) (j : ℕ) (α : A.X) (th : (Fin A.gB → ℂ) → ℂ) (hth : th ∈ A.Theta j α) :
@@ -202,7 +200,6 @@ def FPts.Lev {V : Type} [AddCommGroup V] {act : 𝓞 E → V → V} {I : ℕ →
   ∀ i i' z j, ⊤ ≤ (Θ.x z * p).left ⁻¹ᵁ t.PP.L.U j →
     sval (Θ.sig k i) (fib (Θ.x z * p)) j * ψ i' z = sval (Θ.sig k i') (fib (Θ.x z * p)) j * ψ i z
 
-omit [StarRing (𝓞 E)] in
 
 end Gen
 

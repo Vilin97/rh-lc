@@ -131,7 +131,6 @@ lemma map_polyToChart_apply (j : Fin (n + 1)) (p : MvPolynomial {i // i ≠ j} A
       (awayCongr B n (gradedMap_X A B n j)).symm (polyToChart B j (MvPolynomial.map (algebraMap A B) p)) :=
   congrArg (fun φ => φ p) (map_polyToChart (A := A) (B := B) j)
 
-attribute [local instance] MvPolynomial.algebraMvPolynomial in
 
 theorem isPushout_chart (j : Fin (n + 1)) :
     IsPushout (CommRingCat.ofHom (algebraMap A B)) (CommRingCat.ofHom (chartAlgebraMap A (X j)))
@@ -152,7 +151,6 @@ theorem isPushout_chart (j : Fin (n + 1)) :
     apply MvPolynomial.ringHom_ext <;> intro x <;>
       simp [chartEquiv_symm_apply, map_polyToChart_apply]
 
-variable (A) in
 
 lemma awayι_toSpecBase {s : MvPolynomial (Fin (n + 1)) A} {d : ℕ} (hs : s ∈ grading A n d)
     (hd : 0 < d) :
@@ -161,7 +159,6 @@ lemma awayι_toSpecBase {s : MvPolynomial (Fin (n + 1)) A} {d : ℕ} (hs : s ∈
   rw [toSpecBase, ← Category.assoc, Proj.awayι_toSpecZero, ← Spec.map_comp]
   rfl
 
-variable (A B n) in
 
 theorem isPullback_baseChange :
     IsPullback (baseChangeMap A B n) (toSpecBase B n) (toSpecBase A n)

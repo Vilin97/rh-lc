@@ -64,7 +64,6 @@ private theorem isClosed_unipB : IsClosed (unipB k (Fin n) : Set (GL (Fin n) k))
     isClosed_eq (Units.continuous_val.matrix_elem i j) continuous_const).inter
     (isClosed_iInter fun i => isClosed_eq (Units.continuous_val.matrix_elem i i) continuous_const)
 
-open GlobalTheory.SplitWeil GlobalTheory.IwahoriTraceProof in
 
 private theorem measure_dcos [MeasurableSpace (GL (Fin n) k)] [BorelSpace (GL (Fin n) k)] (μ : Measure (GL (Fin n) k))
     [μ.IsHaarMeasure] {K : Subgroup (GL (Fin n) k)} (hK : IwLev K) {t : Fin n → kˣ} (ht : Dom t) :

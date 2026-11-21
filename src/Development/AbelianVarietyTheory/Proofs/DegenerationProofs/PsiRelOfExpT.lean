@@ -41,7 +41,6 @@ theorem snd_lift_unit {S : Scheme.{0}} (G : Over S) :
 
 variable {R : Type} [CommRing R] [IsDomain R]
 
-omit [IsDomain R] in
 
 theorem exists_lift_of_retraction (F : Type) [Field F] [Algebra (FractionRing R) F] (g : F →+* FractionRing R)
     (hg : ∀ a, g (algebraMap (FractionRing R) F a) = a) {T : Over (Spec (CommRingCat.of R))} (κ : T ⟶ TK R) :
@@ -59,7 +58,6 @@ theorem exists_lift_frac {T : Over (Spec (CommRingCat.of R))} (κ : T ⟶ TK R) 
     ∃ κ' : T ⟶ TF (R := R) (FractionRing R), κ'.left ≫ jFK (R := R) (FractionRing R) = κ.left :=
   exists_lift_of_retraction (FractionRing R) (RingHom.id _) (fun _ => rfl) κ
 
-omit [IsDomain R] in
 
 theorem exists_sameG {G : Over (Spec (CommRingCat.of R))} {L : LB G.left} (hL : L.IsLB) {k : ℕ}
     (s : LB.Sec (LB.LinComb L (K := Fin 1) (fun _ => (snd (𝟙_ _) G).left) (fun _ => (k : ℤ)))) :

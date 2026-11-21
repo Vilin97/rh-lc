@@ -29,7 +29,6 @@ def tau (t : {r : ℝ // 0 < r}) (u : normOneSubgroup F) : IdeleGroup F :=
 def wt (ω : HChar F) (t : {r : ℝ // 0 < r}) (u : normOneSubgroup F) : ℂ :=
   ((ω.1 (tau t u) : ℂˣ) : ℂ)⁻¹ * ((t : ℝ) : ℂ)
 
-variable (F) in
 
 abbrev muE : Measure ({r : ℝ // 0 < r} × normOneSubgroup F) :=
   posRealMeasure.prod ((normOneMeasure F).restrict (normOneFundamentalDomain F))
@@ -49,7 +48,6 @@ def coefK (c : HeightOneSpectrum (𝓞 F) → ℕ) (Y : Ad F) (τ : IdeleGroup F
 def ex (ξ : F) (x : UpperTheory.V.TR.Rinf F) : ℂ :=
   Complex.exp (2 * Real.pi * Complex.I * ∑ v, (reAt v ξ : ℂ) * (x v : ℂ))
 
-open Classical in
 
 def kernF (c : HeightOneSpectrum (𝓞 F) → ℕ) (A Z : Ad F) : ℂ :=
   (∏ v, (((UpperTheory.V.TR.pInf F A v : ℂ) + (UpperTheory.V.TR.pInf F Z v : ℂ)) *

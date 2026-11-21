@@ -56,7 +56,6 @@ noncomputable def galoisMap : A ⊗[B] A →ₐ[A] (G → A) :=
 @[simp] theorem galoisMap_tmul (a b : A) (g : G) :
     galoisMap G A B (a ⊗ₜ b) g = a * g • b := rfl
 
-variable {G A} in
 
 theorem exists_galoisMap_separating [Finite G] (P : Ideal A) (H : Set G)
     (hH : ∀ h ∈ H, ∀ a : A, h • a - a ∈ P)
@@ -113,7 +112,6 @@ theorem exists_galoisMap_separating [Finite G] (P : Ideal A) (H : Set G)
     rw [← map_one (Ideal.Quotient.mk P), Ideal.Quotient.eq]
     exact he' g (by simpa using hg) h hh
 
-variable {G A} in
 
 theorem exists_finset_separating [Finite G] (P : Ideal A) (H : Set G)
     (hH : ∀ h ∈ H, ∀ a : A, h • a - a ∈ P)
@@ -126,7 +124,6 @@ theorem exists_finset_separating [Finite G] (P : Ideal A) (H : Set G)
   · simpa [Finset.sum_apply] using he g hg
   · simpa [Finset.sum_apply] using he' h hh
 
-variable {G A} in
 
 theorem exists_galois_coordinates [Finite G] (h : IsFreeRingAction G A) :
     ∃ s : Finset (A × A), (∀ g : G, g ≠ 1 → ∑ p ∈ s, p.1 * g • p.2 = 0) ∧
@@ -135,7 +132,6 @@ theorem exists_galois_coordinates [Finite G] (h : IsFreeRingAction G A) :
     (by rintro _ rfl a; simp) (fun g hg ↦ by rw [h g hg, sup_top_eq])
   exact ⟨s, hs, by simpa [sub_eq_zero] using hs' 1 rfl⟩
 
-variable {G A} in
 
 end Basic
 
@@ -195,7 +191,6 @@ theorem sum_smul_sum_smul (s : Finset (A × A)) (m : M) :
   simp only [Finset.smul_sum, Finset.sum_smul, smul_distrib_smul, mul_smul]
   exact Finset.sum_comm
 
-variable (G A) in
 
 end Tame
 
@@ -205,13 +200,11 @@ variable {G : Type*} [Group G] [Fintype G] {A : Type*} [CommRing A] [MulSemiring
   {M : Type*} [AddCommGroup M] [Module A M] [DistribMulAction G M] [SMulDistribClass G A M]
   {N : Type*} [AddCommGroup N] [Module A N] [DistribMulAction G N] [SMulDistribClass G A N]
 
-variable (G) in
 
 variable (B : Type*) [CommRing B] [Algebra B A] [SMulCommClass G B A]
   [FaithfulSMul B A] [Algebra.IsInvariant B A G]
   [Module B M] [IsScalarTower B A M] [SMulCommClass G B M]
 
-omit [Fintype G] [SMulDistribClass G A M] in
 
 end DualBasis
 
@@ -223,7 +216,6 @@ variable {G : Type*} [Group G] [Finite G] {A : Type*} [CommRing A] [MulSemiringA
   (M : Type*) [AddCommGroup M] [Module A M] [DistribMulAction G M] [SMulDistribClass G A M]
   [Module B M] [IsScalarTower B A M] [SMulCommClass G B M]
 
-open scoped Pointwise in
 
 omit [Finite G] [MulSemiringAction G A] [SMulCommClass G B A] [FaithfulSMul B A]
   [Algebra.IsInvariant B A G] [SMulDistribClass G A M] in
@@ -341,9 +333,7 @@ variable [SMulCommClass G B A]
 
 variable [FaithfulSMul B A] [Algebra.IsInvariant B A G]
 
-variable {G A} in
 
-variable {G A} in
 
 end BaseChange
 

@@ -93,7 +93,6 @@ def cutψ (s : ℝ) : ℝ := Real.smoothTransition (64 * (s - 1) / 17)
 
 def cutP {e : ℕ} (z : Fin e → ℂ) : ℝ := ∏ i, (1 - cutψ (‖z i‖ ^ 2))
 
-open Classical in
 
 def glueCut {e : ℕ} {X : Type} [TopologicalSpace X] (B : FinHolAtlas e X) (j : Fin B.n) (y : X) :
     ℝ :=
@@ -223,7 +222,6 @@ lemma chartBall_mono (B : FinHolAtlas e X) (j : Fin B.n) {ρ ρ' : ℝ} (h : ρ 
     chartBall B j ρ ⊆ chartBall B j ρ' :=
   Set.inter_subset_inter_right _ (Set.preimage_mono (ball_subset_ball h))
 
-open Classical in
 
 def glueArg (B : FinHolAtlas e X) (f η : Fin B.n → X → ℝ) (δ Mb : ℝ) (j : Fin B.n) (y : X) : ℝ :=
   if y ∈ chartBall B j (5 / 4) then f j y + 4 * δ * η j y else -Mb - 10

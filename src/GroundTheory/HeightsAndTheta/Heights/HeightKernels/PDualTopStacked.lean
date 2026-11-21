@@ -118,7 +118,6 @@ theorem degForm_of_le (hSimple : DualTopSimpleSub.Statement) (hBasis : DualTopBa
 
 end TopDualStacked
 
-open TopDualStacked in
 
 theorem DualTopStacked.proof (hSimple : DualTopSimpleSub.Statement) (hBasis : DualTopBasisChange.Statement)
     (hDeg : DualStackedDegree.Statement) : DualTopStacked.Statement := by

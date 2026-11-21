@@ -28,7 +28,6 @@ theorem blockDiag_iff {b : Fin N → ℕ} {M : Matrix (Fin N) (Fin N) k} :
     · exact h2 (OrderDual.toDual_lt_toDual.2 h)
     · exact h1 h
 
-variable (k) in
 
 def levi (b : Fin N → ℕ) : Subgroup (GL (Fin N) k) where
   carrier := {g | ∀ i j, b i ≠ b j → (g : Matrix (Fin N) (Fin N) k) i j = 0}
@@ -141,7 +140,6 @@ theorem blockTri_le_normalizer (b : Fin N → ℕ) :
   rw [← Subgroup.normal_subgroupOf_iff_le_normalizer (unipRadical_le_blockTri b), ← ker_leviProj]
   infer_instance
 
-variable (k) in
 
 def permGL : Equiv.Perm (Fin N) →* GL (Fin N) k := (Matrix.permMatrixHom (R := k)).toHomUnits
 
@@ -429,13 +427,11 @@ def extTensor {ι : Type} {Γ Y : ι → Type} [∀ a, Group (Γ a)] [∀ a, Add
     extTensor ρ x (PiTensorProduct.tprod ℂ v) = PiTensorProduct.tprod ℂ fun a => ρ a (x a) (v a) :=
   PiTensorProduct.map_tprod _ _
 
-variable (G) in
 
 def isoSetoid : Setoid (FDRep ℂ G) where
   r A B := Nonempty (Representation.Equiv A.ρ B.ρ)
   iseqv := ⟨fun _ => ⟨.refl _⟩, fun ⟨e⟩ => ⟨e.symm⟩, fun ⟨e⟩ ⟨f⟩ => ⟨e.trans f⟩⟩
 
-variable (G) in
 
 def RepClass : Type 1 := Quotient (isoSetoid G)
 
@@ -551,7 +547,6 @@ theorem isCuspidal_iff_forall (ρ : Representation ℂ (GL (Fin N) k) V) :
   have h1 := congrArg (ρ (permGL k w)) h0
   rwa [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, map_zero, Module.End.one_apply] at h1
 
-variable (k) in
 
 abbrev GradedClass : Type 1 := Σ n : ℕ, RepClass (GL (Fin n) k)
 

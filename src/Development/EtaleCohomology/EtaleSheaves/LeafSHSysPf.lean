@@ -69,7 +69,6 @@ theorem monic_rep {J : Type} [SmallCategory J] [IsFiltered J] (D : J ⥤ CommRin
   obtain ⟨Q, hQ, -, hm⟩ := lifts_and_degree_eq_and_monic (f := (c.ι.app j).hom) ⟨P, hP⟩ hp
   exact ⟨j, Q, hQ, hm⟩
 
-open Polynomial in
 
 theorem root_of_cof {J : Type} [SmallCategory J] [IsFiltered J] (D : J ⥤ CommRingCat.{0}) (c : Cocone D)
     {Ω : Type} [Field Ω] (ω : c.pt →+* Ω)

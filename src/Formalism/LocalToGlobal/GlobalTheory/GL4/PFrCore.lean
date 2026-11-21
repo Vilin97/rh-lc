@@ -19,7 +19,6 @@ open Formalism.UG Formalism.UG.CS Formalism.UG.P Formalism.BasicNotions Formalis
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
-variable (F) in
 
 def vi (x : n → E) : n → 𝒜 := fun i => ιA (x i)
 

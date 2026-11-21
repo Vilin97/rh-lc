@@ -186,7 +186,6 @@ theorem full_iff_polyFull {jT : ZMod S.n → ℤ → ℤ} (hj : ∀ i a, ((S.D.U
   simp only [HasJumps, hj]
   rfl
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem admissibleModule_iff_lattice_quotients {jT : ZMod S.n → ℤ → ℤ} (hj : ∀ i a, ((S.D.Ut i).count a : ℤ) = jT i a)
     {M : Type} [AddCommGroup M] [Module S.O M] (π : Representation S.O S.G M) :

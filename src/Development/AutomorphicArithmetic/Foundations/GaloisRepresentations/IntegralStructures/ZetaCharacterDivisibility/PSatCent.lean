@@ -18,7 +18,6 @@ open UpperTheory.Gal.crystallineComparison (GenericMul rootPol)
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 open UpperTheory.Gal.Int.Div
 
-open GlobalTheory.LFun Formalism.UG Matrix in
 
 private theorem scalar_unit_mem {E : Type} [Field E] [NumberField E] (a : ℕ) (w : HeightOneSpectrum (𝓞 E))
     (u : (w.adicCompletion E)ˣ) (hu : Valued.v (u : w.adicCompletion E) = 1) :
@@ -44,7 +43,6 @@ private theorem scalar_unit_mem {E : Type} [Field E] [NumberField E] (a : ℕ) (
     · subst h; simp [bc]
     · simp [bc, h]
 
-open GlobalTheory.LFun Formalism.UG Matrix in
 
 private theorem satEig_self (q n : ℕ) (B : Multiset ℂˣ) (hB : B.card = n) :
     satEig q n B n = ((B.prod : ℂˣ) : ℂ) := by
@@ -55,7 +53,6 @@ private theorem satEig_self (q n : ℕ) (B : Multiset ℂˣ) (hB : B.card = n) :
   rw [Multiset.esymm, Multiset.powersetCard_self, Multiset.map_singleton, Multiset.sum_singleton]
   exact (map_multiset_prod (Units.coeHom ℂ) B).symm
 
-open GlobalTheory.LFun Formalism.UG Matrix in
 
 private theorem scalar_unif_act {E V : Type} [Field E] [NumberField E] [AddCommGroup V] [Module ℂ V] {a : ℕ}
     {w : HeightOneSpectrum (𝓞 E)} {ρ : Representation ℂ (GL (Fin a) (w.adicCompletion E)) V} {x : V}

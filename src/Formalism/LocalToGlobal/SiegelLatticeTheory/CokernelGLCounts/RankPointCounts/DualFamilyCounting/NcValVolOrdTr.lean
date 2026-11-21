@@ -212,7 +212,6 @@ end Gen
 
 end TrW
 
-open TrW in
 
 theorem annX_of {D : D7} (X : HidaSetting D) (ψ : AddChar (AF X.B.I.F) ℂ) (hC : CondAll) : AnnX X ψ := by
   intro hψ hstd v y

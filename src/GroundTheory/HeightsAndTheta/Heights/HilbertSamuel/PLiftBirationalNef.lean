@@ -88,7 +88,6 @@ theorem aeval_scale {y : (Σ k, ι k) → Ω} (lam : K → Ω) {G : MRing ι} {d
 
 end LiftBirationalNef
 
-open LiftBirationalNef in
 
 end
 

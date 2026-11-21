@@ -41,7 +41,6 @@ theorem continuousOn_uMat_apply {T : Type} [TopologicalSpace T] {n : ℕ} {s : S
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-omit [NumberField E] [IsCMField E] in
 
 theorem continuous_gram {r : ℕ} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) :
     Continuous (gram τ G) := by

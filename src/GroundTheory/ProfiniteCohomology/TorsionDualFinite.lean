@@ -88,7 +88,6 @@ theorem exists_apply_ne_zero {a : G} (ha : a ≠ 0) : ∃ f : G →+ QZ, f a ≠
   refine ⟨toAddCircle.symm.toAddMonoidHom.comp (c : G →+ AddCircle (1 : ℚ)), fun h => hc ?_⟩
   exact (AddEquiv.map_eq_zero_iff toAddCircle.symm).mp h
 
-variable (G) in
 
 def evalHom : G →+ ((G →+ QZ) →+ QZ) where
   toFun a :=
@@ -119,7 +118,6 @@ theorem card_hom_le [Finite G] : Nat.card (G →+ QZ) ≤ Nat.card G := by
 theorem card_hom [Finite G] : Nat.card (G →+ QZ) = Nat.card G :=
   card_hom_le.antisymm <| (Nat.card_le_card_of_injective _ evalHom_injective).trans card_hom_le
 
-variable (G) in
 
 end QZ
 

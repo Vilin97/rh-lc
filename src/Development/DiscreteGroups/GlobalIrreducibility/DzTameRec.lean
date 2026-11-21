@@ -31,7 +31,6 @@ theorem normV_mem (v : HeightOneSpectrum (𝓞 M)) : ((normV v : ℕ) : 𝓞 M) 
   rw [← Ideal.Quotient.eq_zero_iff_mem, map_natCast]
   exact hc
 
-omit [IsAlgClosure M Ω] in
 
 theorem weil_fix_root (h : IsPlaceOver A v) (s : Weil h) (ζ : Ω) (hζ : ζ ^ (normV v - 1) = 1) :
     (s : G M Ω) ζ = ζ := by

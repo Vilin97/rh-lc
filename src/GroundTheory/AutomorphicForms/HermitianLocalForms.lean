@@ -105,7 +105,6 @@ theorem tensorQuadEquiv_tmul (r : R) (x : E) :
       ⟨r * algebraMap K R (ψ x).re, r * algebraMap K R (ψ x).im⟩ := by
   simp [tensorQuadEquiv, quadTensorEquiv_tmul]
 
-variable {ψ} in
 
 theorem tensorQuadEquiv_conjBase (hψ : ∀ x, ψ (conj K E x) = star (ψ x)) (z : R ⊗[K] E) :
     tensorQuadEquiv ψ R (conjBase K E R z) = star (tensorQuadEquiv ψ R z) := by

@@ -443,7 +443,6 @@ namespace Formalism.ELL
 
 open WeierstrassCurve
 
-open Classical in
 
 theorem formal_group_points_no_prime_to_p_torsion : FormalGroupPointsTorsionFree.{u} := by
   intro K _ _ W hW _ n hn P hP hnP

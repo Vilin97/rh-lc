@@ -143,7 +143,6 @@ theorem subsingleton_cechH_of_gt {k : ℤ} {q : ℕ} (hq : n < q) :
     Subsingleton (cechH (twistAb A n k) (cover A n) q) :=
   CechOrdered.subsingleton_cechH (by simp; omega) (by omega)
 
-variable (n) in
 
 abbrev NegMon (k : ℤ) : Type := {m : Fin (n + 1) → ℤ // (∀ j, m j < 0) ∧ ∑ j, m j = k}
 

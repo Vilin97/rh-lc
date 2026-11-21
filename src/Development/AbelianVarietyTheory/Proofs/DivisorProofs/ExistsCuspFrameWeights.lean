@@ -106,6 +106,5 @@ end GlobalTheory.FrameBerg
 
 namespace GlobalTheory.FrameBerg
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.FrameBerg

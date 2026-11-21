@@ -72,7 +72,6 @@ theorem exists_lifts (h : InDual L F) : ∃ f, Lifts L F f := by
   obtain ⟨f, hf⟩ := exists_dual L (Algebra.linearMap 𝒪[k] 𝓀[k] ∘ₗ G)
   exact ⟨f, fun y => ⟨G y, rfl, (hf y).symm⟩⟩
 
-open Classical in
 
 theorem cosetInd_eq (q : Unif k) (f : Module.Dual 𝓀[k] (Red L)) (η : n → k) :
     cosetInd q L f η = if Lifts L (q.1 • η) f then 1 else 0 := by
@@ -89,7 +88,6 @@ end Duals
 section Decomposition
 variable [Fintype n'] {L : Submodule 𝒪[k] (n' → k)} {LY : Submodule 𝒪[k] (n → k)} {x₀ : Matrix n n' k}
 
-open Classical in
 
 theorem exists_pull (h : ∀ z ∈ L, x₀ *ᵥ z ∈ LY) (fW : Module.Dual 𝓀[k] (Red LY)) :
     ∃ f₀ : Module.Dual 𝓀[k] (Red L), (∀ z : L, f₀ (Red.mk L z) = fW (Red.mk LY ⟨x₀ *ᵥ z, h z z.2⟩)) ∧
@@ -186,7 +184,6 @@ theorem latInd_mul {g : GL n' k} (hg : g ∈ latStab L) (L₁ : Submodule 𝒪[k
   rw [MulAction.mem_stabilizer_iff.1 hg, one_smul] at this
   simpa using this.symm
 
-omit [Fintype n] in
 
 theorem sum_latInd {φ : Form k n' M} (hφ : φ ∈ Mram k n' M) (L : Submodule 𝒪[k] (n' → k)) [L.IsLattice k]
     (L₁ : Submodule 𝒪[k] (n → k)) (x₀ : Matrix n n' k) : ∑ P₁ ∈ withKer L, latInd P₁.ker L₁ x₀ • φ P₁ = 0 := by
@@ -265,7 +262,6 @@ theorem isClopen_isCompact_qLat (q : Unif k) (L : Submodule 𝒪[k] (n → k)) [
 variable [MeasurableSpace k] [BorelSpace k] (q : Unif k) {ψ : AddChar k Circle} (hψ : HasConductor ψ 1)
   (μ : Measure (n → k)) [μ.IsAddHaarMeasure] (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
 
-omit [BorelSpace k] in
 
 theorem volQ_pos : 0 < volQ μ q L := by
   obtain ⟨h1, h2⟩ := isClopen_isCompact_qLat q L
@@ -273,7 +269,6 @@ theorem volQ_pos : 0 < volQ μ q L := by
 
 include hψ
 
-open Classical in
 
 theorem integrable_qLat (η : n → k) :
     Integrable (fun y => (if q.inv • y ∈ L then (1 : ℂ) else 0) * (ψ (η ⬝ᵥ y) : ℂ)) μ := by
@@ -284,7 +279,6 @@ theorem integrable_qLat (η : n → k) :
   refine Continuous.integrable_of_hasCompactSupport (h3.1.continuous.mul ?_) h3.2.mul_right
   exact continuous_subtype_val.comp (hψ.continuous.comp (continuous_const.dotProduct continuous_id))
 
-open Classical in
 
 theorem integral_qLat (η : n → k) :
     ∫ y, (if q.inv • y ∈ L then (1 : ℂ) else 0) * (ψ (η ⬝ᵥ y) : ℂ) ∂μ =
@@ -398,7 +392,6 @@ theorem datum_eq (q : Unif k) (P : Pair k n') (LY : Submodule 𝒪[k] (n → k))
     · simpa using h (Sum.elim z 0) ⟨0, by simpa using hz, by simp⟩
     · simpa [add_comm] using h (Sum.elim P.vec fun _ => q.inv) ⟨1, by simp, by simp⟩
 
-omit [Fintype n'] in
 
 theorem lastPair_hasVal (q : Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsLattice k] (v : n'' ⊕ Fin 1 → k)
     (a : 𝓀[k]) : (lastPair q L).HasVal v a ↔
@@ -426,8 +419,6 @@ theorem lastPair_hasVal (q : Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsLa
     rw [this]
     exact zero_mem _
 
-omit [Fintype n'] in
-open Classical in
 
 theorem phiOne_last [Fintype n] (q : Unif k) (LY : Submodule 𝒪[k] (n → k)) [LY.IsLattice k]
     (L : Submodule 𝒪[k] (n'' → k)) [L.IsLattice k] (fW : {f : Module.Dual 𝓀[k] (Red LY) // f ≠ 0})
@@ -450,7 +441,6 @@ variable [Fintype n] [Fintype n'] (q : Unif k) (LY : Submodule 𝒪[k] (n → k)
   (L'' : Submodule 𝒪[k] (n'' → k)) [L''.IsLattice k] {M A : Type} [AddCommGroup M] [Module ℂ M] [AddCommGroup A]
   [Module ℂ A] (x' : Matrix n'' n k) (η : n → k)
 
-omit [Fintype n'] in
 
 theorem phiOne_last' (fW : {f : Module.Dual 𝓀[k] (Red LY) // f ≠ 0}) :
     phiOne (ofDual LY fW) (lastPair q L'') (withRow x' η) = latInd LY L'' x' * cosetInd q LY fW.1 η := by

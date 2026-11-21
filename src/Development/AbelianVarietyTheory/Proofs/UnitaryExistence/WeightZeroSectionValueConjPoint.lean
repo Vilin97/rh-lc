@@ -59,7 +59,6 @@ theorem keeps_lower {f : Rul Xo c} (hf : f ∈ sec Xo c 0 0)
     | some p => Units.mk0 _ (hd p.1 p.2)
   exact evR_bor (t := t) hf (((frBor_calculus E H Dw l Xo c _ y y' y').1 t).2 ⟨g, h0, fun _ _ => rfl, h⟩)
 
-open Classical in
 
 def only {R : Type} [CommRing R] (τ : E →+* ℂ) (M : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) R) :
     ∀ ρ : E →+* ℂ, Matrix (Fin (Dw.mult ρ)) (Fin (Dw.mult ρ)) R := Function.update (fun _ => 1) τ M

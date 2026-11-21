@@ -78,6 +78,5 @@ theorem amb_of_eq {D : D7} {Gp : Type} [Group Gp] [Fintype Gp] {Pl0 T : Type} {m
     (∃ J, AmbTie D A X Fm' P ψ tup' jA' J) → ∃ J, AmbTie D A X Fm P ψ tup jA J := by
   subst hF; subst h; cases hj; exact id
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.Mem.R3.SelRowPin

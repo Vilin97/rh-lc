@@ -17,8 +17,6 @@ open scoped WithZero
 
 namespace GlobalTheory.QNorm
 
-open NumberField IsDedekindDomain in
-open scoped WithZero in
 
 theorem _root_.GlobalTheory.QNorm.landherr_and_landherrSt :
     _root_.GlobalTheory.Published.Landherr ∧ _root_.GlobalTheory.Published.LandherrSt :=

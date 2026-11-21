@@ -64,12 +64,10 @@ end Lin
 
 variable {D : D7} {θ : InfF D} {V : HSp D}
 
-variable (θ) in
 
 def adAt (h : GA D V) (τ : D.what₂.Tau) (X : Matrix (Fin V.rank) (Fin V.rank) ℂ) : Matrix (Fin V.rank) (Fin V.rank) ℂ :=
   infMat D.sp.cm.sig V.gram (θ τ) h⁻¹ * X * infMat D.sp.cm.sig V.gram (θ τ) h
 
-variable (θ) in
 
 def IsRealPt (h : GA D V) : Prop :=
   h ∈ GinfC V ∧ ∀ τ, infMat D.sp.cm.sig V.gram (θ τ) h ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)

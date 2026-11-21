@@ -45,7 +45,6 @@ variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [De
 
 section Coordinates
 
-variable (F) in
 
 def coordEquiv (v : Basis ι E W) : W ≃+ (ι → F ⊗[F] E) :=
   v.equivFun.toAddEquiv.trans

@@ -19,7 +19,6 @@ section General
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   (v : HeightOneSpectrum (𝓞 F)) (φ : E →+* v.adicCompletion F)
 
-omit [NumberField E] [Algebra F E] in
 
 theorem map_mem (x : 𝓞 E) : φ x ∈ v.adicCompletionIntegers F := by
   have h2 : IsIntegral (v.adicCompletionIntegers F) (φ x) :=

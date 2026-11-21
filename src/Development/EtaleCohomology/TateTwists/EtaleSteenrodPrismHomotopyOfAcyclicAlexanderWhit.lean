@@ -5,7 +5,6 @@ public import Development.EtaleCohomology.TateTwists.PrismBoundaryMapSquareZeroH
 
 @[expose] public section
 
-open LateralTheory.EtaleFoundations.SteenPf in
 
 theorem LateralTheory.EtaleFoundations.etale_steenrod_prism_homotopy_of_acyclic_alexander_whitney (hA : leaf_acyc) (hAW : leaf_aw) (hWA : leaf_wa) :
     LateralTheory.EtaleFoundations.PrismAlexanderWhitneySwapChainHomotopy :=

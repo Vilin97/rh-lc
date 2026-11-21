@@ -144,7 +144,6 @@ variable {κ : Type} (V : κ → X.Opens) (g : ∀ c, Γ(X, V c)) (hV : ∀ x : 
   (hg : ∀ c c' (x : X) (hx : x ∈ V c) (hx' : x ∈ V c'),
     Associated ((X.presheaf.germ _ x hx).hom (g c)) ((X.presheaf.germ _ x hx').hom (g c')))
 
-include hg in
 
 theorem exists_unit_germ (c c' : κ) (x : X) (hx : x ∈ V c) (hx' : x ∈ V c') :
     ∃ u : (X.presheaf.stalk x)ˣ,

@@ -96,7 +96,6 @@ theorem gdet_mem_unitCong {c : kˣ} {g : GL a k} (h : g ∈ glLatCong c (SplitFl
   congr 1
   exact ((algebraMap 𝒪[k] k).map_det u.val).symm
 
-omit [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] in
 
 theorem isNatDatum_cosets {ι : Type*} {p : ι → Prop} {f : ι → Matrix a b k} (hf : ∀ y, IntM (f y)) {ϖ : kˣ}
     (hϖ : IsUnif ϖ) {e' e : ℕ} (he : e' ≤ e) :
@@ -135,7 +134,6 @@ theorem indicator_cosets_mul {ι : Type*} {p : ι → Prop} {f : ι → Matrix a
   rwa [Matrix.mul_assoc, Matrix.mul_assoc, Matrix.mul_assoc, Units.mul_inv, Matrix.mul_one, ← Matrix.mul_assoc,
     Units.inv_mul, Matrix.one_mul] at this
 
-omit [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] in
 
 theorem isNatDatum_of_periodic {Φ : Matrix a b k → ℂ} (hs : ∀ x, Φ x ≠ 0 → IntM x)
     (hp : ∀ x y, MaxM y → Φ (x + y) = Φ x) {ϖ : kˣ} (hϖ : IsUnif ϖ) {e : ℕ} (he : 1 ≤ e) : IsNatDatum ϖ e Φ := by
@@ -170,8 +168,6 @@ theorem hasTypes_vacuum : HasTypes 1 (TypeDatum.full k a).toLevel (TypeDatum.ful
     fun h => (key (one_mem _) h.2).trans (by
       rw [show (TypeDatum.full k b).lam h = 1 from rfl, inv_one, Units.val_one, one_smul])⟩
 
-omit [Fintype b] [DecidableEq b] in
-open Classical in
 
 theorem parPhi_periodic {b' : Type*} {δ : kˣ →* ℂˣ} (hδ : IsTame δ) :
     (∀ x : Matrix (a ⊕ b) (a ⊕ b') k, parPhi δ x ≠ 0 → IntM x) ∧
@@ -346,7 +342,6 @@ theorem chi_condLE (hw : w ∈ locPl G t) {i : ℕ} (h1 : 1 ≤ i) (h2 : i ≤ D
     unfold Places.W0
     convert Finset.mem_image_of_mem _ h'
 
-variable (L t) in
 
 theorem stepFn_periodic (hL : L.Is μ₀) (w : Pl D.host.E) (j : ℕ) :
     (∀ x, stepFn L t w j x ≠ 0 → IntM x) ∧ ∀ x y, MaxM y → stepFn L t w j (x + y) = stepFn L t w j x := by

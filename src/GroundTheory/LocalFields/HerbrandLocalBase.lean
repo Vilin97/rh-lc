@@ -68,7 +68,6 @@ section Ord
 
 variable {L : Type*} [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
 
-variable (L) in
 
 def unitsOrd : Additive Lˣ →+ ℤ where
   toFun x := ord ((x.toMul : Lˣ) : L)

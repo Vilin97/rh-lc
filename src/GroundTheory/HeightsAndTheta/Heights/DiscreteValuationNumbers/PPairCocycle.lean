@@ -412,7 +412,6 @@ theorem listNum_commute (hC2 : VerticalDivisorsCommute.Statement.{0}) {ϖ : O} (
     exact hC2 O ϖ hϖ K ι P (l ++ Q).length hP b b' f g f' g' hD hD' (l ++ Q).get
   · simp [if_neg h, cycEval]
 
-omit [DecidableEq K] in
 
 theorem ratDiv_mul {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} [P.IsPrime] {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hf : f ∉ P)
     (hg : g ∉ P) (hf' : f' ∉ P) (hg' : g' ∉ P) :
@@ -520,7 +519,6 @@ theorem isFlagPair_comp {ϖ : O} {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsP
       · rw [hp₂.sameFlag i m h, zero_mul]
     · simp
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem isFlagPair_refl {ϖ : O} {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsPrime]
     {B : ChartBundle O (segreVec y) N E} {w : Module.Basis (Fin N) Ω E} {x : Fin N → K → ℤ}
@@ -542,7 +540,6 @@ theorem pairNum_one (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOv
     pairNum P x x (fun _ => 1) (fun _ => 1) Gs Q = 0 := by
   simp [pairNum, cycEval, ratDiv, divCycle_one]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem classNum_eq_polyVal {σ : Type*} (cls : σ → K → ℤ) {H : MvPolynomial σ ℤ} {n : ℕ}
     (hH : H.IsHomogeneous n) {Q : List (K → ℤ)} {d : ℕ} (hn : n + Q.length = d)

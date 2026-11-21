@@ -42,7 +42,6 @@ theorem det_sub_le {n : ℕ} (A B : Matrix (Fin n) (Fin n) k) (hA : ∀ i j, A i
   rw [hA', hB', ← RingHom.map_det, ← RingHom.map_det]
   exact h2
 
-open Classical in
 
 def gfun (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c : ℕ) {m r : ℕ} (A : Matrix (Fin m) (Fin m) k)
     (B : Matrix (Fin m) (Fin r) k) : ℂ :=

@@ -69,7 +69,6 @@ theorem lintegral_chart_le {X : Type*} [TopologicalSpace X] [MeasurableSpace X] 
 variable {D : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {Ω : Type} [Field Ω] [CharZero Ω]
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem isOpen_blockNonzero : IsOpen {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   simp only [Set.ofPred_forall, Set.ofPred_exists]
@@ -209,7 +208,6 @@ theorem local_bound (hC : ChartSupBound.Statement) (d : HSMBlockDatum D K ι Ω)
 
 end BlockResolutionImageSup
 
-open BlockResolutionImageSup in
 
 theorem BlockResolutionImageSup.proof (hC : ChartSupBound.Statement) : BlockResolutionImageSup.Statement := by
   intro D K _ _ ι _ Ω _ _ d

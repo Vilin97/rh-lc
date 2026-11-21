@@ -88,13 +88,11 @@ theorem exists_lift_model {X Z : Type} [AddCommGroup X] [Module ℂ X] [AddCommG
   exact ⟨(LinearEquiv.ofInjective M.e H.1).symm.toLinearMap ∘ₗ f.codRestrict _ hm', fun x =>
     congrArg Subtype.val ((LinearEquiv.ofInjective M.e H.1).apply_symm_apply (f.codRestrict _ hm' x))⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem Laws.exists_isRaw {R : RealDat D A Ks} {F : Face D A} (h : Laws R F) (i : Fin D.R.m) (t : T) :
     ∃ th, IsRaw R i t th :=
   exists_lift_model (R.HW i (sg0 D A)) (h.models.HW i (sg0 D A)) (R.thF i t) (h.thP.thF_mem i t)
 
-set_option maxHeartbeats 1000000 in
 
 theorem thetaInner_smul_left {S T' : HSp D} (μ : Measure (WO S T')) (𝓕 : Set (WO S T')) (a : ℂ) (f f' : WO S T' → ℂ) :
     thetaIP μ 𝓕 (a • f) f' = star a * thetaIP μ 𝓕 f f' := by

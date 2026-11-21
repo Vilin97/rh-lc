@@ -78,11 +78,9 @@ theorem paired_line_iff (ha : a ≤ 1) (χ χ' : HChar E) (s : Op E a → Op E a
     · simp only [op_line, map_smul, LinearMap.smul_apply, smul_eq_mul]
       rw [← add_mul, h3, zero_mul]
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem toUnits_barK (k : Kinf E a) : Unitary.toUnits (barK k) = invT a (Cinf E) (Unitary.toUnits k) := Units.ext rfl
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem det_invT {R : Type} [CommRing R] (g : GL (Fin a) R) :
     GeneralLinearGroup.det (invT a R g) = (GeneralLinearGroup.det g)⁻¹ := by

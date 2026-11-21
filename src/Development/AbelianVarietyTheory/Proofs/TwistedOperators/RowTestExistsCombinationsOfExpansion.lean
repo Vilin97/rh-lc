@@ -23,7 +23,6 @@ namespace GlobalTheory.CombsExist
 
 open GlobalTheory.PlaceModel GlobalTheory.PlaceDatum
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_comb_model {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
     (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)) (e : AE D)

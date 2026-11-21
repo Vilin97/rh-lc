@@ -71,13 +71,9 @@ theorem not_exists_gen : ¬ ∃ t : LB.Gen (O1 R 1), t.IsGen := by
   exact hb.ge (⟨⟨genericPt_mem R (X_ne_zero 0), genericPt_mem R (X_ne_zero 1)⟩,
     genericPt_mem R hne⟩ : genericPt R ∈ W ⊓ _)
 
-omit [IsDomain R] in
 
-omit [IsDomain R] in
 
-omit [IsDomain R] in
 
-omit [IsDomain R] in
 
 end ProjectiveLine
 

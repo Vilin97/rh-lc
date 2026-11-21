@@ -22,15 +22,12 @@ attribute [local instance] GlobalTheory.AdelicUnitaryTop.locallyCompact_finiteAd
 local instance measAf : MeasurableSpace (FiniteAdeleRing (𝓞 F) F) := borel _
 local instance borelAf : BorelSpace (FiniteAdeleRing (𝓞 F) F) := ⟨rfl⟩
 
-variable (F κ) in
 
 abbrev Vi : Type := EuclideanSpace ℝ (Fin (Module.finrank ℝ (κ → mixedEmbedding.mixedSpace F)))
 
-variable (F κ) in
 
 abbrev Vf : Type := κ → FiniteAdeleRing (𝓞 F) F
 
-variable (F κ) in
 
 def eI : Vi F κ ≃L[ℝ] (κ → mixedEmbedding.mixedSpace F) := ContinuousLinearEquiv.ofFinrankEq (by simp)
 
@@ -38,18 +35,15 @@ def glue (p : Vi F κ × Vf F κ) : κ → AdeleRing (𝓞 F) F := fun i =>
   (((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ p.1 i), p.2 i) :
     InfiniteAdeleRing F × FiniteAdeleRing (𝓞 F) F)
 
-variable (F κ) in
 
 def resD : ((κ ⊕ κ → AdeleRing (𝓞 F) F) → ℂ) →ₗ[ℂ] (Vi F κ × Vf F κ → ℂ) where
   toFun φ p := φ (Sum.elim (glue p) (glue p))
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-variable (F κ) in
 
 def mu : Measure (Vi F κ × Vf F κ) := (volume : Measure (Vi F κ)).prod Measure.addHaar
 
-variable (F κ) in
 
 def intSub : Submodule ℂ (Vi F κ × Vf F κ → ℂ) where
   carrier := {h | Integrable h (mu F κ)}
@@ -57,14 +51,12 @@ def intSub : Submodule ℂ (Vi F κ × Vf F κ → ℂ) where
   add_mem' := Integrable.add
   smul_mem' c _ h := h.smul c
 
-variable (F κ) in
 
 def I0 : intSub F κ →ₗ[ℂ] ℂ where
   toFun h := ∫ p, (h : Vi F κ × Vf F κ → ℂ) p ∂(mu F κ)
   map_add' h h' := integral_add h.2 h'.2
   map_smul' c h := integral_smul c (h : Vi F κ × Vf F κ → ℂ)
 
-variable (F κ) in
 
 def Lext : (Vi F κ × Vf F κ → ℂ) →ₗ[ℂ] ℂ := (LinearMap.exists_extend (I0 F κ)).choose
 
@@ -72,11 +64,9 @@ theorem Lext_apply (h : Vi F κ × Vf F κ → ℂ) (hh : Integrable h (mu F κ)
     Lext F κ h = ∫ p, h p ∂(mu F κ) :=
   LinearMap.congr_fun (LinearMap.exists_extend (I0 F κ)).choose_spec ⟨h, hh⟩
 
-variable (F κ) in
 
 def lDiag : ((κ ⊕ κ → AdeleRing (𝓞 F) F) → ℂ) →ₗ[ℂ] ℂ := Lext F κ ∘ₗ resD F κ
 
-variable (F κ) in
 
 def dI : Vi F κ →L[ℝ] (κ ⊕ κ → mixedEmbedding.mixedSpace F) :=
   LinearMap.toContinuousLinearMap
@@ -94,7 +84,6 @@ theorem norm_le_dI (u : Vi F κ) : ‖u‖ ≤ ‖(eI F κ).symm.toContinuousLin
     _ ≤ ‖(eI F κ).symm.toContinuousLinearMap‖ * ‖eI F κ u‖ := ContinuousLinearMap.le_opNorm _ _
     _ ≤ _ := by gcongr
 
-variable (F κ) in
 
 def compD : SchwartzMap (κ ⊕ κ → mixedEmbedding.mixedSpace F) ℂ →L[ℂ] SchwartzMap (Vi F κ) ℂ :=
   SchwartzMap.compCLM ℂ (dI F κ).hasTemperateGrowth

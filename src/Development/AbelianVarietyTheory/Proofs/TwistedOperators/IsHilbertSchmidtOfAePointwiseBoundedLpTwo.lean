@@ -114,7 +114,6 @@ theorem sum_le {X : Type} [MeasurableSpace X] {ν : Measure X} [IsFiniteMeasure 
 
 end GlobalTheory.HSAbs
 
-open GlobalTheory.HSAbs in
 
 theorem GlobalTheory.isHilbertSchmidt_of_ae_bounded : ∀ {X : Type} [MeasurableSpace X] {ν : Measure X} [IsFiniteMeasure ν] {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (T : H →L[ℂ] Lp ℂ 2 ν) (C : ℝ), (∀ v, ∀ᵐ x ∂ν, ‖T v x‖ ≤ C * ‖v‖) → GlobalTheory.OpTrace.IsHilbertSchmidt T := by
   intro X _ ν _ H _ _ _ T C hT

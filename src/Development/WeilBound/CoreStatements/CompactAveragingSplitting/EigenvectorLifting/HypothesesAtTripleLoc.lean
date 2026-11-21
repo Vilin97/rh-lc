@@ -81,7 +81,6 @@ theorem locChar_eq (hw : IsInertAt F E v w) (h : w.under (𝓞 F) = v) {χ : Chr
     (H : IsLocChar χ v χv) (y : (Ev E v)ˣ) : χv y = χ (locIdele F w (Units.map (toCompl h).toMonoidHom y)) := by
   rw [← H _ (locIdele_spec hw h y).1, (locIdele_spec hw h y).2]
 
-omit [NumberField E] in
 
 theorem det_loc {J : Matrix (Fin n) (Fin n) E} (h : IsUnit J.det) : IsUnit (locM (F := F) J v).det :=
   (RingHom.map_det (inclR (F := F) (Fv F v)) J) ▸ h.map _

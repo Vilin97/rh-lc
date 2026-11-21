@@ -20,8 +20,6 @@ theorem _root_.GlobalTheory.DualFrame.hform_eq_dot {A n : Type} [CommRing A] [Fi
     (x y : n → A) : _root_.Formalism.UG.hform σ J x y = (fun i => σ (x i)) ⬝ᵥ (J *ᵥ y) := by
   simp [_root_.Formalism.UG.hform, dotProduct, mulVec, Finset.mul_sum, mul_assoc]
 
-open NumberField IsDedekindDomain Matrix in
-open scoped TensorProduct in
 
 theorem _root_.GlobalTheory.DualFrame.hform_mulVec {A n : Type} [CommRing A] [Fintype n] (σ : A →+* A) (J B : Matrix n n A)
     (u y : n → A) : _root_.Formalism.UG.hform σ J (B *ᵥ u) y = (fun i => σ (u i)) ⬝ᵥ ((_root_.Formalism.UG.cT σ B * J) *ᵥ y) := by
@@ -32,8 +30,6 @@ theorem _root_.GlobalTheory.DualFrame.hform_mulVec {A n : Type} [CommRing A] [Fi
   rw [RingHom.map_mulVec]
   rfl
 
-open NumberField IsDedekindDomain Matrix in
-open scoped TensorProduct in
 
 theorem _root_.GlobalTheory.DualFrame.mem_dualSet_of_mem_span {E n : Type} [Field E] [NumberField E] [Fintype n] (σ : E →+* E)
     (J : Matrix n n E) (L : Submodule (𝓞 E) (n → E)) {y : n → E}
@@ -136,8 +132,6 @@ private theorem mulVec_mem_latticeCompletion_iff {F E : Type} [Field F] [NumberF
     refine Submodule.sum_mem _ fun j _ => ?_
     exact hsmul _ (mul_mem (hy j) hu) _ (hgen _ (hcol j))
 
-open NumberField IsDedekindDomain Matrix in
-open scoped TensorProduct in
 
 theorem _root_.GlobalTheory.DualFrame.exists_dual_frames (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] (σ : E →ₐ[F] E) (k : ℕ) (J : Matrix (Fin k) (Fin k) E) (hJ : IsUnit J.det)

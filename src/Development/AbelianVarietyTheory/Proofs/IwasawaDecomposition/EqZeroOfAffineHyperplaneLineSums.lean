@@ -10,7 +10,6 @@ open scoped TensorProduct
 
 namespace GlobalTheory.FiniteRadon
 
-open Classical in
 
 theorem card_annihilator_mul (k W : Type) [Field k] [Fintype k] [AddCommGroup W] [Module k W]
     [Fintype (Module.Dual k W)] (y : W) (hy : y ≠ 0) :

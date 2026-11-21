@@ -47,7 +47,6 @@ theorem unitAt_iff_of_valAt {a : Ω} {r : R} (h : ValAt ξ z a r) (hz : genPt ξ
     obtain ⟨_, s, hs, -⟩ := h
     exact ⟨h0, ⟨s, hs⟩, ⟨t, ht⟩⟩
 
-omit [Fintype K] [∀ k, Fintype (J k)] in
 
 theorem valAt_aeval {σ : Type} {a : σ → Ω} {r : σ → R} (hz : genPt ξ ⤳ centre z) (h : ∀ p, ValAt ξ z (a p) (r p))
     (s : MvPolynomial σ ℤ) : ValAt ξ z (MvPolynomial.aeval a s) (MvPolynomial.aeval r s) := by
@@ -60,7 +59,6 @@ theorem valAt_aeval {σ : Type} {a : σ → Ω} {r : σ → R} (hz : genPt ξ �
       (map_add (Scheme.stalkClosedPointTo z).hom x y).trans (by rw [map_add (f := _), ← hx', ← hy']; rfl)⟩
   | mul_X p i hp => simpa using CoordModel.valAt_mul hp (h i)
 
-omit [Fintype K] [∀ k, Fintype (J k)] in
 
 theorem inBlockChart_centre_iff (hw : CoordsAt ξ x z w) (hz : genPt ξ ⤳ centre z) (c : ∀ k, J k) :
     InBlockChart ξ x c ⟨centre z, hz⟩ ↔ ∀ k, w ⟨k, c k⟩ ≠ 0 := by
@@ -128,7 +126,6 @@ theorem ptIdeal_centre (hw : CoordsAt ξ x z w) (hz : genPt ξ ⤳ centre z) :
     obtain ⟨d, hd⟩ := hT g hg
     exact ⟨d, hd, fun c hc => (key g d hd c hc).2 (e ▸ Ideal.subset_span hg)⟩
 
-omit [∀ k, Fintype (J k)] in
 
 theorem exists_inBlockChart (h : CoordTie ℤ ξ fun c' : (k : K) → J k => ∏ k, x ⟨k, c' k⟩) (q : Cpt ξ) :
     ∃ c, InBlockChart ξ x c q := by

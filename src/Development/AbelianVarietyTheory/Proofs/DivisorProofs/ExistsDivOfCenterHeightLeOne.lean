@@ -13,7 +13,6 @@ open Polynomial
 
 namespace GlobalTheory
 
-open IsLocalRing in
 
 theorem valuationRing_atPrime_of_minimal {A : Type} [CommRing A] [IsDomain A] [IsNoetherianRing A]
     [IsIntegrallyClosed A] (q : Ideal A) [q.IsPrime]

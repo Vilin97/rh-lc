@@ -41,7 +41,6 @@ section Param
 variable {P T : Type} [NormedAddCommGroup P] [NormedSpace ℝ P] [FiniteDimensional ℝ P]
   [NormedAddCommGroup T] [NormedSpace ℝ T] [FiniteDimensional ℝ T] [MeasurableSpace T] [BorelSpace T]
 
-omit [FiniteDimensional ℝ P] [FiniteDimensional ℝ T] [MeasurableSpace T] [BorelSpace T] in
 
 end Param
 
@@ -57,11 +56,8 @@ include h𝓕 hS hν
 
 def ch (B : V →L[ℝ] T →L[ℝ] ℝ) (l : V) (t : T) : ℂ := Complex.exp (2 * Real.pi * Complex.I * (B l t : ℝ))
 
-omit h𝓕 hS hν [FiniteDimensional ℝ V] [FiniteDimensional ℝ T] [MeasurableSpace T] [BorelSpace T] in
 
-omit h𝓕 hS hν [FiniteDimensional ℝ V] [FiniteDimensional ℝ T] [MeasurableSpace T] [BorelSpace T] in
 
-omit h𝓕 hS hν [FiniteDimensional ℝ V] [FiniteDimensional ℝ T] [MeasurableSpace T] [BorelSpace T] in
 
 end Torus
 
@@ -119,7 +115,6 @@ theorem trace_emb (a : F) : Algebra.trace ℝ (mixedSpace F) (mixedEmbedding F a
 
 variable {κ : Type} [Fintype κ]
 
-open Classical in
 
 end PositivityTheory.Member.ZakTransform.Z
 end
@@ -138,7 +133,6 @@ section Coord
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-open Classical in
 
 end Coord
 
@@ -164,7 +158,6 @@ open Filter Topology
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {ψ : AddChar k ℂ} {κ : Type} [Fintype κ]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 variable [Invertible (2 : k)]
 
@@ -192,11 +185,9 @@ open GlobalTheory.SplitWeil hiding SB
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open Classical in
 
 end LocD
 
-open GlobalTheory.SplitFlip in
 
 end PositivityTheory.Member.ZakTransform
 end
@@ -1097,7 +1088,6 @@ theorem lift_one (Φ : (κ → AF F) → ℂ) : lift v 1 Φ = Φ := funext fun x
   rw [lift_apply]
   exact congrArg Φ (funext fun i => off_add_at v _)
 
-variable (v) in
 
 def psv (ψ : AddChar (AF F) ℂ) : AddChar (Fv F v) ℂ := ψ.compAddMonoidHom (atPlace v).toAddMonoidHom
 
@@ -1107,11 +1097,9 @@ scoped instance invTwoV : Invertible (2 : Fv F v) :=
   ⟨evFin F v (⅟2), by rw [← map_ofNat (evFin F v) 2, ← map_mul, invOf_mul_self, map_one],
     by rw [← map_ofNat (evFin F v) 2, ← map_mul, mul_invOf_self, map_one]⟩
 
-variable (v) in
 
 def evP (w : (κ → AF F) × (κ → AF F)) : (κ → Fv F v) × (κ → Fv F v) := (fun i => evFin F v (w.1 i), fun i => evFin F v (w.2 i))
 
-variable (v) in
 
 def offP (w : (κ → AF F) × (κ → AF F)) : (κ → AF F) × (κ → AF F) := (fun i => off v (w.1 i), fun i => off v (w.2 i))
 
@@ -1248,7 +1236,6 @@ theorem ev_trace (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (z : AE F E) :
     rw [trace_tmul, map_mul, AlgHom.commutes, piW_tmul, piW_tmul, ← t.commutes, trace_cm h, map_add (f := _), mul_add]
     rfl
 
-variable (v) in
 
 def ep : AF F := atPlace v 1
 
@@ -1355,9 +1342,7 @@ variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] {v : Heig
 
 theorem cont_at : Continuous (atPlace (F := F) v) := continuous_const.prodMk (continuous_singleFin v)
 
-open scoped Classical in
 
-open scoped Classical in
 
 open Classical in
 theorem exists_bump : ∃ f : SInf F κ, HasCompactSupport f ∧ f 0 = 1 := by
@@ -1398,7 +1383,6 @@ theorem sub_mem {n d : ℕ} (γ : GL (Fin n) (Fv F v)) {f : Matrix (Fin n) (Fin 
       continuous_invFun := continuous_const.matrix_mul continuous_id }
   exact ⟨hf.1.comp_continuous h.continuous, hf.2.comp_homeomorph h⟩
 
-set_option maxHeartbeats 1600000 in
 
 end Gen
 

@@ -144,8 +144,6 @@ lemma binom_first (Q : ℤ) (k : ℕ) (x t : ℤ) :
   push_cast at this ⊢
   linear_combination this
 
-omit [Fact p.Prime] in
 
-omit [Fact p.Prime] in
 
 end GlobalTheory.EisCong

@@ -30,7 +30,6 @@ namespace GlobalTheory.BasePairChar
 
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 theorem unrAt_of_unramAt {c : (AE D)ˣ →* Circle} {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host.F}
     (hε : IsPlaceIdem D v ε) (hc : GlobalTheory.WeilParts.UnramAt ε c) {w : HeightOneSpectrum (𝓞 D.host.E)}
@@ -73,7 +72,5 @@ theorem unrAt_of_unramAt {c : (AE D)ˣ →* Circle} {v : HeightOneSpectrum (𝓞
     rw [Units.val_inv_eq_inv_val, map_inv₀, hy, inv_one])
   exact (congrArg Circle.toUnits h).trans (map_one _)
 
-open Formalism.L2.JoinChr in
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.BasePairChar

@@ -53,14 +53,12 @@ def aChi (n : ℕ) : ℂ := ∑ g, χ g * (𝓕.a g n : ℂ)
 
 def lamChi (n : ℕ) : ℂ := ∑ g, χ g * (𝓕.lam g n : ℂ)
 
-open Classical in
 
 def res : ℂ := if χ = 1 then ((𝓕.κ * Fintype.card 𝓕.G : ℝ) : ℂ) else 0
 
 def mel (s : ℂ) : ℂ :=
   ∫ x in Set.Ioi (1 : ℝ), ((∑ n ∈ Icc 1 ⌊x⌋₊, 𝓕.aChi χ n) - 𝓕.res χ * x) * (x : ℂ) ^ (-s - 1)
 
-open Classical in
 
 def F (s : ℂ) : ℂ := if χ = 1 then 𝓕.res χ * s + (s - 1) * s * 𝓕.mel χ s else s * 𝓕.mel χ s
 
@@ -98,7 +96,6 @@ variable {K : Type} [Field K] [NumberField K] {M : ℕ} (D : GlobalTheory.Mem.Ra
 def idealsIn (g : D.G) (n : ℕ) : Set (Ideal (𝓞 K)) :=
   {I | I ≠ ⊥ ∧ IsCoprime I (Ideal.span {(M : 𝓞 K)}) ∧ Ideal.absNorm I = n ∧ D.cls I = g}
 
-open Classical in
 
 def lamIdeal (I : Ideal (𝓞 K)) : ℝ :=
   if ∃ (P : Ideal (𝓞 K)) (k : ℕ), P.IsPrime ∧ P ≠ ⊥ ∧ 1 ≤ k ∧ I = P ^ k then Real.log (Ideal.absNorm I.radical) else 0

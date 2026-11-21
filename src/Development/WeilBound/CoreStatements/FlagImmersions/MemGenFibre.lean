@@ -306,7 +306,6 @@ theorem frame_vals {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host 
 
 end VP
 
-open VP in
 
 theorem valuePhi : ValuePhi := by
   intro E _ _ _ H D l Xo c _ Y U Z S Ω _ K _ J _ y 𝔐 τ i j a b a' b' φ L _ _ s z bp bq vp vq α κ u ht hl hg hr ha'

@@ -184,7 +184,6 @@ open Formalism.L2.SG.Pf.BBTie
 
 variable {r : ℕ}
 
-set_option maxHeartbeats 2000000 in
 
 theorem gen_change (t : Term V M r) (C Ci : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (hC0 : ∀ a b, b < a → C a b = 0)
     (hC1 : ∀ a, C a a = 1) (hCO : ∀ a b, C a b ∈ M.L.O) (hCiO : ∀ a b, Ci a b ∈ M.L.O) (hCCi : C * Ci = 1)

@@ -102,7 +102,6 @@ def LocCountFin : Prop :=
       (∏ᶠ v ∈ placesOver D.host.E (X.l i), Nat.card (H0 ((repOn (Tgl i s) κ Y).comp (DecV N v).subtype))) *
         Nat.card Y ^ (D.R.f * D.R.r)
 
-omit [Algebra (X.O0 i) Λ] in
 
 def IsChar {M : ℕ} {ι : Type} [Fintype ι] (ξ : ι → Λ) (d : ι → (GE N →* Multiplicative (ZMod (X.l i ^ M)))) : Prop :=
   ∀ g, ((κ g : Λˣ) : Λ) * ∏ q, (1 + ξ q) ^ (Multiplicative.toAdd (d q g)).val = 1
@@ -116,7 +115,6 @@ def NewPl (M : ℕ) (L : Subgroup (GE N)) (p : PlE D.host) (d : GE N →* Multip
     IsOpen (d.ker : Set (GE N)) ∧ IsFrob (N.plOm.1 p) (normV p) σ ∧ γ ∈ Ine (F := D.host.E) (N.plOm.1 p) ∧
     d γ = Multiplicative.ofAdd 1
 
-variable (X) in
 
 def two (g : GE N) : Bool → GE N := fun b => if b then cConj X g else g
 

@@ -134,7 +134,6 @@ section Level
 variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {u : B.Word} {a : I.ι}
   {Ch : ℕ → Type} {A : TwDat I l Z u a Ch}
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_U_iff (hA : A.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : Ch j) (g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)) :
     g ∈ A.U j β ↔ g ∈ GfC _ ∧ ∀ v, cutAt _ v g ∈ A.U j β := by
@@ -159,7 +158,6 @@ theorem mem_U_iff (hA : A.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : Ch j) (g : GA (
     rw [← bc_congr _ _ w hκ hx (compAt_cutAt _ w g)]
     exact (((A.K j hj β).lev.U_eq _).1 κ.2).2 w
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_of_uloc_le {a' : I.ι} {Ch' : ℕ → Type} {A' : TwDat I l Z u a' Ch'} (hA : A.Is) (hA' : A'.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : Ch j)
     (β' : Ch' j) (v : GlobalTheory.FinPl.Pl (I.rec7 l Z)) (hle : (A.K j hj β).lev.Uloc v ≤ (A'.K j hj β').lev.Uloc v)
@@ -178,6 +176,4 @@ end Level
 end GlobalTheory.PenLevOff
 end
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 2000000 in

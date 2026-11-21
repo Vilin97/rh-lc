@@ -20,7 +20,6 @@ variable {D : D7} {n : ℕ}
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 2000000
 
-open Classical in
 
 def substP {m : ℕ} (τ : D.what₂.Tau) (fr : Matrix (Fin m) (Fin m) ℂ) (p : MvPolynomial (D.what₂.Tau × Fin m × Fin n × Bool) ℂ) :
     PX m n :=

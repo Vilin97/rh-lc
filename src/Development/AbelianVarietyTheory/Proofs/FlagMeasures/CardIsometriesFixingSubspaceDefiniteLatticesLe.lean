@@ -51,7 +51,6 @@ def fixAut (H : HermSpace K V) (U : Submodule K V) (L : Submodule (𝓞 K) V) : 
     · show a.symm y = y
       rw [LinearEquiv.symm_apply_eq, haU y hy]
 
-omit [NumberField K] [StarRing K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem map_eq_of_fix {U : Submodule K V} {g : V ≃ₗ[K] V} (h : ∀ y ∈ U, g y = y) :
     U.map (g : V →ₗ[K] V) = U := by

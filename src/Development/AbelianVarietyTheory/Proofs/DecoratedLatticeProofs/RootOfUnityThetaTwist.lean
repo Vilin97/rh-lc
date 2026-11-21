@@ -82,4 +82,3 @@ theorem isWeil_rec {ψ : AddChar (AF D.host.F) ℂ} {χS χT : (AE D)ˣ →* Cir
 
 end GlobalTheory.TupRoot
 
-open GlobalTheory.TupRoot in

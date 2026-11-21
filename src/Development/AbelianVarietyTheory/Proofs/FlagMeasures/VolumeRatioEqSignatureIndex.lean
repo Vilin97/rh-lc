@@ -41,6 +41,5 @@ theorem mem_mL {m : ℕ} {x : VA I} : x ∈ mL I m ↔ ∃ z ∈ I.Lf, x = (m : 
     obtain ⟨z, hz, rfl⟩ := hx
     exact ⟨a • z, Submodule.smul_mem _ a hz, smul_comm (a : I.E ⊗[I.F] Af I.F) _ z⟩
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.RowIndex

@@ -117,7 +117,6 @@ def InfCongr : Prop := ∀ (n : ℕ) (G G' : Matrix (Fin n) (Fin n) ℂ), G.IsHe
 def mat {E : Type} [Field E] [NumberField E] [IsCMField E] {A : Arith E} {n p : ℕ} [Fact p.Prime] (S : Setup A n p) (x : S.G.C) :
     Matrix (Fin n) (Fin n) E := x
 
-open Classical in
 
 def DefSign : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A : Arith E) (n p : ℕ) [Fact p.Prime] (S : Setup A n p)
   (B : DForm S.G), (∀ a b, IsCMField.complexConj E ((mat S B.β * (A.H n)⁻¹) a b) = (mat S B.β * (A.H n)⁻¹) b a) ∧

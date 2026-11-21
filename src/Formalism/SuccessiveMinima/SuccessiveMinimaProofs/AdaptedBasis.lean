@@ -67,7 +67,6 @@ end Formalism.FN.AdaptedBasisExistence
 
 namespace Formalism.FN.AdaptedBasisExistence
 
-set_option maxHeartbeats 800000 in
 
 theorem adapted_basis_exists : AdaptedBasis := by
   delta Formalism.FN.AdaptedBasis

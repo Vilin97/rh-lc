@@ -254,7 +254,6 @@ theorem mem_hilbertSubgroup (ha : IsGlobalArtin art) (σ : G E Ω) (x : Ideles E
 
 end GlobalTheory.HilbertFromArtin
 
-open GlobalTheory.HilbertFromArtin in
 
 theorem GlobalTheory.Published.GlobalArtinReciprocity.hilbertClassField :
     GlobalTheory.Published.GlobalArtinReciprocity → Neutral.HilbertClassField.Statement := by

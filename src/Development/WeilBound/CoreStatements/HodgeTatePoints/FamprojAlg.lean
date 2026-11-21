@@ -69,7 +69,6 @@ theorem exists_smul_mem (m : Ideal A) [hm : m.IsPrime] (R : Subring Ω)
     rw [mul_smul, key, smul_comm]
     exact M.smul_mem _ hy'
 
-omit [Algebra A Ω] [Module Ω V] [IsScalarTower A Ω V] in
 
 theorem exists_smul_le (m : Ideal A) [hm : m.IsPrime] {M N : Submodule A V} (hM : M.FG)
     (h : ∀ x ∈ M, ∃ t ∉ m, t • x ∈ N) : ∃ t ∉ m, ∀ x ∈ M, t • x ∈ N := by

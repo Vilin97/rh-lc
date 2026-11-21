@@ -113,6 +113,5 @@ theorem exists_algebraMap_eq_of_isIntegral {R : Type} [CommRing R] [IsDomain R] 
   have hu : algebraMap R (FractionRing R) (↑hN.unit⁻¹ : R) * (N : FractionRing R) = 1 := by
     rw [← map_natCast (algebraMap R (FractionRing R)) N, ← map_mul, hN.val_inv_mul, map_one]
   rw [map_mul, map_pow, hc, ← mul_assoc, ← mul_pow, hu, one_pow, one_mul]
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.BigOn.Exp

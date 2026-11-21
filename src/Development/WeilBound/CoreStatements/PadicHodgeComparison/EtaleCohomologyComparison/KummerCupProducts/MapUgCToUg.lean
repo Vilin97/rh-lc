@@ -45,7 +45,6 @@ theorem mapUg_cToUg {A B : PAlg l} (f : A ⟶ B) (x : ℂ_[l]) : PAlg.mapUg f (A
 
 theorem mapUg_kb {A B : PAlg l} (f : A ⟶ B) : (PAlg.mapUg f).comp (kb A) = kb B := RingHom.ext fun x => mapUg_cToUg f _
 
-variable (l) in
 
 structure Roots where
   ρ : ∀ n, Prim (l ^ n) (PadicAlgCl l)

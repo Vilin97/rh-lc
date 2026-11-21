@@ -30,7 +30,6 @@ def darbAlg {n d : ℕ} {Y : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorM
     (φ : ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F, (Fin n × Fin d → Fv F v) → ℂ), f ∈ M.Pol ψ τ ∧ (∀ v, φ v ∈ GlobalTheory.WeilM.SB _) ∧
       (∀ᶠ v in Filter.cofinite, φ v = M.vac v) ∧ Φ = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ}
 
-open Classical in
 
 def liftPure {n d : ℕ} {Y : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n} {Z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d} (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Z)
     {P : Type} [AddCommGroup P] [Module ℂ P] (pr : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d) →ₗ[ℂ] P)
@@ -61,7 +60,6 @@ abbrev PiT {a a' : ℕ} (R : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorM
     (Rf : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.FinMaps D.host.F a a') : Type :=
   R.Pi ⊗[ℂ] GlobalTheory.SmallThetaModules.RTens (vacIm Γ Rf)
 
-open Classical in
 
 def thetaLift {m k d : ℕ} {Y : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E m} {Z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E k}
     (Mo : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model D.sp.cm.sig Y Z) (ψ : AddChar (AF D.host.F) ℂ) (G : Matrix (Fin m) (Fin m) D.host.E)
@@ -82,13 +80,11 @@ def mapB (ψ : AddChar (AF D.host.F) ℂ) {W W₁ X : HSp D} (e : Fin (W.rank + 
     (WO W₁ X → ℂ) →ₗ[ℂ] PiT R Γ Rf :=
   thetaLift Γ.M' ψ (sgn false W₁).gram e (darbAlg Γ.M' Bs.ψ Bs.emb) (liftPure Γ.M' R.p' Rf.p' (vacIm Γ Rf))
 
-open Classical in
 
 def opFin {M X : HSp D} (ω : WRep M X) (S : Submodule ℂ (WO M X → ℂ)) {P : Type} [AddCommGroup P] [Module ℂ P]
     (p : (WO M X → ℂ) →ₗ[ℂ] P) (h : GA D X) : Module.End ℂ P :=
   if H : ∃ T : Module.End ℂ P, ∀ Φ ∈ S, p (ω (1, h) Φ) = T (p Φ) then H.choose else 1
 
-open Classical in
 
 def opLie (θ : InfFam D) {M X : HSp D} (ω : WRep M X) (S : Submodule ℂ (WO M X → ℂ)) {P : Type} [AddCommGroup P]
     [Module ℂ P] (p : (WO M X → ℂ) →ₗ[ℂ] P) (τ : D.what₂.Tau) (Y : Matrix (Fin X.rank) (Fin X.rank) ℂ) : Module.End ℂ P :=

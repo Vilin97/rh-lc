@@ -55,8 +55,6 @@ theorem ysOf_fi {kKs : Ks →+* ↥D.LL0} {hk : ∀ x : Ks, ((kKs x : ↥D.LL0) 
 
 variable {S : RatDat D.ntw}
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure PreTie (YS : NExpRealS R cG S) (v₀ : ∀ (j : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW j σ).Vec) (X : NExpTied D)
     (hF : D.host.F = maximalRealSubfield D.host.E)

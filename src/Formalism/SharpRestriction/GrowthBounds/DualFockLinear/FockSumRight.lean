@@ -46,7 +46,6 @@ theorem valLe_perturb {O Kf : Type} [CommRing O] [IsDomain O] [IsLocalRing O] [F
   refine ⟨a + w ^ c * z, b * ↑hu.unit⁻¹, rfl, ?_⟩
   rw [ha', mul_mul_mul_comm, IsUnit.mul_val_inv, mul_one, hab]
 
-set_option maxHeartbeats 1600000 in
 
 theorem restFlat_of (D : Formalism.BasicNotions.D7) (CLa Ck Crk Cdeg CLa' CD Csz CH CE C6 C18 : ℝ)
     (hXi : RestXi D CLa Ck Crk Cdeg CH CE C6 C18) (hRe : RestReal D CLa Ck Crk Cdeg) :

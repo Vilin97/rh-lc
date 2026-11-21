@@ -86,7 +86,6 @@ private lemma injective_of_pullback_lift_apply_eq_of_isIso {Z X V : Scheme.{0}} 
     rfl
   exact key _ _ hjj
 
-open CategoryTheory Limits AlgebraicGeometry in
 
 theorem _root_.GlobalTheory.EtC.Tr.sum_sections_eq_of_two_splittings : ∀ (R : Type) [CommRing R] {Z X V : Scheme.{0}} {f : Z ⟶ X} {y : V ⟶ X}
     {m m' : ℕ} {s : Fin m → (V ⟶ Z)} {s' : Fin m' → (V ⟶ Z)}, _root_.GlobalTheory.EtC.Tr.SplitBy f y s → _root_.GlobalTheory.EtC.Tr.SplitBy f y s' →

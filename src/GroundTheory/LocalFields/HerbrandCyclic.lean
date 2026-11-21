@@ -18,7 +18,6 @@ theorem toMul_cycNorm (x : Additive M) :
   rw [cycNorm_apply, toMul_sum, tateNorm_apply]
   rfl
 
-omit [Fintype G] in
 
 theorem toMul_cycSubOne (σ : G) (x : Additive M) :
     (cycSubOne (Representation.ofMulDistribMulAction G M) σ x).toMul = σ • x.toMul / x.toMul := by
@@ -46,7 +45,6 @@ theorem range_cycNorm_ofMulDistribMulAction :
 
 variable {σ : G}
 
-omit [Fintype G] in
 
 theorem ker_cycSubOne_ofMulDistribMulAction (hσ : ∀ g, g ∈ Subgroup.zpowers σ) :
     (cycSubOne (Representation.ofMulDistribMulAction G M) σ).ker =
@@ -56,7 +54,6 @@ theorem ker_cycSubOne_ofMulDistribMulAction (hσ : ∀ g, g ∈ Subgroup.zpowers
   simp only [Representation.ofMulDistribMulAction_apply_apply]
   exact ⟨fun h g => congrArg Additive.toMul (h g), fun h g => by rw [h g]; rfl⟩
 
-omit [Fintype G] in
 
 theorem range_cycSubOne_ofMulDistribMulAction (hσ : ∀ g, g ∈ Subgroup.zpowers σ) :
     (cycSubOne (Representation.ofMulDistribMulAction G M) σ).range =
@@ -113,7 +110,6 @@ section Injective
 
 variable {N : Type*} [CommGroup N] [MulDistribMulAction G N]
 
-omit [Fintype G] in
 
 theorem toAdditive_cycSubOne (i : M →* N) (hi : ∀ (g : G) (x : M), i (g • x) = g • i x) (τ : G)
     (x : Additive M) :

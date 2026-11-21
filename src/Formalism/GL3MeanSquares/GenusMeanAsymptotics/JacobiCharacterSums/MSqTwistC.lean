@@ -82,7 +82,6 @@ theorem liX_pow_le {X β δ : ℝ} (hX : 4 ≤ X) (hβ1 : 1 / 2 ≤ β) (hβ2 : 
     _ ≤ 4 * L * Real.exp (-(δ * L)) * liX X :=
         mul_le_mul_of_nonneg_left hlow (by positivity)
 
-set_option maxHeartbeats 1000000 in
 
 theorem eventually_log_cube (K a : ℝ) (hK : 0 < K) (ha : 0 < a) :
     ∃ x₂ : ℝ, ∀ x : ℝ, x₂ ≤ x → K * Real.log x ^ 3 ≤ x ^ a := by

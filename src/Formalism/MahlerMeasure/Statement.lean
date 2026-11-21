@@ -21,10 +21,7 @@ def DetBlockLead : Prop :=
 noncomputable def vmin (p : ℕ) {K : Type} [NormedField K] (h : ℕ) (x : K) : ℝ :=
   -Real.logb p (max ‖x‖ ((p : ℝ) ^ (-(h : ℤ))))
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end Formalism.GM

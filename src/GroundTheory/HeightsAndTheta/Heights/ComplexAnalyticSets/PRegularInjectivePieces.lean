@@ -51,7 +51,6 @@ theorem local_injective {d : ℕ} {U : Set (Fin d → ℂ)} {g : (Fin d → ℂ)
 
 end RegularInjectivePieces
 
-open RegularInjectivePieces in
 
 theorem RegularInjectivePieces.proof : RegularInjectivePieces.Statement := by
   intro d U g hU hg

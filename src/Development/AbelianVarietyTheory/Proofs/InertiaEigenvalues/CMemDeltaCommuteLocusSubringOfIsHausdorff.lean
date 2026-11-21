@@ -101,7 +101,6 @@ end GlobalTheory.BSP.WDelta
 
 namespace GlobalTheory.BSP
 
-open GlobalTheory.BSP.WDelta in
 
 theorem C_mem_δLocus_of_hausdorff : ∀ (l : ℕ) [Fact l.Prime] (a : ℕ) [NeZero a] (C : Type) [CommRing C]
     (DC : Delta l C) (J : Ideal C), (l : C) ∈ J → IsHausdorff J C → ∀ σ : (Wq l a)⟦X⟧ →+* C,

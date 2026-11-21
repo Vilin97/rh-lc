@@ -19,6 +19,5 @@ namespace GlobalTheory.GalFirstClause
 
 open Formalism.BasicNotions.Loc GlobalTheory.Pst GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.GalOfCusp
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.GalFirstClause

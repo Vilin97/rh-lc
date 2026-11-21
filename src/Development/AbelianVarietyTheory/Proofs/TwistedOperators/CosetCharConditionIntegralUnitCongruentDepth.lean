@@ -46,7 +46,6 @@ theorem ann_depLat : All fun {D} _ _ _ {G} W _ => ∀ i, i < D.R.m → ∀ e : A
   rw [smul_smul, hee, symplO_smul_half _ _ e u y hy] at h1
   exact h1
 
-set_option maxHeartbeats 1000000 in
 
 theorem cosDual : All fun {D} _ _ _ {G} W _ => ∀ i, i < D.R.m → ∀ x₀, IsOntoMod G i x₀ → ∀ e : AE D, IsIdemSum e G.pl.W0 →
     ∀ g : GA D (G.V (.core i)),

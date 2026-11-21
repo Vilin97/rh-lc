@@ -24,7 +24,6 @@ open GlobalTheory.SS
 noncomputable section
 namespace GlobalTheory.TorusQuotientGlue
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem exists_glue (Y : Scheme.{0}) (𝒰 : Set Y.Opens)
     (hbas : ∀ U ∈ 𝒰, ∀ V ∈ 𝒰, ∀ x : Y, x ∈ U → x ∈ V → ∃ W ∈ 𝒰, x ∈ W ∧ W ≤ U ∧ W ≤ V)
@@ -107,8 +106,6 @@ theorem exists_glue (Y : Scheme.{0}) (𝒰 : Set Y.Opens)
   · obtain ⟨U, x, rfl⟩ := Scheme.IsLocallyDirected.ι_jointly_surjective F b
     exact ⟨U, x, rfl⟩
 
-open ThickGlue in
-set_option backward.isDefEq.respectTransparency false in
 
 theorem exists_scheme (Y : Scheme.{0}) (𝒰 : Set Y.Opens) (hc : ∀ x : Y, ∃ U : 𝒰, x ∈ U.1)
     (𝒜 : Y.Opensᵒᵖ ⥤ CommRingCat.{0}) (p : 𝒜 ⟶ Y.presheaf)

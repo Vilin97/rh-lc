@@ -29,7 +29,6 @@ abbrev algBL {Y Z : Scheme.{0}} [IsIntegral Y] (π : Y ⟶ Z) (U : Z.Opens) (h :
     Algebra Γ(Y, π ⁻¹ᵁ U) Y.functionField :=
   (Y.presheaf.germ (π ⁻¹ᵁ U) (genericPoint Y) h).hom.toAlgebra
 
-open scoped Classical in
 
 def famIdeal {Y Z : Scheme.{0}} [IsIntegral Y] (π : Y ⟶ Z) [IsAffineHom π]
     (hK : IsField (Z.presheaf.stalk (genPt π)))

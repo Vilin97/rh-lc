@@ -13,7 +13,6 @@ section Def
 
 variable {K : Type*} [Field K]
 
-open scoped Classical in
 
 def HasRationalTorsion (W : WeierstrassCurve K) (L : Type*) [Field L] [Algebra K L] (n : ℕ) :
     Prop :=
@@ -163,7 +162,6 @@ section Forms
 variable {K : Type*} [Field K] [CharZero K] {L : Type*} [Field L] [Algebra K L] [IsAlgClosed L]
   {W : WeierstrassCurve K} [W.IsElliptic]
 
-omit [CharZero K] in
 
 theorem HasRationalTorsion.exists_point_of_root (h : HasRationalTorsion W L 3) {x : L}
     (hx : (W.baseChange L).Ψ₃.eval x = 0) :
@@ -221,7 +219,6 @@ theorem HasRationalTorsion.exists_deuringCurve (h : HasRationalTorsion W L 3) :
   field_simp
   linear_combination 9 * b * hz₀
 
-omit [CharZero K] [IsAlgClosed L] in
 
 theorem HasRationalTorsion.mem_range_of_root (h : HasRationalTorsion W L 2) (h₁ : W.a₁ = 0)
     (h₃ : W.a₃ = 0) {x : L} (hx : x ^ 3 + algebraMap K L W.a₂ * x ^ 2 + algebraMap K L W.a₄ * x
@@ -269,7 +266,6 @@ theorem HasRationalTorsion.exists_splitCurve (h : HasRationalTorsion W L 2) :
   · linear_combination hf'
   · linear_combination he'
 
-omit [CharZero K] in
 
 theorem HasRationalTorsion.isSquare_neg {A B : K} [(splitCurve A B).IsElliptic]
     (h : HasRationalTorsion (splitCurve A B) L 4) : ∃ a : K, a ^ 2 = -A := by

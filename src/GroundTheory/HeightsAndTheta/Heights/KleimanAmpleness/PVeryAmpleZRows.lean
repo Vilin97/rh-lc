@@ -67,7 +67,6 @@ theorem const_zero {s : Cech.Cochain (fun _ : Cell U => V) 0}
 
 end VeryAmpleZRows
 
-open VeryAmpleZRows in
 
 theorem VeryAmpleZRows.proof (hPart : CechPartition.Statement.{u, v, w}) (hSmul : ZChartSmul.Statement.{u, v, w})
     (hLoc : ZChartLocal.Statement.{u, v, w}) : VeryAmpleZRows.Statement.{u, v, w} := by

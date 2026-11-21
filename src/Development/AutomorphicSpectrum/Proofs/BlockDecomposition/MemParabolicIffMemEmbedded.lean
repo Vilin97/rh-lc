@@ -31,7 +31,6 @@ end GlobalTheory.CompanionTheory.LeibPhi.IotaMem
 
 namespace GlobalTheory.CompanionTheory.LeibPhi
 
-open GlobalTheory.CompanionTheory.LeibPhi.IotaMem in
 
 theorem mem_mirabolicParabolic_iff_iotaM_mem (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (m j : ℕ) (y : Mir k (m + j)) :

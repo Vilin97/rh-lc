@@ -160,6 +160,5 @@ theorem exists_line_upq {F E : Type} [Field F] [NumberField F] [Field E] [Number
       rw [map_sub, this, sub_self]
   exact Subtype.ext (Units.ext hmat)
 
-open scoped Classical in
 
 end GlobalTheory.KStableSums

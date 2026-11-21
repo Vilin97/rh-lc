@@ -40,7 +40,6 @@ theorem one_sub_ne_zero {x : ℂ} (hx : ‖x‖ ≤ 1) {s : ℂ} (hs : 1 < s.re)
     (Real.rpow_nonneg (Nat.cast_nonneg (α := ℝ) (Ideal.absNorm v.asIdeal)) (-s).re) hx
   linarith
 
-open Classical in
 
 theorem box_euler (hu : IsUnitary χ) (hr : ∀ w, r w ≤ 1) (hχ : ∀ u ∈ congr r, finPart χ u = 1) {s : ℂ} (hs : 1 < s.re) :
     ∃ Z, QSum (congr r) ((box r).indicator (zterm χ s)) Z ∧
@@ -247,7 +246,6 @@ theorem exists_box {N : ℕ} (hN : 0 < N) {a : Af E} (ha : ∀ w, Valued.v (a w)
       · intro h2
         simpa using Valuation.map_sub_le _ h2 h1
 
-open Classical in
 
 theorem class_entire (hu : IsUnitary χ) {Λ : ℂ → ℂ} (hΛ : IsHeckeL χ Λ) {N : ℕ} (hN : 0 < N)
     (hχ : ∀ u ∈ congr (radN E N), finPart χ u = 1) {a : Af E} (ha : ∀ w, Valued.v (a w) ≤ 1) :
@@ -319,7 +317,6 @@ theorem exists_hchar {c : Ideal (OF E)} (hc : c ≠ ⊥) [Finite (PicO c)] (θ :
     show θ (QuotientGroup.mk' _ 1) = 1
     rw [map_one, map_one]
 
-open Classical in
 
 theorem sum_char {G : Type} [CommGroup G] [Finite G] [Fintype (G →* ℂˣ)] (g : G) :
     ∑ θ : G →* ℂˣ, (θ g : ℂ) = if g = 1 then (Fintype.card (G →* ℂˣ) : ℂ) else 0 := by

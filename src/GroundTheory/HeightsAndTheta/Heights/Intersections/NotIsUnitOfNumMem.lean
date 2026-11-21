@@ -235,7 +235,6 @@ end Loc
 
 end regularityLocalResidue_holds
 
-open regularityLocalResidue_holds in
 
 theorem regularityLocalResidue_holds.proof : regularityLocalResidue_holds.Statement := by
   intro K _ ι _ P s a W b hP hs hsP hW _

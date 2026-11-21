@@ -32,7 +32,6 @@ theorem actsD_zero' (L : ℝ → Module.End ℂ ((κ → AF F) → ℂ)) :
   simp only [map_zero, Pi.zero_apply]
   exact hasDerivAt_const _ _
 
-open scoped Classical in
 
 theorem actsD_comb (L : ℝ → Module.End ℂ ((κ → AF F) → ℂ)) (c : ℂ) {f f₁ g g₁ : SInf F κ}
     (hf : ActsD (evI F) (fun t => ⇑(L t)) ⇑f ⇑f₁) (hg : ActsD (evI F) (fun t => ⇑(L t)) ⇑g ⇑g₁) :

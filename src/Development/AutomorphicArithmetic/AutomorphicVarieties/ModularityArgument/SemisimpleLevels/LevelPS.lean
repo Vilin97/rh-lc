@@ -43,6 +43,5 @@ private theorem infOf_of_weights {m : Fin n → ℤ} {x : Multiset ℂ}
 
 end UpperTheory.V.Lev
 
-open UpperTheory.V UpperTheory.V.Af UpperTheory.V.Br UpperTheory.V.Lev in
 
 end

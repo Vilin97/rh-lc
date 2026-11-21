@@ -52,7 +52,6 @@ variable (R : NRec)
 
 def lifts : Finset ℕ := Finset.Icc 1 R.m
 
-open Classical in
 
 end NRec
 

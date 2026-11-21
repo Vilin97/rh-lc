@@ -133,7 +133,6 @@ end General
 
 section Adelic
 
-set_option maxHeartbeats 1000000 in
 
 theorem col_cong (D : D7) (V : HSp D) (L : Lt D.host.E V.rank) (β : GL (Fin V.rank) (Lev.EAf D))
     (hβ : Formalism.L2.DIV.IsFrame β L) (k : GA D V) (PP : Formalism.L2.DIV.Pl D.host.E) (b : 𝓞 D.host.E)

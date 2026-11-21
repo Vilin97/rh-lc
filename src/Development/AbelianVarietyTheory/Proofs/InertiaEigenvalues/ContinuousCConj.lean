@@ -29,6 +29,5 @@ theorem exists_isDual (i : X.Tw) (s : X.Sig i) : ∃ ρ, IsDual i s ρ := by
         simp only [Tdual, ← Tgl_coe, map_mul, Units.val_mul, Matrix.mul_inv_rev, Matrix.transpose_mul, smul_mul_smul_comm] }
   exact ⟨τ.toHomUnits, fun g => rfl⟩
 
-variable (X) in
 
 end GlobalTheory.NewPrime

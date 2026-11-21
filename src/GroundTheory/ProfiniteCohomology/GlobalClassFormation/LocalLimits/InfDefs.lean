@@ -93,7 +93,6 @@ theorem pi_single_algebraMap_eq_infinite {w : v.placesOver F.1} [DecidableEq (v.
     simp
   · simp [hu]
 
-open Classical in
 
 def infCompletionEmbedding :
     (infPlaceOfEmbedding ι F : NumberField.InfinitePlace F.1).Completion →ₐ[v.Completion]

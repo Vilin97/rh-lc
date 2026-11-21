@@ -334,7 +334,6 @@ theorem le_height_of_trdeg_quotient_eq {B : Type*} [CommRing B] (φ : A →+* B)
   have h := height_le_height_comap_of_surjective ψ hψ (x.map ψ)
   rwa [hcm, ReciprocityTheory.CA.height_eq_of_isMaximal_of_trdeg_eq_field e htr] at h
 
-omit [IsDiscreteValuationRing V] [Algebra.FiniteType V A] in
 
 theorem under_eq_bot_of_mem_minimalPrimes_of_flat [Module.Flat V A] {p : Ideal A}
     (hp : p ∈ minimalPrimes A) : p.under V = ⊥ := by
@@ -347,8 +346,6 @@ theorem under_eq_bot_of_mem_minimalPrimes_of_flat [Module.Flat V A] {p : Ideal A
   refine mem_nonZeroDivisors_iff_left.mpr fun a ha ↦ hreg ?_
   simpa [Algebra.smul_def] using ha
 
-attribute [local instance] Algebra.TensorProduct.rightAlgebra in
-omit [IsDiscreteValuationRing V] in
 
 theorem mem_minimalPrimes_genericFibre_of_flat [Module.Flat V A]
     (K : Type u) [Field K] [Algebra V K] [IsFractionRing V K] {p : Ideal A}
@@ -427,7 +424,6 @@ theorem ker_includeRight_of_surjective (R : Type*) [CommRing R] [IsLocalRing R] 
     obtain ⟨a, rfl⟩ := e.symm.surjective y
     simpa [e, RingHom.mem_ker] using h.ge hy
 
-attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 
 theorem isSmoothAt_of_flat_of_isRegularLocalRing (R : Type*) [CommRing R] [IsLocalRing R]
     [PerfectField (ResidueField R)] {A : Type*} [CommRing A] [Algebra R A]

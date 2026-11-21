@@ -60,8 +60,6 @@ variable {D : D7} (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV)
 
 include hD
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem rowSub_S :
     haveI := Topo.rTop_addGroup_RD i r π g0 eB e₁ s Dd hD
@@ -73,8 +71,6 @@ theorem rowSub_S :
   intro n _ hn
   exact rowSub_at i dc r Dd hr' hsm hχ hn
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem rowOrb_S (hc : TruncatedSeriesCountingIdentities.FamilyContinuous (D := D) i r) :
     haveI := Topo.rTop_addGroup_RD i r π g0 eB e₁ s Dd hD
@@ -84,13 +80,9 @@ theorem rowOrb_S (hc : TruncatedSeriesCountingIdentities.FamilyContinuous (D := 
   exact orb_of_sub (LL := Br.LLw (D.nbr i _ hw)) (rowSub_S i r π dc g0 eB e₁ s Dd hD n hn hw)
     (fun x => by exact locC_du_cont i r hc hw (TruncatedSeriesCountingIdentities.CoefExt.self i _ hw) x) v
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 variable [∀ k, SMulCommClass Dd.R' (D.nd.O i) (blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk k)] (hc : TruncatedSeriesCountingIdentities.FamilyContinuous (D := D) i r)
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem row_lattice_finite_free (n : ℕ) :
     Module.Finite (D.nd.O i) (DatS i r π dc g0 eB e₁ s Dd hD hc n).T' ∧
@@ -106,8 +98,6 @@ theorem row_lattice_finite_free (n : ℕ) :
   rw [hy a]
   rfl
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem rowFin_S :
     KRow.RowFin i dc (KLat.VT (O := D.nd.O i) (RepresentationBoundsCohomology.blk D.R)) (KLat.VT (O := D.nd.O i) (RepresentationBoundsCohomology.blk D.R))

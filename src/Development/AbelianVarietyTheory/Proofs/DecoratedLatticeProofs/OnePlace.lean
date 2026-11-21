@@ -60,4 +60,3 @@ theorem suppAt_conj' {D : D7} {e : Formalism.L2.Theta.AE D} {V : HSp D} {g : GA 
 
 end GlobalTheory.PlaceMatch
 
-set_option maxHeartbeats 1000000 in

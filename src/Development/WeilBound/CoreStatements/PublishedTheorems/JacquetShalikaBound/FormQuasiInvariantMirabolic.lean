@@ -31,7 +31,6 @@ def L0 : Prop := ForF fun F _ _ _ _ _ μ ψ => Continuous ψ ∧ ∀ m : ℕ,
       ((Measures.modulus (g : Matrix (Fin m) (Fin m) F).det : ℝ) : ℂ) *
         ∫ x in A, f ((g : Matrix (Fin m) (Fin m) F) *ᵥ x) ∂(Measure.pi fun _ => μ)
 
-open Classical in
 
 def L1 : Prop := ForF fun F _ _ _ _ _ μ ψ => ∀ (m : ℕ) (y : Fin m → F),
   ∫ ξ in lat F m 0, ψ (ξ ⬝ᵥ y) ∂(Measure.pi fun _ => μ) =

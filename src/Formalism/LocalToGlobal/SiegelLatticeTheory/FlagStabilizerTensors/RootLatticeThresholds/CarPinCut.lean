@@ -112,7 +112,6 @@ def HaarAtC (u u' : D.what₂.Word) (τ : D.what₂.Tau) : Prop :=
       (μRv.map (fun x => Matrix.of.symm (trG (Formalism.L2.SG.Pf.BaseOf.Qc X C (vOf X τ))
         (Formalism.L2.SG.Pf.BaseOf.Qic X C (vOf X τ)) x)))
 
-set_option maxHeartbeats 2000000 in
 
 theorem frameAt_of (u u' : D.what₂.Word) (τ : D.what₂.Tau) (hH : HaarAtC C u u' τ) : FrameAt C u u' τ := by
   intro γ μRv ν hP

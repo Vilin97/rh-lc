@@ -167,7 +167,6 @@ theorem rename_phAt_X (e : σ ↪ τ) (i : σ) :
   simp only [PI.FglGram.phAt]
   rw [rename_psubst e h0, h1]
 
-include hex hl in
 
 theorem isExpIntegral_parallelogram_of_ne (i j : Fin 3) (hij : i ≠ j)
     (hE1 : Simeq (phAt ph (add l ex (Xv 0) (Xv 1)) + phAt ph (sub l ex (Xv 0) (Xv 1)) :

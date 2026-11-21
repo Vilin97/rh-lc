@@ -103,7 +103,6 @@ theorem degree_le_rank_mul_maxSlope_of_injective (Q M : Submodule ℤ E) (hQ : D
     rw [div_le_iff₀ hk'] at hs
     linarith
 
-set_option maxHeartbeats 800000 in
 
 theorem slope_le_max_maxSlope (L₁ L₂ : Submodule ℤ E) (h1 : DiscreteTopology L₁)
     (h2 : DiscreteTopology L₂) (h : ∀ x ∈ L₁, ∀ y ∈ L₂, inner ℝ x y = 0)

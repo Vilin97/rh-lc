@@ -94,7 +94,6 @@ theorem isOpen_stab {Λ : Submodule S (n → A)} (ho : IsOpen (Λ : Set (n → A
     (hc : IsCompact (Λ : Set (n → A))) : IsOpen (Formalism.UG.stabGL Λ : Set (GL n A)) :=
   Subgroup.isOpen_mono (H₁ := cong Λ 1) (fun _ h => h.1) (isOpen_cong ho hc isUnit_one)
 
-omit [Fintype n] in
 
 theorem isCompact_cols {C : Set (n → A)} (hC : IsCompact C) (u : Aˣ) :
     IsCompact {m : Matrix n n A | ∀ j, (fun i => (u : A) * m i j) ∈ C} := by

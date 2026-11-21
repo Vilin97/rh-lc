@@ -53,7 +53,6 @@ theorem blockSign_update_swap (f N : ℕ) (τ : Fin f) (i j : Fin N) (hij : i �
 
 end FlagVandermondeDvd
 
-open FlagVandermondeDvd in
 
 theorem FlagVandermondeDvd.proof (h1 : FlagSwapDivisible.Statement) (h2 : FlagDiffPrime.Statement)
     (h3 : FlagDiffNotDvd.Statement) (h4 : FlagProdPrimesDvd.Statement) :

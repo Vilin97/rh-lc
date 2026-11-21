@@ -412,7 +412,6 @@ theorem isSpherical_of_isLocS (π : NG.FinTyp L n) (s : SplitPlace L)
   exact hfix _ ⟨(map_loc_mem_iff s i hi hic (hlift _).1).1
     (by rw [hloc]; exact (GlobalTheory.SmGL.SphCompletion.KO_completion s.w n).le hk), (hlift _).1⟩
 
-open GlobalTheory.StdFrame Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 
 theorem compAt_cast {F₁ : Subfield L} (h : F₁ = maximalRealSubfield L) (s : SplitPlace L)
     (i : s.v.adicCompletion (maximalRealSubfield L) ≃+* s.w.adicCompletion L)
@@ -432,7 +431,6 @@ theorem compAt_cast {F₁ : Subfield L} (h : F₁ = maximalRealSubfield L) (s : 
     rw [e, map_mul, hic, eq_complMap s i hi hic, e2, mul_comm]
     rfl
 
-open GlobalTheory.StdFrame Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 
 theorem triv_cast {F₁ : Subfield L} (h : F₁ = maximalRealSubfield L) (s : SplitPlace L) (x : GAf L n) :
     TrivOutside {s.v} x ↔ ∀ u, u ≠ s.w.under (𝓞 F₁) → ((x.1.1.map (tensCastR h).symm).map

@@ -43,11 +43,9 @@ section Rep
 variable {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
   {ρ : Representation LL G V}
 
-omit [TopologicalSpace G] in
 
 variable [Module O V] [IsScalarTower O LL V] [IsDomain O] [IsFractionRing O LL]
 
-omit [TopologicalSpace G] in
 
 theorem invariants_stableLattice_mod_irreducible_eq_bot [IsDiscreteValuationRing O] (L : Lattice (O := O) ρ) {lam : O} (hlam : Irreducible lam)
     (h : (coefRep (latRep L) (O ⧸ Ideal.span {lam})).invariants = ⊥) : H0V ρ = ⊥ := by
@@ -126,6 +124,5 @@ end Rep
 
 end General
 
-open GlobalTheory.PhiGam GlobalTheory.Models GlobalTheory.TopSteps in
 
 end GlobalTheory.TopSteps.FinSummand

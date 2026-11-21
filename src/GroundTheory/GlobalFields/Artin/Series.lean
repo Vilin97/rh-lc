@@ -30,13 +30,9 @@ variable (v : HeightOneSpectrum (𝓞 K))
 
 end LocalAverage
 
-variable (K L) in
 
-variable (K L) in
 
-variable (K L) in
 
-variable (K L) in
 
 section Convergence
 

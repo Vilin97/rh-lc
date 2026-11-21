@@ -95,7 +95,6 @@ theorem continuous_psiE : Continuous (psiE (F := F) (E := E) (M := M) R1 R2) := 
   exact (continuous_pi fun i => (continuous_first_orbit_map R1 R2).comp (continuous_apply i)).prodMk
     (continuous_pi fun i => (continuous_p2 R1 R2).comp (continuous_apply i))
 
-set_option maxHeartbeats 800000 in
 
 theorem continuous_qqv :
     Continuous (fun y : (Fin M → R1 ⊗[F] E) × (Fin M → R2 ⊗[F] E) => fun i => qq R1 R2 (y.1 i) (y.2 i)) := by

@@ -78,6 +78,5 @@ variable {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.
 
 end PetTie
 
-open PetTie in
 
 end PositivityTheory.Xgy

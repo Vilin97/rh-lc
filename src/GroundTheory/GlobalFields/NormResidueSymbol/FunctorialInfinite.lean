@@ -51,7 +51,6 @@ theorem ideleNorm_infiniteEmbedding (v' : InfinitePlace K') (a : v'.Completionˣ
 variable {L L' : Type*} [Field L] [NumberField L] [Field L'] [NumberField L'] [Algebra K L]
   [Algebra K L'] [Algebra K' L'] [Algebra L L'] [IsScalarTower K K' L'] [IsScalarTower K L L']
 
-omit [NumberField K] [NumberField K'] [NumberField L] [NumberField L'] in
 
 theorem restrictNormal_restrictScalars_conjAt [IsGalois K L] [IsGalois K' L']
     (u' : InfinitePlace L') (hv : (u'.comap (algebraMap K' L')).IsReal) :
@@ -82,7 +81,6 @@ theorem restrictNormal_restrictScalars_one [Normal K L] :
   rw [AlgEquiv.restrictNormal_commutes, AlgEquiv.restrictScalars_apply, AlgEquiv.one_apply,
     AlgEquiv.one_apply]
 
-omit [NumberField K] [NumberField K'] in
 
 theorem extensionEmbeddingOfIsReal_normUnits (v' : InfinitePlace K') (hv' : v'.IsReal)
     (a : v'.Completionˣ) :

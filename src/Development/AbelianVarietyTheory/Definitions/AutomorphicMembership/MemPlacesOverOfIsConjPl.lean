@@ -43,7 +43,6 @@ theorem eq_of_isConjPl {w₀ w₁ w : PlE H} (h₀ : IsConjPl H w₀ w) (h₁ : 
 
 end Host
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.HeightCounting.LabConjModel
 

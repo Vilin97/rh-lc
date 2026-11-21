@@ -637,7 +637,6 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] {S : GSD K}
   {ι : Type} [Fintype ι] [DecidableEq ι] {G : ι → Type} [∀ i, CommGroup (G i)] [∀ i, Fintype (G i)]
   [∀ i, DecidableEq (G i)] [MulAction (∀ i, G i) S.D] [SMulCommClass (∀ i, G i) S.G S.D]
 
-omit [Fintype ι] [DecidableEq ι] [∀ i, Fintype (G i)] [∀ i, DecidableEq (G i)] in
 
 end GSD
 
@@ -645,15 +644,10 @@ section Cols
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m) (hX : X.Ok)
 
-open Classical in
 
-open Classical in
 
-include hX in
 
-open Classical in
 
-open Classical in
 
 end Cols
 

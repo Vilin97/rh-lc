@@ -35,7 +35,6 @@ theorem subst_C' {a : σ → MvPowerSeries τ S} (ha : HasSubst a) (r : R) :
   rw [← substAlgHom_apply ha, show (C r : MvPowerSeries σ R) = algebraMap R _ r from rfl,
     AlgHom.commutes, MvPowerSeries.algebraMap_apply]
 
-open MvPowerSeries.WithPiTopology in
 
 theorem continuous_pderiv [TopologicalSpace R] [DiscreteTopology R] (i : σ) :
     Continuous (pderiv (R := R) i : MvPowerSeries σ R → MvPowerSeries σ R) := by
@@ -56,7 +55,6 @@ theorem pderiv_comm (i j : σ) (f : MvPowerSeries σ R) :
   rw [add_right_comm]
   ring
 
-open MvPowerSeries.WithPiTopology in
 
 theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ S} (ha : HasSubst a)
     (f : MvPowerSeries σ R) (j : τ) :

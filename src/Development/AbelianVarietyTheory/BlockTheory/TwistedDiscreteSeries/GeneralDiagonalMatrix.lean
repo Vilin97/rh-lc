@@ -41,13 +41,11 @@ section Statement
 
 variable {D : D7} (T : CoreJ D) (hT : LawsJ T) (j : ℕ) (hj : InR D j) (σ : T.Q.c.F →+* ℂ) (hσ : GoodEmb T.Q.c σ)
 
-include hT hj hσ in
 
 theorem dict_mem_dom (h : GA D (T.V j σ)) : (T.dict j σ h).2 ∈ ((T.U j σ).X (T.dict j σ h).1).dom := by
   obtain ⟨_, _, _, hd⟩ := hT.dictU j hj σ hσ
   exact hd.2.2.2.1 h
 
-include hT hj hσ in
 
 end Statement
 

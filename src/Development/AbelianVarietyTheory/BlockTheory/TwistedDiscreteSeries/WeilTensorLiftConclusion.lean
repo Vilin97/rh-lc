@@ -26,9 +26,7 @@ def SupportCondition {a : ℕ} (t : ℕ) (μ : kˣ →* ℂˣ) {V : Type} [AddCo
   ∀ j : ℕ, ¬ InSupport π (μ * absPow k (((t : ℂ) + 1) / 2 + j)) ∧
     ¬ InSupport π (μ * absPow k (-(((t : ℂ) + 1) / 2 + j)))
 
-variable (k) in
 
-variable (k) in
 
 def invTranspose (n : ℕ) (R : Type) [CommRing R] : GL (Fin n) R →* GL (Fin n) R where
   toFun h := ⟨(h⁻¹ : GL (Fin n) R).valᵀ, h.valᵀ,
@@ -43,6 +41,5 @@ def invTranspose (n : ℕ) (R : Type) [CommRing R] : GL (Fin n) R →* GL (Fin n
     show ((x * y)⁻¹ : GL (Fin n) R).valᵀ = (x⁻¹ : GL (Fin n) R).valᵀ * (y⁻¹ : GL (Fin n) R).valᵀ
     rw [_root_.mul_inv_rev, Units.val_mul, transpose_mul]
 
-variable (k) in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion

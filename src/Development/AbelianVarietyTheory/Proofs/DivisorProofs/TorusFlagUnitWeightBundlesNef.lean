@@ -160,7 +160,6 @@ theorem frm_left {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R') (k :
   have e' : spMap φ ≫ x = x' := by rw [← hx, ← hx', Category.assoc]
   exact congrArg (fun v => (tv v).left) (X.F.tanPull_vecAt k φ z hz hz' hx hx' e' σ (Fin.cast h i)).symm
 
-open Classical in
 
 theorem exOf_unitWt (τ : Psi H) (a : ℤ) : AllWt.exOf Dw (NefWt.unitWt τ a) 0 =
     fun ix => ix.elim 0 fun p => if p.1 = τ.1 then a else if p.1 = conjEmb τ.1 then -a else 0 := by

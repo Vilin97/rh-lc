@@ -164,7 +164,6 @@ theorem oneRoot (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : �
   rw [h]
   exact hband
 
-open GroundTheory.Automorphic.Reduction in
 
 theorem tails : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E))),
     IsOpen (L : Set (GL (Fin a) (Af E))) → ∀ W : Submodule ℂ (Kinf E a → ℂ), FiniteDimensional ℂ W →

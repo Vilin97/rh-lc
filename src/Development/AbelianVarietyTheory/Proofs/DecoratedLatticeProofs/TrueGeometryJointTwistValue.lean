@@ -104,6 +104,5 @@ theorem pinTup_combAt {t : Tup c} (F : QFam v t) (sc cT : ℕ → ℂ) (j : ℕ)
 
 end GlobalTheory.QPl.PinComb
 
-open GlobalTheory.QPl.PinComb in
 
 end

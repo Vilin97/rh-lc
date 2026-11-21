@@ -24,7 +24,6 @@ def ev (M : DSModel V S) (v₀ : M.Vec) : MMap M →ₗ[ℂ] (GA D V → ℂ) wh
 
 theorem ev_apply (M : DSModel V S) (v₀ : M.Vec) (T : MMap M) : ev M v₀ T = T v₀ := rfl
 
-open Formalism.L2.SG.RowDict in
 
 end Formalism.IndefR.AutomorphicEvaluation
 

@@ -21,7 +21,6 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
   {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' J' : Ideal (MRing ι')} {n : ℕ}
 
-omit [Fintype K'] in
 
 theorem pullQ_eq_local (hv : IsBlockMap κ v) (R : AnLogRes P' J' n)
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (n + 1) → ℂ)) {x z : R.X} (hz : z ∈ R.U x) :
@@ -75,7 +74,6 @@ theorem det_restrictScalars_eq_zero {m : ℕ} (f : (Fin m → ℂ) →L[ℂ] (Fi
 
 end pullbackBadImage_holds
 
-open pullbackBadImage_holds in
 
 theorem pullbackBadImage_holds.proof : pullbackBadImage_holds.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' J' n R Ψ hv _ _ _

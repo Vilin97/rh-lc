@@ -19,6 +19,5 @@ def SepXSt : Prop := IsSeparated Xo.s
 
 variable {Xo c}
 
-variable (Xo c) in
 
 end Formalism.L2.Pj

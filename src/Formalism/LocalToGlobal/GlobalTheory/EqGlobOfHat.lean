@@ -21,7 +21,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 def IsLat (Λ : Submodule (𝓞 E) (n → E)) : Prop :=
   Module.Finite (𝓞 E) Λ ∧ Submodule.span E (Λ : Set (n → E)) = ⊤
 
-variable (F) in
 
 abbrev hat (Λ : Submodule (𝓞 E) (n → E)) : Submodule 𝒮 (n → 𝒜) :=
   latS (F := F) (FiniteAdeleRing (𝓞 F) F) 𝒮 Λ

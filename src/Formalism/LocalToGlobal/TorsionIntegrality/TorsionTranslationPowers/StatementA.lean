@@ -19,7 +19,6 @@ variable (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l])
 
 def curveL : WeierstrassCurve ℂ_[l] := Formalism.L2.Th1.A.shortW (ι L.g₂) (ι L.g₃)
 
-open Classical in
 
 def ptOf (t : ℂ) : (curveL l L ι).toAffine.Point :=
   if h : t ∉ L.lattice ∧
@@ -41,7 +40,6 @@ def phPrime (t₀ : ℂ) : PowerSeries ℂ_[l] :=
 
 end An
 
-open Classical in
 
 def PtOfAdd : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l]) (s t : ℂ),
@@ -62,7 +60,6 @@ def TransWpBridge : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l]) (t : ℂ), t ∉ L.lattice →
     inU l L ι (fun z => L.weierstrassP (z + t)) = xT (curveL l L ι) (ptOf l L ι t)
 
-open Classical in
 
 def AnalyticSys : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l])

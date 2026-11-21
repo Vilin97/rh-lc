@@ -130,7 +130,6 @@ end Orbit
 
 section Ball
 
-open scoped ComplexOrder in
 
 theorem isPreconnected_ballDom {Ψ : Type} [Fintype Ψ] {j j' n : ℕ} (q : Ψ × Fin j × Fin j' ≃ Fin n) :
     IsPreconnected (ballDom q) := by

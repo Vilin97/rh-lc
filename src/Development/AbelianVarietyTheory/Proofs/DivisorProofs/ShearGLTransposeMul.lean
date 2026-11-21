@@ -106,7 +106,6 @@ theorem mk_eq_mk_iff {G : Type} [AddCommGroup G] (H L : AddSubgroup G) (x y : H)
   rw [QuotientAddGroup.eq, AddSubgroup.mem_addSubgroupOf, ← L.neg_mem_iff]
   simp [neg_add_eq_sub]
 
-open Classical in
 
 theorem sum_shift_out {G : Type} [AddCommGroup G] (F : G → ℂ) (H L : AddSubgroup G)
     [Fintype (H ⧸ L.addSubgroupOf H)] (hL : ∀ x y, y - x ∈ L → F y = F x) (hH : ∀ x, F x ≠ 0 → x ∈ H) (x : G) :
@@ -131,7 +130,6 @@ theorem sum_shift_out {G : Type} [AddCommGroup G] (F : G → ℂ) (H L : AddSubg
     rw [add_sub_cancel_right] at this
     exact hx this
 
-open Classical in
 
 theorem sum_ite_out {G : Type} [AddCommGroup G] (H H' : AddSubgroup G) [Fintype (H' ⧸ H.addSubgroupOf H')]
     (hHH' : H ≤ H') (c : ℂ) (x : G) :

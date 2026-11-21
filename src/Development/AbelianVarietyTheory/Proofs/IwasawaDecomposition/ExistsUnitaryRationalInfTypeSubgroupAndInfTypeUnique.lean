@@ -128,6 +128,5 @@ theorem embPsi_ne_conj {R : Ranks} (H : Formalism.BasicNotions.Host R) (i j : R.
   have : (0 : ℝ) < Real.sqrt H.d := Real.sqrt_pos.2 (by exact_mod_cast hd)
   exact this.ne' (by exact_mod_cast h0)
 
-open Classical in
 
 end GlobalTheory.HalfIntChars

@@ -301,7 +301,6 @@ end ShortVectors
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-open ShortVectors in
 
 theorem exists_short_vectors {n : ℕ} (Λ : Submodule (𝓞 E) (Fin n → E)) (hfg : Λ.FG)
     (hint : ∀ x ∈ Λ, ∀ y ∈ Λ, IsIntegral ℤ (herm 1 x y)) (hdual : ∀ x, (∀ y ∈ Λ, IsIntegral ℤ (herm 1 x y)) → x ∈ Λ) :

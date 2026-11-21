@@ -35,7 +35,6 @@ open GlobalTheory.Doubling (ioH_mem_KFin)
 
 namespace GlobalTheory.Core.Rk.IP
 
-set_option maxHeartbeats 2000000 in
 
 theorem localZetaOn_split : GlobalTheory.Published.UnramifiedDoublingGL →
     ∀ D : D7, LocalZetaOn D fun v => Formalism.MainNotions.SchurIrreducible.IsSplit (E := D.host.E) v := by

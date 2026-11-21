@@ -15,7 +15,6 @@ open NumberField IsDedekindDomain Topology GlobalTheory.WeilM GlobalTheory.Adeli
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
   {X : Spc F E n} {W : Spc F E d}
 
-open scoped Classical in
 
 def coef {v : Pl F} (ω : UA σ X.J × UA σ W.J → Module.End ℂ (Fn F n d v)) (l : Fn F n d v →ₗ[ℂ] ℂ) :
     Fn F n d v →ₗ[ℂ] (UA σ W.J → ℂ) where

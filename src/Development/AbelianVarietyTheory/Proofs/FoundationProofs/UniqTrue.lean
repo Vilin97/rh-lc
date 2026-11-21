@@ -238,7 +238,6 @@ theorem norm_algebraMap_padicInt (a : ℤ_[l]) : ‖algebraMap ℤ_[l] (Qbar l) 
 
 variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] {A : ValuationSubring Ω} {j : Ω →+* Qbar l}
 
-omit [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] in
 
 theorem cgA_iff (hj : Compat l A j) (n : ℕ) (x y : Ω) :
     GlobalTheory.Glue.CgA A l n x y ↔ j x - j y ∈ ball ((l : Qbar l) ^ n) := by

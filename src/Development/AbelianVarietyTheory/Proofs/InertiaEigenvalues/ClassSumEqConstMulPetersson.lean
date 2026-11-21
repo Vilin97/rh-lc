@@ -45,8 +45,6 @@ theorem exists_reps_cong {N : ℕ} (hN : 0 < N) : ∃ T, IsClassReps (congSub L 
   obtain ⟨f, hf, hfu⟩ := hF u hu
   exact ⟨t * f, Finset.mem_image₂_of_mem ht hf, γ, f⁻¹ * u, hfu, by group⟩
 
-variable (L n) in
-open Classical in
 
 def reps (N : ℕ) : Finset (GAf L n) :=
   if h : ∃ T, IsClassReps (congSub L n N) T then h.choose else ∅
@@ -108,7 +106,6 @@ namespace GlobalTheory.ClassPet
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
-open Classical in
 
 def lev {W : Type} (f : GAf L n → W) : ℕ := if h : ∃ N, 0 < N ∧ InvAt N f then h.choose else 1
 
@@ -148,7 +145,6 @@ theorem petN_smul_right (N : ℕ) (c : ℂ) (f f' : GAf L n → a.W) :
     petN a β N f (c • f') = c * petN a β N f f' := by
   simp only [petN, classSum_smul_right]; ring
 
-variable (L n) in
 
 def projAF {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (GQ L n) W) :
     (GAf L n → W) →ₗ[ℂ] (GAf L n → W) :=

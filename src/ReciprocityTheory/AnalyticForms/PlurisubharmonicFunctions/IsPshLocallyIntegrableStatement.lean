@@ -44,7 +44,6 @@ def SubMeanPolydiscStatement : Prop :=
 def coordDiv (S : Finset (Fin D)) : Set (Fin D → ℂ) :=
   {z | ∃ i ∈ S, z i = 0}
 
-open Classical in
 
 def limsupExt (U A : Set (Fin D → ℂ)) (v : (Fin D → ℂ) → ℝ) (z : Fin D → ℂ) : ℝ :=
   if z ∈ A then limsup v (𝓝[U \ A] z) else v z

@@ -38,7 +38,6 @@ def princ (B : Base S T) : Base S T := { B with G := princG B.G }
 theorem princ_good {B : Base S T} (h : B.Good) : (princ B).Good :=
   ⟨h.even, h.odd, h.frame, h.de, h.places, h.wt, h.sig, h.sigOK, h.eta, h.hecke, h.real, h.unram, h.tame, h.inf⟩
 
-open Classical in
 
 theorem omegaG_princ {n r : ℕ} (G : TypeDat D r) (y : Reds D n r) :
     omegaG (princG G).levT (princG G).muC y = omegaK G.Pg y := by
@@ -61,7 +60,6 @@ theorem low_top {κ : Type} [CommRing κ] {n r : ℕ} (hr : r ≤ n) (K : GL (Fi
     Units.val_one, Matrix.one_mul]
   exact ⟨fun h => (Units.eq_inv_of_mul_eq_one_right h).symm, fun h => by rw [← h]; exact K.inv_mul⟩
 
-open Classical in
 
 theorem omegaG_eq_sum {n r : ℕ} (hr : r ≤ n) (G : TypeDat D r) [Fintype G.P.H]
     (K : G.P.H → ∀ PP : Pl D.host.E, GL (Fin r) (kP PP)) (hK : ∀ (p : G.P.H) (PP : ↥G.Pg), p.1 PP = K p PP.1) (y : Reds D n r) :
@@ -119,7 +117,6 @@ theorem locFn_mul (B : Base S T) (ψ : Twist D Circle) (K : ∀ PP : Pl D.host.E
   simp only [Units.val_mul, Units.coe_prod]
   ring
 
-open Classical in
 
 theorem datumFn_eq_sum (B : Base S T) {ψ : Twist D Circle} (hQ : B.admitted ψ.Q) [Fintype B.G.P.H] (k : B.G.P.H → GA D T)
     (hk : ∀ p, Lifts B p.1 (k p)) (x : WO S T) :
@@ -155,7 +152,6 @@ theorem datumFn_eq_sum (B : Base S T) {ψ : Twist D Circle} (hQ : B.admitted ψ.
   have := b.ne_zero
   field_simp
 
-open Classical in
 
 theorem vecFlat_eq_sum_princ {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle} (hψ : ψ.Good) (hQ : B.admitted ψ.Q)
     {ω : PairRep S T} (hω : B.IsWeil ψ.chi ω) [Fintype B.G.P.H] (k : B.G.P.H → GA D T) (hk : ∀ p, Lifts B p.1 (k p)) :
@@ -237,7 +233,6 @@ theorem idem_orth {Pg Q : Finset (Pl D.host.E)} (h : PlacesOK Pg Q) :
   rw [show idem Q = ∑ PP ∈ Q, idemAt PP from rfl, Finset.sum_mul]
   exact Finset.sum_eq_zero fun j hj => key _ h1 _ (h2 hj)
 
-open Classical in
 
 theorem datumFn_eq_tensor {F : Frame S T} (hF : F.Good) {G : TypeDat D T.rank} {Q : Finset (Pl D.host.E)} (h : PlacesOK G.Pg Q)
     {ω : Reds D T.rank S.rank → ℂ} (hω : ∀ y y', (∀ PP ∈ Q, y PP = y' PP) → ω y = ω y') :
@@ -288,7 +283,6 @@ theorem datumFn_eq_tensor {F : Frame S T} (hF : F.Good) {G : TypeDat D T.rank} {
       exact fun i j => add_mem (int_of_int_adj hF k1.2 i j) (k2 i j)
     · rw [if_neg fun h => k2 h.2, zero_mul]
 
-open Classical in
 
 theorem eq_vec_of_two_steps {F : Frame S T} (hF : F.Good) {G : TypeDat D T.rank} {Q : Finset (Pl D.host.E)} (h : PlacesOK G.Pg Q)
     {ω : Reds D T.rank S.rank → ℂ} (hω : ∀ y y', (∀ PP ∈ Q, y PP = y' PP) → ω y = ω y') {fg f : WO S T → ℂ}
@@ -336,7 +330,6 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.L
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} {i : Fin D.R.m}
   {B : Base (Vc D i) (Wc D i)}
 
-open Classical in
 
 theorem omegaFlat_eq_locFn {ψ : Twist D Circle} {t t₀ : T0} (ht : IsTupOf R B ψ t) (hL : R.toLevCh.Is t₀) (hB : B.Good)
     (hψ : ψ.Good) (hQ : B.admitted ψ.Q) (y : Reds D (Wc D i).rank (Vc D i).rank) :
@@ -351,7 +344,6 @@ theorem omegaFlat_eq_locFn {ψ : Twist D Circle} {t t₀ : T0} (ht : IsTupOf R B
   · refine Finset.prod_congr rfl fun PP hP => ?_
     rw [hx PP (Finset.mem_union_right _ hP), Twist.locC, Twist.locC, if_pos hP, if_neg (Finset.disjoint_right.1 hQ.2 hP), one_mul]
 
-open Classical in
 
 theorem eq_vecFlat_princ (h : BaseOf R i B) {ψ : Twist D Circle} {t t₀ : T0} (ht : IsTupOf R B ψ t) (hL : R.toLevCh.Is t₀)
     (hB : B.Good) (hψ : ψ.Good) (hQ : B.admitted ψ.Q) {f : WO (Vc D i) (Wc D i) → ℂ} (hf : IsFlatVec R i t f) :

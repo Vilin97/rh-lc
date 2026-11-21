@@ -22,7 +22,6 @@ noncomputable section
 
 namespace GlobalTheory.HalfPairing
 
-open scoped TensorProduct in
 
 theorem nonempty_equiv_quot {R N : Type} [CommRing R] [IsDomain R] [AddCommGroup N] [Module R N]
     [Module.Finite R N] [Module.Projective R N] (I : Ideal R) [Finite (R ⧸ I)] (r : ℕ)

@@ -21,7 +21,6 @@ section Denominators
 
 variable {E : Type*} [Field E] [NumberField E]
 
-omit [NumberField E] in
 
 theorem isIntegral_natCast_mul {n : ℕ} {x : E} (hx : IsIntegral ℤ x) :
     IsIntegral ℤ ((n : E) * x) := by
@@ -29,7 +28,6 @@ theorem isIntegral_natCast_mul {n : ℕ} {x : E} (hx : IsIntegral ℤ x) :
     simpa using isIntegral_algebraMap (R := ℤ) (A := E) (x := (n : ℤ))
   exact this.mul hx
 
-omit [NumberField E] in
 
 theorem isIntegral_mul_of_dvd {a b : ℕ} {x : E} (hx : IsIntegral ℤ ((a : E) * x)) (hab : a ∣ b) :
     IsIntegral ℤ ((b : E) * x) := by
@@ -51,7 +49,6 @@ theorem exists_nat_mul_isIntegral (x : E) : ∃ n : ℕ, 0 < n ∧ IsIntegral �
     rw [h', Int.cast_neg, neg_mul]
     exact hyx.neg
 
-omit [Field E] [NumberField E] in
 
 theorem exists_common_multiple {ι : Type*} (s : Finset ι) (P : ι → ℕ → Prop)
     (hP : ∀ i a b, P i a → a ∣ b → P i b) (hex : ∀ i ∈ s, ∃ a, 0 < a ∧ P i a) :
@@ -70,7 +67,6 @@ theorem exists_den_of_fg {J : AddSubgroup E} (hJ : J.FG) :
   | add x y _ _ hx hy => rw [mul_add]; exact hx.add hy
   | neg x _ hx => rw [mul_neg]; exact hx.neg
 
-variable (E) in
 
 def intMultiples (N : ℕ) : AddSubgroup E :=
   (integralClosure ℤ E).toSubring.toAddSubgroup.comap (AddMonoidHom.mulLeft ((N : E)⁻¹))

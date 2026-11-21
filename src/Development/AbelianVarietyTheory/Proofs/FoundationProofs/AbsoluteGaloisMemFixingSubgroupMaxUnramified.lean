@@ -39,9 +39,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     (hA : ∀ (lam : O →ₗ[Z] Z) a, cf lam (sc E a) ∈ A) {Y : LocLat G Qp LL O}
     {J ι : Type} [Fintype J] [Fintype ι] (o : Module.Basis J Z O)
 
-include hA in
 
-include hA o in
 
 end Module
 
@@ -62,7 +60,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     [TopologicalSpace V'] [ContinuousAdd V'] [ContinuousConstSMul LL V']
     {L : Lattice (O := O) ρ} {L' : Lattice (O := O) ρ'}
 
-variable (L) in
 
 end Transport
 
@@ -77,7 +74,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {O : Type} [CommRing O] [Algebra O LL] [TopologicalSpace LL] [IsTopologicalRing LL]
     {ψ : G →* LLˣ} (L : Lattice (O := O) (charRep ψ))
 
-omit [IsTopologicalRing LL] in
 
 end RankOne
 

@@ -250,6 +250,5 @@ end GlobalTheory.BlockReorder
 
 namespace GlobalTheory
 
-open BlockReorder in
 
 end GlobalTheory

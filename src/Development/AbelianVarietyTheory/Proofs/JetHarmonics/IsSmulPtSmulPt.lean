@@ -213,7 +213,6 @@ def Represents {H : Over (Spec (CommRingCat.of R))} [GrpObj H] (Φ : ∀ T, (T �
     GtPt.IsPull k.left (Φ T x) (Φ T' (k ≫ x))) ∧
   ∀ (T : Over (Spec (CommRingCat.of R))) (x x' : T ⟶ H), GtPt.IsAdd (Φ T x) (Φ T x') (Φ T (x * x'))
 
-include hG in
 
 theorem exists_ringAct {H : Over (Spec (CommRingCat.of R))} [GrpObj H] [IsCommMonObj H]
     {Φ : ∀ T, (T ⟶ H) ≃ GtPt D T} (h : Represents Φ) :

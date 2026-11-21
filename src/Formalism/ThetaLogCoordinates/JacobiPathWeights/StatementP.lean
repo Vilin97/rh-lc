@@ -19,12 +19,10 @@ def dGT : (n : ℕ) → (Fin n → ℤ) → ℕ
   | 0, _ => 1
   | n + 1, μ => ∑ κ ∈ gtBox μ, dGT n κ
 
-open Classical in
 
 def stripsUp {n : ℕ} (μ : Fin n → ℤ) (b : ℕ) : Finset (Fin n → ℤ) :=
   (Fintype.piFinset fun i => Finset.Icc (μ i) (μ i + b)).filter fun ν => HStrip ν μ b
 
-open Classical in
 
 def stripsDown {n : ℕ} (μ : Fin n → ℤ) (b : ℕ) : Finset (Fin n → ℤ) :=
   (Fintype.piFinset fun i => Finset.Icc (μ i - b) (μ i)).filter fun ν => HStrip μ ν b

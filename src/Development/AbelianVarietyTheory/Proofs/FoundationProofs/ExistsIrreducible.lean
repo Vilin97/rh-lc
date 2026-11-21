@@ -201,7 +201,6 @@ variable {F : Type} [Field F] [NumberField F] (p : HeightOneSpectrum (𝓞 F))
   (ι : F →+* K) (hd : DenseRange ι)
   (hv : ∀ x y : F, valuation K (ι x) ≤ valuation K (ι y) ↔ p.valuation F x ≤ p.valuation F y)
 
-include hd in
 
 theorem exists_val_eq (x : K) (hx : x ≠ 0) :
     ∃ y : F, y ≠ 0 ∧ valuation K (ι y) = valuation K x := by
@@ -211,7 +210,6 @@ theorem exists_val_eq (x : K) (hx : x ≠ 0) :
   rintro rfl
   exact h0 (by simpa using (show valuation K (ι 0) = valuation K x from hy).symm)
 
-include hd hv in
 
 theorem exists_irreducible (g : F) (hg : p.valuation F g = WithZero.exp (-1 : ℤ)) :
     ∃ q : 𝒪[K], Irreducible q ∧ (q : K) = ι g := by
@@ -250,7 +248,6 @@ theorem exists_irreducible (g : F) (hg : p.valuation F g = WithZero.exp (-1 : �
   rw [← WithZero.exp_add, WithZero.exp_le_exp] at h5
   omega
 
-include hd hv in
 
 theorem exists_sq_eq (a : 𝓞 F) (ha : ∀ n : ℕ, ∃ m : ℤ, a - (m : 𝓞 F) ^ 2 ∈ p.asIdeal ^ n) :
     ∃ β : K, β ^ 2 = ι a := by

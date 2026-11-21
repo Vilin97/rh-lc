@@ -43,7 +43,6 @@ def KFormL : Prop :=
   ∀ j t, LinearIndependent ℂ (fun k => X.jL j t (bL j t k)) ∧
     Submodule.span ℂ (Set.range fun k => X.jL j t (bL j t k)) = ⊤
 
-open Classical in
 
 def opC (t : Bs.Tup) (i : A.OpR t) : Module.End ℂ (X.FC t) :=
   if h : LinearIndependent ℂ (fun k => X.jR t (bR t k)) ∧
@@ -51,7 +50,6 @@ def opC (t : Bs.Tup) (i : A.OpR t) : Module.End ℂ (X.FC t) :=
     (Basis.mk h.1 h.2.ge).constr ℂ fun k => X.jR t (A.opR t i (bR t k))
   else 0
 
-open Classical in
 
 def opLC (j : Bs.J) (t : Bs.Tup) (i : A.OpL j t) : Module.End ℂ (X.FLC j t) :=
   if h : LinearIndependent ℂ (fun k => X.jL j t (bL j t k)) ∧
@@ -156,7 +154,6 @@ section Pairing
 
 variable {fc : DefSub A → DefFace Bs} (cr : Crd A fc)
 
-open Classical in
 
 def rinv {d n : ℕ} (P : Matrix (Fin d) (Fin n) K) : Matrix (Fin n) (Fin d) K :=
   if h : ∃ R : Matrix (Fin n) (Fin d) K, P * R = 1 then h.choose else 0
@@ -195,7 +192,6 @@ def W1 (N : IndefNum Bs) (w : HeightOneSpectrum (𝓞 K)) : Prop :=
     jw ((lv (fc X.zs) false).HT j Bs.μ0) (conjPl w) ((lv (fc X.zs) false).Tl j Bs.μ0) ≠ 0 ∨
     N.F0 w j ≠ 0 ∨ N.F0 (conjPl w) j ≠ 0
 
-open Classical in
 
 def MuDef (N : IndefNum Bs) (tw : HeightOneSpectrum (𝓞 K) → Bs.Tup) : Prop :=
   (∀ w, X.W1 cr N w → tw w ≠ Bs.μ0) ∧ (∀ w, X.W1 cr N w → tw (conjPl w) = tw w) ∧
@@ -210,7 +206,6 @@ section Passage
 
 variable {fc : DefSub A → DefFace Bs} (cr : Crd A fc)
 
-open Formalism.L2.GlobalTheoryTheory.DivPassage in
 
 end Passage
 

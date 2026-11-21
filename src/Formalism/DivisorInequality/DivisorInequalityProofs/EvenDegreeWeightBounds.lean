@@ -21,7 +21,6 @@ end UniformCovolumeTail
 
 namespace UniformCovolumeTail
 
-set_option maxHeartbeats 800000 in
 
 theorem stepDiSharp (J Pl Emb : Type) [Fintype J] [Fintype Pl] [Fintype Emb] [Nonempty Emb] (r : ℕ)
     (ν : J → Pl → Fin r → ℝ) (g0 : J → ℝ)
@@ -148,7 +147,6 @@ theorem stepDiSharp (J Pl Emb : Type) [Fintype J] [Fintype Pl] [Fintype Emb] [No
 
 end UniformCovolumeTail
 
-set_option maxHeartbeats 800000 in
 
 theorem height_bound_at_set : HeightS := by
   intro J Pl Emb _ _ _ _ TT _ nr hu hP mlam logT hK aT logH Ch nV L' ν x eps L b a rd La m f k N S η b'

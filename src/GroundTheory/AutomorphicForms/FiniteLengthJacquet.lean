@@ -40,7 +40,6 @@ theorem eq_iff_eq_of_lt_iff (h : ∀ i j, β i < β j ↔ γ i < γ j) (i j : Fi
     · exact he
     · exact absurd ((h j i).1 hg) (by rw [e]; exact lt_irrefl _)
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 
 theorem blockUpper_congr (h : ∀ i j, β i < β j ↔ γ i < γ j) :
     blockUpper F n β = blockUpper F n γ := by
@@ -48,7 +47,6 @@ theorem blockUpper_congr (h : ∀ i j, β i < β j ↔ γ i < γ j) :
   simp only [mem_blockUpper, Matrix.BlockTriangular]
   exact forall_congr' fun i => forall_congr' fun j => imp_congr_left (h j i)
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 
 theorem unipotentRadical_congr (h : ∀ i j, β i < β j ↔ γ i < γ j) :
     unipotentRadical F n β = unipotentRadical F n γ := by

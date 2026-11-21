@@ -59,7 +59,6 @@ theorem residue_smul_of_isArithFrobAt {σ : L ≃ₐ[K] L} (hσ : IsArithFrobAt 
     algebraMap_mem_maximalIdeal_localizationAt_iff]
   exact hσ a
 
-omit [NumberField L] in
 
 theorem smul_notMem_of_isArithFrobAt {σ : L ≃ₐ[K] L} (hσ : IsArithFrobAt (𝓞 K) σ 𝔓.asIdeal)
     {s : 𝓞 L} (hs : s ∉ 𝔓.asIdeal) : σ • s ∉ 𝔓.asIdeal := by
@@ -160,7 +159,6 @@ section LatticeForm
 variable {K : Type*} [Field K] [NumberField K] (σ₀ : K →+* ℂ) (hK : finrank ℚ K = 2)
   [IsTotallyComplex K]
 
-include hK in
 
 theorem exists_unit_of_homConstSet_eq (L L' : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ₀)
     (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (hL' : L'.lattice = idealLattice σ₀ ↑𝔞⁻¹ * L.lattice)
@@ -208,7 +206,6 @@ section Main
 variable {K : Type*} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
   [IsTotallyComplex K] {L : IntermediateField K ℂ} [NumberField L]
 
-omit [NumberField K] [IsTotallyComplex K] [NumberField L] in
 
 theorem algebraMap_mem_of_liesOver {𝔭 : HeightOneSpectrum (𝓞 K)} {𝔓 : HeightOneSpectrum (𝓞 L)}
     [h : 𝔓.asIdeal.LiesOver 𝔭.asIdeal] {a : 𝓞 K} (ha : a ∈ 𝔭.asIdeal) :
@@ -216,7 +213,6 @@ theorem algebraMap_mem_of_liesOver {𝔭 : HeightOneSpectrum (𝓞 K)} {𝔓 : H
   rw [h.over] at ha
   exact ha
 
-omit [NumberField K] [IsTotallyComplex K] [NumberField L] in
 
 theorem isogBaseChange_eq_map {A A' : WeierstrassCurve L} [A.IsElliptic] [A'.IsElliptic]
     (φ : Isogeny A A') : isogBaseChange (F' := ℂ) φ = φ.map (algebraMap L ℂ) :=
@@ -224,8 +220,6 @@ theorem isogBaseChange_eq_map {A A' : WeierstrassCurve L} [A.IsElliptic] [A'.IsE
     (by rw [isogBaseChange_alt, ← ffMap_algebraMap_eq_bcEmb]; exact (Isogeny.map_x _ φ).symm)
     (by rw [isogBaseChange_y, ← ffMap_algebraMap_eq_bcEmb]; exact (Isogeny.map_y _ φ).symm)
 
-omit [NumberField L] in
-include hK in
 
 theorem exists_isogBaseChange_eq_of_isogeny {A A' : WeierstrassCurve L} [A.IsElliptic]
     [A'.IsElliptic] (hA : Nonempty (isogEnd (A.baseChange ℂ) ≃+* 𝓞 K)) (φ : Isogeny A A')
@@ -270,7 +264,6 @@ theorem exists_isogBaseChange_eq_of_isogeny {A A' : WeierstrassCurve L} [A.IsEll
   have h2 := congrArg Subtype.val hQ'
   exact Isogeny.ext' h2
 
-include hK in
 
 theorem exists_mem_maximalIdeal_invConst (𝔭 : HeightOneSpectrum (𝓞 K))
     (𝔓 : HeightOneSpectrum (𝓞 L)) [𝔓.asIdeal.LiesOver 𝔭.asIdeal]
@@ -334,7 +327,6 @@ theorem exists_mem_maximalIdeal_invConst (𝔭 : HeightOneSpectrum (𝓞 K))
   obtain ⟨m, hm, e⟩ := key
   exact ⟨m, hm, by rw [e, map_one, mul_one]⟩
 
-include hK in
 
 theorem reduceIsogeny_eq_comp_frobeniusIsogeny_of_homConstSet (𝔭 : HeightOneSpectrum (𝓞 K))
     (hv : (Ideal.absNorm 𝔭.asIdeal).Prime) (𝔓 : HeightOneSpectrum (𝓞 L))
@@ -375,7 +367,6 @@ theorem reduceIsogeny_eq_comp_frobeniusIsogeny_of_homConstSet (𝔭 : HeightOneS
   obtain ⟨ψ, h1, h2, -, h4, h5⟩ := reduceIsogeny_eq_comp_frobeniusIsogeny L p φ hdeg' hc hcφ
   exact ⟨hp, hdeg', ⟨ψ, h1, h2, h4, h5⟩, residue_j_eq_pow L p φ hdeg' hc hcφ⟩
 
-include hK in
 
 theorem reduceIsogeny_congr_eq_comp_frobeniusIsogeny (𝔭 : HeightOneSpectrum (𝓞 K))
     (hv : (Ideal.absNorm 𝔭.asIdeal).Prime) (𝔓 : HeightOneSpectrum (𝓞 L))
@@ -412,7 +403,6 @@ variable {K : Type*} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ
 abbrev primeClass (𝔭 : HeightOneSpectrum (𝓞 K)) : ClassGroup (𝓞 K) :=
   ClassGroup.mk0 ⟨𝔭.asIdeal, mem_nonZeroDivisors_of_ne_zero 𝔭.ne_bot⟩
 
-omit [NumberField K] [IsTotallyComplex K] [NumberField L] in
 
 theorem ELL.j_eq_algebraMap_j {A : WeierstrassCurve L} [A.IsElliptic] {x : ELL K}
     {h : Nonempty (isogEnd (A.baseChange ℂ) ≃+* 𝓞 K)}
@@ -420,8 +410,6 @@ theorem ELL.j_eq_algebraMap_j {A : WeierstrassCurve L} [A.IsElliptic] {x : ELL K
   rw [← hx, ELL.j_toEll]
   exact WeierstrassCurve.map_j _ _
 
-omit [NumberField L] in
-include hK in
 
 theorem exists_isogeny_primeClass_smul
     (E : ELL K → WeierstrassCurve L) [∀ x, (E x).IsElliptic]
@@ -452,7 +440,6 @@ theorem exists_isogeny_primeClass_smul
     (isogBaseChange φ) (by rw [invConst_isogBaseChange]; exact hφ')
   rwa [degree_isogBaseChange] at h
 
-include hK in
 
 theorem frobenius_at_primes_of_degree_one (hL : ∀ x : ELL K, ELL.j x ∈ L)
     (E : ELL K → WeierstrassCurve L) [∀ x, (E x).IsElliptic]

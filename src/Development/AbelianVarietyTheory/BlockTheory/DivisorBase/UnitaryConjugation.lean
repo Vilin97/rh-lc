@@ -116,47 +116,36 @@ variable (W : G.Weil) (M : Vol G)
 
 variable (t : T) (i j : ℕ)
 
-variable (G) in
 
 abbrev spV : HSp D := G.V (.grid i (j + 1))
 
-variable (G) in
 
 abbrev spW : HSp D := G.V (.grid (i + 1) (j + 1))
 
-variable (G) in
 
 abbrev spW₁ : HSp D := G.V (.grid i j)
 
-variable (G) in
 
 abbrev spV₁ : HSp D := G.V (.grid (i + 1) j)
 
-variable (G) in
 
 def eps : ℕ := (spW₁ G i j).rank % 2
 
-variable (G) in
 
 def alpha : (AE D)ˣ →* Circle := L.mu t (j + 1) * L.eta ^ eps G i j
 
-variable (G) in
 
 def beta : (AE D)ˣ →* Circle := G.ch.chi (D.R.m - i) * L.eta ^ eps G i j
 
-variable (G) in
 
 def xiV (g : GA D (spV G i j)) : ℂ := flatDet (L.eta ^ (2 * eps G i j))⁻¹ _ g
 
-variable (G) in
 
 def xiV₁ (g : GA D (spV₁ G i j)) : ℂ := flatDet (L.mu t (j + 1) * G.ch.chi (D.R.m - i))⁻¹ _ g
 
-variable (G) in
 
 abbrev Num : Type := Fin (spV G i j).rank ⊕ Fin (spV₁ G i j).rank ≃ Fin ((spW G i j).rank + (spW₁ G i j).rank)
 
-variable (G) in
 
 abbrev Geo : Type := WeilTensorModels.Geo D.sp.cm.sig (spW G i j).rank (spW₁ G i j).rank
 
@@ -214,11 +203,8 @@ def IsDatumB (e : Num G i j) (Γ : Geo G i j) (τ : TotT G (routeB t i j))
     (Φ : (Fin (spW₁ G i j).rank × Fin ((spW G i j).rank + (spW₁ G i j).rank) → AF D.host.F) → ℂ) : Prop :=
   Φ ∈ schA D.host.F _ ∧ ∀ u, thetaSum D.host.F (Γ.M'.co.rho W.ψ u Φ) = τ.sum fun d c => c * boxB e d u
 
-variable (i j) in
 
-variable (t) in
 
-variable (t) in
 
 theorem nonempty_num {μ0 : T} (hL : L.Is μ0) (hi : i + 1 ≤ D.R.m) (hj : j + 1 ≤ D.R.m) : Nonempty (Num G i j) := by
   have hr : ∀ X : Node, X.InRange D.R.m → (G.V X).rank = X.rank D := fun X hX => (node_isV G hL hX).rank

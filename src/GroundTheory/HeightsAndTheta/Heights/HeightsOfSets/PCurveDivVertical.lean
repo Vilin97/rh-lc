@@ -21,7 +21,6 @@ open Classical
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-open Classical in
 
 def wt (T : Finset K) : (Σ k, ι k) → ℕ := fun p ↦ if p.1 ∈ T then 1 else 0
 
@@ -146,7 +145,6 @@ theorem isHomogeneous_of_mem_minimalPrimes (T : Finset K) {J V : Ideal (MRing ι
 
 end CurveDivVertical
 
-open CurveDivVertical in
 
 theorem CurveDivVertical.full : CurveDivVertical.Statement := by
   classical

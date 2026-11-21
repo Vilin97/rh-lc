@@ -337,7 +337,6 @@ end Adelic
 
 end GlobalTheory.JacGeom
 
-open GlobalTheory.JacGeom in
 
 theorem GlobalTheory.JacGeom.isJacMap_of_equivariant : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a b : ℕ) (G : Geo σ a (b + 2)) (G₁ : Geo σ a b) (H : Plane E (b + 2) b)

@@ -110,7 +110,6 @@ theorem coordClass_ne_zero {p : Σ k, ι k} (hp : (X p : MRing ι) ∉ P) : coor
   have h := (aeval_coordClass_eq_zero P (X p)).not.2 hp
   rwa [aeval_X] at h
 
-open Classical in
 
 def birPoint (c : ∀ k, ι k) (hc : ∀ k, (X ⟨k, c k⟩ : MRing ι) ∉ P) (p : Σ k, ι k) : fnField P :=
   ⟨coordClass P p / coordClass P ⟨p.1, c p.1⟩,

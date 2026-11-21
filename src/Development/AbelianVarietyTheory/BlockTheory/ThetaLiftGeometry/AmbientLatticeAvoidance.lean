@@ -25,9 +25,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m)
 
 abbrev rkTop (R : Ranks) : ℕ := (R.N R.m - 1) + 0
 
-open Classical in
 
-open Classical in
 
 def lamTop (sharp : Bool) (P : HeightOneSpectrum (𝓞 X.E)) (h : HomE X.E (rkTop R) (rkTop R)) : X.K :=
   if P ∈ Pr.vGs then
@@ -35,9 +33,7 @@ def lamTop (sharp : Bool) (P : HeightOneSpectrum (𝓞 X.E)) (h : HomE X.E (rkTo
       else LocE.lamGB (qOf P) (psi0P Ch P) (chiP Ch P) R.k R.r R.t R.m (R.N R.m - 1) 0 h)
   else LocE.lamQB (resChar (mu : Chr X.F X.E X.K) P) R.r (R.N R.m - 1) h
 
-open Classical in
 
-open Classical in
 
 abbrev Pt (u : Pr.Word) (i : ℕ) : Type := ChPt (R := R) sel mu u i × Option (L.β i) × Set (Sp X.E (R.N i))
 
@@ -60,7 +56,6 @@ def ambE (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (χ : TaylorLogMetric.IdE D →
   e a b N N' z := e a b (s.lat N) (s.lat N') fun τ => z (s.iT.symm τ)
   chiF a b N N' := Base.chiFac χ a b (s.lat N) (s.lat N')
 
-open Classical in
 
 end Global
 

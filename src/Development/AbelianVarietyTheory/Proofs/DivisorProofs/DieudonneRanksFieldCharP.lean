@@ -50,7 +50,6 @@ end BaseChange
 variable (hW : Published.BarsottiTateDieudonne.WittModule) {K : Type} [Field K] (h : (p : K) = 0)
 include hW h
 
-omit hW in
 
 theorem range_rigExtMap_relFrob (G : PDivGroup p K) :
     LinearMap.range (rigExtMap (relFrob h G)) = Submodule.span K (Set.range (absFrob h G).rig) := by
@@ -73,7 +72,6 @@ theorem range_rigExtMap_relFrob (G : PDivGroup p K) :
   · rintro _ ⟨y, rfl⟩
     exact ⟨_, rigExtMap_relFrob_rig h G y⟩
 
-omit hW h hp in
 
 end PDivGroup
 

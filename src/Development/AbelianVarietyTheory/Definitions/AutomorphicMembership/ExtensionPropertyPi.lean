@@ -393,7 +393,6 @@ section Values
 
 variable (L : ι → ModuliIntegralCharts.Loc D r j p)
 
-variable {L} in
 
 end Values
 
@@ -408,7 +407,6 @@ section TransferB
 variable [Nonempty ι] {L : ι → ModuliIntegralCharts.Loc D r j p} (B : ∀ v, BoundaryLocalData.LocB D (L v)) (α : ℕ → 𝓞 D.host.E)
   (hα : ∀ v, (B v).alp = α)
 
-omit [Nonempty ι] in
 
 end TransferB
 

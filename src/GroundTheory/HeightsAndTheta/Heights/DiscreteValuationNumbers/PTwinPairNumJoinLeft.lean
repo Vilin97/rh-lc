@@ -157,7 +157,6 @@ theorem fnField_assoc (O : Type) [CommRing O] {Ω : Type} [Field Ω] [Algebra O 
 
 end PairNumberJoinLeft
 
-open PairNumberJoinLeft in
 
 theorem PairNumberJoinLeft.proof (hPull : PairNumberPullback.Statement)
     (hVert : JoinVerticalDivisorLeft.Statement) (hBir : BirationalJoin.Statement) :

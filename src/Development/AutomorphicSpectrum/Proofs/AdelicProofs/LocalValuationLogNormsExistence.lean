@@ -282,7 +282,6 @@ theorem norm_sep (la : HeightOneSpectrum (𝓞 K)) (hp : ((p : ℕ) : 𝓞 K) �
   rw [hN, Rat.cast_intCast, norm_intCast_eq, ← Ideal.absNorm_span_singleton, hJ, map_mul, Nat.cast_mul,
     norm_mul, norm_absNorm_place la hp, norm_absNorm_coprime J hJ0 hj e, mul_one]
 
-open Classical in
 
 theorem sum_lies (la : HeightOneSpectrum (𝓞 K)) (hp : ((p : ℕ) : 𝓞 K) ∈ la.asIdeal) {π : K}
     (hπ : la.valuation K π = WithZero.exp (-1 : ℤ)) :

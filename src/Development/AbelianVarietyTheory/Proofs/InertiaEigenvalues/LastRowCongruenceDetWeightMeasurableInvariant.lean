@@ -21,7 +21,6 @@ open GlobalTheory.ZUnf
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem lastRow_mul_of_mem {h : GA E (m + 1)} (hh : h ∈ mirU (Ad E) (m + 1) m) (g : GA E (m + 1)) :
     GlobalTheory.ZEul.lastRow (h * g) = GlobalTheory.ZEul.lastRow g := by
@@ -33,7 +32,6 @@ theorem lastRow_mul_of_mem {h : GA E (m + 1)} (hh : h ∈ mirU (Ad E) (m + 1) m)
     rw [(mem_mirU_last.1 hh) l, if_neg hl, zero_mul]
   · simp
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem det_blkU {R : Type} [CommRing R] {a k : ℕ} (y : UnipotentBlockColumnIndex a k k → R) : (blkU y : GL (Fin a) R).val.det = 1 := by
   have h := mem_mirU_zero.1 (blkU_mem_mirU 0 y)
@@ -47,7 +45,6 @@ theorem detPow_blkU (x : ℝ) {k : ℕ} (y : UnipotentBlockColumnIndex (m + 1) k
   rw [MonoidHom.comp_apply, hd, map_one]
   simp
 
-omit [IsTotallyComplex E] in
 
 theorem isClosed_natLat (N : ℕ) : IsClosed (natLat E N) := by
   haveI : T2Space (Af E) := inferInstanceAs (T2Space (RestrictedProduct _ _ _))

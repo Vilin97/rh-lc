@@ -62,7 +62,6 @@ def invariantsConj (g : G) : (Rep.res N.subtype A).ρ.invariants →ₗ[k] (Rep.
   map_add' a b := Subtype.ext (map_add _ _ _)
   map_smul' c a := Subtype.ext (map_smul _ _ _)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep A] in
 
 theorem H0Iso_hom_cohomologyConj (g : G) (x : cohomology (Rep.res N.subtype A) 0) :
     (H0Iso (Rep.res N.subtype A)).hom.hom ((cohomologyConj A N 0 g).hom x) =

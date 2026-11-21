@@ -136,5 +136,3 @@ theorem exists_gl_frame {D : D7} {k : Type} [Field k] [ValuativeRel k] [Topologi
 
 end GlobalTheory.OffTrace
 
-open GlobalTheory.LatPair GlobalTheory.FinPl in
-open scoped Pointwise in

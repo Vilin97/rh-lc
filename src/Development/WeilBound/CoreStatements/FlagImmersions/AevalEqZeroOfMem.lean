@@ -145,7 +145,6 @@ theorem isPt_of_birational {z : (Σ k, ι k) → L} (hb : Birational z) {d : ℕ
     exact Module.finrank_pos
   exact (numMap L L (RingHom.id L) K ι z d hb hz h0).1
 
-open Classical in
 
 theorem intNum_cmp (hP : NumPull) {K₂ : Type} [Fintype K₂] {ι₂ : K₂ → Type} [∀ k, Fintype (ι₂ k)] (y : (Σ k, ι k) → Ω)
     {κ₁ : K₁ → K} {v₁ : (Σ k, ι₁ k) → Σ k, ι k} {κ₂ : K₂ → K} {v₂ : (Σ k, ι₂ k) → Σ k, ι k} (h₁ : IsBlockMap κ₁ v₁)
@@ -167,7 +166,6 @@ theorem intNum_cmp (hP : NumPull) {K₂ : Type} [Fintype K₂] {ι₂ : K₂ →
   obtain ⟨f, g, hfg⟩ := h j
   exact valEq_of_lineIso hz.1 hfg
 
-open Classical in
 
 theorem degNum_eq (hI : PB.Inputs) {d : ℕ} {σ : Type} {S : PB.AnSys d σ} {P : Ideal (MRing ι)} (Re : PB.Realis S P)
     (w : Fin d → σ) :

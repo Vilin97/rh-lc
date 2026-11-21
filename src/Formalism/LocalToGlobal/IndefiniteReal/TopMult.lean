@@ -140,15 +140,10 @@ variable {θ M c pr}
 
 variable {J' : Subgroup (Bridge.Gf V)} {χ' : J' →* ℂˣ} {F : Bridge.Gf V → c.W}
 
-set_option maxHeartbeats 1000000 in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 theorem exists_lift (y : Bridge.Gf V) : ∃ h, h ∈ GfC V ∧ (finHom V).rangeRestrict h = y := by
   obtain ⟨g, rfl⟩ := (finHom V).rangeRestrict_surjective y
@@ -167,10 +162,7 @@ theorem lift_unique {h h' : GA D V} (hh : h ∈ GfC V) (hh' : h' ∈ GfC V)
   rw [inf_GinfC_GfC', Subgroup.mem_bot] at h3
   exact inv_mul_eq_one.mp h3
 
-set_option maxHeartbeats 4000000 in
-open Classical in
 
-open Classical in
 
 end Generic
 
@@ -179,7 +171,6 @@ section Real
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : Formalism.L2.DIV.FamIn D.what₂.LL G Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-open Classical in
 
 end Real
 

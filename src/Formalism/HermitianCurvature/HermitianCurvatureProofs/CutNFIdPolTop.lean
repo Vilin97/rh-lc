@@ -135,7 +135,6 @@ noncomputable section
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
-set_option maxHeartbeats 1000000 in
 
 end
 

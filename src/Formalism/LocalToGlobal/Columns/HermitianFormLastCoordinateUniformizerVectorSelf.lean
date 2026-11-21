@@ -27,14 +27,12 @@ def AtTSeen : Prop :=
       ((0 : WithTop ℤ) < D.what₂.places.val w y ↔
         x ∈ (if (D.fm u).seenP w then A.Pv v else Formalism.HermitianLatticesTheory.conjIdeal (K := D.host.E) (A.Pv v)))
 
-variable (D u) in
 
 def AtTDisc : Prop :=
   ∀ i, i ≤ D.R.m → ∀ c : (D.mem u).C.cls i,
     Nonempty ((CH.Ld D u i c ⧸ (D.clsLat u i c).comap (CH.Ld D u i c).subtype) ≃ₗ[𝓞 D.host.E]
       (𝓞 D.host.E ⧸ Ideal.span {(((D.mem u).A.T : ℕ) : 𝓞 D.host.E)}))
 
-set_option maxHeartbeats 4000000 in
 
 structure AtTMoves where
 
@@ -74,7 +72,6 @@ structure AtTMoves where
       (∀ v', v' ≠ v → ∀ (z : CH.Ld D u i ((D.fm u).dil i v a c)) (hz : (dilG i v a c).1 (z : (D.sp.X i).V) ∈ CH.Ld D u i c),
         (D.fm u).fv i v' _ (hxPr A P i v' _ z) = (D.fm u).fv i v' c (hxPr A P i v' c ⟨_, hz⟩))
 
-set_option maxHeartbeats 4000000 in
 
 structure AtTXp where
 
@@ -96,7 +93,6 @@ structure AtTXp where
       (a : D.host.E) = (D.sp.X D.R.m).hT z0 ((tilG c).1 (z : (D.sp.X D.R.m).V)) →
       (D.fm u).fv D.R.m v _ (hxPr A P D.R.m v _ z) = A.res v a
 
-set_option maxHeartbeats 4000000 in
 
 def atTOf (eF : ∀ v : (D.mem u).A.vT, (D.mem u).A.Fv v ≃+* (𝓞 D.host.F ⧸ (A.eV v).1.asIdeal))
     (hF : ∀ v (a : 𝓞 D.host.F), eF v (A.res v (algebraMap (𝓞 D.host.F) (𝓞 D.host.E) a)) = Ideal.Quotient.mk _ a)

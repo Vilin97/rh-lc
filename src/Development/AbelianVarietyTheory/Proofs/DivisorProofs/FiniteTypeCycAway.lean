@@ -13,7 +13,6 @@ open GlobalTheory GlobalTheory.SiegelTor GlobalTheory.ZM
 
 namespace GlobalTheory.SiegelTor
 
-open CategoryTheory AlgebraicGeometry Limits NumberField in
 
 theorem _root_.GlobalTheory.SiegelTor.finiteType_cycAway (n : ℕ) : Algebra.FiniteType ℤ (_root_.GlobalTheory.SiegelTor.cycAway n) := by
   have hfg : (Algebra.adjoin ℤ ({_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.zeta n, (n : ℂ)⁻¹} : Set ℂ)).FG := by
@@ -23,7 +22,6 @@ theorem _root_.GlobalTheory.SiegelTor.finiteType_cycAway (n : ℕ) : Algebra.Fin
   rw [Algebra.adjoin_int] at h
   exact h
 
-open CategoryTheory AlgebraicGeometry Limits NumberField in
 
 theorem _root_.GlobalTheory.SiegelTor.arBase_cycAway : ∀ n : ℕ, n ≠ 0 → _root_.GlobalTheory.ZM.ArBase (_root_.GlobalTheory.SiegelTor.cycAway n).subtype := by
   intro n _

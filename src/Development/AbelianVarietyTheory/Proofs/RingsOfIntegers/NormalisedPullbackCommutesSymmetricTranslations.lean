@@ -44,7 +44,6 @@ theorem negT_translT [IsCommMonObj A] {T : Over S} (x : T ⟶ A) :
   show fst T A ≫ x * (snd T A)⁻¹ = ((fst T A ≫ x)⁻¹ * snd T A)⁻¹
   rw [mul_inv, inv_inv]
 
-omit [GrpObj A] in
 
 theorem exists_conj {L : LB A.left} (hL : L.IsLB) (φ : A ⟶ A) (a b : ℤ)
     (α : LB.Gen (LB.LinComb L (K := Fin 2) ![𝟙 A.left, φ.left] ![a, -b])) (hα : α.IsGen) {T : Over S}

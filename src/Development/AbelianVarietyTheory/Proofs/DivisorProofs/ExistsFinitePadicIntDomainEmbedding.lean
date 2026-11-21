@@ -82,7 +82,6 @@ theorem finite_quot_span [IsNoetherianRing C] [Finite (ResidueField C)] (hp0 : (
 
 end GlobalTheory.CompletionEmbed
 
-open IsLocalRing GlobalTheory.CompletionEmbed in
 
 theorem GlobalTheory.CompletionEmbed.exists_finite_padicInt_domain :
     ∀ (p : ℕ) [Fact p.Prime] (C : Type) [CommRing C] [IsDomain C] [IsLocalRing C]

@@ -33,7 +33,6 @@ theorem hasComplement_iff (W : HSpace E) (x : W.V) (M' P' Q' : ℕ) :
   · rintro ⟨L, W', ι, hL, hx, hk, hi, hr, hm, hs⟩
     exact ⟨L, (selfDual_iff W L).2 hL, hx, hs, W', ι, (ofKind_iff _ _ _ _).2 hk, hi, hr, hm⟩
 
-omit [NumberField E] [StarRing E] in
 
 theorem forall_step_iff (P Q : ℕ) (C : E → ℕ → ℕ → Prop) :
     (∀ (β : E) (P' Q' : ℕ), SelfDualLatticeComplements.Step β P Q P' Q' → C β P' Q') ↔

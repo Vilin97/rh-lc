@@ -52,11 +52,8 @@ section Tor0
 
 variable {D : D7} {N N' : ℕ} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ}
 
-variable (D cc δ) in
 
-variable (D cc δ) in
 
-variable (D cc δ) in
 
 end Tor0
 
@@ -86,7 +83,6 @@ section StepA
 
 variable {D : D7} {N N' : ℕ} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ}
 
-variable (D cc δ) in
 
 end StepA
 
@@ -94,7 +90,6 @@ section StepC
 
 variable {D : D7} {N N' : ℕ} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ}
 
-variable (D cc δ) in
 
 end StepC
 

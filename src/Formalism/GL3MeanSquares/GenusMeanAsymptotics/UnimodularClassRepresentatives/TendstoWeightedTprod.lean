@@ -108,7 +108,6 @@ theorem tendsto_weighted (hq : ∀ i, 2 ≤ q i) (hsum : Summable fun i => (q i 
   rw [← hcl]
   exact Tendsto.congr heq hlim
 
-open scoped Classical in
 
 def cut (ρ : ι → ℕ → ℝ) (S' : Finset ι) (i : ι) (j : ℕ) : ℝ := if i ∈ S' then ρ i j else 1
 

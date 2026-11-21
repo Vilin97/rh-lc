@@ -251,7 +251,6 @@ theorem eq_of_mem_affine {C : Type} [Field C] (V : ValuationSubring C)
 
 end CoordExtend
 
-open CoordExtend in
 
 theorem coord_point_extends : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X)
     (κ : Type) [Finite κ] (x : κ → Ω), CoordTie ℤ ξ x →

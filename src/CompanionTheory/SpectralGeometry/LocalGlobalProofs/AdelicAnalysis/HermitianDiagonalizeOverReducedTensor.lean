@@ -211,7 +211,6 @@ variable (hs : ∀ z, s (s z) = z) (hR : ∀ r, s (algebraMap R A r) = algebraMa
   (t : A →ₗ[R] R) (ht : ∀ r, t (algebraMap R A r) = r) (hfix : ∀ z, s z = z → algebraMap R A (t z) = z)
   {θ : A} (hθ : IsUnit θ) (hsθ : s θ = -θ) (h2 : IsUnit (2 : A))
 
-include hs ht hfix hθ hsθ h2 in
 
 theorem exists_value_notMem [Nonempty ι] {S : Matrix ι ι A} (hS : cT s S = S) (hdet : IsUnit S.det)
     (m : MaximalSpectrum R) : ∃ x, t (bf s S x x) ∉ m.asIdeal := by
@@ -242,7 +241,6 @@ theorem exists_value_notMem [Nonempty ι] {S : Matrix ι ι A} (hS : cT s S = S)
   rw [← map_one (algebraMap R A), ht] at h4
   exact m.isMaximal.ne_top ((Ideal.eq_top_iff_one _).2 h4)
 
-include hs hR ht hfix hθ hsθ h2 in
 
 theorem exists_value_unit [Nonempty ι] [Finite (MaximalSpectrum R)] {S : Matrix ι ι A}
     (hS : cT s S = S) (hdet : IsUnit S.det) : ∃ (x : ι → A) (r : Rˣ), bf s S x x = algebraMap R A r := by
@@ -281,7 +279,6 @@ theorem cT_fromBlocks {l m : Type} (a : Matrix l l A) (b : Matrix l m A) (c : Ma
   rw [cT, Matrix.fromBlocks_map, Matrix.fromBlocks_transpose]
   rfl
 
-variable (s R) in
 
 def DiagProp (A : Type) [CommRing A] [Algebra R A] (s : A →+* A) (ι : Type) [Fintype ι] [DecidableEq ι] : Prop :=
   ∀ S : Matrix ι ι A, cT s S = S → IsUnit S.det →
@@ -308,7 +305,6 @@ theorem DiagProp.of_equiv {κ : Type} [Fintype κ] [DecidableEq κ] (e : ι ≃ 
   ext i j
   simp [Matrix.diagonal_apply]
 
-include hs hR in
 
 theorem split_step (ih : DiagProp (R := R) A s ι) {S : Matrix (Unit ⊕ ι) (Unit ⊕ ι) A} (hS : cT s S = S)
     (hdet : IsUnit S.det) (r : Rˣ) (h0 : S (Sum.inl ()) (Sum.inl ()) = algebraMap R A r) :
@@ -387,7 +383,6 @@ theorem split_step (ih : DiagProp (R := R) A s ι) {S : Matrix (Unit ⊕ ι) (Un
     funext i
     cases i <;> rfl
 
-include hs hR ht hfix hθ hsθ h2 in
 
 theorem diagProp_succ [Finite (MaximalSpectrum R)] [Finite (MaximalSpectrum A)]
     (ih : DiagProp (R := R) A s ι) : DiagProp (R := R) A s (Unit ⊕ ι) := by

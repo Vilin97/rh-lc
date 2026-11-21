@@ -20,11 +20,9 @@ namespace UnramifiedACris
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-variable (p) in
 
 variable (K₀ : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] K₀]
 
-omit [FiniteDimensional ℚ_[p] K₀] in
 
 theorem mem_integer_iff (x : K₀) : x ∈ 𝒪[K₀] ↔ ‖(x : PadicAlgCl p)‖ ≤ 1 := by
   rw [integer_eq_normInteger, mem_normInteger]

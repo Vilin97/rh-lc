@@ -198,7 +198,6 @@ theorem idealHilbertPoly_ne_zero_of_X_notMem {P : Ideal (MvPolynomial ι k)} [hP
   rw [hbot, Submodule.mem_bot, Ideal.Quotient.eq_zero_iff_mem] at hmem
   exact h (hP.mem_of_pow_mem _ hmem)
 
-omit [Finite ι] in
 
 theorem exists_form_lt_sup_lt_colon {I : Ideal (MvPolynomial ι k)}
     (hI : I.IsHomogeneous (homogeneousSubmodule ι k)) (h : I ≠ ⊤) (hp : ¬ I.IsPrime) :

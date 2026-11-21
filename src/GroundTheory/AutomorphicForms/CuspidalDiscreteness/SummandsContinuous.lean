@@ -40,17 +40,14 @@ theorem archimedeanProjection_maximalCompact (k : archCompact K n) :
       ⟨infEmb K n (k : archGroup K n), Reduction.maxCompact_le_normOneGL k.2⟩ :=
   archProj_of_mem (Reduction.maxCompact_le_normOneGL k.2)
 
-variable {μ} in
 
 theorem IsContRep.of_eq {φ ψ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F : normOneGL K n → ℂ}
     (h : IsContRep μ φ F) (e : φ = ψ) : IsContRep μ ψ F := e ▸ h
 
-variable {μ} in
 
 theorem IsContRep.of_eq_fun {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F G : normOneGL K n → ℂ}
     (h : IsContRep μ φ F) (e : F = G) : IsContRep μ φ G := e ▸ h
 
-omit [μ.IsHaarMeasure] in
 
 theorem smul_comb {E : Type*} [AddCommGroup E] [Module ℂ E] (X : E) (r i c : ℂ) :
     r • (c • X) + Complex.I • (i • (c • X)) = c • ((r + i * Complex.I) • X) := by
@@ -60,7 +57,6 @@ theorem smul_comb {E : Type*} [AddCommGroup E] [Module ℂ E] (X : E) (r i c : �
 
 variable (ν : Measure (archGroup K n)) [ν.IsHaarMeasure]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_contRep_of_zkFinite (v : CuspL2 μ)
     (hs : (isExpLieAlgebra K n).IsSmoothVector (archRepT μ) v)

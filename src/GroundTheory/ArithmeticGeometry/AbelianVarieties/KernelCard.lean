@@ -141,7 +141,6 @@ theorem Ψ₂Sq_ne_zero : W.Ψ₂Sq ≠ 0 := by
     rw [Δ, h2, h0]; linear_combination (-2 * W.b₄ ^ 3) * h3
   exact W.isUnit_Δ.ne_zero hΔ
 
-omit [W.IsElliptic] in
 
 private theorem wronskian_coeff {n : ℤ} (hn : (n : F) ≠ 0) (h2 : 2 ≤ n.natAbs) :
     (derivative (W.Φ n) * W.ΨSq n - W.Φ n * derivative (W.ΨSq n)).coeff
@@ -333,7 +332,6 @@ theorem card_zsmul_eq_zero {n : ℤ} (hn : (n : F) ≠ 0) :
       left_inv := fun P => Subtype.ext (add_sub_cancel_right _ _)
       right_inv := fun Q => Subtype.ext (sub_add_cancel _ _) }
 
-omit [IsSepClosed F] [W.IsElliptic] in
 
 theorem zsmul_eq_zero_iff_ΨSq (n : ℤ) (P : W.toAffine.Point) :
     n • P = 0 ↔ P = 0 ∨ ∃ (x y : F) (h : W.toAffine.Nonsingular x y),

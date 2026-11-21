@@ -40,7 +40,6 @@ theorem exists_frm_pow {D : DegPre R} {k : ℕ} {b : TF (R := R) F ⟶ D.P.A} (w
     (GeneratorPullback.powGen D.P.L _ _ w n) (powGen_isGen _ _ _ _ hw n)
   exact ⟨w', h₁, fun z J hJ => (h₂ _ _ z J hJ).trans (map_pow _ _ _)⟩
 
-omit [IsDomain R] in
 
 theorem exists_secA_mul {A : PolAV (Spec (CommRingCat.of (FractionRing R)))} {a b c : ℕ} (hc : c = a + b)
     (t : SecA A F a) (t' : SecA A F b) : ∃ u : SecA A F c,

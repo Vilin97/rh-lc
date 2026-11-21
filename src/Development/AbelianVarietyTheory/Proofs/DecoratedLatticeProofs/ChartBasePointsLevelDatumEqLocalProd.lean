@@ -20,7 +20,6 @@ noncomputable section
 
 namespace GlobalTheory.PhiOneVal
 
-open Classical in
 
 theorem phiT_base_eq_prod : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word)
     (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is →

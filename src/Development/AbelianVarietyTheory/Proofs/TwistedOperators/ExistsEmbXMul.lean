@@ -16,9 +16,7 @@ open GlobalTheory.StepData
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype n'] [DecidableEq n'] in
 
-omit [Fintype n'] in
 
 open ValuativeRel Matrix in
 variable {k : Type} [Field k] [ValuativeRel k] {n n' : Type} {c : ℕ} in
@@ -77,7 +75,6 @@ theorem _root_.GlobalTheory.RootEx.Unram.intM_affPt {p : ℕ} (x₀ : Matrix n n
     · rw [affPt_apply_of_not_free x₀ e hf]
       exact intM_basePt_of_intM hx r s
 
-omit [Fintype n'] [DecidableEq n'] in
 
 open MeasureTheory ValuativeRel Matrix in
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
@@ -163,11 +160,6 @@ theorem _root_.GlobalTheory.RootEx.Unram.opE_of_ite {p : ℕ} {ψ : AddChar k Ci
     simp [hν.2]
   · simp
 
-open MeasureTheory ValuativeRel Matrix in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
-variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ} in
-variable [MeasurableSpace k] [BorelSpace k] in
-omit [DecidableEq n] [DecidableEq n'] in
 
 theorem _root_.GlobalTheory.RootEx.Unram.psi_ch_eq_one {p : ℕ} (ψ : AddChar k Circle)
     (ν : Measure k) [ν.IsAddHaarMeasure]

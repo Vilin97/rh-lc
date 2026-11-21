@@ -13,7 +13,6 @@ open Filter Topology
 
 namespace GlobalTheory.CountableFibres
 
-open Filter Topology in
 
 theorem _root_.GlobalTheory.CountableFibres.exists_injective_fderiv {E F : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
     [NormedAddCommGroup F] [NormedSpace ℂ F] [FiniteDimensional ℂ E] [FiniteDimensional ℂ F]
@@ -167,7 +166,6 @@ theorem _root_.GlobalTheory.CountableFibres.exists_injective_fderiv {E F : Type}
     ⟨0, Metric.mem_ball_self hε⟩
   exact hxS hx
 
-open Filter Topology in
 
 theorem _root_.GlobalTheory.CountableFibres.exists_independent_ratios :
     ∀ (d : ℕ) (I : Type) [Finite I] (B : Set (Fin d → ℂ)) (θ : (Fin d → ℂ) → I → ℂ), IsOpen B →

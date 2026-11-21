@@ -53,8 +53,6 @@ theorem exists_localGaloisCohomology_order {ℓ : ℕ} (hℓ : ℓ.Prime) (w : H
   · refine dvd_of_nsmul_mk_one_div_eq_zero hN ?_
     rw [← ht, ← AddMonoidHom.map_nsmul, hm, AddMonoidHom.map_zero]
 
-set_option maxHeartbeats 8000000 in
-include hℓ hS in
 
 theorem exists_char_order_gsDecomp (b : ℕ) :
     ∃ χ : Additive Gal(AlgebraicClosure (v.1.adicCompletion K.1)/v.1.adicCompletion K.1) →ₜ+ QZ,
@@ -90,7 +88,6 @@ theorem exists_char_order_gsDecomp (b : ℕ) :
     have h2 := (gsLoc_eq_zero_iff K S ιs v.1 v.2 (m • x')).2 h1
     exact ((congrArg (m • ·) hloc).symm.trans (AddMonoidHom.map_nsmul (gsLoc K S ιs v.1) m x').symm).trans h2
 
-set_option maxHeartbeats 4000000 in
 
 theorem char_eq_proj_nsmul_of_gsDecomp {ℓ : ℕ} (hℓ : ℓ.Prime) (b : ℕ)
     (χ : Additive Gal(AlgebraicClosure (v.1.adicCompletion K.1)/v.1.adicCompletion K.1) →ₜ+ QZ)
@@ -133,8 +130,6 @@ theorem char_eq_proj_nsmul_of_gsDecomp {ℓ : ℕ} (hℓ : ℓ.Prime) (b : ℕ)
     exact Set.mem_univ _
   exact hg
 
-set_option maxHeartbeats 4000000 in
-include hℓ hS in
 
 theorem proj_unramifiedDegree_eq_zero_of_gsDecomp_eq_one (b : ℕ)
     (g : Gal(AlgebraicClosure (v.1.adicCompletion K.1)/v.1.adicCompletion K.1))
@@ -162,8 +157,6 @@ theorem proj_unramifiedDegree_eq_zero_of_gsDecomp_eq_one (b : ℕ)
   rw [hz]
   exact (ZMod.val_eq_zero z).1 h0
 
-set_option maxHeartbeats 4000000 in
-include hℓ hS in
 
 theorem exists_hom_zmod_pow_rangeRestrict_gsDecomp
     (σ : Gal(AlgebraicClosure (v.1.adicCompletion K.1)/v.1.adicCompletion K.1))
@@ -206,8 +199,6 @@ theorem exists_hom_zmod_pow_rangeRestrict_gsDecomp
   · rw [hφ, hψ, hσ, toAdd_ofAdd, map_one]
     rfl
 
-set_option maxHeartbeats 4000000 in
-include hℓ hS in
 
 theorem exists_isPrimePowGenerator_gsDecomp :
     ∃ σ : (gsDecomp K S ιs v).range, IsPrimePowGenerator ℓ σ := by
@@ -224,8 +215,6 @@ instance totallyDisconnectedSpace_range_gsDecomp : TotallyDisconnectedSpace (gsD
   have := galUnramifiedOutside_isProfinite (F := K.1) (Ω := ℚ̄) S
   inferInstance
 
-set_option maxHeartbeats 4000000 in
-include hℓ hS in
 
 theorem eq_zero_of_pow_nsmul_cohomology_range_gsDecomp {p : ℕ} (hp : 2 ≤ p)
     (x : cohomology (Rep.res (gsDecomp K S ιs v).range.subtype

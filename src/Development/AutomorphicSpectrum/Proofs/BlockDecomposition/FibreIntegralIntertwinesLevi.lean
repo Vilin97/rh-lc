@@ -72,7 +72,6 @@ theorem clT_extTensor (τ : Representation ℂ (Mir k i) V) (σ : Representation
     simp only [clT, LinearMap.rTensor_tmul, map_one, Module.End.one_apply]
     exact congrArg (· ⊗ₜ[ℂ] b) hq
 
-set_option maxHeartbeats 1000000 in
 
 theorem fibV_prodPG (τ : Representation ℂ (Mir k i) V) (σ : Representation ℂ (GL (Fin t) k) W)
     (f : cIndSpace (HPG k i t) (hRep τ σ)) (g : GL (Fin (i + t)) k) (y : Fin (i + t) → k)
@@ -107,7 +106,6 @@ theorem fibInt_col (τ : Representation ℂ (Mir k i) V) (σ : Representation �
   exact h1.trans (map_smInt_translate μ (clT τ W) (extTensor τ σ (uM k i x, 1))
           (clT_extTensor τ σ x) (fibV f g) m hlc.1 hlc.2)
 
-set_option maxHeartbeats 1000000 in
 
 theorem fibInt_unip : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (i t : ℕ) {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W] (τ : Representation ℂ (Mir k i) V) (σ : Representation ℂ (GL (Fin t) k) W), IsSmooth τ → IsSmooth σ → ∀ [MeasurableSpace (Fin t → k)] [BorelSpace (Fin t → k)] (μ : MeasureTheory.Measure (Fin t → k)) [μ.IsAddHaarMeasure], ∀ (f : cIndSpace (HPG k i t) (hRep τ σ)) (u : Mir k (i + t)), u ∈ MirUin k (i + t) → ∀ g : GL (Fin (i + t)) k, fibInt μ (prodPG τ σ u f) g = fibInt μ f g := by
   intro k _ _ _ _ i t V W _ _ _ _ τ σ hτ hσ _ _ μ _ f u hu g

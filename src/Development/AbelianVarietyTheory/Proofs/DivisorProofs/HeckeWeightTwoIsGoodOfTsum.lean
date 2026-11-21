@@ -150,7 +150,6 @@ end Wirtinger
 
 end GlobalTheory.HeckeTwo.SumGood
 
-open GlobalTheory.HeckeTwo.SumGood in
 
 theorem GlobalTheory.HeckeTwo.isGood_of_tsum : ∀ (F : Type) [Field F] [NumberField F] (ι : Type)
     (g : ι → ℂ → (Emb F → ℂ) → ℂ) (P : ℂ → (Emb F → ℂ) → ℂ),

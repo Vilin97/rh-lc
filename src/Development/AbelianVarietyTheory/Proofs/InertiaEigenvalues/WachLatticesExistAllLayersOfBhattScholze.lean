@@ -25,7 +25,6 @@ variable {l : ℕ} [Fact l.Prime] {F : FinExt l} {Qp K₀ K : Type} [Field Qp] [
     [Algebra O RW] {inclR : RA →ₐ[O] RW} {φR : RW →ₐ[O] RW} {gR : ↥(GK F) → (RW →ₐ[O] RW)} {πA : RA}
     {I : WIo R RA RW inclR φR gR πA}
 
-set_option maxHeartbeats 2000000 in
 
 theorem build_prism (BS : GlobalTheory.Published.BhattScholzeCrystallineLattices) (E : WEt I) [Algebra ℤ_[l] O]
     [Nontrivial O] [FiniteDimensional Qp LL] (hO : Function.Injective (algebraMap O LL)) (hp : PD.p = l)
@@ -176,8 +175,6 @@ theorem build_prism (BS : GlobalTheory.Published.BhattScholzeCrystallineLattices
 
 end Generic
 
-set_option maxHeartbeats 2000000 in
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem main : GlobalTheory.Published.BhattScholzeCrystallineLattices →
     ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), LocTied l P AI → WachEx AI := by

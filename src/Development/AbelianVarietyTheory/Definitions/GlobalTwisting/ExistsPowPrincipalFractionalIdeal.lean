@@ -156,7 +156,6 @@ theorem ne_zero_of_span_eq (hM : ∀ τ x, embT D τ x ∈ M) {τ : D.what₂.Ta
   rintro rfl
   exact ellT_ne_bot hM τ (by rw [← ha, Submodule.span_singleton_eq_bot])
 
-omit [NumberField M] in
 
 theorem exp_neg_logMet {Λ : AddSubgroup ℂ} {ρ : M →ₐ[ℚ] ℂ} (hΛ : 0 < area (lamConj M ρ Λ)) {a : M}
     (ha : a ≠ 0) : Real.exp (-logMet M Λ ρ a) = area (lamConj M ρ Λ) / (Real.pi * ‖ρ a‖ ^ 2) := by
@@ -165,7 +164,6 @@ theorem exp_neg_logMet {Λ : AddSubgroup ℂ} {ρ : M →ₐ[ℚ] ℂ} (hΛ : 0 
   unfold logMet
   rw [Real.exp_neg, Real.exp_log (by positivity), inv_div]
 
-omit [NumberField M] in
 
 theorem logMet_mul {Λ : AddSubgroup ℂ} {ρ : M →ₐ[ℚ] ℂ} (hΛ : 0 < area (lamConj M ρ Λ)) {c a : M}
     (hc : c ≠ 0) (ha : a ≠ 0) :

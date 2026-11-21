@@ -403,7 +403,6 @@ theorem kosD_kosD {V : Ideal (MRingOver S ι)} {R : ℕ} (z : Fin R → KH.CechC
 
 end KoszulCechComplex
 
-open KoszulCech KoszulCechComplex in
 
 theorem KoszulCechComplex.proof : KoszulCechComplex.Statement := by
   intro S _ K _ _ ι _ _ V α R z hz c p n

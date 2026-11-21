@@ -245,7 +245,6 @@ section Tensor
 
 variable {K L V G : Type*} [Field K] [Field L] [Algebra K L] [AddCommGroup V] [Module K V]
 
-variable (K) in
 
 def rationalPart (W : Submodule L (L ⊗[K] V)) : Submodule K V :=
   (W.restrictScalars K).comap (TensorProduct.mk K L V 1)

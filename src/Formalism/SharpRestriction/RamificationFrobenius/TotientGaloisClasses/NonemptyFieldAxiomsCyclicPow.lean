@@ -654,9 +654,7 @@ theorem hostDer : HostDer (hostRaw φ hinj hH he h) := by
 
 def hostAx : HostAx φ := ⟨hostRaw φ hinj hH he h, hostDer φ hinj hH he h⟩
 
-include hinj in
 
-include hinj he in
 
 end D7
 

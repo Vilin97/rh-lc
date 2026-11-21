@@ -17,7 +17,6 @@ open scoped TensorProduct
 
 namespace GlobalTheory.FieldPair
 
-open IsLocalRing in
 
 theorem exists_residue_coords_of_locModel : ∀ {L : Type} [Field L] (c : ℂ →+* L) (Q : Subring L) (hQ : IsLocModel c Q),
     letI := hQ.isLocalRing; ∀ (N r : ℕ) (V : Place c) (hC : V.Contains Q) (u : Fin r → V.ring),

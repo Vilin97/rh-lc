@@ -31,7 +31,6 @@ def piI (w : InfinitePlace F) : AF F →+* w.Completion where
 
 def jF (v : HeightOneSpectrum (𝓞 F)) (y : v.adicCompletion F) : AF F := pairA F 0 (single v y)
 
-open Classical in
 
 def jI (w : InfinitePlace F) (y : w.Completion) : AF F :=
   pairA F (Pi.single w y : ∀ w : InfinitePlace F, w.Completion) 0

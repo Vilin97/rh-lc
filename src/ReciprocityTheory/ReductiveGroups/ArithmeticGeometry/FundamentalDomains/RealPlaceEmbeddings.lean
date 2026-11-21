@@ -107,7 +107,6 @@ theorem two_card_Psi : 2 * Fintype.card X.Ψ = finrank ℚ E := by
 noncomputable def plc (τ : X.Ψ) : TraceIntegralBasis.CP E :=
   ⟨InfinitePlace.mk τ.1, IsTotallyComplex.isComplex _⟩
 
-open scoped Classical in
 
 noncomputable def Tm : TraceIntegralBasis.VS E →ₗ[ℝ] (X.Ψ → ℂ) where
   toFun z τ := if (plc X τ).1.embedding = τ.1 then z (plc X τ) else conj (z (plc X τ))

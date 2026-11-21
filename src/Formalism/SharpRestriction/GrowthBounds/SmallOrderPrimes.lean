@@ -26,12 +26,10 @@ def Conclusion1 (D : D7) (L : SizeData₂ D) (X : Inst D L) (K : Consts) (C bo :
 
 def Conclusion2 (D : D7) (L : SizeData₂ D) (X : Inst D L) (K : Consts) : Prop := MeanKappaBound X K
 
-open Classical in
 
 def cands (D : D7) (L : SizeData₂ D) (K : Consts) : Finset ℕ :=
   (Finset.range ⌈L.sc.X'⌉₊).filter (fun p => Cand D L K p)
 
-open Classical in
 
 def WReq (X : Inst D L) (K : Consts) (a b : HH D → ℤ) : Prop :=
   ∑ p ∈ cands D L K, Real.log p / p *
@@ -69,7 +67,6 @@ def WeightedPrimeSumBound (D : D7) (L : SizeData₂ D) (X : Inst D L) (K : Const
 def admW (D : D7) (L : SizeData₂ D) (X : Inst D L) (K : Consts) : Prop :=
   aL L ∈ box D (winA D L.sc) ∧ bL L ∈ box D (winB D K L.sc) ∧ WReq X K (aL L) (bL L)
 
-open Classical in
 
 def adm1 (D : D7) (L : SizeData₂ D) (X : Inst D L) (Ce : ℝ) : Prop :=
   ∀ p : ℕ, p.Prime → IsResidueClassZero D p → L.sc.x ^ (L.sc.eps / 4) ≤ (addOrderOf (hP D p) : ℝ) →
@@ -84,12 +81,10 @@ def adm1 (D : D7) (L : SizeData₂ D) (X : Inst D L) (Ce : ℝ) : Prop :=
         ((Finset.Icc 1 (L1 D L.sc p)).filter (fun d =>
           i - d • hP D p ∈ D.host.TT ∧ IsV X p (i - d • hP D p))).card < rG L.sc)
 
-open Classical in
 
 def primesResidueBelow (D : D7) (y : ℝ) : Finset ℕ :=
   (Finset.range ⌈y⌉₊).filter (fun p => p.Prime ∧ (p : ℝ) < y ∧ IsResidueClassZero D p)
 
-open Classical in
 
 def BTT (D : D7) (L : SizeData₂ D) (X : Inst D L) : ℝ :=
   ∑ p ∈ (primesResidueBelow D L.sc.X').filter (fun p => L.sc.x ^ (L.sc.eps / 4) ≤ (addOrderOf (hP D p) : ℝ)),
@@ -99,14 +94,12 @@ def adm2 (D : D7) (L : SizeData₂ D) (X : Inst D L) : Prop :=
   ((D.R.n : ℝ) * L.sc.delta1 / 2 ≤ (D.host.TT.card : ℝ) ∧ (D.host.TT.card : ℝ) ≤ 2 * (D.R.n : ℝ) * L.sc.delta1) ∧
   BTT D L X ≤ (D.host.TT.card : ℝ) * L.sc.x ^ (-2 + L.sc.eps)
 
-open Classical in
 
 def adm3 (D : D7) (L : SizeData₂ D) : Prop :=
   ∑ p ∈ (primesResidueBelow D (L.sc.X'' D.R.n)).filter
       (fun p => (addOrderOf (hP D p) : ℝ) < L.sc.x ^ (L.sc.eps / 4)), Real.log p / p ≤
     L.sc.x ^ (-hG L.sc + L.sc.eps)
 
-open Classical in
 
 def ArchimedeanSignatureMatching (D : D7) (L : SizeData₂ D) (K : Consts) : Prop :=
   rho D K L.sc ≤ L.sc.x ^ (-2 : ℝ) ∧

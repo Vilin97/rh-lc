@@ -20,7 +20,6 @@ namespace GlobalTheory.CompanionTheory.BZPhiPG.LocO
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 def vEl (i t : ℕ) (v : Fin ((i + 1) + t + 1) → k) : Mir k ((i + 1) + t + 1) :=
   unipIn k ((i + 1) + t + 1) (Multiplicative.ofAdd v)
@@ -28,7 +27,6 @@ def vEl (i t : ℕ) (v : Fin ((i + 1) + t + 1) → k) : Mir k ((i + 1) + t + 1) 
 def ap (i t : ℕ) (c : Fin (i + 1) → k) (d : Fin (t + 1) → k) : Fin ((i + 1) + t + 1) → k :=
   Fin.append (m := i + 1) (n := t + 1) c d
 
-variable (k) in
 
 def cEl (i t : ℕ) (c : Fin (i + 1) → k) : Mir k ((i + 1) + t + 1) := vEl k i t (ap i t c 0)
 

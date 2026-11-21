@@ -302,7 +302,6 @@ theorem σC_algebraMap (g : GQ l) (c : ℚ_[l]) :
 end GlobalTheory.MemLoc.TateTwist
 
 namespace GlobalTheory.MemLoc
-open TateTwist in
 
 theorem tate_twist_invariants : ∀ (l : ℕ) [Fact l.Prime], ∀ (C : Core l) (K : FinExt l) (i : ℤ) (x : ℂ_[l]), i ≠ 0 → (∀ g ∈ GK K, Per.σC g x * (algebraMap ℚ_[l] ℂ_[l] ((C.χ g : ℤ_[l]) : ℚ_[l])) ^ i = x) → x = 0 := by
   intro l _ C K i x hi hx

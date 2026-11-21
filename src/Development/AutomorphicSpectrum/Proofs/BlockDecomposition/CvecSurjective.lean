@@ -22,14 +22,12 @@ namespace GlobalTheory.CompanionTheory.RedCov.Bridge
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   [Algebra.IsQuadraticExtension F E] (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
 
-variable (F E n) in
 
 abbrev dimN : ℕ := Fintype.card (Fin n × Fin (Module.finrank F E))
 
 def trG : GAd σ J →* GL (Fin (dimN F E n)) (AF F) :=
   (trHom (ι := Fin n) (Module.finBasis F E) (AF F)).comp (matHom (AF F) σ J)
 
-variable (F) in
 
 def cvec (v : Fin n → E) : Fin (dimN F E n) → F := fun p =>
   (Module.finBasis F E).repr (v ((Fintype.equivFin (Fin n × Fin (Module.finrank F E))).symm p).1)

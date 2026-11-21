@@ -17,7 +17,6 @@ namespace Spherical
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ}
 
-variable (F) in
 
 def Bdd (t : ℤ) (x : F) : Prop := valuation F x ≤ valuation F (uniformizer F : F) ^ t
 
@@ -191,7 +190,6 @@ theorem prod_zpow_uniformizer {ι : Type*} (s : Finset ι) (f : ι → ℤ) :
     rw [Finset.prod_insert ha, Finset.sum_insert ha, ih,
       zpow_add₀ (Cartan.uniformizer_ne_zero F)]
 
-variable (F n) in
 
 def cartanType (g : GL (Fin n) F) : Fin n → ℤ :=
   (Cartan.existsUnique_mem_doubleCoset F n g).exists.choose

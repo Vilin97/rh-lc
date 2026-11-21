@@ -22,7 +22,6 @@ open GlobalTheory.Doubling (absE)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-open Classical in
 
 def ind (S : Finset (Pl F)) : Af F :=
   ⟨fun u => if u ∈ S then 1 else 0, Eventually.of_forall fun u => by

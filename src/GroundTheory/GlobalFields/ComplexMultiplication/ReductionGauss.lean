@@ -34,7 +34,6 @@ theorem coordReduce_algebraMap (a : 𝒪) :
     map_one, ← algebraMap_smul (A := (ResidueField 𝒪)[X]) (residue 𝒪 a)]
   simp
 
-omit [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪] in
 
 theorem smul_basis_mul (c : 𝒪) (p q : 𝒪[X]) :
     (C c * p) • (1 : W.toAffine.CoordinateRing) + (C c * q) • CoordinateRing.mk W Y =
@@ -105,7 +104,6 @@ section Fraction
 
 variable (K : Type*) [Field K] [Algebra 𝒪 K] [IsFractionRing 𝒪 K]
 
-omit [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪] in
 
 theorem coordinateRing_map_algebraMap {S : Type*} [CommRing S] (f : 𝒪 →+* S) (a : 𝒪) :
     CoordinateRing.map W f (algebraMap 𝒪 W.toAffine.CoordinateRing a) =

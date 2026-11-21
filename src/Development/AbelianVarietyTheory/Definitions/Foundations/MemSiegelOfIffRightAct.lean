@@ -143,12 +143,10 @@ variable (e : n ⊕ n ≃ ι)
 
 def dblGram (J : Matrix n n A) : Matrix ι ι A := blkMat e J (-J)
 
-variable (A) in
 
 def diagSub : Submodule A (ι → A) :=
   LinearMap.eqLocus (LinearMap.funLeft A A (e ∘ .inl)) (LinearMap.funLeft A A (e ∘ .inr))
 
-variable (A) in
 
 def antiSub : Submodule A (ι → A) :=
   LinearMap.eqLocus (LinearMap.funLeft A A (e ∘ .inl)) (-LinearMap.funLeft A A (e ∘ .inr))
@@ -458,7 +456,6 @@ theorem IwasawaOf.hgtOf_mul (h : IwasawaOf e mat ν K) (p : siegelOf e mat) {k :
 
 variable [TopologicalSpace A] [IsTopologicalRing A] [T2Space A] [TopologicalSpace G] [IsTopologicalGroup G]
 
-omit [IsTopologicalGroup G] in
 
 theorem iwasawaOf_of_isCompact (hm : Continuous mat) (hν : Continuous ν) (hK : IsCompact (K : Set G))
     (h : ∀ g : G, ∃ p : siegelOf e mat, ∃ k ∈ K, g = p * k) : IwasawaOf e mat ν K :=

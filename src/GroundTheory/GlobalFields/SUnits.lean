@@ -32,7 +32,6 @@ theorem exists_pow_classNumber_eq_span (v : HeightOneSpectrum (𝓞 K)) :
   rw [Ideal.span_singleton_eq_bot.mpr rfl] at ha'
   exact pow_ne_zero _ v.ne_bot ha'
 
-open scoped Classical in
 
 theorem intValuation_of_pow_eq_span {v w : HeightOneSpectrum (𝓞 K)} {a : 𝓞 K} (ha : a ≠ 0)
     {n : ℕ} (h : v.asIdeal ^ n = Ideal.span {a}) :

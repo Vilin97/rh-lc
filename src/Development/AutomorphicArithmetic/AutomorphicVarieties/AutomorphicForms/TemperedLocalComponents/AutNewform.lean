@@ -28,4 +28,3 @@ namespace UpperTheory.V.Af.AutomorphicNewform
 
 end UpperTheory.V.Af.AutomorphicNewform
 
-open UpperTheory.V UpperTheory.V.Af UpperTheory.V.Af.AutomorphicNewform in

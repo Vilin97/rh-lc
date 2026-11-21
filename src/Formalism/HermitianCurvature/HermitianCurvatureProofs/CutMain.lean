@@ -32,7 +32,6 @@ theorem amaps_id (p : KB.Pl P Wp Wq) (f : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (
 
 end place
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end
 

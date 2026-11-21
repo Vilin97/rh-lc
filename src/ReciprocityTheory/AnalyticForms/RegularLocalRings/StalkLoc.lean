@@ -16,7 +16,6 @@ noncomputable section
 
 variable {W : Scheme.{0}} {s : W ⟶ Spec (.of ℂ)}
 
-variable (s) in
 
 structure AffPres where
 

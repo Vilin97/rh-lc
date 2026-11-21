@@ -170,7 +170,6 @@ namespace GlobalTheory.KStabBridge
 open scoped Matrix
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 theorem keeps_of_core (v : Pl D) {n : ℕ} (Ls : Set (Fin n → D.host.E))
     (M : Matrix (Fin n) (Fin n) (Af D.host.F ⊗[D.host.F] D.host.E))
@@ -233,7 +232,6 @@ theorem mem_latHat_iff_lift (S : HSp D) (L : Lat S) (v : Pl D) (z : Fin S.rank �
     convert this using 1
     funext i; exact (h2 i).symm
 
-set_option maxHeartbeats 1000000 in
 
 theorem inStabAt_of_inK (D : D7) (S : HSp D) (L : Lat S) (v : Pl D) (κ : GA D S) (_hL : IsSelfDualC S L)
     (hκ : InK S L (· = v) κ) : GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.InStabAt S L v κ := by

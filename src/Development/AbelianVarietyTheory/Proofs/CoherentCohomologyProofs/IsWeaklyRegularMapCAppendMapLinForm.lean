@@ -123,7 +123,6 @@ theorem linForm_eq [DecidableEq J] (u : J → R) (i : ι) (j₀ : J) :
   (Finset.add_sum_erase _ (fun j => (C (u j) * X (i, j) : MvPolynomial (ι × J) R))
     (Finset.mem_univ j₀)).symm
 
-open Classical in
 
 def linFormHom (u : J → R) (S : Set ι) (j₀ : J) :
     MvPolynomial (ι × J) R →ₐ[R] MvPolynomial (ι × J) R :=
@@ -167,7 +166,6 @@ theorem linFormHom_comp_eq_id {u v : J → R} (S : Set ι) {j₀ : J} (h₀ : v 
       rw [if_neg hk', h k hk', C_0, zero_mul]
   · simp [linFormHom_X_of_notMem _ hx]
 
-open Classical in
 
 def linFormInvCoeff (u : J → R) (j₀ : J) (hu : IsUnit (u j₀)) (j : J) : R :=
   if j = j₀ then (↑hu.unit⁻¹ : R) else -((↑hu.unit⁻¹ : R) * u j)

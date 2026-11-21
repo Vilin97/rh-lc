@@ -214,7 +214,6 @@ theorem pure_rep [Fintype ι] [DecidableEq ι] (hab : a ≤ b) (ha : 0 < a) (lam
 
 end GlobalTheory.KJInf.HoweDualityMaps
 
-open GlobalTheory.KJInf.HoweDualityMaps in
 
 theorem GlobalTheory.KJInf.howeSpan_all : ∀ (ι : Type) [Fintype ι], HoweSpan ι := by
   intro ι _ a b hab ha lam n Q hQ

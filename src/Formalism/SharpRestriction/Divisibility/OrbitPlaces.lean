@@ -1230,7 +1230,6 @@ theorem norm_p : ‖iL ((D.what₂.places.resChar w : ℕ) : D.what₂.LL)‖ = 
   rw [h]
   exact Padic.norm_p
 
-include hint in
 
 theorem le_vAdd_of_norm_le {b : D.what₂.LL} (hb : b ≠ 0) {B : ℝ}
     (h : ‖iL b‖ ≤ ((D.what₂.places.resChar w : ℕ) : ℝ) ^ (-B)) : ur D w B ≤ (vAdd (D.plEq w) b : ℝ) := by

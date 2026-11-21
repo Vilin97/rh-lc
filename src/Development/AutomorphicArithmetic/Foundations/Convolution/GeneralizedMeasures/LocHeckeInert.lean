@@ -19,7 +19,6 @@ section One
 
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
-open Classical in
 
 def conv (ν : Measure (archGroup K n)) (β γ : TI K n) : TI K n :=
   if h : ∃ δ : TI K n, ∀ g, δ g = ∫ x, β x * γ (x⁻¹ * g) ∂ν then h.choose else 0
@@ -71,7 +70,6 @@ def cmp {v : Pl F} (w : PlacesOver E v) : GL (Fin n) (CompletionsOver E v) →* 
 def prodFn {v : Pl F} (h : ∀ w : PlacesOver E v, GL (Fin n) (w.1.adicCompletion E) → ℂ) (g : GL (Fin n) (CompletionsOver E v)) : ℂ :=
   ∏ᶠ w, h w (cmp w g)
 
-open Classical in
 
 def iwFn {q : Pl F} (w₀ : PlacesOver E q) (ν : Fin n → ℤ) : GL (Fin n) (CompletionsOver E q) → ℂ :=
   prodFn fun w => (iwCoset w.1 (if w = w₀ then ν else 0)).indicator 1
@@ -96,11 +94,9 @@ def MatchAt (σ : E ≃ₐ[F] E) (v : Pl F) (c : ℂ) (φ : GL (Fin n) (Completi
     mE.IsHaarMeasure → mF.IsHaarMeasure → mE (unitSet E n v) = 1 → mF (GLnLocal.integralGL (v.adicCompletion F) n) = 1 →
     Match (incFin E v) (galFin σ v) (Module.finrank F E) mE mF c φ f
 
-variable (E) in
 
 def Unr (v : Pl F) : Prop := ∀ w : PlacesOver E v, Algebra.IsUnramifiedAt (𝓞 F) w.1.asIdeal
 
-variable (E) in
 
 def Split (v : Pl F) : Prop := ∀ w : PlacesOver E v, Function.Surjective (completionMap v w.1)
 

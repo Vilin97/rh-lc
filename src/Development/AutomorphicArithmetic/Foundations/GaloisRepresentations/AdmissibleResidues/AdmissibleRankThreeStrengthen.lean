@@ -31,7 +31,6 @@ variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] {l : ℕ}
 
 variable {K : Type} [Field K] [NumberField K] [Algebra K Ω] [IsScalarTower ℚ K Ω]
 
-omit [IsAlgClosure ℚ Ω] [Algebra ℚ Ω] [IsScalarTower ℚ K Ω] in
 
 structure Adm3N [IsCMField K] (ι : Qbar l ≃+* ℂ) (e N : ℕ) (ρ : G K Ω →* GL (Fin 3) (Qbar l)) : Prop where
   irr : IsIrr ρ
@@ -39,7 +38,6 @@ structure Adm3N [IsCMField K] (ι : Qbar l ≃+* ℂ) (e N : ℕ) (ρ : G K Ω �
   level : Level l N ![(e : ℤ), 0, -(e : ℤ)] ρ
   unl : Keep.OddU l ρ
 
-omit [IsAlgClosure ℚ Ω] in
 
 def Adm2N (ι : Qbar l ≃+* ℂ) (e M : ℕ) (ρ : G K Ω →* GL (Fin 3) (Qbar l)) : Prop :=
   ∃ W : G ℚ Ω →* GL (Fin 2) (Qbar l), IsIrr W ∧
@@ -49,7 +47,6 @@ def Adm2N (ι : Qbar l ≃+* ℂ) (e M : ℕ) (ρ : G K Ω →* GL (Fin 3) (Qbar
       !![W (s.restrictScalars ℚ) 0 0, 0, W (s.restrictScalars ℚ) 0 1; 0, 1, 0;
          W (s.restrictScalars ℚ) 1 0, 0, W (s.restrictScalars ℚ) 1 1]
 
-omit [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] [IsScalarTower ℚ K Ω] in
 end
 
 end UpperTheory.GalN.V

@@ -248,7 +248,6 @@ theorem two_le_r (D : D7) : 2 ≤ D.R.r := by have := D.R.m_add_three_le_k; have
 
 theorem r_lt_nV (D : D7) : D.R.r < D.R.nV := by have := t_pos D; unfold Ranks.nV; omega
 
-set_option maxHeartbeats 1000000 in
 
 theorem local_red (hL : R.toLevCh.Is A.μ0) (hPg : ∀ PP ∈ R.Pg, ∃ kv : (Σ k : Fin 2, D.nd.PlG k), PP = D.naut.plGw kv.1 kv.2)
     (i : Fin D.R.m) (t : T) (Pl : LevelP R.Pg D.R.r ℂ) {hF : D.host.F = maximalRealSubfield D.host.E}
@@ -320,7 +319,6 @@ section Main
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type}
   [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat3 D A3 Ks} {F : Face3 D A3} {X0 : BaseLevelRowSide D}
 
-set_option maxHeartbeats 2000000 in
 
 theorem cen_used (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) (hB : R.toRealDat.BaseW F.lv2)
     (hK : Keep (A3 := A3) R.toRealDat F.lv2 cG) (hO : A3.A.fam.Ok 1) (hC : CenRead Y cG) (M : MtFam D) (ad : MtAd Y M)
@@ -438,8 +436,6 @@ theorem cen_heq {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Gr
   rw [eq_of_heq (he _), eq_of_heq (he _)]
   exact (tL μ).cen z a ha x
 
-open Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR.Cx GlobalTheory.Mem.R3.Tr in
-set_option maxHeartbeats 4000000 in
 
 theorem cenRead_state {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {P : Pre2 K w} (x : St P) :
     CenRead x.r.Y x.m.z.cG := by
@@ -455,20 +451,15 @@ theorem cenRead_state {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : C
     (congrFun x.r.tup t) (x.m.t.hL i t) (fun y => (by with_unfolding_all exact ((x.r.Y.eMt i t ((y))) : _))) ((by with_unfolding_all exact ((x.r.eMt i t) :))) z' ((by with_unfolding_all exact (a :))) ((by with_unfolding_all exact (ha' :))) ((by with_unfolding_all exact (v :)))
   exact (by with_unfolding_all exact ((h1.trans h2) :))
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 2000000 in
 
 theorem labTie_withLoc {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {P : Pre2 K w}
     (x : St P) (Lc : LocAll (lay0 (Dof x))) :
     GlobalTheory.SerSys.LabTie (withLoc Lc) fun k => GlobalTheory.Mem.TypePl.labDat ((withLoc Lc).host.g k) :=
   fun k => ⟨(x.fits.grp.teich k).symm, x.fits.grp.ser k⟩
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.SerThird
 

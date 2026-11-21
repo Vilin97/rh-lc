@@ -23,7 +23,6 @@ def betaY (Rl : RealDat3 D A3 Ks) (j : ℕ) : GL (Fin (D.sp.Y j).rank) (EAf D) :
       rw [Nat.min_eq_left h]) ▸ Rl.βY j
   else 1
 
-open Classical in
 
 end Formalism.IndefR.Mi
 

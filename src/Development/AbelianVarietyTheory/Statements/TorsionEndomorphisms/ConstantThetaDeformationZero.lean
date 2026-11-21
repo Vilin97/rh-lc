@@ -150,7 +150,6 @@ variable {X Y Z : Scheme.{0}} (L : LB X) {K K' : Type} [Fintype K] [Fintype K'] 
 
 end Ones
 
-open ThetaDeform in
 
 end Zero
 

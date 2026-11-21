@@ -216,7 +216,6 @@ end Upd
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H}
 
-set_option maxHeartbeats 2000000 in
 
 theorem eq_zero_of_lt (Xo : Moduli Dw l) (c : Coeff l) (e : Ix Dw → ℤ) (τ : E →+* ℂ) (i j : Fin (Dw.mult τ))
     (hij : i < j) (he : e (some ⟨τ, i⟩) < e (some ⟨τ, j⟩)) (f : Rul Xo c) (hf : f ∈ secZ Xo c e) : f = 0 := by

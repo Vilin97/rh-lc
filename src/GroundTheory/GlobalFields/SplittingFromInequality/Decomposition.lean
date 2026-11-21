@@ -20,7 +20,6 @@ section FixedField
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
   [IsGalois K L]
 
-omit [NumberField K] [NumberField L] [IsGalois K L] in
 
 theorem card_stabilizer_fixedField_eq (H : Subgroup Gal(L/K)) (w : HeightOneSpectrum (𝓞 L))
     (hD : MulAction.stabilizer Gal(L/K) w.asIdeal ≤ H) [FiniteDimensional K L] :
@@ -68,7 +67,6 @@ theorem splitsCompletely_fixedField_of_stabilizer_le (H : Subgroup Gal(L/K))
   have : w.1.asIdeal.LiesOver v.asIdeal := Ideal.LiesOver.trans w.1.asIdeal w'.asIdeal v.asIdeal
   exact ramificationIdx_eq_one_and_inertiaDeg_eq_one_of_stabilizer_le H v w' w.1 (hD w.1 this)
 
-omit [NumberField K] [NumberField L] [IsGalois K L] in
 
 theorem below_smul (σ : Gal(L/K)) (w : HeightOneSpectrum (𝓞 L)) : below K (σ • w) = below K w :=
   (below_eq_iff (σ • w) (below K w)).2 (by rw [smul_asIdeal]; infer_instance)
@@ -115,7 +113,6 @@ section Frobenius
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
   [IsGalois K L]
 
-open AdicLiesOver in
 
 theorem stabilizer_eq_zpowers_arithFrobAt (v : HeightOneSpectrum (𝓞 K))
     (w : HeightOneSpectrum (𝓞 L)) [w.asIdeal.LiesOver v.asIdeal]

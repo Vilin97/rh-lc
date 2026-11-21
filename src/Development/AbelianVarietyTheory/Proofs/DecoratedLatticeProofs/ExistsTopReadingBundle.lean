@@ -62,9 +62,7 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
   {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts}
   {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : RealPack ex)
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end True
 
@@ -75,6 +73,5 @@ theorem levG_one {D : D7} {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Ta
   simp only [LevG, inv_one, one_mul, mul_one]
   exact ⟨h1, h2⟩
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.TopVal

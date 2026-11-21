@@ -37,12 +37,10 @@ theorem exact_of_decomp {m n : Type} [Fintype m] [Fintype n] [DecidableEq m] [De
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
 
-omit [IsCMField E] in
 
 theorem emb_ext {φ ψ : E →+* ℂ} (h : ∀ a : 𝓞 E, φ (a : E) = ψ (a : E)) : φ = ψ :=
   IsFractionRing.ringHom_ext (A := 𝓞 E) h
 
-omit [IsCMField E] in
 
 theorem indep {r : (E →+* ℂ) → (E →+* ℂ)} (hr : Function.Injective r) (f : (E →+* ℂ) → ℂ)
     (h : ∀ a : 𝓞 E, ∑ φ, f φ * r φ (a : E) = 0) (φ : E →+* ℂ) : f φ = 0 := by
@@ -53,7 +51,6 @@ theorem indep {r : (E →+* ℂ) → (E →+* ℂ)} (hr : Function.Injective r) 
   funext a
   simpa [Finset.sum_apply] using h a
 
-omit [IsCMField E] in
 
 theorem trace_eq {r : (E →+* ℂ) → (E →+* ℂ)} (hr : Function.Injective r) (a : E) :
     ((Algebra.trace ℚ E a : ℚ) : ℂ) = ∑ φ, r φ a := by

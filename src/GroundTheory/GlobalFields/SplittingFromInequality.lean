@@ -28,7 +28,6 @@ theorem IdeleGroup.infiniteProj_diagonal (w : InfinitePlace K) (a : Kˣ) :
       Units.map (algebraMap K w.Completion).toMonoidHom a :=
   Units.ext (IdeleGroup.coe_infiniteProj_diagonal w a)
 
-variable (L) in
 
 theorem exists_diagonal_mul_mem_localNorms (S : Finset (HeightOneSpectrum (𝓞 K)))
     (x : IdeleGroup K) :

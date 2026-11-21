@@ -446,7 +446,6 @@ lemma dec_exists {g : Mx k r} (hg : g ∈ Glev k r l.castSucc) (hc : ⟪g *ᵥ �
   rw [Matrix.mul_assoc, Matrix.mul_assoc, ← h, ← Matrix.mul_assoc (w1 k r l c), uh_mul_inv hw.1, Matrix.one_mul,
     ← Matrix.mul_assoc, uh_mul_inv hu.1.1, Matrix.one_mul]
 
-open scoped ComplexOrder in
 
 def cF (k r : ℕ) (l : Fin r) (g : Mx k r) : ℂ := herm (Hpk k r) (g *ᵥ bvec (eI k r l)) (bvec (eI k r l))
 

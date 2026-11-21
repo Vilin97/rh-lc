@@ -32,9 +32,6 @@ lemma _root_.GlobalTheory.PerMove.inv_mulVec_apply {r : ℕ} (A : Matrix (Fin r)
   rw [Matrix.inv_def, Matrix.smul_mulVec, Pi.smul_apply, smul_eq_mul, Ring.inverse_eq_inv',
     ← Matrix.cramer_eq_adjugate_mulVec, Matrix.cramer_apply]
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
-open scoped ComplexConjugate in
 
 lemma _root_.GlobalTheory.PerMove.det_of_triangular {n α : Type*} [Fintype n] [DecidableEq n] [LinearOrder α] (f : n → α)
     (hf : Function.Injective f) (M : Matrix n n ℂ) (hM : ∀ k l, f l < f k → M k l = 0) :
@@ -51,7 +48,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 lemma _root_.GlobalTheory.PerMove.map_cc (τ : E →+* ℂ) (z : E) : τ (_root_.ReciprocityTheory.ChartRestriction.G.FD.cc z) = conj (τ z) :=
   NumberField.IsCMField.complexEmbedding_complexConj (K := E) τ z
 
-omit [NumberField E] [IsCMField E] in
 
 open NumberField Matrix in
 open scoped nonZeroDivisors in
@@ -250,10 +246,6 @@ private lemma sum_ite_fst_eq_sum_symm {Ψ : Finset (E →+* ℂ)} [DecidableEq �
     simp [hτ]
   · intro h; exact absurd (Finset.mem_univ σ) h
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
-open scoped ComplexConjugate in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.per_move :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H

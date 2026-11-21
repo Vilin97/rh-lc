@@ -23,7 +23,6 @@ theorem isAlgClosureQ : IsAlgClosure ℚ Ω := by
 
 variable [IsAlgClosure ℚ Ω] (j : Ω →+* PadicAlgCl l)
 
-omit [IsAlgClosure E Ω] [Algebra E Ω] [NumberField E] [Field E] in
 
 def resQ (σ : GQ l) : Ω ≃ₐ[ℚ] Ω :=
   letI : Algebra Ω (PadicAlgCl l) := j.toAlgebra
@@ -115,7 +114,6 @@ theorem norm_le_pow (g : G E Ω) (hg : g ∈ Dec (F := E) A) (z : Ω) (n : ℕ)
   rw [map_div₀, map_pow, map_natCast, hj, map_div₀, map_pow, map_natCast, norm_div, norm_pow] at h2
   exact (div_le_one (by positivity)).mp h2
 
-include hj in
 
 theorem exists_ext (g : G E Ω) (hg : g ∈ Dec (F := E) A) :
     ∃ σ : GQ l, ∀ x, σ (j x) = j (g x) := by

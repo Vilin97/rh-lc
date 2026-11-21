@@ -618,7 +618,6 @@ theorem unitAt_neg_one {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) : Uni
 
 end Main
 
-open GlobalTheory.NormSum.VacMove in
 
 theorem vacuum_scalar : ∀ D : D7, odd4 D := by
   intro D cc δ hc N N' hev e0 he _ W g g' L L' c hL hL' hO

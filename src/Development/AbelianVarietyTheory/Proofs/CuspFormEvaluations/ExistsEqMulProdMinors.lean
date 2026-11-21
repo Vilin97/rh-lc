@@ -78,7 +78,6 @@ theorem weight_of_mem_support (z : Fin p × Fin n → σ) (y : Fin q × Fin n �
   have h2 := mul_right_cancel₀ (mem_support_iff.1 hm) this
   exact_mod_cast h2
 
-omit [CharZero K] in
 
 theorem rowOp_self (z : Fin p × Fin n → σ) {P : MvPolynomial σ K} {a : Fin p} {d : ℕ}
     (h : ∀ m ∈ P.support, ∑ k, m (z (a, k)) = d) : rowOp K z a a P = ((d : ℤ) : K) • P := by
@@ -284,7 +283,6 @@ theorem exists_eq_mul_prod_minors [DecidableEq σ] (z : Fin p × Fin n → σ)
 
 end HighestUnique
 
-open HighestUnique in
 
 theorem exists_eq_smul_basePoly {K T : Type*} [Field K] [CharZero K] [Fintype T] {p q n : ℕ}
     (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) {P : Poly K T p q (Fin n)}

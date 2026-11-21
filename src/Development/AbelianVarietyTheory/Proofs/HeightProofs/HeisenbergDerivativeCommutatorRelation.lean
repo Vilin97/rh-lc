@@ -17,7 +17,6 @@ section
 variable {G R : Type} [AddCommGroup G] [NormedAddCommGroup R] [NormedSpace ℝ R] [FiniteDimensional ℝ R]
   {ι : R →+ G} {π : G →+ R} {om : R →ₗ[ℝ] R →ₗ[ℝ] ℝ}
 
-omit [FiniteDimensional ℝ R] in
 
 theorem heisComm_coset (hπ : ∀ x, π (ι x) = x)
     (hf : ∀ (f : G → ℂ), Sm ι f → ∀ (u : R) (w : G), hD ι π om u f w =

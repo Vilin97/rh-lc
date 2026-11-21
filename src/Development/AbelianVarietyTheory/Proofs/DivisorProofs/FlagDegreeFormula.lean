@@ -88,7 +88,6 @@ private theorem sum_sign_prod_pow_div_factorial_eq_prod {N : ℕ} (v : Fin N →
   ext k
   simp
 
-open MvPolynomial Finset in
 
 theorem _root_.GlobalTheory.FlagPoly.flagDegFormula : _root_.Formalism.DegreeFormula.FlagDegFormula := by
   unfold _root_.Formalism.DegreeFormula.FlagDegFormula

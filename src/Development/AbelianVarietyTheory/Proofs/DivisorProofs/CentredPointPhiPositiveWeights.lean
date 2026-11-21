@@ -90,6 +90,5 @@ theorem isLocalHom_of_centred {Y : Scheme.{0}} {y : Y} {ν : Valuation (Y.preshe
   rw [hv] at this
   simp at this
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.HSApp

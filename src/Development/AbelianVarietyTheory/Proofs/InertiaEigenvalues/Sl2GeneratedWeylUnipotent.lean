@@ -88,7 +88,6 @@ theorem eq_top_of (H : Subgroup (SpecialLinearGroup (Fin 2) F)) (hw : wS F ∈ H
 
 end GlobalTheory.JR.SLGen
 
-open GlobalTheory.JR.SLGen in
 
 theorem GlobalTheory.JR.sl2_closure_weyl_unipotent_eq_top :
     ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E]

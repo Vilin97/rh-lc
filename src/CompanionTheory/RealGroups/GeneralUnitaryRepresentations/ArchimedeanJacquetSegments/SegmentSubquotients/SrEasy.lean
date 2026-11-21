@@ -47,7 +47,6 @@ end SrEasy
 
 open SrEasy
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem exists_irred_le {d l : ℕ} (hd : 0 < d) (hl : 0 < l) (σ : IrrRep (GL (Fin d) k))
     (hσ : IsCuspidal σ.ρ) (T : Subrepresentation (multiProd (consecBlocks l d) (segTerm σ.ρ l)))
@@ -67,13 +66,11 @@ theorem exists_irred_le {d l : ℕ} (hd : 0 < d) (hl : 0 < l) (σ : IrrRep (GL (
   rintro _ ⟨x, rfl⟩
   exact (f x).2
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem isIrreducible_segTensor {d : ℕ} (hd : 0 < d) (σ : IrrRep (GL (Fin d) k)) :
     (piTensor (segTerm σ.ρ 2)).IsIrreducible :=
   CompanionTheory.Lit1.SegRep.PIrr.isIrreducible_piTensor_segTerm σ 2
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem hasFiniteLength_jac_sub {d : ℕ} (hd : 0 < d)
     (σ : IrrRep (GL (Fin d) k)) (hσ : IsCuspidal σ.ρ)

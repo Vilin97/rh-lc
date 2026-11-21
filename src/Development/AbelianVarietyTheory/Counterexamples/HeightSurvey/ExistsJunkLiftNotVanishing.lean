@@ -80,7 +80,6 @@ theorem isThetaFun_transpose (ψ : AddChar (AF D.host.F) ℂ) (V W : HSp D) (hne
 
 variable {X : ThetaX D} {T : ThetaTied D X}
 
-open Classical in
 
 end GlobalTheory.WeilTieCheck
 

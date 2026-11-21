@@ -170,7 +170,6 @@ end Block
 
 end AddBlockIsometric
 
-open AddBlockIsometric in
 
 theorem AddBlockIsometric.proof : AddBlockIsometric.Statement := by
   intro K _ _ ι _ Ω _ _ y D A m N v B L hY hm hv hgen hBa hLa hLh hBh

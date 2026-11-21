@@ -63,7 +63,6 @@ theorem pow_mem_filO {C : GlobalTheory.MemLoc.Core l} {x : OB l O} (hx : x ∈ f
   | zero => simpa using toOB_mem_filO_zero (O := O) C 1
   | succ j ih => rw [pow_succ]; simpa using mul_mem_filO ih hx
 
-variable (O K) in
 
 theorem iS_E_mem (ϖ : PiSys l e) (C : GlobalTheory.MemLoc.Core l) :
     toOB l O (ϖ.iS O K (EIn l e _)) ∈ filO O C 1 := by
@@ -80,7 +79,6 @@ theorem iS_E_mem (ϖ : PiSys l e) (C : GlobalTheory.MemLoc.Core l) :
   rw [h1]
   simpa using toOB_tmul_mem_filO (O := O) h2
 
-variable (O) in
 
 theorem muDiv_mem (ϖ : PiSys l e) (C : GlobalTheory.MemLoc.Core l) (g : ↥(GK (ϖ.field a))) (i : ℕ) :
     toOB l O (ϖ.muDiv a O g i) ∈ filO O C i :=

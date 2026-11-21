@@ -132,7 +132,6 @@ theorem exists_nat_mul_IntAf (a : E ⊗[F] Formalism.MainNotions.S.Af F) :
         (m₁ : E ⊗[F] Formalism.MainNotions.S.Af F) * ((m₂ : E ⊗[F] Formalism.MainNotions.S.Af F) * y) by push_cast; ring]
     exact add_mem (mul_mem (natCast_mem _ _) h₁) (mul_mem (natCast_mem _ _) h₂)
 
-variable (F E) in
 
 def trT : E ⊗[F] Formalism.MainNotions.S.Af F →ₗ[F] Formalism.MainNotions.S.Af F :=
   TensorProduct.lift ((LinearMap.lsmul F (Formalism.MainNotions.S.Af F)).comp (Algebra.trace F E))
@@ -393,7 +392,6 @@ end Lat
 
 end TraceIntegralityAlt
 
-open TraceIntegralityAlt in
 
 theorem t0 : LatticeCommensurable := by
   intro I x

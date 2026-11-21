@@ -184,7 +184,6 @@ def TwNew.rat {D : D7} (N : TwNew D) (S : RatDat D.ntw) : RatDat N.toD7.ntw := {
 
 def TwNew.mt {D : D7} (N : TwNew D) (M : MtFam D) : MtFam N.toD7 := fun μ j h1 h2 => { M μ j h1 h2 with }
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure SideB (D : D7) (cf : CharFrame D) (Rw : RowSide D) (low : Finset ℕ)
     (Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)) → PlE D.host) (S : RatDat D.ntw)
@@ -231,7 +230,6 @@ structure SideB (D : D7) (cf : CharFrame D) (Rw : RowSide D) (low : Finset ℕ)
   hEig_zero : ∀ i (s : D.ntw.Sig i) P, D.ntw.hEig i s 0 P = 1
   rhoS : RhoSpec D Rw rowS
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure ChoiceSide (D : D7) (cf : CharFrame D) (mt : MtFam D) (exp : NExpTied D) (C : NChoice D) (tp : TupTied D cf C) : Prop where
   nct : NChTie D C
@@ -262,7 +260,6 @@ def castX (X : LocNd (lay0 D)) {j : ℕ} {w : D.what₂.places.Pl} {i : X.nd.Loc
     (x : D.what₂.MtL (X.nd.mu i) (X.nd.j i)) : D.what₂.MtL (D.what₂.muTw w) j :=
   cast (by obtain ⟨h1, h2⟩ := (X.nd.locs_mem j w i).1 h; subst h1; subst h2; rw [X.nd.mu_w]) x
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure NdSpec (Pl : PlSide D) (M : MtFam D) (C : NChoice D) (big : D.what₂.places.Pl → Finset ℂ) (X : LocNd (lay0 D))
     (T : LocTw X) where
@@ -335,7 +332,6 @@ structure NdSpec (Pl : PlSide D) (M : MtFam D) (C : NChoice D) (big : D.what₂.
     ∀ c : (D.what₂.MjLat (X.nd.j i)).gen → X.nd.O i, ∑ g, c g • bj i g = 0 ↔
       c ∈ Submodule.span (X.nd.O i) ((fun r => s ∘ r) '' latRel (D.what₂.MjLat (X.nd.j i)))
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure AutSpec {cf : CharFrame D} {jE : D.host.E →+* Qb} (A : SideA D cf jE) (M : MtFam D)
     (tup : D.what₂.Tup → Fin D.R.m → HChar D.host.E) {X : LocNd (lay0 D)}
@@ -370,17 +366,14 @@ structure AutSpec {cf : CharFrame D} {jE : D.host.E →+* Qb} (A : SideA D cf jE
 
 def withLoc (L : LocAll (lay0 D)) : D7 := setN D L.lay
 
-set_option maxHeartbeats 1000000 in
 
 def mtL (L : LocAll (lay0 D)) (M : MtFam D) : MtFam (withLoc L) := fun μ j h1 h2 => { M μ j h1 h2 with }
 
-set_option maxHeartbeats 2000000 in
 
 def chL (L : LocAll (lay0 D)) (C : NChoice D) : NChoice (withLoc L) := { C with }
 
 def cfL (L : LocAll (lay0 D)) (c : CharFrame D) : CharFrame (withLoc L) := cfTr L.lay c
 
-set_option maxHeartbeats 1000000 in
 
 def tpL (L : LocAll (lay0 D)) {c : CharFrame D} {C : NChoice D} (tp : TupTied D c C) : TupTied (withLoc L) (cfL L c) (chL L C) :=
   { tp with }
@@ -397,7 +390,6 @@ structure HeckeOpen (D : D7) (mt : MtFam D) (tup : D.what₂.Tup → Fin D.R.m �
   data : NormalizedDataCompatibility D
   cover : NormalizedLocalCompatibility D mt
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure TypesOpen (D : D7) (jE : D.host.E →+* Qb) where
   grp : GrpSide D
@@ -424,7 +416,6 @@ structure TypesOpen (D : D7) (jE : D.host.E →+* Qb) where
         ((ρ g : GL _ _) : Matrix (Fin D.R.r) (Fin D.R.r) (D.nd.O i)).charpoly.map
           ((D.naut.kFbar i).comp (IsLocalRing.residue (D.nd.O i)))
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure TwOpen (D : D7) (C : NChoice D) (cf : CharFrame D) (tp : TupTied D cf C) (mt : MtFam D) (low : Finset ℕ) where
   chiD : NC.NChiData D

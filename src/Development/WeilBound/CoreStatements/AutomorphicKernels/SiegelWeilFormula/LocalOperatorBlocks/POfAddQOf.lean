@@ -42,7 +42,6 @@ def sLOf (h : LocHyp sg L) : PX m n →ₗ[ℂ] (GR n → ℂ) where
     simp only [add_zero, L_fP_zero h] at e
     simp [e]
 
-open scoped Classical in
 
 def rhoFun (h : LocHyp sg L) (k : GR n) (P : PX m n) : PX m n :=
   if hk : InK (mR k) then Classical.choose (k_poly h k hk P) else 0
@@ -53,7 +52,6 @@ theorem rhoFun_spec (h : LocHyp sg L) {k : GR n} (hk : InK (mR k)) (P : PX m n) 
   simp only [rhoFun, dif_pos hk]
   exact Classical.choose_spec (k_poly h k hk P)
 
-open scoped Classical in
 
 def rhoOf (h : LocHyp sg L) (k : GR n) : PX m n →ₗ[ℂ] PX m n where
   toFun := rhoFun h k

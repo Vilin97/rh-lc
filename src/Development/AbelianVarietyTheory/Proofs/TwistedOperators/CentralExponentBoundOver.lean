@@ -33,7 +33,6 @@ theorem mul_small {γ : (ValueGroupWithZero k)ˣ} {A B : Matrix n n k} (hA : Int
   rw [map_mul]
   exact (mul_le_of_le_one_left' (hA i s)).trans_lt (hB s j)
 
-variable (n) in
 
 def cong (γ : (ValueGroupWithZero k)ˣ) (hγ : γ ≤ 1) : Subgroup (GL n k) where
   carrier := {g | ∀ i j, valuation k ((g.val - 1) i j) < γ}

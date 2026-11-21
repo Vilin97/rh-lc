@@ -22,7 +22,6 @@ section Lines
 
 variable {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X] [FiniteDimensional ℂ X]
 
-omit [FiniteDimensional ℂ X] in
 
 theorem deriv_line {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] {f : X → V} {p : X}
     (hf : DifferentiableAt ℂ f p) (v : X) :
@@ -79,12 +78,10 @@ theorem isOpen_dom : IsOpen {p : CF Ψ N N × CF Ψ n N × CF Ψ n N | (p.1 : CM
   filter_upwards [this] with q hq τ
   simpa using hq τ
 
-open Classical in
 
 noncomputable def dir {m : ℕ} (τ : Ψ) (k : Fin m) (a : Fin N) : CF Ψ m N :=
   fun σ i j => if σ = τ ∧ k = i ∧ a = j then 1 else 0
 
-open Classical in
 
 theorem heat_iff {D : CM Ψ N N → CM Ψ n N → CM Ψ n N → ℂ}
     (hD : DifferentiableOn ℂ (fun p : CF Ψ N N × CF Ψ n N × CF Ψ n N => D p.1 p.2.1 p.2.2)
@@ -213,7 +210,6 @@ theorem hFac_inv_bound (n N : ℕ) {δ : ℝ} (hδ : 0 < δ) (B : ℝ) :
 
 end GlobalTheory.SW.EisHeat
 
-open GlobalTheory.SW.EisHeat in
 
 theorem GlobalTheory.SW.isHeat_eis : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), Even n → 4 * N < n → ∀ φ : Matrix (Fin n) (Fin N) E → ℂ, IsSB φ → IsHeat Ψ (eis Ψ φ) := by
   rintro E _ _ _ Ψ hΨ n N hn hN φ ⟨R, hR, hφ⟩

@@ -130,7 +130,6 @@ theorem numE_lt (a : A) (d : D) : numE (A := A) (D := D) (.inl a) < numE (.inr d
     Fin.coe_natAdd]
   omega
 
-variable (k A D) in
 
 def toAD : GL (Fin (Fintype.card A + Fintype.card D)) k →* GL (A ⊕ D) k :=
   Units.map (reindexAlgEquiv k k (numE (A := A) (D := D)).symm).toMonoidHom

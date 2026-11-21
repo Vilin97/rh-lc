@@ -396,7 +396,6 @@ theorem allSt_and {p q : ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B)
 
 end PointStatements
 
-open PointStatements in
 
 end GlobalTheory.HeightCounting.Up
 

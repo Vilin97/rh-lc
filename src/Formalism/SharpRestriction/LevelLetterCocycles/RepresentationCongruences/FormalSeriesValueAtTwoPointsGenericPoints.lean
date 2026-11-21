@@ -177,9 +177,7 @@ theorem content_X_pow_p1_pow_eq_zero (hl : (l : O) ∈ IsLocalRing.maximalIdeal 
     have h3 : B ≤ l * y := by exact_mod_cast h2
     omega
 
-omit hϖ in
 
-omit hϖ in
 
 end P1
 

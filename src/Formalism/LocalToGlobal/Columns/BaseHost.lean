@@ -21,7 +21,6 @@ section Host
 
 variable {R : Ranks} {H : Formalism.BasicNotions.Host R} (T : Frame H)
 
-include T in
 
 end Host
 
@@ -29,17 +28,12 @@ section Host2
 
 variable {R : Ranks} {H : Formalism.BasicNotions.Host R} (T : Frame H)
 
-include T in
 
-include T in
 
 variable (ι : Qb →+* ℂ) (LL : Fld) [Normal ℚ LL] (hE : H.EQ ≤ LL)
 
-include T in
 
-include T in
 
-include T in
 
 end Host2
 
@@ -48,7 +42,6 @@ section Host3
 variable {R : Ranks} {H : Formalism.BasicNotions.Host R} (T : Frame H)
 variable (ι : Qb →+* ℂ) (LL : Fld) [FiniteDimensional ℚ LL] [Normal ℚ LL] (hE : H.EQ ≤ LL)
 
-include T in
 
 end Host3
 

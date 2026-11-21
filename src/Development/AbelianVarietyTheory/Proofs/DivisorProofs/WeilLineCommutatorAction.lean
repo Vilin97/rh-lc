@@ -72,7 +72,6 @@ theorem sumPl_comm (L L' : ∀ w, Module.End ℂ (V w)) :
 
 end Tensor
 
-open Formalism.BasicNotions.TH in
 
 theorem bracket_mem_upq {p q : ℕ} {Y Z : Mat p q} (hY : Y ∈ upq p q) (hZ : Z ∈ upq p q) : Y * Z - Z * Y ∈ upq p q := by
   have h1 : Yᴴ * Jm p q = -(Jm p q * Y) := eq_neg_of_add_eq_zero_left hY
@@ -82,7 +81,6 @@ theorem bracket_mem_upq {p q : ℕ} {Y Z : Mat p q} (hY : Y ∈ upq p q) (hZ : Z
     mul_neg, mul_neg, ← mul_assoc, ← mul_assoc, h1, h2]
   noncomm_ring
 
-open Formalism.BasicNotions.TH in
 
 theorem fock_trace_comm (P Q R S : ℕ) (c : ℂ) (Y Z : Mat R S) :
     (fockAct2 P Q R S Y + (c * Y.trace) • 1) * (fockAct2 P Q R S Z + (c * Z.trace) • 1) -

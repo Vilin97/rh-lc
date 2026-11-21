@@ -111,7 +111,6 @@ def isColimit_laurent {J : Type} [SmallCategory J] [IsFiltered J] {D : J ⥤ Com
 
 end GlobalTheory.EtC.GmPhiNoeth
 
-open GlobalTheory.EtC.GmPhiNoeth in
 
 theorem GlobalTheory.EtC.gmPhi_surjective_of_noetherian : ∀ (q : ℕ) [NeZero q],
     (∀ (A : Type) [CommRing A] [IsNoetherianRing A], SH A → IsUnit (q : A) → ∀ i : ℤ,

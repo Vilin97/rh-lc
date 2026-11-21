@@ -40,7 +40,6 @@ theorem pU_symm_val (f : InfinitePlace F → ℝˣ) (w : InfinitePlace F) :
 omit [NumberField F] [IsTotallyReal F] in
 theorem pU_val (s : (TR.Rinf F)ˣ) (w : InfinitePlace F) : ((pU s w : ℝˣ) : ℝ) = (s : TR.Rinf F) w := rfl
 
-open Classical in
 
 def atV (v : InfinitePlace F) (x : ℝˣ) : (TR.Rinf F)ˣ := pU.symm (Pi.mulSingle v x : InfinitePlace F → ℝˣ)
 

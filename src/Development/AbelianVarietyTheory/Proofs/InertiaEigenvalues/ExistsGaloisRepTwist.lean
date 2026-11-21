@@ -40,4 +40,3 @@ theorem eta_inf (D : D7) (hA : SumRepresentations.At.TieAut D.nd D.naut) (τ : D
 
 end GlobalTheory.HalfTwist
 
-open GlobalTheory.HalfTwist in

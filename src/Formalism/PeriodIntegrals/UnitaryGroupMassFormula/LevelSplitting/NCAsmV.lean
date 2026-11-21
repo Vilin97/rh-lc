@@ -149,7 +149,6 @@ theorem h_f_pXv (H : D.Hyp) (b : Fin r) (v : n → A) : D.h (D.f b) (D.pXv v) = 
   simp only [LinearMap.smulRight_apply, map_smul, smul_eq_mul, Dat.hL_apply, H.ff, mul_zero,
     Finset.sum_const_zero]
 
-variable (D) in
 
 def pL : (n → A) →ₗ[A] (n → A) := LinearMap.id - D.pX - D.pXv
 

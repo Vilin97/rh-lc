@@ -71,7 +71,6 @@ theorem coe_idelesProj_of (F : FiniteSubfield) [Fact (K ≤ F)] (x : IdeleGroup 
       completionEmbedding ι F ((x : 𝔸[F.1]).2 (placeOfEmbedding ι F).1) := by
   rw [idelesProj_of, coe_idelesLevelProj]
 
-set_option maxHeartbeats 2000000 in
 
 theorem idelesProj_smul (σ : Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1)) (z : IdeleLimit) :
     idelesProj ι ((globalDecomp (v.adicCompletion K.1) ι σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) • z) = σ • idelesProj ι z := by

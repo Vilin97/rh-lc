@@ -1032,7 +1032,6 @@ theorem scale_facts (s : Scale) : 1 < s.a ∧ 0 < s.b' ∧ 0 < s.X' ∧ s.a / s.
   unfold Scale.b'
   field_simp
 
-set_option maxHeartbeats 2000000 in
 
 theorem hypI_69_to_13 (D : D7) (L : SizeData₂ D) (K : Consts) (C₀ CH : ℝ) (hK : K.Nonneg) (hC₀ : C₀ = K.La)
     (hCH0 : 0 ≤ CH) (hCHk : CH ≤ K.kI) (hCHD : CH ≤ K.DI) (hCHr : 2 * CH ≤ K.rho) (hc : 0 ≤ cG L)
@@ -1154,8 +1153,6 @@ theorem hypI_69_to_13 (D : D7) (L : SizeData₂ D) (K : Consts) (C₀ CH : ℝ) 
     apply mul_le_mul_of_nonneg_right _ (by positivity)
     exact mul_le_mul (mul_le_mul_of_nonneg_right hCHk hA) hBB hB0 (mul_nonneg (hCH0.trans hCHk) hA)
 
-set_option maxHeartbeats 2000000 in
-open Classical in
 
 theorem tI_le_tIf (D : D7) (L : SizeData₂ D) (K : Consts) (C : ℝ) (hK : K.Nonneg) (hC0 : 0 ≤ C)
     (hCt1 : 2 * C ≤ K.kappaThresholdOne) (hCt2 : C ≤ K.kappaThresholdTwo) (hc : 0 ≤ cG L) (p n' : ℕ) (TT : Finset (Fin n'))
@@ -1277,7 +1274,6 @@ theorem kappa_share_of_least_serving (D : D7) (L : SizeData₂ D) (X : Inst D L)
   intro p n' W Qq O Kf _ _ _ _ _ _ _ _ _ _ ι σ j w hS TT _ _ _ _ _ _ _ a b _ lam0 hbase hdom
   exact (hX.mem p n' TT a b).2 W Qq O Kf ι σ j w hS lam0 hbase hdom
 
-set_option maxHeartbeats 2000000 in
 
 theorem type_one_hypothesis_of_segments (D : D7) (L : SizeData₂ D) (X : Inst D L) (K : Consts) (Cm CH C : ℝ) (hX : KapIDef X K)
     (hK : K.Nonneg) (hCH0 : 0 ≤ CH) (hCHk : CH ≤ K.kI) (hCHD : CH ≤ K.DI) (hCHr : 2 * CH ≤ K.rho) (hC0 : 0 ≤ C)
@@ -1618,7 +1614,6 @@ theorem scale_pow_mono {O Kf X : Type*} [CommRing O] [Field Kf] [Algebra O Kf] [
   rw [← algebraMap_smul Kf (vp ^ (a - b).toNat) n, smul_smul, map_pow, ← zpow_natCast,
     ← zpow_add₀ hvp, Int.toNat_of_nonneg (sub_nonneg.mpr hab), add_sub_cancel]
 
-open Classical in
 
 theorem type_one_hypothesis_of_bounds (D : D7) (L : SizeData₂ D) (X : Inst D L) (K : Consts) (Cm CH C : ℝ) (hX : KapIDef X K)
     (hK : K.Nonneg) (hCH0 : 0 ≤ CH) (hCHk : CH ≤ K.kI) (hCHD : CH ≤ K.DI) (hCHr : 2 * CH ≤ K.rho) (hC0 : 0 ≤ C)
@@ -1821,8 +1816,6 @@ def HypIIAt (D : D7) (L : SizeData₂ D) (X : Inst D L) (K : Consts) : Prop :=
             2 * (rG L.sc : ℝ) * ((addOrderOf (hP D p) : ℕ) : ℝ) * cG L)) *
         L.sc.x ^ Scale.A ≤ L.sc.a - cG L
 
-set_option maxHeartbeats 2000000 in
-open Classical in
 
 theorem linear_programming_input_of_hypotheses (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (K : Consts)
     (h6 : Formalism.MainNotions.AuxBlock8.adm6 D L K) (h7 : Formalism.MainNotions.AuxBlock8.adm7 D L X K) (hStd : StdSubAt D) (hBC : LPBaseChange)

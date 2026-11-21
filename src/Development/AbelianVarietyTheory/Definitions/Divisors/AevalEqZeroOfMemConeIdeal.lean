@@ -61,7 +61,6 @@ theorem mem_coneIdeal_iff (y : Fin N → Ω) (g : MvPolynomial (Fin N) K) :
 
 theorem isPrime_coneIdeal (y : Fin N → Ω) : (coneIdeal K y).IsPrime := RingHom.ker_isPrime _
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem isHomogeneous_coneIdeal (y : Fin N → Ω) :
     (coneIdeal K y).IsHomogeneous (homogeneousSubmodule (Fin N) K) := fun d g hg => by
@@ -206,7 +205,6 @@ theorem IsImageDeg.pos {ev : V →ₗ[K] Ω} {D δ : ℕ} (h : IsImageDeg ev D �
   obtain ⟨N, b, f, hf⟩ := h
   exact hf.pos
 
-open Classical in
 
 def imageDeg (ev : V →ₗ[K] Ω) (D : ℕ) : ℕ := if h : ∃ δ, IsImageDeg ev D δ then h.choose else 0
 
@@ -243,7 +241,6 @@ def IsImageHeight (Nm : (K →+* ℂ) → V → ℝ) (L : Submodule (𝓞 K) V) 
     (δ : ℕ) (f : MvPolynomial (Fin (D + 1) × Fin N) K), IsFrame Nm L b w A ∧ IsChowFormInt (imageIdeal ev b) D δ f ∧
       ((D : ℝ) + 1) * δ * h = formHeight δ w A f
 
-open Classical in
 
 def imageHeight (Nm : (K →+* ℂ) → V → ℝ) (L : Submodule (𝓞 K) V) (ev : V →ₗ[K] Ω) (D : ℕ) : ℝ :=
   if h : ∃ x, IsImageHeight Nm L ev D x then h.choose else 0
@@ -320,7 +317,6 @@ theorem vdm_smul {R : Type} [CommRing R] (t : R) (la : ι → Fin N → R) :
 
 def stdWt (ι : Type) (N : ℕ) : ι → Fin N → ℤ := fun _ i => (N : ℤ) - 1 - (i : ℕ)
 
-omit [Fintype ι] in
 
 theorem strictAnti_stdWt (τ : ι) : StrictAnti (stdWt ι N τ) := fun i l h => by
   have : (i : ℕ) < l := h

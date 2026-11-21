@@ -224,7 +224,6 @@ open GlobalTheory.Unf.FB GlobalTheory.Unf.FlatComm
 
 variable {D : D7}
 
-set_option maxHeartbeats 600000 in
 
 theorem flFB_om (ψ : AddChar (AF D.host.F) ℂ) (σ : ℕ) (J : JacL D (σ + 1)) (B : BesL D σ) (s : StFB ψ J B)
     (om₁ : Om J.W₀ B.V) (hom₁ : IsWeilDatumO ψ J.W₀ B.V s.χV s.χW om₁) (Ψ : WO J.W B.V → ℂ) (hΨ : IsThetaFunO ψ J.W B.V Ψ)

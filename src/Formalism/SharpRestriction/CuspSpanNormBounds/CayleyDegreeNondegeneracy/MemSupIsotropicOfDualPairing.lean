@@ -62,7 +62,6 @@ theorem inner_z_orth_embedding_eq_zero (x : (D.sp.X 0).V) : (hS D).hT F0.z (D.sp
   c_mem_orth.1 (orth_embedding_mem_orth_plus F0 he hz x) F0.z
     ((le_sup_right : _ ≤ Xplus (lf D F0)) (Submodule.mem_span_singleton_self _))
 
-include he hz in
 
 theorem mem_orthLattice_iff_image_mem_sup {x : (D.sp.X 0).V} :
     x ∈ L0X D Λ (lf D F0) ↔ D.sp.iXY 0 x ∈ Λ ⊔ toO (hS D) (Xsp (lf D F0)) := by
@@ -81,7 +80,6 @@ theorem exists_smul_mem_orthLattice (hΛ : Submodule.IsLattice D.host.E Λ) (x :
   rw [LinearMap.map_smul_of_tower]
   exact Submodule.mem_sup_left hcx
 
-include he hz in
 
 theorem orthLattice_isLattice (hΛ : Submodule.IsLattice D.host.E Λ) (hu : Formalism.HermitianLatticesTheory.IsUnimodular (hS D).hT Λ) :
     Submodule.IsLattice D.host.E (L0X D Λ (lf D F0)) := by
@@ -107,7 +105,6 @@ theorem orthLattice_isLattice (hΛ : Submodule.IsLattice D.host.E Λ) (hu : Form
   · exact isNoetherian_submodule.1 (isNoetherian_of_fg_of_noetherian _ hdfg) _ hle
   · exact eq_top_iff.2 (hs ▸ Submodule.span_mono hM₁)
 
-include he in
 
 theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.E Λ) (hu : Formalism.HermitianLatticesTheory.IsUnimodular (hS D).hT Λ)
     (y : (hS D).V)

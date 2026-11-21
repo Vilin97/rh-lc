@@ -136,7 +136,6 @@ theorem topologicalKrullDim_eq_succ (h : IsArithVar p D) {K : Type} [Field K] [A
     refine Order.le_krullDim_iff.2 ⟨(l.map _ hm).cons x hlt, ?_⟩
     simp [hl]
 
-attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 
 theorem ringKrullDim_chart (h : IsArithVar p D) {K : Type} [Field K] [Algebra k K]
     [IsFractionRing k K] {Y : Scheme.{0}} {j : Y ⟶ X} {q : Y ⟶ Sp K}

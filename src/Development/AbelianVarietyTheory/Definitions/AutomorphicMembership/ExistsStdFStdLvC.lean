@@ -70,17 +70,13 @@ variable (l0 : I.Law0 l) {inQ : (I.rec7 l Z).what₂.Tup → HeightOneSpectrum (
 
 end Tw
 
-set_option maxHeartbeats 1600000 in
 
-set_option maxHeartbeats 1600000 in
 
-set_option maxHeartbeats 1600000 in
 
 section Frames
 
 open GlobalTheory.Mem.FormSym
 
-set_option maxHeartbeats 4000000 in
 
 end Frames
 

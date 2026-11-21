@@ -36,7 +36,6 @@ section Hypotheses
 variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : ℕ} {x : Fin (N + 1) → Ω}
   {E : Type v} [AddCommGroup E] [Module Ω E] [Module S E] [IsScalarTower S Ω E]
 
-variable (S x E) in
 
 def FinGradedSub.zero : FinGradedSub (S := S) (x := x) E where
   piece _ := ⊥

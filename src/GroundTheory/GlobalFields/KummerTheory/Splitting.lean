@@ -81,7 +81,6 @@ theorem splitsCompletely_iff_isFiniteSplit :
   rw [splitsCompletely_iff_forall_finrank, ← isFiniteSplit_pi_iff]
   exact ⟨fun h ↦ .of_algEquiv (tensorEquiv L v).symm, fun h ↦ .of_algEquiv (tensorEquiv L v)⟩
 
-variable (L) in
 
 theorem nonempty_placesOver : Nonempty (PlacesOver L v) := by
   by_contra h

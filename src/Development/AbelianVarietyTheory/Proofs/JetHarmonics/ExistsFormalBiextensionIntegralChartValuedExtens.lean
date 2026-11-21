@@ -13,7 +13,6 @@ noncomputable section
 
 namespace GlobalTheory.CharDepth
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ in
 
 theorem isCanonGauge_mapFB_tower {R : Type} [CommRing R] {d : ℕ} {O : Type} [CommRing O] [StarRing O] {k : Type}
     [CommRing k] [Algebra ℚ k] [Algebra R k] (B : FB R d O) {h : PS k 2 d} {R' : Type} [CommRing R'] [Algebra R' k]

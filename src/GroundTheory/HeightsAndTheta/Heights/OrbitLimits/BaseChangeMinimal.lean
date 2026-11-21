@@ -20,9 +20,7 @@ section GD
 
 attribute [local instance] MvPolynomial.algebraMvPolynomial
 
-omit [Fintype σ] in
 
-omit [Fintype σ] in
 
 end GD
 

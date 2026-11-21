@@ -186,7 +186,6 @@ theorem famSpan_cont' : ∀ F ∈ famSpan θ V τ κ 𝒟, Continuous fun p : K 
   | add x y _ _ hx hy => exact hx.add hy
   | smul a x _ hx => exact continuous_const.mul hx
 
-omit hκ in
 
 theorem famSpan_sm' : ∀ F ∈ famSpan θ V τ κ 𝒟, ∀ k, F k ∈ SmFun θ V := by
   intro F hF

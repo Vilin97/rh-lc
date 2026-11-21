@@ -44,6 +44,5 @@ theorem pow_smul_eq_zero_of_le {O M : Type} [CommRing O] [AddCommGroup M] [Modul
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le h
   rw [pow_add, mul_comm, ← smul_smul, hx, smul_zero]
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.NLink.PowerSmulVanishing

@@ -52,7 +52,6 @@ def fullPt {r j : ℕ} (hj : j ≤ r) (p : Point ℂ j) : Point ℂ (r + 1) :=
       · rw [List.eq_of_mem_replicate hb]; exact ⟨one_ne_zero, le_rfl⟩
     · simp [p.2.2]; omega⟩
 
-open Classical in
 
 def orbJ {k r : ℕ} (L : LocBessel k r)
     (F : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → (L.Wq →L[ℂ] L.Wp)) (γ : Point ℂ (r + 1))
@@ -215,7 +214,6 @@ section Weights
 
 variable {D : D7} {k0 : ℕ} (Gm : GramMap k0 D.R.rS) (X : Dat D k0)
 
-open Classical in
 
 end Weights
 

@@ -15,7 +15,6 @@ variable {O F L : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [F
   [Algebra.IsSeparable F L] [Algebra O L] [IsScalarTower O F L]
   [IsDedekindDomain (integralClosure O L)] [IsFractionRing (integralClosure O L) L]
 
-variable (F) in
 
 theorem resDeg_addv (v : HeightOneSpectrum (integralClosure O L)) :
     letI := resAlg (F := F) (addv L v)

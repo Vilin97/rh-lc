@@ -37,7 +37,6 @@ theorem exists_unimodular_ge {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) 
   unfold IsUnimodular at hu ⊢
   rw [hsup, h2, hsup, hu, sup_comm M G, sup_comm _ G, sup_inf_assoc_of_le _ hi]
 
-omit [FiniteDimensional K V] in
 
 theorem exists_pair {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.Nondegenerate) [Nontrivial V]
     {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) (hu : IsUnimodular h M) (T : 𝓞 K) (hT : T ≠ 0) :
@@ -121,7 +120,6 @@ theorem exists_idem (P : Ideal (𝓞 K)) (T : 𝓞 K) (hc : IsCoprime P (conjIde
   · rw [e3]; exact_mod_cast congrArg (fun x : 𝓞 K => (x : K)) e1
   · rw [e3]; exact_mod_cast congrArg (fun x : 𝓞 K => (x : K)) e2
 
-omit [FiniteDimensional K V] in
 
 theorem exists_norm {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.Nondegenerate) [Nontrivial V]
     {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) (hu : IsUnimodular h M) (T : ℕ) (hT : T ≠ 0)

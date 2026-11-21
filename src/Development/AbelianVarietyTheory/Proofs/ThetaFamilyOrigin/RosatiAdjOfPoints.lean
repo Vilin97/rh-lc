@@ -116,7 +116,6 @@ theorem isMonHom_id_zpow (a : ℤ) : IsMonHom ((𝟙 A : A ⟶ A) ^ a) where
     have o : μ[A] = fst A A * snd A A := by simp [Hom.mul_def]
     rw [comp_id_zpow, o, mul_zpow, MonObj.comp_mul, tensorHom_fst, tensorHom_snd, comp_id_zpow, comp_id_zpow]
 
-variable (A) in
 
 def intRingAct : RingAct A ℤ where
   act a := (𝟙 A) ^ a

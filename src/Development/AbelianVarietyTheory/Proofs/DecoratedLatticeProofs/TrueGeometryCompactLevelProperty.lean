@@ -42,4 +42,3 @@ theorem GlobalTheory.FinPl.AwayLevel.single_natCast_eq {K : Type} [Field K] [Num
     simp
   · simp [hb]
 
-set_option maxHeartbeats 1000000 in

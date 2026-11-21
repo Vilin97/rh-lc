@@ -46,7 +46,6 @@ theorem levi_const_mul {f : ((Σ k, ι k) → ℂ) → ℝ} {z : (Σ k, ι k) �
 
 end PerturbedSemipositivity
 
-open PerturbedSemipositivity in
 
 theorem PerturbSemipos.proof : PerturbSemipos.Statement := by
   intro K _ ι _ P0 P M b a hM hb ha

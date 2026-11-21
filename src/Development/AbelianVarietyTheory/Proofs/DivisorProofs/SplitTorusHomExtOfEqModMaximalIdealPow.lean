@@ -27,7 +27,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraMaps (torus lieMap lieAdd
 
 namespace GlobalTheory
 
-open TorusNil TorusLocal in
 
 theorem splitTorus_hom_ext_of_forall_pow (R : Type) [CommRing R] [IsLocalRing R]
     [IsNoetherianRing R] (A : Type) [AddCommGroup A] (B : Over (Spec (CommRingCat.of R)))
@@ -54,5 +53,3 @@ theorem splitTorus_hom_ext_of_forall_pow (R : Type) [CommRing R] [IsLocalRing R]
   rw [← cancel_epi t.left, ← Over.comp_left, h1, ← Over.comp_left]
 
 end GlobalTheory
-
-open GlobalTheory in

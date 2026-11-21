@@ -199,13 +199,11 @@ omit [MeasurableSpace W] [BorelSpace W] in
 theorem countable_toAddSubgroup (L : Submodule ℤ W) [DiscreteTopology L] [IsZLattice ℝ L] :
     Countable L.toAddSubgroup := inferInstanceAs (Countable L)
 
-omit [MeasurableSpace W] [BorelSpace W] in
 
 theorem exists_basis (L : Submodule ℤ W) [DiscreteTopology L] [IsZLattice ℝ L] :
     ∃ (n : ℕ) (ω : Basis (Fin n) ℝ W), Submodule.span ℤ (Set.range ω) = L :=
   ⟨_, (Module.finBasis ℤ L).ofZLatticeBasis ℝ L, Basis.ofZLatticeBasis_span ℝ L _⟩
 
-omit [MeasurableSpace W] [BorelSpace W] in
 
 theorem exists_bound (L : Submodule ℤ W) [DiscreteTopology L] [IsZLattice ℝ L] {f : W → ℂ}
     (hc : Continuous f) (hf : ∀ l ∈ L, ∀ x, f (x + l) = f x) : ∃ C, ∀ x, ‖f x‖ ≤ C := by
@@ -306,7 +304,6 @@ variable {W : Type*} [NormedAddCommGroup W] [NormedSpace ℝ W] [FiniteDimension
   {W₁ : Type*} [NormedAddCommGroup W₁] [NormedSpace ℝ W₁] [FiniteDimensional ℝ W₁]
   [MeasurableSpace W₁] [BorelSpace W₁] {μ₁ : Measure W₁} [μ₁.IsAddHaarMeasure]
 
-omit [FiniteDimensional ℝ W] [MeasurableSpace W] [BorelSpace W] [μ₁.IsAddHaarMeasure] in
 
 theorem continuous_partialCoeff {D₁ : Set W₁} (h1 : μ₁ D₁ ≠ ⊤) (j : W₁ →ₗ[ℝ] W) {f : W → ℂ}
     (hc : Continuous f) {C : ℝ} (hC : ∀ x, ‖f x‖ ≤ C) (ν : W₁ →ₗ[ℝ] ℝ) :
@@ -373,7 +370,6 @@ theorem coeff_partialCoeff_eq_mul (L : Submodule ℤ W) [DiscreteTopology L] [Is
         simp only [hs, integral_mul_const]
         simp only [coeff, setAverage_eq, one_mul, smul_mul_assoc]
 
-open Classical in
 
 theorem coeff_partialCoeff (L : Submodule ℤ W) [DiscreteTopology L] [IsZLattice ℝ L]
     {D : Set W} (hD : IsAddFundamentalDomain L D μ) {L₁ : AddSubgroup W₁} {D₁ : Set W₁}
@@ -414,7 +410,6 @@ theorem partialCoeff_eq_zero_iff (L : Submodule ℤ W) [DiscreteTopology L] [IsZ
   rw [coeff_partialCoeff L hD hD₁ h0 h1 j hc hf hf₁ hν hχ]
   by_cases h : χ ∘ₗ j = ν <;> simp [h]
 
-open Classical in
 
 theorem partialCoeff_spec_map (L : Submodule ℤ W) [DiscreteTopology L] [IsZLattice ℝ L]
     {D : Set W} (hD : IsAddFundamentalDomain L D μ) {L₁ : AddSubgroup W₁} {D₁ : Set W₁}
@@ -442,8 +437,6 @@ theorem partialCoeff_spec_map (L : Submodule ℤ W) [DiscreteTopology L] [IsZLat
   obtain ⟨l, hl, hk⟩ := hi
   exact coeff_eq_zero_of_period (Γ := L.toAddSubgroup) hD hf hχ (hf₁ l hl) fun ⟨k, h⟩ => hk k h
 
-omit [MeasurableSpace W] [BorelSpace W] in
-open Classical in
 
 theorem partialCoeff_spec_cube {ι : Type*} [Fintype ι] (ω : Basis ι ℝ W)
     {L₁ : AddSubgroup W₁} {D₁ : Set W₁}

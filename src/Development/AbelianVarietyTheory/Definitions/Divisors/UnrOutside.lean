@@ -15,7 +15,6 @@ open GlobalTheory.CuspRep
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-open Classical in
 
 def sat (π : CG E a) (w : HeightOneSpectrum (𝓞 E)) : Multiset ℂˣ :=
   if h : ∃ B, π.HasSat w B then h.choose else 0

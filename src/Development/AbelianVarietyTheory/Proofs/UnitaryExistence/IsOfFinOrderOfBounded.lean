@@ -44,7 +44,6 @@ theorem gram_unitary (G γ : Matrix (Fin r) (Fin r) E)
     simp [FD.gram, FD.hermC, FD.herm, FD.col, FD.emb_cc]
   rw [FD.FrameDegreeData.gram_mul, h, FD.FrameDegreeData.gram_eq]
 
-omit [IsCMField E] in
 
 theorem isOfFinOrder_of_bounded (Ψ : Finset (E →+* ℂ))
     (hΨ : ∀ τ : E →+* ℂ, τ ∈ Ψ ↔ ComplexEmbedding.conjugate τ ∉ Ψ)
@@ -78,7 +77,6 @@ theorem isOfFinOrder_of_bounded (Ψ : Finset (E →+* ℂ))
     rw [Int.cast_mul, mul_assoc, ← zsmul_eq_mul _ (l b)]
     exact this
 
-omit [IsCMField E] in
 
 noncomputable def restrict (Λ : Submodule (𝓞 E) (Fin r → E)) (γ : GL (Fin r) E)
     (hγ : ∀ v, v ∈ Λ ↔ (γ : Matrix (Fin r) (Fin r) E) *ᵥ v ∈ Λ) : Λ ≃ₗ[ℤ] Λ where

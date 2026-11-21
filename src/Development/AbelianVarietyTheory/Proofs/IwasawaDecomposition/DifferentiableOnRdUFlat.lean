@@ -90,7 +90,6 @@ theorem exists_sec_four (hpq : 1 ≤ Dw.p + Dw.q) {σ : c.F →+* ℂ} (y : FrPt
     simp only [CompSplitPfB.cspB_evR_mul]
     exact mul_ne_zero (M₀ := ℂ) (mul_ne_zero (M₀ := ℂ) (mul_ne_zero (M₀ := ℂ) h1 h1) (mul_ne_zero (M₀ := ℂ) h1 h1)) (h0 y)
 
-open Classical in
 
 variable {σ : c.F →+* ℂ} {r : ℕ} {U : Unf Xo c σ r}
 

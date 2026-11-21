@@ -55,6 +55,5 @@ theorem toUX_one (X : HSp D) {k : ℕ} (e : Fin k ≃ Fin X.rank) {J : Matrix (F
   rw [GlobalTheory.TripleRead.toUX_val]
   simp [Formalism.L2.Theta.mt]
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.TripleAssembly

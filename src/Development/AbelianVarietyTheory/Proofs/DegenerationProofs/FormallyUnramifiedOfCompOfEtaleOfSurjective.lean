@@ -14,7 +14,6 @@ namespace GlobalTheory
 
 universe u
 
-open TensorProduct in
 
 theorem ringHom_formallyUnramified_of_comp_faithfullyFlat {A B C : Type*} [CommRing A]
     [CommRing B] [CommRing C] {φ : A →+* B} {β : B →+* C} (hβ : β.FaithfullyFlat)

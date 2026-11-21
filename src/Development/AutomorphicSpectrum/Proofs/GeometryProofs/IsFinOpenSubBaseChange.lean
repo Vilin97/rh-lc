@@ -54,7 +54,6 @@ theorem pushPt_inv (h : Γ'.IsBaseChange Γ φ F)
 
 end GlobalTheory.CompanionTheory.Ar.BT.PullSub
 
-open GlobalTheory.CompanionTheory.Ar.BT.PullSub in
 
 theorem GlobalTheory.CompanionTheory.Ar.BT.isFinOpenSub_preimage_baseChange :
     ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (R' : Type) [CommRing R'] [IsDomain R'] [Algebra R R'] (Γ' : QFGroup R' T) (F : Γ'.G.left ⟶ Γ.G.left), Γ'.IsBaseChange Γ (algebraMap R R') F → ∀ U : Γ.G.left.Opens, Γ.IsFinOpenSub U → Γ'.IsFinOpenSub (F ⁻¹ᵁ U) := by

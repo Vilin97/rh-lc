@@ -101,7 +101,6 @@ theorem ratio_mem {D : ℕ} (G : GenFibre (inrV (ι := GlobalTheory (Fin (D + 1)
 
 end VeroneseGraphDeg
 
-open VeroneseGraphDeg in
 
 theorem VeroneseGraphDeg.proof (hGr : GraphStatement) (hImg : VeroneseGraphImage.Statement)
     (hDim : FibreDimStatement)

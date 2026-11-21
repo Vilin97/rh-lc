@@ -294,7 +294,6 @@ theorem prod_irreducible (hT : DerivTop k) (hP : PosProdD k) (hTop : TopProdD k)
 
 end Main
 
-variable (k) in
 
 theorem bern_of_parts : DerivTop k → PosProdD k → TopProdD k → BernAt k := by
   intro hT hP hTop r t V W _ _ _ _ π₁ π₂ s₁ i₁ u₁ s₂ i₂ u₂

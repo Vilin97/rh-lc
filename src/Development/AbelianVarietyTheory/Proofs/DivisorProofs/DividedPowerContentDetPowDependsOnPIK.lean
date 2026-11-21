@@ -51,7 +51,6 @@ end GlobalTheory.DetPowContent
 
 namespace GlobalTheory
 
-open GlobalTheory.DetPowShape GlobalTheory.DetPowContent in
 
 theorem detPow_content_const : ∀ (p : ℕ), p.Prime → ∀ i k : ℕ, ∃ κ : ℝ, ∀ (C : Type) [Field C]
     [CharZero C] (v : AddValuation C (WithTop ℝ)), v (p : C) = 1 →

@@ -84,7 +84,6 @@ theorem twisted_section_flat_valuation (hP : _root_.GlobalTheory.CovTop.Publishe
 end Gen
 end GlobalTheory.FlatValZero
 open GlobalTheory.FlatValZero
-set_option maxHeartbeats 1000000 in
 end
 end
 
@@ -96,5 +95,4 @@ open GlobalTheory GlobalTheory.CechPic GlobalTheory.Vanishing GlobalTheory.HermT
 open GlobalTheory.FlagMod (FlagCover)
 open GlobalTheory.FlagTan (dimFlag)
 open GlobalTheory.HSApp
-set_option maxHeartbeats 1000000 in
 end

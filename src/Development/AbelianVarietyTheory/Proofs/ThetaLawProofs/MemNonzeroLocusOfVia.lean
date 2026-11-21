@@ -374,7 +374,6 @@ theorem finite_closedFibre {O k : Type} [CommRing O] [IsLocalRing O] [Field k] {
     (hp.trans e.symm)
   exact ⟨q, fun i hi => hz _ (mem_nonzeroLocus_of_via (hs i) q hi), rfl⟩
 
-open Polynomial in
 
 theorem kaVal_eq_of_line : Out.Laws → ∀ (K : Type) [Field K] [CharZero K] [IsAlgClosed K] (x' : KeyIn K) (n l l' : ℕ) (al : ℕ → Matrix (Fin 4) (Fin 4) ℤ) (s₀ s₁ : Fin x'.P.g → RR x' n) (κ₀ κ₁ : Kˣ), admitted x'.P.g n l l' al → (∀ (t : K) (s : Fin x'.P.g → RR x' n), (∀ i c, (show Γ(x'.P.A.left, x'.P.L.U c) from (s i).f c) = AbLaw.cst x'.P.A.hom _ (1 - t) * (show Γ(x'.P.A.left, x'.P.L.U c) from (s₀ i).f c) + AbLaw.cst x'.P.A.hom _ t * (show Γ(x'.P.A.left, x'.P.L.U c) from (s₁ i).f c)) → FinZ x' s) → KaVal x' n l l' al s₀ κ₀ → KaVal x' n l l' al s₁ κ₁ → κ₀ = κ₁ := by
   intro hL K _ _ _ x n l l' al s₀ s₁ κ₀ κ₁ hA hfin h₀ h₁

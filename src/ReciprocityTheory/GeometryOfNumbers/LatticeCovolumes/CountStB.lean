@@ -66,13 +66,11 @@ noncomputable def crdEmb {r : ℕ} {v : Fin r → V} (hli : LinearIndependent K 
 theorem crdEmb_apply {r : ℕ} {v : Fin r → V} (hli : LinearIndependent K v) (x : V) (i : Fin r) :
     crdEmb hli x i = mixedEmbedding K (crd hli x i) := rfl
 
-variable (K) in
 
 noncomputable def latB (r : ℕ) :
     Basis (Σ _ : Fin r, Free.ChooseBasisIndex ℤ (𝓞 K)) ℝ (Fin r → mixedEmbedding.mixedSpace K) :=
   Pi.basis fun _ => mixedEmbedding.latticeBasis K
 
-variable (K) in
 
 noncomputable def lat0 (r : ℕ) : Submodule ℤ (Fin r → mixedEmbedding.mixedSpace K) :=
   Submodule.span ℤ (Set.range (latB K r))

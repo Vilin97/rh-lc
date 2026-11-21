@@ -43,7 +43,6 @@ section Transport
 variable {H H' : Type} [Group H] [Group H'] [TopologicalSpace H] [TopologicalSpace H']
   {Γ : Subgroup H} {Γ' : Subgroup H'} (e : H ≃ₜ* H') (he : ∀ g, e g ∈ Γ' ↔ g ∈ Γ)
 
-include he in
 
 variable [MeasurableSpace H] [BorelSpace H] [MeasurableSpace H'] [BorelSpace H']
 

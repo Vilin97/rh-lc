@@ -57,6 +57,5 @@ theorem fLog_one (h1 : ExpLogRules) {ι : Type} : fLog (1 : MvPowerSeries ι K) 
 
 end SlopeTestRemainingChoices
 
-set_option maxHeartbeats 800000 in
 
 end Formalism.L2.Th1.B.Add1

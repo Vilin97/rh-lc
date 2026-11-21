@@ -31,6 +31,5 @@ theorem exists_values (c : Coeff l) (W : ValuationSubring ℂ) :
   · apply Subtype.ext
     simpa [zeta] using (Complex.isPrimitiveRoot_exp l.A l.A_pos.ne').pow_eq_one
 
-open Classical in
 
 end GlobalTheory.ArcInTest

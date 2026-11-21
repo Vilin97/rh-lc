@@ -14,7 +14,6 @@ namespace PositivityTheory.ThK.LinAct
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Invertible (2 : k)]
   {κ ι : Type} [Fintype κ] [Fintype ι] {ψ : AddChar k ℂ}
 
-omit [Invertible (2 : k)] in
 
 theorem norm_char (hc : Continuous ψ) (x : k) : ‖ψ x‖ = 1 := by
   have hle : ∀ y, ‖ψ y‖ ≤ 1 := fun y => by
@@ -70,7 +69,6 @@ theorem eventually_fix (hc : Continuous ψ) {φ : (κ → k) → ℂ} (hφ : φ 
     · exact image_eq_zero_of_notMem_tsupport hy
   rw [schr, h3, h0, mul_zero]
 
-omit [Invertible (2 : k)] in
 
 theorem exists_compact_ann (hc : Continuous ψ) (h1 : ψ ≠ 1) {U : Set (ι → k)} (hU : U ∈ 𝓝 (0 : ι → k)) :
     ∃ C : Set (ι → k), IsCompact C ∧ ∀ x, (∀ y ∈ U, ψ (x ⬝ᵥ y) = 1) → x ∈ C := by
@@ -100,7 +98,6 @@ theorem schr_comm (w w' : (κ → k) × (κ → k)) (φ : (κ → k) → ℂ) :
   have h2 : ⅟(2 : k) * 2 = 1 := invOf_mul_self _
   linear_combination (w.1 ⬝ᵥ w'.2 - w'.1 ⬝ᵥ w.2) * h2
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Invertible (2 : k)] in
 
 theorem exists_section (large₂ : Submodule k ((κ → k) × (κ → k)))
     (hiso : ∀ w ∈ large₂, ∀ w' ∈ large₂, w.1 ⬝ᵥ w'.2 = w'.1 ⬝ᵥ w.2) (hdim : Module.finrank k large₂ = Fintype.card κ)

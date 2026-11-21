@@ -21,7 +21,6 @@ section Formation
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   [CompactSpace G] {C : Rep.{u} k G} [IsDiscreteRep C]
 
-omit [CompactSpace G] in
 
 theorem cohomologyRes_subgroupOf_surjective {U V : OpenSubgroup G} (h : V ≤ U) (n : ℕ)
     (hs : Function.Surjective (cohomologyResLE C (show (V : Subgroup G) ≤ U from h) n).hom) :
@@ -88,7 +87,6 @@ theorem kummerSequenceResRes_shortExact (hl : (l : K) ≠ 0) (U : Subgroup Gal(K
     (kummerSequenceResRes (K := K) (Ksep := Ksep) l U N).ShortExact :=
   shortExact_map_res N (shortExact_map_res U (kummerSequence_shortExact l hl))
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem subsingleton_cohomology_one_galUnits_subgroupOf {U V : OpenSubgroup Gal(Ksep/K)} (h : V ≤ U) :
     Subsingleton (cohomology (Rep.res ((V : Subgroup Gal(Ksep/K)).subgroupOf U).subtype

@@ -153,7 +153,6 @@ section Abstract
 variable {G H : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [NormedAddCommGroup H]
   [InnerProductSpace ℂ H]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 lemma decay_shift {δ : G → ℝ} (hinv : ∀ g, δ g⁻¹ = δ g) (hsub : ∀ g g', δ (g * g') ≤ δ g + δ g') {c C : ℝ}
     (hc : 0 ≤ c) {f : G → ℂ} (hf : ∀ g, ‖f g‖ ≤ C * Real.exp (-(c * δ g))) (x y g : G) :

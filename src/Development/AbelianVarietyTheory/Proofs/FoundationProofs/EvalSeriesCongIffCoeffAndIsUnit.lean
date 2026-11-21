@@ -125,7 +125,6 @@ end GlobalTheory.Glue.EvInj
 
 end
 
-open GlobalTheory.Glue.EvInj in
 
 theorem GlobalTheory.Glue.ev_cong_iff_and_unit : ∀ (p : ℕ) [Fact p.Prime], ∀ (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω → ∀ (T : GlobalTheory.K5.Tower p Ω) (n : ℕ), ∀ (ψ : O0 p →+* Ω), IsReb T n ψ → ∀ (k : ℕ) (c : ℤ → Ω) (x x' : Ω), Ev ψ c x x' → ((Cong p k x 0 ↔ ∀ r, Cong p k (c r) 0) ∧ ((∃ r, c r ≠ 0 ∧ IsInt p (c r)⁻¹) → x ≠ 0 ∧ IsInt p x⁻¹)) := by
   intro p _ Ω _ _ hC T n ψ hψ k c x x' hEv

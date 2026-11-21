@@ -96,7 +96,6 @@ def splitPlacesTwoPrimes : PlacesOverCommonPrime H :=
 
 end GlobalTheory.Mem.Top.Bl.OnePrimeEach
 
-open GlobalTheory.Mem.Top.Bl.OnePrimeEach in
 
 theorem GlobalTheory.Mem.Top.Bl.exists_half_selection_split_places : ∀ B : Base, ∃ (Pv : HeightOneSpectrum (𝓞 B.host.F) → HeightOneSpectrum (𝓞 B.host.E)) (d : PlacesOverCommonPrime B.host), Formalism.L2.Col.IsSel B.fields Pv ∧ (∀ v, Pv v ∈ aboveF (L := B.host.E) B.host.F v) ∧ Half B Pv ∧ (∀ v hv, Pv v = d.P v hv) ∧ ∀ v hv, Pv v = d.P' v hv := by
   intro B

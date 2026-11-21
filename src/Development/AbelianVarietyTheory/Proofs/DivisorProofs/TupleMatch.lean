@@ -40,7 +40,6 @@ theorem pureT_smul {ι : Type} {N : ι → Type} [∀ i, AddCommGroup (N i)] [�
 
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.TopFlip
 

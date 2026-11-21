@@ -176,14 +176,6 @@ end NormalModelPlace
 
 end
 
-set_option hygiene false in
-set_option hygiene false in
-set_option hygiene false in
-set_option hygiene false in
-set_option hygiene false in
-set_option hygiene false in
-set_option hygiene false in
-set_option hygiene false in
 
 noncomputable section
 

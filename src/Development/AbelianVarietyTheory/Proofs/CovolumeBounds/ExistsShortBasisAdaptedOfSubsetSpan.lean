@@ -169,7 +169,6 @@ theorem exists_short_basis_adapted_of_subset_span (L : Submodule ℤ E) [Discret
   · simpa only [hc] using hflag
   · simpa only [hc] using hn
 
-omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] in
 
 theorem norm_sq_add_sum_Iio_le {n : ℕ} {v : Fin n → E} {i : Fin n} {r : ℝ}
     (h : ∀ j ≤ i, ‖v j‖ ≤ r) :

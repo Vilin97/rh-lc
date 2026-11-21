@@ -39,7 +39,6 @@ section General
 variable {H : Type} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] [LocallyCompactSpace H]
   [MeasurableSpace H] [BorelSpace H] {μ : Measure H} [μ.IsHaarMeasure] {Γ : Subgroup H} [Countable Γ] {𝓕 : Set H}
 
-omit [LocallyCompactSpace H] in
 
 theorem fund_lt_top {C : Set H} (hC : IsCompact C) (hcov : ∀ g, ∃ γ ∈ Γ, γ * g ∈ C)
     (h𝓕 : IsFundamentalDomain Γ 𝓕 μ) : μ 𝓕 < ⊤ := by
@@ -81,7 +80,6 @@ theorem mean_mul_right [SecondCountableTopology H] (h𝓕 : IsFundamentalDomain 
   exact h𝓕.setIntegral_eq h' fun g x => by
     simpa [Subgroup.smul_def, mul_assoc] using hf g g.2 (x * r)
 
-omit [LocallyCompactSpace H] in
 
 theorem mean_continuous [SecondCountableTopology H] {C : Set H} (hC : IsCompact C) (hcov : ∀ g, ∃ γ ∈ Γ, γ * g ∈ C)
     (h𝓕 : IsFundamentalDomain Γ 𝓕 μ) {P : Type} [TopologicalSpace P] [FirstCountableTopology P]

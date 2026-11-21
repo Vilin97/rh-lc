@@ -55,7 +55,6 @@ def IsCWCont {Wp : Type*} [NormedAddCommGroup Wp] (Hm : Matrix (Fin n) (Fin n) �
 
 end PhMeasCore
 
-open PhMeasCore in
 
 def PhMeasCore : Prop :=
   ∀ (n : ℕ) (ε : Fin n → Bool) (Hm : Matrix (Fin n) (Fin n) ℂ) (H : Type) [NormedAddCommGroup H]

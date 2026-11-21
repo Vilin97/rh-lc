@@ -17,8 +17,6 @@ noncomputable section
 
 namespace GlobalTheory.Core.Mi.LatMatch
 
-set_option maxHeartbeats 2000000 in
-open GlobalTheory.FinPl.FrameLat in
 
 theorem exists_normOneAt_pr (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (p : SplitPt D k) (c₀ : k) (hc₀ : c₀ ≠ 0) :

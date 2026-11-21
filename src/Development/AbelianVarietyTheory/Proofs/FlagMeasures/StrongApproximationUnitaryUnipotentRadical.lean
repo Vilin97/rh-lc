@@ -381,7 +381,6 @@ theorem exists_sub_mem_int (x : E ⊗[F] Af F) :
     rw [this]
     exact Formalism.UG.P.levelaf_tmul_mem _ hb
 
-omit [NumberField F] in
 
 theorem exists_compact_arch [IsTotallyComplex E] (φ : InfinitePlace F → (E →+* ℂ))
     (hφ : ∀ v (a : F), φ v (algebraMap F E a) = v.embedding a) :
@@ -686,7 +685,6 @@ theorem exists_sub_mem_nhds (hc : IsCompact (IntAf I.F I.E : Set (Bf I)))
   ext i j
   simp
 
-omit [IsTopologicalRing (Bf I)] in
 
 theorem exists_compact_MA (hc : IsCompact (IntAf I.F I.E : Set (Bf I))) :
     ∃ K : Set (MA I), IsCompact K ∧ ∀ x, ∃ y, x - diag I y ∈ K := by

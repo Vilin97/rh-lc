@@ -16,7 +16,6 @@ open GlobalTheory GlobalTheory.Ex GlobalTheory.Ex.Arch
 noncomputable section
 namespace GlobalTheory.Ex.Arch
 
-open GlobalTheory.PointUnif GlobalTheory.EigenSplit in
 
 theorem fibLie_of_laws : Laws → FibLieSt := by
   intro _ R _ _ _ D J g Λ Hm χ ex fr hfib O _ act F hF τ n hn

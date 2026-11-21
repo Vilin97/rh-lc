@@ -24,7 +24,6 @@ open GroundTheory.Automorphic.Spherical GLnLocal Iwasawa HeckeAlgebra
 
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] {n : ℕ}
 
-variable (F n) in
 
 end General
 

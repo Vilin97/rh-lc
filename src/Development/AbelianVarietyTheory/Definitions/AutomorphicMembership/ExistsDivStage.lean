@@ -209,7 +209,6 @@ theorem normAt_id (e : K →+* ℂ) {W : Type} [NormedAddCommGroup W] [InnerProd
   unfold Formalism.HermitianLatticesTheory.normAt Formalism.HermitianLatticesTheory.cnorm Formalism.HermitianLatticesTheory.fcoord Formalism.HermitianLatticesTheory.vecAt
   simp [InfinitePlace.norm_embedding_eq, InfinitePlace.apply]
 
-variable (K) in
 
 def stdLat (n : ℕ) : HLat K where
   V := Fin n → K

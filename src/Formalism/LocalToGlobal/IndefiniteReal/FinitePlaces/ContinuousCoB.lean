@@ -40,14 +40,12 @@ abbrev pt (a b : AF D.host.F) : AE D := mkE (F := D.host.F) δ (AF D.host.F) a b
 
 abbrev DA (Δ : D.host.F) : AF D.host.F := algebraMap D.host.F (AF D.host.F) Δ
 
-include hδ in
 
 include hΔ in
 theorem pt_mul (a b a' b' : AF D.host.F) :
     pt δ a b * pt δ a' b' = pt δ (a * a' + DA Δ * (b * b')) (a * b' + b * a') :=
   mkE_mul δ Δ hΔ (AF D.host.F) a b a' b'
 
-include hΔ in
 
 theorem pt_one : pt (D := D) δ 1 0 = 1 := mkE_one δ (AF D.host.F)
 
@@ -82,11 +80,8 @@ section Unit
 variable (δ : D.host.E) (hδ : D.sp.cm.sig δ = -δ) (hδ0 : δ ≠ 0) (Δ : D.host.F)
   (hΔ : algebraMap D.host.F D.host.E Δ = δ * δ)
 
-include hΔ in
 
-include hδ in
 
-include hδ hδ0 hΔ in
 
 theorem incA_eq_pt (α β : D.host.F) :
     incA D (algebraMap D.host.F D.host.E α + algebraMap D.host.F D.host.E β * δ) =

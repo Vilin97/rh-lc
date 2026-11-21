@@ -40,7 +40,6 @@ def preFun (e : ψ' ≫ φ = χ ≫ ψ) : (Pair ψ)ᵒᵖ ⥤ (Pair ψ')ᵒᵖ :
 
 variable {s' : X' ⟶ Sp R'} {q' : Y' ⟶ Sp R'}
 
-variable (s' q') in
 
 def preCoefPair (e : ψ' ≫ φ = χ ≫ ψ) (w' : ψ' ≫ s' = q' ≫ spMap (RingHom.id R')) :
     CoefMap (RingHom.id R') (OPre φ s') (pairFst ψ ⋙ OPre χ q') where

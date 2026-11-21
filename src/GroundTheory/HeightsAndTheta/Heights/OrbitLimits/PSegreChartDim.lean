@@ -94,7 +94,6 @@ theorem ringKrullDim_le_of_mem_minimalPrimes_sup_span {F : Type} [Field F] {τ :
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-open ReciprocityTheory.AnForm.R (chartIdeal conePts affCoord) in
 
 theorem ringKrullDim_of_mem_minimalPrimes_chartIdeal {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)}
     (hP : ReciprocityTheory.AnForm.R.IsMultiHomogIdeal P) (e : ℕ)
@@ -131,7 +130,6 @@ theorem ringKrullDim_of_mem_minimalPrimes_chartIdeal {P : Ideal (MvPolynomial (�
       have h1 : e + Fintype.card K ≤ d + s.card := by exact_mod_cast hlow
       exact_mod_cast (show e ≤ d by omega)
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem mem_mcPts_iff {P : Ideal (MRing ι)} (z : (Σ k, ι k) → ℂ) :
     z ∈ mcPts P ↔ z ∈ ReciprocityTheory.AnForm.R.conePts (P.map (MvPolynomial.map (Int.castRingHom ℂ))) := by

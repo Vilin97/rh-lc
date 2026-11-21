@@ -24,7 +24,6 @@ theorem schr_schr [Invertible (2 : R)] (ψ : AddChar R ℂ) {κ : Type} [Fintype
   simp only [add_dotProduct, dotProduct_add]
   linear_combination (-(w.1 ⬝ᵥ w'.2)) * (mul_invOf_self (2 : R))
 
-variable (R) in
 
 variable {α β κ : Type}
 
@@ -38,11 +37,8 @@ def flat (σ : κ ≃ α × β) : Matrix α β R ≃ₗ[R] (κ → R) where
 
 variable [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ]
 
-omit [DecidableEq α] [DecidableEq β] in
 
-omit [DecidableEq α] [Fintype κ] in
 
-omit [DecidableEq α] [Fintype κ] in
 
 def dblNum (σ : κ ≃ α × β) : κ ⊕ κ ≃ α × (β ⊕ β) := (σ.sumCongr σ).trans (Equiv.prodSumDistrib α β β).symm
 

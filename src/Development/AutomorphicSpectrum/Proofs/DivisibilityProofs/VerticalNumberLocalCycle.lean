@@ -136,7 +136,6 @@ end
 
 end GlobalTheory.CompanionTheory.Ar.Num.ZpVert
 
-open GlobalTheory.CompanionTheory.Ar.Num.ZpVert in
 
 theorem GlobalTheory.CompanionTheory.Ar.Num.vertAt_eq_cycList : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (D : ℕ), IsArithVar P (D + 1) → ∀ (p : Nat.Primes) (a : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι), IsMultiHomog f a → f ∉ P → ∀ l : List (K → ℤ), l.length = D → vertAt p P f l = cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f)) W : ℤ))) l := by
   intro K _ _ ι _ P D hP p a f hf hfP l hl

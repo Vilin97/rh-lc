@@ -16,7 +16,6 @@ open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.Genus
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
 
-omit [NumberField E] in
 
 theorem exists_GL_of_components (S : Finset (HeightOneSpectrum (𝓞 F)))
     (b : ∀ v : HeightOneSpectrum (𝓞 F), GL (Fin n) (Fv F v ⊗[F] E)) (hb : ∀ v ∉ S, b v = 1)
@@ -38,7 +37,6 @@ theorem exists_GL_of_components (S : Finset (HeightOneSpectrum (𝓞 F)))
   · rw [← matHom_projArch, map_mul, projArch_ofInf, projInfArch_embArchPi, mem_finPts_iff_forall.1 hm.1 w, mul_one]
     rfl
 
-omit [NumberField E] in
 
 theorem incl_mem_latLoc {L : Submodule (𝓞 E) (Fin n → E)} {v : HeightOneSpectrum (𝓞 F)} {s : 𝓞 F}
     (hs : s ∉ v.asIdeal) {x : Fin n → E} (hx : algebraMap F E s • x ∈ L) :
@@ -54,7 +52,6 @@ theorem incl_mem_latLoc {L : Submodule (𝓞 E) (Fin n → E)} {v : HeightOneSpe
   change (1 : Fv F v) ⊗ₜ[F] x i = _
   rw [Algebra.algebraMap_eq_smul_one, TensorProduct.smul_tmul, Pi.smul_apply, algebraMap_smul, inv_smul_smul₀ hs0]
 
-omit [NumberField E] in
 
 theorem frame_of_rational {L : Submodule (𝓞 E) (Fin n → E)} {v : HeightOneSpectrum (𝓞 F)} (P : GL (Fin n) E)
     (h1 : ∀ j, ∃ s : 𝓞 F, s ∉ v.asIdeal ∧ algebraMap F E s • (fun i => P.1 i j) ∈ L)
@@ -88,7 +85,6 @@ theorem frame_of_rational {L : Submodule (𝓞 E) (Fin n → E)} {v : HeightOneS
     rwa [Matrix.mulVec_mulVec, ← Units.val_mul, ← map_mul, inv_mul_cancel, map_one, Units.val_one,
       Matrix.one_mulVec, mem_latLoc_stdLattice] at this
 
-omit [NumberField F] [NumberField E] in
 
 theorem exists_smul_mem_of_mem_span (M : Submonoid (𝓞 F)) {A : Type} [CommRing A] [Algebra A E]
     (hA : ∀ a : A, ∃ s ∈ M, ∃ r : 𝓞 E, algebraMap F E s * algebraMap A E a = r)

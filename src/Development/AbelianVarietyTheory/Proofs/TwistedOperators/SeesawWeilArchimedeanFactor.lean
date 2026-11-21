@@ -80,7 +80,6 @@ end GlobalTheory.TripleAssembly.EqFin
 
 namespace GlobalTheory.TripleAssembly.EqFin
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.TripleAssembly.EqFin
 

@@ -76,7 +76,6 @@ include hη in
 theorem mem_of_notMem_basicOpen {W : X.Opens} {x : X} (hx : x ∈ W) (hxt : x ∉ X.basicOpen t) :
     η ∈ W := ((hη x).mp hxt).mem_open W.isOpen hx
 
-include hη in
 
 include hp in
 theorem ne_zero : t ≠ 0 := by
@@ -92,7 +91,6 @@ theorem mem_primeIdealOf_iff {U : X.Opens} (hU : IsAffineOpen U) (x : U) (s : Γ
   change X.presheaf.germ U x.1 x.2 s ∈ IsLocalRing.maximalIdeal _ ↔ _
   rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
 
-include hη hp in
 
 theorem primeIdealOf_eq_span {U : X.Opens} (hU : IsAffineOpen U) (h : η ∈ U) :
     (hU.primeIdealOf ⟨η, h⟩).asIdeal =
@@ -127,7 +125,6 @@ theorem primeIdealOf_eq_span {U : X.Opens} (hU : IsAffineOpen U) (h : η ∈ U) 
       Scheme.basicOpen_res]
     exact fun hm => hηt hm.2
 
-include hη hp in
 
 theorem dvd_iff_notMem_basicOpen {U : X.Opens} (hU : IsAffineOpen U) (h : η ∈ U) (s : Γ(X, U)) :
     X.presheaf.map (homOfLE (le_top : U ≤ ⊤)).op t ∣ s ↔ η ∉ X.basicOpen s := by
@@ -136,7 +133,6 @@ theorem dvd_iff_notMem_basicOpen {U : X.Opens} (hU : IsAffineOpen U) (h : η ∈
 
 variable [IsIntegral X]
 
-include hη hp in
 
 theorem isDiscreteValuationRing_stalk [IsLocallyNoetherian X] :
     IsDiscreteValuationRing (X.presheaf.stalk η) ∧
@@ -204,7 +200,6 @@ private theorem exists_section_restrict_eq_of_germ_eq {V : X.Opens} (hV : IsAffi
   have hrr : r' = r := hinj (hr'.trans hr.symm)
   exact hrr ▸ hr'u
 
-include hη in
 
 theorem exists_res_eq {W : X.Opens} (r : Γ(X, W ⊓ X.basicOpen t))
     (hr : ∀ h : η ∈ W, ∃ z : X.presheaf.stalk η, algebraMap _ X.functionField z =
@@ -265,7 +260,6 @@ theorem exists_res_eq {W : X.Opens} (r : Γ(X, W ⊓ X.basicOpen t))
   obtain ⟨s, hs, -⟩ := X.sheaf.existsUnique_gluing' O W (fun i => homOfLE (hOW i)) hcov f hcompat
   exact ⟨s, hs none⟩
 
-include hη hp in
 
 theorem isUnit_of_isUnit_res {W : X.Opens} {s : Γ(X, W)}
     (hs : IsUnit (X.presheaf.map (homOfLE (inf_le_left : W ⊓ X.basicOpen t ≤ W)).op s))
@@ -344,7 +338,6 @@ theorem compatible_of_res_eq {D : X.Opens} (hD : genericPoint X ∈ D) {r : ∀ 
   rw [map_mul, map_mul, germ_res, germ_res, germ_eq_mul_germ hr hga hgb]
   ring
 
-omit [IsIntegral X] in
 
 theorem mem_basicOpen_of_compatible (hg : ∀ a b, IsUnit (g a b)) {s : ∀ a, Γ(X, U a)}
     (hs : ∀ a b, X.presheaf.map (homOfLE inf_le_left).op (s a) =
@@ -359,7 +352,6 @@ theorem mem_basicOpen_of_compatible (hg : ∀ a b, IsUnit (g a b)) {s : ∀ a, �
 
 variable [IsLocallyNoetherian X]
 
-include hη hp in
 
 theorem existsUnique_zpow_mul (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, IsUnit (g a b))
     (τ : Γ(X, X.basicOpen t)ˣ)
@@ -428,7 +420,6 @@ theorem existsUnique_zpow_mul (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, 
     rw [algebraMap_germ, ← germ_res inf_le_left (⟨hga₀, hgD⟩ : genericPoint X ∈ U a₀ ⊓ X.basicOpen t) (s' a₀),
       hs' a₀, map_mul, germ_res, hφ n']
 
-include hη hp in
 
 theorem exists_zpow_mul_isUnit (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, IsUnit (g a b))
     (τ : Γ(X, X.basicOpen t)ˣ)
@@ -480,7 +471,6 @@ theorem zpow_eq_zero {A B : Type*} [CommRing A] [CommRing B] (ρ : A →+* B)
       have hu' : IsUnit (σ * p ^ (k + 1)) := (hρ h').symm ▸ hu
       exact hp ((isUnit_pow_iff (Nat.succ_ne_zero k)).mp (isUnit_of_mul_isUnit_right hu'))
 
-include hη hp in
 
 end Cocycle
 

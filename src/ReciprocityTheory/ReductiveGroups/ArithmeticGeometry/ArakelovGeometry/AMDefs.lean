@@ -25,6 +25,5 @@ def IsSecBasisM [DecidableEq K] (y : (Σ k, ι k) → Ω) (k₀ : K) (n : ℕ) {
     LinearIndependent ℤ (fun j => aeval y (b j)) ∧
     (Submodule.span ℤ (Set.range fun j => aeval y (b j))).toAddSubgroup = secM y (blockDeg k₀ n)
 
-open Classical in
 
 end ReciprocityTheory.ChartRestriction.G.ArakelovGeometry

@@ -47,7 +47,6 @@ def latM (G : Gm D n) (LS : Set (Fin n → D.host.E)) (LT : Set (Fin m → D.hos
     ∃ a : D.host.E, a ∈ D.host.AA ∧ ∃ s ∈ LS, ∃ t ∈ LT,
       w = Matrix.of fun i j => (pairA D.host.F 0 α) ⊗ₜ[D.host.F] (a * t i * ∑ k, star (s k) * G k j)}
 
-open scoped ContDiff in
 
 def ThetaM (ψ : AddChar (AF D.host.F) ℂ) (G : Gm D n) (H : Gm D m) (f : Mx D m n → ℂ) : Prop :=
   (∀ (γ : Matrix (Fin m) (Fin n) D.host.E) (w : Mx D m n), f (γ.map (incA D) + w) =
@@ -156,7 +155,6 @@ def dualM {n m : ℕ} (G : Gm D n) (H : Gm D m) (βS : GL (Fin n) (Lev.EAf D)) (
       (H.map (incA D))).map (toEAf D)))
     βT.val
 
-open Classical in
 
 def fstM {n m : ℕ} (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.host.E)) (βA : GL (Fin n) (Lev.EAf D))
     (βW : GL (Fin m) (Lev.EAf D)) (x : Mx D m n) : ℂ :=
@@ -164,7 +162,6 @@ def fstM {n m : ℕ} (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.h
     unitChar ν e (topL n (frM βA βW x))
   else 0
 
-open Classical in
 
 def sndM {n m : ℕ} (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.host.E)) (a : ℕ) (G : Gm D n) (H : Gm D m)
     (βA : GL (Fin n) (Lev.EAf D)) (βW : GL (Fin m) (Lev.EAf D)) (y : Mx D m n) : ℂ :=
@@ -172,8 +169,6 @@ def sndM {n m : ℕ} (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.h
     unitChar ν e (rightBlock a (dualM G H βA βW y))
   else 0
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure TriM (T : Type) {a a' d : ℕ} (G : Gm D a) (G' : Gm D a') (H : Gm D d) where
 

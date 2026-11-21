@@ -20,11 +20,8 @@ def UnrOff (e : AE D) (χ : (AE D)ˣ →* Circle) : Prop :=
   ∀ x : (AE D)ˣ, infPart D (x : AE D) = 1 → finPart D (x : AE D) ∈ intAE D →
     finPart D ((x⁻¹ : (AE D)ˣ) : AE D) ∈ intAE D → (e + cA D e) * (x : AE D) = e + cA D e → χ x = 1
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end Formalism.IndefR.Fin
 

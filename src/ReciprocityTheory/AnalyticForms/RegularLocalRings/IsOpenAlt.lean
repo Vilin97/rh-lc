@@ -41,7 +41,6 @@ structure SncData {m : ℕ} (I bd : Ideal (MvPolynomial (Fin m) ℂ)) (p : Fin m
   mem_bd : h * ∏ l ∈ J, r l ∈ bd
   le_span : ∀ g ∈ bd, h * g ∈ Ideal.span {∏ l ∈ J, r l} ⊔ I
 
-variable (ι) in
 
 structure AlgRes (P D : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (e : ℕ) where
 

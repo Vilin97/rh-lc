@@ -76,7 +76,6 @@ def postcomp (C : Type*) [CommRing C] [Bialgebra R C] [IsCocomm R C] (h : A →�
   map_one' := toPts_injective (map_one (ptsPush C (h : A →ₐ[R] B)))
   map_mul' f g := toPts_injective (map_mul (ptsPush C (h : A →ₐ[R] B)) (toPts f) (toPts g))
 
-variable (R A) in
 
 def mulBy [IsCocomm R A] (n : ℕ) : A →ₐc[R] A := (toConv (BialgHom.id R A) ^ n).ofConv
 
@@ -108,13 +107,11 @@ theorem mulBy_groupLike [IsCocomm R A] (n : ℕ) {u : A} (hu : IsGroupLikeElem R
   have h := DFunLike.congr_fun (comp_mulBy_pts (AlgHom.id R A) n) u
   exact h.trans (convPow_apply_groupLike (toConv (AlgHom.id R A)) hu n)
 
-variable (R A) in
 
 abbrev augIdeal : Ideal A := RingHom.ker (counitAlgHom R A)
 
 abbrev kerIdeal (f : C →ₐc[R] A) : Ideal A := Ideal.map (f : C →ₐ[R] A) (augIdeal R C)
 
-variable (R A) in
 
 abbrev torsionIdeal [IsCocomm R A] (n : ℕ) : Ideal A := kerIdeal (mulBy R A n)
 
@@ -200,11 +197,9 @@ def liftSurj (i : A →ₐc[R] B) (hi : Function.Surjective i) (f : A →ₐc[R]
     (h : RingHom.ker i ≤ RingHom.ker f) (a : A) : liftSurj i hi f h (i a) = f a :=
   AlgHom.liftOfSurjective_apply (i : A →ₐ[R] B) hi (f : A →ₐ[R] C) h a
 
-variable (R A) in
 
 abbrev Cot : Type _ := AugCot (counitAlgHom R A)
 
-variable (R) in
 
 abbrev dUnit (a : A) : Cot R A := AugCot.d (counitAlgHom R A) a
 
@@ -263,7 +258,6 @@ section Dual
 variable [Module.Finite R A] [Module.Projective R A] [Module.Finite R C] [Module.Projective R C]
   [IsCocomm R A] [IsCocomm R C]
 
-variable (R A C) in
 
 def dualMonoidHom :
     WithConv (C →ₐc[R] A) →* WithConv (CartierDual R A →ₐc[R] CartierDual R C) where
@@ -285,7 +279,6 @@ def dualMonoidHom :
       simp only [map_sum, TensorProduct.map_tmul, CartierDual.pair_comul_tmul]
     rfl
 
-omit [IsCocomm R A] in
 
 theorem dual_mulBy (n : ℕ) : CartierDual.map (mulBy R A n) = mulBy R (CartierDual R A) n :=
   congrArg ofConv (map_pow (dualMonoidHom R A A) (toConv (BialgHom.id R A)) n)
@@ -316,7 +309,6 @@ theorem mu_algHom_ext {x y : AddMonoidAlgebra R (ZMod m) →ₐ[R] B}
   AddMonoidAlgebra.algHom_ext (fun k => by
     rw [← ZMod.natCast_zmod_val k, ← muT_pow R m, map_pow, map_pow, h]) (Subsingleton.elim _ _)
 
-variable (R) in
 
 def muPoint (u : B) (hu : u ^ m = 1) : AddMonoidAlgebra R (ZMod m) →ₐ[R] B :=
   AddMonoidAlgebra.lift R B (ZMod m)

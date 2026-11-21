@@ -82,7 +82,6 @@ def IsPartAt (w : Ideal (𝓞 E)) {d' : ℕ} (G' : LogFGL (vX_vp X) d')
     ∀ ℓ : Lt1 Dw, (primeBelow io X ℓ.1 = w → (I * P).mulVec (lieVec Ch X ℓ) = lieVec Ch X ℓ) ∧
       (primeBelow io X ℓ.1 ≠ w → (I * P).mulVec (lieVec Ch X ℓ) = 0)
 
-open Classical in
 
 def TypedPartAt (τ : E →+* ℂ) : Prop :=
   ∃ h : ℕ, 0 < h ∧ Nat.card (𝓞 E ⧸ primeBelow io X τ) = p ^ h ∧
@@ -100,7 +99,6 @@ def TypedPartAt (τ : E →+* ℂ) : Prop :=
       (∀ a b, ty b ≠ s → P.mulVec (frame Ch X f a) b = 0) ∧
       ∀ k : ℕ, nuFacC Ch X f k = detDepth G' (fun a => P.mulVec (frame Ch X f a)) k
 
-omit [StarRing (𝓞 E)] in
 
 def FormalGroupTypes : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l)

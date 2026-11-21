@@ -35,7 +35,6 @@ theorem vecMulVec_mulVec' {m k l : Type} [Fintype k] {R : Type} [CommRing R] (x 
   rw [Finset.mul_sum]
   exact Finset.sum_congr rfl fun k _ => by ring
 
-open scoped Classical in
 
 theorem finRelG_of_isEv {B : Base F E} {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁}
     {W₁ : Spc F E d₁} {M : Model σ X W} {M₁ : Model σ X₁ W₁} {ι : Matrix (Fin n) (Fin n₁) E}
@@ -120,8 +119,6 @@ theorem finRelG_of_isEv {B : Base F E} {n d n₁ d₁ : ℕ} {X : Spc F E n} {W 
     rw [hA ρ (hRest φ hφ), key φ₁ hφ₁, key φ hφ] at h1
     exact canc _ _ h1
 
-open scoped Classical in
-open GlobalTheory.ThK.EvUniqInf in
 
 theorem infRelG_of_isEv {B : Base F E} {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁}
     {W₁ : Spc F E d₁} {M : Model σ X W} {M₁ : Model σ X₁ W₁} {ι : Matrix (Fin n) (Fin n₁) E}

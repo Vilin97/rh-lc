@@ -94,7 +94,6 @@ theorem wToC_mem_kur (x : WW p) : Formalism.L2.G.Pend.wToC p x ∈ MaximalUnrami
       Set ℂ_[p]) := fun y hy => hle hy
   exact closure_mono hsub hx
 
-variable (p) in
 
 def wK : WW p →+* MaximalUnramifiedExtension p := (Formalism.L2.G.Pend.wToC p).codRestrict (MaximalUnramifiedExtension p) wToC_mem_kur
 

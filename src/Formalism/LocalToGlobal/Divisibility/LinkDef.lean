@@ -18,7 +18,6 @@ section Generic
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase K}
 
-open Classical in
 
 def SyOf (Df : DefSide Bs) (S : IndefData Df) : Finset (HeightOneSpectrum (𝓞 K)) :=
   S.Tw ∪ (if h : (Function.support fun y => vw y (GmOf Df Bs.μ0 y)).Finite then h.toFinset else ∅)

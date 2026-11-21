@@ -116,7 +116,6 @@ end Laws
 
 section Point
 
-open Classical in
 
 end Point
 

@@ -20,7 +20,6 @@ variable [Fintype n'] (q : Unif k) {P₁ : Pair k n'} {e₁ : n' → k} (he : P�
   (x : Matrix n n' k)
 include he
 
-open Classical in
 
 theorem sum_target :
     ∑ Q₁ ∈ withKer Q.lat with cross q Q₁ Q = 1, phiOne P₁ Q₁ x = midInd q P₁.ker e₁ Q x := by
@@ -41,7 +40,6 @@ theorem sum_target :
     rw [mem_withKer] at h1
     exact ⟨h1 ▸ ((hm _).1 h3).1, h2 ▸ cross_hasVal q h1.symm ((hm _).1 h3).2⟩
 
-open Classical in
 
 theorem sum_source :
     midInd q P₁.ker e₁ Q x = ∑ P ∈ withLat P₁.ker with cross q P₁ P = 1, phiOne P Q x := by

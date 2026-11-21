@@ -49,7 +49,6 @@ section Block
 
 variable {ι : Type} [Fintype ι] {n : ℕ}
 
-open Classical in
 
 def bigM (g : ι → Matrix (Fin n) (Fin n) ℂ) : Matrix (ι × Fin n × Fin n) (ι × Fin n × Fin n) ℂ :=
   fun x y => if x.1 = y.1 ∧ x.2.2 = y.2.2 then g x.1 x.2.1 y.2.1 else 0
@@ -413,7 +412,6 @@ theorem map_ten (s : K →+* ℂ) (f : ι → MvPolynomial (Fin n × Fin n) K) :
   simp only [Formalism.GradedWeylDivisibility.blockEmb]
   rw [MvPolynomial.map_rename]
 
-omit [CharZero K] in
 
 theorem map_mem_CSpan (s : K →+* ℂ) (lam : ι → DomWeight n) (F : MvPolynomial (ι × Fin n × Fin n) K) (hF : F ∈ VV K lam) :
     MvPolynomial.map s F ∈ CSpan lam := by

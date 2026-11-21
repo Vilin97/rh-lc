@@ -36,7 +36,6 @@ def latt (ψ0 : AddChar k ℂ) (n d : ℕ) (s : k) : AddSubgroup (Matrix (Fin n)
 theorem mem_latt {ψ0 : AddChar k ℂ} {n d : ℕ} {s : k} {Y : Matrix (Fin n) (Fin d) k} :
     Y ∈ latt ψ0 n d s ↔ ∀ i j, ∀ o : k, ValuativeRel.valuation k o ≤ 1 → ψ0 (o * (s * Y i j)) = 1 := Iff.rfl
 
-open Classical in
 
 def cind {X : Type} [AddGroup X] (L : AddSubgroup X) (y : X) : X → ℂ := fun Y => if Y - y ∈ L then 1 else 0
 

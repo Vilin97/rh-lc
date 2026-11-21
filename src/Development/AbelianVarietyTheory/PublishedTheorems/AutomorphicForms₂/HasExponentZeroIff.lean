@@ -23,7 +23,6 @@ section Tate
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 def unitFilt (a : ℕ) : Set kˣ :=
   {x | valuation k (x : k) = 1 ∧ valuation k ((x : k) - 1) ≤ uniformizer k ^ a}
@@ -118,7 +117,6 @@ variable {K L : Type} [Field K] [NumberField K] [Algebra K Ω] [IsAlgClosure K �
   [Field L] [NumberField L] [Algebra L Ω] [IsAlgClosure L Ω] [Algebra K L]
   {v : HeightOneSpectrum (𝓞 K)} {v' : HeightOneSpectrum (𝓞 L)}
 
-variable (L) in
 
 def IsLocalExt (h : IsPlaceOver A v) : Prop :=
   ∀ σ : G K Ω, ∃ τ : Weil h, ∀ x : L, (τ : G K Ω) (algebraMap L Ω x) = σ (algebraMap L Ω x)
@@ -129,7 +127,6 @@ def Induces {h' : IsPlaceOver A v'} {h : IsPlaceOver A v} (x : WD h') (y : WD h)
     (∀ (σ' : Weil h') (σ : Weil h), (∀ z : Ω, (σ : G K Ω) z = (σ' : G L Ω) z) → ∀ u, j (a.ρ σ' u) = b.ρ σ (j u)) ∧
     Submodule.span ℂ (Set.range fun p : Weil h × (Fin m → ℂ) => b.ρ p.1 (j p.2)) = ⊤
 
-omit [IsAlgClosure K Ω] in
 
 theorem isLocalExt_self (h : IsPlaceOver A v) : IsLocalExt K h := fun σ => ⟨1, fun x => by simp⟩
 
@@ -141,7 +138,6 @@ theorem induces_self {h : IsPlaceOver A v} (x : WD h) : Induces x x := by
 
 end Ind
 
-variable (A) in
 
 abbrev EpsFamily : Type 1 :=
   ∀ (L : Type) [Field L] [NumberField L] [Algebra L Ω] [IsAlgClosure L Ω] (v : HeightOneSpectrum (𝓞 L))

@@ -53,7 +53,6 @@ theorem redExt_actExt (χ₁ : G →* Oˣ) {c : O} (hc : ∀ x : X, c • x = 0)
 
 end Gen
 
-set_option maxHeartbeats 2000000 in
 
 theorem admissible_quotientExtension_iff_admissible_ext' : ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} (S : TopSit P) (jT : ZMod S.n → ℤ → ℤ),
     (∀ i a, ((S.D.Ut i).count a : ℤ) = jT i a) →

@@ -23,7 +23,6 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchim
   [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] {L : LocE F E}
   {r k : ℕ} (S : Frames L r k)
 
-omit [IsNonarchimedeanLocalField F] [CharZero F] in
 
 theorem mass_le_sum {ι : Type} (s : Finset ι) (d : S.Datum) (P : Submodule L.O S.V → Prop)
     (Q : ι → Submodule L.O S.V → Prop) (h : ∀ Λ, S.IsTerm d Λ → P Λ → ∃ i ∈ s, Q i Λ) :
@@ -40,13 +39,11 @@ theorem mass_le_sum {ι : Type} (s : Finset ι) (d : S.Datum) (P : Submodule L.O
   · rw [if_neg hP]
     exact zero_le
 
-omit [IsNonarchimedeanLocalField F] [CharZero F] in
 
 theorem mass_mono (d : S.Datum) (P Q : Submodule L.O S.V → Prop)
     (h : ∀ Λ, S.IsTerm d Λ → P Λ → Q Λ) : S.mass d P ≤ S.mass d Q := by
   simpa using mass_le_sum S {()} d P (fun _ => Q) (fun Λ h1 h2 => ⟨(), by simp, h Λ h1 h2⟩)
 
-omit [IsNonarchimedeanLocalField F] [CharZero F] in
 
 theorem sumData_mass_le (P : S.Datum → Submodule L.O S.V → Prop) :
     (S.sumData fun d => S.mass d (P d)) ≤ S.nn := by

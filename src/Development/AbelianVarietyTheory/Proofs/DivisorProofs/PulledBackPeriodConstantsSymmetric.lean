@@ -25,7 +25,6 @@ open GlobalTheory.LamBiext GlobalTheory.LamRigid
 variable {S S₁ S' : Scheme.{0}} {B : Over S} {B₁ : Over S₁} {B' : Over S'} [GrpObj B] [IsCommMonObj B]
   [GrpObj B₁] [IsCommMonObj B₁] [GrpObj B']
 
-variable (B') in
 
 abbrev sw2 : Fin 2 → ((G2 B').left ⟶ (G2 B').left) :=
   ![(lift (fst B' B') (snd B' B')).left, (lift (snd B' B') (fst B' B')).left]

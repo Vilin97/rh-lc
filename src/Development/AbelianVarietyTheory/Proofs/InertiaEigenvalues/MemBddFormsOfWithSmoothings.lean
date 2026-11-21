@@ -18,7 +18,6 @@ namespace GlobalTheory.Petersson
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E a) in
 
 def bddForms (ω : HChar E) : Submodule ℂ (GA E a → ℂ) where
   carrier := {φ | Continuous φ ∧ (∀ γ g, φ (ratGL E a γ * g) = φ g) ∧
@@ -80,7 +79,6 @@ theorem integrable_mul_conj (hω : ω.IsUnitary) (h : φ ∈ bddForms E a ω) (h
   rw [norm_mul, Complex.norm_conj]
   exact mul_le_mul (hC _) (hD _) (norm_nonneg _) ((norm_nonneg _).trans (hC 1))
 
-variable {μ} in
 
 theorem pet_eq_setIntegral (hω : ω.IsUnitary) (h : φ ∈ bddForms E a ω) (h' : ψ ∈ bddForms E a ω) {𝓕 : Set (GA E a)}
     (h𝓕 : IsFundamentalDomain (latticeGL E a) 𝓕 μ) :
@@ -226,7 +224,6 @@ theorem pet_smoothing_left (hω : ω.IsUnitary) (hα : IsTest (invSet E a) α) (
   refine integral_congr_ae (.of_forall fun x => ?_)
   simp only [(pet_eq_setIntegral hω (chart_mem_bddForms h x) h' hD).2, ← integral_const_mul, mul_assoc]
 
-omit [IsTotallyComplex E] in
 
 def invL (x : Lie E a) : Lie E a := toL (Matrix.of x)⁻¹
 

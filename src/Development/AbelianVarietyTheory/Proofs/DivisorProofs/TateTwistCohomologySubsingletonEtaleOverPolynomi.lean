@@ -78,7 +78,6 @@ end GlobalTheory.EtAlgCD
 
 namespace GlobalTheory.EtAlgCD
 
-open Polynomial in
 
 theorem dimensionLEOne_of_etale (K E : Type) [Field K] [CommRing E] [IsDomain E] [Algebra K[X] E]
     [Algebra.Etale K[X] E] : Ring.DimensionLEOne E := by
@@ -101,7 +100,6 @@ end GlobalTheory.EtAlgCD
 
 namespace GlobalTheory.EtAlgCD
 
-open Polynomial in
 
 theorem subsingleton_of_domain (hcurve : GlobalTheory.EtC.C2) (q : ℕ) [NeZero q] (K E : Type) [Field K] [IsAlgClosed K]
     [CommRing E] [IsDomain E] [Algebra K[X] E] [Algebra.Etale K[X] E] (hq : IsUnit (q : K))
@@ -178,7 +176,6 @@ end GlobalTheory.EtAlgCD
 
 namespace GlobalTheory.EtAlgCD
 
-open Polynomial in
 
 theorem etale_polynomial_cd_le_one : ∀ (q : ℕ) [NeZero q] (K E : Type) [Field K] [IsAlgClosed K]
     [CommRing E] [Algebra (Polynomial K) E] [Algebra.Etale (Polynomial K) E], IsUnit (q : K) →

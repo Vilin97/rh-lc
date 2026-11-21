@@ -17,7 +17,6 @@ open GlobalTheory.Mum
 
 namespace GlobalTheory.ClosedFibreConn
 
-open Classical in
 
 theorem idem_eq_of_basicOpen {X : Scheme.{0}} {e e' : Γ(X, ⊤)} (he : e * e = e) (he' : e' * e' = e')
     (h : (X.basicOpen e : Set X) = X.basicOpen e') : e = e' := by

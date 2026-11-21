@@ -36,7 +36,6 @@ theorem centre_comp_specializes (ψ : R →+* R') (z : Spec (CommRingCat.of R) �
     (Spec.map (CommRingCat.ofHom ψ) (IsLocalRing.closedPoint R'))).map z.continuous
   exact h
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem stalkSpecializes_comp_stalkClosedPointTo (ψ : R →+* R') (z : Spec (CommRingCat.of R) ⟶ X) :
     X.presheaf.stalkSpecializes (centre_comp_specializes ψ z) ≫

@@ -29,6 +29,5 @@ def dualMapR {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R') : DualNu
   map_zero' := by ext <;> simp
   map_add' a b := by ext <;> simp
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 
 end ReciprocityTheory.ChartRestriction.G.Chart

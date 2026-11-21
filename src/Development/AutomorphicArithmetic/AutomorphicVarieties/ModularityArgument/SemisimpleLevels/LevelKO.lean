@@ -52,6 +52,5 @@ private theorem not_mem_of_not_dvd {F : Type} [Field F] [NumberField F] {M : ℕ
 
 end UpperTheory.V.Lev
 
-open UpperTheory.V.Af UpperTheory.V.Lev in
 
 end

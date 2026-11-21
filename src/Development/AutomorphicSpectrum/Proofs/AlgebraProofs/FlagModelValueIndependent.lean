@@ -17,7 +17,6 @@ public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.FlagFurtherTe
 
 namespace GlobalTheory.CompanionTheory.CommAlg.FlagModelValue
 
-open GroundTheory.Heights₂.Heights.NumbersDVR in
 
 theorem main : FlagModelValueIndependence.Statement :=
   FlagModelValueIndependence.proof

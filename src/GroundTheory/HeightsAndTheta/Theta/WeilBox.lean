@@ -20,7 +20,6 @@ variable {ι : Type*} [Fintype ι]
 
 section Boxes
 
-variable (F ι) in
 
 variable [MeasurableSpace F] [BorelSpace F]
 
@@ -28,7 +27,6 @@ end Boxes
 
 section SchwartzBruhat
 
-variable (F ι) in
 
 def schwartzBruhatPi : Submodule ℂ ((ι → F) → ℂ) where
   carrier := {f | IsLocallyConstant f ∧ HasCompactSupport f}
@@ -42,7 +40,6 @@ section Fourier
 
 variable [MeasurableSpace F] [BorelSpace F]
 
-variable (ι) in
 
 variable {ψ : AddChar F Circle}
 

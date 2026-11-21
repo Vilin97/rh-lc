@@ -44,16 +44,12 @@ variable {k G X : Type u} [CommRing k] [Group G] [MulAction G X]
   {ρ : Representation k G (∀ x, M x)} (hρ : PermutesFactors ρ) {x₀ : X} {D : Subgroup G}
   (hD : ∀ g, g ∈ D ↔ g • x₀ = x₀)
 
-include hρ in
 
 theorem _root_.GroundTheory.Global.PermutesFactors.apply_base_eq {g : G} (hg : g • x₀ = x₀) {f f' : ∀ x, M x}
     (h : f x₀ = f' x₀) : ρ g f x₀ = ρ g f' x₀ := by
   have := hρ.apply_eq g h
   rwa [hg] at this
 
-variable (ρ x₀ D) in
-include hρ hD in
-open Classical in
 
 noncomputable def stabRep : Representation k D (M x₀) where
   toFun d := (LinearMap.proj x₀).comp ((ρ d).comp (LinearMap.single k M x₀))

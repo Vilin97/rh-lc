@@ -102,7 +102,6 @@ variable (e : ℕ) (R : Type*) [CommRing R] [Algebra (MvPolynomial (Par e n) D) 
 def chartModel (Q : Ideal (MvPolynomial (Fin n) D)) : Ideal (MvPolynomial (Fin n) R) :=
   Q.map (MvPolynomial.map ((algebraMap (MvPolynomial (Par e n) D) R).comp C))
 
-variable (D) in
 
 def chartPar : Par e n → R := fun p => algebraMap (MvPolynomial (Par e n) D) R (X p)
 

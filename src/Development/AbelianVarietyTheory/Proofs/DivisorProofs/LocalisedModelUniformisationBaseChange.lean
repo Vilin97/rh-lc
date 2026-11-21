@@ -174,7 +174,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   {Xo : Moduli D l} {c : Coeff l} {O O' : Type} [CommRing O] [CommRing O'] {β : O →+* c.F} {β' : O' →+* c.F}
   (Y : Model Xo c β) (b : O →+* O') (hb : β'.comp b = β)
 
-include hb in
 
 theorem isPullback_gen : IsPullback (pullback.fst (pullback.snd Y.s (spMap b)) (spMap β') ≫ pullback.fst Y.s (spMap b))
     (pullback.snd (pullback.snd Y.s (spMap b)) (spMap β')) Y.s (spMap β) := by

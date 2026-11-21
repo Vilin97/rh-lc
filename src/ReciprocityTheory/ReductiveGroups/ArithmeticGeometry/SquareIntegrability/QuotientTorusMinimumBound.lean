@@ -214,7 +214,6 @@ theorem exp_sign (q : ℕ) (k : ℤ) :
   congr 1
   rw [← zpow_natCast, ← zpow_mul, mul_comm]
 
-open Classical in
 
 def kaB (X : PT E) (I : Submodule ℤ (Vsp X.dim)) (q : ℕ) (t : EuclideanSpace ℂ (Fin (gB (IR I)))) : ℂ :=
   if h : ∃ x ∈ Ip X I, wmap (IR I) x = t then (X.eps h.choose : ℂ) ^ q else 1

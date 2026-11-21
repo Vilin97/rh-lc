@@ -14,7 +14,6 @@ open ModularForm (E₄ E₆)
 
 namespace GlobalTheory.QFam
 
-open ReciprocityTheory.PGsh in
 
 theorem isMF_eq_sum_monomials :
     ∀ (w : ℕ) (F : ℍ → ℂ), IsMF w F → ∃ (s : Finset (ℕ × ℕ)) (c : ℕ × ℕ → ℂ),

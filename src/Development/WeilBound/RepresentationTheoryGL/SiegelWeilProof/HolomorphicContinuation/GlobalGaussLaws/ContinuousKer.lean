@@ -41,7 +41,6 @@ def Aw (ψ : AddChar (AF D.host.F) ℂ) (V : HSp D) (θ : InfFam D) (τ : D.what
     Mx D V.rank n → ℂ :=
   fun x => kap μ (piF θ τ fr) (Bw ψ V θ τ fr Ψ x)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem weyl_tens {θ : InfFam D} (hθ : IsInfFam θ) {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ)
     {l : D.what₂.Tau → ℝ} (hl : HasRealPar ψ θ l) {V : HSp D} {τ : D.what₂.Tau}

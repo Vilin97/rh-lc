@@ -13,8 +13,6 @@ namespace GlobalTheory.Per.Val
 
 variable {l : ℕ} [Fact l.Prime]
 
-open Polynomial in
-variable {l : ℕ} [Fact l.Prime] in
 
 theorem _root_.GlobalTheory.Per.Val.exists_norm_eq (x : _root_.Formalism.BasicNotions.Loc.Om l) (hx : x ≠ 0) :
     ∃ q : ℚ, ‖x‖ = (l : ℝ) ^ (-(q : ℝ)) := by
@@ -56,7 +54,6 @@ theorem _root_.GlobalTheory.Per.Val.mem_OL_iff (LL : _root_.Formalism.BasicNotio
     rw [IsScalarTower.algebraMap_eq ℤ_[l] ℚ_[l] ↥LL.1, ← eval₂_map, hq]
     exact minpoly.aeval ℚ_[l] x
 
-open Classical in
 
 def vf (x : Om l) : WithTop ℚ := if h : x = 0 then ⊤ else ((exists_norm_eq x h).choose : ℚ)
 

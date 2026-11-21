@@ -63,7 +63,6 @@ theorem expandsAt_scale (U : UnifPre I D A G) (e k : ℕ)
 
 end Scale
 
-open scoped Classical in
 
 lemma scal_mul {Y : Scheme.{0}} (p : Y ⟶ Spec (CommRingCat.of V)) (r r' : V) : scal p (r * r') = scal p r * scal p r' := by
   simp only [scal, map_mul]

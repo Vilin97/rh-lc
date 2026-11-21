@@ -64,6 +64,5 @@ theorem Milnor.of_isPullback {R R₁ R₂ R₀ : CommRingCat.{0}} {a : R ⟶ R�
   cart := h.of_iso (Scheme.ΓSpecIso R).symm (Scheme.ΓSpecIso R₁).symm (Scheme.ΓSpecIso R₂).symm
     (Scheme.ΓSpecIso R₀).symm (by simp) (by simp) (by simp) (by simp)
 
-omit [GrpObj A] in
 
 end GlobalTheory.DualOpen

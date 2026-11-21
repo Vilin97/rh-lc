@@ -108,6 +108,5 @@ theorem ptF_negFr {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (S T : Node D
   rw [negFr_cart]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.DownApprox

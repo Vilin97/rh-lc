@@ -15,7 +15,6 @@ namespace GlobalTheory.HCAlpha
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem vecF_eqOn_invSet (X : Lie E a) {f f' : Lie E a → ℂ} (h : Set.EqOn f f' (invSet E a)) :
     Set.EqOn (vecF E a X f) (vecF E a X f') (invSet E a) := fun y hy => by

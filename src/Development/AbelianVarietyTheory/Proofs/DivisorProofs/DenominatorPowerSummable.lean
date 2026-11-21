@@ -14,8 +14,6 @@ end GlobalTheory.AffGlue
 
 namespace GlobalTheory.AffGlue
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite in
-open scoped TensorProduct in
 
 theorem _root_.GlobalTheory.AffGlue.existsUnique_ringHom_of_affineOpens : ∀ (Z : Scheme.{0}) (R : Type) [CommRing R] (φ : ∀ U : Z.affineOpens, R →+* Γ(Z, U)), (∀ (U V : Z.affineOpens) (h : (U : Z.Opens) ≤ V), (Z.presheaf.map (homOfLE h).op).hom.comp (φ V) = φ U) → ∃! Φ : R →+* Γ(Z, ⊤), ∀ U : Z.affineOpens, (Z.presheaf.map (homOfLE (le_top : (U : Z.Opens) ≤ ⊤)).op).hom.comp Φ = φ U := by
   intro Z R _ φ hφ

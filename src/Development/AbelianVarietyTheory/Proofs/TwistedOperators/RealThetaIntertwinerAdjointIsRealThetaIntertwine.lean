@@ -31,7 +31,6 @@ open Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.Inde
 
 variable {D : D7}
 
-open Classical in
 
 def QHalfL {T : Type} (L : LevCh D T) : Prop :=
   ∀ t, ∀ PP ∈ L.Q t, ∀ PP' ∈ L.Q t, (∃ p : ℕ, p.Prime ∧ (p : 𝓞 D.host.E) ∈ PP.asIdeal ∧ (p : 𝓞 D.host.E) ∈ PP'.asIdeal) →
@@ -63,9 +62,7 @@ variable {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 end Fam
 
-open Classical in
 
-open Classical in
 
 end GlobalTheory.CompanionTheory.Pins
 

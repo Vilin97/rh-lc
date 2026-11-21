@@ -19,7 +19,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 abbrev Fn (F : Type) [Field F] [NumberField F] (n d : ℕ) : Type := (Fin n × Fin d → AF F) → ℂ
 
-variable (F) in
 
 def incV {n : ℕ} (x : Fin n → E) : Fin n → AE F E := fun i => inclR (F := F) (AF F) (x i)
 
@@ -61,7 +60,6 @@ def isoA (H : Plane E n n₁) (H' : Plane E d d₁) : Set (Matrix (Fin n) (Fin d
 def isoB (H : Plane E n n₁) (H' : Plane E d d₁) : Set (Matrix (Fin n) (Fin d) (AE F E)) :=
   {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} ∪ {u | ∃ y, u = Matrix.vecMulVec (incM F H.ι *ᵥ y) (incV F H'.x)}
 
-variable (X) in
 
 def latHat : AddSubgroup (Fin n → AE F E) :=
   AddSubgroup.closure {z | ∃ a : AF F, evI F a = 0 ∧ (∀ v, evFin F v a ∈ v.adicCompletionIntegers F) ∧ ∃ x ∈ X.L, z = a • incV F x}
@@ -76,12 +74,10 @@ def cone (B : Base F E) (M : Model σ X W) (om : Rep σ X W) (e : Fn F n d →�
 def shiftA (H : Plane E n n₁) (H' : Plane E d d₁) (l : (AE F E)ˣ) : Matrix (Fin n) (Fin d) (AE F E) :=
   l.1 • Matrix.vecMulVec (incV F H.x) (incV F H'.y)
 
-variable (σ) in
 
 def shiftB (H : Plane E n n₁) (H' : Plane E d d₁) (l : (AE F E)ˣ) : Matrix (Fin n) (Fin d) (AE F E) :=
   cA σ l.1 • Matrix.vecMulVec (incV F H.y) (incV F H'.x)
 
-variable (σ W) in
 
 def unip (H' : Plane E d d₁) : Subgroup (UA σ W.J) :=
   Subgroup.closure {u | mat u *ᵥ incV F H'.x = incV F H'.x ∧
@@ -95,7 +91,6 @@ def IsLevi (H' : Plane E d d₁) (t : (AE F E)ˣ) (h₁ : UA σ W₁.J) (h : UA 
   mat h *ᵥ incV F H'.x = t.1 • incV F H'.x ∧ mat h *ᵥ incV F H'.y = cA σ (t⁻¹).1 • incV F H'.y ∧
     mat h * incM F H'.ι = incM F H'.ι * mat h₁
 
-variable (W₁) in
 
 def HasLaw (H' : Plane E d d₁) (χ : Chr F E) (z : ℝ) (T : UA σ W.J → ℂ) : Prop :=
   ∀ t m, IsLevi (W₁ := W₁) H' t 1 m → ∀ h, T (m * h) = (χ t : ℂ) * (((absE F E t : ℝ) ^ z : ℝ) : ℂ) * T h

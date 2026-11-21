@@ -201,7 +201,6 @@ private theorem coeff_subst_lemma_8 {K : Type} [NormedField K]
   rw [map_mul, MvPolynomial.bind₁_C_right, MvPolynomial.bind₁_bind₁, hfun, MvPolynomial.coeff_C_mul,
     coeff_bind_scale_lemma_3]
 
-set_option maxHeartbeats 800000 in
 
 theorem coeff_bound (hFC : FinCoreStatement) (hBC : BasisChangeStatement)
     {K₁ : Type} [Field K₁] {K : Type} [NormedField K] [IsUltrametricDist K] [CompleteSpace K]

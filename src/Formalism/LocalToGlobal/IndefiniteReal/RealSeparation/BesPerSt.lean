@@ -34,11 +34,8 @@ variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ
   {Vt : D.what₂.Tau → Type} [∀ τ, NormedAddCommGroup (Vt τ)] [∀ τ, InnerProductSpace ℂ (Vt τ)]
   {S : D.what₂.Tau → SPar}
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end Vec
 

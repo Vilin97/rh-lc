@@ -36,7 +36,6 @@ def archCoord (w : InfinitePlace F) (g : GArch σ J w) : EmbOver E w → Fin n �
 def infCoord (g : GInf σ J) : ∀ w : InfinitePlace F, EmbOver E w → Fin n → Fin n → ℂ :=
   fun w => archCoord σ J w (projInfArch σ J w g)
 
-omit [NumberField E] in
 
 theorem archMat_apply {w : InfinitePlace F} (τ : EmbOver E w) (g : GArch σ J w) :
     archMat σ J τ g = (matHom _ σ J g).1.map (infEmb τ) := rfl
@@ -66,7 +65,6 @@ theorem continuous_archCoord (w : InfinitePlace F) : Continuous (archCoord σ J 
 theorem continuous_infCoord : Continuous (infCoord σ J) :=
   continuous_pi fun w => (continuous_archCoord σ J w).comp (continuous_projInfArch σ J w)
 
-variable {σ} in
 
 theorem isEmbedding_archMat (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) :
     Topology.IsEmbedding (matCoord (archMat σ J τ)) := by
@@ -132,7 +130,6 @@ theorem ccArch_eq (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) 
     · rw [e]
     · rw [(infEmb_eq_or_conj h τ τ').resolve_left e]; rfl
 
-omit [NumberField E] in
 
 theorem tensor_eq_infFin : tensor σ J fa ff = infFin σ J (tensorInf σ J fa) (tensorFin σ J ff) := by
   funext g
@@ -207,9 +204,7 @@ theorem IsFinFamily.tensorFin_mem (h : IsFinFamily σ J L ff) : tensorFin σ J f
 theorem tensor_mem_ccAd (ha : ∀ w, fa w ∈ CcArch σ J w) (hf : IsFinFamily σ J L ff) : tensor σ J fa ff ∈ CcAd σ J :=
   by rw [tensor_eq_infFin]; exact infFin_mem_ccAd (tensorInf_mem ha) hf.tensorFin_mem
 
-variable (J L) in
 
-variable (σ J L) in
 
 structure SplitAt (v : HeightOneSpectrum (𝓞 F)) where
 
@@ -241,7 +236,6 @@ theorem exists_isUnif (v : HeightOneSpectrum (𝓞 F)) : ∃ ϖ : (Fv F v)ˣ, Is
   obtain ⟨p, hp⟩ := HeightOneSpectrum.valuedAdicCompletion_surjective F v (WithZero.exp (-1 : ℤ))
   exact ⟨Units.mk0 p fun e => WithZero.exp_ne_zero (hp.symm.trans ((congrArg _ e).trans (map_zero _))), hp⟩
 
-open ValuativeRel in
 
 theorem IsUnif.valuation_eq {v : HeightOneSpectrum (𝓞 F)} {ϖ : (Fv F v)ˣ} (h : IsUnif ϖ) :
     letI := GlobalTheory.LocalData.complRel v
@@ -352,7 +346,6 @@ theorem starFn_idem [FiniteDimensional ℂ W] : starFn (s.idem μ τ) = s.idem �
 
 end SplitAt
 
-variable (σ J L) in
 
 structure TypeData where
 
@@ -371,7 +364,6 @@ structure TypeData where
 
 attribute [instance] TypeData.acg TypeData.mod TypeData.fd
 
-variable (σ J L) in
 
 structure UnitaryAuxiliaryPlaceData where
 
@@ -413,15 +405,12 @@ theorem IsTestFin.isFinFamily (h : IsTestFin T U μf ff) : IsFinFamily σ J L ff
     · subst hu; exact h2 ▸ U.frame.cosetFn_mem t
     · exact h3 v hv hu
 
-open Classical in
-omit [Submodule.IsLattice E L] in
 
 end ArchFamily
 
 def transfer {n' : ℕ} {J' : Matrix (Fin n') (Fin n') E} (j : ∀ v, GLoc σ J v ≃ₜ* GLoc σ J' v)
     (ff : ∀ v, GLoc σ J v → ℂ) : ∀ v, GLoc σ J' v → ℂ := fun v => ff v ∘ (j v).symm
 
-omit [Submodule.IsLattice E L] in
 
 theorem IsFinFamily.transfer {n' : ℕ} {J' : Matrix (Fin n') (Fin n') E} {L' : Submodule (𝓞 E) (Fin n' → E)}
     (h : IsFinFamily σ J L ff) (j : ∀ v, GLoc σ J v ≃ₜ* GLoc σ J' v)
@@ -431,7 +420,6 @@ theorem IsFinFamily.transfer {n' : ℕ} {J' : Matrix (Fin n') (Fin n') E} {L' : 
   obtain ⟨g, rfl⟩ := (j v).surjective g
   by_cases hg : g ∈ stabLoc σ J L v <;> simp [Orb.transfer, hv.1, unitLoc, indicator, hv.2 g, hg]
 
-omit [Submodule.IsLattice E L] in
 
 theorem exists_split_place_notMem (h : IsCMExt F E σ) (S : Finset (HeightOneSpectrum (𝓞 F))) :
     ∃ v ∉ S, Nonempty (E →ₐ[F] Fv F v) := by
@@ -488,14 +476,12 @@ def centMap {H H' : Type} [Group H] [Group H'] (φ : H →* H') (γ : H) : cent 
     change φ t * φ γ = φ γ * φ t
     rw [← map_mul, ← map_mul, mem_cent.1 t.2])
 
-variable (L) in
 
 def IsCentProd (γ : GAd σ J) (dta : ∀ w, Measure (cent (projArch σ J w γ))) (dtf : ∀ v, Measure (cent (proj σ J v γ)))
     (dt : Measure (cent γ)) : Prop :=
   GlobalTheory.RestrMeas.IsHaarProd (fun w => centMap (projArch σ J w) γ) (fun v => centMap (proj σ J v) γ)
     (fun v => (stabLoc σ J L v).subgroupOf (cent (proj σ J v γ))) dta dtf dt
 
-variable (L) in
 
 theorem restrGroup_cent (γ : GAd σ J) :
     GlobalTheory.RestrMeas.IsRestrGroup (fun w => centMap (projArch σ J w) γ) (fun v => centMap (proj σ J v) γ)
@@ -638,6 +624,5 @@ theorem IsTestFnG.isPureTensor {T : TypeDataG V} {U : AuxiliaryPlaceHermitianSpa
 
 end Record
 
-omit [Submodule.IsLattice E L] in
 
 end GlobalTheory.Orb

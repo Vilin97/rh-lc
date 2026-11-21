@@ -57,7 +57,6 @@ theorem hasDerivAt_of_bound {f : ℝ → E} {b : E} {K : ℝ}
 
 end GlobalTheory.TypeSum.FamClosed
 
-open GlobalTheory.TypeSum.FamClosed in
 
 theorem GlobalTheory.TypeSum.isClosed_fam (n : ℕ) (ε : Fin n → Bool) (E : Type) [NormedAddCommGroup E] [NormedSpace ℂ E]
     (ρ : Mx n → (E →L[ℂ] E)) (hρ : ModRep ε ρ) : IsClosed (Fam ε ρ : Set (List (lie (Jm ε)) → E)) := by

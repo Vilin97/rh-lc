@@ -115,7 +115,6 @@ theorem mul_pow_mem_forms_of_le {q : ℕ} {w : Fin q → Ω} {j : Fin q} {c : Ω
 
 end SpanStepHomog
 
-open SpanStepHomog in
 
 theorem SpanStepHomog.proof (hL : SpanStepLocal.Statement) : SpanStepHomog.Statement := by
   intro K _ ι _ Ω _ y a q w hy hw hgen

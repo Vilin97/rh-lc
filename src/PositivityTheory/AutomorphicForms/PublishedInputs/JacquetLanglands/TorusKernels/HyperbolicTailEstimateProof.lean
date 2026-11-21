@@ -151,7 +151,6 @@ private theorem orth_cases {a b c d : ℝ} (h1 : a ^ 2 + b ^ 2 = 1) (h2 : c ^ 2 
   · exact Or.inl ⟨by linear_combination (-c) * h1 + a * h3 - b * h, by linear_combination (-d) * h1 + b * h3 + a * h⟩
   · exact Or.inr ⟨by linear_combination (-c) * h1 + a * h3 - b * h, by linear_combination (-d) * h1 + b * h3 + a * h⟩
 
-open Classical in
 
 def sg (S : Set (InfinitePlace F)) : InfinitePlace F → ℝ := fun v => if v ∈ S then -1 else 1
 

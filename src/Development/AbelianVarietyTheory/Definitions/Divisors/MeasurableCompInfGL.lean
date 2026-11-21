@@ -179,7 +179,6 @@ theorem rspan_eq_mspanR (π : CuspSub E a) : rspan π = mspanR π := by
   · refine sInf_le ⟨fun φ hφ => mem_rspan hφ, fun F hF h => rt_mem_rspan hF h, fun F hF X _ ν _ k γ hk => ?_⟩
     exact kerInf_mem_rspan hF ν hk
 
-open Classical in
 
 def plS (w : InfinitePlace E) : ℂ →ₙ+* Cinf E where
   toFun z := Pi.single w z
@@ -189,9 +188,7 @@ def plS (w : InfinitePlace E) : ℂ →ₙ+* Cinf E where
 
 def plGL (w : InfinitePlace E) : GL (Fin a) ℂ →* GL (Fin a) (Cinf E) := cornerGL a (plS w)
 
-open Classical in
 
-open Classical in
 
 theorem isRapidInf_dirac (y : GL (Fin a) (Cinf E)) :
     IsRapidInf (Measure.dirac ()) (fun _ : Unit => (1 : ℂ)) (fun _ => y) :=

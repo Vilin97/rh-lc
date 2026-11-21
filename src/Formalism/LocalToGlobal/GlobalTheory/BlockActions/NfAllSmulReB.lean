@@ -36,7 +36,6 @@ theorem shift_lamTr : shiftOf (lamT u D.R.m) = fun τ => (lamTr D u τ).detShift
 theorem cspan_lamTr : Formalism.MainNotions.product_first_zeroth_parts.CSpan (lamTr D u) = Formalism.MainNotions.product_first_zeroth_parts.CSpan ((D.fm u).lam D.R.m) := by
   simp only [Formalism.MainNotions.product_first_zeroth_parts.CSpan, lamTr, delSq_wSh]
 
-set_option maxHeartbeats 1000000 in
 
 theorem val_of_trEv (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (f : (D.mem u).C.Y D.R.m → ℂ)
     (M : D.what₂.Tau → Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ) (Q : MvPolynomial (D.what₂.Tau × Fin (D.R.N D.R.m) × Fin (D.R.N D.R.m)) ℂ)
@@ -64,7 +63,6 @@ theorem val_of_trEv (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (f : (D.
 
 section Frame
 
-variable (D) in
 
 abbrev eN : Fin (D.R.N D.R.m - 1) ⊕ Fin 1 ≃ Fin (D.R.N D.R.m) := finSumFinEquiv.trans (finCongr (Nm_succ D.R))
 

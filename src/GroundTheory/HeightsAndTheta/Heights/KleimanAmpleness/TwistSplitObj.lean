@@ -32,12 +32,10 @@ section Obj
 variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : ℕ}
   (x : Fin (N + 1) → Ω) {r : ℕ} (η : Fin (r + 1) → Ω)
 
-variable (S) in
 
 def yHom : MvPolynomial (Fin (r + 1)) S →ₐ[S] LaurUT Ω :=
   aeval fun j => single ((1, 0) : ℤ × ℤ) (η j)
 
-variable (S) in
 
 def xyHom : Poly (MvPolynomial (Fin (r + 1)) S) N →+* LaurUT Ω :=
   eval₂Hom (yHom S η).toRingHom fun i => single ((0, 1) : ℤ × ℤ) (x i)
@@ -121,7 +119,6 @@ theorem exists_yHom_eq {n : ℕ} {q : Ω} (hq : q ∈ Set.range η ^ n) :
     congr 1
     ext <;> simp [add_comm]
 
-variable {x} in
 
 def twPart (M₀ : FinGradedSub (S := S) (x := x) Ω) (a b : ℤ) : Submodule S Ω :=
   if 0 ≤ b then Submodule.span S ((M₀.piece a : Set Ω) * Set.range η ^ b.toNat) else ⊥
@@ -222,17 +219,14 @@ theorem isTw_xyHom_mul (M₀ : FinGradedSub (S := S) (x := x) Ω)
     have := twPart_x_mul η M₀ i (hv (k - (0, 1)))
     simpa using this
 
-variable (x) in
 
 def UT (_ : Fin (N + 1) → Ω) (_ : Fin (r + 1) → Ω) : Type w := LaurUT Ω
 
 instance : CommRing (UT x η) := inferInstanceAs (CommRing (LaurUT Ω))
 
-variable {η} in
 
 def UT.toL (v : UT x η) : LaurUT Ω := v
 
-variable {η} in
 
 def UT.ofL (v : LaurUT Ω) : UT x η := v
 
@@ -251,7 +245,6 @@ def twSub (M₀ : FinGradedSub (S := S) (x := x) Ω) :
 
 abbrev TwM (M₀ : FinGradedSub (S := S) (x := x) Ω) : Type w := ↥(twSub η M₀)
 
-variable {η} in
 
 def TwM.val {M₀ : FinGradedSub (S := S) (x := x) Ω} (m : TwM η M₀) : LaurUT Ω := UT.toL (m : UT x η)
 
@@ -288,7 +281,6 @@ variable {η} in
 theorem TwM.val_injective {M₀ : FinGradedSub (S := S) (x := x) Ω} :
     Function.Injective (TwM.val (η := η) (M₀ := M₀)) := fun _ _ h => Subtype.ext h
 
-variable {η} in
 
 def TwM.mk {M₀ : FinGradedSub (S := S) (x := x) Ω} (v : LaurUT Ω) (hv : IsTw η M₀ v) : TwM η M₀ :=
   ⟨UT.ofL v, hv⟩

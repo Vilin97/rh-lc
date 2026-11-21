@@ -67,7 +67,6 @@ theorem exists_form {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d) (b : 
   obtain ⟨k, _, hk⟩ := h
   exact (hrel k).choose_spec (hpr.mem_of_pow_mem _ hk)
 
-open Classical in
 
 def secOf (P : Ideal (MRing ι)) (b : K → ℕ) : MRing ι :=
   if h : ∃ s : MRing ι, IsMultiHomog s b ∧ s ∉ P then h.choose else 0

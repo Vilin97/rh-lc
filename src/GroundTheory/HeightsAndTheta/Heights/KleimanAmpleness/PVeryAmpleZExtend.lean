@@ -33,7 +33,6 @@ theorem prod_mem_pow {r : ℕ} (H : SubSystem S x Ω) {h : Fin (r + 1) → Ω} (
       exact (Submodule.restrictScalars_mem _ _ _).mp ((Submodule.mem_iInf _).mp (hh a) I)
     exact AmpleTwistLocal.mul_mem_pow H I ih 1 h1
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem smul_mem_twist_pow (F : SubSystem S x E) (H : SubSystem S x Ω) (I : Chart x) {a b : ℕ} {z : E}
     {w : Ω} (hz : z ∈ (F.twist (H.pow a)).sub I) (hw : w ∈ (H.pow b).sub I) :
@@ -51,7 +50,6 @@ theorem smul_mem_twist_pow (F : SubSystem S x E) (H : SubSystem S x Ω) (I : Cha
       rw [Subalgebra.smul_def, Subalgebra.smul_def, smul_smul, smul_smul, mul_comm]
     rw [e]; exact Submodule.smul_mem _ t hz
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem gen_smul {r : ℕ} (F : SubSystem S x E) (H : SubSystem S x Ω) {h : Fin (r + 1) → Ω}
     (hh : ∀ l, h l ∈ H.secs) (I : Chart x) (J : Chart h) {j : Fin (r + 1)} (hj : j ∈ J.1) {c : Ω} {a : ℕ}

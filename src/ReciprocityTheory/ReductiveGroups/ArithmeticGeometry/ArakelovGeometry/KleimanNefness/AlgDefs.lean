@@ -21,7 +21,6 @@ abbrev CechC (S : Type*) [CommRing S] {K : Type*} [Fintype K] (ι : K → Type*)
     [AddCommGroup M] [Module (MRingOver S ι) M] (n : ℕ) : Type _ :=
   ∀ I : Cell K ι n, LocalizedModule (cellMon S I.1) M
 
-open Classical in
 
 def cellRes (S : Type*) [CommRing S] {K : Type*} {ι : K → Type*} (M : Type*) [AddCommGroup M]
     [Module (MRingOver S ι) M] (J I : ∀ k, Finset (ι k)) :
@@ -32,7 +31,6 @@ def faceSign {K : Type*} [Fintype K] [LinearOrder K] {ι : K → Type*} [∀ k, 
     (I : ∀ k, Finset (ι k)) (k : K) (i : ι k) : ℤ :=
   (-1) ^ (((I k).filter (· < i)).card + ∑ l ∈ Finset.univ.filter (· < k), ((I l).card - 1))
 
-open Classical in
 
 def cechD (S : Type*) [CommRing S] {K : Type*} [Fintype K] [LinearOrder K] (ι : K → Type*)
     [∀ k, LinearOrder (ι k)] (M : Type*) [AddCommGroup M] [Module (MRingOver S ι) M] (n : ℕ) :

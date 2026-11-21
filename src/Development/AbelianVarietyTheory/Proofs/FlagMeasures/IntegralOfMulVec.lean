@@ -54,7 +54,6 @@ open ValuativeRel MeasureTheory in
 open scoped Pointwise ENNReal Classical in
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] in
-variable {L : _root_.Formalism.MainNotions.S.Loc.LocE F E} {r k : ℕ} (S : _root_.GlobalTheory.HL.Frames L r k) in
 
 theorem _root_.GlobalTheory.HL.UnimodTerm.proj_mem {d : S.Datum}
     {Λ : Submodule L.O S.V} (hT : S.IsTerm d Λ) (ha : S.a = 0)
@@ -141,7 +140,6 @@ open ValuativeRel MeasureTheory in
 open scoped Pointwise ENNReal Classical in
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] in
-variable {L : _root_.Formalism.MainNotions.S.Loc.LocE F E} {r k : ℕ} (S : _root_.GlobalTheory.HL.Frames L r k) in
 
 theorem _root_.GlobalTheory.HL.UnimodTerm.mem_iff_graph {d : S.Datum} {Λ : Submodule L.O S.V}
     (hT : S.IsTerm d Λ) (ha : S.a = 0) {w : S.V}
@@ -249,7 +247,6 @@ open ValuativeRel MeasureTheory in
 open scoped Pointwise ENNReal Classical in
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] in
-variable {L : _root_.Formalism.MainNotions.S.Loc.LocE F E} {r k : ℕ} (S : _root_.GlobalTheory.HL.Frames L r k) in
 
 theorem _root_.GlobalTheory.HL.UnimodTerm.term_unique : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : _root_.Formalism.MainNotions.S.Loc.LocE F E), ∀ (r k : ℕ) (S : _root_.GlobalTheory.HL.Frames L r k), ∀ (d : S.Datum) (Λ : Submodule L.O S.V), S.IsTerm d Λ → S.a = 0 → S.BBzero d Λ ∧ ∀ Λ', S.IsTerm d Λ' → S.Fr d Λ' = S.Fr d Λ → Λ' = Λ := by
   intro F _ _ _ _ _ E _ _ _ L r k S d Λ hT ha

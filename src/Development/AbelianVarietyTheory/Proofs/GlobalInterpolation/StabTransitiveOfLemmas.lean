@@ -191,7 +191,6 @@ omit [NumberField E] in
 theorem latHat_mono {S T : Set (Fin M → E)} (h : S ⊆ T) : latHat F E S ≤ latHat F E T :=
   AddSubgroup.closure_mono fun _ ⟨a, ha, x, hx, e⟩ => ⟨a, ha, x, h hx, e⟩
 
-omit [NumberField E] in
 
 theorem proj_mem {L : Submodule (𝓞 E) (Fin M → E)} (hL : SelfDualLatticeOrthogonalParts.IsSelfDualLattice σ J L) {β : F}
     (hβ : β = 1 ∨ β = -1) {x : Fin M → E} (hx : x ∈ L) (hq : hE σ J x x = algebraMap F E β)
@@ -232,7 +231,6 @@ theorem proj_mem {L : Submodule (𝓞 E) (Fin M → E)} (hL : SelfDualLatticeOrt
     rw [this, mul_neg, neg_smul, sub_neg_eq_add, neg_add_eq_sub, ← neg_sub]
     exact neg_mem hy
 
-omit [NumberField E] in
 
 theorem mem_latHat_perp_iff {L : Submodule (𝓞 E) (Fin M → E)} (hL : SelfDualLatticeOrthogonalParts.IsSelfDualLattice σ J L)
     {β : F} (hβ : β = 1 ∨ β = -1) {x : Fin M → E} (hx : x ∈ L) (hq : hE σ J x x = algebraMap F E β)
@@ -249,7 +247,6 @@ theorem mem_latHat_perp_iff {L : Submodule (𝓞 E) (Fin M → E)} (hL : SelfDua
     | neg y _ hy => rw [← neg_one_smul (Af F ⊗[F] E) y, hR_smul, hy, mul_zero]
   · simpa [hy.2] using proj_mem hL hβ hx hq hy.1
 
-omit [NumberField E] in
 
 theorem stab_inf_eq {L : Submodule (𝓞 E) (Fin M → E)} (hL : SelfDualLatticeOrthogonalParts.IsSelfDualLattice σ J L)
     {β : F} (hβ : β = 1 ∨ β = -1) {x : Fin M → E} (hx : x ∈ L) (hq : hE σ J x x = algebraMap F E β) :

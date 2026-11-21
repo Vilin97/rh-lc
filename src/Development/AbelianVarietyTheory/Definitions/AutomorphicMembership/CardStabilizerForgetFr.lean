@@ -65,7 +65,6 @@ section Forget
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
 
-open Classical in
 
 def frBe (P : HeightOneSpectrum (𝓞 E)) (f : Sp E n ≃ₗ[E] Sp E n) (x : Sp E n) : Fin n → 𝓞 E ⧸ P.asIdeal :=
   if f.symm x ∈ stdAt E n P then redV P (f.symm x) else 0
@@ -102,7 +101,6 @@ abbrev inLeft (Q : Finset (HeightOneSpectrum (𝓞 E))) (w : SG) : uSG SG Q := �
 
 abbrev inRight (SG : Finset (HeightOneSpectrum (𝓞 E))) (P : Q) : uSG SG Q := ⟨P.1, by classical exact Finset.mem_union_right _ P.2⟩
 
-open Classical in
 
 def forgetDeco (p : DecoF E n ST SG Q) : Deco E n ST (uSG SG Q) where
   N := p.deco.1.N
@@ -140,7 +138,6 @@ theorem forgetFr_N (p : DecoF E n ST SG Q) : (forgetFr p).1.N = p.deco.1.N := rf
 
 theorem forgetFr_f (p : DecoF E n ST SG Q) : (forgetFr p).1.f = p.deco.1.f := rfl
 
-open Classical in
 
 theorem forgetFr_res (p : DecoF E n ST SG Q) : (forgetFr p).res Finset.subset_union_left = p.deco := by
   apply Subtype.ext
@@ -154,7 +151,6 @@ theorem isLiftFr_forgetFr (p : DecoF E n ST SG Q) (w : uSG SG Q) (h : w.1 ∉ SG
     IsLiftFr (forgetFr p).1 w (p.fr (rightOf w h)) :=
   ⟨p.2 (rightOf w h), fun _ hx => (congrFun (forgetDeco_be_of_not p w h) _).trans (frBe_apply _ hx)⟩
 
-open Classical in
 
 theorem forgetFr_surjective : Function.Surjective (forgetFr : DecoF E n ST SG Q → DecoSet E n ST (uSG SG Q)) := by
   intro d
@@ -169,8 +165,6 @@ theorem forgetFr_surjective : Function.Surjective (forgetFr : DecoF E n ST SG Q 
     · exact forgetDeco_be_of_mem _ w h
     · exact (forgetDeco_be_of_not _ w h).trans (be_eq_frBe d.2 (liftFr_spec d.2 w)).symm
 
-variable (E n SG Q) in
-open Classical in
 
 def redGQ : GLG E n SG × GLQ E n Q →* GLG E n (uSG SG Q) where
   toFun a w := if h : w.1 ∈ SG then a.1 ⟨w.1, h⟩ else redGL n w.1 (a.2 (rightOf w h))
@@ -350,7 +344,6 @@ theorem card_stabilizer_forgetFr (hd : Disjoint SG Q) (p : DecoF X.E n ST SG Q) 
   · obtain ⟨g, h1, h2⟩ := exists_redFG_smul Λ Θ hd a.1 p p a.2
     exact ⟨⟨g, h2⟩, Subtype.ext h1⟩
 
-variable (X n ST SG Q) in
 
 def trivPt : DecoF X.E n ST SG Q ≃ PtY ST SG Q (Ys.triv X n) where
   toFun p := ⟨(p, ∅), rfl⟩
@@ -365,11 +358,9 @@ section Til
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {N n : ℕ} (hN : N = n + 1)
   {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
 
-open Classical in
 
 def unitOf (pi : 𝓞 E) : Eˣ := if h : (pi : E) = 0 then 1 else Units.mk0 _ h
 
-omit [StarRing E] in
 
 theorem unitOf_val {pi : 𝓞 E} {P : HeightOneSpectrum (𝓞 E)} (h : pi ∉ P.asIdeal) : (unitOf pi : E) = pi := by
   have h0 : (pi : E) ≠ 0 := fun h0 => h (by
@@ -378,7 +369,6 @@ theorem unitOf_val {pi : 𝓞 E} {P : HeightOneSpectrum (𝓞 E)} (h : pi ∉ P.
   rw [unitOf, dif_neg h0]
   rfl
 
-open Classical in
 
 def tilFr (pi : 𝓞 E) (p : DecoF E n ∅ SG Q) : DecoF E N ST SG Q :=
   if h : ∀ (P : Q) (x : Sp E N),
@@ -386,7 +376,6 @@ def tilFr (pi : 𝓞 E) (p : DecoF E n ∅ SG Q) : DecoF E N ST SG Q :=
   then ⟨(DecoSet.tilH hN pi p.deco, fun P => sumE hN (p.fr P) (unitOf pi)), h⟩
   else @DecoF.base E _ _ _ N ST SG Q ⟨by omega⟩
 
-variable (E Q) in
 
 def extQ : GLQ E n Q →* GLQ E N Q := MonoidHom.pi fun P => (extI hN P.1).comp (Pi.evalMonoidHom _ P)
 
@@ -403,7 +392,6 @@ theorem extQ_injective : Function.Injective (extQ E hN Q) := fun _ _ h =>
 
 variable {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal) (hQ : ∀ P : Q, pi ∉ P.1.asIdeal)
 
-include hT in
 
 theorem tilH_N_f {SG' : Finset (HeightOneSpectrum (𝓞 E))} (hG : ∀ w : SG, pi ∉ w.1.asIdeal) (hG' : ∀ w : SG', pi ∉ w.1.asIdeal)
     (d : DecoSet E n ∅ SG) (d' : DecoSet E n ∅ SG') (h : d.1.N = d'.1.N) :
@@ -490,7 +478,6 @@ section XStep
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
-variable (R) in
 
 def levQX : LevQFam X.E X.K (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K)) :=
   levRedFam (rowTyQ R (mu : Chr X.F X.E X.K) (QE sel (mu : Chr X.F X.E X.K)))
@@ -508,7 +495,6 @@ theorem levQX_finiteIndex (P : QE sel (mu : Chr X.F X.E X.K)) : (levQX R sel mu 
 theorem levQX_root (P : QE sel (mu : Chr X.F X.E X.K)) : ∃ m : ℕ, 0 < m ∧ ∀ k, (levQX R sel mu P).lam k ^ m = 1 :=
   levRed_root _ _
 
-variable (Pr R) in
 
 abbrev XPt : Type := DecoF X.E (R.N R.m - 1) ∅ Pr.vGs (QE sel (mu : Chr X.F X.E X.K))
 
@@ -579,7 +565,6 @@ theorem forgetFr_tilF (p : XPt Pr R sel mu) : forgetFr (tilF sel mu u p) = tilQ 
 theorem tilF_N (p : XPt Pr R sel mu) : (tilF sel mu u p).deco.1.N = (tilQ sel mu u (toRow sel mu p)).1.N :=
   congrArg (fun d => d.1.N) (forgetFr_tilF sel mu hPr u hQ p)
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem tilF_smul (a : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) Pr.vGs × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K)))
     (p : XPt Pr R sel mu) :

@@ -44,7 +44,6 @@ theorem weight_apply_eval {σ : Type*} (w : σ → K' → ℕ) (d : σ →₀ �
 
 variable [DecidableEq K] [DecidableEq K']
 
-omit [DecidableEq K] [DecidableEq K'] in
 
 theorem weight_mapDomain {σ τ M : Type*} [AddCommMonoid M] (w : τ → M) (g : σ → τ)
     (d : σ →₀ ℕ) : Finsupp.weight w (Finsupp.mapDomain g d) = Finsupp.weight (w ∘ g) d := by
@@ -127,7 +126,6 @@ theorem isMultiProjPrime_contractPrime {P' : Ideal (ReciprocityTheory.ChartRestr
     rw [rename_X]
     exact hi
 
-omit [DecidableEq K] [DecidableEq K'] in
 
 theorem contractFracMap_algebraMap (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime]
     (a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) :
@@ -151,7 +149,6 @@ theorem map_homFracDegZero_le (P' : Ideal (ReciprocityTheory.ChartRestriction.G.
     isMultiHomog_rename j ι' hf, isMultiHomog_rename j ι' hg, hgP, ?_⟩
   rw [map_div₀, contractFracMap_algebraMap, contractFracMap_algebraMap]
 
-omit [DecidableEq K] [DecidableEq K'] in
 
 theorem pullDeg_sub (bf bg : K → ℕ) :
     pullDeg j (fun k => (bf k : ℤ) - bg k) =

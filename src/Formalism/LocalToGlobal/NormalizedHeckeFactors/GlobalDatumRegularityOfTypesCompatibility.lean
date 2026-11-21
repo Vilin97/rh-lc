@@ -92,7 +92,6 @@ theorem eSer_zero_of_tie (T : NormalizedTypesCompatibility D jE) (k : Fin 2) (f 
   rw [T.eSer_def]
   exact eSerO_eq_zero _ _ f hf
 
-variable (D) in
 
 variable (D)
 

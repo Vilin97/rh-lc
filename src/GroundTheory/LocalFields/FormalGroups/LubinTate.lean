@@ -146,7 +146,6 @@ theorem dropConst_of_constantCoeff_eq_zero {φ : MvPowerSeries σ A} (h : consta
 noncomputable def defect (f g : PowerSeries A) (φ : MvPowerSeries σ A) : MvPowerSeries σ A :=
   subst (substEach g) (dropConst φ) - PowerSeries.subst (dropConst φ) f
 
-open Classical in
 
 noncomputable def divBy (c a : A) : A :=
   if h : c ∣ a then h.choose else 0
@@ -169,7 +168,6 @@ variable [Finite σ] {π : A} {f g : PowerSeries A}
   (hf0 : PowerSeries.constantCoeff f = 0) (hf1 : PowerSeries.coeff 1 f = π)
   (hg0 : PowerSeries.constantCoeff g = 0) (hg1 : PowerSeries.coeff 1 g = π)
 
-include hf0 hf1 hg0 hg1 in
 
 theorem coeff_defect_sub_defect {φ ψ : MvPowerSeries σ A} {n : ℕ}
     (h : (n : ℕ∞) ≤ order (φ - ψ)) {e : σ →₀ ℕ} (he : e.degree ≤ n) :
@@ -226,7 +224,6 @@ theorem defect_zero : defect f g (0 : MvPowerSeries σ A) = 0 := by
   rw [defect, h0, ← coe_substAlgHom (hasSubst_substEach hg0), map_zero,
     PowerSeries.subst_zero_of_constantCoeff_zero hf0, sub_zero]
 
-include hf0 hf1 hg0 hg1 hreg hunit hdiv in
 
 theorem step_eq_self_iff {ℓ : MvPowerSeries σ A} (hℓ : constantCoeff ℓ = 0)
     (φ : MvPowerSeries σ A) :
@@ -289,7 +286,6 @@ theorem step_eq_self_iff {ℓ : MvPowerSeries σ A} (hℓ : constantCoeff ℓ = 
     · exact (hlin e he).symm
     · rw [hdef, map_zero, hdivBy0, mul_zero, add_zero]
 
-include hf0 hf1 hg0 hg1 hreg hunit hdiv in
 
 theorem existsUnique_of_dvd_defect {ℓ : MvPowerSeries σ A} (hℓ : constantCoeff ℓ = 0) :
     ∃! φ : MvPowerSeries σ A,

@@ -168,7 +168,6 @@ theorem eigBasis_of_loc {R O M : Type} [CommRing R] [AddCommGroup M] [Module R M
 
 end GlobalTheory.FlatRow.EigLocal
 
-open GlobalTheory.Serre GlobalTheory.FlatRow.EigLocal in
 
 theorem GlobalTheory.FlatRow.isEigBasis_of_local : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Geo.Tor.Host E) (R : Type) [CommRing R] (t : SAB H (Sp R)) (χ : 𝓞 E →+* R) (m : ℕ) (v : Fin m → (epsR R ⟶ t.G)), (∀ (p : Ideal R) [p.IsPrime], ∃ (t' : SAB H (Sp (Localization.AtPrime p))) (n : SABMap t' t (spMap (algebraMap R (Localization.AtPrime p)))) (v' : Fin m → (epsR (Localization.AtPrime p) ⟶ t'.G)), (∀ i, IsVecOver (algebraMap R (Localization.AtPrime p)) n.φ (v i) (v' i)) ∧ EigenvectorLieDegree.IsEigBasis t'.act ((algebraMap R (Localization.AtPrime p)).comp χ) v') → EigenvectorLieDegree.IsEigBasis t.act χ v := by
   intro E _ _ _ H R _ t χ m v h

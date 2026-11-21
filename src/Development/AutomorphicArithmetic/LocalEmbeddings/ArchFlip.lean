@@ -214,7 +214,6 @@ theorem row_mul' {A B C : Type} [Fintype B] (Y : Matrix A B k) (M : Matrix B C k
   ext j
   rfl
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem isNatDatum_comp {A A' D : Type} [Fintype A'] [DecidableEq A'] [Fintype D] [DecidableEq D] (σ : A ⊕ A' ≃ D)
     {ϖ : kˣ} {e : ℕ} (c : D → kˣ) {Ψ : Matrix A' D k → ℂ} (hΨ : HasDepth ϖ e (diagLat c) Ψ) {κ : GL D k} (hκ : κ ∈ KO k D) :

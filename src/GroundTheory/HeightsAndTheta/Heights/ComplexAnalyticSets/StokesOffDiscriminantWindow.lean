@@ -24,7 +24,6 @@ namespace StokesOffDiscriminant
 
 variable {n D : ℕ}
 
-open Classical in
 
 def sheetTerm (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin D) (Fin n) ℂ)
     (H : (Fin n → ℂ) → ((Fin D → ℂ) → Fin n → ℂ) → ℝ) (y : Fin D → ℂ) (x : Fin n → ℂ) : ℝ :=
@@ -50,7 +49,6 @@ theorem window_of_sheet {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fin 
   exact ⟨hx'V, V, hV, hx'V, hsd, hx's, hsec, interior N, isOpen_interior.mem_nhds hx'N,
     fun x'' hx'' hAx'' => hNs x'' ⟨hx''.1, interior_subset hx''.2⟩ hAx''⟩
 
-open Classical in
 
 theorem sheetTerm_window {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fin D) (Fin n) ℂ}
     {H : (Fin n → ℂ) → ((Fin D → ℂ) → Fin n → ℂ) → ℝ} {y : Fin D → ℂ}
@@ -205,7 +203,6 @@ theorem contDiffOn_comp_section {J : Ideal (MvPolynomial (Fin n) ℂ)} {g : (Fin
   exact hgO.comp (ReciprocityTheory.AnForm.M.pa_holoSmooth s V (analyticOnNhd_of_differentiableOn hV hsd))
     fun y hy => hZO (hsZ y hy)
 
-open Classical in
 
 theorem sheetTerm_weight_window {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fin D) (Fin n) ℂ}
     {s : (Fin D → ℂ) → Fin n → ℂ} {V : Set (Fin D → ℂ)} {W : Set (Fin n → ℂ)}
@@ -224,7 +221,6 @@ theorem sheetTerm_weight_window {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matr
   · intro _ hyW
     rw [hf0 _ hyW, zero_mul]
 
-open Classical in
 
 theorem sheetTerm_cons_window {J : Ideal (MvPolynomial (Fin n) ℂ)}
     {A : Matrix (Fin (D + 1)) (Fin n) ℂ} {s : (Fin (D + 1) → ℂ) → Fin n → ℂ}

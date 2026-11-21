@@ -57,7 +57,6 @@ theorem exists_ringHom_eval {A B σ : Type} [CommRing A] [CommRing B] [Finite σ
   obtain ⟨ψ, hψ⟩ := (mvPowerSeries_eval_of_pow_mem B K σ a fun j => ⟨1, by simpa using ha j⟩).1 h A
   exact ⟨ψ, fun c => ψ.commutes c, hψ⟩
 
-open DiscrJacobian in
 
 theorem exists_trace_eq {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     [CommRing B] [Fintype σ] [DecidableEq σ] [Algebra A B] [Algebra (MvPowerSeries σ A) B]

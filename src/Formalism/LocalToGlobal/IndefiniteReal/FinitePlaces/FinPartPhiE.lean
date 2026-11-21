@@ -36,7 +36,6 @@ theorem tmul_eq (a : AF D.host.F) (w : D.host.E) :
   unfold inclR
   simp [Algebra.TensorProduct.tmul_mul_tmul]
 
-set_option maxHeartbeats 800000 in
 
 theorem mul_e_of (v : HeightOneSpectrum (𝓞 D.host.F)) (e : AE D) (ι : D.host.E →ₐ[D.host.F] v.adicCompletion D.host.F)
     (hid : ∀ w : D.host.E, e * incA D w = e * phiE v (ι w)) (heps : e * phiE v 1 = e) :
@@ -66,7 +65,6 @@ theorem mul_e_of (v : HeightOneSpectrum (𝓞 D.host.F)) (e : AE D) (ι : D.host
     congr 1
     simp only [phiE, map_add (f := _)]
 
-set_option maxHeartbeats 1000000 in
 
 theorem idem_data (P : HeightOneSpectrum (𝓞 D.host.E)) (hP : ¬ Lev.IsConjPl (D := D) P P)
     (v : HeightOneSpectrum (𝓞 D.host.F))

@@ -95,7 +95,6 @@ theorem isMultiHomog_X_none (l : Fin M) :
   unfold IsMultiHomog
   exact isWeightedHomogeneous_X F _ _
 
-variable (F M) in
 
 def IsChartForm (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k) (a : Ω) (n : ℕ)

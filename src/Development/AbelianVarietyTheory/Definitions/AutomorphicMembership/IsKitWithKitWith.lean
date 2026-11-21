@@ -39,9 +39,7 @@ abbrev padWith {s : FinalTheorems S κ} (x : ToroidalCompactificationData s) (Φ
 structure IsKitWith (k : KitT s L jC) (d : s.Comp → D.what₂.Tau → ℝ) (x : ToroidalCompactificationData s) (P : PolOf x k.Φ) (cts : Ats S κ)
     (hj : jC.Pinned) (hA : AdmEx S κ) : Prop where
 
-variable {s jC} in
 
-variable {s L jC} in
 
 namespace IsKitWith
 
@@ -49,7 +47,6 @@ variable {F s L jC} {k : KitT s L jC} {d : s.Comp → D.what₂.Tau → ℝ} {x 
   {hj : jC.Pinned} {hA : AdmEx S κ} (h : IsKitWith F s L jC k d x P cts hj hA)
 include h
 
-open Formalism.DegreeFormula Formalism.MJ GlobalTheory.HodgeDomain in
 
 end IsKitWith
 

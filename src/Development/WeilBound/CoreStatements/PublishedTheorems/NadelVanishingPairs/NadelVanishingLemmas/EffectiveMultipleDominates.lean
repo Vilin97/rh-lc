@@ -132,7 +132,6 @@ private theorem finite_coheight_one_inter_supp {X : Scheme.{0}} [IsIntegral X] [
   have hteq := eq_of_mem_supp_specializes_coheight_one D _ z (hkD ht.mem) (ht.specializes hzk) hz
   exact Set.mem_biUnion hkS (show IsGenericPoint z (k : Set X) from hteq ▸ ht)
 
-open GlobalTheory.Domin in
 
 theorem GlobalTheory.effDominates : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X] [GlobalTheory.IsNormalScheme X] [CompactSpace X] (D E : CartierDiv X), E.Eff → D.supp ≤ E.supp → ∃ c : ℕ, (c • E - D).Eff := by
   intro X _ _ _ _ D E hE hsupp

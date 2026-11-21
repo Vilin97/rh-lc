@@ -62,7 +62,6 @@ theorem isAdmissible_derivB (ψ : AddChar k Circle) (hc : Continuous ψ) (h1 : �
       (PositivityTheory.RgGu.NR.derFin_of k (PositivityTheory.RgGu.NR.derEquiv k) ψ hc h1 n j _ π.ρ hs hi)
       fun Y _ _ τ hq hirr => PositivityTheory.Tls2.BZGL.irreducibleAdmissibleGL_top k n Y τ (hq.isSmooth hD) hirr
 
-variable (k) in
 
 theorem uAdm : UAdm k := fun ψ hc h1 n i π hs hi => isAdmissible_derivB ψ hc h1 n i π hs hi
 
@@ -78,7 +77,6 @@ theorem mem_fixed_iff {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (ρ
   show (∀ h : K, ρ h x = ((1 : K →* ℂˣ) h : ℂ) • x) ↔ _
   simp
 
-variable (k) in
 
 theorem uEig : UEig k := by
   intro ψ hc h1 n i π hs hi t W _ _ σ ω hW hsub hω z

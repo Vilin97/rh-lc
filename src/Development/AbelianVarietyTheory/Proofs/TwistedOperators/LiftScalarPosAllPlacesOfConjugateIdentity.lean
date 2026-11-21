@@ -180,7 +180,6 @@ theorem liftMat_inj (hK : X.KFormL) (hZ : X.CrdZL cr b) (hT : Formalism.IndefR.R
   have htoL : cr.toL X.zs b j t x = 0 := jL_eq_zero X hK j t _ hjz
   exact hinjL (htoL.trans (map_zero _).symm)
 
-omit [StarRing K] in
 
 theorem pos_of_inner {n : ℕ} (Y : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ) (v : InfinitePlace K) (x : Fin n → K)
     {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] (w : E) (hw : w ≠ 0) (l : ℝ)
@@ -214,7 +213,6 @@ private theorem mem_iInf_ker_of_eigen {K W G : Type*} [Field K] [AddCommGroup W]
 
 end General
 
-set_option maxHeartbeats 1000000 in
 
 theorem posScal_of_galD : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat3 D A3 Ks) (F : Face3 D A3) {s : ℕ}, A3.fam3.Ok3 s → R.WeakCharacterisation F → R.toRealDat.ExAt → (0 < R.kap ∧ ∀ i t p, 0 < R.lam3 i t p A3.A.v0) → (R.toCx3 F).GalD F.cr false → R.toRealDat.LUnif → Formalism.IndefR.Rat.LiftTestB (R.toCx3 F) false → R.PGEquiv F → R.PPos := by
   intro D G _ _ Pl0 I0 T A3 Ks _ _ _ R F s hOk hC hE hpos0 hGal hU hT hGE

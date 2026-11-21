@@ -25,9 +25,7 @@ section
 
 variable {N : NExt hL} {S : SExt} {Γ : GeoP} {P : LayP hL}
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 2000000 in
 
 theorem of_is {𝒮 : Slots} {K : Ctx} {q : WPt 𝒮 K} {D : D7} {O : Obj D} (h : q.Is D O) {r : ∀ D : D7, Obj D → Prop}
     (hr : r (q.w.D q.Z) q.O) : r D O :=

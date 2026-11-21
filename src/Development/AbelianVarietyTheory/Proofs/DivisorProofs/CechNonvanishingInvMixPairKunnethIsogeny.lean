@@ -27,7 +27,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.AmpleGen
 
-open GlobalTheory.CechPic in
 
 theorem cls_tw_one {X : Scheme.{0}} {M H : LB X} (hM : M.IsLB) (hH : H.IsLB) :
     cls (GlobalTheory.AbLaw.tw M H 1) (GlobalTheory.AbLaw.isLB_tw hM hH 1) = cls M hM + cls H hH := by
@@ -35,7 +34,6 @@ theorem cls_tw_one {X : Scheme.{0}} {M H : LB X} (hM : M.IsLB) (hH : H.IsLB) :
   rw [GlobalTheory.AmpleStabFinite.cls_pw hH]
   simp
 
-open GlobalTheory.CechPic in
 
 theorem cls_mix_pull {K : Type} [Field K] (A : Over (Sp K)) [GrpObj A] {L : LB A.left} (hL : L.IsLB)
     {T : Over (Sp K)} (z : T ⟶ A) (a b : ℤ) :
@@ -55,7 +53,6 @@ open CategoryTheory MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicG
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.AmpleGen
 attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.AmpleGen
-open GlobalTheory.CechPic in
 
 theorem lbIso_pull_psiMap {K : Type} [Field K] (A : Over (Sp K)) [GrpObj A] (hA : IsAbelianScheme A)
     (a₁ b₁ a₂ b₂ : ℤ) (hs : a₁ * b₁ + a₂ * b₂ = 0) {L : LB A.left} (hL : L.IsLB) (a b : ℤ) :

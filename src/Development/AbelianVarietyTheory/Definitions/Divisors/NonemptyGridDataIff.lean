@@ -180,6 +180,5 @@ theorem nonempty_gridData {T : Type} (L : LevCh D T) (μ0 : T) (hL : L.Is μ0) (
     Nonempty (GridData L sc) :=
   (nonempty_gridData_iff L μ0 hL sc).2 (GlobalTheory.GridPlaces.exists_places D T L μ0 hL hg h1 h2 h3 h4)
 
-open GlobalTheory.SignedHC in
 
 end GlobalTheory.ChiGridModel

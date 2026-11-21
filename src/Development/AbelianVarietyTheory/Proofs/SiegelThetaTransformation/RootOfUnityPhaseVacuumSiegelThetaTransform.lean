@@ -36,7 +36,6 @@ theorem trans_unique {σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ} (hσ : σ ∈ Mat
     Matrix.vecMul_one] at e
   exact e
 
-omit [DecidableEq ι] in
 
 theorem thS_smul (c : ℂ) (φ : Matrix κ ι ℚ → ℂ) (τ : Matrix ι ι ℂ) (ζ : κ → ι → ℂ) :
     thS (c • φ) τ ζ = c * thS φ τ ζ := by
@@ -48,7 +47,6 @@ theorem trans_smul {σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ} {φ ψ : Matrix κ 
     (t : TransS σ φ ψ) : TransS σ (c • φ) (c • ψ) := fun τ hτ ζ => by
   rw [thS_smul, thS_smul, t τ hτ ζ]; ring
 
-omit [DecidableEq ι] in
 
 theorem sb_smul (c : ℂ) {φ : Matrix κ ι ℚ → ℂ} (h : IsSB φ) : IsSB (c • φ) := by
   obtain ⟨R, hR, h1, h2⟩ := h
@@ -88,7 +86,6 @@ theorem vac_trans {σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ} (hσ : σ ∈ Matrix
     rw [h.fix _ ((mem _).1 hy), T.apply_symm_apply] at t1
     exact trans_unique hσ (sb_smul _ (GlobalTheory.SW.heisS_laws _ _ _ _ ψ hψ).1) hψ t1 t
 
-omit [DecidableEq ι] in
 
 theorem pv_sb {φ : Matrix κ ι ℚ → ℂ} (h : PV φ) : IsSB φ := by
   obtain ⟨⟨_, _, h⟩, -⟩ := h

@@ -18,7 +18,6 @@ theorem locallyCompact_of_goodChar [T2Space R] {ψ : AddChar R ℂ} {O : Subring
     LocallyCompactSpace R := by
   exact h.compact.locallyCompactSpace_of_mem_nhds_of_addGroup (h.isOpen.mem_nhds O.zero_mem)
 
-omit [CommRing R] [IsTopologicalRing R] in
 
 theorem integrable_pair {κ : Type} (μ : @Measure (κ → R) (borel _))
     (hμ : @IsFiniteMeasureOnCompacts _ (borel _) _ μ) (φ φ' : SB (κ → R)) :
@@ -35,7 +34,6 @@ theorem integrable_pair {κ : Type} (μ : @Measure (κ → R) (borel _))
   haveI : BorelSpace (κ → R) := ⟨rfl⟩
   exact Continuous.integrable_of_hasCompactSupport hcont hsupp
 
-omit [CommRing R] [IsTopologicalRing R] in
 
 def form {κ : Type} (μ : @Measure (κ → R) (borel _)) (hμ : @IsFiniteMeasureOnCompacts _ (borel _) _ μ) :
     SB (κ → R) →ₗ⋆[ℂ] SB (κ → R) →ₗ[ℂ] ℂ :=
@@ -65,7 +63,6 @@ def form {κ : Type} (μ : @Measure (κ → R) (borel _)) (hμ : @IsFiniteMeasur
       funext x
       simp [mul_left_comm])
 
-omit [CommRing R] [IsTopologicalRing R] in
 
 theorem pair_conj {κ : Type} (μ : @Measure (κ → R) (borel _)) (φ φ' : (κ → R) → ℂ) :
     (starRingEnd ℂ) (pair μ φ φ') = pair μ φ' φ := by
@@ -75,7 +72,6 @@ theorem pair_conj {κ : Type} (μ : @Measure (κ → R) (borel _)) (φ φ' : (κ
   funext x
   rw [map_mul, Complex.conj_conj, mul_comm]
 
-omit [IsTopologicalRing R] in
 
 theorem pair_pos {κ : Type} (μ : @Measure (κ → R) (borel _))
     (hμ : @Measure.IsAddHaarMeasure _ _ _ (borel _) μ) (φ : SB (κ → R)) (hφ : φ ≠ 0) :

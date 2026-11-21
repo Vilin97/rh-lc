@@ -18,26 +18,21 @@ namespace CrystallineSemistableComparison
 
 variable {l : ℕ} [Fact l.Prime]
 
-variable (l) in
 
 abbrev Ainf : Type := AInf ℂ_[l] l
 
-variable (l) in
 
 abbrev Acris : Type := ACris.ACris ℂ_[l] l
 
-variable (l) in
 
 abbrev Acris0 : Type := ↥(ACris.ACrisZero ℂ_[l] l)
 
-variable (l) in
 
 abbrev theta0 : Ainf l →+* OC l := WittVector.fontaineTheta (OC l) l
 
 theorem ker_theta0 : RingHom.ker (theta0 l) = Ideal.span {xi0 l} :=
   IsPerfectoidField.ker_fontaineTheta_eq_span_p_sub_teichmuller untilt_pFlat
 
-variable (l) in
 
 abbrev WL (R : Type) [CommRing R] : Type := Localization.Away (l : WittVector l R)
 
@@ -355,9 +350,7 @@ theorem mapAcr_phi (f : A ⟶ B) (n : ℕ) (x : A.Acr n) : mapAcr f n (A.phi n x
   congr 2
   exact RingHom.ext fun x => map_pow (Hom.f f) x l
 
-variable (A) in
 
-variable (A) in
 
 end Phi
 
@@ -398,7 +391,6 @@ def UnF (n : ℕ) : PAlg l ⥤ ModuleCat.{0} (Ainf l) where
     obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
     exact congrArg (Ideal.Quotient.mk _) (RingHom.congr_fun (mapU_comp f g) y))
 
-variable {l} in
 
 def UgR : PAlg l ⥤ CommRingCat.{0} where
   obj A := CommRingCat.of A.Ug

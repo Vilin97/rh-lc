@@ -140,6 +140,5 @@ theorem subst_exp_eval_two {dd : ℕ} (X : RawChart C d I (Fin dd))
 
 end RowTiePCEqDer
 
-open RowTiePCEqDer in
 
 end Formalism.L2.FormalSeriesBounds

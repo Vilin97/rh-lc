@@ -52,7 +52,6 @@ theorem vOf_herm (g : UG c (stdJ ν E)) (hd : IsUnit (mat c g).toBlocks₂₂.de
     exact this
   rw [Matrix.map_neg _ (map_neg c), transpose_neg, h3]
 
-open scoped Classical in
 
 def nOf (g : UG c (stdJ ν E)) : UG c (stdJ ν E) :=
   if h : IsUnit (mat c g).toBlocks₂₂.det then unip c (-vOf c g) (vOf_herm c g h) else 1
@@ -147,7 +146,6 @@ end GlobalTheory.KSp.OpenCrit
 
 namespace GlobalTheory.KSp
 
-open OpenCrit in
 
 theorem isOpen_of_sieg_of_opp (F : Type) [Field F] [CharZero F] [ValuativeRel F] [TopologicalSpace F]
     [IsNonarchimedeanLocalField F] (E : Type) [Field E] [Algebra F E] [TopologicalSpace E] [IsModuleTopology F E]

@@ -300,7 +300,6 @@ theorem series_of_sep (S : Sys g) (a b : ℕ) (V : Type) [AddCommGroup V] [Modul
     rw [← hN, ← Module.End.mul_apply, ← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul,
       ← map_mul, vanish S _ F f₁ f₂ h12, map_zero]
 
-open GlobalTheory.SmGL GlobalTheory.PRep in
 
 theorem series_prod₂ (S : Sys g) {a b : ℕ} {W W' : Type} [AddCommGroup W] [Module ℂ W] [AddCommGroup W']
     [Module ℂ W'] (σ : Representation ℂ (GL (Fin a) ℚ_[g]) W) (ρ : Representation ℂ (GL (Fin b) ℚ_[g]) W')
@@ -361,7 +360,6 @@ theorem actK_map {n : ℕ} {V V' : Type} [AddCommGroup V] [Module ℂ V] [AddCom
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [actK, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hT]
 
-open GlobalTheory.SmGL GlobalTheory.PRep in
 
 theorem has_of_isSubquotient (S : Sys g) {n : ℕ} {V V' : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup V']
     [Module ℂ V'] {π : Representation ℂ (GL (Fin n) ℚ_[g]) V} {π' : Representation ℂ (GL (Fin n) ℚ_[g]) V'}
@@ -388,7 +386,6 @@ theorem has_of_isSubquotient (S : Sys g) {n : ℕ} {V V' : Type} [AddCommGroup V
     rw [e2, map_zero, hyu] at e3
     exact e3.symm
 
-open GlobalTheory.SmGL GlobalTheory.PRep in
 
 theorem series_multiProd_std (S : Sys g) {s : ℕ} : ∀ {d : Fin s → ℕ} {X : Fin s → Type}
     [∀ i, AddCommGroup (X i)] [∀ i, Module ℂ (X i)] {N : ℕ} (hd : ∑ i, d i = N)
@@ -415,7 +412,6 @@ theorem series_multiProd_std (S : Sys g) {s : ℕ} : ∀ {d : Fin s → ℕ} {X 
     | zero => exact hf
     | succ i => exact hfs i
 
-open GlobalTheory.SmGL GlobalTheory.PRep in
 
 theorem series_of_isSubquotient (S : Sys g) {s N : ℕ} {d : Fin s → ℕ} {X : Fin s → Type}
     [∀ i, AddCommGroup (X i)] [∀ i, Module ℂ (X i)] (e : (Σ a, Fin (d a)) ≃ Fin N)

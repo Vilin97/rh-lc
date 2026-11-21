@@ -124,7 +124,6 @@ theorem isVLam_of_wtPol {ι : Type} [Fintype ι] {a : ℕ} {Y : Type} (fr g : Y 
     simp only [hgy, Matrix.det_mul, hdβ, mul_zpow, e3, Finset.prod_mul_distrib, ← Finset.prod_zpow]
     ring
 
-open Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Finset in
 
 theorem sharpWt_rat (D : D7) (Tw : TwForms D) (u : D.what₂.Word) (μ : D.what₂.Tup) (j : ℕ) (hj : j < D.R.m)
     (τ : D.what₂.Tau) (r : Fin (D.R.N j)) :
@@ -231,7 +230,6 @@ theorem formsSharpAt_of_valTied (t : KerEntTied ex) (u : D.what₂.Word) (μ : D
   choose Q hQ hQE using this
   exact ⟨Q, hQ, hQE⟩
 
-attribute [local instance] Formalism.BasicNotions.Host.cmStar in
 
 theorem formsSharpAt_of_pins (t : KerEntTied ex) (u : D.what₂.Word) (μ : D.what₂.Tup) (St : GlobalTheory.TwU.ChainCharts D u μ)
     (A : GlobalTheory.TwU.AdData t u μ St) (dtU : Formalism.L2.Herm.unitaryOneFiniteAdeles D.sp.cm →* D.Dt) (hP : GlobalTheory.TwU.AdPins A dtU)

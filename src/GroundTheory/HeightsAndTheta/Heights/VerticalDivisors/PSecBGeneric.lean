@@ -82,7 +82,6 @@ theorem map_secIdeal {n : ℕ} (e : ℕ) (I : Ideal (MvPolynomial (Fin n) K)) (v
 
 end SecBGeneric
 
-open SecBGeneric in
 
 theorem SecBGeneric.proof : SecBGeneric.Statement := by
   intro K _ _ n e I v _

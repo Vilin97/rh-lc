@@ -48,7 +48,6 @@ theorem intCast_mem_valBall_zero (z : ℤ) : (z : K) ∈ valBall K 0 := by
   rw [mem_valBall, neg_zero, WithZero.exp_zero, normalizedValuation_le_one_iff]
   exact intCast_mem _ z
 
-omit [CharP 𝓀[K] p] [CharZero K] in
 
 theorem logTerm_order_ge {N : ℤ} {k : ℕ} (hk : 4 * N.toNat + 32 * absRamificationIndex K ^ 2 ≤ k) :
     N ≤ (k + 1 : ℤ) - absRamificationIndex K * padicValNat p (k + 1) := by
@@ -83,7 +82,6 @@ theorem tendsto_natCast_prime_pow : Tendsto (fun n : ℕ ↦ ((p ^ n : ℕ) : K)
   have he' : (1 : ℤ) ≤ absRamificationIndex K := by exact_mod_cast he
   nlinarith
 
-omit [ValuativeRel K] [IsNonarchimedeanLocalField K] in
 
 theorem one_add_pow_sub_one_div_eq (x : K) {m : ℕ} (hm : m ≠ 0) :
     ((1 + x) ^ m - 1) / (m : K) =
@@ -191,7 +189,6 @@ theorem sub_one_mem_valBall_one (u : unitFiltrationUnits K 1) :
 
 variable (p : ℕ) [hp : Fact p.Prime] [CharP 𝓀[K] p] [CharZero K]
 
-include p in
 
 theorem logSeries_mul {x y : K} (hx : x ∈ valBall K 1) (hy : y ∈ valBall K 1) :
     logSeries ((1 + x) * (1 + y) - 1) = logSeries x + logSeries y := by

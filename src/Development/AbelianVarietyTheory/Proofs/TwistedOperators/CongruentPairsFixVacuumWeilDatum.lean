@@ -40,7 +40,6 @@ theorem om_pow_eq {D : D7} {S V : HSp D} (om : GA D S × GA D V →* Module.End 
   | succ m ih =>
     rw [pow_succ, map_mul, Module.End.mul_apply, hc, map_smul, ih, smul_smul, pow_succ, mul_comm]
 
-set_option maxHeartbeats 1000000 in
 
 theorem pair_fix_vacO : ∀ {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D}
     {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ} {sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ}

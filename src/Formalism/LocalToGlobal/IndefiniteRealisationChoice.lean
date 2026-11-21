@@ -80,7 +80,6 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst 
 
 end At
 
-open Formalism.L2.DIV in
 
 structure RemainingDivisionBounds {eps : ℝ} (Fm : FamP eps) (Cabs CH : ℝ) : Prop where
 
@@ -96,7 +95,6 @@ theorem cut_of_stable {eps : ℝ} {Fm : FamP eps}
   obtain ⟨x0, h⟩ := h
   exact ⟨x0, fun x hx i μ _ => Formalism.L2.G.ServJoint.cutUp_of_stable _ μ fun a y hy => h x hx i μ a y hy⟩
 
-open Formalism.L2.DIV in
 
 end Formalism.L2.Top4
 

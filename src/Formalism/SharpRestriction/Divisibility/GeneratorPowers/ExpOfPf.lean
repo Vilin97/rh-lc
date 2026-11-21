@@ -20,7 +20,6 @@ namespace ExpOf
 
 variable {R : Type} [CommRing R]
 
-open Formalism.FG.SolveVAux in
 
 theorem coeff_single_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] [DecidableEq τ]
     (a : σ → MvPowerSeries τ R) (ha : ∀ s, constantCoeff (a s) = 0) (f : MvPowerSeries σ R) (t : τ) :

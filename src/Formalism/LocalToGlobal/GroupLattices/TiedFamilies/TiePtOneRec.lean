@@ -82,7 +82,6 @@ theorem bad_notOver (u : D.what₂.Word) (w : D.what₂.places.Pl) (hg : GIdx D.
   · exact natCast_notMem _ hp hv (hg' 0) h
   · exact natCast_notMem _ hp hv (hg' 1) h
 
-set_option maxHeartbeats 4000000 in
 
 theorem ptOne_rec (T : ∀ u : D.what₂.Word, Forms0 D u) (u : D.what₂.Word) (hU : SameUloc X T u) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) (B : GL (Fin D.R.k) D.host.E) (hB : FrRat X u w hg B)

@@ -38,7 +38,6 @@ end GlobalTheory.ColEvNorm
 
 namespace GlobalTheory.ColEvNorm
 
-open Formalism.L2.Col in
 
 theorem ipAt_le_of_ties {Xf : Fields} [IsTotallyComplex Xf.K]
     (Pr : Primes Xf) (Rk : Ranks) (W : Wts Xf Pr.Word Rk) (Ch : Chars Xf Pr Rk.m)

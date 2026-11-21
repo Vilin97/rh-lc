@@ -62,15 +62,10 @@ theorem nat_smul_mem {m : ℕ} (Λ : Lt E m) (s : ℕ) {v : Fin m → E} (hv : v
     (s : E) • v ∈ Λ := by
   rw [Nat.cast_smul_eq_nsmul]; exact Λ.toAddSubgroup.nsmul_mem hv s
 
-omit [IsCMField E] in
 
-open Classical in
 
-omit [IsCMField E] in
 
-open Classical in
 
-omit [IsCMField E] in
 
 end
 

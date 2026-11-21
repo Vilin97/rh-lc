@@ -21,7 +21,6 @@ noncomputable section
 
 namespace GlobalTheory.FlagMeas.Bound
 
-open scoped ComplexOrder in
 
 theorem zetaE_nonneg (E : Type) [Field E] [NumberField E] (l : ℕ) : 0 ≤ zetaE E l := by
   unfold zetaE dedekindZeta LSeries

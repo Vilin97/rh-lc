@@ -232,7 +232,6 @@ theorem coCpt_last : GlobalTheory.Unf.CoCpt (G.V (.grid D.R.m D.R.m)) := by
   simp only [Node.neg, Nat.sub_self, Nat.zero_div, Nat.sub_zero] at this
   exact GlobalTheory.DefiniteQuotient.posDef_of_signature this
 
-variable (G) in
 
 abbrev Pols : Type := ∀ j : ℕ, PolF D (G.V (.top (j + 1))).rank (G.V (.top j)).rank
 
@@ -407,7 +406,6 @@ theorem rhoH_central {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) {V : HSp D} {x
   rw [GlobalTheory.CoefModel.rhoH_toHilb, hs]
   exact (GlobalTheory.CoefModel.toHilb lam hJ).map_smul _ _
 
-open scoped ComplexOrder in
 
 theorem pairVec_cen {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) {V : HSp D} {x : DefSp V} (hx : x.Is)
     (lam : D.what₂.Tau → DomWeight V.rank) {J : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ} (hJ : ∀ τ, (J τ).PosDef) :

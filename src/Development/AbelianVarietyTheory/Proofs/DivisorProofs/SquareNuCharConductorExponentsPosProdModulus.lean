@@ -36,7 +36,6 @@ theorem expAt_succ {K : Type} [Field K] [NumberField K] {χ : Formalism.L2.Host.
 
 end GlobalTheory.SqTop.CondExpo
 
-open GlobalTheory.SqTop.CondExpo in
 
 theorem GlobalTheory.SqTop.CondExpo.expo_modul : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} (G : GridData L sc) {μ₀ : T}, L.Is μ₀ →
     ∀ (t : T) (i j : Fin D.R.m) (c : Formalism.L2.DIV.Pl D.host.E → ℕ), (∀ w ∈ locPl G t, GlobalTheory.CMVal.ExpAt (nuH G t i j) w (c w)) →

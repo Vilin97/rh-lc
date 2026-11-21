@@ -134,6 +134,5 @@ end OneMatrix
 
 variable {ι : Type} {r : ℕ} {H : ι → Matrix (Fin r) (Fin r) ℂ}
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end GlobalTheory.SUVol

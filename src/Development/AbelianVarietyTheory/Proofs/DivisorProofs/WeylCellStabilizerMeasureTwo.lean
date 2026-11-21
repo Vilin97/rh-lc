@@ -47,7 +47,6 @@ theorem inv_offdiag {σ : L →+* L} (t : GU σ n)
   rw [Subgroup.coe_inv, (GlobalTheory.LGrp.mem_GU_iff σ n _).1 t.2 i j,
     ht _ _ (fun h => hij (Fin.rev_injective h).symm), map_zero]
 
-open GlobalTheory.WeylCell in
 
 end GKConjScale
 

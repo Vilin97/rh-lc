@@ -68,7 +68,6 @@ theorem smul_sum_mem_normalLattice_add_iff (hπ : π ≠ 0)
     rw [pow_add, mul_smul]
     simp_rw [smul_sum, ← mul_smul, hd]
 
-omit [FiniteDimensional K L] in
 
 theorem normalLattice_antitone : Antitone (normalLattice π θ) := by
   refine antitone_nat_of_succ_le fun s => Submodule.span_le.mpr ?_
@@ -107,7 +106,6 @@ variable [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel L]
 
 variable (π : 𝒪[K]) (θ : L)
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem mem_integer_of_mem_normalLattice (hθO : ∀ σ : Gal(L/K), σ θ ∈ 𝒪[L]) {s : ℕ} {x : L}
     (hx : x ∈ normalLattice π θ s) : x ∈ 𝒪[L] := by
@@ -117,7 +115,6 @@ theorem mem_integer_of_mem_normalLattice (hθO : ∀ σ : Gal(L/K), σ θ ∈ �
   rw [integer_smul_eq]
   exact mul_mem ((algebraMap_mem_integer_iff K L _).mpr (c σ).2) (hθO σ)
 
-omit [ValuativeRel L] [ValuativeExtension K L] [FiniteDimensional K L] in
 
 theorem exists_pow_mul_mem_integer_of_lt_one {F : Type*} [Field F] [ValuativeRel F]
     [TopologicalSpace F] [IsNonarchimedeanLocalField F] {t : F}
@@ -139,7 +136,6 @@ theorem exists_pow_mul_mem_integer_of_lt_one {F : Type*} [Field F] [ValuativeRel
   rw [pow_add, mul_comm (t ^ n), mul_assoc]
   exact mul_mem (pow_mem ht1 d) hn
 
-omit [ValuativeRel L] [ValuativeExtension K L] [FiniteDimensional K L] in
 
 theorem exists_pow_mul_mem_integer (hπ : Irreducible π) (a : K) :
     ∃ n, ∀ m ≥ n, (π : K) ^ m * a ∈ 𝒪[K] :=
@@ -148,7 +144,6 @@ theorem exists_pow_mul_mem_integer (hπ : Irreducible π) (a : K) :
 
 variable [IsGalois K L]
 
-omit [ValuativeRel L] [ValuativeExtension K L] in
 
 theorem exists_pow_smul_mem_normalLattice (hπ : Irreducible π)
     (hθ : LinearIndependent K fun σ : Gal(L/K) => σ θ) (y : L) :
@@ -166,7 +161,6 @@ theorem exists_pow_smul_mem_normalLattice (hπ : Irreducible π)
   rw [hb, integer_smul_eq, integer_smul_eq, Algebra.smul_def, ← mul_assoc, ← map_mul]
   simp
 
-omit [ValuativeRel L] [ValuativeExtension K L] in
 
 theorem exists_pow_smul_mul_mem_normalLattice (hπ : Irreducible π)
     (hθ : LinearIndependent K fun σ : Gal(L/K) => σ θ) :
@@ -217,20 +211,17 @@ section Complete
 
 variable [TopologicalSpace K] [IsNonarchimedeanLocalField K]
 
-omit [FiniteDimensional K L] in
 
 private theorem isAdicComplete_maximalIdeal : IsAdicComplete 𝓂[K] 𝒪[K] := by
   let := IsTopologicalAddGroup.rightUniformSpace K
   have := isUniformAddGroup_of_addCommGroup (G := K)
   infer_instance
 
-omit [FiniteDimensional K L] in
 
 theorem smodEq_iff_pow_dvd {π : 𝒪[K]} (hπ : Irreducible π) {n : ℕ} {x y : 𝒪[K]} :
     x ≡ y [SMOD (𝓂[K] ^ n • ⊤ : Submodule 𝒪[K] 𝒪[K])] ↔ π ^ n ∣ x - y := by
   rw [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top, mem_maximalIdeal_pow_iff hπ]
 
-omit [FiniteDimensional K L] in
 
 theorem exists_limit_of_pow_dvd {π : 𝒪[K]} (hπ : Irreducible π) (c : ℕ → 𝒪[K])
     (hc : ∀ N, ∃ M, ∀ m ≥ M, ∀ n ≥ M, π ^ N ∣ c n - c m) :
@@ -250,7 +241,6 @@ theorem exists_limit_of_pow_dvd {π : 𝒪[K]} (hπ : Irreducible π) (c : ℕ �
   have := dvd_add h1 h2
   rwa [sub_add_sub_cancel] at this
 
-omit [FiniteDimensional K L] in
 
 theorem eq_zero_of_forall_pow_dvd {π : 𝒪[K]} (hπ : Irreducible π) {x : 𝒪[K]}
     (h : ∀ N, π ^ N ∣ x) : x = 0 :=
@@ -367,7 +357,6 @@ section Existence
 variable [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel L]
   [TopologicalSpace L] [IsNonarchimedeanLocalField L] [ValuativeExtension K L]
 
-omit [FiniteDimensional K L] [TopologicalSpace L] [IsNonarchimedeanLocalField L] in
 
 theorem valuation_algebraMap_lt_one {π : 𝒪[K]} (hπ : Irreducible π) :
     valuation L (algebraMap K L (π : K)) < 1 :=

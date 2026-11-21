@@ -64,6 +64,5 @@ theorem wt_cast (C : ℕ → Type) (w : ∀ j, C j → ℂ) {j j' : ℕ} (h : j 
 
 end GlobalTheory.PenVol
 
-set_option maxHeartbeats 4000000 in
 
 end

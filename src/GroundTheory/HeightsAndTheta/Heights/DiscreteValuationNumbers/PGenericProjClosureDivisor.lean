@@ -24,7 +24,6 @@ section PointIdeal
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {O : Type} [CommRing O] {Φ : Type} [Field Φ] [Algebra O Φ]
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem aeval_eq_zero_of_mem {z : (Σ k, ι k) → Φ} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hf : f ∈ pointIdeal O z) :
     aeval z f = 0 := by
@@ -276,7 +275,6 @@ def IsZPair (a₀ a₀' : K → ℤ) (z : (Σ o, bundleIdx (bundleIdx ι M) M' o
   (∃ bf bg : Option (Option K) → ℕ, IsMultiHomog f bf ∧ IsMultiHomog g bg ∧
     (fun o => (bf o : ℤ) - bg o) = zetaFirst a₀ - zetaSecond a₀') ∧ aeval z f = aeval z g
 
-omit [Algebra O Ω] [IsScalarTower O Ω Φ] in
 
 theorem IsZPair.cross {a₀ a₀' : K → ℤ} {z : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ}
     {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')} (h : IsZPair a₀ a₀' z f g)
@@ -285,7 +283,6 @@ theorem IsZPair.cross {a₀ a₀' : K → ℤ} {z : (Σ o, bundleIdx (bundleIdx 
   obtain ⟨⟨bf', bg', hf', hg', hd'⟩, hv'⟩ := h'
   exact cross_mem hf hg hf' hg' (fun o => (congrFun hd o).trans (congrFun hd' o).symm) hv hv'
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] [Algebra O Ω] [IsScalarTower O Ω Φ] in
 
 theorem val_pair {z : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ} {L : ℕ}
     {xs : Fin L → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')} {v : Fin L → Φ} (hxs : ∀ l, aeval z (xs l) = v l)

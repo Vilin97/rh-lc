@@ -28,7 +28,6 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open ReciprocityTheory.ChartRestriction.G.Semi
 open scoped CategoryTheory.Obj
 
-set_option maxHeartbeats 1600000 in
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 variable {D : Datum H} {l : Level H} {c : Coeff l}
@@ -42,7 +41,6 @@ open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestrictio
 
 variable {S : Scheme.{0}} {A : Over S} [GrpObj A] [IsCommMonObj A] {L : RigLB A} (c : CubicalStr A L)
 
-include c in
 
 end
 section
@@ -159,10 +157,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 
-set_option maxHeartbeats 800000 in
 
-open MonObj in
-set_option maxHeartbeats 1600000 in
 
 end
 section
@@ -179,7 +174,6 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open ReciprocityTheory.ChartRestriction.G.Semi
 open scoped CategoryTheory.Obj
 
-set_option maxHeartbeats 6400000 in
 
 end
 

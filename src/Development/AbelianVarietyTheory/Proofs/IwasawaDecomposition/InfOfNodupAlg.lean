@@ -60,7 +60,6 @@ def LocAt (π : NG.AutRep L n) (w : HeightOneSpectrum (𝓞 L)) (x : GlobalTheor
 
 end
 
-open Classical in
 
 def hwOf (a : NG.AlgWt L n) (τ : L →+* ℂ) : Fin n → ℤ :=
   if h : ∃ lam, a.HWAt τ lam ∧ Antitone lam then h.choose else 0
@@ -71,7 +70,6 @@ theorem hwOf_antitone (a : NG.AlgWt L n) (τ : L →+* ℂ) : Antitone (hwOf a �
   · exact h.choose_spec.2
   · exact fun _ _ _ => le_rfl
 
-open Classical in
 
 def satOf (π : NG.AutRep L n) (w : HeightOneSpectrum (𝓞 L)) : Multiset ℂ :=
   if h : ∃ (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) (Dv : InertDatum L n v w) (α : Fin (n / 2) → ℂ),
@@ -115,18 +113,15 @@ namespace GlobalTheory.AutQuot
 
 variable (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut)
 
-open Classical in
 
 def locOf (π : NG.AutRep D.host.E D.R.nV) (w : PlE D.host) : D.naut.LP w :=
   if h : ∃ x, LocAt π w x then (T.e w).symm (GlobalTheory.CuspRep.ParLaws.locRec hL (D.nd.plOm.2 w) h.choose)
   else D.naut.lpZero w
 
-open Classical in
 
 def wtOf (π : NG.AutRep D.host.E D.R.nV) : WtQ D.host.E D.R.nV :=
   if h : ∃ b, π.toAlgWt.IsDual b then clsW h.choose else clsW π.toAlgWt
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.AutQuot
 

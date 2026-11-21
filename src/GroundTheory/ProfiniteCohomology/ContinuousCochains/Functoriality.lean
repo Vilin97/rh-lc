@@ -23,7 +23,6 @@ noncomputable def cochainsMapLinear (f : A ⟶ B) (n : ℕ) :
     locallyConstantCochains A n →ₗ[k] locallyConstantCochains B n :=
   (f.hom.toLinearMap.compLeft (Fin n → G)).restrict fun _ hc => IsLocallyConstant.comp hc _
 
-omit [IsTopologicalGroup G] [IsDiscreteRep A] [IsDiscreteRep B] in
 
 noncomputable def cochainsMap (f : A ⟶ B) : cochainsComplex A ⟶ cochainsComplex B :=
   CochainComplex.ofHom (fun n => ModuleCat.ofHom (cochainsMapLinear f n)) fun n => by

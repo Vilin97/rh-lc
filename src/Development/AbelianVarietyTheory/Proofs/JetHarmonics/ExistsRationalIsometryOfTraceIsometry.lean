@@ -13,9 +13,6 @@ namespace GlobalTheory.TraceIsometry
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-open NumberField in
-open scoped Matrix in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 
 theorem _root_.GlobalTheory.TraceIsometry.eq_or_eq_neg_of_norm_eq {x y : E} (hx : _root_.ReciprocityTheory.ChartRestriction.G.FD.cc x = -x) (hy : _root_.ReciprocityTheory.ChartRestriction.G.FD.cc y = -y)
     (h : ∀ τ : E →+* ℂ, ‖τ x‖ = ‖τ y‖) : y = x ∨ y = -x := by
@@ -43,9 +40,6 @@ theorem _root_.GlobalTheory.TraceIsometry.eq_or_eq_neg_of_norm_eq {x y : E} (hx 
     rw [map_neg]
     apply Complex.ext <;> simp [hxr, hyr, k]
 
-open NumberField in
-open scoped Matrix in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 
 theorem _root_.GlobalTheory.TraceIsometry.exists_gl_of_trace_isometry : ∀ (E : Type) [Field E] [NumberField E]
     [IsCMField E] (r : ℕ) (X X' : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r), (∀ τ : E →+* ℂ, ‖τ X.ξ0‖ = ‖τ X'.ξ0‖) →

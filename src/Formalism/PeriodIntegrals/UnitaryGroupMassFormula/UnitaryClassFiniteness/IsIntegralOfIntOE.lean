@@ -22,7 +22,6 @@ theorem intAf_mul {a b : Af F} (ha : a ∈ intAf F) (hb : b ∈ intAf F) : a * b
 
 theorem intAf_one : (1 : Af F) ∈ intAf F := (intAf_iff _).mpr (one_mem _)
 
-variable (F E) in
 
 def Oh : AddSubgroup (Af F ⊗[F] E) :=
   AddSubgroup.closure {r | ∃ a ∈ intAf F, ∃ e : E, IsIntegral ℤ e ∧ r = a ⊗ₜ[F] e}

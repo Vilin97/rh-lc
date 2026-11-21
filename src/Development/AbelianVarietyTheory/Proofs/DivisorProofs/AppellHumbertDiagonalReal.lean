@@ -73,4 +73,3 @@ variable {g : ℕ}
 
 end GlobalTheory.RiemInt
 
-open GlobalTheory.RosatiAH GlobalTheory.RiemInt in

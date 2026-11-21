@@ -29,7 +29,6 @@ theorem index_range_powMonoidHom_adicCompletion_mul_norm (v : HeightOneSpectrum 
   rw [index_range_powMonoidHom_adicCompletion v (NeZero.ne n), hζv.card_rootsOfUnity,
     div_mul_cancel₀ _ hn, sq]
 
-omit [NumberField K] in
 
 theorem eq_one_or_eq_two_of_isReal {w : InfinitePlace K} (hw : w.IsReal) : n = 1 ∨ n = 2 := by
   obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot K n
@@ -41,7 +40,6 @@ theorem eq_one_or_eq_two_of_isReal {w : InfinitePlace K} (hw : w.IsReal) : n = 1
   have hx2 : x ^ 2 = 1 := by rw [← sq_abs, habs, one_pow]
   exact (Nat.dvd_prime Nat.prime_two).1 (h.dvd_of_pow_eq_one 2 hx2)
 
-omit [NumberField K] in
 
 theorem index_range_powMonoidHom_infinitePlaceCompletion_mul_norm (w : InfinitePlace K) :
     ((powMonoidHom n : (w.Completion)ˣ →* (w.Completion)ˣ).range.index : ℝ) *

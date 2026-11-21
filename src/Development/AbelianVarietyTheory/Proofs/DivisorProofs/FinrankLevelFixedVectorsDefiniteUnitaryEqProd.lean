@@ -25,7 +25,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 theorem ua_ext {g h : UA E n} (h1 : cInf g = cInf h) (h2 : ∀ u : Pl E, cLoc u g = cLoc u h) : g = h :=
   Subtype.ext (ga_ext' h1 h2)
 
-variable (n) in
 
 def proj (S : Set (Pl E)) : InfinitePlace E ⊕ S → UA E n →* UA E n :=
   Sum.elim (fun v => (embU n v.embedding).subtype.comp (embRet v.embedding)) fun w => ret0 w.1 n

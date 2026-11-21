@@ -99,7 +99,6 @@ theorem lineFun_res {U V : Scheme.{0}} {k : ℕ} (g : V ⟶ U) (y : Fin (k + 1) 
     D.nat g (y i) (y j) (hy i j)]
   rfl
 
-variable (D) in
 
 def lineMap (hC : CechPt) : cech D.f ⟶ ofCat (glCat 1) where
   app n :=

@@ -18,7 +18,6 @@ section Generic
 
 variable {ι κ V : Type} [DecidableEq κ] [AddCommGroup V] [Module ℂ V] {Pu : (κ → V) → V → Prop}
 
-omit [DecidableEq κ] in
 
 def IsMultiLin (Pu : (κ → V) → V → Prop) : Prop :=
   ∀ (x y z : κ → V) (f g : V) (q : κ) (c : ℂ), Pu x f → Pu y g → (∀ p, p ≠ q → y p = x p) → (∀ p, p ≠ q → z p = x p) →

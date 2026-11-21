@@ -60,8 +60,6 @@ theorem inflation_unramified_closure_h2_bijective (hK : FiniteDimensional ℚ_[p
   rw [BrKer_eq_BrLK_Kn hK hL h] at hx
   exact BrLK_mono (Kn_le_Kur (degLK_pos hL)) hx
 
-open Classical in
-variable (p K) in
 
 noncomputable def invBr : Br p K →+ QZ :=
   if h : ∃ f : Br p K →+ QZ, ∀ x, f ((layerInf p K (MaximalUnramifiedExtension p K)).hom.H 2 x) = invUr p K x then h.choose else 0
@@ -94,6 +92,5 @@ theorem invBr_res (hK : FiniteDimensional ℚ_[p] K) (hL : FiniteDimensional ℚ
   obtain ⟨y, hy, hinv⟩ := exists_res_ur hK hL h z
   rw [hy, invBr_layerInf hL, invBr_layerInf hK, hinv]
 
-variable (p K) in
 
 end ReciprocityTheory.DiscreteGroups.LocalClassField

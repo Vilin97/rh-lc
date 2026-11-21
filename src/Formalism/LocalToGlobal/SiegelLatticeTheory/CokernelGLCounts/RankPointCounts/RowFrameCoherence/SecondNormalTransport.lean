@@ -292,7 +292,6 @@ theorem secondNormal_transport (hT' : T' ≠ 0) (hi : β ∈ Formalism.Hermitian
     rw [this]
     exact symm_X hβe hx''
 
-omit hz hz' hz'' hΛ in
 
 theorem orthogonal_transport (hTh : Th'' Λ F F' F'' β = Hp Λ F F'') {y₂ : S.V} (hy : y₂ ∈ Hp Λ F F'') :
     ∃ y₁ ∈ Hp Λ F F', y₁ - y₂ ∈ Xsp F ∧ β y₁ - y₂ ∈ Xsp F'' := by

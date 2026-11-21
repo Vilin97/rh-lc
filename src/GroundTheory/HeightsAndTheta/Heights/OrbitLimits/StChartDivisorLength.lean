@@ -18,7 +18,6 @@ open MvPolynomial
 open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar HermLine IsSectionOn divSupp IsHorizontal multAt PBlk fsLine Xc)
 open GroundTheory.Heights₂.Heights (segreChartComponents localMult)
 
-open Classical in
 
 def ChartDivisorLength.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n m : ℕ)

@@ -237,7 +237,6 @@ theorem admissible_third_of_low_kernel_law : Adm3OfK1LowerBound := by
   intro p _ X _ E hfin be T pos F hLow H j hj L0 hL0 La' hL' φ I n
   exact Ent.ent_of_K1gen X be j (hLow j hj) (H j hj L0 hL0 La' hL' φ) I n
 
-open Formalism.L2.G.Pend in
 
 theorem low_order_vanishing_of_admissible (D : Formalism.BasicNotions.D7) {p : ℕ} [Fact p.Prime] (X : Sys p) [IsFractionRing X.G.O X.G.Kf]
     (E : CEmbC X.G) (hfin : ∀ j c, (X.Lv.lev j c).FinClasses) (hst : FinStab X.Lv) {g : Formalism.MainNotions.GL3Theta.G1 p}
@@ -246,7 +245,6 @@ theorem low_order_vanishing_of_admissible (D : Formalism.BasicNotions.D7) {p : �
     Formalism.MainNotions.FormalGroupSystem.adm11 D X (pendT X E hfin hst hLT pos F) → ∀ j < X.mm, ∀ v, LowZC X (beLT hLT) j v :=
   fun h j hj v => h v j hj
 
-open Formalism.L2.G.Pend in
 
 theorem admissible_third_of_second_eleventh (D : Formalism.BasicNotions.D7) {p : ℕ} [Fact p.Prime] (X : Sys p) [IsFractionRing X.G.O X.G.Kf]
     (E : CEmbC X.G) (hfin : ∀ j c, (X.Lv.lev j c).FinClasses) (hst : FinStab X.Lv) {g : Formalism.MainNotions.GL3Theta.G1 p}

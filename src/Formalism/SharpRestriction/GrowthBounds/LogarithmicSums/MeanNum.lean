@@ -413,7 +413,6 @@ theorem ord_le_n (D : D7) (h : HH D) : addOrderOf h ≤ D.R.n := by
   have := addOrderOf_le_card_univ (x := h)
   rwa [Formalism.HC.Frame.card_A] at this
 
-set_option maxHeartbeats 2000000 in
 
 theorem restHypI_ev (eps : ℝ) (K : Consts) (hK : K.Nonneg) (Cm C31 : ℝ) :
     ∀ᶠ x : ℝ in atTop, ∀ (D : D7) (L : SizeData₂ D) (X : Inst D L), L.sc.x = x → L.sc.eps = eps → TypePrimeSizeConds D L K →

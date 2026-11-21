@@ -32,11 +32,8 @@ variable {X : Stages} {px : PreX X.B.toPre} {I : ColIn X.B px} {hX : X.B.fields.
 
 namespace Dat
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 2000000 in
 
 theorem inGeo_resGeo_iff (h : Wt' ⊆ Wt) : GlobalTheory.RealGeo.InGeo (z.resGeo h) ↔ GlobalTheory.RealGeo.InGeo z.geo :=
   Res.inGeo_iff (A := (famR X I hX (usedOf I T Wt) z.Xg z.tr).A) (f := inclU I (usedOf_mono I T h))
@@ -60,7 +57,6 @@ theorem nonzero_index_places_conj_stable : ConjStable X (z.W1 F0) := by
   rw [plB_conj, Formalism.DivisionValues.ValuationRepresentative.conjPl_conjPl]
   exact hw.imp fun _ h => h.symm
 
-set_option maxHeartbeats 2000000 in
 
 theorem nzAt_resR (h : Wt' ⊆ Wt) (j : Fin X.toD7.R.m) (v : HeightOneSpectrum (𝓞 X.toD7.what₂.LL)) :
     NzAt (z.resR h) (face0 X I hX (usedOf I T Wt') z.Xg z.tr) F0 j v ↔ NzAt z.R (face0 X I hX (usedOf I T Wt) z.Xg z.tr) F0 j v := by
@@ -87,23 +83,16 @@ theorem twisted_places_eq_complex_side_of_eq_nonzero_index (hW : z.W1 F0 = Wt) (
   obtain ⟨w, rfl⟩ := (plB X).surjective v
   exact (z.plB_mem_twPl w).trans ((Set.ext_iff.1 hW w).symm.trans (z.complex_side_face_numbers_iff_mem_nonzero_index_places F0 kap lam err Dc Sp Zsc C CH hZ w).symm)
 
-set_option maxHeartbeats 4000000 in
 
 section Ex
 
 variable (e : z.R.toRealDat.ExAt) (h : Wt' ⊆ Wt) (hc : ConjStable X Wt')
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end Ex
 
@@ -113,7 +102,6 @@ variable (e : z.R.toRealDat.ExAt) (h : z.W1 F0 ⊆ Wt)
 
 end ExW
 
-include z in
 
 end Dat
 

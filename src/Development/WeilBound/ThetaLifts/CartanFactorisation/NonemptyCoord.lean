@@ -83,7 +83,6 @@ theorem schrInf_apply {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ)
   push_cast
   ring
 
-variable (F κ) in
 
 structure Coord where
   n : ℕ

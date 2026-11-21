@@ -117,7 +117,6 @@ theorem det_sub_one_mem {V : HSp D} {I : Ideal (AE D)} {h : GA D V} (hh : h ∈ 
     exact hh i j
   rw [this, map_one, Matrix.det_one]
 
-set_option maxHeartbeats 1000000 in
 
 theorem isDetRoot_prod {ι : Type} [Fintype ι] {k : ι → Type} [∀ i, Field (k i)] [∀ i, ValuativeRel (k i)]
     [∀ i, TopologicalSpace (k i)] [∀ i, IsNonarchimedeanLocalField (k i)] (p : ∀ i, SplitPt D (k i))
@@ -198,6 +197,5 @@ theorem det_cast (n n' : ℕ) (e : n = n') (h : GA D (D.sp.X n')) :
     (Formalism.L2.Theta.mt _ (e ▸ h : GA D (D.sp.X n))).det = (Formalism.L2.Theta.mt _ h).det := by
   subst e; rfl
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.ChartQuot

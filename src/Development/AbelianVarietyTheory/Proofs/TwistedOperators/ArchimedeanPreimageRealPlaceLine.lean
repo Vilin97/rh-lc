@@ -26,7 +26,6 @@ namespace GlobalTheory.ArchLinePreimage
 
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 theorem smul_eq_zero_of_finPart_eq_zero (t : AE D) (ht : finPart D t = 0) (a : AF D.host.F)
     (ha : a.1 = 0) : a • t = 0 := by

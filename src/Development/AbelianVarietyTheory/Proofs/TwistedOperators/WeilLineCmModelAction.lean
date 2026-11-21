@@ -63,7 +63,6 @@ theorem lintegral_of_integral (l : Type) [Fintype l] (f g : GlobalTheory.RealWei
   rw [key, key] at h
   exact (ENNReal.toReal_eq_toReal_iff' (fin f) (fin g)).1 h
 
-open GlobalTheory.ArchUniq GlobalTheory.RealWeil in
 
 end GlobalTheory.SchwartzSlope
 

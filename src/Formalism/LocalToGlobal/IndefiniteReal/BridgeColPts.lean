@@ -126,7 +126,6 @@ def colAdPts (hS : Col.DecoPtSurj hc n ST SG) : AdPts S (Col.ratIn hc n) (colJ h
   q_eqv := colQ_eqv o
   q_fib := colQ_fib o
 
-open Classical in
 
 def colClassPres (hS : Col.DecoPtSurj hc n ST SG) (h : S.Ok) {W : Type} [NormedAddCommGroup W] [InnerProductSpace ℂ W]
     (σ : K →+* ℂ) (ρ : Col.URat hc n →* Module.End ℂ W) (χ : colJ hc n ST SG H →* ℂˣ)

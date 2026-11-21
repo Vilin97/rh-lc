@@ -19,8 +19,6 @@ namespace FourInj
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-open scoped Classical in
-variable (F κ) in
 
 def split : (κ → AF F) ≃ₜ+ ((κ → mixedEmbedding.mixedSpace F) × (κ → FiniteAdeleRing (𝓞 F) F)) where
   toFun x := (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (x i).1, fun i => (x i).2)
@@ -42,7 +40,6 @@ def split : (κ → AF F) ≃ₜ+ ((κ → mixedEmbedding.mixedSpace F) × (κ �
     rw [h]
     exact (GroundTheory.Global.homeomorphMixedSpace F).symm.continuous.comp ((continuous_apply i).comp continuous_fst)
 
-open scoped Classical in
 
 theorem sch_props (μ : Measure (κ → AF F)) [μ.IsAddHaarMeasure] {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) :
     Continuous Φ ∧ (∃ C : ℝ, ∀ x, ‖Φ x‖ ≤ C) ∧ Integrable Φ μ := by
@@ -157,7 +154,6 @@ theorem eq_zero {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (μ : Measure (κ →
 
 end FourInj
 
-open FourInj in
 
 theorem fourierInj_of : FourierInj := by
   intro F _ _ κ _ ψ hψ μ hμ Φ₁ h₁ Φ₂ h₂ Ψ₁ k₁ Ψ₂ k₂ hco x u

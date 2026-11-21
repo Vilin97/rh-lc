@@ -76,7 +76,6 @@ theorem eq_smul_of_rightInv (κ l : Measure N) [κ.IsHaarMeasure] [κ.IsMulRight
   conv_rhs => rw [← Measure.inv_eq_self κ]
   exact Measure.map_smul _ _ _
 
-omit [LocallyCompactSpace N] [SecondCountableTopology N] [T2Space N] in
 
 theorem fd_ne_top (Γ : Subgroup N) [Countable Γ] {K : Set N} (hK : IsCompact K) (hcov : ∀ g, ∃ γ ∈ Γ, γ * g ∈ K)
     (ν : Measure N) [ν.IsHaarMeasure] {𝓝 : Set N} (h𝓝 : IsFundamentalDomain Γ 𝓝 ν) : ν 𝓝 ≠ ⊤ := by
@@ -178,7 +177,6 @@ variable {G H : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loc
 
 omit [TopologicalSpace H] [IsTopologicalGroup H] [LocallyCompactSpace H] [T2Space H] [SecondCountableTopology H]
   [MeasurableSpace H] [BorelSpace H] in
-include hN in
 
 theorem map_cj_of_mem (Γ : Subgroup G) [Countable Γ] (ν : Measure N) [ν.IsHaarMeasure] {𝓝 : Set N}
     (h𝓝 : IsFundamentalDomain (Γ.subgroupOf N) 𝓝 ν) (hfin : ν 𝓝 ≠ ⊤) {δ : H} (hδ : s δ ∈ Γ) :
@@ -201,7 +199,6 @@ theorem map_cj_of_mem (Γ : Subgroup G) [Countable Γ] (ν : Measure N) [ν.IsHa
 
 omit [IsTopologicalGroup H] [LocallyCompactSpace H] [T2Space H] [SecondCountableTopology H]
   [MeasurableSpace H] [BorelSpace H] in
-include hN hs in
 
 theorem map_cj_of_cocompact (Γ : Subgroup G) [Countable Γ] (ν : Measure N) [ν.IsHaarMeasure] {𝓝 : Set N}
     (h𝓝 : IsFundamentalDomain (Γ.subgroupOf N) 𝓝 ν) (hfin : ν 𝓝 ≠ ⊤) {K : Set H} (hK : IsCompact K)
@@ -245,7 +242,6 @@ theorem map_cj_of_cocompact (Γ : Subgroup G) [Countable Γ] (ν : Measure N) [�
   have h1 := mulEquivHaarChar_smul_map ν (cj N s hnorm h)
   rwa [show mulEquivHaarChar (cj N s hnorm h) = 1 from eq_one_of_bdd χ _ hB h, one_smul] at h1
 
-include hN hs hnorm in
 
 theorem semiMeas_rightInv (μ : Measure H) (ν : Measure N) [μ.IsHaarMeasure] [ν.IsHaarMeasure] [μ.IsMulRightInvariant]
     [ν.IsMulRightInvariant] : (semiMeas N s μ ν).IsMulRightInvariant := by
@@ -268,7 +264,6 @@ theorem semiMeas_rightInv (μ : Measure H) (ν : Measure N) [μ.IsHaarMeasure] [
   funext q
   exact mk_mul N s hnorm q (h₀, n₀)
 
-include hN hs hnorm in
 
 theorem semiMeas_haar_inv (hp : ∃ p : (N ⊔ s.range : Subgroup G) → H, Continuous p ∧ ∀ (h : H) (n : N), p (mk N s (h, n)) = h)
     (Γ : Subgroup G) [Countable Γ] (Λ : Subgroup H) [Countable Λ] (hΛ : ∀ δ ∈ Λ, s δ ∈ Γ) {K : Set H} (hK : IsCompact K)
@@ -293,7 +288,6 @@ theorem semiMeas_haar_inv (hp : ∃ p : (N ⊔ s.range : Subgroup G) → H, Cont
   haveI := semiMeas_rightInv N s hN hs hnorm μ ν
   exact ⟨inferInstance, invInv_of_rightInv _⟩
 
-include hN hs hnorm in
 
 theorem eq_semiMeas_of_covolOne
     (hp : ∃ p : (N ⊔ s.range : Subgroup G) → H, Continuous p ∧ ∀ (h : H) (n : N), p (mk N s (h, n)) = h)
@@ -385,8 +379,6 @@ theorem eq_semiMeas_of_covolOne
     exact_mod_cast hA1
   rw [hc, hc1, one_smul]
 
-omit [LocallyCompactSpace G] [T2Space G] [IsTopologicalGroup H] [LocallyCompactSpace H] [T2Space H] in
-include hs in
 
 theorem lintegral_semiMeas (μ : Measure H) (ν : Measure N) [SFinite ν] (F : G → ℝ≥0∞) (hF : Measurable F) :
     ∫⁻ r : (N ⊔ s.range : Subgroup G), F r ∂(semiMeas N s μ ν) = ∫⁻ h, ∫⁻ n, F (n.1 * s h) ∂ν ∂μ := by
@@ -399,7 +391,6 @@ theorem lintegral_semiMeas (μ : Measure H) (ν : Measure N) [SFinite ν] (F : G
   rw [lintegral_map hF' hφ]
   exact lintegral_prod _ (hF'.comp hφ).aemeasurable
 
-include hN hs hnorm in
 
 theorem lintegral_of_covolOne (R : Subgroup G) (hR : N ⊔ s.range = R)
     (hp : ∃ p : R → H, Continuous p ∧ ∀ (h : H) (n : N) (hm : n.1 * s h ∈ R), p ⟨n.1 * s h, hm⟩ = h)

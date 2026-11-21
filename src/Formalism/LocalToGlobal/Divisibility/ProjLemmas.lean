@@ -863,7 +863,6 @@ theorem convA {k V G : Type} [Field k] [IsAlgClosed k] [Group G] [Fintype G] [Ad
 
 variable {K : Type} [Field K] [CharZero K] {G : Type} [Group G] [Fintype G]
 
-open Classical in
 
 theorem conv_char {χ χ' : G → K} (h : IsAbsIrrChar χ) (h' : IsAbsIrrChar χ') (u : G) :
     (∑ s, χ s⁻¹ * χ' (s * u)) * χ' 1 = if χ = χ' then (Fintype.card G : K) * χ' u else 0 := by

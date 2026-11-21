@@ -34,7 +34,6 @@ def DivPushForward.Statement : Prop :=
       cycEval N' ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' (rename (blockIncl j ι') a)) W : ℤ))) =
         relDeg j P' * cycEval N ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (contractPrime j P') a) W : ℤ)))
 
-open Classical in
 
 end
 

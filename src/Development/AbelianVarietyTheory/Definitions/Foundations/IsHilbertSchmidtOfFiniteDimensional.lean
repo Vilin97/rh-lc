@@ -20,11 +20,9 @@ variable {H K L : Type*}
   [NormedAddCommGroup L] [InnerProductSpace ℂ L] [CompleteSpace L]
   {ι κ : Type*}
 
-variable (H) in
 
 def stdIndex : Set H := (exists_hilbertBasis ℂ H).choose
 
-variable (H) in
 
 def stdBasis : HilbertBasis (stdIndex H) ℂ H := (exists_hilbertBasis ℂ H).choose_spec.choose
 
@@ -41,14 +39,12 @@ def trace (T : H →L[ℂ] H) : ℂ := ∑' i, ⟪stdBasis H i, T (stdBasis H i)
 
 def HasTrace (T : H →L[ℂ] H) (c : ℂ) : Prop := IsTraceClass T ∧ trace T = c
 
-omit [CompleteSpace H] in
 
 theorem hasSum_norm_inner_sq (e : HilbertBasis ι ℂ H) (x : H) :
     HasSum (fun i => ‖⟪e i, x⟫_ℂ‖ ^ 2) (‖x‖ ^ 2) := by
   have h := lp.hasSum_norm (p := 2) (by norm_num) (e.repr x)
   simpa [e.repr_apply_apply] using h
 
-omit [CompleteSpace H] [CompleteSpace K] in
 
 theorem summable_matrix (e : HilbertBasis ι ℂ H) (f : HilbertBasis κ ℂ K) {T : H →L[ℂ] K}
     (h : Summable fun i => ‖T (e i)‖ ^ 2) :
@@ -83,7 +79,6 @@ theorem IsHilbertSchmidt.adjoint {T : H →L[ℂ] K} (h : IsHilbertSchmidt T) :
     IsHilbertSchmidt (adjoint T) :=
   (hasSum_adjoint _ _ (Summable.hasSum h)).summable
 
-omit [CompleteSpace K] [CompleteSpace L] in
 
 theorem IsHilbertSchmidt.of_norm_le {T : H →L[ℂ] K} {S : H →L[ℂ] L} (h : IsHilbertSchmidt T)
     (c : ℝ) (hS : ∀ x, ‖S x‖ ≤ c * ‖T x‖) : IsHilbertSchmidt S := by
@@ -91,7 +86,6 @@ theorem IsHilbertSchmidt.of_norm_le {T : H →L[ℂ] K} {S : H →L[ℂ] L} (h :
   rw [← mul_pow]
   exact pow_le_pow_left₀ (norm_nonneg _) (hS _) 2
 
-omit [CompleteSpace K] [CompleteSpace L] in
 
 theorem IsHilbertSchmidt.comp_left {T : H →L[ℂ] K} (h : IsHilbertSchmidt T) (A : K →L[ℂ] L) :
     IsHilbertSchmidt (A ∘L T) :=
@@ -101,12 +95,10 @@ theorem IsHilbertSchmidt.comp_right {T : H →L[ℂ] K} (h : IsHilbertSchmidt T)
     IsHilbertSchmidt (T ∘L A) := by
   simpa using (h.adjoint.comp_left (ContinuousLinearMap.adjoint A)).adjoint
 
-omit [CompleteSpace K] in
 
 theorem isHilbertSchmidt_zero : IsHilbertSchmidt (0 : H →L[ℂ] K) := by
   simp [IsHilbertSchmidt, summable_zero]
 
-omit [CompleteSpace K] in
 
 theorem IsHilbertSchmidt.add {S T : H →L[ℂ] K} (hS : IsHilbertSchmidt S) (hT : IsHilbertSchmidt T) :
     IsHilbertSchmidt (S + T) := by
@@ -117,13 +109,11 @@ theorem IsHilbertSchmidt.add {S T : H →L[ℂ] K} (hS : IsHilbertSchmidt S) (hT
   rw [add_apply]
   nlinarith [sq_nonneg (‖S (stdBasis H i)‖ - ‖T (stdBasis H i)‖)]
 
-omit [CompleteSpace K] in
 
 theorem IsHilbertSchmidt.smul {T : H →L[ℂ] K} (h : IsHilbertSchmidt T) (c : ℂ) :
     IsHilbertSchmidt (c • T) :=
   h.of_norm_le ‖c‖ fun x => by simp [norm_smul]
 
-omit [CompleteSpace K] in
 
 theorem isHilbertSchmidt_of_finiteDimensional [FiniteDimensional ℂ H] (T : H →L[ℂ] K) :
     IsHilbertSchmidt T := by
@@ -177,7 +167,6 @@ theorem IsTraceClass.summable_norm {T : H →L[ℂ] H} (h : IsTraceClass T) (e :
     Summable fun i => ‖⟪e i, T (e i)⟫_ℂ‖ :=
   (h.hasSum_trace e).summable.norm
 
-omit [CompleteSpace L] in
 
 theorem exists_comp_eq_of_norm_le {C : H →L[ℂ] K} {A : H →L[ℂ] L} (h : ∀ x, ‖C x‖ ≤ ‖A x‖)
     [CompleteSpace L] : ∃ U : L →L[ℂ] K, U ∘L A = C := by
@@ -368,7 +357,6 @@ variable [MeasurableSpace G]
 def IsRepOp (π : G →* (H →L[ℂ] H)) (μ : Measure G) (f : G → ℂ) (T : H →L[ℂ] H) : Prop :=
   ∀ v, Integrable (fun g => f g • π g v) μ ∧ T v = ∫ g, f g • π g v ∂μ
 
-open Classical in
 
 def repOp (π : G →* (H →L[ℂ] H)) (μ : Measure G) (f : G → ℂ) : H →L[ℂ] H :=
   if h : ∃ T, IsRepOp π μ f T then h.choose else 0
@@ -377,14 +365,12 @@ def repTrace (π : G →* (H →L[ℂ] H)) (μ : Measure G) (f : G → ℂ) : �
 
 variable {π : G →* (H →L[ℂ] H)} {μ : Measure G} {f f' : G → ℂ}
 
-omit [TopologicalSpace G] [CompleteSpace H] in
 
 theorem IsRepOp.repOp_eq {T : H →L[ℂ] H} (h : IsRepOp π μ f T) : repOp π μ f = T := by
   have h' : ∃ T, IsRepOp π μ f T := ⟨T, h⟩
   ext v
   rw [repOp, dite_eq_left h', (h'.choose_spec v).2, (h v).2]
 
-omit [CompleteSpace H] in
 
 theorem IsUnitaryRep.isRepOp_of_integrable (hπ : IsUnitaryRep π) (hf : Integrable f μ)
     (hm : ∀ v, AEStronglyMeasurable (fun g => f g • π g v) μ) : IsRepOp π μ f (repOp π μ f) := by
@@ -402,7 +388,6 @@ theorem IsUnitaryRep.isRepOp_of_integrable (hπ : IsUnitaryRep π) (hf : Integra
 
 variable [OpensMeasurableSpace G] [IsFiniteMeasureOnCompacts μ]
 
-omit [CompleteSpace H] in
 
 theorem IsUnitaryRep.isRepOp (hπ : IsUnitaryRep π) (hf : Continuous f) (hc : HasCompactSupport f) :
     IsRepOp π μ f (repOp π μ f) :=
@@ -410,7 +395,6 @@ theorem IsUnitaryRep.isRepOp (hπ : IsUnitaryRep π) (hf : Continuous f) (hc : H
     ((hf.smul (hπ.continuous_apply v)).integrable_of_hasCompactSupport
       hc.smul_right).aestronglyMeasurable
 
-omit [CompleteSpace H] in
 
 theorem IsUnitaryRep.repOp_apply (hπ : IsUnitaryRep π) (hf : Continuous f)
     (hc : HasCompactSupport f) (v : H) : repOp π μ f v = ∫ g, f g • π g v ∂μ :=
@@ -422,7 +406,6 @@ theorem IsUnitaryRep.inner_repOp (hπ : IsUnitaryRep π) (hf : Continuous f)
   rw [hπ.repOp_apply hf hc, ← integral_inner (hπ.isRepOp hf hc v).1]
   simp only [inner_smul_right]
 
-omit [CompleteSpace H] in
 
 theorem IsUnitaryRep.repOp_add (hπ : IsUnitaryRep π) (hf : Continuous f) (hc : HasCompactSupport f)
     (hf' : Continuous f') (hc' : HasCompactSupport f') :
@@ -433,7 +416,6 @@ theorem IsUnitaryRep.repOp_add (hπ : IsUnitaryRep π) (hf : Continuous f) (hc :
   simp only [Pi.add_apply, add_smul, add_apply]
   exact ⟨h1.add h3, by rw [integral_add h1 h3, h2, h4]⟩
 
-omit [CompleteSpace H] in
 
 theorem IsUnitaryRep.repOp_smul (hπ : IsUnitaryRep π) (hf : Continuous f)
     (hc : HasCompactSupport f) (c : ℂ) : repOp π μ (c • f) = c • repOp π μ f := by
@@ -581,7 +563,6 @@ section LocallyConstant
 
 variable {X V : Type*} [TopologicalSpace X] [AddCommGroup V] [Module ℂ V]
 
-omit [Module ℂ V] in
 
 theorem finite_range {F : X → V} (hF : IsLocallyConstant F) (hc : HasCompactSupport F) :
     (Set.range F).Finite := by
@@ -626,7 +607,6 @@ theorem map_lcIntegral {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [C
       rw [Function.mem_support, show F x = w from hx]
       exact hw
 
-omit [MeasurableSpace X] [OpensMeasurableSpace X] in
 
 theorem eq_of_forall_dual {v w : V} (h : ∀ l : V →ₗ[ℂ] ℂ, l v = l w) : v = w := by
   rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
@@ -641,7 +621,6 @@ open GlobalTheory.PRep
 
 variable {G V : Type} [Group G] [TopologicalSpace G] [AddCommGroup V] [Module ℂ V]
 
-omit [TopologicalSpace G] in
 
 theorem mem_fixed {ρ : Representation ℂ G V} {K : Subgroup G} {v : V} :
     v ∈ fixed ρ K ↔ ∀ k ∈ K, ρ k v = v :=
@@ -682,7 +661,6 @@ theorem isOpen_leftStabilizer [IsTopologicalGroup G] {f : G → ℂ} (hf : IsLoc
 
 variable [MeasurableSpace G]
 
-open Classical in
 
 def smoothOp (ρ : Representation ℂ G V) (μ : Measure G) (f : G → ℂ) : V →ₗ[ℂ] V :=
   if h : ∃ T : V →ₗ[ℂ] V, ∀ v, T v = lcIntegral μ fun g => f g • ρ g v then h.choose else 0
@@ -693,14 +671,12 @@ def smoothTrace (ρ : Representation ℂ G V) (μ : Measure G) (f : G → ℂ) :
 variable [IsTopologicalGroup G] [BorelSpace G] {μ : Measure G} [IsFiniteMeasureOnCompacts μ]
   {ρ : Representation ℂ G V} {f f' : G → ℂ}
 
-omit [MeasurableSpace G] [BorelSpace G] in
 
 theorem _root_.GlobalTheory.PRep.IsSmooth.smoothOp_integrand (hρ : IsSmooth ρ) (hf : IsLocallyConstant f)
     (hc : HasCompactSupport f) (v : V) :
     IsLocallyConstant (fun g => f g • ρ g v) ∧ HasCompactSupport fun g => f g • ρ g v :=
   ⟨hf.comp₂ (hρ.isLocallyConstant_orbit v) (· • ·), hc.smul_right⟩
 
-omit [Module ℂ V] in
 
 theorem integrable_map {E : Type*} [NormedAddCommGroup E] {F : G → V} (hF : IsLocallyConstant F)
     (hc : HasCompactSupport F) (l : V → E) (hl : l 0 = 0) : Integrable (fun g => l (F g)) μ :=

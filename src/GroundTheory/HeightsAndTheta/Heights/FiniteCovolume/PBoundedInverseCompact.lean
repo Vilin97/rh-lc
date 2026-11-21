@@ -55,7 +55,6 @@ theorem posDef_exists_lower {P : Matrix ι ι ℂ} (hP : P.PosDef) :
       simp
     · exact absurd ⟨_, hunit y hy⟩ hne
 
-omit [Fintype ι] in
 
 theorem norm_mul_apply_le {m κ : Type*} [Fintype κ] (A : Matrix m κ ℂ) (B : Matrix κ ι ℂ)
     (i : m) (j : ι) : ‖(A * B) i j‖ ≤ ∑ k, ‖A i k‖ * ‖B k j‖ := by
@@ -69,7 +68,6 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
   [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [IsTotallyComplex E] [Fintype ι] in
 
 theorem exists_rightInv (v : Basis ι E W) {n : ℕ} {e : Fin n → W}
     (he : Submodule.span E (Set.range e) = ⊤) :
@@ -100,7 +98,6 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
   [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem BoundedInverseCompact.proof (h : HermitianForm F E W) (v : Basis ι E W) :
     BoundedInverseCompact.Statement h v := by

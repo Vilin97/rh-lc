@@ -20,7 +20,6 @@ namespace GlobalTheory.WeilDeligne
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω]
 variable {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)}
 
-variable (E) in
 
 def Wild (A : ValuationSubring Ω) : Subgroup (G E Ω) where
   carrier := {σ | ∀ y : Ω, y ≠ 0 → A.valuation (σ y / y - 1) < 1}
@@ -55,12 +54,10 @@ def Wild (A : ValuationSubring Ω) : Subgroup (G E Ω) where
     rw [e, Valuation.map_neg, map_div₀, h2, div_one]
     exact h1
 
-omit [NumberField E] in
 
 theorem mem_Wild {σ : G E Ω} :
     σ ∈ Wild E A ↔ ∀ y : Ω, y ≠ 0 → A.valuation (σ y / y - 1) < 1 := Iff.rfl
 
-open Pointwise in
 
 theorem Wild_le_Ine : Wild E A ≤ Ine (F := E) A := by
   intro σ h
@@ -377,12 +374,10 @@ end WD
 
 variable {g : ℕ} [Fact g.Prime]
 
-variable (A w) in
 
 def TeichmullerInertiaLabelCondition (τ : Fbar g →* ℂ) (γ : G E Ω) : Prop :=
   normV w = g ∧ γ ∈ Ine (F := E) A ∧ IsTeich τ
 
-omit [IsAlgClosure E Ω] in
 
 theorem TeichmullerInertiaLabelCondition.of_tameGenAt {τ : Fbar g →* ℂ} {γ : G E Ω} (hw : normV w = g)
     (hγ : TameGenAt A γ) (hτ : ∀ x y, x ≠ 0 → y ≠ 0 → τ x = τ y → x = y) : TeichmullerInertiaLabelCondition A w τ γ :=
@@ -401,7 +396,6 @@ theorem existsUnique_lab (H : TeichmullerInertiaLabelCondition A w τ γ) (x : W
   rw [H.1] at hc h2
   exact H.2.2.existsUnique_monic (fun z hz => H.2.2.exists_eq h0 hc (hn z hz)) h2
 
-open Classical in
 
 def lab (τ : Fbar g →* ℂ) (γ : G E Ω) (x : WD h) : (ZMod g)[X] :=
   if H : TeichmullerInertiaLabelCondition A w τ γ then (existsUnique_lab H x).choose else 1
@@ -574,8 +568,6 @@ theorem exists_normV_eq (g : ℕ) (hg : g.Prime) : ∃ v : HeightOneSpectrum (�
   rw [normV, Nat.card_congr e.toEquiv, hp']
   simpa using Nat.card_congr (Int.quotientSpanNatEquivZMod g).toEquiv
 
-open Classical in
 
-omit [IsAlgClosure E Ω] in
 
 end GlobalTheory.WeilDeligne

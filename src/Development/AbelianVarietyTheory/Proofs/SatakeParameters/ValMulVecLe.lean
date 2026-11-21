@@ -237,7 +237,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7} {V : HSp D}
 
-set_option maxHeartbeats 2000000 in
 
 theorem triv_iff {n : ℕ} {hF : D.host.F = maximalRealSubfield D.host.E} {PV : principalLevelFrame.RowPsi V n}
     (hs : GlobalTheory.NJoin.StdFrame hF PV) {v : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E))}
@@ -271,7 +270,6 @@ theorem triv_iff {n : ℕ} {hF : D.host.F = maximalRealSubfield D.host.E} {PV : 
     have := congrArg (fun X => β'.map φ * X * β.map φ) h
     simpa only [← Matrix.mul_assoc, c2, Matrix.one_mul, Matrix.mul_one, Matrix.mul_assoc _ (β'.map φ) (β.map φ)] using this
 
-set_option maxHeartbeats 2000000 in
 
 theorem exists_frame {hF : D.host.F = maximalRealSubfield D.host.E} {PV : principalLevelFrame.RowPsi V V.rank}
     (hs : GlobalTheory.NJoin.StdFrame hF PV) {w : HeightOneSpectrum (𝓞 D.host.E)}
@@ -351,7 +349,6 @@ theorem exists_frame {hF : D.host.F = maximalRealSubfield D.host.E} {PV : princi
       = Dv.P⁻¹ * s⁻¹ * ((Dv.P * Dv.loc κ * Dv.P⁻¹) * s) * Dv.P := by group
     _ = Dv.loc κ := by rw [hsc]; group
 
-open Classical in
 
 theorem exists_sphOp {n : ℕ} (hn : V.rank = n) {hF : D.host.F = maximalRealSubfield D.host.E} {PV : principalLevelFrame.RowPsi V n}
     (hs : GlobalTheory.NJoin.StdFrame hF PV) {w : HeightOneSpectrum (𝓞 D.host.E)}

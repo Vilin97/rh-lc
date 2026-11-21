@@ -44,7 +44,6 @@ theorem frob_iterate_muOf (x : OCb l) (n : ℕ) :
 theorem theta_muOf (x : OCb l) : Per.θ l (muOf x) = x.untilt - 1 := by
   rw [muOf, map_sub, map_one, WittVector.fontaineTheta_teichmuller]
 
-variable (l) in
 
 def kerAll : Ideal (Ainf l) := ⨅ n : ℕ, RingHom.ker ((Per.θ l).comp (WittVector.frobenius ^ n))
 

@@ -40,48 +40,29 @@ theorem valAt_mul {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y : Sp K
 variable {F : Type} [Field F] [NumberField F] (Y : Var F) (E : Type) [Field E] [NumberField E] [Algebra F E] {n : ℕ}
   (w : Fin n → Y.Fn) (c : Fin Y.dim → Fin n → 𝓞 E)
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] [NumberField E] in
 
 section Proj
 
 variable (F) (N : ℕ)
 
-omit [NumberField F] in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] [NumberField E] in
 
 end Proj
 
-omit [NumberField F] [NumberField E] in
 
 end GlobalTheory.TrueGeo.CutModel

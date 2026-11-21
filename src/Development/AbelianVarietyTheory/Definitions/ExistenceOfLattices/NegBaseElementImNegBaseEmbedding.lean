@@ -78,8 +78,6 @@ theorem gram_eq {E : Type} [Field E] [NumberField E] [IsCMField E] (τ : E →+*
   rw [Complex.star_def]
   ring
 
-variable {σ' : KA l →+* ℂ} {g : ℕ} {ty : Fin g → (D.host.E →+* ℂ)} {F : FamilyUnif Xo σ' ty} in
 
-variable {σ' : KA l →+* ℂ} {g : ℕ} {ty : Fin g → (D.host.E →+* ℂ)} {F : FamilyUnif Xo σ' ty} in
 
 end GlobalTheory.RecDictModel

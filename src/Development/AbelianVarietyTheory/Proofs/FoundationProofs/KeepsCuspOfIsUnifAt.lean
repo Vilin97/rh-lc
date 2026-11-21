@@ -58,8 +58,6 @@ variable {g : ℕ} {e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)}
   {F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => relab c σ (e j).1)}
   {ik : U.Comp → Fin F.n} {φ : ∀ k, (F.Di (ik k)).La ≃ₗ[𝓞 E] (U.X k).Λ}
 
-open Limits MonoidalCategory CartesianMonoidalCategory MonObj in
-open scoped CategoryTheory.Obj in
 
 theorem exists_carries (hU : IsUnf U) (hP : HasPeriods φ)
     (hef : ∀ k a b, (((F.Di (ik k)).EF a b : ℤ) : ℚ) =

@@ -19,7 +19,6 @@ section RestrictGenAux
 variable {F : Type} [Field F] {Ω : Type} [Field Ω] [Algebra F Ω] {K' : Type} [Field K'] [Algebra F K']
   (R : Subalgebra F Ω) (σ : R →ₐ[F] K')
 
-open Classical in
 
 def RestrictGen.resid (a : Ω) : K' := if h : a ∈ R then σ ⟨a, h⟩ else 0
 
@@ -43,7 +42,6 @@ theorem RestrictGen.resid_mul {a b : Ω} (ha : a ∈ R) (hb : b ∈ R) :
 
 end RestrictGenAux
 
-open RestrictGen in
 
 theorem RestrictGen.proof : RestrictGen.Statement := by
   intro F _ N Ω _ _ x K' _ _ x' hxy R σ hσ Q Q' c H ρ w w' hw' hQ hQ' hH

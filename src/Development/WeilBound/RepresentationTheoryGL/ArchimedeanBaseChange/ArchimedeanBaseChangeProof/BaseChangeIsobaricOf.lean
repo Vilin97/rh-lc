@@ -81,7 +81,6 @@ theorem core_of (hS : RunSplit) (hI : RunInert) (hR : Rigid) (hE : Unr E) (hn : 
     obtain ⟨B', hB', e⟩ := (hR E n hn π hπ D D' hD hD' w).2 B hB
     exact ⟨B, hB, fun s ϖ q a b α hα => e.trans (h1 B' hB' s ϖ q a b α hα)⟩
 
-open GlobalTheory.PfBCI in
 
 end PositivityTheory.Rg.BcB
 

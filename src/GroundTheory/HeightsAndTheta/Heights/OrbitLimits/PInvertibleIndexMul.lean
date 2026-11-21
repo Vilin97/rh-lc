@@ -87,7 +87,6 @@ theorem genIndex_rep [CharZero Ω] {B : Subring Ω} [Module.Finite ℤ B] {X : A
 
 end InvertibleIndexMultiplicative
 
-open InvertibleIndexMultiplicative in
 
 theorem InvertibleIndexMul.proof (h1 : LocalGenFamily.Statement) (h2 : LocallyPrincipalCoprimeField.Statement)
     (h3 : InvertibleProductRep.Statement) (h4 : InvertibleIndexCharP.Statement) :

@@ -49,7 +49,6 @@ section Uniform
 
 end Uniform
 
-omit [Fact p.Prime] [CharP K p] in
 
 end EqualChar
 

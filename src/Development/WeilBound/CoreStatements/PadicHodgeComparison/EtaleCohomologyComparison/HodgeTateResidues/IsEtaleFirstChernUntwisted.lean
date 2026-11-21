@@ -19,17 +19,14 @@ namespace CrystallineSemistableComparison.HT
 
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
-variable (K) in
 
 def kC : K →+* ℂ_[l] := (clToC l).comp K.val.toRingHom
 
-variable (l) in
 
 def qC : ℚ_[l] →+* ℂ_[l] := (clToC l).comp (algebraMap ℚ_[l] (PadicAlgCl l))
 
 abbrev genD {M : Model l K} (D : E.LineData M.X) : E.LineData M.gen := D.pb (pullback.fst _ _)
 
-open GlobalTheory.EtC in
 
 def IsEtaleFirstChernUntwisted (r : E.Roots l) {M : Model l K} (D : E.LineData M.X) (v : M.T 2) : Prop :=
   ∃ (D' : E.LineData (E.gb M)) (π : D'.Y ⟶ D.Y) (L : cech D'.f ⟶ ofCat (glCat 1)) (x : ∀ n, Ht (l ^ n) M.spc ((2 : ℕ) : ℤ) 1),
@@ -37,8 +34,6 @@ def IsEtaleFirstChernUntwisted (r : E.Roots l) {M : Model l K} (D : E.LineData M
     (∀ n, pull _ (cechAug D'.f) _ 2 (x n) = c1 (l ^ n) L) ∧
     ∀ n, v.lev n = (cup (l ^ n) (x n) (rootClass (-1) (r.zetaX M n))).cast rfl rfl
 
-variable (l K) in
-set_option maxHeartbeats 1000000 in
 
 structure HTPre where
   h : ∀ (M : Model l K) (a n : ℕ), M.V n →+ (Module.Dual K (Hdg M.q a n) →+ ℂ_[l])

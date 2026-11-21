@@ -117,6 +117,5 @@ theorem Dic.letter {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw
 
 end Letters
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.AdTh

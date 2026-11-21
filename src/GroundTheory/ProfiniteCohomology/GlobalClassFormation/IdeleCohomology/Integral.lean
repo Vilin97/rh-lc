@@ -19,7 +19,6 @@ open scoped Pointwise
 variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
   (v : HeightOneSpectrum (𝓞 K))
 
-variable (L) in
 
 noncomputable abbrev integerUnitsAboveRep :
     Representation ℤ Gal(L/K) (∀ w : PlacesOver L v, Additive (w.1.adicCompletionIntegers L)ˣ) :=

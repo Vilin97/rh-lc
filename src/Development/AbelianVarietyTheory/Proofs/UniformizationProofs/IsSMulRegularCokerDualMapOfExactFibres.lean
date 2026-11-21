@@ -255,7 +255,6 @@ end Complex
 
 end DualCokernel
 
-open DualCokernel in
 
 theorem isSMulRegular_coker_dualMap_of_exact_fibres :
     ∀ (A : Type) [CommRing A] [IsNoetherianRing A] [IsLocalRing A] (ϖ : A) (g : ℕ),

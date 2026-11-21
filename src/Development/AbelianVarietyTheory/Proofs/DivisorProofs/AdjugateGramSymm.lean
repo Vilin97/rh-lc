@@ -62,7 +62,6 @@ theorem det_smul_eq_sum (x : Module.Basis (Fin r) ℤ O) (b : LinearMap.BilinFor
   rw [Finset.smul_sum]
   exact Finset.sum_congr rfl fun k _ => by rw [smul_smul]
 
-open scoped MatrixOrder in
 
 theorem trace_mul_pos_real {n : ℕ} {P H : Matrix (Fin n) (Fin n) ℝ} (hP : P.PosDef) (hH : H.PosSemidef)
     (h0 : H ≠ 0) : 0 < (P * H).trace := by

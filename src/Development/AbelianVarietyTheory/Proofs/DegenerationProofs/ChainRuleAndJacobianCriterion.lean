@@ -149,7 +149,6 @@ private theorem etale_eval2Hom_of_basis_D (R B I : Type) [CommRing R] [CommRing 
   exact _root_.GlobalTheory.EtaleCoordJacobian.etale_of_basis R B I b fun i => by
     rw [hb]; simp [RingHom.algebraMap_toAlgebra]
 
-open KaehlerDifferential TensorProduct in
 
 theorem _root_.GlobalTheory.EtaleCoordJacobian.chain_rule_and_jacobian_criterion : ∀ (R B : Type) [CommRing R] [CommRing B] (c : R →+* B) (I : Type) [Fintype I] [DecidableEq I] (t t' : I → B), (MvPolynomial.eval₂Hom c t).Etale → ∃ a : B, (∀ (C : Type) [CommRing C] (φ : B →+* C) (d : I → B →+ C), (∀ i x y, d i (x * y) = φ x * d i y + φ y * d i x) → (∀ i r, d i (c r) = 0) → (Matrix.of fun i j => d i (t' j)).det = φ a * (Matrix.of fun i j => d i (t j)).det) ∧ (IsUnit a → (MvPolynomial.eval₂Hom c t').Etale) := by
   intro R B _ _ c I _ _ t t' het

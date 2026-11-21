@@ -88,7 +88,6 @@ theorem lamUnif_fr [IsCommMonObj A] {L L₁ : LB A.left} (u₁ : HolUnif A L₁ 
 theorem lamUnif_ex [IsCommMonObj A] {L L₁ : LB A.left} (u₁ : HolUnif A L₁ g) (u : HolUnif A L g) (hex : u.ex = u₁.ex) :
     (lamUnif u₁ u hex).ex = (sqUnif A u₁).ex := rfl
 
-open Classical in
 
 def ext (Λ : Submodule ℤ (Fin g → ℂ)) (χ : Λ → ℂ) (w : Fin g → ℂ) : ℂ := if h : w ∈ Λ then χ ⟨w, h⟩ else 0
 
@@ -233,7 +232,6 @@ theorem lam_shift [IsCommMonObj A] {L L₁ : LB A.left} (u₁ : HolUnif A L₁ g
 
 end GlobalTheory.TorusRM.LamAdd
 
-open GlobalTheory.TorusRM.LamAdd GlobalTheory.ProdUnifSq in
 
 theorem GlobalTheory.TorusRM.lbIso_lam_of_add : ∀ (g : ℕ) (A : Over (Sp ℂ)) [GrpObj A], IsAbelianScheme A → IsProjOver A.hom →
     ∀ (M₁ M₂ M₃ : LB A.left) (u₁ : HolUnif A M₁ g) (u₂ : HolUnif A M₂ g) (u₃ : HolUnif A M₃ g)

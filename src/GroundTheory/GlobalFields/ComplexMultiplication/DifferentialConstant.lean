@@ -96,7 +96,6 @@ theorem algebraMap_isogConst (φ : Isogeny E E') :
     algebraMap F E.toAffine.FunctionField (isogConst φ) = isogCoeff φ :=
   (exists_isogCoeff_eq_algebraMap φ).choose_spec
 
-variable (E) in
 
 theorem isSeparable_iff_isogConst_ne_zero (φ : Isogeny E E') :
     φ.IsSeparable ↔ isogConst φ ≠ 0 := by
@@ -109,7 +108,6 @@ theorem exists_homCoeff_eq_algebraMap (Q : isogHom E E') :
   · exact ⟨0, by rw [hQ, map_zero, map_zero]⟩
   · exact exists_isogCoeff_eq_algebraMap (isogOfHom Q hQ)
 
-variable (E E') in
 
 noncomputable def homConst : isogHom E E' →+ F where
   toFun Q := (exists_homCoeff_eq_algebraMap Q).choose

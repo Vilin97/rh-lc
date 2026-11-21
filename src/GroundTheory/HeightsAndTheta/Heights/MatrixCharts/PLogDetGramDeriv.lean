@@ -74,7 +74,6 @@ theorem key_bound (g k : ℕ) (a b x : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hx : 
 
 end MCLogDetGramDeriv
 
-open MCLogDetGramDeriv in
 
 theorem LogDetGramDeriv.proof (h₁ : InvEntryBound.Statement) (h₂ : InvEntryDeriv.Statement)
     (h₃ : MatrixDetDeriv.Statement) (h₄ : GramEntryDeriv.Statement) :

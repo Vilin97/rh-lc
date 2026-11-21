@@ -154,7 +154,6 @@ theorem finite_abs_le_one_mul_mem_range {c : ℝ} (hc : c ≠ 0) :
     exact (mul_le_of_le_one_right (abs_nonneg c) hx).trans (Int.le_ceil _)
   exact abs_le.1 (by exact_mod_cast h1)
 
-include hZs hZe hZ in
 
 theorem eq_on_rankOneCurve_of_integral (hol : IsHoloSiegel g H) (hH : IsSpInvariant g H)
     (hb : ∀ c : ℝ, 0 < c → ∃ K : ℝ, ∀ τ ∈ SiegelH (Fin g),
@@ -316,7 +315,6 @@ theorem tendsto_floor_nat_mul_div (x : ℝ) :
     rw [div_le_iff₀ hn]
     linarith [Int.floor_le ((n + 1 : ℝ) * x)]
 
-include hZs hZe hZ in
 
 theorem eq_on_rankOneCurve (hol : IsHoloSiegel g H) (hH : IsSpInvariant g H)
     (hb : ∀ c : ℝ, 0 < c → ∃ K : ℝ, ∀ τ ∈ SiegelH (Fin g),

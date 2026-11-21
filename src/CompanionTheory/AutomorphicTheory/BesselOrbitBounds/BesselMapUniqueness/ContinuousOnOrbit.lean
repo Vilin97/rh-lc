@@ -77,7 +77,6 @@ theorem CWLin.sum_orbit (hU : URep Hm σ) {B : H → V} (hB : CWLin Hm σ B) {w 
     rw [Finset.sum_insert ha]
     exact ⟨(h1.smul _).add ih.1, by rw [hB.add _ (h1.smul _) _ ih.1, hB.smul _ _ h1, h0 _ (hg a), ih.2]; simp⟩
 
-omit [CompleteSpace H] in
 
 theorem CWLin.eq_zero (hU : URep Hm σ) {B : H → V} (hB : CWLin Hm σ B) {w : H} (hw : IsSm (UH Hm) σ w)
     (h0 : ∀ g ∈ UH Hm, B (σ g w) = 0) {x : H} (hx : IsSm (UH Hm) σ x)

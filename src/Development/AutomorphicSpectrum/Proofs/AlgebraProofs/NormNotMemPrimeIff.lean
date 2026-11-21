@@ -14,7 +14,6 @@ open GlobalTheory.CompanionTheory.FreeQuotProof GlobalTheory.CompanionTheory.Hyp
 
 namespace GlobalTheory.CompanionTheory.NormPrime
 
-open TensorProduct in
 
 theorem norm_one_tmul {A B K : Type} [CommRing A] [CommRing B] [Algebra A B] [Module.Free A B]
     [Module.Finite A B] [Field K] [Algebra A K] (e : B) :
@@ -45,7 +44,6 @@ theorem norm_mem_comap {A B : Type} [CommRing A] [CommRing B] [Algebra A B] [Mod
   rw [Algebra.norm_apply, LinearMap.det_eq_sign_charpoly_coeff]
   exact Ideal.mul_mem_left _ _ (Ideal.mem_comap.2 h4)
 
-open TensorProduct in
 
 theorem norm_notMem_iff {A B : Type} [CommRing A] [CommRing B] [Algebra A B] [Module.Free A B]
     [Module.Finite A B] (e : B) (p : Ideal A) (hp : p.IsPrime) :

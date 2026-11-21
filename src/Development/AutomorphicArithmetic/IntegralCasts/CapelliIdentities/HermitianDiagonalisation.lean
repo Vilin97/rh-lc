@@ -4,7 +4,6 @@ public import Mathlib
 
 @[expose] public section
 
-open Matrix in
 
 private def Dz {E ι : Type} [Field E] [StarRing E] [Fintype ι] [DecidableEq ι]
     (T : Matrix ι ι E) : Prop :=

@@ -99,7 +99,6 @@ theorem integral_mul_mul_eigen (z : Fin n → ℂˣ) {f : GL (Fin n) F → ℂ}
   rw [integral_congr_ae (Filter.Eventually.of_forall hinner), integral_mul_const, hh₁ g]
   ring
 
-variable (μ) in
 
 def eigenSubalgebra (z : Fin n → ℂˣ) (f : GL (Fin n) F → ℂ)
     (hf : ∀ g, ∀ k ∈ integralGL F n, f (g * k) = f g) :
@@ -150,7 +149,6 @@ theorem sum_rho_coeff : ∑ i : Fin n, ((n : ℤ) - 1 - 2 * (i : ℕ)) = 0 := by
   simp only [nsmul_eq_mul]
   linarith
 
-omit [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] in
 
 theorem halfModulus_const (c : ℤ) : halfModulus F (fun _ : Fin n => c) = 1 := by
   rw [halfModulus_eq, rhoPair]

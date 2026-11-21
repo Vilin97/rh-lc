@@ -58,7 +58,6 @@ theorem isUnifAt_conj (w : HeightOneSpectrum (𝓞 E)) (x : ((GlobalTheory.Theta
 
 end GlobalTheory.CompanionTheory.MuLocal
 
-open GlobalTheory.CompanionTheory.MuLocal Formalism.L2.Host GlobalTheory.CuspRep in
 
 theorem GlobalTheory.CompanionTheory.MuLocal.muLoc_holds : PositivityTheory.Rg.BcB.F.RS.MuLoc := by
   intro E _ _ _ _ μ e w hμ hun

@@ -82,9 +82,7 @@ section Main
 
 variable {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D}
 
-open Classical in
 
-open Classical in
 
 end Main
 

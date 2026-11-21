@@ -29,7 +29,6 @@ def vanC (S : Set (Matrix ι ι ℂ)) : Ideal (MvPolynomial (ι × ι) ℂ) wher
     simp only [evC] at h1 ⊢
     rw [smul_eq_mul, map_mul, h1, mul_zero]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 omit [DecidableEq ι] in
 lemma evC_ltr (g y : Matrix ι ι ℂ) (f : MvPolynomial (ι × ι) ℂ) : evC (ltr g f) y = evC f (g * y) := by
@@ -117,7 +116,6 @@ end GlobalTheory.ClassFin.CosetSep
 
 namespace GlobalTheory.ClassFin
 
-open CosetSep in
 
 theorem exists_isInv_evC_one_ne : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (Γ : Set (Matrix ι ι ℂ)) (Rey : MvPolynomial (ι × ι) ℂ →ₗ[ℂ] MvPolynomial (ι × ι) ℂ), IsQGroup Γ → IsReynolds Γ Rey → ∀ y : Matrix ι ι ℂ, y.det = 1 → y ∉ Γ → ∃ f, IsInv Γ f ∧ evC f 1 ≠ evC f y := by
   intro ι _ _ Γ Rey hΓ hR y hy hyΓ

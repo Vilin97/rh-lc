@@ -13,8 +13,6 @@ open NumberField IsDedekindDomain Matrix CrossDiaZero
 
 variable {D : D7} {u : D.what₂.Word}
 
-set_option maxHeartbeats 8000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem dn_match_gen (T : Forms0 D u) (v : (D.mem u).A.vT) (δ : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (hδv : bc (prV (E := D.host.E) (T.atT.eV v).1) δ.1 = 1) (c c2 c1 c3 : (D.mem u).C.cls 0)

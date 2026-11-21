@@ -26,7 +26,6 @@ theorem red_sec : Function.RightInverse (sec l a) (red l a) := fun f =>
 theorem red_l : red l a (l : (Wq l a)⟦X⟧) = 0 := by
   rw [map_natCast]; exact l_eq_zero l a
 
-omit [NeZero a] in
 
 theorem sub_teich_dvd (x : Ainf l) : ∃ z, x = WittVector.teichmuller l (x.coeff 0) + (l : Ainf l) * z := by
   have h : x - WittVector.teichmuller l (x.coeff 0) ∈ Ideal.span {(l : Ainf l)} := by
@@ -37,7 +36,6 @@ theorem sub_teich_dvd (x : Ainf l) : ∃ z, x = WittVector.teichmuller l (x.coef
 
 end GlobalTheory.BSP.ResTilt
 
-open GlobalTheory.BSP.ResTilt in
 
 theorem GlobalTheory.BSP.exists_resTilt_retract : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K),
     ∃ (ek : (Fq l bk.a)⟦X⟧ →+* OCb l) (pr : OCb l →+ (Fq l bk.a)⟦X⟧),

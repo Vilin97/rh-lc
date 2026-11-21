@@ -56,7 +56,6 @@ theorem det_ne_zero_of_cartan {n : ℕ} {M θ : Matrix (Fin n) (Fin n) ℂ} (h :
   rw [star_star, hMv, dotProduct_zero] at this
   simp at this
 
-open GlobalTheory.WeilM GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels in
 
 theorem isUnit_det_of_cartan {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (τ : E →+* ℂ) (s : ℂ) (θ : Matrix (Fin n) (Fin n) ℂ)
@@ -64,7 +63,6 @@ theorem isUnit_det_of_cartan {F E : Type} [Field F] [NumberField F] [Field E] [N
   refine isUnit_iff_ne_zero.mpr fun h0 => det_ne_zero_of_cartan h ?_
   rw [Matrix.det_smul, show (J.map τ).det = τ J.det from (RingHom.map_det τ J).symm, h0, map_zero, mul_zero]
 
-open GlobalTheory.WeilM GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels in
 
 end GlobalTheory.CompanionTheory.Ar.RT
 

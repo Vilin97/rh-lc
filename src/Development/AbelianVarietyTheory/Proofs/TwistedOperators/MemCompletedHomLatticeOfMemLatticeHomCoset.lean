@@ -50,7 +50,6 @@ theorem smul_mem_latO_of_mem_hatMx' {D : D7} {S T : HSp D} {ΛS : Submodule (�
 
 end GlobalTheory.CosLatHalf
 
-open GlobalTheory.CosLatHalf Formalism.L2.DIV in
 
 theorem GlobalTheory.CosLatHalf.mem_latO_of_mem_cosSet : ∀ {D : D7} {S T : HSp D} {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}, IsSelfDualC S ΛS → ∀ {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)}, IsIdemSum e P → (∀ w ∈ P, ∃ a ∈ D.host.AA, Valued.v ((algebraMap D.host.E (Kw w)) a) = 1) → ∀ {𝔪 : Ideal (𝓞 D.host.E)} (κ : Cos ΛS ΛT 𝔪) {t : WO S T}, t ∈ cosSet e κ → t ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True := by
   intro D S T ΛS ΛT hS e P he hAA 𝔪 κ t ht

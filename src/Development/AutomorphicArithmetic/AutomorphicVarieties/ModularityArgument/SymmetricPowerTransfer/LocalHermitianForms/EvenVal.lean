@@ -22,7 +22,6 @@ variable {Δ τ}
 
 def sigL (x : EL Δ τ) : EL Δ τ := ⟨star x.re, star x.im⟩
 
-variable (Δ) in
 
 def ofE (z : Etau K τ) : EL Δ τ := ⟨algebraMap K (Lsq K Δ) z.re, algebraMap K (Lsq K Δ) z.im⟩
 
@@ -33,7 +32,6 @@ def semi (d : EL Δ τ) (x : Sp Δ τ) : Sp Δ τ := (star x.1, d * sigL x.2)
 
 def quo (z : (Etau K τ)ˣ) : Etau K τ := (z : Etau K τ) * star ((z⁻¹ : (Etau K τ)ˣ) : Etau K τ)
 
-variable (Δ) in
 
 def tor (z : (Etau K τ)ˣ) (x : Sp Δ τ) : Sp Δ τ := (x.1, ofE Δ (quo z) * x.2)
 
@@ -45,11 +43,9 @@ structure IsDat (c : K) (d m : EL Δ τ) : Prop where
   m_star : star (sigL m) = m
   m_sig : sigL m = m * d * star (sigL d)
 
-variable (Δ) in
 
 abbrev U3 : Type := Matrix.unitaryGroup (Fin 3) (Lsq K Δ)
 
-variable (Δ) in
 
 def theta : U3 Δ →* U3 Δ where
   toFun g := ⟨(g : Matrix (Fin 3) (Fin 3) (Lsq K Δ)).map star, by
@@ -70,11 +66,9 @@ structure Models (c : K) (d m : EL Δ τ) (δ : U3 Δ) (ι : (Etau K τ)ˣ →* 
   semi : ∀ x, P (semi d x) = (δ : Matrix (Fin 3) (Fin 3) (Lsq K Δ)) *ᵥ star (P x)
   tor : ∀ z x, P (tor Δ z x) = (ι z : Matrix (Fin 3) (Fin 3) (Lsq K Δ)) *ᵥ P x
 
-open Classical in
 
 def hs (D x : K) : ℂ := if ∃ a b : K, a ^ 2 - D * b ^ 2 = x then 1 else -1
 
-variable (τ) in
 
 def NE : Subgroup Kˣ := (Units.map (QuadraticAlgebra.norm : Etau K τ →* K)).range
 
@@ -86,7 +80,6 @@ variable (O : Type) [CommRing O] {K : Type} [Field K] [Algebra O K] {Δ τ : K}
 
 abbrev IsInt (x : Lsq K Δ) : Prop := IsIntegral O x
 
-variable (τ) in
 
 def Cint : Subgroup (Etau K τ)ˣ where
   carrier := {z | IsIntegral O (quo z) ∧ IsIntegral O (quo z⁻¹)}
@@ -104,7 +97,6 @@ structure IsFix (c : K) (d m : EL Δ τ) (S : Set (Sp Δ τ)) : Prop where
   dual : ∀ y, y ∈ S ↔ ∀ x ∈ S, IsInt O (herm c m x y)
   stab : semi d '' S = S
 
-variable (Δ τ) in
 
 @[reducible] def torAct : MulAction (Etau K τ)ˣ (Set (Sp Δ τ)) where
   smul z S := tor Δ z '' S
@@ -126,7 +118,6 @@ variable (Δ τ) in
     funext x
     simp [tor, e, e', mul_assoc]
 
-open Classical in
 
 def lcount (c : K) (d m : EL Δ τ) : ℂ :=
   letI := torAct (K := K) Δ τ
@@ -138,7 +129,6 @@ def stabSum (c : K) (d m : EL Δ τ) : ℂ :=
 def kapSum (c : K) (d m : EL Δ τ) : ℂ :=
   ∑ᶠ t : Kˣ ⧸ NE τ, hs (τ ^ 2 - 4) ((t.out : Kˣ) : K) * lcount O c d (((t.out : Kˣ) : K) • m)
 
-variable (Δ) in
 
 def KU : Subgroup (U3 Δ) where
   carrier := {g | ∀ i j, IsInt O ((g : Matrix (Fin 3) (Fin 3) (Lsq K Δ)) i j) ∧
@@ -156,15 +146,12 @@ def KU : Subgroup (U3 Δ) where
     rw [star_star]
     exact ⟨(ha j i).2, (ha j i).1⟩
 
-variable (K) in
 
 def KG : Subgroup (GL (Fin 2) K) := (GeneralLinearGroup.map (algebraMap O K)).range
 
-variable (K) in
 
 def ZK : Subgroup (GL (Fin 2) K) := (GeneralLinearGroup.scalar (Fin 2) : Kˣ →* GL (Fin 2) K).range ⊔ KG O K
 
-open Classical in
 
 def fZK (χ : Kˣ →* ℂˣ) (g : GL (Fin 2) K) : ℂ :=
   if h : ∃ z : Kˣ, (GeneralLinearGroup.scalar (Fin 2) z)⁻¹ * g ∈ KG O K then ((χ h.choose)⁻¹ : ℂˣ) else 0
@@ -175,7 +162,6 @@ def gOrb (j : Etau K τ →ₐ[K] Matrix (Fin 2) (Fin 2) K) (χ : Kˣ →* ℂˣ
   orb (Units.map (j : Etau K τ →* Matrix (Fin 2) (Fin 2) K)) (Cint O τ) (MonoidHom.id _) (ZK O K) (fZK O χ)
     (Units.map (j : Etau K τ →* Matrix (Fin 2) (Fin 2) K) z)
 
-open Classical in
 
 def uOrb (ι : (Etau K τ)ˣ →* U3 Δ) (δ : U3 Δ) : ℂ :=
   orb ι (Cint O τ) (theta Δ) (KU O Δ) (fun g => if g ∈ KU O Δ then 1 else 0) δ

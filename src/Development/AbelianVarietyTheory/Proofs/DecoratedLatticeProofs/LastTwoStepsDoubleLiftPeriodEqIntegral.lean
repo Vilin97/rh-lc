@@ -32,7 +32,6 @@ theorem sympl_zero_l (S T : HSp D) (x : WO S T) : symplOH S T 0 x = 0 := by
 theorem sympl_zero_r (S T : HSp D) (x : WO S T) : symplOH S T x 0 = 0 := by
   simp [symplOH, symplO, hO]
 
-set_option maxHeartbeats 1000000 in
 
 theorem biTheta_of_maps {ψ : AddChar (AF D.host.F) ℂ} {V₀ A S X T : HSp D} (a : WO A S →+ WO V₀ S) (b : WO S X →+ WO V₀ S)
     (p : WO S X →+ WO S T) (ca : Continuous a) (cb : Continuous b) (cp : Continuous p)

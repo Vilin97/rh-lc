@@ -58,8 +58,6 @@ private theorem conv_mem_and_vanish_below (e : PowerSeries L) (D : Submodule L M
     refine finsum_eq_zero_of_forall_eq_zero fun j => ?_
     rw [hm _ (by omega), smul_zero]
 
-open TensorProduct in
-variable {L M : Type} [Field L] [AddCommGroup M] [Module L M] in
 
 theorem _root_.GlobalTheory.NL.Model.latSpan_coeff {ι : Type} (ex : ι → ℤ → M)
     (D : Submodule L M) (hD : ∀ x k, ex x k ∈ D) (hs : ∀ x, ∃ m : ℤ, ∀ k < m, ex x k = 0)
@@ -233,8 +231,6 @@ theorem _root_.GlobalTheory.NL.Model.ex_smul (C : _root_.Formalism.BasicNotions.
       _root_.GlobalTheory.NL.conv ((H.W K s LL h).lev i ζ a) (_root_.GlobalTheory.NL.ex C h T i ζ x) :=
   levB_smul_eq_powerSeriesSmul_lemma_2 _ T i ζ a x
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in
 
 end Concrete
 

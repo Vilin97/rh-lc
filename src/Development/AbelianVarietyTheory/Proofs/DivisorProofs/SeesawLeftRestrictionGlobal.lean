@@ -40,7 +40,6 @@ theorem lev_isConjPl_iff {P P' : Pl D.host.E} : Lev.IsConjPl P P' ↔ P' = Forma
 theorem isConjPl_conjPl_divisor (P : Pl D.host.E) : Formalism.BasicNotions.IsConjPl D.host P (Formalism.L2.DIV.conjPl P) :=
   isConjPl_of_lev (lev_isConjPl_iff.2 rfl)
 
-open Classical in
 
 theorem disjoint_conj {X : Finset (Pl D.host.E)} (hX : SplitSet X) : Disjoint X (X.image Formalism.L2.DIV.conjPl) := by
   refine Finset.disjoint_left.2 fun P hP hQ => ?_
@@ -54,13 +53,11 @@ theorem disjoint_conj {X : Finset (Pl D.host.E)} (hX : SplitSet X) : Disjoint X 
   rw [a2, zero_mul, map_zero]
   exact zero_mem _
 
-open Classical in
 
 theorem idem_add_cA {X : Finset (Pl D.host.E)} (hX : SplitSet X) :
     idem X + cA D (idem X) = idem (X ∪ X.image Formalism.L2.DIV.conjPl) := by
   rw [← idem_eq (GlobalTheory.RefDatumLev.isIdemSum_conjPl hX.isIdemSum), idem, idem, idem, Finset.sum_union (disjoint_conj hX)]
 
-open Classical in
 
 theorem idem_add_cA_eq {X Y : Finset (Pl D.host.E)} (hX : SplitSet X) (hY : SplitSet Y)
     (h : ∀ P, P ∈ X ∪ X.image Formalism.L2.DIV.conjPl ↔ P ∈ Y ∪ Y.image Formalism.L2.DIV.conjPl) :
@@ -70,7 +67,6 @@ theorem idem_add_cA_eq {X Y : Finset (Pl D.host.E)} (hX : SplitSet X) (hY : Spli
   ext P
   exact h P
 
-open Classical in
 
 theorem mem_half_closure {ch : Set (Pl D.host.E)}
     (hch : ∀ P P', Formalism.BasicNotions.IsConjPl D.host P P' → P ≠ P' → (P ∈ ch ↔ P' ∉ ch)) {A B : Finset (Pl D.host.E)}
@@ -109,6 +105,5 @@ theorem not_mem_of_coprime {P : Pl D.host.E} {l q : ℕ} (hq : (q : 𝓞 D.host.
   rw [← e]
   exact add_mem (Ideal.mul_mem_left _ _ hl) (Ideal.mul_mem_left _ _ hq)
 
-open Classical in
 
 end GlobalTheory.BigOn.Exp.TupLe

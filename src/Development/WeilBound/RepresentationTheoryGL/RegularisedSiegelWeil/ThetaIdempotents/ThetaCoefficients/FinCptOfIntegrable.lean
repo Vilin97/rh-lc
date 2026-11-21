@@ -68,7 +68,6 @@ theorem scaled_cpt_open {d n M : ℕ} (b : Module.Basis (Fin d) F E) (v : Height
       simpa only [← mul_assoc, hNu, one_mul] using hZ
   exact ⟨heq ▸ hL.1.image (hc u), hL.2.preimage (hc _)⟩
 
-omit [NumberField E] in
 
 theorem scaled_eq_lat {d n M : ℕ} (b : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (𝓞 F)) (N : ℕ)
     (hN : 0 < N) (hv : (algebraMap F (Af F) ((N : F)⁻¹)) v ∈ v.adicCompletionIntegers F) :

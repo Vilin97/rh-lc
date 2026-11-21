@@ -19,7 +19,6 @@ noncomputable section
 
 namespace GlobalTheory.TestLat
 
-open Classical in
 
 theorem blockForm_apply {F C I : Type} [CommRing F] [Fintype C] [Fintype I] {N : ℕ} (e : Fin N ≃ C × I)
     (M : Matrix I I F) (x y : Fin N → F) :
@@ -37,7 +36,6 @@ theorem blockForm_apply {F C I : Type} [CommRing F] [Fintype C] [Fintype I] {N :
     simp [Ne.symm hb]
   · simp
 
-open Classical in
 
 theorem blockForm_posDef {C I : Type} [Fintype C] [Fintype I] {N : ℕ} (e : Fin N ≃ C × I)
     (M : Matrix I I ℂ) (hM : M.PosDef) :
@@ -95,7 +93,6 @@ theorem IsDefGram.inv_transpose {n : ℕ} {G : Matrix (Fin n) (Fin n) K} (h : Is
   · rw [Matrix.transpose_map, map_inv_of_isUnit _ _ hu]
     exact (h.2.2 φ).inv.transpose
 
-omit [NumberField K] in
 
 theorem pairK_equivFun_symm {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n) (G : ι → Matrix (Fin n) (Fin n) K)
     (u v : VVIdx lam → K) :

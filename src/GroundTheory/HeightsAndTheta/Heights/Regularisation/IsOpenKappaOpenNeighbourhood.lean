@@ -88,7 +88,6 @@ def V'' (j : Fin R.n) : Set X := (R.ψ j).source ∩ R.ψ j ⁻¹' R.W'' j
 
 def u (φ : X → ℝ) (j : Fin R.n) (z : Fin D → ℂ) : ℝ := R.q j z + φ ((R.ψ j).symm z)
 
-open Classical in
 
 end RegCharts
 
@@ -311,7 +310,6 @@ theorem isPsh_const (U : Set (Fin D → ℂ)) (c : ℝ) : ReciprocityTheory.AnFo
 theorem projLineCharts_potential_zero (j : Fin 2) : projLineCharts.u (fun _ => 0) j = fun _ => (0 : ℝ) :=
   funext fun z => by simp [RegCharts.u]
 
-open Classical in
 
 def projLineChartData : RegChartData p1 where
   toRegCharts := projLineCharts

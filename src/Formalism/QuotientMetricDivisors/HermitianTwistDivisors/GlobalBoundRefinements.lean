@@ -108,7 +108,6 @@ namespace DivisorInequalityBounds
 
 end DivisorInequalityBounds
 
-open DivisorInequalityBounds in
 
 namespace DivisorInequalityBounds
 

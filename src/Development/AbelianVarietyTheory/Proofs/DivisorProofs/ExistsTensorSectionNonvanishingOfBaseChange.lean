@@ -34,7 +34,6 @@ namespace GlobalTheory.FieldDescent
 
 open scoped TensorProduct
 
-open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC in
 
 theorem exists_sec_of_pull {F E : Type} [Field F] [Field E] [Algebra F E] {Y X : Scheme.{0}}
     {p : Y ⟶ Sp F} {q : X ⟶ Sp E} {π : X ⟶ Y} (H : IsPullback π q p (spMap (algebraMap F E)))

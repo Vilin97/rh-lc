@@ -22,10 +22,6 @@ open GlobalTheory.KeyPow GlobalTheory.KeyFam GlobalTheory.ZM GlobalTheory.AbLaw
 noncomputable section
 namespace GlobalTheory.SiegelFamilyNumberField
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj in
-open scoped CategoryTheory.Obj TensorProduct in
-attribute [local instance] Over.cartesianMonoidalCategory in
-open NumberField Polynomial in
 
 theorem _root_.GlobalTheory.SiegelFamilyNumberField.nonempty_baseChange {h k : ℕ} {o B : Type} [CommRing o] [CommRing B] {ζ : o}
     (F : _root_.GlobalTheory.ZM.SFam h k ζ)
@@ -71,10 +67,6 @@ private theorem isPrimitiveRoot_map_localization_away (k : ℕ) (hk : 0 < k) (K 
       map_zero]
   exact (isRoot_cyclotomic_iff).mp this
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj in
-open scoped CategoryTheory.Obj TensorProduct in
-attribute [local instance] Over.cartesianMonoidalCategory in
-open NumberField Polynomial in
 
 theorem _root_.GlobalTheory.SiegelFamilyNumberField.exists_sFam_numberField : _root_.ReciprocityTheory.ChartRestriction.G.Out.Laws → _root_.ReciprocityTheory.ChartRestriction.G.Out.Laws2 → _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.ThetaUnifAV → ∀ h : ℕ, 1 ≤ h → ∃ (k : ℕ) (K : Type) (_ : Field K) (_ : NumberField K) (ζ : K) (σ : K →+* ℂ), 3 ≤ k ∧ Odd k ∧ σ ζ = Complex.exp (-(2 * Real.pi * Complex.I) / k) ∧ Nonempty (_root_.GlobalTheory.ZM.SFam h k ζ) := by
   intro hL hL2 hT h hh

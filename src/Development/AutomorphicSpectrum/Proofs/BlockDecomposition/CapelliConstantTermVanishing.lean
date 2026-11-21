@@ -109,7 +109,6 @@ theorem lieD_block {F : Sm E (r + s)} (hF : ∀ m : GA E r × GA E s, F.1 (lev (
     exact hF _
   exact h2.unique ((hasDerivAt_const (0 : ℝ) (0 : ℂ)).congr_of_eventuallyEq hz)
 
-variable (E r s) in
 
 def vanAlg : Subalgebra ℂ (Module.End ℂ (Sm E (r + s))) where
   carrier := {z | ∀ F : Sm E (r + s), (∀ m : GA E r × GA E s, F.1 (lev (Ad E) r s m) = 0) →
@@ -159,7 +158,6 @@ theorem capS_mem (τ : E →+* ℂ) (u : ℂ) : capS r s τ u ∈ vanAlg E r s :
   qdet_mem _ _ (fun i j => Eop_mem_of _ τ _ _ fun x => by
     rw [lieS_apply, single_natAdd]; exact lie_block_mem _ _) _
 
-variable (E) in
 
 def nInvAlg (a r : ℕ) : Subalgebra ℂ (Module.End ℂ (Sm E a)) where
   carrier := {z | ∀ ψ : Sm E a, (∀ (x : BlockIx a r → Ad E) (g : GA E a), ψ.1 (unip x * g) = ψ.1 g) →

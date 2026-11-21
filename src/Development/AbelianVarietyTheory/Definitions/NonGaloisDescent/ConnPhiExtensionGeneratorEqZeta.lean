@@ -32,7 +32,6 @@ theorem ulim_sub_dvd {s : ℕ → K⟦X⟧} (h : ∀ n, (X : K⟦X⟧) ^ (n + 1)
   rw [map_sub] at this ⊢
   rw [ulim, coeff_mk, ← neg_sub, this, neg_zero]
 
-variable (K a ι) in
 
 def uPow (m : ℕ) : Submodule K⟦X⟧ (Vec K a ι) where
   carrier := {v | ∀ τ i, (X : K⟦X⟧) ^ m ∣ v τ i}
@@ -169,7 +168,6 @@ theorem raises_smul_phi (c : K) : Raises (c • P.phi) := fun m v hv => by
   ext τ i : 2
   simp [smul_eq_C_mul]
 
-omit [IsUltrametricDist K] [Fintype ι] [DecidableEq ι] in
 
 theorem _root_.GlobalTheory.BK.Raises.eq_zero {T : Module.End K (Vec K a ι)} (hT : Raises T) {α : Type}
     {σ : α → α} (hσ : Function.Surjective σ) {δ : α → Vec K a ι} (h1 : ∀ x, δ x ∈ uPow K a ι 1)
@@ -286,7 +284,6 @@ theorem phi_xi (d : P.D) : P.phi (P.xi d) = P.xi (P.phiD d) := by
   ext τ i : 2
   simp [phiD_apply, Matrix.mulVec, dotProduct]
 
-variable {P} in
 
 theorem map_xi {Q : PhiMod O K l e a κ} {g : Vec K a ι → Vec K a κ}
     (hg : ∀ v, g (P.phi v) = Q.phi (g v)) (d : P.D) : g (P.xi d) = Q.xi (red (g (P.xi d))) := by
@@ -360,7 +357,6 @@ theorem conn_phi (v : Vec K a ι) : P.conn (P.phi v) = (l : K) • P.phi (P.conn
   rw [← smul_eq_C_mul, ← smul_eq_C_mul, Derivation.map_smul, N_frob, smul_comm, smul_eq_C_mul (a := (l : K)),
     map_natCast]
 
-variable {P} in
 
 theorem map_conn {Q : PhiMod O K l e a κ} (g : Vec K a ι →+ Vec K a κ)
     (σ : (ZMod a → K⟦X⟧) → ZMod a → K⟦X⟧) (hσ : ∀ f, σ (NTot f) = NTot (σ f))
@@ -457,7 +453,6 @@ theorem zeta_phi_sub (m : Vec K a ι) : P.zeta (P.phi m - m) = P.conn (P.phi m) 
   (P.zeta_unique (P.conn_mem_uPow _) (by
     rw [map_sub P.conn, sub_sub_cancel, lphi_apply, conn_phi])).symm
 
-variable {P} in
 
 theorem map_zeta {Q : PhiMod O K l e a κ} (g : Vec K a ι →ₗ[K] Vec K a κ)
     (h1 : ∀ v ∈ uPow K a ι 1, g v ∈ uPow K a κ 1) (hg : ∀ v, g (P.phi v) = Q.phi (g v))
@@ -505,7 +500,6 @@ namespace PhiMod
 
 variable (P : PhiMod O K l e a ι) {y : Vec K a ι} (hy : y ∈ P.Mext (invE l e (A O K)))
 
-omit [Fact l.Prime] in
 
 def plus : PhiMod O K l e a (ι ⊕ Unit) :=
   ofMatrix (fun τ => Matrix.fromBlocks (P.mx τ) (Matrix.replicateCol Unit (y τ)) 0 1)

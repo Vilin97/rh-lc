@@ -25,7 +25,6 @@ def fibreNorm (E : HermitianBundle K) (σ : K →+* ℂ) (x : Fibre σ E.carrier
 
 abbrev bundleRank (E : HermitianBundle K) : ℕ := Module.finrank (𝓞 K) E.carrier
 
-variable (K) in
 
 structure BoundedInjection (E' E : HermitianBundle K) (A : (K →+* ℂ) → ℝ) where
 
@@ -67,7 +66,6 @@ def ShortFamily.standard (n : ℕ) : ShortFamily (HermitianBundle.standard K n) 
     rw [Pi.basisFun_apply]
     exact (fibreNorm_standard_single K n σ _).le
 
-variable {K} in
 
 def BoundedInjection.id (E : HermitianBundle K) : BoundedInjection E E (fun _ ↦ 1) where
   toLinearMap := LinearMap.id

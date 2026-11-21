@@ -227,7 +227,6 @@ theorem exists_maximal_ord_eq [IsNoetherianRing A] [IsReduced A] [IsDomain B] (Ï
 
 end MinimalPrimePlace
 
-open MinimalPrimePlace in
 
 theorem MinimalPrimePlace.proof : MinimalPrimePlace.Statement := by
   intro n I J q hI hJ hJq P'

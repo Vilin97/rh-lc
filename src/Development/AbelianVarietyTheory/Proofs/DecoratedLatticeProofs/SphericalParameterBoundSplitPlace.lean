@@ -18,7 +18,6 @@ open Formalism.UG GlobalTheory.LFun
 
 variable {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] {K : Subgroup G}
 
-open Classical in
 
 def cosetInd (S : Finset (G ⧸ K)) : G → ℂ := fun g => if (g : G ⧸ K) ∈ S then 1 else 0
 

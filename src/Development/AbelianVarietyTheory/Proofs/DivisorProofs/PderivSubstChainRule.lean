@@ -13,7 +13,6 @@ open MvPowerSeries
 
 namespace GlobalTheory.PSChain
 
-open scoped MvPowerSeries.WithPiTopology in
 
 theorem continuous_pderiv_discrete {σ R : Type} [CommRing R] [TopologicalSpace R] [DiscreteTopology R]
     (i : σ) : Continuous (fun f : MvPowerSeries σ R => pderiv (R := R) i f) := by
@@ -27,7 +26,6 @@ theorem continuous_pderiv_discrete {σ R : Type} [CommRing R] [TopologicalSpace 
   rw [e]
   exact continuous_of_discreteTopology.comp (MvPowerSeries.WithPiTopology.continuous_coeff R _)
 
-open scoped MvPowerSeries.WithPiTopology in
 
 theorem pderiv_subst_chain {R σ τ : Type} [CommRing R] [Fintype σ] [Fintype τ]
     (a : σ → MvPowerSeries τ R) (ha0 : ∀ s, constantCoeff (a s) = 0) (f : MvPowerSeries σ R) (k : τ) :

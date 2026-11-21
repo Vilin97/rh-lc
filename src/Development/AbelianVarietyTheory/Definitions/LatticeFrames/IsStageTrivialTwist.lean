@@ -18,9 +18,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-open Classical in
 
-open Classical in
 
 theorem one_lt_norm (PP : Pl D.host.E) : (1 : ℝ) < (Ideal.absNorm PP.asIdeal : ℝ) := by
   exact_mod_cast GlobalTheory.LFun.one_lt_absNorm PP

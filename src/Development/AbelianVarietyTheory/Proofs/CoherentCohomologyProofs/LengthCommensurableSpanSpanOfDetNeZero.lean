@@ -144,11 +144,8 @@ private theorem span_range_coe_basis {A : Submodule R V} (a : Basis ι R A) :
     ← Set.range_comp]
   rfl
 
-omit [IsDiscreteValuationRing R] [Fintype ι] [DecidableEq ι] in
 
-variable (K) in
 
-variable (K) in
 
 end Lattice
 

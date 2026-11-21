@@ -109,7 +109,6 @@ theorem exists_bound {σ X : Type} [AddCommGroup X] [Module ℂ X] [FiniteDimens
 
 end ColHigh
 
-open ColHigh in
 
 theorem exists_colHighest (ι : Type) [Fintype ι] (m n : ℕ) (X : Type) [AddCommGroup X] [Module ℂ X]
     [FiniteDimensional ℂ X] (U : Submodule ℂ (X →ₗ[ℂ] Pol ι m n)) (hU0 : U ≠ ⊥)

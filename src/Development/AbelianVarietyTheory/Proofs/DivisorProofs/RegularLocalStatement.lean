@@ -143,7 +143,6 @@ theorem exists_hom (F : Type) [Field F] [NumberField F] (A K : Type) [CommRing A
   rw [← map_mul]
   exact congrArg φ (Subtype.ext hab)
 
-open GlobalTheory.TrueGeo.HorizPt in
 
 theorem main : RegLocSt := by
   intro F _ _ Y V U₀ W hW v g hf x hx hxv

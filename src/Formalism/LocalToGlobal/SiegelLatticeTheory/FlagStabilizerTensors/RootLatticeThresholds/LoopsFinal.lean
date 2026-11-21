@@ -79,7 +79,6 @@ section Summ
 
 variable {D : D7} {X : HidaSetting D} {Y : Full X} {hF : FinX Y} {hI : SIso D.s (sOf hF)}
 
-open Formalism.MainNotions.BridgeLemma in
 
 end Summ
 

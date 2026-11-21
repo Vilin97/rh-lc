@@ -20,11 +20,9 @@ variable {K : Type*} [Field K] [NumberField K] [StarRing K]
   {W κ : Type*} [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
   [Fintype κ] [DecidableEq κ]
 
-variable (K) in
 
 def nPl : ℕ := Fintype.card (InfinitePlace K)
 
-variable (K) in
 
 def logDisc : ℝ := Real.log |(NumberField.discr K : ℝ)|
 

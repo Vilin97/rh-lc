@@ -31,7 +31,5 @@ noncomputable def conjMor (g : G) : res (conjHom S g) (res S.subtype A) ⟶ res 
     congr 2
     group⟩
 
-omit [S.Normal] in
-variable {A S} in
 
 end GroundTheory.GroupCoh

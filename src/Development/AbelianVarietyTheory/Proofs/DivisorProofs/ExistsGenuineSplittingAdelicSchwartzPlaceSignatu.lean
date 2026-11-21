@@ -35,7 +35,6 @@ theorem rho_zero' {R : Type} [CommRing R] [Invertible (2 : R)] {W : Type} [AddCo
     d.rho ψ w 0 = 0 := by
   funext x; simp [Darboux.rho, schr]
 
-open scoped Classical in
 
 theorem genRepD : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (α β κ : Type) [Fintype α]
     [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] (P Q R S : InfinitePlace F → ℕ) (ψ : AddChar (AF F) ℂ)

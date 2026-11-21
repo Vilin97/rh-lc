@@ -44,7 +44,6 @@ theorem inv_keeps {A B : Matrix (Fin n) (Fin n) ℂ} (hBA : B * A = 1) (V : Subm
   rw [← h1, Matrix.mulVec_mulVec, hBA, Matrix.one_mulVec]
   exact x.2
 
-variable (ε) in
 
 def leviSub {a : ℕ} (W : Fin (a + 1) → Submodule ℂ (Fin n → ℂ)) : Subgroup (Formalism.REAL.UJ ε) where
   carrier := flagM ε W
@@ -61,7 +60,6 @@ def leviSub {a : ℕ} (W : Fin (a + 1) → Submodule ℂ (Fin n → ℂ)) : Subg
       inv_keeps (A := (uMat g)ᴴ) ?_ (W i) (fun z hz => (hg i z hz).2) y hy⟩
     rw [← Matrix.conjTranspose_mul, uMat_mul_inv, Matrix.conjTranspose_one]
 
-variable (ε) in
 
 def compactSub : Subgroup (Formalism.REAL.UJ ε) where
   carrier := maxK ε

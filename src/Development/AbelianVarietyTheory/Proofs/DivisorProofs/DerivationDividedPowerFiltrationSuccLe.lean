@@ -70,7 +70,6 @@ theorem smul_deriv_prod_mem {R B M : Type} [CommRing R] [CommRing B] [Algebra R 
 
 end GlobalTheory.DerFil
 
-open GlobalTheory.DerFil in
 
 theorem GlobalTheory.DerFil.deriv_fil_succ_le : ∀ (R B M : Type) [CommRing R] [CommRing B] [Algebra R B] [AddCommGroup M]
     [Module B M] [Module R M] [IsScalarTower R B M] (J : Ideal B) (δ : DividedPowers J) (D : Derivation R B M)

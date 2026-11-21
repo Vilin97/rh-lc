@@ -87,7 +87,6 @@ theorem setLIntegral_image {E : Type*} [NormedAddCommGroup E] [InnerProductSpace
 
 end AreaFormulaLocal
 
-open AreaFormulaLocal AreaGraphPiece in
 
 theorem AreaFormulaLocal.proof : AreaFormulaLocal.Statement := by
   intro E F _ _ _ _ _ _ _ _ _ _ k hk U f x₀ hU hf hx₀ hinj

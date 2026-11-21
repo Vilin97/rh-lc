@@ -241,7 +241,6 @@ theorem integral_fR_complex (G : Matrix β (Fin d) ℂ) :
 
 end GlobalTheory.CompanionTheory.FSCrofton.GaussDet
 
-open GlobalTheory.CompanionTheory.FSCrofton.GaussDet in
 
 theorem GlobalTheory.CompanionTheory.FSCrofton.lintegral_gW_norm_det_sq (d : ℕ) (β : Type) [Fintype β] [DecidableEq β]
     (G : Matrix β (Fin d) ℂ) :

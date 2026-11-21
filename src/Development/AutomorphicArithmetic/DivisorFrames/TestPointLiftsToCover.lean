@@ -60,4 +60,3 @@ private theorem val_sum {K : Type} [Field K] {Z : Scheme.{0}} [AlgebraicGeometry
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [← hc', ← map_mul, ← map_sum, Res.valAt_algebraMap]
 
-open GlobalTheory.LineNorm.Chart in

@@ -34,7 +34,6 @@ theorem finite_tup (p : PtAt ex Csz) : Finite p.P.T := by
       · exact Or.inl (h1 w hw)
   exact Set.finite_univ_iff.1 ((((p.R.twPl).finite_toSet.image _).insert _).subset this)
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.BigTop.Fun.SetFromSize
 

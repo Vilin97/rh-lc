@@ -170,7 +170,6 @@ variable {K}
 def incl {M M' : AddSubmonoid (Gam n d)} (h : M ≤ M') : Rg K M →ₐ[K] Rg K M' :=
   AddMonoidAlgebra.mapDomainAlgHom K K (AddSubmonoid.inclusion h)
 
-variable (K) in
 
 def mon {M : AddSubmonoid (Gam n d)} (g : Gam n d) (hg : g ∈ M) : Rg K M := AddMonoidAlgebra.single ⟨g, hg⟩ 1
 
@@ -196,7 +195,6 @@ theorem mon_mul {M : AddSubmonoid (Gam n d)} (g g' : Gam n d) (hg : g ∈ M) (hg
   simp only [mon, AddMonoidAlgebra.single_mul_single, mul_one]
   rfl
 
-variable (K n) in
 
 def poly (S : Finset (Fin d)) : Bp K n d →ₐ[K] R0 K n d S :=
   MvPolynomial.aeval fun e => mon K (oneE e) (oneE_mem S e)
@@ -216,7 +214,6 @@ theorem incl_poly {S T : Finset (Fin d)} (h : S ⊆ T) (b : Bp K n d) :
     simp only [AlgHom.comp_apply, poly_X, incl_mon]
   exact DFunLike.congr_fun this b
 
-variable (K n) in
 
 def I0 (S : Finset (Fin d)) : Ideal (R0 K n d S) :=
   Ideal.span {y | ∃ k, (S = ∅ ∨ k ∈ S) ∧ y = mon K (oneE (Sum.inr k)) (oneE_mem S _)}
@@ -267,7 +264,6 @@ theorem wv_mem {S : Finset (Fin d)} {k : Fin d} (hk : k ∈ S) (e : E n d) : wv 
     · exact oneE_mem S _
     · exact ratE_mem hk j
 
-variable (K) in
 
 def monL (g : Gam n d) : Lr K n d := mon K g (AddSubmonoid.mem_top g)
 
@@ -279,7 +275,6 @@ def wedge {a : ℕ} (f : Fin a → E n d) : Om K (Lr K n d) a := exteriorPower.�
 def enumD {a : ℕ} (D : {D : Finset (E n d) // D.card = a}) : Fin a → E n d := fun i =>
   finSumFinEquiv.symm ((D.1.map finSumFinEquiv.toEmbedding).orderEmbOfFin (by simpa using D.2) i)
 
-variable (K) in
 
 def monW {a : ℕ} (g : Gam n d) (D : {D : Finset (E n d) // D.card = a}) : Om K (Lr K n d) a :=
   monL K g • wedge (K := K) (enumD D)
@@ -287,7 +282,6 @@ def monW {a : ℕ} (g : Gam n d) (D : {D : Finset (E n d) // D.card = a}) : Om K
 def good (g : Gam n d) (D : Finset (E n d)) : Prop :=
   (∀ l, 0 ≤ g (Sum.inl l) ∧ (g (Sum.inl l) = 0 → Sum.inl l ∉ D)) ∧ 1 ≤ tdeg g
 
-open Classical in
 
 def Tset (g : Gam n d) (D : Finset (E n d)) : Finset (Fin d) :=
   Finset.univ.filter fun j => g (Sum.inr j) < 0 ∨ (g (Sum.inr j) = 0 ∧ Sum.inr j ∈ D)

@@ -44,7 +44,6 @@ section Constants
 
 variable {K : Type} [Field K] [NumberField K]
 
-variable (K) in
 
 end Constants
 

@@ -144,7 +144,6 @@ end Val
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} [StarRing (𝓞 E)]
 
-omit [StarRing (𝓞 E)] in
 
 theorem exists_fpts {S S' : Scheme.{0}} {t : SAB H S} {t' : SAB H S'} {f : S' ⟶ S} (m : SABMap t' t f)
     (w : LB.Iso t'.PP.L (t.PP.L.pull m.φ)) (hw : IsRigIso m.cm t'.PP t.PP w) {F : Type} [Field F] {V : Type}

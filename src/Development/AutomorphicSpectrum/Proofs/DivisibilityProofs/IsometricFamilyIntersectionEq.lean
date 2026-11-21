@@ -38,7 +38,6 @@ theorem cycList_perm (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingO
   funext W
   exact intNumL_perm (IsLocalRing.ResidueField O) (specialIdeal W) h
 
-omit [DecidableEq K] in
 
 theorem divCycle_mul_finite {R : Type} [CommRing R] [IsNoetherianRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
     (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) :

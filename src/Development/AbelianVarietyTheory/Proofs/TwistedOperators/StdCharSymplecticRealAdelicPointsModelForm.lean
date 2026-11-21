@@ -131,7 +131,6 @@ end GlobalTheory.ArchPhase
 namespace GlobalTheory.ArchPhase
 open GlobalTheory.IndefiniteRowSideFullHecke.OrthonormalLatticeThetaValues Matrix
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem psi_symplOH_realPt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (V W : HSp D)
     (b : Matrix (Fin V.rank) (Fin V.rank) D.host.E), GlobalTheory.IndefiniteRowSideFullHecke.OrthonormalLatticeThetaValues.IsONLatBasis V b → ∀ (r : ℕ) (hr : W.rank = r)

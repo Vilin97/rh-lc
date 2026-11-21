@@ -21,6 +21,5 @@ theorem wtOf_off (k : Fin 2) (a : MonoidAlgebra ℂ (GL (Fin D.R.r) (ZMod (D.hos
   rw [D.ntypes.eSer_zero k f hf, mul_zero]
   simp
 
-set_option maxHeartbeats 2000000 in
 
 end Formalism.MainNotions.N.LocalShareBounds

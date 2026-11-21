@@ -347,7 +347,6 @@ theorem u_zero (hGF : GlobalFnsSt) (hu : u.IsGen)
   have h1 : v.s j = canon.s j := (hκ j).trans (by rw [hκ1, map_one, _root_.one_mul])
   exact (congrArg (res _) h1).trans ((corr_symm' D.toPre.P.L hcc) j j' hj hj' hm)
 
-include hO in
 
 theorem rho_e (hGF : GlobalFnsSt) (hu : u.IsGen)
     (hu0 : LB.Gen.Corr D.toPre.P.L _ _ _ _ (LB.pullGen D.toPre.P.L _ _ u (zero2 D.toPre.P.A))

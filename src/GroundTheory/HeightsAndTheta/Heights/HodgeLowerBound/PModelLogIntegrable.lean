@@ -38,7 +38,6 @@ theorem target_inter_compl_Yo_subset {D : ℕ} {X : Type*} [TopologicalSpace X]
 
 end ModelLogIntegrableAlt
 
-open ModelLogIntegrableAlt in
 
 theorem ModelLogIntegrable.proof (hM : ModelPtsIntegrable.Statement) : ModelLogIntegrable.Statement := by
   intro K _ ι _ P e M R L c N u C C' g hP hL hN hu hbd hg

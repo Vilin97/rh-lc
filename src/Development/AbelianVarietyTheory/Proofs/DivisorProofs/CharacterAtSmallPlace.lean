@@ -34,7 +34,6 @@ theorem card_units_pos {E : Type} [Field E] [NumberField E] (PP : Formalism.L2.D
   have : Finite (Formalism.L2.DIV.kP PP) := Ideal.finiteQuotientOfFreeOfNeBot PP.asIdeal PP.ne_bot
   exact Nat.card_pos
 
-open Classical in
 
 def expOf {D : D7} {n : ℕ} (L : Formalism.L2.DIV.LevDat D.host.E ℂ n) : ℕ :=
   ∏ PP ∈ L.Pg ∪ L.Q, Nat.card (Formalism.L2.DIV.kP PP)ˣ

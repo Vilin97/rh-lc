@@ -161,7 +161,6 @@ def RigPullIsGenSt : Prop :=
     (he : eSec G' ≫ F = e ≫ eSec G) (L : LB G.left) (r : LB.Gen (L.pull (eSec G))),
     L.IsLB → r.IsGen → (rigPullOf F e he L r).IsGen
 
-open scoped CategoryTheory.Obj in
 
 end Group
 

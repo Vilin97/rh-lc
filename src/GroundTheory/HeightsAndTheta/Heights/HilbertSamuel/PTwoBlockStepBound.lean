@@ -87,7 +87,6 @@ theorem exists_finrank_sec_le (hRank : RankOfSections.Statement) {x : Ix κ → 
 
 end TwoBlockStepBound
 
-open TwoBlockStepBound in
 
 theorem TwoBlockStepBound.proof (hRank : RankOfSections.Statement) : TwoBlockStepBound.Statement := by
   intro D Ω _ _ κ _ x B hX _ _ hsp

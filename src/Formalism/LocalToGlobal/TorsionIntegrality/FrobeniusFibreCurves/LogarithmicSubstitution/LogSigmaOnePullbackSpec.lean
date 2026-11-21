@@ -140,6 +140,5 @@ variable {K : Type} [Field K] [CharZero K]
 
 end Parity
 
-open Formalism.DworkPowerSeriesWeights (Integral) in
 
 end Formalism.L2.Th1.B.Ph

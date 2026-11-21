@@ -26,7 +26,6 @@ variable {F : Type} [Field F] {K : Type} [Fintype K] [LinearOrder K] {ι : K →
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
-omit [LinearOrder K] [∀ k, Fintype (ι k)] [∀ k, LinearOrder (ι k)] in
 
 theorem snapper_component_mul_X [DecidableEq K] (f : MvPolynomial (Σ k, ι k) F) (b : K → ℕ) (v : Σ k, ι k) :
     weightedHomogeneousComponent (NumbersDVR.blockWeight ι) (b + NumbersDVR.blockWeight ι v) (f * X v) =
@@ -41,7 +40,6 @@ theorem snapper_component_mul_X [DecidableEq K] (f : MvPolynomial (Σ k, ι k) F
   rw [key, key] at h
   exact h
 
-omit [LinearOrder K] [∀ k, Fintype (ι k)] [∀ k, LinearOrder (ι k)] in
 
 theorem snapper_colon_X [DecidableEq K] {J : Ideal (MvPolynomial (Σ k, ι k) F)} (hJ : NumbersDVR.IsMultiHomogIdeal J)
     (v : Σ k, ι k) : NumbersDVR.IsMultiHomogIdeal (J.colon (Ideal.span {(X v : MvPolynomial (Σ k, ι k) F)})) := by
@@ -50,7 +48,6 @@ theorem snapper_colon_X [DecidableEq K] {J : Ideal (MvPolynomial (Σ k, ι k) F)
   rw [← snapper_component_mul_X]
   exact hJ _ hf _
 
-omit [Fintype K] [LinearOrder K] in
 
 theorem snapper_eval_shift (p : MvPolynomial K ℚ) (e m : K → ℤ) :
     eval (fun k => ((m - e) k : ℚ)) p =

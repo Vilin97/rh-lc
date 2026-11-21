@@ -94,7 +94,6 @@ theorem d_one_d_zero (F : SubSystem S x E) (w : Cech.Cochain (fun I => F.sub I) 
     Cech.d (fun I => F.sub I) F.res 1 (Cech.d (fun I => F.sub I) F.res 0 w) = 0 :=
   Cech.d_one_d_zero (fun _ _ _ _ _ _ => rfl) w
 
-set_option maxHeartbeats 1000000 in
 
 theorem subsingleton_H_one_of_quot (F G : SubSystem S x E)
     (hGF : ∀ I, ∀ y ∈ G.sub I, y ∈ F.sub I) (hG : Subsingleton (G.H 1))

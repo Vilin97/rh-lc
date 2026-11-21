@@ -65,10 +65,7 @@ section ThetaShiftProofs
 variable {D : Datum H} {l : Level H} {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
   (Y : Model Xo c β) (b : O →+* T.V) (y : Sp T.V ⟶ Y.X) (m : SABMap t Y.t y)
 
-open Classical in
 
-open scoped Classical in
-variable (D β) in
 
 end ThetaShiftProofs
 

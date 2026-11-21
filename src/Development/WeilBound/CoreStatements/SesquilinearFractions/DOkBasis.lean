@@ -72,7 +72,6 @@ theorem finite_primes [IsDedekindDomain R] [Module.Finite ℤ R] :
   · exact Or.inl h0
   · exact Or.inr (hint _ hQ'.1 hQ'.2 h0)
 
-include hℓ in
 
 theorem locBasis [IsDedekindDomain R] [Module.Finite ℤ R] {M : Type} [AddCommGroup M] [Module R M] [Module.Finite R M]
     [Module.IsTorsionFree R M] : ∃ (g : ℕ) (b : Fin g → M), IsLocBasis R ℓ b := by
@@ -148,7 +147,6 @@ theorem locBasis [IsDedekindDomain R] [Module.Finite ℤ R] {M : Type} [AddCommG
       rw [smul_comm]
       exact Submodule.smul_mem _ _ hx
 
-include hℓ in
 
 theorem locBasis' [IsDedekindDomain R] [Module.Finite ℤ R] {M : Type} [AddCommGroup M] [Module R M] [Module.Finite R M]
     [Module.IsTorsionFree R M] : ∃ b : Fin (Module.finrank R M) → M, IsLocBasis R ℓ b := by

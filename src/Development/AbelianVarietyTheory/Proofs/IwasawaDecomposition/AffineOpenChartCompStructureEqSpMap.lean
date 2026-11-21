@@ -26,8 +26,6 @@ open GlobalTheory.FlagMod (ev tau tau_le spMap_ev ev_res ev_spMap le_preimage_in
 
 namespace GlobalTheory.DRFlag
 
-attribute [local instance] Over.cartesianMonoidalCategory in
-open MonObj in
 
 instance tanAddCommGroup {X : Scheme.{0}} {S : Type} [CommRing S] (x : Sp S ⟶ X) (G : Over X) [GrpObj G]
     [IsCommMonObj G] : AddCommGroup (TanM x G) := inferInstance
@@ -63,9 +61,7 @@ namespace Coc
 
 variable {Z Z' : Scheme.{0}} (C : Coc Z) {S S' : Type} [CommRing S] [CommRing S']
 
-variable {C} in
 
-variable {C} in
 
 end Coc
 
@@ -77,9 +73,7 @@ section Tan
 
 variable {X : Scheme.{0}} {t : SAB H X} {S S' : Type} [CommRing S] [CommRing S']
 
-variable (Dw t) in
 
-variable (t) in
 
 variable {Z : Scheme.{0}} {π : Z ⟶ X} {U : Z.Opens} {hU : IsAffineOpen U} {κ : Type} [Finite κ]
 

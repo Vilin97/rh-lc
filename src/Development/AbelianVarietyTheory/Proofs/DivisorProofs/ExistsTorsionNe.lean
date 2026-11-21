@@ -111,7 +111,6 @@ theorem exists_sec_fibre {K : Type} [Field K] (ev : V₁ →+* K) (θ : LB.Sec (
   rw [← v₁ _ _ z J hJ]
   exact (sval_of θ₁ _ z J _ (fun _ => by rw [Category.comp_id]; rfl)).symm
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_torsion_ne {K : Type} [Field K] [IsAlgClosed K] (ev : V₁ →+* K)
     (θ : FieldBaseChange.SecOver D.P.A.hom (LB.LinComb D.P.L (D.famφB 0) (DegPre.famε 1)))
@@ -236,7 +235,6 @@ theorem gs_ev (ev : V₁ →+* K) (a : Γ(Sp V₁, ⊤)) (z : Sp K) :
     gs (Y := Sp K) (toUnit (Over.mk (spMap ev))).left z ⊤ a = toStk z (ev ((Scheme.ΓSpecIso (CommRingCat.of V₁)).hom.hom a)) :=
   GlobalTheory.RatioVal.gs_specMap ev z a
 
-omit [IsAlgClosed K] in
 
 theorem triv_elt (ev : V₁ →+* K) {P v} (G : GRep D.P.L (𝟙_ (Over (Sp V₁))) P v)
     (hP : ∀ (U : Type) [CommGroup U] (h : _ → U), P U h = 1) :

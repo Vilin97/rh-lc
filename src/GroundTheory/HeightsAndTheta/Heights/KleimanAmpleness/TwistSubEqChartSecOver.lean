@@ -126,7 +126,6 @@ theorem twist_sub_eq_chartSecOver (β : K → ℤ)
 
 end ModelTwistGenerated
 
-open ModelTwistGenerated in
 
 theorem ModelTwistGenerated.proof (hCG : ChartSecGen.Statement) : ModelTwistGenerated.Statement := by
   classical

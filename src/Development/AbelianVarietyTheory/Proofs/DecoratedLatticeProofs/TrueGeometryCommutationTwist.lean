@@ -97,7 +97,6 @@ theorem chr_near {t : kˣ} (ht : IsUnif t) {y y' : k} (hy : valuation k (y - y')
     exact (ht _).1 hy)
   rw [show ((t⁻¹ : kˣ) : k) * y = ((t⁻¹ : kˣ) : k) * (y - y') + ((t⁻¹ : kˣ) : k) * y' by ring, AddChar.map_add_eq_mul, triv, one_mul]
 
-include h hψ in
 
 theorem exists_res {t : kˣ} (ht : IsUnif t) : ∃ α : AddChar (kP PP) ℂ,
     ∀ z, (ψ (((t⁻¹ : kˣ) : k) * prO q z) : ℂ) = α (Ideal.Quotient.mk _ z) := by
@@ -111,7 +110,6 @@ theorem exists_res {t : kˣ} (ht : IsUnif t) : ∃ α : AddChar (kP PP) ℂ,
               rw [wd _ (l a + l b) (by rw [map_add (f := _), hl, hl, hl]), map_add (f := _), mul_add, AddChar.map_add_eq_mul, Circle.coe_mul] },
     fun z => congrArg (fun c : Circle => (c : ℂ)) (wd _ z (hl _)).symm⟩
 
-include h in
 
 theorem exists_near {y : k} (hy : valuation k y ≤ 1) : ∃ z, valuation k (y - prO q z) < 1 := by
   obtain ⟨-, hi, hd⟩ := place_facts q h
@@ -136,7 +134,6 @@ theorem exists_near {y : k} (hy : valuation k y ≤ 1) : ∃ z, valuation k (y -
   rw [map_mul]
   exact lt_of_le_of_lt (mul_le_of_le_one_left' ha1) ((prO_lt q h p).1 hp)
 
-include h hψ in
 
 theorem near_of_res {t t' : kˣ} (ht : IsUnif t) (ht' : IsUnif t')
     (he : ∀ z, ψ (((t⁻¹ : kˣ) : k) * prO q z) = ψ (((t'⁻¹ : kˣ) : k) * prO q z)) :

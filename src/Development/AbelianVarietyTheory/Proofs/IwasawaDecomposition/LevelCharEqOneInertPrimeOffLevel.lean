@@ -20,7 +20,6 @@ set_option maxHeartbeats 2000000
 
 namespace GlobalTheory.Mem.R3.LiftInertChi
 
-open GlobalTheory.FinZeta.LevelOff in
 
 theorem redFn_eq_one_of_locAt {D : D7} {V : HSp D} (β : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)) (x : Bridge.Gf V)
     (hS : Formalism.UG.bc (swapAE D) (x : GL (Fin V.rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E)) ∈ Formalism.L2.DIV.St β)

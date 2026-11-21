@@ -27,7 +27,6 @@ theorem l_mul_inv : (l : Pk) * sI = 1 := by
   rw [← map_natCast (algebraMap (𝕎k) (Pk)) l]
   exact IsLocalization.Away.mul_invSelf _
 
-omit [CharP k l] [PerfectRing k l] in
 
 theorem norm_l_mul (y : Pk) : ‖(l : Pk) * y‖ = ‖y‖ / l := by
   have h := (GlobalTheory.T.closedDiscGaugeCompletion_basic_properties l (WittVector l k) 0 1).2.1 (ofPre l 0 1 y)
@@ -247,7 +246,6 @@ theorem exists_of_norm_le (x : Dk) (hx : ‖x‖ ≤ 1) : ∃ w : 𝕎k, x = toD
 
 end GlobalTheory.BSP.DiscZero
 
-open GlobalTheory.BSP.DiscZero in
 
 theorem GlobalTheory.BSP.disc_zero_one : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K),
     (∀ x y : Disc l (0 : Wq l bk.a) 1, ‖x * y‖ = ‖x‖ * ‖y‖) ∧

@@ -2353,7 +2353,6 @@ theorem bf_LL_last (j : ℤ) {k : ℕ} (hk : k < r) :
   have h2 := bf_u_le (show 1 ≤ 2 + 2 * k by omega) u
   linarith [A.1.2.1, Bq.1.1]
 
-include hr hu hMT hstep in
 
 theorem bf_LL_key (j x : ℤ) (hx : x ∈ (bf_F TT r u J B).LLset j)
     (hc : (((bf_F TT r u J B).LLset j).filter (· ≤ x)).card ≤ r ∨

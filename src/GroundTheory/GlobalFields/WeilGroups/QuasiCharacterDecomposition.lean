@@ -77,7 +77,6 @@ theorem ofUnitaryMulModulePow_bijective :
   · obtain ⟨χ, σ, h⟩ := ψ.exists_ofUnitary_mul_modulePow
     exact ⟨(χ, Multiplicative.ofAdd σ), h⟩
 
-variable (K) in
 
 def unitaryDecomposition : QuasiCharacter K ≃* HeckeCharacter K × Multiplicative ℝ :=
   (MulEquiv.ofBijective _ ofUnitaryMulModulePow_bijective).symm

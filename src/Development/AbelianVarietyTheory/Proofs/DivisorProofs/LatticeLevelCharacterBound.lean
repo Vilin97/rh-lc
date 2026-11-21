@@ -80,7 +80,6 @@ open GlobalTheory.LevPull (CongMod)
 open GlobalTheory.LevDesc (transl)
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.FieldBC
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_span_pull_iff : ∀ (D : D7) (T : CoreJ D) (j : ℕ) (Y : Deep T.toCore j) (e : ℕ) (o : ℝ), LawsJ T → InR D j → Y.Good e o → ∀ (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom a n → ∀ (G : Type) [Group G] (lev : G → (T.Q.Dw j).La →ₗ[𝓞 D.host.E] (T.Q.Dw j).La), ActLev (Xo := T.Q.Xo j) T.Q.c (fun g => (lev g, (LinearMap.id : (T.Q.Dw j).La →ₗ[𝓞 D.host.E] (T.Q.Dw j).La))) → (∀ g, ∀ f ∈ T.cuspA j a n, actLev (Xo := T.Q.Xo j) T.Q.c (fun g => (lev g, (LinearMap.id : (T.Q.Dw j).La →ₗ[𝓞 D.host.E] (T.Q.Dw j).La))) g f ∈ T.cuspA j a n) → ∀ (P : Subgroup G) [Finite P] (lam : P →* (T.Q.c.F)ˣ) (θ : LevelAut (T.Q.Dw j) Y.d.l₂ →* G), (∀ γ, CongMod T.Q.l.Mb (liftLa γ) (lev (θ γ))) → (∀ γ, CongMod T.Q.l.Mb (liftLa γ) LinearMap.id → θ γ = 1) → (∀ u ∈ P, ∃ γ, θ γ = u) → ∀ g ∈ Y.V (wtZ a n), g ∈ Submodule.span Y.d.c₂.F {g | ∃ f ∈ {f : T.R j | f ∈ T.cuspA j a n ∧ ∀ u : P, actLev (Xo := T.Q.Xo j) T.Q.c (fun g => (lev g, (LinearMap.id : (T.Q.Dw j).La →ₗ[𝓞 D.host.E] (T.Q.Dw j).La))) (u : G) f = ((lam u : (T.Q.c.F)ˣ) : T.Q.c.F) • f}, Y.Pull f g} ↔ ∀ γ (h : θ γ ∈ P), transl Y.d.Xo₂ Y.d.c₂ γ g = ((Y.d.eF : Y.c'.F →+* Y.d.c₂.F).comp (incF T.Q.c Y.c' Y.hle)) ((lam ⟨θ γ, h⟩ : (T.Q.c.F)ˣ) : T.Q.c.F) • g := by
   intro D T j Y e o hT hj hG a n hD G _ lev hact hkeep P _ lam θ hθ hker hs g hg
@@ -207,7 +206,6 @@ theorem exists_root (p : PtAt ex Csz) (k : Fin 2) : ∃ ζ : p.T.Q.c.F, IsPrimit
     dvd_trans (hM ▸ GlobalTheory.LevDesc.g_dvd k) (Nat.dvd_lcm_left p.T.Q.l.M p.T.Q.l.A)
   exact ⟨_, hz.pow (Nat.pos_of_ne_zero hN0) (hc.trans (mul_comm _ _))⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem typeK_eq (p : PtAt ex Csz) (i : Fin D.R.m) (lam : (p.F.lv2.lvl false).P →* (p.T.Q.c.F)ˣ)
     (hlam : ∀ u : (p.F.lv2.lvl false).P, algebraMap p.T.Q.c.F D.what₂.LL (lam u : (p.T.Q.c.F)ˣ) =
@@ -228,7 +226,6 @@ theorem typeK_eq (p : PtAt ex Csz) (i : Fin D.R.m) (lam : (p.F.lv2.lvl false).P 
   ext f
   exact ⟨fun ⟨h, hf⟩ => ⟨h, fun u => (key ⟨f, h⟩ u).1 (hf u)⟩, fun ⟨h, hf⟩ => ⟨h, fun u => (key ⟨f, h⟩ u).2 (hf u)⟩⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem latDeep_eq_latN (p : PtAt ex Csz) (i : Fin D.R.m) (Y : Cov p i) {e : ℕ} {o : ℝ} (hY : Y.Good e o) :
     ∃ (fr : TypeFrame (dat p i) Y.d.l₂) (ψ : ∀ v : Sq D.host, AddChar (ZMod (D.host.g v.1)) Y.d.c₂.F),

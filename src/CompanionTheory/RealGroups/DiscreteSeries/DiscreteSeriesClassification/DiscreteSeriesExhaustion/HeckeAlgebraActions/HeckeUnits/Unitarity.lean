@@ -71,7 +71,6 @@ theorem coeY_mem_Isub
   rw [← e, aeval_CH, Om'_CH K hK, LinearMap.zero_apply, map_zero, zero_add, aeval_lin]
   exact aeval_mem_Isub B hI
 
-variable (χ s) in
 
 def phiB (hS : ScalChar X χ) : X.V →ₗ[ℂ] ↥(backSub (step X (χ s)) (χ s + 1)) :=
   (phi0 χ s hS).codRestrict (backSub (step X (χ s)) (χ s + 1)) fun v => mem_of_eig' (omega_projection_scalar_character hS v)
@@ -103,7 +102,6 @@ theorem phiB_surj (hS : ScalChar X χ) (hsimp : ∀ r, r ≠ s → χ r ≠ χ s
   rw [← hv c]
   exact Pr_step hS hsimp _ (hom _ (show ↥(stepSub X (χ s)) from G c).2)
 
-variable (χ s) in
 
 def phiBk (hS : ScalChar X χ) (hB : BackStable) :
     X.V →ₗ[ℂ] (back (step X (χ s)) (χ s + 1) (hB (m + 1) _ _)).V := phiB χ s hS

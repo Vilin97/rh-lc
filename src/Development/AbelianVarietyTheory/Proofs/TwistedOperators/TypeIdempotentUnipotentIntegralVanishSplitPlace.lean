@@ -230,7 +230,6 @@ namespace GlobalTheory.LocConst
 
 open GlobalTheory.SmGL GlobalTheory.IndefiniteRowSideFullHecke.StandardMaximalParabolic ValuativeRel
 
-set_option maxHeartbeats 2000000 in
 
 theorem unip_integral_vanish_of (hTV : TypeConstTermVanish)
     (hpr : ∀ (D : D7) (V : HSp D) (v : HeightOneSpectrum (𝓞 D.host.F)) (s : SplitAt D.sp.cm.sig V.gram (frameLat V) v)

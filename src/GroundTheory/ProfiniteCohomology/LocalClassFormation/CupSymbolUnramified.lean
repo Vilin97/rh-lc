@@ -141,7 +141,6 @@ noncomputable def charIndex : ℕ+ :=
   ⟨(charKer (charAdd ψ)).index, Nat.pos_of_ne_zero
     (Subgroup.FiniteIndex.index_ne_zero (H := ((charKerOpen ψ).toOpenSubgroup : Subgroup Gal(Ω/F))))⟩
 
-omit [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω] in
 
 theorem charAdd_eq_zero_of_mem_fixingSubgroup
     (hψ : ∀ g ∈ (unramifiedDegree F Ω).ker, ψ (Additive.ofMul g) = 0) :

@@ -102,7 +102,6 @@ theorem abs_maDens_collar_le {n d : ℕ} (g : (Fin n → ℂ) → ℝ) (s : (Fin
 
 end TubeCollarComparison
 
-open TubeFormComparison TubeCollarComparison in
 
 theorem TubeCollarCompare.proof : TubeCollarCompare.Statement := by
   intro n d J A P R _hJ _hdim hA _hP

@@ -42,7 +42,6 @@ def sumhT (t : Fin n') (v : Fin (r + K) → ℕ) : ℝ :=
 
 def sumSt (t : Fin n') : ℝ := ∑ v ∈ X.laSet p K t, X.sumhT p K t v
 
-omit [NeZero n'] in
 
 def firstSumFactor : ℝ := 1 - 1 / X.a ^ (X.Ns ^ 2)
 

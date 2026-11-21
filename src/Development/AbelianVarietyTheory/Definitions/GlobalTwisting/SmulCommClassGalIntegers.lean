@@ -44,12 +44,10 @@ def InInertia (𝔭 : HeightOneSpectrum (𝓞 K)) (σ : L ≃ₐ[K] L) : Prop :=
 
 def UnramIn (𝔭 : HeightOneSpectrum (𝓞 K)) : Prop := ∀ σ : L ≃ₐ[K] L, InInertia L 𝔭 σ → σ = 1
 
-open Classical in
 
 def heckeVal (χ : (L ≃ₐ[K] L) →* ℂˣ) (𝔭 : HeightOneSpectrum (𝓞 K)) : ℂ :=
   if h : (∀ σ, InInertia L 𝔭 σ → χ σ = 1) ∧ ∃ σ, IsFrob L 𝔭 σ then ((χ h.2.choose : ℂˣ) : ℂ) else 0
 
-open Classical in
 
 def heckeIdeal (χ : (L ≃ₐ[K] L) →* ℂˣ) (I : Ideal (𝓞 K)) : ℂ :=
   ∏ᶠ 𝔭 : HeightOneSpectrum (𝓞 K), heckeVal L χ 𝔭 ^ (Associates.mk 𝔭.asIdeal).count (Associates.mk I).factors
@@ -65,7 +63,6 @@ def IsModulus (χ : (L ≃ₐ[K] L) →* ℂˣ) (𝔪 : Ideal (𝓞 K)) : Prop :
 def condNorm (χ : (L ≃ₐ[K] L) →* ℂˣ) : ℕ :=
   sInf {n | ∃ 𝔪 : Ideal (𝓞 K), IsModulus L χ 𝔪 ∧ Ideal.absNorm 𝔪 = n}
 
-variable (K) in
 
 def bigQ : ℝ :=
   |(discr K : ℝ)| * ((⨆ χ : (L ≃ₐ[K] L) →* ℂˣ, condNorm L χ : ℕ) : ℝ) *
@@ -76,7 +73,6 @@ def HeckeZero (χ : (L ≃ₐ[K] L) →* ℂˣ) (β : ℂ) : Prop :=
     (∀ s : ℂ, 1 < s.re → HasProd (fun 𝔭 : HeightOneSpectrum (𝓞 K) =>
       (1 - heckeVal L χ 𝔭 * ((Ideal.absNorm 𝔭.asIdeal : ℕ) : ℂ) ^ (-s))⁻¹) (F s)) ∧ F β = 0
 
-omit [NumberField K] [NumberField L] in
 
 instance smulCommClass_gal_integers : SMulCommClass (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) where
   smul_comm s a x := by

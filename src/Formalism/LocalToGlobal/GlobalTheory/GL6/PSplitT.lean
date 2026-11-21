@@ -216,7 +216,6 @@ theorem forms_involution_eq_host_conj (x : D.host.E) : sigD D x = D.host.conj x 
 theorem host_conj_involutive (x : D.host.E) : D.host.conj (D.host.conj x) = x := by
   exact D.host.conj_conj x
 
-set_option maxHeartbeats 1000000 in
 
 theorem splitAtT_of_tied (A : AtTTied u) : SplitAtT A := by
   intro v

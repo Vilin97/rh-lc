@@ -11,7 +11,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 
 namespace GlobalTheory.Svd
 
-set_option maxHeartbeats 800000 in
 
 theorem modelsAt_tr : ∀ (D : D7) (O : Obj D) (N : ∀ u, Submodule (𝓞 D.what₂.LL) (D.div.Nu u).V) (h : D.what₂.Word → ℝ),
     ModelsAt D O → ModelsAt (setDiv D N h) (O.tr N h) := by

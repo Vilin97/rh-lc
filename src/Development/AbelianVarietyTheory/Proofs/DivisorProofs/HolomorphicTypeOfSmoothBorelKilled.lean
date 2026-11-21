@@ -422,7 +422,6 @@ end GlobalTheory.HolDict.HolOf
 
 namespace GlobalTheory.HolDict
 
-open TorusLaw HolOf in
 
 theorem holFn_of_killed : ∀ (n : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι] (Hm : ι → Mt n) (q : ι → ℕ) (x₀ : ι → Mt n) (w : ι → Fin n → ℤ), (∀ τ, OrthFr (Hm τ) (q τ) (x₀ τ)) → ∀ f, SmFn Hm f → KilledFn Hm x₀ w f → HolFn Hm q x₀ w f := by
   intro n ι _ _ Hm q x₀ w h f hs hk

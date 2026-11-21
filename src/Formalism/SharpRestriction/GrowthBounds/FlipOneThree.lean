@@ -320,7 +320,6 @@ def IntegralityFromMetricForLargeConstants (D : Formalism.BasicNotions.D7) : Pro
   TransportedAlt fun C0 CYb Cde Ck CD Cb CE1 CE2 Cc => ∀ Ckap Cs : ℝ, ∃ C : ℝ, 0 < C ∧
     IntegralityFromMetric D C0 CYb Cde Ck CD Cb CE1 CE2 Ckap Cc Cs C
 
-open Classical in
 
 def lgR (p : ℕ) (a : ℝ) (r : ℕ) : ℝ := Real.logb p (8 * a + r) + 1
 

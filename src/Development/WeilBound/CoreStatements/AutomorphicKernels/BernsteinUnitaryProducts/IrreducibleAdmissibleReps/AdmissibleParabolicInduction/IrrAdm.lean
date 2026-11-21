@@ -14,7 +14,6 @@ section Bridge
 
 variable {G V : Type} [Group G] [TopologicalSpace G] [AddCommGroup V] [Module ℂ V]
 
-omit [TopologicalSpace G] in
 
 theorem fixed_eq_fixedVectors (ρ : Representation ℂ G V) (K : Subgroup G) :
     GlobalTheory.PRep.fixed ρ K = GroundTheory.Automorphic.fixedVectors ρ K := by

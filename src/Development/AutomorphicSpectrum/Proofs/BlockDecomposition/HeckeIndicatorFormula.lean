@@ -130,7 +130,6 @@ end GlobalTheory.CompanionTheory.CtS.TjChar
 
 namespace GlobalTheory.CompanionTheory.CtS
 
-open GlobalTheory.CompanionTheory.CtS.TjChar in
 
 theorem Tj_eq_ite : ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n k : ℕ) (ϖ : w.adicCompletion E), IsUnifV E w ϖ → k ≤ n → ∀ g : GL (Fin n) (w.adicCompletion E), Tj ℂ n (Ov E w) ϖ k g = if IsInt w g.val ∧ IsInt w (ϖ • (g⁻¹).val) ∧ ordL g.val.det = (k : ℤ) then 1 else 0 := by
   intro E _ _ w n k ϖ hu hk g

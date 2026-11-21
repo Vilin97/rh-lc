@@ -28,7 +28,6 @@ lemma IsPeriodic.residue_eq_of_mk_eq {f : ℂ → ℂ} (hp : IsPeriodic L f) (hf
   have := hp.residue_add hf hzw w
   rwa [add_sub_cancel] at this
 
-variable (L) in
 
 def torusResidue (f : ℂ → ℂ) (x : Torus L) : ℂ :=
   residue f x.out

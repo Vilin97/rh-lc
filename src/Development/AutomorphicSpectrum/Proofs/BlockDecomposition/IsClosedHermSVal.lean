@@ -22,7 +22,6 @@ theorem isClosed_hermS_val (D : D7) (p : ℕ) (e : AE D) :
     (continuous_const_smul e).comp continuous_subtype_val
   exact isClosed_eq hc continuous_subtype_val
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem hermS_facts : ∀ (D : D7) (p : ℕ) (e : AE D), LocallyCompactSpace (hermS D p e) ∧ T2Space (hermS D p e) ∧
     SecondCountableTopology (hermS D p e) ∧ BorelSpace (hermS D p e) ∧ IsTopologicalAddGroup (hermS D p e) := by

@@ -42,7 +42,6 @@ def AllPts (Q : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalis
   ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies D) (Gi : Formalism.MainNotions.G.Inst D L) (Gl : Formalism.MainNotions.G.LatInst D) (Kc : Formalism.MainNotions.G.Consts)
     (Y : DivX D) (cX : ExtraC) (ex : Extra D L hT Gi Gl Kc Y cX) (Csz : ℝ) (p : PtAt ex Csz) (j : Fin D.R.m), p.Rows → More p → Q p j
 
-open Classical in
 
 def PlacesSt : Prop := AllPts fun {D _ _ _ _ _ _ _ ex _} p j => ∀ w : D.what₂.places.Pl, D.plEq w ∈ p.R.twPl →
   IntegralHeckeForms.TwOK (ex.nch.twI w) (ex.nch.k' w) (ex.nch.Q w) (GlobalTheory.TwistIndex.chosenChar ex.nch w) →
@@ -58,7 +57,6 @@ def PlacesSt : Prop := AllPts fun {D _ _ _ _ _ _ _ ex _} p j => ∀ w : D.what�
         cA D (idem ((ρ.B (ex.nch.twI w) j (ex.nch.sd w)).de.Q ∪
           (ρ.tw (ex.nch.twI w) (ex.nch.sd w) (ex.nch.k' w) (ex.nch.Q w) (GlobalTheory.TwistIndex.chosenChar ex.nch w)).Q))
 
-open Classical in
 
 section Units
 

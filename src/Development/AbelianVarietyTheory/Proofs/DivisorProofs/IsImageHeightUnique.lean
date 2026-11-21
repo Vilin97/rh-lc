@@ -14,9 +14,6 @@ open MvPolynomial NumberField Module GlobalTheory.ChowHt GlobalTheory.CompHt
 
 namespace GlobalTheory.ImageHeightUnique
 
-set_option autoImplicit false in
-open MvPolynomial NumberField Module in
-open scoped Matrix in
 
 theorem _root_.GlobalTheory.ImageHeightUnique.map_linSubst {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {B N n : ℕ} (M : Matrix (Fin N) (Fin n) R)
     (f : MvPolynomial (Fin B × Fin N) R) :
@@ -32,7 +29,6 @@ theorem _root_.GlobalTheory.ImageHeightUnique.map_linSubst {R S : Type} [CommRin
 variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
   [IsScalarTower (𝓞 K) K V] {N : ℕ}
 
-omit [NumberField K] in
 
 set_option autoImplicit false in
 open MvPolynomial NumberField Module in
@@ -470,9 +466,6 @@ theorem _root_.GlobalTheory.ImageHeightUnique.isImageHeight_unique {Ω : Type} [
   have : ((D : ℝ) + 1) * δ₁ * x = ((D : ℝ) + 1) * δ₁ * y := by rw [hx₁, hy₂, hH]
   exact mul_left_cancel₀ hδ.ne' this
 
-set_option autoImplicit false in
-open MvPolynomial NumberField Module in
-open scoped Matrix in
 
 theorem _root_.GlobalTheory.ImageHeightUnique.imageHeight_eq : ∀ (K V Ω : Type) [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] [Field Ω] [Algebra K Ω] (Nm : (K →+* ℂ) → V → ℝ) (L : Submodule (𝓞 K) V)

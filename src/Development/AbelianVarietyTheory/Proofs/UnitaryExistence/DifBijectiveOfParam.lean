@@ -40,11 +40,9 @@ theorem jetMap_z {κ κ' : Type} (m : ℕ) (φ : κ → MvPolynomial κ' S) (h) 
 theorem jetAug_z {κ : Type} (m : ℕ) (s : κ) : (jetAug : Jet S κ m →ₐ[S] S) (z m s) = 0 :=
   MvPolynomial.aeval_X (fun _ => (0 : S)) s
 
-variable (S) in
 
 abbrev jIn (d m : ℕ) : Jet S (Fin d) m →ₐ[S] Jet S (Fin 1 × Fin d) m := jetIn (0 : Fin 1)
 
-variable (S) in
 
 def jOut (d m : ℕ) : Jet S (Fin 1 × Fin d) m →ₐ[S] Jet S (Fin d) m := jetMap (fun p => X p.2) fun _ => X_mem_orig _
 
@@ -217,7 +215,6 @@ section Param
 variable {X0 : Scheme.{0}} {S : Type} [CommRing S] {x0 : Sp S ⟶ X0} {G : Over X0} [GrpObj G] [IsCommMonObj G] {d : ℕ}
   {j : JetPts G x0 d}
 
-set_option maxHeartbeats 800000 in
 
 theorem param_of_dif_bijective (hG : Smooth G.hom)
     (ht : ∀ m, homAt x0 (jetTrunc : Jet S (Fin d) (m + 1) →ₐ[S] Jet S (Fin d) m) ≫ j (m + 1) = j m)

@@ -1381,7 +1381,6 @@ theorem isUnit_det_sub {n : ℕ} (w : Pt E n) (p : lowW E (tr w).1 (tr w).2 × u
   rw [Matrix.det_submatrix_equiv_self, det_orbZ]
   exact Matrix.isUnit_det_of_right_inverse (Formalism.DoubleCosetMeasures.P.Phase.pt_mul_ptI _ _)
 
-open scoped Classical in
 
 def GG (M : Model F E) {m : ℕ} (c : M.Cls m) (Z : Matrix (Fin (m + 1)) (Fin (m + 1)) E) (a : E) : ℂ :=
   if h : (∀ a b, Z a b ∈ M.R) ∧ IsUnit Z.det then

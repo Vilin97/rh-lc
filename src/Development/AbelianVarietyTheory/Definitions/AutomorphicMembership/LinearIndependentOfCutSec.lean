@@ -41,7 +41,6 @@ theorem valAt_ne_zero (hf : UnitAt (below y) f) : valAt y f ≠ 0 := by
 
 variable (y)
 
-omit [IsIntegral Z] in
 
 theorem below_comp (φ : K →+* K') : below (spMap φ ≫ y) = below y := by
   exact (Scheme.Hom.comp_apply _ _ _).trans (congrArg y (Subsingleton.elim (α := PrimeSpectrum K) _ _))
@@ -65,7 +64,6 @@ theorem valAt_comp (φ : K →+* K') (f : Z.functionField) : valAt (spMap φ ≫
       (Scheme.stalkClosedPointTo y ≫ CommRingCat.ofHom φ) U hU')
   · rw [valAt, valAt, dite_eq_right h, dite_eq_right ((below_comp y φ).symm ▸ h), map_zero]
 
-variable {y} in
 
 theorem valAt_fnOf {U : Z.Opens} (hy : below y ∈ U) (h : genericPoint Z ∈ U) (a : Γ(Z, U)) :
     valAt y (fnOf U h a) = TangentOrigin.evalPt y U ((Points.le_preimage_iff _ _).2 hy) a := by
@@ -106,20 +104,15 @@ section Gal
 
 variable {Y E} (σ : AlgebraicClosure E ≃ₐ[E] AlgebraicClosure E) (y : GeomPt Y E)
 
-omit [NumberField F] [NumberField E] in
 
 theorem below_smul : below (σ • y).1 = below y.1 := below_comp _ _
 
-omit [NumberField F] [NumberField E] in
 
 theorem valAt_smul (f : Y.Fn) : valAt (σ • y).1 f = σ (valAt y.1 f) := valAt_comp _ _ _
 
-omit [NumberField F] [NumberField E] [Algebra F E] in
 
 theorem map_coef (i : Fin Y.dim) (l : Fin n) : σ (coef Y E c i l) = coef Y E c i l := σ.commutes _
 
-omit [NumberField F] [NumberField E] in
-variable {w c y} in
 
 theorem smul_mem_cutSet (hy : y ∈ cutSet Y E w c) : σ • y ∈ cutSet Y E w c := fun k hk i => by
   have := congrArg σ (hy k (below_smul σ y ▸ hk) i)
@@ -145,7 +138,6 @@ def dsVal (y : GeomPt Y E) (k : Fin n) (g : Y.Fn) : AlgebraicClosure E :=
 def resAt (f : Y.Fn) (y : GeomPt Y E) (k : Fin n) (g e : Y.Fn) : AlgebraicClosure E :=
   valAt y.1 (f * e * g / w k ^ Y.dim) / dsVal Y E w c y k g
 
-open Classical in
 
 def genIdx (x : Y.X) : Option (Fin n) := if h : ∃ k, GenAt Y w x k then some h.choose else none
 
@@ -159,15 +151,11 @@ section Indep
 
 variable {Y E w c} {x : Y.X} {y : GeomPt Y E} {k k' : Fin n} {g g' e : Y.Fnˣ} {Δ : Y.Dv} {f f' : Y.Fn}
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
 theorem isEqn_eqn (Δ : Y.Dv) (x : Y.X) : Δ.IsEqn x (eqn Δ x) := (Δ.exists_isEqn x).choose_spec
 
-omit [NumberField F] in
 
-omit [NumberField F] [NumberField E] in
 
 theorem dsVal_pick {l : Fin Y.dim → Fin n} (hc : ∀ i j, c i j = if j = l i then 1 else 0) (g : Y.Fn) :
     dsVal Y E w c y k g = valAt y.1 (jacRat Y (fun i => w (l i) / w k) * g) := by
@@ -177,9 +165,7 @@ theorem dsVal_pick {l : Fin Y.dim → Fin n} (hc : ∀ i j, c i j = if j = l i t
     obtain ⟨i, hi⟩ := Function.ne_iff.1 hl
     rw [Finset.prod_eq_zero (Finset.mem_univ i) (by simp [coef, hc, hi]), zero_mul]
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField F] [NumberField E] in
 
 theorem resVal_smul (σ : AlgebraicClosure E ≃ₐ[E] AlgebraicClosure E) (Δ : Y.Dv) (f : Y.Fn) (y : GeomPt Y E) :
     resVal Y E w c Δ f (σ • y) = σ (resVal Y E w c Δ f y) := by
@@ -216,9 +202,7 @@ def cutForm (τ : E →+* ℂ) (g g' : cutSec Y E w c) : ℂ :=
 
 def IsCutHerm (H : ReciprocityTheory.GeometryOfNumbersTheory.HermFam E (cutSec Y E w c)) : Prop := ∀ τ g g', H.form τ g g' = cutForm w c A τ g' g
 
-variable {w c A} in
 
-open Classical in
 
 def cutDeg (Λ : Submodule (𝓞 E) (cutSec Y E w c)) : ℝ :=
   if h : ∃ H, IsCutHerm w c A H then ReciprocityTheory.GeometryOfNumbersTheory.deg h.choose Λ else 0

@@ -34,4 +34,3 @@ theorem inA_of {O Γ k : Type} [CommRing O] [Group Γ] [TopologicalSpace Γ] [Fi
 
 end UpperTheory.V.Cu.RankFourChainReduction
 
-open UpperTheory.V.Cu UpperTheory.V.Ws.Chn UpperTheory.V.Cu.RankFourChainReduction in

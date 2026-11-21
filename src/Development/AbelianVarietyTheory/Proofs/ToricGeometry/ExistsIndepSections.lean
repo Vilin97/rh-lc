@@ -72,7 +72,6 @@ end Transport
 
 attribute [local instance] Over.cartesianMonoidalCategory
 
-open Out in
 
 theorem exists_indep_sections (H : Out.GlobalSectionsRankAlgClosed) (P : Out.PolAV (Sp ℂ)) (n : ℕ) (hn : 1 ≤ n) :
     ∃ s : Fin (n ^ P.g) → (lbPow P.L n).Sec, ∀ a : Fin (n ^ P.g) → ℂ,

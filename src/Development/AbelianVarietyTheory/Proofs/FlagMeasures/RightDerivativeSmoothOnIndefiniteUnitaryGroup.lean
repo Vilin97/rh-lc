@@ -16,7 +16,6 @@ namespace GlobalTheory.RightDerivSmooth
 
 variable {n : ℕ}
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem exp_intertwine (Y Z H : Matrix (Fin n) (Fin n) ℂ) (h : Y * H = H * Z) :
     NormedSpace.exp Y * H = H * NormedSpace.exp Z := by
@@ -37,7 +36,6 @@ theorem exp_intertwine (Y Z H : Matrix (Fin n) (Fin n) ℂ) (h : Y * H = H * Z) 
   rw [e] at h1
   exact h1.unique h2
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem inUH_exp {H X : Matrix (Fin n) (Fin n) ℂ} (hX : Xᴴ * H + H * X = 0) (t : ℝ) :
     inUH H (NormedSpace.exp ((t : ℂ) • X)) := by
@@ -60,7 +58,6 @@ theorem inUH_mul {H a b : Matrix (Fin n) (Fin n) ℂ} (ha : inUH H a) (hb : inUH
         simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
     _ = H := by rw [ha', hb']
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem hasDerivAt_exp_entry (X : Matrix (Fin n) (Fin n) ℂ) (i j : Fin n) :
     HasDerivAt (fun t : ℝ => NormedSpace.exp ((t : ℂ) • X) i j) (X i j) 0 := by
@@ -106,7 +103,6 @@ section
 open GlobalTheory.RightDerivSmooth
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem GlobalTheory.RightDerivSmooth.right_derivative_smooth_on_unitary_group : ∀ (n : ℕ) (H X : Matrix (Fin n) (Fin n) ℂ) (E : Type) [NormedAddCommGroup E] [NormedSpace ℂ E]
     (f : Matrix (Fin n) (Fin n) ℂ → E), Xᴴ * H + H * X = 0 → SmoothOnH H f →

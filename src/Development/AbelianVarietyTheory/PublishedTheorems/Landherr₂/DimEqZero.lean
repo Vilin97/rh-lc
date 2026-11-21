@@ -26,7 +26,6 @@ theorem finite (h : AbMulNSt) (hB : IsAbelianScheme B) (hg : SmoothOfRelativeDim
   rintro rfl
   exact hn Nat.cast_zero
 
-omit [IsAlgClosed k] in
 
 end AbMulNSt
 

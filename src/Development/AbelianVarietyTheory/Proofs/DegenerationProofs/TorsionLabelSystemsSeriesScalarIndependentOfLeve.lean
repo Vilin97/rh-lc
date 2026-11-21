@@ -16,9 +16,6 @@ open GlobalTheory.ModelData
 
 namespace GlobalTheory.ModelData.Scalar
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField in
-open scoped CategoryTheory.Obj BigOperators in
-attribute [local instance] Over.cartesianMonoidalCategory in
 
 theorem _root_.GlobalTheory.ModelData.Scalar.tx_congr {O : Type} [CommRing O] [TopologicalSpace O] (N : _root_.GlobalTheory.Ex.NumD O) {m : ℕ} (hm : Odd m)
     {p p' : N.QT (m ^ 2)} (h : N.QEq p p') : N.tx m p = N.tx m p' := by

@@ -73,7 +73,6 @@ variable {G V W Y : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCommGrou
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 end Final
 

@@ -115,7 +115,6 @@ theorem derivTop_of (hUA : UAtom k) (hUD : UDens k) (hUS : USplit k) (hUL : ULif
     factor hC1.1 q hC2 ((hact v).trans (hqe _ v).symm) ((hact w).trans (hqe _ w).symm)
   rw [e, hC3, ← hdet]
 
-set_option maxHeartbeats 1000000 in
 
 theorem derivPos_of (hUA : UAtom k) (hUD : UDens k) (hUS : USplit k) (hUL : ULift k) (hUSh : UShell k)
     (hUE : UEig k) (hTB : ThmB k) : DerivPos k := by

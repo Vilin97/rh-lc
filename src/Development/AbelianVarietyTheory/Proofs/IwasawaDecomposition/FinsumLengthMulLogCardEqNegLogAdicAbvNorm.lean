@@ -24,6 +24,5 @@ theorem length_quot_ringEquiv {T U : Type*} [CommRing T] [CommRing U] (e : T ≃
 
 end OrderNorm
 
-open OrderNorm in
 
 end GlobalTheory

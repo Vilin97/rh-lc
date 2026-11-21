@@ -30,7 +30,6 @@ def UU (j : ℕ) (g : GA E k) : Prop :=
   (∀ i c : Fin k, c < i → g.val i c = 0) ∧ (∀ i, g.val i i = 1) ∧
     ∀ i c : Fin k, (c : ℕ) < j → g.val i c = (1 : Matrix (Fin k) (Fin k) (Ad E)) i c
 
-variable (E k) in
 
 def nuD : ℕ → Measure (GA E k)
   | 0 => Measure.dirac 1
@@ -40,15 +39,12 @@ def nuD : ℕ → Measure (GA E k)
 def nuG (Γ : Set (GL (Fin k) E)) (d : ℕ) : Measure (GA E k) :=
   Measure.sum fun γ : Γ => Measure.map (fun g => ratGL E k γ * g) (nuD E k d)
 
-variable (E k) in
 
 def nuP (m : ℕ) : Measure (GA E k) := nuG {γ | IsMir m γ} (k - (m + 1))
 
-variable (E k) in
 
 def nuB (j : ℕ) : Measure (GA E k) := nuG {γ | GlobalTheory j γ} (k - j)
 
-variable (E k) in
 
 def RowT (j : ℕ) : Type := {ξ : Fin k → E // ξ ≠ 0 ∧ ∀ i : Fin k, j ≤ (i : ℕ) → ξ i = 0}
 
@@ -124,26 +120,21 @@ structure Grow (H H₀ : GA E k → ℂ) : Prop where
   big : ∀ M : ℕ, ∃ C : ℝ, ∀ g, 1 ≤ Dt g → ‖H g‖ ≤ C * (Dt g ^ M)⁻¹
   small : ∃ C : ℝ, ∀ g, Dt g < 1 → ‖(Dt g : ℂ) * H g - H₀ g‖ ≤ C * Dt g
 
-variable (E k) in
 
 def band : Set (GA E k) := {g | 1 ≤ Dt g ∧ Dt g < Dt (splitCentre E k 1)}
 
-omit [IsTotallyComplex E] in
 
 def embM {R : Type} [CommRing R] (m : ℕ) (A : Matrix (Fin k) (Fin k) R) : Matrix (Fin m) (Fin m) R :=
   Matrix.of fun i c => if h : (i : ℕ) < k ∧ (c : ℕ) < k then A ⟨i, h.1⟩ ⟨c, h.2⟩ else (1 : Matrix (Fin m) (Fin m) R) i c
 
-omit [IsTotallyComplex E] in
 
 def IsEmb {R : Type} [CommRing R] {m : ℕ} (ι : GL (Fin k) R →* GL (Fin m) R) : Prop := ∀ g, (ι g).val = embM m g.val
 
-omit [IsTotallyComplex E] in
 
 def pT (ψ : AddChar (Ad E) ℂ) (j : ℕ) : ℕ → (GA E k → ℂ) → GA E k → ℂ
   | 0, f => f
   | d + 1, f => pT ψ j d (colT ψ (j + d) f)
 
-omit [IsTotallyComplex E] in
 
 def psN (ψ : AddChar (Ad E) ℂ) (n : GA E k) : ℂ :=
   ψ (∑ p : Fin k × Fin k with (p.2 : ℕ) = p.1 + 1, n.val p.1 p.2)

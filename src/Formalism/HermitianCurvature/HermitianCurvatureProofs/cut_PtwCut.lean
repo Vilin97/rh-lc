@@ -28,7 +28,6 @@ theorem jf_congr_level (Bs : B.RealPlaceData k r Wp Wq) {X Y : B.Mat k r → (Wq
   simp only [B.rho]
   rw [h _ (Formalism.FourierDecayAlt.P.B7.sgs_mem Bs hq hg) (Formalism.FourierDecayAlt.P.JCx1.needs.gf_sgs Bs hq g)]
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem ckOn_inter {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {f : B.Mat k r → E} (n : ℕ)
     (hf : B.CkOn ⊤ (B.GV k r) f) (U : Set (B.Mat k r)) : B.CkOn (n : ℕ∞) (U ∩ B.GV k r) f := by
@@ -116,7 +115,6 @@ theorem bigCell_pos (p : KB.Pl P Wp Wq) (q : (Fin P.r → ℂ) × ℂ)
     exact hG'
   · exact absurd rfl hw'
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end place
 

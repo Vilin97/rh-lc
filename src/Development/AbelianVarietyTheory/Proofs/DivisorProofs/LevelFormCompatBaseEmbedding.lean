@@ -98,6 +98,5 @@ theorem isBasOf_onb (hx : IsModelBaseFrameFamily M hr x₀) (hp : X.p0 + p = r) 
 
 end Frame
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.AdTh

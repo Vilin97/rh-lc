@@ -97,7 +97,6 @@ section Rows
 
 variable {K : Type} [Field K]
 
-open GlobalTheory.CompanionTheory.MatrixRowSpace in
 
 theorem bijective_mul_rowBasis (m n : ℕ)
     (c : ∀ U : Submodule K (Fin n → K), Matrix (Fin (Module.finrank K U)) (Fin n) K)

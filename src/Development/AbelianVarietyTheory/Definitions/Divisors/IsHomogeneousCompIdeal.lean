@@ -95,7 +95,6 @@ theorem exists_isShortGen {κ : Type} [Finite κ] (Nm : κ → V → ℝ) {L : S
   exact ⟨n, w, max B 1, fun x => by rw [hw]; rfl, fun i k => (hB ⟨(i, k), rfl⟩).trans (le_max_left _ _),
     le_max_right _ _⟩
 
-omit [NumberField K] [Module K V] in
 
 end Generic
 
@@ -137,7 +136,6 @@ def genPoint (Z : Comp Xo c) (C : Submodule c.F (Rul Xo c)) : C →ₗ[c.F] Om Z
 def compIdeal (Z : Comp Xo c) (G : WTZ E) {N : ℕ} (b : Basis (Fin N) c.F (cuspOn U Z G)) :
     Ideal (MvPolynomial (Fin N) c.F) := imageIdeal (genPoint Z (cuspOn U Z G)) b
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 def compDeg (Z : Comp Xo c) (G : WTZ E) : ℕ := imageDeg (genPoint Z (cuspOn U Z G)) (dimFlag Dw)
 
@@ -173,9 +171,7 @@ theorem petOn_conj (Z : Comp Xo c) (G : WTZ E) (σ : c.F →+* ℂ) (f : Rul Xo 
     petOn U x V dict Z G ((starRingEnd ℂ).comp σ) f = petOn U x V dict Z G σ f :=
   congrArg (fun s => petAt (U s) x (V s) (dict s) (muOn (U s) (V s) (dict s) Z) G f) (goodOf_conj σ)
 
-variable {U x V dict} in
 
-variable {U x V dict} in
 
 def CompShortGen (G : WTZ E) {n : ℕ} (w : Fin n → cuspW Xo c U G) (abelian₂ : ℝ) : Prop :=
   IsShortGen (fun (k : (c.F →+* ℂ) × Comp Xo c) (f : cuspW Xo c U G) => petOn U x V dict k.2 G k.1 f) (latW U G) w abelian₂
@@ -200,16 +196,13 @@ theorem delPrime_eq (Z : Comp Xo c) {u : Weight Dw} (h : vdm u ≠ 0) :
   rw [delPrime, topDeg, topDeg, ← one_sub_rhoOf_mul (u' := uPrime Dw u) h, rhoB]
   ring
 
-variable (Xo c) in
 
 def ValFam : Type :=
   {Vs : HeightOneSpectrum (𝓞 c.F) → Set (Rul Xo c → EReal) // ∀ la, ∀ v ∈ Vs la, IsVal la v}
 
-variable (Xo c) in
 
 def recVals : ValFam Xo c := ⟨valSet Xo c (algCls Xo c), isVal_valSet⟩
 
-open Classical in
 
 def ValFam.patch (S : Set ℕ) (A B : ValFam Xo c) : ValFam Xo c :=
   ⟨fun la => if ∃ p ∈ S, ((p : ℕ) : 𝓞 c.F) ∈ la.asIdeal then A.1 la else B.1 la, fun la v hv => by

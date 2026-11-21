@@ -100,7 +100,6 @@ theorem mram_fd (u : B.Word) : FiniteDimensional ℂ (C.mem u).A.Mram := by
 def eucCast {a b : ℕ} (h : a = b) : Euc a ≃ₗᵢ[ℂ] Euc b :=
   LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ (finCongr h)
 
-open Classical in
 
 def model (n : C.Tup → ℕ) (D : ℕ)
     (e0 : ∀ u, (C.mem u).P.Mt ≃ₗ[ℂ] Euc (n C.mu0)) (eTw : ∀ u μ, (C.PTw u μ).Mt ≃ₗ[ℂ] Euc (n μ))
@@ -182,7 +181,6 @@ end GlobalTheory.Mem.RowsModel
 
 namespace GlobalTheory.Mem
 
-open Formalism.BasicNotions RowsModel in
 
 theorem RowsModel.ipC_cols (B : Base) (u : B.Word)
     (φ ψ : ((ColsModel.cols B).mem u).C.cls 0 → ((ColsModel.cols B).mem u).C.Y 0 → ℂ) :
@@ -191,7 +189,6 @@ theorem RowsModel.ipC_cols (B : Base) (u : B.Word)
   show ((Nat.card PUnit : ℕ) : ℂ)⁻¹ * (starRingEnd ℂ (φ c ()) * ψ c ()) = _
   simp
 
-open Formalism.BasicNotions RowsModel in
 
 end GlobalTheory.Mem
 

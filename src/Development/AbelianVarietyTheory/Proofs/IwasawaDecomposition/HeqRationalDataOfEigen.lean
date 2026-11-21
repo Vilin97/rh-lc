@@ -27,7 +27,6 @@ noncomputable section
 
 namespace GlobalTheory.RowTriple.Lay.EigCopy
 
-set_option maxHeartbeats 4000000 in
 
 theorem eigTrue_congr {D : D7} {cf : CharFrame D} {Rw Rw' : RowSide D} {Sb : Finset (PlE D.host)}
     {eig : ℕ → D.what₂.FT → ℕ → PlE D.host → ↥D.LL0} (h : Rw.locR = Rw'.locR) (hT : GlobalTheory.TwInputs.EigTrue D cf Rw Sb eig) :
@@ -36,6 +35,5 @@ theorem eigTrue_congr {D : D7} {cf : CharFrame D} {Rw Rw' : RowSide D} {Sb : Fin
   rw [← h]
   exact hT
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.RowTriple.Lay.EigCopy

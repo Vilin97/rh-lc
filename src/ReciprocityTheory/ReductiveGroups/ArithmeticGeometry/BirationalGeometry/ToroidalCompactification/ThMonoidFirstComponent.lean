@@ -15,7 +15,6 @@ section Alg
 
 variable {A U : Type} [CommGroup A] [CommGroup U]
 
-variable (A U) in
 
 @[ext] structure Th where
 
@@ -38,7 +37,6 @@ def IsGeo (k : ℕ) (x : T ⟶ A) (g : Th (T' ⟶ A) (T'.left.presheaf.stalk z)�
 variable {σ z J} (hJ : Good L.L z J) {k : ℕ} {x x' : T ⟶ A} {g g' : Th (T' ⟶ A) (T'.left.presheaf.stalk z)ˣ}
 include hJ
 
-omit hJ in
 
 theorem nu_pull (hG : GlobalFnsSt) (hA : IsAbelianScheme A) {K₁ : Type} [Fintype K₁] {φ₁ : K₁ → (A.left ⟶ A.left)} {ε₁ : K₁ → ℤ}
     (ν : LB.Gen (LB.LinComb L.L φ₁ ε₁)) (hν : ν.IsGen)

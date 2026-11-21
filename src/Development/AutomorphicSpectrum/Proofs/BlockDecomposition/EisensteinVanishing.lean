@@ -62,7 +62,6 @@ theorem pairing_zero_left (T : Matrix (Fin m) (Fin m) D.host.E) (ψ : AddChar (A
     simp [GlobalTheory.IndefiniteRowSideFullHecke.GramMatrixBlocks.adj, Formalism.UG.cT]
   simp [pairing, gramQ, mmul, h, GlobalTheory.IndefiniteRowSideFullHecke.GramMatrixBlocks.trA]
 
-open Classical in
 
 theorem char_integral {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ) (V : HSp D) {n : ℕ}
     {μ : Measure (Mx D V.rank n)} {𝓕 : Set (Mx D V.rank n)} (hμ : IsCovolOne (ratMx D V.rank n) μ 𝓕)
@@ -95,7 +94,6 @@ theorem char_integral {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F 
       rw [mul_sub, mul_one, key, sub_self]
     exact (mul_eq_zero.1 this).resolve_right (sub_ne_zero.2 hy₀)
 
-open Classical in
 
 theorem zero : PositivityTheory.GramSchwartzFunctions.EC.Zero := by
   intro D ψ hψ θ hθ V n μ 𝓕 hμ Φ hΦ

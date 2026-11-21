@@ -48,7 +48,6 @@ variable (X : CData)
 
 abbrev L2 : Type := X.I.L2 X.μf X.fund
 
-open Classical in
 
 end CData
 
@@ -62,7 +61,6 @@ namespace CData
 
 variable (X : CData)
 
-open Classical in
 
 end CData
 
@@ -74,11 +72,8 @@ namespace CData
 
 variable (X : CData)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end CData
 
@@ -92,7 +87,6 @@ namespace CData
 
 variable (X : CData)
 
-open Classical in
 
 end CData
 
@@ -108,7 +102,6 @@ variable (X : CData)
 
 end CData
 
-open Classical in
 
 namespace CData
 

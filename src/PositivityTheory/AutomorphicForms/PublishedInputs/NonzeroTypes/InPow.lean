@@ -23,7 +23,6 @@ abbrev res (μ : kˣ →* ℂˣ) : 𝒪[k]ˣ →* ℂˣ := μ.comp (unitIncl k)
 
 def cc {s : ℕ} (μ : Fin s → kˣ →* ℂˣ) (a b : Fin s) : ℕ := cond (res (μ a / μ b))
 
-variable (k) in
 
 structure Grp (n : ℕ) where
   s : ℕ

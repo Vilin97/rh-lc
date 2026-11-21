@@ -20,7 +20,6 @@ namespace GlobalTheory.CompanionTheory.AdmGL
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {a n : ℕ}
 
-open scoped Classical in
 
 def toGL (M : Matrix (Fin a) (Fin a) (ι → ℂ)) : GL (Fin a) (ι → ℂ) :=
   if h : IsUnit M then h.unit else 1

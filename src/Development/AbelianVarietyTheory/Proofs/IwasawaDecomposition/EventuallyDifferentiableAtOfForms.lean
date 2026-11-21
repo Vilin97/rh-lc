@@ -77,7 +77,6 @@ theorem eventually_differentiableAt_of_forms {V : Type} [NormedAddCommGroup V] [
   have := congrArg (fun T : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ) => T (W b')) (Ring.inverse_mul_cancel _ hb')
   exact this.symm
 
-open GlobalTheory.TangentOrigin GlobalTheory.HolLieFrame in
 
 theorem exists_hol_snd_ev {V R : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [CommRing R] {X : Scheme.{0}}
     (ψ : Sp (DualNumber R) ⟶ X) (ev : V → (R →+* ℂ)) (b₀ : V)

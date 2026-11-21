@@ -161,7 +161,6 @@ theorem rowVal_col {A R : Type} [CommRing A] [CommRing R] (f : A →+* R) (g : A
   rw [← hx, ← map_pow, ← map_pow, ← map_mul, ← map_mul, hy, Matrix.mul_apply, Finset.mul_sum]
   simp only [hj, mul_left_comm]
 
-set_option maxHeartbeats 1000000 in
 
 theorem functional_mem (p : SplitPt D k) {w : HeightOneSpectrum (𝓞 D.host.E)} (he : Formalism.L2.NTheta.IsIdemAt p.e w)
     {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {Λ : Lat T} (hΛ : IsSelfDualC T Λ) {n : Type} [Fintype n] [DecidableEq n]

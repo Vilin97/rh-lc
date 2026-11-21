@@ -12,7 +12,6 @@ open scoped ComplexConjugate
 
 namespace Formalism.FourierDecayAlt.P.A5x4
 
-open Formalism.DoubleCosetMeasures.P Formalism.DoubleCosetMeasures.P.Supp in
 
 theorem isCompact_intPairs {K : Type} [CommRing K] [TopologicalSpace K] [IsTopologicalRing K]
     [T2Space K] (R : Subring K) (hRc : IsCompact (R : Set K)) (s : List ℕ) (t : ℕ → Kˣ) :
@@ -172,7 +171,6 @@ theorem Kp_eq_sum {K : Type} [CommRing K] (R : Subring K) (ψ : AddChar K ℂ) (
       apply hcon
       simp [hI.1, hI.2]
 
-open Classical in
 
 theorem BB_eq_sum {K : Type} [CommRing K] [TopologicalSpace K] [IsTopologicalRing K]
     (R : Subring K) (ψ : AddChar K ℂ) (hL : LocalDatum K R ψ) (w : Point K)

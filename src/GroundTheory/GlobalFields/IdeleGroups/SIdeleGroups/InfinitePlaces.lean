@@ -21,7 +21,6 @@ section Infinite
 
 variable (v : InfinitePlace K)
 
-open Classical in
 
 def infiniteAdeleAboveFun (a : (w : v.placesOver L) → w.1.Completion) (w : InfinitePlace L) :
     w.Completion :=
@@ -97,7 +96,6 @@ theorem infiniteProjAbove_infiniteEmbedAbove (y : (w : v.placesOver L) → (w.1.
     infiniteProjAbove v (infiniteEmbedAbove v y) = y :=
   funext fun w ↦ Units.ext (coe_infiniteEmbedAbove_fst v y w)
 
-omit [NumberField K] [NumberField L] in
 
 theorem comap_mem_placesOver (σ : L ≃ₐ[K] L) (w : v.placesOver L) :
     w.1.comap ((σ : L ≃+* L) : L →+* L) ∈ v.placesOver L := by
@@ -110,7 +108,6 @@ theorem mem_placesOver_of_smul_mem (σ : L ≃ₐ[K] L) {w : InfinitePlace L}
   have := (σ⁻¹ • (⟨σ • w, h⟩ : v.placesOver L)).2
   rwa [InfinitePlace.coe_smul_placesOver, inv_smul_smul] at this
 
-omit [NumberField K] in
 
 theorem infiniteProjAbove_smul_congr (σ : L ≃ₐ[K] L) {x y : IdeleGroup L}
     (h : infiniteProjAbove v x = infiniteProjAbove v y) :
@@ -169,7 +166,6 @@ theorem infiniteEmbedAbove_smul (σ : L ≃ₐ[K] L) (y : (w : v.placesOver L) �
   · rw [coe_infiniteEmbedAbove_snd, coe_smul_idele, smul_snd, coe_infiniteEmbedAbove_snd]
     exact (map_one (finiteCompletionMap _ u)).symm
 
-omit [NumberField K] in
 
 theorem infiniteProjAbove_infiniteEmbedAbove_of_ne {v v' : InfinitePlace K} (h : v' ≠ v)
     (y : (w : v.placesOver L) → (w.1.Completion)ˣ) :
@@ -183,7 +179,6 @@ theorem infiniteProjAbove_infiniteEmbedAbove_of_ne {v v' : InfinitePlace K} (h :
     rw [← (InfinitePlace.liesOver_iff_comap_eq v' u.1).1 u.2,
       (InfinitePlace.liesOver_iff_comap_eq v u.1).1 hu]
 
-omit [NumberField K] in
 
 theorem finiteProjAbove_infiniteEmbedAbove (v' : HeightOneSpectrum (𝓞 K))
     (y : (w : v.placesOver L) → (w.1.Completion)ˣ) :

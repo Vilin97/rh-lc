@@ -108,7 +108,6 @@ lemma evV_const {n : ℕ} (x : Fin n → Pt V m d) (hx : ∀ b i, MvPowerSeries.
   rw [h]
   exact MvPowerSeries.constantCoeff_subst_eq_zero (MvPowerSeries.hasSubst_of_constantCoeff_zero ha) ha hf
 
-variable (B) in
 
 def evL {n : ℕ} (x : Fin n → Pt V m d) (hx : ∀ b, Sm (x b)) : SP B n →ₗ[O] SP B m where
   toFun a := ⟨fun i => evV x (a.val i), fun i => evV_sm x hx _ (a.sm i)⟩

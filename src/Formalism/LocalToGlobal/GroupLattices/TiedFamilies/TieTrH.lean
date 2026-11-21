@@ -32,12 +32,8 @@ structure FullTiedNoG (D : D7) extends AllTied D where
   vpos : PositiveVolumeCompatible D
   baseL : BaseTied D base.toHermCols atT
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end Formalism.L2.G

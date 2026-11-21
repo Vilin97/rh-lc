@@ -18,7 +18,6 @@ section Single
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
-open Classical in
 
 def singleAt (v : HeightOneSpectrum (𝓞 L⁺)) (t : v.adicCompletion L⁺) : AFplus L :=
   RestrictedProduct.mk (Pi.single v t) (by

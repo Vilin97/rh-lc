@@ -86,7 +86,6 @@ theorem normalisedData_coefficientMap_injective {D : D7} {G : Type} [Group G] [F
   obtain ⟨g, r, c0L, hT, hbc⟩ := hO.lift.c0
   exact inj_of_li (lamV D i) O.jL sj hbc (hT.mapL i).2.1
 
-set_option maxHeartbeats 4000000 in
 
 theorem omOver_of_isBCOf (X X' : Stages) (hP : X'.B.toPre = X.B.toPre)
     {G : Type} [Group G] [Fintype G] {Pl0 T0 Pl0' T0' : Type} {A : FamIn X.toD7.what₂.LL G Pl0 T0 X.toD7.R.m}

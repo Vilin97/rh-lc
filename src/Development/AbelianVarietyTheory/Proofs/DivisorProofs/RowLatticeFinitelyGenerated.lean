@@ -52,4 +52,3 @@ theorem fg_span_image {K L V W : Type} [Field K] [Field L] [Algebra K L] [AddCom
 
 end GlobalTheory.CovTop.LatAllFG
 
-open GlobalTheory.CovTop.LatAllFG in

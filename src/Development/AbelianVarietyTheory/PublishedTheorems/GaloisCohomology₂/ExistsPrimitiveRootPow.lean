@@ -30,7 +30,6 @@ def PoitouTateDuality : Prop :=
       NineTermExact S Av μ (invAt S Av μ hμ inv) ρ hρ ∧ ShaDual S Av μ ρ ∧
         ∀ n, 3 ≤ n → Subsingleton (Hn ρ n)
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.Published.PoitouTateDuality.totallyComplex (h : _root_.GlobalTheory.Published.PoitouTateDuality) :
     _root_.GlobalTheory.Published.PoitouTateTotallyComplex := by
@@ -40,7 +39,6 @@ theorem _root_.GlobalTheory.Published.PoitouTateDuality.totallyComplex (h : _roo
   exact ⟨inv, hloc, fun S hS Av hAv μ hμ M _ _ _ _ _ ρ hρ =>
     ⟨(hall S hS Av hAv μ hμ M ρ hρ).1, (hall S hS Av hAv μ hμ M ρ hρ).2.1⟩⟩
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.Published.exists_primitiveRoot_pow (F Ω : Type) [Field F] [NumberField F]
     [Field Ω] [Algebra F Ω]
@@ -50,7 +48,6 @@ theorem _root_.GlobalTheory.Published.exists_primitiveRoot_pow (F Ω : Type) [Fi
   haveI : NeZero (l ^ r) := ⟨pow_ne_zero r (Fact.out : l.Prime).ne_zero⟩
   exact HasEnoughRootsOfUnity.exists_primitiveRoot Ω (l ^ r)
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.Published.PoitouTateDuality.cohDimTwoGlobal
     (h : _root_.GlobalTheory.Published.PoitouTateDuality) : _root_.GlobalTheory.Published.CohDimTwoGlobal := by

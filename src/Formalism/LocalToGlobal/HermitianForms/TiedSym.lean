@@ -44,7 +44,6 @@ def FrExtFr (z0 : Fin (D.R.N D.R.m) → D.host.E) (G : GLoc D.host.F D.host.E (s
 abbrev HSym (D : D7) (n : ℕ) (zl : Bool) (v : HeightOneSpectrum (𝓞 D.host.F)) : Subgroup (GL (Fin n) (kv D.host.F v)) :=
   JSymG (kv D.host.F v) n D.R.k (rSD D.R) D.R.t zl
 
-set_option maxHeartbeats 4000000 in
 
 structure FormsTiedSym (D : D7) (u : D.what₂.Word) (Ch : ℕ → Type) (chOf : ∀ i, (D.mem u).C.cls i → Ch i) where
   atT : AtTTied u
@@ -148,6 +147,5 @@ theorem k_le_N (R : Ranks) (i : ℕ) : R.k ≤ R.N i := by
   unfold Ranks.N
   exact Nat.le_add_right _ _
 
-set_option maxHeartbeats 4000000 in
 
 end Formalism.L2.Forms

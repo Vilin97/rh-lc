@@ -48,9 +48,6 @@ theorem infN_atTau (hθ : IsInfFam θ) (τ : D.what₂.Tau) {g : Matrix (Fin V.r
   · rw [Function.update_of_ne c]
     exact h.2.2 ρ c
 
-open scoped Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
-open Formalism.L2.Col in
-attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 
 end Comp
 

@@ -25,7 +25,6 @@ private lemma vInv_nonneg' (K : Type) [Field K] [NumberField K] :
   unfold _root_.Formalism.HermitianLatticesTheory.vInv
   positivity
 
-open NumberField in
 
 theorem _root_.GlobalTheory.DegAsm.pairBd_nonneg (K : Type) [Field K] [NumberField K]
     (k g j T x x' : ℕ) : 0 ≤ _root_.GlobalTheory.DegAsm.pairBd K k g j T x x' := by

@@ -187,7 +187,6 @@ theorem exists_eq_of_isMaximal (hfin : 𝒲.Finite) (h𝒲 : ∀ W ∈ 𝒲, IsM
 
 end SemilocMaxIdeals
 
-open SemilocMaxIdeals regularityLocalFlat_holds in
 
 theorem SemilocMaxIdeals.proof (hFin : FibreOverFinite.Statement) (hInc : FibreIncomp.Statement)
     (hInt : SemilocIntegral.Statement) (hDim : LocRingDimOne.Statement) : SemilocMaxIdeals.Statement := by

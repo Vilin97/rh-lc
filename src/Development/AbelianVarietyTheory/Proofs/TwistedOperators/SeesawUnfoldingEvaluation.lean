@@ -54,6 +54,5 @@ theorem exists_sum_pure {F E : Type} [Field F] [NumberField F] [Field E] [Number
 
 end GlobalTheory.SquareAgree.StabLieAdelic
 
-open GlobalTheory.SquareAgree.StabLieAdelic in
 
 end

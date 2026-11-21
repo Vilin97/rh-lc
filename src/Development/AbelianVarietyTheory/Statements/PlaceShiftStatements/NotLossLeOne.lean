@@ -17,7 +17,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-open Formalism.L2.Host in
 
 theorem loss_mono {dl : PlL D → ℝ} {B B' : ℝ} (h : Loss dl B) (hB : B ≤ B') : Loss dl B' :=
   ⟨h.1, h.2.1, fun s => (h.2.2 s).trans hB⟩

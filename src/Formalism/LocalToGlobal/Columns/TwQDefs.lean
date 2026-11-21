@@ -19,7 +19,6 @@ section QDict
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG Q : Finset (Pl E))
 
-variable (F) in
 
 abbrev qv (P : Pl E) : HeightOneSpectrum (𝓞 F) := underPl F P
 
@@ -58,12 +57,10 @@ structure QLoc {K : Type} [Field K] (Θ : LevQFam E K n Q) where
 
 variable {K : Type} [Field K] {Θ : LevQFam E K n Q}
 
-variable {hc n Q} in
 
 abbrev QLoc.phi (q : QLoc hc n Q Θ) (P : Q) : E →+* (qv F P.1).adicCompletion F :=
   (RingHom.fst _ _).comp ((q.sp P).toRingHom.comp (Formalism.UG.inclE (F := F) ((qv F P.1).adicCompletion F)))
 
-variable {hc n Q} in
 
 abbrev QLoc.at (q : QLoc hc n Q Θ) (P : Q) (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) : GL (Fin n) ((qv F P.1).adicCompletion F) :=
   Formalism.UG.bc ((RingHom.fst _ _).comp (q.sp P).toRingHom) (Formalism.UG.bc (Formalism.UG.prV (E := E) (qv F P.1)) x)

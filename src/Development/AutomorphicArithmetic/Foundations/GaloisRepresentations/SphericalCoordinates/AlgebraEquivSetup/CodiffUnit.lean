@@ -72,7 +72,6 @@ abbrev Phi {E : Type} [Field E] [NumberField E] [IsCMField E] (A : Arith E) : Ty
 def RealIso : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A : Arith E) (n : ℕ),
   ∃ Θ : ℝ ⊗[ℤ] (Fin n → 𝓞 E) ≃ₗ[ℝ] (Phi A × Fin n → ℂ), ∀ (x : Fin n → 𝓞 E) τ i, Θ (1 ⊗ₜ x) (τ, i) = τ.1 (x i : E)
 
-open Classical in
 
 def TraceType : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A : Arith E),
   (∀ x : E, ((Algebra.trace ℚ E x : ℚ) : ℝ) = ∑ τ : Phi A, 2 * (τ.1 x).re) ∧
@@ -80,7 +79,6 @@ def TraceType : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     ∑ τ : Phi A, f (ComplexEmbedding.conjugate τ.1)) ∧
   (∀ v : InfinitePlace E, ∃! τ : Phi A, InfinitePlace.mk τ.1 = v) ∧ (A.τ₀ (A.ω : E)).im ≠ 0
 
-open Classical in
 
 def FormCoord : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A : Arith E) (n : ℕ)
   (Θ : ℝ ⊗[ℤ] (Fin n → 𝓞 E) ≃ₗ[ℝ] (Phi A × Fin n → ℂ)), (∀ (x : Fin n → 𝓞 E) τ i, Θ (1 ⊗ₜ x) (τ, i) = τ.1 (x i : E)) →

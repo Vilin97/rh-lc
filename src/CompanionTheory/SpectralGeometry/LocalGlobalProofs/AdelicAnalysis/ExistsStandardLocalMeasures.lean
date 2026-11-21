@@ -28,7 +28,6 @@ theorem exists_isStdV (v : HeightOneSpectrum (𝓞 F)) : ∃ lam : Measure (Fv F
       exact ⟨0, zero_mem _⟩⟩
   exact ⟨Measure.addHaarMeasure K, inferInstance, Measure.addHaarMeasure_self⟩
 
-omit [NumberField F] in
 
 theorem continuous_toMixed : Continuous (InfiniteAdeleRing.ringEquiv_mixedSpace F) := by
   have : (InfiniteAdeleRing.ringEquiv_mixedSpace F : InfiniteAdeleRing F → mixedSpace F) =
@@ -44,7 +43,6 @@ theorem continuous_toMixed : Continuous (InfiniteAdeleRing.ringEquiv_mixedSpace 
   · exact (InfinitePlace.Completion.isometry_extensionEmbedding v.1).continuous.comp
       (continuous_apply _)
 
-omit [NumberField F] in
 
 theorem continuous_ofMixed : Continuous (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm := by
   refine continuous_pi fun v => ?_

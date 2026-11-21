@@ -94,7 +94,6 @@ theorem det_le {r : ℕ} {G G' : Matrix (Fin r) (Fin r) ℝ} (hG : G.IsHermitian
 
 end BlockMeasureChange
 
-open BlockMeasureChange in
 
 theorem BlockMeasureChange.proof (hS : SupBoundBlock.Statement) : BlockMeasureChange.Statement := by
   intro D K _ _ ι _ Ω _ _ d d' hy hk hA

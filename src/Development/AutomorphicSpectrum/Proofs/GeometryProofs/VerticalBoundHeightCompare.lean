@@ -28,7 +28,6 @@ theorem hasVal_inv_section {y : (Σ k, ι k) → Ω} {a : K → ℤ} {u : Ω} (h
     exact mul_ne_zero hv hfz
   · rw [hgz, inv_mul_cancel_left₀ hv]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem ptHt_neg (a : K → ℤ) (φ : ((Σ k, ι k) → ℂ) → ℝ) (L : Type) [Field L] [NumberField L]
     (w : (Σ k, ι k) → L) :
@@ -46,7 +45,6 @@ theorem ptHt_neg (a : K → ℤ) (φ : ((Σ k, ι k) → ℂ) → ℝ) (L : Type
 
 end GlobalTheory.CompanionTheory.Ar.Ht.UnitHt
 
-open GlobalTheory.CompanionTheory.Ar.Ht.UnitHt in
 
 theorem GlobalTheory.CompanionTheory.Ar.Ht.abs_ptHt_sub_le_of_vertBound : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] (y : (Σ k, ι k) → Ω) (d : ℕ), IsArithVar (mCoordIdeal y) d → Birational y → ∀ (a : K → ℤ) (u : Ω) (c : ℝ), VertBound y a u c → ∀ (φ : ((Σ k, ι k) → ℂ) → ℝ) (L : Type) [Field L] [NumberField L], ∀ w ∈ ptsOver L (mCoordIdeal y), ∀ val : L, val ≠ 0 → HasVal y a u w val → |ptHt (fun k => (a k : ℝ)) φ L w - (Module.finrank ℚ L : ℝ)⁻¹ * ∑ σ : L →+* ℂ, (φ (fun p => σ (w p)) - Real.log ‖σ val‖)| ≤ c := by
   intro K _ ι _ Ω _ y d hAr hB a u c hV φ L _ _ w hw val hv hval

@@ -17,7 +17,6 @@ open GlobalTheory.FinPl (Lat idAt idOff intAt grpAt grpOff MxAt latV latA InK Mo
 open scoped nonZeroDivisors ContDiff Pointwise
 open GlobalTheory.AscFin
 
-open GlobalTheory.StairLine GlobalTheory.SeeSaw in
 
 theorem GlobalTheory.AscFin.primAt_jac_std : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ v ∉ G.pl.S0, PrimAt W.ψ (F.dJ ρ h) (G.Λ (.grid (2 * ρ + 1) 0)) v := by
   intro D hOff T L μ0 hL sc G W M hM F hF ρ h v hv

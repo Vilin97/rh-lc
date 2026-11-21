@@ -69,7 +69,6 @@ theorem selfDual_of_mem_genus {M : Submodule (𝓞 E) (Fin n → E)} (hM : M ∈
 
 end StdMassBound
 
-open StdMassBound in
 
 theorem mass_stdLat_le :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] [StarRing E],

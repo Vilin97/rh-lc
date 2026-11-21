@@ -56,7 +56,6 @@ theorem exists_ideal_eq_iff {S : Scheme.{0}} {Y : Over S} [IsSeparated Y.hom] {R
     rw [h1]
     simp only [Category.assoc, hcond]
 
-open AddMonoidAlgebra in
 
 theorem exists_span_of_coideal (k X : Type) [Field k] [AddCommGroup X] (J : Ideal (AddMonoidAlgebra k X))
     (h1 : ∀ f ∈ J, Coalgebra.counit (R := k) f = 0)
@@ -130,7 +129,6 @@ theorem exists_killing_ideal [IsSeparated G.hom] (u : splitTorus S X ⟶ G) [IsM
     ext1
     exact h'
 
-open TensorProduct in
 
 theorem killing_ideal_coideal (b : Sp k ⟶ S) (u : splitTorus S X ⟶ G) [IsMonHom u]
     (J : Ideal (AddMonoidAlgebra k X))

@@ -161,7 +161,6 @@ theorem exists_pow_mem (I : Ideal (MvPolynomial (Fin n) F)) (f : MvPolynomial (F
 
 end ChartFinite
 
-open ChartFinite in
 
 theorem ChartFinite.proof : ChartFinite.Statement := by
   intro F _ n e I f t p _ hI hf hp

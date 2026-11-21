@@ -70,7 +70,6 @@ end TRingF
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
 
-variable (Xo : Moduli Dw l) in
 
 def TanAddSt : Prop :=
   ∀ (S : Type) [CommRing S] (x : Sp S ⟶ Xo.X) (w : Sp (DualNumber S) ⟶ Xo.univ.t.G.left), IsTanAt x w →

@@ -153,7 +153,6 @@ theorem kFormL_of (hM : R.IsModels) : (R.toCx F).KFormL := by
     (Formalism.L2.DIV.CSD.basis _) (Module.Basis.ofVectorSpace _ _) hB.1
   exact ⟨Tw.linInd' (E := (R.HV i t).H) _ h.1, Tw.span_top' (E := (R.HV i t).H) _ h.2⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem jIsoR_gen (hM : R.IsModels) (cv : CrdV A.fam.amb)
     (hcv : ∀ t x y, cv.hR t x y = (A.fam.R t).S.csum ((x : (A.fam.R t).S.Forms) : (A.fam.R t).S.Cl → (A.fam.R t).S.V) ((y : (A.fam.R t).S.Forms) : (A.fam.R t).S.Cl → (A.fam.R t).S.V)) :
@@ -170,7 +169,6 @@ theorem jIsoR_gen (hM : R.IsModels) (cv : CrdV A.fam.amb)
 theorem jIsoR_of (hM : R.IsModels) : (R.toCx F).JIsoR (cvOf A F.P0 F.ψ0 F.P1 F.ψ1) :=
   jIsoR_gen hM _ fun _ _ _ => rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem jIsoL_gen (hM : R.IsModels) (cv : CrdV A.fam.amb)
     (hcv : ∀ i t x y, cv.hL i t x y = (A.fam.L i t).S.csum ((x : (A.fam.L i t).S.Forms) : (A.fam.L i t).S.Cl → (A.fam.L i t).S.V) ((y : (A.fam.L i t).S.Forms) : (A.fam.L i t).S.Cl → (A.fam.L i t).S.V)) :
@@ -187,9 +185,7 @@ theorem jIsoL_gen (hM : R.IsModels) (cv : CrdV A.fam.amb)
 theorem jIsoL_of (hM : R.IsModels) : (R.toCx F).JIsoL (cvOf A F.P0 F.ψ0 F.P1 F.ψ1) :=
   jIsoL_gen hM _ fun _ _ _ _ => rfl
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end RealDat
 
@@ -217,7 +213,6 @@ variable {R F}
 
 end RealDat
 
-open RealDat in
 
 end Prim
 
@@ -234,7 +229,6 @@ section Exist
 
 open Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx
 
-variable (D) in
 
 variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
@@ -245,13 +239,11 @@ variable (R : RealDat D A Ks) (F : Face D A)
 
 end RealDat
 
-variable (D A Ks) in
 
 end Exist
 
 section Host
 
-variable (D) in
 
 structure HostHyp : Prop where
   interlace : (Ptw D).Interlace
@@ -263,7 +255,6 @@ structure HostHyp : Prop where
   nodeGap : D.NodeGap (4 * ((D.R.N D.R.m : ℕ) : ℝ) ^ 3 + 2 * D.R.t + 6)
   nodeGapR : D.NodeGap (256 * (D.R.r : ℝ) ^ 4)
 
-open Formalism.L2.Geo Formalism.MainNotions Formalism.IndefR.Cx in
 
 end Host
 

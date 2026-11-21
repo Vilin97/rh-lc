@@ -69,7 +69,6 @@ theorem appLE_rs {Z Y : Scheme.{0}} (f : Z ⟶ Y) {V V' : Y.Opens} {U U' : Z.Ope
     (f.appLE V' U' e').hom (rs h a) = rs h' ((f.appLE V U e).hom a) :=
   congr($((f.map_appLE e' (homOfLE h).op).trans (f.appLE_map e (homOfLE h').op).symm).hom a)
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem exists_quotient {A : Type} [CommRing A] {J : Ideal A} (hJ : IsNilpotent J) {G G₀ B₀ : Scheme.{0}}
     (g : G ⟶ Spec (CommRingCat.of A)) (F : G₀ ⟶ G) [IsClosedImmersion F] [Surjective F]

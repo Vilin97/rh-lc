@@ -87,7 +87,6 @@ section U
 variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω]
   {n : ℕ} {s : HidaSetting l L Ω} {V : s.Lev} {c : Coef l} {m : ℕ}
 
-variable (n s) in
 
 def sec0 : GLw n (s.w s.v0) →* Ga l L n := (secS n s).comp (MonoidHom.inr _ _)
 

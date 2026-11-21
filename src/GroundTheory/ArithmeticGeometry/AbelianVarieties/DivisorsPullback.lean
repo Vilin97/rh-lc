@@ -14,13 +14,10 @@ universe u
 
 variable {F : Type u} [Field F] [DecidableEq F] (W : WeierstrassCurve F) [W.IsElliptic]
 
-omit [DecidableEq F] in
 
-omit [DecidableEq F] in
 
 variable [IsAlgClosed F]
 
-omit [DecidableEq F] [W.IsElliptic] [IsAlgClosed F] in
 
 theorem aeval_genX (p : F[X]) :
     aeval (genX W) p = algebraMap F[X] W.toAffine.FunctionField p := by
@@ -32,6 +29,5 @@ theorem valuationInfty_algebraMap_const_eq_one {c : F} (hc : c ≠ 0) :
   rw [valuationInfty_eq_exp W ((map_ne_zero_iff _ (algebraMap F _).injective).mpr hc),
     ordInfty_algebraMap_const W hc, neg_zero, exp_zero]
 
-omit [IsAlgClosed F] [DecidableEq F] in
 
 end GroundTheory.Arith.Abelian

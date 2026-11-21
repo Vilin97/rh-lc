@@ -23,7 +23,6 @@ variable {K : Type} [DecidableEq K] {ι : K → Type} {F : Type u} [Field F]
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
-open Classical in
 
 theorem component_mul_form {c : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hs : IsMultiHomog s c)
     (t : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (n : K → ℕ) :
@@ -50,7 +49,6 @@ theorem exists_sub_component_mem {I : Ideal (ReciprocityTheory.ChartRestriction.
   rw [e]
   exact hI a ha n
 
-omit [DecidableEq K] in
 
 theorem mem_colon_span_iff {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} {s g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} :
     g ∈ I.colon (Ideal.span {s}) ↔ g * s ∈ I := by
@@ -63,7 +61,6 @@ theorem mem_colon_span_iff {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.
     rw [smul_eq_mul, show g * (t * s) = t * (g * s) by ring]
     exact I.mul_mem_left t h
 
-open Classical in
 
 theorem finrank_eq (h1 : GradedFinite.Statement.{u}) [Fintype K] [∀ k, Fintype (ι k)]
     {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I) {c : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}

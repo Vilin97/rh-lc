@@ -59,7 +59,6 @@ theorem hsv_smul (c : ℂ) (A : Wq →L[ℂ] Wp) : B.hsVec (c • A) = c • B.h
   ext i
   simp
 
-open Classical in
 
 def pTerm (P : B.Mat k r → ℂ) (w : List (B.Mat k r)) : B.DTerm k r Wp Wq where
   coef := fun g => P g • ContinuousLinearMap.id ℂ _

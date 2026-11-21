@@ -25,7 +25,6 @@ namespace GlobalTheory.AscFin.BidualLattice
 
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 theorem latO_negSp (S T : HSp D) (LS : Set (Fin S.rank → D.host.E)) (LT : Set (Fin T.rank → D.host.E))
     (P : HeightOneSpectrum (𝓞 D.host.F) → Prop) : latO (negSp S) T LS LT P = latO S T LS LT P := by

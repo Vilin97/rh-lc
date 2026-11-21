@@ -86,7 +86,6 @@ theorem finiteModule_pos (x : IdeleGroup K) : 0 < finiteModule x := by
   rw [finiteModule, finprod_eq_prod _ (finite_mulSupport_norm x)]
   exact Finset.prod_pos fun v _ ↦ norm_pos_iff.2 (finite_ne_zero x v)
 
-variable (K) in
 
 def ideleModule : IdeleGroup K →* {r : ℝ // 0 < r} where
   toFun x := ⟨infiniteModule x * finiteModule x, mul_pos (infiniteModule_pos x) (finiteModule_pos x)⟩
@@ -201,7 +200,6 @@ theorem ideleModule_diagonal (k : Kˣ) : ideleModule K (diagonal K k) = 1 := by
   rw [ideleModule_apply, infiniteModule_diagonal, finiteModule_diagonal, Positive.val_one]
   exact prod_abs_eq_one k.ne_zero
 
-variable (K) in
 
 def normOneSubgroup : Subgroup (IdeleGroup K) := (ideleModule K).ker
 
@@ -210,7 +208,6 @@ theorem mem_normOneSubgroup {x : IdeleGroup K} :
   rw [normOneSubgroup, MonoidHom.mem_ker]
   exact ⟨fun h ↦ by rw [h, Positive.val_one], fun h ↦ Subtype.ext (h.trans Positive.val_one.symm)⟩
 
-variable (K) in
 
 theorem isClosed_normOneSubgroup : IsClosed (normOneSubgroup K : Set (IdeleGroup K)) := by
   have h : (normOneSubgroup K : Set (IdeleGroup K)) =
@@ -220,7 +217,6 @@ theorem isClosed_normOneSubgroup : IsClosed (normOneSubgroup K : Set (IdeleGroup
   rw [h]
   exact isClosed_singleton.preimage (continuous_subtype_val.comp continuous_ideleModule)
 
-variable (K) in
 
 theorem range_diagonal_le_normOneSubgroup : (diagonal K).range ≤ normOneSubgroup K := by
   rintro _ ⟨k, rfl⟩

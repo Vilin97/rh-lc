@@ -121,7 +121,6 @@ theorem heisO_zero (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (f : WO S T �
   funext w
   rw [heisO, symplOH_zero_right, AddChar.map_zero_eq_one, one_mul, add_zero]
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_parts {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : IsSelfDualC S LS)
     (hT : IsSelfDualC T LT) {v : Pl D} (hv : Tame D v) {f : WO S T → ℂ} (hf : Vac ψ S T LS LT (· = v) f) :
@@ -222,7 +221,6 @@ theorem smul_eq_self {α : Type} {F : α → ℂ} (hF : F ≠ 0) {c : ℂ} (h : 
   rw [Pi.smul_apply, smul_eq_mul] at this
   exact mul_right_cancel₀ hw (this.symm.trans (one_mul _).symm)
 
-set_option maxHeartbeats 1600000 in
 
 theorem dual_col {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {V V₀ W : HSp D} {ρ : ℕ} (dV : HypDec V V₀ ρ)
     {LV : Lat V} {LV₀ : Lat V₀} {LW : Lat W} (hV : IsSelfDualC V LV) (hW : IsSelfDualC W LW) {v : Pl D}
@@ -475,7 +473,6 @@ theorem xLast_last {T T₀ : HSp D} {σ : ℕ} (d : HypDec T T₀ σ) (z : Fin T
     xLast d z k (Fin.last σ) = (d.j0 *ᵥ ratV z) k := by
   simp only [xLast, Matrix.of_apply, Fin.snoc_last]
 
-set_option maxHeartbeats 1600000 in
 
 theorem support_parts {ψ : AddChar (AF D.host.F) ℂ} {σ : ℕ} {J : JacLev D (σ + 1)} {B : BesLev D σ} (s : StepFB ψ J B)
     {LV : Lat J.W} {LV₀ : Lat J.W₀} {LW : Lat B.V} {LW₀ : Lat B.V₀} {v : Pl D} (hA : AdaptFB ψ J B LV LV₀ LW LW₀ v)
@@ -577,7 +574,6 @@ end GlobalTheory.FinPl.SuppShift
 
 namespace GlobalTheory.FinPl
 
-open SuppShift in
 
 theorem supportShift : ∀ D : D7, GlobalTheory.FinPl.SupportShift D := by
   intro D ψ σ J B s LV LV₀ LW LW₀ v hA hU 𝔉 h𝔉 hsh f hf

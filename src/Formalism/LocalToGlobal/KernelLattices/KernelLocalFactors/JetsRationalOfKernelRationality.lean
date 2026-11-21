@@ -55,7 +55,6 @@ theorem degAt_eq (m : DVar ι a b →₀ ℕ) (τ : ι) : degAt m τ = ∑ k : D
   have : m k = 0 := by simpa using hk
   rw [this]; simp
 
-open Classical in
 
 def scU (a b : ℕ) (τ : ι) (x : K) : ((ι × Fin b × Fin b) ⊕ DVar ι a b) → K := Sum.elim (fun _ => 1) (fun k => if k.1 = τ then x else 1)
 
@@ -67,7 +66,6 @@ theorem scale_prod (τ : ι) (x : K) (s : ((ι × Fin b × Fin b) ⊕ DVar ι a 
   refine Finset.prod_congr rfl fun k _ => ?_
   split_ifs <;> simp
 
-open Classical in
 
 def bSc (a : ℕ) (τ : ι) (x : K) : ι → Matrix (Fin a) (Fin a) K := fun τ' => Matrix.diagonal fun _ => if τ' = τ then x else 1
 

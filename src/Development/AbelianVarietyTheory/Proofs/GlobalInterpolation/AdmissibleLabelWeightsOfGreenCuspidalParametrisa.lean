@@ -254,7 +254,6 @@ theorem eSer_eq (h5 : 5 ≤ g) (hG : Green) (r : ℕ) {f : (ZMod g)[X]} (hm : f.
 
 end Dict
 
-open Formalism.BasicNotions Formalism.MainNotions.ArithmeticCylinders in
 
 theorem admissibleLabelWeights_of_greenCuspidalParametrisation : Green → ∀ (D : D7) (jE : D.host.E →+* Formalism.L2.Host.Qb) (T : Formalism.L2.NormalizedTypesCompatibility D jE), admLq D := by
   intro hG D jE T k ψ hψ

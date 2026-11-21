@@ -25,7 +25,6 @@ section Generic
 
 variable {G Γ W Cl ι : Type} [Group G] [Group Γ] [NormedAddCommGroup W] [InnerProductSpace ℂ W] [Finite Cl]
 
-open Classical in
 
 theorem eq_adForms_of_values (ιG : Γ →* G) (ρ : Γ →* Module.End ℂ W) (J : Subgroup G) (y : Cl → G)
     (hdec : ∀ g, ∃ (γ : Γ) (c : Cl) (k : J), g = ιG γ * y c * k) (S : Submodule ℂ (G → W))
@@ -101,7 +100,6 @@ theorem exists_gf_reps (rp : ClassReps G) :
     simp only [map_mul (finHom (G.V (.top 0))), hk1, mul_one] at e2
     exact hg.symm.trans e2
 
-open Classical in
 
 theorem span_colOf_psi {θ : InfFam D} (hθ : IsInfFam θ) (rp : ClassReps G) {n : ℕ} (e : Fin n ≃ TestIx G × VVIdx (LaP G))
     (Φ : G.Datum) :

@@ -25,9 +25,7 @@ def consZero (n : ℕ) : (Fin n → R') →ₗ[R'] (Fin (n + 1) → R') where
     funext i
     refine Fin.cases ?_ ?_ i <;> simp
 
-omit [Algebra R R'] in
 
-omit [Algebra R R'] in
 
 theorem scalar_descent [IsDomain R'] (D : Set (R' ≃ₐ[R] R')) (ϖ : R)
     (hπ : algebraMap R R' ϖ ≠ 0)

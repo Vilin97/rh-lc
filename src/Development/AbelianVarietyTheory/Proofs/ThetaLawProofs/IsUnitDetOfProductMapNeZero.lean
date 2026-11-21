@@ -15,7 +15,6 @@ section Diagonal
 variable {R S B : Type} [CommRing R] [CommRing S] [CommRing B] [Algebra R S] [Algebra S B]
   [Algebra R B] [IsScalarTower R S B]
 
-variable (R S B) in
 
 noncomputable def mu : S ⊗[R] B →ₐ[S] B :=
   Algebra.TensorProduct.lift (Algebra.ofId S B) (AlgHom.id R B) fun _ _ => Commute.all _ _
@@ -156,12 +155,7 @@ section Socle
 
 variable {R B C : Type} [CommRing R] [CommRing B] [CommRing C] [Algebra R B] [Algebra R C]
 
-open scoped TensorProduct in
-variable {R B C : Type} [CommRing R] [CommRing B] [CommRing C] [Algebra R B] [Algebra R C] in
 
-open scoped TensorProduct in
-variable {R B C : Type} [CommRing R] [CommRing B] [CommRing C] [Algebra R B] [Algebra R C] in
-open IsLocalRing in
 
 theorem _root_.GlobalTheory.DiscrJacobian.isUnit_det_of_productMap_ne_zero [IsLocalRing R]
     [Algebra (ResidueField R) C]
@@ -268,8 +262,6 @@ theorem _root_.GlobalTheory.DiscrJacobian.X_mem_jacobson {R : Type} [CommRing R]
   rw [MvPowerSeries.isUnit_iff_constantCoeff]
   simp
 
-open MvPowerSeries IsLocalRing in
-open scoped TensorProduct in
 
 theorem _root_.GlobalTheory.DiscrJacobian.map_mem_radical {R S B : Type} [CommRing R]
     [IsLocalRing R] [CommRing S] [CommRing B]
@@ -367,9 +359,6 @@ private theorem norm_sum_mul_eq_discr_mul_det {R B : Type} [CommRing R] [CommRin
   rw [Algebra.norm_eq_matrix_det b, hmat, Matrix.det_mul, Matrix.det_transpose,
     Algebra.discr_def, mul_comm]
 
-open MvPowerSeries IsLocalRing in
-open scoped TensorProduct in
-set_option maxHeartbeats 800000 in
 
 theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Type) [CommRing R] [IsLocalRing R]
     (g d : ℕ) (f : Fin g → MvPowerSeries (Fin g) R)

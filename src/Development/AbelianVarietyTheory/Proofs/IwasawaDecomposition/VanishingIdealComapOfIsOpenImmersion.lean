@@ -10,7 +10,6 @@ open AlgebraicGeometry CategoryTheory Limits NumberField IsLocalRing Topological
 
 namespace GlobalTheory
 
-open Scheme.IdealSheafData in
 
 theorem vanishingIdeal_comap_of_isOpenImmersion : ∀ (A X : Scheme.{0}) (g : A ⟶ X) [IsOpenImmersion g] (B : Closeds X) (B' : Closeds A), (∀ x : A, x ∈ B' ↔ g x ∈ B) → (Scheme.IdealSheafData.vanishingIdeal B).comap g = Scheme.IdealSheafData.vanishingIdeal B' := by
   intro A X g _ B B' h

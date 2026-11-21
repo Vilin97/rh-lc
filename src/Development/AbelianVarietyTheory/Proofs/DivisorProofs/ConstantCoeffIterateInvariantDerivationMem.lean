@@ -61,9 +61,6 @@ private lemma coeff_mapDomain_subst_X_comp_of_injective {σ τ S : Type} [CommRi
   rw [if_neg]
   exact fun h => he' (Finsupp.mapDomain_injective hg h).symm
 
-open MvPowerSeries in
-set_option autoImplicit false in
-variable {R : Type} [CommRing R] {d : ℕ} in
 
 theorem _root_.GlobalTheory.LawDer.Kernel.constantCoeff_iterate_invDer_mem : ∀ (B Q : Type) [CommRing B] [CommRing Q] [Algebra B Q] (d : ℕ) (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) B), (∀ i, constantCoeff (μ i) = 0) → ∀ (N : Ideal B) (l : MvPowerSeries (Fin d) Q) (j : Fin d), _root_.GlobalTheory.QLog.In N (_root_.GlobalTheory.Katz.cob1 (_root_.GlobalTheory.QLog.up Q μ) l) → _root_.GlobalTheory.Katz.lin l = Pi.single j 1 → ∀ (u : Fin d → B) (n : ℕ), 2 ≤ n → ∃ b ∈ N, constantCoeff ((_root_.GlobalTheory.LawDer.invDer (_root_.GlobalTheory.QLog.up Q μ) (fun i => algebraMap B Q (u i)))^[n] l) = algebraMap B Q b := by
   intro B Q _ _ _ d μ hμ N l j hc hl u n hn

@@ -24,7 +24,6 @@ def HasCoverBy (y : (Σ k, ι k) → Ω) (c : (k : K) → ι k) (Pr : Ω → Pro
   ∃ (m : ℕ) (f cc : Fin m → Ω), (∀ l, f l ∈ chartRing ℤ (segreCoord y) c) ∧
     (∀ l, cc l ∈ chartRing ℤ (segreCoord y) c) ∧ ∑ l, cc l * f l = 1 ∧ ∀ l, Pr (f l)
 
-omit [∀ k, Fintype (ι k)] in
 
 def zMono (z : (Σ k, ι k) → ℂ) (c : (k : K) → ι k) (a : K → ℤ) : ℂ := ∏ k, z ⟨k, c k⟩ ^ a k
 
@@ -82,13 +81,10 @@ def ofΩ (x : Ω) : Pl.ΩY := algebraMap (MvPolynomial (Ψ × Fin D.N × Fin D.N
 def gvar (τ : Ψ) (a b : Fin D.N) : Pl.ΩY :=
   algebraMap (MvPolynomial (Ψ × Fin D.N × Fin D.N) Ω) Pl.ΩY (X (τ, a, b))
 
-open Classical in
 
 abbrev Incr (s N : ℕ) : Type := {A : Fin s → Fin N // StrictMono A}
 
-open Classical in
 
-open Classical in
 
 end PlueckerData
 

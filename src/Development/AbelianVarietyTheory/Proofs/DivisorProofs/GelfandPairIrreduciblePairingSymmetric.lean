@@ -76,7 +76,6 @@ theorem avg_mem_span_hecke (K : Subgroup G) [∀ g, Fintype (K ⧸ (stabSub K g)
 
 end GlobalTheory.GelfandCount
 
-open GlobalTheory.GelfandLine GlobalTheory.GelfandCount in
 
 theorem GlobalTheory.fixed_line_of_gelfand_countable : ∀ (G : Type) [Group G] (K : Subgroup G), (∀ g : G, (K.map (MulAut.conj g).toMonoidHom).relIndex K ≠ 0) →
     ∀ θ : G → G, (∀ x y, θ (x * y) = θ y * θ x) → (∀ x, θ (θ x) = x) → (∀ g, ∃ a ∈ K, ∃ b ∈ K, θ g = a * g * b) →

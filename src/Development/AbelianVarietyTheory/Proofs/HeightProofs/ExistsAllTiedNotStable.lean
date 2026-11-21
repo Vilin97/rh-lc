@@ -86,7 +86,6 @@ end Pred
 
 variable {D : D7} {X : ThetaX D}
 
-open Classical in
 
 end GlobalTheory.TypeAtCompare
 

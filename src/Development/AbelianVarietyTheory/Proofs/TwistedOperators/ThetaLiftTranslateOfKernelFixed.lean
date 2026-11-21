@@ -14,9 +14,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory
 
-open NumberField IsDedekindDomain MeasureTheory in
-open scoped TensorProduct InnerProductSpace in
-attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar in
 
 theorem _root_.GlobalTheory.thetaLift_translate_of_kernel_fixed : ∀ {G H S Sinf Ds Dt : Type} [Group G] [Group H]
     [MeasurableSpace H] [AddCommGroup Sinf] [Module ℂ Sinf] [AddCommGroup Ds] [Module ℂ Ds]

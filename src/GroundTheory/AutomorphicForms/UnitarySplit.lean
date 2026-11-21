@@ -23,27 +23,18 @@ noncomputable def splitEquiv : R ⊗[F] (F × F) ≃ₐ[R] R × R :=
 
 variable {F R}
 
-variable (F R) in
 
-variable (F R) in
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
 variable (H : Matrix ι ι (F × F))
 
-variable (R) in
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
-variable (R) in
 
 end Split
 

@@ -18,13 +18,11 @@ set_option linter.unusedSectionVars false
 
 variable {K : Type} [Field K] [NumberField K] {ι κ : Type} [Fintype ι] [Fintype κ]
 
-variable (K ι κ) in
 
 def toEuclidSplit : ((ι ⊕ κ) → mixedSpace K) ≃L[ℝ] (ι → mixedSpace K) × EuclidPi K κ :=
   (LinearEquiv.sumArrowLequivProdArrow ι κ ℝ (mixedSpace K)).toContinuousLinearEquiv.trans
     ((ContinuousLinearEquiv.refl ℝ (ι → mixedSpace K)).prodCongr (toEuclidPi K))
 
-variable (K ι κ) in
 
 def toEuclidSplitConj : ((ι ⊕ κ) → mixedSpace K) ≃L[ℝ] (ι → mixedSpace K) × EuclidPi K κ :=
   (LinearEquiv.sumArrowLequivProdArrow ι κ ℝ (mixedSpace K)).toContinuousLinearEquiv.trans

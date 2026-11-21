@@ -21,7 +21,6 @@ section Coord
 
 variable {K V W : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [AddCommGroup W] [Module K W]
 
-open Classical in
 
 def coordOf (N : (K →+* ℂ) → V → ℝ) :
     Σ n : ℕ, (V →ₗ[K] (Fin n → K)) × ((Fin n → K) →ₗ[K] V) × (InfinitePlace K → Matrix (Fin n) (Fin n) ℂ) :=
@@ -41,7 +40,6 @@ def mapCo (φ : V →ₗ[K] W) : (Fin (cDim N) → K) →ₗ[K] (Fin (cDim N') �
 
 variable {N N'}
 
-omit [NumberField K] in
 
 theorem exists_basis_co (h : HasGram N) : ∃ b : Basis (Fin (cDim N)) K V,
     IsGram b (frameCo N) N ∧ toCo N = b.equivFun ∧ ofCo N = b.equivFun.symm := by
@@ -53,39 +51,26 @@ theorem exists_basis_co (h : HasGram N) : ∃ b : Basis (Fin (cDim N)) K V,
     exact ⟨_, h.some.2.2, rfl, rfl⟩
   exact key _ (dif_pos h)
 
-omit [NumberField K] in
 
 theorem cDim_eq (h : HasGram N) : cDim N = finrank K V := by
   obtain ⟨b, -⟩ := exists_basis_co h
   rw [finrank_eq_card_basis b, Fintype.card_fin]
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
 variable [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
 
-variable (N) in
 
 def latCo (L : Submodule (𝓞 K) V) : Submodule (𝓞 K) (Fin (cDim N) → K) := L.map ((toCo N).restrictScalars (𝓞 K))
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
-omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
-omit [NumberField K] in
 
 variable [StarRing K]
 

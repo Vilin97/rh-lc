@@ -22,7 +22,5 @@ theorem NUnimodLoc_holds : Formalism.L2.SG.Pf.WFL.NUnimodLoc := by
 
 theorem QuotProdK_holds : Formalism.L2.SG.Pf.WFL.QuotProdK := quotient_product_compact
 
-open Formalism.L2.SG.Pf.WFL in
-variable [Fact Formalism.MainNotions.DiscreteSeriesWeylDimension.HighestWeightExists] [Fact Formalism.MainNotions.DiscreteSeriesWeylDimension.DiscreteSeriesExistsG] [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] [Fact Formalism.L2.SG.SplitPrimeNormLemmas.BesselNVGap] in
 
 end Formalism.L2.SG.Closed

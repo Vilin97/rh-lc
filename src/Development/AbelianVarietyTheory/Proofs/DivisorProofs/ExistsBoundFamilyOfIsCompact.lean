@@ -28,8 +28,6 @@ private lemma le_fintype_sum_of_nonneg {ι : Type*} [Fintype ι] (f : ι → ℝ
     (i : ι) : f i ≤ ∑ j, f j :=
   Finset.single_le_sum (fun j _ => hf j) (Finset.mem_univ i)
 
-open MeasureTheory Filter Topology in
-open scoped ContDiff Matrix in
 
 theorem _root_.GlobalTheory.GoodTop.exists_bound_smooth_data : ∀ {n : ℕ} {r : Type} [Fintype r]
     [DecidableEq r] (U K : Set (_root_.ReciprocityTheory.L2DbarEstimates.V n)) (G₀ : _root_.ReciprocityTheory.L2DbarEstimates.V n → Matrix r r ℂ) (ρ : _root_.ReciprocityTheory.L2DbarEstimates.V n → ℝ),

@@ -178,7 +178,6 @@ theorem emb_ext (hA : l.A = 1) {β β' : KA l →+* ℂ} (h : β (baseKA l).ρ =
         exact β.map_one.trans β'.map_one.symm)
   exact RingHom.ext fun a => DFunLike.congr_fun this a
 
-open OverMove in
 
 theorem move_fibre {r : Xo₂.X ⟶ Xo.X} {m : SABMap Xo₂.univ.t Xo.univ.t r} (hm : Lev m) {ρ : Xo₂.X ⟶ Xo₂.X}
     {ν : SABMap Xo₂.univ.t Xo₂.univ.t ρ} {f : D.La →ₗ[𝓞 E] D.La} (hν : IsLevMove ρ ν f LinearMap.id)
@@ -215,7 +214,6 @@ theorem move_fibre {r : Xo₂.X ⟶ Xo.X} {m : SABMap Xo₂.univ.t Xo.univ.t r} 
 
 end Geometry
 
-open GlobalTheory.Dict.Lift in
 
 theorem anFib_lift_ex : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (n : ℕ) (d : DeltaDat Xo c n) [Algebra c.F ℂ] [Algebra d.c₂.F ℂ], (∀ t : c.F, algebraMap d.c₂.F ℂ (d.eF t) = algebraMap c.F ℂ t) → d.IsLev → ∀ (r g : ℕ) (X : Data E r) (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (idx : Fin g ≃ X.Ψ × Fin r) (e : Fin g ≃ Lt1 Dw) (x : Frame X.Ψ r) (L : Lt E r) (y : FrPt Xo c ℂ) (A : AnFib X bas idx e x L y), IsSympl X bas → x ∈ X.dom → SelfD X L → ∀ y₂ : FrPt d.Xo₂ d.c₂ ℂ, FrOver d y₂ y → ∀ mk : Dw.La →ₗ[𝓞 E] (Fin r → E), A.Marked mk → ∃ A₂ : AnFib X bas idx e x L y₂, (∀ z, (A₂.ex z).left ≫ d.m.φ = (A.ex z).left) ∧ (∀ θ, A.Reads 1 y.s θ → A₂.Reads 1 y₂.s θ) ∧ ∃ mk₂ : Dw.La →ₗ[𝓞 E] (Fin r → E), IsMark d.l₂ L mk₂ ∧ A₂.Marked mk₂ ∧ MarkOver l d.l₂ L mk mk₂ := by
   intro E _ _ _ H Dw l Xo c n d _ _ _ hlev r g X bas idx e x L y A hsym hx hL y₂ hover mk hmk

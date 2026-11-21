@@ -207,7 +207,6 @@ theorem exists_exponent {G : Type} [CommGroup G] (ψ : G →* ℂˣ) {l n : ℕ}
   show g (ψ q : ℂ) = _
   rw [Units.val_pow_eq_pow_val, ← hk, map_pow, ← he, ← pow_mul, ← pow_mul, mul_comm]
 
-open GlobalTheory.IndefiniteRowSideFullHecke.ToricSymbols in
 
 theorem ratio_conj (hA : GlobalTheory.Published.GlobalArtinReciprocity) (hG : ToricRatioConjugates)
     (E : Type) [Field E] [NumberField E] [IsCMField E]

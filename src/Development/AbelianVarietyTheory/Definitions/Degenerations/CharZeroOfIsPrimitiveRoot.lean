@@ -226,7 +226,6 @@ theorem existsUnique_twRel {O : Type} [CommRing O] {N : NumD O} {k : ℕ} (β : 
   rw [hp, mul_comm (β.be _ _), zpow_mul, zpow_natCast, h]
   exact (N.twist_τ β u _ z).symm
 
-open ReciprocityTheory.ChartRestriction.G.Out.InhTate GlobalTheory.ToricData in
 
 theorem isCoordPt_one_iff {S : Scheme.{0}} (P : PolAV S) (k : ℕ) {T : Over S} {I : Type} (x : I → (T ⟶ P.A))
     (v : I → Γ(T.left, ⊤)) :

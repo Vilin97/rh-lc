@@ -60,7 +60,6 @@ section
 
 variable {F : Type} [Field F] [NumberField F] (E : Type) [Field E] [NumberField E] [Algebra F E] (n : ℕ)
 
-variable (F) in
 
 abbrev infMap : InfiniteAdeleRing F →+* InfiniteAdeleRing E :=
   GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap (K := F) (L := E)

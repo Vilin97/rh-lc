@@ -213,7 +213,6 @@ def Om (k r : ℕ) (z z' : Vc k r) : Set ℂ := {ζ | Tz k r z * Tz k r z' < Com
 theorem Om_open (z z' : Vc k r) : IsOpen (Om k r z z') := by
   exact isOpen_lt continuous_const Complex.continuous_normSq
 
-open Classical in
 
 def secF (k r : ℕ) (z z' : Vc k r) (μsec : ℂ → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) (ζ : ℂ) :
     Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ := if ζ ∈ Om k r z z' then μsec ζ else 1
@@ -904,7 +903,6 @@ theorem cW_nonneg (c : Fin r → ℂ) : 0 ≤ cWeight k r c := by
   unfold cWeight
   exact Finset.prod_nonneg fun a _ => pow_nonneg (norm_nonneg _) _
 
-set_option maxHeartbeats 800000 in
 
 theorem engine {μG μN μb μW μW' : Measure (Mt k r)} [SFinite μN] [SFinite μb] [SFinite μW] [SFinite μW'] (T T' : ℝ)
     (G0 : (Fin r → ℂ) → Mt k r) (hG0 : Measurable G0) (ES : ℂ → Mt k r) (hES : Measurable ES) (C1 C2 : ℝ≥0)

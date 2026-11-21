@@ -18,13 +18,11 @@ variable {E : Type} [Field E] [NumberField E]
 def CondOne (w : HeightOneSpectrum (𝓞 E)) (c : w.adicCompletion E) : Prop :=
   ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, GlobalTheory.JSW.psiLoc w (c * x * y) = 1) ↔ x ∈ Ov E w
 
-open Classical in
 
 def condExp (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ) (w : HeightOneSpectrum (𝓞 E)) : ℤ :=
   if CondOne w 1 then 0
   else if h : ∃ k : ℤ, CondOne w ((ϖ w ^ k : (w.adicCompletion E)ˣ) : w.adicCompletion E) then h.choose else 0
 
-variable (E) in
 
 def badSet : Finset (HeightOneSpectrum (𝓞 E)) := (GlobalTheory.JSW.psiLoc_conductor_eventually E).choose
 
@@ -38,7 +36,6 @@ theorem condExp_eq_zero_of_notMem (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.a
   classical
   rw [condExp, if_pos (condOne_one_of_notMem hw)]
 
-open Classical in
 
 def shiftFn (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E))) (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ)
     (w : HeightOneSpectrum (𝓞 E)) : Fin (m + 1) → ℤ :=
@@ -56,7 +53,6 @@ theorem shiftFn_mem_badSet (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E)))
   · funext i
     simp [condExp_eq_zero_of_notMem ϖ hw]
 
-open Classical in
 
 def shift (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E))) (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ) :
     GlobalTheory.CellDec.abelian₂ E (m + 1) T :=

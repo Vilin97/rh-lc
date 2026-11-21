@@ -9,7 +9,6 @@ open scoped ContDiff
 
 namespace GlobalTheory
 
-open MeasureTheory Filter Topology in
 
 theorem contDiff_of_continuous_of_map_add_eq_mul {E : Type} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → ℂ) (hf : Continuous f)

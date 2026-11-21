@@ -102,7 +102,6 @@ theorem pairNum_eq_intNum (hF : VerticalComponentFibre.Statement)
 
 end PairNumberRelabelAlt
 
-open IndefiniteRowSideFullHecke.NumbersDVR.Bundles (IsVertDiv mcIdeal) in
 
 theorem PairNumberRelabelAlt.proof (hF : VerticalComponentFibre.Statement) : PairNumberRelabelAlt.Statement := by
   classical

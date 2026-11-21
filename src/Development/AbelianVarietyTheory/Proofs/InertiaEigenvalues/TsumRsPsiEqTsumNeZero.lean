@@ -23,8 +23,6 @@ def rsHat (ℓ : Fin a) (φ φ' : GA E a → ℂ) (Φ : (Fin a → Cinf E) → �
     (η : Fin a → Af E) (g : GA E a) (y : Fin a → Ad E) : ℂ :=
   adelicFourierPi E (rsPsi ℓ φ φ' Φ J η g) y
 
-omit [IsTotallyComplex E] in
-variable (E a) in
 
 def lowSet : Set (GA E a) := {g | (ideleModule E (GeneralLinearGroup.det g) : ℝ) ≤ 1}
 

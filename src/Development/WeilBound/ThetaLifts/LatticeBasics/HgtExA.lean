@@ -20,7 +20,6 @@ open Formalism.UG (cT bc)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n : ℕ} {Y : Spc F E n}
 
-variable (F) in
 
 def eF : AF F := LinearMap.inr F (Ainf F) (Af F) 1
 
@@ -101,7 +100,6 @@ theorem mem_HR {ξ : E} (hξ : ξ ≠ 0) (x : GL (Fin (n + n)) (AE F E)) :
   rw [JR_dblGram, iso_iff, e, dbl_smul, Matrix.mul_smul, Matrix.smul_mul, (hξ.isUnit.map _).smul_left_cancel, cA_eq]
   rfl
 
-variable (σ Y) in
 
 def back {ξ : E} (hξ : ξ ≠ 0) : GAd σ (dblGram finSumFinEquiv (ξ • Y.Jᵀ)) →* G2 σ Y :=
   MonoidHom.mk' (fun g => ⟨reGL finSumFinEquiv.symm (matHom _ σ _ g), (mem_HR hξ _).1 g.2⟩) fun _ _ =>
@@ -139,7 +137,6 @@ theorem keeps_back (hL : Y.L.FG) {ξ : E} (hξ : ξ ≠ 0) {k : GAd σ (dblGram 
   refine ⟨⟨funext fun i => congrFun e0 _, fun v => ?_⟩, funext fun i => congrFun e0 _, fun v => ?_⟩ <;> rw [e1]
   exacts [(e2 v).1, (e2 v).2]
 
-variable (σ Y) in
 
 def stab2 (B : Base F E) : Subgroup (G2 σ Y) where
   carrier := {k | (∀ w, Commute ((mat2 k).map (piInf (B.emb w))) (Matrix.fromBlocks (Y.θ w) 0 0 (-Y.θ w))) ∧ Keeps k ∧ Keeps k⁻¹}
@@ -254,7 +251,6 @@ theorem iwasawa2 {B : Base F E} (hB : B.IsGood σ) {r s : ℕ} (hY : Y.IsHerm σ
   exact ⟨⟨_, back_mem_par hξ p.2⟩, back σ Y hξ k, ⟨fun w => back_comm hξ _ ((hb' w _).1 ((mem_KAd.1 hk).2 w)),
     keeps_back hL.fg hξ (mem_KAd.1 hk).1, k2⟩, map_mul _ _ _⟩
 
-variable (σ Y) in
 
 def emb2 : UA σ Y.J × UA σ Y.J →* G2 σ Y :=
   ((blkGL (Equiv.refl (Fin n ⊕ Fin n))).comp ((Subgroup.subtype _).prodMap (Subgroup.subtype _))).codRestrict _ fun x => by

@@ -27,7 +27,6 @@ def genPt (Ω : Type) [Field Ω] (j₀ j : J) : FractionRing (MvPolynomial {j //
 omit [Fintype J] in
 theorem genPt_self (j₀ : J) : genPt Ω j₀ j₀ = 1 := by simp [genPt, genPoly]
 
-omit [Fintype J] in
 
 theorem eq_top_of_genPt_mem (j₀ : J) (K : Subfield (FractionRing (MvPolynomial {j // j ≠ j₀} Ω)))
     (h1 : ∀ a : Ω, algebraMap Ω _ a ∈ K) (h2 : ∀ j, genPt Ω j₀ j ∈ K) : K = ⊤ := by

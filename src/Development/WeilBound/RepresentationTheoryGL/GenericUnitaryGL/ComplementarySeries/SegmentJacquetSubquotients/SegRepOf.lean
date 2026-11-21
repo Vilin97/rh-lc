@@ -18,7 +18,6 @@ open PositivityTheory.Pf1.SegRepC PositivityTheory.Pf1.SegRepC.SegTwo
 
 namespace PositivityTheory.RgGu.SRC
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def StageP : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k],

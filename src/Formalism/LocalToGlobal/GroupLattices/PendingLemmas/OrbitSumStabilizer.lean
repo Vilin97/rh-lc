@@ -90,7 +90,6 @@ def TT (b0 : A) (hfin : Finite {γ : Γ // sm γ b0 = b0}) (B : Finset A) : Fins
 theorem mem_TT (b0 : A) (hfin : Finite {γ : Γ // sm γ b0 = b0}) (B : Finset A) (γ : Γ) :
     γ ∈ TT sm h1 hm b0 hfin B ↔ sm γ b0 ∈ B := Set.Finite.mem_toFinset _
 
-include h1 hm in
 
 theorem sum_unfold (S : A → Prop) (Rp : Finset A) (hRp : ∀ a ∈ Rp, S a)
     (hex : ∀ a, S a → ∃! a0, a0 ∈ Rp ∧ ∃ γ, a = sm γ a0)
@@ -102,7 +101,6 @@ theorem sum_unfold (S : A → Prop) (Rp : Finset A) (hRp : ∀ a ∈ Rp, S a)
   rw [orbit_sum_stabilizer sm h1 hm b0.1 B f _ (mem_TT sm h1 hm b0.1 _ B), ← mul_assoc, inv_mul_cancel₀, one_mul]
   exact Nat.cast_ne_zero.2 (hst b0.1 (hRp b0.1 b0.2)).ne'
 
-include h1 hm in
 
 theorem adj (S : A → Prop) (Rp : Finset A) (hRp : ∀ a ∈ Rp, S a)
     (hex : ∀ a, S a → ∃! a0, a0 ∈ Rp ∧ ∃ γ, a = sm γ a0)

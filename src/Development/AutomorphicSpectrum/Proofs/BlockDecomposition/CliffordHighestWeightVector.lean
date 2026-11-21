@@ -18,7 +18,6 @@ section Cl
 
 variable {n : ℕ} {A : Type} [Ring A] [Algebra ℂ A] (g : Fin n → Fin n → A)
 
-omit [Ring A] [Algebra ℂ A] in
 
 theorem half_eq {M : Type} [AddCommGroup M] [Module ℂ M] {x y : M} (h : x + x = y + y) : x = y := by
   rw [← two_smul ℂ x, ← two_smul ℂ y] at h
@@ -72,7 +71,6 @@ theorem u_bracket (a b d e : Fin n) :
   rw [t1, t2, t3, t4]
   abel
 
-variable (g) in
 
 def sF (a b : Fin n) : A := (1 / 2 : ℂ) • uF g a b - if a = b then ((n : ℂ) / 2) • (1 : A) else 0
 

@@ -20,6 +20,5 @@ def PseudoCoefficientUpq : Prop :=
     haveI := h.1
     ∃ f : Formalism.REAL.UJ ε → ℂ, IsBiFinite (Formalism.REAL.KG ε) f ∧ IsPseudoCoeff (ujMat ε) μ (ujRep h.2.2.1) f
 
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.L2.Theta Formalism.IndefR.Mult NumberField in
 
 end GlobalTheory.Published

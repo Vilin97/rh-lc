@@ -672,7 +672,6 @@ private theorem exists_int_resS_eq_one_mul_idem_eq_zero_of_ne (ha : IsIdemSum a 
   rw [mul_add, h1, zero_add, h4, ← h2]
   calc es Q * a * (cA D a * cA D e) = (a * cA D a) * (es Q * cA D e) := by ring
     _ = 0 := by rw [hac, zero_mul]
-set_option maxHeartbeats 1000000 in
 
 theorem redFn_eq_one_of_ne (ha : IsIdemSum a P) (hP : PP ∈ P) (he : Formalism.L2.NTheta.IsIdemAt e PP) {V : HSp D}
     {β : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)} {g : GA D V} (hg : SuppAt e V g) (hβ : finE V g ∈ St β) {Q : Pl D.host.E}

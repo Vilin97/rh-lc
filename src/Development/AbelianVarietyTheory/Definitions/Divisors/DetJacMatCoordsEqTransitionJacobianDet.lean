@@ -38,7 +38,6 @@ instance t2Space [IsSeparated p] : T2Space (CxPts p σ) := PtsOver.t2Space p _
 instance secondCountableTopology [LocallyOfFiniteType p] [QuasiCompact p] :
     SecondCountableTopology (CxPts p σ) := PtsOver.secondCountableTopology p _
 
-variable {p} in
 
 theorem compactSpace (h : IsProjOver p) : CompactSpace (CxPts p σ) := PtsOver.compactSpace h _
 

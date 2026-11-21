@@ -34,7 +34,6 @@ theorem BK.X_pow_natDegree_mem {K : FinExt l} (bk : BK K) :
   rw [e]
   exact Ideal.sub_mem _ (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)) (Ideal.mem_sup_left hs)
 
-set_option maxHeartbeats 1000000 in
 
 theorem BK.hom_eq_of_X_C {K : FinExt l} (bk : BK K) {B : Obj l ↥(OL K)} (f g : Hom bk.prism B)
     (hX : BK.hf f X = BK.hf g X) (hC : ∀ w, BK.hf f (C w) = BK.hf g (C w)) : f = g := by

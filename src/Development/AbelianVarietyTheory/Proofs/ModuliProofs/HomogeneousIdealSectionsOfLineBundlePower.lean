@@ -101,7 +101,6 @@ theorem mem_of_X_mul_mem (hc : ⨆ i, Out.nonzeroLocus (th i) = ⊤) {F : MvPoly
   rw [MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X] at this
   rw [_root_.mul_assoc, this, mul_zero]
 
-variable (p th) in
 
 def formSec {d : ℕ} {F : MvPolynomial σ R} (hF : F.IsHomogeneous d) : (lbPow M d).Sec where
   f j := MvPolynomial.eval₂ ((resG X le_top).comp (p.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom))

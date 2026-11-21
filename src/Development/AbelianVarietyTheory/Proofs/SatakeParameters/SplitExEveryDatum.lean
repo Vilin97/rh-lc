@@ -151,8 +151,6 @@ def belowE (v : PlE D.host) : HeightOneSpectrum (𝓞 Fp) where
 theorem fixed_of_cO {x : 𝓞 D.host.E} (hx : cO x = x) : ∃ y : 𝓞 Fp, algebraMap (𝓞 Fp) (𝓞 D.host.E) y = x :=
   (IsCMField.ringOfIntegersComplexConj_eq_self_iff D.host.E _).1 hx
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem exists_splitPlace (v : PlE D.host) (x0 : 𝓞 D.host.E) (hx0 : x0 ∈ v.asIdeal) (hc0 : cO x0 ∉ v.asIdeal) :
     ∃ s : SplitPlace D.host.E, s.v = belowE v := by

@@ -29,7 +29,6 @@ theorem y_inv_mem (τ : D.what₂.Tau) : (C.y τ)⁻¹ ∈ Formalism.QuantumDete
         rw [Matrix.nonsing_inv_mul _ (by rw [Matrix.det_conjTranspose]; exact hu.star),
           Matrix.mul_nonsing_inv _ hu, Matrix.one_mul, Matrix.mul_one]
 
-set_option maxHeartbeats 1000000 in
 
 theorem quotTr_holds (u u' : D.what₂.Word) (τ : D.what₂.Tau) : QuotTr C u u' τ := by
   intro γ μRv ν hH hq

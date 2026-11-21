@@ -11,7 +11,6 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.MainNoti
 
 namespace GlobalTheory
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.frob_dense_off_finite : ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
     (T : Set (HeightOneSpectrum (𝓞 F))), T.Finite →

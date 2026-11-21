@@ -42,7 +42,6 @@ theorem exists_dual_frequently {M : Type} [AddCommGroup M] [Module ℂ M] (u : �
 
 variable {g : ℕ} [Fact g.Prime] {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
 
-variable (g n) in
 
 def KOne : Subgroup (GL (Fin n) ℚ_[g]) := (red g n).ker.map (inc g n)
 

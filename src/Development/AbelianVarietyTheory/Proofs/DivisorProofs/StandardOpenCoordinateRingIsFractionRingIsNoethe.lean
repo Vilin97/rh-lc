@@ -9,7 +9,6 @@ open GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
 
 namespace GlobalTheory.PD
 
-open KaehlerDifferential in
 
 theorem _root_.GlobalTheory.PD.rA_isFractionRing_isNoetherianRing : ∀ (k : Type) [Field k]
     (F : Type) [Field F] [Algebra k F] (d : ℕ)

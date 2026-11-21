@@ -23,7 +23,6 @@ section Kernel
 variable (K L : FiniteSubfield) [hKL : Fact (K ≤ L)]
   [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal]
 
-omit [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal] in
 
 theorem normClass_ideleClassNorm (c : IdeleClassGroup L.1) :
     normClass K L (FiniteSubfield.ideleClassNorm hKL.out c) = 1 := by

@@ -36,7 +36,6 @@ theorem error_isLittleO (D : ℕ) (K₁ K₂ : ℝ) :
 
 end ArithmeticVolumeResolution
 
-open ArithmeticVolumeResolution in
 
 end
 

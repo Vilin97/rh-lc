@@ -53,7 +53,6 @@ section Pt
 variable {X : Fields} {Pr : Primes X} {R : Ranks} {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} {S : Set ℕ}
   {mu : Tup X.F X.E X.K S} {cst : LocCst X (rowSG Pr sel mu)} {u : Pr.Word} {j : ℕ}
 
-open Classical in
 
 def cqOf (q : PtAt R sel mu cst u j) (P : QE sel (mu : Chr X.F X.E X.K)) : Set (Sp X.E (R.N j)) :=
   cosetIn q ⟨P.1, Finset.mem_union_right _ P.2⟩

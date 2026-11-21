@@ -180,7 +180,6 @@ private theorem latBasis_mul_of_mem_integers_of_inv_mem (X : HidaSetting D) (p :
       (R : Matrix (Fin X.B.I.n) (Fin X.B.I.n) (FpX X p))ᵀ ?_ (fun i j => hR' j i) (fun i j => hR j i) _).symm
     rw [← Matrix.transpose_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.transpose_one]
 
-set_option maxHeartbeats 800000 in
 
 theorem hAdaptQ_of_in (X : HidaSetting D) (hb : AdBridgeIso X.B.I) (u : D.what₂.Word) (p : TypX X)
     (h : AdaptIn X hb u p) : HAdaptQ X hb u p := by

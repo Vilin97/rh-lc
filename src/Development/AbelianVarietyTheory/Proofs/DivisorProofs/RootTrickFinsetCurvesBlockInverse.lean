@@ -37,7 +37,6 @@ private lemma lc_rescaleCurve_eq_pow_smul {C : Type} [Field C] {v : AddValuation
   funext c
   simp only [_root_.ReciprocityTheory.PGsh.LogFGL.lc, _root_.ReciprocityTheory.ChartRestriction.G.Sh.PTb.lgCurve_rescale G x (fun b => (hga b).1) c, PowerSeries.coeff_rescale, Pi.smul_apply, smul_eq_mul]
 
-open MvPowerSeries in
 
 theorem _root_.GlobalTheory.RootFin.root_fin : _root_.ReciprocityTheory.ChartRestriction.G.Sh.RootStatement → ∀ (C : Type) [Field C] [IsAlgClosed C] [CharZero C]
     (v : AddValuation C (WithTop ℝ)) (p : ℕ),

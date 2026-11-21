@@ -129,7 +129,6 @@ section SliceInt
 variable [T2Space X] [CompactSpace X] {A : FinHolAtlas (e + 1) X} {W : Set X} [CompactSpace W]
   {ψ : OpenPartialHomeomorph X (Fin (e + 1) → ℂ)} {i : Fin (e + 1)}
 
-open Classical in
 
 def extW (W : Set X) (χ : W → ℝ) (p : X) : ℝ := if h : p ∈ W then χ ⟨p, h⟩ else 0
 

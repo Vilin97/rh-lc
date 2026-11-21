@@ -14,7 +14,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Local
   [TotallyDisconnectedSpace G] [MeasurableSpace G] [BorelSpace G]
   {X : Type} [AddCommGroup X] [Module ℂ X]
 
-omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] [MeasurableSpace G] [BorelSpace G] in
 
 theorem orbit_isLocallyConstant (ρ : Representation ℂ G X) (hρ : IsSmooth ρ) (v : X) :
     IsLocallyConstant fun g => ρ g v := by

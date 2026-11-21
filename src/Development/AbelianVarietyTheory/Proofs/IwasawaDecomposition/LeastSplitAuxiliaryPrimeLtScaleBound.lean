@@ -62,7 +62,6 @@ theorem leastSplitAuxiliaryPrime_lt_scaleBound {K : Ctx} {X : Stages} (hO : K.Ov
   · exact absurd hi (hOk.small.2.2.2.1 i)
   · exact hlt
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.Mem.AtSize
 

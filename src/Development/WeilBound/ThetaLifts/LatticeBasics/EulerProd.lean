@@ -149,7 +149,6 @@ theorem prj_ne {u : Pl F} (h : u ≠ v) {g : UA σ Y.J} (hg : g ∈ locGrp σ Y 
 theorem int_mul_ne {u : Pl F} (h : u ≠ v) {x : UA σ Y.J} (hx : x ∈ locGrp σ Y v) (g : UA σ Y.J) : IntAt u (x * g) ↔ IntAt u g := by
   rw [← int_prj, map_mul, prj_ne h hx, one_mul, int_prj]
 
-variable (σ Y) in
 
 def intGrp (v : Pl F) : Subgroup (UA σ Y.J) where
   carrier := {g | IntAt v g}

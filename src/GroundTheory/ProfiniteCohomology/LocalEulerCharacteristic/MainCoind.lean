@@ -174,7 +174,6 @@ section Shift
 variable [TopologicalSpace G] {H : OpenSubgroup G} {M : Rep.{u} k G} [hN : (H : Subgroup G).Normal]
   {s : G}
 
-include hN in
 
 theorem commute_coindShift (hs : ∀ g : G, s * g * s⁻¹ * g⁻¹ ∈ (H : Subgroup G)) (g : G) :
     Commute (coindShift (H := H) (M := M) s) ((coindRes H M).ρ g) := by
@@ -187,7 +186,6 @@ theorem commute_coindShift (hs : ∀ g : G, s * g * s⁻¹ * g⁻¹ ∈ (H : Sub
   congr 2
   group
 
-omit hN in
 
 theorem coindShift_pow_apply (i : ℕ) (f : coindRes H M) (x : G) :
     ((coindShift (H := H) (M := M) s ^ i) f).1 x = M.ρ (x * (s ^ i)⁻¹ * x⁻¹) (f.1 (x * s ^ i)) := by
@@ -201,7 +199,6 @@ theorem coindShift_pow_apply (i : ℕ) (f : coindRes H M) (x : G) :
     have h2 : x * s * s ^ i = x * s ^ (i + 1) := by rw [pow_succ', mul_assoc]
     rw [h1, h2]
 
-include hN in
 
 theorem coindShift_pow_eq_one {N : ℕ} (hsN : s ^ N ∈ (H : Subgroup G)) :
     coindShift (H := H) (M := M) s ^ N = 1 := by
@@ -288,8 +285,6 @@ theorem eq_coindResConst_of_coindShift_eq {s : G}
     show x * (s ^ i)⁻¹ * s ^ i = x by group] at h
   exact h
 
-variable {A : Rep.{u} k G} in
-omit [TopologicalSpace G] in
 
 theorem ker_le_comap (T : Module.End k A) (hT : ∀ g : G, Commute T (A.ρ g)) (g : G) :
     LinearMap.ker T ≤ (LinearMap.ker T).comap (A.ρ g) := by
@@ -354,7 +349,6 @@ noncomputable def kerShiftIso [(H : Subgroup G).Normal] {s : G}
 
 variable [hN : (H : Subgroup G).Normal]
 
-include hN in
 
 noncomputable def coindOfFun (φ : G ⧸ (H : Subgroup G) → M) : coindRes H M :=
   ⟨fun x => M.ρ (x * (Quotient.out (QuotientGroup.mk x : G ⧸ (H : Subgroup G)))⁻¹)
@@ -388,7 +382,6 @@ theorem eulerChar_subrepresentation_congr {A : Rep.{u} k G} {W W' : Submodule k 
   subst h
   rfl
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 def subrepresentationTopIso (A : Rep.{u} k G)
     (h : ∀ g, (⊤ : Submodule k A) ≤ (⊤ : Submodule k A).comap (A.ρ g)) :
@@ -403,7 +396,6 @@ def subrepresentationTopIso (A : Rep.{u} k G)
     ext x
     rfl
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem eq_and_eq_of_mul_eq_mul_of_le {a b A B : ℕ} (ha : a ≤ A) (hb : b ≤ B) (h : a * b = A * B)
     (hA : 0 < A) (hB : 0 < B) : a = A ∧ b = B := by

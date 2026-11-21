@@ -230,7 +230,6 @@ section OverF
 variable {F Ω : Type u} [Field F] [Field Ω] [Algebra F Ω] [DecidableEq Ω]
 variable {E E' : WeierstrassCurve F} [E.IsElliptic] [E'.IsElliptic]
 
-omit [DecidableEq Ω] in
 
 theorem galFF_bcEmb (g : Ω ≃ₐ[F] Ω) (f : E.toAffine.FunctionField) :
     galFF E g (bcEmb (F' := Ω) E f) = bcEmb (F' := Ω) E f := by
@@ -291,7 +290,6 @@ theorem exists_pointMap_isogBaseChange_eq [PerfectField F] [IsAlgClosed Ω] [Dec
       (E'.toAffine.baseChange_nonsingular (f := Algebra.ofId F Ω) (algebraMap F Ω).injective a b).mp h
     exact ⟨.some a b hab, rfl⟩
 
-variable (Ω) in
 
 noncomputable def pointHomOver [PerfectField F] [IsAlgClosed Ω] [DecidableEq F] (φ : Isogeny E E') :
     E.toAffine.Point →+ E'.toAffine.Point :=
@@ -310,7 +308,6 @@ theorem constMap_pointHomOver [PerfectField F] [IsAlgClosed Ω] [DecidableEq F] 
       (isogBaseChange (F' := Ω) φ).pointMap (constMap E Ω P) :=
   (exists_pointMap_isogBaseChange_eq (Ω := Ω) φ P).choose_spec.symm
 
-omit [DecidableEq Ω] in
 
 end OverF
 

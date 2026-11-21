@@ -119,7 +119,6 @@ theorem finrank_fibre (O M k : Type) [CommRing O] [IsDomain O] [AddCommGroup M] 
         (LocalizedModule.mkLinearMap p0.asIdeal.primeCompl M) hp]
   rw [h1, Module.rankAtStalk_baseChange, hlc.apply_eq_of_preconnectedSpace _ p0, h2]
 
-attribute [local instance] Ideal.Quotient.field in
 
 theorem count [IsDomain O] [Module.Finite O M] [Module.Projective O M] (P : Ideal O)
     [hP : P.IsMaximal] [Finite (O ⧸ P)] :

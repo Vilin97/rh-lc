@@ -104,10 +104,8 @@ def OneCoset (ϖ : 𝒪[k]) (ψ : AddChar k Circle) (ν : Measure k) (n : Type) 
             act t (chainLat ϖ c (stdLat k n)) = chainLat ϖ c (stdLat k n) ∧ h = r * t) ↔
           ∃ r ∈ R k n c 1, ∃ t ∈ T, ∃ j ∈ J, h = r * t * j
 
-open Classical in
 
 end Chain
 
-open Classical in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.ExponentTerms

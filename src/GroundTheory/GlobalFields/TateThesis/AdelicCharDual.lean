@@ -20,7 +20,6 @@ noncomputable section
 
 variable {K : Type*} [Field K] [NumberField K]
 
-variable (K) in
 
 def mixedToInfinite : mixedSpace K →+ InfiniteAdeleRing K :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace K).symm.toAddMonoidHom
@@ -53,7 +52,6 @@ theorem mixedToInfinite_mixedEmbedding (k : K) :
   rw [InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp]
   exact (InfiniteAdeleRing.ringEquiv_mixedSpace K).symm_apply_apply _
 
-omit [NumberField K] in
 
 theorem mixedTrace_homeomorphMixedSpace (x : InfiniteAdeleRing K) :
     mixedTrace K (homeomorphMixedSpace K x) = infiniteTrace K x := by

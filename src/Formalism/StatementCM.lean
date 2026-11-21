@@ -12,8 +12,6 @@ namespace Formalism
 
 def counts {l : ℕ} (Φ : Finset (ZMod l)ˣ) (σ : (ZMod l)ˣ) : Prop := σ ∉ Φ ∧ σ ≠ -1
 
-open Classical in
 
-open ArithmeticFunction Classical in
 
 end Formalism

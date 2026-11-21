@@ -20,20 +20,17 @@ namespace PositivityTheory.ThKW.LatB
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 variable {nS nT : ℕ} {Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) E)}
 
-variable (F) in
 
 def inrA : Af F →ₗ[F] AF F where
   toFun a := pairA F 0 a
   map_add' _ _ := Prod.ext (add_zero 0).symm rfl
   map_smul' c _ := Prod.ext (smul_zero c).symm rfl
 
-variable (F E) in
 
 def liftF : Af F ⊗[F] E →ₗ[F] AEF F E := TensorProduct.map (inrA F) LinearMap.id
 
 theorem liftF_tmul (a : Af F) (t : E) : liftF F E (a ⊗ₜ[F] t) = pairA F 0 a ⊗ₜ[F] t := rfl
 
-variable (E) in
 
 abbrev hatO : AddSubgroup (Af F ⊗[F] E) := GlobalTheory.AdLat.hat1 F (Set.range (algebraMap (𝓞 E) E))
 

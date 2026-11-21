@@ -321,7 +321,6 @@ theorem sigma_mem (hP : IsUnit P) (h : Pᴴ * Formalism.REAL.Jm ε * P = G) (hσ
   rw [← trRep_conj (σ := σ) hP g]
   exact rep_mem (gram_unit hP h) (isURepOn_trRep hP h hσ) hw (conj_mem_UH hP h hg)
 
-attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 
 theorem garding_mem [CompleteSpace H] (hP : IsUnit P) (h : Pᴴ * Formalism.REAL.Jm ε * P = G) (hσ : IsURepOn (UJset ε) σ)
     {φ : Matrix (Fin n) (Fin n) ℂ → ℝ} (hφ : ContDiff ℝ ∞ φ) (hφc : HasCompactSupport φ) (w : H) :
@@ -330,7 +329,6 @@ theorem garding_mem [CompleteSpace H] (hP : IsUnit P) (h : Pᴴ * Formalism.REAL
     ((contDiff_const.mul (GlobalTheory.GardingVec.contDiff_expProd Xs)).mul contDiff_const) fun t =>
     conj_mem_UJ hP h (expProd_mem_UH (gram_unit hP h) hX t)
 
-attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 
 def IsTest (φ : Matrix (Fin n) (Fin n) ℂ → ℝ) : Prop := ContDiff ℝ ∞ φ ∧ HasCompactSupport φ
 
@@ -367,7 +365,6 @@ theorem norm_gard_le (hσ : IsURepOn (UJset ε) σ) (φ : Matrix (Fin n) (Fin n)
   funext g
   rw [norm_smul, hσ.2.1 _ g.2, Real.norm_eq_abs]
 
-open MeasureTheory in
 
 theorem eq_zero_of_forall_test {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
     {F : Formalism.REAL.UJ ε → E} (hF : Continuous F)
@@ -434,7 +431,6 @@ theorem ext_inner_smooth [CompleteSpace H] (hP : IsUnit P) (h : Pᴴ * Formalism
 
 end Frame
 
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.IndefR.Mult in
 
 theorem sm_eq {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (τ : D.what₂.Tau) :
     M.sm τ = smSub (gramAt D V τ) (trRep (M.σ τ) (M.fr τ)) :=

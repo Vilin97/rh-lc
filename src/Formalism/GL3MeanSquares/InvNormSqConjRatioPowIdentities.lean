@@ -15,7 +15,6 @@ noncomputable section
 
 namespace Formalism.HermitianLattices.GlobalBoundRefinements
 
-open Formalism.HermitianLattices.GL2PrimeSums in
 
 def ShortIntervalLowerBound : Prop :=
   ∀ C₀ Cr cr cb : ℝ, 0 < C₀ → 0 < Cr → 0 < cr → 0 < cb →
@@ -32,9 +31,7 @@ def ShortIntervalLowerBound : Prop :=
           ∀ h : ℝ, h ≤ 1 → rhoErr Cr cr B X ≤ h / 100 → B ^ (7 : ℝ) ≤ h * X ^ ((1 : ℝ) / 3) →
             c * h * B ^ (-6 : ℝ) * X / Real.log X ≤ (π₁ (X * (1 + h)) : ℝ) - π₁ X
 
-open Formalism.HermitianLattices.GL2PrimeSums in
 
-open Formalism.HermitianLattices.GL2PrimeSums in
 
 def PrimeCountAsymptoticInProgressions (C₀ Cr cr cb : ℝ) : Prop :=
   ∀ m a : ℕ, 3 ≤ m → Nat.Coprime a m → ∃ (θ : ℤ) (β : ℝ) (η' : ℝ → ℝ), θ ∈ ({-1, 0, 1} : Set ℤ) ∧
@@ -44,17 +41,13 @@ def PrimeCountAsymptoticInProgressions (C₀ Cr cr cb : ℝ) : Prop :=
       |(m.totient : ℝ) * ((((Icc 1 ⌊Y⌋₊).filter (fun p => p.Prime ∧ p ≡ a [MOD m])).card : ℝ) + η' Y) - Emain θ β Y|
         ≤ rhoErr Cr cr (4 * m) Y * Emain θ β Y
 
-open Formalism.HermitianLattices.GL2PrimeSums in
 
 def ShortIntervalImpliesProgressions : Prop :=
   ShortIntervalLowerBound → ∀ C₀ Cr cr cb : ℝ, 0 < C₀ → 0 < Cr → 0 < cr → 0 < cb → PrimeCountAsymptoticInProgressions C₀ Cr cr cb →
     ∃ C₀' c : ℝ, 0 < C₀' ∧ 0 < c ∧ PrimesAPInterval C₀' Cr cr c
 
-open Formalism.HermitianLattices.GL2PrimeSums in
 
-open Classical in
 
-open Formalism.LogVandermondeBounds.StandardLattice in
 
 def LogLFunctionEulerBound : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K], Formalism.HermitianLatticesTheory.IsCMUnram K → ∀ M : ℕ, 2 ≤ M →

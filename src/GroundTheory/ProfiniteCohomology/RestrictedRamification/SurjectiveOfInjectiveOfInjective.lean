@@ -117,8 +117,6 @@ def evalChar {G : Type} [Group G] [TopologicalSpace G] (g : G) : (Additive G →
   map_zero' := rfl
   map_add' _ _ := rfl
 
-set_option maxHeartbeats 2000000 in
-include hℓ hS in
 
 theorem exists_gsVal_eq (v : HeightOneSpectrum (𝓞 K.1)) (hv : v ∉ S) (hF : FrobData K S ιs v) (n : ℕ)
     {A : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)} [IsDiscreteRep A] (y : cohomology A 2)
@@ -155,8 +153,6 @@ section H3
 variable (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1))) (ℓ : ℕ) (hℓ : ℓ.Prime)
   (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S) (ιs : LocalEmbeddings K)
 
-set_option maxHeartbeats 4000000 in
-include hℓ hS in
 
 theorem exists_sUnitsQuotDiv_gsQuotMor_eq (hF : ∀ v : HeightOneSpectrum (𝓞 K.1), v ∉ S → FrobData K S ιs v)
     (d : cohomology (gsDiv K S ιs ℤ) 2) (n : ℕ) (hd : ℓ ^ n • d = 0) :
@@ -216,8 +212,6 @@ def gsDivH2 (ιs : LocalEmbeddings K) :
   (cohomologyMap (sUnitsQuotDiv K S ιs) 2).hom.toAddMonoidHom.comp
     (cohomologyMap (gsQuotMor K S) 2).hom.toAddMonoidHom
 
-set_option maxHeartbeats 4000000 in
-include hℓ hS in
 
 theorem eq_zero_of_h3_sUnits_of_frob (ιs : LocalEmbeddings K)
     (hF : ∀ v : HeightOneSpectrum (𝓞 K.1), v ∉ S → FrobData K S ιs v)

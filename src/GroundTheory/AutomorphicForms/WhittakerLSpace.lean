@@ -39,7 +39,6 @@ omit [TopologicalSpace X] in
 theorem mem_vanishingOn {Z : Set X} {f : X → ℂ} : f ∈ vanishingOn Z ↔ ∀ x ∈ Z, f x = 0 :=
   Iff.rfl
 
-omit [TopologicalSpace X] in
 
 theorem isClosed_support_of_isLocallyConstant {f : X → ℂ} (hf : IsLocallyConstant f) :
     IsClosed (Function.support f) := by
@@ -177,7 +176,6 @@ theorem exists_isClopen_mem_disjoint {Q : Set X} (hQ : IsCompact Q) {y : X} (hy 
     exists_isCompact_isOpen_subset (hQ.isClosed.isOpen_compl.mem_nhds hy)
   exact ⟨V, ⟨hVc.isClosed, hVo⟩, hyV, Set.subset_compl_iff_disjoint_right.mp hVQ⟩
 
-omit [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X] in
 
 theorem mem_of_forall_fiber {Y : Type*} [TopologicalSpace Y] [T2Space Y] [LocallyCompactSpace Y]
     [TotallyDisconnectedSpace Y] {U C : Set X} (hC : IsClosed C) {p : X → Y}

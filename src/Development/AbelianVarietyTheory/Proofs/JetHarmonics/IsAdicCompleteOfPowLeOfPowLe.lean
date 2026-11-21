@@ -10,7 +10,6 @@ open GlobalTheory.AdicColimit
 
 namespace GlobalTheory
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry in
 
 theorem _root_.GlobalTheory.isAdicComplete_of_pow_le_of_pow_le (A : Type) [CommRing A] (J J' : Ideal A) (k l : ℕ)
     (h1 : J ^ k ≤ J') (h2 : J' ^ l ≤ J) (h : IsAdicComplete J A) : IsAdicComplete J' A := by

@@ -135,6 +135,5 @@ theorem frame_stdX (X : HidaSetting D) (u : D.what₂.Word) :
     simp
   · exact Nat.cast_ne_zero.2 (D.mem u).A.T_prime.ne_zero
 
-variable (D) in
 
 end Formalism.L2.SG.Pf.Rescale

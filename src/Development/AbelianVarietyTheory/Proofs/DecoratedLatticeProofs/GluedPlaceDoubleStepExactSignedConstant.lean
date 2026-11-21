@@ -44,7 +44,6 @@ theorem card_withLat_eq (Q Q₀ : Pair k n) : (withLat Q.lat).card = (withLat Q�
 theorem card_withLat_pos (Q : Pair k n) : 0 < (withLat Q.lat).card :=
   Finset.card_pos.2 ⟨Q, mem_withLat.2 rfl⟩
 
-open Classical in
 
 def pairCount (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (n : Type) [Fintype n] [DecidableEq n] : ℕ :=
@@ -67,7 +66,6 @@ end GlobalTheory.FinPl.VertexExactCount
 
 namespace GlobalTheory.FinPl.VertexExactCount
 
-open Classical in
 
 theorem vertexExact (D : D7) : VertexExact D := by
   intro k _ _ _ _ p q ψ χ hχ hIs

@@ -57,7 +57,6 @@ theorem defect_eq_one {G U : Type} [CommGroup G] [CommGroup U] (f b n : G → U)
 
 variable {S : Scheme.{0}}
 
-open CommPairing GlobalLift in
 
 theorem lift_pow (hG : GlobalFnsSt) (P : PolAV S) {T : Over S} {N M : ℕ} (hN : Odd N)
     {α : LB.Gen (LB.LinComb P.L (K := Fin 2) ![(snd T P.A).left, (snd T P.A ^ M).left] ![(M : ℤ) ^ 2, -1])}
@@ -115,7 +114,6 @@ theorem sval_sum {A : Over S} [GrpObj A] {L : LB A.left} {T : Over S} {a : ℤ} 
   refine (gs_res _ z _ hy _).trans ((gs_pull _ (fst T A).left z ⊤ trivial _).trans ?_)
   rw [← Over.comp_left, ptSecT, lift_fst]; rfl
 
-open CommPairing in
 
 theorem exists_root_stalk (hG : GlobalFnsSt) (P : PolAV S) {T : Over S} {N M : ℕ} (hN : Odd N)
     {rig : LB.Gen (P.L.pull (eSec P.A))} {x h w : T ⟶ P.A} (hx : x ^ N = 1) (hM : x ^ M = 1) (hw : w = x * h)

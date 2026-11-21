@@ -55,7 +55,6 @@ theorem rel_uniq_v {X : Over (Spec (CommRingCat.of k))} {w : viaT tk X ⟶ G'} {
   have hv' : v'.left ≫ pullback.snd G.hom g = X.hom := by simpa using Over.w v'
   rw [hv, hv']
 
-include hc hg in
 
 include hc hg in
 theorem rel_exists_v {X : Over (Spec (CommRingCat.of k))} (w : viaT tk X ⟶ G') :
@@ -121,11 +120,8 @@ variable {S S' : Scheme.{0}} {G : Over S} [GrpObj G] {G' : Over S'} [GrpObj G'] 
   (hc : ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsGrpPullback G' G f F) {k : Type} [CommRing k] {tk : Spec (CommRingCat.of k) ⟶ S'}
   {g : Spec (CommRingCat.of k) ⟶ S} (hg : tk ≫ f = g)
 
-include hc in
 
-include hc hg in
 
-include hc in
 
 end Count
 

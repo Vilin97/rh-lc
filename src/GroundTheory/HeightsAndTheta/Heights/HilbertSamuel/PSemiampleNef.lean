@@ -46,7 +46,6 @@ open GroundTheory.Heights₂.Heights.Bridge GroundTheory.Heights₂.Heights.Brid
 
 end SemiampleNefAlt
 
-open ReciprocityTheory.ChartRestriction.G.Geo SemiampleNefAlt in
 
 end
 

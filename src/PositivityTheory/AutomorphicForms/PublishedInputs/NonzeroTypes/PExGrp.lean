@@ -202,7 +202,6 @@ theorem res_div (μ ν : kˣ →* ℂˣ) : res (μ / ν) = res μ / res ν := by
 
 end P_exGrp
 
-open P_exGrp in
 
 theorem step_exGrp : ExistsGroupElementProp (k := k) := by
   intro n χ hχ

@@ -91,7 +91,6 @@ theorem step (hG : jumpWindows.G0) (S : Finset (Pl E)) (φ : XB E k) (g κ : GA 
         rw [map_mul, h5 _ _ _ hvw, mul_one]
         exact ho v hv fun h' => hv' (Finset.mem_insert_of_mem h')
 
-open jumpWindows.GeneralLinearEntryConvergence in
 
 theorem sph (hG : jumpWindows.G0) (S : Finset (Pl E)) (φ : XB E k)
     (hfix : ∀ w, w ∉ S → ∀ x ∈ GLnLocal.integralGL (w.adicCompletion E) k, Rt E k (fl k w x) φ = φ) :

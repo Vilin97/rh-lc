@@ -88,7 +88,6 @@ theorem P_iso (hh : ∀ x y, star (h x y) = h y x) {e : Fin r → V} (hee : ∀ 
   rw [LinearMap.map_sub₂, pair_first s e, map_sub (h u), pair_sum_zero h1, sub_zero,
     Finset.sum_eq_zero (fun a _ => by rw [h2 a, mul_zero]), sub_zero]
 
-variable (h) in
 
 def pi (e f : Fin r → V) : V →ₗ[K] V := LinearMap.id - mix h f e - mix h e f
 
@@ -129,7 +128,6 @@ section Gam
 variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V]
   {h : V →ₗ⋆[K] V →ₗ[K] K} {r : ℕ} {e fY f1 f2 : Fin r → V} {W : Submodule K V}
 
-variable (h e fY f1 f2 W) in
 
 def gam (hcod : ∀ v, P h e fY (pi h e f1 v) ∈ W) (g : W ≃ₗ[K] W) : V →ₗ[K] V :=
   mix h f1 e + mix h e f2 +

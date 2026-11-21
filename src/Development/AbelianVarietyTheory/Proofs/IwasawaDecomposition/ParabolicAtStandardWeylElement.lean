@@ -27,7 +27,6 @@ section Abstract
 variable {k : Type} [Field k] [NumberField k] (σ : k →+* ℂ) {W X : Type} [AddCommGroup W] [Module k W] [FiniteDimensional k W]
   [AddCommGroup X] [Module ℂ X] (ι : W →ₛₗ[σ] X)
 
-omit [NumberField k] [FiniteDimensional k W] in
 
 theorem aeval_read {φ : Module.End k W} {T : Module.End ℂ X} (h : ∀ x, T (ι x) = ι (φ x)) (p : k[X]) (x : W) :
     aeval T (p.map σ) (ι x) = ι (aeval φ p x) := by
@@ -114,7 +113,6 @@ open scoped TensorProduct
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] {n : ℕ}
 
-omit [StarRing E] in
 
 theorem frame_int {β β' : GL (Fin n) (E ⊗[F] Af F)} {Λ : Submodule (𝓞 E) (Fin n → E)} (h : IsFrame β Λ) (h' : IsFrame β' Λ)
     (i j : Fin n) : ((β'⁻¹ * β : GL (Fin n) (E ⊗[F] Af F)) : Matrix (Fin n) (Fin n) (E ⊗[F] Af F)) i j ∈ intAf F E := by
@@ -126,7 +124,6 @@ theorem frame_int {β β' : GL (Fin n) (E ⊗[F] Af F)} {Λ : Submodule (𝓞 E)
   have h2 := (h' _).1 h1 i
   rwa [Matrix.mulVec_mulVec, ← Units.val_mul, Matrix.mulVec_single_one] at h2
 
-omit [StarRing E] in
 
 theorem princ_frame {β β' : GL (Fin n) (E ⊗[F] Af F)} {Λ : Submodule (𝓞 E) (Fin n → E)} (h : IsFrame β Λ) (h' : IsFrame β' Λ)
     {x : GL (Fin n) (E ⊗[F] Af F)} (hx : x ∈ St β) : x ∈ St β' ∧ ∀ PP, redFn β PP x = 1 → redFn β' PP x = 1 := by
@@ -191,7 +188,6 @@ theorem eig_conj (θ : Formalism.IndefR.Datum.InfFam D) (M : DSModel V S) (M' : 
     simp only [e']
     rw [← star_sum, ha', star_mul']
 
-variable (V S) in
 
 def Occ (J : Set (GA D V)) (I : Finset (GA D V) → ℂ → Prop) : Prop :=
   ∃ θ : Formalism.IndefR.Datum.InfFam D, IsInfFam θ ∧ ∃ M : DSModel V S, ∃ U ∈ Mult θ M J fun _ => 1, U ≠ 0 ∧
@@ -242,7 +238,6 @@ theorem levTriv_eq {T : Type} {L : LevCh D T} {μ0 : T} (hL : L.Is μ0) (i : Fin
     exact Subgroup.mem_iInf.2 fun PP => Subgroup.mem_iInf.2 fun hP =>
       Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 ht PP) ((hL.Pg PP).1 hP)
 
-open Classical in
 
 def parOf (W : HSp D) (l : D.what₂.Tau → (D.host.E →+* ℂ)) (ρ : D.what₂.Tau) : SPar :=
   let τ : D.what₂.Tau := if h : ∃ τ, l τ = tauE D ρ ∨ l τ = (starRingEnd ℂ).comp (tauE D ρ) then h.choose else ρ
@@ -362,7 +357,6 @@ theorem mem_mult_iff {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {θ : For
     U ∈ Mult θ M J χ ↔ ∃ s : Set (MMap M), (∀ T ∈ s, IsMultMap θ M J χ T) ∧ U ∈ Submodule.span ℂ s :=
   ⟨fun h => ⟨_, fun _ hT => hT, h⟩, fun ⟨_, hs, h⟩ => Submodule.span_mono hs h⟩
 
-set_option maxHeartbeats 4000000 in
 
 theorem boundAt_tr (X X' : Stages) (h : X.B.toPre = X'.B.toPre) (f : Fr X.B.toPre) (f' : Fr X'.B.toPre) (hf : HEq f f')
     (S : Finset ℂ) (H : ∀ i, BoundAt (Fr.at X f) i S) : ∀ i, BoundAt (Fr.at X' f') i S := by
@@ -419,7 +413,6 @@ theorem exists_bound (hU : GlobalTheory.Published.DiscreteSeriesUpqUnique) {D : 
 def Bounds (Q : Pre) (f : Fr Q) (S : Finset ℂ) : Prop :=
   (∀ z ∈ S, IsAlgebraic ℚ z) ∧ ∀ (X : Stages) (f' : Fr X.B.toPre), Q = X.B.toPre → HEq f f' → ∀ i, BoundAt (Fr.at X f') i S
 
-open Classical in
 
 def gens (Q : Pre) (f : Fr Q) : Finset ℂ := if h : ∃ S, Bounds Q f S then h.choose else ∅
 

@@ -121,7 +121,6 @@ theorem exists_levelInfl_eq (n : ℕ) (x : cohomology (limitRep K) n) :
   apply (ModuleCat.mono_iff_injective ((cochainsComplex (limitRep K)).iCycles n)).1 inferInstance
   rw [iCycles_cyclesMap_apply, hw, hy₀]
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_levelTransition_eq_zero (n : ℕ) (p : GLevel K) (y : cohomology (ideleRep K.1 p.1.1) n)
     (hy : (levelInfl K p.1 n).hom y = 0) :

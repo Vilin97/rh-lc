@@ -24,14 +24,11 @@ def IsDyIdem (v : HeightOneSpectrum (𝓞 D.host.F)) (e : AE D) : Prop :=
   IsSplitIdem D e ∧ finPart D e ∈ intAE D ∧
     ∃ ε : AF D.host.F, IsPlaceIdem D v ε ∧ e + cA D e = algebraMap (AF D.host.F) (AE D) ε
 
-open Classical in
 
 theorem fstA_pairA (x : Ainf D.host.F) (y : Af D.host.F) : fstA D.host.F (pairA D.host.F x y) = x := rfl
 theorem sndA_pairA (x : Ainf D.host.F) (y : Af D.host.F) : sndA D.host.F (pairA D.host.F x y) = y := rfl
 
-open Classical in
 
-open Classical in
 
 section Sym
 
@@ -71,7 +68,6 @@ theorem open_neighbourhood_set_eq (Λ : AddSubgroup (WO S T)) :
   · ext i j; exact h i j
   · have := congrFun (congrFun h i) j; simpa using this
 
-open Classical in
 
 end Phi
 

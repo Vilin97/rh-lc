@@ -30,7 +30,6 @@ def resSymmHomOfIso (e : H ≃ₜ* G) {A : Rep.{u} k G} {B : Rep.{u} k H}
     change A.ρ (e (e.symm g)) _ = _
     rw [e.apply_symm_apply]⟩
 
-omit [IsTopologicalGroup G] [IsTopologicalGroup H] in
 
 theorem continuous_mulEquiv_toMonoidHom (e : H ≃ₜ* G) : Continuous e.toMulEquiv.toMonoidHom :=
   e.continuous_toFun

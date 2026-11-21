@@ -225,7 +225,6 @@ theorem exists_coord (X A₀ : Scheme.{0}) [IsIntegral X] (π : X ⟶ Sp ℤ) [F
     rw [← h, valF_eq_of_gm z (show (x' ≫ W₀.ι) z ∈ L.U j ⊓ a ⁻¹ᵁ W from ⟨h₁, h₂⟩) (mem_pull.2 h₁) (hs j _ x' z h₁ h₂)]
 
 end NormGlue
-open NormGlue in
 
 theorem exists_lineBundle_of_normOne_generators : ∀ (X A₀ : Scheme.{0}) [IsIntegral X] (π : X ⟶ Sp ℤ) [Flat π] [LocallyOfFiniteType π], Geo.Tor.IsNormalScheme X → ∀ (a : A₀ ⟶ X) [IsOpenImmersion a] (L : LB A₀), L.IsLB → ∀ ν : Nrm L, IsNrm L ν → (∀ w : X, IsClosed ({w} : Set X) → ∃ (W : X.Opens) (W₀ : A₀.Opens) (gen₀ : LB.Gen (L.pull W₀.ι)), w ∈ W ∧ (W₀ : Set A₀).Nonempty ∧ gen₀.IsGen ∧ ∀ (p : ℕ) [Fact p.Prime] (x : Sp (PadicAlgCl p) ⟶ W₀.toScheme), IntAt (W₀.ι ≫ a) W x → NormOne ν gen₀ x) → ∃ (M : LB X) (w : LB.Iso (M.pull a) L) (D : M.ι → A₀.Opens), M.IsLB ∧ w.IsGen ∧ (∀ i, (D i : Set A₀).Nonempty) ∧ ∀ (p : ℕ) [Fact p.Prime] (x : Sp (PadicAlgCl p) ⟶ A₀) (i : M.ι) (j : L.ι), IntAt a (M.U i) x → Set.range x ⊆ L.U j → Set.range x ⊆ D i → ‖valF x _ (w.s (j, fun _ => i)).val‖ * ν p x j = 1 := by
   intro X A₀ _ π _ _ hX a _ L hL ν hν H

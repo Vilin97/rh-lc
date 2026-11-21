@@ -94,7 +94,6 @@ def IsNewform {N : ℕ} {k : ℤ} (f : CuspForm (CongruenceSubgroup.Gamma1 N) k)
       (f' : CuspForm (CongruenceSubgroup.Gamma1 M) k), IsNormEigenform f' χ' ∧
       ∀ᶠ p in cofinite, p.Prime → coef f' p = coef f p
 
-open Classical in
 
 def twC (l : ℕ) [Fact l.Prime] (j : ℤ) (φ : GQ →* (QbarL l)ˣ) : GQ →* (QbarL l)ˣ := epsL l ^ j * φ
 
@@ -169,7 +168,6 @@ def SelP (P : ℕ → ValuationSubring QbarQ) (l : ℕ) [Fact l.Prime] {n : ℕ}
     (L : Submodule (QbarL l) (GQ → (Fin n → QbarL l))) : Submodule (QbarL l) (GQ → (Fin n → QbarL l)) :=
   Z1 ρ ⊓ unrP P l ρ ⊓ L
 
-open Classical in
 
 structure KatoSys (P : ℕ → ValuationSubring QbarQ) (l : ℕ) [Fact l.Prime] (e : ℕ) {N : ℕ}
     (f : CuspForm (CongruenceSubgroup.Gamma1 N) ((2 * e + 1 : ℕ) : ℤ)) (ι : QbarL l →+* ℂ)
@@ -410,7 +408,6 @@ noncomputable def extendToGroupWithForm {O : Type} [CommRing O] (c : Fin 3 → G
   open Classical in
   if g ∈ K.fixingSubgroup then diagN c g else diagN c (g * cc) * Jad3 O
 
-open Classical in
 
 noncomputable def extGG3 {A : Type} [CommRing A] (K : IntermediateField ℚ QbarQ) (cc : GQ)
     (H : Subgroup GQ) (s : K.fixingSubgroup →* GL (Fin 3) A) (g : H) : Matrix (Fin 3) (Fin 3) A :=
@@ -419,7 +416,6 @@ noncomputable def extGG3 {A : Type} [CommRing A] (K : IntermediateField ℚ Qbar
     (s ⟨(g : GQ) * cc, h'⟩ : Matrix (Fin 3) (Fin 3) A) * Jad3 A
   else 0
 
-open Classical in
 
 def IsLiftGG3 (O : Type) [CommRing O] [IsLocalRing O] (H GK : Subgroup GQ) (η : GQ → O)
     (c0 : GQ → Matrix (Fin 3) (Fin 3) O) (A : Type) [CommRing A] [IsLocalRing A] [Algebra O A]
@@ -431,7 +427,6 @@ def IsLiftGG3 (O : Type) [CommRing O] [IsLocalRing O] (H GK : Subgroup GQ) (η :
     ∀ h : H, h.1 ∈ U → ∀ i j, (r h - 1) i j ∈ maximalIdeal A ^ m) ∧
   (∀ h : H, (r h).map (residue A) = (c0 h).map (fun x => residue A (algebraMap O A x)))
 
-open Classical in
 
 def IsUnivLiftGG3 (O : Type) [CommRing O] [IsLocalRing O] (H GK : Subgroup GQ) (η : GQ → O)
     (c0 : GQ → Matrix (Fin 3) (Fin 3) O)

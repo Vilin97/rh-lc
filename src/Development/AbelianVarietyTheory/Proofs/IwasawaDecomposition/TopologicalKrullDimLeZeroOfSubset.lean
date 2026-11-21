@@ -165,7 +165,6 @@ section Cut
 
 variable {F : Type} [Field F] (Y : Var F) {Δ : Y.Dv} {n : ℕ} (b : Fin n → Y.H0 Δ)
 
-omit Y in
 
 end Cut
 

@@ -130,7 +130,6 @@ theorem mseg_map (y : (Σ k, J k) → Ω) (c : ∀ k, J k) :
     mseg (fun v => algebraMap Ω Ω' (y v)) c = algebraMap Ω Ω' (mseg y c) := by
   simp [mseg, map_prod]
 
-omit [∀ k, Fintype (J k)] in
 
 theorem map_mem_chartRing (y : (Σ k, J k) → Ω) (c : ∀ k, J k) {a : Ω} (ha : a ∈ chartRing O (mseg y) c) :
     algebraMap Ω Ω' a ∈ chartRing O' (mseg (fun v => algebraMap Ω Ω' (y v))) c := by

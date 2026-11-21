@@ -92,7 +92,6 @@ theorem exists_powOp {w : HeightOneSpectrum (𝓞 E)} (hw : IsSplitAt w) (n : �
     rw [PowSatU, dif_pos h, ← hz σ _ hB]
     exact hact U hU σ hσ φ hφ hx
 
-open UpperTheory.Gal.Gen in
 
 theorem exists_testOp (K : Subgroup (UA E a)) {w : HeightOneSpectrum (𝓞 E)} (hw : IsSplitAt w) (hK : HypAt K w)
     (Φ : MvPolynomial (Fin a) ℂ) : ∃ (f : UA E a →₀ ℂ) (η : Submodule ℂ (UA E a → ℂ) → ℂ),
@@ -140,7 +139,6 @@ theorem exists_testOp (K : Subgroup (UA E a)) {w : HeightOneSpectrum (𝓞 E)} (
         exact h2
       exact hgen _ hs
 
-open UpperTheory.Gal.Gen in
 
 theorem exists_scale {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (lam : (E →+* ℂ) → DomWeight a) (f : UA E a →₀ ℂ)
     (hf : ∀ g ∈ f.support, g ∈ finU E a) : ∃ c : ℂ, c ≠ 0 ∧ IntW ι lam (c • f) ∧ Loc.IntL ι lam (c • f) := by

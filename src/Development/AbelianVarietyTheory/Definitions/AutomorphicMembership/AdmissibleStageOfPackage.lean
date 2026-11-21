@@ -38,7 +38,6 @@ section Stages
 variable {D : D7} {N j : ℕ} {Comp : Type} {jC : ∀ (p : ℕ) [Fact p.Prime], PlL D p → (DV.KW p →+* ℂ)} {ng : NgPkg}
   (P : PadPkg D N j Comp jC ng)
 
-open PadPkg in
 
 end Stages
 

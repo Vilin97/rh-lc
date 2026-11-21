@@ -176,7 +176,6 @@ theorem jPer_congr_above (M : GlobalTheory.FunObj.Vol G) (t : T) (C C' : BiFam G
     exact jPer_congr_above M t C C' F σ (j + 1 + 1) _ _ (by obtain ⟨a, ha⟩ := he; exact ⟨a + 1, by omega⟩)
       fun i hi hji => hC i hi (by omega)
 
-omit hM in
 
 theorem jPer_congr_window (M : GlobalTheory.FunObj.Vol G) (t : T) (C C' : BiFam G) (F : Fn G (.grid D.R.m D.R.m)) (k : ℕ)
     (hk4 : k + 1 + 1 + 2 ≤ D.R.m) (hC : ∀ i, Even i → i ≠ k → i ≠ k + 1 + 1 → C i = C' i)

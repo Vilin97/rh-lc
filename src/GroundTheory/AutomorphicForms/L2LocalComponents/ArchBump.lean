@@ -156,7 +156,6 @@ open scoped Classical
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-open Reduction in
 
 theorem realCompM_mem_unitaryGroup {k : archGroup K n} (hk : k ∈ archCompact K n)
     (v : {w : InfinitePlace K // IsReal w}) :
@@ -188,7 +187,6 @@ theorem realCompM_mem_unitaryGroup {k : archGroup K n} (hk : k ∈ archCompact K
     _ = euclidNorm y := hk'.1 w y
     _ = euclidNorm z := by rw [← hy]; exact (euclidNorm_map ψ.toRingHom hψ y).symm
 
-open Reduction in
 
 theorem complexCompM_mem_unitaryGroup {k : archGroup K n} (hk : k ∈ archCompact K n)
     (v : {w : InfinitePlace K // IsComplex w}) :

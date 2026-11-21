@@ -284,7 +284,6 @@ theorem mem_of_invariant [TopologicalSpace G] [IsTopologicalGroup G] (ρ : Repre
 
 end GlobalTheory.SphericalSpan
 
-open GlobalTheory.SphericalSpan in
 
 theorem GlobalTheory.spherical_eigenvector_generates_irreducible :
     ∀ {G V : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup V]

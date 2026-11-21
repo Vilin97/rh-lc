@@ -345,7 +345,6 @@ theorem embV_comm (V : HSp D) {v v' : HeightOneSpectrum (𝓞 D.host.F)} (h : v 
   apply Units.ext
   exact extM_comm (jv v) (jv v') (jv_orth h) _ _
 
-open Classical in
 
 def embOn (V : HSp D) (T : Set (HeightOneSpectrum (𝓞 D.host.F))) (s : ∀ v ∈ T, SplitD D v)
     (v : HeightOneSpectrum (𝓞 D.host.F)) : GL (Fin V.rank) (v.adicCompletion D.host.F) →* GA D V :=
@@ -402,7 +401,6 @@ theorem one_mem_KpC (V : HSp D) (N : ℕ) : (1 : GA D V) ∈ Formalism.L2.NTheta
   refine ⟨⟨(GfC V).one_mem, fun y => by rw [hf, Matrix.one_mulVec], fun v hv => absurd hv (Finset.notMem_empty v)⟩,
     fun y _ => ⟨0, zero_mem _, by rw [hf, sub_self, Matrix.zero_mulVec, smul_zero]⟩⟩
 
-open Classical in
 
 end Level
 

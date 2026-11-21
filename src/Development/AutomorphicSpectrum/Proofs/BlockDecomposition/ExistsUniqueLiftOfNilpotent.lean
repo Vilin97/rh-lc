@@ -59,7 +59,6 @@ theorem iInf_pow_eq_bot (hJ : IsAdicComplete J B) : ⨅ i : ℕ, J ^ i = ⊥ := 
 
 end GlobalTheory.CompanionTheory.EtaleLift
 
-open GlobalTheory.CompanionTheory.EtaleLift in
 
 theorem GlobalTheory.CompanionTheory.EtaleLift.etLift_of_isAdicComplete :
     ∀ {B : Type} [CommRing B] (J : Ideal B), IsAdicComplete J B → EtLift J := by

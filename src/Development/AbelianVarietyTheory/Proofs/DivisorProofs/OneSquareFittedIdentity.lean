@@ -26,4 +26,3 @@ theorem big_std : GlobalTheory.RowClaim.Big fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => 
 
 end GlobalTheory.BigTop.Fun.OneSqTie
 
-open GlobalTheory.BigTop.Fun.OneSqTie in

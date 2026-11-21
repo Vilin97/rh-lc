@@ -43,7 +43,6 @@ def pieceIso (N₀ N₁ : FinGradedSub (S := S) (x := x) E) {g : E} {e : ℤ} {p
 
 end SnapperQuotFilt
 
-open SnapperQuotFilt in
 
 theorem SnapperQuotFilt.proof : SnapperQuotFilt.Statement.{u, v, w} := by
   intro k _ Ω _ _ N x E _ _ _ _ F₁ F₂ hfg hle J hJ hxJ hJF

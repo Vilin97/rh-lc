@@ -14,9 +14,6 @@ namespace GlobalTheory.Published.JacquetShalikaModel
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 
-open NumberField IsDedekindDomain in
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] in
-omit [IsTotallyComplex E] in
 
 theorem _root_.GlobalTheory.Published.JacquetShalikaModel.infinite_places : Infinite (HeightOneSpectrum (𝓞 E)) := by
   classical

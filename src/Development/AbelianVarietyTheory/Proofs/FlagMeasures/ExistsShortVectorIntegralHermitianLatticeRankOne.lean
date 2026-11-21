@@ -18,7 +18,6 @@ open GlobalTheory.Mass.DiscOrder
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-omit [StarRing K] [Module K V] [IsScalarTower (𝓞 K) K V] in
 
 theorem idxN_span (x : V) (S : Submodule (𝓞 K) V) :
     idxN (Submodule.span (𝓞 K) {x}) S =

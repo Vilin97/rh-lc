@@ -60,7 +60,6 @@ noncomputable def indAddHomComplex {G : Type} [Group G] [Finite G] (H : Subgroup
     haveI := Fintype.ofFinite G
     simp only [ind, Pi.add_apply, subgroupFunctionExtendByZero_add, finsum_eq_sum_of_fintype, Finset.sum_add_distrib, mul_add])
 
-open Polynomial in
 
 theorem _root_.GlobalTheory.BI.virt_mul_comap_conj_ind_linear : ∀ (G : Type) [Group G] [Finite G],
     (∀ a ∈ _root_.GlobalTheory.BI.Virt ℂ ℂ G, ∀ b ∈ _root_.GlobalTheory.BI.Virt ℂ ℂ G,

@@ -13,7 +13,6 @@ namespace GlobalTheory.EmbUnitary
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-open Classical in
 
 def twist (τ : E →+* ℂ) : ℂ →+* ℂ :=
   if (InfinitePlace.mk τ).embedding = τ then RingHom.id ℂ else starRingEnd ℂ

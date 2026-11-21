@@ -54,13 +54,11 @@ theorem YD_xiExt (P : PhiMod O K l e a ι) (α : ℕ)
   rw [AddSubmonoidClass.coe_finsetSum]
   rfl
 
-omit [NeZero a] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] in
 
 theorem cst_mem_Mext (P : PhiMod O K l e a ι) (d : P.D) : (cst d : Vec K a ι) ∈ P.Mext (invL l (S O K e)) := by
   refine mem_tot.2 fun τ i => ?_
   exact HasK.C_mem (d τ i)
 
-omit [NeZero a] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] in
 
 theorem descN_mem_Mext (P : PhiMod O K l e a ι) (i : ℕ) (w : Vec K a ι) (hw : w ∈ P.Mext (invL l (S O K e))) :
     (fun τ j => descN K i (w τ j)) ∈ P.Mext (invL l (S O K e)) := by
@@ -122,8 +120,6 @@ end GlobalTheory.GalStep
 
 namespace GlobalTheory.GalStep
 variable {l : ℕ} [Fact l.Prime]
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 def rhoDHom {LL : FinExt l} {ι : Type} (T : QLat LL)
     (jD : (ι → OD l ↥(OL LL)) ≃ₗ[OD l ↥(OL LL)] TW (OD l ↥(OL LL)) T) (g : Gl l) :

@@ -56,7 +56,6 @@ theorem mem_unitsLevel {n : ℕ} {x : (v.adicCompletion K)ˣ} :
       Valued.v ((x : v.adicCompletion K) - 1) ≤ exp (-(n : ℤ)) :=
   Iff.rfl
 
-variable {v} in
 
 theorem mem_unitsLevel_of_one_le {n : ℕ} (hn : 1 ≤ n) {x : (v.adicCompletion K)ˣ} :
     x ∈ unitsLevel v n ↔ Valued.v ((x : v.adicCompletion K) - 1) ≤ exp (-(n : ℤ)) := by

@@ -242,7 +242,6 @@ theorem sum_lintegral_logTail_le [CompactSpace X] [T2Space X] (hYo : IsOpen Yo)
 
 end TailLogOfMass
 
-open TailLogOfMass in
 
 theorem TailLogOfMass.proof : TailLogOfMass.Statement := by
   intro X _ _ _ D A Yo r th u hYo hr hre hth hu hnn CE hT

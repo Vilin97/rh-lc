@@ -66,7 +66,6 @@ theorem prodTerm_eq_mul_char (m : Fin n → A.X) (v : A.V) :
   simp only [term, Prod.fst_add, Prod.snd_add, AddMonoidHom.add_apply, zero_add, one_smul, e_add]
   ring
 
-variable {a} in
 
 theorem prodTerm_add_Pw_y (ha : ∑ i, a i = 0) (m : Fin n → A.X) (y : A.X) (v : A.V) :
     A.prodTerm th w a (fun i => m i + y) v =
@@ -82,7 +81,6 @@ theorem prodTerm_add_Pw_y (ha : ∑ i, a i = 0) (m : Fin n → A.X) (y : A.X) (v
   rw [Finset.prod_mul_distrib, h1, one_mul, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
     Fintype.card_fin]
 
-variable {a th} in
 
 theorem prodTerm_add_periodTranslation_lattice (h : th ∈ A.Theta 1 0) (ha : ∑ i, a i = 0) (m : Fin n → A.X) (l : A.abelian₂) (v : A.V) :
     A.prodTerm th w a m (v + A.P0 (La.mk 0 0 l)) = A.ah l v.2 ^ n * A.prodTerm th w a m v := by
@@ -103,7 +101,6 @@ theorem prodTerm_add_periodTranslation_lattice (h : th ∈ A.Theta 1 0) (ha : �
   rw [Finset.prod_mul_distrib, h1, one_mul, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
     Fintype.card_fin]
 
-variable {a} in
 
 theorem term_prodCoeff (ha : ∑ i, a i = 0) (α μ : A.X) (v : A.V) :
     A.term n α (A.prodCoeff th w a α) μ v * eTwoPi (w * A.exponent n α μ) =
@@ -209,7 +206,6 @@ theorem exists_translates_ne_zero (h0 : th ≠ 0) {j : ℕ} (hj : 2 ≤ j) (v : 
   · rw [Fin.sum_univ_succ]; simp [Nat.cast_smul_eq_nsmul]
   · exact Fin.cases hx2 (fun _ => hx1) i
 
-omit hT h hw in
 
 theorem exists_Sum_ne_zero_at (A : AnArc O) {T₀ : ℝ} (hT : A.IsConvLine T₀) {th₁ : (Fin A.gB → ℂ) → ℂ}
     (h : th₁ ∈ A.Theta 1 0) (h0 : th₁ ≠ 0) {w : ℂ} (hw : T₀ < w.im) {j : ℕ} (hj : 2 ≤ j) (v : A.V) :

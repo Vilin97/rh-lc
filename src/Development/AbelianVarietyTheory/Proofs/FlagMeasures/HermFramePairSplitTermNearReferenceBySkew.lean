@@ -304,7 +304,6 @@ section Integers
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-omit [StarRing K] in
 
 theorem exists_ext (L : Submodule (𝓞 K) V) (σ : L →ₗ[𝓞 K] V) : ∃ Ψ : V →ₗ[K] V, ∀ y : L, Ψ y = σ y := by
   have hB : Module.Baer (𝓞 K) V := by

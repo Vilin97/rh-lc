@@ -179,7 +179,6 @@ private theorem measurable_bInt_prod {σ : G → (HH →L[ℂ] HH)} (hσ : Forma
     (continuous_enorm.comp (hW'.comp (continuous_fst.comp continuous_snd))).measurable
   exact (h1.mul h2).mul h3
 
-set_option maxHeartbeats 800000 in
 
 private theorem lintegral_const_mul_bInt_eq_iterated {ν μS ν' μS' : Measure G} [SFinite ν] [SFinite μS]
     [SFinite ν'] [SFinite μS'] {σ : G → (HH →L[ℂ] HH)} (hσ : Formalism.L2.SG.Pf.EnergyAbs.IsUnitRep σ) (w : HH) {W : G → V}

@@ -47,7 +47,6 @@ def IsoBlock {n a : ℕ} (r : Γ →* GL (Fin n) O) (ρ : Γ →* GL (Fin a) O) 
 def BlockSemisimple {a : ℕ} (ρ : Γ →* GL (Fin a) O) (χ : ℕ → (Γ →* Oˣ)) (t : ℕ) : Prop :=
   (blockRep ρ χ t).IsSemisimpleRepresentation
 
-omit [IsDomain O] in
 
 def LatticeContinuous [TopologicalSpace Γ] [TopologicalSpace O] {a : ℕ}
     (ρ : Γ →* GL (Fin a) O) : Prop :=

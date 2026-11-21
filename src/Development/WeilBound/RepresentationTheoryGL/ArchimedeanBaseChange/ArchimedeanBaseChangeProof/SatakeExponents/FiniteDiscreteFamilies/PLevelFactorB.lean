@@ -30,7 +30,6 @@ theorem fixed_ne_bot_mono {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V]
   obtain ⟨v, hv, hv0⟩ := (Submodule.ne_bot_iff _).1 h
   exact (Submodule.ne_bot_iff _).2 ⟨v, fun g => hv ⟨g.1, hle g.2⟩, hv0⟩
 
-variable (k n) in
 
 def coreH (K : Subgroup (GL n k)) : Subgroup (GL n k) :=
   ((K.subgroupOf (KO k n)).normalCore).map (KO k n).subtype
@@ -76,7 +75,6 @@ theorem isOpen_coreH {K : Subgroup (GL n k)} (hK : IsOpen (K : Set (GL n k))) :
     rw [hts] at this
     exact this
 
-variable (k) in
 
 def Ki (e : (Σ a, m a) ≃ n) (H : Subgroup (GL n k)) (a : α) : Subgroup (GL (m a) k) :=
   H.comap ((leviEmb k e).comp (MonoidHom.mulSingle (fun b => GL (m b) k) a)) ⊓ KO k (m a)

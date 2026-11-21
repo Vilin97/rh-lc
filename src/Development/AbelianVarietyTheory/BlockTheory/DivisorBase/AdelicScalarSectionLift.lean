@@ -21,11 +21,8 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-variable (D) in
 
-variable (D) in
 
-variable (D) in
 
 variable {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
 
@@ -37,7 +34,6 @@ def level (F : Face D A) : Option Bool → LevelP R.Pg D.R.r ℂ
   | none => R.triv
   | some b => R.levL F b (sg0 D A)
 
-open Classical in
 
 def PrimeToHost : Prop :=
   ∀ PP ∈ R.Pg, ((D.host.QS * D.host.q * D.host.d * Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal

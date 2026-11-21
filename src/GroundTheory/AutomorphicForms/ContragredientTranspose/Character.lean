@@ -77,7 +77,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   (μ : Measure G) [μ.IsHaarMeasure]
   {V : Type*} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V}
 
-omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 
 theorem range_heckeLin_le (hρ : IsSmooth ρ) (f : locallyConstantCompactSupport G ℂ ℂ)
     {K : Subgroup G} (hK : ∀ k ∈ K, ∀ x, (f : G → ℂ) (k * x) = (f : G → ℂ) x) :
@@ -92,19 +91,16 @@ theorem finiteDimensional_range_heckeLin (hρ : IsAdmissible ρ)
   have := hρ.2 K hKc K.isOpen
   exact Submodule.finiteDimensional_of_le (range_heckeLin_le μ hρ.1 f (K := K) hK)
 
-omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 
 theorem heckeLin_add (hρ : IsSmooth ρ) (f g : locallyConstantCompactSupport G ℂ ℂ) :
     heckeLin μ hρ (f + g) = heckeLin μ hρ f + heckeLin μ hρ g :=
   LinearMap.ext fun v => heckeAct_add_left f.2 g.2 (hρ v)
 
-omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 
 theorem heckeLin_smul (hρ : IsSmooth ρ) (c : ℂ) (f : locallyConstantCompactSupport G ℂ ℂ) :
     heckeLin μ hρ (c • f) = c • heckeLin μ hρ f :=
   LinearMap.ext fun v => heckeAct_smul_left c f.2 (hρ v)
 
-variable (ρ) in
 
 def distChar (hρ : IsAdmissible ρ) : Module.Dual ℂ (locallyConstantCompactSupport G ℂ ℂ) where
   toFun f := finTrace (heckeLin μ hρ.1 f)
@@ -129,7 +125,6 @@ theorem distChar_eq_trace (hρ : IsAdmissible ρ) (f : locallyConstantCompactSup
   have := hρ.2 K hKc hKo
   rw [distChar_apply, finTrace_eq_trace _ _ (range_heckeLin_le μ hρ.1 f hK)]
 
-variable (ρ) in
 
 def repEquiv (g : G) : V ≃ₗ[ℂ] V where
   toLinearMap := ρ g
@@ -141,7 +136,6 @@ def repEquiv (g : G) : V ≃ₗ[ℂ] V where
     change (ρ g * ρ g⁻¹) v = v
     rw [← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
 
-omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 
 theorem heckeAct_biTranslL [μ.IsMulRightInvariant] (hρ : IsSmooth ρ) (g : G)
     (f : locallyConstantCompactSupport G ℂ ℂ) (v : V) :
@@ -173,7 +167,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   (μ : Measure G) [μ.IsHaarMeasure]
   {V : Type*} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V}
 
-omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 
 theorem heckeAct_contragredient_apply [μ.IsInvInvariant] (hρ : IsSmooth ρ)
     (f : locallyConstantCompactSupport G ℂ ℂ) (ξ : smoothVectors (Representation.dual ρ)) (v : V) :
@@ -258,7 +251,6 @@ theorem isAdmissible_comp (α : G ≃* G) (hα : Continuous α) (hα' : Continuo
   · rw [Subgroup.coe_map]
     exact (mulEquivHomeo α hα hα').isOpenMap _ hKo
 
-omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 
 theorem heckeAct_comp (α : G ≃* G) (hα : Continuous α) (hα' : Continuous α.symm)
     (hμ : μ.map α = μ) (f : locallyConstantCompactSupport G ℂ ℂ) {v : V}
@@ -309,7 +301,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   {V : Type*} [AddCommGroup V] [Module ℂ V]
   {K : Subgroup G} (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G))
 
-variable (ρ : Representation ℂ G V) in
 
 def levelLin (h : HeckeAlgebraLevel μ K hKc hKo) : fixedVectors ρ K →ₗ[ℂ] fixedVectors ρ K where
   toFun v := h • v

@@ -181,9 +181,6 @@ private lemma uniqueFactorizationMonoid_localization_of_height_le
     have hp : p = ⊥ := le_bot_iff.1 (hbot ▸ IsLocalRing.le_maximalIdeal (Ideal.IsPrime.ne_top ‹_›))
     exact absurd hph (by rw [hp, Ideal.height_bot]; exact zero_ne_one)
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-attribute [local instance] Over.cartesianMonoidalCategory in
-open IsLocalRing in
 
 theorem _root_.GlobalTheory.uniqueFactorizationMonoid_of_isRegularRing_of_isLocalRing :
     (∀ (R : Type) [CommRing R] [IsRegularLocalRing R] (M : Type) [AddCommGroup M] [Module R M]

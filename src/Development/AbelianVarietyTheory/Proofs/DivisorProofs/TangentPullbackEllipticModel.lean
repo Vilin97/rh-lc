@@ -75,9 +75,7 @@ theorem exists_pow_pullback (p : Out.IsPowGrp G₀ G j) (p' : Out.IsPowGrp G₀'
 
 end Pull
 
-open PowUnif in
 
-open PowUnif in
 
 end GlobalTheory.PowFibre
 

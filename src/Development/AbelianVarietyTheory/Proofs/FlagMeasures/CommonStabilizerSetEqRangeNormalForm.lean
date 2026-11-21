@@ -370,7 +370,6 @@ end GlobalTheory.Amp.CommonStab
 
 namespace GlobalTheory.Amp
 
-open CommonStab in
 
 theorem rset_normal0 : ∀ (k r j : ℕ) (hj : j ≤ r) (z z' : (Fin (2 * r + k + 1) → ℂ)), ∀ (g₀ : Mat k r) (β : Fin r → ℕ) (c : ℂ), inWb k r z → inWb k r z' → 0 < Tz k r z → IsNormal0 k r hj β c z z' g₀ → Rset k r g₀ = Set.range (rEl k r j β) ∧ IsClosedSub k r (Rset k r g₀) := by
   intro k r j hj z z' g β c hz hz' hT h

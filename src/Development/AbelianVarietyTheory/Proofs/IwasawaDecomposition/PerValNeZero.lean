@@ -143,7 +143,6 @@ def Per {g : ℕ} {e : Fin g ≃ Letter Dw} (Fu : Fam Xo c σ e) (a : CxFr Z σ)
       IsDerivAt0 (fun w => (Fu.ex i P w).left) (W z) (v₀ ≫ Z.m0.toSABMap.φ)) ∧
     ∀ v, P v = ∑ z, Q v z • W z
 
-open Classical in
 
 def horOf {g : ℕ} {e : Fin g ≃ Letter Dw} (Fu : Fam Xo c σ e) (τ : E →+* ℂ) (x : ∀ i, Idx Dw τ → (Fu.Di i).La)
     (hm : Fin Fu.n → Matrix (Idx Dw τ) (Idx Dw τ) E) (a : CxFr Z σ) : ℂ :=

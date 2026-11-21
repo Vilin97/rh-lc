@@ -112,7 +112,6 @@ theorem rhoDual_eq (hlt : F'.lattice < F.lattice)
 
 end StackedExceptionalResidueExists
 
-open StackedExceptionalResidueExists in
 
 theorem DualStackedExcResidueExists.proof (hσ : DualLatticeModPrime.Statement) :
     DualStackedExcResidueExists.Statement := by

@@ -64,7 +64,6 @@ theorem archA_zero {κ : Type} : arch F (0 : κ → AF F) = 0 := by
 
 end GlobalTheory.ArchSchA
 
-open GlobalTheory.ArchSch GlobalTheory.ArchSchB GlobalTheory.ArchSchA in
 
 theorem GlobalTheory.ArchSchA.lagSetA_submodule : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁} {W₁ : Spc F E d₁} (M : Model σ X W) (M₁ : Model σ X₁ W₁) (H : Plane E n n₁) (H' : Plane E d d₁),
     (0 ∈ lagSetA M M₁ H H') ∧ (∀ l ∈ lagSetA M M₁ H H', ∀ l' ∈ lagSetA M M₁ H H', l + l' ∈ lagSetA M M₁ H H') ∧
@@ -104,7 +103,6 @@ theorem GlobalTheory.ArchSchA.lagSetA_submodule : ∀ {F E : Type} [Field F] [Nu
       rw [this, map_smul, Prod.smul_fst, Prod.smul_snd, lagL_arch_smul, lagL_arch_smul]
       rfl
 
-open GlobalTheory.ArchSch GlobalTheory.ArchSchB GlobalTheory.ArchSchA in
 
 theorem GlobalTheory.ArchSchA.infRelA_proportional : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d n₁ d₁ r s r' s' i₀ i₁ j₀ j₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (H : Plane E n n₁)

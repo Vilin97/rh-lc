@@ -20,10 +20,6 @@ noncomputable section
 
 namespace GlobalTheory.UnifPullGuards
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
-set_option autoImplicit false in
 
 theorem _root_.GlobalTheory.UnifPullGuards.unifBaseChange_holds : _root_.ReciprocityTheory.ChartRestriction.G.Out.UnifBaseChangeSt :=
   _root_.GlobalTheory.unifBaseChange _root_.GlobalTheory.polBaseChange_holds

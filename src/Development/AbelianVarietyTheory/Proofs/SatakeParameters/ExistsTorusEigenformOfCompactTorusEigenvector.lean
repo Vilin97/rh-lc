@@ -102,7 +102,6 @@ theorem secondCountableTopology_units : SecondCountableTopology kˣ := by
     infer_instance
   exact Units.isEmbedding_val₀.secondCountableTopology
 
-variable {k} in
 
 theorem isSmoothChar_torusChar {n : ℕ} {θ : Fin n → kˣ →* ℂˣ} (hθ : ∀ i, IsSmoothChar (θ i)) :
     IsSmoothChar (torusChar θ) :=

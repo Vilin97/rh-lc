@@ -93,7 +93,6 @@ theorem constantCoeff_act_eq_zero (o : O) (x : Sm B n) (hx : GP x.1) : GP (Sm.ac
   rw [smallPointsRingAction_coe_eq_comp B o x hx]
   exact gp_comp1 _ _ (fun i => B.A.const o i) hx
 
-variable (n) in
 
 def zeroPts : Subgroup (Sm B n) where
   carrier := {x | GP x.1}

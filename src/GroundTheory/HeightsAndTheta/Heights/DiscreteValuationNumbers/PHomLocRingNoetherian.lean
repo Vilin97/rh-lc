@@ -41,7 +41,6 @@ abbrev img : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* Fract
 
 variable {P}
 
-omit [DecidableEq K] in
 
 theorem img_eq_zero_iff {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} : img P f = 0 ↔ f ∈ P := by
   simp [img, Ideal.Quotient.eq_zero_iff_mem]
@@ -54,7 +53,6 @@ theorem img_component_congr (hP : IsMultiHomogIdeal P) {u v : ReciprocityTheory.
   rw [← map_sub]
   exact hP _ huv d
 
-omit [DecidableEq K] in
 
 theorem img_ne_zero {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hPW : P ≤ W) {t : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (ht : t ∉ W) :
     img P t ≠ 0 := fun h0 => ht (hPW (img_eq_zero_iff.mp h0))
@@ -65,7 +63,6 @@ theorem quot_mem {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver 
 
 end HomLocRingNoetherian
 
-open HomLocRingNoetherian in
 
 theorem HomLocRingNoetherian.proof (hmem : HomLocRingMem.Statement.{u}) :
     HomLocRingNoetherian.Statement.{u} := by

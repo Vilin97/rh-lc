@@ -94,7 +94,6 @@ def GoodL (Bj : B.RealPlaceData k ρ Wp Wq) (σ : Equiv.Perm (Fin p)) (x : XL k 
 def GoodR (Bj : B.RealPlaceData k ρ Wp Wq) (y : XR k p ρ) : Prop :=
   (Matrix.of y.1.1 : B.Mat k ρ) ∈ UWset k ρ Bj.z' ∧ (Matrix.of y.1.2 : B.Mat k ρ) ∈ Nset k ρ
 
-open Classical in
 
 def sxL (Bj : B.RealPlaceData k ρ Wp Wq) (σ : Equiv.Perm (Fin p)) (x : XL k p ρ σ) : B.Mat k (p + ρ) :=
   if GoodL Bj σ x then

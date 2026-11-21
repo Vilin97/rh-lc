@@ -112,7 +112,6 @@ theorem ne_zero_of_coprime {n p : ℕ} (hp : p.Prime) (h : Nat.Coprime n p) : n 
 
 end FrRat
 
-open FrRat in
 
 theorem rational_coordinates : RatCoord := by
   intro D cc δ B hcc hδ p _ h5 hj g₁ hI hN hM b hb

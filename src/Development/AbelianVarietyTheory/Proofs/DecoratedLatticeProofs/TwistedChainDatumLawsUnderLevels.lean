@@ -59,8 +59,6 @@ theorem levChi_one (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : LevDat D.
   have : levFn β L 1 = 1 := (levChar D.sp.cm V.gram β L).map_one
   rw [this, Units.val_one]
 
-set_option maxHeartbeats 1000000 in
-open Classical in
 
 theorem vecLawQ (D : D7) (c : Com D) (w : Twist D) (hw : w.Is c) (k : ℕ) (hk : k < D.R.m) (s s' : PiLocalization₂ D)
     (hs : IsStage c w k s) (hs' : IsStage c w (k + 1) s') (p : Step c s s') (hp : IsStep w (k + 1) p) :

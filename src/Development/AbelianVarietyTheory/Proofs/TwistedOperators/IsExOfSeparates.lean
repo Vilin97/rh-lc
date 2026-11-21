@@ -30,7 +30,6 @@ namespace GlobalTheory.RowEx
 variable {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}
 
-set_option maxHeartbeats 1000000 in
 
 theorem inj_of_sep_conv {ch : Choice R} (hM : R.IsModels) (hsep : Separates R ch.W ch.M ch.w ch.ρ ch.ξ)
     (hconv : ∀ a u, ConvK ch a u) (u : R.HE.H) (hu : ∀ a, psiK ch a u = 0) : u = 0 := by
@@ -66,7 +65,6 @@ theorem inj_of_sep_conv {ch : Choice R} (hM : R.IsModels) (hsep : Separates R ch
       exact ⟨hc, by rw [he, hx.2, mul_zero]⟩
   exact (key Ψ hΨ).2
 
-set_option maxHeartbeats 1000000 in
 
 theorem isEx_of_separates (hS : GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.FunctionalsSeparate) (hL : LinB) (hB : BaseEx) : IsEx := by
   obtain ⟨C1, hL⟩ := hL

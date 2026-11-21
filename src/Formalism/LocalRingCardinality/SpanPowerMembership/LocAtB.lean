@@ -401,7 +401,6 @@ theorem finrank_FE : Module.finrank H.F H.E = 2 := by
 def slocH (v : HeightOneSpectrum (𝓞 H.F)) : LocAt H.F H.E (conjF H) v :=
   locAtC (conjF H) (conjF_conjF H) (finrank_FE H) v
 
-open Ideal in
 
 theorem val_eq_of_split (p : ℕ) (hp : p.Prime)
     (h : (placesOver H.E p).ncard = Module.finrank ℚ H.E) (v : HeightOneSpectrum (𝓞 H.F))

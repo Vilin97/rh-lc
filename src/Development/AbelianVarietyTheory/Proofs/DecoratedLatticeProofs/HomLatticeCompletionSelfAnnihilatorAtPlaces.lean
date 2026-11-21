@@ -17,7 +17,6 @@ namespace GlobalTheory.SelfDualAt
 
 variable {D : D7}
 
-open Classical in
 
 def indP (P : Pl D → Prop) : Af D.host.F :=
   ⟨fun v => if P v then 1 else 0, Filter.Eventually.of_forall fun v => by
@@ -46,7 +45,6 @@ theorem symplO_smul_swap (S T : HSp D) (c : AF D.host.F) (x y : WO S T) :
   unfold symplO
   rw [hO_smul_swap]
 
-set_option maxHeartbeats 800000 in
 
 theorem compFin_repr (w : Pl D) (y : Af D.host.F ⊗[D.host.F] D.host.E) (k : Fin (Module.finrank D.host.F D.host.E)) :
     (Algebra.TensorProduct.basis (Fv D.host.F w) (Module.finBasis D.host.F D.host.E)).repr
@@ -86,7 +84,6 @@ theorem compFin_alg_cP (P : Pl D → Prop) (w : Pl D) (hw : P w) :
   rw [h, evalV_indP, if_pos hw]
   exact Algebra.TensorProduct.one_def.symm
 
-set_option maxHeartbeats 800000 in
 
 theorem algebraMap_placeIdempotent_mul (P : Pl D → Prop) (z : AE D) (hz : z ∈ idAt D P) :
     algebraMap (AF D.host.F) (AE D) (cP P) * z = z := by

@@ -126,7 +126,6 @@ theorem trace_leading_submatrix_pmat {ε : Fin n → Bool} (z : PCoord ε → �
   rw [trace_leading_submatrix]
   simp [pmat_diag_zero]
 
-open Polynomial in
 
 theorem lemma3c {ε : Fin n → Bool} (z : PCoord ε → ℂ) {i : ℕ} (hi : i ≤ n) :
     ∑ S, wS z hi S * yS z S.1 = 0 := by
@@ -141,7 +140,6 @@ theorem lemma3c {ε : Fin n → Bool} (z : PCoord ε → ℂ) {i : ℕ} (hi : i 
   simp only [hc] at hP
   exact_mod_cast hP
 
-open Polynomial in
 
 theorem lemma3d {ε : Fin n → Bool} (z : PCoord ε → ℂ) {i : ℕ} (hi : i ≤ n) :
     ∑ S, wS z hi S * yS z S.1 ^ 2 = Vi (pmat z) i := by

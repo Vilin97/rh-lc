@@ -24,7 +24,6 @@ namespace BlockRatioAlgebraic
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)] {Ω : Type} [Field Ω]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 
 theorem mCoordIdeal_comp_v {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     (y' : (Σ k', ι' k') → Ω) : mCoordIdeal (fun p ↦ y' (v p)) = imageZ v (mCoordIdeal y') := by
@@ -40,7 +39,6 @@ theorem mCoordIdeal_comp_v {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')
   simp only [mCoordIdeal, RingHom.mem_ker, e]
   exact (map_eq_zero_iff _ (rename_injective κ hv.1)).symm
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem algebraMap_int_injective (y : (Σ k, ι k) → Ω) (h : IsHorizontal (mCoordIdeal y)) :
     Function.Injective (algebraMap ℤ Ω) := by
@@ -52,7 +50,6 @@ theorem algebraMap_int_injective (y : (Σ k, ι k) → Ω) (h : IsHorizontal (mC
   rw [show (mCoordIdeal y).comap (C : ℤ →+* MRing ι) = ⊥ from h] at hm
   exact (Submodule.mem_bot ℤ).mp hm
 
-omit [Fintype K] in
 
 theorem isMultiHomog_C (a : ℤ) : IsMultiHomog (C a : MRing ι) 0 := by
   classical
@@ -107,7 +104,6 @@ theorem aeval_homogN {F : Type} [Field F] (c : ∀ k, ι k) (N : ℕ) (f : MRing
 
 end BlockRatioAlgebraic
 
-open BlockRatioAlgebraic CoordinateConeArithVar in
 
 theorem BlockRatioAlg.proof : BlockRatioAlg.Statement := by
   classical

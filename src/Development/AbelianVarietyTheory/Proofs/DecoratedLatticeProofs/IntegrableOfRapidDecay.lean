@@ -72,12 +72,8 @@ def tupEquiv : (Fin n → Fin M → Ainf F ⊗[F] E) ≃ₜ+ (Fin n → Fin M �
   continuous_toFun := (continuous_mixTup F M n).comp (continuous_crdTup F E b M n)
   continuous_invFun := (continuous_crdTup_symm F E b M n).comp (continuous_mixTup_symm F M n)
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option synthInstance.maxSize 2000 in
 
 end Tup
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option synthInstance.maxSize 2000 in
 
 end GlobalTheory.Core.Rk.RapidInt

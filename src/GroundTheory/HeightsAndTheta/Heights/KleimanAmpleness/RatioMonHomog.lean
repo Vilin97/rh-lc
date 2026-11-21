@@ -39,7 +39,6 @@ theorem ResidueGen.aeval_ratioMon {L : Type} [Field L] [Algebra F L] (z : (Σ k,
       ∏ k, (z ⟨k, d k⟩ ^ (β k).toNat * z ⟨k, c k⟩ ^ (-β k).toNat) := by
   simp [ResidueGen.ratioMon, map_prod]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem ResidueGen.ratio_eval {L : Type} [Field L] [Algebra F L] (z : (Σ k, ι k) → L) (β : K → ℤ)
     (c d : ∀ k, ι k) (hc : ∀ k, z ⟨k, c k⟩ ≠ 0) (hd : ∀ k, z ⟨k, d k⟩ ≠ 0) :

@@ -101,7 +101,6 @@ theorem exists_exp_smul (N : Subgroup G) (hN : IsClosed (N : Set G)) {ν ν' : M
   simp only [ENNReal.smul_def, Measure.smul_apply, smul_eq_mul]
   rw [← mul_assoc, ← ENNReal.coe_mul, div_mul_cancel₀ _ hc0]
 
-omit [LocallyCompactSpace G] [SecondCountableTopology G] in
 
 theorem isHaarSub_conj {N : Set G} {ν : Measure G} (hν : IsHaarSub N ν) (g : G)
     (h1 : ∀ m ∈ N, g * m * g⁻¹ ∈ N) (h2 : ∀ m ∈ N, g⁻¹ * m * g ∈ N) :

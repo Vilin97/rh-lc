@@ -158,7 +158,6 @@ variable (d : ℕ)
 
 variable {d}
 
-variable (d) in
 
 end Std
 

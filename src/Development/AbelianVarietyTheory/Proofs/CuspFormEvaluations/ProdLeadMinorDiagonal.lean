@@ -313,7 +313,6 @@ theorem eval_setBlock_diagonal {z : Fin p × Fin p → σ} (hz : Function.Inject
 
 end UnipotentInvariant
 
-open UnipotentInvariant in
 
 theorem eq_mul_prod_minors {K σ : Type*} [Field K] [CharZero K] [DecidableEq σ] {p : ℕ} (z : Fin p × Fin p → σ) (hz : Function.Injective z)
     (P : MvPolynomial σ K) (c : Fin p → ℕ)

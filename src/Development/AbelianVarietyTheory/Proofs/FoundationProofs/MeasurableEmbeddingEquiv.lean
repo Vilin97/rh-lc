@@ -94,7 +94,6 @@ theorem isRegSS_conj_iff (ha : IsUnit a) (hι : ∀ g, ι' (e g) = a * ι g * a�
   rw [IsRegSS, IsRegSS, hι, Matrix.charpoly_mul_comm,
     Matrix.nonsing_inv_mul_cancel_left _ _ ((Matrix.isUnit_iff_isUnit_det _).1 ha)]
 
-variable (e) in
 
 theorem isCompact_cent_iff (s : H) : IsCompact (cent (e s) : Set H') ↔ IsCompact (cent s : Set H) := by
   rw [isCompact_iff_compactSpace, isCompact_iff_compactSpace]
@@ -175,7 +174,6 @@ variable {H n V W : Type} [Group H] [TopologicalSpace H] [Fintype n] [DecidableE
   [InnerProductSpace ℂ V] [NormedAddCommGroup W] [InnerProductSpace ℂ W] [MeasurableSpace H]
   {ι : H →* Matrix n n ℂ} {μ : Measure H} {c : ℝ≥0}
 
-omit [TopologicalSpace H] in
 
 variable [CompleteSpace V] [CompleteSpace W]
 

@@ -63,7 +63,6 @@ theorem exists_away_algHom_ker {K R Q : Type*} [CommRing K] [CommRing R] [CommRi
     show χ _ = 0
     rw [map_mul, hχ, this, zero_mul]
 
-open ReciprocityTheory.ChartRestriction.G.T0 in
 
 theorem genericSection_away_quotient {K Ω Kl K' : Type} [Field K] [Field Ω] [Algebra K Ω] [Field Kl] [Field K']
     [Algebra K Kl] [Algebra Kl K'] {Dd m D' N' : ℕ} (hD : D' + 1 = Dd + 1) (eN : Fin (N' + 1) ≃ Fin m)

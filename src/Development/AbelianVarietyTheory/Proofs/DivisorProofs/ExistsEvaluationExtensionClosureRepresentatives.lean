@@ -10,8 +10,6 @@ open scoped ContDiff
 
 namespace GlobalTheory.LocRep
 
-open MeasureTheory Filter Topology in
-open scoped ContDiff in
 
 theorem _root_.GlobalTheory.LocRep.exists_eval_closure (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [LocallyCompactSpace G] [SecondCountableTopology G] [T2Space G] [MeasurableSpace G] [BorelSpace G]

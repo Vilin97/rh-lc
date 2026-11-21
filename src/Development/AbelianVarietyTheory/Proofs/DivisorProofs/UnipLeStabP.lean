@@ -25,7 +25,6 @@ theorem mat_one' {W : Spc F E d} : mat (1 : UA σ W.J) = 1 := rfl
 theorem mat_inv_mul' {W : Spc F E d} (g : UA σ W.J) : mat g⁻¹ * mat g = 1 := by
   rw [← mat_mul', inv_mul_cancel, mat_one']
 
-variable (σ) in
 
 def stabilizer₂ (W : Spc F E d) (H' : Plane E d d₁) : Subgroup (UA σ W.J) where
   carrier := {g | (∃ t : (AE F E)ˣ, mat g *ᵥ incV F H'.x = (t : AE F E) • incV F H'.x) ∧

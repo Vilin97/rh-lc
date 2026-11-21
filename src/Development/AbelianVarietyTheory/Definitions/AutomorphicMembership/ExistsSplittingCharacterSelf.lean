@@ -54,7 +54,6 @@ def WeilTwEq (D : D7) : Prop := ∀ ψ, IsStdChar D ψ (-1) → ∀ (V W : HSp D
     (∀ om', IsWeilOn ψ V W χ (χ' * ν) om' → ∀ g h x, IsDetRoot V g x → om' (g, h) = (((ν x)⁻¹ : Circle) : ℂ) • om (g, h)) ∧
     ∀ om', IsWeilOn ψ V W (χ * ν) χ' om' → ∀ g h x, IsDetRoot W h x → om' (g, h) = ((ν x : Circle) : ℂ) • om (g, h)
 
-open Classical in
 
 def LiftAutEq (D : D7) : Prop := ∀ θ : InfF D, IsInfFam θ → ∀ ψ, IsStdChar D ψ (-1) → ∀ (V W : HSp D) χ χ', AdmE V W χ χ' →
   ∀ om, IsWeilOn ψ V W χ χ' om → ∀ μ 𝓕, IsQuot V μ 𝓕 → ∀ (Φ : ThS ψ V W) F, IsCuspForm θ V F →
@@ -123,7 +122,6 @@ section Lift
 variable {θ : InfF D} {X : ThetaX D} {T : ThetaTied D X} {W : WeilTied D X T} {B : BesselTied D X T W}
   {Wf : WeilFun D W.ψ} {Tw : Tow D} {Rc : RecFun D θ W.ψ}
 
-set_option maxHeartbeats 1000000 in
 
 end Lift
 
@@ -273,7 +271,6 @@ structure RecFun.ChrIs {θ : InfF D} {ψ : AddChar (AF D.host.F) ℂ} (Rc : RecF
   chr : ∀ μ (j : Fin D.R.m), Formalism.IndefR.Links.ChrEq (Rc.chr μ (j.1 + 1)) (C.mu0 j * xi μ)
   eta : Formalism.IndefR.Links.ChrEq Rc.eta C.eta
 
-open Formalism.IndefR.Links in
 
 theorem RecFun.exists_chrIs (C : Formalism.L2.Host.CharFrame D) (xi : D.what₂.Tup → Formalism.L2.Host.HChar D.host.E)
     (hf : ∀ μ, ∃ n : ℕ, 0 < n ∧ (xi μ).OrderDvd n) (ht : ∀ μ, (xi μ).TrivOn D.host.F) (θ : InfF D)

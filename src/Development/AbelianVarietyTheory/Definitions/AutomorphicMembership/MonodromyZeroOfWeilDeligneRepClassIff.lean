@@ -222,7 +222,6 @@ theorem Iso.dual {a : WDRep h V} {b : WDRep h V'} (hab : a.Iso b) : a.dual.Iso b
   obtain ⟨e, h1, h2⟩ := hab.symm
   exact ⟨e.dualMap, fun σ f => by ext; simp [h1], fun f => by ext; simp [h2]⟩
 
-variable (h) in
 
 def ofChars {ι : Type*} [Finite ι] (χ : ι → Weil h →* ℂˣ) (hχ : ∀ i, IsSmooth (χ i)) :
     WDRep h (ι → ℂ) where
@@ -245,7 +244,6 @@ def ofChars {ι : Type*} [Finite ι] (χ : ι → Weil h →* ℂˣ) (hχ : ∀ 
 @[simp] theorem ofChars_N {ι : Type*} [Finite ι] (χ : ι → Weil h →* ℂˣ)
     (hχ : ∀ i, IsSmooth (χ i)) : (ofChars h χ hχ).N = 0 := rfl
 
-variable (h) in
 
 def diag {ι : Type*} [Finite ι] (c : ι → ℂˣ) : WDRep h (ι → ℂ) :=
   ofChars h (fun i => unrChar h (c i)) fun _ => isSmooth_unrChar h _
@@ -256,11 +254,9 @@ def diag {ι : Type*} [Finite ι] (c : ι → ℂˣ) : WDRep h (ι → ℂ) :=
 
 @[simp] theorem diag_N {ι : Type*} [Finite ι] (c : ι → ℂˣ) : (diag h c).N = 0 := rfl
 
-variable (w) in
 
 def spEig (n : ℕ) (i : Fin n) : ℂˣ := qPow w (((i : ℕ) : ℝ) - ((n : ℝ) - 1) / 2)
 
-variable (h) in
 
 def sp (n : ℕ) : WDRep h (Fin n → ℂ) where
   ρ := (diag h (spEig w n)).ρ
@@ -444,27 +440,21 @@ def lpDual (x : WD h) : WD h :=
 @[simp] theorem lpDual_mk (a : WDRep h V) : lpDual (mk a) = mk a.dual :=
   sound (iso_std a).dual.symm
 
-variable (h) in
 
 def lpZero : WD h := mk (WDRep.diag h (ι := Fin 0) fun i => i.elim0)
 
-variable (h) in
 
 def lpOfChar (χ : Weil h →* ℂˣ) (hχ : IsSmooth χ) : WD h :=
   mk (WDRep.ofChars h (ι := Fin 1) (fun _ => χ) fun _ => hχ)
 
-open Classical in
 
 def unitOf (z : ℂ) : ℂˣ := if hz : z = 0 then 1 else Units.mk0 z hz
 
 theorem coe_unitOf {z : ℂ} (hz : z ≠ 0) : (unitOf z : ℂ) = z := by simp [unitOf, hz]
 
-open Classical in
-variable (h) in
 
 def lpUnr (m : Multiset ℂ) : WD h := mk (WDRep.diag h fun i : m.ToType => unitOf (i : ℂ))
 
-variable (h) in
 
 def lpSp (n : ℕ) : WD h := mk (WDRep.sp h n)
 
@@ -506,7 +496,6 @@ def frobEig (x : WD h) : Multiset ℂ := eig x (frob h)
 @[simp] theorem frobEig_mk (a : WDRep h V) : frobEig (mk a) = (a.ρ (frob h)).charpoly.roots :=
   eig_mk _ _
 
-open Classical in
 
 def inePol (x : WD h) (σ : G E Ω) : ℂ[X] := if hσ : σ ∈ Weil h then charPol x ⟨σ, hσ⟩ else 1
 
@@ -621,7 +610,6 @@ section Examples
 
 variable (h : IsPlaceOver A w)
 
-omit [IsAlgClosure E Ω] in
 
 end Examples
 

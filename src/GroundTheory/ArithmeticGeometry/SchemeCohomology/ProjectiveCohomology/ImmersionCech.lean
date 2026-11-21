@@ -168,7 +168,6 @@ variable (A : Type u) [CommRing A] [X.Over (Spec (.of A))] [Y.Over (Spec (.of A)
 
 attribute [local instance] algebraOfOver
 
-include i in
 
 lemma algebraMap_eq_appTop (a : A) :
     algebraMap A Γ(X, ⊤) a = i.appTop (algebraMap A Γ(Y, ⊤) a) := by

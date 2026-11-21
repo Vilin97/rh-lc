@@ -86,9 +86,7 @@ set_option maxHeartbeats 1000000
 noncomputable section
 namespace GlobalTheory.CoordReduce
 
-open ReciprocityTheory.ChartRestriction.G.Out in
 
-open ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem isCoordPt_map (h₂ : Laws2) {B : Scheme.{0}} (P : PolAV B) {R K : Type} [CommRing R] [CommRing K]
     (j : R →+* K) {s : Sp R ⟶ B} {x : Sp K ⟶ B} (hx : spMap j ≫ s = x) {k : ℕ} {J : Type}

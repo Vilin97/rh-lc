@@ -191,7 +191,6 @@ def CrysWith [IsAlgClosure E Ω] {n : ℕ} (r : G E Ω →* GL (Fin n) (Qbar l))
       ∀ (τ : E →+* Qbar l) (LL' : FinExt l) (τ' : ↥Bw.Kw.1 →ₐ[ℚ_[l]] ↥LL'.1), IsInduced Bw τ τ' →
         IsJumpsAt P Bw (r.comp (Dec (F := E) A).subtype) τ (J τ)
 
-variable (E Ω l) in
 
 def BlockPair [IsAlgClosure E Ω] (n t : ℕ) (J : (E →+* Qbar l) → Fin n → ℤ) (bot : (E →+* Qbar l) → ℤ) : Prop :=
   ∃ (r : G E Ω →* GL (Fin n) (Qbar l)) (a : ℕ) (ρ : G E Ω →* GL (Fin a) (Qbar l)) (χ : Fin t → G E Ω →* (Qbar l)ˣ),
@@ -207,7 +206,6 @@ def cj [IsCMField E] (τ : E →+* Qbar l) : E →+* Qbar l := τ.comp (IsCMFiel
 def IsHalf [IsCMField E] {ι : Type} (inc : ι → (E →+* Qbar l)) : Prop :=
   Function.Injective inc ∧ (∀ τ τ', cj (inc τ) ≠ inc τ') ∧ ∀ i, ∃ τ, i = inc τ ∨ i = cj (inc τ)
 
-variable (Ω) in
 
 def BlockFor [IsCMField E] [IsAlgClosure E Ω] {ι : Type} (inc : ι → (E →+* Qbar l)) (P : Par) (W : Wts ι) (mu : ι → ℕ → ℕ) : Prop :=
   ∃ (ep : (E →+* Qbar l) → (E →+* Qbar l)) (J : (E →+* Qbar l) → Fin P.Nr → ℤ) (bot : (E →+* Qbar l) → ℤ),
@@ -215,7 +213,6 @@ def BlockFor [IsCMField E] [IsAlgClosure E Ω] {ι : Type} (inc : ι → (E →+
     ∀ τ, (∀ a : Fin P.Nr, J (ep (inc τ)) a = Formalism.CohomologicalDescent.UnitNormBounds.UN P.Nr (mu τ) a ∧ J (ep (cj (inc τ))) a = (h0 P : ℤ) - Formalism.CohomologicalDescent.UnitNormBounds.UN P.Nr (mu τ) (Fin.rev a)) ∧
       bot (ep (inc τ)) = W.bot P τ ∧ bot (ep (cj (inc τ))) = (h0 P : ℤ) - (W.bot P τ + (P.t : ℤ) - 1)
 
-variable (E Ω l) in
 
 structure FrobNorm (Pl : Type) where
 
@@ -239,7 +236,6 @@ def IsJumps [IsCMField E] {ι : Type} (inc : ι → (E →+* Qbar l)) (ep : (E �
 def sysOf {Pl I : Type} (n : ℕ) (pt : Pl → Fin n → I) (θ : I → Qbar l) (P : Pl) (k : ℕ) : Qbar l :=
   if h : 1 ≤ k ∧ k ≤ n then θ (pt P ⟨k - 1, by omega⟩) else 1
 
-variable (Ω) in
 
 def GalSide [IsCMField E] [IsAlgClosure E Ω] {ι : Type} [DecidableEq ι] (inc : ι → (E →+* Qbar l)) (P : Par) (W : Wts ι) (F : Frame l ι P.Nr)
     (Bk : (F.I → Qbar l) → Prop) : Prop :=

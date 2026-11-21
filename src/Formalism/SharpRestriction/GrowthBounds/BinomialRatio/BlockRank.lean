@@ -61,7 +61,6 @@ def ell (x : (Fin D.T.t → ℕ) × ℕ) (β : Fin r → ℕ) :
 theorem ell_apply (x : (Fin D.T.t → ℕ) × ℕ) (β : Fin r → ℕ) (y : MvPolynomial (Fin N × Fin r) (KK O)) :
     ell D x β y = pre (O := O) D x * (rename (chainEmb N r D.T.t) y * xiMon (KK O) N r D.T.t β) := rfl
 
-open Classical in
 
 def Lv : Finset ((Fin D.T.t → ℕ) × ℕ) :=
   ((Fintype.piFinset fun i => Finset.range (D.LL.deg (D.letterAt (D.T.pos i)) + 1)) ×ˢ

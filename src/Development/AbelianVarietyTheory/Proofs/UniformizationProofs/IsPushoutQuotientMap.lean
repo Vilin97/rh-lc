@@ -13,7 +13,6 @@ namespace GlobalTheory.NilpotentLift
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry in
 
 theorem _root_.GlobalTheory.NilpotentLift.isPushout_quotient_map {A : Type} [CommRing A] (J : Ideal A) {B : CommRingCat.{0}}
     (σ : CommRingCat.of A ⟶ B) :
@@ -45,7 +44,6 @@ theorem _root_.GlobalTheory.NilpotentLift.isPushout_quotient_map {A : Type} [Com
       simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom] at h
       exact h.trans (Ideal.Quotient.lift_mk (J.map σ.hom) s.inl.hom (fun a ha => key s ha)).symm
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry in
 
 theorem _root_.GlobalTheory.NilpotentLift.main : ∀ (A : Type) [CommRing A] (J : Ideal A), IsNilpotent J →
     ∀ (G Y : Over (Spec (CommRingCat.of A))) [Smooth G.hom] [IsAffine Y.left]

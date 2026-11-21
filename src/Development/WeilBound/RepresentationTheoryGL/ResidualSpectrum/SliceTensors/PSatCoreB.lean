@@ -44,7 +44,6 @@ variable {E : Type} [Field E] [NumberField E] {w : HeightOneSpectrum (𝓞 E)} {
   {X : Fin c → Type} [∀ a, AddCommGroup (X a)] [∀ a, Module ℂ (X a)]
   {π : ∀ a, Representation ℂ (GL (Fin (N a)) (w.adicCompletion E)) (X a)}
 
-omit h in
 
 theorem evT_idem (hs : ∀ a, IsSmooth (π a))
     (hC : IsCompact (Subgroup.pi Set.univ (fun a => KO (w.adicCompletion E) (Fin (N a))) :

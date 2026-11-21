@@ -203,7 +203,6 @@ theorem mul_latAtV {X : Spc F E n} {W : Spc F E d} {k : Matrix (Fin n) (Fin n) (
   | add y z _ _ hy hz => rw [Matrix.mul_add]; exact add_mem hy hz
   | neg y _ hy => rw [Matrix.mul_neg]; exact neg_mem hy
 
-variable (v) in
 
 def PresD (X : Spc F E n) (g : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E)) : Prop :=
   ∃ a ∈ Pres v X, ∃ b ∈ Pres v X, ∃ c ∈ Pres v X, ∃ e ∈ Pres v X, g = Matrix.fromBlocks a b c e

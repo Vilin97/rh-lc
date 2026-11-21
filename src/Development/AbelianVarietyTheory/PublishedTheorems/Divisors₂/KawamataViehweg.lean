@@ -44,6 +44,5 @@ theorem KawamataViehweg.twist (h : KawamataViehweg) {k : Type} [Field k] [IsAlgC
   exact (cohOn.mapIso Γ(X, ⊤) ⊤ q (i ≪≫ Twist.unitTwistIso _)).toEquiv.subsingleton_congr.2
     (h.of_hom hp hX K h₁ h₂ hq)
 
-open GlobalTheory.ProjSpace in
 
 end GlobalTheory.Published

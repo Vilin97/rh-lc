@@ -104,7 +104,6 @@ theorem normDet_graphLin (A : EuclideanSpace ℝ (Fin k) →L[ℝ] EuclideanSpac
 
 end AreaGraphPiece
 
-open AreaGraphPiece in
 
 theorem AreaGraphPiece.proof : AreaGraphPiece.Statement := by
   intro k m F A δ t hδ hF

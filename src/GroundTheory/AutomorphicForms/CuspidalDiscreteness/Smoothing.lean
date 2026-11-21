@@ -21,7 +21,6 @@ open Reduction AutomorphicForm RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (K n) in
 
 abbrev ArchUnits : Type _ := (ArchMatrix K n)ˣ
 
@@ -29,7 +28,6 @@ instance : MeasurableSpace (ArchUnits K n) := borel _
 
 instance : BorelSpace (ArchUnits K n) := ⟨rfl⟩
 
-variable (K n) in
 
 def archIncl : ArchUnits K n →* AdelicGLn.AdelicGL K n :=
   (infEmb K n).comp (Subgroup.topEquiv (G := ArchUnits K n)).symm.toMonoidHom
@@ -60,7 +58,6 @@ theorem centralSection_inv_mul_inv_comm (s t : {r : ℝ // 0 < r}) :
       (centralSection K n t)⁻¹ * (centralSection K n s)⁻¹ := by
   rw [← map_inv, ← map_inv, ← map_mul, ← map_mul, mul_comm]
 
-variable (K n) in
 
 def archProjFun (A : ArchUnits K n) : AdelicGLn.AdelicGL K n :=
   archIncl K n A * (centralSection K n (detModule K n (archIncl K n A)))⁻¹
@@ -77,7 +74,6 @@ theorem archProjFun_mul (A B : ArchUnits K n) :
     centralSection_inv_mul_comm (detModule K n (archIncl K n A)) (archIncl K n B),
     mul_assoc (archIncl K n B), centralSection_inv_mul_inv_comm (detModule K n (archIncl K n A))]
 
-variable (K n) in
 
 def archProj : ArchUnits K n →* normOneGL K n where
   toFun A := ⟨archProjFun K n A, archIncl_mul_centralSection_inv_mem A⟩
@@ -106,7 +102,6 @@ theorem archProj_mul_finEmb_comm (A : ArchUnits K n) (u : AdelicGLn.FiniteAdelic
   rw [coe_archProj, mul_assoc, centralSection_inv_mul_comm, ← mul_assoc,
     archIncl_mul_finEmb_comm, mul_assoc]
 
-variable (K n) in
 
 def finOne : AdelicGLn.integralFiniteGL K n →* normOneGL K n where
   toFun u := ⟨finEmb K n u, maxCompact_le_normOneGL (finEmb_mem_maxCompact u.2)⟩

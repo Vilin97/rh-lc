@@ -49,6 +49,5 @@ theorem isComb_one {S : Scheme.{0}} {R : Type} [CommRing R] {G : Over S} [GrpObj
       · simp only [Fin.succ_ne_zero, if_false, _root_.one_mul, Fin.succ_inj]
         exact ih (v := fun j => v j.succ) (fun j => hv _) i
 
-open Classical in
 
 end GlobalTheory.CompanionTheory.Ar.Fl.FlatModel

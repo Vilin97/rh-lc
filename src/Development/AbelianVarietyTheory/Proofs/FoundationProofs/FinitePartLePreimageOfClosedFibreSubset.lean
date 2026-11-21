@@ -200,12 +200,10 @@ instance isFinite_finitePart : IsFinite ((finitePart f).ι ≫ f) := by
     (mem_finitePart_of_eq_closedPoint f)
   rwa [finitePart_eq_of_closedFibre_subset f U hU]
 
-omit [IsSeparated f] [QuasiCompact f] in
 
 theorem preimage_finitePart_eq_top (h : Y ⟶ X) [IsFinite (h ≫ f)] : h ⁻¹ᵁ finitePart f = ⊤ :=
   preimage_eq_top_of_closedFibre_subset f _ (mem_finitePart_of_eq_closedPoint f) h
 
-omit [IsSeparated f] [QuasiCompact f] in
 
 end Henselian
 

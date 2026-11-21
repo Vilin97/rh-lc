@@ -54,7 +54,6 @@ variable {R : Type} [CommRing R] (I : Ideal R)
   (L : ∀ e, LB (Y e).left) (w : ∀ e, LB.Iso (L e) ((L (e + 1)).pull (β e)))
   (hL : ∀ e, (L e).IsLB ∧ (w e).IsGen)
 
-include hL in
 
 theorem congr_ofSec_of_redL (e : ℕ) (V : (Y (e + 1)).left.Opens) (V' : (Y e).left.Opens)
     (h : V' ≤ β e ⁻¹ᵁ V) (τ : LB.Sec (L (e + 1))) (σ : LB.Sec (L e))

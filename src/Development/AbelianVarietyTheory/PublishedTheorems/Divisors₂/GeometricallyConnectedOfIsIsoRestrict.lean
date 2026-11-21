@@ -22,7 +22,6 @@ inductive IsSmoothBlowupSeq {S Y : Scheme.{0}} (f : Y ⟶ S) (B : Set Y) : ∀ {
       IsSmoothBlowupSeq f B s → Smooth (J.subschemeι ≫ s ≫ f) → (J.support : Set Y₁) ⊆ s ⁻¹' B →
       FinalTheorems.Blowup π J → IsSmoothBlowupSeq f B (π ≫ s)
 
-open AlgebraicGeometry CategoryTheory Limits TopologicalSpace in
 
 theorem _root_.GlobalTheory.IsSmoothBlowupSeq.mono {S Y Y' : Scheme.{0}} {f : Y ⟶ S} {B B' : Set Y} {s : Y' ⟶ Y}
     (h : _root_.GlobalTheory.IsSmoothBlowupSeq f B s) (hB : B ⊆ B') : _root_.GlobalTheory.IsSmoothBlowupSeq f B' s := by
@@ -33,7 +32,6 @@ theorem _root_.GlobalTheory.IsSmoothBlowupSeq.mono {S Y Y' : Scheme.{0}} {f : Y 
 
 namespace Principalise
 
-open AlgebraicGeometry CategoryTheory Limits TopologicalSpace in
 
 theorem _root_.GlobalTheory.Principalise.effCartier_comap_of_disjoint {W X : Scheme.{0}} (g : W ⟶ X) (J : X.IdealSheafData)
     (h : ∀ w, g w ∉ J.support) : _root_.ReciprocityTheory.AnForm.R.FinalTheorems.EffCartier (J.comap g) := by
@@ -48,7 +46,6 @@ theorem _root_.GlobalTheory.Principalise.effCartier_comap_of_disjoint {W X : Sch
   rw [htop, Ideal.span_singleton_one]
   simp [Scheme.IdealSheafData.ideal_top]
 
-open AlgebraicGeometry CategoryTheory Limits TopologicalSpace in
 
 theorem _root_.GlobalTheory.Principalise.isIso_restrict_of_blowup {X X' : Scheme.{0}} {π : X' ⟶ X}
     {J : X.IdealSheafData} (h : _root_.ReciprocityTheory.AnForm.R.FinalTheorems.Blowup π J)
@@ -76,7 +73,6 @@ theorem _root_.GlobalTheory.Principalise.isIso_restrict_of_blowup {X X' : Scheme
 
 end Principalise
 
-open AlgebraicGeometry CategoryTheory Limits TopologicalSpace in
 
 theorem _root_.GlobalTheory.IsSmoothBlowupSeq.isIso_restrict {S Y Y' : Scheme.{0}} {f : Y ⟶ S}
     {B : Set Y} {s : Y' ⟶ Y}
@@ -91,7 +87,6 @@ theorem _root_.GlobalTheory.IsSmoothBlowupSeq.isIso_restrict {S Y Y' : Scheme.{0
 
 namespace Principalise
 
-open AlgebraicGeometry CategoryTheory Limits TopologicalSpace in
 
 theorem _root_.GlobalTheory.Principalise.nonempty_compl_support {Y : Scheme.{0}} [IsIntegral Y] {I : Y.IdealSheafData} (hI : I ≠ ⊥) :
     (I.support.compl : Set Y).Nonempty := by

@@ -377,7 +377,6 @@ theorem isHolTo_inv {B : Set V} {y : V → (Sp ℂ ⟶ S)} {a : ∀ t, Over.mk (
 
 variable {y : Sp ℂ ⟶ S}
 
-omit [GrpObj G] in
 
 theorem IsDerivAt.over {a : V → (Over.mk y ⟶ G)} {z w : V} {v : Sp (DualNumber ℂ) ⟶ G.left}
     (h : IsDerivAt (fun t => (a t).left) z w v) : v ≫ G.hom = (epsPt y).hom := by
@@ -385,7 +384,6 @@ theorem IsDerivAt.over {a : V → (Over.mk y ⟶ G)} {z w : V} {v : Sp (DualNumb
   have h2 : (fun t => (a t).left ≫ G.hom) = fun _ => y := funext fun t => Over.w (a t)
   exact (h2 ▸ h1).unique (isDerivAt_const y z w)
 
-omit [GrpObj G] in
 
 theorem isDerivAt_lift {G' : Over S} {a : V → (Over.mk y ⟶ G)} {b : V → (Over.mk y ⟶ G')} {z w : V}
     (ha : HolAt (fun t => (a t).left) z) (hb : HolAt (fun t => (b t).left) z) {v : epsPt y ⟶ G} {v' : epsPt y ⟶ G'}
@@ -643,7 +641,6 @@ end GlobalTheory.HolHom
 
 namespace GlobalTheory
 
-open HolHom in
 
 theorem holomorphic_hom_determined (S : Scheme.{0}) (G : Over S) [GrpObj G] :
     (∀ (y : Sp ℂ ⟶ S) (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (e e' : V → (Over.mk y ⟶ G)),

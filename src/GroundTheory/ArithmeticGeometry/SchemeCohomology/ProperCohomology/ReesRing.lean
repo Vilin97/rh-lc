@@ -86,7 +86,6 @@ def polyRingEquiv : polyRing I V ≃+* Polynomial Γ(X, V) :=
           exact (polyInr_eq_eval₂ hV p).symm)
       exact congrArg CommRingCat.Hom.hom h)
 
-include hV in
 
 lemma reesInr_comp :
     reesInr I V ≫ (reesPolyMap I X).app _ =
@@ -109,7 +108,6 @@ lemma reesRingHom_inr (r : reesAlgebra I) :
   rw [this]
   exact polyRingHom_inr hV _
 
-variable (I X V) in
 
 def reesCoeffRing : Subring (Polynomial Γ(X, V)) where
   carrier := {p | ∀ n, p.coeff n ∈ (I.map (algV X V)) ^ n}

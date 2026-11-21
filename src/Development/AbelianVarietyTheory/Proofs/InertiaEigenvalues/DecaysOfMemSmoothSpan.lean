@@ -64,7 +64,6 @@ theorem exists_norm_vecMul_le {κ : Set (GA E a)} (hκ : IsCompact κ) :
   · simp only [Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     nlinarith [norm_nonneg fun i => pInf E (x i)]
 
-omit [IsTotallyComplex E] in
 
 theorem exists_isCompact_vecMul {κ : Set (GA E a)} (hκ : IsCompact κ) {L : Set (Fin a → Af E)} (hL : IsCompact L) :
     ∃ L' : Set (Fin a → Af E), IsCompact L' ∧ ∀ y ∈ κ, ∀ x : Fin a → Ad E,
@@ -81,7 +80,6 @@ theorem norm_pInf_posIdele {ρ : ℝ} (hρ : 0 < ρ) (w : InfinitePlace E) :
   refine Eq.trans ?_ (norm_posIdele_infinite (K := E) ρ hρ w)
   exact ((InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _) _)
 
-omit [IsTotallyComplex E] in
 
 theorem pFin_vecMul_diag (r : Fin a → ℝ) (hr : ∀ i, 0 < r i) (x : Fin a → Ad E) :
     (fun i => pFin E ((x ᵥ* (diagUnits a fun i => posIdele (K := E) (r i) (hr i)).val) i)) = fun i => pFin E (x i) := by
@@ -141,7 +139,6 @@ def Decays (F : GA E a → ℂ) : Prop :=
         ‖F (g * c)‖ ≤ C * (‖fun i => pInf E (((fun j => algebraMap E (Ad E) (ξ j)) ᵥ* g.val) i)‖ ^
           (a * Module.finrank ℚ E) / (ideleModule E (GeneralLinearGroup.det g) : ℝ)) ^ N
 
-omit [IsTotallyComplex E] in
 
 theorem ideleModule_det_eq_one {b : GA E a} (hb : b ∈ adelicBorel (K := E) (n := a))
     (h : ∀ i, ∃ u : IdeleGroup E, b.val i i = u ∧ (ideleModule E u : ℝ) = 1) :
@@ -154,7 +151,6 @@ theorem ideleModule_det_eq_one {b : GA E a} (hb : b ∈ adelicBorel (K := E) (n 
   rw [e, map_prod, coe_finset_prod_pos]
   exact Finset.prod_eq_one fun i _ => hu1 i
 
-omit [IsTotallyComplex E] in
 
 theorem ideleModule_det_rat (γ : GL (Fin a) E) : ideleModule E (GeneralLinearGroup.det (ratGL E a γ)) = 1 := by
   have h : GeneralLinearGroup.det (ratGL E a γ) = IdeleGroup.diagonal E (GeneralLinearGroup.det γ) := by

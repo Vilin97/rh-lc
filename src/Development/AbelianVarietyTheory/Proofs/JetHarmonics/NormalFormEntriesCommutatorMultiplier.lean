@@ -78,7 +78,6 @@ theorem mulT_dZ {φ : ℝ → ℝ} (hφ : LE.SmoothLog φ) (q : ℕ) {a : ℝ} (
   generalize (Complex.normSq w - T)⁻¹ = e
   constructor <;> apply Complex.ext <;> simp <;> ring
 
-open Formalism.FourierDecayAlt.P Formalism.FourierDecayAlt.P.NFx4 in
 
 theorem t_mul_mulG (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
     [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] (P : M.Par)

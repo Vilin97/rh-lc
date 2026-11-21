@@ -15,7 +15,6 @@ namespace GlobalTheory.DPLoc
 variable {B S : Type} [CommRing B] [CommRing S] [Algebra B S] (M : Submonoid B)
   [IsLocalization M S] {J : Ideal B} (δ : DividedPowers J)
 
-include M in
 
 theorem wellDef {u v : S} {j j' : B} (hj : j ∈ J) (hj' : j' ∈ J)
     (h : u * algebraMap B S j = v * algebraMap B S j') (n : ℕ) :
@@ -39,7 +38,6 @@ theorem wellDef {u v : S} {j j' : B} (hj : j ∈ J) (hj' : j' ∈ J)
   apply hu.mul_left_cancel
   linear_combination h3
 
-include M in
 
 theorem rep₂ {x y : S} (hx : x ∈ J.map (algebraMap B S)) (hy : y ∈ J.map (algebraMap B S)) :
     ∃ (u : S) (j j' : B), j ∈ J ∧ j' ∈ J ∧ x = u * algebraMap B S j ∧
@@ -53,20 +51,17 @@ theorem rep₂ {x y : S} (hx : x ∈ J.map (algebraMap B S)) (hy : y ∈ J.map (
   · rw [map_mul, ← hj]; linear_combination (-x) * hu
   · rw [map_mul, ← hj']; linear_combination (-y) * hu
 
-include M in
 
 theorem rep {x : S} (hx : x ∈ J.map (algebraMap B S)) :
     ∃ (u : S) (j : B), j ∈ J ∧ x = u * algebraMap B S j := by
   obtain ⟨u, j, _, hj, _, e, _⟩ := rep₂ M hx hx
   exact ⟨u, j, hj, e⟩
 
-open Classical in
 
 def ext (n : ℕ) (x : S) : S :=
   if h : ∃ p : S × B, p.2 ∈ J ∧ x = p.1 * algebraMap B S p.2 then
     h.choose.1 ^ n * algebraMap B S (δ.dpow n h.choose.2) else 0
 
-include M in
 
 theorem ext_eq (n : ℕ) (u : S) {j : B} (hj : j ∈ J) :
     ext δ n (u * algebraMap B S j) = u ^ n * algebraMap B S (δ.dpow n j) := by

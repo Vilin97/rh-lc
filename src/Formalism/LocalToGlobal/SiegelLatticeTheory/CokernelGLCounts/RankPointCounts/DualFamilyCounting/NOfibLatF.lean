@@ -125,7 +125,6 @@ theorem rows_mem (hL : Formalism.HermitianLatticesTheory.gmap n (VS D).L0 = (VS 
 
 end LatF
 
-open Alg LatF in
 
 theorem dictLatF_holds : DictLatF := by
   intro D X u n hn hL

@@ -17,7 +17,6 @@ structure IsAlgebraicChart (e : OpenPartialHomeomorph (A →ₐ[𝕜] 𝕜) (Fin
   exists_eq_div : ∃ (x : Fin d → A) (s : A), ∀ p ∈ e.source, p s ≠ 0 ∧ ∀ i, e p i = p (x i) / p s
   analyticOnNhd : ∀ a, AnalyticOnNhd 𝕜 (fun z => e.symm z a) e.target
 
-variable (𝕜 A d) in
 
 variable [CompleteSpace 𝕜]
 
@@ -26,9 +25,7 @@ section Detect
 variable {E H M : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [TopologicalSpace H]
   {I : ModelWithCorners 𝕜 E H} [TopologicalSpace M] [ChartedSpace H M]
 
-omit [CompleteSpace 𝕜] in
 
-omit [CompleteSpace 𝕜] in
 
 end Detect
 

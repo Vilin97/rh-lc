@@ -22,13 +22,11 @@ variable {d : SD σ} (R : RD d) (L : LD d)
 scoped instance afSC : SecondCountableTopology (AF F) := GlobalTheory.AdelicUnitaryTop.secondCountable_adele F
 scoped instance afBorel : BorelSpace (AF F) := ⟨rfl⟩
 
-variable (F) in
 
 def lamA : Measure (AF F) := Measure.addHaar
 
 instance lamA_haar : (lamA F).IsAddHaarMeasure := by unfold lamA; infer_instance
 
-variable (F) in
 
 def fA : AddSubgroup (AF F) := (algebraMap F (AF F)).range.toAddSubgroup
 
@@ -135,7 +133,6 @@ theorem shear_mp' {X Y : Type} [MeasurableSpace X] [MeasurableSpace Y] [AddGroup
   (MeasurePreserving.id μ).skew_product (g := fun x y => y + s x) (measurable_snd.add (hs.comp measurable_fst))
     (Filter.Eventually.of_forall fun x => map_add_right_eq_self ν (s x))
 
-open scoped Pointwise in
 
 theorem fd_prod {X Y : Type} [AddCommGroup X] [AddCommGroup Y] [MeasurableSpace X] [MeasurableSpace Y]
     [MeasurableAdd X] [MeasurableAdd Y] {Γ : AddSubgroup X} {Δ : AddSubgroup Y} [Countable Γ] [Countable Δ]

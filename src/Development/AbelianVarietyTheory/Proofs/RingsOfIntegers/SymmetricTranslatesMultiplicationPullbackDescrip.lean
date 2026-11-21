@@ -23,7 +23,6 @@ namespace GlobalTheory.PlaceInt.TwoLifts
 section General
 variable {X : Scheme.{0}} (A : Over X) [GrpObj A] [IsCommMonObj A] (L : RigLB A)
 
-omit [IsCommMonObj A] in
 
 theorem normEnd_iff (N : ℕ)
     (α₀ : LB.Gen (LB.LinComb L.L (K := Fin 2) ![𝟙 A.left, (mulA A N).left] ![(N : ℤ) ^ 2, -1])) :

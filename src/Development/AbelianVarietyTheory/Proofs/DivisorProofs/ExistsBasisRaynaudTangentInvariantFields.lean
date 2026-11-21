@@ -181,7 +181,6 @@ theorem tv_sum {κ : Type} (s : Finset κ) (f : κ → TanM (𝟙 (Sp R)) G) : t
   | empty => rfl
   | insert i s hi ih => rw [Finset.sum_insert hi, Finset.prod_insert hi, ReciprocityTheory.ChartRestriction.G.PullbackSections.tv_add, ih]
 
-open ReciprocityTheory.ChartRestriction.G.PullbackSections in
 
 theorem exists_basis [IsLocalRing R] (hG : Smooth G.hom) :
     ∃ n : ℕ, Nonempty (Module.Basis (Fin n) R (TanM (𝟙 (Sp R)) G)) := by

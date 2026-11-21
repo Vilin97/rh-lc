@@ -74,7 +74,6 @@ theorem trace_map_subtype {L : Submodule ℂ D} [FiniteDimensional ℂ L] (g : D
 
 end Helpers2
 
-open MeasureTheory in
 
 theorem supTrace (n : ℕ) : SupTraceStatement n := by
   intro ε lam h H _ _ σ hDS hHC hgap hthr hp hq

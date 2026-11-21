@@ -104,7 +104,6 @@ def topTerm (s : ZMod d) : ℝ :=
     else if Odd e ∧ dTop d TT s < (e : ℕ∞) then (nu1 s : ℝ) / (l : ℝ) ^ e
     else 0
 
-open Classical in
 
 end TopData
 

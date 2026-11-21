@@ -18,7 +18,6 @@ namespace PtsIntegralZeroLowerNEAux
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem rel_of_mk_eq {W : Ideal (MRing ι)} {a b : mcPts W}
     (h : (Quot.mk _ a : McClasses W) = Quot.mk _ b) :
@@ -49,7 +48,6 @@ theorem maDensity_zero (φ : Fin 0 → (Fin 0 → ℂ) → ℝ) (z : Fin 0 → �
 theorem integral_fin_zero (F : (Fin 0 → ℂ) → ℝ) (y : Fin 0 → ℂ) : ∫ y', F y' = F y := by
   rw [Measure.volume_pi_eq_dirac y, integral_dirac]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem segre_ne_zero {W : Ideal (MRing ι)} {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts W) : segre z ≠ 0 := by
   intro h0
@@ -126,7 +124,6 @@ theorem bij_fibre [Nonempty K] {W : Ideal (MRing ι)} (hW : IsMultiHomogIdeal W)
       rfl
     simp [N, h1]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem density_ge {W : Ideal (MRing ι)} {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (0 + 1) → ℂ)}
     {φ : Fin 0 → ((Σ k, ι k) → ℂ) → ℝ} {g : ((Σ k, ι k) → ℂ) → ℝ} {c : ℝ}
@@ -143,7 +140,6 @@ theorem density_ge {W : Ideal (MRing ι)} {Ψ : (((k : K) → ι k) → ℂ) →
 
 end PtsIntegralZeroLowerNEAux
 
-open PtsIntegralZeroLowerNEAux in
 
 theorem PtsIntegralZeroLowerNE.proof : PtsIntegralZeroLowerNE.Statement := by
   intro K _ _ ι _ W φ g c hW hfin _ hc

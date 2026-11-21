@@ -256,9 +256,7 @@ def lev {c : ℤ} (x : Y.ChiLift T c) (a : Y.Comp) : Level P where
   act v := ((T.act hn v).comp Y.u).comp (Y.Gam (Y.rep a)).subtype
   χ := x.χ (Y.rep a)
 
-open Classical in
 
-open Classical in
 
 end PSys
 

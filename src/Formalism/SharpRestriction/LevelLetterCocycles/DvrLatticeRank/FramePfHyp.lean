@@ -66,7 +66,6 @@ theorem framepf_hyp_local (e s' : ℕ) (hs : 1 ≤ s') (π' : LetA O n) (E : ZMo
 
 end Local
 
-set_option maxHeartbeats 1000000 in
 
 theorem frame_uniformiser_unit_multiple (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F) (h1 : adm1 D HW F Cm) (l : ℕ) [hpf : Fact l.Prime] (hl : l ≠ 2)
@@ -91,7 +90,6 @@ theorem ramification_quotient_pos (l : ℕ) [hpf : Fact l.Prime] (hl : l ≠ 2) 
   have he0 : 0 < eK K := Nat.pos_of_dvd_of_pos hd hl1
   exact (Nat.one_le_div_iff he0).mpr (Nat.le_of_dvd hl1 hd)
 
-set_option maxHeartbeats 1000000 in
 
 theorem framepf_hyp_arith (D : D7) (HW : HWOf D.loc) (l : ℕ) [hpf : Fact l.Prime] (hl : l ≠ 2)
     (K LL : FinExt l) (hG : Good K 1 LL) (h' : ℕ) (hs : 1 ≤ sK l K) :
@@ -140,7 +138,6 @@ theorem framepf_hyp_arith (D : D7) (HW : HWOf D.loc) (l : ℕ) [hpf : Fact l.Pri
     rw [hσ, ← hI]
     exact ha
 
-set_option maxHeartbeats 1000000 in
 
 theorem framepf_hyps (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F) (h1 : adm1 D HW F Cm) (l : ℕ) [hpf : Fact l.Prime] (hl : l ≠ 2)

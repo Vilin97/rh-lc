@@ -33,9 +33,7 @@ variable [NeZero n] {R} (jE : R.EE →ₐ[O] W.EE)
 def vec {T : LocLat G Qp LL O} {r : ℕ} (b : ZMod n → Fin r → W.DD T) (x : DD R n r) : W.DD T :=
   ∑ i, ∑ k, jE (x i k) • b i k
 
-omit [NeZero n] in
 
-omit [NeZero n] in
 
 end Generic
 

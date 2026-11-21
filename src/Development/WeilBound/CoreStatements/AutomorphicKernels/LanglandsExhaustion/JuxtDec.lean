@@ -14,7 +14,6 @@ namespace PositivityTheory.Exh
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 def FineUniqP : Prop :=
   ∀ (Δ : Segment k) {N : ℕ} (hd : ∑ a, (Zc.Seg.dec Δ a).1 = N) {V : Type} [AddCommGroup V] [Module ℂ V]

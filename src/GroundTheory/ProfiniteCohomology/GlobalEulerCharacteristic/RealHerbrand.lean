@@ -56,8 +56,6 @@ variable {k G : Type} [CommRing k] [Group G] [TopologicalSpace G] [IsTopological
   [DiscreteTopology G] (A : Rep.{0} k G) [IsDiscreteRep A] {c : G}
   (hG : ∀ g : G, g = 1 ∨ g = c) (hc : c ≠ 1)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [DiscreteTopology G] [IsDiscreteRep A] in
-include hG hc in
 
 theorem act_act (x : A) : act A c (act A c x) = x := by
   change A.ρ c (A.ρ c x) = x
@@ -65,23 +63,19 @@ theorem act_act (x : A) : act A c (act A c x) = x := by
 
 variable [Finite A]
 
-include hG hc in
 
 theorem finite_cohomology_one : Finite (cohomology A 1) :=
   Finite.of_equiv _ (h1EquivOfOrderTwo A hG hc).toEquiv
 
-include hG hc in
 
 theorem finite_cohomology_two : Finite (cohomology A 2) :=
   Finite.of_equiv _ (h2EquivOfOrderTwo A hG hc).toEquiv
 
-include hG hc in
 
 theorem card_cohomology_one_eq_two : Nat.card (cohomology A 1) = Nat.card (cohomology A 2) := by
   rw [← Nat.card_congr (h1EquivOfOrderTwo A hG hc).toEquiv, ← Nat.card_congr (h2EquivOfOrderTwo A hG hc).toEquiv]
   exact Involution.card_tateQuot_neg (act_act A hG hc)
 
-include hG hc in
 
 theorem eulerChar_eq_card_cohomology_zero : eulerChar A = Nat.card (cohomology A 0) := by
   have := finite_cohomology_one A hG hc
@@ -104,15 +98,12 @@ variable {K : FiniteSubfield} (v : InfinitePlace K.1) (hv : v.IsReal)
   (M : Rep.{0} (ULift.{0} ℤ) Gal(AlgebraicClosure v.Completion / v.Completion)) [IsDiscreteRep M]
   [Finite M]
 
-include hv in
 
-include hv in
 
 theorem eulerChar_eq_card_cohomology_zero_of_isReal :
     eulerChar M = Nat.card (cohomology M 0) :=
   OrderTwo.eulerChar_eq_card_cohomology_zero M (eq_one_or_eq_realConj v hv) (realConj_ne_one v hv)
 
-include hv in
 
 theorem finite_cohomology_of_isReal (n : ℕ) (hn : n ≤ 2) : Finite (cohomology M n) := by
   interval_cases n

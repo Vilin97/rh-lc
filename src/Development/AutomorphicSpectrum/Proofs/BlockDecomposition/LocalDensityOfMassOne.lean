@@ -199,7 +199,6 @@ section Split
 variable {F E : Type} [Field F] [Field E] [Algebra F E] {R : Type} [Field R] [Algebra F R]
   {b2 : Module.Basis (Fin 2) F E} {δ : E} {D : F} {t : R}
 
-variable (F) in
 
 def wv (δ : E) (t p q : R) : R ⊗[F] E := cd F δ ((p + q) / 2) ((p - q) / (2 * t))
 
@@ -445,7 +444,6 @@ end Loc3
 
 section Main
 
-open PositivityTheory.SiegelWeilFormula.Gen in
 
 theorem locR : Scal → MassOne → LocR := by
   intro hScal hOne F E _ _ _ _ _ σ J d b li lam μ 𝓕 mi m hcm hJ _ hlam _ _ _ hm

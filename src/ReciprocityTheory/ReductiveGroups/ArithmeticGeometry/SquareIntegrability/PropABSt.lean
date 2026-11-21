@@ -22,11 +22,8 @@ def paTh (Y : GT ι) (q : ℕ) (F : EuclideanSpace ℂ ι → ℂ) : EuclideanSp
 
 end
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end
 

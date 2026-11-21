@@ -97,7 +97,6 @@ theorem exists_eq_sum_cosetInd {H : AddSubgroup X} (hH : IsOpen (H : Set X)) {f 
   · exact image_eq_zero_of_notMem_tsupport fun hx' ↦ hx ((Set.Finite.mem_toFinset hS).mpr
       ⟨x, hx', rfl⟩)
 
-omit [IsTopologicalAddGroup X] in
 
 theorem exists_pi_subset {ι : Type*} [Finite ι]
     (hbasis : ∀ W ∈ 𝓝 (0 : X), ∃ H ∈ 𝓗, (H : Set X) ⊆ W) {W : Set (ι → X)} (hW : W ∈ 𝓝 0) :
@@ -109,7 +108,6 @@ theorem exists_pi_subset {ι : Type*} [Finite ι]
   refine ⟨H, hH𝓗, fun x hx ↦ hJt fun i _ ↦ ?_⟩
   exact Set.mem_iInter.mp (hH (((AddSubgroup.mem_pi _).mp hx) i (Set.mem_univ i))) i
 
-omit [TopologicalSpace X] [IsTopologicalAddGroup X] in
 
 theorem prod_cosetInd {ι : Type*} [Fintype ι] (H : AddSubgroup X) (a x : ι → X) :
     ∏ i, cosetInd H (a i) (x i) = cosetInd (AddSubgroup.pi Set.univ fun _ : ι ↦ H) a x := by
@@ -212,7 +210,6 @@ theorem integrable_of_mem_finiteSchwartzBruhatPi {f : (ι → 𝔸ᶠ[K]) → �
     (hf : f ∈ finiteSchwartzBruhatPi K) : Integrable f (finiteMeasurePi K) :=
   hf.1.continuous.integrable_of_hasCompactSupport hf.2
 
-omit [NumberField K] in
 
 theorem addChar_sum {G κ : Type*} [AddCommMonoid G] (χ : AddChar G Circle) (s : Finset κ)
     (a : κ → G) : (χ (∑ i ∈ s, a i) : ℂ) = ∏ i ∈ s, (χ (a i) : ℂ) := by

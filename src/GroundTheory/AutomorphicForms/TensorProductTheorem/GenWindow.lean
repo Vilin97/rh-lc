@@ -146,13 +146,11 @@ theorem IsWinProj.apply_of_mem (he : IsWinProj ρ e) {v : V} (hv : v ∈ LinearM
   obtain ⟨w, rfl⟩ := hv
   exact he.idem w
 
-variable (ρ e) in
 
 def winOp (m : M) : End ℂ (LinearMap.range e) :=
   LinearMap.codRestrict (LinearMap.range e) (e ∘ₗ ρ m ∘ₗ (LinearMap.range e).subtype)
     fun x => ⟨_, rfl⟩
 
-variable (ρ e) in
 
 def winOps : Set (End ℂ (LinearMap.range e)) := range (winOp ρ e)
 
@@ -349,7 +347,6 @@ theorem isIrreducible_mGenQuotRep (he : IsWinProj ρ e) (hNe : N ≤ LinearMap.r
     rw [← this]
     exact hu'
 
-variable (ρ e N) in
 
 def mGenQuotForm (l : Dual ℂ V) :
     Dual ℂ ((mGenSubrep ρ N).toSubmodule ⧸ mGenKernel ρ e N) :=

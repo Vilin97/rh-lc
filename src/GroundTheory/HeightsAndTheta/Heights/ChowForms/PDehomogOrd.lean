@@ -279,7 +279,6 @@ def locEquiv (hI : IsHomogIdeal I) :
 
 end DehomogOrd
 
-open DehomogOrd in
 
 theorem DehomogOrd.proof (h₁ : OrdPolynomialLocalization.Statement) : DehomogOrd.Statement := by
   intro F _ n I W t hI hW hIW htW hP hPQ g d hg

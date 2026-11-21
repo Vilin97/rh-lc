@@ -13,7 +13,6 @@ open MvPolynomial ReciprocityTheory.AnForm.M OnePoint Filter Topology MeasureThe
 
 namespace ProjectiveLineResolution
 
-open scoped Classical in
 
 end ProjectiveLineResolution
 

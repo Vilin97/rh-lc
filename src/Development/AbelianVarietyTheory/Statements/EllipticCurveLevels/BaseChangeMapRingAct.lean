@@ -68,7 +68,6 @@ theorem weilIs_push {S S' : Scheme.{0}} {X : Over S} {X' : Over S'} [GrpObj X] [
   subst hg
   exact (weilIs_iff_of_isGrpPullback_comm _ _ _ _ _ _ _ _ hL hL' hp hw T k x y x₀ y₀ c ex ey).2 h
 
-omit [Algebra R R₀] [GrpObj A] [GrpObj B] [GrpObj A₀] [GrpObj B₀] in
 
 theorem IsPairRed.polBundle {P : LB (A ⊗ B).left} {P₀ : LB (A₀ ⊗ B₀).left} (hP : P.IsLB) (hP₀ : P₀.IsLB)
     (r : IsPairRed i j P P₀) {lam : A ⟶ B} {lam₀ : A₀ ⟶ B₀} (e : i ≫ lam.left = lam₀.left ≫ j)
@@ -87,7 +86,6 @@ theorem IsPairRed.polBundle {P : LB (A ⊗ B).left} {P₀ : LB (A₀ ⊗ B₀).l
     rw [Category.assoc, m₂, ← Category.assoc, ← Over.comp_left, lift_snd, Category.assoc, ← Over.comp_left,
       lift_snd, Over.comp_left, Over.comp_left, Category.assoc, ← e, ← Category.assoc, ← l₂, Category.assoc]
 
-omit [Fact p.Prime] in
 
 theorem exists_isWeilHom (hA : IsAbelianScheme A) {P : LB (A ⊗ B).left} (hP : IsDual A B P) (lam : A ⟶ B)
     (t : G.TorsionTower A) : ∃ ψ : G ⟶ G.dual, IsWeilHom t t (polBundle P lam) ψ := by

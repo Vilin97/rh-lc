@@ -16,7 +16,6 @@ variable {V : Type*} [AddCommGroup V] [Module ℂ V]
 def psiT (H : Sesq V) (α : V → ℂ) (z y : V) : ℂ :=
   α z * α y * α (z + y) * Complex.exp (-(Real.pi : ℂ) * Complex.I * (altE H z y : ℂ))
 
-open Classical in
 
 def tripleSum (H : Sesq V) (α : V → ℂ) (Λ₁ : AddSubgroup V) (S₂ S₃ : Finset V) : ℂ :=
   ∑ z ∈ S₃, ∑ y ∈ S₂, if z + y ∈ Λ₁ then psiT H α z y else 0

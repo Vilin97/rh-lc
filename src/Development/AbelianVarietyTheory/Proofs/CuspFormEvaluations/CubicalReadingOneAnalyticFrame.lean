@@ -72,7 +72,6 @@ omit [IsCommMonObj A] in
 theorem e_add_period (z : Fin g → ℂ) {a : Fin g → ℂ} (ha : a ∈ Φ.lat) : Φ.e (z + a) = Φ.e z := by
   rw [Φ.e_add, (Φ.e_ker a).2 ha, _root_.mul_one]
 
-omit [IsCommMonObj A] in
 
 theorem hol_lin {N : ℕ} (Λ : (Fin N → ℂ) →ₗ[ℂ] (Fin g → ℂ)) : IsHolFam fun v => (Φ.e (Λ v)).left := by
   have h := Φ.hol

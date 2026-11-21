@@ -15,7 +15,6 @@ open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNoti
 def StdAt (D : D7) (g : ℕ) {N : ℕ} (L : Submodule (𝓞 D.host.E) (Fin N → D.host.E)) : Prop :=
   ∃ L₀ : Submodule (𝓞 D.host.E) (Fin N → D.host.E), (∀ x, x ∈ L₀ ↔ ∀ k, IsIntegral ℤ (x k)) ∧ EqAt D g L L₀
 
-open Classical in
 
 end GlobalTheory.LiftTypePrime
 

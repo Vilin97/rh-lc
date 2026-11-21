@@ -43,7 +43,6 @@ def liftPoly {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k
     MvPolynomial (Fin m) ℂ :=
   eval₂ (algebraMap ℤ (MvPolynomial (Fin m) ℂ)) (fun p => X (σ.symm (Function.update i p.1 p.2))) f
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem eval_liftPoly {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (x : Fin m → ℂ)
     (f : MRing ι) :

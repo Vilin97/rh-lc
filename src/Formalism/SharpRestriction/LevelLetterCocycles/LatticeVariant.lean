@@ -37,15 +37,10 @@ variable (Y)
 
 variable (bkP : Formalism.MainNotions.BlochKatoReduction.Gen.BKPh X)
 
-variable (X) in
 
-open Classical in
 
-open Classical in
 
-variable (X) in
 
-open Classical in
 
 end Formalism.MainNotions.LatticeVariant
 

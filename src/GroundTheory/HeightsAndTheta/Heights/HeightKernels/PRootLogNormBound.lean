@@ -42,7 +42,6 @@ theorem log_block (h₃ : PlueckerKernel.Statement) (j m : ℕ) (Z : Matrix (Fin
 
 end RootLogNormBoundAlt
 
-open RootLogNormBoundAlt in
 
 theorem RootLogNormBound.proof (h₁ : RootAnchorNonzero.Statement) (h₂ : RootPointConj.Statement)
     (h₃ : PlueckerKernel.Statement) : RootLogNormBound.Statement := by

@@ -116,7 +116,6 @@ theorem nval_map_of_overLa {K : Type} [Field K] [NumberField K] {la : HeightOneS
     · exact h
   exact ⟨r, hr0, he, hr, fun x => he ▸ nval_bc i hr0 hr e x⟩
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 
 theorem intAll_ramified {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H}
     {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} (h : Formalism.L2.PjFree.IntAll Xo c)

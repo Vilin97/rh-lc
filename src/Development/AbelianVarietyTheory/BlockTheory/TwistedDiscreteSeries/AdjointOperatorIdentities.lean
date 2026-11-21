@@ -29,7 +29,6 @@ def IsUnitStable {V : Type} [AddCommGroup V] [Module 𝓀[k] V] (S : Finset {x :
 
 end Notions
 
-variable (k) in
 
 structure Vanishing (n : Type) [Fintype n] [DecidableEq n] (M : Type) [AddCommGroup M] [Module ℂ M] (ϖ : Unif k) :
     Prop where
@@ -48,7 +47,6 @@ structure Vanishing (n : Type) [Fintype n] [DecidableEq n] (M : Type) [AddCommGr
     formOf π P v ∈ Mram k n M → ∀ (M' : Type) [AddCommGroup M'] [Module ℂ M'] (θ : M →ₗ[ℂ] M'),
     ((∀ g ∈ latStab P.lat, ∀ w, θ (π g w) = θ w) ∨ (∀ g ∈ latStab P.ker, ∀ w, θ (π g w) = θ w)) → θ v = 0
 
-variable (k) in
 
 structure OperatorIdentities (n : Type) [Fintype n] (M : Type) [AddCommGroup M] [Module ℂ M] (ϖ : Unif k)
     (χ : AddChar 𝓀[k] ℂ) : Prop where
@@ -103,7 +101,6 @@ structure OperatorIdentities (n : Type) [Fintype n] (M : Type) [AddCommGroup M] 
   unit_ram : ∀ c : 𝓀[k]ˣ, ∀ φ ∈ Mram k n M,
     dia c (FFStar ϖ χ (dia c⁻¹ (FF ϖ χ φ))) = ((resCard k : ℂ) ^ Fintype.card n) • φ
 
-variable (k) in
 
 structure AdjointIdentities (n : Type) [Fintype n] (ϖ : Unif k) (χ : AddChar 𝓀[k] ℂ) : Prop where
 

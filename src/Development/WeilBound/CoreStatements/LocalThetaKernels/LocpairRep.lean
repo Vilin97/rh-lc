@@ -90,7 +90,6 @@ theorem tens_inj {r : (κ → AF F) → ℂ} (hr : ∀ x z, At (evFin F v) z →
   change φ (evA κ v (putA v x₀ y)) * r (putA v x₀ y) = φ' (evA κ v (putA v x₀ y)) * r (putA v x₀ y) at this
   rwa [ev_put (evA_inA v), inv_putA v hr, h₁, mul_one, mul_one] at this
 
-variable (v) in
 
 def IsLocOm {G : Type} [Monoid G] (om : G →* Module.End ℂ ((κ → AF F) → ℂ))
     (omv : G →* Module.End ℂ ((κ → Fv F v) → ℂ)) : Prop :=

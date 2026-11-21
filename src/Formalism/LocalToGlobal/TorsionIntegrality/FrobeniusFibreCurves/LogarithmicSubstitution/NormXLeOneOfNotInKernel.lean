@@ -140,6 +140,5 @@ theorem norm_x_le_one_of_not_in_kernel {K : Type} [NormedField K] {W : Weierstra
   | zero => exact absurd trivial h
   | some x y hxy => exact not_lt.1 h
 
-open Classical in
 
 end Formalism.L2.Th1.B.Half

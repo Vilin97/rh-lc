@@ -47,9 +47,7 @@ instance isIso_imageRestrictLift [IsClosedImmersion (f ∣_ W)] :
   IsClosedImmersion.isIso_lift _ _ (by
     rw [ker_morphismRestrict, ker_morphismRestrict, Scheme.IdealSheafData.ker_subschemeι])
 
-omit [QuasiCompact f] in
 
-omit [QuasiCompact f] in
 
 end SchemeImage
 
@@ -66,7 +64,6 @@ instance : IsClosedImmersion (eqLocusι p g h hgh) := by
   dsimp only [eqLocusι, eqLocus]
   infer_instance
 
-omit [IsSeparated p] in
 
 lemma eqLocusι_comp_eq : eqLocusι p g h hgh ≫ g = eqLocusι p g h hgh ≫ h := by
   have h₁ := congrArg (· ≫ pullback.fst p p) (pullback.condition (f := pullback.diagonal p)

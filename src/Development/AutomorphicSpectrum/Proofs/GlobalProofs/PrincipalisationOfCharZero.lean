@@ -90,6 +90,5 @@ end GlobalTheory.CompanionTheory.Hypotheses₂.CentreOver
 
 namespace GlobalTheory.CompanionTheory.Hypotheses₂
 
-open GlobalTheory.CompanionTheory.Hypotheses₂.SncBlowup GlobalTheory.CompanionTheory.Hypotheses₂.ResKSide GlobalTheory.CompanionTheory.Hypotheses₂.CentreOver in
 
 end GlobalTheory.CompanionTheory.Hypotheses₂

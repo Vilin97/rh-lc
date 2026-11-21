@@ -28,12 +28,10 @@ theorem powMonomial_isMultiHomog (e : K → ℕ) (i : ∀ k, ι k) :
   rw [key] at h
   exact h
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem liftForm_C_eq {J : Type} (a : R) : liftForm (ι := ι) (J := J) (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) = C a := by
   simp [liftForm]
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem cycEval_congr_on_support {n n' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ)
     (h : ∀ W, Z W ≠ 0 → n W = n' W) : cycEval n Z = cycEval n' Z := by
@@ -43,8 +41,6 @@ theorem cycEval_congr_on_support {n n' : Ideal (ReciprocityTheory.ChartRestricti
   · rw [hW, zero_mul, zero_mul]
   · rw [h W hW]
 
-omit [Fintype K] [DecidableEq K] in
-open Classical in
 
 theorem cycEval_ite (p : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → Prop) (A B : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ)
     (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) (hZ : (Function.support Z).Finite) :
@@ -57,7 +53,6 @@ theorem cycEval_ite (p : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOv
   dsimp only
   split_ifs <;> ring
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem vecCons_liftMDeg {d : ℕ} (c : K → ℕ) (L : Fin d → K → ℤ) :
     Matrix.vecCons (fun k => ((liftMDeg c k : ℕ) : ℤ)) (liftDegs L) =

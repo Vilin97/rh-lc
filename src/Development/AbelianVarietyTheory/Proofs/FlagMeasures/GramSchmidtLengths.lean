@@ -11,7 +11,6 @@ open scoped InnerProductSpace ENNReal
 
 namespace GlobalTheory.Amp.GramFlag
 
-open InnerProductSpace in
 
 theorem sub_gs_mem {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] {r : ℕ} (f : Fin r → E) (a : Fin r) :
     f a - gramSchmidt ℂ f a ∈ Submodule.span ℂ (f '' Set.Iio a) := by
@@ -24,7 +23,6 @@ theorem sub_gs_mem {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] {
   exact Submodule.sum_mem _ fun i hi =>
     Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, Finset.mem_Iio.1 hi, rfl⟩)
 
-open InnerProductSpace in
 
 theorem norm_gs_le {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] {r : ℕ} (f : Fin r → E) (a : Fin r)
     {w : E} (hw : w ∈ Submodule.span ℂ (f '' Set.Iio a)) : ‖gramSchmidt ℂ f a‖ ≤ ‖f a - w‖ := by
@@ -46,7 +44,6 @@ theorem norm_gs_le {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] {
   nlinarith [norm_nonneg (gramSchmidt ℂ f a), norm_nonneg (f a - w),
     mul_self_nonneg ‖(f a - gramSchmidt ℂ f a) - w‖]
 
-open InnerProductSpace in
 
 theorem exists_upper {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] {r : ℕ} (f : Fin r → E) :
     ∃ u : UT r → ℂ, ∀ a, ∑ b, upper u b a • f b = gramSchmidt ℂ f a := by

@@ -25,7 +25,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 section Def
 
-variable (K Ω) in
 
 def localArtinMap :
     Kˣ →* (maximalAbelianExtension K Ω ≃ₐ[K] maximalAbelianExtension K Ω) :=

@@ -24,7 +24,6 @@ theorem realCLM_map_complex_smul (L : E →L[ℝ] F) (c : ℂ) (v : E) :
     rw [add_smul, mul_smul, ← Complex.coe_algebraMap, algebraMap_smul, algebraMap_smul]
   rw [h, map_add (f := _), map_smul, map_smul, ← Complex.coe_algebraMap, algebraMap_smul, algebraMap_smul]
 
-omit [NormedSpace ℝ E] [IsScalarTower ℝ ℂ E] in
 
 theorem I_smul_I_smul (v : E) : I • I • v = -v := by
   rw [smul_smul, I_mul_I, neg_smul, one_smul]
@@ -106,7 +105,6 @@ theorem norm_linPart_le (L : E →L[ℝ] F) : ‖linPart L‖ ≤ ‖L‖ := by
   have : ‖(1 / 2 : ℂ)‖ = 1 / 2 := by simp
   rw [this]; linarith
 
-variable (E F) in
 
 def linPartCLM : (E →L[ℝ] F) →L[ℝ] (E →L[ℂ] F) :=
   LinearMap.mkContinuous
@@ -118,7 +116,6 @@ def linPartCLM : (E →L[ℝ] F) →L[ℝ] (E →L[ℂ] F) :=
         rw [smul_comm I c, ← smul_sub, smul_comm] }
     1 fun L => by rw [one_mul]; exact norm_linPart_le L
 
-variable (E F) in
 
 def antilinPartCLM : (E →L[ℝ] F) →L[ℝ] (E →L⋆[ℂ] F) :=
   LinearMap.mkContinuous
@@ -469,7 +466,6 @@ section Levi
 
 variable {u u' : E → ℝ} {z : E}
 
-omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
 theorem contDiffAt_ofReal_comp {n : WithTop ℕ∞} (hu : ContDiffAt ℝ n u z) :
     ContDiffAt ℝ n (fun x => (u x : ℂ)) z := ofRealCLM.contDiff.contDiffAt.comp z hu
@@ -556,7 +552,6 @@ section Inner
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [NormedSpace ℝ H]
   [IsScalarTower ℝ ℂ H]
 
-omit [NormedSpace ℝ H] [IsScalarTower ℝ ℂ H] in
 
 theorem inner_self_eq_ofReal_norm_sq (v : H) : inner ℂ v v = ((‖v‖ ^ 2 : ℝ) : ℂ) := by
   rw [inner_self_eq_norm_sq_to_K]; simp
@@ -655,6 +650,5 @@ open Real MeasureTheory Set Metric
 
 end Circle
 
-open scoped Laplacian in
 
 end GlobalTheory

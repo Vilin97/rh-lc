@@ -267,6 +267,5 @@ theorem quotientLength : QuotientLength := by
   have hq'' : (m : ℤ) + A' ≤ A + n * be := by exact_mod_cast hq'
   linarith
 
-open BQuot in
 
 end Formalism.LatticeBaseChangeAlt

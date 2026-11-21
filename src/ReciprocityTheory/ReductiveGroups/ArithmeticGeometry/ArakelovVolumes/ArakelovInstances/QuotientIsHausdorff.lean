@@ -20,9 +20,7 @@ def GGConnStatement : Prop := ∀ (r : ℕ) (X : Data E r), IsConnected X.dom
 
 variable {r : ℕ} (X : Data E r) [T2Space (Yq X)] [SecondCountableTopology (Yq X)]
 
-omit [T2Space (Yq X)] [SecondCountableTopology (Yq X)] in
 
-omit [T2Space (Yq X)] [SecondCountableTopology (Yq X)] in
 
 end
 

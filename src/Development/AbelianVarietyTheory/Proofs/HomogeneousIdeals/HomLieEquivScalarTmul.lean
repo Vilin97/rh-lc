@@ -231,7 +231,6 @@ section Algebra
 
 variable [Algebra O O'] [Module O' M] [IsScalarTower O O' M]
 
-variable (O') in
 
 theorem lieEquivBase_smul (x : O') (z : Lie a ⊗[O] M) :
     h.lieEquivBase (h.algAct O') ((Algebra.lsmul O O M x).lTensor _ z) =
@@ -407,7 +406,6 @@ theorem lieMult_iff_finrank (hφ : IsLinearPullback a₁ a t φ) (τ : O →+* k
   exact ⟨fun ⟨v⟩ ↦ ⟨.of_basis v, (Module.finrank_eq_card_basis v).trans (Fintype.card_fin n)⟩,
     fun ⟨_, h⟩ ↦ ⟨Module.finBasisOfFinrankEq _ _ h⟩⟩
 
-variable (a₁) in
 
 end Lie
 
@@ -488,6 +486,5 @@ def Lie.splitTorusEquiv {R O X : Type} [CommRing R] [CommRing O] [AddCommGroup X
     ⟨fun _ _ e ↦ Diag.lieVec_injective (congrArg Lie.hom e), fun v ↦
       ((Diag.isTangent_iff_exists _).mp v.isTangent).imp fun _ e ↦ Lie.ext e⟩
 
-open NumberField in
 
 end GlobalTheory.Serre

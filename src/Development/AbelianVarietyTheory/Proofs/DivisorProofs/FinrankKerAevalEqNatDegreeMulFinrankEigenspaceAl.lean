@@ -19,7 +19,6 @@ private lemma rank_submatrix_fromBlocks_one_zero_eq {F : Type} [Field F] {m : Ty
   rw [Matrix.rank_submatrix, hd, Matrix.rank_diagonal]
   simp [Fintype.card_subtype, Finset.card_filter, Fintype.sum_sum_type]
 
-open Matrix in
 
 theorem eigDim_rank_map {K L : Type} [Field K] [Field L] (φ : K →+* L) {n : Type} [Fintype n]
     [DecidableEq n] (M : Matrix n n K) : (M.map φ).rank = M.rank := by

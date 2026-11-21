@@ -11,7 +11,6 @@ open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P Formalism.REAL Formal
 
 namespace GlobalTheory.WeightedFormPos
 
-open Formalism.FourierDecayAlt.P.JCx2 in
 
 theorem radialBetaPos_of_xiExists (hXi : B.XiExists) : JC.RadialBetaPos := by
   intro Wp Wq _ _ _ _ _ _ P0 T j μ hμ

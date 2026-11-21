@@ -28,7 +28,6 @@ theorem card_add_two_mul_card_inf_le_of_not_le {G : Type} [Group G] [Finite G] (
   rw [hk]
   nlinarith
 
-open Classical in
 
 theorem ite_add_two_mul_card_inf_sub_one_le {G : Type} [Group G] [Finite G] (H J : Subgroup G) :
     (if H ≤ J then 0 else Nat.card ↥H) + 2 * (Nat.card ↥(H ⊓ J) - 1) ≤ 2 * (Nat.card ↥H - 1) := by

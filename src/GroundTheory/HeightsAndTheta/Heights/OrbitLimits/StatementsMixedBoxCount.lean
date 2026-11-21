@@ -10,7 +10,6 @@ namespace GroundTheory.Heights₂.Heights.Targets
 
 open NumberField NumberField.InfinitePlace NumberField.mixedEmbedding
 
-open scoped Classical in
 
 def MixedBoxCount.Statement : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (La : Submodule ℤ (mixedSpace F)) [DiscreteTopology La]

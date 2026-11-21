@@ -31,7 +31,6 @@ def toCircle : (ZMod N)ˣ →* Circle where
   map_one' := Circle.ext (by simp)
   map_mul' a b := Circle.ext (by simp only [Units.val_mul, map_mul]; rfl)
 
-omit [NeZero N] in
 
 def galoisCharacter : Gal(maxCyclotomic/ℚ) →* Circle :=
   (toCircle χ).comp ((unitsMod N).comp cycCharacter.toMonoidHom)

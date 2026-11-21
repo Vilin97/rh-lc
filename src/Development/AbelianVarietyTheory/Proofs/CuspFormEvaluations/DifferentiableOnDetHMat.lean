@@ -21,7 +21,6 @@ noncomputable section
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (X : Data E r) {g : ℕ}
 
-open Classical in
 
 def borMat (b : Frame X.Ψ r) : Matrix (X.Ψ × Fin r) (X.Ψ × Fin r) ℂ :=
   Matrix.of fun p q => if q.1 = p.1 then
@@ -139,7 +138,6 @@ theorem per_lact (x : Frame X.Ψ r) {γ : GL (Fin r) E}
       (Matrix.isUnit_iff_isUnit_det _).1 (γ.isUnit.map p.1.1.mapMatrix)
     rw [Matrix.mul_inv_rev, mulVec_mulVec, Matrix.mul_assoc, nonsing_inv_mul _ hu, Matrix.mul_one]
 
-variable (X) in
 
 theorem differentiableOn_per (v : Fin r → E) (p : X.Ψ × Fin r) :
     DifferentiableOn ℂ (fun x => per X x v p) X.dom := by
@@ -162,7 +160,6 @@ theorem differentiableOn_per (v : Fin r → E) (p : X.Ψ × Fin r) :
     · exact differentiable_const _
     · exact hent _ _ _
 
-variable (X) in
 
 def Hm (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (idx : Fin g ≃ X.Ψ × Fin r) (x : Frame X.Ψ r) :
     Matrix (Fin g) (Fin g) ℂ :=
@@ -212,12 +209,10 @@ theorem hermForm_Hm_rmul (z w : Fin g → ℂ) :
 
 end Rmul
 
-variable (X) in
 
 theorem c_pos (τ : X.Ψ) : 0 < X.c τ :=
   mul_pos two_pos (norm_pos_iff.2 ((map_ne_zero τ.1).2 X.ξ0_ne))
 
-variable (X) in
 
 theorem emb_neg_half (τ : X.Ψ) : τ.1 (-(X.κ0 / 2)) = I * (X.c τ / 2 : ℝ) := by
   have hξ : (τ.1 X.ξ0).re = 0 := by
@@ -238,7 +233,6 @@ theorem emb_neg_half (τ : X.Ψ) : τ.1 (-(X.κ0 / 2)) = I * (X.c τ / 2 : ℝ) 
       rw [abs_of_neg (by linarith)]; ring
     · rw [abs_of_pos hpos]; ring
 
-variable (X) in
 
 theorem EF_eq_sum (u v : Fin r → E) : (EF X u v : ℝ) =
     ∑ τ : X.Ψ, X.c τ * -(hermC τ.1 X.Gm (Data.emb τ.1 u) (Data.emb τ.1 v)).im := by

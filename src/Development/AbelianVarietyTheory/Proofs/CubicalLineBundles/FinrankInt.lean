@@ -108,7 +108,6 @@ theorem exists_form (𝔄 : Submodule (𝓞 E) E) (ξ : E) (hξ0 : ξ ≠ 0)
     apply Int.cast_injective (α := ℚ)
     rw [hEF, hz', hg']
 
-omit [IsCMField E] in
 
 theorem finrank_int (𝔄 : Submodule (𝓞 E) E) (hfg : 𝔄.FG) (hne : 𝔄 ≠ ⊥) :
     Module.finrank ℤ 𝔄 = Module.finrank ℚ E := by

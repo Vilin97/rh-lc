@@ -176,7 +176,6 @@ theorem eventually_exists_sq {V : Type} [AddCommGroup V] [Module k V] [Topologic
 variable (k) {R : Type} [Ring R] [Algebra k R] [TopologicalSpace R] [IsTopologicalRing R] [ContinuousSMul k R] [T2Space R]
   [FiniteDimensional k R]
 
-include k in
 
 theorem eventually_isUnit : ∀ᶠ x in 𝓝 (1 : R), IsUnit x := by
   let b := Module.finBasis k R
@@ -186,7 +185,6 @@ theorem eventually_isUnit : ∀ᶠ x in 𝓝 (1 : R), IsUnit x := by
   rw [← Algebra.lmul_isUnit_iff (R := k), LinearMap.isUnit_iff_isUnit_det, ← LinearMap.det_toMatrix b]
   exact hx.isUnit
 
-variable {k} in
 
 theorem eventually_exists_unitary (h2 : (2 : k) ≠ 0) (s : R →ₗ[k] R) (hm : ∀ a b, s (a * b) = s b * s a)
     (hs : ∀ a, s (s a) = a) {g : R} (hg : g * s g = 1) :
@@ -264,7 +262,6 @@ section Classes
 
 variable {A n : Type} [CommRing A] [IsArtinianRing A] [Fintype n] [DecidableEq n]
 
-omit [IsArtinianRing A] in
 
 theorem charpoly_conj_GL (g x : GL n A) : (x⁻¹ * g * x).1.charpoly = g.1.charpoly := by
   rw [Units.val_mul, Units.val_mul, Matrix.charpoly_mul_comm, ← mul_assoc, Units.mul_inv, one_mul]

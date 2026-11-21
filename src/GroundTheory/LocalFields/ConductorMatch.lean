@@ -52,7 +52,6 @@ end Conductor
 
 section Ab
 
-variable (K Ω) in
 
 end Ab
 

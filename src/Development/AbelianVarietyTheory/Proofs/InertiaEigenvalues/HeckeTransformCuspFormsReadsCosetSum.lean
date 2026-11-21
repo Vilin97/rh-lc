@@ -37,7 +37,6 @@ namespace GlobalTheory.HeckeSupReal
 
 open GlobalTheory.HeckeSup
 
-set_option maxHeartbeats 1600000 in
 
 theorem readsCusp_realSide : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.HeckeSupSt.HeckeReadTie → ∀ (D : D7) (X : GlobalTheory.TwInputs.RealSide D)
     (i : Fin D.R.m) (hV : X.core.V ((i : ℕ) + 1) (Formalism.IndefR.FWT.res X.core (sg0 D X.A3.A)) = Wc D i),

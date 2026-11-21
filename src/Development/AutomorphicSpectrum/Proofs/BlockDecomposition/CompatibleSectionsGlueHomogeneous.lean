@@ -14,9 +14,7 @@ namespace GlobalTheory.CompanionTheory.GE.SerreVan
 
 variable {B : Type} [CommRing B] {M : ℕ}
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 def V0 (W : Finset (Fin M)) (P Q : Ideal (MvPolynomial (Fin M) B)) (n₀ : ℕ) : Prop :=
   ∀ n, n₀ ≤ n → ∀ f ∈ P, f.IsHomogeneous n → (∀ i ∈ W, ∃ m : ℕ, X i ^ m * f ∈ Q) → f ∈ Q

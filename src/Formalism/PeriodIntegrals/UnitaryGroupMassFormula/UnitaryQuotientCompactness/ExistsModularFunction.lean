@@ -13,7 +13,6 @@ namespace PI.QuotSetU.UnitaryGroupMassFormula
 
 open PI ModW ModW.MG
 
-open Classical in
 
 def modFun {m : ℕ} (G : Set (Matrix (Fin m) (Fin m) ℂ)) (hG : IsMatGroup G)
     (g : Matrix (Fin m) (Fin m) ℂ) : ℝ :=

@@ -181,7 +181,6 @@ theorem conv_add_right {f f₁ f₂ : G → ℂ} (h : Continuous f) (c : HasComp
   exact integral_add ((h.mul (h₁.comp hy)).integrable_of_hasCompactSupport c.mul_right)
     ((h.mul (h₂.comp hy)).integrable_of_hasCompactSupport c.mul_right)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [BorelSpace G] [IsFiniteMeasureOnCompacts μ] in
 
 theorem conv_smul_smul (a b : ℂ) (f f' : G → ℂ) : conv μ (a • f) (b • f') = (a * b) • conv μ f f' := by
   funext y
@@ -221,7 +220,6 @@ end Inf
 
 section Ad
 
-omit [NumberField E] in
 
 theorem starFn_infFin (a : GInf σ J → ℂ) (b : GFin σ J → ℂ) :
     starFn (infFin σ J a b) = infFin σ J (starFn a) (starFn b) := by

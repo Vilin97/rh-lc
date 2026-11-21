@@ -483,7 +483,6 @@ theorem kill_of_dvd {n : ℕ} {o o' : Obj b N s} {ψ : o.A ⟶ o'.A} (h : IsPIso
 
 end GlobalTheory.UPel.HT.ES.KerFin
 
-open GlobalTheory.UPel.HT.ES.KerFin in
 
 theorem GlobalTheory.UPel.HT.ES.KerFin.finite_kernels : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (N : ℕ), 3 ≤ N → N.Coprime p → D.m = 1 → ∀ (c : ℕ) (k : Type) [Field k] [IsAlgClosed k] [CharP k p] (s : Sp k ⟶ Sp R) (o : Obj b N s), Set.Finite {P : ∀ T : Over (Sp k), (T ⟶ o.A) → Prop | ∃ (o' : Obj b N s) (ψ : o.A ⟶ o'.A), IsPIsog c o o' ψ ∧ P = fun T x => x ≫ ψ = 1} := by
   intro p _ D R _ b N _ _ hm c k _ _ _ s o

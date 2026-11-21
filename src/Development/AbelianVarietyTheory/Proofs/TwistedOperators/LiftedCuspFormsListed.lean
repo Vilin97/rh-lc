@@ -111,6 +111,5 @@ theorem isCuspFun_lift {θ : InfFam D} {V : HSp D} {S : D.what₂.Tau → SPar} 
     exact GlobalTheory.MultMem.isCuspFun_add (GlobalTheory.EndCusp.isAutFunSm_lift hT a).toIsAutFun
       (GlobalTheory.EndCusp.isAutFunSm_lift hT b).toIsAutFun ha hb
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.StartCusp

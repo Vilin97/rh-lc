@@ -6,7 +6,6 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.
 
 namespace ReciprocityTheory.ChartRestriction.G.T0
 
-open Polynomial in
 
 noncomputable def hupsTw {σ R : Type*} [CommRing R] (w : σ → ℕ) :
     MvPolynomial σ R →ₐ[R] Polynomial (MvPolynomial σ R) :=

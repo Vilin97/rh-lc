@@ -29,7 +29,6 @@ section Sub
 
 variable {E : Type} [AddCommGroup E] [Module ℂ E] [TopologicalSpace E] [IsTopologicalAddGroup E]
 
-open Classical in
 
 end Sub
 

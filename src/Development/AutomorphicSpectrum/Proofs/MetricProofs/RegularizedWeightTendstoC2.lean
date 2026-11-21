@@ -219,7 +219,6 @@ theorem arg_C2_through_chart {D : ℕ} (ρ : Mollifier D) {O P L : Set (Fin D �
 
 variable {D : ℕ} {X : Type*} [TopologicalSpace X] {A : FinHolAtlas D X}
 
-open Classical in
 
 theorem regularised_eq_regMax_near (R : RegChartData A) {η : Fin R.N → X → ℝ} {Cη : ℝ}
     (hcut : R.IsCutoffFamily η Cη) (x₀ : X) :

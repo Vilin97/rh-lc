@@ -58,13 +58,11 @@ end Unitors
 
 variable [Fintype G]
 
-variable (k G) in
 
 noncomputable def tateOne : tateCohomology (𝟙_ (Rep.{u} k G)) 0 :=
   ((tateCohomologyZeroIso k G).app (𝟙_ (Rep.{u} k G))).inv.hom
     (Submodule.Quotient.mk ⟨(1 : k), fun _ => rfl⟩)
 
-set_option maxHeartbeats 800000 in
 
 theorem leftUnitor_tateCup_tateOne_zero (B : Rep.{u} k G) (b : tateCohomology B 0) :
     ((tateCohomologyFunctor 0).map (λ_ B).hom).hom

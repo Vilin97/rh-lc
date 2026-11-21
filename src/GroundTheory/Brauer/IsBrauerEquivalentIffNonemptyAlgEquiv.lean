@@ -18,13 +18,10 @@ section Azumaya
 variable {K : Type u} [Field K] {A : Type v} [Ring A] [Algebra K A]
   [Algebra.IsCentral K A] [IsSimpleRing A] [FiniteDimensional K A]
 
-omit [FiniteDimensional K A] in
-variable (K A) in
 
 theorem mulLeftRight_injective : Function.Injective (AlgHom.mulLeftRight K A) :=
   RingHom.injective (AlgHom.mulLeftRight K A).toRingHom
 
-variable (K A) in
 
 theorem mulLeftRight_bijective : Function.Bijective (AlgHom.mulLeftRight K A) := by
   refine ⟨mulLeftRight_injective K A, ?_⟩
@@ -33,7 +30,6 @@ theorem mulLeftRight_bijective : Function.Bijective (AlgHom.mulLeftRight K A) :=
     (by rw [Module.finrank_tensorProduct, MulOpposite.finrank, Module.finrank_linearMap])
   exact h.mp (mulLeftRight_injective K A)
 
-variable (K A) in
 
 end Azumaya
 
@@ -41,7 +37,6 @@ section Equivalence
 
 variable {K : Type u} [Field K]
 
-variable (K) in
 
 end Equivalence
 

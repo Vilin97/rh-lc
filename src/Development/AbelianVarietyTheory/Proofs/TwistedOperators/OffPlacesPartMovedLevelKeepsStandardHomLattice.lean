@@ -22,7 +22,6 @@ open GlobalTheory.StdFrames
 
 variable {D : D7}
 
-open Classical in
 
 theorem cpt_idemSum {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (Q : Pl D.host.E) :
     cpt Q (toEAf D e) = if Q ∈ P then 1 else 0 := by
@@ -36,7 +35,6 @@ theorem cpt_idemSum {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (
     · rw [if_neg hq]; exact (cpt_of_isIdemAt (hes PP hP)).2 Q hq
   rw [Finset.sum_congr rfl h, Finset.sum_ite_eq]
 
-open Classical in
 
 theorem cpt_cA_idemSum (V : HSp D) {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (Q : Pl D.host.E) :
     cpt Q (toEAf D (cA D e)) = if GlobalTheory.IdemSupport.cP Q ∈ P then 1 else 0 := by
@@ -198,7 +196,6 @@ theorem finE_cut_mem_St (V : HSp D) (β Uf K : GL (Fin V.rank) (Lev.EAf D)) (g :
 
 end GlobalTheory.OffPartLattice
 
-open GlobalTheory.OffPartLattice Matrix in
 
 theorem GlobalTheory.OffPartLattice.offPart_keeps_stdLatO : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {t : T},
     t ∈ U → ∀ {Φ : G.Datum} {β : CosFam G t} (j : ℕ) (hj : j + 1 < D.R.m) (k : FinPt G (.top (j + 1))),

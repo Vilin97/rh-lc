@@ -35,7 +35,6 @@ theorem chartDens_annulus_nonneg (hL : RegLogDensNonneg.Statement) (u : Fin n â†
 
 end RegLelongMono
 
-open RegLelongMono in
 
 theorem RegLelongMono.proof (hA : RegLelongAnnulus.Statement) (hL : RegLogDensNonneg.Statement) :
     RegLelongMono.Statement := by

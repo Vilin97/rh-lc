@@ -117,9 +117,7 @@ variable (D : D7) (i : D.ntw.Tw) (b : Bool) (k : ℕ)
   (τ : ∀ kv : (Σ kk : Fin 2, D.nd.PlG kk), (ZMod (D.host.g kv.1))ˣ →* (FractionRing (D.ntw.O i))ˣ)
   (sp : PlE D.host → SplitPlace D.host.E)
 
-open Classical in
 
-open Classical in
 
 theorem gVal_of (kv : Σ kk : Fin 2, D.nd.PlG kk) (s : SplitPlace D.host.E)
     (red : s.v.adicCompletionIntegers (maximalRealSubfield D.host.E) →+* ZMod (D.host.g kv.1))
@@ -143,7 +141,6 @@ section Tau
 
 variable (D : D7)
 
-open Classical in
 
 end Tau
 
@@ -161,7 +158,6 @@ section Pq
 
 variable (D : D7)
 
-open Classical in
 
 def qpOf (Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)) → PlE D.host) (S : Finset (PlE D.host)) :
     Finset (PlE D.host) :=

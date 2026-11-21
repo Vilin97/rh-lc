@@ -40,7 +40,6 @@ open GlobalTheory.Chain.RealIt (glue)
 
 namespace GlobalTheory.EvenOntoRealZeta
 
-open GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction in
 
 theorem realZeta : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → ∀ D : D7, RealZeta D := by
   intro hDS hHC D c hc k hk s s' hs hs' p hp m X hmX

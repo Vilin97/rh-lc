@@ -44,7 +44,6 @@ theorem eventually_mem_localizationAt (x : L) :
   by_contra h
   exact hv (mem_localizationAt_iff.mpr ⟨a, b, h, div_eq_mul_inv _ _⟩)
 
-omit [NumberField L] in
 
 theorem isUnit_of_mem_of_inv_mem {R : Type*} [CommRing R] [Algebra R L] {S : Subalgebra R L}
     {x : L} (hx : x ≠ 0) (h : x ∈ S) (h' : x⁻¹ ∈ S) : IsUnit (⟨x, h⟩ : S) :=

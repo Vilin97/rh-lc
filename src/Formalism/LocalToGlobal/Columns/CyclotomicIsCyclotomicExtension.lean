@@ -88,7 +88,6 @@ section Hecke
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks}
 
-open Classical in
 
 end Hecke
 
@@ -125,13 +124,11 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 
 end Gen
 
-open Classical in
 
 section Inst
 
 variable (LL : Fld) [FiniteDimensional ℚ LL] [Normal ℚ LL] (hLL : cycQ nd2N ≤ LL)
 
-include hLL in
 
 end Inst
 

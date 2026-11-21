@@ -193,7 +193,6 @@ section UnitsTriv
 
 variable {L : Type} [Field L] [NumberField L]
 
-variable (L) in
 
 end UnitsTriv
 

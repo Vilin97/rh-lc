@@ -398,7 +398,6 @@ theorem valuation_transport_of_lemma (D : Formalism.BasicNotions.D7) (h : Formal
 
 section Hom
 
-open Classical in
 
 def suppProj (R : Type) [CommRing R] {σ : Type} (s : Set (σ →₀ ℕ)) : MvPolynomial σ R →ₗ[R] MvPolynomial σ R :=
   (basisMonomials σ R).constr R fun m => if m ∈ s then monomial m 1 else 0
@@ -1237,7 +1236,6 @@ def biPol (R : Type) [CommRing R] {N r K : ℕ} (b' b'' : Fin N → ℕ) :
 
 variable {n' r : ℕ} [NeZero n'] (F : Frames n' r) (j : ℤ)
 
-open Classical in
 
 def segL (m : ℤ → ℤ) (th : ℤ → ℝ) : List (PathInequality (segN F j)) :=
   (List.finRange (segN F j)).flatMap fun i =>
@@ -1400,7 +1398,6 @@ open Formalism.MainNotions.SelectionLemmas in
 theorem li_segE_injective {n' r : ℕ} [NeZero n'] (F : Frames n' r) (j : ℤ) : Function.Injective (segE F j) :=
   fun _ _ h => (OrderIso.injective _) (Subtype.ext h)
 
-open Formalism.MainNotions.SelectionLemmas in
 
 theorem space_statement_linear_independent (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     (hA2 : ∀ (N n : ℕ) [NeZero n] (LL : Letters (Fin N)) (B : Fin N → ℕ),
@@ -1741,7 +1738,6 @@ theorem XXZ_lift (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O
     refine ⟨a' • x1, Submodule.smul_mem _ _ hx1, ?_⟩
     rw [smul_eq_C_mul, smul_eq_C_mul, map_mul, map_C]
 
-open Formalism.MainNotions.SelectionLemmas in
 
 theorem space_statement_sixth_clause (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (n' r K : ℕ) [NeZero n']
     [NeZero r] [NeZero K] (F : Frames n' r) (j : ℤ) (m : ℤ → ℤ) (th o : ℤ → ℝ)
@@ -2053,7 +2049,6 @@ open Formalism.MainNotions.CovariantDegrees
 
 variable {Fd : Type} [Field Fd] {N m k : ℕ}
 
-open Classical in
 
 def jone_w (LL : Letters (Fin N)) (S : Set (Fin N)) (e : Fin m → Fin k) : Fin N × Fin k → ℤ :=
   fun v => if v.1 ∈ S ∧ v.2 ∈ Set.range e then (if LL.vec v.1 then 1 else -1) else 0

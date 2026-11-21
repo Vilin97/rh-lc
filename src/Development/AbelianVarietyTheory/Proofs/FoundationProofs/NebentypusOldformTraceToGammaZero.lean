@@ -130,7 +130,6 @@ end
 
 end GlobalTheory.HeckeFamilyMatrices.TrOld
 
-open GlobalTheory.HeckeFamilyMatrices.TrOld in
 
 theorem GlobalTheory.HeckeFamilyMatrices.chiInv_trOld : ∀ (N l : ℕ) (k : ℤ) (a b : ℤ) (h : (l : ℤ) * b - N * a = 1)
     (χ : DirichletCharacter ℂ N) (G : ℍ → ℂ), 0 < N → l.Prime → ChiInv k N (N * l) χ G →

@@ -127,7 +127,6 @@ end Divisor
 
 open Divisor
 
-variable (k K) in
 
 def weilDifferentials : Submodule k (Module.Dual k (Repartition k K)) where
   carrier := {ω | ∃ D : Divisor k K, ω ∈ weilSpace D}
@@ -139,7 +138,6 @@ def weilDifferentials : Submodule k (Module.Dual k (Repartition k K)) where
     rintro c ω ⟨D, h⟩
     exact ⟨D, Submodule.smul_mem _ c h⟩
 
-variable (k K) in
 
 def WeilDifferential : Type _ := weilDifferentials k K
 
@@ -220,7 +218,6 @@ theorem exists_divisor {ω : WeilDifferential k K} (hω : ω ≠ 0) :
   rw [← this]
   exact le_sup_left
 
-open Classical in
 
 noncomputable def divisor (ω : WeilDifferential k K) : Divisor k K :=
   if h : ω = 0 then 0 else Classical.choose (exists_divisor h)

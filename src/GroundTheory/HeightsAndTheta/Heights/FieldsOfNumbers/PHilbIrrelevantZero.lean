@@ -22,7 +22,6 @@ section
 variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
   [∀ k, Fintype (ι k)]
 
-omit [Fintype K] in
 
 theorem mem_of_isMultiHomog_of_block_le {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} {k : K}
     (hk : ∀ i : ι k, (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ I) {b : K → ℕ} (hb : 1 ≤ b k)

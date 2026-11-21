@@ -127,7 +127,6 @@ theorem int_of_KAt {k : UA σ X.J} (hk : k ∈ KAt σ X v) : IntAt v k := fun z 
   have h1 : z ∈ latW X v := at_iff.1 h ▸ idem_latW hz
   ⟨latW_le (hk.2 z h1).1, latW_le (hk.2 z h1).2⟩
 
-variable (F) in
 
 def eInf : AF F := ((1, 0) : Ainf F × Af F)
 

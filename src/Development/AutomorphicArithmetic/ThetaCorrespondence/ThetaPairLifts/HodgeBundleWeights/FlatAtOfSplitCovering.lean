@@ -102,5 +102,4 @@ end
 
 section
 open GlobalTheory.CovTop GlobalTheory.BigTop
-set_option maxHeartbeats 1000000 in
 end

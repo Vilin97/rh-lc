@@ -163,7 +163,6 @@ section Match
 
 variable {Pg : Finset (Pl D.host.E)} (h : LinearCoefficientData.IsRecPlaces D Pg)
 
-include h in
 
 end Match
 

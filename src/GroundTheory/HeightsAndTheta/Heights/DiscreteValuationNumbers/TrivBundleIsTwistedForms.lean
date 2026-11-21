@@ -101,19 +101,14 @@ variable (o : Type*) [CommRing o] {Ω : Type*} [Field Ω] [Algebra o Ω]
 
 variable {o}
 
-omit [∀ k, Fintype (ι k)] in
 
-omit [∀ k, Fintype (ι k)] in
 
-omit [∀ k, Fintype (ι k)] in
 
-variable (o) in
 
 def genPt (R : Type*) [CommRing R] [IsDomain R] (ι : K → Type*) [∀ k, Fintype (ι k)] :
     MRingOver R ι →ₐ[R] FractionRing (MRingOver R ι) :=
   IsScalarTower.toAlgHom R _ _
 
-omit [Fintype K] in
 
 section DVR
 

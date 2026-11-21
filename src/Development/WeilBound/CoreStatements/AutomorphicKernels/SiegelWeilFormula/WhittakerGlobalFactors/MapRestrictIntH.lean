@@ -20,7 +20,6 @@ theorem hermVec_hermV (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F
     hermVec (Fv F v) σ b n (hermV σ v y) i = evalV F v (hermVec (Af F) σ b n y i) :=
   hermVec_map (evalV F v) σ b n y i
 
-omit [NumberField E] in
 
 theorem mem_latH_iff_vec (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F E) (n : ℕ)
     (v : HeightOneSpectrum (𝓞 F)) (S : HermR (Fv F v) σ n) :

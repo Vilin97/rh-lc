@@ -19,7 +19,6 @@ def PolyApproxAt (ε : ℝ) (θ : J → k) (S : Set (J → k)) : Prop :=
   ∃ (s : Finset (J → k)) (c : (J → k) → k), (s : Set (J → k)) ⊆ S ∧
     ∀ P : MvPolynomial J ℤ, ‖MvPolynomial.aeval θ P - ∑ η ∈ s, c η * MvPolynomial.aeval η P‖ ≤ ε
 
-omit [IsUltrametricDist k] in
 
 end Approx
 

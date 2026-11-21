@@ -176,7 +176,6 @@ theorem ell_sg {Δ : Segment k} {x : IrrGL k} (h1 : jmL (List.ofFn Δ.term) x.re
   · intro S hS hne; rw [J_sg, h0 S hS hne]; simp
   · intro h; exact absurd (by simp [vSets]) h
 
-open Classical in
 
 theorem ell_prod (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hj : LSegJacquet k) (hJ : JCls k) (hAlt : AltSum k)
     (Lseg : Segment k → IrrGL k) (hL : ∀ Δ, IsLSeg Δ (Lseg Δ).rep) (Δ : Segment k) {h N : ℕ}

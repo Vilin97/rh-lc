@@ -96,7 +96,6 @@ theorem line_apply {n : ℕ} (z : Fin n → ℂ) (t : ℂ) (k : Fin n) : line z 
 
 end KernelPositive
 
-open KernelPositive in
 
 theorem kernelPositive_statement : KernelPositive.Statement := by
   intro n a g P T0 hT v hv hB z hz

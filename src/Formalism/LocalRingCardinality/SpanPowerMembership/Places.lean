@@ -40,7 +40,6 @@ theorem vAdd_add (w : HeightOneSpectrum (𝓞 K)) {x y : K} (hx : x ≠ 0) (hy :
     have := (WithZero.log_le_log (valuation_ne_zero' w hxy) (valuation_ne_zero' w hx)).2 h2
     exact (min_le_left _ _).trans (by omega)
 
-open Classical in
 
 def valFun (w : HeightOneSpectrum (𝓞 K)) (x : K) : WithTop ℤ :=
   if x = 0 then ⊤ else ((vAdd w x : ℤ) : WithTop ℤ)
@@ -136,7 +135,6 @@ theorem exists_prime_mem (w : HeightOneSpectrum (𝓞 K)) :
     rw [Ne, Ideal.absNorm_eq_one_iff]; exact w.isPrime.ne_top
   omega
 
-open Classical in
 
 def resCharW (w : HeightOneSpectrum (𝓞 K)) : ℕ := Nat.find (exists_prime_mem w)
 
@@ -232,7 +230,6 @@ theorem starO_symm (x : 𝓞 K) : (starO (K := K)).symm x = starO x := by
 def conjW (w : HeightOneSpectrum (𝓞 K)) : HeightOneSpectrum (𝓞 K) :=
   HeightOneSpectrum.equivOfRingEquiv (starO (K := K)) w
 
-omit [NumberField K] in
 
 omit [NumberField K] in
 theorem conjW_asIdeal' (w : HeightOneSpectrum (𝓞 K)) :

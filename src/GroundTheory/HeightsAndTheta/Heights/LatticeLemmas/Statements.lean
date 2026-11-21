@@ -47,7 +47,6 @@ theorem LocalChange.witness (v₀ : HeightOneSpectrum (𝓞 K)) :
         swapAt v₀ v '' localLattice v (FullLattice.standard K 2).carrier :=
   ⟨swapAt_finite v₀, localLattice_swapAt v₀⟩
 
-variable {K} in
 
 theorem norm_scale {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K) E]
     [Module.Projective (𝓞 K) E] (h : HermitianMetric K E) (c : ℝ) (hc : 0 < c) (σ : K →+* ℂ)

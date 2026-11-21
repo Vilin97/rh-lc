@@ -74,7 +74,6 @@ section levels
 variable {E : Type} [Field E] [DecidableEq E] {H : Type} [NormedAddCommGroup H]
   [InnerProductSpace ℂ H] {W : Type} [Fintype W]
 
-open Classical in
 
 end levels
 

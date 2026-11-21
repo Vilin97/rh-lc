@@ -55,18 +55,15 @@ def IsTorusOf (D : Datum H) {g : ℕ} (ty : Fin g → (E →+* ℂ)) (Pm : D.La 
     (∀ (α : 𝓞 E) z, ψ (fun k => ty k (α : E) * z k) = I2.act α (ψ z)) ∧
     ∀ a, T.eps (ψ (Pm a)) = (Int.negOnePow (D.EF a (H.w0 • a)) : ℤˣ)
 
-variable (E) in
 
 def RunOK (r DF q : ℕ) (R0 : ℝ) (m : ℕ) : Prop :=
   ∀ X : I2.PT E, X.r = r → (∃ τ, X.dim τ ≤ m) → ∃ P : I2.Par X DF, P.q = q ∧ P.R0 = R0 ∧ P.m = m
 
-variable (E) in
 
 def p3 (r q m : ℕ) : ℝ :=
   r * ((1 + ((I2.PT.f E * r : ℕ) : ℝ) * Real.log (1 + 6 * Real.sqrt (((I2.PT.f E * r : ℕ) : ℝ) * q))) +
     Real.log (2 * (3 * (I2.dstar (E := E) m : ℝ)) ^ I2.dstar (E := E) m) + I2.dstar (E := E) m)
 
-variable (E) in
 
 def p16 (r q m R N : ℕ) : ℝ :=
   2 * (R : ℝ) ^ 4 * (p3 E r q m + (Real.log N + 2 * I2.PT.f E * (r : ℝ) ^ 2 * Real.log R)) +

@@ -58,7 +58,6 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι] (𝔪 : ι → Ideal B) [h�
   (C : ι → Type*) [∀ i, CommRing (C i)] [∀ i, Algebra B (C i)]
   [∀ i, IsLocalization.AtPrime (C i) (𝔪 i)]
 
-omit [Fintype ι] in
 
 theorem length_tensor_quot (hinj : Function.Injective 𝔪) (i j : ι) :
     Module.length (C i) (C i ⊗[B] (B ⧸ 𝔪 j)) = if i = j then 1 else 0 := by
@@ -79,7 +78,6 @@ theorem length_tensor_quot (hinj : Function.Injective 𝔪) (i j : ι) :
     rw [htop, Module.length_eq_zero_iff]
     exact Ideal.Quotient.subsingleton_iff.mpr rfl
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem pi_mk_injective (hall : ∀ M : Ideal B, M.IsMaximal → ∃ i, M = 𝔪 i) (N : Type*)
     [AddCommGroup N] [Module B N] :

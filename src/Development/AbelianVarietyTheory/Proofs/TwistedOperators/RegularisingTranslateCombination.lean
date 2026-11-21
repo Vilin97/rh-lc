@@ -68,8 +68,6 @@ theorem mem_range_emb_of_conjU_mem_UAt {D : D7} (V : HSp D) (Y : GlobalTheory.In
   rw [← Algebra.smul_def]
   exact hinj.symm
 
-open GlobalTheory.LocWeilAct in
-open scoped GlobalTheory.VacAny in
 
 theorem act_omB_at : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (W : G.Weil) (t : T) (i j : Fin D.R.m) (M : Vol G)
     (e : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Num G i j) (Bs : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j)
@@ -173,7 +171,6 @@ theorem exists_datum_comb_mem_So_at : ∀ {D : D7} {T : Type} {L : LevCh D T} {s
     obtain ⟨k, -, rfl⟩ := Finset.mem_image.1 (Finsupp.mapDomain_support hb)
     exact k.2
 
-open GlobalTheory.ZConvIdent in
 
 theorem translates_kerSmall_le_theta_at : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T} (hL : L.Is μ₀) (W : G.Weil) (B : Frames G)
     (ρ : RealMatch W) (t : T) (i j : Fin D.R.m) (M : Vol G) (hM : M.Is t) (Θ : TotT G (routeBig t i j))

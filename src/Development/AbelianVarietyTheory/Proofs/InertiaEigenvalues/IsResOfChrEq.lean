@@ -26,7 +26,6 @@ open Formalism.IndefR.Datum
 
 variable {D : D7}
 
-set_option maxHeartbeats 800000 in
 
 theorem isRes_of_chrEq : ∀ (D : D7) (δ : GlobalTheory.ExportSeries.Twist D Circle), δ.Good → ∀ (χ : Formalism.L2.Host.HChar D.host.E),
     ChrEq δ.chi χ → ∀ P ∈ δ.Q, IsRes χ P (δ.resC P) := by

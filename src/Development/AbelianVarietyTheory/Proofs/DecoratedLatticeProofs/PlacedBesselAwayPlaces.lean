@@ -118,7 +118,5 @@ theorem first_scale (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (h : X.B.I =
 
 end GlobalTheory.MiTop.LineAtT
 
-set_option maxHeartbeats 800000 in
-open GlobalTheory.MiTop.LineAtT GlobalTheory.MiTop.Scale GlobalTheory.GoodPos GlobalTheory.IwaPlace GlobalTheory.FinPlLoc in
 
 end

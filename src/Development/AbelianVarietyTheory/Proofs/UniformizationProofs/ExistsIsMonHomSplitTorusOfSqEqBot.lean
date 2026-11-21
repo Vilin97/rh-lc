@@ -46,7 +46,6 @@ theorem charVal_spMap (φ : C →ₐ[A] C') (w : sp C ⟶ splitTorus (Spec (Comm
     exact h.symm
   · rw [Over.comp_left, spMap_left]
 
-variable (A X) in
 
 def univ : sp (AddMonoidAlgebra A X) ⟶ splitTorus (Spec (CommRingCat.of A)) X :=
   ofVal _ (AddMonoidAlgebra.of A X)
@@ -223,7 +222,6 @@ theorem kerEquiv_pullKer (hv : IsLieBasis v) (hJ : J ^ 2 = ⊥) (u : X →+ Y)
   rw [e, h]
   simp
 
-open AddMonoidHom in
 
 theorem exists_coboundary (hv : IsLieBasis v) (hJ : J ^ 2 = ⊥)
     (δ : redKer (R := A) G (J.map (algebraMap A (AddMonoidAlgebra A (X × X)))))
@@ -272,7 +270,6 @@ theorem exists_coboundary (hv : IsLieBasis v) (hJ : J ^ 2 = ⊥)
   simp only [ofMul_toMul, AddEquiv.apply_symm_apply, e2]
   exact hg i
 
-open AddMonoidHom in
 
 theorem exists_correction (hv : IsLieBasis v) (hJ : J ^ 2 = ⊥) (h : sp (AddMonoidAlgebra A X) ⟶ G)
     (hh : pull G (inr X X) h / pull G (inl X X + inr X X) h * pull G (inl X X) h ∈

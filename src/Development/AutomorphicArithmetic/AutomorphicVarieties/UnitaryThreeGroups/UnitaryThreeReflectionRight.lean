@@ -43,7 +43,6 @@ section Twisted
 
 variable {m : ℕ} {R S : Type*} [CommRing R] [CommRing S]
 
-variable (R) in
 
 def Jmat (m : ℕ) : Matrix (Fin m) (Fin m) R := fun i j => if j = i.rev then 1 else 0
 
@@ -67,7 +66,6 @@ theorem Jmat_map (f : R →+* S) (m : ℕ) : (Jmat R m).map f = Jmat S m := by
   simp only [Jmat, Matrix.map_apply]
   split_ifs <;> simp
 
-variable (R) in
 
 def Jgl (m : ℕ) : GL (Fin m) R := ⟨Jmat R m, Jmat R m, Jmat_mul_Jmat m, Jmat_mul_Jmat m⟩
 
@@ -95,7 +93,6 @@ theorem theta_mul (g h : GL (Fin m) R) : theta (g * h) = theta g * theta h := by
     rw [← mul_assoc, Jgl_mul_Jgl, one_mul]
   simp only [theta, trInv_mul, mul_assoc, hJ]
 
-variable (m R) in
 
 def thetaAut : MulAut (GL (Fin m) R) where
   toFun := theta
@@ -104,7 +101,6 @@ def thetaAut : MulAut (GL (Fin m) R) where
   right_inv := theta_theta
   map_mul' := theta_mul
 
-variable (m R) in
 
 def sgnAct : ℤˣ →* MulAut (GL (Fin m) R) where
   toFun s := if s = 1 then 1 else thetaAut m R
@@ -127,7 +123,6 @@ def sgnAct : ℤˣ →* MulAut (GL (Fin m) R) where
   simp only [h, if_false]
   rfl
 
-variable (m R) in
 
 abbrev GG : Type _ := GL (Fin m) R ⋊[sgnAct m R] ℤˣ
 
@@ -194,7 +189,6 @@ theorem GG.adFun_mul (x y : GG m R) (X : Matrix (Fin m) (Fin m) R) :
   · rw [← theta_conj_thetaLie_eq_thetaLie_conj, thetaLie_thetaLie]
     simp only [Matrix.mul_assoc]
 
-variable (m R) in
 
 def GG.ad : Representation R (GG m R) (Matrix (Fin m) (Fin m) R) where
   toFun x :=
@@ -246,7 +240,6 @@ def torGL (t : Rˣ) : GL (Fin 3) R where
   val_inv := by rw [Matrix.diagonal_mul_diagonal]; simp only [Units.mul_inv]; exact Matrix.diagonal_one
   inv_val := by rw [Matrix.diagonal_mul_diagonal]; simp only [Units.inv_mul]; exact Matrix.diagonal_one
 
-variable (R) in
 
 def tor : Rˣ →* GL (Fin 3) R where
   toFun := torGL
@@ -267,7 +260,6 @@ theorem theta_tor (t : Rˣ) : theta (tor R t) = tor R t := by
   fin_cases i <;> fin_cases j <;>
     simp [Matrix.mul_apply, Fin.sum_univ_three, Jmat, wt1, Matrix.diagonal, Fin.rev]
 
-variable (R) in
 
 def gw (j : ℤ) : Submodule R (Matrix (Fin 3) (Fin 3) R) where
   carrier := {X | ∀ a b, wt a b ≠ j → X a b = 0}
@@ -275,7 +267,6 @@ def gw (j : ℤ) : Submodule R (Matrix (Fin 3) (Fin 3) R) where
   zero_mem' := fun _ _ _ => rfl
   smul_mem' := fun c X hX a b h => by simp [hX a b h]
 
-variable (R) in
 
 def unitaryThreeTorusLieAlgebra : Submodule R (Matrix (Fin 3) (Fin 3) R) :=
   Submodule.span R {Matrix.diagonal fun i => ((wt1 i : ℤ) : R)}

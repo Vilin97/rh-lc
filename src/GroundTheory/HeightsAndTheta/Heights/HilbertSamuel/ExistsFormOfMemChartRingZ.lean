@@ -87,7 +87,6 @@ theorem coordProd_add (c : ∀ k, ι k) (d e : K → ℕ) :
   rw [← Finset.prod_mul_distrib]
   simp [pow_add]
 
-open Classical in
 
 theorem exists_form_of_mem_chartRingZ {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k}
     (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {s : Ω} (hs : s ∈ chartRingZ y c) :

@@ -59,7 +59,6 @@ def subRep (rho : Representation R Γ M) (N : AddSubgroup M) (hN : ∀ g, ∀ m 
   map_one' := by ext m; simp
   map_mul' g h := by ext m; simp; rfl
 
-omit [TopologicalSpace Γ] [TopologicalSpace M] [DiscreteTopology M] in
 
 omit [DiscreteTopology M] in
 theorem contAction_subRep (rho : Representation R Γ M) (hc : ContAction rho) (N : AddSubgroup M)
@@ -293,7 +292,6 @@ theorem frob_scalar (bkP : BKPh X) (h : GalHyp bkP i s) {M R : ℕ} {P : Fin R �
 
 end HidaSetting
 
-open GlobalTheory.PrimeToInertia in
 
 theorem firstHalf : LocalFiniteness → LocalTateDuality → LocalEulerChar → TameLocal → ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D.host D.what₂) (X : NTw D.R D.host D.what₂ D.LL0 N) (bkP : BKPh X) (i : X.Tw) (s : X.Sig i), GalHyp bkP i s → FirstHalf i s := by
   intro h1 h2 h3 _ D N X bkP i s h M R P d φ φ' hM hP Λ _ _ _ _ κ hκ hκl B _ _ _ _ hB ρ hρ a v hv

@@ -25,7 +25,6 @@ theorem conj_mem_Sm {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a) : (fun x => star
   rw [chart_conj]
   exact Complex.conjCLE.contDiff.comp_contDiffOn (hφ g)
 
-variable (E a) in
 
 def conjFn : Sm E a ≃ₗ⋆[ℂ] Sm E a where
   toFun φ := ⟨fun x => starRingEnd ℂ (φ.1 x), conj_mem_Sm φ.2⟩

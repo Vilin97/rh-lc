@@ -61,8 +61,6 @@ theorem isUnit_iff_val_eq {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuat
     have e' : w * w' = 1 := inj (by rw [map_one]; exact sub_eq_zero.1 ((mul_eq_zero.1 e).resolve_left hs))
     exact IsUnit.of_mul_eq_one w' e'
 
-open MonObj in
-attribute [local instance] gtGroup in
 
 theorem scale_at_model : ∀ (o' Ω : Type) [CommRing o'] [Field Ω] [Algebra o' Ω] (S : ThetaSys o' Ω) (ρ : S.Real)
     (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V],

@@ -35,7 +35,6 @@ theorem _root_.GlobalTheory.CongruenceIndex.mulVec_inv_mulVec (γ : GL (Fin r) E
       = v := by
   rw [Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_mulVec]
 
-omit [NumberField E] [IsCMField E] in
 
 open NumberField Matrix in
 open scoped nonZeroDivisors in

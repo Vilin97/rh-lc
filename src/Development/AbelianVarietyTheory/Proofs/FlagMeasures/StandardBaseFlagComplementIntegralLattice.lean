@@ -21,7 +21,6 @@ open NumberField GlobalTheory.Mass Formalism.HermitianLatticesTheory
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-omit [StarRing K] [NumberField K] [Module K V] [IsScalarTower (𝓞 K) K V] in
 
 theorem idxN_of_gen {D M : Submodule (𝓞 K) V} {w : V} (hw : w ∈ D) (J : Ideal (𝓞 K))
     (h1 : ∀ a : 𝓞 K, a • w ∈ M ↔ a ∈ J) (h2 : ∀ y ∈ D, ∃ a : 𝓞 K, y - a • w ∈ M) :
@@ -75,7 +74,6 @@ theorem exists_rep (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h.No
 
 variable {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W] [FiniteDimensional K W]
 
-set_option maxHeartbeats 1000000 in
 
 theorem perp_lattice (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h.Nondegenerate) {Λ : Submodule (𝓞 K) V}
     (hL : Submodule.IsLattice K Λ) (hU : IsUnimodular h Λ)
@@ -199,7 +197,6 @@ open NumberField Module Matrix Formalism.BasicNotions Formalism.MainNotions.S Fo
 open scoped ENNReal Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-open scoped ComplexOrder in
 
 theorem baseFlagComplement_posDef (D : D7) : IsPosDef (D.sp.X 0).hT := by
   intro τ x hx

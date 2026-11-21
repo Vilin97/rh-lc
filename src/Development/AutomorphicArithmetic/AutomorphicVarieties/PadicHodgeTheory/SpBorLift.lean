@@ -156,7 +156,6 @@ private theorem bor_cont {X : Type} [TopologicalSpace X] [TopologicalSpace B] [I
 
 end UpperTheory.V.Loc.SpBor
 
-open UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Loc.SpBor in
 
 theorem UpperTheory.V.Loc.borLift (hP : LocalPublishedTheorems) {v l : ℕ} [Fact v.Prime] [Fact l.Prime] {G : Type} [Group G]
     [TopologicalSpace G] [IsTopologicalGroup G] (φ : G →* GQ v) (hφ : IsOpenEmbedding φ)

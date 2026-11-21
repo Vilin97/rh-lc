@@ -126,9 +126,7 @@ variable (S)
 
 variable {S}
 
-variable (S) in
 
-variable (S) in
 
 variable (S)
 
@@ -204,7 +202,6 @@ namespace ThetaSys
 
 variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : ThetaSys o Ω)
 
-variable {S} in
 
 theorem exists_at_of_cen (M : RatModel o Ω) {U₀ : M.Z.Opens} (hle : S.R ≤ M.ringOn U₀) {z : M.Z} {p : ℕ} [Fact p.Prime]
     {y : Sp (OO p) ⟶ M.Z} (hc : M.Cen U₀ z y) :
@@ -242,12 +239,10 @@ theorem heisMat_mul {h : ZMod N} (hh : 2 * h = 1) (u v u' v' : ZMod N) :
     linear_combination (-(u * v')) * hh
   · simp
 
-omit [NeZero N] in
 
 theorem heisMat_zero_apply (h v i j : ZMod N) : heisMat ψ h 0 v i j = if j = i then ψ (v * i) else 0 := by
   simp [heisMat]
 
-omit [NeZero N] in
 
 end Heisenberg
 
@@ -255,7 +250,6 @@ section Inhabitants
 
 variable {o : Type} (Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [IsFractionRing o Ω]
 
-variable (o) in
 
 theorem exists_eq_div_bot (x : Ω) : ∃ a ∈ (⊥ : Subalgebra o Ω), ∃ b ∈ (⊥ : Subalgebra o Ω), x = a / b := by
   obtain ⟨a, b, -, h⟩ := IsFractionRing.div_surjective o x
@@ -368,13 +362,11 @@ instance instIsDomain : IsDomain (AwayBase K n) := IsLocalization.isDomain_local
 instance instIsDedekindDomain : IsDedekindDomain (AwayBase K n) :=
   IsLocalization.isDedekindDomain _ (powers_le K n) _
 
-omit [NeZero n] in
 
 theorem finiteType : Algebra.FiniteType ℤ (AwayBase K n) :=
   Algebra.FiniteType.trans (S := 𝓞 K) inferInstance
     (IsLocalization.finiteType_of_monoid_fg (Submonoid.powers (n : 𝓞 K)) (AwayBase K n))
 
-omit [NumberField K] [NeZero n] in
 
 theorem isUnit_natCast : IsUnit (n : AwayBase K n) := by
   have := IsLocalization.Away.algebraMap_isUnit (S := AwayBase K n) (n : 𝓞 K)

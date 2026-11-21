@@ -244,7 +244,6 @@ theorem mem_sec {L : Lat ξ E} {e : E} : e ∈ sec L x c ↔ ∀ p : Cpt ξ, InC
 
 end ChartTie
 
-open ChartTie in
 
 theorem exists_chartBundle_of_isVB : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X)
     (E : Type) [AddCommGroup E] [Module Ω E] (κ : Type) (x : κ → Ω) (L : Lat ξ E) (r : ℕ),

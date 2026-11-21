@@ -191,7 +191,6 @@ theorem gform {g n : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.IsHermitian
   field_simp
   linear_combination (-(θ (z + lam m) * fr (z + lam m))) * e2
 
-set_option maxHeartbeats 1000000 in
 
 theorem geo_sum (hσ : GoodEmb c σ) (hU : IsUnf U) {P : Ideal (𝓞 E)} {p i : ℕ} {k k' : U.Comp} (x : (U.X k).dom)
     (x' : (U.X k').dom) (hu : ∀ τ' i', ‖dmin (U.X k).Gm x.1 τ' i'‖ = 1) (hu' : ∀ τ' i', ‖dmin (U.X k').Gm x'.1 τ' i'‖ = 1)
@@ -318,8 +317,6 @@ theorem colB_mul (M : Matrix (Fin (Wc D i).rank) (Fin (Wc D i).rank) D.host.E)
 
 end Columns
 
-set_option maxHeartbeats 2000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem theta_prod_eq_phased_sum : ∀ (D : D7), GlobalTheory.IndefiniteRowSideFullHecke.HeckePrimeDetection.HeckePointLaws → GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.SplitLinearModel D → GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.VacFixed D →
     ∀ (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m)

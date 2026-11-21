@@ -686,7 +686,6 @@ theorem rho_mem_locP (w : HeightOneSpectrum (𝓞 K)) {g : Matrix (Fin N) (Fin N
     IsScalarTower.algebraMap_smul]
   rfl
 
-omit [NumberField K] in
 
 theorem mem_colLat_iff (B : GL (Fin N) K) (x : Fin N → K) :
     x ∈ colLat B ↔ ∃ c : Fin N → 𝓞 K, (B : Matrix (Fin N) (Fin N) K) *ᵥ (fun j => (c j : K)) = x := by

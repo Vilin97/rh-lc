@@ -288,8 +288,6 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.Geometric
 
 namespace GlobalTheory.Fc.S0
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure ArithmeticGeometryHyps : Prop where
   toroidalCompactification : GlobalTheory.Published.ToroidalCompactification

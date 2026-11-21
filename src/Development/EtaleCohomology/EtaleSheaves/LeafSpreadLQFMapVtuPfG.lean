@@ -6,7 +6,6 @@ public import Development.EtaleCohomology.EtaleSheaves.SpreadingOutLocallyQuasiF
 
 namespace LateralTheory.E.LeafSpreadLQFMap_vtuPfG
 
-open LateralTheory.E.SpreadingOutLocallyQuasiFinite in
 
 theorem LeafSpreadLQFMap_of (hD : LeafQFAtDescend) (hO : LeafOpenSpread) :
     LateralTheory.E.SpreadingOutQuasiFiniteness.LeafSpreadLQFMap :=

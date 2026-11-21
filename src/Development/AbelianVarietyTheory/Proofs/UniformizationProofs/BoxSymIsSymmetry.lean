@@ -178,7 +178,6 @@ theorem eSec_comp_hom {G' G : Over S} [GrpObj G'] [GrpObj G] (f : G' ⟶ G) [IsM
 
 end GlobalTheory.BoxSymmetry
 
-open GlobalTheory.BoxSymmetry in
 
 theorem GlobalTheory.boxSym_isSymmetry : ∀ S : Scheme.{0}, BoxSymSt (S := S) := by
   intro S

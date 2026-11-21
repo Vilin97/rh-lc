@@ -115,7 +115,6 @@ theorem ker_reciprocity_le_commutator :
   rw [hv1, map_one, range_galRestrict_fixedOpen] at hmap
   exact Sylow.not_dvd_index P (hpd.trans (orderOf_dvd_of_pow_eq_one hmap.symm))
 
-variable (D) in
 
 noncomputable def reciprocityAb :
     Abelianization ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) →*
@@ -132,7 +131,6 @@ theorem reciprocityAb_bijective : Function.Bijective (D.reciprocityAb hLK hax) :
   obtain ⟨q, hq⟩ := reciprocity_surjective (D := D) hLK hax x
   exact ⟨Abelianization.of q, hq⟩
 
-variable (D) in
 
 noncomputable def reciprocityAbEquiv :
     Abelianization ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) ≃*
@@ -147,7 +145,6 @@ theorem reciprocityAbEquiv_of (q : (K : Subgroup G) ⧸ (L : Subgroup G).subgrou
     D.reciprocityAbEquiv hLK hax (Abelianization.of q) = D.reciprocity hLK hax q :=
   reciprocityAb_of hLK hax q
 
-include hLK hax in
 
 theorem reciprocity_bijective_of_isMulCommutative
     [IsMulCommutative ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K)] :

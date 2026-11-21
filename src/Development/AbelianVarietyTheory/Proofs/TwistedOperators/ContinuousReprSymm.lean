@@ -285,7 +285,6 @@ open Topology Metric
 
 variable {D : D7}
 
-set_option synthInstance.maxSize 1024 in
 
 theorem bump_core {m n : ℕ} (x : Mx D m n) (A' : AddSubgroup (XF D m n)) (ho : IsOpen (A' : Set (XF D m n)))
     (hc : IsCompact (A' : Set (XF D m n))) {ε : ℝ} (hε : 0 < ε) :

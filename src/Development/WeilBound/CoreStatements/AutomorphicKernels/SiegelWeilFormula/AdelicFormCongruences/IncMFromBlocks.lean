@@ -203,7 +203,6 @@ theorem rat_blocks {b : GL (Fin n ⊕ Fin n) E} (g : G2 σ Y) (hg : g ∈ rat2 �
     rw [Matrix.toBlocks_fromBlocks₂₂] at this
     exact this
 
-variable (σ Y) in
 
 def cNA (b : GL (Fin n ⊕ Fin n) E) (P Q P' Q' : Matrix (Fin n) (Fin n) (AE F E))
     (h : ∀ β : nA σ Y b, P * β.1 * Q ∈ nA σ Y b) (h' : ∀ β : nA σ Y b, P' * β.1 * Q' ∈ nA σ Y b)

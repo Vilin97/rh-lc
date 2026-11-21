@@ -43,7 +43,6 @@ theorem finsum_sigma_iter {ι : Type} {κ : ι → Type} (f : (Σ i, κ i) → �
 
 variable {Γ A B J : Type} [Group Γ] [MulAction Γ A] [MulAction Γ B]
 
-variable (Γ A B) in
 
 end OrbitFibre
 

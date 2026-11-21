@@ -22,8 +22,6 @@ section Compare
 variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : ℕ}
   {x : Fin (N + 1) → Ω}
 
-variable (S x) in
-open Classical in
 
 def supportRes (I J : StdCell N) (_h : I.1 ⊆ J.1) : ConeLaurent S x →ₗ[S] ConeLaurent S x :=
   if J.1 ⊆ support x then LinearMap.id else 0
@@ -105,7 +103,6 @@ def FinGradedSub.tildeCone (I : Chart x) : (M.tildeSys c).sub I →ₗ[S] ConeLa
     { toFun := fun y => (y : Ω), map_add' := fun _ _ => rfl,
       map_smul' := fun a y => by rw [RingHom.id_apply]; exact Submodule.coe_smul_of_tower a y }
 
-open Classical in
 
 def FinGradedSub.embedC (n : ℕ) :
     Cech.Cochain (fun I : Chart x => (M.tildeSys c).sub I) n →ₗ[S]

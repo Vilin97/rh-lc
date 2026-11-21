@@ -14,7 +14,6 @@ noncomputable section
 namespace GlobalTheory.ZM.ProjCoord
 variable {R : Type} [CommRing R] {N : ℕ} {A : Type} [CommRing A] {Y : Scheme.{0}}
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem secCoord_iff {σ : Type} (e : σ ≃ Fin (N + 1)) (φ : Y ⟶ PSpace R N) (c : R →+* A) (x : Sp A ⟶ Y)
     (hx : (x ≫ φ) ≫ PSpace.str R N = spMap c) (v : σ → A) :
@@ -89,7 +88,6 @@ theorem secCoord_iff {σ : Type} (e : σ ≃ Fin (N + 1)) (φ : Y ⟶ PSpace R N
       change _ = fnOn _ (v a) * ((hu j).unit⁻¹).val
       rw [← h3, mul_assoc, IsUnit.mul_val_inv, mul_one]
 
-omit [CommRing A] in
 
 theorem range_comp_symm {σ τ : Type} (e : σ ≃ τ) (v : σ → A) : Set.range (v ∘ e.symm) = Set.range v :=
   e.symm.surjective.range_comp v

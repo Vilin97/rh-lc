@@ -32,7 +32,6 @@ theorem spMap_comp_eq {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f :
 theorem spMap_inj {R R' : Type} [CommRing R] [CommRing R'] {f f' : R →+* R'} (h : spMap f = spMap f') : f = f' :=
   congrArg CommRingCat.Hom.hom (Spec.map_injective h)
 
-open MvPolynomial in
 
 theorem eval₂_scale {σ R A : Type} [CommRing R] [CommRing A] (φ : R →+* A) (c : A) (x : σ → A) {F : MvPolynomial σ R}
     {e : ℕ} (hF : F.IsHomogeneous e) : eval₂ φ (fun j => c * x j) F = c ^ e * eval₂ φ x F := by

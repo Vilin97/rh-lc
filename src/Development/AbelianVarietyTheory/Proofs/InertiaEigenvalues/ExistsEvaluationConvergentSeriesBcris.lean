@@ -93,7 +93,6 @@ theorem crisFrobenius_periodT_eq_prime_smul (P : LocPrime l) (K : FinExt l) : P.
   have h := (P.PD K).t_φ
   rwa [P.PD_φ, P.period_datum_t_eq, P.PD_p] at h
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_eval : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), LocTied l P AI → ∀ (K : FinExt l) (s : ℕ) (LL : FinExt l), Good K s LL → ∀ (Γ : GamS P K s LL) (R : WSer Γ) (I : IoS AI R), IoW I → ∀ β : RA LL →+* ↥LL.1 ⊗[ℚ_[l]] P.R.B, IsBeta AI β → ∃ J, IsEval I β J := by
   intro l _ P AI T K s LL hG Γ R I hW β hβ

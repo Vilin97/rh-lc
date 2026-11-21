@@ -132,7 +132,6 @@ open Formalism.BasicNotions Formalism.D5 Formalism.FrobeniusOrbits Formalism.LFu
 
 theorem frame_code_of_additive (e : Formalism.HC.Frame) (γ : e.GG) : mcode e (UpperTheory.Comparison₂.toE e γ).toAdd = gcode e γ := rfl
 
-open Classical in
 
 theorem ASK_congr {H : Type} [AddCommGroup H] [Fintype H] [DecidableEq H] (A : characterSumData.ArithData H) (N : ℕ) (a : ℝ) (t : H)
     (w w' : E0 × H → ℝ) (h : ∀ ρ, InPhi ρ → w ρ = w' ρ) : characterSumData.ASK A N a t w = characterSumData.ASK A N a t w' := by

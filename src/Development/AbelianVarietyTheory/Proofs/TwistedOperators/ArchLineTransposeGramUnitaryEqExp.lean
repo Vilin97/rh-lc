@@ -51,7 +51,6 @@ theorem toUX_surj (D : D7) (X : HSp D) {J : Matrix (Fin X.rank) (Fin X.rank) D.h
   apply Units.ext
   exact GlobalTheory.TripleRead.toUX_val X (Equiv.refl _) hJ _
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_GinfC_of_at (D : D7) (X : HSp D) (g : GA D X)
     (h : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) (Formalism.L2.Theta.mt X g - 1)) : g ∈ GinfC X := by

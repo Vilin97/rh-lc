@@ -11,7 +11,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorFixedF
 open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount GlobalTheory.LKCx GlobalTheory.AwayOrb GlobalTheory.FinClsLoc
 open scoped TensorProduct Classical
 
-open GlobalTheory.FinClsLoc.BaseChangeCent in
 
 theorem GlobalTheory.FinClsLoc.baseChange_fixedCentraliser_alg :
   ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (β Y : G.Cˣ) (L : Type) [Ring L] [Algebra ℚ L] (ι : L →ₐ[ℚ] G.C),

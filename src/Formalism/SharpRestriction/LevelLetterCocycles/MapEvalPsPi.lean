@@ -134,7 +134,6 @@ theorem map_eval_rhoL (hR : Ring9 W) (c : ZMod n) (s : ℕ) (a : PowerSeries O) 
 abbrev Dc (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (c : ZMod n) : Type :=
   ↥(DcrisL PD T.ρ (W.emb c))
 
-open Classical in
 
 def toKsD (W : LocWach PD LL O v n) (s : ℕ) (D : Type) [AddCommGroup D] [Module LL D] :
     (Rs LL PD.p s → D) →ₗ[LL] KsW W s ⊗[LL] D :=
@@ -599,7 +598,6 @@ section abelian₂
 
 variable {hR : Ring9 W} {T : LocLat G Qp LL O}
 
-open Classical in
 
 def lamOf (C : Coord W (baseIdOf hR) T) (c : ZMod n) (ell : ℕ) {r : ℕ} (e : Fin r → C.V) (k : Fin r) :
     Dc W T c :=

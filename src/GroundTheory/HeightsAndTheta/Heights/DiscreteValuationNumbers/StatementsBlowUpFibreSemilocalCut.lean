@@ -39,7 +39,6 @@ def blowUpOverLoc (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOv
       blowUpOf P u ≤ Q ∧ Q.comap (liftForm (ι := ι) (J := J) (R := R)) ≤ W),
     blowUpLocRing P u Q
 
-omit [DecidableEq K] in
 
 theorem blowUpEval_liftForm (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
     blowUpEval P u (liftForm f) = Ideal.Quotient.mk P f := by

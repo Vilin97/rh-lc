@@ -93,8 +93,6 @@ abbrev OφX {T : Over (Spec (CommRingCat.of R))} (P x : T ⟶ D.toPre.P.A) :
     Fin 4 → (T.left ⟶ D.toPre.P.A.left) :=
   ![(padd D.toPre.P.A P x).left, x.left, P.left, (toUnit T ≫ η[D.toPre.P.A]).left]
 
-omit [Module O D.toPre.X] in
-omit [Module O D.toPre.X] in
 
 lemma eAk (k : Fin 4) : D.toPre.Oφ (U.gt e).pG (star a • χ) k =
     OφX (D := D) (U.gt e).pG (xc e χ (G := G) ≫ ιD.onB.act (star a)) k := by
@@ -191,9 +189,7 @@ lemma hsub : ∀ k : Fin 4, ∃ k', φA U ιD e a χ k' = φB U ιG e a χ k := 
   · exact ⟨Sum.inr 5, h5⟩
   · exact ⟨Sum.inl 3, (selfLieBasisVector U e a χ).trans rfl⟩
 
-omit [IsDomain R] in
 
-omit [IsDomain R] in
 
 private lemma ss_lemma {Y X : Scheme.{0}} (pB x Pa u0 pA xs P : Y ⟶ X) :
     LB.SameSum ![pB, x, Pa, u0] Oinvε (Sum.elim ![pA, xs, P, u0] ![pA, xs, P, pB, x, Pa])
@@ -242,7 +238,6 @@ lemma hA : φA U ιD e a χ = Sum.elim
     · exact h4
     · exact h5
 
-include hO in
 
 lemma hBv : φB U ιG e a χ =
     ![(padd D.toPre.P.A ((U.gt e).pG ≫ ιD.onB.act a) (xc e χ (G := G))).left,

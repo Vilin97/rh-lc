@@ -18,7 +18,6 @@ namespace GlobalTheory.SchwartzAInt
 
 open GlobalTheory.RegSch.IkSchwartz GlobalTheory.PartialIntegral
 
-set_option maxHeartbeats 800000 in
 
 theorem integrable_pure {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) {m n : ℕ} (μ : Measure (Mx D m n))
     [μ.IsAddHaarMeasure] (f : SchwartzMap (D.what₂.Tau → Fin m → Fin n → ℂ) ℂ) (g : (Fin m → Fin n → AEf D) → ℂ)

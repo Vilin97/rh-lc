@@ -68,7 +68,6 @@ theorem sMoves_of_moves {S : HSp D} {t g : GA D S} {Λ L L' M : Lat S} {p : Glob
   rw [mul_inv_cancel, mt_one', Matrix.one_mulVec] at this
   exact this.trans (hs y hy)
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.LevZero.StabMatch
 

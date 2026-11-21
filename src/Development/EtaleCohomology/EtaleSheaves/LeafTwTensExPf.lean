@@ -10,7 +10,6 @@ open scoped DirectSum TensorProduct
 
 namespace LateralTheory.E.LeafTwTensExPf
 
-open Classical in
 section
 variable {R : Type} [CommRing R] (I J : Cx R)
 

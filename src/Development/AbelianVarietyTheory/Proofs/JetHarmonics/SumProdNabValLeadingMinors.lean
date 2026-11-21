@@ -36,7 +36,6 @@ theorem constantCoeff_ev_eq_zero {m n : ℕ} (a : Fin m → Pt k n d)
 
 variable {R : Type} [CommRing R] {O : Type} [CommRing O] [StarRing O] [Algebra ℚ k] [Algebra R k]
 
-omit [Algebra ℚ k] in
 
 theorem constantCoeff_hL (B : FB R d O) (h : PS k 2 d) (hh : constantCoeff h = 0) (w0 : O) :
     constantCoeff (B.hL k h w0) = 0 := by
@@ -66,6 +65,5 @@ end GlobalTheory.CrudeValue
 
 namespace GlobalTheory
 
-open CrudeValue SymbolCols in
 
 end GlobalTheory

@@ -115,7 +115,6 @@ theorem exists_expansion (φ : ℤ_[p] →+* L) {F : ℕ} (κ : Fin F → L) {π
 
 variable [Algebra ℚ_[p] L]
 
-variable (p L) in
 
 noncomputable def fromInt : ℤ_[p] →+* L := (algebraMap ℚ_[p] L).comp PadicInt.Coe.ringHom
 

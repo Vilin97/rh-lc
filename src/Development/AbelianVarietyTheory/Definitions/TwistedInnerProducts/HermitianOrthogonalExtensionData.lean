@@ -161,7 +161,6 @@ theorem princGL_mono (β : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) {I I' :
 
 end Princ
 
-variable (D) in
 
 structure Node where
 
@@ -257,7 +256,6 @@ def InCosetOf (I : Ideal (𝓞 D.host.E)) (c : Coset S T I) (x : WO S.V T.V) : P
   ∀ i j, ∃ h : frMapO S.V T.V S.β T.β x i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E,
     Ideal.Quotient.mk (idS D.host.F I) ⟨_, h⟩ = cmpS D.host.F I (c i j)
 
-open Classical in
 
 def cosetInd (e : AE D) (I : Ideal (𝓞 D.host.E)) (c : Coset S T I) (x : WO S.V T.V) : ℂ :=
   if IsHalf e x ∧ InCosetOf S T I c x then 1 else 0

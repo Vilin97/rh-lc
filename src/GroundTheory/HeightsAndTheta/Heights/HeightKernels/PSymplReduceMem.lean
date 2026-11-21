@@ -53,7 +53,6 @@ theorem reduce_row {n : ℕ} (H : Matrix (Fin (n + 1) ⊕ Fin (n + 1)) (Fin (n +
 
 end PSymplReduceMem
 
-open PSymplReduceMem in
 
 theorem SymplReduceMem.proof (h1 : SymplOmegaMem.Statement) (h2 : SymplCons.Statement) :
     SymplReduceMem.Statement := by

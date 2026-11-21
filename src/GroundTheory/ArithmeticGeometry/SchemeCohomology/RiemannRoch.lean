@@ -30,8 +30,6 @@ section Instances
 
 variable (hX : topologicalKrullDim X = 1)
 
-omit [HasExt.{w'} (Sheaf (Opens.grothendieckTopology X.toTopCat) AddCommGrpCat.{u})] in
-include hX in
 
 theorem curve_instances :
     IsNoetherian X ∧ IsLocallyFactorial X ∧ IsFunctionField k X.functionField := by
@@ -42,9 +40,7 @@ end Instances
 
 section Genus
 
-variable (X) in
 
-variable (k X) in
 
 end Genus
 

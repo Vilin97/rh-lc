@@ -19,7 +19,6 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   [MeasurableSpace F] [BorelSpace F] {n : ℕ} {α : Type*} [LinearOrder α] {β : Fin n → α}
   {W : Type*} [AddCommGroup W] [Module ℂ W] {σ : Representation ℂ (levi F n β) W}
 
-variable (β) in
 
 def leviCoordMeasure (ψ : AddChar F Circle) : Measure (LeviIndex n β → F) :=
   Measure.pi fun _ => LocalField.selfDualMeasure ψ
@@ -28,14 +27,12 @@ instance (ψ : AddChar F Circle) : (leviCoordMeasure β ψ).IsAddHaarMeasure := 
   unfold leviCoordMeasure
   infer_instance
 
-variable (β) in
 
 def leviAbsDetShift : levi F n β →* ℝ≥0 where
   toFun m := leviAbsDet β m ^ (((n : ℝ) - 1) / 2)
   map_one' := by simp
   map_mul' m m' := by simp [NNReal.mul_rpow]
 
-variable (β) in
 
 def inducedChar : levi F n β →* ℝ≥0 :=
   leviRatio β * leviSqrtModular β * leviAbsDetShift β
@@ -49,7 +46,6 @@ theorem modulus_det_pos (g : GL (Fin n) F) :
     0 < LocalField.modulus ((g : Matrix (Fin n) (Fin n) F).det) :=
   LocalField.modulus_pos (det_ne_zero g)
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
 theorem detPow_add_shift (m : levi F n β) (s : ℂ) :
     detPow (m : GL (Fin n) F) (s + ((n : ℂ) - 1) / 2) =
@@ -62,7 +58,6 @@ theorem detPow_add_shift (m : levi F n β) (s : ℂ) :
   push_cast
   rfl
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
 theorem leviIntegrand_shift (Ψ : Matrix (Fin n) (Fin n) F → ℂ) (w : W) (ℓ : Module.Dual ℂ W)
     (s : ℂ) (m : levi F n β) :
@@ -118,7 +113,6 @@ theorem leviIntegrandB_eq (Ψ : Matrix (Fin n) (Fin n) F → ℂ) (w : W) (ℓ :
 
 section ParabolicB
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
 theorem modularCharacter_leviProj (p : blockUpper F n β) :
     Measure.modularCharacter (leviIncl (leviProj F n β p)) = Measure.modularCharacter p := by
@@ -141,14 +135,12 @@ theorem leviSqrtModular_mul_self (m : levi F n β) :
     leviSqrtModular β m * leviSqrtModular β m = Measure.modularCharacter (leviIncl m) := by
   simp [leviSqrtModular, NNReal.mul_self_sqrt]
 
-variable (β) in
 
 def parabolicB (Ξ : Matrix (Fin n) (Fin n) F → ℂ) (φ : GL (Fin n) F → W) (ℓ : Module.Dual ℂ W)
     (s : ℂ) (y : GL (Fin n) F) (p : blockUpper F n β) : ℂ :=
   Ξ ((p : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) *
     detPow (p : GL (Fin n) F) (1 - s + ((n : ℂ) - 1) / 2) * ℓ (φ ((p : GL (Fin n) F)⁻¹ * y))
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
 theorem modular_mul_parabolicB {φ : GL (Fin n) F → W} (hφ : φ ∈ parabolicIndSpace F n β σ)
     (Ξ : Matrix (Fin n) (Fin n) F → ℂ) (ℓ : Module.Dual ℂ W) (s : ℂ) (y : GL (Fin n) F)
@@ -169,12 +161,10 @@ theorem modular_mul_parabolicB {φ : GL (Fin n) F → W} (hφ : φ ∈ parabolic
 
 variable [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] (ψ : AddChar F Circle)
 
-variable (β) in
 
 abbrev measureP : Measure (blockUpper F n β) :=
   haarParabolic (parabolicMeasure β (leviCoordMeasure β ψ) (unipMeasure β ψ))
 
-variable (β) in
 
 abbrev measureM : Measure (levi F n β) := haarLevi β (leviCoordMeasure β ψ)
 

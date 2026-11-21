@@ -20,7 +20,6 @@ variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 def cone {R : Type*} [CommRing R] (y : (Σ k, ι k) → R) : MRing ι →ₐ[ℤ] MvPolynomial K R :=
   aeval fun p => MvPolynomial.C (y p) * MvPolynomial.X p.1
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem map_cone {R S : Type*} [CommRing R] [CommRing S] (φ : R →+* S) (y : (Σ k, ι k) → R)
     (g : MRing ι) : MvPolynomial.map φ (cone y g) = cone (fun p => φ (y p)) g := by
@@ -46,7 +45,6 @@ theorem eval_grassPolyCoord {f j m : ℕ} (ζ : Fin f → Matrix (Fin j) (Fin m)
 
 end GrassmannianRootBound
 
-open GrassmannianRootBound in
 
 theorem GrassLeRoot.proof : GrassLeRoot.Statement := by
   intro f j m ζ g hg

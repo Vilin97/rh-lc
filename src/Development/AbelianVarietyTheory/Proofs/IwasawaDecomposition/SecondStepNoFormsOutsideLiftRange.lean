@@ -369,7 +369,6 @@ theorem hkEmbC (Bs : SideB D cf Rw low Pq S hL eig θ) (i : D.ntw.Tw) (j : ℕ) 
     embC D i j b (cutEnd (Rg D j) (D.ntw.hk i j b k P) x) = hkC D i j b k P (embC D i j b x) :=
   Subtype.ext (Bs.hk_emb i j b k P x.1 a1 a2 a3 a4 a5)
 
-set_option maxHeartbeats 4000000 in
 
 def cutSideB (Bs : SideB D cf Rw low Pq S hL eig θ) :
     SideB (cutN D).toD7 ((cutN D).cf cf) ((cutN D).row Rw) low Pq ((cutN D).rat S) hL eig θ :=

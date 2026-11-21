@@ -37,9 +37,7 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
     (ρ : Representation LL G V)
 
-open Classical in
 
-open Classical in
 
 end Local
 
@@ -60,7 +58,6 @@ def CrysLe (P : LocPrime l) (K : FinExt l) {a : ℕ} (ρ : ↥(GK K) →* GL (Fi
     Formalism.WeaklyAdmissibleFiltrations.DdR (P.PD K) (matRep L r') ≤ Formalism.WeaklyAdmissibleFiltrations.FilV (P.PD K) (LL := ↥L.1) (V := Fin a → ↥L.1) (-(N : ℤ)) ∧
     Formalism.WeaklyAdmissibleFiltrations.DdR (P.PD K) (matRep L r') ⊓ Formalism.WeaklyAdmissibleFiltrations.FilV (P.PD K) (LL := ↥L.1) (V := Fin a → ↥L.1) ((N : ℤ) + 1) = ⊥
 
-open Classical in
 
 end Om
 

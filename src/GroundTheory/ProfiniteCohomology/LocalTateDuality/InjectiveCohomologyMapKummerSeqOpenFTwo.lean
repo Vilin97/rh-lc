@@ -118,7 +118,6 @@ theorem kummerSeqOpen_shortExact {n : ℕ} (hn : (n : K) ≠ 0) (W : Subgroup Ga
     (kummerSeqOpen (K := K) (Ksep := Ksep) n W).ShortExact :=
   shortExact_map_res W (kummerSequence_shortExact n hn)
 
-omit [IsSepClosure K Ksep] in
 
 theorem kummerSeqOpen_g_hom_apply (n : ℕ) (W : Subgroup Gal(Ksep/K))
     (x : Rep.res W.subtype (galUnits.{0} K Ksep)) :

@@ -209,7 +209,6 @@ theorem diagGL_inv_conj_apply (d : Fin n → Fˣ) (g : GL (Fin n) F) (i j : Fin 
   rw [coe_diagGL, coe_diagGL, mul_diagonal, diagonal_mul]
   rfl
 
-variable (β) in
 
 def blockRank (i : Fin n) : ℕ := (Finset.univ.filter fun j => β j < β i).card
 

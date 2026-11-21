@@ -16,9 +16,7 @@ def IntVec (v : ι → F) : Prop := ∀ i, v i ∈ O
 def CongSpan (S : Set (ι → F)) (v : ι → F) : Prop :=
   ∃ w ∈ Submodule.span O S, ∃ z : ι → F, IntVec O z ∧ v = w + (γ : F) • z
 
-omit [DecidableEq ι] in
 
-omit [DecidableEq ι] in
 
 section Mat
 

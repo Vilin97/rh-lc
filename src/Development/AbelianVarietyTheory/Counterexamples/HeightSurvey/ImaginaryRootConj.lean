@@ -62,6 +62,5 @@ theorem em_int_holds (τ : E →+* ℂ) (x : 𝓞 E) (h : EmbOK T V ι) : V.Ge 0
   have := vV_nonneg T z
   exact WithTop.coe_le_coe.2 (div_nonneg (by exact_mod_cast this) (by positivity))
 
-open Classical in
 
 end GlobalTheory.RowChartCounterexample

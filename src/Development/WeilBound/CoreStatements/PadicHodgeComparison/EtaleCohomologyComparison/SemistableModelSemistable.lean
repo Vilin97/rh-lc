@@ -14,13 +14,11 @@ namespace CrystallineSemistableComparison
 
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
-variable (l) in
 
 def Bcr : Subring (BdR l) := Subring.closure (Set.range (iC l) ∪ {((l : BdR l))⁻¹, (tQ l)⁻¹})
 
 def oK : K →+* BdR l := (algebraMap (BdRp l) (BdR l)).comp ((algClToBdR l).toRingHom.comp K.val.toRingHom)
 
-set_option maxHeartbeats 1000000 in
 
 def SmoothModelCrystalline : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (K : IntermediateField ℚ_[l] (PadicAlgCl l)) [FiniteDimensional ℚ_[l] K] (M : Model l K),

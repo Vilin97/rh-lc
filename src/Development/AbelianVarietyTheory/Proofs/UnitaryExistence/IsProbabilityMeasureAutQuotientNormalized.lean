@@ -31,7 +31,6 @@ variable {K : Type} [Field K] {C : Type} [AddCommGroup C] [Module K C] (σ : K �
 
 variable [MeasurableSpace G] (μ₀ : Measure (AutQ Γ))
 
-open Classical in
 
 end Adelic
 
@@ -42,7 +41,6 @@ section AdelicCusp
 variable (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (σ : c.F →+* ℂ) {G : Type} [Group G] [MeasurableSpace G]
   (Γ : Subgroup G) (μ₀ : Measure (AutQ Γ)) (dict : G → Σ k, Frame ((U σ).X k).Ψ r) (mu : G → ℂ)
 
-open Classical in
 
 variable {U σ Γ μ₀ dict mu}
 
@@ -53,7 +51,6 @@ section Fundamental
 variable {G : Type} [Group G] [MeasurableSpace G] [MeasurableMul G] {μ : Measure G} [μ.IsMulLeftInvariant]
   {Λ : Subgroup G} [Countable Λ] {𝓕 : Set G}
 
-open scoped Pointwise in
 
 theorem iSup_inj_eq (h𝓕 : IsFundamentalDomain Λ 𝓕 μ) {Φ : G → ℝ≥0∞} (hΦ : ∀ (s : Λ) g, Φ (s • g) = Φ g) :
     ⨆ (D : Set G) (_ : MeasurableSet D) (_ : ∀ s : Λ, ∀ g ∈ D, s • g ∈ D → s = 1), ∫⁻ g in D, Φ g ∂μ =

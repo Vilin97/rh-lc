@@ -38,7 +38,6 @@ theorem disc (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] :
     have h2 : algebraMap F (AF F) (ξ i) = 0 := congrArg Subtype.val this
     exact (NumberField.AdeleRing.algebraMap_injective (𝓞 F) F) (h2.trans (map_zero _).symm)
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_theta_re_nonneg : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∀ (κ : Type) [Fintype κ]
     (S : Submodule (AF F) ((κ → AF F) × (κ → AF F))),

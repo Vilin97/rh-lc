@@ -96,16 +96,11 @@ section Eps
 variable {ε : PreTilt (normInteger ℂ_[l]) l} (hε : PreTilt.untilt ε = 1)
   (hζ : PreTilt.untilt ((_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[l]) l) l).symm ε) ≠ 1)
 
-set_option maxHeartbeats 1600000 in
 
-set_option maxHeartbeats 1600000 in
 
-include hζ in
-set_option maxHeartbeats 1600000 in
 
 end Eps
 
-set_option maxHeartbeats 1600000 in
 
 end Concrete
 

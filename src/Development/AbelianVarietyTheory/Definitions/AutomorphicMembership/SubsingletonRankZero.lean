@@ -16,8 +16,6 @@ namespace GlobalTheory.CuspRep.Model
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E) in
-omit [IsTotallyComplex E] in
 
 def absC (s : ℂ) : HChar E := ⟨absHom E s, (absChar E s).2⟩
 

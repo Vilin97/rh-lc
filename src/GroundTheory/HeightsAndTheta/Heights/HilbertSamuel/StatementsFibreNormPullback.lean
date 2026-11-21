@@ -37,7 +37,6 @@ def FibreNormPullback.Statement : Prop :=
                     ‖eval z (map (Int.castRingHom ℂ) h)‖) →
             ‖eval ζ (map (Int.castRingHom ℂ) F)‖ ≤ M₀ ^ τ * ‖ζ‖ ^ (n * q * τ) * M ^ n
 
-open ProjLine in
 
 end
 

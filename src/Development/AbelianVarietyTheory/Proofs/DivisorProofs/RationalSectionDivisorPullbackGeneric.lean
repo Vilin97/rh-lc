@@ -86,4 +86,3 @@ theorem ord_fnMap {X Y : Scheme.{0}} [IsIntegral X] [IsIntegral Y] [IsLocallyNoe
 
 end GlobalTheory.MultPull
 
-open GlobalTheory.MultPull GlobalTheory.TrueGeo.SmallSec in

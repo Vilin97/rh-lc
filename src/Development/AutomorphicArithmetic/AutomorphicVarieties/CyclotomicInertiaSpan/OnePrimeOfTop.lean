@@ -63,9 +63,6 @@ section Coord
 
 variable (n q d : ℕ) [Fact q.Prime] [Fact d.Prime]
 
-omit [Fact q.Prime] [Fact d.Prime] in
-omit [Fact q.Prime] [Fact d.Prime] in
-omit [Fact q.Prime] [Fact d.Prime] in
 
 end Coord
 

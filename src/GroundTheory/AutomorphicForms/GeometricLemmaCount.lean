@@ -281,7 +281,6 @@ theorem avgOver_map_conj (b : G) {K : Subgroup G} {f : G → W} (hf : AvgFinite 
   simp only [MulAut.conj_symm_apply] at this
   exact this
 
-omit [AddCommGroup W] [Module ℂ W] in
 
 theorem avgFinite_map_mulEquiv (φ : G ≃* G) {K : Subgroup G} {f : G → W} (hf : AvgFinite K f) :
     AvgFinite (K.map φ.toMonoidHom) (fun y => f (φ.symm y)) := by

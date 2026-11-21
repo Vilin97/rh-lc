@@ -13,9 +13,7 @@ open Formalism.BasicNotions Formalism.MainNotions.S
 
 namespace GlobalTheory.Core.Rk
 
-open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 
-open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 
 def BigGap (D : D7) : Prop := D.NodeGap (4 * ((D.R.N D.R.m : ℕ) : ℝ) ^ 3 + 2 * D.R.t + 6)
 

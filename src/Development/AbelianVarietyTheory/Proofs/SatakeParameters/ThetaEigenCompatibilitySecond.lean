@@ -32,4 +32,3 @@ theorem GlobalTheory.EigInert.heckeFunI_umax_sum {L : Type} [Field L] [NumberFie
   GlobalTheory.SatIso.heckeFunI_eq_sum Dv _ h (GlobalTheory.T.finite_inertHecke_support_cosets L n v w Dv (GlobalTheory.T.unitary_doubleCoset_finite_left_cosets Dv.ϖ Dv.σw _ n Dv.unram)
     (GlobalTheory.T.mem_maxCompact_of_trivOutside_local_integral L n v w Dv) _ (fun _ _ => Iff.rfl) h hh)
 
-set_option maxHeartbeats 4000000 in

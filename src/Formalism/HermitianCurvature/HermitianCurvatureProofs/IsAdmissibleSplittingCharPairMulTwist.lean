@@ -7551,7 +7551,6 @@ theorem SS_hyps (i : ℕ) (hi : i ∈ Set.Icc 1 (P.k - 1)) :
   · rw [hn, hzb, hgi]; exact h1
   · rw [hns, hz, hgi]; exact h2
 
-include hTT in
 
 theorem BB_la {β : A P (DQ P)} (hβ : β ∈ BB P L) (y : ℂ) : la L y * β = β * la L y := by
   have hle : BB P L ≤ Subalgebra.centralizer ℂ ({la L y} : Set (A P (DQ P))) := by
@@ -7568,7 +7567,6 @@ theorem BB_la {β : A P (DQ P)} (hβ : β ∈ BB P L) (y : ℂ) : la L y * β = 
   rw [Subalgebra.mem_centralizer_iff] at this
   exact this _ rfl
 
-include hTT in
 
 theorem BB_lb {β : A P (DQ P)} (hβ : β ∈ BB P L) :
     ∃ β' ∈ BB P L, ∀ y : ℂ, lb L y * β = β * lb L y + β' * la L y := by
@@ -7691,7 +7689,6 @@ theorem frame_memB :
 
 end Frame
 
-open Classical in
 
 def deB (β : A P (DQ P)) : A P (DQ P) :=
   if h : ∃ β' ∈ BB P L, ∀ y : ℂ, lb L y * β = β * lb L y + β' * la L y then Classical.choose h else 0

@@ -218,7 +218,6 @@ theorem coord_div_mem {y : (Σ k, J k) → Ω} {t : ∀ k, J k} (ht : mseg y t �
   · simp
   · rw [Function.update_of_ne hj, div_self (Finset.prod_ne_zero_iff.1 ht j (Finset.mem_univ j))]
 
-omit [∀ k, Fintype (J k)] in
 
 theorem exists_pow_mul_trans_mem {y : (Σ k, J k) → Ω} {s t : ∀ k, J k} (hs : mseg y s ≠ 0) (ht : mseg y t ≠ 0)
     (a : K → ℤ) : ∃ n : ℕ, (mseg y s / mseg y t) ^ n * (chartMon y s a / chartMon y t a) ∈
@@ -272,7 +271,6 @@ theorem chartMon_eq_div {y : (Σ k, J k) → Ω} {s : ∀ k, J k} (hs : mseg y s
 
 end Trans
 
-omit [∀ k, Fintype (J k)] in
 
 theorem geoNum_one_linear (W : Ideal (MRing J)) :
     ∃ c : K → ℤ, ∀ a : K → ℤ, geoNum 1 W (fun _ => a) = ∑ k, a k * c k := by

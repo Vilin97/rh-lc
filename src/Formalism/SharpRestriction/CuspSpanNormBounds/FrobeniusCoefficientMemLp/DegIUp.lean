@@ -29,11 +29,8 @@ theorem minpq_pos (D : D7) : 1 ≤ min (pOf (epsSH D.R)) (qOf (epsSH D.R)) := by
     exact min_eq_right (positive_count_of_sign_pattern _ _ hk1)
   rw [hq]; omega
 
-variable [Fact Formalism.MainNotions.BridgeCPX.HCMultDSG] [Fact Formalism.MainNotions.DiscreteSeriesWeylDimension.LowKMultOneG] in
 
-variable [Fact Formalism.MainNotions.BridgeCPX.HCMultDSG] [Fact Formalism.MainNotions.DiscreteSeriesWeylDimension.LowKMultOneG] in
 
-variable [Fact Formalism.MainNotions.BridgeLemma₂.deg_DSUniqG] in
 
 end Formalism.MainNotions.S.Pv.DegI
 

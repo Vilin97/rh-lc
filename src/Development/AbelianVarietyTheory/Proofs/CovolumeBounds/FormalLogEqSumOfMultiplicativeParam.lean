@@ -51,7 +51,6 @@ theorem pderiv_X_ite [DecidableEq κ] (i j : κ) :
   · rw [h, pderiv_X_self]
   · exact pderiv_X_of_ne h
 
-open Classical in
 
 theorem coeff_subst_kill (e : ι → κ) {b : κ → MvPowerSeries κ A} (hb0 : ∀ i, b (e i) = 0)
     (hb1 : ∀ k, k ∉ Set.range e → b k = X k) (f : MvPowerSeries κ A) (α : κ →₀ ℕ) :

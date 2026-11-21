@@ -118,7 +118,6 @@ section Approx
 
 variable {F : Type*} [NormedField F] [IsUltrametricDist F]
 
-omit hp in
 
 theorem norm_pow_sub_pow_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) (n : ℕ) :
     ‖a ^ n - b ^ n‖ ≤ ‖a - b‖ := by
@@ -129,7 +128,6 @@ theorem norm_pow_sub_pow_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) 
   exact mul_le_one₀ (pow_le_one₀ (norm_nonneg _) ha) (pow_nonneg (norm_nonneg _) _)
     (pow_le_one₀ (norm_nonneg _) hb)
 
-omit hp in
 
 theorem norm_pow_p_sub_pow_p_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) (hp1 : ‖(p : F)‖ ≤ 1)
     {e : ℕ} (he : 1 ≤ e) (hab : ‖a - b‖ ≤ ‖(p : F)‖ ^ e) :
@@ -156,7 +154,6 @@ theorem norm_pow_p_sub_pow_p_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤
     exact (mul_le_mul (((norm_pow_sub_pow_le ha hb i).trans hab).trans hpe)
       (pow_le_one₀ (norm_nonneg _) hb) (by positivity) (norm_nonneg _)).trans (mul_one _).le
 
-omit hp in
 
 theorem norm_pow_pow_sub_pow_pow_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) (hp1 : ‖(p : F)‖ ≤ 1)
     {e : ℕ} (he : 1 ≤ e) (hab : ‖a - b‖ ≤ ‖(p : F)‖ ^ e) (r : ℕ) :

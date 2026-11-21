@@ -129,8 +129,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {l : Ge
   (hp : ∀ n, 0 < n → IsPrimitiveRoot (ζ n) n) (hc : ∀ n m, 0 < n → 0 < m → ζ (n * m) ^ m = ζ n)
   (hζ : ∀ n, 0 < n → ∀ z : c.F, (z : ℂ) = zeta n → (ζ n : F) = algebraMap (FractionRing k) F (algebraMap k _ (bF z)))
 
-omit ζ hp hc hζ in
-variable (F) in
 
 end ToricLift
 
@@ -139,11 +137,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {l : Ge
   {k : Type} [Field k] {K : Type} [Field K] (i : PowerSeries k →+* K) {ζ r : ℕ → Kˣ}
   (hp : ∀ n, 0 < n → IsPrimitiveRoot (ζ n) n) (hr : ∀ n, 0 < n → (r n : K) ^ n = i PowerSeries.X)
 
-variable (l) in
 
-include hp hr in
 
-include hp hr in
 
 end ToricSer
 

@@ -10,7 +10,6 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Automorphic
 
 open NumberField GlobalTheory.CuspRep UpperTheory.V UpperTheory.V.Af
 
-open GroundTheory.Automorphic in
 
 theorem UpperTheory.V.Br.hermEx : Gk.HermEx :=
   Gk.hermEx_of (fun _ _ _ _ _ => CuspFin.mem_cuspForms_of) fun F _ _ _ a => by

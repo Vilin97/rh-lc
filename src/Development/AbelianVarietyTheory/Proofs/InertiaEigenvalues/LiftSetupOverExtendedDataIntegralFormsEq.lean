@@ -49,7 +49,6 @@ theorem vec_up {S T : HSp D} (B : Base S T) (Q ω) :
   rw [e]
   exact kc% rfl
 
-open Classical in
 
 theorem vecAt_up {S T : HSp D} (B : Base S T) (Q φ) :
     (baseUp r B).vecAt (kc% Q) (kc% φ) = kc% (B.vecAt Q φ) := by
@@ -194,7 +193,6 @@ def cellUp {hρ : ρ.Good} (hρ' : (setupUp r ρ).Good) {rd : Rd ρ D.nexp i j b
 theorem cellUp_rdV {hρ : ρ.Good} (hρ' : (setupUp r ρ).Good) {rd : Rd ρ D.nexp i j b} (t : CellTie hρ D.nexp rd) :
     HEq t.rdV (cellUp r hc hρ' t).rdV := HEq.rfl
 
-include hc in
 
 end Cell
 

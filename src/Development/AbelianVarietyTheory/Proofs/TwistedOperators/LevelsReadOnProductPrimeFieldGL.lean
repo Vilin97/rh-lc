@@ -46,7 +46,6 @@ def EdK (b : Bool) (s k : ℕ) (a c : Fin r) : Prop :=
     ((c : ℕ) = a + 1 ∧ (a : ℕ) + 1 ≠ s ∧ ¬ (0 < k ∧ (a : ℕ) + 1 = s + k)) ∨ ((a : ℕ) + 1 = s ∧ (c : ℕ) = s + k)
   else (c : ℕ) = a + 1
 
-open Classical in
 
 def sumK (b : Bool) (s k : ℕ) (u : Fin r → Fin r → κ) : κ := ∑ a, ∑ c, if EdK b s k a c then u a c else 0
 

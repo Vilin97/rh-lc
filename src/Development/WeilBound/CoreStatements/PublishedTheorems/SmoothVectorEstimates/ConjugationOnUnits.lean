@@ -57,7 +57,6 @@ section Orb
 variable {ι : Type} [Fintype ι] {a : ℕ} {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X]
   (ρ : GL (Fin a) (ι → ℂ) →* (X →L[ℂ] X))
 
-open Classical in
 
 def opI (M : LieI ι a) : X →L[ℂ] X := if h : IsUnit (Matrix.of M) then ρ h.unit else 0
 

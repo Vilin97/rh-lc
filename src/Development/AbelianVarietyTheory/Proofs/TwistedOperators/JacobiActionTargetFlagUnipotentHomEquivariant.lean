@@ -249,7 +249,6 @@ end Main
 
 end GlobalTheory.MixPer.JacHom
 
-open GlobalTheory.MixPer.JacHom in
 
 theorem GlobalTheory.MixPer.jacT_hom : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (T T₀ S : HSp D) (ρ : ℕ) (d : HypDec T T₀ ρ)
     (y : Mx D S.rank ρ), (∀ u ∈ UX D ρ, y ⬝ u.1 = y) → (∀ b c, cenT d S y (d.nB b * d.nC c) = d.qT S c y) ∧

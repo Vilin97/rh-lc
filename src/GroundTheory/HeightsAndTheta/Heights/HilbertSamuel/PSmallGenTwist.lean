@@ -35,7 +35,6 @@ theorem exists_chart (y : (Σ k, ι k) → Ω) {z : (Σ k, ι k) → ℂ} (hz : 
   simp only [map_X, eval_X] at hz0
   exact hc k hz0
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem mul_mem_chartLat (y : (Σ k, ι k) → Ω) {a b : K → ℤ} {s t : Ω} (hs : s ∈ chartLat y a 1)
     (ht : t ∈ chartLat y b 1) : s * t ∈ chartLat y (a + b) 1 := by
@@ -50,7 +49,6 @@ theorem mul_mem_chartLat (y : (Σ k, ι k) → Ω) {a b : K → ℤ} {s t : Ω} 
   simp only [Pi.add_apply, Nat.cast_one, one_mul]
   ring
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem generatesOn_mul (y : (Σ k, ι k) → Ω) {a b : K → ℤ} {n m : ℕ} {w : Fin n → Ω} {v : Fin m → Ω}
     (hw : KH.GeneratesOn y a w) (hv : KH.GeneratesOn y b v) :
@@ -172,7 +170,6 @@ theorem smallGen_of_trivial (y : (Σ k, ι k) → Ω) (E : HermLine ι) (hEa : E
     simp only [map_sub, sub_eq_zero] at hz0
     rw [hz0, hEh, pow_one, mul_one]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem fsH_a [∀ k, Fintype (ι k)] : (fsH ι).a = fun _ => 1 := by
   funext k

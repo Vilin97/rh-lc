@@ -26,7 +26,6 @@ section Alg
 
 variable {R A : Type} [CommRing R] [CommRing A] [Algebra R A] {ι : Type} [Fintype ι] [DecidableEq ι]
 
-omit [DecidableEq ι] in
 
 theorem glue_mul {e : R} (he : e * e = e) (a b c d : Matrix ι ι A) :
     (e • a + (1 - e) • b) * (e • c + (1 - e) • d) = e • (a * c) + (1 - e) • (b * d) := by

@@ -63,8 +63,6 @@ theorem algebraMap_units_ne_zero {O LL : Type} [CommRing O] [Field LL] [Algebra 
     algebraMap O LL (v : O) ≠ 0 :=
   (Units.map (algebraMap O LL : O →* LL) v).ne_zero
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 theorem ex_smul_O (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F)
     (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) (T : Lt K LL)
@@ -119,8 +117,6 @@ theorem ex_sub {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {H :
     ex C h T i ζ (x - x') = ex C h T i ζ x - ex C h T i ζ x' :=
   ((C.C K s LL h).tie.levB T i ζ).map_sub x x'
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 20000000 in
 
 theorem occ : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let W := (HW l).W K s LL h; ∀ T : Lt K LL, IsCrys ((D.loc l).PD K) T.ρ → ∀ y : ℕ, 1 ≤ y → ∀ a ∈ Jumps (PD := (D.loc l).PD K) T, ∀ j : ℕ, 1 ≤ j → j ≤ y → ∃ x ∈ invN W T (W.Q ^ y), x ∉ W.N T ∧ W.γ T x - (((uU W ^ (-(a + j)) : (↥(OL LL))ˣ) : ↥(OL LL))) • x ∈ W.N T := by
   intro D HW F Cm l _ K s LL h W T hT y hy a ha j hj1 hjy

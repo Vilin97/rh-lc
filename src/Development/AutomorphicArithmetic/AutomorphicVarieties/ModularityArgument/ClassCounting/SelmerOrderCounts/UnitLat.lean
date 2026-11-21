@@ -10,7 +10,6 @@ open NumberField IsDedekindDomain UpperTheory.V UpperTheory.V.ZK UpperTheory.V.Z
 section
 open NumberField.Units NumberField.Units.dirichletUnitTheorem NumberField.InfinitePlace
 
-open scoped Classical in
 
 private noncomputable def extS (F : Type) [Field F] [NumberField F] :
     logSpace F →ₗ[ℝ] (InfinitePlace F → ℝ) where

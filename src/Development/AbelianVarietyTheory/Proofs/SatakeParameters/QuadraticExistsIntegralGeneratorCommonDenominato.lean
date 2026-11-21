@@ -99,7 +99,6 @@ private theorem exists_integral_generator_common_denom_of_finrank_two
   obtain ⟨u, v, huv⟩ := hall y
   exact ⟨u, v, huv⟩
 
-open NumberField in
 
 theorem _root_.GlobalTheory.quadratic_exists_integral_generator_common_denominator :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

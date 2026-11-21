@@ -276,6 +276,5 @@ end GlobalTheory.ThetaSplit
 
 namespace GlobalTheory
 
-open ThetaSplit in
 
 end GlobalTheory

@@ -79,7 +79,6 @@ def EmbTypeUc (τ₀ : Br.Kw D.nbr i w hw →ₐ[ℚ_[D.nd.l i]] Br.LL D.nbr i w
 def EmbTypeUe (ep : Bool) (τ₀ : Br.Kw D.nbr i w hw →ₐ[ℚ_[D.nd.l i]] Br.LL D.nbr i w hw) : Prop :=
   if ep then Br.EmbTypeU D.nbr i w hw τ₀ else EmbTypeUc τ₀
 
-variable (i w hw) in
 
 def PlTypeUe (ep : Bool) : Prop := ∀ τ₀, EmbTypeUe (i := i) (w := w) (hw := hw) ep τ₀
 

@@ -30,7 +30,6 @@ private theorem dvd_of_primitiveRoot_pow_pow_eq_self {Ω : Type} [Field Ω] {q k
   rw [h4]
   exact Nat.gcd_dvd_right k m
 
-open NumberField IsDedekindDomain Polynomial in
 
 theorem _root_.GlobalTheory.exists_fixed_dvd_deg : ∀ (E Ω : Type) [Field E] [NumberField E]
     [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)

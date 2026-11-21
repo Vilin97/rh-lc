@@ -107,7 +107,6 @@ variable (D : D7)
 
 abbrev Used (μ : D.what₂.Tup) : Prop := μ = D.what₂.mu0 ∨ ∃ w, μ = D.what₂.muAt w
 
-variable {D} in
 
 def v0 : InfinitePlace D.what₂.LL := InfinitePlace.mk D.what₂.embLL
 

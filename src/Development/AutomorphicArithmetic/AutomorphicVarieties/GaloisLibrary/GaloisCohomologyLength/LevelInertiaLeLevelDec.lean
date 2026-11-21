@@ -21,7 +21,6 @@ def ineImage (A : ValuationSubring Ω) : Subgroup ℤ_[l]ˣ := (Ine (F := F) A).
 
 theorem ineImage_le_decImage (A : ValuationSubring Ω) : ineImage F l A ≤ decImage F l A := Subgroup.map_mono (Ine_le_Dec A)
 
-variable (Ω) in
 
 def qzG (e : ℤ) : Representation ℤ_[l] (G F Ω) (QZ l) := scalRep (QZ l) (cycZ F Ω l ^ (-e))
 

@@ -84,7 +84,6 @@ theorem ratio_of_j (hU : R.LUnif) {y y' : Fin (R.nW i) → D.what₂.LL} {ρ : �
     (fun _ : Fin 1 => 1) (fun _ => y) (fun _ : Fin 1 => 1) (fun _ => y') (fun _ => one_mem _)
     (fun _ => one_mem _) ρ (by simpa using h) (by simpa using h0)
 
-variable (R) in
 
 def AllRational (ph : Fin D.R.m → ℂ) : Prop :=
   ∀ (i : Fin D.R.m) (t : T0) (x₀ : A.fam.amb.FL i t), ∃ y, adForm R i y = ph i • R.thF i t (jVx R i t x₀)
@@ -307,13 +306,11 @@ theorem ratio_rational (fw : FWTie T R κ v₀) (hHW : R.models_HW) (hU : R.LUni
 
 end Descent
 
-variable (R) in
 
 def BaseLiftNeZero : Prop := ∀ i, ∃ x₀ : A.fam.amb.FL i A.μ0, R.thG i A.μ0 (R.jV i A.μ0 x₀) ≠ 0
 
 variable {F : Face D A} {ph : Fin D.R.m → ℂ}
 
-variable (T R κ v₀) in
 
 def SeriesIdentity (i : Fin D.R.m) : Prop :=
   ∀ O₀ : OMDat T.toCore R i T0 id, O₀.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O₀.s0) →

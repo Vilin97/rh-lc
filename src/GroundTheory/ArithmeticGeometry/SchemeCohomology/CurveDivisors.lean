@@ -23,7 +23,6 @@ variable {k : Type u} [Field k] {X : Scheme.{u}} [X.Over (Spec (.of k))] [IsInte
 
 namespace PrimeDivisor
 
-omit [IsLocallyNoetherian X] [IsNormalScheme X] in
 
 noncomputable def degree (Z : PrimeDivisor X) : ℕ :=
   finrank k (IsLocalRing.ResidueField (X.presheaf.stalk Z.point))

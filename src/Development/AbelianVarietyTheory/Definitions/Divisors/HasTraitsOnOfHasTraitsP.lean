@@ -120,7 +120,6 @@ def LatTo {V' : Type} [CommRing V'] [IsDomain V'] [IsLocalRing V'] {ev' : X₁.M
 
 theorem LatTo.refl : 𝔪.LatTo 𝔪 := ⟨AddEquiv.refl _, fun _ _ => rfl, fun _ _ h => h⟩
 
-omit 𝔪 in
 
 end GMem
 
@@ -131,7 +130,6 @@ def IsGeo {O : Type} [CommRing O] {bar : O → O} {q s : ℕ} {W : Matrix (Fin s
     ∀ y, ∃ 𝔪 : GMem X₁ z₁ act (Φ.V y) (Φ.ev y) (Fin s → Φ.X y) (mono W (Φ.t y) (Φ.δ y)) (fun a mu => a • mu),
       𝔪.Terms x₀ lab (Φ.term y)
 
-open Classical in
 
 def ZHAbove (X₁ : GSet) (Y : RatModel X₁.o₁ X₁.Ω₁) (πY : Y.Z ⟶ X₁.M.Z) : Prop :=
   ∃ (U₀ : Y.Z.Opens) (EE : Y.Lat X₁.S.J), Nonempty (ZHOut X₁.ρ Y U₀ EE) ∧ X₁.S.Over₀ Y U₀ ∧ X₁.S.IsEE Y U₀ EE ∧

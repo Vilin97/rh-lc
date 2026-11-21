@@ -147,7 +147,6 @@ end GlobalTheory.TChart.GensFrom
 
 namespace GlobalTheory.TChart
 
-open GensFrom in
 
 theorem exists_gens_of_dataFrom {o W V : Type} [CommRing o] [CommRing W] [IsLocalRing W] [CommRing V] [IsDomain V]
     (T : TautBase o W) (iw : W →+* V) {I : Type} [Fintype I] (s : I → V)

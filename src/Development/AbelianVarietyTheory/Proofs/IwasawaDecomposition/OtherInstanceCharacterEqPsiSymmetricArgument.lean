@@ -33,7 +33,6 @@ def argS (X : HidaSetting D) (x : X.B.I.Gf) : X.B.I.E ⊗[X.B.I.F] Formalism.Mai
 theorem otherInstanceCharacter_eq_psi_symmetricArgument (X : HidaSetting D) (x : X.B.I.Gf) :
     X.chi2 x = X.psiEf (divN X.B.I X.B.g (argS X x)) := rfl
 
-open Classical in
 
 def side (X : HidaSetting D) (w : HeightOneSpectrum (𝓞 D.host.E)) : Bool := decide (GlobalTheory.Mem.SymFrame.EwAt X w)
 

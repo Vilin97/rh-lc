@@ -21,7 +21,6 @@ variable {O B K L : Type} [CommRing O] [IsDomain O] [CommRing B] [Algebra O B] [
   [IsFractionRing O K] [Algebra B L] [Algebra K L] [Algebra O L] [IsScalarTower O K L] [IsScalarTower O B L]
   [IsLocalization (Algebra.algebraMapSubmonoid B O⁰) L]
 
-omit [IsDomain O] [IsFractionRing O K] [IsLocalization (Algebra.algebraMapSubmonoid B O⁰) L] in
 
 theorem algebraMap_sum_smul {n : ℕ} (η : Fin n → B) (v : Fin n → O) :
     algebraMap B L (∑ m, v m • η m) = ∑ m, algebraMap O K (v m) • algebraMap B L (η m) := by
@@ -54,7 +53,6 @@ theorem adjoin_range_eq_top {n : ℕ} (η : Fin n → B) (hgen : Algebra.adjoin 
   rw [hs]
   exact Subalgebra.smul_mem _ hb _
 
-omit [IsDomain O] in
 
 theorem algebraMap_det_mulLeft [Module.Free O B] [Module.Finite O B] [FiniteDimensional K L]
     (hEval : NormFormEval.Statement) {n : ℕ} (η : Fin n → B) (v : Fin n → O) :
@@ -66,7 +64,6 @@ theorem algebraMap_det_mulLeft [Module.Free O B] [Module.Finite O B] [FiniteDime
 
 end NormOfDividedForm
 
-open NormOfDividedForm in
 
 theorem NormOfDividedForm.proof (hEval : NormFormEval.Statement) (hDvd : NormFormDvd.Statement)
     (hPrime : PrimeMapFractionRing.Statement) : NormOfDividedForm.Statement := by

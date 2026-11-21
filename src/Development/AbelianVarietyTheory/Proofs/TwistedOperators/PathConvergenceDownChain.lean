@@ -239,6 +239,5 @@ theorem col_top {ch : Choice R} (hW : ch.W.Over R) (hch : R.IsChain) (hmod : R.I
 
 end GlobalTheory.FlipStart.Col
 
-open GlobalTheory.FlipStart GlobalTheory.FlipStart.Col in
 
 end

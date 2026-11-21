@@ -389,7 +389,6 @@ theorem splits_pcs : Splits dV dW (pcs dV dW LV₀ LW₀ 𝔟 𝔠 ψ) x y ψ (h
     rw [add_right_comm]
     exact ((dV.coordS W).left_inv u).symm.trans (congrArg (fun w => dV.extX W (u ⬝ dV.jX) + dV.ext0 W w + dV.extY W (u ⬝ dV.jY)) e.symm)
 
-omit hW₀ in
 
 theorem vac_mem_cls {f : WO V W → ℂ} (hf : VacG ψ V W (homL dV dW LV₀ LW₀ 𝔟 𝔠 fun _ => True) f) :
     f ∈ cls dV dW (pcs dV dW LV₀ LW₀ 𝔟 𝔠 ψ) x y ψ := by
@@ -480,7 +479,6 @@ theorem hO_extX_extY (a b : Mx D W.rank ρ) : hO V W (dV.extX W a) (dV.extY W b)
   simp only [map_zero, zero_add, add_zero, hO_eq_trace V₀, Matrix.mul_zero, trace_zero] at h
   rw [h, show pairS W (0 : Mx D W.rank ρ) 0 = 0 by simp [pairS], add_zero]
 
-variable (dV dW) in
 
 theorem symplO_shift (N : Mx D ρ ρ) :
     symplO V W (dV.extX W (dW.jX ⬝ N)) (dV.extY W (dW.jY ⬝ (incA D (-D.host.xi0⁻¹) • rat (shiftM D ρ)))) =
@@ -497,7 +495,6 @@ theorem xZero_mem (h1 : ∀ i, ∀ b ∈ 𝔟 i, α⁻¹ * b ∈ 𝔠 i) : idem 
     exact e_mem fun i => h1 i _ (((mem_splitL _ _ _ z).1 hz).1 i)) hα
   rwa [Matrix.mul_smul, smul_smul, mul_inv_cancel₀ α0, one_smul, rat_mul] at this
 
-include hψ in
 
 theorem uni_xZero (h2 : ∀ i, ∀ w ∈ dualC (𝔟 (i + 1)), α⁻¹ * -D.host.xi0⁻¹ * w ∈ dualC (𝔠 i)) (u : UX D ρ)
     (h : dV.extX W (xZero dW ⬝ u.1.1 - xZero dW) ∈ homL dV dW LV₀ LW₀ 𝔟 𝔠 fun _ => True) : psiUni ψ u.1 = 1 := by

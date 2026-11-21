@@ -55,11 +55,9 @@ theorem mem_indSpace {f : G → W} :
       ∃ K : Subgroup G, IsOpen (K : Set G) ∧ ∀ k ∈ K, ∀ g : G, f (g * k) = f g :=
   Iff.rfl
 
-variable {H σ} in
 
 variable [IsTopologicalGroup G]
 
-variable {H σ} in
 
 theorem rightTranslation_mem_indSpace {f : G → W} (hf : f ∈ indSpace H σ) (g : G) :
     rightTranslation g f ∈ indSpace H σ := by
@@ -80,7 +78,6 @@ theorem rightTranslation_mem_indSpace {f : G → W} (hf : f ∈ indSpace H σ) (
     congr 1
     group
 
-variable {H σ} in
 
 def indRep : Representation ℂ G (indSpace H σ) :=
   (rightTranslation (W := W)).subrepresentation (indSpace H σ) fun g _ hf =>

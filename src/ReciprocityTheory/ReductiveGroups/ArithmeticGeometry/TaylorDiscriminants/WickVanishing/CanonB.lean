@@ -34,11 +34,8 @@ private theorem sq_sq_lemma {m : ℕ} (b : Fin n → Q k d l) (a : Fin m → Q k
 
 variable [Algebra ℚ k]
 
-variable (k d) in
 
-omit [Algebra ℚ k] in
 
-set_option maxHeartbeats 1000000 in
 
 section Transfer
 
@@ -84,6 +81,5 @@ variable {R : Type} [CommRing R] (φ : R →+* k)
 
 end Transfer
 
-set_option maxHeartbeats 2000000 in
 
 end ReciprocityTheory.ChartRestriction.G.TB.Canon

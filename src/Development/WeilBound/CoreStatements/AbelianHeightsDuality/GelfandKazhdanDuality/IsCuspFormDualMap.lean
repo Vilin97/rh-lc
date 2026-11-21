@@ -15,7 +15,6 @@ namespace PositivityTheory.PRW.GKD
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E a) in
 
 abbrev invA : GA E a →* GA E a := invT a (Ad E)
 

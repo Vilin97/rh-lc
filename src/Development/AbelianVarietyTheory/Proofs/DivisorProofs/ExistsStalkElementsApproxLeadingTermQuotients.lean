@@ -34,7 +34,6 @@ theorem spMap_comp₁ {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f :
     spMap (g.comp f) = spMap g ≫ spMap f := by
   rw [← Spec.map_comp]; rfl
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem exists_extend_algClosed {A B K : Type} [CommRing A] [CommRing B] [Field K] [IsAlgClosed K] (g : A →+* B)
     (hg : Function.Injective g) (hi : g.IsIntegral) (ψ : A →+* K) : ∃ φ : B →+* K, φ.comp g = ψ := by

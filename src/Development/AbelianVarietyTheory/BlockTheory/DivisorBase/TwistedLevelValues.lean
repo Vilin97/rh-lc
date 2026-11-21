@@ -28,7 +28,6 @@ def IsGalConj {E : Type} [Field E] [NumberField E] (s : ℂ ≃+* ℂ) (w : ℝ)
 theorem isGalConj_refl {E : Type} [Field E] [NumberField E] (w : ℝ) (χ : Formalism.L2.Host.HChar E) :
     IsGalConj (RingEquiv.refl ℂ) w χ χ := fun _ _ => rfl
 
-variable (D) in
 
 def IsEmbOverK (σ : D.what₂.LL →+* ℂ) (s : ℂ ≃+* ℂ) : Prop :=
   (∀ a, σ a = s (D.what₂.embLL a)) ∧ ∀ x : D.host.E, x ∈ D.host.K → σ (D.embE x) = D.what₂.embLL (D.embE x)
@@ -38,32 +37,25 @@ theorem isEmbOverK_base : IsEmbOverK D D.what₂.embLL (RingEquiv.refl ℂ) := �
 def hookOf (n : ℕ) (a : ℕ → ℕ) : ℕ :=
   Formalism.LatticeIndexTer.hookProd (YoungDiagram.ofRowLens (((List.range n).map a).insertionSort (· ≥ ·)) List.sortedGE_insertionSort)
 
-variable (D) in
 
 abbrev pW (i : Fin D.R.m) (ρ : D.what₂.Tau) : ℕ := ((Wc D i).sig (tauE D ρ)).1
 
-variable (D) in
 
 abbrev qW (i : Fin D.R.m) (ρ : D.what₂.Tau) : ℕ := ((Wc D i).sig (tauE D ρ)).2
 
-variable (D) in
 
 def aPlAt (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) (ρ : D.what₂.Tau) : ℕ → ℕ := aPl D i (pW D i ρ) (lab σ ρ)
 
-variable (D) in
 
 def aMiAt (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) (ρ : D.what₂.Tau) : ℕ → ℕ := aMi D i (pW D i ρ) (qW D i ρ) (lab σ ρ)
 
-variable (D) in
 
 def mainTerm (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) : ℝ :=
   ∑ ρ : D.what₂.Tau, Real.log ((hookOf (pW D i ρ) (aPlAt D i σ ρ) : ℝ) * (hookOf (qW D i ρ) (aMiAt D i σ ρ) : ℝ))
 
-variable (D) in
 
 def Lp (b : ℝ) : ℝ := Real.log (b * D.host.rdE * ((D.host.g 0 : ℝ) * (D.host.g 1 : ℝ)) * (D.R.nV : ℝ))
 
-variable (D) in
 
 def Sizes (i : Fin D.R.m) (b : ℝ) : Prop :=
   (∀ τ : D.what₂.Tau, 0 < (((D.hc τ).e i : ℚ) : ℝ) ∧ (((D.hc τ).e i : ℚ) : ℝ) ≤ 2 * b ∧
@@ -71,7 +63,6 @@ def Sizes (i : Fin D.R.m) (b : ℝ) : Prop :=
     ∀ l, |(((D.hc τ).b l : ℚ) : ℝ) - (((D.hc τ).e i : ℚ) : ℝ)| ≤ b) ∧
   ∀ l, ((D.R.k : ℝ) * b) ^ 8 ≤ (D.host.g l : ℝ)
 
-variable (D) in
 
 def deltaAtEmb (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) : PolF D (Wc D i).rank (Vc D i).rank :=
   Formalism.IndefR.Datum.delta (pW D i) (qW D i) (aPlAt D i σ) (aMiAt D i σ)
@@ -97,7 +88,6 @@ def grpOf (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : LevDat D.host.E �
 def chrOf (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : LevDat D.host.E ℂ V.rank) : grpOf V β L →* ℂˣ :=
   (Lev.levCharAfE V β L).comp ((finHom V).range.subtype.subgroupComap _)
 
-open Classical in
 
 def IsLevelVec (ψ : AddChar (AF D.host.F) ℂ) (θ : Datum.InfFam D) (S T : HSp D)
     (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)
@@ -115,7 +105,6 @@ def IsLevelVec (ψ : AddChar (AF D.host.F) ℂ) (θ : Datum.InfFam D) (S T : HSp
 variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
 
-open Classical in
 
 def finS (t : T) : Finset (HeightOneSpectrum (𝓞 D.host.F)) := (R.Pg ∪ R.Q t).image fun PP => PP.under (𝓞 D.host.F)
 

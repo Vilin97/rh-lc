@@ -8,7 +8,6 @@ open Real Filter Asymptotics
 
 namespace GlobalTheory
 
-open Real Filter Asymptotics in
 
 theorem _root_.GlobalTheory.const_mul_rpow_mul_log_pow_le_rpow :
     ∀ a b C : ℝ, ∀ p : ℕ, a < b →

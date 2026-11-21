@@ -22,7 +22,6 @@ def IsConjDual (c : Ω ≃+* Ω) (r : G E Ω →* GL (Fin a) k) (μ : G E Ω →
       (μ g : k) • ((P : Matrix (Fin a) (Fin a) k) * (r g⁻¹ : Matrix (Fin a) (Fin a) k)ᵀ *
         ((P⁻¹ : GL (Fin a) k) : Matrix (Fin a) (Fin a) k))
 
-variable (E Ω) in
 
 def cycBar (l : ℕ) [Fact l.Prime] : G E Ω →* (Qbar l)ˣ :=
   (Units.map ((algebraMap ℚ_[l] (Qbar l)).comp PadicInt.Coe.ringHom).toMonoidHom).comp (cycZ E Ω l)

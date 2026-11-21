@@ -64,7 +64,6 @@ theorem mem_unipRadical_twoBlocks_iff {d a : ℕ} (had : a ≤ d) (x : Gn g d) :
       simp only [Fin.ext_iff]
       split_ifs with h1 h2 h2 <;> first | rfl | omega
 
-open scoped Classical in
 
 theorem res_one_one_eq {d a : ℕ} (had : a ≤ d) (χ : Gn g d → ℂ) :
     res a (d - a) χ 1 1 =
@@ -76,7 +75,6 @@ theorem res_one_one_eq {d a : ℕ} (had : a ≤ d) (χ : Gn g d → ℂ) :
   simp only [Finset.mem_filter, Finset.mem_univ, true_and, Units.val_one]
   exact (mem_unipRadical_twoBlocks_iff had x).symm
 
-open scoped Classical in
 
 theorem res_character_eq_zero_iff {d a : ℕ} (had : a ≤ d) (V : FDRep ℂ (Gn g d)) :
     res a (d - a) (fun x => V.character x) 1 1 = 0 ↔

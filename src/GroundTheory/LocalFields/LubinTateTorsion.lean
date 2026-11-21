@@ -48,7 +48,6 @@ section LTPoly
 
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
 
-variable (K) in
 
 theorem one_lt_card_residueField' : 1 < Nat.card 𝓀[K] := Finite.one_lt_card
 
@@ -383,7 +382,6 @@ theorem card_lubinTateTorsion_ltPoly (n : ℕ) :
 
 variable {f : PowerSeries 𝒪[K]}
 
-omit [IsSepClosed Ω] in
 
 theorem lubinTatePointEquiv_mem_torsion_iff {g : PowerSeries 𝒪[K]} (hf : IsLubinTateSeries π f)
     (hg : IsLubinTateSeries π g) (n : ℕ) (x : IdealPoint Ω (lubinTateFormalGroup hπ hg)) :

@@ -99,7 +99,6 @@ namespace GlobalTheory.MiTop
 
 open Formalism.IndefR.Links GlobalTheory.MiTop.AtReal
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.MiTop
 

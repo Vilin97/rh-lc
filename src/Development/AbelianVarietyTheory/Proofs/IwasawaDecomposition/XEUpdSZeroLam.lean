@@ -14,7 +14,6 @@ noncomputable section
 namespace GlobalTheory.Mem.R3
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-set_option maxHeartbeats 2000000 in
 
 theorem XE_updS_zeroLam (R : RealDat3 D A3 Ks) (F : Face3 D A3) (c : Fin D.R.m → ℝ)
     (hC : R.WeakCharacterisation F) (hP : PrimRows3 R F) (hOk : A3.fam3.Ok3 1) (hsep : A3.fam3.TypesSep3)
@@ -26,7 +25,6 @@ theorem XE_updS_zeroLam (R : RealDat3 D A3 Ks) (F : Face3 D A3) (c : Fin D.R.m �
     · exact zeroLam_of_ne R F c (hZ p he j).1 fun hv => (hZ p he j).2 v hv
   exact (by with_unfolding_all exact (h :))
 
-set_option maxHeartbeats 2000000 in
 
 def scalReadL (R : RealDat3 D A3 Ks) (F : Face3 D A3) (lam : type_of% R.lam3)
     (hX : ∀ b, (((R.updS R.kap lam).toCx3 F).data F.cr b).XE = ((R.toCx3 F).data F.cr b).XE) (X0 : BaseLevelRowSide D)
@@ -35,7 +33,6 @@ def scalReadL (R : RealDat3 D A3 Ks) (F : Face3 D A3) (lam : type_of% R.lam3)
     met := fun v hv x y => (Z.met v hv x y).trans (by rw [hX true]; rfl)
     met0 := fun v hv x y => (Z.met0 v hv x y).trans (by rw [hX false]; rfl) }
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.Mem.R3
 

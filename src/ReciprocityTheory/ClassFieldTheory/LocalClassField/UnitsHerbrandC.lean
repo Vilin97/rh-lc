@@ -41,7 +41,6 @@ theorem norm_Phi_map (σ : L ≃ₐ[K] L) (x : L) : ‖Phi K L (σ x)‖ ≤ ‖
   rw [Phi_map]
   exact norm_le_pi_norm _ _
 
-variable (K L) in
 
 noncomputable def proj1 : L →+ L where
   toFun x := Phi K L x 1 • IsGalois.normalBasis K L 1
@@ -91,7 +90,6 @@ theorem exists_consts : ∃ A B C : ℝ, 0 ≤ A ∧ 0 ≤ B ∧ 0 ≤ C ∧ (�
       · exact norm_le_Phi y
     _ = B * A * A * ‖Phi K L x‖ * ‖Phi K L y‖ := by ring
 
-variable (K L) in
 
 def ball (t : ℝ) (ht : 0 ≤ t) : AddSubgroup L where
   carrier := {x | ‖Phi K L x‖ ≤ t}

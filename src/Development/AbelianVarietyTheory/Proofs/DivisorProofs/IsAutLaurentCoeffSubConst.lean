@@ -70,7 +70,6 @@ include hι h1
 
 variable [T2Space H] [SecondCountableTopology H] [MeasurableSpace H] [BorelSpace H] (μ : Measure H) [μ.IsHaarMeasure]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 end Abstract
 
@@ -88,9 +87,7 @@ variable {x : Matrix (Fin n) (Fin 1) E} {L : Submodule (𝓞 E) (Fin n → E)} {
 
 end Unitary
 
-open GlobalTheory.EisRes.CentralEig in
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.LaurentAut
 end

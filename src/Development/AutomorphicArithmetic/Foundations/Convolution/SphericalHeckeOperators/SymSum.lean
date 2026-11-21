@@ -17,11 +17,9 @@ section Laurent
 
 variable {n : ℕ}
 
-variable (n) in
 
 def pairs : Finset (Fin n × Fin n) := Finset.univ.filter fun p => p.1 < p.2
 
-variable (n) in
 
 def dPol (t : ℂ) : LaurentRing n := ∏ p ∈ pairs n, (varL p.1 - t • varL p.2)
 
@@ -51,7 +49,6 @@ def dco (a : Fin n → ℤ) : Set (GL (Fin n) F) :=
 
 def uFn (a : Fin n → ℤ) : GL (Fin n) F → ℂ := (dco F a).indicator 1
 
-variable (n) in
 
 def oneK : GL (Fin n) F → ℂ := (integralGL F n : Set (GL (Fin n) F)).indicator 1
 

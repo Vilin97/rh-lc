@@ -396,7 +396,6 @@ theorem rat_parts (hθ : IsInfFam θ) (h : V.gram = 1) (γ : GQ V) :
 
 end Real
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.AdTh.PhaseMap
 

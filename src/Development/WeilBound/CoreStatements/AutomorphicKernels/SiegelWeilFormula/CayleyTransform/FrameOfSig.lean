@@ -14,7 +14,6 @@ namespace PositivityTheory.SiegelWeilFormula.Krd
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-omit [NumberField F] [NumberField E] in
 
 theorem conjT_frame {n : ℕ} (c : E) (J : Matrix (Fin n) (Fin n) E) (hJ : ∀ i j, σ (J j i) = c * J i j)
     (hss : ∀ x, σ (σ x) = x) (b : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) E) :

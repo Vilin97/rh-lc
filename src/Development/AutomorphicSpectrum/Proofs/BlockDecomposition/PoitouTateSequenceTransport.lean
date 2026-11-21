@@ -107,14 +107,12 @@ variable {R : Type} [CommRing R] [TopologicalSpace R] [DiscreteTopology R] {Γ �
   (hd : ∀ g f, twDual χ' ρ' (eG g) f = twDual χ ρ g f)
   (hl : ∀ i d m, (ρ'.comp (φ' (eI i))) (eD i d) m = (ρ.comp (φ i)) d m)
 
-include hχ hc in
 
 theorem twDual_transfer : ∀ g f, twDual χ' ρ' (eG g) f = twDual χ ρ g f := by
   intro g f
   ext m
   rw [twDual_apply, twDual_apply, hχ, ← map_inv eG, hc]
 
-include hD hc in
 
 theorem loc_transfer :
     ∀ i d m, (ρ'.comp (φ' (eI i))) (eD i d) m = (ρ.comp (φ i)) d m := by

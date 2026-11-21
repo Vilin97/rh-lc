@@ -44,7 +44,6 @@ theorem esymm_mem_adjoin (k : ℕ) :
   refine neg_mem (mul_mem (hm1 k) (sum_mem fun s hs => mul_mem (mul_mem (hm1 s)
     (ih s (mem_range.mp hs))) (Algebra.subset_adjoin ⟨k - s, rfl⟩)))
 
-omit [Fintype σ] [DecidableEq σ] in
 
 theorem isHomogeneous_prod_map_X (t : Multiset σ) :
     ((t.map (X : σ → MvPolynomial σ ℤ)).prod).IsHomogeneous (Multiset.card t) := by

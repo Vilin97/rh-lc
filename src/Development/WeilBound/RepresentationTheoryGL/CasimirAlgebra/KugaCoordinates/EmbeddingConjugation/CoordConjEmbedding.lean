@@ -14,12 +14,10 @@ namespace PositivityTheory.Rg.Cz.J
 section
 variable {E : Type} [Field E] [NumberField E]
 
-omit [NumberField E] in
 
 theorem atEmb_embedding (w : InfinitePlace E) (z : ℂ) : atEmb w.embedding z = (Pi.single w z : Cinf E) := by
   unfold atEmb; split_ifs <;> simp_all
 
-omit [NumberField E] in
 
 theorem coord_embedding (w : InfinitePlace E) (c : Cinf E) : coord w.embedding c = c w := by
   unfold coord; split_ifs <;> simp_all

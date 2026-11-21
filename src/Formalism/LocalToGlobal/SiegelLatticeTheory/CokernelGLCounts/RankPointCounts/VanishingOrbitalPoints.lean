@@ -25,8 +25,6 @@ theorem stepPoints_of_ooVanish
     Formalism.L2.SG.NGCut.StepPoints :=
   Formalism.L2.SG.NGCut.PtPf.stepPoints_of hOV fun D X Y u u' => Formalism.L2.SG.LeadingMinorsNonvanishing.atSomeAll_holds D X Y u u'
 
-open Formalism.L2.SG.TermOp.Vanish in
 
-open Formalism.L2.SG.TermOp.Vanish in
 
 end Formalism.L2.SG.NGCut.VanishingOrbitalPoints

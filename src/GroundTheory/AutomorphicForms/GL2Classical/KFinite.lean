@@ -61,7 +61,6 @@ theorem realPart_orthogonal {x : AdelicGL ℚ 2} (hx : x ∈ Reduction.maxCompac
   refine ⟨by linear_combination k10, by linear_combination k01, ?_⟩
   linear_combination (k11 - k10 - k01) / 2
 
-variable (N) in
 
 end GL2Classical
 

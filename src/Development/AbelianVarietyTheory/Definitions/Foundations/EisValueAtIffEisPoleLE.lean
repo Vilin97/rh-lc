@@ -199,8 +199,6 @@ section Spherical
 
 variable (hμ : IsHeckeChar D μ) (hI : HasIwasawa D.sp.cm.sig (dblSp V).gram (Khat V a)) (hs : SphConv V a)
 
-omit hμ hs in
-include hI in
 
 theorem isIwasawa_Khat : IsIwasawa ((absA D).comp (aP V)) (Khat V a) :=
   haveI := t2Space_adeleRing' (F := D.host.F)
@@ -209,15 +207,11 @@ theorem isIwasawa_Khat : IsIwasawa ((absA D).comp (aP V)) (Khat V a) :=
 variable (hc : ContinuousOn (fun x : ℂ × GA D (dblSp V) => Φ x.1 x.2) (rightOf (V.rank / 2) ×ˢ univ))
   (hl : ∀ s : ℂ, (V.rank : ℝ) / 2 < s.re → Φ s ∈ degPS V a μ s)
 
-omit hμ hI hs hc in
-include hl in
 
 theorem indLaw_of_mem : ∀ s ∈ rightOf (V.rank / 2),
     IndLaw ((absA D).comp (aP V)) (μ.comp (aP V)) (s + ((V.rank : ℝ) / 2 : ℝ)) (Φ s) := fun s hs p g => by
   rw [((mem_degPS V a).1 (hl s hs)).1 p g]; push_cast; rfl
 
-omit hμ hI in
-include hs in
 
 theorem SphConv.summable : ∀ τ, (V.rank : ℝ) / 2 < τ → Summable fun q =>
     ((term (siegel V) (GQ (dblSp V)) (iwAbs ((absA D).comp (aP V)) (Khat V a)) 1 q : ℝ≥0) : ℝ) ^ (τ + (V.rank : ℝ) / 2) :=
@@ -228,7 +222,6 @@ include hμ hI hs hc hl
 theorem SphConv.isEisFamily : IsEisFamily V Φ := fun s h => ⟨leftInv_of_mem hμ (hl s h),
   cosetConv_of_spherical (isIwasawa_Khat hI) (isCompact_Khat V a) hc (indLaw_of_mem hl) hs.summable h⟩
 
-omit hμ in
 
 theorem SphConv.continuousOn_eis :
     ContinuousOn (fun x : ℂ × GA D (dblSp V) => eis V (Φ x.1) x.2) (rightOf (V.rank / 2) ×ˢ univ) :=
@@ -268,14 +261,11 @@ theorem SphConv.eisValueAt_flat (hs : SphConv V a) (hμ : IsHeckeChar D μ) (h :
   have h1 := hs.isEisFamily_flat hI hφ hμ
   simpa only [flatH_self] using h1.eisValueAt h1.analyticOnNhd_flat h
 
-omit hφ in
 
 theorem sph_mem (s : ℂ) : sph V a s ∈ degPS V a 1 s :=
   haveI := t2Space_adeleRing' (F := D.host.F)
   hI.spherical_mem continuous_absE (isCompact_Khat V a) s
 
-open scoped Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
-omit hφ in
 
 theorem sphConv_iff : SphConv V a ↔ IsEisFamily V (sph V a) ∧
     ∀ σ : ℝ, (V.rank : ℝ) / 2 < σ → 1 ≤ (eis V (sph V a σ) 1).re := by
@@ -314,7 +304,6 @@ theorem leftInv_dblIntegrand (hμ : IsHeckeChar D μ) (hE : LeftInv (GQ (dblSp V
   simp only [dblIntegrand, map_mul (io V), hE _ (io_mem_GQ V hγ.1 hγ.2), Prod.fst_mul, Prod.snd_mul, h₁ _ hγ.1, h₂ _ hγ.2,
     map_mul (detA V), map_mul μ, apply_detA hμ hγ.2, one_mul]
 
-open scoped Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 
 theorem continuous_detA : Continuous (detA V) := by
   have h1 : Continuous (aP V) := continuous_aH
@@ -322,7 +311,6 @@ theorem continuous_detA : Continuous (detA V) := by
     ((continuous_io V).comp (continuous_id.prodMk continuous_id)).subtype_mk _
   exact (h1.comp h2).congr fun g => aH_ioDiag (gram_hdbl V) g
 
-open scoped Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 
 theorem continuous_dblIntegrand (hμ : IsHeckeChar D μ) (hE : Continuous E) (h₁ : Continuous f₁) (h₂ : Continuous f₂) :
     Continuous (dblIntegrand V μ E f₁ f₂) :=

@@ -308,12 +308,10 @@ theorem ciAddChar_one_ne {A : Type} [CommRing A] [Finite A] {p : ℕ} (hp : p.Pr
   have h2 : e n = (n.val : ℕ) • (1 : A) := by rw [nsmul_one, ← map_natCast e, ZMod.natCast_zmod_val]
   rw [h2, AddChar.map_nsmul_eq_pow, h1, one_pow, AddChar.one_apply]
 
-open Classical in
 
 def ciPsi {SB : Finset (HeightOneSpectrum (𝓞 X.E))} (P : SB) (x : X.E) : X.K :=
   if IntAt P.1 ((qOf P.1 : X.E) * x) then psi0P Ch P.1 (redP P.1 ((qOf P.1 : X.E) * x)) else 1
 
-open Classical in
 
 def ciSq (P : HeightOneSpectrum (𝓞 X.E)) : X.K :=
   if h : P ∈ Pr.vGs ∧ Finite (𝓞 X.E ⧸ P.asIdeal) then
@@ -423,7 +421,6 @@ theorem ciFIdx {k₀ c n s : ℕ} (hfr : c = 0 ∨ k₀ = n) (hs : s < n + c) : 
 theorem ciScE_lt {n : ℕ} (ex : ℕ → ℕ) {l : ℕ} (hl : l < n) : LocE.scE n ex l = 0 := by
   simp [LocE.scE, hl]
 
-variable (P q) in
 
 theorem ciMem_lamY {n c : ℕ} (ex : ℕ → ℕ) (x : Sp E n) :
     Loc.inX E n c x ∈ LocE.lamY P q n c ex ↔ x ∈ stdAt E n P := by
@@ -447,8 +444,6 @@ section Lift
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {P : HeightOneSpectrum (𝓞 E)} {q : ℕ}
 
-variable (P) in
-open Classical in
 
 def ciLift (c : 𝓞 E ⧸ P.asIdeal) : 𝓞 E :=
   if c = 0 then 0 else if c = 1 then 1 else (Ideal.Quotient.mk_surjective c).choose
@@ -468,7 +463,6 @@ theorem ciLift_one : ciLift P 1 = 1 := by
   unfold ciLift
   simp
 
-variable (P) in
 
 def ciLiftO {n : ℕ} (M : Matrix (Fin n) (Fin n) (𝓞 E ⧸ P.asIdeal)) : Matrix (Fin n) (Fin n) (𝓞 E) := M.map (ciLift P)
 
@@ -755,7 +749,6 @@ theorem ciLamGv_congr (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (
     ext s s'
     exact (h _ _ (hb s) (hb s')).2.2
 
-variable (P) in
 
 def ciPhiCond (q : ℕ) (sharp : Bool) (k₀ r t j c n : ℕ) (M : ℕ → ℕ → E) : Prop :=
   (∀ p p', p < n + c → p' < r + (j - 1) * t → IntAt P (M p p')) ∧
@@ -777,7 +770,6 @@ theorem ciPhiG_eq (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (𝓞
   dsimp only
   split_ifs <;> rfl
 
-open Classical in
 
 theorem ciPhiG_congr (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hq0 : (q : E) ≠ 0) (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K)
     (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (sharp : Bool) {k₀ r t j c' n' c n : ℕ} (x x' : HomE E (n' + c') (n + c))
@@ -865,7 +857,6 @@ variable {X : Fields} {Pr : Primes X} (Ch : Chars X Pr Examples₂.R0.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) (S : Set ℕ)
   {mq : ℕ → rowSG Pr sel (mu0 X.F X.E X.K S) → X.K}
 
-open Classical in
 
 end Inst
 
@@ -875,9 +866,7 @@ variable {X : Fields} {Pr : Primes X} (Ch : Chars X Pr Examples₂.R0.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) (S : Set ℕ)
   {mq : ℕ → rowSG Pr sel (mu0 X.F X.E X.K S) → X.K}
 
-open Classical in
 
-open Classical in
 
 end PsiInst
 
@@ -885,11 +874,9 @@ section Tied
 
 variable {X : Fields} {Pr : Primes X}
 
-open Classical in
 
 def ciQU (P : HeightOneSpectrum (𝓞 X.E)) : X.Eˣ := if h : (qOf P : X.E) ≠ 0 then Units.mk0 _ h else 1
 
-open Classical in
 
 def ciMuqG {m : ℕ} (G : ChGlob X m) (i : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : X.K :=
   if h : ∃ (hi : i < m) (y : X.K), G.σ₀ y = ((((G.mu0 ⟨i, hi⟩).locK P (ciQU P)) : ℂˣ) : ℂ)⁻¹ then h.choose_spec.choose else 1
@@ -942,8 +929,6 @@ theorem intAt_of_redP_ne_zero₂ {E : Type} [Field E] [NumberField E] {P : Heigh
   by_contra h'
   exact h (reduction_eq_zero_of_not_integral P h')
 
-variable {Ch} in
-open Classical in
 
 end Tied
 

@@ -40,7 +40,6 @@ theorem log_block (j m : ℕ) (e : ℝ) (he : UnitDetBound m j e) (Z : Matrix (F
 
 end GrassHeightEAux
 
-open GrassHeightEAux in
 
 theorem RootLogNormBoundE.full : RootLogNormBoundE.Statement := by
   intro f j m e ζ he hζ z hz

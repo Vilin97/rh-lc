@@ -11,7 +11,6 @@ open NumberField Complex ReciprocityTheory.ChartRestriction.G.I2
 
 namespace GlobalTheory
 
-open ReciprocityTheory.ChartRestriction.G.FD in
 
 theorem exists_short_integers_span :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], ∃ (n : ℕ) (ω : Fin n → 𝓞 E),

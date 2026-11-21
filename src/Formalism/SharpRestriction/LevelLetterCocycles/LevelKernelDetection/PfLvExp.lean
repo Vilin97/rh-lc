@@ -95,7 +95,6 @@ theorem Pf_LvExp_ιV_inj (T : LocLat G Qp LL O) : Function.Injective (ιV PD (LL
   rw [h, h] at hab
   exact Module.Flat.lTensor_preserves_injective_linearMap _ hi hab
 
-open Classical in
 
 def Pf_LvExp_Φ (W : LocWach PD LL O v n) (s : ℕ) (D : Type) [AddCommGroup D] [Module LL D] :
     KsW W s ⊗[LL] D ≃ₗ[LL] (Rs LL PD.p s → D) :=

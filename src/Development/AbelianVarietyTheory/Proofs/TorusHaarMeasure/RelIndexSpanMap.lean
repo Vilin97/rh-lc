@@ -12,8 +12,6 @@ open scoped ComplexOrder ENNReal Matrix
 
 namespace GlobalTheory.HeightInv
 
-open NumberField MeasureTheory Topology in
-open scoped ComplexOrder ENNReal Matrix in
 
 theorem _root_.GlobalTheory.HeightInv.relIndex_span_map {R K V ι : Type} [CommRing R] [Field K] [Algebra R K] [AddCommGroup V]
     [Module K V] [Module R V] [IsScalarTower R K V] (Λ : Submodule R V) (f : V →ₗ[K] V)

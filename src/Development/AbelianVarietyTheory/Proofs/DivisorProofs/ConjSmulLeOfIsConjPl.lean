@@ -52,7 +52,6 @@ theorem conj_smul_le_of_isConjPl {D : D7} {PP' PP : HeightOneSpectrum (𝓞 D.ho
   rw [e, Formalism.BasicNotions.bridge_star_holds]
   rfl
 
-open Formalism.L2.Host in
 
 theorem xiH_eq_one_of_cong : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {μ₀ : T}, L.Is μ₀ → ∀ (G : GridData L sc) (t : T) (u : (AE D)ˣ), IntU D u → (u : AE D) - 1 ∈ hatId D (modT G t * D.host.conj • modT G t) → (L.xiH t).1 (finIdl D u) = 1 := by
   intro D T L sc μ₀ hL G t u hu hc

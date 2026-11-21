@@ -52,7 +52,6 @@ theorem mem_locR_iff (c : L) :
 
 end GlobalTheory.LocIntPrincipal
 
-open GlobalTheory.LocIntPrincipal in
 
 theorem GlobalTheory.LocIntPrincipal.exists_generator : ∀ (L : Type) [Field L] [NumberField L] (v : HeightOneSpectrum ℤ) (K : Set L), 0 ∈ K →
     (∀ a ∈ K, ∀ b ∈ K, a + b ∈ K) →

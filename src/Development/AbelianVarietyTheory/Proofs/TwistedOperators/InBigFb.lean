@@ -30,7 +30,6 @@ namespace GlobalTheory.RowOneCos
 
 variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ}
 
-set_option maxHeartbeats 1000000 in
 
 theorem flatBF_source {ρ : ℕ} {B : BesLev D ρ} {J : JacLev D ρ} (s : StepBF ψ B J) {Ψ : WO B.V J.W → ℂ}
     (hΨ : IsThetaFunO ψ B.V J.W Ψ) {n : GA D B.V} (hn : n ∈ flagN B.d) :

@@ -210,7 +210,6 @@ end AffineWeyl
 
 section Existence
 
-variable {F n} in
 
 def RowsReducedOn (M : Matrix (Fin n) (Fin n) F) (R : Finset (Fin n)) : Prop :=
   ∃ p : Fin n → Fin n, ∀ i ∈ R,
@@ -522,7 +521,6 @@ theorem affineWeylGL_inr (σ : Equiv.Perm (Fin n)) :
     affineWeylGL F n (SemidirectProduct.inr σ) = permGL F σ :=
   SemidirectProduct.lift_inr _ _ _ _
 
-omit [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 
 theorem permGL_mem_integralGL (σ : Equiv.Perm (Fin n)) : permGL F σ ∈ integralGL F n := by
   rw [mem_integralGL_iff]

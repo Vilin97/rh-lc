@@ -22,6 +22,5 @@ end GlobalTheory.Cartier.SecPowLoc
 
 namespace GlobalTheory.Cartier
 
-open SecPowLoc in
 
 end GlobalTheory.Cartier

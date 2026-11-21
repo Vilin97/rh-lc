@@ -188,7 +188,6 @@ section Lattice
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
-open SemicharIndep in
 
 theorem exists_sign (X : Data E r) : ∃ σ : ℤ, (σ = 1 ∨ σ = -1) ∧ ∀ u v, EF X u v = σ * B X u v := by
   rcases EF_eq_or X with h | h
@@ -219,7 +218,6 @@ theorem finrank_lattice (X : Data E r) : Module.Free ℤ X.Λ ∧ Module.Finite 
   exact ⟨Module.Free.of_basis c, Module.Finite.of_basis c, by
     rw [Module.finrank_eq_card_basis c, Fintype.card_fin]⟩
 
-open SemicharIndep in
 
 theorem exists_isSympl (X : DataX E r) :
     ∃ bas : (Fin (X.Ψ.card * r) ⊕ Fin (X.Ψ.card * r) → ℤ) ≃ₗ[ℤ] X.Λ, IsSympl X.toData bas := by

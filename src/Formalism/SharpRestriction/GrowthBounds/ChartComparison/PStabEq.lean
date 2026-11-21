@@ -87,7 +87,6 @@ theorem smul_colSpan (i : G.comp) (γ : (G.lev i).Γ) (L : G.P.Tup) (g : ∀ v, 
   rw [hL v, colSpan_map]
   rfl
 
-include H hW hH hbad hA hΓ hU in
 
 theorem fix_mem (i : G.comp) (L : G.P.Tup) (g : ∀ v, GL (Fin (G.P.m + 1)) (G.P.Qq v))
     (hL : ∀ v, L v = colSpan (G.P.W v) (g v : Matrix (Fin (G.P.m + 1)) (Fin (G.P.m + 1)) (G.P.Qq v)))
@@ -110,7 +109,6 @@ theorem fix_mem (i : G.comp) (L : G.P.Tup) (g : ∀ v, GL (Fin (G.P.m + 1)) (G.P
   rw [e2]
   exact S.U.mul_mem κ'.2 κ.2
 
-include H hW hHc hA hΓ in
 
 theorem fix_of_mem (i : G.comp) (L : G.P.Tup) (g : ∀ v, GL (Fin (G.P.m + 1)) (G.P.Qq v))
     (hL : ∀ v, L v = colSpan (G.P.W v) (g v : Matrix (Fin (G.P.m + 1)) (Fin (G.P.m + 1)) (G.P.Qq v)))
@@ -133,7 +131,6 @@ theorem fix_of_mem (i : G.comp) (L : G.P.Tup) (g : ∀ v, GL (Fin (G.P.m + 1)) (
   rw [smul_colSpan i γ L g hL v, hL v, colSpan_eq, colSpan_eq]
   exact (gMap_std_eq_iff _ _ _).2 hst
 
-include H hW hH hHc hbad hA hΓ hU in
 
 theorem stab_bij (i : G.comp) (hinj : Function.Injective (A.gamI i)) (hon : GamOnto S A i) (L : G.P.Tup)
     (g : ∀ v, GL (Fin (G.P.m + 1)) (G.P.Qq v))
@@ -178,8 +175,6 @@ theorem conj_mem' (x y : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) (γ�
   rw [this]
   exact S.U.mul_mem (S.U.mul_mem (S.U.inv_mem κ₀.2) hd) κ₀.2
 
-set_option maxHeartbeats 2000000 in
-include H hW hH hbad in
 
 theorem cls_unique {cl : Type} (y : cl → UPts σ J (FiniteAdeleRing (𝓞 F) F))
     (hy : Function.Injective (fun c => (Quotient.mk'' (y c) : Cls S))) (i : G.comp) (L : G.P.Tup)
@@ -226,7 +221,6 @@ def stabCls {cl : Type} {stab : cl → Type} [∀ c, Group (stab c)] (y : cl →
       obtain ⟨s, hs⟩ := (hrange c ⟨δ.1, δ.2.1⟩).2 ((mem_map_conj S.U _ _).2 δ.2.2)
       exact ⟨s, Subtype.ext (show (stabI c s).1 = δ.1 from congrArg Subtype.val hs)⟩⟩
 
-include H hW hH hHc hbad hA hΓ hU in
 
 theorem card_eq (i : G.comp) (hinj : Function.Injective (A.gamI i)) (hon : GamOnto S A i) (L : G.P.Tup)
     (g : ∀ v, GL (Fin (G.P.m + 1)) (G.P.Qq v))
@@ -283,7 +277,6 @@ theorem gamI_inj_locJ (c : cmp) : Function.Injective ((locJ hi t B).gamI c) := b
   apply Subtype.ext
   exact (reGL (rankN D (i + 1) hi) D.host.E).injective hab
 
-set_option maxHeartbeats 4000000 in
 
 theorem gamOnto_locJ (hU : SameUlocJ hi S Uloc) (c : cmp) : GamOnto S (locJ hi t B) c := by
   intro δ hδ hoff
@@ -343,7 +336,6 @@ def HypTJC : Prop :=
       GL (Fin (D.sp.X (i + 1)).rank) _) : Matrix (Fin (D.sp.X (i + 1)).rank) (Fin (D.sp.X (i + 1)).rank) _) a b ∈
         w'.adicCompletionIntegers D.host.F
 
-set_option maxHeartbeats 4000000 in
 
 theorem locHypC_locJ (hU : SameUlocJ hi S Uloc) (hB : FrRatJ t B) (hTc : HypTJC t) : LocHypC S (locJ hi t B) := by
   refine locHypC_of (rankN D (i + 1) hi) (locJ hi t B) S B rfl Uloc hU ?_

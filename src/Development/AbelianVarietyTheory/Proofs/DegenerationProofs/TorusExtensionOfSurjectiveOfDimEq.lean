@@ -54,7 +54,6 @@ theorem exists_pow_eq_one_of_finite_kernel {k : Type} [Field k] {G B : Over (Sp 
     rw [← Category.id_comp i, ← MonObj.pow_comp, hZN, MonObj.one_comp]
   rw [← hp.lift_fst x (toUnit _) hx, ← MonObj.comp_pow, h1, MonObj.comp_one]
 
-open RationalPoint in
 
 theorem finite_kernel_points {k : Type} [Field k] [IsAlgClosed k] {G B : Over (Sp k)}
     [GrpObj B] (f : G ⟶ B) (hf : IsFinite (pullback.snd f (η[B] : 𝟙_ _ ⟶ B)).left) :
@@ -74,7 +73,6 @@ theorem finite_kernel_points {k : Type} [Field k] [IsAlgClosed k] {G B : Over (S
   refine (Set.finite_range fun z : 𝟙_ (Over (Sp k)) ⟶ Z => z ≫ i).subset fun x hx => ?_
   exact ⟨hp.lift x (toUnit _) hx, hp.lift_fst _ _ _⟩
 
-open RationalPoint in
 
 theorem eq_top_of_finite_cover {k : Type} [Field k] [IsAlgClosed k] {G : Over (Sp k)} [GrpObj G]
     [LocallyOfFiniteType G.hom] [IrreducibleSpace G.left]
@@ -117,7 +115,6 @@ theorem eq_top_of_finite_cover {k : Type} [Field k] [IsAlgClosed k] {G : Over (S
 
 end IsogenyOntoExtension
 
-open IsogenyOntoExtension RationalPoint in
 
 theorem torusExtension_of_surjective_of_dim_eq : ∀ (k : Type) [Field k] [IsAlgClosed k] (G G' : Over (Sp k)) [GrpObj G] [GrpObj G'] (g : ℕ), SmConn G → SmConn G' → SmoothOfRelativeDimension g G.hom → SmoothOfRelativeDimension g G'.hom → Nonempty (TorusExtension G') → ∀ i : G ⟶ G', IsMonHom i → (∀ y : (𝟙_ (Over (Sp k)) ⟶ G'), ∃ x : (𝟙_ (Over (Sp k)) ⟶ G), x ≫ i = y) → Nonempty (TorusExtension G) := by
   intro k _ _ G G' _ _ g hG hG' hg hg' hT i hi hs

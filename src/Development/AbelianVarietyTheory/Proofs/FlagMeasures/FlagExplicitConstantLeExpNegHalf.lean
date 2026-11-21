@@ -80,8 +80,6 @@ theorem numeric (N s L c : ℝ) (hs : 100 ≤ s) (hN : N = s * s) (hL : 15 ≤ L
 
 end ConstBd
 
-set_option maxHeartbeats 1000000 in
-open ConstBd in
 
 theorem constantBound : ConstantBound := by
   intro E _ _ _ hE p q a j hj1 hjq hL hq hrd _

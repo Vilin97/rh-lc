@@ -17,7 +17,6 @@ noncomputable section
 
 namespace GlobalTheory.UPel.HT.ES.ValExt
 
-open GlobalTheory.DrinLev.HT.HeckePt GlobalTheory.CechPic in
 
 theorem isPIsog_pull : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (N c : ℕ) (S S' : Scheme.{0}) (σ : S ⟶ Sp R) (σ' : S' ⟶ Sp R) (f : S' ⟶ S) (o o' : Obj b N σ) (o₁ o₁' : Obj b N σ') (m : ObjMap o₁ o f) (m' : ObjMap o₁' o' f) (ψ : o.A ⟶ o'.A), IsPIsog c o o' ψ → ∃ ψ₁ : o₁.A ⟶ o₁'.A, IsPIsog c o₁ o₁' ψ₁ ∧ m.φ ≫ ψ.left = ψ₁.left ≫ m'.φ := by
   intro p _ D R _ b N c S S' σ σ' f o o' o₁ o₁' m m' ψ hψ

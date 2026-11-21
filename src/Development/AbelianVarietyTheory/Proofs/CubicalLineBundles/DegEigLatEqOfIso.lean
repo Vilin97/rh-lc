@@ -19,7 +19,6 @@ open GlobalTheory GlobalTheory.CM GlobalTheory.LamF
 noncomputable section
 namespace GlobalTheory.LamF
 
-open IntCoord in
 
 theorem diff_mem_eigLat {K : Type} [Field K] [NumberField K] {P P' : Out.PolAV (Sp (𝓞 K))} {F : GenFib P}
     {F' : GenFib P'} {O : Type} [CommRing O] {a : OAct O P.A} {a' : OAct O P'.A} {f : P.A ⟶ P'.A}

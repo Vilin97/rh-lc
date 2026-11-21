@@ -257,7 +257,6 @@ theorem charsIn_nf {D : D7} {T : Type} [Finite T] {L : LevCh D T} {μ0 : T} (hL 
 
 end GlobalTheory.RowExNF
 
-open GlobalTheory.RowExNF in
 
 theorem GlobalTheory.RowEx.nfChars : NFChars :=
   ⟨0, fun _ _ _ => ⟨0, fun _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ hS ch _ _ => by

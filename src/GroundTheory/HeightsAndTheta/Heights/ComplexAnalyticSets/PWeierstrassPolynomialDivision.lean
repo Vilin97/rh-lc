@@ -53,7 +53,6 @@ theorem norm_pointWithLast_lt {σ : Type} [Fintype σ] {z : σ → ℂ} {s : ℂ
 
 end WeierstrassPolynomialDivision
 
-open WeierstrassPolynomialDivision in
 
 theorem WeierstrassPolynomialDivision.proof (hC : ParametricCircleIntegralAnalytic.Statement) :
     WeierstrassPolynomialDivision.Statement := by

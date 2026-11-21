@@ -28,4 +28,3 @@ theorem algSat_eq' (n q : ℕ) (B : Multiset ℂˣ) :
 
 end GlobalTheory.RoadU.UnrTwist
 
-open GlobalTheory.RoadU.UnrTwist in

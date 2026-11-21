@@ -90,7 +90,6 @@ end GlobalTheory.FlagBundle.Dom
 
 namespace GlobalTheory.FlagBundle
 
-open GlobalTheory.FlagBundle.Dom in
 
 theorem dominates_O (F : Type) [Field F] (ι : Type) [Fintype ι] (m : ι → ℕ) (X Y₁ Y₂ : Var F)
     (Eb : Fr (ratOf X) m 0) (S₁ : Fr (ratOf Y₁) m m) (φ₁ : X.Fn →ₐ[F] Y₁.Fn) (f₁ : Y₁.X ⟶ X.X)

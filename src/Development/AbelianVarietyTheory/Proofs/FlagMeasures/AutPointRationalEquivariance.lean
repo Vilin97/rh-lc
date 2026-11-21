@@ -65,7 +65,6 @@ theorem largestSize_eq (hz : ∀ N, zl (Formalism.HermitianLatticesTheory.realiz
   · rintro ⟨S, hS, hne, rfl⟩
     exact ⟨Φ S, (hsat S).2 hS, fun h => hne (Φ.injective h), sizeQ_eq b X X' Φ hz hr A S⟩
 
-omit [NumberField K] [StarRing K] [Module K V] [IsScalarTower (𝓞 K) K V] in
 
 theorem sSup_eq (A : Submodule (𝓞 K) V) (p p' : Submodule (𝓞 K) V → Prop) (hp : ∀ N, p' (Φ N) ↔ p N) :
     sSup {N | N ≤ Φ A ∧ N ≠ ⊥ ∧ p' N} = Φ (sSup {N | N ≤ A ∧ N ≠ ⊥ ∧ p N}) := by

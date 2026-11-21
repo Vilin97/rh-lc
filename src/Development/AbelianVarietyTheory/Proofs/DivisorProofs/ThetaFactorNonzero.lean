@@ -13,7 +13,6 @@ namespace GlobalTheory.StepFacNe
 
 open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.StepFacNe.chrW_continuous {F E : Type} [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E]
@@ -27,7 +26,6 @@ theorem _root_.GlobalTheory.StepFacNe.chrW_continuous {F E : Type} [Field F] [Nu
     (_root_.GlobalTheory.LFun.SplitChart.continuous_complMap (_root_.GlobalTheory.AdelicU.splitPrime_under τ))
   exact h1.comp h2
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.StepFacNe.chrW_ram {F E : Type} [Field F]
     [NumberField F] [Field E] [NumberField E] [Algebra F E]

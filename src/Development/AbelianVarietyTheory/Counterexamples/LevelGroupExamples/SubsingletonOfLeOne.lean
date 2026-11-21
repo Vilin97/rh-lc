@@ -17,7 +17,6 @@ noncomputable section
 
 namespace GlobalTheory.PointLawsEdge
 
-open Filter Topology Matrix in
 
 theorem real_pos_of_int_ge {ι : Type} [Fintype ι] (M : ι → ι → ℝ) (hs : ∀ i k, M i k = M k i) {c : ℝ} (hc : 0 < c)
     (hM : ∀ z : ι → ℤ, z ≠ 0 → c ≤ ∑ i, ∑ k, (z i : ℝ) * z k * M i k) (x : ι → ℝ) (hx : x ≠ 0) :
@@ -129,7 +128,6 @@ theorem exists_radius {R C : Type} [CommRing R] [IsLocalRing R] [IsNoetherianRin
     rw [smul_eq_mul, map_mul, norm_mul]
     exact (mul_le_of_le_one_left (norm_nonneg _) (hle r)).trans ha
 
-open IsLocalRing Matrix GlobalTheory.ToricRank in
 
 theorem right_inverse_local {R : Type} [CommRing R] [IsLocalRing R] (e : ℕ) {m n : Type}
     [Fintype m] [DecidableEq m] [Fintype n] (C : Matrix m n R)
@@ -178,7 +176,6 @@ open Formalism.MainNotions.DIV.Cons GlobalTheory.ToricRank GlobalTheory.PeriodLa
 open ReciprocityTheory.ChartRestriction.G.Chart (prodPts)
 open scoped CategoryTheory.Obj
 
-open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem matrix_level_local {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R]
     {D : DegData R (maximalIdeal R)} {P : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]
@@ -224,7 +221,6 @@ theorem matrix_level_local {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R]
   refine h₂.trans ?_
   simp [Matrix.mul_apply, vecMul, dotProduct, Diag.dualBasis_apply]
 
-open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem finrank_le_local {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoetherianRing R]
     {D : DegData R (maximalIdeal R)} {P : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]

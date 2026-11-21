@@ -84,7 +84,6 @@ end Graded
 
 end DiagonalOrderOne
 
-open DiagonalOrderOne in
 
 end
 

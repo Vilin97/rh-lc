@@ -29,9 +29,6 @@ def ptFun (X : Scheme.{0}) (q : X ⟶ Spec (CommRingCat.of O)) {k : Type} [CommR
     · rfl
     · simp
 
-set_option autoImplicit false in
-open CategoryTheory AlgebraicGeometry in
-variable {O : Type} [CommRing O] in
 
 theorem _root_.GlobalTheory.LogCris.evalAt_res {B : Type} [CommRing B] {X : Scheme.{0}}
     (y : Spec (CommRingCat.of B) ⟶ X) {U V : X.Opens}
@@ -52,9 +49,6 @@ private theorem gammaSpecIso_hom_appLE_spec_map {A C : CommRingCat.{0}} (χ : A 
     rfl
   rw [h1, ← CommRingCat.comp_apply, Scheme.ΓSpecIso_naturality, CommRingCat.comp_apply]
 
-set_option autoImplicit false in
-open CategoryTheory AlgebraicGeometry in
-variable {O : Type} [CommRing O] in
 
 theorem _root_.GlobalTheory.LogCris.evalAt_map {B B' : CommRingCat.{0}} {X : Scheme.{0}} (φ : B ⟶ B')
     (y : Spec B ⟶ X) {U : X.Opens}
@@ -65,9 +59,6 @@ theorem _root_.GlobalTheory.LogCris.evalAt_map {B B' : CommRingCat.{0}} {X : Sch
   rw [← Scheme.Hom.appLE_comp_appLE (Spec.map φ) y U ⊤ ⊤ h le_top, CommRingCat.comp_apply]
   exact gammaSpecIso_hom_appLE_spec_map φ _ _
 
-set_option autoImplicit false in
-open CategoryTheory AlgebraicGeometry in
-variable {O : Type} [CommRing O] in
 
 theorem _root_.GlobalTheory.LogCris.evalAt_base {B : Type} [CommRing B] {X : Scheme.{0}}
     (q : X ⟶ Spec (CommRingCat.of O)) {k : Type} [CommRing k]
@@ -87,9 +78,6 @@ theorem _root_.GlobalTheory.LogCris.evalAt_base {B : Type} [CommRing B] {X : Sch
     simp
   exact key _ hy _
 
-set_option autoImplicit false in
-open CategoryTheory AlgebraicGeometry in
-variable {O : Type} [CommRing O] in
 
 theorem _root_.GlobalTheory.LogCris.le_preimage_inf {B : Type} [CommRing B] {X : Scheme.{0}}
     (y : Spec (CommRingCat.of B) ⟶ X) {U V : X.Opens}
@@ -135,7 +123,6 @@ namespace SSAtlas
 variable {ϖ : O} {X : Scheme.{0}} {q : X ⟶ Spec (CommRingCat.of O)} {ι A : Type} [Fintype ι]
   (C : SSAtlas ϖ X q ι A) {k : Type} [CommRing k] (κ : O →+* k)
 
-open Classical in
 
 def logFun : LogFun k (κ ϖ) where
   ι := ι
@@ -195,7 +182,6 @@ theorem isStrictlySemistable (C : SSAtlas ϖ X q ι A) : GlobalTheory.Et.IsStric
   obtain ⟨V, hVa, hxV, -, m, r, h1, h2, -, ψ, het, hcomp, -, -⟩ := C.chart α x hα
   exact ⟨V, hVa, hxV, m, r, h1, h2, ψ, het, hcomp⟩
 
-open Classical in
 
 theorem isSSFun_logFun (C : SSAtlas ϖ X q ι A) : IsSSFun ϖ X q κ (C.logFun κ) := by
   refine ⟨C.isStrictlySemistable, fun B => Equiv.refl _, C.U, C.F, C.G, C.affine, C.cover, C.prod_F, C.F_eq, C.nzd,
@@ -219,8 +205,6 @@ section Model
 
 variable (ϖ : O)
 
-set_option autoImplicit false in
-variable {O : Type} [CommRing O] (ϖ : O) in
 
 theorem _root_.GlobalTheory.LogCris.model_mul_eq_zero {m r : ℕ} (hϖ : ϖ ∈ nonZeroDivisors O)
     (g : _root_.GlobalTheory.Et.ssModel O ϖ m r)

@@ -124,7 +124,6 @@ variable {eps : ℝ} (Fm : FamP eps) (C1 : ℝ)
   (hI : ∀ x (hx : Fm.x1 < x) (i : Fm.Ix x), SIso (Fm.D x i).s (sOf (hF x hx i)))
   (hCT : ∀ x (hx : Fm.x1 < x) (i : Fm.Ix x), ConcTie (X x hx i) (Y x hx i))
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Fam5
 

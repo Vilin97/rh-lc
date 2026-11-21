@@ -123,7 +123,6 @@ theorem eventually_pow_le (C ε : ℝ) (hε : 0 < ε) (hD : 1 ≤ D) :
 
 end BlockComplexGramMetricChange
 
-open BlockComplexGramMetricChange in
 
 theorem BlockComplexGramMetricChange.proof (hMC : MetricChange.Statement)
     (hPair : BlockResolutionMetricPair.Statement) (hInd : BlockResolutionFormsIndependent.Statement)

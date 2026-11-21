@@ -460,7 +460,6 @@ theorem IsSymplecticBasis.exists_basis_of_toMatrix_mem {b : Basis (l ⊕ l) R M}
   simpa [IsSymplecticBasis, IsSymplecticBasisOfType] using
     (hb.isSymplecticFamily_iff_toMatrix_mem hB v).2 hv
 
-omit [DecidableEq l] in
 
 theorem IsSymplecticBasis.mem_iff_repr_inr {b : Basis (l ⊕ l) R M} (hb : IsSymplecticBasis B b)
     {P : Submodule R M} (hP : ∀ x ∈ P, ∀ y ∈ P, B x y = 0) (h : ∀ i, b (.inl i) ∈ P) (x : M) :
@@ -495,7 +494,6 @@ theorem IsSymplecticBasis.span_inr_eq {b : Basis (l ⊕ l) R M} (hb : IsSymplect
   simpa [(hb.mem_iff_repr_inl hQ h x).1 hx] using
     Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self i))
 
-omit [DecidableEq l] in
 
 theorem IsSymplecticBasis.exists_adapted [Finite (MaximalSpectrum R)] {b : Basis (l ⊕ l) R M}
     (hb : IsSymplecticBasis B b) (hB : B.IsAlt) {P Q : Submodule R M}
@@ -590,7 +588,6 @@ open TensorProduct
 variable {S R Λ l : Type*} [CommRing S] [CommRing R] [AddCommGroup Λ] [Module S Λ] [Fintype l]
   {B : LinearMap.BilinForm S Λ}
 
-omit [Fintype l] in
 
 theorem IsSymplecticBasis.exists_adapted_mod [Finite (MaximalSpectrum R)] {f : S →+* R}
     (hf : Surjective f) (hB : B.IsAlt) {b : Basis (l ⊕ l) S Λ} (hb : IsSymplecticBasis B b)

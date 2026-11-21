@@ -82,7 +82,6 @@ section Loc
 variable (P : LocPrime l) {Gw : Subgroup (Ω ≃ₐ[E] Ω)} {O : Type} [CommRing O] [Algebra ℤ_[l] O]
   [TopologicalSpace O] (Bw : LocBridge l E Ω Gw O)
 
-omit [NumberField E] in
 
 end Loc
 

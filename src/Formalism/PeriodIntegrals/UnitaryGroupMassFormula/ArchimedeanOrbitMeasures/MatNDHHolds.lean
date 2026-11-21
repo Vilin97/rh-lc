@@ -58,7 +58,6 @@ theorem no_kernel {W : Type} [NormedAddCommGroup W] [InnerProductSpace ℝ W] [F
   have h2 : (R + ‖-z‖) < n * ‖t‖ := by rwa [div_lt_iff₀ htpos] at hn
   linarith
 
-open Classical in
 
 def MatNDH : Prop := ∀ {D : D7} (X : HidaSetting D) (u' : D.what₂.Word) (ψ : AddChar (AF X.B.I.F) ℂ) hT μinf νinf fibInf,
     PushHyp X u' ψ hT μinf νinf fibInf →

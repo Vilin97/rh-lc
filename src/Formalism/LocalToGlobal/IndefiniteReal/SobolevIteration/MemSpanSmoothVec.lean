@@ -44,7 +44,6 @@ lemma prod_drop_mem {N : ℕ} (Z : Fin N → Matrix (Fin n) (Fin n) ℂ) (hZ : �
   obtain ⟨i, rfl⟩ := ha'
   exact hexp _ (hZ i) _
 
-include hU1 hUm hρ hexp in
 
 lemma smoothVec_rep_exp {X : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ Lie) (s : ℝ) {w : E} (hw : SmoothVec Lie ρ w) :
     SmoothVec Lie ρ (ρ (NormedSpace.exp (s • X)) w) := by
@@ -71,7 +70,6 @@ lemma smoothVec_rep_exp {X : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ Lie) (s : �
   rw [hρ _ hP _ (hexp _ hX _)]
   rfl
 
-variable (ρ) in
 
 def orb {N : ℕ} (Z : Fin N → Matrix (Fin n) (Fin n) ℂ) (u : E) (j : ℕ) (r : Fin N → ℝ) : E :=
   ρ (((List.ofFn fun i => NormedSpace.exp (r i • Z i)).drop j).prod) u
@@ -196,9 +194,7 @@ theorem word_pds {k : ℕ} (l : List (Matrix (Fin n) (Fin n) ℂ)) (hl : l.lengt
         rfl
       (rw [hfun, hZj]) <;> rfl
 
-include hU1 hUm hρ hexp in
 
-include hU1 hUm hρ hexp in
 
 lemma word_eval (l : List (Matrix (Fin n) (Fin n) ℂ)) (hl : ∀ Y ∈ l, Y ∈ Lie)
     {X : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ Lie) :
@@ -231,9 +227,7 @@ lemma word_eval (l : List (Matrix (Fin n) (Fin n) ℂ)) (hl : ∀ Y ∈ l, Y ∈
   rw [← this, orb_last]
   simp [Z]
 
-include hU1 hUm hρ hexp in
 
-include hU1 hUm hρ hexp in
 
 end Formalism.IndefR.Tow.OrbStPf
 

@@ -28,7 +28,6 @@ def denIdeal {ι : Type*} (x : ι → K) : Ideal A where
     obtain ⟨u, hu⟩ := ha i
     exact ⟨c * u, by rw [map_mul, hu, smul_eq_mul, map_mul, mul_assoc]⟩
 
-omit [IsDomain A] [IsFractionRing A K] in
 
 lemma exists_assoc [IsNoetherianRing A] {ι : Type*} (x : ι → K)
     (hx : ∃ i, x i ∉ (algebraMap A K).range) :
@@ -145,7 +144,6 @@ theorem mem_range_of_forall_height_one [IsNoetherianRing A] [IsIntegrallyClosed 
   obtain ⟨s, hsP, hsx⟩ := h P hP h1
   exact hs s hsP hsx
 
-omit [IsFractionRing A K] in
 
 theorem finite_height_one [IsNoetherianRing A] {a : A} (ha : a ≠ 0) :
     {P : Ideal A | P.IsPrime ∧ P.height = 1 ∧ a ∈ P}.Finite := by

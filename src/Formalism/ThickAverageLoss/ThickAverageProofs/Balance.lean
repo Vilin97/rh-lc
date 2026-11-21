@@ -102,6 +102,5 @@ end
 
 end Bal
 
-open Bal in
 
 end Formalism.D5

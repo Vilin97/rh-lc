@@ -60,6 +60,5 @@ theorem map_eq_top_of_coprime {R S : Type} [CommRing R] [IsDedekindDomain R] [Co
     rw [eq_top_iff, ← h _ hmax hPeq]
     exact Ideal.map_comap_le
 
-attribute [local instance] FractionRing.liftAlgebra FractionRing.isScalarTower_liftAlgebra in
 
 end GlobalTheory.Proof.different_power_unramified_iff

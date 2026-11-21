@@ -60,7 +60,6 @@ variable [IsAlgClosed F] [DecidableEq F] {E E' E'' : WeierstrassCurve F} [E.IsEl
 
 namespace Isogeny
 
-omit [IsAlgClosed F] [DecidableEq F] in
 
 theorem degree_pos (φ : Isogeny E E') : 0 < φ.degree := by
   have hfin := finiteDimensional_adjoin_of_transcendental E φ.transcendental_alt
@@ -79,7 +78,6 @@ theorem finiteDimensional (φ : Isogeny E E') :
     FiniteDimensional φ.comap.fieldRange E.toAffine.FunctionField :=
   Module.finite_of_finrank_pos φ.degree_pos
 
-omit [IsAlgClosed F] [DecidableEq F] in
 
 theorem degree_eq_one_of_comap_eq (ψ : Isogeny E E) {z : E.toAffine.FunctionField}
     (hz : Transcendental F z) (h : ψ.comap z = z) : ψ.degree = 1 := by

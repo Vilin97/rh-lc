@@ -139,7 +139,6 @@ theorem norm_emb_le_one {L : Type} [Field L] [NumberField L] [IsCMField L] {n : 
 
 end GlobalTheory.InvFormBdd
 
-open GlobalTheory.InvFormBdd in
 
 theorem GlobalTheory.InvFormBdd.exists_isInvForm : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (a : NG.AlgWt L n),
     ∃ β, IsInvForm a β := by

@@ -46,7 +46,6 @@ variable (V : HSp D) (ν : Measure (GA D V)) [ν.IsHaarMeasure] [ν.IsMulRightIn
 
 variable {V ν} {W : Submodule ℂ (DividedPowerChartLift V ν)}
 
-variable (W) in
 
 end Cusp
 

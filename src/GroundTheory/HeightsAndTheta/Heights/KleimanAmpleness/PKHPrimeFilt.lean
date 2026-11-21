@@ -61,7 +61,6 @@ theorem mem_colon {A : Submodule (MRingOver S ι) M} {g : M} {p : MRingOver S ι
     p ∈ colon A g ↔ p • g ∈ A := by
   simp [colon]
 
-variable (𝓜) in
 
 def IsGradedSub (A : Submodule (MRingOver S ι) M) : Prop :=
   ∀ m ∈ A, ∀ c, (DirectSum.decompose 𝓜 m c : M) ∈ A
@@ -183,7 +182,6 @@ theorem exists_prime_colon [IsNoetherianRing S] (hgr : IsMGraded S ι 𝓜)
 
 variable (ι 𝓜)
 
-open Classical in
 
 def next [IsNoetherianRing S] (A : Submodule (MRingOver S ι) M) : M × (K → ℤ) :=
   if h : IsMGraded S ι 𝓜 ∧ IsGradedSub 𝓜 A ∧ A ≠ ⊤ then
@@ -267,7 +265,6 @@ theorem range_fin {M : Type} {r : ℕ} (f : ℕ → M) :
 
 end KHPrimeFilt
 
-open KHPrimeFilt in
 
 theorem KHPrimeFilt.full : PrimeFiltStatement := by
   intro S _ K _ ι _ M _ _ _ _ 𝓜 hS hfin hgr

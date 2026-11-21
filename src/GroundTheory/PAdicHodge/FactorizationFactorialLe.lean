@@ -147,7 +147,6 @@ theorem dpow_mul_dpow (m n : ℕ) (x : AInf K p) :
     _ = ((m + n).factorial : 𝔸) * (((m + n).choose m : 𝔸) * dpow (m + n) x) := by
         rw [← factorial_mul_dpow (m + n) x]; ring
 
-variable (K p) in
 
 def ACrisZero : Subalgebra (AInf K p) 𝔸 :=
   Algebra.adjoin (AInf K p) {y | ∃ n : ℕ, ∃ x ∈ RingHom.ker θ, dpow n x = y}
@@ -170,7 +169,6 @@ theorem acrisZero_eq_adjoin {ξ : AInf K p} (hξ : RingHom.ker θ = Ideal.span {
     rintro _ ⟨n, rfl⟩
     exact dpow_mem (by rw [hξ]; exact Ideal.mem_span_singleton_self ξ) n
 
-variable (K p) in
 
 abbrev ACris : Type _ :=
   AdicCompletion (Ideal.span {(p : ACrisZero K p)}) (ACrisZero K p)
@@ -182,7 +180,6 @@ section Theta
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
-variable (K p) in
 
 def thetaAway : 𝔸 →+* K :=
   ((IsPerfectoidField.awayEquiv (K := K) p : Localization.Away (p : 𝒪) ≃ₐ[𝒪] K) :
@@ -200,7 +197,6 @@ theorem thetaAway_dpow {x : AInf K p} (hx : x ∈ RingHom.ker θ) {n : ℕ} (hn 
   simp only [ZeroMemClass.coe_zero, zero_pow hn, mul_eq_zero, Nat.cast_eq_zero] at h
   exact h.resolve_left (Nat.factorial_ne_zero n)
 
-variable (K p) in
 
 def thetaIntegral : Subalgebra (AInf K p) 𝔸 :=
   { (normInteger K).comap (thetaAway K p) with
@@ -217,7 +213,6 @@ theorem acrisZero_le_thetaIntegral : ACrisZero K p ≤ thetaIntegral K p := by
   · rw [dpow_zero, map_one]; exact one_mem _
   · rw [thetaAway_dpow hx n.succ_ne_zero]; exact zero_mem _
 
-variable (K p) in
 
 def thetaZero : ACrisZero K p →+* 𝒪 :=
   ((thetaAway K p).comp (ACrisZero K p).val.toRingHom).codRestrict (normInteger K)
@@ -239,7 +234,6 @@ theorem span_p_le_comap_thetaZero :
   rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, Ideal.mem_comap, map_natCast]
   exact Ideal.mem_span_singleton_self _
 
-variable (K p) in
 
 def theta : ACris K p →+* 𝒪 :=
   AdicCompletion.extendRingHom _ _ (thetaZero K p) span_p_le_comap_thetaZero
@@ -328,7 +322,6 @@ theorem dpow_frobenius_mem {x : AInf K p} (hx : x ∈ RingHom.ker θ) (n : ℕ) 
     rw [hw]
     exact Subalgebra.algebraMap_mem _ w
 
-variable (K p) in
 
 def phiAway : 𝔸 →+* 𝔸 :=
   Localization.awayLift ((algebraMap (AInf K p) 𝔸).comp (φ : AInf K p →+* AInf K p)) (p : AInf K p)
@@ -357,7 +350,6 @@ theorem phiAway_mem {y : 𝔸} (hy : y ∈ ACrisZero K p) : phiAway K p y ∈ AC
   | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | mul y z _ _ hy hz => rw [map_mul]; exact mul_mem hy hz
 
-variable (K p) in
 
 def phiZero : ACrisZero K p →+* ACrisZero K p :=
   ((phiAway K p).comp (ACrisZero K p).val.toRingHom).codRestrict (ACrisZero K p)
@@ -371,7 +363,6 @@ theorem phiZero_algebraMap (x : AInf K p) :
       algebraMap (AInf K p) (ACrisZero K p) (φ x) :=
   Subtype.ext (phiAway_algebraMap x)
 
-variable (K p) in
 
 instance isAdicComplete : IsAdicComplete (Ideal.span {(p : ACris K p)}) (ACris K p) := by
   have h := AdicCompletion.isAdicComplete_self (Ideal.span {(p : ACrisZero K p)})
@@ -388,7 +379,6 @@ theorem span_p_le_comap_phiZero :
   rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, Ideal.mem_comap, map_natCast]
   exact Ideal.mem_span_singleton_self _
 
-variable (K p) in
 
 def phi : ACris K p →+* ACris K p :=
   AdicCompletion.extendRingHom _ _ ((algebraMap (ACrisZero K p) (ACris K p)).comp (phiZero K p))

@@ -17,7 +17,6 @@ section Af
 variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] [FiniteDimensional F E]
   {σ : E →ₐ[F] E} {M : ℕ} {J : Matrix (Fin M) (Fin M) E} {r : ℕ}
 
-set_option maxHeartbeats 800000 in
 
 theorem continuous_uT (P : Frame E M r) (a b : Fin r) :
     Continuous fun g : HA (Af F) σ J => uT (Af F) σ J P g a b := by

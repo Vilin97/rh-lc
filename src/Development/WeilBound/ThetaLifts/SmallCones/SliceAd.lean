@@ -21,7 +21,6 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.IndefiniteRowSideFullH
 
 variable {F : Type} [Field F] [NumberField F] {κ κ₁ : Type} [Fintype κ] [Fintype κ₁]
 
-variable (F) in
 
 def qI : AF F →+* mixedSpace F := (InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp p1
 
@@ -68,7 +67,6 @@ theorem psi_eq {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (a : AF F) : ψ a =
   push_cast
   ring
 
-variable (F κ) in
 
 def aw0 : ((κ → mixedSpace F) × (κ → mixedSpace F)) →ₗ[ℝ] (κ → mixedSpace F) × ((κ → mixedSpace F) →L[ℝ] ℝ) :=
   LinearMap.prodMap LinearMap.id
@@ -165,7 +163,6 @@ theorem fw_lc {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) {g : (κ → Af F) → 
   · rw [hb x hx]
   · rw [show g (x + b₀.1) = 0 from image_eq_zero_of_notMem_tsupport (f := fun x => g (x + b₀.1)) hx, mul_zero, mul_zero]
 
-open GroundTheory.Global in
 
 theorem annih {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) {U : Set (Af F)} (hU : U ∈ 𝓝 0) :
     ∃ C : Set (Af F), IsCompact C ∧ ∀ b, (∀ a ∈ U, finChar ψ (a * b) = 1) → b ∈ C := by

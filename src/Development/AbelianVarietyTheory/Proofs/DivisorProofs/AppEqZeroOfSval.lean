@@ -148,7 +148,6 @@ open ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction
 
 variable {R : Type} [CommRing R] [IsDomain R]
 
-open SectionScalarValuation in
 
 theorem exists_const0 {I : Ideal R} (D : DegData R I) (k : ℕ) (mu : D.toPre.X) (hmu : mu ≠ 0) :
     ∃ (Ix : Type) (_ : Fintype Ix) (φV : Ix → (Spec (CommRingCat.of R) ⟶ D.toPre.P.A.left)) (εV : Ix → ℤ)
@@ -203,7 +202,6 @@ namespace GlobalTheory.FamWtZero
 
 open ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.H1 GlobalTheory.FamIntAt
 
-open SectionScalarValuation in
 
 theorem exists_family : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], AdmBase R (maximalIdeal R) →
     ∀ (D : DegData R (maximalIdeal R)) (k : ℕ), 1 ≤ k → ∀ σ₀ : D.toPre.SecB k 0,

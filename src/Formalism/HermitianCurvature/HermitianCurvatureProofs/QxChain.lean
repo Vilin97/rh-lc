@@ -119,7 +119,6 @@ variable {k r : ℕ}
 section Lev
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] {i : Fin (r + 1)} {D : Set (Mx k r)}
 
-open Classical in
 
 def cut0 (i : Fin (r + 1)) (D : Set (Mx k r)) : (Mx k r → E) →ₗ[ℂ] (Mx k r → E) where
   toFun := fun f g => if g ∈ Glev k r i ∩ D then f g else 0
@@ -1427,21 +1426,18 @@ theorem int_C (hW : WeylLevelElementFacts) (hEP : EabPres) (hQ : QMinorLeftH) (h
     IntQ (rho E hW l hD.1) (VLeft z l.castSucc hD.1) (qminor (E0 E l.castSucc hD.1) (v0 k l) (v0 k l) u)
       (mB E l.succ (ho1 l hD.1) id id u) := int_minor hW hEP hQ hD id id u
 
-variable (E l) in
 
 def bE1 (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   mB E l.succ (ho1 l hD) id id (u - 1) * bTee E l hD u -
     ∑ w : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ), ((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) •
       (scaledRowVectorOperator E l hD z w * mB E l.succ (ho1 l hD) (skip1 w) (skip1 x) (u - 2) * (xv k r z' l.succ x • 1))
 
-variable (E l) in
 
 def borderedMinorLastColumn (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   bTss E l hD (u - (mdim k r l.succ : ℂ)) * mB E l.succ (ho1 l hD) id id u -
     ∑ w : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ), ((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) •
       (scaledColumnVectorOperator E l hD z x * mB E l.succ (ho1 l hD) (skip1 w) (skip1 x) u * (xbv k r z' l.succ w • 1))
 
-variable (E l) in
 
 def doubleRemovedMinorTerm (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   ∑ w : Fin (mdim k r l.succ), ∑ w' : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ),
@@ -1450,7 +1446,6 @@ def doubleRemovedMinorTerm (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) 
         mB E l.succ (ho1 l hD) (skip2 (min w w') (max w w')) (skip2 (min x x') (max x x')) (u - 2) *
         ((xv k r z' l.succ x' * xbv k r z' l.succ w') • 1)) else 0
 
-variable (E l) in
 
 def capelliDetFirstFactorOrder (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   bTee E l hD u * mB E l.succ (ho1 l hD) id id (u - 1) * bTss E l hD (u - (mdim k r l.succ : ℂ) - 1)
@@ -1462,7 +1457,6 @@ def capelliDetFirstFactorOrder (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → �
         bTss E l hD (u - (mdim k r l.succ : ℂ) - 1) * (xv k r z' l.succ x • 1)))
   - doubleRemovedMinorTerm E l hD z z' u
 
-variable (E l) in
 
 def capelliDetSecondFactorOrder (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   bTss E l hD (u - (mdim k r l.succ : ℂ) - 1) * mB E l.succ (ho1 l hD) id id (u - 1) * bTee E l hD u

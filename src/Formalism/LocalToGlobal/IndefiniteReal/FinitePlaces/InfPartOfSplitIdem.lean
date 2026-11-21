@@ -186,7 +186,6 @@ theorem cT_gram (V : HSp D) (g : GA D V) :
       = ((mt V g).map (cA D))ᵀ * V.gram.map (incA D) * (mt V g * mt V g⁻¹) := by rw [mt_mul_inv, Matrix.mul_one]
     _ = V.gram.map (incA D) * mt V g⁻¹ := by rw [← Matrix.mul_assoc, hu]
 
-set_option maxHeartbeats 2000000 in
 
 theorem adjO_actO (S T : HSp D) (g : GA D S) (h : GA D T) (x : WO S T) :
     adjO S T (actO S T g h x) = mt S g * adjO S T x * mt T h⁻¹ := by
@@ -239,9 +238,7 @@ theorem redM_of_int (PP : Formalism.L2.DIV.Pl D.host.E) {a b : ℕ} {N : Matrix 
     redM PP N i j = Formalism.L2.DIV.resS D.host.F PP ⟨N i j, hN i j⟩ := by
   unfold redM; rw [dite_eq_left (hN i j)]
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 section Lat
 
@@ -544,7 +541,6 @@ theorem genE_mem {α : Af D.host.F} (hα : α ∈ intAf D.host.F) {a : D.host.E}
     rw [Subring.smul_def, genE_smul_left]
     exact liftE_smul_mem r.2 _ hx
 
-set_option maxHeartbeats 1000000 in
 
 theorem St_mulVec_mem {n : ℕ} {β : GL (Fin n) (EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)}
     (hf : Formalism.L2.DIV.IsFrame β Λ) {x : GL (Fin n) (EAf D)} (hx : x ∈ Formalism.L2.DIV.St β) {v : Fin n → EAf D}
@@ -613,9 +609,7 @@ theorem isHalf_actO (e : AE D) (g : GA D S) (h : GA D T) {t : WO S T} (ht : IsHa
   calc e * (mt T h i k * t k l * mt S g⁻¹ l j) = mt T h i k * (e * t k l) * mt S g⁻¹ l j := by ring
     _ = _ := by rw [ht k l]
 
-open Classical in
 
-set_option maxHeartbeats 2000000 in
 
 theorem col_mem_hatL {n : ℕ} {β : GL (Fin n) (EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)}
     (hf : Formalism.L2.DIV.IsFrame β Λ) (j : Fin n) :
@@ -630,7 +624,6 @@ theorem col_mem_hatL {n : ℕ} {β : GL (Fin n) (EAf D)} {Λ : Submodule (𝓞 D
   · subst hij; rw [Pi.single_eq_same]; exact one_mem _
   · rw [Pi.single_eq_of_ne hij]; exact zero_mem _
 
-set_option maxHeartbeats 2000000 in
 
 theorem hform_int {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} (hΛ : IsSelfDualC V Λ)
     {s : Fin V.rank → D.host.E} (hs : s ∈ Λ) {v : Fin V.rank → EAf D} (hv : v ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ) :
@@ -709,7 +702,6 @@ theorem liftE_toEAf (x : AE D) (hx : infPart D x = 0) : liftE (toEAf D x) = x :=
     (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E (finPart D x))) = x
   rw [comm_comm', ← eq_lift_of_infPart x hx]
 
-set_option maxHeartbeats 4000000 in
 
 theorem hO_add_left (x x' y : WO S T) : hO S T (x + x') y = hO S T x y + hO S T x' y := by
   unfold hO; simp only [Matrix.add_apply, mul_add, ← Finset.sum_add_distrib]
@@ -808,7 +800,6 @@ theorem isSplitIdem_cA {e : AE D} (he : IsSplitIdem D e) : IsSplitIdem D (cA D e
   obtain ⟨h1, h2, v, ε, hv, hε⟩ := he
   refine ⟨by rw [← map_mul, h1], by rw [cA_cA, mul_comm, h2], v, ε, hv, by rw [cA_cA, add_comm, hε]⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem heisO_fix_of_latVac (ψ : AddChar (AF D.host.F) ℂ) {f₀ : WO S T → ℂ}
     (hL : IsLatVac (heisO ψ S T) (latAll S T ΛS ΛT) f₀) {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D}
@@ -884,7 +875,6 @@ theorem map_smul_vecMulVec {m n : ℕ} (c : EAf D) (x : Fin m → EAf D) (y : Fi
     (c • Matrix.vecMulVec x y).map (sR D) = sR D c • Matrix.vecMulVec (fun i => sR D (x i)) (fun j => sR D (y j)) := by
   ext i j; simp only [Matrix.map_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, smul_eq_mul, map_mul]
 
-set_option maxHeartbeats 2000000 in
 
 theorem frMapAdj_genE {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EAf D)} (c : EAf D)
     (τ : Fin T.rank → EAf D) (σ : Fin S.rank → EAf D) :
@@ -914,11 +904,8 @@ theorem frMapAdj_neg {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EAf
     frMapAdj S T βS βT (-x) = -frMapAdj S T βS βT x := by
   simp [frMapAdj, Matrix.map_neg, Matrix.mul_neg, Matrix.neg_mul, Matrix.transpose_neg]
 
-set_option maxHeartbeats 4000000 in
 
-open Classical in
 
-set_option maxHeartbeats 2000000 in
 
 theorem infPart_cA_idemSum {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (he : IsIdemSum e P) :
     infPart D (cA D e) = 0 := by
@@ -927,7 +914,6 @@ theorem infPart_cA_idemSum {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)
     rw [map_sum, map_sum]
   exact Finset.sum_eq_zero fun PP hPP => infPart_of_splitIdem (isSplitIdem_cA (hes PP hPP).1)
 
-set_option maxHeartbeats 4000000 in
 
 end Lat
 

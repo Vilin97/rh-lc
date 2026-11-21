@@ -68,4 +68,3 @@ private theorem transfer {V W : Type} [AddCommGroup V] [Module B V] [Module ℚ_
 
 end
 
-open TensorProduct GlobalTheory.Pst Polynomial Matrix in

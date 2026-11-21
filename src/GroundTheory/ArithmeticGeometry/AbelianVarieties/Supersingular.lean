@@ -20,13 +20,11 @@ end Defs
 variable {F : Type u} [Field F] [IsAlgClosed F] [DecidableEq F] (E : WeierstrassCurve F)
   [E.IsElliptic] (p : ℕ) [hp : Fact p.Prime] [CharP F p]
 
-omit [IsAlgClosed F] [E.IsElliptic] hp [CharP F p] in
 
 theorem mem_torsionBy_natCast_iff (n : ℕ) (P : E.toAffine.Point) :
     P ∈ AddSubgroup.torsionBy E.toAffine.Point (n : ℤ) ↔ n • P = 0 :=
   AddSubgroup.torsionBy.nsmul_iff
 
-omit hp [CharP F p] in
 
 theorem finite_torsionBy_natCast {n : ℕ} (hn : n ≠ 0) :
     Finite (AddSubgroup.torsionBy E.toAffine.Point (n : ℤ)) := by
@@ -39,30 +37,17 @@ theorem finite_torsionBy_natCast {n : ℕ} (hn : n ≠ 0) :
     apply Subtype.ext
     exact congrArg (fun x : (mulIsogeny E n hn').pointHom.ker => (x : E.toAffine.Point)) h
 
-omit [IsAlgClosed F] in
 
-omit [IsAlgClosed F] [E.IsElliptic] hp [CharP F p] in
 
-omit [CharP F p] in
 
-omit [IsAlgClosed F] [E.IsElliptic] hp [CharP F p] in
 
-omit [CharP F p] in
 
-omit [IsAlgClosed F] [E.IsElliptic] hp [CharP F p] in
 
-omit [CharP F p] in
 
-omit [CharP F p] in
 
-omit hp [CharP F p] in
 
-omit [CharP F p] in
 
-omit [CharP F p] in
 
-omit [CharP F p] in
 
-omit [CharP F p] in
 
 end GroundTheory.Arith.Abelian

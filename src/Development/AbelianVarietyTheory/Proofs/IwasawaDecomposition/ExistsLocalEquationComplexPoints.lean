@@ -106,7 +106,6 @@ section Expo
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} (Dw : Datum H)
 
-open Classical in
 
 end Expo
 
@@ -129,6 +128,5 @@ theorem spMap_comp₂ {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f :
 
 end Frames
 
-open GlobalTheory.Points GlobalTheory.ShFam.EigLoc in
 
 end GlobalTheory.ShFam.HolFrames

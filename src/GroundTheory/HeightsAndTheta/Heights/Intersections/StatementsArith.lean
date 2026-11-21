@@ -21,9 +21,7 @@ section Objects
 
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
-open Classical in
 
-open Classical in
 
 def IsClosedPt (Q : Ideal (MRing ι)) : Prop :=
   IsMultiProjPrime Q ∧ ringKrullDim (MRing ι ⧸ Q) = ((Fintype.card K : ℕ) : WithBot ℕ∞)

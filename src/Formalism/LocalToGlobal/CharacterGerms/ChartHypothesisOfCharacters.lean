@@ -29,7 +29,6 @@ theorem integralSeries_uncurry_one {χ : PS C 1 dd} (h : IntS V χ) : IntS V (un
 
 end ChG
 
-open ChG VP in
 
 section Chart
 

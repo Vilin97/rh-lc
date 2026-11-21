@@ -55,7 +55,6 @@ lemma piece (hι : Function.Injective ι) (hg : Continuous g) (hf : ∀ v, f v =
       simp only [Set.indicator_of_notMem this]
     simpa using e
 
-open Classical in
 
 noncomputable def restr (B : Set X) (fam : X → Measure V) : X → Measure V :=
   fun b => if b ∈ B then fam b else 0

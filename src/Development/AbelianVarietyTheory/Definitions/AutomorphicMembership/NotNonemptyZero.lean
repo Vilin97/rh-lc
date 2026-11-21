@@ -98,7 +98,6 @@ section Family
 variable (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) {D : D7}
   (T : GlobalTheory.RowTie.WDTie D.nd D.naut)
 
-include hF in
 
 end Family
 
@@ -106,7 +105,6 @@ section Rec
 
 open GlobalTheory.RowTie.Model
 
-set_option maxHeartbeats 2000000 in
 
 end Rec
 

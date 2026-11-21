@@ -15,7 +15,6 @@ noncomputable section
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {n : ι → ℕ}
 
-omit [Fintype ι] in
 
 theorem eval₂_scale_of_isWeightedHomogeneous {S : Type*} [CommRing S] [Fintype ι] (w : ι → S)
     (x : Coord n → S) {f : MvPolynomial (Coord n) ℤ} {δ : ι → ℕ}
@@ -54,7 +53,6 @@ namespace ArithVariety
 
 variable (P : ArithVariety n)
 
-omit [Fintype ι] in
 
 theorem exists_chart :
     ∃ c : (k : ι) → Fin (n k + 1), ∀ k, (X ⟨k, c k⟩ : MvPolynomial (Coord n) ℤ) ∉ P.ideal :=
@@ -94,7 +92,6 @@ abbrev ChartAlg : Subalgebra ℚ P.FunField := (P.chartMap c).range
 instance : Algebra.FiniteType ℚ (P.ChartAlg c) :=
   Algebra.FiniteType.of_surjective (P.chartMap c).rangeRestrict (AlgHom.rangeRestrict_surjective _)
 
-omit [Fintype ι] in
 
 theorem chartMap_map (f : MvPolynomial (Coord n) ℤ) :
     P.chartMap c (map (Int.castRingHom ℚ) f) = eval₂ (Int.castRingHom _) (P.chartCoord c) f := by
@@ -119,7 +116,6 @@ theorem chart_homogeneous (hc : ∀ k, (X ⟨k, c k⟩ : MvPolynomial (Coord n) 
 def chartPoint (ψ : P.ChartAlg c →ₐ[ℚ] AlgebraicClosure ℚ) : Cone n (AlgebraicClosure ℚ) :=
   fun k i ↦ ψ ((P.chartMap c).rangeRestrict (X ⟨k, i⟩))
 
-omit [Fintype ι] in
 
 theorem evalCone_chartPoint (ψ : P.ChartAlg c →ₐ[ℚ] AlgebraicClosure ℚ)
     (f : MvPolynomial (Coord n) ℤ) :

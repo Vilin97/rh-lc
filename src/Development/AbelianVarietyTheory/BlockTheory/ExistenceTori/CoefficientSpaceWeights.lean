@@ -58,7 +58,6 @@ abbrev CoefSp : Type := VV c.F (lamP Dw n ha d)
 def coefRep : GL (Fin n) E →* Module.End c.F (CoefSp Dw c n ha d) :=
   rhoVr (embPsi c) (lamP Dw n ha d)
 
-open Classical in
 
 def coefAct (γ : Matrix (Fin n) (Fin n) E) : CoefSp Dw c n ha d →ₗ[c.F] CoefSp Dw c n ha d :=
   if h : IsUnit γ then coefRep Dw c n ha d h.unit else 0
@@ -76,7 +75,6 @@ theorem natW_anti {N : ℕ} (lam : DomWeight N) : Antitone lam.natW := by
   unfold DomWeight.natW
   exact Int.toNat_le_toNat (by omega)
 
-open Classical in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.CoefficientSpaceWeights
 

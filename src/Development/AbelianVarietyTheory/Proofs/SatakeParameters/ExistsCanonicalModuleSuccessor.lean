@@ -51,6 +51,5 @@ namespace GlobalTheory.RowModCanon
 open MeasureTheory Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S Formalism.L2.Theta Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Lev
   Formalism.IndefR.Links Formalism.IndefR.RecTie
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.RowModCanon

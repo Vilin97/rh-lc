@@ -11,7 +11,6 @@ open scoped ENNReal
 
 namespace QPK
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem lintegral_fintype_prod {ι : Type*} [Fintype ι] {E : ι → Type*}
     {mE : ∀ i, MeasurableSpace (E i)} {μ : (i : ι) → Measure (E i)} [∀ i, SigmaFinite (μ i)]

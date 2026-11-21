@@ -37,7 +37,6 @@ def cZ {j N : ℕ} (Z : MJ j) (p : Fin N) (a : Fin j) : ℂ := if hp : p.val < j
 def cvZ (k r : ℕ) {j : ℕ} (Z : MJ j) (p : Fin (2 * r + k + 1)) (a : Fin j) : ℂ :=
   if hp : 2 * r + k < p.val + j then conj (Z a ⟨2 * r + k - p.val, by omega⟩) else 0
 
-open scoped Classical in
 
 def AZ (k r j m : ℕ) (hm : m ≤ r) (hmj : m ≤ j) (u : ℂ) (h : MJ j → E) : MJ j → E := fun Z =>
   ∑ c : Fin m → Fin (2 * r + k + 1),
@@ -46,7 +45,6 @@ def AZ (k r j m : ℕ) (hm : m ≤ r) (hmj : m ≤ j) (u : ℂ) (h : MJ j → E)
         qminG (EopZ (E := E) k r j) (C3.xR k r m hm) c u h Z
     else 0
 
-open scoped Classical in
 
 def AvZ (k r j m : ℕ) (hm : m ≤ r) (hmj : m ≤ j) (ell : ℂ) (h : MJ j → E) : MJ j → E := fun Z =>
   ∑ B : Fin m → Fin (2 * r + k + 1),

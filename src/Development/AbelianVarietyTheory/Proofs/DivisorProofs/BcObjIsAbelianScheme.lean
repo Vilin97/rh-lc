@@ -47,7 +47,6 @@ variable (p : ℕ) {O : Type} [CommRing O]
 
 variable {p} {A : Over (Sp O)} [GrpObj A]
 
-variable (p A) in
 
 end Levels
 

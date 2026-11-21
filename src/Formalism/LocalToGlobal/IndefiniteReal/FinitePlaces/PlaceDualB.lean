@@ -348,7 +348,6 @@ lemma uniform_nat {ι : Type*} [Fintype ι] (P : ι → ℕ → Prop) (hP : ∀ 
   rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ i)]
   exact hP i _ _ (hPk i)
 
-set_option maxHeartbeats 800000 in
 
 lemma lower (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) :
     ∃ c : ℕ, 0 < c ∧ ∀ Z : WO S T, (∀ i j, IntF (Z i j)) → c • Z ∈ latAll S T ΛS ΛT := by
@@ -462,7 +461,6 @@ lemma intF_gen {α : Af D.host.F} (hα : α ∈ intAf D.host.F) (o : 𝓞 D.host
     IntF (pairA D.host.F 0 α ⊗ₜ[D.host.F] ((o : 𝓞 D.host.E) : D.host.E)) :=
   ⟨by rw [tmul_fI]; rfl, AddSubgroup.subset_closure ⟨α, hα, o, rfl⟩⟩
 
-set_option maxHeartbeats 800000 in
 
 lemma upper (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) :
     ∃ c : ℕ, 0 < c ∧ ∀ t ∈ latAll S T ΛS ΛT, ∀ i j, IntF ((c • t) i j) := by

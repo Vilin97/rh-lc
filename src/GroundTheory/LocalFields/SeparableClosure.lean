@@ -149,7 +149,6 @@ theorem vle_iff_spectralNorm_le [ValuativeRel L] [ValuativeExtension K L] (x y :
     change ¬ ‖y / x‖ < 1 ↔ _
     rw [norm_div, div_lt_one (norm_pos_iff.mpr hx), not_lt]
 
-variable (K) in
 
 theorem valuativeRel_eq_of_isAlgebraic {v₁ v₂ : ValuativeRel L}
     (e₁ : @ValuativeExtension K L _ _ _ v₁ _) (e₂ : @ValuativeExtension K L _ _ _ v₂ _) :
@@ -244,7 +243,6 @@ variable {K Ω : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonar
   [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω]
 
-omit [TopologicalSpace Ω] [IsValuativeTopology Ω] in
 
 theorem exists_algebraMap_valuation_lt (γ : (ValueGroupWithZero Ω)ˣ) :
     ∃ a : K, a ≠ 0 ∧ valuation Ω (algebraMap K Ω a) < γ := by
@@ -316,7 +314,6 @@ section Finite
 
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
 
-variable (K) in
 
 theorem valuativeRel_eq_finiteExtensionStructure {L : Type*} [Field L] [Algebra K L]
     [FiniteDimensional K L] [v : ValuativeRel L] [ValuativeExtension K L] :

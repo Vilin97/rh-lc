@@ -11,7 +11,6 @@ open AlgebraicGeometry CategoryTheory Limits
 
 namespace GlobalTheory.NormSheafDescent
 
-open MvPolynomial in
 
 theorem normIdeal_top (A K L B : Type) [CommRing A] [Field K] [Field L] [Algebra A K] [Algebra K L]
     [FiniteDimensional K L] [CommRing B] [Algebra B L] :

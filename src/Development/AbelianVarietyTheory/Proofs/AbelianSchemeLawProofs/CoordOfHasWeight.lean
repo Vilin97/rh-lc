@@ -326,7 +326,6 @@ end Datum
 
 end GtBaseChange
 
-open GtBaseChange in
 
 theorem gtBaseChange : GtBaseChangeSt := by
   rintro S S' f E G _ ⟨d⟩

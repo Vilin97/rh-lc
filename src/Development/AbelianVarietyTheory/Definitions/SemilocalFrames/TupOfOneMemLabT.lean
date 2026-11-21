@@ -27,7 +27,6 @@ def ES (S : Set (Tup2 D)) : MonoidAlgebra ℂ (G0g D.nd) :=
       (open Classical in if tupOf D a ∈ S then
         ∏ kv : (Σ k : Fin 2, D.nd.PlG k), (D.ntypes.eSer kv.1 (Formalism.CyclotomicNorms.monicOf (a kv))).coeff (g kv) else 0)
 
-open Classical in
 
 def labT : Finset (Tup2 D) :=
   haveI : ∀ k, NeZero (D.host.g k) := fun k => ⟨(D.host.g_prime k).ne_zero⟩
@@ -104,7 +103,6 @@ theorem zTup_comm (t : Tup2 D) (a : MonoidAlgebra ℂ (G0g D.nd)) : zTup D t * a
     simpa only [MonoidAlgebra.coeff_single_mul_apply, MonoidAlgebra.coeff_mul_single_apply, one_mul, mul_one,
       Pi.mul_apply, Pi.inv_apply] using this
 
-open Classical in
 
 theorem ES_coeff (S : Set (Tup2 D)) (g : G0g D.nd) :
     (ES D S).coeff g = ∑ a : (∀ kv : (Σ k : Fin 2, D.nd.PlG k), (Fin D.R.r → ZMod (D.host.g kv.1))),
@@ -114,7 +112,6 @@ theorem ES_coeff (S : Set (Tup2 D)) (g : G0g D.nd) :
 
 theorem ES_good : ES D {t | D.ntypes.goodTuple t} = D.ntypes.e0 := rfl
 
-open Classical in
 
 theorem ES_eq_sum_coef (S : Set (Tup2 D)) :
     ES D S = ∑ a : (∀ kv : (Σ k : Fin 2, D.nd.PlG k), (Fin D.R.r → ZMod (D.host.g kv.1))),
@@ -124,7 +121,6 @@ theorem ES_eq_sum_coef (S : Set (Tup2 D)) :
   refine Finset.sum_congr rfl fun a _ => ?_
   split_ifs <;> rfl
 
-open Classical in
 
 theorem ES_eq_sum (S : Set (Tup2 D)) : ES D S = ∑ t ∈ (labT D).filter (· ∈ S), zTup D t := by
   rw [ES_eq_sum_coef, ← Finset.sum_image (s := Finset.univ) (g := tupOf D)
@@ -166,7 +162,6 @@ theorem sum_zTup : ∑ t ∈ labT D, zTup D t = 1 := by
   rw [← ES_coe, ← ES_univ]
   exact ES_congr fun _ ht => ⟨fun _ => trivial, fun _ => ht⟩
 
-open Classical in
 
 theorem ES_mul_zTup (S : Set (Tup2 D)) (t : Tup2 D) :
     ES D S * zTup D t = if t ∈ S then zTup D t else 0 := by

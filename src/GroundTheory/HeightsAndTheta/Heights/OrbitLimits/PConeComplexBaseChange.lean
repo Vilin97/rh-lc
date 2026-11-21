@@ -23,7 +23,6 @@ namespace ConeComplexBaseChange
 
 variable {σ : Type} [Fintype σ]
 
-omit [Fintype σ] in
 
 theorem map_int_complex_eq :
     (MvPolynomial.map (Int.castRingHom ℂ) : MvPolynomial σ ℤ →+* MvPolynomial σ ℂ) =
@@ -53,6 +52,5 @@ theorem dim_cancel_one {d : WithBot ℕ∞} {N : ℕ} (h : d + 1 = ((N + 1 : ℕ
 
 end ConeComplexBaseChange
 
-open ConeComplexBaseChange in
 
 end GroundTheory.Heights₂.Heights.Targets

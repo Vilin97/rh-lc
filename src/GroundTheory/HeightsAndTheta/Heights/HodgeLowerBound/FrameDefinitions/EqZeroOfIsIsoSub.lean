@@ -67,7 +67,6 @@ variable {D : ComponentData II Ψ K ι Ω E} {O abelian₂ : Type} [CommRing O] 
 def gramLie (z : (Σ k, ι k) → ℂ) (τ : Ψ) {ρ : ℕ} (v : Fin ρ → abelian₂) : Matrix (Fin ρ) (Fin ρ) ℂ :=
   Matrix.of fun a b => ∑ c, starRingEnd ℂ (Cd.lie z τ (v a) c) * Cd.lie z τ (v b) c
 
-open Classical in
 
 def Nz (z : (Σ k, ι k) → ℂ) (I : Submodule O abelian₂) : ℝ :=
   if h : ∃ ρ v, IsNzFamily I ρ v then

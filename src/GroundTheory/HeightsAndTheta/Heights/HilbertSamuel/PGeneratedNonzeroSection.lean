@@ -276,7 +276,6 @@ variable {Ω : Type} [Field Ω] [CharZero Ω] (y : (Σ k, ι k) → Ω)
 theorem nonzeroOn_chart {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) : NonzeroOn y (chartCell c).1 :=
   fun k i hi => by rw [Finset.mem_singleton.mp hi]; exact hc k
 
-open Classical in
 
 def val (z : KH.CechC ℚ ι (MRingOver ℚ ι ⧸ KH.genIdeal y) 0) (c : ∀ k, ι k) : Ω :=
   if h : ∀ k, y ⟨k, c k⟩ ≠ 0 then evHom y _ (nonzeroOn_chart y h) (z (chartCell c)) else 0

@@ -49,7 +49,5 @@ theorem smul_const (a b : ℝ) (H z : ℂ) (hab : 0 ≤ a * b) :
 
 end GlobalTheory.Fam.IoTop
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.Fam.IoTop in
 
 end

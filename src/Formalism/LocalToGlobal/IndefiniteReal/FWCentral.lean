@@ -27,7 +27,6 @@ section Loc
 
 variable {D : D7}
 
-variable (D) in
 
 end Loc
 
@@ -41,7 +40,6 @@ variable {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S)
 
 variable {M}
 
-variable (M) in
 
 end Frame
 
@@ -50,7 +48,6 @@ section Cut
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
   (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F)
 
-omit [Algebra T.Q.c.F D.what₂.LL] in
 
 end Cut
 
@@ -108,11 +105,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {thAd : ∀ t, (Cl' t → Vs) → (AutQ V → ℂ)} {Pl : ∀ t, (Cl' t → Vs) → Prop} {LL : IntermediateField ℚ ℂ}
   {Cu : Submodule c.F (Rul Xo c)} {cc cc' : U.Comp → ℂ} {ph ph' : ℂ}
 
-variable (U dict mu a act dδ Cl' w La Nc gam vol ep io Pl) in
 
-variable (U dict mu a dδ Cl' w La Nc gam vol ep io Pl) in
 
-variable (U dict mu a act dδ Cl' w La Nc gam vol ep io Pl) in
 
 end CC
 

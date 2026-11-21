@@ -20,7 +20,6 @@ section Helpers
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type*} {R : Type*} [CommRing R]
 
-open Classical in
 
 theorem weightedHomogeneousComponent_mul_form {x y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {j : K → ℕ}
     (hy : IsMultiHomog y j) (n : K → ℕ) :
@@ -109,7 +108,6 @@ theorem exists_form_not_mem_of_isRelevant [Fintype K] {H : Ideal (ReciprocityThe
     obtain ⟨k, -, hk⟩ := Ideal.IsPrime.prod_mem_iff.mp hm
     exact hi k (hH.mem_of_pow_mem _ hk)
 
-omit [DecidableEq K] in
 
 theorem divCycle_eq_of_sub_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {x y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (h : x - y ∈ P) :
     (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ)) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P y) W : ℤ)) := by

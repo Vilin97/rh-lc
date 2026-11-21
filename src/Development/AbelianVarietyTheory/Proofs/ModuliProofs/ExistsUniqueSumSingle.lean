@@ -34,7 +34,6 @@ theorem existsUnique_sum_single {k : Type} [Field k] {n N : ℕ} (s : Fin N → 
 
 end GlobalTheory.LieEigenbasis
 
-open ReciprocityTheory.ChartRestriction.G.Chart (prodPts scaleD tvec tmap) in
 
 theorem GlobalTheory.lieMult_of_eigenbasis : ∀ (k : Type) [Field k] (O : Type) [CommRing O] (G : Over (Sp k)) [GrpObj G] (act : OAct O G) (n : ℕ) (v : Fin n → (epsR k ⟶ G)) (τs : Fin n → (O →+* k)), Smooth G.hom → IsLieBasis v → (∀ i a, (v i ≫ act.act a).left = spMap (epsScale (τs i a)) ≫ (v i).left) → ∀ τ : O →+* k, LieMult act (𝟙 (Sp k)) τ (Nat.card {i // τs i = τ}) := by
   intro k _ O _ G _ act n v τs _ hv hτ τ

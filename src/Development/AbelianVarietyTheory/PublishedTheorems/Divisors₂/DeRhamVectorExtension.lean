@@ -58,7 +58,6 @@ variable {p : ℕ} {e : Family p} {R : Type} [CommRing R] (hR : IsNilpotent (p :
   {A B : Over (Sp R)} [GrpObj A] [GrpObj B] (hA : IsAbelianScheme A) (hB : IsAbelianScheme B)
   {G H : PDivGroup p R} (t : G.TorsionTower A) (u : H.TorsionTower B)
 
-variable (e) in
 
 variable [Fact p.Prime]
 

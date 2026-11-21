@@ -78,7 +78,6 @@ theorem nsmul_inj {m n : ℕ} {N : ℕ} (hN : 0 < N) {x y : Mx D m n} (h : N •
 def charSpan (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (b : AE D) : Submodule ℂ (WO S T → ℂ) :=
   Submodule.span ℂ {p | ∃ y : WO S T, IsHalf b y ∧ p = fun t => ψ (symplO S T t y)}
 
-open Classical in
 
 theorem exists_char_of_wave {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {a : AE D} {Λ : AddSubgroup (WO S T)} (N : ℕ)
     {Ψ : WO S T → ℂ}

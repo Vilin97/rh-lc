@@ -124,11 +124,9 @@ section Dict
 variable {G : FGLaw S d} {A : Germ.OAct (𝓞 E) G} {κ : Type} [Fintype κ] {tg : κ → (Sp (DualNumber S) ⟶ t.G.left)}
   {uvec : κ → Fin d → S} {x} (hc : IsChartG t x0 d G.F A.act tg uvec x)
 
-variable (G) in
 
 abbrev FQ : Q S d 2 := ⟨G.F, G.const⟩
 
-variable (A) in
 
 abbrev AQ (a : 𝓞 E) : Q S d 1 := ⟨A.act a, A.const a⟩
 

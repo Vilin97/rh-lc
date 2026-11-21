@@ -18,7 +18,6 @@ section Objects
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-variable (ι) in
 
 def addIdx (N : ℕ) : Option K → Type := fun k => Option.elim k (Fin N) ι
 

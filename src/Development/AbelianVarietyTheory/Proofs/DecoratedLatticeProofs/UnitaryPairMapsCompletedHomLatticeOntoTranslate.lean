@@ -48,7 +48,6 @@ theorem mt_inv_eq (V : HSp D) (hg : V.gram = 1) (g : GA D V) : mt V g⁻¹ = ((m
   calc mt V g⁻¹ = (((mt V g).map (cA D))ᵀ * mt V g) * mt V g⁻¹ := by rw [h1, Matrix.one_mul]
     _ = _ := by rw [Matrix.mul_assoc, h2, Matrix.mul_one]
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem int_of_moves (V : HSp D) (g : GA D V) (N : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E))
     (hM : Moves V rfl g N) (x : Fin V.rank → D.host.E) (hx : x ∈ N) (i : Fin V.rank) :
@@ -74,7 +73,6 @@ namespace GlobalTheory.LatMoveStd
 
 variable {D : D7}
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem int_conj (V : HSp D) (hg : V.gram = 1) (g : GA D V) (N : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E))
     (hM : Moves V rfl g N) (s : Fin V.rank → D.host.E) (hs : s ∈ N) (j : Fin V.rank) :
@@ -128,7 +126,6 @@ theorem row_one {n : ℕ} (s : Fin n → D.host.E) (l : Fin n) :
   rw [Finset.sum_eq_single l (fun k _ hk => by rw [Matrix.one_apply_ne hk, mul_zero])
     (fun h => absurd (Finset.mem_univ l) h), Matrix.one_apply_eq, mul_one]
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem gen_mem (S T : HSp D) (hgS : S.gram = 1) (hgT : T.gram = 1) (g : GA D S) (h : GA D T)
     (N : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (N' : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E))

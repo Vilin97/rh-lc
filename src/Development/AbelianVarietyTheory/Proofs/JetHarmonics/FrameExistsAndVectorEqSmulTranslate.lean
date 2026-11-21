@@ -187,7 +187,6 @@ private theorem swapMat_mem_UWset_of_isFrameOf {k r : ℕ} {z : Fin (2 * r + k +
         abel
     _ = H := by rw [hQ]; simp
 
-open Matrix in
 
 theorem _root_.GlobalTheory.frame_exists_and_vector_eq_smul_translate :
     ∀ (n r : ℕ) (z : (Fin (2 * r + (n + 1) + 1) → ℂ)), _root_.Formalism.QuantumDeterminants.inWb (n + 1) r z → 0 < _root_.Formalism.QuantumDeterminants.Tz (n + 1) r z →

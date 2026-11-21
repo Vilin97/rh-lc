@@ -86,7 +86,6 @@ variable (hcj : ∀ x, cj (cj x) = x) (hO : ∀ x ∈ O, cj x ∈ O) (t t' : O)
   (hG₁ : IsUnit (gramC cj (Z₁.map O.subtype) t t').det)
   (hG₂ : IsUnit (gramC cj (Z₂.map O.subtype) t t').det)
 
-include hcj hu₁ hu₂ hκ hG₁ hG₂ in
 
 theorem form_diff (p : PairSet O cj hO Z₁ Z₂) (Y Y₂ W W₂ : Ix r → O)
     (hy : p.1.1 (Submodule.Quotient.mk fun j => Y (Sum.inl j)) = Submodule.Quotient.mk fun j => Y₂ (Sum.inl j))

@@ -57,7 +57,6 @@ instance : (MorphismProperty.diagonal closedRange).DescendsAlong
 
 end GlobalTheory.SepDescent
 
-open GlobalTheory.SepDescent in
 
 theorem GlobalTheory.isSeparated_of_isPullback_universallyClosed_surjective :
     ∀ (R : Type) [CommRing R] (S : Scheme.{0}) (π : S ⟶ Sp R), UniversallyClosed π → Surjective π →

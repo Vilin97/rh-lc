@@ -62,7 +62,6 @@ def LevelReduction : Prop :=
         (unitOf (w ≫ χ) : DualNumber R) =
           TrivSqZeroExt.inl 1 + TrivSqZeroExt.inr (algebraMap O R ((alLeft P t).1 x))
 
-omit [Algebra ℤ_[p] O] in
 
 variable [Algebra ℤ_[p] C] [IsScalarTower ℤ_[p] O C]
 

@@ -143,7 +143,6 @@ theorem d_mk (F₁ F₂ : SubSystem S x E) (u : Cech.Idx (support x) 0 → E) (h
   simp only [map_zsmul]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_toCochain_eq (F₁ F₂ : SubSystem S x E)
     (hlift : ∀ s : Chart x → E, (∀ I, s I ∈ F₁.sub I) →
@@ -234,7 +233,6 @@ theorem exists_toCochain_eq (F₁ F₂ : SubSystem S x E)
   rw [← hsa]
   exact hts _
 
-set_option maxHeartbeats 1000000 in
 
 theorem length_secs_eq (F₁ F₂ : SubSystem S x E)
     (hlift : ∀ s : Chart x → E, (∀ I, s I ∈ F₁.sub I) →
@@ -363,7 +361,6 @@ theorem exists_residue {k : Type u} [Field k] {R : Type w} [CommRing R] [Algebra
     ← map_zero (algebraMap (R ⧸ P) (FractionRing (R ⧸ P))),
     (IsFractionRing.injective (R ⧸ P) (FractionRing (R ⧸ P))).eq_iff, Ideal.Quotient.eq_zero_iff_mem]
 
-set_option maxHeartbeats 1000000 in
 
 theorem proof (hSC : SurjectiveClosed.Statement.{u, w})
     (hRQ : PrimeFiltration.RestrictQuot.Statement.{u, w}) : RestrLenRestrict.Statement.{u, w} := by

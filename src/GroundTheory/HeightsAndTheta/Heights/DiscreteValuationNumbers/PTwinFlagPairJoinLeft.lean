@@ -283,7 +283,6 @@ end Pairs
 
 end FlagPairJoinLeft
 
-open FlagPairJoinLeft in
 
 theorem FlagPairJoinLeft.proof (hVert : JoinVerticalDivisorLeft.Statement) : FlagPairJoinLeft.Statement := by
   intro O _ _ _ Ω _ _ K _ ι _ x K' _ ι' _ z K₂ _ ι₂ _ w N V _ _ E E' EF E'F hF hF' φ EB E'B hB hB'

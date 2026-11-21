@@ -16,7 +16,6 @@ namespace GlobalTheory.LeviTransfer
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-omit [NumberField E] [IsCMField E] in
 
 theorem borel_diag_ne_zero {Ψ : Finset (E →+* ℂ)} {r : ℕ} {b : Frame Ψ r} (hb : b ∈ Bor Ψ r)
     (τ : Ψ) (i : Fin r) : b τ i i ≠ 0 := by
@@ -25,14 +24,12 @@ theorem borel_diag_ne_zero {Ψ : Finset (E →+* ℂ)} {r : ℕ} {b : Frame Ψ r
   rw [Matrix.det_of_upperTriangular htri] at hdet
   exact (Finset.prod_ne_zero_iff.1 hdet) i (Finset.mem_univ i)
 
-omit [NumberField E] [IsCMField E] in
 
 theorem borel_char_ne_zero {Ψ : Finset (E →+* ℂ)} {r : ℕ} {b : Frame Ψ r} (hb : b ∈ Bor Ψ r)
     (la : Wt Ψ r) : bchar la b ≠ 0 :=
   Finset.prod_ne_zero_iff.2 fun τ _ => Finset.prod_ne_zero_iff.2 fun i _ =>
     zpow_ne_zero _ (borel_diag_ne_zero hb τ i)
 
-omit [NumberField E] [IsCMField E] in
 
 theorem left_act_one {Ψ : Finset (E →+* ℂ)} {r : ℕ} (x : Frame Ψ r) :
     lact (1 : GL (Fin r) E) x = x := by

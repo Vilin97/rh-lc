@@ -26,12 +26,8 @@ theorem mulW_mem_global (j : ℕ) (u : Fin G.N → F) {f : G.Sec j} (hf : f ∈ 
 
 variable {T : ℕ} (hT : G.D + 1 ≤ T) (β J : ℝ) (hβ : 1 ≤ β)
 
-omit [NumberField F] in
 
-include hT in
 
-omit G in
 
-omit G in
 
 end GlobalTheory.HilbertSamuel.Model

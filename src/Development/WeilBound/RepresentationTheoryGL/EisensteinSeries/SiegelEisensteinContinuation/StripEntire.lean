@@ -59,7 +59,6 @@ def secSp (K P : Subgroup G) (c : G → ℂ) (ρ : K →* (W →L[ℂ] W)) : Sub
   zero_mem' := fun r _ => by simp
   smul_mem' := fun a w hw r hr => by rw [map_smul, smul_comm, hw r hr]
 
-open Classical in
 
 def sec (K P : Subgroup G) (c : G → ℂ) (ρ : K →* (W →L[ℂ] W)) (g : G) : W →L[ℂ] W :=
   if h : ∃ k : K, g * (k : G)⁻¹ ∈ P then c (g * (h.choose : G)⁻¹) • ρ h.choose⁻¹ else 0

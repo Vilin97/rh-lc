@@ -16,7 +16,6 @@ namespace GlobalTheory.LowerHecke.MaxReps
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {A D : Type} [Fintype A] [DecidableEq A] [Fintype D] [DecidableEq D]
 
-variable (k D A) in
 
 def maxLat : AddSubgroup (Matrix D A k) where
   carrier := {ν | ∀ i a, valuation k (ν i a) < 1}
@@ -85,7 +84,6 @@ theorem exists_int_right_inv {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformize
 
 end GlobalTheory.LowerHecke.MaxReps
 
-open GlobalTheory.LowerHecke.MaxReps in
 
 theorem GlobalTheory.LowerHecke.exists_finset_reps_maxLat_mod_mul : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (A D : Type) [Fintype A] [DecidableEq A] [Fintype D] [DecidableEq D] (ϖ : kˣ), valuation k (ϖ : k) = uniformizer k → ∀ (s : Finset D) (g : GL D k), (∃ κ ∈ KO k D, ∃ κ' ∈ KO k D, g = κ * torusElt k D ϖ (indic s) * κ') → ∃ N : Finset (Matrix D A k), (∀ ν ∈ N, ∀ i a, valuation k (ν i a) < 1) ∧ ∀ ν : Matrix D A k, (∀ i a, valuation k (ν i a) < 1) → ∃! ν', ν' ∈ N ∧ ∃ μ : Matrix D A k, (∀ i a, valuation k (μ i a) < 1) ∧ ν - ν' = g.1 * μ := by
   intro k _ _ _ _ A D _ _ _ _ ϖ hϖ s g hg

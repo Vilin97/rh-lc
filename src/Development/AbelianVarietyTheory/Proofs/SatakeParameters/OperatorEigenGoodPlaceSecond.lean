@@ -102,7 +102,6 @@ theorem idem_mul_iff {L : Type} [Field L] [NumberField L] [IsCMField L] (v : Hei
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 1000000 in
 
 theorem suppF_iff {D : D7} (hF : D.host.F = maximalRealSubfield D.host.E) {V : Formalism.BasicNotions.TH.HSp D} {n : ℕ}
     (PV : Formalism.IndefR.principalLevelFrame.RowPsi V n) (hV : GlobalTheory.NJoin.StdFrame hF PV) {Pp : HeightOneSpectrum (𝓞 D.host.E)}
@@ -221,7 +220,6 @@ theorem sum_read_abs {G H W W' : Type} [Group G] [Group H] [AddCommGroup W] [Mod
   refine Finset.sum_congr rfl fun γ _ => ?_
   rw [← map_mul, hr, one_mul, mul_assoc]
 
-set_option maxHeartbeats 800000 in
 
 theorem eigen_of_fin {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch} (X : GlobalTheory.NJoin.RealAt D cf nch tp)
     (j : Fin D.R.m) (t : X.T) (h : DIV.Pl D.host.E → (List ℤ →₀ ℂ) → Module.End ℂ (X.R.HV j t).H)
@@ -245,7 +243,6 @@ theorem eigen_of_fin {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied
       (Formalism.L2.Theta.finHom (Formalism.IndefR.Links.Vc D j)).rangeRestrict _ _ hext _ (fun γ hγ => rep_mem _ Pp d hγ) c g hg (hc g hg))
   exact X.hinj j t (congrArg (X.R.cV j).ext key)
 
-set_option maxHeartbeats 800000 in
 
 theorem transport_succ {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch} (X : GlobalTheory.NJoin.RealAt D cf nch tp)
     {M : MtFam D} {rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r} (A : GlobalTheory.NJoin.Agree X M rep) {μ : D.what₂.Tup}

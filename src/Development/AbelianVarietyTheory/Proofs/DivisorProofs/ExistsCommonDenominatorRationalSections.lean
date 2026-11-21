@@ -70,7 +70,6 @@ theorem exists_open_regularAt {L : LB Y} (hL : L.IsLB) {r : L.ι → Y.functionF
 
 end GlobalTheory.MixHt.Denom
 
-open GlobalTheory.MixHt.Denom in
 
 theorem GlobalTheory.MixHt.exists_common_denom : ∀ (k : Type) [CommRing k] (Y : Scheme.{0}) [IsIntegral Y]
     (q : Y ⟶ Sp k), IsAmb q → ∀ (N : HermLB q) (r r' : N.B.ι → Y.functionFieldˣ), IsRatSec N.B r →

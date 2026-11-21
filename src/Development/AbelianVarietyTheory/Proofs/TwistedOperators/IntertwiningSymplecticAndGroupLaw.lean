@@ -106,7 +106,6 @@ end GlobalTheory.RealWeil.Intertw
 
 namespace GlobalTheory.RealWeil
 
-open Intertw in
 
 theorem intertwining_symplectic_and_group_law : ∀ (l : Type) [Fintype l]
     (A : ℝ → (l ⊕ l → ℝ) →ₗ[ℝ] (l ⊕ l → ℝ)) (T : ℝ → Sch l →ₗ[ℂ] Sch l),

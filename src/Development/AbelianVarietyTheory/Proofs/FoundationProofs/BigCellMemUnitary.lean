@@ -106,7 +106,6 @@ theorem bigCell_submatrix (k r : ℕ) (c : Fin r → ℂ) (μ : Matrix (Fin (k +
 
 end BigCellUnitary
 
-open BigCellUnitary in
 
 theorem bigCell_mem_unitary : Formalism.QuantumDeterminants.BigCellMem := by
   intro k r c μ hc hμ

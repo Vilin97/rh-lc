@@ -19,7 +19,6 @@ variable {K Ksep : Type} [Field K] [Field Ksep] [Algebra K Ksep]
   {U V : OpenSubgroup Gal(Ksep/K)} (h : V ≤ U)
   [hN : ((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))).Normal]
 
-include h hN in
 
 theorem inv_mul_mul_mem_of_subgroupOf_normal (g : (U : Subgroup Gal(Ksep/K))) {v : Gal(Ksep/K)}
     (hv : v ∈ (V : Subgroup Gal(Ksep/K))) :
@@ -28,7 +27,6 @@ theorem inv_mul_mul_mem_of_subgroupOf_normal (g : (U : Subgroup Gal(Ksep/K))) {v
   rw [Subgroup.mem_subgroupOf] at this
   simpa using this
 
-include h hN in
 
 theorem apply_mem_fixedField (g : (U : Subgroup Gal(Ksep/K))) {x : Ksep}
     (hx : x ∈ fixedField (V : Subgroup Gal(Ksep/K))) :
@@ -72,7 +70,6 @@ def unitOfMemFixedField (a : Ksepˣ) (ha : (a : Ksep) ∈ fixedField (V : Subgro
     (fixedField (V : Subgroup Gal(Ksep/K)))ˣ :=
   Units.mk0 ⟨a, ha⟩ fun h0 => a.ne_zero (congrArg Subtype.val h0)
 
-include h in
 
 theorem mem_fixedField_of_forall_subgroupOf {x : Ksep}
     (hx : ∀ n : ((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))),
@@ -143,7 +140,6 @@ noncomputable def cohomologyZeroRootsEquiv (l : ℕ) :
 
 variable [((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))).Normal]
 
-omit [IsSepClosure K Ksep] in
 
 theorem unitsInvariantsOpenEquiv_smul (g : (U : Subgroup Gal(Ksep/K)))
     (u : Additive (fixedField (V : Subgroup Gal(Ksep/K)))ˣ) :
@@ -152,7 +148,6 @@ theorem unitsInvariantsOpenEquiv_smul (g : (U : Subgroup Gal(Ksep/K)))
         ((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))) g (unitsInvariantsOpenEquiv h u) :=
   Subtype.ext (Additive.toMul.injective (Units.ext rfl))
 
-omit [IsSepClosure K Ksep] in
 
 theorem rootsInvariantsOpenEquiv_invariantsConj (l : ℕ) (g : (U : Subgroup Gal(Ksep/K)))
     (ζ : (Rep.res ((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))).subtype
@@ -200,7 +195,6 @@ theorem kummerOpenHom_apply (u : Additive (fixedField (V : Subgroup Gal(Ksep/K))
         (unitsInvariantsOpenEquiv h u)) :=
   rfl
 
-include hl in
 
 theorem kummerOpenHom_surjective : Function.Surjective (kummerOpenHom (l := l) h hl) := by
   intro x
@@ -210,7 +204,6 @@ theorem kummerOpenHom_surjective : Function.Surjective (kummerOpenHom (l := l) h
   obtain ⟨u, rfl⟩ := (unitsInvariantsOpenEquiv h).surjective v
   exact ⟨u, hv⟩
 
-include hl in
 
 theorem kummerOpenHom_eq_zero_iff (u : Additive (fixedField (V : Subgroup Gal(Ksep/K)))ˣ) :
     kummerOpenHom h hl u = 0 ↔ ∃ w, l • w = u := by

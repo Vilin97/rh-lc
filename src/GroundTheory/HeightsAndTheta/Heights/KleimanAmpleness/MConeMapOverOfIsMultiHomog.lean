@@ -21,7 +21,6 @@ namespace ResidueMap
 
 variable {F : Type} [Field F] {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] in
 
 theorem isMultiHomog_sub {f g : MRingOver F ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
     IsMultiHomog (f - g) a := by
@@ -30,7 +29,6 @@ theorem isMultiHomog_sub {f g : MRingOver F ι} {a : K → ℕ} (hf : IsMultiHom
   rcases Finset.mem_union.mp (MvPolynomial.support_sub _ f g hm) with h | h
   exacts [hf m h k, hg m h k]
 
-omit [Fintype K] in
 
 theorem isMultiHomog_C (r : F) : IsMultiHomog (C r : MRingOver F ι) 0 := by
   classical
@@ -39,7 +37,6 @@ theorem isMultiHomog_C (r : F) : IsMultiHomog (C r : MRingOver F ι) 0 := by
   subst hm0
   simp
 
-omit [Fintype K] in
 
 theorem isMultiHomog_rename [DecidableEq K] (k : K) {f : MvPolynomial (ι k) F} {m : ℕ} (hf : f.IsHomogeneous m) :
     IsMultiHomog (rename (fun i : ι k => (⟨k, i⟩ : Σ k, ι k)) f) (Pi.single k m) := by
@@ -60,7 +57,6 @@ theorem isMultiHomog_rename [DecidableEq K] (k : K) {f : MvPolynomial (ι k) F} 
     exact Finsupp.mapDomain_of_notMem_range _ _
       (by rintro ⟨j, hj⟩; exact hk (congrArg Sigma.fst hj).symm)
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem aeval_rename_block {A : Type} [CommRing A] [Algebra F A] (z : (Σ k, ι k) → A) (k : K)
     (p : MvPolynomial (ι k) F) :
@@ -120,7 +116,6 @@ theorem wd {y : (Σ k, ι k) → Ω} {y' : (Σ k, ι k) → K'} (hle : mIdealOve
   rw [map_sub, map_mul, map_mul, sub_eq_zero] at h0
   exact h0
 
-variable (F) in
 
 def fracSet (y : (Σ k, ι k) → Ω) (y' : (Σ k, ι k) → K') : Set Ω :=
   {x | ∃ (f g : MRingOver F ι) (n : K → ℕ), IsMultiHomog f n ∧ IsMultiHomog g n ∧ aeval y' g ≠ 0 ∧
@@ -201,7 +196,6 @@ theorem frac_spec {y : (Σ k, ι k) → Ω} {y' : (Σ k, ι k) → K'} (hle : mI
 
 end ResidueMap
 
-open ResidueMap in
 
 theorem ResidueMap.proof : ResidueMap.Statement := by
   intro F _ K _ ι _ Ω _ _ y K' _ _ y' hle

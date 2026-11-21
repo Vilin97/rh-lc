@@ -30,7 +30,6 @@ def coneMap (𝔮 : Ideal (MvPolynomial (Σ k, ι k) ℂ)) :
     MvPolynomial (Σ k, ι k) ℂ →ₐ[ℂ] MvPolynomial K (MvPolynomial (Σ k, ι k) ℂ ⧸ 𝔮) :=
   aeval fun q => X q.1 * C (Ideal.Quotient.mk 𝔮 (X q))
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem aeval_C_mk (𝔮 : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (f : MvPolynomial (Σ k, ι k) ℂ) :
     aeval (fun q => (C (Ideal.Quotient.mk 𝔮 (X q)) : MvPolynomial K (MvPolynomial (Σ k, ι k) ℂ ⧸ 𝔮))) f =
@@ -53,7 +52,6 @@ theorem coneMap_of_isMultiHomog (𝔮 : Ideal (MvPolynomial (Σ k, ι k) ℂ)) {
   rw [aeval_C_mk] at h
   exact h
 
-set_option maxHeartbeats 1000000 in
 
 theorem ringKrullDim_ker_coneMap (𝔮 : Ideal (MvPolynomial (Σ k, ι k) ℂ)) [𝔮.IsPrime] (p : (k : K) → ι k)
     (h1 : ∀ k, (X ⟨k, p k⟩ - 1 : MvPolynomial (Σ k, ι k) ℂ) ∈ 𝔮) (d : ℕ)
@@ -167,7 +165,6 @@ theorem ringKrullDim_ker_coneMap (𝔮 : Ideal (MvPolynomial (Σ k, ι k) ℂ)) 
 
 end ChartSectionNotMem
 
-open ChartSectionNotMem in
 
 theorem ChartSectionNotMem.proof : ChartSectionNotMem.Statement := by
   classical

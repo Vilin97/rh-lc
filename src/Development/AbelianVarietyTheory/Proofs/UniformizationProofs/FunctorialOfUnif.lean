@@ -29,7 +29,6 @@ open GlobalTheory.UT
 
 namespace GlobalTheory.UT
 
-set_option maxHeartbeats 1000000 in
 
 theorem functorial_of_unif :
     AllU fun {_} _ _ {_} {_} {_} {_} _ _ U => Cl.Functorial U := by

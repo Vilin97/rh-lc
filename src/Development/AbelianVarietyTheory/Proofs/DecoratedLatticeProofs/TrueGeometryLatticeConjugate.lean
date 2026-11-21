@@ -120,7 +120,6 @@ section Rat
 open Formalism.L2.Col Formalism.UG
 attribute [local instance] GlobalTheory.Mem.Col2.starE
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_lev_of_rat {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
     (u : B.Word) (a : I.ι) {Ch : ℕ → Type} (A : TwDat I l Z u a Ch) (hA : A.Is) (j : ℕ) (hj : j + 2 ≤ B.R.m) (β : Ch j)
@@ -204,9 +203,7 @@ theorem entry_of_std {k : Type} [Field k] {N : ℕ} {Y : Type} [Fintype Y] [Deci
   rw [he] at h2
   simpa [Matrix.mul_apply, Matrix.one_apply] using h2
 
-set_option maxHeartbeats 2000000 in
 
-open GlobalTheory.FinPl in
 
 theorem grpAt_empty {D : D7} (V : HSp D) {P : Pl D → Prop} (hP : ∀ w, ¬ P w) (n : GA D V) (hn : n ∈ grpAt V P) : n = 1 := by
   rw [GlobalTheory.FinPl.SetCut.mem_grpAt_iff_parts] at hn
@@ -217,7 +214,6 @@ theorem grpAt_empty {D : D7} (V : HSp D) {P : Pl D → Prop} (hP : ∀ w, ¬ P w
   rw [Matrix.sub_apply, sub_eq_zero] at this
   exact this
 
-open GlobalTheory.FinPl in
 
 theorem locHom_one_of_off {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     {Y : Type} [Fintype Y] [DecidableEq Y] (q : GlobalTheory.FinPl.SplitPt D k) (S : HSp D) (F : GlobalTheory.LocMod.Frame k S.rank Y)
@@ -227,7 +223,6 @@ theorem locHom_one_of_off {D : D7} {k : Type} [Field k] [ValuativeRel k] [Topolo
   rw [← GlobalTheory.LevIdx.eq_locHom_iff, h2]
   simp [F.βγ]
 
-open GlobalTheory.FinPl in
 
 theorem grpAt_le_of {D : D7} (V : HSp D) {P P' : Pl D → Prop} (h : ∀ w, P w → P' w) {n : GA D V} (hn : n ∈ grpAt V P) :
     n ∈ grpAt V P' := by

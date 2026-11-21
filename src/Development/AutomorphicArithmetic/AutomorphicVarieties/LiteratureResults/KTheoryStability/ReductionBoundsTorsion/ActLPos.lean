@@ -127,7 +127,6 @@ instance : MulAction (Gp L N) (Pos L N) where
 
 variable (L N)
 
-open ComplexOrder in
 
 def one : Pos L N := ⟨mkHS (fun _ => 1) fun _ => isHermitian_one, fun _ => PosDef.one⟩
 

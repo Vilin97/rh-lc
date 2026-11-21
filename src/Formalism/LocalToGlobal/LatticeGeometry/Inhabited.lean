@@ -222,7 +222,6 @@ def flagDegZ (lam : ι → Fin N → ℤ) : ℤ := degFlZ ι N (linRootZ ι N la
 
 end FlagZ
 
-open Classical in
 
 @[reducible] def geoDegenerate (F : Type) [Field F] [NumberField F] [StarRing F] (Tau : Type) [Fintype Tau] : DV.Geo F where
   Var := ℕ
@@ -585,7 +584,6 @@ theorem prime_of_mem_image : ∀ (_ : Unit), ∀ p ∈ Finset.univ.image D.host.
   obtain ⟨i, _, rfl⟩ := Finset.mem_image.1 hp
   exact D.host.g_prime i
 
-include X0 in
 
 end Tied
 
@@ -725,7 +723,6 @@ theorem tiedX_fl : TiedX (jC := jC) (ng := ng1) (divXFl D jC X0) (fun _ => Finse
       lw := fun _ _ _ _ _ => HEq.rfl }
   lev_κg := rfl
 
-include X0 in
 
 end TiedFl
 

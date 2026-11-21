@@ -60,9 +60,7 @@ theorem frBC_framed : GlobalTheory.Reg.FrBC Xo c := fun S T _ _ _ _ φ y =>
 theorem allTest_framed : AllTest Xo c :=
   GlobalTheory.T.framedPoint_reduced_from_testRing GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H Dw l Xo c
 
-variable {Xo c} in
 
-omit [NumberField E] [IsCMField E] in
 
 variable (U)
 

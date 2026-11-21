@@ -15,7 +15,6 @@ def IsIrrChar (K L : Type) [Field K] [Field L] [Algebra K L] {G : Type} [Group G
 
 def Virt (K L : Type) [Field K] [Field L] [Algebra K L] (G : Type) [Group G] : AddSubgroup (G → L) :=
   AddSubgroup.closure {χ | IsChar K L χ}
-open Classical in
 
 def ext0 {L G : Type} [Field L] [Group G] (H : Subgroup G) (ψ : H → L) (g : G) : L :=
   if h : g ∈ H then ψ ⟨g, h⟩ else 0

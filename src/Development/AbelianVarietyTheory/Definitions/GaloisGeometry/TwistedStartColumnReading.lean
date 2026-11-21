@@ -172,7 +172,6 @@ variable {chi : ∀ n : ℕ, Submodule (𝓞 X.E) (Sp X.E n) → ℂ} {hX : X.Ok
 
 end Laws
 
-variable (b hY P c) in
 
 section Col
 

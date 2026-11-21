@@ -164,8 +164,6 @@ theorem L_le_La (N : NumDatum) : N.sc.L ≤ N.La := by
     _ ≤ Real.log (N.sc.a * N.rd) := Real.log_le_log (Real.exp_pos _) (h1.trans h2)
     _ = N.La := rfl
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.KernelHalf

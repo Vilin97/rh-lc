@@ -84,7 +84,6 @@ theorem prime_l : Prime ((l : ℕ) : 𝓞 ℚ) := by
   rw [← MulEquiv.prime_iff Rat.ringOfIntegersEquiv.toMulEquiv]
   simpa using h
 
-variable (l) in
 
 def vQ : HeightOneSpectrum (𝓞 ℚ) where
   asIdeal := Ideal.span {((l : ℕ) : 𝓞 ℚ)}

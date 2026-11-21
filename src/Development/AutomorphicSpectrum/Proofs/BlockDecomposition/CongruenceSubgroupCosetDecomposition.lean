@@ -17,7 +17,6 @@ namespace GlobalTheory.CompanionTheory.RankinStepC
 
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
 
-variable (F) in
 
 def Pv : ValueGroupWithZero F := valuation F ((uniformizer F : 𝒪[F]) : F)
 

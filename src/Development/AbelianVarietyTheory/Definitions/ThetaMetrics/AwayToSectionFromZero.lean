@@ -24,9 +24,6 @@ def ev (U : (Proj 𝒜).Opens) (x : Proj 𝒜) (hx : x ∈ U) :
 
 variable {𝒜}
 
-open AlgebraicGeometry CategoryTheory TopologicalSpace Opposite in
-variable {A σ : Type} [CommRing A] [SetLike σ A] [AddSubgroupClass σ A] (𝒜 : ℕ → σ) [GradedRing 𝒜] in
-variable {𝒜} in
 
 theorem _root_.GlobalTheory.ProjFrac.ext {U : (Proj 𝒜).Opens} {s t : Γ(Proj 𝒜, U)}
     (h : ∀ x hx, _root_.GlobalTheory.ProjFrac.ev 𝒜 U x hx s =
@@ -37,7 +34,6 @@ theorem _root_.GlobalTheory.ProjFrac.ext {U : (Proj 𝒜).Opens} {s t : Γ(Proj 
 theorem ev_resG {U V : (Proj 𝒜).Opens} (h : V ≤ U) (x : Proj 𝒜) (hx : x ∈ V) (s : Γ(Proj 𝒜, U)) :
     ev 𝒜 V x hx (resG (Proj 𝒜) h s) = ev 𝒜 U x (h hx) s := rfl
 
-variable (𝒜) in
 
 def frac (U : (Proj 𝒜).Opens) {d : ℕ} (a b : A) (ha : a ∈ 𝒜 d) (hb : b ∈ 𝒜 d)
     (hU : U ≤ Proj.basicOpen 𝒜 b) : Γ(Proj 𝒜, U) :=
@@ -203,7 +199,6 @@ theorem _root_.GlobalTheory.ProjFrac.basicOpen_frac :
 
 end
 
-variable (𝒜) in
 
 def fracUnit (U : (Proj 𝒜).Opens) {d : ℕ} (a b : A) (ha : a ∈ 𝒜 d) (hb : b ∈ 𝒜 d)
     (hUa : U ≤ Proj.basicOpen 𝒜 a) (hUb : U ≤ Proj.basicOpen 𝒜 b) : Γ(Proj 𝒜, U)ˣ where

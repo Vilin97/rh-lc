@@ -21,7 +21,6 @@ theorem exists_inverse_chart {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) :
   obtain ⟨ρ, h1, h2, h3⟩ := GlobalTheory.FockCompare.exists_real_chart D θ hθ (GlobalTheory.CMTypePlaces.places_bijective D)
   exact GlobalTheory.FockCompare.RealChart.exists_chart D θ hθ ρ h1 h2 h3
 
-open Classical in
 
 def ray {ι : Type} (τ : ι) (c : ℂ) : ℝ →+ (ι → ℂ) where
   toFun t := fun τ' => if τ' = τ then (t : ℂ) * c else 0

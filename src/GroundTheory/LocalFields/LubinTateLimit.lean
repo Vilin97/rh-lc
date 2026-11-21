@@ -23,7 +23,6 @@ section UnramifiedTower
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
 variable {Ω : Type*} [Field Ω] [Algebra K Ω] [IsSepClosed Ω]
 
-variable (K Ω) in
 
 def unramifiedTowerRoot (k : ℕ) : Ω :=
   Classical.choose (exists_isPrimitiveRoot_card_pow_sub_one (K := K) (Ksep := Ω)
@@ -35,7 +34,6 @@ theorem isPrimitiveRoot_unramifiedTowerRoot (k : ℕ) :
   exact Classical.choose_spec (exists_isPrimitiveRoot_card_pow_sub_one (K := K) (Ksep := Ω)
     (Nat.factorial_ne_zero (k + 1)))
 
-variable (K Ω) in
 
 def unramifiedTower (k : ℕ) : IntermediateField K Ω := K⟮unramifiedTowerRoot K Ω k⟯
 
@@ -77,7 +75,6 @@ variable {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValu
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] [IsSepClosed Ω]
 variable {π : 𝒪[K]} (hπ : Irreducible π) {f : PowerSeries 𝒪[K]}
 
-variable (Ω) in
 
 variable [IsGalois K Ω]
 

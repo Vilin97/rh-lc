@@ -18,6 +18,5 @@ namespace GlobalTheory.UnrEuler
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-open Classical in
 
 end GlobalTheory.UnrEuler

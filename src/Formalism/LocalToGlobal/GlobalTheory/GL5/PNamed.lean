@@ -28,7 +28,6 @@ def VolSigIndep (D : D7) : Prop :=
 def stdPos (D : D7) (n : ℕ) : HSpace D.host.E :=
   Formalism.BasicNotions.Examples₂.posSpace (E := D.host.E) (fun x hx => Formalism.BasicNotions.Examples₂.star_isIntegral x hx) n
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 def band (m a b : ℕ) : Fin m → Bool := fun i => decide (a ≤ (i : ℕ) ∧ (i : ℕ) < b)
 
@@ -102,9 +101,7 @@ theorem bandSpace_sigOK (D : D7) (m a b : ℕ) (hb : b ≤ m) : (bandSpace D m a
   rw [hg]
   exact hasSig_diag_sgn (band m a b) (b - a) (card_band m a b hb)
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Formalism.L2.GlobalTheoryTheory.GenusMassVolumes
 

@@ -53,7 +53,6 @@ def pjSys : PtSys c.F (Rul Xo c) where
   val_smul y a f ha := vAtV_smul y a f ha
   val_mul y f g := vAtV_mul y f g
 
-variable {Xo c} in
 
 def IsBC {T T' : CDVR} {io : c.F →+* T.Fr} (φ : T.Fr →+* T'.Fr) (y : IntFr Xo c T io)
     (z : IntFr Xo c T' (φ.comp io)) : Prop :=
@@ -74,7 +73,6 @@ def UnifAll : Prop :=
 
 variable [StarRing (𝓞 E)]
 
-omit [StarRing (𝓞 E)] in
 
 section Basic
 
@@ -82,14 +80,12 @@ omit [StarRing (𝓞 E)]
 
 theorem cjE_coe (H : Host E) (a : 𝓞 E) : cjE E (a : E) = (H.bar a : E) := (H.bar_eq a).symm
 
-variable {c} in
 
 theorem IsFinExt.overLa {T T' : CDVR} {φV : T.V →+* T'.V} {φ : T.Fr →+* T'.Fr} {r : ℕ} (h : IsFinExt φV φ r)
     {la : HeightOneSpectrum (𝓞 c.F)} {io : c.F →+* T.Fr} {e : ℕ} (ho : OverLa la T.V io e) :
     OverLa la T'.V (φ.comp io) (r * e) :=
   ho.bc φ h.2.2.2.2.1 h.2.2.2.2.2
 
-variable {c} in
 
 theorem pjSys_val_mk (la : HeightOneSpectrum (𝓞 c.F)) {T : CDVR} {io : c.F →+* T.Fr} {e : ℕ}
     (ho : OverLa la T.V io e) (y : IntFr Xo c T io) (hy : y.IsAlg) (t : ℝ) (ht : IsPhiAt Xo c la T io y t)
@@ -104,7 +100,6 @@ theorem phiC_nonneg {E : Type} [Field E] [NumberField E] (cj : E → E) {Y : Typ
   · simp [h0]
   · exact (h b hb h0).le
 
-variable {Xo c} in
 
 end Basic
 

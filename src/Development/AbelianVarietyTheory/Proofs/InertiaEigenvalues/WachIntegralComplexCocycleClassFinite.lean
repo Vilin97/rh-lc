@@ -15,7 +15,6 @@ open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.Basi
 
 namespace GlobalTheory.NL.IntComplex
 
-set_option maxHeartbeats 1000000 in
 
 theorem ring_part (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ)
     (LL : FinExt l) (h : Good K s LL) :
@@ -40,7 +39,6 @@ theorem ring_part (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (l : ℕ) [F
     change W.X i = PowerSeries.X * c
     rw [hX, hc]
 
-set_option maxHeartbeats 1000000 in
 
 theorem main : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), Pr2c D HW F := by
   intro D HW F l _ K s LL h T M hh hT _

@@ -72,7 +72,6 @@ variable {N : ℕ} [NeZero N] {L : Type*} [Field L] [NumberField L] [IsCyclotomi
   (hζ : IsPrimitiveRoot ζ N) (E : Type*) [Field E] [NumberField E] [Algebra E L]
 include hζ
 
-set_option maxHeartbeats 800000 in
 
 theorem adjoin_top : Algebra.adjoin E {ζ} = ⊤ := by
   have h1 : Algebra.adjoin ℚ ({ζ} : Set L) = ⊤ := IsCyclotomicExtension.adjoin_primitive_root_eq_top hζ
@@ -278,7 +277,6 @@ theorem log_norm_weight (u : ZMod N) (hu : u ≠ 1) :
   rw [mul_div_assoc', eq_div_iff ht.ne']
   exact key
 
-open Classical in
 
 theorem log_rd (U : Subgroup (ZMod N)ˣ)
     (hU : ∀ (σ : L ≃ₐ[ℚ] L) (u : (ZMod N)ˣ), σ ζ = ζ ^ (u : ZMod N).val →

@@ -23,7 +23,6 @@ theorem mem_intO_of_isIntegral {C : Type} [NormedField C] [IsUltrametricDist C] 
   obtain ⟨v, rfl⟩ := (IsIntegrallyClosed.isIntegral_iff (R := V) (K := C)).1 hz'
   exact v.2
 
-open Polynomial in
 
 theorem _root_.GlobalTheory.IntegralOfPointValues.isIntegral_inv_smul_of_closed {O C B₀ B₁ : Type*} [CommRing O] [Field C] [IsAlgClosed C]
     [Algebra O C] (hinj : Function.Injective (algebraMap O C))

@@ -36,7 +36,6 @@ abbrev toFlag : M.X ⟶ X.YY := M.σ ≫ inc₀ X Z
 
 abbrev flagIdx (la : AllWt.Weight Dw) (k : X.F.J) : ((L₀ X Z la).pull M.σ).ι := ((common₀ X Z).pull M.σ).idx la k
 
-open Classical in
 
 def IsKS (ω : H0 M.str (LB.div M.K.bundle ((L₀ X Z (FlagTan.kap Dw)).pull M.σ)) M.off) : Prop :=
   ∀ (K : Type) [Field K] [Algebra c.F K] (P Q : FrPt Xo c K) (t : Ix Dw → Kˣ)
@@ -61,16 +60,13 @@ structure CanId where
 
 variable {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (P : WtPar Dw)
 
-variable (Z) in
 
 instance (priority := high) cuspAddCommGroup (la : AllWt.Weight Dw) : AddCommGroup (Cusp Z U la) :=
   Submodule.addCommGroup _
 
-variable (Z) in
 
 instance (priority := high) cuspModule (la : AllWt.Weight Dw) : Module c.F (Cusp Z U la) := Submodule.module _
 
-variable (X Z) in
 
 abbrev Choice : Type 1 :=
   Resol (common₀ X Z) (U₀ X Z) (dimFlag Dw) (space X Z U P.u₁) (space X Z U P.u₂)
@@ -93,12 +89,10 @@ def adjGlobal (j : ℕ) : Submodule c.F (H0 R.str (R.adj j) R.off) := LinearMap.
 variable (x : ℝ) {D : Formalism.BasicNotions.D7} (V : (c.F →+* ℂ) → Formalism.BasicNotions.TH.HSp D)
   (dict : ∀ σ, Formalism.L2.Theta.GA D (V σ) → Σ k, FD.Frame ((U σ).X k).Ψ r)
 
-variable (Z U) in
 
 abbrev CuspFrame (la : AllWt.Weight Dw) : Type :=
   LatFrame (normOn U x V dict Z (wtOf Dw la 0)) (latOn U Z (wtOf Dw la 0))
 
-variable {x V dict} in
 
 theorem nonempty_cuspFrame {la : AllWt.Weight Dw} (h : GoodOn U x V dict Z (wtOf Dw la 0)) :
     Nonempty (CuspFrame Z U x V dict la) :=

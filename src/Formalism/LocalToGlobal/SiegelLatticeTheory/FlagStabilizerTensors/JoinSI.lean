@@ -96,7 +96,6 @@ end Twist
 
 section SpOf
 
-open Formalism.IndefR.Cx in
 
 theorem inner_spOf {D : D7} {X : HidaSetting D} (s : Bool) {Bs : DefBase D.what₂.LL} {Df : DefSide Bs} (Dc : DefCols Df)
     (hK : X.LevelSubgroupCharacter) (Gd : GoodOp X) (wdD : Dc.Mem → D.what₂.Word) (pw : ∀ x, PerW X hK (wdD x))
@@ -109,7 +108,6 @@ theorem inner_spOf {D : D7} {X : HidaSetting D} (s : Bool) {Bs : DefBase D.what�
   have h : (pw x).op (ramCrd (bR x) (cjVec s (Dc.a x) (cjv s c))) = (pw x).op (ramCrd (bR x) c) := by rw [hc]
   exact congrArg (fun w => Formalism.IndefR.Links.cj s ⟪Formalism.IndefR.Links.Tw.out v, w⟫_ℂ) h
 
-open Formalism.IndefR.Cx in
 
 end SpOf
 

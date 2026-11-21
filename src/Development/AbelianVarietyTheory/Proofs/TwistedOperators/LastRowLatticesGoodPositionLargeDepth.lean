@@ -33,7 +33,6 @@ noncomputable section
 
 namespace GlobalTheory.RowShape
 
-set_option maxHeartbeats 800000 in
 
 theorem shapeAt_big : Big fun ch => ShapeAt ch := by
   refine big_mono (fun {D} {Γ} _ _ {Pl0 T} {A} {Ks} _ _ _ {R} ch h => ?_)

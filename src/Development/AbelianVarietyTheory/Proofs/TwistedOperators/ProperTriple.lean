@@ -69,7 +69,6 @@ private lemma recover_colE_vec_from_embX_product {k : Type} [Field k] {n : Type}
   change ((↑x⁻¹ : Matrix n n k) *ᵥ ((x : Matrix n n k) *ᵥ β)) r = β r
   rw [Matrix.mulVec_mulVec, Units.inv_mul, Matrix.one_mulVec]
 
-open MeasureTheory ValuativeRel Matrix in
 
 theorem _root_.GlobalTheory.RootEx.ProperTriple.proper_triple : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (n : Type) [Fintype n] [DecidableEq n] (c ρ : ℕ) (_ : 1 ≤ ρ)

@@ -55,6 +55,5 @@ end GlobalTheory.ThetaCplV.UnitaryTrick
 
 namespace GlobalTheory.ThetaCplV
 
-open UnitaryTrick in
 
 end GlobalTheory.ThetaCplV

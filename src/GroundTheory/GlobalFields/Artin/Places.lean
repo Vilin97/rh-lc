@@ -39,11 +39,8 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
   [IsGalois K L] (H : Subgroup Gal(L/K)) (v : HeightOneSpectrum (𝓞 K))
   (w : HeightOneSpectrum (𝓞 L))
 
-omit [NumberField K] [NumberField L] [IsGalois K L] in
 
-omit [NumberField K] [NumberField L] [IsGalois K L] in
 
-omit [NumberField K] [NumberField L] [IsGalois K L] in
 
 end Finite
 

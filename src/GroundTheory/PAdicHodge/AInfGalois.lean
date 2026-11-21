@@ -25,7 +25,6 @@ variable {K L M : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [IsPerfectoidField L p]
   [IsPerfectoidField M p]
 
-variable (p) in
 
 def map (φ : K →+* L) (hφ : ∀ x, ‖φ x‖ = ‖x‖) : AInf K p →+* AInf L p :=
   WittVector.map (preTiltMap p φ hφ)
@@ -71,11 +70,8 @@ theorem map_frobeniusEquiv (φ : K →+* L) (hφ : ∀ x, ‖φ x‖ = ‖x‖) 
   rw [map_coeff, WittVector.frobeniusEquiv_coeff, WittVector.frobeniusEquiv_coeff, map_coeff,
     map_pow]
 
-omit [IsUltrametricDist K] in
 
-omit [IsUltrametricDist K] in
 
-variable (p) in
 
 end Functor
 

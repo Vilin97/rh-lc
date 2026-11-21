@@ -20,7 +20,6 @@ def Full (L : Submodule (𝓞 K) (Fin m → K)) : Prop := L.FG ∧ Submodule.spa
 
 variable (K' : Type) [Field K'] [NumberField K'] [Algebra K K']
 
-variable {K'} in
 
 end Lat
 

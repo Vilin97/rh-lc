@@ -214,7 +214,6 @@ theorem mk_eq_of (S : StepIn M i hi G) (β : S.Ch) {γ : GL (Fin (D.R.N i)) D.ho
     Subgroup.mem_subgroupOf.2 κ.2, Subtype.ext ?_⟩
   exact hx
 
-set_option maxHeartbeats 1000000 in
 
 theorem fiBPi (S : StepIn M i hi G) (β : S.Ch) : FiBPi S β := by
   intro f hf

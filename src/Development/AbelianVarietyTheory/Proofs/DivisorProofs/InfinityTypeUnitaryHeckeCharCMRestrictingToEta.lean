@@ -71,7 +71,6 @@ theorem continuous_single (v : InfinitePlace E) : Continuous (single v) :=
     show Continuous (fun z : ℂ => (Pi.mulSingle v z : InfinitePlace E → ℂ))
     exact continuous_mulSingle (A := fun _ : InfinitePlace E => ℂ) v)
 
-variable (E) in
 
 abbrev below (v : InfinitePlace E) : InfinitePlace (maximalRealSubfield E) := v.comap (algebraMap (maximalRealSubfield E) E)
 

@@ -23,7 +23,6 @@ variable {K : Type} [Field K]
 
 abbrev dK (f : K) : Ω[K⁄ℤ] := KaehlerDifferential.D ℤ K f
 
-variable (K) in
 
 def extD : abelian₂ K →+ abelian₂ K := (CechDR.dDR ℤ K).toAddMonoidHom
 
@@ -86,7 +85,6 @@ def LogUnit (Z : Set X) (y : X) (g : X.functionFieldˣ) : Prop :=
 def logAt (Z : Set X) (G : CartierDiv X) (a : ℕ) (y : X) : AddSubgroup (abelian₂ X.functionField) :=
   spanForms {c | G.RegularAt y c} (dlog '' {g | LogUnit Z y g}) a
 
-omit [IsIntegral X] in
 
 def latSec {V : Type} [AddCommGroup V] (M : X → AddSubgroup V) (U : X.Opens) : AddSubgroup V :=
   ⨅ y ∈ U, M y

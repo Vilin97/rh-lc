@@ -14,7 +14,6 @@ namespace Formalism.L2.DIV
 
 open Formalism.BasicNotions
 
-open scoped MatrixOrder in
 
 theorem ps_factor {n : ℕ} {T : Matrix (Fin n) (Fin n) ℂ} (hT : T.PosDef) :
     ∃ B : Matrix (Fin n) (Fin n) ℂ, IsUnit B.det ∧ T = B * Bᴴ := by

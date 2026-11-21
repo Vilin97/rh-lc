@@ -69,7 +69,6 @@ theorem log_charOf_of_horizontal {W : Ideal (MRing ι)} (h : IsHorizontal W) : R
     (Submodule.IsPrincipal.eq_bot_iff_generator_eq_zero _).mp h
   simp [charOf, hg]
 
-open Classical in
 
 theorem vert_weight_eq (W : Ideal (MRing ι)) (g : ℤ) :
     (if IsHorizontal W then 0 else (g : ℝ) * Real.log (charOf W)) = Real.log (charOf W) * g := by
@@ -108,7 +107,6 @@ end TwoBlock
 
 end TwoBlockModuleCycleAlt
 
-open TwoBlockModuleCycleAlt in
 
 theorem TwoBlockModuleCycle.proof : TwoBlockModuleCycle.Statement := by
   classical

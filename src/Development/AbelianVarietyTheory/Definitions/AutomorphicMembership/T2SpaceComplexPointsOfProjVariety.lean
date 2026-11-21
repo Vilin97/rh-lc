@@ -65,7 +65,6 @@ private theorem complex_smul_of_eq (c : ℂ) (a : A) :
   | (show c • ((1 : ℂ) ⊗ₜ[F] a) = c ⊗ₜ[F] a
      simp [TensorProduct.smul_tmul'])
 
-variable {σ} in
 
 @[elab_as_elim] theorem induction {P : CxExt σ A → Prop} (x : CxExt σ A)
     (smul : ∀ (c : ℂ) (a : A), P (c • of σ a)) (add : ∀ x y, P x → P y → P (x + y)) : P x := by
@@ -79,7 +78,6 @@ variable {σ} in
   · intro x y hx hy
     exact add x y hx hy
 
-variable {σ} in
 
 def lift {B : Type} [CommRing B] [Algebra ℂ B] (φ : A →+* B)
     (h : ∀ a, φ (algebraMap F A a) = algebraMap ℂ B (σ a)) : CxExt σ A →ₐ[ℂ] B :=
@@ -89,7 +87,6 @@ def lift {B : Type} [CommRing B] [Algebra ℂ B] (φ : A →+* B)
   Algebra.TensorProduct.lift (Algebra.ofId ℂ B) ({ φ with commutes' := h } : A →ₐ[F] B)
     fun _ _ => Commute.all _ _
 
-variable {σ} in
 
 @[simp] theorem lift_of {B : Type} [CommRing B] [Algebra ℂ B] (φ : A →+* B)
     (h : ∀ a, φ (algebraMap F A a) = algebraMap ℂ B (σ a)) (a : A) : lift φ h (of σ a) = φ a := by
@@ -234,7 +231,6 @@ def HasVal (y : Y.pts σ) (f : Y.FnC σ) (c : ℂ) : Prop :=
 
 def RegC (y : Y.pts σ) (f : Y.FnC σ) : Prop := ∃ c, HasVal y f c
 
-open Classical in
 
 def val (y : Y.pts σ) (f : Y.FnC σ) : ℂ := if h : RegC y f then h.choose else 0
 

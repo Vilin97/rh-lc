@@ -23,7 +23,6 @@ private theorem comp_eq {K : Type} [Field K] [NumberField K] {n : ℕ} (v : Pl K
   show (AdelicGLn.finiteRestrictedEquiv K n (AdelicGLn.prodEquiv K n (finEmb K n y)).2) v = _
   rw [prodEquiv_finEmb]
 
-open scoped Classical in
 
 private theorem levOn_inter {K : Type} [Field K] [NumberField K] {n : ℕ} (P : Finset (Pl K))
     (U : ∀ v : Pl K, Subgroup (Gw n v)) :

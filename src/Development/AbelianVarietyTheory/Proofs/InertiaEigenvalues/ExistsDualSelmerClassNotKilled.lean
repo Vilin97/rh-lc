@@ -157,7 +157,6 @@ theorem card_selOn {a : ℕ} (Φ : Matrix (Fin a) (Fin a) A) (Z : GE N → Matri
     change y.1 g - (z ⟨x, hx⟩).1 g = _
     rw [hz]
 
-omit [Algebra (X.O0 i) A] in
 
 theorem card_invariants_torsion_submodule {Γ O : Type} [Group Γ] [CommRing O] [Algebra O A] {r : ℕ} (ρ : Γ →* GL (Fin r) O) (κ : Γ →* Aˣ)
     (U : Subgroup Γ) (Y' : Type) [AddCommGroup Y'] [Module A Y'] (c : A)

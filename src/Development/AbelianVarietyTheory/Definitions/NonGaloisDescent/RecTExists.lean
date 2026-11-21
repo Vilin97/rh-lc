@@ -33,7 +33,6 @@ end Classes
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
-variable (h) in
 
 def TypeLaw (rc : IrrGL (w.adicCompletion E) → WD h) : Prop :=
   ∀ (E' : Type) [Field E'] [NumberField E'] [Algebra E E'] [Algebra E' Ω] [IsScalarTower E E' Ω] [IsAlgClosure E' Ω]
@@ -74,7 +73,6 @@ structure LawsT (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a)
   depth : ∀ x, Good x → fixed x.rep (KOne (w.adicCompletion E) (Fin x.1)) ≠ ⊥ → IsTameWD (rc x)
   type : TypeLaw h rc
 
-variable (h) in
 
 end GlobalTheory.RecT
 

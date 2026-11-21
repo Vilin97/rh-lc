@@ -70,7 +70,6 @@ theorem divCycle_mul' {P : Ideal (MRing ι)} (hP : P.IsPrime) {f g : MRing ι}
   · rw [if_neg h, if_neg fun h2 => h (mem_divSupp_mul_left' hP hg h2),
       if_neg fun h2 => h (by rw [mul_comm]; exact mem_divSupp_mul_left' hP hf h2)]
 
-open Classical in
 
 def cycWeight (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) {n : ℕ}
     (L : Fin n → HermLine ι) (W : Ideal (MRing ι)) : ℝ :=

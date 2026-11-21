@@ -83,7 +83,6 @@ section AtPoint
 
 variable {F : Type u} [Field F] (E : WeierstrassCurve F) {L : Type v} [Field L] [Algebra F L]
 
-open Classical in
 
 noncomputable def omegaAt : (E.baseChange L).toAffine.Point → Ω[L⁄F]
   | .zero => 0
@@ -472,7 +471,6 @@ theorem invCoeff_invariantDifferential : invCoeff E (invariantDifferential E) = 
 
 variable {E} {E' : WeierstrassCurve F} [E'.IsElliptic]
 
-variable (E E') in
 
 noncomputable def homCoeff : isogHom E E' →+ E.toAffine.FunctionField where
   toFun Q := invCoeff E (omegaAt E' Q.1)
@@ -494,18 +492,15 @@ theorem isogenyPullback_invariantDifferential_eq_smul (φ : Isogeny E E') :
     isogenyPullback φ (invariantDifferential E') = isogCoeff φ • invariantDifferential E := by
   rw [isogenyPullback_invariantDifferential, isogCoeff, homCoeff_smul]
 
-variable (E) in
 
 noncomputable def homIdentity : isogHom E E := ⟨genericPoint E, respectsAdd_genericPoint⟩
 
-variable (E) in
 
 theorem homCoeff_zsmul_homIdentity (n : ℤ) : homCoeff E E (n • homIdentity E) = n := by
   rw [map_zsmul]
   show n • invCoeff E (invariantDifferential E) = _
   rw [invCoeff_invariantDifferential, zsmul_one]
 
-variable (E) in
 
 variable (E) in
 theorem isogCoeff_mulIsogeny (n : ℤ) (hn : n ≠ 0) : isogCoeff (mulIsogeny E n hn) = n :=

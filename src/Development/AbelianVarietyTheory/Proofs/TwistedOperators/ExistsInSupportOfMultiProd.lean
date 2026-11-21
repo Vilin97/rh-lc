@@ -47,13 +47,11 @@ theorem nontrivial_piTensor {α : Type} [Fintype α] (X : α → Type) [∀ a, A
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem det_scalar_one {d : ℕ} (hd : d = 1) (z : kˣ) :
     GeneralLinearGroup.det (GeneralLinearGroup.scalar (Fin d) z) = z := by
   ext; simp [GeneralLinearGroup.scalar, hd]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem eq_scalar_det {d : ℕ} (hd : d = 1) (g : GL (Fin d) k) :
     g = GeneralLinearGroup.scalar (Fin d) (GeneralLinearGroup.det g) := by

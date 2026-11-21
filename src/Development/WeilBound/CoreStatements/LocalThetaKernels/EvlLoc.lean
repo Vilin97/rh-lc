@@ -19,7 +19,6 @@ namespace PositivityTheory.ThKH.Evl
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Invertible (2 : k)]
   {κ : Type} [Fintype κ] {ψ : AddChar k ℂ}
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem schr_schr (w w' : (κ → k) × (κ → k)) (φ : (κ → k) → ℂ) :
     schr ψ w (schr ψ w' φ) = ψ (⅟(2 : k) * (w.1 ⬝ᵥ w'.2 - w'.1 ⬝ᵥ w.2)) • schr ψ (w + w') φ := by
@@ -96,7 +95,6 @@ theorem core (hc : Continuous ψ) (hn : ∀ x, ‖ψ x‖ = 1) (h1 : ψ ≠ 1) {
     have : (ψ t - 1) * l (schr ψ b φ₀) = 0 := by linear_combination e1
     exact (mul_eq_zero.1 this).resolve_left (sub_ne_zero.2 hψ)
 
-omit [Invertible (2 : k)] in
 
 theorem exists_subgroup (κ : Type) [Fintype κ] : ∃ U : AddSubgroup (κ → k), IsCompact (U : Set (κ → k)) ∧
     (U : Set (κ → k)).indicator (fun _ => (1 : ℂ)) ∈ SB (κ → k) := by
@@ -136,7 +134,6 @@ theorem transl (hc : Continuous ψ) (hn : ∀ x, ‖ψ x‖ = 1) (h1 : ψ ≠ 1)
       · have : x + u ∉ U := fun h' => hx ((U.add_mem_cancel_right hu).1 h')
         simp [hx, this]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Invertible (2 : k)] in
 
 theorem mem_of_orth (large₂ : Submodule k ((κ → k) × (κ → k)))
     (hiso : ∀ w ∈ large₂, ∀ w' ∈ large₂, w.1 ⬝ᵥ w'.2 = w'.1 ⬝ᵥ w.2) (hdim : Module.finrank k large₂ = Fintype.card κ)

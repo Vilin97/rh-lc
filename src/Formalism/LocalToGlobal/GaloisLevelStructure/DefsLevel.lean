@@ -57,7 +57,6 @@ def IsPsi0 (s : SplitPlace L) (ψ₀ : AddChar (s.v.adicCompletion L⁺) ℂ) : 
 
 end lvl
 
-open Formalism.BasicNotions in
 
 def paramV (R : Ranks) (h : HCParam R) (j : Fin R.m) (sh : ℂ) : Multiset ℂ :=
   (Finset.univ.val.map fun i : Fin (R.k - 1) => ((h.v i : ℚ) : ℂ) - sh) +

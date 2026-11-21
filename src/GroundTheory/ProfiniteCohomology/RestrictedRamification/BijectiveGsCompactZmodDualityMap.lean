@@ -22,7 +22,6 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) [Fintype 
   (hμ : ∀ ζ : ℚ̄, ζ ^ n = 1 → ζ ∈ K.1) (hodd : Odd n ∨ IsTotallyComplex K.1)
   (h3 : Subsingleton (cohomology (gsRoots S n) 3))
 
-include ℓ k hℓ hnk hS hμ in
 
 theorem BaseDualityHypotheses.of_gs
     (h3Z : Subsingleton (cohomology (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 3))
@@ -54,7 +53,6 @@ theorem BaseDualityHypotheses.of_gs
     (compactCupRes_zmodMulPairingRight_swap (gsFinFamily S ιs) (gsRoots S n) (nsmul_gsRoots S n)
       (_root_.GroundTheory.ProfCoh.localToCompact_two_surjective S ιs n h3) yc xc)
 
-include ℓ k hℓ hnk hS hμ in
 
 theorem bijective_gs_compactZmodDualityMap
     (h3Z : Subsingleton (cohomology (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 3))

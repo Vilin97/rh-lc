@@ -419,7 +419,5 @@ theorem valMult_of_section (hV : IsVariety₀ X Z) (hC : ∀ la, CuspIso X Z U l
 
 end Component
 
-open TopologicalSpace ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CechPic GlobalTheory.Vanishing in
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.ValMultRun

@@ -175,7 +175,6 @@ open DividedPowers in
 variable {B : Type} [CommRing B] {J : Ideal B} in
 attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
   _root_.GlobalTheory.PDA.PDPoly.alg in
-open Polynomial TensorProduct in
 
 theorem _root_.GlobalTheory.PDA.ratBasis_zero : _root_.GlobalTheory.PDA.ratBasis 0 = 1 := by
   rw [ratBasis_eq_C_inv_factorial_mul_X_pow]; simp
@@ -185,7 +184,6 @@ open DividedPowers in
 variable {B : Type} [CommRing B] {J : Ideal B} in
 attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
   _root_.GlobalTheory.PDA.PDPoly.alg in
-open Polynomial TensorProduct in
 
 theorem _root_.GlobalTheory.PDA.ratBasis_mul (m n : ℕ) : _root_.GlobalTheory.PDA.ratBasis m * _root_.GlobalTheory.PDA.ratBasis n = ((m + n).choose m : ℚ[X]) * _root_.GlobalTheory.PDA.ratBasis (m + n) := by
   have key : ((m.factorial : ℚ)⁻¹ * (n.factorial : ℚ)⁻¹)
@@ -201,7 +199,6 @@ theorem _root_.GlobalTheory.PDA.ratBasis_mul (m n : ℕ) : _root_.GlobalTheory.P
         rw [C_mul]; ring, ← key, C_mul]
   ring
 
-open Classical in
 
 def intForm : Subalgebra ℤ ℚ[X] :=
   (Submodule.span ℤ (Set.range ratBasis)).toSubalgebra
@@ -225,7 +222,6 @@ open DividedPowers in
 variable {B : Type} [CommRing B] {J : Ideal B} in
 attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
   _root_.GlobalTheory.PDA.PDPoly.alg in
-open Polynomial TensorProduct in
 
 theorem _root_.GlobalTheory.PDA.ratBasis_linearIndependent_int : LinearIndependent ℤ _root_.GlobalTheory.PDA.ratBasis :=
   _root_.GlobalTheory.PDA.ratBasis.linearIndependent.restrict_scalars' ℤ
@@ -248,7 +244,6 @@ open DividedPowers in
 variable {B : Type} [CommRing B] {J : Ideal B} in
 attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
   _root_.GlobalTheory.PDA.PDPoly.alg in
-open Polynomial TensorProduct in
 
 theorem _root_.GlobalTheory.PDA.intBasis_zero : _root_.GlobalTheory.PDA.intBasis 0 = 1 :=
   Subtype.ext (by simp [intBasis_cast_eq_ratBasis, _root_.GlobalTheory.PDA.ratBasis_zero])
@@ -258,7 +253,6 @@ open DividedPowers in
 variable {B : Type} [CommRing B] {J : Ideal B} in
 attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
   _root_.GlobalTheory.PDA.PDPoly.alg in
-open Polynomial TensorProduct in
 
 theorem _root_.GlobalTheory.PDA.intBasis_mul (m n : ℕ) : _root_.GlobalTheory.PDA.intBasis m * _root_.GlobalTheory.PDA.intBasis n = ((m + n).choose m : _root_.GlobalTheory.PDA.intForm) * _root_.GlobalTheory.PDA.intBasis (m + n) :=
   Subtype.ext (by simp [intBasis_cast_eq_ratBasis, _root_.GlobalTheory.PDA.ratBasis_mul])

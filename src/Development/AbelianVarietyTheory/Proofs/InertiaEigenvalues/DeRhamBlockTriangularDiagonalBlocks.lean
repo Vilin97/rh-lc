@@ -56,7 +56,6 @@ namespace GlobalTheory.PMon
 
 open scoped Matrix
 
-open SubquotientAlgEquiv in
 
 theorem subQuot : SubQuot := by
   intro l _ P AI T a b _ _ _ _ K r ρ ρ₁ ρ₂ c _ hblk hdr

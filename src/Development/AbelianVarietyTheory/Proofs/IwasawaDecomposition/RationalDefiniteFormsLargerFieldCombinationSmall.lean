@@ -36,7 +36,6 @@ private theorem span_of_bc {K L : Type} [Field K] [NumberField K] [StarRing K] [
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, LinearMap.map_smulₛₗ, ← hψ k, eq_of_heq (h (ψ k))]
 
-set_option maxHeartbeats 4000000 in
 
 private theorem exists_bc {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} (w : ColW B f T)
     (w' : ColW B' f' T') (Wt : Set B.places.Pl) (Wt' : Set B'.places.Pl) (hE : Enl0 B B') (hf : HEq f' f) (hpx : HEq w'.px w.px)
@@ -85,7 +84,6 @@ private theorem exists_bc {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T :
     rw [hC] at e1
     exact e1.trans e2.symm
 
-set_option maxHeartbeats 2000000 in
 
 private theorem gf_eq {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T}
     {w' : ColW B' f' T'} (Z : w.Lt) (Z' : w'.Lt) (h : B'.toPre = B.toPre) (i : Fin (w.st Z).toD7.R.m)

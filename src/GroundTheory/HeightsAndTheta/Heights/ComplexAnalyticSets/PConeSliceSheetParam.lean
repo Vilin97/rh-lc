@@ -71,7 +71,6 @@ theorem slice_isPrime {n : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)} {ℓ : Fi
 
 end ConeSliceSheetParam
 
-open ConeSliceSheetParam in
 
 theorem ConeSliceSheetParam.proof (hCov : DiscriminantSheetCover.Statement) :
     ConeSliceSheetParam.Statement := by

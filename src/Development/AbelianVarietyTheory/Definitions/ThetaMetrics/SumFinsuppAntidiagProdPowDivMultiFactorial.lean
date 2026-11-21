@@ -247,14 +247,12 @@ theorem support_subset_monomialsLE {R : Type*} [CommSemiring R] {P : MvPolynomia
   ⟨fun h ↦ Finset.sup_le fun _ hα ↦ mem_monomialsLE.mp (h hα),
     fun h _ hα ↦ mem_monomialsLE.mpr ((degree_le_totalDegree hα).trans h)⟩
 
-omit [DecidableEq σ] in
 
 theorem card_support_le_choose {R : Type*} [CommSemiring R] {P : MvPolynomial σ R} {d : ℕ}
     (h : P.totalDegree ≤ d) : #P.support ≤ (Fintype.card σ + d).choose d := by
   classical
   exact card_monomialsLE σ d ▸ card_le_card (support_subset_monomialsLE.mpr h)
 
-omit [DecidableEq σ] in
 
 theorem ncard_setOf_degree_le (d : ℕ) :
     {α : σ →₀ ℕ | α.degree ≤ d}.ncard = (Fintype.card σ + d).choose d := by
@@ -264,7 +262,6 @@ theorem ncard_setOf_degree_le (d : ℕ) :
   ext α
   simp
 
-omit [DecidableEq σ] in
 
 theorem finrank_restrictTotalDegree (R : Type*) [CommRing R] [Nontrivial R] (d : ℕ) :
     Module.finrank R (restrictTotalDegree σ R d) = (Fintype.card σ + d).choose d := by

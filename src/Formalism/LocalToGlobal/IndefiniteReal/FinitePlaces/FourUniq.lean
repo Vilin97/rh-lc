@@ -72,7 +72,6 @@ def Gk (L Y : AddSubgroup W) (k : ℕ) : AddSubgroup (QY L Y) :=
 def Pk (ρ : W → Module.End ℂ V) (L Y : AddSubgroup W) (f₀ : V) (k : ℕ) : V :=
   (Nat.card (Gk L Y k) : ℂ)⁻¹ • ∑ᶠ g : Gk L Y k, ρ ((g : QY L Y).out) f₀
 
-open Classical in
 
 def indk (L X : AddSubgroup W) (k : ℕ) (t : W) : ℂ := if t ∈ smulSub k (L ⊓ X) then 1 else 0
 
@@ -283,8 +282,6 @@ variable {ρ : W → Module.End ℂ V} {χ : W → W → ℂ} {L X Y : AddSubgro
   (hfinX : ∀ k, 0 < k → Finite (Qt k (L ⊓ X))) (hfinY : ∀ k, 0 < k → Finite (Qt k (L ⊓ Y)))
   (htf : ∀ k : ℕ, 0 < k → ∀ t : W, k • t = 0 → t = 0)
 
-include hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf in
-open Classical in
 
 theorem T_formula (T : (W → ℂ) →ₗ[ℂ] V)
     (htr : ∀ Φ, IsSB L X Φ → ∀ x ∈ X, T (fun t => Φ (t + x)) = ρ x (T Φ))
@@ -356,8 +353,6 @@ theorem T_formula (T : (W → ℂ) →ₗ[ℂ] V)
   rw [map_smul, htr _ (isSB_indk hk) _ (hX q hq),
     T_indk hχl hχr hχ0 hLL hdX hdivX hdivY hfinY htf T hmo hva hk]
 
-include hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf in
-open Classical in
 
 theorem model_unique (T T' : (W → ℂ) →ₗ[ℂ] V)
     (htr : ∀ Φ, IsSB L X Φ → ∀ x ∈ X, T (fun t => Φ (t + x)) = ρ x (T Φ))
@@ -371,8 +366,6 @@ theorem model_unique (T T' : (W → ℂ) →ₗ[ℂ] V)
   rw [T_formula hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf T' htr' hmo' hva' hk hs hi hl,
     T_formula hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf T htr hmo hva hk hs hi hl]
 
-include hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf in
-open Classical in
 
 theorem model_mem_span (T : (W → ℂ) →ₗ[ℂ] V)
     (htr : ∀ Φ, IsSB L X Φ → ∀ x ∈ X, T (fun t => Φ (t + x)) = ρ x (T Φ))

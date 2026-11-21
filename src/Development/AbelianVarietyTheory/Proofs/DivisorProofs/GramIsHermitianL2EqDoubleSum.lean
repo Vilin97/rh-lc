@@ -26,9 +26,6 @@ private lemma ofReal_norm_sum_mul_sq_eq_double_sum_conj {ι : Type} [Fintype ι]
   rw [map_mul]
   ring
 
-set_option autoImplicit false in
-open Filter Topology MeasureTheory in
-open scoped ComplexOrder Matrix in
 
 theorem _root_.GlobalTheory.HSAmp.gram_isHermitian_and_l2_eq_quadratic_form (S : Type) (Y : S → Type)
     [∀ σ, MeasurableSpace (Y σ)] (ι : Type) [Fintype ι]

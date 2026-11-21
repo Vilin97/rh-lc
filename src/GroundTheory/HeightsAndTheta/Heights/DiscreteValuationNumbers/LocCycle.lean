@@ -20,7 +20,6 @@ section Defs
 
 variable {R : Type*} [CommRing R]
 
-open Classical in
 
 def locCycle (J W : Ideal R) : ℤ :=
   if h : W ∈ J.minimalPrimes then

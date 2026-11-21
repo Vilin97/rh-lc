@@ -74,7 +74,6 @@ lemma emb_comb [IsCMField E] (σ : E →+* ℂ) (c : ℂ) :
         · exact hτ' (by rw [← h]; exact (ComplexEmbedding.involutive_conjugate (K := E) τ).symm)
       simp [hτ, hτ', hm]
 
-open Classical in
 
 lemma Mc_comb [IsCMField E] {dim : (E →+* ℂ) → ℕ} (σ : E →+* ℂ) (c : ℂ) :
     ∃ r : Module.Free.ChooseBasisIndex ℤ (𝓞 E) → ℝ, ∀ v : Vsp dim,

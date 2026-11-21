@@ -332,7 +332,6 @@ theorem mkC_cocycle {a : ℕ} (z : Cn (modF (AF q V)) a) (hz : InF q V a z) (hd 
   rw [d_mkC]
   exact mkC_eq_zero _ _ hd
 
-variable (q V) in
 
 abbrev FL (Λ : Lifts q V) {a : ℕ} (g₀ : Sec q V) (g : Fin a → Sec q V) : Cn (modF (AF q V)) a :=
   Fm (AF q V) (cz fun T => Λ.v T g₀) a fun j => cz fun T => Λ.v T (g j)
@@ -346,7 +345,6 @@ theorem FL_dmem (Λ : Lifts q V) {a : ℕ} (g₀ : Sec q V) (g : Fin a → Sec q
     InF q V (a + 1) (d _ a (FL q V Λ g₀ g)) :=
   dFm_mem _ (dcz_mem (isL Λ g₀)) a _ fun j => dcz_mem (isL Λ (g j))
 
-variable (q V) in
 
 def clsL (Λ : Lifts q V) {a : ℕ} (g₀ : Sec q V) (g : Fin a → Sec q V) : CH.H (SqF q V a) a :=
   (CH.cx (SqF q V a)).cls (mkC (FL q V Λ g₀ g) (FL_mem Λ g₀ g)) (mkC_cocycle _ _ (FL_dmem Λ g₀ g))

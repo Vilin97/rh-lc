@@ -99,7 +99,6 @@ section Assembly
 
 variable (U : ShimU D G jC ng w)
 
-open Classical in
 
 end Assembly
 

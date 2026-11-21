@@ -69,7 +69,6 @@ variable (X : Formalism.MainNotions.G.Inst D L) (Y : Formalism.MainNotions.G.Lat
   (u : D.what₂.Word) (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w))
   (t0 : Formalism.MainNotions.G.HH D) (ht0 : t0 ∈ Formalism.MainNotions.G.reps X (D.what₂.places.resChar w))
 
-include hL ht0 in
 
 theorem ne_w_non (j : ℕ) (hj : j ∈ SizeData₂.lifts D) (s : Fin ((D.gat u w hg).P.n' (Y.vOf u w hg t0)))
     (hs : s ∉ (Y.Fl u w hg).TT (Y.vOf u w hg t0)) :
@@ -84,7 +83,6 @@ theorem ne_w_non (j : ℕ) (hj : j ∈ SizeData₂.lifts D) (s : Fin ((D.gat u w
   have h6 := ne_kaJ_nonneg (D := D) j (Finset.mem_Icc.1 hj).1
   linarith
 
-include hL ht0 in
 
 theorem ne_w_top (j : ℕ) (hj : j ∈ SizeData₂.lifts D) (s : Fin ((D.gat u w hg).P.n' (Y.vOf u w hg t0)))
     (hs : s ∈ (Y.Fl u w hg).TT (Y.vOf u w hg t0)) :
@@ -116,7 +114,6 @@ theorem ne_Nm (j : ℕ) (hj : j ∈ SizeData₂.lifts D) : (j : ℝ) * ((D.R.t :
 
 end Orbit
 
-open Classical in
 
 theorem price_bound_large_primes : PriceBoundLargePrimes 1 := by
   intro D L X Y K hK _ hT hL u w hg hp t0 ht0 j hj

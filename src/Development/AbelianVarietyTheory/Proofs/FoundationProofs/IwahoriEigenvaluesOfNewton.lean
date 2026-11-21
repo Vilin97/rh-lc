@@ -299,7 +299,6 @@ theorem isUnit_diag {r : ℕ} (g : GL (Fin r) (Int F)) (hg : g ∈ iwahoriInt F 
 
 end Valued
 
-open GlobalTheory.IndefiniteRowSideFullHecke.IwahoriSubgroup WithZero in
 
 theorem iwahoriEigenvalues_of_newton (hN : Formalism.PacketSums.IwahoriNewton) : IwahoriEigenvalues := by
   intro F _ _ _ ϖ hϖ r a ha g hg

@@ -333,7 +333,6 @@ theorem mem_holSub {Comp : Type} (X : Comp → Data E r) (la : ∀ k, Wt (X k).�
 theorem dom_add {a a' : (E →+* ℂ) × ℕ → ℕ} {n n' : ℕ} (h : Dom a n) (h' : Dom a' n') : Dom (a + a') (n + n') :=
   ⟨fun τ => (h.1 τ).add (h'.1 τ), h.2.add h'.2⟩
 
-open Classical in
 
 def shift (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (k : ℕ) (a : (E →+* ℂ) × ℕ → ℕ) : (E →+* ℂ) × ℕ → ℕ :=
   fun x => a x - if InPsi H x.1 then 2 * k else 0
@@ -390,7 +389,6 @@ theorem mul_detU_mem (hf : 1 < Module.finrank ℚ E / 2) {σ : c.F →+* ℂ} (U
   · show P k x * _ = 0
     rw [hP.2 k x hx, zero_mul]
 
-set_option maxHeartbeats 2000000 in
 
 theorem mem_cusp_of_span (hf : 1 < Module.finrank ℚ E / 2) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r)
     (hU : ∀ σ, GoodEmb c σ → IsUnf (U σ))
@@ -561,7 +559,6 @@ open scoped TensorProduct
 open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Datum Formalism.IndefR.FWT Formalism.L2.Pj GlobalTheory.CoverRead
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_cuspA_of_rdU_mem_holSub0 : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, InR D j → ∀ w : WeightFamilies.Wt D j, w.LastPos → ∀ f ∈ sec (T.Q.Xo j) T.Q.c (wtA w) w.n, rdU (T.U j T.σ₀) f ∈ holSub0 (T.U j T.σ₀).X (laU (T.U j T.σ₀) (wtA w) w.n) → f ∈ T.cuspA j (wtA w) w.n := by
   intro D T h j hj w hw f hf hfh

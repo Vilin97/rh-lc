@@ -16,11 +16,9 @@ variable {k : Type} [Field k]
 
 def uv (n : ℕ) (v : Fin n → k) : Mir k n := unipIn k n (Multiplicative.ofAdd v)
 
-variable (k) in
 
 def LH (n : ℕ) : Subgroup (Mir k n) := (levi k n).range
 
-variable (k) in
 
 def lv (n : ℕ) : GL (Fin n) k →* LH k n := (levi k n).rangeRestrict
 

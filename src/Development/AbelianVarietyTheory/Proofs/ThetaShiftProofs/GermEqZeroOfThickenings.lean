@@ -200,7 +200,6 @@ def IsTau (J : Ideal S) (x : Sp S ⟶ G.left) (jL : U.LG.L.ι) (jM : D.toPre.P.L
   ∀ (e : ℕ) (xe : Sp (S ⧸ J ^ (e + 1)) ⟶ (thickObj R I e G).left), xe ≫ (fstG I e G).left = thick S J e ≫ x →
     Ideal.Quotient.mk _ τ * wVal U e xe jL jM = 1
 
-open Classical in
 
 def tau (J : Ideal S) (x : Sp S ⟶ G.left) (jL : U.LG.L.ι) (jM : D.toPre.P.L.ι) : Sˣ :=
   if h : ∃ τ : Sˣ, IsTau U J x jL jM τ then h.choose else 1
@@ -335,7 +334,6 @@ theorem top_le_secChart {jL : U.LG.L.ι} (hL : ⊤ ≤ x ⁻¹ᵁ U.LG.L.U jL) :
     ⊤ ≤ x ⁻¹ᵁ LB.wchart U.LG.L (fun _ : Fin 1 => 𝟙 G.left) (fun _ => jL) :=
   fun _ hz => Set.mem_iInter.2 fun _ => hL hz
 
-variable (U) in
 
 theorem expandsAt_value {e k : ℕ} {σ : H0 U.LG.L k} {f : ∀ α : D.toPre.X, D.toPre.SecB k α}
     (h : U.ExpandsAt e k σ f) : ∃ F : Finset D.toPre.X, ∀ (S : Type) [CommRing S] (s : Sp S ⟶ Sp R)
@@ -473,7 +471,6 @@ theorem isTau_tau (h : IsFormalPt U J g x) (hL : ⊤ ≤ x ⁻¹ᵁ U.LG.L.U jL)
   rw [tau, dif_pos (exists_isTau h hL hM)]
   exact (exists_isTau h hL hM).choose_spec
 
-omit [IsLocalRing S] in
 
 theorem IsTau.unique (h : IsFormalPt U J g x) {a b : S} (ha : IsTau U J x jL jM a) (hb : IsTau U J x jL jM b) :
     a = b :=
@@ -598,7 +595,6 @@ theorem exists_isZero (P : DegPre R) (T : Over (Sp R)) : ∃ g : GtPt P T, g.IsZ
   exact congrArg₂ (· * ·) ((v _ y J hJ).trans (v _ y J hJ).symm)
     (c.trans (((isCub_cubV P.cub hJ).face₃ _ _).trans (v _ y J hJ).symm))
 
-variable (U) in
 
 theorem isFormalPt_zero (φ : R →+* S) {g : GtPt D.toPre (Over.mk (spMap φ))} (hg : g.IsZero) :
     IsFormalPt U (I.map φ) g (spMap φ ≫ eSec G) := by
@@ -622,7 +618,6 @@ theorem isFormalPt_zero (φ : R →+* S) {g : GtPt D.toPre (Over.mk (spMap φ))}
     refine (val_pull hJ _ _ _).symm.trans ((val_corr hJ ((U.gt e).t_unit χ) r).trans ((val_one _).trans ?_))
     exact ((val_corr hJ (hg.2 χ) _).trans (val_one _)).symm
 
-variable (U) in
 
 theorem map_secVal_eq {e k : ℕ} {σ : H0 U.LG.L k} {f : ∀ α : D.toPre.X, D.toPre.SecB k α}
     (h : U.ExpandsAt e k σ f) : ∃ F : Finset D.toPre.X, ∀ (S : Type) [CommRing S] [IsLocalRing S] (J : Ideal S)
@@ -652,7 +647,6 @@ theorem map_secVal_eq {e k : ℕ} {σ : H0 U.LG.L k} {f : ∀ α : D.toPre.X, D.
   rw [map_mul, e₁, ← h₁ jL jM jf jt hL hM fun α hα => hc α (hFF hα), map_pow, ← _root_.mul_assoc, ← mul_pow,
     map_tau_mul_wVal hx hL hM ρ hρ H.1, one_pow, _root_.one_mul]
 
-variable (U) in
 
 theorem expansion_unique [IsNoetherianRing R] [IsAdicComplete I R] {k : ℕ} {σ : H0 U.LG.L k}
     {f f' : ∀ α : D.toPre.X, D.toPre.SecB k α} (h : ∀ e, U.ExpandsAt e k σ f) (h' : ∀ e, U.ExpandsAt e k σ f') :

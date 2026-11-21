@@ -19,7 +19,6 @@ open CategoryTheory Limits
 variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]
   [TotallyDisconnectedSpace G]
 
-omit [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] in
 
 theorem exists_openSubgroup_subgroupOf_eq (U : OpenSubgroup G) (N : Subgroup (U : Subgroup G))
     (hN : IsOpen (N : Set (U : Subgroup G))) :
@@ -30,7 +29,6 @@ theorem exists_openSubgroup_subgroupOf_eq (U : OpenSubgroup G) (N : Subgroup (U 
 
 variable {C : Rep.{0} (ULift.{0} ℤ) G} [IsDiscreteRep C] (F : ClassFormation C)
 
-include F in
 
 theorem ClassFormation.subsingleton_groupCohomology_three_quot (U : OpenSubgroup G)
     (N : Subgroup (U : Subgroup G)) [N.Normal] (hN : IsOpen (N : Set (U : Subgroup G))) :
@@ -46,7 +44,6 @@ theorem ClassFormation.subsingleton_groupCohomology_three_quot (U : OpenSubgroup
     (fun S => (F.tate_hypotheses hVU S).1) (fun S => (F.tate_hypotheses hVU S).2.1)
     (fun S => (F.tate_hypotheses hVU S).2.2)
 
-include F in
 
 theorem ClassFormation.subsingleton_cohomology_three (U : OpenSubgroup G) :
     Subsingleton (cohomology (Rep.res (U : Subgroup G).subtype C) 3) := by

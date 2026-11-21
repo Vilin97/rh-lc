@@ -86,7 +86,6 @@ theorem phi0_algebraic (D : D7) (x : D.host.E) : D.host.φ₀ x ∈ Qbar := by
 
 end MMConj
 
-open MMConj in
 
 theorem conjugation_extension_inert : ConjExt := by
   intro D p _ _ hj lam

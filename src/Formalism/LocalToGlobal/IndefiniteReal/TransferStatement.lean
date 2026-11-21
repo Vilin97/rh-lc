@@ -29,7 +29,6 @@ def eGood {S : Type*} [Fintype S] {T : S → Type*} [∀ s, AddCommGroup (T s)] 
     (τ : ∀ s, Representation K G (T s)) (ρ : Representation K G V) : V →ₗ[K] V :=
   ∑ s, eS (τ s) ρ
 
-open Classical in
 
 def epP (H : Subgroup G) (χ : H →* (𝓞 K)ˣ) {V : Type*} [AddCommGroup V] [Module K V]
     (ρ : Representation K G V) : V →ₗ[K] V :=
@@ -73,7 +72,6 @@ section Places
 
 variable {K : Type*} [Field K] [NumberField K]
 
-open Classical in
 
 end Places
 

@@ -18,7 +18,6 @@ namespace GlobalTheory.SemiAbMulFlat
 
 open FibreFlat FiniteFibreFlat
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem flat_of_flatOver_fields {X Y S : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ S)
     (hY : LocallyOfFinitePresentation g) (h0 : LocallyOfFinitePresentation (f ≫ g))

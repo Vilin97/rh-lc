@@ -25,7 +25,6 @@ def LanglandsSumMultiplicityOne : Prop :=
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
   {𝔪 𝔫 : Multiset (Segment k)} {r t : ℕ} {π₁ : IrrRep (GL (Fin r) k)} {π₂ : IrrRep (GL (Fin t) k)}
 
-omit [CharZero k] in
 
 end GlobalTheory.Published
 

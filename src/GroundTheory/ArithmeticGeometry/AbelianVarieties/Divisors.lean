@@ -143,7 +143,6 @@ theorem exists_eq_XYIdeal {P : Ideal W.toAffine.CoordinateRing} [hP : P.IsPrime]
       ((isMaximal_XYIdeal ((equation_neg ..).mpr hy)).eq_of_le hP.ne_top h1).symm⟩
   · exact ⟨x, y, hns, ((isMaximal_XYIdeal hy).eq_of_le hP.ne_top h1).symm⟩
 
-omit [IsAlgClosed F] [W.IsElliptic] in
 
 theorem isDiscreteValuationRing_localization_XYIdeal {x y : F} (h : W.toAffine.Nonsingular x y)
     [(XYIdeal W.toAffine x (C y)).IsPrime] :

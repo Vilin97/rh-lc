@@ -75,7 +75,6 @@ theorem exists_entire {V W : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [N
     intro k _
     rw [← zpow_add₀ (hne _ _ (hj k)), neg_add_cancel, zpow_zero]
 
-open AppellHumbertTrivial in
 
 theorem norm_mul_exp_add {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.IsHermitian) {x y χ : ℂ} {z l : Fin g → ℂ}
     (hχ : ‖χ‖ = 1) (h : x = χ * Complex.exp (Real.pi * hermForm Hm z l + Real.pi / 2 * hermForm Hm l l) * y) :
@@ -88,7 +87,6 @@ theorem norm_mul_exp_add {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.Is
   congr 2
   ring
 
-open AppellHumbertTrivial in
 
 theorem exists_entire_weight {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.IsHermitian) {K : Type} [Fintype K]
     (ε n : K → ℤ) (a : K → Fin g → ℂ) (h0 : ∑ k, ε k * n k ^ 2 = 0) :

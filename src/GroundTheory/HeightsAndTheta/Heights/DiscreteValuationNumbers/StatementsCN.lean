@@ -27,7 +27,6 @@ def shiftFn (s : K → ℤ) (f : (K → ℤ) → ℤ) : (K → ℤ) → ℤ := f
 
 variable {ι : K → Type*}
 
-open Classical in
 
 def idealCycle {R : Type*} [CommRing R] (J W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) : ℤ :=
   if h : W ∈ J.minimalPrimes ∧ IsRelevant W then
@@ -98,7 +97,6 @@ def GradedPieceQuot.Statement : Prop :=
       Module.finrank F (weightedHomogeneousSubmodule F (blockWeight ι) m) -
         Module.finrank F ↥(weightedHomogeneousSubmodule F (blockWeight ι) m ⊓ I.restrictScalars F)
 
-open Classical in
 
 def CutPieces.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
@@ -160,7 +158,6 @@ def PrimeFiltration.Statement : Prop :=
       (∀ m : K → ℤ, hilbFn J m = (l.map fun p => hilbFn p.1 (m - fun k => (p.2 k : ℤ))).sum) ∧
       (∀ (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [W.IsPrime], multAt J W = (l.map fun p => multAt p.1 W).sum)
 
-open Classical in
 
 def MultAtPrimeAtMinimal.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] (K : Type) (ι : K → Type) (J Q W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [Q.IsPrime]

@@ -122,7 +122,6 @@ theorem cls_eq_of_iso {D : D7} (I : Ident D) (k : Fin 2) (v : D.nd.PlG k) {n : �
   rw [← hg]
   exact e'.toIntertwiningMap.isIntertwining' _
 
-open Classical in
 
 theorem map_surj {D : D7} (I : Ident D) (k v) (n : ℕ) :
     Function.Surjective (Matrix.GeneralLinearGroup.map (n := Fin n) (I.i k v).toRingHom) := fun g =>

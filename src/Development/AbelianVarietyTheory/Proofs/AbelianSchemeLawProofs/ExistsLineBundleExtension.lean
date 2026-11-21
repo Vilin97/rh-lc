@@ -236,7 +236,6 @@ theorem exists_compatible_cover [NoetherianSpace X]
     exact inv_mem (hW p hp y hyq hyp)
   · exact hT.prop p hp q hq y hyp hyq
 
-open Classical in
 
 def unitVal (U : X.Opens) : Γ(X, U)ˣ →* X.functionFieldˣ :=
   if h : genericPoint X ∈ U then Units.map (X.presheaf.germ U _ h).hom else 1

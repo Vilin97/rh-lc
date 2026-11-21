@@ -79,7 +79,6 @@ theorem iso_of_twist {V V' : Type*} [AddCommGroup V] [Module ℂ V] [FiniteDimen
 
 end GlobalTheory.WeilDeligne.TwistInj
 
-open GlobalTheory.WeilDeligne.TwistInj in
 
 theorem GlobalTheory.WeilDeligne.lpChar_left_injective_of_lpDim_one : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (a b c : WD h), c.lpDim = 1 → a.lpChar c = b.lpChar c → a = b := by
   intro E Ω _ _ _ _ _ A w h a b c hc hab

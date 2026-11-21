@@ -124,7 +124,6 @@ theorem exists_expandsAt_of_integral [IsNoetherianRing R] (hI : I ≤ maximalIde
     exact dvd_mul_right _ _
   exact ⟨σ, expandsAt_cancel_of_ne_zero R I D A G U.toUnifPre k r hr σ σ₁ f f₁ hσ h₁ hE₁⟩
 
-omit [IsDomain R] in
 
 theorem exists_thick_pt {J : Ideal R} (hJ : J ≤ maximalIdeal R) (e : ℕ) (X : Over (Spec (CommRingCat.of R)))
     (x : X.left) (hx : X.hom x = closedPoint R) :
@@ -155,7 +154,6 @@ theorem isUnit_sval {X Y Z : Scheme.{0}} {L : LB X} {K : Type} [Fintype K] {φ :
   rw [sval, sec_trans s r z (hJ.mem φ r) hj]
   exact (Units.isUnit _).mul ((isUnit_gs_iff r z _ hj _).2 hu)
 
-omit [IsDomain R] in
 
 theorem mem_of_cst_eq_zero {J : Ideal R} {Y : Scheme.{0}} (p : Y ⟶ Sp (R ⧸ J)) [Flat p] (y : Y)
     (hy : (p ≫ spMap (Ideal.Quotient.mk J)) y = closedPoint R) {a : R}

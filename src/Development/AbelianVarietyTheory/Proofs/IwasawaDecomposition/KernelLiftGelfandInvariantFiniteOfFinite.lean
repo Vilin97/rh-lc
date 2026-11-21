@@ -50,7 +50,6 @@ theorem isMod_ker (hθ : IsInfFam θ) (hκ : IsKerSys θ V W κ) (f : M) (h : GA
     refine ⟨hc f', N, C * (height θ W h : ℝ) ^ N, fun g => (hC g h).trans_eq ?_⟩
     ring
 
-variable (κ) in
 
 def lift (μ : Measure (GA D V)) (𝓕 : Set (GA D V)) (f : M) (F : GA D V → ℂ) : GA D W → ℂ :=
   fun h => ∫ g in 𝓕, κ f g h * F g ∂μ
@@ -82,7 +81,6 @@ theorem lift_smul_right (c : ℂ) (F : GA D V → ℂ) (f : M) : lift κ μ 𝓕
   simp only [lift, Pi.smul_apply, smul_eq_mul, mul_left_comm _ c]
   exact integral_const_mul _ _
 
-variable (θ κ μ 𝓕) in
 
 def Compat (T : (GA D W → ℂ) → (GA D W → ℂ)) : Prop :=
   ∀ f, ∃ f', (∀ g, T (κ f g) = κ f' g) ∧ ∀ F ∈ Decay θ V, T (lift κ μ 𝓕 f F) = lift κ μ 𝓕 f' F

@@ -38,7 +38,6 @@ theorem fn_surjective (P : Pair k n') : Function.Surjective P.fn := by
   refine ⟨s • x, ?_⟩
   rw [map_smul, Algebra.smul_def, ResidueField.algebraMap_eq, hs, mul_assoc, inv_mul_cancel₀ hx, mul_one]
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem valuation_det_mul_unif (q : Unif k) (P : Pair k n') (g : GL n' k) (hg : g • P.ker = P.lat) :
     valuation k (((Matrix.GeneralLinearGroup.det g : kˣ) : k) * (q.unit : k)) = 1 := by
@@ -184,7 +183,6 @@ theorem exists_theta_exact {D : D7} (hLin : LinExact D) (k : Type) [Field k] [Va
 
 end GlobalTheory.FinPl.SrcExact
 
-open GlobalTheory.FinPl GlobalTheory.FinPl.SrcGl GlobalTheory.FinPl.SrcExact in
 
 theorem GlobalTheory.FinPl.sourceExact : ∀ D : D7, GlobalTheory.FinPl.SourceExact D := by
   intro D k _ _ _ _ p n n' _ _ _ _ q χ₀ hχ

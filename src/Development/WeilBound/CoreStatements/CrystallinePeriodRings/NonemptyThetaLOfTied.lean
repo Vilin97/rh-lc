@@ -19,7 +19,6 @@ open GroundTheory.PAdicHodge
 
 variable {l : ℕ} [Fact l.Prime]
 
-open Classical in
 
 def thetaExt (x : Per6.BdR l) : ℂ_[l] :=
   if h : ∃ y : Per6.BdRp l, x = algebraMap (Per6.BdRp l) (Per6.BdR l) y then Per6.θD l h.choose else 0

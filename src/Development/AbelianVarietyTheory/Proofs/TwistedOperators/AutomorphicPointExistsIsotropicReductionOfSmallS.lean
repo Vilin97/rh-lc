@@ -20,12 +20,10 @@ noncomputable section
 
 namespace GlobalTheory.DeepPoint
 
-open Formalism.L2.SG.Pf.unitaryCongruence in
 
 theorem kg_one (I : AutInst) (m : ℕ) : (1 : I.Gf) ∈ I.Kg m :=
   ⟨K_one I, fun y _ => ⟨0, zero_mem _, by rw [fmat_one, sub_self, Matrix.zero_mulVec, smul_zero]⟩⟩
 
-open Formalism.L2.SG.Pf.unitaryCongruence in
 
 theorem kg_mul (I : AutInst) (m : ℕ) {x y : I.Gf} (hx : x ∈ I.Kg m) (hy : y ∈ I.Kg m) : x * y ∈ I.Kg m := by
   refine ⟨K_mul I hx.1 hy.1, fun v hv => ?_⟩
@@ -38,7 +36,6 @@ theorem kg_mul (I : AutInst) (m : ℕ) {x y : I.Gf} (hx : x ∈ I.Kg m) (hy : y 
     abel
   rw [e, hyz, hxz, Matrix.mulVec_smul, smul_add]
 
-open Formalism.L2.SG.Pf.unitaryCongruence in
 
 theorem kg_inv (I : AutInst) (m : ℕ) {k : I.Gf} (hk : k ∈ I.Kg m) : k⁻¹ ∈ I.Kg m := by
   refine ⟨K_inv I hk.1, fun y hy => ?_⟩

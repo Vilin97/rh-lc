@@ -168,7 +168,6 @@ theorem gapConditions_of_largeGaps : GapNum := by
   rw [e]
   exact ⟨by nlinarith [sq_nonneg T], fun hh hc => by nlinarith [sq_nonneg T]⟩
 
-open Classical in
 
 section Instance
 

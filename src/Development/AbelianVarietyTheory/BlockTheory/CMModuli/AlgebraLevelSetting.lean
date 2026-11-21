@@ -115,7 +115,6 @@ structure FormalTorus (i₀ : splitTorus (Lv I 0) X ⟶ thickObj R I 0 G) where
 
 variable {I}
 
-omit [GrpObj G] in
 
 theorem torus_w {e : ℕ} (i : splitTorus (Lv I e) X ⟶ thickObj R I e G) :
     (i.left ≫ pr I e G) ≫ G.hom = (splitTorus (Lv I e) X).hom ≫ thick R I e := by

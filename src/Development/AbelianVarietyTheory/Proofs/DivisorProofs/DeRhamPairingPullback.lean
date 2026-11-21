@@ -28,7 +28,6 @@ open TopologicalSpace
 
 namespace GlobalTheory.CechKS
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_isRep_eps {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A] {A' : Over (Sp (DualNumber K))}
     [GrpObj A'] {i : A.left ⟶ A'.left} (h : IsGrpPullback A A' (DeRham.epsRed K) i) (hA : IsAbelianScheme A)
@@ -84,7 +83,6 @@ theorem eval_eq_zero {K M I : Type*} [Field K] [AddCommGroup M] [Module K M] [Fi
   rw [e7]
   linear_combination e3 - e1
 
-set_option maxHeartbeats 1000000 in
 
 theorem isKSValue_of_isCechKS (P : GlobalTheory.Published.AbelianDeRham) {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A]
     {A' : Over (Sp (DualNumber K))} [GrpObj A'] {i : A.left ⟶ A'.left} (h : IsGrpPullback A A' (DeRham.epsRed K) i)

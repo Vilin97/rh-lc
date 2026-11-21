@@ -171,6 +171,5 @@ theorem m2 {g : O⟦X⟧} (hg : IsDist g) (k f : O⟦X⟧) : cont ϖ g f ≤ con
   intro j hj
   exact (Cont.mem_iff_le ϖ g _ j).1 (Ideal.mul_mem_left _ k ((Cont.mem_iff_le ϖ g f j).2 hj))
 
-omit hϖ in
 
 end Formalism.MainNotions.N.FrobeniusPowerSeries

@@ -53,7 +53,6 @@ end GlobalTheory
 
 namespace GlobalTheory
 
-open Formalism.PairingDivisionLocalBalance in
 
 theorem ceSum_term_le (f X l : ℕ) (hX : X ≠ 0) (hp : l.Prime) :
     ((f * padicValNat l 2 + mE l X : ℕ) : ℝ) * Real.log l ≤

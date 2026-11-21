@@ -21,11 +21,9 @@ namespace ProjSpace
 
 variable {A : Type u} [CommRing A] {n : ℕ}
 
-variable (A n) in
 
 abbrev Laurent : Type u := AddMonoidAlgebra A (Fin (n + 1) → ℤ)
 
-variable (n) in
 
 def expHom : (Fin (n + 1) →₀ ℕ) →+ (Fin (n + 1) → ℤ) where
   toFun e j := e j
@@ -43,7 +41,6 @@ lemma sum_expHom (e : Fin (n + 1) →₀ ℕ) : ∑ j, expHom n e j = (e.degree 
   push_cast
   rfl
 
-variable (A n) in
 
 def toLaurent : MvPolynomial (Fin (n + 1)) A →+* Laurent A n :=
   AddMonoidAlgebra.mapDomainRingHom A (expHom n)
@@ -160,7 +157,6 @@ lemma Allowed.mono {s t : Set (Fin (n + 1))} {k : ℤ} {m : Fin (n + 1) → ℤ}
     (hst : s ⊆ t) : Allowed t k m :=
   ⟨h.1, fun j hj => h.2 j fun hs => hj (hst hs)⟩
 
-variable (A) in
 
 def LDeg (s : Set (Fin (n + 1))) (k : ℤ) : AddSubgroup (Laurent A n) where
   carrier := {ℓ | ∀ m, ℓ.coeff m ≠ 0 → Allowed s k m}

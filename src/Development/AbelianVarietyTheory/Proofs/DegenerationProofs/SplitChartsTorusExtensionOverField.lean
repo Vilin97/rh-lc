@@ -36,7 +36,6 @@ variable {S : Scheme.{0}} {X : Type} [AddCommGroup X] {G : Over S} [GrpObj G] {B
   (hinj : Function.Injective (q.app V).hom) (hS : Stable i (q ⁻¹ᵁ V))
 include hi hV h₀ hS
 
-include hinj in
 
 theorem exists_mem_basicOpen (P : Γ(G.left, q ⁻¹ᵁ V) → Prop)
     (hP : ∀ x ∈ q ⁻¹ᵁ V, ∃ b, IsWt i _ b 0 ∧ x ∈ G.left.basicOpen b ∧ P b) {y : B} (hy : y ∈ V) :
@@ -99,8 +98,6 @@ theorem isWt_basicOpen_iff (c : Γ(B, V)) (a : Γ(G.left, q ⁻¹ᵁ B.basicOpen
     rw [e', map_mul, map_pow]
     exact mul_mem (pow_mem (S := wtZero i _) h2 n) (hw y)
 
-omit hi h₀ hS in
-include hinj in
 
 theorem injective_basicOpen (c : Γ(B, V)) : Function.Injective (q.app (B.basicOpen c)).hom := by
   have hle := B.basicOpen_le c
@@ -115,7 +112,6 @@ theorem injective_basicOpen (c : Γ(B, V)) : Function.Injective (q.app (B.basicO
   rwa [map_mul, map_pow, map_zero, hy, ← hv, ← Units.val_pow_eq_pow_val, ← Units.val_pow_eq_pow_val,
     Units.mul_right_eq_zero, Units.mul_right_eq_zero] at this
 
-omit hi hV h₀ hS in
 
 theorem main : ∀ (K : Type) [Field K] (H : Over (Sp K)) [GrpObj H] [IsCommMonObj H] [Smooth H.hom] [IsSeparated H.hom] [QuasiCompact H.hom] (C : Charts H.left) (d : ℕ) (c : Fin d → C.Cl) (i : splitTorus (Sp K) (Fin d → ℤ) ⟶ H), GeometricallyConnected H.hom → C.Torus c i → ∃ (B : Over (Sp K)) (_ : GrpObj B) (q : H ⟶ B), IsAbelianScheme B ∧ IsMonHom q ∧ Flat q.left ∧ Surjective q.left ∧ IsAffineHom q.left ∧ IsPullback i (toUnit _) q (η[B]) ∧ ∀ a, ∃ (V : B.left.Opens) (h : C.W a = q.left ⁻¹ᵁ V), IsAffineOpen V ∧ ∀ u, HasWt i (C.W a) u 0 ↔ u ∈ Set.range (q.left.appLE V (C.W a) h.le).hom := by
   intro K _ H _ _ _ _ _ C d c i hc hT

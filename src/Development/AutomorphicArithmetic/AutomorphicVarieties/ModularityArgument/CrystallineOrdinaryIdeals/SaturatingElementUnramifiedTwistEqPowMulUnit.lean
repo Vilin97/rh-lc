@@ -53,7 +53,6 @@ theorem prod_eq {C : Type} [CommRing C] (L K0 K1 ε t w a : C) (y : Cˣ) (hy : (
 
 end GlobalTheory.OrdLoc.NilpotentTwist
 
-open GlobalTheory.OrdLoc.NilpotentTwist in
 
 theorem GlobalTheory.OrdLoc.del_unr_twist {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O]

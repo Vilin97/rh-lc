@@ -290,7 +290,6 @@ theorem congr_diagonal (H : Isotropy) (r : ℕ) : ∀ g g' : Fin r → E,
 
 end HermClass
 
-open HermClass in
 
 theorem landherr_of_isotropy
     (H : ∀ (F : Type) [Field F] [NumberField F] (ι : Type) [Fintype ι] (a : ι → F),

@@ -49,7 +49,6 @@ theorem tempered_sum {E X : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] (p 
 
 variable (F : Type) [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-open GroundTheory.Global GroundTheory.Automorphic.GJMatrix in
 
 theorem summable_weight {g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ} (hg : g ∈ SB (κ → FiniteAdeleRing (𝓞 F) F)) :
     ∃ k : ℕ, Summable fun x : κ → F => ‖g (fun i => algebraMap F (FiniteAdeleRing (𝓞 F) F) (x i))‖ *
@@ -93,7 +92,6 @@ theorem summable_weight {g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ} (hg : 
     rw [Set.indicator_of_mem hmem, Complex.norm_real, Real.norm_of_nonneg (by positivity)]
     exact mul_le_mul_of_nonneg_right (hC _) (by positivity)
 
-omit [Fintype κ] in
 
 theorem pureA_rat (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ) (x : κ → F) :
     pureA F f g (fun i => algebraMap F (AdeleRing (𝓞 F) F) (x i)) =
@@ -117,7 +115,6 @@ def thetaLin : schA F κ →ₗ[ℂ] ℂ where
   map_add' Φ Ψ := (summable_schA F Φ.2).of_norm.tsum_add (summable_schA F Ψ.2).of_norm
   map_smul' a Φ := by simp [thetaSum, tsum_mul_left]
 
-open GroundTheory.Global in
 
 theorem indicator_mem_SB : (Set.univ.pi fun _ : κ => (integralFiniteAdeles (𝓞 F) F : Set (FiniteAdeleRing (𝓞 F) F))).indicator
     (fun _ => (1 : ℂ)) ∈ SB (κ → FiniteAdeleRing (𝓞 F) F) := by
@@ -135,7 +132,6 @@ theorem indicator_mem_SB : (Set.univ.pi fun _ : κ => (integralFiniteAdeles (�
   · exact ⟨_, ho, hx, fun y hy => by rw [Set.indicator_of_mem hx, Set.indicator_of_mem hy]⟩
   · exact ⟨_, hcl.isOpen_compl, hx, fun y hy => by rw [Set.indicator_of_notMem hx, Set.indicator_of_notMem hy]⟩
 
-open GroundTheory.Global in
 
 theorem exists_thetaSum_ne_zero : ∃ Φ ∈ schA F κ, thetaSum F Φ ≠ 0 := by
   let b : ContDiffBump (0 : κ → mixedEmbedding.mixedSpace F) := default

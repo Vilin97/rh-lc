@@ -100,7 +100,6 @@ theorem IsLieImage.baseChange (hF : PrimitiveSubmodule B = Submodule.span R' ((b
   rw [← hk.2 f hf, ← sub_eq_zero]
   exact mem_Fil.1 this f hf
 
-set_option maxHeartbeats 1000000 in
 
 theorem IsKSValue.baseChange (P : AbelianDeRham) {A' : Over (Sp (DualNumber R))} [GrpObj A']
     {B' : Over (Sp (DualNumber R'))} [GrpObj B'] {g : ℕ} (hA : IsAbelianScheme A')
@@ -192,7 +191,6 @@ variable {K K' : Type} [Field K] [Algebra c.F K] [Field K'] [Algebra c.F K'] {K�
   [Algebra c.F K₀] {ι : Type} [Fintype ι] {Φ : Finset (E →+* ℂ)} {ψ : K →ₐ[c.F] K'} {y : FrPt Xo c K}
   {y' : FrPt Xo c K'}
 
-open scoped CategoryTheory.Obj in
 
 theorem exists_isGrpPullback {S S' : Scheme.{0}} (G : Over S) [GrpObj G] (f : S' ⟶ S) :
     ∃ (G' : Over S') (_ : GrpObj G') (φ : G'.left ⟶ G.left), IsGrpPullback G' G f φ :=
@@ -249,9 +247,7 @@ variable (P : AbelianDeRham) (ψ : letI := io.toAlgebra; CoefHom c io' T.Fr) {r 
   (h : letI := io.toAlgebra; letI := io'.toAlgebra; FrMap ψ y.1 y'.1) {e : Ix Dw → ℤ} {s₀ : RulK Xo c K₀}
   (h₀ : s₀ ∈ secK Xo c K₀ e) {s : ι → RulK Xo c K₀} (hs : ∀ i, s i ∈ secK Xo c K₀ e)
 
-include P hr hψ hφ h hs in
 
-include P hr hψ hφ h h₀ hs in
 
 variable (k : letI := io.toAlgebra; KSIso Φ y.1) (k' : letI := io'.toAlgebra; KSIso Φ y'.1)
 

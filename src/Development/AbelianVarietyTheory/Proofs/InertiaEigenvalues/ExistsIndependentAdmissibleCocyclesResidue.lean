@@ -163,7 +163,6 @@ theorem exists_ext_Ea (hs : Function.Surjective (algebraMap O k)) (hk : ∀ x, a
   change e (φ _, ψ _) = E.ρ g (e (φ _, ψ _))
   rw [he, map_add (f := _), hφ, map_smul, hψ, algebraMap_smul]
 
-omit [TopologicalSpace G] in
 
 theorem exists_coef_equiv {M : Type} [AddCommGroup M] [Module O M] (W : Representation O G M)
     (χ : G →* Oˣ) (T : Ob k G) (q : M →ₗ[O] (Fin T.m → k)) (hq : Function.Surjective q) (hk : KerIs lam q)

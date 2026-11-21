@@ -38,7 +38,6 @@ theorem finPart_algebraMap (ξ : Fin 2 → K) :
   funext i
   simp only [finPart, adeleRing_algebraMap_snd]
 
-variable (K) in
 
 def splitEquiv : (Fin 2 → 𝔸[K]) ≃ᵐ (Fin 2 → mixedSpace K) × (Fin 2 → 𝔸ᶠ[K]) :=
   (MeasurableEquiv.arrowProdEquivProdArrow (InfiniteAdeleRing K) 𝔸ᶠ[K] (Fin 2)).trans
@@ -66,7 +65,6 @@ def schwartzBruhatTensor2 (φ : 𝓢(Fin 2 → mixedSpace K, ℂ)) (g : (Fin 2 �
     (Fin 2 → 𝔸[K]) → ℂ :=
   fun x ↦ φ (infPart x) * g (finPart x)
 
-variable (K) in
 
 def schwartzBruhat2 : Submodule ℂ ((Fin 2 → 𝔸[K]) → ℂ) :=
   Submodule.span ℂ {F | ∃ φ : 𝓢(Fin 2 → mixedSpace K, ℂ), ∃ g ∈ finiteSchwartzBruhat2 K,
@@ -96,7 +94,6 @@ theorem integrable_of_mem_schwartzBruhat2 {F : (Fin 2 → 𝔸[K]) → ℂ} (hF 
   | add G H _ _ hG hH => exact hG.add hH
   | smul c G _ hG => exact hG.smul c
 
-variable (K) in
 
 def adelicFourier2 (F : (Fin 2 → 𝔸[K]) → ℂ) (y : Fin 2 → 𝔸[K]) : ℂ :=
   ∫ x, F x * (adelicChar K (∑ i, x i * y i) : ℂ) ∂adeleMeasure2 K

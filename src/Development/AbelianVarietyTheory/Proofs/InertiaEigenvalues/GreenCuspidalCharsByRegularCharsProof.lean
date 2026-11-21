@@ -136,7 +136,6 @@ theorem count (d : ℕ) (hd : 0 < d) (Lf : ∀ e, (ZMod g)[X] → Gn g e → ℂ
 
 end GlobalTheory.GreenRegularCharactersInertiaEigenvalues
 
-open GlobalTheory.GreenRegularCharactersInertiaEigenvalues in
 
 theorem GlobalTheory.greenRegularCharacters_holds : GreenRegularCharacters := by
   intro g _ d hd K _ _ hK

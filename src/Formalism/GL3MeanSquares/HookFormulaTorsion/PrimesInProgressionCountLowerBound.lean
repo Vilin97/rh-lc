@@ -614,6 +614,5 @@ theorem shortIntervalLowerBound : ShortIntervalLowerBound := by
     intro h hh1 hρ hB7
     exact gl2a4_claim2 hCr hcr hθ' hB hG1 hGB hβ1 hβ2 hd hX60 hπ₂ hQ' hh1 hρ hB7
 
-set_option maxHeartbeats 800000 in
 
 end Formalism.HermitianLattices.GL2PrimeSums

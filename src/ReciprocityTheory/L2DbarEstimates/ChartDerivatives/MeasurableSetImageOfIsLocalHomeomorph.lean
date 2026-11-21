@@ -70,7 +70,6 @@ theorem measurableSet_image_of_isLocalHomeomorph (n : ℕ) (z : M → V n) (hz :
   · exact measurableSet_image_of_chart n z e he _ (hA.inter (hTo i).measurableSet)
       (Set.inter_subset_right.trans hTe)
 
-omit [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M] in
 
 theorem encard_inter_fiber_of_injOn (n : ℕ) (z : M → V n) (S : Set M) (hS : InjOn z S) (y : V n) :
     (((S ∩ z ⁻¹' {y}).encard : ℕ∞) : ℝ≥0∞) = (z '' S).indicator 1 y := by
@@ -100,7 +99,6 @@ section VolMain
 variable {M : Type*} [TopologicalSpace M] [SecondCountableTopology M] [MeasurableSpace M]
   [BorelSpace M]
 
-omit [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M] in
 
 theorem injOn_source_of_chart (n : ℕ) (z : M → V n) (e : OpenPartialHomeomorph M (V n))
     (he : IsChart n z e) : InjOn z e.source := by

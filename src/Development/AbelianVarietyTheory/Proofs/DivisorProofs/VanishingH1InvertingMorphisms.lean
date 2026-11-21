@@ -91,7 +91,6 @@ theorem coboundary_of_restrict {E : C → Type w} (act : ∀ {S S'}, E S → (S 
   simp only [map_sub, map_add (f := _), hact, Category.assoc, mp_comp] at k2 k3 ⊢
   linear_combination k2 - k3 + k4 - k1
 
-open Classical in
 
 theorem pull_restrict_small_injective (P : ObjectProperty C) (hP : ∀ S S', (S ⟶ S') → P S → P S')
     (sep : ∀ T, Sep F fun S (_ : T ⟶ S) ↦ P S) (glue : ∀ T, Glue F fun S (_ : T ⟶ S) ↦ P S)
@@ -115,7 +114,6 @@ theorem pull_restrict_small_injective (P : ObjectProperty C) (hP : ∀ S S', (S 
   funext S S' S'' ψ χ
   exact hh S S' S'' PUnit.unit ψ χ trivial
 
-open Classical in
 
 theorem descent_H2_surjective (P : ObjectProperty C) (hP : ∀ S S', (S ⟶ S') → P S → P S')
     (sep : ∀ T, Sep F fun S (_ : T ⟶ S) ↦ P S) (glue : ∀ T, Glue F fun S (_ : T ⟶ S) ↦ P S)
@@ -198,11 +196,9 @@ variable {F} {T : C} {P Q : ∀ S, (T ⟶ S) → Prop} (hPQ : ∀ S u, P S u →
   (glue : ∀ S u, Q S u → Glue F fun S' (ψ : S ⟶ S') ↦ P S' (u ≫ ψ))
   (van : ∀ S u, Q S u → Van1 F fun S' (ψ : S ⟶ S') ↦ P S' (u ≫ ψ))
 
-include hPQ in
 
 theorem Sep.mono (h : Sep F P) : Sep F Q := fun x hx ↦ h x fun S u hp ↦ hx S u (hPQ S u hp)
 
-include hPQ sep in
 
 theorem Glue.mono (h : Glue F P) : Glue F Q := by
   intro s hs
@@ -210,7 +206,6 @@ theorem Glue.mono (h : Glue F P) : Glue F Q := by
   refine ⟨x, fun S u hq ↦ sub_eq_zero.1 (sep S u hq _ fun S' ψ hp ↦ ?_)⟩
   rw [map_sub, ← mp_comp, hx _ _ hp, hs _ _ _ _ hq, sub_self]
 
-include hPQ hQ sep glue in
 
 theorem Van1.mono (h : Van1 F P) : Van1 F Q := by
   intro a ha
@@ -234,7 +229,6 @@ theorem Van1.mono (h : Van1 F P) : Van1 F Q := by
   simp only [map_sub, Category.assoc, mp_comp] at k2 k3 ⊢
   linear_combination k2 - k3 + k1
 
-include hPQ hQ sep glue van in
 
 theorem Van2.mono (h : Van2 F P) : Van2 F Q := by
   intro z hz
@@ -254,7 +248,6 @@ section Basic
 variable {F} (H : HasLoc F) {T : C} {P : ∀ S, (T ⟶ S) → Prop} {b : F.obj T}
   (hP : ∀ S u, P S u ↔ IsUnit (mp F u b))
 
-include H hP in
 
 theorem exists_initial : ∃ (T' : C) (l : T ⟶ T') (p : ∀ S (u : T ⟶ S), P S u → (T' ⟶ S)), P T' l ∧
     (∀ S u h, l ≫ p S u h = u) ∧
@@ -267,8 +260,6 @@ theorem exists_initial : ∃ (T' : C) (l : T ⟶ T') (p : ∀ S (u : T ⟶ S), P
   · beta_reduce
     rw [← Category.assoc, hp]
 
-open Classical in
-include H hP in
 
 theorem vanishing_H1_inverting_morphisms : Van1 F P := by
   obtain ⟨T', l, p, hl, h1, h2⟩ := exists_initial H hP
@@ -278,8 +269,6 @@ theorem vanishing_H1_inverting_morphisms : Van1 F P := by
   simp only [dif_pos h, dif_pos h', e]
   rw [ha _ _ _ _ _ _ hl, h1, add_sub_cancel_left]
 
-open Classical in
-include H hP in
 
 theorem vanishing_H2_inverting_morphisms : Van2 F P := by
   obtain ⟨T', l, p, hl, h1, h2⟩ := exists_initial H hP
@@ -292,7 +281,6 @@ theorem vanishing_H2_inverting_morphisms : Van2 F P := by
   rw [h1] at this
   linear_combination this
 
-include H hP in
 
 theorem IsSec.frac {s : ∀ S, (T ⟶ S) → F.obj S} (hs : IsSec F P s) :
     ∃ (n : ℕ) (x : F.obj T), ∀ S u, P S u → s S u * mp F u b ^ n = mp F u x := by
@@ -302,7 +290,6 @@ theorem IsSec.frac {s : ∀ S, (T ⟶ S) → F.obj S} (hs : IsSec F P s) :
   obtain ⟨v, rfl, -⟩ := h4 S u ((hP _ _).1 h)
   rw [hs _ _ _ _ ((hP _ _).2 h1), mp_comp, mp_comp, ← e, map_mul, map_pow]
 
-include H hP in
 
 theorem IsSec.extend (c : F.obj T) {s : ∀ S, (T ⟶ S) → F.obj S}
     (hs : IsSec F (fun S u ↦ P S u ∧ IsUnit (mp F u c)) s) :
@@ -324,7 +311,6 @@ theorem IsSec.extend (c : F.obj T) {s : ∀ S, (T ⟶ S) → F.obj S}
     rw [← e S u ⟨h, h'⟩, map_mul]
     linear_combination (s S u * mp F u c ^ (n + m)) * k'
 
-include H hP in
 
 theorem IsSec.kill (c : F.obj T) {s : ∀ S, (T ⟶ S) → F.obj S} (hs : IsSec F P s)
     (h0 : ∀ S u, P S u → IsUnit (mp F u c) → s S u = 0) :
@@ -347,7 +333,6 @@ section Cech
 variable {F} (H : HasLoc F) {T : C} {ι : Type} [Fintype ι] {b : ι → F.obj T}
   (hb : Ideal.span (Set.range b) = ⊤)
 
-include hb in
 
 theorem exists_partition (N : ℕ) : ∃ r : ι → F.obj T, ∀ S (u : T ⟶ S),
     ∑ l, mp F u (r l) * mp F u (b l) ^ N = 1 := by
@@ -357,7 +342,6 @@ theorem exists_partition (N : ℕ) : ∃ r : ι → F.obj T, ∀ S (u : T ⟶ S)
   refine ⟨r, fun S u ↦ ?_⟩
   simpa using congrArg (mp F u) hr
 
-include H hb in
 
 theorem sep_std : Sep F fun S (u : T ⟶ S) ↦ ∃ i, IsUnit (mp F u (b i)) := by
   intro x hx
@@ -368,7 +352,6 @@ theorem sep_std : Sep F fun S (u : T ⟶ S) ↦ ∃ i, IsUnit (mp F u (b i)) := 
   rw [← mp_id F T x, ← one_mul (mp F _ x), ← hr T (𝟙 T), Finset.sum_mul]
   exact Finset.sum_eq_zero fun l _ ↦ by rw [mul_assoc, hM l T _ trivial, mul_zero]
 
-include H hb in
 
 theorem glue_std : Glue F fun S (u : T ⟶ S) ↦ ∃ i, IsUnit (mp F u (b i)) := by
   intro s hs
@@ -389,7 +372,6 @@ theorem glue_std : Glue F fun S (u : T ⟶ S) ↦ ∃ i, IsUnit (mp F u (b i)) :
   rw [map_mul, map_mul, map_pow, ← hh l _ _ _ u trivial, Category.id_comp]
   linear_combination -mp F u (r l) * hM l i S u hi
 
-include H hb in
 
 theorem cech1 (c : ι → ι → ∀ S, (T ⟶ S) → F.obj S)
     (hs : ∀ i j, IsSec F (fun S u ↦ IsUnit (mp F u (b i)) ∧ IsUnit (mp F u (b j))) (c i j))
@@ -421,7 +403,6 @@ theorem cech1 (c : ι → ι → ∀ S, (T ⟶ S) → F.obj S)
     rw [map_mul, map_pow]
     linear_combination mp F u (r l) * hM l i j S u ⟨hi, hj⟩
 
-include H hb in
 
 theorem cech2 (c : ι → ι → ι → ∀ S, (T ⟶ S) → F.obj S)
     (hs : ∀ i j k, IsSec F (fun S u ↦ (IsUnit (mp F u (b i)) ∧ IsUnit (mp F u (b j))) ∧
@@ -460,14 +441,11 @@ theorem cech2 (c : ι → ι → ι → ∀ S, (T ⟶ S) → F.obj S)
     rw [map_mul, map_pow]
     linear_combination mp F u (r l) * hM l i j k S u ⟨⟨hi, hj⟩, hk⟩
 
-omit [Fintype ι] in
 
 theorem isUnit_comp {S S' : C} {u : T ⟶ S} (ψ : S ⟶ S') {x : F.obj T} (h : IsUnit (mp F u x)) :
     IsUnit (mp F (u ≫ ψ) x) := by
   rw [mp_comp]; exact h.map _
 
-open Classical in
-include H hb in
 
 theorem vanishing_H1_standard_cover : Van1 F fun S (u : T ⟶ S) ↦ ∃ i, IsUnit (mp F u (b i)) := by
   intro a ha
@@ -489,8 +467,6 @@ theorem vanishing_H1_standard_cover : Van1 F fun S (u : T ⟶ S) ↦ ∃ i, IsUn
   rw [hγ i _ _ hi, hγ i _ _ (isUnit_comp ψ hi), he i _ _ _ _ hi, map_sub]
   linear_combination hβ i S S' u ψ hi
 
-open Classical in
-include H hb in
 
 theorem vanishing_H2_standard_cover : Van2 F fun S (u : T ⟶ S) ↦ ∃ i, IsUnit (mp F u (b i)) := by
   intro z hz

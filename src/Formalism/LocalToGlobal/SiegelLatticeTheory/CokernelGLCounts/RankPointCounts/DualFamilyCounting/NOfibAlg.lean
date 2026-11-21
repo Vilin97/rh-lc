@@ -236,7 +236,6 @@ end N
 
 end Alg
 
-open Alg in
 
 theorem dictGram_holds : DictGram := by
   intro D X u n hn

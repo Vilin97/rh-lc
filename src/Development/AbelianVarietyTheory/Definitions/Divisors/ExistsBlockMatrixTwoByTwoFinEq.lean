@@ -61,7 +61,6 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [CommRing R] 
 
 def matR (g : HA R σ Q) : Matrix (Fin (n + n)) (Fin (n + n)) (R ⊗[F] E) := (matHom R σ Q g).1
 
-variable {R σ} in
 
 theorem ext_matR {g h : HA R σ Q} (e : matR R σ g = matR R σ h) : g = h :=
   matHom_injective R σ Q (Units.ext e)
@@ -82,7 +81,6 @@ theorem JR_eq (hQ : Q = StdUnn.blk4 0 1 (-1) 0) : JR (F := F) R Q = StdUnn.blk4 
 def mkPt (M N : Matrix (Fin (n + n)) (Fin (n + n)) (R ⊗[F] E)) (h1 : M * N = 1) (h2 : N * M = 1)
     (h : cT (sigR R σ) M * JR R Q * M = JR R Q) : HA R σ Q := ⟨⟨M, N, h1, h2⟩, h⟩
 
-variable {R σ} in
 
 theorem cT_herm (b : HermR R σ n) : cT (sigR R σ) b.1 = b.1 := by
   ext i j; exact b.2 i j
@@ -181,7 +179,6 @@ section More
 variable {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) {n : ℕ}
   {Q : Matrix (Fin (n + n)) (Fin (n + n)) E}
 
-variable {R σ} in
 
 theorem cT_cT (hσ : ∀ x, σ (σ x) = x) (M : Matrix (Fin n) (Fin n) (R ⊗[F] E)) :
     cT (sigR R σ) (cT (sigR R σ) M) = M := by
@@ -202,9 +199,7 @@ theorem mat_mLoc (hσ : ∀ x, σ (σ x) = x) (hQ : Q = StdUnn.blk4 0 1 (-1) 0) 
 
 variable {R' : Type} [CommRing R'] [Algebra F R']
 
-variable {R σ} in
 
-variable {R σ} in
 
 variable (hQ : Q = StdUnn.blk4 0 1 (-1) 0)
 include hQ
@@ -315,12 +310,10 @@ def psUp [TopologicalSpace R] (μ : (R ⊗[F] E)ˣ →* Circle) (s : ℂ) : Subm
 
 def sphUp (s : ℂ) : HA R σ Q → ℂ := fun g => npow (hgtUp R σ Q ν K g) (s + (n : ℂ) / 2)
 
-variable {Q} in
 
 def intwLoc [TopologicalSpace R] (hQ : Q = StdUnn.blk4 0 1 (-1) 0) (db : Measure (HermR R σ n)) (f : ℂ → HA R σ Q → ℂ)
     (s : ℂ) (g : HA R σ Q) : ℂ := ∫ b, f s (wLoc R σ hQ * nLoc R σ hQ b * g) ∂db
 
-variable {Q} in
 
 def IntwConv [TopologicalSpace R] (hQ : Q = StdUnn.blk4 0 1 (-1) 0) (db : Measure (HermR R σ n)) (f : ℂ → HA R σ Q → ℂ)
     (s : ℂ) (g : HA R σ Q) : Prop := Integrable (fun b => f s (wLoc R σ hQ * nLoc R σ hQ b * g)) db
@@ -421,7 +414,6 @@ theorem isCompact_KUpFin (v : HeightOneSpectrum (𝓞 F)) : IsCompact (KUpFin σ
 
 variable (hc : IsCMExt F E σ) (hI : ∀ g : GAd σ Q, ∃ p : upperParabolic (AF F) σ Q, ∃ k ∈ KUpAd σ Q, g = p * k)
 
-include hI in
 
 theorem isIwasawaUp_fin_of (v : HeightOneSpectrum (𝓞 F)) : IsIwasawaUp _ σ Q (absEv F E v) (KUpFin σ Q v) :=
   isIwasawaUp_of_isCompact (continuous_absEv v) (isCompact_KUpFin v) (exists_mul_fin hI v)
@@ -438,7 +430,6 @@ variable (D : D7) (n : ℕ)
 
 theorem Jst_eq : StdUnn.Jst D n = StdUnn.blk4 0 1 (-1) 0 := rfl
 
-variable {D n} in
 
 theorem matR_adele (g : StdUnn.G D n) : matR (AF D.host.F) D.sp.cm.sig g = StdUnn.mat g := rfl
 
@@ -451,9 +442,7 @@ theorem isIwasawaUp_fin (v : HeightOneSpectrum (𝓞 D.host.F)) :
     IsIwasawaUp _ D.sp.cm.sig (StdUnn.Jst D n) (absEv D.host.F D.host.E v) (KUpFin _ _ v) :=
   isIwasawaUp_fin_of (exists_mul_adele D n) v
 
-variable {D n} in
 
-variable {D n} in
 
 variable {D n}
 

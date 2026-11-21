@@ -119,7 +119,6 @@ theorem exists_basicOpen_le {V : (Sp R).Opens} (hV : (q : Sp R) ∈ V) :
   obtain ⟨f, hf, hle⟩ := exists_basicOpen_le' hV
   exact ⟨f, hf, hle⟩
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem spMap_eq_fromSpecStalk (q : PrimeSpectrum R) :
     Spec.map (Spec.stalkIso (CommRingCat.of R) (q : Sp R)).hom ≫ (Sp R).fromSpecStalk (q : Sp R) =
@@ -132,7 +131,6 @@ theorem spMap_eq_fromSpecStalk (q : PrimeSpectrum R) :
   refine (congrArg (Spec.map (Spec.stalkIso (CommRingCat.of R) (q : Sp R)).hom ≫ ·) e).trans ?_
   rw [← Category.assoc, ← Spec.map_comp, Iso.inv_hom_id, Spec.map_id, Category.id_comp]
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem exists_isAffineOpen_preimage_basicOpen_of_stalk {x : Sp R} {p' : X' ⟶ Spec ((Sp R).presheaf.stalk x)}
     (H' : IsPullback φ p' p ((Sp R).fromSpecStalk x)) [QuasiCompact p] [QuasiSeparated p] [IsAffine X'] :

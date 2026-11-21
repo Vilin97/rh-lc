@@ -6,7 +6,6 @@ public import Mathlib
 
 namespace GlobalTheory.CompanionTheory.ExpSums
 
-open Matrix in
 
 theorem vandermonde_separation (r : ℕ) (α : Fin r → ℂ) (hα : Function.Injective α) :
     ∃ C : ℝ, ∀ (c : Fin r → ℂ) (i : Fin r),

@@ -19,7 +19,6 @@ section Lie
 
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
-variable (E a) in
 
 def ell : Lie E a →ₗ[ℝ] ℝ where
   toFun X := (∑ w : InfinitePlace E, ∑ i, (X i i w).re) / ((a : ℝ) * Fintype.card (InfinitePlace E))
@@ -36,12 +35,10 @@ def shift {A : Type} [Ring A] [Module ℝ A] (L : Lie E a →ₗ[ℝ] A) (r : �
 theorem shift_apply {A : Type} [Ring A] [Module ℝ A] (L : Lie E a →ₗ[ℝ] A) (r : ℝ) (X : Lie E a) :
     shift L r X = L X + (r * ell E a X) • (1 : A) := rfl
 
-omit [NumberField E] in
 
 def cas {A : Type} [Ring A] [Module ℝ A] (L : Lie E a →ₗ[ℝ] A) {n : ℕ} (e : Fin n → Herm E a) : A :=
   ∑ j, (L (toL (e j).1) * L (toL (e j).1) - L (toL (Complex.I • (e j).1)) * L (toL (Complex.I • (e j).1)))
 
-omit [NumberField E] in
 
 def IsBasic {M : Type} [AddCommGroup M] [Module ℝ M] {q : ℕ} (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] M) : Prop :=
   ∀ (X : Fin q → Herm E a) (i : Fin q), (X i).1 = 1 → ω X = 0
@@ -173,7 +170,6 @@ structure IsSq (r : ℝ) (φ : Sm E a) : Prop where
   one : lie E a (oneL E a) φ = -(r : ℂ) • φ
   sq : ∀ l : List (Lie E a), IsSqIntMod ((l.map (lie E a)).prod φ)
 
-variable (E a) in
 
 def sqSub (r : ℝ) : Submodule ℂ (Sm E a) := Submodule.span ℂ {φ | IsSq r φ}
 
@@ -182,13 +178,11 @@ structure IsPet (r : ℝ) (H : Sm E a →ₗ⋆[ℂ] Sm E a →ₗ[ℂ] ℂ) : P
   skew : ∀ (X : Lie E a), ∀ φ ∈ sqSub E a r, ∀ ψ ∈ sqSub E a r,
     H (lie E a X φ) ψ + H φ (lie E a X ψ) = -((2 * r * ell E a X : ℝ) : ℂ) * H φ ψ
 
-omit [IsTotallyComplex E] in
 
 structure IsAdm (Ξ : AlgRep E a) (G : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ) : Prop where
   pos : G.PosDef
   adj : ∀ X : Matrix (Fin a) (Fin a) (Cinf E), (Ξ.dmat (toL X))ᴴ * G = G * Ξ.dmat (toL (star X))
 
-omit [IsTotallyComplex E] in
 
 def HasOne (Ξ : AlgRep E a) (r : ℝ) : Prop := Ξ.dmat (oneL E a) = (r : ℂ) • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
 
@@ -202,10 +196,7 @@ structure IsHarm (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a) (r : ℝ) 
   closed : dCo (smLie Ξ) ω = 0
   coclosed : Coclosed (smAdj Ξ r) e ω
 
-omit [IsTotallyComplex E] in
 
-omit [NumberField E] [IsTotallyComplex E] in
-variable (E) in
 
 def emb : Cinf E →+* ((E →+* ℂ) → ℂ) := Pi.ringHom fun τ => coord τ
 
@@ -361,7 +352,6 @@ def OneParam : Prop :=
     Continuous (fun t => infGL E a (c t)) ∧ HasDerivAt (fun t => toL (c t).val) X 0 ∧
     ∀ t : ℝ, (c t).val = NormedSpace.exp (t • Matrix.of X)
 
-open scoped GlobalTheory.CuspRep.CuspidalL2GL in
 
 def SkewLieActionL2 : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] (X : Lie E a) (φ ψ : Sm E a),
@@ -371,7 +361,6 @@ def SkewLieActionL2 : Prop :=
       (h4 : GlobalTheory.AutomorphicL2Unitary.MemL2Quotient (GlobalTheory.UnitaryBC.latticeGL E a) μ (lie E a X ψ).1),
       inner ℂ h3.toL2 h2.toL2 + inner ℂ h1.toL2 h4.toL2 = 0
 
-open scoped GlobalTheory.CuspRep.CuspidalL2GL in
 
 def SqMem : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (μ : Measure (GA E a)) [μ.IsHaarMeasure] (r : ℝ) (χ : HChar E), IsTw (a := a) r χ →

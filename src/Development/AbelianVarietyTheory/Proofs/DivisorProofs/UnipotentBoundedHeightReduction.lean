@@ -191,11 +191,9 @@ section Proj
 
 variable {σ : E →ₐ[F] E} {d d₁ : ℕ} {J : Matrix (Fin d) (Fin d) E} {x y : Fin d → E} {ι : Matrix (Fin d) (Fin d₁) E}
 
-variable (σ J x y) in
 
 def E1 : Matrix (Fin d) (Fin d) E := vecMulVec x (phi σ J y)
 
-variable (σ J x y) in
 
 def E3 : Matrix (Fin d) (Fin d) E := vecMulVec (-y) (phi σ J x)
 
@@ -391,7 +389,6 @@ namespace GlobalTheory.UnipCompact
 
 open Matrix
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_bounded_translate : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (B : Base F E) (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s : ℕ),

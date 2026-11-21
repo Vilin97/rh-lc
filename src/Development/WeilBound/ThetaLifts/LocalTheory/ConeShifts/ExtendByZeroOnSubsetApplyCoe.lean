@@ -133,7 +133,6 @@ theorem real_add_rest : realAd F 1 + rest (∅ : Finset (Pl F)) = 1 := by simp [
 
 variable {n : ℕ}
 
-variable (σ) in
 
 def PU (J : Matrix (Fin n) (Fin n) E) (a : AF F) : UA σ J →* UA σ J :=
   ((unitP (A := Matrix (Fin n) (Fin n) (AE F E)) a).comp (Subgroup.subtype _)).codRestrict _ fun g => by

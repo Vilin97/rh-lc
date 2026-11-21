@@ -34,7 +34,6 @@ theorem ne_b_top (hS : Formalism.MainNotions.SizesAt L) (s : Fin ((D.gat u w hg)
   rw [dite_eq_left (h2.1 hs)]
   exact ⟨L.bT_ge _, ne_bT_le hS _⟩
 
-include hL ht0 in
 
 end Orbit
 
@@ -42,7 +41,6 @@ def priceThreshold : ℝ := 9
 
 theorem price_threshold_ge_nine : 9 ≤ priceThreshold := by norm_num [priceThreshold]
 
-open Classical in
 
 theorem price_bound_small_primes : PriceBoundSmallPrimes := by
   intro D L X Y K hK hS hT hL u w hg hp t0 ht0 j hj

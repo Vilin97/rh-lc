@@ -9,7 +9,6 @@ open Matrix PositivityTheory.Rg.BcB.D1
 
 namespace GlobalTheory.CompanionTheory.Wedge
 
-open ComplexOrder in
 
 theorem pairI_of_detMono : DetMono → PairI := by
   intro hD ι κ _ _ _ U W

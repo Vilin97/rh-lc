@@ -1045,7 +1045,6 @@ theorem twist_representatives : XiReps := by
 
 end DirectL
 
-open NumberField in
 
 namespace Test
 

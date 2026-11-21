@@ -30,9 +30,6 @@ private lemma continuousAt_cutoff_mul_chern_form_coeff {n : ℕ} {r : Type} [Fin
     (_root_.GlobalTheory.GoodMetric.coordVec a) (_root_.GlobalTheory.GoodMetric.coordVec b) p q
   exact h.continuousAt
 
-open MeasureTheory Filter Topology in
-open scoped ContDiff Matrix in
-set_option autoImplicit false in
 
 theorem _root_.GlobalTheory.GoodTop.integrableOn_cut_mixTop_smooth :
     ∀ {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] (U K : Set (_root_.ReciprocityTheory.L2DbarEstimates.V n)) (G₀ : _root_.ReciprocityTheory.L2DbarEstimates.V n → Matrix r r ℂ) (ρ : _root_.ReciprocityTheory.L2DbarEstimates.V n → ℝ),

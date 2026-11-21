@@ -307,7 +307,6 @@ theorem theta_lower_bound : ThetaLower := by
       apply mul_pos (Real.sqrt_pos.mpr hCt0) (Real.sqrt_pos.mpr (by positivity))
     exact le_trans hmin3 (by rw [e]; exact hinv _ hpos h')
 
-set_option maxHeartbeats 800000 in
 
 theorem theta_power_bound : ThetaPower := by
   intro C A0 Ct CDel cT Cb hC hA0 hCt hCDel hcT hCb hcb

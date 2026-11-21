@@ -51,7 +51,6 @@ namespace CuspSub
 
 variable {π π' : CuspSub E a} {ω ω' : HChar E}
 
-variable (π) in
 
 def HasCentral (ω : HChar E) : Prop :=
   ∀ z : Ideles E, ∀ φ ∈ π.V, rt E a (GeneralLinearGroup.scalar (Fin a) z) φ = ((ω.1 z : ℂˣ) : ℂ) • φ
@@ -101,7 +100,6 @@ theorem HasCentral.apply (h : π.HasCentral ω) {φ : Sm E a} (hφ : φ ∈ π.V
   rw [scalar_comm]
   exact congrFun (congrArg Subtype.val (h z φ hφ)) g
 
-variable (π) in
 
 def IsUnitary : Prop := ∃ ω : HChar E, ω.IsUnitary ∧ π.HasCentral ω
 
@@ -115,18 +113,15 @@ theorem IsUnitary.norm_eq (h : π.IsUnitary) {φ : Sm E a} (hφ : φ ∈ π.V) (
 
 end CuspSub
 
-omit [IsTotallyComplex E] in
 
 theorem isUnitary_one : (1 : HChar E).IsUnitary := fun _ => norm_one
 
-omit [IsTotallyComplex E] in
 
 theorem isUnitary_pow {χ : HChar E} (h : χ.IsUnitary) (n : ℕ) : (χ ^ n).IsUnitary := by
   induction n with
   | zero => rw [pow_zero]; exact isUnitary_one
   | succ n ih => rw [pow_succ]; exact ih.mul h
 
-omit [IsTotallyComplex E] in
 
 namespace CG
 
@@ -160,7 +155,6 @@ theorem IsUnitary.tw (h : π.IsUnitary) {σ : CG E 1} (hσ : σ.IsUnitary) : (π
 
 end CG
 
-variable (E a) in
 
 abbrev CGu : Type := {π : CG E a // π.IsUnitary}
 
@@ -185,7 +179,6 @@ theorem hasCentChar_centChar : π.1.HasCentChar π.centChar.1 := π.2.choose_spe
 theorem centChar_twist (χ : {χ : HChar E // χ.IsUnitary}) : (π.twist χ).centChar.1 = π.centChar.1 * χ.1 ^ a :=
   (π.twist χ).hasCentChar_centChar.unique (π.hasCentChar_centChar.twist χ.1)
 
-variable (E) in
 
 def equivChar : CGu E 1 ≃ {χ : HChar E // χ.IsUnitary} where
   toFun σ := ⟨σ.1.toChar, (CG.isUnitary_toChar_iff _).2 σ.2⟩

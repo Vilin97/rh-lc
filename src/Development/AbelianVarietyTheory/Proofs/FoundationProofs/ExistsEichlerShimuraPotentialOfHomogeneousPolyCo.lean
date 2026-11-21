@@ -31,7 +31,6 @@ def rep (Γ : Subgroup SL(2, ℤ)) (a : Hs) : Hs := (Quotient.mk (orbSetoid Γ) 
 theorem rep_rel (Γ : Subgroup SL(2, ℤ)) (a : Hs) : ∃ γ ∈ Γ, mob (ofSL γ) (rep Γ a).1 = a.1 :=
   Quotient.mk_out (s := orbSetoid Γ) a
 
-open Classical in
 
 def gel (Γ : Subgroup SL(2, ℤ)) (τ : ℂ) : SL(2, ℤ) :=
   if h : τ ∈ Hs then (rep_rel Γ ⟨τ, h⟩).choose else 1
@@ -61,7 +60,6 @@ def potOf {R : Type} [CommRing R] (Γ : Subgroup SL(2, ℤ)) (z : SL(2, ℤ) →
 
 end GlobalTheory.KZ.H3.PotCoc
 
-open GlobalTheory.KZ.H3.PotCoc GlobalTheory.KZ.Betti in
 
 theorem GlobalTheory.KZ.H3.exists_pot_of_isCoc : ∀ (R : Type) [CommRing R] (w N l : ℕ), 4 ≤ N →
     ∀ z : SL(2, ℤ) → MvPolynomial (Fin 2) R, IsCoc w (Gam N l) z → ∃ F ∈ Pot R w (Gam N l),

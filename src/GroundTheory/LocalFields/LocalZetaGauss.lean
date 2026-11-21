@@ -16,7 +16,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 section Quotient
 
-variable (K) in
 
 abbrev unitsModFiltration (c : ℕ) : Type _ :=
   unitFiltrationUnits K 0 ⧸ (unitFiltrationUnits K c).subgroupOf (unitFiltrationUnits K 0)
@@ -49,7 +48,6 @@ section Gauss
 
 variable {χ : Kˣ →* ℂˣ} {ψ : AddChar K Circle}
 
-variable (χ ψ) in
 
 def gaussSum : ℂ :=
   ∑ t : unitsModFiltration K (quasiCharConductor χ),

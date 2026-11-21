@@ -280,7 +280,6 @@ end Unitary
 
 end Volume
 
-open Volume in
 
 theorem measure_shellU : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] [CompleteSpace L] (ϖ : L)
     (σ : L →+* L) (q : ℕ), IsUnramInv ϖ σ q →

@@ -13,7 +13,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory
 
-open Polynomial in
 
 theorem poly_eq_C_of_eq_aeval_invSelf {K : Type} [CommRing K] (p q : K[X])
     (h : algebraMap K[X] (Localization.Away (X : K[X])) p =

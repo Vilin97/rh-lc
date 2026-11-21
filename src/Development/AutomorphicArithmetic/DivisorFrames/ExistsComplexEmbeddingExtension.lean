@@ -12,7 +12,6 @@ open CategoryTheory Limits AlgebraicGeometry IsLocalRing
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.ConsGeo
 
-open Cardinal in
 
 private theorem UpperTheory.nonempty_embedding_complex (K : Type) [Field K] [CharZero K] [Countable K] :
     Nonempty (K →+* ℂ) := by

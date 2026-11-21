@@ -147,12 +147,10 @@ theorem evP_params : EvP fun _ K => ∀ β : BPt K, Nonempty (ParameterChoice' �
   obtain ⟨⟨N⟩, -, -⟩ := hN _ _ (by rw [hsc, h4]) (by rw [hsc]; exact hx) hv (GlobalTheory.Plug.hostArith_bpt β)
   exact ⟨N.params⟩
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.Fc.RL.LamLinked
 
 namespace GlobalTheory.Fc.RL
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.Fc.RL

@@ -20,7 +20,6 @@ variable {F : Type} [Field F]
 private def nF (b : F) : Matrix.SpecialLinearGroup (Fin 2) F :=
   ⟨!![1, b; 0, 1], by simp [Matrix.det_fin_two]⟩
 
-variable (F) in
 
 private def wF : Matrix.SpecialLinearGroup (Fin 2) F :=
   ⟨!![0, 1; -1, 0], by simp [Matrix.det_fin_two]⟩

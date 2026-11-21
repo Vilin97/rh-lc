@@ -94,7 +94,6 @@ end GlobalTheory.InertSph.Scal
 
 namespace GlobalTheory.InertSph
 
-open GlobalTheory.InertSph.Scal GlobalTheory.LatVac in
 
 theorem exists_traceZero_unit : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     B.IsGood σ → ∀ (d : ℕ) (W : Spc F E d) (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →

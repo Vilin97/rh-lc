@@ -112,7 +112,6 @@ theorem map_minor {R S : Type*} [CommRing R] [CommRing S] (φ : R →+* S) {j m 
 
 end RootPointConjugation
 
-open RootPointConjugation in
 
 theorem RootPointConj.proof (h : RootAnchorNonzero.Statement) : RootPointConj.Statement := by
   intro f j m ζ hζ z hz τ

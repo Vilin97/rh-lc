@@ -216,7 +216,6 @@ end GlobalTheory.UpperGrowth
 
 namespace GlobalTheory
 
-open GlobalTheory.UpperGrowth in
 
 theorem upper_half_growth : ∀ (n a : ℕ) (F : (Fin n → ℂ) → ℂ), DifferentiableOn ℂ F (logDom n a) →
     (∀ s ∈ logDom n a, 0 < (F s).im) → ∃ (C : ℝ) (k : ℕ), ∀ s ∈ logDom n a,

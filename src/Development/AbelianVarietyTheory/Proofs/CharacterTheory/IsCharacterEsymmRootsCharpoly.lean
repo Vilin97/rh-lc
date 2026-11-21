@@ -70,7 +70,6 @@ private lemma esymm_roots_charpoly_eq_sum_principal_minors {n : ℕ} (j : ℕ) (
       Multiset.powersetCard_eq_empty _ (by omega)]
     simp
 
-open Polynomial in
 
 theorem _root_.GlobalTheory.BI.isChar_esymm_roots_charpoly :
     ∀ (G : Type) [Group G] (n j : ℕ) (ρ : G →* GL (Fin n) ℂ), _root_.GlobalTheory.BI.IsChar ℂ ℂ

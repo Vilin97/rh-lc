@@ -77,21 +77,14 @@ namespace VMetric
 
 variable [IsIntegral X] {E : X.Modules} {r : ℕ} {h : VMetric p E r} {a b : ℝ}
 
-variable (h) in
 
-variable (h) in
 
-variable (h) in
 
 end VMetric
 
-variable (p) in
 
-variable (p) in
 
-variable (p) in
 
-variable (p) in
 
 def sqMap {S S' : Scheme.{0}} {A : Over S} {A' : Over S'} {f : S' ⟶ S} {φ : A'.left ⟶ A.left}
     (w : φ ≫ A.hom = A'.hom ≫ f) : (A' ⊗ A').left ⟶ (A ⊗ A).left :=
@@ -196,7 +189,6 @@ variable {P} {t : ℝ} {h h' : VMetric p (omega P.A) P.g}
 
 variable (P p) [IsIntegral X]
 
-omit [IsIntegral X] in
 
 variable {P p} {a b : ℝ}
 

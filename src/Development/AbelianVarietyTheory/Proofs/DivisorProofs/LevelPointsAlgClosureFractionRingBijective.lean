@@ -40,7 +40,6 @@ theorem val_tau_ext (x χ : D.X) {z J} (hJ : Good D.P.L z J) :
     val (LB.pullGen D.P.L _ _ (D.tau x χ) (jFK (R := R) F₀)) (extMap (R := R) f hf).left z J = tauVal D F x χ z J := by
   rw [val_pull hJ, tauVal, ← extMap_jFK f hf]
 
-include f hf in
 
 theorem exists_isIota_of_ext {x : D.X} {h' : GtPtF D F} (hh' : GtPtF.IsIota x h') : ∃ g : GtPtF D F₀, GtPtF.IsIota x g := by
   obtain ⟨b', v'⟩ := (isIota_iff_val _ _).1 hh'

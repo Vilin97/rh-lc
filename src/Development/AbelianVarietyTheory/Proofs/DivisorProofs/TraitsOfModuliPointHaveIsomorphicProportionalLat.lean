@@ -53,7 +53,6 @@ theorem sq_associated {V W : Type} [CommRing V] [CommRing W] [IsDomain W] (f : V
 
 end GlobalTheory.UPoinc.TraitUniq
 
-open GlobalTheory.UPoinc.TraitUniq in
 
 theorem GlobalTheory.UPoinc.uTraitUniqSt_holds : UTraitUniqSt := by
   intro E _ _ _ H Dw l Xo c T T' W _ _ _ f f' fK fK' hB hW hf hf' hfl hfl' hK hK' hy w m m' hw hm hm'

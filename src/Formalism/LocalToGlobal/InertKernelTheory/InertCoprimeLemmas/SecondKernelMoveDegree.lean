@@ -34,11 +34,9 @@ open MvPolynomial
 
 variable {D : D7}
 
-open Classical in
 
 def wF {N : ℕ} (τ : D.what₂.Tau) : GL3Theta.FrV D N → ℕ := fun k => if k.1 = τ then 1 else 0
 
-open Classical in
 
 def wI {N N' : ℕ} (τ : D.what₂.Tau) : GL3Theta.Idx D N N' → ℕ := fun k => if k.1 = τ then 1 else 0
 

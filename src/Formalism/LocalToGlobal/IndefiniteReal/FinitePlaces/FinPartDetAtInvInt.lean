@@ -276,7 +276,6 @@ def mkRes (V : HSp D) (ε : AF D.host.F) (hε : IsIdempotentElem ε) (g : GA D V
 theorem mt_mkRes (V : HSp D) (ε : AF D.host.F) (hε : IsIdempotentElem ε) (g : GA D V) :
     mt V (mkRes V ε hε g) = resM (algebraMap (AF D.host.F) (AE D) ε) (mt V g) := rfl
 
-open Classical in
 
 def resG (V : HSp D) (ε : AF D.host.F) (g : GA D V) : GA D V :=
   if hε : IsIdempotentElem ε then mkRes V ε hε g else g
@@ -376,7 +375,6 @@ theorem frGL_val' {n : ℕ} (β : GL (Fin n) (Lev.EAf D)) (y : GL (Fin n) (Forma
           (Formalism.L2.Herm.intAf D.host.F D.host.E).subtype *
         ((β⁻¹ : GL (Fin n) (Lev.EAf D)) : Matrix (Fin n) (Fin n) (Lev.EAf D)) := rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem finE_resG_mem_St (hε : IsIdempotentElem ε) {g : GA D V} {β : GL (Fin V.rank) (Lev.EAf D)}
     (hg : Lev.finE V g ∈ Formalism.L2.DIV.St β) : Lev.finE V (resG V ε g) ∈ Formalism.L2.DIV.St β := by
@@ -408,7 +406,6 @@ section Det
 
 variable {D : D7}
 
-open Classical in
 
 def detAt (e : AE D) (V : HSp D) (g : GA D V) : (AE D)ˣ :=
   if he : e * e = e then
@@ -477,11 +474,8 @@ theorem comm_comm (z : Af D.host.F ⊗[D.host.F] D.host.E) :
   | tmul a b => simp
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 theorem toEAf_det {V : HSp D} {g : GA D V} {β : GL (Fin V.rank) (Lev.EAf D)}
     {y : GL (Fin V.rank) (Formalism.L2.Herm.intAf D.host.F D.host.E)} (hy : Formalism.L2.DIV.frGL β y = Lev.finE V g) :
@@ -533,7 +527,6 @@ theorem infPart_idemAt {e : AE D} {PP : Formalism.L2.DIV.Pl D.host.E} (hPP : For
   have hz : infPart D e * infPart D e = infPart D e := by rw [← map_mul, h1]
   linear_combination -hz + (infPart D e) * hy - hx
 
-set_option maxHeartbeats 1000000 in
 
 theorem unrOff_detAt {e e₁ : AE D} {PP₁ : Formalism.L2.DIV.Pl D.host.E} (hPP₁ : Formalism.L2.NTheta.IsIdemAt e₁ PP₁)
     (horth : (e + cA D e) * e₁ = 0) (V : HSp D) {g : GA D V} {β : GL (Fin V.rank) (Lev.EAf D)}
@@ -611,7 +604,6 @@ theorem isIdemAt_conj {e : AE D} {PP : Formalism.L2.DIV.Pl D.host.E} (h : Formal
     · intro hn hm; exact hn (by have h3 := cF_int hm; rwa [cF_cF] at h3)
     · intro hn hm; exact hn (cF_int hm)
 
-open Classical in
 
 theorem isIdemSum_conj {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (h : IsIdemSum e P) :
     IsIdemSum (cA D e) (P.image Formalism.L2.DIV.conjPl) := by
@@ -630,9 +622,7 @@ theorem isIdemSum_conj {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (h
       rw [he, map_sum]
   · rw [cA_cA, mul_comm]; exact hc
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end Conj
 

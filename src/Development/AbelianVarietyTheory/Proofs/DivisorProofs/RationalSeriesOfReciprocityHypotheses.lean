@@ -123,6 +123,5 @@ namespace GlobalTheory.SerRefPt
 
 open GlobalTheory.RealGeo GlobalTheory.Unframe GlobalTheory.UnframePt
 
-set_option maxHeartbeats 3200000 in
 
 end GlobalTheory.SerRefPt

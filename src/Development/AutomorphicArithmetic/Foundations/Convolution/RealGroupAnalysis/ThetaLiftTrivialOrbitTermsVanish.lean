@@ -42,7 +42,6 @@ abbrev rt (c : F) : A F := algebraMap F (A F) c
 def nU (b : A F) : G1 F := ⟨!![1, b; 0, 1], by simp [Matrix.det_fin_two]⟩
 
 def mD (a : (A F)ˣ) : G1 F := ⟨!![(a : A F), 0; 0, ((a⁻¹ : (A F)ˣ) : A F)], by simp [Matrix.det_fin_two]⟩
-variable (F) in
 
 def wW : G1 F := ⟨!![0, 1; -1, 0], by simp [Matrix.det_fin_two]⟩
 
@@ -61,10 +60,8 @@ def cD (t : (A F)ˣ) (g : G1 F) : G1 F :=
     exact h⟩
 
 abbrev gl (g : G1 F) : GL (Fin 2) (A F) := Matrix.SpecialLinearGroup.toGL g
-variable (F) in
 
 def ratS : Matrix.SpecialLinearGroup (Fin 2) F →* G1 F := Matrix.SpecialLinearGroup.map (algebraMap F (A F))
-variable (F) in
 
 def Gam : Subgroup (G1 F) := (ratS F).range
 
@@ -76,11 +73,9 @@ def At (v : HeightOneSpectrum (𝓞 F)) (g : G1 F) : Prop :=
   InfOne g ∧ ∀ v' ≠ v, ∀ i j, (g i j).2 v' = ((1 : Matrix (Fin 2) (Fin 2) (A F)) i j).2 v'
 
 def IntAt (v : HeightOneSpectrum (𝓞 F)) (g : G1 F) : Prop := ∀ i j, (g i j).2 v ∈ v.adicCompletionIntegers F
-variable (F) in
 
 def KK : Set (G1 F) := {g | InfOrth g ∧ ∀ v, IntAt v g}
 
-variable (F) in
 
 structure Meas where
   μ : Measure (G1 F)
@@ -162,7 +157,6 @@ def Dat.herm (v : V4 F) : Matrix (Fin 2) (Fin 2) (A E) :=
 def Dat.unherm (X : Matrix (Fin 2) (Fin 2) (A E)) : V4 F := ![D.co (X 1 1) 0, D.co (X 0 0) 0, D.co (X 0 1) 0, D.co (X 0 1) 1]
 
 def Dat.act (h : GL (Fin 2) (A E)) (v : V4 F) : V4 F := D.unherm (h.val * D.herm v * (h.val.map D.bar)ᵀ)
-variable (F) in
 
 def nu (h : GL (Fin 2) (A E)) : (A F)ˣ := ideleNorm F E (Matrix.GeneralLinearGroup.det h)
 
@@ -202,7 +196,6 @@ def w1 (f : GL (Fin 2) (A F) → ℂ) (φ : S4 F) (h : GL (Fin 2) (A E)) (g : G1
   Wf f (gl g * dM (nu F h)) * hat (W.Om g (W.L h φ)).1 ![0, 1, 1, 0]
 
 def W1 (f : GL (Fin 2) (A F) → ℂ) (φ : S4 F) (h : GL (Fin 2) (A E)) : ℂ := M.I0 (w1 W f φ h)
-variable (D) in
 
 def WE (Φ : GL (Fin 2) (A E) → ℂ) (h : GL (Fin 2) (A E)) : ℂ :=
   ∫ u in Set.univ.pi fun _ : Fin 2 => fundamentalSet F, Φ (gl (nU (D.mkE (u 0) (u 1))) * h) * ψ (2 * u 0) ∂(adeleMeasurePi F)

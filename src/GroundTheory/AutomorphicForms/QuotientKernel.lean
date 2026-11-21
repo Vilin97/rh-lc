@@ -102,11 +102,9 @@ theorem coeFn_rightRegularRep (g : G) (φ : Lp ℂ 2 (quotientMeasure Γ μ)) :
     rightRegularRep Γ μ g φ =ᵐ[quotientMeasure Γ μ] fun x => φ (rightMul Γ g x) :=
   coeFn_rightTranslate Γ μ g φ
 
-omit [μ.IsMulRightInvariant] in
 
 variable [CompactSpace (RightCosetSpace Γ)]
 
-omit [μ.IsMulRightInvariant] in
 
 omit [Group G] [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G]
   [SecondCountableTopology G] [μ.IsMulLeftInvariant] [μ.IsMulRightInvariant] in
@@ -114,9 +112,7 @@ theorem coeFn_compactSupportToL1 (f : CompactlySupportedContinuousMap G ℂ) :
     (UnitaryRep.ccToL1 μ f : G → ℂ) =ᵐ[μ] f :=
   MemLp.coeFn_toLp _
 
-omit [μ.IsMulRightInvariant] in
 
-omit [μ.IsMulRightInvariant] in
 
 end Operator
 

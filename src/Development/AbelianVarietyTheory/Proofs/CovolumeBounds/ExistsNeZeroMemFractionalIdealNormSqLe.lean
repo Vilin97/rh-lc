@@ -13,7 +13,6 @@ section General
 
 variable (K : Type*) [Field K] [NumberField K]
 
-open scoped Classical in
 
 theorem exists_ne_zero_mem_fractionalIdeal_place_le (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ)
     (g : InfinitePlace K → ℝ≥0) (h : minkowskiBound K I ≤ volume (convexBodyLT K g)) :

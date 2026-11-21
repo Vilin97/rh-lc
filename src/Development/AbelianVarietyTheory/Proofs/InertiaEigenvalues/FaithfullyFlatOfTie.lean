@@ -343,7 +343,6 @@ theorem exists_sub_of_tie [IsDomain O] [IsPrincipalIdealRing O]
     rw [hspan]
     exact Submodule.subset_span ⟨x, hx, rfl⟩
 
-include E in
 
 end Generic
 

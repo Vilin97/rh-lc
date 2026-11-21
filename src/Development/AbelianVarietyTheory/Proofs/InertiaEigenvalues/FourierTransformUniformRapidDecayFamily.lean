@@ -82,7 +82,6 @@ theorem infFourier_fderiv {f : (Fin n → Cinf E) → ℂ} (hf : ContDiff ℝ �
     (2 * π * I * (pairL u v : ℂ)) * ∫ x, f x * (𝐞 (-pairL u x) : ℂ) ∂infMeasure E n
   linear_combination key - e
 
-open Classical in
 
 def dirv (k : Fin n × InfinitePlace E × Bool) : Fin n → Cinf E :=
   Pi.single k.1 (Pi.single k.2.1 (if k.2.2 then I else 1))
@@ -127,7 +126,6 @@ theorem norm_le_sum_pairL (u : Fin n → Cinf E) : ‖u‖ ≤ ∑ k, |pairL u (
 
 end GlobalTheory.FourierDecay
 
-open GlobalTheory.FourierDecay in
 
 theorem GlobalTheory.fourier_decay_family : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (ι : Type)
     (w : ι → ℝ) (𝒞 : Set (ι → (Fin n → Cinf E) → ℂ)),

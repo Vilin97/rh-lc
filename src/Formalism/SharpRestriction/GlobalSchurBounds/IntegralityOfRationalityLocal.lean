@@ -14,7 +14,6 @@ open Formalism.BasicNotions Formalism.MainNotions.product_first_zeroth_parts For
 
 variable (D : D7) (u : D.what₂.Word)
 
-variable {D u} in
 
 def ChiFin0 {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i} (T : Formalism.L2.Forms.FormsTiedSym D u Ch chOf) : Prop :=
   ∃ n : ℕ, 0 < n ∧ ∀ x : (T.cls 0 (Nat.zero_le _) (Or.inl rfl)).lev.U,

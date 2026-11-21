@@ -14,7 +14,6 @@ open NumberField Formalism.BasicNotions Classical Formalism.MainNotions Formalis
 
 namespace GlobalTheory.MomKapi
 
-open Formalism.L2.Th1.H in
 
 theorem nsmul_relIdx_mem {V : Type*} [AddCommGroup V] (S M : AddSubgroup V) {z : V} (hz : z ∈ M) :
     relIdx S M • z ∈ S := by

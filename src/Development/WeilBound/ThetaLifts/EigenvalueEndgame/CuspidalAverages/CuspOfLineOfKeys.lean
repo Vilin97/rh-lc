@@ -89,7 +89,6 @@ theorem wh_ne {f : UA σ W.J → ℂ} (hf : IsAut (W := W) f)
   · simpa using congrFun e 1
   · rw [← wh_right C h H, h0]; rfl
 
-omit H hψ in
 
 theorem wh_two {u u' : Matrix (Fin d) (Fin 2) E} (h : Fr (σ : E →+* E) W.J u u') {ct : (UA σ W.J → ℂ) → UA σ W.J → ℂ}
     (H : IsCt (colSp u) ct) (hψ : StdPsi ψ) {f : UA σ W.J → ℂ} (hf : IsAut (W := W) f) (hm : Mod f)

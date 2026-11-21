@@ -48,7 +48,6 @@ namespace QZDual
 variable {A B C : Type*} [AddCommGroup A] [TopologicalSpace A] [AddCommGroup B]
   [TopologicalSpace B] [AddCommGroup C] [TopologicalSpace C]
 
-variable (A) in
 
 end QZDual
 

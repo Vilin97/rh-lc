@@ -123,9 +123,7 @@ theorem loc_of_isAbsPow {ν : HChar E} {s : ℝ} (hν : ν.IsAbsPow s) (w : Heig
 
 variable [IsTotallyComplex E] (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL)
 
-include hF in
 
-include hF in
 
 theorem exists_hasSat (π : CG E a) (h : IsPlaceOver A w) (hu : (locPar hL π h).unr) :
     ∃ B : Multiset ℂˣ, π.HasSat w B ∧ (locPar hL π h).frobEig = B.map fun b => ((b⁻¹ : ℂˣ) : ℂ) := by
@@ -227,7 +225,6 @@ theorem isPolarized_twist_absPow {π : CuspSub E a} (h : π.IsCsd) (s : ℝ) :
   have h3 : Real.exp (s * t) = -1 := by exact_mod_cast e
   linarith [Real.exp_pos (s * t)]
 
-open Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.WeilDeligne in
 
 end Polar
 
@@ -237,7 +234,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} {N : NData R H what₂} {A : NAut N} {l : ℕ} [Fact l.Prime]
 
-variable (N) in
 
 def FrobFam (ι : Qbar l ≃+* ℂ) (f : PlE H → ℂ[X]) : Prop :=
   ∃ F : Qbar l → G H.E N.Om → Qbar l, (∀ z, Continuous (F z)) ∧
@@ -276,7 +272,6 @@ theorem FrobFam.eq_of_split (hC : GlobalTheory.Published.ChebotarevDegreeOne) {f
   obtain ⟨z, rfl⟩ := ι.surjective z
   rw [← a _ σ (N.plOm.2 w) hσ, ← a' _ σ (N.plOm.2 w) hσ, hF]
 
-variable (A ι) in
 
 def CuspFam : Prop := ∀ (a : ℕ), 1 ≤ a → ∀ π : A.CG a, A.csd π → ∀ s : ℝ, GlobalTheory.GalOfCusp.RegAlgShift A π s →
   FrobFam N ι fun w => galPol A (A.lpTw (A.locG π w) (s + (1 - (a : ℝ)) / 2))
@@ -331,7 +326,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 variable {hL : GlobalTheory.Published.LocalLanglandsGL} (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) {D : D7} {T : WDTie D.nd D.naut}
   (C : CGTrue hL D T)
 
-include hF in
 
 theorem readsCusp : haveI := host_isCMField D.host; ReadsCusp D.naut fun a π => (C.e a π).1 := by
   have := host_isCMField D.host
@@ -339,7 +333,6 @@ theorem readsCusp : haveI := host_isCMField D.host; ReadsCusp D.naut fun a π =>
   rw [T.frobEig w _ hu, C.loc]
   exact exists_hasSat hL hF _ _ (by have e := (T.unr w _).1 hu; rwa [C.loc] at e)
 
-include hF C in
 
 end True
 

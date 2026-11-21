@@ -123,7 +123,6 @@ theorem exp_preserves {Y J : Matrix ι ι ℂ} (h : Yᴴ * J + J * Y = 0) :
   rw [← Matrix.exp_conjTranspose, ← he, Matrix.mul_assoc, ← Matrix.exp_add_of_commute _ _ (Commute.refl Y).neg_left]
   simp
 
-open scoped Matrix.Norms.L2Operator in
 
 theorem exists_log_unitary {k J : Matrix ι ι ℂ} (hk : kᴴ * k = 1) (hJ : Jᴴ = J) (hc : Commute k J) :
     ∃ Y : Matrix ι ι ℂ, Yᴴ = -Y ∧ Commute Y J ∧ NormedSpace.exp Y = k := by
@@ -452,7 +451,6 @@ theorem exists_section {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ : ∀ w : I
 
 variable {β : Type} [Fintype β] [DecidableEq β]
 
-omit [Fintype β] [DecidableEq β] in
 
 theorem mat_ext {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w) {X X' : Matrix β β (AE F E)}
     (hx : At (evI F) (X - X')) (hinf : ∀ w, X.map (piInf (τ w)) = X'.map (piInf (τ w))) : X = X' := by
@@ -461,7 +459,6 @@ theorem mat_ext {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ : ∀ w : Infinite
   rw [map_sub, sub_eq_zero]
   exact congrFun (congrFun (hinf w) i) j
 
-omit [DecidableEq β] in
 
 theorem map_form {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) (g J : Matrix β β (AE F E)) :
     (gᵀ * J * g.map (cA σ)).map (piInf τ) = (g.map (piInf τ))ᵀ * J.map (piInf τ) * (g.map (piInf τ)).map star := by

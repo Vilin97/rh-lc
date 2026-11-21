@@ -35,7 +35,6 @@ theorem normV_eq_pow_of_isPlaceOver {A : ValuationSubring Ω} {v : HeightOneSpec
   simp only [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
   exact (Ideal.absNorm_pow_inertiaDeg v.asIdeal v'.asIdeal).symm
 
-variable (K) in
 
 def resG : G L Ω →* G K Ω where
   toFun σ := σ.restrictScalars K

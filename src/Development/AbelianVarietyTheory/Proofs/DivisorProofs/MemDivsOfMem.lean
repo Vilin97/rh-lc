@@ -47,7 +47,6 @@ theorem mem_above_iff (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E 
     have e : y = cO E x := RingOfIntegers.ext hxy
     rw [e, mem_conjP, cO_cO]
 
-omit [StarRing E] in
 
 theorem valuation_up (Q : HeightOneSpectrum (𝓞 E))
     (h : ¬ (Q.asIdeal.comap (algebraMap (𝓞 F) (𝓞 E))).map (algebraMap (𝓞 F) (𝓞 E)) ≤ Q.asIdeal ^ 2) (x : F) :

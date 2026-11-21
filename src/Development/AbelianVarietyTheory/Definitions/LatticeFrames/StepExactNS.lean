@@ -27,7 +27,6 @@ def trivAt (Pg P : Finset (Pl D.host.E)) (r : ℕ) : Subgroup (G0 P r) where
   mul_mem' := fun {a b} ha hb PP h => by rw [Pi.mul_apply, ha PP h, hb PP h, mul_one]
   inv_mem' := fun {a} ha PP h => by rw [Pi.inv_apply, ha PP h, inv_one]
 
-open Classical in
 
 def comR (t : T) : Com D :=
   ⟨R.θ, R.ψ, R.toLevCh.mu t, R.eta, R.Pg ∪ R.Q t, ⟨trivAt R.Pg (R.Pg ∪ R.Q t) D.R.r, 1⟩,

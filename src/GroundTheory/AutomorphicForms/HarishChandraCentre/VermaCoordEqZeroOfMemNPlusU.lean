@@ -58,7 +58,6 @@ theorem hcEmb_sub_eval_mem_vermaIdeal (lam : Fin n → ℂ) (p : MvPolynomial (F
 
 noncomputable def lowPart (m : Fin n × Fin n →₀ ℕ) : Fin n × Fin n →₀ ℕ := m.filter IsLower
 
-open Classical in
 
 noncomputable def vermaCoord (lam : Fin n → ℂ) : U n →ₗ[ℂ] ((Fin n × Fin n →₀ ℕ) →₀ ℂ) :=
   pbw.constr ℂ fun m =>

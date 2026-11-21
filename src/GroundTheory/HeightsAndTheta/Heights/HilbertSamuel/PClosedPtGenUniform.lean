@@ -59,7 +59,6 @@ theorem genNear_mul_pow (hM : GenNearMul.Statement) (hgr : KH.IsMGraded S Œπ ùì
 
 end ClosedPtGenUniform
 
-open ClosedPtGenUniform in
 
 theorem ClosedPtGenUniform.proof (hG : GradedSubmodules.Statement) (hF : ClosedPtFibreLift.Statement)
     (hN : ChartNakayamaGen.Statement) (hM : GenNearMul.Statement) : ClosedPtGenUniform.Statement := by

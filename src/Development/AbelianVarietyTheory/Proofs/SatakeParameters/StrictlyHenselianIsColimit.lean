@@ -363,7 +363,6 @@ theorem isStalk_O (B : Subalgebra ℤ A) :
   exact ⟨⟨inferInstance, (sh A B).sep⟩, B, inferInstance, inferInstance, 𝟙 _, inferInstance, indEt_fromB B,
     (Category.comp_id _).symm⟩
 
-variable (A) in
 
 abbrev Idx (u : A) : Type := {B : Subalgebra ℤ A // B.FG ∧ u ∈ B}
 

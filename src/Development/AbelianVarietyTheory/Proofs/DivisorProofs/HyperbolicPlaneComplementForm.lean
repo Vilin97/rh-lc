@@ -28,7 +28,6 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E]
 
 end Forms
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.LeviPlaneSection
 

@@ -110,7 +110,6 @@ theorem evPt_eq (n : ℕ) [NeZero n] (a : d.A.La) : evPt d n a = d.qk n a := by
   | zero => exact absurd rfl (NeZero.ne 0)
   | succ n => rfl
 
-omit [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
 theorem exists_EF_eq_one (A : AnArc O) [Nontrivial A.X] : ∃ a b : A.La, A.EF a b = 1 := by
   let e := Module.Free.chooseBasis ℤ A.X

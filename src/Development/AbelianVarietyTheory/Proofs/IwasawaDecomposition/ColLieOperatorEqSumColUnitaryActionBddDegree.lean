@@ -67,7 +67,6 @@ end GlobalTheory.DefLift.ColComb
 
 namespace GlobalTheory.DefLift
 
-open ColComb in
 
 theorem colLie_eq_sum_colSub : ∀ (ι : Type) [Fintype ι] (m n d : ℕ) (τ : ι) (k l : Fin n),
     ∃ (s : Finset (Matrix.unitaryGroup (Fin n) ℂ)) (c : Matrix.unitaryGroup (Fin n) ℂ → ℂ),

@@ -28,7 +28,6 @@ theorem sg_sg (c : E ≃ₐ[F] E) (hcc : ∀ x, c (c x) = x) (z : RA F E) :
   | tmul a x => rw [sg_tmul, sg_tmul, hcc]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
-omit [NumberField E] in
 
 theorem finiteAdele_quadratic_exists_unit_eq_mul_sg (c : E ≃ₐ[F] E) (hcc : ∀ x, c (c x) = x)
     (hfix : ∀ x, c x = x → ∃ t : F, x = algebraMap F E t) (hc : c ≠ 1) (u : RA F E)
@@ -155,7 +154,6 @@ theorem exists_ideal (z w : RA F E) (hzw : z * w = 1)
   · rw [hx', heE, one_tmul_natCast]
     exact hz'
 
-omit [NumberField E] in
 
 theorem exists_quot {z w' : RA F E} {I I' : Ideal (𝓞 E)} {a b : 𝓞 E}
     (hab : Ideal.span {a} * I ≤ Ideal.span {b} * I')

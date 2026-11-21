@@ -23,7 +23,6 @@ theorem continuous_trace_rep (hD : IsUnitaryRep D) :
   simp only [LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℂ V)]
   exact continuous_finset_sum _ fun i _ => continuous_const.inner (hD.continuous_apply _)
 
-omit [TopologicalSpace H] in
 
 theorem trace_rep_conj (x s : H) :
     LinearMap.trace ℂ V (D (x⁻¹ * s * x) : V →ₗ[ℂ] V) = LinearMap.trace ℂ V (D s : V →ₗ[ℂ] V) := by

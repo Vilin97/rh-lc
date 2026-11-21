@@ -129,7 +129,6 @@ theorem csum_goodPart_perp_eq_zero {K : Type} [Field K] [NumberField K] [StarRin
   rw [hH, Formalism.DivisionValues.RationalHermitianForm.hform_eq_dot, Matrix.smul_mulVec, dotProduct_smul, ← Formalism.DivisionValues.RationalHermitianForm.hform_eq_dot,
     hu z' hz', smul_zero]
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.BigTop.Fun
 

@@ -66,7 +66,6 @@ section places
 variable {F L Ω : Type*} [Field F] [NumberField F] [Field L] [NumberField L] [Field Ω] [Algebra F L]
   [Algebra F Ω] [Algebra L Ω] [IsScalarTower F L Ω]
 
-variable (F) in
 
 end places
 

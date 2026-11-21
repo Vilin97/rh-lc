@@ -206,7 +206,6 @@ theorem conj_mem_congSU {G : Matrix (Fin r) (Fin r) E} {L : Set (Fin r → E)}
     rw [Units.val_mul, Units.val_mul, det_mul, det_mul, ht.2, coe_toAd, hβ'.2, mul_one, mul_one]
     exact h1
 
-open Classical in
 
 theorem covolume_le_sum {Ψ : Finset (E →+* ℂ)} {G : Matrix (Fin r) (Fin r) E} {L : Set (Fin r → E)} {M : ℕ}
     (μ : Measure (realSU Ψ G)) [μ.IsMulLeftInvariant]

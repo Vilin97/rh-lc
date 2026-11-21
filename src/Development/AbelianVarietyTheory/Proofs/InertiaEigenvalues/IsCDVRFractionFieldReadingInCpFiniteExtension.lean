@@ -38,7 +38,6 @@ theorem vV_irr' {a : V} (ha : Irreducible a) : vV V (algebraMap V K a) = 1 := by
 theorem vV_pow' {x : K} (n : ℕ) : vV V (x ^ n) = n * vV V x := by
   simp [vV]
 
-variable (V K) in
 
 def absOfVal (c : ℝ) (hc0 : 0 < c) (hc1 : c ≤ 1) : AbsoluteValue K ℝ where
   toFun x := if x = 0 then 0 else c ^ (vV V x)

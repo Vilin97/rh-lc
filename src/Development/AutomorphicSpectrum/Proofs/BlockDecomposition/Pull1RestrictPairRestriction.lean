@@ -81,7 +81,6 @@ theorem pull1_restrict_pair_restriction (h : IsPullback φ s' s (spMap (algebraM
 
 end GlobalTheory.CompanionTheory.SysBC
 
-open GlobalTheory.CompanionTheory.SysBC in
 
 theorem GlobalTheory.CompanionTheory.SysBC.sysBCSt : DescentSt → LowSt → SysBCSt := by
   intro hD hL R R' _ _ _ X X' s s' φ h hs P _ S

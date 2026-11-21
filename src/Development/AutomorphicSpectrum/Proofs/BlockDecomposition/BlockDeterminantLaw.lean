@@ -118,7 +118,6 @@ section Places
 
 variable {E : Type} [Field E]
 
-open Classical in
 
 theorem bdet_rat (A : Ad E R) (hi : Function.Injective A.i) (s : Set ι) {p : GL ι R}
     (hp : p ∈ stab R s) (hr : p ∈ A.ratGL ι) : ∃ x, bdet s p = Units.map A.i.toMonoidHom x := by
@@ -139,7 +138,6 @@ theorem bdet_rat (A : Ad E R) (hi : Function.Injective A.i) (s : Set ι) {p : GL
   rw [hval]
   rfl
 
-open Classical in
 
 theorem norm_det_blk (M : Matrix ι ι ℂ) (hM : M ∈ Matrix.unitaryGroup ι ℂ) (s : Set ι)
     (h0 : ∀ r, r ∉ s → ∀ c ∈ s, M r c = 0) :
@@ -211,7 +209,6 @@ theorem lg_eq_zero (A : Ad E R) (hA : A.GoodL) (u : Rˣ) (h1 : (u : R) ∈ A.O)
   rw [div_lt_iff₀ hpos] at hn
   linarith
 
-open Classical in
 
 theorem lg_bdet (A : Ad E R) (hA : A.GoodL) (s : Set ι) {p : GL ι R} (hp : p ∈ stab R s)
     (hk : p ∈ A.kGL ι) : A.lg (bdet s p) = 0 := by

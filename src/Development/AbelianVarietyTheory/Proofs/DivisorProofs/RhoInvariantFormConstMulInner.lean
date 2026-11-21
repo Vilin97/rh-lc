@@ -34,7 +34,6 @@ theorem integral_rhoFun_mul_conj {n : ℕ} (w : Fin n ⊕ Fin n → ℝ) (G G' :
   simp_rw [rhoFun_mul_conj]
   exact integral_add_right_eq_self (fun x => G x * conj (G' x)) (pPart w)
 
-open scoped Classical in
 
 theorem schr_eq_schrF {F : Type} [Field F] [NumberField F] [Invertible (2 : mixedEmbedding.mixedSpace F)]
     {κ : Type} [Fintype κ] (ψ : AddChar (mixedEmbedding.mixedSpace F) ℂ)
@@ -70,7 +69,6 @@ theorem haar_coords_cplx {n : ℕ} {V : Type} [NormedAddCommGroup V] [NormedSpac
   rw [h1, congrArg (fun m => ∫ x, G (C.symm x) ∂m) hk]
   simp only [integral_smul_nnreal_measure, NNReal.smul_def, Complex.real_smul]
 
-open scoped Classical in
 
 theorem const_of_euclidean : (∀ (n : ℕ) (B : GlobalTheory.RealWeil.Sch (Fin n) → GlobalTheory.RealWeil.Sch (Fin n) → ℂ),
     (∀ h', ∃ L : GlobalTheory.RealWeil.Sch (Fin n) →L[ℂ] ℂ, ∀ h, B h h' = L h) →

@@ -183,7 +183,6 @@ theorem klat_facts (hc : Crv D cc δ) {A : AddSubgroup (VC D N N')} (hA : KLat D
 
 end GlobalTheory.ThetaInter
 
-open GlobalTheory.ThetaInter in
 
 theorem GlobalTheory.theta_translation_intertwiner_unitary : ∀ D : D7, IntertwinerUnitary D := by
   intro D cc δ hc N N' A₁ A₂ h₁ h₂ th hth

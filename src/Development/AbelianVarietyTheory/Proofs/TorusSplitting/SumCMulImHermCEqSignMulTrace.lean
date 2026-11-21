@@ -10,7 +10,6 @@ open NumberField ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.Chart
 
 namespace GlobalTheory
 
-open NumberField in
 
 theorem _root_.GlobalTheory.hermC_emb_eq_map_herm {E : Type} [Field E] [NumberField E]
     [IsCMField E] {r : ℕ}
@@ -18,7 +17,6 @@ theorem _root_.GlobalTheory.hermC_emb_eq_map_herm {E : Type} [Field E] [NumberFi
     _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC τ G (_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ u) (_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ v) = τ (_root_.ReciprocityTheory.ChartRestriction.G.FD.herm G u v) :=
   (_root_.ReciprocityTheory.ChartRestriction.G.FD.emb_herm τ G u v).symm
 
-open NumberField in
 
 theorem _root_.GlobalTheory.re_map_xi_eq_zero {E : Type} [Field E] [NumberField E]
     [IsCMField E] {r : ℕ}
@@ -30,7 +28,6 @@ theorem _root_.GlobalTheory.re_map_xi_eq_zero {E : Type} [Field E] [NumberField 
   simp only [Complex.conj_re, Complex.neg_re] at h2
   linarith
 
-open NumberField in
 
 theorem _root_.GlobalTheory.c_eq_two_mul_abs_im {E : Type} [Field E] [NumberField E] [IsCMField E]
     {r : ℕ}

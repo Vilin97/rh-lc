@@ -61,7 +61,6 @@ theorem inG_conj (m : UJ ε) {X : Matrix (Fin n) (Fin n) ℂ} (h : inG ε X) : i
     _ = 0 := by
         rw [e2]; simp only [Matrix.mul_assoc]; exact neg_add_cancel _
 
-variable (ε) in
 
 def perpJ (V : Submodule ℂ (Fin n → ℂ)) : Submodule ℂ (Fin n → ℂ) where
   carrier := {y | ∀ x ∈ V, star x ⬝ᵥ (Jm ε *ᵥ y) = 0}
@@ -74,7 +73,6 @@ def perpJ (V : Submodule ℂ (Fin n → ℂ)) : Submodule ℂ (Fin n → ℂ) wh
 theorem mem_perpJ {V : Submodule ℂ (Fin n → ℂ)} {y : Fin n → ℂ} :
     y ∈ perpJ ε V ↔ ∀ x ∈ V, star x ⬝ᵥ (Jm ε *ᵥ y) = 0 := Iff.rfl
 
-variable (ε) in
 
 def lieSub : Submodule ℝ (Matrix (Fin n) (Fin n) ℂ) where
   carrier := {X | inG ε X}
@@ -102,7 +100,6 @@ variable {a : ℕ}
 def natFlag (W : Fin (a + 1) → Submodule ℂ (Fin n → ℂ)) (s : ℕ) : Submodule ℂ (Fin n → ℂ) :=
   W ⟨min s a, by omega⟩
 
-variable (ε) in
 
 def dblFlag (W : Fin (a + 1) → Submodule ℂ (Fin n → ℂ)) (s : ℕ) : Submodule ℂ (Fin n → ℂ) :=
   if s ≤ a then natFlag W s else perpJ ε (natFlag W (2 * a + 1 - s))

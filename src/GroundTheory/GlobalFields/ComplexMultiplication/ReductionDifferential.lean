@@ -312,7 +312,6 @@ variable {𝒪 : Type u} [CommRing 𝒪] [IsDomain 𝒪] [IsDiscreteValuationRin
   (K : Type u) [Field K] [Algebra 𝒪 K] [IsFractionRing 𝒪 K] (W W' : WeierstrassCurve 𝒪)
   [W.IsElliptic] [W'.IsElliptic] (φ : Isogeny (W.baseChange K) (W'.baseChange K))
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_invConst_reduceIsogeny :
     ∃ c : 𝒪, algebraMap 𝒪 K c = invConst φ ∧

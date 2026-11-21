@@ -30,7 +30,6 @@ section Localization
 variable {K : Type} {ι : K → Type} {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R']
   (M₀ : Submonoid R) [IsLocalization M₀ R']
 
-include M₀ in
 
 theorem ringKrullDim_quotient_map_le (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
     ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι ⧸ I.map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι))) ≤
@@ -58,7 +57,6 @@ theorem weightedHomogeneousComponent_map [DecidableEq K] (b : K → ℕ) (y : Re
   simp only [coeff_weightedHomogeneousComponent, coeff_map]
   split_ifs <;> simp
 
-include M₀ in
 
 theorem isMultiHomogIdeal_map [DecidableEq K] {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hI : IsMultiHomogIdeal I) :
     IsMultiHomogIdeal (I.map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι))) := by
@@ -78,7 +76,6 @@ theorem isMultiHomogIdeal_map [DecidableEq K] {I : Ideal (ReciprocityTheory.Char
   rw [weightedHomogeneousComponent_map]
   exact Ideal.mem_map_of_mem _ (hI x x.2 b)
 
-include M₀ in
 
 theorem cycEval_divCycle_map (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
     (hdisj : ∀ W ∈ (P ⊔ Ideal.span {f}).minimalPrimes,

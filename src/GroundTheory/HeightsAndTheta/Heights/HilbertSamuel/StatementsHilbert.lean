@@ -34,7 +34,6 @@ def modMultAt {R : Type*} [CommRing R] (M : Type*) [AddCommGroup M] [Module (Rec
     (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [W.IsPrime] : ℕ∞ :=
   Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl M)
 
-open Classical in
 
 def topCycleNum (F : Type*) [Field F] (ι : K → Type*) (M : Type*) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] (d : ℕ) (bs : Fin d → K → ℤ) :
     ℤ :=
@@ -108,7 +107,6 @@ def HilbertIncrement.Statement : Prop :=
             d.factorial| ≤
         C * ((∑ k, (a k : ℝ)) + 1) ^ ((d : ℝ) - 1)
 
-open Classical in
 
 def IntersectionRecursion.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
@@ -159,7 +157,6 @@ def intWeight : (Σ k, ι k) → K → ℤ := fun v => unitDeg v.1
 def ringPiece (m : K → ℤ) : Submodule F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :=
   weightedHomogeneousSubmodule F (intWeight (ι := ι)) m
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem isMultigrading_ring : IsMultigrading ι (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (ringPiece (F := F) (ι := ι)) where
   internal := (weightedDecomposition F (intWeight (ι := ι))).isInternal

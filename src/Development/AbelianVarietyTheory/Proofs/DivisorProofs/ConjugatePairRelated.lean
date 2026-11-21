@@ -68,7 +68,6 @@ theorem inC_sh (R : Type) [CommRing R] [Algebra ℚ R] (a : G.C) :
     inC G R (sh G a) = (starT G.star R (inC G R a)).unop :=
   (starT_tmul G.star R 1 a).symm
 
-variable {G} in
 
 theorem triv_conj_unit (R : Type) [CommRing R] [Algebra ℚ R] (β : G.C) (y : G.Cˣ)
     (x : (R ⊗[ℚ] G.C)ˣ) (t : Rˣ) (hx : Triv G R β x t) :
@@ -122,7 +121,6 @@ theorem conjPair_β (P : Pair G) (y : G.Cˣ) :
 
 end GlobalTheory.LKMid.PairConj
 
-open GlobalTheory.LKMid.PairConj in
 
 theorem GlobalTheory.LKMid.Pair.exists_conj : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P : Pair G) (y : G.Cˣ),
     ∃ P' : Pair G, P.Rel P' ∧ P'.γ = y * P.γ * y⁻¹ ∧ P'.c = P.c ∧

@@ -116,7 +116,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {B : Type*} [CommRing B] [IsDomain B] [IsDiscreteValuationRing B] [Algebra 𝒪[K] B]
   (hunr : (maximalIdeal 𝒪[K]).map (algebraMap 𝒪[K] B) = maximalIdeal B)
 
-variable (π B) in
 
 abbrev ltEisB (m : ℕ) : Polynomial B :=
   (ltEisenstein π m).map (algebraMap 𝒪[K] B)
@@ -132,7 +131,6 @@ theorem ltEisB_eq (m : ℕ) :
       ((ltPolyIter π m).map (algebraMap 𝒪[K] B)) ^ (Nat.card 𝓀[K] - 1) := by
   rw [ltEisB, ltEisenstein, Polynomial.map_add (f := _), Polynomial.map_C, Polynomial.map_pow]
 
-include hπ hunr in
 
 theorem isDistinguishedAt_ltEisB (m : ℕ) : (ltEisB π B m).IsDistinguishedAt (maximalIdeal B) := by
   have hmon := (ltEisenstein_monic π m).1
@@ -141,7 +139,6 @@ theorem isDistinguishedAt_ltEisB (m : ℕ) : (ltEisB π B m).IsDistinguishedAt (
   rw [Polynomial.coeff_map, ← hunr]
   exact Ideal.mem_map_of_mem _ ((isEisensteinAt_ltEisenstein hπ m).mem hn)
 
-include hπ hunr in
 
 theorem algebraMap_uniformizer_mul_eq_zero {c : B} (h : algebraMap 𝒪[K] B π * c = 0) : c = 0 := by
   have hπB := irreducible_algebraMap hunr hπ
@@ -189,7 +186,6 @@ theorem rootEval_subst_ltSeries_uniformizer_pow_succ {F : B⟦X⟧} (hF : consta
   rw [hV, map_mul, ltSeries_uniformizer_pow, ltPolyIter_succ_eq_mul, Polynomial.map_mul,
     Polynomial.coe_mul, map_mul, rootEval_self, mul_zero, zero_mul]
 
-omit hπ hunr [IsDomain B] [IsDiscreteValuationRing B] [IsAdicComplete (maximalIdeal B) B] in
 
 theorem aeval_root_ltPolyIter_pow :
     Polynomial.aeval (AdjoinRoot.root (ltEisB π B m)) ((ltPolyIter π m).map (algebraMap 𝒪[K] B)) ^ (Nat.card 𝓀[K] - 1) =
@@ -202,7 +198,6 @@ theorem aeval_root_ltPolyIter_pow :
   rw [map_neg, eq_neg_of_add_eq_zero_right h]
   rfl
 
-omit [IsAdicComplete (maximalIdeal B) B] in
 
 theorem eq_zero_of_aeval_root_ltPolyIter_mul {z : AdjoinRoot (ltEisB π B m)}
     (h : Polynomial.aeval (AdjoinRoot.root (ltEisB π B m)) ((ltPolyIter π m).map (algebraMap 𝒪[K] B)) * z = 0) : z = 0 := by
@@ -238,7 +233,6 @@ theorem aeval_rootEval_ltSeries_eq_zero {a : 𝒪[K]} (ha : IsUnit a) :
   exact eq_zero_of_rootEval_subst_mul hπ hunr m (constantCoeff_ltSeries hπ a)
     (by rw [coeff_one_ltSeries]; exact ha.map _) h1
 
-omit hπ hunr [IsDomain B] [IsDiscreteValuationRing B] [IsAdicComplete (maximalIdeal B) B] in
 
 theorem map_map_ltEisB (φ : B →ₐ[𝒪[K]] B) :
     (ltEisB π B m).map (φ : B →+* B) = ltEisB π B m := by
@@ -319,7 +313,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   (φ : B →ₐ[𝒪[K]] B) (hφ : ∀ x : B, residue B (φ x) = residue B x ^ Nat.card 𝓀[K])
   (u : 𝒪[K]ˣ)
 
-include hφ in
 
 theorem exists_twistFrob_fixed_root :
     ∃ x : AdjoinRoot (ltEisB π B m), twistFrob hπ hunr m φ u x = x ∧

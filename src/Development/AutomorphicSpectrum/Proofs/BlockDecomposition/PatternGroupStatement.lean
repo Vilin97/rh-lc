@@ -119,7 +119,6 @@ def patSubgroup (h : IsPat Φ) : Subgroup (GL ι K) :=
       rw [this]
       exact M.pow_mem hu _ }
 
-open Classical in
 
 def fill (Φ : ι → ι → Prop) (f : {p : ι × ι // Φ p.1 p.2} → K) : Matrix ι ι K :=
   fun i j => if h : Φ i j then f ⟨(i, j), h⟩ else 0

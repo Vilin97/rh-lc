@@ -9,7 +9,6 @@ open scoped TensorProduct
 
 namespace GlobalTheory.TensHead
 
-open scoped TensorProduct in
 
 theorem _root_.GlobalTheory.TensHead.stab_piOps_piKer {ι : Type} [DecidableEq ι] {M : ι → Type} [∀ i, AddCommGroup (M i)]
     [∀ i, Module ℂ (M i)]

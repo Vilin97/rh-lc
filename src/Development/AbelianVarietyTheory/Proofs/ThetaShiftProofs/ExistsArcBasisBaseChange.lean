@@ -40,7 +40,6 @@ theorem maps_self {X Y : Scheme.{0}} {L : LB X} {F : X ⟶ X} (hF : F = 𝟙 X) 
   exact ⟨hψ, (maps_iff _ _ (φ i') ε (t i') (t i') (𝟙 Y) _ (Out.GeneratorPullback.pullAlong_le L F _ _ _ hψ) (fun _ => rfl)).2
     (NoTorus.pmaps_id hF _ _ (ht i'))⟩
 
-open scoped CategoryTheory.Obj in
 
 theorem exists_self {R : Type} [CommRing R] [IsDomain R] (D : Out.DegPre R) (h : ∀ χ, PsiUnitOn D χ Set.univ) :
     ∃ p : Out.IsPullDeg (RingHom.id R) D D, (∀ q : D.P.A.left ⟶ D.P.A.left, q ≫ prj p = prj p ≫ q) ∧

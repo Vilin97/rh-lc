@@ -34,13 +34,11 @@ theorem chartMonomial_isMultiHomog (u : ∀ k, ι k) (b : K → ℕ) :
 
 variable (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime]
 
-omit [Fintype K] [DecidableEq K] [P.IsPrime] in
 
 theorem map_eq_zero_iff (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
     algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P f) = 0 ↔ f ∈ P := by
   rw [IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
 
-omit [DecidableEq K] [P.IsPrime] in
 
 theorem map_chartMonomial (u : ∀ k, ι k) (b : K → ℕ) :
     algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P (chartMonomial u b)) =
@@ -48,7 +46,6 @@ theorem map_chartMonomial (u : ∀ k, ι k) (b : K → ℕ) :
         (Ideal.Quotient.mk P (X ⟨k, u k⟩)) ^ b k := by
   simp [chartMonomial, map_prod, map_pow]
 
-omit [DecidableEq K] in
 
 theorem map_chartMonomial_ne_zero (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P)
     (b : K → ℕ) :
@@ -145,7 +142,6 @@ theorem algebraicIndependent (hH : MChartHomog.Statement.{u}) (hP : IsMultiHomog
   by_contra hne
   exact hne (by simpa using hzero m (mem_support_iff.2 (by simpa using hne)))
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem isAlgebraic_adjoin (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P) :
     Algebra.IsAlgebraic (Algebra.adjoin (chartMap P u).range (Set.range fun k =>

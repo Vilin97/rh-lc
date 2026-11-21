@@ -24,7 +24,6 @@ theorem parL_self (q kj n c : ℕ) (h : n ≤ kj) : LocE.parL P q kj n c = stdAt
 theorem lamY_zero (q n c : ℕ) : LocE.lamY P q n c 0 = stdAt E (n + c) P :=
   Submodule.ext fun _ => GlobalTheory.GO.ChRoot.mem_lamY_zero
 
-omit [StarRing E] in
 
 theorem lamQB_empty {K : Type} [Field K] (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (kj n : ℕ) (hn : n ≤ kj) {N : ℕ}
     (h : HomE E N N) : LocE.lamQB ξ kj n h = 1 := by

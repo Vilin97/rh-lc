@@ -124,7 +124,6 @@ theorem unswap_det {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {u : GA D V} {
   have h2 : Lev.swapAE D (finHom V u).1.det = (Lev.finE V u).1.det := (Lev.swapAE D).map_det _
   rw [← det_frGL β y, hy, ← h2, unswap_swap]
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_root_value {T0 : Type} {L : LevCh D T0} {μ0 : T0} (hL : L.Is μ0) (t : T0) {V : HSp D}
     {u : GA D V} (hu : u ∈ GfC V)
@@ -256,7 +255,6 @@ theorem latGHat_one_eq {V : HSp D} {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank
     latGHat V 1 = GlobalTheory.AdLat.hat D.host.F (Set.range ι) := by
   rw [(GlobalTheory.T.adelicElementLattice_full_and_completion D V 1).2.2.2.2.1, ← hι.2, LinearMap.coe_range]
 
-set_option maxHeartbeats 1000000 in
 
 theorem factor_det_eq {V : HSp D} {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)} (hι : LatEmb V ι)
     {I J : Ideal (𝓞 D.host.E)} (hIJ : IsCoprime I J) {M : ℕ} (hM : (M : 𝓞 D.host.E) ∈ I)
@@ -307,7 +305,6 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.L
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} {i : Fin D.R.m} {t : T0}
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
-set_option maxHeartbeats 1600000 in
 
 theorem datum_move {l₂ : Level H} {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin (Wc D i).rank → D.host.E)} (hι : LatEmb (Wc D i) ι)
     {K' : Type} [Field K'] {σ' : K' →+* ℂ} {φ : (Fin (Vc D i).rank → LevQc Dw l₂) → K'}
@@ -339,7 +336,6 @@ theorem datum_move {l₂ : Level H} {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin (Wc D
     rfl
   rw [(he x).2, (he fun b => f (x b)).2, h1, h2, h3, mul_left_comm]
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_char {μ0 : T0} (hL : R.toLevCh.Is μ0) (d : DeltaDat Xo c (Vc D i).rank) (hd : d.IsLev)
     {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin (Wc D i).rank → D.host.E)} (hι : GlobalTheory.Member.IotaOK Dw (Wc D i) ι)
@@ -424,7 +420,6 @@ theorem xi_laws {μ0 : T0} (hL : R.toLevCh.Is μ0) {xi : (Af D.host.F ⊗[D.host
     exact Units.ext ((hxi g x hx).trans (h1 g x hx).symm)
   exact ⟨fun γ hγ => (e γ).trans (h3 γ hγ), n, hn, fun g => by rw [e, h4]⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem psiTie_of_values (V : HSp D) {n r : ℕ} (d : DeltaDat Xo c n) (hr : V.rank = r)
     (ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)) (hι : GlobalTheory.Member.IotaOK Dw V ι) (hpq : 1 ≤ Dw.p + Dw.q)
@@ -463,7 +458,6 @@ open GlobalTheory.SW hiding Level IsSB
 open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Datum Formalism.IndefR.FWT Formalism.L2.Pj
 open scoped TensorProduct Classical ComplexConjugate
 
-set_option maxHeartbeats 1600000 in
 
 end
 

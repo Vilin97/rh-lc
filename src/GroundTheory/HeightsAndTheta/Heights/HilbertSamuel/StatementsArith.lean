@@ -34,7 +34,6 @@ section Objects
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-open Classical in
 
 def genDeg (P : Ideal (MRing ι)) (D : ℕ) (a : K → ℤ) : ℤ :=
   GroundTheory.Heights₂.Heights.NumbersDVR.intNum ℚ (P.map (MvPolynomial.map (Int.castRingHom ℚ))) (fun _ : Fin D => a)
@@ -134,7 +133,6 @@ def BlockBirational (y : (Σ k, ι k) → Ω) (k₀ : K) : Prop :=
 
 end BlockBirationality
 
-set_option maxHeartbeats 2000000 in
 
 structure HSMBlockDatum (D : ℕ) (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (Ω : Type) [Field Ω] [CharZero Ω] where
@@ -182,7 +180,6 @@ def blockGram (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (b : Fin r → M
   fun k l => (1 / 2) * ((∫ x, pairValH d.A n (b k) (b l) (blockPt d x) ∂d.dV).re +
     (∫ x, pairValH d.A n (b k) (b l) (conjPt (blockPt d x)) ∂d.dV).re)
 
-open Classical in
 
 def blockChi (d : HSMBlockDatum D K ι Ω) (n : ℕ) : ℝ :=
   if h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Σ k, ι k) ℚ), IsSecBasisM d.y d.k₀ n p.2 then

@@ -126,7 +126,6 @@ end Alg
 
 variable {D : D7}
 
-open scoped ComplexOrder in
 
 theorem norm_ne_zero {V : HSp D} {x : DefSp V} (hx : x.Is) (v : Fin V.rank → ℚ) (hv : v ≠ 0) :
     ((fun i => (v i : D.host.E)) ᵥ* V.gram) ⬝ᵥ (fun i => (v i : D.host.E)) ≠ 0 := by

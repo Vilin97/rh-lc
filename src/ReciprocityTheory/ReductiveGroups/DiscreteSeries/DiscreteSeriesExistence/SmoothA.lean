@@ -181,7 +181,6 @@ section Op
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {ε : Fin n → Bool}
   {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)}
 
-variable (ε σ) in
 
 def smSub : Submodule ℂ H where
   carrier := {v | IsSmoothVecU ε σ v}
@@ -198,7 +197,6 @@ def dSlin (hσ : IsURepOn (UJset ε) σ) (X : Matrix (Fin n) (Fin n) ℂ) (hX : 
   map_add' v w := Subtype.ext (dS_add_vec hσ hX v.2 w.2)
   map_smul' c v := Subtype.ext (dS_smul_vec (σ := σ) c X (v : H))
 
-open Classical in
 
 def Tm (hσ : IsURepOn (UJset ε) σ) (X : Matrix (Fin n) (Fin n) ℂ) : Module.End ℂ (smSub ε σ) :=
   if h : inG ε X then dSlin hσ X h else 0

@@ -145,11 +145,9 @@ theorem eq_univ_of_exp {S : Set (GL (Fin a) (Cinf E))} (h1 : 1 ∈ S) (hS : ∀ 
     obtain ⟨X, rfl⟩ := hz
     exact hS y hy X 1
 
-variable (E a) in
 
 abbrev bas : Module.Basis (Fin (Module.finrank ℝ (Lie E a))) ℝ (Lie E a) := Module.finBasis ℝ (Lie E a)
 
-omit [IsTotallyComplex E] in
 
 def crd (i : Fin (Module.finrank ℝ (Lie E a))) (z : Lie E a) : Lie E a →L[ℝ] ℝ :=
   (LinearMap.toContinuousLinearMap ((bas E a).coord i)).comp (lmul (invL z))
@@ -185,7 +183,6 @@ theorem hasFDerivAt_chart (φ : Sm E a) (g : GA E a) {z : Lie E a} (hz : z ∈ i
 
 variable {ω : HChar E} (μ : Measure (GA E a)) [μ.IsHaarMeasure] {ψ : GA E a → ℂ}
 
-variable (ψ) in
 
 def coef (φ : GA E a → ℂ) (x : GA E a) : ℂ := pet (latticeGL E a) μ (fun g => φ (g * x)) ψ
 

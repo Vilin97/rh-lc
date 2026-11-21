@@ -82,7 +82,6 @@ theorem torusEndOf_pow {S : Scheme.{0}} {X X' : Type} [AddCommGroup X] [AddCommG
 
 end PowOLinear
 
-open PowOLinear in
 
 theorem oLinear_of_unifPow : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (j : ℕ) (D D' : DegData R I) (A A' : PolAV (Spec (CommRingCat.of (FractionRing R)))) (G G' : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G] [GrpObj G'] [IsCommMonObj G'] (pD : IsPowDeg D'.toPre D.toPre j) (pA : IsPowPolAV A' A j) (pG : IsPowGrp G' G j) (U' : Unif I D' A' G') (U : Unif I D A G) (P : UnifPowOf3 pD pA pG U' U) (O : Type) [CommRing O] [StarRing O] [Module O D.toPre.X] [Module O D'.toPre.X], (∀ (a : O) (x : D'.toPre.X), pD.xe (a • x) = a • pD.xe x) → ∀ (ιD : D.OAct O) (ιD' : D'.OAct O) (ιA : A.OAct O) (ιA' : A'.OAct O) (ιG : RingAct G O) (ιG' : RingAct G' O), (∀ a i, ιD'.onB.act a ≫ pD.pw.pr i = pD.pw.pr i ≫ ιD.onB.act a) → (∀ a i, ιA'.act a ≫ pA.pr i = pA.pr i ≫ ιA.act a) → (∀ a i, ιG'.act a ≫ pG.pr i = pG.pr i ≫ ιG.act a) → U.OLinear O ιD ιA ιG → U'.OLinear O ιD' ιA' ιG' := by
   intro R _ _ I j D D' A A' G G' _ _ _ _ pD pA pG U' U P O _ _ _ _ hxe ιD ιD' ιA ιA' ιG ιG'

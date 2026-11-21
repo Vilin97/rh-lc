@@ -38,13 +38,9 @@ theorem gm_unitOn_inj {V : Type} [CommRing V] [IsDomain V] (z : Sp V) {x y : Vˣ
   have h2 := germ_injective_of_isIntegral (Sp V) (U := ⊤) z trivial h1
   exact Units.ext ((ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (CommRingCat.of V)).inv).1 h2)
 
-open InhTate in
 
-open InhTate in
 
-open InhTate in
 
-open InhTate in
 
 theorem lbIso_two {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) (φ : Y ⟶ X) (r : Z ⟶ Y) :
     LBIso (L.pull (r ≫ φ)) ((L.pull φ).pull r) := by
@@ -57,9 +53,7 @@ theorem lbIso_two {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) (φ : Y ⟶ X) (
   exact (LBIso.chartPull (Geo.Tor.chartPullPull L φ φ rfl) (Geo.Tor.chartPullPull L φ φ rfl) h).chartPull
     (chartPullSame L (fun _ => r ≫ φ) (fun _ => φ) _ r fun _ => rfl) (Geo.Tor.chartPullPull (L.pull φ) r r rfl)
 
-open InhTate in
 
-open InhTate in
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Geo.Tor.Level H}
 
@@ -71,6 +65,5 @@ theorem stalkMap_gm {X Y Z : Scheme.{0}} (r : Z ⟶ Y) (f : Y ⟶ X) (z : Z) (U 
   rw [gm_val f (r z) U h]
   exact Scheme.Hom.germ_stalkMap_apply r (f ⁻¹ᵁ U) z h _
 
-open InhTate in
 
 end GlobalTheory.UChart.SepBModel

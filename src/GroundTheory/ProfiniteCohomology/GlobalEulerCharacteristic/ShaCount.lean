@@ -76,14 +76,11 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) [Fintype 
   (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M] [Finite M]
   (hM : ∀ m : M, N • m = 0)
 
-omit [Fintype S] [NeZero N] in
 
 instance isDiscreteRep_res_gsFinFamily_dualRep (v : S) :
     IsDiscreteRep (Rep.res (gsFinFamily S ιs v).toMonoidHom (dualRep (gsRoots S N) M)) :=
   isDiscreteRep_res_dualRep_of_finite (gsRoots S N) M (gsFinFamily S ιs v)
 
-omit [Fintype S] in
-include hS hM in
 
 theorem natCard_gs_local_cohomology_two (v : S) :
     Nat.card (cohomology (Rep.res (gsFinFamily S ιs v).toMonoidHom M) 2) =
@@ -99,7 +96,6 @@ theorem natCard_gs_local_cohomology_two (v : S) :
   rw [Nat.card_congr (Equiv.ofBijective _ (bijective_gsLocalPairing S ιs N hD M hM v (show 2 + 0 = 2 from rfl))),
     QZ.card_hom]
 
-include H hM in
 
 theorem natCard_gs_cohomology_two_mul :
     Nat.card (cohomology M 2) * Nat.card (cohomology (dualRep (gsRoots S N) M) 0) =

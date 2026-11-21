@@ -45,8 +45,6 @@ theorem bwL_descent (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
 
 variable (D : D7) (u : D.what₂.Word)
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem bwL_lcInt (Tt : FormsTied D u) : BwLcInt D u := by
   intro i hi c x hx

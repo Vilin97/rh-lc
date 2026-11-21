@@ -207,7 +207,6 @@ end GlobalTheory.WeilMul
 
 namespace GlobalTheory
 
-open WeilMul in
 
 theorem weilIs_mul_left : GlobalFnsSt → ∀ (S : Scheme.{0}) (P : PolAV S) (k : ℕ) (T : Over S) (x x' y : T ⟶ P.A)
     (c c' : Γ(T.left, ⊤)ˣ), WeilIs P.A P.L k x y c → WeilIs P.A P.L k x' y c' →

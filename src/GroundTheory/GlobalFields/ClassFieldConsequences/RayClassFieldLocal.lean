@@ -23,7 +23,6 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
 
 omit [CharZero k] [IsGalois k M] [IsMulCommutative (M ≃ₐ[k] M)] [ValuativeRel M] [TopologicalSpace M]
   [IsNonarchimedeanLocalField M] [ValuativeExtension k M] [FiniteDimensional k M] in
-variable (k) in
 
 theorem exists_ord_eq_one_units : ∃ π : kˣ, ord (π : k) = 1 := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[k]
@@ -36,7 +35,6 @@ omit [CharZero k] [IsGalois k M] [IsMulCommutative (M ≃ₐ[k] M)] [ValuativeRe
 theorem ord_zpow_units {π : kˣ} (hπ : ord (π : k) = 1) (n : ℤ) : ord ((π ^ n : kˣ) : k) = n := by
   rw [Units.val_zpow_eq_zpow_val, ord_zpow π.ne_zero, hπ, mul_one]
 
-omit [ValuativeRel M] [TopologicalSpace M] [IsNonarchimedeanLocalField M] [ValuativeExtension k M] in
 
 theorem natCard_quotient_range_normUnits :
     Nat.card (kˣ ⧸ (normUnits k M).range) = Module.finrank k M := by
@@ -104,7 +102,6 @@ theorem isEquiv_valuation_valued :
       (Valued.v : Valuation (v.adicCompletion K) ℤᵐ⁰) :=
   ValuativeRel.isEquiv _ _
 
-variable {v} in
 
 theorem mem_unitFiltrationUnits_zero_iff_valued {x : (v.adicCompletion K)ˣ} :
     x ∈ unitFiltrationUnits (v.adicCompletion K) 0 ↔ Valued.v (x : v.adicCompletion K) = 1 := by

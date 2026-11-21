@@ -17,7 +17,6 @@ universe u v w
 
 variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : ℕ} {x : Fin (N + 1) → Ω}
 
-variable (S x) in
 
 def spanBundle (s : Ω) (hs : s ≠ 0) : LineBundle S x where
   sub I := Submodule.span (chartRing S x I) {s}

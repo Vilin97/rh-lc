@@ -28,9 +28,6 @@ open GlobalTheory.RouteSeesaw (box2 topR botR)
 
 variable {D : D7}
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1600000 in
-open GlobalTheory.VacUnique GlobalTheory.FockCompare in
 
 theorem eq_smul_of_vac {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D}
     {S T : HSp D} {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ}

@@ -22,7 +22,6 @@ noncomputable section
 
 namespace GlobalTheory.TrEllSum
 
-open Classical in
 
 theorem finsum_subtype_ite {G : Type} (p : G → Prop) {u : G → ℂ} (hu : (Function.support u).Finite) :
     ∑ᶠ δ : {δ // p δ}, u δ.1 = ∑ δ ∈ hu.toFinset, if p δ then u δ else 0 := by

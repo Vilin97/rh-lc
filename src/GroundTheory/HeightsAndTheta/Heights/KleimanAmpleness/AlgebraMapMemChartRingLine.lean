@@ -25,7 +25,6 @@ def idealMod (J : Ideal (Poly S N)) (I : Chart x) : Submodule (chartRing S x I) 
   Submodule.span _ {a | ∃ (f s : Poly S N) (e : ℕ), f ∈ J ∧ s ∈ monos I.1 ∧ f.IsHomogeneous e ∧
     s.IsHomogeneous e ∧ a = aeval x f / aeval x s}
 
-variable (x) in
 
 def idealSys (J : Ideal (Poly S N)) : SubSystem S x Ω where
   sub I := idealMod J I
@@ -98,7 +97,6 @@ def interSum (pp : Ideal (Poly S N)) {n : ℕ} (L : Fin n → SubSystem S x Ω) 
 def interNum (pp : Ideal (Poly S N)) {n : ℕ} (L : Fin n → SubSystem S x Ω) : ℤ :=
   limUnder atTop (interSum pp L)
 
-variable (x) in
 
 structure IsSubvar (pp : Ideal (Poly S N)) (e : ℕ) : Prop where
   isPrime : pp.IsPrime
@@ -140,13 +138,9 @@ section Domination
 
 variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N N' : ℕ}
 
-variable (S) in
 
-variable (S) in
 
-variable (S) in
 
-variable (S) in
 
 end Domination
 

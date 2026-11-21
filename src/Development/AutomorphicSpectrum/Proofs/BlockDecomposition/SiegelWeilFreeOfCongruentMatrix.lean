@@ -225,7 +225,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
 def scaleB {d : ℕ} (b : Module.Basis (Fin d) F E) (c : F) (hc : c ≠ 0) : Module.Basis (Fin d) F E :=
   b.unitsSMul (fun _ => (Units.mk0 c hc)⁻¹)
 
-omit [NumberField F] in
 
 theorem repr_scaleB {d : ℕ} (b : Module.Basis (Fin d) F E) (c : F) (hc : c ≠ 0) (R : Type) [CommRing R]
     [Algebra F R] (y : R ⊗[F] E) (k : Fin d) :

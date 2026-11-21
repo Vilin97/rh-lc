@@ -105,7 +105,6 @@ theorem isLMat_of_single (I : Ident t ϖ P T) (s : GQ l) (g : G) (γ : ι → ι
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
-omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 
 theorem kappa_act (T : LocLat G ℚ_[l] K O) (s : GQ l) (g : G) :
     letI := zlLat T

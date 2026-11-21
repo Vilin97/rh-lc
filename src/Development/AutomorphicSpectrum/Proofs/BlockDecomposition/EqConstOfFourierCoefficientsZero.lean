@@ -18,7 +18,6 @@ section Abstract
 variable {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsTopologicalAddGroup G] [T2Space G] [LocallyCompactSpace G]
   [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G]
 
-open scoped Pointwise in
 
 theorem mean_add_left (Γ : AddSubgroup G) [Countable Γ] (μ : Measure G) [μ.IsAddHaarMeasure] {s : Set G}
     (hs : IsAddFundamentalDomain Γ s μ) (f : G → ℂ) (hf : ∀ γ ∈ Γ, ∀ x, f (γ + x) = f x) (t : G) :
@@ -83,7 +82,6 @@ theorem const_of_coefficients (Γ : AddSubgroup G) [DiscreteTopology Γ] (K : Se
 
 end Abstract
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem const_of_coeff : ∀ {D : D7} {p : ℕ} {lp : Measure (hermA D p)} {𝓖p : Set (hermA D p)}, IsCovolOneH lp 𝓖p →
     ∀ {ψ : AddChar (AF D.host.F) ℂ}, IsCharAF D.host.F ψ → ∀ φ : hermA D p → ℂ, Continuous φ → IsPer φ →

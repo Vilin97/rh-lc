@@ -15,7 +15,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 variable {R : Type} [CommRing R] {G : Over (Spec (CommRingCat.of R))} [GrpObj G]
 
-set_option maxHeartbeats 1000000 in
 
 theorem lieBasis_of_etale {S : Type} [CommRing S] [Algebra R S] {n : ℕ} [Algebra (MvPolynomial (Fin n) R) S]
     [IsScalarTower R (MvPolynomial (Fin n) R) S] [Algebra.FormallyEtale (MvPolynomial (Fin n) R) S] (ε' : S →ₐ[R] R)
@@ -231,8 +230,6 @@ theorem isReduced_of_smooth {K : Type} [Field K] {X : Scheme.{0}} (q : X ⟶ Sp 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H} {B : Type} [CommRing B]
   {b : Base l B} {X : Scheme.{0}} {s : X ⟶ Sp B}
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end ReciprocityTheory.ChartRestriction.G.Geo.Tor

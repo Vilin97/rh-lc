@@ -114,15 +114,12 @@ instance (τ : InfinitePlace E) : FiniteDimensional ℂ (S.FibSp τ) :=
 
 def pt (τ : InfinitePlace E) (v : S.V) : S.FibSp τ := (1 : CAt τ.embedding) ⊗ₜ[E] v
 
-open Classical in
 
 end MetSpace
 
-variable (E) in
 
 def fPl : ℕ := Fintype.card (InfinitePlace E)
 
-variable (E) in
 
 def rd : ℝ := |(discr E : ℝ)| ^ ((1 : ℝ) / (2 * fPl E))
 

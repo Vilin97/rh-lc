@@ -309,7 +309,6 @@ section Mem
 
 variable (cols : ColsTiedSym D)
 
-set_option maxHeartbeats 4000000 in
 
 theorem top_car (u : D.what₂.Word) (j : ℕ) (hj : j ≤ D.R.m) (h : j = D.R.m) (h1 : 1 ≤ j) :
     ∃ β' : cols.herm.base.Ch u j,
@@ -317,7 +316,6 @@ theorem top_car (u : D.what₂.Word) (j : ℕ) (hj : j ≤ D.R.m) (h : j = D.R.m
   subst h
   exact ⟨chM cols.herm.base u, (cols.carM u).Lb_eq⟩
 
-set_option maxHeartbeats 4000000 in
 
 theorem base_lattice_self_dual_of_chain (u : D.what₂.Word) (dt : MemDt (cols.forms u)) (i : ℕ) (hi : i + 1 ≤ D.R.m) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) :

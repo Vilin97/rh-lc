@@ -184,7 +184,6 @@ open GlobalTheory.FinPl GlobalTheory.SeeSaw.SplitLat
 
 variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-set_option maxHeartbeats 1000000 in
 
 theorem intIn_splitL (q : SplitPt D k) {ρ : ℕ} (B : BesLev D ρ) {n : Type} [Fintype n] [DecidableEq n] {c : ℕ} (s : k)
     (FA : GlobalTheory.LocMod.Frame k B.A.rank n) (F₀ : GlobalTheory.LocMod.Frame k B.V₀.rank (n ⊕ Unit))

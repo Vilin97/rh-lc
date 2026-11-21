@@ -45,7 +45,6 @@ variable {Y G B : Scheme.{0}} {L : LB Y} {K : Type} [Fintype K] (q : G ⟶ B) {�
 
 variable {q} {x : LB.Gen (LB.LinComb L φ' ε')} {V : B.Opens}
 
-omit [Fintype K] in
 
 end Image
 
@@ -80,7 +79,6 @@ variable [IsMonHom q] (hi : i ≫ q = toUnit _ ≫ η[B]) (hL : L.IsLB) {φ : K 
   (hφ : ∀ k, φ' k = q.left ≫ φ k) {x : LB.Gen (LB.LinComb L φ' ε')} (hx : x.IsGen) {χ : X} (hw : WtGen i x χ)
 include hi hL hφ hx hw
 
-omit hi in
 
 end One
 
@@ -91,7 +89,6 @@ variable [IsMonHom q] [IsMonHom i] [IsAffineHom q.left] (hL : L.IsLB) (hε : ∀
   {x : ∀ χ, LB.Gen (LB.LinComb L (φ' χ) ε')} (hx : ∀ χ, (x χ).IsGen) (hw : ∀ χ, WtGen i (x χ) χ)
 include hL hε hφ hx hw
 
-omit hL hε hφ hx hw [IsMonHom i] in
 
 end All
 

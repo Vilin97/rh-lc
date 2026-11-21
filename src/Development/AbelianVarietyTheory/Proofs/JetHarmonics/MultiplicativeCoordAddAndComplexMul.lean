@@ -24,7 +24,6 @@ namespace GlobalTheory.MomOne.AtAdd
 
 variable {q : ℕ} [Fact q.Prime]
 
-open Classical in
 
 theorem sub_mem_of_uw (M : Mdl q) (hM : M.Ok) (s t : ℂ) (ht : t ∉ M.L.lattice) (hy : M.y t ≠ 0)
     (hu : M.u s = M.u t) (hw : M.w s = M.w t) : s - t ∈ M.L.lattice := by

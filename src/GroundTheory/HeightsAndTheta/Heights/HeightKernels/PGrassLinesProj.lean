@@ -109,7 +109,6 @@ theorem blockFnField_le (m : ℕ) :
 
 end GrassmannianLinesProjective
 
-open GrassmannianLinesProjective in
 
 theorem GrassLinesProj.proof (hPF : PFCoordStatement) : GrassLinesProj.Statement := by
   intro m II hII

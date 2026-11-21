@@ -119,7 +119,6 @@ def StdLv {W : TwFormsTiedS (I.rec7 l Z) (I.tw l l0 Z) T J F} (Lv : SymmetricTwi
 
 end Tw
 
-open Classical in
 
 def jStd (u : B.Word) (a : I.ι) (G : (I.per l u a).Mt) : (I.per l u a).Wrow :=
   Classical.epsilon fun z => z ∈ (I.fm l u a).ptC ∧ ∀ w, (I.per l u a).period w G = (I.fm l u a).ipP z w

@@ -127,7 +127,6 @@ theorem bddAbove_range_deg_add_one_sub :
   simp only
   linarith
 
-variable (k K) in
 
 noncomputable def genusInt : ℤ :=
   sSup (Set.range fun D : Divisor k K => deg D + 1 - (finrank k (L D) : ℤ))
@@ -153,7 +152,6 @@ theorem genusInt_nonneg (hk : algebraicClosure k K = ⊥) : 0 ≤ genusInt k K :
   rw [finrank_L_zero_eq_one hk, map_zero] at h
   simpa using h
 
-variable (k K) in
 
 noncomputable def genus : ℕ := (genusInt k K).toNat
 

@@ -11,7 +11,6 @@ namespace GroundTheory.Heights₂.Heights.NumbersDVR
 
 open Polynomial
 
-attribute [local instance] Polynomial.algebra Polynomial.isLocalization in
 
 theorem PolynomialPrimeOverZeroHeight.proof : PolynomialPrimeOverZeroHeight.Statement := by
   intro D _ _ Q _ hQ

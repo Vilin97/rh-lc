@@ -59,7 +59,6 @@ theorem zetaConvH_iff (h : Q = dblGram finSumFinEquiv J) (m : Measure (HA R σ J
     (c : HA R σ J → ℂ) :
     ZetaConvH σ h m Φ c ↔ Integrable (fun g => Φ (ioH R σ h (g, 1)) * starRingEnd ℂ (c g)) m := Iff.rfl
 
-omit [TopologicalSpace R] in
 
 theorem abs_detH (hν : ∀ x, ν (conjUnit σ x) = ν x) {m : ℕ} {J : Matrix (Fin m) (Fin m) E} (hJ : J.det ≠ 0)
     (g : HA R σ J) : ν (detH R σ J g) = 1 := by
@@ -184,9 +183,7 @@ theorem apply_rat_mul {μ : (AF F ⊗[F] E)ˣ →* Circle} (hμ : ∀ x : Eˣ, �
   have := (mem_degPSH.1 hΦ).1 ⟨γ, hγ⟩ g
   rwa [hx, hμ, absE_inclR, one_npow, Circle.coe_one, one_mul, one_mul] at this
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
 theorem isCompact_KArch (hc : IsCMExt F E σ) (w : InfinitePlace F) (b : GL (Fin n) (w.Completion ⊗[F] E)) :
     IsCompact (KArch σ Q w b : Set (GArch σ Q w)) := Frames.isCompact_stabArch hc Q w _
@@ -260,7 +257,6 @@ abbrev aP : siegel V →* (AE D)ˣ := aH _ D.sp.cm.sig (dblSp V).gram
 
 abbrev detA : GA D V →* (AE D)ˣ := detH _ D.sp.cm.sig V.gram
 
-variable (D) in
 
 abbrev absA : (AE D)ˣ →* ℝ≥0 := absE D.host.F D.host.E
 

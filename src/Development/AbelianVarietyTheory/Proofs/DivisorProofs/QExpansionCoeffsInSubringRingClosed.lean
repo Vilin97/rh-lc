@@ -116,8 +116,6 @@ theorem _root_.GlobalTheory.QFam.QAllSubring.prod {κ : Type} (s : Finset κ) {f
     exact _root_.GlobalTheory.QFam.QAllSubring.mul (hf i (Finset.mem_insert_self i s))
       (ih fun k hk => hf k (Finset.mem_insert_of_mem hk))
 
-open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators in
-variable {R : Subring ℂ} {N : ℕ} in
 
 theorem _root_.GlobalTheory.QFam.QAllSubring.ring_closed : ∀ (R : Subring ℂ) (N : ℕ), 0 < N →
     (∀ c ∈ R, _root_.GlobalTheory.QFam.QAll (· ∈ R) N fun _ => c) ∧

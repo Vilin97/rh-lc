@@ -16,7 +16,6 @@ namespace Formalism.REAL
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
-open Classical in
 
 def expG {n : ℕ} (ε : Fin n → Bool) (X : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) : UJ ε :=
   if h : inG ε X then
@@ -104,7 +103,6 @@ lemma inK_smul_real {n : ℕ} (ε : Fin n → Bool) {Z : Matrix (Fin n) (Fin n) 
     rw [Matrix.conjTranspose_smul, hs, Matrix.smul_mul, Matrix.mul_smul, ← smul_add, hG, smul_zero]
   · rw [Matrix.smul_mul, Matrix.mul_smul, hJ]
 
-open Classical in
 
 def expK {n : ℕ} (ε : Fin n → Bool) (Z : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) : KG ε :=
   if h : inK ε Z then

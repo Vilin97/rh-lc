@@ -47,7 +47,6 @@ variable [IsTotallyComplex E]
 theorem pFin_splitCentre (t : ℝ) : GeneralLinearGroup.map (pFin E) (splitCentre E a t) = 1 :=
   pFin_infGL _
 
-variable (E a) in
 
 theorem isFiniteMeasure_quotMeasure (μ : Measure (GA E a)) [μ.IsHaarMeasure] :
     IsFiniteMeasure (GlobalTheory.AutomorphicL2Unitary.quotMeasure (latticeGL E a) μ) := by
@@ -84,7 +83,6 @@ theorem isFiniteMeasure_quotMeasure (μ : Measure (GA E a)) [μ.IsHaarMeasure] :
     simp only [smul_eq_mul]
     group
 
-variable (E a) in
 
 theorem isMulRightInvariant (μ : Measure (GA E a)) [μ.IsHaarMeasure] : μ.IsMulRightInvariant := by
   have hd := isFundamentalDomain_stdDom (latticeGL E a) μ

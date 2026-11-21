@@ -116,7 +116,6 @@ private theorem symp_smul_eq_symp_one_smul {R A : Type} [CommRing R] [CommRing A
     Finset.sum_congr rfl fun l _ => ?_
   ring
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_darboux_transport : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D), IsInfFam θ →
     ∀ (ε : Bool) (S X : HSp D) (A : Fr S) (B : Fr X) {d : ℕ} (e : Fin X.rank ≃ Fin d)

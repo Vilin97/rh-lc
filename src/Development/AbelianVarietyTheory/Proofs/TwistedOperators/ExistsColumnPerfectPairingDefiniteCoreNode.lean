@@ -35,7 +35,6 @@ open GlobalTheory.DefiniteMult GlobalTheory.DefLift
 variable {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel V S} {θ : InfFam D} {c : CoefA V}
   {pr : c.W →ₗ[ℂ] SmT M →ₗ[ℂ] ℂ}
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_form_triv (hθ : IsInfFam θ) (hp : AllPlus M) (hc : c.Is) (hpr : IsDualPair θ M c pr)
     (K : Subgroup (GA D V)) (J : Subgroup (Bridge.Gf V))

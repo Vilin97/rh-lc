@@ -43,7 +43,6 @@ theorem completionMap_below_algebraMap (τ : L ≃+* L') (hτ : ∀ l, τ l = al
       algebraMap L' (w'.adicCompletion L') (τ l) := by
   rw [SemiLocal.completionMap_algebraMap, hτ, IsScalarTower.algebraMap_apply L L']
 
-omit [NumberField L] [NumberField L'] in
 
 theorem completion_algebraMap_comap_apply (τ : L ≃+* L') (hτ : ∀ l, τ l = algebraMap L L' l)
     (w' : InfinitePlace L') (l : L) :
@@ -78,7 +77,6 @@ def infiniteCompletionMap (τ : M ≃+* M') (w' : InfinitePlace M') :
   letI : Algebra M M' := (τ : M →+* M').toAlgebra
   algebraMap (w'.comap (algebraMap M M')).Completion w'.Completion
 
-omit [NumberField M] [NumberField M'] in
 
 theorem infiniteCompletionMap_algebraMap (τ : M ≃+* M') (w' : InfinitePlace M') (l : M) :
     infiniteCompletionMap τ w' (algebraMap M _ l) = algebraMap M' w'.Completion (τ l) :=
@@ -99,7 +97,6 @@ section Galois
 
 variable {K : Type*} [Field K] [NumberField K] [Algebra K M]
 
-omit [NumberField K] [NumberField M] in
 
 theorem comapPrime_eq_inv_smul (σ : M ≃ₐ[K] M) (w' : HeightOneSpectrum (𝓞 M)) :
     comapPrime (σ : M ≃+* M) w' = σ⁻¹ • w' := by
@@ -109,7 +106,6 @@ theorem comapPrime_eq_inv_smul (σ : M ≃ₐ[K] M) (w' : HeightOneSpectrum (�
   simp only [Ideal.mem_comap]
   constructor <;> intro h <;> convert h using 2 <;> ext <;> rfl
 
-omit [NumberField K] [NumberField M] in
 
 theorem comap_eq_inv_smul (σ : M ≃ₐ[K] M) (w' : InfinitePlace M) :
     w'.comap ((σ : M ≃+* M) : M →+* M) = σ⁻¹ • w' := by
@@ -117,13 +113,11 @@ theorem comap_eq_inv_smul (σ : M ≃ₐ[K] M) (w' : InfinitePlace M) :
   rw [InfinitePlace.comap_apply, InfinitePlace.smul_apply]
   rfl
 
-omit [NumberField K] in
 
 theorem smul_snd (σ : M ≃ₐ[K] M) (x : 𝔸[M]) (w' : HeightOneSpectrum (𝓞 M)) :
     (σ • x).2 w' = finiteCompletionMap (σ : M ≃+* M) w' (x.2 (comapPrime (σ : M ≃+* M) w')) :=
   adeleRingEquiv_snd_eq _ x w'
 
-omit [NumberField K] in
 
 theorem smul_fst (σ : M ≃ₐ[K] M) (x : 𝔸[M]) (w' : InfinitePlace M) :
     (σ • x).1 w' = infiniteCompletionMap (σ : M ≃+* M) w' (x.1 (w'.comap ((σ : M ≃+* M) : M →+* M))) :=

@@ -284,11 +284,9 @@ theorem continuous_mexp : Continuous (NormedSpace.exp : Mx n → Mx n) := by
   letI := Matrix.linftyOpNormedAlgebra (R := ℝ) (n := Fin n) (α := ℂ)
   exact continuous_iff_continuousAt.2 fun x => (NormedSpace.exp_analytic (𝕂 := ℝ) x).continuousAt
 
-open Classical in
 
 def piOp (h : ModRep ε ρ) (g : Mx n) : Fam ε ρ →L[ℂ] Fam ε ρ := if hg : g ∈ UJset ε then act h hg else 1
 
-open Classical in
 
 def dpiOp (ε : Fin n → Bool) (ρ : Mx n → (E →L[ℂ] E)) (X : Mx n) : Fam ε ρ →L[ℂ] Fam ε ρ :=
   if hX : X ∈ lie (Jm ε) then der ρ ⟨X, hX⟩ else 0

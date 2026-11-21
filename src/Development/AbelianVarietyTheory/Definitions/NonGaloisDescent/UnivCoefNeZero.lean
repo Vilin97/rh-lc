@@ -119,7 +119,6 @@ theorem int_adj_of_int {F : Frame S T} (hF : F.Good) {x : WO S T} (h : IsIntM (f
   rw [e, ct_mul, ct_mul]
   simpa only [Matrix.mul_assoc] using this
 
-open GlobalTheory.IdemSupport in
 
 end GlobalTheory.ExportSeries.Model
 

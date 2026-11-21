@@ -62,7 +62,6 @@ def LiftIsCuspC (F : Face D A) : Prop :=
       ∃ U ∈ R.Wall i σ, ∀ (v : ∀ ρ, lowT (R.MW i σ) ρ) (g : GA D (Wc D i)), U (fun ρ => v ρ) g =
         Lift.thetaPInt ν 𝓕 (fun g h f => Datum.thetaKO ω h g f) (ptAt R i σ BW f) io (c.ext φ) (PiTensorProduct.tprod ℂ v) g
 
-open Datum in
 
 def FiniteZetaC (F : Face D A) : Prop :=
   ForLiftDataC R F fun i t σ P _ ω _ f _ _ =>

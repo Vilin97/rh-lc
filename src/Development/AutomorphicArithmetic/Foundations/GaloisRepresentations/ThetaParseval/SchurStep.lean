@@ -28,15 +28,12 @@ def lift (M : Model σ X W) (om : Rep σ X W) (Φ : Fn F n d) (φ : UA σ X.J �
 
 def mc (M : Model σ X W) (φ : UA σ X.J → ℂ) (g : UA σ X.J) : ℂ := pet M.μ M.dom (fun y => φ (y * g)) φ
 
-variable (σ X) in
 
 def gInf : Subgroup (UA σ X.J) := Subgroup.closure (UAt σ X (evI F))
 
-variable (σ X) in
 
 def gAt (S : Finset (Pl F)) : Subgroup (UA σ X.J) := ⨆ v ∈ S, locGrp σ X v
 
-variable (σ X) in
 
 def gOff (S : Finset (Pl F)) : Subgroup (UA σ X.J) :=
   Subgroup.closure {g | (∀ w : InfinitePlace F, (mat g).map (compInf F E w) = 1) ∧ ∀ v ∈ S, OffAt v g}
@@ -59,7 +56,6 @@ section CM
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-variable (E) in
 
 abbrev cj : E →ₐ[maximalRealSubfield E] E := (IsCMField.complexConj E).toAlgHom
 

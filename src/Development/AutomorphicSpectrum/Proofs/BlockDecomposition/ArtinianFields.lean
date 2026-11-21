@@ -53,7 +53,6 @@ theorem exists_adele (S : Finset (HeightOneSpectrum (𝓞 F))) (b : ∀ v : Heig
   · have h := congrArg (fun g : GL (Fin 1) (w.Completion ⊗[F] E) => g.1 0 0) (hc w)
     exact h.trans (sc_apply _)
 
-variable (F E) in
 
 def LocR (S : Finset (HeightOneSpectrum (𝓞 F))) : InfinitePlace F ⊕ S → Type
   | .inl w => w.Completion ⊗[F] E
@@ -63,7 +62,6 @@ instance locRing (S : Finset (HeightOneSpectrum (𝓞 F))) : ∀ c, CommRing (Lo
   | .inl w => inferInstanceAs (CommRing (w.Completion ⊗[F] E))
   | .inr v => inferInstanceAs (CommRing (Fv F v.1 ⊗[F] E))
 
-variable (F E) in
 
 def locC (S : Finset (HeightOneSpectrum (𝓞 F))) : ∀ c, AF F ⊗[F] E →+* LocR F E S c
   | .inl w => compInf F E w
@@ -75,7 +73,6 @@ instance locArt (S : Finset (HeightOneSpectrum (𝓞 F))) : ∀ c, IsArtinianRin
   · exact IsArtinianRing.of_finite w.Completion (w.Completion ⊗[F] E)
   · exact IsArtinianRing.of_finite (Fv F v.1) (Fv F v.1 ⊗[F] E)
 
-open Classical in
 
 theorem crit (S : Finset (HeightOneSpectrum (𝓞 F))) (e : AF F ⊗[F] E) (h1 : ∀ w, compInf F E w e = 1)
     (h2 : ∀ v, compFin F E v e = if v ∈ S then 1 else 0) :

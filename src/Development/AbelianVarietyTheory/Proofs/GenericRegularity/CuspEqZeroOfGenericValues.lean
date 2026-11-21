@@ -19,8 +19,6 @@ theorem cusp_eq_zero_of_generic_values {E : Type} [Field E] [NumberField E] [IsC
   obtain ⟨hL, -, -, hA⟩ := evLaws_genFr_atlas E H Dw l Xo c
   exact sec_eq_zero_of_generic_values E H Dw l Xo c hL hG (hA hG) a n g (cusp_le_sec Xo c U a n hg) h0
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem genValInj_record : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j) (hG : GenFrEx (T.Q.Xo j) T.Q.c), GenValInjSt h j hG := by
   intro D T h j _ hG w g h0

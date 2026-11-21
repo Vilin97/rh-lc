@@ -51,7 +51,6 @@ theorem fin_add {D : D7} {m n : ℕ} {x y : Mx D m n} (hx : x.map (infPart D) = 
     (x + y).map (infPart D) = 0 := by
   rw [Matrix.map_add _ (map_add (infPart D)), hx, hy, add_zero]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_alg_form : ∀ {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D}
     {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ} {sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ}

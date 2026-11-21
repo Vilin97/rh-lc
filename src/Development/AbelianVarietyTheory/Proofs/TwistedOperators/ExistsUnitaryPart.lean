@@ -210,8 +210,6 @@ end Generic
 
 variable {D : D7}
 
-set_option maxHeartbeats 800000 in
-open GlobalTheory.IdemSupport GlobalTheory.LevSplit in
 
 theorem exists_idem_set {T : Set (Pl D.host.E)} (hT : OnePlaceOver T) :
     ∃ p : Formalism.L2.Herm.intAf D.host.F D.host.E, p * p = p ∧

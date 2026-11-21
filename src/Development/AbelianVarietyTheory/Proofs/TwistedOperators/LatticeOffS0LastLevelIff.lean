@@ -124,7 +124,6 @@ theorem smul_mem_mul {R K : Type} [CommRing R] [IsDedekindDomain R] [Field K] [A
 
 end GlobalTheory.RowShape.OffLat
 
-open GlobalTheory.RowShape.OffLat in
 
 theorem GlobalTheory.RowShape.latV_grid_iff_rowN_zero : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (v : GlobalTheory.FinPl.Pl D), v ∉ G.pl.S0 → ∀ y : Fin (G.V (.grid D.R.m 0)).rank → AE D, (∀ i, y i ∈ idAt D (· = v)) → (y ∈ GlobalTheory.FinPl.latV _ (G.Λ (.grid D.R.m 0)) (· = v) ↔ y ∈ GlobalTheory.FinPl.latV _ (GlobalTheory.RowShape.rowN G 0) (· = v)) := by
   intro D T L sc G v hv y _

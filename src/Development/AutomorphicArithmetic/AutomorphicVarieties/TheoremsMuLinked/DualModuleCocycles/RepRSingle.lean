@@ -14,7 +14,6 @@ namespace UpperTheory.V.Th.Coc
 
 variable {O R X : Type} [CommRing O] [CommRing R] [Algebra O R] [CommRing X] [Algebra O X] {n : ℕ}
 
-variable (X) in
 
 abbrev bar (Z : Matrix (Fin n) (Fin n) O) : Matrix (Fin n) (Fin n) X := Z.map (algebraMap O X)
 

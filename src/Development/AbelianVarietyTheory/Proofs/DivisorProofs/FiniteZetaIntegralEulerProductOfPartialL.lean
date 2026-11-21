@@ -34,7 +34,6 @@ theorem prod_fin_getD (m : Multiset ℂˣ) {n : ℕ} (hn : m.card = n) (f : ℂ�
 
 variable {D : D7}
 
-open Classical in
 
 def zetaParams (S : Finset (HeightOneSpectrum (𝓞 D.host.F))) (B : GlobalTheory.LFun.Fam D.host.E) (cμ : (AE D)ˣ →* Circle) :
     HeightOneSpectrum (𝓞 D.host.E) → Fin D.R.r → ℂ := fun w a =>

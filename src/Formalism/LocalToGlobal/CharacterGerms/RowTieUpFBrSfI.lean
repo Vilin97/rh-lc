@@ -254,7 +254,6 @@ open Formalism.L2.Pj NumberField
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
 variable (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)]
 
-variable {Xo c} in
 
 theorem upCharS_at_chartL {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io} {C3 : IntChart T io y}
     {C : Type} [Field C] [CharZero C] {V : VF C} {ie : T.Fr →+* C} (hPlace : Pl.PlaceCriterionOfIdempotent)
@@ -268,7 +267,6 @@ theorem upCharS_at_chartL {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io}
   exact upCharS_of_upFLaw_RR hPlace Y (selfOfLab ha hg o) (rankHyp_ofLabS ha hg hr o) Hc T.V C3.FT C3.actT hL
     (ie.comp (algebraMap T.V T.Fr)) h1 h2 h3 h4 hd
 
-variable {Xo c} in
 
 end Chart
 

@@ -144,7 +144,6 @@ lemma bilinear_product_commutator (i j k l : Fin m) (a b c d : Fin n) :
   bilinear_commutator_identity _ _ _ _ _ _ (hBP j k b c) (hBP l i d a) (hPP i k a c) (hBB j l b d)
     (by split_ifs <;> simp) (by split_ifs <;> simp)
 
-omit hBB hPP in
 
 lemma satisfiesGlRelations_bilinearLeft : GlRel (bilinearLeft B P) := by
   intro a b c d
@@ -177,11 +176,8 @@ lemma bilinearLeft_mul_bilinearRight (i j : Fin m) (a b : Fin n) :
   rw [sub_eq_zero]
   simp [ite_and, ite_mul]
 
-omit hBB hPP in
 
-omit hBP hBB hPP in
 
-omit hPP in
 
 end weyl
 

@@ -37,7 +37,6 @@ noncomputable section
 
 namespace GlobalTheory.IdemIota
 
-set_option maxHeartbeats 800000 in
 
 theorem toCompl_map_mem {D : D7} {q : GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift.FinPl D} {w : HeightOneSpectrum (𝓞 D.host.E)}
     (h : w.under (𝓞 D.host.F) = q) (z : Af D.host.F ⊗[D.host.F] D.host.E) (hz : z ∈ intAE D) :

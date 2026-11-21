@@ -234,7 +234,6 @@ end GlobalTheory.PeriodSpan.TorusExp
 
 namespace GlobalTheory.PeriodSpan
 
-open TorusExp in
 
 theorem torusPts_subset_perHolSub (X : Scheme.{0}) (G : Over X) [GrpObj G] (y : Sp ℂ ⟶ X)
     (E : TorusExtension ((Over.pullback y).obj G)) :

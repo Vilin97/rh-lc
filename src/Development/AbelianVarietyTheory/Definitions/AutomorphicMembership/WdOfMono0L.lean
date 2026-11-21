@@ -43,8 +43,6 @@ structure PlSide (D : D7) where
   plB_eq : ∀ lam (z : ℂ), z ∈ plB lam ↔ ‖(ι lam).symm z‖ ≤ 1
   plκ : ∀ lam, IsLocalRing.ResidueField (plB lam) ≃+* Formalism.CyclotomicNorms.Fbar (D.what₂.places.resChar lam)
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 structure WDSide (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut) where
   wdOf : ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {a}, (G D.host.E D.nd.Om →* GL (Fin a) (Qbar l)) → ∀ w, D.naut.LP w

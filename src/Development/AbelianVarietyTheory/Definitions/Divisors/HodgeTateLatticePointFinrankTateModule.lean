@@ -209,7 +209,6 @@ theorem alC_inclT (x : O ⊗[ℤ_[p]] P.T) : P.alC (P.inclT x) = P.inclOm (P.al 
     rw [inclT_tmul, alC_tmul, al_tmul, inclOm, TensorProduct.mk_apply, TensorProduct.tmul_smul,
       TensorProduct.smul_tmul', Algebra.algebraMap_eq_smul_one]
 
-include h in
 
 def evalAl (x : LieG P.Gt) : P.T →ₗ[ℤ_[p]] C :=
   (Algebra.linearMap O C ∘ₗ LinearMap.proj x ∘ₗ (omega P.Gt).subtype).restrictScalars ℤ_[p] ∘ₗ P.al₀
@@ -280,7 +279,6 @@ variable {P} {N j : ℕ}
 
 omit [IsAlgClosed C] [CharZero C] [Fact ¬IsUnit (p : O)]
   [IsAdicComplete (Ideal.span {(p : O)}) O] in
-variable (P) in
 
 end Point
 

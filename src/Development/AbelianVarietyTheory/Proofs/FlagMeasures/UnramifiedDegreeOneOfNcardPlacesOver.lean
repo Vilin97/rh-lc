@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain
 
 namespace GlobalTheory
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.splitPrime_liesOver_span_iff {E : Type} [Field E] [NumberField E] {p : ℕ} (hp : p.Prime)
     (P : Ideal (𝓞 E)) [hP : P.IsPrime] :
@@ -26,7 +25,6 @@ theorem _root_.GlobalTheory.splitPrime_liesOver_span_iff {E : Type} [Field E] [N
     rw [Ideal.span_le, Set.singleton_subset_iff]
     simpa [Ideal.under, Ideal.mem_comap] using h
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.unramified_degree_one_of_ncard_placesOver (E : Type) [Field E] [NumberField E] (p : ℕ)
     (hp : p.Prime) (h : (_root_.Formalism.BasicNotions.placesOver E p).ncard = Module.finrank ℚ E)

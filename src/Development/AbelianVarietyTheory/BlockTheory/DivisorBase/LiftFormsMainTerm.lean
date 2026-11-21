@@ -20,9 +20,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-variable (D) in
 
-variable (D) in
 
 def absPow (half : Bool) (P : Pl D.host.E) (k : D.host.E) : ℂ :=
   cond half ((Real.sqrt (NumberField.FinitePlace.mk P k) : ℝ) : ℂ) 1
@@ -30,17 +28,12 @@ def absPow (half : Bool) (P : Pl D.host.E) (k : D.host.E) : ℂ :=
 def conjRes (s : ℂ →+* ℂ) (χ : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ) : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ :=
   fun PP => (Units.map s.toMonoidHom).comp (χ PP)
 
-open Classical in
 
-open Classical in
 
 variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-open Classical in
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure LiftInput (R : RealDat D A Ks) (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) where
 

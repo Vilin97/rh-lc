@@ -48,9 +48,7 @@ theorem evalNil_eq_finsum [Finite σ] (F : MvPowerSeries σ A) (x : σ → R)
 
 end Eval
 
-open MvPowerSeries in
 
-open MvPowerSeries in
 
 variable {R₀ : Type u} [CommRing R₀]
 

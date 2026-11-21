@@ -15,7 +15,6 @@ variable {r m : ℕ}
 
 variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem wConj_apply (u : GL (Fin (r + m)) k) (i j : Fin (r + m)) :
     ((pm k (wOpen (dd r m) (hdd r m)) * u * (pm k (wOpen (dd r m) (hdd r m)))⁻¹ : GL (Fin (r + m)) k) :
@@ -25,7 +24,6 @@ theorem wConj_apply (u : GL (Fin (r + m)) k) (i j : Fin (r + m)) :
     GroundTheory.Automorphic.permGL_mul_apply]
   rfl
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem mem_unipU_two {u : GL (Fin (r + m)) k} :
     u ∈ unipU k (dd r m) (hdd r m) ↔ u ∈ unipB k (Fin (r + m)) ∧ ∀ i j : Fin (r + m),

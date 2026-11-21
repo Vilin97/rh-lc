@@ -774,7 +774,6 @@ abbrev Lp (k r mm : ℕ) (E : Type*) [NormedAddCommGroup E] : Type _ := lp (fun 
 def Tf (a : ℝ) (mm : ℕ) (F : Mat k r → E) : Idx k r mm → E :=
   fun i => ((gN i.1.2 ^ a : ℝ) : ℂ) • dLR i.1.1.1 i.1.1.2 F i.1.2
 
-open Classical in
 
 def Kf (a : ℝ) {mm : ℕ} (x : Idx k r mm → E) (u w : List (Mat k r)) (g : Mat k r) : E :=
   if h : Vd mm u w g then ((gN g ^ (-a) : ℝ) : ℂ) • x ⟨((u, w), g), h⟩ else 0

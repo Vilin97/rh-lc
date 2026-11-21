@@ -160,7 +160,6 @@ theorem comap_isMultiProjPrime {R : Type} [CommRing R]
 
 end JoinVerticalDivisorLeft
 
-open JoinVerticalDivisorLeft in
 
 theorem JoinVerticalDivisorLeft.proof : JoinVerticalDivisorLeft.Statement := by
   intro O _ _ _ Ω _ _ K _ ι _ x K' _ ι' _ z K₂ _ ι₂ _ w b f g hD

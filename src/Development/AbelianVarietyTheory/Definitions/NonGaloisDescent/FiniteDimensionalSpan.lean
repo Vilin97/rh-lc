@@ -166,11 +166,9 @@ def thU (i : X.Tw) : ∀ n b (Q : Finset (Pl D.host.E)) (M : ℕ), Dat rd i n b 
       grpSum Y (ρ.ch i) Q M fun a => (h.2 a).choose
     else 0
 
-open Classical in
 
 variable (hF : ∀ i j b, Faithful (rd i j b))
 
-include hF in
 
 include hF in
 theorem thPsi_one (i : X.Tw) : ∀ n b k (d : Dat rd i n b),

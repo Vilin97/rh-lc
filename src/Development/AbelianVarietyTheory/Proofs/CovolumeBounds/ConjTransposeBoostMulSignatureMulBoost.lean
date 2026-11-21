@@ -79,7 +79,6 @@ theorem norm_lt_one_of_posDef {Z : Matrix m n ℂ} (hP : (1 - Zᴴ * Z).PosDef) 
 theorem posDef_iff_norm_lt_one (Z : Matrix m n ℂ) : (1 - Zᴴ * Z).PosDef ↔ ‖Z‖ < 1 :=
   ⟨norm_lt_one_of_posDef, posDef_one_sub_conjTranspose_mul⟩
 
-omit [DecidableEq m] in
 
 end general
 

@@ -14,7 +14,6 @@ noncomputable section
 
 namespace GlobalTheory.LatLevel
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 
 theorem exists_finset_of_nhds_zero {F : Type} [Field F] [NumberField F] (V : Set (Af F)) (hV : IsOpen V)
     (h0 : (0 : Af F) ∈ V) :

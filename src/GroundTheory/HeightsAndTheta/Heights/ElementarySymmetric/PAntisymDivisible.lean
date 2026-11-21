@@ -261,7 +261,6 @@ end Blocks
 
 end AntisymDivisible
 
-open AntisymDivisible in
 
 theorem AntisymDivisible.proof : AntisymDivisible.Statement := by
   intro T _ _ N j P hP hvan

@@ -30,7 +30,6 @@ theorem integral_of_frob_row {n : Type} [Fintype n] (v : n → OW l O) (Y : Matr
     (h : ∀ i, frobOW l O (v i) = (v ᵥ* Y.map (inclO l O)) i) : ∀ i, v i ∈ (inclO l O).range :=
   integral_of_frob v Yᵀ fun i => by rw [h i, Matrix.transpose_map, Matrix.mulVec_transpose]
 
-variable (l O) in
 
 def jA : Ainf l →+* OW l O :=
   (inclO l O).toRingHom.comp (Algebra.TensorProduct.includeRight : Ainf l →ₐ[ℤ_[l]] OA l O).toRingHom

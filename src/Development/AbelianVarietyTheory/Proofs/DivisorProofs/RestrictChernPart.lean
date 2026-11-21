@@ -47,6 +47,5 @@ theorem restrict_chernPart (h : φ.IsCInf) (ε : ℤˣ) (c : AlgChart p σ D) :
 
 variable [CompactSpace (CxPts p σ)] [T2Space (CxPts p σ)]
 
-omit [CompactSpace (CxPts p σ)] [T2Space (CxPts p σ)] in
 
 end GlobalTheory.ChernMA

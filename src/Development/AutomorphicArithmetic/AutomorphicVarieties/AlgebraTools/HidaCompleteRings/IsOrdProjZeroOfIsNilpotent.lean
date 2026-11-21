@@ -47,7 +47,6 @@ structure IsOrdProj (I : Ideal R) (U e : Module.End R M) : Prop where
 def IsFactLim (I : Ideal R) (U e : Module.End R M) : Prop :=
   ∀ k : ℕ, ∃ N : ℕ, ∀ j, N ≤ j → ∀ x, (U ^ j.factorial) x - e x ∈ (I ^ k • ⊤ : Submodule R M)
 
-open Classical in
 
 noncomputable def ordProj (I : Ideal R) (U : Module.End R M) : Module.End R M :=
   if h : ∃ e, IsOrdProj I U e then h.choose else 0
@@ -58,7 +57,6 @@ theorem isOrdProj_ordProj {I : Ideal R} {U : Module.End R M} (h : ∃ e, IsOrdPr
   rw [dite_eq_left h]
   exact h.choose_spec
 
-variable (M) in
 
 structure OrdAdm (I : Ideal R) : Prop where
   complete : IsAdicComplete I M

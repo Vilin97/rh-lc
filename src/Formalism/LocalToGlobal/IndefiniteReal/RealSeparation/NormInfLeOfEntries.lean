@@ -37,7 +37,6 @@ theorem entry_le_sum {m n : ℕ} (f : Fin m → Fin n → ℝ) (hf : ∀ i j, 0 
 
 variable {A T : HSp D} {ι : A.V →ₗ[D.host.E] T.V} {s : GA D A →* GA D T}
 
-set_option maxHeartbeats 2000000 in
 
 theorem s_entry_le (θ : InfFam D) (hι : HSpace.IsIsomEmb A T ι) (hemb : IsEmbHom ι s) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ (h : GA D A) (τ : D.what₂.Tau) (b : ℝ), 0 ≤ b →

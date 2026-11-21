@@ -15,8 +15,6 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 
 noncomputable section
 
-open FlagBundleSectionForms (chartPow chartMono liftNat) in
-open FlagBundleChartSection in
 
 theorem FlagBundleChartSection.proof : FlagBundleChartSection.Statement := by
   intro F _ Ω _ _ K _ _ ι y N E _ _ B w b hfl M a φ hφ Φ _ _ t ht i c hsc

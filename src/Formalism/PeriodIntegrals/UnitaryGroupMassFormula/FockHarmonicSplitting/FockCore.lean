@@ -68,7 +68,6 @@ private lemma finiteDimensional_homog' [Fintype σ] (n : ℕ) :
        FiniteDimensional.span_of_finite ℂ (hS.image _)
      exact Submodule.finiteDimensional_of_le hle)
 
-set_option maxHeartbeats 800000 in
 
 lemma exists_orth [Fintype σ] (K : Submodule ℂ (MvPolynomial σ ℂ)) (n : ℕ)
     (hK : K ≤ FockH1Action.homog σ n) (f : MvPolynomial σ ℂ) :

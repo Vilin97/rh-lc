@@ -49,7 +49,6 @@ theorem isPtOf_mul_inv [IsEmpty Q] {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST 
   rw [map_one, OneMemClass.coe_one, map_one, one_mul, (ColAd.near_of_isPtOf h 0).deco] at this
   exact this
 
-omit [NeZero n] in
 
 theorem glg_free {p : DecoF E n ST SG Q} {a b : GLG E n SG} {c d : GLQ E n Q}
     (h : ((1, a, c) : UF E n × GLG E n SG × GLQ E n Q) • p = ((1, b, d) : UF E n × GLG E n SG × GLQ E n Q) • p) : a = b := by
@@ -60,7 +59,6 @@ theorem glg_free {p : DecoF E n ST SG Q} {a b : GLG E n SG} {c d : GLQ E n Q}
   rw [← hx]
   exact this
 
-variable (hc) in
 
 def RdLev {K : Type} [Field K] (U : Subgroup (GL (Fin n) (AfE F E))) (chi : U →* ℂˣ) (bad : Set (HeightOneSpectrum (𝓞 F)))
     (Λ : LevFam E K n SG) (emb : K →+* ℂ) : Prop :=
@@ -104,7 +102,6 @@ theorem rdLev_of_reads {X : Fields} {hc : CMData X.F X.E} {n : ℕ} [NeZero n] {
       Finset.prod_inv_distrib]
     rfl
 
-omit [StarRing E] [NeZero n] in
 
 theorem int_iff (v : HeightOneSpectrum (𝓞 F)) (d : GL (Fin n) (v.adicCompletionIntegers F)) (x : Fin n → v.adicCompletion F) :
     (∀ b, x b ∈ v.adicCompletionIntegers F) ↔
@@ -153,7 +150,6 @@ theorem redM_mat {σ : E →ₐ[F] E} {gp : Fin 2 → ℕ} (G : GLoc F E σ gp) 
   rw [GLoc.mat, e1, e2, ← map_inv, ← map_mul, ← map_mul, ← map_inv, ← map_mul, ← map_mul]
   exact Formalism.L2.G.redM_bc v _
 
-variable (hc) in
 
 theorem exists_trunc (x : ∀ v : HeightOneSpectrum (𝓞 F), GL (Fin n) (E ⊗[F] v.adicCompletion F)) (s : Finset (HeightOneSpectrum (𝓞 F)))
     (h1 : ∀ v ∈ s, x v ∈ UPts hc.sig (1 : Matrix (Fin n) (Fin n) E) (v.adicCompletion F))
@@ -189,7 +185,6 @@ structure Cmp {σ : E →ₐ[F] E} {gp : Fin 2 → ℕ} (G : GLoc F E σ gp) (SG
   ρ_eq : ∀ j v h s, ((ρ j v h s : v.adicCompletionIntegers F) : v.adicCompletion F) = G.phi j v h (prV (E := E) v s.1)
   e_eq : ∀ j v h s, IsLocalRing.residue _ (ρ j v h s) = e j v h (resS F (W j v h).1 s)
 
-attribute [local instance] Formalism.BasicNotions.Host.cmStar in
 
 theorem nonempty_cmp {R : Ranks} (H : Formalism.BasicNotions.Host R) (hc : CMData H.F H.E) {SG : Finset (HeightOneSpectrum (𝓞 H.E))}
     (hl : LevOk H SG ∅) (G : GLoc H.F H.E hc.sig H.g) (hne : H.g 0 ≠ H.g 1)
@@ -232,7 +227,6 @@ theorem nonempty_cmp {R : Ranks} (H : Formalism.BasicNotions.Host R) (hc : CMDat
     rw [← e]
     exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ (by simpa using a)) (Ideal.mul_mem_left _ _ (by simpa using b))
 
-omit [StarRing E] [NeZero n] in
 
 theorem Cmp.prod_eq {σ : E →ₐ[F] E} {gp : Fin 2 → ℕ} {G : GLoc F E σ gp} (C : Cmp G SG) (f : SG → ℂ) :
     ∏ w, f w = ∏ j : Fin 2, ∏ᶠ (v : HeightOneSpectrum (𝓞 F)) (h : (gp j : 𝓞 F) ∈ v.asIdeal), f (C.W j v h) := by

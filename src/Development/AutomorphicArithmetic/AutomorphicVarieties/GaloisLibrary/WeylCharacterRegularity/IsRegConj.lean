@@ -68,7 +68,6 @@ theorem eOf_piK {M : T → GL (Fin a) (Cinf E) → Matrix κ κ ℂ} (h : ∀ t,
     (τ : E →+* ℂ) (i j : Fin a) : eOf (fun y => piK fun t => M t y) τ i j = ∑ t, intersection_update_fsHerm_neg_one t (eOf (M t) τ i j) := by
   simp only [eOf, dOf_piK h h1, map_smul, map_sub, Finset.smul_sum, ← Finset.sum_sub_distrib]
 
-open Classical in
 
 theorem coord_hol [IsTotallyComplex E] (τ τ' : E →+* ℂ) :
     (1 / 2 : ℂ) * (coord τ' (atEmb τ 1) - Complex.I * coord τ' (atEmb τ Complex.I)) = if τ' = τ then 1 else 0 := by

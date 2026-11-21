@@ -105,7 +105,6 @@ def IsPhi (Φ : (D.div.Nu u).V →ₗ[D.what₂.LL] (MtDual D Am).V) : Prop :=
 
 def PhiRat : Prop := ∃ Φ, IsPhi D Am u Φ
 
-open Classical in
 
 def Phi : (D.div.Nu u).V →ₗ[D.what₂.LL] (MtDual D Am).V := if h : PhiRat D Am u then h.choose else 0
 

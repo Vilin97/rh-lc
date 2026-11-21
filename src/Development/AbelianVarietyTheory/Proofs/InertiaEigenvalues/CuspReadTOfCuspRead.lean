@@ -46,7 +46,6 @@ open GlobalTheory.RowTie
 
 variable {rc : RecFam} {D : D7} {T : WDTie D.nd D.naut}
 
-set_option maxHeartbeats 2000000 in
 
 section Read
 

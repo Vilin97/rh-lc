@@ -44,7 +44,6 @@ section General
 
 variable {S : Scheme.{0}} {A : Over S} [GrpObj A] {L : RigLB A}
 
-omit [GrpObj A] in
 
 theorem isPullback_whisk {T T' : Over S} (σ : T' ⟶ T) :
     IsPullback (σ ▷ A).left (fst T' A).left (fst T A).left σ.left := by

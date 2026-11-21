@@ -93,7 +93,6 @@ theorem fin_Fi (M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.
   rw [← (M.emb_basis i).2]
   exact FiniteDimensional.span_of_finite ℂ (Set.finite_range _)
 
-open Classical in
 
 def chs (S : StepIn M i hi G) : Finset S.Ch :=
   Finset.univ.image S.chOf ∪ Finset.univ.image fun a : G.comp => (S.eC.symm a).1

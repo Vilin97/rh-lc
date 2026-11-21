@@ -93,7 +93,6 @@ end GlobalTheory.SupercuspUnitary
 
 namespace GlobalTheory
 
-open GlobalTheory.SupercuspUnitary in
 
 theorem isUnitarisable_of_isSupercuspidal : ∀ (G V : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) (l : Module.Dual ℂ V), l ∈ smoothPart ρ.dual →

@@ -130,7 +130,6 @@ theorem setupL_good {ρ : GlobalTheory.SeriesTie.Setup (Dof x).ntw} (h : ρ.Good
       have h' := h.classes ((by with_unfolding_all exact (i :))) ((by with_unfolding_all exact (j :))) b (twB L t) (twB_good L ht) ⟨(by with_unfolding_all exact ((placesOK_B L hA.1) :)), (by with_unfolding_all exact (hA.2 :))⟩
       ⟨(by with_unfolding_all exact (h'.fin :)), (by with_unfolding_all exact (h'.reps :)), (by with_unfolding_all exact (h'.stab :))⟩ }
 
-open GlobalTheory.SeriesTie in
 
 theorem theta_eq (ρ : Setup (Dof x).ntw) :
     (setupL L ρ).theta = fun i j b h P => (by exact ρ.theta i j b h P) := by
@@ -140,7 +139,6 @@ theorem theta_eq (ρ : Setup (Dof x).ntw) :
   tr_leaves x.o.Z (oL x L).Z
   kexactB (Eq.refl (ρ.theta (kc% i) (kc% j) b (kc% h) (kc% P)))
 
-open GlobalTheory.SeriesTie in
 
 theorem isDatum_eq (ρ : Setup (Dof x).ntw) :
     (setupL L ρ).IsDatum = fun i j b s h P => (by exact ρ.IsDatum i j b s h P) := by

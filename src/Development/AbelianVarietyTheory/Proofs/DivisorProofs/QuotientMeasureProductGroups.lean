@@ -30,7 +30,6 @@ theorem map_restrict_isMulRightInvariant : ∀ (N N₁ : Type) [Group N] [Topolo
   exact hD'.measure_set_eq hD hP fun δ => by
     ext v; simp [Subgroup.smul_def, map_mul, hπΔ δ δ.2]
 
-open scoped Pointwise in
 
 theorem map_restrict_isFiniteMeasureOnCompacts : ∀ (N N₁ : Type) [Group N] [TopologicalSpace N] [IsTopologicalGroup N] [MeasurableSpace N] [BorelSpace N]
     [Group N₁] [TopologicalSpace N₁] [IsTopologicalGroup N₁] [T2Space N₁] [MeasurableSpace N₁] [BorelSpace N₁]
@@ -86,7 +85,6 @@ end GlobalTheory.Cusp.SemidirectConst
 
 open GlobalTheory.Cusp.SemidirectConst
 
-open GlobalTheory.AutomorphicL2Unitary in
 
 theorem GlobalTheory.Cusp.constTermOn_eq_integral_semidirect : ∀ (G G₁ : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [SecondCountableTopology G] [T2Space G] [MeasurableSpace G] [BorelSpace G]
     [Group G₁] [TopologicalSpace G₁] [IsTopologicalGroup G₁] [SecondCountableTopology G₁] [T2Space G₁] [MeasurableSpace G₁] [BorelSpace G₁]

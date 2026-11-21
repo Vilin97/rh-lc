@@ -89,7 +89,6 @@ private theorem adjoin_toInteger_eq_top (A : Type*) [CommRing A] [Algebra A (�
     Algebra.adjoin_le (by simp)
   exact this hy
 
-open Classical in
 
 theorem relDifferent_eq_span_prod (E : IntermediateField ℚ K) {ζ : K} (hζ : IsPrimitiveRoot ζ N) :
     differentIdeal (𝓞 E) (𝓞 K) = Ideal.span
@@ -126,7 +125,6 @@ theorem relDifferent_eq_span_prod (E : IntermediateField ℚ K) {ζ : K} (hζ : 
   · intro σ _
     rfl
 
-open Classical in
 
 theorem map_differentIdeal_eq_span_prod (E : IntermediateField ℚ K) {ζ : K}
     (hζ : IsPrimitiveRoot ζ N) :

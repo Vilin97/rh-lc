@@ -35,6 +35,5 @@ theorem val_inv_eq (n : ℕ) (a : ℂˣ) :
 
 end GlobalTheory.SatFrobLit
 
-open GlobalTheory.SatFrobLit in
 
 end

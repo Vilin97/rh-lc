@@ -71,6 +71,5 @@ theorem slope_prod {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [Finite
     show T 0 t (t⁻¹ • ((List.ofFn fun i : Fin k => T i.succ t).prod f - f)) + _ = _
     rw [LinearMap.map_smul_of_tower, map_sub, ← smul_add, sub_add_sub_cancel]
 
-open scoped Classical in
 
 end GlobalTheory.ArchProdRule

@@ -78,7 +78,6 @@ end GlobalTheory.KZ.JInt
 
 namespace GlobalTheory.KZ.JInt
 
-open Polynomial in
 
 theorem jK_sl_isIntegral : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε),
     Function.Injective ε → (∃ φ : ℂ → ℂ, DifferentiableOn ℂ φ Hs ∧ X.an X.jK = (φ : Mero)) →

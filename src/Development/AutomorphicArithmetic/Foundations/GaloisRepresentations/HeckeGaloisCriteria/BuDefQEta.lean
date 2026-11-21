@@ -41,7 +41,6 @@ set_option maxHeartbeats 1600000
 @[reducible] def thTr (x : ThetaX D) : ThetaX Λ.rec' := { x with }
 
 @[reducible] def errTr (x : ErrX D) : ErrX Λ.rec' := { x with }
-open DivX (md) in
 
 @[reducible] def divTr (X : DivX D) : DivX Λ.rec' := { X with md := fun S κ p _ la z => { md X S κ p la z with } }
 section Local

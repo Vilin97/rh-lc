@@ -37,7 +37,6 @@ section SeparableClosure
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ksep : Type*} [Field Ksep] [Algebra K Ksep]
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem adjoin_gen_eq_top (α : Ksep) : K⟮AdjoinSimple.gen K α⟯ = ⊤ := by
   apply map_injective K⟮α⟯.val
@@ -66,7 +65,6 @@ theorem isUnramifiedSubextension_iff_exists (E : IntermediateField K Ksep) :
     obtain rfl := valuativeRel_unique K h₁ h₂ e₁ e₂
     exact h
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem IsUnramifiedSubextension.ramificationIndex_eq_one {E : IntermediateField K Ksep}
     (hE : IsUnramifiedSubextension E) [ValuativeRel E] [TopologicalSpace E]

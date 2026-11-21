@@ -19,7 +19,6 @@ namespace GlobalTheory.PlaceApprox
 
 variable {F : Type} [Field F] [NumberField F]
 
-open Classical in
 
 def locAdele (S₁ : Finset (InfinitePlace F)) (S₂ : Finset (HeightOneSpectrum (𝓞 F)))
     (p : ((v : S₂) → Fv F v.1) × ((w : S₁) → w.1.Completion)) : AF F :=

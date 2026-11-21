@@ -131,7 +131,6 @@ theorem cohomologyMap_mackeyTranslateMor_injective (p : MackeyIndex V φ) (n : �
   rw [← ModuleCat.comp_apply, ← cohomologyMap_comp, h, cohomologyMap_id]
   rfl
 
-omit [∀ v, CompactSpace (Hv v)] in
 
 theorem cohomologyMapAlong_mackeyFamily_cohomologyRes (p : MackeyIndex V φ) (n : ℕ) (y : cohomology A n) :
     (cohomologyMapAlong (mackeyFamily V φ p).toMonoidHom (continuous_toMonoidHom (mackeyFamily V φ p)) (𝟙 _) n).hom
@@ -186,7 +185,6 @@ theorem cohomologyMapAlong_mackeyFamily_cohomologyRes (p : MackeyIndex V φ) (n 
 
 variable [(V : Subgroup G).Normal]
 
-omit [IsTopologicalGroup G] [CompactSpace G] in
 
 theorem index_mackeySubgroup_dvd {H : Type u} [Group H] (ψ : H →* G) (x : G) :
     (mackeySubgroup (V : Subgroup G) ψ x).index ∣ (V : Subgroup G).index := by

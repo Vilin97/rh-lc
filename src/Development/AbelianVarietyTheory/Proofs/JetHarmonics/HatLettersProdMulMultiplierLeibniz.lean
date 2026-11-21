@@ -97,7 +97,6 @@ private theorem exists_hatWord_mul_multiplier_expansion {A : Type} [Ring A] [Alg
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [List.prod_cons, smul_mul_assoc, smul_smul, add_assoc, mul_assoc]
 
-open MeasureTheory in
 
 theorem _root_.GlobalTheory.HatNF.prod_hats_mul_multiplier : ∀ (A : Type) [Ring A] [Algebra ℂ A] (r : ℕ) (L : _root_.Formalism.FourierDecayAlt.R.LevelData A r), ∀ H : List A, (∀ h ∈ H, h ∈ _root_.GlobalTheory.HatNF.hats L) → ∃ ts : List (ℕ × ℂ × List A), (∀ t ∈ ts, t.1 ≤ H.length * (r + 1) ∧ t.2.2.length = H.length ∧ ∀ h ∈ t.2.2, h ∈ _root_.GlobalTheory.HatNF.hats L) ∧ ∀ m : ℕ → A, _root_.GlobalTheory.HatNF.MulRel L m → ∀ q, H.prod * m q = (ts.map fun t => t.2.1 • (m (q + t.1) * t.2.2.prod)).sum := by
   intro A _ _ r L H hH

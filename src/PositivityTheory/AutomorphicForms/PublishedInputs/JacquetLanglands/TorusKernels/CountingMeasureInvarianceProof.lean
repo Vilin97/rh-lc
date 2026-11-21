@@ -36,7 +36,6 @@ theorem pres_prod (μ : Measure X) [SigmaFinite μ] (hμ : Pres G μ) :
     Pres G ((Measure.count : Measure Ω).prod μ) := fun g =>
   (count_pres g).prod (hμ g)
 
-open Classical in
 
 def cut (R : Set Ω) (β : Ω → X → ℝ) (p : Ω × X) : ℝ := if p.1 ∈ R then β p.1 p.2 else 0
 

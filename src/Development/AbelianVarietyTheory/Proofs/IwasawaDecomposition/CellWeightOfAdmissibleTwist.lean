@@ -45,7 +45,6 @@ theorem domWeight_ext {N : ℕ} {a b : DomWeight N} (h : a.w = b.w) : a = b := b
 
 end Gen2
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.LevCmp
 

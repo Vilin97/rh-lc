@@ -16,14 +16,12 @@ namespace GlobalTheory.RSJ
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E) in
 
 def pFin : Ad E →+* Af E := RingHom.snd (InfiniteAdeleRing E) (Af E)
 
 def secRow {R : Type*} [CommRing R] (y : Fin a → R) : Matrix (Fin a) (Fin a) R :=
   Matrix.of fun i j => if (i : ℕ) + 1 = a then y j else (1 : Matrix (Fin a) (Fin a) R) i j
 
-open Classical in
 
 def secInv (y : Fin a → Cinf E) : GL (Fin a) (Cinf E) :=
   if h : IsUnit (secRow y).det then (Matrix.nonsingInvUnit (secRow y) h)⁻¹ else 1
@@ -31,17 +29,14 @@ def secInv (y : Fin a → Cinf E) : GL (Fin a) (Cinf E) :=
 def rowAct (ξ : Fin a → E) (g : GA E a) : Fin a → Ad E :=
   Matrix.vecMul (fun i => algebraMap E (Ad E) (ξ i)) (g : Matrix (Fin a) (Fin a) (Ad E))
 
-variable (E) in
 
 def natLat (N : ℕ) : Set (Af E) :=
   {x | ∃ z : Af E, (∀ v : HeightOneSpectrum (𝓞 E), z v ∈ v.adicCompletionIntegers E) ∧ x = (N : Af E) * z}
 
-open Classical in
 
 def indN (N : ℕ) (y : Fin a → Af E) : ℂ :=
   if ∀ i : Fin a, y i - (if (i : ℕ) + 1 = a then 1 else 0) ∈ natLat E N then 1 else 0
 
-variable (E a) in
 
 def detPow (x : ℝ) (g : GA E a) : ℝ := ‖((chiDet a (GlobalTheory.HeckeGal.Model.absPow E x) g : ℂˣ) : ℂ)‖
 

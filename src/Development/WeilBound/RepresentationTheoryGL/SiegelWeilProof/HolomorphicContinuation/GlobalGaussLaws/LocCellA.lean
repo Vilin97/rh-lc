@@ -60,7 +60,6 @@ end PositivityTheory.Rg.Sw.Glob.LocCellA
 
 namespace PositivityTheory.Rg.Sw.Glob
 
-open LocCellA in
 
 theorem wEx : WEx := by
   intro D n

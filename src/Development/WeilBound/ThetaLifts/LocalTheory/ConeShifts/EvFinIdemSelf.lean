@@ -51,7 +51,6 @@ theorem at_real {M : Type} [AddCommMonoid M] [Module (AF F) M] (z : M) : At (evI
   rw [smul_smul, show u * realAd F 1 = 0 from af_ext' (by rw [evI_mul, hu, zero_mul, evI_zero]) fun t => by
     rw [map_mul, evFin_real, mul_zero, map_zero], zero_smul]
 
-variable (F) in
 
 def aS (S : Finset (Pl F)) : AF F := realAd F 1 + ∑ v ∈ S, idem F v
 

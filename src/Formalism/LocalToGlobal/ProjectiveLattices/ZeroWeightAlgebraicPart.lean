@@ -34,7 +34,6 @@ theorem rdU_one_of (h : LawsP T) {j : ℕ} (hj : InR D j) (k : (T.U j T.σ₀).C
     (h.allTest j hj _ _)]
   rfl
 
-open Classical in
 
 def frAt {j : ℕ} {k : (T.U j T.σ₀).Comp} (x₀ x : Frame ((T.U j T.σ₀).X k).Ψ D.R.r) :
     Frame ((T.U j T.σ₀).X k).Ψ D.R.r :=
@@ -126,13 +125,10 @@ section Kappa
 variable (h : LawsP T) {j : ℕ} (hj : InR D j) (hG : GenFrEx (T.Q.Xo j) T.Q.c)
   {κ : Comp (T.Q.Xo j) T.Q.c → (T.U j T.σ₀).Comp} (hκ : KappaTie j hG κ) (Z : Comp (T.Q.Xo j) T.Q.c)
 
-include h hj hκ in
 
 variable {x₀ : Frame ((T.U j T.σ₀).X (κ Z)).Ψ D.R.r} (hx0 : x₀ ∈ ((T.U j T.σ₀).X (κ Z)).dom)
 
-include hκ in
 
-include hκ in
 end Kappa
 
 section Rd
@@ -140,9 +136,7 @@ variable (h : LawsP T) {j : ℕ} (hj : InR D j) (hG : GenFrEx (T.Q.Xo j) T.Q.c)
   {κ : Comp (T.Q.Xo j) T.Q.c → (T.U j T.σ₀).Comp} (hκ : KappaTie j hG κ) (Z : Comp (T.Q.Xo j) T.Q.c)
   {x₀ : Frame ((T.U j T.σ₀).X (κ Z)).Ψ D.R.r} (hx0 : x₀ ∈ ((T.U j T.σ₀).X (κ Z)).dom)
 
-include hκ in
 
-set_option maxHeartbeats 1000000 in
 
 end Rd
 

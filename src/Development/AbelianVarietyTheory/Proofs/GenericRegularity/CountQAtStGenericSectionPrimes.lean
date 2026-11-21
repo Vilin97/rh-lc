@@ -17,7 +17,6 @@ section Rec
 variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} {j : ℕ} (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO))
   (N : ℕ)
 
-set_option maxHeartbeats 1000000 in
 
 variable {wL : WeightFamilies.Wt D j} (w : Fin N → B.Cusp j wL)
 
@@ -39,9 +38,7 @@ theorem sfr_zero : sfr X la w 0 = 1 := by
   rw [coe_sfr, frac_apply, pow_one, section_mul_inverse_eq_one]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 theorem countQAt_of_trdeg_le {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : X.Forms →ₐ[B.KO] Ω)
     (htr : Algebra.trdeg B.KO Ω ≤ WeightFamilies.dimY D j) : CurveLoc.CountQAt X la N w gF := by
@@ -59,11 +56,7 @@ theorem countQAt_of_trdeg_le {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : X.Fo
 
 end Rec
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem countQAtSt : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j) (hG : GenFrEx (T.Q.Xo j) T.Q.c) (hT : GenFromTest (T.Q.Xo j) T.Q.c hG), CountQAtSt h j hj hG hT := by
   intro D T h j hj hG hT ka wL wF G S g0 la _ Z

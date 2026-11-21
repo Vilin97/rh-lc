@@ -97,7 +97,6 @@ theorem repr_mul (h0 : B 0 = 1) (h1 : B 1 * B 1 = algebraMap L K Δ) (x y : K) :
   rw [← e] at this
   exact this
 
-variable (B Δ) in
 
 def nrm (x : K) : L := B.repr x 0 ^ 2 - Δ * B.repr x 1 ^ 2
 
@@ -200,11 +199,9 @@ theorem int_ef {e f : K} (he : ∀ l, w (B.repr e l) ≤ 1) (hf : ∀ l, w (B.re
   · rw [map_mul]; exact mul_le_one' hα (he l)
   · rw [map_mul]; exact mul_le_one' hβ (hf l)
 
-variable (B) in
 
 def idm (s : L) : K := (2⁻¹ : L) • B 0 + ((2 * s)⁻¹ : L) • B 1
 
-variable (B) in
 
 def ev (s : L) (x : K) : L := B.repr x 0 + s * B.repr x 1
 

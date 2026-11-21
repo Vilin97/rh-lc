@@ -19,7 +19,6 @@ section Generic
 
 variable {D : D7} {O : Obj D} {c : ℝ}
 
-set_option maxHeartbeats 800000 in
 
 end Generic
 
@@ -27,7 +26,6 @@ section Rows
 
 open GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top.Bl
 
-set_option maxHeartbeats 800000 in
 
 theorem row_of_pack {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D}
     {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Yd cX} (x : R3.TwIn ex)
@@ -53,7 +51,6 @@ theorem row_of_pack {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalis
   cases hj
   exact ⟨s, v, rfl, HEq.rfl, HEq.rfl⟩
 
-set_option maxHeartbeats 800000 in
 
 theorem row_of_args {K : Ctx} {B : GlobalTheory.Mem.Base} {f : GlobalTheory.Mem.Top.Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl}
     {L : SizeData₂ (w.st Z).toD7} {hT : GatTies (w.st Z).toD7} {Gi : Formalism.MainNotions.G.Inst (w.st Z).toD7 L} {Gl : Formalism.MainNotions.G.LatInst (w.st Z).toD7}
@@ -67,7 +64,6 @@ theorem row_of_args {K : Ctx} {B : GlobalTheory.Mem.Base} {f : GlobalTheory.Mem.
       HEq (a.x.Y.jA s v) (t.r.Y.jA s' v') :=
   row_of_pack a.x (R3.famT t) a.pack (R3.lev1 w.I) (R3.chr1 w.I) rfl HEq.rfl t.r.Y.tup t.r.Y.jA a.tup a.jA s v
 
-set_option maxHeartbeats 800000 in
 
 theorem rowForm_all (X : Stages) {px : PreX X.B.toPre} (I : ColIn X.B px) (hX : X.B.fields.Ok) (U : Set I.ι)
     (Xg : Finset (R3.Gc X.B px → X.B.LL)) (tr : R3.TrI X.B px) (s : R3.TupU I U) (a : I.ι) (h : s.1 = I.tup a)
@@ -81,7 +77,6 @@ theorem rowForm_all (X : Stages) {px : PreX X.B.toPre} (I : ColIn X.B px) (hX : 
   subst h
   exact ⟨v, fun i i' e => congrArg v (Fin.ext e), HEq.rfl⟩
 
-set_option maxHeartbeats 800000 in
 
 theorem one_form_rows {K : Ctx} {B : GlobalTheory.Mem.Base} {f : GlobalTheory.Mem.Top.Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl}
     {p0 : BaseLevelRowSide (w.D Z)} {t : RowsT K w Z Wt p0} (rx : RXs t) (s : R3.TupU w.I (R3.usedOf w.I T Wt))
@@ -116,9 +111,7 @@ theorem one_form_congr {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : Col2.
   cases hG
   exact h
 
-set_option maxHeartbeats 800000 in
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.TopVal.OneForm
 

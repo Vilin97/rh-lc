@@ -79,7 +79,6 @@ def Sandwich (E : EtTie W RA RW inclR φR gR πA) (T : LocLat G Qp LL O) (M h : 
 
 end Generic
 
-open TensorProduct in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.PointRingCommRing.letters_neZero {l : ℕ} [Fact l.Prime] (K : _root_.Formalism.BasicNotions.Loc.FinExt l) :
     NeZero (Module.finrank ℚ_[l] ↥(_root_.Formalism.BasicNotions.Loc.K0 K)) := by

@@ -19,7 +19,6 @@ variable (R : Subring K) [IsLocalRing R] (r : ℕ)
 
 end PolyTower
 
-open PolyTower in
 
 theorem IsEtTower.ker_eq_span {cK : k →+* K} {R : Subring K} {cL : k →+* L} {T : Subring L}
     {r : ℕ} {ι : R →+* T} {ψ : T →+* R} {τ : Fin r → T} (h : IsEtTower cK R cL T ι ψ τ) :

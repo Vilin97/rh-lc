@@ -15,7 +15,6 @@ open GlobalTheory.ZH GlobalTheory.Poinc GlobalTheory.UPoinc.USum
 
 namespace GlobalTheory.UPoinc.USum
 
-open GlobalTheory.ThetaCompare GlobalTheory.CommPairing in
 
 theorem isTwVal_transl : ∀ {B : Scheme.{0}} (P : PolAV B) (N m : ℕ) {T₀ T : Over B} (θ : LB.Sec (LPow P.A P.L 1 T₀)) {z₀ : T₀ ⟶ P.A} (τ : LB.Gen (LB.LinComb P.L (Y := T₀.left) (K := Fin 1) (fun _ => z₀.left) (fun _ => 1))) (β : T ⟶ T₀) (x h : T ⟶ P.A) (v : Γ(T.left, ⊤)) (k : T ⟶ P.A), k ^ m = 1 → WeilIs P.A P.L N x k 1 → IsTwVal P N m θ τ β x h v → IsTwVal P N m θ τ β x (h * k) v := by
   intro B P N m T₀ T θ z₀ τ β x h v k hk hw H

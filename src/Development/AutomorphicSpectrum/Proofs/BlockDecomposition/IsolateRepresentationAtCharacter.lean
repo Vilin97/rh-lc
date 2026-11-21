@@ -88,7 +88,6 @@ theorem isHk_smul {K : Subgroup (GL ι F)} {e : GL ι F → ℂ} (c : ℂ) (h : 
       simp [h0]), fun k₁ hk₁ k₂ hk₂ g => by
     simp [h.2.2.2 k₁ hk₁ k₂ hk₂ g]⟩
 
-open Classical in
 
 def unitFn (K : Subgroup (GL ι F)) (g : GL ι F) : ℂ := if g ∈ K then 1 else 0
 
@@ -351,7 +350,6 @@ def hkFix {X : Type} [AddCommGroup X] [Module ℂ X] (σ : Representation ℂ (G
   map_add' v w := Subtype.ext (hk_add_right σ he v w)
   map_smul' c v := Subtype.ext (hk_smul_right σ he c v)
 
-variable (K) in
 
 def heckeAlg (hKo : IsOpen (K : Set (GL ι F))) (hKc : IsCompact (K : Set (GL ι F))) :
     Subalgebra ℂ (∀ i, Module.End ℂ (fixed (ρ i) K)) where

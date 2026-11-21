@@ -97,13 +97,11 @@ section Ext
 variable {LL' : Type} [Field LL'] [Algebra Qp LL'] [Algebra LL LL'] [IsScalarTower Qp LL LL']
   [FiniteDimensional LL LL'] {m : ℕ}
 
-variable (LL LL' m) in
 
 def vecCoord : (Fin m → LL') ≃ₗ[LL] (Fin (finrank LL LL') → Fin m → LL) :=
   (LinearEquiv.piCongrRight fun _ => (finBasis LL LL').equivFun).trans
     { Equiv.piComm _ with map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl }
 
-omit [Algebra Qp LL'] [IsScalarTower Qp LL LL'] in
 
 theorem vecCoord_mulVec (M : Matrix (Fin m) (Fin m) LL) (x : Fin m → LL') (i : Fin (finrank LL LL')) :
     vecCoord LL LL' m ((M.map (algebraMap LL LL')).mulVec x) i = M.mulVec (vecCoord LL LL' m x i) := by
@@ -112,7 +110,6 @@ theorem vecCoord_mulVec (M : Matrix (Fin m) (Fin m) LL) (x : Fin m → LL') (i :
     ∑ j, M k j * (finBasis LL LL').repr (x j) i
   simp [← Algebra.smul_def]
 
-omit [Algebra Qp LL'] [IsScalarTower Qp LL LL'] in
 
 theorem finrank_eq_of_coord {W W' : Type} [AddCommGroup W] [AddCommGroup W'] [Module LL W] [Module LL W']
     [Module LL' W'] [IsScalarTower LL LL' W'] (E : W' ≃ₗ[LL] (Fin (finrank LL LL') → W))
@@ -125,7 +122,6 @@ variable {ρ : Representation LL G (Fin m → LL)} {ρ' : Representation LL' G (
     ∀ x, ρ' g x = (M.map (algebraMap LL LL')).mulVec x)
 include hρ
 
-omit [Algebra Qp LL] [Algebra Qp LL'] [IsScalarTower Qp LL LL'] in
 
 theorem vecCoord_rep (g : G) (x : Fin m → LL') (i : Fin (finrank LL LL')) :
     vecCoord LL LL' m (ρ' g x) i = ρ g (vecCoord LL LL' m x i) := by
@@ -267,7 +263,6 @@ end Bridge
 
 variable [NumberField E]
 
-omit [NumberField E] in
 
 theorem IsInduced.norm_lt_one_iff {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)}
     {Bw : LocBridge l E Ω (Dec (F := E) A) O} (h : IsPlaceOver A w) (hj : Induces Bw) {τ : E →+* Om l}

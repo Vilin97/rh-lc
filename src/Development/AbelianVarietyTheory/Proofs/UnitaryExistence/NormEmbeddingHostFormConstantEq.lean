@@ -68,6 +68,5 @@ theorem isDetRoot_mul {D : D7} (V : HSp D) (g g' : GA D V) (x x' : (AE D)ˣ) (hx
   conv_lhs => rw [hx, hx']
   ring
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.ExtCore

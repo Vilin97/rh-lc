@@ -70,7 +70,6 @@ theorem det_single_not_inj (a : Fin n → Fin n) (ha : ¬ Function.Injective a) 
   refine AlternatingMap.map_eq_zero_of_not_injective _ _ fun h => ha fun i j hij => h ?_
   simp [hij]
 
-open Classical in
 
 theorem topCoeff_prod {m : ℕ} (x : Fin m → Fin n × Fin n) :
     GlobalTheory.GoodMetric.topCoeff (∏ j, X (x j) : MvPolynomial (Fin n × Fin n) ℂ) =

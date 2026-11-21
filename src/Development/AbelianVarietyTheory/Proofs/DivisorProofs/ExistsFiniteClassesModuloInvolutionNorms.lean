@@ -211,10 +211,6 @@ private theorem exists_unit_eq_of_forall_ord_eq_zero {K : Type} [Field K] [Numbe
   obtain ⟨z, hz⟩ := key
   exact ⟨z, by simpa [Units.smul_def, Algebra.smul_def] using hz⟩
 
-open NumberField IsDedekindDomain in
-open scoped Classical nonZeroDivisors in
-open NumberField IsDedekindDomain in
-open scoped TensorProduct Classical nonZeroDivisors in
 
 theorem _root_.GlobalTheory.FixNormField.fixed_classes_mod_norms : ∀ (K : Type) [Field K] [NumberField K]
     (τ : K ≃+* K), (∀ x, τ (τ x) = x) → ∀ S : Finset ℕ,

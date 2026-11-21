@@ -19,7 +19,6 @@ open scoped TensorProduct
 
 namespace GlobalTheory.KeyOriginBC
 
-set_option maxHeartbeats 800000 in
 
 theorem etale_bc : ∀ (T O : Type) [CommRing T] [IsDomain T] [IsLocalRing T] [CommRing O] [IsLocalRing O] [Algebra T O]
     [Algebra (Polynomial T) O] [IsScalarTower T (Polynomial T) O], GlobalTheory.LocAcyc.AbsIntClosed T →

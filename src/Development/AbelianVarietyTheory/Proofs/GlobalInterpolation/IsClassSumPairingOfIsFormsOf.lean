@@ -71,7 +71,6 @@ theorem rowCl_surjective : Function.Surjective (rowCl W Ch sel mu P) := by
 
 variable (hd : Disjoint Pr.vGs (QE sel (mu : Chr X.F X.E X.K)))
 
-include hd in
 
 theorem exists_step_smul (a : FormG (rowTy Ch sel mu P).inv) (p q : (stepX Ch sel mu P).D ())
     (h : a • toRow sel mu p.1.1 = toRow sel mu q.1.1) :
@@ -91,7 +90,6 @@ theorem rowCl_injective : Function.Injective (rowCl W Ch sel mu P) := by
 def clEquiv : (stepX Ch sel mu P).Cl ≃ (mtildeGSD W Ch sel mu P).Cl :=
   Equiv.ofBijective _ ⟨rowCl_injective W Ch sel mu P hd, rowCl_surjective W Ch sel mu P⟩
 
-include hd in
 
 theorem card_stab (c : (stepX Ch sel mu P).Cl) : Nat.card ((stepX Ch sel mu P).Stab c) =
     Nat.card (MulAction.stabilizer (mtildeGSD W Ch sel mu P).G (rowPt Ch sel mu P c)) := by
@@ -99,7 +97,6 @@ theorem card_stab (c : (stepX Ch sel mu P).Cl) : Nat.card ((stepX Ch sel mu P).S
   refine Nat.card_congr (Equiv.subtypeEquiv (Equiv.refl _) fun g => ?_)
   exact (trivPt X _ _ _ _).symm.injective.eq_iff.symm
 
-include hd in
 
 variable (hF : ((stepX Ch sel mu P).fam X.emb W.sgTrue).Ok)
 
@@ -155,7 +152,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 
 variable (hd : Disjoint Pr.vGs (QE sel (mu : Chr X.F X.E X.K))) (σ : X.K →+* ℂ)
 
-include hd in
 
 theorem row_law (z : (mtildeGSD W Ch sel mu P).EqFun) (g : (stepX Ch sel mu P).G ()) (d : (stepX Ch sel mu P).D ()) :
     MvPolynomial.map σ (z.1 (toRow sel mu (letI := (stepX Ch sel mu P).actD (); g • d : (stepX Ch sel mu P).D ()).1.1)).1 =

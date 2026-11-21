@@ -13,7 +13,6 @@ open MeasureTheory ValuativeRel Matrix Topology GlobalTheory.SplitWeil GlobalThe
 
 namespace GlobalTheory.CosetQuotInt
 
-open MeasureTheory ValuativeRel Matrix Topology in
 
 theorem _root_.GlobalTheory.CosetQuotInt.isQuotInt_cosetFn (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k)

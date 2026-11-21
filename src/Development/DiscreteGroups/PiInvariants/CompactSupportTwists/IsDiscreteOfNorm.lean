@@ -33,7 +33,6 @@ open PositivityTheory.Rg.BcB.F PositivityTheory.Rg.BcB.Desc
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-omit [IsCMField E] in
 
 theorem reg_of {π : CuspSub E n} (hreg : (CG.mk π).IsRegAlg) {τ : E →+* ℂ} {m : Multiset ℂ}
     (hm : HasInfCharGL π.V τ m) : ∃ lam : DomWeight n, m = infOfWeight lam := by

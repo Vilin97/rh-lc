@@ -169,7 +169,6 @@ instance isQuasicoherent_pair_obj [M.IsQuasicoherent] [N.IsQuasicoherent]
     (j : Discrete WalkingPair) : ((pair M N).obj j).IsQuasicoherent := by
   obtain ⟨_ | _⟩ := j <;> assumption
 
-open ZeroObject in
 
 instance isQuasicoherent_cokernel (φ : M ⟶ N) [M.IsQuasicoherent] [N.IsQuasicoherent] :
     (cokernel φ).IsQuasicoherent :=
@@ -346,7 +345,6 @@ end Cover
 
 section Subcategory
 
-variable (X) in
 
 abbrev qcoh : ObjectProperty X.Modules := fun M ↦ M.IsQuasicoherent
 
@@ -363,7 +361,6 @@ def kernelSectionsEquiv (φ : M ⟶ N) (U : X.Opens) :
   (LinearEquiv.ofInjective (appLinear (kernel.ι φ) U) (injective_kernel_ι_app φ U)).trans
     (LinearEquiv.ofEq _ _ (range_kernel_ι_app φ U))
 
-open DirectSum in
 
 theorem app_sum {ι : Type w} (t : Finset ι) (φ : ι → (M ⟶ N)) (U : X.Opens) (s : Γ(M, U)) :
     (∑ i ∈ t, φ i).app U s = ∑ i ∈ t, (φ i).app U s := by

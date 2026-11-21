@@ -118,7 +118,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 def ratM (P : HeightOneSpectrum (𝓞 E)) {a b : ℕ} (x : HomE E a b) : Matrix (Fin b) (Fin a) (P.adicCompletion E) :=
   (LinearMap.toMatrix' x).map (algebraMap E (P.adicCompletion E))
 
-variable (F) in
 
 def locM (P : HeightOneSpectrum (𝓞 E)) {n : ℕ} (g : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (P.adicCompletion E) :=
   (g : Matrix (Fin n) (Fin n) (AfE F E)).map (adAt F P)

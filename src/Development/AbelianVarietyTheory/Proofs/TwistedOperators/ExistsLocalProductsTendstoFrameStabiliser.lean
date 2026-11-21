@@ -28,7 +28,6 @@ theorem continuous_intFam : Continuous (intFam F) := by
   unfold intFam
   exact RestrictedProduct.isEmbedding_structureMap.continuous
 
-open Classical in
 
 def indA (s : Finset (HeightOneSpectrum (𝓞 F))) : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F :=
   intFam F fun v => if v ∈ s then 1 else 0

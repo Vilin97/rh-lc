@@ -118,7 +118,6 @@ end GlobalTheory.MixHt.DimBasic
 
 namespace GlobalTheory.MixHt
 
-open DimBasic in
 
 theorem hasDim_basic : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) (p : X ⟶ Sp k), IsAmb p →
     (∃ m : ℕ, ∀ x : X, ∃ d ≤ m, HasDim x d) ∧

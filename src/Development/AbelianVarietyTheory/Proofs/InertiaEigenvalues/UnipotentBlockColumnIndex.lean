@@ -24,7 +24,6 @@ def IsCoLat (Γ : AddSubgroup G) : Prop :=
 
 def Per (Γ : AddSubgroup G) (Φ : G → ℂ) : Prop := Continuous Φ ∧ ∀ γ ∈ Γ, ∀ x, Φ (γ + x) = Φ x
 
-open Classical in
 
 def avg (Γ : AddSubgroup G) (Φ : G → ℂ) : ℂ :=
   letI : MeasurableSpace G := borel G
@@ -137,7 +136,6 @@ section Fn
 
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
-omit [NumberField E] in
 
 theorem map_posU {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {ι : Type} [Fintype ι]
     {p : ι → Fin a × Fin a} (hp : IsNil p) (x : ι → R) :

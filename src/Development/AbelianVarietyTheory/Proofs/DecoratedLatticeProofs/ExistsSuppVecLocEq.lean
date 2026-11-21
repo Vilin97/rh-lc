@@ -26,7 +26,6 @@ namespace GlobalTheory.StMoves
 
 variable {D : D7}
 
-set_option maxHeartbeats 1600000 in
 
 theorem mem_latV_iff_latLoc (V : HSp D) (L : Lat V) (hL : L.FG) (v : Pl D) (y : Fin V.rank → AE D)
     (hy : ∀ i, y i ∈ idAt D (· = v)) :
@@ -55,7 +54,6 @@ theorem exists_supp_vecLoc_eq {n : ℕ} (v : Pl D) (z : Fin n → Fv D.host.F v 
   rw [hl2]
   exact congrFun (h2 w hw) i
 
-set_option maxHeartbeats 1600000 in
 
 theorem moves_iff_stabLoc (V : HSp D) (L : Lat V) (hL : L.FG) (v : Pl D) (g : GA D V) :
     Moves V g L L (· = v) ↔

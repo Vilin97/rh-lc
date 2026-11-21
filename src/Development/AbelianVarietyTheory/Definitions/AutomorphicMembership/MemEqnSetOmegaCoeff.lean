@@ -40,7 +40,6 @@ theorem val_cx (a : Y.Fn) (y : Y.pts σ) : val y (Y.cx σ a) = ratVal a y := by
     rw [val_cx_fnOf hU, ratVal_fnOf (mem_ptsIn_iff.2 hU)]
   · rw [val_of_not_regC (mt regC_cx_iff.1 h)]; rw [ratVal, dite_eq_right (show ¬ RegAt (under y) a from h)]
 
-variable (σ) in
 
 def eqnSet (Δ : Y.Dv) (g : Y.Fnˣ) : Set (Y.pts σ) := {y | Δ.IsEqn (base y) g}
 
@@ -138,7 +137,6 @@ theorem holoOn_fval (Δ : Y.Dv) (g : Y.Fnˣ) (f : Y.FnC σ) :
     (Y.an σ).HoloOn ({y | SecReg Δ f y} ∩ eqnSet σ Δ g) (fval g f) :=
   (holoOn_val _).mono fun _ hz => (secReg_iff hz.2).1 hz.1
 
-variable (Y σ) in
 
 structure Met (Δ : Y.Dv) where
 
@@ -156,15 +154,12 @@ def wt (g : Y.Fnˣ) (y : Y.pts σ) : ℝ := -Real.log (m.h g y)
 
 def posSet : Set (Y.pts σ) := {y | 0 < m.h (eqn Δ y) y}
 
-variable {m} in
 
 theorem mem_posSet_iff (hg : y ∈ eqnSet σ Δ g) : y ∈ m.posSet ↔ 0 < m.h g y := by
   have := tv_ne_zero (mem_eqnSet Δ y) hg
   rw [posSet, mem_setOf_eq, m.trans _ g y (mem_eqnSet Δ y) hg, mul_pos_iff_of_pos_left (by positivity)]
 
-variable {m} in
 
-variable {m} in
 
 theorem wt_trans (hy : y ∈ m.posSet) (hg : y ∈ eqnSet σ Δ g) (hg' : y ∈ eqnSet σ Δ g') :
     m.wt g' y = m.wt g y + Real.log (‖tv g g' y‖ ^ 2) := by
@@ -184,19 +179,16 @@ def ofCover : Met Y σ Δ where
   nonneg _ _ := mul_nonneg (sq_nonneg _) (hw _ _)
   trans g g' y hg hg' := by rw [← mul_assoc, ← mul_pow, ← norm_mul, tv_mul hg hg']
 
-include sub compat in
 
 theorem ofCover_h {i : ι} (hi : y ∈ S i) : (ofCover (Δ := Δ) S e cover w hw).h (e i) y = w i y :=
   (compat i _ y hi (cover y).choose_spec).symm
 
 end Cover
 
-variable {m} in
 
 def SmoothOn (m : Met Y σ Δ) (S : Set (Y.pts σ)) : Prop :=
   S ⊆ m.posSet ∧ ∀ g, (Y.an σ).SmoothOn (S ∩ eqnSet σ Δ g) (m.wt g)
 
-variable {m} in
 
 theorem smoothOn_of_cover {S : Set (Y.pts σ)} (hS : IsOpen S) (h0 : S ⊆ m.posSet) {ι : Type}
     {T : ι → Set (Y.pts σ)} (hT : ∀ i, IsOpen (T i)) (hc : ∀ y, ∃ i, y ∈ T i) {e : ι → Y.Fnˣ}
@@ -217,20 +209,16 @@ theorem cover_pair (Δ Δ' : Y.Dv) (y : Y.pts σ) :
     ∃ i : Y.Fnˣ × Y.Fnˣ, y ∈ eqnSet σ Δ i.1 ∩ eqnSet σ Δ' i.2 :=
   ⟨(_, _), mem_eqnSet Δ y, mem_eqnSet Δ' y⟩
 
-variable (Y σ Δ Δ') in
 
 def mAdd (m : Met Y σ Δ) (m' : Met Y σ Δ') : Met Y σ (Δ + Δ') :=
   ofCover _ (fun i => i.1 * i.2) (cover_pair Δ Δ') (fun i y => m.h i.1 y * m'.h i.2 y)
     fun _ _ => mul_nonneg (m.nonneg _ _) (m'.nonneg _ _)
 
-variable (Y σ Δ) in
 
 def mPow (k : ℕ) (m : Met Y σ Δ) : Met Y σ (k • Δ) :=
   ofCover _ (· ^ k) (fun y => ⟨_, mem_eqnSet Δ y⟩) (fun g y => m.h g y ^ k)
     fun _ _ => pow_nonneg (m.nonneg _ _) _
 
-open Classical in
-variable (Y σ Δ) in
 
 def fsMet {κ : Type} [Fintype κ] (e : κ → Y.FnC σ) : Met Y σ Δ where
   h g y := if ∀ k, SecReg Δ (e k) y then (∑ k, ‖fval g (e k) y‖ ^ 2)⁻¹ else 0
@@ -255,7 +243,6 @@ theorem tv_eq_gv (hp : Presents Δ L r) {i j : L.ι} (hi : y ∈ ptsIn Y.str σ 
 theorem ptsIn_subset_eqnSet (hp : Presents Δ L r) (i : L.ι) :
     ptsIn Y.str σ (L.U i) ⊆ eqnSet σ Δ (r i) := fun _ h => hp.isEqn i _ (mem_ptsIn_iff.1 h)
 
-variable (Y σ Δ L r) in
 
 def ofWeight (_ : Presents Δ L r) (φ : Weight Y.str σ L) : Met Y σ Δ :=
   ofCover (fun i => ptsIn Y.str σ (L.U i)) r (fun y => ⟨_, mem_pick φ.isLB y⟩)
@@ -308,12 +295,10 @@ theorem wt_fsMet {κ : Type} [Fintype κ] {e : κ → Y.FnC σ} (he : ∀ k, Sec
     (fsMet Y σ Δ e).wt g y = Real.log (∑ k, ‖fval g (e k) y‖ ^ 2) := by
   rw [wt, fsMet_h he, Real.log_inv, neg_neg]
 
-variable (Y σ Δ) in
 
 def pn (m : Met Y σ Δ) (f : Y.FnC σ) (y : Y.pts σ) : ℝ :=
   ‖fval (eqn Δ y) f y‖ ^ 2 * m.h (eqn Δ y) y
 
-variable (Y σ Δ) in
 
 def pnK (m : Met Y σ Δ) (f : Y.FnC σ) (y : Y.pts σ) : ℝ := pn Y σ Δ m f y
 
@@ -357,7 +342,6 @@ theorem pn_ofWeight {L : LB Y.X} {r : L.ι → Y.Fnˣ} (hp : Presents Δ L r) (�
       ‖fval (r i) f y‖ ^ 2 * Real.exp (-φ.φ i y) := by
   rw [pn_eq (ptsIn_subset_eqnSet hp i hi), ofWeight_h hp φ hi]
 
-variable (Y σ Δ) in
 
 def mSmooth (m : Met Y σ Δ) : Prop := m.SmoothOn univ
 
@@ -410,7 +394,6 @@ theorem mSmooth.isSmooth_toWeight (h : mSmooth Y σ Δ m) {L : LB Y.X} {r : L.ι
 def omegaCoeff (c : AlgChart Y.str σ Y.dim) : Y.Fnˣ :=
   frameRat (CanonLB.all Y.str Y.dim).bundle (baseChart _ _) (gen_mem_baseOpen _ _) ⟨c.U, _, c.isFrame⟩
 
-variable (Y σ) in
 
 def vol : Measure (Y.pts σ) :=
   (Y.an σ).topMeasure (CanonLB.all Y.str Y.dim) (Weight.ofFun fun _ => 0) fun a =>
@@ -423,7 +406,6 @@ def _root_.GlobalTheory.ProjVar.PosCurrent {D : ℕ} (O : Set (V D)) (u : V D �
 def chartDom (c : AlgChart Y.str σ Y.dim) (Δ : Y.Dv) (g : Y.Fnˣ) : Set (V Y.dim) :=
   c.e.target ∩ c.e.symm ⁻¹' eqnSet σ Δ g
 
-variable (Y σ Δ) in
 
 def mPsh (m : Met Y σ Δ) (ψ : Y.pts σ → ℝ) : Prop :=
   ∀ (c : AlgChart Y.str σ Y.dim) (g : Y.Fnˣ),
@@ -440,21 +422,17 @@ theorem mem_chartAt (y : Y.pts σ) : y ∈ (chartAt y).e.source :=
 
 variable {s : Fin Y.dim → Y.FnC σ} {c c' : AlgChart Y.str σ Y.dim}
 
-variable (Y σ Δ) in
 
 def redZero (s : Fin Y.dim → Y.FnC σ) (S : Set (Y.pts σ)) : Prop :=
   (∀ i y, SecReg Δ (s i) y) ∧ S = {y | ∀ i, SecZero Δ (s i) y} ∧
     ∀ y ∈ S, jac (chartAt y) (eqn Δ y) s y ≠ 0
 
-variable (Y σ Δ) in
 
 def regOn (G : Y.FnC σ) (S : Set (Y.pts σ)) : Prop := ∀ y ∈ S, SecReg (Y.KY + Δ) G y
 
-variable (Y σ Δ) in
 
 def agreeOn (G G' : Y.FnC σ) (S : Set (Y.pts σ)) : Prop := ∀ y ∈ S, SecZero (Y.KY + Δ) (G - G') y
 
-variable (Y σ Δ) in
 
 def resNorm (m : Met Y σ Δ) (Δ' : Y.Dv) (m' : Met Y σ Δ') (s : Fin Y.dim → Y.FnC σ) (G : Y.FnC σ)
     (y : Y.pts σ) : ℝ :=

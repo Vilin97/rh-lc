@@ -332,7 +332,6 @@ section Chart
 variable {O : Type} [CommRing O] {Ω : Type} [Field Ω] [Algebra O Ω] {K : Type} [Fintype K] {J : K → Type}
   (y : (Σ k, J k) → Ω) (s t : ∀ k, J k)
 
-variable (O) in
 
 abbrev ovl : Subalgebra O Ω := CR O y s ⊔ CR O y t
 

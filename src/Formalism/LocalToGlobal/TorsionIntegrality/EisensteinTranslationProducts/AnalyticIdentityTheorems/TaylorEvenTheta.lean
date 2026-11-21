@@ -18,7 +18,6 @@ namespace ThetaZeroTaylorLemmas
 open PowerSeries in
 lemma derivative_prim (f : PowerSeries ℂ) : derivative ℂ (B.prim f) = f := B.dz_prim f
 
-open PowerSeries in
 
 lemma sigS_add_const (Q : PowerSeries ℂ) (s : ℂ) :
     B.sigS (Q + C s) = -B.prim (B.prim Q) + -(C (s / 2) * X ^ 2) := by
@@ -88,7 +87,6 @@ lemma ode_v (L : PeriodPair) {t : ℂ} (ht : t ∉ L.lattice) (h2t : 2 * t ∈ L
 
 end ThetaZeroTaylorLemmas
 
-open ThetaZeroTaylorLemmas TaylorWp in
 
 theorem taylor_even_theta : TaylorTh0 := by
   intro L ω₀ hω ht

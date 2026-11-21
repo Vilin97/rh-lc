@@ -43,7 +43,6 @@ theorem exists_finset_weberIn (r : ℂ) (M : ℕ) (hM : M ≠ 0) : ∃ S : Finse
     exact ⟨hs _ (Set.mem_insert _ _), fun s hs' => hs _ (Set.mem_insert_of_mem _ ⟨_, (hL _).2 ⟨s, rfl⟩, hs', rfl⟩)⟩
   · exact ⟨∅, by simp, fun E _ _ _ H hH => absurd ⟨E, _, _, _, H, hH⟩ h⟩
 
-open Classical in
 
 def WeberLev (B : Base) (f : Fr B.toPre) (T : TwDat B) : Prop :=
   ∀ S : Finset (HeightOneSpectrum (𝓞 B.host.E)), (∀ Q ∈ S, ∃ χ ∈ T.set f, ¬ χ.UnrAt Q) →
@@ -51,7 +50,6 @@ def WeberLev (B : Base) (f : Fr B.toPre) (T : TwDat B) : Prop :=
       H.rt0 = B.host.φ₀ B.host.sqrtMinusD →
       WeberIn H B.LLC (B.host.g 0 * B.host.g 1 * ∏ q ∈ S.image (fun Q => Nat.card (kP Q)), q)
 
-open Classical in
 
 theorem lg_weberLev (K : Ctx) : large₂ K WeberLev := by
   have h : ∀ (P : Pre) (Ξ : Set (HChar P.host.E)), ∃ Z : Finset ℂ, (∀ z ∈ Z, IsAlgebraic ℚ z) ∧
@@ -84,7 +82,6 @@ theorem lg_weberLev (K : Ctx) : large₂ K WeberLev := by
   rintro Q ⟨χ, hχ, hr⟩
   exact Set.mem_biUnion (x := χ) hχ hr
 
-set_option maxHeartbeats 1000000 in
 
 theorem coverField_of_weberLev {B : Base} {f : Fr B.toPre} {T : TwDat B} (hW : WeberLev B f T) (w : ColW B f T) (Z : w.Lt)
     (hX : B.fields.Ok) (Wt : Set B.places.Pl) (z : R3.Dat (w.st Z) w.I hX T Wt) :

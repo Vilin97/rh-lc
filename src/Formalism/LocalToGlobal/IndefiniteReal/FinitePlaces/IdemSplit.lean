@@ -39,7 +39,6 @@ theorem idemAt_int {P : HeightOneSpectrum (𝓞 D.host.E)} {e : AE D} (he : Form
   have := not_not.1 (mt h.2 h1P)
   rwa [show ((1 : 𝓞 D.host.E) : D.host.E)⁻¹ = 1 by simp, map_one, mul_one] at this
 
-set_option maxHeartbeats 800000 in
 
 theorem decomp_AE (hadj : Algebra.adjoin D.host.F {D.host.sqrtMinusD} = ⊤) (z : AE D) :
     ∃ p q : AF D.host.F, z = algebraMap (AF D.host.F) (AE D) p +
@@ -58,7 +57,6 @@ theorem cA_alg (x : AF D.host.F) : cA D (algebraMap (AF D.host.F) (AE D) x) = al
   rw [Algebra.TensorProduct.map_tmul, map_one]
   rfl
 
-set_option maxHeartbeats 800000 in
 
 theorem fixed_AE (hadj : Algebra.adjoin D.host.F {D.host.sqrtMinusD} = ⊤) {z : AE D} (hz : cA D z = z) :
     ∃ r : AF D.host.F, z = algebraMap (AF D.host.F) (AE D) r := by
@@ -72,7 +70,6 @@ theorem fixed_AE (hadj : Algebra.adjoin D.host.F {D.host.sqrtMinusD} = ⊤) {z :
     linear_combination -hz
   rw [two_mul_eq_zero h0, add_zero]
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem adjoin_top_of (b : D.host.E) (t N : D.host.F)
     (ht : algebraMap D.host.F D.host.E t = b + star b) (hN : algebraMap D.host.F D.host.E N = b * star b)
@@ -97,7 +94,6 @@ theorem adjoin_top_of (b : D.host.E) (t N : D.host.F)
   rw [← IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic hbi.isAlgebraic, htop,
     IntermediateField.top_toSubalgebra]
 
-set_option maxHeartbeats 800000 in
 
 theorem approx_int (v : HeightOneSpectrum (𝓞 D.host.F)) (ι : D.host.E →ₐ[D.host.F] v.adicCompletion D.host.F)
     {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intAE D) :
@@ -158,7 +154,6 @@ theorem approx_int (v : HeightOneSpectrum (𝓞 D.host.F)) (ι : D.host.E →ₐ
         Valuation.map_neg]
       exact ha2
 
-set_option maxHeartbeats 1000000 in
 
 theorem idemAt_split {P : HeightOneSpectrum (𝓞 D.host.E)} {e : AE D} (he : Formalism.L2.NTheta.IsIdemAt e P) :
     ¬ Lev.IsConjPl (D := D) P P := by

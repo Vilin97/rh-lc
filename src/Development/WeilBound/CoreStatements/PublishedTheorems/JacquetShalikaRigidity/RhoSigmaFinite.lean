@@ -25,7 +25,6 @@ omit [IsTotallyComplex E] in
 theorem uu_eq_one {u : GA E k} {j : ℕ} (hj : k ≤ j) (hu : UU j u) : u = 1 :=
   Units.ext <| Matrix.ext fun i c => by rw [hu.2.2 i c (by omega), Units.val_one]
 
-variable (E k) in
 
 def rho : Measure (GA E k) := Measure.sum fun ξ : RowT E k k => Measure.dirac (ratGL E k (gam ξ))
 

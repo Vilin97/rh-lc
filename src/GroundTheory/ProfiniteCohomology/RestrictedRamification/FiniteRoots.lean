@@ -24,7 +24,6 @@ variable {F Ω : Type u} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [Is
 variable (S : Set (HeightOneSpectrum (𝓞 F))) (n : ℕ) [NeZero n]
   (hnS : ∀ v ∉ S, ((n : ℕ) : 𝓞 F) ∉ v.asIdeal)
 
-include hnS in
 
 theorem finite_cohomology_one_rootsOfUnity [Finite S] :
     Finite (cohomology (galRootsOfUnity.{u} F (maxUnramifiedOutside F Ω S) n) 1) := by
@@ -47,7 +46,6 @@ theorem finite_cohomology_one_rootsOfUnity [Finite S] :
     simp only at h
     exact Subtype.ext (Subtype.mk.inj h)
 
-include hnS in
 
 theorem finite_cohomology_two_rootsOfUnity_of_finite
     (hfin : {y : cohomology (galSUnits S (maxUnramifiedOutside F Ω S)) 2 | n • y = 0}.Finite) :

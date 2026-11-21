@@ -49,8 +49,6 @@ section Steps
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {X : Scheme.{0}}
   {t : SAB H X} {F : Type} [Field F] [NumberField F] {Y : Var F}
 
-variable (t) in
-open Classical in
 
 def mixLog (ρ : Y.X ⟶ X) {m : ℕ}
     (f : ∀ y : Y.X, Fin m → (Sp (DualNumber (Y.X.presheaf.stalk y)) ⟶ t.G.left)) (b : ℕ → Bool) (i : Fin m) : PtFn Y :=
@@ -80,14 +78,9 @@ omit [NumberField F] in
 theorem fr_spec (y : C.Y.X) : (fr C y).Tri (algebraMap (C.Y.X.presheaf.stalk y) C.Y.X.functionField) C.f0 (dg C y) ∧
     ∀ τ i, (C.gr τ i).IsEqn y (dg C y τ i) := (C.gr_spec y).choose_spec.choose_spec.choose_spec
 
-omit [NumberField F] in
 
-attribute [local instance] Over.cartesianMonoidalCategory in
-omit [NumberField F] in
 
-omit [NumberField F] in
 
-open Classical in
 
 def symLog (b : ℕ → Bool) (st : ((E →+* ℂ) × ℕ) ⊕ ℕ) : PtFn C.Y := fun v ε y =>
   if hp : (resP v).Prime then
@@ -98,7 +91,6 @@ def symLog (b : ℕ → Bool) (st : ((E →+* ℂ) × ℕ) ⊕ ℕ) : PtFn C.Y :
         (fun τ i => spMap (dualMap ψ) ≫ (C.gr_spec (below y.1)).choose_spec.choose.v τ i) (resP v) (b (resP v)) st
   else 0
 
-open Classical in
 
 def lgCopy (w : Sym E →₀ ℤ) (v : HeightOneSpectrum (𝓞 F)) (ε : Ext v) (y : AlgPt C.Y) : ℝ :=
   if hp : (resP v).Prime then
@@ -132,7 +124,6 @@ theorem lgCopy_eq (w : Sym E →₀ ℤ) (v : HeightOneSpectrum (𝓞 F)) (ε : 
   refine congrArg _ (congrArg _ ?_)
   rfl
 
-omit [NumberField F] in
 
 end Flags
 

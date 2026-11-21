@@ -55,7 +55,6 @@ namespace WeierstrassCurve
 
 variable {R : Type u} [CommRing R] (W : WeierstrassCurve R)
 
-open Polynomial in
 
 instance free_coordinateRing : Module.Free R W.toAffine.CoordinateRing :=
   have : Module.Free R[X] W.toAffine.CoordinateRing :=
@@ -219,7 +218,6 @@ theorem jacobian_dehomPresentation : (dehomPresentation W hij).jacobian =
   rw [h₁, h₂, mul_one, zero_mul, sub_zero, h, Algebra.Generators.algebraMap_apply]
   exact eval₂_dehomCoord W i _
 
-include hij in
 
 theorem isStandardSmoothOfRelativeDimension_away_pderiv (T : Type*) [CommRing T]
     [Algebra (DehomRing W i) T] [Algebra R T] [IsScalarTower R (DehomRing W i) T]

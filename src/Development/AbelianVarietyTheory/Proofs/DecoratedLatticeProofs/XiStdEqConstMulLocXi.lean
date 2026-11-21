@@ -129,7 +129,6 @@ theorem lift_near_of_lift {ST SG Q Q' : Finset (HeightOneSpectrum (𝓞 E))} {k 
   rw [← key]
   exact near_right _ i2 (near_left _ i1 (fun i j => by rw [key]; exact hg1 i j) h2) h3 i j
 
-omit [StarRing E] in
 
 theorem intAt_sub_of_near {P : HeightOneSpectrum (𝓞 E)} {q : E} (hq : P.valuation E q = WithZero.exp (-1 : ℤ))
     {f : Sp E n ≃ₗ[E] Sp E n} (hf : ∀ i j : Fin n, P.valuation E (f (Pi.single j 1) i - if i.val = j.val then 1 else 0) < 1)
@@ -159,7 +158,6 @@ theorem isLiftFr_base [NeZero n] {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
     IsLiftFr (DecoF.base (E := E) (n := n) (ST := ST) (SG := SG) (Q := Q)).deco.1 w 1 :=
   ⟨fun _ => Iff.rfl, fun x hx => if_pos hx⟩
 
-omit [StarRing E] in
 
 theorem sumE_near {N : ℕ} (hN : N = n + 1) {P : HeightOneSpectrum (𝓞 E)} {t : Eˣ} (ht : P.valuation E ((t : E) - 1) < 1) (i j : Fin N) :
     P.valuation E (sumE hN (1 : Sp E n ≃ₗ[E] Sp E n) t (Pi.single j 1) i - if i.val = j.val then 1 else 0) < 1 := by
@@ -202,7 +200,6 @@ theorem prV_eq_zero {D : D7} {Q : GlobalTheory.FinPl.Pl D → Prop} {x : AE D} (
   refine (prV_comm v (finPart D x)).trans ?_
   rw [show GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.compFin D v (finPart D x) = 0 from h, RingHom.map_zero]
 
-set_option maxHeartbeats 1000000 in
 
 theorem finM_map_prV {D : D7} (S : HSp D) {n : ℕ} (hn : S.rank = n) {Q : GlobalTheory.FinPl.Pl D → Prop} {h : GA D S}
     (hh : h ∈ GlobalTheory.FinPl.grpAt S Q) {v : GlobalTheory.FinPl.Pl D} (hv : ¬ Q v) : (finM S hn h).map (Formalism.UG.prV (E := D.host.E) v) = 1 := by
@@ -278,11 +275,8 @@ variable {L : SizeData₂ (I.rec7 l Z)}
   {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts}
   {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} {W : RealPack ex} {u : B.Word}
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.Fam.TopFrames
 end World

@@ -98,7 +98,6 @@ theorem exists_mem_glLatCong {u : kˣ} (hu : valuation k (u : k) < 1) {M : Matri
   rw [hv, add_sub_cancel_left]
   exact hM
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem vecMul_diagGL_mem (a b c : D → kˣ) (h : ∀ j, b j = a j * c j) (x : D → k) :
     x ᵥ* (diagGL c).val ∈ diagLat b ↔ x ∈ diagLat a := by

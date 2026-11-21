@@ -79,15 +79,11 @@ variable {S S₁ S₂ : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] {P 
   {G₂ : Over S₂} [GrpObj G₂] [IsCommMonObj G₂] {F₂ : G₂.left ⟶ G.left} {h₂ : F₂ ≫ G.hom = G₂.hom ≫ f₂}
   [ConnectedSpace S₁] {L₁ : Level P X f₁ G₁ F₁ h₁} {L₂ : Level P X f₂ G₂ F₂ h₂} {t : S₁ ⟶ S₂} {m : G₁.left ⟶ G₂.left}
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
 variable {B : Over S} [GrpObj B] [IsCommMonObj B] {M : CP B}
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
 end Levels
 

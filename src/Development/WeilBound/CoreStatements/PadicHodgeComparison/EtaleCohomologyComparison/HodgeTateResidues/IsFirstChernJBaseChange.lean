@@ -162,7 +162,6 @@ theorem cocJ_cls (Lf Lf' : B.CLift G D) (hz hz') : (cx _).cls (cocJ c N Lf) hz =
 
 end
 
-variable (D) in
 
 def IsFirstChernClassDividedPower (x : H (B.pdS ((B.schFn q).cr b ht κ) c 1).fn 2) : Prop :=
   ∀ (C : Type 1) [Category.{0} C] (G : C ⥤ Thick ((B.schFn q).cr b ht κ)) (Lf : B.CLift G D),

@@ -123,7 +123,6 @@ theorem contDiff_integral (v : VolM D m n) {K : Mx D m n → E → ℂ} (h : Loc
 
 end Int
 
-open GlobalTheory.DualPairCompare in
 
 theorem locSm_theta {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D}
     {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (M : E →+ WO S T) (hM : Continuous M)

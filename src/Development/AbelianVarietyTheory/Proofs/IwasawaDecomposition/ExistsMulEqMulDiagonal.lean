@@ -10,8 +10,6 @@ namespace GlobalTheory.SmithBetween
 
 open Matrix
 
-open IsDedekindDomain NumberField in
-open Matrix in
 
 theorem _root_.GlobalTheory.SmithBetween.exists_mul_eq_mul_diagonal {R : Type} [CommRing R] [IsDomain R] [IsPrincipalIdealRing R]
     {n : Type} [Fintype n] [DecidableEq n] (M : Matrix n n R) (hM : M.det ≠ 0) :

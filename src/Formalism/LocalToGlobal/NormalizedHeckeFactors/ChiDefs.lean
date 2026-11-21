@@ -29,7 +29,6 @@ instance : Inv (HC E) where
 instance : One (HC E) where
   one := ⟨1, continuous_const, fun _ => rfl⟩
 
-open scoped Classical in
 
 def locM (P : HeightOneSpectrum (𝓞 E)) : P.adicCompletion E →* AdeleRing (𝓞 E) E where
   toFun x := ((1 : InfiniteAdeleRing E),
@@ -75,7 +74,6 @@ theorem HC.At.unique {χ : HC E} {P : HeightOneSpectrum (𝓞 E)} {a b : ℂ} (h
   obtain ⟨ϖ, hϖ⟩ := exists_unif P
   rw [← ha.2 ϖ hϖ, ← hb.2 ϖ hϖ]
 
-open scoped Classical in
 
 def locInf (v : InfinitePlace E) : v.Completion →* AdeleRing (𝓞 E) E where
   toFun x := ((Pi.mulSingle v x : InfiniteAdeleRing E), (1 : FiniteAdeleRing (𝓞 E) E))
@@ -113,7 +111,6 @@ abbrev ReadC {A : Type} [CommRing A] (pl : HeightOneSpectrum (𝓞 E) → Valuat
     (rd : A →+* ℂ) (χ : HC E) (w : ℤ) : Prop :=
   Read pl φ rd (RingHom.id ℂ) (RingHom.id ℂ) χ w
 
-variable (E Ω) in
 
 theorem normV_ne_zero (P : HeightOneSpectrum (𝓞 E)) : normV P ≠ 0 := by
   have h : normV P = Ideal.absNorm P.asIdeal := by

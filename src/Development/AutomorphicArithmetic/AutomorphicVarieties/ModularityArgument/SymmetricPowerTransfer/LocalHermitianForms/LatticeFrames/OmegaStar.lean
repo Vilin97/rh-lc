@@ -13,7 +13,6 @@ open QuadraticAlgebra
 
 variable {O K : Type} [CommRing O] [Field K] [Algebra O K] {Δ τ : K}
 
-variable (Δ) in
 
 def mkL (σ : K) : (K × Etau K τ) × (K × Etau K τ) →ₗ[K] Sp Δ τ where
   toFun p := (⟨p.1.1, σ * p.2.1⟩, ⟨⟨p.1.2.re, σ * p.2.2.re⟩, ⟨p.1.2.im, σ * p.2.2.im⟩⟩)
@@ -45,7 +44,6 @@ theorem mul_mkL (σ : K) (u : Etau K τ) (v w : K × Etau K τ) :
     (((mkL Δ σ (v, w)).1, ofE Δ u * (mkL Δ σ (v, w)).2) : Sp Δ τ) = mkL Δ σ (Mu u v, Mu u w) := by
   ext <;> simp [mkL_apply, Mu, ofE] <;> ring
 
-variable (Δ) in
 
 def up (σ : K) (S : Set (K × Etau K τ)) : Set (Sp Δ τ) := {x | ∃ v ∈ S, ∃ w ∈ S, x = mkL Δ σ (v, w)}
 

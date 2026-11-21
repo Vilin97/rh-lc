@@ -15,7 +15,6 @@ def act (g : G) : Rˣ →* Rˣ := Units.map (MulSemiringAction.toRingHom G R g :
 
 theorem act_val (g : G) (u : Rˣ) : ((act g u : Rˣ) : R) = g • (u : R) := rfl
 
-variable (G) in
 
 def normU : Rˣ →* Rˣ := ∏ g : G, act g
 

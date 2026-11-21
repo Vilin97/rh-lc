@@ -49,13 +49,10 @@ variable {ι : W →ₗ[R] W'}
 
 variable (hι : IsBaseChange R' ι)
 
-include hι in
 
 variable {ϖ : R} {ϖ' : R'} {u : R'ˣ} {e : ℕ}
 
-include hι in
 
-include hι in
 
 end BaseChange
 
@@ -74,7 +71,6 @@ variable {O Ok O' Fm : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing 
   [IsDiscreteValuationRing O'] [Algebra O Ok] [Algebra Ok O'] [Algebra O O'] [IsScalarTower O Ok O']
   [AddCommGroup Fm] [Module O Fm]
 
-variable (O Ok O' Fm) in
 
 end Transfer
 
@@ -251,7 +247,6 @@ theorem baseChange_mono' (O' : Type) [CommRing O'] [Algebra O O'] {P V : Submodu
   rintro _ ⟨x, hx, rfl⟩
   exact Submodule.tmul_mem_baseChange_of_mem 1 (h hx)
 
-omit [IsDomain O] [Module (FractionRing O) W] [IsScalarTower O (FractionRing O) W] in
 
 omit [Module (FractionRing O) W] [IsScalarTower O (FractionRing O) W] in
 theorem isLatIn_baseChange (O' : Type) [CommRing O'] [IsDomain O'] [Algebra O O']
@@ -269,29 +264,20 @@ theorem isLatIn_baseChange (O' : Type) [CommRing O'] [IsDomain O'] [Algebra O O'
     rw [TensorProduct.mk_apply, algebraMap_smul, ← TensorProduct.tmul_smul]
     exact Submodule.tmul_mem_baseChange_of_mem 1 hcv
 
-omit [IsDomain O] [Module (FractionRing O) W] [IsScalarTower O (FractionRing O) W] in
 
 variable {Ok O' : Type} [CommRing Ok] [CommRing O'] [Algebra O Ok] [Algebra O O'] [Algebra Ok O']
   [IsScalarTower O Ok O']
 
-variable (O W Ok O') in
 
 abbrev rho : Ok ⊗[O] W →ₗ[O] O' ⊗[O] W :=
   LinearMap.rTensor W (IsScalarTower.toAlgHom O Ok O').toLinearMap
 
-omit [IsDomain O] [Module (FractionRing O) W] [IsScalarTower O (FractionRing O) W] in
 
-variable (O') in
 
-omit [IsDomain O] [Module (FractionRing O) W] [IsScalarTower O (FractionRing O) W] in
 
-omit [IsDomain O] [Module (FractionRing O) W] [IsScalarTower O (FractionRing O) W] in
 
-omit [IsDomain O] [Module (FractionRing O) W] [IsScalarTower O (FractionRing O) W] in
 
-omit [IsDomain O] [Module (FractionRing O) W] [IsScalarTower O (FractionRing O) W] in
 
-omit [IsDomain O] [Module (FractionRing O) W] [IsScalarTower O (FractionRing O) W] in
 
 end BC
 

@@ -11,7 +11,6 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace GlobalTheory.HeckeAverage
 
-open Classical in
 
 theorem finsum_translate_eq {G : Type} [Group G] (J J' : Subgroup G) (h : G)
     (hconj : ∀ κ ∈ J', h⁻¹ * κ * h ∈ J)

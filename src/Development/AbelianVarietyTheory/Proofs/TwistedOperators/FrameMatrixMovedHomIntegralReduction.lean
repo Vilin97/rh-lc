@@ -17,7 +17,6 @@ section General
 
 variable {R k : Type} [CommRing R] [CommRing k] {b a : ℕ}
 
-open Classical in
 
 theorem int_mul (O : Subring R) (ρ : O →+* k) (z : Matrix (Fin b) (Fin b) O) (y : Matrix (Fin a) (Fin a) O)
     (N : Matrix (Fin b) (Fin a) R) (h : ∀ i j, N i j ∈ O) :

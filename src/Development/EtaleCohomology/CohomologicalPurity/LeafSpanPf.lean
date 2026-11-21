@@ -78,7 +78,6 @@ theorem annih {A M : Type} [CommRing A] [AddCommGroup M] [Module A M] [Module.Fi
       ← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero] at this
     exact this
 
-open KaehlerDifferential in
 
 theorem key {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (I : Ideal A) {e d : ℕ}
     (x : Fin d → A) (y : Fin e → A) (f : A) (hx : ∀ j, x j ∈ I)

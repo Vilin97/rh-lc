@@ -50,7 +50,6 @@ theorem continuous_shiftOf : Continuous (shiftOf : (κ → AF F) → Vi F κ × 
     continuous_toMixed.comp (continuous_fst.comp (continuous_apply i)))).prodMk
     (continuous_pi fun i => continuous_snd.comp (continuous_apply i))
 
-variable (F κ) in
 
 def glueE : (Vi F κ × Vf F κ) ≃ₜ+ (κ → AF F) where
   toFun := glue
@@ -77,7 +76,6 @@ theorem lDiag_eq (μ : @Measure (κ → AF F) (borel _)) (hμ : @Measure.IsAddHa
   rw [integral_smul_nnreal_measure]
   rfl
 
-variable (F κ) in
 
 def diagL : ((κ → F) × (κ → F)) →ₗ[F] ((κ ⊕ κ → F) × (κ ⊕ κ → F)) where
   toFun p := (Sum.elim p.1 p.1, Sum.elim p.2 (-p.2))

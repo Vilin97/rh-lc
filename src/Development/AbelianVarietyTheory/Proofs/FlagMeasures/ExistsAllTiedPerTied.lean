@@ -125,7 +125,6 @@ structure Frame (A B : HSp D) (ι : A.V →ₗ[D.host.E] B.V) {ρ : ℕ} (e : Ma
   unit : IsUnitN B e ν 𝓝
   emb : ∀ h, EmbRel B A ι (s h) h
 
-open Classical in
 
 section
 

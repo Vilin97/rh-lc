@@ -231,7 +231,6 @@ variable {Λ : AddSubgroup (WO S T)} {b : AE D} {α k₁ k₂ : GA D T} {Δ : Fi
 theorem act_inj (h : GA D T) : Function.Injective (actO S T 1 h) :=
   Function.LeftInverse.injective (g := actO S T 1 h⁻¹) fun u => by rw [← act_mul, inv_mul_cancel, act_one]
 
-open Classical in
 
 theorem IsHalfReps.move (h₁ : ∀ u, u ∈ Λ ↔ actO S T 1 k₁ u ∈ Λ) (h₂ : ∀ u, u ∈ Λ ↔ actO S T 1 k₂ u ∈ Λ)
     (h : IsHalfReps Λ b α Δ) : IsHalfReps Λ b (k₁ * α * k₂) (Δ.image (actO S T 1 k₁)) := by

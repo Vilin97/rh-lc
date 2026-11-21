@@ -137,7 +137,6 @@ def SideF : Prop :=
       (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (aF : TI F n), AmpFn μ νF aF → ∀ (L : Loc σ n q w₀) (ν : Fin n → ℤ),
       ∃ 𝔣 : Side (Twist.id μ) (Module.finrank F E), IsSideF L νF aF ν 𝔣
 
-open Classical in
 
 def LocAll : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F] [IsTotallyComplex E] (σ : E ≃ₐ[F] E),

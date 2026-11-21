@@ -78,15 +78,10 @@ theorem exists_wPart (j : ℕ) : ∃ g : StdUnn.G D n, StdUnn.mat g = wMat (AE D
     rw [ha]
     exact wMat_key _ e1
 
-variable (D n) in
 
-variable (D n) in
 
-variable (D n) in
 
-variable (D n) in
 
-variable (D n) in
 
 end GlobalTheory.SiegelCells
 

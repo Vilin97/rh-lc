@@ -21,7 +21,6 @@ theorem sig_invol (hcm : HeckeCharacterZeroLocus.SiegelWeilU.IsCMExt F E σ) (x 
   apply φ.injective
   rw [hcm.2.2.2, hcm.2.2.2, star_star]
 
-omit [NumberField F] [NumberField E] in
 
 theorem conj_form {ι κ : Type} [Fintype ι] [Fintype κ] (hσ : ∀ x, σ (σ x) = x) (M : Matrix κ κ E) (b : Matrix κ ι E)
     (s : E) (hM : ∀ k l, σ (M l k) = s * M k l) (i j : ι) :

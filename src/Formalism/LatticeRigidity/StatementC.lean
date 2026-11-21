@@ -24,7 +24,6 @@ def RecursionUnrestricted : Prop :=
 noncomputable def chebPt (α β : ℝ) (n : ℕ) (j : Fin (n+1)) : ℝ :=
   (α + β) / 2 + (β - α) / 2 * Real.cos (π * (j : ℕ) / n)
 
-open NumberField in
 
 def BoxSum : Prop :=
   ∃ C : ℝ, ∀ (E : Type) [Field E] [NumberField E] [NumberField.IsTotallyComplex E]

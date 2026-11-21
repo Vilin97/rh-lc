@@ -65,7 +65,6 @@ variable {D : D7} {u : D.what₂.Word} {w : D.what₂.places.Pl} {hg : GIdx D.ho
   {C : ColumnChain D.R D.what₂.Tau (D.hcW u)} {A : ColumnsAtT D.R C} {P : PeriodMap D.R C}
   {M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.what₂.Tau (D.hcW u) C A P} {i : ℕ} {hi : i + 1 ≤ D.R.m}
 
-set_option maxHeartbeats 4000000 in
 
 def kap (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) (p : ℕ) :
     awayG D.sp.cm.sig (D.sp.X (i + 1)).gram (ulocOf Fo β) p →* (Fo.K β).lev.U :=
@@ -105,7 +104,6 @@ theorem kap_off (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) (p : ℕ) (a : awayG D.
   rw [bc_glue_zero _ _ _ (epsP_off D.host.F p D.host.E v hv)]
   rfl
 
-set_option maxHeartbeats 4000000 in
 
 theorem chi_kap (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) (p : ℕ) (a : awayG D.sp.cm.sig (D.sp.X (i + 1)).gram (ulocOf Fo β) p)
     (κ : (Fo.K β).lev.U)
@@ -121,7 +119,6 @@ theorem chi_kap (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) (p : ℕ) (a : awayG D.
     · rw [hκo v hv, kap_off Fo β p a v hv, mul_inv_cancel]
   rwa [map_mul, map_inv, mul_inv_eq_one] at h1
 
-set_option maxHeartbeats 4000000 in
 
 theorem psiEx_of (Fo : FormsIn M (i + 1) hi) (e : D.what₂.LL →+* (D.gat u w hg).Kf)
     (hfr : IsFractionRing (D.gat u w hg).O (D.gat u w hg).Kf)
@@ -160,7 +157,6 @@ theorem finite_glk (v : HeightOneSpectrum (𝓞 F)) : Finite (GL (Fin n) (kv F v
   have : Finite (Matrix (Fin n) (Fin n) (kv F v)) := inferInstanceAs (Finite (Fin n → Fin n → kv F v))
   exact Finite.of_injective (fun u : GL (Fin n) (kv F v) => (u : Matrix (Fin n) (Fin n) (kv F v))) (fun _ _ h => Units.ext h)
 
-open Classical in
 
 theorem chi_fin_of_glevH {S : StepLevel F E σ J T f bad} {G : GLoc F E σ gp}
     {H : ∀ (a : Fin 2) (v : HeightOneSpectrum (𝓞 F)), (gp a : 𝓞 F) ∈ v.asIdeal → Subgroup (GL (Fin n) (kv F v))}
@@ -210,7 +206,6 @@ theorem chi_fin_top (F : FormsTiedSym D u Ch chOf) (j : ℕ) (hj : j ≤ D.R.m) 
   subst h
   exact chi_fin_of_glevH F.glevM fun a => (D.host.g_prime a).ne_zero
 
-set_option maxHeartbeats 2000000 in
 
 theorem finMem_of (F : FormsTiedSym D u Ch chOf) (dt : MemDt F) (i : ℕ) (hi : i + 1 ≤ D.R.m) :
     ∀ β, ∃ m : ℕ, 0 < m ∧ ∀ κ, ((formsInMem F dt i hi).K β).lev.chi κ ^ m = 1 := by
@@ -246,7 +241,6 @@ end Gen
 
 variable {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.Port
 

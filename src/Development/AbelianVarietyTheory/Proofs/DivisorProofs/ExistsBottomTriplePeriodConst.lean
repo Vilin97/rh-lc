@@ -32,4 +32,3 @@ theorem conj_finsum {α : Type*} (f : α → ℂ) : starRingEnd ℂ (∑ᶠ a, f
 
 end GlobalTheory.BotFormula
 
-set_option maxHeartbeats 4000000 in

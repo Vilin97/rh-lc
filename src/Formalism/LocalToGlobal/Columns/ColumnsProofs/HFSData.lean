@@ -171,7 +171,6 @@ theorem lambdaAtPrime_characterMap {F E : Type} [Field F] [NumberField F] [Field
 
 end LevChars
 
-open Classical in
 
 section Ext
 
@@ -188,9 +187,7 @@ variable {X L ι}
 
 variable {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m)
 
-set_option maxHeartbeats 800000 in
 
-set_option maxHeartbeats 800000 in
 
 variable (R) in
 theorem rowTyQ_coefMap {S : Set ℕ} (μ : Tup X.F X.E X.K S) (Q : Finset (HeightOneSpectrum (𝓞 X.E))) (P : Q) :
@@ -213,9 +210,7 @@ theorem mtTyQ_coefMap {S : Set ℕ} (μ : Tup X.F X.E X.K S) (Q : Finset (Height
 
 variable (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ}
 
-set_option maxHeartbeats 800000 in
 
-set_option maxHeartbeats 800000 in
 
 end Ext
 

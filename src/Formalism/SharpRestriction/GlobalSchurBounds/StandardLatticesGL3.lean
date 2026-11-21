@@ -317,7 +317,6 @@ def useBar (D : D7) : Prop :=
               normSq D (torConj D (tor0 D cc δ) M ρ) (La D (torConj D (tor0 D cc δ) M ρ) L L')
                 (U D (torConj D (tor0 D cc δ) M ρ) x G)))
 
-open TensorProduct in
 
 abbrev AE (D : D7) : Type := D.host.E ⊗[ℚ] IsDedekindDomain.FiniteAdeleRing (𝓞 ℚ) ℚ
 

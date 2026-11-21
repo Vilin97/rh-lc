@@ -19,7 +19,6 @@ theorem FrobField.funEqSetting_sq [CompleteSpace K] (h : FrobField K l σ) :
     FunctionalEquationSetting K l (l ^ 2) (σ.comp σ) :=
   ⟨h.prime, ⟨2, two_pos, rfl⟩, h.norm_l, fun a ha => h.norm_sq_sub_pow_le a ha⟩
 
-omit [IsUltrametricDist K] [CharZero K] in
 
 theorem ltLog_sub_eq_X (hl : 2 ≤ l) (τ : K →+* K) :
     ltLog K l - (l : K)⁻¹ • (PowerSeries.map τ (ltLog K l)).subst ((X : PowerSeries K) ^ (l ^ 2))
@@ -88,7 +87,6 @@ theorem ltLog_type (hl : 2 ≤ l) (τ : K →+* K) : IsFunEqType l (l ^ 2) τ (l
   rw [ltLog_sub_eq_X hl τ]
   exact integralPS_X
 
-omit [IsUltrametricDist K] [CharZero K] in
 
 theorem isFunEqType_of_mv {p q : ℕ} (hq : q ≠ 0) (τ : K →+* K) (f : PowerSeries K)
     (h : IsFunEqTypeMv (ι := Unit) p q hq τ f) : IsFunEqType p q τ f := by

@@ -14,7 +14,6 @@ namespace GlobalTheory.ClassFin.ReynoldsLtr
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι]
 
-omit [DecidableEq ι] in
 
 theorem evC_ltr (g y : Matrix ι ι ℂ) (f : MvPolynomial (ι × ι) ℂ) :
     evC (ltr g f) y = evC f (g * y) := by
@@ -28,7 +27,6 @@ theorem evC_ltr (g y : Matrix ι ι ℂ) (f : MvPolynomial (ι × ι) ℂ) :
     rw [hp]
     simp [ltr, Matrix.mul_apply]
 
-omit [DecidableEq ι] in
 
 theorem isInv_iff (Γ : Set (Matrix ι ι ℂ)) (f : MvPolynomial (ι × ι) ℂ) :
     IsInv Γ f ↔ ∀ g ∈ Γ, ltr g f = f := by

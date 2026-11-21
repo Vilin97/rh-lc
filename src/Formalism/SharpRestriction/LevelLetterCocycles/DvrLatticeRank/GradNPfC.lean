@@ -134,7 +134,6 @@ theorem gradNPf_sub_one (lO x : O) (hl : v (ι lO) = 1) (hx : v (ι x - 1) = 1) 
   rw [_root_.map_sub, _root_.map_one, _root_.map_mul, ht, mul_comm (ι lO), mul_assoc,
     inv_mul_cancel₀ hne, mul_one]
 
-include hι hR in
 
 theorem gradNPf_lte (l : ℕ) [hp : Fact l.Prime] (hl2 : l ≠ 2) (hl : v (l : L) = 1)
     (x t : O) (ht : IsUnit t) (hxt : x - 1 = (l : O) * t) :
@@ -226,7 +225,6 @@ theorem gradNPf_sum_val (l : ℕ) [hp : Fact l.Prime] (N : ℕ) :
       (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero N) (Nat.factorial_ne_zero N)]
     ring
 
-include hι hR in
 
 theorem gradNPf_prod (l : ℕ) [hp : Fact l.Prime] (hl2 : l ≠ 2) (hl : v (l : L) = 1)
     (x t : O) (ht : IsUnit t) (hxt : x - 1 = (l : O) * t) (s : ℕ) (hs : s ≠ 0) (hsl : ¬ l ∣ s)

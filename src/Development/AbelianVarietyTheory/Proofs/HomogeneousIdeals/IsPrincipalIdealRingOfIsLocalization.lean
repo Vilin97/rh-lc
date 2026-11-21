@@ -133,7 +133,6 @@ theorem two_le_ringKrullDim : 2 ≤ ringKrullDim O⟦X⟧ := by
   have h := ringKrullDim_succ_le_ringKrullDim_powerseries (R := O)
   rwa [IsDiscreteValuationRing.ringKrullDim_eq_one, one_add_one_eq_two] at h
 
-variable (O) in
 
 theorem ringKrullDim_eq_two : ringKrullDim O⟦X⟧ = 2 :=
   le_antisymm ((ringKrullDim_le_spanFinrank_maximalIdeal _).trans

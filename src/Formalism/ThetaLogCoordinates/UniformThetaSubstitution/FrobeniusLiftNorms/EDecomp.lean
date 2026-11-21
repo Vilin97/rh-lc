@@ -502,7 +502,6 @@ end Rest
 
 end EDec
 
-open EDec in
 
 theorem decomposition_of_hh : HhDecomp := by
   intro K _ _ p ν r0 r1 E D _ u TT ξ hp h2 hn hu hξ hD

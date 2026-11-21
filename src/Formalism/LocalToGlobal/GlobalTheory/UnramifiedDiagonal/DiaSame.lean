@@ -61,7 +61,6 @@ def DnDiaSame0F (T : Forms0 D u) : Prop :=
       (∀ x, IsDnMvF T v c x.1 (Mv x)) ∧ (∀ x, IsDnMvF T v _ x.1 (Mv2 x)) ∧
       ∀ x, (Mv2 (σ x)).1⁻¹ * κd.1 * (δ.1⁻¹ * (Mv x).1 * δ.1) ∈ T.cls0.lev.U
 
-set_option maxHeartbeats 4000000 in
 
 theorem diaU_same (T : Forms0 D u) (hM : UpDiaSame0F T) (v : (D.mem u).A.vT)
     (a : ((D.mem u).A.Fv v)ˣ) (φ : Fn D u 0) (hφ : φ ∈ (D.fm u).Fi 0) :
@@ -132,7 +131,6 @@ theorem diaU_same (T : Forms0 D u) (hM : UpDiaSame0F T) (v : (D.mem u).A.vT)
   rw [S0.adelic_value_translate T.cls0.lev (embT D) (fun τ x => S0.embedding_conj_compat D τ x) hgA γd hγd _ _
     m hx2, hχ]
 
-set_option maxHeartbeats 4000000 in
 
 theorem diaD_same (T : Forms0 D u) (hM : DnDiaSame0F T) (v : (D.mem u).A.vT)
     (a : ((D.mem u).A.Fv v)ˣ) (φ : Fn D u 0) (hφ : φ ∈ (D.fm u).Fi 0) :

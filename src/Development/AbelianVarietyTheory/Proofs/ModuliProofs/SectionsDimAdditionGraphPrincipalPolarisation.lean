@@ -33,7 +33,6 @@ section Algebra
 
 variable {G H σ κ : Type} [CommGroup G] [CommGroup H] [Fintype σ] [DecidableEq σ] [Fintype κ] [DecidableEq κ]
 
-omit [DecidableEq κ] in
 
 theorem apply_prod_single (Φ : H ≃* (σ → G)) (pt : κ → G) (a : σ × κ → ℕ) (b : σ) :
     Φ (∏ x : σ × κ, Φ.symm (Pi.mulSingle x.1 (pt x.2)) ^ a x) b = ∏ j, pt j ^ a (b, j) := by
@@ -43,7 +42,6 @@ theorem apply_prod_single (Φ : H ≃* (σ → G)) (pt : κ → G) (a : σ × κ
     simp [Pi.mulSingle_eq_of_ne' hc]
   · simp
 
-omit [DecidableEq κ] in
 
 theorem existsUnique_prod_single (Φ : H ≃* (σ → G)) {k : ℕ} (pt : κ → G)
     (h : ∀ y : G, y ^ k = 1 → ∃! c : κ → ZMod k, ∏ j, pt j ^ (c j).val = y) (y : H) (hy : y ^ k = 1) :
@@ -102,7 +100,6 @@ def pointsEquiv (e : B ≅ A ⊗ A) [IsMonHom (e.hom ≫ fst A A)] [IsMonHom (e.
     · exact MonObj.mul_comp x y (e.hom ≫ fst A A)
     · exact MonObj.mul_comp x y (e.hom ≫ snd A A)
 
-omit [IsCommMonObj B] in
 
 theorem isMonHom_mul (p q : B ⟶ A) [IsMonHom p] [IsMonHom q] : IsMonHom (p * q) where
   one_hom := by

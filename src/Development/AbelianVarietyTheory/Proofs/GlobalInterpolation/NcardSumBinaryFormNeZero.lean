@@ -156,7 +156,6 @@ end GlobalTheory.BinaryFormCount
 
 namespace GlobalTheory
 
-open Finset in
 
 theorem ncard_sum_binary_form_ne_zero (k : Type) [Field k] [Finite k] (t n : k)
     (hD : t ^ 2 - 4 * n ≠ 0) (η : ℝ) (h1 : (∃ r : k, r ^ 2 - t * r + n = 0) → η = 1)

@@ -225,7 +225,6 @@ open Formalism.MainNotions.product_first_zeroth_parts
 
 variable {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
-set_option maxHeartbeats 2000000 in
 
 theorem extU (Tf : FormsTiedSym D u Ch chOf) (γ : GL (Fin (D.R.N D.R.m - 1)) D.host.E)
     (hγ : γ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramP D)) :
@@ -281,7 +280,6 @@ open Formalism.MainNotions.product_first_zeroth_parts TensorProduct
 
 variable {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
-set_option maxHeartbeats 4000000 in
 
 theorem stab_m (Tf : FormsTiedSym D u Ch chOf) (hE : ExtLevS Tf)
     (c : (D.fm u).clsP) (γ : GL (Fin (D.R.N D.R.m - 1)) D.host.E) (κ : Tf.clsP.lev.U)
@@ -317,7 +315,6 @@ theorem stab_m (Tf : FormsTiedSym D u Ch chOf) (hE : ExtLevS Tf)
       _ = _ := by group
   · rw [← hGchi, map_mul, map_mul, map_inv, mul_comm ((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi (Tf.tilAd.ka c))⁻¹, mul_assoc, inv_mul_cancel, mul_one]
 
-set_option maxHeartbeats 4000000 in
 
 theorem val_inv (Tf : FormsTiedSym D u Ch chOf) (hE : ExtLevS Tf) (φ : Fn D u D.R.m) (hφ : φ ∈ (D.fm u).Fi D.R.m)
     (c : (D.fm u).clsP) (γ : GL (Fin (D.R.N D.R.m - 1)) D.host.E) (κ : Tf.clsP.lev.U)
@@ -372,7 +369,6 @@ open Formalism.MainNotions.product_first_zeroth_parts
 
 variable {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
-set_option maxHeartbeats 4000000 in
 
 theorem stab_of_ext (Tf : FormsTiedSym D u Ch chOf) (hL : Formalism.L2.Rows.LowerMapTieS Tf) (hE : ExtLevS Tf) : StabCompS Tf := by
   intro φ hφ c γ hγ κ hst y y' hy
@@ -462,7 +458,6 @@ open Formalism.MainNotions.product_first_zeroth_parts TensorProduct
 
 variable {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
-set_option maxHeartbeats 4000000 in
 
 theorem extUA (Tf : FormsTiedSym D u Ch chOf) (k : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) (D.host.E ⊗[D.host.F] FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (hk : cT (sigR (sigD D) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) k * (gramP D).map (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) * k = (gramP D).map (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
@@ -546,7 +541,6 @@ open Formalism.MainNotions.product_first_zeroth_parts TensorProduct
 
 variable {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
-set_option maxHeartbeats 4000000 in
 
 theorem extUR {R : Type} [CommRing R] [Algebra D.host.F R] (Tf : FormsTiedSym D u Ch chOf) (k : Matrix (Fin (D.R.N D.R.m - 1)) (Fin (D.R.N D.R.m - 1)) (D.host.E ⊗[D.host.F] R))
     (hk : cT (sigR (sigD D) R) k * (gramP D).map (inclE (F := D.host.F) R) * k = (gramP D).map (inclE (F := D.host.F) R))

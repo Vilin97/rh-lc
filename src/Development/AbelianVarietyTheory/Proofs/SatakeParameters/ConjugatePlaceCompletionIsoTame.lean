@@ -50,6 +50,5 @@ end GlobalTheory.TypeBlockConj
 
 namespace GlobalTheory.TypeBlockConj
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.TypeBlockConj

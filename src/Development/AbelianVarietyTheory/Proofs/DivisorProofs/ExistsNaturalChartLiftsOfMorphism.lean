@@ -34,7 +34,6 @@ variable (hI : I ^ 2 = 0) {X₀ Z₀ X Z : Scheme.{0}} {s₀ : X₀ ⟶ Sp R₀}
   {t : Z ⟶ Sp R} {i : X₀ ⟶ X} {k : Z₀ ⟶ Z} {S : Sys I π s₀} {S' : Sys I π t₀} (P : S.Presents s i)
   (P' : S'.Presents t k) {f₀ : Z₀ ⟶ X₀} {f : Z ⟶ X} (hkf : k ≫ f = f₀ ≫ i)
 
-include hkf in
 
 theorem chart_red (p : Pair f₀) :
     spMap (S'.p (Opposite.op p.1.1)) ≫ P'.y (Opposite.op p.1.1) ≫ f =
@@ -42,7 +41,6 @@ theorem chart_red (p : Pair f₀) :
   rw [← Category.assoc, P'.red, P.red, Category.assoc, hkf, ← Category.assoc, ← Category.assoc,
     ← GlobalTheory.CechDR.secPull_affPt s₀ t₀ p, Category.assoc]
 
-include hI hkf in
 
 theorem chart_range (p : Pair f₀) :
     Set.range ⇑(P'.y (Opposite.op p.1.1) ≫ f) ⊆ Set.range ⇑(P.y (Opposite.op p.1.2)) := by
@@ -79,7 +77,6 @@ theorem chartRing_fac (p : Pair f₀) :
     spMap (chartRing hI P P' hkf p) ≫ P.y (Opposite.op p.1.2) = P'.y (Opposite.op p.1.1) ≫ f := by
   rw [spMap_chartRing, chartMor_fac]
 
-include hkf in
 
 theorem chartRing_comp_algebraMap (hf : f ≫ s = t) (p : Pair f₀) :
     (chartRing hI P P' hkf p).comp (algebraMap R (S.F.obj (Opposite.op p.1.2))) =
@@ -91,7 +88,6 @@ def chartAlg (hf : f ≫ s = t) (p : Pair f₀) : S.F.obj (Opposite.op p.1.2) �
   { chartRing hI P P' hkf p with
     commutes' := fun r ↦ congrArg (fun g ↦ g r) (chartRing_comp_algebraMap hI P P' hkf hf p) }
 
-include hkf in
 
 theorem chartRing_red (p : Pair f₀) :
     (S'.p (Opposite.op p.1.1)).comp (chartRing hI P P' hkf p) =
@@ -99,7 +95,6 @@ theorem chartRing_red (p : Pair f₀) :
   refine chart_ext P _ ?_
   rw [chart_spMap_comp, chart_spMap_comp, Category.assoc, Category.assoc, chartRing_fac, chart_red P P' hkf p]
 
-include hkf in
 
 theorem chartRing_nat {p q : Pair f₀} (a : q ≤ p) (b : S.F.obj (Opposite.op p.1.2)) :
     mp S'.F (homOfLE (Pair.le_fst a)).op (chartRing hI P P' hkf p b) =

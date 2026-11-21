@@ -154,7 +154,6 @@ theorem sqSum_ne_zero {a : J → ℂ} (ha : a ≠ 0) : sqSum a ≠ 0 := by
 
 end LeviFSInvariant
 
-open LeviFSInvariant in
 
 theorem LeviFSInvariant.proof : LeviFSInvariant.Statement := by
   intro M _ a b c μ ha hc

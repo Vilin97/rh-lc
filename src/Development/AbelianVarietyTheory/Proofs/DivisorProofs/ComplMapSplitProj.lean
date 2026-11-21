@@ -46,7 +46,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r : ℕ} {X Y : Matrix (Fin n) (Fin r) E}
   {C : GL (Fin n) E} {l d : ℕ}
 
-omit [NumberField F] [NumberField E] in
 
 end Frame
 
@@ -75,7 +74,6 @@ theorem compFin_sigR (σ : E →ₐ[F] E) (u : HeightOneSpectrum (𝓞 F)) (z : 
   | tmul a x => rfl
   | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
-omit [NumberField E] in
 
 theorem compFin_eq_zero (u : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E)
     (hz : ∀ w : HeightOneSpectrum (𝓞 E), w.under (𝓞 F) = u → pLoc E w (finAdEquiv F E (finTens F E z)) = 0) :
@@ -96,9 +94,7 @@ theorem compFin_eq_zero (u : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E)
   rwa [map_mul, map_zero, Algebra.TensorProduct.map_tmul, evalV_singleFin_self, map_one,
     ← Algebra.TensorProduct.one_def, one_mul, ← compFin_eq] at h2
 
-omit [Algebra F E] [NumberField F] [Field F] in
 
-omit [Algebra F E] [NumberField F] [Field F] in
 
 variable {Φ : AF F ⊗[F] E ≃+* AdeleRing (𝓞 E) E} {j : Ainf F ⊗[F] E ≃+* InfiniteAdeleRing E}
   (hΦ : ∀ z, Φ z = (j (infTens F E z), finAdEquiv F E (finTens F E z))) {d : ℕ}
@@ -109,7 +105,6 @@ theorem fin_symm (a : Ad E) : finAdEquiv F E (finTens F E (Φ.symm a)) = pFin E 
 
 end Adele
 
-open GlobalTheory.LFun GlobalTheory.CuspRep in
 
 end GlobalTheory.BlockForms.LeviLoc
 

@@ -92,7 +92,6 @@ theorem val_le_one_of_codiff {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) {v : Pl 
   rw [e] at h3
   exact h3
 
-variable (E) in
 
 def codE : Submodule (𝓞 E) E where
   carrier := {c | ∀ o : 𝓞 E, IsIntegral ℤ (Algebra.trace ℚ E (o * c))}
@@ -106,7 +105,6 @@ def codE : Submodule (𝓞 E) E where
 theorem one_mem_codE : (1 : E) ∈ codE E := fun o => by
   rw [mul_one]; exact Algebra.isIntegral_trace o.isIntegral_coe
 
-variable (E) in
 
 def intE : Submodule (𝓞 E) E where
   carrier := {c | IsIntegral ℤ c}

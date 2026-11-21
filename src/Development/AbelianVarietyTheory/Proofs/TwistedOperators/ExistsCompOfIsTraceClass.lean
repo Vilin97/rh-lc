@@ -89,7 +89,6 @@ theorem exists_rankOne_expansion {T : H →L[ℂ] H} (h : IsTraceClass T) :
 def projSum {n : ℕ} (v : Fin n → H) (c : Fin n → ℝ) : H →L[ℂ] H :=
   ∑ i, ((c i : ℂ)⁻¹) • InnerProductSpace.rankOne ℂ (v i) (v i)
 
-omit [CompleteSpace H] in
 
 theorem inner_projSum {n : ℕ} (v : Fin n → H) (c : Fin n → ℝ) (b a : H) :
     ⟪b, projSum v c a⟫_ℂ = ∑ i, (c i : ℂ)⁻¹ * (⟪v i, a⟫_ℂ * ⟪b, v i⟫_ℂ) := by
@@ -124,7 +123,6 @@ theorem norm_projSum_le {n : ℕ} {v : Fin n → H} {c : Fin n → ℝ} (h : ∀
     nlinarith [mul_self_nonneg ‖a - projSum v c a‖]
   exact (mul_self_le_mul_self_iff (norm_nonneg _) (norm_nonneg _)).2 hle
 
-omit [CompleteSpace H] in
 
 theorem tendsto_inner_of_dense {P : ℕ → (H →L[ℂ] H)} (hP : ∀ m, ‖P m‖ ≤ 1) {S : Set H} (hS : Dense S)
     {q : H → H → ℂ} (hq : Continuous (Function.uncurry q))
@@ -229,7 +227,6 @@ theorem norm_mean_sub_le {F : X → X → ℂ} (hF : StronglyMeasurable (Functio
 
 variable {Y : Type*} [PseudoMetricSpace Y] [MeasurableSpace Y] [BorelSpace Y] {s : X → Y}
 
-omit [IsFiniteMeasure ν] in
 
 theorem exists_partition (hs : Measurable s) {Ω : Set Y} (hΩ : IsCompact Ω) {E : Set X} (hE : MeasurableSet E)
     (hEΩ : E ⊆ s ⁻¹' Ω) {δ : ℝ} (hδ : 0 < δ) :

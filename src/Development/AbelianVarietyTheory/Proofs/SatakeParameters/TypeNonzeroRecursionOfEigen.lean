@@ -18,7 +18,6 @@ namespace GlobalTheory.TypeNZJoin
 
 open Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.RecTie
 
-set_option maxHeartbeats 1000000 in
 
 theorem inj_at {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch} (X : GlobalTheory.NJoin.RealAt D cf nch tp)
     (hT : ∀ j t, GlobalTheory.DownLift.TypeNZ X.R j t) (i : D.nd.Loc) (hS : GlobalTheory.NJoin.EigString X i)

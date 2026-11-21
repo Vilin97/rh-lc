@@ -133,7 +133,6 @@ theorem mixed_mem (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {h : V �
   rw [he]
   exact Ideal.sub_mem _ (key θ) (Ideal.mul_mem_left _ _ h1)
 
-omit [StarRing K] in
 
 theorem exists_prim {J : Type*} [Finite J] (a : J → K) {j₀ : J} (ha : a j₀ ≠ 0) {P : Ideal (𝓞 K)}
     (hP : P ≠ ⊤) :

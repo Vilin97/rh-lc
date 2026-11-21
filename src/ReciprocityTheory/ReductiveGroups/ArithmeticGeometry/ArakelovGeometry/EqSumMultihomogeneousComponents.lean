@@ -19,7 +19,6 @@ theorem i2bdeg_add (m n : (Σ k, ι k) →₀ ℕ) : i2bdeg (m + n) = i2bdeg m +
   funext k
   simp [i2bdeg, Finset.sum_add_distrib]
 
-open Classical in
 
 def i2comp (a : K → ℕ) (h : MRing ι) : MRing ι :=
   ∑ m ∈ h.support.filter (fun m => i2bdeg m = a), monomial m (AddMonoidAlgebra.coeff h m)

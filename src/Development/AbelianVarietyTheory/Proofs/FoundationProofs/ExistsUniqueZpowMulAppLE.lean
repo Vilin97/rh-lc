@@ -65,8 +65,6 @@ variable {X : Scheme.{u}} {t : Γ(X, ⊤)} {η : X}
   {ι : Type v} {U : ι → X.Opens} {g : ∀ a b, Γ(X, U a ⊓ U b)}
   {W : ι → Y.Opens} (hW : ∀ a, W a = j ⁻¹ᵁ U a)
 
-omit [IsIntegral X] [IsLocallyNoetherian X] in
-include hj in
 
 theorem exists_transport (r : ∀ a, Γ(Y, W a))
     (hr : ∀ a b, Y.presheaf.map (homOfLE inf_le_left).op (r a) =
@@ -104,7 +102,6 @@ theorem exists_transport (r : ∀ a, Γ(Y, W a))
   · rw [← (hb a).1.eq_iff, map_mul, appLE_res, appLE_res, hr', ← hττ, ← map_zpow, Units.coe_map]
     exact iff_of_eq (congrArg (_ = · * _) (res_appLE j htop le_top _).symm)
 
-include hη hp hj in
 
 theorem existsUnique_zpow_mul_appLE (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, IsUnit (g a b))
     (τ : Γ(Y, ⊤)ˣ) (hτ : (τ : Γ(Y, ⊤)) = j.appTop t) {r : ∀ a, Γ(Y, W a)}
@@ -122,7 +119,6 @@ theorem existsUnique_zpow_mul_appLE (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀
   simpa only [H] using existsUnique_zpow_mul hη hp hU hg τ' hτ' hr'
     (hr0.imp fun a ha h ↦ ha (h0 a h))
 
-include hη hp hj in
 
 theorem exists_isUnit_appLE_eq (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, IsUnit (g a b))
     {r : ∀ a, Γ(Y, W a)}

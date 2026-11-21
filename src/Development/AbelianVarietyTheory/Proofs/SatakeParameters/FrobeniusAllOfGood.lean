@@ -49,6 +49,5 @@ theorem charPol_eq {E Ω E' Ω' : Type} [Field E] [NumberField E] [Field Ω] [Al
 
 end GlobalTheory.RoadU.PhiDescent
 
-open GlobalTheory.RoadU.PhiDescent in
 
 end

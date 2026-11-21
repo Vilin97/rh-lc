@@ -20,8 +20,6 @@ def IsLaurent (u : ℤ → M) : Prop := ∃ m : ℤ, ∀ k < m, u k = 0
 def serMul (f : PowerSeries L) (u : ℤ → M) : ℤ → M :=
   fun k => ∑ᶠ j : ℕ, PowerSeries.coeff j f • u (k - (j : ℤ))
 
-open TensorProduct in
-variable {L M : Type} [Field L] [AddCommGroup M] [Module L M] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedSeries.serMul_finite (f : PowerSeries L) {u : ℤ → M}
     (hu : _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedSeries.IsLaurent u) (k : ℤ) :
@@ -35,8 +33,6 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedSeries.serMul_finit
   push_neg at h
   exact hj (by rw [hm _ (by omega), smul_zero])
 
-open TensorProduct in
-variable {L M : Type} [Field L] [AddCommGroup M] [Module L M] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedSeries.serMul_one (u : ℤ → M) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedSeries.serMul (1 : PowerSeries L) u = u := by
@@ -45,7 +41,6 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedSeries.serMul_one (
   rw [finsum_eq_single _ 0 (fun j hj => by simp [PowerSeries.coeff_one, hj])]
   simp
 
-variable (L) in
 
 def serSpan (S : Set (ℤ → M)) : Submodule L (ℤ → M) :=
   Submodule.span L {w | ∃ (f : PowerSeries L) (u : ℤ → M), u ∈ S ∧ IsLaurent u ∧ w = serMul f u}
@@ -95,7 +90,6 @@ def IsExpansion (i : ZMod n) (ζ : LL) (y : W.DD T) (u : ℤ → T.V ⊗[Qp] BdR
 def phiNlev (i : ZMod n) (ζ : LL) : Submodule LL (ℤ → T.V ⊗[Qp] BdR) :=
   serSpan LL {u | ∃ y ∈ W.N T, IsExpansion W T i ζ (W.φD T y) u}
 
-variable (PD) in
 
 def phiSer (j : ℕ) (u : ℤ → T.V ⊗[Qp] B) : ℤ → T.V ⊗[Qp] BdR :=
   fun k => ιV PD (LL := LL) (V := T.V)

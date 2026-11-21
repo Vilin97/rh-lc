@@ -44,7 +44,6 @@ theorem isLineVec_nLine {c : D.host.E} (hc : c ≠ 0) : IsLineVec (nLine D) (fun
 
 open GlobalTheory.ChainOnto (Com PiLocalization₂)
 
-open GlobalTheory.ChainOnto in
 
 end GlobalTheory.SeeSaw.Model
 

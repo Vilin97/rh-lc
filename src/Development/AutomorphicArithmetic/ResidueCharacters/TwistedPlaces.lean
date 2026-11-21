@@ -95,13 +95,11 @@ structure Tab (L : SizeData₂ D) where
   gcost : ℕ → ℕ → ℝ
   gs : ℕ → ℕ → ℝ
 
-open Classical in
 
 def etaSum (L : SizeData₂ D) (j : ℕ) : ℝ :=
   ∑ w ∈ L.supp.filter (fun w => D.what₂.muAt w ≠ D.what₂.mu0),
     SizeData₂.lwP w * (D.what₂.places.ramIdx w : ℝ) * (D.what₂.etaJ j w : ℝ)
 
-open Classical in
 
 def twAt (L : SizeData₂ D) (l : ℕ) : Finset D.what₂.places.Pl :=
   L.supp.filter (fun w => D.what₂.muAt w ≠ D.what₂.mu0 ∧ D.what₂.places.resChar w = l)
@@ -171,7 +169,6 @@ def admB : Prop :=
       C * ((nLam D lam : ℝ) + 1) * D.R.r * (hB L / ((l : ℝ) - 1) ^ (jA L l + 1) +
         (GP L + 1) * ((jA L l : ℝ) + 1) + large₂ L))
 
-open Classical in
 
 def flatCD (i : D.nd.Loc) (lam : HeightOneSpectrum (𝓞 D.host.E)) (l : ℕ) : ℝ :=
   (wP L + eta₃ L) / l + L.Sc + large₂ L + eta₃ L * (if tb.band i lam then 1 else 0)

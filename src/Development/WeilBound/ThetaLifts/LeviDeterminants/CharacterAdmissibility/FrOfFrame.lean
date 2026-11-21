@@ -121,7 +121,6 @@ theorem mul_col {R α β : Type} [CommRing R] (a : Matrix α Unit R) (x : β →
   ext i j
   simp [Matrix.mul_apply, Matrix.vecMulVec_apply, Matrix.replicateCol]
 
-set_option maxHeartbeats 800000 in
 
 theorem chartW {n d d₁ r s r' s' i₀ i₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc F E d₁} {H : Plane E d d₁} (M : Model σ X W)
     (M₁ : Model σ X W₁) (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s') (hH : H.IsAdapted σ B W W₁ i₀ i₁) :

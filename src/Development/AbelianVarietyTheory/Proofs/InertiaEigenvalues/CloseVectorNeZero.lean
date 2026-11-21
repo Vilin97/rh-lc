@@ -266,7 +266,6 @@ open scoped LaurentSeries PowerSeries in
 variable {k : Type} [Field k] in
 variable {V : Type} [AddCommGroup V] [Module k⸨X⸩ V] [Module k⟦X⟧ V] [Module k V]
   [IsScalarTower k⟦X⟧ k⸨X⸩ V] in
-omit [Module k V] in
 
 theorem _root_.GlobalTheory.PhiGam.Close.exists_pow {N N' : Submodule k⟦X⟧ V} (hN : N.FG)
     (hN' : Submodule.span k⸨X⸩ (N' : Set V) = ⊤) :

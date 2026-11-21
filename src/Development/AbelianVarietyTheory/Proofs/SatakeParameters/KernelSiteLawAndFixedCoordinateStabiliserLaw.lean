@@ -20,7 +20,6 @@ namespace GlobalTheory.TwV
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 2000000 in
 
 theorem site_law_xiIn : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S =>
     S.Pair → S.Pos → S.Move → S.Away → S.Law ∧

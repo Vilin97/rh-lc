@@ -67,8 +67,6 @@ def ShortInCusp (hK : ReflexLe Dw c) (nV : ℕ)
     (cusp : ((E →+* ℂ) × ℕ → ℕ) → ℕ → Submodule c.F (Rul Xo c)) : Prop :=
   ∀ (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom a n → OnePos Dw a → ∀ f ∈ shortGen Δ hK nV a n, f ∈ cusp a n
 
-variable (Xo c) in
 
-variable (Xo c) in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.RamifiedCoverPairIsomorphism

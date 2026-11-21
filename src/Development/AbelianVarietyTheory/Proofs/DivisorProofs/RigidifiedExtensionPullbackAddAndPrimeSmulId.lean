@@ -15,7 +15,6 @@ namespace GlobalTheory.PDiv
 
 variable {R A B : Type} [CommRing R] [CommRing A] [CommRing B] [Bialgebra R A] [Bialgebra R B]
 
-variable (R A) in
 
 def restrZeroLeft : A ⊗[R] A →ₗ[R] A :=
   (TensorProduct.lid R A).toLinearMap ∘ₗ (counit (R := R) (A := A)).rTensor A
@@ -26,7 +25,6 @@ theorem restrZeroLeft_tmul (a b : A) : restrZeroLeft R A (a ⊗ₜ b) = counit (
 theorem restrZeroLeft_comul (a : A) : restrZeroLeft R A (comul a) = a := by
   simp [restrZeroLeft, Coalgebra.rTensor_counit_comul]
 
-variable (R A) in
 
 def restrZeroZero : A ⊗[R] (A ⊗[R] A) →ₗ[R] A :=
   (TensorProduct.lid R A).toLinearMap ∘ₗ TensorProduct.map (counit (R := R) (A := A))
@@ -125,7 +123,6 @@ theorem rigExtMap_add (f g : G ⟶ H) : rigExtMap (f + g) = rigExtMap f + rigExt
     rw [hB]
     simp
 
-variable (G) in
 
 theorem rigExtMap_natCast_smul_id (hp : (p : R) = 0) : rigExtMap ((p : ℤ_[p]) • 𝟙 G) = 0 := by
   let φ : (G ⟶ G) →+ (G.RigExt →ₗ[R] G.RigExt) :=

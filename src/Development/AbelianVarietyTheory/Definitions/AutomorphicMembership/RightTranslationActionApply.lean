@@ -29,7 +29,6 @@ theorem rhoC_map (γ : UF X.E n) (v : VV X.K lam) :
   rw [rhoC_apply, e]
   rfl
 
-variable (ST) in
 
 def cForms (Λ : LevFam X.E X.K n SG) : Submodule ℂ (DecoSet X.E n ST SG → Pol ℂ X.Tau n) where
   carrier := {F | ∀ d, F d ∈ VV ℂ lam ∧ ∀ g : FormG Λ, F (g • d) = σ (Λ.chr g.2 : X.Kˣ) • rhoC σ lam g.1 (F d)}
@@ -74,7 +73,6 @@ theorem tr_mem_cForms (Λ : LevFam X.E X.K n SG) (a : GLG X.E n SG) (ha : ∀ w,
   rw [smul_smul, Prod.mk_mul_mk, mul_one] at h1
   rw [smul_smul, Prod.mk_mul_mk, one_mul, e1, h1, e2]
 
-variable (ST) in
 
 def cTr (Λ : LevFam X.E X.K n SG) {A : Type} [Group A] (ι : A →* GLG X.E n SG) (hι : ∀ a w, (Λ w).NormBy (ι a w)) :
     Representation ℂ A (cForms ST σ lam Λ) where
@@ -227,7 +225,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 
 def idxTop : Idx sel mu L R.m := ⟨none, by simp⟩
 
-variable (R) in
 
 theorem ysAt_m : ysAt R sel mu cst R.m = Ys.triv X _ := if_neg (Nat.succ_ne_self _)
 

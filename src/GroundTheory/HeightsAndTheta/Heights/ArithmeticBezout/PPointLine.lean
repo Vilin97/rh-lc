@@ -36,7 +36,6 @@ theorem smul_mem_zeroSet {W : Ideal (MvPolynomial (Fin n) ℂ)} (hW : IsHomogIde
 
 end PointLine
 
-open PointLine in
 
 end
 

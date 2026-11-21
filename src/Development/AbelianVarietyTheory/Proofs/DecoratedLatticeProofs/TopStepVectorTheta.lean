@@ -77,7 +77,6 @@ theorem comb_mem_span {D : D7} (ψ : AddChar (AF D.host.F) ℂ) {S T : HSp D} {b
   unfold comb
   exact Submodule.sum_mem _ fun u hu => Submodule.smul_mem _ _ (Submodule.subset_span ⟨⟨u, hb u hu⟩, rfl⟩)
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.TopConv
 

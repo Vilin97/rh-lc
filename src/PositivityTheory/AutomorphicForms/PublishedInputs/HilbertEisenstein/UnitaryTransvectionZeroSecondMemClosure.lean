@@ -65,7 +65,6 @@ theorem hasTemperateGrowth_oddPoly : (oddPoly (F := F)).HasTemperateGrowth := by
         ({w : InfinitePlace F // w.IsComplex} → ℂ))) : mixedSpace F →L[ℝ] ℂ)).hasTemperateGrowth
   exact (Function.HasTemperateGrowth.const Complex.I).mul h
 
-variable (F) in
 
 def oddSchwartz : 𝓢(mixedSpace F, ℂ) :=
   SchwartzMap.smulLeftCLM ℂ oddPoly

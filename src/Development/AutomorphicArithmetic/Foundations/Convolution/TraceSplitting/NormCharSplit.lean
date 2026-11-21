@@ -40,7 +40,6 @@ variable (F : Type) [Field F] [NumberField F] [Algebra F K]
 def OffAll (n : ℕ) (Λ : (K →+* ℂ) → Multiset ℂ) (t : Pl K → Multiset ℂ) : Prop :=
   ∀ S : Set (Pl F), S.Finite → OffFam F n {w : Pl K | w.under (𝓞 F) ∈ S} S Λ t
 
-variable (K) in
 
 def LiftPlus [IsTotallyComplex F] [IsTotallyComplex K] (n : ℕ) : Prop :=
   ∀ π : CG F n, ∃ (ι : Type) (_ : Fintype ι) (m : ι → ℕ) (P : ∀ i, CG K (m i)), (∀ i, 1 ≤ m i) ∧ Nonempty ι ∧

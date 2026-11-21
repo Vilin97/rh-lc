@@ -86,7 +86,6 @@ theorem mvFG_exact (hU : Cosieve U) (hV : Cosieve V) (n : ℕ) : Function.Exact 
     refine sub_eq_zero.2 ?_
     rfl
 
-open Classical in
 
 def extV (hU : Cosieve U) (hV : Cosieve V) {n : ℕ} (y : CH.Cn ((infP U V).ι ⋙ F) n) : CH.Cn (U.ι ⋙ F) n :=
   fun t => if h : V (t.obj 0).obj then

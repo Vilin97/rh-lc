@@ -49,7 +49,6 @@ theorem locId_one (v : HeightOneSpectrum (𝓞 F)) :
   rw [← TensorProduct.tmul_add, add_sub_cancel]
   rfl
 
-variable (E) in
 
 def locId (v : HeightOneSpectrum (𝓞 F)) : Eˣ →* (AfE F E)ˣ where
   toFun a :=

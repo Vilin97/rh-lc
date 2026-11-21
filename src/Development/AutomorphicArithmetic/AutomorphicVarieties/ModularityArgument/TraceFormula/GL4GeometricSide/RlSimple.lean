@@ -112,7 +112,6 @@ private theorem lie_mem (N : Submodule ℂ (Sm E n))
   · exact N.smul_of_tower_mem _ (N.add_mem (h1 w i j x hx) (h2 w i j x hx))
   · exact N.smul_of_tower_mem _ (N.smul_mem _ (N.sub_mem (h1 w i j x hx) (h2 w i j x hx)))
 
-variable (E n) in
 
 private def fam : (InfinitePlace E → Un n) →* GL (Fin n) (Cinf E) :=
   MonoidHom.toHomUnits

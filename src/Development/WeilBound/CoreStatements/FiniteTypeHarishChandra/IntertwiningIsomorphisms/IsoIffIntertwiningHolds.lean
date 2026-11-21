@@ -48,15 +48,10 @@ section GeneralLinearIntegers
 
 variable {K : Type} [Field K] [Fintype K] [DecidableEq K]
 
-variable (K) in
 
-variable (K) in
 
-variable (K) in
 
-variable (K) in
 
-variable (K) in
 
 end GeneralLinearIntegers
 

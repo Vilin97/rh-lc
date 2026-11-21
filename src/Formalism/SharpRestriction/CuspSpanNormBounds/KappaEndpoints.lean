@@ -759,13 +759,11 @@ section Main
 
 variable {D : D7} {large₂ : SizeData₂ D} (X : TermTie D)
 
-open Classical in
 
 end Main
 
 section Abstract
 
-open Classical in
 
 end Abstract
 
@@ -835,7 +833,6 @@ section Assembly
 
 variable {D : D7} (large₂ : SizeData₂ D) (X : TermTie D)
 
-open Classical in
 
 def k2Cf (C Ch Cc : ℝ) : ℝ := 1 + C + C ^ 2 + Ch ^ 2 + Cc ^ 2
 
@@ -915,9 +912,7 @@ section PairsS
 
 variable {D : D7} (large₂ : SizeData₂ D) (X : TermTie D)
 
-open Classical in
 
-open Classical in
 
 end PairsS
 
@@ -944,7 +939,6 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
 variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableSpace E]
 variable {M : Model F E} {V : Type} [AddCommGroup V] [Module E V]
 
-open MeasureTheory in
 
 theorem ng_scale (hOK : M.OK) (x : Eˣ) :
     ∃ c : NNReal, ∀ s : Set E, IsOpen s → M.mu ((fun y => (x : E) * y) '' s) = c * M.mu s := by
@@ -1638,7 +1632,6 @@ theorem ng_factors (hOK : M.OK) (hG : P.Gv ≠ 0) {d : Datum P} {t : Term V M r}
     exact ⟨Finset.prod_pos (fun l h => (hl l h).1),
       Finset.prod_le_one₀ (fun l h => (hl l h).1.le) (fun l h => (hl l h).2)⟩
 
-omit [TopologicalSpace E] [MeasurableSpace E] [CommRing E] in
 
 omit [TopologicalSpace E] [MeasurableSpace E] [CommRing E] in
 theorem ng_real_q {a b c q : ℝ} (hq : 0 < q) (a0 : 0 < a) (a1 : a ≤ 1) (b0 : 0 < b) (b1 : b ≤ 1) (c0 : 0 < c) (c1 : c ≤ 1)
@@ -1814,9 +1807,7 @@ theorem ng_mem_Aut {g : V ≃ₗ[E] V} {Λ : Submodule M.L.O V} : g ∈ Aut Λ �
     | inv x _ hx => exact ng_img_inv hx
   · intro h; exact Subgroup.subset_closure h
 
-omit [TopologicalSpace E] [MeasurableSpace E] in
 
-omit [TopologicalSpace E] [MeasurableSpace E] in
 
 end NGa
 

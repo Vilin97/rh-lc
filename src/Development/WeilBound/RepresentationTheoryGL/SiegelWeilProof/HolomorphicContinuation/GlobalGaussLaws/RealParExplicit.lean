@@ -16,7 +16,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace PositivityTheory.Rg.Sw.Glob
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem realPar_explicit (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsCharAF D.host.F ψ) (θ : InfFam D)
     (hθ : IsInfFam θ) : ∃ a : D.host.F, a ≠ 0 ∧

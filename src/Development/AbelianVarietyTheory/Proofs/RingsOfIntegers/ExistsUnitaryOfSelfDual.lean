@@ -40,7 +40,6 @@ theorem exists_coprime_nsmul_mem (m : ℕ) (L : Submodule (𝓞 E) (Fin n → E)
   · rw [← natCast_zsmul, hg']
     exact Int.dvd_natAbs.2 dvd_rfl
 
-omit [NumberField E] [IsCMField E] in
 
 theorem exists_coprime_uniform (m : ℕ) {L₁ L₂ : Submodule (𝓞 E) (Fin n → E)} (hL : L₁.FG)
     (h : ∀ x ∈ L₁, ∃ k : ℕ, k.Coprime m ∧ k • x ∈ L₂) : ∃ k : ℕ, k.Coprime m ∧ ∀ x ∈ L₁, k • x ∈ L₂ := by
@@ -95,7 +94,6 @@ theorem exists_unitary_of_selfDual [Algebra.Unramified (𝓞 (maximalRealSubfiel
     obtain ⟨a, ha⟩ := mem_stdMod.1 hy i
     exact ha ▸ locEmb_mem_locOrder v a
 
-open Formalism.L2.Pj in
 
 theorem exists_lat (Λ : GenLat E n) {N : ℕ} (hU : Λ.Unimod) (hN : 0 < N)
     (hle : Ideal.span {(N : 𝓞 E)} • stdLat E n ≤ Λ.La) : ∃ Λ' : Lat E n, Λ'.L = Λ.La ∧ Λ'.SelfDual := by
@@ -134,7 +132,6 @@ theorem exists_lat (Λ : GenLat E n) {N : ℕ} (hU : Λ.Unimod) (hN : 0 < N)
 
 end Genus
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj in
 
 theorem exists_unitary_adapted : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (n : ℕ)
     (Λ : GenLat E n) (N : ℕ), Λ.Unimod → 0 < N → Ideal.span {(N : 𝓞 E)} • stdLat E n ≤ Λ.La → ∀ m : ℕ, 0 < m →

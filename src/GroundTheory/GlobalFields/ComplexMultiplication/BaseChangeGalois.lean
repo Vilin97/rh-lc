@@ -19,7 +19,6 @@ section Conj
 variable {F Ω : Type u} [Field F] [Field Ω] [Algebra F Ω]
 variable {E E' : WeierstrassCurve F} [E.IsElliptic] [E'.IsElliptic]
 
-variable (E) in
 
 theorem baseChange_map_algEquiv (g : Ω ≃ₐ[F] Ω) :
     (E.baseChange Ω).map (g : Ω →+* Ω) = E.baseChange Ω :=
@@ -54,7 +53,6 @@ theorem _root_.GroundTheory.Arith.Abelian.Isogeny.conj_y (g : Ω ≃ₐ[F] Ω)
     (ψ : Isogeny (E.baseChange Ω) (E'.baseChange Ω)) : (ψ.conj g).y = galFF E g ψ.y := by
   rw [Isogeny.conj, Isogeny.mapOf_y, ffCongr_ffMap_eq_galFF]
 
-variable (E E') in
 
 theorem map_galFF_curve' (g : Ω ≃ₐ[F] Ω) :
     ((E'.baseChange Ω).baseChange (E.baseChange Ω).toAffine.FunctionField).map
@@ -65,7 +63,6 @@ theorem map_galFF_curve' (g : Ω ≃ₐ[F] Ω) :
     rw [galFF_algebraMap, AlgEquiv.commutes]
   ext <;> exact e _
 
-variable (E E') in
 
 noncomputable def galPt (g : Ω ≃ₐ[F] Ω) :
     ((E'.baseChange Ω).baseChange (E.baseChange Ω).toAffine.FunctionField).toAffine.Point →+

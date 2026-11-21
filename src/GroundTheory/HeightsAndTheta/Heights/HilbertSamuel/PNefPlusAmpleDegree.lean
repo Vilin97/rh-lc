@@ -31,7 +31,6 @@ theorem genDeg_one_pos (hA : GenDegAmple.Statement) {K : Type} [Fintype K] {ι :
   have h := hA K ι _ (CurvePointsFinite.genericPt W) d 1 hV fun _ => le_rfl
   rwa [hEq] at h
 
-open Classical in
 
 theorem nefOnF_of_nefOnGenericDeg {K : Type} [Fintype K] [Nonempty K] {ι : K → Type} [∀ k, Fintype (ι k)]
     {P : Ideal (MRing ι)} {b : K → ℤ} (hb : NefOnGenericDeg P b) :

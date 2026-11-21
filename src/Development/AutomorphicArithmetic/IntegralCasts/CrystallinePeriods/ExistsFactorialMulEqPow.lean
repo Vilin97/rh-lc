@@ -138,11 +138,9 @@ theorem gamma_frob_mem (n : ℕ) (x : Ainf p R) (hx : Ainf.theta p R x = 0) :
   rw [hz']
   exact gamma_p_mul_mem n z
 
-variable (p) in
 
 def map (f : R →+* S) : AcrisZero p R →+* AcrisZero p S := extend (Ainf.map p f) (gamma_map_mem f)
 
-variable (p R) in
 
 def frob : AcrisZero p R →+* AcrisZero p R := extend (Ainf.frob p R) gamma_frob_mem
 
@@ -192,11 +190,9 @@ theorem extend_log (g : AcrisZero p R →+* AcrisZero p S) (u : Ainf p R) (v : A
   rw [eval_extend, hl', Ideal.quotientMap_mk, eval_log_of_mul_eq v hv n (g l)]
   rw [← h, ← map_natCast g, ← map_pow, ← map_mul, hl, RingHom.map_sub, map_pow, map_one]
 
-variable (p) in
 
 def map (f : R →+* S) : Acris p R →+* Acris p S := extend (AcrisZero.map p f)
 
-variable (p R) in
 
 def frob : Acris p R →+* Acris p R := extend (AcrisZero.frob p R)
 
@@ -257,12 +253,10 @@ theorem algebraMap_padicInt (a : ℤ_[p]) :
       algebraMap (Acris p R) _ (algebraMap ℤ_[p] _ a) :=
   padicLift_algebraMap p _ _ a
 
-variable (p) in
 
 def map (f : R →+* S) : BcrisPlus p R →+* BcrisPlus p S :=
   lift ((algebraMap (Acris p S) _).comp (Acris.map p f)) (isUnit_p p S)
 
-variable (p R) in
 
 def frob : BcrisPlus p R →+* BcrisPlus p R :=
   lift ((algebraMap (Acris p R) _).comp (Acris.frob p R)) (isUnit_p p R)
@@ -310,14 +304,12 @@ theorem hom_ext {B : Type*} [CommRing B] {f g : Bcris p R →+* B}
     (h : ∀ x : BcrisPlus p R, f (algebraMap _ _ x) = g (algebraMap _ _ x)) : f = g :=
   IsLocalization.ringHom_ext (BcrisPlus.periods p R) (RingHom.ext h)
 
-variable (p) in
 
 def map (f : R →+* S) (hf : Function.Injective f) : Bcris p R →+* Bcris p S :=
   lift ((algebraMap (BcrisPlus p S) _).comp (BcrisPlus.map p f)) (fun ε hε => by
     rw [RingHom.comp_apply, BcrisPlus.map_algebraMap, Acris.map_logTeich]
     exact isUnit_logTeich (hε.map f hf))
 
-variable (p R) in
 
 def frob : Bcris p R →+* Bcris p R :=
   lift ((algebraMap (BcrisPlus p R) _).comp (BcrisPlus.frob p R)) (fun ε hε => by
@@ -370,13 +362,11 @@ end Bcris
 
 namespace Bst
 
-variable (p) in
 
 def map (f : R →+* S) (hf : Function.Injective f) : Bst p R →+* Bst p S :=
   lift ((algebraMap (Bcris p S) _).comp (Bcris.map p f hf)) (fun ϖ => logFlat (PFlat.map p f ϖ))
     (fun η ϖ => by rw [PFlat.map_twist, logFlat_twist, RingHom.comp_apply, Bcris.map_logTeich])
 
-variable (p R) in
 
 end Bst
 

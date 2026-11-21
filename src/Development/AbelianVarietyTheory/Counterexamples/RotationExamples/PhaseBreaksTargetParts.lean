@@ -28,7 +28,6 @@ theorem inner_of_unitary {X : Type} [NormedAddCommGroup X] [InnerProductSpace �
     RCLike.conj_mul, hκ] at key
   simpa using key
 
-set_option maxHeartbeats 2000000 in
 
 theorem gram_of_conjAt {ph : ℂ} {c₀ : VsV D i D.what₂.LL →ₛₗ[D.what₂.embLL] (R.cV i).W} (h : ConjAt R i σ ph c₀)
     {μ' η' : (AE D)ˣ →* Circle} {c : CoefA (Vc D i)} {c₁ : VsV D i D.what₂.LL →ₛₗ[σ] c.W}

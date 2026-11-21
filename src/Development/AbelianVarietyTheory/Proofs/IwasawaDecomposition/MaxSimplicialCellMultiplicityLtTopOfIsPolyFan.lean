@@ -132,7 +132,6 @@ theorem perModule [Module.Finite O X] (hF : IsPolyFanOn bar φ X)
 
 end MultBound
 
-open MultBound in
 
 theorem maxMult_lt_top : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (q : ℕ)
     (φ : InvFun (𝓞 E)), IsPolyFan H.bar q φ → maxMult H.bar q φ < ⊤ := by

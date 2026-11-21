@@ -21,28 +21,16 @@ section Witt
 
 variable {k : Type w} [CommRing k] [CharP k p] [PerfectRing k p]
 
-variable {p} in
 
-variable {p} in
 
-variable {p} in
 
-variable {p} in
 
-variable {p} in
 
-variable {p} in
 
-omit [Fact ¬IsUnit (p : R)] in
 
-omit [Fact ¬IsUnit (p : R)] in
-variable {p} in
 
-variable {p} in
 
-variable {p} in
 
-variable {p} in
 
 end Witt
 
@@ -50,21 +38,15 @@ section FracWitt
 
 variable {k : Type w} [Field k] [CharP k p] [PerfectRing k p]
 
-variable {p} in
 
-variable {p} in
 
-variable {p} in
 
-variable {p} in
 
 end FracWitt
 
 variable [IsAdicComplete (span {(p : R)}) R]
 
-variable {p} in
 
-variable {p} in
 
 namespace BdRPlus
 

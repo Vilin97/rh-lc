@@ -163,7 +163,6 @@ theorem Pat.block (hA : Pat k rS r t a A) (hB : Pat k rS r t a B)
 
 variable {K : Type} [Field K]
 
-open Classical in
 
 def ext0 (χ : κˣ →* Kˣ) (a : κ) : K := if h : IsUnit a then ((χ h.unit : Kˣ) : K) else 0
 
@@ -236,11 +235,9 @@ theorem of_div {a : E} (h : IntAt P (a / (qOf P : E))) : IntAt P a ∧ redP P a 
     (Ideal.absNorm_mem P.asIdeal) ?_
   rwa [mul_comm, ← div_eq_mul_inv]
 
-variable (P) in
 
 def red (M : ℕ → ℕ → E) : ℕ → ℕ → 𝓞 E ⧸ P.asIdeal := fun p p' => redP P (M p p')
 
-variable (P) in
 
 def IntM (b a : ℕ) (M : ℕ → ℕ → E) : Prop := ∀ p p', p < b → p' < a → IntAt P (M p p')
 
@@ -281,7 +278,6 @@ theorem redP_dB {s t : ℕ} (hA : IntM P b a A) (h1 : s + t ≤ b) (h2 : s + t �
 theorem reduction_leadingMinor {t : ℕ} (hA : IntM P b a A) (h1 : t ≤ b) (h2 : t ≤ a) : redP P (dT A t) = dT (red P A) t :=
   SymLevelInv.reduction_det P _ fun u u' => hA _ _ (by have := u.2; omega) (by have := u'.2; omega)
 
-variable (P) in
 
 def SuppQ (r b a : ℕ) (M : ℕ → ℕ → E) : Prop :=
   IntM P b a M ∧ ∀ p p', r ≤ p → p < b → p' < r → IntAt P (M p p' / (qOf P : E))
@@ -300,12 +296,10 @@ theorem SuppQ.det {r t : ℕ} (hA : SuppQ P r (r + t) (r + t) A) :
   rw [reduction_leadingMinor hA.1 le_rfl le_rfl]
   exact dT_split fun u l hu hl => (of_div (hA.2 _ _ (by omega) (by omega) hl)).2
 
-variable (P) in
 
 def SuppG (k rS r t b a : ℕ) (M : ℕ → ℕ → E) : Prop :=
   IntM P b a M ∧ (∀ p p', a ≤ p → p < b → p' < a → IntAt P (M p p' / (qOf P : E))) ∧ Pat k rS r t a (red P M)
 
-variable (P) in
 
 def LevG (k rS r t n : ℕ) (M : ℕ → ℕ → E) : Prop :=
   IntM P n n M ∧
@@ -468,7 +462,6 @@ theorem entB_det {k₀ c n : ℕ} (hk : k₀ ≤ n) (ex : ℕ → ℕ) (g : Sp E
     inv_mul_cancel₀ (Finset.prod_ne_zero_iff.2 fun i _ => zpow_ne_zero _ hq), one_mul,
     Matrix.det_submatrix_equiv_self, LinearMap.det_toMatrix', LinearEquiv.coe_det]
 
-variable (E) in
 
 def bv (q k₀ n c : ℕ) (ex : ℕ → ℕ) (s : ℕ) : Sp E (n + c) :=
   ((q : E) ^ scE n ex (fIdx k₀ c n s)) • eN E (n + c) (fIdx k₀ c n s)
@@ -476,7 +469,6 @@ def bv (q k₀ n c : ℕ) (ex : ℕ → ℕ) (s : ℕ) : Sp E (n + c) :=
 def co (q k₀ n c : ℕ) (ex : ℕ → ℕ) (v : Sp E (n + c)) (p : ℕ) : E :=
   ((q : E) ^ scE n ex (fIdx k₀ c n p))⁻¹ * atN v (fIdx k₀ c n p)
 
-variable (P) in
 
 def midL (k₀ n c : ℕ) (ex : ℕ → ℕ) (D : ℕ → Prop) [DecidablePred D] : Submodule (𝓞 E) (Sp E (n + c)) :=
   sclLat P (qOf P) (n + c) fun l => scE n ex l + if D (fPos k₀ c n l) then 1 else 0
@@ -660,7 +652,6 @@ theorem inv_comp {a b : ℕ} (g : Sp E b ≃ₗ[E] Sp E b) (x : HomE E a b) :
 variable (ψ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ)
   {k₀ k₁ rS r t i c' n' c n : ℕ}
 
-open Classical in
 
 def PhiM (k₀ k₁ rS r t i c' n' c n : ℕ) : SF E K (n' + c') (n + c) := fun x =>
   if SuppG P k₁ rS r t (n + c) (r + i * t) (entB (qOf P) k₀ c' n' c n (fun i => i + 1) (fun i => i + 1) x) then

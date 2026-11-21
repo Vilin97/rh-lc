@@ -8,8 +8,6 @@ namespace GlobalTheory
 
 open TensorProduct
 
-open TensorProduct in
-open TensorProduct in
 
 theorem _root_.GlobalTheory.subsingleton_of_residueField_fibres (O Q : Type) [CommRing O]
     [AddCommGroup Q] [Module O Q] [Module.Finite O Q]

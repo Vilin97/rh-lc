@@ -24,7 +24,6 @@ variable {R M N P : Type*} [CommSemiring R] [AddCommMonoid M] [Module R M] [AddC
 theorem ext_apply {φ ψ : CartierDual R M} (h : ∀ a, φ a = ψ a) : φ = ψ :=
   WithConv.ext (LinearMap.ext h)
 
-variable (R M) in
 
 def toDual : CartierDual R M ≃ₗ[R] Module.Dual R M := WithConv.linearEquiv R _
 
@@ -39,14 +38,12 @@ instance instProjective [Module.Finite R M] [Module.Projective R M] :
 instance instFree [Module.Finite R M] [Module.Free R M] : Module.Free R (CartierDual R M) :=
   Module.Free.of_equiv (toDual R M).symm
 
-variable (R M) in
 
 def evalAt : M →ₗ[R] CartierDual R M →ₗ[R] R :=
   (toDual R M).toLinearMap.flip
 
 @[simp] theorem evalAt_apply (a : M) (φ : CartierDual R M) : evalAt R M a φ = φ a := rfl
 
-variable (R M N) in
 
 def pair : CartierDual R M ⊗[R] CartierDual R N →ₗ[R] M ⊗[R] N →ₗ[R] R :=
   dualDistrib R M N ∘ₗ TensorProduct.map (toDual R M).toLinearMap (toDual R N).toLinearMap
@@ -71,7 +68,6 @@ theorem pair_bijective [Module.Finite R M] [Module.Projective R M] [Module.Finit
   rw [this]
   exact LinearEquiv.bijective _
 
-variable (R M N) in
 
 def pairEquiv [Module.Finite R M] [Module.Projective R M] [Module.Finite R N]
     [Module.Projective R N] :
@@ -324,7 +320,6 @@ theorem transpose_injective {f : M →ₗ[R] N} (hf : Function.Surjective f) :
   obtain ⟨a, rfl⟩ := hf b
   exact congr($h a)
 
-variable (R M) in
 
 def cartierDualToBidual : M →ₗ[R] CartierDual R (CartierDual R M) :=
   (toDual R _).symm.toLinearMap ∘ₗ evalAt R M
@@ -422,7 +417,6 @@ def congr (e : H ≃ₐc[R] K) : CartierDual R K ≃ₐc[R] CartierDual R H :=
     (by rw [← map_comp, BialgEquiv.symm_comp, map_id])
     (by rw [← map_comp, BialgEquiv.comp_symm, map_id])
 
-variable (R H) in
 
 def bidualHom : H →ₐc[R] CartierDual R (CartierDual R H) where
   __ := cartierDualToBidual R H
@@ -434,7 +428,6 @@ def bidualHom : H →ₐc[R] CartierDual R (CartierDual R H) where
     change cartierDualToBidual R H (a * b) φ = (cartierDualToBidual R H a * cartierDualToBidual R H b) φ
     rw [mul_apply, ← TensorProduct.map_tmul, pair_map_toBidual, pair_comul_tmul, toBidual_apply]
 
-variable (R H) in
 
 def bidual : H ≃ₐc[R] CartierDual R (CartierDual R H) :=
   BialgEquiv.ofBijective (bidualHom R H) toBidual_bijective
@@ -459,7 +452,6 @@ instance instIsScalarTower {X : Type*} [AddCommMonoid X] [Module A X] :
     IsScalarTower R A (CartierDual A X) :=
   ⟨fun r a φ => WithConv.ext (smul_assoc r a φ.ofConv)⟩
 
-variable (R M) in
 
 def baseChangeLinear : A ⊗[R] CartierDual R M →ₗ[A] CartierDual A (A ⊗[R] M) :=
   (toDual A _).symm.toLinearMap ∘ₗ
@@ -571,7 +563,6 @@ section Product
 variable (R H K : Type*) [CommSemiring R] [Semiring H] [Bialgebra R H] [Module.Finite R H]
   [Module.Projective R H] [Semiring K] [Bialgebra R K] [Module.Finite R K] [Module.Projective R K]
 
-variable {R H K} in
 
 end Product
 
@@ -580,7 +571,6 @@ section Tensor
 variable {R N M N' M' : Type*} [CommSemiring R] [AddCommMonoid M] [Module R M] [AddCommMonoid N]
   [Module R N] [AddCommMonoid M'] [Module R M'] [AddCommMonoid N'] [Module R N']
 
-variable (R N M) in
 
 def tensorToHom : N ⊗[R] M →ₗ[R] CartierDual R M →ₗ[R] N :=
   dualTensorHom R (CartierDual R M) N ∘ₗ LinearMap.rTensor N (evalAt R M) ∘ₗ
@@ -611,7 +601,6 @@ theorem tensorToHom_bijective [Module.Finite R M] [Module.Projective R M] :
     (LinearEquiv.rTensor N (LinearEquiv.ofBijective _ h)).bijective.comp
       (TensorProduct.comm R N M).bijective
 
-variable (R N M) in
 
 def tensorEquivHom [Module.Finite R M] [Module.Projective R M] :
     N ⊗[R] M ≃ₗ[R] (CartierDual R M →ₗ[R] N) :=
@@ -665,7 +654,6 @@ theorem isGroupLikeElem_tensor_iff_mul (x : A ⊗[R] C) : IsGroupLikeElem A x �
         simp only [Algebra.TensorProduct.tmul_mul_tmul, baseChangeLinear_tmul_apply, h,
           mul_mul_mul_comm]
 
-variable (R C A) in
 
 def pointsEquiv : (CartierDual R C →ₐ[R] A) ≃ GroupLike A (A ⊗[R] C) where
   toFun f := ⟨(tensorEquivHom R A C).symm f.toLinearMap,
@@ -682,9 +670,7 @@ section PointsBialgebra
 variable {R H A : Type*} [CommSemiring R] [Semiring H] [Bialgebra R H] [Module.Finite R H]
   [Module.Projective R H] [CommSemiring A] [Algebra R A]
 
-variable (R H A) in
 
-variable (R H A) in
 
 end PointsBialgebra
 
@@ -716,32 +702,25 @@ variable (R : Type*) {H K : Type*} [CommSemiring R] [Semiring H] [Bialgebra R H]
 
 def IsPrimitiveElem (a : H) : Prop := comul (R := R) a = a ⊗ₜ[R] 1 + 1 ⊗ₜ[R] a
 
-variable (H) in
 
 def primitiveComul : H →ₗ[R] H ⊗[R] H :=
   (TensorProduct.mk R H H).flip 1 + TensorProduct.mk R H H 1
 
-variable (H) in
 
 def primitiveElems : Submodule R H := LinearMap.eqLocus comul (primitiveComul R H)
 
-variable {R} in
 
 @[simp] theorem mem_primitiveElems {a : H} : a ∈ primitiveElems R H ↔ IsPrimitiveElem R a :=
   Iff.rfl
 
-variable {R} in
 
 theorem IsPrimitiveElem.map {a : H} (ha : IsPrimitiveElem R a) (f : H →ₐc[R] K) :
     IsPrimitiveElem R (f a) := by
   rw [IsPrimitiveElem, ← CoalgHomClass.map_comp_comul_apply, ha]
   simp
 
-variable {R} in
 
-variable {R} in
 
-variable {R} in
 
 end Primitive
 
@@ -776,9 +755,7 @@ variable (R H A M : Type*) [CommRing R] [Semiring H] [Bialgebra R H] [Module.Fin
 
 variable {R H A M}
 
-variable (R H A) in
 
-variable (R H) in
 
 end LieRing
 
@@ -943,11 +920,8 @@ def IsBicharacter.toBialgHom (hu : IsBicharacter R u) : CartierDual R H →ₐc[
   map_one' := ((isGroupLikeElem_tensor_iff_mul _).1 hu.left).1
   map_mul' := ((isGroupLikeElem_tensor_iff_mul _).1 hu.left).2
 
-variable (R H K) in
 
-omit [Module.Finite R K] [Module.Projective R K] in
 
-omit [Module.Finite R K] [Module.Projective R K] in
 
 theorem isBicharacter_iff_exists_bialgHom (u : H ⊗[R] K) : IsBicharacter R u ↔
     ∃ f : CartierDual R H →ₐc[R] K, ∀ φ, f φ = pairingMap R u φ := by
@@ -958,7 +932,6 @@ theorem isBicharacter_iff_exists_bialgHom (u : H ⊗[R] K) : IsBicharacter R u �
   · exact (hf _).symm.trans ((map_mul f φ ψ).trans (by rw [hf, hf]; rfl))
   · rw [h]; exact ⟨CoalgHomClass.counit_comp f, CoalgHomClass.map_comp_comul f⟩
 
-variable (R H K) in
 
 theorem pairingMap_comm_bijective_iff (u : H ⊗[R] K) :
     Function.Bijective (pairingMap R (TensorProduct.comm R H K u)) ↔
@@ -1000,7 +973,6 @@ variable {R H : Type*} [CommSemiring R] [CommSemiring H] [Bialgebra R H] [IsCoco
 @[simp] theorem pairingMap_canonical : pairingMap R (canonical R H) = LinearMap.id :=
   tensorToHom_comm_canonical
 
-variable (R H) in
 
 theorem isPerfectBicharacter_canonical : IsPerfectBicharacter R (canonical R H) :=
   ⟨(isBicharacter_iff_exists_bialgHom _).2 ⟨BialgHom.id R _, fun φ => by simp⟩,

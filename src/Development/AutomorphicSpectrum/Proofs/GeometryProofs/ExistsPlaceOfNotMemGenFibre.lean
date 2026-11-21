@@ -20,7 +20,6 @@ section Local
 variable {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat.of Ω) ⟶ X}
   {F : Type} [Field F] [NumberField F]
 
-omit [NumberField F] in
 
 theorem int_mem_regAt (hN : NormalCpt ξ) (φ : F →+* Ω) (a : 𝓞 F) (q : Cpt ξ) : φ (a : F) ∈ regAt ξ q :=
   hN q _ ((map_isIntegral_int φ (RingOfIntegers.isIntegral_coe a)).tower_top)

@@ -34,7 +34,6 @@ def rdVLin (rdV : RdV D ρ) (i) (j : Fin D.R.m) (b k Q ψ) :
     rw [← algebraMap_smul (FractionRing (D.ntw.Ok i k)) c f, map_smulₛₗ]
     rfl
 
-open Classical in
 
 def latI (rdV : RdV D ρ) (i) : ∀ n b k Q ψ, Submodule (D.ntw.Ok i k) (D.nexp.MtV i n b k Q ψ)
   | 0, b, k, Q, ψ => D.nexp.MtLat i 0 b k Q ψ

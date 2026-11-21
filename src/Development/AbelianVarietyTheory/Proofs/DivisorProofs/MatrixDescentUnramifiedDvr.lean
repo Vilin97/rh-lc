@@ -148,7 +148,6 @@ end GlobalTheory.MatrixDescent
 
 namespace GlobalTheory
 
-open GlobalTheory.MatrixDescent in
 
 theorem matrix_descent_unramified (R K W K' : Type) [CommRing R] [IsDomain R]
     [IsDiscreteValuationRing R] [Field K] [Algebra R K] [IsFractionRing R K] [CommRing W]

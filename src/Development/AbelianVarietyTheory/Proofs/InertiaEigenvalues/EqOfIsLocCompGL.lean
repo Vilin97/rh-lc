@@ -23,7 +23,6 @@ namespace GlobalTheory.DiscSMO
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a c N : ℕ} {n : Fin c → ℕ}
   {π π' : ∀ i, CuspSub E (n i)}
 
-variable (E a) in
 
 def prodForm (φ : ∀ i, (π i).V) : (∀ i, GA E (n i)) → ℂ := fun m => ∏ i, (φ i).1.1 (m i)
 
@@ -39,11 +38,8 @@ end IsTensorOf
 
 variable {h : ∑ i, n i = N}
 
-variable (h) in
 
-variable (h) in
 
-variable (h) in
 
 namespace IsTensorOf
 
@@ -77,18 +73,14 @@ theorem contDiffAt_chart_mul {f : GA E a → ℂ} {g : GA E a} {y : GL (Fin a) (
   rw [e1]
   exact hf
 
-variable (h) in
 
 namespace IsTensorOf
 
 variable {T : ∀ i, (π i).V →ₗ[ℂ] (π' i).V} {Θ : Module.End ℂ ((∀ i, GA E (n i)) → ℂ)}
 
-variable (h) in
 
 end IsTensorOf
 
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
-open GlobalTheory.Published GlobalTheory.LFun GlobalTheory.SpehPair in
 
 end GlobalTheory.DiscSMO
 

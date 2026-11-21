@@ -73,7 +73,6 @@ theorem deg_zpow_mul {N : ℕ} (hdσ : d σ = Multiplicative.ofAdd (N : ℤ̂)) 
 
 variable [TopologicalSpace G] [IsTopologicalGroup G]
 
-variable (d L σ) in
 
 def frobeniusClosure : Subgroup G :=
   (Subgroup.zpowers σ ⊔ (L ⊓ d.ker)).topologicalClosure
@@ -151,7 +150,6 @@ theorem frobeniusClosure_inf_ker (hd : Continuous d) (hL : IsOpen (L : Set G))
   rw [hx_eq]
   exact L.mul_mem (L.mul_mem (hU0 hσk) hj.1) (L.inv_mem (hU0 hU))
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem map_frobeniusClosure (hd : Continuous d)
     (hσ : σ ∈ Subgroup.normalizer ((L ⊓ d.ker : Subgroup G) : Set G)) {N : ℕ}
@@ -211,7 +209,6 @@ theorem isOpen_frobeniusClosure (hd : Continuous d) (hL : IsOpen (L : Set G))
     ⟨by rw [← Subgroup.relIndex_mul_index le_sup_left]; exact mul_ne_zero h2 h1.index_ne_zero⟩
   exact Subgroup.isOpen_of_isClosed_of_finiteIndex _ isClosed_frobeniusClosure
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem inertiaDegree_frobeniusClosure (hd : Continuous d)
     (hσ : σ ∈ Subgroup.normalizer ((L ⊓ d.ker : Subgroup G) : Set G)) {N : ℕ} (hN : N ≠ 0)

@@ -35,7 +35,6 @@ open GlobalTheory.CompanionTheory.PointSurjectivity
 
 namespace GlobalTheory.CompanionTheory.PointSurjectivity
 
-open GlobalTheory.Cube in
 
 theorem isZero_homology_supp_singleton {ν κ : Type} [LinearOrder ν] [LinearOrder κ] {R : Type}
     [CommRing R] (A : GlobalTheory.Cube.{0} (ν ⊕ₗ κ) R) {Q : Set (Finset ν)} (hQ : Q.OrdConnected)
@@ -87,7 +86,6 @@ theorem isZero_homology_supp_singleton {ν κ : Type} [LinearOrder ν] [LinearOr
   rw [hz, Limits.zero_comp] at hc
   exact hc.symm
 
-open GlobalTheory.Cube in
 
 theorem cechComplex_sliceFst_singleton_acyclic_of_trunc₂ : ∀ {ν κ : Type} [LinearOrder ν] [LinearOrder κ] [Finite ν] [Finite κ] {R : Type} [CommRing R]
     (A : GlobalTheory.Cube.{0} (ν ⊕ₗ κ) R)

@@ -86,4 +86,3 @@ theorem eig_lpChar (x y : WD h) (φ : Weil h) (hy : y.lpDim = 1) (c : ℂ) (hc :
 
 end GlobalTheory.RowTie.EigTwist
 
-open GlobalTheory.RowTie.EigTwist in

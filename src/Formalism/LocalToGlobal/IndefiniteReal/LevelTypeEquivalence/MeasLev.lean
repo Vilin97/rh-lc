@@ -21,7 +21,6 @@ theorem upq_mat_inv_mul {p q : ℕ} (a : UpqT p q) : UpqT.mat a⁻¹ * UpqT.mat 
 
 variable {D : D7} {V : HSp D}
 
-set_option quotPrecheck false in
 
 theorem cond_change {p q : ℕ} (A₀ A : Matrix (Fin p ⊕ Fin q) (Fin V.rank) ℂ) (u : UpqT p q)
     (hu : A = UpqT.mat u * A₀) (B : Set (UpqT p q)) (X : Matrix (Fin V.rank) (Fin V.rank) ℂ) :

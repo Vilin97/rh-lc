@@ -122,7 +122,6 @@ theorem relIndex_congr_inf {G : Type*} [Group G] {A B L : Subgroup G} (h : A ⊓
     A.relIndex L = B.relIndex L := by
   rw [← Subgroup.inf_relIndex_right A L, h, Subgroup.inf_relIndex_right]
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem invVol_eq_idxRatio (C : Subgroup (GL (n ⊕ Fin c) k)) :
     invVol C = idxRatio (symN k n c ⊓ KO k _) (symN k n c ⊓ C) := by

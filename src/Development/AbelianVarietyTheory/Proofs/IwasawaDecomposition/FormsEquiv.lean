@@ -60,7 +60,6 @@ end Gen
 
 attribute [local instance] GlobalTheory.Mem.Col2.starE
 
-set_option maxHeartbeats 1600000 in
 
 theorem law0 : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → ∀ l : I.Laws, I.Law0 l := by
   intro B X I hI l u a

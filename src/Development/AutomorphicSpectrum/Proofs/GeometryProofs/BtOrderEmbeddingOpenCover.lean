@@ -22,11 +22,9 @@ section alg
 
 variable {R : Type} [CommRing R] {T : Type} [CommGroup T]
 
-open Classical in
 
 noncomputable def ind (H : Subgroup T) : T → R := fun x => if x ∈ H then 1 else 0
 
-open Classical in
 
 noncomputable def extZero (H : Subgroup T) (a : H → R) : T → R := fun x => if h : x ∈ H then a ⟨x, h⟩ else 0
 

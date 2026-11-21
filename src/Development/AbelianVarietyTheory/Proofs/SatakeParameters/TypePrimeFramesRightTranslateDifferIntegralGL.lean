@@ -197,7 +197,6 @@ theorem cols_of_congAt {D : D7} {X : Fields} (s : Seam D X) {n : ℕ} (P : Heigh
   rw [Matrix.one_apply, Pi.single_apply]
   split_ifs <;> simp
 
-set_option maxHeartbeats 1000000 in
 
 theorem frame_lev : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =>
   ∀ (i : ℕ) (hi : i ≤ D.R.m) (β : (St i hi).Ch) (x x₁ : UA D i hi) (κ : ((St i hi).K β).lev.U),

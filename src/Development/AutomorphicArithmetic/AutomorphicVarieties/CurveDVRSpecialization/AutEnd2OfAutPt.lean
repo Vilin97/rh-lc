@@ -273,4 +273,3 @@ private theorem conj_mat {D C κ : Type} [Group D] [CommRing C] [CommRing κ] (f
 
 end UpperTheory.V.Pr.LkAut2
 
-open UpperTheory.V.Pr.LkAut2 in

@@ -88,7 +88,6 @@ def AvRec (D : D7) : Finset (PlE D.host) := (avSet_finite D).toFinset
 theorem mem_avRec {D : D7} (v : PlE D.host) : v ∈ AvRec D ↔ ∃ p ∈ avPrimes D, v ∈ placesOver D.host.E p := by
   simp only [AvRec, AvSet, Set.Finite.mem_toFinset, Set.mem_iUnion, exists_prop]
 
-open Classical in
 
 def TwGoodOne (D : D7) (I : TwIn D) (i : D.ntw.Tw) (b : Bool) (Q : Finset (PlE D.host)) (k' : ℕ)
     (ψ : D.ntw.RCG i Q →* (D.ntw.Ok i k')ˣ) : Prop :=
@@ -129,7 +128,6 @@ theorem psiAt_psiAt {Γ A : Type} [Group Γ] [CommGroup A] (b : Bool) (ψ : Γ �
     BlochKatoReduction.Gen.psiAt b (BlochKatoReduction.Gen.psiAt b ψ) = ψ := by
   cases b <;> simp [BlochKatoReduction.Gen.psiAt]
 
-open Classical in
 
 end Formalism.MainNotions
 

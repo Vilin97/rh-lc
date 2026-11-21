@@ -140,7 +140,6 @@ theorem zeta_entries (hZ : NF.ActualZetaSmooth) {P : M.Par} {z z' : Fin (2 * P.r
 
 end Entries
 
-open TwistedTransfer in
 
 theorem topTwistDensOfZeta : TopTwistDensOfZeta := by
   intro hZ Wp Wq _ _ _ _ _ _ S _ _ P z z' π π' X μ L st l0 K hD

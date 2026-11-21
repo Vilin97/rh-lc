@@ -326,7 +326,6 @@ theorem dag_smul' (c : ℂ) (f : WO S T → ℂ) : dag S T (c • f) = starRingE
 
 end GlobalTheory.FockAdjoint
 
-open GlobalTheory.FockAdjoint in
 
 theorem GlobalTheory.FockAdjoint.fock_dag : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D), IsStdChar D ψ (-1) →
     IsInfFam θ → ∀ (S T : HSp D) (A : Fr S) (B : Fr T), ∃ j : PolF D T.rank S.rank ≃+ PolF D S.rank T.rank,

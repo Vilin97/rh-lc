@@ -61,7 +61,6 @@ theorem isClosed_cell [TopologicalSpace R] [IsTopologicalRing R] [T2Space R] (x 
     ((isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun _ => key _ hc i j 0).inter
     (isClosed_iInter fun i => key _ hc i i 1))
 
-variable (R) in
 
 abbrev permRep (w : Equiv.Perm (Fin n)) : GL (Fin n) R := (Matrix.permMatrixHom (R := R)).toHomUnits w
 

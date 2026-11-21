@@ -206,7 +206,6 @@ theorem exists_agree {X X' Y Y' : Scheme.{0}} {L : LB X} {L' : LB X'} (hL : L.Is
   rw [Category.comp_id]
   exact this
 
-open scoped CategoryTheory.Obj in
 
 theorem finNu : PullbackSections.FinNuSt := by
   intro E _ _ _ H V _ _ _ _ _ t P hT ϖ hϖ Q hQ vK hK tK m w hw a k ha hk h hh b U ⟨s, x, tie, hx, hν⟩ _hbk hU hUa

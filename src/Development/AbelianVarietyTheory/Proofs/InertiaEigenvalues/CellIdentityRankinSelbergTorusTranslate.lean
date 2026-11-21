@@ -70,7 +70,6 @@ def negSumHom (n : ℕ) : (Fin n → ℤ) →+ ℤ where
   map_zero' := by simp
   map_add' a b := by simp [Finset.sum_add_distrib]; ring
 
-omit [Field E] [NumberField E] in
 
 theorem cell_identity : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E)))
     (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ), (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) →

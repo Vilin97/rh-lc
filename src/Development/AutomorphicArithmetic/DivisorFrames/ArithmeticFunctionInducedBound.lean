@@ -214,4 +214,3 @@ private theorem exists_lift (V : Mean4O.Cover Y) (M : HermLB V.p) {f : Y.X → Y
 
 end UpperTheory.VertGlob
 
-open UpperTheory.VertGlob GlobalTheory.Mean4O GlobalTheory.CoverNorm GlobalTheory.VertForm GlobalTheory.ArInt GlobalTheory.TrivFlag MvPolynomial in

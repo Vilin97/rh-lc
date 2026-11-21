@@ -68,11 +68,9 @@ theorem exists_isZero (T : Over (Sp R)) : ∃ g : GtPt D T, g.IsZero := by
   exact ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) (v1 _ y J hJ) c)).trans
     ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) (v1 _ y J hJ) (v1 _ y J hJ))).symm
 
-omit [IsDomain R] in
 
 variable {I : Ideal R} {e : ℕ} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G] (g : GtCoord I D e G)
 
-omit [IsDomain R] in
 
 omit [IsDomain R] in
 theorem epsRed_hom : epsRed R ≫ (epsR R).hom = 𝟙 _ := by
@@ -95,6 +93,5 @@ variable {O : Type} [CommRing O] {β : O →+* c.F} {Y : Model Xo c β} {K₁ : 
 
 end ThetaShiftProofs
 
-variable (Xo c) in
 
 end GlobalTheory.ArcLieCompare

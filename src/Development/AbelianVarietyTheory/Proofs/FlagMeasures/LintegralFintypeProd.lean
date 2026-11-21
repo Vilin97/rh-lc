@@ -12,7 +12,6 @@ noncomputable section
 
 namespace GlobalTheory.SnMass.Push
 
-set_option backward.isDefEq.respectTransparency false in
 
 open NumberField IsDedekindDomain MeasureTheory Matrix in
 open scoped TensorProduct ENNReal nonZeroDivisors in

@@ -50,28 +50,19 @@ def WeilLab (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β) {R 
     ∀ a b (w : Over.mk (spMap (algebraMap R R) ≫ x) ⟶ Z.t.G),
       w ^ q = 1 → (lb b).left ≫ Z.m.φ = spMap io ≫ w.left → io ((ch a).χ R w : Rˣ) = (ζ ^ Dw.EF a b : Kˣ)
 
-variable (Dw) in
 
 def pr {K : Type} [CommRing K] (y : K ⊗[ℤ] Dw.La) (a : Dw.La) : K := Dw.EF.baseChange K y (1 ⊗ₜ a)
 
-variable (Dw) in
 
 def IsEigL {K : Type} [CommRing K] (σ : 𝓞 E →+* K) (y : K ⊗[ℤ] Dw.La) : Prop :=
   ∀ o : 𝓞 E, ((LinearMap.lsmul (𝓞 E) Dw.La o).restrictScalars ℤ).baseChange K y = σ o • y
 
-variable (Dw) in
 
-variable (Dw) in
 
-variable (Dw) in
 
-variable (Dw) in
 
-variable (Dw) in
 
-variable (Dw) in
 
-variable (Dw) in
 
 end Chars
 
@@ -89,7 +80,6 @@ section Fam
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {X : Scheme.{0}} {F : Type} [Field F] [NumberField F] {Y : Var F}
 
-variable (Dw) in
 
 end Fam
 

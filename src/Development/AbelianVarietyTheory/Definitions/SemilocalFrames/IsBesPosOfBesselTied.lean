@@ -170,7 +170,6 @@ namespace FJDat
 
 variable {L A B : HSp D} {ι : A.V →ₗ[D.host.E] B.V} (d : FJDat L A B ι)
 
-include d in
 
 theorem hD_fTop (y : B.V) (h : ∀ i, B.hD (d.f i) y = 0) : B.hD d.fTop y = 0 := by
   unfold HSpace.hD at h ⊢

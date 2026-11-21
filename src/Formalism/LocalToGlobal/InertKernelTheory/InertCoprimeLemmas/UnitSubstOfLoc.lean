@@ -472,7 +472,6 @@ end Lin
 
 end ThetaInverseLemmas
 
-open ThetaInverseLemmas in
 
 theorem locInv_of (hU : UnitSubstLoc) : LocInv := by
   intro D cc δ hcc hδ p _ hp5 hin lam σ hσ N N' Y r r' v v' F hv hv' hI
@@ -487,7 +486,6 @@ theorem locInv_of (hU : UnitSubstLoc) : LocInv := by
   exact locInv_core hU D cc δ hcc hδ p hp5 hin lam σ hσ b b' A A' Q hQK hQp hb' hA hA' hdet hAu hA'u v v'
     hvA hvA' F hI
 
-open ThetaInverseLemmas in
 
 theorem unitSubst_of_loc (hU : UnitSubstLoc) : UnitSubst := by
   intro D cc δ hcc hδ p _ hp5 hin lam C wq hC hW r A hAK hAp hAu

@@ -49,7 +49,6 @@ theorem diagHom_apply (b : Fin r → ℕ) (e : (Σ a, Fin (d a)) ≃ Fin r) (he 
   show Matrix.blockDiagonal' (fun a => (x a : Matrix (Fin (d a)) (Fin (d a)) F)) (e.symm (e p)) (e.symm (e q)) = _
   rw [e.symm_apply_apply, e.symm_apply_apply]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 variable {V : Type} [AddCommGroup V] [Module ℂ V]
 

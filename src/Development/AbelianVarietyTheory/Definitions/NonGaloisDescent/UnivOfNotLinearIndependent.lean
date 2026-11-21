@@ -15,7 +15,6 @@ section Flat
 
 variable {k R : Type} [CommRing k] [CommRing R] {r n : ℕ}
 
-open Classical in
 
 def flat (ν : kˣ →* Rˣ) (y : Matrix (Fin r) (Fin n) k) : R :=
   if h : IsUnit (topL r y).det then ((ν h.unit : Rˣ) : R) else 0
@@ -58,14 +57,12 @@ section Univ
 
 variable {k : Type} [Field k] {r n : ℕ}
 
-open Classical in
 
 def prim (y : Matrix (Fin r) (Fin n) k) : ℚ := if LinearIndependent k y.row then 1 else 0
 
 def Compl (U : Submodule k (Fin n → k)) (y : Matrix (Fin r) (Fin n) k) : Prop :=
   Submodule.span k (Set.range y.row) ⊔ U = ⊤
 
-variable (k r n) in
 
 abbrev Planes : Type := {U : Submodule k (Fin n → k) // Module.finrank k U + r = n}
 
@@ -79,7 +76,6 @@ theorem finrank_quot (U : Planes k r n) : Module.finrank k ((Fin n → k) ⧸ U.
   rw [Module.finrank_fin_fun] at h1
   omega
 
-variable (k r n) in
 
 structure DetBases where
 
@@ -142,7 +138,6 @@ theorem dU_mul (β : DetBases k r n) (U : Planes k r n) (g : Matrix (Fin r) (Fin
 
 variable [Finite k] {C : Type} [AddCommGroup C]
 
-open Classical in
 
 def univTerm (β : DetBases k r n) (κ : kˣ →* Multiplicative C) (y : Matrix (Fin r) (Fin n) k) (U : Planes k r n) :
     AddMonoidAlgebra ℚ C :=

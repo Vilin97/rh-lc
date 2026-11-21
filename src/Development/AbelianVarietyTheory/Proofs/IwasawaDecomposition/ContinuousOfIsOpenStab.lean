@@ -11,7 +11,6 @@ namespace GlobalTheory.CuspRep.ContAut
 
 variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
 
-omit [IsTotallyComplex E] in
 
 theorem continuous_pFin : Continuous (pFin E) := continuous_snd
 
@@ -20,7 +19,6 @@ theorem continuous_pInf : Continuous (pInf E) :=
     (InfinitePlace.Completion.isometryEquivComplexOfIsComplex (IsTotallyComplex.isComplex w)).continuous.comp
       ((continuous_apply w).comp continuous_fst)
 
-omit [IsTotallyComplex E] in
 
 theorem continuous_map_pFin :
     Continuous (GeneralLinearGroup.map (pFin E) : GA E a → GL (Fin a) (Af E)) :=

@@ -15,7 +15,6 @@ open GlobalTheory.CatH (face toLast)
 noncomputable section
 namespace GlobalTheory.CompanionTheory.ConeLocal
 
-open GlobalTheory.CompanionTheory.CocProd in
 
 theorem d_eq_of_rep {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {A : C ⥤ CommAlgCat.{0} R} {a b : IdF A} {n : ℕ}
     (f g : CH.Cn (CH.modF A) n) {c : CH.H (sq a b) n}

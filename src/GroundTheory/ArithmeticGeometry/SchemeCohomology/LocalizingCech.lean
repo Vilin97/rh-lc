@@ -16,7 +16,6 @@ universe u
 
 variable {X : TopCat.{u}} {P : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} {R : Type u} [CommRing R]
 
-variable (P) in
 
 structure LocalizingAction (D : R → Opens X) where
 
@@ -170,7 +169,6 @@ theorem exists_d_eq_pow_smul [Fintype ι] {n : ℕ} (σ : Cochain P (D ∘ h) (n
   rw [map_sub, sub_eq_zero, ← A.act_mul, ← pow_add] at hMJ
   exact hMJ
 
-include A in
 
 theorem cechAcyclic_of_localizingAction [Finite ι] (g : R) (hcov : ⨆ i, D (h i) = D g) :
     CechAcyclic P (D ∘ h) := by

@@ -27,9 +27,7 @@ end MultiplierFourier
 
 section Convolution
 
-variable (E) in
 
-variable (F) in
 
 end Convolution
 

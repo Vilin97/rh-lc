@@ -80,7 +80,6 @@ theorem approx_Af (a : Af D.host.F) (N : ℕ) (hN : 0 < N) :
 theorem isAlg_Z (e : D.host.E) : IsAlgebraic ℤ e :=
   (IsFractionRing.isAlgebraic_iff ℤ ℚ D.host.E).2 (Algebra.IsAlgebraic.isAlgebraic e)
 
-set_option maxHeartbeats 1600000 in
 
 theorem approx_AfE (N : ℕ) (hN : 0 < N) (z : Af D.host.F ⊗[D.host.F] D.host.E) :
     ∃ w : D.host.E, ∃ y ∈ intAE D, z = (1 : Af D.host.F) ⊗ₜ[D.host.F] w + N • y := by

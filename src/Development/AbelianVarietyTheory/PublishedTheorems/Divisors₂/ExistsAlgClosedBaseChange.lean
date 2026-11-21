@@ -154,6 +154,5 @@ end AnyField
 theorem NefRiemannRoch.nefBigIff (h : NefRiemannRoch) : NefBigIff :=
   fun _ _ _ _ _ _ _ hp hD _ hL => h.isBig_iff hp hD hL
 
-open GlobalTheory.ProjSpace in
 
 end GlobalTheory.Published

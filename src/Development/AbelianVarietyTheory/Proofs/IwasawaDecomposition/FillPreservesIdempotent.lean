@@ -68,7 +68,6 @@ def IsRbar (σ : what₂.FT) (w : what₂.places.Pl)
       ∃ p : (B₀ w)[X], p.map (B₀ w).subtype = galPol A (A.lpTw (isoLoc N A Sig v) ((1 - (R.r : ℝ)) / 2)) ∧
         (r s : Matrix (Fin R.r) (Fin R.r) _).charpoly = p.map (κ w)
 
-open Classical in
 
 variable {A B₀ κ}
 
@@ -169,7 +168,6 @@ theorem eq_of_galPol {w : PlE H} {a b : A.LP w} (ha : A.unr a) (hb : A.unr b) {u
     rw [A.unr_eq_lpUnr _ ((A.unr_tw a u).2 ha), h1, ← A.unr_eq_lpUnr _ ((A.unr_tw b u).2 hb)]
   simpa only [A.lpTw_add, add_neg_cancel, A.lpTw_zero] using congrArg (A.lpTw · (-u)) h2
 
-variable (A) in
 
 def IsCohSum (n : ℕ) (Sig : List (Formalism.BasicNotions.Part A.CG)) : Prop :=
   (∀ p ∈ Sig, A.csd p.π) ∧ ∀ p ∈ Sig, ∀ τ, (A.infG p.π τ).Nodup ∧
@@ -206,7 +204,6 @@ open GlobalTheory.CuspRep
 
 variable [IsTotallyComplex H.E]
 
-variable (A) in
 
 def ReadsCusp (e : ∀ a, A.CG a → CG H.E a) : Prop :=
   (∀ a, 1 ≤ a → Function.Injective (e a)) ∧ (∀ a π, 1 ≤ a → (e a π).IsUnitary) ∧
@@ -263,7 +260,6 @@ end Cusp
 
 variable (A)
 
-open Classical in
 
 variable {A}
 
@@ -295,7 +291,6 @@ theorem lpDim_isoLoc (Sig : List (Formalism.BasicNotions.Part A.CG)) (w : PlE H)
     rw [GlobalTheory.SpehRigid.spehLoc_eq, lpDim_twSum, GlobalTheory.SpehRigid.flat, List.map_map]
     simp [Function.comp_def, mul_comm]
 
-variable {A} in
 
 structure Spec (M : Type) [AddCommGroup M] [Module ℂ M] where
 
@@ -313,13 +308,11 @@ namespace Spec
 
 variable {A} {M : Type} [AddCommGroup M] [Module ℂ M] (S S' : Spec A M)
 
-variable {S S'} in
 
 end Spec
 
 variable {A} (S : ∀ μ j, Spec A (what₂.Mt μ j)) (T : ∀ μ, Spec A (what₂.Amb μ)) (c : what₂.Tup → ℕ → A.CG 1)
 
-variable (A) in
 
 variable (B₀ : what₂.places.Pl → ValuationSubring ℂ)
   (κ : ∀ w, B₀ w →+* Fb (what₂.places.resChar w) (what₂.places.resChar_prime w))

@@ -95,7 +95,6 @@ theorem repr_map_tens {n : ℕ} {F E R R' : Type} [Field F] [Field E] [Algebra F
 
 end GlobalTheory.IdeleCyl
 
-open GlobalTheory.IdeleCyl in
 
 theorem GlobalTheory.IdeleCyl.exists_isCompact_box : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (M : ∀ w : InfinitePlace F, Set (w.Completion ⊗[F] E)) (L : ∀ v : Pl F, Set (Fv F v ⊗[F] E)),
@@ -139,4 +138,3 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 end GlobalTheory.IdeleCyl
 
-open GlobalTheory.IdeleCyl in

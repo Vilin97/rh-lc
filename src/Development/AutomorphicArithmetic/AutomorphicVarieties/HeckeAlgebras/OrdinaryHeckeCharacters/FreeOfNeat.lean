@@ -134,6 +134,5 @@ theorem res_up (hp : ∀ g, h.p (toGS Ω V.S' g) = toGS Ω V0.S' g) {m : ℕ} (�
     cases r
     exact this
 
-variable {Q0} in
 
 end UpperTheory.V.Hi.LvR

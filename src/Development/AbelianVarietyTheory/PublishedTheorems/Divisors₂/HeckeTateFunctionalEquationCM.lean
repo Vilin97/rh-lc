@@ -18,11 +18,9 @@ namespace GlobalTheory.HeckeEps
 
 variable {E : Type} [Field E] [NumberField E]
 
-variable (E) in
 
 def stdChar : AddChar (AF E) ℂ := (GlobalTheory.StdCharUnique.existsUnique_isStdChar E).exists.choose
 
-variable (E) in
 
 theorem isStdChar_stdChar : GlobalTheory.IndefiniteRowSideFullHecke.LocalDualIndex.IsStdChar E (stdChar E) :=
   (GlobalTheory.StdCharUnique.existsUnique_isStdChar E).exists.choose_spec
@@ -31,7 +29,6 @@ def psiAt (w : HeightOneSpectrum (𝓞 E)) (x : w.adicCompletion E) : ℂ := psi
 
 def diffExp (w : HeightOneSpectrum (𝓞 E)) : ℕ := multiplicity w.asIdeal (differentIdeal ℤ (𝓞 E))
 
-open Classical in
 
 def gaussTerm (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) (c : Eˣ) (y : E) : ℂ :=
   if h : y = 0 then 0 else

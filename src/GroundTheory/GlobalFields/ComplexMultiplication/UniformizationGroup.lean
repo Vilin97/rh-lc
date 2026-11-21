@@ -47,7 +47,6 @@ theorem exists_weierstrassP_eq (c : ℂ) : ∃ z, z ∉ L.lattice ∧ ℘[L] z =
       rfl
   simp [h0] at h2
 
-variable (L) in
 
 def toPoint (z : ℂ) : (weierstrassCurve L).toAffine.Point :=
   haveI := Classical.propDecidable (z ∈ L.lattice)
@@ -175,14 +174,12 @@ theorem toPoint_surjective : Function.Surjective (toPoint L) := by
     exact point_some_congr (by rw [L.weierstrassP_neg, hx])
       (by rw [L.derivWeierstrassP_neg]; linear_combination -h1)
 
-variable (L) in
 
 def toPointHom : ℂ →+ (weierstrassCurve L).toAffine.Point where
   toFun := toPoint L
   map_zero' := toPoint_zero
   map_add' := toPoint_add
 
-variable (L) in
 
 def torusToPoint : Torus L →+ (weierstrassCurve L).toAffine.Point :=
   QuotientAddGroup.lift L.lattice.toAddSubgroup (toPointHom L) fun _ hl ↦ toPoint_of_mem hl
@@ -196,7 +193,6 @@ lemma torusToPoint_injective : Function.Injective (torusToPoint L) := by
   rw [torusToPoint_mk, toPoint_eq_zero_iff] at hx
   exact (QuotientAddGroup.eq_zero_iff z).2 hx
 
-variable (L) in
 
 end Elliptic
 end GroundTheory.Global

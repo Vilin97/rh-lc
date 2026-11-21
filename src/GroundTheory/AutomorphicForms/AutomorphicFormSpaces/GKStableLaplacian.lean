@@ -93,7 +93,6 @@ theorem sliceL_uAction (g : AdelicGLn.AdelicGL K n) (u : UEnv K n) (φ : archSmo
     sliceL g (uAction u φ) = (isExpLieAlgebra K n).rightUAction (F := ℂ) u (sliceL g φ) :=
   Subtype.ext (archSlice_uAction u φ g)
 
-variable (K n) in
 
 def laplacianU {ι : Type*} [Fintype ι] (b : Module.Basis ι ℝ (isExpLieAlgebra K n).lieSubalgebra) :
     UEnv K n :=

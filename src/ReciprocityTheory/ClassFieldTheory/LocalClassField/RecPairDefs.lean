@@ -21,14 +21,12 @@ def IsPairClass (a : (kbarT p K).V) (χ : charGrp (GK p K)) (c : Br p K) : Prop 
     (∀ g, (m g : ℚ) = t (g 0) + t (g 1) - t (g 0 * g 1)) ∧ (∀ g, z.1 g = m g • a) ∧
     c = (kbarT p K).coch.cls 2 z hz
 
-open Classical in
 
 def pairBr (a : Kˣ) (χ : charGrp (GK p K)) : Br p K :=
   if h : ∃ c, IsPairClass p K (ofK p K (Additive.ofMul a)) χ c then h.choose else 0
 
 def pairK (a : Kˣ) (χ : charGrp (GK p K)) : QZ := invBr p K (pairBr p K a χ)
 
-variable {p K L} in
 
 def resChar (h : K ≤ L) : charGrp (GK p K) →+ charGrp (GK p L) where
   toFun χ := ⟨χ.1.comp (MonoidHom.toAdditive (resGK h)),

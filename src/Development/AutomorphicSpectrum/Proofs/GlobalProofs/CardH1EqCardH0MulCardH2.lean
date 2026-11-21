@@ -14,7 +14,6 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.Hypotheses₂.LocalEuler
 
-open PositivityTheory.LocalTateOrthogonality.Gcoh in
 
 theorem card_H1_eq_card_H0_mul_card_H2 (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (PadicAlgCl p))
     (hK : FiniteDimensional ℚ_[p] K) (l : ℕ) [hl : Fact l.Prime] (hlp : l ≠ p) (r : ℕ) (M : Type)

@@ -89,6 +89,5 @@ theorem deltaHalf_inv {E : Type} [Field E] [NumberField E] (n : ℕ) (w : Height
 
 end GlobalTheory.CompanionTheory.JacEigAt
 
-open GlobalTheory.CompanionTheory.JacEigAt in
 
 end

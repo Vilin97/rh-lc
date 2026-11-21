@@ -20,7 +20,6 @@ variable {k Γ : Type*} [Field k] [Group Γ] [Fintype Γ]
   [AddCommGroup X₃] [Module k X₃]
   {ρ₁ : Representation k Γ X₁} {ρ₂ : Representation k Γ X₂} {ρ₃ : Representation k Γ X₃}
 
-omit [Fintype Γ] in
 
 theorem mapsTo_invariants {f : X₁ →ₗ[k] X₂} (hf : ρ₁.IsIntertwiningMap ρ₂ f) (x : X₁)
     (hx : x ∈ ρ₁.invariants) : f x ∈ ρ₂.invariants := fun γ => by

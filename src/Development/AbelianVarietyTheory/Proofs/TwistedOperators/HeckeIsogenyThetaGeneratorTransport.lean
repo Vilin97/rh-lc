@@ -462,7 +462,6 @@ theorem descends_ker (h : IsLinHom Ψ) [Etale Ψ] [QuasiCompact Ψ] [Surjective 
   · have e₅ : toPt x (𝟙 _) ≫ j = 𝟙 _ := Over.OverMorphism.ext (Category.comp_id _)
     rw [toFib_transl, reassoc_of% e₅, inv_mul_cancel_right]
 
-omit [IsAlgClosed Ω] in
 
 theorem mulT_props (x : Sp Ω ⟶ Xo.X) (hp : 1 ≤ p) : Etale (mulT Xo.univ.t.G (Over.mk x) p).left ∧
     QuasiCompact (mulT Xo.univ.t.G (Over.mk x) p).left ∧ Surjective (mulT Xo.univ.t.G (Over.mk x) p).left := by
@@ -491,7 +490,6 @@ theorem mulT_props (x : Sp Ω ⟶ Xo.X) (hp : 1 ≤ p) : Etale (mulT Xo.univ.t.G
     QuasiCompact.of_comp _ (Formalism.L2.PjFree.gxSnd (x)),
     (EmbSpan.pt_pow_and_surjective abelianSchemeLaws_all.1 (GlobalTheory.UnivPol.pol Xo) x p hp).2⟩
 
-omit [IsAlgClosed Ω] in
 
 theorem isIntegral_gx (x : Sp Ω ⟶ Xo.X) : IsIntegral (Gx x) := by
   have hA := isAbelianScheme_of_proper Xo.univ.t Xo.univ.proper
@@ -561,7 +559,6 @@ theorem transl_quot (hp : 1 ≤ p)
 variable {β : LB.Gen (isoLB Xo.univ.t.G Xo.univ.t.PP Ψ ((p : ℤ) ^ 2))} {s : LB.Sec (PPx x)}
   {s₁ : LB.Sec (LPow Xo.univ.t.G Xo.univ.t.PP.L ((p : ℤ) ^ 2) (Over.mk x))}
 
-omit [IsAlgClosed Ω] in
 
 theorem term_transl (h : IsLinHom Ψ) (hβ : β.IsGen) (hs : IsMulPull _ Xo.univ.t.PP p s s₁)
     (hst : ∀ a ∈ transKer _ Ψ, a ≫ Xo.univ.t.act.act H.w0 ∈ transKer _ Ψ) {Z : Scheme.{0}} (r : Z ⟶ Gx x) (z : Z)
@@ -708,7 +705,6 @@ theorem existsUnique_trace (h : IsSplitOff l P p) (hC : Xo.univ.t.HeckeKer (Over
       (hJ.mem (fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x'))) _) _).trans
         ((congrArg _ (map_zero _)).trans (map_zero _)))
 
-omit [IsAlgClosed Ω] in
 
 theorem isThGen_iff [Algebra c.F Ω] (hx : x ≫ Xo.s = sOf c Ω) (s : LB.Sec (PPx x)) :
     IsThGen x s ↔ ¬ ∀ j, s.f j = 0 := by

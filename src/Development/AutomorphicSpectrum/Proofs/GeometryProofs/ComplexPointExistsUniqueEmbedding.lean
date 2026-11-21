@@ -143,7 +143,6 @@ theorem intHom_injective (τ : 𝓞 F →+* ℂ) : Function.Injective τ := by
 
 end OverUnique
 
-open OverUnique GroundTheory.Heights₂.Heights.LowerBoundFree in
 
 theorem existsUnique_ptOver (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     (F : Type) [Field F] [NumberField F] (y : (Σ k, ι k) → Ω) (φ : F →+* Ω) (hO : OverInt y φ) :

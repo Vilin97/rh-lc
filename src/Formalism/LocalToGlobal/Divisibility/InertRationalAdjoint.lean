@@ -43,7 +43,6 @@ def resSet3 (X : Finset (G → K)) : Set (Typ3 K Pl0 I0 Ty) :=
   {p | (∀ P0, P0 ∉ Set.range B.pl → p.1 P0 = 1) ∧ (∀ P0, P0 ∉ Set.range D.plI → ∀ y, p.2 (P0, y) = 0) ∧
     B.inV0 (Lvl.full X) (D.inertTypeEigenspaceSum p) ≠ ⊥}
 
-open Classical in
 
 def ixFin3 (X : Finset (G → K)) : Finset (Typ3 K Pl0 I0 Ty) :=
   if h : (D.resSet3 X).Finite then h.toFinset else ∅

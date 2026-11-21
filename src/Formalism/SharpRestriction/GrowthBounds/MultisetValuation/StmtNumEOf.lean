@@ -22,7 +22,6 @@ def nc_zc (X : Formalism.MainNotions.G.Inst D L) (Y : Formalism.MainNotions.G.La
     (s : Fin ((D.gat u w hg).P.n' (Y.vOf u w hg t0))) : ℝ :=
   Formalism.MainNotions.G.fillG X (Formalism.MainNotions.G.bL L) j (false, t0 + s.val • Formalism.MainNotions.G.hP D (D.what₂.places.resChar w)) + Formalism.MainNotions.G.cG L
 
-open Classical in
 
 def nc_Loc (D : Formalism.BasicNotions.D7) (L : SizeData₂ D) (X : Formalism.MainNotions.G.Inst D L) (Y : Formalism.MainNotions.G.LatInst D) (K : Formalism.MainNotions.G.Consts)
     (_hT : GatTies D) (u : D.what₂.Word) (w : D.what₂.places.Pl)

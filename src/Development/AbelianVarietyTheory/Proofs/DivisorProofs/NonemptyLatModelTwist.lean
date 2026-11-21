@@ -32,7 +32,6 @@ theorem val_resM (hM : LatModel M F) {U W : X.Opens} (e : W ≤ U) (h : genericP
     (s : Γ(F, U)) : hM.val W h (resM F e s) = hM.val U (e h) s :=
   hM.res U W e h s
 
-variable (r) in
 
 def tval (hM : LatModel M F) (i : L.ι) (hi : genericPoint X ∈ L.U i) (U : X.Opens)
     (h : genericPoint X ∈ U) : Γ(twist F L, U) →+ V where

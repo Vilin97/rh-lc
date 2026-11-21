@@ -6,7 +6,6 @@ public import Mathlib
 
 namespace GlobalTheory
 
-open Algebra in
 
 theorem isAlgebraic_of_subring_isAlgebraic {L : Type} [Field L] [Algebra ℂ L]
     (S : Subalgebra ℂ L) (B : Subring L) (z : L)

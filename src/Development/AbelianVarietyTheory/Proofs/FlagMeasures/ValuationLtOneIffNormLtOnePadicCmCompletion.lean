@@ -36,7 +36,6 @@ theorem continuous_symm {A B : Type} [Field A] [TopologicalSpace A] [IsTopologic
 
 end GlobalTheory.SlocVal
 
-open GlobalTheory.SlocVal in
 
 theorem GlobalTheory.valuation_lt_one_iff_norm_lt_one_of_continuous : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (s : SplitPlace L) (g : ℕ) [Fact g.Prime] (i : s.v.adicCompletion (maximalRealSubfield L) ≃+* s.w.adicCompletion L) (j : ℚ_[g] ≃+* s.w.adicCompletion L), Continuous i → Continuous j → ∀ z : s.v.adicCompletion (maximalRealSubfield L), Valued.v z < 1 ↔ ‖j.symm (i z)‖ < 1 := by
   intro L _ _ _ s g _ i j hi hj z

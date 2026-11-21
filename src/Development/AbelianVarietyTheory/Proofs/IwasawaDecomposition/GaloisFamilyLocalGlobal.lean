@@ -81,9 +81,6 @@ theorem eigSet_transport (M : MtFam D) {μ μ' : D.what₂.Tup} {j j' : ℕ} (h�
 
 end Eig
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
-open Classical in
 
 end GlobalTheory.SysFin
 

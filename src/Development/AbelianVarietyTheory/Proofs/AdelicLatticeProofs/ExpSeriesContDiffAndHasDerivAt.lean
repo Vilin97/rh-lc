@@ -102,7 +102,6 @@ private lemma contDiff_tsum_cexp_smul_of_summable_exp {V I : Type} [NormedAddCom
     exact ih (V →L[ℝ] E) (fun i => (m i).smulRight (w i))
       (summable_norm_smulRight_mul_exp m w hw)
 
-open scoped ContDiff in
 
 theorem _root_.GlobalTheory.expSeries_contDiff_and_hasDerivAt :
     ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] (I : Type) (c : I → ℂ)

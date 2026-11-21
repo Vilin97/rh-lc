@@ -79,7 +79,6 @@ def locFib (ξ : Spec (CommRingCat.of Ω) ⟶ X) (q : ℕ) : Set (Cpt ξ) := {p 
 
 def invFib (ξ : Spec (CommRingCat.of Ω) ⟶ X) (m : ℕ) : Set (Cpt ξ) := {p | unitAt ξ p (m : Ω)}
 
-open Classical in
 
 def Lat.predualIn {ξ : Spec (CommRingCat.of Ω) ⟶ X} (L : Lat ξ (Module.Dual Ω E)) (V : Submodule Ω E) : Lat ξ E :=
   fun p =>

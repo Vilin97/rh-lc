@@ -32,7 +32,6 @@ def stabSub (v : V) : AddSubgroup (Fin (m + 1) → k) where
     conv_lhs => rw [← ha]
     rw [← Module.End.mul_apply, ← map_mul, ← colEl_add, neg_add_cancel, colEl_zero, map_one, Module.End.one_apply]
 
-variable (k) in
 
 def charSub {n : ℕ} (ψ : AddChar k Circle) (ξ : Fin n → k) : AddSubgroup (Fin n → k) where
   carrier := {x | ψ (ξ ⬝ᵥ x) = 1}
@@ -44,7 +43,6 @@ def charSub {n : ℕ} (ψ : AddChar k Circle) (ξ : Fin n → k) : AddSubgroup (
     simp only [Set.mem_ofPred_eq] at *
     rw [dotProduct_neg, AddChar.map_neg_eq_inv, ha, inv_one]
 
-variable (k) in
 
 def annSub {n : ℕ} (ψ : AddChar k Circle) (A : AddSubgroup (Fin n → k)) : AddSubgroup (Fin n → k) where
   carrier := {ξ | ∀ a ∈ A, ψ (ξ ⬝ᵥ a) = 1}
@@ -234,7 +232,6 @@ theorem char_sum {ξ η : Fin (m + 1) → k} {A : AddSubgroup (Fin (m + 1) → k
         exact (div_eq_one.mp H2).symm
     rw [hz, mul_zero]
 
-open Classical in
 
 theorem avg_zero' (hψ : Continuous ψ) (hπ : IsSmooth π) (ξ : Fin (m + 1) → k) {A : AddSubgroup (Fin (m + 1) → k)}
     (hA : IsLat A) : avg ψ h π ξ A 0 = 0 := by
@@ -250,7 +247,6 @@ theorem avg_sum' (hψ : Continuous ψ) (hπ : IsSmooth π) (ξ : Fin (m + 1) →
   · intro i s hi ih
     rw [Finset.sum_insert hi, Finset.sum_insert hi, avg_add h π ψ hψ hπ ξ hA, ih]
 
-open Classical in
 
 theorem avg_avg (hψ : Continuous ψ) (hπ : IsSmooth π) (ξ η : Fin (m + 1) → k) {A A' : AddSubgroup (Fin (m + 1) → k)}
     (hA : IsLat A) (hA' : IsLat A') (hAA' : A ≤ A') (v : V) :

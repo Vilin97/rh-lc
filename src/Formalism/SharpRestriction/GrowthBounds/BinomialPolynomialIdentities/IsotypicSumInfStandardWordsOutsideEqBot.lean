@@ -132,7 +132,6 @@ theorem isotypicSum_inf_standardWordsOutside_eq_bot (hpi : DomLowerSet pi) (x : 
     (Set.disjoint_left.2 fun x h1 h2 => h1 h2)
   exact (Submodule.disjoint_def.1 hd) _ h1 h2
 
-include D in
 
 theorem linearIndependent_standardWords_by_weight (hE4 : TypeSumsByEvaluation) {k : ℕ} (e : Fin m → Fin k) (dcd : Fin k → Option (Fin m))
     (hd1 : ∀ a, dcd (e a) = some a) (hd2 : ∀ c a, dcd c = some a → c = e a) (hpi : DomLowerSet pi)

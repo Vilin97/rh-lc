@@ -32,7 +32,6 @@ theorem eventually_compFin_mem_intLoc_adele (z : AE F E) :
     change evFin F v a ⊗ₜ[F] e ∈ _
     simpa using this
 
-omit [NumberField E] in
 
 theorem compFin_unitAt_self (v : Pl F) (l : (AE F E)ˣ) :
     compFin F E v (unitAt E v l : AE F E) = compFin F E v l := by

@@ -14,7 +14,6 @@ namespace GlobalTheory.LawTrace
 variable {G Γ W : Type} [Group G] [Group Γ] [AddCommGroup W] [Module ℂ W]
   (ι : Γ →* G) (ρ : Γ →* Module.End ℂ W) (J : Subgroup G) (χ : J →* ℂˣ)
 
-open Classical in
 
 def term (y x : G) (P : W) (γ : Γ) : W :=
   if h : (ι γ * y)⁻¹ * x ∈ J then ((χ ⟨_, h⟩ : ℂˣ) : ℂ) • ρ γ P else 0

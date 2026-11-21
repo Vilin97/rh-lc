@@ -46,7 +46,6 @@ def In (N : Ideal B) (f : MvPowerSeries σ Q) : Prop :=
 def DIn (N : Ideal B) (f : MvPowerSeries σ Q) : Prop :=
   ∀ α i, ∃ b ∈ N, (α i : Q) * coeff α f = algebraMap B Q b
 
-variable (Q) in
 
 def up {ι : Type} (u : ι → MvPowerSeries σ B) : ι → MvPowerSeries σ Q :=
   fun i => map (algebraMap B Q) (u i)
@@ -212,7 +211,6 @@ theorem hasPeriod_iff [Algebra B Q] {θ : B →+* O} (h : IsFrame p Q θ) (t : G
   · obtain ⟨q', hq', hb⟩ := H n z hz
     rwa [HasVal.unique h hq hq']
 
-variable {c} in
 
 theorem HasPeriod.unique [Algebra B Q] {θ : B →+* O} (h : IsFrame p Q θ) {t : G.Tate}
     {f : MvPowerSeries (Fin d) Q} {y y' : B} (h1 : c.HasPeriod θ t f y) (h2 : c.HasPeriod θ t f y') :
@@ -240,7 +238,6 @@ theorem isLie_iff [Algebra O Q] (h : Function.Injective (algebraMap O Q))
       exact h (by simpa [coeff_map] using congrArg (coeff α) (hs.trans hs'.symm))
     exact this ▸ H' w φ hφ
 
-variable {c} in
 
 theorem isLie_zero [Algebra O Q] (h : Function.Injective (algebraMap O Q)) :
     c.IsLie (0 : MvPowerSeries (Fin d) Q) 0 :=

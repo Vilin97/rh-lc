@@ -23,14 +23,12 @@ variable {O K : Type*} [CommRing O] [IsDomain O] [Field K] [Algebra O K] [IsFrac
   {V : Type*} [AddCommGroup V] [Module K V] [Module O V] [Module A V] [IsScalarTower O K V]
   [IsScalarTower A K V] [IsScalarTower O A V]
 
-omit [IsDomain O] [IsScalarTower O A K] [IsScalarTower A K V] [Algebra A K] in
 
 theorem exists_smul_mem {N : Submodule A V} (hN : Submodule.span K (N : Set V) = ⊤) (x : V) :
     ∃ d ∈ O⁰, d • x ∈ N :=
   (mem_span_localization_iff K O⁰ (N.restrictScalars O) x).1 (by
     rw [Submodule.coe_restrictScalars, hN]; trivial)
 
-omit [IsDomain O] [IsScalarTower O A K] [IsScalarTower A K V] [Algebra A K] in
 
 theorem exists_smul_mem_of_finite {N : Submodule A V} (hN : Submodule.span K (N : Set V) = ⊤)
     {s : Set V} (hs : s.Finite) : ∃ d ∈ O⁰, ∀ x ∈ s, d • x ∈ N := by
@@ -44,7 +42,6 @@ theorem exists_smul_mem_of_finite {N : Submodule A V} (hN : Submodule.span K (N 
     · rw [mul_smul]; exact N.smul_of_tower_mem d h'
     · rw [mul_comm, mul_smul]; exact N.smul_of_tower_mem e (h x hx)
 
-omit [IsDomain O] [IsScalarTower O A K] [IsScalarTower A K V] [Algebra A K] in
 
 theorem exists_smul_le {M N : Submodule A V} (hM : M.FG)
     (hN : Submodule.span K (N : Set V) = ⊤) : ∃ d ∈ O⁰, ∀ x ∈ M, d • x ∈ N := by
@@ -57,10 +54,7 @@ theorem exists_smul_le {M N : Submodule A V} (hM : M.FG)
   | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
   | smul a x _ hx => rw [smul_comm]; exact N.smul_mem a hx
 
-omit [IsScalarTower O A K] [IsScalarTower A K V] [Algebra A K] in
 
-omit [IsScalarTower O A K] [IsScalarTower A K V] [Algebra A K] in
-include K in
 
 end Denominators
 
@@ -240,9 +234,7 @@ theorem algebraMap_mem_adicCompletionIntegers_iff (x : K) :
 
 variable [Fintype ι] [DecidableEq ι]
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
 variable {v}
 

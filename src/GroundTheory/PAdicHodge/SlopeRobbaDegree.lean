@@ -21,7 +21,6 @@ set_option linter.unusedSectionVars false
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
   [IsDiscreteValuationRing (normInteger K)]
 
-variable (K) in
 
 def dvUnif : K := ((IsDiscreteValuationRing.exists_irreducible (normInteger K)).choose : K)
 

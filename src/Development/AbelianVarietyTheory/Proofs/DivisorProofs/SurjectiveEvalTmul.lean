@@ -17,7 +17,6 @@ namespace GlobalTheory.SurjTens
 
 variable {O σ ι : Type} [CommRing O]
 
-open Classical in
 
 def pushVars (j : σ → ι) (f : MvPowerSeries σ O) : MvPowerSeries ι O :=
   fun β => if h : ∃ α : σ →₀ ℕ, Finsupp.mapDomain j α = β then coeff h.choose f else 0

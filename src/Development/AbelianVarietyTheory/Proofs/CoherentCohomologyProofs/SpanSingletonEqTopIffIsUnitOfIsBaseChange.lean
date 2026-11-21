@@ -167,7 +167,6 @@ theorem bijective_smul_stalk
     refine ⟨X.presheaf.germ V x hxV a, ?_⟩
     simp only [germ_smul, TopCat.Presheaf.germ_res_apply]
 
-variable (s) in
 
 noncomputable def sectionHom :
     @Quiver.Hom (U : Scheme.{u}).Modules _ (SheafOfModules.unit (U : Scheme.{u}).ringCatSheaf)
@@ -180,7 +179,6 @@ noncomputable def sectionHom :
         rw [← ConcreteCategory.comp_apply, ← F.presheaf.map_comp]
         rfl))
 
-variable (s) in
 
 theorem sectionHom_app (W : (U : Scheme.{u}).Opens) (a : Γ(X, U.ι ''ᵁ W)) :
     ((sectionHom s).app W a : Γ(F, U.ι ''ᵁ W)) =

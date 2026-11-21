@@ -36,7 +36,6 @@ theorem towerZBasis_apply {M : Type} [AddCommGroup M] [Module (𝓞 Em) M] {ρ :
     (towerZBasis hv p : M) = RingOfIntegers.basis Em (equivReindex Em p.2) • v p.1 := by
   simp [towerZBasis, Basis.smulTower'_apply, Basis.span_apply]
 
-open Classical in
 
 end Tower
 
@@ -47,9 +46,7 @@ variable {II : IntersectionSystem} {Ψ : Type} [Fintype Ψ] {K : Type} [Fintype 
   [∀ τ, Module Ω (E τ)] {Em : Type} [Field Em] [NumberField Em] [IsCMField Em]
   (D : FullerData II Ψ K ι Ω E Em)
 
-open Classical in
 
-open Classical in
 
 end FullerData
 

@@ -28,7 +28,6 @@ abbrev lat {ι : Type} [Fintype ι] {κ : Type} (b : Module.Basis κ ℝ (Euclid
     Submodule ℤ (EuclideanSpace ℂ ι) :=
   Submodule.span ℤ (Set.range b)
 
-variable (E) in
 
 structure PT where
 
@@ -55,11 +54,9 @@ variable (X : PT E)
 
 abbrev L : Submodule ℤ (Vsp X.dim) := lat X.b
 
-variable (E) in
 
 def f : ℕ := Module.finrank ℚ E / 2
 
-variable (E) in
 
 def rd : ℝ := |(NumberField.discr E : ℝ)| ^ (1 / (Module.finrank ℚ E : ℝ))
 
@@ -107,12 +104,10 @@ def polyDeriv {σ W : Type*} [NormedAddCommGroup W] [NormedSpace ℂ W]
 
 abbrev Letter (n : ℕ) (dim : (E →+* ℂ) → ℕ) : Type := Fin n × Idx dim
 
-open Classical in
 
 def dir {n : ℕ} {dim : (E →+* ℂ) → ℕ} (l : Letter n dim) : Fin n → Vsp dim :=
   Pi.single l.1 (EuclideanSpace.single l.2 1)
 
-variable (E) in
 
 structure Block (n : ℕ) (dim : (E →+* ℂ) → ℕ) where
   τ : E →+* ℂ
@@ -284,7 +279,6 @@ def GSupStatement : Prop :=
       (1 + 4 * Real.sqrt (2 * Fintype.card ι) / (Real.sqrt (q * Real.pi) * Y.la1)) ^
         (2 * Fintype.card ι) * Y.l2 q F
 
-open Classical in
 
 def GCauchyStatement : Prop :=
   ∀ (ι : Type) [Fintype ι] (F : EuclideanSpace ℂ ι → ℂ), Differentiable ℂ F →

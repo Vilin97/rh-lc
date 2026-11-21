@@ -24,7 +24,6 @@ theorem awayG_le_comap (p : ℕ) (v : HeightOneSpectrum (𝓞 F)) (hv : ((p : �
     awayG σE J Uloc p ≤ (Uloc v).comap (bc (prV (E := E) v)) :=
   fun x hx => ((mem_awayG σE J Uloc p x).1 hx).2 v hv
 
-variable (σE J Uloc) in
 
 def lamQG (Q : Finset (HeightOneSpectrum (𝓞 F))) (lamQ : ∀ v, v ∈ Q → (Uloc v →* Z)) (p : ℕ)
     (hQ : ∀ v ∈ Q, ((p : ℕ) : 𝓞 F) ∉ v.asIdeal) : awayG σE J Uloc p →* Z :=

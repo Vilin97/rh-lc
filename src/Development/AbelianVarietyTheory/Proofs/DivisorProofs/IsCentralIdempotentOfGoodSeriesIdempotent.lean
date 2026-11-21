@@ -23,7 +23,6 @@ variable {WL : Type} [AddCommGroup WL] [Module LL WL] [Module Ks WL] [IsScalarTo
 variable {W : (LL →+* ℂ) → Type} [∀ σ, NormedAddCommGroup (W σ)] [∀ σ, InnerProductSpace ℂ (W σ)]
 variable {G G' : Type} [Group G] [Fintype G] [Group G'] [Fintype G']
 
-omit [NumberField LL] in
 
 end Clause
 
@@ -65,7 +64,6 @@ include hb
 
 end Places
 
-open GlobalTheory.MemN.TypesInhab in
 
 theorem goodSeriesIdempotent_central_idempotent (D : D7) :
     D.ntypes.e0 ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)) ∧ D.ntypes.e0 * D.ntypes.e0 = D.ntypes.e0 := by

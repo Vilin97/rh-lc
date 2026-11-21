@@ -60,7 +60,6 @@ theorem idMap_inv (I : nonZeroDivisors (Ideal (𝓞 K))) (b : (ZMod M)ˣ) :
     (idMap (sg M K b)⁻¹.toRingEquiv I).1 = conjI M K I.1 b :=
   Ideal.map_symm (sgO M K b)
 
-omit [NeZero M] in
 
 def carry (a b : ZMod M) : ℕ := if M ≤ a.val + b.val then 1 else 0
 

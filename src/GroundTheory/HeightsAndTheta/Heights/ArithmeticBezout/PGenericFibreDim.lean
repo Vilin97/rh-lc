@@ -40,7 +40,6 @@ theorem eq_natCast_of_add_one_eq (d : ℕ) (x : WithBot ℕ∞)
 
 end GenericFibreDim
 
-open GenericFibreDim in
 
 end ObjectsChow
 

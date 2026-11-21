@@ -104,7 +104,6 @@ theorem annihilation_of_scaled_spans {O M ι : Type} [CommRing O] [AddCommGroup 
   have hx' : b • x ∈ Submodule.span O ((Finset.univ.biUnion s : Finset M) : Set M) ⊔ Im := key hx
   exact Submodule.add_mem _ hx' (Submodule.mem_sup_right (nsmul_mem (hB hy) b))
 
-set_option maxHeartbeats 2000000 in
 
 theorem killR_of_steps (D : D7) (HW : HWOf D.loc) (hd : dvdR) (hq : quotR D) (hn : normR D)
     (h9 : p9R D HW) (hS : splitR D HW) (hU : univR D HW) : killR D := by

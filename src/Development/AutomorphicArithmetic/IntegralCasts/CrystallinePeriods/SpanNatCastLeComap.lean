@@ -144,13 +144,11 @@ namespace Ainf
 
 abbrev teich : Tilt p R →* Ainf p R := WittVector.teichmuller p
 
-variable (R) in
 
 def frob : Ainf p R →+* Ainf p R := WittVector.frobenius
 
 def map (f : R →+* S) : Ainf p R →+* Ainf p S := WittVector.map (Tilt.map p f)
 
-variable (R) in
 
 def ofPadicInt : ℤ_[p] →+* Ainf p R :=
   (WittVector.map (ZMod.castHom (dvd_refl p) (Tilt p R))).comp (WittVector.equiv p).symm.toRingHom
@@ -200,7 +198,6 @@ theorem p_dvd_frob_sub_pow (x : Ainf p R) : (p : Ainf p R) ∣ frob p R x - x ^ 
 
 variable [IsAdicComplete (span {(p : R)}) R] [IsAdicComplete (span {(p : S)}) S]
 
-variable (p R) in
 
 def theta : Ainf p R →+* R := WittVector.fontaineTheta R p
 
@@ -243,7 +240,6 @@ theorem hom_ext {B : Type*} [CommRing B] {f g : AinfInv p R →+* B}
     (h : ∀ x : Ainf p R, f (algebraMap _ _ x) = g (algebraMap _ _ x)) : f = g :=
   IsLocalization.ringHom_ext (Submonoid.powers (p : Ainf p R)) (RingHom.ext h)
 
-variable (R) in
 
 def frob : AinfInv p R →+* AinfInv p R := extend p (Ainf.frob p R)
 
@@ -301,7 +297,6 @@ theorem map_frob (f : R →+* S) (x : AinfInv p R) : map p f (frob p R x) = frob
 
 variable [IsAdicComplete (span {(p : R)}) R] [IsAdicComplete (span {(p : S)}) S]
 
-variable (p R) in
 
 def theta : AinfInv p R →+* Localization.Away (p : R) := fontaineThetaInvertP R p
 

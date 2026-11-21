@@ -288,7 +288,6 @@ theorem geoNum_eq_zero {F F' : HermLattice K i} (hlt : F'.lattice < F.lattice)
 
 end StackedExceptionalFirstGeometric
 
-open StackedExceptionalFirstGeometric in
 
 theorem DualStackedExcGeoFirst.proof : DualStackedExcGeoFirst.Statement := by
   intro K _ _ i F F' T _ _ b b' a _ hlt hcov hab E hE d _ ⟨j, hj⟩

@@ -118,7 +118,6 @@ theorem exists_algHom_ker_eq {R : Type w} [CommRing R] [Algebra k R] (P : Ideal 
 
 end CutOneGenerator
 
-open CutOneGenerator in
 
 theorem CutOneGenerator.proof (hG : GlobalFunctionsIntegral.Statement.{u, w}) :
     CutOneGenerator.Statement.{u, w} := by

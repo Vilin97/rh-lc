@@ -27,7 +27,6 @@ variable {LL : Type} [Field LL] [Algebra Qp LL]
     {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
     {V' : Type} [AddCommGroup V'] [Module LL V'] [Module Qp V'] [IsScalarTower Qp LL V']
 
-variable (LL) in
 
 def mB (b : B) : V ⊗[Qp] B →ₗ[LL] V ⊗[Qp] B :=
   AlgebraTensorModule.map LinearMap.id (LinearMap.mulLeft Qp b)
@@ -196,7 +195,6 @@ theorem unit_eq : Dcris PD (Representation.trivial LL G LL) =
     | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul a b => simp [actVB]
 
-variable (LL V) in
 
 theorem mem_DcrisL (ρ : Representation LL G V) (τ : K₀ →ₐ[Qp] LL) (x : V ⊗[Qp] B) :
     x ∈ DcrisL PD ρ τ ↔ x ∈ Dcris PD ρ ∧ ∀ c : K₀, mB LL (algebraMap K₀ B c) x = τ c • x := by

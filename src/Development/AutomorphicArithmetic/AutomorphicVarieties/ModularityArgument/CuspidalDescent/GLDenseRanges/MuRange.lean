@@ -20,7 +20,6 @@ def muE (e : Module.End Λ M) (x : B →ₐ[O] K) : ℕ :=
   Module.finrank K ↥((⨅ a : B, Module.End.maxGenEigenspace ((actL lam M hs a).baseChange K) (x a)) ⊓
     Module.End.eigenspace (e.baseChange K) 1)
 
-variable (B) {M} in
 
 def Idem (e : Module.End Λ M) : Prop := e * e = e ∧ ∀ (b : B) (m : M), e (b • m) = b • e m
 

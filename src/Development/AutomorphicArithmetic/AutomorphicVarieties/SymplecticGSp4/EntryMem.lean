@@ -147,7 +147,6 @@ def toSS : M.A →ₐ[c.O] M.SS := (M.π.comp M.A.val).codRestrict M.SS M.π_mem
 
 end Model
 
-variable (Ω l) in
 
 def SoV : Prop :=
   ∀ ψ : G ℚ Ω →* (PadicAlgCl l)ˣ, IsOpen (ψ.ker : Set (G ℚ Ω)) → ∀ e : ℕ, 1 ≤ e → ∀ θ : G ℚ Ω → PadicAlgCl l,
@@ -157,7 +156,6 @@ def SoV : Prop :=
     (∀ A : ValuationSubring Ω, A.valuation (l : Ω) < 1 → ∃ m, ∀ g ∈ Dec (F := ℚ) A, z g = θ g * m - m) →
     ∃ m, ∀ g, z g = θ g * m - m
 
-variable (Ω l) in
 
 def SoFin : Prop :=
   ∀ (c : Coef l) (ψ : G ℚ Ω →* c.Oˣ), IsOpen (ψ.ker : Set (G ℚ Ω)) → ∀ e : ℕ, 1 ≤ e → Chr.V l e ψ ≠ ⊤

@@ -209,4 +209,3 @@ private theorem val_frob (q a : ℕ) (b : ℂˣ) :
 
 end UpperTheory.V.Z.Desc.W.GaloisCompatibilityAlmostEverywhere
 
-open UpperTheory.V.Z.Desc.W.GaloisCompatibilityAlmostEverywhere in

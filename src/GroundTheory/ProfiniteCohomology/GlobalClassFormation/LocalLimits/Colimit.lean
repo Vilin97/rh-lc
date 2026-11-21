@@ -187,7 +187,6 @@ section Generic
 
 variable (F : FiniteSubfield) [Fact (K ≤ F)] [F.1.fixingSubgroup.Normal]
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_localInfl_eq_homologyπ (n : ℕ)
     (z : (cochainsComplex (galUnitsZ (v.adicCompletion K.1)
@@ -209,7 +208,6 @@ theorem exists_localInfl_eq_homologyπ (n : ℕ)
     (AlgebraicClosure (v.adicCompletion K.1)))).iCycles n)).1 inferInstance
   rw [iCycles_cyclesMap_apply, hw, hy₀]
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_d_eq_of_localInfl_eq_zero (n : ℕ) (w : (cochainsComplex (localLevelRep ι F)).cycles n)
     (hy : (localInfl ι F n).hom (((cochainsComplex (localLevelRep ι F)).homologyπ n).hom w) = 0) :
@@ -230,7 +228,6 @@ section GenericTransition
 variable {F M E : FiniteSubfield} [Fact (K ≤ F)] [Fact (K ≤ M)] [Fact (K ≤ E)] [Fact (F ≤ E)]
   [Fact (M ≤ E)] [F.1.fixingSubgroup.Normal] [M.1.fixingSubgroup.Normal] [E.1.fixingSubgroup.Normal]
 
-set_option maxHeartbeats 4000000 in
 
 theorem localTransition_homologyπ_eq_zero (n : ℕ) (w : (cochainsComplex (localLevelRep ι F)).cycles n)
     (u' : (cochainsComplex (localLevelRep ι M)).X ((ComplexShape.up ℕ).prev n))
@@ -256,7 +253,6 @@ theorem localTransition_homologyπ_eq_zero (n : ℕ) (w : (cochainsComplex (loca
 
 end GenericTransition
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_localInfl_eq (n : ℕ)
     (x : cohomology (galUnitsZ (v.adicCompletion K.1) (AlgebraicClosure (v.adicCompletion K.1))) n) :
@@ -271,7 +267,6 @@ theorem exists_localInfl_eq (n : ℕ)
   obtain ⟨y, hy⟩ := hy
   exact ⟨p, y, hy⟩
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_localTransition_eq_zero (n : ℕ) (p : GLevel K) (y : cohomology (localLevelRep ι p.1) n)
     (hy : (localInfl ι p.1 n).hom y = 0) :

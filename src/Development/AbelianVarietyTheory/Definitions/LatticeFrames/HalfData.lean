@@ -68,7 +68,6 @@ def annS (θ : InfFam D) (τ : D.what₂.Tau) (X : Matrix (Fin V.rank) (Fin n) �
     Mx D V.rank n → ℂ :=
   fun x => deriv (fun t : ℝ => φ (x + lineAt θ τ X t)) 0 + linF V l s τ X (compAt θ τ x) * φ x
 
-open Classical in
 
 def annC (τ : D.what₂.Tau) (X : Matrix (Fin V.rank) (Fin n) ℂ) (f : (D.what₂.Tau → Fin V.rank → Fin n → ℂ) → ℂ) :
     (D.what₂.Tau → Fin V.rank → Fin n → ℂ) → ℂ :=

@@ -19,7 +19,6 @@ section Unimodular
 variable {H : Type*} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] [LocallyCompactSpace H]
   [T2Space H] [SecondCountableTopology H] [MeasurableSpace H] [BorelSpace H]
 
-omit [LocallyCompactSpace H] [T2Space H] in
 
 theorem isFundamentalDomain_preimage_mul_right (L : Subgroup H) [DiscreteTopology L]
     (ν : Measure H) (g : H) :
@@ -57,7 +56,6 @@ theorem isMulRightInvariant_of_compactSpace (L : Subgroup H) [DiscreteTopology L
     rwa [ENNReal.mul_left_inj h0 htop, ENNReal.coe_eq_one] at this
   rw [hc, hc1, one_smul]
 
-omit [T2Space H] in
 
 theorem inv_eq_self_of_isMulRightInvariant (ν : Measure H) [ν.IsHaarMeasure]
     [ν.IsMulRightInvariant] : ν.inv = ν := by

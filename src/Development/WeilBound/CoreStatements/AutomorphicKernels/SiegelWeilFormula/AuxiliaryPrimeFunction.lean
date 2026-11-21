@@ -60,7 +60,6 @@ structure SD (σ : E →ₐ[F] E) : Type 1 where
 
 attribute [instance] SD.fin
 
-variable (F E) in
 
 abbrev Mx (p q : ℕ) : Type := Matrix (Fin p) (Fin q) (AE F E)
 

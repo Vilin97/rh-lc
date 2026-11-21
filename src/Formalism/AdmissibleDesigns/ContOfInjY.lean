@@ -59,7 +59,6 @@ theorem smul_OwY (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (Fr
 
 variable {M : Type} [AddCommGroup M] [Module O M]
 
-variable (e eO) in
 
 def latTY (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (FractionRing O) a)) :
     Submodule Ow (TrV e (MK (O := O) M)) where
@@ -165,7 +164,6 @@ variable {O : Type} [CommRing O] [IsDomain O] {LL : Type} [Field LL] [Topologica
   {Γ G : Type} [Group Γ] [Group G] (ι : G →* Γ)
   {N : Type} [AddCommGroup N] [Module O N]
 
-variable (e) in
 
 def eLin : TrV e (FractionRing O) →ₗ[LL] LL where
   toFun x := e (show FractionRing O from x)
@@ -174,7 +172,6 @@ def eLin : TrV e (FractionRing O) →ₗ[LL] LL where
     show e (e.symm c * (show FractionRing O from x)) = c * e (show FractionRing O from x)
     rw [map_mul, RingEquiv.apply_symm_apply]
 
-variable (e N) in
 
 def pY : TrV e (MK (O := O) (N × O)) →ₗ[LL] LL :=
   eLin e ∘ₗ trL e (liftK (V := FractionRing O) (Algebra.linearMap O (FractionRing O) ∘ₗ LinearMap.snd O N O))
@@ -208,7 +205,6 @@ theorem pY_zero (m : N × O) (h : pY e N (trY e (mkK (O := O) m)) = 0) : m.2 = 0
     rwa [map_eq_zero_iff e e.injective] at h
   exact (IsFractionRing.injective O (FractionRing O)) (h1.trans (map_zero _).symm)
 
-include heO in
 
 theorem div_quot {V : Type} [AddCommGroup V] [Module LL V] [Module Ow V] [IsScalarTower Ow LL V]
     (T : Submodule Ow V) (a : O) (ha : a ≠ 0) (y : V ⧸ T) : ∃ q : V ⧸ T, eO a • q = y := by
@@ -229,7 +225,6 @@ theorem nzsd_prod [NoZeroSMulDivisors O N] : NoZeroSMulDivisors O (N × O) :=
       have h2 : c * x.2 = 0 := congrArg Prod.snd h
       exact Prod.ext ((smul_eq_zero.1 h1).resolve_left hc) ((mul_eq_zero.1 h2).resolve_left hc)⟩
 
-include heO in
 
 theorem ext_of_baer [IsPrincipalIdealRing O] [NoZeroSMulDivisors O N] {Q : Type} [AddCommGroup Q] [Module Ow Q]
     (hdiv : ∀ a : O, a ≠ 0 → ∀ y : Q, ∃ q : Q, eO a • q = y) (g₀ : N →+ Q)

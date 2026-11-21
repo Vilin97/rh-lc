@@ -32,7 +32,6 @@ structure ConjAt (D : D7) where
 
 attribute [instance] ConjAt.instM ConjAt.instMi ConjAt.instMf ConjAt.instT ConjAt.instTi ConjAt.instTf
 
-open Classical in
 
 end Formalism.L2.Fam.DivCQ
 

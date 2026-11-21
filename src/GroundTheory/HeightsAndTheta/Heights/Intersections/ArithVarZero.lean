@@ -18,19 +18,15 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-open Classical in
 
 def killBlocks (S : Set K) : MRing ι →ₐ[ℤ] MRing ι :=
   aeval fun p => if p.1 ∈ S then 0 else X p
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
-open Classical in
 
 theorem killBlocks_X (S : Set K) (p : Σ k, ι k) :
     killBlocks S (X p : MRing ι) = if p.1 ∈ S then 0 else X p := by
   rw [killBlocks, aeval_X]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem killBlocks_monomial_of_forall (S : Set K) (m : (Σ k, ι k) →₀ ℕ) (c : ℤ)
     (h : ∀ p ∈ m.support, p.1 ∉ S) : killBlocks S (monomial m c : MRing ι) = monomial m c := by
@@ -39,7 +35,6 @@ theorem killBlocks_monomial_of_forall (S : Set K) (m : (Σ k, ι k) →₀ ℕ) 
   refine Finsupp.prod_congr fun p hp => ?_
   rw [if_neg (h p hp)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem killBlocks_monomial_of_mem (S : Set K) (m : (Σ k, ι k) →₀ ℕ) (c : ℤ) (p : Σ k, ι k)
     (hp : p ∈ m.support) (hS : p.1 ∈ S) : killBlocks S (monomial m c : MRing ι) = 0 := by
@@ -84,7 +79,6 @@ theorem le_comap_killBlocks {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) (S
   · exact Ideal.subset_span hf
   · exact Ideal.zero_mem _
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem killBlocks_comp {S S' : Set K} (h : S ⊆ S') :
     (killBlocks S').comp (killBlocks S) = (killBlocks S' : MRing ι →ₐ[ℤ] MRing ι) := by

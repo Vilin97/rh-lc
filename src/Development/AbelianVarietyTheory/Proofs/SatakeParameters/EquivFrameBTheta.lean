@@ -240,12 +240,10 @@ theorem thU_det_Yt (h : FrRel X Kc j U W κ) (v : X.Pl) (s : Fin (X.G.P.n' v)) (
   rw [odd_YtMat X Kc j U W v s (κ v s) ((h v s).2 ho), Matrix.det_smul, Fintype.card_fin, map_pow]
   rfl
 
-variable (X Kc j W κ) in
 
 def kN : Kc := ∏ v : X.Pl, ∏ s : Fin (X.G.P.n' v),
   if IsOddPos s then ((W v s).det⁻¹) ^ (exY X j v s).toNat * (κ v s ^ NN X.G.P.m X.t j) ^ (exT X j v s).toNat else 1
 
-variable (X Kc j W κ) in
 
 def kD : Kc := ∏ v : X.Pl, ∏ s : Fin (X.G.P.n' v),
   if IsOddPos s then ((W v s).det⁻¹) ^ (-exY X j v s).toNat * (κ v s ^ NN X.G.P.m X.t j) ^ (-exT X j v s).toNat else 1

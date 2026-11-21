@@ -48,7 +48,6 @@ end RfCs.FrobeniusSplitPrimeDatum
 
 namespace RfCs
 
-open RfCs.FrobeniusSplitPrimeDatum in
 
 theorem cuspFiniteVectorsGL : GlobalTheory.Published.CuspFiniteVectorsGL := by
   intro E _ _ _ a μ _ _ H hH hi

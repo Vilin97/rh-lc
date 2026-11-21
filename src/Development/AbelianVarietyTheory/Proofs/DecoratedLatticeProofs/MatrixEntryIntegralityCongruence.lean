@@ -97,7 +97,6 @@ theorem exists_mat {D : D7} (q : GlobalTheory.FinPl.SplitPt D k) (V : HSp D) {Y 
 
 end Loc
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.FamTrace.TraceBwd
 

@@ -93,7 +93,6 @@ def SignE : Prop :=
 
 def keyS (k r : ℕ) (p : Fin (2 * r + k + 1)) : ℕ := if r + k < p.val then 2 * r + k - p.val else p.val + r
 
-open scoped Classical in
 
 def AAx {A : Type*} [Ring A] [Algebra ℂ A] (k r : ℕ) (E : Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → A)
     (xi : Fin r → Fin (2 * r + k + 1) → ℂ) (m : ℕ) (hm : m ≤ r) (u : ℂ) : A :=
@@ -101,7 +100,6 @@ def AAx {A : Type*} [Ring A] [Algebra ℂ A] (k r : ℕ) (E : Fin (2 * r + k + 1
     if StrictMono c then (Matrix.of fun a l : Fin m => xi (Fin.castLE hm a) (c l)).det • qminor E (xR k r m hm) c u
     else 0
 
-open scoped Classical in
 
 def AAv {A : Type*} [Ring A] [Algebra ℂ A] (k r : ℕ) (E : Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → A)
     (y : Fin r → Fin (2 * r + k + 1) → ℂ) (m : ℕ) (hm : m ≤ r) (ell : ℂ) : A :=
@@ -190,7 +188,6 @@ def XiYZhat : Prop :=
     herm (Hpk k r) (g *ᵥ bvec (eI k r b)) (bvec (eI k r a)) = Zhat k r z z' g a.castSucc b.castSucc ∧
     (g⁻¹ *ᵥ bvec (eI k r a)) (esI k r b) = star (Zhat k r z z' g a.castSucc b.castSucc)
 
-open scoped Classical in
 
 def AAop {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (k r m : ℕ) (hm : m ≤ r) (u : ℂ)
     (f : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → E) :
@@ -201,7 +198,6 @@ def AAop {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (k r m : ℕ) (h
         qminorOp (EabH (Hpk k r)) (xR k r m hm) c u f g
     else 0
 
-open scoped Classical in
 
 def AAvop {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (k r m : ℕ) (hm : m ≤ r) (ell : ℂ)
     (f : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → E) :

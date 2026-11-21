@@ -35,7 +35,6 @@ theorem mulVec_map_leftInv {R : Type} [CommRing R] (f : F →+* R) {M : Matrix �
     [DecidableEq m] (hNM : N * M = 1) (v : m → R) : (N.map f) *ᵥ ((M.map f) *ᵥ v) = v := by
   rw [Matrix.mulVec_mulVec, ← Matrix.map_mul, hNM, Matrix.map_one _ (map_zero f) (map_one f), Matrix.one_mulVec]
 
-variable (F m) in
 
 def coordE : (m → AF F) ≃ₜ+ (Vi F m × Vf F m) where
   toFun t := ((eI F m).symm (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (t i).1), fun i => (t i).2)
@@ -68,7 +67,6 @@ def coordE : (m → AF F) ≃ₜ+ (Vi F m × Vf F m) where
 
 variable [DecidableEq m]
 
-variable (F) in
 
 def archM (M : Matrix κ m F) : (m → mixedEmbedding.mixedSpace F) →L[ℝ] (κ → mixedEmbedding.mixedSpace F) :=
   LinearMap.toContinuousLinearMap ((Matrix.mulVecLin (M.map (mixedEmbedding F))).restrictScalars ℝ)

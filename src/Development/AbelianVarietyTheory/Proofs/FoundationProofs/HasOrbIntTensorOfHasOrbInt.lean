@@ -293,7 +293,6 @@ theorem hasOrbInt_tensor (hμ : IsRestrictedProd σ J L μa μf μ) (hdt : IsCen
   exact ⟨IsHaarProd.isMulRightInvariant hdt (restrGroup_cent L γ), ha', hf',
     hasOrbInt_tensor_of_hasOrbInt hμ hdt hff.2 hK ha' hf'⟩
 
-omit [Submodule.IsLattice E L] in
 
 end Adelic
 

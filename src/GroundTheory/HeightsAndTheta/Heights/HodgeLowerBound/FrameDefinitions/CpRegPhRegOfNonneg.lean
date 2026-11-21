@@ -35,7 +35,6 @@ structure BoundedRegularisationSetting.IsTied {a : K → ℤ} {w : ((Σ k, ι k)
 
 end Ties
 
-open Classical in
 
 def smoothRepConj (P : Ideal (MRing ι)) (A : HermLine ι) : HermLine ι :=
   if h : ∃ A' : HermLine ι, A'.a = A.a ∧ IsSmoothHerm A' ∧ IsConjInvariantH A' ∧ ∀ z ∈ mcPts P, A'.h z = A.h z then

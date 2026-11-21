@@ -158,7 +158,6 @@ theorem vanMod_smul {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {D : De
   rw [map_mul, GlobalTheory.ThickDiv.resTop_scal, GlobalTheory.ThickDiv.app_constFn_eq_zero _ 0 _ _ (by rwa [zero_add, pow_one]),
     zero_mul]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_lead_members {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] (hB : Base R)
     (D : DegData R (maximalIdeal R)) {k : ℕ} (hk : 1 ≤ k) (b : D.toPre.SecB k 0) :

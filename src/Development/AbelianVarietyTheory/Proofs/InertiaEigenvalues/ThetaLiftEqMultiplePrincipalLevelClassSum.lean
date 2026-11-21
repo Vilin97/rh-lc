@@ -75,7 +75,6 @@ theorem lev_eq_of {F E LL : Type} [Field F] [NumberField F] [Field E] [NumberFie
   rw [mem_lev, mem_lev, hH, hH', Subgroup.mem_bot, Subgroup.mem_bot]
   rfl
 
-open GlobalTheory.ConjTwist in
 
 theorem ser_transl {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (i : Fin D.R.m) (t : T0)
@@ -88,7 +87,6 @@ theorem ser_transl {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A 
     (one_mem _) _ _ _ _ (R.vP i t) _ hv, map_smul, Pi.smul_apply, ← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, mul_one,
     smul_eq_mul]
 
-open GlobalTheory.ConjTwist GlobalTheory.FlatVecSum in
 
 theorem sum_eq_classSum {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (j : Fin D.R.m) (t : T0)
@@ -115,7 +113,6 @@ theorem sum_eq_classSum {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type
     ← mul_assoc c0⁻¹ c0, inv_mul_cancel₀ hc0, one_mul]
   rfl
 
-open Classical GlobalTheory.ConjTwist GlobalTheory.FlatVecSum in
 
 theorem thF_eq_classSum_princ : ∀ (D : D7) (X : RealSide D) (E : IntegralHeckeForms.XD D) (Y : SerSide X E) (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool) (t : X.T),
     X.R.xi t = (Y.Z.ρ.B i j b).de.chi → X.R.Q t = (Y.Z.ρ.B i j b).de.Q → ∀ (y : (X.R.HV j t).H) (u : ∀ ρ, lowT (X.R.MW j (sg0 D X.A3.A)) ρ),

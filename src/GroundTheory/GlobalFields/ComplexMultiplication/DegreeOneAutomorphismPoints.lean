@@ -38,7 +38,6 @@ section AlgClosed
 variable {F : Type u} [Field F] [IsAlgClosed F] [DecidableEq F] {A B : WeierstrassCurve F}
   [A.IsElliptic] [B.IsElliptic]
 
-omit [IsAlgClosed F] [A.IsElliptic] [B.IsElliptic] in
 
 theorem vcPoint_constPoint (C : VariableChange F) (hC : C • A = B) (R : A.toAffine.Point) :
     vcPoint (C.baseChange A.toAffine.FunctionField) (Elliptic.baseChange_smul_eq C _ hC)

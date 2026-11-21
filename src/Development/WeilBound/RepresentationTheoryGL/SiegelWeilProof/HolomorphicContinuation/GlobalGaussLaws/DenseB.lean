@@ -59,7 +59,6 @@ theorem continuous_nuE : Continuous (nuE (n := n)) := by
     rw [e]
     exact continuous_nU.comp continuous_hpart.neg
 
-open Classical in
 
 def mlE (A : Matrix (Fin n) (Fin n) ℂ) : GR n :=
   if h : IsUnit A.det then mkGR (fromBlocks A 0 0 (A⁻¹)ᴴ) (inG_mL h) else 1

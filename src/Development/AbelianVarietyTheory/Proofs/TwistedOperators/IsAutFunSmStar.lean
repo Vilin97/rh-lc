@@ -134,7 +134,6 @@ theorem isUnit_of_UH (hJ : IsUnit J.det) {a : Matrix (Fin n) (Fin n) ℂ} (ha : 
   rw [det_mul] at this
   exact isUnit_of_mul_isUnit_right (this ▸ hJ)
 
-open Classical in
 
 def secM (hJ : IsUnit J.det) (a : MAlg n) : UG J :=
   if h : a.mat ∈ Formalism.QuantumDeterminants.UH J then ⟨(isUnit_of_UH hJ h).unit, h⟩ else 1
@@ -227,7 +226,6 @@ theorem Rder_mem {τ : D.what₂.Tau} {X : Matrix (Fin V.rank) (Fin V.rank) ℂ}
     have := (hF.2 _ (mul_mem hy (oneP_mem hX t)) τ' x).2 g hg g' hg'
     simpa only [mul_assoc] using this
 
-variable (θ V) in
 
 def rho (τ : D.what₂.Tau) (X : lieU (gramAt D V τ)) : Module.End ℂ (goodFun θ V) where
   toFun F := ⟨Rder θ V τ X.1 F.1, Rder_mem X.2 F.2⟩
@@ -321,7 +319,6 @@ theorem star_mem_good {F : GA D V → ℂ} (hF : F ∈ goodFun θ V) : star F �
   ⟨fun k τs Xs hX g => Complex.conjCLE.contDiff.comp (hF.1 k τs Xs hX g),
     fun y hy τ x => ⟨congrArg star (hF.2 y hy τ x).1, fun g hg g' hg' => congrArg star ((hF.2 y hy τ x).2 g hg g' hg')⟩⟩
 
-variable (θ V) in
 
 def conjG : goodFun θ V →ₗ⋆[ℂ] goodFun θ V where
   toFun F := ⟨star F.1, star_mem_good F.2⟩
@@ -330,7 +327,6 @@ def conjG : goodFun θ V →ₗ⋆[ℂ] goodFun θ V where
 
 theorem conjG_conjG (F : goodFun θ V) : conjG θ V (conjG θ V F) = F := Subtype.ext (star_star _)
 
-variable (θ V) in
 
 def kappa : Module.End ℂ (goodFun θ V) →+* Module.End ℂ (goodFun θ V) where
   toFun a := (conjG θ V).comp (a.comp (conjG θ V))

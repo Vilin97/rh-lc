@@ -50,7 +50,6 @@ variable [ValuativeRel K'] [TopologicalSpace K'] [IsNonarchimedeanLocalField K']
   [ValuativeExtension K' L'] [ValuativeExtension L L'] [FiniteDimensional K K']
   [FiniteDimensional K' L'] [IsUnramified K' L']
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [FiniteDimensional K L] in
 
 theorem ramificationIndex_right_eq :
     (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L'))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) = (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation K'))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by

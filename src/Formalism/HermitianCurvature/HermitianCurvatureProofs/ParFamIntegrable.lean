@@ -82,7 +82,6 @@ def Rep {Par : Type} (Ψ : Par → Q.RadSp k ρ z z' π π') (Ψf : Par → Mt k
 
 def GGpos (k ρ : ℕ) (z z' : Fin (2 * ρ + k + 1) → ℂ) : Set (Mt k ρ) := {y | 0 < Q.GGl k ρ z z' (Matrix.of y)}
 
-variable (z z' π π') in
 
 def Good (A : Module.End ℂ (Q.RadSp k ρ z z' π π')) : Prop :=
   ∀ (Par : Type) [NormedAddCommGroup Par] [NormedSpace ℝ Par] [FiniteDimensional ℝ Par] [MeasurableSpace Par]
@@ -151,11 +150,9 @@ theorem good_smul (a : ℂ) {A : Module.End ℂ (Q.RadSp k ρ z z' π π')} (hA 
     simp only [LinearMap.smul_apply, Submodule.coe_smul, Pi.smul_apply]
     rw [hW₁ ν Kp hKp hν Ψi y V hV hyV hyG hKV hi c, integral_smul]
 
-variable (z z' π π') in
 
 def PGood (x : Q.Pr (Q.RadSp k ρ z z' π π')) : Prop := Good z z' π π' x.1 ∧ Good z z' π π' x.2.unop
 
-variable (z z' π π') in
 
 def goodAlg : StarSubalgebra ℂ (Q.Pr (Q.RadSp k ρ z z' π π')) where
   carrier := {x | PGood z z' π π' x}

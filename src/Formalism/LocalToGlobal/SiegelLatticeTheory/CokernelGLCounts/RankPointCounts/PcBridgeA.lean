@@ -236,7 +236,6 @@ theorem NF_map (φ : C₁ ≃ₗ[R] C₂) (hα : ∀ v, α₂ (φ v) = α₁ v) 
        rw [hα'])
     | (simp [Submodule.mem_map_equiv, mem_NF, hα']; done)
 
-omit hu hb₁ hb₂ in
 
 def PhiN (φ : C₁ ≃ₗ[R] C₂) (hα : ∀ v, α₂ (φ v) = α₁ v) : NF α₁ ≃ₗ[R] NF α₂ :=
   LinearEquiv.ofSubmodules (φ.prodCongr (LinearEquiv.refl R E)) (NF α₁) (NF α₂) (NF_map φ hα)

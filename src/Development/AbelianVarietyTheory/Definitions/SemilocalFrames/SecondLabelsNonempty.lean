@@ -52,7 +52,6 @@ structure Nodes (x eps : ℝ) : Prop where
   top : ∀ τ, Top D τ → Real.sqrt (bx x eps) ≤ uFirst D τ ∧ uFirst D τ ≤ bx x eps ^ 2 ∧
     3 ≤ bFirst D τ + uLast D τ ∧ bFirst D τ / 2 ≤ -uLast D τ
 
-open Classical in
 
 end GlobalTheory.Diag.PG
 

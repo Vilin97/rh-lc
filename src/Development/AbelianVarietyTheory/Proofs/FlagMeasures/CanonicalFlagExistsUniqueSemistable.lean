@@ -20,7 +20,6 @@ variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComple
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι] (b : Module.Basis ι K V)
   (X : InfinitePlace K → Matrix ι ι ℂ)
 
-omit [IsTotallyComplex K] in
 
 theorem isSat_of_le {L A S : Submodule (𝓞 K) V} (hS : IsSat (Formalism.HermitianLatticesTheory.realize b X) L S) (h : S ≤ A)
     (hA : A ≤ L) : IsSat (Formalism.HermitianLatticesTheory.realize b X) A S := by
@@ -30,7 +29,6 @@ theorem isSat_of_le {L A S : Submodule (𝓞 K) V} (hS : IsSat (Formalism.Hermit
     exact ⟨z, hAB hz, rfl⟩
   exact ⟨h, mono h, fun y hy hy' => hS.2.2 y (mono hA hy) hy'⟩
 
-omit [IsTotallyComplex K] in
 
 theorem rk_lt (hX : ∀ v, IsUnit (X v).det) {A S : Submodule (𝓞 K) V} (hA : A.FG)
     (hS : IsSat (Formalism.HermitianLatticesTheory.realize b X) A S) (hne : S ≠ A) :

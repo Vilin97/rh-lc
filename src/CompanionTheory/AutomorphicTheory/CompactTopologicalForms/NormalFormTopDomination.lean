@@ -13,7 +13,6 @@ noncomputable section
 
 theorem normal_form_top_domination : NFTopDomAll := nfTopDomAll_of_tieC NormalFormRelations.normal_form_hat_compact
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem thmBpAt_top (Cb C₃ CΛ C₀ : ℝ) (hC₃ : 0 ≤ C₃) (hCΛ : 0 ≤ CΛ) (hC₀ : 1 / 2 ≤ C₀) :
     ∃ C₄ c₃ Cc Cc' Cc'' : ℝ, ∀ (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
@@ -49,7 +48,6 @@ open scoped ENNReal
 
 noncomputable section
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem thmBpAt_eqR_top (Cb C₃ CΛ C₀ : ℝ) (hC₃ : 0 ≤ C₃) (hCΛ : 0 ≤ CΛ) (hC₀ : 1 / 2 ≤ C₀) :
     ∃ C₄ c₃ Cc Cc' Cc'' : ℝ, ∀ (P : M.Par) (Wp Wq : Type)

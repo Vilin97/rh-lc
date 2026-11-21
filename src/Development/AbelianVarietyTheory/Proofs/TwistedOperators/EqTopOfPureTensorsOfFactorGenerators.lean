@@ -67,7 +67,6 @@ private lemma tmul_tprod_update_apply_mem_of_stab {ι : Type} [DecidableEq ι] {
   have := hN _ hmem _ h
   rwa [TensorProduct.map_tmul, LinearMap.id_apply, _root_.GlobalTheory.TensHead.piOp_tprod_update] at this
 
-open scoped TensorProduct in
 
 theorem _root_.GlobalTheory.TensHead.eq_top_of_pure_generators :
     ∀ {ι : Type} [Fintype ι] [DecidableEq ι] {M₀ : Type} [AddCommGroup M₀] [Module ℂ M₀]

@@ -59,7 +59,6 @@ abbrev Jd (n : ℕ) (lam : Fin n → ℤ) := Fin (Module.finrank ℂ (Formalism.
 
 def wb (lam : Fin n → ℤ) : Module.Basis (Jd n lam) ℂ (Formalism.BasicNotions.nablaSq ℂ n (dw lam)) := Module.finBasis ℂ _
 
-open Classical in
 
 def Rm (lam : Fin n → ℤ) (x : Mat n) : Matrix (Jd n lam) (Jd n lam) ℂ :=
   if h : IsUnit x.det then LinearMap.toMatrix (wb lam) (wb lam) (GlobalTheory.Branching.sqRep ℂ n (dw lam) (Matrix.nonsingInvUnit x h))

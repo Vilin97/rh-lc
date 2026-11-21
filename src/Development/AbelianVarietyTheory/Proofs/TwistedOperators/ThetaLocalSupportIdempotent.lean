@@ -69,7 +69,6 @@ theorem isAlgComb_self : IsAlgComb ψ S T f₀ f₀ := by
 
 end Comb
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.SplitVacAlg
 

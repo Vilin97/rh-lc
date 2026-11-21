@@ -121,6 +121,5 @@ namespace GlobalTheory.ShareOn
 
 open GlobalTheory.ShareOn.WhitBase
 
-open Formalism.L2.DIV in
 
 end GlobalTheory.ShareOn

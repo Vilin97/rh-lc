@@ -337,7 +337,6 @@ theorem exists_pole₂ (F G : Matrix n n R) :
   obtain ⟨K₂, h₂⟩ := exists_pole hτ G fun i j => hpole _
   exact ⟨max K₁ K₂, h₁ _ (le_max_left _ _), h₂ _ (le_max_right _ _)⟩
 
-include hτ ht hp h3 meet comp hφS hioS hpole h2 in
 
 theorem onto_mod (a b : Matrix n n E) (y : Matrix n n R) (hy : y ∈ matS S) :
     ∃ z ∈ matS S, y - (z - opT φ (io.mapMatrix a) (io.mapMatrix b) z) ∈ matS (modSub io p) := by
@@ -376,7 +375,6 @@ theorem onto_mod (a b : Matrix n n E) (y : Matrix n n R) (hy : y ∈ matS S) :
     convert h' using 1
     abel
 
-include hτ ht hp h3 meet comp hφS hioS hpole h2 in
 
 theorem conj_mod (hφt : (p : R) ∣ t ^ p - φ t) (hJ : ∀ x : R, IsUnit (1 + (p : R) * x))
     (hinv : ∀ X Y : Matrix n n R, X ∈ matS S → X * Y = 1 → Y ∈ matS S)
@@ -443,7 +441,6 @@ theorem conj_mod (hφt : (p : R) ∣ t ^ p - φ t) (hJ : ∀ x : R, IsUnit (1 + 
   · rw [← mul_assoc, ← mul_assoc, hVU, one_mul]
   · rw [key, add_mul, mul_assoc (io.mapMatrix e), ← map_mul, hV, map_one, mul_one, smul_mul_assoc]
 
-include hτ ht hp h3 meet comp hφS hioS hpole h2 in
 
 theorem conj_io (hφt : (p : R) ∣ t ^ p - φ t) (hJ : ∀ x : R, IsUnit (1 + (p : R) * x))
     (hinv : ∀ X Y : Matrix n n R, X ∈ matS S → X * Y = 1 → Y ∈ matS S)

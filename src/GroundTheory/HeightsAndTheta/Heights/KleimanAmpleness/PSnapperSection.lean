@@ -84,7 +84,6 @@ theorem idealMod_le_one (pp : Ideal (Poly k N)) (I : Chart x) : idealMod (x := x
   rintro _ ⟨f, m, e, -, hm, hf, hme, rfl⟩
   exact Submodule.mem_one.mpr ⟨⟨_, f, m, e, hm, hf, hme, rfl⟩, rfl⟩
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem zeroIdeal_homog (D : SubSystem k x Ω) (s : Ω) :
     ∀ f ∈ zeroIdeal D s, ∀ d : ℕ, homogeneousComponent d f ∈ zeroIdeal D s := by
@@ -132,7 +131,6 @@ theorem exists_dim_eq (pp : Ideal (Poly k N)) [pp.IsPrime] (hh : ∀ f ∈ pp, �
 
 end SnapperSections
 
-open SnapperSections in
 
 theorem SnapperSection.proof (hA : SnapperQuotAdd.Statement.{u, w, w})
     (hD : SnapperQuotDevissage.Statement.{u, w, w}) (hM : MulQuotEq.Statement.{u, w})

@@ -21,7 +21,6 @@ namespace GlobalTheory.IdemAdj
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem coeffSpan_mul_right {W : Type} [AddCommGroup W] [Module ℂ W] (ρ₀ : Representation ℂ (Kinf E a) W)
     (k' : Kinf E a) {f : Kinf E a → ℂ} (hf : f ∈ AutFin.coeffSpan ρ₀) : (fun k => f (k * k')) ∈ AutFin.coeffSpan ρ₀ := by

@@ -159,9 +159,7 @@ section Algebra
 
 variable {k : Type} [Field k] {r : ℕ} {b : Fin r → ℕ}
 
-variable (k b) in
 
-variable (k b) in
 
 end Algebra
 
@@ -170,7 +168,6 @@ section Top
 variable {k : Type} [Field k] [TopologicalSpace k] [IsTopologicalDivisionRing k]
   {r : ℕ} {b : Fin r → ℕ}
 
-variable (k b) in
 
 end Top
 

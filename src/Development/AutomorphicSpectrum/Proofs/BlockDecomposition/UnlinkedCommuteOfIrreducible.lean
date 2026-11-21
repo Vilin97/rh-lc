@@ -31,11 +31,9 @@ section Inv
 
 variable {n : Type} [Fintype n] [DecidableEq n]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem invT_invT (g : GL n k) : invT (invT g) = g := Units.ext (transpose_transpose _)
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem det_invT (g : GL n k) :
     GeneralLinearGroup.det (invT g) = (GeneralLinearGroup.det g)⁻¹ := by
@@ -54,14 +52,12 @@ section Levi
 variable {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α] [∀ a, Fintype (m a)]
   [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] {W : Type} [AddCommGroup W] [Module ℂ W]
 
-variable (k m) in
 
 def leviInvT : Levi k m →* Levi k m where
   toFun g a := invT (g a)
   map_one' := funext fun _ => map_one _
   map_mul' _ _ := funext fun _ => map_mul _ _ _
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] [LinearOrder α] in
 
 theorem leviInvT_leviInvT (g : Levi k m) : leviInvT k m (leviInvT k m g) = g :=
   funext fun _ => invT_invT _
@@ -72,13 +68,11 @@ theorem deltaHalf_leviInvT (g : Levi k m) : deltaHalf k m (leviInvT k m g) = (de
   show absPow k _ (GeneralLinearGroup.det (invT (g a))) = _
   rw [det_invT, map_inv]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] in
 
 theorem invT_mem_parab {e : (Σ a, m a) ≃ n} {p : GL n k} (hp : p ∈ parabLower k e) :
     invT p ∈ parab k e :=
   mem_parab_iff.2 fun a b i j hab => (mem_parabLower_iff k).1 (inv_mem hp) b a j i hab
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] in
 
 theorem invT_mem_parabLower {e : (Σ a, m a) ≃ n} {q : GL n k} (hq : q ∈ parab k e) :
     invT q ∈ parabLower k e :=
@@ -126,7 +120,6 @@ section Two
 variable {a b n : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] [Fintype n] [DecidableEq n]
   {W : Type} [AddCommGroup W] [Module ℂ W]
 
-variable (k a b) in
 
 def invTProd : GL a k × GL b k →* GL a k × GL b k := MonoidHom.prodMap invT invT
 

@@ -116,7 +116,6 @@ theorem prod_u {Y T : Over S} (a b : Y ⟶ G) (x : T ⟶ Y) {U : Type} [CommGrou
 
 variable {L : LB G.left} {Y : Over S}
 
-omit [GrpObj G] [IsCommMonObj G] in
 
 theorem formEq_of_sum {K K' : Type} [Fintype K] [Fintype K'] {V W : Scheme.{0}} {φ : K → (V ⟶ W)} {ε : K → ℤ}
     {φ' : K' → (V ⟶ W)} {ε' : K' → ℤ}
@@ -128,7 +127,6 @@ theorem formEq_of_sum {K K' : Type} [Fintype K] [Fintype K'] {V W : Scheme.{0}} 
     apply Additive.ofMul.injective
     simpa only [ofMul_prod, ofMul_zpow] using this
 
-omit [GrpObj G] [IsCommMonObj G] in
 
 theorem rep_pull {K : Type} [Fintype K] {V : Over S} {φ : K → (V.left ⟶ G.left)} {ε : K → ℤ}
     {t : LB.Gen (LB.LinComb L φ ε)} (ht : t.IsGen) (p : Y ⟶ V) {D : FreeAbelianGroup (Y.left ⟶ G.left)}
@@ -139,7 +137,6 @@ theorem rep_pull {K : Type} [Fintype K] {V : Over S} {φ : K → (V.left ⟶ G.l
   have := congrArg Multiplicative.toAdd hD
   simpa only [toAdd_prod, toAdd_zpow, toAdd_ofAdd] using this
 
-omit [GrpObj G] [IsCommMonObj G] in
 
 theorem rep_unique (hL : L.IsLB) (hp : Function.Surjective Y.hom.appTop.hom) (e : 𝟙_ (Over S) ⟶ Y)
     {D D' : FreeAbelianGroup (Y.left ⟶ G.left)} {f f' : ValFam L Y} (h : Rep L D f) (h' : Rep L D' f') (hD : D = D')

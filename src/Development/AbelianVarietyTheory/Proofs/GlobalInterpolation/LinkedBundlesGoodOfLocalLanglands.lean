@@ -70,7 +70,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
-set_option maxHeartbeats 4000000 in
 
 end Layer
 
@@ -84,6 +83,5 @@ namespace GlobalTheory.Fc.GoodLinked
 
 def GoodRec : V4.Slot := fun _ X _ _ _ => Formalism.BasicNotions.GoodFTAll X.toD7
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.Fc.GoodLinked

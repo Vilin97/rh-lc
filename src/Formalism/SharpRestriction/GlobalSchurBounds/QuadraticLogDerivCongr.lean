@@ -380,7 +380,6 @@ theorem hf (u0 : M.e.A) : (Fm.D x (M.pt u0)).R.f = M.f := congrArg Ranks.f (Fm.R
 theorem hAD (u0 : M.e.A) : HEq M.AD (arithOf (Fm.D x (M.pt u0)).host.toHostRaw) :=
   arithOf_heq _ _ (M.he u0).symm (Fm.q_eq x _ _) (Fm.d_eq x _ _) (Fm.QS_eq x _ _) (Fm.art_eq x _ _)
 
-open Classical in
 
 def w (u0 : M.e.A) (j : Fin M.m) (g : E0 × M.e.A) : ℝ :=
   if h : ∃ τ : (Fm.D x (M.pt u0)).what₂.Tau,
@@ -833,7 +832,6 @@ theorem exp_neg_le_half {y : ℝ} (hy : 1 ≤ y) : Real.exp (-y) ≤ 1 / 2 := by
 
 variable {eps : ℝ}
 
-set_option maxHeartbeats 1600000 in
 
 end Formalism.MainNotions.Lnk
 

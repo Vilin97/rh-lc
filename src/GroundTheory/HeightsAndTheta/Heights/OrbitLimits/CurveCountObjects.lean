@@ -38,8 +38,6 @@ section Lemmas
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
-omit [Fintype K] in
-open Classical in
 
 theorem sum_single_chart_apply (k' : K) (j : ι k') (b : ℕ) (k : K) :
     ∑ i, (Finsupp.single (⟨k', j⟩ : Σ k, ι k) b) ⟨k, i⟩ = if k' = k then b else 0 := by
@@ -70,13 +68,11 @@ theorem isMultiHomog_curveChartMono (c : ∀ k, ι k) (d : K → ℕ) :
   rw [hd] at hm
   exact hm
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem aeval_curveChartMono (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (d : K → ℕ) :
     aeval y (curveChartMono c d) = chartUnit y c (fun k => (d k : ℤ)) 1 := by
   simp [curveChartMono, chartUnit, map_prod]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem ne_zero_of_X_notMem {y : (Σ k, ι k) → Ω} {p : Σ k, ι k}
     (hp : (X p : MRing ι) ∉ mCoordIdeal y) : y p ≠ 0 := by
@@ -85,7 +81,6 @@ theorem ne_zero_of_X_notMem {y : (Σ k, ι k) → Ω} {p : Σ k, ι k}
   show X p ∈ RingHom.ker (mConeMap y)
   rw [RingHom.mem_ker, mConeMap, aeval_X, h0, map_zero, zero_mul]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem curveChartMono_notMem {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) (d : K → ℕ) :
     curveChartMono c d ∉ mCoordIdeal y := by

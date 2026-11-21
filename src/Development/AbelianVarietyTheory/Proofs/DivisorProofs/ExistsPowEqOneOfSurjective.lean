@@ -28,7 +28,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.HolUnifEnd
 
-open GlobalTheory GlobalTheory.SurjIsogeny GlobalTheory.IsogenyModel in
 
 theorem exists_pow_eq_one_of_surjective (A B : Over (Sp ℂ)) [GrpObj A] [GrpObj B] (g : ℕ)
     (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) (hgA : SmoothOfRelativeDimension g A.hom)

@@ -42,7 +42,6 @@ theorem finite_resChar_eq {p : ℕ} (hp : p.Prime) :
   rintro _ ⟨la, hla, rfl⟩
   exact mem_primesOverFinset hp la hla
 
-set_option linter.deprecated false in
 
 theorem sum_ram_log_le {p : ℕ} (hp : p.Prime) (T : Finset (HeightOneSpectrum (𝓞 K)))
     (hT : ∀ la ∈ T, resCharOf la = p) :

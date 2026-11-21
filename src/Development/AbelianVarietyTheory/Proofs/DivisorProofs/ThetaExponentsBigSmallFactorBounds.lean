@@ -149,7 +149,6 @@ theorem card_psi (F : ℕ) (hF : Module.finrank ℚ E = 2 * F) :
   rw [Finset.card_univ, NumberField.Embeddings.card E ℂ, hF] at ht
   omega
 
-open Classical in
 
 theorem big_le (u : Weight Dw) (k n B : ℕ) (hk : 2 ≤ k) (hkp : k ≤ Dw.p + 1) (hanti : ∀ τ, Antitone (u τ))
     (hz : ∀ τ (i : Fin (Dw.p + Dw.q)), (i : ℕ) + 2 = k → u τ i = 0) (hB : ∀ τ i, |u τ i| ≤ B) (τ : E →+* ℂ) :
@@ -206,7 +205,6 @@ theorem cloud_eq (u : Weight Dw) (k n : ℕ) (hk : 2 ≤ k) (hkp : k ≤ Dw.p + 
     rw [val i (by omega), val (k - 2) (by omega), hz τ ⟨k - 2, by omega⟩ (by show k - 2 + 2 = k; omega)]
     simp
 
-open Classical in
 
 theorem row_le (u : Weight Dw) (k n B : ℕ) (Sg : ℝ) (hk : 2 ≤ k) (hkp : k ≤ Dw.p + 1) (hu : WtBd Dw k n u B Sg)
     (τ : E →+* ℂ) :

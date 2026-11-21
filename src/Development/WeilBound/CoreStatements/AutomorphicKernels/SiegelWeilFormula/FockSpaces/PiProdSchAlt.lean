@@ -47,7 +47,6 @@ def oneSch : 𝓢(PEmpty → V, ℂ) where
       | zero => rw [norm_iteratedFDeriv_zero]; simp
       | succ n => rw [iteratedFDeriv_const_of_ne (Nat.succ_ne_zero n)]; simp⟩
 
-variable (V) in
 
 def PS (α : Type) [Fintype α] : Prop := ∀ S : α → 𝓢(V, ℂ), ∃ T : 𝓢(α → V, ℂ), ∀ y, T y = ∏ w, S w (y w)
 

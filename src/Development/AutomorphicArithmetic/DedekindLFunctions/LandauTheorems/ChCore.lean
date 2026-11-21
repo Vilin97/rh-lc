@@ -182,7 +182,6 @@ lemma triv (D : ArithData H) (ell : AddChar (E0 × H) ℂ → ℂ) {x Cd : ℝ} 
   have h3 : 0 ≤ Real.log x := Real.log_nonneg (by linarith)
   nlinarith
 
-open Classical in
 
 def vv (Kp : Finset (AddChar (E0 × H) ℂ)) (D : ArithData H) (ell : AddChar (E0 × H) ℂ → ℂ) (c x : ℝ)
     (ψ : AddChar (E0 × H) ℂ) : ℝ :=

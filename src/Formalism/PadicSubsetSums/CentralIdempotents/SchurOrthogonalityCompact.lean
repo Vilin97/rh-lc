@@ -43,6 +43,5 @@ def BCCyclicVector : Prop :=
   ∀ (K V : Type) [Field K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     (g : Module.End K V), g.charpoly.Separable → ∃ e : V, ∀ v : V, ∃ p : K[X], aeval g p e = v
 
-open scoped Classical in
 
 end Formalism.IrreducibleCountingLemmas.Z

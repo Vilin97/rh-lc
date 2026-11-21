@@ -30,7 +30,6 @@ theorem clsAvg_fixed (S : CSD K) (c : S.Cl) (x : S.V) (g : S.Gam c) : S.ρ c g (
   simp_rw [hm]
   exact Equiv.sum_comp (Equiv.mulLeft g) (fun g' => S.ρ c g' x)
 
-open Classical in
 
 def clsSingle (S : CSD K) (c : S.Cl) (x : S.V) : S.Forms :=
   ⟨Pi.single c (clsAvg S c x), by

@@ -32,7 +32,6 @@ theorem unitOn_inj' {R : Type} [CommRing R] : Function.Injective (unitOn (R := R
 
 end GlobalTheory.LevelCarry
 
-open GlobalTheory.LevelCarry in
 
 theorem GlobalTheory.levelPoint_baseChange_label : ∀ (K C : Type) [Field K] [Field C] [IsAlgClosed C] (f : K →+* C) (P : PolAV (Sp K))
     (P' : PolAV (Sp C)) (io : (Over.mk (spMap f) ⟶ P.A) ≃* (baseOver (Sp C) ⟶ P'.A)),

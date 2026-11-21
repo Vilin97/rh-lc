@@ -87,7 +87,6 @@ theorem latMod_sup {M M' : Submodule (𝓞 K) V} {S S' I : Submodule K V} (hM : 
     · rintro x (hx | hx)
       exacts [Submodule.mem_sup_left hx, Submodule.mem_sup_right hx]
 
-omit [StarRing K] in
 
 theorem gens_of_torsion {A D : Submodule (𝓞 K) V} {Y I : Submodule K V} (hA : IsLatMod A (Y ⊔ I) I)
     (hAD : A ≤ D) {n : ℕ} (hn : n ≠ 0) (hD : ∀ x ∈ D, (n : 𝓞 K) • x ∈ A) :
@@ -141,8 +140,6 @@ omit [NumberField K] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower 
 theorem perp_anti {S T : Submodule K V} (h : S ≤ T) : perp H T ≤ perp H S := fun y hy =>
   (mem_perp_iff H S y).2 fun x hx => (mem_perp_iff H T y).1 hy x (h hx)
 
-omit [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
-include hX hX' hr hr' in
 
 theorem rad_sup : ∀ x ∈ X ⊔ X', (∀ y ∈ X ⊔ X', H.B x y = 0) ↔ x ∈ X ⊓ X' := by
   intro x hx
@@ -158,7 +155,6 @@ theorem rad_sup : ∀ x ∈ X ⊔ X', (∀ y ∈ X ⊔ X', H.B x y = 0) ↔ x �
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy
     rw [map_add (f := _), hX x h1 a ha, hX' x h2 b hb, add_zero]
 
-omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem rad_perp {U I : Submodule K V} (hIU : I ≤ U) (h : ∀ x ∈ U, (∀ y ∈ U, H.B x y = 0) ↔ x ∈ I) :
     ∀ x ∈ perp H U, (∀ y ∈ perp H U, H.B x y = 0) ↔ x ∈ I := by
@@ -181,7 +177,6 @@ theorem perp_le_sup : perp H X ≤ perp H (X ⊔ X') ⊔ X := by
     simpa [hX a ha y hy] using hw y (Submodule.mem_sup_right hy)
   exact swap0 (hv _ (add_mem ha h2))
 
-omit [NumberField K] [FiniteDimensional K V] in
 
 theorem inf_sup_eq {U I : Submodule K V} (hIX : I ≤ X) (hIU : I ≤ U) (hI : ∀ x ∈ X, ∀ y ∈ I, H.B x y = 0) :
     rs (𝓞 K) (perp H U) ⊓ (Λ ⊔ rs (𝓞 K) X) =
@@ -194,7 +189,6 @@ theorem inf_sup_eq {U I : Submodule K V} (hIX : I ≤ X) (hIU : I ≤ U) (hI : �
   refine Submodule.add_mem_sup (Submodule.mem_sup_left ⟨ha, (mem_perp_iff H I a).2 fun i hi => ?_⟩) hb
   simpa [hI b hb i hi] using (mem_perp_iff H U _).1 hy i (hIU hi)
 
-include hX hX' hr hr' in
 
 theorem inner_unimod (hU : IsUnimod H Λ) :
     IsUnimodMod H (rs (𝓞 K) (perp H (X ⊔ X')) ⊓ (Λ ⊔ rs (𝓞 K) X)) (perp H (X ⊔ X')) (X ⊓ X') := by
@@ -238,7 +232,6 @@ theorem inner_unimod (hU : IsUnimod H Λ) :
       rw [← hM.2, SetLike.mem_coe, mem_dual_iff] at h2
       exact h2.2 x hx.2
 
-omit [NumberField K] [FiniteDimensional K V] in
 
 theorem quot_inf {I : Submodule K V} (hIX : I ≤ X) (hI : ∀ x ∈ X, ∀ y ∈ I, H.B x y = 0) :
     ((Λ ⊓ rs (𝓞 K) (perp H I)) ⊔ rs (𝓞 K) I) ⊓ rs (𝓞 K) X = (Λ ⊓ rs (𝓞 K) X) ⊔ rs (𝓞 K) I := by
@@ -246,7 +239,6 @@ theorem quot_inf {I : Submodule K V} (hIX : I ≤ X) (hI : ∀ x ∈ X, ∀ y �
   have h2 : rs (𝓞 K) X ≤ rs (𝓞 K) (perp H I) := fun x hx => (mem_perp_iff H I x).2 (hI x hx)
   rw [sup_comm, sup_inf_assoc_of_le _ h1, sup_comm, inf_assoc, inf_eq_right.2 h2]
 
-include hX hX' hr hr' in
 
 theorem idx_eq_del (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hU : IsUnimod H Λ) {U I : Submodule K V}
     (eU : U = X ⊔ X') (eI : I = X ⊓ X') {M : Submodule (𝓞 K) V}
@@ -275,7 +267,6 @@ theorem idx_eq_del (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hU : Is
     simp [del, gidx, idx, hL.2]
   refine ⟨e, by exact_mod_cast h2.ne', by rw [h3, h4, mul_one]⟩
 
-include hX hX' hr hr' in
 
 theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hU : IsUnimod H Λ) {Y : Submodule K V} (hY : X = Y ⊔ X ⊓ X')
     {M L L' Λ₁ A A' : Submodule (𝓞 K) V}
@@ -373,7 +364,6 @@ open GlobalTheory.DegCnt.Kill GlobalTheory.DegCnt.FrameCramer
 
 variable {H : HermSpace K V} {r : ℕ}
 
-omit [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem flag_rad (F F' : FlagD H r) {j : ℕ} (hj : j ≤ r) (hD : Dl F F' j (hj.trans (Nat.le_succ r)) ≠ 0)
     (h : ∀ a : Fin r, j ≤ a.val → ∃ c : K, F.e a.castSucc = c • F'.e a.castSucc) :

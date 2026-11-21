@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain GlobalTheory.UnitaryBC
 
 namespace GlobalTheory.SplitUnram
 
-set_option maxHeartbeats 800000 in
 
 theorem isUnramifiedAt_of_isSplitAt : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L]
     (w : HeightOneSpectrum (𝓞 L)), IsSplitAt w →

@@ -22,7 +22,6 @@ def EvzTie {u : D.what₂.Word} {A : AtTTied u} {K : ClsPTied u} {P : LvTied u A
     IsTr (atInf (embT D) (Tl.ga c).1.1) (W.eY s') (W.eY s) →
     eWz ((D.mem u).P.evz φ) c s = (((Km.lev.chi (Ta.ka c))⁻¹ : ℂˣ) : ℂ) * φ ((D.fm u).til c) s'
 
-open Classical in
 
 def BwTie {u : D.what₂.Word} (A : AtTTied u) {i : ℕ} {hi : i ≤ D.R.m} {K : ClsTied u i hi}
     (W : ValTied u A.eV i hi K) : Prop :=
@@ -75,7 +74,6 @@ def fcOf (R : Ranks) (i : ℕ) : ℕ := if R.m ≤ i + 1 then R.k else R.N i
 
 theorem fcOf_lt {R : Ranks} {i : ℕ} (h : i + 1 < R.m) : fcOf R i = R.N i := if_neg (Nat.not_le.2 h)
 
-set_option maxHeartbeats 1000000 in
 
 structure FormsTied (D : D7) (u : D.what₂.Word) where
   atT : AtTTied u

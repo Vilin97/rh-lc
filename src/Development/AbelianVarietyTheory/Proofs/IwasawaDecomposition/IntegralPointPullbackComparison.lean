@@ -106,4 +106,3 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 end GlobalTheory.TriplesAlong
 
-open GlobalTheory.TriplesAlong in

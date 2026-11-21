@@ -18,7 +18,6 @@ namespace GlobalTheory.ResLineLevi
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
 
-omit [NumberField E] in
 
 theorem mem_frameStab_of_parFlag {s : ℕ} {C : Matrix (Fin n) (Fin s) E} {L : Matrix (Fin s) (Fin n) E} (hL : L * C = 1)
     {d : Fin s → ℕ} {g : GAd σ J} (hg : g ∈ GlobalTheory.UAut.parFlag σ J C d) : g ∈ frameStab σ J C ⊤ := by
@@ -33,7 +32,6 @@ theorem mem_frameStab_of_parFlag {s : ℕ} {C : Matrix (Fin n) (Fin s) E} {L : M
       _ = 1 := by rw [← Matrix.mul_assoc (matHom _ σ J g).1, hMM, Matrix.one_mul, hL']
   exact ⟨⟨B, B', hBB, mul_eq_one_comm.1 hBB⟩, Subgroup.mem_top _, e⟩
 
-omit [NumberField E] in
 
 theorem unipRad_fix {s : ℕ} {C : Matrix (Fin n) (Fin s) E} {u : GAd σ J} (hu : u ∈ unipRad σ J C) :
     (matHom _ σ J u).1 * adMat F C = adMat F C := by
@@ -44,6 +42,5 @@ theorem unipRad_fix {s : ℕ} {C : Matrix (Fin n) (Fin s) E} {u : GAd σ J} (hu 
   obtain ⟨B, hB, e⟩ := this hu
   rw [e, Subgroup.mem_bot.1 hB, Units.val_one, Matrix.mul_one]
 
-omit [NumberField E] in
 
 end GlobalTheory.ResLineLevi

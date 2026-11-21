@@ -1343,7 +1343,6 @@ theorem rma_isDom_omPlus (hz : inWb k r z) (hz' : inWb k r z') : IsDom k r z z' 
   rw [e]
   exact hg.2
 
-variable (k r z z' π π') in
 
 def rma_K : Submodule ℂ (Mx k r → (Wq →L[ℂ] Wp)) where
   carrier := FFl k r z z' π π' 0 (OmPlus k r z z')
@@ -1362,8 +1361,6 @@ theorem rma_resG_add {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (i :
     resG k r i (J + J') c g = resG k r i J c g + resG k r i J' c g := by
   simp only [resG, Pi.add_apply, smul_add]
 
-variable (z z') in
-open Classical in
 
 def rma_resFn (J : Mx k r → (Wq →L[ℂ] Wp)) : Fn k r (Wq →L[ℂ] Wp) := fun c g =>
   if (c, g) ∈ DomR k r z z' then resG k r (Fin.last r) J c g else 0
@@ -1447,7 +1444,6 @@ theorem rma_res_apply (hz : inWb k r z) (hz' : inWb k r z') (J : Mx k r → (Wq 
   rw [e]
   exact rma_resFn_of_mem J hy
 
-variable (V : Type) [AddCommGroup V] [Module ℂ V] in
 
 def rma_fst : Pr V →ₐ[ℂ] Module.End ℂ V where
   toFun x := x.1
@@ -1463,7 +1459,6 @@ theorem rma_star_alg {V : Type} [AddCommGroup V] [Module ℂ V] (w : ℂ) :
     star (algebraMap ℂ (Pr V) w) = algebraMap ℂ (Pr V) (star w) := by
   rw [P.Qx8.algebraMap_Pr, P.Qx8.algebraMap_Pr, P.Qx8.star_mkPair, star_star]
 
-variable (k r z z') in
 
 def rma_Loc {E : Type*} (N : OM (Fn k r E)) : Prop :=
   ∀ a b (f₁ f₂ : Fn k r E), (∀ y ∈ DomR k r z z', f₁ y.1 y.2 = f₂ y.1 y.2) →
@@ -1652,7 +1647,6 @@ theorem rma_QQi (X : ActualOps k r z z' π π') (L : R.LevelData (Pr (RadSp k r 
   congr 1
   exact (rma_sandw X L hL Y r le_rfl _ _ (rma_base X Y) (rma_QL_loc Y)).1 a b Ψ y hy
 
-variable (k r z z') in
 
 def rma_Qop (s : ℂ) : ℂ → Wd.M2 (D.Op (Mx k r → (Wq →L[ℂ] Wp))) := fun Y =>
   Matrix.of fun a b => (fun f => s • tL k r z z' 0 Y a b f : D.Op (Mx k r → (Wq →L[ℂ] Wp)))

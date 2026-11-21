@@ -21,7 +21,6 @@ theorem residue_aeval_integer (p : 𝒪[K][X]) (x : 𝒪[L]) :
   rw [aeval_def, aeval_def, eval₂_map, hom_eval₂]
   congr 1
 
-variable (K) in
 
 theorem adjoin_eq_top_of_residue_of_addVal_eq_one {x : 𝒪[L]}
     (hx : Algebra.adjoin 𝓀[K] {residue 𝒪[L] x} = ⊤) {π : 𝒪[L]}
@@ -77,7 +76,6 @@ theorem adjoin_eq_top_of_residue_of_addVal_eq_one {x : 𝒪[L]}
   intro z _
   exact hnak Submodule.mem_top
 
-variable (K L) in
 
 theorem exists_integer_adjoin_eq_top : ∃ x : 𝒪[L], Algebra.adjoin 𝒪[K] {x} = ⊤ := by
   classical

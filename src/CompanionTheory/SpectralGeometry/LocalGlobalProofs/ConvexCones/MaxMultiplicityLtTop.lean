@@ -13,7 +13,6 @@ open NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.Toroi
 noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.Fan.MaxMultiplicityFinite
 
-open GlobalTheory.PolFan.MultBound in
 
 theorem maxMult_lt_top : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZero O] [Module.Finite ℤ O] (bar : O → O),
     CMOrd O bar → ∀ (q : ℕ) (φ : InvFun O), IsPolyFan bar q φ → maxMult bar q φ < ⊤ := by

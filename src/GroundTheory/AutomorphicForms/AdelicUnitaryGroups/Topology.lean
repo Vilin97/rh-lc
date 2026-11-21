@@ -38,7 +38,6 @@ section Algebraic
 variable (H : Matrix ι ι E)
 variable (R : Type*) [CommRing R] [Algebra K R]
 
-variable (K) in
 
 abbrev baseMatrix : Matrix ι ι (R ⊗[K] E) :=
   H.map (Algebra.TensorProduct.includeRight : E →ₐ[K] R ⊗[K] E)

@@ -42,7 +42,6 @@ theorem AA_ne_zero : D.host.AA ≠ 0 := by
   rw [h0, mul_zero, zero_mul] at h
   exact dual_ne_zero' h.symm
 
-set_option maxHeartbeats 800000 in
 
 theorem mem_AA_of_trace {z : D.host.E}
     (h : ∀ c ∈ D.host.AA, Algebra.trace D.host.F D.host.E (D.host.xi0 * (star c * z)) ∈ invDiff D.host.F) :

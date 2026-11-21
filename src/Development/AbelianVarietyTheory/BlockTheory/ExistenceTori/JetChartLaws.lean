@@ -55,9 +55,7 @@ def IsFormalParam (j : JetPts G x d) : Prop :=
     ∀ g : algO x B ⟶ G, algMap x (Ideal.Quotient.mkₐ S I) ≫ g = 1 →
       ∃! f : Jet S (Fin d) m →ₐ[S] B, algMap x f ≫ j m = g
 
-omit [GrpObj G] in
 
-omit [GrpObj G] in
 
 def TanIs (j : JetPts G x d) (v : Sp (DualNumber S) ⟶ G.left) (c : Fin d → S) : Prop :=
   v = (algMap x (jetVec c) ≫ j 1).left

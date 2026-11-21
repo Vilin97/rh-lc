@@ -13,8 +13,5 @@ open Formalism.DoubleCosetMeasures (IsUpUni IsLowUni upUniG)
 
 end Formalism.FourierDecayAlt.P.S3x9
 
-open Formalism.FourierDecayAlt.P.S3x9 Formalism.FourierDecayAlt.S3 Matrix in
 
-open Formalism.FourierDecayAlt.P.S3x9 Formalism.FourierDecayAlt.S3 Matrix in
 
-open Formalism.FourierDecayAlt.P.S3x9 Formalism.FourierDecayAlt.S3 Matrix in

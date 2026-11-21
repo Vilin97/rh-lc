@@ -66,7 +66,6 @@ theorem cobChar_pow_eq_one (A : ValuationSubring Ω) (y : Ω) (hy : y ≠ 0) (σ
   rw [← QuotientGroup.mk_pow, QuotientGroup.eq_one_iff, ValuationSubring.mem_principalUnitGroup_iff,
     Units.val_pow_eq_pow_val, coe_cob, Units.val_mk0]
 
-variable (E) in
 
 def primeTo (A : ValuationSubring Ω) (l : ℕ) : Subgroup (G E Ω) where
   carrier := {σ | σ ∈ Ine (F := E) A ∧ ∀ y : Ω, y ≠ 0 → ∃ n : ℕ, Nat.Coprime n l ∧
@@ -314,7 +313,6 @@ theorem eq_zero_of_fixed (ρ : Γ →* GL (Fin r) O) (κ : Γ →* Λˣ) {j : Γ
 
 end Algebra
 
-open IsLocalRing in
 
 theorem vanishing {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
     {A : ValuationSubring Ω} {v : HeightOneSpectrum (𝓞 E)} (hA : IsPlaceOver A v)

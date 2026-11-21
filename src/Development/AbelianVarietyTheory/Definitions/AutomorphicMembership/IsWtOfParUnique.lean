@@ -48,10 +48,7 @@ theorem gram_V (X : Stages) {px : PreX X.B.toPre} (I : ColIn X.B px) (hI : I.Ok)
 variable (X : Stages) {px : PreX X.B.toPre} (I : ColIn X.B px) (hX : X.B.fields.Ok) (U : Set I.ι) (Xg : Finset (Gc X.B px → X.B.LL))
   (tr : TrI X.B px)
 
-set_option maxHeartbeats 4000000 in
 
-open Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx Formalism.L2.Indef in
-set_option maxHeartbeats 4000000 in
 
 end Rec
 

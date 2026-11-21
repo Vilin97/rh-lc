@@ -22,8 +22,6 @@ end General
 
 variable {g : ℕ}
 
-open Complex Matrix in
-variable {g : ℕ} in
 
 theorem _root_.GlobalTheory.isSymm_phSym (x : Matrix (Fin g) (Fin g) ℂ) : (_root_.ReciprocityTheory.ChartRestriction.G.Key.phSym x).IsSymm := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Key.phSym
@@ -31,8 +29,6 @@ theorem _root_.GlobalTheory.isSymm_phSym (x : Matrix (Fin g) (Fin g) ℂ) : (_ro
   simp only [transpose_apply, Matrix.smul_apply, Matrix.add_apply, smul_eq_mul]
   ring
 
-open Complex Matrix in
-variable {g : ℕ} in
 
 theorem _root_.GlobalTheory.phSym_eq_self_of_isSymm {x : Matrix (Fin g) (Fin g) ℂ} (hx : x.IsSymm) :
     _root_.ReciprocityTheory.ChartRestriction.G.Key.phSym x = x := by
@@ -40,8 +36,6 @@ theorem _root_.GlobalTheory.phSym_eq_self_of_isSymm {x : Matrix (Fin g) (Fin g) 
   rw [hx.eq, ← two_smul ℂ x, smul_smul]
   norm_num
 
-open Complex Matrix in
-variable {g : ℕ} in
 
 theorem _root_.GlobalTheory.differentiable_phSym_coords :
     Differentiable ℂ (fun x : Fin g → Fin g → ℂ =>
@@ -52,8 +46,6 @@ theorem _root_.GlobalTheory.differentiable_phSym_coords :
     Matrix.of_apply, smul_eq_mul]
   fun_prop
 
-open Complex Matrix in
-variable {g : ℕ} in
 
 theorem _root_.GlobalTheory.isOpen_phDom (g : ℕ) : IsOpen (_root_.ReciprocityTheory.ChartRestriction.G.Key.phDom g) := by
   have hc : Continuous (fun x : Fin g → Fin g → ℂ => _root_.ReciprocityTheory.ChartRestriction.G.Key.phSym (Matrix.of x)) := by
@@ -80,8 +72,6 @@ private theorem convex_siegelH (g : ℕ) : Convex ℝ (_root_.ReciprocityTheory.
     · simp at hab; subst hab; simpa using hB.posDef
     · exact (hA.posDef.smul ha').add_posSemidef (hB.posDef.posSemidef.smul hb)
 
-open Complex Matrix in
-variable {g : ℕ} in
 
 theorem _root_.GlobalTheory.convex_phDom (g : ℕ) : Convex ℝ (_root_.ReciprocityTheory.ChartRestriction.G.Key.phDom g) := by
   have hl : IsLinearMap ℝ (fun x : Fin g → Fin g → ℂ => _root_.ReciprocityTheory.ChartRestriction.G.Key.phSym (Matrix.of x)) := by
@@ -92,8 +82,6 @@ theorem _root_.GlobalTheory.convex_phDom (g : ℕ) : Convex ℝ (_root_.Reciproc
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Key.phDom
   exact this
 
-open Complex Matrix in
-variable {g : ℕ} in
 
 theorem _root_.GlobalTheory.of_symm_mem_phDom {τ : Matrix (Fin g) (Fin g) ℂ}
     (hτ : τ ∈ _root_.ReciprocityTheory.PTheta.SiegelH (Fin g)) :

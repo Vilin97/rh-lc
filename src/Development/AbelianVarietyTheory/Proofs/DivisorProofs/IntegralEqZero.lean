@@ -30,9 +30,7 @@ variable {H : Type} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] [Measu
 
 variable {μ Γ 𝓕}
 
-omit [IsTopologicalGroup H] [μ.IsMulLeftInvariant] [μ.IsMulRightInvariant] [Countable Γ] in
 
-omit [IsTopologicalGroup H] [μ.IsMulLeftInvariant] [μ.IsMulRightInvariant] [Countable Γ] in
 
 theorem isDC_of_local {H : Type} [Group H] (J L : Subgroup H) (x : H) (A : Finset H) (hx : x ∈ L)
     (hs : ∀ k ∈ J, ∃ k₁ ∈ J, ∃ k₂ ∈ J, k₁ ∈ L ∧ k = k₁ * k₂ ∧ ∀ l ∈ L, Commute k₂ l)

@@ -31,7 +31,6 @@ theorem range : T.j.fieldRange = H.EQ := H.range_eq T.j
 theorem conj (x : H.E) : T.ι (T.j (H.conj x)) = starRingEnd ℂ (T.ι (T.j x)) :=
   H.conjE_apply (T.ι.comp T.j.toRingHom) x
 
-include T in
 
 theorem «exists» (H : Formalism.BasicNotions.Host R) : Nonempty (Frame H) := by
   let j : H.E →ₐ[ℚ] Qb := (by

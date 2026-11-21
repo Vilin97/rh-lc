@@ -62,8 +62,6 @@ end GlobalTheory.Hk3.SquareDiag
 
 namespace GlobalTheory.Hk3.SquareDiag
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.Hk3 in
 
 theorem square_diag : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ϖ : L) (σ : L →+* L) (q : ℕ) (δ : L)
     (n n' : ℕ) (A B : Matrix (Fin n) (Fin n) L) (ψ : AddChar L ℂ),

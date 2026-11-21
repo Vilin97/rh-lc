@@ -61,23 +61,19 @@ def Gn (T : Tower p Ω) (n : ℕ) : Subgroup (Gal p Ω) :=
 def IsEmb (T : Tower p Ω) (n : ℕ) (ι : On p n →ₐ[O0 p] Ω) : Prop :=
   ι (xn p n) = T.ζ n ∧ ι (yn p n) = T.qq n
 
-variable (p) in
 
 def IsInt (x : Ω) : Prop := IsIntegral (O0 p) x
 
-variable (p) in
 
 def Cong (k : ℕ) (x y : Ω) : Prop := ∃ z : Ω, IsInt p z ∧ x - y = (p : Ω) ^ k * z
 
 def IsKum (T : Tower p Ω) (n : ℕ) (H : Subgroup (Gal p Ω)) (r : Ω) (a : Gal p Ω → ZMod (p ^ n)) : Prop :=
   ∀ g ∈ H, g r = T.ζ n ^ (a g).val * r
 
-variable (p) in
 
 def IsAlgZp (x : Ω) : Prop :=
   ∃ P : Polynomial ℤ_[p], P ≠ 0 ∧ Polynomial.aeval x (P.map (algebraMap ℤ_[p] (O0 p))) = 0
 
-variable (p) in
 
 def Ggeo (Ω : Type*) [Field Ω] [Algebra (O0 p) Ω] : Subgroup (Gal p Ω) where
   carrier := {g | ∀ x : Ω, IsAlgZp p x → g x = x}

@@ -37,15 +37,12 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.L
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (i : Fin D.R.m)
   {K' : Type} [Field K'] (jL : D.what₂.LL →+* K') (σ' : K' →+* ℂ)
 
-variable (D) in
 
 abbrev lamV : D.what₂.Tau → DomWeight (Vc D i).rank := fun τ => Bridge.lamLdef (Vc D i).rank ((i : ℕ) + 1) τ
 
-variable (D) in
 
 abbrev VsV (K : Type) [Field K] : Type := ↥(VV K (lamV D i))
 
-variable (D) in
 
 def embV (τ : D.what₂.Tau) : D.host.E →+* K' := jL.comp (labLL D τ)
 
@@ -63,7 +60,6 @@ theorem embV_eq_embF {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.ho
 
 abbrev levJ (t : T0) : Subgroup (Bridge.Gf (Vc D i)) := (levEnv (Vc D i) (R.βV i) (R.datVt i t)).J
 
-variable (D) in
 
 def VStd : Prop :=
   (Vc D i).gram = 1 ∧ Bridge.hLat (Vc D i) 1 = Submodule.pi Set.univ fun _ => (1 : Submodule (𝓞 D.host.E) D.host.E)
@@ -108,7 +104,6 @@ def XiIs (xi : (Af D.host.F ⊗[D.host.F] D.host.E)ˣ →* ℂˣ) : Prop :=
 
 variable {La : Type} [AddCommGroup La] [Module (𝓞 D.host.E) La] (ι : La →ₗ[𝓞 D.host.E] (Fin (Wc D i).rank → D.host.E))
 
-open Classical in
 
 def PhiIs (N : Submodule (𝓞 D.host.E) La) (φ : (Fin (Vc D i).rank → La ⧸ N) → K') : Prop :=
   ∃ e : AE D, IsIdemSum e (R.Pg ∪ R.Q t) ∧ ∀ x : Fin (Vc D i).rank → La,

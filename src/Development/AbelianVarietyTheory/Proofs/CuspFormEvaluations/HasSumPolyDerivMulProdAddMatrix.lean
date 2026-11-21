@@ -34,7 +34,6 @@ theorem hasSum_polyDeriv_of_locally_normal {ι : Type*} {F : ι → W → ℂ} {
   exact (SCV.hasSum_iteratedFDeriv_of_locally_normal hU hF hle _ hx).mapL
     (ContinuousMultilinearMap.apply ℂ (fun _ => W) ℂ _)
 
-omit [FiniteDimensional ℂ W] in
 
 theorem polyDeriv_congr_of_eventuallyEq (P : MvPolynomial σ ℂ) (u : σ → W) {F G : W → ℂ} {x : W}
     (h : F =ᶠ[𝓝 x] G) : I2.polyDeriv P u F x = I2.polyDeriv P u G x := by

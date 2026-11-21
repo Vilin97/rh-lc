@@ -130,7 +130,6 @@ variable (kk : KerFam F) (k1 : ∀ al : (F n).β, ClsKer ((F n).mem al) C.gsd) (
 
 def spKer : KerFam (spFam F n m C T) := fun i b b' => spEntry kk k1 k2 i (i + 1) rfl b b'
 
-variable (n m C T) in
 
 variable {hS : ∀ i, (spFam F n m C T i).Ok}
 

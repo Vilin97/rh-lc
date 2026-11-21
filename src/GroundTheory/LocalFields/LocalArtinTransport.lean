@@ -131,7 +131,6 @@ theorem apply_mem_maximalAbelianExtension {y : Ω} (hy : y ∈ maximalAbelianExt
   have := isAbelianGalois_transportField e ε hε L
   exact le_maximalAbelianExtension _ ((apply_mem_transportField e ε hε).2 hyL)
 
-include hε in
 
 theorem mem_maximalAbelianExtension_transport_iff {y : Ω} :
     ε y ∈ maximalAbelianExtension K' Ω' ↔ y ∈ maximalAbelianExtension K Ω := by
@@ -188,7 +187,6 @@ omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace K']
 def residueFieldEquivOfVle : 𝓀[K] ≃+* 𝓀[K'] :=
   IsLocalRing.ResidueField.mapEquiv (integerEquivOfVle e he)
 
-include he in
 
 theorem card_residueField_eq_of_vle : Nat.card 𝓀[K'] = Nat.card 𝓀[K] :=
   (Nat.card_congr (residueFieldEquivOfVle e he).toEquiv).symm
@@ -197,7 +195,6 @@ include he in
 theorem natCast_residueField_ne_zero_iff (m : ℕ) : (m : 𝓀[K']) ≠ 0 ↔ (m : 𝓀[K]) ≠ 0 := by
   rw [← map_natCast (residueFieldEquivOfVle e he), Ne, map_eq_zero_iff _ (residueFieldEquivOfVle e he).injective]
 
-include he in
 
 theorem ord_apply_of_vle (x : Kˣ) : ord (e (x : K)) = ord (x : K) := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
@@ -243,7 +240,6 @@ theorem apply_mem_maximalUnramifiedExtension_of_vle {y : Ω}
   have := (IntermediateField.adjoin_le_iff.2 hS) hy
   rwa [mem_transportField, RingEquiv.symm_symm] at this
 
-variable (K Ω) in
 
 def transportedArtinMap :
     K'ˣ →* (maximalAbelianExtension K' Ω' ≃ₐ[K'] maximalAbelianExtension K' Ω') :=
@@ -276,7 +272,6 @@ theorem transportedArtinMap_apply' (x' : K'ˣ) {y' : Ω'}
   simp only [RingEquiv.apply_symm_apply] at h
   exact h
 
-include he in
 
 theorem transportedArtinMap_eq : transportedArtinMap K Ω e ε hε = localArtinMap K' Ω' := by
   have he' := symm_vle_iff e he
@@ -331,7 +326,6 @@ theorem transportedArtinMap_eq : transportedArtinMap K Ω e ε hε = localArtinM
     simp only [restrictAb_apply, AlgEquiv.one_apply] at h2
     rw [h2, RingEquiv.apply_symm_apply]
 
-include he in
 
 theorem transport_localArtinMap_apply (x : Kˣ) {y : Ω} (hy : y ∈ maximalAbelianExtension K Ω) :
     ε ((localArtinMap K Ω x ⟨y, hy⟩ : maximalAbelianExtension K Ω) : Ω) =
@@ -350,7 +344,6 @@ section Corollaries
 variable {K K' : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   [Field K'] [ValuativeRel K'] [TopologicalSpace K'] [IsNonarchimedeanLocalField K']
 
-open Filter Topology in
 
 theorem vle_apply_iff_of_continuous (e : K ≃+* K') (hc : Continuous e) (hc' : Continuous e.symm)
     (x y : K) : e x ≤ᵥ e y ↔ x ≤ᵥ y := by

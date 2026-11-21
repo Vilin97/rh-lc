@@ -32,7 +32,6 @@ open ValuativeRel
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   [MeasurableSpace k] [BorelSpace k]
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem apow_nat_half_mem (F : Subfield ℂ) (habs : ∀ u : kˣ, apow u (1 / 2) ∈ F) (x : kˣ) (n : ℕ) :
     apow x ((n : ℂ) / 2) ∈ F := by
@@ -40,7 +39,6 @@ theorem apow_nat_half_mem (F : Subfield ℂ) (habs : ∀ u : kˣ, apow u (1 / 2)
     rw [apow, apow, ← Complex.cpow_nat_mul]; congr 1; ring
   rw [this]; exact F.pow_mem (habs x) n
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem fourierSum_mem {A D : Type} [Fintype A] [DecidableEq A] [DecidableEq D] (F : Subfield ℂ) (ψ : AddChar k Circle)
     (ϖ : kˣ) (e : ℕ) (P : Finset D) (hψ : ∀ x : k, valuation k (((ϖ ^ e : kˣ) : k) * x) ≤ 1 → (ψ x : ℂ) ∈ F)
@@ -59,7 +57,6 @@ theorem fourierSum_mem {A D : Type} [Fintype A] [DecidableEq A] [DecidableEq D] 
     exact Subring.mul_mem _ (liftRes_mem T i j) (h i j j.2)
   · exact F.zero_mem
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem invFourierSum_inv_mem {A D : Type} [Fintype A] [DecidableEq A] [DecidableEq D] (F : Subfield ℂ) (ψ : AddChar k Circle)
     (ϖ : kˣ) (e : ℕ) (P : Finset D) (hψ : ∀ x : k, valuation k (((ϖ ^ e : kˣ) : k) * x) ≤ 1 → (ψ x : ℂ) ∈ F)

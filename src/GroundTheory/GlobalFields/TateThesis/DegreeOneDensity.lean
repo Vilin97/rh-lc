@@ -85,9 +85,7 @@ section degreeOne
 
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-variable (K L) in
 
-variable (K) in
 
 theorem hasDirichletDensity_inter_degreeOnePrimes_iff (S : Set (HeightOneSpectrum (𝓞 L)))
     (δ : ℝ) : (S ∩ degreeOnePrimes K L).HasDirichletDensity δ ↔ S.HasDirichletDensity δ := by
@@ -100,7 +98,6 @@ theorem hasDirichletDensity_inter_degreeOnePrimes_iff (S : Set (HeightOneSpectru
   rw [← compl_degreeOnePrimes]
   exact fun h => hw.2 ⟨hw.1, h⟩
 
-variable (K L) in
 
 theorem hasDirichletDensity_degreeOnePrimes : (degreeOnePrimes K L).HasDirichletDensity 1 := by
   have := (hasDirichletDensity_inter_degreeOnePrimes_iff K univ 1).mpr
@@ -340,14 +337,12 @@ theorem dvd_differentIdeal_of_ramificationIdx_ne_one {w : HeightOneSpectrum (�
   have := pow_sub_one_dvd_differentIdeal_aux (𝓞 K) K L w.asIdeal (by omega) hv0 hdvd
   exact (dvd_pow_self _ (by omega)).trans this
 
-variable (K L) in
 
 theorem finite_setOf_ramificationIdx_ne_one :
     {w : HeightOneSpectrum (𝓞 L) | w.asIdeal.ramificationIdx (𝓞 K) ≠ 1}.Finite :=
   (Ideal.finite_factors (differentIdeal_ne_bot (A := 𝓞 K) (B := 𝓞 L))).subset
     fun _ hw => dvd_differentIdeal_of_ramificationIdx_ne_one hw
 
-variable (K L) in
 
 theorem hasDirichletDensity_setOf_splitsCompletely [IsGalois K L] :
     {v : HeightOneSpectrum (𝓞 K) | SplitsCompletely L v}.HasDirichletDensity

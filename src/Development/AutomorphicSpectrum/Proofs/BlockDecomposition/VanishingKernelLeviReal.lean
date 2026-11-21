@@ -309,7 +309,6 @@ theorem isN2_of_gelfand_values_eq (lam : Fin n → ℤ) (lev : Fin n → ℕ) (B
     rw [h1]
     ring
 
-open CompanionTheory.D.LK (LocFin) in
 
 theorem van_cn {lam : Fin n → ℤ} {lev : Fin n → ℕ} {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     {E1 E2 : Fin n → Fin n → Module.End ℂ V} (h : AdmFor lam lev E1 E2) (B : Finset (Fin n × Fin n)) (hB : B.Nonempty)

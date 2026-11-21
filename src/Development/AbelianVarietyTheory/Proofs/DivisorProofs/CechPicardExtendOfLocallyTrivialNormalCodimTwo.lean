@@ -169,7 +169,6 @@ theorem commGroup_inv_eq_conj_twist_identity {G : Type} [CommGroup G] (a b g : G
 
 end GlobalTheory.ExtendClass
 
-open GlobalTheory.GlueLineBundle TopologicalSpace GlobalTheory.ExtendClass in
 
 theorem GlobalTheory.extend_class_of_locally_trivial : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X], ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsNormalScheme X → ∀ W : X.Opens, (∀ z : X, ringKrullDim ((X).presheaf.stalk z) ≤ 1 → z ∈ W) → ∀ c : Pic W.toScheme, (∀ x : X, ∃ N : X.Opens, x ∈ N ∧ GlobalTheory.CechPic.pull (X.homOfLE (inf_le_right : N ⊓ W ≤ W)) c = 0) → ∃ c' : Pic X, GlobalTheory.CechPic.pull W.ι c' = c := by
   intro X _ hX W hW c hc

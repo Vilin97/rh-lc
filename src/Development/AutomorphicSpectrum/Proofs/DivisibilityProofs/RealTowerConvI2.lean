@@ -85,7 +85,6 @@ end GlobalTheory.CompanionTheory.Ar.Top.ConvergenceI2
 
 namespace GlobalTheory.CompanionTheory.Ar.Top
 
-open ConvergenceI2 in
 
 theorem real_tower_convergence_I2 : PB.AgreementPos → PB.Inputs → ∀ II : IntersectionSystem, IsFullIntersectionSystem II → ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) (T : RootTower Ψ N) (R : RealTower T), T.Conv II ∧ T.I2 II := by
   intro hAg hIn II hII Ψ _ _ N T R

@@ -71,7 +71,6 @@ theorem divOrd_prod_zpow (E : DivOver q) {ι : Type} (s : Finset ι) (u : ι →
 
 end GlobalTheory.Discrepancy.MonoOrd
 
-open GlobalTheory.Discrepancy.MonoOrd in
 
 theorem GlobalTheory.Discrepancy.MonoOrd.ord_eq_sum_of_monomial : ∀ {k : Type} [Field k] {Y : Scheme.{0}} [IsIntegral Y] [IsLocallyNoetherian Y]
     [GlobalTheory.IsNormalScheme Y] {q : Y ⟶ Sp k} (E : DivOver q) (y : Y), E.Through y →

@@ -159,7 +159,6 @@ theorem mem_pick_ptC (y : CxPts (mpStr ℤ m n) σ₀) :
     y ∈ ptsIn (mpStr ℤ m n) σ₀ (M.B.U (pick M.isLB y) ⊓ mchart (ptC y)) :=
   mem_ptsIn_inf.2 ⟨mem_pick M.isLB y, mem_ptC y⟩
 
-open Classical in
 
 def hOf (z : (Σ k, Bk n k) → ℂ) : ℝ :=
   if hz : ∃ y, IsUnder y z then hval M a u hz.choose z (pick M.isLB hz.choose) (ptC hz.choose) else 0

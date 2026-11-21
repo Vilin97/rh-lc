@@ -107,7 +107,6 @@ theorem atTau_inv (hθ : IsInfFam θ) {τ : D.what₂.Tau} {k : Matrix (Fin V.ra
   exact ((GlobalTheory.PointAtPlaceHom.atTau_laws D θ hθ V τ).1 k⁻¹ hk').unique
     (GlobalTheory.PointAtPlaceHom.atTau_spec hθ V τ hk') hat
 
-variable (θ V) in
 
 def cuspSub : Submodule ℂ (GA D V → ℂ) where
   carrier := {f | IsAutFunSm θ V f ∧ IsCuspFun V f}

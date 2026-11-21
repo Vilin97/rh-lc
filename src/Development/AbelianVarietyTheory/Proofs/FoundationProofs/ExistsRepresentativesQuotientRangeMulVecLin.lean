@@ -401,7 +401,6 @@ theorem sq_sum_pairQuadraticForm (hodd : Odd d.det) (hs : (dᵀ * b).IsSymm)
     (pairQuadraticForm_nondegenerate hd hs he hc), hcard]
   rw [← Int.cast_natCast (R := ℂ), ← Int.cast_mul, chi_four_natAbs_mul, Int.cast_mul]
 
-omit [DecidableEq n] in
 
 theorem even_dotProduct_mulVec_of_two_dvd (hb : ∀ i j, 2 ∣ b i j) (d : Matrix n n ℤ) (μ : n → ℤ) :
     Even (μ ⬝ᵥ (dᵀ * b) *ᵥ μ) := by

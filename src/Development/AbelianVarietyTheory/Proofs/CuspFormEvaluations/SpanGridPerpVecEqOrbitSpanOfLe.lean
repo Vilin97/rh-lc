@@ -20,7 +20,6 @@ section Perp
 
 variable {R S : Type} [CommRing R] [CommRing S] {p n : ℕ}
 
-variable (R n) in
 
 def dotPairing : (Fin n → R) →ₗ[R] ((Fin n → R) → R) where
   toFun x y := x ⬝ᵥ y

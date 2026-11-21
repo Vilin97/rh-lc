@@ -62,11 +62,9 @@ variable (D : D7)
 
 def normGroup : Subgroup (IdF D) := (ratF D).range ⊔ (normId D).range.comap (resF D)
 
-open Classical in
 
 variable {D}
 
-variable (D) in
 
 variable (D)
 

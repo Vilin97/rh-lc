@@ -99,7 +99,6 @@ namespace GlobalTheory.SplitConj
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-open IsDedekindDomain.HeightOneSpectrum in
 
 theorem exists_idem_coeffs (v : Pl F) (b c : 𝓞 F) (hc : c ∈ v.asIdeal) (hb : b ∉ v.asIdeal) :
     ∃ m k : v.adicCompletionIntegers F,

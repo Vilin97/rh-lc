@@ -99,9 +99,7 @@ variable {H : Host E} {Dw : Datum H} {l : Geo.Tor.Level H} {Xo : Moduli Dw l} {c
 theorem m_mem (l : Geo.Tor.Level H) : (l.M : 𝓞 E) ∈ Mfr l :=
   (l.prod.ge.trans Ideal.mul_le_right) (Ideal.mem_span_singleton_self _)
 
-omit [NumberField E] [IsCMField E] in
 
-omit [IsCMField E] in
 
 end
 

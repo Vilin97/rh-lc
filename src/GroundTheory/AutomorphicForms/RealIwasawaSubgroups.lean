@@ -17,7 +17,6 @@ variable {𝕜 : Type*} [RCLike 𝕜] {n : Type*} [Fintype n] [LinearOrder n]
 
 section StrictUpper
 
-variable (n) in
 
 abbrev StrictUpperIndex := {p : n × n // p.1 < p.2}
 

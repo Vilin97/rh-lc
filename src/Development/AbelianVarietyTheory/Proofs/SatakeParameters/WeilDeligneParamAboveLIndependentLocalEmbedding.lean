@@ -155,7 +155,6 @@ section Conj
 variable {l : ℕ} [Fact l.Prime] (P : LocPrime l) {LL : Type} [Field LL] [Algebra ℚ_[l] LL]
   {V : Type} [AddCommGroup V] [Module LL V] [Module ℚ_[l] V] [IsScalarTower ℚ_[l] LL V]
 
-variable (LL V) in
 
 def conjV (g : GQ l) : End LL (V ⊗[ℚ_[l]] Bst P) := onB P LL V (actSt P g).toLinearMap
 
@@ -307,7 +306,6 @@ variable {l : ℕ} [Fact l.Prime] (P : LocPrime l) (ι : Om l ≃+* ℂ)
   (B : LocBridge l E Ω (Dec (F := E) A) O) (B' : LocBridge l E Ω (Dec (F := E) A) O')
   (h : IsPlaceOver A w) (hj : Induces B) (hj' : Induces B')
 
-open EnlargeCoeff in
 
 theorem mem_span_dQ {K L₁ L₂ : FinExt l}
     {V₁ V₂ : Type} [AddCommGroup V₁] [Module ↥L₁.1 V₁] [Module ℚ_[l] V₁] [IsScalarTower ℚ_[l] ↥L₁.1 V₁]
@@ -329,7 +327,6 @@ theorem mem_span_dQ {K L₁ L₂ : FinExt l}
   rw [wdMk_smul]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
 
-open EnlargeCoeff in
 
 theorem wdPst_enlarge {m : ℕ} {L₁ L₂ : FinExt l} (hL : L₁.1 ≤ L₂.1) (r₁ : ↥(Dec (F := E) A) →* GL (Fin m) ↥L₁.1)
     (hV₁ : IsPst P (B.repE L₁ r₁)) :

@@ -183,7 +183,6 @@ theorem zero_of_group_action_zero [Fact (D.mem u).A.T.Prime] (Tf : FormsTied D u
     rw [group_action_mulSingle_eq_dilation]
     exact ((D.fm u).dilT 0 v _ c).map_eq_zero_iff.1 h
 
-set_option maxHeartbeats 1000000 in
 
 theorem multi_diamond_of_group_elem [Fact (D.mem u).A.T.Prime] (Tf : FormsTied D u) (hE : DiamondElementsExist Tf)
     (g : (D.mem u).A.vT → (ZMod (D.mem u).A.T)ˣ) : ∃ (k : (D.mem u).A.vT → ℤ)

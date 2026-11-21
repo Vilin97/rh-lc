@@ -41,8 +41,6 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 
 namespace IdeleGroup
 
-omit [NumberField K] [NumberField L] in
-open scoped Classical in
 
 theorem finrank_infiniteCompletion_eq_ite [IsGalois K L] (v : InfinitePlace K)
     (w : InfinitePlace L) [w.LiesOver v] :
@@ -59,7 +57,6 @@ theorem finrank_infiniteCompletion_eq_ite [IsGalois K L] (v : InfinitePlace K)
       exact h this
     rw [if_neg hn, h.finrank_eq_two v, Nat.cast_ofNat]
 
-open AdicLiesOver in
 
 theorem finrank_adicCompletion_eq_ramificationIdxIn_mul [IsGalois K L]
     (v : HeightOneSpectrum (𝓞 K)) (w : PlacesOver L v) :
@@ -73,7 +70,6 @@ end IdeleGroup
 
 namespace IdeleGroup
 
-open AdeleBaseChange in
 
 theorem exists_finset_unramified_sup_sIdeles_eq_top :
     ∃ S : Finset (HeightOneSpectrum (𝓞 K)),
@@ -93,7 +89,6 @@ theorem exists_finset_unramified_sup_sIdeles_eq_top :
 
 variable [IsGalois K L]
 
-open AdeleBaseChange AdicLiesOver in
 
 theorem cycHerbrand_ideleClassGroup (σ : Gal(L/K)) (hσ : ∀ g, g ∈ Subgroup.zpowers σ) :
     HasHerbrandQuotient

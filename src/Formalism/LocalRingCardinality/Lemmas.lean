@@ -77,16 +77,13 @@ theorem RRV_finrank : finrank D.what₂.LL D.div.RR.V = D.what₂.Drows := by
     simpa using finrank_eq_card_basis D.what₂.onb.toBasis
   omega
 
-variable {D} in
 
 theorem RRFull.rank (h : D.RRFull) : D.div.Drows = D.what₂.Drows := by
   unfold DivData.Drows HLat.rank Formalism.HN.rkK
   rw [h.2, finrank_top]
   exact D.RRV_finrank
 
-variable {D} in
 
-variable {D} in
 
 theorem NuV_finrank (u : D.what₂.Word) : finrank D.what₂.LL (D.div.Nu u).V = (D.mem u).A.du := by
   have h1 : finrank D.what₂.LL (D.div.Nu u).V = Fintype.card (D.div.Nu u).ι := finrank_eq_card_basis (D.div.Nu u).b
@@ -95,18 +92,14 @@ theorem NuV_finrank (u : D.what₂.Word) : finrank D.what₂.LL (D.div.Nu u).V =
   have h3 : finrank ℂ (D.what₂.Mu u) = (D.mem u).A.du := (D.eMu u).finrank_eq
   omega
 
-variable {D} in
 
 theorem NuFull.rank (h : D.NuFull) (u : D.what₂.Word) : D.div.d u = (D.mem u).A.du := by
   unfold DivData.d dU HLat.rank Formalism.HN.rkK
   rw [(h u).2, finrank_top]
   exact D.NuV_finrank u
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
 end D7
 
@@ -469,7 +462,6 @@ theorem toO_injective : Function.Injective (toO w σ hσ) := by
   rw [toO_spec, toO_spec] at this
   exact IsFractionRing.injective A K (σ.injective this)
 
-include hσ in
 
 theorem isUnit_of_val_one (x : K) (hx : w.valuation K x = 1) (c : O) (hc : algebraMap O Kf c = σ x) :
     IsUnit c := by
@@ -700,7 +692,6 @@ variable {A K : Type*} [CommRing A] [IsDedekindDomain A] [Field K] [Algebra A K]
   [IsFractionRing O Kf]
   (σ : K →+* Kf) (hσ : ∀ x : K, w.valuation K x ≤ 1 ↔ σ x ∈ Set.range (algebraMap O Kf))
 
-include hσ in
 
 theorem span_image_le_of_loc {V W : Type*} [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower A K V]
     [AddCommGroup W] [Module Kf W] [Module O W] [IsScalarTower O Kf W]
@@ -763,7 +754,6 @@ variable {A K : Type*} [CommRing A] [IsDedekindDomain A] [Field K] [Algebra A K]
   [IsFractionRing O Kf]
   (σ : K →+* Kf) (hσ : ∀ x : K, w.valuation K x ≤ 1 ↔ σ x ∈ Set.range (algebraMap O Kf))
 
-include hσ in
 
 theorem fg_span_image {V W : Type*} [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower A K V]
     [AddCommGroup W] [Module Kf W] [Module O W] [IsScalarTower O Kf W]
@@ -841,7 +831,6 @@ theorem addVal_toO_uniformizer (hsurj : ∀ c : O, ∃ x : K, σ x = algebraMap 
   · rw [Ideal.span_singleton_le_iff_mem, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, isUnit_toO_iff]
     exact fun h => h hmemw
 
-include hσ in
 
 theorem length_valuationRing (hsurj : ∀ c : O, ∃ x : K, σ x = algebraMap O Kf c)
     {V W ι : Type*} [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower A K V]
@@ -1169,7 +1158,6 @@ theorem length_quotient_ne_top₂ {L : SizeData₂ D} (X : Inst D L) (Y : LatIns
     rw [pow_add, mul_smul]
     rfl
 
-omit c in
 
 theorem frac_of_ties (hT : GatTies D) (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) :

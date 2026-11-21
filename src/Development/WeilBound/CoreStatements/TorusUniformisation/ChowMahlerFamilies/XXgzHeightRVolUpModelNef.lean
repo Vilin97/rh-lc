@@ -69,9 +69,7 @@ theorem exists_coord {σ : K →+* ℂ} {y : Sp ℂ ⟶ M.Z} (hy : y ≫ M.s = s
   rw [hsm, val_mul hr (const_val hy _).1 (hall _), (const_val hy _).2]
   rfl
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
 end PositivityTheory.Xgn.A_xgz_height_r_vol_up_model_nef
 

@@ -35,7 +35,6 @@ theorem semi_injective {d : ℕ} (w : (Fin d → K) →ₛₗ[σ] H) (hli : Line
   funext k
   exact (map_eq_zero σ).1 (Fintype.linearIndependent_iff.1 hli _ hy k)
 
-omit [NumberField K] in
 
 theorem oLatTie_of_closure {O : Type} [CommRing O] {φ : O →+* ℂ} (hφ : ∀ a, ∃ b : 𝓞 K, φ a = σ (b : K))
     (M : Rows.OLat O φ N) {d : ℕ} (e : N →ₗ[ℂ] H) (he : Function.Injective e) (j : (Fin d → K) →ₛₗ[σ] N)
@@ -217,7 +216,6 @@ theorem levelFormCoordinateMap_levelZero {s : ℕ} (hOk : A.fam.Ok s) (Zs : DefS
       (lZ0 D A F.P0 F.ψ0 Zs i t *ᵥ z) = F.cr.toL Zs false i t z :=
   LiftForms.lvlForm_lE (v0 := A.v0) (s := s) ⟨hOk.conj, hOk.irr, hOk.lifts i t⟩ z
 
-set_option maxHeartbeats 1000000 in
 
 end Main
 

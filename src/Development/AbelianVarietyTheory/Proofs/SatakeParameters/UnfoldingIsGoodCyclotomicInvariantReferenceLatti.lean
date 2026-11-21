@@ -183,7 +183,6 @@ theorem unfolding_isGoodCyclotomicInvariant_referenceLattices [CharZero K] {n' c
         simpa using hu
       · simpa [hp] using intAt_zero
 
-omit [StarRing E] in
 
 theorem volN_inv_nat {n c : ℕ} {Λ : Submodule (𝓞 E) (Sp E (n + c))} {J : Subgroup (Sp E (n + c) ≃ₗ[E] Sp E (n + c))}
     (hJ : J ≤ stabL E _ Λ) {k : Sp E (n + c) ≃ₗ[E] Sp E (n + c)} (hk : k ∈ stabL E _ Λ) :

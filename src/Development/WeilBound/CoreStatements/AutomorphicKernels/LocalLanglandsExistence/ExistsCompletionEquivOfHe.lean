@@ -66,7 +66,6 @@ variable {Ω : Type} [Field Ω] {A : ValuationSubring Ω}
   [Field F] [NumberField F] [Algebra F Ω] [IsAlgClosure F Ω] [Algebra K F] [IsScalarTower K F Ω]
   {v : HeightOneSpectrum (𝓞 K)} {w : HeightOneSpectrum (𝓞 F)}
 
-omit [IsAlgClosure F Ω] in
 
 theorem inertiaDeg_eq_one (h : IsPlaceOver A v) (h' : IsPlaceOver A w)
     (hloc : ∀ (σ : Weil h) (x : F), (σ : G K Ω) (algebraMap F Ω x) = algebraMap F Ω x) :
@@ -79,7 +78,6 @@ theorem inertiaDeg_eq_one (h : IsPlaceOver A v) (h' : IsPlaceOver A w)
   rw [hn] at hf
   exact Nat.pow_right_injective (one_lt_normV v) (hf.symm.trans (pow_one _).symm)
 
-omit [IsAlgClosure F Ω] in
 
 theorem exists_completionEquiv_of_he (h : IsPlaceOver A v) (h' : IsPlaceOver A w)
     (hloc : ∀ (σ : Weil h) (x : F), (σ : G K Ω) (algebraMap F Ω x) = algebraMap F Ω x)

@@ -73,6 +73,5 @@ theorem mem_B_succ {n : ℕ} {x : A.X (n + 1)} : x ∈ A.B (n + 1) ↔ ∃ y, A.
 
 end Cx
 
-open Cx in
 
 end ReciprocityTheory.Coh

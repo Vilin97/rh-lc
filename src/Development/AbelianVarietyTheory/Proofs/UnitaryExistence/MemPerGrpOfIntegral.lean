@@ -255,7 +255,6 @@ theorem mem_smul_iff {L : Lt E r} (hL : SelfD X L) {M : ℕ} (hM : M ≠ 0) {P Q
       push_cast
       ring
 
-open scoped ComplexOrder in
 
 theorem exists_jet_ne_zero (hs : IsSympl X bas) (hd : x ∈ X.dom) {L : Lt E r} (hL : SelfD X L) {M : ℕ}
     (hM : M ≠ 0) {P Q : Ideal (𝓞 E)} (cj : 𝓞 E → 𝓞 E) (hcj : ∀ a, ((cj a : 𝓞 E) : E) = cc (a : E))

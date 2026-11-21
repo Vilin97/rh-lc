@@ -28,9 +28,6 @@ def intForms {K : Type} [Field K] [NumberField K] [StarRing K] (S : CSD K) : Set
 def intSpan (D : D7) {V : Type} [AddCommGroup V] [Module ℂ V] (s : Set V) : AddSubgroup V :=
   AddSubgroup.closure {y | ∃ a : 𝓞 D.what₂.LL, ∃ x ∈ s, y = D.what₂.embLL (a : D.what₂.LL) • x}
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 2000000 in
 
 structure SideTie (R : RealDat D A Ks) (F : Face D A) (tup : T → D.what₂.Tup) (b : Bool) {EE : Type} [NormedAddCommGroup EE]
     [InnerProductSpace ℂ EE] [FiniteDimensional ℂ EE] (S : RowSide D EE) where
@@ -56,9 +53,6 @@ structure SideTie (R : RealDat D A Ks) (F : Face D A) (tup : T → D.what₂.Tup
   lat_tie : ∀ t, eA t '' (S.Mtilde (tup t)).carrier =
     R.jX t '' (lvlForms (A.MtildeCSD t) (A.leftGroupActionRight t) (F.lvl b).P (F.lvl b).ψ ∩ intForms (A.MtildeCSD t))
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 2000000 in
 
 structure RowsTieSum (R : RealDat D A Ks) (F : Face D A) (X0 : BaseLevelRowSide D) where
 
@@ -116,9 +110,6 @@ structure RowsTieSum (R : RealDat D A Ks) (F : Face D A) (X0 : BaseLevelRowSide 
   etaJ_tie : ∀ (i : Fin D.R.m) w, D.what₂.muAt w ≠ D.what₂.mu0 → D.what₂.etaJ ((i : ℕ) + 1) w =
     A.fam.etaJ F.P0 F.ψ0 (R.toCx F).zs i (R.mu (D.plEq w)) (D.plEq w)
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 2000000 in
 
 structure RowsTie (R : RealDat D A Ks) (F : Face D A) (X0 : BaseLevelRowSide D) where
 

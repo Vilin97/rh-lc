@@ -46,7 +46,6 @@ theorem prod_ite_zero (κ : ℂ) :
   rw [Finset.prod_eq_single_of_mem 0 hm fun k _ hk => if_neg (by omega)]
   exact if_pos rfl
 
-variable {W} in
 
 theorem isExpansion_zero {U : Set T} (S : GridChoice W U) (t : T) (Φ : G.Datum) (β : CosFam G t) (hβ : β ∉ S.supp t Φ)
     {τ : PureDat G t →₀ ℂ} (h : S.IsExpansion t Φ β τ) : S.IsExpansion t Φ β 0 := by

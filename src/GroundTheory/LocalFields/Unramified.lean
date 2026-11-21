@@ -77,7 +77,6 @@ def maximalUnramified : IntermediateField K L :=
 variable [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace L]
   [IsNonarchimedeanLocalField L] [FiniteDimensional K L]
 
-variable {K L} in
 
 theorem exists_generator_of_isUnramified (E : IntermediateField K L) [IsUnramified K E] :
     ∃ (γ : 𝒪[L]) (P : 𝒪[K][X]), P.Monic ∧ aeval γ P = 0 ∧ IsUnit (aeval γ (derivative P)) ∧

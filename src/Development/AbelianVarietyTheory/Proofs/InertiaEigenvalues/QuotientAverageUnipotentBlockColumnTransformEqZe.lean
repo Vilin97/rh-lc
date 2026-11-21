@@ -29,7 +29,6 @@ theorem mem_ratV_iff {ι : Type} (x : ι → Ad E) : x ∈ ratV E ι ↔ ∀ t, 
     choose c hc using h
     exact ⟨c, funext hc⟩
 
-variable (E) in
 
 def reix {ι κ : Type} (τ : κ ≃ ι) : (κ → Ad E) ≃ₜ+ (ι → Ad E) where
   toFun w := w ∘ τ.symm

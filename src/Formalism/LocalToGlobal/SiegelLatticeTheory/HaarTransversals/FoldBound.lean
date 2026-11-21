@@ -20,7 +20,6 @@ def IsRightTransversal {G : Type*} [Group G] (Γ S : Subgroup G) (D : Set G) : P
 def quotientLIntegral {G : Type*} [MeasurableSpace G] (μ : Measure G) (F : Set G) (Ph : G → ℂ) : ℝ≥0∞ :=
   ∫⁻ y in F, ‖Ph y‖ₑ ∂μ
 
-set_option linter.dupNamespace false in
 
 def FoldBound (G : Type*) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [LocallyCompactSpace G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G]

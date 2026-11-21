@@ -27,7 +27,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 
 namespace GlobalTheory
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
 
 theorem _root_.GlobalTheory.intFrames_of_laws : _root_.ReciprocityTheory.ChartRestriction.G.Out.SecBaseChangeSt → _root_.ReciprocityTheory.ChartRestriction.G.Out.SecTwistSt →
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H)

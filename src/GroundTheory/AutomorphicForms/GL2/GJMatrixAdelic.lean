@@ -20,7 +20,6 @@ noncomputable section
 
 variable {K : Type*} [Field K] [NumberField K] {ι : Type*} [Fintype ι]
 
-variable (K) in
 
 def adeleMeasurePi : Measure (ι → 𝔸[K]) := Measure.pi fun _ ↦ adeleMeasure K
 
@@ -57,7 +56,6 @@ theorem finPartPi_algebraMap (ξ : ι → K) :
   funext i
   simp only [finPartPi, adeleRing_algebraMap_snd]
 
-variable (K ι) in
 
 def splitEquivPi : (ι → 𝔸[K]) ≃ᵐ (ι → mixedSpace K) × (ι → 𝔸ᶠ[K]) :=
   (MeasurableEquiv.arrowProdEquivProdArrow (InfiniteAdeleRing K) 𝔸ᶠ[K] ι).trans
@@ -89,7 +87,6 @@ def schwartzBruhatTensorPi (φ : 𝓢(ι → mixedSpace K, ℂ)) (g : (ι → �
     (ι → 𝔸[K]) → ℂ :=
   fun x ↦ φ (infPartPi x) * g (finPartPi x)
 
-variable (K ι) in
 
 def schwartzBruhatPi : Submodule ℂ ((ι → 𝔸[K]) → ℂ) :=
   Submodule.span ℂ {F | ∃ φ : 𝓢(ι → mixedSpace K, ℂ), ∃ g ∈ finiteSchwartzBruhatPi K,
@@ -140,7 +137,6 @@ theorem continuous_of_mem_schwartzBruhatPi {F : (ι → 𝔸[K]) → ℂ} (hF : 
   | add G H _ _ hG hH => exact hG.add hH
   | smul c G _ hG => exact hG.const_smul c
 
-variable (K) in
 
 def adelicFourierPi (F : (ι → 𝔸[K]) → ℂ) (y : ι → 𝔸[K]) : ℂ :=
   ∫ x, F x * (adelicChar K (∑ i, x i * y i) : ℂ) ∂adeleMeasurePi K
@@ -320,7 +316,6 @@ theorem schwartzBruhatTensorPi_zero (φ : 𝓢(ι → mixedSpace K, ℂ)) :
   funext x
   simp [schwartzBruhatTensorPi]
 
-variable (K ι) in
 
 def cosetSpanPi : Submodule ℂ ((ι → 𝔸[K]) → ℂ) :=
   Submodule.span ℂ {F | ∃ (φ : 𝓢(ι → mixedSpace K, ℂ)) (J : (FractionalIdeal (𝓞 K)⁰ K)ˣ)

@@ -15,7 +15,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 section Summation
 
-variable (K) in
 
 theorem exists_normalizedValuation_eq (n : ℤ) :
     ∃ y : K, normalizedValuation K y = WithZero.exp n := by
@@ -23,7 +22,6 @@ theorem exists_normalizedValuation_eq (n : ℤ) :
     ((IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt K).symm (WithZero.exp n))
   exact ⟨y, by rw [normalizedValuation_apply, hy]; simp⟩
 
-variable (K) in
 
 def valBall (n : ℤ) : AddSubgroup K where
   carrier := {x | normalizedValuation K x ≤ WithZero.exp (-n)}
@@ -144,7 +142,6 @@ end Arithmetic
 
 section CharZero
 
-variable (K) in
 
 noncomputable def absRamificationIndex : ℕ := (ord ((ringChar 𝓀[K] : ℕ) : K)).toNat
 
@@ -225,7 +222,6 @@ theorem sub_one_mul_padicValNat_factorial_le (k : ℕ) :
     (p - 1) * padicValNat p k.factorial ≤ k :=
   (sub_one_mul_padicValNat_factorial k).le.trans (Nat.sub_le _ _)
 
-include p in
 
 theorem summable_logSeries {x : K} (hx : x ∈ valBall K 1) :
     Summable fun k : ℕ ↦ (-1) ^ k * x ^ (k + 1) / ((k + 1 : ℕ) : K) := by
@@ -280,7 +276,6 @@ section Exp
 
 variable (p : ℕ) [hp : Fact p.Prime] [CharP 𝓀[K] p] [CharZero K]
 
-omit [CharP 𝓀[K] p] [CharZero K] in
 
 theorem expTerm_order_bound {a : ℤ} (ha : (absRamificationIndex K : ℤ) < (p - 1 : ℤ) * a)
     (k : ℕ) : (k : ℤ) ≤ (p - 1 : ℤ) * (k * a - absRamificationIndex K * padicValNat p k.factorial)

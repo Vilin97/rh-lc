@@ -103,7 +103,6 @@ def iota2H : (Fin (r + 1) → M.R) →+ (Ix r → M.L.O) where
   map_zero' := iotaTwo_zero hs
   map_add' := iotaTwo_add hs
 
-include hTT hZ hZσ in
 
 def toP : DG g Zh T T' →+ DD1 hs Z TT × DD1 hs Zσ TT :=
   QuotientAddGroup.lift (RelG g Zh T T').toAddSubgroup
@@ -114,7 +113,6 @@ def toP : DG g Zh T T' →+ DD1 hs Z TT × DD1 hs Zσ TT :=
         QuotientAddGroup.mk'_apply]
       exact Prod.ext ((QuotientAddGroup.eq_zero_iff _).2 h1) ((QuotientAddGroup.eq_zero_iff _).2 h2))
 
-include hTT hZ hZσ in
 
 def ofP : DD1 hs Z TT × DD1 hs Zσ TT →+ DG g Zh T T' :=
   AddMonoidHom.coprod

@@ -34,7 +34,6 @@ theorem baseTrace_algebraMap (t : R) : baseTrace K E R (algebraMap R (R ⊗[K] E
   rw [Algebra.TensorProduct.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply,
     baseTrace_tmul, h1, map_ofNat]
 
-omit [Algebra.IsQuadraticExtension K E] in
 
 theorem baseTrace_tensorMap {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ[K] S)
     (z : R ⊗[K] E) : baseTrace K E S (tensorMap E f z) = f (baseTrace K E R z) := by
@@ -113,7 +112,6 @@ theorem hermTrace_smul_right (c : R) (x y : ι → R ⊗[K] E) :
   rw [hermTrace, ← algebraMap_smul (R ⊗[K] E) c y, hermPair_smul_right, ← Algebra.smul_def,
     map_smul, smul_eq_mul]; rfl
 
-variable (K H R) in
 
 def hermTraceBilin : (ι → R ⊗[K] E) →ₗ[R] (ι → R ⊗[K] E) →ₗ[R] R :=
   LinearMap.mk₂ R (hermTrace K H R) hermTrace_add_left hermTrace_smul_left hermTrace_add_right
@@ -186,7 +184,6 @@ def stdVec (a : ι × κ) : ι → R ⊗[K] E := Pi.single a.1 ((1 : R) ⊗ₜ b
 
 variable {R}
 
-omit [Algebra.IsQuadraticExtension K E] in
 
 theorem sum_coords_smul_stdVec (x : ι → R ⊗[K] E) :
     ∑ a : ι × κ, vecCoords R b x a • stdVec R b a = x := by
@@ -196,7 +193,6 @@ theorem sum_coords_smul_stdVec (x : ι → R ⊗[K] E) :
   conv_rhs => rw [← (Algebra.TensorProduct.basis R b).sum_repr (x i)]
   simp [vecCoords, Algebra.TensorProduct.basis_apply]
 
-omit [Algebra.IsQuadraticExtension K E] [Fintype ι] [Fintype κ] in
 
 theorem tensorMap_stdVec (a : ι × κ) :
     (fun i => tensorMap E (Algebra.ofId K R) (stdVec K b a i)) = stdVec R b a := by

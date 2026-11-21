@@ -161,7 +161,6 @@ private theorem hasSum_prod_pow_eq_prod_one_sub_inv : ∀ (n : ℕ) (β : Fin n 
       refine hprod.congr_fun fun x => ?_
       simp only [Function.comp_apply, hfe]
 
-open MeasureTheory ValuativeRel in
 
 theorem _root_.GlobalTheory.HeckeSeries.hasSum_integral_cosets : ∀ (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ) (γ : Fin n → ℂ)

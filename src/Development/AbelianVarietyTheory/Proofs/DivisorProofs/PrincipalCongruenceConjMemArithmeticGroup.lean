@@ -138,7 +138,6 @@ theorem hat_cong_conj {F E : Type} [Field F] [NumberField F] [Field E] [Algebra 
   simp only [Matrix.mulVec_sub, Matrix.mulVec_smul, Matrix.mulVec_mulVec, Units.inv_mul, Matrix.one_mulVec] at e2
   rw [← e2, Matrix.mul_assoc]
 
-set_option maxHeartbeats 400000 in
 
 theorem conj_mem_of_cong : ∀ (D : D7) (V : Formalism.BasicNotions.TH.HSp D) (Comp : Type) (X : Comp → Data D.host.E V.rank)
     (dict : GA D V → Σ k, Frame (X k).Ψ V.rank) (Kf : Subgroup (GA D V))

@@ -178,9 +178,7 @@ theorem four_le_two_pow : 4 ≤ 2 ^ R.e := by
 include H in
 theorem four_le_n' : 4 ≤ R.n := le_trans (four_le_two_pow H) R.two_pow_le_n
 
-include H in
 
-variable {H} in
 
 theorem finrank_E' : Module.finrank ℚ H.E = 2 * R.f := by
   rw [H.der.finrank_E]

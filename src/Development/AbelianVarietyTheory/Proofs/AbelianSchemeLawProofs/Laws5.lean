@@ -16,7 +16,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 
 namespace GlobalTheory
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
 
 theorem _root_.GlobalTheory.laws5 (hG : _root_.ReciprocityTheory.ChartRestriction.G.Out.GlobalFnsSt) (hS : _root_.ReciprocityTheory.ChartRestriction.G.Out.SecBaseChangeSt) : _root_.ReciprocityTheory.ChartRestriction.G.Out.Laws5 := by
   refine ⟨?_, _root_.GlobalTheory.qkToAk_baseChange hG hS, _root_.GlobalTheory.psiOnExists⟩

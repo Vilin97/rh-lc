@@ -19,7 +19,6 @@ theorem adj_one_k {D : D7} {n : ℕ} : adj (1 : Mx D n n) = 1 := by
   show ((1 : Matrix (Fin n) (Fin n) (AE D)).map (cA D))ᵀ = 1
   rw [Matrix.map_one (cA D) (map_zero (cA D)) (map_one (cA D)), Matrix.transpose_one]
 
-set_option maxHeartbeats 2000000 in
 
 theorem finite_places_match : PositivityTheory.PfSWUS.SwMatch.FinMatch := by
   intro D n M a d bs g gv hP lam L hlam hL hstd

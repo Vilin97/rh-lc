@@ -27,14 +27,12 @@ def ev (v : HeightOneSpectrum (𝓞 𝔽)) : 𝔸 →+* LocAlg v :=
   (Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV 𝔽 v) (AlgHom.id 𝔽 E)).toRingHom.comp
     (Algebra.TensorProduct.comm 𝔽 E (Formalism.L2.Herm.Af 𝔽)).toAlgHom.toRingHom
 
-omit [IsCMField E] in
 
 omit [IsCMField E] in
 theorem ev_ext {z z' : 𝔸} (h : ∀ v, ev v z = ev v z') : z = z' :=
   (Algebra.TensorProduct.comm 𝔽 E (Formalism.L2.Herm.Af 𝔽)).injective
     (GlobalTheory.LatticeLocalGlobal.ext_components _ _ h)
 
-omit [IsCMField E] in
 
 theorem ev_sigR (hc : CMData 𝔽 E) (v : HeightOneSpectrum (𝓞 𝔽)) (z : 𝔸) :
     ev v (Formalism.UG.sigR hc.sig (Formalism.L2.Herm.Af 𝔽) z) = locConj v (ev v z) := by

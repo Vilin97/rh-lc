@@ -51,7 +51,6 @@ def Good (n : GA D B) : Prop :=
 
 variable {d}
 
-variable (d) in
 
 theorem trace_gen {F E R : Type} [Field F] [Field E] [Algebra F E] [FiniteDimensional F E] [CommRing R] [Algebra F R] (r : E) :
     Algebra.trace R (R ⊗[F] E) (inclR R r) = algebraMap F R (Algebra.trace F E r) := by

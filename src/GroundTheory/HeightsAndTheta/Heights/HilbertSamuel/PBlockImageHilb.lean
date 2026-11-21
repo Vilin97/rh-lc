@@ -44,7 +44,6 @@ def mConeMapQ (y : (Σ k, ι k) → Ω) : MvPolynomial (Σ k, ι k) ℚ →ₐ[�
 def valSpan {σ M : Type*} [AddCommMonoid M] (w : σ → M) (y : σ → Ω) (m : M) : Submodule ℚ Ω :=
   (weightedHomogeneousSubmodule ℚ w m).map (aeval y : MvPolynomial σ ℚ →ₐ[ℚ] Ω).toLinearMap
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem map_mCoordIdeal (y : (Σ k, ι k) → Ω) :
     (mCoordIdeal y).map (MvPolynomial.map (Int.castRingHom ℚ)) = RingHom.ker (mConeMapQ y) := by
@@ -196,7 +195,6 @@ end Block
 
 end BlockImageHilb
 
-open BlockImageHilb in
 
 theorem BlockImageHilb.proof : BlockImageHilb.Statement := by
   intro K _ _ ι _ Ω _ _ κ _ y k₀ M N x hxy n

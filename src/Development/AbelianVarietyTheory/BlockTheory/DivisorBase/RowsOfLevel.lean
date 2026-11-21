@@ -17,7 +17,6 @@ section Abstract
 
 variable {G K V : Type} [Group G] [Fintype G] [Field K] [AddCommGroup V] [Module ℂ V]
 
-open Classical in
 
 end Abstract
 

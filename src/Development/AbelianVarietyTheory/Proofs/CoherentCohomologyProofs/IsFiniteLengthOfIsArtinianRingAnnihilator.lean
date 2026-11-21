@@ -486,7 +486,6 @@ theorem residueDegree_eq_finrank (x : X) :
 
 variable [LocallyOfFiniteType f] [CompactSpace X] {F : X.Modules} [IsFiniteQC F]
 
-include f in
 
 theorem isNoetherian_of_locallyOfFiniteType_field : AlgebraicGeometry.IsNoetherian X :=
   have := LocallyOfFiniteType.isLocallyNoetherian f

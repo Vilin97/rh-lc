@@ -30,7 +30,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
 
 variable (μ : Measure G) [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
-omit [LocallyCompactSpace G] [T2Space G] [SecondCountableTopology G] [μ.IsMulRightInvariant] in
 
 theorem setIntegral_smul_set {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] (a : G)
     (s : Set G) (F : G → E) : ∫ x in a • s, F x ∂μ = ∫ x in s, F (a * x) ∂μ := by
@@ -44,16 +43,12 @@ theorem setIntegral_smul_set {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ
 
 variable [CompactSpace (RightCosetSpace Γ)]
 
-omit [μ.IsMulRightInvariant] in
 
-omit [μ.IsHaarMeasure] [μ.IsMulRightInvariant] [CompactSpace (RightCosetSpace Γ)] in
 
-omit [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G] [CompactSpace (RightCosetSpace Γ)] in
 
 omit [LocallyCompactSpace G] [T2Space G] [SecondCountableTopology G] [μ.IsHaarMeasure]
   [μ.IsMulRightInvariant] [CompactSpace (RightCosetSpace Γ)] in
 
-omit [μ.IsMulRightInvariant] in
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G]
   [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G] [DiscreteTopology Γ] in
@@ -69,7 +64,6 @@ theorem eq_of_mul_mem_fundamentalDomain {η₁ η₂ : Γ} {y : G}
 omit [LocallyCompactSpace G] [T2Space G] [μ.IsHaarMeasure] [CompactSpace (RightCosetSpace Γ)]
   [μ.IsMulRightInvariant] in
 
-omit [μ.IsMulRightInvariant] in
 
 end Geometric
 

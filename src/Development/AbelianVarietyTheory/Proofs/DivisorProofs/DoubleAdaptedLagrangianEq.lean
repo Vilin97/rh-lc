@@ -121,6 +121,5 @@ end GlobalTheory.ArchSchB.Iso
 
 namespace GlobalTheory.ArchSchB
 
-open GlobalTheory.ArchSchB.Iso in
 
 end GlobalTheory.ArchSchB

@@ -144,7 +144,6 @@ def IsExtension.basis {n : ℕ} (b : Module.Basis (Fin n) K V) : Module.Basis (F
 
 variable [FiniteDimensional K V]
 
-include hι in
 
 def extend (h : HermFam K V) : HermFam E V' :=
   ofGram (hι.basis (Module.finBasis K V)) (fun τ => h.gram (τ.comp j) (Module.finBasis K V))

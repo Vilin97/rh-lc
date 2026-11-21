@@ -15,7 +15,6 @@ namespace GlobalTheory.PartRed.LowLaw
 section Alg
 variable {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
 
-omit [Fintype n'] [DecidableEq n'] in
 
 theorem rowAdd_mul_apply (r l : Fin c) (a : k) (t : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k)
     (p : n ⊕ Fin c) (q : n' ⊕ Fin (c + 1)) :

@@ -79,7 +79,6 @@ theorem shapiro_placeProj_inl (v : InfinitePlace K.1) (p : GLevel K)
   rw [← placeProj_comp_infiniteShapiroIso (P.inf v p) n]
   rfl
 
-set_option maxHeartbeats 8000000 in
 
 def levelDecomposition : LevelDecomposition K n where
   L := P.localGroup n

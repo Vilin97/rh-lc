@@ -178,7 +178,6 @@ end GlobalTheory.CompanionTheory.Ar.Cusp.Adapted
 
 namespace GlobalTheory.CompanionTheory.Ar.Cusp
 
-open scoped ComplexOrder in
 
 theorem gramDet_pos_of_adapted : ∀ (E L Ψ : Type) [Field E] [NumberField E] [Field L] [NumberField L] (V : Type)
     [AddCommGroup V] [Module L V] [Module (𝓞 L) V] [IsScalarTower (𝓞 L) L V] (A : LinPt E L Ψ V) (s : Ψ ⊕ Ψ) (r k : ℕ)

@@ -49,7 +49,6 @@ theorem aeval_eq_zero_of_coeff_eq_zero {N : ℕ} {t : I → D}
   rw [ht, zero_dvd_iff] at hs
   rw [hs, mul_zero]
 
-omit [Algebra ℂ D] [CommRing D] in
 
 theorem coeff_sum_monomial_finsuppAntidiag (N : ℕ) (F : MvPowerSeries I ℂ) (n : I →₀ ℕ)
     (hn : n.degree < N + 1) :

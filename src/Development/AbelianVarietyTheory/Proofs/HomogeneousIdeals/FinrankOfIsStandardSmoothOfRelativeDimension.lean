@@ -73,14 +73,12 @@ lemma d_mul (a b : A) : d ε (a * b) = ε a • d ε b + ε b • d ε a := by
 
 variable {N : Type*} [AddCommGroup N] [Module R N]
 
-variable {ε} in
 
 lemma hom_ext {f g : AugCot ε →ₗ[R] N} (h : ∀ a, f (d ε a) = g (d ε a)) : f = g := by
   ext x
   obtain ⟨a, rfl⟩ := d_surjective ε x
   exact h a
 
-variable (N) in
 
 def pointDer : Submodule R (A →ₗ[R] N) where
   carrier := {D | ∀ a b, D (a * b) = ε a • D b + ε b • D a}
@@ -116,7 +114,6 @@ def lift (D : A →ₗ[R] N) (hD : ∀ a b, D (a * b) = ε a • D b + ε b • 
     lift ε D hD (d ε a) = D a := by
   rw [d_apply, lift_toCotangent, coe_projKer, map_sub, pointDer_algebraMap hD, sub_zero]
 
-variable (N) in
 
 def pointDerEquiv : pointDer ε N ≃ₗ[R] (AugCot ε →ₗ[R] N) where
   toFun D := lift ε D.1 (mem_pointDer.1 D.2)
@@ -204,7 +201,6 @@ def ofSqZero (φ : A →ₐ[R] TrivSqZeroExt R N) (hφ : ∀ a, (φ a).fst = ε 
 @[simp] lemma ofSqZero_d (φ : A →ₐ[R] TrivSqZeroExt R N) (hφ : ∀ a, (φ a).fst = ε a) (a : A) :
     ofSqZero ε φ hφ (d ε a) = (φ a).snd := lift_d ε _ _ a
 
-variable (N) in
 
 end SqZero
 
@@ -283,17 +279,12 @@ section Tower
 
 variable [Algebra A B] [IsScalarTower R A B]
 
-variable (εA B) in
 
-variable (εA B) in
 
-variable (εA B) in
 
-variable (εA B) in
 
 end Tower
 
-variable (εA εB) in
 
 abbrev tensorAug : A ⊗[R] B →ₐ[R] R := Algebra.TensorProduct.productMap εA εB
 
@@ -311,7 +302,6 @@ lemma d_tmul (a : A) (b : B) : d (tensorAug εA εB) (a ⊗ₜ b) =
   rw [this, d_mul, add_comm]
   simp
 
-variable (εA εB) in
 
 def tensorEquiv : AugCot (tensorAug εA εB) ≃ₗ[R] AugCot εA × AugCot εB :=
   LinearEquiv.ofLinear
@@ -381,7 +371,6 @@ lemma isBaseChange_of_isPushout [Algebra A A'] [IsScalarTower R A A']
     IsBaseChange R' (mapBase (IsScalarTower.toAlgHom R A A') h) :=
   isBaseChange_mapBase _ h hP.out
 
-variable (R' ε) in
 
 def baseChangeAug : R' ⊗[R] A →ₐ[R'] R' :=
   Algebra.TensorProduct.lift (AlgHom.id R' R') ((Algebra.ofId R R').comp ε)
@@ -397,7 +386,6 @@ lemma isBaseChange_baseChangeAug :
       Algebra.TensorProduct.includeRight (fun a => by simp)) :=
   isBaseChange_mapBase _ _ (TensorProduct.isBaseChange R A R')
 
-variable (R' ε) in
 
 def baseChangeEquiv : R' ⊗[R] AugCot ε ≃ₗ[R'] AugCot (baseChangeAug R' ε) :=
   (isBaseChange_baseChangeAug R' ε).equiv
@@ -527,7 +515,6 @@ lemma nonempty_basis_of_locally [IsLocalRing R]
   haveI := smooth_of_locally h
   ⟨Module.finBasisOfFinrankEq _ _ (finrank_of_locally ε h)⟩
 
-open AlgebraicGeometry in
 
 lemma locally_iff_smoothOfRelativeDimension :
     RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension n) (algebraMap R A) ↔
@@ -547,6 +534,5 @@ end Affine
 
 end AugCot
 
-open AugCot in
 
 end GlobalTheory

@@ -54,7 +54,6 @@ theorem Perf.iSup_preimage : ⨆ i, π ⁻¹ᵁ Q.W i = ⊤ := by
   rw [← Scheme.Hom.preimage_iSup, Q.cover]
   exact top_unique fun _ _ => trivial
 
-include Q in
 
 theorem Perf.sec_add
     (hE : ∀ v i, rs X' (le_pull M π (Q.le i)) ((E v).f (fun _ => Q.ch i)) =
@@ -67,7 +66,6 @@ theorem Perf.sec_add
     ((E w).f fun _ => Q.ch i)).trans (congrArg₂ (· + ·) (hE v i) (hE w i))).symm)
   simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
-include Q in
 
 theorem Perf.sec_smul
     (hE : ∀ v i, rs X' (le_pull M π (Q.le i)) ((E v).f (fun _ => Q.ch i)) =

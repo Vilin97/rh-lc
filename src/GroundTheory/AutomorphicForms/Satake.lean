@@ -74,7 +74,6 @@ theorem range_satakeTransform :
   obtain ⟨h, rfl⟩ := (AlgHom.mem_range _).1 hp
   exact satakeTransform_mem_symmetric h
 
-variable (μ) in
 
 theorem evalAt_comp_satakeTransform (z : Fin n → ℂˣ) (σ : Equiv.Perm (Fin n))
     (h : SphericalHecke μ (F := F) (n := n)) :

@@ -82,7 +82,6 @@ theorem isOpen_smul (hT : IsOpen (T : Set V)) (hϖ : algebraMap O LL ϖ ≠ 0) :
   rw [this]
   exact hT.preimage (continuous_const_smul _)
 
-omit [Field LL] [Algebra O LL] [Module LL V] [IsScalarTower O LL V] [ContinuousConstSMul LL V] in
 
 theorem isLocallyConstant_mk {X : Type} [TopologicalSpace X]
     (hS : IsOpen {v : V | ∃ u : ↥T, ϖ • (u : V) = v}) (f : X → V) (hf : Continuous f)

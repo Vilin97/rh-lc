@@ -13,7 +13,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 
 namespace PositivityTheory.HtPt.Cc
 
-open GroundTheory.FunctionField in
 
 def ffCurve (k K : Type) [Field k] [Field K] [Algebra k K] [IsFunctionField k K] : ACurve K where
   I := Place k K

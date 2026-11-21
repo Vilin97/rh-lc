@@ -23,7 +23,6 @@ theorem InDC.inv {J : Subgroup G} {x g : G} (h : InDC J x g) : InDC J x⁻¹ g�
   obtain ⟨u, v, rfl⟩ := h
   exact ⟨v⁻¹, u⁻¹, by simp [mul_assoc]⟩
 
-open Classical in
 
 theorem card_filter_le {J : Subgroup G} {x y : G} {A B : Finset G} (hA : IsDC J x A) (hB : IsDC J y B)
     (P Q : G → Prop) (ψ : G → G) (h1 : ∀ a ∈ A, P a → InDC J y (ψ a))
@@ -113,7 +112,6 @@ theorem card_conv_le {x y : G} {A B : Finset G} (hA : IsDC J x A) (hB : IsDC J y
 
 end Theta
 
-open Classical in
 
 theorem card_pairs {J L : Subgroup G} {y : G} {A B : Finset G} (hB : IsDC J y B) (hAL : ∀ a ∈ A, a ∈ L)
     (hBL : ∀ b ∈ B, b ∈ L) {z : G} (hz : z ∈ L) :

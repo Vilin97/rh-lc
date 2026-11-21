@@ -140,11 +140,8 @@ theorem measurableEmbedding_val (n : Type*) [Fintype n] [DecidableEq n] :
   rw [this]
   exact (isOpen_ne_fun (continuous_id.matrix_det) continuous_const).measurableSet
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem om_mem_SB {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
     (μ : kˣ →* ℂˣ) (g : GL a k) (h : GL b k) {Φ : Matrix b a k → ℂ} (hΦ : Φ ∈ SB (Matrix b a k)) :

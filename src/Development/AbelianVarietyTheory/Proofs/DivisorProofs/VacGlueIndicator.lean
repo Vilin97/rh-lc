@@ -59,7 +59,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 def planeMat {n n₁ : ℕ} (H : Plane E n n₁) : Matrix (Fin n) (Fin n₁ ⊕ Fin 2) E :=
   Matrix.of fun i k => Sum.elim (fun j => H.ι i j) (fun t : Fin 2 => if t = 0 then H.x i else H.y i) k
 
-open Classical in
 
 def planeCoef {n n₁ : ℕ} (H : Plane E n n₁) : Matrix (Fin n₁ ⊕ Fin 2) (Fin n) E :=
   if h : n₁ + 2 = n then
@@ -83,20 +82,16 @@ def posT {d₁ n₁ : ℕ} : Ic d₁ n₁ → (Fin n₁ ⊕ Fin 2) × (Fin d₁ 
   | .inl j => (.inr 0, j)
   | .inr a => (.inl a, .inr 0)
 
-variable (F E) in
 
 def bE : Module.Basis (Fin (Module.finrank F E)) F E := Module.finBasis F E
 
-variable (F E) in
 
 def bE' : Module.Basis (Fin (Module.finrank F E)) F E :=
   (Algebra.traceForm F E).dualBasis (traceForm_nondegenerate F E) (bE F E)
 
-variable (F E) in
 
 def bA : Module.Basis (Fin (Module.finrank F E)) (AF F) (AE F E) := Algebra.TensorProduct.basis (AF F) (bE F E)
 
-variable (F E) in
 
 def bA' : Module.Basis (Fin (Module.finrank F E)) (AF F) (AE F E) := Algebra.TensorProduct.basis (AF F) (bE' F E)
 

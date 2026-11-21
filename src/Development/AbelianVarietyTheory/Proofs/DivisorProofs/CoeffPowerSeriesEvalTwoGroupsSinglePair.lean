@@ -12,7 +12,6 @@ namespace GlobalTheory
 
 namespace OnePair
 
-open CategoryTheory TensorProduct MvPowerSeries in
 
 theorem _root_.GlobalTheory.OnePair.coeff_subst_kill {σ R : Type} [CommRing R] [Finite σ] (p : σ → Prop)
     [DecidablePred p] (c : MvPowerSeries σ R) (γ : σ →₀ ℕ) [Decidable (∀ s, ¬ p s → γ s = 0)] :
@@ -55,7 +54,6 @@ theorem _root_.GlobalTheory.OnePair.coeff_subst_kill {σ R : Type} [CommRing R] 
 
 end OnePair
 
-open CategoryTheory TensorProduct MvPowerSeries in
 
 theorem _root_.GlobalTheory.coeff_at2_single_X_inl_inr (R : Type) [CommRing R] (d : ℕ)
     (c : MvPowerSeries (Fin d ⊕ Fin d) R) (m : Fin d) (γ : Fin d ⊕ Fin d →₀ ℕ) :

@@ -26,12 +26,10 @@ def InAt (𝔞 : FractionalIdeal (𝓞 E)⁰ E) (v : Pl F) (x : AE F E) : Prop :
 
 def wt (ν : Chr F E) (z : ℕ) (l : (AE F E)ˣ) : ℂ := (ν l : ℂ) * ((absE F E l : ℝ) : ℂ) ^ z
 
-open Classical in
 
 def uLoc (v : Pl F) (x : @Measure (idAt E (evFin F v)) (borel _)) (𝔞 : FractionalIdeal (𝓞 E)⁰ E) (ν : Chr F E) (z : ℕ) : ℂ :=
   @integral _ _ _ _ (borel _) x fun l => (if InAt 𝔞 v (l.1 : AE F E) then 1 else 0) * wt ν z l.1
 
-open Classical in
 
 def IdeleFub : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n : ℕ) (X : Spc F E n) (K : Subgroup (UA σ X.J)) (m : LocMeas K) (μ : Measure (AE F E)ˣ), B.IsGood σ → m.Is → μ.IsHaarMeasure →
@@ -97,9 +95,7 @@ def ArchCone : Prop :=
         Integrable (fun k : kAt K (evI F) => @integral _ _ _ _ (borel _) m.xi fun l =>
           ei (opI (fun Φ => M.co.rho B.ψ (realAd F 1 • u l.1) (om (k.1, 1) Φ)) f) y * wt ν z l.1) m.ki
 
-open Classical in
 
-open Classical in
 
 def PureFac : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d n₁ d₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Spc F E d₁)

@@ -92,7 +92,6 @@ theorem kappa_div : kappa ^ n / (Complex.I / 2) ^ n = (((Real.pi ^ n)⁻¹ : ℝ
 
 end GlobalTheory.ChernTopDens
 
-open GlobalTheory.ChernTopDens in
 
 theorem GlobalTheory.ChernCalc.dens_chernAt_re (n : ℕ) (ι : Type) (m : ι → ℕ) (R : MvPolynomial (ι × ℕ) ℝ) (G : V n → Mat m ℂ)
     (v : V n) :

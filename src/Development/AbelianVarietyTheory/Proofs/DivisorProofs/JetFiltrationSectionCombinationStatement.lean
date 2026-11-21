@@ -240,7 +240,6 @@ end GlobalTheory.SecJet.Orders
 
 namespace GlobalTheory.SecJet
 
-open Orders in
 
 end GlobalTheory.SecJet
 

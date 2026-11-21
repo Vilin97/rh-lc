@@ -22,7 +22,6 @@ abbrev muLoc (A : ValuationSubring Ω) :
     Representation (ZMod (l ^ r)) (Dec (F := F) A) (ZMod (l ^ r)) :=
   charRep ((cycMod F Ω l r).comp (Dec (F := F) A).subtype)
 
-variable (Ω) in
 
 abbrev InvFam : Type :=
   ∀ A : ValuationSubring Ω, H2 (muLoc F l r A) →ₗ[ZMod (l ^ r)] ZMod (l ^ r)
@@ -287,7 +286,6 @@ end Global
 
 end PoitouTate
 
-open PoitouTate in
 
 def PoitouTateTotallyComplex : Prop :=
   ∀ (F Ω : Type) [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω]
@@ -304,7 +302,6 @@ def PoitouTateTotallyComplex : Prop :=
       (hρ : ContAction ρ),
       NineTermExact S Av μ (invAt S Av μ hμ inv) ρ hρ ∧ ShaDual S Av μ ρ
 
-open PoitouTate in
 
 theorem PoitouTateTotallyComplex.annihilators (h : PoitouTateTotallyComplex)
     (F Ω : Type) [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω]

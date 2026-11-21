@@ -41,7 +41,6 @@ theorem hinv_absC (w : HeightOneSpectrum (𝓞 E)) (x : ℂ) :
   change (conj (((Ideal.absNorm w.asIdeal : ℕ) : ℂ) ^ (-x)))⁻¹ = _
   rw [← h1, ← Complex.cpow_neg, map_neg, neg_neg]
 
-omit [IsTotallyComplex E] in
 
 theorem satTw_string (w : HeightOneSpectrum (𝓞 E)) (z : ℂ) (C B₀ : Multiset ℂˣ) {d : ℕ} (e : Fin d → ℝ)
     (h : C.map (fun b : ℂˣ => (b : ℂ)) = ∑ i, satTw w (e i : ℂ) B₀) :

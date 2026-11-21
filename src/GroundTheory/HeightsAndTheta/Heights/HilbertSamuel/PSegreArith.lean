@@ -18,7 +18,6 @@ namespace SegreArithmetic
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {Ω : Type} [Field Ω]
 
-omit [DecidableEq K] in
 
 theorem segreCoords_div (y : (Σ k, ι k) → Ω) (f c : (k : K) → ι k) :
     segreCoords y ⟨(), f⟩ / segreCoords y ⟨(), c⟩ = ∏ k, y ⟨k, f k⟩ / y ⟨k, c k⟩ := by
@@ -35,7 +34,6 @@ theorem ratio_eq_segre (y : (Σ k, ι k) → Ω) (c : (k : K) → ι k) (hc : �
   · intro h
     exact absurd (Finset.mem_univ k) h
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem charZero_of_horizontal (y : (Σ k, ι k) → Ω)
     (h : IsHorizontal (mCoordIdeal y)) : CharZero Ω := by
@@ -51,7 +49,6 @@ theorem charZero_of_horizontal (y : (Σ k, ι k) → Ω)
 
 end SegreArithmetic
 
-open SegreArithmetic BlockImageArithmetic in
 
 theorem SegreArith.proof : SegreArith.Statement := by
   intro K _ _ ι _ Ω _ y D hY

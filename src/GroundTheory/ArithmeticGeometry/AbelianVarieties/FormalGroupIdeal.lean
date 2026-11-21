@@ -151,9 +151,7 @@ omit [IsAdicComplete (IsLocalRing.maximalIdeal 𝒪) 𝒪] in
 @[simp] theorem val_mk (x : 𝒪) (hx : x ∈ IsLocalRing.maximalIdeal 𝒪) :
     (mk x hx : MaxIdealPoint F).val = x := rfl
 
-omit [IsAdicComplete (IsLocalRing.maximalIdeal 𝒪) 𝒪] in
 
-omit [IsAdicComplete (IsLocalRing.maximalIdeal 𝒪) 𝒪] in
 
 instance : Zero (MaxIdealPoint F) := ⟨mk 0 (zero_mem _)⟩
 

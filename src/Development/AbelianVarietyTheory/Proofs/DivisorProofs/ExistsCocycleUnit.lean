@@ -161,7 +161,6 @@ theorem hom_ext (hΦ : Represents Φ) {Z : Scheme.{0}} {r r' : Z ⟶ Y.left}
   exact congrArg (·.left) ((Φ _).injective (pt_ext (h₁.1.trans ((Over.OverMorphism.ext hb).trans h₂.1.symm))
     fun χ z J hJ => (h₁.2 χ z J hJ).trans ((hv χ z J hJ).trans (h₂.2 χ z J hJ).symm)) : k = k')
 
-variable (hE) in
 
 def Carries {e : ℕ} (c : GtCoord I E.toPre e G') (g : GtPt D Y) (φ : (thickObj R' I e G').left ⟶ Y.left) : Prop :=
   c.pG.left ≫ hE.e.hom.left ≫ pullback.fst D.P.A.hom (specOf ρ) = φ ≫ g.b.left ∧

@@ -18,7 +18,6 @@ variable {K : Type*} [Field K] [NumberField K]
 
 namespace Modulus
 
-omit [NumberField K] in
 
 instance : Dvd (Modulus K) :=
   ⟨fun 𝔪 𝔫 ↦ 𝔪.ideal ∣ 𝔫.ideal ∧ 𝔪.real ⊆ 𝔫.real⟩

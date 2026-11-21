@@ -10,8 +10,6 @@ open Polynomial
 
 namespace GlobalTheory.PrimeLogSum
 
-open scoped BigOperators Matrix in
-open Polynomial in
 
 theorem _root_.GlobalTheory.PrimeLogSum.sum_log_div_pred_le_real : ∀ (B : ℝ), 1 ≤ B →
     ∑ p ∈ (Finset.range (⌊B⌋₊ + 1)).filter Nat.Prime, Real.log p / ((p : ℝ) - 1)

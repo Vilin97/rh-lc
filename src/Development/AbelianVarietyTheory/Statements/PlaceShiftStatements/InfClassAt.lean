@@ -54,7 +54,6 @@ def aOne (C b : ℝ) : ℝ := C * D.R.f * bigN D * b * Real.log b + C * D.R.m * 
 def Away (t : T) (w : PlL D) : Prop :=
   ∀ PP ∈ L.Q t, PP.under (𝓞 D.host.F) ∈ G.pl.S0 ∨ ∀ l : ℕ, l.Prime → (l : 𝓞 D.host.E) ∈ PP.asIdeal → (l : 𝓞 D.what₂.LL) ∉ w.asIdeal
 
-open Classical in
 
 def depL (l : ℕ) : ℕ := (G.pl.W0.filter fun PP => (l : 𝓞 D.host.E) ∈ PP.asIdeal).sup (depthAt G)
 
@@ -72,7 +71,6 @@ def topVal (Ψ : GLf G → WtSp G) (x : FinPt G (.top 0)) : VV ℂ (wt G (.top 0
 def rowVal (v : VV ℂ (listedWt G (.grid 0 D.R.m))) : VV ℂ (wt G (.grid 0 D.R.m)) :=
   rhoVr (tauE D) _ (S.N.fr (.grid 0 D.R.m))⁻¹ (funOf (listedWt G (.grid 0 D.R.m)) v)
 
-variable (G) in
 
 abbrev lastPair : VV ℂ (wt G (.top D.R.m)) →ₗ[ℂ] VV ℂ (wt G (.grid D.R.m D.R.m)) →ₗ[ℂ] ℂ :=
   brPair (listedWt G (.grid D.R.m D.R.m)) G.sp.topDec.rank.symm (wt G (.top D.R.m))

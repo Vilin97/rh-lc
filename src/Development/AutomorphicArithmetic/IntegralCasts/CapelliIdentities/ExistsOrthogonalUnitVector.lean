@@ -19,7 +19,6 @@ noncomputable def UpperTheory.Reformulated.B.ExistsOrthogonalBasisWithUnitNorms.
               ∃ c ∈ S,
                 ∃ d ∈ S, Formalism.HermitianLattices.Ext.L3.WA.IsUnitIn S (((h : V → V →ₗ[K] K) (c • w + d • y) : V → K) (c • w + d • y))
 
-open Formalism.HermitianLattices.Ext.L3.WA in
 
 private theorem UpperTheory.Reformulated.B.ExistsOrthogonalBasisWithUnitNorms.exists_primitive {K V : Type} [Field K] [StarRing K] [AddCommGroup V]
     [Module K V] {S : Subring K} {h : V →ₗ⋆[K] V →ₗ[K] K} (hS : IsHermSemilocal S)
@@ -57,7 +56,6 @@ private theorem UpperTheory.Reformulated.B.ExistsOrthogonalBasisWithUnitNorms.ex
   · simpa [mul_comm] using hdiv _ ⟨m, hm, rfl⟩
   · rw [map_smul, hα, smul_eq_mul, inv_mul_cancel₀ hα0]
 
-open Formalism.HermitianLattices.Ext.L3.WA in
 
 private theorem UpperTheory.Reformulated.B.ExistsOrthogonalBasisWithUnitNorms.exists_extend {K V : Type} [Field K] [StarRing K] [AddCommGroup V]
     [Module K V] [FiniteDimensional K V] {S : Subring K} {h : V →ₗ⋆[K] V →ₗ[K] K}

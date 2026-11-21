@@ -25,7 +25,6 @@ variable {Ω : Type} [Field Ω] {A : Type} [CommRing A] [Algebra A Ω] [IsIntegr
   {m : Ideal A} [m.IsPrime] {O : Type} [CommRing O] [Algebra A O] [IsLocalization.AtPrime O m] [Algebra O Ω]
   [IsScalarTower A O Ω]
 
-include m in
 
 theorem algebraMap_injective : Function.Injective (algebraMap O Ω) := by
   have hA : Function.Injective (algebraMap A Ω) := IsIntegralClosure.algebraMap_injective A ℤ Ω
@@ -38,13 +37,11 @@ theorem algebraMap_injective : Function.Injective (algebraMap O Ω) := by
   have h2 : a = 0 := hA (by rw [← h1, map_zero])
   rw [h2, IsLocalization.mk'_zero]
 
-include m in
 
 theorem exists_of_integral (x : Ω) (hx : IsIntegral ℤ x) : ∃ o : O, algebraMap O Ω o = x :=
   ⟨algebraMap A O (IsIntegralClosure.mk' A x hx), by
     rw [← IsScalarTower.algebraMap_apply, IsIntegralClosure.algebraMap_mk']⟩
 
-include m in
 
 theorem exists_hom {R : Type} [CommRing R] (f : R →+* Ω) (hf : ∀ a, IsIntegral ℤ (f a)) :
     ∃ g : R →+* O, ∀ a, algebraMap O Ω (g a) = f a := by
@@ -85,7 +82,6 @@ section Abstract
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-open NumberField in
 
 theorem orbit_abstract {p : ℕ} (hp : p.Prime) (hd : ¬ (p : ℤ) ∣ NumberField.discr E) {T : Type} [Finite T] (t₀ : T)
     (φ : Equiv.Perm T) {k : Type} [Field k] (r : T → 𝓞 E →+* k) (hpk : (p : k) = 0)

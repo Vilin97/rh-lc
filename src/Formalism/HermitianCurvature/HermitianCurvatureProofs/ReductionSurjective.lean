@@ -14,7 +14,6 @@ variable {ι : Type} [Fintype ι] [DecidableEq ι] {A : Type} [CommRing A]
 
 variable {c : ι → ℕ} {x y : Matrix ι ι A}
 
-variable (A) (c) in
 
 end Generic
 
@@ -28,11 +27,8 @@ section Specific
 
 variable {A : Type} [CommRing A] {r k : ℕ}
 
-variable (A r k) in
 
-variable (A r k) in
 
-variable (r) in
 
 end Specific
 

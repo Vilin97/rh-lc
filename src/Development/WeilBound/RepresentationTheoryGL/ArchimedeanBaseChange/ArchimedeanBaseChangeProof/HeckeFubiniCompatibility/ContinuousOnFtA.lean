@@ -106,8 +106,6 @@ theorem continuous_St (v : InfinitePlace E) {ka : Kers Ma} {kb : Kers Mb} {ψ : 
     (φ := fun q : G a × RA E a b v => p * ιA v q.1 * σA v q.2)
     ((continuous_const.mul ((continuous_ιA v).comp continuous_fst)).mul ((continuous_σA v).comp continuous_snd)))
 
-set_option maxHeartbeats 800000 in
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem Rv_eq (hF : CompatFub) (D : Dom E a b) (hC : Compat D μa μb ν) (v : InfinitePlace E) (ka : Kers Ma)
     (kb : Kers Mb) (ψ : Matrix κ κ (Hf E a b → ℂ)) (f : Io Ma Mb κ → H E a b → ℂ) (hT : IsTestM (tens ka kb ψ))

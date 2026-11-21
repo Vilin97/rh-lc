@@ -58,6 +58,5 @@ theorem exists_prime_eq {L : Type} [Field L] [NumberField L] (O : ValuationSubri
     have := ((ValuationSubring.mem_nonunits_iff_or O).1 hn).resolve_left hx0
     exact this (h ▸ ValuationSubring.mem_top _)
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.CompanionTheory.SmallFin

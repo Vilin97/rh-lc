@@ -33,7 +33,6 @@ variable {K : Type} [Field K] [NumberField K] {i : ℕ} {F : HermLattice K i}
 def formPoly (b : Module.Basis T ℤ (dualLattice F)) (p : Σ _ : Unit, T) : MvPolynomial (Fin i) K :=
   ∑ j, C ((b p.2 : Fin i → K) j) * X j
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem dualPlanePt_eq_mulVec [DecidableEq (K →+* ℂ)] (b : Module.Basis T ℤ (dualLattice F))
     (σ : K →+* ℂ) (v : Fin i → ℂ) (t : T) :
@@ -45,7 +44,6 @@ theorem dualPlanePt_eq_mulVec [DecidableEq (K →+* ℂ)] (b : Module.Basis T �
   · intro τ hτ
     simp [hτ]
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem eval₂_formPoly (b : Module.Basis T ℤ (dualLattice F)) (σ : K →+* ℂ) (v : Fin i → ℂ)
     (p : Σ _ : Unit, T) :
@@ -54,7 +52,6 @@ theorem eval₂_formPoly (b : Module.Basis T ℤ (dualLattice F)) (σ : K →+* 
 
 end DualPointsOfPlane
 
-open DualPointsOfPlane in
 
 theorem DualPtsOfPlane.proof : DualPtsOfPlane.Statement := by
   intro K _ _ i F T _ _ b hb σ v hv

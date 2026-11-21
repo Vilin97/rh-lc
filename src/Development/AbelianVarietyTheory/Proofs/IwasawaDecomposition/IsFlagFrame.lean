@@ -73,7 +73,6 @@ structure IsFinPart {R : Type} [CommRing R] (x : Sp R ⟶ X) (q : ℕ) {B : Type
 
 variable {F : Type} [Field F] [NumberField F] {Y : Var F}
 
-open Classical in
 
 end Tangent
 

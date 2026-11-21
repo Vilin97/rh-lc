@@ -18,17 +18,11 @@ namespace GlobalTheory.EisBL.DoubledUnipotentRadical
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-variable (σ) in
 
 omit [NumberField E] in
 theorem cA_inclR (σ : E →ₐ[F] E) (x : E) :

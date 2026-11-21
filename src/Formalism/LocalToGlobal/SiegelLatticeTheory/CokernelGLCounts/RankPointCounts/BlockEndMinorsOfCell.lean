@@ -39,7 +39,6 @@ theorem zhatOM_isIntegral {D : D7} {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T 
   rw [hZ, ← hc]
   exact h1.mul (RingOfIntegers.isIntegral_coe c)
 
-open Formalism.MainNotions.BesselShellMomentBounds Formalism.HermitianLatticeCounting.ExpansionTerms in
 
 theorem blockEndMinors_of_cell {D : D7} (Z : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E)
     (hZ : ∀ i j, IsIntegral ℤ (Z i j)) (γ : Point D.host.E (D.R.rS + 1)) (hc : IsInCell Z γ) :
@@ -101,6 +100,5 @@ theorem stepPoints_of
   stepPoints_of_ctx (fun _ _ _ _ _ _ _ _ D _ X Y u u' _ => hOV D X Y u u')
     (fun _ _ _ _ _ _ _ _ D _ X Y u u' _ => hAt D X Y u u')
 
-open Formalism.L2.SG.TermOp.Vanish in
 
 end Formalism.L2.SG.NGCut.PtPf

@@ -27,7 +27,6 @@ variable (p : ℕ) [Fact p.Prime] {R : Type} [CommRing R] (hR : (p : R) = 0) {X 
 abbrev tU (s : X ⟶ Sp R) (U : AffOp X) : Thick (dp0 R) s :=
   Thick.triv (Sec s U.unop.1) (affPt s U.unop) (affPt_w s U.unop)
 
-include hR in
 
 theorem cast_sec (U : X.Opens) : (p : Sec s U) = 0 := by
   rw [← map_natCast (algebraMap R (Sec s U)), hR, map_zero]

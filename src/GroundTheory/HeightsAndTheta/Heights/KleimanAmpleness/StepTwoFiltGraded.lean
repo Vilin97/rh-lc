@@ -21,13 +21,11 @@ section Laurent
 
 variable (x : Fin (N + 1) → Ω) (E : Type v) [AddCommGroup E] [Module Ω E]
 
-set_option linter.unusedVariables false in
 
 abbrev LaurentSpace (x : Fin (N + 1) → Ω) (E : Type v) [Zero E] : Type v := ℤ →₀ E
 
 def laurentShift : Module.End Ω (LaurentSpace x E) := Finsupp.lmapDomain E Ω (· + 1)
 
-variable (S) in
 
 def laurentAct : Poly S N →+* Module.End Ω (LaurentSpace x E) :=
   (Polynomial.aeval (laurentShift x E)).toRingHom.comp (cone (S := S) x).toRingHom
@@ -36,7 +34,6 @@ instance : Module (Poly S N) (LaurentSpace x E) := Module.compHom _ (laurentAct 
 
 variable {x E}
 
-variable (x) in
 
 def laurentSingle (c : ℤ) (m : E) : LaurentSpace x E := Finsupp.single c m
 
@@ -371,7 +368,6 @@ theorem quotProj_smul_iota_mem (r : Poly S N) {e : ℤ} (g : M₁.piece e) (c : 
   · exact Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _)
   · exact zero_mem _
 
-variable (M₁ M₂) in
 
 def IsProjStable (A : Submodule (Poly S N) (quotLaurent M₁ M₂)) : Prop :=
   ∀ y ∈ A, ∀ c, quotProj M₁ M₂ c y ∈ A
@@ -432,7 +428,6 @@ theorem filtPiece_sup {A : Submodule (Poly S N) (quotLaurent M₁ M₂)} (hA : I
     rw [smul_quotIota M₁ M₂ hf] at h2
     exact h2
 
-variable (M₁ M₂) in
 
 def filtSub (A : Submodule (Poly S N) (quotLaurent M₁ M₂))
     (hfg : ∃ (n : ℕ) (deg : Fin n → ℤ) (gen : Fin n → E), (∀ j, gen j ∈ filtPiece M₁ M₂ A (deg j)) ∧

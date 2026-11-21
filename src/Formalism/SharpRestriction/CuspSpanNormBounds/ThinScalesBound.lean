@@ -14,7 +14,6 @@ open Formalism.MainNotions.S.Loc
 
 namespace Formalism.MainNotions.ThinScalesBound
 
-open scoped Classical in
 
 def ThOK {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
     {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableSpace E]

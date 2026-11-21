@@ -90,14 +90,12 @@ open Filter Topology
 
 namespace GlobalTheory.RegSch.JointCont
 
-open GlobalTheory.StdUnn GlobalTheory.StdUnn.Model in
 
 theorem levi_weyl_rel {R : Type} [CommRing R] {n : ℕ} {b c : Matrix (Fin n) (Fin n) R} (h1 : b * c = 1) (h2 : c * b = 1) :
     blk4 b 0 0 c * blk4 0 1 (-1) 0 = blk4 1 b 0 1 * blk4 0 1 (-1) 0 * blk4 1 c 0 1 *
       (blk4 0 1 (-1) 0 * blk4 0 1 (-1) 0 * blk4 0 1 (-1) 0) * blk4 1 b 0 1 := by
   simp [submatrix_fromBlocks_mul, h1, h2]
 
-open GlobalTheory.StdUnn GlobalTheory.StdUnn.Model in
 
 theorem resEta_of_isWeilSch {D : D7} {n : ℕ} (hn : 0 < n) {V : HSp D} {ψ : AddChar (AF D.host.F) ℂ}
     (hψ : IsCharAF D.host.F ψ) {θ : InfFam D} (hθ : IsInfFam θ) {χ : (AE D)ˣ →* Circle}

@@ -38,26 +38,20 @@ def eigen : X.Modules := (eigenSub ρ σ).toMod
 
 def eigenι : eigen ρ σ ⟶ F := (eigenSub ρ σ).incl
 
-variable {ρ σ} in
 
 theorem mem_eigenSub_iff {s : Γ(F, V)} : s ∈ (eigenSub ρ σ).sec V ↔
     ∀ a, (act ρ a).app V s = resG X (le_top : V ≤ ⊤) (σ a) • s :=
   (Submodule.mem_iInf _).trans (forall_congr' fun _ => sub_eq_zero)
 
-variable {ρ σ} in
 
 def eigenLift (φ : G ⟶ F) (h : ∀ a, φ ≫ act ρ a = σ a • φ) : G ⟶ eigen ρ σ :=
   (eigenSub ρ σ).lift φ fun V s => mem_eigenSub_iff.2 fun a => congr(($(h a)).app V s)
 
     eigenLift φ h ≫ eigenι ρ σ = φ := rfl
 
-variable {ρ ρ'} in
 
-variable {ρ ρ'} in
 
-variable {ρ σ} in
 
-variable (F) in
 
 def scalarAct : O →+* End F := (smulEnd F).comp σ
 
@@ -74,7 +68,6 @@ theorem act_eigenπ (a : O) : act ρ a ≫ eigenπ ρ σ = σ a • eigenπ ρ �
   rw [Sigma.ι_desc_assoc, comp_zero, Preadditive.sub_comp, sub_eq_zero, smulHom_comp] at this
   exact this
 
-variable {ρ σ} in
 
 def eigenDesc (φ : F ⟶ G) (h : ∀ a, act ρ a ≫ φ = σ a • φ) : eigenQuot ρ σ ⟶ G :=
   cokernel.desc _ φ (Sigma.hom_ext _ _ fun a => by
@@ -93,12 +86,10 @@ def dualAct : O →+* End (dual F) where
 
 @[simp] theorem act_dualAct (a : O) : act (dualAct ρ) a = GlobalTheory.CompanionTheory.Ar.dualMap (act ρ a) := rfl
 
-variable {ρ σ} in
 
 theorem ActsThrough.dual (h : ActsThrough ρ σ) : ActsThrough (dualAct ρ) σ := fun a => by
   rw [act_dualAct, h a, dualMap_smulHom]
 
-variable {ρ ρ'} in
 
 theorem pullback_map_smulHom (f : Y ⟶ X) (a : Γ(X, ⊤)) :
     (Scheme.Modules.pullback f).map (smulHom F a) = smulHom _ (f.appTop a) := by
@@ -122,13 +113,11 @@ def pullAct (f : Y ⟶ X) : O →+* End ((Scheme.Modules.pullback f).obj F) wher
 @[simp] theorem act_pullAct (f : Y ⟶ X) (a : O) :
     act (pullAct ρ f) a = (Scheme.Modules.pullback f).map (act ρ a) := rfl
 
-variable {ρ σ} in
 
 theorem ActsThrough.pullback (h : ActsThrough ρ σ) (f : Y ⟶ X) :
     ActsThrough (pullAct ρ f) (f.appTop.hom.comp σ) := fun a => by
   rw [act_pullAct, h a, pullback_map_smulHom]; rfl
 
-variable {ρ ρ'} in
 
 end Eigen
 
@@ -136,7 +125,6 @@ section Split
 
 variable {O : Type} [CommRing O] {k : Type} [Field k] {ι : Type}
 
-variable (X) in
 
 abbrev scal [Algebra k Γ(X, ⊤)] (σ : O →+* k) : O →+* Γ(X, ⊤) := (algebraMap k Γ(X, ⊤)).comp σ
 
@@ -162,7 +150,6 @@ theorem isSplitBy_of_injective [Fintype ι] [Module.Free ℤ O] [Module.Finite �
 
 variable [Algebra k Γ(X, ⊤)] (ρ : O →+* End F)
 
-variable (k) in
 
 namespace IsSplitBy
 
@@ -170,11 +157,7 @@ variable [DecidableEq ι] (h : IsSplitBy σ)
 
 variable [Fintype ι]
 
-omit [DecidableEq ι] [Fintype ι] in
-include h in
 
-omit [DecidableEq ι] in
-include h in
 
 end IsSplitBy
 
@@ -184,7 +167,6 @@ section Frobenius
 
 variable (p : ℕ) [Fact p.Prime]
 
-variable (X) in
 
 def frob (h : (p : Γ(X, ⊤)) = 0) : X ⟶ X := SS.FrobField.absFrob X p 1 Fact.out h
 
@@ -197,8 +179,6 @@ theorem frob_appTop (a : Γ(X, ⊤)) : (frob X p h).appTop a = a ^ p := frob_app
 
     frob Y p hY ≫ f = f ≫ frob X p h := SS.FrobField.absFrob_nat f p 1 Fact.out hY h
 
-omit [Fact p.Prime] in
-variable (X) in
 
 theorem natCast_eq_zero (k : Type) [CommRing k] [CharP k p] [Algebra k Γ(X, ⊤)] :
     (p : Γ(X, ⊤)) = 0 := by

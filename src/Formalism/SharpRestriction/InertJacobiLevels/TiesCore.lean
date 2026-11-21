@@ -80,29 +80,19 @@ def Good (_X : Inst D L) (p : ℕ) (t0 : HH D) : Prop :=
   IsGoodOrbit (addOrderOf (hP D p)) (topsPos D p t0) (L2 D L.sc) (KG L.sc) (rG L.sc) L.sc.delta1
     (hG L.sc) L.sc.x
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 def Cand (D : GD) (L : GParameters D) (K : Consts) (p : ℕ) : Prop :=
   p.Prime ∧ (p : ℝ) < L.sc.X' ∧ IsResidueClassZero D p ∧ L.sc.x ^ (L.sc.eps / 4) ≤ (addOrderOf (hP D p) : ℝ) ∧
     (L.sc.p0 D.R.k ≤ (p : ℝ) → ¬ InBand D K L.sc p)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end Formalism.MainNotions.Inhab.GC
 

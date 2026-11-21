@@ -27,8 +27,6 @@ private lemma circleIntegral_finset_sum_of_continuousOn {E ι : Type*} [NormedAd
     simp only [Finset.sum_insert ha]
     rw [circleIntegral.integral_add (ha'.circleIntegrable hR) (hsum.circleIntegrable hR), ih hs]
 
-open Finset Complex in
-open scoped InnerProductSpace in
 
 theorem _root_.GlobalTheory.norm_sum_eigenprojector_le_of_resolvent_bound :
     ∀ (H κ : Type) [NormedAddCommGroup H] [NormedSpace ℂ H] [Fintype κ] [DecidableEq κ]

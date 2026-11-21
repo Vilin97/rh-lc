@@ -193,8 +193,6 @@ theorem isDomT_zero : IsDomT H q n (fun _ _ => 0) := by
   obtain ⟨i, -⟩ := Function.ne_iff.1 hc
   exact (hx.ne_zero i (Subsingleton.elim _ _)).elim
 
-variable (H q) in
-open Classical in
 
 def extFun (φ : InvFun (𝓞 E)) : InvFun (𝓞 E) where
   toFun n B := if IsDomT H q n B then φ.toFun n B else (InvFun.minVal (𝓞 E)).toFun n B
@@ -257,7 +255,6 @@ theorem extFun_homog (hpol : IsPolFan H.bar q φ) (htw : IsTwInv H φ) (n k : �
   · rw [extFun_of_not (mt (isDomT_smul_iff ht B).1 h), extFun_of_not h]
     exact minVal_smul ht n B
 
-variable (H q φ) in
 
 theorem evalR_extFun {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X]
     (hX : Module.finrank (𝓞 E) X ≤ q) {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (hB : B ∈ psdCone H.bar X) :

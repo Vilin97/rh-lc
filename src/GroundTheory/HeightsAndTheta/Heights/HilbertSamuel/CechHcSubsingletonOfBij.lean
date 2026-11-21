@@ -26,7 +26,6 @@ theorem cechHc_subsingleton_iff (𝓜 : (K → ℤ) → Submodule S M) (c : K �
   show Subsingleton (_ ⧸ _) ↔ _
   rw [Submodule.Quotient.subsingleton_iff, Submodule.comap_subtype_eq_top]
 
-omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 
 theorem locPart_shift (𝓜 : (K → ℤ) → Submodule S M) (T : Submonoid (MRingOver S ι)) (c x : K → ℤ) :
     KH.locPart ι (fun d => 𝓜 (d + c)) T x = KH.locPart ι 𝓜 T (x + c) := by
@@ -34,7 +33,6 @@ theorem locPart_shift (𝓜 : (K → ℤ) → Submodule S M) (T : Submonoid (MRi
     fun _ => add_right_comm _ _ _
   simp only [KH.locPart, h]
 
-omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 
 theorem cechCc_shift (𝓜 : (K → ℤ) → Submodule S M) (c x : K → ℤ) (n : ℕ) :
     KH.cechCc ι (fun d => 𝓜 (d + c)) x n = KH.cechCc ι 𝓜 (x + c) n := by
@@ -45,7 +43,6 @@ theorem cechHc_shift_iff (𝓜 : (K → ℤ) → Submodule S M) (c x : K → ℤ
   rw [cechHc_subsingleton_iff, cechHc_subsingleton_iff]
   cases n <;> simp only [KH.cechZc, KH.cechBc, cechCc_shift]
 
-omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 
 theorem isMGraded_shift {𝓜 : (K → ℤ) → Submodule S M} (h : KH.IsMGraded S ι 𝓜) (c : K → ℤ) :
     KH.IsMGraded S ι (fun d => 𝓜 (d + c)) := by

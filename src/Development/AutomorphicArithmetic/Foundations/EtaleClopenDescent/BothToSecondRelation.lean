@@ -110,7 +110,6 @@ def fstV (d : ℕ) : (L2 D d).Hom (Vec D d) where
   app _ _ x := ⟨(x.1.1.1, fun j => x.1.1.2 j.castSucc), x.2⟩
   nat _ _ := rfl
 
-variable {D} in
 
 section Formal
 open LateralTheory.E.t_E6Cut

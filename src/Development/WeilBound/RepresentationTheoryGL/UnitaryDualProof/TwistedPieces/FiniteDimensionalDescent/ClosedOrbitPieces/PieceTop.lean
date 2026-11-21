@@ -8,7 +8,6 @@ public import Development.WeilBound.CoreStatements.AutomorphicKernels.BernsteinU
 noncomputable section
 
 open Matrix Polynomial GroundTheory.Automorphic.Whittaker
-open Classical in
 section
 end
 
@@ -25,7 +24,6 @@ def re {d r : ℕ} (γ : Fin d → Fin r → k) (s : Fin r → Matrix (Fin N) (F
     Matrix (Fin N) (Fin N) k :=
   ∑ l, ∑ j, γ l j • (s j * ε ^ (l : ℕ))
 
-open Classical in
 
 structure SData (Z : Subalgebra k (Matrix (Fin N) (Fin N) k)) (χ : k[X]) (q : ℕ) where
   r : ℕ

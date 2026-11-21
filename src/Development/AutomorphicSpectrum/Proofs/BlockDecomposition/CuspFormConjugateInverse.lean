@@ -51,7 +51,6 @@ end Semilinear
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E a) in
 
 def dual : Sm E a →ₗ⋆[ℂ] Sm E a where
   toFun φ := ⟨fun g => star (φ.1 (invA E a g)), GlobalTheory.CompanionTheory.DualSm.conj_invA_mem_Sm φ.2⟩
@@ -147,7 +146,6 @@ theorem height_invT_le (y : GL (Fin a) (Cinf E)) : height (invT a (Cinf E) y) �
   unfold height
   linarith
 
-omit [IsTotallyComplex E] in
 
 theorem height_invT (y : GL (Fin a) (Cinf E)) : height (invT a (Cinf E) y) = height y := by
   refine le_antisymm (height_invT_le y) ?_
@@ -190,7 +188,6 @@ theorem isAutForm_dual {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (dual E a φ
     rw [e, norm_star]
     exact h2
 
-omit [IsTotallyComplex E] in
 
 theorem phiU_eq : PhiU a (Ad E) = ratGL E a (PhiU a E) := by
   ext i j
@@ -256,7 +253,6 @@ theorem isCuspidal_dual {φ : GA E a → ℂ} (hl : ∀ γ g, φ (ratGL E a γ *
 
 end GlobalTheory.CompanionTheory.DualCusp
 
-open GlobalTheory.CompanionTheory.DualCusp in
 
 theorem GlobalTheory.CompanionTheory.DualCusp.isCuspForm_conj_invA {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
     (φ : Sm E a) (hψ : (fun g => star (φ.1 (invA E a g))) ∈ Sm E a) (h : IsCuspForm φ) :

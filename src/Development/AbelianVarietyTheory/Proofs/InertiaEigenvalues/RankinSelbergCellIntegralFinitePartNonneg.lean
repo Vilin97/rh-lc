@@ -55,7 +55,6 @@ theorem blockGL_finGL {j n : ℕ} (hj : j ≤ n) (k : GL (Fin j) (Af E)) :
   · rw [hm, pInf_finGL, pInf_finGL, map_one]
   · rw [hm, pFin_finGL, pFin_finGL]
 
-omit [IsTotallyComplex E] in
 
 theorem blockGL_mem_integral {j n : ℕ} (hj : j ≤ n) {k : GL (Fin j) (Af E)}
     (hk : k ∈ GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E j) :
@@ -91,7 +90,6 @@ theorem map_blockGL {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) {j n 
   simp [blockMat_apply]
   split_ifs <;> simp
 
-omit [IsTotallyComplex E] in
 
 theorem blockGL_level {j n : ℕ} (hj : j ≤ n) (S : Finset (HeightOneSpectrum (𝓞 E))) {k : GL (Fin j) (Af E)}
     (hk1 : ∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v j)

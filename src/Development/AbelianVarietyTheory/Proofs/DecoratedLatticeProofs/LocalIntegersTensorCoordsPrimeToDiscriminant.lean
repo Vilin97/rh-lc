@@ -81,7 +81,6 @@ end GlobalTheory.FixedUnitNorm.Coords
 
 namespace GlobalTheory.FixedUnitNorm.Coords
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_intV_coords : ∀ (D : D7) (v : Pl D) (w : D.host.E) (t n : 𝓞 D.host.F),
     w + D.sp.cm.sig w = algebraMap D.host.F D.host.E t → w * D.sp.cm.sig w = algebraMap D.host.F D.host.E n →

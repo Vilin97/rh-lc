@@ -25,7 +25,6 @@ noncomputable section
 
 namespace GlobalTheory.TanBasisDim
 
-open ReciprocityTheory.ChartRestriction.G.PullbackSections in
 
 theorem basis_tanM_of_dim {R : Type} [CommRing R] [IsLocalRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G]
     (d : ℕ) (hG : SmoothOfRelativeDimension d G.hom) :

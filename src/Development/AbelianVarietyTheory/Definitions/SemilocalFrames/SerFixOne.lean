@@ -20,7 +20,6 @@ section Events
 
 variable {D : D7} (X : HidaSetting D)
 
-open Classical in
 
 def egA (a : MonoidAlgebra ℂ (G0g D.nd)) (x : X.B.I.Gf) : ℂ :=
   if h : x ∈ X.B.I.Kset ∧ ∃ γ : G0g D.nd, GoodAt X x γ then
@@ -42,7 +41,6 @@ def ES (S : Set (Tup2 D)) : MonoidAlgebra ℂ (G0g D.nd) :=
 def eT (S : Set (Tup2 D)) : X.B.I.Gf → ℂ :=
   X.B.I.convF X.B.μf X.B.e (egA X (ES S))
 
-open Classical in
 
 def ReT (S : Set (Tup2 D)) : X.B.I.L2 X.B.μf X.B.fund →L[ℂ] X.B.I.L2 X.B.μf X.B.fund :=
   if h : ∃ T, X.B.I.IsRConvF X.B.μf X.B.fund X.B.R (eT X S) T then Classical.choose h else 0

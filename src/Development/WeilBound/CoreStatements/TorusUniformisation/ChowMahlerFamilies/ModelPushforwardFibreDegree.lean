@@ -219,7 +219,6 @@ theorem Setup.avoid (S : Setup φ P 𝒲) (b : K → ℕ) :
   exact ⟨e', H, hH, fun h => hav P (Finset.mem_insert_self _ _) ((S.ker H _ hH).mp h),
     fun W hW => hav W (Finset.mem_insert_of_mem (S.fin.mem_toFinset.mpr hW))⟩
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem Setup.clear (S : Setup φ P 𝒲) (b : K → ℕ) {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)}
     (hQ : IsMultiProjPrime Q) :
@@ -1237,7 +1236,6 @@ theorem eq_of_comap_eq (hP' : IsModelOver P' d) (hP : IsModelOver (P'.comap (rr 
   rw [relDim_eq_of_dim _ _ (eq_of_le_le d3 d4)] at h1
   exact lt_irrefl _ (lt_of_le_of_lt h1 h2)
 
-open Classical in
 
 def srd (j : K ↪ K') (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι')) : ℕ :=
   if h : (specialIdeal W').IsPrime then haveI := h; relDeg j (specialIdeal W') else 0

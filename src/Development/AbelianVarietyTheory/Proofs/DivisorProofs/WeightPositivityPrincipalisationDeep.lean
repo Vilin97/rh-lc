@@ -175,6 +175,5 @@ theorem gapGe_sub_kap {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
   push_cast at h₁ h₂ h₅ ⊢
   linarith
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.SepCusp

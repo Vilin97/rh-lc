@@ -87,7 +87,6 @@ theorem unityPow_mul (n : ℕ) (c d : ℤ_[l]) :
 theorem unityPow_pow (n : ℕ) (c : ℤ_[l]) : unityPow Ω l n c ^ l ^ n = 1 := by
   rw [unityPow, ← pow_mul, mul_comm, pow_mul, (unitySeq_primitive Ω l n).pow_eq_one, one_pow]
 
-variable {Ω} in
 
 theorem existsUnique_unityPow {y : ℕ → Ω} (h0 : ∀ n, y n ^ l ^ n = 1)
     (hy : ∀ n, y (n + 1) ^ l = y n) : ∃! c : ℤ_[l], ∀ n, y n = unityPow Ω l n c := by
@@ -113,26 +112,22 @@ section Kummer
 
 variable (l : ℕ) [Fact l.Prime]
 
-variable (E Ω) in
 
 def zetaPow (n : ℕ) (c : ℤ_[l]) : Ω :=
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed E
   haveI : CharZero Ω := charZero_of_injective_algebraMap (algebraMap E Ω).injective
   unityPow Ω l n c
 
-variable (Ω) in
 
 def rootOf (a : E) (n : ℕ) : Ω :=
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed E
   rootSeq l (algebraMap E Ω a) n
 
-omit [NumberField E] in
 
 theorem rootOf_pow (a : E) (n : ℕ) : rootOf Ω l a n ^ l ^ n = algebraMap E Ω a :=
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed E
   rootSeq_pow l _ n
 
-omit [NumberField E] in
 
 theorem rootOf_ne_zero {a : E} (ha : a ≠ 0) (n : ℕ) : rootOf Ω l a n ≠ 0 := by
   intro h0
@@ -229,17 +224,14 @@ theorem cycZ_weil {h : IsPlaceOver A w} (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal
 def ineConj {h : IsPlaceOver A w} (g : Weil h) (σ : Ine (F := E) A) : Ine (F := E) A :=
   ⟨(g : G E Ω) * σ * (g : G E Ω)⁻¹, conj_mem_Ine (Weil_le_Dec h g.2) σ.2⟩
 
-omit [IsAlgClosure E Ω] in
 
 @[simp] theorem ineIncl_ineConj {h : IsPlaceOver A w} (g : Weil h) (σ : Ine (F := E) A) :
     ineIncl h (ineConj g σ) = g * ineIncl h σ * g⁻¹ := rfl
 
-omit [IsAlgClosure E Ω] in
 
 @[simp] theorem coe_ineConj {h : IsPlaceOver A w} (g : Weil h) (σ : Ine (F := E) A) :
     (ineConj g σ : G E Ω) = (g : G E Ω) * σ * (g : G E Ω)⁻¹ := rfl
 
-omit [IsAlgClosure E Ω] in
 
 theorem continuous_ineConj {h : IsPlaceOver A w} (g : Weil h) : Continuous (ineConj g) :=
   Continuous.subtype_mk (by fun_prop) _
@@ -267,13 +259,10 @@ theorem kummerChar_ineConj {h : IsPlaceOver A w} (hl : ((l : ℕ) : 𝓞 E) ∉ 
     ← cycZ_weil hl g]
   push_cast; rfl
 
-omit [IsAlgClosure E Ω] in
-variable (w) in
 
 theorem exists_uniformiser : ∃ ϖ : 𝓞 E, ϖ ∈ w.asIdeal ∧ ϖ ∉ w.asIdeal ^ 2 := by
   simpa using Ideal.exists_mem_pow_notMem_pow_succ w.asIdeal w.ne_bot w.isPrime.ne_top 1
 
-variable (w) in
 
 def unif : 𝓞 E := (exists_uniformiser w).choose
 
@@ -281,7 +270,6 @@ theorem unif_mem : unif w ∈ w.asIdeal := (exists_uniformiser w).choose_spec.1
 
 theorem unif_notMem : unif w ∉ w.asIdeal ^ 2 := (exists_uniformiser w).choose_spec.2
 
-variable (w) in
 
 def unifUnit : Eˣ := Units.mk0 ((unif w : 𝓞 E) : E) fun h0 =>
   unif_notMem (w := w) (by rw [RingOfIntegers.coe_eq_zero_iff.mp h0]; exact zero_mem _)

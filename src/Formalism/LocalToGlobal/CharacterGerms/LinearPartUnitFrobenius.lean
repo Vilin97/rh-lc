@@ -157,7 +157,6 @@ theorem linear_part_unit_frobenius (Y : FBChart C V O dd) {w : Fin dd → C} (hw
 
 end PairPointEvaluation
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ PartialDerivEval MaximalIdealCongruence FirstVanishing SelfAdjointCongruence PairPointEvaluation MvPowerSeries in
 
 theorem aLinAdj_holds : ALinAdjSt := by
   intro C _ _ V O _ _ dd Y e eb heI hebI he0 heb0 hhom hW u hu hV1 v hv

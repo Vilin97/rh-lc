@@ -65,7 +65,6 @@ theorem subst_jacEntry (F : FGLaw K d) (hF : ∀ a, MvIsInt v (subst (twoVars K 
   rw [← subst_secondBlockZero_twoPointVariables Y hY, ← pderiv_inr_twoVars]
   rfl
 
-omit [CharZero K] in
 
 theorem subst_ev_pt_zero [Finite ι] (T : Fin n × Fin d → MvPowerSeries ι K) (hT : ∀ q, constantCoeff (T q) = 0)
     (b : Fin n) (g : PS K 2 d) :
@@ -86,7 +85,6 @@ theorem subst_ev_pt_zero [Finite ι] (T : Fin n × Fin d → MvPowerSeries ι K)
   · simp only [Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_zero, Pi.zero_apply, one_ne_zero, if_false]
     rw [← coe_substAlgHom hTs, map_zero]
 
-omit [CharZero K] in
 
 theorem constantCoeff_subst_self {σ : Type} [Finite σ] (T : σ → MvPowerSeries ι K)
     (hT : ∀ q, constantCoeff (T q) = 0) (f : MvPowerSeries σ K) :

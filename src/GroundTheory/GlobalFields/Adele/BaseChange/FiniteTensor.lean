@@ -82,7 +82,6 @@ local instance : Algebra K (FiniteAdeleRing (𝓞 L) L) :=
 local instance : IsScalarTower K L (FiniteAdeleRing (𝓞 L) L) :=
   .of_algebraMap_eq fun _ ↦ rfl
 
-variable (K L) in
 
 def finiteTensorMap : L ⊗[K] FiniteAdeleRing (𝓞 K) K →ₐ[L] FiniteAdeleRing (𝓞 L) L :=
   Algebra.TensorProduct.lift (Algebra.ofId L _)
@@ -134,7 +133,6 @@ theorem sum_finiteCoord_finiteTensorMap (t : L ⊗[K] FiniteAdeleRing (𝓞 K) K
   | add s t hs ht =>
     simp_rw [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, hs, ht]
 
-variable (K L) in
 
 def finiteTensorEquiv : L ⊗[K] FiniteAdeleRing (𝓞 K) K ≃ₐ[L] FiniteAdeleRing (𝓞 L) L :=
   AlgEquiv.ofBijective (finiteTensorMap K L)

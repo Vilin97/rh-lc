@@ -65,7 +65,6 @@ lemma hleG (j : (pullExt f E).ChartIdx) {V : E.B.left.Opens} {V₁ : ((Over.pull
         | rfl
         | exact Scheme.preimage_comp _ _ _
 
-set_option maxHeartbeats 800000 in
 
 def datum : (pullExt f E).GtDatum ((Over.pullback f).obj G) where
   q := qB f d.q

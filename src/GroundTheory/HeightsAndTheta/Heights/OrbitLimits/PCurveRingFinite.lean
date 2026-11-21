@@ -18,7 +18,6 @@ namespace CurveRingFiniteAlt
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem mem_integer_of_mem_chartRingZ {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F))
     (z : (Σ k, ι k) → F) (c : ∀ k, ι k)
@@ -35,7 +34,6 @@ theorem mem_integer_of_mem_chartRingZ {F : Type} [Field F] [NumberField F] (v : 
   | add x w _ _ hx hw => exact add_mem hx hw
   | mul x w _ _ hx hw => exact mul_mem hx hw
 
-omit [Fintype K] in
 
 theorem mem_integralClosure {F : Type} [Field F] [NumberField F] (z : (Σ k, ι k) → F) (c0 : ∀ k, ι k)
     (hc0 : ∀ k, z ⟨k, c0 k⟩ ≠ 0) {b : F}
@@ -57,7 +55,6 @@ theorem mem_integralClosure {F : Type} [Field F] [NumberField F] (z : (Σ k, ι 
     exact hc0 k ((Valuation.zero_iff _).mp (le_antisymm h1 zero_le))
   exact mem_integer_of_mem_chartRingZ v z c (fun p => hc p.1 p.2) (hb c hcz)
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem charZero {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (hy : IsHorizontal (mCoordIdeal y)) :
     CharZero Ω := by
@@ -69,7 +66,6 @@ theorem charZero {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (hy : IsHorizo
 
 end CurveRingFiniteAlt
 
-open CurveRingFiniteAlt IndefiniteRowSideFullHecke.HeightsSet.CoordCurveDegree in
 
 theorem CurveRingFinite.proof : CurveRingFinite.Statement := by
   intro K _ ι _ Ω _ y hy

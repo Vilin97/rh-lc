@@ -26,7 +26,6 @@ variable {X Y : TopCat.{0}} (f : X ⟶ Y) {P : (Opens Y)ᵒᵖ ⥤ AddCommGrpCat
   {κ ι : Type} (V : κ → Opens Y) (U : ι → Opens X) (τ : ι → κ)
   (hτ : ∀ i, U i ≤ (Opens.map f).obj (V (τ i)))
 
-include hτ in
 
 theorem inter_le_map {n : ℕ} (t : Fin n → ι) : inter U t ≤ (Opens.map f).obj (inter V (τ ∘ t)) := by
   intro x hx

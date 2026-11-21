@@ -8,7 +8,6 @@ open NumberField
 
 namespace GlobalTheory
 
-open Classical in
 
 theorem mixedSpace_trace_eq (F : Type) [Field F] [NumberField F]
     (x : mixedEmbedding.mixedSpace F) :
@@ -27,7 +26,6 @@ theorem mixedSpace_trace_eq (F : Type) [Field F] [NumberField F]
       mixedEmbedding.stdBasis_apply_isComplex_fst, mixedEmbedding.stdBasis_apply_isComplex_snd]
     simp [mixedEmbedding.stdBasis, two_mul]
 
-open Classical in
 
 theorem mixedSpace_traceForm_nondegenerate :
     ∀ (F : Type) [Field F] [NumberField F] (ξ : mixedEmbedding.mixedSpace F),

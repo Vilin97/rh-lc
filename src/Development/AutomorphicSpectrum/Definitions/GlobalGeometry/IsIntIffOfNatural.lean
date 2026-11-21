@@ -52,7 +52,6 @@ theorem nonempty_intData {T : CDVR} {io : c.F →+* T.Fr} (y : IntFr Xo c T io) 
   obtain ⟨G, t', m1, m2, ⟨ub, h1, h2, h3, h4⟩, θ, h5, w1, w2, σ, s1, θ2, r1, r2, k1, k2, k3, k4⟩ := y.2.2
   exact ⟨⟨G, t', m1, m2, ub, h1, h2, h3, h4, θ, h5, w1, w2, σ, s1, θ2, r1, r2, k1, k2, k3, k4⟩⟩
 
-variable (Xo c) in
 
 theorem unifAll_holds : UnifAll Xo c := by
   intro la T io e ho y hy

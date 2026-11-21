@@ -123,7 +123,6 @@ theorem entriesCommute_prod (M : R → Matrix (Fin 2) (Fin 2) B)
       fun y hy => h y (by simp [hy])
     exact (Commute.sum_right _ _ _ (fun m _ => Commute.mul_right (hx Y Y' i j k m) (ih ht m l))).eq
 
-set_option maxHeartbeats 800000 in
 
 theorem wordFusion_list (L : List ((R → Matrix (Fin 2) (Fin 2) B) × (R → R)))
     (h : ∀ x ∈ L, IsRTT x.1 ∧ IsDet x.1 x.2)

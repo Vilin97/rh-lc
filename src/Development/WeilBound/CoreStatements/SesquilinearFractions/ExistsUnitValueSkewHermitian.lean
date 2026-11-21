@@ -100,7 +100,6 @@ def orb (m : Ideal R) : Set (Ideal R) := {m, starI m}
 theorem orb_starI (m : Ideal R) : orb (starI m) = orb m := by
   rw [orb, orb, starI_starI, Set.pair_comm]
 
-open Classical in
 
 noncomputable def wit (G : Matrix I I R) (S : Set (Ideal R)) : I → R := Classical.epsilon fun x => ∀ n ∈ S, hf G x x ∉ n
 

@@ -29,7 +29,6 @@ open GlobalTheory.Hk3 (Core Good IsSF SchurAll TwoSided FixAll EEc Wcc eH IsLab 
 
 namespace GlobalTheory.AdjSpan
 
-open Formalism.L2 in
 
 theorem eigSum_le_span {K V H I : Type} [Field K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     [NormedAddCommGroup H] [InnerProductSpace ℂ H] [FiniteDimensional ℂ H] {σ : K →+* ℂ} {j : V →ₛₗ[σ] H}
@@ -106,7 +105,6 @@ theorem evC_splitC {D : D7} (V : HSp D) (P : Pl D.host.E) (a : List ℤ → ℂ)
   rw [Finsupp.sum_single_index (by simp)]
   split_ifs <;> simp
 
-open Formalism.L2 in
 
 theorem range_le_span_blockSum {K V H E Pl ι : Type} [Field K] [AddCommGroup V] [Module K V]
     [NormedAddCommGroup H] [InnerProductSpace ℂ H] [FiniteDimensional ℂ H]

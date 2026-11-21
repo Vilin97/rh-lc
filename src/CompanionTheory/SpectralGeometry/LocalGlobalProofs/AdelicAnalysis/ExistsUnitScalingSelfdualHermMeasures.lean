@@ -334,7 +334,6 @@ theorem hermVec_isHomeomorph {d : ℕ} (b : Module.Basis (Fin d) F E) (n : ℕ) 
   have h2 := toVec_isHomeomorph hcm R b n
   exact ((h1.homeomorph _).trans (h2.homeomorph _)).isHomeomorph
 
-include hcm in
 
 theorem sd_core {d : ℕ} (b : Module.Basis (Fin d) F E) (n : ℕ) (lam : Measure R)
     [lam.IsAddHaarMeasure] (ψR : R → ℂ) (c : ℝ≥0)

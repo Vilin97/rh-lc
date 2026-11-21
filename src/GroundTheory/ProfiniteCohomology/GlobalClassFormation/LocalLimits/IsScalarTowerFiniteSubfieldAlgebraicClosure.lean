@@ -51,7 +51,6 @@ theorem exists_unique_map_single_one_eq_one (φ : (∀ i, A i) →+* R) :
   rw [map_mul, map_zero, hj, (hidem i).resolve_left hi, one_mul] at this
   exact one_ne_zero this
 
-omit [Fintype ι] [IsDomain R] in
 
 theorem map_eq_map_single_of_map_single_one {φ : (∀ i, A i) →+* R} {i : ι}
     (hi : φ (Pi.single i 1) = 1) (y : ∀ i, A i) : φ y = φ (Pi.single i (y i)) := by
@@ -131,7 +130,6 @@ theorem pi_single_algebraMap_eq {w : PlacesOver F.1 v} [DecidableEq (PlacesOver 
     simp
   · simp [hu]
 
-open Classical in
 
 def completionEmbedding :
     (placeOfEmbedding ι F).1.adicCompletion F.1 →ₐ[v.adicCompletion K.1]

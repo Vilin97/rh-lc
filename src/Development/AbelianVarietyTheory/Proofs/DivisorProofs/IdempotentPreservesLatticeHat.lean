@@ -25,6 +25,5 @@ theorem loc_transfer {R : Type} [CommRing R] {n : ℕ} {S : Subring R} (H₀ H�
   show ε * z a = (u : R) * ((N : R) * (ε * z a))
   rw [← mul_assoc, hu, ← mul_assoc, hε]
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.LatLoc

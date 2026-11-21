@@ -76,7 +76,6 @@ theorem abs_anchor_sub_le (P : ParameterChoice' D L) (t : D.what₂.Tau) (τ : P
   rw [abs_le]
   constructor <;> linarith [hc.1, hc.2]
 
-set_option maxHeartbeats 1000000 in
 
 theorem anchorAt_of {PP A : ℝ} (P : ParameterChoice' D L) (hw : WtNum p i PP) (hh : HostNum D L PP A 1) : AnchorAt p i 100 := by
   have hk := D.R.m_add_three_le_k

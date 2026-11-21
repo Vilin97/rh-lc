@@ -95,11 +95,8 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Group G] 
 
 variable {B ℓ} {v0 : InfinitePlace K} (hv0 : IsConjAt v0) {s : ℕ} (h : B.Ok s) (hX : ∀ χ ∈ ℓ.X, IsAbsIrrChar χ)
 
-include hv0 h hX in
 
-include hv0 h hX in
 
-include hv0 h hX in
 
 end Block
 

@@ -59,7 +59,6 @@ def projectiveLineChartAtZero : OpenPartialHomeomorph (OnePoint ℂ) (Fin 1 → 
   continuousOn_toFun := continuousOn_pi.2 fun _ => continuousOn_finiteCoord
   continuousOn_invFun := (OnePoint.continuous_coe.comp (continuous_apply 0)).continuousOn
 
-open scoped Classical in
 
 def projectiveLineChartAtInfinity : OpenPartialHomeomorph (OnePoint ℂ) (Fin 1 → ℂ) where
   toFun x := fun _ => crd1 x
@@ -167,7 +166,6 @@ def p1 : FinHolAtlas 1 (OnePoint ℂ) where
 theorem projLineAtlas_chart0 : p1.chart (0 : Fin 2) = projectiveLineChartAtZero := rfl
 theorem projLineAtlas_chart1 : p1.chart (1 : Fin 2) = projectiveLineChartAtInfinity := rfl
 
-open scoped Classical in
 
 def fsPot : LocPot (OnePoint ℂ) where
   U x := if x = ∞ then projectiveLineChartAtInfinity.source else projectiveLineChartAtZero.source
@@ -191,7 +189,6 @@ theorem fsPot_φ_infty : fsPot.φ ∞ = fun y => (1 / 2) * Real.log (1 + ‖crd1
 theorem fsPot_φ_coe (z : ℂ) :
     fsPot.φ (z : OnePoint ℂ) = fun y => (1 / 2) * Real.log (1 + ‖crd0 y‖ ^ 2) := by simp [fsPot]
 
-open scoped Classical in
 
 def projectiveLinePairSection (x y : OnePoint ℂ) : ℂ := if x = ∞ then crd1 y else 1
 

@@ -138,7 +138,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7} {X : Formalism.L2.Herm.Herm0 D}
 
-set_option maxHeartbeats 4000000 in
 
 theorem hb_rec (T : ∀ u : D.what₂.Word, Forms0 D u) (I : CmpIn D X) (hJ : ∀ u, Joint0 X.lev0 u (T u)) (u : D.what₂.Word)
     (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) (v : Fin (D.gat u w hg).P.nV)
@@ -153,8 +152,6 @@ theorem hb_rec (T : ∀ u : D.what₂.Word, Forms0 D u) (I : CmpIn D X) (hJ : �
     ((X.g u w hg).fr _ ((X.g u w hg).pl v).2) (I.fr_B u w hg _ ((X.g u w hg).pl v).2)
     ((X.g u w hg).fr_lat _ ((X.g u w hg).pl v).2) ((T u).cls0).lev.Lb (hJ u).Lb_eq t
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem lcInt_of_cls {u : D.what₂.Word} {i : ℕ} {hi : i ≤ D.R.m} (K : ClsTied u i hi) (c : (D.mem u).C.cls i) :
     clsCrd D u i hi c ≤ Ld D u i hi c := by
@@ -184,7 +181,6 @@ theorem hle_rec (T : ∀ u : D.what₂.Word, Forms0 D u) (u : D.what₂.Word) (c
   rw [← SetLike.mem_coe, Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.bwG_Ld_coe] at h
   exact h
 
-set_option maxHeartbeats 8000000 in
 
 theorem restLatW_of (T : ∀ u : D.what₂.Word, Forms0 D u) (I : CmpIn D X) (hJ : ∀ u, Joint0 X.lev0 u (T u)) :
     RestLatW T I := by
@@ -195,7 +191,6 @@ theorem restLatW_of (T : ∀ u : D.what₂.Word, Forms0 D u) (I : CmpIn D X) (hJ
     (clsCrd D u 0 (Nat.zero_le _) c) (((T u).cls0).y c) (((T u).cls0).y_lat c)
     (hle_rec T u c) B' hB' i g γ κ hpt v
 
-set_option maxHeartbeats 8000000 in
 
 theorem restGramW_of (T : ∀ u : D.what₂.Word, Forms0 D u) (I : CmpIn D X) : RestGramW I := by
   intro u w hg c B' hB' v a b

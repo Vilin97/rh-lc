@@ -255,7 +255,6 @@ section Frames
 
 variable {p : ℕ} [Fact p.Prime] {X : Sys p} {D : D7}
 
-open Classical in
 
 def frameGL (fd : FData X D) (j : ℕ) (La : X.Lt j) (v : X.Pl) : GL (Fin ((X.Pj j).m + 1)) (X.G.P.Qq v) :=
   if h : IsUnit (fd.frM j La v).det then Matrix.nonsingInvUnit _ h else 1
@@ -269,7 +268,6 @@ theorem frameGL_val (fd : FData X D) (j : ℕ) (La : X.Lt j) (v : X.Pl) (h : IsU
   rw [dite_eq_left h]
   rfl
 
-open Classical in
 
 def vMat (Kc : Type) [Field Kc] [Algebra (Formalism.L2.G.Pend.K0 p) Kc] [Algebra X.G.Kf Kc] (fd : FData X D) (c : Kc) (j : ℕ)
     (La' : X.Lt (j + 1)) (x y : X.ZA j) : Kc :=

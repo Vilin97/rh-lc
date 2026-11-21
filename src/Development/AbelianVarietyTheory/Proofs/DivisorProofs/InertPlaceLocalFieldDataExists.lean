@@ -49,14 +49,12 @@ theorem eq_liftV_of_at (v : Pl F) {a : AF F} (ha : At (evFin F v) a) :
   rw [smul_eq_mul, sub_mul, one_mul, sub_eq_zero, liftV_one_mul] at h
   exact h
 
-variable (E) in
 
 def liftT (v : Pl F) : Fv F v ⊗[F] E →ₗ[F] AE F E := TensorProduct.map (GlobalTheory.LatVac.liftV v) LinearMap.id
 
 theorem liftT_tmul (v : Pl F) (a : Fv F v) (e : E) :
     liftT E v (a ⊗ₜ[F] e) = GlobalTheory.LatVac.liftV v a ⊗ₜ[F] e := rfl
 
-variable (E) in
 
 def evT (v : Pl F) : AE F E →ₐ[F] Fv F v ⊗[F] E := Algebra.TensorProduct.map (evFin F v) (AlgHom.id F E)
 

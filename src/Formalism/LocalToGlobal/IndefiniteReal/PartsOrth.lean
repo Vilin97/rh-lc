@@ -26,7 +26,6 @@ def cptL (σ : K →+* ℂ) (n : ℕ) : (Fin n → K) →ₛₗ[σ] (Fin n → �
   map_add' x y := by funext i; simp [cpt]
   map_smul' a x := by funext i; simp [cpt]
 
-open Classical in
 
 def kOf (σ : K →+* ℂ) (z : ℂ) : K := if h : ∃ a : K, σ a = z then h.choose else 0
 
@@ -37,7 +36,6 @@ def IsRat (σ : K →+* ℂ) {m n : ℕ} (M : Matrix (Fin m) (Fin n) ℂ) : Prop
 def lin {E : Type} [AddCommGroup E] [Module ℂ E] {n : ℕ} (v : Fin n → E) : (Fin n → ℂ) →ₗ[ℂ] E :=
   Fintype.linearCombination ℂ v
 
-open Classical in
 
 def solve {E : Type} [AddCommGroup E] [Module ℂ E] {n : ℕ} (f : (Fin n → ℂ) →ₗ[ℂ] E) (e : E) : Fin n → ℂ :=
   if h : ∃ y, f y = e then h.choose else 0

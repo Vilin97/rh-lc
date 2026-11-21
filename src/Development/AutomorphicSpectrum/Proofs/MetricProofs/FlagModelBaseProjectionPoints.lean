@@ -290,7 +290,6 @@ section Flag
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Φ : Type} [Field Φ] {y : (Σ k, ι k) → Φ}
   {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {N j : ℕ} (M : FlagModel y Ψ N j)
 
-include M in
 
 theorem blockMap_base : IsBlockMap (ι := baseIdx ι M.blk) (ι' := ι) (Subtype.val : NonPluckerBlocks M.blk → K)
     (fun q => (⟨q.1.1, q.2⟩ : Σ k, ι k)) := by

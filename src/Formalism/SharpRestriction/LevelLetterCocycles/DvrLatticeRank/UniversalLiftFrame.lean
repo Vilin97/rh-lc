@@ -101,7 +101,6 @@ theorem pt_fil {T : LocLat G Qp LL O} (Pt : ZMod n → LL → (K →ₐ[Qp] LL) 
     show _ = ∑ j, serC (W.lev c ζ (g j)) (valAt W T c ζ (rep j)) i
     exact Finset.sum_congr rfl fun k _ => serMul_ev h0 h1 (g k) (valAt W T c ζ (rep k)) i
 
-set_option maxHeartbeats 1000000 in
 
 theorem universal_lift_frame [IsDomain O] (hdvr : IsDiscreteValuationRing O) (hfr : IsFractionRing O LL)
     {T₁ T₂ : LocLat G Qp LL O} (F : LatHom T₁.L T₂.L) (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop)

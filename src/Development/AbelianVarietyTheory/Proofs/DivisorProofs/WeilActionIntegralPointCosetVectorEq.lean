@@ -27,7 +27,6 @@ open Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric Formalism.MainN
 
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 theorem eig_of_prop {δ t0 : ℂ} {Q : ℕ} (P : Pair D ⊤ δ t0 Q) (hT : P.e0 ∈ TT D (tor0 D ⊤ δ) P.a P.d)
     {g' : Formalism.MainNotions.StandardLatticesGL3.GA D P.d}

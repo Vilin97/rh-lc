@@ -44,7 +44,6 @@ theorem sqrt_im_pos (D : D7) : 0 < (D.host.φ₀ D.host.sqrtMinusD).im := by
   have hd : (0 : ℝ) < D.host.d := by exact_mod_cast d_pos D
   simpa using hd
 
-set_option maxHeartbeats 1600000 in
 
 end Sign
 

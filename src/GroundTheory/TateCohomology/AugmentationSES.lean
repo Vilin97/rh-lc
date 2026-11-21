@@ -284,7 +284,6 @@ theorem augX_naturality {X Y : Rep.{u} k G} (f : X ⟶ Y) :
   | add s t hs ht =>
     rw [map_add (f := _), map_add (f := _), hs, ht]
 
-variable (k G) in
 
 noncomputable def augSES : Rep.{u} k G ⥤ ShortComplex (Rep.{u} k G) where
   obj X := ShortComplex.mk (augIdealι k G ▷ X) (augX X) (augSES_zero X)

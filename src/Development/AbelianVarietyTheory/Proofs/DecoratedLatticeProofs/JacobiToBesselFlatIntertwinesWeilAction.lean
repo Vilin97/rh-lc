@@ -66,7 +66,6 @@ theorem sFinite_of_haar {G : Type} [MeasurableSpace G] [Group G] [TopologicalSpa
   haveI : SigmaFinite μ := Measure.IsHaarMeasure.sigmaFinite μ
   exact instSFiniteOfSigmaFinite
 
-set_option maxHeartbeats 600000 in
 
 theorem flatFB_om : ∀ (D : D7), Descent D → ∀ (ψ : AddChar (AF D.host.F) ℂ) (σ : ℕ) (J : JacLev D (σ + 1)) (B : BesLev D σ) (s : StepFB ψ J B), ∀ (Ψ : WO J.W B.V → ℂ), IsThetaFunO ψ J.W B.V Ψ → ∀ (g : GA D J.W₀) (h : GA D B.A), flatFB s (s.om (J.d.emb0 g, embA B.d B.o h) Ψ) = s.om₀ (g, B.o.emb (h, 1)) (flatFB s Ψ) := by
   intro D hD ψ σ J B s Ψ hΨ g h

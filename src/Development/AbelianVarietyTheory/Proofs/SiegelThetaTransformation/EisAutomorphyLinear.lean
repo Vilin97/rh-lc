@@ -20,7 +20,6 @@ namespace GlobalTheory.SW.EisTrans
 
 variable {N : ℕ}
 
-open scoped MatrixOrder in
 
 theorem exists_mem_HnGe {E : Type} [Field E] (Ψ : Finset (E →+* ℂ)) {Z : CM Ψ N N}
     (hZ : Z ∈ Hn Ψ N) : ∃ δ : ℝ, 0 < δ ∧ Z ∈ HnGe Ψ N δ := by
@@ -75,7 +74,6 @@ theorem entry_bound {C D Z : Matrix (Fin N) (Fin N) ℂ} {δ : ℝ} (hδ : 0 < �
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)) {n : ℕ}
 
-omit [NumberField E] [IsCMField E] in
 
 theorem hFac_zero (γ : M2 E N) (Z : CM Ψ N N) :
     hFac Ψ γ Z (0 : CM Ψ n N) 0 = ∏ τ : Ψ, (hDen Ψ γ Z τ).det ^ n := by
@@ -108,7 +106,6 @@ theorem hFac_inv_bound {Z : CM Ψ N N} (hZ : Z ∈ Hn Ψ N) (z z' : CM Ψ n N) :
   rw [norm_mul]
   exact mul_le_mul_of_nonneg_right (hb a b) (norm_nonneg _)
 
-omit [NumberField E] [IsCMField E] in
 
 theorem botSpan_mul (g γ : M2 E N) : botSpan (g * γ) = (botSpan g).map γ.vecMulLinear := by
   unfold botSpan
@@ -132,7 +129,6 @@ noncomputable def lagEquiv {γ : M2 E N} (hγ : γ ∈ UU E N) : Lag E N ≃ Lag
 
 end GlobalTheory.SW.EisTrans
 
-open GlobalTheory.SW.EisTrans in
 
 theorem GlobalTheory.SW.eis_automorphy_linear : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), Even n → 4 * N < n → ∀ φ : Matrix (Fin n) (Fin N) E → ℂ, IsSB φ → ∀ Z ∈ Hn Ψ N, (∀ z z', Summable fun U : Lag E N => ‖eisTerm Ψ U.2.choose φ Z z z'‖) ∧ (∀ γ ∈ UU E N, eis Ψ (weil Ψ γ φ) (hAct Ψ γ Z) 0 0 = hFac Ψ γ Z (0 : CM Ψ n N) 0 * eis Ψ φ Z 0 0) ∧ (∀ ψ, IsSB ψ → ∀ z z', eis Ψ (φ + ψ) Z z z' = eis Ψ φ Z z z' + eis Ψ ψ Z z z') ∧ ∀ (c : ℂ) z z', eis Ψ (c • φ) Z z z' = c * eis Ψ φ Z z z' := by
   intro E _ _ _ Ψ hΨ n N hn hN

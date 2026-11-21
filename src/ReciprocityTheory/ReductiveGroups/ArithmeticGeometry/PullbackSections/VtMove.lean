@@ -245,7 +245,6 @@ section MulMove
 theorem ofMul_eq' {M : Type} [CommGroup M] {a b : M} (h : Additive.ofMul a = Additive.ofMul b) : a = b :=
   Additive.ofMul.injective h
 
-open ReciprocityTheory.ChartRestriction.G.PullbackSections.MixEnd in
 
 theorem mulGen_move {E : Type} [Field E] [NumberField E] [NumberField.IsCMField E] {H : Host E} {S₂ S₂' : Scheme.{0}}
     {t' : SAB H S₂'} {t : SAB H S₂} {f₂ : S₂' ⟶ S₂} (m : SABMap t' t f₂)

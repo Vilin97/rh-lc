@@ -176,7 +176,6 @@ theorem ord_nsmul_A (h : φ.A) : φ.ord • h = 0 := by
 
 end BaseA
 
-open Classical in
 
 def offC (D : D7) (sc : Scale) (_j : ℕ) (z : Bool × G.HH D) : ℝ :=
   if G.IsTopPl D z then sc.b' / sc.x else if G.IsThickPl D z then sc.b else sc.w'' D.R.n
@@ -227,7 +226,6 @@ theorem plGG_top_iff (z : Bool × G.HH D) : G.plGG D z ∈ D.host.topPlaces ↔ 
 
 variable {D} (L : SizeData₂ D)
 
-open Classical in
 
 end InstW
 
@@ -262,11 +260,8 @@ theorem TTP_subset (a b : G.HH D → ℤ) (p : ℕ) : ∀ t ∈ G.TTP X0 K a b p
   · exact ht
   · exact (Finset.mem_filter.1 ht).1
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 variable (dr : Set ℕ) (len : D.what₂.Word → D.what₂.places.Pl → ℚ) (hw : 1 ≤ L0.sc.w'' D.R.n)
     (hg : ∀ i, ¬ (G.IsResidueClassZero D (D.host.g i) ∨ G.IsSg D (D.host.g i)))

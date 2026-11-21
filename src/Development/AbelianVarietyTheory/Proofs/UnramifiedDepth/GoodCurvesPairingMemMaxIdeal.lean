@@ -728,7 +728,6 @@ end Core
 
 end GlobalTheory.RowLaw.GoodPair
 
-open GlobalTheory.RowLaw.GoodPair in
 
 theorem GlobalTheory.RowLaw.good_pairing_mem_max : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I : Fin 2 → Type) [∀ g, Fintype (I g)] (κ : Type) [Fintype κ] (X : RawChart C d I κ), RLaw X V → ∀ (H : ∀ g, X.CartHyp V g) (g : Fin 2) (a a' : ZMod d) (w : I g → C) (x : ℕ → I g ⊕ JJ I g → C) (w' : I (1 - g) → C) (x' : ℕ → I (1 - g) ⊕ JJ I (1 - g) → C), (RawChart.cart (H g)).Good a w x → (RawChart.cart (H (1 - g))).Good a' w' x' → (∀ c, V.MM ((RawChart.cart (H g)).V2 x c)) → V.MM (∑ q : I (1 - g), (RawChart.cart (H g)).c0' x q * w' q) := by
   intro C _ V d _ I _ κ _ X hX H g a a' w x w' x' hx hx' hV

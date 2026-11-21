@@ -427,7 +427,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F} {Y : Model Xo c β} {S : Finset ℕ}
   {Ω : Type} [Field Ω] {K : Type} [Fintype K] {J : K → Type} {y : (Σ k, J k) → Ω}
 
-attribute [local instance] Over.cartesianMonoidalCategory in
 
 theorem interior_pol (𝔐 : HodgeCpt Y S y) (hβ : Function.Injective β) (z : Spec (CommRingCat.of ℂ) ⟶ 𝔐.X)
     (hz : 𝔐.Interior z) :

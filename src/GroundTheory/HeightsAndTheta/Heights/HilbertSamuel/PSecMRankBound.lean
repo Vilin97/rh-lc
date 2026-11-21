@@ -29,7 +29,6 @@ theorem finite_secM (y : (Σ k, ι k) → Ω) (d : K → ℕ) : Module.Finite �
   rw [← AddSubgroup.toIntSubmodule_toAddSubgroup (secM y d), ← Submodule.fg_iff_addSubgroup_fg] at h
   exact Module.Finite.iff_fg.mpr h
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem aeval_eq_zero_of_mem {y : (Σ k, ι k) → Ω} {g : MRing ι} (hg : g ∈ mCoordIdeal y) :
     aeval y g = 0 := by

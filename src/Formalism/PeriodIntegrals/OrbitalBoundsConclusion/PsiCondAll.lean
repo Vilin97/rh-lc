@@ -238,7 +238,6 @@ end Inst
 
 end PsiCondAllPf
 
-open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum in
 
 theorem psi_conductor_all_places : Formalism.L2.SG.Pf.PsiCondAll := by
   intro D X v hv

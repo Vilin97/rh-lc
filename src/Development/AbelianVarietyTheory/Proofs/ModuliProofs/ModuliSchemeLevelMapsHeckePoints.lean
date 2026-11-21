@@ -20,8 +20,6 @@ open scoped CategoryTheory.Obj
 
 namespace GlobalTheory
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField in
-open scoped CategoryTheory.Obj in
 
 theorem _root_.GlobalTheory.moduliScheme_levelMaps_heckePoints : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.N1 := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.N1

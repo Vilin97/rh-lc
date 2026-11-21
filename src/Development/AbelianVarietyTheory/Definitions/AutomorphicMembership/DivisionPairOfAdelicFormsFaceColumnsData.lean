@@ -22,9 +22,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {K : Formalism.MainNotions.G.Consts} {Yd : DivX D}
   {cX : ExtraC}
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 2000000 in
 
 structure TwIn (ex : Extra D L hT Gi Gl K Yd cX) : Type 1 where
   G : Type
@@ -56,7 +53,6 @@ attribute [instance] TwIn.grp TwIn.fin TwIn.alg
 
 variable {ex : Extra D L hT Gi Gl K Yd cX}
 
-set_option maxHeartbeats 2000000 in
 
 @[reducible] def divisionPairOfAdelicFormsFaceColumnsData (x : TwIn ex) : RowSideFamily ex where
   Gp := x.G
@@ -91,9 +87,6 @@ def TwIn.bR (x : TwIn ex) (m : (x.F.Dc (zsOf x.R x.F)).Mem) (i : Fin ((x.F.Dc (z
   D.eMu (x.wd m) (D.jN (x.wd m) (x.C.eNu (x.wd m)
     (Pi.single (Fin.cast (congrArg (x.F.Dc (zsOf x.R x.F)).a (x.wU_wd m)).symm i) 1)))
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 4000000 in
 
 structure RealIn (x : TwIn ex) (Rc : Formalism.L2.RecT ex) (S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc) : Type 1 where
   psiPin : x.R.ψ = Rc.T.theta.W.ψ
@@ -131,7 +124,6 @@ structure RealIn (x : TwIn ex) (Rc : Formalism.L2.RecT ex) (S : Formalism.L2.SG.
 
 variable {x : TwIn ex} {Rc : Formalism.L2.RecT ex} {S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc}
 
-set_option maxHeartbeats 4000000 in
 
 theorem phEff_one (x : TwIn ex) : phEff x.R = fun _ => 1 := by
   funext i
@@ -139,13 +131,8 @@ theorem phEff_one (x : TwIn ex) : phEff x.R = fun _ => 1 := by
   rw [x.pins.phs i]
   simp
 
-set_option maxHeartbeats 4000000 in
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.Mem.R3
 

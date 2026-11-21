@@ -57,7 +57,6 @@ def SwapTie (p : KB.Pl P Wp Wq) (q : KB.Pl (shP P u u') Wp Wq') : Prop :=
     q.T.base.μW = p.T.base.μW ∧ q.T.base.μN = p.T.base.μN ∧ q.T.base.μW' = p.T.base.μW' ∧
     q.ν' = p.ν' ∧ q.m₀ = p.m₀
 
-open Classical in
 
 def ptRep (p : KB.Pl P Wp Wq) (γ : C.LPt) : B.Mat P.k P.r :=
   if h : ∃ g ∈ B.GV P.k P.r, Zhat P.k P.r p.T.base.z p.T.base.z' g = D.ptMatN γ (P.r + 1) ∧

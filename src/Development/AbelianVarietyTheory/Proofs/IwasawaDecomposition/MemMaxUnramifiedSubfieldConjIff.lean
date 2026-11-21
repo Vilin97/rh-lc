@@ -103,7 +103,6 @@ theorem exists_conj_right (σ₂ : ↥(GK K₂)) : ∃ σ₁ : ↥(GK K₁), (σ
 variable {LL : Type} [Field LL] [Algebra ℚ_[l] LL] {V : Type} [AddCommGroup V] [Module LL V] [Module ℚ_[l] V]
   [IsScalarTower ℚ_[l] LL V] {ρ₁ : Representation LL ↥(GK K₁) V} {ρ₂ : Representation LL ↥(GK K₂) V}
 
-omit hK in
 
 theorem actQdR_mem_Fil (K K' : FinExt l) (a : ℤ) {b : P.R.BdR} (hb : b ∈ (P.PD K).Fil a) :
     P.actQdR g b ∈ (P.PD K').Fil a := by
@@ -119,7 +118,6 @@ theorem actQdR_mem_Fil (K K' : FinExt l) (a : ℤ) {b : P.R.BdR} (hb : b ∈ (P.
   rw [P.PD_actdR, ← SetLike.mem_coe, P.PD_Fil K₀ K'] at h2
   exact h2
 
-omit hK in
 
 theorem mem_FilV_iff (K K' : FinExt l) (a : ℤ) (x : V ⊗[ℚ_[l]] P.R.BdR) :
     x ∈ FilV (P.PD K) (LL := LL) (V := V) a ↔
@@ -226,7 +224,6 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   [CommRing O₂] [Algebra ℤ_[l] O₂] [TopologicalSpace O₂]
   (B₁ : LocBridge l E Ω (Dec (F := E) A) O₁) (B₂ : LocBridge l E Ω (Dec (F := E) A) O₂)
 
-omit [NumberField E] in
 
 theorem exists_conj (h₁ : GlobalTheory.Pst.Induces B₁) (h₂ : GlobalTheory.Pst.Induces B₂) :
     ∃ g : GQ l, (∀ x, g (B₁.j x) = B₂.j x) ∧ (∀ x, x ∈ B₁.Kw.1 ↔ g x ∈ B₂.Kw.1) ∧

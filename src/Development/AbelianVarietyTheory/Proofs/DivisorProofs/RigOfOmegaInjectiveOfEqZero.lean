@@ -59,7 +59,6 @@ theorem evalAt_mul [Module.Finite R A] [Module.Projective R A] [IsCocomm R A]
         counitAlgHom R (CartierDual R A) ψ • CartierDual.evalAt R A b.1 φ :=
   (CartierDual.isPrimitiveElem_iff_mul b.1).1 (isPrimitiveElem_of_mem_ker b.2) φ ψ
 
-variable (R A) in
 
 def primTangent [Module.Finite R A] [Module.Projective R A] [IsCocomm R A] :
     LinearMap.ker (cobOne R A) →ₗ[R] Module.Dual R (Cot R (CartierDual R A)) where
@@ -73,11 +72,8 @@ def primTangent [Module.Finite R A] [Module.Projective R A] [IsCocomm R A] :
 
 variable [IsCocomm R A] [IsCocomm R' A']
 
-variable (R A) in
 
-variable (R A) in
 
-omit [IsCocomm R A] [IsCocomm R' A'] in
 
 end Level
 

@@ -54,7 +54,6 @@ section Res
 
 variable (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
 
-variable {F} in
 
 def IsUnramAdd (ϖ : F) (ψ : AddChar F ℂ) : Prop :=
   (∀ x ∈ 𝒪[F], ψ x = 1) ∧ ∃ x ∈ 𝒪[F], ψ (ϖ⁻¹ * x) ≠ 1

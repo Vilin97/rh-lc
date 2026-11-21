@@ -62,7 +62,6 @@ def formRho (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG) :
     simp only [Prod.fst_mul, Prod.snd_mul, map_mul, Units.val_mul]
     rw [smul_mul_smul_comm]
 
-open Classical in
 
 @[reducible] def formGSD (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG) : GSD X.K where
   G := FormG Λ

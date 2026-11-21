@@ -104,8 +104,6 @@ private theorem prod_absNorm_pow_le_pow_finrank {F : Type} [Field F] [NumberFiel
   simp only [map_pow] at h
   exact Nat.le_of_dvd (pow_pos hp _) h
 
-open NumberField IsDedekindDomain Polynomial in
-open scoped WithZero TensorProduct in
 
 theorem _root_.GlobalTheory.CNorm.index_finPow_le : ∀ (p : ℕ) (F : Type) [Field F] [NumberField F]
     [IsTotallyComplex F] (S : Finset (HeightOneSpectrum (𝓞 F))), 0 < p →

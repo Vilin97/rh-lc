@@ -108,7 +108,6 @@ theorem wt_inv {U : G.left.Opens} {u v : Γ(G.left, U)} (e : u * v = 1) {χ : X}
     - (((t ≫ i) * g).left.appLE U ⊤ h₁).hom v * (SplitTorus.val t χ * SplitTorus.val t (-χ)) * c
     - (((t ≫ i) * g).left.appLE U ⊤ h₁).hom v * d
 
-variable (i) in
 
 def weights [IrreducibleSpace G.left] : AddSubgroup X where
   carrier := {χ | ∃ (U : G.left.Opens) (u : Γ(G.left, U)), (U : Set G.left).Nonempty ∧ IsUnit u ∧ Wt i U u χ}

@@ -16,7 +16,6 @@ noncomputable section
 
 namespace GlobalTheory.Mem.R3.Brg
 
-open Formalism.L2.Col in
 
 theorem conjIdeal_eq_conjP {E : Type} [Field E] [NumberField E] [StarRing E] (P : HeightOneSpectrum (𝓞 E)) :
     Formalism.HermitianLatticesTheory.conjIdeal (K := E) P.asIdeal = (conjPrime₂ P).asIdeal := by
@@ -36,7 +35,6 @@ theorem conjIdeal_eq_conjP {E : Type} [Field E] [NumberField E] [StarRing E] (P 
     show (r : E) = star (star (r : E))
     rw [star_star]
 
-open Formalism.L2.Col in
 
 theorem g_notMem_of_levOff {X : Fields} {Pr : Primes X} (hPr : Pr.Ok)
     (P : letI := X.starE; LevOff (E := X.E) ∅ Pr.vGs ∅) (k : Fin 2) :

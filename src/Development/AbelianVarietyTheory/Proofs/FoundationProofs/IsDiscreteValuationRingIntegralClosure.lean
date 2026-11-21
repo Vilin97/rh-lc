@@ -304,7 +304,6 @@ theorem finite_of_finiteReduction (φ : MvPowerSeries τ R →ₐ[R] MvPowerSeri
   rw [Ideal.map_span, ← Set.range_comp]
   rfl
 
-omit [IsNoetherianRing R] [IsAdicComplete (maximalIdeal R) R] [Finite σ] in
 
 theorem isLocalHom_of_constantCoeff_mem (φ : MvPowerSeries τ R →ₐ[R] MvPowerSeries σ R)
     (h0 : ∀ j, constantCoeff (φ (X j)) ∈ maximalIdeal R) : IsLocalHom φ.toRingHom := by

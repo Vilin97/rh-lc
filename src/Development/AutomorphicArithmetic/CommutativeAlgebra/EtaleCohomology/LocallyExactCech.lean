@@ -31,17 +31,13 @@ def Gen (τ : GrothendieckTopology Scheme.{0}) (q : ℕ) (M : PMod R) {U : Schem
 section Cech
 variable {Y X : Scheme.{0}} (f : Y ⟶ X)
 
-variable {f} in
 
-variable {f} in
 
-variable {f} in
 
 variable {f}
 
 variable (f)
 
-variable {f} in
 
 end Cech
 

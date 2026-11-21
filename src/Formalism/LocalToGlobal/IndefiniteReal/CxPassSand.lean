@@ -262,7 +262,6 @@ theorem M_eq [Fintype P] : (∑ k : P, (((ψ k)⁻¹ : Kˣ) : K) • B.S.actMat 
         ext a
         simp
 
-include hv0 hOk hX hZ in
 
 theorem sub_toF : ∀ f ∈ B.Mt ⟨X, P, ψ⟩, ∃ f' ∈ B.Mt (Lvl.full X),
     B.toF ⟨X, P, ψ⟩ Z ((B.Pq ⟨X, P, ψ⟩ Z).mulVec f) = B.toF (Lvl.full X) Z ((B.Pq (Lvl.full X) Z).mulVec f') := by
@@ -286,7 +285,6 @@ theorem sub_toF : ∀ f ∈ B.Mt ⟨X, P, ψ⟩, ∃ f' ∈ B.Mt (Lvl.full X),
     have hP := isPr_Phi B hv0 hOk ⟨X, P, ψ⟩ hX Z f
     exact hP.unique hH (isPr_down B hv0 hOk hX Z hZ P ψ h0 hmem.2)
 
-include hv0 hOk hX hZ in
 
 theorem act_toF (g : G) : ∀ f ∈ B.Mt (Lvl.full X), ∃ f' ∈ B.Mt (Lvl.full X),
     B.r g (B.toF (Lvl.full X) Z ((B.Pq (Lvl.full X) Z).mulVec f)) =
@@ -316,7 +314,6 @@ theorem act_toF (g : G) : ∀ f ∈ B.Mt (Lvl.full X), ∃ f' ∈ B.Mt (Lvl.full
     rw [hf'] at h2
     exact h1.unique hH h2
 
-include hv0 hOk hX hZ in
 
 theorem avg_toF [Fintype P] : ∀ f ∈ B.Mt (Lvl.full X), ∃ f' ∈ B.Mt ⟨X, P, ψ⟩,
     ∑ k : P, (((ψ k)⁻¹ : Kˣ) : K) • B.r (k : G) (B.toF (Lvl.full X) Z ((B.Pq (Lvl.full X) Z).mulVec f)) =

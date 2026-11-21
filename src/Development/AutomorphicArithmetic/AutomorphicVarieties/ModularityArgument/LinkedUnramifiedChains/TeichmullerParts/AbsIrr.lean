@@ -95,7 +95,6 @@ def toGS : Ga l L n →* GS n s := MonoidHom.prod (Pi.monoidHom fun u : s.St => 
 def GaS : Subgroup (Ga l L n) :=
   ⨅ (w : Plc L) (_ : w.under (𝓞 (Lp L)) ∉ s.St ∧ w.under (𝓞 (Lp L)) ≠ s.v0), (cmp n w).ker
 
-open Classical in
 
 def secS : GS n s →* Ga l L n :=
   if h : Function.Bijective ((toGS n s).comp (GaS n s).subtype) then
@@ -109,11 +108,9 @@ variable {n s} (V : s.Lev) (ι : Qbar l ≃+* ℂ) {lam : Wt L l n} {d : ℕ}
   (e : (Fin d → ℂ) ≃ₗ[ℂ] ⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res))
   (ξ : GV n (fun v : V.frame.Vl => s.w v.1) →* GL (Fin d) ℂ)
 
-variable (n) in
 
 abbrev GL' : Type := GV n (fun v : V.frame.Vl => s.w v.1)
 
-variable (n d) in
 
 def actS : Representation ℂ (GL' n V × GS n s) (Ga l L n × GL' n V → Fin d → ℂ) :=
   (rtr ℂ (Ga l L n × GL' n V) (Fin d → ℂ)).comp
@@ -124,7 +121,6 @@ def VS {c : Coef l} {m : ℕ} (Q : QData V) (τ₀ : KT n (wt s) →* GL (Fin m)
   (hset Q τ₀).X.AF ξ ⊓ Submodule.span ℂ {F | ∀ ℓ, toForm ι e F ℓ ∈ σ} ⊓
     fixd ((rtr ℂ (Ga l L n × GL' n V) (Fin d → ℂ)).comp (MonoidHom.inl _ _)) (KS n s)
 
-variable (lam) in
 
 def WtLink (lam' : InfinitePlace L → DomWeight n) : Prop :=
   ∀ σ : Submodule ℂ (UA L n → ℂ), IsAutRepU σ →

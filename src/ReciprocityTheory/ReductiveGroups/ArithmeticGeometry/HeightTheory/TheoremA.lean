@@ -225,6 +225,5 @@ variable (d : Data K ι Ω WT A)
 
 end Data
 
-open Data in
 
 end ReciprocityTheory.ChartRestriction.G.T0

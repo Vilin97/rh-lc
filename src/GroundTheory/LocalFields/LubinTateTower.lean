@@ -25,7 +25,6 @@ variable {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValu
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω]
 variable {π : 𝒪[K]} {f g : PowerSeries 𝒪[K]}
 
-variable (Ω) in
 
 def lubinTateField (hπ : Irreducible π) (hf : IsLubinTateSeries π f) (n : ℕ) :
     IntermediateField K Ω :=
@@ -90,7 +89,6 @@ theorem lubinTateField_eq (hf : IsLubinTateSeries π f) (hg : IsLubinTateSeries 
       fun _ => m'.valuation_lt_one
   exact le_antisymm (key hf hg) (key hg hf)
 
-omit [IsSepClosed Ω] in
 
 theorem image_val_lubinTateTorsion_ltPoly (n : ℕ) :
     IdealPoint.val '' (lubinTateTorsion Ω (isLubinTateSeries_ltPoly π) n :
@@ -225,7 +223,6 @@ def galPoint {F : _root_.FormalGroup 𝒪[K]} {E : IntermediateField K Ω} [Fini
       ← valuation_coe_lt_one_iff]
     exact x.valuation_lt_one)
 
-omit [TopologicalSpace Ω] [IsValuativeTopology Ω] in
 
 theorem galPoint_val {F : _root_.FormalGroup 𝒪[K]} {E : IntermediateField K Ω}
     [FiniteDimensional K E] (σ : E ≃ₐ[K] E) (x : IdealPoint Ω F) (hx : x.val ∈ E) :
@@ -334,7 +331,6 @@ theorem exists_galEquiv_lubinTateField (hf : IsLubinTateSeries π f) (n : ℕ) :
   obtain ⟨b, rfl⟩ := hgen x hx
   rw [← galPoint_val σ (b • l) (hmem hx), hgal σ _ hx, smul_comm, ← ha, smul_comm]
 
-variable (hπ) in
 
 def lubinTateGalEquiv (hf : IsLubinTateSeries π f) (n : ℕ) :
     (lubinTateField Ω hπ hf n ≃ₐ[K] lubinTateField Ω hπ hf n) ≃* (𝒪[K] ⧸ Ideal.span {π ^ n})ˣ :=

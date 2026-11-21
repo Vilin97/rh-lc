@@ -87,21 +87,15 @@ open Series
 
 variable (n : ℕ)
 
-omit [Algebra ℤ_[l] O] in
 
 variable {l O n}
 
-omit [Algebra ℤ_[l] O] in
 
-omit [Algebra ℤ_[l] O] in
 
-omit [Algebra ℤ_[l] O] in
 
-omit [Algebra ℤ_[l] O] in
 
 variable (l O n)
 
-omit [Algebra ℤ_[l] O] in
 
 end Completion
 
@@ -246,7 +240,6 @@ section Fon
 variable {P : LocPrime l} {AI : LocAinf l P} {K LL : FinExt l}
   {io : PowerSeries ℤ_[l] →ₐ[ℤ_[l]] Ainf l} {T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)}
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 end Fon
 

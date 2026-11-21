@@ -159,6 +159,5 @@ theorem redFn_int {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {L : LevDat D.h
   rw [upper_block_val_submatrix _ (blockTri_blkOf_le _ _ (parLev_g hk.2.1 hP))] at e'
   exact eq_int_of_submatrix hr L.hr e'
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.GalCentral

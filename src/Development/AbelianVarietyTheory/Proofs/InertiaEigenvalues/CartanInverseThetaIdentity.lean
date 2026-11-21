@@ -19,7 +19,6 @@ noncomputable section
 
 namespace GlobalTheory.VacFixOpen
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_open_fix_vacO : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) (χS χT : (AE D)ˣ →* Circle)
     (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)), IsWeilDatumO ψ S T χS χT om → S.SigOK → T.SigOK →

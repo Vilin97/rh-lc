@@ -241,7 +241,6 @@ theorem evFin_of_at {v w : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorMod
   rw [smul_eq_mul, map_mul, GlobalTheory.LatVac.evFin_liftV, one_mul, map_zero] at this
   exact this
 
-open Classical in
 
 theorem pure_split (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F κ)
     (φ ρ : ∀ w : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F, (κ → Fv F w) → ℂ) (x : κ → AF F)
@@ -275,7 +274,6 @@ theorem pure_split (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
   rw [e, Function.update_self]
   ring
 
-open Classical in
 
 theorem acts_pure (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (T : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ)
     (f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F κ) (φ : ∀ w : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F, (κ → Fv F w) → ℂ) (φ₁ : (κ → Fv F v) → ℂ)

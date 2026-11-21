@@ -187,7 +187,6 @@ private lemma four_inv {f : (κ → K) → ℂ} {c : K} (hc : c ≠ 0)
   · rw [(cond_pi ψ hd hc u).2 hu x hx, one_mul]
   · rw [h2 x hx, mul_zero]
 
-omit [IsUltrametricDist K] in
 
 omit hd [ProperSpace K] [MeasurableSpace (κ → K)] [BorelSpace (κ → K)] in
 private lemma ind_inv (r : ℝ) (u : κ → K) (hu : ‖u‖ ≤ r) (x : κ → K) :

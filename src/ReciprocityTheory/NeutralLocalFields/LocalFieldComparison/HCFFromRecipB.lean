@@ -14,7 +14,6 @@ namespace ReciprocityTheory.Neutral.Bridge.HCFR
 
 variable (K : Type) [Field K] [NumberField K]
 
-open Classical in
 
 def infIdele (w : InfinitePlace K) : (w.Completion)ˣ →* Ideles K :=
   Units.map

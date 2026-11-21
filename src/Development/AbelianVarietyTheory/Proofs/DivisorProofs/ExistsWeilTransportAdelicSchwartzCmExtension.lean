@@ -66,7 +66,6 @@ theorem exists_transport' {V W G : Type} [AddCommGroup V] [Module ℂ V] [AddCom
     fun g f hf => (hmem _).2 (hω g f ((hmem f).1 hf))
   exact ⟨om, fun g x hx => let ⟨h1, h2⟩ := hom g ⟨x, hx⟩; ⟨h1, h2⟩⟩
 
-open scoped Classical in
 
 theorem comp_mem_schA {F : Type} [Field F] [NumberField F] {κ κ' : Type} [Fintype κ] [Fintype κ'] (σ : κ ≃ κ')
     {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ GlobalTheory.WeilM.schA F κ) : (fun x : κ' → AF F => Φ (x ∘ σ)) ∈ GlobalTheory.WeilM.schA F κ' := by

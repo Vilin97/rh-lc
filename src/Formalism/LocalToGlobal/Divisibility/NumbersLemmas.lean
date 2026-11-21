@@ -555,10 +555,7 @@ theorem ofRecord_hA (hDel : D.s.Del = (Del : ℚ)) (hEta : L.etaSz = (D.R.m : �
   rw [e, s, hS, hE, ofRecord_La]
   rfl
 
-open Classical in
 
-open Classical in
-include hh in
 
 theorem ofRecord_aPlus (j : ℕ) (z : Bool × HH D) (i : ℕ) :
     (ofRecord D L Del h0).aPlus j z i = DV.aPlusQ D j (tauPl D z) i := rfl

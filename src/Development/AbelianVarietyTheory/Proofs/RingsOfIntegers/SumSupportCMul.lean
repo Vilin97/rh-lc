@@ -19,7 +19,6 @@ open GlobalTheory.PlaceInt
 
 namespace GlobalTheory.PlaceInt
 
-open GlobalTheory.NabLinear in
 
 theorem nab_smul_secN {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
     (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)] (nab : NabV Xo c) (hnab : IsNab Xo c nab)

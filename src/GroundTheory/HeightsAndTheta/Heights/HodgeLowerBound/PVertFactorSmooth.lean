@@ -69,7 +69,6 @@ theorem mConeMap_eq_sum (y : (Σ k, ι k) → Ω) (u : MRing ι) :
     rw [map_sum]
   simp only [mConeMap_monomial]
 
-open Classical in
 
 def comp (u : MRing ι) (m : K →₀ ℕ) : MRing ι :=
   ∑ e ∈ u.support.filter (fun e => mdeg e = m), monomial e (AddMonoidAlgebra.coeff u e)
@@ -309,7 +308,6 @@ end Component
 
 end VertFactorSmooth
 
-open VertFactorSmooth in
 
 theorem VertFactorSmooth.proof (hPos : VertFactorPos.Statement) : VertFactorSmooth.Statement := by
   intro II Ψ _ K _ ι _ Ω _ _ E _ _ D p hp

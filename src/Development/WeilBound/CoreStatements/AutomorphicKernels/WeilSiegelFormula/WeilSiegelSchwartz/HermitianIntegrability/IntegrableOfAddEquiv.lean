@@ -42,8 +42,6 @@ theorem integrable_of_addEquiv {V V' : Type} [AddCommGroup V] [TopologicalSpace 
   rw [Measure.isAddLeftInvariant_eq_smul ν (μ.map e)]
   exact hi.smul_measure_nnreal
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem integrable_of_hermE {r : ℕ} (lam : Measure (hermA D r)) (hlam : lam.IsAddHaarMeasure)
     (db : Measure (HermR (AF D.host.F) D.sp.cm.sig r)) (hdb : db.IsAddHaarMeasure)

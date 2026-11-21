@@ -67,7 +67,6 @@ variable {A : Type} [CommRing A] {K : Type} [Field K] [Algebra A K]
   {V : Type} [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower A K V]
   {E : Type} [Field E] [NumberField E]
 
-omit [Algebra A K] [IsScalarTower A K V] in
 
 end FurtherEigen
 

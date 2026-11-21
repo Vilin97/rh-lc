@@ -75,14 +75,12 @@ theorem charpoly_reduce {R S : Type} [CommRing R] [CommRing S] (π : R →+* S)
   simp only [← hb']
   rw [Module.Basis.repr_sum_self]
 
-open GlobalTheory.HTLat in
 
 theorem lev_pow_smul {M : Type} [CommGroup M] {l : ℕ} [Fact l.Prime]
     (s : Tate l M) (j n : ℕ) : (((l : ℤ_[l]) ^ j) • s).lev n = s.lev n ^ l ^ j := by
   rw [← Nat.cast_pow, Nat.cast_smul_eq_nsmul]
   rfl
 
-open GlobalTheory.HTLat in
 
 theorem tate_lev_eq_one_iff (M : Type) [CommGroup M] (l : ℕ) [Fact l.Prime]
     (t : GlobalTheory.HTLat.Tate l M) (j : ℕ) :
@@ -95,7 +93,6 @@ theorem tate_lev_eq_one_iff (M : Type) [CommGroup M] (l : ℕ) [Fact l.Prime]
   · rintro ⟨s, rfl⟩
     rw [lev_pow_smul, Tate.lev_pow]
 
-open GlobalTheory.HTLat in
 
 theorem tate_lev_surj (M : Type) [CommGroup M] (l : ℕ) [Fact l.Prime] (r : ℕ)
     (hc : ∀ n : ℕ, Nat.card {x : M // x ^ (l ^ n) = 1} = l ^ (r * n)) (j : ℕ) (x : M)
@@ -118,7 +115,6 @@ end GlobalTheory.CharpolyLattice
 
 namespace GlobalTheory.AV.AbVar
 
-open GlobalTheory.CharpolyLattice GlobalTheory.HTLat in
 
 theorem charpoly_eq_lattice_model : ∀ (k : Type) [Field k] [IsAlgClosed k] (B : GlobalTheory.AV.AbVar k) (f : B ⟶ B)
     (L : Type) [AddCommGroup L] [Module.Free ℤ L] [Module.Finite ℤ L]

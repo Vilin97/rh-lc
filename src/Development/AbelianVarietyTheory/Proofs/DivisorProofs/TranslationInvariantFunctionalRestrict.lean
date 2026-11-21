@@ -239,7 +239,6 @@ theorem exists_hadamard [FiniteDimensional ℝ Y] (P : Submodule ℝ Y) (f : �
   have h5 : f (x - π x) = 0 := hf _ (by rw [hπ, sub_sub_cancel]; exact (q x).2)
   simp [h5, hχ]
 
-open Complex GlobalTheory.CharFormDeriv in
 
 theorem apply_linear_mul (T : 𝓢(Y, ℂ) →L[ℂ] ℂ) (L : Y →L[ℝ] ℝ)
     (hT : ∀ t : ℝ, ∀ f f' : 𝓢(Y, ℂ), (∀ x, f' x = Complex.exp ((I * t) * (L x : ℂ)) * f x) → T f' = T f)

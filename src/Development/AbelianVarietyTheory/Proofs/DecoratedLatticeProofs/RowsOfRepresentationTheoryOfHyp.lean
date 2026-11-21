@@ -117,7 +117,6 @@ theorem Placed.of_heq {D : D7} {G' : Type} [Group G'] [Fintype G'] {Pl0 T : Type
   obtain rfl := eq_of_heq hS
   exact h
 
-set_option maxHeartbeats 1000000 in
 
 theorem placed_upd {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
@@ -129,7 +128,6 @@ theorem placed_upd {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     Placed ((R.updS k lam).withErr e).toRealDat (reFace F Dc Sp Zsc).lv2 eE P S t c :=
   ⟨⟨h.1.fin, h.1.conj, h.1.mat⟩, h.2.1, h.2.2⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem exAt_upd {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
@@ -146,7 +144,6 @@ variable {K : Ctx} {B : GlobalTheory.Mem.Base} {f : Fr B.toPre} {T : TwDat B} {w
   {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (w.st Z).toD7} {cX : ExtraC} {ex : Extra (w.st Z).toD7 L hT Gi Gl Kc Yd cX}
   {t : RowsT K w Z Wt ex.p0}
 
-set_option maxHeartbeats 1000000 in
 
 theorem exAt_of_args (a : TwArgs ex t) (x : TwIn ex) (hx : HEq a.x x) : x.R.toRealDat.ExAt := by
   obtain rfl := eq_of_heq hx
@@ -154,7 +151,6 @@ theorem exAt_of_args (a : TwArgs ex t) (x : TwIn ex) (hx : HEq a.x x) : x.R.toRe
     | ⟨_, _, _, _, _, _, _, _, _, R, _, _⟩ => R.toRealDat.ExAt) a.pack
   exact e.mpr (exAt_upd _ _ _ _ t.exAt)
 
-set_option maxHeartbeats 1000000 in
 
 theorem placed_of_args (a : TwArgs ex t) (x : TwIn ex) (hx : HEq a.x x)
     {F0 : ∀ u, Formalism.L2.Forms.Forms0 (w.st Z).toD7 u} (P : SPack (w.st Z).toD7 F0) (S : SRest P)
@@ -171,7 +167,6 @@ theorem placed_of_args (a : TwArgs ex t) (x : TwIn ex) (hx : HEq a.x x)
 
 end Args
 
-set_option maxHeartbeats 1000000 in
 
 end General
 
@@ -179,7 +174,6 @@ section Wit
 
 variable {hL : GlobalTheory.Published.LocalLanglandsGL} {p : Bl.Prm hL} {K : Ctx} {q : Bl.WPt p.s K} {c : ℝ} {b : Bundle (q.w.D q.Z) q.O c}
 
-set_option maxHeartbeats 1000000 in
 
 end Wit
 

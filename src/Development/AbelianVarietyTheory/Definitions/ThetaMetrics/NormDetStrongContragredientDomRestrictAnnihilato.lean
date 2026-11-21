@@ -16,7 +16,6 @@ variable {V W X : Type*} [NormedAddCommGroup V] [InnerProductSpace 𝕜 V]
   [NormedAddCommGroup W] [InnerProductSpace 𝕜 W] [NormedAddCommGroup X] [InnerProductSpace 𝕜 X]
 variable {ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
 
-variable (𝕜) in
 
 def gramVol (v : ι → V) : ℝ := √(RCLike.re (gram 𝕜 v).det)
 
@@ -52,7 +51,6 @@ theorem gramVol_of_pairwise_orthogonal {v : ι → V}
 @[simp] theorem gramVol_unique [Unique ι] (v : ι → V) : gramVol 𝕜 v = ‖v default‖ := by
   rw [gramVol_of_pairwise_orthogonal (Subsingleton.pairwise), Fintype.prod_unique]
 
-omit [DecidableEq ι] [Fintype κ] [DecidableEq κ] in
 
 theorem gram_sum_smul (v : ι → V) (Y : Matrix ι κ 𝕜) :
     gram 𝕜 (fun j => ∑ i, Y i j • v i) = Yᴴ * gram 𝕜 v * Y := by
@@ -140,9 +138,7 @@ open InnerProductSpace
 
 variable [FiniteDimensional 𝕜 V] [FiniteDimensional 𝕜 W] [FiniteDimensional 𝕜 X]
 
-variable (𝕜 V) in
 
-omit [FiniteDimensional 𝕜 W] in
 
 end Dual
 

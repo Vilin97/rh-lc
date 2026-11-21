@@ -64,6 +64,5 @@ theorem infMat_unitary {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
   rw [hm]
   exact this
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.MarkUnit

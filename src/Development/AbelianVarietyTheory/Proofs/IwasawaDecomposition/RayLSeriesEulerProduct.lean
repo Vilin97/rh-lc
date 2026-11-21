@@ -132,6 +132,5 @@ theorem summable_norm_absNorm_cpow (K : Type) [Field K] [NumberField K] {s : ℂ
   · rw [LSeries.term_of_ne_zero hn, div_eq_mul_inv, ← cpow_neg, norm_mul]
     simp
 
-open Classical in
 
 end GlobalTheory.Mem

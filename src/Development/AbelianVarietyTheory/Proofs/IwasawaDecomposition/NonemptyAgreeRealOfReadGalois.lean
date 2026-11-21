@@ -31,6 +31,5 @@ theorem stdFrame_iff {D : D7} {V : HSp D} {n : ℕ} (hF : D.host.F = maximalReal
   unfold R3.StdFrame GlobalTheory.NJoin.StdFrame principalLevelFrame.StdPsi
   rw [key hF]
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.HeightCounting.Up.StandardFrameAgreement

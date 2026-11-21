@@ -95,7 +95,6 @@ abbrev adMat (F : Type) [Field F] [NumberField F] [Algebra F E] (x : HomE E a b)
 def mid (g : GL (Fin a) (AfE F E)) (g' : GL (Fin b) (AfE F E)) (x : HomE E a b) : Matrix (Fin b) (Fin a) (AfE F E) :=
   ((g'⁻¹ : GL (Fin b) (AfE F E)) : Matrix (Fin b) (Fin b) (AfE F E)) * adMat F x * (g : Matrix (Fin a) (Fin a) (AfE F E))
 
-omit [StarRing E] in
 
 theorem pullV_map (g' : GL (Fin b) (AfE F E)) (x : HomE E a b) (z : Sp E a) :
     Col2.pullV g' (x z) = (((g'⁻¹ : GL (Fin b) (AfE F E)) : Matrix (Fin b) (Fin b) (AfE F E)) * adMat F x) *ᵥ
@@ -107,7 +106,6 @@ theorem pullV_map (g' : GL (Fin b) (AfE F E)) (x : HomE E a b) (z : Sp E a) :
   rw [← LinearMap.toMatrix'_mulVec x z]
   exact RingHom.map_mulVec _ _ _ i
 
-omit [StarRing E] in
 
 theorem pullV_mid (g : GL (Fin a) (AfE F E)) (g' : GL (Fin b) (AfE F E)) (x : HomE E a b) (z : Sp E a) :
     Col2.pullV g' (x z) = mid g g' x *ᵥ Col2.pullV g z := by
@@ -118,7 +116,6 @@ theorem pullV_mid (g : GL (Fin a) (AfE F E)) (g' : GL (Fin b) (AfE F E)) (x : Ho
 def Good (P : HeightOneSpectrum (𝓞 E)) (ia : Fin a) (ib : Fin b) (X : Matrix (Fin b) (Fin a) (AfE F E)) : Prop :=
   (∀ r s, Valued.v (adAt F P (X r s)) ≤ 1) ∧ ∀ s, Valued.v (adAt F P (X ib s - (1 : Matrix (Fin a) (Fin a) (AfE F E)) ia s)) < 1
 
-omit [StarRing E] in
 
 theorem Good.congr {P : HeightOneSpectrum (𝓞 E)} {ia : Fin a} {ib : Fin b} {X Y : Matrix (Fin b) (Fin a) (AfE F E)}
     (h : Good P ia ib X) (hXY : ∀ r s, Valued.v (adAt F P (Y r s - X r s)) < 1) : Good P ia ib Y := by
@@ -190,7 +187,6 @@ theorem cond_iff {g : GL (Fin a) (AfE F E)} {g' : GL (Fin b) (AfE F E)} {p : Dec
     rw [map_mul, map_mul]
     exact lt_of_le_of_lt (mul_le_of_le_one_right' (hw s)) (h2 s)
 
-omit [StarRing E] in
 
 theorem val_mul_mul_lt (P : HeightOneSpectrum (𝓞 E)) {A : Matrix (Fin b) (Fin b) (AfE F E)} {D : Matrix (Fin b) (Fin a) (AfE F E)}
     {C : Matrix (Fin a) (Fin a) (AfE F E)} (hA : ∀ r s, Valued.v (adAt F P (A r s)) ≤ 1) (hD : ∀ r s, Valued.v (adAt F P (D r s)) < 1)
@@ -248,7 +244,6 @@ theorem phiT_eq (K : Type) [Field K] (ha : 0 < a) (hb : 0 < b) {k y : GL (Fin a)
   · exact absurd (key'.2 h2) h1
   · rfl
 
-omit [StarRing E] in
 
 theorem val_natCast_lt {S : Finset (HeightOneSpectrum (𝓞 E))} {M : ℕ} (hM : (∏ P ∈ S, Ideal.absNorm P.asIdeal) ∣ M)
     {P : HeightOneSpectrum (𝓞 E)} (hP : P ∈ S) : Valued.v ((M : ℕ) : P.adicCompletion E) < 1 := by

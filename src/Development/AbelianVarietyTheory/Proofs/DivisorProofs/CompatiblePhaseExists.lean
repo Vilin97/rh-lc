@@ -146,7 +146,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 abbrev sndT (F E : Type) [Field F] [NumberField F] [Field E] [Algebra F E] : AF F ⊗[F] E →+* Af F ⊗[F] E :=
   (Algebra.TensorProduct.map (sndA F) (AlgHom.id F E)).toRingHom
 
-omit [NumberField E] in
 
 theorem dense_ratFin : Dense {x : AF F ⊗[F] E | ∃ a : E, sndT F E (x - inclR (F := F) (AF F) a) = 0} := by
   have : IsModuleTopology (AF F) (AF F ⊗[F] E) := ⟨rfl⟩

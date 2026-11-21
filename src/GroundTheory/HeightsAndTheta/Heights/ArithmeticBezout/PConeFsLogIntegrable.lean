@@ -70,7 +70,6 @@ theorem norm_le_of_fsLog_le (h : HermNorm n) (u : Fin n → ℂ) (y : EuclideanS
 
 end ConeFsLog
 
-open ConeFsLog in
 
 theorem ConeFsLogIntegrable.proof (hfin : ConeBallFinite.Statement)
     (hslab : ConeSlabBound.Statement) : ConeFsLogIntegrable.Statement := by

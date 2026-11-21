@@ -18,16 +18,13 @@ attribute [local instance] borelH
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-variable (E n) in
 
 def infAt (w : InfinitePlace E) : GA E n →* PositivityTheory.RgTw.G n :=
   Matrix.GeneralLinearGroup.map ((Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) w).comp (pInf E))
 
-variable (E n) in
 
 def finOf : GA E n →* GL (Fin n) (Af E) := Matrix.GeneralLinearGroup.map (pFin E)
 
-variable (E n) in
 
 def thetaF (g : GL (Fin n) (Af E)) : GL (Fin n) (Af E) := finOf E n (thetaA E n (finGL E n g))
 

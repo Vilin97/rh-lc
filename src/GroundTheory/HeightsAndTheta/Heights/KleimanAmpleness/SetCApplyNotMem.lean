@@ -37,7 +37,6 @@ theorem rem_apply_subset (I : ∀ k, Finset (ι k)) (p : Σ k, ι k) (l : K) : r
   · subst hl; rw [rem_apply_self]; exact Finset.erase_subset _ _
   · rw [rem_apply_of_ne i hl]
 
-omit [∀ k, LinearOrder (ι k)] in
 
 theorem offset_update (I : ∀ k, Finset (ι k)) (k : K) (X : Finset (ι k)) :
     ∑ l ∈ Finset.univ.filter (· < k), ((Function.update I k X l).card - 1) =
@@ -220,7 +219,6 @@ theorem sum_addC {M : Type} [AddCommMonoid M] (c : ∀ k, ι k) (I : ∀ k, Fins
   congr 2
   exact Finset.sum_congr rfl fun l hl => by rw [addC_apply_of_ne c I (Finset.ne_of_mem_erase hl)]
 
-omit [Fintype K] in
 
 theorem telescope {M : Type} [AddCommGroup M] (g : Finset K → M) (s : Finset K) :
     ∑ k ∈ s, (g (s.filter (· < k)) - g (s.filter (· ≤ k))) = g ∅ - g s := by
@@ -258,18 +256,15 @@ def Good (y : (Σ k, ι k) → Ω) (I : ∀ k, Finset (ι k)) : Prop :=
 def Supp (y : (Σ k, ι k) → Ω) (f : (∀ k, Finset (ι k)) → Ω) : Prop :=
   ∀ I, ¬ Good y I → f I = 0
 
-open Classical in
 
 def dif (y : (Σ k, ι k) → Ω) (f : (∀ k, Finset (ι k)) → Ω) (I : ∀ k, Finset (ι k)) : Ω :=
   if Good y I then ∑ k, ∑ i ∈ I k, faceSign I k i • f (rem I ⟨k, i⟩) else 0
 
-open Classical in
 
 def coneOp (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (k : K) (f : (∀ k, Finset (ι k)) → Ω)
     (I : ∀ k, Finset (ι k)) : Ω :=
   if Good y I ∧ c k ∉ I k then faceSign (addC c I k) k (c k) • f (addC c I k) else 0
 
-open Classical in
 
 def projOp (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (T : Finset K) (f : (∀ k, Finset (ι k)) → Ω)
     (I : ∀ k, Finset (ι k)) : Ω :=
@@ -555,7 +550,6 @@ theorem dif_projOp (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {f : (∀ k, Finset (ι k)
       exact hj1 (by have := h j hjT; rwa [rem_apply_of_ne i (Ne.symm hl)] at this)
     · intro h; exact absurd (Finset.mem_univ j) h
 
-omit [∀ k, LinearOrder (ι k)] in
 
 theorem projOp_projOp (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) (f : (∀ k, Finset (ι k)) → Ω) (T : Finset K) {k : K}
     (hk : k ∉ T) (I : ∀ k, Finset (ι k)) :
@@ -643,7 +637,6 @@ theorem dif_homot (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {f : (∀ k, Finset (ι k))
 theorem supp_homot (f : (∀ k, Finset (ι k)) → Ω) : Supp y (homot y c f) :=
   fun _ h => Finset.sum_eq_zero fun _ _ => projOp_of_not fun h' => h h'.1
 
-open Classical in
 
 def extC (m : ℕ) (t : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι m → Ω) (J : ∀ k, Finset (ι k)) : Ω :=
   if h : (∀ l, (J l).Nonempty) ∧ ∑ l, ((J l).card - 1) = m then t ⟨J, h⟩ else 0
@@ -708,7 +701,6 @@ theorem supp_extC {m : ℕ} {G : (∀ k, Finset (ι k)) → Submodule S Ω} {s :
     exact (Submodule.mem_bot S).1 hm
   · rfl
 
-omit [Fintype K] in
 
 theorem G_fill {G : (∀ k, Finset (ι k)) → Submodule S Ω}
     (hins : ∀ I : ∀ k, Finset (ι k), (∀ k, (I k).Nonempty) → ∀ k,
@@ -767,7 +759,6 @@ theorem homot_mem (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {G : (∀ k, Finset (ι k))
 
 end CellContract
 
-open CellContract in
 
 theorem CellContract.proof : CellContract.Statement := by
   intro S _ K _ _ ι _ _ Ω _ _ y G c hc hbot hmono hins q s hs hds

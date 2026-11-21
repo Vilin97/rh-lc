@@ -84,6 +84,5 @@ theorem integral_theta {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {
       h1 h2 h3 (hΛk k hk hk') (hΛa a ha) x g
     exact congrFun h4 0
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.LiftUnfold

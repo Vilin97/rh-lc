@@ -8,7 +8,6 @@ open NumberField
 
 namespace GlobalTheory
 
-open TensorProduct in
 
 theorem natCard_quot_maximal_smul_top_eq {R M : Type} [CommRing R] [IsDomain R] [AddCommGroup M]
     [Module R M] [Module.Finite R M] [Module.Flat R M] (P : Ideal R) [P.IsMaximal] :

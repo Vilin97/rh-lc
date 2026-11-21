@@ -13,8 +13,6 @@ open scoped InnerProductSpace ENNReal
 
 namespace Formalism.L2.SG.RealObj.EnergyConvJ
 
-set_option maxHeartbeats 400000 in
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
 theorem locQuadGG_G_holds (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) : LocQuadGG_G := by
   intro D hG X u u' sc hsc v cv hcv g hZ

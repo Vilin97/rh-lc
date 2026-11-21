@@ -61,6 +61,5 @@ end GlobalTheory.UnipCocompact
 
 namespace GlobalTheory.UnipCocompact
 
-open GlobalTheory.ThK.SquareIntegrability in
 
 end GlobalTheory.UnipCocompact

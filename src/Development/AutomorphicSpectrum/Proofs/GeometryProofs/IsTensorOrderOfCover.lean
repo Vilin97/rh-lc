@@ -132,10 +132,8 @@ section Omega
 variable (Γ : QFGroup R T) {S : Scheme.{0}} {G : Over S} [GrpObj G] {x : Spec (CommRingCat.of R) ⟶ S}
   (i : Γ.G.left ⟶ G.left) {L : Type} [AddCommGroup L] [Module R L] (M : LieModel G x L) (N : ℕ)
 
-omit [IsDomain R] in
 
 end Omega
 
-omit [IsDomain R] [CommGroup T] in
 
 end GlobalTheory.CompanionTheory.Ar.BT.TranslateEq

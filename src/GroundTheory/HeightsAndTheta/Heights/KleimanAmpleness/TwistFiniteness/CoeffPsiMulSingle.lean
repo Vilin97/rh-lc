@@ -174,7 +174,6 @@ theorem gen_pre
     · simp
   · field_simp
 
-variable {n0 d0 g0} in
 
 theorem chart_pre (G B : LineBundle S x)
     (hgen : ∀ I, Submodule.span (chartRing S x I) (Set.range η) = B.sub I)

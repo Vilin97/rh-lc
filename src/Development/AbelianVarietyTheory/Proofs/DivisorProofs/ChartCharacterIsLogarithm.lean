@@ -81,7 +81,6 @@ theorem pderiv_of_mul (g : MvPowerSeries (Fin d) C)
 
 variable [CharZero C]
 
-open Formalism.L2.Th1.C in
 
 theorem coeff_of_pderiv (g : MvPowerSeries (Fin d) C) (c : Fin d → C) (h0 : constantCoeff g = 1)
     (h : ∀ i, pderiv C i g = c i • g) (α : Fin d →₀ ℕ) :

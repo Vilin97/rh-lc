@@ -23,7 +23,6 @@ namespace GlobalTheory.CompanionTheory.MixZ.Holo
 
 variable {m : ℕ} {n : Fin (m + 1) → ℕ}
 
-open GlobalTheory.QCoh.Qcqs in
 
 theorem baseRingHom_toSpecΓ {Y : Scheme.{0}} {B : CommRingCat.{0}} (ψ : B ⟶ Γ(Y, ⊤)) :
     baseRingHom (Y.toSpecΓ ≫ Spec.map ψ) ⊤ = ψ := by
@@ -136,7 +135,6 @@ theorem toC_tau : toC c ≫ tau c = (mchart c).ι := by
 
 end Chart
 
-open GlobalTheory.QCoh.Qcqs in
 
 theorem affine_surj (c : ∀ k, Bk n k) : IsAffineOpen (mchart c) ∧ Function.Surjective (dehomog c) := by
   have hr : Set.range (tau c) ⊆ Set.range (mchart c).ι := by

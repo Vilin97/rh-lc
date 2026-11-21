@@ -14,9 +14,7 @@ theorem highest_weight_exists_bis [Fact Formalism.MainNotions.DiscreteSeriesWeyl
 
 variable {eps : ℝ} (Fm : FamP eps)
 
-variable [Fact Formalism.MainNotions.DiscreteSeriesWeylDimension.HighestWeightExists] in
 
-variable [Fact Formalism.MainNotions.DiscreteSeriesWeylDimension.HighestWeightExists] in
 
 end Formalism.MainNotions.BridgeHW
 

@@ -352,7 +352,6 @@ theorem Good.map_add {T : X → X} (h : H.Good T) {x y : X} (hx : x ∈ H.G) (hy
 
 variable (H)
 
-open Classical in
 
 def hat (T : X → X) : Module.End ℂ H.V :=
   if h : H.Good T then
@@ -1029,7 +1028,6 @@ theorem fam_diff {Φ : Fn k r (Wq →L[ℂ] Wp)} (h : FamFF k r z z' π π' L Dc
   have hev : ∀ᶠ c' in 𝓝 c, ((c', g) : (Fin r → ℂ) × Mx k r) ∈ U := hcont.continuousAt.eventually_mem (hU.mem_nhds hxU)
   exact hev.mono fun c' hc' => hFe (c', g) hc' hg
 
-variable (z z' π π') in
 
 def RS (L : Fin (r + 1)) (Dc Dc₀ : (Fin r → ℂ) → Set (Mx k r)) (S : Set (Fin r → ℂ))
     (Φ Ψ : Fn k r (Wq →L[ℂ] Wp)) : Prop :=
@@ -1244,7 +1242,6 @@ theorem step_fam (hCS : ChainStep) (hR : ResMem) (hFO : FamOps) (hTP : TPreserve
     exact hgD
   exact (hCS Wp Wq k r z z' π π' l D' Y a b hz hz' hdom' (Φ c₀) hJ₀ c₀ hc₀ g hg hgD').symm
 
-variable (z z' π π') in
 
 def RK (D : Set (Mx k r)) (l : Fin r) (Φ Ψ : Fn k r (Wq →L[ℂ] Wp)) : Prop :=
   FamFF k r z z' π π' l.castSucc (Dcell D l.castSucc) Φ ∧ Ind l.val Φ ∧
@@ -1382,7 +1379,6 @@ end Dom
 section Cut
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] {L : Fin (r + 1)} {Dc : (Fin r → ℂ) → Set (Mx k r)}
 
-open Classical in
 
 def cutP (L : Fin (r + 1)) (Dc : (Fin r → ℂ) → Set (Mx k r)) : Fn k r E →ₗ[ℂ] Fn k r E where
   toFun := fun Φ c g => if c ∈ OmX r ∧ g ∈ Glev k r L ∧ g ∈ Dc c then Φ c g else 0
@@ -1448,7 +1444,6 @@ theorem fam_congr (hS : SData z z' L Dc Dc (OmX r)) {Φ Ψ : Fn k r (Wq →L[ℂ
   ⟨Qx3.sf_congr_on hS.o (fun _ hx => hx) (fun x hx hxG => he x.1 hx.1 x.2 hxG hx.2) h.1,
     fun c hc => ff_congr (hS.d c hc) (h.2 c hc) (fun g hg => he c hc g hg.1 hg.2)⟩
 
-variable (π π') in
 
 def famData (hS : SData z z' L Dc Dc (OmX r)) : HatData (Fn k r (Wq →L[ℂ] Wp)) :=
   mkData (E := Wq →L[ℂ] Wp) L Dc (FamFF k r z z' π π' L Dc) fam_zero (fun _ _ h h' => fam_add h h')

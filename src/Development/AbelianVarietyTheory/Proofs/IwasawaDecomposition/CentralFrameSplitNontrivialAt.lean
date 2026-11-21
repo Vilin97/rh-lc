@@ -33,7 +33,6 @@ namespace GlobalTheory.FrameTypes
 
 open ReciprocityTheory.Aut Formalism.AUTREP GlobalTheory.CenFrame
 
-set_option maxHeartbeats 4000000 in
 
 def IsBlockUpperUnipotentMatrix {k : Type} [CommRing k] {n : ℕ} (r : ℕ) (x : GL (Fin n) k) : Prop :=
   ∀ i j : Fin n, (r ≤ i.val → j.val < r → x.val i j = 0) ∧ (i.val < r → j.val < i.val → x.val i j = 0) ∧
@@ -132,7 +131,6 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : DIV.FamIn3 D.w
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : Formalism.IndefR.Links.RealDat3 D A3 Ks}
   {F : Formalism.IndefR.Links.Face3 D A3} {X0 : BaseLevelRowSide D} {Y : Read R.toRealDat F.lv2 X0} {M : MtFam D}
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_fn (ad : MtAd Y M) (μ : D.what₂.Tup) (hμ : Formalism.IndefR.RecTie.Used0 D μ) (k : Fin D.R.m)
     (hnt : Nontrivial (D.what₂.Mt μ ((k : ℕ) + 1))) :
@@ -162,7 +160,6 @@ theorem exists_fn (ad : MtAd Y M) (μ : D.what₂.Tup) (hμ : Formalism.IndefR.R
     rw [← map_smul] at e4
     exact (congrArg l ((ad.eW _ hμ k).injective e4)).trans (map_smul l _ _)
 
-set_option maxHeartbeats 1000000 in
 
 theorem types_of (ad : MtAd Y M) {tup : D.what₂.Tup → Fin D.R.m → HChar D.host.E} {Q : D.what₂.places.Pl → Finset (PlE D.host)}
     (hin : MtInput D M tup Q) {μ0 : T} (hlev : R.toRealDat.toLevCh.Is μ0) (hgl : R.toRealDat.grp_levels F.lv2)
@@ -199,7 +196,6 @@ theorem types_of (ad : MtAd Y M) {tup : D.what₂.Tup → Fin D.R.m → HChar D.
 
 end Read
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.FrameTypes
 

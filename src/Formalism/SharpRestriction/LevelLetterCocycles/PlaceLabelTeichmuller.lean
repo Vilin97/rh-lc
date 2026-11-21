@@ -31,9 +31,7 @@ variable {O K V X : Type} [CommRing O] [IsDomain O] [IsPrincipalIdealRing O] [Fi
     [FiniteDimensional K V] [DecidableEq X]
     (T : Subalgebra O (X → O)) (act : T →ₐ[O] (V →ₗ[K] V))
 
-omit [IsPrincipalIdealRing O] [DecidableEq X] in
 
-omit [IsDomain O] [IsPrincipalIdealRing O] [IsFractionRing O K] [FiniteDimensional K V] [DecidableEq X] in
 
 end Drop
 
@@ -249,7 +247,6 @@ section Good
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {G : ι → Type} [∀ i, Group (G i)] [∀ i, Finite (G i)]
   {P : ι → Type} [∀ i, Fintype (P i)]
 
-open Classical in
 
 def eGood (E : ∀ i, P i → MonoidAlgebra ℂ (G i)) (good : (∀ i, P i) → Prop) :
     MonoidAlgebra ℂ (∀ i, G i) :=
@@ -268,7 +265,6 @@ theorem eGood_central (hcen : ∀ i p a, E i p * a = a * E i p) (x : MonoidAlgeb
 
 variable {W : Type} [AddCommGroup W] [Module ℂ W]
 
-open Classical in
 
 def onC {A : Type} [Ring A] [Algebra ℂ A] (Φ : Subalgebra.center ℂ A →ₐ[ℂ] Module.End ℂ W) (z : A) :
     Module.End ℂ W :=
@@ -443,7 +439,6 @@ theorem e0_eq : D.ntypes.e0 = eGood (ESer D) (goodVec D) := by
   refine Finset.sum_congr (by first | rfl | (congr 1; exact Subsingleton.elim _ _) | convert rfl) (fun p _ => ?_)
   split_ifs <;> rfl
 
-open Classical in
 
 theorem atPlace_eq (k : Fin 2) (v : D.nd.PlG k) (a : MonoidAlgebra ℂ (GL (Fin D.R.r) (ZMod (D.host.g k)))) :
     ArithmeticCylinders.atPlace D k v a =

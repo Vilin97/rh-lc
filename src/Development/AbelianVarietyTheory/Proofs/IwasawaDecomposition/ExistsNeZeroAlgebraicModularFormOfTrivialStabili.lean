@@ -33,7 +33,6 @@ theorem double_coset_unique {L : Type} [Field L] [NumberField L] [IsCMField L] {
   rw [hγ, mul_assoc, mul_assoc] at h
   exact (mul_left_cancel (mul_left_cancel h))
 
-open Classical in
 
 noncomputable def cosetForm {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {K : Type} [Field K] {W : Type}
     [AddCommGroup W] [Module K W] (ρ : Representation K (GQ L n) W) (J : Subgroup (GAf L n)) (χ : J →* Kˣ)

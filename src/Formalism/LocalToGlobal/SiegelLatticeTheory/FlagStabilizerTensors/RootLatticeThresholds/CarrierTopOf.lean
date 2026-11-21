@@ -51,7 +51,6 @@ theorem emb_carrierInOf (e : InfinitePlace D.host.E ≃ D.what₂.Tau) (he : Pla
       X.B.I.φ ((carrierInOf X u u' e he hv C CA de de' l grid grid1 T hT fc χ sg ν' m₀ top A₀).τ j) x :=
   fun j x => embE_apply X e j x
 
-open Matrix in
 
 theorem base_carrierOf (I : CarrierIn X u u') (Mo : ModelsFor (sOf I)) (i0 i0' : ∀ _ : InfinitePlace X.B.I.F, Fin D.R.k)
     (hQ : ∀ v, I.Q v * I.Qi v = 1) (hi : ∀ v, i0 v = i0' v)

@@ -77,7 +77,6 @@ theorem map_loc {A B : Type} [Ring A] [Ring B] (f : A →+* B) (e k : A) :
     f (1 + e * (k - 1)) = 1 + f e * (f k - 1) := by
   rw [map_add (f := _), map_mul, map_sub, map_one]
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_hom (D : D7) : ∃ Θ : AE D →+* AdeleRing (𝓞 D.host.E) D.host.E, Continuous Θ ∧
     (∀ x, Θ (incA D x) = algebraMap D.host.E _ x) ∧

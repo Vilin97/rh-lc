@@ -27,7 +27,6 @@ open IsDedekindDomain
 
 namespace GlobalTheory.PowData
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_powData : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l),
  letI := H.starRing

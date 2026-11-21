@@ -217,14 +217,12 @@ theorem holoOn_continuousAt {e : ℕ} {Y : Type} [TopologicalSpace Y] {A : FinHo
   filter_upwards [(A.chart j).open_source.mem_nhds hj] with y hy
   simp [(A.chart j).left_inv hy]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem isOpen_blockNonzero : IsOpen {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   simp only [Set.ofPred_forall, Set.ofPred_exists]
   exact isOpen_iInter_of_finite fun k => isOpen_iUnion fun i =>
     isOpen_ne_fun (continuous_apply _) continuous_const
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem log_ratio_torusSmul (A₁ A₂ : HermLine ι) (ha : A₁.a = A₂.a) (c : K → ℂ) (hc : ∀ k, c k ≠ 0)
     {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) :

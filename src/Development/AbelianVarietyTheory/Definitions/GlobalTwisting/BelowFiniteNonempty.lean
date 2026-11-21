@@ -147,7 +147,6 @@ theorem below_finite_nonempty (hX : X.Ok) (hPr : Pr.Ok) {P : Pr.vT u} (hP : Move
 
 end Position
 
-variable {sel u} in
 
 theorem T_notMem_rowSG (hPr : Pr.Ok) (hsel : IsSel X sel) (hT : Pr.T u ∈ S) :
     ∀ w ∈ rowSG Pr sel mu, (Pr.T u : 𝓞 X.E) ∉ w.asIdeal := by
@@ -177,7 +176,6 @@ theorem T_notMem_rowSG (hPr : Pr.Ok) (hsel : IsSel X sel) (hT : Pr.T u ∈ S) :
       exact hT
     · simp at h
 
-variable {W u j} in
 
 namespace Hyp
 
@@ -193,6 +191,5 @@ theorem g_mem (h : Hyp Z s cc δ χ cD sel S mu cst u) (k : Fin 2) : Z.Pr.g k �
 
 end Hyp
 
-open Classical in
 
 end GlobalTheory.KerT

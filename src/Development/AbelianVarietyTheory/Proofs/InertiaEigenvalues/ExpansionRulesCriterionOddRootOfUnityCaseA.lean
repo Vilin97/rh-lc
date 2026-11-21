@@ -18,7 +18,6 @@ noncomputable section
 
 namespace GlobalTheory.ExpansionsOdd
 
-set_option maxHeartbeats 800000 in
 
 theorem main : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F), Formalism.MainNotions.DeltaInvariantLattices.DeltaInvariantNormBound D HW F Cm →

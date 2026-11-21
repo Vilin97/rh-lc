@@ -31,7 +31,6 @@ structure Irr (n : ℕ) : Type 1 where
 
 attribute [instance] Irr.acg Irr.mod
 
-variable {k} in
 
 def Irr.ofDet (n : ℕ) (χ : kˣ →* ℂˣ) (h : IsSmoothChar χ) : Irr k n where
   V := ℂ
@@ -39,23 +38,17 @@ def Irr.ofDet (n : ℕ) (χ : kˣ →* ℂˣ) (h : IsSmoothChar χ) : Irr k n wh
   smooth := (isSmooth_ofChar_iff _).2 h.detChar
   irr := isIrreducible_ofChar _
 
-variable {k} in
 
 instance (n : ℕ) : Inhabited (Irr k n) := ⟨Irr.ofDet n 1 (isSmoothChar_of_isUnram fun _ _ => rfl)⟩
 
-variable {k} in
 
 @[reducible] def Irr.toIrrRep {n : ℕ} (π : Irr k n) : IrrRep (GL (Fin n) k) := ⟨π.V, π.π, π.smooth, π.irr⟩
 
-variable {k} in
 
 @[reducible] def Irr.ofIrrRep {n : ℕ} (σ : IrrRep (GL (Fin n) k)) : Irr k n := ⟨σ.V, σ.ρ, σ.smooth, σ.irr⟩
 
-variable {k} in
 
-variable {k} in
 
-variable {k} in
 
 def TameSplit : Prop := ∀ (r t : ℕ) (χ : kˣ →* ℂˣ) (π : Irr k (r + t)) (v : π.V), IsSmoothChar χ → IsTame χ →
   ¬ IsUnram χ → v ≠ 0 → IsParahoricVec χ π.π v →

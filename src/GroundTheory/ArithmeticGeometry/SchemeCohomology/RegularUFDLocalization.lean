@@ -187,7 +187,6 @@ theorem spanFinrank_maximalIdeal_le_quotient_add_one [IsLocalRing R] [IsNoetheri
   rw [← hcard]
   exact Nat.add_le_add_right Finset.card_image_le 1
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem isRegularLocalRing_of_hasProjectiveDimensionLT [IsLocalRing R] [IsNoetherianRing R]
     (n : ℕ) (hk : HasProjectiveDimensionLT (ModuleCat.of R (R ⧸ maximalIdeal R)) (n + 1)) :

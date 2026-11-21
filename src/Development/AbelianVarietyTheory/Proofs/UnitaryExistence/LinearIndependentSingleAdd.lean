@@ -94,7 +94,6 @@ theorem exists_congr_diagonal (H : GlobalTheory.Published.Landherr) (X : Data E 
       · simp
   · rw [hdet, div_self X.Gm_det]; simp [cc]
 
-omit [NumberField E] [IsCMField E] in
 
 theorem linearIndependent_single_add {ρ : ℕ} {i j : Fin ρ → Fin r} (hi : Function.Injective i)
     (hij : ∀ a b, i a ≠ j b) :

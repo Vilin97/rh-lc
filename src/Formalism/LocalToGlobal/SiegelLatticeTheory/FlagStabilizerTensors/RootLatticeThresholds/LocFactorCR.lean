@@ -159,7 +159,6 @@ theorem local_continuity_all : ContAll := by
   intro D X θ C u τ
   exact continuousOn_wTg (C.isT τ).2.1 (C.isT τ).2.2.1 (X.Wloc_cont u _)
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
 theorem local_reproduction_all : ReprodAll := by
   intro D hG X θ C u τ

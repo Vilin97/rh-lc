@@ -101,7 +101,6 @@ def AlgWt.Iso (a b : AlgWt L n) : Prop := ∃ T : a.W ≃ₗ[ℂ] b.W, ∀ γ x,
 def AlgWt.IsDual (a b : AlgWt L n) : Prop :=
   ∃ B : a.W →ₗ[ℂ] b.W →ₗ[ℂ] ℂ, B ≠ 0 ∧ ∀ γ x y, B (a.ρ γ x) (b.ρ γ y) = B x y
 
-open Classical in
 
 def evPt (τ : L →+* ℂ) (B : GL (Fin n) ℂ) : (L →+* ℂ) × Fin n × Fin n → ℂ := fun p =>
   if p.1 = τ then B.val p.2.1 p.2.2
@@ -147,7 +146,6 @@ def TypeSp (ρ : Representation ℂ (GQ L n) W) (J : Subgroup (GAf L n)) (χ : J
 def HypOutside (J : Subgroup (GAf L n)) (χ : J →* ℂˣ) (B : Set (HeightOneSpectrum (𝓞 L⁺))) : Prop :=
   ∀ κ : GAf L n, TrivOutside Bᶜ κ → (κ ∈ J ↔ κ ∈ Umax L n) ∧ ∀ h : κ ∈ J, χ ⟨κ, h⟩ = 1
 
-open Classical in
 
 def heckeD (J : Subgroup (GAf L n)) (D : Set (GAf L n)) (f : GAf L n → W) : GAf L n → W :=
   fun g => ∑ᶠ c : GAf L n ⧸ J, if hc : ∃ x ∈ D, (x : GAf L n ⧸ J) = c then f (g * hc.choose) else 0

@@ -21,7 +21,6 @@ section Core
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {n : Type} [Fintype n] [DecidableEq n] {c : ℕ}
 
-variable (k n c) in
 
 def volDiag : (n ⊕ Fin c → kˣ) →* ℚ where
   toFun d := invVol ((KO k (n ⊕ Fin c)).map (MulAut.conj (diagGL d)).toMonoidHom)

@@ -78,7 +78,6 @@ theorem schr_smul {ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (w : (ι �
 end GlobalTheory.DiagUniq
 end
 
-open GlobalTheory.DiagUniq in
 
 theorem GlobalTheory.DiagUniq.eq_smul_lDiag : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ →
     ∀ (κ : Type) [Fintype κ] (l : ((κ ⊕ κ → AF F) → ℂ) →ₗ[ℂ] ℂ), l ∈ (adeleClass F).adm (κ ⊕ κ) →

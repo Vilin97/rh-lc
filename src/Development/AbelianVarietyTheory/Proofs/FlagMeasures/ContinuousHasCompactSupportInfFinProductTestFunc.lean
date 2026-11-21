@@ -53,7 +53,6 @@ theorem glueTup_proj (X : Fin n → Fin M → AF F ⊗[F] E) :
 
 end GlobalTheory.ProdCont
 
-open GlobalTheory.ProdCont in
 
 theorem GlobalTheory.prod_continuous_hasCompactSupport : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (M n : ℕ) (Φ : (Fin n → Fin M → AF F ⊗[F] E) → ℂ) (Φi : (Fin n → Fin M → Ainf F ⊗[F] E) → ℂ) (Φf : (Fin n → Fin M → Af F ⊗[F] E) → ℂ), Continuous Φi → HasCompactSupport Φi → Continuous Φf → HasCompactSupport Φf → IsProdInfFin Φ Φi Φf → Continuous Φ ∧ HasCompactSupport Φ := by
   intro F E _ _ _ _ _ M n Φ Φi Φf hci hki hcf hkf hΦ

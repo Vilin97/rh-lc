@@ -44,7 +44,6 @@ theorem existsUnique_iff (hN : Statement.{u}) :
   ⟨fun hU I hI V n L hV => agree_of_existsUnique hN hU I hI V n L hV,
     fun h => ⟨fun V _ L => intNum F V L, hN F K ι, h⟩⟩
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem ringKrullDim_eq_of_relDim (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (n : ℕ)
     (h : FieldNumbers.relDim V = (n : WithBot (WithTop ℤ))) :

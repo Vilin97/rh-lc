@@ -17,9 +17,7 @@ structure SmithData {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
   a : Fin d → R
   hy : ∀ i, y (b i) = a i • b' i
 
-open Classical in
 
-open Classical in
 
 def SmithExists : Prop :=
   ∀ (R M : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [AddCommGroup M]

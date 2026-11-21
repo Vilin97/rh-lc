@@ -129,14 +129,12 @@ theorem sm_dsig {σ : Mat k r → (H →L[ℂ] H)} (hσ : IsURepOn (GG k r) σ) 
     {Y : Mat k r} (hY : InLieHpk k r Y) : IsSmoothVec σ (dsig σ Y v) := by
   exact (((GlobalTheory.T.smooth_vectors_dense_invariant k r σ v hσ).2.2.2.1 v hv).2 Y hY).1
 
-omit [CompleteSpace H] in
 
 theorem inner_map {σ : Mat k r → (H →L[ℂ] H)} (hσ : IsURepOn (GG k r) σ) {g : Mat k r} (hg : g ∈ GG k r) (v w : H) :
     ⟪σ g v, σ g w⟫_ℂ = ⟪v, w⟫_ℂ := by
   let L : H →ₗᵢ[ℂ] H := { toLinearMap := (σ g).toLinearMap, norm_map' := hσ.2.1 g hg }
   exact L.inner_map_map v w
 
-omit [CompleteSpace H] in
 
 theorem dsig_skew {σ : Mat k r → (H →L[ℂ] H)} (hσ : IsURepOn (GG k r) σ) {v w : H} {X : Mat k r}
     (hv : IsSmoothVec σ v) (hw : IsSmoothVec σ w) (hX : InLieHpk k r X) :
@@ -360,7 +358,6 @@ end Main
 
 end GlobalTheory.DiffQuot
 
-open GlobalTheory.DiffQuot in
 
 theorem GlobalTheory.diffQuot_bessel : ∀ (k r : ℕ) {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [FiniteDimensional ℂ Wp] [CompleteSpace Wp] (σ : Mat k r → (H →L[ℂ] H)) (z : Fin (2 * r + k + 1) → ℂ) (ψ : Mat k r → ℂ) (π : Mat k r → (Wp →L[ℂ] Wp)) (l : H → Wp) (x : H) (X : Mat k r), IsURepOn (GG k r) σ → IsBesselMapSm z ψ σ π l → IsSmoothVec σ x → InLieHpk k r X → Filter.Tendsto (fun t : ℝ => l ((t : ℂ)⁻¹ • (σ (NormedSpace.exp ((t : ℂ) • X)) x - x))) (nhdsWithin 0 {0}ᶜ) (nhds (l (dsig σ X x))) ∧ ContinuousOn (fun g => l (σ g x)) (GG k r) ∧ ∀ t : ℝ, NormedSpace.exp ((t : ℂ) • X) ∈ GG k r ∧ σ (NormedSpace.exp ((t : ℂ) • X)) x - x = ∫ u in (0 : ℝ)..t, σ (NormedSpace.exp ((u : ℂ) • X)) (dsig σ X x) := by
   intro k r H _ _ _ Wp _ _ _ _ σ z ψ π l x X hσ hl hx hX

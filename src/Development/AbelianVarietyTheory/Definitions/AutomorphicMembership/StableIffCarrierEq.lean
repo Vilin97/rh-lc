@@ -104,9 +104,6 @@ def liftForm (A : FamIn D.what₂.LL G Pl0 T D.R.m) (P : Subgroup G) (ψ : P →
   (A.fam.L i t).S.basis.equivFun.symm
     (((A.fam.L i t).S.lvlE (A.fam.L i t).r (A.fam.lvlA P ψ).P (A.fam.lvlA P ψ).ψ).mulVec x)
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 4000000 in
 
 structure Read (R : RealDat D A3.A Ks) (F : Face D A3.A) (X0 : BaseLevelRowSide D) : Type 1 where
   tup : T → D.what₂.Tup
@@ -187,10 +184,6 @@ structure Read (R : RealDat D A3.A Ks) (F : Face D A3.A) (X0 : BaseLevelRowSide 
     (∃ (φ : D.what₂.Mu u) (x : D.what₂.Amb μ), x ∈ D.what₂.V0 μ ∧ D.what₂.perCol u μ φ x ≠ 0) → (∃ z : D.what₂.LL, D.what₂.embLL z = c) →
     D.what₂.zeC u μ = c
 
-open Classical in
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 4000000 in
 
 structure ReadL (R : RealDat3 D A3 Ks) (F : Face3 D A3) (X0 : BaseLevelRowSide D) (Y : Read (A3 := A3) R.toRealDat F.lv2 X0) : Type where
   eRR : (Fin ((R.toCx3 F).data F.cr true).D → D.what₂.LL) ≃ₗ[D.what₂.LL] D.div.RR.V
@@ -211,8 +204,6 @@ structure ReadL (R : RealDat3 D A3 Ks) (F : Face3 D A3) (X0 : BaseLevelRowSide D
   etaJ : ∀ (i : Fin D.R.m) w, D.what₂.etaJ ((i : ℕ) + 1) w =
     if D.plEq w ∈ R.twPl then A3.A.fam.etaJ F.P0 F.ψ0 (A3.fam3.toSub2 (R.toCx3 F).zs) i (R.mu (D.plEq w)) (D.plEq w) else 0
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure ReadC (R : RealDat3 D A3 Ks) (F : Face3 D A3) (X0 : BaseLevelRowSide D) (Y : Read (A3 := A3) R.toRealDat F.lv2 X0) : Type where
   wU : D.what₂.Word → (F.Dc (R.toCx3 F).zs).Mem
@@ -252,7 +243,6 @@ def idsOf (cG : G0 R.Pg D.R.r ≃* G0g D.nd) (Z : ReadL R F X0 Y) (C : ReadC R F
   wU := C.wU
   eNu := C.eNu
 
-open Classical in
 
 def Lam3 (Z : ReadL R F X0 Y) : Prop :=
   ∃ cOf : D.what₂.FT → A3.fam3.base3.Ix,

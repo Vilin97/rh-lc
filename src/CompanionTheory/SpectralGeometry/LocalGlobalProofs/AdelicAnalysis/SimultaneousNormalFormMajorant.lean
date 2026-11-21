@@ -9,7 +9,6 @@ open scoped ENNReal NNReal MatrixGroups
 
 namespace GlobalTheory.CompanionTheory.SW.Diag
 
-open scoped MatrixOrder in
 
 theorem exists_eq_transpose_mul_self {ι : Type} [Fintype ι] [DecidableEq ι]
     {T : Matrix ι ι ℝ} (hT : T.PosSemidef) : ∃ B : Matrix ι ι ℝ, T = Bᵀ * B := by

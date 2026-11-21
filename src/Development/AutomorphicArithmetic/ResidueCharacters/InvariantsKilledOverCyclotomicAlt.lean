@@ -37,7 +37,6 @@ def LiftK : Prop := ∀ (N h : ℕ) (K LL : FinExt l), Cyc N K LL →
     IsCrys (P.PD K) T₁.ρ → IsCrys (P.PD K) T₂.ρ → F.Onto →
     (∀ τ, JumpsInV (P.PD K) T₁.ρ τ (Set.Icc (-(h : ℤ)) h)) → F.LiftF (P.PD K) (eL l N h)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def InvariantsKilledOverCyclotomic : Prop := ∀ (N h n : ℕ) (K LL : FinExt l), Cyc N K LL →
   ∀ (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (U : Finset ℤ), U.card ≤ n → (∀ u ∈ U, -(h : ℤ) ≤ u ∧ u ≤ h) →

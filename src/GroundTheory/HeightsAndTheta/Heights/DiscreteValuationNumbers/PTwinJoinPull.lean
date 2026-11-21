@@ -73,6 +73,5 @@ end Pull
 
 end JoinPullbackAlt
 
-open JoinPullbackAlt in
 
 end GroundTheory.Heights₂.Heights.NumbersDVR

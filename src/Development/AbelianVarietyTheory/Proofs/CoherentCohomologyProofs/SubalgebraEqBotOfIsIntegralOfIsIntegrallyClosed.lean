@@ -8,7 +8,6 @@ open scoped PowerSeries TensorProduct
 
 namespace GlobalTheory
 
-open scoped PowerSeries TensorProduct in
 
 theorem _root_.GlobalTheory.integralClosure_restrictScalars_of_isIntegral (A A' B : Type*) [CommRing A] [CommRing A']
     [CommRing B] [Algebra A A'] [Algebra A' B] [Algebra A B] [IsScalarTower A A' B]

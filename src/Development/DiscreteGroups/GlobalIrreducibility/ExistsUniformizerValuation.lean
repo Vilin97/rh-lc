@@ -106,7 +106,6 @@ theorem exists_hasConductor_of_continuous_ne_one (ψ : AddChar k Circle) (hψ : 
   have := (valuation_le_iff_ord_le (b N) (Units.mk0 x hx0)).2 (by omega)
   simpa using this
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem residue_eq_iff_valuation_lt (a b : 𝒪[k]) :
     IsLocalRing.residue 𝒪[k] a = IsLocalRing.residue 𝒪[k] b ↔ valuation k ((a : k) - b) < 1 := by
@@ -118,6 +117,5 @@ theorem residue_eq_iff_valuation_lt (a b : 𝒪[k]) :
   push_cast at h1 ⊢
   exact ⟨fun h => lt_of_le_of_ne h1 h, fun h => h.ne⟩
 
-set_option linter.style.haveILetI false in
 
 end DiscreteGroups.sglob.DzType

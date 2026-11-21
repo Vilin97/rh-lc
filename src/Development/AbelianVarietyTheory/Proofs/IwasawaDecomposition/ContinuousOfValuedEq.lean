@@ -31,7 +31,6 @@ theorem continuous_of_valued_eq {A B Γ : Type*} [Ring A] [Ring B] [LinearOrdere
 
 variable {L : Type} [Field L] [NumberField L]
 
-open scoped WithZeroTopology in
 
 theorem exists_finCompl_map (c : L ≃+* L) {v v' : HeightOneSpectrum (𝓞 L)} (h : ConjPl c v v') :
     ∃ φ : v.adicCompletion L →+* v'.adicCompletion L, Continuous φ ∧
@@ -57,7 +56,6 @@ theorem exists_finCompl_map (c : L ≃+* L) {v v' : HeightOneSpectrum (𝓞 L)} 
   exact (HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v' _).trans
     ((h k).trans (HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v _).symm)
 
-omit [NumberField L] in
 
 theorem exists_infCompl_map (c : L ≃+* L) (w : InfinitePlace L) :
     ∃ φ : (w.comap (c : L →+* L)).Completion →+* w.Completion, Continuous φ ∧
@@ -86,7 +84,6 @@ theorem map_update_one {ι : Type} [DecidableEq ι] {M : ι → Type} [∀ i, Ri
 
 end General
 
-open Classical in
 
 theorem exists_isConjI : ∀ (L : Type) [Field L] [NumberField L] (c : L ≃+* L), ∃ C : Ideles L →* Ideles L, IsConjI c C := by
   intro L _ _ c

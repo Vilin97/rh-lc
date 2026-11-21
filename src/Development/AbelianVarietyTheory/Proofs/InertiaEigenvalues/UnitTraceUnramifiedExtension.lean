@@ -92,7 +92,6 @@ theorem map_maximalIdeal (hU : IsUnrExt K K' d φ) :
   rw [h1, Ideal.map_span, Set.image_singleton,
     (IsDiscreteValuationRing.irreducible_iff_uniformizer _).1 h2]
 
-open scoped nonZeroDivisors in
 
 theorem exists_trace_unit_of_span (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E) (hU : IsUnrExt K K' d φ)
     (hB : ∃ u : Fin d → K'.O, ∀ y : K'.O, ∃ a : Fin d → K.O,

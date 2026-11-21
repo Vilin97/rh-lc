@@ -10,7 +10,6 @@ open MvPolynomial Formalism.GradedWeylDivisibility Formalism.BasicNotions Global
 
 namespace GlobalTheory.AlcMult
 
-open Polynomial in
 
 noncomputable def linProd {k : Type} [Field k] {ι : Type} [Fintype ι] (a : ι → k) : k[X] :=
   ∏ i, (1 - Polynomial.C (a i) * Polynomial.X)

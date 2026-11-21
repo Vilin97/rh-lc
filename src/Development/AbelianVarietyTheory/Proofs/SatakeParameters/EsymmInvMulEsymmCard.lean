@@ -55,7 +55,6 @@ theorem tinv_scalGL' (c : Kˣ) : tinv (scalGL c : GL (Fin r) K) = (scalGL c)⁻�
 theorem tinv_injective : Function.Injective (tinv : GL (Fin r) K → GL (Fin r) K) := fun a b h => by
   rw [← tinv_tinv a, h, tinv_tinv]
 
-omit [Field K] in
 
 theorem glMap_eq_glMap_iff {O : Type} [CommRing O] [Field K] [Algebra O K] (a b : GL (Fin r) K)
     (L : Submodule O (Fin r → K)) :

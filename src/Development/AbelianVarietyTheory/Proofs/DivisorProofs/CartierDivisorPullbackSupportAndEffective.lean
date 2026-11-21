@@ -37,8 +37,6 @@ private theorem regAt_functionFieldMap_of_regAt {X Y : Scheme} [IsIntegral X]
   exact ⟨ConcreteCategory.hom (s.stalkMap y) a, by
     rw [← _root_.GlobalTheory.functionFieldMap_algebraMap, ha]⟩
 
-set_option autoImplicit false in
-open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter in
 
 theorem _root_.GlobalTheory.Discrepancy.pullCart_supp_and_eff : ∀ (X Y : Scheme.{0}) [IsIntegral X]
     [IsIntegral Y] (s : Y ⟶ X) [IsDominant s] (D : _root_.GlobalTheory.Cartier.CartierDiv X),

@@ -164,7 +164,6 @@ theorem nonempty_jacB_detRep (N : ℕ) (ψ : kˣ →* ℂˣ) :
   push_cast
   ring
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem torusChar_mulSingle {n : Type} [Fintype n] [DecidableEq n] (χ : n → kˣ →* ℂˣ) (i : n)
     (x : kˣ) : torusChar χ (Pi.mulSingle i x) = χ i x := by
@@ -173,7 +172,6 @@ theorem torusChar_mulSingle {n : Type} [Fintype n] [DecidableEq n] (χ : n → k
     rw [Pi.mulSingle_eq_of_ne hj, map_one]
   · simp
 
-open Classical in
 
 theorem wordMult_detRep (N : ℕ) (ψ : kˣ →* ℂˣ) (w : List ℂˣ) :
     wordMult (detRep (Fin N) ψ) w = if w.length = N ∧ ∀ i < N, unrChar k (w.getD i 1) =

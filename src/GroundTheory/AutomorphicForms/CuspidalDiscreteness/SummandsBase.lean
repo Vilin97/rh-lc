@@ -30,7 +30,6 @@ open AutomorphicForm
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (K n) in
 
 def archP : archGroup K n →* Reduction.normOneGL K n :=
   (archProj K n).comp (archGroup K n).subtype

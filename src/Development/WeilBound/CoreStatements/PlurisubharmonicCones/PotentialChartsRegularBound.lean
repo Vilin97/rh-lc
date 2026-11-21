@@ -110,7 +110,6 @@ theorem isOpen_nz : IsOpen {z : (Σ k, J k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩
 
 variable {ref : HermLine J} {w : ((Σ k, J k) → ℂ) → ℝ} (P : PotentialCharts M.atlas)
 
-include P in
 
 theorem relative_weight_bounded (hr : IsSmoothHerm ref) (hL : LogHom D ref.a w) (hB : ChartBdd D w) :
     ∃ C, ∀ y ∈ Yo M, |ph0 M ref w y| ≤ C := by
@@ -204,7 +203,6 @@ theorem chart_local (hth : ThRef M ref P.th) (hL : LogHom D ref.a w) (hP : Chart
   simp only [e5]
   linarith
 
-open Classical in
 
 noncomputable def ph (ref : HermLine J) (w : ((Σ k, J k) → ℂ) → ℝ) (x : M.Xc) : ℝ :=
   if x ∈ Yo M then ph0 M ref w x else limsup (ph0 M ref w) (𝓝[Yo M] x)

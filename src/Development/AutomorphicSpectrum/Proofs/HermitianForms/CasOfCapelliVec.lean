@@ -154,6 +154,5 @@ theorem sq_sub_cas {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (E : Fin n → 
   rw [two_smul, ← h1, ← sub_eq_zero.1 h2]
   abel
 
-open Formalism.REAL in
 
 end GlobalTheory.CompanionTheory.Inh.CapelliCasimir

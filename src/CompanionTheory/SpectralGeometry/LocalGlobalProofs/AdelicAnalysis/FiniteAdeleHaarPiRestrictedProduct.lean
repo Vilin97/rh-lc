@@ -96,7 +96,6 @@ theorem continuous_compS (ι : Type) (S : Finset (HeightOneSpectrum (𝓞 F))) :
   continuous_pi fun v => continuous_pi fun i =>
     (RestrictedProduct.continuous_eval v.1).comp (continuous_apply i)
 
-open Classical in
 
 def liftS {S : Finset (HeightOneSpectrum (𝓞 F))} (t : ∀ v : S, Fv F v.1) : Af F :=
   ⟨fun w => if hw : w ∈ S then t ⟨w, hw⟩ else (0 : Fv F w), by

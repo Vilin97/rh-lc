@@ -38,7 +38,6 @@ theorem val_lt_one_iff {K : Type} [Field K] [ValuativeRel K] [TopologicalSpace K
   change valuation K ((q.pr.comp (incA D)) x) < 1 ↔ ¬ valuation K ((q.pr.comp (incA D)) (x : D.host.E)⁻¹) ≤ 1
   rw [map_inv₀, map_inv₀, not_le, one_lt_inv₀ (zero_lt_iff.2 ((map_ne_zero _).2 h0))]
 
-variable {o G} in
 
 section Unif
 
@@ -167,7 +166,6 @@ theorem comp_map {F E : Type} [Field F] [Field E] [Algebra F E] {R R' R'' : Type
       Algebra.TensorProduct.map ψ (AlgHom.id F E) (Algebra.TensorProduct.map φ (AlgHom.id F E) z) := by
   rw [← AlgHom.comp_apply, ← Algebra.TensorProduct.map_comp, AlgHom.comp_id]
 
-set_option maxHeartbeats 1000000 in
 
 theorem charUnramAt_of {χ : (AE D)ˣ →* Circle} {v : HeightOneSpectrum (𝓞 D.host.F)}
     (h : ∀ w : HeightOneSpectrum (𝓞 D.host.E), w.under (𝓞 D.host.F) = v → GlobalTheory.LFun.UnrAt χ w) : CharUnramAt D χ v := by

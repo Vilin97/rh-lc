@@ -21,7 +21,6 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
 
 namespace OpenNormalSubgroup
 
-omit [IsTopologicalGroup G] in
 
 theorem exists_le_of_finite {ι : Type*} [Finite ι] (V : ι → OpenNormalSubgroup G) :
     ∃ W : OpenNormalSubgroup G, ∀ i, W ≤ V i := by

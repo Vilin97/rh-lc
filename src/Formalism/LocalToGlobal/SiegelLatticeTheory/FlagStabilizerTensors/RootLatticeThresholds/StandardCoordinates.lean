@@ -17,7 +17,6 @@ variable {D : D7} {X : HidaSetting D} (v : InfinitePlace X.B.I.F) {lam : ℂ} (h
   {Q : Matrix (Fin X.B.I.n) (Fin (2 * D.R.rS + D.R.k + 1)) ℂ} {Qi : Matrix (Fin (2 * D.R.rS + D.R.k + 1)) (Fin X.B.I.n) ℂ}
   (hT : IsTranspC X v lam D.R.k D.R.rS Q Qi) (u' : D.what₂.Word)
 
-include hT in
 
 theorem fam_eq (hl : lam ≠ 0) (b : Fin (D.R.rS + 1)) :
     Formalism.L2.SG.RealObj.frm X u' 1 v b =
@@ -35,7 +34,6 @@ theorem fam_eq (hl : lam ≠ 0) (b : Fin (D.R.rS + 1)) :
     simp only [Fin.coe_castSucc, Fin.is_lt, dif_pos, Fin.eta]
     rw [h1, smul_smul, inv_mul_cancel₀ (pow_ne_zero _ hl), one_smul]
 
-include hT hl in
 
 theorem stCoordV_gen (w : Point D.host.E (D.R.rS + 1)) (γ : X.B.I.Ginf) (y : Formalism.REAL.UJ (X.B.I.ε v))
     (p : Formalism.L2.SG.RealObj.FreeE w) :
@@ -79,7 +77,6 @@ theorem stCoordV_gen (w : Point D.host.E (D.R.rS + 1)) (γ : X.B.I.Ginf) (y : Fo
   rw [mul_pow, mul_pow]
   field_simp
 
-include hT hl in
 
 theorem coord_conj (M H : Matrix (Fin X.B.I.n) (Fin X.B.I.n) ℂ)
     (hHU : Hᴴ * Formalism.REAL.Jm (X.B.I.ε v) * H = Formalism.REAL.Jm (X.B.I.ε v)) (hHu : IsUnit H.det)

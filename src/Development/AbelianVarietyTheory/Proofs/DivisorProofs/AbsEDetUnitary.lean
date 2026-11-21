@@ -36,7 +36,6 @@ section Alg
 variable {R : Type} [CommRing R] {A : Type} [CommRing A] [Algebra R A] {α β ν X : Type} [Fintype β] [DecidableEq β]
   [AddCommGroup X] [Module R X] {e : ν ⊕ ν ≃ α}
 
-omit [DecidableEq β] in
 
 variable [Invertible (2 : R)] {D : Matrix α β A ≃ₗ[R] X × X} (hΔ : ∀ w, LinAct.Del e w → (D w).1 = 0)
   (hN : ∀ w, LinAct.Nab e w → (D w).2 = 0)

@@ -47,8 +47,6 @@ def push {n : ℕ} (γ : Matrix (Fin n) (Fin n) E) :
     MvPolynomial (LtN Dw n) c.F →ₐ[c.F] MvPolynomial (LtN Dw n) c.F :=
   aeval fun ℓ : LtN Dw n => letB c ℓ.1 ℓ.2.1 fun k => γ k ℓ.2.2
 
-open Classical in
 
-open Classical in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.UnitaryDetClass

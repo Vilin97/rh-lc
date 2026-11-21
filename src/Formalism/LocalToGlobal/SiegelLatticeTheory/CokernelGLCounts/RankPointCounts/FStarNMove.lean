@@ -314,7 +314,6 @@ theorem exists_move {T T' : E} (F : FlagG S r T) (P Q : FlagG S r T')
 
 end NMoveP
 
-open NMoveP in
 
 theorem n_move_holds (D : Formalism.BasicNotions.D7) : NMove D := by
   intro T T' F0 F'₂ F' hZ hG hO

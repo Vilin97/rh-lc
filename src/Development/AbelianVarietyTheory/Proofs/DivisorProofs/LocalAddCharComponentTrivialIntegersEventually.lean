@@ -51,7 +51,6 @@ theorem eq_one_of_forall_norm_pow_sub_one_lt (w : ℂ) (h : ∀ n : ℕ, ‖w ^ 
   rw [div_lt_iff₀ hd] at hN
   linarith
 
-open Filter Topology in
 
 theorem psiLoc_eventually_trivial_integers {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ)
     (hψ : Continuous ψ) :

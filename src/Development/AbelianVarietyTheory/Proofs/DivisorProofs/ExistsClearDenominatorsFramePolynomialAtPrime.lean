@@ -47,7 +47,6 @@ end GlobalTheory.CoeffDenom
 
 namespace GlobalTheory.CoeffDenom
 
-open GlobalTheory.LamT in
 
 theorem exists_clear_coeff_at_prime : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H)
     (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)] (z : CMPt Xo c) (f : ℕ) (La : ℝ), z.Good f La →

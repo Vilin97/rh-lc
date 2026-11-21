@@ -35,7 +35,6 @@ def WindowMeanAP : Prop :=
     (∑ j ∈ range Y₀, (β (progr t₀ d j) : ℝ)) / (Y₀ : ℝ) ≤
       (n₀ : ℝ) * ((del₀ : ℝ) / Y₀ + (La₀ + (del₀ : ℝ) * h / Y₀) / E)
 
-open Classical in
 
 def WindowFullAP : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (K : Type) [NormedField K] [NormedAlgebra ℚ_[p] K] [IsUltrametricDist K]

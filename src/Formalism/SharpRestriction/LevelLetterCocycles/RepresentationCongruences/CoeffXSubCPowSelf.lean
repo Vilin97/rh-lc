@@ -146,7 +146,6 @@ theorem crisMap_coords (W : LocWach PD LL O v n) {T₁ T₂ : LocLat G Qp LL O} 
     simp only [dvO, dv, map_sum, map_smul, hX, Finset.smul_sum, smul_smul, map_mul, Finset.sum_smul]
   exact Finset.sum_comm
 
-set_option maxHeartbeats 1000000 in
 
 theorem lift2a [NeZero n] [Fintype (K →ₐ[Qp] LL)] [IsDomain O] [IsDiscreteValuationRing O]
     [IsAdicComplete (IsLocalRing.maximalIdeal O) O] (W : LocWach PD LL O v n)

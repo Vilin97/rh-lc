@@ -53,7 +53,6 @@ end GlobalTheory.AdForm.RdTrans
 
 namespace GlobalTheory.AdForm.RdTrans
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_level {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (u : B.Word) (a : I.ι) (i : ℕ) {Ch : Type}
     {chOf : (I.stp u a i).Cl → Ch}
@@ -94,7 +93,6 @@ theorem exists_level {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (u 
 
 end GlobalTheory.AdForm.RdTrans
 
-set_option maxHeartbeats 4000000 in
 
 theorem GlobalTheory.AdForm.rd_trTo : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → ∀ θ, IsInfFam θ → ∀ j (hj : j ≤ B.R.m), ∀ φ ∈ (I.fm l u a).Fi j, ∀ b (c : (I.chain l u a).cls j) (d : (I.stp u a j).D c.1)
     (x : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)) (z : TC.GA B (B.R.N j)), x ∈ GfC _ →

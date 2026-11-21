@@ -59,7 +59,6 @@ theorem good_cyc {art : Ideles K →* Gab K Ω} (ha : IsGlobalArtin art) (ι : Q
 
 end AlgType
 
-open AlgType in
 
 end UpperTheory.V.Cu2
 

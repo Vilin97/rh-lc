@@ -141,7 +141,6 @@ theorem isSubDPIdeal (κ : DividedPowers I) {N : ℕ} (hN : NilExp κ (N + 2)) :
 
 end GlobalTheory.SqLift.DPStep
 
-open GlobalTheory.SqLift.DPStep in
 
 theorem GlobalTheory.SqLift.exists_isStep_nilExp :
     ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Ideal R) (κ : DividedPowers I) (π : R →+* R₀),

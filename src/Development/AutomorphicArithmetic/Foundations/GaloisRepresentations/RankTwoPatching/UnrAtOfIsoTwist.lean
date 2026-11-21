@@ -91,7 +91,6 @@ theorem good_of_fixed {n : ℕ} (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) (
   obtain ⟨i, -, rfl⟩ := Multiset.mem_map.1 hy
   rfl
 
-open GlobalTheory.RealGal.TwistUnr in
 
 theorem unrAt_of_isoTwist (hA : AdmissibleReal) (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (a : ℕ) (ha : 1 ≤ a)
     (π : TR.CuspSub F a) (η : HChar F) (hT : IsoTwist π η) (u : HeightOneSpectrum (𝓞 F)) (B : Multiset ℂˣ) (hB : π.HasSat u B) :

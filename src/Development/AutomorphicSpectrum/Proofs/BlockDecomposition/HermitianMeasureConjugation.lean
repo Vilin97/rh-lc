@@ -111,7 +111,6 @@ theorem hermPart_split {d e : AE D} (he : cA D e = -e) (hde : d * e = 1) (x : Mx
     smul_sub]
   exact (add_add_sub_cancel _ _ _).trans (half_smul_add x)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def mulCE (d e : AE D) (hde : d * e = 1) : Mx D n n ≃ₜ+ Mx D n n where
   toFun x := d • x

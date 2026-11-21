@@ -18,7 +18,6 @@ variable {n n' : Type*} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'
 
 variable [MeasurableSpace k] [BorelSpace k]
 
-omit [DecidableEq n] in
 
 theorem hat_coset {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν : Measure k} (hν : IsUnitVol ν) {ε : k}
     (hε : ε ∈ 𝒪[k]) (y₀ : n → k) {η : n → k} (hη : ∀ i, η i ∈ 𝒪[k]) :
@@ -43,7 +42,6 @@ theorem hat_coset {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν : Measur
     Measure.pi_pi]
   simp [hν.2]
 
-omit [DecidableEq n] [DecidableEq n'] in
 
 end A
 
@@ -68,21 +66,18 @@ theorem typeFrame_inv (ϖ : kˣ) (o : ι ≃ n ⊕ Fin c) :
   rw [typeFrame_val, diagonal_mul_diagonal, ← diagonal_one]
   congr; funext i; exact mul_inv_cancel₀ (wt_ne_zero ϖ i)
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 end B
 
 section C
 variable [MeasurableSpace k] [BorelSpace k] {κ t : Type*} [Fintype κ] [DecidableEq κ] [Fintype t] [DecidableEq t]
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 end C
 
 section D
 variable {κ t : Type*} [Fintype κ] [DecidableEq κ] [Fintype t] [DecidableEq t]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 end D
 

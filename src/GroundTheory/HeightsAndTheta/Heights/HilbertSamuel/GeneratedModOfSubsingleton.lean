@@ -34,11 +34,8 @@ section Point
 variable {S : Type} [CommRing S] {K : Type} [Fintype K] [LinearOrder K] {ι : K → Type}
   [∀ k, Fintype (ι k)] [∀ k, LinearOrder (ι k)] [∀ k, Subsingleton (ι k)]
 
-omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 
-omit [LinearOrder K] [∀ k, Fintype (ι k)] [∀ k, LinearOrder (ι k)] in
 
-omit [Fintype K] [∀ k, Subsingleton (ι k)] in
 
 theorem isMultiHomog_one_zero : IsMultiHomog (1 : MRingOver S ι) 0 := by
   classical

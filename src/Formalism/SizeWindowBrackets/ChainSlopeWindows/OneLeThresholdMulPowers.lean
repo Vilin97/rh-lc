@@ -951,6 +951,5 @@ lemma first_le {C₁ : ℝ}
   unfold tOrders tBand
   linarith
 
-open Formalism.RankGapBounds.WeightedMeanData Formalism.LFunctionChainParameters.WeightedSlopeBounds in
 
 end Formalism.LFunctionChainParameters.PrimeWindowSizeBounds

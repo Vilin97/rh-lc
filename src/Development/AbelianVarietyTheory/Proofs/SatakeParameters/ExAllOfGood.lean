@@ -22,7 +22,6 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 noncomputable section
 namespace GlobalTheory.RoadU
 
-open UpperTheory.V.Af in
 
 theorem frobEig_of_dec {E Ω : Type} [Field E] [NumberField E]
     [IsCMField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {a : ℕ}
@@ -57,7 +56,6 @@ theorem frobEig_of_dec {E Ω : Type} [Field E] [NumberField E]
   rw [e, ← hq, ← key, Units.val_mul, Units.val_mul, Matrix.charpoly_mul_comm, ← mul_assoc, ← Units.val_mul, inv_mul_cancel,
     Units.val_one, one_mul]
 
-open UpperTheory.V.Af in
 
 end GlobalTheory.RoadU
 end

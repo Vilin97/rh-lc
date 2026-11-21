@@ -220,9 +220,7 @@ theorem ker_classT (L : Lattice (O := O) ρ) (hρ : ∀ x, Continuous fun g => �
   · rintro ⟨x, rfl⟩
     exact ⟨x, x.2, rfl⟩
 
-omit [IsFractionRing O LL] in
 
-omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O LL] in
 
 theorem ker_redMap_le (L : Lattice (O := O) ρ) (hρ : ∀ x, Continuous fun g => ρ g x) (I : Ideal O) :
     LinearMap.ker (redMap I (cobT PD L hρ)) ≤ galoisLatticeModIdealInvariants L I := by

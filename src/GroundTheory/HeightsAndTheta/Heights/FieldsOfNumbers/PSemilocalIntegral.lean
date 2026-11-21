@@ -29,7 +29,6 @@ section Dim
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {F : Type u} [Field F]
 
-omit [DecidableEq K] in
 
 theorem exists_ringKrullDim_eq_nat (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [Q.IsPrime] :
     ∃ D : ℕ, ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) = D := by
@@ -69,7 +68,6 @@ section Centre
 variable {F : Type u} [Field F] {K K' : Type} [Fintype K] [DecidableEq K] [Fintype K']
   [DecidableEq K'] {j : K ↪ K'} {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
-omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 
 theorem contract_le {P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')} [P'.IsPrime] {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)))}
     (hPW : contractPrime j P' ≤ W) (R : ValuationSubring (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')))

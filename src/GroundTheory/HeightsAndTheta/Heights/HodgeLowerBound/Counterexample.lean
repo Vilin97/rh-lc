@@ -57,7 +57,6 @@ end Point
 
 section Shift
 
-open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet in
 
 end Shift
 

@@ -40,7 +40,6 @@ theorem isMultiHomogIdeal_top {K : Type} [Fintype K] {ι : K → Type} [∀ k, F
 
 end PowerBlockDatum
 
-open PowerBlockDatum in
 
 theorem PowerBlockDatum.proof (hE : ResExistsStatement) (hV : ResVolume.Statement)
     (hVer : PowerBlockVeronese.Statement) (hBir : PowerHeightsirational.Statement)

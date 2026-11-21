@@ -21,7 +21,6 @@ namespace SeparatedSmallCount
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
-omit [Fintype K] in
 
 theorem isMultiHomog_sub {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
     IsMultiHomog (f - g) a := by
@@ -62,7 +61,6 @@ def IsSectionValue (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) (s : Ω)
     eval z (map (Int.castRingHom ℂ) h) ≠ 0 ∧
     v = eval z (map (Int.castRingHom ℂ) g) / eval z (map (Int.castRingHom ℂ) h)
 
-open Classical in
 
 def sectionValue (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) (s : Ω) (z : (Σ k, ι k) → ℂ) : ℂ :=
   if h : ∃ v, IsSectionValue y a τ s z v then h.choose else 0
@@ -87,7 +85,6 @@ theorem exists_isSectionValue {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : �
   obtain ⟨dg, dh, g, h, hg, hh, hd, he, hz0⟩ := LocalRep.proof K ι Ω y a τ s z hs hz
   exact ⟨_, dg, dh, g, h, hg, hh, hd, he, hz0, rfl⟩
 
-omit [Fintype K] in
 
 theorem isSectionValue_add {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : ℕ} {s t : Ω} {z : (Σ k, ι k) → ℂ} {v w : ℂ}
     (hv : IsSectionValue y a τ s z v) (hw : IsSectionValue y a τ t z w) :
@@ -149,7 +146,6 @@ theorem isBoundedH_of_sectionValue {y : (Σ k, ι k) → Ω} {A : HermLine ι} {
 
 end SeparatedSmallCount
 
-open SeparatedSmallCount in
 
 theorem SeparatedSmallCount.proof (hfin : SectionLatticeFinite.Statement) : SeparatedSmallCount.Statement := by
   classical

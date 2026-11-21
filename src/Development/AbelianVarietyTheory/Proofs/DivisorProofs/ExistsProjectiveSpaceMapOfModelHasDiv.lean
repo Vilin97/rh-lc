@@ -46,7 +46,6 @@ theorem subsingleton_of_not_nonempty {X : Scheme.{0}} {V : X.Opens} (hV : ¬ (V 
   subst this
   infer_instance
 
-variable {M} in
 
 theorem eq_of_valF {V : M.Z.Opens} {f g : Γ(M.Z, V)}
     (h : ∀ hV : (V : Set M.Z).Nonempty, valF M.pt V f = valF M.pt V g) : f = g := by
@@ -55,12 +54,10 @@ theorem eq_of_valF {V : M.Z.Opens} {f g : Γ(M.Z, V)}
   · have := subsingleton_of_not_nonempty hV
     exact Subsingleton.elim _ _
 
-open Classical in
 
 def fnOf (V : M.Z.Opens) (x : Ω) : Γ(M.Z, V) :=
   if h : ∃ f : Γ(M.Z, V), valF M.pt V f = x then h.choose else 0
 
-variable {M} in
 
 theorem valF_fnOf {V : M.Z.Opens} {x : Ω} (h : ∃ f : Γ(M.Z, V), valF M.pt V f = x) :
     valF M.pt V (fnOf M V x) = x := by

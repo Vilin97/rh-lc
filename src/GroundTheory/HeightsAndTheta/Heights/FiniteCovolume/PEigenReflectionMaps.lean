@@ -14,7 +14,6 @@ noncomputable section
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [DecidableEq ι] in
 
 theorem star_dotProduct_mulVec_of_isHermitian {P : Matrix ι ι ℂ} (hP : P.IsHermitian)
     (x y : ι → ℂ) : star (star y ⬝ᵥ (P *ᵥ x)) = star x ⬝ᵥ (P *ᵥ y) := by
@@ -36,7 +35,6 @@ theorem exists_unit_mul_star_eq_norm (s : ℂ) : ∃ α : ℂ, ‖α‖ = 1 ∧ 
       field_simp
       push_cast; ring
 
-variable (ι) in
 
 theorem EigenReflectionMaps.proof (h₁ : EigenReflection.Statement ι)
     (h₂ : EigenspacesOrthogonal.Statement ι) : EigenReflectionMaps.Statement ι := by

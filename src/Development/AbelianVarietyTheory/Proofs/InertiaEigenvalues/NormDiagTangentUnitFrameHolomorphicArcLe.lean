@@ -153,7 +153,6 @@ theorem im_tau_mono {w₀ w : ℂ} (hw : w₀.im ≤ w.im) (x : Fin g → ℝ) :
   have := mul_le_mul_of_nonneg_right hw hN
   linarith
 
-omit [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
 theorem exists_riem_inv {w : ℂ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hR : IsRiem Fu Ha.i (Ha.Pw w) Hm) :
     ∃ G : Matrix (Fin g) (Fin g) ℝ, G * (Θ.τ w).map Complex.im = 1 ∧ ∀ v, (hermForm Hm v v).re =
@@ -168,7 +167,6 @@ theorem exists_riem_inv {w : ℂ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hR : IsRiem
       by_cases hij : i = j <;> simp [Pi.single_apply, hij, eq_comm]), fun v => ?_⟩
   rw [← re_hermForm_sum Hm p h1, ← eq_sum Θ.h p (fun i => (Θ.per w i).1)]
 
-include Θ in
 
 theorem riem_anti {w₀ w : ℂ} (h₀ : Ha.T < w₀.im) (hw : w₀.im ≤ w.im) {H₀ Hm : Matrix (Fin g) (Fin g) ℂ}
     (hR₀ : IsRiem Fu Ha.i (Ha.Pw w₀) H₀) (hR : IsRiem Fu Ha.i (Ha.Pw w) Hm) (v : Fin g → ℂ) :
@@ -181,8 +179,6 @@ theorem riem_anti {w₀ w : ℂ} (h₀ : Ha.T < w₀.im) (hw : w₀.im ≤ w.im)
 
 end ThetaShiftProofs
 
-open GlobalTheory.FrameNormLie GlobalTheory.FrameNorm in
-set_option maxHeartbeats 1000000 in
 
 theorem point_bound {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ} {σ : c.F →+* ℂ}

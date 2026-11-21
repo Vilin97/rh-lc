@@ -13,7 +13,6 @@ namespace PositivityTheory.RgUd.AB.Pf
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open Classical in
 
 def cutL {n : ℕ} (U : Set k) : (Mx k n → ℂ) →ₗ[ℂ] (GL (Fin (n + 1)) k → ℂ) where
   toFun ψ x := if (x.val).det ∈ U then ψ x.val else 0

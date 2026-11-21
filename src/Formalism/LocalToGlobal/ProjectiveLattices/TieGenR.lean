@@ -22,6 +22,5 @@ def RatAt (h : LawsP T) (j : ℕ) (hG : GenFrEx (T.Q.Xo j) T.Q.c) (κ : Comp (T.
     rdR h j F (κ Z) x = P (ReciprocityTheory.ChartRestriction.G.T0.ratio (Ω := Om Z) (valC hG (wtA u) u.n F.1 Z)
       (valC hG (wtA u) u.n G'.1 Z)) * rdR h j G' (κ Z) x
 
-open Classical in
 
 end Formalism.L2.Pj

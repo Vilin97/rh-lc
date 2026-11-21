@@ -33,7 +33,6 @@ theorem isClosedEmbedding_leviUnipotent :
 instance locallyCompactSpace_leviUnipotent : LocallyCompactSpace (leviUnipotent F n β γ) :=
   isClosedEmbedding_leviUnipotent.locallyCompactSpace
 
-variable (F n β γ) in
 
 def leviUnipotentToUnipotent : leviUnipotent F n β γ →* unipotentRadical F n γ where
   toFun u := ⟨((u : levi F n β) : GL (Fin n) F), Subgroup.mem_subgroupOf.1 u.2⟩
@@ -69,7 +68,6 @@ variable {U U' U'' : Type*} [AddCommGroup U] [Module ℂ U] [AddCommGroup U'] [M
   [AddCommGroup U''] [Module ℂ U''] {σ : Representation ℂ (levi F n β) U}
   {σ' : Representation ℂ (levi F n β) U'} {σ'' : Representation ℂ (levi F n β) U''}
 
-variable (γ) in
 
 def restrictLeviUnipotent (f : Representation.IntertwiningMap σ σ') :
     Representation.IntertwiningMap (σ.comp (leviUnipotent F n β γ).subtype)

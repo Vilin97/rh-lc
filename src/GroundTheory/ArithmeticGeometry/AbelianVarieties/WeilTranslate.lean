@@ -46,15 +46,10 @@ theorem ordPoint_translate (P R : W.toAffine.Point) {f : W.toAffine.FunctionFiel
     exp_inj] at h
   exact neg_injective h
 
-omit [DecidableEq F] [IsAlgClosed F] in
 
-omit [DecidableEq F] [IsAlgClosed F] in
 
-omit [DecidableEq F] [IsAlgClosed F] in
 
-omit [DecidableEq F] [IsAlgClosed F] in
 
-omit [DecidableEq F] [W.IsElliptic] in
 
 theorem exists_zsmul_eq {n : ℤ} (hn : n ≠ 0) (Q : W.toAffine.Point) : ∃ P, n • P = Q := by
   classical

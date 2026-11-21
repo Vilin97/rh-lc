@@ -20,7 +20,6 @@ open scoped Classical
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-variable (F κ) in
 
 def intPts : Set (κ → Af F) :=
   Set.univ.pi fun _ => {a : Af F | ∀ v, a v ∈ v.adicCompletionIntegers F}

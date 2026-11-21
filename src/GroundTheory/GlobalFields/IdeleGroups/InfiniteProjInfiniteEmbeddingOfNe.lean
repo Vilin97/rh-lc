@@ -76,7 +76,6 @@ section Finite
 
 variable {K}
 
-open Classical in
 
 def finiteAdeleSingle (v : HeightOneSpectrum (𝓞 K)) :
     v.adicCompletion K →* FiniteAdeleRing (𝓞 K) K where
@@ -174,7 +173,6 @@ section Infinite
 
 variable {K}
 
-open Classical in
 
 def infiniteAdeleSingle (w : InfinitePlace K) : w.Completion →* InfiniteAdeleRing K :=
   MonoidHom.mulSingle (fun u : InfinitePlace K ↦ u.Completion) w

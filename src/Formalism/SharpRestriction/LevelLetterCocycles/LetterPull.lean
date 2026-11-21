@@ -156,7 +156,6 @@ theorem o_inj [FiniteDimensional Qp LL] (hK : Function.Bijective (algebraMap K�
   funext k
   exact Fintype.linearIndependent_iff.1 hind2 ρ (by rw [← hξ, hξ0]) k
 
-include W in
 
 theorem right_inv (hV : ValRing (LL := LL) O v) (hinj : Function.Injective (algebraMap O LL)) {d dY : ℕ}
     (o : Fin d → Fin dY → O)

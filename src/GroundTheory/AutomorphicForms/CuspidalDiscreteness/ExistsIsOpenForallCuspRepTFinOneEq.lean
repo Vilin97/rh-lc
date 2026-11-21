@@ -60,7 +60,6 @@ def archRepT : BanachRep (archGroup K n) (CuspL2 μ) := BanachRep.ofUnitary (arc
 theorem archRepT_apply (a : archGroup K n) (v : CuspL2 μ) :
     archRepT μ a v = cuspRepT μ (archP K n a) v := rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_isOpen_forall_cuspRepT_finOne_eq (v : CuspL2 μ)
     (hv : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k :
@@ -93,7 +92,6 @@ theorem toLp_integrated_archRepT {γ : archGroup K n → ℂ} (hγ : Continuous 
   ((toLp μ).integral_comp_comm (integrable_smul_archRepT μ ν hγ hγc w)).symm.trans
     (integral_congr_ae (Eventually.of_forall fun a => (toLp μ).map_smul (γ a) _))
 
-set_option maxHeartbeats 1000000 in
 
 theorem isContRep_integrated_archRepT {w : CuspL2 μ} {W : normOneGL K n → ℂ}
     (hW : IsContRep μ (toLp μ w) W) {C : ℝ} (hWb : ∀ y, ‖W y‖ ≤ C)

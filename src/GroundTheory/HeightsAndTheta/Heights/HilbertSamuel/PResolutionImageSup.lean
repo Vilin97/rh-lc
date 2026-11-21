@@ -181,7 +181,6 @@ theorem local_bound (hC : ChartSupBound.Statement) (d : HSMDatum D Ω κ) (x₀ 
 
 end ResolutionImageSup
 
-open ResolutionImageSup in
 
 theorem ResolutionImageSup.proof (hC : ChartSupBound.Statement) : ResolutionImageSup.Statement := by
   intro D Ω _ _ κ _ d

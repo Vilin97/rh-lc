@@ -428,7 +428,6 @@ theorem topSelf_pow (hp : IsProjOver p) (L : HermLB p) (m : ℕ) (Z : Scheme.{0}
     push_cast
     ring
 
-omit [Module.Finite ℤ k] in
 
 end Curves
 

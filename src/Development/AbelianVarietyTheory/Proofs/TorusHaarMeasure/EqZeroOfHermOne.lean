@@ -13,11 +13,8 @@ namespace GlobalTheory.TwoLines
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-omit [IsCMField E] in
 
-omit [NumberField E] [IsCMField E] in
 
-omit [NumberField E] [IsCMField E] in
 
 theorem two_mul_card_cmType {r : ℕ} (X : Data E r) : 2 * X.Ψ.card = Module.finrank ℚ E := by
   classical

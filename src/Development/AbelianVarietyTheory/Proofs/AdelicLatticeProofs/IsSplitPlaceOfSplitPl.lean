@@ -44,7 +44,6 @@ theorem eq_zero_of_loc {x : RA F E} (h : ∀ v, loc E v x = 0) : x = 0 := by
 theorem eq_of_loc {x y : RA F E} (h : ∀ v, loc E v x = loc E v y) : x = y :=
   sub_eq_zero.1 (eq_zero_of_loc fun v => by rw [map_sub, h, sub_self])
 
-open Classical in
 
 def ind (S : Set (HeightOneSpectrum (𝓞 F))) : FiniteAdeleRing (𝓞 F) F :=
   ⟨fun w => if w ∈ S then 1 else 0, Filter.Eventually.of_forall fun w => by
@@ -151,6 +150,5 @@ theorem support_iff (p : HeightOneSpectrum (𝓞 F) → Prop) {n : ℕ} (h : Mat
       · rw [loc_ind_pos hv, one_mul]
       · rw [(hone v).1 (hT v hv), mul_zero]
 
-omit [NumberField F] in
 
 end GlobalTheory.UnRep.Compare

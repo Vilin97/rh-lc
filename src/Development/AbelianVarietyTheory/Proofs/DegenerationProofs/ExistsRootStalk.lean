@@ -206,8 +206,6 @@ theorem val_eq_of_pow_eq {F : Type} [Field F] (v : AddValuation F (WithTop ℚ))
   rw [v.map_pow, v.map_pow, ← hr, ← hr', ← WithTop.coe_nsmul, ← WithTop.coe_nsmul, WithTop.coe_eq_coe] at this
   rw [← hr, ← hr', nsmul_right_injective hn this]
 
-open GlobalTheory.TorusExt in
-attribute [local instance] gtGroup in
 
 theorem val_theta : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWStatement → UUStatement →
     AllUV fun {V} _ _ _ {ϖ} hϖ {D} Q {F} _ _ {v} hv {A} {G} _ _ U => ∀ w₀ rig, NormW U.toUnifPre w₀ rig →

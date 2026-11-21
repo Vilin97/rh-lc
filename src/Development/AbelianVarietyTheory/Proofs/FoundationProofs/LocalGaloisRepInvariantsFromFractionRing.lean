@@ -95,7 +95,6 @@ noncomputable def grepOf {m : ℕ} (r : ↥Gw →* GL (Fin m) O)
     ρ := Bw.rep r
     cont := rep_continuous Bw r hr }
 
-set_option maxHeartbeats 1000000 in
 
 theorem finrank_h1f_no_invariants [IsDomain O] (P : LocPrime l) {m : ℕ} (r : ↥Gw →* GL (Fin m) O)
     (hr : Continuous fun g => ((r g : GL (Fin m) O) : Matrix (Fin m) (Fin m) O))

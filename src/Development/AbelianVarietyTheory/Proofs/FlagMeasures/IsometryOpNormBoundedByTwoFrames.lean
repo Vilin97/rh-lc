@@ -148,7 +148,6 @@ theorem eucl_proj_le {H : Matrix (Fin n) (Fin n) ℂ} (hH : Hᴴ * H = 1) (b b' 
   rw [eucl_mulVec_of_unitary hH]
   exact mul_le_mul_of_nonneg_right (hM j) (eucl_nonneg _)
 
-omit [Fintype ι] in
 
 theorem sq_le_of_pos {H : Matrix (Fin n) (Fin n) ℂ} (hH : Hᴴ = H) (hH2 : H * H = 1)
     (b' : ι → Fin n → ℂ) (hpos : ∀ y, (∀ i, herm H y (b' i) = 0) → 0 ≤ (herm H y y).re)

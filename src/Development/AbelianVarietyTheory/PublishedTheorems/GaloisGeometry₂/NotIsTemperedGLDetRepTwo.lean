@@ -87,7 +87,6 @@ theorem prod_coord {M : Type} [CommMonoid M] (F : ℂ → M) (z : Cinf E) :
   rw [e, Finset.prod_pair hne]
   simp [coord, hne]
 
-variable (E) in
 
 theorem dchi_absC (s : ℂ) (z : Cinf E) : dchi (Model.absC E s) z = s * ∑ w, (2 * ((z w).re : ℝ) : ℂ) := by
   let A : Cinf E →L[ℝ] ℂ := s • ∑ w, (2 : ℝ) • (Complex.ofRealCLM.comp (Complex.reCLM.comp (ContinuousLinearMap.proj w)))

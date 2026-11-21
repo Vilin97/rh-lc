@@ -45,7 +45,6 @@ def secGroup (W : X.Opens) : AddSubgroup (∀ α, κ α → Γ(X, W ⊓ U α)) w
   neg_mem' := fun {s} hs α β k => by
     simp only [Pi.neg_apply, map_neg, hs α β k, mul_neg, Finset.sum_neg_distrib]
 
-variable {g} in
 
 theorem sec_rel {W : X.Opens} {s : ∀ α, κ α → Γ(X, W ⊓ U α)} (hs : s ∈ secGroup g W) (α β : ι) (k : κ α)
     {V : X.Opens} (h₁ : V ≤ W ⊓ U α) (h₂ : V ≤ W ⊓ U β) (h₃ : V ≤ U α ⊓ U β) :
@@ -168,7 +167,6 @@ theorem coord_res {V W : X.Opens} (h : W ≤ V) (α : ι) (hV : V ≤ U α) (hW 
   change rs _ (rs _ (s.1 α k)) = rs _ (rs _ (s.1 α k))
   simp only [rs_trans]
 
-variable {g} in
 
 def ofCoord (hc : Coc g) {W : X.Opens} (α : ι) (h : W ≤ U α) (t : κ α → Γ(X, W)) : secGroup g W :=
   ⟨fun β k => ∑ k', rs (le_inf inf_le_right (inf_le_left.trans h) : W ⊓ U β ≤ U β ⊓ U α) (g β α k k') *
@@ -183,7 +181,6 @@ def ofCoord (hc : Coc g) {W : X.Opens} (α : ι) (h : W ≤ U α) (t : κ α →
       simp only [Finset.mul_sum] at this
       exact this.symm⟩
 
-variable {g} in
 
 def coordEquiv (hc : Coc g) {W : X.Opens} (α : ι) (h : W ≤ U α) :
     secGroup g W ≃ₗ[Γ(X, W)] (κ α → Γ(X, W)) where

@@ -203,7 +203,6 @@ variable {D : D7} (i : D.nd.Loc) (dc : TruncatedSeriesCountingIdentities.Decl D 
   [∀ k, SMulCommClass Dd.R' (D.nd.O i) (blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk k)]
   [∀ k, IsScalarTower Dd.T' Dd.R' (blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk k)]
 
-variable {i r ρ π Dd} in
 
 theorem rblk (hE : Ev r π Dd) (hN : RepresentationBoundsCohomology.NormAt D.nd r ρ π) (c' : Fin D.R.t) (g : GE D.nd) :
     Dd.ρπ (Dd.r g) (Fin.natAdd D.R.r c') (Fin.natAdd D.R.r c') =
@@ -219,7 +218,6 @@ theorem rblk (hE : Ev r π Dd) (hN : RepresentationBoundsCohomology.NormAt D.nd 
   rw [h1]
   exact congrArg _ (hN.2.1 g c')
 
-variable {i r ρ π Dd} in
 
 theorem r_act (hE : Ev r π Dd) (hN : RepresentationBoundsCohomology.NormAt D.nd r ρ π) (c' : Fin D.R.t) (g : GE D.nd)
     (m : blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk c'.succ) :
@@ -556,7 +554,6 @@ theorem idx_not_qs {v : HeightOneSpectrum (𝓞 D.host.E)} (hv : v ∈ plSet i d
 theorem row_mem_pl {v : HeightOneSpectrum (𝓞 D.host.E)} (hv : v ∈ dc.row) : v ∈ plSet i dc :=
   Finset.mem_union_left _ (Finset.mem_union_left _ hv)
 
-set_option maxHeartbeats 1000000 in
 
 theorem Fpos_row (c : Fin (D.R.t + 1)) {w : ℕ} (hw : w ∈ rowsN i dc) :
     Fpos i dc Dd c w = if (c : ℕ) = 1 then lcH1 (resU i dc Dd c w) ⊓
@@ -568,7 +565,6 @@ theorem Fpos_row (c : Fin (D.R.t + 1)) {w : ℕ} (hw : w ∈ rowsN i dc) :
   unfold Fpos
   simp only [if_neg hq, if_pos hw]
 
-set_option maxHeartbeats 1000000 in
 
 end Shape
 

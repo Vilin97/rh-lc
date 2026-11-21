@@ -125,7 +125,6 @@ theorem pairingO_smul {G : PDivGroup p O} {h : ℕ} (e : G.Tate ≃ₗ[ℤ_[p]] 
     (χ : G.dual.Tate) : IndefiniteRowSideFullHecke.EpsilonPairingZeta.pairingO hε e (c • y) χ = c * IndefiniteRowSideFullHecke.EpsilonPairingZeta.pairingO hε e y χ := by
   simp [IndefiniteRowSideFullHecke.EpsilonPairingZeta.pairingO, Finset.mul_sum, mul_assoc]
 
-omit [Algebra ℤ_[p] O] in
 
 theorem pairingO_inj {G : PDivGroup p O} (hG : Function.Surjective (G.pairing O).flip) {h : ℕ}
     (e : G.Tate ≃ₗ[ℤ_[p]] (Fin h → ℤ_[p])) (y z : Fin h → O)

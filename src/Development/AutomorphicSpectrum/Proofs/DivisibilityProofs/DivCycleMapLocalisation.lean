@@ -12,7 +12,6 @@ open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.Compan
 open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar IsHorizontal mcPts mCoordIdeal IsIntersectionFamily IsIntersectionSystem IntersectionSystem ptsIntegral geoNum charOf recR arInt ChartBundle chartRing)
 set_option maxSynthPendingDepth 1
 
-attribute [local instance] MvPolynomial.algebraMvPolynomial in
 
 theorem GlobalTheory.CompanionTheory.Ar.Num.divCycle_map_localisation :
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (R R' : Type) [CommRing R] [CommRing R'] [Algebra R R'] (Mo : Submonoid R) [IsLocalization Mo R'] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι)), W'.IsPrime → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map (MvPolynomial.map (algebraMap R R'))) (MvPolynomial.map (algebraMap R R') f)) W' : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) (W'.comap (MvPolynomial.map (algebraMap R R'))) : ℤ) := by

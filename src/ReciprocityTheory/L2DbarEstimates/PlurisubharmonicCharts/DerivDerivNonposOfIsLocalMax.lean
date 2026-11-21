@@ -50,7 +50,6 @@ private theorem differentiableAt_fderiv_of_contDiffAt_two' {f : ReciprocityTheor
     (hf : ContDiffAt ℝ 2 f x) : DifferentiableAt ℝ (fderiv ℝ f) x :=
   (hf.fderiv_right (m := 1) one_add_one_eq_two.le).differentiableAt (by norm_num)
 
-set_option maxHeartbeats 400000 in
 
 theorem snd_nonpos_of_isLocalMax {f : V n → ℝ} {x : V n} (hf : ContDiffAt ℝ 2 f x)
     (hmax : IsLocalMax f x) (u : V n) : fderiv ℝ (fderiv ℝ f) x u u ≤ 0 := by

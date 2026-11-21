@@ -13,7 +13,6 @@ open QuadraticAlgebra UpperTheory.V.Z.Sym UpperTheory.V.Z.Sym.Loc
 
 variable {O K : Type} [CommRing O] [Field K] [Algebra O K] {τ : K}
 
-variable (O τ) in
 
 def Gu : Subgroup (Etau K τ)ˣ where
   carrier := {u | IsIntegral O (u : Etau K τ) ∧ IsIntegral O ((u⁻¹ : (Etau K τ)ˣ) : Etau K τ)}
@@ -22,11 +21,9 @@ def Gu : Subgroup (Etau K τ)ˣ where
     rw [_root_.mul_inv_rev, Units.val_mul]; exact hb.2.mul ha.2⟩
   inv_mem' {a} ha := ⟨ha.2, by simpa using ha.1⟩
 
-variable (O) in
 
 def Ord (y : Etau K τ) : Set (Etau K τ) := (Submodule.span O {1, y} : Submodule O (Etau K τ))
 
-variable (O) in
 
 def Hu (y : Etau K τ) : Subgroup (Etau K τ)ˣ where
   carrier := {u | PS.ml u (Ord O y) = Ord O y}

@@ -202,7 +202,6 @@ theorem psi_weight_zero_twist {oa : D.OAct O} (h : TraceFormTwistIso D oa w) : T
   rw [_root_.mul_assoc, _root_.mul_assoc]
   exact congrArg _ e
 
-omit hw ht in
 
 end Twist
 

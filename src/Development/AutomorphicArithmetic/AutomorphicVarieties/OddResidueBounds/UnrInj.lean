@@ -27,7 +27,6 @@ private theorem unrInj_smul {l : ℕ} [Fact l.Prime] {u : ℤ_[l]ˣ} (hu : u ∈
     exact congrArg Units.val h
   rw [← hsmul, hu', one_mul]
 
-set_option maxHeartbeats 400000 in
 
 theorem UpperTheory.V.Odd.unrInj :
     ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (l : ℕ) [Fact l.Prime] (D : LData E Ω l) (e : ℤ), ∃ f : Submodule.torsionBy ℤ_[l] (H1 (qzTw D e)) (l : ℤ_[l]) → UnrHom (Fn E Ω l 1) Ω l, Function.Injective f := by

@@ -202,7 +202,6 @@ theorem addBlock_sum (h : Point K) (c : Kˣ) : (addBlock h 1 c).1.sum = h.1.sum 
 def toCos {w : Point K} (p : lowW K w.1 w.2 × upUniG K w.1.sum) : Cos R w :=
   (Quotient.mk _ p.1, QuotientGroup.mk p.2)
 
-open Classical in
 
 def Gterm (ψ : AddChar K ℂ) (w w' : Point K) (p : lowW K w.1 w.2 × upUniG K w.1.sum)
     (p' : lowW K w'.1 w'.2 × upUniG K w'.1.sum) : ℂ :=
@@ -1683,7 +1682,6 @@ theorem finsum_of_inj {X S : Type} (ι : S → X) (hι : Function.Injective ι) 
 
 variable {K : Type} [CommRing K]
 
-open Classical in
 
 def tTerm (R : Subring K) (ψ : AddChar K ℂ) {m m' N N' : ℕ} (hN : N = m + 1) (hN' : N' = m' + 1)
     (Z₁ : Matrix (Fin m) (Fin m) K) (Z₂ : Matrix (Fin m') (Fin m') K) (c : K)

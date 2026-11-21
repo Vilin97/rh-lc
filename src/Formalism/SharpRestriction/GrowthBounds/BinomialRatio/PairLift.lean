@@ -15,7 +15,6 @@ def FamOK (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (C0 C
     (u : ∀ j : Fin (numSeg X.TT), SegVs O X.m (segS X.TT j) (X.seg C0 CE1 CE2 j).t) : Prop :=
   ∀ j, u j ∈ Lj O C0 CE1 CE2 Cm X j ∧ ∀ b, b ≠ β j → u j b = 0
 
-open Classical in
 
 def PairLiftAt (C0 CYb Cde Ck CD Cb CE1 CE2 Cm Ct Cc : ℝ) : Prop :=
   ∀ (X : Loc) [NeZero X.m] (W Qq O Kf : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [Field Qq]

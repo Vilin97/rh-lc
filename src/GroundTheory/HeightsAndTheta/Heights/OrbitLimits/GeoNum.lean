@@ -76,7 +76,6 @@ theorem isFieldIntersection_intNum (p : ℕ) [Fact p.Prime] :
 
 end GeoNumTarget
 
-open GeoNumTarget Bridge.GeoNum in
 
 theorem geoNumStatement {K : Type} [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] :
     ReciprocityTheory.ChartRestriction.G.AI.I1.GeoNumStatement ι := by

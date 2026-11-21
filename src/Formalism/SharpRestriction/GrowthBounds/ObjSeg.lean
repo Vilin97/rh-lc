@@ -235,7 +235,6 @@ def blockLat (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (
 abbrev SegVs (O : Type*) [CommRing O] [IsDomain O] (r s t : ℕ) :=
   SegBlock s r → MvPolynomial (BVar (2 * s + 1) r t) (KK O)
 
-open Classical in
 
 def segLat (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (p r : ℕ) [NeZero r]
     (S : SegData s) (aTop : Fin s → ℕ) (aPlus : ℕ) (m : ℝ) : Submodule O (SegVs O r s S.t) :=
@@ -277,7 +276,6 @@ def blockRank (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] 
     (blockData p S aTop aPlus m b).SSZ O (r := r)
   Module.finrank (KK O) (Submodule.span (KK O) (L : Set (MvPolynomial (BVar (2 * s + 1) r S.t) (KK O))))
 
-open Classical in
 
 def segRank (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (p r : ℕ) [NeZero r]
     (S : SegData s) (aTop : Fin s → ℕ) (aPlus : ℕ) (m : ℝ) : ℕ :=
@@ -315,7 +313,6 @@ def segS (TT : Finset (Fin n')) (j : Fin (numSeg TT)) : ℕ := (segDists TT j).l
 def segPos (TT : Finset (Fin n')) (j : Fin (numSeg TT)) (i : Fin (segS TT j)) : Fin n' :=
   posAdd (segStart TT j) ((segDists TT j).get i)
 
-open Classical in
 
 def segData (p : ℕ) (TT : Finset (Fin n')) (bT : Fin n' → ℕ) (a : ℕ) (b' Y La E0 : ℝ) (j : Fin (numSeg TT)) :
     SegData (segS TT j) where

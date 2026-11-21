@@ -39,7 +39,6 @@ variable {T} (h : LawsCore T)
 
 namespace LawsCore
 
-open Classical in
 
 def Nl (j : ℕ) (w : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ) : T.R j → ℝ :=
   if hj : InR D j then

@@ -24,7 +24,6 @@ theorem overRows_allSt {p : RowP} (h : OverRows p) :
   EvG.imp h fun _ _ _ _ _ hK => large₂.imp hK fun _ _ _ _ H kp _ _ w s P x =>
     s.1.elim fun c => H kp w c x.o.Z P.Wt P.hX x.m.z x.s.p0 x.r.Y x.m.intersectionNumber_baseChange x.m.exAt x.m.inGeo x.fits.grp x.fits.grpAt
 
-open Classical in
 
 end GlobalTheory.HeightCounting.Up.RowModel
 

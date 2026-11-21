@@ -44,7 +44,6 @@ def rtW (k : ℕ) : Ainf l := WittVector.teichmuller l (rt l k)
 
 def InWm (s : Ainf l) : Prop := ∀ i, ¬ IsUnit (s.coeff i)
 
-variable {l} in
 
 abbrev Des {R : Type} [CommRing R] (F : PAlg l ⥤ ModuleCat.{0} R) (s : R) : Prop := DesJ (testι l) F s
 

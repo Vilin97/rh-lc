@@ -18,7 +18,6 @@ namespace BlockAdjoinPrime
 
 variable {R : Type*} [CommRing R] {K : Type*} {ι : K → Type*}
 
-open Classical in
 
 def killB (B : Set K) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι :=
   aeval fun v => if v.1 ∈ B then 0 else X v

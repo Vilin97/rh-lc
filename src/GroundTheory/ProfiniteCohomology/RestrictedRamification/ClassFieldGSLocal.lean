@@ -145,7 +145,6 @@ section Frobenius
 
 variable {K : FiniteSubfield} {S : Set (HeightOneSpectrum (𝓞 K.1))} {n : ℕ}
 
-set_option maxHeartbeats 4000000 in
 
 end Frobenius
 

@@ -62,7 +62,6 @@ theorem covol_ideal_smul (b : Basis ι K V) (X : InfinitePlace K → Matrix ι �
     Formalism.HN.DualPolygon.twist_index M hM 𝔟 h𝔟, Nat.cast_pow]
   rfl
 
-omit [StarRing K] [IsTotallyComplex K] in
 
 theorem den_smul_idealSmul (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K)
     (M : Submodule (𝓞 K) V) :

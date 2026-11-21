@@ -27,7 +27,6 @@ private lemma half_lt_re_of_norm_eq_one_of_norm_sub_one_lt {w : ℂ} (hw : ‖w�
     nlinarith
   nlinarith
 
-open ValuativeRel Matrix in
 
 theorem _root_.GlobalTheory.CharDualMat.circle_eq_one_of_pow_near (z : Circle) (h : ∀ n : ℕ, ‖(z : ℂ) ^ n - 1‖ < 1) :
     z = 1 := by
@@ -86,8 +85,6 @@ theorem _root_.GlobalTheory.CharDualMat.valuation_nsmul_le (t : k) (n : ℕ) : v
     rw [succ_nsmul]
     exact ((valuation k).map_add _ _).trans (max_le ih le_rfl)
 
-open ValuativeRel Matrix in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem _root_.GlobalTheory.CharDualMat.exists_ball_trivial (ψ : AddChar k Circle) (hψ : Continuous ψ) :
     ∃ γ : ValueGroupWithZero k, γ ≠ 0 ∧ ∀ t : k, valuation k t < γ → ψ t = 1 := by
@@ -105,8 +102,6 @@ theorem _root_.GlobalTheory.CharDualMat.exists_ball_trivial (ψ : AddChar k Circ
   rw [Set.mem_preimage, AddChar.map_nsmul_eq_pow] at hmem
   simpa using hmem
 
-open ValuativeRel Matrix in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem _root_.GlobalTheory.CharDualMat.mem_integer_of_dual (ψ : AddChar k Circle) (hψ : Continuous ψ)
     (hne : ψ ≠ 1) (a : k)
@@ -153,8 +148,6 @@ theorem _root_.GlobalTheory.CharDualMat.mem_integer_of_dual (ψ : AddChar k Circ
   rw [mul_one, inv_mul_cancel_right₀ (pow_ne_zero _ ha0)] at this
   rw [this, AddChar.one_apply]
 
-open ValuativeRel Matrix in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem _root_.GlobalTheory.CharDualMat.integral_of_dual (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k]

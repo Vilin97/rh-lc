@@ -211,7 +211,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {Wp Wq : InfinitePla
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
-open Classical in
 
 def datumCoef (S : C.HidaSetting E Wp Wq) (T : ∀ v : Fin S.f, D.LevTower S.G.k S.G.r (Wp (S.pl v)) (Wq (S.pl v)))
     (v : Fin S.f) (Φ : FMap S v) (a a' : B.Mat S.G.k S.G.r → (Fin (2 * S.G.r + S.G.k + 1) → ℂ))

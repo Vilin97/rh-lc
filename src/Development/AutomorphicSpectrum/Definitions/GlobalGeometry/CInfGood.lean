@@ -45,7 +45,6 @@ def WEq (Dw : Datum H) (a b : WZ E) : Prop := ∀ τ i, i < Dw.mult τ → a (τ
 def towerWt (Dw : Datum H) (a : WZ E) : Top.Wt (CMType H) (Dw.p + Dw.q) :=
   fun τ n => if (n : ℕ) < Dw.p then (a (τ.1, n) : ℝ) else -(a (conjEmb τ.1, Dw.p + Dw.q - 1 - n) : ℝ)
 
-open Classical in
 
 def BirOn (h : GenFrEx Xo c) (Z : Comp Xo c) {N : ℕ} (g : Fin (N + 1) → Rul Xo c) : Prop :=
   evC h Z (g 0) ≠ 0 ∧ IntermediateField.adjoin c.F (Set.range fun j => evC h Z (g j) / evC h Z (g 0)) = ⊤

@@ -67,7 +67,6 @@ theorem strip_down_antitone {n : ℕ} {ν μ : Fin n → ℤ} {b : ℕ} (hν : A
     obtain ⟨h1, h2, -⟩ := h
     exact antitone_of_succ μ fun a ha => (h1 ⟨a.1 + 1, ha⟩).trans (h2 a ha)
 
-open Classical in
 
 theorem pieri_rule_count_form (D : Formalism.BasicNotions.D7) : Formalism.MainNotions.SelectionLemmas.GenericProjectionCriterion D := by
   intro m ν b hν
@@ -254,8 +253,6 @@ theorem foldr_smul {R M ι : Type*} [Semiring R] [AddCommMonoid M] [Module R M] 
   | nil => rfl
   | cons i l ih => simp only [List.map_cons, List.foldr_cons, Function.comp_apply, ih, iter_smul]
 
-set_option maxHeartbeats 1000000 in
-open Classical in
 
 theorem NPDesc_of (c : LatCmp D) {L : SizeData₂ D} (hT : GatTies D) (X : Inst D L) (Y : LatInst D) (K : Consts)
     (hv : c.VramDef Y) (hy : YvRat c) : c.NPDesc X Y K := by
@@ -349,8 +346,6 @@ theorem NPDesc_of (c : LatCmp D) {L : SizeData₂ D} (hT : GatTies D) (X : Inst 
       rw [hNP]
       exact Submodule.subset_span ⟨y, hy, rfl⟩
 
-set_option maxHeartbeats 1000000 in
-open Classical in
 
 end Formalism.MainNotions.G.Joints.Lit
 

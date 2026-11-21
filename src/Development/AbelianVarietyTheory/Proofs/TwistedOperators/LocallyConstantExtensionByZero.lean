@@ -35,7 +35,6 @@ theorem _root_.GlobalTheory.SBExtend.exists_isCompact_isClopen_between {K W : Se
 open Matrix Topology in
 variable {X : Type} [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X]
   [TotallyDisconnectedSpace X] in
-omit [LocallyCompactSpace X] [TotallyDisconnectedSpace X] in
 
 theorem _root_.GlobalTheory.SBExtend.indicator_mem_SB {V : Set X} (hc : IsCompact V)
     (hV : IsClopen V) : (V.indicator fun _ => (1 : ℂ)) ∈ _root_.GlobalTheory.SplitWeil.SB X := by

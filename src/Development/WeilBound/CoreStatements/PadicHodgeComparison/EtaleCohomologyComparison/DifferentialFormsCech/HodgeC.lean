@@ -21,7 +21,6 @@ variable {K : Type} [Field K] {X Y : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of
 
 abbrev HodgeC (a j : ℕ) : Type := GlobalTheory.HodgeCoh.hodgeH q a j
 
-variable {q} in
 
 def pullC {p : Y ⟶ Spec (CommRingCat.of K)} (u : Y ⟶ X) (hu : u ≫ q = p) (a j : ℕ) : HodgeC q a j →ₗ[K] HodgeC p a j :=
   GlobalTheory.HodgeCoh.hodgePull hu a j

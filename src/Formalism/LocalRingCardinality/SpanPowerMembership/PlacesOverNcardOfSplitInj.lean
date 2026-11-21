@@ -65,7 +65,6 @@ structure NHyp (what₂ : Rows.Data R) : Prop where
   hcard : what₂.restRowsFiniteGroupCard = exampleClassGroupCard H
   hg : ∀ k, (placesOver H.E (H.g k)).ncard = Module.finrank ℚ H.E
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def ndToy (what₂ : Rows.Data R) (h : NHyp H what₂) : NData R H what₂ where
   Om := AlgC
@@ -172,7 +171,6 @@ theorem isCMConjOm_conjAlgC : IsCMConjOm H.E AlgC conjAlgC := by
   change starRingEnd ℂ (H.φ₀ x) = H.φ₀ (H.conj x)
   rw [baseEmbedding_conj]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def ntwToy {what₂ : Rows.Data R} [NumberField what₂.LL] [StarRing what₂.LL]
     (LL0 : IntermediateField ℚ what₂.LL) (h : NHyp H what₂) :
@@ -294,12 +292,8 @@ def ntwToy {what₂ : Rows.Data R} [NumberField what₂.LL] [StarRing what₂.LL
   res_art i := i.elim
   th i := i.elim
 
-open Classical in
 
-open Classical in
 
-open Ideal in
-open scoped Pointwise in
 
 theorem exists_halfPlaces (p : ℕ) (hp : p.Prime)
     (h : (placesOver H.E p).ncard = Module.finrank ℚ H.E) :
@@ -380,7 +374,6 @@ theorem qPow_add (w : PlE H) (s t : ℝ) : qPow H w s * qPow H w t = qPow H w (s
 
 theorem qPow_zero (w : PlE H) : qPow H w 0 = 1 := by ext; simp [qPow]
 
-open Classical in
 
 def toU (z : ℂ) : ℂˣ := if h : z = 0 then 1 else Units.mk0 z h
 
@@ -390,8 +383,6 @@ theorem toU_val (u : ℂˣ) : toU (u : ℂ) = u := by
 theorem val_toU {z : ℂ} (h : z ≠ 0) : ((toU z : ℂˣ) : ℂ) = z := by
   unfold toU; rw [dite_eq_right h]; rfl
 
-open Polynomial in
-set_option synthInstance.maxHeartbeats 400000 in
 
 def nautToy (what₂ : Rows.Data R) (h : NHyp H what₂) : NAut (ndToy H what₂ h) where
   iotaQ i := i.elim
@@ -531,7 +522,6 @@ theorem shaExample_eq (p : ℕ) [hp : Fact p.Prime] (e : ℕ) :
   unfold shaExample
   rw [dite_eq_left hp.out]
 
-open Ideal Polynomial in
 
 theorem placesOver_ncard_of_frob (p : ℕ) [hp : Fact p.Prime] (hpN : ¬ p ∣ H.condN)
     (hF : ∀ (P : Ideal (𝓞 H.E)) [P.IsPrime] [P.LiesOver (span {(p : ℤ)})] (σ : H.E ≃ₐ[ℚ] H.E),
@@ -654,7 +644,6 @@ theorem g_split_of (hg : ∀ k, H.g k % H.condN = 1) :
   have : Fact (H.g k).Prime := ⟨H.g_prime k⟩
   exact placesOver_ncard_of_split H (H.g k) (hg k)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def nbcToy (what₂ : Rows.Data R) (h : NHyp H what₂) : NBC (nautToy H what₂ h) where
   AU _ := Empty
@@ -675,7 +664,6 @@ def nbcToy (what₂ : Rows.Data R) (h : NHyp H what₂) : NBC (nautToy H what₂
   embAV_sph i := i.elim
   embAV_inf i := i.elim
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def nexpToy {what₂ : Rows.Data R} [NumberField what₂.LL] [StarRing what₂.LL]
     (LL0 : IntermediateField ℚ what₂.LL) (h : NHyp H what₂) :

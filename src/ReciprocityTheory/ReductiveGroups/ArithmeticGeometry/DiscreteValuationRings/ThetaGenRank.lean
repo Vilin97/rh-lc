@@ -215,7 +215,6 @@ section Rank
 
 variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoetherianRing R] {I : Ideal R} (D : DegData R I)
 
-set_option maxHeartbeats 1000000 in
 
 theorem secB_rank_one (hLaws : Laws) (t s' : D.toPre.SecB 1 0) :
     ∃ c₀ c' : R, (∀ j, toW D.toPre.P.A.hom _ c₀ * s'.f j = toW D.toPre.P.A.hom _ c' * t.f j) ∧

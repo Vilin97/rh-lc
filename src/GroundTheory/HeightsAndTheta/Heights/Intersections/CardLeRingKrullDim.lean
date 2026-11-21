@@ -42,7 +42,6 @@ theorem le_comap_killBlocks (S : Finset K) {W : Ideal (MRing ι)} (hW : IsMultiH
   rw [SetLike.mem_coe, Ideal.mem_comap, killBlocks_form S ha]
   exact Ideal.mul_mem_left _ _ (Ideal.subset_span hg)
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem killBlocks_comp {S T : Finset K} (hST : S ⊆ T) :
     (killBlocks T).comp (killBlocks S) = (killBlocks T : MRing ι →ₐ[ℤ] MRing ι) := by
@@ -52,7 +51,6 @@ theorem killBlocks_comp {S T : Finset K} (hST : S ⊆ T) :
   · simp [h, hST h]
   · simp [h]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem killBlocks_empty : (killBlocks ∅ : MRing ι →ₐ[ℤ] MRing ι) = AlgHom.id ℤ (MRing ι) :=
   MvPolynomial.algHom_ext fun p => by simp [killBlocks]

@@ -78,7 +78,6 @@ theorem corr_mem (W : Submodule D.host.E (VS D).V) (w : W) :
 
 end GlobalTheory.RowsOrb.ModelIso
 
-open GlobalTheory.RowsOrb.ModelIso in
 
 theorem GlobalTheory.RowsOrb.ub_equiv_model : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (W : Submodule D.host.E (VS D).V)
     (HW : Formalism.HermitianLatticeCounting.S6.HermSpace D.host.E W), GlobalTheory.DegAsm.IsEmb (GlobalTheory.TypeAsm.F0 X u) HW W.subtype →

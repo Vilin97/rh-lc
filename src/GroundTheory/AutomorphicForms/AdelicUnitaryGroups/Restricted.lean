@@ -19,7 +19,6 @@ variable {K E : Type*} [Field K] [NumberField K] [CommRing E] [Algebra K E]
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] (H : Matrix ι ι E)
 variable {κ : Type*} [Fintype κ] (b : Basis κ K E)
 
-variable (K) in
 
 def finiteAdeleEval (v : HeightOneSpectrum (𝓞 K)) :
     FiniteAdeleRing (𝓞 K) K →ₐ[K] v.adicCompletion K where

@@ -142,7 +142,6 @@ theorem rep_zero_xdt (h1 : CrystallineSemistableComparison.Pb.KH.LocGr) (h2 : Cr
   have e0 : x = 0 := by simpa using e
   rwa [e0] at hx
 
-set_option maxHeartbeats 1600000 in
 
 theorem main : KH.LocGr → KH.PolyTf → KH.GrAff →
     ∀ {K : Type} [Field K] [CharZero K] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K)) (n : ℕ)

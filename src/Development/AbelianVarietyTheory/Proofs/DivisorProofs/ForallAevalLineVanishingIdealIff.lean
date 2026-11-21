@@ -30,12 +30,6 @@ theorem aeval_smul_of_isHomogeneous {k K : Type} [Field k] [Field K] [Algebra k 
     Finset.prod_pow_eq_pow_sum, hd]
   ring
 
-set_option autoImplicit false in
-open MvPolynomial NumberField in
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
-set_option autoImplicit false in
-open MvPolynomial NumberField in
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 end GlobalTheory.ChowHt

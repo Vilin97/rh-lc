@@ -21,11 +21,8 @@ variable {O : Type} [CommRing O] {a rk : ℕ} (wt : Fin a → (Fin rk → ℤ))
 
 def monoWt (m : Fin a →₀ ℕ) : Fin rk → ℤ := m.sum fun i e => (e : ℤ) • wt i
 
-variable (O) in
 
-variable (O) in
 
-variable (O) in
 
 def comp (j : Fin rk → ℤ) (f : MvPowerSeries (Fin a) O) : MvPowerSeries (Fin a) O :=
   fun m => if monoWt wt m = j then coeff m f else 0

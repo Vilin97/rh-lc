@@ -12,9 +12,6 @@ namespace GlobalTheory.FunctionFieldPrimitive
 
 open Polynomial
 
-open scoped MatrixGroups TensorProduct in
-open Matrix in
-open Polynomial in
 
 theorem _root_.GlobalTheory.FunctionFieldPrimitive.exists_integral_primitive {F : Type} [Field F] [CharZero F]
     {L : Type} [Field L]

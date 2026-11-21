@@ -25,7 +25,6 @@ theorem lift_of_x : Formalism.FourierDecayAlt.TL.LiftX :=
   lift_of_x_of_parts lift_zero_order lift_closed_under_operations
     (x_fibre_of_parts big_cell_values omega_polynomial_facts capelli_vector_frame capelli_vector_equivariance)
 
-set_option maxHeartbeats 400000 in
 
 theorem top_lift_exists : Formalism.FourierDecayAlt.TL.TopLiftExists3 := by
   classical

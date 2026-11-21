@@ -22,7 +22,6 @@ section Defs
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime]
 
-variable (Ω) in
 
 abbrev Par (w : HeightOneSpectrum (𝓞 E)) : Type 1 :=
   ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w), (IrrGL (w.adicCompletion E) → WD h) → WD h

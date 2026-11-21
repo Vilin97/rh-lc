@@ -61,8 +61,6 @@ def zsc {D : D7} {O : Obj D} (P : Formalism.L2.Rows.RowSideFamily O.ex) (Del h0 
     let z := Formalism.L2.DIV.ZscOfNum3 P.A3 P.P0 P.ψ0 (Formalism.L2.DIV.ofRecord D O.L Del h0) (Equiv.refl _) O.L.Nc Zs
     { z with l6m := fun j => z.l6m j - c * z.l6u, l6u := 0 }
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure Bundle (D : D7) (O : Obj D) (c : ℝ) : Type 1 where
   R : Formalism.L2.RecT O.ex

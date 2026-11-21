@@ -23,7 +23,6 @@ universe u
 
 variable {E : Type u} [AddCommGroup E] [Module ℝ E] {D : ℕ}
 
-variable (E D) in
 
 abbrev Form : Type u := MultilinearMap ℝ (fun _ : Fin (D + 1) => E) ℝ
 
@@ -35,9 +34,7 @@ section Bundles
 
 variable {k : Type} [CommRing k] {X X' : Scheme.{0}} {p : X ⟶ Sp k} {q : X' ⟶ Sp k}
 
-variable (p) in
 
-variable (p) in
 
 def NefOver (L : HermLB p) (l : ℕ) : Prop :=
   ∀ (Z : Scheme.{0}) (i : Z ⟶ X) [IsClosedImmersion i] [IsIntegral Z] (κ : Type)

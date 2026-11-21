@@ -64,6 +64,5 @@ end An
 
 variable {D : D7} {T : Top D}
 
-set_option maxHeartbeats 1600000 in
 
 end Formalism.L2.Pj

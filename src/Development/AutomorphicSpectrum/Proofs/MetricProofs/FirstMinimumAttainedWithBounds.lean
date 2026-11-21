@@ -27,7 +27,6 @@ theorem abs_form_le (him : ∀ x y, ((f x y : ℤ) : ℝ) = (inner ℂ (p y) (p 
   rw [him, mul_comm]
   exact (Complex.abs_im_le_norm _).trans (norm_inner_le_norm _ _)
 
-include p in
 
 theorem finite_short [Module.Free ℤ L] [Module.Finite ℤ L]
     (him : ∀ x y, ((f x y : ℤ) : ℝ) = (inner ℂ (p y) (p x)).im) (hu : Function.Surjective f) (T : ℝ) :

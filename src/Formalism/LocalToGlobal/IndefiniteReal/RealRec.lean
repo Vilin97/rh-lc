@@ -24,7 +24,6 @@ variable {Rc : Formalism.L2.RecT ex} {P : RowSideFamily ex} {Dcf : ∀ Zs : DefS
   {Spf : ∀ Zs : DefSub P.A3.fam3.amb3, SPer (Dcf Zs)} {Zscf : DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3}
   {S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-open Classical in
 
 def twPOf (P : RowSideFamily ex) (tupT : D.what₂.Tup → P.T) (tupTie : ∀ μ, Formalism.IndefR.RecTie.Used0 D μ → P.I.tup (tupT μ) = μ)
     (μ : D.what₂.Tup) (i : Fin D.R.m) (x : D.what₂.MtL μ ((i : ℕ) + 1)) :
@@ -53,8 +52,6 @@ def jDT (Q : RealT Rc P Dcf Spf Zscf S Ks) (i : Fin D.R.m) (y : Fin ((P.A3.indef
     Fin (Q.Rl.nW i) → D.what₂.LL :=
   Formalism.IndefR.NX.jDL Q.Rl Q.F.lv2 i (y ∘ Fin.cast (dWL_eq Q i))
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure RealRec (Q : RealT Rc P Dcf Spf Zscf S Ks) : Type 1 where
 

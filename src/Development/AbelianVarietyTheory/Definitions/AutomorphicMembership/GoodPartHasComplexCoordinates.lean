@@ -145,7 +145,6 @@ namespace Read
 
 variable (R : Read D X fc s)
 
-include R in
 
 end Read
 

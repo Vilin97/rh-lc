@@ -18,7 +18,6 @@ instance fact_prime_ringChar : Fact (ringChar 𝓀[K]).Prime :=
 
 variable (p : ℕ) [CharP 𝓀[K] p]
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem valuation_intCast_le_one (n : ℤ) : valuation K (n : K) ≤ 1 :=
   (Valuation.mem_integer_iff _ _).mp (intCast_mem _ n)
@@ -37,7 +36,6 @@ theorem valuation_intCast_eq_one_iff (n : ℤ) : valuation K (n : K) = 1 ↔ ¬ 
 
 variable [Fact p.Prime]
 
-omit [Fact p.Prime] in
 
 theorem valuation_p_lt_one : valuation K (p : K) < 1 := by
   refine lt_of_le_of_ne (by exact_mod_cast valuation_intCast_le_one K p) fun h => ?_

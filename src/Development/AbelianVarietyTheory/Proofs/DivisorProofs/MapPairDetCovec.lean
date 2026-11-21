@@ -30,7 +30,6 @@ def IsTest (p : ℕ) [Fact p.Prime] {X : Scheme.{0}} (Xw : X.Opens) (yb : Sp �
 def GeomIrr {V : Type} [CommRing V] {X : Scheme.{0}} (s : X ⟶ Sp V) (Xw : X.Opens) : Prop :=
   ∀ (k : Type) [Field k] (f : V →+* k), Function.Injective f → IrreducibleSpace ↑(pullback (Xw.ι ≫ s) (spMap f))
 
-open GlobalTheory.IndefiniteRowSideFullHecke.SpecialFibreUnits in
 
 section Minors
 
@@ -78,7 +77,6 @@ end Lie
 
 abbrev Ind (Dw : Datum H) (τ : E →+* ℂ) : Type := Fin (Dw.mult τ) ⊕ Fin (Dw.mult (conjEmb τ))
 
-variable (Dw) in
 
 section Model
 
@@ -111,7 +109,6 @@ def GVal (τ : E →+* ℂ) (f : Rul Xo c) {k : Type} [Field k] [Algebra c.F k] 
 
 variable {p : ℕ} [Fact p.Prime] [StarRing (𝓞 E)]
 
-variable (p E) in
 
 abbrev PtP : Type 1 := Point p (Valued.v : Valuation ℂ_[p] ℝ≥0) 𝓞_ℂ_[p] (𝓞 E)
 

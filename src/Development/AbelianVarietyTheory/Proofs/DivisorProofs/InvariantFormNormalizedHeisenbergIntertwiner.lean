@@ -128,8 +128,6 @@ private lemma invariantForms_eq_of_eq_on_vacua (hW : _root_.GlobalTheory.FinWeil
     LinearMap.ext_on hspan (fun s hs => by simp [hleft s hs])
   simpa using LinearMap.congr_fun hflip u
 
-open Classical in
-open scoped BigOperators in
 
 theorem _root_.GlobalTheory.FinWeil.invForm_intertwiner : ∀ {R X M : Type} [CommRing R]
     [AddCommGroup X] [Module R X] [AddCommGroup M] [Module ℂ M] {σ : R →+* R} {w : R}

@@ -326,7 +326,6 @@ theorem Twist.exists_inv (hN : N ≠ 0) (hN1 : 1 < N) (hn0 : n ≠ 0) (hj : j (z
     rw [RingHom.comp_apply, RingEquiv.toRingHom_eq_coe, RingEquiv.coe_toRingHom, hσ', map_pow, t.root, ← pow_mul, hz1,
       RingHom.id_apply])
 
-variable (F j) in
 
 def Grp : Type := {f : F.X ⟶ F.X // ∃ T m σ, Twist F j T m σ f}
 

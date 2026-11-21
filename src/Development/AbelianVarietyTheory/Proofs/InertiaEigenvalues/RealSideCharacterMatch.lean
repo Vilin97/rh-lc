@@ -65,7 +65,6 @@ theorem stabK_mul' {y : G} (a b : stab ι J y) : stabK ι (a * b) = stabK ι b *
 variable (P : ClassPres ι S σ ρ J χ) (χ' : J →* ℂˣ) (hχ' : ∀ k, ∃ b : K, σ b = (χ' k : ℂ))
   (hρ : ∀ γ x, ∃ x', P.coef x' = ρ γ (P.coef x))
 
-include hχ' hρ in
 
 end Gen
 
@@ -197,7 +196,6 @@ theorem mul_mem_dc (hDC : IsDC J x A) {u : G} (hu : u ∈ J) {a : G} (ha : a ∈
   obtain ⟨j₁, j₂, e⟩ := hDC.1 a ha
   exact ⟨⟨u, hu⟩ * j₁, j₂, by rw [e]; simp [mul_assoc]⟩
 
-open Classical in
 
 def pick (hDC : IsDC J x A) {u : G} (hu : u ∈ J) (a : G) : G :=
   if ha : a ∈ A then (hDC.2 (u * a) (mul_mem_dc hDC hu ha)).exists.choose else a
@@ -326,9 +324,7 @@ variable (P : ClassPres ι S σ ρ J χ) (hχ : ∀ k, ∃ b : K, σ b = (χ k :
     (∀ k ∈ J, ∃ k₁ ∈ J, ∃ k₂ ∈ J, k₁ ∈ Lc ∧ k = k₁ * k₂ ∧ ∀ x ∈ Lc, Commute k₂ x) ∧
     ∀ k : J, (k : G) ∈ Lc → χ k = 1)
 
-include hloc in
 
-open Classical in
 
 end Hecke
 

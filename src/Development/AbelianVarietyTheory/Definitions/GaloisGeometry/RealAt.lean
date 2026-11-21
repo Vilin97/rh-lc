@@ -46,7 +46,6 @@ def RealAt (d : Dec J std) (j : ℕ) (hj : j ≤ D.R.m) (h : ((sysS H X std).Pj 
         dPow (bAt J j hj La.1).1 (fun _ => -(cTw D j)) * detF (cTw D j) z' *
         φ (clsAt X H j La.1 La.2) ((J.St j hj).eY.symm z')
 
-open Classical in
 
 def sO (d : Dec J std) (ι : ℂ →+* ℂ_[D.what₂.places.resChar w]) (j : ℕ) (La : (sysS H X std).Lt j) : ℂ_[D.what₂.places.resChar w] :=
   if hj : j ≤ D.R.m then ι (sPt d j hj La * cOp (sysS H X std) D (hT.gat_pos u w hg) j (t.O u μ).dgen) else 0
@@ -71,7 +70,6 @@ def cKs (S : J.At std) (ι : ℂ →+* ℂ_[D.what₂.places.resChar w]) (j : �
   ι (kT J j hj a' * (kS J j (Nat.le_of_succ_le hj) a * cOp (sysS H X std) D (hT.gat_pos u w hg) j (t.O u μ).dgen)⁻¹) *
     ltC S.g S.hLT ^ (-(∑ τ, szT (sysS H X std) D (hT.gat_pos u w hg) j τ))
 
-open Classical in
 
 def scT (d : Dec J std) (S : J.At std) (ι : ℂ →+* ℂ_[D.what₂.places.resChar w]) (j : ℕ) (c' : Lv.comp (j + 1))
     (L' : ((sysS H X std).Pj (j + 1)).Tup) : ℂ_[D.what₂.places.resChar w] :=

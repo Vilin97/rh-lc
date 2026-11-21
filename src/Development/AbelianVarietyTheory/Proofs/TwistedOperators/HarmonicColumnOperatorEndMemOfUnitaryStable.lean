@@ -59,7 +59,6 @@ theorem colDerM_yForm (t t' : T) (X : Matrix κ κ R) (b : Fin q) (φ : κ → R
     · rw [hv, map_sum]; simp [map_smul, Finset.sum_neg_distrib]
   · simp
 
-variable [DecidableEq κ] in
 
 theorem colActHom_colDerM (g : T → GL κ R) (t : T) (X : Matrix κ κ R) (P : Poly R T p q κ) :
     colActHom g (colDerM t X P) =

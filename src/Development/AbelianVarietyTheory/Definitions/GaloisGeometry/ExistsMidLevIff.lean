@@ -162,16 +162,13 @@ theorem exists_midLev_iff (j : ℕ) (P : rowSG Pr sel mu) (h : AutY X R j) (g : 
     (∃ z, MidLev Ch sel mu cst j P h g z) ↔ g ∈ prCat (Pr := Pr) cst.sharp j P.1 h :=
   ⟨fun ⟨_, r, hr, hg, _⟩ => ⟨r, hr, hg⟩, fun ⟨r, hr, hg⟩ => ⟨_, r, hr, hg, rfl⟩⟩
 
-open Classical in
 
 def SameCoset {n : ℕ} (P : rowSG Pr sel mu) (y y' : Sp X.E n) : Prop :=
   ∀ l, IntAt P.1 (((qOf P.1 : X.E) ^ (if P.1 ∈ Pr.vGs then 0 else cst.M))⁻¹ * (y - y') l)
 
-open Classical in
 
 def topDep (P : rowSG Pr sel mu) : ℕ := if P.1 ∈ Pr.vGs then 1 else 2 * cst.M
 
-open Classical in
 
 def rowLevTop (Pr : Primes X) (R : Ranks) (sharp : Bool) (n : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) :
     Subgroup (Sp X.E ((n - 1) + 0) ≃ₗ[X.E] Sp X.E ((n - 1) + 0)) :=
@@ -179,7 +176,6 @@ def rowLevTop (Pr : Primes X) (R : Ranks) (sharp : Bool) (n : ℕ) (P : HeightOn
     (if sharp then LocE.JGsym P (qOf P) R.k R.rS R.r R.t (n - 1) 0 else LocE.JG P (qOf P) R.k R.r R.t (n - 1) 0)
   else LocE.JQ P (qOf P) R.r (n - 1) 0
 
-open Classical in
 
 def rowChrTop (sharp : Bool) (j n : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) (h : HomE X.E ((n - 1) + 0) ((n - 1) + 0)) : X.K :=
   if P ∈ Pr.vGs then
@@ -213,7 +209,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7} {u : D.what₂.Word}
 
-set_option maxHeartbeats 1000000 in
 
 structure StepCharts (C : ColumnChain D.R D.what₂.Tau (D.hcW u)) (i : ℕ) (hi : i ≤ D.R.m) where
 
@@ -376,15 +371,12 @@ end W
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G.LatInst D} {Kc : G.Consts} {Y : DivX D} {cX : ExtraC}
   {ex : Extra D L hT Gi Gl Kc Y cX} (t : KerEntTied ex) (u : D.what₂.Word) (μ : D.what₂.Tup)
 
-include μ in
 
 theorem m_eq : D.R.m = t.m2 + 2 := (t.idx_ok μ).hm
 
-include μ in
 
 theorem cpl_lt : t.m2 + 1 < D.R.m := by have := m_eq t μ; omega
 
-include μ in
 
 theorem top_le : t.m2 + 1 + 1 ≤ D.R.m := by have := m_eq t μ; omega
 
@@ -535,7 +527,6 @@ theorem AdTie.latK_eq (H : AdTie A dtU a) (i : ℕ) (hi : i ≤ D.R.m) (c : (D.c
   rw [H.lat i hi c]
   exact latK_eq_map _ _ _ _ _
 
-variable (St) in
 
 abbrev AdDatum : Type :=
   ∀ i (hi : i + 1 ≤ D.R.m), (St i (Nat.le_of_succ_le hi)).Ch → (St (i + 1) hi).Ch →
@@ -602,11 +593,9 @@ theorem AdLawAt.mu_ne {XiAd : AdDatum St} {muT : ℕ → (AfE D.host.F D.host.E)
   rw [mul_inv_cancel, (H.mu_mul i hi).1, h0, zero_mul] at h
   exact one_ne_zero h
 
-variable (St) in
 
 abbrev ChainBase : Type := ∀ i hi, (St i hi).Base
 
-variable (St) in
 
 def moveCharts (k : ChainBase St) : ChainCharts D u μ := fun i hi => (St i hi).move (k i hi)
 
@@ -614,11 +603,9 @@ variable (A dtU a)
 
 variable {A dtU a}
 
-set_option maxHeartbeats 1000000 in
 
 end Comparison₂
 
-open Formalism.MainNotions in
 
 end GlobalTheory.TwU
 

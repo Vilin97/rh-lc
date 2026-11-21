@@ -25,7 +25,6 @@ end P_spRes
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable {n : ℕ} (G : Grp k n)
 
-open P_spRes in
 
 theorem step_spRes : G.SpecialRestrictionProp := by
   intro ν hν i

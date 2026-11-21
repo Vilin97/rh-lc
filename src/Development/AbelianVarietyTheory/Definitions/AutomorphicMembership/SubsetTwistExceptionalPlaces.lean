@@ -50,8 +50,6 @@ section Rows
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type}
   [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat3 D A3 Ks} {F : Face3 D A3} {X0 : BaseLevelRowSide D}
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure MtAd (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (M : MtFam D) where
   PV : ∀ i : Fin D.R.m, principalLevelFrame.RowPsi (Vc D i) D.R.nV
@@ -67,12 +65,10 @@ structure MtAd (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (M : MtFam D) where
   id : ∀ i : Fin D.R.m, ∃ hn : (Vc D i).rank = D.R.nV, ∀ κ a b, finMat D.sp.cm.sig (Vc D i).gram ((PV i).ψ κ) a b =
     (GlobalTheory.Mem.R3.swapCast Y.hF).symm ((κ.1 : Matrix (Fin D.R.nV) (Fin D.R.nV) (ReciprocityTheory.Aut.AL D.host.E)) (Fin.cast hn a) (Fin.cast hn b))
 
-variable (R) in
 
 def hkNorm (i : Fin D.R.m) (k : ℕ) (P : PlE D.host) : ℂ :=
   (((R.C.mu0 i).val P : ℂˣ) : ℂ)⁻¹ ^ k * (((Nat.card (kP P) : ℕ) : ℂ) ^ (k * (D.R.nV / 2)))⁻¹
 
-variable (R) in
 
 structure HkDat (Sb : Finset (PlE D.host)) (i : Fin D.R.m) (k : ℕ) (P : PlE D.host) (α : GA D (Wc D i))
     (Rr : Finset (GA D (Wc D i))) : Prop where
@@ -103,9 +99,6 @@ structure RatAd (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (cG : G0 R.Pg D.R.
 
 variable {cG : G0 R.Pg D.R.r ≃* G0g D.nd} {S : RatDat D.ntw}
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 1000000 in
 
 structure SerAt (YS : NExpRealS R cG S) (v₀ : ∀ (j : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW j σ).Vec) (X : NExpTied D)
     (PV : ∀ i : Fin D.R.m, principalLevelFrame.RowPsi (Vc D i) D.R.nV) (cf : CharFrame D)

@@ -493,7 +493,6 @@ theorem nonneg_triv {la : HeightOneSpectrum (𝓞 c.F)}
     exact ⟨e', v F, hov.1, hChV a n F hF, h0 v hv⟩) ((maximalIdeal V).comap φ.toRingHom) hqq
   exact chval_nonneg φ.toRingHom 1 (S.ch j F) _ (hChV a n F hF) a' s' hfs' hs'
 
-set_option maxHeartbeats 1000000 in
 
 theorem comb_triv {la : HeightOneSpectrum (𝓞 c.F)}
     (S : SCharts Xo c la) (hQ : S.CovQ) {m : ℕ} (ws : Fin m → Rul Xo c) (hF : S.FamW ws)

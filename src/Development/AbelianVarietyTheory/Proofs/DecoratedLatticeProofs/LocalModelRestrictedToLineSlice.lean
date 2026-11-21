@@ -33,7 +33,6 @@ theorem map_ι_mul {a b c : Type} [Fintype b] (M : Matrix a b k) (N : Matrix b c
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem frame_card {N : ℕ} {Y : Type} [Fintype Y] [DecidableEq Y] (F : Frame k N Y) : Fintype.card Y = N := by
   have e : (Y → k) ≃ₗ[k] (Fin N → k) := LinearEquiv.ofLinear (Matrix.toLin' F.β) (Matrix.toLin' F.γ)

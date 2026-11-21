@@ -23,21 +23,17 @@ noncomputable instance : SymmetricCategory X.Modules :=
 instance isIso_ringSheafId_scheme : IsIso (ringSheafId (Opens.grothendieckTopology X) X.sheaf) :=
   inferInstanceAs (IsIso (𝟙 (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat)))
 
-variable (X) in
 
 abbrev PMod := PresheafOfModules.{u} (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat)
 
-variable (X) in
 
 noncomputable abbrev sheafifyMod : PMod X ⥤ X.Modules :=
   modulesSheafification (Opens.grothendieckTopology X) X.sheaf
 
-variable (X) in
 
 noncomputable abbrev preMod : X.Modules ⥤ PMod X :=
   SheafOfModules.forget _ ⋙ PresheafOfModules.restrictScalars (ringSheafId _ X.sheaf)
 
-variable (X) in
 
 noncomputable abbrev sheafifyModAdj : sheafifyMod X ⊣ preMod X :=
   PresheafOfModules.sheafificationAdjunction (J := Opens.grothendieckTopology X)

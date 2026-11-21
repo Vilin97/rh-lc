@@ -324,8 +324,6 @@ variable {M : Submodule (𝓞 K) U} (hM : IsIntLat (hRes h U) M) {x : U} (hx : x
   {c : 𝓞 K} (hc : algebraMap (𝓞 K) K c = T * hRes h U x x)
   (hc' : ∀ r : 𝓞 K, r * c ∈ Ideal.span {(T : 𝓞 K)} → r ∈ Ideal.span {(T : 𝓞 K)})
 
-omit [FiniteDimensional K V] in
-include hs hT hz hU hM hx g1 g2 hc hc' in
 
 theorem glue_spec (b : 𝓞 K) (hb : b * cj b - c ∈ Ideal.span {(T : 𝓞 K)}) :
     Submodule.IsLattice K (glue U M x z (algebraMap (𝓞 K) K b / T)) ∧
@@ -445,7 +443,6 @@ theorem glue_spec (b : 𝓞 K) (hb : b * cj b - c ∈ Ideal.span {(T : 𝓞 K)})
     field_simp at e2
     linear_combination e2
 
-include hs hT hz hU hM hx g1 g2 hc hc' in
 
 theorem exists_eq_glue (hn : (hRes h U).Nondegenerate) (L : Submodule (𝓞 K) V)
     (hL : Submodule.IsLattice K L) (hLu : IsUnimodular h L)
@@ -524,7 +521,6 @@ theorem exists_eq_glue (hn : (hRes h U).Nondegenerate) (L : Submodule (𝓞 K) V
   rw [← hLu', ← hu]
   exact an _ _ hle
 
-include hs hT hz hU hM hx g1 g2 in
 
 theorem fibre_card (hK : IsCMUnram K) (hn : (hRes h U).Nondegenerate)
     (hsp : ∀ P : Ideal (𝓞 K), P.IsMaximal → (T : 𝓞 K) ∈ P → Ideal.absNorm P = T ∧ (T : 𝓞 K) ∉ P ^ 2) :

@@ -29,7 +29,6 @@ theorem defTot_smul {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Wei
   refine Finset.sum_congr rfl fun d _ => ?_
   ring
 
-set_option maxHeartbeats 1600000 in
 
 theorem valAt_of_steps (ch : Choice R) (s : ℤˣ) (hFl : FlatAt ch s) (hT : TensAt ch) (hV : VolAt ch) (hW : WtAt ch s)
     (hFo : FockAt ch) (hB : BasicAt ch) (hO : OneAt ch) (hS : ∀ t a, ch.S.SumOK t (ch.Phi a)) : ValAt ch s := by

@@ -15,7 +15,6 @@ open scoped ComplexOrder
 
 namespace GlobalTheory.PosDefSwap
 
-open scoped Matrix.Norms.L2Operator in
 
 theorem one_sub_mul_conjTranspose_posDef {p q : ℕ} (z : Matrix (Fin p) (Fin q) ℂ)
     (h : (1 - zᴴ * z).PosDef) : (1 - z * zᴴ).PosDef := by

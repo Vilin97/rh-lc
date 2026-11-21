@@ -204,7 +204,6 @@ private theorem multiProd_placing {h N : ℕ} {d : Fin h → ℕ} (e e' : (Σ i,
   obtain ⟨φ⟩ := (GlobalTheory.SmGL.Placing.parInd_jac_placing k _ _ _ e e' _).1 (piTensor fun i => (s i).ρ)
   exact isSubquotient_of_equiv φ
 
-set_option maxHeartbeats 1000000 in
 
 private theorem cell (hG : GlobalTheory.Published.GeometricLemma) (hBZ : GlobalTheory.Published.BernsteinZelevinskyFiniteness)
     {h : ℕ} (w : Fin h → IrrGL k) {b : Fin h → Fin h → ℕ} (hr : ∀ i, ∑ j, b i j = (w i).1)

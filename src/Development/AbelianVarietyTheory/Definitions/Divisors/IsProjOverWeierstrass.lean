@@ -143,7 +143,6 @@ variable {X Y Y' : Scheme.{0}}
 
 variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R]
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 end Sections
 

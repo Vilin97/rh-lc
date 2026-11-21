@@ -47,7 +47,6 @@ theorem isClosed_divisorComponent {e : ℕ} (A : FinHolAtlas e X) (L : LocPot X)
       rw [← hWk] at hm
       exact hx hm.1
 
-open Classical in
 
 def sliceChart {e : ℕ} (ψ : OpenPartialHomeomorph X (Fin (e + 1) → ℂ)) (i : Fin (e + 1))
     (S : Set X) (hS : ∀ y ∈ ψ.source, y ∈ S ↔ ψ y i = 0) (w0 : S) :

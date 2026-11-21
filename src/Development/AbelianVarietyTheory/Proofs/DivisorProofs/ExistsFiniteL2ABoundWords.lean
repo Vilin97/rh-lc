@@ -220,7 +220,6 @@ theorem word_sumPure (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (ℓ : mixedEmbed
     rw [GlobalTheory.WeilL2Words.word_cons, ih, dS_sumPure ψ ℓ hℓ]
     rfl
 
-omit [Invertible (2 : AdeleRing (𝓞 F) F)] in
 
 theorem l2A_sumPure_le {m : ℕ} (μ : @Measure (κ → FiniteAdeleRing (𝓞 F) F) (borel _))
     (g : Fin m → (κ → FiniteAdeleRing (𝓞 F) F) → ℂ) (hg : ∀ i, Continuous (g i))
@@ -266,7 +265,6 @@ theorem l2A_sumPure_le {m : ℕ} (μ : @Measure (κ → FiniteAdeleRing (𝓞 F)
 
 end GlobalTheory.FoldrBoundLinearForms
 
-open GlobalTheory.FoldrBoundLinearForms in
 
 theorem GlobalTheory.WeilL2Words.l2A_word_le : ∀ (F : Type) [Field F] [NumberField F] [Invertible (2 : AdeleRing (𝓞 F) F)] (κ : Type) [Fintype κ]
     (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ), GlobalTheory.WeilL2Words.IsStdInf F ψ → ∀ Φ ∈ GlobalTheory.WeilM.schA F κ,

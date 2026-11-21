@@ -46,7 +46,6 @@ theorem exists_irred_le {C : Submodule ℂ (L2 (latticeGL E a) μ)} (hC : IsSubr
   obtain ⟨X, hX, hi⟩ := enoughCompact_Rcusp.exists_irred_le (isUnitaryRep_Rcusp μ) hW hW0
   exact ⟨X.map (L2cusp μ).subtype, e ▸ Submodule.map_mono hX, isIrredSubrep_map hi⟩
 
-open GlobalTheory.ExpDeriv in
 
 theorem lie_mem {Z : Submodule ℂ (L2 (latticeGL E a) μ)} (hZ : IsSubrep (R (latticeGL E a) μ) Z)
     {W : Submodule ℂ (Sm E a)} (h : ∀ φ ∈ W, MemL2Quotient (latticeGL E a) μ φ.1) (hW : IsStable W)
@@ -229,7 +228,6 @@ theorem mem_of_toL2_mem_irreducible {W : Submodule ℂ (Sm E a)} (hW : IsStable 
   rwa [show φ = ψ from Subtype.ext ((Continuous.ae_eq_iff_eq μ (ContAut.continuous_of_isOpen_stab E a φ hφ.level)
     (ContAut.continuous_of_isOpen_stab E a ψ (hWa ψ hψ).level)).1 (h.lift_toL2_ae_eq.symm.trans e))]
 
-variable (μ) in
 
 theorem exists_isFinitePartOf (π : CuspSub E a) (hπ : IsNormalised π) :
     ∃ H, IsIrredSubrep (R (latticeGL E a) μ) H ∧ IsFinitePartOf μ π H := by

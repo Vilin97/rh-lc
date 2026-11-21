@@ -18,8 +18,6 @@ open GlobalTheory.SS
 
 namespace GlobalTheory.SS
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
 
 theorem _root_.GlobalTheory.SS.semistableReductionSt : _root_.GlobalTheory.Published.SemistableReductionSt := by
   unfold _root_.GlobalTheory.Published.SemistableReductionSt

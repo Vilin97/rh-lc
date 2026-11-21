@@ -9,7 +9,6 @@ open PowerSeries GlobalTheory.CycFr
 
 namespace GlobalTheory.CycFr
 
-open PowerSeries in
 
 theorem _root_.GlobalTheory.CycFr.eq_act_of_comm {l : ℕ} [Fact l.Prime] {O : Type}
     [CommRing O] [IsDomain O] [CharZero O]

@@ -39,7 +39,6 @@ theorem res_Eop (π : CuspSub E a) (τ : E →+* ℂ) (i j : Fin a) :
 
 end GlobalTheory.WigCap
 
-open GlobalTheory.WigCap in
 
 theorem GlobalTheory.capelli_cuspSub : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a) (τ : E →+* ℂ) (χ : Fin a → ℂ), π.HasInfChar τ (Multiset.map χ Finset.univ.val) → GlRel (cx τ (lieOp π)) ∧ ∀ u : ℂ, qdet (cx τ (lieOp π)) (u + ((a : ℂ) - 1) / 2) = algebraMap ℂ _ (∏ s, (u + χ s)) := by
   intro E _ _ _ a π τ χ hχ

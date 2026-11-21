@@ -147,7 +147,6 @@ section Good
 
 variable {Y T : Scheme.{0}} {p : Y ⟶ Sp c.F} {σ σ' : c.F →+* ℂ} {B : LB Y}
 
-open Classical in
 
 end Good
 
@@ -155,7 +154,6 @@ section Fac
 
 variable {r : ℕ} {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (x : ℝ)
 
-open Classical in
 
 def diagChar (e : Ix Dw → ℤ) (t : Ix Dw → (CAt σ)ˣ) : ℂ := toC (∏ ix, t ix ^ e ix).val
 

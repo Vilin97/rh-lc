@@ -222,13 +222,11 @@ namespace PicInf
 
 variable {K S ιs}
 
-open Classical in
 
 noncomputable def zuInd (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})
     (U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)) : galUnramifiedOutside K.1 ℚ̄ S → ℤ :=
   fun g => if ∃ z ∈ (gsDecomp K S ιs v).range, ∃ u ∈ U, g = z * u then 1 else 0
 
-open Classical in
 
 theorem good_single_of_base {ℓ : ℕ} (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})
     (U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)) [hUn : U.Normal]
@@ -338,7 +336,6 @@ theorem exists_normal_level (φ : galUnramifiedOutside K.1 ℚ̄ S → ℤ) (hφ
   obtain ⟨E, hEf, hEn, hEV⟩ := (krullTopology_mem_nhds_one_iff_of_normal K.1 _ V).1 hV
   exact ⟨E, hEf, hEn, fun x u hu => hVφ x u (hEV hu)⟩
 
-open Classical in
 
 theorem eq_sum_single (f : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S} → galUnramifiedOutside K.1 ℚ̄ S → ℤ)
     (T : Finset {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S}) (hT : ∀ v ∉ T, f v = 0) :
@@ -349,7 +346,6 @@ theorem eq_sum_single (f : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S} → gal
   · rfl
   · exact hT v h
 
-open Classical in
 
 theorem good_single {ℓ : ℕ}
     (hbase : ∀ (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})
@@ -435,7 +431,6 @@ namespace PicInf
 
 variable {K S ιs}
 
-open Classical in
 
 theorem good_base (ℓ : ℕ) (hℓ : ℓ.Prime)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
@@ -500,7 +495,6 @@ theorem good_base (ℓ : ℕ) (hℓ : ℓ.Prime)
 
 end PicInf
 
-open PicInf Classical in
 
 theorem exists_coprime_smul_picInfRep (ℓ : ℕ) (hℓ : ℓ.Prime)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)

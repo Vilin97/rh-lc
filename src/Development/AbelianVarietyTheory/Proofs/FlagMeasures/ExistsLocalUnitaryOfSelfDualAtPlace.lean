@@ -133,7 +133,6 @@ theorem one_tmul_mem (a : v.adicCompletionIntegers F) :
     (1 : E) ⊗ₜ[F] (a : v.adicCompletion F) ∈ intV E v :=
   Subring.subset_closure (Or.inr ⟨⟨a, a.2⟩, rfl⟩)
 
-variable (E) in
 
 def baseMap : v.adicCompletionIntegers F →+* intV E v :=
   (((Algebra.TensorProduct.includeRight : v.adicCompletion F →ₐ[F] E ⊗[F] v.adicCompletion F) :

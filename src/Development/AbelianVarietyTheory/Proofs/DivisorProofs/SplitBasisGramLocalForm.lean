@@ -96,7 +96,6 @@ end GlobalTheory.SplitCoord.GramAt
 
 namespace GlobalTheory.SplitCoord
 
-open GramAt in
 
 theorem basMat_gram : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (n m : ℕ) (W : Spc F E n) (W₁ : Spc F E m) (H : Plane E n m) (i₀ i₁ : ℕ),

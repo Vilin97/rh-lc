@@ -244,7 +244,6 @@ lemma qp_coords (hq : ZetaQuasi) (hl : SigmaLogDeriv) (ho : SigmaOdd) (hz : Sigm
 
 end PeriodLatticeBasisLemmas
 
-open PeriodLatticeBasisLemmas in
 
 theorem sigmaQuasi_of (hq : ZetaQuasi) (hl : SigmaLogDeriv) (_he : SigmaEntire) (ho : SigmaOdd)
     (hz : SigmaZero) : SigmaQuasi := by
@@ -252,7 +251,6 @@ theorem sigmaQuasi_of (hq : ZetaQuasi) (hl : SigmaLogDeriv) (_he : SigmaEntire) 
   obtain ⟨a, b, rfl⟩ := (_root_.Formalism.L2.Th1.F.PeriodLatticeBasisLemmas.mem_lattice_iff_exists_int_comb' L).mp hω
   exact Formalism.L2.Th1.F.PeriodLatticeBasisLemmas.qp_coords hq hl ho hz L _ a b le_rfl z
 
-open PeriodLatticeBasisLemmas in
 
 theorem sigmaSimple_of (hq : SigmaQuasi) (he : SigmaEntire)
     (h0 : ∀ L : PeriodPair, deriv (wSigma L) 0 = 1) : SigmaSimple := by

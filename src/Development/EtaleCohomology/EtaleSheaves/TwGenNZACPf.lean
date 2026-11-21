@@ -18,7 +18,6 @@ theorem prim_isPrimitiveRoot (z : Prim q L) : IsPrimitiveRoot z.1 q := by
   rw [Polynomial.aeval_def, Polynomial.eval₂_eq_eval_map, Polynomial.map_cyclotomic] at h
   exact Polynomial.isRoot_cyclotomic_iff.1 h
 
-open Classical in
 
 def lg (q : ℕ) (z x : L) : ZMod q := if h : ∃ n : ℕ, z ^ n = x then (h.choose : ZMod q) else 0
 
@@ -30,7 +29,6 @@ theorem lg_pow {z : L} (hz : IsPrimitiveRoot z q) (n : ℕ) : lg q z (z ^ n) = n
   have h3 := ((hz.isOfFinOrder (NeZero.ne q)).pow_eq_pow_iff_modEq).1 h2
   rwa [← hz.eq_orderOf] at h3
 
-open Classical in
 
 def fv (q : ℕ) (i : ℤ) (z x : L) : ZMod q :=
   if h : IsUnit (lg q z x) then ((h.unit ^ i : (ZMod q)ˣ) : ZMod q) else 0

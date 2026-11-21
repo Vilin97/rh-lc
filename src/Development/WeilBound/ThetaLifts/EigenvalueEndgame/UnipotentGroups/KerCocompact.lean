@@ -190,7 +190,6 @@ theorem log_skew {x : Matrix n n R} (h : x * x * x = 0) (hu : (1 + x)ᵀ * J * (
   nth_rw 1 [← half (A := A) (J * (y * y))]
   abel
 
-variable (c J e f) in
 
 def eqs (p : Matrix n n R) : Matrix n n R →ₗ[A] Matrix n n R × Matrix n n R × Matrix n n R × Matrix n n R × Matrix n n R where
   toFun x := (xᵀ * J + J * x.map c, x * e, e * (x * f) - x * f, f * x - x, x * p)

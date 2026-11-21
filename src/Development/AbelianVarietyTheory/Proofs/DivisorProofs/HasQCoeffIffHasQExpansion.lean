@@ -10,7 +10,6 @@ open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators
 
 namespace GlobalTheory.QFam
 
-open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators in
 
 theorem _root_.GlobalTheory.QFam.hasQ_coeff_iff_hasQExpansion (N : ℕ) (f : ℍ → ℂ) (φ : PowerSeries ℂ) :
     _root_.GlobalTheory.QFam.HasQ N f (fun n => PowerSeries.coeff n φ) ↔

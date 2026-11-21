@@ -123,7 +123,6 @@ theorem unramBridge : UnramBridge := fun K _ _ _ h => unramBridge_holds K h
 
 def hostOfRecord (D : D7) : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E := hostOfB D unramBridge
 
-open Classical in
 
 def cRoot (D : D7) (p : ℕ) : ℤ :=
   if h : ∃ c : ℤ, (p : ℤ) ∣ c ^ 2 - c + mE D then Classical.choose h else 0
@@ -385,7 +384,6 @@ def DomFor (D : D7) (j : ℕ) (EF : LinearMap.BilinForm ℤ (latW D j)) : Prop :
         (((D.R.sigW j).1 : ℂ) * τ (a : D.host.E) + ((D.R.sigW j).2 : ℂ) * starRingEnd ℂ (τ (a : D.host.E))) →
       J ∘ₗ A = A ∘ₗ J ∧ LinearMap.trace ℝ _ A = 2 * t.re ∧ LinearMap.trace ℝ _ (J ∘ₗ A) = -2 * t.im
 
-open Classical in
 
 def sgnW (D : D7) (j : ℕ) : ℤ := if ∃ hI : DatInt D j, DomFor D j (intForm (efQ D j) hI) then 1 else -1
 

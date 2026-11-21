@@ -134,7 +134,6 @@ def noUnf (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (N : ℕ) : Form
   X := PEmpty.elim
   un := fun k => k.elim
 
-open Classical in
 
 def UnfFam.U (u : UnfFam Xo c N ξ) (σ : c.F →+* ℂ) : Formalism.L2.PjFree.Unf Xo c σ N :=
   if h : Formalism.L2.PjFree.GoodEmb c σ then u.good σ h else noUnf Xo c σ N
@@ -289,7 +288,6 @@ theorem trans {κ₂ : Lv A} (s₂ : FinalTheorems S κ₂) (h : κ.l.Dvd κ₂.
 
 end FinalTheorems
 
-open Formalism.L2.Geo (datW datW_N datW_j) in
 
 structure SrcFam (A : Amb D) : Type 1 where
 
@@ -330,6 +328,5 @@ abbrev «at» (w : Formalism.L2.Geo.Dat D (Lv A)) : FinalTheorems (F.sig w.N w.j
 
 end SrcFam
 
-open Formalism.L2.Geo (datW datW_N datW_j) in
 
 end GlobalTheory.ShFam

@@ -305,7 +305,6 @@ theorem secChart_le_span (Q H : LineBundle S x) (m b : ℕ) {h : Ω} (h0 : h ≠
 
 end AmpleAffineGen
 
-open AmpleAffineGen in
 
 theorem AmpleAffineGen.proof : AmpleAffineGen.Statement.{u, w} := by
   intro S _ _ Ω _ _ N x H A Q b j h0

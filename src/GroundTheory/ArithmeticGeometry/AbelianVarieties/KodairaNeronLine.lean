@@ -66,26 +66,19 @@ open IsLocalRing
 variable {𝒪 : Type*} [CommRing 𝒪] [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪]
   (K : Type*) [Field K] [Algebra 𝒪 K] [IsFractionRing 𝒪 K] (W : WeierstrassCurve 𝒪)
 
-omit [IsFractionRing 𝒪 K] in
 
 section Origin
 
 variable {π : 𝒪} (hπ : Irreducible π)
 include hπ
 
-omit [IsFractionRing 𝒪 K] in
 
-omit [IsFractionRing 𝒪 K] in
 
-omit [IsFractionRing 𝒪 K] in
 
-omit [IsFractionRing 𝒪 K] in
 
 end Origin
 
-omit [IsFractionRing 𝒪 K] in
 
-omit [IsFractionRing 𝒪 K] in
 
 end DVR
 

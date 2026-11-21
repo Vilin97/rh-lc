@@ -39,7 +39,6 @@ instance finiteDimensional [∀ k, Fintype (ι k)] (m : K → ℕ) :
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
-open Classical in
 
 theorem component_mul {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {e : K → ℕ} (hx : IsMultiHomog x e) (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)
     (m : K → ℕ) :

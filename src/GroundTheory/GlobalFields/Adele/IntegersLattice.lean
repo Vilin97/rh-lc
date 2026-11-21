@@ -26,7 +26,6 @@ theorem discreteTopology_of_isOpen_of_forall_mem {G : Type*} [AddGroup G] [Topol
 
 variable (K : Type*) [Field K]
 
-open scoped Classical in
 
 noncomputable def homeomorphMixedSpace : K∞ ≃ₜ mixedEmbedding.mixedSpace K :=
   (Homeomorph.piEquivPiSubtypeProd (fun v : InfinitePlace K => IsReal v)

@@ -87,7 +87,6 @@ open Formalism.L2 Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalis
 
 variable {hL : GlobalTheory.Published.LocalLanglandsGL} {p : Prm hL}
 
-set_option maxHeartbeats 2000000 in
 
 end Wit
 

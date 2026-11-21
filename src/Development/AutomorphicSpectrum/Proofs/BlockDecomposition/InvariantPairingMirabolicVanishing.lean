@@ -121,7 +121,6 @@ theorem exists_descent (N : Subgroup G) (T : Representation ℂ G V) (T' : Repre
 
 end Descent
 
-set_option maxHeartbeats 2000000 in
 
 theorem pair_psi : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (ψ : AddChar k Circle), Continuous ψ → ψ ≠ 1 → ∀ (n s : ℕ) (V V' : Type) [AddCommGroup V] [Module ℂ V]

@@ -22,7 +22,6 @@ open Formalism.DivisionValues Formalism.EigenvalueLevelCeiling Formalism.L2.Inde
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {Kc : MainNotions.G.Consts} {Y : DivX D}
   {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX}
 
-open Classical in
 
 def nfMat {E : Type} [Field E] (n c : ℕ) (q : E) (nn : Fin c → ℤ) (z : Fin n → E) : Matrix (Fin (n + c)) (Fin (n + c)) E :=
   fun a b =>
@@ -30,7 +29,6 @@ def nfMat {E : Type} [Field E] (n c : ℕ) (q : E) (nn : Fin c → ℤ) (z : Fin
     else if hab : a = b then q ^ nn ⟨b.1 - n, by have := b.isLt; omega⟩
     else if h : b.1 = n ∧ a.1 < n then q ^ nn ⟨0, by have := b.isLt; omega⟩ * z ⟨a.1, h.2⟩ else 0
 
-open Classical in
 
 end Formalism.L2.DIV
 

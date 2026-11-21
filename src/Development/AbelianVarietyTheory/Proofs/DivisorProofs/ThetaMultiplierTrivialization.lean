@@ -271,7 +271,6 @@ theorem unitValue_ne_zero {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (V : X.Opens) (h :
 
 end GlobalTheory.TorusRM.TransFrame
 
-open GlobalTheory.TorusRM.TransFrame in
 
 theorem GlobalTheory.TorusRM.exists_theta_of_hasGen_lam_pull : ∀ (g : ℕ) (A : Over (Sp ℂ)) [GrpObj A], IsAbelianScheme A →
     ∀ (M : LB A.left) (u : HolUnif A M g) (Hm : Matrix (Fin g) (Fin g) ℂ) (χ : u.Λ → ℂ),

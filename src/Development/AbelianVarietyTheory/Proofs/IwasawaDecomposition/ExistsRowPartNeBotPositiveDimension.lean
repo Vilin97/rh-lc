@@ -134,7 +134,6 @@ section Real
 
 variable {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-set_option maxHeartbeats 800000 in
 
 theorem carries_of_upInj (hCusp : GlobalTheory.Published.CuspRapidDecay) (hHowe : HoweUnram) (R : RealDat3 D A3 Ks) (F : Face3 D A3) {s : ℕ}
     (hOk : A3.fam3.Ok3 s) (hCW : R.WeakCharacterisation F) (hEx : R.toRealDat.ExAt) (hJ : GlobalTheory.Hk3.InertJunk A3) (hPG : R.PGEquiv F)
@@ -249,7 +248,6 @@ theorem partsW_of_carried (hCRD : GlobalTheory.Published.CuspRapidDecay) (R : Re
 
 end Real
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.LiftsOnly
 

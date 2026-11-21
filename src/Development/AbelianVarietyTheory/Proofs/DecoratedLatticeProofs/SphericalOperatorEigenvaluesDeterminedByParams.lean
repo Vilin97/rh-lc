@@ -65,7 +65,6 @@ namespace GlobalTheory.ParamEigen
 
 variable {D : D7} {V : HSp D}
 
-open GlobalTheory.AdelicU GlobalTheory.PRep in
 
 theorem heckeLin_eq_heckeVec {v : HeightOneSpectrum (𝓞 D.host.F)} {K : Set (GA D V)}
     (hK : ∀ x, x ∈ K ↔ ∃ k ∈ stabLoc D.sp.cm.sig V.gram (frameLat V) v, emb D.sp.cm.sig V.gram v k = x)
@@ -116,7 +115,6 @@ namespace GlobalTheory.ParamEigen
 
 variable {D : D7} {V : HSp D}
 
-open GlobalTheory.AdelicU GlobalTheory.PRep in
 
 theorem exists_eig {J : Set (GA D V)} {χ : GA D V → ℂ} {Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))}
     (hJ : SphOff J χ Sb) (B : GlobalTheory.LFun.Fam D.host.E) (P : HeightOneSpectrum (𝓞 D.host.E)) (d : List ℤ) :

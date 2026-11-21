@@ -87,7 +87,6 @@ end Beta
 
 variable (hI : BetaInd k) (hS : BetaSmooth k) (hC : BetaCompact k)
 
-include hI hS in
 
 end Seq
 

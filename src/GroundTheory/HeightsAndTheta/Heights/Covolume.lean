@@ -28,7 +28,6 @@ end RealSpace
 
 end Real
 
-open Classical in
 
 theorem det_basisMatrix_sq : (basisMatrix K).det ^ 2 = ((discr K : ℤ) : ℂ) := by
   rw [basisMatrix_eq_embeddingsMatrixReindex,
@@ -56,9 +55,7 @@ variable {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K
   [Module.Projective (𝓞 K) E] (h : HermitianMetric K E) {ι : Type*} [Fintype ι] [DecidableEq ι]
   {s : ι → E}
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
 end RiemannRoch
 

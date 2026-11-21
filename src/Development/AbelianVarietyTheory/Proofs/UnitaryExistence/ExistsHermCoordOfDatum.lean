@@ -59,8 +59,6 @@ private lemma exists_trace_mul_eq_of_addMonoidHom (f : 𝓞 E →+ ℤ) :
   rw [h1]
   exact congrArg (fun w : 𝓞 E →ₗ[ℤ] ℚ => w a) huv
 
-open NumberField Matrix in
-open scoped nonZeroDivisors TensorProduct in
 
 theorem _root_.GlobalTheory.exists_herm_coord_of_datum :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) (ξ : E),

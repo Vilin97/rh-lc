@@ -37,13 +37,9 @@ theorem isScalarTower_mdl_om (X : Tower Ω ε) (Γ' : Subgroup SL(2, ℤ)) (S : 
 
 attribute [local instance] isScalarTower_mdl_om
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 def unitOf (X : Tower Ω ε) (a : X.K) : X.Kˣ := if h : a = 0 then 1 else Units.mk0 a h
 
@@ -55,18 +51,12 @@ def cR (l N : ℕ) (r₀ : ZMod l) : ℤ := (N : ℤ) * ((-r₀ * (N : ZMod l)�
 def gR (l N : ℕ) (r₀ : ZMod l) : SL(2, ℤ) :=
   ⟨!![1, 0; cR l N r₀, 1], by simp [Matrix.det_fin_two]⟩
 
-open Classical in
 
-open Classical in
 
 theorem cR_mod (l N : ℕ) [Fact l.Prime] (hN : (N : ZMod l) ≠ 0) (r₀ : ZMod l) : ((cR l N r₀ : ℤ) : ZMod l) = -r₀ := by
   simp only [cR, Int.cast_mul, Int.cast_natCast, ZMod.natCast_zmod_val]
   rw [mul_comm (-r₀), ← mul_assoc, mul_inv_cancel₀ hN, one_mul]
 
-open scoped MatrixGroups TensorProduct in
-open Matrix in
-variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} in
-attribute [local instance] _root_.GlobalTheory.K4.algMdl in
 
 theorem _root_.GlobalTheory.ZetaB.eval_clsHat (X : _root_.GlobalTheory.KZ.Tower Ω ε) (l : ℕ)
     [Fact l.Prime] (n : ℕ) (a : X.K) :
@@ -77,10 +67,6 @@ theorem _root_.GlobalTheory.ZetaB.eval_clsHat (X : _root_.GlobalTheory.KZ.Tower 
   rw [AdicCompletion.eval_of]
   rfl
 
-open scoped MatrixGroups TensorProduct in
-open Matrix in
-variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} in
-attribute [local instance] _root_.GlobalTheory.K4.algMdl in
 
 theorem _root_.GlobalTheory.ZetaB.unitOf_val (X : _root_.GlobalTheory.KZ.Tower Ω ε) {a : X.K}
     (ha : a ≠ 0) : ((_root_.GlobalTheory.ZetaB.unitOf X a : (X.K)ˣ) : X.K) = a := by
@@ -88,10 +74,6 @@ theorem _root_.GlobalTheory.ZetaB.unitOf_val (X : _root_.GlobalTheory.KZ.Tower �
   rw [dite_eq_right ha]
   rfl
 
-open scoped MatrixGroups TensorProduct in
-open Matrix in
-variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} in
-attribute [local instance] _root_.GlobalTheory.K4.algMdl in
 
 theorem _root_.GlobalTheory.ZetaB.unitOf_zero (X : _root_.GlobalTheory.KZ.Tower Ω ε) :
     _root_.GlobalTheory.ZetaB.unitOf X 0 = 1 := by

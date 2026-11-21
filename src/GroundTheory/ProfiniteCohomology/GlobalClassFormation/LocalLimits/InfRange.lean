@@ -44,7 +44,6 @@ theorem infLocalDecompHom_surjective : Function.Surjective (infLocalDecompHom ι
   exact congrArg (algebraMap _ (AlgebraicClosure v.Completion))
     (infiniteDecomposition_smul_coe τ (WithAbs.toAbs _ x)).symm
 
-omit [F.1.fixingSubgroup.Normal] in
 
 theorem isComplex_infPlaceOfEmbedding {r : F.1} (hr : r ^ 2 = -1) :
     (infPlaceOfEmbedding ι F : NumberField.InfinitePlace F.1).IsComplex := by
@@ -57,7 +56,6 @@ theorem isComplex_infPlaceOfEmbedding {r : F.1} (hr : r ^ 2 = -1) :
   rw [h] at this
   linarith
 
-omit [F.1.fixingSubgroup.Normal] in
 
 theorem isAlgClosed_infCompletion {r : F.1} (hr : r ^ 2 = -1) :
     IsAlgClosed (infPlaceOfEmbedding ι F : NumberField.InfinitePlace F.1).Completion :=
@@ -65,7 +63,6 @@ theorem isAlgClosed_infCompletion {r : F.1} (hr : r ^ 2 = -1) :
     (NumberField.InfinitePlace.Completion.ringEquivComplexOfIsComplex
       (isComplex_infPlaceOfEmbedding ι F hr)).symm
 
-omit [F.1.fixingSubgroup.Normal] in
 
 theorem infCompletionEmbedding_surjective {r : F.1} (hr : r ^ 2 = -1) :
     Function.Surjective (infCompletionEmbedding ι F) := by

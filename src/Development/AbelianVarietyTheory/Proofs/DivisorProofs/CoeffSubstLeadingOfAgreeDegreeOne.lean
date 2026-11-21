@@ -67,7 +67,6 @@ theorem near_one {u v : MvPowerSeries τ R} (hu : constantCoeff u = 0) (hv : con
 
 end LeadSubst
 
-open MvPowerSeries in
 
 theorem coeff_subst_leading :
     ∀ (R : Type) [CommRing R] (σ τ : Type) [Finite σ] (u v : σ → MvPowerSeries τ R) (N : ℕ)

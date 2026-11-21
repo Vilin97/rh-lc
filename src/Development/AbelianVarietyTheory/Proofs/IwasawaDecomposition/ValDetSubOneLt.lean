@@ -151,7 +151,6 @@ theorem compAt_eq {g : GL (Fin n) (AfE F E)} {a : Ideles E} (h : IsDetLift hc g 
   rw [← map_mul, ← adAt_finAf F]
   exact congrArg (fun u : (AfE F E)ˣ => adAt F P u) e
 
-omit [StarRing E] in
 
 theorem val_compAt_ne (P : HeightOneSpectrum (𝓞 E)) (a : Ideles E) : Valued.v (compAt P a) ≠ 0 :=
   (Valuation.ne_zero_iff _).2 ((Group.isUnit a).map (compAt P)).ne_zero

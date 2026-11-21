@@ -91,7 +91,6 @@ def PairAmpConst : Prop :=
     row Y r.1.1 = row Y r.2.1 → row Y r'.1.1 = row Y r'.2.1 →
       Formalism.MainNotions.S.hsInner (amp Y r.1.1) (amp Y r.2.1) = Formalism.MainNotions.S.hsInner (amp Y r'.1.1) (amp Y r'.2.1)
 
-variable {Y} in
 
 def FibreCountEq (hF : FinX Y) : Prop :=
   ∀ (u u' : D.what₂.Word) (q : RP Y u u'),

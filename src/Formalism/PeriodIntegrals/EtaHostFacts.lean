@@ -16,6 +16,5 @@ def Unram : Prop := ∀ (R : Formalism.BasicNotions.Ranks) (H : Formalism.BasicN
   ∀ P : HeightOneSpectrum (𝓞 H.E), (aboveF (L := H.E) H.F (P.under (𝓞 H.F))).card = 1 →
     P.asIdeal.ramificationIdx (𝓞 H.F) = 1
 
-open Classical in
 
 end PI.EtaHostFacts

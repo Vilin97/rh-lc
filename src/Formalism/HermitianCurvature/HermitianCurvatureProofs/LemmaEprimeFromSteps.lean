@@ -13,15 +13,10 @@ theorem smoothLog_sc (c : Cut) (ε : ℝ) (m : ℕ) : SmoothLog (c.sc ε m) := b
   unfold SmoothLog Cut.sc
   exact (c.smooth.comp (Real.contDiff_exp.div_const ε)).pow m
 
-open Polynomial in
 
-open Polynomial in
 
-open Polynomial in
 
-open Polynomial in
 
-open Polynomial in
 
 theorem thetaForm : ThetaForm := by
   intro ε σ hε v

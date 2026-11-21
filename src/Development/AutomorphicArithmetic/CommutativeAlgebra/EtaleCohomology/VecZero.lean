@@ -19,17 +19,14 @@ open UpperTheory.Gal.crystallineComparison
 
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
-variable (l) in
 
 def tA : Acris l := ACris.periodT (untilt_epsilon (p := l))
 
-variable (l) in
 
 def phiA : Acris l →+* Acris l := ACris.phi ℂ_[l] l
 
 def galA (g : K.fixingSubgroup) : Acris l →+* Acris l := ACris.galCris (IntermediateField.fixingSubgroupEquiv K g)
 
-variable (l) in
 
 def zA : ℤ_[l] →+* Acris l := (algebraMap (Ainf l) (Acris l)).comp (IsPerfectoidField.padicIntToWitt l)
 
@@ -49,7 +46,6 @@ structure PBg (l : ℕ) [Fact l.Prime] {A Γ : Type} [CommRing A] (t : A) (φA :
 
 attribute [instance] PBg.ring PBg.alg
 
-variable (l K) in
 
 abbrev PB : Type 1 := PBg l (tA l) (phiA l) (galA (K := K)) (zA l)
 

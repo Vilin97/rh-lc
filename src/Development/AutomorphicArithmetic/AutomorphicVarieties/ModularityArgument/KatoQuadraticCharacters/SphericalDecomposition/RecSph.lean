@@ -76,4 +76,3 @@ end WD
 
 end UpperTheory.V.Z.Kato.WeilSphericalRecords.SphericalReciprocity
 
-open UpperTheory.V.Z.Kato.WeilSphericalRecords.SphericalReciprocity in

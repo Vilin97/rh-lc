@@ -119,9 +119,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
 
 variable [FiniteDimensional F E] {d : ℕ} (b : Module.Basis (Fin d) F E)
 
-include b in
 
-include b in
 
 end Main
 

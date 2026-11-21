@@ -36,7 +36,6 @@ theorem ip_double_sum {D : D7} {S T : HSp D} (μ : Measure (WO S T)) (𝓕 : Set
   rw [integral_finsetSum _ (fun j _ => (hI i j).const_mul _)]
   exact Finset.sum_congr rfl fun j _ => integral_const_mul _ _
 
-open Classical in
 
 def monoFactor {D : D7} {m n : ℕ} (k : FVar D m n →₀ ℕ) (τ : D.what₂.Tau) : MvPolynomial (FVar D m n) ℂ :=
   ∏ y ∈ k.support with y.1 = τ, MvPolynomial.X y ^ k y

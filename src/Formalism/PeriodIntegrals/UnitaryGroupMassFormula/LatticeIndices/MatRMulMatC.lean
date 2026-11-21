@@ -80,7 +80,6 @@ private theorem isUnit_of_mul_eq_one_add_smul_maximalIdeal {ι : Type*} [Fintype
   rw [Matrix.det_mul] at h1
   exact (Matrix.isUnit_iff_isUnit_det C).mpr (isUnit_of_mul_isUnit_right h1)
 
-set_option maxHeartbeats 800000 in
 
 theorem adapt_of_eps (hθ : IsSplitEquiv X p θ) (hε : θ (epsP X p) = (1, 0)) (hL : LatBasis X p θ (reindex₂ X p Q)) :
     ∃ Q' : GL (IdxD D) (FpX X p), LatBasis X p θ (reindex₂ X p Q') ∧ AdaptA X p θ Q' := by

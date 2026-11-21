@@ -71,7 +71,6 @@ theorem continuous_of_iso (H : Continuous r) (h : RepIso r r') : Continuous r' :
   rw [e]
   exact (continuous_const.mul H).mul continuous_const
 
-variable (F l) in
 
 theorem eventually_not_mem : ∀ᶠ w : HeightOneSpectrum (𝓞 F) in Filter.cofinite, ((l : ℕ) : 𝓞 F) ∉ w.asIdeal := by
   have h0 : Ideal.span {((l : ℕ) : 𝓞 F)} ≠ 0 := by

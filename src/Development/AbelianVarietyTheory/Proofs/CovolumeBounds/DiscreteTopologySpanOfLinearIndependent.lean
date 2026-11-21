@@ -35,7 +35,6 @@ theorem free_of_fg {V : Type*} [AddCommGroup V] [Module ℝ V] {L : Submodule �
   have : IsAddTorsionFree V := .of_isTorsionFree ℝ V
   infer_instance
 
-open Classical in
 
 noncomputable def spanCovol (L : Submodule ℤ E) : ℝ :=
   if h : L.FG then

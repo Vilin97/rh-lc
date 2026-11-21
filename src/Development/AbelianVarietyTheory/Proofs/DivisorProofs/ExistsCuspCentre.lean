@@ -404,7 +404,6 @@ theorem orbitInterp' (r : ℕ) (X : Data E r) (G : Subgroup (GL (Fin r) E)) (x0 
   rw [e', FundSetPf.lact_mul, hu'.1.1.2.2 _ (X.Γ.inv_mem hs) _
     (MajInv.lact_mem_dom X (hG.isUStab h1) hx0), h3, mul_zero]
 
-open GlobalTheory.Up.BallExPf in
 
 theorem frame_bound3 {r : ℕ} (X : Data E r) {x0 x1 : Frame X.Ψ r} (h0 : IsOrth X x0)
     (h1 : IsOrth X x1) (hρ : rhX X x0 x1 ≤ 1 / 4) (τ : X.Ψ) (u : Fin r → ℂ) :
@@ -535,8 +534,6 @@ theorem normSq_sub_le {r : ℕ} (v w : Fin r → ℂ) :
   have h : ‖(v - w) k‖ ≤ ‖v k‖ + ‖w k‖ := norm_sub_le _ _
   nlinarith [norm_nonneg ((v - w) k), norm_nonneg (v k), norm_nonneg (w k), sq_nonneg (‖v k‖ - 3 * ‖w k‖)]
 
-open ReciprocityTheory.MultiplicativeHeights in
-open scoped ComplexOrder in
 
 theorem eq_one_of_cong {K : Type} [Field K] [NumberField K] {r M : ℕ} (hM : 5 ≤ M)
     (H : (K →+* ℂ) → Matrix (Fin r) (Fin r) ℂ) (hH : ∀ σ, (H σ).PosDef)
@@ -578,7 +575,6 @@ theorem eq_one_of_cong {K : Type} [Field K] [NumberField K] {r M : ℕ} (hM : 5 
       nlinarith
   exact sub_eq_zero.1 ((smul_eq_zero.1 hN).resolve_left (inv_ne_zero hM0))
 
-open GlobalTheory.Up.BallExPf in
 
 theorem exists_freeBall {r : ℕ} (X : DataX E r) {N : ℕ} (hN : 5 ≤ N)
     (hL : ∀ γ ∈ X.Γ, ∀ x ∈ X.L', ∃ y ∈ X.L', (γ : Matrix (Fin r) (Fin r) E) *ᵥ x - x = (N : E) • y) :

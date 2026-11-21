@@ -54,7 +54,6 @@ theorem exists_mul_mem_of_mem_chartRingZ (m : Ideal (curveRing y)) (hm : m.IsPri
 
 end SectionQuotientLocal
 
-open SectionQuotientLocal in
 
 theorem SectionQuotLocal.proof : SectionQuotLocal.Statement := by
   intro T _ K' _ _ y s _hy hs hsP m t hm hrat a b hb hba

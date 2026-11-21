@@ -251,7 +251,6 @@ theorem eTh_isLatIn (Sg : Set (Y.Dat i j b))
 
 variable (E : Formalism.MainNotions.IntegralHeckeForms.ExpDat Y)
 
-open Classical in
 
 end Basis
 
@@ -262,11 +261,8 @@ variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂} {X : N
 
 variable (Y : NExp D.R D.host D.what₂ D.LL0 N X) (E : Formalism.MainNotions.IntegralHeckeForms.ExpDat Y)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end Main
 

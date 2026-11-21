@@ -158,7 +158,6 @@ theorem prod_eq_sq (T : PT E) (s : (Fin 1 → Vsp T.dim) → ℂ) (a : Fin T.r �
   refine Finset.prod_congr rfl fun j _ => ?_
   rw [div_pow, Real.sq_sqrt (hp _), Real.sq_sqrt hl]
 
-omit [IsCMField E] in
 
 theorem finsum_le (T : PT E) (S : Set (Fin T.r → Vsp T.dim))
     (hS : ∀ a ∈ S, (∀ j, a j ∈ ZSpan.fundamentalDomain T.b) ∧ ∀ j, ((5 : ℂ) ^ 2) • a j ∈ T.L)

@@ -496,7 +496,6 @@ theorem tr_mem {n : ℕ} (S : GStep E K n) (emb : ι → E →+* K) (σ : K →+
     exact Submodule.subset_span ⟨S.rho emb lam b g v, rfl⟩
   exact hle hF
 
-open Classical in
 
 variable {R : Ranks} {I : ChainIn E K ι R} (J : AtIn I) (emb : ι → E →+* K) (σ : K →+* ℂ)
 

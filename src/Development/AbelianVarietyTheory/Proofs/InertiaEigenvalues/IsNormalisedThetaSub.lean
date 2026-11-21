@@ -70,7 +70,6 @@ variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
 def invL (x : Lie E a) : Lie E a := toL (Matrix.of x)⁻¹
 
-attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 
 theorem invL_smooth : (∀ x ∈ invSet E a, ContDiffAt ℝ ∞ invL x) ∧
     HasFDerivAt (invL : Lie E a → Lie E a) (-ContinuousLinearMap.id ℝ _) (oneL E a) := by
@@ -141,7 +140,6 @@ theorem continuous_conjAd : Continuous (conjAd E) := by
       (continuous_apply w)
   exact ((continuous_infEq E).comp (continuous_star.comp h)).prodMap (continuous_conjFin _)
 
-variable (E a) in
 
 def thetaA : GA E a →* GA E a := thetaGL a (conjAd E)
 
@@ -186,7 +184,6 @@ theorem theta_mem_Sm {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a) : (fun g => φ 
   ((hφ (thetaA E a g)).comp (fun x hx => (adjL.contDiff.contDiffAt.comp x (invL_smooth.1 x hx)).contDiffWithinAt)
     fun _ hx => (chart_theta φ g hx).2).congr fun _ hx => (chart_theta φ g hx).1
 
-variable (E a) in
 
 def pull : Sm E a ≃ₗ[ℂ] Sm E a where
   toFun φ := ⟨fun g => φ.1 (thetaA E a g), theta_mem_Sm φ.2⟩
@@ -288,7 +285,6 @@ theorem Zalg_pull {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) :
     obtain ⟨y', h3, h4⟩ := hy
     exact ⟨x' * y', mul_mem h1 h3, fun φ => by simp [h2, h4]⟩
 
-omit [IsCMField E] in
 
 theorem height_theta (y : GL (Fin a) (Cinf E)) : height (thetaGL a (starRingEnd (Cinf E)) y) = height y := by
   have h1 : ∀ y : GL (Fin a) (Cinf E), ‖toL (thetaGL a (starRingEnd (Cinf E)) y).val‖ ≤ ‖toL (y⁻¹).val‖ := fun y =>
@@ -390,7 +386,6 @@ theorem blockMap_mem_ratN (h : r + s = a) {x : BlockIx a r → Ad E} (hx : x ∈
 
 end Block
 
-open MeasureTheory in
 
 theorem isCuspidal_pull {φ : GA E a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal fun g => φ (thetaA E a g) := by
   intro r h0 h1 _ _ μ 𝓕 hμ hF g

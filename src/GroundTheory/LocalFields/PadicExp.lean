@@ -118,7 +118,6 @@ theorem mem_integer_of_mem_valBall {n : ℤ} (hn : 0 ≤ n) {x : K} (hx : x ∈ 
   rw [← normalizedValuation_le_one_iff]
   exact hx.trans (by rw [← WithZero.exp_zero, WithZero.exp_le_exp]; omega)
 
-variable (K) in
 
 noncomputable def valBallEquivMaximalIdealPow (n : ℕ) :
     valBall K n ≃ₜ+ (𝓂[K] ^ n : Ideal 𝒪[K]) where

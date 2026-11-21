@@ -14,7 +14,6 @@ namespace GlobalTheory.ValCount
 
 variable {K L : Type} [Field K] [Field L]
 
-open Classical in
 
 def vord (V : ValuationSubring L) (x : L) : ℤ :=
   if h : IsDiscreteValuationRing V then (haveI := h; WithZero.log (Ring.ordFrac V x)) else 0

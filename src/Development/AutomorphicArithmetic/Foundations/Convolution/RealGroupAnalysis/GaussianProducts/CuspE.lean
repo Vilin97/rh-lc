@@ -11,7 +11,6 @@ open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspR
 open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.G
 open scoped Classical ENNReal nonZeroDivisors
 
-open GroundTheory.Automorphic.FourierWhittaker in
 
 private noncomputable def latE {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (D : Dat F E) :
     vecLattice F (Fin 2) ≃ AdeleRing.principalSubgroup (𝓞 E) E where

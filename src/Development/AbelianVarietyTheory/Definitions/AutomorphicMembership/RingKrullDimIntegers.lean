@@ -126,8 +126,6 @@ attribute [instance] CxSt.fnCRing CxSt.fnCAlg
 
 namespace CxSt
 
-variable (F) in
-open Var in
 
 variable (C : CxSt F) (Y : Var F) (σ : F →+* ℂ) (Δ : Y.Dv) (m : C.Met Y σ Δ)
 
@@ -135,7 +133,6 @@ end CxSt
 
 abbrev below {K : Type} [Field K] {Z : Scheme.{0}} (y : Sp K ⟶ Z) : Z := y (IsLocalRing.closedPoint K)
 
-open Classical in
 
 def valAt {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y : Sp K ⟶ Z) (f : Z.functionField) : K :=
   if h : RegAt (below y) f then (Scheme.stalkClosedPointTo y).hom h.choose else 0
@@ -247,7 +244,6 @@ def arVol : ℝ :=
   (limsup (fun τ : ℕ => ENNReal.log ((A.small τ).encard : ENNReal) *
     ((((Y.dim + 1).factorial : ℝ) / (τ : ℝ) ^ (Y.dim + 1) : ℝ) : EReal)) atTop).toReal / (Module.finrank ℚ F : ℝ)
 
-open Classical in
 
 def ht (x : Y.X) : ℝ :=
   -((∑ σ : F →+* ℂ, ∑ᶠ (z : Pts Y σ) (_ : under z = x),
@@ -275,7 +271,6 @@ def IsArTop (t : ℝ) : Prop :=
     (haveI := M.ar.isIntegral; L.IsSelfInter a) ∧
     t = (a / (((k : ℕ) : ℝ) * (A.n : ℕ)) ^ (Y.dim + 1) + ((Y.dim : ℝ) + 1) * A.deg * ∑ᶠ v, cf v) / (Module.finrank ℚ F : ℝ)
 
-open Classical in
 
 def arTop : ℝ := if h : ∃ t, A.IsArTop t then h.choose else 0
 
@@ -335,13 +330,11 @@ theorem valAt_zpow {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y : Sp 
     exact (congrArg Units.val (map_zpow (Units.map ψ.toMonoidHom) a m)).trans (Units.val_zpow_eq_zpow_val _ _)
   rw [← e, valAt_stalk, valAt_stalk, e]
 
-omit [NumberField F] in
 
 theorem ratVal_one {Y : Var F} {σ : F →+* ℂ} (y : Pts Y σ) : ratVal (1 : Y.Fn) y = 1 := by
   have e := ratVal_fnOf (y := y) CxPts.mem_ptsIn_top trivial 1
   rwa [map_one, CxPts.ev_one CxPts.mem_ptsIn_top] at e
 
-omit [NumberField F] in
 
 theorem unitAt_eqn_zero {Y : Var F} (x : Y.X) : UnitAt x (eqn (0 : Y.Dv) x : Y.Fn) := by
   simpa using (CartierDiv.isEqn_zero x).iff_unitAt.1 (isEqn_eqn 0 x)
@@ -350,7 +343,6 @@ end Base
 
 open Base
 
-variable (F) in
 
 def Model.pspace (n : ℕ) : Model (proj F n) where
   X := PSpace (𝓞 F) n
@@ -367,7 +359,6 @@ namespace Adl
 variable {C : CxSt F} {Y : Var F} {A : Adl C Y} {M : Model Y} {L : HermLB M.p} {k : ℕ+}
   {cf : HeightOneSpectrum (𝓞 F) → ℝ}
 
-variable (C Y) in
 
 def triv : Adl C Y where
   D := 0
@@ -389,7 +380,6 @@ theorem pn_triv (σ : F →+* ℂ) (τ : ℕ) {f : Y.Fn} {y : Pts Y σ} (hf : Re
   erw [h₃]
   simp [ratVal_one, Weight.ofFun]
 
-variable (C) in
 
 theorem induced_triv (M : Model Y) : (triv C Y).Induced M (HermLB.triv M.p) 1 0 := by
   have hL := LB.isLB_pull (HermLB.triv M.p).isLB M.j
@@ -417,7 +407,6 @@ end Adl
 
 variable [StarRing F]
 
-open Classical in
 
 def frameAt (W : HLat F) (σ : F →+* ℂ) : Matrix W.ι W.ι ℂ :=
   if (InfinitePlace.mk σ).embedding = σ then W.X (InfinitePlace.mk σ) else (W.X (InfinitePlace.mk σ)).map (starRingEnd ℂ)
@@ -448,7 +437,6 @@ structure ResSt (C : CxSt F) : Type 1 where
   resDeg : ∀ (Y : Var F) (E : Type) [Field E] [NumberField E] [Algebra F E] {n : ℕ},
     (Fin n → Y.Fn) → (Fin Y.dim → Fin n → 𝓞 E) → ∀ (M0 : HLat F), (M0.V →ₗ[F] Y.Fn) → Adl C Y → ℝ
 
-omit [StarRing F] in
 
 theorem supInf_twist {C : CxSt F} {Y : Var F} (A : Adl C Y) (ci : InfinitePlace F → ℝ)
     (cf : HeightOneSpectrum (𝓞 F) → ℝ) (v : InfinitePlace F) (τ : ℕ) (f : Y.Fn) :
@@ -461,7 +449,6 @@ theorem supInf_twist {C : CxSt F} {Y : Var F} (A : Adl C Y) (ci : InfinitePlace 
   congr 2
   ring
 
-omit [StarRing F] in
 
 theorem supFin_twist {C : CxSt F} {Y : Var F} (A : Adl C Y) (ci : InfinitePlace F → ℝ)
     (cf : HeightOneSpectrum (𝓞 F) → ℝ) (v : HeightOneSpectrum (𝓞 F)) (τ : ℕ) (f : Y.Fn) :
@@ -549,15 +536,11 @@ def geoOf (C : CxSt F) (K : CutSt C) (R : ResSt C) : DV.Geo F where
 theorem deg_ofW (C : CxSt F) (Y : Var F) (L : Y.Dv) (W : HLat F) (ι : W.V →ₗ[F] Y.Fn) :
     (ofW C Y L W ι).deg = (Y.inter (fun _ => L) : ℝ) := by simp [Adl.deg, ofW]
 
-omit [StarRing F] in
 
 theorem deg_twist {C : CxSt F} {Y : Var F} (A : Adl C Y) (ci : InfinitePlace F → ℝ)
     (cf : HeightOneSpectrum (𝓞 F) → ℝ) : (A.twist ci cf).deg = A.deg := rfl
 
-omit [StarRing F] in
 
-omit [StarRing F] in
 
-omit [StarRing F] in
 
 end GlobalTheory.TrueGeo

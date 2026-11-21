@@ -139,7 +139,6 @@ theorem rowsC_cut (hc : c.Good) (h : RowsC D) : RowsC (cut D c) :=
         Set.ext fun Sig => par_iff i x Sig
       rw [e]; rfl }
 
-set_option maxHeartbeats 1000000 in
 
 def ledBack (L : SizeData₂ (cut D c)) : SizeData₂ D := { L with }
 

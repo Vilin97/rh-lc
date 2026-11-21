@@ -161,7 +161,6 @@ section Gen
 
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R}
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem isRoot_of_eig (B : LocBase0 H what₂) (j : ℕ) (w : what₂.places.Pl) (v : HeightOneSpectrum (𝓞 H.E)) (k : ℕ)
     [Module.Finite what₂.LL (what₂.MtL (what₂.muTw w) j)] (μ : FractionRing (B.Oc j w))
@@ -206,7 +205,6 @@ theorem finite_MtL {R : Ranks} (what₂ : Rows.Data R) (μ : what₂.Tup) (j : �
 
 variable {D : D7}
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem root_int (M : MtFam D) (C : NChoice D) (hR : HeckeLift0 (mt0 M) C.Q) (hP : HeckeStdPlain) (hG : GenHyp M C.Q)
     (hsp : ∀ v : PlE D.host, IsSplitPl D.host v → ∃ (s : SplitPlace D.host.E) (ϖ : s.v.adicCompletion (maximalRealSubfield D.host.E)),
@@ -269,7 +267,6 @@ end GlobalTheory.HeckeStdBase
 
 namespace GlobalTheory.HeckeStdBase
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem heckeStd0_base : ∀ (D : D7) (M : MtFam D) (C : NChoice D) (hR : HeckeLift0 (mt0 M) C.Q) (X : CoefIn D.what₂)
     (hS : SplitK (mt0 M) C.Q hR X), HeckeStdPlain → GenHyp M C.Q →

@@ -32,7 +32,6 @@ theorem laplacian_apply (t : T) (a : Fin p) (b : Fin q) (P : Poly R T p q κ) :
 
 def IsHarmonic (P : Poly R T p q κ) : Prop := ∀ t a b, laplacian t a b P = 0
 
-variable (R T p q κ) in
 
 def harmonicSubmodule : Submodule R (Poly R T p q κ) where
   carrier := {P | IsHarmonic P}
@@ -262,13 +261,11 @@ noncomputable def colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ 
     | (t, Sum.inl a, k) => xForm t a (A t k)
     | (t, Sum.inr b, k) => yForm t b fun l => B t l k
 
-omit [Fintype κ] in
 
 @[simp] theorem colSubst_X_xVar (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (t : T) (a : Fin p)
     (k : κ) : colSubst A B (X (xVar t a k) : Poly R T p q κ) = xForm t a (A t k) := by
   simp [colSubst]
 
-omit [Fintype κ] in
 
 @[simp] theorem colSubst_X_yVar (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (t : T) (b : Fin q)
     (k : κ) : colSubst A B (X (yVar t b k) : Poly R T p q κ) = yForm t b fun l => B t l k := by
@@ -322,7 +319,6 @@ theorem colSubst_minorProd [Fintype T] (A : T → Matrix κ κ' R) (B : T → Ma
       (ringHom_yMinor (colSubst A B).toRingHom t i (φ t) (fun a => B t *ᵥ φ t a)
         fun a b => colSubst_yForm _ _ _ _ _)
 
-omit [Fintype κ] in
 
 theorem eval_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (z : Var T p q κ' → R)
     (P : Poly R T p q κ) :
@@ -337,7 +333,6 @@ theorem eval_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (z
     · rw [map_mul, map_mul, map_mul, hP, eval_X, colSubst_X_xVar, eval_xForm]; rfl
     · rw [map_mul, map_mul, map_mul, hP, eval_X, colSubst_X_yVar, eval_yForm, dotProduct_comm]; rfl
 
-omit [Fintype κ] in
 
 theorem colSubst_isWeightedHomogeneous {M : Type*} [AddCommMonoid M] (w : T → Fin p ⊕ Fin q → M)
     (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) {P : Poly R T p q κ} {m : M}
@@ -384,7 +379,6 @@ theorem colActHom_mul (g h : T → GL κ R) :
   rw [colActHom, colActHom, colActHom, colSubst_comp]
   simp only [Pi.mul_apply, _root_.mul_inv_rev, Units.val_mul]
 
-variable (R T p q κ) in
 
 noncomputable def colAct : (T → GL κ R) →* (Poly R T p q κ ≃ₐ[R] Poly R T p q κ) where
   toFun g := AlgEquiv.ofAlgHom (colActHom g) (colActHom g⁻¹)
@@ -396,7 +390,6 @@ noncomputable def colAct : (T → GL κ R) →* (Poly R T p q κ ≃ₐ[R] Poly 
 theorem colAct_apply (g : T → GL κ R) (P : Poly R T p q κ) :
     colAct R T p q κ g P = colSubst (fun t => ((g t)⁻¹ : GL κ R)) (fun t => g t) P := rfl
 
-variable (R T p q κ) in
 
 noncomputable def colRep : Representation R (T → GL κ R) (Poly R T p q κ) where
   toFun g := (colAct R T p q κ g).toLinearMap
@@ -419,17 +412,14 @@ end Action
 
 section Base
 
-variable (R) in
 
 def baseCovec (h : p + q ≤ n) (a : Fin p) : Fin n → R :=
   Pi.single (Fin.castLE (by omega) a) 1
 
-variable (R) in
 
 def baseVec (h : p + q ≤ n) (b : Fin q) : Fin n → R :=
   Pi.single (Fin.rev (Fin.castLE (by omega) b)) 1
 
-variable (R T) in
 
 theorem isPerp_base (h : p + q ≤ n) :
     IsPerp (fun _ : T => baseCovec R h) (fun _ => baseVec R h) := fun t a b => by
@@ -452,13 +442,11 @@ theorem linearIndependent_baseVec (h : p + q ≤ n) : LinearIndependent R (baseV
 
 variable [Fintype T]
 
-variable (R) in
 
 noncomputable def basePoly (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) :
     Poly R T p q (Fin n) :=
   minorProd c c' (fun _ => baseCovec R h) (fun _ => baseVec R h)
 
-variable (R) in
 
 noncomputable def orbitSpan (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) :
     Submodule R (Poly R T p q (Fin n)) :=
@@ -485,7 +473,6 @@ theorem colAct_mem_orbitSpan (g : T → GL (Fin n) R) {P : Poly R T p q (Fin n)}
   | add P Q _ _ hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
   | smul r P _ hP => rw [map_smul]; exact Submodule.smul_mem _ _ hP
 
-variable (R) in
 
 theorem map_basePoly (f : R →+* S) : MvPolynomial.map f (basePoly R h c c') = basePoly S h c c' := by
   rw [basePoly, map_minorProd, basePoly]

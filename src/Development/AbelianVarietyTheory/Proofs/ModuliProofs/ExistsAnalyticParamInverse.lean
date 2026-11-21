@@ -59,7 +59,6 @@ theorem exists_analytic_param_inverse {F : B × V → V} {b₀ : B} {A : V →L[
     rw [← h3]
     exact h4
 
-omit [FiniteDimensional ℂ B] [FiniteDimensional ℂ V] in
 
 theorem eventually_eq_zero_of_slices {W : Type*} [NormedAddCommGroup W] [NormedSpace ℂ W]
     [CompleteSpace V] {F : B × W → V} {b₀ : B} (hF : AnalyticAt ℂ F (b₀, 0))

@@ -19,8 +19,6 @@ variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algeb
   [IsGalois K L] (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpectrum (𝓞 L))
   [w.asIdeal.LiesOver v.asIdeal]
 
-include v in
-open AdicLiesOver in
 
 theorem isZero_groupCohomology_decomposition_integerUnits
     (he : w.asIdeal.ramificationIdx (𝓞 K) = 1) {n : ℕ} (hn : 1 ≤ n) :
@@ -32,7 +30,6 @@ theorem isZero_groupCohomology_decomposition_integerUnits
     (groupCohomology.mapIso (decompositionMulEquiv v w) (integerUnitsAddEquiv w).toIntLinearEquiv
       (fun σ => LinearMap.ext fun x => integerUnitsAddEquiv_decomposition v w σ x) n)
 
-include v in
 
 theorem isZero_cohomology_decomposition_integerUnits
     (he : w.asIdeal.ramificationIdx (𝓞 K) = 1) {n : ℕ} (hn : 1 ≤ n) :

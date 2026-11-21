@@ -227,6 +227,5 @@ theorem basis_exists (k r : ℕ) : ∃ (N : ℕ) (e : Fin N → B.Mat k r) (c : 
       _ ≤ K := Finset.single_le_sum (f := fun j => C j * s j)
           (fun j _ => mul_nonneg (hC0 j).le (hs0 j).le) (Finset.mem_univ i)
 
-open Classical in
 
 end PI.ComplexConjugateDerivative

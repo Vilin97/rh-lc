@@ -66,8 +66,6 @@ private lemma norm_apply_le_sum_of_gram_eq_smul_one {n : ℕ} (G M M₀ : Matrix
     _ ≤ ∑ k, ‖M₀ i k‖ := Finset.sum_le_sum fun k _ => by
       rw [norm_mul]; exact mul_le_of_le_one_right (norm_nonneg _) (hbound k j)
 
-open NumberField in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.DefiniteFrames.isCompact_ortho (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r) (hp : X.p0 = 0 ∨ r ≤ X.p0) :
     IsCompact {x : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r | X.IsOrtho x} := by
@@ -123,8 +121,6 @@ private lemma mem_dom_of_isOrtho' (X : _root_.ReciprocityTheory.ChartRestriction
     rw [hmin, Complex.ofReal_re]
     exact mul_self_pos.mpr hne
 
-open NumberField in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.DefiniteFrames.exists_compact_of_definite : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r), (X.p0 = 0 ∨ r ≤ X.p0) → ∃ C : Set (_root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r), IsCompact C ∧ C ⊆ X.dom ∧ ∀ x ∈ X.dom, ∃ γ ∈ X.Γ, ∃ b ∈ _root_.ReciprocityTheory.ChartRestriction.G.FD.Bor X.Ψ r, _root_.ReciprocityTheory.ChartRestriction.G.FD.lact γ (_root_.ReciprocityTheory.ChartRestriction.G.FD.rmul x b) ∈ C := by
   intro E _ _ _ r X hp

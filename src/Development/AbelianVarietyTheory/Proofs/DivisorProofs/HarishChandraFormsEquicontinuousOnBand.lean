@@ -33,19 +33,16 @@ omit [IsTotallyComplex E] in
 theorem continuous_mapFin : Continuous (Matrix.GeneralLinearGroup.map (n := Fin a) (pFin E)) :=
   Continuous.units_map _ (continuous_id.matrix_map (continuous_snd : Continuous (pFin E)))
 
-omit [IsTotallyComplex E] in
 
 theorem absDetA_eq (g : GA E a) :
     absDetA g = (GroundTheory.Global.IdeleGroup.ideleModule E (Matrix.GeneralLinearGroup.det g) : ℝ) := by
   unfold absDetA
   exact GroundTheory.Automorphic.Reduction.adeleAbs_units (K := E) _
 
-omit [IsTotallyComplex E] in
 
 theorem absDetA_mul (g h : GA E a) : absDetA (g * h) = absDetA g * absDetA h := by
   rw [absDetA_eq, absDetA_eq, absDetA_eq, map_mul, map_mul, Positive.val_mul]
 
-omit [IsTotallyComplex E] in
 
 theorem continuous_absDetA : Continuous (absDetA (E := E) (a := a)) := by
   have e : (absDetA (E := E) (a := a)) =

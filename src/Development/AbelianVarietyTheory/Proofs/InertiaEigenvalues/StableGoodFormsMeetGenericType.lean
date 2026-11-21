@@ -31,7 +31,6 @@ theorem GlobalTheory.MeetsGen.exists_right_inv_generic_central_projector : ∀ (
   exact GlobalTheory.T.exists_right_inverse_centralProjectorUnitElement U ψ D.ntypes.e0 hi (fun a => ((Subalgebra.mem_center_iff.mp hc) a).symm)
     (GlobalTheory.T.good_idempotent_irreducible_character_generic_sum_ne_zero D S U hU ψ hψ hr)
 
-open GlobalTheory.MeetsGen in
 
 theorem GlobalTheory.TwInputs.meetsAll_of_ties : GlobalTheory.Published.GreenCuspidal → ∀ (D : D7), NExpTied D → GrpSide D → MeetsAll D := by
   intro hG D T S i j b W hW hst hfix

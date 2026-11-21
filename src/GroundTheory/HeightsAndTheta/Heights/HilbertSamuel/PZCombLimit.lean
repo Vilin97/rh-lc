@@ -165,7 +165,6 @@ theorem famExt_div (e : Fin 2 → HermLine ι) (k p q : ℕ) (hq : 0 < q) :
 
 end ZCombLimit
 
-open GroundTheory.Heights₂.Heights.NumbersDVR in
 
 theorem ZCombLimit.genericFibre {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
     {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRing ι)} {d : ℕ} (hP : IsArithVar P (d + 1)) :

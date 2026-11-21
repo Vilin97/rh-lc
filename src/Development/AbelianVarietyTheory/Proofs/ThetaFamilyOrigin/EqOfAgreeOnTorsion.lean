@@ -293,7 +293,6 @@ end GlobalTheory.EndOnTorsion
 
 namespace GlobalTheory
 
-open CechPic EndOnTorsion in
 
 theorem endDeterminedOnTorsion : Out.Laws →
     (∀ (K : Type) [Field K] [IsAlgClosed K] (P : Out.PolAV (Sp K)) (N d k : ℕ) (b : Out.baseOver (Sp K) ⟶ P.A),

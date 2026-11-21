@@ -33,7 +33,6 @@ section Frames
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
 
-open Classical in
 
 def latFr (P : HeightOneSpectrum (𝓞 E)) (N : Submodule (𝓞 E) (Sp E n)) : Sp E n ≃ₗ[E] Sp E n :=
   if localization₂ P.asIdeal N = stdAt E n P then 1 else frameAt P N
@@ -47,7 +46,6 @@ theorem isFr_latFr (P : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E) (Sp 
     rfl
   · exact CharValCompare.isFr_frameAt (CharValCompare.exists_isFr P hN)
 
-open Classical in
 
 def ptFr (p : DecoF E n ST SG Q) (P : HeightOneSpectrum (𝓞 E)) : Sp E n ≃ₗ[E] Sp E n :=
   if h : P ∈ SG then p.deco.1.liftFr ⟨P, h⟩ else if h' : P ∈ Q then p.fr ⟨P, h'⟩ else latFr P p.deco.1.N
@@ -98,7 +96,6 @@ theorem extTo_fr (SQ : Finset (HeightOneSpectrum (𝓞 E))) (p : DecoF E n ST SG
 theorem extTo_self (hd : Disjoint SG Q) (p : DecoF E n ST SG Q) : extTo Q p = p :=
   Subtype.ext (Prod.ext rfl (funext fun P => ptFr_of_mem p (Finset.disjoint_right.1 hd P.2) P.2))
 
-open Classical in
 
 def detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) (N : Submodule (𝓞 E) (Sp E n))
     (fr : HeightOneSpectrum (𝓞 E) → Sp E n ≃ₗ[E] Sp E n) : Ideles E :=
@@ -106,13 +103,11 @@ def detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) (N : Submodule (𝓞 E) (S
     ∏ᶠ w : HeightOneSpectrum (𝓞 E),
       if w ∈ SB ∨ conjPrime₂ w ∈ SB then 1 else localIdele E w (atFin w (unif w)) ^ (ordSub w (detSub N)).toNat
 
-omit [StarRing E] in
 
 theorem finite_ordSub {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) :
     {w | ordSub w (detSub N) ≠ 0}.Finite :=
   (ordSub_detSub_lattice E n N hN.fg hN.span_eq_top).1
 
-open Classical in
 
 theorem finite_detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) :
     Function.HasFiniteMulSupport fun w : HeightOneSpectrum (𝓞 E) =>
@@ -120,7 +115,6 @@ theorem finite_detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) {N : Submodule 
   refine (finite_ordSub hN).subset fun w hw h0 => hw ?_
   simp [h0]
 
-open Classical in
 
 theorem compAt_detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N)
     (fr : HeightOneSpectrum (𝓞 E) → Sp E n ≃ₗ[E] Sp E n) (w : HeightOneSpectrum (𝓞 E)) :
@@ -286,7 +280,6 @@ theorem IsPtOf.extTo {SQ : Finset (HeightOneSpectrum (𝓞 E))} (hQ : SQ ⊆ Q) 
   ⟨h.uni, h.lat, h.f, h.be, fun P i j => by
     rw [h.fr ⟨P.1, hQ P.2⟩, extTo_fr, ptFr_of_mem p (Finset.disjoint_right.1 hd P.2) (hQ P.2)]⟩
 
-variable (hc) in
 
 theorem isPtOf_base [NeZero n] : IsPtOf hc 1 (DecoF.base E n ST SG Q) := by
   have h1 : ∀ (x : Sp E n) i, pullV (1 : GL (Fin n) (AfE F E)) x i = Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F) (x i) :=
@@ -346,7 +339,6 @@ theorem sigR_mem_rInt {r : AfE F E} (hr : r ∈ RInt F E) : Formalism.UG.sigR hc
       rfl
   exact h hr
 
-omit [StarRing E] in
 
 theorem exists_approx_small (z : AfE F E) (T : Finset (HeightOneSpectrum (𝓞 E))) {γ : WithZero (Multiplicative ℤ)} (hγ : γ ≠ 0) :
     ∃ (y : E) (N : ℕ) (r : AfE F E), r ∈ RInt F E ∧ (∀ P ∈ T, Valued.v (N : P.adicCompletion E) < γ) ∧
@@ -360,7 +352,6 @@ theorem exists_approx_small (z : AfE F E) (T : Finset (HeightOneSpectrum (𝓞 E
   rw [e2, map_mul, map_natCast]
   rfl
 
-omit [StarRing E] in
 
 theorem valued_nat_mul_lt {P : HeightOneSpectrum (𝓞 E)} {N : ℕ} {r : AfE F E} (hr : r ∈ RInt F E)
     {γ : WithZero (Multiplicative ℤ)} (h : Valued.v (N : P.adicCompletion E) < γ) : Valued.v (adAt F P (N * r)) < γ := by
@@ -393,7 +384,6 @@ theorem valued_sigR (P : HeightOneSpectrum (𝓞 E)) (z : AfE F E) :
   have h := key (conjPrime₂ P) (Formalism.UG.sigR hc.sig _ z)
   rwa [DetClass.sigR_sigR (fun x => star_star x), CharValCompare.conjP_conjP] at h
 
-include hc in
 
 theorem exists_real_approx {P : HeightOneSpectrum (𝓞 E)} (hP : conjPrime₂ P ≠ P) (u : (P.adicCompletion E)ˣ) :
     ∃ k : Fˣ, Valued.v ((u : P.adicCompletion E) - algebraMap E _ (algebraMap F E k)) < Valued.v (u : P.adicCompletion E) := by
@@ -661,7 +651,6 @@ theorem rhoAt'_eq_hecke {ξ : HChar H.E} (h : KDq H SQ ≤ (ξ.1.comp (finPartI 
     xiDet_eq SQ (reference_characters_factor_tame SQ C j)]
   rfl
 
-variable (H) in
 
 def toDtQ {SQ : Finset (HeightOneSpectrum (𝓞 H.E))} (h : Q ⊆ SQ) : DtQ H SQ →* DtQ H Q :=
   QuotientGroup.map (KDq H SQ) (KDq H Q) (MonoidHom.id _) (KDq_anti H h)

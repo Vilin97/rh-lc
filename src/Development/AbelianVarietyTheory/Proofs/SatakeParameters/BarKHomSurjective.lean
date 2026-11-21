@@ -13,8 +13,6 @@ namespace GlobalTheory.IdemAdj
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E a) in
-omit [NumberField E] [IsTotallyComplex E] in
 
 def barKHom : Kinf E a →* Kinf E a where
   toFun := barK
@@ -24,15 +22,12 @@ def barKHom : Kinf E a →* Kinf E a where
     ext i j
     simp [Matrix.mul_apply, Matrix.star_apply, mul_comm])
 
-omit [NumberField E] [IsTotallyComplex E] in
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem barK_barK (k : Kinf E a) : barK (barK k) = k := Subtype.ext (by
   ext i j
   simp [barK, Matrix.star_apply])
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem barKHom_surjective : Function.Surjective (barKHom E a) := fun k => ⟨barK k, barK_barK k⟩
 

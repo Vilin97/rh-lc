@@ -46,7 +46,6 @@ theorem herm_map {La : Type} {g g' : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} {Hm'
   rw [map_smul] at this
   simpa [herm] using this
 
-omit [IsCMField E] in
 
 theorem eq_zero_of_eig {ρ : E →+* ℂ} {v : Fin g → ℂ} (hv : ∀ a : 𝓞 E, tyAct ty a v = ρ a • v) {n : Fin g}
     (hn : ty n ≠ ρ) : v n = 0 := by
@@ -69,7 +68,6 @@ theorem herm_eq_zero (hP : IsPeriod D ty P) (hE : ∀ x y, (hermForm Hm (P x) (P
   rw [hv, hermForm_smul_right, emb_bar, Complex.star_def, Complex.conj_conj] at this
   simpa [hermForm, tyAct, dotProduct, Pi.single_apply] using this
 
-open Classical in
 
 theorem flatCoord_ne_zero (hP : IsPeriod D ty P) (hE : ∀ x y, (hermForm Hm (P x) (P y)).im = D.EF x y)
     {ρ : E →+* ℂ} {p q : ℕ} (hr : p + q = D.p + D.q) {x : Fin q ⊕ Fin p → D.La} (hx : LinearIndependent (𝓞 E) x)
@@ -293,7 +291,6 @@ theorem isDerivAt0_of_sameVecs {y : Sp ℂ ⟶ Xo.XF c} {g n : ℕ} {e : (Fin g 
   rw [← k1, ← Y.m.cart.1.hom_ext (h1.trans k2.symm) ((Over.w v₀).trans (Over.w v₁).symm)]
   exact h2
 
-open Classical in
 
 theorem exists_reading (hU : IsClosed (U : Set (Xo.XF c))) {σb : RuleY Y} {σ : RuleU Xo c}
     (hres : Restricts Y U τ σb σ) {s : c.F →+* ℂ} {g₀ : ℕ} {ty : Fin g₀ → (E →+* ℂ)}

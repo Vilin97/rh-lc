@@ -8,7 +8,6 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.MemIntMat
 
 namespace GlobalTheory
 
-open Matrix in
 
 theorem phaseCondition_basisChange : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (σ : L →+* L) (δ : L)
     (n n' : ℕ) (A : Matrix (Fin n) (Fin n) L) (ψ : AddChar L ℂ)

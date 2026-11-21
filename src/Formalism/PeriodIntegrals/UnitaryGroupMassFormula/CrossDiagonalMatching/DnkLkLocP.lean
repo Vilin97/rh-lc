@@ -14,8 +14,6 @@ open NumberField IsDedekindDomain Matrix
 
 variable {D : D7} {u : D.what₂.Word}
 
-set_option maxHeartbeats 2000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem dnk_tld (T : Forms0 D u) (c : (D.mem u).C.cls 0) (y : Fin (D.R.N 0) → D.host.E)
     (hy : y ∈ Ld D u 0 (Nat.zero_le _) c) :
@@ -65,7 +63,6 @@ theorem dnk_tld (T : Forms0 D u) (c : (D.mem u).C.cls 0) (y : Fin (D.R.N 0) → 
 theorem dnk_lk_le (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0) :
     Lk T.atT 0 (Nat.zero_le _) v c ≤ Ld D u 0 (Nat.zero_le _) c := sup_le (cls_le_ld T c) Submodule.smul_le_right
 
-set_option maxHeartbeats 2000000 in
 
 theorem dnk_lk_locP (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0) :
     Formalism.HermitianLatticesTheory.localization₂ (T.atT.Pv v) (Lk T.atT 0 (Nat.zero_le _) v c) ≤
@@ -80,8 +77,6 @@ theorem dnk_lk_locP (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0
   rw [mul_smul, ← hab, smul_add, hty]
   exact Submodule.add_mem _ (Submodule.smul_mem _ t ha) (dnk_tld T c y hy)
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 4000000 in
 
 theorem dnk_char (T : Forms0 D u) (v : (D.mem u).A.vT) (c c1 : (D.mem u).C.cls 0)
     (g : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk 0 v c)) (γ : GL (Fin (D.R.N 0)) D.host.E)
@@ -138,8 +133,6 @@ theorem dnk_char (T : Forms0 D u) (v : (D.mem u).A.vT) (c c1 : (D.mem u).C.cls 0
     exact (memP _ _).mpr ⟨t * s, hPc ht (Ideal.mem_primeCompl_iff.mpr hs),
       (memM _ _ _).mpr ⟨x, hxk1, by rw [hxe, mul_smul]⟩⟩
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 4000000 in
 
 theorem dnk_latP (T : Forms0 D u) (v : (D.mem u).A.vT) (c c1 c2 : (D.mem u).C.cls 0)
     (g : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk 0 v c)) (γ γ' : GL (Fin (D.R.N 0)) D.host.E)

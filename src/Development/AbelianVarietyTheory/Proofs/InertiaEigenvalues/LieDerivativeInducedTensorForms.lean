@@ -16,7 +16,6 @@ namespace GlobalTheory.LieTensor
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 
-omit [IsTotallyComplex E] in
 
 theorem exists_curve {a : ℕ} (Z : Matrix (Fin a) (Fin a) (Cinf E)) :
     ∃ c : ℝ → GL (Fin a) (Cinf E), c 0 = 1 ∧ HasDerivAt (fun t => toL (c t).val) (toL Z) 0 ∧
@@ -130,7 +129,6 @@ theorem lie_block_tensor {c N : ℕ} (n : Fin c → ℕ)
   simp only [infGL_leviEmb, ← map_mul]
   exact h m
 
-omit [IsTotallyComplex E] in
 
 theorem exists_decomp {c N : ℕ} {n : Fin c → ℕ} (e : (Σ i, Fin (n i)) ≃ Fin N)
     (Y : Matrix (Fin N) (Fin N) (Cinf E)) :

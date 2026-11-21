@@ -58,14 +58,12 @@ def FamSmul {k : ℕ} (c : F) (s s' : Fam D F k) : Prop :=
 def FamAdd {k : ℕ} (s s' s'' : Fam D F k) : Prop :=
   ∀ α j, (s''.s α).f j = (s.s α).f j + (s'.s α).f j
 
-variable (R F) in
 
 abbrev TKF : Over (Spec (CommRingCat.of (FractionRing R))) :=
   Over.mk (Spec.map (CommRingCat.ofHom (algebraMap (FractionRing R) F)))
 
 variable (P : PolAV (Spec (CommRingCat.of (FractionRing R))))
 
-variable (F) in
 
 abbrev SecA (k : ℕ) : Type := LB.Sec (LPow P.A P.L (k : ℤ) (TKF R F))
 

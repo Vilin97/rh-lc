@@ -118,7 +118,6 @@ def w (j : ℕ) (z : RPl N.R) : ℝ := ((N.eQ j z : ℚ) : ℝ)
 def FOrb (j p : ℕ) (z : RPl N.R) : ℝ :=
   lpF p (N.ordP p) (fun s => ((N.R.k : ℝ) - 1) * N.w j (N.pos p z s.val))
 
-open Classical in
 
 def FInert (j p : ℕ) : ℝ :=
   if N.cls p = PrimeClass.inertClass ∧ N.hP p = 0 then
@@ -145,7 +144,6 @@ def Dminus (j : ℕ) : ℚ := ∑ z : RPl N.R, ∑ c ∈ Finset.range (N.R.sigW 
 
 def FTypeG (j : ℕ) : ℝ := -(((N.Dplus j + N.Dminus j : ℚ) : ℝ)) / 2
 
-open Classical in
 
 def FjP (j p : ℕ) : ℝ :=
   if p = N.g 0 ∨ p = N.g 1 then N.FTypeG j
@@ -230,21 +228,17 @@ def EatD (W : Finset (Code N)) (hW : W.Nonempty) (j : ℕ) : ℝ :=
 def EatC (cdig : ℝ) (j p : ℕ) : ℝ :=
   cdig * (N.R.f : ℝ) * (N.Nm : ℝ) ^ 2 * Real.logb p N.sc.a + (∑ z : RPl N.R, N.w j z) / ((p : ℝ) ^ 2 - 1)
 
-open Classical in
 
 def kindA (p : ℕ) : Finset (RPl N.R) := Finset.univ.filter fun z => ¬ N.cls p = PrimeClass.signal ∧ z.1 = false
 
-open Classical in
 
 def kindBC (p : ℕ) : Finset (RPl N.R) := Finset.univ.filter fun z => N.cls p = PrimeClass.signal ∨ z.1 = true
 
-open Classical in
 
 def topsBC (p : ℕ) : Finset (RPl N.R) := (N.kindBC p).filter fun z => z.1 = false ∧ z.2 ∈ N.TT
 
 def IsCs (p : ℕ) : Prop := N.cls p = PrimeClass.inertClass ∧ Odd (addOrderOf (N.hP p)) ∧ N.hP p ≠ 0
 
-open Classical in
 
 def EatX (c6 : ℝ) (j p : ℕ) : ℝ :=
   if N.IsCs p then

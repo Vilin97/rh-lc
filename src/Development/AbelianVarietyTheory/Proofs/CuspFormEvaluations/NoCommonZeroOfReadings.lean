@@ -37,7 +37,6 @@ theorem exists_complex_point {K A : Type} [Field K] [CommRing A] [Algebra K A] [
   show g (Ideal.Quotient.mk M x) = 0
   rw [Ideal.Quotient.eq_zero_iff_mem.mpr (hIM hx), map_zero]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem noCommonZero_of_readings : ∀ (D : D7) (T : Top D) (_h : LawsP T) (j : ℕ) (_hj : InR D j) (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n m : ℕ) (ws : Fin m → T.R j), (∀ i, ws i ∈ sec (T.Q.Xo j) T.Q.c a n) → (∀ k, ∀ x ∈ ((T.U j T.σ₀).X k).dom, ∃ i, rdU (T.U j T.σ₀) (ws i) k x ≠ 0) → NoCommonZero (T.Q.Xo j) T.Q.c ws := by
   intro D T h j hj a n m ws hws hz

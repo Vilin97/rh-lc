@@ -14,7 +14,6 @@ section FrameEx
 
 variable {I : Formalism.MainNotions.S.AutInst} {S : Set (Fin I.n → I.E)}
 
-variable (I S) in
 
 def frW : Submodule I.E (Fin I.n → I.E) where
   carrier := {y | ∀ s ∈ S, hform (starRingEnd I.E) I.J s y = 0}

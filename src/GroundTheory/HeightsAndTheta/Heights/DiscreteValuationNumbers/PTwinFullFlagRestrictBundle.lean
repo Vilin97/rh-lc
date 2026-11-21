@@ -48,7 +48,6 @@ theorem cover_rs (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {s : ∀ k, ι k} (hs : 
   push_neg at hne
   simp [hne] at h
 
-variable (B) in
 
 def resBundle (hPQ : redIdeal O (mcIdeal O x) ≤ Q) :
     ChartBundle (kap O) (mseg (genPt (kap O) Q)) N (resFibre O x Q B) where
@@ -106,7 +105,6 @@ theorem finrank_span_low {F E : Type*} [Field F] [AddCommGroup E] [Module F E] {
       exact ⟨_, show ((Fin.castLE (Fin.is_le j) q : Fin N) : ℕ) < j from q.2, rfl⟩
   rw [e, finrank_span_eq_card (hb.comp _ (Fin.castLE_injective _)), Fintype.card_fin]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_resFlag (hPQ : redIdeal O (mcIdeal O x) ≤ Q) (hrel : IsRelevant Q) (fl : FullFlag O x B) :
     ∃ fl' : FullFlag (kap O) (genPt (kap O) Q) (resBundle B hPQ),

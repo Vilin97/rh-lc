@@ -48,7 +48,6 @@ theorem isIntegral_rootCoord {f j m : ℕ} (ζ : Fin f → Matrix (Fin j) (Fin m
 
 end RootArithmeticVariety
 
-open RootArithmeticVariety in
 
 theorem RootArithVar.proof (h : CoordConeArithVar.Statement) : RootArithVar.Statement := by
   intro f j m ζ hf hζ

@@ -197,7 +197,6 @@ theorem projectors_preserve_multidegree : ProjectorsPreserveMultidegree := by
   rw [← h]
   exact polProj_mem B _
 
-open Classical in
 
 def partialInverseOfEmbedding {m k : ℕ} (e : Fin m → Fin k) : Fin k → Option (Fin m) :=
   fun c => if h : ∃ a, e a = c then some (Classical.choose h) else none

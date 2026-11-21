@@ -75,7 +75,6 @@ instance isGalois_sup (E₁ E₂ : IntermediateField K Ω) [IsGalois K E₁] [Is
 variable (hf : IsLubinTateSeries π f) {n : ℕ} (hn : 0 < n) {E : IntermediateField K Ω}
   (hE : IsUnramifiedSubextension E)
 
-include hE hn in
 
 theorem bijective_restrictAut_prod :
     haveI := hE.isGalois
@@ -101,8 +100,6 @@ theorem bijective_restrictAut_prod :
 
 variable [FiniteDimensional K E] {m : ℕ} (hEm : Module.finrank K E = m)
 
-omit [IsSepClosed Ω] in
-include hE hEm in
 
 theorem frobenius_generates :
     (∀ σ : E ≃ₐ[K] E, σ ∈ Subgroup.zpowers (frobenius K E hE.ramificationIndex_eq_one)) ∧
@@ -122,7 +119,6 @@ def lubinTateUnramifiedGalEquiv :
       (zmodMulEquivOfGenerator (frobenius_generates hE hEm).1
         (frobenius_generates hE hEm).2).symm)
 
-include hn hE in
 
 theorem lubinTateUnramified_mul_comm
     (σ τ : (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω) ≃ₐ[K]

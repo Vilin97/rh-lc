@@ -55,7 +55,6 @@ def IsFormOrd (η : RatForms p n) (a : ℤ) : Prop :=
   ∃ ω : Forms E.const n, IsFreeGen E.ring ω ∧
     ∃ f : X.functionFieldˣ, η = (f : X.functionField) • E.toRat n ω ∧ E.ord f = a
 
-open Classical in
 
 def formOrd (η : RatForms p n) : ℤ := if h : ∃ a, E.IsFormOrd η a then h.choose else 0
 
@@ -240,7 +239,6 @@ theorem IsAt.ord_eq [IsLocallyNoetherian X] (h : E.IsAt z) (g : X.functionField�
   rw [← h1]
   exact (WithZero.exp_log ((map_ne_zero _).2 g.ne_zero)).symm
 
-variable (p) in
 
 theorem exists_isAt [LocallyOfFiniteType p] (z : X)
     [IsDiscreteValuationRing (X.presheaf.stalk z)] : ∃ E : DivOver p, E.IsAt z := by
@@ -279,7 +277,6 @@ end DivOver
 
 section Pairs
 
-omit [IsIntegral X] in
 
 structure IsEffQDiv (Δ : X → ℚ) : Prop where
 
@@ -296,24 +293,20 @@ variable (p : X ⟶ Sp k) {n : ℕ}
 def IsLogEqn (Δ : X → ℚ) (η : RatForms p n) (x : X) (m : ℕ) (g : X.functionFieldˣ) : Prop :=
   ∀ z, z ⤳ x → ∀ E : DivOver p, E.IsAt z → (m : ℚ) * (E.formOrd η + Δ z) = E.ord g
 
-variable {p} in
 
 def discrep (E : DivOver p) (η : RatForms p n) (m : ℕ) (g : X.functionFieldˣ) : ℚ :=
   E.formOrd η - E.ord g / m
 
-variable (n) in
 
 def KltAt (Δ : X → ℚ) (x : X) : Prop :=
   ∃ (η : RatForms p n) (m : ℕ) (g : X.functionFieldˣ), η ≠ 0 ∧ 0 < m ∧ IsLogEqn p Δ η x m g ∧
     ∀ E : DivOver p, E.Through x → -1 < discrep E η m g
 
-variable (n) in
 
 def LcAt (Δ : X → ℚ) (x : X) : Prop :=
   ∃ (η : RatForms p n) (m : ℕ) (g : X.functionFieldˣ), η ≠ 0 ∧ 0 < m ∧ IsLogEqn p Δ η x m g ∧
     ∀ E : DivOver p, E.Through x → -1 ≤ discrep E η m g
 
-variable (n) in
 
 def IsLogCanonicalMultiple (Δ : X → ℚ) (m : ℕ) (G : CartierDiv X) : Prop :=
   ∃ η : RatForms p n, η ≠ 0 ∧ ∀ x g, G.IsEqn x g → IsLogEqn p Δ η x m g
@@ -412,7 +405,6 @@ theorem DivOver.formOrd_formOf_nonneg (hn : topologicalKrullDim X = n) {U : X.Op
   rw [← h, E.ord_nonneg_iff, ← (E.isFreeGen_toRat hω').1 e₁]
   exact a.2
 
-omit [PerfectField k] [LocallyOfFiniteType p] in
 
 theorem DivOver.formOrd_formOf_eq_zero {U : X.Opens} (hz : z ∈ U) (hE : E.IsAt z)
     {ω : FormsOn p n U} (hω : IsFrame ω) : E.formOrd (formOf U (gen_mem hz) ω) = 0 := by
@@ -441,7 +433,6 @@ theorem DivOver.formOrd_formOf_eq_zero {U : X.Opens} (hz : z ∈ U) (hE : E.IsAt
   exact hω.gen.of_isBaseChange (isBaseChange_exteriorPower
     (KaehlerDifferential.isBaseChange_of_formallyEtale k Γ(X, U) E.ring) n)
 
-omit [LocallyOfFiniteType p] in
 
 theorem kltAt_zero_of_smooth [SmoothOfRelativeDimension n p] (hn : topologicalKrullDim X = n)
     (x : X) : KltAt p n 0 x := by
@@ -457,7 +448,6 @@ theorem kltAt_zero_of_smooth [SmoothOfRelativeDimension n p] (hn : topologicalKr
     norm_num
     linarith
 
-omit [LocallyOfFiniteType p] in
 
 theorem isLogCanonicalMultiple_canonical [IsLocallyNoetherian X] [SmoothOfRelativeDimension n p]
     (hn : topologicalKrullDim X = n) (D : CartierDiv X) (hm : 0 < m) :

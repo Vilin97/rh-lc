@@ -7,7 +7,6 @@ public import Mathlib
 open NumberField
 
 namespace GlobalTheory
-open TensorProduct nonZeroDivisors in
 
 theorem finrank_int_eq_finrank_ringOfIntegers_mul : ∀ (E : Type) [Field E] [NumberField E] (N : Type) [AddCommGroup N] [Module (𝓞 E) N] [Module.Free ℤ N] [Module.Finite ℤ N], Module.finrank ℤ N = Module.finrank (𝓞 E) N * Module.finrank ℚ E := by
   intro E _ _ N _ _ _ _

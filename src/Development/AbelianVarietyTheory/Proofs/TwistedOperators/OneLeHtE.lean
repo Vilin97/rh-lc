@@ -15,7 +15,6 @@ open scoped NNReal
 
 variable (F : Type) [Field F] [NumberField F] {E : Type} [Field E] [NumberField E] [Algebra F E]
 
-open Classical in
 
 def htE (x : E) : ℝ≥0 :=
   (∏ w : InfinitePlace F, max 1 (Finset.univ.sup fun τ : EmbOver E w => ‖τ.1 x‖₊)) *

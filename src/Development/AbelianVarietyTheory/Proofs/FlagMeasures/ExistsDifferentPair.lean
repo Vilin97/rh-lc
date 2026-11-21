@@ -102,16 +102,10 @@ theorem gq_zero (σ : E →+* E) (g : ℕ) :
   simp [Gq, lead]
   ring
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
 end GlobalTheory.SgGlob.Inhab

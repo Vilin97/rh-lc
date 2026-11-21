@@ -420,7 +420,6 @@ theorem exists_w (i : X.Tw) {M : ℕ} (hM : 1 ≤ M) {q : ℕ} (hq : q % (2 * X.
   have := congrArg (IsLocalRing.residue (X.O i)) hw
   simpa [h1] using this
 
-open MvPolynomial in
 
 theorem propE (D : Formalism.BasicNotions.D7) (N : NData D.R D.host D.what₂) (X : NTw D.R D.host D.what₂ D.LL0 N) (N0 : X.Tw → ℕ)
     (h9 : adm9 X N0) (h10 : adm10 X) : PropE X N0 := by

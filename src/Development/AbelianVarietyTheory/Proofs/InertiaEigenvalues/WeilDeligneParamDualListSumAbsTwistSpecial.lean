@@ -42,7 +42,6 @@ theorem iso_tensor_dual (a : WDRep h V) (b : WDRep h V') :
       ring
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-omit [IsAlgClosure E Ω] in
 
 theorem qPow_neg' (s : ℝ) : qPow w (-s) = (qPow w s)⁻¹ :=
   eq_inv_of_mul_eq_one_left (by rw [← qPow_add, neg_add_cancel, qPow_zero])

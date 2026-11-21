@@ -106,7 +106,6 @@ end GlobalTheory.CompanionTheory.Ar.Flat.TopA
 
 namespace GlobalTheory.CompanionTheory.Ar.Flat
 
-open GlobalTheory.CompanionTheory.Ar.Flat.TopA in
 
 theorem thmFlatA_of_parts : PartI → FlatLineGenerator → FlatLineGeneratorComponent → FinConst → ThmFlatA := by
   intro hI hA0 hA1 _ E _ _ _ H D Xo l c _ U τ g ty FU i hpq hτ hg hty hU hUi hP

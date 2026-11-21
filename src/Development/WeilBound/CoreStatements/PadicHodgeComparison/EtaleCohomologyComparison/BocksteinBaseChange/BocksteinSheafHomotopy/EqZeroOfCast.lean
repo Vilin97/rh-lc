@@ -104,7 +104,6 @@ theorem conc_eq_one (hF : FormalIn) (q : ℕ) [NeZero q] (X : Scheme.{0}) (ζ : 
 
 end RootOfUnityLemmas
 
-open RootOfUnityLemmas in
 
 theorem root : RootsOfUnityFormal := by
   intro hF q _ X ⟨ζ⟩ i

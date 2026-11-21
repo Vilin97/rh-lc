@@ -382,7 +382,6 @@ def IsUnram (w : HeightOneSpectrum (𝓞 F)) : Prop :=
   ∀ P : HeightOneSpectrum (𝓞 E), P.asIdeal.comap (algebraMap (𝓞 F) (𝓞 E)) = w.asIdeal →
     Ideal.ramificationIdx P.asIdeal (𝓞 F) = 1
 
-open Classical in
 
 def etaV (w : HeightOneSpectrum (𝓞 F)) : ℂ := if IsSplit (E := E) w then 1 else -1
 

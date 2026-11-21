@@ -273,9 +273,7 @@ def FirstKind : Prop :=
       C * J * Real.log (2 ^ e * Y) ^ 2 / (2 : ℝ) ^ e +
         (⌊Real.log X'⌋₊ : ℝ) * ((4 * ρ + 1 / p₀) * Real.log (2 * X'))
 
-open Formalism.RankGapBounds.WeightedMeanData Formalism.LFunctionChainParameters.WeightedSlopeBounds in
 
-open Formalism.RankGapBounds.WeightedMeanData Formalism.LFunctionChainParameters.WeightedSlopeBounds in
 
 end
 

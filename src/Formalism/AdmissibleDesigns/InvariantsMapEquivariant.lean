@@ -34,7 +34,6 @@ theorem toKOG_surjective : Function.Surjective (H0.toKOG (D := D) i Dd) := by
 def phi0 : blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk 0 ≃ₗ[D.nd.O i] KOG (D.nd.O i) D.R.r :=
   LinearEquiv.ofBijective (H0.toKOG i Dd) ⟨H0.toKOG_injective i Dd, toKOG_surjective i Dd⟩
 
-variable {i r ρ π g0 eB e₁ s Dd} in
 
 theorem invariants_map_equivariant
     (hD : Formalism.RepresentationBoundsCohomology.ringDataObjects.RingDef (D.nd.O i) (D.nd.T i) (RepresentationBoundsCohomology.repX D.nd r) π (chiU D.nd i 1) (epsU D.nd i) g0 eB e₁ s Dd)
@@ -42,7 +41,6 @@ theorem invariants_map_equivariant
     phi0 i Dd (uRep (D.nd.O i) (M := blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk 0) Dd.r Dd.χ g m) = Br.WKO i ρ π g (phi0 i Dd m) := by
   exact H0.toKOG_equiv hD hN g m
 
-variable {i r ρ π g0 eB e₁ s Dd} in
 
 theorem tieSel1_rec
     (hD : Formalism.RepresentationBoundsCohomology.ringDataObjects.RingDef (D.nd.O i) (D.nd.T i) (RepresentationBoundsCohomology.repX D.nd r) π (chiU D.nd i 1) (epsU D.nd i) g0 eB e₁ s Dd)
@@ -54,7 +52,6 @@ theorem tieSel1_rec
       (K.QS.Io i) := by
   exact tieSel1_of (hBk := hBk)
 
-variable {i r ρ π g0 eB e₁ s Dd} in
 
 theorem tieSel1_rec_loc
     (hD : Formalism.RepresentationBoundsCohomology.ringDataObjects.RingDef (D.nd.O i) (D.nd.T i) (RepresentationBoundsCohomology.repX D.nd r) π (chiU D.nd i 1) (epsU D.nd i) g0 eB e₁ s Dd)

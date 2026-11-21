@@ -16,11 +16,9 @@ namespace GlobalTheory.ConstTermSmooth
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
 
 def invM (y : Lie E a) : Lie E a := toL (Matrix.of y)⁻¹
 
-omit [IsTotallyComplex E] in
 
 theorem contDiffOn_invM : ContDiffOn ℝ ∞ (invM (E := E) (a := a)) (invSet E a) := by
   have h1 : ContDiffOn ℝ ∞ (fun y : Lie E a => Ring.inverse (Matrix.of y).det) (invSet E a) := fun y hy => by
@@ -59,12 +57,10 @@ theorem continuousOn_chart {φ : GA E a → ℂ} (hφ : Continuous φ) :
   refine (hφ.comp ((continuous_fst.comp continuous_subtype_val).mul (continuous_infGL.comp hu))).congr fun p => ?_
   exact (chart_val φ p.1.1 (IsUnit.unit (p.2.2 : IsUnit (Matrix.of p.1.2)))).symm
 
-omit [IsTotallyComplex E] in
 
 def coef (i : Fin (Module.finrank ℝ (Lie E a))) (y : Lie E a) : Lie E a →L[ℝ] ℂ :=
   Complex.ofRealCLM ∘L LinearMap.toContinuousLinearMap ((Module.finBasis ℝ (Lie E a)).coord i) ∘L lmul (invM y)
 
-omit [IsTotallyComplex E] in
 
 theorem contDiffOn_coef (i : Fin (Module.finrank ℝ (Lie E a))) : ContDiffOn ℝ ∞ (coef i) (invSet E a) := by
   refine contDiffOn_clm_apply.2 fun Y => ?_
@@ -99,7 +95,6 @@ theorem Good.lie {φ : Sm E a} (h : Good φ) (X : Lie E a) : Good (lie E a X φ)
     simp only [Module.End.mul_apply, hk'] at e
     exact e.symm
 
-omit [IsTotallyComplex E] in
 
 theorem exists_bound {r : ℕ} {V : Type} [NormedAddCommGroup V] {Ψ : GA E a → Lie E a → V} {S : Set (Lie E a)}
     (hS : IsCompact S) (hc : ContinuousOn (fun p : GA E a × Lie E a => Ψ p.1 p.2) (Set.univ ×ˢ S))
@@ -136,7 +131,6 @@ section Integral
 variable {r : ℕ} [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)]
   (ν : Measure (BlockIx a r → Ad E)) [IsFiniteMeasure ν]
 
-omit [IsTotallyComplex E] in
 
 theorem integrable_unip {V : Type} [NormedAddCommGroup V] {Ψ : GA E a → Lie E a → V}
     (hc : ContinuousOn (fun p : GA E a × Lie E a => Ψ p.1 p.2) (Set.univ ×ˢ invSet E a))
@@ -149,7 +143,6 @@ theorem integrable_unip {V : Type} [NormedAddCommGroup V] {Ψ : GA E a → Lie E
     hc.comp_continuous ((CuspidalL2GL.continuous_unip.mul continuous_const).prodMk continuous_const) fun _ => ⟨trivial, hy⟩
   exact Integrable.of_bound hf.aestronglyMeasurable C (.of_forall fun x => hC x y rfl)
 
-omit [BorelSpace (BlockIx a r → Ad E)] [IsFiniteMeasure ν] in
 
 theorem chart_integral (φ : GA E a → ℂ) (g : GA E a) :
     chart (fun g => ∫ x, φ (unip x * g) ∂ν) g = fun y => ∫ x, chart φ (unip x * g) y ∂ν := by

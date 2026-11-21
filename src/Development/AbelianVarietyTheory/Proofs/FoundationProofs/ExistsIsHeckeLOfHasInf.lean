@@ -15,7 +15,6 @@ open NumberField IsDedekindDomain ReciprocityTheory.Gal Formalism.ConjugateSelfD
 
 namespace GlobalTheory.ToricDistribution
 
-open Classical in
 
 def ToricSumFormula : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (I : Type) [Fintype I] (φ : I → E →+* ℂ), IsCMType φ →
@@ -258,7 +257,6 @@ end Record
 
 section Entire
 
-open GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele (ideleNorm) in
 
 theorem exists_isHeckeL_of_hasInf (E : Type) [Field E] [NumberField E] [IsCMField E] (I : Type) [Fintype I] (φ : I → E →+* ℂ)
     (m : I → ℤ) (χ : HChar E) (hφ : IsCMType φ) (hu : IsUnitary χ) (hm : HasInf χ φ m) (h0 : ∃ i, m i ≠ 0) :
@@ -318,7 +316,6 @@ theorem below_eq_iff {P Pb : HeightOneSpectrum (𝓞 D.host.E)} (h : IsConjPl D.
   refine mem_aboveF.symm.trans ?_
   rw [below, e, Finset.mem_insert, Finset.mem_singleton]
 
-open Classical in
 
 theorem gen_relation (hA : GlobalTheory.Published.GlobalArtinReciprocity) (hL : ToricSumFormula) (ht : IsToricElt X) : BlochKatoReduction.Gen.adm10 X := by
   intro i hi Q hQ lam s hs P Pb hP hPb hne hconj k ψ σ hσ

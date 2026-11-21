@@ -49,7 +49,6 @@ theorem det_ne_of_sig {n r s : ℕ} (B : Base F E) (J : Matrix (Fin n) (Fin n) E
   rw [RingHom.mapMatrix_apply] at e
   rw [← e, h0, map_zero]
 
-open scoped Classical in
 
 theorem evalPt_mem_adm {κ : Type} [Fintype κ] (x : κ → AF F) :
     (LinearMap.proj x : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) ∈ (adeleClass F).adm κ := by

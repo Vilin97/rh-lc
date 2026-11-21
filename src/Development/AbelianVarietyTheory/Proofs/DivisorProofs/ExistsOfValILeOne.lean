@@ -13,7 +13,6 @@ open Matrix
 variable {V F : Type} [CommRing V] [IsDomain V] [ValuationRing V] [Field F] [Algebra V F]
   [IsFractionRing V F]
 
-variable (V) in
 
 abbrev valI : Valuation F (ValuationRing.ValueGroup V F) := ValuationRing.valuation V F
 

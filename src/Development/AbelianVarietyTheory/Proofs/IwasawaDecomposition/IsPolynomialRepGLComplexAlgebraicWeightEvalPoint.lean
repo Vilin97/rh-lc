@@ -29,7 +29,6 @@ theorem tauPt_mul (τ : L →+* ℂ) (A B : GL (Fin n) ℂ) :
   · simp [_root_.mul_inv_rev, Matrix.transpose_mul]
   · simp
 
-open Classical in
 
 def tauSubst (τ : L →+* ℂ) : (L →+* ℂ) × Fin n × Fin n →
     MvPolynomial ((Fin n × Fin n) ⊕ (Fin n × Fin n)) ℂ := fun p =>

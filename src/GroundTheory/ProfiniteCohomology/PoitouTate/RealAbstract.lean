@@ -82,7 +82,6 @@ structure TatePoitouTateHypotheses : Prop where
 
 variable (M : Rep (ULift.{0} ℤ) G) [IsDiscreteRep M] [Finite M]
 
-omit [Fintype ι] [Fintype κ] [IsDiscreteRep D] in
 
 theorem bijective_tateCompactCohomologyResMap_of_comp_eq_id {A B : Rep (ULift.{0} ℤ) G}
     [IsDiscreteRep A] [IsDiscreteRep B] (f : A ⟶ B) (g : B ⟶ A) (hfg : f ≫ g = 𝟙 A)
@@ -100,7 +99,6 @@ namespace TatePoitouTateHypotheses
 
 variable {φ ψ D t inv invr} (P : TatePoitouTateHypotheses φ ψ D t inv invr)
 
-include P in
 
 theorem bijective_ptTCompactDualMap (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 3)
     (hr : 1 ≤ r) : Function.Bijective (ptTCompactDualMap φ ψ D M t h) := by
@@ -145,8 +143,6 @@ theorem bijective_ptTCompactDualMap (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h
     rfl
   exact bijective_compHom_zmodToQZ β (nsmul_cohomology_eq_zero _ hMD s) hβ
 
-omit [NeZero n] in
-include P in
 
 theorem ptTCompactDualMap_ptTLocalToCompact {r s : ℕ} (h : r + s = 2) (h' : r + 1 + s = 3)
     (ξ : ptTLocal φ ψ M r) :
@@ -157,7 +153,6 @@ theorem ptTCompactDualMap_ptTLocalToCompact {r s : ℕ} (h : r + s = 2) (h' : r 
     P.localToCompact_two, ptTLocalDualMap_apply]
   rfl
 
-include P in
 
 end TatePoitouTateHypotheses
 
@@ -165,9 +160,7 @@ section DegreeZero
 
 variable {φ ψ}
 
-omit [Fintype ι] [Fintype κ] [Finite M] in
 
-omit [Fintype ι] [Fintype κ] [Finite M] in
 
 end DegreeZero
 
@@ -175,10 +168,7 @@ namespace TatePoitouTateHypotheses
 
 variable {φ ψ D t inv invr} (P : TatePoitouTateHypotheses φ ψ D t inv invr)
 
-include P in
 
-omit [NeZero n] [Finite M] in
-include P in
 
 theorem injective_ptTGlobalToLocalHat : Function.Injective (ptTGlobalToLocalHat φ ψ M) := by
   refine (injective_iff_map_eq_zero _).2 fun x hx => P.injective_res_zero M ?_
@@ -186,7 +176,6 @@ theorem injective_ptTGlobalToLocalHat : Function.Injective (ptTGlobalToLocalHat 
   change (fun v => ptRes φ M v 0 x) = 0 at h1
   exact h1.trans (funext fun v => (map_zero (ptRes φ M v 0)).symm)
 
-include P in
 
 theorem surjective_ptTLocalDualMap_two (hM : ∀ m : M, n • m = 0) :
     Function.Surjective (ptTLocalDualMap φ ψ D M inv invr (show 2 + 0 = 2 from rfl)) := by
@@ -232,7 +221,6 @@ theorem surjective_ptTLocalDualMap_two (hM : ∀ m : M, n • m = 0) :
     rw [hξ₂]
     rfl
 
-include P in
 
 theorem surjective_ptTLocalToCompact_two (hM : ∀ m : M, n • m = 0) :
     Function.Surjective (ptTLocalToCompact φ ψ M 2).hom := fun z => by
@@ -242,7 +230,6 @@ theorem surjective_ptTLocalToCompact_two (hM : ∀ m : M, n • m = 0) :
   rw [P.ptTCompactDualMap_ptTLocalToCompact M (show 2 + 0 = 2 from rfl)
     (show 2 + 1 + 0 = 3 from rfl), hξ]
 
-include P in
 
 theorem injective_ptTGlobalToLocal_three (hM : ∀ m : M, n • m = 0) :
     Function.Injective (ptTGlobalToLocal φ ψ M 3).hom := by
@@ -251,11 +238,8 @@ theorem injective_ptTGlobalToLocal_three (hM : ∀ m : M, n • m = 0) :
   obtain ⟨ξ, rfl⟩ := P.surjective_ptTLocalToCompact_two M hM z
   exact (ptTExact_compact φ ψ M 2 _).2 ⟨ξ, rfl⟩
 
-include P in
 
-include P in
 
-include P in
 
 end TatePoitouTateHypotheses
 

@@ -14,7 +14,6 @@ def glEquiv {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [Decidable
     GL ι K ≃* GL κ K :=
   Units.mapEquiv (Matrix.reindexAlgEquiv K K e).toMulEquiv
 
-variable {K} in
 
 def transp {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] (e : ι ≃ κ)
     (τ : FDRep ℂ (GL ι K)) : FDRep ℂ (GL κ K) :=
@@ -33,7 +32,6 @@ structure LabelMap (C : LabelConv K) where
       LinearMap.trace ℂ τ (τ.ρ γ) = C.ι (algebraMap K (AlgebraicClosure K) x) ^ m) →
     lab 1 τ = X - Polynomial.C x
 
-variable {K} in
 
 def LabelMapEquivariant {C : LabelConv K} (O : LabelMap K C) : Prop :=
   (∀ (d : ℕ) (α : ℂ ≃+* ℂ) (a : ℕ),
@@ -65,18 +63,12 @@ def DisjointMultO (O : LabelMap K C) : Prop :=
     Module.finrank ℂ (Intw (hcRep K b τ) (hcRep K b σ)) =
       Module.finrank ℂ (Intw (τ 0).ρ (σ 0).ρ) * Module.finrank ℂ (Intw (τ 1).ρ (σ 1).ρ)
 
-variable (K) in
 
-variable (K) in
 
 def twoBlock (n a : ℕ) : Fin n → Fin 2 := fun i => if (i : ℕ) < a then 0 else 1
 
-variable (K) in
 
-variable (K) in
-open Classical in
 
-variable (K) in
 
 def ZIdemOccurs : Prop :=
   ∀ (Γ : Type) [Group Γ] [Fintype Γ] (τ : FDRep ℂ Γ) (V : Type) [AddCommGroup V] [Module ℂ V]

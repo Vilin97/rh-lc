@@ -129,7 +129,6 @@ theorem left_eq_iff {A' : Type} [CommRing A'] {g' : Sp A' ⟶ S} (φ : A →+* A
       change w'.left ≫ (splitTorus S X).hom = (spMap φ ≫ w.left) ≫ (splitTorus S X).hom
       rw [e1, Category.assoc, e2, hg]
 
-variable (g) in
 
 def ofVal (f : Multiplicative X →* A) : Over.mk g ⟶ splitTorus S X :=
   ofChar _ ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom.toMonoidHom.comp f)
@@ -146,7 +145,6 @@ section Eps
 variable {S : Scheme.{0}} {R : Type} [CommRing R] {g : Sp (DualNumber R) ⟶ S}
   {X Y : Type} [AddCommGroup X] [AddCommGroup Y]
 
-variable (g) in
 
 def epsVec (c : X →+ R) : Over.mk g ⟶ splitTorus S X :=
   ofVal g
@@ -304,7 +302,6 @@ theorem isLieComb_iff {n : ℕ} (a : Fin n → R) (c : Fin n → (X →+ R))
   unfold IsLieComb
   exact exists_prod_iff (fun b => epsScaleR_base b) a c w
 
-variable (R X) in
 
 theorem isLieBasis_iff {n : ℕ} (c : Fin n → (X →+ R)) :
     IsLieBasis (fun i => lieVec (c i)) ↔
@@ -361,7 +358,6 @@ section Basis
 
 variable {I J : Type} [Fintype I] [Fintype J]
 
-variable (R) in
 
 def dualBasis (b : Module.Basis I ℤ X) : Module.Basis I R (X →+ R) :=
   Module.Basis.ofEquivFun
@@ -457,7 +453,6 @@ theorem isLieEigen_iff (v : epsPt t ⟶ splitTorus S X) :
     ext x
     simpa using hc a x
 
-variable (X) in
 
 def eigenHom {k : Type} [CommRing k] (τ : O →+* k) : Submodule k (X →+ k) where
   carrier := {c | ∀ (a : O) (x : X), c (a • x) = τ a * c x}

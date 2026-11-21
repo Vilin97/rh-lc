@@ -177,7 +177,6 @@ theorem exists_root_vGs {m : ℕ} {Ch : Chars X Pr m} {σ₀ : X.K →+* ℂ} {x
   rw [hW w c 1 (by rw [← hy, hc, Int.cast_one])]
   simp
 
-open Classical in
 
 theorem exists_locCst_of_values (Ch : Chars X Pr R.m) (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ}
     (mu : Tup X.F X.E X.K S) (G : ChGlob X R.m) (hdeg : ∀ P : rowSG Pr sel mu, DegOneUnram P.1)

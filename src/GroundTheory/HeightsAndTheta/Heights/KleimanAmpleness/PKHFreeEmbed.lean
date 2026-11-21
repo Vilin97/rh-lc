@@ -58,7 +58,6 @@ theorem update_erase_subset (I : ∀ k, Finset (ι k)) (k : K) (i : ι k) (l : K
   · subst hl; rw [Function.update_self]; exact Finset.erase_subset _ _
   · rw [Function.update_of_ne hl]
 
-open Classical in
 
 theorem embed_apply (a : (Σ k, ι k) → ℤ) (n : ℕ) (f : CombC S (negSet a) n) (I : KH.Cell K ι n) :
     embed S a n f I = if h : ∀ k, negSet a k ⊆ I.1 k then f ⟨I, h⟩ • monoFrac S I.1 a else 0 := by
@@ -66,7 +65,6 @@ theorem embed_apply (a : (Σ k, ι k) → ℤ) (n : ℕ) (f : CombC S (negSet a)
   rw [LinearMap.pi_apply]
   split_ifs <;> rfl
 
-open Classical in
 
 theorem cechD_apply (n : ℕ) (x : KH.CechC S ι (MRingOver S ι ⧸ (⊥ : Ideal (MRingOver S ι))) n)
     (I : KH.Cell K ι (n + 1)) :
@@ -83,7 +81,6 @@ theorem cechD_apply (n : ℕ) (x : KH.CechC S ι (MRingOver S ι ⧸ (⊥ : Idea
   refine Finset.sum_congr rfl fun i _ => ?_
   split_ifs <;> rfl
 
-open Classical in
 
 theorem combD_apply (J : ∀ k, Finset (ι k)) (n : ℕ) (f : CombC S J n) (I : CombCell ι J (n + 1)) :
     combD S J n f I = ∑ k, ∑ i ∈ I.1.1 k,

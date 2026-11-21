@@ -84,7 +84,6 @@ variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 def cutIdentityLeftSide (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (c : K → ℕ) {d : ℕ} (L : Fin d → K → ℤ) : ℤ :=
   cycEval (fun G => vNum G (Matrix.vecCons (fun k => (c k : ℤ)) L)) (ratDiv P f g)
 
-open Classical in
 
 def cutIdentityRightSide (ϖ : O) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) {d : ℕ}
     (L : Fin d → K → ℤ) : ℤ :=

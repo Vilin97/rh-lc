@@ -62,7 +62,6 @@ end Groups
 
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem range_repHom_le_comap {A B : Rep.{u} k G} (f : A ⟶ B) (g : G) :
     LinearMap.range f.hom.toLinearMap ≤ (LinearMap.range f.hom.toLinearMap).comap (B.ρ g) := by
@@ -172,7 +171,6 @@ instance isDiscreteRep_coindInvQuotShortComplex_X₂ : IsDiscreteRep (coindInvQu
 instance isDiscreteRep_coindInvQuotShortComplex_X₃ : IsDiscreteRep (coindInvQuotShortComplex A N).X₃ :=
   isDiscreteRep_quotient _ _ _
 
-omit [CompactSpace G] in
 
 theorem coindInvQuotShortComplex_shortExact : (coindInvQuotShortComplex A N).ShortExact where
   exact := by
@@ -194,7 +192,6 @@ noncomputable def coindInvQuotToInvariants :
         exact congrArg (fun φ => φ.hom x) (coindInvariants A N).zero), fun g =>
     Submodule.linearMap_qext _ (LinearMap.ext fun x => Rep.hom_comm_apply (coindInvariants A N).g g x)⟩
 
-omit [CompactSpace G] in
 
 theorem coindInvQuotToInvariants_injective : Function.Injective (coindInvQuotToInvariants A N).hom := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -250,7 +247,6 @@ theorem cohomologyInfl_δ_coindInvQuot (i j : ℕ) (hij : i + 1 = j)
   exact (cohomologyMapAlong_cohomologyMap (QuotientGroup.mk' N) (continuous_quotientGroup_mk' N)
     (coindInvQuotToInvariants A N) (Rep.ofHom ((coindCokernel A).ρ.quotientToInvariants_lift N)) x).symm
 
-omit [CompactSpace G] in
 
 theorem isIsoModCoprime_cohomologyInfl_one (ℓ : ℕ)
     (h1 : ∀ y : cohomology (Rep.res N.subtype A) 1, ∃ m : ℕ, m.Coprime ℓ ∧ m • y = 0) :

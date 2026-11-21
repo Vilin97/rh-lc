@@ -32,7 +32,6 @@ theorem diag_eq {j m : ℕ} (Z : Matrix (Fin j) (Fin m) ℂ) (hZ : ∀ a b, ‖Z
 
 end PlueckerUnitBoundAlt
 
-open PlueckerUnitBoundAlt in
 
 theorem PlueckerUnitBound.proof (h : HadamardPSD.Statement) : PlueckerUnitBound.Statement := by
   intro j m Z hZ

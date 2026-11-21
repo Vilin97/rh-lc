@@ -92,7 +92,6 @@ section Coord
 
 variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R]
 
-open GlobalTheory.BetaAdd in
 
 theorem coord_rel (Dg : DegData R (maximalIdeal R)) (r : Dg.toPre.X → R) (hr : ∀ χ, PsiCoord Dg.toPre χ (r χ)) :
     (∀ a a' b, ∃ u : Rˣ, r (a + a' + b) * r a * r a' * r b * u = r (a + b) * r (a' + b) * r (a + a')) ∧

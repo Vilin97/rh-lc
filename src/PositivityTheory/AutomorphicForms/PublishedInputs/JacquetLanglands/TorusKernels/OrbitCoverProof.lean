@@ -15,7 +15,6 @@ namespace UpperTheory.Esk.OrbitCoverLemmas
 
 variable {G Y : Type} [Group G] [Countable G] [MeasurableSpace Y] [MulAction G Y]
 
-omit [Countable G] [MeasurableSpace Y] in
 
 theorem orbit_tsum_smul (u : Y → ℝ) (g : G) (y : Y) :
     ∑' h : G, u (h • g • y) = ∑' h : G, u (h • y) := by

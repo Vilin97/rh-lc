@@ -252,7 +252,6 @@ theorem tauOfC_bijective (hX : X.Ok) (hPr : Pr.Ok) (u : Pr.Word) (w : HeightOneS
 
 variable {R : Ranks} (W : Wts X Pr.Word R)
 
-open Classical in
 
 end Seen
 

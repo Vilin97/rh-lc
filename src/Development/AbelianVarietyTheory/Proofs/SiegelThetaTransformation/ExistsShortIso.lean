@@ -374,7 +374,6 @@ theorem exists_int_rows {N m n D : ℕ} (hD : 0 < D) {G : Matrix (Fin m) (Fin m)
 
 end GlobalTheory.SW.MinkowskiProductBounds
 
-open GlobalTheory.SW.MinkowskiProductBounds in
 
 theorem GlobalTheory.SW.exists_shortIso : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (N D : ℕ) (ε : ℝ), 0 < D → 0 < ε →

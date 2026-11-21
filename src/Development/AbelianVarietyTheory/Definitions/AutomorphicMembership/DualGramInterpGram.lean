@@ -115,7 +115,6 @@ theorem co_spec (i : Fin (Dw.mult τ)) : IsCombAtG Z.t x (f.v τ) (fun a => f.co
 theorem vec_eq (i : Fin (Dw.mult τ)) : g.vec τ i = ∑ a, f.co g τ a i • f.vec τ a :=
   (isComb_iff (f.vec τ) _ (g.vec τ i)).1 (f.co_spec g τ i)
 
-variable {f g τ} in
 
 theorem co_eq {T : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) R}
     (h : ∀ i, IsCombAtG Z.t x (f.v τ) (fun a => T a i) (g.v τ i)) : f.co g τ = T :=
@@ -152,7 +151,6 @@ theorem IsMap.tri {ψ : R →+* R'} {f' : EigFrame Z φ' x'} (hf : f.IsMap ψ f'
 
 end EigFrame
 
-variable (Z) in
 
 structure EigMet (σ : c.F →+* ℂ) : Type where
 
@@ -176,7 +174,6 @@ def ofForm (h : ∀ y : CxPts (genStr Z) σ, TanM (y.1 ≫ genι Z) Z.t.G →ₗ
 
 instance : Nonempty (EigMet Z σ) := ⟨ofForm _ fun y => (exists_isBlockMetric Z.t (y.1 ≫ genι Z)).choose_spec⟩
 
-open Classical in
 
 def interp (s : CxPts (genStr Z) σ → ℝ) (hs : ∀ y, s y ∈ Set.Icc (0 : ℝ) 1) (G₀ G : EigMet Z σ) : EigMet Z σ where
   gram y f τ := if τ (H.rt : E) = H.rt0 then mix (s y) (G₀.gram y f τ) (G.gram y f τ)
@@ -192,7 +189,6 @@ def interp (s : CxPts (genStr Z) σ → ℝ) (hs : ∀ y, s y ∈ Set.Icc (0 : �
 variable {s : CxPts (genStr Z) σ → ℝ} {hs : ∀ y, s y ∈ Set.Icc (0 : ℝ) 1} {G₀ G : EigMet Z σ} {y : CxPts (genStr Z) σ}
   (f : EigFrame Z σ (y.1 ≫ genι Z)) {τ : E →+* ℂ}
 
-variable (G) in
 
 def SmoothOn {d : ℕ} (R : AnRead (genStr Z) σ d) (S : Set (CxPts (genStr Z) σ)) : Prop :=
   ∀ (V : (gen Z).affineOpens) (φ : c.F →+* Γ(gen Z, V.1)) (F : EigFrame Z φ (LogKS.chart V ≫ genι Z)) (τ : E →+* ℂ)
@@ -208,7 +204,6 @@ variable {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} (Y : FlagCpt Z e
 
 abbrev _root_.GlobalTheory.ShFam.embOf (e : F ≃+* c.F) (σ : F →+* ℂ) : c.F →+* ℂ := σ.comp e.symm.toRingHom
 
-omit [NumberField F] in
 
 theorem π_genStr : Y.π ≫ genStr Z = Y.Y.str ≫ spMap e.symm.toRingHom := by
   have h1 : spMap e.toRingHom ≫ spMap e.symm.toRingHom = 𝟙 _ := by
@@ -226,12 +221,10 @@ def Adapted (p : Y.Y.pts σ) (t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Y.Y
   ∃ (φ : c.F →+* Y.Y.X.presheaf.stalk (base p)) (f : EigFrame Z φ (stalkPt Y.Y (base p) ≫ Y.π ≫ genι Z)),
     f.Tri (algebraMap (Y.Y.X.presheaf.stalk (base p)) Y.Y.X.functionField) Y.f0 t ∧ f.Tri (evStalk p) g t'
 
-omit [NumberField F] in
 
 theorem spMap_evStalk (p : Y.Y.pts σ) : spMap (evStalk p) ≫ stalkPt Y.Y (base p) = p.1 :=
   Scheme.Spec_stalkClosedPointTo_fromSpecStalk p.1
 
-omit [NumberField F] in
 
 theorem exists_adapted (p : Y.Y.pts σ) : ∃ q : (∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Y.Y.Fnˣ) × Y.FrameAt p,
     (∀ τ i, p ∈ eqnSet σ (Y.gr τ i) (q.1 τ i)) ∧ Y.Adapted p q.1 q.2 1 := by
@@ -253,7 +246,6 @@ variable (G : EigMet Z (embOf e σ)) (n n' : Letter Dw → ℤ)
 
 def genSq {p : Y.Y.pts σ} (g : Y.FrameAt p) : ℝ := ∏ z : Letter Dw, grSq (G.gram _ g z.1) z.2 ^ n z
 
-omit [NumberField F] in
 
 theorem genSq_pos {p : Y.Y.pts σ} (g : Y.FrameAt p) : 0 < Y.genSq G n g :=
   Finset.prod_pos fun _ _ => zpow_pos (grSq_pos (G.pos _ _ _) _) _
@@ -274,7 +266,6 @@ theorem prodPow_mem (h : ∀ τ i, p ∈ eqnSet σ (Y.gr τ i) (t τ i)) : p ∈
     | insert z s hz ih => rw [Finset.sum_insert hz, Finset.prod_insert hz]; exact ((h _ _).zsmul _).add ih
   exact hE Finset.univ
 
-omit [NumberField F] in
 
 theorem Adapted.compare (h₁ : Y.Adapted p t₁ g₁ 1) (h : Y.Adapted p t g t') :
     ∃ u : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Y.Y.X.presheaf.stalk (base p))ˣ,
@@ -312,7 +303,6 @@ theorem Adapted.compare (h₁ : Y.Adapted p t₁ g₁ 1) (h : Y.Adapted p t g t'
     simp only [Pi.one_apply, Units.val_one, norm_one]
     ring
 
-omit [NumberField F] in
 
 theorem Adapted.mem_eqnSet (h : Y.Adapted p t g t') (τ : E →+* ℂ) (i : Fin (Dw.mult τ)) :
     p ∈ eqnSet σ (Y.gr τ i) (t τ i) := by
@@ -344,7 +334,6 @@ theorem met_h (h : Y.Adapted p t g t') :
   simp only [sq, mul_zpow]
   ring
 
-omit [NumberField F] in
 
 theorem adapted_of_tri {y : Y.Y.X} {ψ : Y.Y.X.presheaf.stalk y →+* ℂ} {φ : c.F →+* Y.Y.X.presheaf.stalk y}
     {f : EigFrame Z φ (stalkPt Y.Y y ≫ Y.π ≫ genι Z)} (hp : p.1 = spMap ψ ≫ stalkPt Y.Y y)
@@ -377,7 +366,6 @@ theorem pn_met {s : Y.Y.Fn} {a : ℂ} (h : IsCoord Y p.1 g n s a) :
   simp only [prodPow, _root_.zpow_neg, Finset.prod_inv_distrib, Units.val_inv_eq_inv_val, norm_inv]
   ring
 
-variable (Y) in
 
 end FlagCpt
 

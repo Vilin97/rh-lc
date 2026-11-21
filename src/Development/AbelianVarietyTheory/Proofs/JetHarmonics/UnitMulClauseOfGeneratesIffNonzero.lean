@@ -225,7 +225,6 @@ theorem generates_iff_secBGenerates (hS : SecBaseChangeSt) [IsNoetherianRing R] 
   exact (secBGenerates_iff_smul g).2 (existsUnique_of_exists ((secBGenerates_iff_smul (D := D) b).1 hb)
     ((generates_iff_smul _ g).1 H))
 
-omit [IsDomain R] in
 
 theorem exists_thick_pt {J : Ideal R} (hJ : J ≤ maximalIdeal R) (e : ℕ) (X : Over (Spec (CommRingCat.of R)))
     (x : X.left) (hx : X.hom x = closedPoint R) :

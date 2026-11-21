@@ -11,7 +11,6 @@ open Finset Formalism.HermitianLattices.GL2PrimeSums
 
 namespace GlobalTheory.Lin
 
-open Finset in
 
 theorem _root_.GlobalTheory.Lin.primesAPInterval_of_primesRel (h : _root_.GlobalTheory.Lin.PrimesRel) :
     ∃ C₀ Cr cr c : ℝ, 0 < C₀ ∧ 0 < Cr ∧ 0 < cr ∧ 0 < c ∧ _root_.Formalism.HermitianLattices.GL2PrimeSums.PrimesAPInterval C₀ Cr cr c := by

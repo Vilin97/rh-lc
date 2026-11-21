@@ -133,7 +133,6 @@ theorem self_mem_spanT [Zero X] (hu : u 0 = 0) : f ∈ spanT ψ u f :=
     show heisO ψ S T (u 0) f = f
     rw [hu, GlobalTheory.SplitScalar.heisO_zero]⟩
 
-variable (ψ u f) in
 
 def rhoT [Add X] (hu : ∀ x y, u (x + y) = u x + u y) (x : X) : Module.End ℂ (spanT ψ u f) :=
   (GlobalTheory.SplitScalar.heisL ψ S T (u x)).restrict fun _ hm => heis_mem_spanT hu x hm
@@ -141,7 +140,6 @@ def rhoT [Add X] (hu : ∀ x y, u (x + y) = u x + u y) (x : X) : Module.End ℂ 
 theorem coe_rhoT [Add X] (hu : ∀ x y, u (x + y) = u x + u y) (x : X) (m : spanT ψ u f) :
     (rhoT ψ u f hu x m : WO S T → ℂ) = heisO ψ S T (u x) m := rfl
 
-variable (ψ u f) in
 
 def omT {G : Type} [Monoid G] (π : G →* Module.End ℂ (WO S T → ℂ))
     (hπ : ∀ g, ∀ m ∈ spanT ψ u f, π g m ∈ spanT ψ u f) : G →* Module.End ℂ (spanT ψ u f) where

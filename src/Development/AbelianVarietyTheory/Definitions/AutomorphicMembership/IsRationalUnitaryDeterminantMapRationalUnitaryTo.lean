@@ -90,7 +90,6 @@ def KD : Subgroup (Ideles H.E) :=
 
 abbrev DtT : Type := Ideles H.E ⧸ KD H
 
-open Classical in
 
 def tildeD (χ : HChar H.E) : DtT H →* ℂˣ :=
   if h : KD H ≤ (χ.1.comp (finPartI H.E)).ker then QuotientGroup.lift (KD H) (χ.1.comp (finPartI H.E)) h else 1
@@ -101,7 +100,6 @@ def IsRationalUnitaryDeterminantMap (f : (letI := H.cmStar; unitary H.E) →* Dt
   letI := H.cmStar
   ∀ (k : H.Eˣ) (z : unitary H.E), (z : H.E) * H.conj (k : H.E) = k → QuotientGroup.mk (diagUnits H.E k) = f z
 
-open Classical in
 
 def e1T : (letI := H.cmStar; unitary H.E) →* DtT H := if h : ∃ f, IsRationalUnitaryDeterminantMap H f then h.choose else 1
 
@@ -214,6 +212,5 @@ theorem relDetT_self (N : ℕ) (M : Submodule (𝓞 H.E) (Fin N → H.E)) : relD
 theorem isTwist_one (S : Set ℕ) : IsTwist H S 1 :=
   ⟨⟨1, one_pos, one_pow 1⟩, isClsF_one.triv, fun _ _ _ _ => rfl, fun v hv => absurd (isClsF_one.unr v) hv⟩
 
-attribute [local instance] DtPack.instDt in
 
 end GlobalTheory.Mem.Chr

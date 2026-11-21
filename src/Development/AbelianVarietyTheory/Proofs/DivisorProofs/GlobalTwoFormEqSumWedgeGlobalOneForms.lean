@@ -114,7 +114,6 @@ end GlobalTheory.AbCoh.TwoFormSum
 
 namespace GlobalTheory.AbCoh
 
-open TwoFormSum in
 
 theorem twoForm_eq_wsum : ∀ (R : Type) [CommRing R] (C : Type) [Category.{0} C] (F : C ⥤ CommAlgCat.{0} R),
     HasFrame F → CohomZeroIsConstants F → ∀ ζ : W0 F 2, (∀ ⦃T T' : C⦄ (φ : T ⟶ T'), ζ T' = pOm F 2 φ (ζ T)) →

@@ -24,7 +24,6 @@ def invSub (F : GA E a → ℂ) : Subgroup (GL (Fin a) (Af E)) where
     rw [mul_assoc, ← map_mul, inv_mul_cancel, map_one, mul_one] at this
     exact this.symm
 
-variable (E a) in
 
 def openInv : Submodule ℂ (GA E a → ℂ) where
   carrier := {F | IsOpen (invSub F : Set (GL (Fin a) (Af E)))}
@@ -88,7 +87,6 @@ theorem mem_openInv_of_mem {π : CuspSub E a} {φ : Sm E a} (hφ : φ ∈ π.V) 
 
 end GlobalTheory.JSW.MirSemi.OpenInv
 
-open GlobalTheory.JSW.MirSemi.OpenInv in
 
 theorem GlobalTheory.JSW.MirSemi.locSpan_openInv : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (π : CuspSub E a) (φ : Sm E a), φ ∈ π.V →

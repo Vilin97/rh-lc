@@ -26,7 +26,6 @@ theorem exists_near (v : HeightOneSpectrum (𝓞 L⁺))
     hU ⟨y₀, hy₀⟩
   exact ⟨k, hk⟩
 
-variable (L) in
 
 theorem exists_sep (s : ReciprocityTheory.Aut.SplitPlace L) :
     ∃ e : 𝓞 L, Valued.v (s.i (e : L)) = 1 ∧

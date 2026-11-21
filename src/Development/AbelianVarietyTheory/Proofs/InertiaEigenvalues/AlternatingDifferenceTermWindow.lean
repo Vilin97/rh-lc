@@ -216,7 +216,6 @@ theorem prod_mul_eq (a : K.O) (P x : B.A) (k : ℕ) :
 
 end GlobalTheory.UnitLemma.Desc.Window
 
-open GlobalTheory.UnitLemma.Desc.Window in
 
 theorem GlobalTheory.UnitLemma.Desc.term_window : ∀ (K : UQ) (B : InvAlg K) (ι : Type) [Fintype ι] (e π : ι → B.A)
     (S : Finset ι) (a : K.O), B.P.Separable → K.Small a → IsFrame B e π S → ∀ I I' : Finset ι, I ⊆ S → I' ⊆ S →

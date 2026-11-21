@@ -66,7 +66,6 @@ def RecognitionSt : Prop :=
     w.Proportional c₀ → (∃ j, 1 ≤ j ∧ w.RationalAt ν ν' j) →
     ∃ e : IsPullDeg (RingHom.id V) D.toPre D'.toPre, w.InducedBy ν ν' e
 
-open TateInh in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.ThetaTowerRecognition
 end

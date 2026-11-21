@@ -120,7 +120,6 @@ section Coordinates
 
 variable {P : FPair H r} {S : Frames M.L r k} (c : Coord P S)
 
-include c in
 
 theorem selfDual_of (Λ : Submodule M.L.O V) (h : IsSD M.L S.Hm (c.lat Λ)) : H.IsSelfDual Λ := by
   obtain ⟨⟨hfg, hsp⟩, hd⟩ := h
@@ -245,7 +244,6 @@ theorem frame_of (Fr : FrameD H r) (g : Fin (r + 1) → S.V) (hgf : ∀ a, g a =
     rw [isom_of c g hn]
     exact Fr.h_zz
 
-include c in
 
 theorem change_of (Fr : FrameD H r) (g : Fin (r + 1) → S.V) (hgf : ∀ a, g a = c.e (Fr.f a))
     (n : V ≃ₗ[E] V) (s : Matrix (Fin (r + 1)) (Fin (r + 1)) E)

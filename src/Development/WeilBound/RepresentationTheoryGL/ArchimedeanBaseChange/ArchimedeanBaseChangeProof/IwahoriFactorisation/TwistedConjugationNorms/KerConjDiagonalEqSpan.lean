@@ -283,7 +283,6 @@ end Ord
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-set_option maxHeartbeats 1000000 in
 
 theorem kapSign_eq_one_of_vals (hU : Unr E) (w : Pl E) (n : ℕ) (γ : GLw n w) (hγ : γ ∈ UL n w)
     (v : Fin n → ℤ) (hv : Function.Injective v) (hrev : ∀ i j, v j = -v i → j = Fin.rev i)

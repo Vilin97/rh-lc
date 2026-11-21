@@ -255,6 +255,5 @@ theorem exists_finite_net {r : ℕ} (X : DataX E r) (la : Wt X.Ψ r) (M w : ℝ)
     · exact ⟨y₀, hy₀, by linarith [hp0 P y₀]⟩
     · exact hmain P hP x hx h
 
-open ReciprocityTheory.ChartRestriction.G.I2.TiledBoundaries (E4) in
 
 end GlobalTheory

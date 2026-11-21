@@ -16,7 +16,6 @@ variable {F : Type} [Field F] [NumberField F]
 def IntAt (b : F) (v : HeightOneSpectrum (𝓞 F)) : Prop :=
   algebraMap F (A F) b v ∈ v.adicCompletionIntegers F
 
-open Classical in
 
 def idem (b : F) : A F :=
   ⟨fun v => if IntAt b v then 1 else 0, Filter.Eventually.of_forall fun v => by
@@ -24,7 +23,6 @@ def idem (b : F) : A F :=
     · simpa [h] using (v.adicCompletionIntegers F).one_mem
     · simpa [h] using (v.adicCompletionIntegers F).zero_mem⟩
 
-open Classical in
 
 def scale (b : F) : A F :=
   ⟨fun v => if IntAt b v then 1 else (algebraMap F (A F) b v)⁻¹,
@@ -33,7 +31,6 @@ def scale (b : F) : A F :=
       · simpa [h] using (v.adicCompletionIntegers F).one_mem
       · simpa [h] using ((v.adicCompletionIntegers F).mem_or_inv_mem _).resolve_left h⟩
 
-open Classical in
 
 def scaleInv (b : F) : A F :=
   ⟨fun v => if IntAt b v then 1 else algebraMap F (A F) b v, by

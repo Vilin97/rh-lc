@@ -116,7 +116,6 @@ section Row
 
 variable {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch} (X : GlobalTheory.NJoin.RealAt D cf nch tp)
 
-set_option maxHeartbeats 1000000 in
 
 theorem ipM_theta {μ : D.what₂.Tup} (hμ : Used0 D μ) (j : Fin D.R.m) (x : D.what₂.Mt μ (j.1 + 1)) (y : D.what₂.Mj (j.1 + 1))
     (T T' : MMap (X.R.MW j (sg0 D X.A))) (hT : PiTensorProduct.lift T = (X.IL.jMj j y).1)
@@ -181,7 +180,6 @@ theorem ext_pre {V : HSp D} {n : ℕ} (c : CoefA V) (hc : ∀ h ∈ GfC V, c.ρ 
   show c.ρ (PV.ψ (preF PV k))⁻¹ (f ((finHom V).rangeRestrict (PV.ψ (preF PV k)))) = _
   rw [hp, hc _ (inv_mem (PV.into _)), Module.End.one_apply]
 
-set_option maxHeartbeats 1000000 in
 
 theorem ext_real (hV : X.R.models_cV) (A : GlobalTheory.NJoin.Agree X M rep) {μ : D.what₂.Tup} (hμ : Used0 D μ) (j : Fin D.R.m)
     (x : D.what₂.Mt μ (j.1 + 1)) :
@@ -214,7 +212,6 @@ section Canon
 
 variable {hL : GlobalTheory.Published.LocalLanglandsGL} {D : D7} {P : Pin hL D} (X : GlobalTheory.NJoin.RealAt D P.cf P.C P.tp)
 
-set_option maxHeartbeats 1000000 in
 
 end Canon
 

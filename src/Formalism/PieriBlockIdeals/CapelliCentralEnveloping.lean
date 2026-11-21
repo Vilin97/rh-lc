@@ -127,7 +127,6 @@ def capelli (E : Fin N → Fin N → 𝒰) (u : 𝒰) : 𝒰 :=
 
 end Capelli
 
-attribute [local instance 100] LieRing.ofAssociativeRing in
 
 def C2 : Prop :=
   ∀ (k : Type) [CommRing k] (𝒰 : Type) [Ring 𝒰] [Algebra k 𝒰] (V : Type) [AddCommGroup V]

@@ -64,7 +64,6 @@ theorem transitionCochains_trans {U V W : OpenNormalSubgroup G} (hVU : V ≤ U) 
   exact groupCohomology.cochainsMap_congr
     (MonoidHom.ext fun g => QuotientGroup.induction_on g fun _ => rfl) (LinearMap.ext fun _ => rfl)
 
-variable (k G) in
 
 noncomputable def levelCochains :
     (OpenNormalSubgroup G)ᵒᵖ ⥤ CochainComplex (ModuleCat k) ℕ where

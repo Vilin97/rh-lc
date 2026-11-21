@@ -128,5 +128,4 @@ theorem nums (a l C0 PP T D b uE : ℝ) (ha : 1 ≤ a) (hl : 10 ≤ l) (hlC : C0
     have h9 : PP ≤ T * PP := le_mul_of_one_le_left hPP0 hT1
     linarith
 
-set_option maxHeartbeats 4000000 in
 end GlobalTheory.ThickBerg

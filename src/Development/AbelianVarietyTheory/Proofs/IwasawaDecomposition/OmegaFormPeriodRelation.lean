@@ -107,6 +107,5 @@ theorem exists_isDetAt {e : AE D} (he : e * e = e) (V : HSp D) (g : GA D V) : ‚à
     linear_combination (e * e) * det_conj_mul V g +
       (2 - (Formalism.L2.Theta.mt V g).det - cA D (Formalism.L2.Theta.mt V g).det) * he), Units.val_mkOfMulEqOne _‚ü©
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.OneMapRef.ClassScalar

@@ -72,6 +72,5 @@ def PrimValPrimitive : Prop :=
 
 end
 
-open NumberField Ideal in
 
 end Formalism.LFunctionChainParameters.LHost

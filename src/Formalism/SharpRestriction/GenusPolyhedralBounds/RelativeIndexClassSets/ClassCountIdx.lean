@@ -72,7 +72,6 @@ theorem inverse_in_adic_integers (c : 𝓞 F) (w : HeightOneSpectrum (𝓞 F)) [
       le_antisymm ((HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 (levelaf_int_mem_v w c)) (not_lt.1 h)
     rw [h1, inv_one]
 
-open Classical in
 
 def a_u (c : 𝓞 F) : FiniteAdeleRing (𝓞 F) F :=
   ⟨fun w => if Valued.v (algebraMap (𝓞 F) (w.adicCompletion F) c) < 1 then (0 : w.adicCompletion F)
@@ -115,7 +114,6 @@ section SP
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
-open Classical in
 
 end SP
 
@@ -139,15 +137,10 @@ variable (hp : p ∈ O) (hq : q ∈ O) (hqi : q * qi = 1)
   (mLb : ∀ y, y ∈ Lb ↔ (∃ c ∈ O, y i0 = p * c) ∧ ∀ i, i ≠ i0 → y i ∈ O)
   (mLd : ∀ y, y ∈ Ld ↔ q * y i0 ∈ O ∧ ∀ i, i ≠ i0 → y i ∈ O)
 
-include hp hq hqi mLb mLd in
 
-include hp mLb in
 
-include hq mLd in
 
-include hq mLb mLd in
 
-include hq mLb mLd in
 
 end TAbs
 

@@ -160,7 +160,6 @@ theorem exists_action (hv : IsLieBasis v) {O : Type} [CommRing O] (act : OAct O 
 variable {R' : Type} [CommRing R'] {G' : Over (Sp R')} [GrpObj G'] [IsCommMonObj G']
   {v' : Fin n → (epsR R' ⟶ G')} {f : R →+* R'} {φ : G'.left ⟶ G.left}
 
-omit [IsCommMonObj G] [IsCommMonObj G'] in
 
 theorem prodPts_left (h : IsGrpPullback G' G (spMap f) φ)
     (hv' : ∀ i, (v' i).left ≫ φ = spMap (dualMapR f) ≫ (v i).left) (c : Fin n → R) :
@@ -247,7 +246,6 @@ end GlobalTheory.LieEigen
 
 namespace GlobalTheory
 
-open LieEigen in
 
 theorem exists_isLieBasis_eigen : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (c : Coeff l) (g : ℕ) (ty : Fin g → (E →+* ℂ)), IsTypeFn H D.p D.q ty → ∀ (R : Type) [CommRing R] (j : c.F →+* R) (o : Obj D l (baseKA l) (spMap j ≫ spMap (IntermediateField.inclusion c.le).toRingHom)) (n : ℕ) (v₀ : Fin n → (epsR R ⟶ o.t.G)), IsLieBasis v₀ → ∀ p : PrimeSpectrum R, ∃ r ∉ p.asIdeal, ∀ (t' : SAB H (Sp (Localization.Away r))), Nonempty (SABMap t' o.t (spMap (algebraMap R (Localization.Away r)))) → ∃ v : Fin g → (epsR (Localization.Away r) ⟶ t'.G), (IsLieBasis v ∧ ∀ i a, (v i ≫ t'.act.act a).left = spMap (epsScaleR (algebraMap R (Localization.Away r) (j ⟨ty i (a : E), c.conj (ty i) a⟩))) ≫ (v i).left) := by
   intro E _ _ _ H D l c g ty hty R _ j o n v₀ hv₀ p

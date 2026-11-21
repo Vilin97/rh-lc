@@ -235,7 +235,6 @@ section Hol
 
 variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] {X : Scheme.{0}}
 
-open Classical in
 
 end Hol
 

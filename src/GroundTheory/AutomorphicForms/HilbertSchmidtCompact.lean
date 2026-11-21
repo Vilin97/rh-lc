@@ -16,7 +16,6 @@ variable {𝕜 : Type*} [RCLike 𝕜]
   {H : Type*} [NormedAddCommGroup H] [InnerProductSpace 𝕜 H] [CompleteSpace H]
   {K : Type*} [NormedAddCommGroup K] [InnerProductSpace 𝕜 K] [CompleteSpace K]
 
-omit [CompleteSpace H] [CompleteSpace K] in
 
 theorem isCompactOperator_innerSL_smulRight (e : H) (y : K) :
     IsCompactOperator ((innerSL 𝕜 e).smulRight y) := by
@@ -55,7 +54,6 @@ theorem sub_hsTruncation_apply_basis {ι : Type*} [DecidableEq ι] (b : HilbertB
     innerSL_apply_apply, hb, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq']
   split_ifs <;> simp
 
-omit [CompleteSpace K] in
 
 theorem hsNormSq_sub_hsTruncation (T : H →L[𝕜] K) (F : Finset (exists_hilbertBasis 𝕜 H).choose) :
     hsNormSq (T - hsTruncation (stdHilbertBasis 𝕜 H) T F) =

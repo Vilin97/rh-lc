@@ -39,26 +39,21 @@ end Comb
 variable {F : Type} [Field F] {e : F ≃+* c.F} {X W : Scheme.{0}} {jB : W ⟶ X} {πB : W ⟶ gen Z} {r : ℕ}
   {τ : E →+* ℂ}
 
-omit [NumberField E] [IsCMField E] in
 
 def cf (dual : Bool) {M : X.Modules} {U V : X.Opens} {f : Fin r → Γ(M, U)} (hf : VB.IsFrame f)
     {g : Fin r → Γ(M, V)} (hg : VB.IsFrame g) {K : Type} [CommRing K] (z : Sp K ⟶ X) (h1 : ⊤ ≤ z ⁻¹ᵁ (V ⊓ U))
     (h2 : ⊤ ≤ z ⁻¹ᵁ (U ⊓ V)) (a b : Fin r) : K :=
   cond dual (TangentOrigin.evalPt z _ h2 (trCo hf g a b)) (TangentOrigin.evalPt z _ h1 (trCo hg f b a))
 
-omit [NumberField E] [IsCMField E] in
 
 section Glue
 
 variable {ι : Type} {M : X.Modules} {V : ι → X.Opens} {g : ∀ i, Fin r → Γ(M, V i)} (hg : ∀ i, VB.IsFrame (g i))
   (u : ∀ i, LocAssign Z r jB (V i)) (dual : Bool)
 
-variable (πB) in
-omit [NumberField E] [IsCMField E] in
 
 end Glue
 
-omit [NumberField E] [IsCMField E] in
 
 section Basis
 

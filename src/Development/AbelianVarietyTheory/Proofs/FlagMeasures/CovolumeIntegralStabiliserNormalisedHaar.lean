@@ -25,7 +25,6 @@ noncomputable section
 
 namespace GlobalTheory.HL.Cov0
 
-open Formalism.L2.SG.RealObj Formalism.L2.S.Pv.Chart Formalism.MainNotions.S.ThB Formalism.L2.SG.LocWSOf in
 
 theorem chart_of {D : D7} (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word) (t : TauC Y u u')
     (w : Point D.host.E (D.R.rS + 1)) (γw s s' : X.B.I.Ginf) (hrep : IsPtRep X u u' w γw) (hs : s ∈ X.SinfU u)
@@ -159,7 +158,6 @@ end
 noncomputable section
 namespace GlobalTheory.HL.Cov0
 
-open Formalism.L2.SG.NGCut.SplitEmbedding Formalism.L2.SG.NGCut.StabilizerCovolume Formalism.L2.SG.RealObj in
 
 theorem covolume_integralStabiliser_normalisedHaar_alt : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), Formalism.MainNotions.S.Cnt.Stand D u u' → 4 * D.R.rS + 7 ≤ D.R.k → ∀ (w : Point D.host.E (D.R.rS + 1)) (F00 : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (F'0 : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (FP : ∀ p : PlF D, LocNG.FPair (locH (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) p) D.R.rS), ZhatOM (ZhatL F00 F'0) = ptMat w → Gval F00 F'0 ≠ 0 → (∀ p, AtBase (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) p F00 F'0 (Tu D u) (Tu D u') (FP p) ∧ (FP p).RelG (LocNG.theta (Y.M p))) → ∀ (G : GFrames (placesOf (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D)) D.R.rS D.R.k) (c : GCoord (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) F00 F'0 FP G), ∀ (t₀ : TauC Y u u') (ρ : ((VS D).V ≃ₗ[D.host.E] (VS D).V)) (U U' : Formalism.L2.SG.PairVal.MatR D), MovesTo F00 F'0 (lf D (X.Fu u)) t₀.frame ρ U U' → t₀.relevant → ∀ μR, Formalism.L2.SG.VolPin.IsPinnedR t₀ w μR → ∃ K : Set X.B.I.Ginf, (MeasurableSet K ∧ ∀ y ∈ Formalism.L2.SG.TermOp.Vanish.Rset t₀, ∃! s, s ∈ realPts X {σ | c.grp ρ σ ∈ G.K0} ∧ s * y ∈ K) ∧ μR K = ENNReal.ofReal (((X.B.g : ℝ) ^ (D.R.f * Fintype.card (Formalism.L2.SG.RealObj.FreeE w)))⁻¹) := by
   intro D X Y u u' hSt hk w F00 F'0 FP hZ hGv hAt G c t₀ ρ U U' hMv hrel μR hPin

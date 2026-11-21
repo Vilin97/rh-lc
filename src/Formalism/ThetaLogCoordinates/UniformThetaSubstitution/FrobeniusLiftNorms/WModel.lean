@@ -199,6 +199,5 @@ theorem complete : CompleteSpace (KK p) := by
 
 end WModel
 
-open WModel in
 
 end Formalism.InvariantFactorPaths.G7

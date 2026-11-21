@@ -66,7 +66,6 @@ variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
 variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
 
-include μ in
 
 theorem exists_approx_bound (ν : Measure (ArchUnits K n)) [ν.IsHaarMeasure]
     (g : CompactlySupportedContinuousMap (normOneGL K n) ℂ) {ε : ℝ} (hε : 0 < ε) :

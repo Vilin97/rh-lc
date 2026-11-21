@@ -40,7 +40,6 @@ def LowerMapTieTw {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotion
     (T.tw.pt.val u μ hμ).eW ((D.PTw u μ).lowerMap ψ) c =
       Formalism.L2.Forms.fnOf _ (Formalism.L2.Forms.shiftOf (Formalism.L2.Forms.sgT u)) 1 (Formalism.L2.Ker.brTen D u P)
 
-open Classical in
 
 end Formalism.L2.Rows
 

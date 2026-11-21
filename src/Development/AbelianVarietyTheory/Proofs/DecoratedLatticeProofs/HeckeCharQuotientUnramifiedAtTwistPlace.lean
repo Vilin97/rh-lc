@@ -78,7 +78,6 @@ theorem loc_eq_of_isRes {D : D7} {H H' : Formalism.L2.Host.HChar D.host.E} {PP :
 
 end GlobalTheory.ChainTw.QuotUnr
 
-open GlobalTheory.ChainTw.QuotUnr in
 
 theorem GlobalTheory.ChainTw.quot_unrAt_twist : ∀ (D : D7) (c : Com D) (w : Twist D), w.Is c → ∀ PP ∈ w.Q, ∀ i j : ℕ, 1 ≤ i → i ≤ D.R.m → 1 ≤ j → j ≤ D.R.m → GlobalTheory.LFun.UnrAt (F := D.host.F) (c.μ i * (c.μ j)⁻¹) PP := by
   intro D c w hw PP hPP i j hi1 him hj1 hjm

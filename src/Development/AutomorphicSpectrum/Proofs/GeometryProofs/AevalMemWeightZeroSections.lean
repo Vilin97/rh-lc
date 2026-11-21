@@ -213,7 +213,6 @@ theorem basePt_genFr (h : GenFrEx Xo c) (Z : Comp Xo c) :
     show Spec.map _ = Spec.map _ ≫ Spec.map _
     rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_fn (h : GenFrEx Xo c) (Z : Comp Xo c) (r₀ : kap Z) (hr : IsIntegral c.F r₀) :
     ∃ f ∈ Formalism.L2.Pj.sec Xo c 0 0, evC h Z f = algebraMap (kap Z) (Om Z) r₀ := by

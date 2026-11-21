@@ -61,7 +61,6 @@ theorem norm_integral_star_mul_le_sqrtK {ε : Fin n → Bool} {f g : KG ε → �
   have := Real.abs_le_sqrt H
   rwa [abs_of_nonneg (norm_nonneg _)] at this
 
-set_option maxHeartbeats 1600000 in
 
 theorem sqrt_integral_normSq_le_integral_kernel_mul_translate :
     ∀ {n : ℕ} (ε : Fin n → Bool) (p : KG ε → ℂ) (κ : KG ε → ℝ), Continuous p → Continuous κ →

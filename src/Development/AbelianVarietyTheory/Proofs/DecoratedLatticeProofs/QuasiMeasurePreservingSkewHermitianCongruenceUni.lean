@@ -55,7 +55,6 @@ noncomputable def skewConjEquiv {D : D7} {ρ : ℕ} (g : GL (Fin ρ) (AE D)) : s
     rw [this, skewConj_matOne]
   map_add' := skewConj_addArg _
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem quasiMeasurePreserving_skewConj : ∀ (D : D7) (ρ : ℕ) (lC : Measure (skewA D ρ)), lC.IsAddHaarMeasure →
     ∀ u : UX D ρ, Measure.QuasiMeasurePreserving (skewConj u.1.1) lC lC := by

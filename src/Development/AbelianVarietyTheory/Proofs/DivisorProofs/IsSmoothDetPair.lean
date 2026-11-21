@@ -35,13 +35,11 @@ theorem leviTgt_apply {m : ℕ} {P₁ : Type} [AddCommGroup P₁] [Module ℂ P�
     leviTgt σ₁ ξ₁ ξ₂ l y = ((ξ₁ (Matrix.GeneralLinearGroup.det (l 0)) * ξ₂ (Matrix.GeneralLinearGroup.det (l 2)) : ℂˣ) : ℂ) •
       σ₁ (l 1) y := rfl
 
-variable (k) in
 
 def torusPt (m : ℕ) (t₁ t₂ : kˣ) : Levi k fun i : Fin 3 => Fin (blk3 m i) :=
   Pi.mulSingle (M := fun i : Fin 3 => GL (Fin (blk3 m i)) k) 0 (Matrix.GeneralLinearGroup.scalar (Fin (blk3 m 0)) t₁) *
     Pi.mulSingle (M := fun i : Fin 3 => GL (Fin (blk3 m i)) k) 2 (Matrix.GeneralLinearGroup.scalar (Fin (blk3 m 2)) t₂)
 
-variable (k) in
 
 def detPair (a a' : ℕ) (α₀ β₀ : kˣ →* ℂˣ) : Representation ℂ (Levi k (Two (Fin a) (Fin a'))) (ℂ ⊗[ℂ] ℂ) :=
   (extTensor (detRep (Fin a) α₀) (detRep (Fin a') β₀)).comp (leviTwo k (Fin a) (Fin a')).symm.toMonoidHom
@@ -49,13 +47,11 @@ def detPair (a a' : ℕ) (α₀ β₀ : kˣ →* ℂˣ) : Representation ℂ (Le
 theorem prod₂_detRep_eq (a a' : ℕ) (α₀ β₀ : kˣ →* ℂˣ) :
     prod₂ (detRep (Fin a) α₀) (detRep (Fin a') β₀) = parInd (two (stdSum rfl)) (detPair k a a' α₀ β₀) := rfl
 
-variable (k) in
 
 def cellChar (a a' : ℕ) (α₀ β₀ : kˣ →* ℂˣ) (b : Bool → Fin 3 → ℕ) (t₁ t₂ : kˣ) : ℂˣ :=
   ∏ r : Bool, ((cond r β₀ α₀ * absPow k ((1 - ((cond r a' a : ℕ) : ℂ)) / 2)) t₁) ^ b r 0 *
     ((cond r β₀ α₀ * absPow k ((((cond r a' a : ℕ) : ℂ) - 1) / 2)) t₂) ^ b r 2
 
-variable (k) in
 
 def cellMid (α₀ β₀ : kˣ →* ℂˣ) (b : Bool → Fin 3 → ℕ) :=
   prod₂ (detRep (Fin (b false 1)) (α₀ * absPow k ((((b false 0 : ℕ) : ℂ) - (b false 2 : ℕ)) / 2)))

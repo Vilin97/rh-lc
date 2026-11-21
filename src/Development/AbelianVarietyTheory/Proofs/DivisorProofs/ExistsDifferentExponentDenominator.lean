@@ -41,6 +41,5 @@ end GlobalTheory.DifferentElement
 
 namespace GlobalTheory.DifferentElement
 
-open Classical in
 
 end GlobalTheory.DifferentElement

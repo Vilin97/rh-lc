@@ -53,7 +53,6 @@ lemma ab_cancel (x : H) : σ₁ a (σ₁ b x) = x := by
   rw [hab, hrep.1.1] at h
   rw [← ContinuousLinearMap.comp_apply, ← h, ContinuousLinearMap.one_apply]
 
-include hrep hba ha hb in
 
 include hrep ha hb in
 lemma conj_apply {g : Matrix (Fin n) (Fin n) ℂ} (hg : g ∈ Formalism.MainNotions.S.UJset ε) (x : H) :
@@ -184,6 +183,5 @@ lemma ktype_iff (μ : Fin n → ℝ) (S : Submodule ℂ H) :
     intro μ' u huS hu0 hwu
     exact hdom μ' (σ₁ a u) (hs a ha u huS) (ne_a σ₁ hrep ha hu0) (wt21 σ₁ hrep hab ha hb hwu)
 
-include hab hba ha hb in
 
 end ReciprocityTheory.ChartRestriction.DS.Lap.CayleyIndepA

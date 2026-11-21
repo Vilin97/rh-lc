@@ -24,14 +24,11 @@ def evalAt (v : HeightOneSpectrum (𝓞 F)) : FiniteAdeleRing (𝓞 F) F →ₐ[
   map_add' _ _ := rfl
   commutes' _ := rfl
 
-variable (E) in
 
 def loc (v : HeightOneSpectrum (𝓞 F)) : RA F E →ₐ[F] v.adicCompletion F ⊗[F] E :=
   Algebra.TensorProduct.map (evalAt v) (AlgHom.id F E)
 
-variable (F) in
 
-variable (E) in
 
 def IsSplitPlace (v : HeightOneSpectrum (𝓞 F)) : Prop :=
   ∃ w w' : Ideal (𝓞 E), w ≠ w' ∧ w.IsPrime ∧ w'.IsPrime ∧

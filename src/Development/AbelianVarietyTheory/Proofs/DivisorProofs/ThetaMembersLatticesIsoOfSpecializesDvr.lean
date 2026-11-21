@@ -159,7 +159,6 @@ theorem torAt_char_eq_weil (𝔪 : GMem X₁ z₁ act V ev X t δ) (τ : X₁.S.
 variable {Y : RatModel X₁.o₁ X₁.Ω₁} {πY : Y.Z ⟶ X₁.M.Z} {U₀ : Y.Z.Opens} {EE : Y.Lat X₁.S.J} (FinalForm : ZHOut X₁.ρ Y U₀ EE)
   (𝔫 : GMem X₁ z₁ act V ev X t δ) {ξ : Sp V ⟶ Y.Z}
 
-include 𝔫 in
 
 theorem base_of_gMem : GlobalTheory.Mum.Base V :=
   ⟨⟨𝔫.cn.1, inferInstance, 𝔫.cn.2.1, 𝔫.cn.2.2.1⟩, 𝔫.cn.2.2.2⟩

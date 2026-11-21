@@ -21,7 +21,6 @@ section PullPresents
 variable {X Z : Scheme.{0}} [IsIntegral X] (B : EffCartierData Z) (f : X ⟶ Z)
   (h : f (genericPoint X) ∉ B.idealSheaf.support)
 
-open Classical in
 
 theorem fnOf_pull_g (J J' : PUnit.{1} → B.ι)
     (hg : genericPoint X ∈ (B.lb.pull f).U J ⊓ (B.lb.pull f).U J') :

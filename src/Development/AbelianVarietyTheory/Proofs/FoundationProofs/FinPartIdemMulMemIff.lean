@@ -35,7 +35,6 @@ theorem atPlace_mul_right (a : Fv F v) (y : AF F) : atPlace v a * y = atPlace v 
 
 theorem evFin_atPlace (a : Fv F v) : evFin F v (atPlace v a) = a := evalV_singleFin_self v a
 
-variable (E) in
 
 def tensAt : Fv F v ⊗[F] E →ₗ[F] AF F ⊗[F] E := TensorProduct.map (atPlace v) LinearMap.id
 

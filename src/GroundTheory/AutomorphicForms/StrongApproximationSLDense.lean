@@ -123,7 +123,6 @@ theorem finiteAdele_zero_apply (v : HeightOneSpectrum (𝓞 K)) :
     (0 : FiniteAdeleRing (𝓞 K) K) v = 0 :=
   rfl
 
-open Classical in
 
 def finiteAdeleSingleAdd (v : HeightOneSpectrum (𝓞 K)) (c : v.adicCompletion K) :
     FiniteAdeleRing (𝓞 K) K :=
@@ -135,7 +134,6 @@ theorem finiteAdeleSingleAdd_apply (v w : HeightOneSpectrum (𝓞 K)) (c : v.adi
       u.adicCompletion K) v c w :=
   rfl
 
-open Classical in
 
 def localEmbedding (v : HeightOneSpectrum (𝓞 K)) : GL (Fin n) (v.adicCompletion K) →* FiniteAdelicGL K n where
   toFun x := (finiteRestrictedEquiv K n).symm
@@ -149,7 +147,6 @@ theorem finiteRestrictedEquiv_symm_apply (y : FiniteRestrictedGL K n) (w : Heigh
       (y w : GL (Fin n) (w.adicCompletion K)) a b := by
   rw [← finiteRestrictedEquiv_apply, ContinuousMulEquiv.apply_symm_apply]
 
-open Classical in
 
 theorem localEmbedding_transvectionGL (v : HeightOneSpectrum (𝓞 K))
     (t : TransvectionStruct (Fin n) (v.adicCompletion K)) :
@@ -201,7 +198,6 @@ theorem det_finiteRestrictedEquiv_apply (g : FiniteAdelicGL K n) (v : HeightOneS
   rw [RingHom.map_det]
   rfl
 
-open Classical in
 
 def truncate (S : Finset (HeightOneSpectrum (𝓞 K))) (y : FiniteRestrictedGL K n) :
     FiniteRestrictedGL K n where

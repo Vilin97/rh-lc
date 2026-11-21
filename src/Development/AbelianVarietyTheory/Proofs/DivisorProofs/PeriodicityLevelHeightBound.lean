@@ -58,7 +58,6 @@ theorem heis_fix : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype
     simp only [schr, Pi.smul_apply, smul_eq_mul] at hx1 ⊢
     rw [mul_left_comm, hx1]
 
-open Formalism.UG in
 
 theorem transport_denom : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ}
     (e : Matrix (Fin n) (Fin d) (AF F ⊗[F] E) ≃ₗ[AF F] (Fin n × Fin d → AF F) × (Fin n × Fin d → AF F)),

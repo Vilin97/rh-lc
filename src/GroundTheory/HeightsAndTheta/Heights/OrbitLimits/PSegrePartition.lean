@@ -26,7 +26,6 @@ def numIdx (ι : K → Type*) [∀ k, Fintype (ι k)] : ℝ := Fintype.card ((k 
 def bump (z : (Σ k, ι k) → ℂ) (i : (k : K) → ι k) : ℝ :=
   Real.smoothTransition (2 * numIdx ι * (segreSq z i / segreSqSum z) - 1)
 
-open Classical in
 
 def rho (i : (k : K) → ι k) (z : (Σ k, ι k) → ℂ) : ℝ :=
   if 0 < segreSqSum z then bump z i / ∑ j, bump z j else 1 / numIdx ι
@@ -52,7 +51,6 @@ theorem segreSqSum_pos {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k, i�
   exact Finset.sum_pos' (fun j _ => segreSq_nonneg z j)
     ⟨i, Finset.mem_univ _, pow_pos (norm_pos_iff.mpr h) 2⟩
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem segre_smul (c : K → ℂ) (z : (Σ k, ι k) → ℂ) (i : (k : K) → ι k) :
     segre (fun p => c p.1 * z p) i = (∏ k, c k) * segre z i :=

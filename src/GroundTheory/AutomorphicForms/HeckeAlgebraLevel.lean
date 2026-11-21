@@ -29,7 +29,6 @@ namespace HeckeAlgebra
 variable (μ : Measure G) [μ.IsHaarMeasure] {K : Subgroup G} (hKc : IsCompact (K : Set G))
   (hKo : IsOpen (K : Set G))
 
-include hKc hKo in
 
 theorem measureReal_compactOpen_pos : 0 < μ.real (K : Set G) :=
   ENNReal.toReal_pos (hKo.measure_ne_zero μ ⟨1, K.one_mem⟩) hKc.measure_lt_top.ne
@@ -111,7 +110,6 @@ theorem heckeAct_idem_eq_fixedProj (hρ : IsSmooth ρ) (v : V) :
     simp [ψ, fixedProj_apply_act hρ hKc hKo hk])] at this
   simpa [ψ] using this
 
-variable (μ) in
 
 def biInvariant (K : Subgroup G) : NonUnitalSubalgebra ℂ (HeckeAlgebra μ) where
   carrier := {f | ∀ k ∈ K, ∀ x, f (k * x) = f x ∧ f (x * k) = f x}
@@ -179,7 +177,6 @@ theorem biInvariant_eq_range :
     · rw [← mul_assoc, ← mul_assoc, hi.eq]
     · rw [mul_assoc, hi.eq]
 
-variable (μ) in
 
 def HeckeAlgebraLevel (K : Subgroup G) (_hKc : IsCompact (K : Set G)) (_hKo : IsOpen (K : Set G)) :
     Type _ :=

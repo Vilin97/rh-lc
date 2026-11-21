@@ -21,7 +21,6 @@ namespace ThmBHecke
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F E) in
 
 def adeleEquiv : AE F E ≃ₐ[AF F] 𝔸[E] := adeleTensorAlgEquivLeft F E
 
@@ -48,7 +47,6 @@ theorem continuous_adeleEquiv_symm : Continuous (adeleEquiv F E).symm := by
   have := IsModuleTopology.toContinuousAdd (AF F) (AE F E)
   exact IsModuleTopology.continuous_of_linearMap (adeleEquiv F E).symm.toLinearMap
 
-variable (F E) in
 
 def ideleEquiv : (AE F E)ˣ ≃* IdeleGroup E :=
   Units.mapEquiv (adeleEquiv F E).toRingEquiv.toMulEquiv
@@ -61,7 +59,6 @@ theorem continuous_ideleEquiv_symm : Continuous (ideleEquiv F E).symm :=
   Units.continuous_iff.2 ⟨continuous_adeleEquiv_symm.comp Units.continuous_val,
     continuous_adeleEquiv_symm.comp Units.continuous_coe_inv⟩
 
-variable (F E) in
 
 def finEquiv : Af F ⊗[F] E ≃+* FiniteAdeleRing (𝓞 E) E :=
   (Algebra.TensorProduct.comm F (Af F) E).toRingEquiv.trans (finiteTensorEquiv F E).toRingEquiv

@@ -71,7 +71,6 @@ theorem exists_gen_pairing (hG : GlobalFnsSt) (hA : IsAbelianScheme A) {L : RigL
   simp only [commVal, ofMul_mul, ofMul_inv] at a₁ a₂ a₃ ⊢
   linear_combination (norm := abel) a₃ + a₁ - a₂
 
-omit [IsCommMonObj A] in
 
 theorem prod_mulT {T Z : Over S} (n : ℕ) (x : T ⟶ A) (t : Z ⟶ T) (w : Z ⟶ A) {U : Type} [CommGroup U]
     (h : (Z.left ⟶ A.left) → U) :

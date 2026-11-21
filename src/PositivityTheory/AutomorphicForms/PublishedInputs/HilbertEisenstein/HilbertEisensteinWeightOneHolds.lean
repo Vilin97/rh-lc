@@ -18,7 +18,6 @@ public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstei
 
 @[expose] public section
 
-open UpperTheory.HilbertEisensteinWeightOne in
 
 theorem UpperTheory.V.Published.hilbert_eisenstein_weight_one_holds : UpperTheory.V.Published.HilbertEisOne :=
   top poisson_summation_holds s_integrality moderate_growth_holds smoothness_holds left_invariance_holds level_holds open_kernel_holds central_character_holds K_finiteness_holds

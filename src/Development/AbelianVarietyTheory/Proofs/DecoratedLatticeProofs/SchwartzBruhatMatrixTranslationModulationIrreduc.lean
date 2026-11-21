@@ -17,7 +17,6 @@ namespace GlobalTheory.IrredSB
 section Alg
 variable {G : Type} [AddCommGroup G]
 
-open Classical in
 
 def ind (K : AddSubgroup G) (t : G) : ℂ := if t ∈ K then 1 else 0
 
@@ -179,7 +178,6 @@ theorem pair_single [DecidableEq Y] [DecidableEq Y'] (r : Y) (q : Y') (c : k) (t
     simp [Matrix.single, h.symm]
   · simp
 
-variable (k Y Y') in
 
 def intMat : AddSubgroup (Matrix Y Y' k) where
   carrier := {u | ∀ r q, u r q ∈ 𝒪[k]}
@@ -187,7 +185,6 @@ def intMat : AddSubgroup (Matrix Y Y' k) where
   zero_mem' _ _ := zero_mem _
   neg_mem' ha r q := neg_mem (ha r q)
 
-variable (k Y Y') in
 
 def lat (n : ℕ) : AddSubgroup (Matrix Y Y' k) := (intMat k Y Y').map (nsmulAddMonoidHom n)
 

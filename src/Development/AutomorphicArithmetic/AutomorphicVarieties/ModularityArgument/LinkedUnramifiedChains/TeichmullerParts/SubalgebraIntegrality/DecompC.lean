@@ -106,7 +106,6 @@ theorem secRange (s : HidaSetting l L Ω) : GlobalTheory.BCT.IsSection (Set.rang
   have e : v = w.under (𝓞 (Lp L)) := (under_w s v).symm.trans h
   rw [e]
 
-open Classical in
 
 def Pc (s : HidaSetting l L Ω) (n c : ℕ) (w : Plc L) : Subgroup (GLw n w) :=
   if w ∈ s.w '' s.S then Kc _ n c else GlobalTheory.LFun.KGL w n

@@ -21,21 +21,18 @@ section Lemmas
 
 variable {F : Type} [Field F] [NumberField F] {E : Type} [Field E] [Algebra F E]
 
-open Classical in
 
 theorem evalAt_singleF_self (v : HeightOneSpectrum (𝓞 F)) (x : v.adicCompletion F) :
     evalAt F v (singleF F v x) = x := by
   show Pi.single v x v = x
   simp
 
-open Classical in
 
 theorem evalAt_singleF_ne {v w : HeightOneSpectrum (𝓞 F)} (h : w ≠ v) (x : v.adicCompletion F) :
     evalAt F w (singleF F v x) = 0 := by
   show Pi.single v x w = 0
   simp [h]
 
-open Classical in
 
 theorem singleF_mul (v : HeightOneSpectrum (𝓞 F)) (x y : v.adicCompletion F) :
     singleF F v (x * y) = singleF F v x * singleF F v y := by
@@ -45,7 +42,6 @@ theorem singleF_mul (v : HeightOneSpectrum (𝓞 F)) (x y : v.adicCompletion F) 
   · subst h; simp
   · simp [h]
 
-open Classical in
 
 theorem singleF_mul_ne {v w : HeightOneSpectrum (𝓞 F)} (h : w ≠ v) (x : v.adicCompletion F)
     (y : w.adicCompletion F) : singleF F v x * singleF F w y = 0 := by

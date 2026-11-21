@@ -279,7 +279,6 @@ theorem second_level_of_norm_holds : SecondLevelOfNorm := by
     rw [e4]
     exact hsym
 
-open BrC in
 
 open BrC in
 theorem norm_units_alt : NormUnits := by
@@ -300,6 +299,5 @@ theorem norm_units_alt : NormUnits := by
   obtain ⟨a, ha, h⟩ := hα ε hε
   exact ⟨a, ha, by rw [dist_eq_norm, norm_sub_rev]; exact h⟩
 
-open BrC in
 
 end Formalism.L2.Th1.D

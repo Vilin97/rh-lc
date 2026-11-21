@@ -59,8 +59,6 @@ variable (hv : W → ℝ) (vol : @HSpace H.E _ _ H.cmStar → ℝ) (hvol : ∀ V
   (tw : (@placesOf H.E _ _ H.cmStar).Pl → Bool)
   (htw : ∀ w, tw ((@placesOf H.E _ _ H.cmStar).conj w) = tw w)
 
-set_option synthInstance.maxHeartbeats 200000 in
-set_option maxHeartbeats 1600000 in
 
 end Record
 

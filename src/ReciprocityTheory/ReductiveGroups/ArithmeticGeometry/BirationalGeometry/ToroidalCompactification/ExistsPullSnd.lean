@@ -226,7 +226,6 @@ theorem genOf_pow (hs : L.IsSymmetric) (y : T ⟶ A) (n : ℕ) : GenOf L.L fun _
     simp only [ofMul_mul, ofMul_inv, ofMul_pow, ofMul_one, nsmul_add, smul_neg, add_nsmul, one_nsmul]
     abel!
 
-include c in
 
 theorem exists_norm (φ : A ⟶ A) [IsMonHom φ] {a b : ℕ} {a' b' : ℤ} (ha : a' = a) (hb : b' = b)
     (g : GenOf L.L fun _ _ h => h (𝟙 A.left) ^ a * (h φ.left ^ b)⁻¹) :

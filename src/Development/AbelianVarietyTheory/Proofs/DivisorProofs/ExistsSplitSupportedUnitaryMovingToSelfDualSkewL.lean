@@ -204,7 +204,6 @@ theorem move_iff {R : Type*} [CommRing R] (S : Subring R) {e y yi Y Yi T : R} (h
 theorem zeroAt_zero' (D : D7) (q : ℕ) : ZeroAt D q 0 :=
   fun _ => ⟨1, one_pos, Nat.coprime_one_left q, 0, zero_mem _, by simp⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_skew_move : ∀ (D : D7) (𝔪 : Ideal (𝓞 D.host.E)), 𝔪 ≠ ⊥ → IsCoprime 𝔪 (D.host.conj • 𝔪) → ∀ d : ℕ, ∃ (g' : GA D d) (x' : (AE D)ˣ), SuppSplit D (g' : GL (Fin d) (AE D)) ∧ Moves D (g' : GL (Fin d) (AE D)) (skewLat D 𝔪 d) ∧ (∀ q : ℕ, q.Prime → InertQ D q → ZeroAt D q ((x' : AE D) - 1)) ∧ x' = Matrix.GeneralLinearGroup.det (g' : GL (Fin d) (AE D)) * sgU D x' := by
   intro D 𝔪 h𝔪 hcop d

@@ -312,6 +312,5 @@ theorem zeta_proposition_third : PropZ_iii := by
   exact final_part_arithmetic_bound hC (Nat.cast_nonneg _) (Nat.cast_nonneg _) (by linarith) hlkv (by linarith)
     (by linarith) hT (by linarith)
 
-set_option maxHeartbeats 800000 in
 
 end Formalism.HermitianLattices.TraceIntegrality

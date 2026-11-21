@@ -19,7 +19,6 @@ noncomputable section
 
 universe u
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem SemilocalLengthSum.proof (h1 : FibreFinite.Statement.{u})
     (h2 : SemilocalFiniteRank.Statement.{u}) (h3 : DegZeroLocalRing.Statement.{u})

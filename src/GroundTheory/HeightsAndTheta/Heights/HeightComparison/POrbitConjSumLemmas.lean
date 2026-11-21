@@ -28,7 +28,6 @@ theorem eval_map_int {κ : Type*} (z : κ → ℂ) (f : MvPolynomial κ ℤ) :
     eval z (map (Int.castRingHom ℂ) f) = aeval z f := by
   rw [eval_map, aeval_def, algebraMap_int_eq]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem aeval_eq_zero_of_mem (x : Cone n (AlgebraicClosure ℚ)) {f : MvPolynomial (Coord n) ℤ}
     (hmem : f ∈ orbitIdeal x) : aeval (flatCone x) f = 0 := by
@@ -67,7 +66,6 @@ theorem mem_orbitIdeal_of_homog (x : Cone n (AlgebraicClosure ℚ)) {f : MvPolyn
     ac_rfl
   rw [orbitIdeal, Geo.mCoordIdeal, RingHom.mem_ker, key, h0, map_zero, zero_mul]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem conj_mem (x : Cone n (AlgebraicClosure ℚ)) (hx : BlockNonzero x)
     (σ : coordField x →+* ℂ) :
@@ -137,7 +135,6 @@ theorem isWeightedHomogeneous_chartHomog (c : (k : ι) → Fin (n k + 1))
   funext k
   rw [Pi.add_apply, weight_coordDeg_apply, Nat.add_sub_cancel' (blockDeg_le P hm k)]
 
-omit [DecidableEq ι] in
 
 theorem aeval_chartHomog {F : Type*} [Field F] (c : (k : ι) → Fin (n k + 1))
     (P : MvPolynomial (Coord n) ℤ) (w : Coord n → F) (hw : ∀ k, w ⟨k, c k⟩ ≠ 0) :
@@ -190,7 +187,6 @@ theorem conj_chart_ne_zero (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) →
     σ (coordVec x k (c k)) ≠ 0 :=
   (map_ne_zero σ).mpr fun h ↦ hc k (congrArg Subtype.val h)
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem restrict_eq_iff (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1))
     (σ σ' : coordField x →+* ℂ) :
@@ -213,7 +209,6 @@ def conjPt (x : Cone n (AlgebraicClosure ℚ)) (hx : BlockNonzero x) (σ : coord
     projPts (ι := blockIdx n) (orbitIdeal x) :=
   Quot.mk _ ⟨_, conj_mem x hx σ⟩
 
-omit [DecidableEq ι] in
 
 theorem conjPt_eq_iff (x : Cone n (AlgebraicClosure ℚ)) (hx : BlockNonzero x)
     (c : (k : ι) → Fin (n k + 1)) (hc : ∀ k, x k (c k) ≠ 0) (σ σ' : coordField x →+* ℂ) :

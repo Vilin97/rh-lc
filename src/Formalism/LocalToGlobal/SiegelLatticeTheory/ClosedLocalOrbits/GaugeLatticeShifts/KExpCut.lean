@@ -104,11 +104,9 @@ theorem norm_blk_le (hK : X.LevelSubgroupCharacter) (t : GTerm X u u' F0 F0' wha
   · rw [norm_zero]
     exact mul_nonneg (abs_nonneg _) (norm_nonneg _)
 
-variable (F0 F0' what₂ rows') in
 
 def OOAbs : Prop := Summable (fun t : GTerm X u u' F0 F0' what₂ rows' => ‖OOt t‖)
 
-variable (F0 F0') in
 
 def EntryUnfold (hK : X.LevelSubgroupCharacter) (Dt Dt' : Set X.B.I.GA) : Prop :=
   ∀ (T : Cu X u hK) (T' : Cu X u' hK),
@@ -116,11 +114,9 @@ def EntryUnfold (hK : X.LevelSubgroupCharacter) (Dt Dt' : Set X.B.I.GA) : Prop :
       ∑ ρ, ∑ ρ', inner ℂ ((∑' t : GTerm X u u' F0 F0' what₂ rows', blk cs cs' FdN FdN' t ρ ρ') (sharp hK cs' T' ρ'))
         (sharp hK cs T ρ)
 
-variable (F0 F0' what₂ rows') in
 
 def OOVanish : Prop := ∀ t : GTerm X u u' F0 F0' what₂ rows', ¬ t.relevant → OOt t = 0
 
-variable (F0 F0') in
 
 def IdOffBlocks : Prop :=
   u ≠ u' → ∀ (ρ : cs.Cl) (ρ' : cs'.Cl),
@@ -144,7 +140,6 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u : D.what₂
   {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)} {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
   (cs : ColSys X u what₂) (FdN : Set X.B.I.Ginf)
 
-variable (F0) in
 
 def IdDiagBlocks : Prop :=
   Formalism.L2.SG.HidaSetting.IsSFund X.B.I (NOinf X u) FdN → ∀ ρ ρ' : cs.Cl,
@@ -271,11 +266,9 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
   (TR : TypedRed X) (cs : ColSys X u what₂) (cs' : ColSys X u' rows') (FdN FdN' : Set X.B.I.Ginf)
 
-variable (X) in
 
 def PsiUnit : Prop := ∀ x, ‖X.psiEf x‖ = 1
 
-variable (X) in
 
 theorem psiUnit : PsiUnit X := by
   exact fun x => psi_unit_of X.psiEf X.psiEf_add X.psiEf_int x
@@ -336,7 +329,6 @@ theorem absConvT_of (hK : X.LevelSubgroupCharacter) (hψ : PsiUnit X) (hO : OOAb
           mul_le_mul (wt_le t) (hb3 _) (norm_nonneg _) (le_trans (abs_nonneg _) (wt_le t))
       _ = _ := by rw [hamp]; ring
 
-variable (F0 F0' what₂ rows') in
 
 def OOLint : Prop :=
   ∀ t : GTerm X u u' F0 F0' what₂ rows',
@@ -508,7 +500,6 @@ theorem integral_conj_mul {α : Type*} [MeasurableSpace α] (μ : Measure α) (f
   rw [← integral_conj]
   congr 1
 
-variable (F0 F0') in
 
 def DCTerms (hK : X.LevelSubgroupCharacter) (R : Set X.B.I.GA) (Fs : X.B.I.GA → Set X.B.I.GA) : Prop :=
   ∀ (T : Cu X u hK) (T' : Cu X u' hK),
@@ -619,7 +610,6 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
   (cs : ColSys X u what₂) (cs' : ColSys X u' rows') (FdN FdN' : Set X.B.I.Ginf)
 
-variable (F0) in
 
 def NOcol (ρ : cs.Cl) : Set X.B.I.Ginf :=
   {y | ∃ (x : X.B.I.GA) (n : (VS D).V ≃ₗ[D.host.E] (VS D).V), RatLink X x n ∧ y = x.1 ∧
@@ -628,7 +618,6 @@ def NOcol (ρ : cs.Cl) : Set X.B.I.Ginf :=
 def slab (ρ : cs.Cl) (Ω : Set X.B.I.Ginf) : Set X.B.I.GA :=
   Ω ×ˢ ((((cs.h ρ : X.B.I.Gf) * X.xu u) * ·) '' X.K2)
 
-variable (F0) in
 
 def SlabFD : Prop :=
   ∀ (FS : Set X.B.I.GA), IsFundamentalDomain (Srat X u) FS (X.B.I.muA X.B.μf) →
@@ -638,7 +627,6 @@ def SlabFD : Prop :=
     (∀ ρ, IntegrableOn f (slab cs ρ (Ωs ρ)) (X.B.I.muA X.B.μf)) ∧
       ∫ x in FS, f x ∂(X.B.I.muA X.B.μf) = ∑ ρ, ∫ x in slab cs ρ (Ωs ρ), f x ∂(X.B.I.muA X.B.μf)
 
-variable (F0 F0') in
 
 def Regroup (hK : X.LevelSubgroupCharacter) (Dt' : Set X.B.I.GA) : Prop :=
   ∀ (Ωs : cs.Cl → Set X.B.I.Ginf), (∀ ρ, Formalism.L2.SG.HidaSetting.IsSFund X.B.I (NOcol F0 cs ρ) (Ωs ρ)) →

@@ -71,7 +71,6 @@ section Group
 
 variable {C : Type} [CommRing C] [TopologicalSpace C] {S : Scheme.{0}} (t : Sp C ⟶ S)
 
-omit [TopologicalSpace C] in
 
 abbrev leftPt {A : Over S} (x : Over.mk t ⟶ A) : Sp C ⟶ A.left := x.left
 
@@ -106,7 +105,6 @@ theorem isTopologicalGroup (G : Over S) [GrpObj G] : IsTopologicalGroup (Over.mk
 
 end Group
 
-attribute [local instance] ptTopology in
 
 theorem exists_pow_extends {V F : Type} [CommRing V] [IsLocalRing V] [NormedField F] [ProperSpace F]
     (σ : V →+* F) (hσ : Function.Injective σ) (ho : IsOpen (Set.range σ)) (G : Over (Sp V)) [GrpObj G]

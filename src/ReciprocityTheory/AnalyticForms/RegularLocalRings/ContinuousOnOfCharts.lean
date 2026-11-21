@@ -193,7 +193,6 @@ theorem isOpen_overP (p : (k : K) → ι k) : IsOpen (w.overP p) := by
   rw [h]
   exact isOpen_iUnion fun i => w.isOpen_alt_bis _
 
-open Classical in
 
 def fib (p : (k : K) → ι k) (l : Fin (w.m p)) (x : w.M) : ℝ :=
   if h : ∃ i, x ∈ w.src ⟨p, i⟩ then vecNorm (w.tv p h.choose x) l else 0

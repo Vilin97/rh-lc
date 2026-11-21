@@ -35,7 +35,6 @@ def ofRingAct {O : Type} [CommRing O] {S : Scheme.{0}} {G : Over S} [GrpObj G] [
     OAct O G :=
   ⟨a.act, a.hom, a.map_one, fun x y => by rw [mul_comm, a.map_mul], fun x y => a.map_add x y⟩
 
-open Classical in
 
 def valF {F : Type} [Field F] {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Opens) (f : Γ(X, U)) : F :=
   if h : ⊤ ≤ x ⁻¹ᵁ U then (Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom ((x.appLE U ⊤ h).hom f) else 0

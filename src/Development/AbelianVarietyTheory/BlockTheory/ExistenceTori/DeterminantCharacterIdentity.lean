@@ -39,7 +39,6 @@ section Adelic
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-variable (E n) in
 
 def conjId (H : Host E) (𝔞 : Ideal (𝓞 E)) : Ideal (𝓞 E) := 𝔞.map (H.bar : 𝓞 E →+* 𝓞 E)
 

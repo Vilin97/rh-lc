@@ -17,7 +17,6 @@ namespace GlobalTheory.IwaPlace
 
 variable {D : D7}
 
-open GlobalTheory.SelfDualAt in
 
 theorem idAt₂ (v : Pl D) : algebraMap (AF D.host.F) (AE D) (cP (· = v)) ∈ idAt D (· = v) := by
   refine Ideal.mem_inf.2 ⟨?_, Ideal.mem_iInf.2 fun w => ?_⟩
@@ -35,7 +34,6 @@ theorem idAt₂ (v : Pl D) : algebraMap (AF D.host.F) (AE D) (cP (· = v)) ∈ i
     rw [h, evalV_indP, if_neg w.2]
     exact TensorProduct.zero_tmul _ _
 
-open GlobalTheory.SelfDualAt in
 
 theorem eq_alg_cP {v : Pl D} {ε : AE D} (hεI : ε ∈ intAt D (· = v)) (hε : ∀ a, a ∈ idAt D (· = v) ↔ ε * a = a) :
     ε = algebraMap (AF D.host.F) (AE D) (cP (· = v)) := by
@@ -44,7 +42,6 @@ theorem eq_alg_cP {v : Pl D} {ε : AE D} (hεI : ε ∈ intAt D (· = v)) (hε :
   rw [← h2, mul_comm]
   exact h1.symm
 
-open GlobalTheory.SelfDualAt in
 
 theorem placeIdem_eq_cP {v : Pl D} {εF : AF D.host.F} (h : IsPlaceIdem D v εF) : εF = cP (· = v) := by
   obtain ⟨α, rfl, h1, h0⟩ := h
@@ -69,7 +66,6 @@ theorem half_mem_int (v : Pl D) (h2 : (2 : 𝓞 D.host.F) ∉ v.asIdeal) :
     exact HeightOneSpectrum.intValuation_eq_one_iff.2 h2
   rw [e1, map_inv₀, e2, inv_one]
 
-open GlobalTheory.SelfDualAt in
 
 theorem exists_trace_one_at_tame : ∀ (D : D7) (v : Pl D) (ε : AE D) (hεε : ε * ε = ε) (hεc : cA D ε = ε)
     (hεI : ε ∈ intAt D (· = v)) (hε : ∀ a, a ∈ idAt D (· = v) ↔ ε * a = a), Tame D v →

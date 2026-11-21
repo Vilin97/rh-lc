@@ -205,9 +205,7 @@ theorem embN_apply (β : Ch) (X : DetTw (K β).lev (embT D) (cTw D i)) (x : (M.l
 
 variable {M eY chOf K}
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 2000000 in
 
 end Rec
 

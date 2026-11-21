@@ -43,7 +43,6 @@ theorem exists_mul_algebraMap_eq (x : K♭) :
   ⟨_, _, nonZeroDivisors.ne_zero (IsLocalization.sec (nonZeroDivisors 𝒪♭) x).2.2,
     IsLocalization.sec_spec (nonZeroDivisors 𝒪♭) x⟩
 
-variable (K p) in
 
 def tiltSharpFun (x : K♭) : K :=
   ♮(IsLocalization.sec (nonZeroDivisors 𝒪♭) x).1 /
@@ -64,7 +63,6 @@ theorem tiltSharpFun_eq {x : K♭} {a b : 𝒪♭} (hb : b ≠ 0)
   change ♮a' / ♮b' = _
   rw [div_eq_div_iff (untiltK_ne_zero hb') (untiltK_ne_zero hb), key']
 
-variable (K p) in
 
 def tiltSharp : K♭ →*₀ K where
   toFun := tiltSharpFun K p
@@ -122,7 +120,6 @@ end Sharp
 
 section Norm
 
-variable (K p) in
 
 def tiltAbv : AbsoluteValue K♭ ℝ where
   toFun x := ‖tiltSharp K p x‖
@@ -165,7 +162,6 @@ theorem norm_le_one_iff_exists_algebraMap {x : K♭} :
     rw [norm_algebraMap_preTilt]
     exact preTilt_norm_le_one a
 
-variable (K p) in
 
 theorem exists_tilt_norm_mem_Ioo (r : ℝ) (hr : r < 1) : ∃ x : K♭, r < ‖x‖ ∧ ‖x‖ < 1 := by
   obtain ⟨ϖ, h1, h2⟩ := IsPerfectoidField.exists_norm_mem_Ioo (K := K) (p := p) (max r ‖(p : K)‖)

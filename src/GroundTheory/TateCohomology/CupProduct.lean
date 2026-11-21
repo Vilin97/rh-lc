@@ -158,13 +158,11 @@ theorem cupH_π (h : p + q = n) (z : cocycles A p) (w : cocycles B q) :
   rw [cupH, descH_π]
   exact cupHLeft_π h z w
 
-variable (A B p q) in
 
 def cupTensor :
     groupCohomology A p ⊗[k] groupCohomology B q →ₗ[k] groupCohomology (A ⊗ B) (p + q) :=
   TensorProduct.lift (cupH rfl)
 
-variable (A B p q) in
 
 def cup : groupCohomology A p ⊗ groupCohomology B q ⟶ groupCohomology (A ⊗ B) (p + q) :=
   ModuleCat.ofHom (cupTensor A B p q)
@@ -204,7 +202,6 @@ theorem d_oneCochain :
   simp [inhomogeneousCochains.d_hom_apply, oneCochain]
   rfl
 
-variable (k G) in
 
 end Cohomology
 

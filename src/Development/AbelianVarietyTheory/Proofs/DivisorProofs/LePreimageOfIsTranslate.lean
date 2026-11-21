@@ -21,7 +21,6 @@ end GlobalTheory.KSRechart
 
 namespace GlobalTheory.KSRechart
 
-open scoped Classical in
 
 private theorem valR_comp_eq_valR_app' {A : Type} [CommRing A] {X Z : Scheme.{0}} (x : Sp A ⟶ Z) (m : Z ⟶ X)
     (U : X.Opens) (O : Z.Opens) (h : O ≤ m ⁻¹ᵁ U) (hO : ⊤ ≤ x ⁻¹ᵁ O) (r : Γ(X, U)) :

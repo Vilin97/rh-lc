@@ -30,8 +30,6 @@ variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
 
 omit [IsDomain R] [IsDiscreteValuationRing R] [IsDomain A] [IsDiscreteValuationRing A]
   [IsFractionRing A L] [IsLocalHom (algebraMap R A)] in
-variable (R K L) in
-include K L in
 
 theorem faithfulSMul_of_tower : FaithfulSMul R A := by
   rw [faithfulSMul_iff_algebraMap_injective]
@@ -184,21 +182,18 @@ private theorem dvr_localization (P : HeightOneSpectrum S) :
     IsDiscreteValuationRing (Localization.AtPrime P.asIdeal) :=
   IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain S P.ne_bot _
 
-include R K L in
 
 theorem not_isField_of_finite : ¬ IsField S := by
   have := faithfulSMul_of_tower R K S L
   rw [← Algebra.IsIntegral.isField_iff_isField (FaithfulSMul.algebraMap_injective R S)]
   exact not_isField R
 
-include R in
 
 theorem finite_heightOneSpectrum : Finite (HeightOneSpectrum S) := by
   have := finite_maximalSpectrum_of_finite R S
   exact Finite.of_injective (fun P : HeightOneSpectrum S => (⟨P.asIdeal, P.isMaximal⟩ :
     MaximalSpectrum S)) fun P Q h => HeightOneSpectrum.ext (congrArg MaximalSpectrum.asIdeal h)
 
-include R S in
 
 theorem finrank_field_pos : 0 < finrank K L := by
   have := faithfulSMul_of_tower R K S L
@@ -239,7 +234,6 @@ private theorem log_ordFrac_norm_algebraMap {x : S} (hx : x ≠ 0) :
   push_cast
   exact Finset.sum_congr rfl fun P _ => by rw [hm', mul_comm]; rfl
 
-variable {L} in
 
 theorem log_ordFrac_norm_eq_sum {x : L} (hx : x ≠ 0) :
     WithZero.log (Ring.ordFrac R (Algebra.norm K x)) =

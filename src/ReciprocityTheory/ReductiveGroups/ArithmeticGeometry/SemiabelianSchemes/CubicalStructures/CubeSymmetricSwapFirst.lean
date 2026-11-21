@@ -102,7 +102,6 @@ def invGen (φ : K → (Y ⟶ X)) (ε : K → ℤ) (t : Gen (LinComb L φ ε)) :
 def Coh (φ : K → (Y ⟶ X)) (j : K → L.ι) : Prop :=
   ∀ k₁ k₂, φ k₁ = φ k₂ → j k₁ = j k₂
 
-open scoped Classical in
 
 def SameSum (φ : K → (Y ⟶ X)) (ε : K → ℤ) (φ' : K' → (Y ⟶ X)) (ε' : K' → ℤ) : Prop :=
   ∀ ψ : Y ⟶ X, (∑ k, if φ k = ψ then ε k else 0) = ∑ k', if φ' k' = ψ then ε' k' else 0

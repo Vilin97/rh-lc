@@ -43,7 +43,6 @@ private theorem one_le_abs_discr_E (I : _root_.Formalism.MainNotions.S.AutInst) 
   rw [← Int.cast_abs]
   exact_mod_cast Int.one_le_abs h
 
-open MeasureTheory NumberField Matrix Finset in
 
 theorem _root_.GlobalTheory.FlagMeas.instance_numbers : ∀ I : _root_.Formalism.MainNotions.S.AutInst, _root_.Formalism.HermitianLatticesTheory.fDeg I.E = I.f ∧ 2 * _root_.Formalism.HermitianLatticesTheory.vInv I.E = I.rd ∧ 1 ≤ I.rd ∧ 1 ≤ I.f ∧ Fintype.card (InfinitePlace I.F) = I.f ∧ ∀ p q, _root_.GlobalTheory.FlagMeas.HasSig I p q → p + q = I.n := by
   intro I

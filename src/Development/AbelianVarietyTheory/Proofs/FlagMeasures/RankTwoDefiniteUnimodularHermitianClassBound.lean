@@ -148,12 +148,10 @@ abbrev Glued (X₁ X₂ : E × Submodule (𝓞 E) E) : Type :=
     (∀ x, x ∈ M ↔ ∀ y ∈ M, star y ⬝ᵥ ((Matrix.diagonal ![X₁.1, X₂.1]) *ᵥ x) ∈ (algebraMap (𝓞 E) E).range) ∧
     (∀ t, t ∈ X₁.2 ↔ ![t, 0] ∈ M) ∧ ∀ t, t ∈ X₂.2 ↔ ![0, t] ∈ M}
 
-variable (E) in
 
 def realIdeals (Y : ℝ) : Set (Ideal (𝓞 E)) :=
   {𝔫 : Ideal (𝓞 E) | 𝔫 ≠ ⊥ ∧ 𝔫 = Ideal.span {t | t ∈ 𝔫 ∧ star (t : E) = t} ∧ (Ideal.absNorm 𝔫 : ℝ) ≤ Y ^ 2}
 
-variable (E) in
 
 abbrev GlueData (Y : ℝ) : Type :=
   Σ 𝔫 : realIdeals E Y,

@@ -22,7 +22,6 @@ namespace Reduction
 
 variable {K : Type*} [Field K] [NumberField K]
 
-open scoped Classical in
 
 theorem norm_apply_le_norm_homeomorphMixedSpace (x : InfiniteAdeleRing K) (w : InfinitePlace K) :
     ‖x w‖ ≤ ‖GroundTheory.Global.homeomorphMixedSpace K x‖ := by
@@ -61,7 +60,6 @@ theorem norm_le_one_of_mem_integralFiniteAdeles {a : FiniteAdeleRing (𝓞 K) K}
     ‖a v‖ ≤ 1 :=
   norm_le_one_of_mem v (ha v)
 
-open scoped Classical in
 
 theorem exists_dirichlet_box : ∃ B : ℝ, 0 < B ∧ ∀ (a : 𝔸[K]) (N : ℕ), 0 < N →
     ∃ l : 𝓞 K, l ≠ 0 ∧

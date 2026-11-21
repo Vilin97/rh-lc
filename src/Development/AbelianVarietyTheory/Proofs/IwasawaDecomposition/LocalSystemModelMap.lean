@@ -220,9 +220,7 @@ variable (hf : IsMap Z' Z f) {mu : SABMap (Y Z'.i).t (Y Z.i).t τ} (hT : IsTrans
 
 include hf hT hty
 
-omit hty in
 
-include M in
 
 end Main
 

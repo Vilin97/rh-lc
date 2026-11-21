@@ -17,13 +17,11 @@ variable {W : Type*} [AddCommGroup W] [Module E W]
 
 namespace HyperbolicPairTransitive
 
-omit [NumberField E] in
 
 theorem sesq_swap (h : HermitianForm F E W) (x y : W) :
     h.toSesq y x = conj F E (h.toSesq x y) :=
   (h.isSymm.eq x y).symm
 
-omit [NumberField E] in
 
 theorem exists_unitary_of_preserves (h : HermitianForm F E W) [FiniteDimensional E W]
     (f : W →ₗ[E] W) (hf : ∀ x y, h.toSesq (f x) (f y) = h.toSesq x y) :

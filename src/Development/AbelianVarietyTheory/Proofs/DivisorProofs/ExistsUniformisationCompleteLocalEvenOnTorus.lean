@@ -35,7 +35,6 @@ theorem isAdmissible_maximalIdeal_of_completeNormalCharZero {R : Type} [CommRing
   letI := Ideal.Quotient.field (maximalIdeal R)
   infer_instance
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_setting {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R]
     {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G] (P : CP G) (hS : IsSemiAbelian G)
@@ -83,7 +82,6 @@ theorem exists_setting {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R]
 
 end GlobalTheory.Mum.UnifEven
 
-set_option maxHeartbeats 1600000 in
 
 theorem GlobalTheory.Mum.exists_unif_even : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R → ∀ (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (P : GlobalTheory.UU.CP G), IsSemiAbelian G → EvenOn P → ∀ (A : PolAV (Sp (FractionRing R))) (gen : (Over.pullback (jK R)).obj G ≅ A.A), IsMonHom gen.hom → LBIso (A.L.pull gen.hom.left) (P.L.L.pull (pullback.fst G.hom (jK R))) → ∃ (D : DegData R (maximalIdeal R)) (U : Unif (maximalIdeal R) D A G), U.LG = P.L ∧ U.gen = gen := by
   intro R _ _ _ hB G _ _ P hS hEv A gen hgen hA

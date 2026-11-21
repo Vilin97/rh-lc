@@ -235,7 +235,6 @@ theorem Generates.exists_unit_smul (hL : L.IsLB) {O : Z.Opens} {t t' : SecOn L O
 
 end Generators
 
-omit [Flat π] [IsLocallyNoetherian X] in
 
 theorem exists_generates {L : LB Y} (hL : L.IsLB) (x : X) :
     ∃ (V : X.Opens) (t : SecOn L (π ⁻¹ᵁ V)), x ∈ V ∧ Generates t := by

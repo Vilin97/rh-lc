@@ -128,7 +128,6 @@ theorem rhoAlg_std (hok : I.Ok) (hp : TC.Pins B X) (l : I.Laws) (Z : TC.Later B 
   · obtain ⟨h, z, hz⟩ := hq ((O u a).dt (i + 1) c')
     exact ((h3 i hi).1 _ h z hz).2.1
 
-open Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.G in
 
 theorem adaptedTh_kerEntC {D : D7} {P : Examples₂.EntPl D} {O : ∀ u μ, GL3Theta.LiftObj D (D.chTw u μ)} {Bs : PlaceMatrixFamily D} {Dx : DivX D} {Tw : TwForms D}
     (hB : BasOk P O Bs) (hA : AdaptedEnt P O Bs Dx) (h : KerEntHyp P O Bs Dx Tw) : AdaptedTh (kerEntC P O Bs h) O := by

@@ -79,7 +79,6 @@ def nil (n : M4 k) : Submodule k (sp4 k) where
   smul_mem' c X hX i j h := by
     rw [Submodule.coe_smul, mul_smul_comm, smul_mul_assoc, Matrix.smul_apply, hX i j h, smul_zero]
 
-variable (k) in
 
 def tor : Submodule k (sp4 k) where
   carrier := {X | X.1.IsDiag}

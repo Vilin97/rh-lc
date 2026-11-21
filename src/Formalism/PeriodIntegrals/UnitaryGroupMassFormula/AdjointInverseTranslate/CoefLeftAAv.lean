@@ -120,7 +120,6 @@ def QExpand : Prop :=
         ∑ c : Fin t → Fin n, ∑ d : Fin t → Fin n,
           ((∏ j, P (c j) (a j)) * ∏ j, Q (b j) (d j)) • qminor E c d u
 
-open scoped Classical in
 
 def AlgAA : Prop :=
   ∀ (A : Type) [Ring A] [Algebra ℂ A] (k r m : ℕ) (hm : m ≤ r)
@@ -136,7 +135,6 @@ def AlgAA : Prop :=
       if StrictMono C then (Matrix.of fun a l : Fin m => ∑ d, Q d (C l) * xi a d).det •
         qminor E (xR k r m hm) C u else 0
 
-open scoped Classical in
 
 def AlgAAv : Prop :=
   ∀ (A : Type) [Ring A] [Algebra ℂ A] (k r m : ℕ) (hm : m ≤ r)

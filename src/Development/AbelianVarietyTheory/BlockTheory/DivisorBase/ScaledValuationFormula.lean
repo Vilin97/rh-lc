@@ -25,6 +25,5 @@ def scaledAt {d : ℕ} (w : HeightOneSpectrum (𝓞 K)) (n : ℤ) (B : Submodule
 
 variable [StarRing K] {Bs : DefBase K} {Df : DefSide Bs}
 
-omit [StarRing K] in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.ScaledValuationFormula

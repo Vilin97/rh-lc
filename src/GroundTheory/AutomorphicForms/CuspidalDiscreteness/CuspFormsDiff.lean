@@ -146,12 +146,10 @@ theorem hasDerivAt_diffSum (ψ : archSmooth K n) (x : AdelicGLn.AdelicGL K n) (Y
     refine Finset.sum_congr rfl fun ε _ => ?_
     rw [key _ (commute_altPoint hc ε)]
 
-variable (K n) in
 
 abbrev archBasis : Module.Basis (Fin (Module.finrank ℝ (ArchMatrix K n))) ℝ (ArchMatrix K n) :=
   Module.finBasis ℝ (ArchMatrix K n)
 
-variable (K n) in
 
 abbrev archDim : ℕ := Module.finrank ℝ (ArchMatrix K n)
 

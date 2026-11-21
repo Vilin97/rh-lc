@@ -91,11 +91,9 @@ theorem normalizedValuation_le_exp_iff (y : F) (m : ℤ) :
     nrm_eq_unifNrm_zpow F hy]
   exact (zpow_le_zpow_iff_right_of_lt_one₀ (unifNrm_pos F) (unifNrm_lt_one F)).symm
 
-variable (K) in
 
 def baseUnif : 𝒪[K] := (IsDiscreteValuationRing.exists_irreducible 𝒪[K]).choose
 
-variable (K Ω) in
 
 def baseUnifNrm : ℝ := nrm K (algebraMap K Ω (baseUnif K : K))
 
@@ -162,7 +160,6 @@ theorem Moves.zpow (hr : 0 ≤ r) {a : Ω} (ha : Moves σ r a) (n : ℤ) : Moves
   · rw [zpow_natCast]; exact ha.pow hr m
   · rw [zpow_neg, zpow_natCast]; exact (ha.pow hr m).inv
 
-variable (F) in
 
 theorem nrm_sub_le_of_forall_integer (i : ℕ)
     (h : ∀ y : F, nrm K (y : Ω) ≤ 1 → nrm K (σ y - y) ≤ unifNrm F ^ (i + 1)) (x : F) :
@@ -224,7 +221,6 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
   [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
-variable (K L) in
 
 def upperIndex (w : ℝ) : ℕ :=
   (upperRamificationGroup K L w).relIndex (lowerRamificationGroup K L 0)

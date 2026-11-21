@@ -26,7 +26,6 @@ section Levi
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type}
 
-open scoped Classical in
 
 theorem levi_mapsTo [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F) (hA : IsUnit A.det) :
     ∀ Φ ∈ schA F κ, LinearMap.funLeft ℂ ℂ (fun x : κ → AF F => A⁻¹.map (algebraMap F (AF F)) *ᵥ x) Φ ∈ schA F κ := by
@@ -56,7 +55,6 @@ theorem levi_mapsTo [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F) (hA : IsU
     exact Submodule.subset_span ⟨_, _, sb_comp (homeo gF A hA) hg, rfl⟩
   exact fun Φ hΦ => hle hΦ
 
-open scoped Classical in
 
 theorem bijOn_levi [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F) (hA : IsUnit A.det) :
     Set.BijOn (LinearMap.funLeft ℂ ℂ (fun x : κ → AF F => A⁻¹.map (algebraMap F (AF F)) *ᵥ x))
@@ -72,7 +70,6 @@ theorem bijOn_levi [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F) (hA : IsUn
 
 end Levi
 
-open scoped Classical in
 
 theorem hasOpB_levi : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → (∀ᶠ v in cofinite, PsiUnr ψ v) →
     (∀ v : Pl F, ∃ x, psiLoc ψ v x ≠ 1) → ∀ (κ : Type) [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F), IsUnit A.det →
@@ -163,7 +160,6 @@ theorem hasOpB_levi : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF
         (RingHom.ext fun c => (evFin F v).commutes c) A⁻¹ x i
   · exact bijOn_levi A hA
 
-open scoped Classical in
 
 theorem hasOpB_unipM : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ →
     (∀ᶠ v in cofinite, PsiUnr ψ v) → (∀ v : Pl F, ∃ x, psiLoc ψ v x ≠ 1) →
@@ -240,8 +236,6 @@ theorem hasOpB_unipM : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (A
 
 end GlobalTheory.SympChangeBij
 
-open GlobalTheory.SympChange GlobalTheory.SympChangeBij in
-open scoped Classical in
 
 theorem GlobalTheory.SympChangeBij.change_of_coordinates_bij : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (r s r' s' : ℕ), B.IsGood σ → X.IsHerm σ B r s →

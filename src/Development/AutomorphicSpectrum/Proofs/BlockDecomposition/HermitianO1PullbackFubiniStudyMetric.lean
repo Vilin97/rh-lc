@@ -49,4 +49,3 @@ theorem prod_blockUnit_single {W : (MP ℤ m n).Opens} (k : Fin (m + 1)) (c c' :
 
 end GlobalTheory.CompanionTheory.MPDict.Inhab
 
-open GlobalTheory.CompanionTheory.MPDict.Inhab in

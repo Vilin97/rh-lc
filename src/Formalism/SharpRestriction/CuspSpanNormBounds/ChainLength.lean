@@ -22,7 +22,6 @@ section LocalTheory
 
 open Formalism.MainNotions.S.Loc MeasureTheory ComplexConjugate
 
-open scoped Classical in
 
 def FamilyVolumeFourth {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
     {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableSpace E]

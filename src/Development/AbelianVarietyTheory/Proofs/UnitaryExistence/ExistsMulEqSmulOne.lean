@@ -85,7 +85,6 @@ theorem exists_solutions {V : Type} (F : Type) [CommRing V] [IsDomain V] [Field 
       Ideal.mem_span_singleton] at h1
     exact isUnit_of_dvd_one h1
 
-open IsLocalRing in
 
 theorem exists_mul_eq_one {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] (e : ℕ) {m n : Type}
     [Fintype m] [DecidableEq m] [Fintype n] (C : Matrix m n R)
@@ -115,7 +114,6 @@ theorem exists_mul_eq_one {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuat
     exact pow_ne_zero _ hc
   exact ⟨Matrix.of Q * (C * Matrix.of Q)⁻¹, by rw [← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hu]⟩
 
-open NumberField TensorProduct in
 
 theorem finrank_int_eq (E : Type) [Field E] [NumberField E] (X : Type) [AddCommGroup X] [Module (𝓞 E) X] :
     Module.finrank ℤ X = Module.finrank ℚ E * Module.finrank (𝓞 E) X := by
@@ -262,7 +260,6 @@ theorem exists_matrix_torus {S X : Type} [CommRing S] [AddCommGroup X] {G : Over
   rw [e, funext fun i => (Chart.isLieComb_iff _ _ _).1 (hC i), vecMul_eq_sum]
   exact prodPts_prodPts hv.1 _ fun i => C i
 
-open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem exists_matrix_level {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     {D : DegData R (maximalIdeal R)} {P : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]
@@ -308,7 +305,6 @@ theorem exists_matrix_level {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValu
   refine h₂.trans ?_
   simp [Matrix.mul_apply, vecMul, dotProduct, Diag.dualBasis_apply]
 
-open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem finrank_le_of_lieMult {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     {D : DegData R (maximalIdeal R)} {P : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]

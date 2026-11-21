@@ -233,7 +233,6 @@ theorem dpoly_C_mul (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (cp : ι �
   | monomial m a => rw [MvPolynomial.C_mul_monomial, dpoly_monomial, dpoly_monomial, map_mul, mul_assoc]
   | add P Q hP hQ => rw [mul_add, dpoly_add, dpoly_add, mul_add, hP, hQ]
 
-open Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupCopies in
 
 theorem dpoly_ev (G : FGLaw k d) {ι κ : Type} [Fintype ι] [Fintype κ] (cp : ι → Fin n) (u : ι → Fin d → k)
     {M : Fin n → Pt k n d} (hM : NoConst M) (co : ι → κ → k) (t : ι → κ → ι)

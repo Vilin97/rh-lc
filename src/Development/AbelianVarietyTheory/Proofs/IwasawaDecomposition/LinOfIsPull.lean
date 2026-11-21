@@ -28,8 +28,6 @@ variable {S : Scheme.{0}} {G : Over S} {L : LB G.left} {N : ℕ} {T T' : Over S}
 
 end
 
-open GlobalTheory.FramePull in
 
-open GlobalTheory.FramePull in
 
 end GlobalTheory.TorRef

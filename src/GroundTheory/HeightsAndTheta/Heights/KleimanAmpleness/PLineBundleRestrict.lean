@@ -176,7 +176,6 @@ theorem redSys_invertible (hγ0 : γ ≠ 0) (hg : RedGood hxy Q.toSubSystem γ) 
     rw [(locAt_one hsp).2] at this
     exact this.2
 
-omit hsp in
 
 end
 

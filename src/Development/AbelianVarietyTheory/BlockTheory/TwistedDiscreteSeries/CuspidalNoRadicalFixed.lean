@@ -61,9 +61,7 @@ structure IsCuspidalOp (f : GA D V → ℂ) : Prop where
 def CuspidalOperators : Prop :=
   ∀ f ∈ CcGA V, RadicalIntegralsVanish V f → RadicalIntegralsVanish V (starFn f) → IsCuspidalOp V μ f
 
-omit [μ.IsHaarMeasure] [μ.IsMulRightInvariant] in
 
-omit [μ.IsHaarMeasure] [μ.IsMulRightInvariant] in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.CuspidalNoRadicalFixed
 

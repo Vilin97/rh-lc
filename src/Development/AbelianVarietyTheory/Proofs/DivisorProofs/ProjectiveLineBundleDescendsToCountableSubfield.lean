@@ -15,7 +15,6 @@ open GlobalTheory GlobalTheory.CechPic GlobalTheory.QCoh
 
 namespace GlobalTheory.ProjCountableDescent
 
-open GlobalTheory.PolCountableDescent in
 
 theorem projLB_descends_to_countable_subfield : ∀ (K : Type) [Field K] (X : Scheme.{0}) (p : X ⟶ Sp K), IsProjOver p → ∀ (L : LB X), L.IsLB → ∃ (K₁ : Subfield K) (X₁ : Scheme.{0}) (p₁ : X₁ ⟶ Sp K₁) (ψ : X ⟶ X₁) (L₁ : LB X₁), Countable K₁ ∧ IsProjOver p₁ ∧ IsPullback ψ p p₁ (spMap (algebraMap K₁ K)) ∧ L₁.IsLB ∧ LBIso L (L₁.pull ψ) := by
   intro K _ X p hp L hL

@@ -23,7 +23,6 @@ variable {l : ℕ} [hl : Fact l.Prime] {a : ℕ} [NeZero a] {O : Type} [CommRing
 
 theorem natCast_l_ne_zero : (l : Wq l a) ≠ 0 := WittVector.p_nonzero l (Fq l a)
 
-variable (K) in
 
 theorem emb_injective (t : Wq l a →ₐ[ℤ_[l]] O) (τ : ZMod a) :
     Function.Injective fun x : Wq l a => algebraMap O K (emb t τ x) := by
@@ -81,7 +80,6 @@ theorem Wit.eq [CharZero K] {F G : ZMod a → K⟦X⟧⟦X⟧} {w : ℕ × ℕ �
   funext fun τ => PowerSeries.ext fun i => PowerSeries.ext fun n =>
     mul_left_cancel₀ (Nat.cast_ne_zero.2 (by positivity)) ((hF τ i n).trans (hG τ i n).symm)
 
-variable (K) in
 
 def mkF (v : ℕ × ℕ → Wq l a) : ZMod a → K⟦X⟧⟦X⟧ := fun τ =>
   PowerSeries.mk fun i => PowerSeries.mk fun n =>
@@ -101,7 +99,6 @@ variable {l : ℕ} [hl : Fact l.Prime] {a : ℕ} [NeZero a] {O : Type} [CommRing
   [Module.Free ℤ_[l] O] {K : Type} [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K]
   (t : Wq l a →ₐ[ℤ_[l]] O) (e : ℕ)
 
-omit [Module.Free ℤ_[l] O] in
 
 theorem tendsToZeroLAdically_of_eq_prime_pow_mul {u v : ℕ × ℕ → Wq l a} (k : ℕ) (h : ∀ p, u p = (l : Wq l a) ^ k * v p)
     (hu : LTo0 l u) : LTo0 l v := by

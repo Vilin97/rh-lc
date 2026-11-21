@@ -106,11 +106,8 @@ def MtJoinBy (co : Coord p) (e₀ : ∀ u, (D.mem u).P.Mt ≃ₗ[ℂ] D.what₂.
   ∀ u t, Used0 D (p.P.I.tup t) → ∀ h : p.P.I.tup t ≠ D.what₂.mu0,
     JoinAt p co t (tw.pt.cls u _ h).lev (tw.pt.cls u _ h).y fun F => (tw.pt.val u _ h).eW (tw.ptE.jM u _ ((e u _).symm F))
 
-include p in
 
-include p in
 
-include p in
 
 variable {p Cs tw} {co : Coord p} {e₀ e₀' : ∀ u, (D.mem u).P.Mt ≃ₗ[ℂ] D.what₂.Amb D.what₂.mu0}
   {e e' : ∀ u μ, (D.PTw u μ).Mt ≃ₗ[ℂ] D.what₂.Amb μ}

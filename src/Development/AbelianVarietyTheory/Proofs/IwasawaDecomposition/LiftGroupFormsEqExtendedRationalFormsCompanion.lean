@@ -19,7 +19,6 @@ namespace GlobalTheory.Mem.R3.Reads
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {K : Formalism.MainNotions.G.Consts} {Yd : DivX D}
   {cX : ExtraC} {ex : Extra D L hT Gi Gl K Yd cX}
 
-set_option maxHeartbeats 2000000 in
 
 theorem liftGroupForms_eq_extended_rationalForms_companion (x : TwIn ex) : Formalism.IndefR.RecTie.MtRead x.R.toRealDat x.F.lv2 x.Y.tupT x.Y.hm x.Y.hTop x.Y.hinj x.Y.IL
     (twPOf (divisionPairOfAdelicFormsFaceColumnsData x) x.Y.tupT x.Y.tupTie) := by
@@ -39,9 +38,7 @@ theorem liftGroupForms_eq_extended_rationalForms_companion (x : TwIn ex) : Forma
   rw [dite_eq_left hμ]
   rfl
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.Mem.R3.Reads
 

@@ -18,7 +18,6 @@ section
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-omit [NumberField K] [StarRing K] in
 
 theorem primInv_span_gmap (γ : V ≃ₗ[K] V) (M : Submodule (𝓞 K) V) :
     Submodule.span K ((Formalism.HermitianLatticesTheory.gmap γ M : Submodule (𝓞 K) V) : Set V) =
@@ -27,7 +26,6 @@ theorem primInv_span_gmap (γ : V ≃ₗ[K] V) (M : Submodule (𝓞 K) V) :
   rw [Submodule.map_coe, ← Submodule.span_image]
   try rfl
 
-omit [NumberField K] [StarRing K] in
 
 theorem primInv_gmap_injective (γ : V ≃ₗ[K] V) :
     Function.Injective (fun M : Submodule (𝓞 K) V => Formalism.HermitianLatticesTheory.gmap γ M) := by

@@ -53,7 +53,6 @@ theorem exists_crys (hA : IsAbelianScheme A₀) (u v : HdR A₀) :
   rw [LinearMap.add_apply, LinearMap.smul_apply, h₁ c, h₂ c]
   ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
 
-set_option maxHeartbeats 1000000 in
 
 theorem crys_ext (hA : IsAbelianScheme A₀) {d d' : Crys (epsDP k) (GlobalTheory.DeRham.epsRed k) A₀}
     (h : ∀ c : primDR A₀, d ((constMor A₀).pull c) = d' ((constMor A₀).pull c)) : d = d' := by

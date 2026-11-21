@@ -68,7 +68,6 @@ def mulX (l : σ) : dil σ →ₗ[ℂ] dil σ := (LinearMap.mulLeft ℂ (X l)).r
 def term (t : ℝ) (E E' : MvPowerSeries σ ℂ) (α : σ →₀ ℕ) : ℂ :=
   (t : ℂ) ^ α.degree * ((mfact α : ℂ) * coeff α E * coeff α E')
 
-omit [DecidableEq σ] in
 
 theorem norm_term_le {t : ℝ} (ht : 0 ≤ t) (E E' : MvPowerSeries σ ℂ) (α : σ →₀ ℕ) :
     ‖term t E E' α‖ ≤ t ^ α.degree * ((mfact α : ℝ) * ‖coeff α E‖ ^ 2) +
@@ -78,7 +77,6 @@ theorem norm_term_le {t : ℝ} (ht : 0 ≤ t) (E E' : MvPowerSeries σ ℂ) (α 
   gcongr
   nlinarith [sq_nonneg (‖coeff α E‖ - ‖coeff α E'‖), norm_nonneg (coeff α E), norm_nonneg (coeff α E')]
 
-omit [DecidableEq σ] in
 
 theorem summable_norm_term {t : ℝ} (ht : t ∈ Set.Ioo (0 : ℝ) 1) (E E' : dil σ) :
     Summable fun α => ‖term t E.1 E'.1 α‖ :=
@@ -102,11 +100,9 @@ def pr {t : ℝ} (ht : t ∈ Set.Ioo (0 : ℝ) 1) : dil σ →ₗ[ℂ] dil σ �
 
 variable {t : ℝ} (ht : t ∈ Set.Ioo (0 : ℝ) 1)
 
-omit [DecidableEq σ] in
 
 theorem pr_apply (E E' : dil σ) : pr ht E E' = ∑' α, term t E.1 E'.1 α := rfl
 
-omit [DecidableEq σ] in
 
 theorem pr_comm (E E' : dil σ) : pr ht E E' = pr ht E' E :=
   tsum_congr fun α => by simp only [term]; ring

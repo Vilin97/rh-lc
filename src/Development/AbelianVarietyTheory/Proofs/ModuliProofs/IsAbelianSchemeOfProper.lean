@@ -77,7 +77,6 @@ theorem isIso_of_mono {A B : Over (Sp k)} (α : A ⟶ B) [IsProper A.hom] [IsSep
   have : IsIso ((Over.forget _).map α) := ‹_›
   exact isIso_of_reflects_iso α (Over.forget _)
 
-omit [IsAlgClosed k] in
 
 theorem toUnit_comp_injective {K : Type} [Field K] (x : Sp K ⟶ Sp k) (A : Over (Sp k)) :
     Function.Injective (fun z : 𝟙_ (Over (Sp k)) ⟶ A => toUnit (Over.mk x) ≫ z) := by

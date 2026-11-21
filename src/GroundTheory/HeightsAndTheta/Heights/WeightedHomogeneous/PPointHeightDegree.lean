@@ -19,7 +19,6 @@ section Embedding
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {n : ι → ℕ}
 
-omit [DecidableEq ι] in
 
 end Embedding
 

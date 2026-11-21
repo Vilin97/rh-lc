@@ -18,7 +18,6 @@ section Box
 
 variable {ι : Type} [Fintype ι]
 
-variable (K ι) in
 
 def B_lat : AddSubgroup (ι → 𝔸[K]) := (AddMonoidHom.compLeft (algebraMap K 𝔸[K]).toAddMonoidHom ι).range
 

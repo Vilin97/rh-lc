@@ -261,7 +261,6 @@ end GlobalTheory.KSp.FourInv
 
 namespace GlobalTheory.KSp
 
-open FourInv in
 
 theorem four_four (X : Type) [AddCommGroup X] [TopologicalSpace X] [MeasurableSpace X] [BorelSpace X] (hX : Good X)
     (μ : Measure X) [μ.IsAddHaarMeasure] (e : X → X → ℂ) (he : IsPair e) :

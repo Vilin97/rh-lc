@@ -54,7 +54,6 @@ theorem mul_det {n : ℕ} (a : R) (M : Matrix (Fin n) (Fin n) R) (h : ∀ i j, a
 
 end Alg
 
-set_option maxHeartbeats 1000000 in
 
 theorem char_norm {D : D7} {χ : (Formalism.L2.Theta.AE D)ˣ →* Circle} {n : ℕ} (h : ResEta D χ n)
     (x y : (Formalism.L2.Theta.AE D)ˣ) (hy : (y : Formalism.L2.Theta.AE D) = x * cA D x) : χ y = 1 := by
@@ -65,7 +64,6 @@ theorem char_norm {D : D7} {χ : (Formalism.L2.Theta.AE D)ˣ →* Circle} {n : �
       (x : Formalism.L2.Theta.AE D)).symm)
   rw [e, h η hη, hη.2.2.1, one_pow]
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.SplitDetChar
 

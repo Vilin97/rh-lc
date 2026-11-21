@@ -109,7 +109,6 @@ theorem borDesc (Xo : Moduli Dw l) (c : Coeff l) : BorDesc Xo c := by
 
 end GlobalTheory.BorelDescent
 
-open NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD Formalism.L2.Pj Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAlgebra ReciprocityTheory.ChartRestriction.G.PullbackSections GlobalTheory.RunIn in
 
 theorem GlobalTheory.borDesc_and_wtField : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), BorDesc Xo c ∧ WtField Xo c :=
   fun _ _ _ _ _ _ _ Xo c => ⟨GlobalTheory.BorelDescent.borDesc Xo c, wtField_of (GlobalTheory.BorelDescent.borDesc Xo c)⟩

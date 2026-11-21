@@ -32,7 +32,6 @@ theorem pow_of_alg {k : Type} [Field k] [Algebra (ZMod l) k] (c : k) (h : IsAlge
   rw [hn] at this
   exact congrArg Subtype.val this
 
-variable (K) in
 
 def iZ : ℤ_[l] →+* OK l K :=
   ((algebraMap ℚ_[l] K).comp PadicInt.Coe.ringHom).codRestrict (OK l K) fun a => by

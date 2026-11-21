@@ -353,7 +353,6 @@ theorem isClosed_blockQ (b : n → α) : IsClosed (blockQ k b : Set (GL n k)) :=
   exact isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun _ =>
     isClosed_eq (continuous_entry i j) continuous_const
 
-omit [IsTopologicalRing k] in
 
 omit [T2Space k] in
 theorem continuous_blockProj (b : n → α) : Continuous (blockProj (k := k) b) := by
@@ -398,7 +397,6 @@ def borelIn [LinearOrder n] (H : Subgroup (GL n k))
     rw [← diagHom_diagEntries Function.injective_id] at this
     exact this
 
-omit [TopologicalSpace k] [IsTopologicalRing k] [T2Space k] in
 
 variable {a d : Type} [Fintype a] [DecidableEq a] [Fintype d] [DecidableEq d]
 
@@ -414,7 +412,6 @@ theorem mem_blockQ_two {g : GL (a ⊕ d) k} : g ∈ blockQ k (twoBlocks a d) ↔
     · exact congrFun (congrFun h i) j
     · simp [twoBlocks] at e
 
-omit [TopologicalSpace k] [IsTopologicalRing k] [T2Space k] in
 
 end Blocks
 
@@ -494,7 +491,6 @@ theorem mul_antiJ_apply (n : ℕ) (A : Matrix (Fin n) (Fin n) L) (i j : Fin n) :
   simp only [Matrix.mul_apply, antiJ_apply, eq_comm (a := j), Fin.rev_eq_iff]
   simp
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
 theorem mem_GU_iff (σ : L →+* L) (n : ℕ) (g : GL (Fin n) L) :
     g ∈ GU σ n ↔ ∀ i j, (g⁻¹).val i j = σ (g.val j.rev i.rev) := by
@@ -514,7 +510,6 @@ def SelfDualBlocks {n : ℕ} (b : Fin n → α) : Prop := ∀ i j, b i.rev < b j
 
 theorem selfDualBlocks_id (n : ℕ) : SelfDualBlocks (id : Fin n → Fin n) := fun _ _ => Fin.rev_lt_rev
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
 theorem blockProj_mem_GU (σ : L →+* L) {n : ℕ} {b : Fin n → α} (hb : SelfDualBlocks b) (q : blockQ L b)
     (hq : (q : GL (Fin n) L) ∈ GU σ n) : blockProj b q ∈ GU σ n := by
@@ -847,7 +842,6 @@ variable (σ : L →+* L) (hσ : ∀ x, σ (σ x) = x) (hc : Continuous σ)
 def lineParU (n : ℕ) : LeviDatum (GU σ (n + 2)) (Lˣ × GU σ n) :=
   (parU σ (selfDualBlocks_line (n + 2))).reparam (lineLevi σ hσ hc n)
 
-omit hσ hc [Valued L (WithZero (Multiplicative ℤ))] in
 
 omit σ hσ hc
 

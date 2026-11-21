@@ -36,14 +36,12 @@ theorem good_idempotent_fixes_mem_good_type_space (i : X.Tw) (j : ℕ) (b : Bool
   obtain ⟨y, -, rfl⟩ := hx
   exact eG_eG Y i j b y
 
-open Formalism.MainNotions.IntegralHeckeForms in
 
 theorem AO_eq (i : X.Tw) (j : ℕ) (b : Bool) (x : Y.Fm i j b) :
     AO Y i j b x = ((D.what₂.restRowsFiniteGroupCard : ℕ) : FractionRing (X.O i)) • eG Y i j b x := by
   show ((D.what₂.restRowsFiniteGroupCard : ℕ) : X.O i) • eG Y i j b x = _
   rw [← map_natCast (algebraMap (X.O i) (FractionRing (X.O i))), algebraMap_smul]
 
-open Formalism.MainNotions.IntegralHeckeForms in
 
 theorem thetaSeries_mem_goodTypeForms (E : ExpDat Y) (i : X.Tw) (j : ℕ) (b : Bool) (a : Y.Dat i j b) (ha : a ∈ E.Dat0 i j b) :
     Y.th i j b a ∈ Fm0 Y i j b := by
@@ -52,7 +50,6 @@ theorem thetaSeries_mem_goodTypeForms (E : ExpDat Y) (i : X.Tw) (j : ℕ) (b : B
   have := E.theta_base_equivariant i j b a ha u
   simp [this]
 
-open Formalism.MainNotions.IntegralHeckeForms in
 
 theorem AO_Th_le (E : ExpDat Y) (i : X.Tw) (j : ℕ) (b : Bool) :
     ∀ x ∈ (Th Y i j b (SgJ Y E i j b)).map (AO Y i j b), x ∈ V0 Y i j b := by
@@ -63,7 +60,6 @@ theorem AO_Th_le (E : ExpDat Y) (i : X.Tw) (j : ℕ) (b : Bool) :
   rintro _ ⟨a, ha, rfl⟩
   exact thetaSeries_mem_goodTypeForms Y E i j b a ha
 
-open Formalism.MainNotions.IntegralHeckeForms in
 
 theorem fullRk_of_le (E : ExpDat Y) (i : X.Tw) (j : ℕ) (b : Bool)
     (h : V0 Y i j b ≤ Submodule.span (FractionRing (X.O i)) (eG Y i j b '' (Y.th i j b '' E.Dat0 i j b))) :

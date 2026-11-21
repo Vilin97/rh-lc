@@ -58,7 +58,6 @@ theorem aeval_div_chart {Ω : Type*} [Field Ω] [Algebra ℤ Ω] (z : Coord n �
   simp_rw [div_pow]
   rw [Finset.prod_div_distrib, hden, div_eq_mul_inv, Finset.prod_inv_distrib]
 
-omit [DecidableEq ι] in
 
 theorem mem_orbitIdeal_iff_of_isMultiHomog (x : Cone n (AlgebraicClosure ℚ))
     (F : MvPolynomial (Coord n) ℤ) (a : ι → ℕ) (hF : Geo.IsMultiHomog (ι := blockIdx n) F a) :
@@ -71,7 +70,6 @@ theorem mem_orbitIdeal_iff_of_isMultiHomog (x : Cone n (AlgebraicClosure ℚ))
     mul_eq_zero, C_eq_zero, map_eq_zero_iff _ (FaithfulSMul.algebraMap_injective _ _)]
   exact or_iff_left (Finset.prod_ne_zero_iff.mpr fun k _ ↦ pow_ne_zero _ (X_ne_zero k))
 
-omit [DecidableEq ι] in
 
 theorem exists_chart_ciSup (x : Cone n (AlgebraicClosure ℚ)) (hx : BlockNonzero x)
     (v : FinitePlace (coordField x)) :

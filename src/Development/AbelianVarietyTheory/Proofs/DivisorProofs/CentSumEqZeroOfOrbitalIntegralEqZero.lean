@@ -152,7 +152,6 @@ theorem conjAct_smul_eq_map' {H : Type} [Group H] (g : H) (S : Subgroup H) :
   rfl
 end GlobalTheory.DefVanish
 
-open GlobalTheory.DefVanish in
 
 theorem GlobalTheory.LKDef.DForm.centSum_eq_zero_of_orbK : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p), G.a = 1 →
     ∀ (L : G.Level) (f : G.GAf → ℂ), IsTest (MonoidHom.id _) L.K.toSubgroup L.K.toSubgroup f →

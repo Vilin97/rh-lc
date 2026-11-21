@@ -57,21 +57,17 @@ variable (d : APFData L)
 
 def u (n : ℕ) : ℝ := d.u₀ + n * (d.c / 2)
 
-open Classical in
 
 end APFData
 
 end Construction
 
-omit [IsGalois K Ω] in
 
-omit [IsGalois K Ω] in
 
 namespace APFData
 
 variable {L : IntermediateField K Ω} [IsGalois K L] (d : APFData L)
 
-omit [IsGalois K Ω] in
 
 end APFData
 

@@ -21,7 +21,6 @@ variable (D : D7) (i : Fin D.R.m)
 
 def Dn : ℕ := D.R.f * D.R.r.choose 2
 
-open Classical in
 
 end Numbers
 

@@ -101,7 +101,6 @@ private theorem val_of_redK_mem (hPF : ParaFactor) (F : IndSp (stdBlocks d hd) �
   rw [h4, hF _ c hc]
   exact h3
 
-set_option maxHeartbeats 1000000 in
 
 private theorem evalOne_parab (hPF : ParaFactor)
     {κ : Representation ℂ (Levi 𝓀[k] fun a => Fin (d a)) Z} {Φ : W →ₗ[ℂ] Z}

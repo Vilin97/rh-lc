@@ -65,6 +65,5 @@ theorem mcPts_eq_conePts {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintyp
 
 end CxInt
 
-open CxInt in
 
 end GlobalTheory.CompanionTheory.Ar.Pub

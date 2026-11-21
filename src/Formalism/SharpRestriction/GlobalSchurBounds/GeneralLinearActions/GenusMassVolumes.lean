@@ -234,7 +234,6 @@ def evalV (v : HeightOneSpectrum (𝓞 F)) : Af F →ₐ[F] Fv F v :=
   { RestrictedProduct.evalRingHom (fun w : HeightOneSpectrum (𝓞 F) => w.adicCompletion F) v with
     commutes' := fun _ => rfl }
 
-open Classical in
 
 def singleV (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v) : Af F :=
   RestrictedProduct.single (fun w : HeightOneSpectrum (𝓞 F) => w.adicCompletionIntegers F) v y

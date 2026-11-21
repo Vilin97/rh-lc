@@ -165,7 +165,6 @@ def IsDeg (N : Fin d → LB X) (z : X) (a : ℤ) : Prop :=
   ∃ (Z : Scheme.{0}) (i : Z ⟶ X) (_ : IsClosedImmersion i) (_ : IsIntegral Z) (_ : Algebra (ZMod p) Γ(Z, ⊤)),
     i (genericPoint Z) = z ∧ topologicalKrullDim Z = d ∧ a = interNum (ZMod p) (structureModule Z) fun j => (N j).pull i
 
-open Classical in
 
 def pdeg (N : Fin d → LB X) (z : X) : ℤ := if h : ∃ a, IsDeg p N z a then h.choose else 0
 

@@ -38,7 +38,6 @@ theorem triIs_congr {D : D7} {T : Type} {A A' WW : HSp D} {X : Tri T A A' WW} {�
   obtain rfl := funext e6
   exact h
 
-set_option maxHeartbeats 1000000 in
 
 theorem trBot_holds : TrBot := by
   intro X X' T T' L L' sc G G' W W' S S' μ₀ μ₀' ι hA M σ hB

@@ -13,7 +13,6 @@ namespace GlobalTheory.CoindKernel
 variable {G : Type} [Group G] (P : Subgroup G) {V : Type} [AddCommGroup V] [Module ℂ V]
   (σ : Representation ℂ P V)
 
-open Classical in
 
 noncomputable def delta : V →ₗ[ℂ] Representation.coindV P.subtype σ where
   toFun v := ⟨fun x => if h : x ∈ P then σ ⟨x, h⟩ v else 0, by

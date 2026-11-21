@@ -18,7 +18,6 @@ variable (F : Type) [Field F] [NumberField F]
 theorem adele_ext {x y : FiniteAdeleRing (𝓞 F) F} (h : ∀ v, evalV F v x = evalV F v y) : x = y := by
   exact Subtype.ext (funext fun v => h v)
 
-open Classical in
 
 def sglFun (w : HeightOneSpectrum (𝓞 F)) (a : w.adicCompletion F) : FiniteAdeleRing (𝓞 F) F :=
   ⟨Pi.single w a, by

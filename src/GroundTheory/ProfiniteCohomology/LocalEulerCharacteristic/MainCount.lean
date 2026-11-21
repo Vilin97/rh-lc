@@ -16,7 +16,6 @@ section Integers
 
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem card_quotient_span_eq_one_of_isUnit {a : 𝒪[K]} (ha : IsUnit a) :
     Nat.card (𝒪[K] ⧸ Ideal.span {a}) = 1 := by
@@ -39,7 +38,6 @@ theorem card_quotient_span_mul {a b : 𝒪[K]} (ha : a ≠ 0) (hb : b ≠ 0) :
   rw [hab, key, key, key, FormalGroup.card_quotient_span_pow hπ, FormalGroup.card_quotient_span_pow hπ,
     FormalGroup.card_quotient_span_pow hπ, pow_add]
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem natCast_integer_ne_zero {m : ℕ} (hm : (m : K) ≠ 0) : (m : 𝒪[K]) ≠ 0 := by
   intro h

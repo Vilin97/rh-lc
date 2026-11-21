@@ -47,7 +47,6 @@ theorem completionMap_algebraMap_completion (u : NumberField.InfinitePlace F.1)
       IsScalarTower.algebraMap_apply F.1 E.1 w'.Completion]
     rfl
 
-variable (F E) in
 
 def infCompletionEmbeddingBelow (u : v.placesOver F.1)
     [(infPlaceOfEmbedding ι E : NumberField.InfinitePlace E.1).LiesOver

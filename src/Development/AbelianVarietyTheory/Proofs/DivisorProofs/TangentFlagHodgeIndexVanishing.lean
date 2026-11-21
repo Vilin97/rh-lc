@@ -56,7 +56,6 @@ theorem exists_mem_Fil_corr (P : AbelianDeRham) {T : Type} [CommRing T] [Algebra
   · rw [LinearMap.comp_apply, e₀, ← sub_eq_zero, ← map_sub, ← map_sub]
     exact z _ (p1 c)
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_isFilLift_dir (P : AbelianDeRham) {ι : Type} [Fintype ι] {C : Over (Sp (TrivSqZeroExt R (ι → R)))}
     [GrpObj C] {g : ℕ} (hC : IsAbelianScheme C) (gC : SmoothOfRelativeDimension g C.hom) {A : Over (Sp R)} [GrpObj A]

@@ -259,11 +259,8 @@ theorem gridFr_unique {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L s
     (h : IsGridFr W X A) (h' : IsGridFr W X A') : A = A' :=
   fr_eq_of_onb fun τ => (h τ).1.trans (h' τ).1.symm
 
-open GlobalTheory.SquareIdent in
 
-open GlobalTheory.SquareIdent in
 
-open GlobalTheory.SquareConv in
 
 theorem standing_of_size {large₂ : SizeData₂ D} (hs : GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.SizeRows large₂) (hx : 11 ≤ D.host.splitBound) {T : Type}
     {L : LevCh D T} {μ₀ : T} (hL : L.Is μ₀) {sc : Consts} (G : GridData L sc) (t : T) : SquareStanding G t := by

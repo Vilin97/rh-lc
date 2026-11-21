@@ -270,7 +270,6 @@ end Alg
 section Proj
 variable {G : Type} [Group G] [Fintype G]
 
-omit [Fintype G] in
 
 theorem conv_tens2 {G' : Type} [Group G'] [Fintype G'] (a a' : G → ℂ) (b b' : G' → ℂ) :
     conv (tens2 a b) (tens2 a' b') = tens2 (conv a a') (conv b b') := by

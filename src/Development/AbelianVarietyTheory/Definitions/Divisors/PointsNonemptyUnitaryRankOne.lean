@@ -155,9 +155,7 @@ def Stab.one (G : HTGroup p) (v : InfinitePlace G.F) (β : G.Cˣ) (x : (AfP p �
     Stab G v β x t hx Kf K' a :=
   ⟨1, by simpa using Kf.one_mem, by simpa using K'.one_mem, fixL_one G v β _⟩
 
-open GlobalTheory.LKTrip.Example GlobalTheory.LKMid.Example in
 
-open GlobalTheory.LKTrip.Example GlobalTheory.LKMid.Example in
 
 theorem finitePlacesAway_nonempty (p : ℕ) [Fact p.Prime] : Nonempty (AwayP p) := by
   obtain ⟨q, hq, hqp⟩ := Nat.exists_infinite_primes (p+1)
@@ -178,6 +176,5 @@ theorem sigG_one (G : HTGroup p) (g : Gr G 1) : sigG G 1 g = g := by
   · show sigRes p (G.Fw i) G.n 1 (g.2 i) = g.2 i
     rw [sigRes_degree_one]; rfl
 
-open GlobalTheory.LKTrip.Example GlobalTheory.LKMid.Example in
 
 end GlobalTheory.LKCx

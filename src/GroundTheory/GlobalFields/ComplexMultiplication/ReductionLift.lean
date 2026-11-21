@@ -45,7 +45,6 @@ theorem coordEval_algebraMap (c : 𝒪) :
     coordEval, AdjoinRoot.lift_of]
   simp
 
-include hxy in
 
 theorem equation_residue_of_equation :
     ((W.map (residue 𝒪)).map (ResidueField.map j)).toAffine.Equation (residue Λ x)
@@ -58,7 +57,6 @@ theorem equation_residue_of_equation :
   simp only [← RingHom.comp_apply (ResidueField.map j), ResidueField.map_comp_residue]
   simpa only [RingHom.comp_apply] using this
 
-include hxy in
 
 def coordEvalRed :
     (W.map (residue 𝒪)).toAffine.CoordinateRing →+* ResidueField Λ :=
@@ -90,7 +88,6 @@ theorem residue_coordEval (a : W.toAffine.CoordinateRing) :
         AdjoinRoot.lift_root]
   exact congrArg (· a) this
 
-omit [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪] in
 
 theorem coordinateRing_ringHom_ext {S : Type*} [CommRing S]
     {f g : W.toAffine.CoordinateRing →+* S}
@@ -110,7 +107,6 @@ theorem coordinateRing_ringHom_ext {S : Type*} [CommRing S]
 
 variable (hx : Function.Injective (eval₂RingHom (ResidueField.map j) (residue Λ x)))
 
-include hx in
 
 theorem coordEvalRed_injective : Function.Injective (coordEvalRed W j hxy) := by
   letI : Algebra (ResidueField 𝒪) (ResidueField Λ) := (ResidueField.map j).toAlgebra

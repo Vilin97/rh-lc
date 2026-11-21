@@ -36,7 +36,6 @@ namespace AdeleBaseChange
 
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-variable (K L) in
 
 def adeleTensorAlgEquivLeft : 𝔸[K] ⊗[K] L ≃ₐ[𝔸[K]] 𝔸[L] :=
   AlgEquiv.ofRingEquiv
@@ -71,7 +70,6 @@ theorem adeleBasis_repr (y : 𝔸[L]) (i : ι) : (adeleBasis b).repr y i = coord
   conv_lhs => rw [← hy]
   rw [Basis.repr_sum_self]
 
-omit [DecidableEq ι] in
 
 theorem adeleBasis_repr_algebraMap (l : L) (i : ι) :
     (adeleBasis b).repr (algebraMap L 𝔸[L] l) i = algebraMap K 𝔸[K] (b.repr l i) := by
@@ -85,7 +83,6 @@ theorem adeleBasis_repr_algebraMap (l : L) (i : ι) :
       adeleMap_algebraMap]
   rw [hl, Basis.repr_sum_self]
 
-variable (K) in
 
 scoped instance nontrivial_adeleRing : Nontrivial 𝔸[K] :=
   (AdeleRing.algebraMap_injective (𝓞 K) K).nontrivial
@@ -93,9 +90,7 @@ scoped instance nontrivial_adeleRing : Nontrivial 𝔸[K] :=
 variable (K L) in
 scoped instance : Module.Free 𝔸[K] 𝔸[L] := .of_basis (adeleBasis (Module.finBasis K L))
 
-variable (K L) in
 
-variable (K L) in
 
 theorem finrank_adeleRing : Module.finrank 𝔸[K] 𝔸[L] = Module.finrank K L := by
   rw [Module.finrank_eq_card_basis (adeleBasis (Module.finBasis K L)), Fintype.card_fin]
@@ -154,7 +149,6 @@ theorem ideleEmbedding_diagonal (k : Kˣ) :
       IdeleGroup.diagonal L (Units.map (algebraMap K L).toMonoidHom k) :=
   Units.ext (adeleMap_algebraMap (k : K))
 
-variable (K L) in
 
 def ideleNorm : IdeleGroup L →* IdeleGroup K :=
   Units.map (Algebra.norm 𝔸[K] : 𝔸[L] →* 𝔸[K])
@@ -186,12 +180,10 @@ theorem diagonal_range_le_comap_ideleNorm :
   rintro _ ⟨l, rfl⟩
   exact ⟨Units.map (Algebra.norm K : L →* K) l, (ideleNorm_diagonal l).symm⟩
 
-variable (K L) in
 
 def ideleClassMap : IdeleClassGroup K →* IdeleClassGroup L :=
   QuotientGroup.map _ _ (ideleEmbedding K L) diagonal_range_le_comap_ideleEmbedding
 
-variable (K L) in
 
 def ideleClassNorm : IdeleClassGroup L →* IdeleClassGroup K :=
   QuotientGroup.map _ _ (ideleNorm K L) diagonal_range_le_comap_ideleNorm

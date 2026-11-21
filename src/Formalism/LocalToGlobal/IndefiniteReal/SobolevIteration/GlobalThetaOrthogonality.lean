@@ -27,9 +27,7 @@ variable {D : D7}
 def KAt {k : ℕ} (G s : Matrix (Fin k) (Fin k) ℂ) : Set (Matrix (Fin k) (Fin k) ℂ) :=
   {g | g ∈ Formalism.QuantumDeterminants.UH G ∧ g * s = s * g}
 
-open Classical in
 
-open Classical in
 
 end Formalism.IndefR.Tow
 

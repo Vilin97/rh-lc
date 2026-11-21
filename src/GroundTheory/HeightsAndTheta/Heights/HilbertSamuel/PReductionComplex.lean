@@ -23,7 +23,6 @@ section Grading
 
 variable {R : Type} [CommRing R]
 
-open Classical in
 
 def blockWt : (Σ k, ι k) → (K → ℕ) := fun q k => if q.1 = k then 1 else 0
 
@@ -425,7 +424,6 @@ end Complex
 
 end FibreReduction
 
-open FibreReduction in
 
 theorem ReductionComplex.proof : ReductionComplex.Statement := by
   intro K _ _ ι _ _ Ω _ y D p a hV hp

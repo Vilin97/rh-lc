@@ -59,13 +59,11 @@ theorem ip_sum_left {A : Type} (t : Finset A) (f : A → Fin g → ℂ) (y : Fin
     rw [← ip_conj R y, ip_sum_right, map_sum]
   exact Finset.sum_congr rfl fun i _ => ip_conj R y (f i)
 
-omit [IsCMField E] in
 
 theorem comp_ne {s s' : E →+* ℂ} (h : s ≠ s') :
     s.comp (algebraMap (𝓞 E) E) ≠ s'.comp (algebraMap (𝓞 E) E) :=
   fun e => h (IsLocalization.ringHom_ext (nonZeroDivisors (𝓞 E)) e)
 
-omit [IsCMField E] in
 
 theorem emb_injective (s : 𝓞 E →+* ℂ) : Function.Injective s := by
   have hc : (RingHom.ker s).comap (algebraMap ℤ (𝓞 E)) = ⊥ := by
@@ -83,7 +81,6 @@ omit [IsCMField E] in
 theorem extEmb_comp (s : 𝓞 E →+* ℂ) : (extEmb s).comp (algebraMap (𝓞 E) E) = s :=
   RingHom.ext (extEmb_apply s)
 
-open Classical in
 
 end Eig
 
@@ -91,9 +88,7 @@ section Family
 
 variable {K : Type} {J : K → Type} {Ψ : Type}
 
-open Classical in
 
-open Classical in
 
 variable {T : Set ((Σ k, J k) → ℂ)} {R : ((Σ k, J k) → ℂ) → RiemLat E g Λ} {w : (Σ k, J k) → ℂ}
 

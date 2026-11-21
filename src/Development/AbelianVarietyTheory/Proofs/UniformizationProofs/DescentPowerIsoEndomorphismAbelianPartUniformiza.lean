@@ -28,8 +28,6 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I}
   {A : PolAV (Spec (CommRingCat.of (FractionRing R)))} {G : Over (Spec (CommRingCat.of R))} [GrpObj G]
   [IsCommMonObj G] (U : UnifPre I D A G) {K : Type} [Fintype K] {ε : K → ℤ}
 
-open RigidIsoCube in
-include U in
 
 theorem surj_base (hG : GlobalFnsSt) : Function.Surjective G.hom.appTop.hom ∧
     Function.Surjective ((snd G (G ⊗ G)).left ≫ (snd G G).left ≫ G.hom).appTop.hom := by
@@ -192,8 +190,6 @@ variable (b : K → (D.toPre.P.A ⟶ D.toPre.P.A))
   (hq : ∀ e k, (Over.pullback (thick R I e)).map (a k) ≫ (U.gt e).q =
     (U.gt e).q ≫ (Over.pullback (thick R I e)).map (b k))
 
-set_option maxHeartbeats 800000 in
-include hβ nβ hq in
 
 theorem exists_level (hG : GlobalFnsSt) (hS : IsSemiAbelian G) [IsAdicComplete I R] (e : ℕ) :
     ∃ s : LB.Gen (LB.LinComb D.toPre.P.L (fun k => (fstG I e D.toPre.P.A).left ≫ (b k).left) ε), s.IsGen ∧

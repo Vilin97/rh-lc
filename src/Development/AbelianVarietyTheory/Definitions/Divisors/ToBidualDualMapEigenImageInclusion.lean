@@ -26,7 +26,6 @@ namespace GlobalTheory.LieVB
 
 variable {X Y : Scheme.{0}} {F G H : X.Modules} {O : Type} [CommRing O]
 
-variable (F) in
 
     cartierDualToBidual (dual F) ≫ dualMap (cartierDualToBidual F) = 𝟙 _ := by
   ext V l : 3
@@ -228,14 +227,12 @@ def twoAct : ℤ[X] →+* End (F ⊞ G) :=
   eval₂RingHom' (Int.castRingHom _) (2 • (biprod.snd ≫ biprod.inr : F ⊞ G ⟶ F ⊞ G))
     fun n => Int.cast_commute n _
 
-variable (X) in
 
 def zeroChar : ℤ[X] →+* Γ(X, ⊤) := (Int.castRingHom _).comp constantCoeff
 
 theorem act_twoAct_X : act (twoAct F G) Polynomial.X = 2 • (biprod.snd ≫ biprod.inr) :=
   eval₂_X (S := End (F ⊞ G)) _ _
 
-variable {F G} in
 
 theorem act_comp_of_X {ρ : ℤ[X] →+* End F} {φ : F ⟶ G} (h : act ρ Polynomial.X ≫ φ = 0)
     (a : ℤ[X]) : act ρ a ≫ φ = zeroChar X a • φ := by
@@ -274,7 +271,6 @@ theorem actsThrough_pull_twoAct (f : Y ⟶ X) (hY : (2 : Γ(Y, ⊤)) = 0) :
   rw [this, smulHom_eq_smul_id]
   simp [zeroChar]
 
-variable {F G} in
 
 theorem not_isIso_quotToIm_twoAct {r s : ℕ} (hF : IsVB F r) (hG : IsVB G (s + 1))
     (h : IsRegularFn (2 : Γ(X, ⊤))) (f : Y ⟶ X) [Nonempty Y] (hY : (2 : Γ(Y, ⊤)) = 0) :

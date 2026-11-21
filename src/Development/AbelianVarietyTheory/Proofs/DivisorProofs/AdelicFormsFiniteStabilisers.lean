@@ -15,9 +15,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.InnerClassSum
 
-open MeasureTheory IsDedekindDomain NumberField Matrix in
-open scoped TensorProduct InnerProductSpace Pointwise in
-attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar in
 
 theorem _root_.GlobalTheory.InnerClassSum.finite_stab_of_measure {G : Type} [Group G] [TopologicalSpace G]
     [IsTopologicalGroup G] [MeasurableSpace G]
@@ -63,9 +60,6 @@ theorem _root_.GlobalTheory.InnerClassSum.finite_stab_of_measure {G : Type} [Gro
   rw [htop, ← hsum, hT] at hle
   exact h1 (top_le_iff.1 hle)
 
-open MeasureTheory IsDedekindDomain NumberField Matrix in
-open scoped TensorProduct InnerProductSpace Pointwise in
-attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar in
 
 theorem _root_.GlobalTheory.InnerClassSum.integral_inner_eq_adInner {G H W : Type} [Group G] [TopologicalSpace G]
     [IsTopologicalGroup G] [MeasurableSpace G]
@@ -159,9 +153,6 @@ private lemma norm_character_eq_one_of_finite {A : Type} [Group A] [Finite A] (�
   apply Complex.norm_eq_one_of_pow_eq_one (n := Nat.card A) _ Nat.card_pos.ne'
   rw [← Units.val_pow_eq_pow_val, ← map_pow, pow_card_eq_one', map_one, Units.val_one]
 
-open MeasureTheory IsDedekindDomain NumberField Matrix in
-open scoped TensorProduct InnerProductSpace Pointwise in
-attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar in
 
 theorem _root_.GlobalTheory.InnerClassSum.norm_levFn {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] {n : ℕ}

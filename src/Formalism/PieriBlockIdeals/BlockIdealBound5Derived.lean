@@ -237,11 +237,8 @@ def TheoremWTop : Prop :=
     sInf {J : ℕ | TopIncl O Γ jK l N lam S J} ≤
       ∑ τ, cTau T2 ex (cFloor l N k t h lam j q xm xp ecl i) τ
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
 def ExpLeOfInclZ : Prop :=
   ∀ (r : ℕ) (ν μ : Fin r → ℕ) (l e : ℕ), LA.InclZ r r le_rfl ν l e → ExpLe l r ν μ e
@@ -262,7 +259,6 @@ def cFloorCoarse (l N k t h : ℕ) {ι : Type} (lam : ι → ℕ → ℕ) (j q :
     (ecl i : ι → ℕ) (τ : ι) : ℕ :=
   ⌊cCoarse l k (j τ) t (q τ) h N (ecl τ) (xm τ) (xp τ) (UN N (lam τ) (k + j τ)) (i τ : ℝ)⌋₊
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
 def DepthAsU : Prop :=
   ∀ (N c : ℕ) (lam : ℕ → ℕ) (w : Fin N → ℕ),

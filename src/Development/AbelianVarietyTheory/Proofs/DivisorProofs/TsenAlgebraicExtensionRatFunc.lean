@@ -298,7 +298,6 @@ private theorem exists_ne_zero_ratFunc_homogeneous_zero {k : Type} [Field k] [Is
     simp only [map_mul, MvPolynomial.eval_C] at key
     exact (mul_eq_zero.1 key).resolve_left hc0
 
-open Polynomial in
 
 theorem _root_.GlobalTheory.tsen_algebraic_extension_ratFunc :
     ∀ (k K : Type) [Field k] [IsAlgClosed k] [Field K] [Algebra (RatFunc k) K]

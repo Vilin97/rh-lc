@@ -124,7 +124,6 @@ theorem isLocalization_adjoin {Ω : Type} [Field Ω] [CharZero Ω] (A : Subalgeb
 
 end GlobalTheory.CompanionTheory.Ar.LocalisedSmooth
 
-open GlobalTheory.CompanionTheory.Ar.LocalisedSmooth in
 
 theorem GlobalTheory.CompanionTheory.Ar.LocalisedSmooth.smooth_localised
     (Ω₀ Ω : Type) [Field Ω₀] [Field Ω] [CharZero Ω₀] [CharZero Ω] [Algebra Ω₀ Ω]

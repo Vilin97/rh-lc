@@ -112,8 +112,6 @@ variable {w : AvDefs.Place p (𝓞 E)} {P : Ideal (𝓞 E)}
 
 end Places
 
-open Classical in
 
-open Classical in
 
 end GlobalTheory.AvChartCompare

@@ -44,9 +44,7 @@ variable (m : Match P D) (c : Coord P S)
 
 include m
 
-include c in
 
-omit m in
 
 end Match
 

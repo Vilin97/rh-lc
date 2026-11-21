@@ -64,8 +64,6 @@ theorem exists_sReps (G : Matrix (Fin r) (Fin r) E) (L : Set (Fin r → E)) (M :
   rw [← i.out_eq, ← j.out_eq]
   exact Quotient.sound h
 
-variable (E) in
 
-variable (E) in
 
 end GlobalTheory.SUVol.TamModel

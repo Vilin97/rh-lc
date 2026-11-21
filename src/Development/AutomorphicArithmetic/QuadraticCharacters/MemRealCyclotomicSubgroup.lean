@@ -41,9 +41,7 @@ namespace Core
 
 variable (C : Core)
 
-open Classical in
 
-open Classical in
 
 end Core
 

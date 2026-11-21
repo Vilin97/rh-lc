@@ -245,7 +245,6 @@ theorem epsW_mul_conj (w : E) (y : Matrix (Fin n) (Fin r) E) :
     simp only [map_mul, Complex.conj_ofReal, Complex.conj_I, map_ratCast]; ring
   rw [this, add_neg_cancel, Complex.exp_zero]
 
-variable (X) in
 
 def Good (w : E) (A : AddSubgroup (Matrix (Fin n) (Fin r) E)) : Prop :=
   A.FG ∧ (∀ y, y ∈ A ↔ ∀ y' ∈ A, ∃ k : ℤ, ∑ i, EF X (y i) (y' i) = k) ∧

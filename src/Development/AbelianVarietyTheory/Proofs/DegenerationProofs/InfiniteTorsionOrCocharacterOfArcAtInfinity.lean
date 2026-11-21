@@ -87,7 +87,6 @@ theorem exists_sig {z : PowerSeries k} (h : PowerSeries.constantCoeff z = 0 ∧ 
     exact IsUnit.mk0 _ fun e => h.2 (toK_injective (e.trans (map_zero _).symm)))
   exact ⟨σ, fun x => by rw [hσ, AlgHom.comp_apply, PowerSeries.coe_substAlgHom]⟩
 
-open scoped Classical in
 
 def sig (z : PowerSeries k) : FractionRing (PowerSeries k) →ₐ[k] FractionRing (PowerSeries k) :=
   if h : PowerSeries.constantCoeff z = 0 ∧ z ≠ 0 then (exists_sig h).choose else AlgHom.id k _
@@ -292,7 +291,6 @@ theorem TwoVar.shear (hc : IsChart G j ε f) (ht : TwoVar j f a h d) (hd : (MvPo
     mul_right_cancel₀ hp (by rw [e.choose_spec i, h1, (hy i).2])
   exact ⟨e.choose_spec, by rwa [this]⟩
 
-omit [IsAlgClosed k] in
 
 theorem add_step {m n : ℕ} (hmn : m < n) {Pd : Polynomial k} {P : Fin r → Polynomial k} {ψ : k → (A →ₐ[k] k)}
     (hg : ∀ (s t : k) (z w : PowerSeries k), s ≠ 0 → (m : ℕ∞) ≤ z.order → (n : ℕ∞) ≤ (w - z).order →

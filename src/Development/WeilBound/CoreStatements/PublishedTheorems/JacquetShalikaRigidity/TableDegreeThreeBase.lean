@@ -84,7 +84,6 @@ theorem avg_char {ψ : AddChar (Ad E) ℂ} (hψ : StdPsi ψ) (ζ : ι → E) :
       rw [sub_mul, h1, one_mul, sub_self]
     exact (mul_eq_zero.1 h3).resolve_left (sub_ne_zero.2 ha)
 
-variable (E ι) in
 
 abbrev Q : Type := (ι → Ad E) ⧸ ratV E ι
 
@@ -114,7 +113,6 @@ instance instMS : MeasurableSpace (Q E ι) := borel _
 
 instance instBS : BorelSpace (Q E ι) := ⟨rfl⟩
 
-variable (E ι) in
 
 def nu : Measure (Q E ι) :=
   Measure.map (QuotientAddGroup.mk : (ι → Ad E) → Q E ι) ((vecMeasure E ι).restrict (vecDomain E ι))

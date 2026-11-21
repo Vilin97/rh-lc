@@ -11,8 +11,6 @@ open scoped ENNReal Classical
 
 namespace GlobalTheory.Mass
 
-open NumberField Matrix in
-open scoped ENNReal Classical in
 
 theorem _root_.GlobalTheory.Mass.orbSum_eq_sum_reps : ∀ (G α : Type) [Group G] [MulAction G α]
     (X : Set α) (N : α → ℝ≥0∞), _root_.GlobalTheory.Mass.Stable G X → (∀ (g : G) x, N (g • x) = N x) →

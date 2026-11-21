@@ -418,7 +418,6 @@ theorem arcBasis_iff (ρ : (E →+* ℂ) → (𝓞 E →+* A)) (e : ∀ τ : E �
   choose v hv using fun ν => (GlobalTheory.T.exists_unique_constant_tangent_vectors_along_arc hG E H Dw l Xo c O β Y A b a χ W ν).1.exists
   exact ⟨fun τ k => v (e τ k), fun τ k => hv _, fun τ => (isEigBasis_iff hG W _ fun k => hv _).1 (h τ)⟩
 
-include W in
 
 theorem IsEigBasis.of_cor {O' : Type} [CommRing O'] {β' : O' →+* c.F} {Y' : Model Xo c β'} {b' : O' →+* A}
     {a' : ArcIn Dw l β' A b'} {χ' : Sp (PowerSeries A) ⟶ Y'.X} (W' : Wit Y' a' χ')

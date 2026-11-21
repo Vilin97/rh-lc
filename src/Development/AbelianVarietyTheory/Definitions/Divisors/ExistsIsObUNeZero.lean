@@ -23,11 +23,8 @@ variable {C : Type} [Category.{0} C] {F : C ⥤ CommAlgCat.{0} R₀}
 
 variable (hI : I ^ 2 = 0)
 
-include hI in
 
-include hI in
 
-include hI in
 
 end Alg
 

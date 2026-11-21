@@ -15,7 +15,6 @@ open scoped TensorProduct NNReal Matrix
 
 namespace GlobalTheory.ThetaDenom
 
-variable (F : Type) [Field F] [NumberField F] in
 
 def IsMulInt {κ : Type} (M : ℕ) (z : κ → AF F) : Prop :=
   (∀ i, (z i).1 = 0) ∧ ∀ v i, ‖evFin F v (z i)‖ ≤ ‖(M : Fv F v)‖

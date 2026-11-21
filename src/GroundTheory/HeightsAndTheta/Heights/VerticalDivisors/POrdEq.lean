@@ -22,7 +22,6 @@ theorem vertComps_finite' {K : Type*} [Field K] [NumberField K] {n : ℕ}
     (vertComps I u v).Finite :=
   (Ideal.finite_minimalPrimes_of_isNoetherianRing _ _).subset fun _ hW => hW.1.1
 
-open Classical in
 
 theorem OrdEq.proof (hni : NormIdentity.Statement) (hnl : NormLength.Statement)
     (hld : LengthDecomp.Statement) (hmax : SpecMax.Statement) (hlen : SpecLength.Statement)

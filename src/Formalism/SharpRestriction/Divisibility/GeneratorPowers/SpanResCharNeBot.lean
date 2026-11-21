@@ -70,6 +70,5 @@ variable {D : D7}
 
 end H1algLink
 
-open H1algLink in
 
 end Formalism.MainNotions.ModuliIntegralCharts.H1

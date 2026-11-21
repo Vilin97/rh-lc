@@ -10,8 +10,6 @@ open GlobalTheory.WeilM GlobalTheory.FullRankCoinv MeasureTheory
 
 namespace GlobalTheory.HaarScaleMatrix
 
-open scoped Matrix in
-open MeasureTheory in
 
 theorem _root_.GlobalTheory.HaarScaleMatrix.secondCountable_of_localField (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] : SecondCountableTopology k :=

@@ -66,14 +66,12 @@ def pull (r : X →ₗ[O] X₁) (β : LinearMap.BilinForm ℤ X₁) : LinearMap.
 theorem pull_mem (r : X →ₗ[O] X₁) {β : LinearMap.BilinForm ℤ X₁} (h : β ∈ balForms bar X₁) : pull r β ∈ balForms bar X :=
   ⟨fun y z => h.1 _ _, fun a y z => by simp only [pull_apply, map_smul, h.2 a]⟩
 
-variable (bar) in
 
 def pullBal (r : X →ₗ[O] X₁) : balForms bar X₁ →ₗ[ℤ] balForms bar X where
   toFun β := ⟨pull r β, pull_mem r β.2⟩
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-variable (bar) in
 
 def pullBalEquiv (e : X ≃ₗ[O] X₁) : balForms bar X₁ ≃ₗ[ℤ] balForms bar X :=
   LinearEquiv.ofLinear (pullBal bar e.toLinearMap) (pullBal bar e.symm.toLinearMap)
@@ -169,7 +167,6 @@ theorem isPosDef_iff_basis {ι : Type} [Fintype ι] (b : Module.Basis ι ℤ X) 
           rw [Finset.sum_comm]
           exact Finset.sum_congr rfl fun i _ => Finset.sum_comm
 
-variable (bar X) in
 
 def psdCone : Set (X →ₗ[ℤ] X →ₗ[ℤ] ℝ) :=
   {B | ∃ (X₁ : Type) (_ : AddCommGroup X₁) (_ : Module O X₁) (_ : Module.Projective O X₁) (r : X →ₗ[O] X₁)
@@ -253,7 +250,6 @@ theorem linearOn_iff (γ : Fin m → LinearMap.BilinForm ℤ X) : φ.LinearOn γ
     ∀ c : Fin m → ℝ, (∀ i, 0 ≤ c i) → evalR φ (∑ i, c i • toReal (γ i)) = ∑ i, c i * φ.evalZ (γ i) := by
   simp [InvFun.LinearOn, evalR, LinearMap.sum_apply]
 
-variable {φ} in
 
 theorem linearOn_comp {γ : Fin m → LinearMap.BilinForm ℤ X} (h : φ.LinearOn γ) (s : Fin m' ↪ Fin m) :
     φ.LinearOn fun i => γ (s i) := by
@@ -269,7 +265,6 @@ theorem linearOn_comp {γ : Fin m → LinearMap.BilinForm ℤ X} (h : φ.LinearO
     · rw [Function.extend_apply' _ _ _ hj]; rfl
   simpa only [key] using this
 
-variable {φ} in
 
 theorem linearOn_pull_iff {r : X →ₗ[O] X₁} (hr : Function.Surjective r) {γ : Fin m → LinearMap.BilinForm ℤ X₁} :
     (φ.LinearOn fun i => pull r (γ i)) ↔ φ.LinearOn γ := by
@@ -319,12 +314,10 @@ theorem IsStrict.of_pull {r : X →ₗ[O] X₁} (hr : Function.Surjective r) {γ
     obtain ⟨b, rfl⟩ := hr b
     simpa [LinearMap.sum_apply] using LinearMap.congr_fun₂ hc a b
 
-omit [Module.Finite O X] [Module.Finite O X₁] in
 
 @[simp] theorem pull_symm_pull (e : X ≃ₗ[O] X₁) (β : LinearMap.BilinForm ℤ X₁) :
     pull e.symm.toLinearMap (pull e.toLinearMap β) = β := LinearMap.ext₂ fun a b => by simp
 
-omit [Module.Finite O X] [Module.Finite O X₁] in
 
 @[simp] theorem pull_pull_symm (e : X ≃ₗ[O] X₁) (β : LinearMap.BilinForm ℤ X) :
     pull e.toLinearMap (pull e.symm.toLinearMap β) = β := LinearMap.ext₂ fun a b => by simp
@@ -410,7 +403,6 @@ def IsPolFan (bar : O → O) (q : ℕ) (φ : InvFun O) : Prop :=
   ∀ (X : Type) [AddCommGroup X] [Module O X] [Module.Finite O X] [Module.Projective O X], Module.finrank O X ≤ q →
     IsPolFanOn bar φ X
 
-variable (O) {X} in
 
 def NoEquivRays (γ : Fin m → LinearMap.BilinForm ℤ X) : Prop :=
   ∀ (e : X ≃ₗ[O] X) (i j : Fin m), pull e.toLinearMap (γ i) = γ j → i = j
@@ -459,7 +451,6 @@ theorem IsPolFanOn.of_equiv (h : IsPolFanOn bar φ X) (e : X ≃ₗ[O] X₁) : I
     obtain ⟨g, hg⟩ := h1 m _ (hγ.pull_equiv e)
     exact ⟨e.symm.trans (g.trans e), fun i => ⟨_, hg i, rfl⟩⟩
 
-omit [Module.Finite O X] [Module.Finite O X₁] in
 
 theorem isPolFanOn_of_subsingleton [Subsingleton X] : IsPolFanOn bar φ X := by
   have h0 : ∀ β : LinearMap.BilinForm ℤ X, β = 0 := fun β => Subsingleton.elim _ _

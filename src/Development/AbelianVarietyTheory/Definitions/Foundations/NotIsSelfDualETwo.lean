@@ -25,12 +25,7 @@ theorem _root_.GlobalTheory.TestLat.Model.mem_sumLat (lam : ι → _root_.Formal
   simp only [_root_.GlobalTheory.TestLat.sumLat, Submodule.mem_iInf, Submodule.mem_comap,
     LinearMap.restrictScalars_apply]
 
-omit [NumberField K] in
 
-open NumberField in
-open scoped Matrix ComplexOrder in
-variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι] {n N : ℕ} {C : Type} in
-omit [NumberField K] in
 
 theorem _root_.GlobalTheory.TestLat.Model.valAt_bijective (lam : ι → _root_.Formalism.BasicNotions.DomWeight n) (e : Fin N ≃ C × _root_.Formalism.L2.DIV.VVIdx lam) :
     Function.Bijective fun (u : Fin N → K) (c : C) => _root_.GlobalTheory.TestLat.valAt lam e c u := by
@@ -42,10 +37,6 @@ theorem _root_.GlobalTheory.TestLat.Model.valAt_bijective (lam : ι → _root_.F
   · ext c
     simp [_root_.GlobalTheory.TestLat.valAt, LinearMap.funLeft_apply]
 
-open NumberField in
-open scoped Matrix ComplexOrder in
-variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι] {n N : ℕ} {C : Type} in
-omit [NumberField K] in
 
 theorem _root_.GlobalTheory.TestLat.Model.sumGram_form [StarRing K] [Fintype C] (lam : ι → _root_.Formalism.BasicNotions.DomWeight n)
     (e : Fin N ≃ C × _root_.Formalism.L2.DIV.VVIdx lam)
@@ -71,6 +62,5 @@ theorem _root_.GlobalTheory.TestLat.Model.sumGram_form [StarRing K] [Fintype C] 
   simp only [RingHom.id_apply, starRingEnd_apply]
   ring
 
-omit [NumberField K] in
 
 end GlobalTheory.TestLat.Model

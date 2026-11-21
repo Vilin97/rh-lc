@@ -36,8 +36,6 @@ theorem exists_cast (j : ℕ) (μ ν : D.what₂.Tup) (h : μ = ν) (x : D.what�
     ∃ x' : D.what₂.MtL μ j, x = h ▸ x' := by
   subst h; exact ⟨x, rfl⟩
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.ClassSumLift
 
-set_option synthInstance.maxHeartbeats 400000 in

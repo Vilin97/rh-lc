@@ -17,7 +17,6 @@ variable {C : Type} [Field C] {V : VF C}
 
 end FrobP
 
-open FrobP in
 
 namespace FrobP
 
@@ -30,6 +29,5 @@ theorem mm_l : V.MM (V.l : C) := by
 
 end FrobP
 
-open FrobP in
 
 end Formalism.L2.FormalSeriesBounds

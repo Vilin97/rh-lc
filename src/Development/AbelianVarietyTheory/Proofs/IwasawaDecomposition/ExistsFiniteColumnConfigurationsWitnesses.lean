@@ -35,7 +35,6 @@ theorem finite_piG (P : Pre) :
   intro g hg i _
   exact ⟨RingOfIntegers.isIntegral_coe _, hg i⟩
 
-open Classical in
 
 def chiOf {P : Pre} (f : Top.Fr P) : Fin P.R.m → HeightOneSpectrum (𝓞 P.host.E) → 𝓞 P.host.E → ℂ :=
   fun j w y => if h : (f.P.Div 0 w ∨ f.P.Div 1 w) ∧ (y : P.host.E) ≠ 0 ∧ IsUnit (Ideal.Quotient.mk w.asIdeal y) then
@@ -81,7 +80,6 @@ theorem qprime_eq_of_reads {F E K : Type} [Field F] [NumberField F] [Field E] [N
     rw [h a, h1]
     simp
 
-open Classical in
 
 def qBound {P : Pre} (ξ : Formalism.L2.Host.HChar P.host.E) : Set (HeightOneSpectrum (𝓞 P.host.E)) :=
   if (ramPl ξ).Finite then {Q | ∃ v ∈ ramPl ξ, Ideal.under (𝓞 P.host.F) Q.asIdeal = v.asIdeal} else ∅

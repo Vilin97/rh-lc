@@ -181,7 +181,6 @@ def rowLift (P : PolRow G) (d : SchRow G) (F : Fn G (.grid 0 D.R.m)) : Fn G (.gr
 def downPure (P : PolDown G) (d : SchDown G t) : PureT G (downPath t D.R.m D.R.m) :=
   downFam t D.R.m D.R.m fun j => W.fock (.mu t D.R.m j) (d j) (P j)
 
-variable {M t} in
 
 def oppPer (hM : M.Is t) (P : PolRow G × PolDown G) (d : SchRow G × SchDown G t) (φ : Fn G (.top 0)) (F : Fn G (.grid 0 D.R.m)) :
     (chain G W t hM).Var → ℂ :=

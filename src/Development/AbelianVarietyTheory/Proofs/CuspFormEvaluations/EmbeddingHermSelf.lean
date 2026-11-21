@@ -42,7 +42,6 @@ theorem embedding_herm_self {n : ℕ} (σ : E →+* ℂ) (x : Fin n → E) :
     σ (herm 1 x x) = ((∑ k, ‖σ (x k)‖ ^ 2 : ℝ) : ℂ) := by
   simp [herm_one_eq, cc, IsCMField.complexEmbedding_complexConj, Complex.mul_conj']
 
-omit [IsCMField E] in
 
 theorem mem_inv_different {x : E} (hx : ∀ a : 𝓞 E, ∃ k : ℤ, Algebra.trace ℚ E (x * a) = k) :
     x ∈ (differentIdeal ℤ (𝓞 E) : FractionalIdeal (𝓞 E)⁰ E)⁻¹ := by
@@ -55,7 +54,6 @@ theorem mem_inv_different {x : E} (hx : ∀ a : 𝓞 E, ∃ k : ℤ, Algebra.tra
 
 end TraceDualMin
 
-open TraceDualMin in
 
 theorem trace_dual_min {n : ℕ} (Λ : Submodule (𝓞 E) (Fin n → E))
     (hint : ∀ x ∈ Λ, ∀ y ∈ Λ, IsIntegral ℤ (herm 1 x y)) (hdual : ∀ x, (∀ y ∈ Λ, IsIntegral ℤ (herm 1 x y)) → x ∈ Λ)

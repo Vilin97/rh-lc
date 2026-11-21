@@ -67,7 +67,6 @@ theorem relAmple_diag_lam {R : Type} [CommRing R] [IsLocalRing R] [IsNoetherianR
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
   abel
 
-open SiegelOfPolarised PrimNorm in
 
 end GlobalTheory.EighthPowerLocal
 

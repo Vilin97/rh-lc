@@ -44,7 +44,6 @@ theorem mapLF_mul_act {Λ : Submodule (𝓞 D.host.E) (VS D).V} {β γ : (VS D).
   rw [h1, h2]
   exact ext rfl rfl rfl
 
-variable (F0 F0') in
 
 def actC (hPD : Saturated.PDIso D) {Λ Λ' : Submodule (𝓞 D.host.E) (VS D).V} (x0 : X.B.I.GA)
     (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hx : RatLink X x0 β) (hβ : β ∈ Saturated.AutF Λ (lf D F0))
@@ -65,7 +64,6 @@ theorem grel_actC (hPD : Saturated.PDIso D) {Λ Λ' : Submodule (𝓞 D.host.E) 
   rw [hq]
   simp only [mul_assoc, inv_mul_cancel_left]
 
-variable (F0 F0') in
 
 def actQ (hPD : Saturated.PDIso D) {Λ Λ' : Submodule (𝓞 D.host.E) (VS D).V} (x0 : X.B.I.GA)
     (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hx : RatLink X x0 β) (hβ : β ∈ Saturated.AutF Λ (lf D F0)) :
@@ -90,7 +88,6 @@ theorem actQ_comp (hPD : Saturated.PDIso D) {Λ Λ' : Submodule (𝓞 D.host.E) 
     show (x1 * (x0 * p.1.1), β1 * (β * p.1.2)) = p.1
     rw [← mul_assoc, ← mul_assoc, e1, e2, one_mul, one_mul]
 
-variable (what₂ rows') in
 
 def phiT (hPD : Saturated.PDIso D) (x0 : X.B.I.GA) (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hx : RatLink X x0 β)
     (t : GTerm X u u' F0 F0' what₂ rows') : GTerm X u u' F0 F0' what₂ rows' :=
@@ -127,7 +124,6 @@ theorem phiT_comp (hPD : Saturated.PDIso D) (x0 x1 : X.B.I.GA) (β β1 : (VS D).
       rw [hb1, autF_inv_iff]; exact h
     simp only [phiT, dif_neg h, dif_neg h1]
 
-variable (what₂ rows') in
 
 def phiE (hPD : Saturated.PDIso D) (x0 : X.B.I.GA) (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hx : RatLink X x0 β) :
     GTerm X u u' F0 F0' what₂ rows' ≃ GTerm X u u' F0 F0' what₂ rows' where

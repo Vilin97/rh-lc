@@ -60,7 +60,6 @@ theorem smulE_tmul (π' : LetA O n) (c : ZMod n) (e f : W.EE) (l : LcQ W T π' c
     smulE W T π' c e (f ⊗ₜ l) = (e * f) ⊗ₜ l := by
   simp [smulE]
 
-set_option maxHeartbeats 1000000 in
 
 theorem finite_of (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (π' Eπ : LetA O n) (h' : ℕ) (c : ZMod n)
     (hEu : IsUnit (algebraMap (LetA O n) W.EE Eπ))

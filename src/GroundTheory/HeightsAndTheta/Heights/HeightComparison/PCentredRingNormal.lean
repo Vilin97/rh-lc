@@ -16,7 +16,6 @@ namespace CentredRingNormal
 
 variable {L : Type} [Field L] [NumberField L]
 
-omit [NumberField L] in
 
 theorem isIntegral_of_comp {R R' : Type*} [CommRing R] [CommRing R'] [Algebra R L] [Algebra R' L]
     (f : R →+* R') (hf : (algebraMap R' L).comp f = algebraMap R L) {x : L}

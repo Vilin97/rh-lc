@@ -85,7 +85,6 @@ end Lin
 
 variable {ϖ : v.adicCompletion E}
 
-variable (v) in
 
 end GlobalTheory.ResW.SatWordAt
 

@@ -19,12 +19,10 @@ namespace MetricLocal
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem le_of_mem_divSupp {P W : Ideal (MRing ι)} {s : MRing ι} (hW : W ∈ divSupp P s) : P ≤ W :=
   le_sup_left.trans hW.1.1.2
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem mcPts_mono {P W : Ideal (MRing ι)} (h : P ≤ W) : mcPts W ⊆ mcPts P :=
   fun _ hz => ⟨hz.1, fun f hf => hz.2 f (h hf)⟩

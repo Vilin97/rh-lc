@@ -38,7 +38,6 @@ theorem HasSig.aniso {n r s : ℕ} {M : Matrix (Fin n) (Fin n) ℂ} (h : HasSig 
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n : ℕ} {Y : Spc F E n}
 
-variable (σ) in
 
 def Aniso (J : Matrix (Fin n) (Fin n) E) : Prop := ∀ x, form σ J x x = 0 → x = 0
 

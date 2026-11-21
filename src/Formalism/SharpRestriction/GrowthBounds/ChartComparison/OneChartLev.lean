@@ -153,7 +153,6 @@ def oneChart (K : ClsTied u i hi) (β : Unit) :
   stabI_inj := fun c => K.stabI_inj c.1
   stabI_range := fun c => K.stabI_range c.1
 
-set_option maxHeartbeats 2000000 in
 
 theorem valTied_toG (V : ValTied u eV i hi K) :
     ValuationCompatibleChart (D.fm u) V.eY (fun _ => True) (chU u i) (lat := clsCrd D u i hi) (oneChart K) where
@@ -171,11 +170,9 @@ theorem valTied_toG (V : ValTied u eV i hi K) :
 
 variable {p : ℕ}
 
-set_option maxHeartbeats 2000000 in
 
 variable {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
-set_option maxHeartbeats 2000000 in
 
 end Formalism.MainNotions.G.CmpJ
 

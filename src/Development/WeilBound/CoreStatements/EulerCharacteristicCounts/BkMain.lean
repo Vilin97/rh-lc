@@ -74,6 +74,5 @@ theorem stable_pow {G : Type} [Group G] {LL O V : Type} [Field LL] [CommRing O] 
   rw [Submodule.map_smul''] at h
   exact Submodule.smul_mono le_rfl le_top h
 
-open ExactAnn in
 
 end PositivityTheory.LocalTateOrthogonality.Bk

@@ -95,7 +95,6 @@ theorem exists_norm_one_orth (S : Subring E) (σ : E →+* E) (φ : o →+* E) (
   · simp only [map_mul, map_sub]
     ring
 
-omit [IsLocalRing o] in
 
 theorem exists_primitive [IsArtinianRing E] [IsReduced E] (S : Subring E) [IsPrincipalIdealRing S]
     (hid : ∀ e : E, e * e = e → e ∈ S) {y0 y1 y2 : E} (hy0 : y0 ∈ S) (hy1 : y1 ∈ S)

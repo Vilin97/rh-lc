@@ -78,7 +78,6 @@ variable {D : D7} {X : Formalism.L2.Herm.Herm0 D} {u : D.what₂.Word} {w : D.wh
   {eps : UJ (D.sp.cm.sig : D.host.E →+* D.host.E) (D.sp.X (i + 1)).gram →* (D.gat u w hg).Oˣ}
   (t : GChartTie (X.g u w hg) Lv i em (D.sp.X (i + 1)).gram Lb Uloc ψ eps)
 
-set_option maxHeartbeats 2000000 in
 
 theorem stab_iff (w' : HeightOneSpectrum (𝓞 D.host.F)) (h : ((D.what₂.places.resChar w : ℕ) : 𝓞 D.host.F) ∈ w'.asIdeal)
     (hdual : SelfDualAt D.sp.cm.sig (D.sp.X (i + 1)).gram w' Lb)
@@ -183,8 +182,6 @@ end Gen
 variable {D : D7} (X : Formalism.L2.Herm.Herm0 D) (T : ∀ u : D.what₂.Word, Forms0 D u) (u : D.what₂.Word) (hU : SameUloc X T u)
   (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) (B : GL (Fin D.R.k) D.host.E)
 
-set_option maxHeartbeats 4000000 in
-include hU in
 
 theorem away_of_off (c c' : (D.gat u w hg).comp) (δ : GL (Fin (D.R.N 0)) D.host.E)
     (hδ : δ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)))
@@ -253,8 +250,6 @@ theorem locHypC_locAt (hB : FrRat X u w hg B) (hTc : HypTC (X.g u w hg)) : LocHy
   rw [hfr] at h1 h2
   exact ⟨h1, h2⟩
 
-set_option maxHeartbeats 4000000 in
-include hU in
 
 theorem oneHyp_locAt (hB : FrRat X u w hg B) (hT : HypT (X.g u w hg)) (hTc : HypTC (X.g u w hg)) :
     OneHyp ((T u).cls0).toChart.lev (locAt X u w hg B) ((T u).cls0).toChart.y where
@@ -322,7 +317,6 @@ theorem selfDualAt_col (L : ColLevel R F E sp gp C A clsLat) (v : HeightOneSpect
 
 variable (t : Formalism.L2.Herm.GLevTie L G)
 
-set_option maxHeartbeats 2000000 in
 
 theorem stabilises_columnBaseLattice_iff_firstFactor (w : HeightOneSpectrum (𝓞 F)) (h : ((p : ℕ) : 𝓞 F) ∈ w.asIdeal) (hdual : SelfDualAt sp.cm.sig sp.gram0 w L.Lb)
     (x : GL (Fin R.k) (E ⊗[F] w.adicCompletion F)) (hx : x ∈ UPts sp.cm.sig sp.gram0 (w.adicCompletion F)) :

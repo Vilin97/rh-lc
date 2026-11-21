@@ -28,7 +28,6 @@ section Frames
 
 variable {S : Scheme.{0}} (G : Over S) [GrpObj G] [IsCommMonObj G] (L : RigLB G)
 
-omit [IsCommMonObj G] [GrpObj G] in
 
 end Frames
 

@@ -148,7 +148,6 @@ def lamOf {u u' : D.what₂.Word} (t : D.s.Term u u') : Submodule (𝓞 D.host.E
 def fl'Of {u u' : D.what₂.Word} (t : D.s.Term u u') : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) :=
   mapL (W.δ u) (W.isom u) (repF (tc hI t))
 
-variable (D) in
 
 def LatIso : Prop :=
   ∀ (β : (VS D).V ≃ₗ[D.host.E] (VS D).V), β ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT →
@@ -252,11 +251,9 @@ theorem FeqF_iffC {u u' : D.what₂.Word} (t : D.s.Term u u') :
   refine (TermDef.isFeqF_mk (PI.TermAttrConst.UnitaryGroupMassFormula.feqFFun_all _ _ _) _).trans ?_
   exact (Formalism.L2.SG.Pf.flag_equivalence_isomorphism _ _ (W.δ u) (W.isom u) (tc hI t).lam (lf D (X.Fu u)) (repF (tc hI t))).symm
 
-variable (Y) in
 
 def IdentityCellVanishes (u u' : D.what₂.Word) : Prop := ∀ t : RT Y u u', Formalism.L2.SG.FourParts.termIsId t → t.G = 0
 
-include hI in
 
 theorem id_GC (hId : ∀ u u', IdentityCellVanishes Y u u') {u u' : D.what₂.Word} (t : D.s.Term u u') (h : D.s.isId t) :
     D.s.Gterm t = 0 := by
@@ -264,7 +261,6 @@ theorem id_GC (hId : ∀ u u', IdentityCellVanishes Y u u') {u u' : D.what₂.Wo
   rw [map_zero, gterm_val hI t]
   exact hId u u' _ ((hI.isId t).1 h)
 
-variable (Y) in
 
 def AtSome (u u' : D.what₂.Word) : Prop := ∀ t : RT Y u u', t.G ≠ 0 → t.relevant → ∃ w, t.atPt w
 
@@ -350,7 +346,6 @@ theorem lamOf_mem {u u' : D.what₂.Word} (t : D.s.Term u u') : lamOf W hI t ∈
 theorem wRowOf_pos (hA : ∀ u, Formalism.L2.SG.PairVal.AutFin D (FlagOfWord W u) (rowsRec W Y u)) {u u' : D.what₂.Word}
     (p : D.s.Pair u u') : 0 < wRowOf W hI p := Formalism.L2.SG.PairVal.wRow_pos (h := hA u _ (lamOf_mem W hI (D.s.pfst p)))
 
-variable (X) in
 
 structure AmpDat where
   chi : ∀ {u u' : D.what₂.Word}, D.s.Pair u u' → ℂ
@@ -410,21 +405,18 @@ section Loc
 variable {D : D7} {X : HidaSetting D} {Y : Formalism.L2.SG.Full.Full X} {hF : FinX Y} (W : WittDat X)
   (hI : SIso D.s (sOf hF))
 
-variable (D) in
 
 def WRowIso : Prop :=
   ∀ (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hβ : β ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
     (F0 : FlagG (VS D) D.R.rS T) (Λ : Submodule (𝓞 D.host.E) (VS D).V),
     Formalism.MainNotions.S.wRow D (Formalism.L2.SG.Saturated.mapFlag β hβ F0) (Formalism.HermitianLatticesTheory.gmap β Λ) = Formalism.MainNotions.S.wRow D F0 Λ
 
-variable (D) in
 
 def RowRepsIso : Prop :=
   ∀ (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hβ : β ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
     (F0 : FlagG (VS D) D.R.rS T) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)),
     IsRowReps D F0 what₂ → IsRowReps D (Formalism.L2.SG.Saturated.mapFlag β hβ F0) (what₂.image (Formalism.HermitianLatticesTheory.gmap β))
 
-variable (Y) in
 
 theorem term_injC {u u' : D.what₂.Word} (γ γ' : D.s.Term u u') (hL : lamOf W hI γ = lamOf W hI γ')
     (h : ∃ n ∈ NLam (lamOf W hI γ) (lf D (FlagOfWord W u)), ∃ m ∈ NLam (lamOf W hI γ) (fl'Of W hI γ),
@@ -451,7 +443,6 @@ theorem term_injC {u u' : D.what₂.Word} (γ γ' : D.s.Term u u') (hL : lamOf W
     rfl
   exact key (tc hI γ) (tc hI γ') hlam hdc'
 
-include hI in
 
 end Loc
 

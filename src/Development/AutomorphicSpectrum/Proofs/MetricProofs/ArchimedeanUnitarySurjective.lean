@@ -21,19 +21,16 @@ section TmSurj
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-omit [IsCMField E] in
 
 theorem embOf_coe (s : 𝓞 E →+* ℂ) (x : 𝓞 E) : embOf s (x : E) = s x :=
   IsFractionRing.lift_algebraMap (intEmb_injective s) x
 
-omit [IsCMField E] in
 
 theorem embOf_restrict (φ : E →+* ℂ) : embOf (φ.comp (algebraMap (𝓞 E) E)) = φ := by
   apply IsLocalization.ringHom_ext (nonZeroDivisors (𝓞 E))
   ext x
   simpa using embOf_coe (φ.comp (algebraMap (𝓞 E) E)) x
 
-omit [IsCMField E] in
 
 theorem embOf_conj (s : 𝓞 E →+* ℂ) : embOf ((starRingEnd ℂ).comp s) = ComplexEmbedding.conjugate (embOf s) := by
   apply IsLocalization.ringHom_ext (nonZeroDivisors (𝓞 E))
@@ -44,7 +41,6 @@ theorem embOf_conj (s : 𝓞 E →+* ℂ) : embOf ((starRingEnd ℂ).comp s) = C
   change embOf ((starRingEnd ℂ).comp s) (x : E) = starRingEnd ℂ (embOf s (x : E))
   rw [h1, h2]; rfl
 
-omit [IsCMField E] in
 
 theorem embOf_inj {s s' : 𝓞 E →+* ℂ} (h : embOf s = embOf s') : s = s' := by
   ext x

@@ -10,9 +10,7 @@ open Submodule
 
 variable {O B : Type} [CommRing O] [CommRing B] [Algebra O B] {n r : ℕ}
 
-omit [CommRing O] [Algebra O B] in
 
-omit [CommRing O] [Algebra O B] in
 
 theorem mulVec_span_stable (A : Matrix (Fin n) (Fin n) B) (G : Set (Fin n → B))
     (hG : ∀ x ∈ G, A.mulVec x ∈ span O G) : ∀ x ∈ span O G, A.mulVec x ∈ span O G := by

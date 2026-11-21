@@ -41,7 +41,6 @@ theorem sgn_mul_sgn_swap {K : Finset (Fin n)} {j k : Fin n} (hk : k ∈ K) (hj :
 variable {U : Finset (Fin n)} {R : Type u} [CommRing R] {G : Cell U → Type v}
   [∀ I, AddCommGroup (G I)] [∀ I, Module R (G I)] {ρ : ∀ I J : Cell U, I.1 ⊆ J.1 → G I →ₗ[R] G J}
 
-open Classical in
 
 def restrictTo {i : ℕ} (s : Cech.Cochain G i) (K : Cell U) (A : Finset (Fin n)) : G K :=
   if h : ∃ L : Cech.Idx U i, L.1.1 = A ∧ A ⊆ K.1 then
@@ -59,7 +58,6 @@ theorem restrictTo_eq {i : ℕ} (s : Cech.Cochain G i) (K : Cell U) (L : Cech.Id
 
 end CechDSq
 
-open CechDSq in
 
 theorem CechDSq.proof : CechDSq.Statement := by
   intro n U R _ G _ _ ρ hρ i s

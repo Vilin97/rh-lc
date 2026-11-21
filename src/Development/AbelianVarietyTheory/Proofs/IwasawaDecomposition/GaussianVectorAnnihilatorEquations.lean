@@ -19,7 +19,6 @@ section General
 
 variable {σ : Type} [DecidableEq σ] {F : Fock σ} {v : F.H} {E : MvPowerSeries σ ℂ}
 
-omit [DecidableEq σ] in
 
 theorem prod_factorial_add_single (α : σ →₀ ℕ) (l : σ) :
     (α + Finsupp.single l 1).prod (fun _ k => (k.factorial : ℂ)) =

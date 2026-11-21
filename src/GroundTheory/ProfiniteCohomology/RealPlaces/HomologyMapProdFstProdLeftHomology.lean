@@ -30,7 +30,6 @@ variable {A B C : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRe
   {Aᵣ Cᵣ : ∀ w, Rep.{u} k (F w)} [∀ w, IsDiscreteRep (Aᵣ w)] [∀ w, IsDiscreteRep (Cᵣ w)]
   {ar : ∀ w, Rep.res (ψ w).toMonoidHom A ⟶ Aᵣ w} {cr : ∀ w, Rep.res (ψ w).toMonoidHom C ⟶ Cᵣ w}
 
-variable (B) in
 
 noncomputable def tateLocalResB :
     cochainsComplex B ⟶ tateLocalComplex (fun v => Rep.res (φ v).toMonoidHom B)
@@ -141,7 +140,6 @@ theorem tateCupHomotopy_zero_succ (s n : ℕ) (h : 0 + s = n + 1) (hs : s = n + 
       tateCupHomotopyL ψ μᵣ (Cᵥ := Cᵥ) hs x.2 z :=
   rfl
 
-include hμ hμr in
 
 theorem tateCupHomotopy_spec {r s n : ℕ} (h : r + s = n) (x : (tateGlobalComplex A Aᵣ).X r)
     (z : (cochainsComplex B).X s) :

@@ -10,7 +10,6 @@ open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.AUTREP Formali
 
 namespace GlobalTheory.SplitLocEq
 
-open NumberField IsDedekindDomain TensorProduct in
 
 theorem _root_.GlobalTheory.SplitLocEq.conj_entry {L : Type} [Field L] [NumberField L] [IsCMField L]
     {n : ℕ} (x : _root_.ReciprocityTheory.Aut.GA L n) (i j : Fin n) :
@@ -90,7 +89,6 @@ private theorem eq_zero_of_compAt_eq_zero_of_proj_conj_eq_zero {L : Type} [Field
     · exact (hw' w hv).2
   simp [ha, hc]
 
-open NumberField IsDedekindDomain TensorProduct in
 
 theorem _root_.GlobalTheory.SplitLocEq.eq_of_trivOutside_of_loc_eq : ∀ (L : Type) [Field L] [NumberField L]
     [IsCMField L] (n : ℕ) (s : _root_.ReciprocityTheory.Aut.SplitPlace L) (x y : _root_.Formalism.AUTREP.GAf L n),

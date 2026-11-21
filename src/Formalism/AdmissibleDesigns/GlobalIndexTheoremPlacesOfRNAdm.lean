@@ -88,7 +88,6 @@ section Rec
 variable {D : D7} (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i)))
   (ρ : D.nd.X i → (GE D.nd →* GL (Fin D.R.r) (D.nd.O i))) (π : D.nd.X i)
 
-open Classical in
 
 def rN : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i)) :=
   Function.update r π (splitRep (t := D.R.t) (ρ π) (D.nd.chi i))

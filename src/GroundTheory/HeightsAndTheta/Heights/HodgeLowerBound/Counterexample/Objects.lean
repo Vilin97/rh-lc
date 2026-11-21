@@ -24,7 +24,6 @@ end Line
 
 section FS
 
-open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet in
 
 end FS
 
@@ -41,7 +40,6 @@ structure WeightReg (ι : K → Type) [∀ k, Fintype (ι k)] where
     (∀ z : (Σ b, ι b) → ℂ, (∀ b, ∃ i, z ⟨b, i⟩ ≠ 0) → A'.h z = k * A.h z) →
     ∀ z : (Σ b, ι b) → ℂ, (∀ b, ∃ i, z ⟨b, i⟩ ≠ 0) → (reg t A').h z = k * (reg t A).h z
 
-open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet in
 
 def weightRegRef : WeightReg (PBlk 2) where
   reg _ A := (HermLine.ofMetrics (fun k => fsMetric (PBlk 2 k)) A.a).tensor

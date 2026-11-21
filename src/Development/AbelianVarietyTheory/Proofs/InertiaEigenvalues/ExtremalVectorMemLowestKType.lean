@@ -71,7 +71,6 @@ theorem extremalVector_mem_lowestKType (X : RealSide D) {j : Fin D.R.m}
     X.geo.v₀ j (sg0 D X.A3.A) τ ∈ lowT (model X j) τ :=
   (hv.1 τ).2.1
 
-set_option maxHeartbeats 4000000 in
 
 theorem harm_move (h : CopyTw D D' ι e) {ρ : Setup D.ntw} {ρ' : Setup D'.ntw} (hs : SameSetup ρ ρ') (i : D.ntw.Tw)
     (i' : D'.ntw.Tw) (hi : HEq i i') (j : Fin D.R.m) (b : Bool) (P : PolF D (Wc D j).rank (Vc D j).rank)

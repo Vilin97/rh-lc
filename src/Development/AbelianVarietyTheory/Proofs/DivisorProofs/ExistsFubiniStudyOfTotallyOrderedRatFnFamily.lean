@@ -134,7 +134,6 @@ theorem sum_expDiag (w : J → ℝ) (v : J → ℂ) (a : J) :
 
 end GlobalTheory.HSNef.FSExist
 
-open GlobalTheory.HSNef.FSExist in
 
 theorem GlobalTheory.HSNef.exists_isFS : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k),
     ∀ (J : Type) [Fintype J] [Nonempty J] (f : J → X.functionField) (w : J → ℝ), Total f →

@@ -38,7 +38,6 @@ private theorem smulRight_mul_smulRight_of_apply_eq_one {W : Type} [AddCommGroup
   ext x
   simp [h]
 
-open NumberField IsDedekindDomain Matrix in
 
 theorem _root_.GlobalTheory.commuting_endAlgebras_common_fixed_vector :
     ∀ (ι : Type) [Fintype ι] (Wv : ι → Type) [∀ v, AddCommGroup (Wv v)] [∀ v, Module ℂ (Wv v)]

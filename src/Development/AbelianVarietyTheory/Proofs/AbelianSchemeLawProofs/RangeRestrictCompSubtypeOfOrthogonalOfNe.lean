@@ -442,7 +442,6 @@ theorem cubeSign_inrEmb (w : Finset (ι ⊕ₗ κ)) (k : κ) :
     ext; rw [mem_part, Finset.mem_filter]; simp
   rw [cubeSign, card_parts, h1, h2, cubeSign, pow_add]
 
-variable (ι κ) in
 
 noncomputable def partsEquiv : Finset (ι ⊕ₗ κ) ≃ Σ _ : Finset ι, Finset κ where
   toFun w := ⟨part (inlEmb ι κ) w, part (inrEmb ι κ) w⟩

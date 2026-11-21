@@ -131,7 +131,6 @@ theorem finrank_eq_relIndex (K : FinExt l) :
   rw [← h4, mul_comm] at h3
   exact (Nat.eq_of_mul_eq_mul_left hpos h3).symm
 
-set_option maxHeartbeats 800000 in
 
 theorem card_torsion_mul_finrank : ∀ {l : ℕ} [Fact l.Prime] (P : LocPrime l) (K LL : FinExt l) {n : ℕ} (W : LocWach (P.PD K) ↥LL.1 ↥(OL LL) (P.v LL) n), l ≠ 2 → K.1 ≤ Ks K 1 → W.DelF.card * Module.finrank ↥(K0 K) ↥K.1 = l - 1 := by
   intro l _ P K LL n W h2 hK

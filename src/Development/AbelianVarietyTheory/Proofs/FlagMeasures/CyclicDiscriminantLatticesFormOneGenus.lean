@@ -221,7 +221,6 @@ theorem conj_ne (hK : IsCMUnram K) {T : ℕ} (hT : T.Prime) {P : Ideal (𝓞 K)}
   apply hθ
   simpa using P.sub_mem hz h2
 
-omit [StarRing K] in
 
 theorem exists_primes {T : ℕ} (hT : T.Prime)
     (H : ∀ P : Ideal (𝓞 K), P.IsMaximal → (T : 𝓞 K) ∈ P → Ideal.absNorm P = T ∧ (T : 𝓞 K) ∉ P ^ 2) :
@@ -322,7 +321,6 @@ theorem Cyc.gmap {A B : Submodule (𝓞 K) V} {I : Ideal (𝓞 K)} (H : Cyc A B 
   · rw [isomAct_mem_gmap, hg, ← h2]
     simp
 
-omit [NumberField K] [FiniteDimensional K V] in
 
 theorem transfer (g : V ≃ₗ[K] V) {A B A' B' : Submodule (𝓞 K) V} (hA : gmap g A = A') (hB : gmap g B = B')
     (r : 𝓞 K) : (∀ y ∈ A, r • y ∈ B) ↔ ∀ y ∈ A', r • y ∈ B' := by

@@ -64,7 +64,6 @@ def thTj (μ : D.what₂.Tup) (j : ℕ) : Submodule (𝓞 D.what₂.LL) (X.MjH j
 def IjIdx (μ : D.what₂.Tup) (j : ℕ) (w : D.what₂.places.Pl) : ℤ :=
   Formalism.HermitianLatticesTheory.lidx (D.plEq w).asIdeal (X.MjH j).L (thTj X μ j)
 
-variable (D) in
 
 def jwIdx (μ : D.what₂.Tup) (j : ℕ) (w : D.what₂.places.Pl) : ℤ :=
   Formalism.HermitianLatticesTheory.lidx (D.plEq w).asIdeal (TjL D μ j) (TjDual D μ j)
@@ -92,7 +91,6 @@ def HermRat : Prop :=
 def Z0 (μ : D.what₂.Tup) (j : ℕ) : Submodule ℂ (D.what₂.Mt μ j) :=
   (LinearMap.ker (D.what₂.thetaP μ j))ᗮ ⊓ LinearMap.range (D.what₂.eMt μ j)
 
-open Classical in
 
 def hLL (μ : D.what₂.Tup) (j : ℕ) (x y : D.what₂.MtL μ j) : D.what₂.LL :=
   if h : ∃ c : D.what₂.LL, D.what₂.embLL c = inner ℂ (D.what₂.jMt μ j x) (D.what₂.jMt μ j y) then h.choose else 0
@@ -199,7 +197,6 @@ def IsLatIn {R W : Type} [CommRing R] [AddCommGroup W] [Module R W] (M V : Submo
 
 end NForms
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def NChoice.thPe (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j : ℕ) :
     FractionRing (c.Oe w) ⊗[D.ntw.Ok (c.twI w) (c.k' w)]
@@ -210,14 +207,12 @@ def NChoice.thPe (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j : ℕ) :
     (D.nexp.thP (c.twI w) j (c.sd w) (c.k' w) (c.Q w) ((c.psi' w).comp (D.ntw.art (c.twI w) (c.Q w)))).baseChange
       (FractionRing (c.Oe w))
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def NChoice.toFracE (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j : ℕ) :
     c.Oe w ⊗[D.ntw.O (c.twI w)] D.nexp.Fm (c.twI w) j (c.sd w) →ₗ[D.ntw.O (c.twI w)]
       FractionRing (c.Oe w) ⊗[D.ntw.O (c.twI w)] D.nexp.Fm (c.twI w) j (c.sd w) :=
   ((Algebra.linearMap (c.Oe w) (FractionRing (c.Oe w))).restrictScalars (D.ntw.O (c.twI w))).rTensor _
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem NChoice.thPe_one (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j : ℕ)
     (m : D.nexp.MtV (c.twI w) j (c.sd w) (c.k' w) (c.Q w) ((c.psi' w).comp (D.ntw.art (c.twI w) (c.Q w)))) :
@@ -234,7 +229,6 @@ theorem NChoice.thPe_one (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j :
     simp [Algebra.smul_def]
   | add x y hx hy => rw [TensorProduct.tmul_add, map_add (f := _), hx, hy, map_add (f := _)]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure NMj (D : D7) (X : DivX D) (c : NChoice D) where
 
@@ -259,11 +253,9 @@ namespace NMj
 
 variable {D : D7} {X : DivX D} {c : NChoice D} (T : NMj D X c)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end NMj
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end Formalism.BasicNotions
 

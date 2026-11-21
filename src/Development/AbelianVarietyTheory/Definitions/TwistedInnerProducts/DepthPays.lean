@@ -51,7 +51,6 @@ variable {S : D.what₂.Tau → SPar} (M : DSModel V S)
 
 def coefR (v a : ∀ τ, M.H τ) (g : GA D V) : ℂ := ∏ τ, ⟪v τ, M.rep τ (cmp θ τ g) (a τ)⟫_ℂ
 
-open Classical in
 
 def coef (K : Subgroup (GL (Fin V.rank) (Lev.EAf D))) (v a : ∀ τ, M.H τ) (g : GA D V) : ℂ :=
   if Lev.finE V g ∈ K then coefR θ M v a g else 0

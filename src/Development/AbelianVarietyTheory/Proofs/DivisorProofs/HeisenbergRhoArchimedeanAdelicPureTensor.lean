@@ -27,7 +27,6 @@ theorem exists_phase_translate {V : Type} [NormedAddCommGroup V] [NormedSpace �
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-variable (F) in
 
 def evHom : AF F →+* mixedEmbedding.mixedSpace F :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp (RingHom.fst _ _)

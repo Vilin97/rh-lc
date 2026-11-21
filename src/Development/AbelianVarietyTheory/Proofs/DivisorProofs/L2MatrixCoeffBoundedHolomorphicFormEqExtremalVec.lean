@@ -72,7 +72,6 @@ lemma one_mem_UG : (1 : ι → Mt n) ∈ UG Hm := by
   change (1 : Mt n)ᴴ * Hm τ * 1 = Hm τ
   simp
 
-omit [Fintype ι] in
 
 lemma norm_prod_exp (w : Fin n → ℤ) (s : Fin n → ℝ) :
     ‖∏ a, Complex.exp ((s a : ℂ) * Complex.I) ^ w a‖ = 1 := by
@@ -98,7 +97,6 @@ end Local
 
 end GlobalTheory.HolDict.InterpolationCoefficientsInL2
 
-open GlobalTheory.HolDict.InterpolationCoefficientsInL2 in
 
 theorem GlobalTheory.HolDict.inner_reg_eq_coef_extremal : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (w : D.what₂.Tau → Fin V.rank → ℤ) (v : M.Vec), IsInfFam θ → HolShape M → WtIs M w → IsExtVec M v → ∀ (μ : Measure (GA D V)) (𝓕 : Set (GA D V)) (ρ : GA D V →* (Lp ℂ 2 (nuQ V μ 𝓕) →L[ℂ] Lp ℂ 2 (nuQ V μ 𝓕))), FinPair V μ 𝓕 → IsReg V μ 𝓕 ρ → ∀ (J : Set (GA D V)) (χ φ : GA D V → ℂ) F, HolForm θ M w J χ φ → Repr V μ 𝓕 F φ → ∀ u ∈ GinfC V, ⟪F, ρ u F⟫_ℂ = ((‖F‖ ^ 2 : ℝ) : ℂ) * ∏ τ, ⟪(v τ : M.H τ), M.rep τ (archM V (θ τ) u) (v τ : M.H τ)⟫_ℂ := by
   classical

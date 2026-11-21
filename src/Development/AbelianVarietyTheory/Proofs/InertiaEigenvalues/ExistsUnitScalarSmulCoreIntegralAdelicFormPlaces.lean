@@ -64,7 +64,6 @@ end GlobalTheory.ScaleInt
 
 namespace GlobalTheory.ScaleInt
 
-set_option maxHeartbeats 800000 in
 
 theorem smul_mem_baseInt : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ (i : Fin D.R.m) (κ : WeightFamilies.Wt D ((i : ℕ) + 1)), κ.LastPos →
     ∀ (q : Ideal (𝓞 T.Q.c.F)), q.IsPrime → ∀ (P : Set (HeightOneSpectrum (𝓞 T.Q.c.F))), P.Finite →

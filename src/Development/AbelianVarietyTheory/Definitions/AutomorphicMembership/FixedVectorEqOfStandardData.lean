@@ -25,7 +25,6 @@ def TopPt (u : B.Word) (a : I.ι) (k : GA B (B.R.N B.R.m)) : Prop :=
     IsExt (I.rec7 l Z) (z0 X u) (inclE (F := (I.rec7 l Z).host.F) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F)) g'.1 g.1 →
     PtOf (g * k) (tilF I.sel (I.tup a) u d)
 
-set_option maxHeartbeats 800000 in
 
 section Tw
 

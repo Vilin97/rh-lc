@@ -67,7 +67,6 @@ theorem sq_zero (L A : ι → R) (hLL : ∀ i j, Commute (L i) (L j)) (hLA : ∀
   have h3 := congrArg (fun x => (2 : ℂ)⁻¹ • x) h2
   simpa [smul_smul] using h3
 
-omit [DecidableEq ι] [Algebra ℂ R] in
 
 theorem commute_of_unitary_conjugate (T G : R) (L A : ι → R) (hTA : ∀ k, Commute T (A k)) (hGL : ∀ k, Commute G (L k))
     (h : ∑ k, (T * L k - L k * T) * A k + ∑ k, L k * (G * A k - A k * G) = 0) :

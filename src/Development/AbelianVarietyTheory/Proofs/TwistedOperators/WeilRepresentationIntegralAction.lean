@@ -35,7 +35,6 @@ theorem continuous_toMixed : Continuous (InfiniteAdeleRing.ringEquiv_mixedSpace 
   · exact (InfinitePlace.Completion.isometry_extensionEmbedding v.1).continuous.comp
       (continuous_apply _)
 
-variable (F) in
 
 def splitEquiv (κ : Type) :
     ((κ → mixedEmbedding.mixedSpace F) × (κ → FiniteAdeleRing (𝓞 F) F)) ≃+ (κ → AF F) where
@@ -61,7 +60,6 @@ theorem evI_splitEquiv (κ : Type) (p : (κ → mixedEmbedding.mixedSpace F) × 
     (i : κ) : evI F (splitEquiv F κ p i) = p.1 i :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
-variable (F) in
 
 def intPts (κ : Type) : Set (κ → FiniteAdeleRing (𝓞 F) F) :=
   Set.univ.pi fun _ => {b | ∀ v : HeightOneSpectrum (𝓞 F), b.1 v ∈ v.adicCompletionIntegers F}
@@ -76,11 +74,9 @@ theorem isOpen_intPts (κ : Type) [Finite κ] : IsOpen (intPts F κ) :=
 theorem zero_mem_intPts (κ : Type) : (0 : κ → FiniteAdeleRing (𝓞 F) F) ∈ intPts F κ :=
   fun _ _ v => zero_mem (v.adicCompletionIntegers F)
 
-variable (F) in
 
 def g0 (κ : Type) : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ := (intPts F κ).indicator 1
 
-variable (F) in
 
 def r0 (κ : Type) : (κ → AF F) → ℂ := fun x => g0 F κ (fun i => (x i).2)
 

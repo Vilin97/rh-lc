@@ -50,7 +50,6 @@ section UBIntRows
 
 variable {C : Type} [Field C] {n0 : ℕ}
 
-open Classical in
 
 end UBIntRows
 

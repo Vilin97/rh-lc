@@ -69,11 +69,9 @@ section Data
 variable {R : Type} [CommRing R] [IsDomain R] {D : Datum H} {P : DegPre R} [Module (𝓞 E) P.X]
   {oa : letI := H.starRing; P.OAct (𝓞 E)} {F : Type} [Field F] [Algebra (FractionRing R) F]
 
-open Classical in
 
 variable (hB : P.TauBimult)
 
-include hB in
 
 end Data
 
@@ -89,11 +87,9 @@ variable {R : Type} [CommRing R] [IsDomain R] {D : Datum H} {l : Level H} {P : D
   {oa : letI := H.starRing; P.OAct (𝓞 E)} {F F' : Type} [Field F] [Algebra (FractionRing R) F] [Field F']
   [Algebra (FractionRing R) F'] (hB : P.TauBimult)
 
-include hB in
 
 variable (f : F →+* F') (hf : f.comp (algebraMap (FractionRing R) F) = algebraMap (FractionRing R) F')
 
-omit [Module (𝓞 E) P.X] in
 
 end Level
 
@@ -102,7 +98,6 @@ section ThetaShiftProofs
 variable {D : Datum H} {l : Level H} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
   {O' : Type} [CommRing O'] [IsDomain O'] {b : O →+* O'}
 
-open Classical in
 
 end ThetaShiftProofs
 

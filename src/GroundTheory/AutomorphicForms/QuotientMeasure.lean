@@ -343,7 +343,6 @@ theorem lintegral_quotientMeasure (h : RightCosetSpace Γ → ℝ≥0∞) :
 
 variable {Γ} [μ.IsMulLeftInvariant]
 
-omit [LocallyCompactSpace G] [T2Space G] in
 
 theorem map_restrict_eq_quotientMeasure {F : Set G} (hF : IsFundamentalDomain Γ F μ) :
     Measure.map (mk Γ) (μ.restrict F) = quotientMeasure Γ μ :=

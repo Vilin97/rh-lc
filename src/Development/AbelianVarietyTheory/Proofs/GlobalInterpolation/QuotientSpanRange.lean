@@ -8,7 +8,6 @@ open IsLocalRing Matrix
 
 namespace GlobalTheory.RegularQuotient
 
-open IsLocalRing Matrix in
 
 theorem _root_.GlobalTheory.RegularQuotient.quot_regular (Λ : Type) [CommRing Λ]
     [IsRegularLocalRing Λ] {ι κ : Type} [Fintype ι]
@@ -71,7 +70,6 @@ theorem _root_.GlobalTheory.RegularQuotient.quot_regular (Λ : Type) [CommRing �
   exact ⟨IsRegularLocalRing.of_spanFinrank_maximalIdeal_le _ (hgen.trans hdim.ge), hmap, hspan,
     hdim⟩
 
-open IsLocalRing Matrix in
 
 theorem _root_.GlobalTheory.RegularQuotient.exists_extend (Λ : Type) [CommRing Λ]
     [IsRegularLocalRing Λ] {ι : Type} [Fintype ι]
@@ -135,7 +133,6 @@ private theorem linearIndependent_toCotangent_of_sum_mem_maximalIdeal_sq (A : Ty
   rw [← ha i, IsLocalRing.residue_eq_zero_iff]
   exact hind a hsum i
 
-open IsLocalRing Matrix in
 
 theorem _root_.GlobalTheory.RegularQuotient.quotient_span_range : ∀ (A : Type) [CommRing A] [IsRegularLocalRing A] (d k : ℕ)
     (x : Fin k → A),

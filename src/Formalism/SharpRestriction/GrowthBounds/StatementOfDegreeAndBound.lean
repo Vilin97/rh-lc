@@ -287,7 +287,6 @@ def XXZ (O : Type) [CommRing O] {N r K : ℕ}
     Submodule O (MvPolynomial (Fin N × Fin (r + K)) O) :=
   Submodule.span O {G | ∃ q ∈ PP, ∃ I' I'', IsSt q.1 I' ∧ IsSt q.2 I'' ∧ G = PsiPl O q.1 I' * PsiTan O q.2 I''}
 
-open Classical in
 
 def glOpsE (F : Type*) [Field F] {N m k : ℕ} (LL : Letters (Fin N)) (S : Set (Fin N)) (e : Fin m → Fin k) :
     GLOps m F (MvPolynomial (Fin N × Fin k) F) :=

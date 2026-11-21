@@ -18,7 +18,6 @@ universe u
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {F : Type*} [Field F]
 
-omit [DecidableEq K] in
 
 theorem chartMonomial_add (u : ∀ k, ι k) (a c : K → ℕ) :
     (chartMonomial u (a + c) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) = chartMonomial u a * chartMonomial u c := by

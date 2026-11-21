@@ -28,7 +28,6 @@ end Lattice
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks}
 
-variable (Pr) in
 
 def NF (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) (h : AutY X R j) : Prop :=
   ∃ (e : Fin (cOf R j) → ℤ) (z : Sp X.E (R.N j)),
@@ -36,13 +35,11 @@ def NF (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) (h : AutY X R j) : Prop :=
     z ∈ stdAt X.E (R.N j) P ∧
     h '' (lamYat (Pr := Pr) (R := R) j P : Set (Sp X.E (R.N j + cOf R j))) = nfLat P (R.N j) (cOf R j) e z
 
-variable (Pr) in
 
 def Sandwich (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) (h : AutY X R j) : Prop :=
   (∀ x ∈ lamYat (Pr := Pr) (R := R) j P, ∃ y ∈ lamYat (Pr := Pr) (R := R) j P, h y = x) ∧
     ∀ x ∈ lamYat (Pr := Pr) (R := R) j P, ((qOf P : X.E) ^ j) • h x ∈ lamYat (Pr := Pr) (R := R) j P
 
-variable (Pr R) in
 
 def InclAt : Prop :=
   ∀ (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)), P ∉ Pr.vGs → ∀ h k : AutY X R j, NF Pr j P h →

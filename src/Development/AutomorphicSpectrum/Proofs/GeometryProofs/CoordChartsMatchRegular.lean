@@ -59,7 +59,6 @@ theorem unitAt_mul {ξ : Spec (CommRingCat.of Ω) ⟶ X} {p : Cpt ξ} {s a : Ω}
 variable (o F : Type) [CommRing o] [IsDomain o] [Field F] [Algebra o F] [IsFractionRing o F]
   [Algebra o Ω] [Algebra F Ω] [IsScalarTower o F Ω]
 
-include F in
 
 theorem algebraMap_ne_zero {d : o} (hd : d ≠ 0) : algebraMap o Ω d ≠ 0 := by
   rw [IsScalarTower.algebraMap_apply o F Ω]

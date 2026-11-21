@@ -19,8 +19,6 @@ namespace GlobalTheory.PolFan.TameZ
 
 variable {g n m : ℕ}
 
-variable (g) in
-open Classical in
 
 variable {φ : InvFun ℤ}
 

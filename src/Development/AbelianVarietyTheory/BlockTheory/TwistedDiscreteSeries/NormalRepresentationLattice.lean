@@ -95,7 +95,6 @@ def LastSteps : Prop :=
       ∀ η, hat ψ ν ε (cosetInd _ yb) η ≠ 0 →
         ∀ y, Submodule.Quotient.mk y = yb → ε * (η ⬝ᵥ y) ∈ powInt ϖ (-((s : ℤ) + 1))
 
-variable (k) in
 
 def ChainSizes : Prop :=
   ∀ ϖ : kˣ, valuation k (ϖ : k) = uniformizer k →
@@ -108,6 +107,5 @@ def ChainSizes : Prop :=
       NormalReps (Chain.ofTwist δ hδ μ₀ F Ftop) ϖ ψ ν ∧ DepthOne (Chain.ofTwist δ hδ μ₀ F Ftop) ϖ ψ ν ∧
         LastSteps (Chain.ofTwist δ hδ μ₀ F Ftop) ϖ ψ ν
 
-variable (k) in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.NormalRepresentationLattice

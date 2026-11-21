@@ -206,7 +206,6 @@ theorem strictMono_int_exists (e : ℤ → ℤ) (he : StrictMono e) (x : ℤ) : 
   have := hmin (j - 1) h
   omega
 
-open Classical in
 
 def nonW (F : Frames n' r) (j : ℤ) : Finset ℤ := (F.letters j).filter fun x => ¬ F.IsW j x
 

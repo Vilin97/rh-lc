@@ -281,7 +281,6 @@ theorem tsum_reindex (G : Matrix (Fin T.rank) (Fin ρ) D.host.E → ℂ) :
     simpa only [Matrix.add_mul, HypDec.q0, HypDec.qY, Matrix.mul_assoc d.e, Matrix.mul_assoc d.i₀, Matrix.mul_assoc d.e',
       Matrix.mul_assoc T'.gram⁻¹, hY, h0, Matrix.mul_zero, add_zero, Matrix.one_mul] using this
 
-set_option maxHeartbeats 1000000 in
 
 theorem inner_mean (hψ : IsStdChar D ψ (-1)) (v : GlobalTheory.Unf.VolM D T.rank ρ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
     {μ : Measure (Mx D t ρ)} {𝓕 : Set (Mx D t ρ)} (hμ : IsCovolOne (ratMx D t ρ) μ 𝓕)

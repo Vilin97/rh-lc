@@ -377,8 +377,6 @@ private lemma mapDomain_sideRow_inr {n : ℕ} (m : _root_.Formalism.IncomingBoun
   rw [Finset.sum_eq_single ρ (fun b _ hb => by simp [hb]) (by simp)]
   simp
 
-open scoped BigOperators in
-variable {C : Type} [Field C] {σ κ : Type} in
 
 theorem _root_.GlobalTheory.blockValue_rows : _root_.Formalism.L2.FormalSeriesBounds.BiValue := by
   unfold _root_.Formalism.L2.FormalSeriesBounds.BiValue

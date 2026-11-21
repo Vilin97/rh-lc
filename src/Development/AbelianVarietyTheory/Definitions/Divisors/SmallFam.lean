@@ -21,7 +21,6 @@ variable {k : Type} [CommRing k] {X : Scheme.{0}} [IsIntegral X] {p : X ⟶ Sp k
 def Le (B A : HermLB p) : Prop :=
   ∃ P : Pair p, P.L = A ∧ P.A = B ∧ (1 : X.functionField) ∈ P.Bl 1 (-1) 1
 
-omit [IsIntegral X] in
 
 def HtNef (M : HermLB p) (D : ℕ) : Prop :=
   M.SemiPos D ∧ ∀ h : X → ℝ, M.IsArithHeight h → ∀ x, 0 ≤ h x

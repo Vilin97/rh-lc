@@ -119,7 +119,6 @@ lemma resR_injective_of_le {V W : X.Opens} (h : W ≤ V) (h' : V ≤ W) :
   rw [resR_resR, resR_resR, resR_refl, resR_refl] at this
   exact this
 
-variable (P : PMod X) in
 
 noncomputable def dualAb : TopCat.Presheaf Ab X where
   obj U := AddCommGrpCat.of (DualSec P U.unop)
@@ -131,7 +130,6 @@ noncomputable instance (P : PMod X) (U : (Opens X)ᵒᵖ) :
     Module ((X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj U) ((dualAb P).obj U) :=
   inferInstanceAs (Module (ringOn X U.unop) (DualSec P U.unop))
 
-variable (P : PMod X) in
 
 noncomputable def dualPre : PMod X :=
   PresheafOfModules.ofPresheaf (dualAb P) (fun _ _ f r φ => DualSec.restr_smul f.unop.le r φ)

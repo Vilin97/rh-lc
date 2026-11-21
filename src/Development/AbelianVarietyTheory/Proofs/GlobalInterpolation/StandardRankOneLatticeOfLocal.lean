@@ -281,11 +281,8 @@ theorem normOne_detI {N : Submodule (𝓞 E) (Sp E n)} (hN : IsSdLat N) : NormOn
   rw [HeightOneSpectrum.valuation_of_algebraMap] at h7
   exact (HeightOneSpectrum.intValuation_eq_one_iff).1 h7 h6
 
-omit [NumberField E] [StarRing E] in
 
-omit [NumberField E] [StarRing E] in
 
-omit [NumberField E] [StarRing E] in
 
 theorem ordDet_eq {P : HeightOneSpectrum (𝓞 E)} {N : Submodule (𝓞 E) (Sp E n)} {f : Sp E n ≃ₗ[E] Sp E n} (hf : IsFr P N f) :
     ordDet P N = ordE P (dt f) := by
@@ -312,6 +309,5 @@ theorem mem_localization_one (P : HeightOneSpectrum (𝓞 E)) (x : E) : x ∈ lo
   · rintro ⟨r, s, hs, h⟩
     exact ⟨s, hs, Submodule.mem_one.2 ⟨r, by rw [← h, Algebra.smul_def]⟩⟩
 
-omit [StarRing E] in
 
 end GlobalTheory.CharValCompare

@@ -173,7 +173,6 @@ theorem listDiff_eq_mixedDiff (f : (K → ℤ) → ℤ) (c : ℕ) (L : List K) (
 
 end EventualPolynomial
 
-open EventualPolynomial in
 
 theorem EventualPolynomial.proof : EventualPolynomial.Statement := by
   intro K _ _ n f hf

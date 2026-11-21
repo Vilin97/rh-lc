@@ -16,7 +16,6 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.Ar.Fan.NewCellsStarMultiplicity
 
-open GlobalTheory.PolFan.StarNewCell in
 
 theorem cellMult_lt_of_star_new : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZero O] [Module.Finite ℤ O] (bar : O → O), CMOrd O bar → ∀ (q : ℕ) (φ lab w ψ' : InvFun O),
     SimpLab bar q φ lab → IsCentreSet bar q φ w →

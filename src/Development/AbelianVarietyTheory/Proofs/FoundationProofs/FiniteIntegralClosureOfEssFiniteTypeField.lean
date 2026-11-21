@@ -204,7 +204,6 @@ theorem coneHom_of_isHomogeneous (ρ : σ → L) {p : MvPolynomial σ o} {n : �
   simp only [Finsupp.prod, mul_pow, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, map_mul,
     map_prod, map_pow, Polynomial.algebraMap_apply, mul_assoc, Finsupp.degree_apply]
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem isHomogeneous_ker_coneHom (ρ : σ → L) :
     (RingHom.ker (coneHom o ρ)).IsHomogeneous (MvPolynomial.homogeneousSubmodule σ o) := by
@@ -412,7 +411,6 @@ theorem finite_integralClosure_of_injective (L : Type*) [Field L] [CharZero o] [
   · rintro ⟨_, a, ha, rfl⟩
     exact ha
 
-include o in
 
 theorem finite_integralClosure_of_essFiniteType_field (L : Type*) [Field L] [CharZero L]
     [Algebra R L] [Algebra.EssFiniteType R L] : Module.Finite R (integralClosure R L) := by
@@ -454,7 +452,6 @@ theorem finite_of_isIntegralClosure_dedekind [CharZero o] [IsDomain R] [Faithful
   haveI := finite_integralClosure_dedekind o R K L
   .equiv (IsIntegralClosure.equiv R (integralClosure R L) L C).toLinearEquiv
 
-include o in
 
 theorem finite_integralClosure_of_essFiniteType_of_isReduced (B : Type*) [CommRing B]
     [IsReduced B] [IsAddTorsionFree B] [Algebra R B] [Algebra.EssFiniteType R B] :
@@ -551,7 +548,6 @@ theorem isFinite_fromNormalization_of_dense [IsReduced X] {D : Set X} (hD : Dens
     (.of_surjective _ (ConcreteCategory.bijective_of_isIso (f.normalizationObjIso hU).inv).2)
     (RingHom.finite_algebraMap.mpr this)
 
-omit g in
 
 theorem finite_genericPoints_inter [IsLocallyNoetherian X] (W : X.Opens)
     (hW : IsCompact (W : Set X)) : (genericPoints X ∩ W).Finite := by
@@ -615,7 +611,6 @@ theorem isFinite_fromNormalization_of_genericallyFinite [IsIntegral X] [CharZero
     (hfin : (f.stalkMap (genericPoint X)).hom.Finite) : IsFinite f.fromNormalization :=
   isFinite_fromNormalization_of_isIntegral f g hfin.finiteType.essFiniteType
 
-omit f in
 
 theorem isFinite_fromNormalization_SpecMap_fromSpecStalk (y : Y) {L : Type u} [Field L]
     [CharZero L] (φ : Y.presheaf.stalk y ⟶ .of L) (hφ : φ.hom.EssFiniteType) :
@@ -628,7 +623,6 @@ theorem isFinite_fromNormalization_SpecMap_fromSpecStalk (y : Y) {L : Type u} [F
       (Scheme.Hom.stalkMap_surjective _ _)).essFiniteType (essFiniteType_stalkMap_SpecMap φ hφ x)
   exact h.residueFieldMap
 
-omit f g in
 
 end Schemes
 

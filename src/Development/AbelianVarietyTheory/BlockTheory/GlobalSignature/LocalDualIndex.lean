@@ -90,7 +90,6 @@ section Densities
 
 variable (F E : Type) [Field F] [NumberField F] [Field E] [Algebra F E]
 
-open Classical in
 
 def etaV (v : HeightOneSpectrum (𝓞 F)) : ℝ :=
   if IsField (Fv F v ⊗[F] E) then -1 else 1

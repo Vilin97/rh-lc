@@ -24,11 +24,8 @@ end Lift
 
 variable (k : Type) [CommRing k] [Algebra ℚ k] [Algebra R k]
 
-omit [Algebra ℚ k] in
 
-omit [Algebra ℚ k] in
 
-omit [Algebra ℚ k] in
 
 theorem Dof_expS (F : Fin d → PS k 2 d) (u : Fin d → k) {g : PS k 1 d}
     (hg : constantCoeff g = 0) : Dof F u (FB.expS k g) = FB.expS k g * Dof F u g := by

@@ -9,7 +9,6 @@ open scoped BigOperators ComplexOrder
 
 namespace GlobalTheory.CompanionTheory.CommAlg
 
-open AddMonoidAlgebra in
 
 theorem ker_eq_span_single_sub_one :
     ∀ (k X A : Type) [Field k] [AddCommGroup X] [CommRing A] [Nontrivial A] [Bialgebra k A]

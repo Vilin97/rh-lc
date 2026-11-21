@@ -131,7 +131,6 @@ theorem inter_mem_fixedBy (hH : IsHerm H) {A₁ A₂ : AddSubgroup V} [Finite (A
     rw [AddSubgroup.coe_add, alpha_opU_add hH hd₂ hs₂ a.2 s.2, opU_of_fixed hs₁ hF (AddSubgroup.mem_addSubgroupOf.1 hs), opU_mul,
       ← mul_assoc (α s), alpha_sq hs₂ s.2, one_mul]
 
-open Classical in
 
 theorem sum_chi (hH : IsHerm H) {A₁ A₂ : AddSubgroup V} [Fintype (A₁ ⧸ A₂.addSubgroupOf A₁)]
     (hd₁ : IsSelfDual H A₁) (hd₂ : IsSelfDual H A₂) {y : V} (hy : y ∈ A₂) :
@@ -219,7 +218,6 @@ theorem inter_inter (hH : IsHerm H) {A₁ A₂ : AddSubgroup V} [Finite (A₁ �
   rw [← h2]
   field_simp
 
-omit [Module ℂ V] in
 
 theorem finite_quot {A₁ A₂ : AddSubgroup V} (hfg : A₂.FG) (h : ∀ x ∈ A₂, ∃ m : ℕ, 0 < m ∧ m • x ∈ A₁) :
     Finite (A₂ ⧸ A₁.addSubgroupOf A₂) := by

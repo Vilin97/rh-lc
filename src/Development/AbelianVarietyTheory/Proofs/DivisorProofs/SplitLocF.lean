@@ -14,7 +14,6 @@ namespace GlobalTheory.HeckeSplitGen
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F E) in
 
 def intAEF : AddSubgroup (Af F ⊗[F] E) :=
   AddSubgroup.closure {y | ∃ a : Af F, (∀ v : HeightOneSpectrum (𝓞 F), a v ∈ v.adicCompletionIntegers F) ∧
@@ -23,7 +22,6 @@ def intAEF : AddSubgroup (Af F ⊗[F] E) :=
 def splitLocF (σ : E →ₐ[F] E) : Set (AEF F E)ˣ :=
   {x | ∃ e, IsSplitIdemF σ e ∧ (e + cAF σ e) * ((x : AEF F E) - 1) = (x : AEF F E) - 1}
 
-variable (F E) in
 
 def modSetF (N : ℕ) : Set (AEF F E)ˣ :=
   {x | infPartF F E (x : AEF F E) = 1 ∧

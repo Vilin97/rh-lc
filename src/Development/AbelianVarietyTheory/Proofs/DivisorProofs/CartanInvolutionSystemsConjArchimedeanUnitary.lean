@@ -17,7 +17,6 @@ open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNo
 noncomputable section
 namespace GlobalTheory.ConjCartan
 
-open scoped ComplexOrder in
 
 theorem exists_conj_cartan_matrix : ∀ (n : ℕ) (M θ₁ θ₂ : Matrix (Fin n) (Fin n) ℂ), Mᴴ = M → IsCartan M θ₁ → IsCartan M θ₂ →
     ∃ u v : Matrix (Fin n) (Fin n) ℂ, u * v = 1 ∧ uᵀ * M * u.map star = M ∧ u * θ₁ = θ₂ * u := by
@@ -112,7 +111,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem piInf_inclR {w : InfinitePlace F} (τ : EmbOver E w) (x : E) : piInf τ (inclR (F := F) (AF F) x) = τ.1 x := by
   simp [piInf, inclR, compInf, infEmb_tmul]
 
-variable (F E) in
 
 def archIdeal : Ideal (AE F E) where
   carrier := {z | At (evI F) z}

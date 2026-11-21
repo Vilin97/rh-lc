@@ -77,7 +77,6 @@ variable {K₁ K₂ : Type*} [DecidableEq K₁] [DecidableEq K₂] {ι₁ : K₁
   (e : K₁ ≃ K₂) (φ : (Σ k, ι₁ k) ≃ (Σ k, ι₂ k)) (hφ : ∀ v, (φ v).1 = e v.1)
   {F : Type*} [Field F]
 
-include hφ in
 
 theorem weight_mapDomain (d : (Σ k, ι₁ k) →₀ ℕ) :
     Finsupp.weight (blockWeight ι₂) (Finsupp.mapDomain φ d) =
@@ -93,7 +92,6 @@ theorem weight_mapDomain (d : (Σ k, ι₁ k) →₀ ℕ) :
     simp only [blockWeight, hφ, Pi.smul_apply, Function.comp_apply, Pi.single_apply,
       Equiv.symm_apply_eq]
 
-include hφ in
 
 theorem gradedPiece_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₁)) (d : K₂ → ℕ) :
     gradedPiece (I.map (renameEquiv F φ)) d =
@@ -120,14 +118,12 @@ theorem gradedPiece_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.
     funext k
     simp
 
-include hφ in
 
 theorem finrank_gradedPiece_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₁)) (d : K₂ → ℕ) :
     Module.finrank F (gradedPiece (I.map (renameEquiv F φ)) d) =
       Module.finrank F (gradedPiece I (d ∘ e)) := by
   rw [gradedPiece_map_rename e φ hφ, LinearEquiv.finrank_map_eq]
 
-include hφ in
 
 theorem hilbFn_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₁)) (m : K₂ → ℤ) :
     hilbFn (I.map (renameEquiv F φ)) m = hilbFn I (m ∘ e) := by
@@ -139,7 +135,6 @@ theorem hilbFn_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.M
     exact congrArg _ (finrank_gradedPiece_map_rename e φ hφ I (fun k => (m k).toNat))
   · rw [if_neg h, if_neg (mt hpos.2 h)]
 
-include hφ in
 
 theorem intNum_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι₁)) {n : ℕ} (bs : Fin n → K₂ → ℤ) :
     intNum F (I.map (renameEquiv F φ)) bs = intNum F I (fun i => bs i ∘ e) := by

@@ -15,7 +15,6 @@ namespace Formalism.Q3
 def IsMQ {k : ℕ} {E : Type*} [Field E] [Algebra ℚ E] (a : Fin k → ℤ) (α : Fin k → E) : Prop :=
   (∀ i, α i ^ 2 = (a i : E)) ∧ IntermediateField.adjoin ℚ (Set.range α) = ⊤
 
-open Classical in
 
 def galSign {k : ℕ} {E : Type*} [Field E] [Algebra ℚ E] (α : Fin k → E) (σ : Gal(E/ℚ)) :
     Fin k → ℤˣ :=
@@ -36,6 +35,5 @@ def MQKummer : Prop :=
     ∀ d : ℚ, IsSquare (algebraMap ℚ E d) ↔
       ∃ S : Finset (Fin k), IsSquare (d * ∏ i ∈ S, (a i : ℚ))
 
-open Classical in
 
 end Formalism.Q3

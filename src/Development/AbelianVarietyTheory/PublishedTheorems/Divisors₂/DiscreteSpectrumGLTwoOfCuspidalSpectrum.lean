@@ -29,7 +29,6 @@ structure IsDiscreteWith (ω : HChar E) (V : Submodule ℂ (Sm E a)) : Prop wher
   ne_bot : V ≠ ⊥
   irred : ∀ W ≤ V, IsStable W → W = ⊥ ∨ W = V
 
-variable (a) in
 
 def detLine (χ : HChar E) : Submodule ℂ (Sm E a) := Submodule.span ℂ {mulChi a χ (oneFn E a)}
 

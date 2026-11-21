@@ -52,7 +52,6 @@ theorem OE_mul (v : HeightOneSpectrum (𝓞 F)) {a b : v.adicCompletion F ⊗[F]
 theorem OE_one (v : HeightOneSpectrum (𝓞 F)) : (1 : v.adicCompletion F ⊗[F] E) ∈ OE E v :=
   AddSubgroup.subset_closure ⟨1, one_mem _, 1, by simp [Algebra.TensorProduct.one_def]⟩
 
-variable (E) in
 
 def OEsub (v : HeightOneSpectrum (𝓞 F)) : Subring (v.adicCompletion F ⊗[F] E) :=
   { OE E v with

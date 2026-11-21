@@ -21,8 +21,6 @@ private lemma isCl_apply_eq_of_isConj {G : Type} [Group G] {f : G → ℂ}
   rw [inv_inv] at this
   exact this.symm
 
-open Polynomial SemidirectProduct in
-open scoped Classical in
 
 theorem _root_.GlobalTheory.Shin.shLift_isNorm_and_twisted_inv : ∀ (F F' : Type) [Field F] [Field F']
     [Algebra F F'] [Finite F'] (s : F' ≃ₐ[F] F'), (∀ t : F' ≃ₐ[F] F', t ∈ Subgroup.zpowers s) →

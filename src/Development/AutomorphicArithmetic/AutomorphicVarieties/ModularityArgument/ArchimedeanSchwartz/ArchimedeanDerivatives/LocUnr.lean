@@ -43,7 +43,6 @@ private theorem anti_sq :
   ext i j
   simp [Matrix.one_apply]
 
-variable (F n) in
 
 private def wl : GL (Fin n) F :=
   ⟨(1 : Matrix (Fin n) (Fin n) F).submatrix Fin.rev id, (1 : Matrix (Fin n) (Fin n) F).submatrix Fin.rev id, anti_sq, anti_sq⟩

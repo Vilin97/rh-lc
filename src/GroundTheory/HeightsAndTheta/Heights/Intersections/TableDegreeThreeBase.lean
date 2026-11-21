@@ -21,7 +21,6 @@ section Pull
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
   {K' : Type*} [Fintype K'] {ι' : K' → Type*} [∀ k, Fintype (ι' k)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 
 theorem blocks_ne_zero_restrict {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {z : (Σ k', ι' k') → ℂ} (hz : ∀ k', ∃ i', z ⟨k', i'⟩ ≠ 0) (k : K) : ∃ i, z (v ⟨k, i⟩) ≠ 0 := by
@@ -50,7 +49,6 @@ theorem pullDeg_add (κ : K → K') (a b : K → ℤ) : pullDeg κ (a + b) = pul
   simp only [pullDeg, Function.extend, Pi.add_apply]
   split_ifs <;> simp
 
-omit [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)] in
 
 theorem IsPullHerm.tensor {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {A B : HermLine ι}
     {A' B' : HermLine ι'} (hA : IsPullHerm κ v A A') (hB : IsPullHerm κ v B B') :
@@ -67,7 +65,6 @@ section Algebra
 
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] in
 
 theorem isMultiHomog_prod_X_pow [DecidableEq K] {J : Type*} [Fintype J] (q : J → Σ k, ι k) (e : J → ℕ) :
     IsMultiHomog (∏ j, X (q j) ^ e j : MRing ι)

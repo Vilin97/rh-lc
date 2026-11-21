@@ -34,7 +34,6 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
   {x : Fin (N + 1) → Ω} {E : Type v} [AddCommGroup E] [Module Ω E] [Module S E]
   [IsScalarTower S Ω E]
 
-omit [IsScalarTower S Ω E] in
 
 theorem tildeSys_twist_mono {M M' : FinGradedSub (S := S) (x := x) E} (h : ∀ c, M.piece c ≤ M'.piece c)
     (Q : SubSystem S x Ω) (I : Chart x) :

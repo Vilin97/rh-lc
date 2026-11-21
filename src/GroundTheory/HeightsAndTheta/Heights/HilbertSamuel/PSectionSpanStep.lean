@@ -51,7 +51,6 @@ theorem prod_pow_mem {y : (Σ k, ι k) → Ω} {a : K → ℤ} {q : ℕ} {w : Fi
 
 end SectionSpanStep
 
-open SectionSpanStep in
 
 theorem SectionSpanStep.proof (hH : SpanStepHomog.Statement) (hS : SerreGraded.Statement) :
     SectionSpanStep.Statement := by

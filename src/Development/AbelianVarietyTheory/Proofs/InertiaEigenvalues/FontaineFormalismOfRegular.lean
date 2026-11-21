@@ -229,7 +229,6 @@ theorem comparison_bijective (hf : FracInv PD) (hu : LineUnit PD) [FiniteDimensi
   rw [← LinearMap.range_eq_top, comparison, LinearMap.range_liftBaseChange, Submodule.range_subtype,
     (isCrys_iff_span PD hf hu ρ).1 h]
 
-omit [IsDomain B] in
 
 theorem baseChange_mem {ρ : Representation LL G V} {ρ' : Representation LL G V'} {f : V →ₗ[LL] V'}
     (hf : IsEquivariant ρ ρ' f) (x : B ⊗[Qp] V) (hx : x ∈ DcrisK₀ PD ρ) :
@@ -320,7 +319,6 @@ theorem tensorCrys (hf : FracInv PD) (hu : LineUnit PD) : TensorCrys PD LL := by
     rw [prodB_tmul, mul_one] at this
     exact this
 
-omit [IsDomain B] in
 
 theorem exists_dual_equiv (V : Type) [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
     [FiniteDimensional LL V] : ∃ (lam : LL →ₗ[Qp] Qp) (e : Dual LL V ≃ₗ[Qp] Dual Qp V),
@@ -399,8 +397,6 @@ theorem tensorB_eq (f : V →ₗ[LL] V') (x : V ⊗[Qp] B) :
   | tmul v b => simp [tensorB]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-omit [IsDomain B] [FiniteDimensional Qp LL] in
-variable {LL} in
 
 theorem left_exact {V₀ : Type} [AddCommGroup V₀] [Module LL V₀] [Module Qp V₀] [IsScalarTower Qp LL V₀]
     {ρ₀ : Representation LL G V₀} {ρ : Representation LL G V} {ρ' : Representation LL G V'}
@@ -469,7 +465,6 @@ theorem dcrisExact (hf : FracInv PD) : DcrisExact PD LL := by
   rw [← h5, mul_add] at c₁
   omega
 
-omit [FiniteDimensional Qp LL] in
 
 theorem exists_pow_sigma (hc : Nat.card (K₀ →ₐ[Qp] LL) = finrank Qp K₀) (τ τ' : K₀ →ₐ[Qp] LL) :
     ∃ n : ℕ, ∀ c, τ' c = τ (PD.σ^[n] c) := by
@@ -496,8 +491,6 @@ theorem exists_pow_sigma (hc : Nat.card (K₀ →ₐ[Qp] LL) = finrank Qp K₀) 
   rw [AlgEquiv.coe_pow]
   rfl
 
-omit [IsDomain B] [FiniteDimensional Qp LL] in
-variable {LL} in
 
 theorem letter_le (ρ : Representation LL G V) [Module.Finite LL ↥(Dcris PD ρ)] (τ τ' : K₀ →ₐ[Qp] LL)
     (h : ∀ c, τ' c = τ (PD.σ c)) : finrank LL ↥(DcrisL PD ρ τ') ≤ finrank LL ↥(DcrisL PD ρ τ) := by
@@ -526,8 +519,6 @@ theorem letter_le (ρ : Representation LL G V) [Module.Finite LL ↥(Dcris PD ρ
   exact LinearMap.finrank_le_finrank_of_injective (f := (φVB PD (LL := LL)).restrict h3)
     fun x y hxy => Subtype.ext (h4 (congrArg Subtype.val hxy))
 
-omit [IsDomain B] [FiniteDimensional Qp LL] in
-variable {LL} in
 
 theorem finrank_eq_sum_letters [FiniteDimensional Qp K₀] [Fintype (K₀ →ₐ[Qp] LL)]
     (hc : Fintype.card (K₀ →ₐ[Qp] LL) = finrank Qp K₀) {M : Type} [AddCommGroup M] [Module LL M]

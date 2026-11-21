@@ -47,7 +47,6 @@ theorem fiveTerm_exact :
     · intro ht
       exact exists_transgression_eq A N hN t ht
 
-include hN in
 
 theorem infRes_exact {q : ℕ} (hq : q ≠ 0)
     (hA : ∀ i, 0 < i → i < q → IsZero (cohomology (Rep.res N.subtype A) i)) :

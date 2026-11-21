@@ -105,7 +105,6 @@ include hΘ in
 theorem lam_inv_right {T : Over S} (x y : T ⟶ A) : lam (cls L hL) x y⁻¹ = -lam (cls L hL) x y := by
   rw [lam_comm, lam_inv_left hL hΘ, lam_comm]
 
-include hΘ in
 
 theorem lam_ev_adj {s : A ⟶ A} {ev : ℤ[X] → (A ⟶ A)} (h1 : ev 1 = 𝟙 A)
     (hadd : ∀ F G, ev (F + G) = ev F * ev G) (hX : ∀ F, ev (X * F) = ev F ≫ s) {T : Over S}

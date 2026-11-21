@@ -17,7 +17,6 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm
 
-open GlobalTheory.CompanionTheory.IwahoriContraction in
 
 end UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm
 

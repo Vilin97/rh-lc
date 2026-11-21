@@ -99,6 +99,5 @@ theorem fj_mul_eq_zero {E : Type} [Field E] [NumberField E] [IsCMField E] {r : â
   simp only [hz] at hm
   exact hm.unique hasSum_zero
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.CuspMulUnit

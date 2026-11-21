@@ -134,7 +134,6 @@ def crd (i : ℕ) (hi : i ≤ d.R.m) : (d.sp.X i).V ≃ₗ[d.host.E] (Fin (d.R.N
 def repr (u : d.what₂.Word) (i : ℕ) (c : StCl (Pr := d.Pr) d.W d.lev u i) : DecoSet d.X.E (d.R.N i) (d.Pr.vT u) d.Pr.vGs :=
   (stepGSD (Pr := d.Pr) d.W d.lev u i).outSec.rep c
 
-open Classical in
 
 def clsLat (u : d.what₂.Word) (i : ℕ) (c : StCl (Pr := d.Pr) d.W d.lev u i) : Submodule (𝓞 d.host.E) (d.sp.X i).V :=
   if hi : i ≤ d.R.m then

@@ -9,7 +9,6 @@ open GlobalTheory.JR MeasureTheory Filter Topology
 
 namespace GlobalTheory.JR
 
-open TopologicalGroup in
 
 theorem integral_inducedMeasure_complex {A B C : Type} [Group A] [Group B] [Group C]
     [TopologicalSpace A] [TopologicalSpace B] [TopologicalSpace C] [IsTopologicalGroup A]

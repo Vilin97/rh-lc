@@ -114,7 +114,6 @@ theorem mem_pair (hJ₁ : ∀ i j, σ (W₁.J j i) = -W₁.J i j) {u : UA σ W.J
       rw [e, Matrix.mulVec_add, hc, hb, Matrix.mulVec_smul, hx, Matrix.mulVec_add, Matrix.mulVec_smul, incM_mulVec]
       abel
 
-set_option maxHeartbeats 800000 in
 
 theorem two_orders [MeasurableSpace (Multiplicative (AE F E))] [BorelSpace (Multiplicative (AE F E))] (hd : W.J.det ≠ 0)
     (hJ₁ : ∀ i j, σ (W₁.J j i) = -W₁.J i j) {f c₀ c φ c' : UA σ W.J → ℂ} (hf : IsAut f)
@@ -206,7 +205,6 @@ theorem two_orders [MeasurableSpace (Multiplicative (AE F E))] [BorelSpace (Mult
       rw [hA, incM_mulVec, fa_inc]; rfl) (lat_of_good G2) LR
   exact uniq_sub cS LS A1 (st2 f φ c' hf.1 hf.2 hφ hc')
 
-set_option maxHeartbeats 800000 in
 
 theorem two_kill (hd : W.J.det ≠ 0) (hJ₁ : ∀ i j, σ (W₁.J j i) = -W₁.J i j) {f c₀ c : UA σ W.J → ℂ} (hf : IsAut f) (hm : Mod f)
     (h0 : IsCT H f c₀) (h1 : ∀ lev : UA σ W₁.J → UA σ W.J, (∀ y, IsLevi H 1 y (lev y)) →

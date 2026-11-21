@@ -116,19 +116,14 @@ section Adelic
 variable (e : IndefiniteRowSideFullHecke.IdeleNormTraceForm.Af ≃ₐ[ℚ] IndefiniteRowSideFullHecke.AdelicScalarMultiplier.Af)
   (he : ∀ a, e a ∈ IndefiniteRowSideFullHecke.AdelicScalarMultiplier.zHat ↔ a ∈ IndefiniteRowSideFullHecke.IdeleNormTraceForm.Zhat)
 
-include he in
 
-include he in
 
 section Ideles
 
 variable {K : Type} [Field K] [NumberField K]
 
-include he in
 
-include he in
 
-include he in
 
 end Ideles
 
@@ -137,13 +132,10 @@ section Groups
 variable {E : Type} [Field E] [NumberField E]
   {W : Type} [AddCommGroup W] [Module ℚ W] [Module E W] [IsScalarTower ℚ E W]
 
-omit [Module E W] [IsScalarTower ℚ E W] in
 
 include he
 
-omit [Module E W] [IsScalarTower ℚ E W] in
 
-omit [Module E W] [IsScalarTower ℚ E W] in
 
 variable [Module (𝓞 E) W] [IsScalarTower (𝓞 E) E W]
 
@@ -157,21 +149,16 @@ variable {K : Type} [Field K] [NumberField K] {d : ℕ} {δ : K}
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] [Algebra K E]
 
-omit [IsCMField E] [NumberField E] in
 
-omit [Algebra K E] in
 
 variable {W : Type} [AddCommGroup W] [Module ℚ W] [Module E W] [IsScalarTower ℚ E W]
   [Module (𝓞 E) W] [IsScalarTower (𝓞 E) E W]
 
-omit [Algebra K E] [IsScalarTower ℚ E W] [Module (𝓞 E) W] [IsScalarTower (𝓞 E) E W] in
 
 omit [Algebra K E] [IsCMField E] [IsScalarTower ℚ E W] [Module (𝓞 E) W]
   [IsScalarTower (𝓞 E) E W] in
 
-omit [Algebra K E] [IsScalarTower ℚ E W] [Module (𝓞 E) W] [IsScalarTower (𝓞 E) E W] in
 
-omit [Algebra K E] [IsScalarTower ℚ E W] [IsScalarTower (𝓞 E) E W] in
 
 end Hypotheses
 

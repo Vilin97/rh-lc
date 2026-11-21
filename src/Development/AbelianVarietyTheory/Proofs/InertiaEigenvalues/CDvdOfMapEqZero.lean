@@ -71,7 +71,6 @@ theorem constantCoeff_act (c : ℤ_[l]) (x : A⟦X⟧) : constantCoeff (act l A 
   conv_lhs => rw [h, map_add (f := _), map_mul, act_C, act_X, map_add (f := _), map_mul, cyc_const]
   simp
 
-omit hl [Algebra ℤ_[l] A] [Algebra ℤ_[l] B] in
 
 theorem map_QQ (e : A →+* B) (s : ℕ) : PowerSeries.map e (QQ l A s) = QQ l B s := by
   simp [QQ, XX]

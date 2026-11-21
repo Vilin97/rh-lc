@@ -74,7 +74,6 @@ def ratioOn (U : (PSpace R N).Opens) (i : Fin (N + 1)) (hU : U ≤ chart R N i) 
     Γ(PSpace R N, U) :=
   frac (grading R N) U (X j) (X i) (X_mem R N j) (X_mem R N i) hU
 
-variable (R N) in
 
 abbrev ratio (i j : Fin (N + 1)) : Γ(PSpace R N, chart R N i) := ratioOn (chart R N i) i le_rfl j
 
@@ -229,7 +228,6 @@ theorem algebraMap_sections_eq (U : (PSpace R N).Opens) :
     algebraMap R Γ(PSpace R N, U) =
       ((Scheme.ΓSpecIso (CommRingCat.of R)).inv ≫ (PSpace.str R N).appLE ⊤ U le_top).hom := rfl
 
-variable {R N} in
 
 theorem resG_algebraMap {U V : (PSpace R N).Opens} (h : V ≤ U) (r : R) :
     resG _ h (algebraMap R Γ(PSpace R N, U) r) = algebraMap R Γ(PSpace R N, V) r :=
@@ -247,7 +245,6 @@ theorem algebraMap_chart (i : Fin (N + 1)) (r : R) :
   rw [baseRingHom.eq_1 (Proj.toSpecZero _), h'] at h
   exact congrArg (fun φ => φ.hom r) h
 
-variable {R N} in
 
 theorem formOn_C {U : (PSpace R N).Opens} {i : Fin (N + 1)} {hi : U ≤ chart R N i} (r : R) :
     formOn U i hi 0 (C r) (isHomogeneous_C _ r) = algebraMap R Γ(PSpace R N, U) r := by
@@ -365,7 +362,6 @@ theorem chartAlgEquiv_dehom (i : Fin (N + 1)) {n : ℕ} {f : MvPolynomial (Fin (
   rw [chartAlgEquiv_apply, polyToAway_dehom R N i n f (by simpa using hf), awayToSection_mk]
   exact frac_eq rfl
 
-variable {R N} in
 
 theorem formOn_eq_aeval {U : (PSpace R N).Opens} {i : Fin (N + 1)} {hi : U ≤ chart R N i} {n : ℕ}
     {f : MvPolynomial (Fin (N + 1)) R} (hf : f.IsHomogeneous n) :
@@ -398,7 +394,6 @@ theorem formOn_chart_inj (i : Fin (N + 1)) {n : ℕ} {f g : MvPolynomial (Fin (N
   obtain ⟨⟨_, m, rfl⟩, h1⟩ := h1
   exact ((isRegular_X (n := i)).pow n).left (((isRegular_X (n := i)).pow m).left h1)
 
-variable {R N} in
 
 theorem aeval_ratio_surjective (i : Fin (N + 1)) :
     Function.Surjective (aeval (R := R) (ratio R N i)) := by
@@ -464,13 +459,11 @@ theorem baseChange_preimage_chart (i : Fin (N + 1)) :
     baseChange N φ ⁻¹ᵁ chart R N i = chart R' N i := by
   rw [chart, baseChange_preimage_basicOpen, map_X]
 
-variable {N} in
 
 theorem baseChange_preimage_le {U : (PSpace R N).Opens} {i : Fin (N + 1)} (hi : U ≤ chart R N i) :
     baseChange N φ ⁻¹ᵁ U ≤ chart R' N i :=
   fun _ hx => (baseChange_preimage_chart N φ i).le (hi hx)
 
-variable {N} in
 
 theorem baseChange_app_ratioOn {U : (PSpace R N).Opens} {i : Fin (N + 1)} (hi : U ≤ chart R N i)
     (j : Fin (N + 1)) :
@@ -478,7 +471,6 @@ theorem baseChange_app_ratioOn {U : (PSpace R N).Opens} {i : Fin (N + 1)} (hi : 
       ratioOn (baseChange N φ ⁻¹ᵁ U) i (baseChange_preimage_le φ hi) j :=
   (map_app_frac (gradedMap N φ) (irrelevant_le_map N φ) U _ _ _ _ hi).trans (frac_eq (by simp))
 
-variable {N} in
 
 theorem baseChange_app_formOn {U : (PSpace R N).Opens} {i : Fin (N + 1)} (hi : U ≤ chart R N i)
     {n : ℕ} {f : MvPolynomial (Fin (N + 1)) R} (hf : f.IsHomogeneous n) :
@@ -487,7 +479,6 @@ theorem baseChange_app_formOn {U : (PSpace R N).Opens} {i : Fin (N + 1)} (hi : U
   (map_app_frac (gradedMap N φ) (irrelevant_le_map N φ) U _ _ _ _ (le_basicOpen_X_pow hi n)).trans
     (frac_eq (by simp))
 
-variable {N} in
 
 theorem pullU_baseChange_ratioUnit {U : (PSpace R N).Opens} {i j : Fin (N + 1)} (hi : U ≤ chart R N i)
     (hj : U ≤ chart R N j) :

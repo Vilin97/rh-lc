@@ -59,7 +59,6 @@ theorem ctn_sm {K : Type} [Field K] [NumberField K] {n : ℕ} [MeasurableSpace (
 
 end GlobalTheory.CompanionTheory.Conc.SmKill
 
-open GlobalTheory.CompanionTheory.Conc.SmKill in
 
 theorem GlobalTheory.CompanionTheory.Conc.kill_sm : ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) [MeasurableSpace (archGroup K n)] [BorelSpace (archGroup K n)] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (β : archGroup K n → ℝ) (f : AdelicGLn.AdelicGL K n → ℂ) (r : ℕ) (p : ℂ[X]), Ker ν β → 0 < r → r < n → Continuous f →
     An.Kill r f p → An.Kill r (sm ν β f) p := by

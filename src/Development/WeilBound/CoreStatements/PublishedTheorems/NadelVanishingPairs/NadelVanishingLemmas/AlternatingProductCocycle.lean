@@ -22,7 +22,6 @@ theorem dtot_add {E : Type} [AddCommGroup E] (d : E →+ E) (c c' : Finset ι �
 def dtotHom {E : Type} [AddCommGroup E] (d : E →+ E) : (Finset ι → E) →+ (Finset ι → E) :=
   AddMonoidHom.mk' (Dtot d) (dtot_add d)
 
-omit [LinearOrder ι] in
 
 theorem oneC_empty : (oneC : Finset ι → ExteriorAlgebra K V) ∅ = 0 := by
   simp [oneC]

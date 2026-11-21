@@ -22,17 +22,11 @@ end Alg
 
 namespace CompatibleChartOperations
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
 end CompatibleChartOperations
 

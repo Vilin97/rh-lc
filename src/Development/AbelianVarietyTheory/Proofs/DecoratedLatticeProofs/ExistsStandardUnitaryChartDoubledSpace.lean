@@ -79,7 +79,6 @@ def conjEquiv (σ : R →+* R) (Q J : Matrix n n R) (T : GL n R) (c : Rˣ)
 
 end GlobalTheory.StdUnn.ChartExist
 
-open GlobalTheory.StdUnn.ChartExist in
 
 theorem GlobalTheory.StdUnn.ChartExist.gram_adelic (D : D7) (A : HSp D) (μ : D.host.E)
     (hgram : (Tm A μ)ᴴ * (dblSp A).gram * Tm A μ = μ • Jst D A.rank)
@@ -95,7 +94,6 @@ theorem GlobalTheory.StdUnn.ChartExist.gram_adelic (D : D7) (A : HSp D) (μ : D.
   ext i j
   simp [Matrix.map_apply, map_mul]
 
-open GlobalTheory.StdUnn.ChartExist in
 
 theorem GlobalTheory.StdUnn.chart_exists : ∀ (D : D7) (A : HSp D) (μ : D.host.E), IsSkew μ → ∃ κ : GA D (dblSp A) ≃* G D A.rank, IsChart A μ κ := by
   intro D A μ hμ

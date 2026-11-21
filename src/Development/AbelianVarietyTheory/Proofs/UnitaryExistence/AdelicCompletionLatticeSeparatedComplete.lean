@@ -209,8 +209,6 @@ private theorem exists_limit_in_hat_of_cauchy_nsmul {m : ℕ} {e : Fin m → Fin
     add_mem hw (comb_mem_hat_of_integral hmem ha), ?_⟩
   rw [hyA, map_add (f := _), map_nsmul, hA, hxw, smul_add, add_assoc]
 
-open NumberField IsDedekindDomain in
-open scoped TensorProduct Matrix nonZeroDivisors in
 
 theorem _root_.GlobalTheory.AdLat.Complete.hat_separated_complete : ∀ (F E : Type) [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E] (n : ℕ) (L : Submodule (𝓞 E) (Fin n → E)), L.FG →

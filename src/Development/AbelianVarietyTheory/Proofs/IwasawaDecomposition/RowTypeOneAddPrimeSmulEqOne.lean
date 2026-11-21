@@ -34,7 +34,6 @@ theorem unitV_det_delta (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {t : ℕ} {A : 
     rw [Matrix.of_apply, hA, Matrix.one_apply]
   rw [this, Matrix.det_one, unitV_one]
 
-omit [NumberField E] [StarRing E] in
 
 theorem entB_id (q : ℕ) {k₀ c n : ℕ} (hk : k₀ ≤ n) (ex : ℕ → ℕ) {p p' : ℕ} (hp : p < n + c) (hp' : p' < n + c) :
     LocE.entB q k₀ c n c n ex ex (LinearMap.id : HomE E (n + c) (n + c)) p p' = if p = p' then 1 else 0 := by

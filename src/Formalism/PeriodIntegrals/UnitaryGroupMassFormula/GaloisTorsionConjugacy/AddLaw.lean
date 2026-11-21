@@ -92,7 +92,6 @@ lemma stepB (L : PeriodPair) {z w : ℂ} (hz : z ∉ L.lattice) (hw : w ∉ L.la
 
 end OriginCoordinatesAdd
 
-open OriginCoordinatesAdd in
 
 theorem addLaw : AddLaw := by
   intro L z w hz hw hm hp

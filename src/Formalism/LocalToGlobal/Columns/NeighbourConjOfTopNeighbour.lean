@@ -157,7 +157,6 @@ theorem mem_heckeSet_iff_symm (Q : HeightOneSpectrum (𝓞 E)) {i : ℕ} (d e : 
     rw [conjugatePrime_conjugatePrime] at h'
     exact ⟨h', hf.symm, hb.symm⟩
 
-open Classical in
 
 def decoratedNeighbourAtPrime (Q : HeightOneSpectrum (𝓞 E)) (g : DecoSet E n ST SG) : DecoSet E n ST SG :=
   if h : (g.heckeSet Q.asIdeal n).Nonempty then h.some else g

@@ -25,7 +25,6 @@ section General
 
 variable {V : Type*} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V}
 
-omit [μ.IsHaarMeasure] in
 
 theorem heckeAct_mul [IsFiniteMeasureOnCompacts μ] [μ.IsMulLeftInvariant] (a b : HeckeAlgebra μ)
     {v : V} (hv : v ∈ smoothVectors ρ) :

@@ -76,7 +76,6 @@ theorem aeval_mem_closure {σ L : Type} [Field L] (y : σ → L) (f : MvPolynomi
 
 end FibreDimB
 
-open FibreDimB in
 
 section Inhabitants
 

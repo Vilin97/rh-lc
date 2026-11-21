@@ -19,7 +19,6 @@ open Reduction AutomorphicForm
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (K) in
 
 theorem exists_natCast_mul_mem_of_mem_nhds {W : Set (FiniteAdeleRing (𝓞 K) K)}
     (hW : W ∈ 𝓝 (0 : FiniteAdeleRing (𝓞 K) K)) :

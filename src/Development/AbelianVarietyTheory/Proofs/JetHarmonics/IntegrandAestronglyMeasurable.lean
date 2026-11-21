@@ -32,7 +32,6 @@ omit [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] in
 theorem SqIntegrable.integrable (H : SqIntegrable D α) : Integrable (fun g : Mt k r =>
     gN (Matrix.of g : Mat k r) ^ (-α) * gN (Matrix.of g : Mat k r) ^ (-α)) D.μG := H.2
 
-omit [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] in
 
 theorem sqIntegrable_of_threshold (D : RealPlaceData k r Wp Wq) (hα : AB k r ≤ α) : SqIntegrable D α := by
   have h0 : 0 ≤ α := le_trans (P.B2.AB_nonneg k r) hα

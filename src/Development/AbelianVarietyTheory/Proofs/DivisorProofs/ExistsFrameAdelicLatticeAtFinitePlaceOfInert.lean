@@ -95,7 +95,6 @@ section Adelic
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F E) in
 
 def genAt (v : Pl F) : Set (AE F E) := {z : AE F E | ∃ a : AF F, At (evFin F v) a ∧
   evFin F v a ∈ v.adicCompletionIntegers F ∧ ∃ o : 𝓞 E, z = a • inclR (F := F) (AF F) (o : E)}

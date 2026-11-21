@@ -34,9 +34,7 @@ section SF07
 open TensorProduct MvPolynomial CategoryTheory CategoryTheory.Limits
 open Formalism.UG Formalism.RankGapBounds.FormsTensorLocalization Formalism.GradedWeylDivisibility Formalism.CohomologicalDescent.LD Formalism.CohomologicalDescent.UnitNormBounds Formalism.CohomologicalDescent.DepthNonnegative
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
 end SF07
 

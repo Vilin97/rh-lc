@@ -33,7 +33,6 @@ def thA (φ : TF n g) (x : Frame X.Ψ r) (z : Fin n → Fin g → ℂ) : ℂ :=
 def thP (φ : TF n g) (P : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) (x : Frame X.Ψ r) : ℂ :=
   polyDeriv P (letterDir X hr idx) (thA X bas idx φ x) 0
 
-open Classical in
 
 def wG (γ : GL (Fin r) E) (φ : TF n g) : TF n g :=
   if h : ∃ ψ : TF n g, IsSB ψ ∧ ∀ x ∈ X.dom, thA X bas idx ψ (lact γ x) = thA X bas idx φ x
@@ -77,7 +76,6 @@ def IsDbl (φ₁ φ₂ : TF n g) (ψ : Matrix (Fin n) (Fin r) E → ℂ) : Prop 
       kZero X idx x₁ x₂ z₁ w *
         thH X.Ψ ψ (dblZ X x₁ x₂) (dblz X idx x₁ x₂ z₁ w) (dblz' X idx x₁ x₂ z₁ w)
 
-open Classical in
 
 def dbl (φ₁ φ₂ : TF n g) : Matrix (Fin n) (Fin r) E → ℂ :=
   if h : ∃ ψ, IsSB ψ ∧ IsDbl X bas idx φ₁ φ₂ ψ then h.choose else 0
@@ -206,7 +204,6 @@ def Level.lats (D : Level X) : Set (Lt E r) :=
   {L | SelfD X L ∧ ∃ s : 𝓞 E, IsCoprime (Ideal.span {s}) (D.𝔪 * conjI D.𝔪) ∧
     (∀ v ∈ L, s • v ∈ X.Λ) ∧ ∀ v ∈ X.Λ, s • v ∈ L}
 
-open Classical in
 
 def Level.dat (D : Level X) (hn : r ≤ n) (y : Matrix (Fin n) (Fin r) E) : ℂ :=
   if h : (∃ k : D.J, D.Red (fun i => y (Fin.castLE hn i)) k) ∧

@@ -293,7 +293,6 @@ theorem finite_classes_fixed_gamma (L : G.Level) (f : G.GAf → ℂ)
 
 end GlobalTheory.LKDefFin
 
-open GlobalTheory.LKDef GlobalTheory.LKDefFin in
 
 theorem GlobalTheory.LKDefFin.finite_classes_of_pol : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p), G.a = 1 →
     ∀ (L : G.Level) (f : G.GAf → ℂ), IsTest (MonoidHom.id _) L.K.toSubgroup L.K.toSubgroup f →

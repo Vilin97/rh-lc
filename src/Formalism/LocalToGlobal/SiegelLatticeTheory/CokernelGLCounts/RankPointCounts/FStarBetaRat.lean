@@ -26,7 +26,6 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word}
 
 variable (u u' F0 what₂)
 
-set_option maxHeartbeats 1000000 in
 
 theorem betaRat_holds : BetaRat Zd u u' F0 what₂ := by
   intro γ Z F'₂ φ φ' Λ₂ hB

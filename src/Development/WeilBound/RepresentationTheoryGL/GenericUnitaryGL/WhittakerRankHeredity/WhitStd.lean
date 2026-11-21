@@ -21,7 +21,6 @@ theorem rank_piTensor_le_one {h : ℕ} (M : Fin h → Type) [∀ a, AddCommGroup
   rw [← (Basis.piTensorProduct b).mk_eq_rank'', Cardinal.le_one_iff_subsingleton]
   infer_instance
 
-set_option maxHeartbeats 800000 in
 
 theorem whitRankStd_of_heredity : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k],
     GlobalTheory.BZMir.Leib.WhitHeredity k → GlobalTheory.BZSeg.WhitRankIrr k → GlobalTheory.BZSeg.WhitRankStd k := by

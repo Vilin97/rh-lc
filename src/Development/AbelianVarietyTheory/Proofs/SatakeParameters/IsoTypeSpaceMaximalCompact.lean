@@ -193,7 +193,6 @@ theorem heckeD_eq_heckeVec {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] 
 end Key
 section Main
 
-set_option maxHeartbeats 800000 in
 
 end Main
 

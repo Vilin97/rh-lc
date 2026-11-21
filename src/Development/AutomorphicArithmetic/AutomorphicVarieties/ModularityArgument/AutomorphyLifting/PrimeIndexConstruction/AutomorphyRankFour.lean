@@ -81,4 +81,3 @@ private theorem irr_tw_comp {Γ Γ' k : Type} [Group Γ] [Group Γ'] [Field k] {
 private theorem tw_one {Γ k : Type} [Group Γ] [Field k] {n : ℕ} (r : Γ →* GL (Fin n) k) (κ : Γ →* kˣ) (s : Γ) (h : r s = 1) (h' : κ s = 1) :
     tw r κ s = 1 := Units.ext (by rw [tw_val, h, h']; simp)
 
-set_option maxHeartbeats 800000 in

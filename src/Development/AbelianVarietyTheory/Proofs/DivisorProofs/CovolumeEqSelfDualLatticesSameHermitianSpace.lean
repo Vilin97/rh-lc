@@ -72,7 +72,6 @@ theorem det_mul_det (hG : IsUnit G.det) {a : Matrix (Fin n) (Fin n) R} (ha : IsU
 theorem det_conj (h k : GL (Fin n) R) : (h⁻¹ * k * h).1.det = k.1.det := by
   rw [Units.val_mul, Units.val_mul, det_mul, det_mul, mul_right_comm, ← det_mul, Units.inv_mul, det_one, one_mul]
 
-variable (σ G) in
 
 def cong (H : AddSubgroup (Fin n → R)) (M : ℕ) : Subgroup (GL (Fin n) R) where
   carrier := {k | IsU σ G k.1 ∧ k.1.det = 1 ∧ (k⁻¹).1 ∈ stab H ∧ ∃ B ∈ stab H, k.1 = 1 + (M : R) • B}
@@ -198,7 +197,6 @@ theorem isU_emb {γ : Matrix (Fin n) (Fin n) E} :
 variable [NumberField E] {L : Submodule (𝓞 E) (Fin n → E)} (hL : L.FG)
   (hsp : Submodule.span E (L : Set (Fin n → E)) = ⊤)
 
-include hL hsp in
 
 theorem embGL_mem_cong {M : ℕ} (hM : 0 < M) (γ : GL (Fin n) E) :
     embGL F γ ∈ cong (sgA c) ((emb F).mapMatrix G) (hat F (L : Set (Fin n → E))) M ↔
@@ -242,7 +240,6 @@ theorem embGL_mem_cong {M : ℕ} (hM : 0 < M) (γ : GL (Fin n) E) :
 variable (hrk : Module.finrank F E = 2) (hG : IsHerm (c : E →+* E) G)
   (hiso : ∃ z : Fin n → E, z ≠ 0 ∧ hf (c : E →+* E) G z z = 0)
 
-include hL hsp hrk hG hiso in
 
 theorem exists_inv_mul_mem_cong {M : ℕ} (hM : 0 < M) {s : GL (Fin n) (RA F E)}
     (hs : IsU (sgA c) ((emb F).mapMatrix G) s.1) (hd : s.1.det = 1) :
@@ -263,7 +260,6 @@ theorem exists_inv_mul_mem_cong {M : ℕ} (hM : 0 < M) {s : GL (Fin n) (RA F E)}
   rw [eB']
   exact add_mem (one_mem (stab _)) (natCast_smul_mem _ hB)
 
-include hL hsp hrk hG hiso in
 
 theorem relIndex_comap {M : ℕ} (hM : 0 < M) {h : GL (Fin n) (RA F E)}
     (hh : IsU (sgA c) ((emb F).mapMatrix G) h.1) (K : Subgroup (GL (Fin n) (RA F E)))

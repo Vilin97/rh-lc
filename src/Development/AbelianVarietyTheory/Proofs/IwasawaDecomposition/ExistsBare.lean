@@ -16,7 +16,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 
 namespace GlobalTheory.Mem.R3.LedRec
 
-set_option maxHeartbeats 1000000 in
 
 theorem ev_exists_sizeData : Ev fun K => ∀ X : Stages, K.Over X.B.toPre → X.V.div.etaF = 6 * K.s.x ^ (-K.C.P.CF) →
     (∀ w j, X.toD7.what₂.Aj j w = 0) →

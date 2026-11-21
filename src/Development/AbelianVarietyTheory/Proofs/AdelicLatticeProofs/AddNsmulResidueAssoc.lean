@@ -98,7 +98,6 @@ theorem genMap_mem_span (S T : HSp D) {A : Set D.host.E} {B : Set (Fin S.rank �
   · exact Matrix.ext fun i j => star_sum_add (a * t i) s s' fun k => S.gram k j
   · exact Matrix.ext fun i j => (congrArg (· * _) (mul_add a (t i) (t' i))).trans (add_mul _ _ _)
 
-open Classical in
 
 def idemAt (F : Type) [Field F] [NumberField F] (P : HeightOneSpectrum (𝓞 F) → Prop) : Af F :=
   ⟨fun v => if P v then 1 else 0, Filter.Eventually.of_forall fun v => by

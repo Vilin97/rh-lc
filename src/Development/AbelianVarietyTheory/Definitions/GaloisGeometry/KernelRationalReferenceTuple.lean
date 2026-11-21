@@ -239,7 +239,6 @@ theorem vqTieU_of (t : KerEntTied ex) {lam : ∀ (_ : D.what₂.Word) (i : ℕ),
     {sh : D.what₂.Word → ℕ → D.what₂.Tau → ℤ} (h : t.VQTie lam sh) : VQTieU t lam sh :=
   fun u μ _ i hi c => h u μ i hi c
 
-open Classical in
 
 theorem kmapRat_of_vqU (t : KerEntTied ex) (lam : ∀ (_ : D.what₂.Word) (i : ℕ), D.what₂.Tau → DomWeight (D.R.N i))
     (sh : D.what₂.Word → ℕ → D.what₂.Tau → ℤ) (n : D.what₂.Word → ℕ → D.what₂.Tau → ℕ)

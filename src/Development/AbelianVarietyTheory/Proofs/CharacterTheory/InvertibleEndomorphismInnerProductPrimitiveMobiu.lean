@@ -91,7 +91,6 @@ theorem psi_bot {s : F[X] → ℂ} (hs : IsAdditive s) (U : Type) [AddCommGroup 
     ⟨fun W => W.2.1 (Subsingleton.elim _ _)⟩
   rw [psi_eq, hc, h1, finsum_of_isEmpty, sub_zero]
 
-open Classical in
 
 theorem ipGL_psi_eq (F : Type) [Field F] [Finite F] (V : Type) [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] (s : F[X] → ℂ) (hs : IsAdditive s) (φ : Module.End F V → ℂ)

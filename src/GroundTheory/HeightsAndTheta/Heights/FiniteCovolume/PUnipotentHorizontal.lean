@@ -22,7 +22,6 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
   [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem archUnitary_preserves_form (h : HermitianForm F E W) (v : Basis ι E W)
     (g : archUnitary h v) (w : InfinitePlace E) (a b : ι → ℂ) :

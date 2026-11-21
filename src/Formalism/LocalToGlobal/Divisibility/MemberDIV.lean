@@ -61,7 +61,6 @@ variable {X : Fields} {e : X.Tau → (X.E →+* D.what₂.LL)} {Pr : Primes (fie
   (W : Wts (fieldsLL D X e) Pr.Word D.R) (Ch : Chars (fieldsLL D X e) Pr D.R.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {Sg : Set ℕ} (Gc : ChGlob (fieldsLL D X e) D.R.m) (m2 : ℕ)
 
-open Classical in
 
 def psiM : ∀ PP : Pl X.E, AddChar (kP PP) D.what₂.LL :=
   fun PP => if h : PP ∈ Pr.vGs then Ch.psi0 ⟨PP, h⟩ else 1
@@ -164,7 +163,6 @@ section Pins
 
 variable {T : TiedDataSK ex} {P : RowSideFamily ex}
 
-open Classical in
 
 variable {X : Fields} {e : X.Tau → (X.E →+* D.what₂.LL)} {Pr : Primes (fieldsLL D X e)}
   {W : Wts (fieldsLL D X e) Pr.Word D.R} {Ch : Chars (fieldsLL D X e) Pr D.R.m}

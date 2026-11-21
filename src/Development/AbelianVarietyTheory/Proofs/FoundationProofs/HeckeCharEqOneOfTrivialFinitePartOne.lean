@@ -63,8 +63,6 @@ theorem denseRange_units {E ι : Type} [Field E] [Finite ι] [Nonempty ι] (τ :
   funext w
   exact Units.ext (congrFun hk w).symm
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.FockCompare in
 
 theorem eq_one_of_trivial_on_finite : ∀ (D : D7) (c : (AE D)ˣ →* Circle), IsHeckeChar D c → (∀ x : (AE D)ˣ, infPart D (x : AE D) = 1 → c x = 1) → ∀ x, c x = 1 := by
   intro D c hc hf

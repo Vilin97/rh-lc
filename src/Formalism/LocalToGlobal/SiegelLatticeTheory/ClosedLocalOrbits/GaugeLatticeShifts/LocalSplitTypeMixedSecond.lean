@@ -1044,7 +1044,6 @@ theorem dmin_eq' {m : ℕ} (w : Point D.host.E m) (l : ℕ) : Dmin w l = leadMin
 
 theorem conjF_star (x : D.host.E) : D.conjF x = star x := (D.conjF_eq x).trans (Formalism.BasicNotions.Examples₂.star_eq_conj (H := D.host) x).symm
 
-variable (D) in
 
 end Formalism.L2.SG.Pf.AtPt
 

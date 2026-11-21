@@ -21,7 +21,6 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
 def coneQ (y : (Σ k, ι k) → Ω) : MvPolynomial (Σ k, ι k) ℚ →ₐ[ℚ] MvPolynomial K Ω :=
   aeval fun p => MvPolynomial.C (y p) * MvPolynomial.X p.1
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem map_mCoordIdeal (y : (Σ k, ι k) → Ω) :
     (mCoordIdeal y).map (MvPolynomial.map (Int.castRingHom ℚ)) = RingHom.ker (coneQ y) := by

@@ -40,4 +40,3 @@ theorem exists_norm_eq_inv (F : Type) [Field F] [NumberField F] (v : IsDedekindD
 
 end GlobalTheory.NormFvFacts
 
-open GlobalTheory.NormFvFacts in

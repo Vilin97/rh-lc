@@ -149,12 +149,8 @@ theorem thExprUniqSt_iff_top : Formalism.MainNotions.ModuliIntegralCharts.H1.ThE
 
 section Reframe
 
-open GlobalTheory.RowSpan GlobalTheory.RowTriangular ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ in
-open scoped TensorProduct in
 
-open GlobalTheory.RowSpan in
 
-open GlobalTheory.RowSpan in
 
 end Reframe
 

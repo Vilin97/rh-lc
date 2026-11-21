@@ -149,7 +149,6 @@ theorem flt_tay_coeff (R : Type*) [CommRing R] {σ : Type*} (F : MvPolynomial σ
       exact Finset.prod_eq_zero (Finsupp.mem_support_iff.2 (by omega)) (Nat.choose_eq_zero_of_lt hk)
     rw [hz, Nat.cast_zero, mul_zero, monomial_zero]
 
-open Classical in
 
 def flt_Th {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Letters ι) (S : Set ι) (j : Fin n) :
     MvPolynomial (ι × Fin n) (GLLaurent R n) →+*

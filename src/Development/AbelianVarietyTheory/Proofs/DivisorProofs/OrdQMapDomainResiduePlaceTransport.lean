@@ -59,7 +59,6 @@ end GlobalTheory.FieldPair.ResidueTransport
 
 namespace GlobalTheory.FieldPair
 
-open ResidueTransport in
 
 theorem ordQ_mapDomain_residue_eq {L K : Type} [Field L] [Field K] (cL : ℂ →+* L) (cK : ℂ →+* K)
     (Q : Subring L) (u : Q) (S E : Place cL) (ψ : S.ring →+* K) (F : Place cK)

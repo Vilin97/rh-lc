@@ -42,12 +42,10 @@ def Conj {u : HeightOneSpectrum (𝓞 L)} (s : L ≃ₐ[K] L) (Y Y' : IrrGL (u.a
   ∃ i : u.adicCompletion L ≃+* u.adicCompletion L, Continuous i ∧
     (∀ x : L, i (algebraMap L _ x) = algebraMap L _ (s x)) ∧ RepRel i Y Y'
 
-variable (L) in
 
 def KillsNorms {v : HeightOneSpectrum (𝓞 K)} (η : (v.adicCompletion K)ˣ →* ℂˣ) : Prop :=
   ∀ (z : L) (y : (v.adicCompletion K)ˣ), (y : v.adicCompletion K) = algebraMap K _ (Algebra.norm K z) → η y = 1
 
-variable (K) in
 
 def IsOrbitProd {u : HeightOneSpectrum (𝓞 L)} (Y : (L ≃ₐ[K] L) → IrrGL (u.adicCompletion L))
     (X : IrrGL (u.adicCompletion L)) : Prop :=
@@ -61,9 +59,7 @@ section Loc
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)}
 
-variable (h : IsPlaceOver A w) in
 
-variable (h : IsPlaceOver A w) in
 
 end Loc
 
@@ -104,7 +100,6 @@ section Ind
 variable (K : Type) {L Ω : Type} [Field K] [Field L] [NumberField L] [Field Ω] [Algebra K Ω] [Algebra L Ω]
   [IsAlgClosure L Ω] [Algebra K L] [IsScalarTower K L Ω]
 
-open Classical in
 
 end Ind
 

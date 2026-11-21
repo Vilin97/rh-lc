@@ -33,9 +33,7 @@ theorem continuous_hO : Continuous fun p : WO S T × WO S T => hO S T p.1 p.2 :=
   unfold hO
   fun_prop
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end Formalism.IndefR.Eqv
 

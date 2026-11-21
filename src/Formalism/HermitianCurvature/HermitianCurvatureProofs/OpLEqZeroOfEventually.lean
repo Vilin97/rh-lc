@@ -29,7 +29,6 @@ def LCptAt (Φ : RadSp k r z z' π π') (c : Fin r → ℂ) : Prop :=
   ∃ U : Set (Fin r → ℂ), IsOpen U ∧ c ∈ U ∧ ∃ K : Set (Mx k r), IsCompact K ∧ K ⊆ {g | 0 < GGl k r z z' g} ∧
     ∀ c' ∈ U, VanOut Φ c' K
 
-variable (k r z z' π π') in
 
 def lcSub : Submodule ℂ (RadSp k r z z' π π') where
   carrier := {Φ | ∀ c ∈ OmX r, LCptAt Φ c}

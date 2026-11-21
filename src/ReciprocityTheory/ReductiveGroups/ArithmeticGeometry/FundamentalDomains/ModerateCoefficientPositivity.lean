@@ -42,7 +42,6 @@ def periods (la : Wt X.Ψ r) : AddSubgroup (X.Ψ → ℝ) :=
   AddSubgroup.closure {p | ∃ a : E, cc a = a ∧ IsIntegral ℤ a ∧
     p = fun τ => ((X.m * X.chiOrd la : ℕ) : ℝ) * (τ.1 a).re}
 
-open Classical in
 
 def fj (la : Wt X.Ψ r) (ξ : Fin r → E) (ν : X.Ψ → ℝ) (P : Frame X.Ψ r → ℂ) (x : Frame X.Ψ r) : ℂ :=
   if (∀ p ∈ X.periods la, ∃ k : ℤ, 2 * ∑ τ, ν τ * p τ = k) then

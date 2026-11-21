@@ -92,7 +92,6 @@ theorem local_exists_isUnit_det {R n : Type} [CommRing R] [IsLocalRing R] [Finty
 
 end GlobalTheory.StableRange
 
-open GlobalTheory.StableRange in
 
 theorem GlobalTheory.StableRange.exists_mem_KO : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ)
     (A S C D : Matrix (Fin n) (Fin n) k), A ∈ intM k (Fin n) (Fin n) → S ∈ intM k (Fin n) (Fin n) →

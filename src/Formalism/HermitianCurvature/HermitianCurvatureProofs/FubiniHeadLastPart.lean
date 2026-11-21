@@ -524,7 +524,6 @@ theorem lwSplit_mp : MeasurePreserving (lwSplit σh σb) volume ((volume.prod vo
     (((MeasurePreserving.id _).prod (Dx2.SL.curry_mp (Fin s) (Fin p))).comp h3).prod (MeasurePreserving.id _)
   exact h4.comp (h2.comp h1)
 
-variable (p s) in
 
 def utSplit : (G.UT (p + s) → ℂ) ≃ᵐ ((G.UT p → ℂ) × (Fin p → Fin s → ℂ)) × (G.UT s → ℂ) :=
   (Dx2.SL.reE (X := ℂ) (utEquiv p s).symm).trans ((MeasurableEquiv.sumPiEquivProdPi (fun _ => ℂ)).trans

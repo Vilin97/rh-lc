@@ -338,7 +338,6 @@ theorem adm_of_section_mem [IsLocalRing B] (𝒜 : Deg k → Submodule B R) {ts 
     exact Ideal.mem_sup_left hs
   · exact Ideal.mem_sup_right (Ideal.subset_span ⟨d', h1⟩)
 
-include S in
 
 theorem length_add (m : Deg k) :
     Module.length B (F.gr m) = Module.length B (F'.gr m) + Module.length B (F''.gr m) := by
@@ -385,7 +384,6 @@ theorem add_of_hom {k : ℕ} (X : HidaSetting k) (hGr : RuleGr) (ts : List (Deg 
 
 end E1
 
-open E1 in
 
 theorem euler_additivity_of_rules : RuleGr → RuleFin → RuleIso → EulerAdditivityExactSequence := by
   intro hGr hFin hIso k X ts

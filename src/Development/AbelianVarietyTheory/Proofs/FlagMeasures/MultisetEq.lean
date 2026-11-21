@@ -11,7 +11,6 @@ noncomputable section
 
 namespace GlobalTheory.Dec.GelfSepProof
 
-open PowerSeries Matrix in
 
 theorem _root_.GlobalTheory.Dec.GelfSepProof.gen {n : ℕ} (l : Fin n → ℂ) :
     ((1 : PowerSeries ℂ) -
@@ -80,9 +79,7 @@ theorem _root_.GlobalTheory.Dec.GelfSepProof.gen {n : ℕ} (l : Fin n → ℂ) :
       simp [PowerSeries.coeff_mk, map_sum]
   rw [← hdet2, ← hfactor, Matrix.det_mul, hdet1, hdet3, mul_comm]
 
-open Polynomial in
 
-open PowerSeries in
 
 end GlobalTheory.Dec.GelfSepProof
 

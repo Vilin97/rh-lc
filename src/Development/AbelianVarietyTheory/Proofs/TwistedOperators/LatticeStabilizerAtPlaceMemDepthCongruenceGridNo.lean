@@ -184,7 +184,6 @@ theorem exists_unit_mem_modul {T : Type} {L : LevCh D T} {sc : Consts} (G : Grid
 
 end GlobalTheory.LevelOffS
 
-open GlobalTheory.LevelOffS in
 
 theorem GlobalTheory.LevelOffS.inK_mem_lev : All fun {D} _ _ _ {G} _ _ => ∀ i, i ≤ D.R.m → ∀ v, v ∉ G.pl.S0 → ∀ κ, InK (G.V (.grid i 0)) (G.Λ (.grid i 0)) (· = v) κ → κ ∈ lev G (.grid i 0) := by
   intro D hD T L μ0 hL sc G W M hM i hi v hv κ hκ

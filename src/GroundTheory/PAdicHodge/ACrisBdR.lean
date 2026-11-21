@@ -199,11 +199,9 @@ section Quot
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
-variable (K p) in
 
 abbrev kerAway : Ideal 𝔸 := RingHom.ker (fontaineThetaInvertP (normInteger K) p)
 
-variable (K p) in
 
 abbrev xiGen : AInf K p := IsPerfectoidField.kerThetaGenerator K p
 
@@ -230,12 +228,10 @@ theorem algebraMap_dvd_iff (m : ℕ) (w : AInf K p) :
     rw [map_mul]
     exact dvd_mul_right _ _
 
-variable (K p) in
 
 def latticeQ (m : ℕ) : Subring (𝔸 ⧸ kerAway K p ^ m) :=
   ((Ideal.Quotient.mk (kerAway K p ^ m)).comp (algebraMap (AInf K p) 𝔸)).range
 
-variable (K p) in
 
 def acrisQ (m : ℕ) : Subring (𝔸 ⧸ kerAway K p ^ m) :=
   (ACrisZero K p).toSubring.map (Ideal.Quotient.mk (kerAway K p ^ m))
@@ -278,7 +274,6 @@ theorem pow_mul_mem_latticeQ (m : ℕ) :
   show Ideal.Quotient.mk _ (algebraMap (AInf K p) 𝔸 (↑hu.unit⁻¹ * w)) = _
   rw [hcalc, map_mul, map_pow, map_natCast, map_add (f := _), hz, add_zero]
 
-variable (K p) in
 
 instance isAdicComplete_latticeQ (m : ℕ) :
     IsAdicComplete (Ideal.span {(p : latticeQ K p m)}) (latticeQ K p m) := by
@@ -306,7 +301,6 @@ instance isAdicComplete_latticeQ (m : ℕ) :
     exact (algebraMap_dvd_iff m w).2 this
   exact ⟨⟩
 
-variable (K p) in
 
 instance isAdicComplete_acrisQ (m : ℕ) :
     IsAdicComplete (Ideal.span {(p : acrisQ K p m)}) (acrisQ K p m) :=
@@ -319,7 +313,6 @@ section Iota
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
-variable (K p) in
 
 def iotaZero (m : ℕ) : ACrisZero K p →+* acrisQ K p m :=
   ((Ideal.Quotient.mk (kerAway K p ^ m)).comp (ACrisZero K p).val.toRingHom).codRestrict
@@ -334,12 +327,10 @@ theorem span_p_le_comap_iotaZero (m : ℕ) :
   rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, Ideal.mem_comap, map_natCast]
   exact Ideal.mem_span_singleton_self _
 
-variable (K p) in
 
 def embedding₂ (m : ℕ) : ACris K p →+* acrisQ K p m :=
   AdicCompletion.extendRingHom _ _ (iotaZero K p m) (span_p_le_comap_iotaZero m)
 
-variable (K p) in
 
 def iotaQ (m : ℕ) : ACris K p →+* 𝔸 ⧸ kerAway K p ^ m :=
   (acrisQ K p m).subtype.comp (embedding₂ K p m)
@@ -373,7 +364,6 @@ theorem iotaQ_compat {m n : ℕ} (hle : m ≤ n) :
   rw [iotaQ, iotaQ, embedding₂, embedding₂, ← h]
   rfl
 
-variable (K p) in
 
 def iota : ACris K p →+* BDeRhamPlus (normInteger K) p :=
   _root_.AdicCompletion.liftRingHom (kerAway K p) (iotaQ K p) fun hle => iotaQ_compat hle

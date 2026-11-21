@@ -52,7 +52,6 @@ theorem isMultiHomog_unique {t : MRingOver S ι} {a b : K → ℕ} (ha : IsMulti
   funext k
   rw [← ha m hm' k, hb m hm' k]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem cellMon_split {B B' : ∀ k, Finset (ι k)} {p : Σ k, ι k}
     (hB : ∀ k (i : ι k), i ∈ B' k → (⟨k, i⟩ : Σ k, ι k) = p ∨ i ∈ B k) {t : MRingOver S ι}
@@ -87,7 +86,6 @@ theorem cellMon_isMultiHomog [DecidableEq K] {B : ∀ k, Finset (ι k)} {t : MRi
     obtain ⟨b, hb⟩ := hg
     exact ⟨a + b, isMultiHomog_mul' ha hb⟩
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem aeval_ne_zero_of_mem_cellMon {Ω : Type} [Field Ω] [Algebra S Ω] {y : (Σ k, ι k) → Ω}
     {B : ∀ k, Finset (ι k)} (hB : CellMeets y B) {t : MRingOver S ι} (ht : t ∈ cellMon S B) : aeval y t ≠ 0 := by
@@ -235,7 +233,6 @@ theorem cellSec_mono (y : (Σ k, ι k) → Ω) (γ : K → ℤ) {I I' : ∀ k, F
 
 variable [LinearOrder K] [∀ k, LinearOrder (ι k)]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem mem_update_insert {I : ∀ k, Finset (ι k)} {k : K} {i : ι k} {k' : K} {i' : ι k'}
     (h : i' ∈ Function.update I k (insert i (I k)) k') : (⟨k', i'⟩ : Σ k, ι k) = ⟨k, i⟩ ∨ i' ∈ I k' := by
@@ -248,7 +245,6 @@ theorem mem_update_insert {I : ∀ k, Finset (ι k)} {k : K} {i : ι k} {k' : K}
   · rw [Function.update_of_ne hk] at h
     exact Or.inr h
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem subset_update_insert (I : ∀ k, Finset (ι k)) (k : K) (i : ι k) (k' : K) :
     I k' ⊆ Function.update I k (insert i (I k)) k' := by
@@ -258,7 +254,6 @@ theorem subset_update_insert (I : ∀ k, Finset (ι k)) (k : K) (i : ι k) (k' :
     exact Finset.subset_insert _ _
   · rw [Function.update_of_ne hk]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem subset_baseCell (k₀ : K) {N : ℕ} (e : ι k₀ ≃ Fin (N + 1)) (J : Finset (Fin (N + 1)))
     (I : ∀ k, Finset (ι k)) (k : K) : I k ⊆ baseCell k₀ e J I k := by
@@ -267,7 +262,6 @@ theorem subset_baseCell (k₀ : K) {N : ℕ} (e : ι k₀ ≃ Fin (N + 1)) (J : 
   · subst hk; rw [Function.update_self]; exact Finset.subset_union_left
   · rw [Function.update_of_ne hk]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem baseCell_mono (k₀ : K) {N : ℕ} (e : ι k₀ ≃ Fin (N + 1)) (J : Finset (Fin (N + 1)))
     {I I' : ∀ k, Finset (ι k)} (hI : ∀ k, I k ⊆ I' k) (k : K) :
@@ -278,7 +272,6 @@ theorem baseCell_mono (k₀ : K) {N : ℕ} (e : ι k₀ ≃ Fin (N + 1)) (J : Fi
     exact Finset.union_subset_union (hI k) subset_rfl
   · rw [Function.update_of_ne hk, Function.update_of_ne hk]; exact hI k
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem cellMeets_baseCell (y : (Σ k, ι k) → Ω) (k₀ : K) {N : ℕ} (e : ι k₀ ≃ Fin (N + 1))
     (J : Kleiman.Chart (IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ ∘ e.symm)) {I : ∀ k, Finset (ι k)} (hI : CellMeets y I) :
@@ -294,7 +287,6 @@ theorem cellMeets_baseCell (y : (Σ k, ι k) → Ω) (k₀ : K) {N : ℕ} (e : �
       exact (Kleiman.mem_support _).mp (J.2.2 hj)
   · rw [Function.update_of_ne hk] at hi; exact hI k i hi
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem mem_baseCell_update (k₀ : K) {N : ℕ} (e : ι k₀ ≃ Fin (N + 1)) (J : Finset (Fin (N + 1)))
     (I : ∀ k, Finset (ι k)) (k : K) (i : ι k) {k' : K} {i' : ι k'}
@@ -341,7 +333,6 @@ theorem coord_mem_secOver [DecidableEq K] (y : (Σ k, ι k) → Ω) (k : K) (i :
 
 variable [LinearOrder K] [∀ k, Fintype (ι k)] {y : (Σ k, ι k) → Ω} {k₀ : K} {N : ℕ} (e : ι k₀ ≃ Fin (N + 1))
 
-omit [LinearOrder K] in
 
 theorem chartSecOver_zero_subset [DecidableEq K] (hGen : ChartSecGen.Statement)
     (hM : IndefiniteRowSideFullHecke.Kleiman2.IsModelWithBase F y k₀) (J : Kleiman.Chart (IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ ∘ e.symm)) {z : Ω}
@@ -357,7 +348,6 @@ theorem chartSecOver_zero_subset [DecidableEq K] (hGen : ChartSecGen.Statement)
   rw [Subalgebra.smul_def, smul_eq_mul, mul_one]
   exact (c j).2
 
-omit [LinearOrder K] in
 
 theorem exists_sum_eq_one [DecidableEq K] (hGen : ChartSecGen.Statement) (hMul : ChartSecMul.Statement)
     (hM : IndefiniteRowSideFullHecke.Kleiman2.IsModelWithBase F y k₀) (J : Kleiman.Chart (IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ ∘ e.symm)) (k : K) :

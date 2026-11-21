@@ -18,7 +18,6 @@ namespace BM
 
 variable {D : D7}
 
-set_option maxHeartbeats 800000 in
 
 theorem locQuad1_G_holds (hI : CompanionTheory.Lime.BM.Inputs2) : LocQuad1_G := by
   intro D hG X w μSl νl C hQ v

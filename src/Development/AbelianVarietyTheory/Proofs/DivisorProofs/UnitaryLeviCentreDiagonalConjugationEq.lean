@@ -12,7 +12,6 @@ namespace GlobalTheory.SatakeWeyl.TorusConjProof
 
 variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] {σ : L →+* L} {r : ℕ}
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
 theorem mat_inv_diag {ϖ : L} (hϖ : ϖ ≠ 0) {s : GU σ r} {b : Fin r → ℤ}
     (hs : mat s = Matrix.diagonal (fun i => ϖ ^ b i)) : mat s⁻¹ = Matrix.diagonal (fun i => ϖ ^ (-b i)) := by
@@ -24,7 +23,6 @@ theorem mat_inv_diag {ϖ : L} (hϖ : ϖ ≠ 0) {s : GU σ r} {b : Fin r → ℤ}
   calc mat s⁻¹ = mat s⁻¹ * (mat s * Matrix.diagonal (fun i => ϖ ^ (-b i))) := by rw [h, Matrix.mul_one]
     _ = _ := by rw [← Matrix.mul_assoc, mat_inv_mul, Matrix.one_mul]
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
 theorem mat_zpow_diag {ϖ : L} (hϖ : ϖ ≠ 0) {s : GU σ r} {b : Fin r → ℤ}
     (hs : mat s = Matrix.diagonal (fun i => ϖ ^ b i)) (d : ℤ) :
@@ -46,7 +44,6 @@ theorem mat_zpow_diag {ϖ : L} (hϖ : ϖ ≠ 0) {s : GU σ r} {b : Fin r → ℤ
     congr 1
     ring
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
 theorem mat_conj_apply {ϖ : L} (hϖ : ϖ ≠ 0) {s : GU σ r} {b : Fin r → ℤ}
     (hs : mat s = Matrix.diagonal (fun i => ϖ ^ b i)) (g : GU σ r) (i j : Fin r) :

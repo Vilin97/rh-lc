@@ -84,17 +84,14 @@ theorem valEx_of' (hc : ∀ τ x, emb τ (σ x) = starRingEnd ℂ (emb τ x)) (h
     (hO : PtOne S G A) (hR : EvRatPt S emb embLL G A pos embV) : ValEx S emb embLL G A pos embV yc :=
   valEx_of hc ratInU hA hP hO hR
 
-variable (S emb embLL G A pos embV yc) in
 
 def EvRatRep : Prop :=
   ∀ (x : V) (c : cls), ∃ Q ∈ VtupR G.P LL, ∀ z : Frames (gramC J emb),
     evC G.P A.rk pos (gramC J emb) (crdB emb A.B) (MvPolynomial.map embLL Q) z = embV x c z
 
-variable (S embLL) in
 
 def ChiRatAll : Prop := ∀ κ : S.U, ∃ r : LL, embLL r = (S.chi κ : ℂ)
 
-variable (G A pos) in
 
 def VtupStab (tE : Tau → E →+* LL) : Prop :=
   ∀ γ : GL (Fin n) E, γ ∈ UJ (σ : E →+* E) J → ∀ Q ∈ VtupR G.P LL,
@@ -117,7 +114,6 @@ theorem substR_rename (R : Type) [CommRing R] (h : ∀ v, Fin (P.n' v) → Matri
       simp [substR, Formalism.GradedWeylDivisibility.blockAct, map_sum]
   exact congrArg (fun f => f F) e
 
-set_option maxHeartbeats 1000000 in
 
 theorem natActR_VtupR (R : Type) [Field R] (g : ∀ v, Fin (P.n' v) → GL (Fin (P.m + 1)) R) (Q : XR P R)
     (hQ : Q ∈ VtupR P R) : natActR P R g Q ∈ VtupR P R := by

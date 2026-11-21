@@ -45,7 +45,6 @@ theorem om_pow_eq_fst {D : D7} {S V : HSp D} (om : GA D S × GA D V →* Module.
       rw [pow_succ, Prod.mk_mul_mk, mul_one]
     rw [e, map_mul, Module.End.mul_apply, hc, map_smul, ih, smul_smul, pow_succ, mul_comm]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_open_fix_vac_source : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil}
     {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}, IsBottomTri W i j X → ∀ t : T,

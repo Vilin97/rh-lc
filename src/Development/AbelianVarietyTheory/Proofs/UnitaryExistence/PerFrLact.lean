@@ -39,7 +39,6 @@ lemma perFr_lact (X : Data E r) (γ : GL (Fin r) E)
   · rfl
   · rfl
 
-omit [IsCMField E] in
 
 lemma exists_equiv (Λ : Submodule (𝓞 E) (Fin r → E)) (γ : GL (Fin r) E)
     (hγ : ∀ x, x ∈ Λ ↔ (γ : Matrix (Fin r) (Fin r) E) *ᵥ x ∈ Λ) :

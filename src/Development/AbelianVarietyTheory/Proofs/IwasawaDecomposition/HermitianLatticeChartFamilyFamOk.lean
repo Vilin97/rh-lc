@@ -16,7 +16,6 @@ section
 
 variable {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] [StarRing K] [Fintype ι] {n : ℕ}
 
-omit [NumberField K] [StarRing K] in
 
 theorem GStep.lsh_eq_map (S : GStep E K n) (h : S.Ok) (b : S.β) (g : S.G b) (d : S.D b) :
     S.Lsh b (g • d) = (S.Lsh b d).map
@@ -31,7 +30,6 @@ theorem GStep.lsh_eq_map (S : GStep E K n) (h : S.Ok) (b : S.β) (g : S.G b) (d 
   · rintro ⟨x, hx, rfl⟩
     exact (h.lsh_smul b g d x).2 hx
 
-omit [StarRing K] [Fintype ι] in
 
 theorem GStep.tauLat_smul (S : GStep E K n) (h : S.Ok) (emb : ι → E →+* K) [Fintype ι] (b : S.β) (g : S.G b) (d : S.D b) (τ : ι) :
     tauLat emb τ (S.Lsh b (g • d)) = gLat (embGL emb (S.gam b g) τ) (tauLat emb τ (S.Lsh b d)) := by

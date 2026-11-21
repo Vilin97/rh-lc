@@ -127,7 +127,6 @@ theorem nabs_unif {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformizer k) : nabs
     Ideal.mem_span_singleton, (Valuation.integer.integers (valuation k)).dvd_iff_le, ← le_uniformizer_iff, ← hϖ]
   rfl
 
-variable (k n) in
 
 def torusElt (ϖ : kˣ) (e : n → ℤ) : GL n k := diagT k n fun i => ϖ ^ e i
 
@@ -208,7 +207,6 @@ theorem sphSection_torusElt {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformizer
   congr 1
   ring
 
-variable (k n) in
 
 def cell (ϖ : kˣ) (e : n → ℤ) : Set (GL n k) :=
   DoubleCoset.doubleCoset (torusElt k n ϖ e) (KO k n) (KO k n)

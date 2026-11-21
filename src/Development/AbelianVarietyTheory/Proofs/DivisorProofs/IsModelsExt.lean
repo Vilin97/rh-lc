@@ -35,7 +35,6 @@ def FamC (Y : NewReal R V X) : Prop :=
   (extR R Y).grp_red_R ∧ (extR R Y).grp_red_L ∧ TieExt R Y ∧ (extR R Y).fam_roots ∧ RealDat.fam_degR (A := extA A X) ∧
     RealDat.fam_degL (A := extA A X) ∧ (extR R Y).fam_muVal
 
-set_option maxHeartbeats 2000000 in
 
 def updM (Y : NewReal R V X) (HX : type_of% Y.HX) (HV : type_of% Y.HV)
     (jX : ∀ n, (extA A X).fam.amb.FR (.inr n) →ₛₗ[D.what₂.embLL] (HX n).H)
@@ -46,13 +45,11 @@ def updM (Y : NewReal R V X) (HX : type_of% Y.HX) (HV : type_of% Y.HV)
     HX := HX, HV := HV, jX := jX, jV := jV, νY := νY, fdY := fdY, νX := νX, fdX := fdX, νV := νV, fdV := fdV,
     ioX := fun _ => 0, Th := fun _ => 0, thF := fun _ _ => 0, thG := fun _ _ => 0 }
 
-set_option maxHeartbeats 2000000 in
 
 def updK (Y : NewReal R V X) (ωY : type_of% Y.ωY) (ωX : type_of% Y.ωX) (ωP : type_of% Y.ωP) (vY : type_of% Y.vY)
     (vX : type_of% Y.vX) (vP : type_of% Y.vP) : NewReal R V X :=
   { Y with ωY := ωY, ωX := ωX, ωP := ωP, vY := vY, vX := vX, vP := vP }
 
-set_option maxHeartbeats 2000000 in
 
 def updL (Y : NewReal R V X) (ioY : type_of% (extR R Y).ioY) (ioX : type_of% (extR R Y).ioX) (Th : type_of% (extR R Y).Th)
     (thF : type_of% (extR R Y).thF) (thG : type_of% (extR R Y).thG) : NewReal R V X :=
@@ -97,7 +94,6 @@ theorem isGrp_ext {F : Face D A} (hG : R.IsGrp F) (Y : NewReal R V X) (h : FamC 
   · exact (by with_unfolding_all exact (hG.record :))
   · exact (by with_unfolding_all exact (hG.chiW :))
 
-set_option maxHeartbeats 2000000 in
 
 theorem models_stage (hM : R.IsModels) (Y : NewReal R V X) (h : FamC Y) : ∃ Y' : NewReal R V X, FamC Y' ∧ ModC (extR R Y') := by
   choose HX jX h1 h2 using fun n => exists_modX (extR R Y) (.inr n)
@@ -132,7 +128,6 @@ theorem models_stage (hM : R.IsModels) (Y : NewReal R V X) (h : FamC Y) : ∃ Y'
     · exact (by with_unfolding_all exact (hM.νV i t :))
     · exact (by with_unfolding_all exact (h8 i n :))
 
-set_option maxHeartbeats 2000000 in
 
 theorem ker_stage (hc : R.IsChain) (hp : R.IsThP) (hL : (extL R.toLevCh V).Is (.inl A.μ0)) (Y : NewReal R V X) (h : FamC Y)
     (hm : ModC (extR R Y)) : ∃ Y' : NewReal R V X, FamC Y' ∧ ModC (extR R Y') ∧ KerC (extR R Y') := by
@@ -204,7 +199,6 @@ theorem isThP_updL (hp : R.IsThP) (Y : NewReal R V X) (ioY ioX Th thF thG)
     · exact (by with_unfolding_all exact (hp.thG i t :))
     · exact (by with_unfolding_all exact (h.thG i (.inr n) :))
 
-set_option maxHeartbeats 2000000 in
 
 theorem core_ext (h₁ : GlobalTheory.Published.DiscreteSeriesCover) (h₂ : GlobalTheory.Published.HarishChandraModules) (h₃ : GlobalTheory.Published.CuspRapidDecay)
     (h₄ : GlobalTheory.Published.CasselmanWallach) (hP : ∀ k, GlobalTheory.Chain.ChainPar D k) {F : Face D A} (hC : GlobalTheory.Hk3.Core R F)

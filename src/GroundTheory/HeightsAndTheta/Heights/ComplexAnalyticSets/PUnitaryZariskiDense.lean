@@ -53,7 +53,6 @@ theorem conj_diagonal_mem {n : ℕ} {V : Matrix (Fin n) (Fin n) ℂ} (hV : V ∈
 
 end UnitaryZariskiDense
 
-open UnitaryZariskiDense in
 
 theorem UnitaryZariskiDense.proof : UnitaryZariskiDense.Statement := by
   intro n p hp

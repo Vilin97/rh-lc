@@ -44,8 +44,6 @@ end Ord
 section Chain
 variable {s κ : ℕ} (S : SymData k s κ) (t : Type) [Fintype t] [DecidableEq t]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
-variable (k) in
 
 end Chain
 

@@ -124,7 +124,6 @@ section Raw
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
   (cm : CMData F E) {T : Type} [Fintype T] (emb : T → E →+* ℂ) (cd : CDHaar)
 
-open Classical in
 
 end Raw
 

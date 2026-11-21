@@ -115,6 +115,5 @@ theorem const_eq {ι κ : Type} [Fintype κ] (q : ι → ℝ) (hq : ∀ u, 0 < q
   rw [h7]
   field_simp
 
-open Classical in
 
 end GlobalTheory.SiegelWeilMean

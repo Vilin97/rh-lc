@@ -300,7 +300,6 @@ theorem Lb_sigH (c : Mx D m n) (h : ∀ i j, finPart D (c i j) = 0) : Lb D m n (
   · rw [map_sub, infPart_Lb_sigH, sub_self]
   · rw [map_sub, finPart_Lb, h, sub_self]
 
-open Classical in
 
 def sg (τ : D.what₂.Tau) (z : Matrix (Fin m) (Fin n) ℂ) : V D m n := fun ρ i j => if ρ = τ then z i j else 0
 
@@ -618,7 +617,6 @@ theorem continuous_phR (v : V D T.rank S.rank) : Continuous fun x : WO S T => ph
   unfold phR
   exact continuous_finset_sum _ fun ρ _ => (continuous_eM_left _ _ _ _).comp (continuous_compAt ρ)
 
-variable (S T) in
 
 def lH (v : V D T.rank S.rank) : V D T.rank S.rank →+ ℝ where
   toFun u := phR S T (Lb D _ _ u) v
@@ -630,7 +628,6 @@ def lH (v : V D T.rank S.rank) : V D T.rank S.rank →+ ℝ where
   map_add' u u' := by
     rw [map_add (f := _), phR_add_left]
 
-variable (S T) in
 
 def lCL (v : V D T.rank S.rank) : V D T.rank S.rank →L[ℝ] ℝ :=
   (lH S T v).toRealLinearMap ((continuous_phR v).comp continuous_Lb)
@@ -805,7 +802,6 @@ theorem theta_dRho (hψ : IsStdChar D ψ (-1)) (hLine : LineAtExists D) (τ : D.
     rw [e]
     exact (contDiff_dRho_chart hψ hLine τ z hf w).comp A'.contDiff
 
-open Classical in
 
 end Calc
 

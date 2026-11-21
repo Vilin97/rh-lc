@@ -56,9 +56,7 @@ theorem rename_eq_symm_comp_C :
   rw [← joinPolyEquiv_comp_rename, ← RingHom.comp_assoc]
   ext x <;> simp
 
-set_option hygiene false in
 
-set_option hygiene false in
 
 theorem joinPolyEquiv_rename (x : MRing ι R) : joinPolyEquiv (ε x) = Polynomial.C x :=
   RingHom.congr_fun joinPolyEquiv_comp_rename x
@@ -158,7 +156,6 @@ theorem multAt_map_rename (P Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo
 
 end JoinDivCycle
 
-open JoinDivCycle in
 
 theorem JoinDivCycle.proof : JoinDivCycle.Statement := by
   intro R _ _ K _ ι _ P f

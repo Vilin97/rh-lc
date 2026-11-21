@@ -119,7 +119,6 @@ theorem mark_congr {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E
 
 end GlobalTheory.Member.Occ
 
-open GlobalTheory.Member.Occ GlobalTheory.AdLat in
 
 theorem GlobalTheory.Member.exists_mark : ∀ (D : D7) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (V : HSp D) (r : ℕ) (C : Ctx Xo c σ V r), C.OK → ∀ h : GA D V, ∃ k γ, C.Mark h k γ := by
   intro D H Dw l Xo c σ V r C hC h

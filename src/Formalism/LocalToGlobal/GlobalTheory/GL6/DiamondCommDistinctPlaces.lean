@@ -40,7 +40,6 @@ end Gen
 
 variable {D : D7} {u : D.what₂.Word}
 
-set_option maxHeartbeats 1000000 in
 
 theorem diamond_comm_distinct_places (Tf : FormsTied D u) (hE : DiamondElementsExist Tf) (i : ℕ) (hi : i ≤ D.R.m) (v v' : (D.mem u).A.vT)
     (hvv : v ≠ v') (a : ((D.mem u).A.Fv v')ˣ) (b : ((D.mem u).A.Fv v)ˣ) (φ : Formalism.MainNotions.product_first_zeroth_parts.Fn D u i)

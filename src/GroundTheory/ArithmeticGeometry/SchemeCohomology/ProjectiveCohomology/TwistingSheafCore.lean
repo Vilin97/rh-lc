@@ -179,7 +179,6 @@ def mulLin (a b : ℤ) (U : (Proj 𝒜).Opens) :
       change val s x * ((r.1 x).val * val t x) = (r.1 x).val * (val s x * val t x)
       ring))
 
-variable (𝒜) in
 
 def mulPre (a b : ℤ) :
     (preMod (Proj 𝒜)).obj (twistingSheaf 𝒜 a) ⊗ (preMod (Proj 𝒜)).obj (twistingSheaf 𝒜 b) ⟶
@@ -195,7 +194,6 @@ def mulPre (a b : ℤ) :
     intro s t
     exact ProjTwist.ext (funext fun x => rfl)
 
-variable (𝒜) in
 
 def twistMul (a b : ℤ) : twistingSheaf 𝒜 a ⊗ twistingSheaf 𝒜 b ⟶ twistingSheaf 𝒜 (a + b) :=
   tensorLift (mulPre 𝒜 a b)
@@ -216,7 +214,6 @@ lemma mulSec_upow {u : A} (hu : u ∈ 𝒜 1) (a b : ℤ) :
   ProjTwist.ext (funext fun x => by
     erw [val_mulSec, val_upow, val_upow, val_upow, twistFrac_mul])
 
-variable (𝒜) in
 
 def oneSections : (twistingSheaf 𝒜 0).sections :=
   ⟨fun U => mkSection (U := U.unop)
@@ -229,7 +226,6 @@ lemma val_oneSections (U : (Proj 𝒜).Opens) (x : U) :
   change ((1 : (ProjectiveSpectrum.Proj.structureSheaf 𝒜).obj.obj (op U)).1 x).val = 1
   erw [Proj.one_apply, HomogeneousLocalization.val_one]
 
-variable (𝒜) in
 
 def unitToTwistZero : 𝟙_ (Proj 𝒜).Modules ⟶ twistingSheaf 𝒜 0 :=
   (SheafOfModules.unitHomEquiv _).symm (oneSections 𝒜)

@@ -379,7 +379,6 @@ end GlobalTheory.NormSum.RepAt
 open NumberField Classical Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3 GlobalTheory.NormSum
 open scoped BigOperators
 
-open GlobalTheory.NormSum.RepAt GlobalTheory.NormSum.PtsMem in
 
 theorem GlobalTheory.NormSum.exists_rep_trivial_at : ∀ D : D7, oddRep D := by
   intro D N p hp g

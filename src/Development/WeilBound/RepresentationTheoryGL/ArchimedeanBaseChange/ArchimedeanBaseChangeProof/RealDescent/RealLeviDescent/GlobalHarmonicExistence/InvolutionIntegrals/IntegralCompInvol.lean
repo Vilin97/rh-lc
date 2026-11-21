@@ -30,7 +30,6 @@ theorem map_thetaR' {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (σ :
     τ (f (((g⁻¹ : GL (Fin n) A) : Matrix (Fin n) (Fin n) A) j i))
   exact h _
 
-variable (E n) in
 
 def tF : GL (Fin n) (Af E) →* GL (Fin n) (Af E) := thetaR (GlobalTheory.ThetaPull.cFin E) n
 

@@ -99,7 +99,6 @@ theorem comp_mem_SB {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalR
   have hsub : tsupport (g ∘ linC c) ⊆ linD d '' tsupport g := fun y hy => ⟨linC c y, h1 hy, hdc y⟩
   exact (hg'.2.image (continuous_linD d)).of_isClosed_subset (isClosed_tsupport _) hsub
 
-variable (F) in
 
 theorem exists_schwartz_comp {κ : Type} [Fintype κ] {r : ℕ} (c d : Fin r → κ → mixedEmbedding.mixedSpace F)
     (hdc : ∀ y, linD d (linC c y) = y) (f : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ) :
@@ -123,7 +122,6 @@ theorem exists_schwartz_comp {κ : Type} [Fintype κ] {r : ℕ} (c d : Fin r →
         rw [pow_one]; exact mul_le_mul_of_nonneg_left (by linarith) (norm_nonneg _)
   exact ⟨SchwartzMap.compCLM ℝ Lc'.hasTemperateGrowth hb f, fun y => rfl⟩
 
-variable (F) in
 
 theorem pureA_comp_mem {κ : Type} [Fintype κ] {r : ℕ} (a p : Fin r → κ → F)
     (hp : ∀ i j, ∑ k, p i k * a j k = if i = j then 1 else 0)

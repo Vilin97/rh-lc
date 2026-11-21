@@ -161,7 +161,6 @@ theorem gsReal_card_mul_eq (hT : T.ShortExact) [Finite T.X₁] [Finite T.X₂] [
       (gsRealH0Card S T.X₃ ιr v : ℚ) := gsReal_eulerChar_eq_card_cohomology_zero S ιr T.X₃ v
   exact ((congrArg₂ (· * ·) e1 e3).symm.trans h).trans (congrArg (· * _) e2)
 
-omit [IsDiscreteRep T.X₁] [IsDiscreteRep T.X₂] [IsDiscreteRep T.X₃] in
 
 theorem gsRealRes_cohomologyMap {A B : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)}
     [IsDiscreteRep A] [IsDiscreteRep B] (f : A ⟶ B) (n : ℕ) (x : cohomology A n)
@@ -181,7 +180,6 @@ theorem gsRealRes_cohomologyMap {A B : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOut
     (Category.id_comp ((Rep.resFunctor (gsRealFamily S ιr v).toMonoidHom).map f))
   exact (h1.trans c1).trans (h2.trans c2).symm
 
-open scoped Classical in
 
 theorem gsEulerRatio_shortExact [Finite S] (hT : T.ShortExact) [Finite T.X₂]
     (hn : ∀ v : HeightOneSpectrum (𝓞 K.1), ((Nat.card T.X₂ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
@@ -222,7 +220,6 @@ theorem gsEulerRatio_shortExact [Finite S] (hT : T.ShortExact) [Finite T.X₂]
   exact ratio_mul_eq (Fintype.card (InfinitePlace K.1)) hPA hPB hPC (by exact_mod_cast hcard)
     hglob hprod
 
-open scoped Classical in
 
 theorem gsEulerRatio_shortExact_of_bijective [Finite S] (hT : T.ShortExact) [Finite T.X₂]
     (hn : ∀ v : HeightOneSpectrum (𝓞 K.1), ((Nat.card T.X₂ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)

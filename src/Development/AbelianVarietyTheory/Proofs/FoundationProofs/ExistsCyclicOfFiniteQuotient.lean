@@ -148,8 +148,6 @@ section Points
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
 
-variable (E) in
-omit [NumberField E] in
 
 def intLocMap (v : HeightOneSpectrum (𝓞 F)) : v.adicCompletionIntegers F →+* intLoc F E v :=
   ((Algebra.TensorProduct.includeLeftRingHom (R := F) (B := E)).comp (v.adicCompletionIntegers F).subtype).codRestrict _
@@ -316,13 +314,11 @@ theorem isProperOrbit_GAd_of_local (L : Submodule (𝓞 E) (Fin n → E)) [Submo
   · simpa only [map_mul, h2] using hb2 v hv
   · simpa only [map_mul, h2] using hb3 v hv
 
-omit [NumberField E] in
 
 theorem isRegSS_proj_ratEmb {γ : GRat σ J} (hγ : IsRegSS γ.1.1) (v : HeightOneSpectrum (𝓞 F)) :
     IsRegSS (matHom _ σ J (proj σ J v (ratEmb σ J γ))).1 := by
   rw [proj_ratEmb]; exact hγ.map (inclR _)
 
-omit [NumberField E] in
 
 theorem isRegSS_projArch_ratEmb {γ : GRat σ J} (hγ : IsRegSS γ.1.1) (w : InfinitePlace F) :
     IsRegSS (matHom _ σ J (projArch σ J w (ratEmb σ J γ))).1 := by

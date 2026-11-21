@@ -136,7 +136,6 @@ theorem subst_homog {K : Type*} [DecidableEq K] {ι : K → Type} {M : ℕ} {F :
 
 end FlagLineDegreeProof
 
-open FlagLineDegreeProof in
 
 theorem FlagLineDegree.proof : FlagLineDegree.Statement := by
   intro F _ Ω _ _ K _ _ ι _ y e hV _ N E _ _ B w b hflag M a φ hφ Φ _ _ t ht h0

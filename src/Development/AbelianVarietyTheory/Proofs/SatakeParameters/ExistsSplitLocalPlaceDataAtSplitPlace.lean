@@ -80,7 +80,6 @@ theorem tensCastR_one_tmul {E : Type} [Field E] [NumberField E] {F1 F2 : Subfiel
   subst h
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_place : ∀ (D : D7) (s : SplitPlace D.host.E) (hF : D.host.F = maximalRealSubfield D.host.E),
     ∃ (p : GlobalTheory.LocMod.Place D (s.w.adicCompletion D.host.E))

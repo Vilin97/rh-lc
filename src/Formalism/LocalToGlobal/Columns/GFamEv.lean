@@ -40,7 +40,6 @@ namespace Ev
 
 variable {F : GFam K} {σ : K →+* ℂ} (E : F.Ev σ)
 
-open Classical in
 
 end Ev
 

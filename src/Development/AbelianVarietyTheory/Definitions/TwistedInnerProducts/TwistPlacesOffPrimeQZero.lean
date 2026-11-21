@@ -60,7 +60,6 @@ def PhaseCl : Prop := ∀ t Φ, ∀ β ∈ S.supp t Φ, PhasesIn σ S t Φ β
 
 def JetCl : Prop := ∀ t Φ, ∀ β ∈ S.supp t Φ, JetsIn σ S t Φ β
 
-variable (W) in
 
 def BotCl : Prop := ∀ i j : Fin D.R.m, ∃ (A A' WW : HSp D) (X : Tri T A A' WW), IsBottomTri W i j X ∧ SumsIn W σ X
 
@@ -78,7 +77,6 @@ structure AllIn (μ₀ : T) : Prop where
 
   bot : BotCl W σ
 
-variable {σ S} in
 
 theorem AllIn.numbersIn {μ₀ : T} (h : AllIn σ S μ₀) : NumbersIn σ S μ₀ :=
   ⟨h.chars, h.root.1, h.root.2.1, h.phase, h.root.2.2, h.jet, h.ratios, fun i j _ => h.bot i j⟩

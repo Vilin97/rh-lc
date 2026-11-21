@@ -18,6 +18,5 @@ abbrev epsRed (R : Type) [CommRing R] : Sp R ⟶ Sp (DualNumber R) :=
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
   {Xo : Moduli Dw l} {c : Coeff l}
 
-variable (Xo c) in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.LieLiftsTangentReduction

@@ -123,7 +123,6 @@ theorem sgs_Om (D : RealPlaceData k r Wp Wq) {p : SS k r} (hp : D.inSS p) {y : M
     rw [B5.sgs_eq, gInv k r D.z D.z' D.z_mem D.z'_mem _ hs _ hs' y]
     exact hy.2.2
 
-omit [FiniteDimensional ℂ Wq] in
 
 end Formalism.FourierDecayAlt.P.PositiveOrbitOpen
 

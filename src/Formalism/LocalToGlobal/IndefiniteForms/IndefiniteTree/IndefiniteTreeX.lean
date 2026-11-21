@@ -78,7 +78,6 @@ def Resolves {R : Type*} [CommRing R] {D : ℕ} (x : Fin D → R) (a : ℕ) {n :
 
 end EagonNorthcott
 
-open EagonNorthcott in
 
 def EagonNorthcott : Prop :=
   ∀ D a : ℕ, ∃ (n : ℕ → ℕ) (e : Fin (n 0) → Fin D → ℕ) (C : ∀ j, Matrix (Fin (n j)) (Fin (n (j + 1))) (Fin D → ℤ)),

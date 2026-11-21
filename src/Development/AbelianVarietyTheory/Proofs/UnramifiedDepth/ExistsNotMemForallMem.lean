@@ -400,7 +400,6 @@ theorem exists_idem_seq {O : Type} [CommRing O] (l ε : O) (hε : ∃ y, ε * ε
       obtain ⟨z, hz⟩ := h2 n
       exact ⟨y + l ^ n * z, by linear_combination hy + hz⟩
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ Formalism.MainNotions.ModuliIntegralCharts.H1.LinEig in
 
 theorem exists_linHom {C : Type} [Field C] {O : Type} [CommRing O] {dd : ℕ} (G : FGLaw C dd) (A : OAct O G) :
     ∃ ρ : O →+* Matrix (Fin dd) (Fin dd) C,

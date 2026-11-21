@@ -150,7 +150,6 @@ theorem cpt_cell {z : V (nd X)} (hz : z ∈ OmF X x0) :
   have h := D.uniq z hz (oneF X) (oneF_mem X)
   rwa [rmul_oneF X] at h
 
-open Classical in
 
 def P0 (la : Wt X.Ψ r) (F : V (nd X) → ℂ) (x : Frame X.Ψ r) : ℂ :=
   if x ∈ X.dom ∧ D.Δ x ≠ 0 then bchar la (D.bOf x) * F (D.zOf x) else 0

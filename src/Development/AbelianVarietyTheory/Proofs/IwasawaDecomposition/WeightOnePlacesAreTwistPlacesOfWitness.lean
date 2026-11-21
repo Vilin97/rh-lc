@@ -65,9 +65,7 @@ theorem finite_T_of_twArgs {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {
   cases pack
   exact hfin
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.Mem.Top.Bl
 

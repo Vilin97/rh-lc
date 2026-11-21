@@ -224,7 +224,6 @@ theorem pins_scaleXi (u : O.c'.F) (hu : u ≠ 0) {c0 : ℂ} (h : XiConst O ι x�
     ⟨_, hr, xiConst_scaleXi O u h⟩, hP.model₂⟩
   exact ⟨isLev_scale _ _ ((map_ne_zero _).2 hu) (hP.cov t).1, (hP.cov t).2⟩
 
-set_option maxHeartbeats 1600000 in
 
 end Change
 
@@ -282,7 +281,6 @@ theorem chiG_ne (g : G) : chiG R i g ≠ 0 := Finset.prod_ne_zero_iff.2 fun _ _ 
 abbrev cQ (T : CoreJ D) (i : Fin D.R.m) (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (q : AutQ (Wc D i)) : ℂ :=
   T.cE ((i : ℕ) + 1) T.σ₀ (castDict hV (T.dict ((i : ℕ) + 1) T.σ₀) q.out).1
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_base (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc D i).rank)
     {O : OMDat T.toCore R i Unit fun _ => A.μ0} (hP : O.Pins κ v₀ ι x₀) {ph : ℂ}
@@ -313,7 +311,6 @@ theorem exists_base (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc
     rw [← h3 z₀ q, ← e, h5, mul_left_comm, h4]
     ring
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_transfer (hT : LawsJ T) (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc D i).rank)
     {Tp : Type} {tup : Tp → T0} {O : OMDat T.toCore R i Tp tup} (hP : O.Pins κ v₀ ι x₀)
@@ -357,7 +354,6 @@ theorem span_read {W : HSp D} {I : Type} (θ : I → AutQ W → ℂ) (a b c d : 
     · simp only [Pi.smul_apply, smul_eq_mul]; linear_combination r * h2 q
     · simp only [Pi.smul_apply, smul_eq_mul]; linear_combination r * h3 q
 
-set_option maxHeartbeats 2000000 in
 
 theorem oneMapOf_of_ptIdent (hT : LawsJ T) (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc D i).rank)
     {O : OMDat T.toCore R i Unit fun _ => A.μ0} (hP : O.Pins κ v₀ ι x₀) {ph : ℂ}
@@ -414,7 +410,6 @@ theorem oneMapOf_of_ptIdent (hT : LawsJ T) (hV : T.V ((i : ℕ) + 1) T.σ₀ = W
     rw [h0, Pi.zero_apply, mul_zero] at e3 ⊢
     exact ((mul_eq_zero.1 e3.symm).resolve_right (div_ne_zero hc0 hc0')).symm
 
-set_option maxHeartbeats 2000000 in
 
 theorem const_ratio_mem (hT : LawsJ T) (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc D i).rank)
     {O : OMDat T.toCore R i Unit fun _ => A.μ0} (hF : O.c'.F = D.what₂.embLL.toRatAlgHom.fieldRange)

@@ -19,7 +19,6 @@ noncomputable section
 
 namespace DualLineSemipositiveAlt
 
-open scoped MatrixOrder in
 
 theorem exists_conjTranspose_mul_self {n : Type} [Fintype n] [DecidableEq n] {M : Matrix n n ℂ}
     (hM : M.PosSemidef) : ∃ B : Matrix n n ℂ, M = Bᴴ * B := by
@@ -51,7 +50,6 @@ def coordMap {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice F))
       (LinearMap.pi fun k => LinearMap.proj (p.1, k))) ∘ₗ (dualRecover b hb).toLinearMap ∘ₗ
     (LinearMap.pi fun t => LinearMap.proj (⟨(), t⟩ : Σ _ : Unit, T))
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem dualLine_h_eq {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (z : (Σ _ : Unit, T) → ℂ) :
@@ -67,7 +65,6 @@ theorem dualLine_h_eq {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice
 
 end DualLineSemipositiveAlt
 
-open DualLineSemipositiveAlt in
 
 theorem DualLineSemipositive.proof : DualLineSemipositive.Statement := by
   intro K _ _ i F T _ _ b hb

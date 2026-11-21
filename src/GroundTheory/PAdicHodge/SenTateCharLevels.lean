@@ -22,7 +22,6 @@ variable {p : ℕ} [hp : Fact p.Prime] {K : IntermediateField ℚ_[p] (PadicAlgC
 instance valuativeExtension_charTower (k : ℕ) : ValuativeExtension K (charTower η k) :=
   GroundTheory.LocalField.intermediateField_valuativeExtension_left _
 
-variable (K η) in
 
 def artinLevel (n : ℕ) : ℕ := sInf {k | ¬ artinImage K η n ≤ unitsOneAdd p (k + 1)}
 
@@ -122,7 +121,6 @@ theorem upperRamificationGroup_charTower_eq_map (hη : Continuous η) {k n : ℕ
     rw [e]
     exact mul_mem hσ' (unitsOneAdd_antitone (min_le_right _ _) h2')
 
-omit [FiniteDimensional ℚ_[p] K] in
 
 theorem relIndex_charTowerGal {s t : ℕ} (hs : 2 ≤ s) (hst : s ≤ t) {a : ℤ_[p]ˣ} (haR : a ∈ η.range)
     (ha : a ∈ unitsOneAdd p s) (ha' : a ∉ unitsOneAdd p (s + 1)) :

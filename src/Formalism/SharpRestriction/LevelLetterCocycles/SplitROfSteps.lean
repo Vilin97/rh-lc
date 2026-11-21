@@ -61,7 +61,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {PD : PeriodData G Qp K₀ K B BdR} {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL]
     [CommRing O] [Algebra O LL] {v : AddValuation LL (WithTop ℚ)} {n : ℕ} [NeZero n]
 
-set_option maxHeartbeats 1000000 in
 
 theorem split_local (W : LocWach PD LL O v n) (T Tp : LocLat G Qp LL O) (ι : LatHom T.L Tp.L)
     (π : LatHom Tp.L W.one.L) (κ : G → T.V) (hκ : κ ∈ latticeCocycles T.L) (e : W.DD W.one)
@@ -359,7 +358,6 @@ def extOfR (D : D7) (HW : HWOf D.loc) : Prop :=
         IsCrys ((D.loc l).PD K) ((HW l).W K 1 LL hG).one.ρ ∧
         ∀ τ, JumpsInV ((D.loc l).PD K) Tp.ρ τ (Set.Icc (-(h' : ℤ)) h')
 
-set_option maxHeartbeats 2000000 in
 
 theorem splitR_of_steps (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (h2 : adm2 D HW F) (h2e : HerrClassMapsLocal D HW F) (hE : extOfR D HW) (hW : wKillR D HW)

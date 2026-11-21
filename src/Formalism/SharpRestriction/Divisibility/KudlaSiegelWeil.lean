@@ -375,7 +375,6 @@ theorem val_eq_one (D : D7) (w : FinE D) (x : 𝓞 D.host.E) (hx : x ∉ w.asIde
 
 end InertConditionsOfHost
 
-open InertConditionsOfHost Formalism.FrobeniusOrbits in
 
 theorem inert_conditions_hold (D : D7) : InertPlaceConditions D := by
   intro v hv
@@ -455,7 +454,6 @@ def RepIso {Gp M N : Type} [Monoid Gp] [AddCommGroup M] [Module ℂ M] [AddCommG
     (σ : Representation ℂ Gp M) (π : Representation ℂ Gp N) : Prop :=
   ∃ e : M ≃ₗ[ℂ] N, ∀ g x, e (σ g x) = π g (e x)
 
-open Classical in
 
 structure LocW (D : D7) (T : ThetaX D) where
 
@@ -579,7 +577,6 @@ def HasSmallTheta (X : LocW D T) (V W : HS D) (χ₁ χ₂ : T.Chr) (v : Pl D) :
 def ePlus (X : LocW D T) (τ : D.what₂.Tau) : Prop :=
   0 < ((tauE D τ) D.host.xi0).im ↔ X.sR = true
 
-open Classical in
 
 structure LocP {D : D7} {T : ThetaX D} (X : LocW D T) where
   PiT : HS D → HS D → HS D → T.Chr → T.Chr → Pl D → Type
@@ -706,7 +703,6 @@ namespace Sett
 
 variable {Lc : Loc D T} (S : Sett D T Lc)
 
-open Classical in
 
 end Sett
 

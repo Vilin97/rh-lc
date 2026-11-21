@@ -13,7 +13,6 @@ namespace GlobalTheory.IndefiniteRowSideFullHecke.MassFormulaPositivity
 
 open NumberField Formalism.BasicNotions
 
-open scoped ComplexOrder in
 
 theorem posDef_of_hasSignature {n : Type} [Fintype n] [DecidableEq n] {J : Matrix n n ℂ} {p : ℕ}
     (h : Formalism.UG.HasSignature J p 0) : J.PosDef := by

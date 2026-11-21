@@ -175,7 +175,6 @@ theorem incM_gam_mulVec (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin 
 
 end GlobalTheory.ThK.UnipDom.PlaneRatC
 
-open GlobalTheory.ThK.UnipDom.Additive GlobalTheory.ThK.UnipDom.PlaneRatC in
 
 theorem GlobalTheory.ThK.UnipDom.exists_ratCentral_coC_translate_plane : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n n₁ : ℕ) (Y : Spc F E n) (Y₁ : Spc F E n₁) (H : Plane E n n₁), IsCMExt F E σ → (∀ i j, σ (Y.J j i) = -Y.J i j) → IsIsoPlane σ B H Y Y₁ → ∀ q : F, ∃ γ ∈ unip σ Y H, γ ∈ ratU σ Y.J ∧ ∀ u ∈ unip σ Y H, coA σ Y.J H (γ * u) = coA σ Y.J H u ∧ coC σ Y.J H (γ * u) = algebraMap (AF F) (AE F E) (algebraMap F (AF F) q) + coC σ Y.J H u := by
   intro F E _ _ _ _ _ σ B n n₁ Y Y₁ H hCM hJ hP q

@@ -15,7 +15,6 @@ noncomputable section
 
 namespace GlobalTheory.InertLevel
 
-open Classical in
 
 theorem finsum_cosets_eq {G W : Type} [Group G] [AddCommMonoid W] (S K U : Subgroup G)
     (hU : ∀ κ ∈ S, (κ ∈ U ↔ κ ∈ K)) (F : G → W)

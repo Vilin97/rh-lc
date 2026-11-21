@@ -149,7 +149,6 @@ theorem continuous_quasiChar_inv (hχ : Continuous χ) : Continuous (χ⁻¹ : K
   rw [this]
   exact hχ.inv
 
-omit hχ in
 
 theorem quasiCharExponent_inv : quasiCharExponent χ⁻¹ = -quasiCharExponent χ := by
   simp only [quasiCharExponent, MonoidHom.inv_apply, Units.val_inv_eq_inv_val, norm_inv,
@@ -161,7 +160,6 @@ section ShellIntegral
 
 variable [MeasurableSpace K] [BorelSpace K] {χ : Kˣ →* ℂˣ}
 
-open scoped Classical in
 
 theorem setIntegral_ordShell_quasiChar (hχ : Continuous χ) (k : ℤ) :
     ∫ u in ordShell K k, ((χ u : ℂˣ) : ℂ) ∂multHaar K =

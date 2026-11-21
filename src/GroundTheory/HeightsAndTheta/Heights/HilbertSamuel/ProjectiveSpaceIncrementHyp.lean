@@ -22,7 +22,6 @@ variable {K : Type*} [DecidableEq K] (ι : K → Type*) {F : Type*} [Field F]
 variable {M : Type*} [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
   [IsScalarTower F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M]
 
-open Classical in
 
 variable {ι}
 

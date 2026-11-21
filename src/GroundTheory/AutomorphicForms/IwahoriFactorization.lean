@@ -333,7 +333,6 @@ theorem elimGL_mem_iwahori (hβ : Monotone β) {h : GL (Fin n) F} (hh : h ∈ iw
     rw [sub_sub_cancel_left, Valuation.map_neg, map_one]
     exact hD i i
 
-variable (β) in
 
 theorem congruenceSubgroup_iwahoriFactorization {m : ℕ} (hm : 1 ≤ m) :
     ∀ k ∈ congruenceSubgroup F n m,
@@ -376,7 +375,6 @@ theorem congruenceSubgroup_iwahoriFactorization' {m : ℕ} (hm : 1 ≤ m) :
       ∃ z ∈ congruenceSubgroup F n m ⊓ oppositeUnipotentRadical F n β, k = x * y * z :=
   iwahoriFactorization_symm (congruenceSubgroup_iwahoriFactorization β hm)
 
-variable {β} in
 
 theorem iwahori_iwahoriFactorization' (hβ : Monotone β) :
     ∀ k ∈ iwahori F n, ∃ x ∈ iwahori F n ⊓ unipotentRadical F n β,
@@ -398,7 +396,6 @@ theorem valuation_zpow_mul_le_pow_mul {x : F} {e : ℕ} {z : ℤ} (hz : (e : ℤ
     map_pow, mul_right_comm]
   exact mul_le_of_le_one_right' (pow_le_one' (valuation_uniformizer_lt_one F).le d)
 
-variable (β) in
 
 end Contraction
 
@@ -413,7 +410,6 @@ theorem jacquetFixedMap_surjective_congruenceSubgroup (hπ : IsAdmissible π) {m
   jacquetFixedMap_surjective hπ (isCompact_congruenceSubgroup F n m)
     (isOpen_congruenceSubgroup F n m) (congruenceSubgroup_iwahoriFactorization β hm)
 
-variable {β} in
 
 end Jacquet
 

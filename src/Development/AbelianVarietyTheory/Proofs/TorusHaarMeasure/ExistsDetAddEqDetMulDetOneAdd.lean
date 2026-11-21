@@ -10,7 +10,6 @@ open scoped ComplexOrder ENNReal Pointwise
 
 namespace GlobalTheory
 
-open scoped MatrixOrder in
 
 theorem exists_det_add_eq_det_mul_det_one_add {n : Type} [Fintype n] [DecidableEq n]
     {P Q : Matrix n n ℂ} (hP : P.PosSemidef) (hQ : Q.PosSemidef) (hd : P.det ≠ 0) :

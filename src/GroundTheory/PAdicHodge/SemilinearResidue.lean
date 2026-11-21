@@ -16,7 +16,6 @@ section Poly
 
 variable {k : Type*} [Field k] {p : ℕ} [hp : Fact p.Prime] [CharP k p]
 
-include hp in
 
 omit [CharP k p] in
 include hp in
@@ -45,7 +44,6 @@ theorem linearIndependent_of_notMem_span (v : ℕ → V) : ∀ m : ℕ,
     rw [this]
     exact linearIndependent_finSnoc.mpr ⟨ih, h m (by omega)⟩
 
-variable (k) in
 
 theorem exists_rel [FiniteDimensional k V] (v : ℕ → V) :
     ∃ m, (∃ c : ℕ → k, v m = ∑ i ∈ range m, c i • v i) ∧
@@ -67,7 +65,6 @@ theorem exists_rel [FiniteDimensional k V] (v : ℕ → V) :
 
 variable {p : ℕ} [hp : Fact p.Prime] [CharP k p] {e : ℕ} {φ : V →+ V}
 
-omit hp [CharP k p] in
 
 end Vec
 

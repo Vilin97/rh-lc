@@ -43,7 +43,6 @@ open GlobalTheory.ChartCompare
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {X0 : Scheme.{0}} (t : SAB H X0)
 variable {S : Type} [CommRing S] (x0 : Sp S ⟶ X0)
 
-set_option maxHeartbeats 800000 in
 
 theorem tanBasis_of_lieBasis {n : ℕ} (v : Fin n → (epsR S ⟶ (Over.pullback x0).obj t.G)) (hB : IsLieBasis v) :
     ∃ tg : Fin n → (Sp (DualNumber S) ⟶ t.G.left), IsTanBasisG t x0 tg := by

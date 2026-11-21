@@ -23,15 +23,11 @@ section BC
 
 variable {K L Rl : Type} [Field K] [Field L] [AddCommGroup Rl] [Module K Rl]
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 variable (φ : K →+* L)
 
-open Classical in
 
 end BC
 
@@ -91,7 +87,6 @@ def secZ (a : ExZ E) (n : ℕ) : Submodule c.F (Rul Xo c) :=
 
 variable {Xo c} {r : ℕ}
 
-open Classical in
 
 def laZ {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (a : ExZ E) (n : ℕ) (k : U.Comp) : Wt (U.X k).Ψ r :=
   fun τ j => if (U.X k).p0 ≤ (j : ℕ) then
@@ -120,7 +115,6 @@ section Pet
 variable {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
   (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ D.R.r) (W : HSp D) (dict : ∀ σ : c.F →+* ℂ, GA D W → Σ k, Frame ((U σ).X k).Ψ D.R.r)
 
-open Classical in
 
 end Pet
 

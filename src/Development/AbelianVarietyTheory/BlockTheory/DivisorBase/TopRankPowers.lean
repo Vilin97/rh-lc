@@ -57,7 +57,6 @@ end OneField
 
 variable {F : Type} [Field F] [NumberField F] (X : Data F)
 
-variable {X} in
 
 variable (E : Type) [Field E] [NumberField E] [Algebra F E]
 

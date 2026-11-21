@@ -41,7 +41,6 @@ variable {D : D7} {u : D.what₂.Word} {w : D.what₂.places.Pl} {h : GIdx D.hos
   {μ : D.what₂.Tup} {Tw : TwForms D} (I : CmpJIn Tw u μ w h Lv)
   (L0 : Lev0Data D u w h) (a : 𝓞 D.host.E) (bad : Finset (HeightOneSpectrum (𝓞 D.host.F)))
 
-set_option maxHeartbeats 1600000 in
 
 end AtS
 
@@ -58,7 +57,6 @@ variable {D : D7} {u : D.what₂.Word} {w : D.what₂.places.Pl} {h : GIdx D.hos
   (om : ∀ v, OmBasis (D.what₂.places.resChar w) ((D.gat u w h).P.n' v))
   {μ : D.what₂.Tup} {Tw : TwForms D}
 
-set_option maxHeartbeats 1600000 in
 
 end Spec
 

@@ -66,7 +66,6 @@ section Split
 variable {D : D7} (δ : D.host.E) (hδ : D.sp.cm.sig δ = -δ) (hδ0 : δ ≠ 0) (Δ : D.host.F)
   (hΔ : algebraMap D.host.F D.host.E Δ = δ * δ)
 
-include hΔ hδ0 hδ in
 
 theorem exists_splitIdem' (v : HeightOneSpectrum (𝓞 D.host.F)) (s : v.adicCompletion D.host.F)
     (hs : s * s = algebraMap D.host.F (v.adicCompletion D.host.F) Δ) :
@@ -205,7 +204,6 @@ by
     linear_combination k3 - ι b * ι b * kd
   · exact ⟨single v 1, rfl, epv_self v, fun v' hv' => epv_ne hv'⟩
 
-include hδ hδ0 hΔ in
 
 end Split
 

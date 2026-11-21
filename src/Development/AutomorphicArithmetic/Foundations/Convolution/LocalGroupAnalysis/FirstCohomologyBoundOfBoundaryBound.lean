@@ -179,7 +179,6 @@ private theorem galHom_mem (σ : E ≃ₐ[F] E) (w w' : HeightOneSpectrum (𝓞 
   rw [mem_O, ← Valued.toNormedField.norm_le_one_iff] at hy ⊢
   exact h1.trans_le hy
 
-variable (E) in
 
 private noncomputable def intOver (v : HeightOneSpectrum (𝓞 F)) : Subring (CompletionsOver E v) :=
   ⨅ w : PlacesOver E v, (𝒪[w.1.adicCompletion E]).comap

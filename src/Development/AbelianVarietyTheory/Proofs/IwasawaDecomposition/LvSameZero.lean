@@ -38,12 +38,10 @@ theorem redN_rfl (d : DecoSet X.E n ST SG) (P : ST) (x : TDat.Red d.1.N P.1) : r
 
 theorem redK_rfl (d : DecoSet X.E n ST SG) (P : ST) (x : TDat.Red (d.1.dnN P) P.1) : redK (rfl : d = d) P x = x := redEq_rfl _ x
 
-open Classical in
 
 def fvD (d : DecoSet X.E n ST SG) (P : ST) : Module.Dual (Res P.1) (TDat.Red d.1.N P.1) :=
   if h : ∃ φ : Module.Dual (Res P.1) (TDat.Red d.1.N P.1), ∀ x : d.1.N, φ (Submodule.Quotient.mk x) = d.1.f P x then h.choose else 0
 
-open Classical in
 
 def teD (d : DecoSet X.E n ST SG) (T : ℕ) (P : ST) : TDat.Red (d.1.dnN P) P.1 :=
   if h : ∃ t : d.1.dnN P, ∃ e ∈ d.1.N, d.1.f P e = 1 ∧ (t : Fin n → X.E) = (T : 𝓞 X.E) • e

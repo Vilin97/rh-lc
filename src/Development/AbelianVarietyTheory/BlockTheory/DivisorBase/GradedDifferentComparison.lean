@@ -26,9 +26,6 @@ def IsPowMul_vp (p : ℕ) (v : Valuation C ℝ≥0) {O : Type} [CommRing O] [Alg
     (La La' : Submodule O U) : Prop :=
   ∃ u : C, (v u : ℝ) = (v (p : C) : ℝ) ^ t ∧ La' = scaleLat u La
 
-set_option autoImplicit false in
-open scoped NNReal NumberField Classical in
-variable {C : Type} [Field C] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedDifferentComparison.exists_generator_different {v : Valuation C ℝ≥0} {O : Type}
     [CommRing O] [Algebra O C] (hv : v.Integers O) {E : Type} [Field E] [NumberField E]

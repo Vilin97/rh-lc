@@ -28,14 +28,12 @@ theorem pullW_φ (i : PUnit → B.ι) (z : CxPts q σ') :
     (pullW hΦ φ).φ i z = φ.φ (i PUnit.unit) (Φ z) :=
   (Fintype.sum_unique fun a : PUnit.{1} => ((1 : ℤ) : ℝ) * φ.φ (i a) (Φ z)).trans (by simp)
 
-include hΦ in
 
 theorem ev_app' (W : X.Opens) (g : Γ(X, W)) (z : CxPts q σ') :
     ev q σ' (j ⁻¹ᵁ W) (j.app W g) z = ev p σ W g (Φ z) := by
   rw [ev, ev, hΦ]
   exact (valR_comp z.1 j W g).symm
 
-include hΦ in
 
 theorem mem_preimage_iff (W : X.Opens) (z : CxPts q σ') :
     z ∈ ptsIn q σ' (j ⁻¹ᵁ W) ↔ Φ z ∈ ptsIn p σ W := by
@@ -53,7 +51,6 @@ theorem isCInf_pullW (h : φ.IsCInf) : (pullW hΦ φ).IsCInf := fun i z hz => by
     filter_upwards [Φ.continuous.continuousAt.eventually h₅] with w hw
     exact (pullW_φ hΦ i w).trans hw
 
-include hΦ in
 
 theorem holo_trans (c : AlgChart p σ D) (c' : AlgChart q σ' D) :
     DifferentiableOn ℂ (Φ.transOpenPartialHomeomorph c.e ∘ c'.e.symm)
@@ -127,4 +124,3 @@ theorem chernPart_pullW (R : AnRead p σ D) (R' : AnRead q σ' D) (h : φ.IsCInf
 
 end GlobalTheory.ChernTransfer
 
-open GlobalTheory GlobalTheory.ChernTransfer in

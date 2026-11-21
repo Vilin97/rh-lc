@@ -23,7 +23,6 @@ section Free
 variable {ι : Type} [Fintype ι] {N : ℕ} (W : Wts ι N) (h : W.Hyp) (hd : W.IsDiv)
 include h hd
 
-omit [Fintype ι] in
 
 theorem antitone (τ : ι) : Antitone (W.u1 τ) := fun a b hab => by
   have hab' : (a : ℕ) ≤ b := hab
@@ -37,7 +36,6 @@ theorem mul_abs_le (τ : ι) (a : Fin N) : (W.T : ℝ) * |(W.u1 τ a : ℝ)| ≤
   have h4 : 0 ≤ ((W.Dd : ℝ) + 1) * |(W.u1 τ a : ℝ)| := by positivity
   linarith
 
-omit [Fintype ι] in
 
 theorem mul_cloud_le (τ : ι) (a : Fin N) (ha : (a : ℕ) < W.kc) : (W.T : ℝ) * (W.u1 τ a : ℝ) ≤ W.S + 2 * N := by
   have hk := h.kc_lt

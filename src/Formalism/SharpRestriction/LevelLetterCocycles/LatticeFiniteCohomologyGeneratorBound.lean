@@ -203,7 +203,6 @@ def LocalLiftingConditions [NeZero n] (W : LocWach PD LL O v n) : Prop :=
             2 * (m : ℝ) * cD PD.p (hpar n b S + η)) e₀) ∧
         (m = 0 → F.LiftF PD (e₀ + 3 * S))
 
-set_option maxHeartbeats 800000 in
 
 private lemma e0_le_eBd_of_ExpC {l h η S e₀ : ℕ} (hl : 11 ≤ l) (hE : ExpC l h η S e₀) :
     (e₀ : ℝ) ≤ eBd 32 4 10 25 l (h + η) S η := by

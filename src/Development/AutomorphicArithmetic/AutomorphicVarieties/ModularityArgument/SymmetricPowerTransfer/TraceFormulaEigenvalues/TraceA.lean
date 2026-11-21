@@ -80,7 +80,6 @@ theorem f_fin (hD : HD s f) (g y : G) : {x : Γ ⧸ B.Γ₀ | f (g⁻¹ * s.θ (
 theorem Tk_fin (hD : HD s f) (g y : G) : (Function.support fun x : Γ ⧸ B.Γ₀ => Tk s f g y x.out⁻¹).Finite :=
   (f_fin hD g y).subset fun x hx h => hx (by simp only [Tk, h, zero_smul])
 
-variable (s f) in
 
 noncomputable def Ek (g y : G) : Module.End ℂ V := ∑ᶠ x : Γ ⧸ B.Γ₀, Tk s f g y x.out⁻¹
 

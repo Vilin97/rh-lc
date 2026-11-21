@@ -12,7 +12,6 @@ namespace PositivityTheory.KB.CentralizerFixed
 
 variable (L : Type) [Field L] [NumberField L]
 
-open Classical in
 
 private def lamS : ({w : InfinitePlace L // w ≠ w₀} → ℝ) →ₗ[ℝ] (InfinitePlace L → ℝ) :=
   LinearMap.pi fun w => if h : w = w₀ then (-((mult (w₀ : InfinitePlace L) : ℝ))⁻¹) •

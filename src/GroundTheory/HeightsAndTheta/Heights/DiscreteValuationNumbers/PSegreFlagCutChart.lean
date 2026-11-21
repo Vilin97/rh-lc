@@ -41,7 +41,6 @@ theorem exists_pow_mul_mem_of_mem_sup_map {R S F : Type*} [CommRing R] [CommRing
 
 end SegreFlagCutChart
 
-open SegreFlagCutChart in
 
 theorem SegreFlagCutChart.proof (hCS : SegreFlagCutChartSection.Statement)
     (hPre : SegreFlagCutPreimage.Statement) : SegreFlagCutChart.Statement := by

@@ -56,7 +56,6 @@ theorem cycHerbrand_eq_of_mulEquiv (e : H ≃* G) (f : V ≃+ W)
       fun h ↦ ⟨Finite.of_equiv _ e0.symm (h := h.1), Finite.of_equiv _ e1.symm (h := h.2)⟩⟩
   · rw [cycHerbrand_eq, cycHerbrand_eq, Nat.card_congr e0, Nat.card_congr e1]
 
-omit [Fintype H] [Fintype G] in
 
 theorem mem_zpowers_mulEquiv (e : H ≃* G) {τ : H} (hτ : ∀ h, h ∈ Subgroup.zpowers τ) (g : G) :
     g ∈ Subgroup.zpowers (e τ) := by
@@ -121,7 +120,6 @@ instance decompositionMulSemiringActionIntegers :
   smul_one σ := Subtype.ext (smul_one σ)
   smul_mul σ x y := Subtype.ext (MulSemiringAction.smul_mul σ (x : w.adicCompletion L) y)
 
-variable {w} in
 
 instance decompositionUnitsAction :
     MulDistribMulAction (MulAction.stabilizer Gal(L/K) w.asIdeal) (w.adicCompletion L)ˣ :=
@@ -229,7 +227,6 @@ theorem integerUnitsAddEquiv_decomposition (σ : MulAction.stabilizer Gal(L/K) w
   rw [GroundTheory.LocalField.coe_integerAlgEquiv_apply]
   rfl
 
-omit [IsGalois K L] in
 
 theorem isUnramified_adicCompletion (he : w.asIdeal.ramificationIdx (𝓞 K) = 1) :
     GroundTheory.LocalField.IsUnramified (v.adicCompletion K) (w.adicCompletion L) :=
@@ -244,8 +241,6 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
   [IsGalois K L]
   (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpectrum (𝓞 L)) [w.asIdeal.LiesOver v.asIdeal]
 
-open AdicLiesOver in
-include v in
 
 theorem subsingleton_cycTateZero_adicCompletionIntegers_units
     (he : w.asIdeal.ramificationIdx (𝓞 K) = 1)
@@ -264,8 +259,6 @@ theorem subsingleton_cycTateZero_adicCompletionIntegers_units
       (integerUnitsAddEquiv_decomposition v w) τ).toEquiv] at h1
   exact (Nat.card_eq_one_iff_unique.1 h1).1
 
-open AdicLiesOver in
-include v in
 
 theorem subsingleton_cycTateNegOne_adicCompletionIntegers_units
     (he : w.asIdeal.ramificationIdx (𝓞 K) = 1)

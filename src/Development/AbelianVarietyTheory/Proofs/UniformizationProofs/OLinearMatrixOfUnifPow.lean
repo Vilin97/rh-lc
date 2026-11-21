@@ -48,7 +48,5 @@ local instance splitTorus_isCommMonObj (S : Scheme.{0}) (X : Type) [AddCommGroup
 
 end PowMatrixLinear
 
-attribute [local instance] PowMatrixLinear.splitTorus_isCommMonObj in
-open PowMatrixLinear in
 
 end GlobalTheory

@@ -56,17 +56,11 @@ theorem exists_int_comb {F : HermLattice K (r + 1)} {φ : Fin (N + 1) → Fin (r
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).mp h
   exact ⟨D, hD, c, hc⟩
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-open Classical in
 
 end
 

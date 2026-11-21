@@ -439,7 +439,6 @@ section Gen5
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : ℕ} {T : E}
 
-open Formalism.L2.SG.Saturated in
 
 theorem exists_unip (F0 : FlagG S r T) (aa : Fin r → FractionalIdeal (nonZeroDivisors (𝓞 E)) E)
     (Λa Λb : Submodule (𝓞 E) S.V) (σ : S.V ≃ₗ[E] S.V) (hσ : ∀ x y, S.hT (σ x) (σ y) = S.hT x y)

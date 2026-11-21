@@ -44,7 +44,6 @@ end GlobalTheory.HeisLineTransfer
 
 namespace GlobalTheory.HeisLineTransfer
 
-set_option maxHeartbeats 1600000 in
 
 theorem isDatum_dRho_heisO : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D), IsInfFam θ →
     ∀ (ε : Bool) (S X : HSp D) (A : Fr S) (B : Fr X) {d : ℕ} (e : Fin X.rank ≃ Fin d)

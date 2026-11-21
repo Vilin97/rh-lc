@@ -13,8 +13,6 @@ namespace GlobalTheory.UnitLemma
 
 open Polynomial
 
-open Matrix MeasureTheory in
-open Polynomial in
 
 theorem _root_.GlobalTheory.UnitLemma.charpoly_dvd_minpoly_of_separable {E V : Type} [Field E] [AddCommGroup V] [Module E V]
     [Module.Finite E V] (f : Module.End E V) (h : (LinearMap.charpoly f).Separable) :
@@ -45,8 +43,6 @@ theorem _root_.GlobalTheory.UnitLemma.charpoly_dvd_minpoly_of_separable {E V : T
     Multiset.prod_X_sub_C_dvd_iff_le_roots hm0, Multiset.le_iff_subset (nodup_roots h.map)]
   exact hroot
 
-open Matrix MeasureTheory in
-open Polynomial in
 
 theorem _root_.GlobalTheory.UnitLemma.exists_basis_pow_of_separable : ∀ (K : _root_.GlobalTheory.UnitLemma.UQ)
     (B : _root_.GlobalTheory.UnitLemma.InvAlg K), B.P.Separable →

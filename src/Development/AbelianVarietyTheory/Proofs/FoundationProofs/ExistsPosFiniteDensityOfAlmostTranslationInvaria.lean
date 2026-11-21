@@ -99,7 +99,6 @@ private theorem measure_ball_mul_le_mul_of_forall_measure_ball_le (lam ν : Meas
             rw [hempty, measure_empty]
     _ = lam (ball 0 ρ) * b := by rw [lintegral_indicator_const measurableSet_ball, mul_comm]
 
-open MeasureTheory Filter Topology Metric Set in
 
 theorem _root_.GlobalTheory.exists_pos_finite_density_of_almost_translation_invariant :
     ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (lam ν : Measure V) [lam.IsAddHaarMeasure] [IsFiniteMeasure ν], (∀ r : ℝ, 0 < r → ν (ball 0 r) ≠ 0) → (∀ κ : ℝ, 1 < κ → ∃ δ : ℝ, 0 < δ ∧ ∀ x ∈ ball (0 : V) δ, ∀ r ∈ Ioo (0 : ℝ) δ, ν (ball 0 r) ≤ ν (ball x (κ * r)) ∧ ν (ball x r) ≤ ν (ball 0 (κ * r))) → ∃ c : ENNReal, c ≠ 0 ∧ c ≠ ⊤ ∧ Tendsto (fun r : ℝ => ν (ball 0 r) / lam (ball 0 r)) (𝓝[>] 0) (𝓝 c) := by

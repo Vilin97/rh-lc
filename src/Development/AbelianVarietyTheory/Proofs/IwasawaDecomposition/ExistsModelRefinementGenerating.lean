@@ -46,7 +46,6 @@ theorem exists_denom {U : X.Opens} (hU : IsAffineOpen U) (h : genericPoint X ∈
   refine ⟨α ^ (n + 1), γ * α, by rwa [X.basicOpen_pow α n.succ_pos], ?_⟩
   rw [map_mul, e, map_pow, pow_succ, mul_assoc]
 
-omit [IsIntegral X] in
 
 theorem exists_unitAt {x : X} {ι : Type} [Fintype ι] {c g : ι → X.functionField} (hc : ∀ i, RegAt x (c i))
     (hg : ∀ i, RegAt x (g i)) (e : ∑ i, c i * g i = 1) : ∃ i, UnitAt x (g i) := by

@@ -456,7 +456,6 @@ def oEquiv : D.ntw.O i ≃+* D'.ntw.O i' :=
 
 theorem frac_heq (x : FractionRing (D.ntw.O i)) : HEq (fracEquiv (h.oEquiv hi) x) x := fracEquiv_ringCast_heq _ _ x
 
-include hi in
 
 theorem sideEmb_heq (b : Bool) (x : ↥D'.LL0) : HEq (sideEmb D.ntw i b (e x)) (sideEmb D'.ntw i' b x) :=
   heq_fracMap h.Tw_eq h.set.O0 h.set.crO0 h.set.O h.set.crO h.set.algO hi (D.ntw.O_inj i) (D'.ntw.O_inj i')
@@ -637,7 +636,6 @@ include m
 variable {e : ↥D'.LL0 ≃+* ↥D.LL0} (h : CopyTw D D' ι e)
 include h
 
-omit m in
 
 theorem cG_eG (g : X.Γ) : X'.cG (X'.R.eG (m.γ g)) = h.grpEquiv (X.cG (X.R.eG g)) := by
   have key : ∀ {R R' : Ranks} {H : Host R} {H' : Host R'} {P P' : Fin 2 → Type} {Q : Finset (Pl H.E)} {Q' : Finset (Pl H'.E)},

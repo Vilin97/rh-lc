@@ -31,9 +31,6 @@ theorem gl_map_val {n : ℕ} {R S : Type} [CommRing R] [CommRing S] (f : R →+*
 
 end GlobalTheory.StepVec.HalfCmp
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.StepVec.HalfCmp in
 
 theorem GlobalTheory.StepVec.onHalf_viaRed_eq_locFn : ∀ (D : D7) (v : FinPl D) (φ : SplitProj D v) (e : AE D) (PP : Formalism.L2.DIV.Pl D.host.E)
     (r : v.adicCompletionIntegers D.host.F →+* Formalism.L2.DIV.kP PP), IsIdemOf φ e → IsProjAt φ PP → IsRedMap φ PP r →

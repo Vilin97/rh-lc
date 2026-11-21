@@ -18,7 +18,6 @@ section Extension
 
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-open Classical in
 
 theorem card_embeddings_restrict (τ : K →+* ℂ) :
     (Finset.univ.filter fun σ : L →+* ℂ ↦ σ.comp (algebraMap K L) = τ).card = finrank K L :=
@@ -178,9 +177,7 @@ section Cone
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {n : ι → ℕ}
 
-omit [DecidableEq ι] in
 
-omit [DecidableEq ι] in
 
 end Cone
 

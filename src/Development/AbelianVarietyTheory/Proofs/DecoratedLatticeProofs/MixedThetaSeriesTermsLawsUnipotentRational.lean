@@ -97,7 +97,6 @@ namespace GlobalTheory.Unf.TermLaw
 
 variable {D : D7}
 
-set_option maxHeartbeats 2000000 in
 
 theorem rat_coords {V V₀ : HSp D} {ρ : ℕ} (d : HypDec V V₀ ρ) (u : GL (Fin ρ) (AE D)) (b : Mx D ρ V₀.rank)
     (c : skewA D ρ) (hγ : d.levi u * (d.nB b * d.nC c) ∈ GQ V) :

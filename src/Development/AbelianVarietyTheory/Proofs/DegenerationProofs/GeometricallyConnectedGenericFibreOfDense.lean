@@ -180,7 +180,6 @@ end GlobalTheory.GenericConnected
 
 namespace GlobalTheory
 
-open GenericConnected in
 
 theorem geometricallyConnected_genericFibre_of_dense :
     ∀ (X S : Scheme.{0}) [IsIntegral S] [IsNoetherian S] (f : X ⟶ S) [LocallyOfFiniteType f] [QuasiCompact f] (Sg : Set S), Dense Sg → (∀ x ∈ Sg, GeometricallyConnected (f.fiberToSpecResidueField x)) → GeometricallyConnected (f.fiberToSpecResidueField (genericPoint S)) := by

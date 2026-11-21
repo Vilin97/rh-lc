@@ -111,7 +111,6 @@ end PI.ULS
 
 namespace PI
 
-open PI.ULS in
 
 def UnimodLocStd : Prop :=
   ∀ (a : ℕ) (b c : ℤ) (d : ℕ) (ha : 0 < a) (hd : 0 < d) (lam : ℂ) (hlam : lam ≠ 0), CmOK a b c d →

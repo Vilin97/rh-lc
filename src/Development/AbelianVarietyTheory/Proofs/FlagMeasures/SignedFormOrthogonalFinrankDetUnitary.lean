@@ -20,7 +20,6 @@ variable {n : ℕ} {ε : Fin n → Bool}
 def basisMat (V : Submodule ℂ (Fin n → ℂ)) : Matrix (Fin n) (Fin (Module.finrank ℂ V)) ℂ :=
   Matrix.of fun j i => (Module.finBasis ℂ V i : Fin n → ℂ) j
 
-variable (ε) in
 
 def pairMap (V : Submodule ℂ (Fin n → ℂ)) : (Fin n → ℂ) →ₗ[ℂ] (Fin (Module.finrank ℂ V) → ℂ) :=
   ((basisMat V)ᴴ * Formalism.REAL.Jm ε).mulVecLin

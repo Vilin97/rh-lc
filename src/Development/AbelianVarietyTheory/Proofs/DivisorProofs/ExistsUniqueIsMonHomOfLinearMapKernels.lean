@@ -65,7 +65,6 @@ theorem exists_of_polAV (P P' : Out.PolAV (Sp ℂ)) (n n' : ℕ) (v : HolUnif P.
     thetaUnifAV_all P P' P.L P'.L v v' F hF
   exact ⟨f, hf, hfe⟩
 
-open GlobalTheory.HolUnifEnd GlobalTheory.HolUnifHom in
 
 theorem exists_isMonHom_of_map_lattice (A A' : Over (Sp ℂ)) [GrpObj A] [GrpObj A'] (g g' : ℕ)
     (hA : IsAbelianScheme A) (hA' : IsAbelianScheme A') (hgA : SmoothOfRelativeDimension g A.hom)

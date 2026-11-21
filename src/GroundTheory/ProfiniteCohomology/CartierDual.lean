@@ -24,7 +24,6 @@ attribute [-instance] ULift.smulLeft ULift.module
 variable {A B : Type*} [AddCommGroup A] [AddCommGroup B] [Module (ULift.{u} ℤ) A]
   [Module (ULift.{u} ℤ) B]
 
-variable (A B) in
 
 def uliftIntLinearEquivAddHom : (A →ₗ[ULift.{u} ℤ] B) ≃+ (A →+ B) where
   toFun f := f.toAddMonoidHom
@@ -54,7 +53,6 @@ variable {K L : Type u} [Field K] [Field L] [Algebra K L]
 
 section MonoidHom
 
-variable (K L) in
 
 def cartierDualEquivMonoidHom (M : Rep.{u} (ULift.{u} ℤ) Gal(L/K)) :
     (M →ₗ[ULift.{u} ℤ] galUnits.{u} K L) ≃ (Multiplicative M →* Lˣ) :=
@@ -98,7 +96,6 @@ theorem bijective_ihom_map_rootsOfUnityToUnits (M : Rep.{u} (ULift.{u} ℤ) Gal(
     refine LinearMap.ext fun m => ?_
     rfl
 
-variable (K L) in
 
 def cartierDualIsoHomRootsOfUnityOfNsmul (M : Rep.{u} (ULift.{u} ℤ) Gal(L/K)) (n : ℕ)
     (hn : ∀ m : M, n • m = 0) :
@@ -113,13 +110,11 @@ theorem cartierDualIsoHomRootsOfUnityOfNsmul_hom_apply (M : Rep.{u} (ULift.{u} �
       M →ₗ[ULift.{u} ℤ] galUnits.{u} K L) m = (rootsOfUnityToUnits K L n).hom (f m) :=
   rfl
 
-variable (K L) in
 
 end RootsOfUnity
 
 section Finite
 
-variable (K L) in
 
 instance isDiscreteRep_cartierDual [Algebra.IsIntegral K L] (M : Rep.{u} (ULift.{u} ℤ) Gal(L/K))
     [Finite M] [IsDiscreteRep M] : IsDiscreteRep (cartierDual K L M) := by
@@ -141,7 +136,6 @@ instance isDiscreteRep_cartierDual [Algebra.IsIntegral K L] (M : Rep.{u} (ULift.
       rw [Subgroup.coe_inf]
       exact (isOpen_stabilizer M m).inter (isOpen_stabilizer (galUnits.{u} K L) (f' m))
 
-variable (K) in
 
 end Finite
 
@@ -149,15 +143,12 @@ section Pairing
 
 variable (K L) [Algebra.IsIntegral K L]
 
-variable {K L} in
 
 end Pairing
 
 section Biduality
 
-variable (K L) in
 
-variable (K L) in
 
 end Biduality
 
@@ -165,7 +156,6 @@ section Exact
 
 attribute [local instance 3000] Submodule.Quotient.module
 
-variable (K L) in
 
 end Exact
 
@@ -184,13 +174,9 @@ theorem zmodRep_eq_zsmul (G : Type*) [Monoid G] (n : ℕ) (k : ℤ) :
   change (k : ZMod n) = k • (1 : ZMod n)
   rw [zsmul_one]
 
-variable (K L) in
 
-variable (K L) in
 
-variable (K L) in
 
-variable (K L) in
 
 end ZMod
 

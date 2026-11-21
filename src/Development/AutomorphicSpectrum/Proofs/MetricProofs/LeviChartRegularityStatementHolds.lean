@@ -367,7 +367,6 @@ theorem coneTangent_disc {II : IntersectionSystem} {Ψ : Type} [Fintype Ψ] {K :
   · filter_upwards [hev a] with s hs
     exact hΦmem _ hs
 
-open NbarLeviChartReg in
 
 theorem nbarLeviChartReg : NbarLeviChartReg.Statement := by
   have hProj : ProjChartHolo.Statement := projChartHolo

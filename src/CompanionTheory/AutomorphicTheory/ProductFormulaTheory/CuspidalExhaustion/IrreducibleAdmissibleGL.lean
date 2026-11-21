@@ -39,7 +39,6 @@ theorem embL_nil (x : IrrGL k) (h0 : x.1 = 0) : EmbL x [] := by
     (piTensor fun a => (([] : List (IrrGL k)).get a).rep) (PiTensorProduct.isEmptyEquiv (Fin 0)) c.rep.ρ c.rep.irr
   exact ⟨hd, φ.symm.toIntertwiningMap, fun v w h => φ.symm.toLinearEquiv.injective h⟩
 
-variable (k) in
 
 theorem cuspEmbP (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hR : RefineP k) : CuspEmbP k := by
   have hJ : JacquetSubLeft k := GlobalTheory.T.jacquet_sub_left_of_admissible hA
@@ -62,7 +61,6 @@ theorem cuspEmbP (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hR : Ref
       exacts [hc, hl ρ hρ]
     · simpa using hR x (y 1) [y 0] l [] hy (by simpa using embL_pair hf)
 
-variable (k) in
 
 theorem suppP : SuppP k := by
   intro x a y l 𝔫 hl hx hxy hy Δ hΔ
@@ -97,7 +95,6 @@ theorem suppP : SuppP k := by
 theorem irreducibleAdmissibleGL : GlobalTheory.Published.IrreducibleAdmissibleGL :=
   fun k _ _ _ _ n => GlobalTheory.T.irreducible_smooth_admissible_GL k (Fin n)
 
-variable (k) in
 
 theorem cuspEmbP_of_refine (hR : RefineP k) : CuspEmbP k :=
   cuspEmbP k irreducibleAdmissibleGL hR

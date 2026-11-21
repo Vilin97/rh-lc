@@ -37,7 +37,6 @@ theorem adl_exists_place_ge_one (r : 𝓞 F) (hr : r ≠ 0) :
 
 open scoped AdeleRing
 
-variable (F) in
 
 def adlNbhd : Set (AdeleRing (𝓞 F) F) :=
   {x | (∀ w, ‖x.1 w‖ < 1) ∧ ∀ v, x.2 v ∈ v.adicCompletionIntegers F}

@@ -23,7 +23,6 @@ variable (G : Over X₀) [GrpObj G] [IsCommMonObj G]
 
 variable (x : Sp S ⟶ X₀) {d : ℕ}
 
-omit [GrpObj G] [IsCommMonObj G] in
 
 variable {G x}
 

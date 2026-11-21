@@ -64,7 +64,6 @@ theorem ld_locP (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0)
   · exact localization_mono₂ _ (sup_le (CrossDiaZero.cls_le_ld T c)
       ((Submodule.span_singleton_le_iff_mem _ _).2 z3.2))
 
-set_option maxHeartbeats 4000000 in
 
 theorem ptz_val (T : Forms0 D u) {v : (D.mem u).A.vT} {c : (D.mem u).C.cls 0}
     {g : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk 0 v c)}

@@ -29,9 +29,7 @@ structure Lbl where
 
 variable {H} (Lb : Lbl H)
 
-variable (H) in
 
-variable (H) in
 
 variable (H) (what₂ : Rows.Data R) (h : NHyp H what₂)
 
@@ -41,6 +39,5 @@ variable (K : Type) [Field K] [CharZero K]
 
 end Field
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end Formalism.BasicNotions.Examples₂.NZ

@@ -59,7 +59,6 @@ theorem uniqueFactorizationMonoid_stalk_toScheme (X : Scheme.{0}) (U : X.Opens)
 
 end GlobalTheory.ExtendLineBundleComponents
 
-open GlobalTheory.ExtendLineBundleComponents GlobalTheory.GenSpread in
 
 theorem GlobalTheory.exists_lineBundle_extension_of_isDomain : ∀ (X Y : Scheme.{0}) [IsLocallyNoetherian X]
     [CompactSpace X] (j : Y ⟶ X), IsOpenImmersion j → (∀ x : X, IsDomain (X.presheaf.stalk x)) →

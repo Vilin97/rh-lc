@@ -207,7 +207,6 @@ end GlobalTheory.CovTop.WtSz
 
 namespace GlobalTheory.CovTop.WtSz
 
-set_option maxHeartbeats 4000000 in
 
 theorem arith (f r L PP b kap T D c : ℝ) (hf : 8 ≤ f) (hr : 1 ≤ r) (hL : 10 ≤ L)
     (hPP : (f * r * L) ^ 12 ≤ PP) (hb : PP ^ 10 ≤ b) (hk : b ≤ PP * kap) (hT1 : 1 ≤ T) (hD0 : 0 ≤ D) (hDT : D ≤ T)
@@ -323,7 +322,6 @@ namespace GlobalTheory.CovTop.WtSz
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
   {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz) (i : Fin D.R.m)
 
-set_option maxHeartbeats 1000000 in
 
 theorem at_pt (PP A A' : ℝ) (hi : (i : ℕ) + 1 < D.R.m) (hS : SizeAt p i PP A) (hH : HostNum D L PP A' 10)
     (hW : WtNum p i PP) :
@@ -421,6 +419,5 @@ end GlobalTheory.CovTop.WtSz
 
 namespace GlobalTheory.CovTop.WtSz
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.CovTop.WtSz

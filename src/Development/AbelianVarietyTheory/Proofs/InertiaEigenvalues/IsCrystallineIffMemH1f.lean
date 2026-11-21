@@ -25,7 +25,6 @@ section Triv
 variable {G Qp F R LL : Type} [Field Qp] [Field F] [Algebra Qp F] [CommRing R] [Algebra Qp R] [Algebra F R]
   [IsScalarTower Qp F R] [Field LL] [Algebra Qp LL]
 
-variable (Qp F R LL) in
 
 def incl : LL ⊗[Qp] F →ₗ[LL] LL ⊗[Qp] R :=
   AlgebraTensorModule.map (LinearMap.id : LL →ₗ[LL] LL) (IsScalarTower.toAlgHom Qp F R).toLinearMap

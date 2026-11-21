@@ -17,7 +17,6 @@ namespace GlobalTheory.ArchLine
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
 
-open Classical in
 
 def archOp (om : Rep σ X W) (h : UA σ W.J) (f : SInf F (Fin n × Fin d)) : SInf F (Fin n × Fin d) :=
   if hx : ∃ f₁ : SInf F (Fin n × Fin d), Acts (evI F) (om (1, h)) ⇑f ⇑f₁ then hx.choose else 0

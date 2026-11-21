@@ -67,8 +67,6 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 
 section Infinite
 
-omit [NumberField L] in
-open scoped Classical in
 
 theorem prod_card_stabilizer_infinitePlace
     [Fintype (orbitRel.Quotient (L ≃ₐ[K] L) (InfinitePlace L))] :
@@ -94,7 +92,6 @@ instance (w : HeightOneSpectrum (𝓞 L)) :
     w.asIdeal.LiesOver (placeBelow (K := K) w).asIdeal :=
   ⟨rfl⟩
 
-omit [NumberField K] [NumberField L] [IsGalois K L] in
 
 theorem eq_placeBelow_of_liesOver {w : HeightOneSpectrum (𝓞 L)} {v : HeightOneSpectrum (𝓞 K)}
     (h : w.asIdeal.LiesOver v.asIdeal) : v = placeBelow w :=

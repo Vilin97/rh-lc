@@ -118,7 +118,6 @@ theorem basis_of_invariants (P : LocPrime l) (AI : LocAinf l P) (Θ : ThetaL P A
         exact h i) k
     simp at this
 
-set_option maxHeartbeats 1600000 in
 
 theorem htBasis_of_isCrys (P : LocPrime l) (AI : LocAinf l P) (Θ : ThetaL P AI) (K : FinExt l)
     (s : ℕ) (hs : Lev l s) (E : FinExt l) (hEs : E.1 = Ks K s) (hle : K.1 ≤ E.1) (LL : FinExt l)

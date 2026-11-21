@@ -66,7 +66,6 @@ theorem seriesIdempotent_idem : e0F N es * e0F N es = e0F N es := by
   · intro i x y hxy
     exact horth i.1 _ _ (fun h => hxy (monicOf_injective h))
 
-include hidem horth in
 
 variable {N}
 

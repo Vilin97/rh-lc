@@ -183,7 +183,6 @@ end GlobalTheory.ThetaPowOrder
 
 namespace GlobalTheory
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor ThetaPowOrder in
 
 theorem thetaGrp_act_iterate_eq_of_pow_eq_one : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [IsCommMonObj A] (L : LB A.left), L.IsLB → ∀ (k : ℤ) (T : Over S) (θ : ThetaGrp A L k T) (n : ℕ), θ.pt ^ n = 1 → LB.Gen.Corr L _ _ _ _ (Out.powGen A L k θ n) (LB.oneGen L) → ∀ t : Fin (n + 1) → LB.Sec (LPow A L k T), (∀ i : Fin n, IsActOf A L k θ (t i.castSucc) (t i.succ)) → ∀ j, (t (Fin.last n)).f j = (t 0).f j := by
   intro S A _ _ L hL k T θ n hn hc t ht j

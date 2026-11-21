@@ -40,7 +40,6 @@ namespace PositivityTheory.Rg.Sw.Glob.LocLawH
 
 variable {D : D7} {n : ℕ}
 
-open Classical in
 
 def atT {m : ℕ} (σ : (D.what₂.Tau → ℂ) →+ AE D) (τ : D.what₂.Tau) (M : Matrix (Fin m) (Fin n) ℂ) : Mx D m n :=
   fun i j => σ (Pi.single τ (M i j))
@@ -70,7 +69,6 @@ def intW (D : D7) (m n : ℕ) : AddSubgroup (Matrix (Fin m) (Fin n) (Af D.host.F
   zero_mem' := fun _ _ => (intAE D).zero_mem
   neg_mem' := fun ha i j => (intAE D).neg_mem (ha i j)
 
-open Classical in
 
 def g0 (D : D7) (m n : ℕ) : (Fin m → Fin n → Af D.host.F ⊗[D.host.F] D.host.E) → ℂ := fun a =>
   if (QuotientAddGroup.mk (show Matrix (Fin m) (Fin n) _ from a) : _ ⧸ intW D m n) = 0 then (1 : ℂ) else 0

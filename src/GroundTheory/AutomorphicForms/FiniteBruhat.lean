@@ -10,7 +10,6 @@ open Matrix DoubleCoset
 
 variable {n : ℕ} {k : Type*} [Field k]
 
-variable (n k) in
 
 def borel : Subgroup (GL (Fin n) k) where
   carrier := {g | (g : Matrix (Fin n) (Fin n) k).IsUpperTriangular}
@@ -32,7 +31,6 @@ lemma mem_borel_iff (g : GL (Fin n) k) :
     g ∈ borel n k ↔ ∀ i j : Fin n, j < i → (g : Matrix (Fin n) (Fin n) k) i j = 0 :=
   Iff.rfl
 
-variable (k) in
 
 noncomputable def permGL : Equiv.Perm (Fin n) →* GL (Fin n) k :=
   (Matrix.permMatrixHom (n := Fin n) (R := k)).toHomUnits

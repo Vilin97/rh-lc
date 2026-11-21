@@ -172,7 +172,6 @@ lemma coaction_free [Mono i] [Module.Finite R Λ] :
   rw [this, RingHom.finite_algebraMap]
   infer_instance
 
-omit hρ in
 
 lemma isPushout_equalizer {T : Type} [CommRing T] [Algebra R T] (α β : B →ₐ[R] T)
     (h₁ : Function.Surjective (productMap β α))

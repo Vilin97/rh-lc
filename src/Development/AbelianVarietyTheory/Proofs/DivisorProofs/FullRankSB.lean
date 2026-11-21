@@ -15,7 +15,6 @@ namespace GlobalTheory.RankFibre
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 def fullRankSB (a d : ℕ) : Submodule ℂ (Matrix (Fin a) (Fin d) k → ℂ) where
   carrier := {Ψ | Ψ ∈ SB (Matrix (Fin a) (Fin d) k) ∧ ∀ Y : Matrix (Fin a) (Fin d) k, Y.rank ≠ a → Ψ Y = 0}

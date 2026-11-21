@@ -266,7 +266,6 @@ theorem exists_conj_le_integralGL {H : Subgroup (GL (Fin n) F)}
   refine ⟨g, fun h hh => (mapSubmodule_standardLattice_eq_iff F n).mp ?_⟩
   rw [mapSubmodule_mul, mapSubmodule_mul, hgL, hstab h hh, ← hgL, mapSubmodule_inv_mapSubmodule]
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 
 end Compact
 

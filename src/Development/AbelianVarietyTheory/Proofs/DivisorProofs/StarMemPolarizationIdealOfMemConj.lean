@@ -62,8 +62,6 @@ theorem conj_inv_smul {D : D7} (x : 𝓞 D.host.E) : D.host.conj⁻¹ • x = D.
 
 end StarAAbar
 
-set_option synthInstance.maxHeartbeats 160000 in
-set_option maxHeartbeats 800000 in
 
 theorem star_mem_AA_of_mem_AAbar : ∀ {D : D7} {c : D.host.E}, c ∈ D.host.AAbar → star c ∈ D.host.AA := by
   intro D c hc

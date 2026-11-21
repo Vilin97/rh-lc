@@ -135,7 +135,6 @@ theorem le_of_common (hNot : ChartSectionNotMem.Statement) {W₁ W₂ : Ideal (M
 
 end ChartDivisorComponents
 
-open ChartDivisorComponents in
 
 theorem ChartDivisorComponents.proof (hNot : ChartSectionNotMem.Statement) : ChartDivisorComponents.Statement := by
   classical

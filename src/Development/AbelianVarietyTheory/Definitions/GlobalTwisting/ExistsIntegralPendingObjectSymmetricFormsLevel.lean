@@ -21,7 +21,6 @@ variable (D : D7) {n : ℕ} (lam : D.what₂.Tau → DomWeight n)
 
 variable {D lam}
 
-variable (lam) in
 
 variable {g : D.what₂.Tau → MvPolynomial (Fin n × Fin n) ℤ}
 

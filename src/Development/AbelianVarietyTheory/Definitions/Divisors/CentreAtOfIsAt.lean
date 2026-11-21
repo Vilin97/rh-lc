@@ -26,7 +26,6 @@ def QNum [IsLocallyNoetherian X] (p : X ⟶ Sp k) (N : LB X) (b : ℚ) (D : X �
     ∀ C : Closeds X, IsCompleteCurve k C →
       (interNumRed k C ![toLB D₀] : ℚ) / m = b * interNumRed k C ![N]
 
-omit [IsIntegral X] in
 
 def Off (B : X → ℚ) (z : X) : Prop := ∀ w, w ⤳ z → B w = 0
 

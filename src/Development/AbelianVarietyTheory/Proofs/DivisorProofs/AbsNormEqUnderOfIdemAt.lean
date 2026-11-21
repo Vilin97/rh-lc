@@ -78,7 +78,6 @@ theorem absNorm_eq_under_of_idemAt {P : HeightOneSpectrum (𝓞 D.host.E)} {e : 
 
 variable {T : Type} {L : LevCh D T}
 
-open Classical in
 
 theorem absNorm_w (P : Places L) {v : HeightOneSpectrum (𝓞 D.host.F)} (hv : v ∈ P.S0) :
     Ideal.absNorm (P.w v).asIdeal = Ideal.absNorm v.asIdeal := by

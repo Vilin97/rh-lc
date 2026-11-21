@@ -35,7 +35,6 @@ namespace GlobalTheory.LatIndexDet
 variable (O : Type) [CommRing O] [IsDomain O] (E : Type) [Field E] [Algebra O E] [IsFractionRing O E]
   {V : Type} [AddCommGroup V] [Module E V] [Module O V] [IsScalarTower O E V]
 
-include E in
 
 theorem isTorsionFree_lat (N : Submodule O V) : Module.IsTorsionFree O N := by
   refine Module.IsTorsionFree.of_smul_eq_zero fun r x h => ?_

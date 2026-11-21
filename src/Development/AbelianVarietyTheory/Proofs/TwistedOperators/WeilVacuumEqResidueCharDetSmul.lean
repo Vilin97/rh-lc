@@ -94,7 +94,6 @@ theorem det_mul_det_inv (V : HSp D) (g : GA D V) :
   unfold Formalism.L2.Theta.mt
   rw [← Matrix.det_mul, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one, Matrix.det_one]
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_detAt {χ : (AE D)ˣ →* Circle} {P : Finset (Pl D.host.E)} {es : Pl D.host.E → AE D}
     (hes : ∀ PP ∈ P, Formalism.L2.NTheta.IsIdemAt (es PP) PP) {e : AE D} {c : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ}

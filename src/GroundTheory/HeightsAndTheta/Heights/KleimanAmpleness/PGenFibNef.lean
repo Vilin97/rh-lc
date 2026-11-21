@@ -24,7 +24,6 @@ section Transport
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 variable {F₁ F₂ : Type} [Field F₁] [Field F₂] (e : F₁ ≃+* F₂)
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem isMultiHomog_map_iff (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι) (b : K → ℕ) :
     IsMultiHomog (map (e : F₁ →+* F₂) f) b ↔ IsMultiHomog f b := by
@@ -36,12 +35,10 @@ noncomputable def quotEquiv (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo
   Ideal.quotientEquiv P _ (mapEquiv (Σ k, ι k) e) (by
     congr 1)
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem quotEquiv_mk (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι) :
     quotEquiv e P (Ideal.Quotient.mk P f) = Ideal.Quotient.mk _ (map (e : F₁ →+* F₂) f) := rfl
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem quotEquiv_smul (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) (r : F₁) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι ⧸ P) :
     quotEquiv e P (r • x) = e r • quotEquiv e P x := by
@@ -54,7 +51,6 @@ theorem quotEquiv_smul (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRin
   rw [h₁, quotEquiv_mk, quotEquiv_mk, h₂, map_mul, map_C]
   rfl
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem quotEquiv_mem_gradedPiece (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι)) (n : K → ℕ) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F₁ ι ⧸ P)
     (hx : x ∈ gradedPiece P n) : quotEquiv e P x ∈ gradedPiece (P.map (map (e : F₁ →+* F₂))) n := by

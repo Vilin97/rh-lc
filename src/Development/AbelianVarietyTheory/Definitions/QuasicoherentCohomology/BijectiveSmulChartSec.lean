@@ -93,7 +93,6 @@ def secGroup (V : X.Opens) : AddSubgroup (∀ i, Γ(X, V ⊓ L.U i)) where
   zero_mem' := fun i j => by simp only [Pi.zero_apply, map_zero, mul_zero]
   neg_mem' := fun {s} hs i j => by simp only [Pi.neg_apply, map_neg, hs i j, mul_neg]
 
-variable {L} in
 
 theorem secOn_rel {V : X.Opens} {s : ∀ i, Γ(X, V ⊓ L.U i)} (hs : s ∈ secOn L V) (i j : L.ι)
     {W : X.Opens} (hi : W ≤ V ⊓ L.U i) (hj : W ≤ V ⊓ L.U j) (hij : W ≤ L.U i ⊓ L.U j) :
@@ -191,7 +190,6 @@ def mkSec {V : X.Opens} (f : ∀ i, Γ(X, V ⊓ L.U i)) (hf : f ∈ secOn L V) :
 
     s = t := Subtype.ext (funext h)
 
-variable (L) in
 
 def secOnEquiv (V : X.Opens) : Γ(toMod L, V) ≃ secOn L V where
   toFun s := ⟨coord s, coord_mem s⟩
@@ -295,7 +293,6 @@ def ofSec (s : LB.Sec L) (V : X.Opens) : Γ(toMod L, V) :=
     (toMod L).presheaf.map (homOfLE h).op (ofSec s V) = ofSec s W :=
   sec_ext fun i => by rw [coord_map, coord_ofSec, resG_resG, coord_ofSec]
 
-variable (L) in
 
 def globalEquiv : Γ(toMod L, ⊤) ≃ₗ[Γ(X, ⊤)] LB.Sec L where
   toFun s := ⟨fun i => resG X (le_inf le_top le_rfl) (coord s i), fun i j => by
@@ -395,7 +392,6 @@ def chartIso (hL : L.IsLB) (i : L.ι) :
     unitMod (L.U i).toScheme ≅ (toMod L).restrict (L.U i).ι :=
   Descent.freeIso (Descent.bijective_smul_stalk (bijective_smul_chartSec hL i))
 
-set_option backward.isDefEq.respectTransparency false in
 
 def chartOverIso (hL : L.IsLB) (i : L.ι) :
     SheafOfModules.free (R := X.ringCatSheaf.over (L.U i)) PUnit.{1} ≅ (toMod L).over (L.U i) :=
@@ -406,7 +402,6 @@ def chartOverIso (hL : L.IsLB) (i : L.ι) :
     e.inverse.mapIso ((Scheme.Modules.overFunctorEquiv (L.U i)).app (toMod L)).symm ≪≫
       (e.unitIso.app ((toMod L).over (L.U i))).symm
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem isIso_ofEpi_π.{v, u} {C : Type u} [Category.{v} C] {J : GrothendieckTopology C}
     {R : Sheaf J RingCat.{0}} [HasWeakSheafify J AddCommGrpCat.{0}]
@@ -416,7 +411,6 @@ theorem isIso_ofEpi_π.{v, u} {C : Type u} [Category.{v} C] {J : GrothendieckTop
   rw [SheafOfModules.GeneratingSections.ofEpi_π, SheafOfModules.free.generatingSections_π]
   exact inferInstanceAs (IsIso (𝟙 (SheafOfModules.free I) ≫ e.hom))
 
-set_option backward.isDefEq.respectTransparency false in
 
 def generatorsOfIso {F : X.Modules} {ι : Type} {U : ι → X.Opens} (hU : ⨆ i, U i = ⊤)
     (e : ∀ i, SheafOfModules.free (R := X.ringCatSheaf.over (U i)) PUnit.{1} ≅ F.over (U i)) :
@@ -428,7 +422,6 @@ def generatorsOfIso {F : X.Modules} {ι : Type} {U : ι → X.Opens} (hU : ⨆ i
     exact hU
   generators i := (SheafOfModules.free.generatingSections PUnit.{1}).ofEpi (e i).hom
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem isLocallyFree_of_iso {F : X.Modules} {ι : Type} {U : ι → X.Opens} (hU : ⨆ i, U i = ⊤)
     (e : ∀ i, SheafOfModules.free (R := X.ringCatSheaf.over (U i)) PUnit.{1} ≅ F.over (U i)) :
@@ -440,7 +433,6 @@ theorem isLocallyFree_of_iso {F : X.Modules} {ι : Type} {U : ι → X.Opens} (h
 theorem isLocallyFree_toMod (hL : L.IsLB) : (toMod L).IsLocallyFree :=
   (isLocallyFree_of_iso hL.cover (chartOverIso hL)).1
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem isQuasicoherent_toMod (hL : L.IsLB) : (toMod L).IsQuasicoherent :=
   haveI := isLocallyFree_toMod hL
@@ -668,7 +660,6 @@ theorem pull_inf_le (V : X.Opens) (j : (L.pull f).ι) :
     f ⁻¹ᵁ V ⊓ (L.pull f).U j ≤ f ⁻¹ᵁ (V ⊓ L.U (j PUnit.unit)) :=
   inf_le_inf_left _ (pull_U_le f j)
 
-variable (L) in
 
 def pullSec (V : X.Opens) :
     Γ(toMod L, V) →ₛₗ[(f.app V).hom] Γ(toMod (L.pull f), f ⁻¹ᵁ V) where
@@ -719,7 +710,6 @@ theorem globalEquiv_pullSec_f (s : LB.Sec L) (j : (L.pull f).ι) :
     (coord (pullSec L f ⊤ (ofSec s ⊤)) j) = _
   rw [coord_pullSec, resG_appLE, coord_ofSec, appLE_resG]
 
-variable (L) in
 
 def toPushforward : toMod L ⟶ (Scheme.Modules.pushforward f).obj (toMod (L.pull f)) :=
   homOfLinear (G := (Scheme.Modules.pushforward f).obj (toMod (L.pull f)))
@@ -732,7 +722,6 @@ def toPushforward : toMod L ⟶ (Scheme.Modules.pushforward f).obj (toMod (L.pul
 theorem toPushforward_app (V : X.Opens) (s : Γ(toMod L, V)) :
     (toPushforward L f).app V s = pullSec L f V s := rfl
 
-variable (L) in
 
 def pullbackHom : (Scheme.Modules.pullback f).obj (toMod L) ⟶ toMod (L.pull f) :=
   ((Scheme.Modules.pullbackPushforwardAdjunction f).homEquiv _ _).symm (toPushforward L f)

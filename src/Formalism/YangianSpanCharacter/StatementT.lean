@@ -57,6 +57,5 @@ def pt1 {R : Type*} (M : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) R) :
     Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) R :=
   Matrix.of fun ik jl => M (ik.1, jl.2) (jl.1, ik.2)
 
-open scoped Kronecker in
 
 end Formalism.YangianSpanCharacter.T

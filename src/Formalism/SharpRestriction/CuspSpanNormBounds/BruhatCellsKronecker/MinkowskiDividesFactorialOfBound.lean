@@ -251,7 +251,6 @@ section FamL
 variable {eps : ℝ} (Fm : FamP eps)
 end FamL
 
-open Formalism.MainNotions.S.Lat in
 
 theorem mass_ratio_of_siegel_cm_unramified (h : Formalism.HermitianLatticesTheory.SiegelMassRatio) (D : D7) : UnitaryVolumeMass.stMassRatio D :=
   fun j hj V V' _ _ _ _ _ _ _ _ f f' L L' hs hs' ho ho' =>

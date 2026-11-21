@@ -22,11 +22,8 @@ namespace GlobalTheory.FockLetters
 variable {D : D7} {H : Geo.Tor.Host D.host.E}
 variable (Dw : Datum H) {m n : ℕ} (hΨ : ∀ τ : D.host.E →+* ℂ, InPsi H τ ↔ ∃ ρ, τ = tauE D ρ) (hm : m = Dw.p + Dw.q)
 
-include hΨ in
 
-include hΨ in
 
-include hΨ in
 
 end GlobalTheory.FockLetters
 

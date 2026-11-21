@@ -39,7 +39,6 @@ theorem pderiv_algHom_of_linear {R : Type*} [CommRing R]
     rw [Derivation.leibniz, map_add (f := _), smul_add, smul_eq_mul, smul_eq_mul, map_mul G (X k),
       mul_smul_comm]
 
-omit [Fintype τ] in
 
 theorem constantCoeff_algHom_of_linear {R : Type*} [CommRing R]
     (G : MvPolynomial τ R →ₐ[R] MvPolynomial σ R) (M : σ → τ → R)

@@ -117,7 +117,6 @@ theorem lev_eq (s : A ⊕ Fin c) : lev 1 s = lv M (e s).1 := by
   · simp only [lev, Sum.elim_inr, lv, he i]
     split_ifs <;> omega
 
-include he in
 
 theorem inN_iff (x : (Fin (M + c) → E) ≃ₗ[E] (Fin (M + c) → E)) : InN 1 (locHom ι e x) ↔ Unip x := by
   have hval : ∀ r s, (locHom ι e x).val r s = ι (x (Pi.single (e s) 1) (e r)) := fun r s => rfl

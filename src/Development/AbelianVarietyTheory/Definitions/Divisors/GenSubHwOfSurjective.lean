@@ -105,25 +105,20 @@ theorem incM_map {m k : Type} (A : Matrix m k E) {w : InfinitePlace F} (τ : Emb
 
 variable (τ : ∀ w : InfinitePlace F, EmbOver E w) (w : InfinitePlace F)
 
-variable (σ J) in
 
 def GAt : Set (UA σ J) := {g | At (evI F) (mat g - 1) ∧ ∀ w', w' ≠ w → cmp (τ w') g = 1}
 
-variable (σ J) in
 
 def LinesAt : Set (Multiplicative ℝ →* UA σ J) := {γ | Continuous γ ∧ ∀ t, γ t ∈ GAt σ J τ w}
 
 def HasRDer (γ : Multiplicative ℝ →* UA σ J) (f f' : UA σ J → ℂ) : Prop :=
   ∀ g, HasDerivAt (fun t : ℝ => f (g * γ (Multiplicative.ofAdd t))) (f' g) 0
 
-variable (σ J) in
 
-variable {w} in
 
 def IsGenAt (τ : EmbOver E w) (C : Matrix (Fin n) (Ix R S) ℂ) (γ : Multiplicative ℝ →* UA σ J) (X : Mat R S) : Prop :=
   ∀ t : ℝ, cmp τ (γ (Multiplicative.ofAdd t)) * C = C * NormedSpace.exp (t • X)
 
-variable (σ) in
 
 def IsAdapted (Y : Spc F E n) (C : Matrix (Fin n) (Ix R S) ℂ) : Prop :=
   IsFrame (herm Y.J (τ w)) C ∧ Y.θ w * C = C * Jm R S
@@ -145,7 +140,6 @@ def Stable (Y : Spc F E n) (C : Matrix (Fin n) (Ix R S) ℂ) (T : Submodule ℂ 
 def GenBy (C : Matrix (Fin n) (Ix R S) ℂ) (T : Submodule ℂ (UA σ J → ℂ)) (Λ : Ix R S → ℚ) : Prop :=
   ∃ act, IsGKAt τ w C T act ∧ genSub act (isoPart act Λ) = ⊤
 
-variable (σ) in
 
 variable {τ w} {C : Matrix (Fin n) (Ix R S) ℂ} {T : Submodule ℂ (UA σ J → ℂ)}
 
@@ -156,12 +150,10 @@ theorem genBy_iff_hw {Λ : Ix R S → ℚ} :
 theorem HasRDer.unique {γ : Multiplicative ℝ →* UA σ J} {f f₁ f₂ : UA σ J → ℂ} (h₁ : HasRDer γ f f₁) (h₂ : HasRDer γ f f₂) :
     f₁ = f₂ := funext fun g => (h₁ g).unique (h₂ g)
 
-open Classical in
 
 def liftAt [IsTotallyReal F] (τ : ∀ w : InfinitePlace F, EmbOver E w) (w : InfinitePlace F) (ξ : E)
     (G : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) (AE F E) := 1 + liftM τ ξ (Pi.single w (G - 1))
 
-open Classical in
 
 theorem liftAt_map [IsTotallyReal F] {ξ : E} (hξ : ∀ w, ((τ w).1 ξ).im ≠ 0) (G : Matrix (Fin n) (Fin n) ℂ)
     (w' : InfinitePlace F) : (liftAt τ w ξ G).map (piInf (τ w')) = if w' = w then G else 1 := by
@@ -310,7 +302,6 @@ theorem single_mem_wtSub (c : Ix R S) :
   ext e
   by_cases h : d = c <;> simp [Eab, stdWt, h, Matrix.single_apply, Pi.single_apply, eq_comm]
 
-variable (R S) in
 
 abbrev stdMod : GKMod R S where
   V := Ix R S → ℂ
@@ -369,7 +360,6 @@ theorem stable_genBy_coef (hCM : IsCMExt F E σ) {Y : Spc F E n} {C : Matrix (Fi
   simp only [Matrix.mul_assoc]
   rw [← Matrix.mul_assoc C C', hC', Matrix.one_mul]
 
-variable (F E) in
 
 def hypPlane : Spc F E 2 := ⟨!![0, 1; -1, 0], ⊤, fun _ => !![0, -2 * Complex.I; Complex.I / 2, 0], fun _ => 1⟩
 

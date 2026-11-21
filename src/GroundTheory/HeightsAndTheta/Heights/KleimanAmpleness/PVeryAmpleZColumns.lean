@@ -35,7 +35,6 @@ theorem prod_mem_pow {I : Chart x} (Q : Submodule (chartRing S x I) Ω) (h : Fin
     rw [Finset.prod_insert ha, Finset.card_insert_of_notMem ha, pow_succ']
     exact Submodule.mul_mem_mul (hh a) ih
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem smul_mem_twist_pow {G : SubSystem S x E} {H : SubSystem S x Ω} {I : Chart x} {n c : ℕ}
     {q : Ω} (hq : q ∈ H.sub I ^ c) {z : E} (hz : z ∈ (G.twist (H.pow n)).sub I) :
@@ -56,7 +55,6 @@ theorem smul_mem_twist_pow {G : SubSystem S x E} {H : SubSystem S x Ω} {I : Cha
     rw [e1]
     exact Submodule.smul_mem _ a hy
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem smul_mem_twist_of_inv {G : SubSystem S x E} {H : SubSystem S x Ω} {I : Chart x} {m c : ℕ}
     {w : Ω} (hw : ∀ q ∈ H.sub I ^ m, w * q ∈ chartRing S x I) {z : E}
@@ -84,7 +82,6 @@ theorem smul_mem_twist_of_inv {G : SubSystem S x E} {H : SubSystem S x Ω} {I : 
 
 variable {G : SubSystem S x E} {H : SubSystem S x Ω} {h : Fin (r + 1) → Ω} {I : Chart x}
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem pow_mono (hH : ∀ j, h j ∈ H.sub I) {J : Chart h} {e : E} {n : ℕ}
     (he : xProd J ^ n • e ∈ (G.twist (H.pow (J.1.card * n))).sub I) (k : ℕ) :
@@ -120,7 +117,6 @@ theorem exists_pow_of_mem (hH : ∀ j, h j ∈ H.sub I) {J : Chart h} {e : E}
     rw [smul_comm]
     exact Submodule.smul_of_tower_mem _ s hn
 
-omit [IsScalarTower S Ω E] in
 
 theorem mono (hH : ∀ j, h j ∈ H.sub I) {J J' : Chart h} (hJJ' : J.1 ⊆ J'.1) :
     secsOnZChart G H h I J ≤ secsOnZChart G H h I J' := by
@@ -198,7 +194,6 @@ theorem exists_partition {H : LineBundle S x} (hV : IsVeryAmpleBy H.toSubSystem 
 
 end VeryAmpleZColumns
 
-open VeryAmpleZColumns in
 
 theorem VeryAmpleZColumns.proof : VeryAmpleZColumns.Statement.{u, v, w} := by
   intro S _ Ω _ _ N x E _ _ _ _ G H r h hV I

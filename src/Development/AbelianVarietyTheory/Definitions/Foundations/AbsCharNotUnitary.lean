@@ -235,7 +235,6 @@ section Product
 
 variable {F : Type} [Field F] [NumberField F]
 
-open Classical in
 
 def cut (a : FiniteAdeleRing (𝓞 F) F) (T : Finset (HeightOneSpectrum (𝓞 F))) : FiniteAdeleRing (𝓞 F) F :=
   ⟨fun v => if v ∈ T then a v else 1, by

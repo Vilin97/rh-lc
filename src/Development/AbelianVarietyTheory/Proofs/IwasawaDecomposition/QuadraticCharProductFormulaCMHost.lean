@@ -408,7 +408,6 @@ theorem etaAll_eq_one {m : 𝓞 K⁺} (hm : m ≠ 0)
 
 end CM
 
-open Classical in
 
 theorem eta_product_formula : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (a : (H.F)ˣ), (∏ᶠ v : HeightOneSpectrum (𝓞 H.F), etaFin (L := H.E) H.F v a) * ∏ w : InfinitePlace H.F, etaInf H.F w a = 1 := by
   intro R H a

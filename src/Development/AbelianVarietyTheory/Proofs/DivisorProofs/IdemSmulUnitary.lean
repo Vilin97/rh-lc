@@ -26,7 +26,6 @@ theorem idem_smul_mul {A : Type} [CommRing A] [Algebra (AF F) A] {ε : AF F} (h�
   rw [map_sub, map_one]
   linear_combination (a * b - a - b + 1) * he
 
-variable (E) in
 
 def idemUnit (ε : AF F) (hε : ε * ε = ε) : (AE F E)ˣ →* (AE F E)ˣ where
   toFun l := ⟨ε • l.1 + (1 - ε) • 1, ε • (l⁻¹ : (AE F E)ˣ).1 + (1 - ε) • 1,
@@ -35,7 +34,6 @@ def idemUnit (ε : AF F) (hε : ε * ε = ε) : (AE F E)ˣ →* (AE F E)ˣ where
   map_one' := Units.ext (by simp only [Units.val_one, Units.val_mk]; rw [← add_smul, add_sub_cancel, one_smul])
   map_mul' a b := Units.ext (by simp only [Units.val_mul, Units.val_mk]; rw [idem_smul_mul hε])
 
-variable (σ) in
 
 def eFin (v : Pl F) : AF F := GlobalTheory.LatVac.liftV v 1
 
@@ -55,17 +53,13 @@ theorem eInf_idem : eInf F * eInf F = eInf F := by
   rw [sub_mul, one_mul, sub_eq_zero] at h
   exact h
 
-variable (E) in
 
 def unitAt (v : Pl F) : (AE F E)ˣ →* (AE F E)ˣ := idemUnit E (eFin v) (eFin_idem v)
 
-variable (F E) in
 
 def unitArch : (AE F E)ˣ →* (AE F E)ˣ := idemUnit E (eInf F) eInf_idem
 
-variable (σ) in
 
-variable (σ) in
 
 theorem unitAt_mem (v : Pl F) (l : (AE F E)ˣ) : unitAt E v l ∈ idelesAt E (evFin F v) := by
   intro u hu

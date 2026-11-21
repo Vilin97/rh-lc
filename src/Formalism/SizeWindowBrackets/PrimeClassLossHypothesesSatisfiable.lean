@@ -108,9 +108,7 @@ def LossBoundsEventually : Prop :=
       (BAD : ℕ → τ → Prop) (Sig : ℕ → ℝ) (io : U → ℕ → ℝ) (D : U → LD ι κ τ),
       PrimeClassLossHypotheses P Ps cand PR J TT BAD Sig io D → ExcessAndPrimeLogSumUnitBounds P Ps cand J TT io D
 
-open Formalism.RankGapBounds.WeightedMeanData Formalism.LFunctionChainParameters.WeightedSlopeBounds in
 
-open Formalism.RankGapBounds.WeightedMeanData Formalism.LFunctionChainParameters.WeightedSlopeBounds in
 
 end
 

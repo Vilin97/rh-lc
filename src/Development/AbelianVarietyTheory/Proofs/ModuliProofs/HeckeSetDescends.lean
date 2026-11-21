@@ -187,7 +187,6 @@ theorem heckeKer_comap (D : Datum H) (P : Ideal (𝓞 E)) (p i : ℕ) (t : SAB H
 
 end GlobalTheory.HkSetDesc
 
-open GlobalTheory.HkSetDesc in
 
 theorem GlobalTheory.heckeSet_descends : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (𝔓 : Ideal (𝓞 E)) (p i : ℕ) (S S' : Scheme.{0}) (s : S ⟶ Sp (KA l)) (s' : S' ⟶ Sp (KA l)) (f : S' ⟶ S) (o : Ob D l s) (o' : Ob D l s') (m : ObjMap o' o f) (K : Set o.t.G.left), admitted l 𝔓 p → Surjective f → HeckeSet D o'.t 𝔓 p i (m.toSABMap.φ ⁻¹' K) → HeckeSet D o.t 𝔓 p i K := by
   intro E _ _ _ H D l 𝔓 p i S S' s s' f o o' m K hA hf hK k _ _ x

@@ -63,7 +63,6 @@ theorem isSqInt_act (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) (o : 
     exact SmoothingSquareIntegrable.memL2_of_smoothing μ ν (GlobalTheory.AutGrowth.isTest_dens X hα)
       (ContAut.continuous_of_isOpen_stab E N φ h.level) hm
 
-variable (E N) in
 
 def ainv : Submodule ℂ (Sm E N) where
   carrier := {φ | ∀ t g, φ.1 (splitCentre E N t * g) = φ.1 g}

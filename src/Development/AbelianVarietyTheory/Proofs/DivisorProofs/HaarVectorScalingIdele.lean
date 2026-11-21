@@ -29,7 +29,6 @@ theorem continuous_compFinV (v : Pl F) : Continuous (compFin F E v) := by
   exact GlobalTheory.AutFunCompare.continuous_tensNU (E := E) (evFin F v).toLinearMap (map_mul (evFin F v))
     ((RestrictedProduct.continuous_eval v).comp continuous_snd)
 
-variable (F E) in
 
 end GlobalTheory.ThK.LemF.QuotInv
 

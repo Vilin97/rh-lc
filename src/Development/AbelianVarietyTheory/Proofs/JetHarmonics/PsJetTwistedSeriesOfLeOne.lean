@@ -43,15 +43,12 @@ variable {c : Fin d → Fin d → S} {P Q : Pt S n d}
 
 variable [Algebra ℚ S]
 
-omit [Algebra ℚ S] in
 
-omit [Algebra ℚ S] in
 
 omit [Algebra ℚ S] in
 theorem cc_pt (j : Fin n) (i : Fin d) : constantCoeff (pt S d j i) = 0 := by
   simp [pt]
 
-omit [Algebra ℚ S] in
 
 end Series
 

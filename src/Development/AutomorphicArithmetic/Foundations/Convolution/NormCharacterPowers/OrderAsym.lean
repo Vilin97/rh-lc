@@ -23,9 +23,7 @@ def OrderAsym : Prop := ∀ (F : ℂ → ℂ) (S : ℝ → ℂ) (δ : ℕ), Anal
   (∀ σ : ℝ, 1 < σ → F σ = ((σ : ℂ) - 1) ^ δ * Complex.exp (S σ)) →
     ∃ (k : ℕ) (M : ℝ), ∀ σ : ℝ, 1 < σ → σ ≤ 2 → |(S σ).re - ((δ : ℝ) - k) * (-Real.log (σ - 1))| ≤ M
 
-open Classical in
 
-open Classical in
 
 def LogAsym : Prop := ForSys fun q X _ A => ∀ x y : X, ∃ M : ℝ, ∀ σ : ℝ, 1 < σ → σ ≤ 2 →
   |dre q (A x) (A y) σ - (if x = y then -Real.log (σ - 1) else 0)| ≤ M
@@ -43,7 +41,6 @@ def BCSum : Prop := ∀ (l : ℕ) (W W' : Type) (q : W → ℕ) (q' : W' → ℕ
     (Summable fun p => ‖lterm q α β σ p‖) → (Summable fun p => ‖lterm q' ξ ζ σ p‖) ∧
       ∑' p, lterm q' ξ ζ σ p = ∑ j ∈ Finset.range l, ∑' p, lterm q α (fun v b => β v b * c v ^ j) σ p
 
-open Classical in
 
 def AbsCount : Prop := ∀ (l : ℕ) (W W' : Type) (q : W → ℕ) (q' : W' → ℕ) (u : W' → W) (f : W' → ℕ) (c : W → ℂ), 1 ≤ l →
   Cover l q q' u f c → ∀ (X X' : Type) (d : X → ℕ) (d' : X' → ℕ) (A : ∀ x, W → Fin (d x) → ℂ) (A' : ∀ x, W' → Fin (d' x) → ℂ),

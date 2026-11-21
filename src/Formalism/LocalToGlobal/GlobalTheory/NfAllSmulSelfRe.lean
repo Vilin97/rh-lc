@@ -98,7 +98,6 @@ theorem defect_smul_right (t : E) (x y : Fin n → E) :
   simp only [smul_eq_mul, map_mul]
   ring
 
-include hφ in
 
 theorem defect_eq_zero (t : E) (ht : (φ t).im ≠ 0) (h0 : ∀ x, defect φ Y G x x = 0) (x y : Fin n → E) :
     defect φ Y G x y = 0 := by
@@ -118,7 +117,6 @@ theorem defect_eq_zero (t : E) (ht : (φ t).im ≠ 0) (h0 : ∀ x, defect φ Y G
     linarith
   exact (mul_eq_zero.1 h4).resolve_left h5
 
-include hφ in
 
 theorem gram_of_norm (hG : Gᴴ = G) (t : E) (ht : (φ t).im ≠ 0)
     (h : ∀ x : Fin n → E, (star (Y *ᵥ fun i => φ (x i)) ⬝ᵥ (Y *ᵥ fun i => φ (x i))).re = (φ (star x ⬝ᵥ (G *ᵥ x))).re) :

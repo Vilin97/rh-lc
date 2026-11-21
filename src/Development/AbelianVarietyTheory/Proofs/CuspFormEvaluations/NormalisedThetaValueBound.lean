@@ -100,7 +100,6 @@ theorem exists_min_period (T : PT E) (Λ' : Submodule (𝓞 E) (Fin n → E)) (h
     congr 2
     field_simp
 
-open Classical in
 
 theorem norm_sum_jet_isogeny_sum_le (T : PT E) (w₀ : 𝓞 E) (hw : (w₀ : E) + cc (w₀ : E) = 1)
     (heps : ∀ x ∈ T.L, (T.eps x : ℝ) = Real.cos (Real.pi * (Hf x (act w₀ x)).im))
@@ -145,7 +144,6 @@ namespace GlobalTheory
 
 open NumberField Complex ReciprocityTheory.ChartRestriction.G.I2 ReciprocityTheory.ChartRestriction.G.FD TensorLat
 
-open Classical in
 
 theorem normalised_theta_value_bound {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
     (T : PT E) (w₀ : 𝓞 E) (hw : (w₀ : E) + cc (w₀ : E) = 1)

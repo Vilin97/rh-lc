@@ -19,7 +19,6 @@ section Site
 variable {C : Type u} [Category.{v} C] {J : GrothendieckTopology C}
   [HasSheafify J AddCommGrpCat.{v}]
 
-variable (J) in
 
 abbrev freeYoneda : C ⥤ Sheaf J AddCommGrpCat.{v} :=
   yoneda ⋙ (Functor.whiskeringRight _ _ _).obj AddCommGrpCat.free ⋙ presheafToSheaf _ _
@@ -138,7 +137,6 @@ def δ (n : ℕ) (U : C) : Sheaf.H'.{w'} S.X₃ n U →+ Sheaf.H'.{w'} S.X₁ (n
 lemma δ_apply (n : ℕ) (U : C) (x : Ext.{w'} ((freeYoneda J).obj U) S.X₃ n) :
     δ hS n U x = x.comp hS.extClass rfl := rfl
 
-include hS in
 
 theorem exact₂ (n : ℕ) (U : C) : Function.Exact (map.{w'} S.f n U) (map.{w'} S.g n U) :=
   (ShortComplex.ab_exact_iff_function_exact _).1
@@ -156,7 +154,6 @@ theorem map_zero_injective_of_mono {F G : Sheaf J AddCommGrpCat.{v}} (f : F ⟶ 
     (U : C) : Function.Injective (map.{w'} f 0 U) :=
   Ext.postcomp_mk₀_injective_of_mono ((freeYoneda J).obj U) f
 
-include hS in
 
 theorem injective_zero (U : C) : Function.Injective (map.{w'} S.f 0 U) :=
   have := hS.mono_f

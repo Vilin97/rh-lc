@@ -63,7 +63,6 @@ theorem Reps.exists_left {K : Subgroup G} {g γ k : G} {R R' : Finset G} (h : Re
   obtain ⟨δ, ⟨hδ, hd⟩, -⟩ := h'.2 (k * γ) ⟨k * k₁, mul_mem hk h₁, k₂, h₂, by rw [e]; group⟩
   exact ⟨δ, hδ, hd⟩
 
-open Classical in
 
 noncomputable def pairMult (K : Subgroup G) (R₁ R₂ : Finset G) (y : G) : ℕ :=
   ((R₁ ×ˢ R₂).filter fun p => (p.1 * p.2)⁻¹ * y ∈ K).card

@@ -127,7 +127,6 @@ end GlobalTheory.FrobIdealDeg
 
 namespace GlobalTheory
 
-open GlobalTheory.FrobIdealDeg in
 
 theorem frobenius_ideal_degree_bound : ∀ {O : Type} [CommRing O] (l : ℕ), 2 ≤ l →
     ∀ (φ : O⟦X⟧ →ₐ[O] O⟦X⟧), (∀ (f : O⟦X⟧) (m : ℕ), PowerSeries.coeff m (φ f) =

@@ -15,8 +15,6 @@ open scoped ENNReal Classical
 
 namespace GlobalTheory.Mass.StdMass
 
-open NumberField Matrix in
-open scoped ENNReal Classical in
 
 theorem _root_.GlobalTheory.Mass.StdMass.isSymm_of_ortho {K V : Type} [Field K] [NumberField K] [StarRing K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
@@ -67,8 +65,6 @@ private theorem massU_zero_eq_one (K : Type) [Field K] [NumberField K] [StarRing
   rw [_root_.Formalism.HermitianLatticesTheory.massBasic_mass_eq _ _ hs, hchoose, Finset.sum_singleton, hcard]
   norm_num
 
-open NumberField Matrix in
-open scoped ENNReal Classical in
 
 theorem _root_.GlobalTheory.Mass.StdMass.main : ∀ (K : Type) [Field K] [NumberField K]
     [StarRing K], _root_.Formalism.HermitianLatticesTheory.IsCMUnram K → ∀ j : ℕ, (_root_.Formalism.MainNotions.S.Cnt.stdH K j).IsSymm ∧

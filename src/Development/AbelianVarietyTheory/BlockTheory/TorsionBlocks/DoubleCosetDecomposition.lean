@@ -56,7 +56,6 @@ def latCoord (W : HSpace E) : Set (Fin W.rank → E) := {x | ∑ i, x i • W.fr
 def levelW (hc : CMData F E) (W : HSpace E) : Subgroup (HA (AF F) hc.sig W.gram) :=
   levelK hc.sig W.gram (latCoord W)
 
-open Classical in
 
 end Space
 

@@ -31,7 +31,6 @@ def resConst (r : ℕ) : ℝ :=
 
 end L2Extension
 
-open L2Extension in
 
 def L2ExtensionLogCanonical : Prop :=
   ∀ (n : ℕ), 1 ≤ n →

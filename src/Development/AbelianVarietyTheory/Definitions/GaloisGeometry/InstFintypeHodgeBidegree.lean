@@ -46,7 +46,6 @@ theorem mOm_wedgeOm {R' B' : Type} [CommRing R'] [CommRing B'] [Algebra R' B'] {
     e.mOm Q (wedgeOm R B h x y) = wedgeOm R' B' h (e.mOm q x) (e.mOm q' y) :=
   Subtype.ext (map_mul e.mDR x.1 y.1)
 
-variable (R B) in
 
 def oneOm : Om R B 0 := ⟨1, by
   change _ ∈ LinearMap.range _ ^ 0
@@ -162,7 +161,6 @@ theorem ev_self {M : C ⥤ ModuleCat.{0} R} {m : ℕ} (s : ComposableArrows C m)
   rw [hid, M.map_id]
   rfl
 
-variable (F) in
 
 def oneTerm : Term F 0 0 := fun s ↦ oneOm R (F.obj (s.obj (Fin.last 0)))
 
@@ -231,7 +229,6 @@ theorem dTot_sg {a q n : ℕ} (h : a + q = n) (c : Term F a q) :
       · rfl
       · rw [totV_succ, Tot.sg_of_ne _ _ _ (fun e ↦ hQ (congrArg (· + 1) e)), map_zero, smul_zero]
 
-variable (F) in
 
 def Tot.cup {m n N : ℕ} (h : m + n = N) : Tot F m →ₗ[R] Tot F n →ₗ[R] Tot F N :=
   ∑ b : Bidegree m, ∑ b' : Bidegree n, (-1 : ℤ) ^ (b.1.2 * b'.1.1) •
@@ -290,7 +287,6 @@ theorem dTot_cup {m n N : ℕ} (h : m + n = N) (x : Tot F m) (y : Tot F n) :
   · ring
   · ring
 
-variable (F) in
 
 def Tot.one : Tot F 0 := Tot.sg F rfl (oneTerm F)
 
@@ -343,7 +339,6 @@ theorem Tot.cup_mem_BTot_right {m n N : ℕ} (h : m + n = N) {x : Tot F m} {y : 
     rw [map_zsmul, dTot_cup, show dTot F m x = 0 from hx, map_zero, LinearMap.zero_apply, zero_add,
       smul_smul, ← mul_pow, neg_one_mul, neg_neg, one_pow, one_smul]
 
-variable (F) in
 
 def ZTot.cup {m n N : ℕ} (h : m + n = N) : ZTot F m →ₗ[R] ZTot F n →ₗ[R] ZTot F N :=
   LinearMap.mk₂ R (fun x y ↦ ⟨Tot.cup F h x.1 y.1, Tot.cup_mem_ZTot h x.2 y.2⟩)
@@ -352,14 +347,12 @@ def ZTot.cup {m n N : ℕ} (h : m + n = N) : ZTot F m →ₗ[R] ZTot F n →ₗ[
     (fun _ _ _ ↦ Subtype.ext (LinearMap.map_add _ _ _))
     (fun _ _ _ ↦ Subtype.ext (LinearMap.map_smul _ _ _))
 
-variable (F) in
 
 def Hyp.cup {m n N : ℕ} (h : m + n = N) : Hyp F m →ₗ[R] Hyp F n →ₗ[R] Hyp F N :=
   LinearMap.liftQ₂ _ _ ((ZTot.cup F h).compr₂ (Hyp.mk F N))
     (fun x hx ↦ LinearMap.ext fun y ↦ Hyp.mk_eq_zero.2 (Tot.cup_mem_BTot_left h hx y.2))
     (fun y hy ↦ LinearMap.ext fun x ↦ Hyp.mk_eq_zero.2 (Tot.cup_mem_BTot_right h x.2 hy))
 
-variable (F) in
 
 def Hyp.one : Hyp F 0 := Hyp.mk F 0 ⟨Tot.one F, Tot.one_mem⟩
 

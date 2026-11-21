@@ -75,7 +75,6 @@ theorem isFlagPair_self {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuatio
 
 end ChernClassOnFlagPair
 
-open ChernClassOnFlagPair in
 
 theorem ChernClassOnFlagPair.proof (h1 : JoinPointFlagModel.Statement)
     (h2 : JoinPointNumbers.Statement) (h3 : FlagModelValueIndependence.Statement)

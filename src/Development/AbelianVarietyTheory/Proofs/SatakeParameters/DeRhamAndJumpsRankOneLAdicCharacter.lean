@@ -81,7 +81,6 @@ end GlobalTheory.CharAboveRead
 
 namespace GlobalTheory.CharAboveRead
 
-set_option maxHeartbeats 1000000 in
 
 theorem deRham_and_jumps_rankOne_lAdic_character : ∀ (D : D7) (T : WDTie D.nd D.naut) (W : WDSide D T) (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ)
     (μ : G D.host.E D.nd.Om →* (Qbar l)ˣ), Continuous μ → ∀ (J : (D.host.E →+* Qbar l) → Multiset ℤ)

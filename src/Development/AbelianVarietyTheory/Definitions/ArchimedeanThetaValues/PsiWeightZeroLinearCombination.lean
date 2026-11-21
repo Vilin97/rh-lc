@@ -174,7 +174,6 @@ def toricPre (q : X → (FractionRing K)ˣ) : DegPre K where
 
 variable {K X}
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
 def polar (q : X → (FractionRing K)ˣ) (a b : X) : (FractionRing K)ˣ := q (a + b) * (q a)⁻¹ * (q b)⁻¹
 
@@ -183,7 +182,6 @@ instance (q : X → (FractionRing K)ˣ) (O : Type) [Ring O] [Module O X] : Modul
 
 variable (q : X → (FractionRing K)ˣ)
 
-omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 
 theorem psi_isConst (y : X) : IsConst ((toricPre K X q).psi y) (unitOn (q y)) := cg_isConst _ _ _
 

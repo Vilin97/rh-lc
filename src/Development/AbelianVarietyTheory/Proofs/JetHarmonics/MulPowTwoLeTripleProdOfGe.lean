@@ -414,7 +414,6 @@ theorem norm_x_sub_eq_one {W : Affine K} (h₁ : ‖W.a₁‖ ≤ 1) (h₂ : ‖
 
 end General
 
-open Classical in
 
 theorem torsion_integral_and_distinct (q : ℕ) [Fact q.Prime] (M : Mdl q) (N : ℕ) (hM : M.Ok)
     (hN : Nat.Coprime N q) :

@@ -15,7 +15,6 @@ namespace GlobalTheory.ArInt.Model
 
 variable {L M : HermLB (𝟙 (Sp ℤ))} {s t : ℝ}
 
-open Classical in
 
 open CategoryTheory AlgebraicGeometry TopologicalSpace Filter Topology MvPolynomial in
 variable {L M : _root_.GlobalTheory.HermLB (𝟙 (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp ℤ))} {s t : ℝ} in
@@ -90,8 +89,6 @@ private theorem eq_zero_of_isHomogeneous_of_forall_lin_pow_eq_zero {ι : Type} [
     rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   rw [hsm, map_smul, hmon d hw, smul_zero]
 
-open CategoryTheory AlgebraicGeometry TopologicalSpace Filter Topology MvPolynomial in
-variable {L M : _root_.GlobalTheory.HermLB (𝟙 (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp ℤ))} {s t : ℝ} in
 
 theorem _root_.GlobalTheory.ArInt.Model.isArFun_unique {k : Type} [CommRing k] {X : Scheme.{0}}
     [IsIntegral X] {p : X ⟶ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp k} {D E : ℕ} (hX : _root_.GlobalTheory.IsArithVar p E)

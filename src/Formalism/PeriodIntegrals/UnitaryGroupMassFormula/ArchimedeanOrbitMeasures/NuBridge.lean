@@ -55,7 +55,6 @@ theorem norm_reimV_sq (M : V → Matrix (Fin n) (Fin m) ℂ) :
   refine Finset.sum_congr rfl fun v _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [Complex.sq_norm, Complex.normSq_apply]
 
-variable (V m) in
 
 def hermFam : Submodule ℝ (V → Matrix (Fin m) (Fin m) ℂ) where
   carrier := {M | ∀ v, (M v)ᴴ = M v}

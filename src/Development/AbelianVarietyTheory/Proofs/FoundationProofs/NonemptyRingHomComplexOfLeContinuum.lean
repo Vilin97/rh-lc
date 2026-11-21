@@ -14,7 +14,6 @@ open Formalism.BasicNotions NumberField
 
 namespace GlobalTheory.WittFracComplex
 
-open Cardinal in
 
 theorem nonempty_ringHom_complex_of_le_continuum (K : Type) [Field K] [CharZero K] (hK : #K ≤ 𝔠) :
     Nonempty (K →+* ℂ) := by
@@ -47,7 +46,6 @@ theorem charZero_wittVector (p : ℕ) [hp : Fact p.Prime] (k : Type) [Field k] [
   · subst h
     exact CharP.charP_to_charZero _
 
-open Cardinal in
 
 theorem mk_wittVector_le (p : ℕ) (k : Type) (hk : #k ≤ ℵ₀) : #(WittVector p k) ≤ 𝔠 := by
   have h : Function.Injective (WittVector.coeff : WittVector p k → ℕ → k) :=
@@ -56,7 +54,6 @@ theorem mk_wittVector_le (p : ℕ) (k : Type) (hk : #k ≤ ℵ₀) : #(WittVecto
   rw [← Cardinal.power_def, Cardinal.mk_nat, ← Cardinal.aleph0_power_aleph0]
   exact Cardinal.power_le_power_right hk
 
-open Cardinal in
 
 theorem nonempty_ringHom_complex : ∀ (p : ℕ) [Fact p.Prime], Nonempty (DV.KW p →+* ℂ) := by
   intro p _

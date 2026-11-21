@@ -123,7 +123,6 @@ theorem pos_rho {P : Type} [Fintype P] {B : S3.MassData P} (hP : B.Pos) : 0 < B.
   casesm* _ ∧ _
   first | positivity | assumption | (unfold S3.MassData.ρ0; positivity)
 
-open Formalism.L2.SG.DataInst in
 
 def RowsInputP (D : D7) : Prop :=
   ∀ (Wp Wq : InfinitePlace D.host.E → Type) [∀ x, NormedAddCommGroup (Wp x)] [∀ x, InnerProductSpace ℂ (Wp x)]
@@ -142,7 +141,6 @@ def RowsInputP (D : D7) : Prop :=
       ∀ κ : Formalism.L2.SG.TermDef.Term D u u' F0 what₂ → ℕ, RowLabel κ →
         RowsPSD S δ M L u u' F0 what₂ ϖ (Formalism.L2.SG.PairVal.vRdef D u u' F0 what₂ δ M) κ nc α
 
-open Formalism.L2.SG.AdBridge Formalism.L2.SG.CntLocal Formalism.L2.SG.DataInst in
 
 theorem theoremS_rec
     (hLMA : ∀ D : D7, LocalModelAt D) (hDIA : ∀ D : D7, Formalism.L2.SG.Pf.LocCP.LocTied D → DensInputAt D) (hRIA : ∀ D : D7, RowsInputP D)
@@ -282,7 +280,6 @@ section GlobOf
 
 variable (D : D7)
 
-open Classical in
 
 def gOf (e : InfinitePlace D.host.E ≃ D.what₂.Tau) : Sz.Glob (InfinitePlace D.host.E) where
   k := D.R.k
@@ -304,14 +301,12 @@ def gOf (e : InfinitePlace D.host.E ≃ D.what₂.Tau) : Sz.Glob (InfinitePlace 
 def deOf (τ : D.what₂.Tau) (u : D.what₂.Word) (l : ℕ) : ℝ :=
   if 1 ≤ l ∧ l + 2 ≤ D.R.k then (vOne D τ l - 1 / 2 - uOne D u τ (l + 1)) / D.s.Del else 0
 
-open Classical in
 
 def lOf (de de' : ℕ → ℝ) : ℕ :=
   if h : ∃ l, 1 ≤ l ∧ l + 2 ≤ D.R.k ∧ de l ≠ de' l then Nat.find h else 0
 
 end GlobOf
 
-open Formalism.L2.SG.AdBridge Formalism.L2.SG.CntLocal Formalism.L2.SG.DataInst Formalism.L2.SG.RowsConc in
 
 section MassDataHypotheses
 
@@ -366,8 +361,6 @@ theorem massDataInputs_Y (hPos : MassDataPosY X hb Y u u' X0 ψ sd C Th vR Q i0 
 
 end MassDataHypotheses
 
-open Formalism.L2.SG.AdBridge Formalism.L2.SG.DataInst Formalism.L2.SG.RealObj in
 
-open Formalism.L2.SG.AdBridge Formalism.L2.SG.CntLocal Formalism.L2.SG.DataInst Formalism.L2.SG.RowsConc in
 
 end Formalism.L2.SG.SpectralTiesReal

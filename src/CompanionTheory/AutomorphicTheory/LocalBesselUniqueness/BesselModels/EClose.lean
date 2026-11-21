@@ -16,7 +16,6 @@ namespace Formalism.L2.SG.RealObj.EnergyConvJ
 
 namespace BM
 
-set_option maxHeartbeats 400000 in
 
 theorem locQuadGG_G_holds (hI : CompanionTheory.Lime.BM.Inputs2) : LocQuadGG_G := by
   intro D hG X u u' sc hsc v cv hcv g hZ

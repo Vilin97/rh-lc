@@ -258,7 +258,6 @@ private theorem conj_mem_iff (n j : ℕ) (hj : j ≤ n) (ϖ : L) (hϖ : ϖ ≠ 0
   rw [tjcosets_mem_K_iff, hinv, key g, key g⁻¹, map_inv, map_inv]
   exact ⟨fun h => h.1, fun h => ⟨h, (stabS n j κ hj).inv_mem h⟩⟩
 
-include e in
 
 private theorem relIndex_eq (n j : ℕ) (hj : j ≤ n) (ϖ : L) (hϖ : ϖ ≠ 0) (hϖO : ϖ ∈ O)
     (hmax : ∀ x : O, ϖ⁻¹ * (x : L) ∈ O ↔ IsLocalRing.residue O x = 0) (t : GL (Fin n) L)

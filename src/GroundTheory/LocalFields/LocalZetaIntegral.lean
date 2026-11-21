@@ -16,9 +16,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 section Laurent
 
-variable (K) in
 
-variable (K) in
 
 theorem differentiable_qpow : Differentiable ℂ fun s : ℂ => (residueCard K : ℂ) ^ (-s) :=
   differentiable_neg.const_cpow (Or.inl residueCard_ne_zero_complex)
@@ -27,7 +25,6 @@ end Laurent
 
 section Sums
 
-omit [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem hasSum_int_of_shift {E : Type*} [AddCommMonoid E] [TopologicalSpace E] {a : ℤ → E}
     (M : ℤ) (h : ∀ k, k < M → a k = 0) {x : E} (hx : HasSum (fun n : ℕ => a (M + n)) x) :
@@ -45,7 +42,6 @@ section LFactor
 
 variable (χ : Kˣ →* ℂˣ)
 
-open Classical in
 
 def localLFactor (s : ℂ) : ℂ :=
   if IsUnramifiedChar χ then (1 - ((χ (unifUnit K) : ℂˣ) : ℂ) * (residueCard K : ℂ) ^ (-s))⁻¹
@@ -166,7 +162,6 @@ theorem integrable_localZeta (hf : f ∈ schwartzBruhat K) (hχ : Continuous χ)
   rw [← ENNReal.ofReal_tsum_of_nonneg ha0 hsum.summable]
   exact ENNReal.ofReal_lt_top
 
-open scoped Classical in
 
 theorem localZeta_eq_sum (hf : f ∈ schwartzBruhat K) (hχ : Continuous χ) {M N : ℤ} (hMN : M ≤ N)
     (hM : ∀ x, f x ≠ 0 → x ∈ valBall K M) (hN : ∀ x ∈ valBall K N, f x = f 0) {s : ℂ}
@@ -243,9 +238,7 @@ theorem localZeta_eq_sum (hf : f ∈ schwartzBruhat K) (hχ : Continuous χ) {M 
   rw [e] at h12
   exact hsum.unique h12
 
-open Classical in
 
-omit [MeasurableSpace K] [BorelSpace K] in
 
 end ZetaNonvanishing₂
 

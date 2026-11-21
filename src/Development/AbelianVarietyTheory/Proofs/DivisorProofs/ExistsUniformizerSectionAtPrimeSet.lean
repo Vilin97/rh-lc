@@ -101,7 +101,6 @@ theorem fac {D : D7} (Φ : AddChar (EAf D) ℂ) (Q : Finset (Pl D.host.E)) (a : 
   rw [AddChar.mulShift_apply, ← mul_assoc, mul_inv_cancel₀ hc, one_mul] at this
   simpa using this
 
-open GlobalTheory.StdFrames (cpt) in
 
 theorem mem_int_of_mul {D : D7} {PP : Pl D.host.E} {e : AE D} (he : Formalism.L2.NTheta.IsIdemAt e PP) {ϖ : 𝓞 D.host.E}
     (hϖ : ϖ ∈ PP.asIdeal ∧ ϖ ∉ PP.asIdeal ^ 2) {m : EAf D} (hm : toEAf D e * m = m)

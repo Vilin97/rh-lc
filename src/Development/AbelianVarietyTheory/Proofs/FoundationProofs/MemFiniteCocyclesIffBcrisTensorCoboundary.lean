@@ -293,7 +293,6 @@ omit [TopologicalSpace G] [Fintype ι] [DecidableEq ι] [ContinuousAdd V₁] [Co
 
 end Two
 
-omit [TopologicalSpace G] [DecidableEq ι] in
 
 end Lat
 

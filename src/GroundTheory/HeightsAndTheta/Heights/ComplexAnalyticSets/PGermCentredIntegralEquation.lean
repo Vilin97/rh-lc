@@ -136,8 +136,6 @@ theorem coe_monic_expr {d : ℕ} (A : (σ → ℂ) →L[ℂ] (Fin d → ℂ)) (w
   funext z
   simp [compA, Finset.sum_apply]
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem proof : CentredIntegralEquation.Statement := by
   classical

@@ -45,9 +45,7 @@ variable {D : D7} {u : D.what₂.Word} {w : D.what₂.places.Pl} {h : GIdx D.hos
   {X : Fields} (s : Seam D X) (rd : KerRead (D.chTw u μ) X)
   (cls : ∀ j, Lv.comp j → (Fl.Pj j).Tup → (D.chTw u μ).cls j)
 
-open Classical in
 
-include I L0 in
 
 end AtS
 

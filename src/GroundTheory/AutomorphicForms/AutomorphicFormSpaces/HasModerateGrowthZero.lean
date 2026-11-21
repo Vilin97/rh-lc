@@ -195,7 +195,6 @@ theorem isAutomorphicForm_zero : IsAutomorphicForm (0 : AdelicGLn.AdelicGL K n �
 
 end Closure
 
-variable (K n) in
 
 def automorphicForms : Submodule ℂ (AdelicGLn.AdelicGL K n → ℂ) where
   carrier := {φ | IsAutomorphicForm φ}

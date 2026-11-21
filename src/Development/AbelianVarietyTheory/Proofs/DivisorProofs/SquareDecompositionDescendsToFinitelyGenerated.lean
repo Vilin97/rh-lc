@@ -78,7 +78,6 @@ theorem fam_comm {R S : Type} [CommRing R] [CommRing S] [Algebra k R] [Algebra k
 
 end GlobalTheory.SqDecSpread
 
-open GlobalTheory.Spread GlobalTheory.HomDescent GlobalTheory.SqDecSpread in
 
 theorem GlobalTheory.SqDecSpread.sqDec_fg : ∀ (k Ω : Type) [Field k] [Field Ω] [Algebra k Ω] (A₀ : Over (Sp k)) [GrpObj A₀],
     IsAbelianScheme A₀ → ∀ (L M : LB A₀.left), L.IsLB → M.IsLB →

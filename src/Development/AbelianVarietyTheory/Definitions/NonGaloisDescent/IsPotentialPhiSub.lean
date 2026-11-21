@@ -49,7 +49,6 @@ theorem phi_bas_unit (i : ι) : (unitMod l a e O K ι).phi (bas i) = bas i := by
 
 variable [TameDescentExponentData K l e a]
 
-variable (O K l e a ι) in
 
 def unitDesc : Descent (unitMod l a e O K ι) :=
   Descent.ofMatrix _ (fun _ _ => 1)
@@ -60,14 +59,12 @@ def unitDesc : Descent (unitMod l a e O K ι) :=
       rw [mx_unitMod, mx_unitMod, Matrix.map_one _ (map_zero _) (map_one _),
         Matrix.map_one _ (map_zero _) (map_one _)]
 
-omit [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] in
 
 theorem unitDesc_act (γ : TameGal K l e a) (v : Vec K a ι) (τ : ZMod a) (i : ι) :
     (unitDesc l a e O K ι).act γ v τ i = ringAct γ (fun σ => v σ i) τ := by
   change Descent.matAct γ (fun _ => 1) v τ i = _
   rw [Descent.matAct_apply, Matrix.one_mulVec, ringAct_apply]
 
-variable (O K l e a ι) in
 
 def unitDat (η H : ℕ) : BKDat O K l e a ι η H where
   toPhiMod := unitMod l a e O K ι
@@ -115,7 +112,6 @@ theorem galOW_iW_of_covers {h : GQ l} {γ : TameGal K l e a} (hc : Covers K t ϖ
   rw [← galOW_inclO, key, key, map_mul, map_pow, hε, galOW_inclO, h2] at h3
   exact (hu.pow N).mul_left_cancel h3
 
-omit [TameDescentExponentData K l e a] in
 
 theorem galOB_iB_const {h : GQ l} (hh : h ∈ GK (ϖ.field a)) (f : ZMod a → invL l (S O K e))
     (c : ZMod a → K) (hf : ∀ τ, (f τ : K⟦X⟧) = C (c τ)) : galOB O h (ϖ.iB t K f) = ϖ.iB t K f := by
@@ -188,7 +184,6 @@ def unitPack {LL : FinExt l} [HasUnr a LL] [TameDescentExponentData ↥LL.1 l e 
   R := unitGal _ ϖ (sQ l) η H T hT (latBasis T)
   isBK := isBK_unitIdent (thetaW a LL) ϖ (T := resF T (ϖ.field a)) (fun g x => hT _ x) (latBasis T)
 
-omit [TameDescentExponentData K l e a] in
 
 theorem isCrisVal_unique {P : PhiMod O K l e a ι} {T : LocLat G ℚ_[l] K O}
     {jB : (ι → OB l O) ≃ₗ[OB l O] TW (OB l O) T} {w : ι → OW l O} {b b' : TW (OB l O) T}
@@ -263,7 +258,6 @@ theorem fix_Kur {F : FinExt l} {g : ↥(GK F)} (hg : g ∈ IK F) : (g : GQ l) �
   rintro ⟨_, k, rfl⟩
   exact MulAction.mem_fixedBy_zpow (α := Om l) (g := (σ : GQ l)) (a := x) key k
 
-omit [NeZero e] [TameDescentExponentData K l e a] in
 
 theorem isGood_of_trivial (Pl : LocPrime l) {LL : FinExt l} (T : QLat LL) (hT : ∀ g x, T.ρ g x = x) :
     IsGood a ϖ Pl T {0} {0} := by
@@ -290,8 +284,6 @@ theorem isGood_of_trivial (Pl : LocPrime l) {LL : FinExt l} (T : QLat LL) (hT : 
   simp only [Finset.prod_singleton, ZMod.val_zero, pow_zero, map_one, map_sub, Polynomial.aeval_X]
   exact sub_eq_zero.2 (key y)
 
-omit [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] in
-variable (O K G l) in
 
 theorem finrank_unitLat : Module.finrank O ↥(unitLat G : LocLat G ℚ_[l] K O).L.T = 1 := by
   have : Nontrivial O := (algebraMap O K).domain_nontrivial

@@ -35,7 +35,6 @@ abbrev phiTQ (b : Fin q) : letI := H.starRing; (pointA hv ε i X false).T →ₗ
 
 variable [IsAlgClosed C] [CharZero C]
 
-omit [NumberField K] in
 
 theorem pairT_patT_gram {T T' : PAT H (Sp (𝓞 K))} {f f' : T.t.G ⟶ T'.t.G} (hf : Serre.IsLinearHom T.t.act T'.t.act f)
     (hf' : Serre.IsLinearHom T.t.act T'.t.act f') {g : 𝓞 E}

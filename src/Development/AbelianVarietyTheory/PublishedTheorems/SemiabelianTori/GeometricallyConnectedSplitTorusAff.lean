@@ -94,7 +94,6 @@ theorem existsUnique_iso_of_extensions (h : SemiAbelianHomExtension)
   have : IsMonHom (Iso.refl A).hom := inferInstanceAs (IsMonHom (𝟙 A))
   simpa [eq_comm] using h.existsUnique_iso_of_isGrpPullback hS hG hH hφ hψ (Iso.refl A)
 
-omit [AlgebraicGeometry.IsNoetherian S] in
 
 section Dvr
 

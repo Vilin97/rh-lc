@@ -189,7 +189,6 @@ theorem IsGal.pow_eq_one (ha : IsGlobalArtin art) (h : IsGal art κ ι χ 0 r) {
   rw [MonoidHom.pow_apply, ← map_pow, MonoidHom.one_apply, inQ_eq_one, map_pow] at this
   exact this
 
-omit [TopologicalSpace O] in
 
 omit [TopologicalSpace O] in
 theorem sideIso_false (ι : Qbar l ≃+* ℂ) (x : Qbar l) : sideIso ι false x = starRingEnd ℂ (ι x) := rfl

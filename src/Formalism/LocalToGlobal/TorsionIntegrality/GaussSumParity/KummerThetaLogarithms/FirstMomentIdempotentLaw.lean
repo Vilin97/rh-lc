@@ -314,7 +314,6 @@ lemma coeff_one_subst {R : Type} [CommRing R] {α τ : Type} [Fintype α] [Decid
       rw [hsum] at hg
       rw [hg.1 _ (by rw [Finsupp.degree_single]; omega), smul_zero]
 
-open Classical in
 
 def keep {τ : Type} (P : τ → Prop) (f : MvPowerSeries τ K) : MvPowerSeries τ K :=
   rescale (fun x => if P x then (1 : K) else 0) f
@@ -334,7 +333,6 @@ lemma coeff_keep {τ : Type} (P : τ → Prop) (f : MvPowerSeries τ K)
     rw [Finsupp.prod, Finset.prod_eq_zero (Finsupp.mem_support_iff.2 hx), zero_mul]
     rw [if_neg hPx, zero_pow hx]
 
-open Classical in
 
 def keepX {τ : Type} (P : τ → Prop) : τ → MvPowerSeries τ K :=
   (fun x => if P x then (1 : K) else 0) • X

@@ -155,7 +155,6 @@ section Order
 variable (V : Type*) {F : Type*} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field F]
   [Algebra V F] [IsFractionRing V F]
 
-open Classical in
 
 noncomputable def ordTop_vw (f : F) : WithTop ℤ :=
   if f = 0 then ⊤ else (WithZero.log (Ring.ordFrac V f) : ℤ)
@@ -214,21 +213,15 @@ omit [IsDomain V] [IsDiscreteValuationRing V] in
 
 variable {F} (b : Basis (Fin n) V Ω[V⁄K])
 
-omit [IsDomain V] [IsDiscreteValuationRing V] in
 
-omit [IsDomain V] [IsDiscreteValuationRing V] in
 
-omit [IsDomain V] [IsDiscreteValuationRing V] in
 
-omit [IsDomain V] [IsDiscreteValuationRing V] in
 
-omit [IsDomain V] [IsDiscreteValuationRing V] in
 
 end Order
 
 section Existence
 
-open scoped IntermediateField.algebraAdjoinAdjoin in
 
 theorem exists_basis_kaehler_of_algebraicIndependent {K F ι : Type*} [Field K] [Field F]
     [Algebra K F] {v : ι → F} (hv : AlgebraicIndependent K v)
@@ -332,7 +325,6 @@ theorem exists_basis_kaehler_uniformiser {t : V} (ht : Irreducible t) :
 variable (F : Type*) [Field F] [Algebra V F] [IsFractionRing V F] [Algebra K F]
   [IsScalarTower K V F]
 
-omit [IsDomain V] [IsDiscreteValuationRing V] [Algebra.FormallySmooth K V] in
 
 theorem trdeg_eq_of_basis_kaehler {n : ℕ} (b : Basis (Fin n) V Ω[V⁄K]) :
     Algebra.trdeg K F = n := by
@@ -350,7 +342,6 @@ theorem exists_basis_kaehler_of_trdeg {n : ℕ} (hn : Algebra.trdeg K F = n) {t 
   subst this
   exact ⟨m.succ_pos, z, b, h₀, hb⟩
 
-variable (V) in
 
 theorem trdeg_residueField_of_trdeg {n : ℕ} (hn : Algebra.trdeg K F = n) :
     Algebra.trdeg K (ResidueField V) = (n - 1 : ℕ) := by

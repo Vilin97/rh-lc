@@ -21,7 +21,6 @@ namespace GlobalTheory.TwFam.ProdRel
 
 variable {R : Type} [CommRing R] [IsDomain R]
 
-open ReciprocityTheory.ChartRestriction.G.DVR in
 
 theorem comp_tφ (D : DegPre R) (a : D.P.A ⟶ D.P.A) (β : D.X) {T : Over (Spec (CommRingCat.of R))} (r : T ⟶ D.P.A) (k : Fin 5) :
     r.left ≫ tφ D a β k = ((![r, r * cP D T β, cP D T β, 1, r ≫ a] : Fin 5 → (T ⟶ D.P.A)) k).left := by
@@ -37,7 +36,6 @@ theorem comp_tφ (D : DegPre R) (a : D.P.A ⟶ D.P.A) (β : D.X) {T : Over (Spec
     rw [← Over.comp_left, Hom.one_def, ← Category.assoc, toUnit_unique (r ≫ toUnit _) (toUnit T)]
   · show r.left ≫ a.left = (r ≫ a).left; rw [Over.comp_left]
 
-open ReciprocityTheory.ChartRestriction.G.DVR in
 
 theorem formEq (D : DegPre R) (a : D.P.A ⟶ D.P.A) (mu β β' β₁ β₁' : D.X) (n j n' j' : ℤ) :
     FormEq (Sum.elim (Sum.elim (Sum.elim (dφ D a mu β β₁) (dφ D a mu β' β₁'))
@@ -70,7 +68,6 @@ theorem formEq (D : DegPre R) (a : D.P.A ⟶ D.P.A) (mu β β' β₁ β₁' : D.
   simp only [ofMul_mul, ofMul_zpow, ofMul_inv]
   module
 
-open ReciprocityTheory.ChartRestriction.G.DVR in
 
 theorem trF_prB (D : DegPre R) (mu : D.X) : DegPre.trF D (FractionRing R) mu ≫ DegPre.prB D (FractionRing R) =
     DegPre.prB D (FractionRing R) * cP D (DegPre.BF D (FractionRing R)) mu := by
@@ -79,7 +76,6 @@ theorem trF_prB (D : DegPre R) (mu : D.X) : DegPre.trF D (FractionRing R) mu ≫
 theorem zF_prB (D : DegPre R) : DegPre.zF D (FractionRing R) ≫ DegPre.prB D (FractionRing R) = 1 := by
   simp only [DegPre.zF, DegPre.prB, lift_snd, Hom.one_def]
 
-open ReciprocityTheory.ChartRestriction.G.DVR in
 
 theorem exists_prodFac (D : DegPre R) (hB : D.TauBimult) (a : D.P.A ⟶ D.P.A) (h : D.X →+ D.X) (n j n' j' : ℤ)
     (mu β β' β₁ β₁' : D.X) (uf : LB.Gen (LB.LinComb D.P.L (dφ D a mu β β₁) (dε n j)))
@@ -123,7 +119,6 @@ theorem exists_prodFac (D : DegPre R) (hB : D.TauBimult) (a : D.P.A ⟶ D.P.A) (
   · exact (ev _ _ z J hJ).trans (congrArg₂ (· * ·) (congrArg₂ (· * ·) rfl (val_pull hJ _ _ _))
       (congrArg (·⁻¹) (val_pull hJ _ _ _)))
 
-open ReciprocityTheory.ChartRestriction.G.DVR in
 
 theorem comp_cub (D : DegPre R) (β β' : D.X) {T : Over (Spec (CommRingCat.of R))} (r : T ⟶ D.P.A) :
     r.left ≫ (lift (toUnit _ ≫ D.c β) (lift (toUnit _ ≫ D.c β') (𝟙 D.P.A)) : D.P.A ⟶ G3 D.P.A).left =

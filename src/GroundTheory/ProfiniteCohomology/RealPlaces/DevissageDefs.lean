@@ -184,7 +184,6 @@ noncomputable def tateCompactδRes (hS : S.ShortExact) (n : ℕ) :
 
 variable (hS : S.ShortExact)
 
-include hS in
 
 theorem tateCompactRes_exact₃ (n : ℕ) :
     (ShortComplex.mk (tateCompactCohomologyResMap φ ψ S.g n) (tateCompactδRes φ ψ hS n)

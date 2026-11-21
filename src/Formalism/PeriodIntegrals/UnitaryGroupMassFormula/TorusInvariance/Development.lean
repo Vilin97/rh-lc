@@ -109,7 +109,6 @@ variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {k r : ℕ} {i : 
 
 abbrev Pt (k r : ℕ) (i : Fin (r + 1)) (D : Set (Mx k r)) : Type := {g : Mx k r // g ∈ Glev k r i ∩ D}
 
-open Classical in
 
 def ext (k r : ℕ) (i : Fin (r + 1)) (D : Set (Mx k r)) (φ : Pt k r i D → E) : Mx k r → E :=
   fun g => if h : g ∈ Glev k r i ∩ D then φ ⟨g, h⟩ else 0
@@ -145,7 +144,6 @@ lemma lev_smul {f : Mx k r → E} (c : ℂ) (hf : SmoothLev k r i D f) :
   show c • f g = c • F g
   rw [hfF g hg hgG]
 
-variable (E k r i D) in
 
 def Sm : Submodule ℂ (Pt k r i D → E) where
   carrier := {φ | SmoothLev k r i D (ext k r i D φ)}

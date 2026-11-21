@@ -440,7 +440,6 @@ end GlobalTheory.SnMass.VolN.DepCoords
 
 namespace GlobalTheory.SnMass.VolN
 
-open DepCoords in
 
 theorem dep_of_free_coords (k r : ℕ) (x : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) (d : ℕ)
     (hx : x ∈ Nset k r) (hf : ∀ β : Bk r, degB r β < d → cM k r β (Matrix.of.symm x) = 0) :

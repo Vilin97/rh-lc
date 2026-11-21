@@ -75,9 +75,7 @@ variable {T j N}
 
 def IsExt (σ' : KT T j N →+* ℂ) : Prop := ∀ a : T.Q.c.F, σ' (algebraMap T.Q.c.F (KT T j N) a) = T.σ₀ a
 
-variable (T j N) in
 
-variable (T j N) in
 
 abbrev CfT (w : WeightFamilies.Wt D j) : Type := KT T j N ⊗[T.Q.c.F] Cf T j w
 

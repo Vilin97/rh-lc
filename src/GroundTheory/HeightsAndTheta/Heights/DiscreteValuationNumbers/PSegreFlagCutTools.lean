@@ -143,7 +143,6 @@ theorem IsVerticalDivisor.restrict {P H : Ideal (ReciprocityTheory.ChartRestrict
 
 variable [IsDomain O] [IsDiscreteValuationRing O] [Fintype K] [∀ k, Fintype (ι k)]
 
-omit [DecidableEq K] in
 
 theorem ratDiv_eq_of_sub_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} [P.IsPrime] {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hf : f ∉ P)
     (hg : g ∉ P) (hf' : f' ∉ P) (hg' : g' ∉ P) (h : f * g' - f' * g ∈ P) :

@@ -15,15 +15,11 @@ universe u
 
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G]
 
-variable (k G) in
 
-variable (k G) in
 
-variable (k G) in
 
 variable [IsTopologicalGroup G]
 
-variable (k G) in
 
 def HasFiniteCohomology (P : ℕ → Prop) : Prop :=
   ∀ (A : Rep.{u} k G) [IsDiscreteRep A], Finite A → P (Nat.card A) →

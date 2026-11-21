@@ -165,12 +165,10 @@ def toLk (A : AtTTied u) (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT) (c : 
 
 variable (A : AtTTied u) (P : ∀ i hi, LvTied u A i hi)
 
-open Classical in
 
 def prH (i : ℕ) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) : Formalism.L2.Herm.Ld D u i c →+ (D.fm u).lv i v c :=
   if hi : i ≤ D.R.m then ((P i hi).pr v c).comp (toLd i hi c) else 0
 
-open Classical in
 
 def prkH (i : ℕ) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) :
     Formalism.L2.Herm.Lk D u (A.Pv v) i c →+ (D.fm u).lk i v c :=
@@ -279,7 +277,6 @@ theorem lc_gmap (i : ℕ) (hi : i ≤ D.R.m) (γ : UJ (sigD D : D.host.E →+* D
 variable {e : (D.mem u).A.vT ≃ {v : HeightOneSpectrum (𝓞 D.host.F) // (((D.mem u).A.T : ℕ) : 𝓞 D.host.F) ∈ v.asIdeal}}
   {eF : ∀ v : (D.mem u).A.vT, (D.mem u).A.Fv v ≃+* (𝓞 D.host.F ⧸ (e v).1.asIdeal)}
 
-set_option maxHeartbeats 4000000 in
 
 def mkAtT (he : A.eV = e)
     (hF : ∀ v (a : 𝓞 D.host.F), eF v (A.res v (algebraMap (𝓞 D.host.F) (𝓞 D.host.E) a)) = Ideal.Quotient.mk _ a)

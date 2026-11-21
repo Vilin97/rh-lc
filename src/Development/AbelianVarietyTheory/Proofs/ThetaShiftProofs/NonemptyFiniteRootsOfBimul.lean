@@ -33,7 +33,6 @@ theorem projective_of_int [IsDedekindDomain O] [Module.Finite ℤ O] [Module.Fin
   have : Module.FinitePresentation O X := Module.finitePresentation_of_finite O X
   exact Module.Flat.projective_of_finitePresentation
 
-variable {O X} in
 
 theorem exists_linearMap_lift_of_int [IsDedekindDomain O] [Module.Finite ℤ O] [Module.Finite ℤ X]
     [Module.IsTorsionFree ℤ X] {N N' : Type*} [AddCommGroup N] [Module O N] [AddCommGroup N']
@@ -158,14 +157,12 @@ theorem BalSq.exists_lift {w : O} (hw : w + star w = 1) [Module.Finite O X]
   rw [SetLike.mem_coe, LinearMap.mem_ker, map_sub]
   exact sub_eq_zero.2 (hτ.2 a y x)
 
-variable (O X) in
 
 def balTensorRel : AddSubgroup (X ⊗[ℤ] X) :=
   AddSubgroup.closure
     ({z | ∃ (a : O) (y x : X), z = (a • y) ⊗ₜ x - y ⊗ₜ (star a • x)} ∪
       {z | ∃ y x : X, z = y ⊗ₜ x - x ⊗ₜ y})
 
-variable (O) in
 
 def balTensorMk : Bil X ((X ⊗[ℤ] X) ⧸ balTensorRel O X) :=
   LinearMap.mk₂ ℤ (fun y x => QuotientAddGroup.mk' (balTensorRel O X) (y ⊗ₜ x))

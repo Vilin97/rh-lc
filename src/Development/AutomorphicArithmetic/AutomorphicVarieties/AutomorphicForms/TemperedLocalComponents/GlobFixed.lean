@@ -96,7 +96,6 @@ theorem entry_mem {k : GL (Fin n) (Af F)} (hk : k ∈ KLev F n M) (i j : Fin n) 
   obtain ⟨g, -, rfl⟩ := hk
   exact (g i j).2
 
-variable (n M) in
 
 noncomputable def KAway (S : Finset (HeightOneSpectrum (𝓞 F))) : Subgroup (GL (Fin n) (Af F)) :=
   KLev F n M ⊓ ⨅ w ∈ S, (GeneralLinearGroup.map (pLoc F w)).ker
@@ -128,4 +127,3 @@ theorem exists_KAway_subset {U : Set (GL (Fin n) (Af F))} (hU : U ∈ 𝓝 (1 : 
 
 end UpperTheory.V.Af.GlobalFixedVectors
 
-open UpperTheory.V.Af UpperTheory.V.Af.GlobalFixedVectors in

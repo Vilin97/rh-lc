@@ -20,7 +20,6 @@ open GlobalTheory.KeyPow GlobalTheory.KeyKa
 
 namespace GlobalTheory.KeyCx
 
-open TensorProduct in
 
 theorem exists_dominant_component :
     ∀ (R : Type) [CommRing R] [IsDomain R] [Algebra.FiniteType ℤ R] (g : R →+* ℂ), ∃ (E : Type) (_ : CommRing E) (_ : IsDomain E) (_ : Algebra ℂ E) (ρ : R →+* E) (e : E →ₐ[ℂ] ℂ), Algebra.FiniteType ℂ E ∧ Function.Injective ρ ∧ e.toRingHom.comp ρ = g := by

@@ -82,7 +82,6 @@ end GlobalTheory.InertZeta.LeviSum
 
 namespace GlobalTheory.InertZeta
 
-open LeviSum in
 
 theorem step : Step := by
   intro Y C q N ℓ l φ₀ α X y Z hq hα hy hy1 hyα hyα' H hZ

@@ -114,7 +114,6 @@ theorem germ_secH_C (s : W ⟶ Spec (.of ℂ))
       W.presheaf.germ ⊤ x trivial (s.appTop ((Scheme.ΓSpecIso (.of ℂ)).inv c)) := by
   rw [secH_C V s hover c, TopCat.Presheaf.germ_res_apply]
 
-variable {K iso} in
 
 theorem isClosed_of_comap_eq (s : W ⟶ Spec (.of ℂ))
     (hover : iso.hom ≫ Spec.map (CommRingCat.ofHom (algebraMap ℂ (MvPolynomial (Fin n) ℂ ⧸ K))) =

@@ -19,8 +19,6 @@ theorem im_embedding_algebraMap (σ : E →+* ℂ) (c : F) : (σ (algebraMap F E
   rw [conj_algebraMap] at h
   exact Complex.conj_eq_iff_im.mp h.symm
 
-omit [IsTotallyReal F] [IsTotallyComplex E] in
-variable (F E) in
 
 theorem exists_imaginary_integer : ∃ t : 𝓞 E, (t : E) ≠ 0 ∧ conj F E (t : E) = -(t : E) := by
   obtain ⟨ζ, hζ⟩ := exists_not_mem_range (F := F) (E := E)
@@ -43,8 +41,6 @@ theorem exists_imaginary_integer : ∃ t : 𝓞 E, (t : E) ≠ 0 ∧ conj F E (t
     rw [map_sub, conj_conj]
     ring
 
-omit [IsTotallyReal F] in
-variable (F E) in
 
 theorem card_infinitePlace_eq : Fintype.card (InfinitePlace E) = finrank ℚ F := by
   have h1 := IsTotallyComplex.finrank (K := E)

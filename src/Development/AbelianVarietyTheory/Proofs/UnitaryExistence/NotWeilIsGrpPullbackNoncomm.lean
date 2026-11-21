@@ -43,6 +43,5 @@ attribute [local instance] heisGrp
 
 end WeilNoncomm
 
-open WeilNoncomm in
 
 end GlobalTheory

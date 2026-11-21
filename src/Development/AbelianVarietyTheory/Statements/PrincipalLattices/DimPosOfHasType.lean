@@ -22,7 +22,6 @@ namespace GlobalTheory.CM.NumInh
 
 variable {K : Type} [Field K] [NumberField K]
 
-omit [NumberField K] in
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
@@ -74,7 +73,6 @@ theorem dim_pos_of_hasType (hs : Splits E K) {ρ : 𝓞 K} (hρ : ρ ^ 2 = -(H.d
   exact dim_pos_of_lieMult ((hT ℂ (σ.comp (algebraMap (𝓞 K) K)) (σ.injective.comp RingOfIntegers.coe_injective)
     ((σ.comp (algebraMap (𝓞 K) K)).comp τ)).1 (by rw [RingHom.comp_apply, hτ])) T.dim
 
-omit [IsCMField E] in
 
 end GlobalTheory.CM.NumInh
 end

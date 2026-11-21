@@ -25,7 +25,6 @@ def intK {d : ℕ} (b : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (𝓞 F
 
 def qv (v : HeightOneSpectrum (𝓞 F)) : ℝ≥0 := (Ideal.absNorm v.asIdeal : ℝ≥0)
 
-variable (E) in
 
 def zetaV (v : HeightOneSpectrum (𝓞 F)) (s : ℕ) : ℝ :=
   open Classical in

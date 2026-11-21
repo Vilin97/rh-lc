@@ -128,7 +128,6 @@ structure IsSq {C : Type} [CommRing C] [Algebra O C] [IsCO O C] (μ : ResidueFie
 
 variable {O}
 
-open Classical in
 
 def evK {C : Type} [CommRing C] [Algebra O C] (K : Ideal C) (u : K →ₗ[O] ResidueField O) (x : C) : ResidueField O :=
   if h : x ∈ K then u ⟨x, h⟩ else 0
@@ -175,7 +174,6 @@ def co : (RingHom.ker p →ₗ[O] ResidueField O) →ₗ[ResidueField O]
 
 end SetLift
 
-variable (O) in
 
 def HasObs (R : Type) [CommRing R] [Algebra O R] (H : Type) [AddCommGroup H] [Module (ResidueField O) H] : Prop :=
   ∀ (C' : Type) [CommRing C'] [Algebra O C'] [IsCO O C'] (p : C' →ₐ[O] R), Function.Surjective p →

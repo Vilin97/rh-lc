@@ -30,13 +30,11 @@ instance isDiscreteRep_tensorUnit : IsDiscreteRep (𝟙_ (Rep.{u} k G)) :=
 
 variable {A : Rep.{u} k G} [IsDiscreteRep A] {p : ℕ}
 
-omit [IsTopologicalGroup H] in
 
 theorem cocycles_ext {x y : cocycles A p}
     (h : cochainOf A (cocycleι A p x) = cochainOf A (cocycleι A p y)) : x = y :=
   cocycleι_injective (cochainOf_injective h)
 
-omit [IsTopologicalGroup H] in
 
 @[elab_as_elim]
 theorem cohomology_induction_on {C : cohomology A p → Prop} (z : cohomology A p)
@@ -48,14 +46,12 @@ section Map
 
 variable {B : Rep.{u} k G} [IsDiscreteRep B]
 
-omit [IsTopologicalGroup H] in
 
 theorem cochainOf_cocycleι_cyclesMap (f : A ⟶ B) (x : cocycles A p) :
     cochainOf B (cocycleι B p (HomologicalComplex.cyclesMap (cochainsMap f) p x)) =
       fun g => f.hom (cochainOf A (cocycleι A p x) g) :=
   congrArg (fun ψ => cochainOf B (ψ.hom x)) (HomologicalComplex.cyclesMap_i (cochainsMap f) p)
 
-omit [IsTopologicalGroup H] in
 
 theorem cohomologyMap_cohomologyπ (f : A ⟶ B) (x : cocycles A p) :
     cohomologyMap f p (cohomologyπ A p x) =

@@ -531,7 +531,6 @@ section Expand
 
 variable (k : ℕ) (hk : k ≠ 0)
 
-include hk in
 
 end Expand
 

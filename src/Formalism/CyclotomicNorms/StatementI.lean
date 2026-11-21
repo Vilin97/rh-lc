@@ -64,6 +64,5 @@ def Restriction : Prop :=
 def monicOf {K : Type} [Field K] {N : ℕ} (a : Fin N → K) : K[X] :=
   X ^ N + ∑ i : Fin N, C (a i) * X ^ (i : ℕ)
 
-open Classical in
 
 end Formalism.CyclotomicNorms

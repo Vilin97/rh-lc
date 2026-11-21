@@ -35,7 +35,6 @@ theorem double_sum_eq_of_filter_card {α M : Type} [DecidableEq α] [AddCommMono
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-open Classical in
 
 def decorationPathCount (P Q : Ideal (𝓞 E)) (i j : ℕ) (d f : DecoSet E n ST SG) : ℕ :=
   ((d.heckeNb P i).filter fun e => f ∈ e.heckeNb Q j).card

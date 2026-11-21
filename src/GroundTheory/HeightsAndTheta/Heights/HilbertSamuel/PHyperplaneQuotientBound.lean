@@ -23,7 +23,6 @@ namespace HyperplaneQuotientBound
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [CharZero Ω]
   {y : (Σ k, ι k) → Ω}
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem mul_mem {b b' : K → ℤ} {s t : Ω} (hs : s ∈ chartLatQ y b 1) (ht : t ∈ chartLatQ y b' 1) :
     s * t ∈ chartLatQ y (b + b') 1 := by
@@ -41,7 +40,6 @@ theorem mul_mem {b b' : K → ℤ} {s t : Ω} (hs : s ∈ chartLatQ y b 1) (ht :
   rw [heq]
   exact h
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem pow_mem {e : K → ℤ} {σ : Ω} (hσ : σ ∈ chartLatQ y e 1) (n : ℕ) :
     σ ^ n ∈ chartLatQ y ((n : ℤ) • e) 1 := by
@@ -58,7 +56,6 @@ theorem pow_mem {e : K → ℤ} {σ : Ω} (hσ : σ ∈ chartLatQ y e 1) (n : �
     rw [pow_succ]
     exact h
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem pow_regular {c : ∀ k, ι k} {e : K → ℤ} {σ : Ω} (hσ : σ ∈ chartLatQ y e 1)
     (hreg : ∀ (b : K → ℤ) (s : Ω), s ∈ chartLatQ y b 1 →
@@ -169,7 +166,6 @@ theorem finrank_quot_le {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {b 
 
 end HyperplaneQuotientBound
 
-open HyperplaneQuotientBound in
 
 theorem HyperplaneQuotientBound.proof (hR : HyperplaneRegularSection.Statement)
     (hS : DiagonalSectionDifference.Statement) (hF : SectionLatticeFinite.Statement) :

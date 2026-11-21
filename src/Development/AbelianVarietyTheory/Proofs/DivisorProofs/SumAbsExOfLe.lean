@@ -30,7 +30,6 @@ section Different
 variable {C : Type} [Field C] [IsAlgClosed C] [CharZero C] {v : Valuation C ℝ≥0} {O : Type} [CommRing O] [Algebra O C]
   {E : Type} [Field E] [NumberField E]
 
-omit [IsAlgClosed C] [CharZero C] in
 
 theorem exists_delta [IsGalois ℚ E] (hv : v.Integers O) {p : ℕ} (hp : p.Prime) (hO : ¬ IsUnit (p : O)) (τ : E →+* C) :
     ∃ δ ∈ (differentIdeal ℤ (𝓞 E)).map (embO hv τ),
@@ -156,7 +155,6 @@ theorem pairV_inclT {w : P.V} (hw : w ∈ P.latT) (s : O ⊗[ℤ_[p]] P.T) :
     rw [P.inclT_tmul, this, map_smul, ← hb]
     exact ⟨c * b, map_mul _ _ _⟩
 
-omit [IsAlgClosed C] [CharZero C] in
 
 theorem actV_mem (a : Λ) (x : P.V) (hx : x ∈ P.latT) : P.actV a x ∈ P.latT := by
   obtain ⟨s, rfl⟩ := hx
@@ -271,7 +269,6 @@ variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] [IsAlgClosed C] [CharZero
   {O : Type} [CommRing O] [Algebra O C] [Algebra ℤ_[p] O] [Algebra ℤ_[p] C] [IsScalarTower ℤ_[p] O C]
   [Algebra c.F C] [StarRing (𝓞 E)] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]
 
-omit [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] in
 
 theorem smul_mem_latT (P : Point p v O (𝓞 E)) (τ : E →+* ℂ) {δ : O}
     (hδ : δ ∈ (differentIdeal ℤ (𝓞 E)).map (embO P.integers (embAt c C τ))) {w : P.V} (hw : w ∈ htLat c P τ) :

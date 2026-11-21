@@ -18,8 +18,6 @@ variable (𝕂 : Type*) [RCLike 𝕂] (𝔸 : Type*) [NormedRing 𝔸] [NormedAl
 theorem contDiff_exp {n : WithTop ℕ∞} : ContDiff 𝕂 n (exp : 𝔸 → 𝔸) :=
   contDiff_iff_contDiffAt.2 fun x => (exp_analytic (𝕂 := 𝕂) x).contDiffAt
 
-variable {𝔸} in
-include 𝕂 in
 
 theorem exp_add_of_commute' {x y : 𝔸} (h : Commute x y) : exp (x + y) = exp x * exp y :=
   exp_add_of_commute_of_mem_ball (𝕂 := 𝕂) h
@@ -76,7 +74,6 @@ theorem contDiffOn_expPartialHomeomorph_symm {n : WithTop ℕ∞} :
     exact ((contDiff_exp 𝕂 𝔸 (n := 1)).differentiable one_ne_zero _).hasFDerivAt
   · exact (contDiff_exp 𝕂 𝔸).contDiffAt
 
-include 𝕂 in
 
 noncomputable def expUnit (X : 𝔸) : 𝔸ˣ :=
   ⟨exp X, exp (-X), by

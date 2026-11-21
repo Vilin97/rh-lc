@@ -42,13 +42,9 @@ variable {R₀ : Type} [CommRing R₀] {G : Over (Spec (CommRingCat.of R₀))} [
       ∀ z : sp (R₀ := R₀) S ⟶ G, spMap ρ ≫ z = 1 →
         ∃ a : Fin g → S, (∀ i, a i ∈ RingHom.ker ρ) ∧ z = x S a)
 
-include h0 hnat hsurj in
 
-include h0 hnat hinj hsurj in
 
-include h0 hnat hinj hsurj in
 
-include h0 hnat hinj hsurj in
 
 end Torsion
 
@@ -78,7 +74,6 @@ lemma comp_χ_eq {T : Over (Spec (CommRingCat.of R₀))} {m n : ℕ}
   · exact comp_χ_of_le χ h u v huv
   · exact (comp_χ_of_le χ h v u huv.symm).symm
 
-open Classical in
 
 end Value
 

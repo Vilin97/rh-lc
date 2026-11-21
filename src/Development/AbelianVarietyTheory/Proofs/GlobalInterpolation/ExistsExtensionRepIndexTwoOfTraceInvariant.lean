@@ -14,7 +14,6 @@ namespace GlobalTheory.IndexTwoExt
 
 variable {Γ k : Type} [Group Γ] [Field k] {n : ℕ}
 
-variable {Γ k : Type} [Group Γ] [Field k] {n : ℕ} in
 
 theorem _root_.GlobalTheory.IndexTwoExt.isSSRep_of_ker [CharZero k] (η : Γ →* ℤˣ) (t : Γ)
     (ht : η t = -1) (ρ : Γ →* GL (Fin n) k)
@@ -193,7 +192,6 @@ private theorem exists_sqrt_commute_of_isUnit_det {k : Type} [Field k] [IsAlgClo
     · rw [map_mul, map_pow, Polynomial.aeval_C, Polynomial.aeval_X]
       exact (Algebra.commute_algebraMap_left a Y).mul_left (hY.pow_left _)
 
-variable {Γ k : Type} [Group Γ] [Field k] {n : ℕ} in
 
 theorem _root_.GlobalTheory.IndexTwoExt.main : ∀ (Γ k : Type) [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [Field k] [CharZero k] [IsAlgClosed k] [TopologicalSpace k] [IsTopologicalRing k] (n : ℕ) (η : Γ →* ℤˣ), IsOpen (η.ker : Set Γ) → ∀ r : η.ker →* GL (Fin n) k, Continuous r → _root_.Formalism.MainNotions.N.IsSSRep r → (∀ (g : Γ) (h h' : η.ker), (h' : Γ) = g * h * g⁻¹ → ((r h' : GL (Fin n) k) : Matrix (Fin n) (Fin n) k).trace = ((r h : GL (Fin n) k) : Matrix (Fin n) (Fin n) k).trace) → ∃ ρ : Γ →* GL (Fin n) k, Continuous ρ ∧ _root_.Formalism.MainNotions.N.IsSSRep ρ ∧ ∀ h : η.ker, ρ h = r h := by
   intro Γ k _ _ _ _ _ _ _ _ n η hH r hr hrss htr

@@ -185,7 +185,6 @@ theorem basis_of_regular {ι O N E D : Type} [Finite ι] [CommRing O] [IsDomain 
   haveI : Module.Free O⟦X⟧ N := free_of_regular c hc hc' hX h
   exact basis_of_baseChange hE f hf
 
-set_option maxHeartbeats 1600000 in
 
 theorem wach_free {l : ℕ} [Fact l.Prime] (P : LocPrime l) (H : LocHW l P) (K : FinExt l) (s : ℕ)
     (LL : FinExt l) (h : Good K s LL) (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL))

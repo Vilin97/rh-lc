@@ -25,7 +25,6 @@ variable {Γ V : Type} [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] 
   (μ : Measure Γ) [μ.IsMulRightInvariant] [μ.IsInvInvariant] [IsFiniteMeasureOnCompacts μ] [SFinite μ]
   [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V]
 
-omit [IsTopologicalGroup Γ] [T2Space Γ] [SecondCountableTopology Γ] [BorelSpace Γ] [Group Γ] [TopologicalSpace Γ] in
 
 theorem inner_integral_left {μ : Measure Γ} {A : Γ → V} (hA : Integrable A μ) (c : V) :
     ⟪∫ y, A y ∂μ, c⟫_ℂ = ∫ y, ⟪A y, c⟫_ℂ ∂μ := by

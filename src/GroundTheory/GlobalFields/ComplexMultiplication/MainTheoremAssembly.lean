@@ -63,7 +63,6 @@ theorem exists_constMap_eq (A : WeierstrassCurve L) (P : (A.baseChange ℂ).toAf
       (A.toAffine.baseChange_nonsingular (f := Algebra.ofId L ℂ) (algebraMap L ℂ).injective a b).1 h
     exact ⟨.some a b h', rfl⟩
 
-omit [DecidableEq L] in
 
 theorem baseChange_map_eq (A : WeierstrassCurve L) (τ : L →+* L) (σ : ℂ →+* ℂ)
     (hτσ : ∀ a : L, σ (algebraMap L ℂ a) = algebraMap L ℂ (τ a)) :
@@ -74,7 +73,6 @@ theorem baseChange_map_eq (A : WeierstrassCurve L) (τ : L →+* L) (σ : ℂ �
   ext a
   exact hτσ a
 
-omit [Algebra L ℂ] in
 
 theorem constMap_eq_pointMapRing {M : Type} [Field M] [Algebra L M] [DecidableEq M]
     (A : WeierstrassCurve L) (t : A.toAffine.Point) :
@@ -137,7 +135,6 @@ section Level
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
   [IsTotallyComplex K]
 
-include hK in
 
 theorem exists_uniformization_of_data (σ : ℂ ≃ₐ[K] ℂ) (s : IdeleGroup K)
     (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) {E : WeierstrassCurve ℂ} [E.IsElliptic]

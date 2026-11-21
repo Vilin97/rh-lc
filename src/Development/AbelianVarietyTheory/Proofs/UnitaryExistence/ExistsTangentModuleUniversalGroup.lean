@@ -216,7 +216,6 @@ def smHom (a : S) : (overAt x0 (DualNumber S) ⟶ G) →* (overAt x0 (DualNumber
   map_one' := smT_one' x0 a
   map_mul' := smT_mul x0 a
 
-variable (G) in
 
 def TanSp : Type := Additive (smHom (G := G) x0 0).ker
 
@@ -255,7 +254,6 @@ theorem TanSp.pt_sum {κ : Type} (s : Finset κ) (f : κ → TanSp x0 G) :
   | empty => rfl
   | insert i s hi ih => rw [Finset.sum_insert hi, Finset.prod_insert hi, TanSp.pt_add, ih]
 
-variable (x0) in
 
 def TanSp.post (φ : G ⟶ G) (hφ : IsMonHom φ) : Module.End S (TanSp x0 G) where
   toFun m := TanSp.mk (m.pt ≫ φ) (by rw [smT_post, m.tan, MonObj.one_comp])
@@ -265,7 +263,6 @@ def TanSp.post (φ : G ⟶ G) (hφ : IsMonHom φ) : Module.End S (TanSp x0 G) wh
 theorem TanSp.pt_post (φ : G ⟶ G) (hφ : IsMonHom φ) (m : TanSp x0 G) :
     (TanSp.post x0 φ hφ m).pt = m.pt ≫ φ := rfl
 
-variable (x0) in
 
 def TanSp.act {O : Type} [CommRing O] (A : OAct O G) : O →+* Module.End S (TanSp x0 G) :=
   RingHom.mk'

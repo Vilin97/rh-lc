@@ -27,7 +27,6 @@ theorem tp_sum {K : Type} [Fintype K] [DecidableEq K] (M : K → Matrix ι ι �
   refine Finset.sum_congr rfl fun f _ => ?_
   rw [Finset.prod_mul_distrib]
 
-open MvPolynomial in
 
 def polyOf {K : Type} [Fintype K] (φ : Matrix (Fin q → ι) (Fin q → ι) ℂ →ₗ[ℂ] ℂ)
     (M : K → Matrix ι ι ℂ) : MvPolynomial K ℂ :=
@@ -317,7 +316,6 @@ theorem sum_perm_mt (x : Fin q → Matrix ι ι ℂ) (I J : Fin q → ι)
   · rintro ⟨h1, h2⟩ i
     exact ⟨congrFun h1 i, congrFun h2 i⟩
 
-open MvPolynomial in
 
 theorem sym_zero (φ : Matrix (Fin q → ι) (Fin q → ι) ℂ →ₗ[ℂ] ℂ) (x : Fin q → Matrix ι ι ℂ)
     (h0 : ∀ t : Fin q → ℂ, φ (tp q (∑ j, t j • x j)) = 0) :

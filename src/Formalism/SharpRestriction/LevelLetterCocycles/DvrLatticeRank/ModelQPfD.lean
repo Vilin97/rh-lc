@@ -55,7 +55,6 @@ theorem expand_at (π' a : LetA O n) (i : ZMod n) (hπ0 : PowerSeries.constantCo
   rw [PowerSeries.subst_add hS, PowerSeries.subst_mul hS, PowerSeries.subst_X hS, PowerSeries.subst_C]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem basis_L [IsDomain O] (π' : LetA O n) (s' : ℕ) (hs : 1 ≤ s') (w₁ : (LetA O n)ˣ)
     (hπ : π' = w₁ * (letπ : LetA O n) ^ s')

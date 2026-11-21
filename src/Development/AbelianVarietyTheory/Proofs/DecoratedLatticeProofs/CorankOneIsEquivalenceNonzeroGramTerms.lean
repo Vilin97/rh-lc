@@ -12,7 +12,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.Core.One
 
-open Formalism.L2.SG.NGCut.CorankRelation in
 
 theorem corankOne_isEquivalence_nonzeroGram_terms : CorankOneIsEquivalenceOnRow := by
   intro D X Y u u' _hT

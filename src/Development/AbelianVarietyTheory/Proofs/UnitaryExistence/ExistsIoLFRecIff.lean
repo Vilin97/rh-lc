@@ -131,7 +131,6 @@ variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {l : Level H}
 theorem embF_conjugate (τ : E →+* ℂ) (x : E) : embF c (ComplexEmbedding.conjugate τ) x = embF c τ (star x) :=
   Subtype.ext (IsCMField.complexEmbedding_complexConj E τ x).symm
 
-variable (n) in
 
 def letRep : GL (Fin n) E →* Module.End c.F (MvPolynomial (LtN Dw n) c.F) :=
   ((renameEquiv c.F (Harm.thetaLetterEquiv Dw n)).toLinearEquiv.symm.conjRingEquiv : _ →* _).comp
@@ -195,7 +194,6 @@ theorem mult_le (σ : E →+* ℂ) : Dw.mult σ ≤ Dw.p + Dw.q := by
   unfold Datum.mult
   split_ifs <;> omega
 
-open Classical in
 
 theorem gaStar_pG {a : (E →+* ℂ) × ℕ → ℕ} (ha : IsPartFam Dw a) (hn : Dw.p + Dw.q ≤ n) (u : Fin n → E) :
     gaStar c (Matrix.diagonal u) (pG (Dw := Dw) c a n) =

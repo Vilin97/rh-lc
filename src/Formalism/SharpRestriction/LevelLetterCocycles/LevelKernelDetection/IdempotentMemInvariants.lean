@@ -20,7 +20,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} [NeZero n] {W : LocWach PD LL O v n}
     [Fintype (K →ₐ[Qp] LL)]
 
-variable (W) in
 
 def k17e (i : ZMod n) : W.EE := algebraMap (LetA O n) W.EE (letE i)
 
@@ -177,7 +176,6 @@ theorem local_corner_unit_dichotomy (hOloc : IsLocalRing O)
       have := hOloc
       exact IsLocalRing.isUnit_one_sub_self_of_mem_nonunits _ (mem_nonunits_iff.2 (hk m))
 
-variable (W) in
 
 def k17S : Subring W.EE where
   carrier := {ε | ∀ δ ∈ W.DelF, W.γE δ ε = ε}
@@ -189,11 +187,9 @@ def k17S : Subring W.EE where
 
 theorem k17e_mem_k17S (i : ZMod n) : k17e W i ∈ k17S W := fun δ _ => idempotent_gamma_invariant i δ
 
-variable (W) in
 
 def idempotentInvariant (i : ZMod n) : k17S W := ⟨k17e W i, k17e_mem_k17S i⟩
 
-variable (W) in
 
 abbrev k17R (i : ZMod n) : Type := k17S W ⧸ Ideal.span {1 - idempotentInvariant W i}
 
@@ -272,7 +268,6 @@ theorem letterRingValueFun_mk (i : ZMod n) (s : k17S W) :
     letterRingValueFun i (Ideal.Quotient.mk (Ideal.span {1 - idempotentInvariant W i}) s) = k17e W i * s :=
   letterRing_mk_eq i (Ideal.Quotient.mk_surjective _).choose_spec
 
-variable (W) in
 
 def letterRingVal (i : ZMod n) : k17R W i →+ W.EE where
   toFun := letterRingValueFun i

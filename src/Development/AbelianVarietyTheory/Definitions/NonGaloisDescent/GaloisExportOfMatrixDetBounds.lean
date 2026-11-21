@@ -19,9 +19,7 @@ end Ord
 
 variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N}
 
-open Classical in
 
-open Classical in
 
 end GlobalTheory.TwSys.Test
 

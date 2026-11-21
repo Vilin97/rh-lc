@@ -81,7 +81,6 @@ theorem leviEmb_eq (hm : StrictMono o) (he : ∀ a t, e' ⟨a, t⟩ = e ⟨o a, 
     rw [← he, ← he] at h1
     exact h1.trans h2.symm
 
-omit [Fintype n] [DecidableEq n] in
 
 theorem modExp_drop (hm : StrictMono o) (hne : ∀ j, d j ≠ 0 → j ∈ Set.range o) (a : Fin r') :
     modExp (fun b => Fin (d (o b))) a = modExp (fun j => Fin (d j)) (o a) := by

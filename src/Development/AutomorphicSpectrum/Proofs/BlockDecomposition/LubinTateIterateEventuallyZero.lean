@@ -175,7 +175,6 @@ end GlobalTheory.CompanionTheory.LTPer.Nonv
 
 namespace GlobalTheory.CompanionTheory.LTPer
 
-open GlobalTheory.CompanionTheory.LTPer.Nonv in
 
 theorem exists_ltIter_eq_zero_of_tends : ∀ {B : Type} [CommRing B] {S : Subring B} {F : ℕ → Ideal B} {ϖ : B} {C : Type} [NormedField C] [IsUltrametricDist C], PerEnv S F ϖ → ∀ (ϖ' : B), ϖ * ϖ' = 1 →
     ∀ (θ : B →+* C), (∀ x, θ x = 0 ↔ x ∈ F 1) → (∀ s ∈ S, ‖θ s‖ ≤ 1) → ‖θ ϖ‖ < 1 → ∀ (q : ℕ), 2 ≤ q →

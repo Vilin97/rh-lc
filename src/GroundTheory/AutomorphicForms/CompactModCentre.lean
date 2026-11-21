@@ -60,7 +60,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   {V W : Type*} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
   {π : Representation ℂ G V} {σ : Representation ℂ G W}
 
-open Classical in
 
 end Orthogonality
 

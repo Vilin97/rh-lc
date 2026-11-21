@@ -87,7 +87,6 @@ theorem map_inertia_eq (l : ℕ) [Fact l.Prime] (P : Ideal (𝓞 K)) [P.IsPrime]
       (cycInertia_ef (N := N) l).1, inertiaUnits, ← MonoidHom.comap_bot, cycInertia_card_comap]
     simp
 
-attribute [local instance] Ideal.Quotient.field in
 
 theorem map_stabilizer_eq (l : ℕ) [Fact l.Prime] (P : Ideal (𝓞 K)) [P.IsPrime]
     [P.LiesOver (Ideal.span {(l : ℤ)})] :

@@ -108,7 +108,6 @@ def quotEquivRange
   (Ideal.quotEquivOfEq (ker_dehomFrac hVh hc).symm).trans
     (Ideal.quotientKerEquivRange (dehomFrac V c)).toRingEquiv
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem range_dehomFrac_le {c c' : (k : ι) → Fin (n k + 1)}
     (hc : ∀ k, (X ⟨k, c k⟩ : MvPolynomial (Coord n) ℤ) ∉ V)

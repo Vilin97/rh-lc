@@ -24,22 +24,18 @@ variable {d d₁ : ℕ}
 def perm (d₁ : ℕ) : (Fin d₁ ⊕ Fin 2) ⊕ (Fin d₁ ⊕ Fin 2) ≃ (Fin d₁ ⊕ Fin d₁) ⊕ (Fin 2 ⊕ Fin 2) :=
   Equiv.sumSumSumComm _ _ _ _
 
-variable (F) in
 
 def DS (H' : Plane E d d₁) : Matrix (Fin d ⊕ Fin d) ((Fin d₁ ⊕ Fin 2) ⊕ (Fin d₁ ⊕ Fin 2)) (AE F E) :=
   Matrix.fromBlocks (incM F (frame H')) 0 0 (incM F (frame H'))
 
-variable (F) in
 
 def DT (hd : d = d₁ + 2) (H' : Plane E d d₁) : Matrix ((Fin d₁ ⊕ Fin 2) ⊕ (Fin d₁ ⊕ Fin 2)) (Fin d ⊕ Fin d) (AE F E) :=
   Matrix.fromBlocks (incM F (coframe hd H')) 0 0 (incM F (coframe hd H'))
 
-variable (F) in
 
 def dP (H' : Plane E d d₁) : Matrix (Fin d ⊕ Fin d) ((Fin d₁ ⊕ Fin d₁) ⊕ (Fin 2 ⊕ Fin 2)) (AE F E) :=
   (DS F H').submatrix id (perm d₁).symm
 
-variable (F) in
 
 def dPinv (hd : d = d₁ + 2) (H' : Plane E d d₁) : Matrix ((Fin d₁ ⊕ Fin d₁) ⊕ (Fin 2 ⊕ Fin 2)) (Fin d ⊕ Fin d) (AE F E) :=
   (DT F hd H').submatrix (perm d₁).symm id

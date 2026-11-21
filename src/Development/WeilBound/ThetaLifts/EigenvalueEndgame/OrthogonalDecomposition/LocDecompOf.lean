@@ -32,7 +32,6 @@ theorem qht_le (x h : UA σ W.J) : qht x ≤ qht (x * h) * ht h⁻¹ := by
   have := heightGL_mul_le F (γ.1 * (x * h)).1 (h⁻¹).1
   rwa [← Subgroup.coe_mul, mul_assoc, mul_inv_cancel_right] at this
 
-variable (σ W) in
 
 def rapid : Submodule ℂ (UA σ W.J → ℂ) where
   carrier := {f | IsRapid (Y := W) f}

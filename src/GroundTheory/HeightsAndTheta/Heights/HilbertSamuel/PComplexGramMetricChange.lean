@@ -103,7 +103,6 @@ theorem eventually_pow_le (C ε : ℝ) (hε : 0 < ε) (hD : 1 ≤ D) :
 
 end ComplexGramMetricChange
 
-open ComplexGramMetricChange in
 
 theorem ComplexGramMetricChange.proof (hMC : MetricChange.Statement) (hPB : ProjectionBounds.Statement)
     (hFS : PullFSExtension.Statement) (hPair : ResolutionMetricPair.Statement)

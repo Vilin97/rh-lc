@@ -11,7 +11,6 @@ namespace GlobalTheory
 open NumberField Complex ReciprocityTheory.ChartRestriction.G.I2 ReciprocityTheory.ChartRestriction.G.I2.ChA
 noncomputable section
 
-set_option maxHeartbeats 1000000 in
 
 theorem characters_of_nearestPlane_of_short_integers (hNP : Ext.NearestPlane)
     (hom : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E],

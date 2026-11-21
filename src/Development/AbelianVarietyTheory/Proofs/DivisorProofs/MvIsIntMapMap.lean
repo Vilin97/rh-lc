@@ -158,7 +158,6 @@ theorem gauge_chart :
   letI : Algebra T.Fr X.C := X.ιF.toAlgebra
   exact (GlobalTheory.canonGauge_nabVal_baseChange T.Fr _ _ Ch.ch.B T.Fr X.C (Algebra.ofId T.Fr X.C) _ Ch.ch.gauge).1
 
-include X in
 
 theorem not_isUnit_p : ¬ IsUnit (p : T.V) := fun h => X.nonunit.out (by simpa using h.map X.ι)
 

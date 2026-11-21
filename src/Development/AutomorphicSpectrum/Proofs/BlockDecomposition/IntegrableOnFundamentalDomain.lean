@@ -14,7 +14,6 @@ namespace GlobalTheory.CompanionTheory.ConstTerm
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a r : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem continuous_map_pFin :
     Continuous (GeneralLinearGroup.map (n := Fin a) (pFin E)) :=
@@ -59,7 +58,6 @@ theorem continuous_of_isOpen_stab (φ : Sm E a) (hU : IsOpen {k | finRep E a k �
   have h3 : ContinuousAt (fun h : GA E a => φ.1 (g * h)) (g⁻¹ * g) := by rwa [inv_mul_cancel]
   simpa [Function.comp_def] using h3.comp h2
 
-omit [IsTotallyComplex E] in
 
 theorem continuous_unip : Continuous (unip : (BlockIx a r → Ad E) → GA E a) := by
   have hn : Continuous (fun x : BlockIx a r → Ad E => (nilM x : Matrix (Fin a) (Fin a) (Ad E))) :=
@@ -70,7 +68,6 @@ theorem continuous_unip : Continuous (unip : (BlockIx a r → Ad E) → GA E a) 
       · exact continuous_const
   exact Units.continuous_iff.2 ⟨continuous_const.add hn, continuous_const.sub hn⟩
 
-omit [IsTotallyComplex E] in
 
 theorem exists_isCompact_sub_mem :
     ∃ C : Set (BlockIx a r → Ad E), IsCompact C ∧ ∀ x, ∃ n ∈ ratN E a r, x - n ∈ C := by
@@ -79,7 +76,6 @@ theorem exists_isCompact_sub_mem :
   refine ⟨Set.pi Set.univ fun _ => K, isCompact_univ_pi fun _ => hK, fun x => ?_⟩
   exact ⟨fun p => algebraMap E (Ad E) (y (x p)), ⟨fun p => y (x p), rfl⟩, fun p _ => hy (x p)⟩
 
-omit [IsTotallyComplex E] in
 
 theorem periodic_integrand (φ : GA E a → ℂ) (hl : ∀ (γ : GL (Fin a) E) (g : GA E a), φ (ratGL E a γ * g) = φ g)
     (g : GA E a) {n : BlockIx a r → Ad E} (hn : n ∈ ratN E a r) (x : BlockIx a r → Ad E) :

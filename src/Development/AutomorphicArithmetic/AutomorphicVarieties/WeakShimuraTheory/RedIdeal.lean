@@ -109,7 +109,6 @@ structure Res (P : PD Φ.ι Γ R) : Prop where
   char : ∀ v, ∀ s ∈ Φ.Gv v, ∀ i, P.ψ v i s = a (Φ.χ i s)
   shape : (Supp nP P.r ∧ ∀ v, SuppM qQ (P.n v)) ∨ Supp nM P.r
 
-variable {Φ} in
 
 def InV (P : PD Φ.ι Γ R) : Prop := Supp vV P.r ∧ ∀ v, SuppM qQ (P.n v) ∧ P.n v 2 0 ≠ 0
 

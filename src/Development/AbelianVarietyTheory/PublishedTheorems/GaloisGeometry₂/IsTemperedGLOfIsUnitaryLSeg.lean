@@ -17,12 +17,10 @@ namespace GlobalTheory.GKCoh
 
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
-variable (E a) in
 
 def regFun : Subalgebra ℂ (GL (Fin a) (Cinf E) → ℂ) :=
   Algebra.adjoin ℂ ({f | ∃ τ i j, f = fun y => coord τ (y.val i j)} ∪ {f | ∃ τ, f = fun y => (coord τ y.val.det)⁻¹})
 
-variable (E a) in
 
 structure AlgRep where
 
@@ -33,11 +31,9 @@ structure AlgRep where
   pos : 0 < d
   irred : ∀ W : Submodule ℂ (Fin d → ℂ), (∀ y, ∀ v ∈ W, mat y *ᵥ v ∈ W) → W = ⊥ ∨ W = ⊤
 
-open Classical in
 
 def extGL (f : GL (Fin a) (Cinf E) → ℂ) (x : Lie E a) : ℂ := if h : IsUnit (Matrix.of x) then f h.unit else 0
 
-omit [NumberField E] in
 
 theorem extGL_val (f : GL (Fin a) (Cinf E) → ℂ) (y : GL (Fin a) (Cinf E)) : extGL f (toL y.val) = f y := by
   have h : IsUnit (Matrix.of (toL y.val)) := y.isUnit
@@ -116,13 +112,10 @@ theorem mat_mul_dmat (Ξ : AlgRep E a) (y : GL (Fin a) (Cinf E)) (X : Matrix (Fi
   rw [Matrix.mul_apply, Matrix.mul_apply]
   exact h4.trans (Finset.sum_congr rfl fun l _ => mul_comm _ _)
 
-variable (E a) in
 
-omit [NumberField E] in
 
 end AlgRep
 
-variable (E a) in
 
 abbrev Herm : Submodule ℝ (Matrix (Fin a) (Fin a) (Cinf E)) := selfAdjoint.submodule ℝ (Matrix (Fin a) (Fin a) (Cinf E))
 

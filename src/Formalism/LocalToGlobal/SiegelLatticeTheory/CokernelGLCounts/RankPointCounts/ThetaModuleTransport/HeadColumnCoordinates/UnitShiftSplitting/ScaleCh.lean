@@ -51,7 +51,6 @@ theorem zz_split (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' : F) :
     rw [add_assoc, h0, add_zero]
   · simp
 
-include hs in
 
 theorem zz_unit_iff (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' : F) :
     IsUnit (HermSp.ZZplusOf M Zh T T').det ↔

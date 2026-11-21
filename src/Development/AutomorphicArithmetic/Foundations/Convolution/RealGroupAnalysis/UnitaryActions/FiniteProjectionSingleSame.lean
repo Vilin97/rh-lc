@@ -14,7 +14,6 @@ namespace UpperTheory.ConvolutionTheory.R2
 
 variable {F : Type} [Field F] [NumberField F]
 
-variable (F) in
 
 def Cell : Set (G1 F) := {g | IsUnit (g 1 0)}
 theorem nmwn_val (b₁ b₂ : A F) (a : (A F)ˣ) : (nU b₁ * mD a * wW F * nU b₂).1 =
@@ -37,10 +36,8 @@ theorem cell_normal (g : G1 F) (c : (A F)ˣ) (hc : g 1 0 = c) :
 theorem mem_cell_iff (g : G1 F) : g ∈ Cell F ↔ ∃ b₁ a b₂, g = nU b₁ * mD a * wW F * nU b₂ :=
   ⟨fun h => ⟨_, _, _, cell_normal g (IsUnit.unit h) rfl⟩, by rintro ⟨b₁, a, b₂, rfl⟩; exact nmwn_mem_cell _ _ _⟩
 
-variable (F) in
 
 def p1 : A F →+* InfiniteAdeleRing F := RingHom.fst _ _
-variable (F) in
 
 def p2 : A F →+* FiniteAdeleRing (𝓞 F) F := RingHom.snd _ _
 
@@ -55,9 +52,7 @@ theorem isUnit_adele_iff (x : A F) :
 
 theorem eventually_intAt (g : G1 F) : ∀ᶠ v in cofinite, IntAt v g :=
   eventually_all.2 fun i => eventually_all.2 fun j => (g i j).2.2
-variable (F) in
 
-variable (F) in
 
 def eInf : A F := (1, 0)
 theorem one_sub_eInf_mul (b : A F) : (1 - eInf F) * b = (0, b.2) :=

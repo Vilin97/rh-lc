@@ -155,7 +155,6 @@ theorem sgnV_dot {R : Type} [CommRing R] (ε : κ → ℤˣ) (x y : κ → R) : 
   simp only [sgnV, dotProduct]
   exact Finset.sum_congr rfl fun i _ => by ring
 
-variable (F) in
 
 def compS (ε : κ → ℤˣ) : ((κ → AF F) → ℂ) →ₗ[ℂ] ((κ → AF F) → ℂ) := LinearMap.funLeft ℂ ℂ (sgnV ε)
 

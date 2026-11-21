@@ -82,7 +82,6 @@ section Ext
 variable {k F L : Type} [Field k] [Field F] [Algebra k F] [Field L] [Algebra F L]
   [FiniteDimensional F L] [Algebra.IsSeparable F L] (Pl : Places k F)
 
-variable (L) in
 
 theorem exists_local (i : Pl.I) [IsDiscreteValuationRing (Pl.O i)] :
     ∃ (J : Type) (_ : Finite J) (O' : J → ValuationSubring L) (w : J → Lˣ → ℤ),
@@ -129,7 +128,6 @@ theorem exists_local (i : Pl.I) [IsDiscreteValuationRing (Pl.O i)] :
       exact hN
     rw [this, Pl.v_mul, v_zpow, v_unit Pl i hu (Units.mk0 _ hu0) rfl, add_zero, finsum_mul' _ _ (Set.toFinite _)]
 
-variable (L) in
 
 theorem exists_ext [Algebra k L] [IsScalarTower k F L] (hD : ∀ i, IsDiscreteValuationRing (Pl.O i)) :
     ∃ Pl' : Places k L, ∀ y : L, (∀ j, y ∈ Pl'.O j) → ∀ i, IsIntegral (Pl.O i) y := by

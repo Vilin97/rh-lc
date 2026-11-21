@@ -154,7 +154,6 @@ def IsCen (x : E) (w : Plc E) (z : GUf E n) : Prop :=
   ∀ u : Plc E, (SameK x (cj u) w → (comp u z).val = ((Ideal.absNorm w.asIdeal : ℕ) : u.adicCompletion E) • (1 : Matrix (Fin n) (Fin n) _)) ∧
     (¬ SameK x (cj u) w → comp u z = 1)
 
-open Classical in
 
 def mOf (x : E) (W : Wt E n) (J : ℤ) (φ : E →+* ℂ) : ℤ :=
   J - ∑ v : InfinitePlace E, if v.embedding x = -φ x then ∑ i, (W v).w i else 0

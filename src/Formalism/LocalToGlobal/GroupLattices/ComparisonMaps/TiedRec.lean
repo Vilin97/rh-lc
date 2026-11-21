@@ -55,7 +55,6 @@ def StdB (D : D7) (B : GL (Fin D.R.k) D.host.E) : Prop :=
     ∀ a, (((reGL (rank_eq_first_level D.R) D.host.E B)⁻¹ : GL (Fin (D.R.N 0)) D.host.E).1 *ᵥ x) a ∈
       (algebraMap (𝓞 D.host.E) D.host.E).range
 
-set_option maxHeartbeats 1000000 in
 
 structure CmpTied (D : D7) (X : Formalism.L2.Herm.Herm0 D) (T : ∀ u : D.what₂.Word, Forms0 D u) (Gt : GatTies D)
     (c : LatCmp D) where

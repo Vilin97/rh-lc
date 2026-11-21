@@ -36,7 +36,6 @@ variable {I : Type} [SmallCategory I] [IsCofiltered I]
   (w : ∀ {i j} (f : i ⟶ j), π i ≫ D.map f = π j) (hc : IsLimit (schemeConeOfFamily D π w))
   [∀ {i j} (f : i ⟶ j), IsAffineHom (D.map f)]
 
-include hc in
 
 theorem exists_isLB_of_isLimit {i : I} [CompactSpace (D.obj i)] (M : LB (D.obj i)) [Finite M.ι]
     (hM : ∀ a b c, IsCompact ((M.U a ⊓ M.U b ⊓ M.U c : (D.obj i).Opens) : Set (D.obj i)))
@@ -80,7 +79,6 @@ theorem exists_isLB_of_isLimit {i : I} [CompactSpace (D.obj i)] (M : LB (D.obj i
     exact (val _ y _ _ _ hy).symm.trans ((gm_pull (D.map g) (D.map f) y _ hy _).symm.trans (e.trans
       ((gm_pull (D.map g) (D.map f) y _ hy _).trans (gm_res _ y _ hy _))))
 
-include hc in
 
 theorem exists_lb_of_isLimit {i : I} [CompactSpace (D.obj i)] [CompactSpace X]
     (hsep : ∀ U V : (D.obj i).Opens, IsAffineOpen U → IsAffineOpen V → IsAffineOpen (U ⊓ V))

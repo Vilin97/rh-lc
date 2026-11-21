@@ -167,7 +167,6 @@ theorem galCupClass_eq_zero_iff_of_injective (χ : Additive Gal(Ω/F) →ₜ+ QZ
     hinj.eq_iff]
   rfl
 
-open Classical in
 
 noncomputable def quadraticInvFun (x : cohomology (galUnitsZ F Ω) 2) : QZ :=
   if x = 0 then 0 else QZ.mk (1 / 2)
@@ -237,7 +236,6 @@ omit [IsGalois F Ω] in
 theorem card_gal_le_two (h2 : Module.finrank F Ω ≤ 2) : Fintype.card Gal(Ω/F) ≤ 2 := by
   exact (AlgEquiv.card_le (F := F) (K := Ω)).trans h2
 
-open Classical in
 
 noncomputable def quadraticChar (h2 : Module.finrank F Ω ≤ 2) : Additive Gal(Ω/F) →ₜ+ QZ where
   toFun x := if Additive.toMul x = 1 then 0 else QZ.mk (1 / 2)

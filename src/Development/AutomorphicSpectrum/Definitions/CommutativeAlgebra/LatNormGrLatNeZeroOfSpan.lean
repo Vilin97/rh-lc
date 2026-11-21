@@ -104,7 +104,6 @@ theorem latNorm_eq (L : Submodule O V) (x : V) : latNorm v L x = GlobalTheory.HT
   · rintro ⟨a, h, y, hy, e⟩; exact ⟨a, ⟨y, hy, e.symm⟩, h⟩
   · rintro ⟨a, ⟨y, hy, e⟩, h⟩; exact ⟨a, h, y, hy, e.symm⟩
 
-omit [Algebra O C] [IsScalarTower O C V] in
 
 theorem latNorm_span (hv : v.Integers O) {g : V} (hg : g ≠ 0) (c : C) :
     latNorm v (Submodule.span O {g}) (c • g) = v c := by
@@ -169,13 +168,11 @@ variable {A : Type} [CommRing A] {K : Type} [Field K] [Algebra A K]
   {V : Type} [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower A K V]
   {E : Type} [Field E] [NumberField E]
 
-omit [NumberField E] in
 
 theorem mem_eigSp {ρ : 𝓞 E →+* Module.End K V} {σ : E →+* K} {x : V} :
     x ∈ eigSp ρ σ ↔ ∀ a : 𝓞 E, ρ a x = σ (a : E) • x := by
   simp [eigSp, Submodule.mem_iInf, sub_eq_zero]
 
-omit [NumberField E] in
 
 theorem eigSp_eq (ρ : 𝓞 E →+* Module.End K V) (σ : E →+* K) :
     eigSp ρ σ = GlobalTheory.EigenSplit.eigenSub ρ (σ.comp (algebraMap (𝓞 E) E)) := by
@@ -299,7 +296,6 @@ theorem regAct_basis (k) :
       Algebra.TensorProduct.basis K (RingOfIntegers.basis E) k := by
   simp [regAct, Algebra.TensorProduct.basis_apply]
 
-omit [NumberField E] in
 
 theorem val_le_one (v : Valuation K NNReal) (σ : E →+* K) (x : 𝓞 E) : v (σ (x : E)) ≤ 1 :=
   (Valuation.integer.integers v).isIntegral_iff_v_le_one.1

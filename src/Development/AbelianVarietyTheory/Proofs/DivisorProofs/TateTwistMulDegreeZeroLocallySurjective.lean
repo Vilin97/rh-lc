@@ -94,7 +94,6 @@ end GlobalTheory.EtC.TwMulSurj
 
 namespace GlobalTheory.EtC
 
-open TwMulSurj in
 
 theorem tw_mul_locSurj : ∀ (q : ℕ) [NeZero q] (i j k : ℤ), i + j = k → ∀ {K : Cx (ZMod q)}
     (τ : Pair (sgl (tw q i)) (sgl (tw q j)) K), τ.IsTensor → ∀ φ : tw q k ⟶ K.X 0,

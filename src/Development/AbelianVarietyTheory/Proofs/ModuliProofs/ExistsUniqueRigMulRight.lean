@@ -37,19 +37,14 @@ end Maps
 section Triv
 variable {G H : Over S} [GrpObj G] [IsCommMonObj G] [GrpObj H] [IsCommMonObj H]
 
-omit [IsCommMonObj H] in
 
 variable {L : RigLB G} {i : H ⟶ G}
 
-omit [IsCommMonObj G] [GrpObj H] [IsCommMonObj H] in
 
-omit [IsCommMonObj H] in
 
-omit [IsCommMonObj H] in
 
 variable {c : CubicalStr G L} [IsMonHom i]
 
-omit [IsCommMonObj H] [IsMonHom i] in
 
 end Triv
 
@@ -102,7 +97,6 @@ variable {X : Type} [AddCommGroup X] {G : Over S} [GrpObj G]
 
 variable {B : Over S} [GrpObj B]
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 end Ext
 
@@ -110,9 +104,7 @@ section Desc
 variable {G H B : Over S} [GrpObj G] [IsCommMonObj G] [GrpObj H] [IsCommMonObj H] [GrpObj B] [IsCommMonObj B]
   {i : H ⟶ G} [IsMonHom i] {q : G ⟶ B} [IsMonHom q] {P : CP G} {M : CP B} {w : LB.Iso P.L.L (M.L.L.pull q.left)}
 
-omit [IsMonHom i] [IsMonHom q] [IsCommMonObj H] in
 
-omit [IsMonHom i] [IsCommMonObj H] in
 
 end Desc
 

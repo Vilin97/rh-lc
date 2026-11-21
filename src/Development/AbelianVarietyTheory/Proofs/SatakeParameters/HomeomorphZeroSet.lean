@@ -40,7 +40,6 @@ theorem homAt_comp {φ : MvPolynomial (Fin k) ℂ →+* Γ(X, U)} (hφ : Functio
 
 end GlobalTheory.AffCxPts
 
-open GlobalTheory.AffCxPts GlobalTheory.CxPts GlobalTheory.Points in
 
 theorem GlobalTheory.AffCxPts.homeomorph_zeroSet : ∀ (X : Scheme.{0}) (p : X ⟶ Sp ℂ) (U : X.Opens),
     IsAffineOpen U → (algX p U).FiniteType → ∃ (k : ℕ) (G : Finset (MvPolynomial (Fin k) ℂ)),

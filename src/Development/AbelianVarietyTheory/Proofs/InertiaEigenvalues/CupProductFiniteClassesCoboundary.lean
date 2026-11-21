@@ -192,7 +192,6 @@ def charGRep (χ : G →* LLˣ) (hχ : Continuous fun g => ((χ g : LLˣ) : LL))
 
 end Char
 
-set_option maxHeartbeats 1600000 in
 
 theorem cob_of_cont (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (hT : LocTied l P AI)
     (K : FinExt l) (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL]

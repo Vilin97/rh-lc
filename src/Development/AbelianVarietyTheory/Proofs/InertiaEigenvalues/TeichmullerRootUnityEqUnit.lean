@@ -10,7 +10,6 @@ open scoped Formalism.Per
 
 namespace GlobalTheory.PMon.Gauss
 
-open Polynomial in
 
 theorem exists_zmod_of_pow_eq_self {F : Type} [CommRing F] [IsDomain F] (l : ℕ) [Fact l.Prime] [CharP F l]
     (ζ : F) (h : ζ ^ l = ζ) : ∃ a : ZMod l, ZMod.castHom (dvd_refl l) F a = ζ := by

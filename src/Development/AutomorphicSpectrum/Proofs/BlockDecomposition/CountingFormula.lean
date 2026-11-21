@@ -91,7 +91,6 @@ theorem thetaMeas_ne (hcm : IsCMExt F E σ) {J : Matrix (Fin 2) (Fin 2) E} (hJ :
 
 end Alg
 
-set_option maxHeartbeats 1000000 in
 
 theorem cnt : TestEx → LSide → RSide → Cnt := by
   intro hTE hL hR F E _ _ _ _ _ σ J d b li lam μ 𝓕 mi m hcm hJ hAn hli hlam hμ h𝓕 hmi hm κ hκ

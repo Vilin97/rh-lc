@@ -41,7 +41,6 @@ theorem isMulCommutative_cent_projArch_ratEmb {γ : GRat σ J} (hγ : IsRegSS γ
     IsMulCommutative (Orb.cent (projArch σ J w (ratEmb σ J γ))) :=
   Orb.isMulCommutative_cent_HA (isRegSS_projArch_ratEmb hγ w)
 
-open Orb in
 
 end General
 
@@ -51,6 +50,5 @@ end
 
 namespace GlobalTheory.ArchVanish
 
-set_option maxHeartbeats 400000 in
 
 end GlobalTheory.ArchVanish

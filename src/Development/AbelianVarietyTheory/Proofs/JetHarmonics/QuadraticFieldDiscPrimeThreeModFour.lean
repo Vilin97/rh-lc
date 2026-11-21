@@ -9,7 +9,6 @@ open NumberField IntermediateField Polynomial
 
 namespace GlobalTheory
 
-open NumberField IntermediateField Polynomial in
 
 theorem _root_.GlobalTheory.sqrtNeg_not_mem_range {K : Type*} [Field K] [CharZero K] [Algebra ℚ K]
     (q : ℕ) (hq : 0 < q) (x : K) (hx : x ^ 2 = -(q : K)) : x ∉ (algebraMap ℚ K).range := by
@@ -21,7 +20,6 @@ theorem _root_.GlobalTheory.sqrtNeg_not_mem_range {K : Type*} [Field K] [CharZer
   have hq' : (0 : ℚ) < q := by exact_mod_cast hq
   nlinarith [sq_nonneg r]
 
-open NumberField IntermediateField Polynomial in
 
 theorem _root_.GlobalTheory.minpoly_eq_of_quadratic_irrational {K : Type*} [Field K] [Algebra ℚ K]
     (p : ℚ[X]) (hm : p.Monic) (hd : p.natDegree = 2) (x : K) (hx : aeval x p = 0)
@@ -32,7 +30,6 @@ theorem _root_.GlobalTheory.minpoly_eq_of_quadratic_irrational {K : Type*} [Fiel
   have hne : (minpoly ℚ x).natDegree ≠ 1 := fun h => hr (minpoly.natDegree_eq_one_iff.1 h)
   exact Polynomial.eq_of_monic_of_dvd_of_natDegree_le (minpoly.monic hint) hm hdvd (by omega)
 
-open NumberField IntermediateField Polynomial in
 
 theorem _root_.GlobalTheory.natAbs_discr_of_sq_eq_neg_prime (K : Type*) [Field K] [NumberField K] (q : ℕ)
     (hq : q.Prime) (h4 : q % 4 = 3) (x : K) (hx : x ^ 2 = -(q : K))

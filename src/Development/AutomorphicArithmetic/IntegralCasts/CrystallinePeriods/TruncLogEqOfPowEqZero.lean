@@ -170,7 +170,6 @@ def fil (i : ℤ) : Submodule (BdRPlus p R) (BdR p R) :=
 
 end BdR
 
-variable {p R} in
 
 def AinfInv.gamma (n : ℕ) (x : AinfInv p R) : AinfInv p R := ((n ! : ℚ)⁻¹) • x ^ n
 
@@ -180,7 +179,6 @@ def acrisZero : Subalgebra (Ainf p R) (AinfInv p R) :=
 
 abbrev AcrisZero : Type u := acrisZero p R
 
-variable {p R} in
 
 def AcrisZero.gamma (n : ℕ) (x : Ainf p R) (hx : Ainf.theta p R x = 0) : AcrisZero p R :=
   ⟨AinfInv.gamma n (algebraMap _ _ x), Algebra.subset_adjoin ⟨n, x, hx, rfl⟩⟩
@@ -245,12 +243,10 @@ end Acris
 
 def tateModule : Submonoid (Tilt p R) := MonoidHom.mker (PreTilt.untilt (O := R) (p := p))
 
-variable {p R} in
 
 def Acris.logTeich (η : tateModule p R) : Acris p R :=
   Acris.log (Ainf.teich p η.1) (by rw [Ainf.theta_teich]; exact η.2)
 
-variable {p R} in
 
 def IsPrimitive (ε : tateModule p R) : Prop :=
   PreTilt.untilt ((frobeniusEquiv (Tilt p R) p).symm ε.1) ≠ 1
@@ -297,7 +293,6 @@ instance : IsScalarTower (Acris p R) (BcrisPlus p R) (Bcris p R) :=
 instance : IsScalarTower ℚ_[p] (BcrisPlus p R) (Bcris p R) :=
   IsScalarTower.of_algebraMap_eq fun _ => rfl
 
-variable {p R} in
 
 def logTeich (η : tateModule p R) : Bcris p R := algebraMap (Acris p R) _ (Acris.logTeich η)
 
@@ -305,7 +300,6 @@ end Bcris
 
 def PFlat : Type u := {ϖ : Tilt p R // PreTilt.untilt ϖ = (p : R)}
 
-variable {p R} in
 
 def PFlat.twist (η : tateModule p R) (ϖ : PFlat p R) : PFlat p R :=
   ⟨η.1 * ϖ.1, by rw [map_mul, ϖ.2, show PreTilt.untilt η.1 = 1 from η.2, one_mul]⟩
@@ -361,11 +355,8 @@ theorem hom_ext {B : Type*} [CommRing B] {f g : Bst p R →+* B}
     (h₂ : ∀ ϖ, f (logFlat ϖ) = g (logFlat ϖ)) : f = g :=
   Ideal.Quotient.ringHom_ext (MvPolynomial.ringHom_ext h₁ h₂)
 
-variable (p R) in
 
-variable (p R) in
 
-variable (p R) in
 
 end Bst
 

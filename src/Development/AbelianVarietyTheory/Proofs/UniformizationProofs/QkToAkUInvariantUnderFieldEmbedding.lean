@@ -96,7 +96,6 @@ section OneField
 
 variable {A : PolAV (Spec (CommRingCat.of (FractionRing R)))} {F : Type} [Field F] [Algebra (FractionRing R) F] {k : ℕ}
 
-variable (A F k) in
 
 abbrev AbSec : Type := SecOver (abelianBase A F) (LPow A.A A.L (k : ℤ) (TFK (R := R) F))
 
@@ -241,7 +240,6 @@ theorem exists_phiVal_pull (hG : GlobalFnsSt) {D : DegPre R} {k : ℕ} {p : QkPt
 variable {I : Ideal R} {D : DegData R I} {A : PolAV (Spec (CommRingCat.of (FractionRing R)))}
   {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G] (U : UnifPre I D A G)
 
-variable (E F) in
 
 def grpPull (k : ℕ) : GroupSec U E k →ₛₗ[algebraMap E F] GroupSec U F k :=
   pullOver U.LG.L _ (whisker_fst E F ((Over.pullback (jK R)).obj G))

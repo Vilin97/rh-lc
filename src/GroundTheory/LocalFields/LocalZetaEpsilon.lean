@@ -70,8 +70,6 @@ theorem unitFiltration_sub_one_mem_valBall {j : ℕ} {v : Kˣ} (hv : v ∈ unitF
     simpa using sub_mem h0 h1
   · exact (mem_unitFiltrationUnits_iff_valBall hj).mp hv
 
-variable (χ) in
-open Classical in
 
 def quasiCharExt (x : K) : ℂ := if h : x = 0 then 0 else ((χ (Units.mk0 x h) : ℂˣ) : ℂ)
 
@@ -101,7 +99,6 @@ variable [MeasurableSpace K] [BorelSpace K]
 
 section Epsilon
 
-open Classical in
 
 def localEpsilon (χ : Kˣ →* ℂˣ) (ψ : AddChar K Circle) (s : ℂ) : ℂ :=
   if IsUnramifiedChar χ then

@@ -63,9 +63,7 @@ theorem mem_polyGrading_natCast {p : MvPolynomial ι R} {d : ℕ} :
     Finsupp.degree_eq_weight_one]
   rfl
 
-variable (ι R) in
 
-variable (ι R) in
 
 theorem polyGrading_of_neg {n : ℤ} (hn : n < 0) : polyGrading ι R n = ⊥ := by
   rw [eq_bot_iff]
@@ -91,7 +89,6 @@ variable {ι : Type*} {R : Type*} [CommRing R]
   {N : Type*} [AddCommGroup N] [Module R N] [Module (MvPolynomial ι R) N]
   {P : Type*} [AddCommGroup P] [Module R P] [Module (MvPolynomial ι R) P]
 
-variable (ι) in
 
 abbrev PolyGradedSMul (ℳ : ℤ → Submodule R M) : Prop :=
   SetLike.GradedSMul (polyGrading ι R) ℳ
@@ -126,9 +123,7 @@ namespace IsGradedMap
 
 variable {ℳ : ℤ → Submodule R M} {𝒩 : ℤ → Submodule R N} {𝒬 : ℤ → Submodule R P}
 
-variable (ι ℳ) in
 
-variable (ι ℳ 𝒩) in
 
 theorem zero : IsGradedMap ℳ 𝒩 (0 : M →ₗ[MvPolynomial ι R] N) := fun _ _ _ => zero_mem _
 
@@ -289,9 +284,7 @@ instance grQuot.polyGradedSMul (ℳ : ℤ → Submodule R M) [PolyGradedSMul ι 
 theorem isGradedMap_subtype (ℳ : ℤ → Submodule R M) (K : Submodule (MvPolynomial ι R) M) :
     IsGradedMap (grSub ℳ K) ℳ K.subtype := fun _ _ h => h
 
-omit [IsScalarTower R (MvPolynomial ι R) M] in
 
-omit [IsScalarTower R (MvPolynomial ι R) N] in
 
 theorem IsGradedMap.liftQ {ℳ : ℤ → Submodule R M} {𝒩 : ℤ → Submodule R N}
     {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f) (K : Submodule (MvPolynomial ι R) M)
@@ -401,19 +394,16 @@ instance grPi.decomposition [Finite κ] (ℳ : ∀ k, ℤ → Submodule R (M k))
         · rw [Pi.single_eq_of_ne h]; exact zero_mem _
       | add a b ha hb => rw [Pi.single_add]; exact add_mem ha hb
 
-variable (ι) in
 
 theorem isGradedMap_piProj (ℳ : ∀ k, ℤ → Submodule R (M k)) (k : κ) :
     IsGradedMap (grPi ℳ) (ℳ k) (LinearMap.proj (R := MvPolynomial ι R) k) :=
   fun _ _ h => mem_grPi.1 h k
 
-variable (ι) in
 
 theorem IsGradedMap.pi {𝒩 : ℤ → Submodule R N} {ℳ : ∀ k, ℤ → Submodule R (M k)}
     {f : ∀ k, N →ₗ[MvPolynomial ι R] M k} (hf : ∀ k, IsGradedMap 𝒩 (ℳ k) (f k)) :
     IsGradedMap 𝒩 (grPi ℳ) (LinearMap.pi f) := fun _ _ h => mem_grPi.2 fun k => hf k h
 
-variable (ι R) in
 
 abbrev grFree (d : κ → ℤ) : ℤ → Submodule R (κ → MvPolynomial ι R) :=
   grPi fun k => grShift (polyGrading ι R) (-d k)

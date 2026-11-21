@@ -17,7 +17,6 @@ namespace GlobalTheory.VacUnion
 
 variable {D : D7}
 
-open Classical in
 
 def idemF (v : Pl D) : Af D.host.F :=
   ⟨fun w => if w = v then 1 else 0, Filter.Eventually.of_forall fun w => by

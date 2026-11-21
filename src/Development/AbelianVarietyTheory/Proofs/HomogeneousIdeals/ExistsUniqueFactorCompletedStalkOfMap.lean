@@ -134,7 +134,6 @@ noncomputable def fromSpecCompletedStalk (X : Scheme.{u}) (x : X) :
     (AdicCompletion (maximalIdeal (X.presheaf.stalk x)) (X.presheaf.stalk x)))) ≫
     X.fromSpecStalk x
 
-omit [IsLocalRing R] in
 
 theorem existsUnique_factor_completedStalk (I : Ideal R) [IsAdicComplete I R]
     {f : Spec (.of R) ⟶ X} {x : X}
@@ -150,7 +149,6 @@ theorem existsUnique_factor_completedStalk (I : Ideal R) [IsAdicComplete I R]
   · intro h; rw [h]; rfl
   · intro h; exact congr($(Spec.map_injective h).hom)
 
-omit [IsLocalRing R] in
 
 theorem existsUnique_factor_completedStalk' (I : Ideal R) [IsAdicComplete I R]
     {f : Spec (.of R) ⟶ X} {x : X}
@@ -312,9 +310,7 @@ theorem existsUnique_over_of_isAdicFamily [IsAdicComplete I R] {X S : Scheme.{u}
 
 variable (I)
 
-omit [IsLocalRing R] in
 
-omit [IsLocalRing R] in
 
 end Limit
 

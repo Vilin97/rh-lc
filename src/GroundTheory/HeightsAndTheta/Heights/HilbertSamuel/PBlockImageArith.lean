@@ -36,7 +36,6 @@ theorem ringKrullDim_eq (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k,
     (CoordinateConeArithVar.algebraMap_injective _ hhor), htr]
   simp only [map_add (f := _), map_natCast]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem div_mem_of_sum (F : IntermediateField ℚ Ω) {A B : Type} [Fintype B] (u : A → Ω) (v : B → Ω)
     (L : Matrix A B ℤ) (hu : ∀ a, u a = ∑ b, (L a b : Ω) * v b) (b₀ : B)
@@ -46,7 +45,6 @@ theorem div_mem_of_sum (F : IntermediateField ℚ Ω) {A B : Type} [Fintype B] (
   rw [mul_div_assoc]
   exact mul_mem (intCast_mem F _) (hF b)
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem ratio_mem_of_sum (F : IntermediateField ℚ Ω) {A B : Type} [Fintype B] (u : A → Ω) (v : B → Ω)
     (L : Matrix A B ℤ) (hu : ∀ a, u a = ∑ b, (L a b : Ω) * v b) (b₀ : B) (hv : v b₀ ≠ 0)
@@ -54,7 +52,6 @@ theorem ratio_mem_of_sum (F : IntermediateField ℚ Ω) {A B : Type} [Fintype B]
   rw [← div_div_div_cancel_right₀ hv (u a) (u a')]
   exact div_mem (div_mem_of_sum F u v L hu b₀ hF a) (div_mem_of_sum F u v L hu b₀ hF a')
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem aeval_mem (F : IntermediateField ℚ Ω) (w : (Σ k, ι k) → Ω) (hw : ∀ p, w p ∈ F) (f : MRing ι) :
     aeval w f ∈ F := by
@@ -63,7 +60,6 @@ theorem aeval_mem (F : IntermediateField ℚ Ω) (w : (Σ k, ι k) → Ω) (hw :
   | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p q hp => rw [map_mul, aeval_X]; exact mul_mem hp (hw q)
 
-omit [Fintype K] [CharZero Ω] in
 
 theorem isMultiHomog_X_single [DecidableEq K] (p : Σ k, ι k) :
     IsMultiHomog (X p : MRing ι) (fun k ↦ if k = p.1 then 1 else 0) := by
@@ -81,7 +77,6 @@ theorem isMultiHomog_X_single [DecidableEq K] (p : Σ k, ι k) :
       exact absurd (Finset.mem_univ _) h
   · simp [h]
 
-omit [CharZero Ω] in
 
 theorem aeval_mul_pow_of_block (y w : (Σ k, ι k) → Ω) (k₀ : K) (z : Ω)
     (hw : ∀ i, w ⟨k₀, i⟩ * z = y ⟨k₀, i⟩) {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d)
@@ -119,7 +114,6 @@ theorem aeval_mul_pow_of_block (y w : (Σ k, ι k) → Ω) (k₀ : K) (z : Ω)
 
 end BlockImageArithmetic
 
-open BlockImageArithmetic in
 
 theorem BlockImageArith.proof : BlockImageArith.Statement := by
   intro D K _ _ ι _ Ω _ _ y k₀ r M N x hY hbir hB _

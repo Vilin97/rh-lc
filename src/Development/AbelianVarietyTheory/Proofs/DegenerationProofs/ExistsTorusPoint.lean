@@ -31,7 +31,6 @@ theorem exists_form {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : Th
   rw [← eStd_add_right]
   exact ind _ _ (by rw [map_add (f := _), hσ, hσ, hσ, QuotientAddGroup.mk_add])
 
-attribute [local instance] gtGroup in
 
 theorem exists_torus_point : LL → UTorsSt → ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] (S : ThetaSys o Ω) (ρ : S.Real) (p : ℕ) [Fact p.Prime] (y₀ : S.R →+* PadicAlgCl p) (u : ρ.UTest p y₀) (l : u.Lab) (g : u.Geom) (a : S.Gam) (ha : a ∈ S.perp l.yy.ker), ∃ (q : QkPt u.D.toPre (PadicAlgCl p) S.N) (τ : Multiplicative u.D.toPre.X →* (PadicAlgCl p)ˣ), q.y = 0 ∧ IsTor τ q.g ∧ QkToAkU u.U.toUnifPre (PadicAlgCl p) S.N q (g.pt (S.r • a)) ∧ ∀ χ, (τ (Multiplicative.ofAdd χ) : PadicAlgCl p) = y₀ (algebraMap o S.R (S.ζN ^ (l.wt χ ⟨a, ha⟩).val)) := by
   intro hL hT o Ω _ _ _ hA S ρ p _ y₀ u l g a ha

@@ -20,7 +20,6 @@ theorem exists_int_generators (E : Type) [Field E] [NumberField E] :
   obtain ⟨n, hn⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 this
   exact ⟨n, hn.symm⟩
 
-omit [NumberField E] in
 
 theorem mem_addClosure_of_mem_ordAt (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v ⊗[F] E)
     (hy : y ∈ ordAt E v) :
@@ -38,7 +37,6 @@ theorem mem_addClosure_of_mem_ordAt (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v
     exact ⟨a * b, mul_mem ha hb, x * x', by
       rw [Algebra.TensorProduct.tmul_mul_tmul]; rfl⟩
 
-omit [NumberField E] in
 
 theorem exists_coeff {k : ℕ} (x : Fin k → 𝓞 E)
     (hx : ∀ w : 𝓞 E, ∃ n : Fin k → ℤ, w = ∑ j, n j • x j) (v : HeightOneSpectrum (𝓞 F))

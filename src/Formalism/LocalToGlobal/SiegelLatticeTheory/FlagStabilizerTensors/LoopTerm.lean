@@ -600,7 +600,6 @@ theorem rho_mul (D : D7) (a b : Fin (D.R.rS + 1)) :
   push_cast
   ring
 
-include W in
 
 theorem inCell_real (hAt : ∀ u u', AtSome Y u u') {u u' : D.what₂.Word} (t : D.s.Term u u') (hG : D.s.Gterm t ≠ 0)
     (hr : D.s.relevant t) (τ : D.what₂.Tau) :
@@ -684,7 +683,6 @@ theorem normSq_sub_scaled_eq_zero {P x y : ℂ} {T T' : ℝ}
     linear_combination h
   exact (mul_eq_zero.1 h2).resolve_left hP'
 
-include W in
 
 theorem gf_ne {u u' : D.what₂.Word} (t : D.s.Term u u') (hG : D.s.Gterm t ≠ 0) (τ : D.what₂.Tau) :
     Formalism.QuantumDeterminants.Gf D.R.k D.R.rS (zB X (C.Qi τ) u τ) (zB X (C.Qi τ) u' τ) (gamR hI C t τ) ≠ 0 := by

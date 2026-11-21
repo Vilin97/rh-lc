@@ -8,7 +8,6 @@ open scoped TensorProduct
 
 namespace GlobalTheory
 
-open Polynomial in
 
 theorem mem_range_of_forall_algHom_eq :
     ∀ (F K₀ : Type) [Field F] [CharZero F] [Field K₀] [Algebra F K₀], Algebra.IsAlgebraic F K₀ →

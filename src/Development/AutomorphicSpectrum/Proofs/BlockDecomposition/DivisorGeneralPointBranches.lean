@@ -26,7 +26,6 @@ public import GroundTheory.HeightsAndTheta.Heights.LocalFiniteness.BranchInverse
 
 namespace GlobalTheory.CompanionTheory.ComplexSets
 
-open GroundTheory.Heights₂.Heights in
 
 theorem divisorGeneralPointBranches : GroundTheory.Heights₂.Heights.DivisorGeneralPointBranches.Statement :=
   DivisorGeneralPointBranches.proof DivisorOneComponent.proof

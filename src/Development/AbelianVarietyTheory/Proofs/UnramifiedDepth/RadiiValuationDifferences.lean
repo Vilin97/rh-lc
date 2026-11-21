@@ -141,7 +141,6 @@ theorem binomial_differences : F5 := by
 
 end RadiiIdentities
 
-open RadiiIdentities in
 
 theorem radii_valuation_differences :
     Formalism.L2.FormalSeriesBounds.EInt ∧ I1 ∧ I2 ∧ ValOther ∧ WeightConditionIff ∧ F5 :=

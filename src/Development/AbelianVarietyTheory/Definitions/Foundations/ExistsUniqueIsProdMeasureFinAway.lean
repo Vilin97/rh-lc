@@ -24,7 +24,6 @@ def cyl (S : Finset κ) (A : ∀ i, Set (H i)) (B : ∀ k, Set (P k)) : Set G :=
 theorem mem_cyl {S : Finset κ} {A : ∀ i, Set (H i)} {B : ∀ k, Set (P k)} {g : G} :
     g ∈ cyl p q K S A B ↔ (∀ i, p i g ∈ A i) ∧ (∀ k ∈ S, q k g ∈ B k) ∧ ∀ k ∉ S, q k g ∈ K k := Iff.rfl
 
-open Classical in
 
 variable [TopologicalSpace G] [∀ i, TopologicalSpace (H i)] [∀ k, TopologicalSpace (P k)]
 
@@ -49,8 +48,6 @@ structure IsRestrProd (μi : ∀ i, Measure (H i)) (μf : ∀ k, Measure (P k)) 
 
 variable {p q K} {μi : ∀ i, Measure (H i)} {μf : ∀ k, Measure (P k)} {μ : Measure G}
 
-omit [∀ k, TopologicalSpace (P k)] in
-open Classical in
 
 omit [∀ k, TopologicalSpace (P k)] in
 theorem exists_finset_vol_one (h : ∀ᶠ k in cofinite, μf k (K k) = 1) : ∃ S : Finset κ, ∀ k ∉ S, μf k (K k) = 1 :=
@@ -76,7 +73,6 @@ variable [IsTopologicalGroup G] [BorelSpace G] [LocallyCompactSpace G] [SecondCo
   [∀ k, IsTopologicalGroup (P k)] [∀ k, BorelSpace (P k)] [∀ k, LocallyCompactSpace (P k)]
   [∀ k, SecondCountableTopology (P k)] [∀ k, T2Space (P k)]
 
-omit [LocallyCompactSpace G] [SecondCountableTopology G] in
 
 omit [IsTopologicalGroup G] [BorelSpace G] [LocallyCompactSpace G] [SecondCountableTopology G]
   [∀ i, SecondCountableTopology (H i)] [∀ k, SecondCountableTopology (P k)] [MeasurableSpace G] [Group G]
@@ -93,9 +89,7 @@ theorem exists_box_pos (μi : ∀ i, Measure (H i)) (μf : ∀ k, Measure (P k))
     ENNReal.mul_ne_top (ENNReal.prod_ne_top fun i _ => (A i).isCompact.measure_lt_top.ne)
       (ENNReal.prod_ne_top fun k _ => (B k).isCompact.measure_lt_top.ne)⟩
 
-omit [LocallyCompactSpace G] [SecondCountableTopology G] in
 
-omit [∀ i, SecondCountableTopology (H i)] [∀ k, SecondCountableTopology (P k)] in
 
 theorem IsRestrProd.unique {μ' : Measure G} (h : IsRestrProd p q K μi μf μ) (h' : IsRestrProd p q K μi μf μ') :
     μ = μ' := by
@@ -244,7 +238,6 @@ instance (v : HeightOneSpectrum (𝓞 F)) : (haarLoc σ J L v).IsHaarMeasure := 
 
 variable {σ J L}
 
-variable (L) in
 
 end GlobalTheory.AdelicU
 

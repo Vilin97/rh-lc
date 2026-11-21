@@ -104,7 +104,6 @@ theorem sol_eq_zero (hγ : constantCoeff (γ X) = 0) (hG : G.map constantCoeff =
   ext i n
   simp [this]
 
-omit [DecidableEq ι] in
 
 theorem apply_C (x : K) : γ (C x) = C x := γ.commutes x
 

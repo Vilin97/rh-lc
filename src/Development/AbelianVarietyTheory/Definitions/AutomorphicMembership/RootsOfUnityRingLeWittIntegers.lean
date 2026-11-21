@@ -121,7 +121,6 @@ structure StC {a : StA hL D cf (repOf Y)} {n : InRat Y cG} {xi : D.whatâ‚‚.Tup â
 
 end Rows
 
-open GlobalTheory.Mem.Top GlobalTheory.Mem.Top.Bl in
 
 end GlobalTheory.HeightCounting
 

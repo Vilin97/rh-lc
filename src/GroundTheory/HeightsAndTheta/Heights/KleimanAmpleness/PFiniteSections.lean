@@ -78,7 +78,6 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
   {x : Fin (N + 1) → Ω} {F : Type u} [Field F] [Algebra S F] [Algebra F Ω] [IsScalarTower S F Ω]
   [IsFractionRing S F]
 
-omit [IsFractionRing S F] in
 
 theorem exists_monos_map {I : Finset (Fin (N + 1))} {s : Poly F N} (hs : s ∈ monos I) :
     ∃ s' : Poly S N, s' ∈ monos I ∧ map (algebraMap S F) s' = s := by

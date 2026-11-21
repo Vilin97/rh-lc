@@ -25,7 +25,6 @@ set_option autoImplicit false
 noncomputable section
 namespace GlobalTheory.LieInjField
 
-open GlobalTheory.CechDR in
 
 theorem cmpForm_surjective (hC : GlobalTheory.Published.CrystallineSmoothLift) (hH : GlobalTheory.Published.AbelianHodgeDeRham)
     (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g : ℕ) (hab : IsAbelianScheme A)

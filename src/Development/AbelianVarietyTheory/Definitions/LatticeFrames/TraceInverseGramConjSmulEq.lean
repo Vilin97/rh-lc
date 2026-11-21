@@ -41,7 +41,6 @@ theorem tau_gram (h : IsLineVec L' ζ') :
   apply mul_left_cancel₀ hz'
   rw [hn]; ring
 
-include l in
 
 end GlobalTheory.Unf.Model
 

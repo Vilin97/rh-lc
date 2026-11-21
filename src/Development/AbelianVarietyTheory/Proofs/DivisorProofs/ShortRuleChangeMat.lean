@@ -116,9 +116,7 @@ theorem plc_prime {K : Type} [Field K] [NumberField K] (lam : HeightOneSpectrum 
   · rw [h, zero_dvd_iff] at hd
     exact absurd hd hne
 
-attribute [local instance] Formalism.BasicNotions.Host.cmStar in
 
-attribute [local instance] Formalism.BasicNotions.Host.cmStar in
 
 theorem star_mem_one (D : D7) {x : D.host.E} (hx : x ∈ (1 : Submodule (𝓞 D.host.E) D.host.E)) :
     star x ∈ (1 : Submodule (𝓞 D.host.E) D.host.E) := by
@@ -126,7 +124,6 @@ theorem star_mem_one (D : D7) {x : D.host.E} (hx : x ∈ (1 : Submodule (𝓞 D.
   exact Submodule.mem_one.2 ⟨⟨star (algebraMap _ _ y),
     (RingOfIntegers.isIntegral_coe y).map (starRingEnd D.host.E).toIntAlgHom⟩, rfl⟩
 
-attribute [local instance] Formalism.BasicNotions.Host.cmStar in
 
 theorem zero_case (D : D7) (V : Formalism.BasicNotions.TH.HSp D) (hL : Formalism.IndefR.Bridge.hLat V 1 = stdLat D.host.E V.rank)
     (Λ : GenLat D.host.E V.rank) (hT : Λ.TrivAt 0) :

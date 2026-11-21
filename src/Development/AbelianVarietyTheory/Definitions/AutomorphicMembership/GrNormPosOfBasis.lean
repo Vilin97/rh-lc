@@ -58,7 +58,6 @@ theorem comb_smul (hu : ∀ k, IsTanAtG t x (u k)) {cf : Fin m → R} {w : Sp (D
   rw [← (isCombAtG_iff t x (fun j => ovT (hu j)) _ _).1 h]
   exact (isCombAtG_iff t x (fun j => ovT (hu j)) _ _).2 (by rw [← smT_combT]; rfl)
 
-variable (t x u) in
 
 def Indep : Prop := ∀ cf cf' w, IsCombAtG t x u cf w → IsCombAtG t x u cf' w → cf = cf'
 
@@ -109,7 +108,6 @@ theorem Indep.map {K K' : Type} [Field K] [Field K'] (io : K →+* K') {x : Sp K
 variable {C : Type} [NontriviallyNormedField C] {x : Sp C ⟶ X} {Λ : Set (Sp (DualNumber C) ⟶ t.G.left)} {m : ℕ}
   {u u' : Fin m → (Sp (DualNumber C) ⟶ t.G.left)}
 
-variable (t x Λ u) in
 
 def grSet (i : Fin m) : Set ℝ :=
   {r | ∃ cf : Fin m → C, cf i ≠ 0 ∧ (∀ k, i < k → cf k = 0) ∧ (∃ w ∈ Λ, IsCombAtG t x u cf w) ∧ r = ‖cf i‖⁻¹}
@@ -169,7 +167,6 @@ theorem tri_mulVec {K : Type} [Field K] {A : Matrix (Fin m) (Fin m) K} (hA : A.B
     · rw [hA (show id j < id i from hj), zero_mul]
     · rw [h j hj, mul_zero]
 
-open Pointwise in
 
 theorem grNorm_tri (hu : ∀ k, IsTanAtG t x (u k)) {d : Fin m → C} (hd : ∀ i, d i ≠ 0)
     (h : ∀ i, ∃ cf : Fin m → C, cf i = d i ∧ (∀ k, i < k → cf k = 0) ∧ IsCombAtG t x u cf (u' i)) (i : Fin m) :

@@ -98,7 +98,6 @@ private theorem finite_setOf_not_isUnit_natCast_atP (D : D7) (N : ℕ) (hN : N �
 
 end GlobalTheory.FrameFactorUnit
 
-open GlobalTheory.FrameFactorUnit in
 
 theorem GlobalTheory.FrameFactorUnit.frFac_isUnitO_finite : ∀ (D : D7) (Z : LocDat D) (a : Fin (D.R.rS + 1)),
     {p : PlF D | ¬ Formalism.MainNotions.S.LocNG.IsUnitO (Z.M p) (frFac Z.δ p a)}.Finite := by

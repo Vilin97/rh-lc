@@ -213,7 +213,6 @@ section PartB
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d j : ℕ}
   {W : Spc F E d} {v : Pl F} {t : E →ₐ[F] Fv F v} {sec : Fv F v × Fv F v → AE F E}
 
-variable (t) in
 
 def cp : UA σ W.J →* GL (Fin d) (Fv F v) := (Matrix.GeneralLinearGroup.map (piW t)).comp (Subgroup.subtype _)
 
@@ -236,7 +235,6 @@ theorem uAt_one : (1 : UA σ W.J) ∈ UAt σ W (evFin F v) := fun u _ => by
   change u • ((1 : Matrix (Fin d) (Fin d) (AE F E)) - 1) = 0
   rw [sub_self, smul_zero]
 
-variable (v sec) in
 
 def sA : Fv F v →+ AE F E := AddMonoidHom.mk' (fun x => sgl v x • sec (1, 0)) fun x y => by rw [map_add (f := _), add_smul]
 

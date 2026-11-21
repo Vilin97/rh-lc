@@ -13,7 +13,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory
 
-open PrimeSpectrum in
 
 theorem prime_line_mem_range_comap_mapRingHom {R K : Type} [CommRing R] [Field K] (χ : R →+* K)
     (hχ : Function.Surjective χ) (P : PrimeSpectrum (Polynomial R))

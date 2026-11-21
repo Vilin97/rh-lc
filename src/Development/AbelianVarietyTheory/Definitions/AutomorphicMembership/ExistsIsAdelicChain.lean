@@ -106,8 +106,6 @@ end Side
 variable {R : RealDat D A Ks} {F : Face D A} {tup : T → D.what₂.Tup} {b : Bool} {EE : Type} [NormedAddCommGroup EE]
   [InnerProductSpace ℂ EE] [FiniteDimensional ℂ EE] {S : RowSide D EE}
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure MultTie (Y : SideTie R F tup b S) where
 
@@ -140,8 +138,6 @@ theorem haar_chain (hY : R.models_νY) (hY' : R.models_νY') (t : T) (j : ℕ) (
   · obtain rfl : j = D.R.m - 1 := by omega
     exact ⟨(hY' t).1.1, (hY' t).2⟩
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure HChain (m : ℕ) (E B : Type) [NormedAddCommGroup E] [InnerProductSpace ℂ E] [NormedAddCommGroup B]
     [InnerProductSpace ℂ B] where
@@ -159,7 +155,6 @@ structure HChain (m : ℕ) (E B : Type) [NormedAddCommGroup E] [InnerProductSpac
 
 attribute [instance] HChain.nSp HChain.iSp HChain.fSp
 
-set_option maxHeartbeats 1000000 in
 
 end Inhabitant
 
@@ -197,7 +192,6 @@ namespace MultTie
 
 variable {Y : SideTie R F tup b S} (M : MultTie Y)
 
-include M in
 
 end MultTie
 

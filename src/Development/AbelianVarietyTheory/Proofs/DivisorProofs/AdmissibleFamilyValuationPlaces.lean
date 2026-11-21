@@ -268,4 +268,3 @@ private theorem one_comp {F : Type} [Field F] [NumberField F] {Y : Var F} {C : C
   rw [vertNum_eq, Int.cast_mul]
   exact if_congr Iff.rfl rfl rfl
 
-set_option maxHeartbeats 1000000 in

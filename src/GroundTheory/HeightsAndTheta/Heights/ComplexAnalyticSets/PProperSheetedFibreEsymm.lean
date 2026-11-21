@@ -18,7 +18,6 @@ open scoped Real
 
 namespace ProperSheetedFibreEsymm
 
-open Classical in
 
 noncomputable def fibreEsymm {σ : Type} {d : ℕ} (Y : Set (σ → ℂ)) (A : (σ → ℂ) →L[ℂ] (Fin d → ℂ))
     (l : (σ → ℂ) →L[ℂ] ℂ) (j : ℕ) (t : Fin d → ℂ) : ℂ :=
@@ -204,7 +203,6 @@ theorem analyticOnNhd_of_differentiableOn (hcirc : ParametricCircleIntegralAnaly
 
 end ProperSheetedFibreEsymm
 
-open ProperSheetedFibreEsymm in
 
 theorem ProperSheetedFibreEsymm.proof (hcount : UnbranchedProperCountConstant.Statement)
     (hriem : RiemannExtensionAnalytic.Statement) (hcirc : ParametricCircleIntegralAnalytic.Statement) :

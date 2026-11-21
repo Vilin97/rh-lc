@@ -357,7 +357,6 @@ theorem one_sub_ew (w : HeightOneSpectrum (𝓞 D.host.E)) (k : Fin 2)
   have h3 := sub_mem h2 h1
   rwa [mul_add, add_sub_cancel_left, mul_one] at h3
 
-open Classical in
 
 def epsD (w : HeightOneSpectrum (𝓞 D.host.E)) : Fin D.R.k → VA X.B.I :=
   if EwAt X w then X.bwd else fun i => X.bw (Fin.rev i)

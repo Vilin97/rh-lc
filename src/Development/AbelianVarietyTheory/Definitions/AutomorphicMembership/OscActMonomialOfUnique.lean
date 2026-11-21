@@ -89,7 +89,6 @@ section Adjoint
 variable {σ H : Type} [DecidableEq σ] [NormedAddCommGroup H] [InnerProductSpace ℂ H]
   {ι : MvPolynomial σ ℂ →ₗ[ℂ] H}
 
-omit [DecidableEq σ] in
 
 theorem mfact_add_single (α : σ →₀ ℕ) (l : σ) :
     FockSeq.mfact (α + Finsupp.single l 1) = (α l + 1) * FockSeq.mfact α := by

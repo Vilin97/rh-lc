@@ -22,7 +22,6 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.LocDual.CobDetect
 
-open CategoryTheory in
 
 theorem exists_compat {X : ℕ → Type} [∀ n, Finite (X n)] [∀ n, Nonempty (X n)]
     (f : ∀ n, X (n + 1) → X n) : ∃ x : ∀ n, X n, ∀ n, f n (x (n + 1)) = x n :=

@@ -86,7 +86,6 @@ theorem isDual1_loc (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i)))
 
 end
 
-set_option maxHeartbeats 1600000 in
 
 theorem stepPotDual : StepPotDual := by
   classical

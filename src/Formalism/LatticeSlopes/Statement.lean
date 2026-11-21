@@ -14,7 +14,6 @@ section Defs
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
 
-open Classical in
 
 def covol (L : Submodule ℤ E) : ℝ :=
   if h : DiscreteTopology L then

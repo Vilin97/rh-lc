@@ -47,15 +47,12 @@ section Adeles
 
 variable (F : Type) [Field F] [NumberField F] (S : Finset (HeightOneSpectrum (𝓞 F)))
 
-open Classical in
 
-open Classical in
 
 variable {F} in
 theorem intAf_mul {a b : Af F} (ha : a ∈ intAf F) (hb : b ∈ intAf F) : a * b ∈ intAf F := fun v => by
   rw [map_mul]; exact mul_mem (ha v) (hb v)
 
-variable {F} in
 
 end Adeles
 

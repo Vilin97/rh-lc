@@ -105,7 +105,6 @@ theorem exists_isNormRos {L : LB G.left} (hL : L.IsLB) (f g : G ⟶ G) [IsMonHom
     congr 1
   rw [val_one, val_pull hJ, Category.id_comp, hv _ _ y J hJ, val_mul hJ, val_inv, val_pull hJ, e, mul_inv_cancel]
 
-omit [IsCommMonObj G] in
 
 theorem isNormRos_unique {L : LB G.left} (hL : L.IsLB) (f g : G ⟶ G)
     (hs : Function.Surjective (G ⊗ G).hom.appTop.hom) {u u' : LB.Gen (LB.LinComb L (rosatiφ G f g) rosatiε)}

@@ -35,8 +35,6 @@ theorem modulBar_ne_bot {D : D7} {T : Type} {L : LevCh D T} (P : Places L) (sc :
 
 end GlobalTheory.AscFin.PrimStd
 
-open GlobalTheory.SeeSaw (idV FI dI) in
-open GlobalTheory.AscFin.PrimStd in
 
 theorem GlobalTheory.AscFin.primAt_std_bessel : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ v ∉ G.pl.S0,
     PrimAt W.ψ (F.dB ρ h) (G.Λ (.grid (2 * ρ + 2) 0)) v := by

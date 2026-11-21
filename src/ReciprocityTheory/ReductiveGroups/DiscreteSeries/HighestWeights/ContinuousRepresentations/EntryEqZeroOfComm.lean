@@ -151,7 +151,6 @@ end Piece
 
 end PieceCon
 
-open PieceCon in
 
 def pieceKType {n : ℕ} {ε : Fin n → Bool} (R : KRep ε)
     (hS : KRepStableStatement) (hR : KRepRelStatement) (μ : Fin n → ℝ) (x : R.V) (hx : x ≠ 0)
@@ -220,7 +219,6 @@ def pieceKType {n : ℕ} {ε : Fin n → Bool} (R : KRep ε)
       have h1 : R.dτ (Matrix.single a b 1) x = 0 := hhi.2 a b hab hε
       rw [h1, smul_zero] }
 
-open PieceCon in
 
 theorem kRepPiece_of (hR : KRepRelStatement) (hS : KRepStableStatement) : KRepPieceStatement := by
   intro n ε R μ x hx hhi

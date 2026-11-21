@@ -48,7 +48,6 @@ theorem splittingSES_shortExact : (splittingSES M u).ShortExact :=
 
 noncomputable abbrev splittingModule : Rep.{u} k G := (splittingSES M u).X₂
 
-omit [Fintype G] in
 
 theorem map_H1π_augCocycle {H : Type u} [Group H] (φ : H →* G) {A : Rep.{u} k G}
     (f : cocycles₁ A) :

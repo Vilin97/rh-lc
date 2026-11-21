@@ -24,7 +24,6 @@ def SplitOrInert (D : D7) : Prop :=
       ¬ Lev.IsConjPl (D := D) PP PP) ∨
     ∀ e : AE D, IsSplitIdem D e → e * algebraMap (AF D.host.F) (AE D) ε = 0
 
-open Classical in
 
 theorem sbHalf_halfInd {S T : HSp D} (e : AE D) (Λ : AddSubgroup (WO S T)) : IsSBHalf e Λ (halfInd e Λ) := by
   unfold IsSBHalf halfInd

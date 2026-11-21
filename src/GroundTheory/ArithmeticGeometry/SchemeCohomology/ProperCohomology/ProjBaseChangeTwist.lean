@@ -24,13 +24,11 @@ namespace ProjSpace
 
 variable {A B : Type u} [CommRing A] [CommRing B] [Algebra A B] {n : ℕ}
 
-variable (A) in
 
 abbrev cmap :
     C(ProjectiveSpectrum.top (grading B n), ProjectiveSpectrum.top (grading A n)) :=
   ProjectiveSpectrum.comap (gradedMap A B n) (irrelevant_le_map A B n)
 
-variable (A) in
 
 abbrev pt (y : ProjectiveSpectrum (grading B n)) : ProjectiveSpectrum (grading A n) :=
   ProjectiveSpectrum.comapFun (gradedMap A B n) (irrelevant_le_map A B n) y
@@ -154,7 +152,6 @@ instance isIso_pullbackTwistingSheafMap :
   rw [key]
   exact ProjTwist.isBasisOn_upow _ _ k
 
-variable (A B n) in
 
 def pullbackTwistingSheafIso :
     (Scheme.Modules.pullback (baseChangeMap A B n)).obj (twistingSheaf (grading A n) k) ≅

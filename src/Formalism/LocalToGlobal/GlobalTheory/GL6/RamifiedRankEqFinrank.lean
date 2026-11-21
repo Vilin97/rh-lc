@@ -15,7 +15,6 @@ section Model
 
 variable {R : Ranks} {ι : Type} [Fintype ι] {hc : ι → HCParam R} {C : ColumnChain R ι hc}
 
-open Classical in
 
 structure FreeRankModel (A : ColumnsAtT R C) where
   H : Type
@@ -34,11 +33,8 @@ attribute [instance] FreeRankModel.grp FreeRankModel.finH FreeRankModel.finX Fre
 
 variable (A : ColumnsAtT R C)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end Model
 

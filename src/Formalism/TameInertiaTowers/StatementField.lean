@@ -16,7 +16,6 @@ def IsLayer (n q d : ℕ) {L : Type*} [Field L] [Algebra ℚ L] (ζ a b : L) : P
   IsPrimitiveRoot ζ (2 ^ n) ∧ a ^ 2 = -(q : L) ∧ b ^ 2 = -(d : L) ∧
     IntermediateField.adjoin ℚ {ζ, a, b} = ⊤
 
-open Classical in
 
 def sgn {L : Type*} [Field L] [Algebra ℚ L] (σ : Gal(L/ℚ)) (x : L) : ℤˣ :=
   if σ x = x then 1 else -1

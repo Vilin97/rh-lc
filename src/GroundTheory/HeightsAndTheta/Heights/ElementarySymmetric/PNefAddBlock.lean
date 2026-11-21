@@ -25,7 +25,6 @@ section Reduction
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 variable (p : ℕ) [Fact p.Prime]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem map_red {W : Ideal (Geo.MRing ι)} (hW : Geo.IsMultiProjPrime W)
     (hpW : (C (p : ℤ) : Geo.MRing ι) ∈ W) (n : ℕ)

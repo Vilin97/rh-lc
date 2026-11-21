@@ -73,7 +73,6 @@ section Local
 variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {n : Type*} [Fintype n] [DecidableEq n] {c : ℕ}
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem exists_int_inv {U : Matrix n n k} (hU : IntM U) (hd : U.det = 1) : ∃ V, IntM V ∧ U * V = 1 := by
   let U₀ : Matrix n n 𝒪[k] := Matrix.of fun i j => ⟨U i j, hU i j⟩

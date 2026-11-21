@@ -194,7 +194,6 @@ def matrixRingEquiv (hC : ∀ i (M : Matrix m m (R i)), M ∈ C i ↔ ∀ a b, M
     exact map_sum (_root_.RestrictedProduct.evalRingHom R i) _ _
   map_add' _ _ := rfl
 
-omit [∀ i, TopologicalSpace (R i)] in
 
 omit [∀ i, TopologicalSpace (R i)] [∀ i, SubringClass (S i) (R i)] in
 theorem coe_eq_setOf (hC : ∀ i (M : Matrix m m (R i)), M ∈ C i ↔ ∀ a b, M a b ∈ B i) (i : ι) :
@@ -206,7 +205,6 @@ def matrixHomeomorph (hC : ∀ i (M : Matrix m m (R i)), M ∈ C i ↔ ∀ a b, 
     Matrix m m (Πʳ i, [R i, B i]) ≃ₜ Πʳ i, [Matrix m m (R i), C i] :=
   (matrixHomeomorphSets m hB).trans (congrSets fun i => (coe_eq_setOf m hC i).symm)
 
-omit [∀ i, SubringClass (S i) (R i)] in
 
 theorem isOpen_coe_of_forall (hC : ∀ i (M : Matrix m m (R i)), M ∈ C i ↔ ∀ a b, M a b ∈ B i)
     (hB : ∀ i, IsOpen (B i : Set (R i))) (i : ι) : IsOpen (C i : Set (Matrix m m (R i))) := by

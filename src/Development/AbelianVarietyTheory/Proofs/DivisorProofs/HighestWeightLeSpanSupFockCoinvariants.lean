@@ -53,7 +53,6 @@ end GlobalTheory.HoweR.MultOne
 
 namespace GlobalTheory.HoweR
 
-open GlobalTheory.HoweR.MultOne in
 
 theorem hw_le_span_sup_coinv : ∀ (P Q R S : ℕ) (x : ℚ) (μ' : Ix R S → ℚ), JointShape P Q R S (fun _ => x) μ' →
     ∃ f₀ : Formalism.BasicNotions.TH.Pol P Q R S, hwSub (fockAct2 P Q R S) μ' ≤ Submodule.span ℂ {f₀} ⊔ coinv P Q R S (x : ℂ) := by

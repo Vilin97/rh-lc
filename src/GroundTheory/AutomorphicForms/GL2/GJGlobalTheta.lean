@@ -129,7 +129,6 @@ theorem tsum_inv_eq (Ψ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ) (t : {r : ℝ 
     simp only [mul_assoc]
   rw [e, Units.val_mul, Units.val_mul, coe_diagonal]
 
-set_option maxHeartbeats 1600000 in
 
 theorem thetaPairing_eq (hn : 2 ≤ n) {φ₁ φ₂ : AdelicGLn.AdelicGL K n → ℂ}
     (h₁ : φ₁ ∈ cuspForms K n) (h₂ : φ₂ ∈ cuspForms K n)

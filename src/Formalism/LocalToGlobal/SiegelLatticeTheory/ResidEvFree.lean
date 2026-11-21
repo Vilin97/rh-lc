@@ -82,7 +82,6 @@ end Cyc
 
 end
 
-open Ideal NumberField IsDedekindDomain in
 
 theorem splitsE_g (D : D7) (i : Fin 2) : S.SplitsCompl D.host.E (D.host.g i) := by
   have hp := D.host.g_prime i

@@ -170,7 +170,6 @@ theorem one_tmul_mem_center {z : UEnv E a} (hz : z ∈ (isExpLieAlgebra E a).cen
   | tmul c x => simp only [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul, Subalgebra.mem_center_iff.1 hz x]
   | add x y hx hy => rw [add_mul, mul_add, hx, hy]
 
-omit [IsTotallyComplex E] in
 
 theorem exists_re_im_center {w : UC E a} (hw : w ∈ Subalgebra.center ℂ (UC E a)) :
     ∃ p ∈ (isExpLieAlgebra E a).centerU, ∃ q ∈ (isExpLieAlgebra E a).centerU, w = (1 : ℂ) ⊗ₜ p + Complex.I ⊗ₜ q :=

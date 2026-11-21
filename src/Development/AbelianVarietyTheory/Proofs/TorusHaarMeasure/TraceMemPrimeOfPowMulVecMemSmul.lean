@@ -37,7 +37,6 @@ private lemma charpoly_dvd_pow_card_of_aeval_eq_zero {K : Type} [Field K] {r : �
     _ = (φ.map (algebraMap K Ω)) ^ r := by
         rw [Multiset.map_const', Multiset.prod_replicate, hcard]
 
-open NumberField Polynomial Matrix in
 
 theorem _root_.GlobalTheory.trace_mem_prime_of_pow_mulVec_mem_smul : ∀ (K : Type) [Field K] [NumberField K] (r : ℕ) (L : Submodule (𝓞 K) (Fin r → K))
       (N : Matrix (Fin r) (Fin r) K) (P : Ideal (𝓞 K)) (n : ℕ), L.FG →

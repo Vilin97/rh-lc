@@ -32,7 +32,6 @@ variable {cmp : Type} [Fintype cmp] {em : cmp → Lv.compS i}
   {T : ℕ} {bad : Set (HeightOneSpectrum (𝓞 D.host.F))}
   (S : StepLevel D.host.F D.host.E (sigD D) (gramN D (i + 1) hi) T D.R.f bad)
 
-set_option maxHeartbeats 4000000 in
 
 theorem compInj_locJ (hU : SameUlocJ hi S Uloc) : CompInj S (locJ hi t B) := by
   intro c c' δ hδ hoff
@@ -68,7 +67,6 @@ end One
 variable {C : ColumnChain D.R D.what₂.Tau (D.hcW u)} {A : ColumnsAtT D.R C} {P : PeriodMap D.R C}
   {M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.what₂.Tau (D.hcW u) C A P}
 
-set_option maxHeartbeats 4000000 in
 
 theorem chX_stepInOf (Fo : FormsIn M (i + 1) hi) (Lc : LocIn X u w hg Lv i Fo.Ch)
     (pos : (Σ v : Fin (Fl.Pj (i + 1)).nV, Fin ((Fl.Pj (i + 1)).n' v)) ≃ D.what₂.Tau)

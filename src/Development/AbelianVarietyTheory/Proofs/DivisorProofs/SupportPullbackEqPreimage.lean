@@ -18,7 +18,6 @@ open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Vert Globa
 
 namespace GlobalTheory.QCoh
 
-open TensorProduct in
 
 theorem nontrivial_fibre_of_isBaseChange {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
     {M N : Type*} [AddCommGroup M] [Module R M]

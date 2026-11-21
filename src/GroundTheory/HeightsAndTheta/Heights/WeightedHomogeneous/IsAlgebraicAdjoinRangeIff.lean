@@ -20,7 +20,6 @@ section Field
 
 variable {R L : Type} [Field R] [CommRing L] [IsDomain L] [Algebra R L]
 
-omit [IsDomain L] in
 
 end Field
 
@@ -28,13 +27,11 @@ section Dimension
 
 variable {σ : Type} [Fintype σ] {L : Type} [CommRing L] [IsDomain L] [Algebra ℚ L]
 
-omit [Fintype σ] [IsDomain L] in
 
 theorem map_C_int (φ : MvPolynomial σ ℤ →+* L) (m : ℤ) : φ (C m) = algebraMap ℚ L m := by
   have h1 : φ (C m) = (m : L) := eq_intCast (φ.comp C) m
   rw [h1, map_intCast]
 
-omit [Fintype σ] [IsDomain L] in
 
 theorem ringKrullDim_quotient_ker (φ : MvPolynomial σ ℤ →+* L) :
     ∃ s : ℕ, Algebra.trdeg ℚ (adjoin ℚ (Set.range fun v ↦ φ (X v))) = s ∧
@@ -70,7 +67,6 @@ section Constants
 
 variable {M : Type} [CommRing M] [IsDomain M] [Algebra ℚ M]
 
-omit [IsDomain M] in
 
 end Constants
 

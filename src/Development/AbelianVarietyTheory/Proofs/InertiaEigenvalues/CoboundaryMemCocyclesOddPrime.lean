@@ -99,8 +99,6 @@ theorem pow_le_mem (T : QLat LL) {k n : ℕ} (hk : k ≤ n) (v : T.V) (hv : (l :
   rw [pow_add, mul_comm, mul_smul]
   exact lpow_smul_mem T _ _ hv
 
-set_option maxHeartbeats 2000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem cocycle (T : QLat LL) (b : TW (OB l ↥(OL LL)) T) (c : Gl l → T.V) (hc : IsCobOf (sQ l) T b c)
     (g h : Gl l) : c (g * h) = c g + T.ρ g (c h) := by

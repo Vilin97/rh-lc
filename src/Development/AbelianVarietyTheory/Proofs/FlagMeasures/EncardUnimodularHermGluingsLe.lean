@@ -101,8 +101,6 @@ theorem integral {y x : V} (hy : y ∈ L) (hx : x ∈ L) : H.B y x ∈ (1 : Subm
   rw [← hU.2, mem_dual_iff] at hy
   exact hy.2 x hx
 
-omit [FiniteDimensional K V] in
-include hU hp hq in
 
 theorem proj_mem_dual {v : V} (hv : v ∈ L) : p v ∈ dual H (L ⊓ rs (𝓞 K) U) := by
   rw [mem_dual_iff, span_inf ((isLatMod_top_bot_iff L).1 hU.1)]
@@ -112,7 +110,6 @@ theorem proj_mem_dual {v : V} (hv : v ∈ L) : p v ∈ dual H (L ⊓ rs (𝓞 K)
   rw [← h0]
   exact integral H hU hv ha.1
 
-include hc hU hp hq in
 
 theorem mem_dual_iff_proj (d : V) : d ∈ dual H (L ⊓ rs (𝓞 K) (perp H U)) ↔ ∃ v ∈ L, v - p v = d := by
   have hsp := span_inf ((isLatMod_top_bot_iff L).1 hU.1) (perp H U)
@@ -156,7 +153,6 @@ theorem mem_dual_iff_proj (d : V) : d ∈ dual H (L ⊓ rs (𝓞 K) (perp H U)) 
     rw [map_sub, LinearMap.sub_apply, this, sub_zero]
     exact integral H hU hv hb.1
 
-include hc hU in
 
 theorem idx_ne_zero (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) :
     idx (dual H (L ⊓ rs (𝓞 K) U)) (L ⊓ rs (𝓞 K) U) ≠ 0 := by

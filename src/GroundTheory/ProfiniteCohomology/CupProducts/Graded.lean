@@ -27,7 +27,6 @@ def invariantsMap {A A' : Rep.{u} k G} (f : A ⟶ A') :
     A.quotientToInvariants N ⟶ A'.quotientToInvariants N :=
   (Rep.quotientToInvariantsFunctor k N).map f
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem invariantsTensorHom_braiding (A B : Rep.{u} k G) :
     (β_ (A.quotientToInvariants N) (B.quotientToInvariants N)).hom ≫ invariantsTensorHom B A N =
@@ -43,7 +42,6 @@ theorem cohomologyMap_inflation' (U : OpenNormalSubgroup G) {A A' : Rep.{u} k G}
       inflation A' U n (groupCohomology.map (MonoidHom.id _) (invariantsMap (U : Subgroup G) f) n x) :=
   cohomologyMap_inflation U f x
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem map_invariantsMap_braiding_map_invariantsTensorHom_cupH {A B : Rep.{u} k G} {p q n : ℕ}
     (h : p + q = n) (h' : q + p = n) (x : groupCohomology (A.quotientToInvariants N) p)

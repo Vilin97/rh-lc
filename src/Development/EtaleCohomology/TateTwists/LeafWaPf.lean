@@ -82,12 +82,10 @@ lemma wa_eq (N : ℕ) : Pr.wa N = tau N (Pr.aw N) := by
 
 end LateralTheory.EtaleFoundations.SteenPf.WaPf
 
-open LateralTheory.EtaleFoundations.SteenPf LateralTheory.EtaleFoundations.SteenPf.WaPf in
 
 theorem LateralTheory.EtaleFoundations.SteenPf.leaf_wa_of_aw (hAW : leaf_aw) : leaf_wa := by
   intro N
   rw [wa_eq, wa_eq, d_tau, hAW, tau_bd]
 
-open LateralTheory.EtaleFoundations.SteenPf in
 
 theorem LateralTheory.EtaleFoundations.SteenPf.leaf_wa_of (hAW : leaf_aw) : leaf_wa := leaf_wa_of_aw hAW

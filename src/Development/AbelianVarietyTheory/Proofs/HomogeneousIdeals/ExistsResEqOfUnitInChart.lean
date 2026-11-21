@@ -56,7 +56,6 @@ theorem addDers_apply {κ : Type} [Fintype κ] (τ : κ → Derivation R B B) (�
     (t : κ → A) (ht : ∀ i j, t i * t j = 0) (b : B) :
     addDers τ φ t ht b = φ b + ∑ i, φ (τ i b) * t i := rfl
 
-variable (R B) in
 
 theorem exists_ders [Algebra.Smooth R B] :
     ∃ (κ : Type) (_ : Fintype κ) (β : κ → B) (τ : κ → Derivation R B B),

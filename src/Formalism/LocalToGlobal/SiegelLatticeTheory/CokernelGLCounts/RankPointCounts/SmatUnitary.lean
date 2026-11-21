@@ -101,7 +101,6 @@ theorem smat_mat (G : Matrix (Fin k) (Fin k) ℂ) (a b : Fin k) :
     abel
   rw [Matrix.mulVec_mulVec, ← entry, hM]
 
-include hon in
 
 theorem smat_inv (hJ2 : J * J = 1) (hJh : Jᴴ = J) (G : Matrix (Fin k) (Fin k) ℂ) (hG : Gᴴ * G = 1)
     (hon : ∀ a b, star (wf a) ⬝ᵥ (J *ᵥ wf b) = if a = b then 1 else 0) :

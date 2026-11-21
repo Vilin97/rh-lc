@@ -43,7 +43,6 @@ theorem finiteDimensional_adjoin_restrict {F K : Type} [Field F] [Field K] [Alge
     IsScalarTower.of_algebraMap_eq fun _ => rfl
   exact Module.Finite.of_restrictScalars_finite (IntermediateField.adjoin F {α}) _ _
 
-open GlobalTheory.FN.LevelGal in
 
 theorem finiteDimensional_lvl {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε)
     (hj : ∃ φ : ℂ → ℂ, DifferentiableOn ℂ φ Hs ∧ X.an X.jK = (φ : Mero)) (M : ℕ) (hM : 0 < M) :

@@ -54,7 +54,6 @@ theorem psi_lin (Fm : FMap G C I D β₁.pull) {M : Model l K} (a : D.Ch M) (hM 
     (x : (D.H' a).N j) (f : Module.Dual C.K₀ (I.D M j)) : Fm.ψ a j (c • x) f = iP C Fm.k c * Fm.ψ a j x f := by
   rw [Fm.lin a hM, iP_apply]
 
-open Classical in
 
 def delta (hF : R.Facts) (hC : C.Facts) (Fm : FMap G C I D β₁.pull) {M : Model l K} (a : D.Ch M) (j : ℕ) :
     (D.A a).N j →+ (Module.Dual C.K₀ (I.D M j) →+ C.C) :=
@@ -148,7 +147,6 @@ theorem deltaE_id {M : Model l K} {a a' : D.Ch M} (m : D.Mo (𝟙 M.X) (Category
   rw [this]
   exact congrArg _ (LinearMap.ext fun x => by rw [LinearMap.comp_apply, Fm.pull_id M hM n x])
 
-include hL in
 
 theorem deltaE_indep {M : Model l K} (hM : G M) (a a' : D.Ch M) (n : ℕ) (u : M.T n) (f : Module.Dual C.K₀ (I.D M n)) :
     delta hF hC Fm a n (E.e a n u) f = delta hF hC Fm a' n (E.e a' n u) f := by
@@ -166,7 +164,6 @@ theorem cD_tmV {M : Model l K} (hM : G M) (a : D.Ch M) (n : ℕ) (z : ℚ_[l]) (
   unfold cD tmV
   exact ExtV.ext_tmul _ z u f
 
-open Classical in
 
 def cC (M : Model l K) (n : ℕ) : M.V n →+ (Module.Dual C.K₀ (I.D M n) →+ C.C) :=
   if hM : G M then cD hF hC Fm E hM (a0 hL M hM) n else 0

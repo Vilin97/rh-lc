@@ -463,7 +463,6 @@ theorem noFix_quot {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [TopologicalSpa
   rw [this]
   exact (IsModuleTopology.continuous_of_linearMap _).comp (hc.comp (continuous_id.prodMk continuous_const))
 
-open GlobalTheory.BKRightExact in
 
 theorem lift_dR {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} (T : LocTied l P AI)
     (K : FinExt l) (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [FiniteDimensional ℚ_[l] LL]

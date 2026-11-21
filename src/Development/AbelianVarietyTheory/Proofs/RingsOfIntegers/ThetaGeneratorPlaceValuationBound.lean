@@ -151,7 +151,6 @@ theorem bound_of_chBound (Xo : Moduli Dw l) (c : Coeff l) (π : 𝓞 E) (hπ : �
     rw [EReal.coe_le_coe_iff]
     linarith
 
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.DIV.Cons GlobalTheory.PlaceTop in
 
 theorem thBound : ThBoundSt := by
   intro D T h j hj hinj EX hO w g hg la y

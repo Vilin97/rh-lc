@@ -152,7 +152,6 @@ section Orbit
 
 variable {X : Type*} {U : X → Type*} [∀ x, CommGroup (U x)] [MulDistribMulAction G (∀ x, U x)]
 
-variable (G U) in
 
 def mulPiRep : Representation ℤ G (∀ x, Additive (U x)) where
   toFun g := AddMonoidHom.toIntLinearMap ((additivePiEquiv U).toAddMonoidHom.comp

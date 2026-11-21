@@ -157,7 +157,6 @@ def evLin (I : ∀ k, Finset (ι k)) (hI : CellMeets y I) :
     | h m t =>
       rw [LocalizedModule.smul'_mk, ev_mk, ev_mk, map_smul, smul_div_assoc, RingHom.id_apply]
 
-open Classical in
 
 def evMap (I : ∀ k, Finset (ι k)) :
     LocalizedModule (cellMon S I) (MRingOver S ι ⧸ mIdealOver S y) →ₗ[S] Ω :=

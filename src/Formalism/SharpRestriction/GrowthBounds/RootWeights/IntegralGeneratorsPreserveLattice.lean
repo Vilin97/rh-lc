@@ -182,7 +182,6 @@ section
 
 variable {K : Type} [Field K] [CharZero K] {ι : Type} [Fintype ι] {n : ℕ}
 
-open Classical in
 
 def letterPolarization (K : Type) [Field K] {ι : Type} {n : ℕ} (LL : Letters ι) (S : Set ι) (a b : Fin n) (l : ι) :
     Module.End K (MvPolynomial (ι × Fin n) K) :=

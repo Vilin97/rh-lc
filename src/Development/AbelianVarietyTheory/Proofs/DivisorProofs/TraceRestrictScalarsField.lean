@@ -176,7 +176,6 @@ private lemma trace_mul_finrank_eq_finrank_mul_trace {A M : Type} [Ring A] [Alge
   push_cast
   ring
 
-set_option autoImplicit false in
 
 theorem _root_.GlobalTheory.QTrace.q_trace : ∀ {F A V : Type} [Field F] [NumberField F] [Ring A] [Algebra F A] [FiniteDimensional F A] [Algebra.IsCentral F A]
     [IsSimpleRing A] [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V] (n : ℕ), Module.finrank F A = n ^ 2 →

@@ -42,9 +42,6 @@ lemma _root_.GlobalTheory.DualFamily.isIntegral_cc {a : E} (ha : IsIntegral ℤ 
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.cc
   exact ha.map (RingHom.toIntAlgHom (IsCMField.complexConj E).toRingEquiv.toRingHom)
 
-open NumberField in
-open scoped nonZeroDivisors in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 
 lemma _root_.GlobalTheory.DualFamily.exists_herm_eq {n : ℕ} (f : (Fin n → E) →ₗ[E] E) :
     ∃ w : Fin n → E, ∀ u, f u = _root_.ReciprocityTheory.ChartRestriction.G.FD.herm 1 u w := by
@@ -54,10 +51,6 @@ lemma _root_.GlobalTheory.DualFamily.exists_herm_eq {n : ℕ} (f : (Fin n → E)
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.cc
   rw [IsCMField.complexConj_apply_apply, smul_eq_mul]
 
-open NumberField in
-open scoped nonZeroDivisors in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
-omit [IsCMField E] in
 
 lemma _root_.GlobalTheory.DualFamily.eq_zero_of_line {n : ℕ} (Λ : Submodule (𝓞 E) (Fin n → E))
     (hfg : Λ.FG) (w : Fin n → E) (hw : ∀ c : E, c • w ∈ Λ) : w = 0 := by

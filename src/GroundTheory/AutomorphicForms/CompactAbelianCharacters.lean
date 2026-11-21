@@ -32,7 +32,6 @@ def transl (h : C) : Lp ℂ 2 μ →L[ℂ] Lp ℂ 2 μ :=
 
 variable (ψ : C(C, ℝ))
 
-include μ in
 
 end Metrizable
 

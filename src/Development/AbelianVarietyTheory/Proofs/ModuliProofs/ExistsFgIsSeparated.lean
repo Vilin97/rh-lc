@@ -13,7 +13,6 @@ namespace GlobalTheory.SpreadSep
 
 universe u
 
-open AlgebraicGeometry CategoryTheory Limits in
 
 theorem _root_.GlobalTheory.SpreadSep.exists_isClosed_preimage_diff {I : Type u} [Category.{u} I] (D : I ⥤ Scheme.{u}) (c : Cone D)
     (hc : IsLimit c) [IsCofiltered I] [∀ {i j} (f : i ⟶ j), IsAffineHom (D.map f)]
@@ -182,7 +181,6 @@ private theorem isSeparated_pullback_snd_spMap_iff_isClosed_preimage (k R : Type
       rw [Iso.inv_hom_id, Category.id_comp]
   rw [hr]
 
-open AlgebraicGeometry CategoryTheory Limits in
 
 theorem _root_.GlobalTheory.SpreadSep.exists_fg_isSeparated (k V : Type) [CommRing k] [IsNoetherianRing k] [CommRing V]
     [Algebra k V] (X : Scheme.{0}) (p : X ⟶ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp k) (h₁ : LocallyOfFiniteType p) (h₂ : QuasiCompact p)

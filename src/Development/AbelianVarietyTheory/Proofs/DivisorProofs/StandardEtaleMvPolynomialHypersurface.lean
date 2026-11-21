@@ -44,7 +44,6 @@ theorem optionEquivLeft_map (A : Type) [CommRing A] (n : ℕ) {k : Type} [Field 
   · simp [optionEquivLeft_C]
   · rcases i with _ | j <;> simp [optionEquivLeft_X_none, optionEquivLeft_X_some]
 
-open MvPolynomial in
 
 theorem standardEtale_mvPolynomial_hypersurface :
     ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (n : ℕ)

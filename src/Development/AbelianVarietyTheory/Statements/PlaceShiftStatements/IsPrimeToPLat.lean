@@ -29,7 +29,6 @@ variable {p : ℕ} [Fact p.Prime] {k : Type} [Field k]
 
 variable {O : Type} [Ring O] {star : O ≃+* Oᵐᵒᵖ} {A₀ : AbVar k} {ι₀ : O →+* End A₀} {c₀ : Pic A₀.X.left}
 
-variable (p) in
 
 variable [CharP k p] [PerfectRing k p]
 

@@ -18,7 +18,6 @@ noncomputable section
 
 namespace GlobalTheory.MatFrames
 
-set_option maxHeartbeats 1000000 in
 
 theorem frames_mat : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =>
     ∀ j (hj : j < D.R.m), j ≤ t.m2 → ∀ (β : (St j hj.le).Ch) (x x₁ : UA D j hj.le) (κ : ((St j hj.le).K β).lev.U), x₁.1 = x.1 * κ.1 →

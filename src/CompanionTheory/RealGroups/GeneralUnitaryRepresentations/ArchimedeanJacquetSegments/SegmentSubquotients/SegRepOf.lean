@@ -18,7 +18,6 @@ open CompanionTheory.Pf1.SegRepC CompanionTheory.Pf1.SegRepC.SegTwo
 
 namespace CompanionTheory.RgGu.SRC
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def StageP : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k],

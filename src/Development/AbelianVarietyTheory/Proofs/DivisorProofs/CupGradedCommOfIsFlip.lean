@@ -197,7 +197,6 @@ theorem ev_sub' {R : Type} [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (a b : Co
 
 end GlobalTheory.EtC.CupFlip
 
-open GlobalTheory.EtC.CupSpec GlobalTheory.EtC.CupFlip in
 
 theorem GlobalTheory.EtC.Pair.cup_flip : ∀ (R : Type) [CommRing R] {I J K : Cx R} (μ : Pair I J K) (ν : Pair J I K), μ.IsFlip ν →
     ∀ (E : Spc) {n m k : ℤ} (h : n + m = k) (h' : m + n = k) a b,

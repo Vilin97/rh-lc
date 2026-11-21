@@ -94,7 +94,6 @@ theorem isHomogeneous_forgetWeight (κ : K → K') {P : Ideal (MRing ι')} (h : 
   rw [weight_forgetWeight]
   exact ha d (mem_support_iff.mpr hd) k.1
 
-omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 
 theorem isWeightedHomogeneous_rename (κ : K → K') {v : (Σ k, ι k) → (Σ k', ι' k')}
     (hv : ∀ p, (v p).1 ∈ Set.range κ) (g : MvPolynomial (Σ k, ι k) ℤ) :
@@ -116,7 +115,6 @@ theorem isWeightedHomogeneous_rename (κ : K → K') {v : (Σ k, ι k) → (Σ k
 def forgetMonomial (κ : K → K') (i : ∀ k : Forgotten κ, ι' k.1) (a : Forgotten κ →₀ ℕ) : MRing ι' :=
   ∏ k, X ⟨k.1, i k⟩ ^ a k
 
-omit [∀ k, Fintype (ι' k)] in
 
 theorem isWeightedHomogeneous_forgetMonomial (κ : K → K') (i : ∀ k : Forgotten κ, ι' k.1)
     (a : Forgotten κ →₀ ℕ) :
@@ -142,7 +140,6 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' : Ideal (MRing ι')}
   {L : Type} [Field L] [Algebra ℚ L] {φ : MRing ι' →+* L}
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem algebraicIndependent_forgotten (hv : ∀ p, (v p).1 = κ p.1) (hP : IsMultiHomogIdeal P')
     (hprime : P'.IsPrime) (hker : RingHom.ker φ = P') (i : ∀ k : Forgotten κ, ι' k.1)

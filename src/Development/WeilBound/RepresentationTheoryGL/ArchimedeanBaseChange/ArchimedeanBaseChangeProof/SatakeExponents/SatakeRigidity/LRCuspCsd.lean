@@ -81,7 +81,6 @@ theorem sum_rev_map {d : ℕ} (f : Fin d → Multiset ℂˣ) :
   rw [map_inv_sum]
   exact Fintype.sum_equiv Fin.revPerm _ _ fun k => by rw [Fin.revPerm_apply]
 
-variable (E) in
 
 def nuT (s : ℝ) : Formalism.L2.Host.HChar E := GlobalTheory.ThetaPull.thetaChar (GlobalTheory.HeckeGal.Model.absPow E (-s))
 
@@ -89,7 +88,6 @@ theorem isAbsPow_nuT (s : ℝ) : (nuT E s).IsAbsPow s := by
   have h := GlobalTheory.ThetaPull.isAbsPow_thetaChar (GlobalTheory.HeckeGal.Model.absPow_isAbsPow E (-s))
   rwa [neg_neg] at h
 
-variable (E) in
 
 def muT (d : ℕ) (k : Fin d) : Formalism.L2.Host.HChar E := GlobalTheory.HeckeGal.Model.absPow E (-spehExp d k.rev)
 
@@ -102,7 +100,6 @@ theorem isAbsPow_muT (d : ℕ) (k : Fin d) : (muT E d k).IsAbsPow (spehExp d k) 
 
 end CuspidalConjugateSelfDual
 
-open CuspidalConjugateSelfDual in
 
 theorem rCuspCsd : RCuspCsd := by
   intro hJ hSS hStr E _ _ _ n D hr ht i a d P ha hd hu hn he

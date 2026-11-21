@@ -139,6 +139,5 @@ theorem lbIso_lam_pull {G : Over S} {G' : Over S'} [GrpObj G] [IsCommMonObj G] [
 
 end GlobalTheory.ZM.SiegPull
 
-open GlobalTheory.ZM.SiegPull in
 
 end

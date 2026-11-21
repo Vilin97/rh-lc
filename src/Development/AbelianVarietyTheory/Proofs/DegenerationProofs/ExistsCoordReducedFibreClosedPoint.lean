@@ -82,7 +82,6 @@ theorem mem_nilradical_of_forall_algHom {K T : Type} [Field K] [IsAlgClosed K] [
   rw [← Ideal.Quotient.eq_zero_iff_mem]
   exact (map_eq_zero_iff e e.toRingHom.injective).mp this
 
-open TensorProduct in
 
 theorem exists_coords_ring {R S K B : Type} [CommRing R] [CommRing S] [Field K] [IsAlgClosed K] [CommRing B]
     [Algebra K B] {g : ℕ} (α : R →+* S) (hα : α.FiniteType) (ψ : S →+* K) [Finite (S ⧸ RingHom.ker ψ)]
@@ -177,7 +176,6 @@ theorem exists_coords_ring {R S K B : Type} [CommRing R] [CommRing S] [Field K] 
     ← RingHom.ker_eq_comap_bot, Ideal.mk_ker, sup_assoc, sup_eq_left.mpr (Ideal.le_radical (I := Q))] at h1
   exact h1
 
-open TensorProduct in
 
 theorem exists_chart_ring {G Z H : Scheme.{0}} (f : G ⟶ Z) {R S K : Type} [CommRing R] [CommRing S] [Field K]
     {g : ℕ} (α : R →+* S) (ρ : R →+* K) (iW : Sp S ⟶ G) (iV : Sp R ⟶ Z) [IsOpenImmersion iW] [IsOpenImmersion iV]

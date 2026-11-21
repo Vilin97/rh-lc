@@ -249,8 +249,6 @@ theorem le_of_X_pow_smul_le
 
 end Key
 
-open Formalism.MainNotions.DeltaInvariantLattices in
-set_option maxHeartbeats 800000 in
 
 theorem main : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), WachCharacterisation D HW F := by
   intro D HW F l _ K s LL h T hT N₁ hfree hbc hγN₁ hγπ hφ hφinv

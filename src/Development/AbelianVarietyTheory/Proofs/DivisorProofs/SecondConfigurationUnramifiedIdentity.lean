@@ -56,4 +56,3 @@ theorem rat_desc {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (
 
 end GlobalTheory.StabCosetDomain
 
-open GlobalTheory.StabCosetDomain in

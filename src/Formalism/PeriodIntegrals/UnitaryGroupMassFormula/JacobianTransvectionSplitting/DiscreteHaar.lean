@@ -11,7 +11,6 @@ open scoped ENNReal NNReal
 
 namespace PI.NglqJacSplitW
 
-open Classical in
 
 def modF (F : Type) [Field F] [TopologicalSpace F] [IsTopologicalDivisionRing F]
     [LocallyCompactSpace F] (a : F) : ℝ≥0∞ :=

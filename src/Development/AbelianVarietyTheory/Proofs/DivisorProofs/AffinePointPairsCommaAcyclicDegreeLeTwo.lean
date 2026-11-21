@@ -31,14 +31,12 @@ variable {R : Type} [CommRing R] {C : Type u} [Category.{v} C] (F : C ⥤ CommAl
   (bij : ∀ S h, Function.Bijective (mp F (θ S h)))
   (h0 : P _ (θ T (hQ T (𝟙 T))))
 
-include hQ bij h0 in
 
 theorem sep_of_retract : Sep F P := by
   intro x hx
   refine (bij T (hQ T (𝟙 T))).1 ?_
   rw [hx _ _ h0, map_zero]
 
-include hp bij h0 in
 
 theorem glue_of_retract : Glue F P := by
   intro s hs
@@ -46,7 +44,6 @@ theorem glue_of_retract : Glue F P := by
   refine ⟨x, fun S u hu ↦ (bij S (hQ S u)).1 ?_⟩
   rw [← mp_comp, ← hp, mp_comp, hx, ← hs _ _ _ _ h0, hp, hs _ _ _ _ hu]
 
-include hp hθ hpm bij h0 in
 
 theorem cocycleOne_vanishing_of_natural_additive_retract : Van1 F P := by
   intro a ha
@@ -64,7 +61,6 @@ theorem cocycleOne_vanishing_of_natural_additive_retract : Van1 F P := by
   simp only [map_sub]
   linear_combination k1 - k3 + k2
 
-include hp hθ hpm hmm bij h0 in
 
 theorem cocycleTwo_vanishing_of_natural_additive_retract : Van2 F P := by
   intro z hz

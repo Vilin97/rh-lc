@@ -114,7 +114,6 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E]
 
 end Herm
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.LandherrUnram] in
 
 end GlobalHyps
 

@@ -118,7 +118,6 @@ theorem card_aboveF {L : Type} [Field L] [NumberField L] (F : Type) [Field F] [N
     exact ⟨⟨Q, h1, Ideal.ne_bot_of_liesOver_of_ne_bot v.ne_bot Q⟩,
       HeightOneSpectrum.ext h2.over.symm, rfl⟩
 
-open Classical in
 
 theorem eta_eq_jacobiSym : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (v : HeightOneSpectrum (𝓞 H.F)),
     ((H.d : ℕ) : 𝓞 H.F) ∉ v.asIdeal →

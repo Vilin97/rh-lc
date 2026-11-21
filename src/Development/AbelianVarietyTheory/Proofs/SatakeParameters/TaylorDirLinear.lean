@@ -26,7 +26,6 @@ theorem map_subst_linear {σ κ R S : Type*} [Finite σ] [Fintype κ] [CommRing 
 
 open Formalism.MainNotions.G Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric NumberField GlobalTheory.IndefiniteRowSideFullHecke.IntegralJetsPairing
 
-open Classical in
 
 theorem taylorDir_linear (D : D7) {N N' : ℕ} (G : VC D N N' → ℂ)
     (c : D.what₂.Tau × Fin N' × Fin N → D.what₂.Tau × Fin N' × Fin N → ℂ)

@@ -32,7 +32,6 @@ def IsTotPos (x : F) : Prop := ∀ τ : F →+* ℝ, 0 < τ x
 
 def HasGen {X : Scheme.{0}} (L : LB X) : Prop := ∃ t : L.Gen, t.IsGen
 
-variable (F) in
 
 structure Obj (𝔠 : FracId F) (S : Scheme.{0}) where
 
@@ -136,7 +135,6 @@ variable {𝔠 : FracId F} {Q Q' : ObjClass 𝔠} {R₀ R₁ : Type} [CommRing R
 
 end Rule
 
-variable (F) in
 
 def halfSpace : Set ((F →+* ℝ) → ℂ) := {z | ∀ τ, 0 < (z τ).im}
 

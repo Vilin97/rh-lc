@@ -125,7 +125,6 @@ theorem norm_eig_segParam {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Al
 
 end TemperedRec
 
-open TemperedRec in
 
 theorem tempered_of_isTemperedGL : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), IsRec h rc → ∀ (n : ℕ) (σ : IrrRep (GL (Fin n) (w.adicCompletion E))), GlobalTheory.LocGL.IsTemperedGL σ.ρ → (rc (cls σ)).tempered := by
   intro E Ω _ _ _ _ _ A w h rc hrc n σ hσ

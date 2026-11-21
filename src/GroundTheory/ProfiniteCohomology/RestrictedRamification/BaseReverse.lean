@@ -73,7 +73,6 @@ theorem cochainOf_revLC (n : ℕ) (x : (cochainsComplex A).X n) :
 
 variable {A}
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep A] in
 
 theorem revCochain_zero (f : (Fin 0 → G) → A) : revCochain 0 f = f := by
   funext x
@@ -183,12 +182,10 @@ theorem revCochain_two_apply (x : (Fin 2 → G) → A) (a b : G) :
   have : ((-1 : k) ^ 3) = -1 := by norm_num
   rw [this, neg_one_smul]
 
-variable (A) in
 
 def revHtpyOne (f : (Fin 1 → G) → A) : (Fin 0 → G) → A :=
   fun _ => f ![1]
 
-variable (A) in
 
 def revHtpyTwo (x : (Fin 2 → G) → A) : (Fin 1 → G) → A :=
   fun g => -x ![g 0, (g 0)⁻¹] - A.ρ (g 0) (x ![1, 1])
@@ -604,13 +601,11 @@ section CupReverse
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   {A B C : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRep C]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRep C] in
 
 noncomputable abbrev resPairingAlong {H : Type u} [Group H] (ψ : H →* G) (μ : A ⊗ B ⟶ C) :
     Rep.res ψ A ⊗ Rep.res ψ B ⟶ Rep.res ψ C :=
   (Rep.resFunctor ψ).map μ
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRep C] in
 
 theorem revCochain_hom {X Y : Rep.{u} k G} (μ : X ⟶ Y) {n : ℕ} (F : (Fin n → G) → X) (σ : Fin n → G) :
     revCochain n (fun τ => μ.hom (F τ)) σ = μ.hom (revCochain n F σ) := by
@@ -628,7 +623,6 @@ theorem revLC_cupPairingCochains (μ : A ⊗ B ⟶ C) {p q n : ℕ} (h : p + q =
     revCochain_cupCochain h h', map_smul]
   rfl
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRep C] in
 
 theorem braiding_comp_resPairingAlong {H : Type u} [Group H] (ψ : H →* G) (μ : A ⊗ B ⟶ C) :
     (β_ (Rep.res ψ B) (Rep.res ψ A)).hom ≫ resPairingAlong ψ μ = resPairingAlong ψ ((β_ B A).hom ≫ μ) := by
@@ -681,7 +675,6 @@ theorem neg_one_pow_succ_mul_mul (r s : ℕ) :
     (-1 : k) ^ ((r + 1) * s) * (-1 : k) ^ s = (-1 : k) ^ (r * s) := by
   rw [Nat.succ_mul, pow_add, mul_assoc, ← mul_pow, neg_one_mul, neg_neg, one_pow, mul_one]
 
-set_option maxHeartbeats 1600000 in
 
 theorem revCone_compactCup_succ (μ : A ⊗ B ⟶ C) {r s m : ℕ} (h : r + 1 + s = m + 1)
     (h' : s + (r + 1) = m + 1) (x : (cochainsComplex A).X (r + 1))
@@ -723,7 +716,6 @@ theorem revCone_compactCup_succ (μ : A ⊗ B ⟶ C) {r s m : ℕ} (h : r + 1 + 
   rw [e, braiding_comp_resPairingAlong, ← neg_one_pow_succ_mul_mul r s, ← smul_smul] at key
   exact key
 
-set_option maxHeartbeats 1600000 in
 
 theorem revCone_compactCup_zero (μ : A ⊗ B ⟶ C) {s : ℕ} (h : 0 + s = s) (h' : s + 0 = s)
     (x : (cochainsComplex A).X 0) (z : (cochainsComplex B).X s) :

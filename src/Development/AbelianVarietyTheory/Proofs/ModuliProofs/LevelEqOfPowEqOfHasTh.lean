@@ -90,7 +90,6 @@ theorem eq_of_pairing_const {H U I : Type} [CommGroup H] [CommGroup U] [Fintype 
   rw [skew, h]
   exact inv_one
 
-open Out ThetaCoord CommPairing VVRank in
 
 theorem exists_twist (hG : GlobalFnsSt) {S : Scheme.{0}} (P : PolAV S) {T : Over S} {k : ℕ} (hk : Odd k) {I : Type}
     {x a : I → (T ⟶ P.A)} (ha : ∀ i, a i ^ k = 1) {c : I → Γ(T.left, ⊤)ˣ}
@@ -160,7 +159,6 @@ theorem linComb_val {S : Scheme.{0}} {A T : Over S} [GrpObj A] [IsCommMonObj A] 
   rw [Out.linComb, List.prod_ofFn]
   exact Finset.prod_congr rfl fun i _ => by rw [← zpow_natCast, ZMod.val_intCast, ← zpow_eq_zpow_emod' _ (h i)]
 
-open Out in
 
 theorem eq_of_isThetaPt (hLaw : Laws) {g n j : ℕ} (hn : Odd n) (hj : 2 ≤ j) {K : Type} [Field K] [IsAlgClosed K]
     (P : PolAV (Sp K)) {y z : Fin (2 * g) → (baseOver (Sp K) ⟶ P.A)} (hy : ∀ i, y i ^ (n ^ j) ^ 2 = 1)
@@ -252,7 +250,6 @@ end GlobalTheory.LevelSquare
 
 namespace GlobalTheory
 
-open LevelSquare ThetaPtMove in
 
 theorem level_eq_of_pow_eq_of_hasTh : Out.Laws → Out.Laws2 → ∀ (g n j : ℕ) (J : Type), n.Prime → Odd n → 2 ≤ j → ∀ (o : Type) [CommRing o] (b : TBase o ((n ^ j) ^ 2)) (K : Type) [Field K] [IsAlgClosed K] (s : Sp K ⟶ Sp o) (t t' : TObj g ((n ^ j) ^ 2) J b s) (φ : t'.A.left ⟶ t.A.left) (v : Ix g ((n ^ j) ^ 2) → K), IsGrpPullback t'.A t.A (𝟙 _) φ → LBIso t'.L (t.L.pull φ) → (∀ i, (t'.pt i ^ n ^ j).left ≫ φ = (t.pt i ^ n ^ j).left) → t.HasTh (𝟙 _) v → t'.HasTh (𝟙 _) v → ∀ i, (t'.pt i).left ≫ φ = (t.pt i).left := by
   intro hLaw hLaw₂ g n j J hp hn hj o _ b K _ _ s t t' φ v hφ hw hk H H'

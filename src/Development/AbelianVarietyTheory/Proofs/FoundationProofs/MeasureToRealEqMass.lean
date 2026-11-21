@@ -113,7 +113,6 @@ theorem comap_finE : K.comap (finE V) = levA V K ⊔ GinfC V := by
     rw [show finHom V g = 1 from hg, map_one]
     exact one_mem _
 
-variable {V K} in
 
 theorem nonempty_gam_equiv (c : Cl D.sp.cm V.gram K) :
     Nonempty (Gam c ≃ stabAt (UQ D.sp.cm V.gram) (K.subgroupOf (UA D.sp.cm V.gram)) c.out) := by

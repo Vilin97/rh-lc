@@ -28,11 +28,8 @@ section Gen
 variable {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] [Algebra F E] {r : ℕ} (V : ConjugateFieldNorm.HSpace E r)
 
-omit [NumberField F] [IsTotallyReal F] [NumberField E] [IsCMField E] in
 
-omit [IsTotallyReal F] [IsCMField E] in
 
-omit [IsTotallyReal F] [IsCMField E] in
 
 end Gen
 

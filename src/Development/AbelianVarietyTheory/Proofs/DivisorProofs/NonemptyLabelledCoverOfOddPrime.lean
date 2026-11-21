@@ -38,7 +38,6 @@ theorem mono_α {R : Type} [CommRing R] [IsDomain R] {M : Modif R} {X : Over M.S
 
 end GlobalTheory.Mum.UCoverLab
 
-open GlobalTheory.Mum.UCoverLab GlobalTheory.Mum.CoverFin in
 
 theorem GlobalTheory.Mum.UCover.labCover : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R → ∀ (D : DegData R (maximalIdeal R)) (C : UCover R) (lab : Labels D.toPre C.A), ∀ n : ℕ, n.Prime → Odd n → IsUnit (n : R) → OneTrait D.toPre C.A lab → GalEqN n lab → Nonempty (LabCover D) := by
   intro R _ _ _ hB D C lab n hn ho hu hone hgal

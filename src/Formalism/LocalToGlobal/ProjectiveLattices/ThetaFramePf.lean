@@ -95,7 +95,6 @@ end Calc
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
 variable (Xo : Moduli Dw l) (c : Coeff l)
 
-set_option maxHeartbeats 400000 in
 
 theorem thetaFrame_of (hT : ReciprocityTheory.ChartRestriction.G.Out.SecTwistSt) : ThetaFrameSt Xo c := by
   intro T io O _ β Y hPI yt z hz hzs G m t' m1 m2

@@ -21,7 +21,6 @@ open GlobalTheory.ThetaDens
 
 namespace GlobalTheory.ThetaDens
 
-open GlobalTheory.FockCompare GlobalTheory.OrientedHeis GlobalTheory.Size in
 
 theorem sm_of_tendstoUniformly_words {G R A : Type} [AddCommGroup G] [NormedAddCommGroup R] [NormedSpace ℝ R]
     [FiniteDimensional ℝ R] [Fintype A] (ι : R →+ G) (p : G →+ R) (om : R →ₗ[ℝ] R →ₗ[ℝ] ℝ) (hp : ∀ x, p (ι x) = x)
@@ -74,7 +73,6 @@ theorem sum_coord_single {τs : Type} [Fintype τs] {m n : ℕ} (x : τs → Fin
     Finset.sum_eq_single j (fun b _ hb => by simp [hb]) (by simp)]
   simp [add_comm]
 
-open GlobalTheory.FockCompare GlobalTheory.OrientedHeis GlobalTheory.Size in
 
 theorem contDiff_of_tendstoUniformly_words : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ θ : InfFam D, IsInfFam θ → ∀ (S T : HSp D) (u : ℕ → WO S T → ℂ), (∀ j, IsThetaFunO ψ S T (u j)) → ∀ F : List (D.what₂.Tau × Fin T.rank × Fin S.rank × Bool) → WO S T → ℂ, (∀ l, TendstoUniformly (fun j => GlobalTheory.Size.wordAct (GlobalTheory.Size.heisDer ψ θ) l (u j)) (F l) Filter.atTop) → ∀ (l : List (D.what₂.Tau × Fin T.rank × Fin S.rank × Bool)) (k : ℕ) (L : (Fin k → ℝ) →+ WO S T), Continuous L → (∀ t, (L t).map (finPart D) = 0) → ∀ w, ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) fun t => F l (w + L t) := by
   intro D ψ hψ θ hθ S T u hu F hF l

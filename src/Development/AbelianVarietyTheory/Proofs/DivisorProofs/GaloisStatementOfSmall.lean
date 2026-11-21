@@ -350,7 +350,6 @@ theorem exists_of_half {T A : Type} {inc : T → (E →+* Qbar l)} (h : IsHalf i
   exact ⟨fun i => Sum.elim f f' (e'.symm i), fun τ => congrArg (Sum.elim f f') (e'.symm_apply_apply (.inl τ)),
     fun τ => congrArg (Sum.elim f f') (e'.symm_apply_apply (.inr τ))⟩
 
-variable (Ω) in
 
 theorem exists_crys_char (h1 : GlobalTheory.Published.HeckeLAdicCharacter) (h2 : GlobalTheory.Published.HeckeLAdicCharacterAbove) (ι : Qbar l ≃+* ℂ)
     (c : (E →+* Qbar l) → ℤ) (w0 : ℤ) (hc : ∀ τ, c τ + c (cj τ) = w0) :
@@ -432,7 +431,6 @@ theorem SystemOf.reads {ι : Qbar l ≃+* ℂ} {T : Type} {inc : T → (E →+* 
   rw [hcp', hcp _ (hlab Q).1 (hlab Q).2 hu σ S h1 h2 B g hB hg]
   exact reverse_scale_eq_hecke ι (absNorm_ne_zero _) S (card_of_hasSat h2) _ h3 _
 
-variable (Ω) in
 
 end Side
 
@@ -469,12 +467,10 @@ theorem blk_numbers {j : Fin D.R.m} {P : Par} {W : Wts D.what₂.Tau} (hD : Dict
   have := hD.t
   exact ⟨by omega, H.ranks.2.2.trans hD.t.symm, List.exists_mem_of_ne_nil _ (List.cons_ne_nil _ _)⟩
 
-set_option maxHeartbeats 1600000 in
 
 end Point
 
 end GlobalTheory.FrameGal
 
-open Formalism.MainNotions GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.ExpTie in
 
 end

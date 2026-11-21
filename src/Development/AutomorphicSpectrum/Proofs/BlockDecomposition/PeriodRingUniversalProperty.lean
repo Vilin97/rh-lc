@@ -36,7 +36,6 @@ variable {R S T C B : Type} [CommRing R] [CommRing S] [CommRing T] [CommRing C] 
   [Algebra R S] [Algebra R T] [Algebra R C] [Algebra S C] [Algebra T C]
   [IsScalarTower R S C] [IsScalarTower R T C]
 
-open TensorProduct in
 
 theorem tens_ext
     (hs : Function.Surjective (Algebra.TensorProduct.lift (IsScalarTower.toAlgHom R S C)
@@ -52,7 +51,6 @@ theorem tens_ext
       map_mul, map_mul, h1, h2]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
-open TensorProduct in
 
 theorem tens_desc (m n : ℕ)
     (hs : Function.Surjective (Algebra.TensorProduct.lift (IsScalarTower.toAlgHom R S C)

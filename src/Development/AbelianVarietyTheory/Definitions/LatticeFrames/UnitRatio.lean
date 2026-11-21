@@ -40,7 +40,6 @@ structure Base (c : Comm D) where
 
 variable {c : Comm D}
 
-open Classical in
 
 def Base.S (B : Base c) : Finset (GlobalTheory.FinPl.Pl D) := B.Pg.image fun PP => PP.under (𝓞 D.host.F)
 
@@ -150,9 +149,7 @@ variable {B : Base c} {τ : ∀ j h, Matrix (Fin (c.bes j 0 h).L.rank) (Fin c.Lz
 
 end AtLevel
 
-open Classical in
 
-open GlobalTheory.FinPl in
 
 end GlobalTheory.Fam
 

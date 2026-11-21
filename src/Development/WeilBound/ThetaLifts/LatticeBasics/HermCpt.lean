@@ -61,7 +61,6 @@ theorem cpt_sig {n r s : ℕ} {M : Matrix (Fin n) (Fin n) ℂ} (h : HasSig M r s
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n : ℕ}
 
-variable (F) in
 
 def fA : Af F →+ AF F := AddMonoidHom.inr (Ainf F) (Af F)
 
@@ -100,7 +99,6 @@ theorem exists_arch_section (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, 
       (by simp)]
     simp
 
-variable (F E) in
 
 def lamF : AddSubgroup (AE F E) where
   carrier := (fun x : Ix E → Af F => ∑ i, fA F (x i) • bA F i) '' Set.univ.pi fun _ => Oh F

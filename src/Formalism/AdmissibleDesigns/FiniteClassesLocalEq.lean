@@ -50,7 +50,6 @@ theorem smul_Ow (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (Fra
 
 variable {M : Type} [AddCommGroup M] [Module O M] (j : M →ₗ[O] V)
 
-variable (e eO) in
 
 def latT (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (FractionRing O) a)) :
     Submodule Ow (TrV e V) where
@@ -104,7 +103,6 @@ variable {Γ G : Type} [Group Γ] [Group G] [TopologicalSpace G] {K₀ Kk B BdR 
     [IsScalarTower K₀ Kk BdR] [IsScalarTower Qp K₀ BdR]
     (PD : PeriodData G Qp K₀ Kk B BdR) (ι : G →* Γ)
 
-variable (e eO) in
 
 def latOf (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (FractionRing O) a))
     (ρV : Representation O Γ V) (ρM : Representation O Γ M) (hj : Function.Injective j)
@@ -288,7 +286,6 @@ variable {O : Type} [CommRing O] [IsDomain O] {LL : Type} [Field LL] [Topologica
   {ev : P →ₗ[O] Q} {f0 : VP →ₗ[O] VQ}
   (hf0 : ∀ γ v, f0 (ρVP γ v) = ρVQ γ (f0 v)) (hcomm : ∀ m, f0 (jP m) = jQ (ev m))
 
-include hspQ hcomm in
 
 theorem trL_onto (hev : Function.Surjective ev) : Function.Surjective (trL e f0) := by
   intro v
@@ -300,7 +297,6 @@ theorem trL_onto (hev : Function.Surjective ev) : Function.Surjective (trL e f0)
   show f0 ((algebraMap O (FractionRing O) c)⁻¹ • jP p) = untr e v
   rw [smulK, hcomm, hm, ← algebraMap_smul (FractionRing O) c (untr e v), smul_smul, inv_mul_cancel₀ hk, one_smul]
 
-include heO hjP hjQ hjeqP hjeqQ hspP hspQ hf0 hcomm in
 
 theorem liftO_of_liftAt (ℓ : ℕ) (hp : PD.p = ℓ) (hι : Function.Bijective ι) (hev : IsEquivMap ρP ρQ ev)
     (hevs : Function.Surjective ev) {ιx : Type} {k : ℕ} (Ms : ιx → G → Matrix (Fin k) (Fin k) LL) (n : ℕ)

@@ -53,7 +53,6 @@ def smoothing (ν : Measure (Lie E a)) (α : Lie E a → ℂ) (φ : GA E a → �
 
 variable (μ : Measure (GA E a)) [μ.IsHaarMeasure]
 
-omit [IsTotallyComplex E] in
 
 variable {μ} [μ.IsMulRightInvariant] {S : Submodule ℂ (L2 (latticeGL E a) μ)}
 
@@ -104,14 +103,12 @@ theorem continuous_smoothing (ν : Measure (Lie E a)) [ν.IsAddHaarMeasure] {α 
 
 variable [IsFiniteMeasure (GlobalTheory.AutomorphicL2Unitary.quotMeasure (latticeGL E a) μ)]
 
-omit [μ.IsMulRightInvariant] in
 
 theorem memL2_of_bound {φ : GA E a → ℂ} (hφ : Continuous φ) (hl : LeftInv (latticeGL E a) φ) {C : ℝ}
     (hC : ∀ g, ‖φ g‖ ≤ C) : MemL2Quotient (latticeGL E a) μ φ :=
   ⟨hl, MemLp.of_bound (aestronglyMeasurable_quotMeasure_iff_lift.2 (by
     rw [hl.lift_descend]; exact hφ.aestronglyMeasurable)) C (.of_forall fun q => hC _)⟩
 
-omit [μ.IsMulRightInvariant] [IsFiniteMeasure (GlobalTheory.AutomorphicL2Unitary.quotMeasure (latticeGL E a) μ)] in
 
 end GlobalTheory.CuspQuot
 

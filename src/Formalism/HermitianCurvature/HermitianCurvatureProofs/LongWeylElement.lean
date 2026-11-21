@@ -171,7 +171,6 @@ private lemma matrix_apply_congr_of_eq {n m : ℕ} (μ : Matrix (Fin n) (Fin m) 
   subst h2
   rfl
 
-set_option maxHeartbeats 800000 in
 
 theorem t_bigcellrec : BigCellRec := by
   intro k r' c μ

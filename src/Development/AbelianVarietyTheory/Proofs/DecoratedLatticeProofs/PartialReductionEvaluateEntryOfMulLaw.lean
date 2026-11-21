@@ -60,7 +60,6 @@ theorem continuous_form (w : Matrix R Q k →ₗ[k] k) : Continuous w := by
   exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     (continuous_id.matrix_elem i j).mul continuous_const
 
-omit [Fintype R] [Fintype Q] in
 
 theorem exists_cball_single {f : Matrix R Q k → ℂ} (hf : f ∈ SB (Matrix R Q k)) (e : R × Q) :
     ∃ s : kˣ, ∀ t ∈ cball s, ∀ x, f (x + Matrix.single e.1 e.2 t) = f x := by

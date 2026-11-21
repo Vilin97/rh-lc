@@ -181,7 +181,6 @@ theorem hol_slice {X : Scheme.{0}} {g : ℕ} (e : (Fin g → ℂ) → (Sp ℂ �
 
 end GlobalTheory.FrameSign
 
-open GlobalTheory.FrameSign GlobalTheory.CubeValues in
 
 theorem GlobalTheory.ahFrame_factor_eq_negOnePow : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (σ : KA l →+* ℂ) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (Fu : FamilyUnif Xo σ ty) (i : Fin Fu.n) (Pm : (Fu.Di i).La →+ (Fin g → ℂ)) (Hm : Matrix (Fin g) (Fin g) ℂ) (χl : (Fin g → ℂ) → ℂ) (fr : Xo.univ.t.PP.L.ι → (Fin g → ℂ) → ℂ), IsPeriod (Fu.Di i) ty Pm → AHFrame Fu i Pm Hm χl fr → ∀ a, χl (Pm a) = ((Int.negOnePow ((Fu.Di i).EF a (H.w0 • a)) : ℤˣ) : ℤ) := by
   intro E _ _ _ H Dw l Xo σ g ty Fu i Pm Hm χl fr hP hF a

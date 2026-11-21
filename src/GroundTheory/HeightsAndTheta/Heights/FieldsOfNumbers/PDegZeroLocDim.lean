@@ -22,12 +22,10 @@ section
 variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
   [∀ k, Fintype (ι k)]
 
-omit [DecidableEq K] in
 
 theorem finiteType_quotient_mRing (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : Algebra.FiniteType F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) :=
   Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ F I) (Ideal.Quotient.mkₐ_surjective F I)
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem chartMonomial_not_mem (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [Q.IsPrime] (u : ∀ k, ι k)
     (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ Q) (b : K → ℕ) : chartMonomial u b ∉ Q := by

@@ -33,7 +33,6 @@ lemma en_wS : en (wS K) 0 0 = 0 ∧ en (wS K) 0 1 = 1 ∧ en (wS K) 1 0 = -1 ∧
 
 variable {M : Type} [Monoid M]
 
-open Classical in
 
 def mx (m : Kˣ → M) (x : K) : M := if h : x = 0 then 1 else m (Units.mk0 x h)
 
@@ -43,7 +42,6 @@ lemma mx_ne (m : Kˣ → M) {x : K} (hx : x ≠ 0) : mx m x = m (Units.mk0 x hx)
 lemma mx_unit (m : Kˣ → M) (s : Kˣ) : mx m (s : K) = m s := by
   rw [mx_ne m s.ne_zero, Units.mk0_val]
 
-open Classical in
 
 def rho (n : K → M) (m : Kˣ → M) (t : M) (g : SpecialLinearGroup (Fin 2) K) : M :=
   if en g 1 0 = 0 then mx m (en g 0 0) * n (en g 0 1 / en g 0 0)

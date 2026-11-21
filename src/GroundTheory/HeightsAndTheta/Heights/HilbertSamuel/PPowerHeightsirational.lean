@@ -213,7 +213,6 @@ end Forms
 
 end PowerHeightsirational
 
-open PowerHeightsirational in
 
 theorem PowerHeightsirational.proof (hN : GeneratedNefGeneric.Statement) (hK : KodairaGeneric.Statement)
     (hC : ChartDenominator.Statement) : PowerHeightsirational.Statement := by

@@ -45,7 +45,6 @@ def colS {E : Type} {n m : ℕ} (x y : Fin n → E) (ι : Matrix (Fin n) (Fin m)
 def basMat {E : Type} [Field E] {n m : ℕ} (H : Plane E n m) (e : Ix m ≃ Fin n) : Matrix (Fin n) (Fin n) E :=
   fun r k => colS H.x H.y H.ι (e.symm k) r
 
-open Classical in
 
 def basGL {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {v : Pl F} (t : E →ₐ[F] Fv F v) {n m : ℕ}
     (H : Plane E n m) (e : Ix m ≃ Fin n) : GL (Fin n) (Fv F v) :=

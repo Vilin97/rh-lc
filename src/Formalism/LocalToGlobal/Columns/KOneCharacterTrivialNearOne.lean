@@ -117,7 +117,6 @@ def twLt : ∀ j, LevFam X.E X.K (R.N j) Pr.vGs := colLevSym Ch
 def twTt : ∀ j, LevQFam X.E X.K (R.N j) (QE sel (mu : Chr X.F X.E X.K)) := fun j P =>
   kOneLevel P.1 (R.N j) R.r (twTopDepth R) (resChar (mu : Chr X.F X.E X.K) P.1)
 
-open Classical in
 
 end TwTop
 

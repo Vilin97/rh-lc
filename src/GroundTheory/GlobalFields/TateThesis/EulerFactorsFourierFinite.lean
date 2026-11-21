@@ -150,7 +150,6 @@ def conductorChar (u : (FiniteAdeleRing (𝓞 K) K)ˣ) : ℂ :=
 theorem conductorChar_ne_zero (u : (FiniteAdeleRing (𝓞 K) K)ˣ) : χ.conductorChar u ≠ 0 :=
   Finset.prod_ne_zero_iff.2 fun _ _ ↦ Circle.coe_ne_zero _
 
-open Classical in
 
 theorem finiteTest_mul {v : HeightOneSpectrum (𝓞 K)} (u : (v.adicCompletion K)ˣ)
     (hu : Valued.v (u : v.adicCompletion K) = 1) (x : v.adicCompletion K) :
@@ -304,7 +303,6 @@ theorem finiteFourier_eq_zero_of_le {y : FiniteAdeleRing (𝓞 K) K} {v : Height
     rw [sub_mul, ← h1, one_mul, sub_self]
   exact (mul_eq_zero.1 h2).resolve_left (sub_ne_zero.2 fun h ↦ ha1 (Circle.coe_eq_one.1 h))
 
-open Classical in
 
 def unitOrOne {F : Type*} [GroupWithZero F] (x : F) : Fˣ :=
   if h : x = 0 then 1 else Units.mk0 x h

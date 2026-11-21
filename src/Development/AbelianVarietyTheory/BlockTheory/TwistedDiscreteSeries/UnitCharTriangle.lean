@@ -29,7 +29,6 @@ def IsUnitDet (e : AE D) {k : ℕ} (N : Matrix (Fin k) (Fin k) (Lev.EAf D)) (x :
   infPart D (x : AE D) = 1 ∧ toEAf D (x : AE D) = 1 - toEAf D e + toEAf D e * N.det ∧
     toEAf D ((x⁻¹ : (AE D)ˣ) : AE D) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E
 
-open Classical in
 
 def unitChar (ν : (AE D)ˣ →* Circle) (e : AE D) {k : ℕ} (N : Matrix (Fin k) (Fin k) (Lev.EAf D)) : ℂ :=
   if h : ∃ x, IsUnitDet e N x then (((ν h.choose)⁻¹ : Circle) : ℂ) else 0
@@ -37,7 +36,6 @@ def unitChar (ν : (AE D)ˣ →* Circle) (e : AE D) {k : ℕ} (N : Matrix (Fin k
 def rightBlock {κ : Type} [Zero κ] {k d : ℕ} (a : ℕ) (Y : Matrix (Fin k) (Fin d) κ) : Matrix (Fin k) (Fin k) κ :=
   fun i j => if h : a + j.1 < d then Y i ⟨a + j.1, h⟩ else 0
 
-open Classical in
 
 def stdFst (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.host.E)) (A WW : HSp D) (βA : GL (Fin A.rank) (Lev.EAf D))
     (βW : GL (Fin WW.rank) (Lev.EAf D)) (x : WO A WW) : ℂ :=
@@ -49,7 +47,6 @@ def dualCoord (A' WW : HSp D) (βA' : GL (Fin A'.rank) (Lev.EAf D)) (βW : GL (F
     Matrix (Fin A'.rank) (Fin WW.rank) (Lev.EAf D) :=
   eToEAf D D.host.xi0 • frMapAdj A' WW βA' βW y
 
-open Classical in
 
 def stdSnd (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.host.E)) (a : ℕ) (A' WW : HSp D)
     (βA' : GL (Fin A'.rank) (Lev.EAf D)) (βW : GL (Fin WW.rank) (Lev.EAf D)) (y : WO A' WW) : ℂ :=
@@ -74,8 +71,6 @@ def Rig.Is {V : HSp D} (r : Rig V) : Prop :=
 def Rig.IsStd {V : HSp D} (r : Rig V) : Prop :=
   V.gram = 1 ∧ (∀ y, y ∈ r.Λ ↔ ∀ i, ∃ b : 𝓞 D.host.E, (b : D.host.E) = y i) ∧ ∀ τ, r.s τ = 1 ∧ r.B τ = 1
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure Tri (T : Type) (A A' WW : HSp D) where
 
@@ -181,7 +176,6 @@ def beta (i j : Fin D.R.m) (_ : T) : (AE D)ˣ →* Circle := G.chi (D.R.m - i) *
 
 def nuH (i j : Fin D.R.m) (t : T) : Formalism.L2.Host.HChar D.host.E := R.C.mu0 j * R.xiH t / G.chiH (D.R.m - i)
 
-open Classical in
 
 def places (t : T) : Finset (Pl D.host.E) := G.toPlaceDat.W R.Pg ∪ R.Q t
 

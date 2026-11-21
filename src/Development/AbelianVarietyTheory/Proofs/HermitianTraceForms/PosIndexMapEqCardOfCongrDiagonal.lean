@@ -201,7 +201,6 @@ theorem posIndex_add_negIndex {G : Matrix n n ℂ} (hG : G.IsHermitian) (hG0 : G
   rw [posIndex_add_negIndex_eq_rank hG,
     rank_of_isUnit G ((isUnit_iff_isUnit_det G).2 hG0.isUnit)]
 
-open scoped ComplexOrder in
 
 theorem posIndex_map_conj {G : Matrix n n ℂ} (hG : G.IsHermitian) :
     posIndex (G.map conj) = posIndex G := by
@@ -369,13 +368,11 @@ theorem det_map_ne_zero {n : Type*} [Fintype n] [DecidableEq n] (τ : E →+* �
   rw [h]
   exact (map_ne_zero τ).2 hG0
 
-omit [NumberField E] [IsCMField E] in
 
 theorem hermC_eq_dotProduct (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (u v : Fin r → ℂ) :
     FD.hermC τ G u v = u ⬝ᵥ G.map τ *ᵥ star v :=
   (HermDiag.dotProduct_mulVec_comp_eq_sum conj (G.map τ) u v).symm
 
-omit [NumberField E] [IsCMField E] in
 
 theorem gram_eq (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (P : Matrix (Fin r) (Fin r) ℂ) :
     FD.gram τ G P = Pᵀ * G.map τ * P.map conj := by
@@ -383,7 +380,6 @@ theorem gram_eq (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (P : Matrix (F
   rw [HermDiag.transpose_mul_mul_map_apply]
   exact hermC_eq_dotProduct τ G _ _
 
-omit [NumberField E] [IsCMField E] in
 
 theorem gram_eq_sgn_iff (τ : E →+* ℂ) {G : Matrix (Fin r) (Fin r) E}
     (hG : ∀ a b, FD.cc (G a b) = G b a) (hG0 : G.det ≠ 0) (p : ℕ) :
@@ -405,7 +401,6 @@ theorem negIndex_map_conjugate (τ : E →+* ℂ) {G : Matrix n n E}
     negIndex (G.map (ComplexEmbedding.conjugate τ)) = negIndex (G.map τ) :=
   negIndex_map_conj (isHermitian_map τ hG)
 
-omit [DecidableEq n] in
 
 theorem map_congr {m : Type*} (τ : E →+* ℂ) (G : Matrix n n E) (P : Matrix n m E) :
     (Pᵀ * G * P.map FD.cc).map τ = (P.map τ)ᵀ * G.map τ * (P.map τ).map conj := by
@@ -425,6 +420,5 @@ theorem posIndex_map_eq_card_of_congr_diagonal (τ : E →+* ℂ) {G P : Matrix 
 
 end CM
 
-open NumberField in
 
 end GlobalTheory.Inertia

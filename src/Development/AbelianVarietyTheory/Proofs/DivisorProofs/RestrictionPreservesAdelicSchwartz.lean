@@ -54,8 +54,6 @@ theorem hasCompactSupport_comp_extend_by_zero {κ ι κ₁ R : Type} [Zero R] [T
 
 end GlobalTheory.ThK.AdaptEv
 
-open GlobalTheory.ThK.AdaptEv in
-open scoped Classical in
 
 theorem GlobalTheory.ThK.AdaptEv.restrL_mem_schA : ∀ (F : Type) [Field F] [NumberField F] {κ ι κ₁ : Type} [Fintype κ] [Fintype ι] [Fintype κ₁] (eq : κ ≃ ι ⊕ κ₁),
     ∀ Φ ∈ schA F κ, restrL eq Φ ∈ schA F κ₁ := by

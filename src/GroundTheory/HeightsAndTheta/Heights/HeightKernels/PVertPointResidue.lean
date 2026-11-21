@@ -126,7 +126,6 @@ theorem aeval_div {K' : Type} [Field K'] (y : (Σ _ : Unit, T) → K') (c : T)
 
 end VerticalPointResidue
 
-open VerticalPointResidue in
 
 theorem VertPointResidue.proof (hC : CurveCharts.Statement) : VertPointResidue.Statement := by
   intro T _ K' _ _ y s hP hs hsP W hW

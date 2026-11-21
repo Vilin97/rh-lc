@@ -199,7 +199,6 @@ theorem isEmbedding_coe_coe :
     Topology.IsEmbedding (fun x : G => ((x : 𝔸ˣ) : 𝔸)) :=
   Units.isOpenEmbedding_val.isEmbedding.comp Topology.IsEmbedding.subtypeVal
 
-include h in
 
 theorem secondCountableTopology : SecondCountableTopology G :=
   isEmbedding_coe_coe.secondCountableTopology
@@ -273,7 +272,6 @@ theorem contDiff_smul_of_tsupport {V F : Type*} [NormedAddCommGroup V] [NormedSp
       simp [hy]
     exact contDiffAt_const.congr_of_eventuallyEq this
 
-open MeasureTheory in
 
 theorem contDiff_integral_comp_of_hasCompactSupport {X : Type*} [MeasurableSpace X]
     [TopologicalSpace X] [OpensMeasurableSpace X] [SecondCountableTopology X] (ν : Measure X)

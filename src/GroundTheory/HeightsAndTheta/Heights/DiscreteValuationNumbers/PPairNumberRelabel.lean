@@ -112,7 +112,6 @@ section Numbers
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type*}
 
-omit [DecidableEq K] in
 
 theorem diffStep_comm (a b : K → ℤ) (h : (K → ℤ) → ℤ) :
     diffStep a (diffStep b h) = diffStep b (diffStep a h) := by
@@ -120,7 +119,6 @@ theorem diffStep_comm (a b : K → ℤ) (h : (K → ℤ) → ℤ) :
   simp only [diffStep, sub_right_comm m a b]
   ring
 
-omit [DecidableEq K] in
 
 theorem foldr_diffStep_perm {l₁ l₂ : List (K → ℤ)} (p : l₁.Perm l₂) (h : (K → ℤ) → ℤ) :
     l₁.foldr diffStep h = l₂.foldr diffStep h := by
@@ -150,7 +148,6 @@ variable {K₁ K₂ : Type} [DecidableEq K₁] [DecidableEq K₂] {ι₁ : K₁ 
   {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   (e : K₁ ≃ K₂) (σ : (Σ k, ι₁ k) ≃ (Σ k, ι₂ k))
 
-omit [DecidableEq K₁] [DecidableEq K₂] in
 
 theorem specialIdeal_map (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) :
     specialIdeal (W.map (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂)) =
@@ -190,7 +187,6 @@ theorem classNum_map (hσ : ∀ v, (σ v).1 = e v.1) {S : Type*} (cls : S → K�
   rw [← Multiset.map_coe, Multiset.coe_toList, Multiset.coe_toList, Multiset.map_map]
   rfl
 
-omit [IsDomain O] [IsDiscreteValuationRing O] in
 
 theorem isMultiHomog_rename (hσ : ∀ v, (σ v).1 = e v.1) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁} {a : K₁ → ℕ}
     (h : IsMultiHomog f a) : IsMultiHomog (rename σ f) (a ∘ e.symm) := by
@@ -203,7 +199,6 @@ theorem isMultiHomog_rename (hσ : ∀ v, (σ v).1 = e v.1) {f : ReciprocityTheo
     exact e.injective.extend_apply a 0 k₁
   rwa [hext] at h'
 
-omit [IsDomain O] [IsDiscreteValuationRing O] in
 
 theorem isModelOver_map [Fintype K₁] [Fintype K₂] (hσ : ∀ v, (σ v).1 = e v.1)
     (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) (d : ℕ) (h : IsModelOver P d) :
@@ -226,7 +221,6 @@ theorem isModelOver_map [Fintype K₁] [Fintype K₂] (hσ : ∀ v, (σ v).1 = e
   · rw [GroundTheory.Heights₂.Heights.Targets.ExistsUniqueRelabel.ringKrullDim_quot_map, hdim,
       Fintype.card_congr e]
 
-omit [IsDomain O] [IsDiscreteValuationRing O] in
 
 theorem isVerticalDivisor_map (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) (ϖ : O)
     (b : K₂ → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁) (h : IsVerticalDivisor P ϖ (b ∘ e) f g) :

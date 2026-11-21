@@ -185,7 +185,6 @@ section Core
 
 variable {O W V : Type} [CommRing O] [CommRing W] [CommRing V] [IsLocalRing O] [IsLocalRing W] [IsLocalRing V]
 
-omit [IsLocalRing W] in
 
 theorem essFiniteType_residue (ib : W →+* V) {σ : Type} [Finite σ] (s : σ → V)
     (h : ∀ x : V, ∃ a ∈ Subring.closure (Set.range ib ∪ Set.range s), ∃ b ∈ Subring.closure (Set.range ib ∪ Set.range s),

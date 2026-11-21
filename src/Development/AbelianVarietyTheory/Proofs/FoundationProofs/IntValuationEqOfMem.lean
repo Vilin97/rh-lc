@@ -236,7 +236,6 @@ theorem rho_mem {V : HSp D} {C : Bridge.CoefDat D V} {lam : D.what₂.Tau → Do
   obtain ⟨γE, hγ⟩ := exists_isRatMat γ
   exact ⟨_, h.1 γ γE hγ v⟩
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_jV_eq (i : Fin D.R.m) (t : T0) {gramR c0R c0L} (hj : R.models_jV)
     (hT : Bridge.FamTie R.B R.pl (R.Sb : Set (Pl D.host.E)) R.Q (labLL D) (fun τ => Bridge.lamRdef (Ptw D) τ)
@@ -250,7 +249,6 @@ theorem exists_jV_eq (i : Fin D.R.m) (t : T0) {gramR c0R c0L} (hj : R.models_jV)
   have h3 := exists_ext_eq (R.B.L i t).pres (c0L i) h1 h2 x₀ g
   exact h3.imp fun k hk => hk.imp fun v hv => h0.trans hv
 
-set_option maxHeartbeats 1600000 in
 
 theorem placeEx_of_type_mem (i : Fin D.R.m) {K' : Type} [Field K'] (jL : D.what₂.LL →+* K') (σ' : K' →+* ℂ) (t : T0)
     {Cl : Type} [Fintype Cl] (h : Cl → GA D (Vc D i)) (c0' : VsV D i K' →ₛₗ[σ'] (R.cV i).W) {gramR c0R c0L}

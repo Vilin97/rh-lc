@@ -48,7 +48,6 @@ theorem denom_fin {K : Set (Af F)} (hK : IsCompact K) :
   rw [he, Nat.cast_mul, mul_comm (d : F) (e : F), mul_assoc]
   exact hei.mul hdx
 
-variable (F) in
 
 def uFin : AF F := pairA F 0 1
 

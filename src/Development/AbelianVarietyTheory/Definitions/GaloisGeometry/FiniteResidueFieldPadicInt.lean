@@ -31,19 +31,16 @@ variable {O K r}
 def glMap (g : GL (Fin r) K) (L : Submodule O (Fin r → K)) : Submodule O (Fin r → K) :=
   L.map ((Matrix.toLin' (g : Matrix (Fin r) (Fin r) K)).restrictScalars O)
 
-omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O K] in
 
 theorem glMap_one (L : Submodule O (Fin r → K)) : glMap 1 L = L := by
   ext x; simp [glMap]
 
-omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O K] in
 
 theorem glMap_mul (g h : GL (Fin r) K) (L : Submodule O (Fin r → K)) :
     glMap (g * h) L = glMap g (glMap h L) := by
   simp only [glMap, ← Submodule.map_comp, Units.val_mul, Matrix.toLin'_mul]
   rfl
 
-omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O K] in
 
 theorem glMap_le_glMap_iff (g : GL (Fin r) K) (M L : Submodule O (Fin r → K)) :
     glMap g M ≤ glMap g L ↔ M ≤ L := by
@@ -51,12 +48,10 @@ theorem glMap_le_glMap_iff (g : GL (Fin r) K) (M L : Submodule O (Fin r → K)) 
   have h' : glMap g⁻¹ (glMap g M) ≤ glMap g⁻¹ (glMap g L) := Submodule.map_mono h
   rwa [← glMap_mul, ← glMap_mul, inv_mul_cancel, glMap_one, glMap_one] at h'
 
-omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O K] in
 
 theorem glMap_smul (g : GL (Fin r) K) (I : Ideal O) (L : Submodule O (Fin r → K)) :
     glMap g (I • L) = I • glMap g L := Submodule.map_smul'' _ _ _
 
-omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O K] in
 
 theorem relIndex_glMap (g : GL (Fin r) K) (M L : Submodule O (Fin r → K)) :
     (glMap g M).toAddSubgroup.relIndex (glMap g L).toAddSubgroup =

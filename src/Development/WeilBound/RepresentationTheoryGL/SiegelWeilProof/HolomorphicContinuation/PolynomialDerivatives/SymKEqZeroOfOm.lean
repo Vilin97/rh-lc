@@ -76,7 +76,6 @@ theorem psi_sum_left {ι : Type*} (p : Sym m n) (F : Finset ι) (f : ι → Sym 
   rw [psi_herm, psi_sum_right, star_sum]
   exact Finset.sum_congr rfl fun x _ => (psi_herm _ _).symm
 
-variable (ε) in
 
 def Om : Module.End ℂ (Sym m n) :=
   ∑ ij : Fin n × Fin n, (symK ε ij.1 ij.2).toLinearMap * (symK ε ij.2 ij.1).toLinearMap
@@ -88,7 +87,6 @@ theorem Om_mem {N : ℕ} {s : Sym m n} (hs : s ∈ S ε N) : Om ε s ∈ S ε N 
   rw [Om_apply]
   exact Submodule.sum_mem _ fun ij _ => symK_mem _ _ (symK_mem _ _ hs)
 
-variable (ε) in
 
 def OmS (N : ℕ) : Module.End ℂ (S (n := n) ε N) := (Om ε).restrict fun _ hs => Om_mem hs
 

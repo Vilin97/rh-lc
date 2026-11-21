@@ -22,7 +22,6 @@ variable {L : Type*} [Field L] (σ₀ : L →+* ℂ) {WL : Type*} [AddCommGroup 
 
 def IsHkJ (T : WL →ₗ[L] WL) : Prop := ∀ x, em (j (T x)) = c • TF (em (j x))
 
-open Classical in
 
 variable {σ₀ j em TF c}
 

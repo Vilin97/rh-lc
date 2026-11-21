@@ -35,27 +35,18 @@ theorem v_two {ϖ : L} {σ : L →+* L} {q : ℕ} (h : IsUnramInv ϖ σ q) (hq :
   rw [h2'] at h0
   simp at h0
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
-open Classical in
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
 section Main
 
 variable {ϖ : L} {σ : L →+* L} {q : ℕ} {δ : L} {ψ : AddChar L ℂ}
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
-variable (σ δ ψ) in
 
-variable (δ ψ) in
 
-variable (σ δ ψ) in
 
 end Main
 

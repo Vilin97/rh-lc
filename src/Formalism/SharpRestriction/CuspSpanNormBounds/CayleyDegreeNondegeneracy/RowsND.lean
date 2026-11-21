@@ -16,7 +16,6 @@ section ND
 
 variable {D : D7} {large₂ : SizeData₂ D} {X : TermTie D} {u u' : D.what₂.Word} {C1 : ℝ} (Y : LoopTie D large₂ X u u' C1)
 
-include Y in
 
 theorem rows_thmA (hThA : VanishingOnXAndXPlus.adm14 D u u') (hSt : Cnt.Stand D u u') (p : D.s.Pair u u')
     (hG1 : D.s.Gterm (D.s.pfst p) ≠ 0) (hG2 : D.s.Gterm (D.s.psnd p) ≠ 0) (hs : 2 ≤ D.s.s0 p) :
@@ -29,7 +28,6 @@ theorem rows_thmA (hThA : VanishingOnXAndXPlus.adm14 D u u') (hSt : Cnt.Stand D 
   refine hThA _ _ _ _ _ (X.fixed _) (VanishingOnXAndXPlus.primeHyp_of_stand D u u' hSt) t1 t2 (X.isPair p) ?_
   rw [← X.s0_eq p]; exact hs
 
-include Y in
 
 theorem rows_thmA_nd (hThA : VanishingOnXAndXPlus.adm14 D u u') (hSt : Cnt.Stand D u u') (hG0 : @LatticeDeterminantFactorization D X u u') (p : D.s.Pair u u')
     (hG1 : D.s.Gterm (D.s.pfst p) ≠ 0) (hG2 : D.s.Gterm (D.s.psnd p) ≠ 0) (hs : 2 ≤ D.s.s0 p) (hnd : ndP X p) :

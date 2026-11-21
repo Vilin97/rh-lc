@@ -98,7 +98,6 @@ theorem posSemidef_hessC_logPot_sub {N : ℕ} {z : Fin N → ℂ} (hz : ‖z‖ 
 
 end SheetFormComparison
 
-open SheetFormComparison in
 
 end
 

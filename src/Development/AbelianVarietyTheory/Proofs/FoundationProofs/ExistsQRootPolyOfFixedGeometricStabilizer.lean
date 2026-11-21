@@ -11,7 +11,6 @@ namespace GlobalTheory.K5.Span
 
 variable {p : ℕ} [Fact p.Prime] {Ω : Type} [Field Ω] [Algebra (O0 p) Ω]
 
-variable (p Ω) in
 
 def baseField : Subfield Ω :=
   Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x | IsAlgZp p x})
@@ -51,7 +50,6 @@ theorem isAlgebraic_baseField (h : IsClo p Ω) : Algebra.IsAlgebraic (baseField 
 
 end GlobalTheory.K5.Span
 
-open GlobalTheory.K5 GlobalTheory.K5.Span in
 
 theorem GlobalTheory.K5.span_fixed_ggeo_stab : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
   ∀ (T : Tower p Ω) (N : ℕ) (y : Ω), (∀ g ∈ Ggeo p Ω ⊓ MulAction.stabilizer (Gal p Ω) (T.qq N), g y = y) →

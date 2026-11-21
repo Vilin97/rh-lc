@@ -168,7 +168,6 @@ theorem entB_zero (k₀ n : ℕ) (ex : ℕ → ℕ) (g : HomE E (n + 0) (n + 0))
   rw [fIdx_zero, fIdx_zero, scE_lt _ hp, scE_lt _ hp']
   simp
 
-omit [NumberField E] [StarRing E] in
 
 variable {P q}
 

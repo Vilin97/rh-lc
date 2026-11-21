@@ -57,12 +57,10 @@ theorem coeff_eval₂_scale {σ R A : Type} [Fintype σ] [CommRing R] [CommRing 
   · rfl
   · rw [notMem_support_iff.mp hm, map_zero, zero_mul]
 
-open Classical in
 
 def scaleWt (κ : K → K') (A : Type) [CommRing A] (k' : K') : MvPolynomial (FibreBlock κ) A :=
   if h : k' ∈ Set.range κ then 1 else X ⟨k', h⟩
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem algebraicIndependent_forgotten {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     (V' : Ideal (MRingOver S ι')) [V'.IsPrime] (hV' : IsMultiHomogIdeal V') (i : ∀ k : FibreBlock κ, ι' k.1)
@@ -146,7 +144,6 @@ theorem algebraicIndependent_forgotten {κ : K → K'} {v : (Σ k, ι k) → (Σ
   rw [coeff_zero]
   exact hjinj ((mul_eq_zero.mp hc.symm).resolve_right (hyprod m) |>.trans (map_zero j).symm)
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem trdeg_add_card_le [Nontrivial S] {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     (V' : Ideal (MRingOver S ι')) [V'.IsPrime] (hV' : IsMultiHomogIdeal V') (hrel : IsRelevant V')

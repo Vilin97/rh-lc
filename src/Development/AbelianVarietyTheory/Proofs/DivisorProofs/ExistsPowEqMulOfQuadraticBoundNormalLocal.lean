@@ -10,7 +10,6 @@ open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out
 
 namespace GlobalTheory
 
-open IsDiscreteValuationRing in
 
 theorem mul_dvd_pow_of_quadratic_bound_dvr {V : Type} [CommRing V] [IsDomain V]
     [IsDiscreteValuationRing V] {X : Type} [AddCommGroup X] (h h' : X →+ X) (C : ℕ)

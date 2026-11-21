@@ -37,7 +37,6 @@ theorem entry {l : Type*} [Fintype l] (E H : Matrix l l ℝ) (x y : l) :
 
 end PSymplReduceConj
 
-open PSymplReduceConj in
 
 theorem SymplReduceConj.proof : SymplReduceConj.Statement := by
   intro n H Q

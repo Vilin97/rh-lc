@@ -45,7 +45,6 @@ abbrev mt (g : DX Δ) : Matrix (Fin 2) (Fin 2) (Lsq K Δ) := (g : GL (Fin 2) (Ls
 
 def IsScal (z : Kˣ) (g : DX Δ) : Prop := mt g = scalar (Fin 2) (algebraMap K (Lsq K Δ) z)
 
-variable (Δ) in
 
 def ZD : Subgroup (DX Δ) :=
   ((GeneralLinearGroup.scalar (Fin 2)).comp (Units.map (algebraMap K (Lsq K Δ) : K →* Lsq K Δ))).range.subgroupOf (DX Δ)
@@ -60,18 +59,15 @@ def HasTr (γ : DX Δ) (τ : K) : Prop := (mt γ).det = 1 ∧ (mt γ).trace = al
 
 def Ind (H : Subgroup Kˣ) (τ : K) (t : Kˣ) : Prop := ∃ h ∈ H, τ = (t * h : Kˣ) + ((t * h)⁻¹ : Kˣ)
 
-open Classical in
 
 def one (p : Prop) : ℂ := if p then 1 else 0
 
 variable (O : Type) [CommRing O] [Algebra O K]
 
-variable (Δ) in
 
 def KD : Subgroup (DX Δ) :=
   (GeneralLinearGroup.map ((integralClosure O (Lsq K Δ)).val : integralClosure O (Lsq K Δ) →+* Lsq K Δ)).range.subgroupOf (DX Δ)
 
-open Classical in
 
 def fZD (χ : Kˣ →* ℂˣ) (g : DX Δ) : ℂ :=
   if h : ∃ z : Kˣ, ∃ s : DX Δ, IsScal z s ∧ s⁻¹ * g ∈ KD Δ O then ((χ h.choose)⁻¹ : ℂˣ) else 0
@@ -80,7 +76,6 @@ def IsChi (Δ : K) [IsLocalRing O] (χ : Kˣ →* ℂˣ) : Prop :=
   Unr O χ ∧ ∀ (ϖ : O) (x : Kˣ), Irreducible ϖ → (x : K) = algebraMap O K ϖ →
     (χ x : ℂ) = hs Δ (x : K) / (Nat.card (IsLocalRing.ResidueField O) : ℂ)
 
-variable (Δ) in
 
 structure SigData where
   P : Set Kˣ
@@ -177,11 +172,9 @@ structure Dat.Ok : Prop where
 
 namespace Dat
 
-open Classical in
 
 def Jv (v : Pl F) : Subgroup (U3 (cv v Δ)) := if v ∈ D.Sg then (D.S v).J else KU (Ov v) _
 
-open Classical in
 
 def J2v (v : Pl F) : Subgroup (DX (cv v Δ)) := if v ∈ D.Sg then (D.S v).J2 else KD _ (Ov v)
 
@@ -195,15 +188,12 @@ abbrev Par (F : Type) [Field F] [NumberField F] : Type := ∀ v : Pl F, (Kv v)ˣ
 
 def Cone (t : Par F) : Prop := ∀ v ∈ D.Sg, t v ∈ (D.S v).P
 
-open Classical in
 
 def fGv (t : Par F) (v : Pl F) (g : U3 (cv v Δ)) : ℂ := if v ∈ D.Sg then (D.S v).fG (t v) g else one (g ∈ KU (Ov v) _)
 
-open Classical in
 
 def fSv (t : Par F) (v : Pl F) (g : DX (cv v Δ)) : ℂ := if v ∈ D.Sg then (D.S v).fS (t v) g else one (g ∈ KD _ (Ov v))
 
-open Classical in
 
 def fKv (t : Par F) (v : Pl F) (g : DX (cv v Δ)) : ℂ := if v ∈ D.Sg then (D.S v).fK (t v) g else fZD (Ov v) (D.χ v) g
 

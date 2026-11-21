@@ -42,7 +42,6 @@ private theorem dc_open (hJo : IsOpen (J : Set G)) (x : G) :
     IsOpen ((J : Set G) * {x} * (J : Set G)) :=
   hJo.mul_left
 
-variable (ν) in
 
 private noncomputable def dcF (hJc : IsCompact (J : Set G)) (hJo : IsOpen (J : Set G)) (x : G) : HeckeAlgebra ν :=
   HeckeAlgebra.mk ν (((J : Set G) * {x} * (J : Set G)).indicator fun _ => (1 : ℂ))

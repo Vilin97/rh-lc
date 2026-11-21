@@ -255,7 +255,6 @@ theorem exists_represent (hc : ∀ t, σ (σ t) = t)
   rw [div_eq_iff (pow_ne_zero 2 hw2)]
   linear_combination hw1
 
-omit [NumberField F] [NumberField E] in
 
 theorem posIndex_of_congr {τ : E →+* ℂ} (hτ : ∀ x, τ (σ x) = conj (τ x)) {r : ℕ}
     {G G' : Matrix (Fin r) (Fin r) E} (h : Congr (σ : E →+* E) G G') :
@@ -350,7 +349,6 @@ theorem congr_of_invariants (hσ : σ ≠ 1) (hG : ∀ a b, σ (G a b) = G b a)
     simp only [map_mul, RingHom.coe_coe]
     ring
 
-omit [NumberField F] in
 
 theorem exists_real_extension (ρ : F →+* ℝ) :
     ∃ (v : InfinitePlace F) (φ : v.Completion →+* ℝ), ∀ s : F, φ (algebraMap F _ s) = ρ s := by

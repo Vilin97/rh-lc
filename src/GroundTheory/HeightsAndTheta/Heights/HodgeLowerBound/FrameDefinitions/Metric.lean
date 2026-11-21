@@ -53,7 +53,6 @@ theorem isValueAt_mul {y : (Σ k, ι k) → Ω} {s t : Ω} {z : (Σ k, ι k) →
   · rw [map_mul, map_mul]; exact mul_ne_zero hz0 hz0'
   · simp only [map_mul]; rw [mul_div_mul_comm]
 
-open Classical in
 
 def valAt (y : (Σ k, ι k) → Ω) (s : Ω) (z : (Σ k, ι k) → ℂ) : ℂ :=
   if h : ∃ v, IsValueAt y s z v then h.choose else 0
@@ -133,7 +132,6 @@ theorem refNorm_pos (a : K → ℤ) {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ 
   exact lt_of_lt_of_le (by positivity) (Finset.single_le_sum (fun i _ => sq_nonneg ‖z ⟨k, i⟩‖)
     (Finset.mem_univ i))
 
-variable (ι) in
 
 def hermOfFun (a : K → ℤ) (F : ((Σ k, ι k) → ℂ) → ℝ) : HermLine ι where
   a := a

@@ -76,8 +76,6 @@ theorem bijective_const {Z : Scheme.{0}} [IsReduced Z] {Ω : Type} [Field Ω]
     rw [← ho, ← hcomp]
     rfl
 
-attribute [local instance] GroundTheory.Arith.SchemeCoh.algebraOfOver in
-open GroundTheory.Arith.SchemeCoh in
 
 theorem isConnected_closed {Z : Scheme.{0}} {O : Type} [CommRing O] [IsNoetherianRing O] [IsLocalRing O]
     (f : Z ⟶ Spec (CommRingCat.of O)) [IsProper f]

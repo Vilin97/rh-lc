@@ -24,7 +24,6 @@ theorem WittVector.frobenius_teichmuller (a : R) :
     frobenius (teichmuller p a) = teichmuller p (a ^ p) := by
   rw [frobenius_eq_map_frobenius, map_teichmuller, frobenius_def]
 
-omit [CharP R p] in
 
 def WittVector.teichmullerSeries (a : ℕ → R) : WittVector p R :=
   WittVector.mk p fun n => a n ^ p ^ n
@@ -101,9 +100,7 @@ section Frobenius
 
 variable {p : ℕ} [hp : Fact p.Prime] {R : Type*} [CommRing R] [CharP R p] [PerfectRing R p]
 
-omit [CharP R p] [PerfectRing R p] in
 
-omit [CharP R p] [PerfectRing R p] in
 
 theorem WittVector.frobeniusEquiv_coeff (x : WittVector p R) (n : ℕ) :
     (WittVector.frobeniusEquiv p R x).coeff n = x.coeff n ^ p := by
@@ -146,7 +143,6 @@ namespace AInf
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p]
 
-variable (K p) in
 
 end AInf
 

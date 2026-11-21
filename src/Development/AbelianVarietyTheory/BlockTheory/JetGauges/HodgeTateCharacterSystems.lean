@@ -110,7 +110,6 @@ lemma dAt_mul (a b : LocRing G) : dAt G (a * b) = aug G a • dAt G b + aug G b 
   show (augIdeal G).toCotangent (_ + _ + _) = aug G a • (augIdeal G).toCotangent _ + aug G b • (augIdeal G).toCotangent _
   rw [map_add (f := _), map_add (f := _), hz, add_zero, map_smul, map_smul, algebraMap_smul, algebraMap_smul]
 
-variable {G} in
 
 def tangentAlg {R : Type u} [CommRing R] [Algebra O R] (v : Cotangent G →ₗ[O] R) :
     LocRing G →ₐ[O] DualNumber R where
@@ -144,7 +143,6 @@ variable (O : Type u) [CommRing O]
 def specOver (R : Type u) [CommRing R] [Algebra O R] : Over (Spec (CommRingCat.of O)) :=
   Over.mk (Spec.map (CommRingCat.ofHom (algebraMap O R)))
 
-variable {O} in
 
 end Points
 
@@ -167,7 +165,6 @@ section Characters
 
 variable {S : Scheme.{u}} {G : Over S} [GrpObj G]
 
-variable (G) in
 
 variable [IsCommMonObj G] (G)
 

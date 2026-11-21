@@ -41,7 +41,6 @@ theorem eq_projectionPullbackSection_of_inverseImage {S : Scheme.{0}} (P : PolAV
 
 end GlobalTheory.TransNZ
 
-open GlobalTheory.MBLow.TranslateSection GlobalTheory.MBLow.TrSec in
 
 theorem GlobalTheory.TransNZ.exists_ne : ∀ (K : Type) [Field K] [IsAlgClosed K] [CharZero K] (x : KeyIn K) (m : ℕ), Odd m → 3 ≤ m →
     ∀ (I : Type) (pt : I → (baseOver (Sp K) ⟶ x.P.A)), (∀ z : baseOver (Sp K) ⟶ x.P.A, z ^ (m ^ 2) = 1 → ∃ i, pt i = z) →

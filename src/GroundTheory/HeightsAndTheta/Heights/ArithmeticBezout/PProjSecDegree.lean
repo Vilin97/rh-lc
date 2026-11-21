@@ -17,9 +17,7 @@ namespace ProjSecDegree
 
 variable {n e : ℕ} (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin (e + 1)) (Fin n) ℂ)
 
-set_option hygiene false in
 
-set_option hygiene false in
 
 theorem projVar_ne_zero (i : Fin (e + 1)) : projVar e i ≠ 0 :=
   (map_ne_zero_iff _ (IsFractionRing.injective ℝt 𝕂)).2 (X_ne_zero i)
@@ -55,8 +53,6 @@ theorem projHom_X (i : Fin (e + 1)) :
     ComplexSets.projHom J A (X i) = Ideal.Quotient.mk J (ComplexSets.linPoly A i) := by
   simp [ComplexSets.projHom, ComplexSets.pullback]
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1600000 in
 
 theorem finrank_eq [Algebra ℝt (MvPolynomial (Fin n) ℂ ⧸ J)]
     (hφ : ∀ p, algebraMap ℝt (MvPolynomial (Fin n) ℂ ⧸ J) p = ComplexSets.projHom J A p) :

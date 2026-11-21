@@ -56,7 +56,6 @@ private theorem isHeckeChar_of_isHeckeChar_mul {D : D7} {χ χ' : (AE D)ˣ →* 
     rw [MonoidHom.mul_apply, h.2 x, one_mul] at hx
     exact hx
 
-set_option maxHeartbeats 1000000 in
 
 theorem rungJ : FockTot → PartFixed → RungJ := by
   intro hFock hFix D hD T L μ0 hL sc G W M hM v F ΓL _hEnds hGood Ψ hΨ u hu k h h' hB

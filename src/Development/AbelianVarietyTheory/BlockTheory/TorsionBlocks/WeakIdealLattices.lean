@@ -58,7 +58,6 @@ variable {K LL : FinExt l}
 
 variable {P : LocPrime l} (AI : LocAinf l P)
 
-open Classical in
 
 end Hyp
 

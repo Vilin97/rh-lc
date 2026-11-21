@@ -112,5 +112,3 @@ private theorem plane_span {F E : Type} [Field F] [Field E] [Algebra F E] (σ : 
   obtain ⟨p, hp⟩ := hsurj v
   exact ⟨p.1.1, p.1.2, p.2, by rw [← hL, hp]⟩
 
-set_option maxHeartbeats 800000 in
-set_option synthInstance.maxHeartbeats 400000 in

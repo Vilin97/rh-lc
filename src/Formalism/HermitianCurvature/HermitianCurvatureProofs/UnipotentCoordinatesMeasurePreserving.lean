@@ -1509,7 +1509,6 @@ theorem reflection_commutes_m0_mulVec (v : Fin (2 * r + k + 1) → ℂ) : Wb (m�
   simp only [Matrix.mulVec_smul, hme, hms, Wb_smul, Wb_ee, Wb_es, smul_zero, Finset.sum_const_zero, zero_add]
   exact Wb_of_inWb (m0_mulVec_mem_orthogonal m₀ hmU hme hms hW)
 
-include hmU hme hms in
 
 theorem orthoProj_m0_intertwine {z z' : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hz' : inWb k r z') (μ : ℝ) (hμ : μ ≠ 0)
     (hmz : m₀ *ᵥ z' = (μ : ℂ) • z) (hzz : herm (Hpk k r) z' z' ≠ 0) (v : Fin (2 * r + k + 1) → ℂ) :
@@ -3535,7 +3534,6 @@ theorem rhoF_unique (x : C2.Lstidx w → ℂ) {ρ : B.Mat k r} (hρ : ρ ∈ C6.
     (hu : C2.uMap k r D.z ρ = (low w x)ᴴ) : ρ = rhoF D γ w x :=
   hG.inj hρ (rhoF_spec D hγ hd hG x).1 (by rw [hu, (rhoF_spec D hγ hd hG x).2])
 
-omit hγ hd hG in
 
 def phi0 (w : Equiv.Perm (Fin (r + 1))) (x : Mt k r) : C2.Lstidx w → ℂ :=
   fun q => conj (C2.uMap k r D.z (Matrix.of x) q.1.2 q.1.1)
@@ -4036,7 +4034,6 @@ theorem ee_sum_lo (t : Fin r → ℂ) (c0 : Fin r) : (∑ c, t c • DF.ee k r c
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, DF.ee, bvec, Pi.single_apply, DF.eI_inj]
   simp
 
-omit D in
 
 theorem mem_N (M : B.Mat k r) (hM : M ∈ UH (Hpk k r)) (U : Matrix (Fin (r + 1)) (Fin (r + 1)) ℂ)
     (hU : U ∈ C2.UTset (r + 1)) (he : ∀ a, M *ᵥ DF.ee k r a = ∑ c, U c.castSucc a.castSucc • DF.ee k r c)

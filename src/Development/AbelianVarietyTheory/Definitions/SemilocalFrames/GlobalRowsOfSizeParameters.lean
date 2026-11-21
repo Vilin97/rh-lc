@@ -155,11 +155,9 @@ section Rec
 
 open Formalism.BasicNotions.Examples₂ Formalism.BasicNotions.Examples₂.NZ
 
-set_option maxHeartbeats 1600000 in
 
 end Rec
 
-open Formalism.BasicNotions.Examples₂ in
 
 theorem two_le_rd {R : Ranks} (H : Host R) : 2 ≤ H.rdE := UpperTheory.Ram.Rd.two_le_rdE H
 
@@ -229,7 +227,6 @@ theorem globalRows_of_sizeData {D : D7} (L : SizeData₂ D) (P : ParameterChoice
     refine ⟨by linarith, by linarith, ?_⟩
     rw [c]; push_cast; ring
 
-open Formalism.MainNotions.Inhab Formalism.L2.GlobalTheoryTheory GlobalTheory.EX GlobalTheory.FieldSize GlobalTheory.FinalJoin GlobalTheory.FinalJoin2 GlobalTheory.RunJoin GlobalTheory.Mem GlobalTheory.EX.OB in
 
 end GlobalTheory.Diag.PG.Model0
 

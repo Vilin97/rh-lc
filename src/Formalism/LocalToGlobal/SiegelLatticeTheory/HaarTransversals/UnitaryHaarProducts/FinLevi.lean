@@ -432,7 +432,6 @@ theorem SA.sub_PW_mem (h : SA (u := u) G G') (w : VA X.B.I) (he : ∀ a, hA X.B.
   simp only [hpe, hpz, zero_smul, Finset.sum_const_zero, add_zero, mul_zero]
   exact Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ (e_mem_span X a)
 
-variable (X u) in
 
 def Hf (G : Matrix (Fin X.B.I.n) (Fin X.B.I.n) (X.B.I.E ⊗[X.B.I.F] Af X.B.I.F)) (y : VA X.B.I) : VA X.B.I :=
   PWl X u (G *ᵥ PWl X u y) + (y - PWl X u y)

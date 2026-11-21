@@ -69,4 +69,3 @@ private theorem val_inv_eq (n : ℕ) (a : ℂˣ) :
 
 end UpperTheory.V.Z.Desc.W.SatakeFrobeniusEigenvalues
 
-open UpperTheory.V.Z.Desc.W.SatakeFrobeniusEigenvalues in

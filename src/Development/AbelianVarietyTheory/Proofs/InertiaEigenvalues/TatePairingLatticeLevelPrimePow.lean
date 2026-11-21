@@ -207,7 +207,6 @@ def cupH2Level : ↥(quotientCocycles LA' I' hI') →ₗ[O] ↥(quotientCocycles
       funext x
       simp [zq, map_smul])
 
-include hsI hsI' hm hlc' in
 
 theorem exists_level_pairing {S : Submodule O LL}
     (e : ReciprocityTheory.Def.H2 (repD L1) (⊤ : Submodule O (LL ⧸ L1.T)) ≃ₗ[O] (LL ⧸ S)) :
@@ -234,7 +233,6 @@ theorem exists_level_pairing {S : Submodule O LL}
     unfold CobO
     rw [funext (zq_eq m L1 I I' s hsI hsI' hI' c.1 c'.1)]
 
-omit [TopologicalSpace LL] in
 
 theorem cobO_smul (a : O) {z : G × G → LL} (h : CobO PD L1 z) :
     CobO PD L1 (fun x => algebraMap O LL a * z x) := by
@@ -268,7 +266,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {LL : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL]
     {O : Type} [CommRing O] [Algebra O LL]
 
-open Formalism.MainNotions.BlochKatoDuality.Br in
 
 theorem cobO_red [IsTopologicalRing LL] [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O LL]
     (L1 : Lattice (O := O) (charRep (cycLL PD LL)))

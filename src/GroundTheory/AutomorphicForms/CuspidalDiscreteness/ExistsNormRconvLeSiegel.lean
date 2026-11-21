@@ -50,7 +50,6 @@ theorem coe_conj_unipGL {r : ℕ} (x : AdelicGLn.AdelicGL K n) (P : UPos n r →
   rw [Units.val_mul, Units.val_mul, coe_unipGL, unipMatrix, Matrix.mul_add, Matrix.add_mul,
     Matrix.mul_one, Units.inv_mul]
 
-variable (K n) in
 
 def conjArch {r : ℕ} (x : AdelicGLn.AdelicGL K n) : (UPos n r → 𝔸[K]) →+ ArchMatrix K n where
   toFun P := archMat K n (((x⁻¹ : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) *
@@ -92,7 +91,6 @@ theorem map_altPoint {V W : Type*} [AddCommGroup V] [AddCommGroup W] (φ : V →
   refine Finset.sum_congr rfl fun i _ => ?_
   split_ifs <;> simp
 
-variable (n) in
 
 def truncInfHom (r : ℕ) : (UPos n r → 𝔸[K]) →+ (UPos n r → 𝔸[K]) where
   toFun := truncInf

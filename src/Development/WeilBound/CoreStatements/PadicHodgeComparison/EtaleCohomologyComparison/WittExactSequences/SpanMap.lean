@@ -15,11 +15,9 @@ open scoped LaurentPolynomial
 
 namespace CrystallineSemistableComparison.D
 
-open MvPolynomial in
 
 def eqA {A : Type} [CommRing A] (P : Polynomial A) : Set (MvPolynomial (Fin 3) A) := {Polynomial.aeval (X 0) P}
 
-open MvPolynomial in
 
 def eqB {A : Type} [CommRing A] (f g : A) : Set (MvPolynomial (Fin 3) A) :=
   {X 0 * X 0 - X 0, X 0 * C f - X 1 * C g, (1 - X 0) * C g - X 2 * C f}

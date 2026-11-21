@@ -279,7 +279,6 @@ theorem ptsPosDens_eq {P : Ideal (MRing ι)} {L : Fin e → HermLine ι} (hL : �
 
 end PtsPosPartLocal
 
-open PtsPosPartLocal in
 
 theorem PtsPosPartLocal.proof : PtsPosPartLocal.Statement := by
   intro K _ ι _ P e Ψ Ψ' L g z hP _ _ hL _ hg _ hs hs'

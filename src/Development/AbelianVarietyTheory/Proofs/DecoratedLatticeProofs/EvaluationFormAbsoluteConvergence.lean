@@ -151,7 +151,6 @@ theorem val_ratR {Ψ : WO B.V J.W → ℂ} (hΨ : IsThetaFunO ψ B.V J.W Ψ) {γ
 
 variable (φ : GA D B.A → ℂ) (G : GA D J.W → ℂ) (Φ : WO B.V J.W → ℂ)
 
-omit hom in
 
 def evalMaj (g r : GA D J.W) : ℝ≥0∞ :=
   ‖G g‖ₑ * ∫⁻ h₀ in B.vA.𝓕, ‖φ h₀‖ₑ * ‖val s (s.om (embA B.d B.o h₀, g) Φ) (mt J.W r ⬝ xZero J.d) 0‖ₑ ∂B.vA.μ
@@ -191,7 +190,6 @@ theorem exists_mt_xZero {r : GA D J.W} (hr : r ∈ jacGrp J.d) : ∃ v : UX D ρ
   obtain ⟨v, hv, e⟩ := hr
   exact ⟨⟨v, hv⟩, e⟩
 
-omit hom in
 
 theorem exists_levi_conj {r : GA D J.W} (hr : r ∈ jacGrp J.d) : ∃ v : UX D ρ, ∀ u : UX D ρ,
     ∃ t ∈ radX J.d ⊔ J.d.emb0.range, J.d.levi u.1 * r = t * J.d.levi (u * v).1 := by
@@ -286,7 +284,6 @@ theorem lintegral_maj_lt_top (hφ : IsContAut B.A φ) (hG : RapidDec J.W G) (hΦ
     hφ.2.measurable hG.continuous.measurable hc.measurable
     ((contAut_rapidDec_bounded_integrable D B.A B.cpt φ hφ).2.2 B.vA) hM
 
-omit hom in
 
 theorem exists_domain (J : JacLev D ρ) : IsClosed (jacGrp J.d : Set (GA D J.W)) ∧ J.μR.IsHaarMeasure ∧ J.μR.IsInvInvariant ∧
     ∃ 𝓡 : Set (jacGrp J.d), IsFundamentalDomain ((GQ J.W ⊓ jacGrp J.d).subgroupOf (jacGrp J.d)) 𝓡 J.μR ∧
@@ -346,8 +343,6 @@ end GlobalTheory.EvalAbs
 
 namespace GlobalTheory.Unf
 
-set_option maxHeartbeats 800000 in
-open GlobalTheory.EvalAbs in
 
 theorem evalBF_abs : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (ρ : ℕ) (B : BesLev D ρ) (J : JacLev D ρ) (s : StepBF ψ B J) (om' : Om B.V₀ J.W), IsWeilDatumO ψ B.V₀ J.W s.χV s.χW om' → ∀ (φ : GA D B.A → ℂ) (G : GA D J.W → ℂ) (Φ : WO B.V J.W → ℂ), IsContAut B.A φ → RapidDec J.W G → IsThetaFunO ψ B.V J.W Φ → ∃ z', IsQuotIntL1 J.μR s.vW.μ (fun h => ((∫ u : UX D ρ, ‖J.perAll ψ B s.om₀ φ (rTrans (J.d.levi u.1 * h) G) (evalBF s (s.om (1, (J.d.levi u.1 * h)) Φ))‖ ∂s.vU.ν : ℝ) : ℂ)) z' := by
   intro D ψ ρ B J s om' hom φ G Φ hφ hG hΦ

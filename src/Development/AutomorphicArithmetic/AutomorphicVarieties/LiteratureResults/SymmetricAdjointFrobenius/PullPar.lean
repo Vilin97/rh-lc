@@ -18,16 +18,13 @@ section Comp
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyReal E]
 
-omit [IsTotallyReal E] in
 
 private def zf (y : Af E) : Ad E := ((0, y) : InfiniteAdeleRing E × Af E)
 
-omit [IsTotallyReal E] in
 
 private theorem split (x : Ad E) : x = TR.sInf E (TR.pInf E x) + zf (pFin E x) :=
   Prod.ext (((TR.infEq E).apply_symm_apply _).symm.trans (add_zero _).symm) (zero_add _).symm
 
-omit [IsTotallyReal E] in
 
 variable {σ : E ≃+* E} {s : Ad E →+* Ad E} (hs : IsAdExt (σ : E →+* E) s)
 include hs
@@ -38,15 +35,11 @@ section Pull
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyReal E] {a : ℕ}
 
-omit [NumberField E] [IsTotallyReal E] in
 
-omit [IsTotallyReal E] in
-variable (a) in
 
 variable {σ : E ≃+* E} {s : Ad E →+* Ad E} (hs : IsAdExt (σ : E →+* E) s)
 include hs
 
-variable (a) in
 
 end Pull
 

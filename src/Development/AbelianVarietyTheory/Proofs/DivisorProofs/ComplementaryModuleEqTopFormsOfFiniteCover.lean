@@ -49,8 +49,6 @@ theorem height_under_eq_one {A B : Type} [CommRing A] [IsDomain A] [CommRing B]
     have := Ideal.height_add_one_le_of_lt_of_isPrime (bot_lt_iff_ne_bot.mpr hne)
     simpa using this
 
-open KaehlerDifferential in
-open scoped IntermediateField.algebraAdjoinAdjoin in
 
 theorem exists_basis_D (k F K : Type) [Field k] [Field F] [Field K] [Algebra k F] [Algebra k K]
     [Algebra F K] [IsScalarTower k F K] [Algebra.IsSeparable F K] (d : ℕ) (v : Fin d → F)

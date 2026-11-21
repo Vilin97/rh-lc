@@ -121,7 +121,6 @@ private theorem exists_monoidHom_precomp {S : Scheme.{0}} {X Y G : Over S} [GrpO
     ∃ N : (Y ⟶ G) →* (X ⟶ G), ∀ g, N g = h ≫ g :=
   ⟨MonoidHom.mk' (fun g => h ≫ g) (fun a b => MonObj.comp_mul h a b), fun _ => rfl⟩
 
-open GlobalTheory.CechPic in
 
 theorem forward {h g : ℕ} {W : Matrix (Fin 8) (Fin 8) ℤ} {J : Type} {a : J → Matrix (Fin 8) (Fin 8) ℤ}
     {bas : (Fin (2 * g) → ℤ) ≃ₗ[ℤ] (Fin 8 → (Fin h ⊕ Fin h → ℤ))} {k : ℕ} {o : Type} [CommRing o] {b : TBase o k}
@@ -267,7 +266,6 @@ theorem exists_factor {S S' : Scheme.{0}} {A C : Over S} {A' C' : Over S'} [GrpO
     rw [← MonObj.mul_comp, ← map_mul, ← hιmul, Over.comp_left, hMh, Over.comp_left]
     simp only [Category.assoc]
 
-open GlobalTheory.CechPic in
 
 theorem pair_mul (hG : Out.GlobalFnsSt) {h k : ℕ} {o : Type} [CommRing o] {ζ : o} {S : Scheme.{0}} {s : S ⟶ Sp o}
     (c : SiegPre h k ζ s) (hc : c.Principal) {T : Over S} (x x' y : T ⟶ c.A) :
@@ -282,7 +280,6 @@ theorem pair_mul (hG : Out.GlobalFnsSt) {h k : ℕ} {o : Type} [CommRing o] {ζ 
   rw [← sub_eq_zero, ← h0]
   abel
 
-open GlobalTheory.CechPic in
 
 theorem pair_symm {h k : ℕ} {o : Type} [CommRing o] {ζ : o} {S : Scheme.{0}} {s : S ⟶ Sp o}
     (c : SiegPre h k ζ s) {T : Over S} (x y : T ⟶ c.A) :
@@ -303,7 +300,6 @@ theorem prod_single {G : Type*} [CommGroup G] (x : Fin 8 → G) (u v w : Fin 8) 
   · rw [if_neg hw]
     exact Finset.prod_eq_one fun i _ => by simp [Ne.symm hw]
 
-open GlobalTheory.CechPic in
 
 theorem backward (hG : Out.GlobalFnsSt) {h g : ℕ} {W : Matrix (Fin 8) (Fin 8) ℤ} {J : Type}
     {a : J → Matrix (Fin 8) (Fin 8) ℤ}

@@ -207,7 +207,6 @@ theorem mem_iff (σ : K →+* ℂ) (L L' : PeriodPair) (𝔟 : Ideal (𝓞 K)) (
 
 end CMLattice
 
-open CMLattice in
 
 theorem lattice_cm_eq_ideal_and_covolume :
     ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 → ∀ (σ : K →+* ℂ), ¬ NumberField.ComplexEmbedding.IsReal σ →

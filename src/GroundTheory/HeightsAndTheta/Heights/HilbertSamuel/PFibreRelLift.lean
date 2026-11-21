@@ -129,7 +129,6 @@ theorem dehomLoc_mk (T : Submonoid (MRingOver (ZMod ℓ) ι)) (hT : ∀ t ∈ T,
 
 end FibreRelLift
 
-open FibreRelLift in
 
 theorem FibreRelLift.proof : FibreRelLift.Statement := by
   intro K _ _ ι _ _ Ω _ y ℓ a r s J u hs hc _ hrel

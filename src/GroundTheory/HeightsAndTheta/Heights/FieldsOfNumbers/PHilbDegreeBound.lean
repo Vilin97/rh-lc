@@ -51,7 +51,6 @@ theorem isMultiHomogIdeal_sup_span {I : Ideal (ReciprocityTheory.ChartRestrictio
   exact weightedHomogeneousComponent_mem_of_mem
     (h := (isHomogeneous_of_isMultiHomogIdeal hI).sup h2) (hp := hf) (m := b)
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem colon_span_eq_of_isPrime {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hP : P.IsPrime) {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hs : s ∉ P) : P.colon (Ideal.span {s}) = P := by
@@ -59,7 +58,6 @@ theorem colon_span_eq_of_isPrime {P : Ideal (ReciprocityTheory.ChartRestriction.
   rw [Ideal.mem_colon_span_singleton]
   exact ⟨fun h => (hP.mem_or_mem h).resolve_right hs, fun h => P.mul_mem_right s h⟩
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem ringKrullDim_sup_span_add_one_le {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [P.IsPrime] {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hs : s ∉ P) :

@@ -43,7 +43,6 @@ theorem exists_denominator (c : Ideal (OF E)) (y : (Af E)ˣ) :
   exact (HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v _).symm.trans_le
     ((HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 h3)
 
-omit [NumberField E] in
 
 theorem exists_generator : ∃ g : Ideal (𝓞 E) → 𝓞 E, ∀ b : 𝓞 E, ∃ u : (𝓞 E)ˣ, g (Ideal.span {b}) * u = b := by
   classical

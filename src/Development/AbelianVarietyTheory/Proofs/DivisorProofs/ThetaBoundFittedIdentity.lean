@@ -38,6 +38,5 @@ theorem htLe_one_zero {K : Type} [Field K] [NumberField K] [StarRing K] {B : ℝ
 
 end GlobalTheory.BigTop.Fun.ThbTie
 
-open GlobalTheory.BigTop.Fun.ThbTie in
 
 end

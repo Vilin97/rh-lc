@@ -86,7 +86,6 @@ theorem smooth_of_numberField (F A : Type) [Field F] [NumberField F] [CommRing A
   exact ⟨Algebra.FormallySmooth.of_restrictScalars ℚ F A,
     Algebra.FinitePresentation.of_restrict_scalars_finitePresentation ℚ F A⟩
 
-open Algebra in
 
 theorem trdeg_numberField (F Ω : Type) [Field F] [NumberField F] [Field Ω] [CharZero Ω] [Algebra F Ω] :
     Algebra.trdeg F Ω = Algebra.trdeg ℤ Ω := by
@@ -315,7 +314,6 @@ theorem smooth_pullback {X : Scheme.{0}} {ξ : Sp Ω ⟶ X} (hall : ∀ q : X, g
 
 end Charts
 
-open GlobalTheory.CompanionTheory.Ar.SncBase.Mdl in
 
 theorem smooth_genericFibre : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (Ω : Type) [Field Ω] [CharZero Ω] (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω) (M : PModel ℤ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩)) (f : M.X ⟶ Y.X) (y₀ : Sp Ω ⟶ Xo.XF c) (U : (pullback (f ≫ Y.s) (spMap (algebraMap (𝓞 c.F) c.F))).Opens), M.ξ ≫ f = y₀ ≫ Y.j → SmoothGenericFibreM y → Algebra.trdeg ℤ Ω = ((D.dim : ℕ) : Cardinal) → SmoothOfRelativeDimension D.dim (U.ι ≫ pullback.snd (f ≫ Y.s) (spMap (algebraMap (𝓞 c.F) c.F))) := by
   intro E _ _ _ H D l Xo c Y Ω _ _ K _ J _ y M f y₀ U hξ hsm htr

@@ -56,14 +56,12 @@ variable {X T : Scheme.{0}} {R K : Type} [CommRing R] [Field K] [Algebra R K] {f
   {ξ : Sp K ⟶ T} (w : spMap (algebraMap R K) ≫ f = ξ ≫ f₀) {I : Type} [Fintype I] {U : X.Opens} {V : T.Opens}
   (hU : ⊤ ≤ f ⁻¹ᵁ U) (hVU : V ≤ f₀ ⁻¹ᵁ U) (hξ : ⊤ ≤ ξ ⁻¹ᵁ V)
 
-include hU in
 
 variable {H : Type*} [AddCommGroup H] [Module K H] [Module R H] [IsScalarTower R K H]
 
 variable {A B : X.Modules} {D : T.Modules} [A.IsQuasicoherent] [B.IsQuasicoherent] [D.IsQuasicoherent]
   {a : (Scheme.Modules.pullback f₀).obj A ⟶ D} {b : D ⟶ (Scheme.Modules.pullback f₀).obj B} {z : a ≫ b = 0}
 
-include hU in
 
 end Reads
 
@@ -114,6 +112,5 @@ open GlobalTheory.DeRhamSheaf (onAff)
 open GlobalTheory.Published.AbelianDeRham (bcMor)
 open GlobalTheory.DualPull (theta dualApp_theta)
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.BadPt.Fibre

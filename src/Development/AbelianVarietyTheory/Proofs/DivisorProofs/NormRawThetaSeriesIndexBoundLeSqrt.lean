@@ -53,7 +53,6 @@ theorem thLaValAt_evR {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Ho
   rw [e1, e2]
   exact hv
 
-set_option maxHeartbeats 1000000 in
 
 theorem norm_evR_le (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H)
     (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r)

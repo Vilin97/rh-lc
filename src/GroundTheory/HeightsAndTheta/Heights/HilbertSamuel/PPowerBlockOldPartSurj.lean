@@ -413,7 +413,6 @@ theorem vanish_new {N : ℕ} (y : (Σ k, ι k) → Ω) (v : Fin N → Ω) (E : K
 
 end PowerBlockOldPartSurj
 
-open PowerBlockOldPartSurj in
 
 theorem PowerBlockOldPartSurj.proof : PowerBlockOldPartSurj.Statement := by
   intro K _ ι _ Ω _ y a m N v hv hgen x hx

@@ -10,7 +10,6 @@ open Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibl
 
 namespace GlobalTheory.Cyc
 
-open PowerSeries in
 
 theorem algHom_sub_dvd {O : Type} [CommRing O] (f : O⟦X⟧ →ₐ[O] O⟦X⟧) (hf : (X : O⟦X⟧) ∣ f X)
     (a : O⟦X⟧) : f X - X ∣ f a - a := by

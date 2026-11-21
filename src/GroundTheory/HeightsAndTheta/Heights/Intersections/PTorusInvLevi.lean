@@ -206,7 +206,6 @@ end Blocks
 
 end TorusInvariantLevi
 
-open TorusInvariantLevi in
 
 theorem TorusInvLevi.proof : TorusInvLevi.Statement := by
   intro K _ ι _ u hu hinv

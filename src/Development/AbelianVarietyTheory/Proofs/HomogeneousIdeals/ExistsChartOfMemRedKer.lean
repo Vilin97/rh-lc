@@ -148,7 +148,6 @@ theorem mem_redKer_of_section (q : A →ₐ[R] A₀) (s : A₀ →ₐ[R] A) (hs 
     exact Ideal.Quotient.eq.2 (by simp [RingHom.mem_ker, hs])
   rw [mem_redKer, this, ← spMap_comp, Category.assoc, hy, comp_one']
 
-variable (G A) in
 
 def UnitInChart : Prop :=
   ∃ (B : Type) (_ : CommRing B) (_ : Algebra R B) (j : sp B ⟶ G) (u : B →ₐ[R] A),

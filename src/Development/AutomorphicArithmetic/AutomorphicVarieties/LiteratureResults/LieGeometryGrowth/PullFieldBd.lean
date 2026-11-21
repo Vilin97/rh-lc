@@ -52,7 +52,6 @@ private theorem polarization_smul (c : ℝ) (A B : Matrix (Fin a) (Fin a) (Cinf 
     change _ = c • Matrix.of (pol0 A B v).1
     simp only [polarization_val, star_smul, star_trivial c, mul_smul_comm, smul_mul_assoc, smul_add])
 
-variable (E a) in
 
 private def pol : Lie E a →L[ℝ] Lie E a →L[ℝ] HV E a →L[ℝ] HV E a :=
   LinearMap.toContinuousLinearMap (LinearMap.toContinuousLinearMap.toLinearMap ∘ₗ

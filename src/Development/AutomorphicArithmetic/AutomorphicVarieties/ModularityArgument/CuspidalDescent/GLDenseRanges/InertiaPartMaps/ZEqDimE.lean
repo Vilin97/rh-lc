@@ -54,6 +54,5 @@ private theorem card_not_dvd {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [N
   rw [hq] at h
   exact s.p_ne ((Nat.prime_dvd_prime_iff_eq hl s.p_prime).1 (hl.dvd_of_dvd_pow (hl.dvd_of_dvd_pow h))).symm
 
-set_option maxHeartbeats 1600000 in
 
 end UpperTheory.V.Z.Desc.V0

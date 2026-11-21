@@ -78,7 +78,6 @@ abbrev Gp (p : ℕ) : Subgroup (G ℚ Ω) := Dec (F := ℚ) (D.pl p)
 
 abbrev Ip (p : ℕ) : Subgroup (G ℚ Ω) := Ine (F := ℚ) (D.pl p)
 
-open Classical in
 
 def Sb : Finset ℕ := D.S.filter fun p => p ≠ l ∧ l ∣ Nat.card ((D.Ip p).map D.ψ)
 

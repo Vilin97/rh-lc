@@ -101,9 +101,7 @@ open scoped NumberField.LiesOver
 
 variable {L : Type*} [Field L] [NumberField L] (d : L) [Fact (∀ r : L, r ^ 2 ≠ d + 0 * r)]
 
-omit [Fact (∀ r : L, r ^ 2 ≠ d + 0 * r)] in
 
-omit [NumberField L] in
 
 end Bridge
 

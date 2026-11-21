@@ -21,7 +21,6 @@ theorem set_eq_preimage {ι : Type} [Fintype ι] [DecidableEq ι] (A : Matrix ι
 
 end PSymplBoxVolume
 
-open PSymplBoxVolume in
 
 theorem SymplBoxVolume.proof : SymplBoxVolume.Statement := by
   intro ι _ _ A a hA ha

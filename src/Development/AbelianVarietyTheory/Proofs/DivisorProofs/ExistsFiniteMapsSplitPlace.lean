@@ -131,7 +131,6 @@ theorem chrW_div (χ χ' : Chr F E) {v : Pl F} (t : E →ₐ[F] Fv F v) : chrW (
   ext x
   simp [chrW, locChar]
 
-omit [NumberField E] in
 
 theorem one_mem_UAt {n : ℕ} (Y : Spc F E n) (v : Pl F) : (1 : UA σ Y.J) ∈ UAt σ Y (evFin F v) := fun u _ => by
   rw [show mat (1 : UA σ Y.J) = 1 from rfl, sub_self, smul_zero]

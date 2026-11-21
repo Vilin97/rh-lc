@@ -73,7 +73,6 @@ namespace GStep
 variable {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] [StarRing K] [Fintype ι] {n : ℕ}
   (S : GStep E K n) (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : ι → DomWeight n)
 
-omit [StarRing E] [StarRing K] in
 
 theorem evV_rho_eq_tr (b : S.β) (g : S.G b) (F : VV K lam) :
     evV emb (1 : Matrix (Fin n) (Fin n) E) lam σ (S.rho emb lam b g F) =

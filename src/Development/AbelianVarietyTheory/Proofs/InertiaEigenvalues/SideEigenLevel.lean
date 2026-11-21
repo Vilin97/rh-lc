@@ -88,5 +88,3 @@ end GlobalTheory.CoefDuty.ExtRing
 
 end
 
-open GlobalTheory.CoefDuty.ExtRing in
-set_option maxHeartbeats 2000000 in

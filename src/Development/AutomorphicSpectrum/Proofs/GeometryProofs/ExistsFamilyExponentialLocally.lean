@@ -503,7 +503,6 @@ end GlobalTheory.CompanionTheory.Ar.Flat.ExpLoc
 
 namespace GlobalTheory.CompanionTheory.Ar.Flat
 
-open ExpLoc in
 
 theorem exists_famExp_near : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (g n : ℕ) (M : LieModel G (𝟙 (Sp R)) (Fin g → R)) (B : Set (Fin n → ℂ)) (ψ : (Fin n → ℂ) → (R →+* ℂ)), Smooth G.hom → IsHolPts B ψ → ∀ b₀ ∈ B, ∃ ε : ℝ, 0 < ε ∧ ball b₀ ε ⊆ B ∧ Nonempty (FamExp G M (ball b₀ ε) ψ) := by
   intro R _ G _ _ g n M B ψ hsm hψ b₀ hb₀

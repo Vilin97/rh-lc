@@ -72,7 +72,6 @@ theorem xi_sat {e : Per.Fl l} (he : IsEps e) (n : ℕ) (a : Per.Ainf l)
 end GlobalTheory.MemLoc.XiHaus
 
 namespace GlobalTheory.MemLoc
-open XiHaus in
 
 theorem eq_zero_of_forall_xi_pow_dvd (l : ℕ) [Fact l.Prime] (e : Per.Fl l) (he : IsEps e)
     (a : Per.Ainf l) (ha : ∀ n : ℕ, xi e ^ n ∣ a) : a = 0 := by

@@ -215,7 +215,6 @@ end Real
 
 end VolOrdW
 
-open VolOrdW in
 
 theorem volOrd_body {D : D7} (X : HidaSetting D) (u u' : D.what₂.Word) (ψ : AddChar (AF X.B.I.F) ℂ)
     (hN : SdNormDV X ψ) (hB : BoxScaleL) :

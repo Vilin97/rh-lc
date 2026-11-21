@@ -18,8 +18,6 @@ private lemma exists_dir_dw_cons_eq_fderiv {d : ℕ} (j : Fin d) :
       _root_.ZetaZeros.D.EllReg.dw (j :: w) f x = fderiv ℝ (_root_.ZetaZeros.D.EllReg.dw w f) x e :=
   ⟨EuclideanSpace.single j 1, fun _ _ _ => rfl⟩
 
-open MeasureTheory in
-open scoped ContDiff BoundedContinuousFunction Topology in
 
 theorem _root_.GlobalTheory.HCA.contDiffOn_dw_of_isOpen {d : ℕ} {U : Set (_root_.ZetaZeros.D.EllReg.E d)} (hU : IsOpen U) (w : List (Fin d))
     (u : _root_.ZetaZeros.D.EllReg.E d → ℂ) (hu : ContDiffOn ℝ ∞ u U) : ContDiffOn ℝ ∞ (_root_.ZetaZeros.D.EllReg.dw w u) U := by
@@ -31,8 +29,6 @@ theorem _root_.GlobalTheory.HCA.contDiffOn_dw_of_isOpen {d : ℕ} {U : Set (_roo
     rw [h]
     exact (ih.fderiv_of_isOpen hU (by simp)).clm_apply contDiffOn_const
 
-open MeasureTheory in
-open scoped ContDiff BoundedContinuousFunction Topology in
 
 theorem _root_.GlobalTheory.HCA.eqOn_dw_of_isOpen {d : ℕ} {U : Set (_root_.ZetaZeros.D.EllReg.E d)} (hU : IsOpen U) (w : List (Fin d))
     (u v : _root_.ZetaZeros.D.EllReg.E d → ℂ) (h : Set.EqOn u v U) : Set.EqOn (_root_.ZetaZeros.D.EllReg.dw w u) (_root_.ZetaZeros.D.EllReg.dw w v) U := by

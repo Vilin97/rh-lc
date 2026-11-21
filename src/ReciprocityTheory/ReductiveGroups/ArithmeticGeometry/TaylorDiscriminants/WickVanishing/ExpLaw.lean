@@ -146,7 +146,6 @@ theorem formal_exp_law : ExpLawSt := by
   rw [L1, L2 0, L2 1, L3 0, L3 1] at e2
   exact e2
 
-open Formalism.FG.SolveVAux in
 
 theorem dLin_comp1 {d : ℕ} (φ ψ : Pt k 1 d) (hψ : ∀ i, constantCoeff (ψ i) = 0) :
     dLin (comp1 φ ψ) = dLin φ * dLin ψ := by
@@ -238,6 +237,5 @@ theorem add_at {d : ℕ} (G : FGLaw k d) (ℓ : Pt k 1 d)
   rw [L1, L2, L3] at e2
   exact e2
 
-open Formalism.FG.SolveVAux in
 
 end ReciprocityTheory.ChartRestriction.G.TB.WickVanishing

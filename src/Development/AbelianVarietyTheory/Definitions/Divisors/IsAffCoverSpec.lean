@@ -60,7 +60,6 @@ variable [IsIntegral X]
 
 variable [Algebra k X.functionField]
 
-omit σ in
 
 structure IsAffCover {ι : Type} (U : ι → X.Opens) (B : Finset ι → Subalgebra k X.functionField) : Prop where
   alg : algebraMap k X.functionField = @algebraMap k X.functionField _ _ (ffAlg p)

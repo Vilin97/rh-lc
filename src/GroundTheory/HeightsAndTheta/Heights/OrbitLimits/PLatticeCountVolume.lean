@@ -57,7 +57,6 @@ theorem measure_le_encard_mul {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ
     _ ≤ ∫⁻ _ in F, ((A.encard : ℕ∞) : ℝ≥0∞) ∂μ := lintegral_mono fun z => key z
     _ = ((A.encard : ℕ∞) : ℝ≥0∞) * μ F := setLIntegral_const _ _
 
-open scoped Classical in
 
 theorem proof : LatticeCountVolume.Statement := by
   intro E _ _ _ _ _ μ _ La _ _ S T hS hST

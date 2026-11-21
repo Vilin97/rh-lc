@@ -221,7 +221,6 @@ theorem ringKrullDim_quotient_le_of_chartIdeal_le {P : Ideal (MvPolynomial (Σ k
   rw [hAdim]
   exact_mod_cast (by omega : sA ≤ e)
 
-open Classical in
 
 noncomputable def blockWt (k : K) (q : Σ k, ι k) : ℕ := if q.1 = k then 1 else 0
 

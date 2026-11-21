@@ -73,7 +73,6 @@ section CompactModCenter
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ}
 
-omit [ValuativeRel F] [IsNonarchimedeanLocalField F] in
 
 theorem IsCompactModCenter.comp_inv {φ : GL (Fin n) F → ℂ} (hφ : IsCompactModCenter φ) :
     IsCompactModCenter fun g => φ g⁻¹ := by

@@ -191,7 +191,6 @@ theorem isoV_of_ne (μ : Measure (GA E N)) [μ.IsHaarMeasure] [μ.IsMulRightInva
 
 end GlobalTheory.CompanionTheory.FinDisc.Orth
 
-open GlobalTheory.CompanionTheory.FinDisc.Orth in
 
 theorem GlobalTheory.CompanionTheory.FinDisc.integral_eq_zero_of_not_isoV :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) [MeasurableSpace (GA E N)] [BorelSpace (GA E N)]

@@ -183,7 +183,6 @@ end
 section
 namespace Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 
-open Filter Topology in
 
 end Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 end
@@ -416,13 +415,9 @@ theorem of_mul_twistedIdem {G : Type} [Group G] [Fintype G] (J : Subgroup G) (χ
   simp only [Equiv.coe_mulLeft, map_mul, mul_inv_rev, Units.val_mul, Units.val_inv_eq_inv_val]
   field_simp <;> ring
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 end
@@ -648,7 +643,6 @@ open scoped ComplexOrder
 
 namespace Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 
-open Module in
 
 end Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 end

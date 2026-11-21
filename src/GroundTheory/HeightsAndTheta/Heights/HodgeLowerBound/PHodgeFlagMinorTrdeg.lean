@@ -335,7 +335,6 @@ theorem z_indep : AlgebraicIndependent F (z F Ψ h) := by
     simp only [z, w, δ, Sum.map_inr, Sum.elim_inr, pivotRatio, map_div₀]
     rfl
 
-include h in
 
 theorem leadMinor_ne_zero (τ : Ψ) (A : Fin (n - 1)) : leadMinor (genMat0Fr F Ψ n j τ) A ≠ 0 := by
   by_cases hA : (A : ℕ) < j

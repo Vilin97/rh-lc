@@ -26,7 +26,6 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.Hypotheses₂.Zarhin.NearZero
 
-open GlobalTheory.PrimSec in
 
 theorem exists_open_pull_eq_zero {O K : Type} [CommRing O] [IsDomain O] [ValuationRing O] [Ring.DimensionLEOne O]
     [Field K] [IsAlgClosed K] [Algebra O K] [IsFractionRing O K] {X XK : Scheme.{0}} {f : X ⟶ Sp O} {j : XK ⟶ X}

@@ -30,7 +30,6 @@ def InCell (e : AE D) (g : G D p) : Prop := ∃ y : Mx D p p, mm y (lowC g) = e 
 
 def IsB (e : AE D) (g : G D p) (x : hermS D p e) : Prop := InCell e g ∧ mm (lowC g) x.1.1 = e • lowD g
 
-open Classical in
 
 end GlobalTheory.CompanionTheory.MuC
 

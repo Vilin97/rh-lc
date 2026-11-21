@@ -33,7 +33,6 @@ theorem sub_one_entry_mem {w : Pl E} {g : GLw n w} (hg : g ∈ GlobalTheory.LFun
   · exact one_mem _
   · exact zero_mem _
 
-omit [IsCMField E] in
 
 theorem af_ext {a b : Af E} (h : ∀ u : Pl E, pLoc E u a = pLoc E u b) : a = b := Subtype.ext (funext h)
 

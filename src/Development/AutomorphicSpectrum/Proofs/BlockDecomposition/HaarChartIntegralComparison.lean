@@ -166,7 +166,6 @@ end GlobalTheory.CompanionTheory.SobGL.HaarDom
 
 namespace GlobalTheory.CompanionTheory.SobGL
 
-open scoped GroundTheory.Automorphic in
 
 theorem lebesgue_le_haar :
     ∀ (n : ℕ) [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n)) [μ.IsHaarMeasure]

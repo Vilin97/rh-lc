@@ -105,7 +105,6 @@ end GlobalTheory.PuncturedDiscExtension
 
 namespace GlobalTheory
 
-open GlobalTheory.PuncturedDiscExtension in
 
 theorem holomorphic_extension_of_exp_two_pi_I_bound :
     ∀ (H : ℂ → ℂ) (r C : ℝ) (N : ℕ), 0 < r →

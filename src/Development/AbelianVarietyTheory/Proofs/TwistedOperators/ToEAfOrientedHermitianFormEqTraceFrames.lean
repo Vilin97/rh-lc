@@ -30,8 +30,6 @@ theorem hO_eq_trace_mul {D : D7} (S T : HSp D) (k y : WO S T) :
   conv_lhs => rw [Finset.sum_comm]; enter [2, c]; rw [Finset.sum_comm]
   rw [Finset.sum_comm]
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 800000 in
 
 theorem toEAf_hO_eq_trace_frames {D : D7} (S T : HSp D) (βS : GL (Fin S.rank) (Datum.EAf D))
     (βT : GL (Fin T.rank) (Datum.EAf D)) (k y : WO S T) :

@@ -22,13 +22,10 @@ def HasRelDim {F : Type u} [Field F] {K : Type v} [Fintype K] {ι : K → Type w
     (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (n : ℕ) : Prop :=
   ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = ((n + Fintype.card K : ℕ) : WithBot ℕ∞)
 
-open Classical in
 
-open Classical in
 
 end Objects
 
-open Classical in
 
 section Examples
 

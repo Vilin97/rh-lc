@@ -95,9 +95,6 @@ theorem _root_.GlobalTheory.Proof.localUnfoldingIntegrand_boundedSchwartz.intHom
   · exact hu _
   · exact _root_.GlobalTheory.IndefiniteRowSideFullHecke.SourceLatticeInvariance.intAt_zero P
 
-open NumberField IsDedekindDomain in
-variable {E : Type} [Field E] {n' c' n c : ℕ} in
-variable [NumberField E] {P : HeightOneSpectrum (𝓞 E)} in
 
 theorem _root_.GlobalTheory.Proof.localUnfoldingIntegrand_boundedSchwartz.integrand_bdd : ∀ (E : Type) [Field E] [NumberField E] (K : Type)
     [Field K] (P : HeightOneSpectrum (𝓞 E))

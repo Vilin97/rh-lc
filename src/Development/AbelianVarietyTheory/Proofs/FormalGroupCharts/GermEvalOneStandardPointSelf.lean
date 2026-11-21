@@ -102,7 +102,6 @@ end Push
 
 section Coeff
 
-variable (R R') in
 
 def jetCoeff (κ : Type) (m : ℕ) : JetR R κ m →ₐ[R] JetR R' κ m :=
   jetLift R (RingHom.ker (jetAug R' κ m)) (ker_jetAug_pow κ m) (zR m) (zR_mem_ker m)

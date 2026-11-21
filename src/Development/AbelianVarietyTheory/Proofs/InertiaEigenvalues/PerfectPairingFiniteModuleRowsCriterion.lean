@@ -47,7 +47,6 @@ end GlobalTheory.NewPrime.CharDual
 
 namespace GlobalTheory.NewPrime
 
-open GlobalTheory.NewPrime.CharDual in
 
 theorem charDual_cogenerator : ∀ (A : Type) [CommRing A] [Finite A] (n : ℕ), n ≠ 0 → (n : A) = 0 →
     ∃ (Y : Type) (_ : AddCommGroup Y) (_ : Module A Y) (_ : Finite Y) (β : Y →+ A →+ ZMod n),

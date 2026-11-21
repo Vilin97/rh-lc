@@ -70,7 +70,6 @@ abbrev ratDatR (Rl : RealDat3 D A3 Ks) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.r ≃
     (hk : ∀ x : Ks, ((kKs x : ↥D.LL0) : D.what₂.LL) = algebraMap Ks D.what₂.LL x) : RatDat D.ntw :=
   ratDatOfReal Rl (Rl.eG.trans cG) kKs hk
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure NExpRealS (Rl : RealDat3 D A3 Ks) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.r ≃* G0g D.nd) (S : RatDat D.ntw) where
   fi : ∀ i : Fin D.R.m, FormsIso (S.A ((i : ℕ) + 1)) (Rl.FW i)
@@ -86,7 +85,6 @@ structure NExpRealS (Rl : RealDat3 D A3 Ks) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.
   act : ∀ i j b (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (g : G0g D.nd) (x : D.nexp.Fm i j b),
     eF i j b h1 h2 (D.nexp.actG i j b g x) = actG S i j b (rho j h1 h2) (chi j h1 h2) g (eF i j b h1 h2 x)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 section Hecke
 
@@ -103,7 +101,6 @@ def hkFR (i : tw.Tw) (j : ℕ) (b : Bool) (hL : ℕ → PlE D.host → Module.En
 
 end Hecke
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure NExpRealH (Rl : RealDat3 D A3 Ks) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.r ≃* G0g D.nd) (S : RatDat D.ntw)
     (Y : NExpRealS Rl cG S) where
@@ -125,7 +122,6 @@ section NMjR
 
 variable {D : D7}
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure NMjR (X : DivX D) (c : NChoice D) where
   eMj : ∀ w j, (X.MjH j).V →ₛₗ[c.embW w]
@@ -148,7 +144,6 @@ open Formalism.IndefR.Links
 variable {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
   {A3 : Formalism.L2.DIV.FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure NMjRR (Rl : RealDat3 D A3 Ks) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.r ≃* G0g D.nd) (S : RatDat D.ntw)
     (Y : NExpRealS Rl cG S)

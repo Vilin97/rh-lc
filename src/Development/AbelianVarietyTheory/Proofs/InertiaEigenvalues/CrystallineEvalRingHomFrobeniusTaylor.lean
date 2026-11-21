@@ -42,7 +42,6 @@ theorem iotaP_mem (b : Bp l a) : iotaP K t b ∈ PPSet t K e := by
   · rw [coeff_iotaP]
     simp [embK, map_mul, map_natCast]
 
-variable (K) in
 
 def iotaD : Bp l a →+* PPd t K e :=
   (iotaP K t).codRestrict (PPd t K e) fun b => Subring.subset_closure (iotaP_mem t b)
@@ -71,14 +70,12 @@ theorem coeff_iotaP_X (b : Bp l a) (τ : ZMod a) (i : ℕ) : coeff i (iotaP K t 
   change coeff i (PowerSeries.map (rhoK K t τ) (b : (Polynomial (Wq l a))⟦X⟧)) = _
   rw [coeff_map, Polynomial.coeff_coe]
 
-omit [NeZero e] in
 
 theorem constP_inclS_coe (q : Polynomial (Wq l a)) :
     constP a K (inclS t K (q : (Wq l a)⟦X⟧)) = iotaP K t (Polynomial.C q) := funext fun τ => by
   rw [iotaP_C, rhoK_eq_toAc]
   rfl
 
-omit [NeZero e] in
 
 theorem acris_complete : IsAdicComplete (Ideal.span {(l : Per.Acris l)}) (Per.Acris l) :=
   (GlobalTheory.MemLoc.acris_torsionFree_complete l).2
@@ -123,7 +120,6 @@ omit [NeZero e] in
 theorem fP_X (g' : GQ l) : fP a ϖ g' Polynomial.X = ainfToAcris l (ϖ.mu g' * ϖ.teich) := by
   simp [fP]
 
-omit [NeZero a] [NeZero e] in
 
 theorem sep_teich_acris (x : Per.Acris l) (h : ∀ n, ainfToAcris l ϖ.teich ^ n ∣ x) : x = 0 := by
   have := acris_complete (l := l)

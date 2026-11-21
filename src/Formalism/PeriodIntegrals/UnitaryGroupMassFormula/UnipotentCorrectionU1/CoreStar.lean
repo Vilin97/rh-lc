@@ -15,7 +15,6 @@ open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Form
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
-open Classical in
 
 def costP (k j ρ : ℕ) (X : B.Mat k (j + ρ)) : ℕ := if inLieP k j ρ X then 0 else j
 

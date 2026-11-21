@@ -81,7 +81,6 @@ theorem tendsto_tau_inf (w : InfinitePlace F) {N : ℕ} (hN : 2 ≤ N) :
   refine squeeze_zero (fun k => by exact_mod_cast (tau_pos hN k).le) hb ?_
   exact tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num)
 
-open Classical in
 
 def finS (S : Finset (HeightOneSpectrum (𝓞 F))) (q : F) :
     Πʳ v : HeightOneSpectrum (𝓞 F), [v.adicCompletion F, v.adicCompletionIntegers F]_[𝓟 ((S : Set (HeightOneSpectrum (𝓞 F)))ᶜ)] :=
@@ -126,7 +125,6 @@ theorem ring_hom_mul_sub_eq_zero {A B : Type*} [CommRing A] [CommRing B] (f : A 
     (hc : f e = c) (h : f x * c = f y) : f (x * e - y) = 0 := by
   rw [map_sub, map_mul, hc, h, sub_self]
 
-open Classical in
 
 theorem tensor_key {E : Type} [Field E] [Algebra F E] (S : Finset (HeightOneSpectrum (𝓞 F)))
     (e : AF F ⊗[F] E) (hi : ∀ w, compInf F E w e = 1)

@@ -23,7 +23,6 @@ section Alg
 
 variable {F E : Type} [Field F] [Field E] [Algebra F E]
 
-variable (F) in
 
 def cd (δ : E) {R : Type} [CommRing R] [Algebra F R] (a c : R) : R ⊗[F] E :=
   a ⊗ₜ[F] (1 : E) + c ⊗ₜ[F] δ
@@ -104,7 +103,6 @@ section Model
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-open GlobalTheory.CompanionTheory.SW.GoodInt GlobalTheory.CompanionTheory.SW.GoodMass in
 
 theorem model (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) (J : Matrix (Fin 1) (Fin 1) E) (hJ : IsHermND σ J)
     {d : ℕ} (b : Module.Basis (Fin d) F E) :

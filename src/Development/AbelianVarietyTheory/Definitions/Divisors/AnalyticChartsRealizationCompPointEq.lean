@@ -56,7 +56,6 @@ variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : Fam
 @[reducible] def Charts.Obj.ratAlg {K : Charts F} (T : K.Obj) : Algebra ℚ T.C :=
   ((algebraMap (Hol F.V) T.C).comp ((algebraMap ℂ (Hol F.V)).comp (algebraMap ℚ ℂ))).toAlgebra
 
-open Classical in
 
 def Charts.Obj.δ {K : Charts F} (T : K.Obj) : DividedPowers T.J :=
   letI := T.ratAlg
@@ -218,7 +217,6 @@ theorem perCl_injective (F : Fam I g Λ) : Function.Injective F.allCharts.perCl 
   rw [Charts.fn_sh _ _ hp, Fam.shift, hc z hz 0 (0 + F.τ l z), sub_self] at h4
   exact sub_eq_zero.1 h4.symm
 
-variable (I) in
 
 def fam : Fam I 1 ℤ where
   V := ⊤
@@ -227,15 +225,12 @@ def fam : Fam I 1 ℤ where
          map_add' l m := by funext _ _; simp [add_mul] }
   hol _ := analyticOnNhd_const
 
-variable (B) in
 
 abbrev Ring : Type := Localization.Away (Polynomial.X : B[X])
 
-variable (B) in
 
 abbrev str : Sp (Ring B) ⟶ Sp B := spMap (algebraMap B (Ring B))
 
-variable (B) in
 
 def coord : Ring B := algebraMap B[X] (Ring B) Polynomial.X
 

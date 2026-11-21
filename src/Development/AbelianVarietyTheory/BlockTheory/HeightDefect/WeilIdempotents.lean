@@ -129,7 +129,6 @@ def Implements {A B : HSp D} {ψ : AddChar (AF D.host.F) ℂ} (M : Module.End �
 def idemFin (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) : AE D :=
   algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 (singleV D.host.F v 1))
 
-open Classical in
 
 def idemInf (D : D7) (v : InfinitePlace D.host.F) : AE D :=
   algebraMap (AF D.host.F) (AE D) (pairA D.host.F (Pi.single v 1) 0)

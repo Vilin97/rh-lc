@@ -18,7 +18,6 @@ omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem valuation_lt_one_of_unif {ϖ : kˣ} (h : GlobalTheory.IndefiniteRowSideFullHecke.FramePositiveSum.IsUnif ϖ) : valuation k (ϖ : k) < 1 :=
   (h _).2 le_rfl
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem irreducible_of_unif {ϖ : kˣ} (h : GlobalTheory.IndefiniteRowSideFullHecke.FramePositiveSum.IsUnif ϖ) :
     Irreducible (⟨(ϖ : k), (valuation_lt_one_of_unif h).le⟩ : 𝒪[k]) := by
@@ -40,7 +39,6 @@ theorem irreducible_of_unif {ϖ : kˣ} (h : GlobalTheory.IndefiniteRowSideFullHe
 section
 variable {ι n : Type} [Fintype n] [DecidableEq n] {c : ℕ}
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem chainLat_eq_latOf (ϖ : kˣ) (p : 𝒪[k]) (hp : (p : k) = ϖ) (o : ι ≃ n ⊕ Fin c) :
     chainLat p c (stdLat k n) = latOf (typeFrame ϖ o).bas := by
@@ -68,7 +66,6 @@ theorem act_latOf (u g : GL Y k) : act u (latOf g) = latOf (u * g) := by
   ext v
   rw [mem_act_iff_inv, ← mulVec_mem_latOf u, mulVec_mulVec, Units.mul_inv, one_mulVec]
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem mapsInto_latOf_iff (g : GL Y k) (g' : GL Y' k) (x : Matrix Y Y' k) :
     MapsInto x (latOf g') (latOf g) ↔ IntM ((g⁻¹).val * x * g'.val) := by

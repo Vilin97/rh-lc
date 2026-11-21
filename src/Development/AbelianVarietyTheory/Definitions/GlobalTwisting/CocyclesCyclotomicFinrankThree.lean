@@ -22,6 +22,5 @@ def Z1 (γ : G →* Eˣ) : Submodule E (G → E) where
     rintro t a ⟨ha, ha'⟩
     exact ⟨continuous_const.mul ha, fun g h => by simp only [Pi.smul_apply, smul_eq_mul, ha']; ring⟩
 
-variable (G E) in
 
 end GlobalTheory.OrdLoc

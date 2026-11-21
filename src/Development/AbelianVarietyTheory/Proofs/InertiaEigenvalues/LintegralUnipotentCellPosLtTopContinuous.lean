@@ -195,12 +195,10 @@ theorem exists_components (S : Finset (HeightOneSpectrum (𝓞 E)))
     · rw [map_mul, pLoc_locGL_of_ne (fun e : v = w => hv (Finset.mem_insert.2 (.inl e))),
         h2 v fun e => hv (Finset.mem_insert_of_mem e), mul_one]
 
-variable (E) in
 
 def mirAt (ℓ : Fin a) (S : Finset (HeightOneSpectrum (𝓞 E))) : Set (GA E a) :=
   {p | (∀ j, p.val ℓ j = if j = ℓ then 1 else 0) ∧ ∀ v ∉ S, compV E a v p = 1}
 
-variable (a) in
 
 def levelAt (S : Finset (HeightOneSpectrum (𝓞 E))) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) : Set (GL (Fin a) (Af E)) :=
   {κ | (∀ v, GeneralLinearGroup.map (pLoc E v) κ ∈ GlobalTheory.LFun.KGL v a) ∧ ∀ v ∈ S, ∀ i j,

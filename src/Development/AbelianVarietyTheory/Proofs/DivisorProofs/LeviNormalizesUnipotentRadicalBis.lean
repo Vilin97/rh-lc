@@ -18,7 +18,6 @@ namespace GlobalTheory.ResLine.LeviFacts
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r : ℕ}
 
-omit [NumberField E] in
 
 theorem dual_eq {k : ℕ} (C : Matrix (Fin n) (Fin k) E) (g : GAd σ J) (B : Matrix (Fin k) (Fin k) (AF F ⊗[F] E))
     (e : (matHom _ σ J g).1 * adMat F C = adMat F C * B) :

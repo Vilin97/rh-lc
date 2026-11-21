@@ -42,7 +42,6 @@ theorem map_bcEmb_genericPoint [DecidableEq F'] :
         (E.baseChange (E.baseChange F').toAffine.FunctionField).toAffine.Point) :=
   map_liftPoint_genericPoint E _ _
 
-omit [E.IsElliptic] in
 
 theorem transcendental_bcEmb {z : E.toAffine.FunctionField} (hz : Transcendental F z) :
     Transcendental F' (bcEmb (F' := F') E z) := by
@@ -188,7 +187,6 @@ theorem bcDiff_smul (a : E.toAffine.FunctionField) (η : Ω[E.toAffine.FunctionF
 
 variable [DecidableEq F'] {E} {E' : WeierstrassCurve F}
 
-omit [E.IsElliptic] [DecidableEq F'] in
 
 theorem bcDiff_omegaAt (P : (E'.baseChange E.toAffine.FunctionField).toAffine.Point) :
     bcDiff (F' := F') E (omegaAt E' P) =
@@ -212,7 +210,6 @@ theorem bcDiff_omegaAt (P : (E'.baseChange E.toAffine.FunctionField).toAffine.Po
     · rw [c1, c2, c4, ← bcDiff_D, ← t, bcDiff_smul]
       simp only [map_add (f := _), map_sub, map_mul, map_pow, map_ofNat]
 
-variable (E) in
 
 theorem bcDiff_invariantDifferential :
     bcDiff (F' := F') E (invariantDifferential E) = invariantDifferential (E.baseChange F') := by

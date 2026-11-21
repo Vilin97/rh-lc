@@ -13,13 +13,10 @@ open AlgebraicGeometry CategoryTheory
 
 variable (A : Type) [CommRing A] (Ω : Type) [Field Ω] [Algebra A Ω]
 
-set_option backward.isDefEq.respectTransparency false in
 
 variable [IsDomain A] [IsFractionRing A Ω]
 
-omit [IsDomain A] [IsFractionRing A Ω] in
 
-omit [IsDomain A] [IsFractionRing A Ω] in
 
 section General
 

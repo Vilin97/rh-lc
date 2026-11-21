@@ -22,9 +22,7 @@ def Co {D : D7} (V W : HSp D) (x : WA V W) (a : Ix V W) : AF D.host.F := Phi V W
 def CoordFinP : Prop :=
   ∀ (D : D7) (V W : HSp D) (x : WA V W), x.map (finPart D) = 0 → ∀ a, (Co V W x a).2 = 0
 
-open scoped Classical in
 
-open scoped Classical in
 
 def PsiOpenP : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsCharAF F ψ →

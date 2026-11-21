@@ -15,7 +15,6 @@ open IsLocalRing
 
 namespace GlobalTheory
 
-open IsLocalRing in
 
 theorem _root_.GlobalTheory.nonempty_padicInt_ringHom_of_isAdicComplete {V : Type*} [CommRing V] (I : Ideal V)
     [IsAdicComplete I V] (p : ℕ) [Fact p.Prime] (hp : (p : V) ∈ I) : Nonempty (ℤ_[p] →+* V) := by
@@ -39,7 +38,6 @@ theorem _root_.GlobalTheory.nonempty_padicInt_ringHom_of_isAdicComplete {V : Typ
   rw [← PadicInt.zmod_cast_comp_toZModPow m n hle]
   exact hx
 
-open IsLocalRing in
 
 theorem _root_.GlobalTheory.exists_padicInt_algebra_finite (V : Type*) [CommRing V] [IsDomain V]
     [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] [CharZero V]
@@ -75,7 +73,6 @@ theorem _root_.GlobalTheory.exists_padicInt_algebra_finite (V : Type*) [CommRing
     rw [himage]
     exact hmem
 
-open IsLocalRing in
 
 theorem _root_.GlobalTheory.exists_ringEquiv_integralClosure_padicInt (V K : Type*) [CommRing V] [IsDomain V]
     [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] [Field K] [CharZero K]
@@ -246,7 +243,6 @@ private theorem isAdicComplete_integralClosure_padicInt (p : ℕ) [Fact p.Prime]
     have hfin := le_of_tendsto hlim' hbound
     simpa [nm, g, L] using hfin
 
-open IsLocalRing in
 
 theorem _root_.GlobalTheory.completeDVR_eq_integralClosure_padicInt :
     (∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] [Field K] [CharZero K] [Algebra V K] [IsFractionRing V K], Finite (ResidueField V) → ∃ (p : ℕ) (_ : Fact p.Prime) (K₀ : IntermediateField ℚ_[p] (PadicAlgCl p)) (e : K ≃+* K₀) (e₀ : V ≃+* integralClosure ℤ_[p] K₀), FiniteDimensional ℚ_[p] K₀ ∧ ∀ x, e (algebraMap V K x) = ((e₀ x : integralClosure ℤ_[p] K₀) : K₀)) ∧ ∀ (p : ℕ) [Fact p.Prime] (K₀ K' : IntermediateField ℚ_[p] (PadicAlgCl p)) (h : K₀ ≤ K'), FiniteDimensional ℚ_[p] K' → IsDiscreteValuationRing (integralClosure ℤ_[p] K') ∧ IsFractionRing (integralClosure ℤ_[p] K') K' ∧ (∀ [IsLocalRing (integralClosure ℤ_[p] K')], IsAdicComplete (maximalIdeal (integralClosure ℤ_[p] K')) (integralClosure ℤ_[p] K')) ∧ ∃ f : integralClosure ℤ_[p] K₀ →+* integralClosure ℤ_[p] K', f.Finite ∧ IsLocalHom f ∧ ∀ x, ((f x : integralClosure ℤ_[p] K') : K') = IntermediateField.inclusion h x := by

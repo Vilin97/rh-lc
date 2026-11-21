@@ -59,7 +59,6 @@ theorem mem_KO_iff_det {g : GL D k} : g ∈ KO k D ↔ (∀ i j, g.val i j ∈ �
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype A] [DecidableEq A] [Fintype A']
   [DecidableEq A'] in
 
-omit [Fintype A] [DecidableEq A] [Fintype A'] [DecidableEq A'] in
 
 variable {ϖ : kˣ} (hϖ : IsUnif ϖ) (c : ℕ) (σ : A ⊕ A' ≃ D)
 
@@ -76,7 +75,6 @@ def colDatum (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c : ℕ) (σ : Fin n ⊕ Fin n' �
 
 variable (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c : ℕ) (σ : Fin n ⊕ Fin n' ≃ D)
 
-omit [Fintype D] [DecidableEq D] in
 
 theorem colDatum_eq {X : Matrix (Fin n) D k} {u : GL (Fin n) k} (hu : u ∈ KO k (Fin n))
     (h₁ : ∀ i j, X i (σ (.inl j)) = u.val i j) (h₂ : ∀ i j, X i (σ (.inr j)) ∈ cball (ϖ ^ c)) :
@@ -93,7 +91,6 @@ variable [MeasurableSpace k] [BorelSpace k] {m : Measure k}
 
 variable {ν ϖ}
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 end Pair
 

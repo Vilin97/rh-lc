@@ -234,7 +234,6 @@ theorem map_eq_actVdR (ρ : Representation LL G V) (g : G) (x : V ⊗[Qp] BdR) :
 
 end Fil
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_rational (AI : LocAinf l P) (LT : LocTied l P AI) (K LL : FinExt l)
     (h1F : (1 : P.R.BdR) ∈ (P.PD K).Fil 0)
@@ -292,7 +291,6 @@ theorem exists_rational (AI : LocAinf l P) (LT : LocTied l P AI) (K LL : FinExt 
       hx1G, AlgebraTensorModule.map_tmul, LinearMap.id_apply, hf, sub_tmul]
     abel
 
-set_option maxHeartbeats 4000000 in
 
 theorem cob_of_rational (AI : LocAinf l P) (K LL : FinExt l)
     (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (f : ↥(GK K) → ↥T.L.T)
@@ -340,7 +338,6 @@ theorem cob_of_rational (AI : LocAinf l P) (K LL : FinExt l)
       rfl)
   exact ⟨k, x, fun g => hx g⟩
 
-set_option maxHeartbeats 4000000 in
 
 theorem cob_of_strict (AI : LocAinf l P) (LT : LocTied l P AI) (J : ThetaL P AI) (K LL : FinExt l)
     (Yt T Z : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (ι : LatHom T.L Yt.L) (π : LatHom Yt.L Z.L)

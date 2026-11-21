@@ -15,7 +15,6 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
 
 section Forms
 
-variable (k n) in
 
 abbrev Form (M : Type*) : Type _ := Pair k n → M
 
@@ -45,7 +44,6 @@ def Nm : Module.End ℂ (Form k n M) :=
   letI := Fintype.ofFinite 𝓀[k]ˣ
   ∑ c : 𝓀[k]ˣ, dia c
 
-variable (k n M) in
 
 def Mram : Submodule ℂ (Form k n M) := LinearMap.ker Nm
 
@@ -57,14 +55,12 @@ def tr : Module.End ℂ (Form k n M) := LinearMap.pi fun P => trLat P.lat
 
 def tr' : Module.End ℂ (Form k n M) := LinearMap.pi fun P => trKer P.ker
 
-open Classical in
 
 def Da (q : Unif k) (a : 𝓀[k]) : Module.End ℂ (Form k n M) :=
   sumOp (fun P₁ => (withLat P₁.ker).filter fun P => cross q P₁ P = a) fun _ _ => 1
 
 def D (q : Unif k) : Module.End ℂ (Form k n M) := Da q 1
 
-open Classical in
 
 def U (q : Unif k) : Module.End ℂ (Form k n M) :=
   sumOp (fun P => (withKer P.lat).filter fun P₁ => cross q P₁ P = 1) fun _ _ => 1
@@ -112,16 +108,13 @@ theorem tr_apply (P : Pair k n) : tr φ P = ∑ Q ∈ withLat P.lat, φ Q := trL
 
 theorem tr'_apply (P : Pair k n) : tr' φ P = ∑ Q ∈ withKer P.ker, φ Q := trKer_apply φ _
 
-open Classical in
 
 theorem Da_apply (a : 𝓀[k]) (P₁ : Pair k n) :
     Da q a φ P₁ = ∑ P ∈ withLat P₁.ker with cross q P₁ P = a, φ P := by simp [Da, sumOp_apply]
 
-open Classical in
 
 theorem D_apply (P₁ : Pair k n) : D q φ P₁ = ∑ P ∈ withLat P₁.ker with cross q P₁ P = 1, φ P := Da_apply q φ 1 P₁
 
-open Classical in
 
 theorem U_apply (P : Pair k n) : U q φ P = ∑ P₁ ∈ withKer P.lat with cross q P₁ P = 1, φ P₁ := by
   simp [U, sumOp_apply]
@@ -304,7 +297,6 @@ end Character
 section Kernel
 variable [Fintype n']
 
-open Classical in
 
 def latInd (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) (x : Matrix n n' k) : ℂ :=
   if ∀ y ∈ S, x *ᵥ y ∈ L then 1 else 0
@@ -312,7 +304,6 @@ def latInd (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) 
 def Maps (P : Pair k n') (Q : Pair k n) (x : Matrix n n' k) : Prop :=
   ∃ h : ∀ y ∈ P.lat, x *ᵥ y ∈ Q.lat, ∀ y : P.lat, Q.fn ⟨x *ᵥ y, h y y.2⟩ = P.fn y
 
-open Classical in
 
 def phiOne (P : Pair k n') (Q : Pair k n) (x : Matrix n n' k) : ℂ := if Maps P Q x then 1 else 0
 
@@ -367,18 +358,15 @@ end Kernel
 section Glued
 variable {c : ℕ}
 
-variable (k n) in
 
 def inX (c : ℕ) : (n → k) →ₗ[𝒪[k]] (n ⊕ Fin c → k) where
   toFun x := Sum.elim x 0
   map_add' x y := by ext (i | i) <;> simp
   map_smul' s x := by ext (i | i) <;> simp
 
-variable (k n) in
 
 def avec (c p : ℕ) : n ⊕ Fin c → k := Sum.elim 0 fun i => if i.val + 1 = p then 1 else 0
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem sum_smul_avec (z : Fin c → k) : ∑ i : Fin c, z i • avec k n c (i.val + 1) = Sum.elim (0 : n → k) z := by
   ext (j | j) <;> simp [avec, Fin.val_inj]

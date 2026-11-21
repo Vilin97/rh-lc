@@ -43,5 +43,3 @@ theorem reductionBlock_injective_of_eq {κ : Type} [CommRing κ] {n r : ℕ} (hr
 
 end GlobalTheory.LevZeroInd
 
-open GlobalTheory.LevZeroInd in
-set_option maxHeartbeats 1000000 in

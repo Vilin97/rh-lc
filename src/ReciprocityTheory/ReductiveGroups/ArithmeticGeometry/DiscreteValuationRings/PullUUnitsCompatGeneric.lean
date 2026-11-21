@@ -84,7 +84,6 @@ lemma pullU_of_eq_id (f : Z ⟶ Z) (hf : f = 𝟙 Z) (U V : Z.Opens) (hV : V ≤
   ext
   simp [res, pullU, CommRingCat.hom_id, Units.coe_map] <;> rfl
 
-open scoped Classical in
 
 theorem exists_value (hL : L.IsLB) (φ : K → (Y ⟶ X)) (ε : K → ℤ) (t : LB.Gen (LB.LinComb L φ ε)) (ht : t.IsGen)
     (z : Z ⟶ Y) (h0 : fsum (fun k => z ≫ φ k) ε = 0) :

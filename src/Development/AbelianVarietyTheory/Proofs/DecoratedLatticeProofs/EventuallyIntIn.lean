@@ -101,7 +101,6 @@ variable {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : Formalism.L2.DI
   {a : XGeo D} {y : YRat a} (m : YMeas y) (b : ∀ j, GA D (Yc D j)) (v : VCom (commOf R u (mkGeo m b)))
   {PP : Formalism.L2.DIV.Pl D.host.E} (l : LocX a R.βX PP)
 
-set_option maxHeartbeats 2000000 in
 
 end Loc
 

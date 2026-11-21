@@ -110,7 +110,6 @@ theorem ker_top (hL : L.Ok Ch sel mu cst G m2) (p : PtAt R sel mu cst u (m2 + 1)
   rw [← stepC_eq_stepT W Ch sel mu cst (muqTie_of_ok Ch sel mu cst L hL) A u (m2 + 1) (by omega)]
   rfl
 
-variable {W Ch u} in
 
 theorem k2top_tilF (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hm : R.m = m2 + 2) (hc : cst.Ok) (H : TilOk Pr sel mu u)
     {T : ChTh W sel mu u m2} (hT : TameFr T.top) (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Set (Sp X.E (R.N (m2 + 1))))
@@ -139,7 +138,6 @@ theorem k2top_tilF (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hm : R.m = m2
 
 variable (Tp : TopLev X Pr R (QE sel (mu : Chr X.F X.E X.K)))
 
-variable (sel mu cst L) in
 
 structure Reps where
   rp : ∀ j b, MulAction.orbitRel.Quotient ((stepAt sel mu cst L Tp u j).G b) (GStep.D (stepAt sel mu cst L Tp u j) b) →
@@ -310,7 +308,6 @@ theorem colAt_top (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (H : TilOk Pr s
     exact Finset.sum_congr rfl fun a _ => (comp_appOf ((chKerC W Ch sel mu cst L A u m2 b hY P hK).cp a) (hF m2 a) (hF (m2 + 1) b)
       ((chKerC W Ch sel mu cst L A u m2 b hY P hK).kk.colTo hF m2 (startC hL u φ) a).1 (toRow sel mu d)).symm
 
-omit hF hL in
 
 theorem pair_smul (hW : W.Ok) (ψ : (evGSD W Ch sel mu P u).EqFun) (z : (mtildeGSD W Ch sel mu P).EqFun)
     (g : (mtildeGSD W Ch sel mu P).G) (d : (mtildeGSD W Ch sel mu P).D) :

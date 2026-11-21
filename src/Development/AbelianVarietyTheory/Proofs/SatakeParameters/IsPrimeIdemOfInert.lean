@@ -156,7 +156,6 @@ theorem fin_lift (x : Bridge.Gf V) : ∃ g ∈ GfC V, fin V g = x := by
   show finHom V g₁ = finHom V (g₁ * g₂)
   rw [map_mul, b, mul_one]
 
-set_option maxHeartbeats 1000000 in
 
 end Local
 

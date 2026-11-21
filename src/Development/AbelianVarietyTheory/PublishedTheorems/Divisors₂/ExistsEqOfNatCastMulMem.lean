@@ -257,7 +257,6 @@ omit [NumberField K] in
 @[simp] theorem torsionIncl_mk (𝔞 : FractionalIdeal (𝓞 K)⁰ K) (x : K) :
     torsionIncl 𝔞 (Submodule.Quotient.mk x) = (algebraMap K ℂ x : ℂ) := rfl
 
-omit [Algebra K ℂ] in
 
 theorem exists_natCast_mul_mem {𝔞 : FractionalIdeal (𝓞 K)⁰ K} (h𝔞 : 𝔞 ≠ 0) (x : K) :
     ∃ n : ℕ, n ≠ 0 ∧ (n : K) * x ∈ 𝔞 := by
@@ -274,7 +273,6 @@ theorem exists_natCast_mul_mem {𝔞 : FractionalIdeal (𝓞 K)⁰ K} (h𝔞 : �
   simp only [Algebra.smul_def, map_mul]
   field_simp
 
-omit [NumberField K] in
 
 theorem exists_eq_of_natCast_mul_mem {𝔞 : FractionalIdeal (𝓞 K)⁰ K} {n : ℕ} (hn : n ≠ 0) {z : ℂ}
     (hz : (n : ℂ) * z ∈ idealSub 𝔞) : ∃ x : K, algebraMap K ℂ x = z := by
@@ -403,7 +401,6 @@ theorem exists_transports (h2 : Module.finrank ℚ K = 2) (σ : ℂ ≃ₐ[K] �
   rw [torsionIncl_mk, torsionIncl_mk, hξα, e', mapPoint_variableChangePoint _ h h' hs,
     (hc _ _).1 (hF x)]
 
-omit [Algebra K ℂ] in
 
 theorem finitePart_inr (t : (IsDedekindDomain.FiniteAdeleRing (𝓞 K) K)ˣ) :
     finitePart (K := K) (Units.map (MonoidHom.inr (InfiniteAdeleRing K) _) t) = t :=

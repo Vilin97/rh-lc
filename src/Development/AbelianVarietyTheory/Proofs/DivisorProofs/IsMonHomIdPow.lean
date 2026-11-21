@@ -23,7 +23,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.PolPrimeTo
 
-open Classical in
 
 end GlobalTheory.PolPrimeTo
 

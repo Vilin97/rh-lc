@@ -30,7 +30,6 @@ section Alg
 variable {R : Type} [CommRing R] {E : Type} [CommRing E] [Algebra R E] (c : E →ₐ[R] E)
   {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
 
-omit [DecidableEq α] [DecidableEq β] in
 
 theorem symp_dbl (ξ : E) (JA : Matrix α α E) (JB : Matrix β β E) (x₁ x₂ y₁ y₂ : Matrix α β E) :
     symp (R := R) c ξ JA (dbl JB) (Matrix.fromCols x₁ x₂) (Matrix.fromCols y₁ y₂) =

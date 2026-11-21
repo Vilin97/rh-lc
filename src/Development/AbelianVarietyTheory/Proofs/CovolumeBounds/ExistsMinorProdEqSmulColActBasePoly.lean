@@ -142,7 +142,6 @@ theorem exists_covecAct_eq_and_vecAct_eq {ε ε' : ι → κ → K} {φ φ' : ι
   rw [← hg, covecAct_dotProduct_vecAct, hg]
   exact (congrFun (he x) a).symm
 
-omit [DecidableEq κ] in
 
 theorem exists_linearIndependent_perp_flag {p q : ℕ} (hpq : p + q ≤ Fintype.card κ)
     (ε : Fin p → κ → K) (φ : Fin q → κ → K) (h : ∀ a b, ε a ⬝ᵥ φ b = 0) :
@@ -218,7 +217,6 @@ section Span
 
 variable {K : Type*} [Field K] {T κ : Type*} [Fintype T] {p q n : ℕ}
 
-omit [Fintype T] in
 
 theorem exists_act_eq_of_isPerp [Fintype κ] [DecidableEq κ] {ε ε' : T → Fin p → κ → K}
     {φ φ' : T → Fin q → κ → K}

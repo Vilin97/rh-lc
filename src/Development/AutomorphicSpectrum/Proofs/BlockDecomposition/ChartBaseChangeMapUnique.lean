@@ -13,7 +13,6 @@ open CrystallineSemistableComparison.Onto GlobalTheory.CompanionTheory.Surjectio
 
 variable {K : Type} [Field K] {n d : ℕ}
 
-variable (K n d) in
 
 def tau : Bp K n d := ∏ e, MvPolynomial.X e
 

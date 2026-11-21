@@ -148,13 +148,11 @@ def gram (i j : Fin P.n) : O := h (gen P j) (gen P i)
 
 def crd (i : Fin P.n) : A ⟶ G := t.mapLeft (IsTensor.self a) (LinearMap.proj i ∘ₗ P.incl)
 
-omit [StarRing O] in
 
 theorem isLinearHom_crd (i : Fin P.n) : IsLinearHom b a (crd t P i) := t.isLinearHom_mapLeft _ _
 
 instance isMonHom_crd (i : Fin P.n) : IsMonHom (crd t P i) := IsTensor.isMonHom_mapLeft _ _ _
 
-omit [StarRing O] in
 
 abbrev BIx (n : ℕ) : Type := (Fin n × Fin n) × ULift.{0} (Finset (Fin 2))
 
@@ -205,8 +203,6 @@ section Laws
 
 variable {L : LB G.left} (hL : L.IsLB) (hΘ : ∃ s : LB.Gen (Theta G L), s.IsGen) (hadj : IsAdj a L)
 
-omit [IsCommMonObj G] in
-include hadj in
 
 theorem lam_act [IsCommMonObj G] (x y : T ⟶ G) (c : O) :
     lam (cls L hL) (x ≫ a.act c) y = lam (cls L hL) x (y ≫ a.act (star c)) := by
@@ -215,27 +211,23 @@ theorem lam_act [IsCommMonObj G] (x y : T ⟶ G) (c : O) :
     ((cls_cube_two hL _ _ _).symm.trans (h₀.trans (cls_cube_two hL _ _ _)))
   simpa only [pull_lam, lift_fst, lift_snd, lift_fst_assoc, lift_snd_assoc] using h'
 
-include hΘ in
 
 theorem bi_mul_left (x y z : T ⟶ A) :
     bi t P h (cls L hL) (x * y) z = bi t P h (cls L hL) x z + bi t P h (cls L hL) y z := by
   simp only [bi, MonObj.mul_comp, lam_mul_left hL hΘ, Finset.sum_add_distrib]
 
-include hΘ in
 
 theorem bi_mul_right (x y z : T ⟶ A) :
     bi t P h (cls L hL) x (y * z) = bi t P h (cls L hL) x y + bi t P h (cls L hL) x z := by
   have := a.hom
   simp only [bi, MonObj.mul_comp, lam_mul_right hL hΘ, Finset.sum_add_distrib]
 
-include hadj in
 
 theorem bi_comm (x z : T ⟶ A) : bi t P h (cls L hL) x z = bi t P h (cls L hL) z x := by
   rw [bi, bi, Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
   rw [lam_comm, ← Category.assoc z, lam_act hL hadj, Category.assoc, gram, gram, h.star_apply]
 
-include hadj in
 
 theorem bi_act (x z : T ⟶ A) (c : O) :
     bi t P h (cls L hL) (x ≫ b.act c) z = bi t P h (cls L hL) x (z ≫ b.act (star c)) := by
@@ -244,9 +236,7 @@ theorem bi_act (x z : T ⟶ A) (c : O) :
     Category.assoc, Category.assoc, act_comm a, ← Category.assoc (b.act _), (isLinearHom_crd t P j).comm,
     Category.assoc]
 
-include hΘ hadj in
 
-include hΘ hadj in
 
 theorem lam_bi {w : O} (hw : w + star w = 1) (x z : T ⟶ A) :
     lam (bi t P h (cls L hL) (𝟙 A) (b.act w)) x z = bi t P h (cls L hL) x z := by
@@ -259,12 +249,8 @@ theorem lam_bi {w : O} (hw : w + star w = 1) (x z : T ⟶ A) :
     bi_mul_right t P h hL hΘ]
   abel
 
-omit [StarRing O] in
-include t in
 
-include hΘ hadj in
 
-include hΘ hadj in
 
 end Laws
 
@@ -312,7 +298,6 @@ section ThetaLaws
 
 variable {L : RigLB G} (c : CubicalStr G L) (hadj : IsAdj a L.L) {w : O} (hw : w + star w = 1)
 
-include c in
 
 include c hadj hw
 
@@ -330,9 +315,7 @@ theorem theta_prim : LBIso (theta t P h w L).L (cubeLB A ![𝟙 A, b.act w] (the
   refine (cls_eq_iff hN (LB.isLB_linComb hN _ _)).1 (Eq.trans ?_ (cls_cube_two hN _ _ _).symm)
   rw [lam_theta t P h c hadj hw, cls_theta]
 
-omit hw in
 
-omit hw in
 
 end ThetaLaws
 
@@ -344,7 +327,6 @@ variable {S' : Scheme.{0}} {G₁ A₁ : Over S'} [GrpObj G₁] [IsCommMonObj G�
   (hm : ∀ m, (t₁.tmul m).left ≫ ψ = φ ≫ (t.tmul m).left)
 include hφ hψ hm
 
-omit [StarRing O] in
 
 theorem mapLeft_self_comm (l : M →ₗ[O] O) :
     (t₁.mapLeft (IsTensor.self a₁) l).left ≫ φ = ψ ≫ (t.mapLeft (IsTensor.self a) l).left := by

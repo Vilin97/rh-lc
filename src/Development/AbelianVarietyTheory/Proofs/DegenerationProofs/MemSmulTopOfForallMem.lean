@@ -136,7 +136,6 @@ theorem exact_hom_one [IsNoetherianRing R] (N : Ideal R) (hN : N ≤ maximalIdea
           (h2 _ (by omega)) (hDext i j (by omega))⟩
   exact (key g 0 (zero_add g)).1
 
-omit [IsLocalRing R] in
 
 theorem mem_smul_top_of_forall_mem (N : Ideal R) {F : Type} [AddCommGroup F] [Module R F] [Module.Free R F]
     [Module.Finite R F] (f : Module.Dual R F) (hf : ∀ x, f x ∈ N) : f ∈ N • (⊤ : Submodule R (Module.Dual R F)) := by
@@ -144,7 +143,6 @@ theorem mem_smul_top_of_forall_mem (N : Ideal R) {F : Type} [AddCommGroup F] [Mo
   rw [← (Module.Free.chooseBasis R F).sum_dual_apply_smul_coord f]
   exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem_smul (hf _) trivial
 
-omit [IsLocalRing R] in
 
 theorem injective_of_exact {A : Type} [CommRing A] [IsLocalRing A] [IsNoetherianRing A] [Algebra A R] [Module.Flat A R]
     {F₀ F₁ F₂ : Type} [AddCommGroup F₀] [Module R F₀] [AddCommGroup F₁] [Module R F₁] [AddCommGroup F₂] [Module R F₂]
@@ -207,7 +205,6 @@ theorem injective_of_exact {A : Type} [CommRing A] [IsLocalRing A] [IsNoetherian
   have : Nontrivial (R ⧸ I) := Ideal.Quotient.nontrivial_iff.2 hI
   exact FaithfulSMul.algebraMap_injective A (R ⧸ I)
 
-omit [IsLocalRing R] in
 
 theorem regular_fibre {A T : Type} [CommRing A] [IsLocalRing A] [CommRing T] [Algebra A T] (g : ℕ)
     [Algebra.IsStandardSmoothOfRelativeDimension g A T] (q : Ideal T) [hq : q.IsMaximal]
@@ -262,8 +259,6 @@ theorem regular_fibre {A T : Type} [CommRing A] [IsLocalRing A] [CommRing T] [Al
   rw [← h1]
   exact WithBot.coe_le_coe.mpr h2
 
-omit [IsLocalRing R] in
-open AlgebraicGeometry in
 
 theorem exists_localRing {A : Type} [CommRing A] [IsLocalRing A] [IsNoetherianRing A] {X : Scheme.{0}}
     (f : X ⟶ Spec (CommRingCat.of A)) (g : ℕ) (hf : SmoothOfRelativeDimension g f) {K : Type} [Field K]

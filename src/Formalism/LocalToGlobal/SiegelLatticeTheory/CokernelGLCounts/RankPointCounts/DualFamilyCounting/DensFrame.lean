@@ -423,7 +423,6 @@ theorem bc_f_eq (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D
   obtain ⟨w, hw, hw1⟩ := phi_inv_mem hA p a
   exact ⟨w, hw, by rw [locFam_inl, smul_smul, hw1, one_smul]⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem span_le_none (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
     (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (hs : (M p).split = none) :
@@ -450,7 +449,6 @@ theorem span_le_none (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T
       rw [fvec_cast]
       exact Submodule.mem_sup_right (mem_NX L p F'.fl b)
 
-set_option maxHeartbeats 1000000 in
 
 theorem le_span_none (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
     (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (hs : (M p).split = none) :
@@ -494,7 +492,6 @@ end SpanMain
 
 section SpanG
 
-set_option maxHeartbeats 1000000 in
 
 theorem span_le_some (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
     (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) :
@@ -518,7 +515,6 @@ theorem span_le_some (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T
     exact Submodule.mem_sup_left (Submodule.mem_sup_left
       (Submodule.smul_mem _ (⟨_, hc⟩ : (M p).L.O) (mem_NG_d L p F0 F' a)))
 
-set_option maxHeartbeats 1000000 in
 
 theorem le_span_some (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
     (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) :

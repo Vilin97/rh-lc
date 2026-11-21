@@ -59,7 +59,6 @@ def Closes (X : Stages) : Prop :=
     TiesB z.R z.F → TiesG z.core z.R z.geo.κ z.geo.v₀ z.geo.O → GlobalTheory.CuspMult.MultEq z.R.toRealDat → z.R.toRealDat.LIntegral →
       HoldsL z.R z.F
 
-set_option maxHeartbeats 2000000 in
 
 theorem ties_at (hG : GlobalTheory.Published.GreenCuspidal) {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T) (Z : w.Lt) (hX : B.fields.Ok)
     (Wt : Set B.places.Pl) (z : Dat (w.st Z) w.I hX T Wt) (hN : GrpTrue Z.N f)
@@ -81,7 +80,6 @@ theorem ties_at (hG : GlobalTheory.Published.GreenCuspidal) {B : Base} {f : Fr B
   exact GlobalTheory.OneMapRow3.oneFormMapRow_threeLevel_of_characterisation _ _ _ _ _ _ z.core z.R z.F z.geo.κ z.geo.v₀ z.geo.O (fun _ => 1) hn hch hEx ⟨z.geo.fw⟩ hI i
     (z.geo.pins i) (z.geo.phase i hU)
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.Mem.R3.LiftsAt
 

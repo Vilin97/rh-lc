@@ -79,7 +79,6 @@ theorem eval_top (f j k : ℕ) (L : IndefiniteRowSideFullHecke.RestTerms.Roots f
 
 end FlagProportional
 
-open FlagProportional in
 
 theorem FlagIntegralProportional.intersectionNumber_baseChange : IndefiniteRowSideFullHecke.RestTerms.FlagIntegralProportional.Statement := by
   intro f j k _ _ _ I hI

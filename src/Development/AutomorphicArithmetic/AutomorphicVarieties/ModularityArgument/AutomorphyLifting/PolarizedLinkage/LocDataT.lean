@@ -155,4 +155,3 @@ end WD
 
 end UpperTheory.V.Z.Win.LocalCharacterData
 
-open UpperTheory.V.Z.Win.LocalCharacterData in

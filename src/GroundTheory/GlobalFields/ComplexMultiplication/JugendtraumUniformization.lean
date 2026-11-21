@@ -79,7 +79,6 @@ variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ 
 
 variable {E₁ E₂ : WeierstrassCurve ℂ} [E₁.IsElliptic] [E₂.IsElliptic]
 
-include hK in
 
 theorem exists_unit_automorphismPoint_eq (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) {E : WeierstrassCurve ℂ}
     [E.IsElliptic] {f : ℂ →+ E.toAffine.Point}

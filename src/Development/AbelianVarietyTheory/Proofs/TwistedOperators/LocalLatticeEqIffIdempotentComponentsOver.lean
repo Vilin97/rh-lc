@@ -45,7 +45,6 @@ theorem mem_hat_iff_of_supp {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)
       exact hy w hwv i
     rw [hz]
     exact Submodule.zero_mem _
-set_option maxHeartbeats 800000 in
 
 theorem locL_le {Λ Λ' : Submodule (𝓞 D.host.E) (Fin n → D.host.E)} (h : Λ.FG) (h' : Λ'.FG)
     (v : HeightOneSpectrum (𝓞 D.host.F))

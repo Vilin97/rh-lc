@@ -22,11 +22,9 @@ set_option linter.unusedSectionVars false
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ} {α : Type*} [LinearOrder α]
 
-variable (n) in
 
 abbrev LeviIndex (β : Fin n → α) : Type := {ij : Fin n × Fin n // β ij.1 = β ij.2}
 
-variable (F) in
 
 def unipMatrix {β : Fin n → α} (u : UnipotentIndex n β → F) : Matrix (Fin n) (Fin n) F :=
   fun i j => if h : β i < β j then u ⟨(i, j), h⟩ else 0
@@ -49,9 +47,7 @@ def lieLevi : Submodule F (Matrix (Fin n) (Fin n) F) where
   zero_mem' i j _ := rfl
   smul_mem' c A hA i j h := by simp [hA i j h]
 
-variable {F n β} in
 
-variable {F n β} in
 
 theorem mul_mem_lieLevi {A B : Matrix (Fin n) (Fin n) F} (hA : A ∈ lieLevi F n β)
     (hB : B ∈ lieLevi F n β) : A * B ∈ lieLevi F n β := by
@@ -185,7 +181,6 @@ theorem isUnit_add_unipMatrix (m : levi F n β) (u : UnipotentIndex n β → F) 
   rw [Matrix.isUnit_iff_isUnit_det, det_add_unipMatrix, ← Matrix.isUnit_iff_isUnit_det]
   exact (m : GL (Fin n) F).isUnit
 
-variable (β) in
 
 def parabolicMk (m : levi F n β) (u : UnipotentIndex n β → F) : blockUpper F n β :=
   ⟨(isUnit_add_unipMatrix m u).unit, by
@@ -329,7 +324,6 @@ theorem parabolicChart_parabolicMk (m : levi F n β) (u : UnipotentIndex n β �
   · have hlt := lt_of_le_of_ne (not_lt.1 s.2) h
     rw [dite_eq_right h, mem_levi.1 m.2 _ _ h, unipMatrix_apply_of_lt u hlt, zero_add]
 
-variable (β) in
 
 def parabolicMkHomeomorph : (levi F n β × (UnipotentIndex n β → F)) ≃ₜ blockUpper F n β where
   toFun x := parabolicMk β x.1 x.2
@@ -381,7 +375,6 @@ variable [MeasurableSpace F] [BorelSpace F] [MeasurableSpace (GL (Fin n) F)]
 
 variable {β : Fin n → α}
 
-variable (β) in
 
 def haarLevi (μ𝔪 : Measure (LeviIndex n β → F)) : Measure (levi F n β) :=
   (leviChart β).haar μ𝔪
@@ -390,7 +383,6 @@ instance isHaarMeasure_haarLevi (μ𝔪 : Measure (LeviIndex n β → F)) [μ�
     (haarLevi β μ𝔪).IsHaarMeasure :=
   LinearChart.isHaarMeasure_haar _ μ𝔪
 
-variable (β) in
 
 def parabolicMeasure (μ𝔪 : Measure (LeviIndex n β → F)) (μ𝔫 : Measure (UnipotentIndex n β → F)) :
     Measure (ParabolicIndex n β → F) :=

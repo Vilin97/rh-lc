@@ -75,7 +75,6 @@ theorem map_fixedProj_of_invariant {U : Type*} [AddCommGroup U] [Module ℂ U] (
     Finset.sum_const, Finset.card_univ, Fintype.card_fin, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul,
     inv_mul_cancel₀ (by exact_mod_cast hN.ne'), one_smul]
 
-variable (ρ) in
 
 def hop (g : G) : Module.End ℂ (fixedVectors ρ K) :=
   (fixedProj ρ hρ hKc hKo) ∘ₗ (ρ g) ∘ₗ (fixedVectors ρ K).subtype

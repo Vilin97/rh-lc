@@ -152,7 +152,6 @@ theorem chi_gam_zpow_ne_one
   rw [h, sub_self, norm_zero] at h3
   exact (zpow_pos (Nat.cast_pos.mpr (Fact.out : l.Prime).pos) _).ne h3
 
-set_option maxHeartbeats 1000000 in
 
 theorem lower (C : LocCmpT l P AI H F) (h : Good K s LL) (T : Lt K LL) (hT : IsCrys (P.PD K) T.ρ)
     (i : Let K) (S : Submodule ↥LL.1 (T.V ⊗[ℚ_[l]] P.R.B)) (k : ℤ) (hk : k ≠ 0)

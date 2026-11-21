@@ -189,7 +189,6 @@ theorem ptsIntegralAt_eq (hSheet : SheetIndepStatement) (hAB : A * B = 1) (hBA :
 
 end IntegralCoordArithIntersection
 
-open IntegralCoordArithIntersection in
 
 theorem IntCoordArInt.proof (hInd : PtsIndepStatement) (hSheet : SheetIndepStatement) :
     IntCoordArInt.Statement := by

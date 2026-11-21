@@ -28,11 +28,8 @@ end Blocks
 
 end Formalism.FourierDecayAlt.P.S3x1
 
-open Formalism.FourierDecayAlt.P.S3x1 in
 
-open Formalism.FourierDecayAlt.P.S3x1 in
 
-open Formalism.FourierDecayAlt.P.S3x1 in
 
 namespace Formalism.FourierDecayAlt.P.S3x1
 
@@ -135,17 +132,12 @@ end Count2
 
 end Formalism.FourierDecayAlt.P.S3x1
 
-open Formalism.FourierDecayAlt.P.S3x1 in
 
-open Formalism.FourierDecayAlt.P.S3x1 in
 
-open Formalism.FourierDecayAlt.P.S3x1 in
 
-open Formalism.FourierDecayAlt.P.S3x1 in
 
 open Formalism.FourierDecayAlt.P.S3x1 in
 theorem Formalism.FourierDecayAlt.P.gamma_factor_product : Formalism.FourierDecayAlt.S3.GammaProduct := by
   intro K _ _ k
   rw [Matrix.card_GL_field, Nat.card_congr (upUniGEquiv k), card_uni, prod_gl]
 
-open Formalism.FourierDecayAlt.P.S3x1 in

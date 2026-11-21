@@ -188,9 +188,7 @@ section Divisor
 
 variable [IsIntegral X] [IsNoetherian X] [IsNormalScheme X]
 
-variable (X) in
 
-variable (X) in
 
 end Divisor
 

@@ -11,7 +11,6 @@ open WittVector Ideal ReciprocityTheory.PGsh
 
 namespace GlobalTheory.AinfChecks
 
-open WittVector Ideal in
 
 theorem _root_.GlobalTheory.AinfChecks.padicComplex (p : ℕ) [Fact p.Prime] :
     ∃ (_ : Fact ¬IsUnit ((p : ℕ) : 𝓞_ℂ_[p])) (_ : IsAdicComplete (span {((p : ℕ) : 𝓞_ℂ_[p])}) 𝓞_ℂ_[p]),
@@ -35,7 +34,6 @@ section
 variable (p : ℕ) [Fact p.Prime] (O : Type) [CommRing O] [Fact ¬IsUnit (p : O)]
   [IsAdicComplete (span {(p : O)}) O]
 
-omit [IsAdicComplete (span {(p : O)}) O] in
 
 end
 

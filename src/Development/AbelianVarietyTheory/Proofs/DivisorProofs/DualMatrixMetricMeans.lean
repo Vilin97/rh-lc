@@ -49,6 +49,5 @@ theorem meanInf_const [IsTotallyComplex K] (c : ℝ) : meanInf K (fun _ => c) = 
   change 1 / (nPl K : ℝ) * ((nPl K : ℝ) * c) = c
   field_simp
 
-open Classical in
 
 end GlobalTheory.Proof.DualMatrixMetricMeans

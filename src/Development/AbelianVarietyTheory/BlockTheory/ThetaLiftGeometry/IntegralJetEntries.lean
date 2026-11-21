@@ -23,6 +23,5 @@ def IsRBasis (D : D7) {l : ℕ} [Fact l.Prime] (ρ : D.host.E → ℂ_[l]) {N : 
     Submodule.span 𝓞_ℂ_[l] (Set.range fun a : Fin N => fun k => g k a) =
       Submodule.span 𝓞_ℂ_[l] ((fun (x : Fin N → D.host.E) k => ρ (x k)) '' (L : Set (Fin N → D.host.E)))
 
-open Classical in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.IntegralJetEntries

@@ -67,7 +67,6 @@ theorem jetSet_amb (B : Base) (J : AmbIn B.host) (χ : Submodule (𝓞 B.host.E)
   simp only [h2]
   rfl
 
-open Classical in
 
 @[reducible] def hostWts (P : Pre) : Wts (hostFields P.host) P.Word P.R where
   row := fun τ => RowPar.of (P.hc τ)
@@ -234,7 +233,6 @@ def amb0 {R : Ranks} (H : Host R) : AmbIn H := (exists_ambIn_ok H).choose
 theorem qPow_ne_zero {E : Type} [Field E] [NumberField E] (Q : HeightOneSpectrum (𝓞 E)) (n : ℕ) : qOf Q ^ n ≠ 0 :=
   pow_ne_zero _ (Ideal.absNorm_eq_zero_iff.not.2 Q.ne_bot)
 
-open Classical in
 
 end JetEx
 

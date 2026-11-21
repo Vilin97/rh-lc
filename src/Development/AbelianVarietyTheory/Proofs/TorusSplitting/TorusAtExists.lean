@@ -102,7 +102,6 @@ private lemma im_hermC_emb_eq_sign_mul_trace (E : Type) [Field E] [NumberField E
       _root_.GlobalTheory.hermC_emb_eq_map_herm, map_mul, Complex.mul_re, hre]
     ring
 
-open NumberField in
 
 theorem _root_.GlobalTheory.torusAtExists : _root_.ReciprocityTheory.ChartRestriction.G.I2.TorusAtExistsStatement :=
   _root_.GlobalTheory.torusAtExists_of_parts exists_frame_span_castLE_eq_span_col

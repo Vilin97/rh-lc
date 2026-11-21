@@ -44,7 +44,6 @@ end Analytic
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E a) in
 
 def Cv : Submodule ℂ (Lie E a → ℂ) where
   carrier := {h | ContDiffOn ℝ ∞ h (invSet E a) ∧ ∀ x ∉ invSet E a, h x = 0}
@@ -52,7 +51,6 @@ def Cv : Submodule ℂ (Lie E a → ℂ) where
   zero_mem' := ⟨contDiffOn_const, fun _ _ => rfl⟩
   smul_mem' := fun c h hh => ⟨hh.1.const_smul c, fun x hx => by simp [hh.2 x hx]⟩
 
-open Classical in
 
 def lv (X : Lie E a) (h : Lie E a → ℂ) (x : Lie E a) : ℂ :=
   if x ∈ invSet E a then fderiv ℝ h x (rmul X x) else 0

@@ -10,7 +10,6 @@ open scoped ComplexConjugate nonZeroDivisors
 
 namespace Formalism.FourierDecayAlt.P.Jx3
 
-open InfinitePlace in
 
 theorem trace_places (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (x : E) :
     ((Algebra.trace ℚ E x : ℚ) : ℝ) = ∑ w : InfinitePlace E, 2 * (w.embedding x).re := by
@@ -185,9 +184,7 @@ lemma rd_pos (E : Type) [Field E] [NumberField E] [IsCMField E] : 0 < S6.rd E :=
   have : (0 : ℤ) < |discr E| := abs_pos.2 (discr_ne_zero E)
   exact_mod_cast this
 
-open scoped Classical in
 
-open scoped Classical in
 
 section Poisson
 

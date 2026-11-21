@@ -89,7 +89,6 @@ section Units
 
 variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
 
-omit [IsGalois K Ω] in
 
 theorem mem_fixedModule_units_iff' (H : Subgroup G) (a : Ωˣ) :
     a ∈ fixedModule Ωˣ H ↔ ∀ σ ∈ H, σ (a : Ω) = a := by
@@ -117,7 +116,6 @@ def unitsEquivOfForall {k : Type*} [Field k] [Algebra k Ω] (H : Subgroup G)
     ext
     rfl
 
-omit [IsGalois K Ω] in
 
 omit [IsGalois K Ω] in
 @[simp]
@@ -178,7 +176,6 @@ omit [IsGalois K Ω] in
 theorem restrictEmbedding_apply (σ : G) (x : L) : restrictEmbedding L σ x = σ x :=
   rfl
 
-omit [IsGalois K Ω] in
 
 theorem restrictEmbedding_eq_iff (σ τ : G) :
     restrictEmbedding L σ = restrictEmbedding L τ ↔ σ⁻¹ * τ ∈ L.fixingSubgroup := by
@@ -254,7 +251,6 @@ variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
 variable (K' L' : Subgroup (Ω ≃ₐ[K] Ω)) {E F : IntermediateField K Ω} (hEF : E ≤ F)
   (hK : E.fixingSubgroup = K') (hL : F.fixingSubgroup = L')
 
-include hK hL in
 
 theorem normal_extendScalars [(L'.subgroupOf K').Normal] :
     Normal E (extendScalars hEF) := by
@@ -282,7 +278,6 @@ instance isSeparable_extendScalars : Algebra.IsSeparable E (extendScalars hEF) :
   have : Algebra.IsSeparable E Ω := Algebra.isSeparable_tower_top_of_isSeparable K E Ω
   Algebra.isSeparable_tower_bot_of_isSeparable E (extendScalars hEF) Ω
 
-omit [IsGalois K Ω] in
 
 theorem finiteDimensional_extendScalars [FiniteDimensional K F] :
     FiniteDimensional E (extendScalars hEF) :=
@@ -358,7 +353,6 @@ def restrictEmbeddingRel (σ : K') : extendScalars hEF →ₐ[E] Ω :=
   ((IntermediateField.fixingSubgroupEquiv E ⟨σ, hK ▸ σ.2⟩ : Ω ≃ₐ[E] Ω) : Ω →ₐ[E] Ω).comp
     (extendScalars hEF).val
 
-omit [IsGalois K Ω] in
 
 omit [IsGalois K Ω] in
 include hL in
@@ -403,7 +397,6 @@ noncomputable def cosetEmbeddingEquivRel : K' ⧸ L'.subgroupOf K' ≃ (extendSc
       obtain ⟨σ, rfl⟩ := restrictEmbeddingRel_surjective K' hEF hK τ
       exact ⟨(σ : K' ⧸ L'.subgroupOf K'), rfl⟩⟩
 
-include hK in
 
 theorem coe_norm_eq_algebraMap_norm [FiniteDimensional K F] [(L'.subgroupOf K').FiniteIndex]
     (a : fixedModule Ωˣ L') :

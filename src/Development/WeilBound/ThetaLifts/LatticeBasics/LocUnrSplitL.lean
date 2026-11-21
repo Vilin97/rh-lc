@@ -14,8 +14,6 @@ open MeasureTheory Matrix GlobalTheory.CompanionTheory.QL
 
 namespace GlobalTheory.ThK.Dbl.Split
 
-set_option hygiene false in
-set_option hygiene false in
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {O : Subring k} {ϖ : kˣ}
   {nrm : AbsoluteValue k ℝ} {q n : ℕ}
@@ -157,7 +155,6 @@ theorem exists_frame (h : LF O (ϖ : k) nrm q) (g : GL (Fin n) k) : ∃ (t : GL 
     congr 1
     exact (fromBlocks_mul_fromRows _ _ _ _ _ _).trans (by simp)
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem exists_dual (J : GL (Fin n) k) {p J₂ : GL (Fin n ⊕ Fin n) k} (hJ : J₂.1 = fromBlocks J.1 0 0 (-J.1)) {t : GL (Fin n) k}
     (h : p.1 * fromRows 𝟙 𝟙 = fromRows 𝟙 𝟙 * t.1) : ∃ t' : GL (Fin n) k,

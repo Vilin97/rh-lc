@@ -141,7 +141,6 @@ section Dual
 
 variable {A : Type} [CommRing A] {n : ℕ}
 
-set_option maxHeartbeats 1000000 in
 
 theorem dv_conj (σ : A →+* A) (hσ : ∀ x, σ (σ x) = x) {J Ji : Matrix (Fin n) (Fin n) A} (hJ : J * Ji = 1)
     (hJh : Formalism.UG.cT σ J = J) {I : AddSubgroup A} (hI : ∀ x ∈ I, ∀ y ∈ I, x * y ∈ I)

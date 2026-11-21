@@ -79,7 +79,6 @@ theorem IsContRep.translate {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F : norm
   rw [hy1]
   exact hy2
 
-variable (μ) in
 
 theorem isContRep_rconv (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ)
     (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) :
@@ -106,7 +105,6 @@ theorem IsContRep.ae_eq_quotFun {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F : 
 variable (μ)
 variable (ν : Measure (archGroup K n)) [ν.IsHaarMeasure]
 
-set_option maxHeartbeats 1000000 in
 
 end CuspidalSpectrum
 

@@ -178,8 +178,6 @@ private theorem pairing_cayDet_pow_mul (n k : ℕ) (F G : MvPolynomial (Fin n ×
   | succ k ih =>
     rw [pow_succ, mul_assoc, ih, pairing_cayDet_mul', pow_succ', Module.End.mul_apply]
 
-open MvPolynomial in
-variable {C : Type} [CommRing C] {n : ℕ} in
 
 theorem _root_.GlobalTheory.DetPowPairing.pairing_pow_proportional :
   (∀ (C : Type) [Field C] [CharZero C] (n₀ M Y : ℕ) (Q : MvPolynomial (Fin n₀ × Fin n₀) C), M ≤ Y → Q.IsHomogeneous (n₀ * M) →

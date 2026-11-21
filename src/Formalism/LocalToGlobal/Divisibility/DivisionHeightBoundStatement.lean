@@ -301,7 +301,6 @@ theorem ChainTie.cpl_norm (T : ChainTie ch Q) (v : InfinitePlace K) (x : Fin (ch
 def ChainTie.First (T : ChainTie ch Q) (f : (Fin (ch.c 0) → K) →ₗ[K] (Q.F 0).Forms) : Prop :=
   ∀ x, T.coF 0 (Nat.zero_le _) x = f x
 
-omit [NumberField K] [StarRing K] in
 
 end Comparison₂
 
@@ -535,7 +534,6 @@ abbrev kerRec {Bs : DefBase X.K} {P : LevFam X.E X.K Rk.r Pr.vGs} {m2 : ℕ} (mu
     ∀ t x, ChKer W Ch sel (mu t) (cst t) (L t) P (wd x) m2 (b t x) (hY t x) :=
   fun t x => Formalism.L2.Ker.chKerC W Ch sel (mu t) (cst t) (L t) Am (wd x) m2 (b t x) (hY t x) P (hK t x)
 
-open Formalism.MainNotions in
 
 end ConcreteCol
 
@@ -546,13 +544,9 @@ namespace Formalism.L2.DIV.Inst
 open Formalism.DivisionValues Formalism.EigenvalueLevelCeiling Formalism.L2.Indef Formalism.L2.Indef.Examples₂ Formalism.L2.DIV
 open Formalism.LatticeIndexTer (ph)
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
 def kk : Fin 2 → K3 := ![2, 2⁻¹]
 

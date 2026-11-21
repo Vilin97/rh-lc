@@ -211,7 +211,6 @@ open Formalism.MainNotions.S (AutInst)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
 
-open Classical in
 
 def singleL (v : HeightOneSpectrum (𝓞 F)) : Fv F v →ₗ[F] Af F where
   toFun := singleV F v

@@ -21,7 +21,6 @@ def StabEqRest {D : D7} {c : LatCmp D} {Tw : TwForms D} {u : D.what₂.Word} {μ
   ∀ j, 1 ≤ j → j ≤ D.R.m → ∀ (a : Lv.comp j) (L : (Fl.Pj j).Tup), (Fl.Pj j).IsLatTup L →
     Nat.card ((D.chTw u μ).stab j (KA.cls j a L)) = Nat.card {γ : (Lv.lev j a).Γ // (Lv.lev j a).smul γ L = L}
 
-set_option linter.unusedVariables false in
 
 def TieStab0Inst : Prop :=
   ∀ (D : D7) (ex : TwForms D) (cc : LatCmp D) (u : D.what₂.Word) (μ : D.what₂.Tup) (w : D.what₂.places.Pl)
@@ -32,7 +31,6 @@ def TieStab0Inst : Prop :=
     (cls : ∀ j, Lv.comp j → (Fl.Pj j).Tup → (D.chTw u μ).cls j),
     DV.Used D μ → OrbitPlaces.Stab0 D → TieStabAt (Y := Y) u μ cls 0
 
-set_option linter.unusedVariables false in
 
 def TieStabRestIff : Prop :=
   ∀ (D : D7) (ex : TwForms D) (cc : LatCmp D) (u : D.what₂.Word) (μ : D.what₂.Tup) (w : D.what₂.places.Pl)

@@ -95,7 +95,6 @@ theorem comb_push {n : ℕ} {v : Fin n → (Sp (DualNumber S) ⟶ t'.G.left)}
     · exact (prod_push m u' u fun i => (hu i).trans (Category.assoc _ _ _).symm).trans hp
     · exact (Over.w (List.ofFn u').prod).trans hw.symm
 
-include m in
 
 end Push
 

@@ -28,6 +28,5 @@ theorem woTypeT {h : IsPlaceOver A w} {y : WD h} (k : WOT ι r y) (χ : Fin n �
     (t : IsTypeWD h (fun i => (χ i).comp (Ine (F := L) A).subtype) y) : IsWDOf ι r y :=
   WDT.isWDOf k (typeTor L Ω n w A h χ y t)
 
-omit [IsAlgClosure L Ω] in
 
 end UpperTheory.V.Z.Desc.P

@@ -71,7 +71,6 @@ theorem sumL_coefL (ω : GlobForm s) : sumL fr (coefL fr hc ω) = ω := by
   refine Finset.sum_congr rfl fun i _ ↦ ?_
   rw [coef_spec, algebraMap_smul]
 
-include fr hc in
 
 theorem projective : Module.Projective R (GlobForm s) :=
   Module.Projective.of_split (coefL fr hc) (sumL fr) (LinearMap.ext (sumL_coefL fr hc))
@@ -82,7 +81,6 @@ def back (U : AffOp X) (x : Ω[Sec s U.unop.1⁄R]) : Sec s U.unop.1 ⊗[R] Glob
 theorem back_add (U : AffOp X) (x y : Ω[Sec s U.unop.1⁄R]) : back fr U (x + y) = back fr U x + back fr U y := by
   simp only [back, map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib]
 
-include fr hc in
 
 theorem par (U : AffOp X) : IsBaseChange (Sec s U.unop.1) (evForm s U) := by
   change Function.Bijective (TensorProduct.lift _)

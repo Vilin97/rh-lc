@@ -46,7 +46,6 @@ namespace IsPerfectoidField
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
-omit [CharZero K] in
 
 theorem eq_zero_of_forall_mem_span_p_pow {b : 𝒪} (h : ∀ M : ℕ, b ∈ span {(p : 𝒪) ^ M}) : b = 0 := by
   have := isAdicComplete (K := K) p
@@ -54,7 +53,6 @@ theorem eq_zero_of_forall_mem_span_p_pow {b : 𝒪} (h : ∀ M : ℕ, b ∈ span
   rw [SModEq.zero, smul_eq_mul, mul_top, span_singleton_pow]
   exact h n
 
-omit [IsPerfectoidField K p] in
 
 theorem natCast_p_ne_zero : (p : 𝒪) ≠ 0 := by
   intro h

@@ -100,7 +100,6 @@ theorem first_vanishing_of_unit_smul (Y : FBChart C V O dd) {c : C} (hc : ¬ V.M
 
 end SelfAdjointTop
 
-open SelfAdjointTop MaximalIdealCongruence in
 
 theorem rank_maximal_self_core (hV1 : FirstVanishingCore) (hFE : FunEqCoreSt) (hC0 : CurveLinearTermCondition) (hNL : NoLinSelfSt) :
     RankMaximalSelfOfNondegenerate := by

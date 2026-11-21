@@ -210,7 +210,6 @@ theorem vac_line (kS : S.SigOK) (kT : T.SigOK) (hS : ∀ τ, IsCartanInv (gramAt
   have c0 : c ≠ 0 := fun e => vac_ne_zero h1 (by rw [e, zero_smul])
   exact ⟨c⁻¹ * u, by rw [mul_smul, ← hu, inv_smul_smul₀ c0]⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_span (kS : S.SigOK) (kT : T.SigOK) (hS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ))
     (hT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ)) (dS : IsSelfDualC S ΛS) (dT : IsSelfDualC T ΛT) {f₀ f : WO S T → ℂ}

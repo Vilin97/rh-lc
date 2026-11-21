@@ -47,7 +47,6 @@ variable {P : Type*} {C : P → Type*}
 
 def OffS (θ0 : ∀ p, C p) (S : Finset P) : Type _ := {θ : ∀ p, C p // ∀ p ∉ S, θ p = θ0 p}
 
-set_option maxHeartbeats 800000 in
 
 theorem hasSum_prod_offS [DecidableEq P] (θ0 : ∀ p, C p) (f : ∀ p, C p → ℂ) (a : P → ℂ) (S : Finset P)
     (hf : ∀ p ∈ S, HasSum (f p) (a p)) (hn : ∀ p ∈ S, Summable fun c => ‖f p c‖) :

@@ -134,7 +134,6 @@ section Places
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
 
-open Classical in
 
 def infJ (w : InfinitePlace F) : w.Completion →ₗ[F] AF F :=
   (LinearMap.inl F (Ainf F) (Af F)).comp (LinearMap.single F (fun u : InfinitePlace F => u.Completion) w)
@@ -159,7 +158,6 @@ theorem continuous_infJ (w : InfinitePlace F) : Continuous (infJ w) := by
   classical
   exact (continuous_single (A := fun u : InfinitePlace F => u.Completion) w).prodMk continuous_const
 
-variable (E) in
 
 def singleInf (w : InfinitePlace F) : w.Completion ⊗[F] E →ₙ+* AF F ⊗[F] E :=
   GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU (infJ w) (infJ_mul w)

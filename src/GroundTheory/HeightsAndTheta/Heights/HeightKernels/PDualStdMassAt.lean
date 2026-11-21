@@ -24,8 +24,6 @@ theorem segre_const (z : (Σ _ : Unit, T) → ℂ) (t : T) :
     segre (ι := dualBlocks T) z (fun _ => t) = z ⟨(), t⟩ := by
   simp [segre]
 
-omit [Fintype T] [DecidableEq T] in
-open Classical in
 
 theorem recover_planePt {i : ℕ} {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (σ : K →+* ℂ) (v : Fin i → ℂ) :
@@ -36,7 +34,6 @@ theorem recover_planePt {i : ℕ} {F : HermLattice K i} (b : Module.Basis T ℤ 
   simp [Matrix.mulVec, dotProduct, dualEmbMatrix, dualPlanePt,
     Fintype.sum_prod_type]
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem proj_segre_planePt {i : ℕ} {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (σ : K →+* ℂ) (v : Fin i → ℂ) :
@@ -114,7 +111,6 @@ theorem fibre_eq (hOn : DualPtsOnPlane.Statement) (hOf : DualPtsOfPlane.Statemen
     have hv : (Fin.cons 1 y : Fin (D + 1) → ℂ) ≠ 0 := fun h0 => by simpa using congrFun h0 0
     exact ⟨_, hOf K (D + 1) F T b hb σ _ hv, rfl, proj_segre_planePt b hb σ _⟩
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem planePt_injective {D : ℕ} {F : HermLattice K (D + 1)} (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (y : Fin D → ℂ) :
@@ -145,7 +141,6 @@ theorem isSheet_planePt (hOf : DualPtsOfPlane.Statement) {D : ℕ} {F : HermLatt
 
 end StandardDualMassAtPoint
 
-open StandardDualMassAtPoint in
 
 theorem DualStdMassAt.proof (hOn : DualPtsOnPlane.Statement) (hOf : DualPtsOfPlane.Statement) :
     DualStdMassAt.Statement := by

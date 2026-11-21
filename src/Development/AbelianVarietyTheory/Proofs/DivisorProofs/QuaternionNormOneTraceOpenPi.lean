@@ -49,7 +49,6 @@ theorem continuous_glue [∀ i, TopologicalSpace (R i)] :
 
 end TraceOpenPi
 
-open TraceOpenPi in
 
 theorem traceOpen_pi : ∀ (ι : Type) [Fintype ι] (R : ι → Type) [∀ i, CommRing (R i)]
     [∀ i, TopologicalSpace (R i)] (a b : ∀ i, R i),

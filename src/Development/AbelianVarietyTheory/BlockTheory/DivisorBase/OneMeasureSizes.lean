@@ -99,6 +99,5 @@ def OneMeasure (D : D7) : Prop :=
       ∀ (μ : Measure (GA D (Wc D i))) (𝓕 : Set (GA D (Wc D i))), IsMeasFD (Wc D i) (levW C i P) μ 𝓕 →
         μ 𝓕 ≠ 0 ∧ μ 𝓕 ≠ ⊤ ∧ ExactRatio C i P μ 𝓕 ∧ ∀ L, Sizes D L → RatioBound i μ 𝓕 L
 
-omit [Algebra T.Q.c.F D.what₂.LL] in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.OneMeasureSizes

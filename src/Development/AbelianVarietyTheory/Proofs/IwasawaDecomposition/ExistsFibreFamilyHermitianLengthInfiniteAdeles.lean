@@ -98,7 +98,6 @@ theorem exists_compact_pull (ho : IsOpenUnits R) {S : Set R} (hS : IsCompact S) 
   show Ring.inverse (s u) • s u • x = x
   rw [smul_smul, Ring.inverse_mul_cancel _ (hu u hu'), one_smul]
 
-omit [IsTopologicalRing R] [LocallyCompactSpace R] in
 
 theorem exists_avg_const (ho : IsOpenUnits R) (μ : Measure V) [μ.IsAddHaarMeasure]
     (ν : Measure R) [ν.IsOpenPosMeasure] [IsFiniteMeasureOnCompacts ν]

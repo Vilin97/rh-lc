@@ -19,7 +19,6 @@ open _root_.WittVector Laurent Polynomial WittTilt
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-variable (p) in
 
 def sig (ρ : ℝ) : ℝ := Real.log ρ / Real.log (p : ℝ)⁻¹
 

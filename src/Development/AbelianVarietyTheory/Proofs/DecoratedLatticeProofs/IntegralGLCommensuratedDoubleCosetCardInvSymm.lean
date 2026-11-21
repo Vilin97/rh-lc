@@ -64,7 +64,6 @@ end GlobalTheory.ChainOnto.CosetSymGL
 
 namespace GlobalTheory.ChainOnto.CosetSymGL
 
-open GlobalTheory.LFun.ConjPlace in
 
 theorem invT_of_symm {L : Type} [Field L] {n : ℕ} (d : GL (Fin n) L)
     (hd : (d : Matrix (Fin n) (Fin n) L)ᵀ = (d : Matrix (Fin n) (Fin n) L)) : invT (RingEquiv.refl L) n d = d⁻¹ := by
@@ -78,7 +77,6 @@ theorem invT_mem_iff {L : Type} [Field L] {n : ℕ} (O : Subring L) (g : GL (Fin
     invT (RingEquiv.refl L) n g ∈ Formalism.UG.GLint (Fin n) O ↔ g ∈ Formalism.UG.GLint (Fin n) O :=
   (mem_iff_invT (RingEquiv.refl L) (O := O) (O' := O) (fun _ => Iff.rfl) g).symm
 
-open GlobalTheory.LFun.ConjPlace in
 
 theorem invT_mem_doset (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ)
     (g : GL (Fin n) (w.adicCompletion E)) : ∃ a ∈ KGL w n, ∃ b ∈ KGL w n,
@@ -106,7 +104,6 @@ theorem invT_mem_doset (E : Type) [Field E] [NumberField E] (w : HeightOneSpectr
 
 end GlobalTheory.ChainOnto.CosetSymGL
 
-open GlobalTheory.ChainOnto.CosetSymGL GlobalTheory.LFun.ConjPlace in
 
 theorem GlobalTheory.ChainOnto.kGL_commensurated_cosetSym : ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ), IsCommensurated (KGL w n) ∧ CosetSym (KGL w n) := fun E _ _ w n =>
   ⟨Formalism.UG.Final.GLintComm E w n, cosetSym_of_aut _ (invT (RingEquiv.refl _) n) (fun x => invT_mem_iff _ x)

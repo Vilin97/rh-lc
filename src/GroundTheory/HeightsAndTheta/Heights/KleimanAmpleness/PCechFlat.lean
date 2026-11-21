@@ -83,9 +83,7 @@ variable {S' : Type u} [CommRing S'] [Algebra S S']
   (f : M →ₗ[S] M')
   (hX : ∀ (i : Fin (N + 1)) (m : M), f ((X i : Poly S N) • m) = (X i : Poly S' N) • f m)
 
-include hX in
 
-omit [Module S M'] [IsScalarTower S S' M'] in
 
 end Loc
 
@@ -105,12 +103,8 @@ variable {S : Type u} [CommRing S] {N : ℕ}
   (hf : IsBaseChange S' f) (𝓜 : GradedPMod S N M) (𝓜' : GradedPMod S' N M')
   (hdeg : ∀ (c : ℤ) (m : M), m ∈ 𝓜.piece c → f m ∈ 𝓜'.piece c)
 
-omit [IsScalarTower S (Poly S N) M] [IsScalarTower S' (Poly S' N) M'] in
-include hf hdeg in
 
-include hdeg in
 
-include hf hdeg in
 
 end Grade
 

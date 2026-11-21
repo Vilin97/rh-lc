@@ -135,7 +135,6 @@ def liftHom (T : Thick (smFun Z q)) (hT : ⊤ ≤ CosieveSiteLaws.ptZ q T ⁻¹�
     (T := (smS π rfl).G.obj (liftT π U q T hT)) (T' := T) (RingHom.id T.B) (fun _ => rfl)
     (DPMorphism.id T.δ).isDPMorphism (fun _ h => h) ((ptMap_id q T.J _ _).trans (liftT_y π U q T hT))
 
-set_option maxHeartbeats 2000000 in
 
 def liftInv (T : Thick (smFun Z q)) (hT : ⊤ ≤ CosieveSiteLaws.ptZ q T ⁻¹ᵁ U) :
     T ⟶ (smS π rfl).G.obj (liftT π U q T hT) :=
@@ -154,7 +153,6 @@ set_option maxHeartbeats 2000000 in
 theorem liftInv_φ (T : Thick (smFun Z q)) (hT : ⊤ ≤ CosieveSiteLaws.ptZ q T ⁻¹ᵁ U) (x : T.B) :
     (liftInv π U q T hT).φ x = x := rfl
 
-set_option maxHeartbeats 2000000 in
 
 def liftIso (T : Thick (smFun Z q)) (hT : ⊤ ≤ CosieveSiteLaws.ptZ q T ⁻¹ᵁ U) :
     (smS π rfl).G.obj (liftT π U q T hT) ≅ T where
@@ -186,7 +184,6 @@ def pre {T T' : Thick (smFun Y (π ≫ q))} (hT : inU (π ≫ q) (π ⁻¹ᵁ U)
 
 variable (V : Z.Opens) (hV : V ≤ U)
 
-include hV in
 
 theorem isEquiv (P : ObjectProperty (Thick (smFun Z q))) (P' : ObjectProperty (Thick (smFun Y (π ≫ q))))
     (hP : Cosieve P) (hPV : ∀ T, P T → inU q V T) (hP' : ∀ T, P' T → P ((smS π rfl).G.obj T))

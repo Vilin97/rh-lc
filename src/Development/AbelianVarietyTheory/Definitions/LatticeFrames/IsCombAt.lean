@@ -124,9 +124,7 @@ def GLast (D : D7) : Prop :=
       biComb ψ B.A W X c₁ c₂ fun u => o''.boxT W (T₂ O₂) fun w => T₁ O₁ ((B.o.resS W).symm
         (u, GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.ofAdj B.L W ((rat τ : Mx D B.L.rank L''.rank) * w)))
 
-open Classical in
 
-open Classical in
 
 variable {D : D7} {u : D.what₂.Word}
 
@@ -213,7 +211,6 @@ structure PinGBy (G : ∀ PP : d.c.Pg, GAt d τ PP.1) (cG : ∀ j, WO (D.sp.X j)
   prod : ∀ j, j < D.R.m → ∀ f, IsThetaFunO d.c.ψ _ _ f → comb d.c.ψ _ _ (cG j) f =
     d.c.Pg.attach.toList.foldr (fun PP f' => comb d.c.ψ _ _ ((G PP).cg j) f') f
 
-variable (d τ) in
 
 end GlobalTheory.LocMod
 end

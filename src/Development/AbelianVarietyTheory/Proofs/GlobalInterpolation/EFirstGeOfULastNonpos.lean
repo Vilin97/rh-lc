@@ -157,6 +157,5 @@ theorem wtSigns_assemble_iff (B : Base) (C : Cols B) (W : RowsRest B C) (V : Div
   exact (wtSigns_iff (D := assemble B C W V S N G) X).trans
     (and_congr (forall_congr' fun τ => imp_congr (e τ) Iff.rfl) Iff.rfl)
 
-open GlobalTheory.Mem.Num in
 
 end GlobalTheory.LvT.WtSign

@@ -33,6 +33,5 @@ variable {D : D7} {T : Top D} {j : ℕ}
   {d : ReciprocityTheory.ChartRestriction.G.T0.Data T.Q.c.F (Comp (T.Q.Xo j) T.Q.c) (fun Z => Om Z) (WTZ D.host.E) (fun Z => AC Z)}
   {Z : Comp (T.Q.Xo j) T.Q.c} {X : ReciprocityTheory.ChartRestriction.G.FD.Data D.host.E D.R.r}
 
-open Classical in
 
 end Formalism.L2.Pj

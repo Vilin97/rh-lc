@@ -34,17 +34,11 @@ set_option maxHeartbeats 4000000 in
 def lvSet {u : D.what₂.Word} {A : AtTTied (D := D) u} {i : ℕ} {hi : i ≤ D.R.m} (P : LvTied (D := D) u A i hi) :
     LvTied (D := setGat D g' hd') u (atTTSet D g' hd' A) i hi := { P with }
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 8000000 in
 
-set_option maxHeartbeats 4000000 in
 
 def forms0Set {u : D.what₂.Word} (T : Forms0 D u) : Forms0 (setGat D g' hd') u where
   atT := atTTSet D g' hd' T.atT

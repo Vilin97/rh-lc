@@ -28,8 +28,6 @@ section
 variable {S L : Type*} [CommRing S] [IsDedekindDomain S] [Field L] [Algebra S L]
   [IsFractionRing S L] (v : HeightOneSpectrum S)
 
-variable (L) in
-open Classical in
 
 noncomputable def addv : AddValuation L (WithTop ℤ) :=
   AddValuation.of (fun x => if x = 0 then ⊤ else (((-log (v.valuation L x) : ℤ)) : WithTop ℤ))
@@ -229,8 +227,6 @@ theorem algebraMap_OL_injective : Function.Injective (algebraMap O L) := by
   | exact (algebraMap F L).injective.comp (IsFractionRing.injective O F)
   | (rw [RingHom.coe_comp]; exact (algebraMap F L).injective.comp (IsFractionRing.injective O F))
 
-variable (O F L) in
-include F in
 
 theorem exists_heightOne (Q : Ideal (integralClosure O L)) (hQ : Q.IsMaximal) :
     ∃ v : HeightOneSpectrum (integralClosure O L), v.asIdeal = Q := by
@@ -275,8 +271,6 @@ theorem addv_mem_placesOver (v : HeightOneSpectrum (integralClosure O L)) :
     rw [IsScalarTower.algebraMap_apply O (integralClosure O L) L x, ← hcomap, Ideal.mem_comap]
     exact ⟨addv_nonneg v _, addv_pos_iff v _⟩
 
-variable (O F L) in
-include F in
 
 theorem placesOver_bij : ∃ e : HeightOneSpectrum (integralClosure O L) ≃ PlacesOver O L,
     ∀ v, (e v : AddValuation L (WithTop ℤ)) = addv L v := by
@@ -365,7 +359,6 @@ theorem addv_count (v : HeightOneSpectrum (integralClosure O L)) (b : integralCl
   | (push_cast; convert rfl; done)
   | (congr 1; convert rfl)
 
-include F in
 
 end DVR
 

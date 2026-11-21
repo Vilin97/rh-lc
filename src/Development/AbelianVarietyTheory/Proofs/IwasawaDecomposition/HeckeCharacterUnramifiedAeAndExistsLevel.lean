@@ -122,7 +122,6 @@ theorem exists_levelLe (χ : HChar L) (v : HeightOneSpectrum (𝓞 L)) : ∃ n, 
   conv_rhs => rw [← WithZero.exp_log hγ0]
   exact WithZero.exp_lt_exp.mpr (by omega)
 
-open Classical in
 
 theorem unr_ae_and_level : ∀ (L : Type) [Field L] [NumberField L] (χ : HChar L), {v | ¬ χ.UnrAt v}.Finite ∧ ∀ v, ∃ n, χ.LevelLe v n :=
   fun _ _ _ χ => ⟨finite_ramified χ, exists_levelLe χ⟩

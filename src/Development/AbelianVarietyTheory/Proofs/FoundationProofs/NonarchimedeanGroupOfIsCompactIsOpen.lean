@@ -51,7 +51,6 @@ section General
 
 variable {G : Type} [Group G] {K : Subgroup G} {Φ : G → ℂ}
 
-variable (K Φ) in
 
 variable [TopologicalSpace G] [ContinuousMul G]
 

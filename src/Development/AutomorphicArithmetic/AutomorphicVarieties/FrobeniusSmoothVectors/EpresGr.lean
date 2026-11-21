@@ -41,7 +41,6 @@ def Ev.ad (h : B.Ev π) (j : ZMod 2) : Representation K F.Γ (adp K j) := B.ad.s
 @[simp] theorem Ev.ad_apply (h : B.Ev π) (j : ZMod 2) (s : F.Γ) (X : adp K j) :
     ((h.ad j s X : adp K j) : Matrix (Fin 3) (Fin 3) K) = B.ad s X := rfl
 
-variable (B) in
 
 def bp (j : ZMod 2) (v : F.V) : Submodule K (adp K j) := (B.b v).comap (adp K j).subtype
 
@@ -65,7 +64,6 @@ def formp (σ' : C' →ₐ[O] C') (K : Ideal C') (j : ZMod 2) :
   zero_mem' _ _ _ _ := rfl
   smul_mem' c u h i e y hy := by simp [h i e y hy]
 
-variable (O) in
 
 def HasObsG {R : Type} [CommRing R] [Algebra O R] (σ : R →ₐ[O] R) (j : ZMod 2) (H : Type) [AddCommGroup H]
     [Module (ResidueField O) H] : Prop :=

@@ -41,7 +41,6 @@ theorem gm_eq_of_flat_surjective {X Y : Scheme.{0}} (π : X ⟶ Y) [Flat π] [Su
 
 variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R}
 
-omit [IsDomain R] in
 
 theorem trans_comp_proj (e : ℕ) (G : Over (Spec (CommRingCat.of R))) :
     thickMap R I e G ≫ (fstG I (e + 1) G).left = (fstG I e G).left :=

@@ -75,7 +75,6 @@ theorem eq_zero_of_mem_nullPart {ρ : Representation ℂ G V} (hρ : IsSmooth ρ
   rw [map_one] at h3
   exact Submodule.disjoint_def.1 (LocGL.isCompl_fixed_twKer hρ hK).disjoint x h1 h3
 
-omit [IsTopologicalGroup G] in
 
 theorem exists_irred {ρ : Representation ℂ G V} (hρ : IsSmooth ρ) {K : Subgroup G} (hK : IsOpen (K : Set G))
     (h2 : ∀ W : Submodule ℂ V, (∀ g, ∀ v ∈ W, ρ g v ∈ W) → W ⊓ fixed ρ K = ⊥ → W = ⊥)

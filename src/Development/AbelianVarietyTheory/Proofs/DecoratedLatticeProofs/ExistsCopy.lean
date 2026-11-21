@@ -98,8 +98,6 @@ theorem exists_copy {A : Type} [CommRing A] {n n' : ℕ} (e : n' = n) (g : GL (F
   subst e
   exact ⟨g, fun _ _ => rfl⟩
 
-attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Host.cmStar in
-set_option maxHeartbeats 1000000 in
 
 theorem rd_all {B : Base} {X : PreX B.toPre} (I : TC B X) [NeZero (B.R.N B.R.m - 1)] {Lb U chi y lat st}
     (h : I.ReadsP I.mu0 Lb U chi y lat st) (c : (I.stX I.mu0).Cl) :
@@ -118,7 +116,6 @@ open NumberField IsDedekindDomain Matrix MeasureTheory ValuativeRel GlobalTheory
 open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.SeeSaw.TopLevel
 

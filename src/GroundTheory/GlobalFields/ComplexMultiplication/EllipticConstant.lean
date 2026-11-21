@@ -64,7 +64,6 @@ lemma IsPeriodic.limPunctured_add {f : ℂ → E} (hp : IsPeriodic L f) {z l : �
   rw [e] at h2
   exact h2.limUnder_eq
 
-variable (L) in
 
 theorem exists_const_of_meromorphicOrderAt_nonneg [CompleteSpace E] {f : ℂ → E} (hf : Meromorphic f)
     (hp : IsPeriodic L f) (ho : ∀ z, 0 ≤ meromorphicOrderAt f z) :
@@ -77,7 +76,6 @@ theorem exists_const_of_meromorphicOrderAt_nonneg [CompleteSpace E] {f : ℂ →
   rw [← limPunctured_eq_of_continuousAt hz.continuousAt]
   exact eq_of_differentiable_of_isPeriodic L hd hFp z 0
 
-variable (L) in
 
 theorem exists_eventuallyEq_const_of_meromorphicOrderAt_nonneg [CompleteSpace E] {f : ℂ → E} (hf : Meromorphic f)
     (hp : IsPeriodic L f) (ho : ∀ z, 0 ≤ meromorphicOrderAt f z) :

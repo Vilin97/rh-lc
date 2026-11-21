@@ -169,11 +169,8 @@ section inert3
 variable {K L : Type} [Field K] [Fintype K] [Field L] [Fintype L] [Algebra K L]
 variable {n : ℕ} (Ph : Matrix (Fin n) (Fin n) L)
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
 end inert3
 
@@ -181,9 +178,7 @@ section inert4
 variable {K L : Type} [Field K] [Fintype K] [Field L] [Fintype L] [Algebra K L]
 variable {n : ℕ} (Ph : Matrix (Fin n) (Fin n) L)
 
-open scoped Classical in
 
-open scoped Classical in
 
 end inert4
 
@@ -211,9 +206,7 @@ variable {o O : Type} [CommRing o] [IsDomain o] [IsDiscreteValuationRing o] [Com
   [Algebra o O] {abelian₂ : Type} [AddCommGroup abelian₂] [Module O abelian₂] [Module.Free O abelian₂]
   [Module.Finite O abelian₂] (h : abelian₂ →ₗ[O] abelian₂ →ₗ⋆[O] O)
 
-omit [IsDomain o] [IsDiscreteValuationRing o] [Algebra o O] [CommRing o] in
 
-omit [IsDomain o] [IsDiscreteValuationRing o] [Algebra o O] [CommRing o] in
 
 end unimod2
 
@@ -233,15 +226,10 @@ end stdform
 section hermjac
 variable {F E : Type} [Field F] [CommRing E] [Algebra F E] [StarRing E]
 
-omit [StarRing E] in
 
-omit [StarRing E] in
 
-omit [StarRing E] in
 
-omit [StarRing E] in
 
-omit [StarRing E] in
 
 end hermjac
 
@@ -258,7 +246,6 @@ end hermjacA2
 section hermjacB
 variable {F E : Type} [Field F] [CommRing E] [Algebra F E] [StarRing E]
 
-omit [StarRing E] in
 
 end hermjacB
 

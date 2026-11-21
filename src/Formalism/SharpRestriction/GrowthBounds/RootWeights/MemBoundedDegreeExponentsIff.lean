@@ -53,7 +53,6 @@ theorem asm_padicGe_prod {p : ℕ} [Fact p.Prime] {ι : Type*} (s : Finset ι) (
     exact padicGe_mul (h a (Finset.mem_insert_self a s))
       (ih fun i hi => h i (Finset.mem_insert_of_mem hi))
 
-open Classical in
 
 def boundedDegreeExponents (σ : Type*) [Fintype σ] (c : ℕ) : Finset (σ → ℕ) :=
   (Fintype.piFinset fun _ : σ => range (4 * c + 1)).filter fun j => ∑ k, j k ≤ 4 * c

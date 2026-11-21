@@ -10,7 +10,6 @@ noncomputable section
 
 namespace Formalism
 
-open ArithmeticFunction in
 
 def SchiC {N : ℕ} (χ : DirichletCharacter ℂ N) (x : ℝ) : ℂ :=
   ∑ n ∈ Finset.Icc 1 ⌊x⌋₊, (Λ n : ℂ) * χ n * ((x / n - 1 : ℝ) : ℂ)

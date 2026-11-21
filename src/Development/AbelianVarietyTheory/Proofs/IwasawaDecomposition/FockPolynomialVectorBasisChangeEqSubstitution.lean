@@ -149,7 +149,6 @@ theorem pureTensorO_X_mul (BS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.ran
     (fun _ _ h => aPlus_theta hψ hθ _ _ _ h) (fun i j _ h => aPlus_comm_one hψ hθ i.1 _ j.1 _ h)
     (fun i _ _ h h' => aPlus_add hψ hθ i.1 _ _ h h') (fun i a _ h => aPlus_smul hψ hθ i.1 _ _ a h) hf Q v
 
-omit hψ hθ in
 
 theorem pureTensorO_subst : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D), IsStdChar D ψ (-1) → IsInfFam θ → ∀ (BS g : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (BT h : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ) (f : WO S T → ℂ), IsThetaFunO ψ S T f → ∀ P, pureTensorO ψ θ S T (fun _ => 1) (fun _ => 1) (fun τ => BS τ * g τ) (fun τ => BT τ * h τ) f P = pureTensorO ψ θ S T (fun _ => 1) (fun _ => 1) BS BT f (substF h (fun τ => ((g τ)⁻¹)ᵀ) P) := by
   intro D ψ θ S T hψ hθ BS g BT h f hf P

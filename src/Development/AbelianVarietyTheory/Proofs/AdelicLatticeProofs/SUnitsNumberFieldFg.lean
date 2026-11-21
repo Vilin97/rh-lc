@@ -34,8 +34,6 @@ private lemma exists_unit_of_valuation_eq_one {F : Type} [Field F] [NumberField 
     rw [map_mul, ha, hb, map_one, Units.mul_inv]
   exact ⟨⟨a, b, hab, by rw [mul_comm, hab]⟩, ha⟩
 
-open NumberField IsDedekindDomain in
-open scoped WithZero in
 
 theorem _root_.GlobalTheory.QNorm.sUnits_fg :
     ∀ (F : Type) [Field F] [NumberField F] (S : Finset (HeightOneSpectrum (𝓞 F))),

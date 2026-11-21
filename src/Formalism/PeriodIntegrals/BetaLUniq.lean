@@ -21,7 +21,6 @@ end PI.BetaLUniq
 
 namespace PI
 
-open PI.BetaLUniq in
 
 def BetaLUniq : Prop :=
   ∀ (D : D7) (u u' : D.what₂.Word),

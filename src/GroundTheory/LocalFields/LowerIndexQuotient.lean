@@ -55,9 +55,7 @@ theorem ramificationIndex_mul_lowerIndex_restrictNormalHom [Normal K M] (σ : L 
       ∑ τ : L ≃ₐ[M] L, lowerIndex K L (σ * τ.restrictScalars K) :=
   by apply _root_.UpperTheory.Reformulated.B.RamificationLowerIndex.ramificationIndex_mul_lowerIndex_restrictNormalHom <;> assumption
 
-open Classical in
 
-omit [IsGalois K L] in
 
 theorem exists_lowerIndex_mul_eq_min (σ : L ≃ₐ[K] L) :
     ∃ τ₀ : L ≃ₐ[M] L,

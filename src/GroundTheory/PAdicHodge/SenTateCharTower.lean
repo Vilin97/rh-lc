@@ -101,7 +101,6 @@ def artinGal (n : ℕ) : Subgroup Gal(PadicAlgCl p/K) :=
   ((unitFiltrationUnits K n).map (localArtinMap K (PadicAlgCl p))).comap
     (AlgEquiv.restrictNormalHom (maximalAbelianExtension K (PadicAlgCl p)))
 
-variable (η) in
 
 def artinImage (n : ℕ) : Subgroup ℤ_[p]ˣ := (artinGal K n).map η
 
@@ -114,7 +113,6 @@ variable (η) in
 theorem artinImage_antitone : Antitone (artinImage K η) := fun _ _ h =>
   Subgroup.map_mono (artinGal_antitone h)
 
-omit [FiniteDimensional ℚ_[p] K] in
 
 theorem restrictAb_restrictNormalHom (E : IntermediateField K (PadicAlgCl p)) [Normal K E]
     (h : E ≤ maximalAbelianExtension K (PadicAlgCl p)) (ρ : Gal(PadicAlgCl p/K)) :
@@ -123,7 +121,6 @@ theorem restrictAb_restrictNormalHom (E : IntermediateField K (PadicAlgCl p)) [N
   ext x
   rw [restrictAb_apply, AlgEquiv.restrictNormalHom_apply, AlgEquiv.restrictNormalHom_apply]
 
-omit [FiniteDimensional ℚ_[p] K] in
 
 theorem eq_one_of_mem_fixingSubgroup_maximalAbelianExtension (hη : Continuous η)
     {ρ : Gal(PadicAlgCl p/K)}

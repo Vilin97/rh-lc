@@ -16,7 +16,6 @@ open scoped ENNReal
 
 noncomputable section
 
-open Classical in
 
 def LocalGraphProjectionMass.Statement : Prop :=
   ∀ (n d : ℕ) (b : OrthonormalBasis (Fin n) ℂ (EuclideanSpace ℂ (Fin n))) (I₀ : Finset (Fin n))

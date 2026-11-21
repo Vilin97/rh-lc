@@ -268,7 +268,6 @@ def chartD (e : Sg → CMType H ⊕ CMType H) (b : ∀ t, Fin (labelRk D t) → 
 def zeroD (F : Type) (n : ℕ) (Sg : Type) (r s : Sg → ℕ) : LieLatticeData Ω F n Sg r s :=
   ⟨⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥⟩
 
-open Classical in
 
 def famD (e : Sg → CMType H ⊕ CMType H) (b : ∀ t, Fin (labelRk D t) → 𝔐.Li)
     (pq : (𝓞 E ⧸ Ideal.span {(p : 𝓞 E)}) →+* F) (sc : F →+ (𝓞 E ⧸ Ideal.span {(p : 𝓞 E)})) (w : O)

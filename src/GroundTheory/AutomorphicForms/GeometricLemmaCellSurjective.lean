@@ -82,7 +82,6 @@ section Bump
 variable {β : Fin n → ℕ} {W : Type*} [AddCommGroup W] [Module ℂ W]
   (σ : Representation ℂ (levi F n β) W)
 
-open Classical in
 
 def bumpFun (x : GL (Fin n) F) (K : Subgroup (GL (Fin n) F)) (v : W) : GL (Fin n) F → W :=
   fun g => if h : ∃ p : blockUpper F n β, ∃ k ∈ K, g = (p : GL (Fin n) F) * x * k then

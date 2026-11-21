@@ -36,7 +36,6 @@ theorem parts_inj (x y : AEF F E) (h1 : infPartF F E x = infPartF F E y) (h2 : f
     x = y :=
   sub_eq_zero.1 (GlobalTheory.SplitDetCharF.adele_tensor_ext _ (by rw [map_sub, h1, sub_self]) (by rw [map_sub, h2, sub_self]))
 
-variable (E) in
 
 def fj : Af F →ₙ+* AEF F E where
   toFun α := pairA F 0 α ⊗ₜ[F] (1 : E)
@@ -64,7 +63,6 @@ theorem singleV_mul (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v) (α : Af F) :
   · subst hw; simp only [map_mul, evalV_singleV_same]
   · simp only [map_mul, evalV_singleV_ne _ v _ hw, mul_zero]
 
-variable (E) in
 
 abbrev pl (v : HeightOneSpectrum (𝓞 F)) : AEF F E := fj E (singleV F v 1)
 
@@ -137,7 +135,6 @@ theorem exists_splitAt {c : E ≃ₐ[F] E} (h : IsCMExt F E (c : E →ₐ[F] E))
 
 variable {n : ℕ} {σ : E →ₐ[F] E} {J : Matrix (Fin n) (Fin n) E}
 
-variable (σ J) in
 
 def cutA (ε : AEF F E) (hε : ε * ε = ε) (hσ : cAF σ ε = ε) : GAF σ J →* GAF σ J :=
   cutH (AF F) σ J ε hε hσ
@@ -164,7 +161,6 @@ theorem idem_inf : (1 - fj E (1 : Af F)) * (1 - fj E 1) = 1 - fj E 1 := by
 
 theorem conj_inf : cAF σ (1 - fj E (1 : Af F)) = 1 - fj E 1 := by rw [map_sub, map_one, cA_fj]
 
-variable (σ J) in
 
 def pInf : GAF σ J →* GAF σ J := cutA σ J (1 - fj E 1) idem_inf conj_inf
 

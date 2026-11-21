@@ -19,7 +19,6 @@ section General
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V] [FiniteDimensional ℂ V]
   {ι : Type*} {U : Set V}
 
-omit [FiniteDimensional ℂ V] in
 
 theorem convexOn_norm_term (c : ℂ) (L : V →L[ℂ] ℂ) :
     ConvexOn ℝ Set.univ fun p => ‖c * cexp (L p)‖ := by
@@ -129,12 +128,10 @@ noncomputable def form (x : Matrix (Fin n) (Fin N) E) :
 theorem form_apply (x : Matrix (Fin n) (Fin N) E) (p : CF Ψ N N × CF Ψ n N × CF Ψ n N) :
     form Ψ x p = 2 * π * I * expo Ψ x p.1 p.2.1 p.2.2 := rfl
 
-open Classical in
 
 noncomputable def dir {m : ℕ} (τ : Ψ) (k : Fin m) (a : Fin N) : CF Ψ m N :=
   fun σ i j => if σ = τ then if i = k then if j = a then 1 else 0 else 0 else 0
 
-open Classical in
 
 theorem add_smul_dir {m : ℕ} (x : CM Ψ m N) (τ : Ψ) (k : Fin m) (a : Fin N) (s : ℂ) :
     (fun σ => x σ + if σ = τ then Matrix.single k a s else 0 : CM Ψ m N) =
@@ -172,7 +169,6 @@ theorem form_dir₃ (x : Matrix (Fin n) (Fin N) E) (τ : Ψ) (k : Fin n) (a : Fi
     simp [dir, h]
   · simp
 
-open Classical in
 
 theorem line₁ (Z : CF Ψ N N) (z z' : CF Ψ n N) (τ : Ψ) (a b : Fin N) (s : ℂ) :
     (Z, z, z') + s • ((dir Ψ τ a b, 0, 0) : CF Ψ N N × CF Ψ n N × CF Ψ n N) =
@@ -209,7 +205,6 @@ theorem heat_dir (φ : Matrix (Fin n) (Fin N) E → ℂ)
 
 end GlobalTheory.SW.ExpSum
 
-open GlobalTheory.SW.ExpSum in
 
 theorem GlobalTheory.SW.isHeat_thH : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ) (φ : Matrix (Fin n) (Fin N) E → ℂ), IsSB φ → IsHeat Ψ (thH Ψ φ) := by
   intro E _ _ _ Ψ hΨ n N φ hφ

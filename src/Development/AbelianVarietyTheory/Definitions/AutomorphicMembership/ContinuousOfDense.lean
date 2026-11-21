@@ -88,18 +88,15 @@ theorem isFockIsometry_embedding : IsFockIP (emb σ) := by
     rw [Pi.single_eq_same, if_pos rfl, RCLike.inner_apply, mul_comm, star_wt_mul, mfact_cast]
   · rw [Pi.single_eq_of_ne h, if_neg h, inner_zero_right]
 
-omit [DecidableEq σ] in
 
 def diag (c : (σ →₀ ℕ) → ℂ) (hc : ∀ α, ‖c α‖ = 1) : L2 σ →L[ℂ] L2 σ :=
   lp.mapCLM 2 (fun α => c α • ContinuousLinearMap.id ℂ ℂ) zero_le_one fun α => by
     simp [norm_smul, hc]
 
-omit [DecidableEq σ] in
 
 @[simp] theorem diag_apply (c : (σ →₀ ℕ) → ℂ) (hc : ∀ α, ‖c α‖ = 1) (x : L2 σ) (α : σ →₀ ℕ) :
     diag c hc x α = c α * x α := rfl
 
-omit [DecidableEq σ] in
 
 theorem norm_diag (c : (σ →₀ ℕ) → ℂ) (hc : ∀ α, ‖c α‖ = 1) (x : L2 σ) : ‖diag c hc x‖ = ‖x‖ := by
   have hp : 0 < (2 : ENNReal).toReal := by norm_num

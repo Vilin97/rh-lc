@@ -93,7 +93,6 @@ theorem exists_completion {A : Type} [CommRing A] [IsNoetherianRing A] (J : Idea
     rw [← PrimeSpectrum.comap_comp_apply]
     congr 2
 
-open GlobalTheory.FormalPoint in
 
 theorem exists_completed_point {R : Type} [CommRing R] [IsNoetherianRing R] (I : Ideal R)
     (G G' : Over (Spec (CommRingCat.of R))) [Flat G'.hom] [LocallyOfFiniteType G'.hom]

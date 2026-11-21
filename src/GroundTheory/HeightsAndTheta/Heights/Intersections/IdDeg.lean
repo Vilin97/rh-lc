@@ -30,7 +30,6 @@ def ArithmeticIntersectionDivisorPushforward.Statement : Prop :=
 
 section Inhabitants
 
-open Classical in
 
 end Inhabitants
 

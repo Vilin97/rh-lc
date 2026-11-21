@@ -33,7 +33,6 @@ private theorem swap_fibre (hi : Measurable i) {F a b : G → ℝ≥0∞} (hF : 
   refine lintegral_congr fun g => ?_
   rw [lintegral_const_mul _ (by fun_prop), lintegral_inv_eq_self (fun t : T => a (i t * g))]
 
-omit [MeasurableInv G] [MeasurableInv T] [SFinite μT] [μT.IsInvInvariant] in
 
 private theorem norm_toNNReal (hi : Measurable i) {ρ : G → ℝ≥0∞} (hρ : Measurable ρ) (h1 : ∀ g, ∫⁻ t, ρ (i t * g) ∂μT = 1) (g : G) :
     ∫⁻ t, ((ρ (i t * g)).toNNReal : ℝ≥0∞) ∂μT = 1 := by

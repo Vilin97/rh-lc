@@ -107,7 +107,6 @@ theorem pow_classNumber (x : (RA F E)ˣ) : ∃ b : E, b ≠ 0 ∧ ∃ s t : hatR
   rw [← mul_assoc, ← map_mul, mul_div_cancel₀ _ hN', map_pow, map_natCast, ← mul_pow]
   exact congrArg Subtype.val e
 
-omit [NumberField E] in
 
 variable {F E} (c : E ≃ₐ[F] E)
 

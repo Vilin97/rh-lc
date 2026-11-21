@@ -193,7 +193,6 @@ theorem det_pow {m : ℕ} {P : Matrix (Fin m) (Fin m) ℂ} (hP : IsUnit P) (ε :
   refine Finset.prod_congr rfl fun a _ => ?_
   cases ε a <;> simp [← Complex.exp_int_mul, mul_assoc]
 
-open Classical in
 
 theorem om_pt {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} {χS χT : (AE D)ˣ →* Circle}
     {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)} (hW : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ)
@@ -280,7 +279,6 @@ theorem sub_diag {m n : ℕ} (τ : D.what₂.Tau) (l : Fin m → ℂ) :
   · rw [Function.update_of_ne e, if_neg e, Finset.sum_eq_single a (fun b _ hb => by rw [Matrix.one_apply_ne hb, zero_smul])
       (fun h => (h (Finset.mem_univ _)).elim), Matrix.one_apply_eq]
 
-open Classical in
 
 theorem delta_weights {m n : ℕ} (p q : D.what₂.Tau → ℕ) (ap am : D.what₂.Tau → ℕ → ℕ) (τ : D.what₂.Tau) {ε : Fin m → Bool}
     (hε : ∀ a, ε a = decide ((a : ℕ) < p τ)) (χ : Matrix (Fin m) (Fin m) ℂ → ℂ) (κ : Fin m → ℝ)
@@ -367,7 +365,6 @@ theorem cartan_one {k : ℕ} {G B : Matrix (Fin k) (Fin k) ℂ} (h : IsONBasis G
   rw [Matrix.mul_one, ← Matrix.IsUnit.posDef_star_left_conjugate_iff hB, star_eq_conjTranspose, e]
   exact Matrix.PosDef.one
 
-open Classical in
 
 theorem replace_at {V W : HSp D} {S' : D.what₂.Tau → SPar} {θ : InfFam D} (M : DSModel W S') {c : CoefA V}
     {ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} {pt : PolF D W.rank V.rank →ₗ[ℂ] (WO V W → ℂ)}

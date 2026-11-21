@@ -567,7 +567,6 @@ theorem theorem_w_top_of_simple_quotients (hSS : SimpleSubquotOfPower) (hIso : S
     hclass hhw hIN1 hexO hIN2
   exact ⟨hmain, Nat.sInf_le hmain⟩
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
 theorem weight_theorem_top : TheoremWTop := theorem_w_top_of_simple_quotients simple_subquotient_of_power_holds subquotient_iso_holds
 
@@ -594,7 +593,6 @@ theorem top_inclusion_monotone_holds : TopInclMono := by
     exact Submodule.smul_mem _ _ hx
   · rw [← LocalizedModule.smul'_mk, hxs, smul_smul, ← pow_add, add_comm]
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
 theorem depth_as_weight_sum_holds : DepthAsU := by
   intro N c lam w

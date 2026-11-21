@@ -110,7 +110,6 @@ section Dom
 
 variable {N N' : ℕ}
 
-variable (S) in
 
 end Dom
 
@@ -118,13 +117,10 @@ section Join
 
 variable {N N' m : ℕ}
 
-variable (S) in
 
-variable (S) in
 
 variable {x' : Fin (N' + 1) → Ω} {x : Fin (N + 1) → Ω}
 
-variable (x x') in
 
 end Join
 

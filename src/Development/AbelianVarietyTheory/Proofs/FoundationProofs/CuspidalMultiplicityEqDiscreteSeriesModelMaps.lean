@@ -78,7 +78,6 @@ theorem Represents.translate' (g : GfC V) {Φ Φ' : ContinuousMultilinearMap ℂ
   rw [h']
   exact (lift_R (g : GA D V) _).trans ((measurePreserving_mul_right μ (g : GA D V)).quasiMeasurePreserving.ae (h v))
 
-variable (μ) in
 
 def phiOf (T : MMap M) : ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ) :=
   open Classical in
@@ -97,7 +96,6 @@ theorem phiOf_eq (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam θ
 
 variable {W : Type} [AddCommGroup W] [Module ℂ W] {σ : Representation ℂ (GfC V) W}
 
-variable (μ) in
 
 def homOf (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam θ) (f : W →ₗ[ℂ] MMap M) (hf : ∀ w, f w ∈ allMaps θ M) :
     W →ₗ[ℂ] ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ) where
@@ -127,7 +125,6 @@ theorem homOf_mem (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam �
   rw [phiOf_eq hP hθ hm ((phiOf_spec hP hθ (hf.1 w)).2.translate g)]
   rfl
 
-variable (μ) in
 
 def toHom (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam θ) :
     homInto σ (finRep M) (allMaps θ M) →ₗ[ℂ] homFinDS σ M (RG V μ) (GlobalTheory.Cusp.L2cusp V μ) where
@@ -148,7 +145,6 @@ theorem toHom_injective (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsIn
   rw [h0] at hr
   exact eq_of_represents_cont (continuous_of_mem_allMaps (f.2.1 w)) (fun _ => continuous_const) hr represents_zero
 
-variable (σ) in
 
 def stab (w : W) : Subgroup (GfC V) where
   carrier := {g | σ g w = w}
@@ -191,7 +187,6 @@ end GlobalTheory.AutMult.MultAssembly
 
 namespace GlobalTheory.AutMult
 
-open GlobalTheory.AutMult.MultAssembly in
 
 theorem cuspMult_eq_mCuspDS : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.DixmierMalliavinFactorisation → ∀ (D : D7) (θ : D.what₂.Tau → (TensorProduct D.host.F (Ainf D.host.F) D.host.E →+* ℂ)), IsInfFam θ → ∀ (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (μ : Measure (GA D V)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (W : Type) [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (GfC V) W), GlobalTheory.PRep.IsSmooth σ → GlobalTheory.CuspMult.cuspMult θ M σ = mCuspDS μ σ M := by
   intro hP _ _ D θ hθ V S M μ _ _ W _ _ σ hσ

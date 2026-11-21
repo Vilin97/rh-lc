@@ -102,7 +102,6 @@ theorem key_step (W : Submodule ℂ V) (hW : ∀ a, ∀ w ∈ W, σ a w ∈ W)
     rw [← e]; exact W.smul_mem _ h1
   exact (W.smul_mem_iff (card_ne_zero _ _)).1 hm
 
-include hc hadd in
 
 theorem exists_character_sup_ne_top (W : Submodule ℂ V) (hW : ∀ a, ∀ w ∈ W, σ a w ∈ W)
     (hsm : ∀ v : V, ∃ s : kˣ, ∀ h ∈ ball s, σ h v = v) (hne : W ≠ ⊤) :

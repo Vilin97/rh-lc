@@ -71,7 +71,6 @@ theorem smooth_vectors_translate {ai : CayleySignature.Mat k r} (hai : ai ∈ Fo
     show σ g (σ ai v) = F (L g)
     rw [hL, ← h1, hmul g hin ai hai]; rfl
 
-include hmul hone in
 
 end Pos
 

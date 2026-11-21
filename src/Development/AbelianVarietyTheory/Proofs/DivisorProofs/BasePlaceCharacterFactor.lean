@@ -96,7 +96,6 @@ theorem nuH_levelLe_two {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} (G : 
     rw [e, div_eq_mul_inv]
     exact levelLe_mul (levelLe_mul hmu hxi) (levelLe_inv h)
 
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 
 theorem condExp_comp_eq_two {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {v : HeightOneSpectrum (𝓞 F)} (τ : E →ₐ[F] Fv F v) (χ : HChar E)
@@ -139,7 +138,6 @@ theorem factor_unr {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
   rw [he]
   field_simp
 
-open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels in
 
 theorem factor_ram {F : Type} [Field F] [NumberField F] {K : Type} [Field K] [NumberField K] (σ : K →+* ℂ)
     (ψ : AddChar (AF F) ℂ) {v : HeightOneSpectrum (𝓞 F)} (ν₀ ξ : (Fv F v)ˣ →* ℂˣ) (s : (Fv F v)ˣ) (z : ℤ) (c : ℕ)
@@ -169,7 +167,6 @@ end GlobalTheory.SqStepArith
 
 namespace GlobalTheory.SqStepArith
 
-open Formalism.L2.Host in
 
 theorem nuH_loc_mem {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} {G : GridData Lc sc} {μ₀ : T} {W : G.Weil}
     {S : GridChoice W Set.univ} (hN : NumbersIn D.what₂.embLL S μ₀) (i j : Fin D.R.m) (t : T)
@@ -184,7 +181,6 @@ theorem nuH_loc_mem {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} {G : Grid
     Units.val_inv_eq_inv_val]
   exact mul_mem (mul_mem h1 h2) (inv_mem h3)
 
-open Formalism.L2.Host in
 
 theorem isUnitAt_complMap {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {v : HeightOneSpectrum (𝓞 F)} (τ : E →ₐ[F] Fv F v) (x : (Fv F v)ˣ) (h1 : (x : Fv F v) ∈ v.adicCompletionIntegers F)
@@ -205,8 +201,6 @@ namespace GlobalTheory.SqStepArith
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-set_option maxHeartbeats 1000000 in
-open Formalism.L2.Host in
 
 theorem base_place_factor_zero : ∀ {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} (G : GridData Lc sc) {μ₀ : T}, Lc.Is μ₀ →
     ∀ (W : G.Weil) (S : GridChoice W Set.univ), NumbersIn D.what₂.embLL S μ₀ → ∀ (i j : Fin D.R.m) (t : T)

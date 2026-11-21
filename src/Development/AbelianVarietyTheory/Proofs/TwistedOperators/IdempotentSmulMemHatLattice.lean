@@ -108,7 +108,6 @@ open GlobalTheory.FunObj.Comparison₂ GlobalTheory.StdFrames Formalism.L2.DIV G
 variable {D : D7} {S T : HSp D} {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)}
   {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
 
-set_option maxHeartbeats 1000000 in
 
 theorem v_le_of_mem_latO_idLat (hS : IsSelfDualC S ΛS) {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EAf D)}
     (hβS : IsFrame βS ΛS) (hβT : IsFrame βT ΛT) (w : Pl D.host.E)
@@ -193,7 +192,6 @@ theorem v_le_of_mem_latO_idLat (hS : IsSelfDualC S ΛS) {βS : GL (Fin S.rank) (
 
 end GlobalTheory.DepthBig
 
-open GlobalTheory.FunObj.Comparison₂ GlobalTheory.StdFrames Formalism.L2.DIV GlobalTheory.DepthBig in
 
 theorem GlobalTheory.DepthBig.smul_mem_hatMx_of_mem_latBig : All fun {D} _ _ _ {G} _ _ => ∀ i, i < D.R.m →
     ∀ v : WO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0)),

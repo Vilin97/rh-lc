@@ -21,7 +21,6 @@ namespace GlobalTheory.MemLoc.TiedTheta
 
 variable {l : ℕ} [Fact l.Prime]
 
-open Classical in
 
 def thetaExt (x : Per.BdR l) : ℂ_[l] :=
   if h : ∃ y : Per.BdRp l, algebraMap (Per.BdRp l) (Per.BdR l) y = x then Per.θD l h.choose else 0

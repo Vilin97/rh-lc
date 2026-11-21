@@ -21,42 +21,35 @@ def IsHeckeOp {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Represe
   ∀ (v : fixed π J) (l : Module.Dual ℂ V), (∀ x ∈ J, l ∘ₗ π x = l) →
     l (π g (v : V)) = l ((T v : fixed π J) : V)
 
-variable (k) in
 
 def HasIwahoriFact (N : ℕ) (J : Subgroup (GL (Fin N) k)) {h : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N) : Prop :=
   ∀ x ∈ J, ∃ a ∈ J ⊓ unipRadLower k (stdBlocks d hd), ∃ b ∈ J ⊓ (leviEmb k (stdBlocks d hd)).range,
     ∃ c ∈ J ⊓ unipRad k (stdBlocks d hd), x = a * b * c
 
-variable (k) in
 
 def KN (N : ℕ) (J : Subgroup (GL (Fin N) k)) {h : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N) : Subgroup (GL (Fin N) k) :=
   J ⊓ unipRad k (stdBlocks d hd)
 
-variable (k) in
 
 def KNl (N : ℕ) (J : Subgroup (GL (Fin N) k)) {h : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N) : Subgroup (GL (Fin N) k) :=
   J ⊓ unipRadLower k (stdBlocks d hd)
 
-variable (k) in
 
 def KM (N : ℕ) (J : Subgroup (GL (Fin N) k)) {h : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N) : Subgroup (Levi k (Bl d)) :=
   (J).comap (leviEmb k (stdBlocks d hd))
 
-variable (k) in
 
 def IsDominant (N : ℕ) (J : Subgroup (GL (Fin N) k)) {h : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N) (t : Levi k (Bl d)) : Prop :=
   (∀ n ∈ KN k N J d hd, leviEmb k (stdBlocks d hd) t * n * (leviEmb k (stdBlocks d hd) t)⁻¹ ∈ KN k N J d hd) ∧
   (∀ n ∈ KNl k N J d hd, (leviEmb k (stdBlocks d hd) t)⁻¹ * n * leviEmb k (stdBlocks d hd) t ∈ KNl k N J d hd) ∧
   (∀ x ∈ KM k N J d hd, t * x * t⁻¹ ∈ KM k N J d hd ∧ t⁻¹ * x * t ∈ KM k N J d hd)
 
-variable (k) in
 
 def IsStrictlyDominant (N : ℕ) (J : Subgroup (GL (Fin N) k)) {h : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N) (t : Levi k (Bl d)) : Prop :=
   IsDominant k N J d hd t ∧ ∀ U : Set (GL (Fin N) k), IsOpen U → (1 : GL (Fin N) k) ∈ U →
     ∃ j : ℕ, ∀ n ∈ KN k N J d hd,
       leviEmb k (stdBlocks d hd) t ^ j * n * (leviEmb k (stdBlocks d hd) t ^ j)⁻¹ ∈ U
 
-variable (k) in
 
 def C1 : Prop :=
   ∀ (N h : ℕ) (d : Fin h → ℕ) (hd : ∑ a, d a = N) (J : Subgroup (GL (Fin N) k)), IsOpen (J : Set (GL (Fin N) k)) →
@@ -68,7 +61,6 @@ def C1 : Prop :=
       IsHeckeOp π J (leviEmb k (stdBlocks d hd) t') T' →
       IsHeckeOp π J (leviEmb k (stdBlocks d hd) (t * t')) (T * T')
 
-variable (k) in
 
 def C2 : Prop :=
   ∀ (N h : ℕ) (d : Fin h → ℕ) (hd : ∑ a, d a = N) (J : Subgroup (GL (Fin N) k)), IsOpen (J : Set (GL (Fin N) k)) →
@@ -81,7 +73,6 @@ def C2 : Prop :=
         ((deltaHalf k (Bl d) t : ℂˣ) : ℂ) •
           jac (stdBlocks d hd) π t (Submodule.Quotient.mk (v : V))
 
-variable (k) in
 
 def C3 : Prop :=
   ∀ (N h : ℕ) (d : Fin h → ℕ) (hd : ∑ a, d a = N) (J : Subgroup (GL (Fin N) k)), IsOpen (J : Set (GL (Fin N) k)) →
@@ -97,18 +88,14 @@ def C3 : Prop :=
     ∀ v : fixed π (J),
       (Submodule.Quotient.mk (v : V) : Jacquet π (unipRad k (stdBlocks d hd))) = 0 → ∃ r : ℕ, (T ^ r) v = 0
 
-variable (k) in
 
-variable (k) in
 
-variable (k) in
 
 def C0 : Prop :=
   ∀ (N m h : ℕ) (d : Fin h → ℕ) (hd : ∑ a, d a = N), 1 ≤ m →
     IsOpen (Zls.Km k N m : Set (GL (Fin N) k)) ∧ IsCompact (Zls.Km k N m : Set (GL (Fin N) k)) ∧
       HasIwahoriFact k N (Zls.Km k N m) d hd
 
-variable (k) in
 
 def CH : Prop :=
   ∀ (N : ℕ) (J : Subgroup (GL (Fin N) k)), IsOpen (J : Set (GL (Fin N) k)) → IsCompact (J : Set (GL (Fin N) k)) →

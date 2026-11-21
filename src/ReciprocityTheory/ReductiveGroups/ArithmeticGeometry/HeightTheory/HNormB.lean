@@ -16,13 +16,11 @@ open IsDedekindDomain IsLocalRing
 variable {R F L : Type} [CommRing R] [IsDomain R] [UniqueFactorizationMonoid R] [Field F]
   [Algebra R F] [IsFractionRing R F] [Field L] [Algebra F L]
 
-variable (R F L) in
 
 def OverR (p : Ideal R) : Set (AddValuation L (WithTop ℤ)) :=
   {w | IsNormDiscrete w ∧ ∀ x : R, 0 ≤ w (algebraMap F L (algebraMap R F x)) ∧
     (0 < w (algebraMap F L (algebraMap R F x)) ↔ x ∈ p)}
 
-variable (F) in
 
 noncomputable def fz (w : AddValuation L (WithTop ℤ)) : ℕ :=
   letI := resAlg (F := F) w

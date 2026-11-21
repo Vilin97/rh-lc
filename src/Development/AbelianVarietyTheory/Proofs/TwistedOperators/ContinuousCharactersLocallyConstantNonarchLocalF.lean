@@ -11,8 +11,6 @@ open Filter Topology
 
 namespace GlobalTheory.RootEx.OpenKernel
 
-open MeasureTheory ValuativeRel Matrix in
-open Filter Topology in
 
 theorem _root_.GlobalTheory.RootEx.OpenKernel.isLocallyConstant_coe_addChar {k : Type} [Field k]
     [ValuativeRel k] [TopologicalSpace k]
@@ -25,8 +23,6 @@ theorem _root_.GlobalTheory.RootEx.OpenKernel.isLocallyConstant_coe_addChar {k :
   · obtain ⟨c, hc⟩ := _root_.GlobalTheory.SplitWeil.exists_hasConductor_of_continuous ψ hψ h
     exact (_root_.GlobalTheory.SplitWeil.HasConductor.isLocallyConstant hc).comp _
 
-open MeasureTheory ValuativeRel Matrix in
-open Filter Topology in
 
 theorem _root_.GlobalTheory.RootEx.OpenKernel.characters_locallyConstant : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], (∀ μ : kˣ →* ℂˣ, Continuous μ → IsOpen (μ.ker : Set kˣ)) ∧ ∀ ψ : AddChar k Circle, Continuous ψ → IsLocallyConstant (fun x : k => (ψ x : ℂ)) :=
   fun _ _ _ _ _ => ⟨fun μ hμ => _root_.GlobalTheory.RootEx.UniformLattices.isOpen_ker_of_continuous μ hμ,

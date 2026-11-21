@@ -86,11 +86,8 @@ variable {E : Type} [Field E] [NumberField E] (F : Subfield E) [NumberField F]
 
 variable {F} (c : E ≃ₐ[ℚ] E) (hF : ∀ x : E, x ∈ F ↔ c x = x) (hc : ∀ x : E, c (c x) = x)
 
-include hF in
 
-include hF hc in
 
-include hF hc in
 
 end Fix
 
@@ -211,7 +208,6 @@ section Two
 variable {E : Type} [Field E] [NumberField E] {F : Subfield E} [NumberField F]
   (c : E ≃ₐ[ℚ] E) (hF : ∀ x : E, x ∈ F ↔ c x = x) (hc : ∀ x : E, c (c x) = x)
 
-include hF hc in
 
 end Two
 

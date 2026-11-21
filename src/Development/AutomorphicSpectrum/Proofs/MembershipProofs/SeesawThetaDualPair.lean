@@ -87,7 +87,6 @@ theorem exists_ratPt [Nontrivial A] (c : E →ₐ[F] E) (J : Matrix β β E) (g 
   rw [hg, map_cA, ← Matrix.transpose_map, ← Matrix.map_mul, ← Matrix.map_mul] at h
   exact Matrix.map_injective hi h
 
-omit [Fintype β] in
 
 theorem mem_span_inc (z : Matrix α β (A ⊗[F] E)) [Finite β] :
     z ∈ Submodule.span A (Set.range fun x : Matrix α β E => x.map (inc (F := F) A)) := by

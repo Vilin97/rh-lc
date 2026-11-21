@@ -50,7 +50,6 @@ theorem local_of {D D' : CartierDiv X} {V : X.Opens} {h : X.functionField}
 
 end GlobalTheory.Cartier.RatSecDiv
 
-open GlobalTheory.Cartier.RatSecDiv in
 
 theorem GlobalTheory.Cartier.exists_sec_div_nonzeroLocus_eq :
     ∀ {X : Scheme.{0}} [IsIntegral X] (D D' : CartierDiv X) (L : LB X) (r : L.ι → X.functionFieldˣ),

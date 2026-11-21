@@ -64,7 +64,6 @@ theorem sym_pull (h : IsGrpPullback A' A f φ) (hs : Sym A L) : Sym A' (L.pull �
     rw [Category.assoc, inv_comm h, ← Category.assoc, ← hψ, Category.assoc]
   · exact hψ.symm
 
-omit [GrpObj A] [GrpObj A'] in
 
 theorem relAmple_restrict (h : IsPullback φ A'.hom A.hom f) (hL : L.IsLB) (hA : RelAmple A L)
     (V : S.Opens) (hV : IsAffineOpen V) :

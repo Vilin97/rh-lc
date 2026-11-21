@@ -21,7 +21,6 @@ def NoRel (T : Finset ℕ) (L : ℕ) : Prop :=
 
 def InTranslate {n : ℕ} (T : Finset ℕ) (u₀ x : ZMod n) : Prop := ∃ s ∈ T, x = (s : ZMod n) + u₀
 
-open Classical in
 
 def HostThickOrbit : Prop :=
   ∀ (n L : ℕ), 0 < n → 2 ≤ L → ∀ T : Finset ℕ, (∀ s ∈ T, 4 * L * s < n) → NoRel T L →
@@ -38,7 +37,6 @@ def HostThickExists : Prop :=
 def bern {α : Type*} [Fintype α] (δ : ℝ) (T : Finset α) : ℝ :=
   δ ^ T.card * (1 - δ) ^ (Fintype.card α - T.card)
 
-open Classical in
 
 def HostStab : Prop :=
   ∀ (e q d : ℕ), HypOdd q d →

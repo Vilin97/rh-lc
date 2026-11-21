@@ -148,7 +148,6 @@ theorem funField_le_locRing (P : Ideal (MRing ι)) [P.IsPrime] : funField P ≤ 
 
 end RegularityFunctionFieldNumber
 
-open regularityEmbedding_holds in
 
 theorem RegularityFunctionFieldNumber.proof : RegularityFunctionFieldNumber.Statement := by
   intro K _ ι _ P hP

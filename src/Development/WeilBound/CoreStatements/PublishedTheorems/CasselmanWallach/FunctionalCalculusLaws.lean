@@ -98,7 +98,6 @@ def A12 : Prop := ForBas fun _ ε _ _ _ E _ b μ =>
   ∀ κ, Cas E κ → ∀ c : ℝ, 0 ≤ c → ∃ (s : ℕ) (x₀ : ℝ), 1 ≤ s ∧ 0 ≤ x₀ ∧ ∀ ν v, x₀ ≤ ν → Eig ε E ν v →
     ((1 + ν) ^ s)⁻¹ * (ν - κ + c) * ‖v‖ ^ 2 ≤ (beta ε E (fc b μ fun x => ((1 + x) ^ s)⁻¹) v v).re
 
-open Classical in
 
 def BasisSumAsFormValues : Prop := ForBas fun _ ε V _ _ E ι b μ =>
   ∀ (φ : ℝ → ℝ) (S : Finset ι), (∀ i, i ∉ S → φ (μ i) = 0) → ∃ T : Finset ι, S ⊆ T ∧ ∀ f : V →ₗ[ℂ] ℂ,

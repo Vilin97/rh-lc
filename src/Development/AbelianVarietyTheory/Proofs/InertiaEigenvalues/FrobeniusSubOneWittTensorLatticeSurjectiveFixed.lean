@@ -190,7 +190,6 @@ theorem ring_fixed (l : ℕ) [Fact l.Prime] (LL : FinExt l) :
   unfold RW φRW
   exact baseChange_flat (frobW l) hs hk (algebraMap_WCb_injective l)
 
-set_option maxHeartbeats 1600000 in
 
 theorem main : ∀ (l : ℕ) [Fact l.Prime] (K LL : FinExt l) (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)), (∀ y : TW (RW LL) T, ∃ b, TWmap (φRW LL) T b - b = y) ∧ (∀ b : TW (RW LL) T, TWmap (φRW LL) T b = b ↔ ∃ t : ↥T.L.T, b = (1 : RW LL) ⊗ₜ[↥(OL LL)] t) ∧ Function.Injective (fun t : ↥T.L.T => (1 : RW LL) ⊗ₜ[↥(OL LL)] t) := by
   intro l _ K LL T

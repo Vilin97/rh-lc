@@ -33,8 +33,6 @@ open GlobalTheory.KeyPow GlobalTheory.KeyKa
 
 namespace GlobalTheory
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj MeasureTheory in
-attribute [local instance] Over.cartesianMonoidalCategory in
 
 theorem _root_.GlobalTheory.keyFormulaPow_and_keyDegree :
     _root_.GlobalTheory.KeyFormulaPow ∧ _root_.GlobalTheory.KeyDegreeSt := by

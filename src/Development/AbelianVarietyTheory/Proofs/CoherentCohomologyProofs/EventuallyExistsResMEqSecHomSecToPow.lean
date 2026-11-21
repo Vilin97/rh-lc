@@ -51,14 +51,12 @@ def chartEval (i : L.ι) {V : X.Opens} (h : V ≤ L.U i) : MvPolynomial ι R →
   | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp => simp only [map_mul, hp, chartEval_X, resG_resG]
 
-variable {R} in
 
 def formSec {p : MvPolynomial ι R} {d : ℤ} (hp : p ∈ polyGrading ι R d) : LB.Sec (lbZPow L d) :=
   zmkGlobal (fun i => chartEval R x i le_rfl p) fun i j => by
     rw [resG_chartEval, resG_chartEval, chartEval, chartEval, ← eval₂Hom_unit_mul _ _ _ hp]
     exact congrArg (fun b => eval₂Hom _ b p) (funext fun l => (x l).compat i j)
 
-variable {R} in
 
 @[simp] theorem zfun_formSec {p : MvPolynomial ι R} {d : ℤ} (hp : p ∈ polyGrading ι R d)
     (i : L.ι) : zfun (formSec x hp) i = chartEval R x i le_rfl p := zfun_zmkGlobal _ _ i
@@ -87,28 +85,23 @@ theorem nonzeroLocus_prodSec (hL : L.IsLB) (I : Finset ι) :
 
 variable (F : X.Modules) {G : X.Modules} {U V W : X.Opens}
 
-variable (V) in
 
 def gammaOp (j : ι) (n : ℤ) :
     sectionsOn (twistZ F L n) V →ₗ[R] sectionsOn (twistZ F L (n + 1)) V :=
   sectionsOn.map R (mulSec F (zofSec (x j)) n) V
 
-variable (V) in
 
 theorem gammaOp_commute : OperatorsCommute (gammaOp R x F V) := fun i j n a =>
   congr(sectionsOn.map R $(mulSecOfEq_comm (F := F) (zofSec (x j)) (zofSec (x i)) (n := n)
     rfl rfl rfl rfl) V a)
 
-variable (V) in
 
 abbrev GammaStar : Type := GrSum (gammaOp_commute R x F V)
 
-variable (V) in
 
 abbrev gammaGrading : ℤ → Submodule R (GammaStar R x F V) :=
   GrSum.grading (gammaOp_commute R x F V)
 
-variable (V) in
 
 abbrev gammaOf (n : ℤ) : sectionsOn (twistZ F L n) V →ₗ[R] GammaStar R x F V :=
   GrSum.of (gammaOp_commute R x F V) n
@@ -135,11 +128,8 @@ theorem gammaRes_gammaRes (h : V ≤ U) (h' : W ≤ V) (y : GammaStar R x F U) :
         sectionsOn.res_res]
   exact congr($e y)
 
-variable {F} in
 
-variable {F} in
 
-variable (V) in
 
 def gammaCoord (i : L.ι) : GammaStar R x F V →ₗ[R] sectionsOn F (V ⊓ L.U i) :=
   GrSum.desc _ fun _ =>
@@ -172,7 +162,6 @@ theorem gammaCoord_smul (i : L.ι) (p : MvPolynomial ι R) (y : GammaStar R x F 
       rw [GrSum.X_smul_of, gammaCoord_gammaOf, gammaCoord_gammaOf, gammaOp, sectionsOn.toΓ_map,
         zcoord_mulSecOfEq_app, zfun_zofSec]
 
-variable {R x} in
 
 theorem smul_gammaOf {p : MvPolynomial ι R} {e e' d : ℤ} (hp : p ∈ polyGrading ι R e)
     (σ : LB.Sec (lbZPow L e')) (hσ : ∀ i, zfun σ i = chartEval R x i le_rfl p) (he : e = e')
@@ -207,7 +196,6 @@ section Loc
 variable [F.IsQuasicoherent] (hL : L.IsLB) (hW : IsCompact (W : Set X))
   (hW' : IsQuasiSeparated (W : Set X))
 
-include hL hW in
 
 theorem eventually_xProd_pow_smul_eq_zero {I : Finset ι} (h : V ≤ W)
     (hV : W ⊓ ⨅ j ∈ I, Out.nonzeroLocus (x j) ≤ V) (y : GammaStar R x F W)
@@ -226,7 +214,6 @@ theorem eventually_xProd_pow_smul_eq_zero {I : Finset ι} (h : V ≤ W)
   rw [← hT, Finset.smul_sum]
   exact Finset.sum_eq_zero hk
 
-include hL hW hW' in
 
 theorem eventually_exists_gammaRes_eq {I : Finset ι} (h : V ≤ W)
     (hV : V = W ⊓ ⨅ j ∈ I, Out.nonzeroLocus (x j)) (z : GammaStar R x F V) :

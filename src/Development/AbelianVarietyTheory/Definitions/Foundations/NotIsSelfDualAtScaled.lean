@@ -15,19 +15,12 @@ open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.Genus
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
 
-variable (E) in
 
-omit [NumberField F] [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-variable (E) in
 
-omit [NumberField E] in
 
-variable {σ} in
 
 section Supp
 

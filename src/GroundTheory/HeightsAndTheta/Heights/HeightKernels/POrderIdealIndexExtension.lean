@@ -113,7 +113,6 @@ theorem exists_family : ∃ S : Set (𝓞 L), S.Finite ∧ LinearIndepOn B (fun 
 
 end OrderIdealIndexExtensionAlt
 
-open OrderIdealIndexExtensionAlt InvertibleIdealIndexAlt in
 
 theorem OrderIdealIndexExtension.proof : OrderIdealIndexExtension.Statement := by
   intro L _ _ B hB

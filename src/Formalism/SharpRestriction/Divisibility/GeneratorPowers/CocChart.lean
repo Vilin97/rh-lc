@@ -75,7 +75,6 @@ theorem val_Bq (C : ChartAt Xo c y) (a : 𝓞 E) (wLa : ExpGC.AdTy Xo a) (wLb : 
       ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) rfl (val_mul hJ _ _ _)))
       ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) rfl (val_inv _ _))))))
 
-set_option maxHeartbeats 2000000 in
 
 theorem coc_chart (hP1 : ExpGJ.PhOneValSt) (hP2 : ExpGJ.PhTwoValSt) (hAd : ExpGJ.AdValSt) (hUid : UnitIdSt)
     (hO : ExpGO.BqOriginSt) (hs : ∀ a : 𝓞 E, star a = H.bar a)

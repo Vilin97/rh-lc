@@ -36,7 +36,6 @@ theorem above_eq {P : HeightOneSpectrum (𝓞 D.host.E)} [DecidableEq (HeightOne
   rw [aboveF, Set.Finite.mem_toFinset, Finset.mem_insert, Finset.mem_singleton]
   exact ⟨eq_or_eq_cP, by rintro (rfl | rfl); exacts [rfl, under_cP P]⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem val_mul_val (hv : ∀ (k : D.host.E) (Q : HeightOneSpectrum (𝓞 D.host.E)),
       (cP Q).valuation D.host.E (star k) = Q.valuation D.host.E k)
@@ -194,7 +193,6 @@ theorem det_unitary (V : HSp D) (hg : V.gram = 1) (h : GA D V) :
   rw [RingHom.map_det]
   exact h2
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_ideal (V : HSp D) (hg : V.gram = 1) (hL : Bridge.hLat V 1 = stdLat D.host.E V.rank) (h : GA D V)
     (e : AE D) (P : Finset (HeightOneSpectrum (𝓞 D.host.E))) (y : (AE D)ˣ) (he : Formalism.IndefR.Datum.IsIdemSum e P)
@@ -349,6 +347,5 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Form
 open scoped TensorProduct Classical ComplexConjugate
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.ClassScalarValue

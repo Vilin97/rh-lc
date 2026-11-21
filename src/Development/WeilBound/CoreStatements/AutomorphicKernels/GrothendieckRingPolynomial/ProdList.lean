@@ -17,7 +17,6 @@ namespace PositivityTheory.Groth
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open Classical in
 
 def cl0 {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V) : GrothGL k :=
   if h : HasFiniteLength π then clsGL π h else 0
@@ -75,7 +74,6 @@ def JSeg : Prop := ∀ Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k
   jmL (List.ofFn Δ.term) (IrrGL.rep (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k)) = 1 ∧
     ∀ S ∈ vSets Δ, S ≠ ∅ → jmL (vWord Δ S) (IrrGL.rep (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k)) = 0
 
-open Classical in
 
 def AltSum : Prop := ∀ (Δ : Segment k) (h : ℕ) (Γ : Fin h → Segment k),
   ∑ S ∈ vSets Δ, (-1 : ℤ) ^ S.card * (shuffleCount (vWord Δ S) (fun i => decWord (Γ i)) : ℤ) =

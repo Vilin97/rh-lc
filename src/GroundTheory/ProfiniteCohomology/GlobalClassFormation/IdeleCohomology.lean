@@ -21,11 +21,9 @@ open scoped Pointwise
 
 variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-variable (K) in
 
 abbrev Place : Type := InfinitePlace K ⊕ HeightOneSpectrum (𝓞 K)
 
-variable (L) in
 
 noncomputable def placeRep : Place K → Rep ℤ Gal(L/K)
   | .inl v => Rep.of (infiniteUnitsAboveRep L v)
@@ -52,8 +50,6 @@ theorem placeEmbed_comp_placeProj_of_ne {v v' : Place K} (h : v ≠ v') :
   · exact finiteEmbedAboveRep_comp_infiniteProjAboveRep v' v
   · exact finiteEmbedAboveRep_comp_finiteProjAboveRep_of_ne fun e => h (by rw [e])
 
-variable (L) in
-open Classical in
 
 noncomputable def idelesCohomologySum (n : ℕ) :
     (⨁ v : Place K, cohomology (placeRep L v) n) →+ cohomology (ideleRep K L) n :=
@@ -66,7 +62,6 @@ theorem idelesCohomologySum_of (n : ℕ) (v : Place K) (x : cohomology (placeRep
   unfold idelesCohomologySum
   exact DirectSum.toAddMonoid_of (β := fun v => cohomology (placeRep L v) n) _ v x
 
-open Classical in
 
 theorem placeProj_idelesCohomologySum (n : ℕ) (ξ : ⨁ v : Place K, cohomology (placeRep L v) n)
     (v : Place K) : (cohomologyMap (placeProj v) n).hom (idelesCohomologySum L n ξ) = ξ v := by
@@ -90,7 +85,6 @@ theorem idelesCohomologySum_injective (n : ℕ) :
   ext v
   rw [← placeProj_idelesCohomologySum n ξ v, ← placeProj_idelesCohomologySum n η v, h]
 
-variable (K L) in
 
 noncomputable def ramifiedBelow : Finset (HeightOneSpectrum (𝓞 K)) :=
   ((finite_setOf_ramified K L).image (AdeleBaseChange.below K)).toFinset
@@ -139,7 +133,6 @@ theorem subtype_sEmbFin (S : Finset (HeightOneSpectrum (𝓞 K))) (n : ℕ)
     (cohomologyMap_comp (sEmbFin S v) (Rep.subtype _ _ (sIdelesSubmodule_stable K L S)) n)).symm.trans
     (idelesCohomologySum_of n (.inr v.1) z).symm
 
-open Classical in
 
 theorem idelesCohomologySum_surjective {n : ℕ} (hn : 1 ≤ n) :
     Function.Surjective (idelesCohomologySum (K := K) L n) := by
@@ -179,9 +172,7 @@ theorem idelesCohomologyEquiv_apply {n : ℕ} (hn : 1 ≤ n)
     idelesCohomologyEquiv hn ξ = idelesCohomologySum L n ξ :=
   rfl
 
-variable (L) in
 
-variable (L) in
 
 theorem idelesCohomologyEquiv_symm_apply {n : ℕ} (hn : 1 ≤ n) (x : cohomology (ideleRep K L) n)
     (v : Place K) :

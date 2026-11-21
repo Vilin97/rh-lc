@@ -211,4 +211,3 @@ def labDatum {g : ℕ} [Fact g.Prime] (t : Formalism.CyclotomicNorms.Fbar g →*
 
 end GlobalTheory.DepthZeroRankOneLabel
 
-open GlobalTheory.WeilDeligne in

@@ -271,7 +271,6 @@ theorem isDetRoot_of_fin {V : HSp D} {k : GA D V} (hk : k ∈ GfC V) {x : (AE D)
   · rw [RingHom.map_mul, e2]
     exact h2.trans (congrArg _ (GlobalTheory.PlaceIdem.finPart_cA D _).symm)
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_root_half (m : ℕ) (U : Formalism.L2.Herm.intAf D.host.F D.host.E) (a b s s' : 𝓞 D.host.E)
     (hb : (b : D.host.E) = star (a : D.host.E)) (hs : a + b = 1 + m * s) (hs' : a * b = m * s')
@@ -346,7 +345,6 @@ theorem map_coe_sum {R B : Type} [CommRing R] [CommRing B] (S : Subring R) (f : 
   subst hm
   simp
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_root_char {V : HSp D} {β : GL (Fin V.rank) (EAf D)} {L : LevDat D.host.E ℂ V.rank} (hr : L.r = V.rank)
     {g₀ : G0 L.Pg L.r} {k : GA D V} (hk : IsLevelLift V β L g₀ k) {c : (AE D)ˣ →* Circle} {χ : HChar D.host.E} (hc : ChrEq c χ)

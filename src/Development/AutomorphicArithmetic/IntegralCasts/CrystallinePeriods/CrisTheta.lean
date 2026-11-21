@@ -22,7 +22,6 @@ namespace AinfInv
 theorem isUnit_factorial (n : ℕ) : IsUnit (n ! : AinfInv p R) :=
   IsUnit.natCast_factorial_of_algebra ℚ n
 
-open Classical in
 
 @[simp] theorem gamma_zero (x : AinfInv p R) : gamma 0 x = 1 := by simp [gamma]
 
@@ -41,7 +40,6 @@ theorem AinfInv.theta_gamma {n : ℕ} (hn : n ≠ 0) {x : AinfInv p R} (hx : Ain
 
 namespace AcrisZero
 
-variable (p R) in
 
 def pdIdeal : Ideal (AcrisZero p R) :=
   span {y | ∃ (n : ℕ) (x : Ainf p R) (hx : Ainf.theta p R x = 0), n ≠ 0 ∧ y = gamma n x hx}
@@ -119,7 +117,6 @@ theorem algebraMap_away_injective :
 
 namespace AcrisZero
 
-variable (p R) in
 
 def theta : AcrisZero p R →+* R where
   toFun y := (exists_theta_eq y).choose
@@ -157,7 +154,6 @@ end AcrisZero
 
 namespace Acris
 
-variable (p R) in
 
 def theta : Acris p R →+* R :=
   ((AdicCompletion.ofAlgEquiv (span {(p : R)})).symm : _ →+* R).comp
@@ -174,15 +170,12 @@ def theta : Acris p R →+* R :=
   rw [IsScalarTower.algebraMap_apply (Ainf p R) (AcrisZero p R) (Acris p R), theta_algebraMap_zero,
     AcrisZero.theta_algebraMap]
 
-omit [IsDomain R] [CharZero R] in
 
-open Classical in
 
 end Acris
 
 namespace BcrisPlus
 
-variable (p R) in
 
 def theta : BcrisPlus p R →+* Localization.Away (p : R) :=
   lift ((algebraMap R _).comp (Acris.theta p R))

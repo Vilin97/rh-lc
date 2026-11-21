@@ -294,7 +294,6 @@ theorem isIntegral_modularJ_of_mul_mem {τ : ℍ} {α : ℂ} (hα : ∀ m : ℤ,
   · push_cast
     linear_combination (τ : ℂ) * hrs - hpq
 
-open NumberField in
 
 theorem isIntegral_modularJ_of_ringOfIntegers {K : Type*} [Field K] [NumberField K]
     (hK : Module.finrank ℚ K = 2) (ι : K →+* ℂ) {τ : ℍ}
@@ -340,6 +339,5 @@ theorem exists_hasSum_modularJ_sub_inv : ∃ c : ℕ → ℤ, ∀ τ : ℍ,
       rw [mul_sub, mul_inv_cancel₀ (Periodic.qParam_ne_zero _)])
   exact ⟨fun n ↦ coeff n K, fun τ ↦ by simpa using h2 τ⟩
 
-open NumberField in
 
 end GlobalTheory

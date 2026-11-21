@@ -61,7 +61,6 @@ open MvPolynomial
 
 variable {K L G σ : Type*} [Field K] [Field L] [Algebra K L]
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 end Polynomial
 

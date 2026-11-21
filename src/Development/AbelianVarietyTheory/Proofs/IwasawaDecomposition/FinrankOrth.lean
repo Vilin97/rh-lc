@@ -67,7 +67,6 @@ section Lat
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E]
 
-omit [NumberField E] in
 
 theorem mem_dual {V : Type} [AddCommGroup V] [Module E V] [Module (𝓞 E) V] [IsScalarTower (𝓞 E) E V]
     (h : V →ₗ⋆[E] V →ₗ[E] E) (L : Submodule (𝓞 E) V) (x : V) :

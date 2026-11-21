@@ -36,7 +36,6 @@ end GlobalTheory.InfTraceNondeg
 
 namespace GlobalTheory.InfTraceNondeg
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem realTrace_nondeg : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)),
     IsInfFam θ → ∀ a : Ainf D.host.F, a ≠ 0 →

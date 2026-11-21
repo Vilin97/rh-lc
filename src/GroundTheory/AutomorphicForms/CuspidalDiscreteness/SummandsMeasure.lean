@@ -20,13 +20,11 @@ open AutomorphicForm Reduction GroundTheory.Global
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (K n) in
 
 def infPart : AdelicGLn.AdelicGL K n →* archGroup K n :=
   (archEquiv K n).toMulEquiv.toMonoidHom.comp
     ((MonoidHom.fst _ _).comp (AdelicGLn.prodEquiv K n).toMulEquiv.toMonoidHom)
 
-variable (K n) in
 
 def finPart : AdelicGLn.AdelicGL K n →* AdelicGLn.FiniteAdelicGL K n :=
   (MonoidHom.snd _ _).comp (AdelicGLn.prodEquiv K n).toMulEquiv.toMonoidHom
@@ -68,7 +66,6 @@ theorem ext_parts {g g' : AdelicGLn.AdelicGL K n} (h1 : infPart K n g = infPart 
   exact prodEquiv_diagUnits_posIdele_snd (K := K) (n := n)
     (fun _ => ((rpowHom ((n * Module.finrank ℚ K : ℝ))⁻¹ s : {r : ℝ // 0 < r}) : ℝ)) (fun _ => (rpowHom _ s).2)
 
-variable (K n) in
 
 def zInf : {r : ℝ // 0 < r} →* archGroup K n := (infPart K n).comp (centralSection K n)
 
@@ -84,7 +81,6 @@ theorem zInf_mul_comm (s : {r : ℝ // 0 < r}) (a : archGroup K n) : zInf K n s 
   apply infEmb_injective
   rw [map_mul, map_mul, infEmb_zInf, centralSection_mul_comm]
 
-variable (K n) in
 
 def detA : archGroup K n →* {r : ℝ // 0 < r} := (detModule K n).comp (infEmb K n)
 
@@ -471,7 +467,6 @@ theorem F0fun_archP (κ : archGroup K n → ℂ) (a : archGroup K n) :
 
 end F0
 
-variable (K n) in
 
 def infFinEquiv : archGroup K n × AdelicGLn.FiniteAdelicGL K n ≃ₜ* AdelicGLn.AdelicGL K n where
   toFun p := infEmb K n p.1 * finEmb K n p.2

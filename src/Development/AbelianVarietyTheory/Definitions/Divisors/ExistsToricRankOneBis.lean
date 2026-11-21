@@ -61,7 +61,6 @@ def shift {X : Type} [AddCommGroup X] (h h' : X →+ X) (n j : ℤ) (mu : X) : X
 def TFE {D : DegPre R} {a : D.P.A ⟶ D.P.A} (h h' : D.X →+ D.X) {n j : ℤ} (f : ∀ β, SecT D a n j β) : Prop :=
   ∀ mu β, TRel h mu (f β) (f (β + shift h h' n j mu))
 
-open Classical in
 
 def IsSum (I : Ideal R) {D : DegPre R} {a : D.P.A ⟶ D.P.A} {n j : ℤ} {Ix : Type} {w : Ix → D.X}
     (s : ∀ i, SecT D a n j (w i)) (F : ∀ δ, SecT D a n j δ) : Prop :=
@@ -112,7 +111,6 @@ theorem sval_zeroT (D : DegPre R) (a : D.P.A ⟶ D.P.A) (n j : ℤ) (β : D.X) {
 
 namespace Witness
 
-open ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.DVR.TG in
 
 end Witness
 

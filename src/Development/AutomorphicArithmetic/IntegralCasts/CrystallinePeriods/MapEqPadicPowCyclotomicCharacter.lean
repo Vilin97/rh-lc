@@ -19,7 +19,6 @@ variable {S : Type v} [CommRing S] [Fact ¬IsUnit (p : S)] [IsAdicComplete (span
 
 namespace Tilt
 
-variable (p R) in
 
 def seqEquiv : Perfection R p ≃* Tilt p R := Perfection.quotientMulEquiv p (span {(p : R)})
 
@@ -211,7 +210,6 @@ instance : Nonempty (PFlat p R) :=
   let ⟨y, hy⟩ := Tilt.untilt_surjective_of_isAlgClosed (p := p) (p : R)
   ⟨⟨y, hy⟩⟩
 
-variable (p R) in
 
 def pflat : PFlat p R := Classical.arbitrary _
 
@@ -234,7 +232,6 @@ theorem exists_isPrimitive : ∃ ε : tateModule p R, IsPrimitive ε := by
     rw [hy]
     exact hz.ne_one (Fact.out : p.Prime).one_lt
 
-variable (p R) in
 
 def eps : tateModule p R := (exists_isPrimitive p R).choose
 

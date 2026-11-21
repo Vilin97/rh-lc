@@ -20,7 +20,6 @@ open GlobalTheory.Unf.Inhab
 
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 theorem eventually_charUnramAt (D : D7) (χ : (AE D)ˣ →* Circle) (hχ : Continuous χ) :
     ∀ᶠ v : Pl D in Filter.cofinite, CharUnramAt D χ v := by

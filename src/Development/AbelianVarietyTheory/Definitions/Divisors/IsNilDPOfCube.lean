@@ -20,7 +20,6 @@ section Cube
 
 variable {A : Type} [CommRing A] {J : Ideal A} (g : A → A)
 
-open Classical in
 
 def cubePow (J : Ideal A) (g : A → A) : ℕ → A → A
   | 0, x => if x ∈ J then 1 else 0

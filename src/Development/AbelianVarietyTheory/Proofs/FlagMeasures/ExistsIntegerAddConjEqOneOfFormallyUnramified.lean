@@ -53,8 +53,6 @@ private theorem ne_id_of_embedding_conj {F E : Type} [Field F] [Field E] [Number
   rw [h] at this
   simpa [ComplexEmbedding.conjugate_coe_eq] using this.symm
 
-open NumberField IsDedekindDomain MeasureTheory Matrix in
-open scoped TensorProduct ENNReal nonZeroDivisors Classical in
 
 theorem _root_.GlobalTheory.exists_integer_add_conj_eq_one_of_formallyUnramified :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

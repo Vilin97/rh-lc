@@ -148,7 +148,6 @@ theorem rename_hw {a b : ℕ} (h : a ≤ b) (ν : Fin a → ℕ) :
   ext p q : 2
   simp [GlobalTheory.Proof.ColumnInclusionRenaming.colIncl]
 
-open GlobalTheory.DualWeyl GlobalTheory.WeylMinorDual in
 
 theorem fock_mul_det {n : ℕ} (μ : Fin n → ℕ) (hμ : Antitone μ) (e : ℕ) {f : MvPolynomial (Fin n × Fin n) ℂ}
     (hf : f ∈ dualWeyl ℂ n n μ) :

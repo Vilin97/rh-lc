@@ -66,7 +66,6 @@ theorem reduction_det {t : ℕ} (A : Matrix (Fin t) (Fin t) E) (hA : ∀ i j, In
   rw [← h1]
   exact h2
 
-variable {P} in
 
 end Red
 
@@ -80,9 +79,7 @@ theorem mem_sclLat (N : ℕ) (e : ℕ → ℤ) (v : Sp E N) :
   rw [Submodule.mem_comap, mem_localization_standardLattice]
   simp
 
-omit [NumberField E] [StarRing E] in
 
-omit [NumberField E] [StarRing E] in
 
 variable {P q} {k₀ r t n : ℕ} {g : Sp E (n + 0) ≃ₗ[E] Sp E (n + 0)}
 
@@ -90,6 +87,5 @@ end Ent
 
 end RowTypeInv
 
-open RowTypeInv Formalism.L2.Col.LocE in
 
 end GlobalTheory

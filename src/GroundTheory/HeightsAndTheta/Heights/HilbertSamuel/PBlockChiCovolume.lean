@@ -58,7 +58,6 @@ theorem cast_single {r : ℕ} (k : Fin r) :
 
 end BlockChiCovolume
 
-open BlockChiCovolume in
 
 theorem BlockChiCovolume.proof : BlockChiCovolume.Statement := by
   intro D K _ _ ι _ Ω _ _ d n E hE r ψ hψ hnorm _ _

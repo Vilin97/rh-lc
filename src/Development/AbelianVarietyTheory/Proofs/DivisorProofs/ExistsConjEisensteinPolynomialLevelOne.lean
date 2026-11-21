@@ -55,8 +55,6 @@ private theorem qConj_eisensteinCombination (g : ℂ ≃+* ℂ) {N : ℕ}
   exact (_root_.GlobalTheory.QFam.QConj.const g N (c i)).mul hN
     ((h₄.pow hN (u i)).mul hN (h₆.pow hN (v i)))
 
-open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators in
-open ModularForm (E₄ E₆) in
 
 theorem _root_.GlobalTheory.QFam.levelPoly_conj : ∀ (g : ℂ ≃+* ℂ) (w N : ℕ) (F F' : ℍ → ℂ),
     0 < N → (∀ γ : SL(2, ℤ), F ∣[(w : ℤ)] γ = F) → _root_.GlobalTheory.QFam.QConj g N F F' →

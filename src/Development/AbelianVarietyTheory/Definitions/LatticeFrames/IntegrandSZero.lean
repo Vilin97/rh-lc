@@ -40,7 +40,6 @@ def wcoef (ν : Measure (WO A B)) (𝓕 : Set (WO A B)) (Φ₁ Φ₂ : WO A B �
 
 def rcoef (u₁ u₂ : GA D A → ℂ) : GA D A → ℂ := fun g => petersson A m (rTr A g u₁) u₂
 
-variable (A) in
 
 def hgtL (L : Lat A) (a : GL (Fin A.rank) (AE D)) (g : GA D A) : ℝ≥0 :=
   hgtAd D.sp.cm.sig (dblSp A).gram L a (io A (g, 1))
@@ -49,12 +48,10 @@ def integrand (ν : Measure (WO A B)) (𝓕 : Set (WO A B)) (L : Lat A) (a : GL 
     (u₁ u₂ : GA D A → ℂ) (s : ℂ) : GA D A → ℂ :=
   fun g => wcoef om ν 𝓕 Φ₁ Φ₂ g * npow (hgtL A L a g) (s - sZero A B) * rcoef m u₁ u₂ g
 
-variable (A) in
 
 def openOff (L : Lat A) (Sf : Finset (FinPl D)) : Set (GA D A) :=
   {g | ∀ v ∉ Sf, proj D.sp.cm.sig A.gram v g ∈ stabLoc D.sp.cm.sig A.gram L v}
 
-variable (A) in
 
 def SphFun (L : Lat A) (Sf : Finset (FinPl D)) (u : GA D A → ℂ) : Prop :=
   ∀ v ∉ Sf, ∀ k ∈ stabLoc D.sp.cm.sig A.gram L v, ∀ g, u (g * emb D.sp.cm.sig A.gram v k) = u g

@@ -15,7 +15,6 @@ namespace GlobalTheory.GyLat
 open Formalism.L2.G Formalism.MainNotions.G Formalism.UG Formalism.FrobeniusOrbits
 open scoped TensorProduct
 
-open Classical in
 
 theorem arith_bsH_eq {φ : Formalism.HC.Frame} (h t : φ.A) : Formalism.L2.GlobalTheoryTheory.Arith.bsH h t = Formalism.L2.G.bsH φ h t := by
   rw [bsH_eq_bsA]
@@ -169,7 +168,6 @@ noncomputable def fillsC (c : ℕ) (hcl : ∀ u, CloudBound (recG D sc Ce Lc X h
   fillsRec D u _ (X u w h).hS (rSc sc D.R.k (D.what₂.places.resChar w)) (Lc u) (X u w h).I (X u w h).ψ
     (repP (Lc u) _) (epSc D.R sc Ce (D.what₂.places.resChar w)) c ⟨(hcl u).top, (hcl u).off, (hcl u).fill⟩
 
-set_option maxHeartbeats 4000000 in
 
 theorem latTied_fillsC (c : ℕ) (hcl : ∀ u, CloudBound (recG D sc Ce Lc X hd) u c)
     (Lv : ∀ u w h, Levels (fillsC D sc Ce Lc X hd c hcl u w h)) (Ch : ∀ u w h, Chain (Lv u w h))
@@ -203,7 +201,6 @@ open Formalism.L2.G Formalism.MainNotions.G Formalism.UG Formalism.FrobeniusOrbi
 
 attribute [local instance] Formalism.BasicNotions.factResChar
 
-set_option maxHeartbeats 4000000 in
 
 theorem latLayer_of_eq (sc : Scale) (D : D7) (Gt : GatTies D) (D0 : D7) (Ce : ℝ)
     (Lc : ∀ u, ColLevel D0.R D0.host.F D0.host.E D0.sp D0.host.g (D0.mem u).C (D0.mem u).A (D0.clsLat u))
@@ -237,7 +234,6 @@ namespace GlobalTheory.Mem.Top.Bl
 
 open GlobalTheory.GyLat
 
-set_option maxHeartbeats 4000000 in
 
 theorem latLayer_free : ∀ {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T), K.Over B.toPre → Forced K B T → Pinned K B f T w →
     ∀ (Z : w.Lt) (t : ColumnDataSplitPrimes K w Z) (Wt : Set B.places.Pl) (nch : NChoice (w.D Z)) (_ : NchT w Z Wt nch) (Y : DivX (w.D Z)),

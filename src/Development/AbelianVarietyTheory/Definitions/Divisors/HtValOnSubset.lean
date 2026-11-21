@@ -38,7 +38,6 @@ structure ArchSec (Z : Comp Xo c) (la : Weight Dw) : Type where
   cInf_pos : ∀ σ, 0 < cInf σ
   norm_inf : ∀ σ, homN (U (goodOf c σ)) x (wtOf Dw la 0) sig '' framesOn (U (goodOf c σ)) Z = {cInf σ}
 
-variable {U x} in
 
 def ArchSec.ofConst {Z : Comp Xo c} {la : Weight Dw} {δ : HeightOneSpectrum (𝓞 c.F) → ℝ} (s : ConstSec U x Z la δ) :
     ArchSec U x Z la :=
@@ -73,7 +72,6 @@ def Always (Q : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Reci
 
 def ArchEx : Prop := ∀ (Z : Comp Xo c) (τ : Psi H), Nonempty (ArchSec U x Z (flatWt Dw τ))
 
-variable (Xo c) in
 
 def FrameDeg (logOm : ℝ) : Prop :=
   ∀ (Z : Comp Xo c) (τ : Psi H) (s : ArchSec U x Z (flatWt Dw τ)) (ρ : HeightOneSpectrum (𝓞 c.F) → ℝ),

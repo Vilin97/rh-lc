@@ -297,7 +297,6 @@ theorem toUX_blk (A B : HSp D) {d : ℕ} (e : Fin A.rank ⊕ Fin B.rank ≃ Fin 
     toUX (GlobalTheory.Doubling.hsum A B) (e.symm.trans finSumFinEquiv) h' (blk A B g) = blkU A B e h g :=
   Subtype.ext (Units.ext (blkMat_submatrix e _ _))
 
-set_option maxHeartbeats 1000000 in
 
 theorem thetaInt_eq_zero (hSA : GlobalTheory.Published.StrongApproxSU) (hK : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree)
     (hLM : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching) {μ₀ : T} (hL : L.Is μ₀) (W : G.Weil) (B : Frames G) (ρ : RealMatch W) (t : T)
@@ -398,7 +397,6 @@ theorem exists_not_isNull (hSA : GlobalTheory.Published.StrongApproxSU) (hK : Gl
   obtain ⟨M, hM, a, τ, τ', n, Φ, hn, hF, g, g₁, h⟩ := exists_integral_ne_zero hSA hK hLM hL W B ρ t i j hst
   exact ⟨toTens a, fun h0 => h (h0 M hM a rfl n Φ τ τ' hn hF g g₁)⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem hasFlip_congr {W : G.Weil} {B : Frames G} {ρ ρ₀ : RealMatch W} (h1 : ρ₀.vX = ρ.vX) (h2 : ρ₀.vT = ρ.vT) {t : T}
     {i j : Fin D.R.m} {n Φ τ τ'} (h : HasFlip B t ρ i j n Φ τ τ') : HasFlip B t ρ₀ i j n Φ τ τ' := by

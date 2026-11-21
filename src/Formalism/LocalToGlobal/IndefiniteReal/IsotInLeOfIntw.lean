@@ -93,9 +93,7 @@ theorem isotL_iso (P : RowPsi W n) (M : Mult.DSModel W SpW) (J : Set (GA D W)) (
   unfold isotL
   rw [isotIn_iso (actM P M) (Minf θ P M) h]
 
-open Classical in
 
-open Classical in
 
 end F
 

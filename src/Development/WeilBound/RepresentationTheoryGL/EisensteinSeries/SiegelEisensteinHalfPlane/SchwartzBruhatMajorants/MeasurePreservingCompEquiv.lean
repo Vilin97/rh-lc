@@ -12,7 +12,6 @@ open PositivityTheory.He2M1 GroundTheory.Global GroundTheory.Automorphic GroundT
 
 namespace GlobalTheory.CompanionTheory.LtrFourier.Hd
 
-open MeasureTheory in
 
 theorem measurePreserving_comp_equiv {ι κ : Type} [Fintype ι] [Fintype κ] {α : Type*} [MeasurableSpace α] (μ : Measure α)
     [SigmaFinite μ] (e : κ ≃ ι) :

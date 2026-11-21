@@ -82,7 +82,6 @@ theorem dim_real {D : D7} (W : HSp D) (σ : D.what₂.LL →+* ℂ) :
   rw [map_prod]
   exact Finset.prod_congr rfl fun ρ _ => map_ratCast _ _
 
-set_option maxHeartbeats 1000000 in
 
 theorem inner_conj_of_values {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (he : R.models_HW) (i : Fin D.R.m)
@@ -96,6 +95,5 @@ theorem inner_conj_of_values {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 :
   rw [dim_conj] at h2
   exact h1.trans ((conj_integral _ _ (dim_real _ σ) hx hy).trans (congrArg (starRingEnd ℂ) h2).symm)
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.ConjInner

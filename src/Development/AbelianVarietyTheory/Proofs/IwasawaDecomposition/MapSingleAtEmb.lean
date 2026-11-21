@@ -17,13 +17,11 @@ namespace GlobalTheory.OneRep
 
 variable {E : Type} [Field E] [NumberField E] [NumberField.IsTotallyComplex E] {a : ℕ}
 
-omit [NumberField E] [NumberField.IsTotallyComplex E] in
 
 theorem atEmb_zero (τ : E →+* ℂ) : atEmb τ 0 = 0 := by
   classical
   unfold atEmb; split_ifs <;> simp
 
-omit [NumberField E] [NumberField.IsTotallyComplex E] in
 
 theorem map_single_atEmb (τ : E →+* ℂ) (i k : Fin a) (z : ℂ) :
     (Matrix.single i k z).map (atEmb τ) = Matrix.single i k (atEmb τ z) := by

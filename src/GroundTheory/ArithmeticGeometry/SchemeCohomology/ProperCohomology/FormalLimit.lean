@@ -63,9 +63,7 @@ variable {A : Type u} [CommRing A]
   (hι : ∀ n, (τE n).comp (ι (n + 1)) = (ι n).comp (τP n))
   (hπ : ∀ n, (τQ n).comp (π (n + 1)) = (π n).comp (τE n))
 
-include hι in
 
-include hπ in
 
 variable (hinj : ∀ n, Function.Injective (ι n))
   (hex : ∀ n, LinearMap.range (ι n) = LinearMap.ker (π n))
@@ -82,7 +80,6 @@ def towerLimitMap : towerLimit τP →ₗ[A] towerLimit τE where
     ext n
     exact map_smul (ι n) _ _
 
-include hι hπ hinj hex in
 
 theorem bijective_towerLimitMap {c : ℕ} (hc : ∀ n, towerComp τQ n c = 0) :
     Function.Bijective (towerLimitMap τP τE ι hι) := by
@@ -115,7 +112,6 @@ theorem bijective_towerLimitMap {c : ℕ} (hc : ∀ n, towerComp τQ n c = 0) :
 omit [∀ n, AddCommGroup (E n)] [∀ n, Module A (E n)] [∀ n, AddCommGroup (Q n)]
   [∀ n, Module A (Q n)] in
 
-include hι hπ hex in
 
 end Exact
 

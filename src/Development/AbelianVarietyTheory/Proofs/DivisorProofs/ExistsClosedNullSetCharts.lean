@@ -34,7 +34,6 @@ section Model
 
 variable {F : Type} [Field F] [NumberField F] {X G : Scheme.{0}} {p : X ⟶ Sp (𝓞 F)} {q : G ⟶ Sp F} {j : G ⟶ X}
 
-attribute [local instance] MvPolynomial.algebraMvPolynomial in
 
 end Model
 
@@ -42,7 +41,6 @@ section Fibre
 
 variable {k : Type} [CommRing k] {X Y : Scheme.{0}} {p : X ⟶ Sp k} {q : Y ⟶ Sp k} (π : Y ⟶ X) (hπ : π ≫ p = q)
 
-include hπ in
 
 theorem app_algX (U : X.Opens) (a : k) : algX q (π ⁻¹ᵁ U) a = (π.app U).hom (algX p U a) := by
   have hw : π ≫ p = q ≫ spMap (RingHom.id k) := by
@@ -51,7 +49,6 @@ theorem app_algX (U : X.Opens) (a : k) : algX q (π ⁻¹ᵁ U) a = (π.app U).h
     (σ := RingHom.id k) hw (V := U) (W := π ⁻¹ᵁ U) le_rfl) a
   simpa [Scheme.Hom.app_eq_appLE] using this.symm
 
-include hπ in
 
 theorem etale_app {U : X.Opens} {e : ℕ} {x : Fin e → Γ(X, U)} (hx : (MvPolynomial.eval₂Hom (algX p U) x).Etale)
     (het : (π.app U).hom.Etale) :

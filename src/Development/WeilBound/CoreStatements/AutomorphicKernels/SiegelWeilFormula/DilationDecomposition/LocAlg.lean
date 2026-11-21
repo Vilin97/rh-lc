@@ -20,7 +20,6 @@ open Matrix
 
 variable {n : ℕ}
 
-open PositivityTheory.Rg.Sw.Glob.GaussH in
 
 theorem actZ_mul_K (y k : GR n) (hk : InK (mR k)) : actZ (y * k) (Complex.I • 1) = actZ y (Complex.I • 1) := by
   classical
@@ -119,7 +118,6 @@ theorem trace_aa {m : ℕ} (u : Fin m → Fin n → ℂ) (a : Matrix (Fin n) (Fi
   push_cast
   ring
 
-open PositivityTheory.Rg.Sw.Glob.GaussH in
 
 theorem gzf_eval {m : ℕ} (s : ℤˣ) (b a : Matrix (Fin n) (Fin n) ℂ) (hb : bᴴ = b) (u : Fin m → Fin n → ℂ) :
     gZf (fun _ : Fin m => true) (2 * Real.pi * ((s : ℤ) : ℝ)) (2 * Real.pi) (b + Complex.I • (a * aᴴ)) u =

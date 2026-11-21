@@ -63,7 +63,6 @@ theorem prV_inclE (v : HeightOneSpectrum (𝓞 F)) (x : E) :
 
 end GlobalTheory.Mem.Col2.PiDiv
 
-open GlobalTheory.Mem.Col2.PiDiv in
 
 theorem GlobalTheory.Mem.Col2.prV_eq_pi_mul : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] {ST : Finset (Pl E)} {π : 𝓞 E}, BasePi ST π → ∀ (v : HeightOneSpectrum (𝓞 F)) (z : E ⊗[F] FiniteAdeleRing (𝓞 F) F), z ∈ Formalism.L2.Herm.intAf F E → (∀ P ∈ ST, Valued.v (adAt F P z) < 1) → ∃ s ∈ intV E v, prV (E := E) v z = inclE (F := F) (v.adicCompletion F) (algebraMap (𝓞 E) E π) * s := by
   intro F E _ _ _ _ _ _ ST π hπ v z hz hP

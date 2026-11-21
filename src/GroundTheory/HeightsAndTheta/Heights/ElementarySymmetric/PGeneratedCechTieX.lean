@@ -102,7 +102,6 @@ theorem exists_cocycle {n : K → ℤ} {s : Ω} (hs : s ∈ secOver S y n) :
 
 end GeneratedCechTie
 
-open GeneratedCechTie HZeroRowPlaceData in
 
 theorem GeneratedCechTie.proof : GeneratedCechTie.Statement := by
   intro S _ K _ _ ι _ _ Ω _ _ y β _ hgen I

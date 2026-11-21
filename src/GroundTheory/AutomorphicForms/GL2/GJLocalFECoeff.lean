@@ -35,7 +35,6 @@ theorem measurePreserving_of_distribHaarChar_eq_one {ι : Type*} [Fintype ι]
     rfl
   rw [h1, ← distribHaarChar_mul, map_inv, hL, inv_one, ENNReal.coe_one, one_mul]
 
-variable (F n) in
 
 def mulMulEntries (a b : GL (Fin n) F) : (Fin n × Fin n → F) ≃ₗ[F] (Fin n × Fin n → F) :=
   (entries F n).symm.trans (((Units.mulLeftLinearEquiv F _ a).trans

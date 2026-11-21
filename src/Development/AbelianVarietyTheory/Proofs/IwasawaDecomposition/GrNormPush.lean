@@ -125,7 +125,6 @@ section Norm
 variable {t} {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C] {x : Sp C ⟶ X} {m : ℕ}
   {u u' : Fin m → (Sp (DualNumber C) ⟶ t.G.left)}
 
-open Pointwise in
 
 end Norm
 

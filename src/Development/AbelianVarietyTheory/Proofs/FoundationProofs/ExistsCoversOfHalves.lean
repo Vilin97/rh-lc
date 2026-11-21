@@ -36,7 +36,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.TupleCover
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_xi (D : D7) (V : HSp D) (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E) (h : ChrEq c χ) (n : ℕ) (hn : 0 < n)
     (ho : χ.OrderDvd n) (hF : χ.TrivOn D.host.F) (ht : ∀ P, χ.TameAt P) :
@@ -114,7 +113,6 @@ theorem iotaOK_and_frame (J : CoreJ D) (hJ : LawsJ J) (j : ℕ) (hj : InR D j) (
   have h1 := hJ.familyUniformisationBasePointOrthogonal j hj _ hσ k₀ τ (((hU.2.1 k₀).2 τ).2 hτ)
   rwa [(hW k₀).1, (hU.2.1 k₀).1] at h1
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_fun {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
     {n r : ℕ} (d : DeltaDat Xo c n) (V : HSp D) (hr : V.rank = r) (ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E))
@@ -197,7 +195,6 @@ def CoversAt (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c
     (∀ t k, ModelW (Wc D i) (rank_Wc i) ((U₂ t).X k)) ∧
     ∀ t, ∃ m : ℕ, 0 < m ∧ (dδ t).cδ ^ m = 1
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_covers_of_halves (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) {μ0 : T0} [Finite T0]
     (hT : LawsJ T) (hL : R.toLevCh.Is μ0) (i : Fin D.R.m) (n : ℕ)

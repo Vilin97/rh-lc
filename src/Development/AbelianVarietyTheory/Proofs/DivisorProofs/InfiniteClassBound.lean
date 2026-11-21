@@ -23,7 +23,6 @@ open IsDedekindDomain NumberField Matrix GlobalTheory.ChiGrid GlobalTheory.FunOb
 
 namespace GlobalTheory.ClassCount
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.ClassCount
 

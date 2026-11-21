@@ -52,15 +52,10 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
 
 def lamZ (u : Pr.Word) (τ : X.Tau) : Fin (kap R + 1) → ℤ := castW (kap_succ R) (W.lamTrue u 0 τ)
 
-variable (Pr) in
 
-variable (Pr) in
 
-variable (X) in
 
-variable (Pr R) in
 
-variable (Pr R) in
 
 end Nums
 
@@ -86,7 +81,6 @@ section PartI
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
 
-variable {W Ch} in
 
 variable (hX : X.Ok)
 

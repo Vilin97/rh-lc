@@ -161,7 +161,6 @@ open GlobalTheory.OrbFinAf.TorusNorm
 
 variable {p : ℕ} [Fact p.Prime]
 
-set_option maxHeartbeats 2000000 in
 
 theorem normProper (G : HTGroup p) (v : AwayP p) (g0 : Gv G v)
     (hcomA0 : ∀ a b : Qv v ⊗[ℚ] G.C,

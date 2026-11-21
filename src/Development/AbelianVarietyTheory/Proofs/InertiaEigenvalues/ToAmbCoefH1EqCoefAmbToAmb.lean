@@ -238,7 +238,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     [CommRing O] [Algebra O LL] [TopologicalSpace LL] {n : ℕ} (emb : ZMod n → (K₀ →ₐ[Qp] LL))
     (Γ : GalData G Qp LL O) (t d : ℕ) (Ut : ZMod n → Multiset ℤ)
 
-open GlobalTheory.IndefiniteRowSideFullHecke.InvariantsVanishing in
 
 theorem adm_eq_H1fX (hO : IsDomain O) (hdvr : IsDiscreteValuationRing O) (hl : Irreducible Γ.lam)
     (hf1 : Module.Free O (HH Γ)) (hf2 : Module.Finite O (HH Γ))

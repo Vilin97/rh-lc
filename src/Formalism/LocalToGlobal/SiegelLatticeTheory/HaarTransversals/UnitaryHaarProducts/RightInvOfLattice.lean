@@ -100,7 +100,6 @@ theorem conj_ninf {h : X.B.I.Ginf} (hh : h ∈ Hinf X u) {n : X.B.I.Ginf} (hn : 
     (fun v => hfix v _ (Or.inr rfl)) hn
   simpa using this
 
-open PI.SchurPlaces.LeviLA in
 
 theorem frameAt (v : InfinitePlace X.B.I.F) :
     Frame (X.B.I.ε v) (fun a => rv X.B.I v (X.eR a)) (fun a => rv X.B.I v (X.fR a)) (rv X.B.I v (X.zR u))
@@ -126,7 +125,6 @@ theorem frameAt (v : InfinitePlace X.B.I.F) :
   card := by
     have h1 := X.n_eq; have h2 := D.R.r_eq; have h3 := D.R.rS_two; omega
 
-open PI.SchurPlaces.LeviLA in
 
 theorem levi {t : X.B.I.Ginf} (ht : t ∈ X.SinfU u) : ∃ h ∈ Hinf X u, ∃ n ∈ X.NinfU u, t = h * n := by
   have hS : ∀ v, InS (fun a => rv X.B.I v (X.eR a)) (rv X.B.I v (X.zR u)) (uMat (t v)) := ht

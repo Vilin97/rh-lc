@@ -22,7 +22,6 @@ def SysUAt (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (u : D.wh
       low ≤ (∑ j ∈ Finset.Icc 1 D.R.m, ∑ v ∈ Finset.univ \ (reps X (D.what₂.places.resChar w)).image (Y.vOf u w hg),
         Fn v j) - ∑ j ∈ Finset.range D.R.m, (dG j : ℝ)
 
-open Classical in
 
 theorem UAt_of (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (K : Consts) (low : ℝ)
     (hT : GatTies D) (hLT : LatTied hT X Y) (u : D.what₂.Word) (w : D.what₂.places.Pl)
@@ -232,7 +231,6 @@ theorem unit_bound_of_local_system (D : D7) (L : SizeData₂ D) (X : Inst D L) (
   intro hE μ hUs hT hLT u w hg hq
   exact UAt_of D L X (W.Yt μ) K _ hT hLT u w hg (hP hE μ hUs hT hLT u w hg hq) hNum hLarge
 
-open Classical in
 
 theorem unit_bound_of_sum_over_primes (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (K : Consts) (Dx : DivX D)
     (W : Formalism.MainNotions.WeilJacquetShalikaLaw.TwLoc D Y) (lev : LevelData D) (Xe : ErrX D) (ce : ErrC) (sp : ℝ) (hS : Formalism.MainNotions.FormalGroupSystem.Stmt D)

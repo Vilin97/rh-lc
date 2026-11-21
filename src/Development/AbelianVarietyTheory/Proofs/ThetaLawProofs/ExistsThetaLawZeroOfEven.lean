@@ -14,7 +14,6 @@ public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsIsSym
 
 namespace GlobalTheory.KeyPow
 
-open Matrix ReciprocityTheory.ChartRestriction.G.Key ReciprocityTheory.ChartRestriction.G.Key.Chi in
 
 theorem exists_thetaLaw_zero_of_even (hInv : ReciprocityTheory.ChartRestriction.G.Key.Chi.InversionStatement) (g : ℕ)
     (n n' : Fin g → ℤ) (h : Even (n ⬝ᵥ n')) :

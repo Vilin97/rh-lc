@@ -119,13 +119,11 @@ section Lattice
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F E) in
 
 def bas : Module.Basis (Fin (Module.finrank F E)) (AF F) (AE F E) :=
   haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
   Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)
 
-variable (F) in
 
 def intAd : Subring (AF F) :=
   ⨅ v : HeightOneSpectrum (𝓞 F), (v.adicCompletionIntegers F).toSubring.comap (evFin F v).toRingHom
@@ -134,7 +132,6 @@ theorem mem_intAd {a : AF F} : a ∈ intAd F ↔ ∀ v, evFin F v a ∈ v.adicCo
   simp only [intAd, Subring.mem_iInf, Subring.mem_comap]
   rfl
 
-variable (F E) in
 
 def latG : AddSubgroup (AE F E) :=
   ⨅ i, (intAd F).toAddSubgroup.comap ((bas F E).coord i).toAddMonoidHom
@@ -160,7 +157,6 @@ theorem bas_mem_latG (j) : bas F E j ∈ latG F E := by
   · exact one_mem _
   · exact zero_mem _
 
-variable (F E) in
 
 def ord : Subring (AE F E) where
   carrier := {z | ∀ y ∈ latG F E, z * y ∈ latG F E}
@@ -448,7 +444,6 @@ theorem absFin_mul_absNorm_le {u z : (AE F E)ˣ} (hu : IsSmall u)
     rw [absEv_unitFin, ← h4]
     rfl
 
-variable (F E) in
 
 def natIdele (n : ℕ) (hn : 0 < n) : (AE F E)ˣ :=
   Units.map (inclR (F := F) (AF F)).toMonoidHom (Units.mk0 (n : E) (by exact_mod_cast hn.ne'))

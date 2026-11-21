@@ -50,7 +50,6 @@ variable (g : Dat K) (hex0 : PowerSeries.constantCoeff g.ex = 0)
   (hl0 : PowerSeries.constantCoeff g.l = 0)
 include hex0 hl0
 
-omit hex0 hl0 in
 
 end Rename₂
 

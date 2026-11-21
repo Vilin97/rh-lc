@@ -230,7 +230,6 @@ theorem secGen_of_secNZ (hT : SecTwistSt) {E : Type} [Field E] [NumberField E] [
   obtain ⟨q, i, hq, hi⟩ := h y
   exact ⟨q, hq, Opens.mem_iSup.2 ⟨i, hi⟩⟩
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_thTie_generator : ReciprocityTheory.ChartRestriction.G.Out.SecTwistSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), ∀ (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (M : MChart Y), ∀ (R : Type) [CommRing R] [Algebra c.F R] (f : Γ(Y.X, M.U) →+* R) (x : Sp R ⟶ Xo.X) (Λ : M.Lift f x), ∃ s : LB.Sec (PPx x), Λ.ThTie s ∧ ∀ s' : LB.Sec (PPx x), ∃! a : R, ∀ i, s'.f i = scal x a i * s.f i := by
   intro hT E _ _ _ H Dw l Xo c O _ β Y M R _ _ f x Λ

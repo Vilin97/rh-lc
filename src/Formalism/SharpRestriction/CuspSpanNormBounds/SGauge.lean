@@ -229,7 +229,6 @@ def chartJac {N : ℕ} (Θ : EuclideanSpace ℝ (Fin N) → MP n) (t : Euclidean
   Real.sqrt (Matrix.det (Matrix.of fun i j : Fin N =>
     @inner ℝ _ _ (realV ((Matrix.of (Θ t))⁻¹ * Matrix.of (dPart Θ t i))) (realV ((Matrix.of (Θ t))⁻¹ * Matrix.of (dPart Θ t j)))))
 
-open Classical in
 
 abbrev obG (ε : Fin n → Bool) := stdOrthonormalBasis ℝ (gLie ε)
 

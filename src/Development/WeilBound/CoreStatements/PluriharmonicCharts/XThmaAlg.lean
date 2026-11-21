@@ -78,7 +78,6 @@ theorem linePoly_formPoly {σ : Type} [Fintype σ] (D : ℕ) (b : (Fin D → σ)
   rw [show -u / 2 = 1 / 2 * -u by ring, mul_pow]
   ring
 
-open Classical in
 
 noncomputable def mixPoly {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n → σ) → ℝ) (k : ℕ) (e : σ → ℝ) (a₀ : σ) :
     MvPolynomial σ ℝ :=

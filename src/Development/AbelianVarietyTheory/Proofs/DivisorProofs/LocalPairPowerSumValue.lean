@@ -283,7 +283,6 @@ lemma ev_awO (X : SimplicialObject Spc) (n a : ℕ) (ha : a ≤ n) :
 
 end Sheaves
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem homotopyEquiv_chains_totChains : ∀ (R : Type) [CommRing R] (X : SimplicialObject GlobalTheory.EtC.Spc), (∃ e : HomotopyEquiv (diagCx ((freeBi R).obj X)) (tot ((freeBi R).obj X)), ∀ n : ℕ, e.hom.f n = awF _ n) → ∃ e : HomotopyEquiv ((GlobalTheory.EtC.chains R).obj (GlobalTheory.EtC.bidiag.obj X)) (totChains R X), ∀ n : ℕ, e.hom.f (-(n : ℤ)) = awZ R X n := by
   intro R _ X ⟨e, he⟩

@@ -34,7 +34,6 @@ open MvPolynomial Formalism.L2.Ker
 
 variable {K : Type} [Field K] {ι : Type} [Fintype ι] {a b : ℕ}
 
-omit [Fintype ι] in
 
 theorem jetLin_monomial (J : (DVar ι a b →₀ ℕ) → K) (μ : ((ι × Fin b × Fin b) ⊕ DVar ι a b) →₀ ℕ) (c : K) :
     jetLin J (monomial μ c) = monomial (μ.comapDomain Sum.inl Sum.inl_injective.injOn)
@@ -53,7 +52,6 @@ theorem jetMap_sum {α : Type} (s : Finset α) (r : α → K) (J : α → (DVar 
   refine LinearMap.ext fun P => ?_
   simp only [jetMap, h, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply]
 
-omit [Fintype ι] in
 
 theorem map_subD {L : Type} [Field L] (s : K →+* L) (P : Formalism.L2.DIV.Pol K ι a) :
     MvPolynomial.map s (subD K ι a b P) = subD L ι a b (MvPolynomial.map s P) := by
@@ -363,9 +361,7 @@ structure Tied (hc : X.Tau → HCParam R) : Prop where
   act : ∀ i, i ≤ R.m → ∀ b : (A.F i).β, ∃ (u : (A.F i).G b →* UF X.E (R.N i)) (χ : (A.F i).G b →* X.Kˣ), ∀ g x,
     A.eV i ((A.F i).ρ b g x) = ((χ g : X.Kˣ) : X.K) • rhoVr X.emb (A.lam i) (ufGL X.E (R.N i) (u g)) (A.eV i x)
 
-variable {A} in
 
-variable {A} in
 
 @[reducible] def exampleGSD (X : Fields) {n : ℕ} (lam : X.Tau → DomWeight n) : GSD X.K where
   G := ℤˣ
@@ -472,13 +468,9 @@ def Unfolds (hc : X.Tau → HCParam R) (U : A.UnfFam σ) : Prop :=
   ∀ i, i < R.m → ∀ c c' x (y : Fr X σ (R.N (i + 1))), U i c c' ((A.chain σ hc).sharp i (A.ev σ i x)) y =
     (A.rho i c * A.rho' i c')⁻¹ * ((∏ τ, deFr y τ ^ sD hc i τ) * A.ev σ (i + 1) (A.ker i c c' x) y)
 
-variable {A σ} in
 
-variable {A σ} in
 
-variable {A σ} in
 
-variable {A σ} in
 
 def polFn (X : Fields) (σ : X.K →+* ℂ) (n : ℕ) : Formalism.L2.DIV.Pol ℂ X.Tau n →ₗ[ℂ] (Fr X σ n → ℂ) := fnOf _ 0 1
 
@@ -542,7 +534,6 @@ theorem trueWt_detShift_succ (hc : X.Tau → HCParam R) {i : ℕ} (hi : i < R.m)
 def sharpPol (hc : X.Tau → HCParam R) (i : ℕ) (x : (A.F i).V) : Formalism.L2.DIV.Pol ℂ X.Tau (R.N i) :=
   MvPolynomial.map σ ((A.eV i x).1 * ∏ τ, Formalism.L2.Ker.frDet X.K (R.N i) τ ^ nuEnd hc i τ)
 
-variable {A} in
 
 theorem Tied.sharp_ev {hc : X.Tau → HCParam R} (h : A.Tied hc) (i : ℕ) (hi : i < R.m) (x : (A.F i).V) :
     (A.chain σ hc).sharp i (A.ev σ i x) = polFn X σ _ (A.sharpPol σ hc i x) := by
@@ -561,7 +552,6 @@ theorem Tied.sharp_ev {hc : X.Tau → HCParam R} (h : A.Tied hc) (i : ℕ) (hi :
   rw [MvPolynomial.eval₂_pow, hd, ← zpow_natCast, nuEnd_cast hc hi, zpow_add₀ (isUnit_det_fr y τ).ne_zero, ← h.lam_eq i hi.le, mul_comm]
   rfl
 
-variable {A} in
 
 theorem Tied.de_mul_ev {hc : X.Tau → HCParam R} (h : A.Tied hc) (i : ℕ) (hi : i < R.m) (x : (A.F (i + 1)).V) (y : Fr X σ (R.N (i + 1))) :
     (∏ τ, deFr y τ ^ sD hc i τ) * A.ev σ (i + 1) x y = polFn X σ _ (MvPolynomial.map σ (A.eV (i + 1) x).1) y := by
@@ -575,7 +565,6 @@ def JetTie (hc : X.Tau → HCParam R) (J : A.JetFam) : Prop :=
   ∀ i, i < R.m → ∀ c c' x, MvPolynomial.map σ (A.eV (i + 1) (A.ker i c c' x)).1 =
     (A.rho i c * A.rho' i c') • J i c c' (A.sharpPol σ hc i x)
 
-variable {A} in
 
 theorem Tied.unfolds_iff {hc : X.Tau → HCParam R} (h : A.Tied hc) (J : A.JetFam) :
     A.Unfolds σ hc (A.unfJet σ J) ↔ A.JetTie σ hc J := by
@@ -591,7 +580,6 @@ theorem Tied.unfolds_iff {hc : X.Tau → HCParam R} (h : A.Tied hc) (J : A.JetFa
   rw [h.de_mul_ev σ i hi, eq_inv_mul_iff_mul_eq₀ (mul_ne_zero h1 h2), eq_comm]
   rfl
 
-variable {A} in
 
 theorem Tied.exists_jetTie {hc : X.Tau → HCParam R} (h : A.Tied hc) : ∃ J : A.JetFam, A.JetTie σ hc J := by
   refine ⟨fun i c c' => fnPol X σ _ ∘ₗ (A.chain σ hc).unf i c c' ∘ₗ polFn X σ _, fun i hi c c' x => ?_⟩

@@ -19,7 +19,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-set_option maxHeartbeats 800000 in
 
 theorem infPart_splitIdem {e : AE D} (he : IsSplitIdem D e) : infPart D e = 0 := by
   obtain ⟨h1, -, v, ε, hε, h3⟩ := he

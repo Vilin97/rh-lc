@@ -194,7 +194,6 @@ theorem isDatum_unique (hs : Function.Surjective crd) {Φ : (Fin n × Fin d → 
 
 end Gen
 
-set_option maxHeartbeats 1600000 in
 
 theorem conjUInv_mem_GfC {D : D7} (V : HSp D) (Yp : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E V.rank) (c : D.host.E)
     (hc : c ≠ 0) (h : Yp.J = c • V.gram) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl D.host.F) (x : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.UB Yp.J)

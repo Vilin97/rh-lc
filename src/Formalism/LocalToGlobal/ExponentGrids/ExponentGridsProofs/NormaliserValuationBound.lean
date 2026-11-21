@@ -60,7 +60,6 @@ theorem vw_add (w : HeightOneSpectrum (𝓞 K)) (a b : K) (ha : a ≠ 0) (hb : b
   · have h2 := WithZero.exp_le_exp.mp h
     exact le_trans (min_le_right _ _) (by linarith)
 
-open Classical in
 
 end ValuationJets
 

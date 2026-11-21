@@ -36,7 +36,6 @@ end GlobalTheory.HSAmp.IndepCx
 
 namespace GlobalTheory.HSAmp
 
-open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX) in
 
 theorem linearIndependent_vals : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k) (D : ℕ),
     IsArithVar p D → ∀ (P : Pair p), ∀ (a b : ℤ) (ι : Type) [Fintype ι] (f : ι → X.functionField),

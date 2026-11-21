@@ -191,18 +191,15 @@ theorem exists_isAmpleLB : ∃ A : LB Z.X, IsAmpleLB A :=
 def gen : Z.X.Opens :=
   Z.str ⁻¹ᵁ ⟨{closedPoint O}ᶜ, (IsLocalRing.isClosed_singleton_closedPoint O).isOpen_compl⟩
 
-variable {Z} in
 
 theorem mem_gen {x : Z.X} : x ∈ Z.gen ↔ Z.str x ≠ closedPoint O := Iff.rfl
 
-variable {Z} in
 
 theorem mem_gen_iff_eq_bot {x : Z.X} : x ∈ Z.gen ↔ (Z.str x).asIdeal = ⊥ := by
   refine ⟨fun h => by_contra fun h' => h (PrimeSpectrum.ext
     (eq_maximalIdeal ((Z.str x).isPrime.isMaximal h'))), fun h h' => ?_⟩
   exact IsDiscreteValuationRing.not_a_field O ((congrArg PrimeSpectrum.asIdeal h').symm.trans h)
 
-variable {Z} in
 
 theorem mem_basicOpen_const {x : Z.X} {g : O} :
     x ∈ Z.X.basicOpen (Z.const g) ↔ g ∉ (Z.str x).asIdeal := by
@@ -267,7 +264,6 @@ def relDim : ℕ := Z.exists_dim_eq.choose
 
 theorem dim_eq : topologicalKrullDim Z.X = (Z.relDim + 1 : ℕ) := Z.exists_dim_eq.choose_spec
 
-variable {Z} in
 
 theorem relDim_eq_iff {d : ℕ} : Z.relDim = d ↔ topologicalKrullDim Z.X = (d + 1 : ℕ) := by
   rw [dim_eq]
@@ -276,7 +272,6 @@ theorem relDim_eq_iff {d : ℕ} : Z.relDim = d ↔ topologicalKrullDim Z.X = (d 
 theorem dim_special_le : topologicalKrullDim ((Z.gen : Set Z.X)ᶜ : Set Z.X) ≤ Z.relDim :=
   ENat.WithBot.add_le_add_one_right_iff.1 (Z.dim_special_add_one_le.trans_eq Z.dim_eq)
 
-variable (O) in
 
 def projSpace (N : ℕ) : Model O where
   X := PSpace O N
@@ -415,7 +410,6 @@ theorem effDeg_mul (I J : Z.effVert) : effDeg (I * J) = effDeg I + effDeg J := b
   rw [chiLenPic_congr O e₁, chiLenPic_congr O e₂, chiLenPic_congr O e₃] at this
   exact (congrFun this c).trans (congrArg (· + _) (chiLenPic_twist O _ hM c))
 
-variable (Z) in
 
 abbrev VDivZ : Type := Algebra.GrothendieckAddGroup (Additive Z.effVert)
 
@@ -450,15 +444,12 @@ def vCls : Z.VDivZ →+ Pic Z.X := vLift effCls effCls_mul
 
 def vDeg : Z.VDivZ →+ (PicSym Z.X →ₗ[ℚ] ℚ) := vLift effDeg effDeg_mul
 
-variable {Z} in
 
 @[simp] theorem vCls_ofEff (I : Z.effVert) : Z.vCls (ofEff I) = effCls I := vLift_ofEff _ _ I
 
-variable {Z} in
 
 @[simp] theorem vDeg_ofEff (I : Z.effVert) : Z.vDeg (ofEff I) = effDeg I := vLift_ofEff _ _ I
 
-variable {Z} in
 
 theorem vDeg_ofEff_prod (I : Z.effVert) {ι : Type} [Fintype ι] {L : ι → LB Z.X}
     (hL : ∀ i, (L i).IsLB) : Z.vDeg (ofEff I) (∏ i, c1 (L i) (hL i)) =
@@ -466,7 +457,6 @@ theorem vDeg_ofEff_prod (I : Z.effVert) {ι : Type} [Fintype ι] {L : ι → LB 
   rw [vDeg_ofEff]
   exact (isVertical_divMod I).deg_prod hL
 
-variable {Z} in
 
 theorem vDeg_eq_zero (D : Z.VDivZ) {n : ℕ} (hn : n ≠ Z.relDim) {x : PicSym Z.X}
     (hx : x ∈ symDeg (SmallPic Z.X) n) : Z.vDeg D x = 0 := by
@@ -547,7 +537,6 @@ end Pull
 
 end Model
 
-variable {O} in
 
 structure VertDiv (Z : Model O) where
 
@@ -592,14 +581,12 @@ def ofUnits (M : LB Z.X) (hM : M.IsLB) (u : ∀ i, Γ(Z.X, Z.gen ⊓ M.U i))
     (hu : ∀ i, IsUnit (u i)) (h : u ∈ secOn M Z.gen) : VertDiv Z :=
   ⟨M, hM, LB.mkSec u h, hu⟩
 
-variable (Z) in
 
 def zero : VertDiv Z :=
   ofUnits (LB.triv _) (LB.isLB_triv _) (fun _ => 1) (fun _ => isUnit_one) fun _ _ => by
     change _ = resG Z.X _ 1 * _
     simp only [map_one, mul_one]
 
-variable (Z) in
 
 def const (g : O) (hg : g ≠ 0) : VertDiv Z :=
   ofUnits (LB.triv _) (LB.isLB_triv _) (fun _ => resG Z.X le_top (Z.const g))
@@ -653,7 +640,6 @@ theorem Extends.smul (h : P.Extends g s) (g' : O) : P.Extends (g' * g) (Z.const 
     simp only [LB.coord_ofSec, LB.coord_smul, LB.smul_f, map_mul, resG_resG, this, eqn, resG_self,
       mul_assoc]
 
-variable (P) in
 
 theorem exists_extends {a : O} (ha : a ≠ 0) (hm : a ∈ maximalIdeal O) :
     ∃ (m : ℕ) (s : P.M.Sec), P.Extends (a ^ m) s := by
@@ -665,7 +651,6 @@ theorem exists_extends {a : O} (ha : a ≠ 0) (hm : a ∈ maximalIdeal O) :
     LinearEquiv.symm_apply_apply, ← ht]
   simp only [Model.const, map_pow]
 
-variable (P P' P'') in
 
 def IsSum : Prop := ∀ (i : P.M.ι) (j : P'.M.ι) (k : P''.M.ι),
   ∃ u : Γ(Z.X, P.M.U i ⊓ P'.M.U j ⊓ P''.M.U k)ˣ,
@@ -703,14 +688,12 @@ theorem IsSum.ofEff_sub (H : IsSum P P' P'') (h : P.Extends g s) (h' : P'.Extend
   simp only [map_mul, germ_resG] at e'
   exact (Associated.of_eq e').trans (associated_unit_mul_left _ _ (u.isUnit.map _))
 
-variable (P) in
 
 theorem exists_extends' : ∃ q : {g : O // g ≠ 0} × P.M.Sec, P.Extends q.1 q.2 :=
   have ⟨_, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible O
   have ⟨m, s, h⟩ := P.exists_extends hϖ.ne_zero hϖ.not_isUnit
   ⟨⟨⟨_, pow_ne_zero m hϖ.ne_zero⟩, s⟩, h⟩
 
-variable (P) in
 
 def cls : Z.VDivZ :=
   Model.ofEff (P.exists_extends'.choose_spec.eff P.exists_extends'.choose.1.2) -
@@ -727,12 +710,10 @@ theorem IsIsom.isSum (H : IsIsom P P') : IsSum P (zero Z) P' := fun i _ k => by
   refine this.trans (congrArg₂ (· * ·) (resG_resG _ _ _).symm ?_)
   exact (mul_one _).symm.trans (congrArg _ (map_one _).symm)
 
-variable (P) in
 
 theorem IsIsom.refl : IsIsom P P :=
   ⟨idIso P.M, idIso_isGen P.isLB, fun p q => P.eqn_rel p q _ _ _⟩
 
-variable (Z) in
 
 @[simp] theorem cls_zero : (zero Z).cls = 0 := by simpa using (IsIsom.refl (zero Z)).isSum.cls_eq
 
@@ -743,9 +724,7 @@ theorem Extends.cls_eq (h : P.Extends g s) (hg : g ≠ 0) :
 
 theorem IsIsom.cls_eq (H : IsIsom P P') : P.cls = P'.cls := by simpa using H.isSum.cls_eq.symm
 
-variable (P P') in
 
-variable (P) in
 
 theorem extends_one (h : ofSec s Z.gen = P.t) : P.Extends 1 s := by
   rw [Extends, Model.const, map_one, map_one, one_smul, h]
@@ -753,14 +732,12 @@ theorem extends_one (h : ofSec s Z.gen = P.t) : P.Extends 1 s := by
 theorem Extends.cls_eq_ofEff (h : P.Extends 1 s) : P.cls = Model.ofEff (h.eff one_ne_zero) := by
   rw [h.cls_eq one_ne_zero, Z.div_of_isUnit isUnit_one, sub_zero]
 
-variable (Z) in
 
 @[simp] theorem cls_const (g : O) (hg : g ≠ 0) : (const Z g hg).cls = Z.div g hg := by
   have h : (const Z g hg).Extends 1 ⟨fun _ => Z.const g, fun _ _ => (one_mul _).symm⟩ :=
     extends_one rfl
   exact h.cls_eq_ofEff
 
-variable (P) in
 
 @[simp] theorem vCls_cls : Z.vCls P.cls = CechPic.cls P.M P.isLB := by
   rw [cls, map_sub, vCls_div, sub_zero, vCls_ofEff, effCls_eq rfl, cls_eq_iff]
@@ -785,9 +762,7 @@ section Pull
 
 variable {Z₁ : Model O} {f : Z₁.X ⟶ Z.X} (hf : f ≫ Z.str = Z₁.str)
 
-variable (P) in
 
-variable (P) in
 
 end Pull
 

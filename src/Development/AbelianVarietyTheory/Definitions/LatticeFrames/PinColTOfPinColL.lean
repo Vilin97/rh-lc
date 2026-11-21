@@ -135,6 +135,5 @@ theorem isEmbTop_topDec (hG : (D.sp.X D.R.m).gram = 1) (hG' : D.sp.X'.gram = 1)
     exact (mul_assoc _ _ _).symm
 end Emb
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.AdForm.LiveModel

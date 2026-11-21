@@ -186,7 +186,6 @@ theorem integrable_monoInner_ex (i j : Fin (Finset.Nat.antidiagonalTuple (D + 1)
   (continuous_monoInner_rep (ex_degree i) (ex_degree j)).integrable_of_hasCompactSupport
     (HasCompactSupport.of_compactSpace _)
 
-omit hA in
 
 theorem integral_monoInner_ex (i j : Fin (Finset.Nat.antidiagonalTuple (D + 1) (2 * n)).card) :
     ∫ p : CP D, monoInner (2 * n) (ex D (2 * n) i) (ex D (2 * n) j) p.rep ∂CP.fsMeasure D =

@@ -390,6 +390,5 @@ theorem core [TopologicalSpace V] [ContinuousAdd V] [ContinuousConstSMul LL V] [
 
 end Gen
 
-open GlobalTheory.CompanionTheory.LocDual in
 
 end GlobalTheory.CompanionTheory.TdDualD

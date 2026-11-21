@@ -284,7 +284,6 @@ open MvPolynomial QCoh.Qcqs Cartier
 
 variable {R : Type} [CommRing R] {N : ℕ} {X : Scheme.{0}} {L : LB X}
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 theorem isFinite_iff_pullRatio (φ : X ⟶ PSpace R N) {U : Fin (N + 1) → X.Opens}
     (hU : ∀ i, φ ⁻¹ᵁ chart R N i = U i) :
@@ -408,7 +407,6 @@ theorem IsAmpleLB.eventually_subsingleton_coh_twist [IsProper f] {L : LB X} (h :
     ∀ᶠ n : ℕ in atTop, ∀ p, 0 < p → Subsingleton (coh (twist F (lbPow L n)) p) :=
   tendsto_natCast_atTop_atTop.eventually (h.eventually_subsingleton_coh_twistZ hf F)
 
-omit hf [IsNoetherianRing R] [Algebra R Γ(X, ⊤)] in
 
 theorem isProper_and_exists_isAmpleLB_of_isProjOver (h : IsProjOver f) :
     IsProper f ∧ ∃ L : LB X, IsAmpleLB L := by
@@ -456,7 +454,6 @@ theorem finiteCohTwists_of_isProjOver (h : IsProjOver f) : FiniteCohTwists k F :
 
 end Field
 
-open QCoh Twist ProjSpace in
 
 theorem serre_finiteness_vanishing (R : Type) [CommRing R] [IsNoetherianRing R] (X : Scheme.{0})
     [Algebra R Γ(X, ⊤)] (F : X.Modules) [IsFiniteQC F] :

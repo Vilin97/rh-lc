@@ -36,13 +36,11 @@ section PartG
 
 open Formalism.BasicNotions Formalism.BasicNotions.DV
 
-open Classical in
 
 section Proof
 
 open Formalism.FrobeniusOrbits
 
-open Classical in
 
 end Proof
 
@@ -107,7 +105,6 @@ theorem loss_bound_nonneg (L : SizeData₂ D) : 0 ≤ L.B0 := by
 
 def sumA (L : SizeData₂ D) : ℝ := ∑ t : D.host.TT, (L.aT t : ℝ)
 
-open Classical in
 
 def C2atG (D : D7) (L : SizeData₂ D) (C : ℝ) : Prop :=
   ∀ (i : Fin 2) u, ∀ j ∈ SizeData₂.lifts D,
@@ -293,7 +290,6 @@ theorem sum_val_log_le (n : ℕ) (hn : 0 < n) (P : Finset ℕ) (hP : ∀ p ∈ P
         rw [Real.log_pow]; ring
     _ ≤ Real.log (n : ℝ) := Real.log_le_log h3 (by exact_mod_cast h2)
 
-open Classical in
 
 def EatCI (L : SizeData₂ D) (K : Consts) (c : ErrC) (j p : ℕ) : ℝ :=
   if IsResidueClassZero D p ∧ hP D p = 0 then EatC L c j p else EatI L K c j p
@@ -310,7 +306,6 @@ def InertPrimeLossBound (D : D7) (L : SizeData₂ D) (K : Consts) (c : ErrC) (C 
     (∀ p ∈ P, p.Prime ∧ (IsResidueClassZero D p ∨ IsSg D p) ∧ (p : ℝ) ≤ L.sc.X'' D.R.n) →
     ∑ p ∈ P, 2 * Real.log (p : ℝ) * |EatCI L K c j p| ≤ C * L.B0
 
-open Classical in
 
 def hOff (L : SizeData₂ D) (K : Consts) (c : ErrC) (u : D.what₂.Word) (j p : ℕ) : ℝ :=
   (padicValNat p (D.mem u).C.DGam : ℝ) + (if D.host.cls p = PrimeClass.ramD then |EatD D j| else 0) +
@@ -707,7 +702,6 @@ variable (D : D7)
 def RationalMapValues : Prop :=
   ∀ u (φ : (D.div.Nu u).V) (x : D.div.RR.V), ∃ y : D.what₂.LL, D.what₂.embLL y = D.what₂.Bu u (D.jN u φ) (D.jEE x)
 
-variable {D} in
 
 end Rat
 
@@ -779,11 +773,8 @@ open Formalism.BasicNotions Formalism.BasicNotions.DV
 
 variable (D : D7)
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
 end PartF
 
@@ -799,7 +790,6 @@ variable {eps : ℝ} (Fm : Formalism.MainNotions.FamP eps)
 
 end Fam
 
-variable {D} in
 
 section IV
 
@@ -826,15 +816,12 @@ theorem vAdd_lpow (D : D7) (w : D.what₂.places.Pl) (k : ℕ) :
 
 end IV
 
-variable {D} in
 
-variable {D} in
 
 section FamJ
 
 variable {eps : ℝ} (Fm : Formalism.MainNotions.FamP eps)
 
-open Classical in
 
 end FamJ
 

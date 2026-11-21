@@ -109,7 +109,6 @@ theorem thetaKO_zero {D : D7} {S T : HSp D} (om : GA D S × GA D T →* Module.E
     thetaKO om g h 0 = 0 := by
   simp [thetaKO]
 
-open GlobalTheory.SquareComm in
 
 end GlobalTheory.BotFac
 

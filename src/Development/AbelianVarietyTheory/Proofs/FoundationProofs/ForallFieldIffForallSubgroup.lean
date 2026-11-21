@@ -109,7 +109,6 @@ theorem fullLabels_of_good {i : N.Loc} {x : N.X i} {Sig : List (Part A.CG)} (h :
   rw [lpDim_isoLoc, (rank_of_hasParamX N A h).2]
   exact ((hg k).1.1 v).2.1
 
-variable {A} in
 
 end Hyps
 

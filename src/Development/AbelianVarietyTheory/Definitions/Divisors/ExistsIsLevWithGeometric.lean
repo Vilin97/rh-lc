@@ -166,7 +166,6 @@ theorem weilIs_unique {k : ℕ} {S : Type} [CommRing S] {x0 : Sp S ⟶ Xo.X} {p 
   (unitOn_bijective S).1
     (CommutatorPairing.weilIs_unique GlobalTheory.firstFiveLaws.1.globalFns (UnivPol.pol Xo).isAb (UnivPol.pol Xo).isLB hu hv)
 
-variable {Xo} in
 
 theorem IsLevWith.baseChange {k : ℕ} {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) {x0 : Sp S ⟶ Xo.X}
     {x1 : Sp T ⟶ Xo.X} (h : ptO Xo x1 ⟶ ptO Xo x0) (hh : h.left = spMap ψ) {ζ : Sˣ}
@@ -178,7 +177,6 @@ theorem IsLevWith.baseChange {k : ℕ} {S T : Type} [CommRing S] [CommRing T] (�
   · rw [← map_zpow]
     exact weilIs_baseChange Xo ψ h hh (hev.2.2 a b)
 
-variable {Xo} in
 
 theorem IsLevWith.unique_field {k : ℕ} (hk : k ∣ l.M) {K : Type} [Field K] {x0 : Sp K ⟶ Xo.X} {ζ : Kˣ}
     (hζ : IsPrimitiveRoot ζ k) {ev ev' : LatMod Dw k → (ptO Xo x0 ⟶ Xo.univ.t.G)} (h : IsLevWith Xo k ζ x0 ev)
@@ -210,7 +208,6 @@ theorem IsLevWith.unique_field {k : ℕ} (hk : k ∣ l.M) {K : Type} [Field K] {
   obtain ⟨y, hy⟩ := h2
   exact ⟨x + y, by rw [smul_add, ← hx, ← hy, sub_smul, one_smul, smul_sub]; abel⟩
 
-variable {Xo c} in
 
 theorem IsLevOf.unique {k : ℕ} {S : Type} [CommRing S] [Algebra c.F S] {x0 : Sp S ⟶ Xo.X}
     {ev ev' : LatMod Dw k → (ptO Xo x0 ⟶ Xo.univ.t.G)} (h : IsLevOf Xo c k x0 ev) (h' : IsLevOf Xo c k x0 ev') :
@@ -399,7 +396,6 @@ theorem exists_isLevWith_cover {k : ℕ} (hk : k ∣ l.M) {S : Type} [CommRing S
     rw [(hvχ _ lo p).1 h3, zpow_congr (by rw [← map_pow, hζ1, map_one]) (dvd_EF_sub (hra a) (hra b))] at h4
     exact h4
 
-variable {Xo c} in
 
 theorem IsLevOf.baseChange {k : ℕ} {S T : Type} [CommRing S] [Algebra c.F S] [CommRing T] [Algebra c.F T]
     (ψ : S →ₐ[c.F] T) {x0 : Sp S ⟶ Xo.X} {x1 : Sp T ⟶ Xo.X} (h : ptO Xo x1 ⟶ ptO Xo x0)

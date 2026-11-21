@@ -261,7 +261,6 @@ theorem toBDeRhamPlus_mem_span_pow_iff {ξ : 𝕎R♭}
     AdicCompletion.evalₐ_of, Ideal.Quotient.eq_zero_iff_mem, ker_fontaineThetaInvertP hξ,
     Ideal.span_singleton_pow, mem_span_singleton]
 
-omit [IsAdicComplete (span {(p : R)}) R] in
 
 theorem eq_zero_of_algebraMap_mul_eq_zero {x : 𝕎R♭} (hx : x ∈ nonZeroDivisors 𝕎R♭) {y : 𝔸}
     (h : algebraMap 𝕎R♭ 𝔸 x * y = 0) : y = 0 := by
@@ -424,13 +423,11 @@ theorem mem_nonZeroDivisors_of_ker_eq_span {ξ : 𝕎𝒪♭} (hξ : RingHom.ker
   rw [h₀, zero_coeff] at h1
   exact not_isUnit_zero h1
 
-variable (K p) in
 
 def kerThetaGenerator : 𝕎𝒪♭ :=
   haveI := isPrincipal_ker_fontaineTheta K p
   Submodule.IsPrincipal.generator (RingHom.ker θ)
 
-variable (K p) in
 
 theorem ker_fontaineTheta_eq_span_kerThetaGenerator : RingHom.ker θ = span {kerThetaGenerator K p} :=
   haveI := isPrincipal_ker_fontaineTheta K p

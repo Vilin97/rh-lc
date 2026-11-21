@@ -23,7 +23,6 @@ theorem mul_lattice_one {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Subm
 
 variable {D : D7} {u : D.what₂.Word}
 
-set_option maxHeartbeats 4000000 in
 
 theorem pt_agree1 (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0)
     (w1 : Fin (D.R.N 0) → D.host.E) (s1 : 𝓞 D.host.E)
@@ -51,8 +50,6 @@ theorem pt_agree1 (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0)
     exact smul_right_injective _ (res_ne T hs1) h
   rw [hp, map_smul, map_smul, h1, h3]
 
-set_option maxHeartbeats 16000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem valSame_pt (T : Forms0 D u) : ValSame T := by
   intro v c G hG g η κ μ g' η' κ' μ' y hP hP'
@@ -72,8 +69,6 @@ theorem valSame_pt (T : Forms0 D u) : ValSame T := by
     (dn_fwd T hD z.1 z.2) (pt_agree1 T v c _ s1 hw1 hs1 y hy1 g g' hg1 hg3)
   exact val_of_mem T v (T.cls0.y c) (hcomp T η' κ' μ') (hcomp T η κ μ) H3.1 H1.1 hm G hG
 
-set_option maxHeartbeats 16000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem valTe_pt (T : Forms0 D u) : ValTe T := by
   intro v c G hG g η κ μ hP

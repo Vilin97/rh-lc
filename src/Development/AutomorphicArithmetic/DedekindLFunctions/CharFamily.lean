@@ -14,7 +14,6 @@ namespace Deduction
 def ramp (f : ℕ → ℂ) (y : ℝ) : ℂ :=
   ∑ n ∈ Finset.range (⌊y⌋₊ + 1), (Λ n : ℂ) * f n * ((max (y / n - 1) 0 : ℝ) : ℂ)
 
-open Classical in
 
 def Gchi {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (y : ℝ) : ℂ :=
   if χ = 1 then

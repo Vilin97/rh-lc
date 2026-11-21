@@ -123,7 +123,6 @@ theorem Coord.step {P : PlE D.host} {t : ℕ → Matrix (Fin n) (Fin n) (X.O i)}
   rw [Finset.sum_comm]
   simp only [mul_comm]
 
-open Classical in
 
 def Rel (Y : NExp D.R D.host D.what₂ D.LL0 N X) (i : X.Tw) (j : ℕ) (b : Bool) (ch : Set (PlE D.host)) (sg : Bool) : Prop :=
   ∀ (M : ℕ) d (Q : Finset (PlE D.host)) (a : Y.Dat i j b), IsCoord Y i M d → QOk X i Q →
@@ -142,7 +141,6 @@ def Rel (Y : NExp D.R D.host D.what₂ D.LL0 N X) (i : X.Tw) (j : ℕ) (b : Bool
 def sgnProd {ι B : Type} [Fintype ι] [CommGroup B] {n : ℕ} (sg : Bool) (u : ι → B) (x : ι → ZMod n) : B :=
   if sg then ∏ q, u q ^ (x q).val else (∏ q, u q ^ (x q).val)⁻¹
 
-open Classical in
 
 theorem det_factor {ch : Set (PlE D.host)} {sg : Bool} (hrel : Rel Y i j b ch sg)
     {Ball : Submodule (X.O i) (Y.Fm i j b)} (hbs : LinearIndependent (X.O i) bs)

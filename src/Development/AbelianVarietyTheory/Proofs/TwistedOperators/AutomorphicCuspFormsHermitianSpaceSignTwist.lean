@@ -249,7 +249,6 @@ theorem isCuspFun_sgn_true (hL : SgnLaw θ true V) (φ : GA D V → ℂ) :
 
 end GlobalTheory.SgnFun
 
-open GlobalTheory.SgnFun in
 
 theorem GlobalTheory.sgn_fun_cusp : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (ε : Bool) (V : HSp D) (φ : GA D V → ℂ),
     (IsAutFunSm θ (sgn ε V) (fun g => φ (ofSgn ε V g)) ↔ IsAutFunSm θ V φ) ∧

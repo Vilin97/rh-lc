@@ -200,7 +200,6 @@ theorem value_at_level (hB : AdmBase R I) (hG : IsSemiAbelian G) (U : Unif I D A
   rw [_root_.mul_assoc]
   exact h₄
 
-attribute [local instance] TorusExt.gtGroup in
 
 theorem exists_sumF (hB : AdmBase R I) (hG : IsSemiAbelian G) (U : Unif I D A G)
     {w₀ ρ} (hN : NormW U.toUnifPre w₀ ρ) {n : ℕ} (hn : 1 ≤ n) (p : QkPt D.toPre F n) (hp : p.y = 0) {k : ℕ}
@@ -250,7 +249,6 @@ theorem exists_sumF (hB : AdmBase R I) (hG : IsSemiAbelian G) (U : Unif I D A G)
   simp only [Function.comp_apply, h₁, ← hdc] at S'
   exact ⟨_, S'⟩
 
-omit [CharZero R] [IsAlgClosed F] in
 
 theorem exists_coef_ratio (U : Unif I D A G) {w₀ w₁ : W0 U.toUnifPre} (h₀ : w₀.IsGen) (h₁ : w₁.IsGen) (k : ℕ) :
     ∃ d : F, d ≠ 0 ∧ ∀ (t : SecA A F k) s, U.ExpandsF F k w₀ t s → ∃ s', U.ExpandsF F k w₁ t s' ∧
@@ -268,8 +266,6 @@ theorem exists_coef_ratio (U : Unif I D A G) {w₀ w₁ : W0 U.toUnifPre} (h₀ 
 
 end Unif
 
-open GlobalTheory.UT.CoefBasic in
-attribute [local instance] TorusExt.gtGroup in
 
 theorem liesOver_of_qkToAkU : ∀ (R : Type) [CommRing R] [IsDomain R] [CharZero R] (I : Ideal R), AdmBase R I → ∀ (D : DegData R I) (A : PolAV (Spec (CommRingCat.of (FractionRing R)))) (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G], IsSemiAbelian G → ∀ (U : Unif I D A G) (F : Type) [Field F] [IsAlgClosed F] [Algebra (FractionRing R) F] (w₀ : W0 U.toUnifPre), w₀.IsGen → ∀ (k : ℕ), 1 ≤ k → ∀ (p : QkPt D.toPre F k) (x : TFK (R := R) F ⟶ A.A), p.y = 0 → QkToAkU U.toUnifPre F k p x → ∃ (w : Frm D.toPre F 1 p.g.b) (fr : FrAt x), w.IsGen ∧ fr.IsGen ∧ GlobalTheory.Poinc.Tors.LiesOver U.toUnifPre w₀ p.g w x fr := by
   intro R _ _ _ I hB D A G _ _ hG U F _ _ _ w₀ hw₀ n hn p x hp hx

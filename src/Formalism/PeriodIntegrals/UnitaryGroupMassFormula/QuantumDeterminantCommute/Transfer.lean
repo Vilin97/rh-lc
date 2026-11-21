@@ -14,7 +14,6 @@ namespace QmCapCommW
 
 abbrev Pt (k r : ℕ) (i : Fin (r + 1)) (D : Set (Mx k r)) : Type := {g : Mx k r // g ∈ Glev k r i ∩ D}
 
-open Classical in
 
 def ext0 {k r : ℕ} {i : Fin (r + 1)} {D : Set (Mx k r)} {E : Type} [Zero E] (φ : Pt k r i D → E) : Mx k r → E :=
   fun g => if h : g ∈ Glev k r i ∩ D then φ ⟨g, h⟩ else 0
@@ -62,7 +61,6 @@ lemma smooth_lin {f f' : Mx k r → E} (hf : SmoothLev k r i D f) (hf' : SmoothL
   show f g + c • f' g = F1 g + c • F2 g
   rw [hf1 g hg.1 hgl, hf2 g hg.2 hgl]
 
-variable (k r i D E) in
 
 def SS : Submodule ℂ (Pt k r i D → E) where
   carrier := {φ | SmoothLev k r i D (ext0 φ)}

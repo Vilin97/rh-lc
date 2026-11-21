@@ -91,7 +91,6 @@ def LiftIsSum (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) (κ : WeightFamilie
     ∀ q : AutQ (Wc D i), R.thF i A.μ0 y v₀ q.out =
       ζ * (lieFac (T.Q.Dw ((i : ℕ) + 1)) (xiR D) (wtA κ) : ℂ) * adOver O cc (actLev O.c' O.lev2 z f) q.out
 
-set_option maxHeartbeats 2000000 in
 
 theorem oneMapOf_of_span (hR : PreChar R) (hchi : R.grp_chiW) (hT : TieIn T R κ v₀) (O : OMDat T.toCore R i Unit (fun _ => A.μ0))
     (hF : O.c'.F = D.what₂.embLL.toRatAlgHom.fieldRange)
@@ -143,7 +142,6 @@ theorem oneMapOf_of_span (hR : PreChar R) (hchi : R.grp_chiW) (hT : TieIn T R κ
     GlobalTheory.PhaseRational.phRat_of_identity O (κ i) _ cE 1 () rfl hF hP hT.laws.toLawsM (hT.kap i (D.eTau.symm 1)).2.2 hchi
       hR.thP.thF_mem hR.thP.thG hE hid⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem lift_of_oneMapOf (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) {κ : WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : (R.MW i (sg0 D A)).Vec}
     {ι x₀} (hP : O.Pins κ v₀ ι x₀) {cE : (T.U ((i : ℕ) + 1) O.s0).Comp → ℂ} (h : O.OneMapOf κ v₀ cE 1) :

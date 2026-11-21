@@ -22,7 +22,6 @@ namespace GlobalTheory.SemiPosBir
 variable {k : Type} [CommRing k] {X Z : Scheme.{0}} {p : X ⟶ Sp k} {q : Z ⟶ Sp k} {σ : k →+* ℂ}
   {D : ℕ}
 
-open ReciprocityTheory.L2DbarEstimates in
 
 theorem continuousAt_levi {g : V D → ℂ} {x : V D} (hg : ContDiffAt ℝ 2 g x) (ξ : Fin D → ℂ) :
     ContinuousAt (fun v => leviV D g v ξ) x := by
@@ -76,7 +75,6 @@ theorem ae_mem [IsDomain k] [IsIntegral X] (hσ : Function.Injective σ) (c : Al
   refine (RingHom.congr_fun e₁ r).symm.trans ?_
   rw [RingHom.comp_apply, e₂, ← ev_eq, ev_mul, e, zero_mul]
 
-variable (D) in
 
 def PosOn (f : CxPts p σ → ℝ) (S : Set (CxPts p σ)) : Prop :=
   ∀ c : AlgChart p σ D, ∀ y ∈ c.e.source ∩ S, ∀ ξ : Fin D → ℂ,

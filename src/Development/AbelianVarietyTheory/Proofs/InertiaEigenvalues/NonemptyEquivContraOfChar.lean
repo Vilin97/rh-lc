@@ -134,14 +134,12 @@ theorem Stable.mem_of_ballFn {S : Submodule ℂ (OnePoint k → ℂ)} (hS : Stab
 
 variable [DecidableEq k]
 
-variable (k) in
 
 def funRep : Representation ℂ (GL (Fin 2) k) (OnePoint k → ℂ) where
   toFun g := LinearMap.funLeft ℂ ℂ (g⁻¹ • ·)
   map_one' := by ext; simp
   map_mul' g h := by ext; simp [mul_smul]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 @[simp] theorem funRep_apply (g : GL (Fin 2) k) (F : OnePoint k → ℂ) (x : OnePoint k) :
     funRep k g F x = F (g⁻¹ • x) := rfl
@@ -274,7 +272,6 @@ def pts : (Σ _ : Fin 2, Fin 1) ≃ Fin 2 := stdBlocks (fun _ => 1) (by simp)
 theorem pts_apply (a : Fin 2) (i : Fin 1) : pts ⟨a, i⟩ = a :=
   Fin.ext ((stdBlocks_val (fun _ => 1) _ a i).trans (by simp))
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem mem_parab_pts {g : GL (Fin 2) k} : g ∈ parab k pts ↔ g • (∞ : OnePoint k) = ∞ := by
   rw [OnePoint.smul_infty_eq_self_iff, mem_parab_iff]
@@ -283,14 +280,12 @@ theorem mem_parab_pts {g : GL (Fin 2) k} : g ∈ parab k pts ↔ g • (∞ : On
   fin_cases a <;> fin_cases b <;> simp at hab
   exact h
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem exists_smul_infty (x : OnePoint k) : ∃ g : GL (Fin 2) k, g⁻¹ • (∞ : OnePoint k) = x := by
   induction x using OnePoint.rec with
   | infty => exact ⟨1, by simp⟩
   | coe x => exact ⟨(GeneralLinearGroup.mkOfDetNeZero !![x, 1; 1, 0] (by simp))⁻¹, by simp [OnePoint.smul_infty_eq_ite]⟩
 
-omit [DecidableEq k] in
 
 theorem law_detLevi (η : kˣ →* ℂˣ) (p : parab k pts) (c : ℂ) :
     twist (ofChar (detLevi pts η)) (deltaHalf k _) (leviProj k pts p) c = (detChar (Fin 2) η p : ℂ) * c := by
@@ -339,7 +334,6 @@ theorem nonempty_equiv_parInd {η : kˣ →* ℂˣ} (hη : IsSmoothChar η) :
     · show (detChar (Fin 2) η g : ℂ) * F (g⁻¹ • ∞) = _
       rw [hF, mul_inv_cancel_left₀ (Units.ne_zero _)]
 
-omit [DecidableEq k] in
 
 theorem exists_line {η : kˣ →* ℂˣ} (hη : IsSmoothChar η) :
     ∃ (V : Type) (_ : AddCommGroup V) (_ : Module ℂ V) (π : Representation ℂ (GL (Fin 2) k) V)
@@ -376,7 +370,6 @@ theorem exists_line {η : kˣ →* ℂˣ} (hη : IsSmoothChar η) :
     rw [L.map_eq_zero_iff, Submodule.Quotient.mk_eq_zero] at h2
     exact one_ne_zero (key 0 1 (by rw [zero_smul, one_smul, zero_add]; exact h2.1)).2
 
-omit [DecidableEq k] in
 
 theorem exists_equiv_prodIrr {θ : Fin 2 → kˣ →* ℂˣ} (hθ : ∀ a, IsSmoothChar (θ a)) {x : Fin 2 → IrrGL k}
     (hx : ∀ a, x a = IrrGL.ofChar (θ a) (hθ a)) {Θ : Levi k (fun _ : Fin 2 => Fin 1) →* ℂˣ}

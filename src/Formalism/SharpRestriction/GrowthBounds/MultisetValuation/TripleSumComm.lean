@@ -37,7 +37,6 @@ theorem th_sSer_int (R : Subring K') (t : Fin n') (a : Fin r0) (b : Fin r1) : In
   · exact R.pow_mem (R.neg_mem R.one_mem) l
   · exact R.zero_mem
 
-set_option maxHeartbeats 200000 in
 
 theorem th_sumR {ν : ℕ} (w1 w2 : Fin ν → WW p) (P Q : Finset (Fin n'))
     (hQ : ∀ t' ∈ Q, posAdd t' 1 ∈ P)

@@ -57,7 +57,6 @@ abbrev t2 (p : PlF D) (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (VS D
     (Λ₂ : Submodule (𝓞 D.host.E) (VS D).V) : Loc.Term (Vp D p) (Zd.M p) D.R.rS :=
   ⟨lattice₂ D Zd.M p Λ₂, (tLoc Zd p γ).f, locF' Zd p F'₂, (tLoc Zd p γ).T, (tLoc Zd p γ).T'⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem fwd_typed (p : PlF D) (g : Loc.SplitG (Zd.M p).L) (hsp : (Zd.M p).split = some g)
     (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
@@ -119,7 +118,6 @@ theorem fwd_typed (p : PlF D) (g : Loc.SplitG (Zd.M p).L) (hsp : (Zd.M p).split 
   rw [e, map_add (f := _)]
   exact add_mem hfin (Submodule.subset_span ⟨_, hβξ, rfl⟩)
 
-set_option maxHeartbeats 1000000 in
 
 theorem bwd_typed (p : PlF D) (g : Loc.SplitG (Zd.M p).L) (hsp : (Zd.M p).split = some g)
     (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
@@ -179,7 +177,6 @@ theorem bwd_typed (p : PlF D) (g : Loc.SplitG (Zd.M p).L) (hsp : (Zd.M p).split 
 
 end IotaBP
 
-set_option maxHeartbeats 1000000 in
 
 theorem iotaB_of (hP : PinB Zd u u' F0 what₂) : IotaB Zd u u' F0 what₂ := by
   intro γ Z F'₂ φ φ' Λ₂ hB β₀ hiso hfr hW hO v hv hvf hvX hgm

@@ -19,9 +19,6 @@ structure Form (k : ℕ) where
   pos : ∀ y, y ≠ 0 → 0 < be y y
   dvd : ∀ y z, (2 * k : ℤ) ∣ be y z
 
-open scoped BigOperators in
-variable {O : Type} [CommRing O] in
-variable (N : _root_.GlobalTheory.Ex.NumD O) in
 
 theorem _root_.GlobalTheory.Ex.NumD.Form.half_add {N : _root_.GlobalTheory.Ex.NumD O} {k : ℕ}
     (β : N.Form k) (x y : N.X) :
@@ -38,9 +35,6 @@ theorem _root_.GlobalTheory.Ex.NumD.Form.half_add {N : _root_.GlobalTheory.Ex.Nu
     dvd_trans (dvd_mul_right 2 (k : ℤ)) (β.dvd y y)
   omega
 
-open scoped BigOperators in
-variable {O : Type} [CommRing O] in
-variable (N : _root_.GlobalTheory.Ex.NumD O) in
 
 theorem _root_.GlobalTheory.Ex.NumD.Form.div_mul {N : _root_.GlobalTheory.Ex.NumD O}
     {k : ℕ} (β : N.Form k) {j : ℕ} (hj : j ∣ k)
@@ -49,9 +43,6 @@ theorem _root_.GlobalTheory.Ex.NumD.Form.div_mul {N : _root_.GlobalTheory.Ex.Num
   Int.ediv_mul_cancel (dvd_trans (Int.natCast_dvd_natCast.2 hj)
     (dvd_trans (dvd_mul_left (k : ℤ) 2) (β.dvd x y)))
 
-open scoped BigOperators in
-variable {O : Type} [CommRing O] in
-variable (N : _root_.GlobalTheory.Ex.NumD O) in
 
 theorem _root_.GlobalTheory.Ex.NumD.Form.div_add {N : _root_.GlobalTheory.Ex.NumD O} {k : ℕ}
     (β : N.Form k) {j : ℕ} (hj : j ∣ k)
@@ -77,9 +68,6 @@ def twist {k : ℕ} (β : N.Form k) (u : Oˣ) : NumD O :=
              rw [e, e, e, mul_right_comm, h, map_add (f := _), LinearMap.add_apply, zpow_add]
              exact mul_mul_mul_comm _ _ _ _ }
 
-open scoped BigOperators in
-variable {O : Type} [CommRing O] in
-variable (N : _root_.GlobalTheory.Ex.NumD O) in
 
 theorem _root_.GlobalTheory.Ex.NumD.twist_τ {k : ℕ} (β : N.Form k) (u : Oˣ)
     (x y : N.X) :
@@ -99,9 +87,6 @@ def twG {k : ℕ} (β : N.Form k) (u : Oˣ) (g : N.Gt) (l : N.X → ℤ) (hl : �
     show g.s (χ + χ') * u ^ l (χ + χ') * N.θ (N.c χ) (N.c χ') g.b = g.s χ * u ^ l χ * (g.s χ' * u ^ l χ')
     rw [mul_right_comm, g.mult, hl, zpow_add]; exact mul_mul_mul_comm _ _ _ _⟩
 
-open scoped BigOperators in
-variable {O : Type} [CommRing O] in
-variable (N : _root_.GlobalTheory.Ex.NumD O) in
 
 theorem _root_.GlobalTheory.Ex.NumD.twG_pow {k : ℕ} (β : N.Form k) (u : Oˣ)
     (g : N.Gt) (l : N.X → ℤ)
@@ -233,8 +218,6 @@ def homOfIso {N N' : NumD O} (I : NumD.Iso N N') : NumD.Hom (RingHom.id O) N N' 
   c_eq := I.c_eq
   ψ_eq := I.ψ_eq
 
-open scoped BigOperators in
-variable {O : Type} [CommRing O] in
 
 theorem _root_.GlobalTheory.Ex.TateInh.evT_one (N : _root_.GlobalTheory.Ex.NumD O) (m : ℕ)
     (p : N.QT (m ^ 2)) (χ : N.X) :
@@ -244,8 +227,6 @@ theorem _root_.GlobalTheory.Ex.TateInh.evT_one (N : _root_.GlobalTheory.Ex.NumD 
   simp only [_root_.GlobalTheory.Ex.NumD.Gt.generator_inv_base,
     _root_.GlobalTheory.Ex.NumD.Gt.one_b, one_mul, N.cub.N_one]
 
-open scoped BigOperators in
-variable {O : Type} [CommRing O] in
 
 theorem _root_.GlobalTheory.Ex.TateInh.qEq_mul (N : _root_.GlobalTheory.Ex.NumD O) {k : ℕ}
     {p p' q q' : N.QT k} (h : N.QEq p p')

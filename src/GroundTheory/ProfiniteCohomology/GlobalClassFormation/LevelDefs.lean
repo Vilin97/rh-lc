@@ -18,6 +18,5 @@ noncomputable abbrev ideleClassRep : Rep ℤ Gal(L/K) :=
 
 variable {K L}
 
-omit [NumberField K] in
 
 end GroundTheory.ProfCoh

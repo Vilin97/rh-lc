@@ -38,7 +38,6 @@ theorem maxLam_ne_top (i : X.Tw) (M : ℕ) (ι : Type) : maxLam X i M ι ≠ ⊤
 
 variable {X} (bkP : BKPh X)
 
-variable (X) in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.ResidualLatticeSetting
 

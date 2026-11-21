@@ -102,7 +102,6 @@ theorem card_quotient_line {F G P : Submodule R M} (hFG : F ≤ G) (hPF : P ≤ 
 
 end Algebra
 
-open scoped ComplexOrder in
 
 theorem gramDet_re_eq_norm {L : Type} [Field L] [NumberField L] (B : HermitianBundle.{0} L)
     (σ : L →+* ℂ) {n : ℕ} {e : Fin n → B.carrier} (hli : LinearIndependent (𝓞 L) e) :

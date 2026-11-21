@@ -117,7 +117,6 @@ variable {G : Over (Spec (CommRingCat.of R₀))} [GrpObj G] {g : ℕ}
     (∀ a ∈ RingHom.ker ρ, IsNilpotent a) → ∀ z : sp (R₀ := R₀) S ⟶ G, spMap ρ ≫ z = 1 →
     ∃ a : Fin g → S, (∀ i, a i ∈ RingHom.ker ρ) ∧ z = x S a)
 
-include h0 hnat hinj hsurj in
 
 theorem first_order_add (a b : Fin g → R₀) :
     x (DualNumber R₀) (fun k => TrivSqZeroExt.inr (a k)) *
@@ -182,7 +181,6 @@ theorem e_zero (R : LAlg R₀) : e R 0 = 1 := by
   rw [add_zero] at h
   exact mul_eq_left.1 h.symm
 
-include h0 hnat hinj hsurj he hadd hen in
 
 theorem exists_basis : ∃ gb : Module.Basis (Fin g) R₀ B.gg, ∀ w : B.gg,
     e (dualL R₀) (B.tg (dualProj R₀) dualProj_sqZero (w ⊗ₜ epsK R₀)) =

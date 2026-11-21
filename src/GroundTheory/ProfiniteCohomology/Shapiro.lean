@@ -134,7 +134,6 @@ section DegreeZero
 
 variable (B : Rep.{u} k (U : Subgroup G)) [IsDiscreteRep B]
 
-omit [IsTopologicalGroup G] [CompactSpace G] [IsDiscreteRep B] in
 
 theorem coind_invariant_apply (f : (Rep.coind (U : Subgroup G).subtype B).ρ.invariants) (x : G) :
     f.1.1 x = f.1.1 1 := by

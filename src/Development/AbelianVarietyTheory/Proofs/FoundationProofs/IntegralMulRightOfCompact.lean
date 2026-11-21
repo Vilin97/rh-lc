@@ -29,7 +29,6 @@ theorem apply_mem_fixed_ker {v : V} (hv : v ∈ fixed κ r.ker) (k : K) : κ k v
     rw [← Module.End.mul_apply, ← map_mul]
     exact apply_eq_of_map_eq hv (by rw [map_mul, MonoidHom.mem_ker.1 hn, one_mul])
 
-variable (κ) in
 
 def kerRep (hr : Function.Surjective r) : Representation ℂ Q (fixed κ r.ker) where
   toFun q := (κ (Function.surjInv hr q)).restrict fun _ hv => apply_mem_fixed_ker hv _
@@ -97,8 +96,6 @@ variable {G Q : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Mea
   [Group Q] (μ : Measure G) [μ.IsHaarMeasure] {K : Subgroup G} (ho : IsOpen (K : Set G)) (hc : IsCompact (K : Set G))
   {F : G → ℂ}
 
-omit [IsTopologicalGroup G] [μ.IsHaarMeasure] in
-include ho in
 
 theorem integral_eq_subgroup (h0 : ∀ g ∉ K, F g = 0) : ∫ g, F g ∂μ = ∫ k : K, F k ∂(μ.comap K.subtype) :=
   (setIntegral_eq_integral_of_forall_compl_eq_zero (s := (K : Set G)) h0).symm.trans
@@ -121,30 +118,22 @@ theorem integral_inv_of_compact (h0 : ∀ g ∉ K, F g = 0) : ∫ g, F g⁻¹ �
   rw [integral_eq_subgroup μ ho h0, integral_eq_subgroup μ ho fun g hg => h0 _ (by rwa [K.inv_mem_iff])]
   exact integral_inv_eq_self (fun x : K => F x) _
 
-omit [μ.IsHaarMeasure] ho hc in
 
 def kerSet (r : K →* Q) : Set G := (↑) '' (r.ker : Set K)
 
 variable {r : K →* Q} (hr : Function.Surjective r) (hk : IsOpen (r.ker : Set K))
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [MeasurableSpace G] [BorelSpace G] ho hc in
 
 theorem coe_mem_kerSet {k : K} : (k : G) ∈ kerSet r ↔ r k = 1 := Subtype.val_injective.mem_set_image
 
-omit [IsTopologicalGroup G] [MeasurableSpace G] [BorelSpace G] hc in
-include hk in
 
 theorem isOpen_kerSet : IsOpen (kerSet r) := ho.isOpenMap_subtype_val _ hk
 
-omit [MeasurableSpace G] [BorelSpace G] ho in
-include hk in
 
 theorem isCompact_kerSet : IsCompact (kerSet r) :=
   haveI : CompactSpace K := isCompact_iff_compactSpace.1 hc
   (r.ker.isClosed_of_isOpen hk).isCompact.image continuous_subtype_val
 
-omit hc in
-include hk in
 
 theorem integral_eq_sum_ker [Fintype Q] (hF : Integrable F μ) (h0 : ∀ g ∉ K, F g = 0) :
     ∫ g, F g ∂μ = ∑ q, ∫ x in kerSet r, F ((Function.surjInv hr q : K) * x) ∂μ := by
@@ -163,7 +152,6 @@ theorem integral_eq_sum_ker [Fintype Q] (hF : Integrable F μ) (h0 : ∀ g ∉ K
   refine integral_congr_ae (.of_forall fun x => ?_)
   simp [indicator_apply]
 
-include hr hk in
 
 theorem real_eq_card_mul [Fintype Q] : (μ.real K : ℂ) = Fintype.card Q * μ.real (kerSet r) := by
   have h := integral_eq_sum_ker μ ho hr hk (F := (K : Set G).indicator fun _ => 1)
@@ -177,7 +165,6 @@ theorem real_eq_card_mul [Fintype Q] : (μ.real K : ℂ) = Fintype.card Q * μ.r
       exact indicator_of_mem (K.mul_mem (Subtype.prop _) k.2) _
   simpa [e, integral_indicator ho.measurableSet] using h
 
-include hk in
 
 theorem real_kerSet_ne_zero : (μ.real (kerSet r) : ℂ) ≠ 0 := by
   exact_mod_cast ENNReal.toReal_ne_zero.2 ⟨((isOpen_kerSet ho hk).measure_pos μ ⟨1, 1, one_mem _, rfl⟩).ne',
@@ -185,7 +172,6 @@ theorem real_kerSet_ne_zero : (μ.real (kerSet r) : ℂ) ≠ 0 := by
 
 variable {W : Type} [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (τ : Representation ℂ Q W)
 
-include hr hk in
 
 theorem typeIdem_mul_real [Fintype Q] (k : K) : typeIdem μ r τ k * μ.real (kerSet r) =
     (Module.finrank ℂ W : ℂ) / Fintype.card Q * conj (τ.character (r k)) := by
@@ -193,7 +179,6 @@ theorem typeIdem_mul_real [Fintype Q] (k : K) : typeIdem μ r τ k * μ.real (ke
   rw [typeIdem_coe, real_eq_card_mul μ ho hc hr hk]
   field_simp
 
-include hr hk in
 
 theorem conv_typeIdem [Finite Q] (hτ : τ.IsIrreducible) :
     conv μ (typeIdem μ r τ) (typeIdem μ r τ) = typeIdem μ r τ := by
@@ -229,7 +214,6 @@ theorem conv_typeIdem [Finite Q] (hτ : τ.IsIrreducible) :
       · rw [typeIdem_of_notMem μ r τ hx, zero_mul]
     simp [conv, this]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [MeasurableSpace G] [BorelSpace G] ho hc in
 
 theorem conj_mem_kerSet (k : K) (g : G) : (k : G)⁻¹ * (g * k) ∈ kerSet r ↔ g ∈ kerSet r := by
   by_cases hg : g ∈ K
@@ -244,7 +228,6 @@ theorem conj_mem_kerSet (k : K) (g : G) : (k : G)⁻¹ * (g * k) ∈ kerSet r �
     · rintro ⟨x, -, rfl⟩
       exact hg x.2
 
-include hr hk in
 
 theorem proj_of_weak [Finite Q] (hτ : τ.IsIrreducible) {V : Type} [AddCommGroup V] [Module ℂ V]
     {ρ : Representation ℂ G V} {L : Set (V →ₗ[ℂ] ℂ)} (hsep : ∀ v w, (∀ l ∈ L, l v = l w) → v = w)
@@ -305,7 +288,6 @@ theorem proj_of_weak [Finite Q] (hτ : τ.IsIrreducible) {V : Type} [AddCommGrou
     simp only
     rw [(typeIdem_mul_ker μ r τ hk1 _).2, map_mul, Module.End.mul_apply]
 
-include hr hk in
 
 theorem smoothOp_typeIdem [T2Space G] [Finite Q] (hτ : τ.IsIrreducible) {V : Type} [AddCommGroup V] [Module ℂ V]
     {ρ : Representation ℂ G V} (hρ : IsSmooth ρ) :
@@ -320,14 +302,11 @@ theorem smoothOp_typeIdem [T2Space G] [Finite Q] (hτ : τ.IsIrreducible) {V : T
     (fun _ _ _ => trivial) (fun l _ v => ((hρ.isLocallyConstant_orbit v).comp l).continuous)
     (fun l _ v => hρ.map_smoothOp hb.1 hb.2 l v) fun l _ v => hρ.map_smoothOp he.1 he.2 l v
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [MeasurableSpace G] [BorelSpace G] ho hc in
 
 def linRep {H : Type} [NormedAddCommGroup H] [NormedSpace ℂ H] (π : G →* (H →L[ℂ] H)) : Representation ℂ G H :=
   ContinuousLinearMap.toLinearMapRingHom.toMonoidHom.comp π
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [MeasurableSpace G] [BorelSpace G] ho hc in
 
-include hr hk in
 
 theorem repOp_typeIdem [T2Space G] [Finite Q] (hτ : τ.IsIrreducible) {H : Type} [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] [CompleteSpace H] {π : G →* (H →L[ℂ] H)} (hπ : IsUnitaryRep π) :

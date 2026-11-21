@@ -36,13 +36,11 @@ def moveHomeo (εS : GL Y' k) (εT : GL Y k) (σS : Z' ≃ Y') (σT : Z ≃ Y) :
   continuous_toFun := ((continuous_const.matrix_mul continuous_id).matrix_mul continuous_const).matrix_submatrix _ _
   continuous_invFun := (continuous_const.matrix_mul (continuous_id.matrix_submatrix _ _)).matrix_mul continuous_const
 
-omit [IsNonarchimedeanLocalField k] in
 
 theorem comp_homeo_mem_SB {X X' : Type} [TopologicalSpace X] [TopologicalSpace X'] (e : X ≃ₜ X') {Φ : X' → ℂ}
     (h : Φ ∈ SB X') : Φ ∘ e ∈ SB X :=
   ⟨h.1.comp_continuous e.continuous, h.2.comp_homeomorph e⟩
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem frame_back {K : Type} [Field K] {n N n' N' : ℕ} (h : N = n) (h' : N' = n') (L₁ : GL (Fin n) K) (L₀ : GL (Fin n') K)
     (x : Matrix (Fin N) (Fin N') K) :
@@ -84,7 +82,6 @@ theorem coord_up : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Typ
   simp only [Place.up, GlobalTheory.FunObj.Frames.coord, frRow, frOf, hm]
   exact congrArg Matrix.transpose (frame_back _ _ _ _ x)
 
-open Classical in
 
 theorem model_of_vec : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} (ch : Choice R) {μ0 : T}, R.toLevCh.Is μ0 → LatP ch → ∀ t, ∀ w ∈ locPl ch.G t, ∀ p, IsPlc w p → ∀ (φ : EdgeDat ch t w) j (hj : j < D.R.m) v f, IsArrVec ch t w p.e φ j hj v f → ∃ Tm₀, p.IsModel ch.W.ψ (frRow ch.S.B t w j hj.le) (frRow ch.S.B t w (j + 1) hj) Tm₀ ∧ (∀ O, IsOne O → Tm₀ O = v) ∧ ∃ Φ₀ : SB (Matrix (Fin ((locGrid ch.G t w).rank (D.R.m, j + 1))) (Fin ((locGrid ch.G t w).rank (D.R.m, j))) (Kw w)), (∀ x, Φ₀.1 x = φ (.theta D.R.m j) xᵀ) ∧ Tm₀ Φ₀ = f := by
   intro D Γ _ _ Pl0 T A Ks _ _ _ R ch μ0 hL hLat t w hw p hp φ j hj v f hv

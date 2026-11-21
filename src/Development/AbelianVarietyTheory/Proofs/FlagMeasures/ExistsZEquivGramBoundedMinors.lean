@@ -98,8 +98,6 @@ private lemma det_submatrix_mul_diagonal {R : Type} [CommRing R] {N t : ℕ}
     simp [Matrix.mul_diagonal]
   rw [hsub, det_mul, det_diagonal]
 
-open NumberField Module Matrix in
-open scoped Classical in
 
 theorem _root_.GlobalTheory.ReducedGram.exists_reduced : ∀ (K : Type) [Field K] [NumberField K],
     (∀ w : InfinitePlace K, w.IsComplex) → ∀ (r : ℕ) (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) K)

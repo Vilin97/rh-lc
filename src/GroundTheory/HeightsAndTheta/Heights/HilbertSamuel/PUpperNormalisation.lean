@@ -67,7 +67,6 @@ theorem secM_le_chartLat (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) {d
 
 end UpperNormalisation
 
-open UpperNormalisation Mono in
 
 theorem UpperNormalisation.proof (h7 : G7.Statement) (hPack : PackingStatement) (hCond : KH.CondStatement) :
     UpperNormalisation.Statement := by

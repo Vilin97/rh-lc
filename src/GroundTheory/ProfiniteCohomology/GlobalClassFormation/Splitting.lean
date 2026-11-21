@@ -55,8 +55,6 @@ theorem exists_placeOfEmbedding_eq (w : PlacesOver E.1 v) :
   rw [AlgHom.commutes]
   rfl
 
-set_option maxHeartbeats 2000000 in
-variable (v) in
 
 theorem exists_unitsLocalRes_unitsResField_eq_zero_of_placeOfEmbedding
     (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1)) (x : cohomology (unitsLimitRep K) 2)
@@ -123,7 +121,6 @@ theorem exists_infPlaceOfEmbedding_eq (w : v.placesOver E.1) :
   rw [AlgHom.commutes]
   rfl
 
-set_option maxHeartbeats 2000000 in
 
 theorem exists_unitsLocalRes_unitsResField_eq_zero_of_infPlaceOfEmbedding
     (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure v.Completion) (x : cohomology (unitsLimitRep K) 2)
@@ -163,7 +160,6 @@ section Main
 
 open scoped NumberField.LiesOver
 
-set_option maxHeartbeats 2000000 in
 
 theorem unitsResField_eq_zero_of_dvd_finrank (ι : LocalEmbeddings K) (x : cohomology (unitsLimitRep K) 2)
     (m : ℕ) (hm : m • x = 0) (hinf : ∀ v : InfinitePlace K.1, brauerLocal ι x (.inl v) = 0)

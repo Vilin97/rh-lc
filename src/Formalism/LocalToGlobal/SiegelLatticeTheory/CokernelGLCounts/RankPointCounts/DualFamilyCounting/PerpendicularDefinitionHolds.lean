@@ -176,7 +176,6 @@ theorem Xplus_le_upair : F0.Xplus ≤ UPair D F0 F' := by
 
 end PairSpanDimension
 
-open PairSpanDimension in
 
 theorem perpendicular_definition_holds : PerpDef := by
   intro D u u' _ F0 what₂ _ Z F' _ hZ hP

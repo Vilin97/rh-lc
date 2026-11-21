@@ -223,13 +223,11 @@ theorem out_invariant {α : Type} (hΔ : ∀ g, g ∈ Δ ↔ g.1 = g.2 ∧ g.1 �
   rw [e]
   exact hG t ht l hl l' hl' y.1 y.2
 
-variable (Z L Δ M) in
 
 noncomputable def proj (Q : DoubleCoset.Quotient (Δ : Set (H × H)) (M : Set (H × H))) :
     DoubleCoset.Quotient (Z : Set H) (L : Set H) :=
   DoubleCoset.mk Z L (Quotient.out Q).1
 
-variable (Z L Δ M) in
 
 noncomputable def lift (q : DoubleCoset.Quotient (Z : Set H) (L : Set H)) (p : H ⧸ L) :
     DoubleCoset.Quotient (Δ : Set (H × H)) (M : Set (H × H)) :=

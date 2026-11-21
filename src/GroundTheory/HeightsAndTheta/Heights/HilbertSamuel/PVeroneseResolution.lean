@@ -266,7 +266,6 @@ theorem lift_self_eq (p : CP D) :
 
 end VeroneseResolution
 
-open VeroneseResolution in
 
 theorem VeroneseResolution.proof : VeroneseResolution.Statement := by
   intro D _

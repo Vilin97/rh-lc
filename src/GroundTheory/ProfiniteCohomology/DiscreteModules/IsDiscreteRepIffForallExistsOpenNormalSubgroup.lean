@@ -69,7 +69,6 @@ instance isDiscreteRep_of_isTrivial (A : Rep.{w} k G) [A.ρ.IsTrivial] : IsDiscr
 
 variable [IsTopologicalGroup G]
 
-omit [IsTopologicalGroup G] in
 
 theorem IsDiscreteRep.of_injective {A B : Rep.{w} k G} (f : A ⟶ B)
     (hf : Function.Injective f.hom) [IsDiscreteRep B] : IsDiscreteRep A :=
@@ -162,7 +161,6 @@ instance : (isDiscreteRep.{w} k G).IsClosedUnderQuotients where
     have : IsDiscreteRep _ := hX
     exact IsDiscreteRep.of_surjective f ((Rep.epi_iff_surjective f).1 ‹_›)
 
-omit [IsTopologicalGroup G] in
 
 theorem isDiscreteRep_X₃_of_shortExact {S : ShortComplex (Rep.{w} k G)} (hS : S.ShortExact)
     [IsDiscreteRep S.X₂] : IsDiscreteRep S.X₃ :=

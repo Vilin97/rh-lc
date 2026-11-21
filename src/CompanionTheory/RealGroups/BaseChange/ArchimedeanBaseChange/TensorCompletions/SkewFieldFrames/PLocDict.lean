@@ -18,4 +18,3 @@ namespace CompanionTheory.Rg.BcB.G3.LocDictP
 
 end CompanionTheory.Rg.BcB.G3.LocDictP
 
-open CompanionTheory.Rg.BcB.G3.LocDictP in

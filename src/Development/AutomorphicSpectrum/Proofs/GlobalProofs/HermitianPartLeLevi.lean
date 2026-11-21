@@ -65,7 +65,6 @@ section Field
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r : ℕ} {X Y : Matrix (Fin n) (Fin r) E}
 
-variable (σ J X Y) in
 
 def P (I : Set (Fin r)) : Matrix (Fin n) (Fin n) E := prj (σ : E →+* E) J X Y (ind I)
 

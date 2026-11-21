@@ -21,13 +21,11 @@ def substR (R : Type) [CommRing R] (A : Matrix T T₂ ℤ) :
     MRingOver R (dualBlocks T₂) →ₐ[R] MRingOver R (dualBlocks T) :=
   aeval fun p => ∑ t, C ((A t p.2 : ℤ) : R) * X (⟨(), t⟩ : Σ k : Unit, dualBlocks T k)
 
-omit [Fintype T₂] [DecidableEq T] [DecidableEq T₂] in
 
 theorem substR_int (A : Matrix T T₂ ℤ) : substR ℤ A = intCoordSubst A := by
   unfold substR intCoordSubst
   simp
 
-omit [DecidableEq T₂] in
 
 theorem substR_substR (R : Type) [CommRing R] {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ}
     (hAB : A * B = 1) (f : MRingOver R (dualBlocks T)) : substR R A (substR R B f) = f := by
@@ -47,7 +45,6 @@ theorem substR_substR (R : Type) [CommRing R] {A : Matrix T T₂ ℤ} {B : Matri
     simp
   exact DFunLike.congr_fun h f
 
-omit [DecidableEq T] in
 
 theorem isWH_iff {R : Type} [CommRing R] (f : MRingOver R (dualBlocks T)) (m : Unit → ℕ) :
     IsWeightedHomogeneous (NumbersDVR.blockWeight (dualBlocks T)) f m ↔ f.IsHomogeneous (m ()) := by
@@ -65,7 +62,6 @@ theorem isWH_iff {R : Type} [CommRing R] (f : MRingOver R (dualBlocks T)) (m : U
     cases u
     exact h hd
 
-omit [DecidableEq T] [DecidableEq T₂] in
 
 theorem substR_isWH (R : Type) [CommRing R] (A : Matrix T T₂ ℤ) {f : MRingOver R (dualBlocks T₂)}
     {m : Unit → ℕ} (hf : IsWeightedHomogeneous (NumbersDVR.blockWeight (dualBlocks T₂)) f m) :
@@ -96,7 +92,6 @@ theorem comap_substR (R : Type) [CommRing R] {A : Matrix T T₂ ℤ} {B : Matrix
     rw [Ideal.mem_comap, Ideal.mem_comap, substR_substR R hAB]
     exact hg
 
-omit [Fintype T₂] [DecidableEq T] [DecidableEq T₂] in
 
 theorem red_substR (p : ℕ) (A : Matrix T T₂ ℤ) (f : MRingOver ℤ (dualBlocks T₂)) :
     MvPolynomial.map (Int.castRingHom (ZMod p)) (substR ℤ A f) =
@@ -150,7 +145,6 @@ theorem hilbFn_comap (F : Type) [Field F] {A : Matrix T T₂ ℤ} {B : Matrix T�
 
 end IntegralCoordGeometricNumber
 
-open IntegralCoordGeometricNumber in
 
 theorem IntCoordGeoNum.proof : IntCoordGeoNum.Statement := by
   intro T T₂ _ _ _ _ A B hAB hBA V n p hV hp hpV hdim a

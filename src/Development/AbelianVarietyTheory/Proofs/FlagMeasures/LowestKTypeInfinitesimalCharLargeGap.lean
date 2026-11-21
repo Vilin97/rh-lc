@@ -76,7 +76,6 @@ private theorem posDef_conjTranspose_mul_exp_mul {ε : Fin n → Bool} {m X : Ma
   intro a b hab
   have := congrArg (fun x => (mᴴ).mulVec x) hab
   simpa only [Matrix.mulVec_mulVec, hu, Matrix.one_mulVec] using this
-set_option maxHeartbeats 1000000 in
 
 lemma compress_of_formula (hF : FormulaGap) {ε : Fin n → Bool} {lam : Fin n → ℝ} {H : Type} [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} (hlam : IsHCParam lam) (hσ : IsDS ε lam σ)

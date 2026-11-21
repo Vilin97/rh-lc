@@ -130,7 +130,6 @@ def flatCoord {g p q : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (z : Fin q ⊕ Fin
   Matrix.det (Matrix.of fun k => Sum.elim (fun b => -(Real.pi : ℂ) * hermForm Hm (W b) (z k)) (C k) :
     Matrix (Fin q ⊕ Fin p) (Fin q ⊕ Fin p) ℂ)
 
-open Classical in
 
 def IsHorizontal (sig : Rule Y Xc τ) : Prop :=
   ∀ (s : c.F →+* ℂ), s (IntermediateField.inclusion c.le (baseKA l).ρ) = H.rt0 →

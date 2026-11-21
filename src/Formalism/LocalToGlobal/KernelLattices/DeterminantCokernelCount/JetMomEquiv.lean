@@ -24,7 +24,6 @@ section Stmts
 variable {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Base D cc δ) (χ : IdE D → ℂ) {q : ℕ} [Fact q.Prime]
   (lam : Qbar →+* ℂ_[q])
 
-variable (D) in
 
 end Stmts
 

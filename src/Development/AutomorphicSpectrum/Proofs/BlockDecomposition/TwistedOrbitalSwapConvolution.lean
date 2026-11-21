@@ -28,8 +28,6 @@ open scoped Pointwise
 
 variable {H : Type} [Group H]
 
-set_option quotPrecheck false in
-set_option quotPrecheck false in
 
 theorem relIndex_sq (A B : Subgroup H) :
     (A.prod A).relIndex (B.prod B) = A.relIndex B * A.relIndex B := by

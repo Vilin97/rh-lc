@@ -345,6 +345,5 @@ theorem key_sets (L : SizeData₂ D) (hJb : CloudCentreDistance L) (hJc : jcCond
       rw [mem_JJ, mem_intPart, mem_intPart]
       rfl
 
-open Classical in
 
 end GlobalTheory.HostJumpWin

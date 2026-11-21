@@ -220,7 +220,6 @@ theorem selfW_ident (e : ℕ) : IsIdent (selfW I D e) := (exists_isIdent D.P.isL
 
 end Pre
 
-open UnifPullRig in
 
 def selfPre {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} (D : DegData R I) [Subsingleton D.toPre.X]
     (A : PolAV (Spec (CommRingCat.of (FractionRing R)))) (eA : (Over.pullback (jK R)).obj D.toPre.P.A ≅ A.A)
@@ -535,6 +534,5 @@ end GlobalTheory.SelfUnif
 
 namespace GlobalTheory
 
-open SelfUnif in
 
 end GlobalTheory

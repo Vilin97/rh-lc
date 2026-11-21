@@ -55,9 +55,6 @@ open MeasureTheory Matrix in
 open ValuativeRel in
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {n : Type} [Fintype n] [DecidableEq n] in
-variable [MeasurableSpace (GL n k)] in
-variable {μ : Measure (GL n k)} {Ξ : Matrix n n k → ℂ} {c : GL n k → ℂ} in
-omit [MeasurableSpace (GL n k)] in
 
 theorem _root_.GlobalTheory.LGrp.nabs_det_of_mem_KO {x : GL n k}
     (hx : x ∈ _root_.GlobalTheory.SplitWeil.KO k n) :
@@ -135,9 +132,6 @@ open MeasureTheory Matrix in
 open ValuativeRel in
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {n : Type} [Fintype n] [DecidableEq n] in
-variable [MeasurableSpace (GL n k)] in
-variable {μ : Measure (GL n k)} {Ξ : Matrix n n k → ℂ} {c : GL n k → ℂ} in
-omit [MeasurableSpace (GL n k)] in
 
 theorem _root_.GlobalTheory.LGrp.nabs_eq_zpow (x : kˣ) :
     _root_.GlobalTheory.SplitWeil.nabs k x =
@@ -186,7 +180,6 @@ theorem _root_.GlobalTheory.LGrp.nabs_eq_zpow (x : kˣ) :
     _ = (_root_.GlobalTheory.SplitWeil.resCard k : ℝ) ^ (-o) := by
       rw [_root_.GlobalTheory.SplitWeil.nabs_mul, hy1, (key o).1, one_mul]
 
-omit [MeasurableSpace (GL n k)] in
 
 end ZetaNonvanishing₂
 

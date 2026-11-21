@@ -116,9 +116,7 @@ def IsRegularSemisimple (γ : V ≃ₗ[E] V) : Prop :=
 def torusE (γ : V ≃ₗ[E] V) : Subgroup (V ≃ₗ[E] V) :=
   Subgroup.centralizer {γ}
 
-omit [FiniteDimensional E V] in
 
-omit [FiniteDimensional E V] in
 
 def TorusE (γ : V ≃ₗ[E] V) : Type _ := torusE γ
 
@@ -126,11 +124,8 @@ namespace TorusE
 
 variable {γ : V ≃ₗ[E] V}
 
-omit [FiniteDimensional E V] in
 
-omit [FiniteDimensional E V] in
 
-omit [FiniteDimensional E V] in
 
 variable [Fact (IsRegularSemisimple γ)]
 

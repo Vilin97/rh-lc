@@ -87,7 +87,6 @@ theorem avg_mul (k j : ℕ) (H : AddSubgroup W) [Finite (Qt k H)] [Finite (Qt (k
   simp_rw [key]
   exact avg_comp_surj π hπ (fun b => g ((b.out : H) : W))
 
-open Classical in
 
 def integ (H : AddSubgroup W) (g : W → ℂ) : ℂ :=
   if h : ∃ k, 0 < k ∧ IsInv k H g then avg h.choose H g else 0
@@ -127,7 +126,6 @@ theorem integ_congr {g g' : W → ℂ} (h : ∀ t ∈ H, g t = g' t) : integ H g
       exact hg ⟨k, hk, hgk.congr fun t ht => (h t ht).symm⟩
     rw [integ, dite_eq_right hg, integ, dite_eq_right hg']
 
-omit hfin in
 
 omit hfin in
 theorem IsInv.cmul {k : ℕ} {g : W → ℂ} (hg : IsInv k H g) (c : ℂ) : IsInv k H (fun t => c * g t) := by

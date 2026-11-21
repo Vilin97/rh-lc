@@ -610,7 +610,6 @@ theorem rank_grid_lt {i : ℕ} (hi : i + 1 ≤ D.R.m) :
   rw [rank_grid G (i := i) (by omega), rank_grid G hi, e]
   omega
 
-variable (sc) in
 
 theorem step_top {j : ℕ} (hj : j + 1 ≤ D.R.m) (τ : D.what₂.Tau) (r : Fin (G.V (.top (j + 1))).rank) :
     (wt G (.top (j + 1)) τ).natW r = if h : r.1 < (G.V (.top j)).rank then
@@ -636,7 +635,6 @@ theorem step_top {j : ℕ} (hj : j + 1 ≤ D.R.m) (τ : D.what₂.Tau) (r : Fin 
     rw [add_zero]
     exact weightX_above D sc.cGap τ hj hx hy
 
-variable (sc) in
 
 theorem step_grid {i : ℕ} (hi : i + 1 ≤ D.R.m) (τ : D.what₂.Tau) (r : Fin (G.V (.grid (i + 1) D.R.m)).rank) :
     (wt G (.grid (i + 1) D.R.m) τ).natW r = if h : r.1 < (G.V (.grid i D.R.m)).rank then

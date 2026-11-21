@@ -187,7 +187,6 @@ def muL (c : ZMod n) (ζ : LL) : LetA O n ⊗[O] XO BdR T →ₗ[O] (ℤ → XO 
 theorem muL_tmul (c : ZMod n) (ζ : LL) (a : LetA O n) (d : XO BdR T) :
     muL (W := W) T c ζ (a ⊗ₜ d) = serC (W.lev c ζ a) d := rfl
 
-include Ct in
 
 theorem expS_wd [IsDedekindDomain O] (hinj : Function.Injective (algebraMap O LL))
     {c : ZMod n} {ζ : LL} (hP : PtHyp (W := W) T c ζ) (π' : LetA O n)

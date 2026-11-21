@@ -50,7 +50,6 @@ def inclAtlas (hV : IsOpen V) [Nonempty V] : FinHolAtlas e V where
 
 end GlobalTheory.CompanionTheory.Ar.PB.HoloLift
 
-open GlobalTheory.CompanionTheory.Ar.PB.HoloLift in
 
 theorem GlobalTheory.CompanionTheory.Ar.PB.HoloLift.holo_of_analytic_lift : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P J : Ideal (MRing ι)) (D e : ℕ) (R : AnLogRes P J D), J = ⊤ → ∀ (V : Set (Fin e → ℂ)) (μ : (Fin e → ℂ) → (Σ k, ι k) → ℂ) (g : (Fin e → ℂ) → R.X), IsOpen V → (∀ q, AnalyticOnNhd ℂ (fun u => μ u q) V) → (∀ u ∈ V, SameOrbit (R.lift (g u) (g u)) (μ u)) → ContinuousOn g V ∧ ∀ k, AnalyticOnNhd ℂ (R.A.chart k ∘ g) (V ∩ g ⁻¹' (R.A.chart k).source) := by
   intro K _ ι _ P J D e R hJ V μ g hV hμ hg

@@ -81,7 +81,6 @@ theorem isOpen_cellUnion (j : ℕ) : IsOpen (cellUnion C j) := by
   rw [← isClosed_compl_iff, hc, hc']
   exact isClosed_biUnion_finset fun l _ => isClosed_closure
 
-omit hcov in
 
 theorem closure_inter_cellUnion_succ (j : Fin k) :
     closure (C j) ∩ cellUnion C ((j : ℕ) + 1) = C j := by

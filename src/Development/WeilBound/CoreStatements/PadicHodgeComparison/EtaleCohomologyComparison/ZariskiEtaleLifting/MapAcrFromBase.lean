@@ -63,7 +63,6 @@ theorem uJ_map (k : Bool) {A A' : PAlg l} (f : A ⟶ A') (n : ℕ) :
     obtain ⟨w, rfl⟩ := Ideal.Quotient.mk_surjective x
     exact congrArg (Ideal.Quotient.mk _) (mapAcr_toAcr f n w)
 
-variable (l) in
 
 abbrev bs (k : Bool) (n : ℕ) : Base where
   R := (base l).Acr n

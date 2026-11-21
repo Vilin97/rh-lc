@@ -23,7 +23,6 @@ variable {F : Type u} [Field F] [NumberField F] (S : Set (HeightOneSpectrum (�
 variable {K L : Type u} [Field K] [Field L] [NumberField K] [NumberField L] [Algebra F K]
   [Algebra F L] [Algebra K L] [IsScalarTower F K L]
 
-omit [NumberField F] [NumberField L] in
 
 theorem exists_underPlace_eq (v : HeightOneSpectrum (𝓞 F)) :
     ∃ w : HeightOneSpectrum (𝓞 L), underPlace (F := F) w = v := by
@@ -31,7 +30,6 @@ theorem exists_underPlace_eq (v : HeightOneSpectrum (𝓞 F)) :
   exact ⟨⟨Q, hQ, Ideal.ne_bot_of_liesOver_of_ne_bot v.ne_bot Q⟩,
     (liesOver_iff_eq_underPlace.1 hQv).symm⟩
 
-omit [NumberField F] [NumberField K] [NumberField L] in
 
 theorem underPlace_underPlace (W : HeightOneSpectrum (𝓞 L)) :
     underPlace (F := F) (underPlace (F := K) W) = underPlace (F := F) W :=
@@ -241,7 +239,6 @@ theorem galUnitsHom_mul_inv_eq (σ : galUnramifiedOutside F Ω S) (x y : (maxUnr
   rw [map_mul, mul_inv]
   ac_rfl
 
-variable (Ω) in
 
 def sInvariantSubgroup : Subgroup (maxUnramifiedOutside F Ω S)ˣ where
   carrier := {x | IsSInvariant S x}
@@ -262,7 +259,6 @@ theorem mem_sInvariantSubgroup {x : (maxUnramifiedOutside F Ω S)ˣ} :
     x ∈ sInvariantSubgroup Ω S ↔ IsSInvariant S x :=
   Iff.rfl
 
-omit [IsGalois F Ω] in
 
 theorem map_algebraMap_mem_sInvariantSubgroup (a : Fˣ) :
     Units.map (algebraMap F (maxUnramifiedOutside F Ω S) : F →* _) a ∈ sInvariantSubgroup Ω S := by

@@ -15,7 +15,6 @@ namespace GlobalTheory.KatzF
 
 variable (p : ℕ) [Fact p.Prime] {k : Type} [Field k] [CharP k p] [PerfectRing k p] {d : ℕ} {σ : Type}
 
-variable (k) in
 
 def sig : Fr p k →+* Fr p k := (WittVector.FractionRing.frobenius p k : Fr p k →+* Fr p k)
 

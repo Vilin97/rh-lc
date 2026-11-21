@@ -215,7 +215,6 @@ theorem key (P : K[X]) (hP : Irreducible P) (hm : P.Monic) (x : L) (hx : aeval x
     rw [div_pow, div_eq_one_iff_eq (pow_ne_zero _ hcL)] at hyl'
     exact hyl'
 
-open Classical in
 
 noncomputable def Bset (K : Type) [Field K] [Fintype K] (δ : ℕ) (c₀ : Kˣ) : Finset (Fin δ → K) :=
   Finset.univ.filter (fun c => Irreducible (monicOf c) ∧

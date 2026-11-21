@@ -39,7 +39,6 @@ theorem volume_fundamentalDomain_basisFun (ι : Type) [Fintype ι] :
 
 end PSymplMinkowskiBox
 
-open PSymplMinkowskiBox in
 
 theorem SymplMinkowskiBox.proof (h1 : SymplBoxVolume.Statement) : SymplMinkowskiBox.Statement := by
   intro ι _ _ A a hdet ha hprod

@@ -32,7 +32,6 @@ theorem ramified_dvd_differentIdeal {w : HeightOneSpectrum (𝓞 L)}
   have := pow_sub_one_dvd_differentIdeal_aux (𝓞 K) K L w.asIdeal (by omega) hv0 hdvd
   exact (dvd_pow_self _ (by omega)).trans this
 
-variable (K L) in
 
 theorem finite_setOf_ramified :
     {w : HeightOneSpectrum (𝓞 L) | w.asIdeal.ramificationIdx (𝓞 K) ≠ 1}.Finite :=

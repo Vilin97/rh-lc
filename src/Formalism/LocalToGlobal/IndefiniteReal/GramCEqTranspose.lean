@@ -102,7 +102,6 @@ def Mj (J0 : Subgroup G0) (lam0 : J0 →* LLˣ) (eC : G0 → LL) : Submodule (�
 
 def nrmAt (σ : LL →+* ℂ) (x : WL) : ℝ := ‖A.j σ x‖
 
-open Classical in
 
 def Mcoord (J0 : Subgroup G0) (lam0 : J0 →* LLˣ) (eC : G0 → LL) {d : ℕ} (b : Fin d → WL) :
     Submodule (𝓞 LL) (Fin d → LL) :=

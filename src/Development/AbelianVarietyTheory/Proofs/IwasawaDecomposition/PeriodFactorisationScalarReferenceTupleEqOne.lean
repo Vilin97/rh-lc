@@ -51,7 +51,6 @@ theorem ZeFact.mu0 {D : Rows.Data R} {u : D.Word} {c : ℂ} (h : ZeFact D u D.mu
   have hb : D.perCol u D.mu0 φ ((D.Qsp D.mu0).starProjection F) ≠ 0 := fun h0 => hne (by rw [e1, h0, mul_zero])
   exact (mul_eq_right₀ hb).1 e2.symm
 
-open Classical in
 
 def zeVal (u : D.Word) (μ : D.Tup) : D.LLˣ :=
   if μ = D.mu0 then 1 else if h : ∃ z : D.LLˣ, ZeFact D u μ (D.embLL (z : D.LL)) then h.choose else 1
@@ -372,7 +371,6 @@ end GlobalTheory.Mem.R3.Rw.NumDef
 
 namespace GlobalTheory.Mem.R3.Rw
 
-open NumDef in
 
 theorem exists_nums_numOK : ∀ (B : Base) (C : Cols B) (G : Type) [Group G] (p : PkB B C G) (e : PerD p) (W₀ : RowsRest B C),
     ∃ n : Nums p W₀, ∀ η hη V S N G', NumOK (assemble B C (p.what₂ e W₀ n η hη) V S N G') := by

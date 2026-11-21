@@ -12,7 +12,6 @@ namespace GlobalTheory.JSW
 def padTo {m n : ℕ} (_h : m ≤ n) (l : Fin m → ℕ) : Fin n → ℕ :=
   fun i => if hi : (i : ℕ) < m then l ⟨i, hi⟩ else 0
 
-open Classical in
 
 def antiParts (m d : ℕ) : Finset (Fin m → ℕ) :=
   (Finset.Nat.antidiagonalTuple m d).filter Antitone

@@ -17,7 +17,6 @@ namespace KHFreeIndep
 
 variable {S : Type} [CommRing S] {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem cellMon_monomial {I : ∀ k, Finset (ι k)} {t : MRingOver S ι} (ht : t ∈ KH.cellMon S I) :
     ∃ e, t = monomial e 1 := by
@@ -32,7 +31,6 @@ theorem cellMon_monomial {I : ∀ k, Finset (ι k)} {t : MRingOver S ι} (ht : t
     obtain ⟨e', rfl⟩ := hy
     exact ⟨e + e', by rw [monomial_mul, mul_one]⟩
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem eq_zero_of_monomial_mul (e : (Σ k, ι k) →₀ ℕ) {p : MRingOver S ι}
     (h : monomial e (1 : S) * p = 0) : p = 0 := by
@@ -41,7 +39,6 @@ theorem eq_zero_of_monomial_mul (e : (Σ k, ι k) →₀ ℕ) {p : MRingOver S �
   rw [coeff_monomial_mul, one_mul, coeff_zero] at this
   rw [this, coeff_zero]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem eq_zero_of_mk_eq_zero {I : ∀ k, Finset (ι k)} {p : MRingOver S ι}
     (h : LocalizedModule.mk (Ideal.Quotient.mk (⊥ : Ideal (MRingOver S ι)) p) (1 : KH.cellMon S I) = 0) :

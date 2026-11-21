@@ -106,7 +106,6 @@ theorem univBasis_of_isGenSec (hS : SecBaseChangeAnySt) {S : Scheme.{0}} (P : Po
 end GlobalTheory.SecBasisPull
 end
 
-open GlobalTheory.SecBasisPull GlobalTheory.ThetaReal in
 
 theorem GlobalTheory.SecBasisPull.exists_secBasis_pull : ∀ {R R' : Type} [CommRing R] [CommRing R'] (P : PolAV (Sp R)) (P' : PolAV (Sp R')) (f : R →+* R') (ψ : P'.A.left ⟶ P.A.left), IsGrpPullback P'.A P.A (spMap f) ψ → LBIso P'.L (P.L.pull ψ) → ∀ th : LB.Sec (LPow P.A P.L 1 (baseOver (Sp R))), IsSecBasis _ (fun _ : Fin 1 => th) → ∃ th' : LB.Sec (LPow P'.A P'.L 1 (baseOver (Sp R'))), IsSecBasis _ (fun _ : Fin 1 => th') := by
   intro R R' _ _ P P' f ψ hp hw th hth

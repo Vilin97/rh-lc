@@ -278,7 +278,6 @@ theorem analyticAt_monicEval {d m : ℕ} (F : ℕ → (Fin d → ℂ) → ℂ) (
 
 end PolynomialRootPredicateFactor
 
-open PolynomialRootPredicateFactor in
 
 theorem PolynomialRootPredicateFactor.proof : PolynomialRootPredicateFactor.Statement := by
   intro d N B a δ P hBo hBc ha hδ ⟨t₁, ht₁B, ht₁⟩ hsep hbr

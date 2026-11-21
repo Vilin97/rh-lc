@@ -44,7 +44,6 @@ structure LocPl (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (M : GlobalTheory
 
 attribute [instance] LocPl.fld LocPl.val LocPl.top LocPl.loc LocPl.fY LocPl.dY LocPl.fY' LocPl.dY'
 
-open Classical in
 
 def prodDat {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {M : GlobalTheory.FinPl.Lat S} {M' : GlobalTheory.FinPl.Lat T} {n : ℕ}
     (L : Fin n → LocPl ψ S T M M') (x : WO S T) : ℂ :=

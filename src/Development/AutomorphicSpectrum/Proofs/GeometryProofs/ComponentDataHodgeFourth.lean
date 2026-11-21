@@ -26,7 +26,6 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.Ar.Cusp.PhMuFree
 
-open LieTangent in
 
 theorem valAt_diff {X : Scheme.{0}} {Ω : Type} [Field Ω] {G : Over X} [GrpObj G]
     {ξ : Spec (CommRingCat.of Ω) ⟶ X} {L : Type} [AddCommGroup L] [Module Ω L] {M : LieModel G ξ L}

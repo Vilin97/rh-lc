@@ -77,9 +77,7 @@ variable {V K : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Fie
 
 variable {A : Over (Sp V)} [GrpObj A] {B : Over (Sp K)} [GrpObj B] {ψ : B.left ⟶ A.left}
 
-omit [GrpObj B] in
 
-omit [GrpObj B] in
 
 end Dvr
 

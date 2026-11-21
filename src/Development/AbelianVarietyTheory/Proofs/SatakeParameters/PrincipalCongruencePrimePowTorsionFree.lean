@@ -87,7 +87,6 @@ end GlobalTheory.CongTorsion
 
 namespace GlobalTheory
 
-open GlobalTheory.CongTorsion in
 
 theorem principalCongruence_torsionFree :
     ∀ (R : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [CharZero R] (l m a : ℕ),

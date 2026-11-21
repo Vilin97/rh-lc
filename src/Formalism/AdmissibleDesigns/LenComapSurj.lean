@@ -55,7 +55,6 @@ theorem resQ_bij : Function.Bijective (resQ e Ψ Q Q' hQ) := by
     obtain ⟨x, hx, rfl⟩ := (hQ y).1 hy
     exact ⟨⟨x, hx⟩, rfl⟩
 
-include hinj hQ in
 
 def resQE : ↥Q ≃ₛₗ[(e : R →+* S)] ↥Q' :=
   LinearEquiv.ofBijective (resQ e Ψ Q Q' hQ) (resQ_bij e Ψ hinj Q Q' hQ)
@@ -63,7 +62,6 @@ def resQE : ↥Q ≃ₛₗ[(e : R →+* S)] ↥Q' :=
 include hinj hQ in
 theorem resQE_apply (x : ↥Q) : ((resQE e Ψ hinj Q Q' hQ x : ↥Q') : N) = Ψ (x : M) := rfl
 
-include hinj hQ hP in
 
 theorem len_semi :
     Module.length R (↥Q ⧸ P.comap Q.subtype) = Module.length S (↥Q' ⧸ P'.comap Q'.subtype) := by

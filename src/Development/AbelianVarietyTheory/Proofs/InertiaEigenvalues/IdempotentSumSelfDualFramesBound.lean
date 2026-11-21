@@ -157,7 +157,6 @@ theorem halfDifferent_ne_bot : D.host.𝔟 ≠ ⊥ := by
   simp only [Submodule.bot_mul] at h1
   exact differentIdeal_ne_bot h1
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_dual_families (S : HSp D) {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} (hS : IsSelfDualC S ΛS) :
     ∃ (N : ℕ) (g s' : Fin N → Fin S.rank → D.host.E), (∀ i, g i ∈ ΛS) ∧ (∀ i, s' i ∈ ΛS) ∧

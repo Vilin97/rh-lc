@@ -45,7 +45,6 @@ scoped instance measurableSpace_GA : MeasurableSpace (GA E a) := borel _
 
 scoped instance borelSpace_GA : BorelSpace (GA E a) := ⟨rfl⟩
 
-variable {E a} in
 
 theorem continuous_unip {r : ℕ} : Continuous (unip : (BlockIx a r → Ad E) → GA E a) := by
   have h : Continuous (nilM : (BlockIx a r → Ad E) → Matrix (Fin a) (Fin a) (Ad E)) :=
@@ -158,7 +157,6 @@ section Cusp
 
 variable {φ ψ : GA E a → ℂ}
 
-omit [IsTotallyComplex E] in
 
 theorem integrableOn_unip (hc : Continuous φ) (hl : ∀ γ g, φ (ratGL E a γ * g) = φ g) {r : ℕ}
     [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)] (ν : Measure (BlockIx a r → Ad E))
@@ -178,7 +176,6 @@ theorem integrableOn_unip (hc : Continuous φ) (hl : ∀ γ g, φ (ratGL E a γ 
   rw [unip_add, mul_assoc] at this
   exact (congrArg norm ((congrArg (fun u => φ (u * _)) (unip_algebraMap y)).trans (hl _ _))).symm.trans_le this
 
-variable (E a) in
 
 def cuspCont : Submodule ℂ (GA E a → ℂ) where
   carrier := {φ | Continuous φ ∧ (∀ γ g, φ (ratGL E a γ * g) = φ g) ∧ (∀ t g, φ (splitCentre E a t * g) = φ g) ∧
@@ -280,11 +277,9 @@ theorem classes_le_L2cusp (h : ∀ φ ∈ V, IsCuspForm φ)
     (h' : ∀ φ ∈ V, ∀ t g, φ.1 (splitCentre E a t * g) = φ.1 g) : classes V μ ≤ L2cusp μ :=
   (Submodule.le_topologicalClosure _).trans (closure_classes_le_L2cusp h h')
 
-variable (μ) in
 
 theorem isClosed_L2cusp : IsClosed (L2cusp μ : Set (L2 (latticeGL E a) μ)) := Submodule.isClosed_topologicalClosure _
 
-variable (μ) in
 
 instance completeSpace_L2cusp : CompleteSpace (L2cusp μ) := (isClosed_L2cusp μ).completeSpace_coe
 
@@ -316,7 +311,6 @@ theorem toL2_ne_zero (h : MemL2Quotient (latticeGL E a) μ φ) (hc : Continuous 
   h0 ((Continuous.ae_eq_iff_eq μ hc continuous_zero).1
     (h.lift_toL2_ae_eq.symm.trans (e ▸ ae_quotMeasure_iff.1 (Lp.coeFn_zero ℂ 2 _))))
 
-variable (μ V) in
 
 def toL2ₗ (h : ∀ φ ∈ V, MemL2Quotient (latticeGL E a) μ φ.1) : V →ₗ[ℂ] L2 (latticeGL E a) μ where
   toFun φ := (h φ φ.2).toL2
@@ -338,17 +332,14 @@ theorem toL2ₗ_injective (h : ∀ φ ∈ V, MemL2Quotient (latticeGL E a) μ φ
 
 variable [μ.IsMulRightInvariant]
 
-variable (μ) in
 
 theorem isSubrep_L2cusp : IsSubrep (R (latticeGL E a) μ) (L2cusp μ) :=
   isSubrep_topologicalClosure fun g F ⟨_, h, e⟩ => ⟨_, mul_right_mem_cuspCont h g,
     (lift_R g F).trans ((measurePreserving_mul_right μ g).quasiMeasurePreserving.ae e)⟩
 
-variable (μ) in
 
 abbrev Rcusp : GA E a →* (L2cusp μ →L[ℂ] L2cusp μ) := (isSubrep_L2cusp μ).rep
 
-variable (μ) in
 
 theorem isUnitaryRep_Rcusp : IsUnitaryRep (Rcusp μ) :=
   (isSubrep_L2cusp μ).isUnitaryRep (isUnitaryRep_R (latticeGL E a) μ)
@@ -378,7 +369,6 @@ end L2
 
 section RankOne
 
-omit [IsTotallyComplex E] in
 
 variable {μ : Measure (GA E 1)} [μ.IsHaarMeasure]
 
@@ -389,7 +379,6 @@ theorem memL2_of_rank_one {φ : GA E 1 → ℂ} (hc : Continuous φ) (h : LeftIn
   simpa only [← _root_.norm_pow] using (GlobalTheory.integrableOn_fundamentalDomain_of_cocompact _ _ K hK hcov μ inferInstance _ hd
     (fun g => φ g ^ 2) (hc.pow 2) fun γ hγ g => by rw [h γ hγ]).norm
 
-variable (μ) in
 
 theorem exists_one_mem_L2cusp : ∃ F ∈ L2cusp μ, F ≠ 0 ∧ lift (latticeGL E 1) F =ᵐ[μ] fun _ => 1 :=
   have h : MemL2Quotient (latticeGL E 1) μ fun _ => 1 := memL2_of_rank_one continuous_const fun _ _ _ => rfl

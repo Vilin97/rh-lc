@@ -68,15 +68,10 @@ variable (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F)
 def TypeCoprime : Prop :=
   ∀ PP ∈ R.Pg, ((D.host.QS * D.host.q * Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal
 
-variable {T R} in
 
-variable {T R} in
 
-variable {T R} in
 
-variable {T R} in
 
-variable {T R} in
 
 def LevUnique (i : Fin D.R.m) : Prop :=
   ∀ lev lev' : G → (T.Q.Dw ((i : ℕ) + 1)).La →ₗ[𝓞 D.host.E] (T.Q.Dw ((i : ℕ) + 1)).La,

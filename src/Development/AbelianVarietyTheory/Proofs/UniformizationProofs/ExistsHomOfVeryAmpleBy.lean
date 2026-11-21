@@ -224,7 +224,6 @@ theorem exists_iso {φ : X' ⟶ X} (h : Propor s s' φ (𝟙 X')) (hc : ⨆ i, n
 
 end MapToProj
 
-open MapToProj in
 
 theorem exists_hom_of_veryAmpleBy : ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of R)) (H : LB X) (n : ℕ) (s : Fin (n + 1) → LB.Sec H), H.IsLB → VeryAmpleBy f H s → ∀ (X' : Scheme.{0}) (f' : X' ⟶ Spec (CommRingCat.of R)) (H' : LB X') (s' : Fin (n + 1) → LB.Sec H'), H'.IsLB → (⨆ i, nonzeroLocus (s' i) = ⊤) → (∀ (t : ℕ) (F : MvPolynomial (Fin (n + 1)) R), F.IsHomogeneous t → (∀ k : (H).ι, MvPolynomial.eval₂Hom (cst (f) ((H).U k)) (fun j => (s j).f k) (F) = 0) → (∀ k : (H').ι, MvPolynomial.eval₂Hom (cst (f') ((H').U k)) (fun j => (s' j).f k) (F) = 0)) → ∃ (φ : X' ⟶ X) (w : LB.Iso H' (H.pull φ)), φ ≫ f = f' ∧ w.IsGen ∧ (∀ j, (∀ z (k : (H).ι) (k' : (H').ι), (φ) z ∈ (H).U k → z ∈ (H').U k' → gs (φ) z _ ((s j).f k) = (Geo.Tor.gw (w) (𝟙 _) z k k').val * gs (𝟙 _) z _ ((s' j).f k'))) := by
   intro R _ X f H n s _ ⟨hc, hs⟩ X' f' H' s' _ hc' hv

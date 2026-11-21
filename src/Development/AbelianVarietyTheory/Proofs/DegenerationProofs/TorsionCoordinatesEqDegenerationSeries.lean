@@ -339,7 +339,6 @@ abbrev ValIs {k : ℕ} (t : SecA A C k) (x : TFK (R := R) C ⟶ A.A)
   ∀ z J, Good A.L z J → sA t (ptSecT A.A x).left z J = @id ((TFK (R := R) C).left.presheaf.stalk z)
     (cst (R := R) C z c) * (val (powFrame A.A A.L x e k) (𝟙 _) z J).val
 
-omit [CompleteSpace C] in
 
 theorem value_at_level (hL : LL) (hB : AdmBase R I) (hG : IsSemiAbelian G) (U : Unif I D A G) (hC : CExt R I C)
     {w₀ ρ} (hN : NormW U.toUnifPre w₀ ρ) {N : ℕ} (hN1 : 1 ≤ N) (q : QkPt D.toPre C N) (x : TFK (R := R) C ⟶ A.A)
@@ -375,7 +374,6 @@ theorem value_at_level (hL : LL) (hB : AdmBase R I) (hG : IsSemiAbelian G) (U : 
   rw [_root_.mul_assoc]
   exact h₄
 
-attribute [local instance] TorusExt.gtGroup in
 
 theorem value_at_torsion (hL : LL) (hB : AdmBase R I) (hG : IsSemiAbelian G) (U : Unif I D A G) (hC : CExt R I C)
     {w₀ ρ} (hN : NormW U.toUnifPre w₀ ρ) {n : ℕ} (hn : 1 ≤ n) (p : QkPt D.toPre C n) (x : TFK (R := R) C ⟶ A.A)
@@ -436,7 +434,6 @@ theorem summable_vt [IsLocalRing R] (hL : LL) (hgt : BrGtSt) (hfam : BrFamSt) (h
   have a₂ := ν.eX.toEquiv.summable_iff.2 (ν'.eX.toEquiv.summable_iff.1 a₁)
   exact (summable_mul_left_iff (mul_ne_zero hc₀ (vF_ne ν w))).1 (a₂.congr fun χ => coef_theta ν hϑ hp.2 hw χ)
 
-omit [CharZero R] [IsUltrametricDist C] [CompleteSpace C] in
 
 theorem exists_theta (hL : LL) (hfam : BrFamSt) (U : Unif I D A G) {w₀ : W0 U.toUnifPre} (hw : w₀.IsGen)
     {N : NumD C} (ν : NumOf D.toPre C N) : ∃ (th : SecA A C 1) (ϑ : Fam D.toPre C 1) (c₀ : C), c₀ ≠ 0 ∧

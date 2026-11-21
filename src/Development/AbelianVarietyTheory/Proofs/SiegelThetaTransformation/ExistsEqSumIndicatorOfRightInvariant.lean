@@ -55,9 +55,7 @@ theorem exists_matrix_of_span_eq_top_field {k W n : Type*} [Field k] [AddCommGro
     rw [← this]
     simp [Fintype.linearCombination_apply, LinearMap.toMatrix'_apply]
 
-open Classical in
 
-open Classical in
 
 end LatticeIndicator
 

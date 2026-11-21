@@ -87,7 +87,6 @@ variable {d M : ℕ} (b : Module.Basis (Fin d) F E) (σ : E →ₐ[F] E)
   (Jp : Matrix (Fin (M + 1)) (Fin (M + 1)) E) (h : HA (AF F) σ Jp) (ginf : HA (Ainf F) σ Jp)
   (g : ∀ v : HeightOneSpectrum (𝓞 F), HA (Fv F v) σ Jp) (S Sh : Finset (HeightOneSpectrum (𝓞 F)))
 
-include b in
 
 theorem pureL_act
     (hinf : ∀ (n : ℕ) (X : Fin n → Fin (M + 1) → AF F ⊗[F] E),
@@ -152,7 +151,6 @@ theorem pureL_act
       exact (key v hv'.1 hv'.2).1 this
     rw [Set.indicator_of_notMem hX, Set.indicator_of_notMem hY]
 
-include b in
 
 theorem pureL_act_vec
     (hinf : ∀ (n : ℕ) (X : Fin n → Fin (M + 1) → AF F ⊗[F] E),

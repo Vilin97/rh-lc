@@ -154,7 +154,6 @@ theorem local_formula {X : Scheme.{0}} {Ω : Type} [Field Ω] {K : Type} {J : K 
   rw [← hcore, hDs, hDs, core_sum]
   simp only [hcore]
 
-open Classical in
 
 noncomputable def ev {S : Scheme.{0}} (U : S.Opens) (f : Γ(S, U)) (z : Sp ℂ ⟶ S) : ℂ :=
   if hz : centre z ∈ U then evalAt U f z hz else 0

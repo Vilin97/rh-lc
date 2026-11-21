@@ -23,11 +23,8 @@ namespace PieceDegreeAlt
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
   {F : Type} [Field F] [Algebra F Ω]
 
-omit [Fintype K] in
 
-omit [Fintype K] in
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem exists_ringEquiv_comp [NumberField F] (sg sg' : F →+* ℂ) :
     ∃ τ : ℂ ≃+* ℂ, (τ : ℂ →+* ℂ).comp sg = sg' := by

@@ -17,7 +17,6 @@ attribute [local irreducible] Tf
 
 variable {ι A B : Type} [Fintype ι] [DecidableEq ι] [Fintype A] [Fintype B]
 
-variable (ι A B) in
 
 def invSub : Submodule ℂ (PV ι A B) where
   carrier := {q | IsInv q}
@@ -25,7 +24,6 @@ def invSub : Submodule ℂ (PV ι A B) where
   zero_mem' := fun u _ => map_zero _
   smul_mem' := fun c q hq u hu => by rw [map_smul, hq u hu]
 
-variable (ι A B) in
 
 def Vd (d : ℕ) : Submodule ℂ (PV ι A B) := restrictTotalDegree ((ι × A) ⊕ (ι × B)) ℂ d ⊓ invSub ι A B
 

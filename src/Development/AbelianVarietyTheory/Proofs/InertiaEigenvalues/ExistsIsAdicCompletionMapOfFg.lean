@@ -26,7 +26,6 @@ theorem mem_map_pow_iff (hfg : J.FG) (n : ℕ) (y : AdicCompletion J L) :
 
 end GlobalTheory.BSP.AdicComplExists
 
-open GlobalTheory.BSP.AdicComplExists in
 
 theorem GlobalTheory.BSP.isCompl_exists : ∀ (L : Type) [CommRing L] (J : Ideal L), J.FG →
     ∃ (Q : Type) (_ : CommRing Q) (i : L →+* Q), IsCompl i J := by

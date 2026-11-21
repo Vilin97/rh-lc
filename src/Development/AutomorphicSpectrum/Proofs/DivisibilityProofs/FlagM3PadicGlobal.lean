@@ -53,7 +53,6 @@ theorem ck_cast {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   push_cast
   rfl
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem length_classList {σ : Type} (cls : σ → K → ℤ) {H : MvPolynomial σ ℝ} {e : ℕ}
     (hH : H.IsHomogeneous e) {μ : σ →₀ ℕ} (hμ : μ ∈ H.support) : (classList cls μ).length = e := by
@@ -63,7 +62,6 @@ theorem length_classList {σ : Type} (cls : σ → K → ℤ) {H : MvPolynomial 
   rw [← h, Finsupp.weight_apply]
   simp [Finsupp.sum]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem cycNum_transfer {O₀ : Type} [CommRing O₀] [IsDomain O₀] [IsDiscreteValuationRing O₀]
     {Λ : Type} [Fintype Λ] {O : Λ → Type} [∀ l, CommRing (O l)] [∀ l, IsDomain (O l)]

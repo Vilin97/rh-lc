@@ -9,7 +9,6 @@ open Complex DirichletCharacter ArithmeticFunction MeasureTheory
 
 namespace GlobalTheory.ZeroDetect
 
-open Complex DirichletCharacter ArithmeticFunction MeasureTheory in
 
 theorem _root_.GlobalTheory.ZeroDetect.sum_trunc_conv (a f : ℕ → ℂ)
     (hf : ∀ m n, 0 < m → 0 < n → f (m * n) = f m * f n)
@@ -55,7 +54,6 @@ theorem _root_.GlobalTheory.ZeroDetect.sum_trunc_conv (a f : ℕ → ℂ)
     · rintro ⟨⟨⟨h0, hX⟩, hdn⟩, -, hdD⟩
       exact ⟨⟨h0, hX⟩, ⟨hdn, h0.ne'⟩, hdD⟩
 
-open Complex DirichletCharacter ArithmeticFunction MeasureTheory in
 
 theorem _root_.GlobalTheory.ZeroDetect.sum_initial (f : ℕ → ℂ) (D : ℕ) (hD : 1 ≤ D) :
     ∑ n ∈ Finset.Ioc 0 D,
@@ -108,7 +106,6 @@ theorem _root_.GlobalTheory.ZeroDetect.rpow_bound {Q y σ : ℝ} (hQ : 1024 ≤ 
   calc 16 * Q ^ 5 ≤ y ^ ((11:ℝ) / 12) := key
     _ ≤ y ^ σ := Real.rpow_le_rpow_of_exponent_le hy1 hσ
 
-open Complex DirichletCharacter ArithmeticFunction MeasureTheory in
 
 theorem _root_.GlobalTheory.ZeroDetect.zero_detect : ∃ Q₀ : ℕ, ∀ Q : ℕ, Q₀ ≤ Q →
     ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q), χ ≠ 1 → q ≤ Q → ∀ ρ : ℂ,

@@ -358,8 +358,6 @@ theorem even_uV (ha : a ^ 2 = 1) (hf : Function.Surjective G.hom.appTop.hom)
     linear_combination (norm := abel) a₁ - a₂ + a₄ + a₅ - a₆
   exact alg e₁ e₂ e₃ e₅ e₆
 
-omit u sq in
-set_option maxHeartbeats 400000 in
 
 theorem exists_level [IsLocalRing R] (hG : IsSemiAbelian G) (ha : a ^ 2 = 1)
     (hf : Function.Surjective G.hom.appTop.hom)
@@ -484,7 +482,6 @@ theorem gw_trans' {D : DegData R I} {A : PolAV (Spec (CommRingCat.of (FractionRi
   have h₁ := gm_pull r (thickMap R I e G) z _ hm.1 ((U.w (e + 1)).s (fun _ => jM, fun _ => jL))
   exact h₁.symm.trans ((gm_res r z inf_le_left hm _).symm.trans (H.trans (gm_res r z inf_le_right hm _)))
 
-omit [IsDomain R] [GrpObj G] [IsCommMonObj G] in
 
 theorem thickMap_comm {G' : Over (Spec (CommRingCat.of R))} (e : ℕ) (f₀ : thickObj R I e G' ⟶ thickObj R I e G)
     (f₁ : thickObj R I (e + 1) G' ⟶ thickObj R I (e + 1) G) (f : G'.left ⟶ G.left)
@@ -522,7 +519,6 @@ theorem surjective_appTop {D : DegData R I} {A : PolAV (Spec (CommRingCat.of (Fr
   exact ⟨s₁, surj_comp (RigidIsoCube.surjective_snd_of_generic hG (jK R) G A.isAb hg _)
     (surj_comp (RigidIsoCube.surjective_snd_of_generic hG (jK R) G A.isAb hg _) s₁)⟩
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_iso_translate [IsLocalRing R] (hR : AdmBase R I) (hG : IsSemiAbelian G) {D D' : DegData R I}
     {A A' : PolAV (Spec (CommRingCat.of (FractionRing R)))} (U : UnifPre I D A G) (U' : UnifPre I D' A' G)

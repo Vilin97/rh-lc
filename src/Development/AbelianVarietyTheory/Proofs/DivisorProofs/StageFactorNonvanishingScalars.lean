@@ -82,7 +82,6 @@ noncomputable section
 
 namespace GlobalTheory.ThetaRegularizationComparison
 
-open GlobalTheory.RegCompare in
 
 theorem thetaInt_wop_intg {D : D7} {M X : HSp D} {ω : GlobalTheory.Grid.WRep M X} {ν : Measure (GA D M)} {𝓕 : Set (GA D M)}
     (hν : IsHaarFD M ν 𝓕) {Φ : WO M X → ℂ} (hL : ∀ γ ∈ GQ M, ∀ g h, thetaKO ω (γ * g) h Φ = thetaKO ω g h Φ)
@@ -98,7 +97,6 @@ theorem thetaInt_wop_intg {D : D7} {M X : HSp D} {ω : GlobalTheory.Grid.WRep M 
   rw [wop_apply, thetaInt_sum _ fun k _ => (hi k).smul _]
   simp only [thetaInt_smul, he, zdeg, Finsupp.sum, Finset.sum_smul]
 
-open GlobalTheory.RegCompare in
 
 theorem tmul_cancel_left {P Q : Type} [AddCommGroup P] [Module ℂ P] [AddCommGroup Q] [Module ℂ Q] {x : P} (hx : x ≠ 0) {u u' : Q}
     (h : x ⊗ₜ[ℂ] u = x ⊗ₜ[ℂ] u') : u = u' := by
@@ -126,7 +124,6 @@ theorem eq_of_regConst (hK : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorM
   have hJ0 : J ≠ 0 := fun h => hne (by rw [e1, h, mul_zero])
   exact mul_right_cancel₀ hJ0 (e2.symm.trans e1)
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.ThetaRegularizationComparison
 

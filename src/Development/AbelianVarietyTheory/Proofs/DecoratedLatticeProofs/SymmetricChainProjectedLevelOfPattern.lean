@@ -13,7 +13,6 @@ namespace GlobalTheory.SymChain.PrImage
 section Plain
 variable {k : Type*} [Field k] {ι n : Type*} [Fintype ι] [DecidableEq ι] [Fintype n] [DecidableEq n] {c : ℕ}
 
-variable (k n c) in
 
 def fixX : Subgroup (GL (n ⊕ Fin c) k) where
   carrier := {v | ∀ r x, v.val r (.inl x) = (1 : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k) r (.inl x)}

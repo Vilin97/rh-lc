@@ -127,8 +127,6 @@ theorem tensorEquiv_symm_rep (h : AdelicGLn.FiniteAdelicGL K n)
       D.toDecomposition.π₂ h (D.finite.equiv.toLinearEquiv.symm t) :=
   LinearMap.congr_fun (D.finite.equiv.symm.toIntertwiningMap.isIntertwining' h) t
 
-open Classical in
-variable {P} in
 
 def famL (w : HeightOneSpectrum (𝓞 K)) (x : ∀ v, D.finite.W v)
     (hx : RestrictedTensor.IsRestricted D.finite.ξ x) :

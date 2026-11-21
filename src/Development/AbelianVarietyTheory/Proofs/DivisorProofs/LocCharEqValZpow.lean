@@ -17,10 +17,7 @@ open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (E) in
 
-variable (F) in
 
-variable (F) in
 
 end GlobalTheory.UnrEuler

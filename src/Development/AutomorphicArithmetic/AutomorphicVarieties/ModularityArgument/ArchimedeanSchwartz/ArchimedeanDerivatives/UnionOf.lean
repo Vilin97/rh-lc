@@ -197,7 +197,6 @@ end Primes
 
 section Main
 
-open Classical in
 
 private def pick {X : Type} (sat : X → Multiset ℂˣ → Prop) (w : X) : Multiset ℂˣ :=
   if h : ∃ B, sat w B then h.choose else 0

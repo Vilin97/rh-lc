@@ -59,13 +59,9 @@ theorem exists_prod_equiv {G B : Type} [Group G] [TopologicalSpace G] [IsTopolog
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-open GlobalTheory.LeviElem GlobalTheory.LeviHom GlobalTheory.LeviPlaneHom in
 
-open GlobalTheory.StdPar GlobalTheory.SiegelSet in
 
-open GlobalTheory.StdPar GlobalTheory.SiegelSet in
 
-open GlobalTheory.StdPar GlobalTheory.SiegelSet in
 
 open GlobalTheory.StdPar GlobalTheory.SiegelSet in
 theorem mem_leviOne {n r : ℕ} {J : Matrix (Fin n) (Fin n) E} {X Y : Matrix (Fin n) (Fin r) E} {S : Finset (Fin r)}
@@ -77,7 +73,5 @@ theorem mem_leviOne {n r : ℕ} {J : Matrix (Fin n) (Fin n) E} {X Y : Matrix (Fi
   exact ⟨fun h k hk => ⟨(h.1 k hk).1, (h.1 k hk).2, h.2 k hk⟩, fun h => ⟨fun k hk => ⟨(h k hk).1, (h k hk).2.1⟩,
     fun k hk => (h k hk).2.2⟩⟩
 
-set_option maxHeartbeats 600000 in
-open GlobalTheory.StdPar GlobalTheory.SiegelSet GlobalTheory.ThK.SquareIntegrability GlobalTheory.ThK.GLTwo in
 
 end GlobalTheory.LeviSplit

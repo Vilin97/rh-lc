@@ -40,7 +40,6 @@ section Similitude
 
 variable {R : Type} [CommRing R] {σ : R →+* R} {n : ℕ}
 
-open ReciprocityTheory.Aut in
 
 theorem scalar_of_comm (hσ : ∀ x, σ (σ x) = x) (h2 : IsUnit (2 : R)) (a : Matrix (Fin n) (Fin n) R)
     (ha : ∀ κ ∈ UGroup n σ hσ, a * κ.val = κ.val * a) (i₀ : Fin n) : a = a i₀ i₀ • (1 : Matrix (Fin n) (Fin n) R) := by
@@ -74,7 +73,6 @@ theorem scalar_of_comm (hσ : ∀ x, σ (σ x) = x) (h2 : IsUnit (2 : R)) (a : M
     rw [(h2.mul_right_eq_zero).1 e2]
     simp [hij]
 
-open ReciprocityTheory.Aut in
 
 theorem exists_unitary_conj : ∀ {R : Type} [CommRing R] (σ : R →+* R) (hσ : ∀ x, σ (σ x) = x) {n : ℕ}, IsUnit (2 : R) → Odd n → ∀ g : GL (Fin n) R, (∀ κ ∈ ReciprocityTheory.Aut.UGroup n σ hσ, g * κ * g⁻¹ ∈ ReciprocityTheory.Aut.UGroup n σ hσ) → ∃ h ∈ ReciprocityTheory.Aut.UGroup n σ hσ, ∀ κ : GL (Fin n) R, g * κ * g⁻¹ = h * κ * h⁻¹ := by
   intro R _ σ hσ n h2 hn g hg
@@ -136,7 +134,6 @@ theorem block_frame_conjugation_identity {R : Type} [CommRing R] {a b c : ℕ} (
     _ = (bW' * bW) * K' * (bW' * (J * J') * bW) := by rw [← hc]; simp only [Matrix.mul_assoc]
     _ = _ := by rw [hJ, Matrix.mul_one, hW, Matrix.one_mul, Matrix.mul_one]
 
-set_option maxHeartbeats 1000000 in
 
 theorem frames_inner : ∀ {D : D7} (Y W : HSp D) {n : ℕ} (hF : D.host.F = maximalRealSubfield D.host.E) (PY : principalLevelFrame.RowPsi Y n) (PW : principalLevelFrame.RowPsi W n), GlobalTheory.StdFrame.StdPsi hF PY → GlobalTheory.StdFrame.StdPsi hF PW → Odd Y.rank → ∀ (β : GL (Fin Y.rank) (Lev.EAf D)) (β' : GL (Fin W.rank) (Lev.EAf D)) (Pg : Finset (Pl D.host.E)) (j : Matrix (Fin W.rank) (Fin Y.rank) (Lev.EAf D)) (Φ : GfC Y ≃ₜ* GfC W), GlobalTheory.CuspMult.IsFinIso Y W β β' Pg j Φ → ∃ h : Formalism.AUTREP.GAf D.host.E n, ∀ κ, ((Φ ⟨PY.ψ κ, PY.into κ⟩ : GfC W) : GA D W) = PW.ψ (h * κ * h⁻¹) := by
   intro D Y W n hF PY PW hY hW hodd β β' Pg j Φ hI
@@ -191,7 +188,6 @@ theorem frames_inner : ∀ {D : D7} (Y W : HSp D) {n : ℕ} (hF : D.host.F = max
     exact (k ⟨κ, hκ⟩).2
   exact ⟨⟨h, hU⟩, fun κ => Subtype.ext ((hg κ).symm.trans (hh κ.1))⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_conj_map : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A) {n : ℕ} (PY : principalLevelFrame.RowPsi (Yc D 0) n) π, π ∈ principalLevelFrame.OccRows R.θ PY (R.MY 0) (fun b => (levS _ (R.βY 0) (R.dat0 (R.levR F b)))) (fun b => (levChi _ (R.βY 0) (R.dat0 (R.levR F b)))) (fun _ => R.e0) → ∃ (M₀ : DSModel (Yc D 0) (parA (Ptw D) 0)) (f : π.S →ₗ[ℂ] MMap M₀), f ≠ 0 ∧ principalLevelFrame.IsEqvA (principalLevelFrame.actM PY M₀) π f ∧ ∀ x, f x ∈ GlobalTheory.CuspMult.allMaps R.θ M₀ := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F n PY π hπ
@@ -243,7 +239,6 @@ theorem exists_conj_map : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T :
     rw [this]
     exact GlobalTheory.PartDims.mult_le R.θ _ (fun k hk => hk.elim) hT'
 
-open Formalism.IndefR.principalLevelFrame in
 
 theorem exists_good_base_vec : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A) {s : ℕ}, A.fam.Ok s → GlobalTheory.Hk3.Core R F → (∀ χ ∈ A.X, chiIdem χ * lvlIdem F.P0 F.ψ0 ≠ 0) → ∀ {n : ℕ} (PY : principalLevelFrame.RowPsi (Yc D 0) n) (π : Formalism.L2.NG.FinTyp D.host.E n) (v : Formalism.AUTREP.GAf D.host.E n → ℂ), v ∈ π.S → v ≠ 0 → principalLevelFrame.IsTypeVec (PY.ψ ⁻¹' levS _ (R.βY 0) (R.dat0 R.triv)) (fun _ => 1) v → (∀ κ : G → Formalism.AUTREP.GAf D.host.E n, (∀ g, IsLevelLift (Yc D 0) (R.βY 0) (R.dat0 R.triv) (R.eG g) (PY.ψ (κ g))) → ∑ g, RealDat.eC (A := A) D.what₂.embLL g • Formalism.L2.NG.rt D.host.E n (κ g) v = v) → ∃ x ∈ π.S, x ≠ 0 ∧ principalLevelFrame.IsTypeVec (PY.ψ ⁻¹' levS _ (R.βY 0) (R.dat0 (R.levR F false))) (fun κ => levChi _ (R.βY 0) (R.dat0 (R.levR F false)) (PY.ψ κ)) x ∧ ∀ κ : G → Formalism.AUTREP.GAf D.host.E n, (∀ g, IsLevelLift (Yc D 0) (R.βY 0) (R.dat0 R.triv) (R.eG g) (PY.ψ (κ g))) → ∑ g, RealDat.eC (A := A) D.what₂.embLL g • Formalism.L2.NG.rt D.host.E n (κ g) x = x := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F s hOk hC hne n PY π v hvS hv0 hvT hgood
@@ -454,8 +449,6 @@ def eqv {D : D7} {Y : HSp D} {n : ℕ} (P : principalLevelFrame.RowPsi Y n) : Fo
       obtain ⟨h, hh⟩ := P.onto g.1 g.2
       exact ⟨h, Subtype.ext hh⟩⟩
 
-set_option maxHeartbeats 2000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem exists_mem_isotL (hP : GlobalTheory.Published.HarishChandraFinite) {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A) {s : ℕ} (hOk : A.fam.Ok s) (hC : GlobalTheory.Hk3.Core R F) (hM : MultEq R) (hX : Formalism.L2.DIV.GoodStable A.X) (hgen : ∀ χ ∈ A.X, chiIdem χ * lvlIdem F.P0 F.ψ0 ≠ 0) {n : ℕ} (hF : D.host.F = maximalRealSubfield D.host.E) (PY : principalLevelFrame.RowPsi (Yc D 0) n) (i : Fin D.R.m) (PW : principalLevelFrame.RowPsi (Wc D i) n) (hPY : GlobalTheory.StdFrame.StdPsi hF PY) (hPW : GlobalTheory.StdFrame.StdPsi hF PW) (π : Formalism.L2.NG.FinTyp D.host.E n) (hπ : π ∈ principalLevelFrame.OccRows R.θ PY (R.MY 0) (fun b => (levS _ (R.βY 0) (R.dat0 (R.levR F b)))) (fun b => (levChi _ (R.βY 0) (R.dat0 (R.levR F b)))) (fun _ => R.e0)) :
     ∃ w ∈ principalLevelFrame.isotL R.θ PW (R.MW i (sg0 D A))
@@ -572,8 +565,6 @@ theorem exists_mem_isotL (hP : GlobalTheory.Published.HarishChandraFinite) {D : 
   show f' (GlobalTheory.OccRowVec.finRep π h⁻¹ (GlobalTheory.OccRowVec.finRep π h ⟨y, hyS⟩)) = _
   rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.KapIsot
 end

@@ -21,7 +21,6 @@ section AtRecord
 
 variable {D : D7} {L : SizeData₂ D} (X : G.Inst D L) (K : G.Consts) (Cr C bo : ℝ)
 
-open NumberField in
 
 theorem pa_int_dvd_of_mem_span {E : Type*} [Field E] [NumberField E] (N a : ℤ)
     (h : (a : 𝓞 E) ∈ Ideal.span {(N : 𝓞 E)}) : N ∣ a := by
@@ -50,7 +49,6 @@ theorem pa_int_dvd_of_mem_span {E : Type*} [Field E] [NumberField E] (N a : ℤ)
     rw [h2]; field_simp
   exact_mod_cast this
 
-open NumberField in
 
 theorem pa_norm_congr_one {E : Type*} [Field E] [NumberField E] (c : E ≃ₐ[ℚ] E) (T M : ℕ) (pz : 𝓞 E)
     (hpz : (pz : E) * c (pz : E) = (T : E)) (hcong : (pz - 1) ∈ Ideal.span {(M : 𝓞 E)}) :
@@ -186,7 +184,6 @@ theorem pa_lt_bndP {p : ℕ} (h : (p : ℝ) ≤ L.sc.X'' D.R.n) : p < bndP L := 
   have h2 := le_max_right ⌊L.sc.a + L.sc.a / ((D.R.k : ℝ) * L.sc.x ^ (Scale.A / 2))⌋₊ ⌊L.sc.X'' D.R.n⌋₊
   omega
 
-open Classical in
 
 theorem pa_entry (H : PtH X K Cr) (w : D.what₂.places.Pl) (hw : w ∈ L.supp) :
     (∑ j ∈ SizeData₂.lifts D, L.gainD j w) - L.tau w =
@@ -452,11 +449,8 @@ theorem pg_more (hx : Fm.x1 < x) (i i' : Fm.Ix x) (p n : ℕ) :
   pg_sameMore Fm.GK (allOf (Fm.Gx x i)) (allOf (Fm.Gx x i')) (Fm.R_eq x i i') (pg_TT i i') (pg_cls i i')
     (Fm.hP_eq x i i') (Lnk.sc_eq Fm hx i i') (Fm.bs_eq x i i') p n
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 theorem pg_LaG (hx : Fm.x1 < x) (i : Fm.Ix x) : (Fm.L x i).LaG = G.La Fm.GK (Fm.L x i).sc := by
   obtain ⟨w, -⟩ := Lnk.place_over (Fm.D x i) 2 Nat.prime_two
@@ -488,7 +482,6 @@ theorem parTie (hx : Fm.x1 < x) (i : Fm.Ix x) (C bo Cb Cord : ℝ) :
   · show (Fm.L x i0).sc.X' * (1 + Fm.Cr * G.rhoB (Fm.D x i0) Fm.GK (Fm.L x i0).sc) = _; rw [hrho, hsc]
   · rfl
 
-open Classical in
 
 end Family
 
@@ -1543,11 +1536,8 @@ section marg
 
 variable {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end marg
 

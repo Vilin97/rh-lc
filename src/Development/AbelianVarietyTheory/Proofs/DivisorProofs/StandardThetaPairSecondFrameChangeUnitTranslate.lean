@@ -128,7 +128,6 @@ private theorem exists_unitFactor {e : AE D} (hE : toEAf D e * toEAf D e = toEAf
     rw [← Matrix.det_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.det_one]
   rw [idem_mul hE, hd, mul_one, sub_add_cancel]
 
-set_option maxHeartbeats 1000000 in
 
 private theorem unitChar_mul (ν : (AE D)ˣ →* Circle) {e : AE D} (hE : toEAf D e * toEAf D e = toEAf D e) {k : ℕ}
     (κ : GL (Fin k) (EAf D)) (x : (AE D)ˣ) (h1 : infPart D (x : AE D) = 1)
@@ -193,7 +192,6 @@ private theorem frMapAdj_pull (A' WW : HSp D) (βA βA' : GL (Fin A'.rank) (EAf 
   simp only [Matrix.mul_assoc, Units.inv_mul, Matrix.mul_one]
   rw [← Matrix.mul_assoc βA'.val (βA'⁻¹).val, Units.mul_inv, Matrix.one_mul]
 
-set_option maxHeartbeats 1000000 in
 
 private theorem stdSnd_frames : ∀ {D : D7} (ν : (AE D)ˣ →* Circle) (e : AE D) (S : Finset (Formalism.L2.DIV.Pl D.host.E)), IsIdemSum e S →
     ∀ (I : Ideal (𝓞 D.host.E)) (a : ℕ) (A' WW : HSp D) (ΛA : Submodule (𝓞 D.host.E) (Fin A'.rank → D.host.E))

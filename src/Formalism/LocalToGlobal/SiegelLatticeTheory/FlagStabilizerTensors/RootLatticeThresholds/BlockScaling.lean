@@ -115,7 +115,6 @@ theorem conj_trG {n N : ℕ} {ε : Fin n → Bool} {Q : Matrix (Fin n) (Fin N) �
       rw [hQQi, Matrix.mul_one, Matrix.mul_one]
       rfl
 
-open Formalism.L2.SG.HidaSetting Formalism.L2.SG.LocWSOf in
 
 theorem rset_of_stV {D : D7} {X : HidaSetting D} (v : InfinitePlace X.B.I.F) {lam : ℂ} (hl : lam ≠ 0)
     {Q : Matrix (Fin X.B.I.n) (Fin (2 * D.R.rS + D.R.k + 1)) ℂ} {Qi : Matrix (Fin (2 * D.R.rS + D.R.k + 1)) (Fin X.B.I.n) ℂ}

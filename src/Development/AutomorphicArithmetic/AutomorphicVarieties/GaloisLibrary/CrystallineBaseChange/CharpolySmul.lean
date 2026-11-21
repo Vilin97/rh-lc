@@ -125,4 +125,3 @@ private theorem charpoly_smul {k : Type} [Field k] (φ : k →+* ℂ) (M : Matri
 
 end UpperTheory.V.Br.AutomorphicNewformFromAlmostEverywhere
 
-open UpperTheory.V UpperTheory.V.Af UpperTheory.V.Br.AutomorphicNewformFromAlmostEverywhere in

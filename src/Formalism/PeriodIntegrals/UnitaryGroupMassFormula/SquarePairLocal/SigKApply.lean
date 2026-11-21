@@ -64,7 +64,6 @@ theorem val_star (a : E) : v.valuation E (star a) = v.valuation E a := by
   rw [star_div₀, hs, hs, map_div₀, map_div₀, valuation_of_algebraMap, valuation_of_algebraMap,
     valuation_of_algebraMap, valuation_of_algebraMap, intVal_cj v hv, intVal_cj v hv]
 
-omit hv in
 
 def tau : WithVal (v.valuation E) →+* WithVal (v.valuation E) :=
   WithVal.map (v.valuation E) (v.valuation E) (starRingEnd E)

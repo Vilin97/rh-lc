@@ -27,7 +27,6 @@ section Transfer
 
 variable {X Y : Type} [AddCommGroup X] [Module (𝓞 E) X] [AddCommGroup Y] [Module (𝓞 E) Y]
 
-omit [IsCMField E] in
 
 lemma pairE_comp (e : X →ₗ[𝓞 E] Y) (ξ : Module.Dual ℤ Y) (ξ₁ : Module.Dual ℤ X) (h : ∀ x, ξ₁ x = ξ (e x)) (x : X) :
     pairE (E := E) ξ₁ x = pairE ξ (e x) := by

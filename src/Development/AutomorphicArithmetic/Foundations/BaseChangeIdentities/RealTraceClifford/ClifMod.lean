@@ -134,14 +134,12 @@ def lf : Module.End ℂ V →ₐ[ℂ] Module.End ℂ (Ten J V) where
   map_add' S T := by ext x j; simp
   commutes' c := by ext x j; simp [Module.algebraMap_end_apply]
 
-variable {J} (V) in
 
 def mt (M : Matrix J J ℂ) : Module.End ℂ (Ten J V) where
   toFun x := WithLp.toLp 2 fun j => ∑ k, M j k • x k
   map_add' x y := by ext j; simp [Finset.sum_add_distrib]
   map_smul' c x := by ext j; simp [Finset.smul_sum, smul_smul, mul_comm]
 
-variable {J} in
 
 def dg [DecidableEq J] (K : Fin n → Fin n → Module.End ℂ V) (c : Fin n → Fin n → Matrix J J ℂ) (a b : Fin n) :
     Module.End ℂ (Ten J V) := lf J (K a b) + mt V (spn c a b)

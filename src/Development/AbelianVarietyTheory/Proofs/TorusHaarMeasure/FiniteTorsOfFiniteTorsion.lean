@@ -130,7 +130,6 @@ theorem _root_.GlobalTheory.ChartCompare.nEval_subst (b : σ → MvPowerSeries �
   rw [_root_.GlobalTheory.ChartCompare.subst_C_eq f _ hab] at h
   simpa using (congrArg (coeff 0) h).symm
 
-omit [Fintype σ] in
 
 open IsLocalRing TensorProduct in
 variable {R₀ : Type} [CommRing R₀] in
@@ -261,21 +260,16 @@ variable {B : BX R₀} {k : LAlg R₀} {p g : ℕ} {O : ResAlg k}
 
 variable {C : Type v} [Field C] [Algebra (O.alg : Type) C] [IsFractionRing (O.alg : Type) C]
 
-omit [IsFractionRing (O.alg : Type) C] in
 
 namespace OfFin
 
 variable (F : FIN B O.alg p)
 
-include F in
 
-include F in
 
-variable (C) in
 
 end OfFin
 
-variable (C) in
 
 end Torsion
 
@@ -286,7 +280,6 @@ universe v
 variable {B : BX R₀} {g : ℕ} {p : ℕ} [Fact p.Prime] {k : LAlg R₀} {O : ResAlg k} {W : NilAlg k}
   {C : Type v} [Field C] [Algebra (O.alg : Type) C] [IsFractionRing (O.alg : Type) C]
 
-variable (C) in
 
 end Bundle
 

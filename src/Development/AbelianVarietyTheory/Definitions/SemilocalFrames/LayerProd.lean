@@ -44,7 +44,6 @@ def lamX (x : I.GA) : Submodule (𝓞 I.E) (Fin I.n → I.E) :=
   Submodule.span (𝓞 I.E)
     {y | I.fmat x.2⁻¹ *ᵥ (fun i => Formalism.UG.inclE (F := I.F) (Af I.F) (y i)) ∈ I.Lf}
 
-open Classical in
 
 def frm (x : I.GA) : InfinitePlace I.E → Matrix (Fin I.n) (Fin I.n) ℂ := fun w =>
   if w.embedding = I.φ (w.comap (algebraMap I.F I.E)) then

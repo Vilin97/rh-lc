@@ -8,7 +8,6 @@ open NumberField
 
 namespace GlobalTheory.CompanionTheory.Ar.Giv
 
-open NumberField.InfinitePlace NumberField.Units NumberField.Units.dirichletUnitTheorem in
 
 theorem const_of_orthogonal_log_units : ∀ (F : Type) [Field F] [NumberField F] (m : (F →+* ℂ) → ℝ),
     (∀ sg, m (ComplexEmbedding.conjugate sg) = m sg) →

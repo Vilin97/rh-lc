@@ -9,7 +9,6 @@ open IsLocalRing TensorProduct
 
 namespace GlobalTheory
 
-open MvPolynomial in
 
 theorem derivation_sumAlgEquiv_eq_pderiv {Λ : Type} [CommRing Λ] {σ τ : Type}
     (d : τ ⊕ σ → Derivation ℤ (MvPolynomial τ (MvPolynomial σ Λ))

@@ -21,7 +21,6 @@ namespace GlobalTheory.PDiv.FrobRigKer
 
 variable {O A B : Type} [CommRing O] [CommRing A] [CommRing B] [Bialgebra O A] [Bialgebra O B]
 
-variable (O A) in
 
 def evalZeroTwo : A ⊗[O] A →ₗ[O] O :=
   (TensorProduct.lid O O).toLinearMap ∘ₗ TensorProduct.map (counit (R := O)) (counit (R := O))

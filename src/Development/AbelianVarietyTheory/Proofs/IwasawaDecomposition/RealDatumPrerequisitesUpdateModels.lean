@@ -89,7 +89,6 @@ theorem realDatum_isUpdate_first_models (R : RealDat D A Ks) : ∀ R' HX HV HE H
   · refine Or.inr ⟨HX, HV, HE, HW, gE, gW, jX, jV, νY, fdY, ν0, fd0, νX, fdX, νV, fdV, νW, fdW, BV, ?_⟩
     exact (by with_unfolding_all exact ((Eq.refl (R.upd1 HX HV HE HW gE gW jX jV νY fdY ν0 fd0 νX fdX νV fdV νW fdW BV)) :))
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_models (hI : Inputs D) (hX : IdemClass A) {F : Face D A} (hL : LiftsAt D A Ks F) (R : RealDat D A Ks) (h : R.Pre0 F) :
     ∃ HX HV HE gE jX jV νY fdY ν0 fd0 νX fdX νV fdV, ∀ R2 : RealDat D A Ks,
@@ -109,7 +108,6 @@ theorem exists_models (hI : Inputs D) (hX : IdemClass A) {F : Face D A} (hL : Li
     rintro _ rfl
     exact (by with_unfolding_all exact (m' :))
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_at (hI : Inputs D) {F : Face D A} (hF : SeedFacts D A Ks F) (R : RealDat D A Ks) (h : R.Pre0 F)
     (hω : WeilAt R A.μ0) (hV : ModVAt R A.μ0) (hl : LiftAt R A.μ0) (hr : RatAt R A.μ0) (i : Fin D.R.m) (t : T)
@@ -159,7 +157,6 @@ theorem exists_at (hI : Inputs D) {F : Face D A} (hF : SeedFacts D A Ks F) (R : 
     obt ⟨g, hg⟩ := orZero_exists (PG R i th)
     exact ⟨ω, v, H₀, j₀, ν₀, fd₀, th, g, hω', hv, m1, m2, m3, hth, hg, fun e => absurd e ht⟩
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_thPW_keep (hI : Inputs D) (hX : IdemClass A) {F : Face D A} (hL : LiftsAt D A Ks F) (hF : SeedFacts D A Ks F)
     (R : RealDat D A Ks) (h : R.Pre0 F) (hW : ModW R) (hω : WeilAt R A.μ0) (hV : ModVAt R A.μ0) (hl : LiftAt R A.μ0)
@@ -219,7 +216,6 @@ theorem realDatum_thetaPairWeil_update_third {R : RealDat D A Ks} (a : R.IsThPW)
     (R.upd3 ωY ωX vac vacX vY vX ItY ItX ioY ioX Th).IsThPW :=
   ⟨a.ωP, a.vP, a.pt_theta, a.ioP, a.thF, a.thG⟩
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_weak_keep (hI : Inputs D) (hX : IdemClass A) {F : Face D A} (hL : LiftsAt D A Ks F) (hF : SeedFacts D A Ks F)
     (Q : RealDat D A Ks → Prop)

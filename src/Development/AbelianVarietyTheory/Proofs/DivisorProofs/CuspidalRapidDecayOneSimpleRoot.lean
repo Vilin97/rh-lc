@@ -101,7 +101,6 @@ theorem map_unip' {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {r : �
   simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add (f := _)]
   split_ifs <;> simp
 
-variable (E) in
 
 def conjY {r : ℕ} (x : GA E a) : (BlockIx a r → Ad E) →+ Matrix (Fin a) (Fin a) (Cinf E) where
   toFun P := (((x⁻¹ : GA E a) : Matrix (Fin a) (Fin a) (Ad E)) * nilM P * (x : Matrix (Fin a) (Fin a) (Ad E))).map (pInf E)

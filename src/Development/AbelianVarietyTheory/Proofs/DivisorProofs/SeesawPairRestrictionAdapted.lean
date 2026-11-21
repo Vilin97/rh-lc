@@ -49,7 +49,6 @@ theorem frame_mul {d d₁ : ℕ} {β : Type} (H : Plane E d d₁) (z : Matrix (F
 theorem incM_one {α : Type} [DecidableEq α] : incM F (1 : Matrix α α E) = 1 :=
   Matrix.map_one _ (map_zero _) (map_one _)
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_coord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d)
     (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' →

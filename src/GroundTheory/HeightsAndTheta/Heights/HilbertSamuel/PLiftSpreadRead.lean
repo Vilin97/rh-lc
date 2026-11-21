@@ -48,7 +48,6 @@ theorem evQ_smul (t : MRingOver ℚ ι) (m : MRingOver ℚ ι ⧸ KH.genIdeal y)
   rw [show t • Ideal.Quotient.mk (KH.genIdeal y) f = Ideal.Quotient.mk (KH.genIdeal y) (t * f) from rfl,
     evQ_mk, evQ_mk, map_mul]
 
-open Classical in
 
 def evL (T : Submonoid (MRingOver ℚ ι)) (x : LocalizedModule T (MRingOver ℚ ι ⧸ KH.genIdeal y)) : Ω :=
   if h : ∀ t ∈ T, aeval y t ≠ 0 then
@@ -133,7 +132,6 @@ theorem cellMon_ne {I : ∀ k, Finset (ι k)} (hI : ∀ k, ∀ i ∈ I k, y ⟨k
   | one => simp
   | mul x x' _ _ hx hx' => rw [map_mul]; exact mul_ne_zero hx hx'
 
-variable (y) in
 
 theorem aeval_div_mem (c : ∀ k, ι k) {g : MRingOver ℚ ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
     aeval y g / ∏ k, y ⟨k, c k⟩ ^ d k ∈ chartRingQ y c := by
@@ -241,7 +239,6 @@ theorem locPart_mem {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {a : K 
 
 variable [LinearOrder K] [∀ k, LinearOrder (ι k)]
 
-variable (y) in
 
 def val (z : KH.CechC ℚ ι (MRingOver ℚ ι ⧸ KH.genIdeal y) 0) (J : KH.Cell K ι 0) : Ω :=
   evL y (KH.cellMon ℚ J.1) (z J)
@@ -420,7 +417,6 @@ theorem val_chart_eq {z : KH.CechC ℚ ι (MRingOver ℚ ι ⧸ KH.genIdeal y) 0
       simp [Finset.mem_insert, hk]
   simpa using key Finset.univ
 
-variable (y) in
 
 theorem exists_sections_of_generatedV {n : K → ℤ} (hg : KH.GeneratedV ℚ (KH.genIdeal y) n) :
     ∃ (σ : Type) (_ : Fintype σ) (s : σ → Ω), (∀ j, s j ∈ chartLatQ y n 1) ∧

@@ -483,7 +483,6 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : 
   [AddCommGroup D] [Module LL D] {R : LevelModel S LL Ks Δ D} {η : ℕ} {kind : ℕ → Kind}
   {b : ℕ → ℕ} {lam : Fin r → D} {U : ℕ → Submodule O (Fin r → O)}
 
-omit [IsDomain O] [IsDiscreteValuationRing O] in
 
 lemma nb_iff (h : BridgeItems R ϖ η kind b lam U) {s : ℕ} (hs : s < ell)
     (y : Fin r → PowerSeries O) (m m' : ℕ)
@@ -545,7 +544,6 @@ theorem level_iff (hϖ : Irreducible ϖ) (h : BridgeItems R ϖ η kind b lam U) 
       split_ifs <;> first | rfl | omega), core _ _ (Nat.le_add_right _ _)]
     rfl
 
-omit [IsDomain O] [IsDiscreteValuationRing O] in
 
 lemma pr_key (h : BridgeItems R ϖ η kind b lam U) {s : ℕ} (hs : s < ell)
     (y : Fin r → PowerSeries O) (N : ℕ) (o : Fin r → O) (d : D) (e : S.Lv)

@@ -61,7 +61,6 @@ theorem continuous_ofMixed : Continuous (InfiniteAdeleRing.ringEquiv_mixedSpace 
     exact ((continuous_apply _).comp continuous_snd).congr fun y =>
       (congrFun (congrArg Prod.snd ((InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply y)) ⟨v, hv⟩).symm
 
-variable (F κ) in
 
 def glueE : (Vi F κ × Vf F κ) ≃ₜ+ (κ → AF F) where
   toFun := glue

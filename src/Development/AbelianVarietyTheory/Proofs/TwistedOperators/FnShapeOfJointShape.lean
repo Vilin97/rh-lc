@@ -97,7 +97,6 @@ end GlobalTheory.JointHarm.ListShape
 
 namespace GlobalTheory.JointHarm
 
-open ListShape in
 
 theorem fnShape_of_jointShape (p q r s : ℕ) (μ : Ix p q → ℚ) (μ' : Ix r s → ℚ)
     (h : JointShape p q r s μ μ') : FnShape p q r s μ μ' := by

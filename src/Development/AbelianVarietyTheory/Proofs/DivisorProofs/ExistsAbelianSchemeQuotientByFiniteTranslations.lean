@@ -62,7 +62,6 @@ theorem isAbelianScheme_of_finite_etale {S : Scheme.{0}} (A Q : Over S) [GrpObj 
   exact ⟨hQ, GlobalTheory.AbelianQuotient.smooth_of_grpObj_of_flat Q, ⟨⟩,
     GlobalTheory.AbelianQuotient.geometricallyConnected_of_comp q.left Q.hom⟩
 
-open GlobalTheory.AbelianQuotient in
 
 theorem grp_descent : ∀ (S : Scheme.{0}) (A Q : Over S) [GrpObj A] [IsCommMonObj A] (q : A ⟶ Q),
     Flat q.left → Surjective q.left → QuasiCompact q.left →

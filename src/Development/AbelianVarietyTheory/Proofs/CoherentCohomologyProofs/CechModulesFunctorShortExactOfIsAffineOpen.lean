@@ -51,8 +51,6 @@ section Comparison
 variable (R : Type v) [CommRing R] [Algebra R Γ(X, ⊤)] [LinearOrder ι] [Finite ι]
   (hc : ⨆ i, U i = ⊤) (hU : ∀ s : Finset ι, s.Nonempty → IsAffineOpen (⨅ i ∈ s, U i))
 
-omit [LinearOrder ι] [Finite ι] in
-include hU in
 
 theorem cechAcyclicMod_top_of_isAffineOpen (F : X.Modules) [F.IsQuasicoherent] :
     CechAcyclicMod ⊤ U F :=
@@ -77,8 +75,6 @@ theorem cechHEquivCoh_toCechH (F : X.Modules) [F.IsQuasicoherent] (x : sectionsO
   rw [cechHEquivCoh_def, cechHEquivCohOn_zero, cechHZeroEquivCohOn, LinearEquiv.trans_apply,
     cechHZeroEquiv_toCechH]
 
-omit [Finite ι] in
-include hU in
 
 theorem cechModulesFunctor_shortExact_of_isAffineOpen {S : ShortComplex X.Modules}
     (hS : S.ShortExact) [S.X₁.IsQuasicoherent] :
@@ -169,12 +165,10 @@ theorem exists_finset_sum_cofanProj_app [Small.{u} κ] [∀ k, (F k).IsQuasicohe
 
 variable (R : Type v) [CommRing R] [Algebra R Γ(X, ⊤)] (V : X.Opens) (n : ℕ)
 
-variable (c) in
 
 def cohOn.directSumMap : (⨁ k, cohOn (F k) V n) →ₗ[R] cohOn c.pt V n :=
   DirectSum.toModule R κ _ fun k => cohOn.map R (c.inj k) V n
 
-variable (c) in
 
 @[simp]
 theorem cohOn.directSumMap_lof (k : κ) (x : cohOn (F k) V n) :
@@ -182,7 +176,6 @@ theorem cohOn.directSumMap_lof (k : κ) (x : cohOn (F k) V n) :
       cohOn.map R (c.inj k) V n x :=
   DirectSum.toModule_lof (M := fun k => cohOn (F k) V n) R k x
 
-include hc in
 
 theorem cohOn.directSumMap_injective : Function.Injective (cohOn.directSumMap c R V n) := by
   have key (j : κ) : cohOn.map R (cofanProj hc j) V n ∘ₗ cohOn.directSumMap c R V n =
@@ -200,7 +193,6 @@ theorem cohOn.directSumMap_injective : Function.Injective (cohOn.directSumMap c 
 
 variable {V} [Small.{u} κ] [∀ k, (F k).IsQuasicoherent]
 
-include hc in
 
 theorem cohOn.directSumMap_bijective {ι : Type} [Finite ι] {U : ι → X.Opens} (hV : V ≤ ⨆ i, U i)
     (hU : ∀ s : Finset ι, s.Nonempty → IsAffineOpen (cechOpen V U s)) :
@@ -249,7 +241,6 @@ end DirectSum
 
 section Disjoint
 
-open SheafLES in
 
 theorem SheafLES.pi_res_bijective_of_disjoint {T : TopCat.{u}} {κ : Type w} {V : Opens T}
     {U : κ → Opens T} (h : ∀ i, U i ≤ V) (hc : V ≤ ⨆ i, U i)
@@ -341,8 +332,6 @@ theorem coh.disjointRestrictEquiv_apply (F : X.Modules) (n : ℕ) (x : coh F n) 
 
 end Disjoint
 
-attribute [local instance] Abelian.hasFiniteBiproducts in
-open DirectSum in
 
 theorem cech_computes_coh_of_affine_cover (X : Scheme.{u}) (R : Type v) [CommRing R]
     [Algebra R Γ(X, ⊤)] :

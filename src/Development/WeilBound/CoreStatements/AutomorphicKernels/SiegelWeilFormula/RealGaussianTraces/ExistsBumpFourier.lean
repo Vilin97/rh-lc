@@ -74,7 +74,6 @@ theorem exp_pair3 {ι : Type} [Fintype ι] {n : ℕ} (l : ι → ℝ) (u w : ι 
   push_cast
   ring
 
-set_option maxHeartbeats 400000 in
 
 theorem selfDual_const {H : Type} [AddCommGroup H] [TopologicalSpace H] [MeasurableSpace H] [BorelSpace H]
     {ι : Type} [Fintype ι] {n : ℕ} (l : ι → ℝ) (hl : ∀ i, l i ≠ 0)

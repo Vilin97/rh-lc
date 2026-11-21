@@ -164,7 +164,6 @@ theorem integrable_tens (D : Dom E a b) [MeasurableSpace (G a)] [MeasurableSpace
 
 end prime_not_mem_section_base_place
 
-open prime_not_mem_section_base_place in
 
 theorem typeOf : TypeOf := by
   intro E _ _ _ a b Ma Mb

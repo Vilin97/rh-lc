@@ -13,8 +13,6 @@ section General
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ}
 
-open NumberField IsDedekindDomain in
-variable {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ} in
 
 theorem _root_.GlobalTheory.phiT_add_smul_homAt (K : Type) [Field K]
     {ST SG SG' S : Finset (HeightOneSpectrum (𝓞 E))}
@@ -56,8 +54,6 @@ theorem _root_.GlobalTheory.inFr_add (f : _root_.Formalism.L2.Col.Sp E a ≃ₗ[
   unfold _root_.Formalism.L2.Col.inFr
   rw [LinearMap.add_comp, LinearMap.comp_add]
 
-open NumberField IsDedekindDomain in
-variable {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ} in
 
 theorem _root_.GlobalTheory.intAt_inFr_smul_homAt {S : Finset (HeightOneSpectrum (𝓞 E))}
     {N : Submodule (𝓞 E) (_root_.Formalism.L2.Col.Sp E a)}

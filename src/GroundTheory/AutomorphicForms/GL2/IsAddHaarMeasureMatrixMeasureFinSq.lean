@@ -57,7 +57,6 @@ theorem norm_detPow (g : GL (Fin m) F) (s : ℂ) :
     ‖detPow g s‖ = ((LocalField.residueCard F : ℝ) ^ (-s.re)) ^ ordDet g := by
   rw [detPow_eq_qs_zpow, norm_zpow, norm_qs]
 
-variable (F m) in
 
 def tile (j : ℤ) : Set (GL (Fin m) F) := {g | j * m ≤ ordDet g ∧ ordDet g < j * m + m}
 

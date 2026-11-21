@@ -17,7 +17,6 @@ noncomputable section
 
 namespace GlobalTheory.CuspGL.PsiPrimitive
 
-open Classical in
 
 theorem finsum_sub {α : Type} [Fintype α] (p : α → Prop) (f : {a // p a} → ℂ) :
     ∑ᶠ x, f x = ∑ a, if h : p a then f ⟨a, h⟩ else 0 := by
@@ -28,7 +27,6 @@ theorem finsum_sub {α : Type} [Fintype α] (p : α → Prop) (f : {a // p a} �
     rw [dite_eq_right i.2]
   simp only [h1, h2, Finset.sum_const_zero, add_zero]
 
-open Classical in
 
 def res {F : Type} [Field F] (s : F[X] → ℂ) {V : Type} [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] (W : Submodule F V) (k : Module.End F V) : ℂ :=

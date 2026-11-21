@@ -39,7 +39,6 @@ def unit (anti : ∀ a b, σ (a * b) = σ b * σ a) (one : σ 1 = 1) (invol : �
     have : ((a⁻¹ : 𝔸ˣ) : 𝔸) = σ a := (Units.eq_inv_of_mul_eq_one_right ha).symm
     rw [this, invol, mul_adj σ ha]
 
-open Classical in
 
 def sec (anti : ∀ a b, σ (a * b) = σ b * σ a) (one : σ 1 = 1) (invol : ∀ a, σ (σ a) = a) (a : 𝔸) :
     unit σ anti one invol :=

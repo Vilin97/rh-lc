@@ -42,13 +42,9 @@ variable [NumberField E] {σ : E →+* E} {n r : ℕ} {J s : Matrix (Fin n) (Fin
   {P P' : Matrix (Fin n) (Fin (r + 1)) E} {u v : Matrix (Fin (r + 1)) (Fin (r + 1)) E}
   {Λ M : Submodule (𝓞 E) (Fin n → E)}
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
 end Lattices
 

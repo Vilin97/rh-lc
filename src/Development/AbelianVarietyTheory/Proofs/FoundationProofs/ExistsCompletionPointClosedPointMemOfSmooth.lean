@@ -15,16 +15,12 @@ section Lift
 
 variable {X S : Scheme.{u}} (f : X ⟶ S)
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing in
-variable {X S : Scheme.{u}} (f : X ⟶ S) in
 
 theorem _root_.GlobalTheory.range_subset_opens_of_isLocalRing {B : CommRingCat.{u}} [IsLocalRing B] (s : Spec B ⟶ S)
     {U : S.Opens} (h : s (closedPoint B) ∈ U) : Set.range s ⊆ U := by
   rintro _ ⟨y, rfl⟩
   exact ((specializes_closedPoint y).map s.base.hom.continuous).mem_open U.isOpen h
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing in
-variable {X S : Scheme.{u}} (f : X ⟶ S) in
 
 theorem _root_.GlobalTheory.exists_isAffineOpen_pair (x : X) {O : X.Opens} (hx : x ∈ O) :
     ∃ (U : S.Opens) (V : X.Opens), IsAffineOpen U ∧ IsAffineOpen V ∧ V ≤ f ⁻¹ᵁ U ∧ V ≤ O ∧
@@ -36,8 +32,6 @@ theorem _root_.GlobalTheory.exists_isAffineOpen_pair (x : X) {O : X.Opens} (hx :
       (show x ∈ ((O ⊓ f ⁻¹ᵁ U : X.Opens) : Set X) from ⟨hx, hxU⟩) (O ⊓ f ⁻¹ᵁ U).isOpen
   exact ⟨U, V, hU, hV, fun y hy => (hVle hy).2, fun y hy => (hVle hy).1, hxV⟩
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing in
-variable {X S : Scheme.{u}} (f : X ⟶ S) in
 
 theorem _root_.GlobalTheory.exists_lift_of_smooth_of_isAffineOpen [Smooth f] {U : S.Opens} {V : X.Opens}
     (hU : IsAffineOpen U) (hV : IsAffineOpen V) (hVU : V ≤ f ⁻¹ᵁ U) {B C : CommRingCat.{u}}
@@ -79,8 +73,6 @@ theorem _root_.GlobalTheory.exists_lift_of_smooth_of_isAffineOpen [Smooth f] {U 
     ext r
     exact ψ.commutes r
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing in
-variable {X S : Scheme.{u}} (f : X ⟶ S) in
 
 theorem _root_.GlobalTheory.lift_ext_of_unramified [FormallyUnramified f] [LocallyOfFiniteType f]
     {B C : CommRingCat.{u}} (π : B ⟶ C) (hπ : Function.Surjective π)
@@ -167,9 +159,6 @@ section Residue
 
 variable (B : Type u) [CommRing B] [HenselianLocalRing B] (s : Spec (.of B) ⟶ S)
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing in
-variable {X S : Scheme.{u}} (f : X ⟶ S) in
-variable (B : Type u) [CommRing B] [HenselianLocalRing B] (s : Spec (.of B) ⟶ S) in
 
 theorem _root_.GlobalTheory.reducePoint_residue_surjective [Smooth f] :
     Function.Surjective (_root_.GlobalTheory.reducePoint f (CommRingCat.ofHom (residue B)) s) :=
@@ -183,8 +172,6 @@ section QuasiSection
 
 variable {X S : Scheme.{u}} (f : X ⟶ S) [Smooth f]
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing in
-variable {X S : Scheme.{u}} (f : X ⟶ S) [Smooth f] in
 
 theorem _root_.GlobalTheory.exists_etale_point_of_smooth (B : Type u) [CommRing B] [IsLocalRing B]
     (K : Type*) [Field K] [Algebra B K] [Algebra (ResidueField B) K]
@@ -235,8 +222,6 @@ theorem _root_.GlobalTheory.exists_etale_point_of_smooth (B : Type u) [CommRing 
     rw [← SetLike.mem_coe, ← hV.range_fromSpec]
     exact ⟨(Spec.map (CommRingCat.ofHom ψ)).base z, rfl⟩
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing in
-variable {X S : Scheme.{u}} (f : X ⟶ S) [Smooth f] in
 
 theorem _root_.GlobalTheory.range_fst_residue {B : Type u} [CommRing B] [IsLocalRing B] (g : X ⟶ Spec (.of B)) :
     Set.range (pullback.fst g (Spec.map (CommRingCat.ofHom (residue B)))) =
@@ -263,7 +248,6 @@ end Field
 
 section DiscreteValuation
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing in
 
 theorem _root_.GlobalTheory.isDiscreteValuationRing_of_etale_of_isLocalHom (V V' : Type*) [CommRing V] [IsDomain V]
     [IsDiscreteValuationRing V] [CommRing V'] [IsLocalRing V'] [Algebra V V']

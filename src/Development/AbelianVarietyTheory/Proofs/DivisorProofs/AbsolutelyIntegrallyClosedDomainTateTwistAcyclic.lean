@@ -39,7 +39,6 @@ end GlobalTheory.EtC.AicAcyc
 
 namespace GlobalTheory.EtC
 
-open GlobalTheory.EtC.AicAcyc in
 
 theorem b5 : B5 := by
   intro q A _ _ hA hq n i hn

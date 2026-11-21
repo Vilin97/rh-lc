@@ -28,7 +28,6 @@ variable {M : Type} [AddCommGroup M] [Module (AF F) M]
 
 def partFin (v : Pl F) (z : M) : M := GlobalTheory.LatVac.liftV v 1 • z
 
-variable (F) in
 
 def partInf (z : M) : M := realAd F 1 • z
 
@@ -60,7 +59,6 @@ section Groups
 
 variable {R : Type} [Zero R] {n : ℕ}
 
-variable (σ) in
 
 def UAtSub (X : Spc F E n) (ev : AF F → R) : Subgroup (UA σ X.J) where
   carrier := UAt σ X ev
@@ -78,7 +76,6 @@ def UAtSub (X : Spc F E n) (ev : AF F → R) : Subgroup (UA σ X.J) where
 
 def KAt {X : Spc F E n} (K : Subgroup (UA σ X.J)) (ev : AF F → R) : Subgroup (UA σ X.J) := K ⊓ UAtSub σ X ev
 
-variable (E) in
 
 def idelesAt (ev : AF F → R) : Subgroup (AE F E)ˣ where
   carrier := {l | At ev ((l : AE F E) - 1)}
@@ -94,7 +91,6 @@ def idelesAt (ev : AF F → R) : Subgroup (AE F E)ˣ where
       rw [sub_mul, Units.mul_inv]; ring
     rw [e, smul_neg, ← smul_mul_assoc, hg u hu, zero_mul, neg_zero]
 
-variable (E) in
 
 def unitsAt (v : Pl F) : Subgroup (AE F E)ˣ :=
   idelesAt E (evFin F v) ⊓ (intLoc F E v).toSubmonoid.units.comap (unitFin F E v)
@@ -131,7 +127,6 @@ theorem isClosed_idelesAt (ev : AF F → R) : IsClosed (idelesAt E ev : Set (AE 
   exact isClosed_iInter fun u => isClosed_iInter fun _ =>
     isClosed_eq ((Units.continuous_val.sub continuous_const).const_smul u) continuous_const
 
-omit [NumberField E] in
 
 theorem compFin_smul (v : Pl F) (a : AF F) (z : AE F E) : compFin F E v (a • z) = evFin F v a • compFin F E v z := by
   induction z using TensorProduct.induction_on with
@@ -139,7 +134,6 @@ theorem compFin_smul (v : Pl F) (a : AF F) (z : AE F E) : compFin F E v (a • z
   | tmul b x => exact congrArg (· ⊗ₜ[F] x) (map_mul (evFin F v) a b)
   | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
-omit [NumberField E] in
 
 theorem compInf_smul (w : InfinitePlace F) (a : AF F) (z : AE F E) :
     compInf F E w (a • z) = evInf F w a • compInf F E w z := by
@@ -196,7 +190,6 @@ theorem ideleAt_unitFin {v : Pl F} {l : (AE F E)ˣ} (hl : l ∈ idelesAt E (evFi
       rw [map_sub, map_one, sub_eq_zero] at this
       exact Units.ext this.symm
 
-variable (E) in
 
 def idelesAtEquiv (v : Pl F) : idelesAt E (evFin F v) ≃ₜ* (Fv F v ⊗[F] E)ˣ where
   toFun l := unitFin F E v l.1
@@ -288,7 +281,6 @@ variable {R : Type} [Zero R] {n : ℕ} {X : Spc F E n}
 def IsNormK (K : Subgroup (UA σ X.J)) (ev : AF F → R) (μ : Measure (KAt K ev)) : Prop :=
   μ.IsHaarMeasure ∧ μ Set.univ = 1
 
-variable (E) in
 
 def IsNormE (v : Pl F) (μ : Measure (idelesAt E (evFin F v))) : Prop :=
   μ.IsHaarMeasure ∧ μ {l | l.1 ∈ unitsAt E v} = 1
@@ -310,7 +302,6 @@ theorem existsUnique_isNormK {K : Subgroup (UA σ X.J)} (hK : IsCompact (K : Set
     IsCompact.locallyCompactSpace_of_mem_nhds_of_group isCompact_univ (x := 1) univ_mem
   exact Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
 
-variable (E) in
 
 theorem idelesAt_facts (ev : AF F → R) : IsTopologicalGroup (idelesAt E ev) ∧ LocallyCompactSpace (idelesAt E ev) ∧
     SecondCountableTopology (idelesAt E ev) ∧ T2Space (idelesAt E ev) ∧ BorelSpace (idelesAt E ev) := by
@@ -329,7 +320,6 @@ theorem idelesAt_facts (ev : AF F → R) : IsTopologicalGroup (idelesAt E ev) �
   haveI : BorelSpace (AE F E)ˣ := ⟨rfl⟩
   exact ⟨inferInstance, (isClosed_idelesAt ev).locallyCompactSpace, inferInstance, inferInstance, inferInstance⟩
 
-variable (E) in
 
 theorem exists_haar_idelesAt (ev : AF F → R) : ∃ μ : Measure (idelesAt E ev), μ.IsHaarMeasure := by
   obtain ⟨_, _, _, _, _⟩ := idelesAt_facts E ev
@@ -340,7 +330,6 @@ theorem haar_idelesAt_eq_smul {ev : AF F → R} (μ' μ : Measure (idelesAt E ev
   obtain ⟨_, _, _, _, _⟩ := idelesAt_facts E ev
   exact ⟨_, (Measure.haarScalarFactor_pos_of_isHaarMeasure μ' μ).ne', Measure.isMulLeftInvariant_eq_smul μ' μ⟩
 
-variable (E) in
 
 theorem existsUnique_isNormE (v : Pl F) : ∃! μ, IsNormE E v μ := by
   obtain ⟨_, _, _, _, _⟩ := idelesAt_facts E (evFin F v)
@@ -379,12 +368,10 @@ section Ops
 
 variable {κ : Type} [Fintype κ]
 
-open Classical in
 
 def locOp (v : Pl F) (T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)) (φ : (κ → Fv F v) → ℂ) : (κ → Fv F v) → ℂ :=
   if h : ∃ φ₁, φ₁ ∈ SB (κ → Fv F v) ∧ Acts (evFin F v) T φ φ₁ then h.choose else 0
 
-open Classical in
 
 def locOpInf (T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)) (f : SInf F κ) : SInf F κ :=
   if h : ∃ f₁ : SInf F κ, Acts (evI F) T f f₁ then h.choose else 0
@@ -408,7 +395,6 @@ theorem acts_locOpInf {T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)} 
   rw [locOpInf, dite_eq_left h]
   exact h.choose_spec
 
-variable (F κ) in
 
 theorem exists_rest_inf : ∃ r : ((κ → AF F) → ℂ), r 0 ≠ 0 ∧ ∀ f : SInf F κ, Rest (evI F) f r := by
   let φ : ∀ w : Pl F, (κ → Fv F w) → ℂ := fun w => Set.indicator {x | ∀ i, x i ∈ w.adicCompletionIntegers F} 1
@@ -465,7 +451,6 @@ theorem locOp_lin {v : Pl F} {T : ((κ → AF F) → ℂ) → ((κ → AF F) →
 
 variable {V : Type} [AddCommGroup V] [Module (AF F) V] {Bf : V → V → AF F}
 
-open scoped GlobalTheory.VacAny in
 
 theorem locOp_rho (co : Darboux Bf κ) {ψ : AddChar (AF F) ℂ} (hψ : Continuous ψ) (v : Pl F) (u : V)
     {φ : (κ → Fv F v) → ℂ} (hφ : φ ∈ SB (κ → Fv F v)) :
@@ -479,7 +464,6 @@ theorem locOp_rho (co : Darboux Bf κ) {ψ : AddChar (AF F) ℂ} (hψ : Continuo
   have hm := GlobalTheory.SchrSB.schr_mem_SB ψ hψ v (GlobalTheory.LatVac.locCo co v u) φ hφ
   exact ⟨acts_locOp ⟨_, hm, h⟩, locOp_eq hφ hm h⟩
 
-open GlobalTheory.ArchUniq Classical in
 
 theorem locOpInf_rho (co : Darboux Bf κ) {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (u : V) (f : SInf F κ) :
     Acts (evI F) (co.rho ψ (partInf F u)) f (locOpInf (co.rho ψ (partInf F u)) f) ∧
@@ -528,9 +512,7 @@ def coneFin (φ : (Fin n × Fin d → Fv F v) → ℂ) : (Fin n₁ × Fin d₁ �
 
 variable {B M om v ev K μK μ u ν z}
 
-open scoped GlobalTheory.VacAny in
 
-open scoped GlobalTheory.VacAny in
 
 end Fin
 
@@ -546,7 +528,6 @@ def coneInfInt (f : SInf F (Fin n × Fin d)) (k : UA σ X.J) (l : (AE F E)ˣ) : 
 def coneInfFun (f : SInf F (Fin n × Fin d)) : (Fin n₁ × Fin d₁ → mixedEmbedding.mixedSpace F) → ℂ :=
   fun y => ∫ k, ∫ l, coneInfInt B M om ei u ν z f k.1 l.1 y ∂μ ∂μK
 
-open Classical in
 
 def coneInf (f : SInf F (Fin n × Fin d)) : SInf F (Fin n₁ × Fin d₁) :=
   if h : ∃ g : SInf F (Fin n₁ × Fin d₁), ⇑g = coneInfFun B M om ei K μK μ u ν z f then h.choose else 0

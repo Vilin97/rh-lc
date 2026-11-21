@@ -120,7 +120,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Λ : �
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ}
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu))
 
-open Classical in
 
 def frsD {n : ℕ} {ST : Finset (HeightOneSpectrum (𝓞 X.E))} (p : DecoSet X.E n ST Pr.vGs) : Frs X.E n (rowSG Pr sel mu) := fun P =>
   if h : P.1 ∈ Pr.vGs then p.1.liftFr ⟨P.1, h⟩ else 1
@@ -157,7 +156,6 @@ def xiKer (i : ℕ) (p : DecoSet X.E (R.N i) (Pr.vT u) Pr.vGs) (p' : DecoSet X.E
 def XiEquiv : Prop :=
   ∀ i, ClsEq (S := stepGSD W Λ u i) (S' := stepGSD W Λ u (i + 1)) (xiKer W Λ Ch sel mu cst Am u Ξ i)
 
-variable {W Λ Ch sel mu cst Am u Ξ} in
 
 variable {W Λ Ch sel mu cst Am u Ξ}
 

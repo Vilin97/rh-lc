@@ -61,7 +61,6 @@ noncomputable def h1RatModIntIso :
     H1 (Rep.trivial ℤ G (AddCircle (1 : ℚ))) ≅ ModuleCat.of ℤ (Additive G →+ AddCircle (1 : ℚ)) :=
   H1IsoOfIsTrivial _
 
-omit [Fintype G] in
 
 theorem h1RatModIntIso_inv_apply (χ : Additive G →+ AddCircle (1 : ℚ)) :
     (h1RatModIntIso G).inv χ =
@@ -112,10 +111,7 @@ section Cyclic
 
 variable {G : Type} [Group G] [Fintype G] (σ : G) (hσ : ∀ g : G, g ∈ Subgroup.zpowers σ)
 
-omit [Fintype G] in
-include hσ in
 
-include hσ in
 
 theorem orderOf_ofAdd_div_card_dvd :
     orderOf (Multiplicative.ofAdd (((1 : ℚ) / Nat.card G : ℚ) : AddCircle (1 : ℚ))) ∣
@@ -134,7 +130,6 @@ theorem cyclicChar_apply_gen :
   rw [monoidHomOfForallMemZpowers_apply_gen]
   rfl
 
-include hσ in
 
 end Cyclic
 

@@ -37,7 +37,6 @@ theorem Nu_cont : Continuous (Nu L) := by
   rw [e]
   exact continuous_finsetSum _ fun j _ => (continuous_apply j).smul continuous_const
 
-omit L in
 
 theorem unit_frame (d : SD σ) (x : d.G) : ∃ e : AE F E,
     (inFrame d.b x)ᵀ * Matrix.fromBlocks 0 1 (e • 1) 0 * (inFrame d.b x).map (cA σ) = Matrix.fromBlocks 0 1 (e • 1) 0 := by

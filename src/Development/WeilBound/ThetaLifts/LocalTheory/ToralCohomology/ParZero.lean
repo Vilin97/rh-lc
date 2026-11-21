@@ -26,7 +26,6 @@ structure Emb (R S R₁ S₁ : ℕ) where
   pos : ∀ a b, posC a b → posC (e a) (e b)
   ext : ∀ a b, (a = .inl i ∨ a = .inr j) → sameBlock a (e b) → (0 < ε → posC a (e b)) ∧ (ε < 0 → posC (e b) a)
 
-open Classical in
 
 def Emb.h (m : Emb R S R₁ S₁) (a : Ix R S) : ℝ := if a = .inl m.i ∨ a = .inr m.j then m.ε else 0
 

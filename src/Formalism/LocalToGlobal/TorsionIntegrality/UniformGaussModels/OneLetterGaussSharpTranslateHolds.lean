@@ -39,12 +39,7 @@ theorem calcP : CalcP := CalcP_of cmDatum
 theorem kappa_integral : uniformGaussModelConditionReformulated := kappa_integral_of_calculation calcC
 theorem hypShape : HypShape := HypShape_of calcC
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
 theorem modelInert (dK : ℕ) (L : PeriodPair) (hsq : Squarefree dK) (hmod : dK % 4 = 3)
     (hcm : Formalism.L2.Th1.CM.HasCMBy dK L) (l : ℕ) [Fact l.Prime] (h5 : 5 ≤ l) (hd : ¬ l ∣ dK)
@@ -53,17 +48,7 @@ theorem modelInert (dK : ℕ) (L : PeriodPair) (hsq : Squarefree dK) (hmod : dK 
       ∀ n, ‖PowerSeries.coeff n (Formalism.L2.Th1.D.thetaS l g2 g3 ε)‖ ≤ 1 :=
   Formalism.L2.Th1.D.FAux.model l Formalism.L2.Th1.CM.cm2 Formalism.L2.Th1.CM.cm3 dK L hsq hmod hcm h5 hd hin ι
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
 theorem ltNormExists : LTNormExists := lubin_tate_norm_exists
 theorem transIntLT : TransIntLT := lubin_tate_transfer_integral

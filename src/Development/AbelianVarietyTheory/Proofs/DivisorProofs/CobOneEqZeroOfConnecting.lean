@@ -195,8 +195,6 @@ theorem extChar_vecExtMap (hp : (p : R) = 0) (f : G ⟶ H) (x : H.VecExt) :
   rw [← SemiHom.ofHom_vecExt, SemiHom.extChar_vecExt _ hp]
   rfl
 
-omit [Fact p.Prime] in
-variable (G) in
 
 theorem primLie_bijective (hp : (p : R) = 0) : Function.Bijective G.primLie :=
   (LinearEquiv.ofBijective _ (G.dual.omegaLevel_one_bijective hp)).dualMap.bijective.comp T.additiveFunctionCartierDualTangent_bijective
@@ -210,7 +208,6 @@ theorem primLie_naturality (f : G ⟶ H) (b : LinearMap.ker (cobOne R (H.A 1)))
       H.primLie_apply b _ (CartierDual.map (f.app 1) φ) (by rw [omegaMap_val, ← hφ]; exact cotMap_d _ _), h]
     rfl
 
-omit [Fact p.Prime] in
 
 theorem SemiHom.primLie_prim {σ : R →+* R'} {G' : PDivGroup p R'} (s : SemiHom σ G' G)
     (t : SemiHom σ G'.dual G.dual)
@@ -223,7 +220,6 @@ theorem SemiHom.primLie_prim {σ : R →+* R'} {G' : PDivGroup p R'} (s : SemiHo
     (by rw [SemiHom.omega_val, ← hφ]; exact SemiBialgHom.cot_d _ _)]
   exact h φ b.1
 
-variable (G) in
 
 theorem primLie_toBase [Algebra R R'] (b : LinearMap.ker (cobOne R (G.A 1))) (w : G.dual.omega) :
     (G.baseChange R').primLie (((G.toBase R').app 1).prim b)
@@ -236,22 +232,18 @@ theorem primLie_toBase [Algebra R R'] (b : LinearMap.ker (cobOne R (G.A 1))) (w 
   refine (CartierDual.baseChange_tmul_tmul R' 1 1 φ a).trans ?_
   rw [mul_one, Algebra.algebraMap_eq_smul_one]
 
-variable (G) in
 
 def rigToLie (hp : (p : R) = 0) : G.RigExt →ₗ[R] G.dual.Lie :=
   G.primLie ∘ₗ G.extChar hp ∘ₗ G.rigToExt
 
-variable (G) in
 
 theorem rigToLie_apply (hp : (p : R) = 0) (x : G.RigExt) :
     G.rigToLie hp x = G.primLie (G.extChar hp (G.rigToExt x)) := rfl
 
-variable (G) in
 
 theorem rigToLie_surjective (hp : (p : R) = 0) : Function.Surjective (G.rigToLie hp) :=
   (G.primLie_bijective hp).2.comp ((G.extChar_bijective hp).2.comp G.rigToExt_surjective)
 
-variable (G) in
 
 theorem exact_rigOfOmega_rigToLie (hp : (p : R) = 0) :
     Function.Exact G.rigOfOmega (G.rigToLie hp) := fun x => by
@@ -267,7 +259,6 @@ section BaseChange
 
 variable (G R') [Algebra R R']
 
-omit [Fact p.Prime] in
 
 theorem liftSemi_prim_bijective (hp : (p : R) = 0)
     (h : Module.Flat R R' ∨ Module.Projective R G.dual.omega) :

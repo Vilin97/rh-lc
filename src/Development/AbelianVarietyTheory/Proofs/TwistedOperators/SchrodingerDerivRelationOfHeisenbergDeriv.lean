@@ -73,7 +73,6 @@ theorem thV_smul {F : Type} [Field F] [NumberField F] {N : ℕ} [Invertible (2 :
 
 end GlobalTheory.LineDerivTransfer
 
-open GlobalTheory.LineDerivTransfer in
 
 theorem GlobalTheory.LineDerivTransfer.schr_deriv_of_heisO_deriv : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) →
     ∀ (S T : HSp D) (JB : Matrix (Fin S.rank) (Fin S.rank) D.host.E) (ξ : AF D.host.F ⊗[D.host.F] D.host.E),

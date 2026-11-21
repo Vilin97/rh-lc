@@ -29,9 +29,6 @@ private theorem natCast_mul_pow_pred_mem_differentIdeal_of_pow_eq {K L : Type} [
   rw [← hder, hh, derivative_mul, map_add (f := _), map_mul, map_mul, minpoly.aeval, zero_mul, add_zero]
   exact Ideal.mul_mem_right _ _ hmem
 
-set_option autoImplicit false in
-open NumberField IsDedekindDomain Polynomial in
-open scoped IntermediateField nonZeroDivisors in
 
 theorem _root_.GlobalTheory.FieldSize.natCast_mem_differentIdeal_of_root {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] (k : ℕ) (hk : 0 < k) (y : K) (hy : y ≠ 0) (I : Submodule (𝓞 K) K)
@@ -138,9 +135,6 @@ theorem _root_.GlobalTheory.FieldSize.natCast_mem_differentIdeal_of_root {K L : 
     (fun a x _ hx => by rw [smul_eq_mul, mul_left_comm]; exact Ideal.mul_mem_left _ a hx) h1
   simpa using hfin
 
-set_option autoImplicit false in
-open NumberField IsDedekindDomain Polynomial in
-open scoped IntermediateField nonZeroDivisors in
 
 theorem _root_.GlobalTheory.FieldSize.sz_sup_adjoin_root : ∀ (F : IntermediateField ℚ ℂ) (a b : ℝ) (k : ℕ) (y : F) (I : Submodule (𝓞 F) F) (z : ℂ), _root_.GlobalTheory.FieldSize.Sz F a b → 0 < k → y ≠ 0 → I ^ k = Submodule.span (𝓞 F) {y} → z ^ k = (y : ℂ) → _root_.GlobalTheory.FieldSize.Sz (F ⊔ ℚ⟮z⟯) (a + Real.log k) (b + Real.log k) := by
   intro F a b k y I z hF hk hy hI hz

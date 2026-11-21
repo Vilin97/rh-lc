@@ -159,7 +159,6 @@ theorem conj_mkE (a b : R) :
   simp only [mkE, map_add (f := _), Algebra.TensorProduct.map_tmul, AlgHom.id_apply, map_one, hδ,
     TensorProduct.tmul_neg, TensorProduct.neg_tmul]
 
-include hΔ in
 
 theorem incl_eq_mkE (α β : F) :
     (Algebra.TensorProduct.includeRight : E →ₐ[F] R ⊗[F] E) (algebraMap F E α + algebraMap F E β * δ) =

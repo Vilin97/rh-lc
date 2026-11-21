@@ -53,13 +53,9 @@ namespace ChainData
 
 variable {D : D7} {u : D.what₂.Word} {μ : D.what₂.Tup} (T : ChainData D u μ)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end ChainData
 

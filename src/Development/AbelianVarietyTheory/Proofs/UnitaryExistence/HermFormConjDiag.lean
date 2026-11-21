@@ -205,7 +205,6 @@ lemma exists_loc (τ : E →+* ℂ) (Gm : Matrix (Fin r) (Fin r) E) (hG : ∀ a 
     · simp; ring
     · ring
 
-omit [IsCMField E] in
 
 lemma trace_re (Ψ : Finset (E →+* ℂ))
     (h : ∀ τ : E →+* ℂ, τ ∈ Ψ ↔ ComplexEmbedding.conjugate τ ∉ Ψ) (z : E) :

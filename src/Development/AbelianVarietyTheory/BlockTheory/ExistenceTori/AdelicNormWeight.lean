@@ -53,7 +53,6 @@ def diagE : E →+* AdE E :=
 def inclF : AdF E →+* AdE E :=
   Algebra.TensorProduct.includeLeftRingHom (R := maximalRealSubfield E) (A := AdF E) (B := E)
 
-variable {E} in
 
 def compF (v : Plc E) : AdF E →ₐ[maximalRealSubfield E] v.adicCompletion (maximalRealSubfield E) where
   toFun a := a v
@@ -63,7 +62,6 @@ def compF (v : Plc E) : AdF E →ₐ[maximalRealSubfield E] v.adicCompletion (ma
   map_add' _ _ := rfl
   commutes' _ := rfl
 
-variable {E} in
 
 def compE (v : Plc E) : AdE E →+* (v.adicCompletion (maximalRealSubfield E) ⊗[maximalRealSubfield E] E) :=
   (Algebra.TensorProduct.map (compF v) (AlgHom.id (maximalRealSubfield E) E)).toRingHom
@@ -95,11 +93,9 @@ def ptsIn (n : ℕ) (R : Subring (AdE E)) : Subgroup (UA E n) where
     exact ⟨key x y hx.1 hy.1, by rw [mul_inv_rev]; exact key _ _ hy.2 hx.2⟩
   inv_mem' := fun {x} hx => ⟨hx.2, by rw [inv_inv]; exact hx.1⟩
 
-variable (E) in
 
 def ratPts (n : ℕ) : Subgroup (UA E n) := ptsIn n (diagE E).range
 
-variable (E) in
 
 def maxCpt (n : ℕ) : Subgroup (UA E n) := ptsIn n (intAd E)
 
@@ -115,7 +111,6 @@ def TrivOn (S : Finset (Plc E)) (h : UA E n) : Prop :=
 def stab (J : Subgroup (UA E n)) (h : UA E n) : Subgroup (UA E n) :=
   ratPts E n ⊓ J.comap (MulAut.conj h⁻¹).toMonoidHom
 
-variable (E) in
 
 end Adelic
 
@@ -132,10 +127,7 @@ def FixesDatum {n : ℕ} (J : Subgroup (UA E n)) (ph : (Fin n → ConjQ Dw l) �
     (∀ a b, ∃ u ∈ intAd E, star (k.1 a b) - diagE E (κ a b : E) = (l.M : AdE E) * u) →
       ∀ x, ph (fun a => ∑ b, κ a b • x b) = ph x
 
-variable {Xo c} in
 
-variable {Xo c} in
 
-variable {Xo c} in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.AdelicNormWeight

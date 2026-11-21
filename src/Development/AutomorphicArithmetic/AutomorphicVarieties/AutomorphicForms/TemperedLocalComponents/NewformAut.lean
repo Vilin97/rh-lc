@@ -69,4 +69,3 @@ private theorem scale_charpoly {k : Type} [Field k] (φ : k →+* ℂ) (M : Matr
 
 end UpperTheory.V.Af.NewformAutomorphy
 
-open UpperTheory.V.Af.NewformAutomorphy in

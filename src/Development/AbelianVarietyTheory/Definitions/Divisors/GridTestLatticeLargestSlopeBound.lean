@@ -24,7 +24,6 @@ section Delta
 variable {Γ A K M : Type} [Group Γ] [Group A] [Field K] [AddCommGroup M] [Module K M]
   (ι : Γ →* A) (U : Subgroup A) (ρ : Γ →* Module.End K M)
 
-open Classical in
 
 def deltaForm (x : A) (v : M) (g : A) : M := ∑ᶠ γ : Γ, if x⁻¹ * ((ι γ)⁻¹ * g) ∈ U then ρ γ v else 0
 
@@ -73,7 +72,6 @@ def LaP (τ : D.what₂.Tau) : DomWeight (Xp G).rank where
   w a := (La D sc.cGap τ).w (Fin.cast (rank_Xp G) a)
   anti _ _ h := (La D sc.cGap τ).anti h
 
-variable (D) in
 
 abbrev emb : D.what₂.Tau → D.host.E →+* D.what₂.LL := labLL D
 
@@ -141,7 +139,6 @@ theorem psi_left (rp : ClassReps G) {n : ℕ} (e : Fin n ≃ TestIx G × VVIdx (
 theorem psi_right (rp : ClassReps G) {n : ℕ} (e : Fin n ≃ TestIx G × VVIdx (LaP G)) (a : Fin n) (g : GLf G) {k : GLf G}
     (hk : k ∈ G.Kplus) : psi rp e a (g * k) = psi rp e a g := deltaForm_right _ _ _ _ _ _ hk
 
-open Classical in
 
 theorem ClassReps.gridClassReps_delta_apply_rep (rp : ClassReps G) (hN : rp.Neat) (c c' : G.ClPlus) (v : WtSp G) :
     rp.delta c v (rp.x c') = if c' = c then v else 0 := by

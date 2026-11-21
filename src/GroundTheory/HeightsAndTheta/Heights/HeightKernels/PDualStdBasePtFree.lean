@@ -20,14 +20,12 @@ open DualPointsOnPlane
 
 variable {K : Type} [Field K] [NumberField K] {i : ℕ} {T : Type} [Fintype T] [DecidableEq T]
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem coord_integral (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i))) (c : T) (j : Fin i) :
     ∃ α : 𝓞 K, (α : K) = (b c : Fin i → K) j := by
   obtain ⟨α, hα⟩ := (b c).2 (Pi.single j 1) (Submodule.subset_span ⟨j, rfl⟩)
   exact ⟨α, hα.trans (dotProduct_single_one _ _)⟩
 
-omit [DecidableEq T] in
 
 theorem mConeMap_lin {Ω : Type} [Field Ω] (y : (Σ _ : Unit, T) → Ω) (a : T → ℤ) :
     mConeMap y (∑ t, C (a t) * X ⟨(), t⟩ : MRing (dualBlocks T)) =
@@ -40,7 +38,6 @@ theorem mConeMap_lin {Ω : Type} [Field Ω] (y : (Σ _ : Unit, T) → Ω) (a : T
 
 end StandardDualBasePointFree
 
-open StandardDualBasePointFree DualPointsOnPlane in
 
 theorem DualStdBasePtFree.proof : DualStdBasePtFree.Statement := by
   intro K _ _ i T _ _ b k₂ c

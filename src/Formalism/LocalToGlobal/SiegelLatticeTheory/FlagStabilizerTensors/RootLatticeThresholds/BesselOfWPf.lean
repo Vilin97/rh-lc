@@ -224,7 +224,6 @@ theorem bow_core [FiniteDimensional ℂ Wp] {ε : Fin (2 * r + k + 1) → Bool} 
     rw [div_mul_eq_mul_div, eq_div_iff hy]
     linear_combination hc
 
-variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
 theorem besselOfW_of_local_decomposition (hDI : Formalism.FourierDecayAlt.ThreeDimData.DecInf) (hJ : PI.BesselMapUniq.BesselMapUniq) :
     Formalism.L2.SG.LocWSOf.BesselOfW := by
@@ -237,6 +236,5 @@ theorem besselOfW_of_local_decomposition (hDI : Formalism.FourierDecayAlt.ThreeD
   obtain ⟨κ, hκ⟩ := bow_core hS l hla hWc hWeq hRe
   exact ⟨fun v => κ • l v, (Formalism.MainNotions.BridgeCS3d.isBesselMapSm_iff _ _ _ _ _).mpr (DDSmoothness.bessel_smul hlB κ), hκ⟩
 
-variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
 end Formalism.MainNotions.BridgeCS3dBOW

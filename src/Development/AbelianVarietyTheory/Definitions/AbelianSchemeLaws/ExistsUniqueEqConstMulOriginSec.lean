@@ -177,7 +177,6 @@ theorem originOpen_le : originOpen W ≤ coordOpen W 1 := (scheme W).basicOpen_l
 theorem isAffineOpen_originOpen : IsAffineOpen (originOpen W) :=
   (isAffineOpen_coordOpen W 1).basicOpen _
 
-variable {W} in
 
 theorem isUnit_originCofactor {U : (scheme W).Opens} (h : U ≤ originOpen W) :
     IsUnit (originCofactor W U (h.trans (originOpen_le W))) := by
@@ -212,7 +211,6 @@ theorem originOpen_sup_coordOpen_two : originOpen W ⊔ coordOpen W 2 = ⊤ := b
 
 abbrev originParam : Γ(scheme W, originOpen W) := ratioOn W (originOpen W) 1 (originOpen_le W) 0
 
-variable {W} in
 
 theorem isUnit_ratioOn_one_zero {U : (scheme W).Opens} (h₀ : U ≤ originOpen W)
     (h₁ : U ≤ coordOpen W 2) : IsUnit (ratioOn W U 1 (h₀.trans (originOpen_le W)) 0) := by
@@ -266,7 +264,6 @@ theorem nonzeroLocus_originSec : nonzeroLocus (originSec W) = coordOpen W 2 := b
   · exact ((scheme W).basicOpen_of_isUnit (isUnit_one (M := Γ(scheme W, coordOpen W 2)))).ge.trans
       (basicOpen_le_nonzeroLocus (originSec W) false)
 
-variable {W} in
 
 theorem evalPt_zero_ratioOn {U : (scheme W).Opens} (hU : U ≤ coordOpen W 1)
     (h : ⊤ ≤ zero W ⁻¹ᵁ U) (j : Fin 3) :
@@ -274,13 +271,11 @@ theorem evalPt_zero_ratioOn {U : (scheme W).Opens} (hU : U ≤ coordOpen W 1)
   (mul_one _).symm.trans (evalPt_ptHom_ratioOn_mul (algebraMap R R) ![0, 1, 0]
     (isUnimodularSol_zero _) hU h j)
 
-variable {W} in
 
 theorem evalPt_zero_constOn {U : (scheme W).Opens} (h : ⊤ ≤ zero W ⁻¹ᵁ U) (r : R) :
     evalPt (zero W) U h (constOn W U r) = r :=
   evalPt_constOn (ρ := RingHom.id R) ((zero_toSpec W).trans (Spec.map_id _).symm) h r
 
-variable {W} in
 
 theorem evalPt_zero_originCofactor {U : (scheme W).Opens} (hU : U ≤ coordOpen W 1)
     (h : ⊤ ≤ zero W ⁻¹ᵁ U) : evalPt (zero W) U h (originCofactor W U hU) = 1 := by
@@ -297,7 +292,6 @@ abbrev originValue : Γ(scheme W, originOpen W) →+* R :=
 
 theorem originValue_originParam : originValue W (originParam W) = 0 := evalPt_zero_ratioOn _ _ 0
 
-variable {W} in
 
 theorem eq_spMap_zero_of_evalPt {A : Type} [CommRing A] {x : Sp A ⟶ scheme W} {ρ : R →+* A}
     (hx : x ≫ toSpec W = spMap ρ) (h : ⊤ ≤ x ⁻¹ᵁ originOpen W)
@@ -398,7 +392,6 @@ theorem nonzeroLocus_coordSec (j : Fin 3) : nonzeroLocus (coordSec W j) = coordO
   simp only [basicOpen_coordFn]
   rw [← iSup_inf_eq, (originLB_isLB W).cover, top_inf_eq]
 
-variable {W} in
 
 theorem resG_coordFn {V : (scheme W).Opens} {i : Fin 3} (hi : V ≤ coordOpen W i) (j : Fin 3) :
     ∀ (k : (originLB W).ι) (hk : V ≤ (originLB W).U k),
@@ -411,7 +404,6 @@ theorem resG_coordFn {V : (scheme W).Opens} {i : Fin 3} (hi : V ≤ coordOpen W 
     ring
   | false, hk => (ratioOn_mul_ratioOn (U := V) (i := 2) hk hi).symm.trans (mul_comm _ _)
 
-variable {W} in
 
 theorem gs_coordFn {Z : Scheme.{0}} (r : Z ⟶ scheme W) (z : Z) {i : Fin 3} (j : Fin 3)
     {k : (originLB W).ι} (hi : r z ∈ coordOpen W i) (hk : r z ∈ (originLB W).U k) :

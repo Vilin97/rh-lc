@@ -521,7 +521,6 @@ theorem exists_lifts {V : Z.Opens} {s d : ℕ} (hle : SS q 1 s V ≤ inU q V) (E
     rw [e1, e2]
     rfl
 
-set_option maxHeartbeats 3000000 in
 
 theorem affOm : FormUniq → AffOm := by
   intro hU K _ _ Z q V d ⟨c⟩ a

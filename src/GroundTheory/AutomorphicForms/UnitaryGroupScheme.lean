@@ -13,7 +13,6 @@ section Transport
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {A B : Type*} [CommRing A] [CommRing B]
 
-omit [DecidableEq ι] in
 
 theorem map_unitaryExpr (φ : A →+* B) {sA : A →+* A} {sB : B →+* B}
     (hs : ∀ x, φ (sA x) = sB (φ x)) (H M : Matrix ι ι A) :
@@ -71,7 +70,6 @@ variable {F E R S T}
 @[simp]
 theorem conjBase_tmul (r : R) (e : E) : conjBase F E R (r ⊗ₜ e) = r ⊗ₜ conj F E e := rfl
 
-variable (E) in
 
 noncomputable def tensorMap (f : R →ₐ[F] S) : R ⊗[F] E →ₐ[F] S ⊗[F] E :=
   Algebra.TensorProduct.map f (AlgHom.id F E)
@@ -94,9 +92,7 @@ theorem tensorMap_includeRight (f : R →ₐ[F] S) (e : E) :
       (Algebra.TensorProduct.includeRight e : S ⊗[F] E) := by
   simp [Algebra.TensorProduct.includeRight_apply]
 
-omit [Algebra.IsQuadraticExtension F E] in
 
-omit [Algebra.IsQuadraticExtension F E] in
 
 end BaseChange
 
@@ -123,7 +119,6 @@ theorem map_includeRight_tensorMap (f : R →ₐ[F] S) :
   funext e
   exact tensorMap_includeRight f e
 
-variable (F E H) in
 
 noncomputable def unitaryMap (f : R →ₐ[F] S) : unitaryPoints F E H R →* unitaryPoints F E H S :=
   ((Matrix.GeneralLinearGroup.map
@@ -166,7 +161,6 @@ theorem map_includeRight_lid :
   funext e
   simp [Algebra.TensorProduct.includeRight_apply]
 
-variable (F E H) in
 
 noncomputable def unitaryPointsRationalEquiv :
     unitaryPoints F E H F ≃* unitaryGroupMatrix (conjHom F E) H :=
@@ -175,7 +169,6 @@ noncomputable def unitaryPointsRationalEquiv :
 
 variable {V : Type*} [AddCommGroup V] [Module E V]
 
-variable (F E) in
 
 noncomputable def unitaryPointsRationalEquivHermitian (h : HermitianForm F E V)
     (v : Basis ι E V) : unitaryPoints F E (gram h.toSesq v) F ≃* h.unitaryGroup :=

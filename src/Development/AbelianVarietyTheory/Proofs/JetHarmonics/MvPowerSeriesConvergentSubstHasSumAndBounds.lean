@@ -105,7 +105,6 @@ theorem tendsto_degree {σ : Type} [Fintype σ] :
 
 end GlobalTheory.ConvSer.SubstSum
 
-open GlobalTheory.ConvSer.SubstSum in
 
 theorem GlobalTheory.ConvSer.csub_hasSum_and_bounds :
     ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CompleteSpace K] (σ τ : Type) [Fintype σ] (s : σ → MvPowerSeries τ K) (S : MvPowerSeries σ K), (∀ i, Small (s i)) → Bdd S → (∀ μ, HasSum (fun ν : σ →₀ ℕ => MvPowerSeries.coeff ν S * MvPowerSeries.coeff μ (∏ i, s i ^ ν i)) (MvPowerSeries.coeff μ (csub s S))) ∧ Bdd (csub s S) ∧ (Intg S → Intg (csub s S)) ∧ (Intg S → MvPowerSeries.constantCoeff S = 0 → Small (csub s S)) := by

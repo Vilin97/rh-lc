@@ -42,7 +42,6 @@ def Charts.Hom.ten {T T' : K.Obj} (f : T ⟶ T') : T.ten D →ₐ[D] T'.ten D :=
 theorem Charts.Hom.ten_tmul {T T' : K.Obj} (f : T ⟶ T') (d : D) (c : T.C) :
     Charts.Hom.ten D f (d ⊗ₜ c) = d ⊗ₜ f.φ c := rfl
 
-variable (K) in
 
 @[reducible] def Charts.Ten : K.Obj ⥤ CommAlgCat.{0} D where
   obj T := CommAlgCat.of D (T.ten D)
@@ -52,7 +51,6 @@ variable (K) in
 
 variable {D}
 
-variable (K) in
 
 def Charts.tenZ (p : Λ →+ D) : Z1 (K.Ten D) :=
   ⟨fun _ T' f ↦ algebraMap D (T'.ten D) (p f.deg), fun T T' T'' f f' ↦ by
@@ -74,10 +72,6 @@ open TopologicalSpace Filter Topology TensorProduct in
 open CategoryTheory AlgebraicGeometry DividedPowers in
 variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : _root_.GlobalTheory.AnPer.Fam I g Λ}
   {K : _root_.GlobalTheory.AnPer.Charts F} in
-attribute [local instance] _root_.GlobalTheory.AnPer.Charts.Obj.cAlg in
-variable (D : Type) [CommRing D] [Algebra ℂ D] in
-variable {D} in
-variable (π : D →ₐ[ℂ] ℂ) in
 
 theorem _root_.GlobalTheory.AnPer.Charts.Hom.red_ten
     {T T' : K.Obj} (f : T ⟶ T') (x : T.ten D) :
@@ -100,10 +94,6 @@ open TopologicalSpace Filter Topology TensorProduct in
 open CategoryTheory AlgebraicGeometry DividedPowers in
 variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : _root_.GlobalTheory.AnPer.Fam I g Λ}
   {K : _root_.GlobalTheory.AnPer.Charts F} in
-attribute [local instance] _root_.GlobalTheory.AnPer.Charts.Obj.cAlg in
-variable (D : Type) [CommRing D] [Algebra ℂ D] in
-variable {D} in
-variable (π : D →ₐ[ℂ] ℂ) in
 
 theorem _root_.GlobalTheory.AnPer.Charts.Hom.ten_mem {T T' : K.Obj}
     (f : T ⟶ T') {x : T.ten D} (h : x ∈ T.tenJ π) :
@@ -147,10 +137,6 @@ open TopologicalSpace Filter Topology TensorProduct in
 open CategoryTheory AlgebraicGeometry DividedPowers in
 variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : _root_.GlobalTheory.AnPer.Fam I g Λ}
   {K : _root_.GlobalTheory.AnPer.Charts F} in
-attribute [local instance] _root_.GlobalTheory.AnPer.Charts.Obj.cAlg in
-variable (D : Type) [CommRing D] [Algebra ℂ D] in
-variable {D} in
-variable (π : D →ₐ[ℂ] ℂ) in
 
 theorem _root_.GlobalTheory.AnPer.Charts.Obj.tenJ_nil
     (hπ : IsNilpotent (RingHom.ker π)) (T : K.Obj) : IsNilpotent (T.tenJ π) := by
@@ -183,7 +169,6 @@ theorem _root_.GlobalTheory.AnPer.Charts.Obj.tenJ_nil
 @[reducible] def Charts.Obj.tenRat (T : K.Obj) : Algebra ℚ (T.ten D) :=
   ((algebraMap ℂ (T.ten D)).comp (algebraMap ℚ ℂ)).toAlgebra
 
-open Classical in
 
 def Charts.Obj.tenδ (T : K.Obj) : DividedPowers (T.tenJ π) :=
   letI := T.tenRat (D := D)

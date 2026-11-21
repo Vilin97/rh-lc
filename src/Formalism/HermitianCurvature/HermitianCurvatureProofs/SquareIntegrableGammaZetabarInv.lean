@@ -142,9 +142,7 @@ variable {b}
 variable {L : LevelData (A (Pb b) (DQ (Pb b))) 0} (hL : IsModelLevel (Pb b) (DQ (Pb b)) L)
 include hL
 
-omit hL in
 
-omit hL in
 
 end
 

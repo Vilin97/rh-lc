@@ -31,8 +31,6 @@ private lemma exists_root_quadratic_of_isUnit_of_mem_maximalIdeal (R : Type) [Co
     (X ^ 2 + C b * X + C c) hmon 0 (by simpa using hc) (by simpa using hb.map _)
   exact ⟨β, by simpa using hβ⟩
 
-open scoped TensorProduct in
-open NumberField IsDedekindDomain Polynomial in
 
 theorem _root_.GlobalTheory.SplitPlace.not_isField_of_split : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E], Module.finrank F E = 2 → ∀ v : HeightOneSpectrum (𝓞 F),

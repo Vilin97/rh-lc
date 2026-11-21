@@ -16,7 +16,6 @@ open GlobalTheory.InertThetaCompare
 
 variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] {σ : L →+* L} {n q : ℕ} {ϖ : L}
 
-open Classical in
 
 def cellSum (ϖ : L) (h : GU σ n → ℂ) (a : Fin (n / 2) → ℤ) : ℂ :=
   ∑ᶠ x : GU σ n ⧸ KU σ n, if Cell ϖ a x then h x.out else 0

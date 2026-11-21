@@ -51,7 +51,6 @@ end GlobalTheory.StepLevelP.IoLevPf
 
 namespace GlobalTheory.StepLevelP
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.StepLevelP
 

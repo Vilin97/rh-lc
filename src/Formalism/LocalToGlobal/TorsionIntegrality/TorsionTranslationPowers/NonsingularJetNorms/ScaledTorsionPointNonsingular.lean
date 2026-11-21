@@ -23,8 +23,6 @@ theorem transport {K : Type*} [Field K] [DecidableEq K] {W W' : WeierstrassCurve
 
 end ScaledTorsionTransport
 
-open Formalism.L2.Th1 in
-open Classical in
 
 theorem scaled_torsion_point_of_add (hA : PtOfAdd) : ScaledTorsionPointNonsingular := by
   intro l _ L ι lam hlam z N hNz hz

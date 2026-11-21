@@ -26,7 +26,6 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
 
 abbrev chrK (W : RealPack ex) (t : W.P.T) (j : ℕ) : (AE (I.rec7 l Z))ˣ →* Circle := (pk W).toLevCh.mu t (j + 1)
 
-set_option maxHeartbeats 1000000 in
 
 structure QJ (a : GeoAll W u) (t : W.P.T) where
   Ch₀ : ℕ → Type

@@ -21,7 +21,6 @@ theorem card_dual (L : Submodule 𝒪[k] (n → k)) [Fintype n] [L.IsLattice k] 
   rw [Module.natCard_eq_pow_finrank (K := 𝓀[k]), Subspace.dual_finrank_eq, ← Module.natCard_eq_pow_finrank,
     Red.card_eq]
 
-open Classical in
 
 theorem finsum_char (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : Submodule 𝒪[k] (n → k)) [Fintype n] [L.IsLattice k]
     (z : Red L) : ∑ᶠ f : Module.Dual 𝓀[k] (Red L), χ (-f z) =
@@ -68,7 +67,6 @@ theorem card_ne_zero (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] : ((resCa
   push_cast [ENat.card_eq_coe_natCard]
   exact h
 
-omit [Fintype n] in
 
 theorem withCol_split (x : Matrix n (n' ⊕ Fin 1) k) :
     withCol (x.submatrix id Sum.inl) (fun i => x i (Sum.inr 0)) = x := by
@@ -92,7 +90,6 @@ theorem term_neg (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (P : Pair k n') {L : Su
     term q χ 1 P L f x₀ = 0 := by
   rw [term, dif_neg h0]
 
-open Classical in
 
 theorem datum_expand (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
     (P : Pair k n') (x₀ : Matrix n n' k) (y : n → k) :
@@ -130,7 +127,6 @@ namespace GlobalTheory.GluedExp
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n n' : Type}
   [Fintype n] [Fintype n']
 
-open Classical in
 
 theorem glued_col (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
     (P : Pair k n') :
@@ -181,8 +177,6 @@ theorem glued_sum (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : 
   · rw [finsum_eq_zero_of_forall_eq_zero (term_neg q χ P h0), latInd,
       if_neg (fun h => h0 fun z hz => h z (P.ker_le hz)), mul_zero]
 
-omit [Fintype n'] in
-open Classical in
 
 theorem dualInd_eq (q : Unif k) (L : Submodule 𝒪[k] (n → k)) (η : n → k) :
     dualInd L η = if Lifts L (q.1 • η) 0 then 1 else 0 := by
@@ -197,8 +191,6 @@ theorem dualInd_eq (q : Unif k) (L : Submodule 𝒪[k] (n → k)) (η : n → k)
     have : ((t : 𝒪[k]) : k) = η ⬝ᵥ y := mul_left_cancel₀ q.ne_zero hs
     exact this ▸ t.2
 
-omit [Fintype n'] in
-open Classical in
 
 theorem cosetInd_pair (q : Unif k) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
     (f : {f : Module.Dual 𝓀[k] (Red L) // f ≠ 0}) (η : n → k) :
@@ -207,8 +199,6 @@ theorem cosetInd_pair (q : Unif k) (L : Submodule 𝒪[k] (n → k)) [L.IsLattic
   show cosetInd q L (ofDual L f).red η = _
   rw [h, cosetInd_eq]
 
-omit [Fintype n'] in
-open Classical in
 
 theorem finsum_lifts (q : Unif k) (L : Submodule 𝒪[k] (n → k)) (η : n → k) (A : Module.Dual 𝓀[k] (Red L) → ℂ) :
     ∑ᶠ f : Module.Dual 𝓀[k] (Red L), A f * (if Lifts L (q.1 • η) f then 1 else 0) =
@@ -220,8 +210,6 @@ theorem finsum_lifts (q : Unif k) (L : Submodule 𝒪[k] (n → k)) (η : n → 
   · exact finsum_eq_zero_of_forall_eq_zero fun f => by
       rw [if_neg fun h' => h (inDual_of_lifts h'), mul_zero]
 
-omit [Fintype n'] in
-open Classical in
 
 theorem coset_total (q : Unif k) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] (η : n → k) :
     (dualInd L + ∑ Q ∈ withLat L, cosetInd q Q.lat Q.red) η = if InDual L (q.1 • η) then 1 else 0 := by

@@ -18,22 +18,17 @@ abbrev TZ : Type := K' ⊗[Kl] (Kl ⊗[K] Ω)
 
 variable {K Ω Kl K'} {D m : ℕ}
 
-variable (K Kl) in
 
 def tsec (t : Fin (D + 1) × Fin m → K') (v : Fin m → Ω) (i : Fin (D + 1)) : TZ K Ω Kl K' :=
   ∑ k, t (i, k) ⊗ₜ[Kl] ((1 : Kl) ⊗ₜ[K] v k)
 
-variable (K Kl) in
 
 def tJ (t : Fin (D + 1) × Fin m → K') (v : Fin m → Ω) : Ideal (Localization.Away (tsec K Kl t v 0)) :=
   Ideal.span (Set.range fun i : Fin D =>
     algebraMap (TZ K Ω Kl K') (Localization.Away (tsec K Kl t v 0)) (tsec K Kl t v i.succ) *
       IsLocalization.Away.invSelf (tsec K Kl t v 0))
 
-omit [Field Kl] [Field K'] [Algebra K Kl] [Algebra Kl K'] [Algebra K K'] [IsScalarTower K Kl K'] in
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem s1T [CharZero K] (hfg : (⊤ : IntermediateField K Ω).FG) (htr : Algebra.trdeg K Ω = D)
     (v : Fin m → Ω) (k₀ : Fin m) (hv₀ : v k₀ ≠ 0)

@@ -116,7 +116,6 @@ theorem diag_form {ι : Type*} [Fintype ι] (d : (K →+* ℂ) → ι → ℝ) (
     (σ : K →+* ℂ) (x y : ι → K) :
     (diag d hd).form σ x y = ∑ i, (d σ i : ℂ) * (σ (x i) * conj (σ (y i))) := rfl
 
-variable (K) in
 
 noncomputable def std (ι : Type*) [Fintype ι] : ArchMetric K (ι → K) :=
   diag (fun _ _ => 1) fun _ _ => one_pos
@@ -125,7 +124,6 @@ theorem std_form {ι : Type*} [Fintype ι] (σ : K →+* ℂ) (x y : ι → K) :
     (std K ι).form σ x y = ∑ i, σ (x i) * conj (σ (y i)) := by
   simp [std, diag_form]
 
-variable (K) in
 
 noncomputable def stdField : ArchMetric K K :=
   ofFun (Basis.singleton Unit K) (fun σ x y => σ x * conj (σ y))
@@ -219,7 +217,6 @@ theorem gramDet_diag (d : (K →+* ℂ) → ι → ℝ) (hd : ∀ σ i, 0 < d σ
     (diag d hd).gramDet σ (Pi.basisFun K ι) = ∏ i, d σ i := by
   rw [gramDet, gram_diag, Matrix.det_diagonal, ← Complex.ofReal_prod, Complex.ofReal_re]
 
-variable {h} in
 
 end GramDet
 
@@ -240,23 +237,19 @@ theorem stdField_norm (σ : K →+* ℂ) (x : K) : (stdField K).norm σ x = ‖�
   rw [norm, stdField_form, Complex.mul_conj, Complex.ofReal_re, Complex.normSq_eq_norm_sq,
     Real.sqrt_sq (_root_.norm_nonneg _)]
 
-variable {h} in
 
 section Comap
 
 variable (f : V' →ₗ[K] V) (hf : Function.Injective f) (σ : K →+* ℂ)
 
-variable {h} in
 
 end Comap
 
-variable {h} in
 
 section Scale
 
 variable (c : (K →+* ℂ) → ℝ) (hc : ∀ σ, 0 < c σ) (σ : K →+* ℂ)
 
-variable {h c} in
 
 end Scale
 
@@ -292,7 +285,6 @@ theorem finrank_lattice_eq_finrank_span (A : Submodule (𝓞 K) V) :
     finrank (𝓞 K) A = finrank K (Submodule.span K (A : Set V)) := by
   rw [Module.finrank, Module.finrank, rank_eq_rank_span K]
 
-omit [NumberField K] in
 
 theorem finiteDimensional_span_of_fg {A : Submodule (𝓞 K) V} (hA : A.FG) :
     FiniteDimensional K (Submodule.span K (A : Set V)) := by
@@ -385,14 +377,12 @@ namespace IsLatticeFrame
 
 variable {A : Submodule (𝓞 K) V} {ι κ : Type*} {e : ι → V}
 
-omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 
 theorem span_eq (he : IsLatticeFrame A e) :
     Submodule.span K (Set.range e) = Submodule.span K (A : Set V) :=
   le_antisymm (Submodule.span_mono (Set.range_subset_iff.2 he.mem))
     (Submodule.span_le.2 he.mem_span)
 
-omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 
 theorem span_le (he : IsLatticeFrame A e) : Submodule.span (𝓞 K) (Set.range e) ≤ A :=
   Submodule.span_le.2 (Set.range_subset_iff.2 he.mem)
@@ -400,7 +390,6 @@ theorem span_le (he : IsLatticeFrame A e) : Submodule.span (𝓞 K) (Set.range e
 theorem card_eq [Fintype ι] (he : IsLatticeFrame A e) : Fintype.card ι = finrank (𝓞 K) A := by
   rw [finrank_lattice_eq_finrank_span, ← he.span_eq, finrank_span_eq_card he.linearIndependent]
 
-omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 
 theorem comp_equiv (he : IsLatticeFrame A e) (p : κ ≃ ι) : IsLatticeFrame A (e ∘ p) :=
   ⟨fun i => he.mem _, he.linearIndependent.comp _ p.injective, by
@@ -413,13 +402,11 @@ theorem relIndex_ne_zero (he : IsLatticeFrame A e) (hA : A.FG) :
     rw [Submodule.span_span_of_tower]
     exact he.mem_span x hx
 
-omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 
 theorem of_le {B : Submodule (𝓞 K) V} (he : IsLatticeFrame A e) (hAB : A ≤ B)
     (hB : ∀ x ∈ B, x ∈ Submodule.span K (A : Set V)) : IsLatticeFrame B e :=
   ⟨fun i => hAB (he.mem i), he.linearIndependent, fun x hx => he.span_eq ▸ hB x hx⟩
 
-omit [NumberField K] in
 
 theorem map (he : IsLatticeFrame A e) (f : V →ₗ[K] V') (hf : Function.Injective f) :
     IsLatticeFrame (A.map (f.restrictScalars (𝓞 K))) (f ∘ e) where
@@ -430,7 +417,6 @@ theorem map (he : IsLatticeFrame A e) (f : V →ₗ[K] V') (hf : Function.Inject
     rw [Set.range_comp, ← Submodule.map_span]
     exact ⟨x, he.mem_span x hx, rfl⟩
 
-omit [NumberField K] in
 
 theorem smul (he : IsLatticeFrame A e) {d : ι → 𝓞 K} (hd : ∀ i, d i ≠ 0) :
     IsLatticeFrame A fun i => d i • e i := by
@@ -447,7 +433,6 @@ theorem smul (he : IsLatticeFrame A e) {d : ι → 𝓞 K} (hd : ∀ i, d i ≠ 
 
 end IsLatticeFrame
 
-omit [NumberField K] in
 
 theorem isLatticeFrame_span {ι : Type*} {e : ι → V} (he : LinearIndependent K e) :
     IsLatticeFrame (Submodule.span (𝓞 K) (Set.range e)) e :=
@@ -481,14 +466,12 @@ section FrameDeg
 variable {A : Submodule (𝓞 K) V} {ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fintype κ]
   [DecidableEq κ]
 
-omit [IsScalarTower (𝓞 K) K V] in
 
 theorem frameDeg_eq_relIndex (A : Submodule (𝓞 K) V) (e : ι → V) :
     h.frameDeg A e =
       Real.log ((Submodule.span (𝓞 K) (Set.range e)).toAddSubgroup.relIndex A.toAddSubgroup) -
         ∑ σ : K →+* ℂ, 1 / 2 * Real.log (h.gramDet σ e) := rfl
 
-omit [IsScalarTower (𝓞 K) K V] in
 
 theorem frameDeg_comp_equiv (A : Submodule (𝓞 K) V) (e : ι → V) (p : κ ≃ ι) :
     h.frameDeg A (e ∘ p) = h.frameDeg A e := by
@@ -547,7 +530,6 @@ theorem frameDeg_eq_frameDeg (hA : A.FG) {e : ι → V} {f : κ → V} (he : IsL
 
 end FrameDeg
 
-open Classical in
 
 noncomputable def arDeg (A : Submodule (𝓞 K) V) : ℝ :=
   if hA : A.FG then h.frameDeg A (exists_isLatticeFrame hA).choose else 0

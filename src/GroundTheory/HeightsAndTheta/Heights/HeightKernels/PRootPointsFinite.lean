@@ -70,7 +70,6 @@ theorem rootCoord_isIntegral {f j m : ℕ} (ζ : Fin f → Matrix (Fin j) (Fin m
 
 end RootPointsFiniteAlt
 
-open RootPointsFiniteAlt in
 
 theorem RootPointsFinite.proof (h : RootAnchorNonzero.Statement) : RootPointsFinite.Statement := by
   intro f j m ζ hζ

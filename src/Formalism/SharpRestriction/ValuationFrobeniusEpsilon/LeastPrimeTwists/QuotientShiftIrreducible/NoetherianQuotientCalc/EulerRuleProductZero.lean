@@ -16,7 +16,6 @@ namespace Formalism.MainNotions.V.Pf.V2.Calc
 
 open IsLocalRing Filter
 
-open E7 in
 
 theorem euler_char_product_eventually_add (hE1 : EulerAdditivityExactSequence) (hGr : RuleGr) {k : ℕ} (X : HidaSetting k)
     (ts : List (Deg k × X.R)) (F : X.Mod) (d d' : Deg k) (s s' : X.R)

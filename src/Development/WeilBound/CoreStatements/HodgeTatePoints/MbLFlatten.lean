@@ -308,7 +308,6 @@ theorem plucker_block (o : Type) [CommRing o] (Ω : Type) [Field Ω] [Algebra o 
 
 end PositivityTheory.HtPt.Mb.LFlatten.Flatten
 
-open AlgebraicGeometry CategoryTheory GlobalTheory.CompanionTheory.Ar NumberField in
 
 theorem PositivityTheory.HtPt.Mb.flatten : ∀ (o : Type) [CommRing o] (Ω : Type) [Field Ω] [Algebra o Ω] (κ : Type) [Finite κ] (x : κ → Ω) (M : PModel o x) (E : Type) [AddCommGroup E] [Module Ω E] (L : Lat M.ξ E) (V : Submodule Ω E) [FiniteDimensional Ω V], L.IsCohOn Set.univ → (∀ p, Submodule.span Ω (L p : Set E) = V) → ∃ (κ' : Type) (_ : Finite κ') (w : κ' → Ω), (∃ l, w l ≠ 0) ∧ (∀ p : Cpt M.ξ, (∃ (r : ℕ) (b : Fin r → E), L.IsFrameAt b p) → ∃ l, InChart M.ξ w l p) ∧ ∀ (X' : Scheme.{0}) (Ω' : Type) [Field Ω'] (ξ' : Spec (CommRingCat.of Ω') ⟶ X') (i : Ω →+* Ω') (F : Type) [AddCommGroup F] [Module Ω' F] (j : E →+ F), IsExtOver i j → (L.pullLoc ξ' i j).IsVBOn {p' | p' ∈ ctrSet o x i ξ' ∧ ∃ l, InChart ξ' (fun l => i (w l)) l p'} (Module.finrank Ω V) (Submodule.span Ω' (j '' (V : Set E))) :=
   @PositivityTheory.HtPt.Mb.LFlatten.Flatten.plucker_block

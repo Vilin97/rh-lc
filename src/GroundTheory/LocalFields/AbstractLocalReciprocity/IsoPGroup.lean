@@ -109,7 +109,6 @@ section Restrict
 
 variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]
 
-omit [IsTopologicalGroup G] [CompactSpace G] in
 
 theorem galRestrict_surjective {K L M : OpenSubgroup G} [((L : Subgroup G).subgroupOf K).Normal]
     [((M : Subgroup G).subgroupOf K).Normal] (hLM : L ≤ M) :
@@ -118,7 +117,6 @@ theorem galRestrict_surjective {K L M : OpenSubgroup G} [((L : Subgroup G).subgr
   induction q using QuotientGroup.induction_on with
   | H τ => exact ⟨(τ : (K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K), rfl⟩
 
-omit [CompactSpace G] in
 
 theorem conjOpen_eq_of_normal {K M : OpenSubgroup G} (hMK : M ≤ K)
     [((M : Subgroup G).subgroupOf K).Normal] {g : G} (hg : g ∈ (K : Subgroup G)) :

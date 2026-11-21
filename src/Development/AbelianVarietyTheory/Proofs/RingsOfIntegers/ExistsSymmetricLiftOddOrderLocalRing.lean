@@ -41,7 +41,6 @@ private theorem hom_baseOver_subsingleton {X : Over S} (f g : X ⟶ baseOver S) 
   have hg' : g.left = X.hom := by simpa using hg
   exact Over.OverMorphism.ext (hf'.trans hg'.symm)
 
-omit [GrpObj A] in
 
 theorem surj_fst_base (h : Function.Surjective (A ⊗ A).hom.appTop.hom) :
     Function.Surjective (fst (baseOver S) A).left.appTop.hom := by

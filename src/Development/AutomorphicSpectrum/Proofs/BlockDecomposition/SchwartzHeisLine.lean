@@ -52,7 +52,6 @@ theorem linForm_apply (B y : κ → mixedEmbedding.mixedSpace F) :
   set_option synthInstance.maxHeartbeats 100000 in
     simp [linForm, map_sum, LinearMap.sum_apply]
 
-open scoped Classical in
 
 theorem phase_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b x : κ → AF F) (hb : At (evI F) b) (t : ℝ) :
     ψ (x ⬝ᵥ (realAd F t • b) + ⅟(2 : AF F) * ((realAd F t • a) ⬝ᵥ (realAd F t • b))) =

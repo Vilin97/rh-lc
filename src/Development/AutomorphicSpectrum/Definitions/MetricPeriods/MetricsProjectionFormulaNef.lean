@@ -104,7 +104,6 @@ def FT [Fintype σ] (t : ℝ) : MvPolynomial σ ℝ := formPoly (D + 1) (Re.num 
 
 def PB [Fintype σ] : MvPolynomial σ ℝ := formPoly (D + 1) (Re.limNum II)
 
-include Re in
 
 theorem nonempty_base : Nonempty S.X := by
   obtain ⟨z, hz, hJ⟩ :=
@@ -112,7 +111,6 @@ theorem nonempty_base : Nonempty S.X := by
   obtain ⟨x, -⟩ := Re.R.surj z hz hJ
   exact ⟨Re.π x⟩
 
-include Re in
 
 def comap {σ' : Type} (f : σ' → σ) : Realis (S.comap f) P where
   arith := Re.arith

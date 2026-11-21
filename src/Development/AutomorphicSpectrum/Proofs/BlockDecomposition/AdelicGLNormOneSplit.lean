@@ -28,7 +28,6 @@ theorem continuous_splitCentre : Continuous (splitCentre E a) := by
   change Continuous fun x : Ad E => Matrix.diagonal fun _ : Fin a => x
   exact (continuous_pi fun _ => continuous_id).matrix_diagonal
 
-variable (E) in
 
 def expIdele (t : ℝ) : IdeleGroup E := infId E (expU fun _ : InfinitePlace E => (t : ℂ))
 

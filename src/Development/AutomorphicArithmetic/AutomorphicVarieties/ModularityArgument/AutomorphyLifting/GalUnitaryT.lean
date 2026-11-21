@@ -34,7 +34,6 @@ theorem WDT.of_conj (k : WDT ι r y) (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) {
   obtain ⟨x, hx, k⟩ := k
   exact ⟨x, hx.of_conj hl P hP, k⟩
 
-variable (ι r y) in
 
 def CmpT : Prop :=
   (((l : ℕ) : 𝓞 E) ∉ w.asIdeal → WDT ι r y) ∧
@@ -53,7 +52,6 @@ def LocGlobT (ι : Qbar l ≃+* ℂ) (r : G F Ω →* GL (Fin n) (Qbar l)) (w : 
   ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion F) → WD h), IsRecT h rc →
     CmpT ι r (rc (algNorm σ))
 
-omit [IsAlgClosure F Ω] in
 
 def HasHTAt (r : G F Ω →* GL (Fin n) (Qbar l)) (HT : (F →+* Qbar l) → Multiset ℤ) (w : HeightOneSpectrum (𝓞 F)) : Prop :=
   ∀ A : ValuationSubring Ω, IsPlaceOver A w →
@@ -62,7 +60,6 @@ def HasHTAt (r : G F Ω →* GL (Fin n) (Qbar l)) (HT : (F →+* Qbar l) → Mul
       ∀ (τ : F →+* Qbar l) (LL' : FinExt l) (τ' : ↥Bw.Kw.1 →ₐ[ℚ_[l]] ↥LL'.1), IsInduced Bw τ τ' →
         IsJumpsAt (Loc.PP l) Bw (r.comp (Dec (F := F) A).subtype) τ (HT τ)
 
-omit [IsAlgClosure F Ω] in
 
 def CompatT : Prop :=
   ∀ (F Ω : Type) [Field F] [NumberField F] [IsCMField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime]

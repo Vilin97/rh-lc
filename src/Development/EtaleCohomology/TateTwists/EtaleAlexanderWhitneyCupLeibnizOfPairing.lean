@@ -78,7 +78,6 @@ theorem sign_nat (p : ℕ) : ((-1 : ℤ) ^ p) = (((p : ℤ).negOnePow : ℤˣ) :
 
 end LateralTheory.EtaleFoundations.AWLeib
 
-open LateralTheory.EtaleFoundations.AWLeib in
 
 theorem LateralTheory.EtaleFoundations.etaleAlexanderWhitneyCup_leibniz_of_pairing : LateralTheory.EtaleFoundations.EtaleAlexanderWhitneyCupLeibniz := by
   intro R _ I J K μ E n m k hk α β γ γ₁ γ₂ hγ h1 h2

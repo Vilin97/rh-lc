@@ -85,7 +85,6 @@ theorem intHom_iff {P : HeightOneSpectrum (𝓞 E)} {a b : ℕ} (y : (Fin a → 
 theorem mem_stdAt_iff [StarRing E] {P : HeightOneSpectrum (𝓞 E)} {N : ℕ} (v : Fin N → E) : v ∈ stdAt E N P ↔ IntV P v :=
   mem_localization_standardLattice P v
 
-open Classical in
 
 section Flags
 

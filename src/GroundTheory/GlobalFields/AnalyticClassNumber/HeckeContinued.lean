@@ -29,7 +29,6 @@ def normalizedLFunction (s : ℂ) : ℂ :=
 theorem normalizedLFunction_eq {s : ℂ} (hs : 1 < s.re) : χ.normalizedLFunction s = χ.LFunction s :=
   (χ.LFunction_eq_mul_completedLFunction hs).symm
 
-open Classical in
 
 def continuedLFunction : ℂ → ℂ :=
   if h : ∃ τ : ℝ, ∀ x : IdeleGroup K,
@@ -119,7 +118,6 @@ theorem differentiableOn_continuedLFunction_of_forall :
   exact ((χ.differentiable_cpow_mul_gammaFactor_inv z).mul
     (differentiableAt_completedLFunction_of_forall hτ hz.2 hz.1)).differentiableWithinAt
 
-omit hτ in
 
 end Trivial
 

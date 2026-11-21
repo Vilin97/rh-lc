@@ -68,7 +68,6 @@ theorem phase_move (JS : Matrix (Fin nS) (Fin nS) E) (J : Matrix (Fin nT) (Fin n
     ← Matrix.mul_assoc _ (s.1.map (cAF σ))ᵀ, ← Matrix.transpose_mul, ← Matrix.map_mul, Units.mul_inv,
     Matrix.map_one _ (map_zero _) (map_one _), Matrix.transpose_one, Matrix.one_mul]
 
-variable (F E nS nT) in
 
 def vecE : WOF F E nS nT ≃+ (Fin (nT * nS) → AF F ⊗[F] E) where
   toFun w k := w (finProdFinEquiv.symm k).1 (finProdFinEquiv.symm k).2

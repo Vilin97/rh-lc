@@ -31,7 +31,6 @@ variable {D : D7} {X : Formalism.L2.Herm.Herm0 D} {u : D.what₂.Word} {w : D.wh
   (t : GChartTie (X.g u w hg) Lv i em (D.sp.X (i + 1)).gram Lb Uloc ψ eps)
   (B : GL (Fin (D.sp.X (i + 1)).rank) D.host.E)
 
-set_option maxHeartbeats 1000000 in
 
 def locJ : LocAt D.host.F D.host.E (D.R.N (i + 1)) (gatCh (gatJ Lv (i + 1)) em) where
   rk := t.rk.trans (rankN D (i + 1) hi)
@@ -53,7 +52,6 @@ theorem locJ_UJ (c : cmp) (γ : ((gatCh (gatJ Lv (i + 1)) em).lev c).Γ) :
     (locJ hi t B).gamI c γ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D (i + 1) hi) :=
   reGL_mem_UJ (rankN D (i + 1) hi) _ (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) _ (t.gamI c γ).2
 
-set_option maxHeartbeats 4000000 in
 
 theorem locJ_actB (hB : FrRatJ t B) : (locJ hi t B).ActB := by
   refine LocAt.actB_of (locJ hi t B) (rankN D (i + 1) hi) B (fun c γ => (t.gamI c γ).1) rfl (fun _ _ => rfl) ?_
@@ -62,7 +60,6 @@ theorem locJ_actB (hB : FrRatJ t B) : (locJ hi t B).ActB := by
   rw [hB _ ((X.g u w hg).pl v).2, bc_comp] at h1
   exact h1
 
-set_option maxHeartbeats 4000000 in
 
 theorem locGood_locJ : LocGood (sigD D) (gramN D (i + 1) hi) (locJ hi t B) where
   herm := isHerm_re (rankN D (i + 1) hi) _ (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) (gram_herm D.sp.cm (D.sp.X (i + 1)))

@@ -22,8 +22,6 @@ private lemma exists_pos_nat_clearing_rat_denominators {κ : Type} [Fintype κ] 
   calc ((q k).den : ℚ) * m * q k = m * (q k * (q k).den) := by ring
     _ = m * (q k).num := by rw [Rat.mul_den_eq_num]
 
-open Matrix in
-open scoped Kronecker ComplexOrder TensorProduct in
 
 theorem _root_.GlobalTheory.ClassFin.adelicPair_elementary : ∀ (R : Type) [CommRing R] [Algebra ℚ R] (R₀ : Subring R), _root_.GlobalTheory.ClassFin.AdelicPair R R₀ → (∀ M : ℕ, 0 < M → ∀ r ∈ R₀, ∃ z : ℤ, ∃ a ∈ R₀, r = (z : R) + (M : R) * a) ∧ (∀ (κ : Type) [Fintype κ] (r : κ → R), ∃ M : ℕ, 0 < M ∧ ∀ k, (M : R) * r k ∈ R₀) ∧ Function.Injective (algebraMap ℚ R) := by
   intro R _ _ R₀ hR

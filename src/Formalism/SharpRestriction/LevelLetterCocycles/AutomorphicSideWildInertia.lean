@@ -15,6 +15,5 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N
 
 def ResidualIrreducibleGood (D : D7) : Prop := ResidualIrreducibleRankR D
 
-open Formalism.ConjugateSelfDual ReciprocityTheory.Gal in
 
 end Formalism.MainNotions.AutomorphicSideWildInertia

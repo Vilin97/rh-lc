@@ -151,7 +151,6 @@ theorem diffStep_comm (a b : K → ℤ) (h : (K → ℤ) → ℤ) :
   rw [sub_right_comm m a b]
   ring
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem intNumL_perm (F : Type*) [Field F] (V : Ideal (MRingOver F ι)) {L₁ L₂ : List (K → ℤ)}
     (h : L₁.Perm L₂) : NumbersDVR.intNumL F V L₁ = NumbersDVR.intNumL F V L₂ := by

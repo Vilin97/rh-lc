@@ -102,6 +102,5 @@ theorem exists_fixed_of_mem_span {D : D7} (j : Fin D.R.m) {W M : Type} [AddCommG
       have ha : (τ : ℂ →+* ℂ) (a : ℂ) = a := by rw [← ho]; exact hτ _
       rw [Submodule.coe_smul, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← e1, ha]
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.BigOn.Exp.TwConj

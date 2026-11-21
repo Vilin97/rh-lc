@@ -43,7 +43,6 @@ theorem placesIdele_apply [Finite S] (a : ∀ w : S, (w.1.adicCompletion K)ˣ) :
     placesIdele S a = ∏ w : S, finiteEmbedding w.1 (a w) :=
   rfl
 
-open Classical in
 
 theorem finiteProj_placesIdele [Finite S] (a : ∀ w : S, (w.1.adicCompletion K)ˣ)
     (v : HeightOneSpectrum (𝓞 K)) :
@@ -59,7 +58,6 @@ theorem finiteProj_placesIdele [Finite S] (a : ∀ w : S, (w.1.adicCompletion K)
     rw [e] at h
     exact h w.2
 
-open Classical in
 
 def divisorExponent (D : sDivisor S) (v : HeightOneSpectrum (𝓞 K)) : ℤ :=
   if h : v ∈ S then 0 else D ⟨v, h⟩

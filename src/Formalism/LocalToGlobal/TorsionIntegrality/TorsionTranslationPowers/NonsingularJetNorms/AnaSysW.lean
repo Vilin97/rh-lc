@@ -633,7 +633,6 @@ theorem analytic_point_eq_zero_iff : PtWZero := by
   intro l _ L ι W hU t
   exact AnaSysW.ptW_zero_iff hU t
 
-open Classical in
 
 theorem analytic_point_map_add : PtWAdd := by
   intro l _ L ι W hU s t
@@ -644,7 +643,6 @@ theorem weierstrass_series_eq_transported (l : ℕ) [Fact l.Prime] (L : PeriodPa
     Formalism.L2.Th1.A.wpReg W = PowerSeries.map (ι : ℂ →+* ℂ_[l]) (Formalism.L2.Th1.F.pSeries L) := by
   exact AnaSysW.wpBridge hU
 
-open Classical in
 
 theorem analytic_translate_system_model : AnalyticSysW := by
   unfold AnalyticSysW

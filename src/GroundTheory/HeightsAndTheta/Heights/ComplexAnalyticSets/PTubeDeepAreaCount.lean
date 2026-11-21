@@ -126,7 +126,6 @@ theorem mem_isolatedFibrePts {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix 
 
 end TubeDeepAreaCount
 
-open TubeDeepAreaCount SheetAreaCompare in
 
 theorem TubeDeepAreaCount.proof (hB : IsolatedPointsCount.Statement) : TubeDeepAreaCount.Statement := by
   classical

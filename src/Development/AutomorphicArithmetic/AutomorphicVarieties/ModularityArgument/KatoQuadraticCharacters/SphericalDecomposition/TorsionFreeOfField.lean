@@ -97,4 +97,3 @@ private theorem isOpen_ker {Ω C : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosu
 
 end UpperTheory.V.Z.Kato.WeilSphericalRecords.TwistNewform
 
-open UpperTheory.V.Z.Kato.WeilSphericalRecords.TwistNewform in

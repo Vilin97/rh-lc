@@ -92,7 +92,6 @@ theorem intF_sum {ι : Type} [Fintype ι] {a : ι → AF F} (h : ∀ i, IntF (a 
 
 variable {κ : Type} [Fintype κ]
 
-variable (F κ) in
 
 def crd : Pt F κ ≃ₗ[AF F] (κ ⊕ κ → AF F) := (LinearEquiv.sumArrowLequivProdArrow κ κ (AF F) (AF F)).symm
 

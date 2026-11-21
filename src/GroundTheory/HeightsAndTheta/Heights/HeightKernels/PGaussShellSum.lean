@@ -34,7 +34,6 @@ theorem exp_neg_nat (m : ℕ) : Real.exp (-(m : ℝ)) = Real.exp (-1) ^ m := by
 
 end PGaussShellSum
 
-open PGaussShellSum in
 
 theorem GaussShellSum.proof (hS : GaussShell.Statement) : GaussShellSum.Statement := by
   intro n hn Λ δ hδ hmin

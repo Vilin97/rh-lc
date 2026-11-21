@@ -23,4 +23,3 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 end GlobalTheory.UnitLSeg
 
-open GlobalTheory.UnitLSeg in

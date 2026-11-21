@@ -9,8 +9,6 @@ open scoped Matrix WithZero
 
 namespace GlobalTheory.LocalQuad.Approx
 
-open NumberField IsDedekindDomain in
-open scoped Matrix WithZero in
 
 theorem _root_.GlobalTheory.LocalQuad.Approx.exists_forall_abv_sub_lt {F : Type*} [Field F] {ι : Type*} [Finite ι]
     {v : ι → AbsoluteValue F ℝ} (h : ∀ i, (v i).IsNontrivial)
@@ -103,9 +101,6 @@ theorem _root_.GlobalTheory.LocalQuad.Approx.abv_pairwise (T : Finset (HeightOne
 
 end GlobalTheory.LocalQuad.Approx
 
-open NumberField IsDedekindDomain in
-open scoped Matrix WithZero in
-variable {F : Type} [Field F] [NumberField F] in
 
 theorem _root_.GlobalTheory.LocalQuad.denseRange_finite_real (F : Type) [Field F] [NumberField F]
     (T : Finset (HeightOneSpectrum (𝓞 F))) :

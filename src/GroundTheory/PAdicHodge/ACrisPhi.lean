@@ -66,7 +66,6 @@ section Expansion
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-variable (p) in
 
 def logCoeff (n j : ℕ) : ℤ :=
   (-1) ^ n * powCoeff p (n + 1) (j + 1) * (((j + 1).factorial / (n + 1) : ℕ) : ℤ)

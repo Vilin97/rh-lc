@@ -39,7 +39,6 @@ theorem exists_biinvariant (h : f ∈ SB G) :
 
 variable [MeasurableSpace G] {μ : Measure G}
 
-omit [IsTopologicalGroup G] in
 
 theorem conv_eq_zero {y : G} (h : y ∉ tsupport f * tsupport f') : conv μ f f' y = 0 := by
   have : ∀ x, f x * f' (x⁻¹ * y) = 0 := fun x => by
@@ -94,7 +93,6 @@ section Type_
 variable {G Q W : Type} [Group G] [Group Q] [AddCommGroup W] [Module ℂ W] [MeasurableSpace G] (μ : Measure G)
   {K : Subgroup G} (r : K →* Q) (τ : Representation ℂ Q W)
 
-open Classical in
 
 def typeIdem : G → ℂ := fun g =>
   if h : g ∈ K then (Module.finrank ℂ W : ℂ) * (μ.real K : ℂ)⁻¹ * conj (τ.character (r ⟨g, h⟩)) else 0
@@ -229,9 +227,7 @@ structure IsPseudoCoeff (ι : H →* Matrix n n ℂ) (μ : Measure H) (D : H →
 
 variable {ι : H →* Matrix n n ℂ} {μ : Measure H} {π : H →* (V →L[ℂ] V)} [BorelSpace H]
 
-omit [CompleteSpace V] in
 
-omit [CompleteSpace V] in
 
 def circleMat : Circle →* Matrix (Fin 1) (Fin 1) ℂ := (Matrix.scalar (Fin 1)).toMonoidHom.comp Circle.coeHom
 

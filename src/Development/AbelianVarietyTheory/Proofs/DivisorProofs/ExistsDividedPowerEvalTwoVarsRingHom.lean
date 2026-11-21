@@ -75,7 +75,6 @@ variable {B : Type} [CommRing B] (u v : ℕ → B)
 
 def ψ : D →ₗ[ℤ] B := β.constr ℤ fun p ↦ u p.1 * v p.2
 
-open Classical in
 
 def φ (q : MvPolynomial (Fin 2) ℚ) : B := if h : q ∈ D then ψ u v ⟨q, h⟩ else 0
 
@@ -124,7 +123,6 @@ end GlobalTheory.DPEval2
 
 namespace GlobalTheory
 
-open DPEval2 in
 
 theorem dpEval_two :
     ∀ (B : Type) [CommRing B] (u v : ℕ → B), u 0 = 1 → v 0 = 1 →

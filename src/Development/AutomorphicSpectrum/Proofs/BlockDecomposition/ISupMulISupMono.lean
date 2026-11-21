@@ -92,7 +92,6 @@ section Places
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
 
-open Classical in
 
 def phi (σ : E →ₐ[F] E) {M d : ℕ} (J : Matrix (Fin M) (Fin M) E) (b : Module.Basis (Fin d) F E)
     (S : Finset (HeightOneSpectrum (𝓞 F)))
@@ -105,7 +104,6 @@ def cut (σ : E →ₐ[F] E) {M d : ℕ} (J : Matrix (Fin M) (Fin M) E) (b : Mod
   {y | (∀ v, v ∉ T → projV v (projFin y) ∈ latV b v) ∧
     ∀ v, v ∈ T → v ∉ S → projV v (projFin y) ∈ primV σ J b v}
 
-open Classical in
 
 theorem pureL_phi (σ : E →ₐ[F] E) {M d : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (b : Module.Basis (Fin d) F E) {S T : Finset (HeightOneSpectrum (𝓞 F))} (hST : S ⊆ T)

@@ -59,7 +59,6 @@ lemma act_mem_of {K : Type} [Fintype K] (φ : K → ((thickObj R I e G).left ⟶
   rw [comp_base_eq' (hφ k) z]
   exact h1
 
-include hO in
 
 theorem rho_inv_loc
     (hi : ∃ t : splitTorus (Spec (CommRingCat.of (R ⧸ I ^ (e + 1)))) D.toPre.X ⟶
@@ -128,7 +127,6 @@ theorem rho_inv_loc
     rw [← hA1]; ring
   exact ((hchi.mul hR).mul_right_cancel key).symm
 
-include hO in
 
 theorem rho_inv
     (hi : ∃ t : splitTorus (Spec (CommRingCat.of (R ⧸ I ^ (e + 1)))) D.toPre.X ⟶

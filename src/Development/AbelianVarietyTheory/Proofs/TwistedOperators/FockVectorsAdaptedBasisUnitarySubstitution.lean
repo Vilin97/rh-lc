@@ -263,7 +263,6 @@ theorem aPlus_smul_dir (e : Bool) (c : ℂ) (z : Matrix (Fin T.rank) (Fin S.rank
     generalize ((fockScale D τ : ℂ))⁻¹ = k
     linear_combination (k * (c.im : ℂ) * B) * Complex.I_sq + (k * (A - Complex.I * B)) * hre
 
-open GlobalTheory.FockIndep GlobalTheory.OrientedHeis Complex in
 
 theorem aPlus_comm_at (hS : IsCartanInv (gramAt D S τ) sS) (hT : IsCartanInv (gramAt D T τ) sT)
     (z z' : Matrix (Fin T.rank) (Fin S.rank) ℂ) :

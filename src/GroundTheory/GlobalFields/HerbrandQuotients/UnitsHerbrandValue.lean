@@ -134,7 +134,6 @@ theorem cycHerbrand_logLatticeRep_mul_card {σ : L ≃ₐ[K] L} (hσ : ∀ g, g 
 
 variable [IsGalois K L]
 
-open scoped Classical in
 
 theorem cycHerbrand_unitsRep {σ : L ≃ₐ[K] L} (hσ : ∀ g, g ∈ Subgroup.zpowers σ) :
     cycHerbrand (unitsRep K L) σ =

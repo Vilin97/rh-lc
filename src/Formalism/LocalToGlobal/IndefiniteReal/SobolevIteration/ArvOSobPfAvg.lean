@@ -40,8 +40,6 @@ theorem smoothVec_rep {G : Matrix (Fin n) (Fin n) ℂ} (hG : IsUnit G.det) {π :
 
 end Avg
 
-open Avg in
-set_option maxHeartbeats 2000000 in
 
 theorem avgSmooth_of (h4 : SobChart) : AvgSmooth := by
   intro n H _ _ _ G s π hs hπ μ hμ p hp w hw

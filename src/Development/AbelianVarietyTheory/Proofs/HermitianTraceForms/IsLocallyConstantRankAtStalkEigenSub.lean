@@ -72,7 +72,6 @@ theorem isSplitting_of_idem [Fintype ι] {σ : ι → O →+* R} (e : ι → R �
   · ext j
     simp [h1, Pi.single_apply]
 
-omit [DecidableEq ι] in
 
 theorem IsSplitting.map [Finite ι] {σ : ι → O →+* R} (h : IsSplitting σ) {R' : Type*}
     [CommRing R'] (f : R →+* R') : IsSplitting (fun i => f.comp (σ i)) := by
@@ -103,7 +102,6 @@ theorem IsSplitting.map [Finite ι] {σ : ι → O →+* R} (h : IsSplitting σ)
     rw [this, ← map_mul, one_tmul_mul_idem, hF']
     rfl
 
-omit [DecidableEq ι] in
 
 theorem IsSplitting.injective [Nontrivial R] {σ : ι → O →+* R} (h : IsSplitting σ) :
     Function.Injective σ := by
@@ -273,7 +271,6 @@ theorem eigenEquiv_symm_apply [Fintype ι] (v : ∀ i, eigenSub ρ (σ i)) :
     (eigenEquiv h ρ).symm v = ∑ i, (v i : N) := by
   simp [eigenEquiv]
 
-include h in
 
 theorem isInternal_eigenSub [Finite ι] : DirectSum.IsInternal fun i => eigenSub ρ (σ i) := by
   have := Fintype.ofFinite ι
@@ -554,7 +551,6 @@ variable {O : Type*} [CommRing O] {R : Type*} [CommRing R] {ι : Type*} [Fintype
   {σ : ι → O →+* R} (h : IsSplitting σ) (ρ : O →+* Module.End R N)
 include h
 
-omit [Fintype ι] in
 
 end Stalk
 
@@ -563,7 +559,6 @@ section Discr
 variable {E : Type*} [Field E] [NumberField E] {R : Type*} [CommRing R] {ι : Type*} [Fintype ι]
   [DecidableEq ι]
 
-omit [DecidableEq ι] in
 
 theorem nonempty_basis (hc : Fintype.card ι = Module.finrank ℚ E) :
     Nonempty (Module.Basis ι ℤ (𝓞 E)) :=
@@ -649,7 +644,6 @@ theorem det_sq_conjugateHom {L : Type*} [Field L] [Algebra (𝓞 L) R] {φ : ι 
   rw [map_pow, RingHom.map_det, map_intCast, ← this]
   congr 2
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem card_embeddings_of_splits {L : Type*} [Field L] [CharZero L] [Fintype (E →+* L)]
     (hL : ∀ x : E, ((minpoly ℚ x).map (algebraMap ℚ L)).Splits) :
@@ -662,9 +656,7 @@ theorem isSplitting_of_isUnit_discr {σ : ι → 𝓞 E →+* R} (b : Module.Bas
     (hu : IsUnit (NumberField.discr E : R)) : IsSplitting σ :=
   (isSplitting_iff_isUnit_det σ b).2 ((isUnit_pow_iff two_ne_zero).1 (hd ▸ hu))
 
-omit [DecidableEq ι] in
 
-omit [DecidableEq ι] in
 
 theorem isSplitting_of_isDomain {S : Type*} [CommRing S] [IsDomain S] [CharZero S]
     {σ : ι → 𝓞 E →+* S} (hσ : Function.Injective σ) (hc : Fintype.card ι = Module.finrank ℚ E)
@@ -686,6 +678,5 @@ end Discr
 
 end EigenSplit
 
-open EigenSplit in
 
 end GlobalTheory

@@ -68,7 +68,6 @@ def Setup.AlgJets (S : Setup g) (δ : ℂ) (e : (Fin g → ℂ) → ℂ) : Prop 
 
 variable {q : ℕ} [Fact q.Prime]
 
-open Classical in
 
 def lamA (lam : Qbar →+* ℂ_[q]) (x : ℂ) : ℂ_[q] :=
   if h : x ∈ Qbar then lam ⟨x, h⟩ else 0

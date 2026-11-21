@@ -18,7 +18,6 @@ section Gen
 variable {K L : Type} [Field K] [Field L] [Algebra K L] {C : Type} [AddCommGroup C] [Module K C] {n : ℕ}
   {H : Type} [AddCommGroup H] [Module ℂ H] {X : Type} [AddCommGroup X] [Module ℂ X]
 
-variable (L) in
 
 def crd (b : Basis (Fin n) K C) : C →ₗ[K] (Fin n → L) :=
   (Algebra.linearMap K L).compLeft (Fin n) ∘ₗ b.equivFun.toLinearMap
@@ -65,7 +64,6 @@ theorem extB_injective (σ : L →+* ℂ) {w : Fin n → H} (hw : LinearIndepend
   have h1 : (fun k => σ (x k)) = fun k => σ (y k) := LinearMap.ker_eq_bot.1 (lc_ker hw) h
   exact funext fun k => σ.injective (congrFun h1 k)
 
-variable (K C) in
 
 abbrev HasB (n : ℕ) : Prop := Nonempty (Basis (Fin n) K C)
 
@@ -75,13 +73,9 @@ theorem hasB_iff : HasB K C n ↔ FiniteDimensional K C ∧ n = finrank K C :=
   ⟨fun ⟨b⟩ => ⟨Module.Finite.of_basis b, by rw [finrank_eq_card_basis b, Fintype.card_fin]⟩,
     fun ⟨_, h⟩ => h ▸ hasB_finrank⟩
 
-variable (K L C) in
-open Classical in
 
 def crdOr (n : ℕ) : C →ₗ[K] (Fin n → L) := if h : HasB K C n then crd L h.some else 0
 
-variable (K C) in
-open Classical in
 
 def bOr (n : ℕ) : Fin n → C := if h : HasB K C n then h.some else 0
 
@@ -91,8 +85,6 @@ theorem bOr_eq (h : HasB K C n) : bOr K C n = h.some := dif_pos h
 
 theorem crdOr_injective (h : HasB K C n) : Function.Injective (crdOr K L C n) := crdOr_eq (L := L) h ▸ crd_injective _
 
-variable (K L C) in
-open Classical in
 
 def secOr (n : ℕ) : LinearMap.range (crdOr K L C n) →ₗ[K] C :=
   if h : Function.Injective (crdOr K L C n) then (LinearEquiv.ofInjective _ h).symm.toLinearMap else 0
@@ -109,7 +101,6 @@ theorem extB_crdOr (h : HasB K C n) (σ : L →+* ℂ) (jK : C →ₛₗ[σ.comp
 
 def EvEx (σ : K →+* ℂ) (ev : H → X) (φ : C → X) : Prop := ∃ j : C →ₛₗ[σ] H, ∀ f, ev (j f) = φ f
 
-open Classical in
 
 def evOr (σ : K →+* ℂ) (ev : H → X) (φ : C → X) : C →ₛₗ[σ] H := if h : EvEx σ ev φ then h.choose else 0
 
@@ -131,7 +122,6 @@ def RhoIs (σ : L →+* ℂ) (j : WL →ₛₗ[σ] H) (e : H →ₗ[ℂ] X) (act
     (ρ : G →* (WL →ₗ[L] WL)) : Prop :=
   ∀ g x, e (j (ρ g x)) = σ ((chi g : Lˣ) : L) • act g (e (j x))
 
-open Classical in
 
 def rhoOr (σ : L →+* ℂ) (j : WL →ₛₗ[σ] H) (e : H →ₗ[ℂ] X) (act : G → X →ₗ[ℂ] X) (chi : G →* Lˣ) :
     G →* (WL →ₗ[L] WL) :=
@@ -147,7 +137,6 @@ theorem RhoIs.unique {σ : L →+* ℂ} {j : WL →ₛₗ[σ] H} {e : H →ₗ[�
     (h : RhoIs σ j e act chi ρ) (h' : RhoIs σ j e act chi ρ') : ρ = ρ' :=
   MonoidHom.ext fun g => LinearMap.ext fun x => hj (he ((h g x).trans (h' g x).symm))
 
-variable (L) in
 
 def rhoB (b : Basis (Fin n) K C) (ρC : G →* (C →ₗ[K] C)) : G →* ((Fin n → L) →ₗ[L] (Fin n → L)) where
   toFun g := Matrix.toLin' ((LinearMap.toMatrix b b (ρC g)).map (algebraMap K L))
@@ -311,7 +300,6 @@ def chiC (i : Fin D.R.m) (g : G) : ℂˣ :=
 def ChiIs (i : Fin D.R.m) (chi : G →* D.what₂.LLˣ) : Prop :=
   ∀ g, D.what₂.embLL ((chi g : D.what₂.LLˣ) : D.what₂.LL) = (chiC R i g : ℂ)
 
-open Classical in
 
 def chiTop (i : Fin D.R.m) : G →* D.what₂.LLˣ := if h : ∃ chi, ChiIs R i chi then h.choose else 1
 
@@ -407,7 +395,6 @@ def JEvBarAt (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) (hV : T.V ((i : ℕ) 
 def JEvBar : Prop :=
   ∀ i σ, ¬ GoodEmb T.Q.c (res T σ) → ∀ hV, JEvBarAt T R κ i σ hV
 
-open Classical in
 
 def jTop (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) : Cu T κ i →ₛₗ[res T σ] (R.HW i σ).H :=
   if GoodEmb T.Q.c (res T σ) then
@@ -491,7 +478,6 @@ def KapIs : Prop :=
     (∀ k : Fin (D.R.sigW ((i : ℕ) + 1)).2,
       (κ i).aM τ k = aMi D i ((Wc D i).sig (tauE D τ)).1 ((Wc D i).sig (tauE D τ)).2 τ k) ∧ (κ i).n = D.R.nV
 
-variable (D) in
 
 def KapDom : Prop :=
   (∀ (i : Fin D.R.m) (τ : D.what₂.Tau),
@@ -529,7 +515,6 @@ theorem kapDom : KapDom D := by
     have := D.R.two_le_m
     exact ⟨a + b + c, by simp only [Ranks.nV, Ranks.r]; omega⟩
 
-variable (D) in
 
 def kapTop (i : Fin D.R.m) : WeightFamilies.Wt D ((i : ℕ) + 1) :=
   ⟨_, _, fun τ => ((kapDom D).1 i τ).1, fun τ => ((kapDom D).1 i τ).2, D.R.nV, (kapDom D).2⟩
@@ -625,7 +610,6 @@ theorem FWTie.mem_MK (t : FWTie T R κ v₀) (i : Fin D.R.m) (f : Cu T κ i) :
     refine ⟨(t.e i f).2, fun la y => ?_⟩
     exact (t.nrm_eq i la y f).trans_le ((T.nrmM_le_one_iff _ la _ _).2 (h la _))
 
-variable (T R v₀) in
 
 def EvInj : Prop := ∀ i σ, GoodEmb T.Q.c (res T σ) → Function.Injective (evAt R i σ (v₀ i σ))
 

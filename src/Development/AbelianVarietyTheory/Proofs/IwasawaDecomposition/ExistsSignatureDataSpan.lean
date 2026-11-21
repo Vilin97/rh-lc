@@ -47,7 +47,6 @@ def SigIdx (i : T.Tw) : Type :=
 
 instance finSigIdx (i : T.Tw) : Finite (SigIdx D T In i) := Subtype.finite
 
-open Classical in
 
 def sigEig (i : T.Tw) (x : SigIdx D T In i) (k : ℕ) (P : PlE D.host) : T.O i :=
   if h : sigVal D T i k P then (x.2.2.2.2 k P h).choose else 1

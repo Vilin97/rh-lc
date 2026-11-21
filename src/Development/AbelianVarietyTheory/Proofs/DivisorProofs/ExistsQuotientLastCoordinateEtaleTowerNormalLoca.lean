@@ -193,10 +193,6 @@ private lemma isDomain_of_formallyEtale_of_isLocalRing {A B : Type} [CommRing A]
     (IsLocalization.algEquiv q.primeCompl (Localization.AtPrime q') B).toRingEquiv
   exact e'.symm.toMulEquiv.isDomain
 
-open CategoryTheory AlgebraicGeometry TopologicalSpace in
-open scoped TensorProduct in
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1600000 in
 
 theorem _root_.GlobalTheory.FieldPair.IsEtTower.exists_quotient_last :
     ∀ {K L : Type} [Field K] [Field L] (cK : ℂ →+* K) (cL : ℂ →+* L) (r : ℕ) (R : Subring K)

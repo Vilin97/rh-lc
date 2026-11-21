@@ -100,7 +100,6 @@ def restrictIsoOfLinear {U : X.Opens}
         right_inv := LinearEquiv.apply_symm_apply _ })
     fun {V W} h s => hφ _ (g.image_mono h) s
 
-set_option backward.isDefEq.respectTransparency false in
 
 def overIsoOfRestrictIso {U : X.Opens} (e : F.restrict U.ι ≅ G.restrict U.ι) :
     F.over U ≅ G.over U :=
@@ -108,7 +107,6 @@ def overIsoOfRestrictIso {U : X.Opens} (e : F.restrict U.ι ≅ G.restrict U.ι)
     ((Scheme.Modules.overFunctorEquiv U).app F ≪≫ e ≪≫
       ((Scheme.Modules.overFunctorEquiv U).app G).symm)
 
-set_option backward.isDefEq.respectTransparency false in
 
 def generatorsOver {U V : X.Opens} (h : V ≤ U) (σ : (F.over U).GeneratingSections) :
     (F.over V).GeneratingSections :=
@@ -116,7 +114,6 @@ def generatorsOver {U V : X.Opens} (h : V ≤ U) (σ : (F.over U).GeneratingSect
     (SheafOfModules.overMapUnitIso (homOfLE h)).symm).ofEpi
     ((SheafOfModules.overFunctorMap X.ringCatSheaf (homOfLE h)).app F).hom
 
-set_option backward.isDefEq.respectTransparency false in
 
 def generatorsOfLocallyIso {ι : Type} {U : ι → X.Opens} (hU : ⨆ k, U k = ⊤)
     (e : ∀ (k : ι) (W : X.Opens), W ≤ U k → (F.restrict W.ι ≅ G.restrict W.ι))
@@ -133,7 +130,6 @@ def generatorsOfLocallyIso {ι : Type} {U : ι → X.Opens} (hU : ⨆ k, U k = �
   generators p := (generatorsOver inf_le_left (σ.generators p.1)).ofEpi
     (overIsoOfRestrictIso (e p.2 _ inf_le_right)).hom
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem isFiniteType_of_locally_iso {ι : Type} {U : ι → X.Opens} (hU : ⨆ k, U k = ⊤)
     (e : ∀ (k : ι) (W : X.Opens), W ≤ U k → (F.restrict W.ι ≅ G.restrict W.ι))
@@ -186,14 +182,12 @@ theorem stalkHomOfLinear_germ {V : X.Opens} (hV : V ≤ U) (hxV : x ∈ V) (s : 
   rw [e, hφ hV]
   exact germ_resM _ _ _
 
-include hx in
 
 theorem exists_germ_eq_of_mem (t : (F.presheaf.stalk x :)) :
     ∃ (V : X.Opens) (_ : V ≤ U) (hxV : x ∈ V) (s : Γ(F, V)), F.presheaf.germ V x hxV s = t := by
   obtain ⟨V, hV, s, rfl⟩ := F.presheaf.exists_germ_eq t
   exact ⟨V ⊓ U, inf_le_right, ⟨hV, hx⟩, resM F inf_le_left s, germ_resM _ _ _⟩
 
-include hφ in
 
 theorem symm_resM {V W : X.Opens} (hV : V ≤ U) (h : W ≤ V) (s : Γ(G, V)) :
     (φ W (h.trans hV)).symm (resM G h s) = resM F h ((φ V hV).symm s) := by

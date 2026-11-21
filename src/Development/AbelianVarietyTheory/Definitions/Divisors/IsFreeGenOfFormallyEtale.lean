@@ -92,6 +92,5 @@ theorem exists_place {Q : Subring K} (hQ : IsLocModel c Q) {t : Q} (ht : Prime t
     rw [this]
     exact A.mul_mem (A.algebraMap_mem ⟨a, ha⟩) g.2
 
-open MvPolynomial in
 
 end GlobalTheory.FieldPair.AdjModel

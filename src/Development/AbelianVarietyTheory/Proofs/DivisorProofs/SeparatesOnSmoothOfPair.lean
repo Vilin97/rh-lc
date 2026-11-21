@@ -245,7 +245,6 @@ theorem separate_two (hS : SeparatesOnSmooth) (hNN : GlobalTheory.Published.NefN
       erw [e, mul_zero, zero_add] at this
       exact this)
 
-open Cardinal in
 
 theorem nonempty_ringHom_complex (K : Type) [Field K] [CharZero K] [Countable K] : Nonempty (K →+* ℂ) := by
   let F := FractionRing (MvPolynomial ℝ K)
@@ -312,7 +311,6 @@ theorem sum_rpow_le (D : ℕ) :
     push_cast at this ih ⊢
     linarith
 
-open GlobalTheory.Discrepancy GlobalTheory.TopForm GlobalTheory.QCoh in
 
 theorem separatesOnSmooth_of_pair (h : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X] [GlobalTheory.IsNormalScheme X]
     (p : X ⟶ Sp ℂ) (n : ℕ), IsProjOver p → topologicalKrullDim X = n →

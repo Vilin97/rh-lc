@@ -33,7 +33,6 @@ private lemma res_res_lemma {X : Scheme.{0}} {U V W : X.Opens} (h₁ : V ≤ U) 
     | simp [← Functor.map_comp_apply]
     | simp
 
-set_option maxHeartbeats 800000 in
 
 end GV
 

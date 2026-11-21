@@ -162,7 +162,6 @@ theorem exists_sec_ne_zero {Y : GT ι} {θ : EuclideanSpace ℂ ι → ℂ} (hθ
   rw [add_neg_cancel, twistedLaw_zero_iff] at h
   exact ⟨_, h, by simp [ha', hb']⟩
 
-open Classical in
 
 noncomputable def jets (Y : GT ι) (k : ℕ) : Submodule ℂ (MvPowerSeries ι ℂ) where
   carrier := {x | ∃ F ∈ (powTorus Y k).Sec k,
@@ -277,7 +276,6 @@ end ThetaJet
 
 open ThetaJet
 
-open Classical in
 
 theorem exists_section_jet_ne_zero {ι : Type} [Fintype ι] (Y : GT ι) (θ : EuclideanSpace ℂ ι → ℂ) (hθ : θ ∈ Y.Sec 1) (h0 : θ ≠ 0)
     (D q : ℕ) (hq : 3 * D + 2 ≤ q) (P : MvPolynomial ι ℂ) (hP : P ≠ 0) (hD : P.totalDegree ≤ D) :

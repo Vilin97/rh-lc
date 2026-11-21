@@ -59,7 +59,6 @@ theorem adq_Z_lat :
     (adq_lat (X := X) (hb := hb) (u := u) (p := p) _ (colV_lat (X := X) (p := p) zI))
     (adq_z_cong (X := X) (hb := hb) (u := u) (p := p))
 
-include hb in
 
 theorem adq_tau (hθ : IsSplitEquiv X p θ) (hL : LatBasis X p θ (reindex₂ X p Q)) :
     ∃ o : OvA X p, adqTau X u p θ Q = -1 + ((gOf p : ℕ) : FpX X p) * (o : FpX X p) := by
@@ -83,7 +82,6 @@ theorem adq_tau (hθ : IsSplitEquiv X p θ) (hL : LatBasis X p θ (reindex₂ X 
   push_cast
   linear_combination hy
 
-include hb in
 
 theorem adq_tau_inv (hθ : IsSplitEquiv X p θ) (hL : LatBasis X p θ (reindex₂ X p Q)) :
     (adqTau X u p θ Q)⁻¹ ∈ OvA X p ∧ adqTau X u p θ Q ≠ 0 := by

@@ -48,7 +48,6 @@ theorem Wit.w {L : Link D G} {h : G.GAf} {N N' : ℕ} {X' : GenModel gb N'} {X :
   obtain ⟨-, o, ψ, φ, -, rfl⟩ := H
   rw [Category.assoc, φ.cart.1.w, ← Category.assoc, Over.w]
 
-variable (D) in
 
 def IsSys (f : ℕ → D.La →+ D.La) (u : ℕ → ℤ) (c k : ℕ) : Prop :=
   c.Coprime p ∧ k.Coprime p ∧ c ∣ k ^ 2 ∧

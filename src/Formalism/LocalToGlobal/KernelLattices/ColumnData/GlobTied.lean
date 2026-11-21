@@ -33,7 +33,6 @@ theorem exists_over (X : Fields) (v : HeightOneSpectrum (𝓞 X.F)) :
   rintro rfl
   exact v.ne_bot (hc ▸ Ideal.comap_bot_of_injective _ hinj)
 
-open Classical in
 
 end Sel
 
@@ -44,9 +43,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Λ : �
 
 abbrev chr0 (X : Fields) (S : Set ℕ) : Chr X.F X.E X.K := ((mu0 X.F X.E X.K S : Tup X.F X.E X.K S) : Chr X.F X.E X.K)
 
-open Classical in
 
-variable (R) in
 
 end Fin
 

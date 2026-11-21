@@ -20,7 +20,6 @@ namespace CoordArithOfFnField
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [CharZero Ω]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem ratioField_eq (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) :
     ratioField y c = blockFnField y := by
@@ -55,7 +54,6 @@ theorem dim_eq (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, 
   rw [hA, htr]
   simp only [map_add (f := _), map_natCast]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [CharZero Ω] in
 
 theorem nonzero_of_relevant (y : (Σ k, ι k) → Ω) (h : IsRelevant (mCoordIdeal y)) :
     ∃ c : ∀ k, ι k, ∀ k, y ⟨k, c k⟩ ≠ 0 := by
@@ -65,7 +63,6 @@ theorem nonzero_of_relevant (y : (Σ k, ι k) → Ω) (h : IsRelevant (mCoordIde
 
 end CoordArithOfFnField
 
-open CoordArithOfFnField in
 
 theorem CoordArithOfFnField.proof : CoordArithOfFnField.Statement := by
   intro K _ ι _ K' _ ι' _ Ω _ _ y y' d hK' hy' hF hA

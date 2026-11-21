@@ -116,7 +116,6 @@ theorem exists_param [Finite (Pts O A)] (ζ₀ : Pts O A) [IsDVRAt ζ₀] :
       exact ζ.asIdeal.add_mem hi' (hjmem ζ hz)
     exact ζ.isMaximal.ne_top ((Ideal.eq_top_iff_one _).mpr this)
 
-open Classical in
 
 theorem exists_unit_param (K : Type*) [Field K] [Algebra K A] [FiniteDimensional K A]
     [Finite (Pts O A)] [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif A ϖ) (ζ₀ : Pts O A) :
@@ -233,7 +232,6 @@ theorem length_zero_of_le {R M : Type*} [Ring R] [AddCommGroup M] [Module R M]
   rw [Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq]
   exact h (a - b).2
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem length_residue (hfin : Module.Finite O ↥(As O A)) (ζ : Pts O A) :
     Module.length O (↥(As O A) ⧸ ζ.asIdeal) = (fdeg ζ : ℕ∞) := by
@@ -265,7 +263,6 @@ variable {V : Type*} [AddCommGroup V] [Module A V] [Module O V] [IsScalarTower O
 theorem ballO_mono [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif A ϖ) (he : IsGen A e)
     {c c' : Pts O A → ℤ} (hc : ∀ ζ, c ζ ≤ c' ζ) : ballO ϖ e c ≤ ballO ϖ e c' := fun v hv => ball_mono h he hc hv
 
-open Classical in
 
 theorem length_step (K : Type*) [Field K] [Algebra K A] [FiniteDimensional K A]
     [Finite (Pts O A)] [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif A ϖ) (hfin : Module.Finite O ↥(As O A))

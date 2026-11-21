@@ -22,8 +22,6 @@ open scoped InnerProductSpace ENNReal
 
 namespace GlobalTheory.CoefZero
 
-open Matrix MeasureTheory Finset in
-open scoped InnerProductSpace ENNReal Matrix.Norms.Elementwise in
 
 theorem _root_.GlobalTheory.CoefZero.continuousOn_of_ckOn {k r : ℕ} {E : Type} [NormedAddCommGroup E]
     [NormedSpace ℂ E] {m : ℕ∞}

@@ -43,7 +43,6 @@ theorem uAction_lieEq (X : TR.Lie F a) (φ : TR.Sm F a) :
   simp only [archSlice_apply, one_mul, ← Fb.infEmb_grpEq, MulEquiv.apply_symm_apply]
   rfl
 
-open Classical in
 
 theorem exists_stdBasis (F : Type) [Field F] [NumberField F] (a : ℕ) :
     ∃ b : Module.Basis (InfinitePlace F × Fin a × Fin a) ℝ (TR.Lie F a),

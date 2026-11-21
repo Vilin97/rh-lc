@@ -22,7 +22,6 @@ noncomputable section
 
 namespace GlobalTheory.ChainOnto.SatInv
 
-open GlobalTheory.LFun.ConjPlace in
 
 theorem Tj_inv_eq_invT {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ)
     (u : (w.adicCompletion E)ˣ) (j : ℕ) (g : GL (Fin n) (w.adicCompletion E)) :
@@ -47,7 +46,6 @@ theorem Tj_inv_eq_invT {E : Type} [Field E] [NumberField E] (w : HeightOneSpectr
     rw [H]
     group
 
-open GlobalTheory.LFun.ConjPlace in
 
 theorem invT_invT {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ)
     (g : GL (Fin n) (w.adicCompletion E)) :
@@ -55,7 +53,6 @@ theorem invT_invT {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (�
   Units.ext (Matrix.ext fun i j => by
     rw [invT_val, ← map_inv, invT_val, inv_inv]; rfl)
 
-open GlobalTheory.LFun.ConjPlace in
 
 theorem heckeVec_inv_eq {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ) (V : Type)
     [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) (x : V)

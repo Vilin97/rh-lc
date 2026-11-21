@@ -24,7 +24,6 @@ def IsBoxD (D : ι → ∀ v : HeightOneSpectrum (𝓞 F), Set (Fv F v)) : Prop 
   (∀ c v, IsClopen (D c v) ∧ IsCompact (D c v)) ∧
     ∀ᶠ v in cofinite, ∀ c, D c v = (v.adicCompletionIntegers F : Set (Fv F v))
 
-variable (F ι) in
 
 def boxes : Set (Set (ι → Af F)) := {s | ∃ D, IsBoxD D ∧ s = boxS D}
 
@@ -159,7 +158,6 @@ theorem boxes_seq : ∃ bs : ℕ → Set (ι → Af F), (∀ n, bs n ∈ boxes F
   refine ⟨bs, fun n => hTS (mem_range_self n), ?_⟩
   rw [← sUnion_range, hTU, hU]
 
-open Classical in
 
 private theorem exists_restricted_box_subset_of_isOpen {x : Af F} {U : Set (Af F)} (hU : IsOpen U) (hx : x ∈ U) :
     ∃ E : ∀ v : HeightOneSpectrum (𝓞 F), Set (Fv F v),

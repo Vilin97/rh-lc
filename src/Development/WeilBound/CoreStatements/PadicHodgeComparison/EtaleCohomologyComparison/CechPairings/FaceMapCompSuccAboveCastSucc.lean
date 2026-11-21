@@ -80,7 +80,6 @@ def ch {n k : ℕ} (s : ComposableArrows C' n) {a : Fin (k+1) → Fin (n+1)} {b 
     (ha : Monotone a) (hb : Monotone b) : ComposableArrows (C' × Fin 2) k :=
   Functor.prod' (ha.functor ⋙ s) hb.functor
 
-open Classical in
 
 def tm (m' : Mor F F' σ) {G : C' ⥤ C} (η : G ⟶ m'.G) {n k : ℕ} (s : ComposableArrows C' n) (f : Cn F k)
     (a : Fin (k+1) → Fin (n+1)) (b : Fin (k+1) → Fin 2) : F'.obj (s.obj (Fin.last n)) :=

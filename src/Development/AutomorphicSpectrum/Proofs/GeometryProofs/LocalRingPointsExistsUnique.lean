@@ -310,7 +310,6 @@ theorem exists_local_ext {o : Type} [CommRing o] [Algebra o Ω] {κ : Type} {x :
   change (a : Ω) * (((s : Algebra.adjoin o (Set.range fun j => x j / x c)) : Ω) * (b : Ω)⁻¹) = 1
   rw [← mul_assoc, ev, mul_inv_cancel₀ b0]
 
-set_option maxHeartbeats 2000000 in
 
 theorem existsUnique_point (T : CoordTie ℤ ξ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩))
     (w : (Σ k, J k) → R) (hu : ∀ k, ∃ c, IsUnit (w ⟨k, c⟩))

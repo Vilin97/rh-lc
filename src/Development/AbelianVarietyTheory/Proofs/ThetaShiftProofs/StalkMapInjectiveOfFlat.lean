@@ -221,7 +221,6 @@ theorem deltaφ_comp (α mu : a.D₀.X) (i : Fin 4 ⊕ Fin 4) : DegPre.deltaφ P
   · show ((DegPre.trF P.toPre F (e mu)).left ≫ DegPre.famφ P.toPre F (e α) i) ≫ φ = _ ≫ _ ≫ _
     rw [Category.assoc, famφ_comp hW, ← Category.assoc, trF_comp_φ hW, Category.assoc]
 
-include hW hG in
 
 theorem val_fe (α mu : a.D₀.X)
     (u u' : LB.Gen (LB.LinComb P.toPre.P.L (DegPre.deltaφ P.toPre F j (e α) (e mu)) (DegPre.deltaε j)))

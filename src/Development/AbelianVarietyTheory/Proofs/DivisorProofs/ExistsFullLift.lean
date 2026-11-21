@@ -61,8 +61,6 @@ theorem eC_idem_at (hr : R.grp_record) (σ : D.what₂.LL →+* ℂ) : GlobalThe
     simp only [← map_mul, ← map_sum] at this ⊢
   exact congrArg σ ((sg0 D A).injective this)
 
-open Classical in
-variable (R) in
 
 def blkChar (i : Fin D.R.m) : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ :=
   fun PP => if PP ∈ R.Pg then (R.chi ((i : ℕ) + 1) PP)⁻¹ else R.xiR A.μ0 PP
@@ -126,9 +124,7 @@ theorem lower_of_parts {X Y ι : Type} [NormedAddCommGroup X] [InnerProductSpace
     · obtain ⟨l, a1, a2, a3⟩ := h4 k hk
       exact ⟨l, (Real.le_log_iff_exp_le a1).1 a3, a2⟩
 
-open GlobalTheory.IndefiniteRowSideFullHecke.WeilGramSignature in
 
-open GlobalTheory.IndefiniteRowSideFullHecke.WeilGramSignature in
 
 end GlobalTheory.LowForm
 

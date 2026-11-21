@@ -29,6 +29,5 @@ theorem theta_mem {v w : Pl E} (f : v.adicCompletion E →+* w.adicCompletion E)
   exact mul_mem (mul_mem (GlobalTheory.ThetaSatake.phiU_mem _ n) (GlobalTheory.BCT.LocGlue.intst E n v w f hf g hg))
     (inv_mem (GlobalTheory.ThetaSatake.phiU_mem _ n))
 
-set_option hygiene false in
 
 end GlobalTheory.EulerTwSplit

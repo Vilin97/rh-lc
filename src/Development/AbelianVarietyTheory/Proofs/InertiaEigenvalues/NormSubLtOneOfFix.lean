@@ -400,7 +400,6 @@ section Main
 
 variable {l : ℕ} [hl : Fact l.Prime] {P : LocPrime l} (AI : LocAinf l P)
 
-open scoped Formalism.Per in
 
 theorem ιA_zlW (T : LocTied l P AI) (z : ℤ_[l]) :
     AI.ιA (zlW l (OCb l) z) = algebraMap ℚ_[l] P.R.B (z : ℚ_[l]) := by

@@ -33,7 +33,6 @@ theorem charZero_adicCompletion : CharZero (w.adicCompletion E) :=
 
 end GlobalTheory.LocLanglands.LangExt
 
-open GlobalTheory.LocLanglands.LangExt in
 
 theorem GlobalTheory.LocLanglands.exists_isLExt : LanglandsExhaustionGL → LanglandsMultisegments → ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (r : IrrGL (w.adicCompletion E) → WD h), (∃ rc, IsLExt r rc) ∧ ∀ rc, IsLExt r rc → ∀ x : IrrGL (w.adicCompletion E), x.IsCusp → rc x = r x := by
   intro hX hM E Ω _ _ _ _ _ A w h r

@@ -101,7 +101,6 @@ omit [LocallyCompactSpace G] [SecondCountableTopology G] [T2Space G] [LocallyCom
 theorem measurable_mk : Measurable (QuotientGroup.mk : G → G ⧸ H) :=
   QuotientGroup.continuous_mk.measurable
 
-omit [LocallyCompactSpace G] [T2Space G] [LocallyCompactSpace H] [SecondCountableTopology G] in
 
 theorem fibre_comp_mk_mul (ν : Measure H) {φ : G → ℝ≥0∞} (hφ : Measurable φ)
     (hφ1 : ∀ g : G, ∫⁻ h : H, φ (g * h) ∂ν = 1) (F : G ⧸ H → ℝ≥0∞) (g : G) :

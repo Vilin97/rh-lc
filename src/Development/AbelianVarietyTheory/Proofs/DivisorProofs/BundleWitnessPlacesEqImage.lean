@@ -27,7 +27,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.Div.PgTie
 
-open Classical in
 
 theorem image_congr {D : D7} {X X' : Formalism.L2.Col.Fields} (hX : X = X') {s : Formalism.L2.Ker.Seam D X} {s' : Formalism.L2.Ker.Seam D X'}
     (hs : HEq s s') {Pr : Formalism.L2.Col.Primes X} {Pr' : Formalism.L2.Col.Primes X'} (hP : HEq Pr Pr') :
@@ -42,14 +41,11 @@ theorem plMap_refl {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (
   ext x
   exact Formalism.L2.Host.CT.mem_plMap (RingEquiv.refl E) P x
 
-open Classical in
 
 theorem image_refl {E : Type} [Field E] [NumberField E] (f : E ≃+* E) (hf : f = RingEquiv.refl E)
     (S : Finset (HeightOneSpectrum (𝓞 E))) : S.image (Formalism.L2.Host.CT.plMap f) = S := by
   subst hf
   rw [show Formalism.L2.Host.CT.plMap (RingEquiv.refl E) = id from funext plMap_refl, Finset.image_id]
 
-open Classical in
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.Div.PgTie

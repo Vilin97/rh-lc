@@ -49,7 +49,6 @@ def KillsAll {D₁ : BKDat O K l e a ι η H} {D₂ : BKDat O K l e a κ η H} (
   KillsCoker F.app n D₁.Y D₂.Y ∧
   KillsCoker F.app n D₁.Y' D₂.Y'
 
-omit [NormedAlgebra ℚ_[l] K] [NeZero e] [NeZero a] [TameDescentExponentData K l e a] in
 
 theorem killsCoker_M_iff {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} (F : Hom P Q) (n : ℕ) :
     KillsCoker F.app n P.M Q.M ↔ ∀ q : F.coker, n • q = 0 := by

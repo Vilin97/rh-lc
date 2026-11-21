@@ -11,7 +11,6 @@ namespace GroundTheory.Heights₂.Heights.Targets
 
 open MeasureTheory Module ZLattice
 
-open scoped Classical in
 
 theorem CovolumeRelIndex.proof : CovolumeRelIndex.Statement := by
   intro E _ _ _ _ _ μ _ L₁ L₂ _ _ _ _ h

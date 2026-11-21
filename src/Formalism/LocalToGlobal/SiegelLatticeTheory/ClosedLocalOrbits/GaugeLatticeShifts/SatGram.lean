@@ -400,7 +400,6 @@ theorem reduction_additive_char_ne_one (hP : PsiCond X) (v : (reductionTypedPlac
   rw [psiV_apply] at h2
   exact hne h2
 
-include hR hU hC in
 
 theorem typedRed_exists (hP : PsiCond X) : ∃ TR : TypedRed X, ∀ v, TR.psi0 v ≠ 1 :=
   ⟨reductionTypedPlaces hR hU hC, reduction_additive_char_ne_one hR hU hC hP⟩
@@ -512,7 +511,6 @@ variable {D : D7} {X : HidaSetting D} {u u' : D.what₂.Word}
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
   (TR : TypedRed X) (cs : ColSys X u what₂) (cs' : ColSys X u' rows') (FdN FdN' : Set X.B.I.Ginf)
 
-variable (F0 F0') in
 
 def LeftAct (S : Set (GTerm X u u' F0 F0' what₂ rows')) (A : {Λ // Λ ∈ what₂} → Set (Iof TR)) : Prop :=
   ∀ (q : {Λ // Λ ∈ what₂} × {Λ' // Λ' ∈ rows'}), ∀ b ∈ A q.1,
@@ -522,7 +520,6 @@ def LeftAct (S : Set (GTerm X u u' F0 F0' what₂ rows')) (A : {Λ // Λ ∈ wha
       (∀ t, t ∈ S → positionT t = q → iotaOf TR cs cs' (φ t) = b * iotaOf TR cs cs' t) ∧
       (∀ t, t ∈ S → positionT t = q → aT cs cs' FdN FdN' (φ t) = U (aT cs cs' FdN FdN' t))
 
-variable (F0 F0') in
 
 def RightAct (S : Set (GTerm X u u' F0 F0' what₂ rows')) (A' : {Λ' // Λ' ∈ rows'} → Set (Iof TR)) : Prop :=
   ∀ (q : {Λ // Λ ∈ what₂} × {Λ' // Λ' ∈ rows'}), ∀ b ∈ A' q.2,
@@ -651,7 +648,6 @@ theorem card_gPl_sub (hN : GCount X) (i : Fin 2) :
       left_inv := fun _ => rfl
       right_inv := fun _ => rfl }
 
-include hR hU hC in
 
 theorem card_prod (hN : GCount X) (TR : TypedRed X) :
     ∏ v, Fintype.card (TR.Fq v) =
@@ -700,7 +696,6 @@ theorem card_prod (hN : GCount X) (TR : TypedRed X) :
   simp only [id] at hp2
   rw [hpi, card_pi_eq TR (reductionTypedPlaces hR hU hC), ← hpi, hp2, hcnt 0, hcnt 1]
 
-include hR hU hC in
 
 theorem typed_count (hN : GCount X) (TR : TypedRed X) (i : Fin 2) :
     Fintype.card {v : TR.Pl // Fintype.card (TR.Fq v) = D.host.g i} = Module.finrank ℚ X.B.I.F := by
@@ -714,7 +709,6 @@ theorem typed_count (hN : GCount X) (TR : TypedRed X) (i : Fin 2) :
   · exact h0.symm
   · exact h1.symm
 
-include hR hU hC in
 
 theorem tt_eq (hN : GCount X) (TR : TypedRed X) :
     ∏ v, (1 + 3 / (Fintype.card (TR.Fq v) : ℝ)) =
@@ -806,7 +800,6 @@ theorem factor_eq (TR : TypedRed X) (v : TR.Pl) :
 
 variable (hR : RedExists X) (hU : GUnif X) (hC : GResCard X)
 
-include hR hU hC in
 
 theorem gamma_one_eq_pow_degree (hN : GCount X) (TR : TypedRed X) :
     Gam1 TR = gaZ D.R.k (D.host.g 0) ^ Module.finrank ℚ X.B.I.F * gaZ D.R.k (D.host.g 1) ^ Module.finrank ℚ X.B.I.F := by
@@ -880,7 +873,6 @@ theorem card_typ (hN : GCount X) (i : Fin 2) :
       left_inv := fun _ => rfl
       right_inv := fun _ => rfl }
 
-include hR hU hC in
 
 theorem gamma_one_eq_prod_typed_places (hN : GCount X) (TR : TypedRed X) :
     Gam1 TR = ∏ p : Formalism.L2.SG.TypedSets.TypP X.B.I.F (D.host.g 0) (D.host.g 1),
@@ -970,7 +962,6 @@ theorem gUnif_of (hS : SplitPrimeLoc) : GUnif X := by
   · rw [hval 0 hi, hone 1 (fun h1 => g_coprime_mem v hi h1), mul_one]
   · rw [hval 1 hi, hone 0 (fun h0 => g_coprime_mem v h0 hi), one_mul]
 
-variable (X) in
 
 theorem one_sub_ew : ZMod' X.B.I X.B.g (1 - X.ew - sigA X.B.I X.ew) := by
   set c := 1 - X.ew - sigA X.B.I X.ew with hc

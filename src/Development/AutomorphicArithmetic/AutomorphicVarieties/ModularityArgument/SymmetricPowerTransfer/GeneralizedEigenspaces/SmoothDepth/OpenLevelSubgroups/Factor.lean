@@ -25,7 +25,6 @@ private theorem ua_ext {g h : UA E n} (h1 : cInf g = cInf h) (h2 : ∀ u, cLoc u
   refine Units.ext (matAf_ext fun u => ?_)
   exact congrArg Units.val (h2 u)
 
-open Classical in
 
 private def idem (P : HeightOneSpectrum (𝓞 E) → Prop) : Af E :=
   ⟨fun u => if P u then 1 else 0, Filter.Eventually.of_forall fun u => by

@@ -89,7 +89,6 @@ end GlobalTheory.HSCore.SplitField
 
 namespace GlobalTheory.HSCore
 
-open SplitField in
 
 theorem exists_split : ∀ (F : Type) [Field F] [NumberField F] (T : Tuple F) (E : Type) [Field E] [NumberField E] [Algebra F E] (s : Fin T.D → Fin T.N → E), T.IsGoodSection E s → ∃ (E' : Type) (_ : Field E') (_ : NumberField E') (_ : Algebra F E') (_ : Algebra E E') (_ : IsScalarTower F E E'), Split T E' fun i k => algebraMap E E' (s i k) := by
   intro F _ _ T E _ _ _ s hs

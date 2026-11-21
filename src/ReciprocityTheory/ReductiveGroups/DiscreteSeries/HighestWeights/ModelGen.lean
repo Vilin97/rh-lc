@@ -30,7 +30,6 @@ variable [FiniteDimensional ℂ V] {ε : Fin n → Bool} (τ : KG ε →* unitar
   (hder : ∀ X, inK ε X → ∀ γ : ℝ → KG ε, (∀ t : ℝ, toMK (γ t) = NormedSpace.exp ((t : ℂ) • X)) →
     HasDerivAt (fun t => ((τ (γ t) : unitary (V →L[ℂ] V)) : V →L[ℂ] V)) (dτ X) 0)
 
-include hcont hder in
 
 include hcont hder in
 theorem pre_kRel : Formalism.REAL.KRel ε (preUnits dτ) := by
@@ -79,7 +78,6 @@ theorem pre_dτ_stable_of_kStable (W : Submodule ℂ V) (hW : Formalism.REAL.KSt
     rw [e, map_zero, _root_.zero_apply]
     exact W.zero_mem
 
-include hcont hder in
 
 theorem pre_kStable_of_stable (W : Submodule ℂ V)
     (hW : ∀ k : KG ε, ∀ v ∈ W, ((τ k : unitary (V →L[ℂ] V)) : V →L[ℂ] V) v ∈ W) :
@@ -121,7 +119,6 @@ theorem pre_kStable_of_stable (W : Submodule ℂ V)
     _root_.smul_apply]
   exact W.sub_mem (W.smul_mem _ (hK _ h1 v hv)) (W.smul_mem _ (hK _ h2 v hv))
 
-include hcont hder in
 
 theorem pre_kSpan_stable (x : V) (k : KG ε) :
     ∀ v ∈ Formalism.REAL.kSpan ε (preUnits dτ) x,
@@ -136,7 +133,6 @@ theorem pre_kSpan_stable (x : V) (k : KG ε) :
   rw [show ((τ k : unitary (V →L[ℂ] V)) : V →L[ℂ] V) = NormedSpace.exp (dτ Y) from he]
   exact exp_mem_of_stable _ _ (pre_dτ_stable_of_kStable dτ _ hS Y hY)
 
-include hcont hder in
 
 theorem irred_of_gen {Λ : Fin n → ℝ} (w : V)
     (hwt : ∀ a, dτ (Matrix.single a a 1) w = ((Λ a : ℝ) : ℂ) • w)

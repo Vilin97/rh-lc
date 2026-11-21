@@ -19,7 +19,6 @@ namespace VerticalPointSurjective
 
 variable {T : Type} [Fintype T]
 
-omit [Fintype T] in
 
 theorem ringHom_aeval {A A' : Type*} [CommRing A] [CommRing A'] [Algebra ℤ A] (f : A →+* A')
     (z : (Σ _ : Unit, T) → A) (g : MRing (fun _ : Unit => T)) :
@@ -252,7 +251,6 @@ theorem locLen_quot_eq_zero {R : Type*} [CommRing R] (m : Ideal R) [m.IsPrime] {
 
 end VerticalPointSurjective
 
-open VerticalPointSurjective in
 
 theorem VertPointSurj.proof (hC : CurveCharts.Statement) (hSQ : SectionQuotLocal.Statement) :
     VertPointSurj.Statement := by

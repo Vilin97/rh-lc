@@ -20,6 +20,5 @@ theorem mem_iwahori_iff {g : GL (Fin n) F} :
     g ∈ PositivityTheory.Rg.Tf.Loc.iwahori (m := n) F ↔ g ∈ GlobalTheory.SmGL.iwahori F (Fin n) := by
   rw [GlobalTheory.SmGL.mem_iwahori]; rfl
 
-omit [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 
 end GlobalTheory.CompanionTheory.IwContract

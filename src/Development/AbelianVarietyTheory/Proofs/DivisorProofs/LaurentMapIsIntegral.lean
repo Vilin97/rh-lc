@@ -39,9 +39,6 @@ private theorem map_rowDifferential_of_commute_faces_lemma {E E' : _root_.Global
     simp only [_root_.GlobalTheory.EtC.GmStep.rowD, AddMonoidHom.finset_sum_apply,
     AddMonoidHom.smul_apply, map_sum, map_zsmul, hc]
 
-open CategoryTheory Limits AlgebraicGeometry Opposite Simplicial in
-variable (R : Type) [CommRing R] in
-variable {R} in
 
 theorem _root_.GlobalTheory.EtC.GmStep.rowExact_transfer {E E' : _root_.GlobalTheory.EtC.Spc}
     {F F' : _root_.GlobalTheory.EtC.Shv R} {s s' : ℤ}
@@ -110,9 +107,6 @@ theorem _root_.GlobalTheory.EtC.GmStep.laurentMap_coeff {A B : Type} [CommRing A
       ← LaurentPolynomial.single_eq_C_mul_T, ← LaurentPolynomial.single_eq_C_mul_T,
       AddMonoidAlgebra.coeff_single, AddMonoidAlgebra.coeff_single, Finsupp.mapRange_single]
 
-open CategoryTheory Limits AlgebraicGeometry Opposite Simplicial in
-variable (R : Type) [CommRing R] in
-variable {R} in
 
 theorem _root_.GlobalTheory.EtC.GmStep.laurentMap_isIntegral {A B : Type} [CommRing A] [CommRing B] (f : A →+* B)
     (hf : f.IsIntegral) : (_root_.GlobalTheory.EtC.GmStep.laurentMap f).IsIntegral := by
@@ -130,9 +124,6 @@ theorem _root_.GlobalTheory.EtC.GmStep.laurentMap_isIntegral {A B : Type} [CommR
   · rw [← _root_.GlobalTheory.EtC.GmStep.laurentMap_T f n]
     exact isIntegral_algebraMap
 
-open CategoryTheory Limits AlgebraicGeometry Opposite Simplicial in
-variable (R : Type) [CommRing R] in
-variable {R} in
 
 theorem _root_.GlobalTheory.EtC.GmStep.laurentMap_ker {A B : Type} [CommRing A] [CommRing B]
     (f : A →+* B) (hk : RingHom.ker f ≤ nilradical A) :
@@ -150,9 +141,6 @@ theorem _root_.GlobalTheory.EtC.GmStep.laurentMap_ker {A B : Type} [CommRing A] 
   refine Ideal.mul_mem_right _ _ ?_
   exact mem_nilradical.mpr ((mem_nilradical.mp (hk (RingHom.mem_ker.mpr (hc n)))).map _)
 
-open CategoryTheory Limits AlgebraicGeometry Opposite Simplicial in
-variable (R : Type) [CommRing R] in
-variable {R} in
 
 theorem _root_.GlobalTheory.EtC.GmStep.spec_integral_surj {A B : Type} [CommRing A] [CommRing B]
     (φ : A →+* B) (hi : φ.IsIntegral) (hk : RingHom.ker φ ≤ nilradical A) :

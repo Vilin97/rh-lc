@@ -18,7 +18,6 @@ variable {k G : Type} [CommRing k] [Group G] [TopologicalSpace G] [IsTopological
   {ι : Type} {H : ι → Type} [∀ v, Group (H v)] [∀ v, TopologicalSpace (H v)] [∀ v, IsTopologicalGroup (H v)]
   (φ : ∀ v, H v →ₜ* G)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem cupCochain_const_left {A B : Rep.{0} k G} {q n : ℕ} (h : 0 + q = n) (m : A) (g : (Fin q → G) → B)
     (x : Fin n → G) :
@@ -50,7 +49,6 @@ theorem cochainOf_constCupSub (m : X) {s : ℕ} (e : (cochainsComplex B).X s) (z
   refine (congrArg μX.hom (cupCochain_const_left (show 0 + s = s by omega) m _ σ)).trans ?_
   congr 3
 
-include hj in
 
 theorem d_constCupSub (m : X) (x : (cochainsComplex U).X 1)
     (hx : ((cochainsMap j).f 1).hom x = ((cochainsComplex X).d 0 1).hom (constCochain X m))
@@ -73,7 +71,6 @@ variable (Ωᵥ : ∀ v, Rep.{0} k (H v)) [∀ v, IsDiscreteRep (Ωᵥ v)] (l : 
   (μΩ : ∀ v, Ωᵥ v ⊗ Rep.res (φ v).toMonoidHom B ⟶ Ωᵥ v)
   (hl : ∀ v, (Rep.resFunctor (φ v).toMonoidHom).map μX ≫ l v = resTensorHom (φ v).toMonoidHom (l v) (𝟙 _) ≫ μΩ v)
 
-include hj hl in
 
 theorem exists_compactCup_const
     (hμ : ∀ v, (Rep.resFunctor (φ v).toMonoidHom).map μU ≫ ((Rep.resFunctor (φ v).toMonoidHom).map j ≫ l v) =
@@ -215,9 +212,6 @@ theorem gsPairingK_gsUnitsLocalMor (v : S) :
 variable [Fintype S] (n ℓ k : ℕ) [NeZero n] (hℓ : ℓ.Prime) (hnk : n = ℓ ^ k)
   (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
-set_option maxHeartbeats 1600000 in
-omit [Fintype S] in
-include hℓ hnk hS in
 
 theorem exists_gsUnitsData_cup_bock (t : sInvariantSubgroup (F := K.1) ℚ̄ S)
     (z : cocycles (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1) :

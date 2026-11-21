@@ -282,7 +282,6 @@ theorem quotientMass_right_translation_invariant {Wp : Type} [NormedAddCommGroup
   · simp only
     rw [hval x hx]
 
-open GlobalTheory.CWDeriv in
 
 theorem continuousOn_orbit {ε : Fin (2 * r + k + 1) → Bool} {mu : Fin (2 * r + k + 1) → ℝ} {R : Rep k r}
     (hR : R.IsDS ε mu) {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] {Bm : R.H → V}

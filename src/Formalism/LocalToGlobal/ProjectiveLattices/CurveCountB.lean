@@ -101,8 +101,6 @@ theorem sfr_zero : sfr X la w 0 = 1 := by
 
 variable {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : X.Forms →ₐ[B.KO] Ω)
 
-set_option synthInstance.maxHeartbeats 200000 in
-set_option maxHeartbeats 1000000 in
 
 theorem countQAt_of (v : Fin N → Ω) (hv : ∀ i, gF (X.inc wL (w i)) = v i)
     (htr : ∃ a₀, v a₀ ≠ 0 ∧

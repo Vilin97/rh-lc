@@ -83,7 +83,6 @@ theorem exists_lift_int (c : Formalism.L2.Herm.intAf D.host.F D.host.E) :
   rw [hc']
   exact (mem_OA_iff _).1 c.2 Q
 
-set_option maxHeartbeats 800000 in
 
 theorem smul_mem_of_idS {𝔪 : Ideal (𝓞 D.host.E)} (h𝔪 : ∀ r ∈ 𝔪, ∀ t ∈ LT, r • t ∈ LT') {u : WO S B}
     (hu : u ∈ latO S B (LS : Set _) (LT : Set _) fun _ => True) {s : Formalism.L2.Herm.intAf D.host.F D.host.E}

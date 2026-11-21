@@ -18,7 +18,6 @@ variable {n' r : ℕ} [NeZero n'] (X : Dat n' r) (p K : ℕ)
 
 def Pz (j x : ℤ) : ℕ := p ^ (X.F.dist j x + X.Rj p K j)
 
-open Classical in
 
 def laSet (t : Fin n') : Finset (Fin (r + K) → ℕ) :=
   (Fintype.piFinset fun _ : Fin (r + K) => Finset.range (X.a' p K t + 1)).filter fun v =>
@@ -30,19 +29,16 @@ def LA : Finset (Fin n' → Fin (r + K) → ℕ) := Fintype.piFinset (X.laSet p 
 def nz (la : Fin n' → Fin (r + K) → ℕ) (j x : ℤ) : ℕ :=
   (X.a' p K (posOf n' x) - ∑ c, la (posOf n' x) c) / X.Pz p K j x
 
-open Classical in
 
 def EE (la : Fin n' → Fin (r + K) → ℕ) : Finset (Fin X.F.J → Fin r → ℕ) :=
   Fintype.piFinset fun j : Fin X.F.J => Fintype.piFinset fun i : Fin r =>
     (Finset.range (r * X.Qc p K (j.val : ℤ))).filter fun e =>
       e % X.Qc p K (j.val : ℤ) = X.nz p K la (j.val : ℤ) (X.F.fr (j.val : ℤ) i.val) % X.Qc p K (j.val : ℤ)
 
-omit [NeZero n'] in
 
 def eZ (e : Fin X.F.J → Fin r → ℕ) (j : ℤ) : Fin r → ℕ :=
   if h : 0 < X.F.J then e ⟨(j % (X.F.J : ℤ)).toNat % X.F.J, Nat.mod_lt _ h⟩ else 0
 
-open Classical in
 
 def bfam (la : Fin n' → Fin (r + K) → ℕ) (e : Fin X.F.J → Fin r → ℕ) (j : ℤ) : ℤ → ℕ := fun x =>
   if x ∈ X.F.letters j then
@@ -53,7 +49,6 @@ def bfam (la : Fin n' → Fin (r + K) → ℕ) (e : Fin X.F.J → Fin r → ℕ)
     else X.nz p K la j x
   else 0
 
-open Classical in
 
 def setTau (j : ℤ) (b : ℤ → ℕ) (e : Fin r → ℕ) : ℤ → ℕ := fun x =>
   if X.F.fr j 0 ≤ x ∧ x ≤ X.F.fr j (r - 1) then ∑ i : Fin r, if x = X.F.fr j i.val then e i else 0 else b x
@@ -68,7 +63,6 @@ def segBound (j : ℤ) (b : ℤ → ℕ) : ℝ :=
     (∏ i : Fin r, ((Nat.choose ((X.Bw p K j (X.F.fr (j - 1) i.val) - (X.m0 K : ℤ)).toNat + (r + K) - 1) (r + K - 1) : ℕ) : ℝ)) *
     (((X.Qc p K j : ℕ) : ℝ) ^ (r - 1) * max 0 (1 - (r : ℝ) / (2 * X.Y))) ^ r
 
-open Classical in
 
 def SegOK [NeZero r] [NeZero K] (O : Type) [CommRing O] (j : ℤ) (G : (ℤ → ℕ) → ℝ) : Prop :=
   (∀ b, 0 ≤ G b) ∧

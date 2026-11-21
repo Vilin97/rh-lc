@@ -51,7 +51,6 @@ theorem det_herm (a : GL ν E) (D : ν → Fˣ) :
   simp only [Matrix.GeneralLinearGroup.val_det_apply, Units.coe_prod, map_prod]
   ring
 
-include hE in
 
 theorem sc_det_inv (χ : Eˣ →* Circle) (m : ℕ) (hχ : ResEtaPow (R := F) ⊥ χ m) (a : GL ν E) (D : ν → Fˣ) :
     sc F χ m ((a : Matrix ν ν E) * diagonal (fun j => algebraMap F E (D j)) * ((a : Matrix ν ν E).map c)ᵀ).det⁻¹ =

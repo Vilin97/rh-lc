@@ -422,7 +422,6 @@ theorem smooth_inv {i : Fin (r + 1)} {c : Mx k r → ℂ} (hc : SmoothLev k r i 
   rw [← he g₀ hgU hg₀.1]
   exact h0 g₀ hg₀
 
-variable (k r D) in
 
 def smAlg : Subalgebra ℂ (Mx k r → ℂ) where
   carrier := {c | SmoothLev k r 0 D c}
@@ -433,7 +432,6 @@ def smAlg : Subalgebra ℂ (Mx k r → ℂ) where
 theorem rep_mul (hD : IsOpen D) (c : smAlg k r D) : Rep (opV k r 0 D (mulF (E := E) c.1)) (mulF c.1) :=
   rep_opV hD (good_mulF c.2)
 
-variable (E) in
 
 def mulHom (hD : IsOpen D) : smAlg k r D →ₐ[ℂ] Module.End ℂ (SV k r 0 D E) where
   toFun := fun c => opV k r 0 D (mulF c.1)
@@ -566,7 +564,6 @@ def evAt (g : Mx k r) : smAlg k r D →+* ℂ := (Pi.evalRingHom (fun _ : Mx k r
 
 theorem evAt_apply (g : Mx k r) (c : smAlg k r D) : evAt g c = c.1 g := rfl
 
-variable (D) in
 
 def yF (z : Fin (2 * r + k + 1) → ℂ) (i : Fin (r + 1)) (c : Fin (mdim k r 0)) : smAlg k r D :=
   ⟨invL k r (fvec k r z i) (posL k r 0 c), smooth_of_contDiff (invL k r (fvec k r z i) (posL k r 0 c)).contDiff⟩
@@ -581,7 +578,6 @@ theorem det_yF (z : Fin (2 * r + k + 1) → ℂ) (γ : Fin (r + 1) → Fin (mdim
     simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum]
   rfl
 
-variable (E) in
 
 theorem group_identity (z z' : Fin (2 * r + k + 1) → ℂ) (hz' : inWb k r z') (hT : 0 < Tz k r z) (hT' : 0 < Tz k r z')
     (Y : ℂ) : ∃ (m : ℕ) (co : Fin m → Mx k r → ℂ) (a b : Fin m → Fin (r + k) → Fin (2 * r + k + 1)),
@@ -662,7 +658,6 @@ variable {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [Norm
   [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] {P : M.Par}
   {Bs : B.RealPlaceData P.k P.r Wp Wq} {ε : ℝ}
 
-variable (Bs ε) in
 
 def RadOp (a : RA P Bs) (T : (B.Mat P.k P.r → (Wq →L[ℂ] Wp)) → B.Mat P.k P.r → (Wq →L[ℂ] Wp)) : Prop :=
   ∀ F, JC.NiceCoef Bs ε F → JC.NiceCoef Bs ε (T F) ∧ ∀ Φ, Top.IsRadOf P Bs Φ F → Top.IsRadOf P Bs (a.1 Φ) (T F)
@@ -808,7 +803,6 @@ theorem db_pow_rh (X : Q.ActualOps P.k P.r Bs.z Bs.z' Bs.π Bs.π') (μ : Measur
 
 end lift
 
-open Formalism.FourierDecayAlt.P Formalism.FourierDecayAlt.P.TLB MeasureTheory in
 
 theorem polyLift_rh : ∀ (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq) (X : Q.ActualOps P.k P.r Bs.z Bs.z' Bs.π Bs.π') (μ : Measure (Mt P.k P.r)) (L : LevelData (RA P Bs) P.r) (st : Start (RA P Bs)) (l0 : ℕ) (d : Q.NFData P (RA P Bs)), P5.IsData P Bs.z Bs.z' Bs.π Bs.π' X μ L st l0 → IsNF X d → ∀ y : ℝ, PolyLift P Bs (2 * P.r + P.k + 1) (8 * (P.r + 1) * (2 * P.r + P.k + 1)) (rh d y) := by
   intro Wp Wq _ _ _ _ _ _ P Bs X μ L st l0 d hD hN y

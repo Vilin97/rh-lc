@@ -22,7 +22,6 @@ section QuotQuot
 
 variable {U V V' : Subgroup G} [(V.subgroupOf U).Normal] [(V'.subgroupOf U).Normal]
 
-omit [IsTopologicalGroup G] in
 
 variable (C : Rep.{u} k G)
 
@@ -54,7 +53,6 @@ omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 theorem exists_inv_eq (W : OpenSubgroup G) (q : QZ) : ∃ x : H2Open C W, F.inv W x = q :=
   (F.inv_bijective W).2 q
 
-include hVU in
 
 theorem tate_hypotheses (S : Subgroup (U ⧸ (V : Subgroup G).subgroupOf U)) :
     IsZero (groupCohomology (Rep.res S.subtype ((Rep.res (U : Subgroup G).subtype C).quotientToInvariants
@@ -75,11 +73,9 @@ variable [CompactSpace G] [TotallyDisconnectedSpace G] {P : Set Nat.Primes}
 
 include F
 
-omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 
 variable (hP : ∀ p : Nat.Primes, (p : ℕ) ∣ (V : Subgroup G).relIndex U → p ∈ P)
 
-include hVU hP in
 
 end ClassFormationAt
 

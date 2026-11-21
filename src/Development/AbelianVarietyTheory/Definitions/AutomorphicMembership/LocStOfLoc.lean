@@ -39,7 +39,6 @@ structure LocAt (S : Sig A N j) (κ : Lv A) (p : ℕ) : Type 1 where
   pbKF : ∀ {c : ℕ}, ngTrue.KF (D.R.f * N) c → loc.Sec (loc.keySh c)
   bc : CodeAt S κ → loc.Mdl
 
-open Classical in
 
 def bcAt {p : ℕ} (ct : At S κ p) (Z : CodeAt S κ) : ct.Mdl :=
   if h : ∃ Z', IsBCAt ct Z Z' then h.choose else ct.Xm

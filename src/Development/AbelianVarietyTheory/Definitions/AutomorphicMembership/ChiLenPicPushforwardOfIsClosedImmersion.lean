@@ -53,7 +53,6 @@ def dual : Z.GenIso (CechPic.dual L) (CechPic.dual L') where
     simp only [mul_inv, ← map_inv] at this
     exact this
 
-variable (L L') in
 
 end GenIso
 
@@ -97,7 +96,6 @@ variable (Z)
 
 abbrev VDivQ : Type := ℚ ⊗[ℤ] Z.VDivZ
 
-variable {Z} in
 
 def toQ : Z.VDivZ →+ Z.VDivQ := (TensorProduct.mk ℤ ℚ Z.VDivZ 1).toAddMonoidHom
 
@@ -127,7 +125,6 @@ variable (Z) (p : ℕ) [Fact p.Prime] [CharZero O] [CharP (ResidueField O) p]
 
 def divP : Z.VDivZ := Z.div p (natCast_ne_zero O p)
 
-set_option linter.overlappingInstances false in
 
 @[reducible] def toITh [CharP (ResidueField O) p] (d : ℕ) : Formalism.BasicNotions.DV.ITh where
   LB := FinLB Z.X
@@ -142,7 +139,6 @@ set_option linter.overlappingInstances false in
 
 end Theory
 
-variable (Z) in
 
 def vdiv (L L' : FinLB Z.X) (u : Z.GenIso L.lb L'.lb) : Z.VDivQ := toQ (u.div L.isLB L'.isLB)
 
@@ -171,8 +167,6 @@ section Iso
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {B B' : Model O} {f : B'.X ⟶ B.X} [IsIso f]
   (hf : f ≫ B.str = B'.str)
 
-variable (f) in
-include f in
 
 theorem relDim_eq_of_isIso : B'.relDim = B.relDim := by
   refine Model.relDim_eq_iff.2 (Eq.trans ?_ B.dim_eq)

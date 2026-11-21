@@ -9,7 +9,6 @@ namespace Formalism.MainNotions.BridgeLemma₂
 
 open Formalism.HermitianLatticeCounting
 
-open Classical in
 
 theorem rows_fibres {Pr κ : Type} (S : Finset Pr) (c₁ c₂ : Pr → κ) (F : Pr → ℝ) :
     ∑ p ∈ S, F p = ∑ x ∈ S.image c₁, ∑ y ∈ S.image c₂, ∑ p ∈ S.filter (fun p => c₁ p = x ∧ c₂ p = y), F p := by
@@ -21,7 +20,6 @@ theorem rows_fibres {Pr κ : Type} (S : Finset Pr) (c₁ c₂ : Pr → κ) (F : 
   refine Finset.filter_congr fun p _ => ?_
   rw [Prod.ext_iff]
 
-open Classical in
 
 theorem weighted_sum_le {Pr κ : Type} (S : Finset Pr) (w a₁ a₂ : Pr → ℝ) (c₁ c₂ : Pr → κ) (M R Φ : ℝ) (N : κ → κ → ℝ)
     (α φ : κ → ℝ) (hM : 0 ≤ M) (hR : 0 ≤ R) (hw : ∀ p ∈ S, 0 ≤ w p) (ha₁ : ∀ p ∈ S, 0 ≤ a₁ p) (ha₂ : ∀ p ∈ S, 0 ≤ a₂ p)

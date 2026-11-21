@@ -81,7 +81,6 @@ theorem parP_m : parP D D.R.m = parXp D 0 := funext fun τ => (grid D τ).parPi_
 
 end Numbers
 
-variable (D) in
 
 structure PlaceDat where
 
@@ -97,11 +96,9 @@ namespace PlaceDat
 
 variable (Z : PlaceDat D) (Pg : Finset (Pl D.host.E))
 
-open Classical in
 
 def W : Finset (Pl D.host.E) := Pg ∪ Z.Wd ∪ {Z.w0}
 
-open Classical in
 
 def depth (w : Pl D.host.E) : ℕ := if w = Z.w0 then Z.e0 else 2
 
@@ -200,7 +197,6 @@ def meas0 (t : T) (j : ℕ) : (row0 R (j + 1)).MeasDat :=
   if h : j + 1 < D.R.m then Node.MeasDat.cast (nodeY_eq_chainVertexAtRowZero_of_lt R h) ⟨R.νY t (j + 1), R.fdY t (j + 1)⟩
   else Node.MeasDat.cast (nodeX_eq_chainVertexAtRowZero_of_ge R h) ⟨R.νX t, R.fdX t⟩
 
-variable (D) in
 
 structure GridSp extends PlaceDat D where
 
@@ -228,8 +224,6 @@ abbrev Cos (i : ℕ) : Type := Coset (G.vert R (i + 1) 0) (G.vert R i 0) (G.lvl 
 
 end GridSp
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure GridPre extends GridSp D where
 
@@ -394,8 +388,6 @@ structure HasLifts : Prop where
 
 end GridPre
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure GridDat extends GridPre R where
 

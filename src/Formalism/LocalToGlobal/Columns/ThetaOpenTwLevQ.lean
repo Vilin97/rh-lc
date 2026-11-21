@@ -69,8 +69,6 @@ theorem qth_exists_e (P : HeightOneSpectrum (𝓞 X.E)) (hq0 : ((qOf P : ℕ) : 
   have := Int.self_le_toNat (-(WithZero.log (P.valuation X.E ((qOf P : ℕ) : X.E))))
   omega
 
-open Classical in
-set_option maxHeartbeats 4000000 in
 
 theorem thetaOpen_twLevQ (hc : cst.Ok) (hQg : ∀ P ∈ QE sel (mu : Chr X.F X.E X.K), P ∉ Pr.vGs) (j : ℕ)
     (hh : rowSG Pr sel mu → AutY X R j) : ThetaOpen (twLevQ Ch sel mu cst j hh) := by
@@ -130,7 +128,6 @@ theorem thetaOpen_twLevQ (hc : cst.Ok) (hQg : ∀ P ∈ QE sel (mu : Chr X.F X.E
     exact qth_lamQB_one hq hq0 _ _ hy
   · rfl
 
-open Classical in
 
 theorem thetaOpen_twIdx (hc : cst.Ok) (hQg : ∀ P ∈ QE sel (mu : Chr X.F X.E X.K), P ∉ Pr.vGs) (m2 j : ℕ)
     (b : (twIdx Ch sel mu cst m2).β j) : ThetaOpen ((twIdx Ch sel mu cst m2).levQ j b) := by

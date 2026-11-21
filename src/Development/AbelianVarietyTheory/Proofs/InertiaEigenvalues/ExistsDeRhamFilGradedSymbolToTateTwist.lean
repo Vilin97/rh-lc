@@ -94,7 +94,6 @@ theorem shift_iff (a b : ℤ) (x : P.R.BdR) :
     have := (P.PD (botExt l)).Fil_mul _ _ _ _ (zpow_mem J (-a)) h
     rwa [neg_add_cancel_left] at this
 
-omit J in
 
 theorem exists_symbol : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), ThetaL P AI →
     ∀ (K : FinExt l), ∃ sy : ℤ → P.R.BdR → PadicComplex l, ∀ a : ℤ,

@@ -60,7 +60,6 @@ section Fibres
 variable {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K) E]
   [Module.Projective (𝓞 K) E]
 
-omit [NumberField K] [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 K) E] in
 
 theorem fibreMap_fibreMap {E' E'' : Type*} [AddCommGroup E'] [Module (𝓞 K) E']
     [AddCommGroup E''] [Module (𝓞 K) E'']

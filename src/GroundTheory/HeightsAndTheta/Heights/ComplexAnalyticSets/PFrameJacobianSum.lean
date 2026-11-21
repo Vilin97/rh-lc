@@ -47,7 +47,6 @@ theorem det_adjoint_comp (S : EuclideanSpace ℂ (Fin d) →ₗ[ℂ] EuclideanSp
 
 end FrameJacobianSumAlt
 
-open FrameJacobianSumAlt in
 
 theorem FrameJacobianSum.proof : FrameJacobianSum.Statement := by
   intro d n T b

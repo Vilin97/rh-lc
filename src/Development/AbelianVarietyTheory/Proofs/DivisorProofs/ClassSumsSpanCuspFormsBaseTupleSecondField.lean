@@ -33,7 +33,6 @@ open scoped TensorProduct Classical
 open GlobalTheory.BasePoint
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_point_phiIs_core : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : Formalism.L2.DIV.FamIn D.what₂.LL G Pl0 T0 D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.Hk3.Core R F → ∀ (i : Fin D.R.m), VStd D i → ∀ (H : Geo.Tor.Host D.host.E) (Dw : Datum H) (l : Geo.Tor.Level H) (c : Coeff l) (ι : Dw.La →ₗ[𝓞 D.host.E] (Fin (Wc D i).rank → D.host.E)) (I : Ideal (𝓞 D.host.E)), LatEmb (Wc D i) ι → HalfIs R A.μ0 l.Mb I → ∃ x1 : Fin (Vc D i).rank → LevQc Dw l, Submodule.span (𝓞 D.host.E) (Set.range x1) = ⊤ ∧ PhiIs R i c.F.val.toRingHom A.μ0 ι (Mfr l • ⊤) (indPhi c x1) := by
   intro D G _ _ Pl0 T0 A Ks _ _ _ R F hR i hV H Dw l c ι I hι hh
@@ -113,7 +112,6 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : Formalis
   {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
   {i : Fin D.R.m} {Tp : Type} {tup : Tp → T0}
 
-set_option maxHeartbeats 800000 in
 
 theorem lattice_scalar_value (hC : GlobalTheory.Hk3.Core R F) (hT : TieIn T R κ v₀) (O : OMDat T.toCore R i Tp tup)
     (hO : O.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O.s0)) (t : Tp) (h : GA D (Vc D i)) (e : AE D)
@@ -169,7 +167,6 @@ theorem lattice_scalar_value (hC : GlobalTheory.Hk3.Core R F) (hT : TieIn T R κ
   rw [← hi'] at this
   exact this
 
-set_option maxHeartbeats 2000000 in
 
 theorem kernel_eq_shortVal (hC : GlobalTheory.Hk3.Core R F) (hT : TieIn T R κ v₀) (O : OMDat T.toCore R i Unit (fun _ => A.μ0))
     (hP : O.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O.s0)) {ka : ℂ} (hka : IoAt O (v₀ i (sg0 D A)) ka)
@@ -284,7 +281,6 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : Formalis
   (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (F : Face D A)
   (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec)
 
-set_option maxHeartbeats 2000000 in
 
 theorem classSumsSpan_of_pins_core (hR : GlobalTheory.Hk3.Core R F) (ht : TieIn T R κ v₀) (hio : IoExt R) (hsz : 8 * D.R.f * D.R.r + 4 ≤ D.R.nV)
     (i : Fin D.R.m) (O : OMDat T.toCore R i Unit (fun _ => A.μ0))

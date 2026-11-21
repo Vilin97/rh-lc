@@ -27,13 +27,11 @@ variable {R : Type} [CommRing R] {G : Over (Spec (CommRingCat.of R))} [GrpObj G]
 abbrev tanExp (v : Fin n → (epsR R ⟶ G)) (s : Fin n → S) : sp (R₀ := R) (DualNumber S) ⟶ G :=
   lieExp v (fun i => (inr (s i) : DualNumber S)) (fun _ => TrivSqZeroExt.inr_mul_inr _ _ _)
 
-variable (S) in
 
 def IsLieBasisOver (v : Fin n → (epsR R ⟶ G)) : Prop :=
   (∀ s s' : Fin n → S, tanExp v s = tanExp v s' → s = s') ∧
     ∀ w : sp (R₀ := R) (DualNumber S) ⟶ G, IsTanOver w → ∃ s, w = tanExp v s
 
-variable (A) in
 
 def ExpBij (v : Fin n → (epsR R ⟶ G)) : Prop :=
   ∀ J : Ideal A, J ^ 2 = ⊥ →
@@ -254,7 +252,6 @@ theorem expBij_of_span {s : Set A} (hs : Ideal.span s = ⊤)
     rw [ed, comp_lieExp]
     exact lieExp_congr _ (fun i => (hc i f).symm) _ _
 
-variable (A) in
 
 theorem expBij (hv : IsLieBasis v) : ExpBij A v := by
   refine expBij_of_span

@@ -53,7 +53,6 @@ theorem sphG_iff_cl (hS : SatPol) {a : ℕ} (ι : Qbar l ≃+* ℂ) (r : G E Ω 
       rw [hS E Ω A w hA a B g]
       exact (h2 P AI hT A hA O Bw hj).2.2.2 g
 
-variable (E Ω) in
 
 end UpperTheory.Gal.TP
 

@@ -26,7 +26,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     [Algebra O RW] {inclR : RA →ₐ[O] RW} {φR : RW →ₐ[O] RW} {gR : G → (RW →ₐ[O] RW)} {πA : RA}
     (E : EtTie W RA RW inclR φR gR πA)
 
-include E in
 
 theorem surjective_of_tie (hfl : Module.Flat O RW) {T' T : LocLat G Qp LL O}
     (hfix : ∀ b, TWmap φR T' b = b → ∃ t : ↥T'.L.T, b = (1 : RW) ⊗ₜ[O] t)

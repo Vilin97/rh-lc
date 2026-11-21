@@ -38,7 +38,6 @@ set_option linter.unusedSectionVars false
 
 variable {N : ℕ} [NeZero N] {k : ℤ}
 
-variable (k) in
 
 theorem posIdele_fst_rat (r : ℝ) (hr : 0 < r) :
     ((Reduction.posIdele (K := ℚ) r hr : Global.IdeleGroup ℚ) : 𝔸[ℚ]).1 =

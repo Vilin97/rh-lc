@@ -190,8 +190,6 @@ private theorem isHeis_sum_map_eq_zero_of_sum_eq_zero {R X M : Type} [CommRing R
           simp only [u, map_sum, map_smul]
     _ = 0 := by rw [hu, map_zero, map_zero]
 
-open Classical in
-open scoped BigOperators in
 
 theorem _root_.GlobalTheory.FinWeil.exists_weil_rep_of_vacua : ∀ {R X M : Type} [CommRing R]
     [AddCommGroup X] [Module R X] [AddCommGroup M] [Module ℂ M] {σ : R →+* R} {w : R}

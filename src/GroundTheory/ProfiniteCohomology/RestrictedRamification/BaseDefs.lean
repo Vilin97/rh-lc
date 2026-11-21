@@ -166,7 +166,6 @@ theorem gsLocalInvRootsQZ_eq (v : S) :
           (cohomologyULiftIntAddEquiv _ 2).toAddMonoidHom) :=
   rfl
 
-omit [Fintype S] in
 
 theorem gsLocalInvRootsQZ_cohomologyMapAlong (v : S) (x : cohomology (gsRoots S n) 2) :
     gsLocalInvRootsQZ S ιs n v ((cohomologyMapAlong (gsFinFamily S ιs v).toMonoidHom
@@ -184,7 +183,6 @@ theorem gsLocalInvRootsQZ_cohomologyMapAlong (v : S) (x : cohomology (gsRoots S 
     (rootsOfUnityToSUnits S (maxUnramifiedOutside K.1 ℚ̄ S) n) (sUnitsToUnits S (maxUnramifiedOutside K.1 ℚ̄ S))
     (rootsLocalMorZ S ιs n v) (embUnitsMorZ S (ιs v)) (fun _ => rfl) 2 x
 
-omit [Fintype S] [NeZero n] in
 
 theorem placeInv_inl_eq_zero (hn : Odd n ∨ IsTotallyComplex K.1) (v : InfinitePlace K.1)
     (y : localGaloisCohomology K 2 (.inl v)) (hy : n • y = 0) : placeInv (.inl v) y = 0 := by
@@ -204,7 +202,6 @@ theorem placeInv_inl_eq_zero (hn : Odd n ∨ IsTotallyComplex K.1) (v : Infinite
     rw [show y = 0 from Subsingleton.elim (α := cohomology (galUnitsZ v.Completion
       (AlgebraicClosure v.Completion)) 2) y 0, map_zero]
 
-omit [Fintype S] in
 
 theorem sumPlaceInv_eq_sum_of_placeInv (T : Finset (Place K.1)) (y : ⨁ w : Place K.1, localGaloisCohomology K 2 w)
     (hT : ∀ w ∉ T, placeInv w (y w) = 0) : sumPlaceInv K y = ∑ w ∈ T, placeInv w (y w) := by
@@ -220,13 +217,11 @@ theorem sumPlaceInv_eq_sum_of_placeInv (T : Finset (Place K.1)) (y : ⨁ w : Pla
     _ = ∑ w ∈ T, placeInv w (y w) :=
         (Finset.sum_subset Finset.subset_union_right fun w _ hw => hT w hw).symm
 
-omit [Fintype S] [NeZero n] in
 
 theorem placeInv_inr_apply (v : HeightOneSpectrum (𝓞 K.1)) (y : localGaloisCohomology K 2 (.inr v)) :
     placeInv (.inr v) y = brauerInvZOfIsSepClosure (v.adicCompletion K.1) (AlgebraicClosure (v.adicCompletion K.1)) y :=
   rfl
 
-open Classical in
 
 def gsLocalEmbeddings : LocalEmbeddings K where
   fin v := if h : v ∈ S then ιs ⟨v, h⟩ else (nonempty_localEmbeddings K).some.fin v
@@ -236,13 +231,11 @@ omit [Fintype S] [NeZero n] in
 theorem gsLocalEmbeddings_fin (v : S) : (gsLocalEmbeddings S ιs).fin v = ιs v :=
   dif_pos v.2
 
-omit [Fintype S] in
 
 theorem sum_eq_zero_of_zmodToQZ {ι : Type*} [Fintype ι] (F : ι → ZMod n) (G : ι → QZ)
     (hFG : ∀ v, zmodToQZ n (F v) = G v) (h : ∑ v, G v = 0) : ∑ v, F v = 0 :=
   zmodToQZ_injective (by rw [map_sum, map_zero, ← h]; exact Finset.sum_congr rfl fun v _ => hFG v)
 
-omit [NeZero n] in
 
 theorem brauerSumInv_eq_sum_of (ι : LocalEmbeddings K) (z : cohomology (unitsLimitRep K) 2)
     (hz : ∀ w : Place K.1, (∀ v : S, w ≠ .inr (v : HeightOneSpectrum (𝓞 K.1))) →
@@ -255,7 +248,6 @@ theorem brauerSumInv_eq_sum_of (ι : LocalEmbeddings K) (z : cohomology (unitsLi
       _ fun w hw => hz w fun v hv => hw (Finset.mem_image.2 ⟨v, Finset.mem_univ _, hv.symm⟩),
     Finset.sum_image (fun v _ w _ h => Subtype.ext (Sum.inr_injective h))]
 
-omit [NeZero n] in
 
 theorem sum_brauerInvZ_gsLocalRes_sUnits (hn : Odd n ∨ IsTotallyComplex K.1)
     (y : cohomology (galSUnitsMax K.1 ℚ̄ S) 2) (hy : n • y = 0) :
@@ -292,7 +284,6 @@ theorem gsSumInvRoots_globalToLocal (hn : Odd n ∨ IsTotallyComplex K.1) (x : c
     (sum_brauerInvZ_gsLocalRes_sUnits S ιs n hn _ ?_))
   rw [← map_nsmul, nsmul_cohomology_eq_zero _ (fun ζ => nsmul_gsRoots S n ζ) 2 x, map_zero]
 
-omit [Fintype S] [NeZero n] in
 
 theorem localToCompact_two_surjective (h3 : Subsingleton (cohomology (gsRoots S n) 3)) :
     Function.Surjective (localToCompact (gsFinFamily S ιs) (gsRoots S n) _ (fun _ => 𝟙 _) 2).hom := fun _ =>
@@ -313,7 +304,6 @@ noncomputable def gsCompactInv (hn : Odd n ∨ IsTotallyComplex K.1) (h3 : Subsi
   descendAlong (localToCompact (gsFinFamily S ιs) (gsRoots S n) _ (fun _ => 𝟙 _) 2).hom
     (localToCompact_two_surjective S ιs n h3) (gsSumInvRoots S ιs n) (ker_localToCompact_le S ιs n hn)
 
-set_option maxHeartbeats 1600000 in
 
 theorem gsCompactInv_localToCompact (hn : Odd n ∨ IsTotallyComplex K.1)
     (h3 : Subsingleton (cohomology (gsRoots S n) 3))

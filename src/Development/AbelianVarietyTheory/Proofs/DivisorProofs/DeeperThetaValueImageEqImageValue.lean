@@ -18,7 +18,6 @@ noncomputable section
 namespace GlobalTheory.Poinc.Sep
 open GlobalTheory.Points
 
-open GlobalTheory.ZH.RatModel in
 
 theorem Tower.valF_app_p {g n : ℕ} {F : SFam g n (zetaAway n)} {W : Matrix (Fin 8) (Fin 8) ℤ} {Z : Scheme.{0}} {i : F.X ⟶ Z}
     {X₁ : Setup F W i} {act : Matrix (Fin 8) (Fin 8) ℤ → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)} (𝔗 : Tower X₁ act)

@@ -29,7 +29,6 @@ noncomputable section
 
 namespace GlobalTheory.UMin.KeySmall
 
-open Cardinal in
 
 theorem mk_adicCompletion_le {D : Type} [CommRing D] (I : Ideal D) (h : #D ≤ 𝔠) : #(AdicCompletion I D) ≤ 𝔠 := by
   have hs : ∀ a : AdicCompletion I D, ∃ s : ℕ → D, ∀ n, a.val n = Submodule.Quotient.mk (s n) := fun a => by
@@ -41,7 +40,6 @@ theorem mk_adicCompletion_le {D : Type} [CommRing D] (I : Ideal D) (h : #D ≤ �
   rw [← Cardinal.power_def, Cardinal.mk_nat]
   exact (Cardinal.power_le_power_right h).trans_eq Cardinal.continuum_power_aleph0
 
-open Cardinal in
 
 theorem dvd_of_forall_small : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsIntegrallyClosed R] [CharZero R],
     #R ≤ 𝔠 → ∀ a b : R, b ≠ 0 → (∀ (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V], GlobalTheory.LN.CDvr V → #V ≤ 𝔠 →
@@ -106,7 +104,6 @@ theorem dvd_of_map_dvd {V W : Type} [CommRing V] [IsDomain V] [ValuationRing V] 
   obtain ⟨u, rfl⟩ := isUnit_of_map_unit g c hu
   exact ⟨↑u⁻¹, by rw [hc, _root_.mul_assoc, Units.mul_inv, _root_.mul_one]⟩
 
-open Cardinal in
 
 theorem mem_range_of_small_traits {A : Type} [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A] [CharZero A]
     (hA : #A ≤ 𝔠) (f : A) (hf : f ≠ 0) (b : Localization.Away f)
@@ -191,7 +188,6 @@ theorem pullT_iso {S S' : Scheme.{0}} (f : S' ⟶ S) (t : SAB H S) {L : LB t.G.l
   have e'' := LBIso.trans i₁ i₂ hL' e' h'
   exact LBIso.trans i₀ i₁ hL' e e''
 
-open Cardinal in
 
 theorem key_unit_split (κ : Rule) (hR : Rule4 κ) (W : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [CharZero W]
     (hc : IsAdicComplete (IsLocalRing.maximalIdeal W) W) (hW : #W ≤ 𝔠) (t : SAB H (Sp W))
@@ -212,7 +208,6 @@ theorem key_unit_split (κ : Rule) (hR : Rule4 κ) (W : Type) [CommRing W] [IsDo
   obtain ⟨U, -⟩ := GlobalTheory.LN.uDvrSt_holds E H W hW' t hp hS
   exact key_unit_trait κ hR W hc hW t.G L σ x y t.semi ⟨U.D, U.A, U.U, by rw [U.bundle]; exact hL⟩ hy hσ hk0
 
-open Cardinal in
 
 theorem key_unit_normal (κ : Rule) (hR : Rule4 κ) (A : Type) [CommRing A] [IsDomain A] [IsNoetherianRing A]
     [IsIntegrallyClosed A] [CharZero A] (hA : #A ≤ 𝔠) (t : SAB H (Sp A)) (L : RigLB t.G) (hL : LBIso t.PP.L L.L)
@@ -319,7 +314,6 @@ theorem germ_lbPow_g' {S : Scheme.{0}} (M : LB S) (n : ℕ) (j j' : (lbPow M n).
   erw [Units.coe_map, Units.coe_map]
   exact TopCat.Presheaf.germ_res_apply _ _ _ _ _
 
-open Cardinal in
 
 theorem key_sab {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} (S : Scheme.{0}) [IsIntegral S]
     (t : SAB H S) (g : ℕ) (δ : LB S) (σ : (CechPic.tens t.PP.L (δ.pull t.G.hom)).Sec) (hg : 1 ≤ g)
@@ -370,7 +364,6 @@ theorem cls_det_zero {X : Scheme.{0}} (F : X.Modules) (h : (VB.det F 0).IsLB) : 
     rfl)
   simp [e]
 
-open Cardinal in
 
 theorem mk_le_of_lft {k A : Type} [Field k] [CommRing A] (hk : #k ≤ 𝔠) (s : Sp A ⟶ Sp k) [LocallyOfFiniteType s] :
     #A ≤ 𝔠 := by

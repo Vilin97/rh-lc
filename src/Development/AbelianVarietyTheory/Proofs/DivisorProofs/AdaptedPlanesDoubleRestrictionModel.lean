@@ -58,7 +58,6 @@ def pos (Z : Matrix (Ix n₁) (Ix d₁) S) : Ix n₁ ⊕ Fin d₁ → S :=
 
 def core (Z : Matrix (Ix n₁) (Ix d₁) S) : Matrix (Fin n₁) (Fin d₁) S := Matrix.of fun i j => Z (some (some i)) (some (some j))
 
-variable (R) in
 
 def shuffle : Matrix (Ix n₁) (Ix d₁) S ≃ₗ[R]
     ((Ix n₁ ⊕ Fin d₁ → S) × (Ix n₁ ⊕ Fin d₁ → S)) × Matrix (Fin n₁) (Fin d₁) S where

@@ -108,7 +108,6 @@ private theorem isFS_fsBasis_normOf {k : Type} [CommRing k] {Z : Scheme} (p : Z 
   rw [Weight.fsBasis_φ, dualNorm_normOf, Real.sq_sqrt (Finset.sum_nonneg fun _ _ => sq_nonneg _)]
   rfl
 
-open FubiniStudyChowHeightFormula₂.Fs GroundTheory.Heights₂.Heights in
 
 theorem FubiniStudyChowHeightFormula₂.fubiniStudyChowHeight_of_arExists (hE : GlobalTheory.Published.ArExists) : GlobalTheory.Published.FubiniStudyChowHeight := by
   intro K _ _ N e δ Y _ i _ hvar A hA hc f hf

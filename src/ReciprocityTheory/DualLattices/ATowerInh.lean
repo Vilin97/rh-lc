@@ -35,6 +35,5 @@ lemma isLocalHom_of_surj {R S : Type} [CommRing R] [IsLocalRing R] [CommRing S] 
 
 end TowerExample
 
-open TowerExample in
 
 end ReciprocityTheory.PGsh

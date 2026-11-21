@@ -16,7 +16,6 @@ section Datum
 variable (F E : Type*) [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E]
   [IsTotallyComplex E] [Algebra F E] [Algebra.IsQuadraticExtension F E]
 
-include F in
 
 theorem isCMField : IsCMField E := IsCMField.ofCMExtension F E
 
@@ -83,8 +82,6 @@ variable {F E}
 
 variable (F E)
 
-omit [NumberField F] in
-variable {F} in
 
 end Datum
 

@@ -68,7 +68,6 @@ theorem basis_repr_idempotent_smul (x : W.DD T) (i : ZMod n) (j : Fin r) :
     simp only [smul_assoc]
   rw [h1, Module.Basis.repr_sum_self]
 
-include hB in
 
 theorem basis_repr_mem_letter (i : ZMod n) (x : W.DD T) (hx : x ∈ DDl W T i) (j : Fin r) :
     B.repr x j ∈ EEl W i := by
@@ -76,7 +75,6 @@ theorem basis_repr_mem_letter (i : ZMod n) (x : W.DD T) (hx : x ∈ DDl W T i) (
   · rw [← basis_repr_idempotent_smul, hx.1]
   · rw [← basis_repr_gamma B hB x δ hδ, hx.2 δ hδ]
 
-include hB in
 
 theorem basis_combination_mem_invariants (i : ZMod n) (d : Fin r → W.EE) (hd : ∀ j, d j ∈ EEl W i) :
     ∑ j, d j • B j ∈ DDl W T i := by
@@ -117,7 +115,6 @@ theorem letterRing_sum_mul {i : ZMod n} {ι : Type} [Fintype ι] (a : ι → k17
     rw [Finset.sum_apply, map_sum]
   simp only [Pi.smul_apply, smul_eq_mul, letterRing_val_mul]
 
-include hB in
 
 theorem letter_invariants_basis (i : ZMod n) {ι : Type} [Fintype ι]
     (C : Module.Basis ι (k17R W i) (Fin r → k17R W i)) :

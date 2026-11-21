@@ -46,7 +46,6 @@ def HkComm : Prop :=
 def ExL : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ), SplitL F l → Nonempty (LDat F ι)
 
-open Classical in
 
 def GlFacts : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (D : LDat F ι),

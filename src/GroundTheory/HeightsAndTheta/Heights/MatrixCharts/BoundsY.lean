@@ -122,7 +122,6 @@ theorem inv_ge_of_le {ι : Type*} [Fintype ι] [DecidableEq ι] {A : Matrix ι �
       linarith
     · rw [← hzero]; simpa using hxy
 
-open scoped ComplexOrder in
 
 theorem posSemidef_map_ofReal {ι : Type*} [Fintype ι] {A : Matrix ι ι ℝ} (hA : A.PosSemidef) :
     (A.map (fun x : ℝ => (x : ℂ))).PosSemidef := by

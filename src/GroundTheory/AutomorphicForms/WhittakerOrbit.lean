@@ -184,7 +184,6 @@ theorem continuousSMul_orbit (x₀ : X) : ContinuousSMul H (orbit H x₀) := by
   rw [this]
   exact continuous_fst.smul (continuous_subtype_val.comp continuous_snd)
 
-omit [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] [TotallyDisconnectedSpace X] in
 
 theorem isOpen_orbitPiece {x₀ : X} (hO : IsLocallyClosed (orbit H x₀)) {L : Subgroup H}
     (hLo : IsOpen (L : Set H)) {y : X} (hy : y ∈ orbit H x₀) :
@@ -201,7 +200,6 @@ theorem isOpen_orbitPiece {x₀ : X} (hO : IsLocallyClosed (orbit H x₀)) {L : 
   · rintro ⟨l, hl, e⟩
     exact ⟨l, hl, congrArg Subtype.val e⟩
 
-omit [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] in
 
 theorem exists_lift_orbit_piece {U C : Set X} (hU : IsOpen U) (hC : IsClosed C) {x₀ : X}
     (hO : U ∩ C = orbit H x₀) {L : Subgroup H} (hLc : IsCompact (L : Set H))
@@ -278,7 +276,6 @@ theorem GoodPiece.smul (hUinv : ∀ h : H, ∀ x ∈ U, h • x ∈ U) (χ : H �
   have := transl_mem_of_mem χ hWU hW h h1
   rwa [← transl_mul, mul_inv_cancel, transl_one] at this
 
-omit [TotallyDisconnectedSpace X] [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] in
 
 theorem exists_finset_orbitPiece (hOl : IsLocallyClosed (orbit H x₀)) {J A : Subgroup H}
     (hJc : IsCompact (J : Set H)) (hAo : IsOpen (A : Set H)) (hAJ : A ≤ J)
@@ -331,7 +328,6 @@ theorem exists_finset_orbitPiece (hOl : IsLocallyClosed (orbit H x₀)) {J A : S
       obtain ⟨i, hi, rfl⟩ := Finset.mem_image.1 hS
       exact Set.indicator_of_notMem (fun hxi => hx (hsub i (htJ (htfin.mem_toFinset.1 hi)) hxi)) _
 
-omit [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] in
 
 theorem GoodPiece.up {U C : Set X} (hU : IsOpen U) (hC : IsClosed C) {x₀ : X}
     (hO : U ∩ C = orbit H x₀) (χ : H →* ℂ)
@@ -360,7 +356,6 @@ theorem GoodPiece.up {U C : Set X} (hU : IsOpen U) (hC : IsClosed C) {x₀ : X}
   · rw [Set.indicator_of_notMem hxS,
       Set.indicator_of_notMem (fun h' => hxS (Set.mem_smul_set_iff_inv_smul_mem.1 h'))]
 
-omit [TotallyDisconnectedSpace X] [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] in
 
 theorem GoodPiece.down {U C : Set X} (hU : IsOpen U) (hC : IsClosed C) {x₀ : X}
     (hO : U ∩ C = orbit H x₀) (hUinv : ∀ h : H, ∀ x ∈ U, h • x ∈ U) (χ : H →* ℂ)
@@ -402,7 +397,6 @@ theorem GoodPiece.down {U C : Set X} (hU : IsOpen U) (hC : IsClosed C) {x₀ : X
   have := T.smul_mem (𝒮.card : ℂ)⁻¹ hcard
   rwa [smul_smul, inv_mul_cancel₀ hc, one_smul] at this
 
-omit [TotallyDisconnectedSpace X] [T2Space X] [LocallyCompactSpace X] [SigmaCompactSpace H] in
 
 theorem exists_forall_smul_eq {U C : Set X} (hC : IsClosed C) {x₀ : X}
     (hO : U ∩ C = orbit H x₀) {f : X → ℂ} (hf : f ∈ supportedIn U) :

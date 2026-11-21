@@ -375,7 +375,6 @@ theorem push_mem_Fil (f : A ⟶ B) [IsMonHom f] {h : HdR A} (hh : h ∈ Fil A) :
   rw [e']
   exact hh _ hg'
 
-omit [GrpObj A] in
 
 theorem pt_w {D : Type} [CommRing D] [Algebra R D] (v : Over.mk (spMap (algebraMap R D)) ⟶ A) :
     v.left ≫ A.hom ≫ 𝟙 _ = spMap (algebraMap R D) := by
@@ -385,12 +384,10 @@ theorem pt_w {D : Type} [CommRing D] [Algebra R D] (v : Over.mk (spMap (algebraM
 def tanVal {A : Over (Sp R)} (v : epsR R ⟶ A) : Form (A.hom ≫ 𝟙 _) →ₗ[R] R :=
   TrivSqZeroExt.sndHom R R ∘ₗ (SqExt.dual R).val v.left (pt_w v) ∘ₗ (Form _).subtype
 
-omit [GrpObj A] in
 
 theorem tanVal_apply (v : epsR R ⟶ A) (f : Form (A.hom ≫ 𝟙 _)) :
     tanVal v f = TrivSqZeroExt.snd (R := R) ((SqExt.dual R).val v.left (pt_w v) f.1) := rfl
 
-omit [GrpObj A] in
 
 theorem tanVal_epsScale (r : R) (v : epsR R ⟶ A) (f : Form (A.hom ≫ 𝟙 _)) :
     tanVal (epsScale r ≫ v) f = r * tanVal v f := by
@@ -414,7 +411,6 @@ theorem tanVal_one (f : Form (A.hom ≫ 𝟙 _)) : tanVal (1 : epsR R ⟶ A) f =
   rw [tanVal_apply, SqExt.val_const (SqExt.dual R) η[A].left hx _ _ hy f]
   rfl
 
-omit [GrpObj A] [GrpObj B] in
 
 theorem tanVal_comp (v : epsR R ⟶ A) (g : A ⟶ B)
     (m : IsMor (dp0 R) (B.hom ≫ 𝟙 _) (dp0 R) (A.hom ≫ 𝟙 _) (RingHom.id R) g.left)
@@ -575,7 +571,6 @@ theorem IsLieImage.sub_mem {h h' : HdR A} {v : epsR R ⟶ A} (e : IsLieImage h v
   intro f hf
   rw [LinearMap.sub_apply, e.2 f hf, e'.2 f hf, sub_self]
 
-variable (A) in
 
 def LieExact : Prop :=
   (∀ h : HdR A, ∃! v, IsLieImage h v) ∧ ∀ v : epsR R ⟶ A, IsTangent v → ∃ h, IsLieImage h v
@@ -684,11 +679,9 @@ end Lift
 
 section KS
 
-variable (R) in
 
 abbrev epsRed : Sp R ⟶ Sp (DualNumber R) := spMap (TrivSqZeroExt.fstHom R R R).toRingHom
 
-variable (R) in
 
 def epsDP : DividedPowers (RingHom.ker (TrivSqZeroExt.fstHom R R R).toRingHom) :=
   divided₂ (SqExt.dual R).sq
@@ -696,7 +689,6 @@ def epsDP : DividedPowers (RingHom.ker (TrivSqZeroExt.fstHom R R R).toRingHom) :
 variable {A : Over (Sp R)} [GrpObj A] {A' : Over (Sp (DualNumber R))} [GrpObj A']
   {i : A.left ⟶ A'.left}
 
-variable (A) in
 
 theorem constMor : GrpMor (dp0 R) (𝟙 _) A (epsDP R) (epsRed R) A (algebraMap R (DualNumber R)) (𝟙 _)
     (Over.Hom.left (𝟙 A)) :=
@@ -743,7 +735,6 @@ theorem IsKSValue.smul {f : HdR A} {v : epsR R ⟶ A} (e : IsKSValue h f v) (r :
     smul_eq_mul, smul_eq_mul]
   ext <;> simp
 
-variable (h) in
 
 def KSRegular : Prop := ∀ f ∈ Fil A, ∃! v, IsKSValue h f v
 

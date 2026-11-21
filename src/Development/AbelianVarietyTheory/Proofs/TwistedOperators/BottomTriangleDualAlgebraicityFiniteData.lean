@@ -63,7 +63,6 @@ theorem isWeilDatumO_fixSig (h : IsWeilDatumO ψ S T χS χT om) : IsWeilDatumO 
     exact ⟨r, hr, fun ℓ hℓ f hf => H ℓ (fun u hu f' hf' => hℓ u hu f' (GlobalTheory.VacFixTarget.isThetaFunO_fixSig hf')) f
       (isThetaFunO_of_fixSig hf)⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_cong_fix_vac (hW : IsWeilDatumO ψ S T χS χT om)
     (hcS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) (hcT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ))
@@ -146,7 +145,6 @@ theorem exists_cong_fix_vac (hW : IsWeilDatumO ψ S T χS χT om)
   obtain ⟨n, hn⟩ := key
   exact ⟨_, Nat.mul_pos n₁.factorial_pos n.factorial_pos, hn⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem eventually_fix (hW : IsWeilDatumO ψ S T χS χT om)
     (hcS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) (hcT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ))
@@ -249,7 +247,6 @@ theorem level_right [Finite T] (hX : IsBottomTri W i j X) :
   have hm : ((g, x * κ) : GA D A' × GA D WW) = (g, x) * (1, κ) := by simp
   rw [hm, map_mul, Module.End.mul_apply, hpt, h κ hκf hκ t]
 
-open Classical in
 
 theorem scalar_exists (hX : IsBottomTri W i j X) (t : T) (τ₀ : D.what₂.Tau) :
     ∃ C w : ℂ, (w = Complex.exp Complex.I ∨ w = (Complex.exp Complex.I)⁻¹) ∧
@@ -385,7 +382,6 @@ theorem det_mem {N : ℕ} (M : IntermediateField ℚ ℂ) (h : Matrix (Fin N) (F
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil}
   {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}
 
-variable (D) in
 
 def conjField : IntermediateField ℚ ℂ := ⨆ τ : D.what₂.Tau, (tauE D τ).toRatAlgHom.fieldRange
 

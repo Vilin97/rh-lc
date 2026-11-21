@@ -19,7 +19,6 @@ open scoped NNReal
 
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
 
-variable (F) in
 
 def centralUnif (m : ℕ) : GL (Fin m) F := Cartan.diagPow F m fun _ => 1
 
@@ -64,7 +63,6 @@ def leviIntegrandB (σ : Representation ℂ (levi F n β) W) (κ : levi F n β �
   Ψ ((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) * (((κ m)⁻¹ * leviModulus β m : ℝ≥0) : ℂ) *
     detPow (m : GL (Fin n) F) (-s) * ℓ (σ m⁻¹ w)
 
-variable (F) in
 
 def LeviFE (σ : Representation ℂ (levi F n β) W) (κ : levi F n β →* ℝ≥0)
     (μM : Measure (levi F n β)) (ψ : AddChar F Circle) (γ : RatFunc ℂ) : Prop :=
@@ -83,7 +81,6 @@ section Induced
 variable {n : ℕ} {α : Type*} [LinearOrder α] {β : Fin n → α}
   {W : Type*} [AddCommGroup W] [Module ℂ W] [MeasurableSpace F] [BorelSpace F]
 
-variable (F) in
 
 def InducedFE [MeasurableSpace (GL (Fin n) F)] (σ : Representation ℂ (levi F n β) W)
     (μG : Measure (GL (Fin n) F)) (ψ : AddChar F Circle) (γ : RatFunc ℂ) : Prop :=

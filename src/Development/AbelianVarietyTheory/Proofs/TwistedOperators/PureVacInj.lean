@@ -67,7 +67,6 @@ theorem compAt_mapB (θ : InfFam D) (hθ : IsInfFam θ) (τ : D.what₂.Tau) (e 
   rw [compAt_neg', compAt_mul', compAt_inc θ hθ, compAt_conj θ hθ]
   rfl
 
-open GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation (blk) in
 
 theorem cplx_pairS {W : G.Weil} {M : Vol G} {t : T} {i j : Fin D.R.m} {e : Num G i j} {Bs : Base D.host.F D.host.E}
     {Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j} {X : Chars D.host.F D.host.E} (h : IsTripleOf W M t i j e Bs Γ X) (u u' : PtS G i j)

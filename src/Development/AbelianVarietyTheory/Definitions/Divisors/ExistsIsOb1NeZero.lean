@@ -31,9 +31,7 @@ theorem mul_eq_zero_of_mem {a b : R} (ha : a ∈ I) (hb : b ∈ I) : a * b = 0 :
 
 variable {R₁ : Type} [CommRing R₁] [Algebra R₀ R₁]
 
-include hk in
 
-include hI hs in
 
 theorem exists_isSig (α : Aug I π R₁) {B B₀ : Type} [CommRing B] [Algebra R B] [CommRing B₀] [Algebra R₀ B₀]
     (p : B →+* B₀) (semi : SemiHom π p) (surj : Function.Surjective p)
@@ -56,9 +54,7 @@ theorem exists_isSig (α : Aug I π R₁) {B B₀ : Type} [CommRing B] [Algebra 
 
 variable {C C' : Type} [Category.{0} C] [Category.{0} C'] {F : C ⥤ CommAlgCat.{0} R₀} {F' : C' ⥤ CommAlgCat.{0} R₀}
 
-include hI hs in
 
-include hI hs in
 
 end General
 
@@ -77,17 +73,12 @@ open Polynomial
 variable {R R₀ : Type} [CommRing R] [CommRing R₀] {I : Ideal R} {π : R →+* R₀} {R₁ : Type} [CommRing R₁] [Algebra R₀ R₁]
 variable (hI : I ^ 2 = 0) (hs : Function.Surjective π) (hk : RingHom.ker π = I)
 
-include hI in
 
-include hk in
 
 variable {C : Type} [Category.{0} C]
 
-include hI hs in
 
-include hI in
 
-include hI hs hk in
 
 end Line
 

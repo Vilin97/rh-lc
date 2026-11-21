@@ -74,7 +74,6 @@ theorem idem_mul_idem_of_ne {Z Z' : Comp Xo c} (h : Z ≠ Z') : idem Z * idem Z'
     exact Set.disjoint_left.1 (CompSplitPfD.cspD_comp_disj Xo c Z Z' h) ((idem_notMem_iff Z y q).1 h1.1)
       ((idem_notMem_iff Z' y q).1 h1.2)
 
-variable (Xo c) in
 
 theorem sum_idem [Fintype (Comp Xo c)] : ∑ Z : Comp Xo c, idem Z = 1 := by
   classical
@@ -95,7 +94,6 @@ theorem sum_idem [Fintype (Comp Xo c)] : ∑ Z : Comp Xo c, idem Z = 1 := by
   rw [mul_sub, h2, mul_one, sub_self]
   exact q.asIdeal.zero_mem
 
-variable (Xo c) in
 
 theorem sum_idem_mul [Fintype (Comp Xo c)] (f : Rul Xo c) : ∑ Z : Comp Xo c, idem Z * f = f := by
   rw [← Finset.sum_mul, sum_idem, one_mul]

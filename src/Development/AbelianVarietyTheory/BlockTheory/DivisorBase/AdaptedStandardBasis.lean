@@ -38,9 +38,7 @@ variable (Xo : Moduli Dw l) (c : Coeff l)
 def polyNorm {n : ℕ} (P : MvPolynomial (LtN Dw n) c.F) : ℝ :=
   Real.sqrt (∑ s : c.F →+* ℂ, ∑ m ∈ P.support, ‖s (P.coeff m)‖ ^ 2)
 
-variable (Dw) in
 
-variable (Dw) in
 
 variable {Xo c} {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r)
 

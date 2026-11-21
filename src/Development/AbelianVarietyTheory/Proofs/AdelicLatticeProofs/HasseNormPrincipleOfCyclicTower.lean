@@ -159,8 +159,6 @@ private theorem exists_eq_pow_finrank_mul_norm_of_norm_eq_cyclic (F M E : Type) 
   refine ⟨b, ((c⁻¹ : Eˣ) : E), Units.ne_zero _, ?_⟩
   rw [map_units_inv (Algebra.norm F) c, (algebraMap F M).injective hbn, mul_inv_cancel_right₀ hNc]
 
-open NumberField IsDedekindDomain Polynomial in
-open scoped WithZero TensorProduct in
 
 theorem _root_.GlobalTheory.CNorm.np_of_cyclic_tower : ∀ (F M E : Type) [Field F] [NumberField F] [Field M] [NumberField M]
     [Field E] [NumberField E] [Algebra F M] [Algebra M E] [Algebra F E] [IsScalarTower F M E]

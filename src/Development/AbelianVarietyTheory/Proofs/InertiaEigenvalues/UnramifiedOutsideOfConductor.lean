@@ -28,7 +28,6 @@ open scoped ENNReal ComplexConjugate
 
 namespace GlobalTheory.ZEul
 
-open GlobalTheory.CuspRep.CuspidalL2GL in
 
 theorem exists_fundamentalDomain_NE : ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) (μ : Measure (GA E n)) [μ.IsHaarMeasure],
   ∃ 𝓕₀ : Set (GA E n), IsFundamentalDomain (GlobalTheory.CellDec.NE E n) 𝓕₀ μ := by

@@ -18,7 +18,6 @@ section Diag
 
 variable {E : Type} [Field E]
 
-open Classical in
 
 def dEnt (n : ℕ) (π : E) (i : Fin n) : E := if i.1 + 1 = n then (if π = 0 then 1 else π) else 1
 

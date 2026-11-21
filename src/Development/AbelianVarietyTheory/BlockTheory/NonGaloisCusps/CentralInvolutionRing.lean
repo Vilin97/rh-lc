@@ -31,7 +31,6 @@ section Series
 
 variable {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (i : Fin D.R.m)
 
-open Classical in
 
 end Series
 

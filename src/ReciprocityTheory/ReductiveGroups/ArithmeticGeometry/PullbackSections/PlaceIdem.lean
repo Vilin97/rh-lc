@@ -10,7 +10,6 @@ open NumberField
 
 namespace ReciprocityTheory.ChartRestriction.G.PullbackSections
 
-open Classical in
 
 def PlaceIdemSt : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]

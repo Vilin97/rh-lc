@@ -297,7 +297,6 @@ theorem map_secIdeal (Q : Ideal (MvPolynomial (Fin n) k)) (e : ℕ) :
 
 end GenSecDomain
 
-open GenSecDomain in
 
 theorem GenSecDomain.proof (h₁ : ChartDomain.Statement) (h₂ : IncidenceGeneric.Statement)
     (h₃ : IncIdealBelow.Statement) : GenSecDomain.Statement := by

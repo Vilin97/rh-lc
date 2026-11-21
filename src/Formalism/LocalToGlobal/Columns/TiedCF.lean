@@ -55,7 +55,6 @@ variable {D}
 def lamT (u : D.what₂.Word) (i : ℕ) : D.what₂.Tau → DomWeight (D.R.N i) :=
   fun τ => shW ((D.fm u).lam i τ) ((i * (D.R.t + 1) / 2 : ℕ) : ℤ)
 
-set_option maxHeartbeats 1000000 in
 
 structure ClsTied (u : D.what₂.Word) (i : ℕ) (hi : i ≤ D.R.m) where
 
@@ -78,7 +77,6 @@ structure ClsTied (u : D.what₂.Word) (i : ℕ) (hi : i ≤ D.R.m) where
       bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ.1 ∈
         lev.U.map (MulAut.conj (y c).1).toMonoidHom
 
-set_option maxHeartbeats 1000000 in
 
 end Step
 
@@ -122,7 +120,6 @@ abbrev Lk {u : D.what₂.Word} (A : AtTTied u) (i : ℕ) (hi : i ≤ D.R.m) (v :
     Submodule (𝓞 D.host.E) (Fin (D.R.N i) → D.host.E) :=
   clsCrd D u i hi c ⊔ A.Pv v • Ld D u i hi c
 
-set_option maxHeartbeats 1000000 in
 
 structure LvTied (u : D.what₂.Word) (A : AtTTied u) (i : ℕ) (hi : i ≤ D.R.m) where
 
@@ -143,11 +140,8 @@ structure LvTied (u : D.what₂.Word) (A : AtTTied u) (i : ℕ) (hi : i ≤ D.R.
 
 variable {u : D.what₂.Word} {A : AtTTied u} {i : ℕ} {hi : i ≤ D.R.m}
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end AtT
 

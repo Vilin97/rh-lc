@@ -97,8 +97,6 @@ theorem smul_mem_latGHat {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Su
   rw [← e]
   exact GlobalTheory.LevelUnique.mulVec_mem_latGHat _ hN w hw
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem cong_of_trivial {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)}
     (hβ : IsSDFrame V β Λ 1) {La : Type} [AddCommGroup La] [Module (𝓞 D.host.E) La]
@@ -143,8 +141,6 @@ theorem cong_of_trivial {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Sub
     _ = M • (F m - s • w) := by
         rw [smul_sub, E2, smul_comm s M w, smul_sub]
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem rTup_eq_one_of_cong {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)}
     (hβ : IsSDFrame V β Λ 1) (L : Formalism.L2.DIV.LevDat D.host.E ℂ V.rank) {M : ℕ} {c : 𝓞 D.host.E}
@@ -205,9 +201,6 @@ theorem rTup_eq_one_of_cong {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ :
 
 end GlobalTheory.LevelFaithful
 
-open GlobalTheory.LevelFaithful in
-set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem GlobalTheory.LevelFaithful.lev_mul_and_faithful : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Y : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX} {Csz : ℝ} (p : PtAt ex Csz), More p → ∀ (r : TwoRuns p.T p.P.Gp) (h : RunsOk (fw2 p) r), OwnPin r → ∀ (i : Fin D.R.m), (∀ g g' : p.P.Gp, r.lev i (g * g') = r.lev i g * r.lev i g') ∧ ∀ g : p.P.Gp, r.lev i g = 1 → g = 1 := by
   intro D L hT Gi Gl Kc Y cX ex Csz p _ r h _ i

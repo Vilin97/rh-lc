@@ -76,16 +76,13 @@ theorem ev_some {y z} (h : Z.pt y = some z) (f) : T.ev i _ b f y = valAt YS fw j
 
 theorem ev_none {y} (h : Z.pt y = none) (f) : T.ev i _ b f y = 0 := by rw [Z.ev_eq, h]; rfl
 
-include Z in
 
 theorem exists_ev_eq (z : Pts YS (T.iC i) b ((j : ℕ) + 1)) :
     ∃ (y : T.Pt i ((j : ℕ) + 1)) (u : ℂ_[D.ntw.l i]), ‖u‖ = 1 ∧ ∀ f, valAt YS fw j z.1 (toK YS j b f) = u * T.ev i _ b f y := by
   obtain ⟨y, z', t, hy, ht, hb⟩ := Z.cover z
   exact ⟨y, _, norm_wchar ht _, fun f => by rw [Z.ev_some hy]; exact valAt_frBor YS fw j hb _⟩
 
-include Z in
 
-include Z in
 
 theorem norm_le_iff {B : ℝ} (hB : 0 ≤ B) (f : D.nexp.Fm i ((j : ℕ) + 1) b) : (∀ y, ‖T.ev i _ b f y‖ ≤ B) ↔
     ∀ z : Pts YS (T.iC i) b ((j : ℕ) + 1), ‖valAt YS fw j z.1 (toK YS j b f)‖ ≤ B := by
@@ -97,9 +94,7 @@ theorem norm_le_iff {B : ℝ} (hB : 0 ≤ B) (f : D.nexp.Fm i ((j : ℕ) + 1) b)
     · rw [Z.ev_none hy, norm_zero]; exact hB
     · rw [Z.ev_some hy]; exact h z
 
-include Z in
 
-include Z in
 
 theorem hecke {k P} (h : HkIdx i k P) : ∃ s : T0.Q.c.F, ‖embC YS (T.iC i) b s‖ = 1 ∧ ∀ y z, Z.pt y = some z →
     ∃ quot : HkKer P.asIdeal (charAt P) k z.1 → FrC YS (T.iC i) b ((j : ℕ) + 1),
@@ -117,11 +112,8 @@ theorem hecke {k P} (h : HkIdx i k P) : ∃ s : T0.Q.c.F, ‖embC YS (T.iC i) b 
   beta_reduce
   rw [h5, Z.ev_some (h1 c), e.symm_apply_apply, valAt_frBor YS fw j (h4 c), mul_assoc]
 
-include Z in
 
-include Z in
 
-include Z in
 
 theorem detects : Detects YS fw (T.iC i) b j := fun x hx => by
   obtain ⟨f, rfl⟩ := (toK YS j b).surjective x
@@ -132,7 +124,6 @@ theorem detects : Detects YS fw (T.iC i) b j := fun x hx => by
 
 end SideTie
 
-variable {YS} in
 
 theorem mem_span_toK {i : D.ntw.Tw} {j : Fin D.R.m} {b : Bool} {s : Set (D.nexp.Fm i ((j : ℕ) + 1) b)}
     {s' : Set (NX.Fm S i ((j : ℕ) + 1) b)} (h : ∀ f, f ∈ s ↔ toK YS j b f ∈ s') (f : D.nexp.Fm i ((j : ℕ) + 1) b) :
@@ -147,15 +138,10 @@ theorem mem_span_toK {i : D.ntw.Tw} {j : Fin D.R.m} {b : Bool} {s : Set (D.nexp.
 def SupPin (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool) : Prop :=
   ∀ f : D.nexp.Fm i ((j : ℕ) + 1) b, f ∈ D.nexp.Bsup i _ b ↔ toK YS j b f ∈ NX.Bsup S i ((j : ℕ) + 1) b
 
-variable {YS fw T} in
 
-variable {YS fw T} in
 
-variable {YS fw T} in
 
-variable {YS fw T} in
 
-variable {YS fw T} in
 
 section Record
 
@@ -200,11 +186,9 @@ def allEv (j : Fin D.R.m) (b : Bool) : D.nexp.Fm i ((j : ℕ) + 1) b →+ (AllPt
     rw [Pi.add_apply]
     cases atSide b y <;> simp
 
-open Classical in
 
 def kerNum (j k : ℕ) (P : PlE D.host) : ℕ := if h : ∃ n, KerCard YS iC j k P n then h.choose else 0
 
-open Classical in
 
 def allMove (j k : ℕ) (P : PlE D.host) (c : Fin (kerNum YS iC j k P)) (y : AllPts YS iC j) : AllPts YS iC j :=
   if h : Nonempty (Fin (kerNum YS iC j k P) ≃ HkKer P.asIdeal (charAt P) k y.2.1) ∧
@@ -214,7 +198,6 @@ theorem allMove_fst (j k : ℕ) (P : PlE D.host) (c) (y : AllPts YS iC j) : (all
   unfold allMove
   split_ifs <;> rfl
 
-open Classical in
 
 def hkUnit (j : Fin D.R.m) (b : Bool) (k : ℕ) (P : PlE D.host) : ℂ_[D.ntw.l i] :=
   if h : ∃ s : T0.Q.c.F, ‖embC YS iC b s‖ = 1 ∧ HeckeIs YS fw iC b j k P (embC YS iC b s) then embC YS iC b h.choose else 1
@@ -271,14 +254,12 @@ theorem allEv_ball {j : Fin D.R.m} {b : Bool} {B : ℝ} (hB : 0 ≤ B) (f : D.ne
   · rw [allEv_other f hb, norm_zero]
     exact hB
 
-variable (YS fw) in
 
 def evN (j : ℕ) : ∀ b, D.nexp.Fm i j b →+ (AllPts YS iC j → ℂ_[D.ntw.l i]) :=
   extLift (α := fun j => ∀ b, D.nexp.Fm i j b →+ (AllPts YS iC j → ℂ_[D.ntw.l i])) (allEv YS fw iC) (fun _ _ => 0) j
 
 theorem evN_succ (j : Fin D.R.m) : evN YS fw (iC := iC) ((j : ℕ) + 1) = allEv YS fw iC j := extLift_succ _ _ j
 
-variable (YS iC) in
 
 def fmUrN (j : ℕ) : ∀ b, AddSubgroup (D.nexp.Fm i j b) :=
   extLift (α := fun j => ∀ b, AddSubgroup (D.nexp.Fm i j b))
@@ -288,7 +269,6 @@ theorem mem_fmUrN (j : Fin D.R.m) (b : Bool) (f) :
     f ∈ fmUrN YS iC ((j : ℕ) + 1) b ↔ toK YS j b f ∈ ratForms S _ b (kurAt YS iC b) := by
   rw [fmUrN, extLift_succ]; rfl
 
-variable (YS fw iC) in
 
 def hkUnitN (j : ℕ) (b : Bool) (k : ℕ) (P : PlE D.host) : ℂ_[D.ntw.l i] :=
   extLift (α := fun _ => ℂ_[D.ntw.l i]) (fun j => hkUnit YS fw iC j b k P) (fun _ => 1) j

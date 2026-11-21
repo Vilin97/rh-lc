@@ -57,7 +57,6 @@ open Formalism.IndefR.FWT Formalism.L2.Pj Formalism.MainNotions
 
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
 
-set_option maxHeartbeats 1000000 in
 
 end Comparison₂
 

@@ -268,7 +268,6 @@ theorem span_MK_good (hK : A.IsKsForm) (hρ : ∀ g, ∀ f ∈ A.WK, A.ρ g f �
   refine Submodule.sum_mem _ fun κ _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨?_, hwG κ⟩)
   exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (g j).2
 
-omit [NumberField LL] [Module (𝓞 LL) WL] [IsScalarTower (𝓞 LL) LL WL] in
 
 theorem fg_MK_good (hM : A.MKFull) (J0 : Subgroup G0) (lam0 : J0 →* LLˣ) (eC : G0 → LL) :
     ∃ S : Finset WL, (Submodule.span (𝓞 Ks) (S : Set WL) : Set WL) = {y | y ∈ A.MK ∧ y ∈ A.Wgood J0 lam0 eC} := by

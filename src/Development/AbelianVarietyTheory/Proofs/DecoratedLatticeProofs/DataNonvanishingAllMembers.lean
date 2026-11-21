@@ -40,7 +40,6 @@ noncomputable section
 
 namespace GlobalTheory.Fam.MemberData
 
-open Formalism.MainNotions.S in
 
 theorem dataNW_of_val {C : Formalism.MainNotions.Inhab.FC} {cD ch : ℝ} (hC : Std C) {D : D7} (L : SizeData₂ D)
     (hV : Val C cD ch L) (hS : SizesAt L) (hR : ∀ u, GlobalTheory.Core.Rk.RankMu D u) : GlobalTheory.Core.Deg.DataNW D := by

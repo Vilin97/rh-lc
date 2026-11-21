@@ -22,7 +22,6 @@ def formR (p : ℕ) (ι : Type) [Fintype ι] : (ι → R) →ₗ[R] ((ι → ZMo
   map_add' l l' := by ext x; simp [add_mul, Finset.sum_add_distrib]
   map_smul' c l := by ext x; simp [Finset.mul_sum, mul_assoc]
 
-variable (C) in
 
 def toC (X : Type) : (X → R) →ₗ[R] (X → C) := (Algebra.linearMap R C).compLeft X
 

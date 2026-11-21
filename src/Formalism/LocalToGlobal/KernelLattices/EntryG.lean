@@ -19,9 +19,7 @@ section Cf
 
 variable {K : Type} [Field K] {ι : Type} [Fintype ι] {a b : ℕ}
 
-open Classical in
 
-open Classical in
 
 end Cf
 
@@ -88,9 +86,7 @@ variable {Q} (Bb : ChBas Q)
 def crd (j : ℕ) (ν : Nd Q j) : (Q.F j).Forms →ₗ[K] K :=
   (Bb.B j ν.1).coord ν.2 ∘ₗ (LinearMap.proj (famRep Q j ν.1)) ∘ₗ ((Q.F j).mem ν.1.1).EqFun.subtype ∘ₗ LinearMap.proj ν.1.1
 
-variable (Q) in
 
-variable (Q) in
 
 structure LastDat (S₁ : GSD K) (Bsp : Type) [AddCommGroup Bsp] [Module K Bsp] where
 
@@ -122,7 +118,6 @@ variable {Bsp : Type} [AddCommGroup Bsp] [Module K Bsp]
 
 variable (T : LastDat Q.S₁ Bsp)
 
-variable (Q) in
 
 variable {l : ℕ} [Fact l.Prime] {J : Type} [Fintype J] {Asp : Type} [AddCommGroup Asp] [Module K Asp]
 

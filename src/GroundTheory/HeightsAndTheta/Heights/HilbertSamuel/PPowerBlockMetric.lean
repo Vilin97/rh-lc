@@ -540,7 +540,6 @@ theorem conj_graphLine {S : ((Σ k, ι k) → ℂ) → ℝ}
 
 end PowerBlockMetric
 
-open PowerBlockMetric in
 
 theorem PowerBlockMetric.proof (hExt : SectionNormSqExtension.Statement) : PowerBlockMetric.Statement := by
   intro K _ _ ι _ Ω _ y A P0 m N v hP0 hsemi hconj hv hgen

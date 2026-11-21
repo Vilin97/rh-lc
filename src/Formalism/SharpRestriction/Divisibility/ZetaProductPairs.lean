@@ -60,7 +60,6 @@ def idxPar (q : ℝ) (r s : ℕ) : ℝ := TH.parIdx q r s
 def Lpair (q : ℝ) (t : ℕ) (x : ℂ) : ℂ :=
   (∏ s ∈ Icc 1 t, ((1 - x * ((q : ℂ) ^ (-(s : ℤ)))) * (1 - x⁻¹ * ((q : ℂ) ^ (-(s : ℤ))))))⁻¹
 
-open NumberField IsDedekindDomain in
 
 end Local
 

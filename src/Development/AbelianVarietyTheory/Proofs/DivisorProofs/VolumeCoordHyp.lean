@@ -20,9 +20,6 @@ private lemma mem_offHyp_iff {n : ℕ} {S : Finset (Fin n)}
   unfold _root_.GlobalTheory.GoodTop.offHyp
   exact Iff.rfl
 
-open MeasureTheory Filter Topology in
-open scoped ContDiff Matrix in
-set_option autoImplicit false in
 
 lemma _root_.GlobalTheory.GoodTop.offHyp_ae_eq {n : ℕ} (S : Finset (Fin n))
     (U : Set (_root_.ReciprocityTheory.L2DbarEstimates.V n)) : _root_.GlobalTheory.GoodTop.offHyp S U =ᵐ[volume] U := by

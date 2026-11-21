@@ -91,9 +91,7 @@ variable {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} {e : FamE D} {Q : DtAd
 
 end AdLift
 
-open Formalism.MainNotions.G in
 
-open Formalism.MainNotions.G in
 
 def br (D : D7) {u : D.what₂.Word} (C : ColumnChain D.R D.what₂.Tau (D.hcW u)) (mt : ℕ → D.Dt →* ℂˣ) : Prop :=
   ∀ idl : D.Dt ⧸ D.UO → IdE D, RelDetPinned D idl →
@@ -259,13 +257,9 @@ theorem norm_un (h : T.unUnit) {i : ℕ} (hi : i < D.R.m) (c : (D.chTw u μ).cls
 
 end KFTie
 
-open IsDedekindDomain in
 
-open IsDedekindDomain in
 
-open IsDedekindDomain in
 
-open IsDedekindDomain in
 
 def eJ (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) (i : ℕ) : ℚ := if h : i < D.R.m then (D.hcW u τ).e ⟨i, h⟩ else 0
 
@@ -400,10 +394,7 @@ theorem wtRec_thm (D : D7) : wtRec D := by
 
 end Rel7
 
-open Formalism.MainNotions.G in
 
-open Formalism.MainNotions.G in
 
-open Formalism.MainNotions.G in
 
 end Formalism.MainNotions.GL3Columns

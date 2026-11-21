@@ -64,7 +64,6 @@ theorem det_congr (C X : Matrix n n ℂ) :
 
 end ChartEnergyCongruence
 
-open ChartEnergyCongruence in
 
 theorem ChartEnergy.proof (hI : ChartEnergyLinearInvariant.Statement) (hD : ChartEnergyDiagonal.Statement) :
     ChartEnergy.Statement := by

@@ -269,7 +269,6 @@ theorem linDer_isExp (T G : Matrix σ σ ℂ)
   · rintro _ ⟨z, rfl⟩ v
     exact linDer_eval_series T G hG z v
 
-open scoped Matrix.Norms.Operator in
 
 theorem hasSum_exp_entry (Y : Matrix σ σ ℂ) (a b : σ) :
     HasSum (fun n : ℕ => (n.factorial : ℂ)⁻¹ * (Y ^ n) a b) (NormedSpace.exp Y a b) := by
@@ -301,7 +300,6 @@ theorem linDer_kron_left_isExp (Y : Matrix α α ℂ) :
 
 end Kron
 
-open Formalism.BasicNotions.TH in
 
 theorem omAct_definite (n d : ℕ) (T : Matrix (Ln n 0 d 0) (Ln n 0 d 0) ℂ) :
     omAct n 0 d 0 T = ((linDer T : Derivation ℂ (Pol n 0 d 0) (Pol n 0 d 0)) : Pol n 0 d 0 →ₗ[ℂ] Pol n 0 d 0) +

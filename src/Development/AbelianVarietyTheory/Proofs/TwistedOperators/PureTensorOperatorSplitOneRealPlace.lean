@@ -94,7 +94,6 @@ theorem proj_archFinEquiv_symm (v : HeightOneSpectrum (𝓞 F)) (p : (∀ u, GAr
     proj σ J v ((archFinEquiv σ J).symm p) = projFinLoc σ J v p.2 := by
   rw [← projFinLoc_projFin, projFin_archFinEquiv_symm]
 
-variable (σ J) in
 
 def killAt [DecidableEq (InfinitePlace F)] (w : InfinitePlace F) :
     ((∀ u, GArch σ J u) × GFin σ J) →* GAd σ J :=

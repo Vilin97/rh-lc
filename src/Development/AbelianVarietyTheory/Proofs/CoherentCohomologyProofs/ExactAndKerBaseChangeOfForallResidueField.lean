@@ -219,7 +219,6 @@ universe u
 variable {R : Type u} [CommRing R] (S : Type u) [CommRing S] [Algebra R S]
   {ι : Type*} {c : ComplexShape ι}
 
-set_option backward.isDefEq.respectTransparency false in
 
 end Explicit
 

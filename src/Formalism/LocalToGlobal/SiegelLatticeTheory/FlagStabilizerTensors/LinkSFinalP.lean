@@ -117,6 +117,5 @@ theorem offDiagonalK0_of_rows (hT : TheoremSDistinctWords) (h1 : 1 ≤ C0) {𝒞
     (Formalism.MainNotions.NonGenericAndKTwoTheorems.Hyp_of _ _ _ _ _ _ _ _ _ _ hH.1 hH.2.1 hH.2.2 (by linarith))
     (gap_hypothesis_of_hypotheses hH.2.1 (by linarith) hC'29) ok.2.2.2.2.2.1 ok.2.2.2.2.2.2 hRB hRNS
 
-variable [Fact Formalism.L2.SG.Pf.SzHypFD.DsigHC] [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
 end Formalism.L2.SG.ThmSOwn

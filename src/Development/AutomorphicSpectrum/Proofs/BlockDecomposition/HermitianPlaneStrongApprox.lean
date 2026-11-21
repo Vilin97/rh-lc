@@ -20,7 +20,6 @@ abbrev Pl : Type := InfinitePlace F ⊕ HeightOneSpectrum (𝓞 F)
 
 variable {F}
 
-open Classical in
 
 end Places
 

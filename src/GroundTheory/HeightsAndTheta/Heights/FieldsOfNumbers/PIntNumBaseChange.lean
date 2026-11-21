@@ -160,7 +160,6 @@ section Hilbert
 
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem gradedPiece_eq_span (E : Type*) [Field E] (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver E ι)) (m : K → ℕ) :
     gradedPiece J m = Submodule.span E ((fun d => Ideal.Quotient.mk J (monomial d (1 : E))) ''
@@ -298,7 +297,6 @@ theorem isPrime_map_polynomial (P : Ideal (MvPolynomial σ F)) [P.IsPrime] :
   rw [← he, ← Ideal.map_map]
   exact Ideal.map_isPrime_of_equiv e
 
-attribute [local instance] MvPolynomial.algebraMvPolynomial in
 
 theorem isPrime_map_ratFunc (P : Ideal (MvPolynomial σ F)) [hP : P.IsPrime] :
     (P.map (map (algebraMap F (RatFunc F)) : MvPolynomial σ F →+* _)).IsPrime := by

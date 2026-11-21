@@ -15,7 +15,6 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 def decWord (Γ : Segment k) : List (IrrGL k) := (List.ofFn Γ.term).reverse
 
-open Classical in
 
 def jmL (W : List (IrrGL k)) {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) : ℕ∞ :=
@@ -24,7 +23,6 @@ def jmL (W : List (IrrGL k)) {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V
 def sub {α : Type*} {h : ℕ} (W : List α) (c : Fin W.length → Fin h) (i : Fin h) : List α :=
   ((List.finRange W.length).filter (fun p => c p = i)).map W.get
 
-open Classical in
 
 def shuffleCount {α : Type*} {h : ℕ} (W : List α) (D : Fin h → List α) : ℕ :=
   (Finset.univ.filter fun c : Fin W.length → Fin h => ∀ i, sub W c i = D i).card

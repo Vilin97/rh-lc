@@ -27,7 +27,6 @@ theorem exists_shear (G : Matrix ι ι R) (p : ι) (τ : ι → R) (hτ : τ p =
       Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     ring
 
-omit [DecidableEq ι] in
 
 theorem hermitian_congr (hc : ∀ x, c (c x) = x) {G : Matrix ι ι R} (hG : ∀ a b, c (G a b) = G b a)
     (P : Matrix ι ι R) (a b : ι) : c ((Pᵀ * G * P.map c) a b) = (Pᵀ * G * P.map c) b a := by
@@ -43,7 +42,6 @@ theorem det_congr (G P : Matrix ι ι R) :
   rw [det_mul, det_mul, det_transpose, RingHom.map_det, RingHom.mapMatrix_apply]
   ring
 
-omit [DecidableEq ι] in
 
 theorem congr_mul (G P Q : Matrix ι ι R) :
     (P * Q)ᵀ * G * (P * Q).map c = Qᵀ * (Pᵀ * G * P.map c) * Q.map c := by

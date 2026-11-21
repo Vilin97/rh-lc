@@ -120,7 +120,6 @@ def psiA : AddChar (Ad E) ℂ := Circle.coeHom.compAddChar (GroundTheory.Global.
 
 def psiF : AddChar (Af E) ℂ := (psiA E).compAddMonoidHom (sFin E : Af E →+ Ad E)
 
-variable {E} in
 
 def psiL (w : HeightOneSpectrum (𝓞 E)) : AddChar (w.adicCompletion E) ℂ :=
   (psiF E).compAddMonoidHom (sLoc E w : w.adicCompletion E →+ Af E)

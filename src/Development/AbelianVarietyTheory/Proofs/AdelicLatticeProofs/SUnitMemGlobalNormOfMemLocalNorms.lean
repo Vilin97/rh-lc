@@ -17,8 +17,6 @@ open scoped WithZero
 
 namespace GlobalTheory.QNorm
 
-open NumberField IsDedekindDomain in
-open scoped WithZero in
 
 theorem _root_.GlobalTheory.QNorm.index_eq_relIndex_mul_index_sup {G : Type} [CommGroup G] (U W : Subgroup G) :
     W.index = W.relIndex U * (U ⊔ W).index := by
@@ -82,8 +80,6 @@ private lemma sqs_le_self {G : Type} [CommGroup G] (U : Subgroup G) :
   rw [powMonoidHom_apply]
   exact U.pow_mem hs 2
 
-open NumberField IsDedekindDomain in
-open scoped WithZero in
 
 theorem _root_.GlobalTheory.QNorm.sUnit_mem_normSub_of_mem_locNorm : ∀ (F : Type) [Field F] [NumberField F] (δ : Fˣ) (S : Finset (HeightOneSpectrum (𝓞 F))), _root_.GlobalTheory.QNorm.admitted F S → δ ∈ _root_.GlobalTheory.QNorm.sUnits F S → ¬ IsSquare (δ : F) → ∀ x ∈ _root_.GlobalTheory.QNorm.sUnits F S, x ∈ _root_.GlobalTheory.QNorm.locNorm F δ S → x ∈ _root_.GlobalTheory.QNorm.normSub (RingHom.id F) (δ : F) := by
   intro F _ _ δ S hS hδ hns x hx hxN

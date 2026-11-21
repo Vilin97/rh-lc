@@ -16,7 +16,6 @@ namespace PositivityTheory.Rg.BcB.F.RS.JB
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 structure RB (N : ℕ) : Type 1 where
   V : Type

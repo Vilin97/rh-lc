@@ -31,7 +31,6 @@ def Ann (s : Mat l) (f : Sch l) : Prop :=
 def Nrm (s : Mat l) (U : Sch l →L[ℂ] Sch l) : Prop :=
   ∀ s' : Sp l, ∀ f : Sch l, Ann s'.1 f → (U f 0) ^ 2 * dd (s * s'.1) = (f 0) ^ 2 * dd s'.1
 
-variable (l) in
 
 abbrev Amb : Type := Sp l × (L2 l ≃ₗᵢ[ℂ] L2 l) × (Sch l →L[ℂ] Sch l)ˣ
 
@@ -45,7 +44,6 @@ theorem Ann.map {s s' : Mat l} {U : Sch l →L[ℂ] Sch l} (h : ∀ w f, U (dRho
     (hf : Ann s' f) : Ann (s * s') (U f) := fun j => by
   rw [← mulVec_mulVec, ← mulVec_mulVec, ← h, ← h, hf j, map_smul]
 
-variable (l) in
 
 def sub : Subgroup (Amb l) where
   carrier := {x | Mem x}
@@ -83,7 +81,6 @@ def sub : Subgroup (Amb l) where
       rw [e1, show (x.1⁻¹ * s').1 = x.1⁻¹.1 * s'.1 from rfl, ← Matrix.mul_assoc, e3, Matrix.one_mul] at h1
       exact h1.symm
 
-variable (l) in
 
 def G : Type := sub l
 

@@ -38,7 +38,6 @@ private theorem isRoot_of_tri {W : Type} [AddCommGroup W] [Module ℂ W] [Finite
     Polynomial.IsRoot, Polynomial.eval_prod]
   exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [h1])
 
-set_option maxHeartbeats 800000 in
 
 theorem isRoot_charPol_wdAt :
     ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime]

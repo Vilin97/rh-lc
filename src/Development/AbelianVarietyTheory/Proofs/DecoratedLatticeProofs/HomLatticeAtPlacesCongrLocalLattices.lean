@@ -89,7 +89,6 @@ theorem latO_le_left (S T : HSp D) (N M : Lat S) (LT : Set (Fin T.rank → D.hos
   rw [gen] at h2
   exact h2
 
-set_option maxHeartbeats 2000000 in
 
 theorem latV_le_of_local (S : HSp D) (N M : Lat S) (hN : Submodule.IsLattice D.host.E N)
     (hM : Submodule.IsLattice D.host.E M) (P : Pl D → Prop)

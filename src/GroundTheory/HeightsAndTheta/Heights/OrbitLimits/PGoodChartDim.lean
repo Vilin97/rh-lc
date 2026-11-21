@@ -37,7 +37,6 @@ theorem segreCone_smul {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d) {m
     (fun h => absurd hP.1 (not_nonempty_iff.2 h))
   exact ⟨z', hz', funext fun b => by simp [hseg]⟩
 
-open Classical in
 
 def psiCoeffs {m e : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) :
     Fin m → ℂ :=
@@ -61,7 +60,6 @@ theorem linForm_single' {m : ℕ} (a : Fin m) : linForm (Pi.single a (1 : ℂ)) 
   classical
   simp [linForm, Pi.single_apply]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem segreChartSet_eq (P : Ideal (MRing ι)) {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (a : Fin m) :
     segreChartSet P σ (σ a) = {x | x ∈ segreCone P σ ∧ eval x (linForm (Pi.single a (1 : ℂ))) = 1} := by

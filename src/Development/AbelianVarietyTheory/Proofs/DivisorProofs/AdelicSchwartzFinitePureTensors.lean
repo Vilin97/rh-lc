@@ -21,7 +21,6 @@ open Topology Filter
 
 variable {F : Type} [Field F] [NumberField F]
 
-variable (F) in
 
 def intA : AddSubgroup (FiniteAdeleRing (𝓞 F) F) where
   carrier := {a | ∀ v : Pl F, a v ∈ v.adicCompletionIntegers F}
@@ -54,7 +53,6 @@ theorem isCompact_intA : IsCompact ((intA F : AddSubgroup _) : Set (FiniteAdeleR
     (fun v => Valued.isOpen_integer _)).continuous
   exact isCompact_range hc
 
-variable (F) in
 
 def intP (κ : Type) : AddSubgroup (κ → FiniteAdeleRing (𝓞 F) F) := AddSubgroup.pi Set.univ fun _ => intA F
 

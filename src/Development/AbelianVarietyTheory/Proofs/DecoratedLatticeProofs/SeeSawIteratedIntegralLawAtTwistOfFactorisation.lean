@@ -111,7 +111,6 @@ theorem ix₀ (Q : QAt v χ) (h : j + 2 * (σ + 1) + 2 = D.R.m) : j + (2 * σ + 
 theorem ix₁ (Q : QAt v χ) (h : j + 2 * (σ + 1) + 2 = D.R.m) : j + 1 + (2 * σ + 1) = Q.s := by have := Q.hs; omega
 theorem ix₂ (Q : QAt v χ) (h : j + 2 * (σ + 1) + 2 = D.R.m) : j + 1 + 1 + 2 * σ = Q.s := by have := Q.hs; omega
 
-set_option maxHeartbeats 1000000 in
 
 @[reducible] def stepOf (H : Chars t χ j σ h χz) (Q : QAt v χ) (α : Q.Ch j) : QStep (dblOf H) :=
   { k := Q.k
@@ -229,7 +228,6 @@ theorem fin_dQ {w : VTup t} (F : QFam v t) (hF : F.Pins w) (n : ℕ) (hn : n + 3
   have := (F.Q i).hs
   exact isFinComb_of_half (F.Q i).q ((F.Q i).dL_mid n ((F.Q i).s - (n + 1)) (by omega) _ _).1
 
-set_option maxHeartbeats 1000000 in
 
 theorem oneChart (hc : c.Is) (hv : v.Is) (hW : WeilOK (t := t) v) {w : VTup t} (F : QFam v t) (hF : F.Pins w)
     (H : Chars t F.χ j σ h χz) {ρ₁ μ₁ ρ₂ μ₂}
@@ -310,7 +308,6 @@ theorem oneChart (hc : c.Is) (hv : v.Is) (hW : WeilOK (t := t) v) {w : VTup t} (
     simp only [mul_assoc]
     rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem qLaw_of_pin : ∀ (D : D7) (c : Comm D) (v : VCom c) (t : Tup c) (w : VTup t), c.Is → t.Is → v.Is → WeilOK (t := t) v → QPin v w → QLaw v w := by
   intro D c v t w hc _ hv hW ⟨F, hF⟩ j σ h ρ₁ μ₁ ρ₂ μ₂ hN₁ hN₂ Ψ₁ Ψ₂ hΨ₁ hΨ₂ φ hφ f hf hfY

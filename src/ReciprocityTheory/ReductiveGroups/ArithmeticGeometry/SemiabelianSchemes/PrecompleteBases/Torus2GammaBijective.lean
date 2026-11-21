@@ -517,7 +517,6 @@ theorem torus_hom_coord [TwoUniqueSums X] {Y : Type u} [AddCommGroup Y]
 end
 end Rosenlicht
 
-open Rosenlicht in
 
 theorem splitTorus_rigidity (K : Type u) [Field K] (X : Type u) [AddCommGroup X] [TwoUniqueSums X]
     (Y : Type u) [AddCommGroup Y]

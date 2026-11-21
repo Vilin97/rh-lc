@@ -105,7 +105,6 @@ theorem repsR_map {K K' : Type} [Field K] [Field K'] (j : K →+* K') {t : T0} {
   obtain ⟨h1, h2, h3, h4, h5, h6⟩ := hr
   exact ⟨h1, h2, h3, h4, by rw [h5, map_inv₀, map_natCast], h6⟩
 
-set_option maxHeartbeats 1000000 in
 
 end Merge
 

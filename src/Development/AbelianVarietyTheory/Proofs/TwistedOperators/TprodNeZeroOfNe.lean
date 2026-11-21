@@ -20,7 +20,6 @@ variable {H₁ H₂ FF : Type}
   [NormedAddCommGroup H₂] [InnerProductSpace ℂ H₂]
   [NormedAddCommGroup FF] [InnerProductSpace ℂ FF] [CompleteSpace FF]
 
-omit [CompleteSpace H₁] [CompleteSpace FF] in
 
 theorem norm_isoBilin {Tm : H₁ →ₗ[ℂ] H₂ →ₗ[ℂ] FF} (hI : IsIsoBilin Tm) (x : H₁) (y : H₂) :
     ‖Tm x y‖ = ‖x‖ * ‖y‖ := by
@@ -47,7 +46,6 @@ theorem exists_isContr {Tm : H₁ →ₗ[ℂ] H₂ →ₗ[ℂ] FF} (hI : IsIsoBi
   · intro c a y
     exact ext_inner_left ℂ fun x => by simp only [inner_smul_right, hf, map_smul, inner_smul_left]
 
-omit [CompleteSpace H₁] [CompleteSpace FF] in
 
 theorem isContr_unique {Tm : H₁ →ₗ[ℂ] H₂ →ₗ[ℂ] FF} {It It' : FF →ₗ[ℂ] H₂ →ₛₗ[starRingEnd ℂ] H₁}
     (h : IsContr Tm It) (h' : IsContr Tm It') : It = It' := by

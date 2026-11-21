@@ -198,7 +198,6 @@ end Char
 
 section Haar
 
-open Formalism.BasicNotions in
 
 theorem exists_model (k r : ℕ) : ∃ (P Q : ℕ) (C : Matrix (Fin P ⊕ Fin Q) (Fin (2 * r + k + 1)) ℂ)
     (D : Matrix (Fin (2 * r + k + 1)) (Fin P ⊕ Fin Q) ℂ) (φ : UpqT P Q → Mt k r),
@@ -265,7 +264,6 @@ section General
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-open Formalism.BasicNotions Formalism.MainNotions.StandardLattice in
 
 end General
 

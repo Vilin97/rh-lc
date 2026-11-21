@@ -172,7 +172,6 @@ theorem exists_transport (I : AutInst) (μf : Measure I.Gf) [μf.IsHaarMeasure] 
     have : IsOpen ((fun k : G => (T k).2) ⁻¹' (K : Set I.Gf)) := (h2 ▸ h1).preimage (continuous_snd.comp hT)
     exact this
 
-open NumberField in
 
 theorem hom_tens (I : AutInst) {μf : Measure I.Gf} [SigmaFinite μf] {fund : Set I.GA}
     {R : I.GA → (I.L2 μf fund →L[ℂ] I.L2 μf fund)} {H : InfinitePlace I.F → Type} [∀ v, NormedAddCommGroup (H v)]
@@ -193,7 +192,6 @@ open NumberField IsDedekindDomain MeasureTheory Matrix Formalism.BasicNotions Fo
 open scoped TensorProduct InnerProductSpace ContDiff Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_adelic_rep {D : D7} {θ : InfFam D} {V : HSp D} (hθ : IsInfFam θ) {μ : Measure (GA D V)}
     (hμ : μ.IsHaarMeasure) (hμ' : μ.IsMulRightInvariant)
@@ -238,7 +236,6 @@ theorem exists_adelic_rep {D : D7} {θ : InfFam D} {V : HSp D} (hθ : IsInfFam �
   exact ⟨R, L, hL, fun v h1 h2 => hR v (fun k ps hps => h1 k (fun i => (ps i).1) (fun i => (ps i).2) hps)
     fun k hk => h2 k hk.1 hk.2, hb⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_mmap {D : D7} {θ : InfFam D} {V : HSp D} (hθ : IsInfFam θ) {S : D.what₂.Tau → SPar} (M : DSModel V S)
     {μ : Measure (GA D V)} (hμ : μ.IsHaarMeasure) (hμ' : μ.IsMulRightInvariant)

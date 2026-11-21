@@ -30,7 +30,6 @@ theorem adjoint_inj_of_parts {H H' : Type*} [NormedAddCommGroup H] [InnerProduct
 
 end GlobalTheory.AdjointInjectiveOfParts
 
-open GlobalTheory.Hk3 in
 
 theorem GlobalTheory.LiftRows.upInj_of_scal : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.Hk3.Core R F → GlobalTheory.Hk3.SchurAll R → (∀ χ ∈ A.X, IsAbsIrrChar χ) → ∀ SF, GlobalTheory.Hk3.IsSF R SF → Scal R SF → UpInj R ∧ UpInjW R := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F hC hS hI SF hSF hScal

@@ -22,7 +22,6 @@ def sumLat (lam : ι → DomWeight n) (e : Fin N ≃ C × VVIdx lam) (T : C → 
     Submodule (𝓞 K) (Fin N → K) :=
   ⨅ c, (T c).comap ((valAt lam e c).restrictScalars (𝓞 K))
 
-open Classical in
 
 def sumGram [StarRing K] (lam : ι → DomWeight n) (e : Fin N ≃ C × VVIdx lam) (G : ι → Matrix (Fin n) (Fin n) K) :
     Matrix (Fin N) (Fin N) K :=

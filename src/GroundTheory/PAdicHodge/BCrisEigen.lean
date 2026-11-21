@@ -23,7 +23,6 @@ variable {p : ℕ} [hp : Fact p.Prime]
 variable {ε : PreTilt (normInteger ℂ_[p]) p} (hε : PreTilt.untilt ε = 1)
   (hζ : PreTilt.untilt ((_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[p]) p) p).symm ε) ≠ 1)
 
-include hζ in
 
 theorem exists_eq_zpow_mul_unit {y : 𝔹dR} (hy : y ≠ 0) :
     ∃ (i : ℤ) (u : 𝔹ˣ), y = algebraMap 𝔹 𝔹dR (fontaineT ε hε) ^ i * algebraMap 𝔹 𝔹dR (u : 𝔹) := by
@@ -87,7 +86,6 @@ theorem exists_gal_smul_unit (σ : Gal(PadicAlgCl p/L)) {i : ℤ} {u : 𝔹} {q 
   field_simp
   linear_combination h3
 
-variable (p) in
 
 def SenTateCharacters : Prop :=
   ∀ (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] K]
@@ -127,8 +125,6 @@ theorem exists_twist_of_finite_image {K : IntermediateField ℚ_[p] (PadicAlgCl 
   obtain ⟨z, hz, hzc⟩ := hc σ
   exact ⟨z, by rw [hz, hψL], hzc⟩
 
-include hζ in
-set_option maxHeartbeats 1600000 in
 
 theorem exists_unramified_twist (hST : SenTateCharacters p)
     {K : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDimensional ℚ_[p] K] {y : 𝔹dR}
@@ -193,8 +189,6 @@ theorem isUnit_of_fixed_twist {R F G : Type*} [CommRing R] [IsDomain R] [Field F
     exact (hBu.mul c.isUnit).mul (Units.isUnit _)
   exact (isUnit_pow_iff hf.ne').1 hbfu
 
-include hζ in
-set_option maxHeartbeats 3200000 in
 
 theorem isUnit_of_twist {L : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDimensional ℚ_[p] L]
     {b : BCris hε} (hb0 : b ≠ 0) {i : ℤ} {u : 𝔹ˣ}
@@ -240,8 +234,6 @@ theorem isUnit_of_twist {L : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDi
     ← gal_smul_bDeRham_def, gal_smul_algebraMap_bDeRham, huL σ, hCσ σ, map_mul, mul_pow]
   field_simp
 
-include hζ in
-set_option maxHeartbeats 3200000 in
 
 theorem isUnit_of_forall_galB_eq_mul (hST : SenTateCharacters p)
     {K : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDimensional ℚ_[p] K] {b : BCris hε}
@@ -256,9 +248,6 @@ theorem isUnit_of_forall_galB_eq_mul (hST : SenTateCharacters p)
       rw [← iotaB_galB (K := K) hε hζ σ b, hq, map_mul, iotaB_algebraMap_padic_bdRPlus])
   exact isUnit_of_twist hε hζ (L := L) hb0 hyu hf huL hc
 
-include hζ in
-set_option maxHeartbeats 3200000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end ACris
 

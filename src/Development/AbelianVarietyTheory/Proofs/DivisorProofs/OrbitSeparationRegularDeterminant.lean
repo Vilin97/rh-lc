@@ -106,7 +106,6 @@ theorem cls_nsmul {Y : Scheme.{0}} {Λ : Type} [AddCommGroup Λ] {B : Λ → LB 
     exact left_eq_add.1 h
   | succ n ih => rw [succ_nsmul, GlobalTheory.HSApp.cls_common_add C, ih, succ_nsmul]
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.OrbitSep
 

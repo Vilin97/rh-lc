@@ -90,6 +90,5 @@ end Ext
 
 end LengthBaseChangeAlt
 
-open BQuot in
 
 end Formalism.LatticeBaseChangeAlt

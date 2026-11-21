@@ -100,7 +100,6 @@ theorem isPosDef_of_vStd (hV : VStd D i) : (Vc D i).IsPosDef := fun τ => by
 
 end Levels
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 
 section Record
 

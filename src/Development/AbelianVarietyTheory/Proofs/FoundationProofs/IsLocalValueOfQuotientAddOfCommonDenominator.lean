@@ -61,7 +61,6 @@ theorem restrict_mul {R R' : Type} [CommRing R] [CommRing R'] (j : R →+* R') {
   have hm : (φ * χ).map j = φ.map j * χ.map j := HahnSeries.map_mul (j : R →ₙ+* R')
   rw [← he (C * D) r, map_mul, ← key φ C hφ hC, ← key χ D hχ hD, ← hm, HahnSeries.map_coeff]
 
-open scoped NNReal in
 
 theorem exists_ev {p : ℕ} [hp : Fact p.Prime] {K : Type} [Field K] [Algebra ℚ K] {Ω : Type} [Field Ω] [Algebra (O0 p) Ω]
     (hc : IsClo p Ω) (ψ : O0 p →+* Ω) (j : K →+* Ω) (hj : ∀ z, IsAlgZp p (j z)) (S : Finset K) (C : HahnSeries ℤ K)

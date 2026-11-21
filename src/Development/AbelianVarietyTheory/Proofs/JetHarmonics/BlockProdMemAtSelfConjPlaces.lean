@@ -126,7 +126,6 @@ section Image
 variable {C : Type} [Field C] {Ty : Type} {r : Ty → ℕ} {Orb : Type} [Fintype Orb] (tau : Orb → ZMod 2 → Ty)
   {N n : ℕ} (pl : Fin N × Fin 2 ↪ Fin n)
 
-variable (r) in
 
 abbrev Var : Type := WVO fun (o : Orb) (_ : Fin 2) => Σ s : ZMod 2, Fin (r (tau o s))
 
@@ -324,7 +323,6 @@ variable {C : Type} [Field C] {V : VF C} {Ty : Type} {r : Ty → ℕ} {Orb : Typ
   {J : Orb → Fin 2 → Type} [∀ o g, Fintype (J o g)]
   (X : ∀ o, RowData C V 2 (fun _ => Σ s : ZMod 2, Fin (r (tau o s))) (J o)) (F : ∀ o, RF.Flag (X o))
 
-omit [Fintype Orb] in
 
 theorem sub_minor (hty : ∀ o g c, ((X o).G g).ty (Sum.inl c) = c.1 + sh g)
     (hen : ∀ o g a q, (((F o).en g a q).2 : ℕ) = q) (o : Orb) {what₂ : ℕ} (pr : Fin what₂ → Fin N) (g : Fin 2)

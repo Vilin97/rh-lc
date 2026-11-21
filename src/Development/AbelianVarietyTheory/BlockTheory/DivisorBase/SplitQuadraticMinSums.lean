@@ -30,11 +30,9 @@ theorem not_isBig_iff (k : ℕ) (f : Lt1 Dw) : ¬ IsBig k f ↔ IsSmall f ∨ Is
   · simp only [h, true_and, not_true, false_or]; omega
   · simp [h]
 
-open Classical in
 
 def sumBig (k : ℕ) (cx : Lt1 Dw → ℕ) : ℕ := ∑ f ∈ Finset.univ.filter (IsBig k), cx f
 
-open Classical in
 
 def sumSmallSpread (k : ℕ) (cx : Lt1 Dw → ℕ) : ℕ :=
   ∑ f ∈ Finset.univ.filter (fun f => IsSmall f ∨ IsSpread k f), rk f * cx f

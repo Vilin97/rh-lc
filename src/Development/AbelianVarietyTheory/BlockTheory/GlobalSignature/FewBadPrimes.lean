@@ -43,7 +43,6 @@ def GoodH (H : Host R) (s : Scale) (p : ℕ) (t0 : R.A) : Prop :=
 def IsOrigins {φ : Formalism.HC.Frame} (bs : φ.A → φ.A → φ.A) : Prop :=
   (∀ h t, ∃ i : ℕ, bs h t + i • h = t) ∧ ∀ h t, bs h (t + h) = bs h t
 
-open Classical in
 
 def FewBad (H : Host R) (s : Scale) (bs : R.A → R.A → R.A) : Prop :=
   ∑ p ∈ (Finset.range ⌈s.X'⌉₊).filter (fun p => p.Prime ∧ H.cls p = PrimeClass.inertClass ∧

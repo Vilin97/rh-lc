@@ -105,7 +105,6 @@ theorem norm_multiset_sum_le_of_forall_le {s : Multiset E} {C : ℝ} (hC : 0 ≤
       (max_le (h a (Multiset.mem_cons_self a t))
         (ih fun b hb => h b (Multiset.mem_cons_of_mem hb)))
 
-omit [IsUltrametricDist E] in
 
 theorem norm_multiset_prod_le_pow_card {s : Multiset E} {C : ℝ} (h : ∀ a ∈ s, ‖a‖ ≤ C) :
     ‖s.prod‖ ≤ C ^ Multiset.card s := by
@@ -117,7 +116,6 @@ theorem norm_multiset_prod_le_pow_card {s : Multiset E} {C : ℝ} (h : ∀ a ∈
       (ih fun b hb => h b (Multiset.mem_cons_of_mem hb)) (norm_nonneg _)
       ((norm_nonneg a).trans (h a (Multiset.mem_cons_self a t)))
 
-omit [IsUltrametricDist E] in
 
 theorem norm_multiset_prod_eq (s : Multiset E) : ‖s.prod‖ = (s.map norm).prod := by
   induction s using Multiset.induction_on with
@@ -283,7 +281,6 @@ def axExponent (p k : ℕ) : ℝ := (p : ℝ) / ((p : ℝ) - 1) ^ 2 * (1 - ((p :
 
 theorem one_lt_prime_cast : (1 : ℝ) < p := by exact_mod_cast hp.out.one_lt
 
-omit hp in
 
 theorem axExponent_zero : axExponent p 0 = 0 := by simp [axExponent]
 

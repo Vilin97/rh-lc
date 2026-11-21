@@ -30,7 +30,6 @@ def pOfB (ε : Fin n → Bool) (B : Pt ε → Qt ε → ℂ) : Matrix (Fin n) (F
     if ha : ε a = true then (if hb : ε b = false then B ⟨a, ha⟩ ⟨b, hb⟩ else 0)
     else (if hb : ε b = true then star (B ⟨b, hb⟩ ⟨a, by simpa using ha⟩) else 0)
 
-open Classical in
 
 def toUJ (ε : Fin n → Bool) (m : Matrix (Fin n) (Fin n) ℂ) : UJ ε :=
   if h : inUJ ε m then

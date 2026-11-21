@@ -54,7 +54,6 @@ theorem isSectionOn_one_of_degree_zero {P : Ideal (MRing ι)} {d : ℕ} {A : Her
     simp [hm0]
   · exact (Ideal.ne_top_iff_one P).1 hP.2.1.1.ne_top
 
-open Classical in
 
 theorem logNorm_one_eq_indicator {Ω F : Type} [Field Ω] [Field F] [Algebra F Ω] {y : (Σ k, ι k) → Ω}
     {P : Ideal (MRing ι)} {tg : F →+* ℂ} {B : HermLine ι}

@@ -24,7 +24,6 @@ variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] {ψ : Add
 theorem sl_int (h : Φ ∈ schA F (κ ⊕ κ)) (a) : Integrable (sl a Φ) (adeleMeasurePi F) :=
   integrable_of_mem_schwartzBruhatPi ((sl_mem h).1 a)
 
-variable (F κ) in
 
 def lD : ((κ ⊕ κ → AF F) → ℂ) →ₗ[ℂ] ℂ := (LinearMap.exists_extend
   ({ toFun Φ := adelicFourierPi F (sl 0 Φ.1) 0

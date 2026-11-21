@@ -36,7 +36,6 @@ theorem injective_of_ker_countable {V W : Type} [AddCommGroup V] [Module ℂ V] 
   have : (Set.univ : Set ℂ).Countable := (hS.preimage hi).mono fun t _ => hk _ (by rw [map_smul, hv, smul_zero])
   exact not_countable_complex this
 
-open MonObj in
 
 theorem exists_isometry [Algebra c.F ℂ] {r g g' : ℕ} {X : Data E r} {bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ}
     {idx : Fin g ≃ X.Ψ × Fin r} {e : Fin g ≃ Lt1 Dw} {x : Frame X.Ψ r} {L : Lt E r} {y : FrPt Xo c ℂ}

@@ -165,7 +165,6 @@ end GlobalTheory.SepReal.IntBd
 
 namespace GlobalTheory.SepReal
 
-open GlobalTheory.SepReal.IntBd in
 
 theorem intBounds_of (hE : EmbLaws) (hBo : Boost) (hP : PowInt) (hD : DecPow) : IntBounds := by
   intro C₀ hC₀

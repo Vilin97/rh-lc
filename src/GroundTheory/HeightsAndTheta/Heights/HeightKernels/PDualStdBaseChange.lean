@@ -34,7 +34,6 @@ theorem isMultiHomog_linForm (A : ∀ _ : Unit, Fin i → T → ℤ) (q : Σ _ :
   cases k
   simp [Finsupp.single_apply]
 
-omit [DecidableEq T] in
 
 theorem exists_linForm_not_mem (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i)))
     (hP : IsArithVar (dualIdeal b) i)
@@ -54,7 +53,6 @@ theorem exists_linForm_not_mem (b : Module.Basis T ℤ (dualLattice (HermLattice
 
 end StandardDualBaseChange
 
-open StandardDualBaseChange in
 
 theorem DualStdBaseChange.proof (hCM : ChangeOfModelStatement) (hGr : GraphStatement)
     (hGF : GenFibreExistsStatement)

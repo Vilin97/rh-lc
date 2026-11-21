@@ -89,7 +89,6 @@ theorem isClosed_ker_cycMod (l : ℕ) [Fact l.Prime] (m : ℕ) :
 
 end GlobalTheory.InertiaClosed
 
-open GlobalTheory.InertiaClosed in
 
 theorem GlobalTheory.isClosed_Ine_inf_ker_cycMod : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω]
     [Algebra.IsAlgebraic ℚ Ω] (A : ValuationSubring Ω) (m : ℕ),

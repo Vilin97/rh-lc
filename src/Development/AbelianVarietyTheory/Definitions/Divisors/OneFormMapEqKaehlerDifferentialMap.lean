@@ -64,7 +64,6 @@ theorem indDR {P : DR R B → Prop} (h : ∀ b : B, P (algebraMap B _ b)) (hd : 
   | mul a b h1 h2 => exact hm _ _ h1 h2
   | add a b h1 h2 => exact ha _ _ h1 h2
 
-variable (R B) in
 
 def Tw : Type := DR R B × DR R B
 
@@ -173,7 +172,6 @@ theorem graph_1 (x : DR R B) : (graph x).1 = x := by
 
 end Tw
 
-variable (R B) in
 
 def dDR : DR R B →ₗ[R] DR R B where
   toFun x := (Tw.graph x).2
@@ -247,7 +245,6 @@ theorem sgn_of_mem {j : ℕ} {x : DR R B} (hx : x ∈ ⋀[B]^j Ω[B⁄R]) : sgn 
     rw [map_mul, sgn_ι, ih, pow_succ]
     rcases neg_one_pow_eq_or (DR R B) i with h | h <;> simp [h]
 
-variable (R B) in
 
 def dOm (j : ℕ) : Om R B j →ₗ[R] Om R B (j + 1) where
   toFun x := ⟨dDR R B x, dDR_mem x.2⟩
@@ -259,14 +256,12 @@ def dOm (j : ℕ) : Om R B j →ₗ[R] Om R B (j + 1) where
 @[simp] theorem dOm_dOm {j : ℕ} (x : Om R B j) : dOm R B (j + 1) (dOm R B j x) = 0 :=
   Subtype.ext (dDR_dDR _)
 
-variable (R B) in
 
 def dOne : Ω[B⁄R] →ₗ[R] Om R B 2 where
   toFun ω := ⟨dDR R B (ι1 ω), dDR_ι_mem ω⟩
   map_add' x y := Subtype.ext (by simp)
   map_smul' r x := Subtype.ext (by simp)
 
-variable (R B) in
 
 def dTwo : Om R B 2 →ₗ[R] Om R B 3 := dOm R B 2
 
@@ -274,7 +269,6 @@ def dTwo : Om R B 2 →ₗ[R] Om R B 3 := dOm R B 2
 
 theorem dOne_eq_dOm (ω : Ω[B⁄R]) : dOne R B ω = dOm R B 1 ⟨ι1 ω, ι_mem ω⟩ := rfl
 
-variable (R B) in
 
 def wedge : Ω[B⁄R] →ₗ[B] Ω[B⁄R] →ₗ[B] Om R B 2 :=
   LinearMap.mk₂ B (fun a b ↦ ⟨ι1 a * ι1 b, mul_mem (ι_mem a) (ι_mem b)⟩)

@@ -25,6 +25,5 @@ lemma finrank_eq (D : Formalism.BasicNotions.D7) : Module.finrank ℚ D.host.E =
   rw [hn]
   ring
 
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.FD in
 
 end ReciprocityTheory.ChartRestriction.G.PullbackSections.PfTorusFrame

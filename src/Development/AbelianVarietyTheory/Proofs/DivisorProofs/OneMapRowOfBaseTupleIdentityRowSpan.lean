@@ -39,7 +39,6 @@ variable {J : Type} {tup : J → T0} (src : ∀ j, OMDat C R i Unit (fun _ => tu
   (io₃ : VsV D i c₃.F →ₗ[c₃.F] MvPolynomial (LtN (C.Q.Dw ((i : ℕ) + 1)) (Vc D i).rank) c₃.F) (hw₃ : VsV D i c₃.F)
   (u : J → c₃.F) (h : ∀ j, (src j).Cl' () → GA D (Vc D i)) (v₀ : (R.MW i (sg0 D A)).Vec)
 
-set_option maxHeartbeats 1000000 in
 
 theorem pins_merge_of_clauses (hL : R.toLevCh.Is A.μ0) (hW : R.grp_chiW) (hF : R.IsFam) (hMo : R.IsModels)
     {κ : WeightFamilies.Wt D ((i : ℕ) + 1)} {ι x₀}
@@ -79,7 +78,6 @@ variable (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) 
 
 variable {T R κ v₀}
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_extension_of_clauses (hL : R.toLevCh.Is A.μ0) (hW : R.grp_chiW) (hF : R.IsFam) (hMo : R.IsModels)
     {i : Fin D.R.m} {ι x₀}

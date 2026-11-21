@@ -18,7 +18,6 @@ variable {K : Type} [Group K] [TopologicalSpace K] [IsTopologicalGroup K] [Measu
 theorem measure_eq [Countable Γ] [μ.IsMulLeftInvariant] {s t : Set K}
     (hs : IsFundamentalDomain Γ s μ) (ht : IsFundamentalDomain Γ t μ) : μ s = μ t := hs.measure_eq ht
 
-omit [IsTopologicalGroup K] [BorelSpace K] in
 
 theorem measure_ne_zero [Countable Γ] [μ.IsHaarMeasure] {s : Set K}
     (hs : IsFundamentalDomain Γ s μ) : μ s ≠ 0 :=
@@ -37,7 +36,6 @@ theorem measure_le_of_cover [Countable Γ] [μ.IsMulLeftInvariant] {s : Set K}
       _ = μ (toMeasurable μ C) := (hs.measure_eq_tsum _).symm
       _ = μ C := measure_toMeasurable C
 
-omit [TopologicalSpace K] [IsTopologicalGroup K] [BorelSpace K] in
 
 theorem isFundamentalDomain_smul_iff {c : NNReal} (hc : c ≠ 0) (s : Set K) :
     IsFundamentalDomain Γ s (c • μ) ↔ IsFundamentalDomain Γ s μ := by

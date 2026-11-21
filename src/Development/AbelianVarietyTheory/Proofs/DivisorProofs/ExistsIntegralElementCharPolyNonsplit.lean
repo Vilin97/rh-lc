@@ -46,7 +46,6 @@ theorem mul_entries {w : Pl E} {A B : Matrix (Fin n) (Fin n) (w.adicCompletion E
   rw [Matrix.mul_apply]
   exact sum_mem fun k _ => mul_mem (hA i k) (hB k j)
 
-set_option maxHeartbeats 800000 in
 
 theorem local_step (hE : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (M G : Matrix (Fin n) (Fin n) E)
     (hG : IsUnit G) (hGh : cT (IsCMField.complexConj E).toRingEquiv.toRingHom G = G)

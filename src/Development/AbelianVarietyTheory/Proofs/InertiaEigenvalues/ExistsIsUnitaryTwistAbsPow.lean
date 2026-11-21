@@ -69,7 +69,6 @@ theorem exists_eq_mul_log_module (f : IdeleGroup F → ℝ) (hc : Continuous f) 
   rw [mul_inv_cancel_left, eq_zero_of_normOne f hc hm hk _ h4, add_zero, h1, ht] at h5
   rw [h5]; ring
 
-open GlobalTheory.Mem.Chr.CharModel in
 
 theorem exists_norm_eq_exp (ω : HChar F) :
     ∃ c : ℝ, ∀ x, ‖((ω.1 x : ℂˣ) : ℂ)‖ = Real.exp (c * logNorm F x) := by
@@ -100,12 +99,10 @@ open Neutral.B1 ReciprocityTheory.Neutral.Bridge.HCFR GlobalTheory.Mem.Chr.CharM
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem absPow_val_apply (t : ℝ) (x : Ideles E) :
     (((absPow E t).1 x : ℂˣ) : ℂ) = Complex.exp ((t : ℂ) * logNorm E x) := rfl
 
-omit [IsTotallyComplex E] in
 
 theorem absPow_neg_mul (t : ℝ) : absPow E (-t) * absPow E t = 1 := by
   refine Subtype.ext (MonoidHom.ext fun x => Units.ext ?_)
@@ -135,7 +132,6 @@ theorem HasSat.twist {π : CG E a} {w : HeightOneSpectrum (𝓞 E)} {B : Multise
   induction π using Quotient.inductionOn
   exact GlobalTheory.SphGal.hasSatGL_twist _ _ _ ν w B hν h
 
-omit [IsTotallyComplex E] in
 
 theorem norm_val_absPow (t : ℝ) (w : HeightOneSpectrum (𝓞 E)) :
     ‖(((absPow E t).val w : ℂˣ) : ℂ)‖ = (Ideal.absNorm w.asIdeal : ℝ) ^ (-t) := by

@@ -48,7 +48,6 @@ omit [NeZero a] in
 theorem powL_one (ζ : rootsOfUnity e K) : powL l (1 : ZMod a) ζ = ζ ^ l := by
   rw [powL_apply, ZMod.val_one_eq_one_mod, pow_pow_mod l, pow_one]
 
-variable (K e a) in
 
 def frobAut : Multiplicative (ZMod a) →* MulAut (rootsOfUnity e K) where
   toFun s :=
@@ -59,7 +58,6 @@ def frobAut : Multiplicative (ZMod a) →* MulAut (rootsOfUnity e K) where
   map_one' := MulEquiv.ext fun ζ => powL_zero l ζ
   map_mul' s t := MulEquiv.ext fun ζ => powL_add l _ _ ζ
 
-variable (K e a) in
 
 abbrev TameGal : Type := rootsOfUnity e K ⋊[frobAut K l e a] Multiplicative (ZMod a)
 

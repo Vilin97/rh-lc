@@ -47,7 +47,6 @@ theorem withBot_le_of_lt_succ (a : WithBot ℕ∞) (m : ℕ) (h : a < ((m + 1 : 
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   {K' : Type} [Fintype K'] [DecidableEq K'] {ι' : K' → Type} [∀ o, Fintype (ι' o)]
 
-omit [IsDomain O] [IsDiscreteValuationRing O] [∀ o, Fintype (ι' o)] in
 
 theorem ratDiv_support {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι')} (hPm : IsMultiHomogIdeal P) {cs ch : K' → ℕ}
     {s h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι'} (hs : IsMultiHomog s cs) (hh : IsMultiHomog h ch) (hW : ratDiv P s h W ≠ 0) :
@@ -111,7 +110,6 @@ theorem vNumL_eq_zero_of_contract {ϖ : O} (hϖ : Irreducible ϖ) {P W : Ideal (
 
 end SegreFlagCutContraction
 
-open SegreFlagCutContraction in
 
 theorem SegreFlagCutContraction.proof (hModel : SegreFlagClosureModel.Statement)
     (hProj : SegreFlagCutProjection.Statement) : SegreFlagCutContraction.Statement := by

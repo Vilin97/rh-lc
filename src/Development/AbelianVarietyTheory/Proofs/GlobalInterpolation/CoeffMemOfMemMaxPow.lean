@@ -65,5 +65,3 @@ theorem psCNL : ∀ (O : Type) [CommRing O] [IsLocalRing O] (C : TR O) (n : ℕ)
         rw [← residue_eq_zero_iff, map_sub, ha', sub_self] }
 
 end GlobalTheory.PsCNL
-
-open Formalism.BasicNotions.V1 IsLocalRing in

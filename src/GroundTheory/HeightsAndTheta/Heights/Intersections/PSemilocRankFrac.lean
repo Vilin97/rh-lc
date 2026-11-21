@@ -89,7 +89,6 @@ end Eval
 
 end SemilocRankFrac
 
-open SemilocRankFrac in
 
 theorem SemilocRankFrac.proof (hR : RankFracDegree.Statement) (hF : SemilocFinite.Statement)
     (hC : SemilocChartRatio.Statement) : SemilocRankFrac.Statement := by

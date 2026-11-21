@@ -536,7 +536,6 @@ end Weights
 
 end RegLelongAnnulus
 
-open RegLelongAnnulus in
 
 theorem RegLelongAnnulus.proof (hRW : RegRadialWeight.Statement) (hCM : ChartMassCompact.Statement) :
     RegLelongAnnulus.Statement := by

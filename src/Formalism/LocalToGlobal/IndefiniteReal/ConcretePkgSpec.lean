@@ -45,7 +45,6 @@ variable {R F}
 
 end RealDat
 
-open RealDat in
 
 namespace RealDat
 

@@ -259,7 +259,6 @@ theorem exists_io_poly (D : D7) (V W : HSp D) (θ : InfFam D) (Sp : D.what₂.Ta
     convert one_smul ℂ _ using 2
     field_simp
 
-open GlobalTheory.IndefiniteRowSideFullHecke.InfinityTypes in
 
 theorem weights_label (D : D7) (i : Fin D.R.m) (τ : D.what₂.Tau) (p q : ℕ) (hp : p = pS D i τ) (hq : q = qS D i τ)
     (lam : Fin (Wc D i).rank → ℝ) (ε : Fin (Wc D i).rank → Bool)

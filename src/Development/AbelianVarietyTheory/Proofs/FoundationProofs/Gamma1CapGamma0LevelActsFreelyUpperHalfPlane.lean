@@ -32,7 +32,6 @@ end GlobalTheory.KZ.FreeAct
 
 namespace GlobalTheory.KZ
 
-open FreeAct in
 
 theorem gam_free : ∀ (N l : ℕ), 4 ≤ N → ∀ γ ∈ Gam N l, ∀ z ∈ Hs, mob (ofSL γ) z = z → γ = 1 := by
   intro N l hN γ hγ z hz hfix

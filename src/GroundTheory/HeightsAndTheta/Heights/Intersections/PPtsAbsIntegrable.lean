@@ -96,7 +96,6 @@ theorem abs_maDensity_le {P : Ideal (MRing ι)} {e : ℕ} {Ψ : (((k : K) → ι
 
 end PointsAbsIntegrable
 
-open PointsAbsIntegrable in
 
 theorem PtsAbsIntegrable.proof (hInt : PtsIntegrableStatement) (hMeas : PtsAbsMeasurable.Statement) :
     PtsAbsIntegrable.Statement := by

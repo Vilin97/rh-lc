@@ -19,9 +19,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 instance borelSpace_units : BorelSpace Kˣ :=
   measurableEmbedding_units_val.borelSpace isOpenEmbedding_units_val.isInducing
 
-omit [BorelSpace K] in
 
-omit [BorelSpace K] in
 
 namespace Padic
 

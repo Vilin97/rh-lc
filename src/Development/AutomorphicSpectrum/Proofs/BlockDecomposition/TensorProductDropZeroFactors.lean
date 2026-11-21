@@ -61,7 +61,6 @@ def blockEquiv (o : Fin r' → Fin r) (ho : Function.Injective o) : Fin r' ⊕ O
 
 variable {X : Fin r → Type} [∀ j, AddCommGroup (X j)] [∀ j, Module ℂ (X j)]
 
-open scoped Classical in
 
 def dropEquiv (o : Fin r' → Fin r) (ho : Function.Injective o) (φ : ∀ c : Off o, X c ≃ₗ[ℂ] ℂ) :
     (⨂[ℂ] j, X j) ≃ₗ[ℂ] ⨂[ℂ] a, X (o a) :=
@@ -72,7 +71,6 @@ def dropEquiv (o : Fin r' → Fin r) (ho : Function.Injective o) (φ : ∀ c : O
           (PiTensorProduct.constantBaseRingEquiv (Off o) ℂ).toLinearEquiv)).trans
         (TensorProduct.rid ℂ _)
 
-open scoped Classical in
 
 theorem dropEquiv_tprod (o : Fin r' → Fin r) (ho : Function.Injective o)
     (φ : ∀ c : Off o, X c ≃ₗ[ℂ] ℂ) (x : ∀ j, X j) :

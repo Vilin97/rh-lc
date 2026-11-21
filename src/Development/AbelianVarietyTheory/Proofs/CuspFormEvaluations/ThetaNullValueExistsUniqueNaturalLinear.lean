@@ -132,7 +132,6 @@ theorem baseChange {N : ℕ} {S T : Type} [CommRing S] [Algebra c.F S] [CommRing
     rw [e2] at h1
     exact h1
 
-open GlobalTheory.ThetaValueWeight in
 
 theorem triangular {N : ℕ} {S : Type} [CommRing S] [Algebra c.F S] {y y' : FrPt Xo c S} {t : Ix Dw → Sˣ}
     (hb : FrBor t y y') (p : ptO Xo y.x ⟶ Xo.univ.t.G) (p' : ptO Xo y'.x ⟶ Xo.univ.t.G) (hp : p'.left = p.left)

@@ -25,7 +25,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {O : Type} [CommRing O] [Algebra O LL] [TopologicalSpace LL]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} [NeZero n] {W : LocWach PD LL O v n}
 
-variable (W) in
 
 abbrev pfCoeff_J (k : ℕ) : Ideal W.EE := Ideal.span {((PD.p : ℕ) : W.EE) ^ k}
 
@@ -80,7 +79,6 @@ section Ext
 
 variable (f : LetA O n →+* LetA O n) (hf : IsUnit (algebraMap (LetA O n) W.EE (f letπ)))
 
-variable (W) in
 
 def pfCoeff_Good (x y : W.EE) : Prop :=
   ∀ k, ∃ (a : LetA O n) (m : ℕ),
@@ -274,7 +272,6 @@ theorem pfCoeff_sw_γ (i : ZMod n) (g₀ : PowerSeries O →ₐ[O] PowerSeries O
 theorem pfCoeff_sw_d (hR : Ring9 W) (i : ZMod n) (a : PowerSeries O) :
     pfCoeff_sw i ((baseIdOf hR).d a) = (baseIdOf hR).d a := rfl
 
-variable (W) in
 
 def pfCoeff_σ (i : ZMod n) : W.EE →+* W.EE :=
   pfCoeff_ext (pfCoeff_sw i) (by rw [pfCoeff_sw_π]; exact W.EE_π)
@@ -316,7 +313,6 @@ theorem pfCoeff_letE_mem (j : ZMod n) : algebraMap (LetA O n) W.EE (letE j) ∈ 
   rw [W.γE_ext]
   exact congrArg _ (γA_letE W δ j)
 
-variable (W) in
 
 abbrev pfCoeff_mod (hR : Ring9 W) : Module (PowerSeries O) W.EE :=
   Module.compHom W.EE ((algebraMap (LetA O n) W.EE).comp (baseIdOf hR).d.toRingHom)

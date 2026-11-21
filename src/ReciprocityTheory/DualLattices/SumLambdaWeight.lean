@@ -125,7 +125,6 @@ theorem pow_mem' (AA : HopfOrder (C := C) R (ZMod p)) {f : ZMod p → C} (hf : f
     rw [pow_succ]
     exact AA.mul_mem _ _ ih hf
 
-omit hv in
 
 variable {ω : ZMod p → C} (hω : IsTeich v ω)
 include hω

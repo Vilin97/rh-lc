@@ -215,7 +215,6 @@ theorem exists_pair_of_integral (hL : Laws) (X : 𝟙_ (Over (Sp V)) ⟶ G) (x :
   obtain ⟨p, hp, hpg⟩ := (T.torsionPoint_qk_alt hL.globalFns V I hR hI D A G U.toUnifPre k X gp hX hgp).2 F
   exact ⟨p, hp, qkToAkU_of_integral_torsion hL V I hR hI D A G U k hk X gp hX hgp F p x hp hpg h⟩
 
-attribute [local instance] gtGroup in
 
 theorem exists_integral_of_pair [ValuationRing V] [CharZero V] [IsAlgClosed F] (hL : Laws) (hL₂ : Laws2)
     (hG : IsSemiAbelian G) (f : QkPt D.toPre F k → (TFK (R := V) F ⟶ A.A))

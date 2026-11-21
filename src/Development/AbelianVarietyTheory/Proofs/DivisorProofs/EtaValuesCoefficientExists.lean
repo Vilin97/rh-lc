@@ -60,7 +60,6 @@ theorem isEtaConj_base (hL : R.toLevCh.Is A.μ0) (hV : EtaVals R) : IsEtaConj (s
   ⟨hL.eta.1, GlobalTheory.EtaConjExist.unram_of_chrEq hL.eta R.C.isEta.unr, fun P e he x hx =>
     (hV P e he x hx).imp fun y hy => ⟨hy, (RingHom.congr_fun (realisation_embedding_eq_baseEmbedding R) y).symm.trans hy⟩⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem places_base (hL : R.toLevCh.Is A.μ0) : R.Q A.μ0 = ∅ :=
   Finset.eq_empty_iff_forall_notMem.2 fun PP hPP =>
@@ -94,7 +93,6 @@ theorem deltaConj_base : deltaConj i (sg0 D A) = RealDat.Delta i := by
   rw [hl]
   rfl
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.GalLift.BaseDatum
 

@@ -54,7 +54,6 @@ theorem torsion_le {C : Type} [CommRing C] [Bialgebra O C] (π : G.A 1 →ₐc[O
 
 end GlobalTheory.QuotField
 
-open GlobalTheory.QuotField GlobalTheory.HTPair.QuotIsog in
 
 theorem GlobalTheory.HTPair.exists_quot_field : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p]
     (G : PDivGroup p k) (C : Type) [CommRing C] [HopfAlgebra k C] [IsCocomm k C]

@@ -99,7 +99,6 @@ theorem quad_eq {ι : Type} [Fintype ι] (X : Matrix (l ⊕ l) (l ⊕ l) ℝ) (u
   push_cast
   ring
 
-variable (l) in
 
 structure Meta : Type 1 where
   G : Type
@@ -118,7 +117,6 @@ structure Meta : Type 1 where
 
 attribute [instance] Meta.grp Meta.top
 
-attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 
 end PositivityTheory.RL.Up
 

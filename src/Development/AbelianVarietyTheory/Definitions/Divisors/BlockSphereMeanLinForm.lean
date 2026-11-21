@@ -12,7 +12,5 @@ noncomputable section
 open MvPolynomial NumberField
 namespace GlobalTheory.ChowHt.Model
 
-set_option autoImplicit false in
-open MvPolynomial NumberField in
 
 end GlobalTheory.ChowHt.Model

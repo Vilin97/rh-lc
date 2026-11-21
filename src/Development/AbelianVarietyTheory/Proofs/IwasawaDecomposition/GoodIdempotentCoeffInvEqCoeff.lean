@@ -65,4 +65,3 @@ theorem goodStable_of_coeff {K G : Type} [Field K] [CharZero K] [Group G] [Finty
 
 end GlobalTheory.Mem.R3.GoodDual
 
-open GlobalTheory.Mem.R3.GoodDual in

@@ -128,7 +128,6 @@ end GlobalTheory.CompanionTheory.Hypotheses₂.HCF.Rg
 
 namespace GlobalTheory.CompanionTheory.Hypotheses₂
 
-open GlobalTheory.Published.AutFin in
 
 theorem _root_.PositivityTheory.RgHf.harishChandraFinite : GlobalTheory.Published.HarishChandraFinite := by
   intro D θ hθ V U hU ε fr hfr W _ _ _ ρ hρ c

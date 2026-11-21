@@ -22,7 +22,6 @@ variable {K F L : Type*} [Field K] [NumberField K] [Field F] [NumberField F] [Fi
   [NumberField L] [Algebra K F] [Algebra K L] [Algebra F L] [IsScalarTower K F L]
   [IsGalois K F] [IsGalois K L]
 
-omit [NumberField K] [NumberField F] [NumberField L] [IsGalois K L] in
 
 theorem algebraMap_restrictNormalHom_smul (σ : Gal(L/K)) (x : 𝓞 F) :
     algebraMap (𝓞 F) (𝓞 L) (AlgEquiv.restrictNormalHom F σ • x) =
@@ -31,19 +30,12 @@ theorem algebraMap_restrictNormalHom_smul (σ : Gal(L/K)) (x : 𝓞 F) :
   change algebraMap F L ((σ.restrictNormal F) (x : F)) = σ (algebraMap F L (x : F))
   exact AlgEquiv.restrictNormal_commutes σ F x
 
-omit [NumberField K] [NumberField F] [NumberField L] [IsGalois K L] in
 
-omit [NumberField K] [NumberField F] [NumberField L] [IsGalois K L] in
 
-omit [NumberField K] [NumberField F] [NumberField L] [IsGalois K F] [IsGalois K L] in
 
-omit [NumberField K] [NumberField F] [NumberField L] [IsGalois K L] in
 
-omit [NumberField K] [NumberField F] [NumberField L] [IsGalois K L] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
 theorem IsArithFrobAt.restrictNormalHom {φ : Gal(L/K)} {Q : Ideal (𝓞 L)}
     (h : IsArithFrobAt (𝓞 K) φ Q) :

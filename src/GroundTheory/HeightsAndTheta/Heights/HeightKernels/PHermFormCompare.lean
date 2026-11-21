@@ -69,7 +69,6 @@ theorem re_quad_ge {n : ℕ} {N : Matrix (Fin n) (Fin n) ℂ} (hN : N.PosDef) (x
 
 end HermitianFormComparison
 
-open HermitianFormComparison in
 
 theorem HermFormCompare.proof : HermFormCompare.Statement := by
   intro n M N hM hN

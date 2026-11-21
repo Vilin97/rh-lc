@@ -16,7 +16,6 @@ section Adelic
 
 variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι] [DecidableEq ι]
 
-open Classical in
 
 end Adelic
 

@@ -78,7 +78,6 @@ section
 variable (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] (n : ℕ)
   [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] (μ : Measure (GL (Fin n) F)) [μ.IsHaarMeasure]
 
-open Classical in
 
 def GammaIntAt : Prop :=
   ∀ g : GL (Fin n) F,
@@ -90,7 +89,6 @@ def GammaConjAt : Prop :=
   ∀ (z : Fin n → ℂˣ), Function.Injective z → (∀ i, ‖(z i : ℂ)‖ = 1) → ∀ g : GL (Fin n) F,
     zonalSpherical μ z g⁻¹ = (starRingEnd ℂ) (zonalSpherical μ z g)
 
-variable {F n μ} in
 
 def IsReps (h : SphericalHecke μ (F := F) (n := n)) (T : Finset (GL (Fin n) F)) : Prop :=
   (∀ g ∈ T, ∀ g' ∈ T, g⁻¹ * g' ∈ GLnLocal.integralGL F n → g = g') ∧

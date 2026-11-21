@@ -370,7 +370,6 @@ theorem Kf_fRaw {d y : Fin n → ℤ} (hd : ∀ j : Fin n, (j : ℕ) + 1 < n →
 
 end GlobalTheory.CompanionTheory.ModelS.Fhw
 
-open GlobalTheory.CompanionTheory.ModelS.Fhw in
 
 theorem GlobalTheory.CompanionTheory.ModelS.f_highest (n : ℕ) (lam : Fin n → ℤ) (hl : Antitone lam) (lev : Fin n → ℕ) (hv : IsLev lam lev)
     (F : GlobalTheory.CompanionTheory.ModelS.SmF n) (hF : F.1 = GlobalTheory.CompanionTheory.ModelS.fRaw lam lev) :

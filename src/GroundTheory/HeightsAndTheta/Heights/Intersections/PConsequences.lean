@@ -21,7 +21,6 @@ open MvPolynomial MeasureTheory ReciprocityTheory.ChartRestriction.G.Geo Recipro
 
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem ptsIntegral_congr_pts (P : Ideal (MRing ι)) {e : ℕ} (φ : Fin e → ((Σ k, ι k) → ℂ) → ℝ)
     {g g' : ((Σ k, ι k) → ℂ) → ℝ} (hg : ∀ z ∈ mcPts P, g z = g' z) :

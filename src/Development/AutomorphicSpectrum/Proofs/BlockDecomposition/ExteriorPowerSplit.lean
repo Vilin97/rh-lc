@@ -14,7 +14,6 @@ open GlobalTheory.TopExt
 variable {R F H L : Type*} [CommRing R] [AddCommGroup F] [Module R F] [AddCommGroup H] [Module R H]
   [AddCommGroup L] [Module R L]
 
-variable (R F) in
 
 noncomputable def gradeProj (n : ℕ) : ExteriorAlgebra R F →ₗ[R] ⋀[R]^n F :=
   DirectSum.component R ℕ (fun k => ⋀[R]^k F) n ∘ₗ

@@ -58,7 +58,6 @@ theorem resS_eq_zero (w : Pl E) (v : HeightOneSpectrum (𝓞 F))
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, ← TensorProduct.tmul_add, ← e]
   rw [key, map_add (f := _), map_mul, hz r hr, hz d hd, zero_mul, add_zero]
 
-open Classical in
 
 def ind (S : Finset (HeightOneSpectrum (𝓞 F))) : FiniteAdeleRing (𝓞 F) F :=
   ⟨fun v => if v ∈ S then 1 else 0, Filter.Eventually.of_forall fun v => by

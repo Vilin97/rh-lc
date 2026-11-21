@@ -106,7 +106,6 @@ theorem expand_weight {E : Type} [Field E] [NumberField E] [IsCMField E] {r : �
   push_cast
   ring
 
-set_option maxHeartbeats 1000000 in
 
 theorem run_weight_arch (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j) (large₂ : SizeData₂ D) (H : KHyp)
     (C2 A2 CR CT : ℝ) (ka wL wF : WeightFamilies.Wt D j) (Tn nP nW : ℕ) (h0 : ℝ)
@@ -208,8 +207,6 @@ open Formalism.IndefR Formalism.IndefR.Links GlobalTheory.BigTop GlobalTheory.Bi
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end Point
 

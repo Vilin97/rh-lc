@@ -38,7 +38,6 @@ private lemma natLog_le_add_two_mul_of_le_two_pow_mul_exp {l m k : ℕ} {L : ℝ
   have : ((Nat.log l m : ℝ) - k) * Real.log 2 ≤ L := by linarith
   nlinarith
 
-open NumberField IsDedekindDomain Module in
 
 theorem _root_.GlobalTheory.HubLoc.torsionExponent_le_twentyFive_mul :
     ∀ (l N : ℕ) (L : ℝ), 2 ≤ l → 1 ≤ N → 1 ≤ L →

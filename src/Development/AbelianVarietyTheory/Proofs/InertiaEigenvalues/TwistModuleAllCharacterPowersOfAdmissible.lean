@@ -58,6 +58,5 @@ theorem twistModule_all_character_powers_of_admissible (bkP : BKPh X) (E : ExpDa
 
 end GlobalTheory.ExportFromInputs
 
-open GlobalTheory.TwAll in
 
 end

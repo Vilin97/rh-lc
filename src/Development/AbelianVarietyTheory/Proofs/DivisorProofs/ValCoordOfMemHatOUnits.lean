@@ -172,7 +172,6 @@ theorem unitAt_norm {l : ℕ} (hl : l.Prime) (α : Eˣ)
 
 end GlobalTheory.CMVal.LUnit
 
-open GlobalTheory.CMVal.LUnit in
 
 theorem GlobalTheory.CMVal.value_unitAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (I : Type) [Fintype I]
     (φ : I → E →+* ℂ), IsCMType φ → ∀ (s : ℕ) (κ : I → ℕ) (c : Ideal (OF E)) (χ : HChar E) (l : ℕ), c ≠ ⊥ → l.Prime →

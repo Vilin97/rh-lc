@@ -21,7 +21,6 @@ universe u
 
 variable {X : Scheme.{u}}
 
-variable (X) in
 
 end VectorBundle
 
@@ -180,7 +179,6 @@ universe u
 
 variable {X Y : Scheme.{u}}
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 end Transport
 

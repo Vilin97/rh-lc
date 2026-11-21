@@ -25,7 +25,6 @@ section Generic
 
 variable {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] {a b : ℕ} {P : HeightOneSpectrum (𝓞 E)}
 
-omit [StarRing E] in
 
 theorem awayAt_of_fnModAt {N : Submodule (𝓞 E) (Sp E a)} {N' : Submodule (𝓞 E) (Sp E b)} {Φ : HomE E a b → K}
     (hq : (qOf P).Prime) (h : FnModAt P N N' Φ) (w : HeightOneSpectrum (𝓞 K)) {B : ℕ} (hB : 1 ≤ B) : AwayAt P w B N N' Φ := by

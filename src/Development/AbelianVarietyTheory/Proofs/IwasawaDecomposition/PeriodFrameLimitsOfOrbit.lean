@@ -239,6 +239,5 @@ end GlobalTheory.OrbitNfac
 
 namespace GlobalTheory
 
-open OrbitNfac in
 
 end GlobalTheory

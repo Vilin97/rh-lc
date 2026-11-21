@@ -46,7 +46,6 @@ theorem subsingleton_Hn_succ_iff {R : Type*} [CommRing R] [Module R M] [Continuo
   · intro h f _
     exact h f.1 f.2.1 f.2.2
 
-omit [TopologicalSpace Γ] [TopologicalSpace M] [IsTopologicalAddGroup M] in
 
 theorem dn_eq_of_action_eq {R R' : Type*} [CommRing R] [CommRing R'] [Module R M] [Module R' M]
     (rho : Representation R Γ M) (rho' : Representation R' Γ M)
@@ -73,7 +72,6 @@ theorem subsingleton_Hn_of_action_eq {R R' : Type*} [CommRing R] [CommRing R'] [
   obtain ⟨c, hc, e⟩ := hs f hf (by rw [← dn_eq_of_action_eq rho rho' h]; exact hd)
   exact ⟨c, hc, by rw [dn_eq_of_action_eq rho rho' h]; exact e⟩
 
-omit [TopologicalSpace Γ] [TopologicalSpace M] [IsTopologicalAddGroup M] in
 
 def zmodRep {R : Type*} [CommRing R] [Module R M] (N : ℕ) [Module (ZMod N) M]
     (rho : Representation R Γ M) : Representation (ZMod N) Γ M where

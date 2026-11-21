@@ -353,12 +353,9 @@ theorem _root_.GlobalTheory.SW.TwistAdm.twist_adm {M R : ℕ}
         (_root_.GlobalTheory.SW.TwistAdm.cols_of_cond hex.choose_spec.2 (hiff.mp hc))
     · rw [if_neg hc, if_neg (mt hiff.mpr hc)]
 
-omit [IsCMField E] in
 
 end GlobalTheory.SW.TwistAdm
 
-open Matrix Complex NumberField Filter Topology in
-open scoped ComplexConjugate ComplexOrder Real Classical in
 
 theorem _root_.GlobalTheory.SW.twist_admissible : ∀ (E : Type) [Field E]
     [NumberField E] [IsCMField E] (n N M R : ℕ) (φ : _root_.GlobalTheory.SW.Fam E n N)

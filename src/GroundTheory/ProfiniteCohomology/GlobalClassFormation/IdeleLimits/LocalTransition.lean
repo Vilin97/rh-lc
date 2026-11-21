@@ -29,7 +29,6 @@ theorem algebraMap_levelRestrict_integers (σ : E.1 ≃ₐ[K.1] E.1) (x : 𝓞 F
     algebraMap (𝓞 F.1) (𝓞 E.1) (levelRestrict K F E σ • x) = σ • algebraMap (𝓞 F.1) (𝓞 E.1) x :=
   RingOfIntegers.ext (coe_levelRestrict_apply σ (x : F.1))
 
-include hw in
 
 theorem levelRestrict_mem_stabilizer {σ : E.1 ≃ₐ[K.1] E.1}
     (hσ : σ ∈ MulAction.stabilizer (E.1 ≃ₐ[K.1] E.1) w'.1.asIdeal) :
@@ -40,7 +39,6 @@ theorem levelRestrict_mem_stabilizer {σ : E.1 ≃ₐ[K.1] E.1}
   rw [Ideal.mem_pointwise_smul_iff_inv_smul_mem, hover, Ideal.mem_comap, Ideal.mem_comap,
     ← map_inv, algebraMap_levelRestrict_integers, ← Ideal.mem_pointwise_smul_iff_inv_smul_mem, hσ]
 
-variable {w w'} in
 
 def decompRestrict :
     MulAction.stabilizer (E.1 ≃ₐ[K.1] E.1) w'.1.asIdeal →*
@@ -70,7 +68,6 @@ theorem completionMap_decomposition_smul (σ : MulAction.stabilizer (E.1 ≃ₐ[
       rw [adicCompletionRingHomOf_algebraMap, coe_decompRestrict, coe_levelRestrict_apply])
   exact congrFun this a
 
-variable {w w'} in
 
 def completionUnitsRep :
     Rep.res (decompRestrict (w := w) (w' := w'))
@@ -84,7 +81,6 @@ def completionUnitsRep :
       (completionMap_decomposition_smul w w' σ
         (Additive.toMul (α := (w.1.adicCompletion F.1)ˣ) a : w.1.adicCompletion F.1)))⟩
 
-variable (K F E) in
 
 def localTransition (n : ℕ) :
     cohomology (Rep.ofMulDistribMulAction (MulAction.stabilizer (F.1 ≃ₐ[K.1] F.1) w.1.asIdeal)
@@ -99,7 +95,6 @@ section Infinite
 
 variable {v : InfinitePlace K.1} (w : v.placesOver F.1) (w' : v.placesOver E.1) [hw : w'.1.LiesOver w.1]
 
-include hw in
 
 theorem levelRestrict_mem_stabilizer_infinite {σ : E.1 ≃ₐ[K.1] E.1}
     (hσ : σ ∈ MulAction.stabilizer (E.1 ≃ₐ[K.1] E.1) w'.1) :
@@ -118,7 +113,6 @@ theorem levelRestrict_mem_stabilizer_infinite {σ : E.1 ≃ₐ[K.1] E.1}
   rw [h1, coe_levelRestrict_apply]
   exact key _
 
-variable {w w'} in
 
 def infDecompRestrict :
     MulAction.stabilizer (E.1 ≃ₐ[K.1] E.1) w'.1 →* MulAction.stabilizer (F.1 ≃ₐ[K.1] F.1) w.1 where
@@ -151,7 +145,6 @@ theorem infCompletionMap_decomposition_smul (σ : MulAction.stabilizer (E.1 ≃�
         coe_infDecompRestrict, coe_levelRestrict_apply])
   exact congrFun this a
 
-variable {w w'} in
 
 def infCompletionUnitsRep :
     Rep.res (infDecompRestrict (w := w) (w' := w'))
@@ -163,7 +156,6 @@ def infCompletionUnitsRep :
       (infCompletionMap_decomposition_smul w w' σ
         (Additive.toMul (α := (w.1.Completion)ˣ) a : w.1.Completion)))⟩
 
-variable (K F E) in
 
 def infLocalTransition (n : ℕ) :
     cohomology (Rep.ofMulDistribMulAction (MulAction.stabilizer (F.1 ≃ₐ[K.1] F.1) w.1)

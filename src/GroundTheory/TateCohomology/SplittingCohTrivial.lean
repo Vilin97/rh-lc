@@ -25,27 +25,23 @@ theorem eq_zero_of_isZero {A : ModuleCat.{u} k} (h : IsZero A) (x : A) : x = 0 :
 theorem isZero_of_forall_eq_zero {A : ModuleCat.{u} k} (h : ∀ x : A, x = 0) : IsZero A :=
   ModuleCat.isZero_iff_subsingleton.2 ⟨fun a b => (h a).trans (h b).symm⟩
 
-include hX in
 
 theorem δ_map_g_apply (i j : ℕ) (hij : i + 1 = j) (x : groupCohomology X.X₂ i) :
     δ hX i j hij (map (MonoidHom.id H) X.g i x) = 0 := by
   have h := congr(($((map_cochainsFunctor_shortExact hX).comp_δ i j hij)).hom x)
   exact h
 
-include hX in
 
 theorem map_f_δ_apply (i j : ℕ) (hij : i + 1 = j) (z : groupCohomology X.X₃ i) :
     map (MonoidHom.id H) X.f j (δ hX i j hij z) = 0 := by
   have h := congr(($((map_cochainsFunctor_shortExact hX).δ_comp i j hij)).hom z)
   exact h
 
-include hX in
 
 theorem exists_map_f_eq (n : ℕ) (x : groupCohomology X.X₂ n)
     (hx : map (MonoidHom.id H) X.g n x = 0) : ∃ w, map (MonoidHom.id H) X.f n w = x :=
   (ShortComplex.moduleCat_exact_iff _).1 (mapShortComplex₂_exact hX n) x hx
 
-include hX in
 
 theorem isZero_X₂_of_injective_δ (n : ℕ) (h₁ : IsZero (groupCohomology X.X₁ n))
     (hδ : Function.Injective (δ hX n (n + 1) rfl)) : IsZero (groupCohomology X.X₂ n) := by
@@ -55,7 +51,6 @@ theorem isZero_X₂_of_injective_δ (n : ℕ) (h₁ : IsZero (groupCohomology X.
   obtain ⟨w, hw⟩ := exists_map_f_eq hX n x h1
   rw [← hw, eq_zero_of_isZero h₁ w, map_zero]
 
-include hX in
 
 theorem isZero_X₂_succ_of_surjective_δ (n : ℕ) (h₃ : IsZero (groupCohomology X.X₃ (n + 1)))
     (hδ : Function.Surjective (δ hX n (n + 1) rfl)) : IsZero (groupCohomology X.X₂ (n + 1)) := by
@@ -116,7 +111,6 @@ theorem exists_eq_zsmul_augClass (y : groupCohomology (res S.subtype (augIdeal �
 noncomputable def subgroupNormElt : MonoidAlgebra ℤ G :=
   ∑ t : S, MonoidAlgebra.single (t : G) (1 : ℤ)
 
-omit [Fintype G] in
 
 theorem ρ_subgroupNormElt (s : S) :
     (Rep.leftRegular ℤ G).ρ (s : G) (subgroupNormElt S) = subgroupNormElt S := by
@@ -124,7 +118,6 @@ theorem ρ_subgroupNormElt (s : S) :
     simp only [subgroupNormElt, map_sum, Representation.ofMulAction_single, smul_eq_mul]
   exact Fintype.sum_equiv (Equiv.mulLeft s) _ _ (fun t => rfl)
 
-omit [Fintype G] in
 
 theorem augmentation_subgroupNormElt :
     augmentation ℤ G (subgroupNormElt S) = (Fintype.card S : ℤ) := by
@@ -167,7 +160,6 @@ noncomputable abbrev splitδ :
     groupCohomology (res S.subtype (augIdeal ℤ G)) 1 ⟶ groupCohomology (res S.subtype M) 2 :=
   δ ((shortExact_res S.subtype).2 (splittingSES_shortExact M u)) 1 2 rfl
 
-omit [Fintype S] in
 
 theorem splitδ_augClass : splitδ M u S (augClass S) = resClass M u S :=
   δ_splittingSES_res_δ₀ M u S.subtype
@@ -182,7 +174,6 @@ theorem splitδ_injective (h2 : addOrderOf (resClass M u S) = Nat.card S) :
   obtain ⟨t, rfl⟩ := hd
   rw [mul_comm, mul_zsmul, card_smul_augClass, zsmul_zero]
 
-omit [Fintype S] in
 
 theorem splitδ_surjective
     (h3 : ∀ y : groupCohomology (res S.subtype M) 2, ∃ m : ℤ, y = m • resClass M u S) :
@@ -215,7 +206,6 @@ theorem isZero_groupCohomology_res_splittingModule_two
   isZero_X₂_succ_of_surjective_δ ((shortExact_res S.subtype).2 (splittingSES_shortExact M u)) 1
     (isZero_groupCohomology_res_augIdeal_two S) (splitδ_surjective M u S h3)
 
-omit [Fintype S] in
 
 theorem cohTrivial_splittingModule
     (h1 : ∀ S : Subgroup G, IsZero (groupCohomology (res S.subtype M) 1))

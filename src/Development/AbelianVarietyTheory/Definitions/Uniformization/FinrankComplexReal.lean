@@ -34,7 +34,6 @@ theorem sval_smul (c : F) (s : SecMod p (LB.LinComb L φ ε)) :
 
 end Val
 
-variable (p) in
 
 end SecMod
 end GlobalTheory.UU

@@ -57,7 +57,6 @@ def sumA (H : Plane E n n₁) (H' : Plane E d d₁) : Set (Ten F E n d) :=
 def sumB (H : Plane E n n₁) (H' : Plane E d d₁) : Set (Ten F E n d) :=
   {u | ∃ z y, u = vecMulVec (incV F H.x) z + vecMulVec (incM F H.ι *ᵥ y) (incV F H'.x)}
 
-variable (σ X W X₁ W₁) in
 
 def PolT {T : Type} [AddCommGroup T] [Module E T] [Module F T] (ι : Matrix (Fin n) (Fin n₁) E) (ι' : Matrix (Fin d) (Fin d₁) E)
     (I : Set (Ten F E n d)) (U : T →ₗ[E] Matrix (Fin n) (Fin d) E) : Prop :=

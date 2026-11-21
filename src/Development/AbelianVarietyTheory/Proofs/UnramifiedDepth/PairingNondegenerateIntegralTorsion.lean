@@ -131,7 +131,6 @@ private theorem pfTie_local (R : Type) [CommRing R] [IsLocalRing R] (a : Γ(Spec
 
 end Transfer
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 
 theorem pairing_nondegenerate_integral_torsion :
   (∀ {R₀ : Type} [CommRing R₀] (B : BX R₀) (b : ∀ R x y, B.P R x y) (t₁ t₂ : ∀ R : LAlg R₀, B.G R → B.G R → B.G R → (R : Type)ˣ),

@@ -17,11 +17,8 @@ section One
 variable {n P Q : ℕ} (ε : Fin n → Bool) (e : Fin P ⊕ Fin Q ≃ Fin n)
   (h1 : ∀ i, ε (e (Sum.inl i)) = true) (h2 : ∀ j, ε (e (Sum.inr j)) = false)
 
-include h1 h2 in
 
-include h1 h2 in
 
-include h1 h2 in
 
 end One
 

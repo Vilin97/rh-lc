@@ -14,7 +14,6 @@ namespace GlobalTheory.SW
 noncomputable section
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n N : ℕ}
 
-open Classical in
 
 theorem mem_stdL {x : Fin n → E} : x ∈ stdL E n ↔ ∀ a, IsIntegral ℤ (x a) := by
   constructor

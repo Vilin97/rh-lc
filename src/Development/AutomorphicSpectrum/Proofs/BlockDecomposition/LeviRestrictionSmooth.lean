@@ -10,7 +10,6 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.CTFin.Slice1
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
 
-variable (E r s) in
 
 def blockOne (x : Lie E r) : Lie E (r + s) :=
   toL (Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))

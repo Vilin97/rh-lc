@@ -33,14 +33,12 @@ theorem section_exists : ∀ (k r : ℕ) (L : LocBessel k r), 1 ≤ k → ∃ μ
   | 0, _, _, h => absurd h (by norm_num)
   | _ + 1, _, L, _ => Formalism.MainNotions.S.Inh.big_cell_section_of_local_bessel L
 
-open Formalism.FourierDecayAlt.S3 in
 
 section MassDataStep
 
 variable (D) (large₂ : SizeData₂ D) (X : TermTie D) (Cw : ℝ) (Y : ∀ u u', LoopTie D large₂ X u u' Cw) (Z : TermLocs D X)
   (cN : D.what₂.Word → D.what₂.Word → ℝ)
 
-open Formalism.FourierDecayAlt.S3 in
 
 end MassDataStep
 

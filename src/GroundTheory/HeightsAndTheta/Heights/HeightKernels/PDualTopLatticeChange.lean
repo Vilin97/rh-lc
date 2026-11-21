@@ -30,7 +30,6 @@ def supStandard (F : HermLattice K i) : HermLattice K i where
   posDef := fun _ => Matrix.PosDef.one
   conj := fun _ => by simp
 
-omit [NumberField K] in
 
 theorem gramAt_one_single (σ : K →+* ℂ) :
     gramAt (1 : Matrix (Fin i) (Fin i) ℂ) σ (fun j : Fin i => (Pi.single j 1 : Fin i → K)) = 1 := by
@@ -59,7 +58,6 @@ theorem standard_degree : (HermLattice.standard K i).degree = 0 := by
 
 end TopDualLatticeChange
 
-open TopDualLatticeChange in
 
 theorem DualTopLatticeChange.proof (hSub : DualTopSubLattice.Statement) :
     DualTopLatticeChange.Statement := by

@@ -175,7 +175,6 @@ theorem gw_trans (e : ℕ) {Z : Scheme.{0}} (r : Z ⟶ (thickObj R I e G).left) 
   exact (gm_pull r (thickMap R I e G) z _ hm.1 ((U.w (e + 1)).s (fun _ => jM, fun _ => jL))).symm.trans
     ((gm_res r z inf_le_left hm _).symm.trans (H.trans (gm_res r z inf_le_right hm _)))
 
-open TorusInvariance in
 
 theorem exists_matching [IsLocalRing R] [IsAdicComplete I R] (hI : I ≠ ⊤) {K : Type} [Fintype K] (ε : K → ℤ)
     (φ : K → (Spec (CommRingCat.of R) ⟶ D.toPre.P.A.left)) (φ' : K → (Spec (CommRingCat.of R) ⟶ G.left))
@@ -329,7 +328,6 @@ section Level
 
 open TorusInvariance TorusCoord
 
-variable (I G) in
 
 def toG (e : ℕ) (T : Over (Spec (CommRingCat.of (R ⧸ I ^ (e + 1))))) :
     (T ⟶ thickObj R I e G) →* ((Over.map (thick R I e)).obj T ⟶ G) :=
@@ -340,7 +338,6 @@ def toB (e : ℕ) (T : Over (Spec (CommRingCat.of (R ⧸ I ^ (e + 1))))) :
     (T ⟶ thickObj R I e G) →* ((Over.map (thick R I e)).obj T ⟶ D.toPre.P.A) :=
   MonoidHom.mk' (fun y => im (U.gt e) y) fun a b => im_mul (U.gt e) a b
 
-omit [IsDomain R] in
 
 def cubT {H : Over (Spec (CommRingCat.of R))} [GrpObj H] [IsCommMonObj H] {L : RigLB H} (c : CubicalStr H L) {e : ℕ}
     (T : Over (Spec (CommRingCat.of (R ⧸ I ^ (e + 1))))) (z : T.left) (J : (T.left ⟶ H.left) → L.L.ι)
@@ -490,7 +487,6 @@ end Main
 
 end TorsionTranslate
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor TorsionTranslate in
 
 theorem expandsAt_translate_torsion : GlobalFnsSt → ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (I : Ideal R), AdmBase R I → I ≠ ⊤ → ∀ (D : DegData R I) (A : PolAV (Spec (CommRingCat.of (FractionRing R)))) (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G] (U : UnifPre I D A G) (k : ℕ) (x : (𝟙_ (Over (Spec (CommRingCat.of R)))) ⟶ G) (gp : GtPt D.toPre (𝟙_ (Over (Spec (CommRingCat.of R))))), x ^ k = 1 → gp.b ^ k = 1 → (∀ e : ℕ, ∃ xe : Over.mk (thick R I e) ⟶ (Over.map (thick R I e)).obj (thickObj R I e G), xe ≫ fstG I e G = toUnit _ ≫ x ∧ xe ≫ (U.gt e).pG = toUnit _ ≫ gp.b ∧ ∀ χ, LB.Gen.Corr D.toPre.P.L _ _ _ _ (LB.pullGen D.toPre.P.L _ _ ((U.gt e).t χ) xe.left) (LB.pullGen D.toPre.P.L _ _ (gp.s χ) (toUnit (Over.mk (thick R I e))).left)) → ∃ (ν : LB.Gen (LB.LinComb D.toPre.P.L (K := Fin 2) ![eSec D.toPre.P.A, gp.b.left] (DegPre.lineε k))) (uL : LB.Gen (LB.LinComb U.LG.L (K := Fin 2) ![𝟙 G.left, (𝟙 G * (toUnit G ≫ x)).left] ![(k : ℤ), -(k : ℤ)])) (uM : ∀ α, LB.Gen (LB.LinComb D.toPre.P.L (Sum.elim (D.toPre.famφB α) (fun i => (𝟙 D.toPre.P.A * (toUnit D.toPre.P.A ≫ gp.b)).left ≫ D.toPre.famφB α i)) (DegPre.deltaε k))), ν.IsGen ∧ uL.IsGen ∧ (∀ α, (uM α).IsGen ∧ LB.Gen.Corr D.toPre.P.L _ _ _ _ (LB.pullGen D.toPre.P.L _ _ (uM α) (eSec D.toPre.P.A)) (LB.mulGen D.toPre.P.L _ _ _ _ (gp.s α) ν)) ∧ ∀ (σ σ' : H0 U.LG.L k) (f f' : ∀ α, D.toPre.SecB k α), GeneratorPullback.SecRel U.LG.L _ _ σ' _ _ σ (𝟙 G * (toUnit G ≫ x)).left _ _ uL → (∀ α, GeneratorPullback.SecRel D.toPre.P.L _ _ (f' α) _ _ (f α) (𝟙 D.toPre.P.A * (toUnit D.toPre.P.A ≫ gp.b)).left _ _ (uM α)) → ∀ e, U.ExpandsAt e k σ f → U.ExpandsAt e k σ' f' := by
   intro hGF R _ _ _ I hR hI D A G _ _ U k x gp hx hb H

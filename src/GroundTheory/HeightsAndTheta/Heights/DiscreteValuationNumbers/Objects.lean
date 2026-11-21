@@ -48,7 +48,6 @@ variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 def multAt (J W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [W.IsPrime] : ℕ∞ :=
   Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ J))
 
-open Classical in
 
 def divCycle (P : Ideal (MRing ι R)) (f : MRing ι R) (W : Ideal (MRing ι R)) : ℤ :=
   if h : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W then
@@ -71,7 +70,6 @@ variable {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
 def gradedPiece (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : K → ℕ) : Submodule F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) :=
   (weightedHomogeneousSubmodule F (blockWeight ι) m).map (Ideal.Quotient.mkₐ F P).toLinearMap
 
-open Classical in
 
 def hilbFn (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : K → ℤ) : ℤ :=
   if ∀ k, 0 ≤ m k then (Module.finrank F (gradedPiece P (fun k => (m k).toNat)) : ℤ) else 0
@@ -82,7 +80,6 @@ def diffStep (b : K → ℤ) (h : (K → ℤ) → ℤ) : (K → ℤ) → ℤ :=
 def mixedDiff {n : ℕ} (bs : Fin n → K → ℤ) (h : (K → ℤ) → ℤ) : (K → ℤ) → ℤ :=
   (List.ofFn bs).foldr diffStep h
 
-open Classical in
 
 def eventualValue (f : (K → ℤ) → ℤ) : ℤ :=
   if h : ∃ c, ∀ᶠ m in Filter.atTop, f m = c then h.choose else 0
@@ -143,7 +140,6 @@ theorem isMultiProjPrime_bot {R : Type*} [CommRing R] [IsDomain R] [∀ k, Nonem
     rw [Ideal.mem_bot]
     exact X_ne_zero _
 
-omit [DecidableEq K] in
 
 theorem divCycle_one {R : Type*} [CommRing R] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
     divCycle P 1 W = 0 := by

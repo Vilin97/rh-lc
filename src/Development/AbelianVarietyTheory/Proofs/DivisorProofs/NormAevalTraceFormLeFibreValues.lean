@@ -44,7 +44,6 @@ end GlobalTheory.HSAmp
 
 namespace GlobalTheory.HSAmp
 
-set_option maxHeartbeats 1000000 in
 
 theorem norm_aeval_trace_le : ∀ (K : Type) [Field K] [CharZero K] (D : ℕ) (x : Fin (D + 1) → K), (∀ j, x j ≠ 0) →
     AlgebraicIndependent ℤ (fun j : Fin D => x j.succ / x 0) → FiniteDimensional (ratF x) K →

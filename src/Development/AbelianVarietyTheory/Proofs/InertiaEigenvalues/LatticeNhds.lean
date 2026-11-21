@@ -274,7 +274,6 @@ theorem as_TW {G : Type} [Group G] [TopologicalSpace G] (LL : FinExt l)
   as_two (O := ↥(OL LL)) (P := ↥T.L.T) (frobW l) (GlobalTheory.ArtinSchreierWitt.main l).1
     (GlobalTheory.ArtinSchreierWitt.main l).2.1
 
-set_option maxHeartbeats 1600000 in
 
 theorem cob_TW {P : LocPrime l} (AI : LocAinf l P) (K LL : FinExt l)
     (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (H : Subgroup ↥(GK K))

@@ -140,7 +140,6 @@ section Global
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
 variable {Xo : Moduli Dw l}
 
-open Formalism.MainNotions.ModuliIntegralCharts.H1.ExpGC in
 
 theorem exists_gen_norm (wP : PrimTy H Xo) (hwP : wP.IsGen) (β : 𝓞 E) (N : ℕ) (hN : β * H.bar β = (N : 𝓞 E))
     (wL : AdTy Xo β) (hwL : wL.IsGen) :
@@ -189,7 +188,6 @@ theorem exists_gen_norm (wP : PrimTy H Xo) (hwP : wP.IsGen) (β : 𝓞 E) (N : �
 
 theorem one_left (T : Over Xo.X) : (1 : T ⟶ Xo.univ.t.G).left = (toUnit T).left ≫ eSec Xo.univ.t.G := rfl
 
-open Formalism.MainNotions.ModuliIntegralCharts.H1.ExpGC in
 
 theorem val_norm (wP : PrimTy H Xo) (hwP : IsPrim wP) (β : 𝓞 E) (N k : ℕ) (hN : β * H.bar β = (N : 𝓞 E))
     (wL : AdTy Xo β) (hwL : wL.IsGen)
@@ -461,7 +459,6 @@ theorem frame_eq (β : 𝓞 E) (N : ℕ) (hN : β * H.bar β = (N : 𝓞 E)) (wL
     ← map_mul, hw, map_mul, ← h3]
   ring
 
-omit hJ in
 
 theorem germ_eq (β : 𝓞 E) (N k : ℕ) (hN : β * H.bar β = (N : 𝓞 E)) (w : PS S 1 C.d)
     (hw : w * ∏ i ∈ Finset.range N, ev ![C.B.A.act 1, C.B.A.act ((i : 𝓞 E) * H.w0), C.B.A.act H.w0] C.B.ph2 =

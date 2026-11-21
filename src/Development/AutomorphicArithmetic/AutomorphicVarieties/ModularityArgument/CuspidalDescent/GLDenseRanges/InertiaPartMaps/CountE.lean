@@ -160,4 +160,3 @@ private theorem ce_cnt {M J : Type} [AddCommGroup M] [Module ℂ M] [Fintype J] 
   rw [hsum, Nat.cast_sum, Finset.sum_congr rfl fun i _ => h6 i, ← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul, ← hk,
     Nat.card_eq_fintype_card, Fintype.card_subtype]
 
-set_option maxHeartbeats 800000 in

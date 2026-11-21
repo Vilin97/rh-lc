@@ -113,7 +113,6 @@ theorem offS_plc {v : Pl D} (hv : v ∉ S) {t : Fv D.host.F v ⊗[D.host.F] D.ho
   · subst h; show compFin _ _ w _ ∈ _; rw [compFin_plc_self]; exact ht
   · show compFin _ _ w _ ∈ _; rw [compFin_plc_ne h]; exact zero_mem _
 
-set_option maxHeartbeats 800000 in
 
 theorem kap_supp (Q : Matrix (Fin r) (Fin r) D.host.E) (hQ : Q.det ≠ 0) (hψ : IsCharAF D.host.F ψ) :
     ∃ S₀ : Finset (Pl D), ∀ S, S₀ ⊆ S → ∀ (n : ℕ) (x : Mx D r n), ¬ IntOff S x →

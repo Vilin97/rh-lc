@@ -54,7 +54,6 @@ end GlobalTheory.Heat.WtDec
 
 namespace GlobalTheory.Heat.WtDec
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.RayEv in
 
 theorem isAffineHom_q : ∀ {R : Type} [CommRing R] [IsDomain R] {Q : DegPre R} {O : Type} [CommRing O] [StarRing O]
     [Module O Q.X] {oa : Q.OAct O} (Y : Ray oa), IsAffineHom Y.q.left := by

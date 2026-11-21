@@ -20,7 +20,6 @@ variable {Qp : Type} [Field Qp] (F : Type) [CommRing F] [Algebra Qp F]
     {V' : Type} [AddCommGroup V'] [Module LL V'] [Module Qp V'] [IsScalarTower Qp LL V']
     {V'' : Type} [AddCommGroup V''] [Module LL V''] [Module Qp V''] [IsScalarTower Qp LL V'']
 
-variable (Qp) in
 
 def bil (β : V →ₗ[LL] V' →ₗ[LL] V'') : V ⊗[Qp] F →ₗ[LL] V' ⊗[Qp] F →ₗ[LL] V'' ⊗[Qp] F :=
   TensorProduct.curry
@@ -31,7 +30,6 @@ def bil (β : V →ₗ[LL] V' →ₗ[LL] V'') : V ⊗[Qp] F →ₗ[LL] V' ⊗[Qp
     bil Qp F β (v ⊗ₜ[Qp] b) (w ⊗ₜ[Qp] b') = β v w ⊗ₜ[Qp] (b * b') := by
   simp [bil]
 
-variable (Qp LL V) in
 
 def sm : LL ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F := bil Qp F (LinearMap.lsmul LL V)
 
@@ -39,12 +37,10 @@ def sm : LL ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F := bil Qp F 
     sm Qp F LL V (c ⊗ₜ[Qp] b) (v ⊗ₜ[Qp] b') = (c • v) ⊗ₜ[Qp] (b * b') := by
   simp [sm]
 
-variable (Qp) in
 
 abbrev ext (f : V →ₗ[LL] V') : V ⊗[Qp] F →ₗ[LL] V' ⊗[Qp] F :=
   AlgebraTensorModule.map f (LinearMap.id : F →ₗ[Qp] F)
 
-variable (Qp LL V) in
 
 abbrev mulR (b : F) : V ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F :=
   AlgebraTensorModule.map (LinearMap.id : V →ₗ[LL] V) (LinearMap.mulLeft Qp b)
@@ -387,7 +383,6 @@ theorem act_bil (ρ : Representation LL G V) (ρ' : Representation LL G V') (ρ'
     | add r s hr hs => simp only [map_add (f := _), hr, hs]
     | tmul w b'' => simp [hβ]
 
-variable (LL) in
 
 abbrev actR (g : G) : LL ⊗[Qp] F →ₗ[LL] LL ⊗[Qp] F := actVdR PD (Representation.trivial LL G LL) g
 

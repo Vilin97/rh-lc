@@ -32,7 +32,6 @@ noncomputable section
 
 namespace GlobalTheory.Mem.R3.FrameCaseLifts
 
-open Formalism.IndefR.Seed Formalism.IndefR.Seed.Frm in
 
 theorem frames_by_cases_lifts {D : D7} (hY : ∀ j, FrmC.StdLat (D.sp.Y j)) (hX : FrmC.StdLat D.sp.X')
     (hV : ∀ j, FrmC.StdLat (D.sp.V j)) (hW : ∀ j, 1 ≤ j → j ≤ D.R.m → FrmC.StdLat (D.sp.W j)) (Pg : Finset (Pl D.host.E)) :
@@ -109,7 +108,6 @@ theorem exists_levCh_tuples_of_lifts : ∀ (X : Stages) (px : PreX X.B.toPre) (I
   rw [this]
   exact Ideal.mul_mem_left P.asIdeal _ hm
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_realDat_keep : ∀ (X : Stages) (px : PreX X.B.toPre) (I : ColIn X.B px) (hX : X.B.fields.Ok) (T : Top.TwDat X.B)
     (Wt : Set X.B.places.Pl) (Ks' : Type) [Field Ks'] [NumberField Ks'] [Algebra Ks' X.toD7.what₂.LL],

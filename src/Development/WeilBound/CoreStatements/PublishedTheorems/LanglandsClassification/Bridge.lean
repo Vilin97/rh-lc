@@ -32,9 +32,7 @@ variable {Lseg : Segment k → IrrGL k} {L : Multiset (Segment k) → IrrGL k} (
   (h3 : ∀ (𝔪 : Multiset (Segment k)) (h : ℕ) (Δ : Fin h → Segment k), IsOrderedForm Δ 𝔪 →
     ∃ hd : ∑ a, (Lseg (Δ a)).1 = (L 𝔪).1, IsCosocle (L 𝔪).rep (prodIrr (fun a => Lseg (Δ a)) hd))
 
-include h1 h3 in
 
-include h1 h3 in
 
 end
 

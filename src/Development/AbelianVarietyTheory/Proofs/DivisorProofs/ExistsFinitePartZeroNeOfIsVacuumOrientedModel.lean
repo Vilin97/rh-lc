@@ -44,8 +44,6 @@ theorem finPart_infTmul (x : Ainf D.host.F) (e : D.host.E) :
   show (0 : Af D.host.F) ⊗ₜ[D.host.F] _ = 0
   rw [TensorProduct.zero_tmul]
 
-set_option synthInstance.maxHeartbeats 160000 in
-set_option maxHeartbeats 1600000 in
 
 theorem decomp_AE (V : AddSubgroup (AE D)) (hV : IsOpen (V : Set (AE D))) (z : AE D) :
     ∃ e : D.host.E, ∃ u ∈ V, infPart D u = 0 ∧ ∃ r : AE D, finPart D r = 0 ∧ z = incA D e + u + r := by

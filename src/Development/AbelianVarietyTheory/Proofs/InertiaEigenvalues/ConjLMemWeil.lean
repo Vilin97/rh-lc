@@ -29,7 +29,6 @@ theorem mem_Dec_of_iff {F : Type} [Field F] [NumberField F] [Algebra F Ω] {A : 
 variable (s : L ≃ₐ[K] L) (g : G K Ω) (hgs : ∀ x : L, g (algebraMap L Ω x) = algebraMap L Ω (s x))
 include hgs
 
-omit [NumberField K] [NumberField L] in
 
 variable {A : ValuationSubring Ω}
 

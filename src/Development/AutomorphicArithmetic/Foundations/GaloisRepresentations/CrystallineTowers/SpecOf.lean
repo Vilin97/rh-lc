@@ -115,7 +115,6 @@ theorem sm_q {M : CrystallineSemistableComparison.Model l K.1} (h : M.Sm) : IsPr
   have hs : Smooth M.p := h.2
   exact ⟨inferInstance, inferInstance⟩
 
-variable (K) in
 
 abbrev IsoFam : Type 1 := ∀ {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K.1)) [Smooth q] [IsProper q] (a j : ℕ),
   CrystallineSemistableComparison.HT.Hdg q a (a + j) ≃ₗ[K.1] CrystallineSemistableComparison.Om.HodgeC q a j

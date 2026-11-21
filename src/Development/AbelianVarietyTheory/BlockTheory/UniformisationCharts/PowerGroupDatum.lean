@@ -37,7 +37,6 @@ variable (G : Over S)
 
 variable [GrpObj G]
 
-omit [GrpObj G] in
 
 end Power
 

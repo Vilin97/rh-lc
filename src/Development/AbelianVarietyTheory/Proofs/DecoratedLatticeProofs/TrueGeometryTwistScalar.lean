@@ -61,6 +61,5 @@ theorem GlobalTheory.TopLevQ.red_eq_zero_iff : ∀ {D : D7} {k : Type} [Field k]
     rw [h6, ← hred.ker, Formalism.L2.DIV.resS_oToS] at h2
     rw [← hz, h2]
 
-set_option maxHeartbeats 2000000 in
 
 end

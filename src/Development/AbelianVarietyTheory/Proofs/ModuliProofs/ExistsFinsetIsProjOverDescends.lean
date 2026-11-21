@@ -40,7 +40,6 @@ theorem baseChange_appLE_chartAlgEquiv {R R' : Type} [CommRing R] [CommRing R'] 
       exact congrArg (resG _ (baseChange_preimage_chart N φ i).ge) h3
   exact congrArg (fun ψ => ψ q) h
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem comap_map_baseChange {R R' : Type} [CommRing R] [CommRing R'] (N : ℕ) (φ : R →+* R')
     (I : (PSpace R' N).IdealSheafData) (T : ∀ i : Fin (N + 1), Set (MvPolynomial {j // j ≠ i} R'))
@@ -73,7 +72,6 @@ end GlobalTheory.ProjSpace
 
 namespace GlobalTheory
 
-open ProjSpace in
 
 theorem exists_finset_isProjOver_descends : ∀ (K : Type) [Field K] (K₀ : Subfield K) (X : Scheme.{0}) (p : X ⟶ Sp K), IsProjOver p → ∃ s : Finset K, ∀ K₁ : Subfield K, K₀ ≤ K₁ → (s : Set K) ⊆ K₁ → ∃ (X₁ : Scheme.{0}) (p₁ : X₁ ⟶ Sp K₁) (φ : X ⟶ X₁), IsProjOver p₁ ∧ IsPullback φ p p₁ (spMap K₁.subtype) := by
   classical

@@ -62,7 +62,6 @@ lemma half_unique {La : Type} [AddCommGroup La] (E E' : LinearMap.BilinForm ℤ 
 
 end GlobalTheory.UPel.HT.Build
 
-open GlobalTheory.UPel.HT.Build in
 
 theorem GlobalTheory.UPel.HT.exists_obj_unifAt_of_period : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (N : ℕ) (σ : R →+* ℂ) (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) (D' : PLat D.O D.inv) t Q, 0 < N → N.Coprime p → b.IsType σ ρ → D.Cls N D' t → IsPeriod D' ρ Q → ∃ (o : Obj b N (spMap σ)) (h : _) (hL : _) (e : _), UnifAt (o.fam h hL) σ ρ N D' t Q (𝟙 _) e := by
   intro p _ D R _ b N σ ρ D' t Q hN hNp htype hcls hper

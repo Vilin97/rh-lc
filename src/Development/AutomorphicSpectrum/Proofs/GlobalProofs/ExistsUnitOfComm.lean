@@ -232,11 +232,9 @@ namespace GlobalTheory.CompanionTheory.LeviGen
 variable {A : Type} [CommRing A] {s : A →+* A} {n r : ℕ} {J : Matrix (Fin n) (Fin n) A}
   {X Y : Matrix (Fin n) (Fin r) A}
 
-variable (s J X Y) in
 
 def prj (d : Fin r → A) : Matrix (Fin n) (Fin n) A := prX s J X Y d + prY s J X Y d
 
-variable (s J X Y) in
 
 def IsComm (G : Matrix (Fin n) (Fin n) A) (d : Fin r → A) : Prop :=
   G * prX s J X Y d = prX s J X Y d * G ∧ G * prY s J X Y d = prY s J X Y d * G

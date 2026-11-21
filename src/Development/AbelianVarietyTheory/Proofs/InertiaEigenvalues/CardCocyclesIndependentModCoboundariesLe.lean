@@ -35,7 +35,6 @@ theorem card_le_sum {k V ι : Type} [Field k] [AddCommGroup V] [Module k V] [Fin
 
 variable {k : Type} [Field k] {l n m : ℕ} [Fact l.Prime] [CharP k l] [NeZero n] {R : RingPG k l}
 
-omit [Fact l.Prime] [CharP k l] [NeZero n] in
 
 theorem cob_mem (D : ModPG R n (Vc k m)) (y : ZMod n → Vc k m) :
     ((fun i => D.φ i (y (i - 1)) - y i, fun i => D.γ i (y i) - y i) :
@@ -106,7 +105,6 @@ theorem gauge_one (D : ModPG R n (Vc k m)) (Dt : TopData n m) (N : Lats k n m)
     rw [hc]
     exact Submodule.sub_mem _ hdeep (hxB i h)
 
-omit [Fact l.Prime] [CharP k l] [NeZero n] in
 
 theorem span_prop {s : ℕ} (c : Fin s → Vc k m) (g : Vc k m →ₗ[k] Vc k m) (P Q : Submodule k⟦X⟧ (Vc k m))
     (h : ∀ a, c a ∈ P ∧ g (c a) - c a ∈ Q) :

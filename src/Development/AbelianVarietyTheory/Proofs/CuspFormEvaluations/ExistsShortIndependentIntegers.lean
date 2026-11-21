@@ -76,8 +76,6 @@ private lemma norm_sq_realCoords_eq_sum_norm_sq {K : Type} [Field K] [NumberFiel
   rw [Complex.sq_norm, Complex.normSq_apply]
   linear_combination (σ x).im ^ 2 * hε
 
-open NumberField Module Submodule in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.exists_short_independent_integers (K : Type) [Field K] [NumberField K] :
     ∃ ω : Fin (Module.finrank ℚ K) → 𝓞 K, LinearIndependent ℚ (fun k => (ω k : K)) ∧

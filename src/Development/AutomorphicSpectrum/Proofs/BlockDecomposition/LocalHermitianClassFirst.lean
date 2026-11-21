@@ -74,7 +74,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (Q : SelfR
   (hc : ∀ a : maximalRealSubfield E, cm (algebraMap _ k a) = φ (algebraMap _ E a))
   {n : ℕ} (ψ : Fld Q →ₗ[E] (Fin n → E))
 
-include hc in
 
 def vecT : k ⊗[maximalRealSubfield E] Fld Q →+ (Fin n → K) :=
   TensorProduct.liftAddHom
@@ -135,7 +134,6 @@ theorem vecT_alpha (t : k ⊗[maximalRealSubfield E] Fld Q) :
     ext i
     exact RingHom.map_mulVec φ A₀ (ψ y) i
 
-include hj hψ in
 
 theorem vecT_eval (m : K[X]) : ∀ t : k ⊗[maximalRealSubfield E] Fld Q,
     vecT Q φ cm hc ψ (eval₂RingHom ((inclBase Q k).toRingHom.comp j.toRingHom) ((1 : k) ⊗ₜ alpha Q) m * t) =

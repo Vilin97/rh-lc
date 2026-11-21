@@ -109,7 +109,6 @@ theorem hilbertSamuel_estimate_at_level (hP : _root_.GlobalTheory.CovTop.Hypothe
   refine ⟨by exact_mod_cast (h.geo f₁ f₂ th k).one_le_n, ?_⟩
   rw [hrk]
   exact hC
-set_option maxHeartbeats 1000000 in
 end GlobalTheory.HSShortRun
 end
 
@@ -123,5 +122,4 @@ open GlobalTheory.LevDesc (TypeFrame grpHR grpGHR latN levDet secRing transl pul
 open GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms (LevelAut)
 open GlobalTheory.BadCount
 open scoped TensorProduct
-set_option maxHeartbeats 1000000 in
 end

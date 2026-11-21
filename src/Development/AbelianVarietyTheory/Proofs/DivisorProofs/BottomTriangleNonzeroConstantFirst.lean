@@ -39,7 +39,6 @@ namespace GlobalTheory.BotClassSumSmall
 
 open scoped ComplexOrder
 
-open GlobalTheory.DefiniteClassAvg in
 
 theorem openCompact {D : D7} {T : Type} {A A' WW : HSp D} (X : Tri T A A' WW) (hstd : X.rA'.IsStd) :
     IsOpen (((Formalism.L2.DIV.St X.rA'.β).comap (Lev.finE A') : Subgroup (GA D A')) : Set (GA D A')) ∧
@@ -65,6 +64,5 @@ theorem openCompact {D : D7} {T : Type} {A A' WW : HSp D} (X : Tri T A A' WW) (h
   intro k hk
   exact ⟨finPart A' k, finPart_mem_levA A' hk, realPart A' k, realPart_mem A' k, finPart_mul_realPart A' k⟩
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.BotClassSumSmall

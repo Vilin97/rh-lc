@@ -62,7 +62,6 @@ theorem eq_zero_of_embedding_mem_isotropic {x : (D.sp.X 0).V} (hx : D.sp.iXY 0 x
   rw [← hc, map_zero]
   exact Finset.sum_eq_zero fun i _ => by rw [h0 i, zero_smul]
 
-include he hz in
 
 theorem orth_space_posDef_every_place (hT : 0 < Tu D u) : Cnt.IsPosDef (D.sp.X 0).hT := by
   intro τ x hx

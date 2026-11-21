@@ -119,7 +119,6 @@ def ratHom (σ : E →ₐ[F] E) (J : Matrix n n E) (R : Type) [CommRing R] [Alge
 
 end Unitary
 
-open NumberField in
 
 section Proofs
 

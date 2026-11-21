@@ -101,7 +101,6 @@ theorem map_mul_incA {m n : ℕ} {z : AE D} (hz : infPart D z = 0) (M : Matrix (
   · simp only [RingHom.map_mul, hz, zero_mul]
   · rw [RingHom.map_mul, RingHom.map_mul, finPart_incA, finPart_pair]
 
-set_option maxHeartbeats 1000000 in
 
 theorem symplO_split {S T : HSp D} {e : AE D} (h1 : e * e = e) (h2 : e * cA D e = 0) (u v : WO S T) :
     symplO S T u v = symplO S T (e • u) (cA D e • v) + symplO S T (cA D e • u) (e • v) +
@@ -178,7 +177,6 @@ theorem exists_den {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ}
     obtain ⟨s, hs, hsx⟩ := h
     exact hs (hle ((hI s).2 hsx))
 
-open GlobalTheory.IdemSupport GlobalTheory.OffIdemDen in
 
 theorem off_den_int : ∀ (D : D7) (e : AE D) (SS : Finset (Formalism.L2.DIV.Pl D.host.E)), IsIdemSum e SS → ∀ c : 𝓞 D.host.E, c ≠ 0 → (∀ Q : HeightOneSpectrum (𝓞 D.host.E), c ∈ Q.asIdeal → Q ∈ SS ∨ Formalism.L2.Col.conjPrime₂ Q ∈ SS) → finPart D ((1 - e - cA D e) * incA D ((c : D.host.E))⁻¹) ∈ intAE D := by
   intro D e SS he c hc0 hcQ
@@ -233,7 +231,6 @@ namespace GlobalTheory.AdForm.HalfASign
 
 open GlobalTheory.LatVac
 
-set_option maxHeartbeats 4000000 in
 
 theorem char_symplO_halfA : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) (δ : ℂ) (sc : ℝ), StdPair θ S T δ sc ψ → ∀ (e : AE D) (SS : Finset (Formalism.L2.DIV.Pl D.host.E)), IsIdemSum e SS → (∀ Q ∈ SS, ((D.host.QS * D.host.q * D.host.d : ℕ) : 𝓞 D.host.E) ∉ Q.asIdeal) → ∀ (N : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (N' : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S N → IsSelfDualC T N' → ∀ (c : ℕ), 0 < c → Odd c → ∀ x' ∈ halfAO SS (perO (D.host.AA0 : Submodule (𝓞 D.host.E) D.host.E) N N') c, ∀ y' ∈ halfAO SS (perO (D.host.AA0 : Submodule (𝓞 D.host.E) D.host.E) N N') c, ψ (symplO S T (finTens 1 (LinearMap.toMatrix' y')) (finTens 1 (LinearMap.toMatrix' x'))) = 1 := by
   intro D ψ θ S T δ sc hP e SS hE h2qd N N' hN hN' c hc hcQ x' hx y' hy

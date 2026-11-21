@@ -102,7 +102,6 @@ theorem norm_mul_eq_one {l : ℕ} [Fact l.Prime] (ι : ℂ ≃+* ℂ_[l]) (κ c 
 
 end KR
 
-open KR in
 
 theorem KernelRatio_of (hC : UnitaryConstant) : KernelRatio := by
   intro L ω₀ n _ _ h Λ α β g₀ g₁ D0 D1 hfix
@@ -242,7 +241,6 @@ theorem quadraticSemicharacterIdentityEquivalent_of_kernelRatio (hK : KernelRati
   · exact le_of_eq (KR.norm_mul_eq_one ι κ c _ hc8 hκ)
   · rw [hθκ, hc, smul_smul]
 
-open KR in
 
 theorem quadraticSemicharacterIdentityReformulated_of_kernelRatio_of_localStandard_of_kappaExists (hK : KernelRatio) (hL : LocalStandard) (hκ : KappaExists) : quadraticSemicharacterIdentityReformulated := by
   intro a b c d ha hd lam hlam hOK n _ _ h Λ g₀ hg₀ hsd hst i1 i2

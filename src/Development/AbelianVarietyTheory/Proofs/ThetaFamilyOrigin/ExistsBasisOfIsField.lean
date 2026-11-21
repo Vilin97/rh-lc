@@ -82,7 +82,6 @@ theorem exists_basis_of_isField {R M : Type} [CommRing R] [AddCommGroup M] [Modu
 
 attribute [local instance] Over.cartesianMonoidalCategory
 
-open Out in
 
 theorem exists_basis_sections (H : Out.GlobalSectionsRankAlgClosed) (K : Type) [Field K] [IsAlgClosed K]
     (P : Out.PolAV (Sp K)) (n : ℕ) (hn : 1 ≤ n) :

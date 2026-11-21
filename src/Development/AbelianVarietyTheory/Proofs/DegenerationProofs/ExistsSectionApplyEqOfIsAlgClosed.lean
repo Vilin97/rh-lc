@@ -149,8 +149,6 @@ private lemma exists_section_through_closed_fiber_point (V K : Type) [CommRing V
       PrimeSpectrum.ext hψq
     exact (congrArg hU.fromSpec this).trans hqx
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
 
 theorem _root_.GlobalTheory.exists_section_of_quasiFinite_flat :
     ∀ (V K : Type) [CommRing V] [IsDomain V] [ValuationRing V] [Field K] [IsAlgClosed K]

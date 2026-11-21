@@ -50,6 +50,5 @@ theorem latExp_nonneg (E : Type) [Field E] [NumberField E] (S : Finset ℕ) {p :
     positivity
   · exact le_rfl
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 end GlobalTheory.CompanionTheory.Ar.Small

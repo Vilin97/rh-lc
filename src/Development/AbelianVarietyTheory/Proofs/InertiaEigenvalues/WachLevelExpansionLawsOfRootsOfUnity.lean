@@ -30,7 +30,6 @@ variable {l : ℕ} [Fact l.Prime] {O L : Type} [CommRing O] [Field L] [CharZero 
 noncomputable def evOne (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) : O⟦X⟧ →ₐ[O] L⟦X⟧ :=
   (W.lev i ζ).comp (Pi.constAlgHom O (ZMod n) O⟦X⟧)
 
-omit [CharZero L] [Algebra ℚ L] in
 
 theorem lev_eq (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) (a : LetA O n) :
     W.lev i ζ a = evOne W i ζ (a i) := by

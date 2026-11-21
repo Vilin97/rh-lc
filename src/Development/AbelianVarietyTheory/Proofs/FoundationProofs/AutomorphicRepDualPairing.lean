@@ -28,7 +28,6 @@ def forms (ρ : Representation ℂ (infU E n) S) : Submodule ℂ (S →ₗ[ℂ] 
   smul_mem' c _ ha := ⟨fun v => Submodule.smul_mem _ c (ha.1 v), fun x v => by
     rw [LinearMap.smul_apply, LinearMap.smul_apply, ha.2, map_smul]⟩
 
-variable (E n S) in
 
 def post : Representation ℂ (finU E n) (S →ₗ[ℂ] (UA E n → ℂ)) where
   toFun k := LinearMap.llcomp ℂ _ _ _ (RU E n k)

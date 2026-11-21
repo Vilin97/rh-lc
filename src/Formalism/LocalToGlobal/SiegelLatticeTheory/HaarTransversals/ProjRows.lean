@@ -64,7 +64,6 @@ def ConvProj : Prop :=
     ∀ (K : Type) [NormedAddCommGroup K] [InnerProductSpace ℂ K] (π : G → (K →L[ℂ] K)) (T : K →L[ℂ] K),
       IsURep π → IsOpInt μ π ph T → IsRowProj π m T
 
-set_option linter.dupNamespace false in
 
 def ProdConv : Prop :=
   ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (G : ι → Type) [∀ i, Group (G i)] [∀ i, TopologicalSpace (G i)]

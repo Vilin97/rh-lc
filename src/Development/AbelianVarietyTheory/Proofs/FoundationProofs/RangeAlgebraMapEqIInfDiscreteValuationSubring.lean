@@ -500,7 +500,6 @@ instance isDiscreteValuationRing_adicCompletion_of_dvr :
     IsDiscreteValuationRing (AdicCompletion (maximalIdeal V) V) :=
   (adicCompletion_isDVR_irreducible V (IsDiscreteValuationRing.exists_irreducible V).choose_spec).2.1
 
-variable {V} in
 
 theorem irreducible_algebraMap_adicCompletion_of_dvr {π : V} (hπ : Irreducible π) :
     Irreducible (algebraMap V (AdicCompletion (maximalIdeal V) V) π) :=
@@ -514,7 +513,6 @@ variable {A : Type*} [CommRing A] [IsDomain A] [IsNoetherianRing A] [Ring.Dimens
   (K : Type*) {L : Type*} [Field K] [Algebra A K] [IsFractionRing A K] [Field L] [Algebra K L]
   [Algebra A L] [IsScalarTower A K L] [FiniteDimensional K L]
 
-include K in
 
 theorem krullAkizuki (B : Subalgebra A L) : IsNoetherianRing B ∧ Ring.DimensionLEOne B := by
   have hinj : Function.Injective (algebraMap A L) := by
@@ -548,7 +546,6 @@ theorem krullAkizuki (B : Subalgebra A L) : IsNoetherianRing B ∧ Ring.Dimensio
   · change algebraMap A L (d * c) * x = (d : A) • c • (x : L)
     rw [← mul_smul, Algebra.smul_def]
 
-include K in
 
 theorem isDedekindDomain_integralClosure_of_dimensionLEOne :
     IsDedekindDomain (integralClosure A L) := by
@@ -587,7 +584,6 @@ theorem range_algebraMap_eq_iInf_discreteValuationSubring [IsIntegrallyClosed R]
   ext x
   exact (IsIntegrallyClosed.isIntegral_iff (R := R) (K := K)).symm
 
-variable {R K} in
 
 theorem exists_algebraMap_eq_of_forall_discreteValuationSubring [IsIntegrallyClosed R] {x : K}
     (hx : ∀ V : ValuationSubring K, IsDiscreteValuationRing V → (∀ r, algebraMap R K r ∈ V) →
@@ -624,7 +620,6 @@ theorem map_maximalIdeal_pow_le {S O : Type*} [CommRing S] [IsLocalRing S] [Comm
   rw [Ideal.map_pow]
   exact Ideal.pow_right_mono (map_maximalIdeal_le φ) n
 
-open TensorProduct in
 
 theorem exists_complete_discreteValuationRing_ker_eq {S : Type u} [CommRing S]
     [IsNoetherianRing S] [IsLocalRing S] (q : Ideal S) [q.IsPrime] (hq : q ≠ maximalIdeal S) :
@@ -662,7 +657,6 @@ theorem exists_complete_discreteValuationRing_of_prime_lt {A : Type u} [CommRing
   · rw [← RingHom.comap_ker, h1, hc]
   · rw [← Ideal.comap_comap, maximalIdeal_comap, hm]
 
-open AlgebraicGeometry CategoryTheory in
 
 theorem exists_complete_discreteValuationRing_of_specializes {X : Scheme.{u}}
     [IsLocallyNoetherian X] {η x : X} (h : η ⤳ x) (hne : η ≠ x) :

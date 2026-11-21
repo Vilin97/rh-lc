@@ -78,7 +78,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 section Vec
 
-omit [NumberField E] in
 
 def splitVec (τ : E →ₐ[F] Fv F v) (y : Fin n → Fv F v ⊗[F] E) : Fin n → Fv F v := fun i => splitProj τ (y i)
 
@@ -124,7 +123,6 @@ def splitVecEquiv (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) :
   left_inv y := splitVec_ext h τ (by simp [splitVec_add]) (by simp [splitVec_add])
   right_inv p := by simp [splitVec_add]
 
-omit [NumberField E] in
 
 def splitGram (hJ : IsHermND σ J) (τ : E →ₐ[F] Fv F v) : GL (Fin n) (Fv F v) :=
   Matrix.GeneralLinearGroup.mkOfDetNeZero (J.map τ) (by
@@ -133,7 +131,6 @@ def splitGram (hJ : IsHermND σ J) (τ : E →ₐ[F] Fv F v) : GL (Fin n) (Fv F 
 omit [NumberField E] in
 @[simp] theorem splitGram_val (hJ : IsHermND σ J) (τ : E →ₐ[F] Fv F v) : (splitGram hJ τ).1 = J.map τ := rfl
 
-omit [NumberField E] in
 
 theorem map_comp_conj (hJ : IsHermND σ J) (τ : E →ₐ[F] Fv F v) : J.map (τ.comp σ) = (J.map τ)ᵀ :=
   Matrix.ext fun i j => congrArg τ (hJ.1 j i)
@@ -142,7 +139,6 @@ omit [NumberField E] in
 theorem JR_map_splitProj (J : Matrix (Fin n) (Fin n) E) (τ : E →ₐ[F] Fv F v) :
     (JR (Fv F v) J).map (splitProj τ) = J.map τ := Matrix.ext fun i j => splitProj_inclR τ (J i j)
 
-omit [NumberField E] in
 
 theorem splitProj_hLin (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (τ : E →ₐ[F] Fv F v)
     (y x : Fin n → Fv F v ⊗[F] E) :
@@ -161,8 +157,6 @@ end Vec
 
 section Group
 
-omit [NumberField E] in
-variable (σ J) in
 
 def splitHom (τ : E →ₐ[F] Fv F v) : GLoc σ J v →* GL (Fin n) (Fv F v) :=
   (bc (splitProj τ : Fv F v ⊗[F] E →+* Fv F v)).comp (matHom _ σ J)
@@ -188,21 +182,18 @@ theorem map_unitary (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (τ : E 
   congr 2
   exact Matrix.ext fun i j => (splitProj_comp τ σ _).symm
 
-omit [NumberField E] in
 
 theorem splitHom_unitary (τ : E →ₐ[F] Fv F v) (g : GLoc σ J v) :
     (splitHom σ J (τ.comp σ) g).1ᵀ * J.map τ * (splitHom σ J τ g).1 = J.map τ := by
   have hg : cT (sigR _ σ) (matHom _ σ J g).1 * JR (Fv F v) J * (matHom _ σ J g).1 = JR (Fv F v) J := g.2
   rw [splitHom_val, splitHom_val, ← map_unitary, hg, JR_map_splitProj]
 
-omit [NumberField E] in
 
 theorem pairing_splitHom (τ : E →ₐ[F] Fv F v) (g : GLoc σ J v) (u' u : Fin n → Fv F v) :
     ((splitHom σ J (τ.comp σ) g).1 *ᵥ u') ⬝ᵥ J.map τ *ᵥ ((splitHom σ J τ g).1 *ᵥ u) = u' ⬝ᵥ J.map τ *ᵥ u := by
   conv_rhs => rw [← splitHom_unitary τ g]
   rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec u', Matrix.vecMul_transpose]
 
-omit [NumberField E] in
 
 theorem splitHom_comp (hJ : IsHermND σ J) (τ : E →ₐ[F] Fv F v) (g : GLoc σ J v) :
     splitHom σ J (τ.comp σ) g = dualConj (splitGram hJ τ) (splitHom σ J τ g) :=
@@ -312,7 +303,6 @@ end Group
 
 section Level
 
-omit [NumberField E] in
 
 def splitLat (τ : E →ₐ[F] Fv F v) (L : Submodule (𝓞 E) (Fin n → E)) :
     Submodule (v.adicCompletionIntegers F) (Fin n → Fv F v) where
@@ -340,7 +330,6 @@ theorem splitIncl_mem_latLoc_iff (h : IsCMExt F E σ) {u : Fin n → Fv F v} :
   rw [splitIncl_splitVec]
   exact (latLoc F L v).smul_mem ⟨_, splitIdem_mem h τ⟩ hy
 
-variable (τ) in
 
 theorem mem_latLoc_iff_split (h : IsCMExt F E σ) {y : Fin n → Fv F v ⊗[F] E} :
     y ∈ latLoc F L v ↔ splitVec τ y ∈ splitLat τ L ∧ splitVec (τ.comp σ) y ∈ splitLat (τ.comp σ) L := by
@@ -378,12 +367,10 @@ theorem splitHom_mulVec_inv (g : GLoc σ J v) (u : Fin n → Fv F v) :
     (splitHom σ J τ g).1 *ᵥ ((splitHom σ J τ g⁻¹).1 *ᵥ u) = u := by
   rw [Matrix.mulVec_mulVec, map_inv, Units.mul_inv, Matrix.one_mulVec]
 
-omit [NumberField E] in
 
 theorem splitHom_mem_stabGL {g : GLoc σ J v} (hg : g ∈ stabLoc σ J L v) : splitHom σ J τ g ∈ stabGL (splitLat τ L) :=
   fun u => ⟨splitHom_mulVec_mem hg, fun hu => splitHom_inv_mulVec (τ := τ) g u ▸ splitHom_mulVec_mem (inv_mem hg) hu⟩
 
-variable (τ) in
 
 theorem mem_stabLoc_iff_splitLat (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hL : IsSelfDualAt σ J L v)
     {g : GLoc σ J v} : g ∈ stabLoc σ J L v ↔ splitHom σ J τ g ∈ stabGL (splitLat τ L) := by
@@ -396,8 +383,6 @@ theorem mem_stabLoc_iff_splitLat (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hL :
   · rw [← pairing_splitHom τ g]
     exact H _ ((hg u).1 hu)
 
-omit [NumberField E] in
-variable (τ L β) in
 
 def IsSplitBasis : Prop :=
   ∀ u : Fin n → Fv F v, (∀ i, u i ∈ v.adicCompletionIntegers F) ↔ β.1 *ᵥ u ∈ splitLat τ L
@@ -406,7 +391,6 @@ variable (τ) in
 theorem isSplitBasis_stdLattice (h : IsCMExt F E σ) : IsSplitBasis τ (stdLattice E n) 1 := fun u => by
   rw [Units.val_one, Matrix.one_mulVec, mem_splitLat_stdLattice h]
 
-variable (τ) in
 
 theorem IsLatticeFrame.isSplitBasis (h : IsCMExt F E σ) {a : GL (Fin n) (AF F ⊗[F] E)} (ha : IsLatticeFrame L a) :
     IsSplitBasis τ L (bc (splitProj τ : Fv F v ⊗[F] E →+* Fv F v) (bc (compFin F E v) a)) := fun u => by
@@ -417,7 +401,6 @@ theorem IsLatticeFrame.isSplitBasis (h : IsCMExt F E σ) {a : GL (Fin n) (AF F �
   rw [← splitIncl_mem_latLoc_iff h, ← e, ← ha v, ← mem_latLoc_stdLattice, splitIncl_mem_latLoc_iff,
     mem_splitLat_stdLattice h]
 
-variable (τ L) in
 
 theorem exists_isSplitBasis (h : IsCMExt F E σ) [Submodule.IsLattice E L] : ∃ β, IsSplitBasis τ L β :=
   (Frames.exists_isLatticeFrame (F := F) L).elim fun _ ha => ⟨_, ha.isSplitBasis τ h⟩
@@ -447,7 +430,6 @@ theorem IsSplitBasis.mem_iff (hβ : IsSplitBasis τ L β) {u : Fin n → Fv F v}
     u ∈ splitLat τ L ↔ ∀ i, ((β⁻¹).1 *ᵥ u) i ∈ v.adicCompletionIntegers F := by
   rw [hβ, Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]
 
-omit [NumberField E] in
 
 theorem IsSplitBasis.iff_mem_GLint (hβ : IsSplitBasis τ L β) {β' : GL (Fin n) (Fv F v)} :
     IsSplitBasis τ L β' ↔ β⁻¹ * β' ∈ GLint (Fin n) (v.adicCompletionIntegers F).toSubring := by
@@ -481,8 +463,6 @@ section Red
 
 variable {τ : E →ₐ[F] Fv F v} {L : Submodule (𝓞 E) (Fin n → E)} {β : GL (Fin n) (Fv F v)}
 
-omit [NumberField E] in
-variable (σ J τ L) in
 
 def stabLocOne : Subgroup (GLoc σ J v) where
   carrier := {g | g ∈ stabLoc σ J L v ∧ ∀ u ∈ splitLat τ L, (splitHom σ J τ g).1 *ᵥ u - u ∈
@@ -503,7 +483,6 @@ omit [NumberField E] in
 theorem mem_stabLocOne {g : GLoc σ J v} : g ∈ stabLocOne σ J τ L ↔ g ∈ stabLoc σ J L v ∧ ∀ u ∈ splitLat τ L,
     (splitHom σ J τ g).1 *ᵥ u - u ∈ IsLocalRing.maximalIdeal (v.adicCompletionIntegers F) • splitLat τ L := Iff.rfl
 
-omit [NumberField E] in
 
 theorem IsSplitBasis.mem_smul_iff (hβ : IsSplitBasis τ L β) {u : Fin n → Fv F v} :
     u ∈ IsLocalRing.maximalIdeal (v.adicCompletionIntegers F) • splitLat τ L ↔
@@ -529,7 +508,6 @@ theorem IsSplitBasis.mem_smul_iff (hβ : IsSplitBasis τ L β) {u : Fin n → Fv
     · subst e; simp
     · simp [e]
 
-omit [NumberField E] in
 
 theorem IsSplitBasis.mem_stabLocOne_iff (hβ : IsSplitBasis τ L β) {g : GLoc σ J v} :
     g ∈ stabLocOne σ J τ L ↔
@@ -606,7 +584,6 @@ variable {τ : E →ₐ[F] Fv F v} {L : Submodule (𝓞 E) (Fin n → E)} {β : 
 theorem dualConj_one_val {K : Type} [Field K] (x : GL (Fin n) K) : (dualConj 1 x).1 = (x⁻¹).1ᵀ := by
   simp only [dualConj_val, inv_one, Units.val_one, one_mul, mul_one]
 
-include h in
 
 theorem IsSplitBasis.dual (hL : IsSelfDualAt σ J L v) (hβ : IsSplitBasis τ L β) :
     IsSplitBasis (τ.comp σ) L (dualConj 1 (splitGram hJ τ * β)) := fun c => by
@@ -631,12 +608,8 @@ theorem splitEquivIn_comp (τ : E →ₐ[F] Fv F v) (β : GL (Fin n) (Fv F v)) (
   congr 1
   group
 
-omit [NumberField E] in
 
-omit [NumberField E] in
 
-include h in
-variable (J τ L) in
 
 theorem isOpen_stabLocOne [Submodule.IsLattice E L] : IsOpen (stabLocOne σ J τ L : Set (GLoc σ J v)) := by
   obtain ⟨β, hβ⟩ := exists_isSplitBasis τ L h
@@ -655,7 +628,6 @@ end Swap
 
 section Ties
 
-open ValuativeRel in
 
 theorem GLint_eq_KO_and_princ_eq_KOne (v : HeightOneSpectrum (𝓞 F)) (n : ℕ) :
     letI := GlobalTheory.LocalData.complRel v

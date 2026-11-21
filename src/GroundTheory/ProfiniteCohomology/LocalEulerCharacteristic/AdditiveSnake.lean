@@ -92,7 +92,6 @@ theorem toFun_range_of_injective (ρ : Representation (ZMod l) Γ X)
   rw [d.toFun_eq_ker_add_range ρ σ φ hφ,
     d.toFun_eq_zero_of_subsingleton (X := LinearMap.ker φ), zero_add]
 
-omit [Finite X] in
 
 theorem toFun_range_of_surjective (ρ : Representation (ZMod l) Γ X)
     (σ : Representation (ZMod l) Γ Y) (φ : X →ₗ[ZMod l] Y) (hφ : ρ.IsIntertwiningMap σ φ)
@@ -227,12 +226,10 @@ theorem connecting_spec (c : TorsN C n) (b : B) (a : A) (hb : h b = c) (ha : f a
     connecting hh hfh hf c = Submodule.Quotient.mk a :=
   connectingFun_spec hh hfh hf c b a hb ha
 
-omit hh hfh in
 
 theorem torsNMap_injective : Function.Injective (torsNMap n f) := fun _ _ hxy =>
   Subtype.ext (hf (congrArg Subtype.val hxy))
 
-omit hh in
 
 theorem exact_torsNMap_torsNMap : Function.Exact (torsNMap n f) (torsNMap n h) := by
   intro y
@@ -278,7 +275,6 @@ theorem exact_connecting_modNMap : Function.Exact (connecting hh hfh hf) (modNMa
     simp only [LinearMap.lsmul_apply, natCast_zsmul] at hy
     rw [smul_sub, ← ha', ← map_nsmul, ← map_sub, hy, sub_sub_cancel]
 
-omit hf in
 
 theorem exact_modNMap_modNMap : Function.Exact (modNMap n f) (modNMap n h) := by
   intro q
@@ -299,7 +295,6 @@ theorem exact_modNMap_modNMap : Function.Exact (modNMap n f) (modNMap n h) := by
     refine ⟨-h y, ?_⟩
     rw [smul_neg, ← map_nsmul, hy, map_sub, (hfh _).2 ⟨a, rfl⟩, zero_sub, neg_neg]
 
-omit hfh hf in
 
 theorem modNMap_surjective : Function.Surjective (modNMap n h) := by
   intro q

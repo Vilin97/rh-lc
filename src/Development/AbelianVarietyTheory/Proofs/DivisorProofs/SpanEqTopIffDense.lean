@@ -142,6 +142,5 @@ namespace GlobalTheory.Morita
 variable {R : Type*} [CommRing R] {N : Type*} [AddCommGroup N] [Module R N]
   {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-open MatrixUnits in
 
 end GlobalTheory.Morita

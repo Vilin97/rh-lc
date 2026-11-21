@@ -46,7 +46,6 @@ variable {k : Type} [Field k] {ι κ : Type} [LinearOrder ι] [LinearOrder κ] {
 
 def sortSign (τ : κ → ι) (s : Finset κ) : ℤ := ∏ a ∈ s, ∏ b ∈ s, if a < b ∧ τ b < τ a then -1 else 1
 
-open Classical in
 
 def pullC (τ : κ → ι) (φ : E →ₗ[k] E') : (Finset ι → E) →ₗ[k] (Finset κ → E') where
   toFun c s := if Set.InjOn τ s then sortSign τ s • φ (c (s.image τ)) else 0

@@ -305,7 +305,6 @@ theorem isCyclotomic_iff (R : RingPG k l) (ι : k⸨X⸩ →ₐ[k] k⸨X⸩) :
       exact ⟨fun h => ⟨⟨b, rfl⟩, h⟩, fun h => h.2⟩
     · rw [hγ, hab, gam_coe]
 
-omit hl [CharP k l] in
 
 theorem psiRing_iff (R : RingPG k l) (ψ : k⸨X⸩ →ₗ[k] k⸨X⸩) :
     OnePlusPowerCharacters.PsiRing R ψ ↔ FrobeniusBinomialReduction.PsiRing R ψ := by

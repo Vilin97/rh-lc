@@ -19,7 +19,6 @@ def perpVector (ε : ι → Module.Dual R M) (e' : ι → M) (g : M) : M :=
   (pairingMatrix ε e').det • g
     - ∑ a, ∑ a', ((pairingMatrix ε e').adjugate a a' * ε a g) • e' a'
 
-omit [Fintype ι] [DecidableEq ι] in
 
 section Integral
 
@@ -141,7 +140,6 @@ section Form
 variable {R M ι : Type*} [CommRing R] [AddCommGroup M] [Module R M] [Fintype ι] [DecidableEq ι]
   {σ : R →+* R}
 
-omit [Fintype ι] [DecidableEq ι] in
 
 end Form
 

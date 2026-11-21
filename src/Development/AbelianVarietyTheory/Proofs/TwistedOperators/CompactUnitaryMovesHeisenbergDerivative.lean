@@ -29,7 +29,6 @@ theorem tens_split {κ : Type} (φ : (κ → mixedEmbedding.mixedSpace F) → �
     funext fun i => GlobalTheory.ArchIsom.evI_splitEquiv κ _ i
   simp only [tens, hz, archimedean_isomorphism_split_trivial, mul_one]
 
-open scoped Classical in
 
 theorem proj_mem_adm {κ : Type} [Fintype κ] (x : κ → AF F) :
     (LinearMap.proj x : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) ∈ (adeleClass F).adm κ := by
@@ -41,8 +40,6 @@ theorem proj_mem_adm {κ : Type} [Fintype κ] (x : κ → AF F) :
 
 end GlobalTheory.KHeisComm
 
-open GlobalTheory.KHeisComm in
-open scoped Classical in
 
 theorem GlobalTheory.KHeisComm.actsD_heisLine_mat_mul : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ)

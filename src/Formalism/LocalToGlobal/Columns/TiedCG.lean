@@ -51,7 +51,6 @@ def IsExt (z0 : Fin (D.R.N D.R.m) → D.host.E) {R : Type} [CommRing R] (φ : D.
 
 variable {D}
 
-set_option maxHeartbeats 1000000 in
 
 structure ClsPTied (u : D.what₂.Word) where
 
@@ -77,9 +76,7 @@ structure ClsPTied (u : D.what₂.Word) where
 def sgT (u : D.what₂.Word) : D.what₂.Tau → DomWeight (D.R.N D.R.m - 1) :=
   fun τ => shW ((D.fm u).sg τ) ((D.R.m * (D.R.t + 1) / 2 : ℕ) : ℤ)
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 structure TilTied (u : D.what₂.Word) (A : AtTTied u) (K : ClsPTied u) (P : LvTied u A D.R.m le_rfl) where
   z0 : Fin (D.R.N D.R.m) → D.host.E
@@ -92,11 +89,8 @@ structure TilTied (u : D.what₂.Word) (A : AtTTied u) (K : ClsPTied u) (P : LvT
     (r : D.host.E) = hform (sigD D : D.host.E →+* D.host.E) (gramN D D.R.m le_rfl) z0 ((ga c).1.1 *ᵥ x.1) →
     (D.fm u).fv D.R.m v ((D.fm u).til c) (P.pr v _ x) = A.res v r
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
 structure TilAd {u : D.what₂.Word} {A : AtTTied u} {K : ClsPTied u} {P : LvTied u A D.R.m le_rfl}
     (Tl : TilTied u A K P) (Km : ClsTied u D.R.m le_rfl) where
@@ -106,7 +100,6 @@ structure TilAd {u : D.what₂.Word} {A : AtTTied u} {K : ClsPTied u} {P : LvTie
     bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) (Tl.ga c).1 * (Km.y ((D.fm u).til c)).1 =
       g * (ka c).1
 
-set_option maxHeartbeats 4000000 in
 
 end XP
 
@@ -114,9 +107,7 @@ section All
 
 variable {D : ColRec}
 
-open Classical in
 
-set_option maxHeartbeats 1000000 in
 
 end All
 

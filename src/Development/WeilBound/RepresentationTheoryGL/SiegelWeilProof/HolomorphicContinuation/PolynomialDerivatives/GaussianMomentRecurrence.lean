@@ -76,7 +76,6 @@ theorem phi_rel (c : ℝ) (hc : 0 < c) (u : Fin m × Fin n × Bool →₀ ℕ) (
 
 variable (hM : OneMom)
 
-include hM in
 
 theorem mom_pderiv (c : ℝ) (hc : 0 < c) (k : Fin m × Fin n × Bool) (Q : PX m n) :
     mom c (pderiv k Q) = (c : ℂ) * mom c (X (flip k) * Q) := by

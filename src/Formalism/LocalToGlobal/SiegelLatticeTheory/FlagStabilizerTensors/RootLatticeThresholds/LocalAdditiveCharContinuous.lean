@@ -238,7 +238,6 @@ attribute [local instance] factRes
 
 variable {D : D7}
 
-variable (D) in
 
 def LocTied : Prop := ∀ p : PlF D, Nonempty (Formalism.L2.S.LocIso (D.s.atP p) (Formalism.L2.S.locC D p))
 

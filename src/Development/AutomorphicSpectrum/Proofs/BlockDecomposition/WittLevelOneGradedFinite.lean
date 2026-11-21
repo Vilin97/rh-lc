@@ -69,7 +69,6 @@ theorem serre_red [IsNoetherianRing R] (F : Thick (nlFun γ p X q κ) ⥤ Module
   obtain ⟨𝒮, h𝒮⟩ := serre_fg R
   exact (h𝒮 _).1 (GlobalTheory.CompanionTheory.GlobSt.glob_st.2.1 F Q U 𝒮 j fun a b hab => (h𝒮 _).2 (h a b hab))
 
-include hI in
 
 theorem fin_gen [IsNoetherianRing R] (hp : p ≠ 0) (hn : IsNilpotent (p : R)) [IsProper q] (U : Cov q) (r j : ℕ) :
     Module.Finite R (HU (GF (nlFun γ p X q κ) r) (St ⊤ (Set.range U.U)) j) := by

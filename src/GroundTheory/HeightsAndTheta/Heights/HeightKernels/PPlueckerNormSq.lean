@@ -34,7 +34,6 @@ theorem rowsOf_conjTranspose {j N : ℕ} (A : Matrix (Fin j) (Fin N) ℂ)
 
 end PlueckerNormSqAlt
 
-open PlueckerNormSqAlt in
 
 theorem PlueckerNormSq.proof (h : CauchyBinet.Statement) : PlueckerNormSq.Statement := by
   intro j m Z

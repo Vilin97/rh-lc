@@ -44,9 +44,7 @@ section Deep
 variable (T : CoreJ D) (j : ℕ) {l : Level T.Q.H} (Xo : Moduli (T.Q.Dw j) l) (c : Coeff l)
   (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ D.R.r) (dict : ∀ σ, GA D (D.sp.W j) → Σ k, Frame ((U σ).X k).Ψ D.R.r)
 
-variable (L) in
 
-variable {T j} in
 
 variable {Q T j Xo c U dict}
 
@@ -56,7 +54,6 @@ section Restrict
 
 variable {K M M' : Type} [Field K] [AddCommGroup M] [Module K M] [AddCommGroup M'] [Module K M']
 
-open Classical in
 
 def restrictOr (φ : M →ₗ[K] M') (C : Submodule K M) (C' : Submodule K M') : C →ₗ[K] C' :=
   if h : ∀ x ∈ C, φ x ∈ C' then φ.restrict h else 0
@@ -84,12 +81,9 @@ theorem levPh_mem_cuspW {G G' : WTZ E} (hG : Even G.2) (hG' : Even G'.2) (hK : K
   rw [levPh_apply, levTr_apply]
   exact Submodule.sum_mem _ fun g _ => Submodule.smul_mem _ _ (hK _ _ (mul_mem_cuspW hG hG' hf (hK' _ _ hu)))
 
-variable (U) in
 
 end Keeps
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure LiftData (T : CoreJ D) (i : Fin D.R.m) : Type 1 where
 
@@ -141,7 +135,6 @@ def facOf : SlopeBoundLiftData Y.c.F (pageOf Q) :=
   facWith Q Y.U Y.dict h (inR_succ i) CI C2 (mixVals Y.Xo Y.c (bZero Q ((i : ℕ) + 1))) Y.Hb Y.NN Y.Ph Y.eGood
     (Nat.card (LevelGroup D.host))
 
-open Classical in
 
 def LiftData.ofCore (hT : LawsJ T) (i : Fin D.R.m) (ψ : ∀ v : Sq D.host, AddChar (ZMod (D.host.g v.1)) T.Q.c.F)
     (om : ∀ k : Fin 2, (ZMod (D.host.g k))ˣ →* (T.Q.c.F)ˣ)

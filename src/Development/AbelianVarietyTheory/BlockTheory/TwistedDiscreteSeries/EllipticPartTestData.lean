@@ -209,7 +209,6 @@ theorem exists_isTorusMeas (P : PPol σ r) : ∃ dta dtf dt, IsTorusMeas P dta d
 def torVol (P : PPol σ r) (dt : Measure (Tor P (AF F))) : ENNReal :=
   quotMeasure (ratPts (star' P) (one₁ P)) dt univ
 
-open Classical in
 
 def PhiReal (P : PPol σ r) {w : InfinitePlace F} (τ : EmbOver E w) (lam : Fin r → ℤ)
     (dt : Measure (Tor P w.Completion)) : ℂ :=

@@ -26,7 +26,6 @@ theorem prod_block_pow {R : Type} [CommMonoid R] (e : (Σ k, ι k) →₀ ℕ) (
     (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _)
   exact h.symm.trans (Finsupp.prod_fintype _ _ (fun _ => pow_zero _))
 
-omit [Fintype K] in
 
 theorem blockDeg_le_totalDegree (g : MvPolynomial (Σ k, ι k) S) :
     ∀ e ∈ g.support, ∀ k, blockDeg e k ≤ g.totalDegree := by

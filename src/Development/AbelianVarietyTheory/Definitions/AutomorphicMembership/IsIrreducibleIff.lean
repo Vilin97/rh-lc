@@ -35,7 +35,6 @@ theorem isIrreducible_iff {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Repre
 
 variable [TopologicalSpace G]
 
-variable (G) in
 
 structure SmIrr where
 
@@ -49,17 +48,14 @@ structure SmIrr where
 
 attribute [instance] SmIrr.acg SmIrr.mod
 
-variable (G) in
 
 instance SmIrr.setoid : Setoid (SmIrr G) where
   r σ σ' := Nonempty (σ.ρ.Equiv σ'.ρ)
   iseqv := ⟨fun σ => ⟨.refl σ.ρ⟩, fun ⟨e⟩ => ⟨e.symm⟩, fun ⟨e⟩ ⟨e'⟩ => ⟨e.trans e'⟩⟩
 
-variable (G) in
 
 def Irr : Type 1 := Quotient (SmIrr.setoid G)
 
-variable (G) in
 
 def SmIrr.triv : SmIrr G where
   V := ℂ

@@ -59,7 +59,6 @@ theorem eq_of_pow_eq_one_of_residue_eq {m : ℕ} (hm : (m : 𝓀[L]) ≠ 0) {x y
     rw [← IsLocalRing.residue_ne_zero_iff_isUnit]
     simpa using hm
 
-omit [TopologicalSpace L] [IsNonarchimedeanLocalField L] in
 
 theorem mem_integer_of_pow_eq_one {m : ℕ} (hm : m ≠ 0) {x : L} (hx : x ^ m = 1) : x ∈ 𝒪[L] := by
   rw [Valuation.mem_integer_iff]

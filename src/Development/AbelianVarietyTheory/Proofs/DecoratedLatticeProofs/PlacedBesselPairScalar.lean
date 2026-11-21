@@ -63,8 +63,6 @@ end GlobalTheory.MiTop.UnitAtLevel
 
 namespace GlobalTheory.MiTop
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.MiTop
 

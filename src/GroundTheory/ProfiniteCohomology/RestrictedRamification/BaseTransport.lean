@@ -86,7 +86,6 @@ def transportLocalCohomology (n : ℕ) :
     (continuous_mulEquiv_toMonoidHom (ψ i)) (transportLocalMor φ φ' θ e ψ hcomm f i) n).hom.comp
       (LinearMap.proj (e i)))
 
-omit [IsTopologicalGroup G] [IsTopologicalGroup G'] in
 
 theorem homologyMap_transportLocal_localCohomologyIso (n : ℕ) :
     HomologicalComplex.homologyMap (transportLocal φ φ' θ e ψ hcomm f) n ≫
@@ -173,7 +172,6 @@ variable {K₁ K₂ : Type u} [Group K₁] [TopologicalSpace K₁] [IsTopologica
   (a : Rep.res ι₀ A ⟶ A₁) (b : Rep.res ι₀ B ⟶ B₁) (c : Rep.res ι₀ C ⟶ C₁) (μ : A ⊗ B ⟶ C)
   (μ₁ : A₁ ⊗ B₁ ⟶ C₁) (hμ : (Rep.resFunctor ι₀).map μ ≫ c = resTensorHom ι₀ a b ≫ μ₁)
 
-include hμ in
 
 theorem cochainsMapAlong_cupPairingCochains {r s n : ℕ} (h : r + s = n) (x : (cochainsComplex A).X r)
     (z : (cochainsComplex B).X s) :
@@ -206,7 +204,6 @@ variable {A' B' C' : Rep.{u} k G'} [IsDiscreteRep A'] [IsDiscreteRep B'] [IsDisc
 omit [IsTopologicalGroup G] [IsTopologicalGroup G'] [∀ i, IsTopologicalGroup (H i)]
   [∀ j, IsTopologicalGroup (H' j)] [IsDiscreteRep A'] [IsDiscreteRep B'] [IsDiscreteRep C']
   [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRep C] in
-include hμ in
 
 theorem transportLocalMor_pairing (i : ι) :
     (Rep.resFunctor (ψ i).toMulEquiv.toMonoidHom).map ((Rep.resFunctor (φ' (e i)).toMonoidHom).map μ') ≫
@@ -222,8 +219,6 @@ theorem transportLocalMor_pairing (i : ι) :
   exact congrArg (fun F : Rep.res θ.toMulEquiv.toMonoidHom (A' ⊗ B') ⟶ C =>
     F.hom ((a : A') ⊗ₜ[k] (b : B') : (A' ⊗ B' : Rep k G'))) hμ
 
-omit [IsTopologicalGroup G] [IsTopologicalGroup G'] in
-include hμ in
 
 theorem transportLocal_pi_cup {r s n : ℕ} (hh : r + s = n)
     (y₀ : (piComplex fun j => cochainsComplex (Rep.res (φ' j).toMonoidHom A')).X r)
@@ -255,7 +250,6 @@ theorem transportLocal_pi_cup {r s n : ℕ} (hh : r + s = n)
     ((Rep.resFunctor (φ i).toMonoidHom).map μ)
     (transportLocalMor_pairing φ φ' θ e ψ hcomm fA fB fC μ' μ hμ i) hh (y₀ (e i)) (w₀ (e i))
 
-include hμ in
 
 theorem compactTransport_compactCupRes {r s n : ℕ} (h : r + s = n) (y : compactCohomologyRes φ' A' r)
     (x : cohomology B' s) :

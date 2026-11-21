@@ -6,7 +6,6 @@ public import Mathlib
 
 namespace GlobalTheory
 
-open Module in
 
 theorem eq_zero_of_sum_mul_embeddings_eq_zero (F Ω L : Type) [Field F] [CharZero F] [Field Ω]
     [IsAlgClosed Ω] [Algebra F Ω] [Field L] [Algebra F L] [FiniteDimensional F L] (m : ℕ)

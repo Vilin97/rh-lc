@@ -53,7 +53,6 @@ variable [Algebra c.F ℂ]
 variable (F : FamilyUnif Xo σ' ty) (i : Fin F.n) (P : (F.Di i).La →+ (Fin g → ℂ)) (hP : IsPeriod (F.Di i) ty P)
   (y : FrPt Xo c ℂ) (hy : y.x = F.u i P)
 
-include hP in
 
 theorem basis_single (e' : Fin g ≃ Lt1 Dw) (v : Fin g → ℂ) :
     ∃! a : Lt1 Dw → ℂ, ∀ j, ∑ ℓ, a ℓ * (if j = e'.symm ℓ then (1 : ℂ) else 0) = v j := by

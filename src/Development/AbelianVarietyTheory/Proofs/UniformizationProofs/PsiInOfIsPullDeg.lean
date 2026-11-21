@@ -166,7 +166,6 @@ theorem psiOn_val {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} {W : (Spec
 
 end PsiInPull
 
-open PsiInPull in
 
 theorem psiIn_of_isPullDeg (R R' : Type) [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R'] (φ : R →+* R')
     (D : DegPre R) (D' : DegPre R') (hD : IsPullDeg φ D D') (x : D'.X) (J : Ideal R) (J' : Ideal R')

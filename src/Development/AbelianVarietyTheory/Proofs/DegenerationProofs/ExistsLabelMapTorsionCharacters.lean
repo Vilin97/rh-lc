@@ -44,7 +44,6 @@ theorem exists_lift_points {S S' : Scheme.{0}} {G : Over S} {G' : Over S'} [GrpO
   obtain ⟨a, ha⟩ := hk (Φ x) (by rw [← map_pow, hx, map_one])
   exact ⟨a, ((key a x).1 ha.symm).symm⟩
 
-attribute [local instance] TorusExt.gtGroup in
 
 theorem pow_eq_one_of_qkAdd {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} {F : Type} [Field F]
     [Algebra (FractionRing R) F] (hB : D.TauBimult) {k : ℕ} {M : Type} [Group M] (f : QkPt D F k → M)

@@ -67,7 +67,6 @@ instance isDenseSubsite_overEquivalence_inverse :
       ((Opens.grothendieckTopology X.toTopCat).over U) :=
   U.instIsDenseSubsiteSubtypeMemOverGrothendieckTopologyOverInverseOverEquivalence
 
-set_option maxHeartbeats 4000000 in
 
 def restrictAbIso (F : X.Modules) :
     (sheafCongrAb ((Opens.grothendieckTopology X.toTopCat).over U)

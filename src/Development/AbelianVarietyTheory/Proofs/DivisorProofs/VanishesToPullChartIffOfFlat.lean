@@ -85,11 +85,8 @@ variable {p : Y ⟶ Sp k} {p' : Y' ⟶ Sp k'} {σ : k →+* k'} {B : LB Y} {B' :
   {I : Y.IdealSheafData} {I' : Y'.IdealSheafData} {n : ℕ}
   (hI : ∀ z, stalkId I' z = (stalkId I (φ z)).map (φ.stalkMap z).hom)
 
-include hI in
 
-include hI in
 
-include hI in
 
 end Order
 
@@ -204,11 +201,8 @@ section Symbol
 
 variable {p : Y ⟶ Sp k} {p' : Y' ⟶ Sp k'} {σ : k →+* k'} (H : IsPullback φ p' p (spMap σ))
 
-include H in
 
-include H in
 
-include H in
 
 variable {D : ℕ} [SmoothOfRelativeDimension D p] [SmoothOfRelativeDimension D p'] (K : CanonLB p D)
   {L A B : LB Y} {L' A' B' : LB Y'} (l : ChartPull L' L φ) (a : ChartPull A' A φ)
@@ -220,7 +214,6 @@ abbrev pullQuotSec (e : (LB.div A (tw B L D)).Sec) : (LB.div A' (tw B' L' D)).Se
 variable (hL : L.IsLB) (hA : A.IsLB) (hB : B.IsLB) (hL' : L'.IsLB) (hA' : A'.IsLB) (hB' : B'.IsLB)
   (e : (LB.div A (tw B L D)).Sec)
 
-include hA' hB' in
 
 variable (hS : Etale ((cutIdeal hL s).subschemeι ≫ p))
   (hS' : Etale ((cutIdeal hL' fun t => chartSec l (s t)).subschemeι ≫ p'))
@@ -239,11 +232,8 @@ section Field
 variable {E E' : Type} [Field E] [Field E'] {σ : E →+* E'} {p : Y ⟶ Sp E} {p' : Y' ⟶ Sp E'}
   (H : IsPullback φ p' p (spMap σ)) {L : LB Y} (hL : L.IsLB)
 
-variable (φ) in
 
-variable (φ) in
 
-variable (φ) in
 
 section Order
 

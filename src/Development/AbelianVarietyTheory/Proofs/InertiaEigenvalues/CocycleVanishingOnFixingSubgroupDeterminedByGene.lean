@@ -121,7 +121,6 @@ theorem eqOn_of_dense {H : Subgroup Γ} (hg : g ∈ G) (hHG : H ≤ G)
   · rintro _ ⟨x, hx, a, rfl⟩
     exact G.mul_mem (hHG hx) (pow_mem hg a)
 
-omit [IsUltrametricDist X] [TopologicalSpace Γ] in
 
 theorem exists_extension [CompleteSpace X] (Gn : ℕ → Subgroup Γ) (hanti : Antitone Gn)
     (hcos : ∀ σ ∈ G, ∀ n, ∃ a : ℕ, σ * (g ^ a)⁻¹ ∈ Gn n) (S : ℕ → X)

@@ -554,7 +554,6 @@ theorem map_eq_zero_iff_repr {F E R R' ι : Type} [Field F] [Field E] [Algebra F
 
 variable {F : Type} [Field F] [NumberField F]
 
-open Classical in
 
 def idemF (P : HeightOneSpectrum (𝓞 F) → Prop) : Af F :=
   ⟨fun v => if P v then 1 else 0, Filter.Eventually.of_forall fun v => by

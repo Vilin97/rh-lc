@@ -14,11 +14,7 @@ namespace GlobalTheory.SW.FourierJ.Row
 
 variable {ι : Type} [Fintype ι]
 
-omit [Fintype ι] in
 
-open Matrix Complex in
-open scoped ComplexConjugate Real in
-variable {ι : Type} [Fintype ι] in
 
 theorem _root_.GlobalTheory.SW.FourierJ.Row.poisson_class : ∀ (ι : Type) [Fintype ι] [DecidableEq ι]
     (R : ℕ), 0 < R → ∀ τ ∈ _root_.GlobalTheory.SW.Siegel ι, -τ⁻¹ ∈ _root_.GlobalTheory.SW.Siegel ι →

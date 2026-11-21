@@ -66,6 +66,5 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   {RM : Top.RootModel (CMType H) (D.p + D.q)}
   {Sys : PB.AnSys (Top.dimFl (CMType H) (D.p + D.q)) (Option (RootIx D))} {Fx : FixedData Y Sys}
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 end GlobalTheory.CompanionTheory.Ar.Small.ReadFinTest

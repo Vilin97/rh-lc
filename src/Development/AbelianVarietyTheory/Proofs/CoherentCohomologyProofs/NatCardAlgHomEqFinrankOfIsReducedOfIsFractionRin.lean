@@ -33,7 +33,6 @@ theorem det_algHom_basis_ne_zero (e : Basis ι R S) {P : ι → (S →ₐ[R] L)}
   have := congrFun hc₀ i
   simpa [Matrix.mulVec, dotProduct, mul_comm] using this
 
-omit [IsDomain L] in
 
 theorem algHom_matrix_mul_leftMulMatrix (e : Basis ι R S) (P : ι → (S →ₐ[R] L)) (x : S) :
     (Matrix.of fun j i => P j (e i)) * (Algebra.leftMulMatrix e x).map (algebraMap R L) =
@@ -96,9 +95,7 @@ theorem algebraMap_discr_basis_ne_zero (e : Basis ι R S) {P : ι → (S →ₐ[
 
 variable [Module.Free R S] [Module.Finite R S]
 
-omit [DecidableEq ι] in
 
-omit [DecidableEq ι] in
 
 theorem algebraMap_trace_eq_sum_algHom_of_card (h : Fintype.card ι = finrank R S)
     {P : ι → (S →ₐ[R] L)} (hP : Function.Injective P) (x : S) :
@@ -147,13 +144,11 @@ section Etale
 variable (K : Type*) {S : Type*} (L : Type*) [Field K] [CommRing S] [Algebra K S] [Field L]
   [Algebra K L] [IsSepClosed L] [Algebra.Etale K S]
 
-variable (S) in
 
 theorem natCard_algHom_eq_finrank_of_etale : Nat.card (S →ₐ[K] L) = finrank K S :=
   have := Algebra.FormallyUnramified.finite_of_free K S
   natCard_algHom_eq_finrank_of_etale_baseChange K S L
 
-variable (S) in
 
 variable {K L} {ι : Type*} [Fintype ι]
 

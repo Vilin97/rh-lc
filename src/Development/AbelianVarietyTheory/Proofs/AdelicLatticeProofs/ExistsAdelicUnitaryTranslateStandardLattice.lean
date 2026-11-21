@@ -123,7 +123,6 @@ theorem exists_div (d : ℕ) (e : FiniteAdeleRing (𝓞 F) F) (he : ∀ v, e v �
   · rw [nsmul_eq_mul, ← mul_assoc, ← map_natCast (algebraMap F (FiniteAdeleRing (𝓞 F) F)), ← map_mul,
       mul_inv_cancel₀ hd0, map_one, one_mul]
 
-open Classical in
 
 def idem (F : Type) [Field F] [NumberField F] (k : ℕ) : FiniteAdeleRing (𝓞 F) F :=
   ⟨fun v => if (k : 𝓞 F) ∈ v.asIdeal then 1 else 0, Filter.Eventually.of_forall fun v => by

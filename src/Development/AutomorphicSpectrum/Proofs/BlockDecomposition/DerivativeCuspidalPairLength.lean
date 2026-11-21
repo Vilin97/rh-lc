@@ -24,7 +24,6 @@ section Ext
 
 variable {r c : ℕ} {M : Fin c → Type}
 
-open Classical in
 
 def extFam (ι : Fin r → Fin c) (x : ∀ i, M (ι i)) (z : ∀ j, M j) : ∀ j, M j :=
   fun j => if h : ∃ i, ι i = j then h.choose_spec ▸ x h.choose else z j
@@ -238,7 +237,6 @@ theorem deltaHalf_drop (G : Levi k fun j => Fin (b j)) :
   rw [modExp_drop ι b hz i]
   rfl
 
-include hz in
 
 theorem nonempty_jac_equiv (π : Representation ℂ (GL (Fin N) k) V) :
     Nonempty ((jac (stdBlocks b hb) π).Equiv

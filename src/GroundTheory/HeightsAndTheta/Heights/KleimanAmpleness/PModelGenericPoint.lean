@@ -63,7 +63,6 @@ theorem mIdealOver_genPt [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] [P.
 
 end ModelGenericPoint
 
-open ModelGenericPoint in
 
 end
 

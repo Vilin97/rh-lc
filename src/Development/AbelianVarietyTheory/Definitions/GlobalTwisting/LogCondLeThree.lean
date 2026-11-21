@@ -48,7 +48,6 @@ def QDChoice : Prop :=
   ∀ eps : ℝ, 0 < eps → eps < 1 / 52 → ∃ C5 x0 : ℝ, 0 < C5 ∧ ∀ x ≥ x0, ∀ n : ℕ, 1 ≤ n → (n : ℝ) ≤ 2 * x ^ (2 + 8 * eps) →
     ∃ q d : ℕ, Rowq x eps n q d ∧ QDq x eps C5 q d ∧ Boxq x eps q d
 
-open Classical in
 
 def NormPrimes : Prop :=
   ∀ eps : ℝ, 0 < eps → eps < 1 / 52 → ∃ x0 : ℝ, ∀ (s : Scale) (R : Ranks) (N d : ℕ), s.eps = eps → x0 ≤ s.x → RankVal s R →
@@ -64,7 +63,6 @@ def LevelPrime : Prop :=
 
 def SmallPrimeOne : Prop := ∃ A : ℝ, 1 ≤ A ∧ ∀ M : ℕ, 2 ≤ M → ∃ p : ℕ, p.Prime ∧ p % M = 1 ∧ (p : ℝ) ≤ (M : ℝ) ^ A
 
-open Classical in
 
 end GlobalTheory.EX
 

@@ -38,7 +38,6 @@ theorem hasSum_indicator {E : ℕ → Set (Fin n → ℂ)} (hE : Pairwise (Funct
     simp only [h0, hu]
     exact hasSum_zero
 
-open Classical in
 
 theorem sheetSum_eq_sum {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fin d) (Fin n) ℂ} {y : Fin d → ℂ}
     (hfin : (fibre J A y).Finite) (F : (Fin n → ℂ) → ((Fin d → ℂ) → Fin n → ℂ) → ℝ) :
@@ -92,7 +91,6 @@ theorem abs_indicator_mul_le (S : Set (Fin n → ℂ)) (f : (Fin n → ℂ) → 
 
 end ChartIntCountAdd
 
-open ChartIntCountAdd in
 
 theorem ChartIntCountAdd.proof (hCM : ChartMassCompact.Statement) : ChartIntCountAdd.Statement := by
   intro n d W A f φ E hW hdim hA hf hfc hφ hEm hE

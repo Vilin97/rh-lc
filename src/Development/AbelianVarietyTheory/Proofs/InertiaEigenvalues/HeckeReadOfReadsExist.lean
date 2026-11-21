@@ -43,9 +43,7 @@ section Pin
 
 variable (Rl cG S) (YS : NX.NExpRealS Rl cG S)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end Pin
 

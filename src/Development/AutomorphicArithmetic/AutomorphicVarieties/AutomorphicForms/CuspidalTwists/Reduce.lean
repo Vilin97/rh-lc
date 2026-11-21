@@ -96,7 +96,6 @@ theorem exists_twist_zero (ha : a ≠ 0) {φ : Sm F a} {s : ℂ} (h : lie F a (o
     field_simp; ring
   rw [this, zero_smul, map_zero]
 
-variable (F a) in
 
 def ZeroCompl : Prop :=
   ∃ C : Submodule ℂ (Sm F a), (∀ φ ∈ C, IsCuspForm φ) ∧ (∀ φ, IsCuspForm φ → lie F a (oneL F a) φ = 0 → φ ∈ C) ∧ IsStable C ∧

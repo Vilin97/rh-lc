@@ -27,7 +27,6 @@ open scoped Matrix
 
 namespace GlobalTheory.Mem.R3.DefLatBC
 
-open Formalism.L2.Col in
 
 theorem repCSD_lift_of_reading {K K' : Type} [Field K] [NumberField K] [StarRing K] [Field K'] [NumberField K'] [StarRing K']
     (S : GSD K) (S' : GSD K') (hS : S.Ok) (hS' : S'.Ok) {A A' : Type} [Group A] [Group A']
@@ -59,7 +58,6 @@ end GlobalTheory.Mem.R3.DefLatBC
 
 namespace GlobalTheory.Mem.R3.DefLatBC
 
-open Formalism.L2.Col in
 
 theorem decoratedLattice_translates_heq_of_eq_primes {X : Fields} {n r : ℕ} (h : r ≤ n) {SG Q Q' : Finset (HeightOneSpectrum (𝓞 X.E))} (hQ : Q' = Q) :
     (∀ d' : DecoSet X.E n ∅ (uSG SG Q'), ∃ d : DecoSet X.E n ∅ (uSG SG Q), HEq d' d) ∧
@@ -68,7 +66,6 @@ theorem decoratedLattice_translates_heq_of_eq_primes {X : Fields} {n r : ℕ} (h
   subst hQ
   exact ⟨fun d' => ⟨d', HEq.rfl⟩, fun g d d' hd => by cases hd; rfl⟩
 
-open Formalism.L2.Col in
 
 theorem decoratedLattice_translates_heq_of_eq_preData (B B' : Base) (px : PreX B.toPre) (px' : PreX B'.toPre) (h : B'.toPre = B.toPre) (hp : HEq px' px)
     (sel : HeightOneSpectrum (𝓞 B.fields.F) → HeightOneSpectrum (𝓞 B.fields.E))
@@ -93,7 +90,6 @@ theorem decoratedLattice_translates_heq_of_eq_preData (B B' : Base) (px : PreX B
   exact (decoratedLattice_translates_heq_of_eq_primes (r_le_nV _) (hQ'.trans hQ.symm)).2 _ d d' hd
 
 end GlobalTheory.Mem.R3.DefLatBC
-set_option maxHeartbeats 8000000 in
 
 theorem GlobalTheory.Mem.R3.DefLatBC.act_ext : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.CasselmanWallach → GlobalTheory.Published.WeilRepresentationUnitaryPair → GlobalTheory.Published.DiscreteSeriesExists → GlobalTheory.Published.HarishChandraFinite → (StepW Pinned fun K B' f' T' w' => ∀ (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T), Enl0 B B' →
   HEq f' f → Pinned K B f T w → HEq w'.px w.px → ∀ (Z : w.Lt) (hX : B.fields.Ok) (Wt : Set B.places.Pl)

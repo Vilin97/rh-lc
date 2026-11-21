@@ -139,7 +139,6 @@ theorem extZ_add_row (hP : S.Pattern t) (j : ℕ) (q : Fin (s + 1)) (hq : q.val 
     refine h ⟨g', g'.2, ?_⟩
     rw [e', e, vecMulVec_neg, add_neg_cancel_right]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem coords_typeFrame {ι ι' n n' : Type} [Fintype ι] [DecidableEq ι] [Fintype ι'] [DecidableEq ι'] [Fintype n]
     [DecidableEq n] [Fintype n'] [DecidableEq n'] {c c' : ℕ} (ϖ : kˣ) (o : ι ≃ n ⊕ Fin c) (o' : ι' ≃ n' ⊕ Fin c')

@@ -16,7 +16,6 @@ section RowLie
 
 variable {ι : Type} {m n : ℕ}
 
-open Classical in
 
 def rowSubst (n : ℕ) (τ : ι) (g : Matrix (Fin m) (Fin m) ℂ) : Pol ι m n →ₐ[ℂ] Pol ι m n :=
   subst (fun _ => 1) (fun ρ => if ρ = τ then g else 1)

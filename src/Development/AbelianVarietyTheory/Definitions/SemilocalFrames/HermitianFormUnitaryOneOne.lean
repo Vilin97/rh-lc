@@ -47,7 +47,6 @@ def SmoothInf (I : AutInst) (a : I.Ginf → ℂ) : Prop :=
   ∀ x : I.Ginf, ∃ F : (InfinitePlace I.F → Fin I.n → Fin I.n → ℂ) → ℂ,
     ContDiffAt ℝ ∞ F (fun v i j => uMat (x v) i j) ∧ ∀ᶠ g in nhds x, a g = F (fun v i j => uMat (g v) i j)
 
-open Classical in
 
 def slice (I : AutInst) (f : I.GA → ℂ) (x : I.GA) (v : InfinitePlace I.F) : Matrix (Fin I.n) (Fin I.n) ℂ → ℂ :=
   fun y => if h : ∃ g : UJ (I.ε v), uMat g = y then f (x * (Pi.mulSingle v h.choose, 1)) else 0
@@ -262,7 +261,6 @@ theorem exists_isHaarSub_NW {n : ℕ} (ε : Fin n → Bool) (W : Submodule ℂ (
   rw [coe_nwSub] at h
   exact ⟨_, h⟩
 
-open Classical in
 
 theorem Eword_congr {n : ℕ} (ε : Fin n → Bool) {f f' : Matrix (Fin n) (Fin n) ℂ → ℂ}
     (h : ∀ g, inUJ ε g → f g = f' g) (w : List (Fin n × Fin n)) :
@@ -278,11 +276,9 @@ theorem Eword_congr {n : ℕ} (ε : Fin n → Bool) {f f' : Matrix (Fin n) (Fin 
     simp only [Eword, Eab, Ec, Rd]
     rw [hcurve _ hm.1, hcurve _ hm.2.1]
 
-open Classical in
 
 namespace ProjEx
 
-open Classical in
 
 end ProjEx
 

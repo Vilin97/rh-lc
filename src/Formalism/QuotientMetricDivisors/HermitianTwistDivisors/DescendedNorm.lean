@@ -197,7 +197,6 @@ theorem filter_zero {m : ℕ} :
 
 end OperatorNormFrames
 
-open OperatorNormFrames in
 
 namespace OperatorNormFrames
 
@@ -313,7 +312,6 @@ theorem quot_rep {n D : ℕ} (Hc X0 : Matrix (Fin n) (Fin n) ℂ) (h0 : IsUnit X
 
 end OperatorNormFrames
 
-open OperatorNormFrames in
 
 namespace OperatorNormFrames
 

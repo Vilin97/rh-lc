@@ -123,11 +123,9 @@ namespace GlobalTheory.JSW.MirCinf
 
 variable {E : Type} [Field E] [NumberField E] {n : ℕ}
 
-open Classical in
 
 def unitVecInf (j : Fin n) (w : InfinitePlace E) (z : ℂ) : Fin n → Cinf E := Pi.single j (Pi.single w z)
 
-variable (E n) in
 
 def dualVecInf : ((Fin n → Cinf E) →L[ℝ] ℝ) →L[ℝ] (Fin n → Cinf E) :=
   LinearMap.toContinuousLinearMap

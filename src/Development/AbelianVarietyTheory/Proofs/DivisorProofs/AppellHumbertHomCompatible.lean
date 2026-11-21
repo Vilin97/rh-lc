@@ -119,12 +119,10 @@ theorem exists_chart_pt' {X : Scheme.{0}} (L : LB X) (hL : L.IsLB) (y : Sp ℂ �
   rw [this]
   exact hj
 
-open Classical in
 
 def chi {M : LB A.left} (u : HolUnif A M g) (χ : u.Λ → ℂ) (z : Fin g → ℂ) : ℂ :=
   if h : z ∈ u.Λ then χ ⟨z, h⟩ else 0
 
-omit [IsCommMonObj A] in
 
 theorem semichar {M : LB A.left} (hM : M.IsLB) (u : HolUnif A M g) {Hm : Matrix (Fin g) (Fin g) ℂ}
     {χ : u.Λ → ℂ} (hF : IsFactorAH u Hm χ) {l m : Fin g → ℂ} (hl : l ∈ u.Λ) (hm : m ∈ u.Λ) :
@@ -290,4 +288,3 @@ theorem halfR_twist (Fl : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) (v : Fin 
 
 end GlobalTheory.LamPullFrame
 
-open GlobalTheory.LamPullFrame GlobalTheory.ProdUnifSq in

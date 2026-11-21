@@ -27,7 +27,6 @@ theorem toFrac_eq_zero {P : Ideal (MRing ι)} [P.IsPrime] {f : MRing ι} : toFra
   rw [RingHom.comp_apply, ← map_zero (algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P))),
     (IsFractionRing.injective (MRing ι ⧸ P) _).eq_iff, Ideal.Quotient.eq_zero_iff_mem]
 
-omit [Fintype K] in
 
 theorem isMultiHomog_X_single [DecidableEq K] (k : K) (i : ι k) :
     IsMultiHomog (X ⟨k, i⟩ : MRing ι) (Pi.single k 1) := by
@@ -171,7 +170,6 @@ theorem chartHom_mul {P : Ideal (MRing ι)} (j : ∀ k, ι k) (r : (Σ k, ι k) 
 
 end regularityEmbedding_holds
 
-open regularityEmbedding_holds in
 
 theorem regularityEmbedding_holds.proof : regularityEmbedding_holds.Statement := by
   intro K _ ι _ P R hP hR hRu

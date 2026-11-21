@@ -45,7 +45,6 @@ theorem exists_int_of_val (x : F)
   obtain ⟨s, hs⟩ := HeightOneSpectrum.mem_integers_of_valuation_le_one F x h'
   exact ⟨s, hs.symm⟩
 
-omit [IsTotallyReal F] in
 
 theorem exists_den_compact {ι : Type} [Finite ι] {C : Set (Ideles F)} (hC : IsCompact C)
     (f : ι → Ideles F → Af F) (hf : ∀ i, Continuous (f i)) :
@@ -85,7 +84,6 @@ theorem scalar_mul_mul_inv (g : GA F 2) (a : Ideles F) :
 omit [IsTotallyReal F] in
 theorem pFin_algebraMap (x : F) : pFin F (algebraMap F (Ad F) x) = algebraMap F (Af F) x := rfl
 
-omit [IsTotallyReal F] in
 
 theorem exists_den_row (c : HeightOneSpectrum (𝓞 F) → ℕ) (g : GA F 2) {C : Set (Ideles F)} (hC : IsCompact C) :
     ∃ d : 𝓞 F, d ≠ 0 ∧ ∀ a ∈ C, ∀ ξ : Fin 2 → F,

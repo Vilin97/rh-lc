@@ -28,7 +28,6 @@ def mixEq : TR.Rinf E ≃ₐ[ℝ] mixedSpace E :=
 
 def matEq : Matrix (Fin a) (Fin a) (TR.Rinf E) ≃ₐ[ℝ] ArchMatrix E a := (mixEq E).mapMatrix
 
-variable {E a} in
 
 def lieEq : TR.Lie E a ≃ₗ[ℝ] (isExpLieAlgebra E a).lieSubalgebra where
   toFun X := ⟨matEq E a (Matrix.of X), Submodule.mem_top⟩

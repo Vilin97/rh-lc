@@ -79,7 +79,6 @@ def chartMid (j : Fin P.N) : Set (Fin D → ℂ) :=
 instance midNonempty (x : X) : Nonempty {j // x ∈ P.mid j} :=
   ⟨⟨(P.cover x).choose, P.inner_subset_mid _ (P.cover x).choose_spec⟩⟩
 
-open Classical in
 
 def glue (a : Fin P.N → X → ℝ) (ε : ℝ) (x : X) : ℝ :=
   regMax ε (fun j : {j // x ∈ P.mid j} => a j x) + ε / 2

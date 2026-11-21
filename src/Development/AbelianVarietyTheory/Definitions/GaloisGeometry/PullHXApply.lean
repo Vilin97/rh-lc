@@ -17,19 +17,16 @@ open GlobalTheory.EtC.Rel
 section Sites
 variable {Z Y U Z' Y' U' : Scheme.{0}}
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 def bcSq {a : Z ⟶ Z'} {i' : Z' ⟶ Y'} {i : Z ⟶ Y} {b : Y ⟶ Y'} (h : a ≫ i' = i ≫ b) :
     bc i' ⋙ bc a ≅ bc b ⋙ bc i :=
   (MorphismProperty.Over.pullbackComp a i').symm ≪≫ MorphismProperty.Over.pullbackCongr h ≪≫
     MorphismProperty.Over.pullbackComp i b
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 def bcComp {f : U ⟶ Z} {g : Z ⟶ Y} {k : U ⟶ Y} (h : f ≫ g = k) : bc g ⋙ bc f ≅ bc k :=
   (MorphismProperty.Over.pullbackComp f g).symm ≪≫ MorphismProperty.Over.pullbackCongr h
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 def bcFst (f : U ⟶ Y) : bc f ⋙ (Scheme.Etale.forget U ⋙ Over.forget U) ⟶ Scheme.Etale.forget Y ⋙ Over.forget Y where
   app V := pullback.fst V.hom f

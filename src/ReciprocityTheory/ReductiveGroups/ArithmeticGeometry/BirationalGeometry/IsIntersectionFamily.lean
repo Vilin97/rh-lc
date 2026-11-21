@@ -42,7 +42,6 @@ def IsArithVar (P : Ideal (MRing ι)) (d : ℕ) : Prop :=
 def divSupp (P : Ideal (MRingOver R ι)) (s : MRingOver R ι) : Set (Ideal (MRingOver R ι)) :=
   {W | W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant W}
 
-open Classical in
 
 def multAt (J W : Ideal (MRingOver R ι)) : ℕ :=
   if h : W.IsPrime then
@@ -65,7 +64,6 @@ def divCycle [IsNoetherianRing R] (P : Ideal (MRingOver R ι)) (s : MRingOver R 
 def charOf (W : Ideal (MRing ι)) : ℕ :=
   (Submodule.IsPrincipal.generator (W.comap (C : ℤ →+* MRing ι))).natAbs
 
-open Classical in
 
 def geoNum : (n : ℕ) → Ideal (MRing ι) → (Fin n → K → ℤ) → ℤ
   | 0, V, _ =>
@@ -87,7 +85,6 @@ section Complex
 def mcPts (P : Ideal (MRing ι)) : Set ((Σ k, ι k) → ℂ) :=
   {z | (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) ∧ ∀ f ∈ P, eval z (map (Int.castRingHom ℂ) f) = 0}
 
-variable (ι) in
 
 structure HermLine where
 

@@ -36,9 +36,7 @@ section Herm
 variable {E : Type} [Field E] [NumberField E] [NumberField.IsCMField E]
   {W : Type} [AddCommGroup W] [Module ℚ W] [Module E W]
 
-omit [NumberField.IsCMField E] in
 
-omit [NumberField.IsCMField E] [Module E W] in
 
 end Herm
 
@@ -47,13 +45,10 @@ section Groups
 variable {E : Type} [Field E] [NumberField E]
   {W : Type} [AddCommGroup W] [Module ℚ W] [Module E W] [IsScalarTower ℚ E W]
 
-omit [Module E W] [IsScalarTower ℚ E W] in
 
 variable [Module (𝓞 E) W]
 
-omit [IsScalarTower ℚ E W] in
 
-omit [Module E W] [IsScalarTower ℚ E W] in
 
 end Groups
 

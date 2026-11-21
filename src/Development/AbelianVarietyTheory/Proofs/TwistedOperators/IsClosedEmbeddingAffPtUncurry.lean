@@ -110,7 +110,6 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
   [MeasurableSpace k] [BorelSpace k] {n n' : Type*} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n']
   {c : ℕ}
 
-open Classical in
 
 theorem integrable_opE_integrand (p : ℕ) {ψ : AddChar k Circle} (hψ : Continuous ψ) (ν : Measure k)
     [ν.IsAddHaarMeasure] {Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ}
@@ -130,7 +129,6 @@ theorem integrable_opE_integrand (p : ℕ) {ψ : AddChar k Circle} (hψ : Contin
       (f := fun z : Matrix n n' k × ({rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k) =>
         Φ (affPt p z.1 z.2)) (x := (x₀, e)) fun h' => he ⟨_, h', rfl⟩
 
-omit [BorelSpace k] [DecidableEq n] [DecidableEq n'] in
 
 theorem opE_mem_SB (p : ℕ) (ψ : AddChar k Circle) (ν : Measure k)
     {Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ}

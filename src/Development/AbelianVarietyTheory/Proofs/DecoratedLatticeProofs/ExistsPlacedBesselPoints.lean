@@ -66,7 +66,6 @@ theorem oneBlock_lev {D : D7} (V : Formalism.BasicNotions.TH.HSp D) (β : GL (Fi
   · unfold Lev.levChi levFn
     simp only [hs, hQ, Finset.range_zero, Finset.prod_empty, Finset.prod_const_one, mul_one]
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.MiTop
 

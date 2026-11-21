@@ -22,7 +22,6 @@ section C
 open Finset MeasureTheory
 open scoped ComplexOrder
 
-set_option maxHeartbeats 800000 in
 
 end C
 

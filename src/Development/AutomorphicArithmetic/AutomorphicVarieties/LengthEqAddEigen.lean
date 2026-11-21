@@ -63,7 +63,6 @@ section Parts
 variable {E Ω : Type} [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {l : ℕ} [Fact l.Prime]
 
-variable (E) in
 
 def cE : E ≃+* E := (IsCMField.complexConj E).toRingEquiv
 

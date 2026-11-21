@@ -16,7 +16,6 @@ section Ideals
 
 variable {R : Type*} [CommRing R] [IsDedekindDomain R]
 
-omit [IsDedekindDomain R] in
 
 theorem asIdeal_pow_eq_one_iff (v : HeightOneSpectrum R) {k : ℕ} : v.asIdeal ^ k = 1 ↔ k = 0 := by
   constructor

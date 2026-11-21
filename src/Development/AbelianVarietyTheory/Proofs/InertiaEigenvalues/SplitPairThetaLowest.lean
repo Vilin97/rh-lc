@@ -42,7 +42,6 @@ noncomputable section
 
 namespace GlobalTheory.RefPair
 
-set_option maxHeartbeats 1000000 in
 
 theorem thetaPair_of_hasThetaAt (hBZ : GlobalTheory.Published.BernsteinZelevinskyFiniteness) (D : D7) {μt : D.what₂.Tup} {j : ℕ}
     (Mr : MtReal D μt j) {rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r} (X : RowMod D rep j) (μ η : HChar D.host.E)
@@ -171,7 +170,6 @@ namespace GlobalTheory.RefPair
 
 open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.ThetaGL GlobalTheory.SplitRead GlobalTheory.NPin
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.RefPair
 

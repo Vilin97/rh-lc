@@ -24,7 +24,6 @@ lemma qf_smul {ι : Type} [Fintype ι] (Y : Matrix ι ι ℝ) (c : ℝ) (x : ι 
 
 end PSymplShortPrim
 
-open PSymplShortPrim in
 
 theorem SymplShortPrim.proof : SymplShortPrim.Statement := by
   intro ι _ _ G hG v w m hvw hv hmin

@@ -722,7 +722,6 @@ theorem mem_herrCocycles_of_eq {O D : Type} [CommRing O] [AddCommGroup D] [Modul
     (y z : D) (h : γ y - y = φ z - z) : (y, z) ∈ herrCocycles γ φ := by
   simp [herrCocycles, h]
 
-set_option maxHeartbeats 1600000 in
 
 theorem herr_a : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), adm9 D HW F → ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let S := sit D.loc HW l (D.locA l) K s LL h; let E : S.Comparison₂ := ((F l).E K s LL h).tie; HerrAat S ∧ HerrAsat S := by
   intro D HW F h9 l _ K s LL h S E

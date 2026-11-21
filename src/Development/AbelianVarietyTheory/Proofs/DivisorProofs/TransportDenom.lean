@@ -25,7 +25,6 @@ open scoped TensorProduct NNReal Matrix
 
 namespace GlobalTheory.ThetaDenom
 
-open Formalism.UG in
 
 theorem transport_denom : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ}
     (e : Matrix (Fin n) (Fin d) (AF F ⊗[F] E) ≃ₗ[AF F] (Fin n × Fin d → AF F) × (Fin n × Fin d → AF F)),

@@ -192,7 +192,6 @@ theorem diag_case [Nonempty n] (Θ : Matrix n n K[X]) (D : n → K)
 
 end CofactorOrder
 
-open CofactorOrder in
 
 theorem exists_not_X_pow_dvd_adjugate_of_firstOrderKernel (K : Type) [Field K] (a m : ℕ)
     (Ψ : Matrix (Fin a) (Fin a) (Polynomial K))

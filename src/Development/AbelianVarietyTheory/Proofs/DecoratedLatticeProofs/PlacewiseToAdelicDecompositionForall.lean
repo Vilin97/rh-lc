@@ -111,7 +111,6 @@ end GlobalTheory.FinPl.PlacesAdeles
 
 namespace GlobalTheory.FinPl
 
-open GlobalTheory.FinPl.PlacesAdeles in
 
 theorem placesToAdeles (D : D7) : PlacesToAdeles D := by
   classical

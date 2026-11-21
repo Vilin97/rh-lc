@@ -246,7 +246,6 @@ theorem gtRel_iff (u : D.X → Fˣ) (g₀ : GtPtF D F) (g : GtPtF D' F) :
     exact (key χ).2 ⟨fun i => by rw [← hb]; exact gtφ_push gp hT hc _ _ i, fun y J J' hJ hJ' =>
       (congrArg (fun q : ((Sp F).presheaf.stalk y)ˣ => q * vS (g.s (e χ)) y J') (pr χ y J J')).trans (H χ y J J' hJ hJ')⟩
 
-include gp hT hc hw in
 
 theorem exists_gtRel (hG : GlobalFnsSt) (u : D.X → Fˣ) (hu : ∀ a b, u (a + b) = u a * u b) (g₀ : GtPtF D F) :
     ∃ g : GtPtF D' F, GtRel w e u g₀ g := by
@@ -319,7 +318,6 @@ theorem exists_gtRel (hG : GlobalFnsSt) (u : D.X → Fˣ) (hu : ∀ a b, u (a + 
   rw [v, AddEquiv.symm_apply_apply, hgb]
   exact vt χ y J J' hJ hJ'
 
-include gp hT hc hw in
 
 theorem GtRel.unique {u : D.X → Fˣ} {g₀ : GtPtF D F} {g g' : GtPtF D' F} (h : GtRel w e u g₀ g)
     (h' : GtRel w e u g₀ g') : g = g' := by
@@ -371,7 +369,6 @@ theorem GtRel.isAdd (hG : GlobalFnsSt) {u u' u'' : D.X → Fˣ} (hu : ∀ χ, u'
   simp only [ofMul_mul, ofMul_inv] at a₁ c₁ c₂ c₃ ⊢
   linear_combination (norm := abel) a₁ - c₁ - c₂ + c₃
 
-include gp hT hc hw in
 
 theorem GtRel.over_zero {u : D.X → Fˣ} {g₀ : GtPtF D F} {g : GtPtF D' F} (h : GtRel w e u g₀ g) (hb : g₀.b = 1) :
     g.b = 1 ∧ ∀ χ (y : Sp F) J J', Good D.P.L y J → Good D'.P.L y J' →
@@ -396,7 +393,6 @@ theorem GtRel.isZero {u : D.X → Fˣ} (hu : ∀ χ, u χ = 1) {g₀ : GtPtF D F
   have z₃ : vS (g₀.s χ) y J = 1 := z₂ χ y J hJ
   exact (hv χ y J J' hJ hJ').trans (by rw [hu, map_one, z₃, _root_.mul_one])
 
-include gp hT hc hw in
 
 theorem GtRel.torus {u : D.X → Fˣ} {g₀ : GtPtF D F} {g : GtPtF D' F} (h : GtRel w e u g₀ g) {t : D.X → F}
     (hb : g₀.b = DegPre.zeroF D F)
@@ -461,7 +457,6 @@ theorem psi_val {v : Fˣ} {χ : D.X} (hψ : GenRel w (LB.pullGen _ _ _ (D'.psi (
   rw [← b₁, ← b₂, wVal, ← a₁]
   exact H
 
-include gp hT hc hw hr in
 
 theorem GtRel.isIota {u v : D.X → Fˣ} (hψ : ∀ χ, GenRel w (LB.pullGen _ _ _ (D'.psi (e χ)) (jFK (R := R') F))
     (LB.pullGen _ _ _ (D.psi χ) (jFK (R := R) F)) (v χ : F)) {x : D.X} (hu : ∀ χ, v (x + χ) = u χ * v x * v χ)
@@ -568,7 +563,6 @@ theorem exists_transport (hG : GlobalFnsSt) {n : ℕ} (hn : n ∣ l.M') (q₀ : 
     simp only [Nat.cast_one, _root_.one_mul] at this
     exact (gtRel_zpow (u_ne_zero hu) _ _ _).1 this
 
-omit [IsAlgClosed F] hW hF hu in
 
 end ThetaShiftProofs
 

@@ -109,6 +109,5 @@ theorem one_le_qqI_of_inst {D : D7} {I : AutInst} (h : I = Formalism.L2.SG.InstE
 
 variable (C0 : ℝ)
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
 end Formalism.L2.SG.ThmSOwn

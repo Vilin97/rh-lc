@@ -66,7 +66,6 @@ theorem pullbackι_pullbackSnd : pullbackι S β ≫ pullbackSnd S β = 0 := by
 noncomputable def pullbackSES : ShortComplex (Rep.{u} k G) :=
   ShortComplex.mk (pullbackι S β) (pullbackSnd S β) (pullbackι_pullbackSnd S β)
 
-variable {S} in
 
 theorem pullbackSES_shortExact (hS : S.ShortExact) : (pullbackSES S β).ShortExact := by
   have hex := function_exact_of_shortExact hS

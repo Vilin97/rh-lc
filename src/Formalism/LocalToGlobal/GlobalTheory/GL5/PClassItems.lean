@@ -45,9 +45,7 @@ theorem class_mass_of_genus_classes (hM : PI.UJClassMass2.UJClassMass) (D : D7) 
     (fun τ => D.sp.cm.cmUnram.2.1 τ) W.herm W.nondeg W.standardTuple_isLattice
     (fun τ => by have h1 := hW τ; rw [hsig τ] at h1; exact h1) n g hcov hdisj
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Formalism.L2.GlobalTheoryTheory.GenusMassVolumes
 

@@ -324,7 +324,6 @@ theorem map_mul_left_volume_complex {z : ℂ} (hz : z ≠ 0) :
   rw [hdet, abs_of_nonneg (by positivity)] at h
   exact h
 
-omit [NumberField K] in
 
 theorem map_mul_left_infinitePlaceMeasure (w : InfinitePlace K) {a : w.Completion} (ha : a ≠ 0) :
     Measure.map (a * ·) (infinitePlaceMeasure w) =

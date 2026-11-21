@@ -38,7 +38,6 @@ omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 private theorem unr_inv {a : kˣ →* ℂˣ} (ha : IsUnram a) : IsUnram a⁻¹ := fun x hx => by
   rw [MonoidHom.inv_apply, ha x hx, inv_one]
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 private theorem lin_zero (a : kˣ →* ℂˣ) : (lin a).eval 0 = 1 := by
   unfold lin

@@ -155,7 +155,6 @@ theorem upVec_eq (hP : GlobalTheory.Published.CuspRapidDecay) (R : RealDat D A K
   · simp only [map_add (f := _), ← hin, inner_add_left]
   · simp only [map_smul, ← hin, inner_smul_left, Complex.star_def]
 
-set_option maxHeartbeats 1000000 in
 
 theorem coVec_level (R : RealDat D A Ks) (F : Face D A) (hL : Laws R F) (i : Fin D.R.m) (t : T)
     (v : ∀ ρ, lowT (R.MW i (sg0 D A)) ρ) {n : ℕ} (b : OrthonormalBasis (Fin n) ℂ (R.cV i).W)
@@ -197,7 +196,6 @@ theorem coVec_rat (hP : GlobalTheory.Published.CuspRapidDecay) (R : RealDat D A 
 theorem coefExt_apply {V : HSp D} (c : CoefA V) (f : Formalism.IndefR.Bridge.Gf V → c.W) (h : GA D V) :
     c.ext f h = c.ρ h⁻¹ (f (Formalism.IndefR.FWT.fin V h)) := rfl
 
-set_option maxHeartbeats 2000000 in
 
 theorem upVec_mem_range : GlobalTheory.Published.CuspRapidDecay → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Laws R F → R.FullP → ∀ (i : Fin D.R.m) (t : T) (v : ∀ ρ, lowT (R.MW i (sg0 D A)) ρ) (n : ℕ) (b : OrthonormalBasis (Fin n) ℂ (R.cV i).W) (y : (R.HW i (sg0 D A)).H), ∃ u : (R.HV i t).H, R.extV i t u = upVec R i t v b y := by
   intro hP D G _ _ Pl0 T A Ks _ _ _ R F hL _ i t v n b y

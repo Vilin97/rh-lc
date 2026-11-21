@@ -60,7 +60,6 @@ theorem finPart_cA (D : D7) (x : AE D) :
     finPart D (cA D x) = sg (FiniteAdeleRing (𝓞 D.host.F) D.host.F) (GlobalTheory.Member.cF D) (finPart D x) :=
   GlobalTheory.UnitarySplit.map_sig (sndA D.host.F) D.sp.cm.sig x
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_trivAt_isMov : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ M : ℕ, 0 < M → ∀ Λ ∈ Vset D.host.E S.rank M, ∃ h ∈ GfC S, TrivAt S (Ideal.span {(M : 𝓞 D.host.F)}) h ∧ IsMov (fmtC S h) (stdL D.host.E S.rank) Λ := by
   rintro D S T C M - Λ ⟨-, hU', k, hk0, hkM, h1, h2⟩

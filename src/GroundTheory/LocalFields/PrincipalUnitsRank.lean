@@ -32,7 +32,6 @@ noncomputable def padicIntEquivInteger : ℤ_[p] ≃+* 𝒪[ℚ_[p]] where
 
 variable [CharP 𝓀[K] p] [CharZero K]
 
-variable (K) in
 
 noncomputable def padicIntHom : ℤ_[p] →+* K :=
   (CharZero.padicHom K p).comp PadicInt.Coe.ringHom
@@ -40,16 +39,13 @@ noncomputable def padicIntHom : ℤ_[p] →+* K :=
 theorem padicIntHom_mem (a : ℤ_[p]) : padicIntHom K p a ∈ 𝒪[K] :=
   CharZero.valuation_padicHom_padicInt_le_one K p a
 
-variable (K) in
 
 noncomputable def padicIntHomInteger : ℤ_[p] →+* 𝒪[K] :=
   (padicIntHom K p).codRestrict 𝒪[K] (padicIntHom_mem p)
 
-variable (K) in
 
 noncomputable abbrev algebraK : Algebra ℤ_[p] K := (padicIntHom K p).toAlgebra
 
-variable (K) in
 
 noncomputable abbrev algebraInteger : Algebra ℤ_[p] 𝒪[K] := (padicIntHomInteger K p).toAlgebra
 
@@ -77,7 +73,6 @@ theorem finite_and_finrank_integer :
 theorem padicIntHom_mem_valBall_zero (a : ℤ_[p]) : padicIntHom K p a ∈ valBall K 0 :=
   padicHom_padicInt_mem_valBall_zero p a
 
-variable (K) in
 
 noncomputable def valBallSubmodule (m : ℤ) : Submodule ℤ_[p] K where
   carrier := valBall K m
@@ -92,7 +87,6 @@ noncomputable def valBallSubmodule (m : ℤ) : Submodule ℤ_[p] K where
 theorem mem_valBallSubmodule {m : ℤ} {x : K} : x ∈ valBallSubmodule K p m ↔ x ∈ valBall K m :=
   Iff.rfl
 
-variable (K) in
 
 noncomputable def valBallSubmoduleZeroEquiv : valBallSubmodule K p 0 ≃ₗ[ℤ_[p]] 𝒪[K] where
   toFun x := ⟨x, mem_integer_of_mem_valBall le_rfl x.2⟩
@@ -104,7 +98,6 @@ noncomputable def valBallSubmoduleZeroEquiv : valBallSubmodule K p 0 ≃ₗ[ℤ_
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-variable (K) in
 
 noncomputable def valBallSubmoduleEquiv (m : ℤ) :
     valBallSubmodule K p 0 ≃ₗ[ℤ_[p]] valBallSubmodule K p m :=
@@ -146,7 +139,6 @@ theorem rank_valBallSubmodule (m : ℤ) :
   rw [← h2]
   exact (Cardinal.cast_toNat_of_lt_aleph0 (Module.rank_lt_aleph0 _ _)).symm
 
-variable (K) in
 
 noncomputable def padicLogLinear : Additive (unitFiltrationUnits K 1) →ₗ[ℤ_[p]] K where
   toFun := padicLog K
@@ -167,7 +159,6 @@ theorem padicLog_nsmul_mem (u : Additive (unitFiltrationUnits K 1)) :
   rw [zero_add] at this
   exact_mod_cast padicLog_mem_valBall_of_mem p le_rfl this
 
-include p in
 
 theorem padicLog_mem_valBall_bound (u : Additive (unitFiltrationUnits K 1)) :
     padicLog K u ∈ valBall K (absRamificationIndex K + 1 -

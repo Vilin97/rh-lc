@@ -40,7 +40,6 @@ section Exact
 variable {A B C : Type*} [AddCommGroup A] [Module (𝓞 K) A] [AddCommGroup B] [Module (𝓞 K) B]
   [AddCommGroup C] [Module (𝓞 K) C] {i : A →ₗ[𝓞 K] B} {p : B →ₗ[𝓞 K] C}
 
-omit [NumberField K] in
 
 theorem finrank_eq_add_of_exact [Module.Finite (𝓞 K) A] [Module.Finite (𝓞 K) B]
     [Module.Finite (𝓞 K) C] (hi : Function.Injective i) (hp : Function.Surjective p)
@@ -58,7 +57,6 @@ theorem finrank_eq_add_of_exact [Module.Finite (𝓞 K) A] [Module.Finite (𝓞 
 
 variable {m n : Type*} [Fintype m] [Fintype n]
 
-omit [NumberField K] in
 
 theorem linearIndependent_sumElim_of_exact (hi : Function.Injective i) (hex : Function.Exact i p)
     {s' : m → A} {s'' : n → C} {u : n → B} (hu : ∀ j, p (u j) = s'' j)
@@ -83,7 +81,6 @@ theorem linearIndependent_sumElim_of_exact (hi : Function.Injective i) (hex : Fu
   rintro (k | j)
   exacts [hl k, hr j]
 
-omit [NumberField K] in
 
 theorem card_quotient_sumElim_of_exact (hi : Function.Injective i) (hp : Function.Surjective p)
     (hex : Function.Exact i p) {s' : m → A} {s'' : n → C} {u : n → B} (hu : ∀ j, p (u j) = s'' j)

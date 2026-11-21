@@ -81,7 +81,6 @@ end GlobalTheory.TieStd
 
 namespace GlobalTheory.TieStd
 
-open GlobalTheory.StdPar in
 
 theorem levi_le_leviFlag : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J → ∀ (r : ℕ)

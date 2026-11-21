@@ -26,7 +26,6 @@ def thSub (W : G.Weil) (p : Pair T) : Submodule ℂ (WO (G.pS p) (G.pT p) → �
   zero_mem' := GlobalTheory.OrientedHeis.theta_zero
   smul_mem' := fun c _ hg => GlobalTheory.OrientedHeis.theta_smul c hg
 
-open Classical in
 
 def toTh (W : G.Weil) (p : Pair T) (f : WO (G.pS p) (G.pT p) → ℂ) : thSub W p :=
   if h : IsThetaFunO W.ψ (G.pS p) (G.pT p) f then ⟨f, h⟩ else 0

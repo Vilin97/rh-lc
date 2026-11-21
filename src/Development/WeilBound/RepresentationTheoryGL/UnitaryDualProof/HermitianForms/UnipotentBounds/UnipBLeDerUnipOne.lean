@@ -12,7 +12,6 @@ namespace PositivityTheory.RgUd.Form.Asm
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem blkAt_apply (n N : ℕ) (h : n ≤ N) (g : GL (Fin n) k) (i j : Fin N) :
     (blkAt k n N h g).val i j =
@@ -38,7 +37,6 @@ theorem blkAt_apply (n N : ℕ) (h : n ≤ N) (g : GL (Fin n) k) (i j : Fin N) :
         rw [Fin.ext_iff, Fin.ext_iff]; simp only; omega
       simp only [hi, hj, dite_false, fromBlocks_apply₂₂, one_apply, e]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem scalAt_eq (m N : ℕ) (h : m ≤ N) (z : kˣ) : scalAt k m N h z = aDiag k N m z := by
   ext i j
@@ -60,7 +58,6 @@ theorem scalAt_eq (m N : ℕ) (h : m ≤ N) (z : kˣ) : scalAt k m N h z = aDiag
       · subst e; simp [hi]
       · simp [hi, e]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem blkAt_comm_aDiag (n m N : ℕ) (hn : n ≤ m) (h : n ≤ N) (g : GL (Fin n) k) (z : kˣ) :
     blkAt k n N h g * aDiag k N m z = aDiag k N m z * blkAt k n N h g := by
@@ -76,7 +73,6 @@ theorem blkAt_comm_aDiag (n m N : ℕ) (hn : n ≤ m) (h : n ≤ N) (g : GL (Fin
     · subst e; simp [hi, mul_comm]
     · simp [hi, e]
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 
 theorem continuous_blkAt [IsTopologicalRing k] (n N : ℕ) (h : n ≤ N) : Continuous (blkAt k n N h) := by
   have h1 : Continuous (blkGL k n (N - n)) := by
@@ -116,7 +112,6 @@ theorem twKer_eq_bot {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (ρ 
   subst this
   simp
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem colFix_apply {N n : ℕ} {g : GL (Fin N) k} (hg : g ∈ colFix k N n) (r c : Fin N) (hc : (c : ℕ) < n) :
     g.val r c = (1 : Matrix (Fin N) (Fin N) k) r c := by
@@ -125,13 +120,11 @@ theorem colFix_apply {N n : ℕ} {g : GL (Fin N) k} (hg : g ∈ colFix k N n) (r
   simp only [col_apply, Pi.single_apply] at this
   rw [one_apply, this]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem derUnip_eq_one {N n : ℕ} (h : N ≤ n) (u : derUnip k N n) : (u : GL (Fin N) k) = 1 := by
   ext r c
   exact colFix_apply (u.2.2) r c (by omega)
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem unipB_le_derUnip_one (N : ℕ) : unipB k (Fin N) ≤ derUnip k N 1 := by
   intro g hg
@@ -146,7 +139,6 @@ theorem unipB_le_derUnip_one (N : ℕ) : unipB k (Fin N) ≤ derUnip k N 1 := by
   · rw [if_neg e]
     exact h1 r c (Fin.lt_def.2 (by have := Fin.val_ne_of_ne e; omega))
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem lvlChar_eq (ψ : AddChar k Circle) (N n : ℕ) (u : derUnip k N n) :
     lvlChar k ψ N n u = whitChar ψ N (Subgroup.inclusion (derUnip_le_unipB k N n) u) := by
@@ -161,14 +153,12 @@ theorem lvlChar_eq (ψ : AddChar k Circle) (N n : ℕ) (u : derUnip k N n) :
     rw [colFix_apply u.2.2 p.1 p.2 (by omega), one_apply_ne]
     intro e; rw [e] at hp; omega
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem twKer_lvl_le {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
     (ψ : AddChar k Circle) (n : ℕ) :
     twKer π (derUnip k N n) (lvlChar k ψ N n) ≤ twKer π (unipB k (Fin N)) (whitChar ψ N) :=
   twKer_mono π (derUnip_le_unipB k N n) _ _ (lvlChar_eq ψ N n)
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem twKer_whit_le {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
     (ψ : AddChar k Circle) :
@@ -279,7 +269,6 @@ theorem lvl_all (hS : StepForm k) (hsm : IsSmooth π) (B : V →ₗ[ℂ] V →�
 
 end Desc
 
-variable (k) in
 
 theorem asmForm : AsmForm k := by
   intro hS ψ hψc hψ1 N V _ _ π hsm hU

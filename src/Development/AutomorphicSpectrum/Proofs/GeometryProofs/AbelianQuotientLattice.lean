@@ -97,7 +97,6 @@ theorem chi_injective {a b : Ch} (h : chi (S := Sp k) Ch a = chi (S := Sp k) Ch 
   have h3 := congrArg (fun p => p.coeff a) this
   simp [AddMonoidAlgebra.coeff_single, Finsupp.single_apply, Ne.symm hab] at h3
 
-open Rosenlicht GlobalTheory.Diag in
 
 theorem exists_diagMap [TwoUniqueSums Ch] (t : splitTorus (Sp k) Ch ⟶ splitTorus (Sp k) Ch) [IsMonHom t] :
     ∃ h : Ch →+ Ch, t = diagMap (Sp k) h := by
@@ -229,7 +228,6 @@ theorem isMonHom_of_comp {A A' C : Over (Sp k)} [GrpObj A] [GrpObj A'] [GrpObj C
     rw [Category.assoc, Category.assoc, h, IsMonHom.mul_hom, IsMonHom.mul_hom,
       tensorHom_comp_tensorHom_assoc, h])
 
-open GlobalTheory.Diag in
 
 theorem exists_charAct [TwoUniqueSums Ch] (i : splitTorus (Sp k) Ch ⟶ G) (q : G ⟶ B) [IsMonHom i] [IsMonHom q]
     (ker : IsPullback i (toUnit _) q (η : 𝟙_ _ ⟶ B)) {O : Type} [CommRing O]

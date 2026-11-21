@@ -173,7 +173,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {Γ : GalData G Qp LL O} {t : ℕ} {Ut : ZMod n → Multiset ℤ}
     {M : Type} [AddCommGroup M] [Module O M] {W : Representation O G M}
 
-omit [TopologicalSpace G] in
 
 theorem lTensor_twCoef (χ : G →* Oˣ) {X X' : Type} [AddCommGroup X] [Module O X] [AddCommGroup X'] [Module O X']
     (f : X →ₗ[O] X') (g : G) (m : M ⊗[O] X) :

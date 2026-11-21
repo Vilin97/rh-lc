@@ -23,9 +23,7 @@ section Abstract
 variable {n : ℕ} [NeZero n] {G : Type} [Group G] [TopologicalSpace G] {R : Type} [CommRing R] [Finite R]
   [Algebra (ZMod n) R] [TopologicalSpace R] [DiscreteTopology R]
 
-variable (n) in
 
-omit [NeZero n] [TopologicalSpace G] [Finite R] [TopologicalSpace R] [DiscreteTopology R] in
 
 end Abstract
 

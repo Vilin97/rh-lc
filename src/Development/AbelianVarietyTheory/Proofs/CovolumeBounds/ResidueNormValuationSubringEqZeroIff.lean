@@ -155,7 +155,6 @@ noncomputable def seriesValue {R : Type*} [CommSemiring R] [TopologicalSpace R]
     (g : MvPowerSeries σ R) (z : σ → R) : R :=
   ∑' t : σ →₀ ℕ, coeff t g * t.prod (z · ^ ·)
 
-omit [IsUltrametricDist C] in
 
 theorem isRestricted_const_iff (g : MvPowerSeries σ C) (r : ℝ) :
     IsRestricted (fun _ => r) g ↔
@@ -175,7 +174,6 @@ theorem hasSum_seriesValue [CompleteSpace C] {g : MvPowerSeries σ C} {c : σ �
   refine (NonarchimedeanAddGroup.summable_of_tendsto_cofinite_zero ?_).hasSum
   exact squeeze_zero_norm (norm_term_le g hz) hg
 
-omit [IsUltrametricDist C] in
 
 theorem isRestricted_of_summable {g : MvPowerSeries σ C} {w : σ → C}
     (h : Summable fun t : σ →₀ ℕ => coeff t g * t.prod (w · ^ ·)) :
@@ -183,7 +181,6 @@ theorem isRestricted_of_summable {g : MvPowerSeries σ C} {w : σ → C}
   have := h.tendsto_cofinite_zero.norm
   simpa only [IsRestricted, norm_mul, norm_finsuppProd_pow, norm_zero] using this
 
-omit [IsUltrametricDist C] in
 
 theorem exists_isGreatest_gaussNorm {g : MvPowerSeries σ C} {c : σ → ℝ} (hc : ∀ i, 0 ≤ c i)
     (hg : IsRestricted c g) :
@@ -292,7 +289,6 @@ theorem exists_map_eq_iff_norm_coeff_le_one (g : MvPowerSeries σ C) :
     ext t
     rfl
 
-omit [IsUltrametricDist C] in
 
 theorem isRestricted_of_norm_coeff_le [Finite σ] {g : MvPowerSeries σ C} {M : ℝ}
     (h : ∀ t, ‖coeff t g‖ ≤ M) {r : ℝ} (h0 : 0 ≤ r) (h1 : r < 1) :
@@ -306,7 +302,6 @@ theorem isRestricted_of_norm_coeff_le [Finite σ] {g : MvPowerSeries σ C} {M : 
   exact squeeze_zero (fun t => by positivity)
     (fun t => mul_le_mul_of_nonneg_right (h t) (pow_nonneg h0 _)) this
 
-omit [IsUltrametricDist C] in
 
 theorem exists_radius_lt_one [Finite σ] {z : σ → C} (hz : ∀ i, ‖z i‖ < 1) :
     ∃ r : ℝ, 0 ≤ r ∧ r < 1 ∧ ∀ i, ‖z i‖ ≤ r := by

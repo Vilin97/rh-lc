@@ -121,7 +121,6 @@ end GlobalTheory.GenEigenFinOrbit
 
 namespace GlobalTheory
 
-open GenEigenFinOrbit in
 
 theorem mem_span_genEigen_of_finiteDimensional_orbit :
     ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (A : Subalgebra ℂ (Module.End ℂ V)),

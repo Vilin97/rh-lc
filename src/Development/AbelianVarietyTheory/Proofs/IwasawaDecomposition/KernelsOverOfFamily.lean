@@ -232,7 +232,6 @@ theorem kRat_true {i : ℕ} (hR : ReadsAt B.fields.emb B.embLL (l.ch u a) (kTrue
     (I.fm l u a).KRat i :=
   fun x => exists_K_embF hR hE ((l.fmL u a).fam i) ((l.fmL u a).fam (i + 1)) x
 
-variable (u a) in
 
 theorem pRat_true : (I.fm l u a).PRat := by
   have hw := LvT.BuiltChain.weights_ok (I.perIn u a) (B.hcW u) B.fields.emb

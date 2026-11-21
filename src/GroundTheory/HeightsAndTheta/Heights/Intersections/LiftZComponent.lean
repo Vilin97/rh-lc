@@ -115,7 +115,6 @@ theorem liftZ_component [Fintype K'] [∀ k, Fintype (ι' k)] [DecidableEq K'] {
 
 end FibreMultiHomogeneous
 
-open FibreMultiHomogeneous in
 
 theorem ArithmeticIntersectionFibreMultiHomogeneous.proof : ArithmeticIntersectionFibreMultiHomogeneous.Statement := by
   intro K _ ι _ K' _ ι' _ κ v p _ W' hv hp hW G'

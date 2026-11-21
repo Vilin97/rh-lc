@@ -260,9 +260,7 @@ variable [Fintype m] [DecidableEq m]
 noncomputable def schurComplement₁₁ (G : Matrix (m ⊕ n) (m ⊕ n) ℂ) : Matrix n n ℂ :=
   G.toBlocks₂₂ - G.toBlocks₂₁ * G.toBlocks₁₁⁻¹ * G.toBlocks₁₂
 
-omit [DecidableEq m] [Fintype m] in
 
-omit [DecidableEq n] in
 
 end MatrixLemmas
 
@@ -333,17 +331,14 @@ variable [Fintype n]
 
 namespace IsLogBounded
 
-omit [Fintype n] in
 
 end IsLogBounded
 
-omit [Fintype n] in
 
 namespace IsLogBounded
 
 variable [Fintype m]
 
-omit [Fintype m] [DecidableEq m] in
 
 end IsLogBounded
 

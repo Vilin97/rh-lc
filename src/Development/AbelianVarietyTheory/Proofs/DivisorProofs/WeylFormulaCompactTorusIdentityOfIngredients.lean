@@ -51,7 +51,6 @@ private theorem prod_tor_pow_eq_wtVal_mul {n : ℕ} (lam : Fin n → ℝ) (m : F
 
 end WeylCompactTorusIdentity
 
-open WeylCompactTorusIdentity in
 
 theorem weylFormulaCompactTorusIdentity_of_ingredients : VdmSplit → PhysTor → NumShift → TorusId := by
   intro hV hP hN n ε lam Λ m hm hΛ θ hinj x hx

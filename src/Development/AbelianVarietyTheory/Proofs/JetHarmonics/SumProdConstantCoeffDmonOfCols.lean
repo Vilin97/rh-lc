@@ -52,6 +52,5 @@ end GlobalTheory.SymbolCols
 
 namespace GlobalTheory
 
-open SymbolCols in
 
 end GlobalTheory

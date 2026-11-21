@@ -99,7 +99,6 @@ theorem finite_cohomology_zero (M : Rep.{u} k G) [IsDiscreteRep M] [Finite M] :
     Finite (cohomology M 0) :=
   Finite.of_equiv _ (H0Iso M).toLinearEquiv.toEquiv.symm
 
-omit [IsTopologicalGroup G] in
 
 theorem exists_openSubgroup_le_fixing (U W₀ : OpenSubgroup G) (M : Rep.{u} k (U : Subgroup G))
     [IsDiscreteRep M] [Finite M] :

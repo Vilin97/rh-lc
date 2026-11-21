@@ -37,7 +37,6 @@ variable {F E : Type*} [Field F] [Field E] [NumberField E] [Algebra F E]
   [Algebra.IsQuadraticExtension F E]
 variable {W : Type*} [AddCommGroup W] [Module E W]
 
-omit [NumberField E] in
 
 theorem factorial_nsmul_mem_of_mem_dual {h : HermitianForm F E W} {D : ℕ} {La : AddSubgroup W}
     (hLa : IsDIntegral h D La) {y : W} (hy : y ∈ dualLattice h La) : D.factorial • y ∈ La := by

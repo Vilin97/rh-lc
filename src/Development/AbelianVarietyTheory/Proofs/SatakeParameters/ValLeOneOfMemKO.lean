@@ -24,7 +24,6 @@ theorem val_col_lt {n : Type} [Fintype n] [DecidableEq n] {h g : GL n k} (hh : h
   exact Valuation.map_sum_lt _ one_ne_zero fun c _ => by
     rw [map_mul]; exact Right.mul_lt_one_of_le_of_lt (val_le_one_of_mem_KO hh a c) (hg c)
 
-variable (k) in
 
 def blockGrp (r t : ℕ) : Subgroup (GL (Fin (r + t)) k) where
   carrier := {h | h ∈ KO k (Fin (r + t)) ∧
@@ -45,7 +44,6 @@ def blockGrp (r t : ℕ) : Subgroup (GL (Fin (r + t)) k) where
     rw [e, Matrix.neg_apply, Valuation.map_neg]
     exact val_col_lt ((KO k _).inv_mem hh) _ (fun c => h1 c j) a
 
-open Classical in
 
 def blockChar {r t : ℕ} (χ : kˣ →* ℂˣ) (h : GL (Fin (r + t)) k) : ℂ :=
   if hd : (h.val.submatrix (Fin.natAdd r) (Fin.natAdd r)).det = 0 then 0 else (χ (Units.mk0 _ hd) : ℂ)

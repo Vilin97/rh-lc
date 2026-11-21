@@ -95,7 +95,6 @@ theorem natGenerator_ne (p : ℕ) (v : AwayP p) : (primesEquiv v.1 : ℕ) ≠ p 
   rw [Ideal.mem_map_of_equiv]
   simp [eq_intCast]
 
-open Rat.HeightOneSpectrum in
 
 theorem exists_integer_lim (p : ℕ) [hp : Fact p.Prime] (a : ℕ → ℤ)
     (ha : ∀ n m : ℕ, 0 < n → 0 < m → (n * m).Coprime p → (n : ℤ) ∣ a (n * m) - a n) (v : AwayP p) :

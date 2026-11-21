@@ -25,7 +25,6 @@ theorem map_mul_inv (f : T →+* K) (g : GL n T) :
     (g : Matrix n n T).map f * ((g⁻¹ : GL n T) : Matrix n n T).map f = 1 := by
   rw [← Matrix.map_mul, g.mul_inv, Matrix.map_one _ (map_zero f) (map_one f)]
 
-include hs in
 
 theorem key_I (g : GL n T) (hg : g ∈ Formalism.UG.UJ s J) :
     ((P : Matrix n n K)ᵀ * (J.map (t1 θ))ᵀ) * (g : Matrix n n T).map (t2 θ) =

@@ -149,7 +149,6 @@ theorem genVal_phi_zero {p : GtPtF D ℂ} {bt : Fin g → ℂ}
     simp only [ofMul_mul, ofMul_zpow]
     module
 
-omit [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
 theorem secVal_congr {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {u : HolUnif A L g} (hL : L.IsLB)
     {Y Y' : Scheme.{0}} {K : Type} [Fintype K] {φ : K → (Y ⟶ A.left)} {φ' : K → (Y' ⟶ A.left)} {ε : K → ℤ}
@@ -189,7 +188,6 @@ theorem secVal_translate (hG : GlobalFnsSt) (h : u.IsAH Hm χ) {k : ℕ} {q : Qk
   refine secVal_congr D.P.isLB ?_ (isLift_fam hc' z) (isLift_famF hc' (pt_pr _))
   rw [sval_resF D ℂ t _ hJ, pt_pr]
 
-omit [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
 theorem fn_translate : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)] (D : Datum H) (l : Level H) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (b : O →+* ℂ) (a : ArcIn D l β ℂ b) (Λ : GtAn a) (k : ℕ) [NeZero k] (la : Λ.A.La) (q : Out.QkPt a.D₀ ℂ k) (v : LB.Gen (LB.LinComb a.D₀.P.L (Out.DegPre.lineφ a.D₀ ℂ q.g.b) (Out.DegPre.lineε k))), q.y = Λ.ε la.y → q.g = Λ.ex0 ((k : ℂ)⁻¹ • Λ.A.P0 la) → v.IsGen → ∃ κ : ℂ, κ ≠ 0 ∧ ∀ (α : Λ.A.X) (s : a.D₀.SecB k (Λ.ε α)) (t : a.D₀.SecB k (Λ.ε α + q.y)) (t' : a.D₀.SecB k (Λ.ε (α + la.y))), ThetaTranslate.IsPhiTranslate a.D₀ ℂ k q v (Λ.ε α) s t → HEq t t' → Λ.fn k (α + la.y) t' = κ • Λ.A.shift k la α (Λ.fn k α s) := by
   intro hL _ E _ _ _ H _ D l c O _ β _ _ b a Λ k _ la q v hy hg hv

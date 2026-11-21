@@ -83,7 +83,6 @@ theorem polyMat_rat {ι : Type} (P : ι → ι → MvPolynomial ((E →+* ℂ) �
   rw [h]
   rfl
 
-omit [NumberField E] [IsCMField E] in
 
 theorem continuous_coord' (τ : E →+* ℂ) : Continuous (coord τ) := by
   unfold coord

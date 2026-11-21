@@ -23,7 +23,6 @@ noncomputable section
 namespace GlobalTheory.Mum.PreEven
 open GlobalTheory.UU GlobalTheory.ClosedPol
 
-set_option maxHeartbeats 1000000 in
 
 theorem evenOn_preU : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (D : DegPre R) (A : PolAV (Sp (FractionRing R))) (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (U : GlobalTheory.UU.PreU (maximalIdeal R) D A G), EvenOn U.P := by
   intro R _ _ _ D A G _ _ U

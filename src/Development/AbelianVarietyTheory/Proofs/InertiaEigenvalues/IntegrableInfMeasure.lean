@@ -64,7 +64,6 @@ theorem continuous_bounded {π : CuspSub E a} (hπ : π.IsUnitary) {φ : Sm E a}
     (GlobalTheory.cuspRapidDecaySiegelGL_of_finite GlobalTheory.automorphicFormsFiniteGL)) hω (CuspSub.hasCentral_iff.1 h) hφ
   exact ⟨this.1, this.2.2.2⟩
 
-omit [IsTotallyComplex E] in
 
 def rowInv (ℓ : Fin a) (y : Fin a → Cinf E) : Lie E a := invL (toL (rowMat ℓ y))
 
@@ -96,7 +95,6 @@ theorem contDiffAt_translate (F : Sm E a) (g : GA E a) {ℓ : Fin a} {y : Fin a 
   ((contDiffAt_chart F.2 g (rowInv_eq hy ▸ val_mem_invSet _)).comp y (contDiffAt_rowInv hy)).congr_of_eventuallyEq
     (Filter.eventually_of_mem ((isOpen_rowSet ℓ).mem_nhds hy) fun _ hz => chart_rowInv _ g hz)
 
-omit [IsTotallyComplex E] in
 
 def rowCoef (ℓ : Fin a) (v : Fin a → Cinf E) (β : Fin (Module.finrank ℝ (Lie E a))) (y : Fin a → Cinf E) : ℂ :=
   ((Module.finBasis ℝ (Lie E a)).coord β (toL (rowMat ℓ y * Matrix.of (fderiv ℝ (rowInv ℓ) y v))) : ℝ)

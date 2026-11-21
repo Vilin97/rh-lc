@@ -30,7 +30,6 @@ theorem eval₂_mul_block_of_isMultiHomog {R : Type*} [CommRing R] (s : MvPolyno
   change ∏ i, t k ^ m ⟨k, i⟩ = t k ^ a k
   rw [Finset.prod_pow_eq_pow_sum, hs m hm k]
 
-omit [Fintype ι] in
 
 theorem coe_chartEval (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1))
     (f : MvPolynomial (Coord n) ℤ) :
@@ -55,7 +54,6 @@ theorem evalCone_ne_zero_of_notMem_orbitIdeal (x : Cone n (AlgebraicClosure ℚ)
     eval₂_mul_block_of_isMultiHomog s a hs _ (fun p ↦ C (flatCone x p)) X, hC, h0, map_zero,
     zero_mul]
 
-omit [Fintype ι] in
 
 theorem coe_evalCone_coordVec (x : Cone n (AlgebraicClosure ℚ)) (s : MvPolynomial (Coord n) ℤ) :
     ((evalCone (coordVec x) s : coordField x) : AlgebraicClosure ℚ) = evalCone x s := by

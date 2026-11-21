@@ -16,7 +16,6 @@ namespace GlobalTheory.ThetaDecay
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-open scoped Classical in
 
 theorem realAd_mul (a b : ℝ) : realAd F a * realAd F b = realAd F (a * b) := by
   unfold realAd

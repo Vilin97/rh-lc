@@ -150,7 +150,6 @@ end GlobalTheory.Mem.R3.DefLatBC
 
 namespace GlobalTheory.Mem.R3.DefLatBC
 
-set_option maxHeartbeats 1000000 in
 
 theorem goodIdempotents_agree_extendedData {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T}
     {w' : ColW B' f' T'} {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl}

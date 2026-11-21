@@ -13,7 +13,6 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.TyFin.ColStep.Avg
 
-open Classical in
 
 theorem sum_eq_zero_of_translates {G : Type} [Group G] [Fintype G] (N A : Set G) (h1 : (1 : G) ∈ A)
     (hN : ∀ v ∈ A, ∀ u, u * v ∈ N ↔ u ∈ N) (L χ : G → ℂ)

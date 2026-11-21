@@ -106,7 +106,6 @@ theorem adicCompletionRingHomOf_algebraMap (σ : L ≃ₐ[K] L) (hσ : σ • w.
   rw [UniformSpace.Completion.mapRingHom_coe]
   rfl
 
-variable (w) in
 
 theorem ringHom_ext_adicCompletion {f g : w.adicCompletion L →+* w.adicCompletion L}
     (hf : Continuous f) (hg : Continuous g)
@@ -140,7 +139,6 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
   [ContinuousSMul (v.adicCompletion K) (w.adicCompletion L)]
   [IsScalarTower K (v.adicCompletion K) (w.adicCompletion L)]
 
-omit [w.asIdeal.LiesOver v.asIdeal] in
 
 theorem adicCompletionRingHomOf_algebraMap_adicCompletion (σ : L ≃ₐ[K] L)
     (hσ : σ • w.asIdeal = w.asIdeal) (c : v.adicCompletion K) :
@@ -155,7 +153,6 @@ theorem adicCompletionRingHomOf_algebraMap_adicCompletion (σ : L ≃ₐ[K] L)
     rw [← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply K L (w.adicCompletion L),
       adicCompletionRingHomOf_algebraMap, AlgEquiv.commutes]
 
-omit [NumberField K] in
 
 theorem smul_asIdeal_of_mem_stabilizer (σ : MulAction.stabilizer Gal(L/K) w.asIdeal) :
     (σ : Gal(L/K)) • w.asIdeal = w.asIdeal :=
@@ -193,13 +190,11 @@ theorem continuous_decompositionAlgEquiv (σ : MulAction.stabilizer Gal(L/K) w.a
     Continuous (decompositionAlgEquiv v w σ) :=
   continuous_adicCompletionRingHomOf σ.1 (smul_asIdeal_of_mem_stabilizer w σ)
 
-omit [w.asIdeal.LiesOver v.asIdeal] in
 
 theorem valued_decompositionAlgEquiv (σ : MulAction.stabilizer Gal(L/K) w.asIdeal)
     (y : w.adicCompletion L) : Valued.v (decompositionAlgEquiv v w σ y) = Valued.v y :=
   valued_adicCompletionRingHomOf σ.1 (smul_asIdeal_of_mem_stabilizer w σ) y
 
-omit [w.asIdeal.LiesOver v.asIdeal] in
 
 theorem algEquiv_ext_adicCompletion {f g : w.adicCompletion L ≃ₐ[v.adicCompletion K]
     w.adicCompletion L} (hf : Continuous f) (hg : Continuous g)
@@ -224,7 +219,6 @@ theorem decompositionToLocal_algebraMap (σ : MulAction.stabilizer Gal(L/K) w.as
       algebraMap L (w.adicCompletion L) ((σ : Gal(L/K)) x) :=
   decompositionAlgEquiv_algebraMap v w σ x
 
-omit [w.asIdeal.LiesOver v.asIdeal] in
 
 theorem decompositionToLocal_injective : Function.Injective (decompositionToLocal v w) := by
   rw [injective_iff_map_eq_one]
@@ -251,7 +245,6 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 omit [Algebra (v.adicCompletion K) (w.adicCompletion L)]
   [ContinuousSMul (v.adicCompletion K) (w.adicCompletion L)]
   [IsScalarTower K (v.adicCompletion K) (w.adicCompletion L)] in
-include v in
 
 theorem card_decompositionGroup :
     Nat.card (MulAction.stabilizer Gal(L/K) w.asIdeal) =

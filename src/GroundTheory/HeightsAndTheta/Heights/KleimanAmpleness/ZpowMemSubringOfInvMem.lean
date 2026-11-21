@@ -47,7 +47,6 @@ theorem mem_of_forall_mem_locIn (B : Subalgebra F Ω) {u : Ω}
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem adjoin_base_le (y : (Σ k, ι k) → Ω) (k₀ : K) (c : ∀ k, ι k) :
     Algebra.adjoin F (Set.range fun i => IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ i / IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ (c k₀)) ≤

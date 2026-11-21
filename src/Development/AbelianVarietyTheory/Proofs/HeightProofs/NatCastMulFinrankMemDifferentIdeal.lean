@@ -98,7 +98,6 @@ theorem not_pow_dvd (n : ℕ) (hn : 0 < n) (P Q : Ideal (𝓞 L)) [hP : P.IsMaxi
   have h11 := Ideal.dvd_iff_le.1 ((mul_dvd_mul_iff_left h0).1 h10)
   exact hP.ne_top (by rw [← hPQ, sup_eq_left.2 h11])
 
-omit K L in
 
 theorem natCast_mul_finrank_mem_differentIdeal :
     ∀ (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] [IsGalois K L] (n : ℕ), 0 < n →

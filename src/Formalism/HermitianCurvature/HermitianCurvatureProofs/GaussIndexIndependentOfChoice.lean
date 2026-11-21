@@ -664,7 +664,6 @@ open Matrix Formalism.DoubleCosetMeasures Formalism.FourierDecayAlt.A5 Formalism
 
 namespace Formalism.FourierDecayAlt.P.A6x7.Ind
 
-open Classical in
 
 theorem finsum_zero_of_fibres {X Y : Type} (κ : X → Y) (g : X → ℂ)
     (hfin : (Function.support g).Finite)

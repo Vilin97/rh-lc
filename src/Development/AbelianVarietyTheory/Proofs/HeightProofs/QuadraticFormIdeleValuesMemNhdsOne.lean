@@ -80,7 +80,6 @@ theorem eventually_isSquare_finite (v : HeightOneSpectrum (𝓞 F)) :
   simp only [powMonoidHom_apply, Units.val_mk0, pow_two] at hy'
   exact ⟨y, hy'.symm⟩
 
-omit [NumberField F] in
 
 theorem eventually_isSquare_infinite (w : InfinitePlace F) :
     ∀ᶠ x in 𝓝 (1 : w.Completion), IsSquare x := by
@@ -111,7 +110,6 @@ theorem continuous_eval (v : HeightOneSpectrum (𝓞 F)) :
 
 end NormOpen
 
-open NormOpen in
 
 theorem norm_form_mem_nhds_one : ∀ (F : Type) [Field F] [NumberField F] (δ : F), δ ≠ 0 → {a : (AdeleRing (𝓞 F) F)ˣ | ∃ x y : AdeleRing (𝓞 F) F, (a : AdeleRing (𝓞 F) F) = x ^ 2 - algebraMap F (AdeleRing (𝓞 F) F) δ * y ^ 2} ∈ 𝓝 (1 : (AdeleRing (𝓞 F) F)ˣ) := by
   intro F _ _ δ hδ

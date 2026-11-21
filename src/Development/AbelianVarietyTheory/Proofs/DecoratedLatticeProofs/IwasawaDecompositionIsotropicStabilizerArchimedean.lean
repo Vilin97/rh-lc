@@ -94,7 +94,6 @@ theorem mem_stabArch_of {F E : Type} [Field F] [NumberField F] [Field E] [Number
   show (MulAut.conj b⁻¹) (matHom _ σ J g) ∈ UJ (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR w.Completion σ) (1 : Matrix (Fin n) (Fin n) _)
   rwa [MulAut.conj_apply, inv_inv]
 
-set_option maxHeartbeats 2000000 in
 
 theorem iwasawa_stab_arch : ∀ (D : D7) (T T₀ : HSp D) (r : ℕ) (d : HypDec T T₀ r) (b : GL (Fin T.rank) (AE D)), IsMaj T b → ∀ y ∈ GinfC T, ∃ q ∈ stab d, ∃ k ∈ Kmax T b, q ∈ GinfC T ∧ y = q * k := by
   intro D T T₀ r d b hb y hy

@@ -181,7 +181,6 @@ theorem exists_poly {κ : Type} {x : κ → Ω} {c : κ} {g : Ω} (hg : g ∈ ch
   rw [Algebra.adjoin_range_eq_range_aeval] at h
   exact h
 
-open Classical in
 
 def vl (ξ : Sp Ω ⟶ X) (y : (Σ k, J k) → Ω) (a : Ω) (w : (Σ k, J k) → ℂ) : ℂ :=
   if h : ∃ s : ℂ, ∃ z : Sp ℂ ⟶ X, CoordsAt ξ y z w ∧ ValAt ξ z a s then h.choose else 0

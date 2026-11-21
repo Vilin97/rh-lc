@@ -685,12 +685,10 @@ section Restrict
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
-open scoped MatrixOrder in
 
 end Restrict
 
 end ConjugateWeightGram
 
-open ConjugateWeightGram in
 
 end Formalism.DivisionValues

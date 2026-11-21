@@ -39,7 +39,6 @@ structure CmpCore (T : ∀ u : D.what₂.Word, Forms0 D u) (Gt : GatTies D) (I :
 
 variable {T : ∀ u : D.what₂.Word, Forms0 D u} {Gt : GatTies D} {I : CmpIn D X}
 
-set_option maxHeartbeats 1000000 in
 
 theorem cmpRec_lat_pf (H : CmpCore T Gt I) (hloc : ValIntRec T Gt I)
     (u : D.what₂.Word) (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w))
@@ -54,7 +53,6 @@ theorem cmpRec_lat_pf (H : CmpCore T Gt I) (hloc : ValIntRec T Gt I)
 def SurjRat (T : ∀ u : D.what₂.Word, Forms0 D u) (Gt : GatTies D) (I : CmpIn D X) : Prop :=
   ∀ u w hg, ∀ F ∈ (D.gat u w hg).M, RatFn (D.gat u w hg) (I.embW u w hg) F → ∃ x, cmpRec T Gt I u w hg x = F
 
-set_option maxHeartbeats 1000000 in
 
 theorem latM_pf (H : CmpCore T Gt I) (hloc : ValIntRec T Gt I) (hsurj : SurjRat T Gt I)
     (hd : ∀ u w hg, MRatSpan (D.gat u w hg).P (D.gat u w hg).comp (I.embW u w hg) (D.gat u w hg).M)

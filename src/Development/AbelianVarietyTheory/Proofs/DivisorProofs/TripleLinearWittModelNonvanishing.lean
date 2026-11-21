@@ -106,7 +106,6 @@ section Cosets
 
 variable {T : Type} [TopologicalSpace T] [MeasurableSpace T] [OpensMeasurableSpace T]
 
-open Classical in
 
 theorem expand (μ : Measure T) [IsFiniteMeasureOnCompacts μ] {V : Type} [AddGroup V]
     (ι : (T → ℂ) →ₗ[ℂ] (V → ℂ)) (hinj : Set.InjOn ι (SB T)) (L : AddSubgroup V) (xs : V → T → ℂ)
@@ -151,7 +150,6 @@ namespace GlobalTheory.LinearModelL2
 
 open GlobalTheory.LinSchur
 
-open Classical in
 
 theorem ip_cind {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V] [MeasurableSpace V]
     [BorelSpace V] (ν : Measure V) [ν.IsAddRightInvariant] (L : AddSubgroup V) (y y' : V) :
@@ -171,7 +169,6 @@ theorem ip_cind {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalA
       · simp [h1]
     rw [e, integral_zero]
 
-open Classical in
 
 theorem ip_cosets {T : Type} [TopologicalSpace T] [MeasurableSpace T] [OpensMeasurableSpace T]
     {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n d : ℕ}

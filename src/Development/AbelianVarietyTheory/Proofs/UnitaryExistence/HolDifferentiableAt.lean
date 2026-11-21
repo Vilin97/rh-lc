@@ -47,10 +47,6 @@ theorem _root_.GlobalTheory.LocalLift.hol_differentiableAt {V : Type} [NormedAdd
     DifferentiableAt ℂ (fun z => _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' (y z) U f) b :=
   ((hy U f).2 b ⟨hb, hU⟩).differentiableAt ((hy U f).1.mem_nhds ⟨hb, hU⟩)
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField in
-open scoped CategoryTheory.Obj in
-open Filter Topology in
-variable {Y : Scheme.{0}} in
 
 theorem _root_.GlobalTheory.LocalLift.isDerivAt0_const {g : ℕ} (e : (Fin g → ℂ) → (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp ℂ ⟶ Y))
     (w : Fin g → ℂ)
@@ -77,10 +73,6 @@ theorem _root_.GlobalTheory.LocalLift.isDerivAt0_const {g : ℕ} (e : (Fin g →
   rw [hval]
   exact TrivSqZeroExt.snd_inl _ _
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField in
-open scoped CategoryTheory.Obj in
-open Filter Topology in
-variable {Y : Scheme.{0}} in
 
 theorem _root_.GlobalTheory.LocalLift.exists_local_lift : ∀ (Y : Scheme.{0}) (s : Y ⟶ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp ℂ)
     (g g' : ℕ) (e : (Fin g → ℂ) → (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp ℂ ⟶ Y)) (e' : (Fin g' → ℂ) → (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp ℂ ⟶ Y)),

@@ -54,7 +54,6 @@ namespace GlobalTheory.UnramFromOnePrime
 
 open GlobalTheory.IdemSupport GlobalTheory.ResLoc
 
-set_option maxHeartbeats 1000000 in
 
 theorem unramAt_of_unrAt_one : ∀ (D : D7) (ν : (AE D)ˣ →* Circle), IsHeckeChar D ν → ResEta D ν 0 →
     ∀ (v : HeightOneSpectrum (𝓞 D.host.F)) (ε : AF D.host.F), IsPlaceIdem D v ε →

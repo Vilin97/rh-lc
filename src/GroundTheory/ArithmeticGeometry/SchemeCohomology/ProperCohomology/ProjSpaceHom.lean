@@ -31,7 +31,6 @@ lemma corr_apply (g : X ⟶ Proj 𝒜) (r : A) (V : X.Opens) (h : V ≤ g ⁻¹�
   erw [hB]
   exact hR
 
-set_option backward.isDefEq.respectTransparency false in
 
 lemma ι_appTop_eq (V : X.Opens) (z : Γ(X, ⊤)) :
     V.ι.appTop z = V.topIso.inv (X.presheaf.map (homOfLE le_top).op z) := by

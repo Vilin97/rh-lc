@@ -63,8 +63,6 @@ theorem coh_top {M : Type} [AddCommGroup M] [Module (MRingOver F ι) M] [Module 
 
 end EulerVar
 
-set_option maxHeartbeats 1600000 in
-open EulerVar in
 
 theorem EulerVar.proof (hSq : KH.CechDSqStatement) (hE : EulerSES.Statement) : EulerVar.Statement := by
   classical

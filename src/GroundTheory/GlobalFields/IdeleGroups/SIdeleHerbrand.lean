@@ -20,7 +20,6 @@ namespace IdeleGroup
 
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-open SemiLocal in
 
 theorem nonempty_placesOver_of_finite (v : HeightOneSpectrum (𝓞 K)) :
     Nonempty (PlacesOver L v) := by
@@ -67,7 +66,6 @@ theorem cycHerbrand_integerUnitsOutside (S : Set (HeightOneSpectrum (𝓞 K)))
     Nat.card_eq_one_iff_unique.2 ⟨h1, ⟨0⟩⟩]
   norm_num
 
-open AdicLiesOver in
 
 theorem cycHerbrand_sIdeles (S : Set (HeightOneSpectrum (𝓞 K))) (hSf : S.Finite)
     (hS : ∀ v ∉ S, ∀ w : PlacesOver L v, w.1.asIdeal.ramificationIdx (𝓞 K) = 1)

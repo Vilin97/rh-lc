@@ -37,7 +37,6 @@ theorem resGal_mem_Dec_iff {σ : G L Ω} :
   rw [mem_decompositionSubgroup_iff_galois_valuations, mem_decompositionSubgroup_iff_galois_valuations]
   simp only [resGal_apply]
 
-variable (F L) in
 
 def decRes (A : ValuationSubring Ω) : Dec (F := L) A →* Dec (F := F) A :=
   ((resGal F L Ω).comp (Dec (F := L) A).subtype).codRestrict (Dec (F := F) A)

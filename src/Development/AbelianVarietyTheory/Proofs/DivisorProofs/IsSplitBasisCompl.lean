@@ -174,7 +174,6 @@ namespace GlobalTheory.HermPlaneCompl
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {B : Base F E} {n n₁ : ℕ} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁} {i₀ i₁ r s : ℕ}
 
-open GlobalTheory.AdaptedPlaneBasis in
 
 theorem isSplitBasis_compl (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hH : H.IsAdapted σ B X X₁ i₀ i₁) :
     ∀ v : B.P, IsSplitBasis (B.τ v) X₁.L (X₁.bas v) := by

@@ -34,8 +34,6 @@ def EigFrame.Tri {Z : Model Xo c β} {R R' : Type} [CommRing R] [CommRing R'] {�
   x' = spMap ψ ≫ x ∧ φ' = ψ.comp φ ∧ ∀ τ i, ∃ cf : Fin (Dw.mult τ) → R', cf i = t τ i ∧ (∀ k, i < k → cf k = 0) ∧
     IsCombAtG Z.t x' (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ k) cf (g.v τ i)
 
-attribute [local instance] Over.cartesianMonoidalCategory in
-open MonObj in
 
 theorem isCombAtG_single {X0 : Scheme.{0}} (t : SAB H X0) {R : Type} [CommRing R] (x : Sp R ⟶ X0) {m : ℕ}
     {v : Fin m → (Sp (DualNumber R) ⟶ t.G.left)} (hv : ∀ j, IsTanAtG t x (v j)) (j : Fin m) :
@@ -137,7 +135,6 @@ def LEx : (Ix Dw → ℤ) →+ C.Y.Dv where
 
 def Lw (la : GlobalTheory.AllWt.Weight Dw) : C.Y.Dv := C.LEx (GlobalTheory.AllWt.exOf Dw la 0)
 
-open Classical in
 
 end FlagCpt
 

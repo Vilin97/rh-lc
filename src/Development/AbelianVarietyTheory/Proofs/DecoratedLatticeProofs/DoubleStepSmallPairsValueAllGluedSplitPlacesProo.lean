@@ -49,7 +49,6 @@ theorem overAll_cons {ι : Type} {p : ι → SplitPt D k} {ψ : AddChar (AF D.ho
 
 end GlobalTheory.FinPl.VertexAllProof
 
-open GlobalTheory.FinPl.VertexAllProof in
 
 theorem GlobalTheory.FinPl.vertexAll : ∀ D : D7, GlobalTheory.FinPl.VertexAll D := by
   intro D k _ _ _ _ ι p I P hPl q ψ χ hχ hc

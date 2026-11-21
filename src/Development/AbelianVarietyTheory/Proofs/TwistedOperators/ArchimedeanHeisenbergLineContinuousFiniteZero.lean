@@ -41,7 +41,6 @@ theorem continuous_ofMixed' (F : Type) [Field F] [NumberField F] :
 theorem continuous_realAd' (F : Type) [Field F] [NumberField F] : Continuous (realAd F) :=
   Continuous.prodMk ((continuous_ofMixed' F).comp (continuous_algebraMap ℝ _)) continuous_const
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem archLine_continuous_finPart : ∀ (D : D7) (S X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d) (g : Matrix (Fin S.rank) (Fin S.rank) D.host.E)
     (cS : Matrix (Fin S.rank) (Fin d) (AE D) ≃+ WO S X),

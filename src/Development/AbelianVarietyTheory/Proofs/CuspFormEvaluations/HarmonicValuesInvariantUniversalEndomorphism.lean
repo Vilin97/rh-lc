@@ -261,7 +261,6 @@ open GlobalTheory.FrameAdjSeries
 
 variable {S : Type} [CommRing S] {x0 : Sp S ⟶ X} {x0' : Sp S ⟶ X'}
 
-variable (ν) in
 
 def pu (h0 : x0' ≫ ρ = x0) (A : Type) [CommRing A] [Algebra S A] : (overAt x0' A ⟶ t'.G) →* (overAt x0 A ⟶ t.G) :=
   have e : (overAt x0' A).hom ≫ ρ = (overAt x0 A).hom := (Category.assoc _ _ _).trans (congrArg (_ ≫ ·) h0)
@@ -304,7 +303,6 @@ theorem jpt_push (hx : ∀ m, (x' m).left ≫ ν.φ = (x m).left) {n : ℕ} (m :
     (jptG t' x0' d x' m i).left ≫ ν.φ = (jptG t x0 d x m i).left :=
   (Category.assoc _ _ _).trans (congrArg (_ ≫ ·) (hx m))
 
-variable (w) in
 
 def FrRel (e' : ∀ m, FrTyG t' x0' d x' m) (e : ∀ m, FrTyG t x0 d x m) : Prop :=
   ∀ (m : ℕ) (Z : Scheme.{0}) (r : Z ⟶ Sp (Jet S (Fin 2 × Fin d) m)) (z : Z) J J', Good t.PP.L z J → Good t'.PP.L z J' →
@@ -675,7 +673,6 @@ theorem const_ad {d : ℕ} (B : Germ.FB S d (𝓞 E)) (a : 𝓞 E) : MvPowerSeri
   rw [B.adjoint_zero_fst a, map_one] at e
   exact e.symm
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_chart_push (hG : GlobalFnsSt) {ρ : Xo.X ⟶ Xo.X} (ν : SABMap Xo.univ.t Xo.univ.t ρ) {y y' : FrPt Xo c S}
     {pm : Gx y.x ⟶ Gx y'.x} {w : LB.Iso Xo.univ.t.PP.L (Xo.univ.t.PP.L.pull ν.cm.F)} (h0 : y'.x = y.x ≫ ρ)

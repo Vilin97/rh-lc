@@ -46,7 +46,6 @@ variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algeb
 
 section Representation
 
-variable (L) in
 
 noncomputable abbrev infiniteUnitsAboveRep :
     Representation ℤ Gal(L/K) (∀ w : v.placesOver L, Additive (w.1.Completion)ˣ) :=
@@ -163,13 +162,11 @@ section Decomposition
 
 variable (w : v.placesOver L)
 
-omit [NumberField K] [NumberField L] in
 
 theorem mem_stabilizer_iff_smul_eq_infinite (σ : Gal(L/K)) :
     σ ∈ MulAction.stabilizer Gal(L/K) w.1 ↔ σ • w = w := by
   rw [MulAction.mem_stabilizer_iff, Subtype.ext_iff, InfinitePlace.coe_smul_placesOver]
 
-omit [NumberField K] in
 
 theorem infiniteCompletionMap_eq_decomposition (σ : MulAction.stabilizer Gal(L/K) w.1)
     (h : w.1 = w.1.comap (((σ : Gal(L/K)) : L ≃+* L) : L →+* L)) (x : w.1.Completion) :

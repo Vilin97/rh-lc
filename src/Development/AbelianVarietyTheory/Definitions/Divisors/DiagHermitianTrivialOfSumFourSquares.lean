@@ -137,10 +137,6 @@ private theorem lkMid_sh_mul_sh_units_inv_eq_one (y : (G.C)ˣ) :
       _root_.GlobalTheory.LKMid.sh G ((y⁻¹ : (G.C)ˣ) : G.C) = 1 := by
   rw [← lkMid_sh_mul_eq_sh_mul_sh_rev, Units.inv_mul, _root_.GlobalTheory.LKMid.sh_one_eq]
 
-open Matrix NumberField in
-open scoped TensorProduct Classical in
-variable {p : ℕ} [Fact p.Prime] in
-variable {G : _root_.GlobalTheory.LKTrip.HTGroup p} in
 
 theorem _root_.GlobalTheory.LKDef.DPair.rel_equivalence (G : _root_.GlobalTheory.LKTrip.HTGroup p) :
     Equivalence (_root_.GlobalTheory.LKDef.DPair.Rel (G := G)) := by
@@ -169,10 +165,6 @@ theorem pol_eq_of_rel {P Q : DPair G} (h : P.Rel Q) : Q.pol = P.pol := by
   simp only [pol, hγ, Units.val_mul]
   exact h
 
-open Matrix NumberField in
-open scoped TensorProduct Classical in
-variable {p : ℕ} [Fact p.Prime] in
-variable {G : _root_.GlobalTheory.LKTrip.HTGroup p} in
 
 theorem _root_.GlobalTheory.LKDef.DPair.mk_eq_iff (P Q : _root_.GlobalTheory.LKDef.DPair G) :
     Quot.mk (_root_.GlobalTheory.LKDef.DPair.Rel (G := G)) P = Quot.mk _ Q ↔
@@ -180,10 +172,6 @@ theorem _root_.GlobalTheory.LKDef.DPair.mk_eq_iff (P Q : _root_.GlobalTheory.LKD
   ⟨fun h => (_root_.GlobalTheory.LKDef.DPair.rel_equivalence G).eqvGen_iff.mp (Quot.eqvGen_exact h),
     Quot.sound⟩
 
-open Matrix NumberField in
-open scoped TensorProduct Classical in
-variable {p : ℕ} [Fact p.Prime] in
-variable {G : _root_.GlobalTheory.LKTrip.HTGroup p} in
 
 theorem _root_.GlobalTheory.LKDef.DPair.rel_out (P : _root_.GlobalTheory.LKDef.DPair G) :
     P.Rel

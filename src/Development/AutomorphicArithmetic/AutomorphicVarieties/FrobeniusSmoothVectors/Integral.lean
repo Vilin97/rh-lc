@@ -14,18 +14,15 @@ namespace UpperTheory.V.Fr
 
 variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsLocalRing O] {F : Frame l (ResidueField O)} {n : ℕ}
 
-variable (O F n) in
 
 def IsTr {C : Type} [CommRing C] [Algebra O C] [IsCO O C] (t : F.G0 → C) : Prop :=
   AdicCont (maximalIdeal C) t ∧ ∀ g, res O C (t g) = ∑ i, ((F.Ψ g ^ w n i : (ResidueField O)ˣ) : ResidueField O)
 
-variable (O F n) in
 
 def IsPsi {C : Type} [CommRing C] [Algebra O C] [IsCO O C] (χ : ∀ v, Fin n → F.Gv v → C) : Prop :=
   ∀ v i, AdicCont (maximalIdeal C) (χ v i) ∧
     ∀ g, res O C (χ v i g) = ((F.Ψ (F.loc v g) ^ w n i : (ResidueField O)ˣ) : ResidueField O)
 
-variable (O) in
 
 structure Integral (C : Type) [CommRing C] [Algebra O C] [IsCO O C] {K : Type} [CommRing K] [Algebra C K]
     (ρ : NRep F n K) : Prop where
@@ -34,7 +31,6 @@ structure Integral (C : Type) [CommRing C] [Algebra O C] [IsCO O C] {K : Type} [
   ze : ∃ ζ : C, res O C ζ = (F.Ψ F.g0 : ResidueField O) - ((F.Ψ F.g0)⁻¹ : (ResidueField O)ˣ) ∧
     ∀ i, (ρ.r F.g0 - ρ.r (F.star F.g0)) i i = (w n i : K) * algebraMap C K ζ
 
-variable (O) in
 
 structure Cone (C : Type) [CommRing C] [Algebra O C] [IsCO O C] {K : Type} [CommRing K] [Algebra C K]
     (ρ : NRep F n K) : Prop where
@@ -47,7 +43,6 @@ structure Cone (C : Type) [CommRing C] [Algebra O C] [IsCO O C] {K : Type} [Comm
     (maximalIdeal C ^ N • Submodule.span C (Set.range fun g => ρ.r g i j)).mkQ (ρ.r g i j)
   psi : ∃ χ : ∀ v, Fin n → F.Gv v → C, IsPsi O F n χ ∧ ∀ v i g, algebraMap C K (χ v i g) = ρ.ψ v i g
 
-variable (O) in
 
 def IsResMap (C : Type) [CommRing C] [IsLocalRing C] [Algebra O C] (f : ResidueField O →+* ResidueField C) : Prop :=
   ∀ a, f (residue O a) = residue C (algebraMap O C a)

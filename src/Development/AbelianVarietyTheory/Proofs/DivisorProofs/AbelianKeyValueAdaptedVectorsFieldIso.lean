@@ -38,7 +38,6 @@ include he in
 theorem toF_comp : (e : F →+* F').comp (toF R F) = toF R F' :=
   RingHom.ext fun r => by simp [toF, he]
 
-include he in
 
 def rhoE : TE R F' ⟶ TE R F :=
   Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F'))) (by
@@ -51,7 +50,6 @@ def rhoE : TE R F' ⟶ TE R F :=
     exact RingHom.ext fun r => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, he, TrivSqZeroExt.algebraMap_eq_inl])
       (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]))
 
-include he in
 
 def sigE : TF (R := R) F' ⟶ TF (R := R) F :=
   Over.homMk (spMap (e : F →+* F')) (by

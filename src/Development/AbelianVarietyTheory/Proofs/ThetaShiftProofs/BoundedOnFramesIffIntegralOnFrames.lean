@@ -86,7 +86,6 @@ noncomputable def discEvalAway : A →+* K :=
 
 variable {π A}
 
-include hi ht0 ht in
 
 end Value
 
@@ -289,7 +288,6 @@ section Finite
 
 variable {O : Type*} [CommRing O] [Algebra ℤ_[p] O] (i : O →+* ℂ_[p]) (hi : ∀ x, ‖i x‖ ≤ 1)
 
-include hi in
 
 theorem map_algebraMap_padicInt (z : ℤ_[p]) :
     i (algebraMap ℤ_[p] O z) = algebraMap ℚ_[p] ℂ_[p] z :=
@@ -370,7 +368,6 @@ theorem finiteDimensional_genField {T : Set ℂ_[p]} (hT : T.Finite) :
 
 variable (L : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] L]
 
-omit [Module.Finite ℤ_[p] O] in
 
 theorem finite_of_intEmb_eq {j : O →+* integralClosure ℤ_[p] L} (hj : ∀ a, intEmb L (j a) = i a) :
     j.Finite := by
@@ -395,9 +392,7 @@ theorem norm_map_eq_one_iff (hinj : Function.Injective i) (x : O) : ‖i x‖ = 
   have := isLocalHom_of_intEmb_eq i hi _ hinj hj
   rw [← hj, ← isUnit_iff_norm, isUnit_map_iff]
 
-omit [Module.Finite ℤ_[p] O] [Algebra ℤ_[p] O] in
 
-omit [Module.Finite ℤ_[p] O] in
 
 end Finite
 
@@ -418,7 +413,6 @@ def IsDiscPoint (L : IntermediateField ℚ_[p] (PadicAlgCl p)) {t : ℂ_[p]} (ht
   (∀ f, intEmb L (ev f) = discEval i hi ht f) ∧
     ∀ f, fieldEmb L (evA f) = discEvalAway π A i hi hπ ht0 ht f
 
-variable {i hi hπ A} in
 
 end Points
 
@@ -426,7 +420,6 @@ section Frames
 
 open MvPolynomial
 
-variable (p) in
 
 def algInt : Subring ℂ_[p] where
   carrier := {x | x ∈ algField p ∧ ‖x‖ ≤ 1}
@@ -466,6 +459,5 @@ end Frames
 
 end Padic
 
-open MvPolynomial in
 
 end GlobalTheory.DiscEval

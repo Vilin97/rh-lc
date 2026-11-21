@@ -178,4 +178,3 @@ theorem reg_of_val {K V Ω : Type} [Field K] [NumberField K] [AddCommGroup V] [M
 
 end ChowFormHeightComparison₂.SmallGenerators
 
-set_option maxHeartbeats 1000000 in

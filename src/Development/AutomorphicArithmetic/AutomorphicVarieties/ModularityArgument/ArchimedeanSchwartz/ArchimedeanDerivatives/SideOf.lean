@@ -42,4 +42,3 @@ private theorem eulerd_shift (B : HeightOneSpectrum (𝓞 K) → Multiset ℂ) (
 
 end UpperTheory.V.Z.Inf
 
-open UpperTheory.V.Z.Inf in

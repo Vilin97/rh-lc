@@ -23,7 +23,6 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
   [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem exists_coord_le_len {h : HermitianForm F E W} {v : Basis ι E W} (M : Majorant h v)
     (g : archUnitary h v) : ∃ K : ℝ, 0 ≤ K ∧ ∀ (y : InfinitePlace E → ι → ℂ) w i,
@@ -64,7 +63,6 @@ theorem exists_coord_le_len {h : HermitianForm F E W} {v : Basis ι E W} (M : Ma
         exact Finset.single_le_sum (f := fun i' => ∑ j, ‖G w i' j‖ / Real.sqrt (c w))
           (fun _ _ => by positivity) (Finset.mem_univ i)
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem LatticePointsBelowFinite.proof (h : HermitianForm F E W) (v : Basis ι E W) :
     LatticePointsBelowFinite.Statement h v := by

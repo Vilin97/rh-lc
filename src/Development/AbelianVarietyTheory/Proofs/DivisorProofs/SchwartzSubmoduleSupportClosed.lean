@@ -15,7 +15,6 @@ namespace GlobalTheory.SBRestrict
 
 variable {k : Type} [Field k] {Y Y' : Type}
 
-open Classical in
 
 def ext (I : Set (Y × Y')) (s : Matrix {p : Y × Y' // p ∉ I} Unit k) : Matrix Y Y' k :=
   fun r q => if h : (r, q) ∈ I then 0 else s ⟨(r, q), h⟩ ()
@@ -69,7 +68,6 @@ end GlobalTheory.SBRestrict
 
 namespace GlobalTheory.SBRestrict
 
-open Classical in
 
 theorem eq_SB_of_restrict : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
     {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y'] (ψ0 : AddChar k ℂ), Continuous ψ0 →

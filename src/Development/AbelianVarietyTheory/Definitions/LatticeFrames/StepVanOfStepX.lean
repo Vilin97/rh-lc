@@ -22,7 +22,6 @@ variable {D : D7} {u : D.what₂.Word}
 
 variable (d : Dat D u) (hb : d.Base)
 
-open Classical in
 
 section Ind
 

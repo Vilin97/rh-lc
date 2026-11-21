@@ -47,7 +47,6 @@ def weilSubgroup : Subgroup (Ω ≃ₐ[K] Ω) :=
   (Subgroup.zpowers (maximalUnramifiedExtensionFrobenius K Ω)).comap
     (AlgEquiv.restrictNormalHom (maximalUnramifiedExtension K Ω))
 
-variable {K Ω} in
 
 theorem mem_weilSubgroup_iff {σ : Ω ≃ₐ[K] Ω} :
     σ ∈ weilSubgroup K Ω ↔ ∃ n : ℤ,
@@ -55,7 +54,6 @@ theorem mem_weilSubgroup_iff {σ : Ω ≃ₐ[K] Ω} :
   simp only [weilSubgroup, Subgroup.mem_comap, Subgroup.mem_zpowers_iff]
   exact exists_congr fun n ↦ eq_comm
 
-variable {K Ω} in
 
 theorem restrictNormal_eq_frobenius_zpow_iff (σ : Ω ≃ₐ[K] Ω) (n : ℤ) :
     σ.restrictNormal (maximalUnramifiedExtension K Ω) = maximalUnramifiedExtensionFrobenius K Ω ^ n ↔
@@ -63,7 +61,6 @@ theorem restrictNormal_eq_frobenius_zpow_iff (σ : Ω ≃ₐ[K] Ω) (n : ℤ) :
   rw [← unramifiedDegree_restrictNormal, ← unramifiedDegree_maximalUnramifiedExtensionFrobenius_zpow K Ω n]
   exact unramifiedDegree_maximalUnramifiedExtension_injective.eq_iff.symm
 
-variable {K Ω} in
 
 theorem mem_weilSubgroup_iff_unramifiedDegree {σ : Ω ≃ₐ[K] Ω} :
     σ ∈ weilSubgroup K Ω ↔ ∃ n : ℤ, unramifiedDegree K Ω σ = Multiplicative.ofAdd (n : ℤ̂) := by
@@ -114,27 +111,17 @@ def WeilGroup : Type _ := weilSubgroup K Ω
 
 namespace WeilGroup
 
-variable {K Ω} in
 
-variable {K Ω} in
 
-variable {K Ω} in
 
-variable {K Ω} in
 
 variable {K Ω}
 
-variable (K Ω) in
 
-variable (K Ω) in
 
-variable (K Ω) in
 
-variable (K Ω) in
 
-variable (K Ω) in
 
-variable (K Ω) in
 
 end WeilGroup
 

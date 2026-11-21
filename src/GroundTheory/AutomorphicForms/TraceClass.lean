@@ -314,7 +314,6 @@ theorem IsTraceClass.comp_right {T : H →L[ℂ] H} (hT : IsTraceClass T) (C : H
 theorem IsTraceClass.adjoint {T : H →L[ℂ] H} (hT : IsTraceClass T) : IsTraceClass (T†) := by
   rw [IsTraceClass, traceNorm_adjoint]; exact hT
 
-variable (H) in
 
 theorem two_mul_traceNorm_comp_le (A B : H →L[ℂ] H) :
     2 * traceNorm (A.comp B) ≤ hsNormSq A + hsNormSq B := by

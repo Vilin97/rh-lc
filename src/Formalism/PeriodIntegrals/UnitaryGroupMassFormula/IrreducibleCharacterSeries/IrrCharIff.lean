@@ -17,10 +17,7 @@ def ConjChar : Prop :=
 def IrrCharIff : Prop :=
   ∀ (G : Type) [Group G] [Fintype G] (χ : G → ℂ), IsIrrChar χ ↔ ∃ V : FDRep ℂ G, Simple V ∧ χ = V.character
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end PI.SerBridgeGLW

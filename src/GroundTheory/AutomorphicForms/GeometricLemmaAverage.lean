@@ -340,7 +340,6 @@ theorem relIndex_ne_zero_of_isCompact_of_isOpen {K L : Subgroup G} (hK : IsCompa
   have := Subgroup.quotient_finite_of_isOpen (L.subgroupOf K) hopen
   exact Subgroup.index_ne_zero_of_finite
 
-omit [AddCommGroup W] [Module ℂ W] in
 
 theorem avgFinite_of_isOpen {K U : Subgroup G} {f : G → W} (hK : IsCompact (K : Set G))
     (hU : IsOpen (U : Set G)) (hUf : U ≤ rightStab f) : AvgFinite K f :=

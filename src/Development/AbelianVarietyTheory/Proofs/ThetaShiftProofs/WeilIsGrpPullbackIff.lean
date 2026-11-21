@@ -159,7 +159,6 @@ theorem commIsOf_of_isRatio (hG : GlobalFnsSt) (hA : IsAbelianScheme A) {k : ℕ
   exact comm_alg (isCub_cubV c hJ) (by rw [← MonObj.comp_pow, hx, MonObj.comp_one])
     (by rw [← MonObj.comp_pow, hy, MonObj.comp_one]) _ _ _ _ (he _ (fst T A) y J hJ)
 
-include c in
 
 theorem exists_theta {k : ℕ} {T : Over S} (x : T ⟶ A) (hx : x ^ k = 1) (i j : Lr.L.ι)
     (hi : ∀ p, x.left p ∈ Lr.L.U i) (hj : ∀ p, (1 : T ⟶ A).left p ∈ Lr.L.U j) :
@@ -268,7 +267,6 @@ theorem IsRatio.rosati (hG : GlobalFnsSt) (hA : IsAbelianScheme A) (f g : A ⟶ 
   rw [← Category.assoc] at this ⊢
   rw [h₁, h₂, ← this, _root_.mul_assoc]
 
-include c in
 
 theorem weilIs_rosati (hG : GlobalFnsSt) (hA : IsAbelianScheme A) (f g : A ⟶ A) [IsMonHom f] [IsMonHom g]
     (h : RosatiAdj A Lr.L f g) {k : ℕ} {T : Over S} {x y : T ⟶ A} (hx : x ^ k = 1) (hy : y ^ k = 1)
@@ -278,7 +276,6 @@ theorem weilIs_rosati (hG : GlobalFnsSt) (hA : IsAbelianScheme A) (f g : A ⟶ A
   obtain ⟨e₀, he⟩ := exists_isRatio c k (x ≫ f) y hx' hy
   rw [weilIs_iff c hG hA hx' hy he, weilIs_iff c hG hA hx hy' (he.rosati c hG hA f g h hx hy)]
 
-include c in
 
 theorem weilIs_pull (hG : GlobalFnsSt) (hA : IsAbelianScheme A) {S₀ : Scheme.{0}} {G : Over S₀} [GrpObj G]
     {L₀ : LB G.left} (hL₀ : L₀.IsLB) {f : S ⟶ S₀} {φ : A.left ⟶ G.left} (hp : IsGrpPullback A G f φ)

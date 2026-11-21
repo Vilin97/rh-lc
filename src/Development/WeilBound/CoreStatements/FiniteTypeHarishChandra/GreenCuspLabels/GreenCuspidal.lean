@@ -147,7 +147,6 @@ theorem rad_iff {d a : ℕ} (had : a ≤ d) (M : Mt g d) :
         simp only at this
         omega
 
-open Classical in
 
 theorem res_eq_zero_iff {d a : ℕ} (had : a ≤ d) (χ : Gn g d → ℂ) :
     res a (d - a) χ 1 1 = 0 ↔ (∑ u : Gn g d, if u ∈ stdRadical (ZMod g) d a then χ u else 0) = 0 := by

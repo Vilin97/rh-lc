@@ -111,7 +111,6 @@ lemma slab_identity (μM : Measure G) [SFinite μM] {S : Set G} {a : ℝ → G} 
 
 end GlobalTheory.CompanionTheory.SlabLemma
 
-open GlobalTheory.CompanionTheory.SlabLemma in
 
 theorem GlobalTheory.CompanionTheory.SlabLemma.slab : CompanionTheory.RgExh.Dec.N.S.Slab := by
   intro G _ _ _ μN μM _ _ S a δ τ c hSm hSc ha hδ hτ hadd hS hinv hδa hτa hδ0 F hF hfin

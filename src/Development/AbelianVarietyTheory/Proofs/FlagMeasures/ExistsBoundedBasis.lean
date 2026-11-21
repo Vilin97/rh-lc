@@ -112,7 +112,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 theorem rdE_pos : 0 < rdE E := Real.rpow_pos_of_pos
     (abs_pos.mpr (by exact_mod_cast NumberField.discr_ne_zero E)) _
 
-open ShortVectors in
 
 theorem exists_bounded_basis {n : ℕ} (hn : 1 ≤ n) (Λ : Submodule (𝓞 E) (Fin n → E)) (hfg : Λ.FG)
     (hint : ∀ x ∈ Λ, ∀ y ∈ Λ, IsIntegral ℤ (herm 1 x y))
@@ -153,7 +152,6 @@ theorem exists_bounded_basis {n : ℕ} (hn : 1 ≤ n) (Λ : Submodule (𝓞 E) (
   exact ⟨fun i => v (e i), fun i => (hb _).1 (hv _), hs2.comp e e.injective, fun σ i k =>
     SelfDualClasses.norm_herm_le σ _ _ _ (hle' _ σ) (hle' _ σ)⟩
 
-open StdMassBound RootClassCount in
 
 theorem mass_le [StarRing E] (hs : ∀ x : E, star x = IsCMField.complexConj E x) {n : ℕ} (hn : 1 ≤ n) {B : ℝ}
     (hB : B = 2 * (fdeg E : ℝ) * n ^ 2 * rdE E ^ 2) :
@@ -205,7 +203,6 @@ theorem mass_le [StarRing E] (hs : ∀ x : E, star x = IsCMField.complexConj E x
     _ = s.card := by simp
     _ ≤ R.card := by exact_mod_cast hcard
 
-omit [IsCMField E] in
 
 theorem mass_small [StarRing E] (hK : Formalism.HermitianLatticesTheory.IsCMUnram E) (hv : 1 ≤ Formalism.HermitianLatticesTheory.vInv E) {n : ℕ} (h1 : 1 ≤ n)
     (h2 : n ≤ 2) :

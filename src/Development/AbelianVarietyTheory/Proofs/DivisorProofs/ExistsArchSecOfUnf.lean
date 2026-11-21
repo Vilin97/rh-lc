@@ -36,7 +36,6 @@ namespace GlobalTheory.FlatDenom
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
   {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
-open GlobalTheory.DetLine GlobalTheory.IndefiniteRowSideFullHecke.HermitianCompactForm GlobalTheory.Toroidal in
 
 theorem framesOn_eq {r : ℕ} {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (hσ : GoodEmb c σ) (hU : IsUnf U)
     (hgeo : FnAlgClosed Xo c) (Z : Comp Xo c) : ∃ k, framesOn U Z = {z | z.1 = k ∧ z.2 ∈ (U.X z.1).dom} := by
@@ -58,7 +57,6 @@ theorem framesOn_eq {r : ℕ} {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (hσ : Go
     have := hq (q.symm Z) ⟨y, hy⟩ s
     rwa [Equiv.apply_symm_apply] at this
 
-open GlobalTheory.BdryUnit in
 
 theorem const_length {r : ℕ} {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (x : ℝ) (hσ : GoodEmb c σ) (hU : IsUnf U)
     (hgeo : FnAlgClosed Xo c) {Z : Comp Xo c} {τ : Psi H} {Y : Model Xo c (RingHom.id c.F)} {V : (Xo.XF c).Opens}
@@ -111,7 +109,6 @@ theorem detLaw_inv (s : ArchSec U x Z (flatWt Dw τ)) : DetLaw Z s.inv (conjEmb 
   linear_combination (-(evR Xo c s.inv z * evR Xo c s.inv y)) * k1 + (g₂.det * evR Xo c s.inv y) * k3 -
     (g₁.det * evR Xo c s.inv z) * k2
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem archSec_denom (hpq : 1 ≤ Dw.p + Dw.q) (hA : l.A = 1) (s : ArchSec U x Z (flatWt Dw τ))
     (hs : ∀ (T : CDVR) (io : c.F →+* T.Fr) (y₀ : IntFr Xo c T io), (∀ a, a ≠ 0 → vV T.V (io a) = 0) →
@@ -150,7 +147,6 @@ theorem archSec_denom (hpq : 1 ≤ Dw.p + Dw.q) (hA : l.A = 1) (s : ArchSec U x 
 
 end GlobalTheory.FlatDenom
 
-open Formalism.BasicNotions GlobalTheory.CovTop in
 
 namespace GlobalTheory.FlatDenom
 
@@ -182,7 +178,6 @@ theorem HasBddSec.neg (h : HasBddSec U x Z la) : HasBddSec U x Z (-la) := by
       ⟨(image_eq_singleton_iff.1 (s.norm_inf σ)).1, fun z hz => homN_inv s hz⟩⟩, m, hm,
     fun w v hv => (h w v hv).symm⟩
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem HasBddSec.add (h : HasBddSec U x Z la) (h' : HasBddSec U x Z la') : HasBddSec U x Z (la + la') := by
   obtain ⟨s, m, hm, h⟩ := h
@@ -226,8 +221,5 @@ theorem exists_nat_vAdd {K : Type} [Field K] [NumberField K] {a : K} (ha : a ≠
 
 end GlobalTheory.FlatDenom
 
-open Formalism.BasicNotions GlobalTheory.CovTop in
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 end

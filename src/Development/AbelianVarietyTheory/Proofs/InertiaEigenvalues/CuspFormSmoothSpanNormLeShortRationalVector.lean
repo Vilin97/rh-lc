@@ -118,7 +118,6 @@ theorem Good.kernel {G : GA E a → ℂ} (hG : Good G) {X : Type} [MeasurableSpa
     Submodule.subset_span ⟨X, inferInstance, ν, inferInstance, k, γ, G, hk, hG, rfl⟩
   exact ⟨kSpan_le_Sm hm, fun l => kSpan_decays_growth _ (word_mem_kSpan l _ hm)⟩
 
-variable (E a) in
 
 def goodSub : Submodule ℂ (GA E a → ℂ) where
   carrier := {F | Good F}

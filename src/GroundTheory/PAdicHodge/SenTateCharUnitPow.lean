@@ -112,7 +112,6 @@ section Residue
 
 variable (p : ℕ) [hp : Fact p.Prime] [CharP 𝓀[K] p]
 
-omit hp in
 
 theorem not_dvd_card_residueField_sub_one : ¬ p ∣ Nat.card 𝓀[K] - 1 := by
   intro h

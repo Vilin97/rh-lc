@@ -40,7 +40,6 @@ section Arch
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {Ψ : Type} [Fintype Ψ] {j j' n g : ℕ} {Λ : Type}
   [AddCommGroup Λ] [Module (𝓞 E) Λ]
 
-omit [IsCMField E] in
 
 theorem intEmb_injective (s : 𝓞 E →+* ℂ) : Function.Injective s := by
   have hc : (RingHom.ker s).comap (algebraMap ℤ (𝓞 E)) = ⊥ := by
@@ -79,7 +78,6 @@ structure LatEmb (F : UnivFam E Ψ j j' n g Λ) where
 
 def plc (F : UnivFam E Ψ j j' n g Λ) (τ : Ψ) : InfinitePlace E := InfinitePlace.mk (embOf (F.σ τ))
 
-open Classical in
 
 def tauMat (F : UnivFam E Ψ j j' n g Λ) (a : InfinitePlace E → GL (Fin (j + j')) ℂ) (τ : Ψ) :
     Matrix (Fin (j + j')) (Fin (j + j')) ℂ :=
@@ -106,12 +104,10 @@ def cinv (A : Matrix (Fin (j + j')) (Sg j j') ℂ) (τ : Ψ) : Matrix (Sg j j') 
 def perExt (R : RiemLat E g Λ) : (Ψ → Fin (j + j') → ℂ) →ₗ[ℝ] (Fin g → ℂ) :=
   C.bas.constr ℝ fun k => R.P (C.lam k)
 
-open Classical in
 
 def pPart (R : RiemLat E g Λ) (τ : Ψ) (y : Fin (j + j') → ℂ) : Fin g → ℂ :=
   (1 / 2 : ℂ) • (C.perExt R (Pi.single τ y) - Complex.I • C.perExt R (Pi.single τ (Complex.I • y)))
 
-open Classical in
 
 def pBar (R : RiemLat E g Λ) (τ : Ψ) (y : Fin (j + j') → ℂ) : Fin g → ℂ :=
   (1 / 2 : ℂ) • (C.perExt R (Pi.single τ y) + Complex.I • C.perExt R (Pi.single τ (Complex.I • y)))

@@ -14,9 +14,7 @@ variable {R Ix : Type} [CommRing R] [Fintype Ix] [DecidableEq Ix]
 def HasDeg (deg : Ix → ℕ) (k : ℤ) (X : Matrix Ix Ix R) : Prop :=
   ∀ p q, (deg p : ℤ) ≠ deg q + k → X p q = 0
 
-omit [DecidableEq Ix] in
 
-omit [Fintype Ix] [DecidableEq Ix] in
 
 variable {R Ix : Type} [CommRing R] [Fintype Ix] [DecidableEq Ix] in
 private lemma submatrix_mul_eq_of_vanishing_off {ι κ : Type} (X Y : Matrix Ix Ix R) (Q : Ix → Prop)
@@ -167,7 +165,6 @@ private lemma det_even_submatrix_homotopy_product_eq_one (deg : Ix → ℕ) (D h
       ⟨fun i => hd (by rw [← i.2]; exact i.1.2)⟩
     exact Matrix.det_isEmpty
 
-variable {R Ix : Type} [CommRing R] [Fintype Ix] [DecidableEq Ix] in
 
 theorem _root_.GlobalTheory.TorsionUnique.torsSq_unique : ∀ (R Ix : Type) [CommRing R] [Fintype Ix] [DecidableEq Ix]
     (deg : Ix → ℕ) (D : Matrix Ix Ix R) (t t' : R),

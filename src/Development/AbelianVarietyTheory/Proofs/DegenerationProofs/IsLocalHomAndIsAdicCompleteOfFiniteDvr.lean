@@ -42,7 +42,6 @@ private lemma mem_span_pow_iff_repr {V V' : Type} [CommRing V] [CommRing V'] [Al
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hc i, smul_smul, mul_comm (ϖ ^ j)]
 
-open IsLocalRing in
 
 theorem _root_.GlobalTheory.isLocalHom_and_isAdicComplete_of_finite_dvr :
     ∀ (V V' : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]

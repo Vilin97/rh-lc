@@ -86,7 +86,6 @@ theorem secM_off (ι : H →* G) (ρ : Representation ℂ H V) (K : Subgroup G) 
 
 end GlobalTheory.BCT.TraceBlocks.Decomp
 
-open GlobalTheory.BCT.TraceBlocks.Decomp in
 
 theorem GlobalTheory.BCT.TraceBlocks.eqvM_eq_finsum_secM : ∀ (G H V : Type) [Group G] [Group H] [AddCommGroup V] [Module ℂ V] (ι : H →* G), Function.Injective ι → ∀ (ρ : Representation ℂ H V) (K' : Subgroup G), Finite (DoubleCoset.Quotient (ι.range : Set G) (K' : Set G)) → (∀ x : G, Finite (ι.range ⊓ K'.map (MulAut.conj x).toMonoidHom : Subgroup G)) → ∀ φ ∈ eqvM ι ρ K', ∑ᶠ q : DoubleCoset.Quotient (ι.range : Set G) (K' : Set G), secM ι ρ K' (Quotient.out q) (φ (Quotient.out q)) = φ := by
   intro G H V _ _ _ _ ι hι ρ K' hQ hS φ hφ

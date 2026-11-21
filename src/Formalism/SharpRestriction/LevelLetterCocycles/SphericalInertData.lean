@@ -53,7 +53,6 @@ theorem isoLoc_single {a : ℕ} (P : D.naut.CG a) (w : PlE D.host) :
     (D.naut.lpZero w)) (D.naut.lpZero w) = D.naut.locG P w
   rw [D.naut.lpSum_zero, D.naut.lpSum_zero, h0, D.naut.lpTw_zero]
 
-variable (D) in
 
 variable (D)
 

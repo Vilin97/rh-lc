@@ -40,12 +40,10 @@ def cxOf (e : F ≃+* c.F) (σ : c.F →+* ℂ) {X : Var F} {j : X.X ⟶ gen Z}
 
 variable {σ : c.F →+* ℂ} {r : ℕ}
 
-open Classical in
 
 def unfFam (U : Formalism.L2.PjFree.Unf Xo c σ r) : ∀ σ' : c.F →+* ℂ, Formalism.L2.PjFree.Unf Xo c σ' r := fun σ' =>
   if h : σ = σ' then h ▸ U else { Comp := Empty, X := fun k => k.elim, un := fun k => k.elim }
 
-variable (Z) in
 
 def hodgeMet (U : Formalism.L2.PjFree.Unf Xo c σ r) : EigMet Z σ :=
   EigMet.hodge (unfFam U) (2 * Real.pi) Real.two_pi_pos (Classical.arbitrary (EigMet Z σ))
@@ -56,7 +54,6 @@ def FrameAt (e : F ≃+* c.F) {X : Var F} {j : X.X ⟶ gen Z} (f₀ : EigFrame Z
     (ψ : X.X.presheaf.stalk (under y) →+* ℂ), y.1 = spMap ψ ≫ stalkPt X (under y) ∧
       fz.Coord (algebraMap (X.X.presheaf.stalk (under y)) X.X.functionField) f₀ (A₀ * A⁻¹) ∧ fz.IsMap ψ g
 
-open Classical in
 
 def lieGram (e : F ≃+* c.F) (U : Formalism.L2.PjFree.Unf Xo c σ r) {X : Var F} {j : X.X ⟶ gen Z}
     (hj : j ≫ genStr Z ≫ spMap e.toRingHom = X.str) (f₀ : EigFrame Z (constF e X) (genericPt X ≫ j ≫ genι Z))

@@ -18,7 +18,6 @@ section L
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
-omit [NumberField F] [Algebra F E] in
 
 theorem adelstabL_den {κ : Type} [Fintype κ] (f : κ → E) :
     ∃ m : ℤ, m ≠ 0 ∧ ∀ i, IsIntegral ℤ ((m : E) * f i) := by

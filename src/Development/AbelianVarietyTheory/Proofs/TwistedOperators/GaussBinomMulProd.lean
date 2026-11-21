@@ -102,7 +102,6 @@ private lemma card_submodule_finrank_eq_gaussBinom (k : Type) [Field k] [Finite 
       ⟨fun ⟨L, hL⟩ => by have := Submodule.finrank_le L; omega⟩
     exact Nat.card_of_isEmpty
 
-open Module in
 
 theorem _root_.GlobalTheory.GaussCount.subspaceCount : _root_.GlobalTheory.IndefiniteRowSideFullHecke.GaussianBinomialFormula.SubspaceCount := by
   unfold _root_.GlobalTheory.IndefiniteRowSideFullHecke.GaussianBinomialFormula.SubspaceCount
@@ -134,7 +133,6 @@ private lemma gaussBinom_sub_eq_gaussBinom {q : ℕ} (hq : 1 < q) (n a : ℕ) (h
     linear_combination h2 - h1
   exact_mod_cast this
 
-open Module in
 
 theorem _root_.GlobalTheory.GaussCount.card_codim (k : Type) [Field k] [Finite k] (V : Type) [AddCommGroup V] [Module k V]
     [FiniteDimensional k V] (j : ℕ) :
@@ -153,7 +151,6 @@ theorem _root_.GlobalTheory.GaussCount.card_codim (k : Type) [Field k] [Finite k
       ⟨fun ⟨L, hL⟩ => by have := L.finrank_quotient_add_finrank; omega⟩
     exact Nat.card_of_isEmpty
 
-open Module in
 
 theorem _root_.GlobalTheory.GaussCount.gauss_formula (q : ℕ) (R : Type) [CommRing R] (Y : R) (m : ℕ) :
     ∑ j ∈ Finset.range (m + 1),

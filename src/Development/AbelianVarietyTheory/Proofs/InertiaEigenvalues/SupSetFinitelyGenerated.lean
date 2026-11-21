@@ -102,7 +102,6 @@ theorem fg_of_separating {K V : Type} [Field K] [AddCommGroup V] [Module K V] (O
 variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
   (la : HeightOneSpectrum (𝓞 K))
 
-omit [NumberField K] in
 
 theorem exists_denominator (y : L)
     (hy : ∀ w : HeightOneSpectrum (𝓞 L), w.asIdeal.LiesOver la.asIdeal → w.valuation L y ≤ 1) :
@@ -201,7 +200,6 @@ section Geometry
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
   (Xo : Moduli Dw l) (c : Coeff l)
 
-open GlobalTheory.Models GlobalTheory.Models.RankZero in
 
 theorem exists_model_rank_zero (hD : Dw.p + Dw.q = 0) {O : Type} [CommRing O] [IsDomain O] [IsIntegrallyClosed O]
     [IsNoetherianRing O] (β : O →+* c.F) : ∃ Y : Model Xo c β, PushInvertible Y.t.G Y.t.PP.L := by

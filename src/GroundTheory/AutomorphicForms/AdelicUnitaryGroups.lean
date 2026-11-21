@@ -52,24 +52,20 @@ end Congr
 
 variable [NumberField K]
 
-variable (K) in
 
 def adeleRingEquivProd : 𝔸[K] ≃ₐ[K] InfiniteAdeleRing K × FiniteAdeleRing (𝓞 K) K :=
   AlgEquiv.refl
 
-variable (K) in
 
 def infiniteAdeleRingEquivPi : InfiniteAdeleRing K ≃ₐ[K] ∀ w : InfinitePlace K, w.Completion :=
   AlgEquiv.refl
 
-variable (K) in
 
 def adeleInfiniteEval (w : InfinitePlace K) : 𝔸[K] →ₐ[K] w.Completion :=
   ((Pi.evalAlgHom K (fun w : InfinitePlace K => w.Completion) w).comp
     (infiniteAdeleRingEquivPi K).toAlgHom).comp
     ((AlgHom.fst K _ _).comp (adeleRingEquivProd K).toAlgHom)
 
-variable (K) in
 
 def adeleFiniteEval (v : HeightOneSpectrum (𝓞 K)) : 𝔸[K] →ₐ[K] v.adicCompletion K :=
   (finiteAdeleEval K v).comp ((AlgHom.snd K _ _).comp (adeleRingEquivProd K).toAlgHom)
@@ -80,7 +76,6 @@ theorem locallyCompactSpace_unitaryPoints_adele (hH : IsUnit H.det) :
     LocallyCompactSpace (unitaryPoints K E H 𝔸[K]) :=
   locallyCompactSpace_unitaryPoints H 𝔸[K] hH
 
-variable (K) in
 
 def unitaryDiagonal : unitaryPoints K E H K →* unitaryPoints K E H 𝔸[K] :=
   unitaryMap K E H (Algebra.ofId K 𝔸[K])

@@ -19,7 +19,6 @@ set_option autoImplicit false
 
 namespace GlobalTheory.CharExists
 
-open TensorProduct WithConv in
 
 theorem pres (K : Type) [Field K] (N : Over (Sp K)) [GrpObj N] [IsCommMonObj N] (hf : IsFinite N.hom) :
   ∃ (B : Type) (_ : CommRing B) (_ : HopfAlgebra K B), Coalgebra.IsCocomm K B ∧ Module.Finite K B ∧
@@ -77,7 +76,6 @@ theorem transfer (S : Scheme.{0}) (N N' T : Over S) [GrpObj N] [GrpObj N'] (e : 
       ext; simp [pullTop]
     rw [← this, h, map_one]
 
-open TensorProduct in
 
 noncomputable def secMap (K : Type) [CommRing K] (B D : Type) [CommRing B] [CommRing D] [Algebra K B] [Algebra K D] :
     B ⊗[K] D →+* Γ(((Spec (CommRingCat.of B)).asOver (Sp K) ⊗ (Spec (CommRingCat.of D)).asOver (Sp K)).left, ⊤) :=
@@ -85,7 +83,6 @@ noncomputable def secMap (K : Type) [CommRing K] (B D : Type) [CommRing B] [Comm
     (Spec (CommRingCat.of D)).asOver (Sp K)).left ≅ Spec (CommRingCat.of (B ⊗[K] D))).hom.appTop.hom.comp
     (Scheme.ΓSpecIso (CommRingCat.of (B ⊗[K] D))).inv.hom
 
-open TensorProduct in
 
 theorem secMap_injective (K : Type) [CommRing K] (B D : Type) [CommRing B] [CommRing D] [Algebra K B]
     [Algebra K D] : Function.Injective (secMap K B D) := by
@@ -103,7 +100,6 @@ theorem secMap_injective (K : Type) [CommRing K] (B D : Type) [CommRing B] [Comm
     (Scheme.ΓSpecIso _).hom.hom (e.inv.appTop.hom (e.hom.appTop.hom ((Scheme.ΓSpecIso _).inv.hom y))) at h2
   rwa [h1, h1, h3, h3] at h2
 
-open TensorProduct in
 
 theorem secMap_lift (K : Type) [CommRing K] (B D : Type) [CommRing B] [CommRing D] [Algebra K B] [Algebra K D]
     (Y : Over (Sp K)) (f : Y ⟶ (Spec (CommRingCat.of B)).asOver (Sp K))
@@ -133,7 +129,6 @@ theorem secMap_lift (K : Type) [CommRing K] (B D : Type) [CommRing B] [CommRing 
   rw [nL, nR, ← hf, ← hh, ← hfst, ← hsnd]
   rfl
 
-open TensorProduct in
 
 theorem prodsec (K : Type) [CommRing K] (B D : Type) [CommRing B] [CommRing D] [Algebra K B] [Algebra K D] :
     ∃ Φ : B ⊗[K] D →+* Γ(((Spec (CommRingCat.of B)).asOver (Sp K) ⊗ (Spec (CommRingCat.of D)).asOver (Sp K)).left, ⊤),
@@ -145,7 +140,6 @@ theorem prodsec (K : Type) [CommRing K] (B D : Type) [CommRing B] [CommRing D] [
             h.left.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of D)).inv.hom d) :=
   ⟨secMap K B D, secMap_injective K B D, secMap_lift K B D⟩
 
-open TensorProduct in
 
 theorem mulsharp (K : Type) [CommRing K] (B : Type) [CommRing B] [HopfAlgebra K B] (Y : Over (Sp K))
     (f g : Y ⟶ (Spec (CommRingCat.of B)).asOver (Sp K)) (b : B) {J : Type} (s : Finset J) (x y : J → B)
@@ -182,7 +176,6 @@ theorem algsharp (K : Type) [CommRing K] (A : Type) [CommRing A] [Algebra K A] (
   simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom] at hn
   rw [← hn]
 
-open TensorProduct in
 
 theorem bridge (K : Type) [Field K] (B D : Type) [CommRing B] [HopfAlgebra K B] [CommRing D] [Algebra K D]
   (u : (B ⊗[K] D)ˣ) (hu : IsGroupLikeElem D (TensorProduct.comm K B D (u : B ⊗[K] D))) (h1 : u ≠ 1) :
@@ -257,7 +250,6 @@ theorem bridge (K : Type) [Field K] (B D : Type) [CommRing B] [HopfAlgebra K B] 
   ext
   simp only [pullTop, Units.coe_map, Units.val_mul]
   exact (e1 u).trans (key.trans (congrArg₂ (· * ·) (e2 u).symm (e3 u).symm))
-open TensorProduct WithConv GlobalTheory GlobalTheory.CartierDual in
 
 theorem exists_character_ne_one : ∀ (K : Type) [Field K] (N : Over (Sp K)) [GrpObj N] [IsCommMonObj N], IsFinite N.hom → (𝟙 N ≠ (1 : N ⟶ N)) → ∃ (T : Over (Sp K)) (χ : Γ((N ⊗ T).left, ⊤)ˣ), IsCharacter χ ∧ χ ≠ 1 := by
   intro K _ N _ _ hf hne

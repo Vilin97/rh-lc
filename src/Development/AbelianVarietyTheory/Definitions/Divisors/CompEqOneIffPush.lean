@@ -44,13 +44,11 @@ structure IsIsogDeg (f : A ⟶ A') (d : ℕ) : Prop where
 def KilledBy (ρ : RingAct A O) (𝔴 : Ideal O) {T : Over S} (x : T ⟶ A) : Prop :=
   ∀ a ∈ 𝔴, x ≫ ρ.act a = 1
 
-omit [GrpObj A] [IsCommMonObj A] [GrpObj A'] [IsCommMonObj A'] in
 
 theorem IsIsogDeg.of_isIso (f : A ⟶ A') [IsIso f] : IsIsogDeg f 1 := by
   have : IsIso f.left := inferInstanceAs (IsIso ((Over.forget S).map f))
   exact ⟨inferInstance, inferInstance, inferInstance, congrFun (Scheme.Hom.finrank_eq_one_of_isIso _)⟩
 
-omit [GrpObj A] [IsCommMonObj A] [GrpObj A'] [IsCommMonObj A'] [GrpObj A''] [IsCommMonObj A''] in
 
 theorem IsIsogDeg.comp {f : A ⟶ A'} {g : A' ⟶ A''} {d e : ℕ} (hf : IsIsogDeg f d) (hg : IsIsogDeg g e) :
     IsIsogDeg (f ≫ g) (d * e) := by
@@ -62,9 +60,7 @@ theorem IsIsogDeg.comp {f : A ⟶ A'} {g : A' ⟶ A''} {d e : ℕ} (hf : IsIsogD
   · rw [Over.comp_left]; infer_instance
   · rw [Over.comp_left, FinrankComp.finrank_comp_of_const _ _ d hf.rank, hg.rank]
 
-omit [GrpObj A] [IsCommMonObj A] [GrpObj A'] [IsCommMonObj A'] in
 
-omit [GrpObj A] [IsCommMonObj A] [GrpObj A'] [IsCommMonObj A'] in
 
 theorem IsIsogDeg.of_isPullback {C C' : Over S'} {f : A ⟶ A'} {g : C ⟶ C'} {d : ℕ} (hf : IsIsogDeg f d)
     {u : C.left ⟶ A.left} {v : C'.left ⟶ A'.left} (H : IsPullback u g.left f.left v) : IsIsogDeg g d := by
@@ -76,7 +72,6 @@ theorem IsIsogDeg.of_isPullback {C C' : Over S'} {f : A ⟶ A'} {g : C ⟶ C'} {
 
 abbrev ker (f : A ⟶ A') : Over S := pullback f η[A']
 
-omit [GrpObj A] [IsCommMonObj A] [IsCommMonObj A'] in
 
 theorem IsIsogDeg.ker {f : A ⟶ A'} {d : ℕ} (hf : IsIsogDeg f d) : IsIsogDeg (toUnit (ker f)) d := by
   rw [toUnit_unique (toUnit _) (pullback.snd f η[A'])]

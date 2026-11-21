@@ -62,9 +62,6 @@ def extA {K : Type} [Field K] [NumberField K] [StarRing K] {m : ℕ} (A : FamIn 
 
 variable {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
-set_option maxHeartbeats 2000000 in
 
 structure NewReal (R : RealDat D A Ks) (V : NewLev D N) (X : NewFam A N) where
   BR : ∀ n, Bridge.SideReal D D.sp.X'
@@ -100,7 +97,6 @@ structure NewReal (R : RealDat D A Ks) (V : NewLev D N) (X : NewFam A N) where
   thF : ∀ i n, (HV i n).H →ₗ[ℂ] MMap (R.MW i (sg0 D A))
   thG : ∀ i n, (HV i n).H →ₗ[ℂ] (R.HW i (sg0 D A)).H
 
-set_option maxHeartbeats 4000000 in
 
 def extR (R : RealDat D A Ks) {V : NewLev D N} {X : NewFam A N} (Y : NewReal R V X) : RealDat D (extA A X) Ks where
   toLevCh := extL R.toLevCh V
@@ -162,7 +158,6 @@ def extR (R : RealDat D A Ks) {V : NewLev D N} {X : NewFam A N} (Y : NewReal R V
   lam _ _ _ _ := 0
   err0 := R.err0
 
-set_option maxHeartbeats 4000000 in
 
 section Ties
 
@@ -191,7 +186,6 @@ variable {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {R : RealDat D A T.Q.c.F} 
   (Y : NewReal R V X) {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)}
   {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
 
-set_option maxHeartbeats 2000000 in
 
 def fwExt (t : FWTie T R κ v₀) : FWTie T (extR R Y) κ v₀ where
   alg_eq := t.alg_eq
@@ -207,7 +201,6 @@ def fwExt (t : FWTie T R κ v₀) : FWTie T (extR R Y) κ v₀ where
   ev0 := t.ev0
   ev := t.ev
 
-set_option maxHeartbeats 2000000 in
 
 def omExt {i : Fin D.R.m} (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) :
     OMDat T.toCore (extR R Y) i Unit (fun _ => (extA A X).μ0) where

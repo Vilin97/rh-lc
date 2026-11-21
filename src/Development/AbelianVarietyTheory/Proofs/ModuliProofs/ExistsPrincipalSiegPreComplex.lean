@@ -85,7 +85,6 @@ end GlobalTheory.SiegelInhabitant
 
 namespace GlobalTheory
 
-open SiegelInhabitant in
 
 theorem exists_principal_siegPre_complex : ∀ (h k : ℕ), 0 < k → ∀ (o : Type) [CommRing o] (em : o →+* ℂ) (ζ : o), IsPrimitiveRoot (em ζ) k → ∃ c : SiegPre h k ζ (spMap em), c.Principal ∧ SmoothOfRelativeDimension h c.A.hom := by
   intro h k hk o _ em ζ hζ

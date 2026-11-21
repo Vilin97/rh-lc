@@ -42,7 +42,6 @@ def placesOver {F : Type} [Field F] [NumberField F] (E : Type) [Field E] [Number
     [Algebra F E] (S : Set (Place F)) : Set (Place E) :=
   {w | ∃ v ∈ S, w.asIdeal.LiesOver v.asIdeal}
 
-open Classical in
 
 def quadSign {F : Type} [Field F] [NumberField F] (E : Type) [Field E] [NumberField E]
     [Algebra F E] (v : Place F) : ℂ :=

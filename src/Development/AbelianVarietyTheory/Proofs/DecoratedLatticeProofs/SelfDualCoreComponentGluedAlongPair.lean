@@ -18,7 +18,6 @@ noncomputable section
 
 namespace GlobalTheory.Core.Mi.LatMatch
 
-open GlobalTheory.LatPair in
 
 theorem exists_pair_of_line {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n : Type}
     (Λ : Submodule 𝒪[k] (n ⊕ Fin 1 → k)) (hΛ : Λ.IsLattice k) (q : Unif k) (m : k)

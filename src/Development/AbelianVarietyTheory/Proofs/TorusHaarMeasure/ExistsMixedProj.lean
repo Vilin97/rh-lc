@@ -86,9 +86,6 @@ namespace GlobalTheory.Up
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-open NumberField MeasureTheory Topology in
-open scoped ContDiff ENNReal Matrix in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 
 theorem _root_.GlobalTheory.Up.polePoint_holds : _root_.GlobalTheory.Up.PolePoint (E := E) := by
   unfold _root_.GlobalTheory.Up.PolePoint

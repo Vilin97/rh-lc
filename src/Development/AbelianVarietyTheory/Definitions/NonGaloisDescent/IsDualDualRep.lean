@@ -14,7 +14,6 @@ namespace GlobalTheory.ResSel
 variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N} (bkP : BKPh X)
   (i : X.Tw) (s : X.Sig i)
 
-variable (X) in
 
 def IsCj (g g' : GE N) : Prop := ∀ x, g' x = X.cc (g (X.cc.symm x))
 
@@ -110,7 +109,6 @@ def Recip : Prop :=
       cl x ∈ selOn bkP i (Tgl i s) (1 : GE N →* Kˣ) K Q → cl y ∈ selOn bkP i ρ (1 : GE N →* Kˣ) K ∅ →
       ∑ a, (c a : K) * form x y (γ a) (φ a) (γ' a) (φ' a) = 0
 
-variable (X) in
 
 def StepAB : Prop :=
   ∀ (M : ℕ), 1 ≤ M → ∀ H S d, AdmFam X i M H S d → ∀ z, IsTameInertiaElementAtTwistPrime X i z →

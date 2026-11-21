@@ -103,7 +103,6 @@ section Charts
 variable {o W V : Type} [CommRing o] [CommRing W] [IsLocalRing W] [CommRing V] [IsDomain V] (T : TautBase o W)
   (iw : W →+* V)
 
-open Classical in
 
 def Jd {Tt : Over (Sp V)} (z : Tt.left) (J : (Tt.left ⟶ (Bp T iw).left) → PUnit → T.M.L.ι) :
     (Tt.left ⟶ T.B.left) → T.M.L.ι := fun χ =>

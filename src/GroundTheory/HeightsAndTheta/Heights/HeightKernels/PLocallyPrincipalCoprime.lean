@@ -100,7 +100,6 @@ theorem exists_local_mult {B : Subring L} {M : AddSubgroup L} {ι : Type} [Finty
   rw [this]
   exact c.2
 
-open Classical in
 
 noncomputable def toB (B : Subring L) (x : L) : B := if h : x ∈ B then ⟨x, h⟩ else 0
 
@@ -109,7 +108,6 @@ theorem coe_toB {B : Subring L} {x : L} (h : x ∈ B) : (toB B x : L) = x := by
 
 end LocallyPrincipalCoprimeAlt
 
-open LocallyPrincipalCoprimeAlt in
 
 theorem LocallyPrincipalCoprime.proof : LocallyPrincipalCoprime.Statement := by
   intro L _ _ B M ι _ a hfin hBM haM hden hloc hM s hs

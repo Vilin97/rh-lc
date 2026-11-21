@@ -78,7 +78,6 @@ theorem quotMap_algebraMap {O : Type} [CommRing O] (ϖ : O) (n : ℕ) :
 
 end GlobalTheory.SmChart
 
-open GlobalTheory.SmChart in
 
 theorem GlobalTheory.SSG.chartAt_of_smooth : ∀ (O : Type) [CommRing O] (ϖ : O) (X : Scheme.{0})
     (p : X ⟶ Spec (CommRingCat.of O)) (V : X.Opens) (x : X), x ∈ V → Smooth (V.ι ≫ p) →

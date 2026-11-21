@@ -44,7 +44,6 @@ end Mult
 
 variable {k : Type} [Field k] {N : ℕ}
 
-open Classical in
 
 def projCycle (J : Ideal (MvPolynomial (Fin N) k)) : Ideal (MvPolynomial (Fin N) k) →₀ ℕ :=
   Finsupp.ofSupportFinite

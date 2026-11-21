@@ -26,7 +26,6 @@ def LS {E : Type} [Field E] [NumberField E] (S : Finset (HeightOneSpectrum (𝓞
 
 def pad {k : ℕ} (m : ℕ) (l : Fin k → ℤ) : Fin m → ℤ := fun a => if h : (a : ℕ) < k then l ⟨a, h⟩ else 0
 
-open Classical in
 
 def loc {m k : ℕ} (q : ℕ) (α : Fin m → ℂˣ) (β : Fin k → ℂˣ) (s : ℂ) (l : Fin k → ℤ) : ℂ :=
   if Antitone l ∧ ∀ i, 0 ≤ l i then evalAt α (schur (pad m l)) * conj (evalAt β (schur l)) * (q : ℂ) ^ (-s * ((∑ i, l i : ℤ) : ℂ))
@@ -55,7 +54,6 @@ def RSPole : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex 
         (∀ σ : ℝ, 0 < σ → ZS (σ + u * Complex.I) ≠ 0) ∧ (∀ s : ℂ, σ₀ < s.re → Z s = (s - 1) * ZS s * LS S α β s) ∧
         ((⟨m, CG.mk π⟩ : Σ a, CG E a) ≠ ⟨k, CG.mk π'⟩ → Z 1 = 0)
 
-open Classical in
 
 def RSU : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m k : ℕ) (π : CG E m) (π' : CG E k),
   1 ≤ m → 1 ≤ k → π.IsUnitary → π'.IsUnitary →

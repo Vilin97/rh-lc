@@ -21,7 +21,6 @@ open BwdCut BwdBetaCut BwdNP BetaI
 variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u)}
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
-set_option maxHeartbeats 1000000 in
 
 theorem localOrthogonal_holds : PartialIsometryExtension Zd u u' F0 what₂ := by
   intro γ Z F'₂ φ φ' Λ₂ hB β₀ hβ₀ hfr hW0 hOm p w hw hm hm₂

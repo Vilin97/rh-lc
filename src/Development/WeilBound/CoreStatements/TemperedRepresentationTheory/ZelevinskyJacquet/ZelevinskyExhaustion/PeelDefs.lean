@@ -17,11 +17,8 @@ def Peel (Δ : Segment k) (x : IrrGL k) : Prop :=
   ∃ (y : Fin 2 → IrrGL k) (hd : ∑ a, (y a).1 = x.1), IsLSeg Δ (y 0).rep ∧
     ∃ f : x.rep.IntertwiningMap (prodIrr y hd), Function.Injective f
 
-variable (k) in
 
-variable (k) in
 
-variable (k) in
 
 def PeelGoodP : Prop :=
   ∀ (x : IrrGL k) (y : Fin 2 → IrrGL k) (hd : ∑ a, (y a).1 = x.1) (Δ : Segment k) (𝔫 : Multiset (Segment k)),

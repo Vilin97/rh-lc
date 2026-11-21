@@ -27,7 +27,6 @@ theorem af_ext {x y : Af F} (h : ∀ w, evalV F w x = evalV F w y) : x = y := by
     | (ext w
        exact h w)
 
-open Classical in
 
 def sglV (a : v.adicCompletion F) : Af F :=
   ⟨Pi.single v a, by
@@ -175,7 +174,6 @@ theorem val_coe_le_one (f : 𝓞 F) : Valued.v (((f : F) : v.adicCompletion F)) 
        rw [e]
        exact IsDedekindDomain.HeightOneSpectrum.intValuation_le_one v f)
 
-set_option maxHeartbeats 800000 in
 
 theorem roots_exist (t N : 𝓞 F) (hN : N ∈ v.asIdeal) (ht : t ∉ v.asIdeal) :
     ∃ r₁ r₂ : v.adicCompletion F, r₁ + r₂ = ((t : F) : v.adicCompletion F) ∧ r₁ * r₂ = ((N : F) : v.adicCompletion F) ∧

@@ -129,7 +129,6 @@ theorem isCompact_boxSubgroup_of_eq :
     IsCompact (boxSubgroup K K' : Set (Πʳ v, [G v, K v])) :=
   isCompact_boxSubgroup hK'c (hK'e.mono fun v h => h.le)
 
-include hπ hξ hK'c hK'o hK'e in
 
 theorem coe_fixedProj_tprod {x : ∀ v, V v} (hx : IsRestricted ξ x) :
     ((fixedProj (restrictedTensorRep π ξ hξ) (isSmooth_restrictedTensorRep hπ hξ)
@@ -255,7 +254,6 @@ include hπ hK'c hK'o in
 omit [∀ v, IsTopologicalGroup (G v)] [∀ v, LocallyCompactSpace (G v)] [∀ v, T2Space (G v)]
   [∀ v, TotallyDisconnectedSpace (G v)] hKo hKc in
 
-include hπ hK'c hK'o in
 
 theorem le_range_windowEmbed [DecidableEq ι] (hK'e : ∀ᶠ v in cofinite, K' v = K v)
     (S : Finset ι) (hSK : ∀ v ∉ S, K' v = K v)

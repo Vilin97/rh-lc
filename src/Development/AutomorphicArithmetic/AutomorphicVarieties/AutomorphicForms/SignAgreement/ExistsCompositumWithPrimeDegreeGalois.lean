@@ -19,20 +19,16 @@ section Defs
 
 variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] {l : ℕ} [Fact l.Prime] {n : ℕ}
 
-omit [NumberField F] in
 
 def SameSign (μ : G F Ω →* (Qbar l)ˣ) : Prop := ∀ c c' : G F Ω, IsConjEl c → IsConjEl c' → μ c = μ c'
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
 def Pol (ι : Qbar l ≃+* ℂ) (r : G F Ω →* GL (Fin n) (Qbar l)) : Prop :=
   ∃ (F₀ : Type) (_ : Field F₀) (_ : NumberField F₀) (_ : Algebra F₀ F) (_ : Algebra F₀ Ω) (_ : IsScalarTower F₀ F Ω)
     (_ : IsAlgClosure F₀ Ω), IsTotallyReal F₀ ∧ ∃ (μ : G F₀ Ω →* (Qbar l)ˣ) (c : G F₀ Ω) (P : GL (Fin n) (Qbar l)),
       IsAlgChar ι μ ∧ SameSign μ ∧ IsConjEl c ∧ IsPairing c r (μ.comp (resG F₀ F Ω)) P
 
-variable (F Ω) in
 
 def Equi (M : Type) [Field M] [NumberField M] [Algebra F M] [Algebra M Ω] [IsScalarTower F M Ω] : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (n : ℕ), 1 ≤ n → ∀ r : G F Ω →* GL (Fin n) (Qbar l), Continuous r →

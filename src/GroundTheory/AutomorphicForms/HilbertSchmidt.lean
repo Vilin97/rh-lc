@@ -79,7 +79,6 @@ theorem tsum_enorm_sq_eq_adjoint {ι κ : Type*} (b : HilbertBasis ι 𝕜 H)
     _ = ∑' j, ‖(T†) (c j)‖ₑ ^ 2 := by
         congr 1; ext j; exact (enorm_sq_eq_tsum b _).symm
 
-variable (𝕜 H) in
 
 def stdHilbertBasis : HilbertBasis (exists_hilbertBasis 𝕜 H).choose 𝕜 H :=
   (exists_hilbertBasis 𝕜 H).choose_spec.choose
@@ -176,7 +175,6 @@ theorem IsHilbertSchmidt.comp_right {T : K →L[𝕜] L} (hT : IsHilbertSchmidt 
     IsHilbertSchmidt (T.comp B) :=
   (hsNormSq_comp_right_le T B).trans_lt (ENNReal.mul_lt_top (by simp) hT)
 
-variable (𝕜 H K) in
 
 def hilbertSchmidt : Submodule 𝕜 (H →L[𝕜] K) where
   carrier := {T | IsHilbertSchmidt T}

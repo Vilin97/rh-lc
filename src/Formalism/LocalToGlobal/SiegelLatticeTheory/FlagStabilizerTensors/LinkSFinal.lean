@@ -77,8 +77,6 @@ theorem absConvTied_holds : Formalism.L2.SG.RowsConc.AbsConvTied :=
 
 variable (C0 : ℝ)
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
 end Formalism.L2.SG.ThmSOwn

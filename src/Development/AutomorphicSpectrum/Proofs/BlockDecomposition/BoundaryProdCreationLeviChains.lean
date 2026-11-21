@@ -47,7 +47,6 @@ theorem tri_antiL (l m k e : Lt n) :
   · split_ifs <;> simp
   · split_ifs <;> simp
 
-open Classical in
 
 theorem part_oneL (S : Lt n → Prop) (E1 E2 : Fin n → Fin n → Module.End ℂ V) {e : Lt n} (he : S e) :
     ((∑ l : Lt n, if S l then (liftL n (xL E1 E2 l) : Module.End ℂ (Cq n V)) * annL l else 0) * creL e +
@@ -75,7 +74,6 @@ theorem sum_antiL {R : Type*} [Ring R] (T P Q : Lt n → Lt n → Lt n → R) (c
       ∑ i, ∑ j, ∑ k, P i j k - ∑ i, ∑ j, ∑ k, Q i j k := by
   simp only [Finset.sum_mul, Finset.mul_sum, ← Finset.sum_add_distrib, h, Finset.sum_sub_distrib]
 
-open Classical in
 
 theorem part_twoL (S : Lt n → Prop) {e : Lt n} (he : S e) :
     ((∑ l : Lt n, ∑ m : Lt n, ∑ k : Lt n,
@@ -160,7 +158,6 @@ theorem term_commL (k i g : Lt n) :
     mul_assoc (creL g), sub_neg_eq_add, add_sub_cancel_right]
   split_ifs <;> simp
 
-open Classical in
 
 theorem adS_creL (S : Lt n → Prop) (s : Bool) (p q : Fin n) (g : Lt n) :
     (adS S s p q * creL g - creL g * adS S s p q : Module.End ℂ (Cq n V)) =

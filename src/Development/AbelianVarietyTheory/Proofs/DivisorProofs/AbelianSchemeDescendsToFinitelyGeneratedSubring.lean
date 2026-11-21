@@ -24,7 +24,6 @@ set_option backward.isDefEq.respectTransparency false
 
 namespace GlobalTheory.AbelianLimit
 
-open RationalPoint in
 
 theorem connectedSpace_of_surjective_pow {k : Type} [Field k] [IsAlgClosed k] (G : Over (Sp k)) [GrpObj G]
     [IsCommMonObj G] [LocallyOfFiniteType G.hom] [QuasiCompact G.hom]

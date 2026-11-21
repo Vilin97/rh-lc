@@ -95,7 +95,6 @@ structure Om (N : ℕ) (χ : DirichletCharacter ℂ N) (ω : HeckeCharacter ℚ)
     (∀ v, pOf v ∣ N → ((N : Qv v))⁻¹ * ((lf v d : Qv v) - n) ∈ 𝒪[Qv v]) →
     (ω.toIdele (IdeleGroup.ofFinite d) : ℂ) * χ (n : ZMod N) = 1
 
-open UpperHalfPlane in
 
 structure Lift (k N : ℕ) [NeZero N] (f : ℍ → ℂ) (ω : HeckeCharacter ℚ) (φ : G2 → ℂ) : Prop where
   cont : Continuous φ

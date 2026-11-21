@@ -81,7 +81,6 @@ end Main
 
 end GlobalTheory.KZ.H3.RelOp
 
-open GlobalTheory.KZ.H3.RelOp in
 
 theorem GlobalTheory.KZ.H3.rel_ops : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε) (l : ℕ) [Fact l.Prime],
     (∀ b b' F F', Rel X l b F → Rel X l b' F' → Rel X l (b + b') (F + F')) ∧ Rel X l 0 0 ∧

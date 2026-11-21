@@ -32,7 +32,6 @@ theorem normO_le (a : 𝓞 K) : ‖f (a : K)‖ ≤ 1 := by
 
 variable (𝔭 : HeightOneSpectrum (𝓞 K)) (ϖ : 𝓞 K) (h : ℕ) (hgen : 𝔭.asIdeal ^ h = Ideal.span {ϖ}) (hlt : ‖f (ϖ : K)‖ < 1)
 
-include hgen hlt in
 
 theorem norm_lt_of_mem {t : 𝓞 K} (ht : t ∈ 𝔭.asIdeal) : ‖f (t : K)‖ < 1 := by
   have hmem : t ^ h ∈ Ideal.span {ϖ} := hgen ▸ Ideal.pow_mem_pow ht h
@@ -51,7 +50,6 @@ theorem norm_lt_of_mem {t : 𝓞 K} (ht : t ∈ 𝔭.asIdeal) : ‖f (t : K)‖ 
     simp at key
   exact (pow_lt_one_iff_of_nonneg (norm_nonneg _) hh).mp key
 
-include hgen hlt in
 
 theorem norm_eq_one_of_not_mem {a : 𝓞 K} (ha : a ∉ 𝔭.asIdeal) : ‖f (a : K)‖ = 1 := by
   obtain ⟨b, i, hi, hbi⟩ := 𝔭.isMaximal.exists_inv ha
@@ -69,7 +67,6 @@ theorem norm_eq_one_of_not_mem {a : 𝓞 K} (ha : a ∉ 𝔭.asIdeal) : ‖f (a 
     _ ≤ 1 * ‖f (a : K)‖ := mul_le_mul_of_nonneg_right (normO_le f b) (norm_nonneg _)
     _ = ‖f (a : K)‖ := one_mul _
 
-include hgen hlt in
 
 theorem norm_pow_int {a : 𝓞 K} (ha : a ≠ 0) :
     ∃ n : ℕ, 𝔭.intValuation a = WithZero.exp (-(n : ℤ)) ∧ ‖f (a : K)‖ ^ h = ‖f (ϖ : K)‖ ^ n := by
@@ -98,7 +95,6 @@ theorem norm_pow_int {a : 𝓞 K} (ha : a ≠ 0) :
   have e : (a : K) ^ h = (c : K) * (ϖ : K) ^ n := by exact_mod_cast hc.symm
   rw [← norm_pow, ← map_pow f, e, map_mul, norm_mul, hc1, one_mul, map_pow, norm_pow]
 
-include hgen hlt in
 
 theorem norm_pow_eq {x : K} (hx : x ≠ 0) :
     ‖f x‖ ^ h = ‖f (ϖ : K)‖ ^ (-WithZero.log (𝔭.valuation K x)) := by

@@ -23,6 +23,5 @@ open scoped ComplexConjugate TensorProduct
 
 namespace GlobalTheory.TrMult
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.TrMult

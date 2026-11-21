@@ -27,13 +27,10 @@ variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
 
 variable {μ}
 
-variable (μ) in
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 
-variable (μ) in
 
-variable (μ) in
 
 end MultiplicityOne
 

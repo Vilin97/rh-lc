@@ -24,7 +24,6 @@ variable {S : Type*} [CommRing S] {K : Type*} [Fintype K] [DecidableEq K] {ι : 
 
 def blockDeg (p : Σ k, ι k) : K → ℕ := Pi.single p.1 1
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem weight_blockDeg_apply [∀ k, Fintype (ι k)] (m : (Σ k, ι k) →₀ ℕ) (k : K) :
     Finsupp.weight (blockDeg (ι := ι)) m k = ∑ i, m ⟨k, i⟩ := by
@@ -45,8 +44,6 @@ theorem isWeightedHomogeneous_iff {f : MRingOver S ι} {a : K → ℕ} :
     rw [weight_blockDeg_apply]
     exact h m (mem_support_iff.2 hm) k
 
-omit [∀ k, Fintype (ι k)] in
-open Classical in
 
 theorem component_mul {g f : MRingOver S ι} {E : K → ℕ}
     (hf : IsWeightedHomogeneous (blockDeg (ι := ι)) f E) (D : K → ℕ) :
@@ -83,24 +80,20 @@ theorem isMultiHomogIdeal_of_mem_minimalPrimes {J W : Ideal (MRingOver S ι)} (h
   cyc_isMultiHomogIdeal_of_isHomogeneous fun k =>
     cyc_isHomogeneous_of_mem_minimalPrimes _ (cyc_isHomogeneous_of_isMultiHomogIdeal hJ k) hW
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 def cellProd (S : Type*) [CommRing S] (I : ∀ k, Finset (ι k)) : MRingOver S ι :=
   ∏ k, ∏ i ∈ I k, X ⟨k, i⟩
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem cellProd_mem (I : ∀ k, Finset (ι k)) : cellProd S I ∈ KH.cellMon S I :=
   Submonoid.prod_mem _ fun k _ => Submonoid.prod_mem _ fun i hi => Submonoid.subset_closure ⟨k, i, hi, rfl⟩
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem cellProd_isWeightedHomogeneous (I : ∀ k, Finset (ι k)) :
     IsWeightedHomogeneous (blockDeg (ι := ι)) (cellProd S I) (∑ k, ∑ i ∈ I k, blockDeg ⟨k, i⟩) :=
   IsWeightedHomogeneous.prod _ _ _ fun _ _ =>
     IsWeightedHomogeneous.prod _ _ _ fun _ _ => isWeightedHomogeneous_X (R := S) _ _
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem isRelevant_of_cellProd_notMem {I : ∀ k, Finset (ι k)} (hI : ∀ k, (I k).Nonempty)
     {W : Ideal (MRingOver S ι)} (hW : cellProd S I ∉ W) : IsRelevant W := by
@@ -115,7 +108,6 @@ theorem isRelevant_of_cellProd_notMem {I : ∀ k, Finset (ι k)} (hI : ∀ k, (I
   rw [hc]
   exact W.mul_mem_right c hX
 
-omit [DecidableEq K] in
 
 theorem exists_isClosedMultiPt_ge [IsNoetherianRing S] {W : Ideal (MRingOver S ι)} (hW : IsMultiProjPrime W) :
     ∃ Q, IsClosedMultiPt Q ∧ W ≤ Q := by
@@ -126,7 +118,6 @@ theorem exists_isClosedMultiPt_ge [IsNoetherianRing S] {W : Ideal (MRingOver S �
   by_contra hne
   exact hmax Q' ⟨hQ', hWQ.trans hle⟩ (lt_of_le_of_ne hle (Ne.symm hne))
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem smul_eq_zero_of_mem_annihilator {M : Type*} [AddCommGroup M] [Module (MRingOver S ι) M]
     {T : Submonoid (MRingOver S ι)} {v : MRingOver S ι} (hv : v ∈ Module.annihilator (MRingOver S ι) M)
@@ -136,7 +127,6 @@ theorem smul_eq_zero_of_mem_annihilator {M : Type*} [AddCommGroup M] [Module (MR
 
 end GenNearCover
 
-open GenNearCover in
 
 theorem GenNearCover.proof (hG : GradedSubmodules.Statement) : GenNearCover.Statement := by
   intro S _ K _ _ ι _ _ V M _ _ _ _ 𝓜 deg hS hgr hV hP

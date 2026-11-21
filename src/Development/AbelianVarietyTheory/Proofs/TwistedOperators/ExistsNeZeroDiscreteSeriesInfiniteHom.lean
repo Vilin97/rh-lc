@@ -92,7 +92,6 @@ section Norm
 
 variable [∀ i, TopologicalSpace (Γ i)] [TopologicalSpace G] [CompleteSpace K]
 
-omit [Fintype ι] dec [∀ i, Group (Γ i)] [∀ i, TopologicalSpace (Γ i)] [TopologicalSpace G] in
 
 theorem norm_apply_eq_of {Γ₀ H₀ : Type} [Group Γ₀] [NormedAddCommGroup H₀] [InnerProductSpace ℂ H₀] [CompleteSpace H₀]
     {π : Γ₀ →* (H₀ →L[ℂ] H₀)} {ρ₀ : Γ₀ →* (K →L[ℂ] K)} (h1 : ∀ g x, ‖π g x‖ = ‖x‖) (h2 : IsTopIrreducible π)
@@ -393,7 +392,6 @@ end Main
 
 end GlobalTheory.TensorHom
 
-open GlobalTheory.TensorHom GlobalTheory.TrAct in
 
 theorem GlobalTheory.TensorHom.exists_ne_zero_homDS : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (π : GA D V →* (H →L[ℂ] H)), IsIrrUnitary π → HasDSComp M π → ∃ Φ ∈ homDS M π ⊤, Φ ≠ 0 := by
   intro D V S M H _ _ _ π hπ hds

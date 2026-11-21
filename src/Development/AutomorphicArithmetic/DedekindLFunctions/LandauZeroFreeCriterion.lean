@@ -32,9 +32,7 @@ def WindowHypU (g : ℝ → ℝ) (θ δ : ℝ) : Prop :=
     (∀ u ∈ Icc U ((1 + δ) * U), 0 ≤ R u ∧ g u ≤ R u) ∧
     ∫ u in Icc U ((1 + δ) * U), R u * Real.exp (-θ * u) ≤ Real.exp (η * U)
 
-open Classical in
 
-open Classical in
 
 end Deduction
 

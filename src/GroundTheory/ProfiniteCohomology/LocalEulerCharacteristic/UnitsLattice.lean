@@ -89,7 +89,6 @@ noncomputable abbrev unitFiltrationAction (k : ℕ) :
   smul_mul σ u v := Subtype.ext (smul_mul' σ (u : 𝒪[F]ˣ) v)
   smul_one σ := Subtype.ext (smul_one σ)
 
-variable {F} in
 
 noncomputable def maxPow (F : Type*) [Field F] [ValuativeRel F] (k : ℕ) : AddSubgroup 𝒪[F] :=
   (𝓂[F] ^ k).toAddSubgroup
@@ -207,8 +206,6 @@ theorem unitToModN_eq_zero_iff (hp : p.Prime) {k : ℕ} (hk : e + 1 ≤ k)
       Units.val_pow_eq_pow_val] at hyp ⊢
     exact hyp.symm
 
-omit hϖ hpe in
-variable (ϖ) in
 
 theorem unitToModN_smul (hϖ : Irreducible ϖ) (hpe : (p : 𝒪[F]) = ϖ ^ e * ε) {k : ℕ}
     (hk : e ≤ k) (σ : F ≃ₐ[E] F) (u : Additive (unitFiltration F k)) :
@@ -227,7 +224,6 @@ section Lattice
 variable {E F : Type*} [Field E] [ValuativeRel E] [Field F] [ValuativeRel F] [Algebra E F]
   [FiniteDimensional E F]
 
-variable (E) in
 
 noncomputable def normalSub (θ : F) : AddSubgroup 𝒪[F] :=
   (normalLattice (1 : 𝒪[E]) θ 0).toAddSubgroup.comap (𝒪[F].subtype : 𝒪[F] →+* F).toAddMonoidHom
@@ -237,7 +233,6 @@ theorem mem_normalSub {θ : F} {x : 𝒪[F]} :
     x ∈ normalSub E θ ↔ (x : F) ∈ normalLattice (1 : 𝒪[E]) θ 0 :=
   Iff.rfl
 
-omit [ValuativeRel F] [FiniteDimensional E F] in
 
 theorem normalLattice_zero_eq (π : 𝒪[E]) (θ : F) :
     normalLattice π θ 0 = normalLattice (1 : 𝒪[E]) θ 0 := by

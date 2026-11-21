@@ -30,15 +30,12 @@ namespace ArithVariety
 
 variable (n : ι → ℕ)
 
-omit [Fintype ι] in
 
 omit [Fintype ι] in
 theorem whole_mkF_X_ne_zero (v : Coord n) : (whole n).mkF (X v) ≠ 0 := fun h ↦
   X_ne_zero v ((Submodule.mem_bot _).mp (((whole n).mkF_eq_zero_iff _).mp h))
 
-omit [Fintype ι] in
 
-omit [Fintype ι] in
 
 end ArithVariety
 
@@ -84,13 +81,9 @@ def blockSubst :
     MvPolynomial (Coord (blockAddData n k₀).extSizes) ℤ →+* MvPolynomial (Option ι) (MvPolynomial (Coord n) ℤ) :=
   eval₂Hom (Int.castRingHom _) fun v ↦ C (blockVal n k₀ v) * X v.1
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [DecidableEq ι] in
 
-open Matrix in
 
 end
 

@@ -67,7 +67,6 @@ theorem levChi_flat (t : T) (hr : D.R.r ≤ (stY R t 0).V.rank) (k : GA D (Yc D 
   simp [flat, comR, twR, Lev.datY]
   exact Lev.subgroupCharExtension_one_apply _ _
 
-open Classical in
 
 theorem levS_flat_gen (Q : Finset (Pl D.host.E)) (hr : D.R.r ≤ (Yc D 0).rank)
     (χ : ℕ → ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ) (ξ : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ) :
@@ -103,7 +102,6 @@ end GlobalTheory.ChainTw.LevelYZero
 
 namespace GlobalTheory.ChainTw
 
-open LevelYZero in
 
 theorem rowPar_of_chain : GlobalTheory.Published.CuspRapidDecay → ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → (∀ h : RangeX R, RChain R h) → RangeX R → RowPar R := by
   intro hP D G _ _ Pl0 T A Ks _ _ _ R F _hG hch hX t c

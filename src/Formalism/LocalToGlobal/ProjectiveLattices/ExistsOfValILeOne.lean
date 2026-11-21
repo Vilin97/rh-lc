@@ -13,7 +13,6 @@ open Matrix IsDedekindDomain
 variable {V F : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field F] [Algebra V F]
   [IsFractionRing V F]
 
-variable (V) in
 
 abbrev valI : Valuation F (WithZero (Multiplicative ℤ)) := (IsDiscreteValuationRing.maximalIdeal V).valuation F
 

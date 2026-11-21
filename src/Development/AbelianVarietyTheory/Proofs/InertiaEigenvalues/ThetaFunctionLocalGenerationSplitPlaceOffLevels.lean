@@ -167,7 +167,6 @@ theorem coord_tgt {K : Type} [Field K] {a b : ℕ} (c : K) (B H g : Matrix (Fin 
   rw [Matrix.mul_one, Matrix.mul_smul, Matrix.transpose_mul, ← Matrix.mul_assoc, ← Matrix.mul_assoc, h]
   simp only [Matrix.mul_assoc]
 
-open GlobalTheory.SplitHecke GlobalTheory.SplitLinear in
 
 theorem exists_coord (S T : HSp D) (he : IsSplitIdem D e) :
     ∃ (v : HeightOneSpectrum (𝓞 D.host.F)) (τ : Matrix (Fin S.rank) (Fin T.rank) (Fv D.host.F v) →+ WO S T),
@@ -495,7 +494,6 @@ def vacGen (ψ : AddChar (AF D.host.F) ℂ) (om : GA D S × GA D T →* Module.E
     (f : WO S T → ℂ) : Set (WO S T → ℂ) :=
   {F | ∃ (h : GA D T) (φ : WO S T → ℂ), φ ∈ locSpan ψ S T e f ∧ HalfVac ψ S T e φ ∧ F = om (1, h) φ}
 
-open GlobalTheory.SplitHecke in
 
 theorem mem_span_vacGen (hW : IsWeilDatumO ψ S T χS χT om) (hr : T.rank ≤ S.rank) (he : IsSplitIdem D e)
     {f₀ f : WO S T → ℂ} (hf₀ : HalfVac ψ S T e f₀) (h0 : f₀ ≠ 0) (hf : IsThetaFunO ψ S T f)

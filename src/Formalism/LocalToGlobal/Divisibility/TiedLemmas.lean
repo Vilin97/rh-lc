@@ -88,7 +88,6 @@ end OForm
 
 section CutRec
 
-set_option linter.style.haveILetI false in
 
 theorem restRowsFiniteGroupCard_pos (D : Formalism.BasicNotions.D7) : 0 < D.what₂.restRowsFiniteGroupCard := D.what₂.restRowsFiniteGroupCard_pos
 
@@ -107,7 +106,6 @@ theorem ranks_r_sym (D : Formalism.BasicNotions.D7) : D.R.r = D.R.k + 2 * D.R.rS
   unfold Formalism.BasicNotions.Ranks.r Formalism.BasicNotions.Ranks.rS
   omega
 
-variable {D A} in
 
 end Fam
 

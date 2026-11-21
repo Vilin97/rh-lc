@@ -17,7 +17,6 @@ variable {O LL : Type} [CommRing O] [IsDomain O] [Field LL] [Algebra O LL]
   (u : PowerSeries LL) (hu : IsUnit u) (hψ : ψ (PowerSeries.X + PowerSeries.C l) = PowerSeries.X * u)
 include hinj hψC hu hψ
 
-omit hinj hψC hψ in
 
 theorem poly_eq_zero : ∀ (k : ℕ) (r : Polynomial O), r.degree < k →
     PowerSeries.X ^ k ∣ ψ (r : PowerSeries O) → r = 0 := by

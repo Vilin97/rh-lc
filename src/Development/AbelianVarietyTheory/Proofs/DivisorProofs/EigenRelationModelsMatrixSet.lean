@@ -25,7 +25,6 @@ section Pairing
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-omit [NumberField F] [NumberField E] in
 
 theorem trace_tmul (R : Type) [CommRing R] [Algebra F R] [FiniteDimensional F E] (a : R) (e : E) :
     Algebra.trace R (R ⊗[F] E) (a ⊗ₜ[F] e) = a * algebraMap F R (Algebra.trace F E e) := by
@@ -94,7 +93,6 @@ theorem ev_pairing_trivial : ∀ {F E : Type} [Field F] [NumberField F] [Field E
 
 end GlobalTheory.ExpandXDenom
 
-open GlobalTheory.ExpandXDenom in
 
 theorem GlobalTheory.ExpandXDenom.main : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d₁ : ℕ) (X : Spc F E n) (W₁ : Spc F E d₁) (M₁ : Model σ X W₁), M₁.IsGood B.ψ →

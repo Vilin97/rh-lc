@@ -29,7 +29,6 @@ theorem smoothRepConj_smooth_of {P : Ideal (MRing ι)} {A Z : HermLine ι} (ha :
 
 end MUcSmooth
 
-open MuRegSmooth TopNPoly NbarSmooth MUcSmooth in
 
 theorem MUcSmooth.proof (hE : HermExtend.Statement) (hP : ProjSmoothAlong.Statement) : MUcSmooth.Statement := by
   intro II Ψ _ K _ ι _ Ω _ _ E _ _ D H M w S B p q t hsm

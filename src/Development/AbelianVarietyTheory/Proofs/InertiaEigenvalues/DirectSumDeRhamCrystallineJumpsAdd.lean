@@ -211,7 +211,6 @@ theorem finrank_FildR_add (e : V ≃ₗ[LL] V₁ × V₂)
 
 end Per
 
-open GlobalTheory.Per.FontaineBound in
 
 private theorem dcris_finite_le {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} (T : LocTied l P AI)
     (K LL : FinExt l) (V : Type) [AddCommGroup V] [Module ↥LL.1 V] [Module ℚ_[l] V]

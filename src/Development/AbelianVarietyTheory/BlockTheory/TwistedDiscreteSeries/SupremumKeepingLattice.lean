@@ -25,9 +25,7 @@ variable {LL Ks : Type} [Field LL] [NumberField LL] [Field Ks] [NumberField Ks] 
   {W : (LL →+* ℂ) → Type} [∀ σ, NormedAddCommGroup (W σ)] [∀ σ, InnerProductSpace ℂ (W σ)]
   {G : Type} [Group G] [Fintype G] (X : FormsL LL Ks WL W G)
 
-omit [Fintype G] in
 
-variable {X} in
 
 end Forms
 

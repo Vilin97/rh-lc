@@ -44,7 +44,6 @@ section Split
 variable {R S : Type*} (E : Type*) [CommRing R] [CommRing S] [Algebra R S] [Field E]
   [Algebra R E] [IsFiniteSplit E (E ⊗[R] S)]
 
-variable (R S) in
 
 theorem exists_algEquiv_fin_points :
     ∃ (n : ℕ) (P : Fin n ≃ (S →ₐ[R] E)) (e : E ⊗[R] S ≃ₐ[E] (Fin n → E)),
@@ -70,7 +69,6 @@ theorem finite_algHom_of_isFiniteSplit : Finite (S →ₐ[R] E) := by
   obtain ⟨n, P, -⟩ := exists_algEquiv_fin_points R S E
   exact Finite.of_equiv _ P
 
-variable {E} in
 
 theorem exists_algEquiv_points {ι : Type*} (P : ι ≃ (S →ₐ[R] E)) :
     ∃ e : E ⊗[R] S ≃ₐ[E] (ι → E), ∀ x j, e (1 ⊗ₜ x) j = P j x := by
@@ -80,7 +78,6 @@ theorem exists_algEquiv_points {ι : Type*} (P : ι ≃ (S →ₐ[R] E)) :
 
 variable [Module.Free R S]
 
-variable (R S) in
 
 theorem natCard_algHom_eq_finrank [Nontrivial R] : Nat.card (S →ₐ[R] E) = finrank R S := by
   obtain ⟨n, P, e, -⟩ := exists_algEquiv_fin_points R S E
@@ -111,7 +108,6 @@ theorem det_points_sq_eq_discr (P : ι ≃ (S →ₐ[R] E)) (v : ι → S) :
     simp [Matrix.mul_apply, algebraMap_trace_eq_sum_points P]
   rw [discr_def, RingHom.map_det, this, Matrix.det_mul, Matrix.det_transpose, pow_two]
 
-omit [Module.Free R S] [Module.Finite R S] in
 
 theorem det_points_ne_zero_of_basis (P : ι ≃ (S →ₐ[R] E)) (b : Basis ι R S) :
     (Matrix.of fun i j ↦ P j (b i)).det ≠ 0 := by

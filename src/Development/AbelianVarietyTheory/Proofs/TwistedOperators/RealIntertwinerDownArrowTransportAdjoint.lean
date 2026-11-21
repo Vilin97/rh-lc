@@ -39,7 +39,6 @@ theorem isIntw_transport {V W : HSp D} {S S' : D.what₂.Tau → SPar} {X Y P P'
   invg τ Y hY φ φ' v v' hd hv := h.invg τ Y hY (e φ) (e φ') v v' (fun z => by
     simp only [hpt, hω, Function.comp_apply]; exact hd (b z)) hv
 
-open GlobalTheory.FockAdjoint in
 
 theorem ptOf_dag {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
     {V W : HSp D} {SV SW : D.what₂.Tau → SPar} (M : DSModel V SV) (M' : DSModel W SW) {g : WO V W → ℂ}
@@ -79,7 +78,6 @@ theorem dag_cj {S T : HSp D} (F : WO S T → ℂ) : dag S T (GlobalTheory.Indefi
 
 end GlobalTheory.AdjTr
 
-open GlobalTheory.AdjTr in
 
 theorem GlobalTheory.AdjTr.downArrow_transport : ∀ {D : D7} (S T : GlobalTheory.Grid.Node D) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (χ : (AE D)ˣ →* Circle)
     (ω : GlobalTheory.Grid.WRep S.V T.V) (f : WO S.V T.V → ℂ), IsInfFam θ → GlobalTheory.Grid.IsWeil ψ true S.V T.V χ χ ω →

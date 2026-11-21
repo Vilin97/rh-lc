@@ -37,7 +37,6 @@ theorem Jm_conjTranspose (ε : Fin n → Bool) : (Jm ε)ᴴ = Jm ε := by
 theorem isUnit_Jm_det (ε : Fin n → Bool) : IsUnit (Jm ε).det :=
   isUnit_det_of_left_inverse (Jm_mul_self ε)
 
-attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 
 theorem dRep_add_bracket {ρ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)}
     (hρ : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) ρ) {v : H} (hv : SmoothVec (lieSet ε) ρ v)

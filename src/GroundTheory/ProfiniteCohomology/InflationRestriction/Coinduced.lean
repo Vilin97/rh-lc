@@ -36,7 +36,6 @@ section Restriction
 variable (N : Subgroup G) [N.Normal] {s : G ⧸ N → G} (hs : Continuous s)
   (hsec : ∀ c, (s c : G ⧸ N) = c)
 
-include hsec in
 
 theorem inv_section_mul_mem (x : G) : (s (x : G ⧸ N))⁻¹ * x ∈ N :=
   QuotientGroup.eq.mp (hsec x)
@@ -66,7 +65,6 @@ theorem sectionRetraction_section_mul (c : G ⧸ N) (m : N) :
   apply Subtype.ext
   rw [coe_sectionRetraction, mk_section_mul N hsec, inv_mul_cancel_left]
 
-include hs in
 
 def restrictSlice (f : LocallyConstant G X) (m : N) : LocallyConstant (G ⧸ N) X :=
   ⟨fun c => f (s c * m), f.isLocallyConstant.comp_continuous (hs.mul continuous_const)⟩
@@ -156,7 +154,6 @@ section Invariants
 
 variable (N : Subgroup G) [N.Normal]
 
-variable {X N} in
 
 theorem apply_eq_of_mem_invariants {f : LocallyConstant G X}
     (hf : f ∈ Representation.invariants ((discreteCoindRep k G X).comp N.subtype)) {x y : G}

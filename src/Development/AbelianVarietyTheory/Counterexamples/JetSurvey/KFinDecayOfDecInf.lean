@@ -21,8 +21,6 @@ theorem decay_range (k r : ℕ) (h : ℝ) (h120 : 120 * ((2 * r + k + 1 : ℕ) :
     mul_le_mul hn1 (hs.trans hn1) (Real.sqrt_nonneg _) (by linarith)
   nlinarith
 
-open scoped InnerProductSpace in
 
-open scoped InnerProductSpace in
 
 end GlobalTheory.GapSizeCheck

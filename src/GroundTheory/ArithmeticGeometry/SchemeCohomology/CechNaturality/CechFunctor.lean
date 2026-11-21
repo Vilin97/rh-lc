@@ -82,7 +82,6 @@ lemma cechHMap_zero (n : ℕ) (x : cechH P U n) : cechHMap U (0 : P ⟶ P') n x 
   rw [cechHMap_cls]
   exact (cls_congr U (push_zero' U n σ) _ (map_zero _)).trans cls_zero
 
-variable (P) in
 
 def cechH.endRingHom (n : ℕ) : End P →+* AddMonoid.End (cechH P U n) where
   toFun φ := cechHMap U φ n

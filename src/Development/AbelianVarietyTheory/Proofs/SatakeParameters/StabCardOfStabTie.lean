@@ -39,15 +39,10 @@ section Red
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {P : HeightOneSpectrum (𝓞 E)}
 
-omit [StarRing E] in
 
-omit [StarRing E] in
 
-omit [StarRing E] in
 
-omit [StarRing E] in
 
-omit [StarRing E] in
 
 end Red
 
@@ -106,9 +101,7 @@ section Levels
 
 variable {D : D7} {u : D.what₂.Word} {μ : D.what₂.Tup} (T : ChainData D u μ)
 
-open Classical in
 
-open Classical in
 
 variable {T}
 
@@ -120,7 +113,6 @@ variable {D : D7} {u : D.what₂.Word} {μ : D.what₂.Tup} (T : ChainData D u �
 
 abbrev APt (i : ℕ) : Type := AmbientLatticeAvoidance.Pt (R := D.R) T.sel T.xi T.L T.w i
 
-open Classical in
 
 variable {T}
 
@@ -142,11 +134,9 @@ variable {D : D7} {u : D.what₂.Word} {μ : D.what₂.Tup} {T : ChainData D u �
   {abelian₂ : HeightOneSpectrum (𝓞 T.X.E) → Submodule (𝓞 T.X.E) (Sp T.X.E (AmbientLatticeAvoidance.rkTop D.R))}
   {dep : HeightOneSpectrum (𝓞 T.X.E) → ℕ}
 
-variable (T) in
 
 variable {rep : ∀ i, (D.chTw u μ).cls i → APt T i}
 
-variable (T abelian₂ dep rep) in
 
 end Classes
 
@@ -155,11 +145,8 @@ section Kernels
 variable {D : D7} {u : D.what₂.Word} {μ : D.what₂.Tup} {T : ChainData D u μ}
   {rep : ∀ i, (D.chTw u μ).cls i → APt T i}
 
-variable (T rep) in
 
-variable (T) in
 
-variable (T) in
 
 variable {abelian₂ : HeightOneSpectrum (𝓞 T.X.E) → Submodule (𝓞 T.X.E) (Sp T.X.E (AmbientLatticeAvoidance.rkTop D.R))}
   {dep : HeightOneSpectrum (𝓞 T.X.E) → ℕ}

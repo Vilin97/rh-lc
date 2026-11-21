@@ -28,8 +28,6 @@ theorem _root_.GlobalTheory.QuadSymbol.Model.numberField [NumberField K] :
   haveI : Module.Finite ℚ (QuadraticAlgebra K d 0) := Module.Finite.trans K _
   exact ⟨⟩
 
-open NumberField IsDedekindDomain in
-variable {K : Type} [Field K] (d : K) [Fact (∀ r : K, r ^ 2 ≠ d + 0 * r)] in
 
 theorem _root_.GlobalTheory.QuadSymbol.Model.mem_normGroup_sqrt {A : Type} [CommRing A] [Algebra K A] {x : Aˣ} :
     x ∈ _root_.GlobalTheory.QuadSymbol.normGroup K (QuadraticAlgebra K d 0) A ↔
@@ -43,8 +41,6 @@ end Quad
 section Real
 variable {K : Type} [Field K] [Fact (∀ r : K, r ^ 2 ≠ -1 + 0 * r)]
 
-open NumberField IsDedekindDomain in
-variable {K : Type} [Field K] [Fact (∀ r : K, r ^ 2 ≠ -1 + 0 * r)] in
 
 theorem _root_.GlobalTheory.QuadSymbol.Model.eta_real_place (w : InfinitePlace K) (hw : w.IsReal) :
     _root_.GlobalTheory.QuadSymbol.eta K (QuadraticAlgebra K (-1) 0) w.Completion

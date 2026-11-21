@@ -98,7 +98,6 @@ end GlobalTheory.LKMid.CentPos
 
 namespace GlobalTheory.LKMid
 
-open GlobalTheory.LKMid.CentPos in
 
 theorem cent_sim_pos : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (P : Pair G) (μ : ℂ), G.a = 1 → P.Mark μ →
     ∀ y ∈ P.cent, 0 < ((y.2 : ℚˣ) : ℚ) := by

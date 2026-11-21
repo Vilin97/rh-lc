@@ -57,6 +57,5 @@ variable (σ : E →ₐ[F] E) [IsTopologicalRing (AE F E)]
 
 end Iso
 
-variable (F E) in
 
 end GlobalTheory.ImaginaryModulus

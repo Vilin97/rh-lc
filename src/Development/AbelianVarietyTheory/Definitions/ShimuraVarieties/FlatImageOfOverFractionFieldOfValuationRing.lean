@@ -59,7 +59,6 @@ theorem isIntegral_of_schemeDominant (d : T' ⟶ T) [IsSchemeTheoreticallyDomina
   have : IrreducibleSpace T := (irreducibleSpace_def T).mpr h
   exact isIntegral_of_irreducibleSpace_of_isReduced T
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem eq_zero_of_mul_eq_zero_of_flat {S : Scheme.{u}} [IsAffine S] (s : T ⟶ S) [Flat s]
     (V : T.Opens) (r : Γ(S, ⊤)) (hr : r ∈ nonZeroDivisors Γ(S, ⊤)) (a : Γ(T, V))
@@ -76,7 +75,6 @@ theorem eq_zero_of_mul_eq_zero_of_flat {S : Scheme.{u}} [IsAffine S] (s : T ⟶ 
   rw [map_mul, map_zero, ← CommRingCat.comp_apply, Scheme.Hom.appLE_map] at h'
   simpa [Algebra.smul_def, RingHom.algebraMap_toAlgebra] using h'
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem flat_of_schemeDominant_of_torsionFree_flat {O : CommRingCat.{u}}
     (hO : ∀ (M : Type u) [AddCommGroup M] [Module O M],
@@ -329,7 +327,6 @@ theorem lift_fst : lift f₁ f₂ u φ h t₁ t₂ ht d w h₁ h₂ ≫ fst f₁
 theorem lift_snd : lift f₁ f₂ u φ h t₁ t₂ ht d w h₁ h₂ ≫ snd f₁ f₂ u φ h = t₂ := by
   rw [← ι_snd, lift_ι_assoc, pullback.lift_snd]
 
-include ht h₁ h₂ in
 
 theorem existsUnique_lift : ∃! l : T ⟶ graphClosure f₁ f₂ u φ h,
     l ≫ fst f₁ f₂ u φ h = t₁ ∧ l ≫ snd f₁ f₂ u φ h = t₂ :=

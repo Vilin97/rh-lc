@@ -37,6 +37,5 @@ def testI : ℝ := ∑ τ, degFl D.what₂.Tau Y.N (pLow Y.j τ 1 * curveCl D.wh
 
 variable {Y} (A : SlopeTestRemainingChoices Y) (Φ : ℝ → Fn Y) (hh : Fn Y)
 
-variable (Y) in
 
 end GlobalTheory.Mean4

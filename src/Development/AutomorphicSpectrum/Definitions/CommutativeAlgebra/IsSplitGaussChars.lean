@@ -35,7 +35,6 @@ def IsBun (L : C.I → AddSubgroup V) : Prop :=
   (∀ i, ∃ b : Module.Basis (Fin (Module.finrank K V)) K V, IsLatOf C i b (L i)) ∧
     ∃ b : Module.Basis (Fin (Module.finrank K V)) K V, {i | ¬ IsLatOf C i b (L i)}.Finite
 
-open Classical in
 
 def locBasis [FiniteDimensional K V] (i : C.I) (L : AddSubgroup V) :
     Module.Basis (Fin (Module.finrank K V)) K V :=
@@ -142,9 +141,7 @@ open Polynomial IsDedekindDomain
 
 variable (k : Type) [Field k]
 
-open Classical in
 
-open Classical in
 
 end Line
 
@@ -224,7 +221,6 @@ section Twist
 variable (k : Type) [Field k] (V : Type) [AddCommGroup V] [Module (RatFunc k) V]
   [FiniteDimensional (RatFunc k) V]
 
-open Classical in
 
 end Twist
 

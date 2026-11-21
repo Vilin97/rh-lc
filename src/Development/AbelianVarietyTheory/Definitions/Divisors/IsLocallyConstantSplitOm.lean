@@ -62,7 +62,6 @@ theorem eventually_char_eq_one (μ : Fˣ →* Circle) (hμ : Continuous μ) :
 
 variable {α β κ : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ]
 
-omit [DecidableEq α] [Fintype κ] in
 
 variable [Invertible (2 : F)] {JA : Matrix α α (F × F)} {JB : Matrix β β (F × F)}
 

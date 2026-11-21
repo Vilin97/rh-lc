@@ -81,7 +81,6 @@ theorem cover (k : Fin 2) (w : PlE D.host) (hw : ((D.host.g k : ℕ) : 𝓞 D.ho
   · exact ⟨v, Or.inl (congrArg Subtype.val hx).symm⟩
   · exact ⟨v, Or.inr (congrArg Subtype.val hx).symm⟩
 
-open GlobalTheory.LevCmp in
 
 theorem gPlaces (D : D7) : GPlaces D := by
   refine ⟨fun k v => ⟨D.naut.plGw_over k v, GlobalTheory.SplitPlaceOfFixed.exists_splitPlace_plGw D ⟨k, v⟩⟩, ?_, ?_⟩
@@ -101,6 +100,5 @@ theorem gPlaces (D : D7) : GPlaces D := by
 
 end GlobalTheory.TypePlacesCover
 
-open GlobalTheory.TypePlacesCover in
 
 end

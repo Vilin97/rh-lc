@@ -187,7 +187,6 @@ theorem gen_eq_of_section {X Y S₀ : Scheme.{0}} {L : LB X} (hL : L.IsLB) {K : 
   rw [h _ _ _ _ hJ, mul_inv_cancel, Category.assoc _ e, he, Category.comp_id] at e2
   exact ⟨J, hJ, mul_inv_eq_one.1 (e1.trans e2.symm)⟩
 
-open FrameMove in
 
 theorem exists_frame_up (hLaw : Laws) {S S₀ : Scheme.{0}} [IsLocallyNoetherian S] {T : Over S} {T₀ : Over S₀}
     [IsIntegral T.left] [GlobalTheory.IsNormalScheme T.left] [Subsingleton T₀.left] {f : S₀ ⟶ S} {h : T₀.left ⟶ T.left}

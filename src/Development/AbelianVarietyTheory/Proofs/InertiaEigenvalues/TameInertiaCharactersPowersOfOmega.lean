@@ -42,7 +42,6 @@ theorem near_of_fix_root : ∀ (l : ℕ) [Fact l.Prime] (F : FinExt l), ∃ M : 
 
 variable {l : ℕ} [hl : Fact l.Prime]
 
-open GlobalTheory.MemLoc.FrobLaws in
 
 theorem fix_root (g : Gl l) (hg : g ∈ IK (Formalism.MainNotions.ElementDenominator.qlExt l)) {ζ : Om l} {m : ℕ} (hm : 0 < m)
     (hlm : ¬ l ∣ m) (hζ : ζ ^ m = 1) : (g : GQ l) ζ = ζ := by
@@ -54,7 +53,6 @@ theorem fix_root (g : Gl l) (hg : g ∈ IK (Formalism.MainNotions.ElementDenomin
     (Subtype.ext (by rw [SubmonoidClass.coe_pow]; exact hζ)) ((res_eq_iff a b).2 h1)
   exact congrArg Subtype.val this
 
-open GlobalTheory.MemLoc.FrobLaws in
 
 theorem frob_root (Fr : Gl l) (hFr : ∀ x : Om l, x ∈ MaximalUnramifiedExtension l → ‖x‖ ≤ 1 → ‖(Fr : GQ l) x - x ^ l‖ < 1)
     {ζ : Om l} {m : ℕ} (hm : 0 < m) (hlm : ¬ l ∣ m) (hζ : ζ ^ m = 1) : (Fr : GQ l) ζ = ζ ^ l := by
@@ -68,7 +66,6 @@ theorem frob_root (Fr : Gl l) (hFr : ∀ x : Om l, x ∈ MaximalUnramifiedExtens
     (Subtype.ext (by rw [SubmonoidClass.coe_pow]; exact hζl)) ((res_eq_iff a b).2 h1)
   exact congrArg Subtype.val this
 
-open GlobalTheory.MemLoc.FrobLaws in
 
 theorem mem_IK_of_fix_Kur (g : Gl l) (hg : ∀ x ∈ MaximalUnramifiedExtension l, (g : GQ l) x = x) :
     g ∈ IK (Formalism.MainNotions.ElementDenominator.qlExt l) := by

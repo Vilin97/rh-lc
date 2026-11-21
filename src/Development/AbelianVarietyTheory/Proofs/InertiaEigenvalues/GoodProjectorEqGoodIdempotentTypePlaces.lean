@@ -47,7 +47,6 @@ theorem pi_induction {I : Type} [Finite I] [DecidableEq I] {H : I → Type} [∀
   rw [← Finset.noncommProd_mulSingle a]
   exact Finset.noncommProd_induction _ _ _ p hm h1 fun i _ => hs i _
 
-open scoped Classical in
 
 theorem exists_act {D : D7} {s : ∀ k : Fin 2, D.nd.PlG k → SplitPlace D.host.E}
     {j : ∀ k v, ℚ_[D.host.g k] ≃+* (s k v).v.adicCompletion (maximalRealSubfield D.host.E)}

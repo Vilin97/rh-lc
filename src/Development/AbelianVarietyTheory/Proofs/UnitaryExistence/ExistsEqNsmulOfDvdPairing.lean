@@ -12,8 +12,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 
 namespace GlobalTheory.LevelHalf
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.LevelHalf.trivial_mod_of_trivial_on_half :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H)

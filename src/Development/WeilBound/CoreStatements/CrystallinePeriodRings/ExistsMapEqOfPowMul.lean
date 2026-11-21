@@ -163,7 +163,6 @@ theorem cB_isFrac : IsFrac (Per6.cB l) (l : Acris) (Per6.tA l) := loc2_isFrac
 
 theorem isUnit_cB_l : IsUnit (Per6.cB l (l : Acris)) := (cB_isFrac l).1
 
-variable {l} in
 
 theorem bcris_surj (x : Per6.Bcris l) : ∃ (m n : ℕ) (y : Acris),
     Per6.cB l (l : Acris) ^ m * Per6.cB l (Per6.tA l) ^ n * x = Per6.cB l y :=
@@ -202,7 +201,6 @@ theorem kur_eq : MaximalUnramifiedExtension l = unramifiedClosure l := by
 
 def oD : Om l →+* Per6.BdR l := algClToBdRField l
 
-variable {l} in
 
 theorem exists_iota_eq (y : ACris.BCrisPlus ℂ_[l] l) : ∃ (k : ℕ) (a : Acris),
     ACris.iota ℂ_[l] l a = ACris.iota ℂ_[l] l (l : Acris) ^ k * ACris.iotaPlus ℂ_[l] l y :=
@@ -265,7 +263,6 @@ def tiltEquiv : OCb l ≃+* PreTilt ↥(normInteger ℂ_[l]) l :=
   RingEquiv.ofRingHom (Per6.tiltMap l) (tiltInv l) (RingHom.ext (tiltMap_tiltInv l))
     (RingHom.ext (tiltInv_tiltMap l))
 
-variable {l} in
 
 def galT (g : GQ l) : OCb l →+* OCb l :=
   (tiltInv l).comp ((preTiltMap l (galCp (Per6.toBot g) : ℂ_[l] →+* ℂ_[l])

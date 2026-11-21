@@ -30,4 +30,3 @@ theorem ch_cast {D : D7} {cf : Formalism.L2.Host.CharFrame D} {nch : NChoice D} 
 
 end GlobalTheory.Mem.Col2.TC.KerSK
 
-set_option maxHeartbeats 1600000 in

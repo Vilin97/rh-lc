@@ -72,8 +72,6 @@ theorem smul_add_smul (v : Pl D.host.F) {a : AE D}
   rw [sub_smul, one_smul, sub_eq_zero] at h1
   rw [← add_smul, hsum, algebraMap_smul, ← h1]
 
-set_option maxHeartbeats 1600000 in
-open Classical in
 
 theorem datum_of_placeModel (M : Model D.sp.cm.sig Y Z) {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1))
     (hstd : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsStd ψ) (hG : M.IsGood ψ)
@@ -389,7 +387,6 @@ theorem mem_latAtV {t : T} {i j : ℕ} {e : Num G i j} {Bs : Base D.host.F D.hos
 
 end Grid
 
-set_option maxHeartbeats 1600000 in
 
 theorem isDatum_linA : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc} {μ₀ : T}, L.Is μ₀ → ∀ (W : G.Weil) (B : Frames G) (t : T) (i j : Fin D.R.m) (M : Vol G), SquareStanding G t →
     ∀ (e : Num G i j) (Bs : Base D.host.F D.host.E) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j) (X : Chars D.host.F D.host.E)

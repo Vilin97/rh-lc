@@ -27,7 +27,6 @@ theorem card_TTv (D : D7) : (TTv D).card = D.host.TT.card := by
   simp only [Finset.sum_const, nsmul_eq_mul, mul_one, Finset.card_univ, Fintype.card_coe] at h
   exact_mod_cast h
 
-open Classical in
 
 theorem bad_card_at (p : ℕ) : ((TTv D).filter (fun n => badAt X p n)).card = (badTops X p).card := by
   have h := pb_sum_TTv (D := D) (fun n => if badAt X p n then (1 : ℝ) else 0)

@@ -446,7 +446,6 @@ theorem closure_doubleCoset_subset (g : GL (Fin n) F) :
   · exact Or.inl (mem_doubleCoset_of_cellRank_eq
       (cellRank_eq_of_le_of_cellHeight_le hxZ (not_lt.1 hlt)))
 
-omit [TopologicalSpace F] [IsTopologicalRing F] [T1Space F] in
 
 theorem cellHeight_of_mem_doubleCoset {g x : GL (Fin n) F}
     (hx : x ∈ doubleCoset g (blockUpper F n β : Set (GL (Fin n) F)) (blockUpper F n γ)) :

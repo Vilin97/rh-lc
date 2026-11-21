@@ -21,7 +21,6 @@ namespace GlobalTheory.SW.Cusp
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n N : ℕ}
 
-omit [IsCMField E] in
 
 theorem exists_den {α β : Type} [Fintype α] [Fintype β] (γ : Matrix α β E) :
     ∃ c : ℕ, 0 < c ∧ Den c γ := by
@@ -35,7 +34,6 @@ theorem exists_den {α β : Type} [Fintype α] [Fintype β] (γ : Matrix α β E
   · rw [e]; exact h
   · rw [e, Int.cast_neg, neg_mul]; exact h.neg
 
-omit [NumberField E] [IsCMField E] in
 
 theorem exists_inv (v : Fin (N + 1) → E) (hv : v ≠ 0) :
     ∃ a b : Matrix (Fin (N + 1)) (Fin (N + 1)) E, b * a = 1 ∧ a *ᵥ v = Pi.single 0 1 := by
@@ -53,7 +51,6 @@ theorem exists_inv (v : Fin (N + 1) → E) (hv : v ≠ 0) :
   refine ⟨b⁻¹, b, Matrix.mul_nonsing_inv b hb, ?_⟩
   rw [← hbv, Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul b hb, Matrix.one_mulVec]
 
-omit [NumberField E] [IsCMField E] in
 
 theorem pushZ_mem (Ψ : Finset (E →+* ℂ)) {Z : CM Ψ N N} (hZ : Z ∈ Hn Ψ N) (v : Fin N → E) {t : ℝ}
     (ht : 0 ≤ t) : pushZ Ψ Z v t ∈ Hn Ψ N := by
@@ -104,7 +101,6 @@ theorem hFac_levi (Ψ : Finset (E →+* ℂ)) (a b : Matrix (Fin N) (Fin N) E) (
       ∏ τ : Ψ, ((ccT b).map τ.1).det ^ n := by
   simp [hFac, hDen]
 
-omit [IsCMField E] in
 
 theorem colsIn_cons (Λ : Lt E n) (c : E) (x : Matrix (Fin n) (Fin N) E) :
     ColsIn Λ (c • (Matrix.of fun k => Fin.cons 0 (x k) : Matrix (Fin n) (Fin (N + 1)) E)) ↔
@@ -162,7 +158,6 @@ theorem tendsto_first {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) (hn : Even n
 
 end GlobalTheory.SW.Cusp
 
-open GlobalTheory.SW.Cusp in
 
 theorem GlobalTheory.SW.swd_tendsto_zero_at_cusps : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), Even n → 4 * (N + 1) < n → SWAt Ψ n N → ∀ (M R : ℕ) (φ : Fam E n (N + 1)), admitted M R φ → ∀ v : Fin (N + 1) → E, v ≠ 0 → ∀ Z ∈ Hn Ψ (N + 1), Tendsto (fun t : ℝ => swd Ψ M φ (pushZ Ψ Z v t) 0 0) atTop (𝓝 0) := by
   intro E _ _ _ Ψ hΨ n N hn hN hsw M R φ hφ v hv Z hZ

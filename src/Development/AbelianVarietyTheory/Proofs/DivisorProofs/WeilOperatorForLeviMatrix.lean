@@ -93,7 +93,6 @@ theorem eventually_int (M : Matrix κ κ F) :
   simp only [Filter.eventually_all]
   exact fun i j => (algebraMap F (Af F) (M i j)).2
 
-open scoped Classical in
 
 theorem hasOp_levi : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → (∀ᶠ v in cofinite, PsiUnr ψ v) →
     (∀ v : Pl F, ∃ x, psiLoc ψ v x ≠ 1) → ∀ (κ : Type) [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F), IsUnit A.det →

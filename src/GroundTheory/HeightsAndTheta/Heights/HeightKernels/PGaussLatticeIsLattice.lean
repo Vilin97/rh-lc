@@ -35,7 +35,6 @@ theorem gaussLattice_eq_span {g : ℕ} (B : Matrix (Fin g) (Fin g) ℝ) (hB : B.
 
 end PGaussLatticeIsLattice
 
-open PGaussLatticeIsLattice in
 
 theorem GaussLatticeIsLattice.proof : GaussLatticeIsLattice.Statement := by
   intro g B hB

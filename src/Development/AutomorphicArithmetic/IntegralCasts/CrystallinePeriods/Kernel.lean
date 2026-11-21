@@ -73,7 +73,6 @@ theorem exists_pow_eq_of_isAlgClosed {R : Type u} [CommRing R] [IsDomain R] [IsI
 
 namespace Tilt
 
-variable (p R) in
 
 def sharpEquiv : Tilt p R ≃* Perfection R p :=
   (Perfection.quotientMulEquiv p (span {(p : R)})).symm
@@ -217,7 +216,6 @@ theorem coeff_zero_xi (ϖ : PFlat p R) : (xi ϖ).coeff 0 = -ϖ.1 := by
   rw [xi, map_sub, map_natCast]
   simp
 
-omit [IsAdicComplete (span {(p : R)}) R] in
 
 theorem isUnit_iff_isUnit_coeff (x : Ainf p R) : IsUnit x ↔ IsUnit (x.coeff 0) := by
   refine ⟨fun h => h.map WittVector.constantCoeff, fun h => ?_⟩

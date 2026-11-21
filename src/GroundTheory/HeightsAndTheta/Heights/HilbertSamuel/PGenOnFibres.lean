@@ -514,8 +514,6 @@ section Main
 variable {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {S : Type} [CommRing S]
 variable [LinearOrder K] [∀ k, LinearOrder (ι k)]
 
-variable (y S) in
-open Classical in
 
 def secCoch (s : Ω) (a : K → ℤ) : KH.CechC S ι (MRingOver S ι ⧸ idealOver y S) 0 := fun J =>
   if h : ∃ x, IsRep y S (KH.cellMon S J.1) x (cellChart J) s a then h.choose else 0
@@ -550,7 +548,6 @@ theorem secCoch_mem {s : Ω} {a : K → ℤ} (hs : s ∈ chartLat y a 1) :
       rw [cellRes_of_le (cellMon_mono hJ), cellRes_of_le (cellMon_mono hJ')]
       exact ((secCoch_spec hs J hJc).lift _).unique ((secCoch_spec hs J' hJc').lift _)
 
-variable (S) in
 
 theorem generatedV_idealOver {a : K → ℤ} {n : ℕ} {w : Fin n → Ω} (hw : ∀ j, w j ∈ chartLat y a 1)
     (hg : KH.GeneratesOn y a w) : KH.GeneratedV S (idealOver y S) a := by

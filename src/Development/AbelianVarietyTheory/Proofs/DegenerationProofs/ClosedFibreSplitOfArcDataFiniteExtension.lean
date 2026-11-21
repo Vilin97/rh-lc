@@ -78,7 +78,6 @@ variable {D : Datum H} {l : Level H} {Xo : Moduli D l} {c : Coeff l} {W₀ : Val
   {Y : Model Xo c (c.V W₀).subtype} {O' : Type} [CommRing O'] [IsDomain O'] [CharZero O'] {b : c.V W₀ →+* O'}
   {a : ArcIn D l (c.V W₀).subtype O' b}
 
-set_option maxHeartbeats 3200000 in
 
 theorem same_rel (hL : Laws) (h2 : Laws2) (h4 : Laws4) (h5 : Laws5) (h6 : Laws6) {R : Type} [CommRing R] [IsDomain R]
     [IsDiscreteValuationRing R] {I : Ideal R} (hadm : AdmBase R I) {f : O' →+* R} {u : R}
@@ -210,7 +209,6 @@ theorem torus_ext {S T : Scheme.{0}} {X : Type} [AddCommGroup X] (τ τ' : T ⟶
       rw [GlobalTheory.SplitTorus.val_eq, GlobalTheory.SplitTorus.val_eq, ← GlobalTheory.SplitTorus.charUnit_val]; exact h₂ x)
   exact congrArg (·.left) this
 
-set_option maxHeartbeats 1600000 in
 
 theorem split_of_galois (hL : Laws) (h2 : Laws2) (h3 : Laws3) (h4 : Laws4) (h5 : Laws5) (h6 : Laws6) {V R : Type}
     [CommRing V] [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] {I : Ideal R} (hR : AdmBase R I)

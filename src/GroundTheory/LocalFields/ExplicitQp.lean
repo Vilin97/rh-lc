@@ -23,7 +23,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 attribute [local instance] isDiscreteModule_units
 
-include hf in
 
 theorem localReciprocity_symm_lubinTateField {n : ℕ} (hn : 0 < n) (u : 𝒪[K]ˣ) (k : ℤ)
     {τ : Ω ≃ₐ[K] Ω} (hτd : unramifiedDegree K Ω τ = Multiplicative.ofAdd (k : ℤ̂))
@@ -48,7 +47,6 @@ theorem localReciprocity_symm_lubinTateField {n : ℕ} (hn : 0 < n) (u : 𝒪[K]
   rw [e]
   rfl
 
-include hf in
 
 theorem apply_val_of_mk_eq_localReciprocityLimit {n : ℕ} (hn : 0 < n) (u : 𝒪[K]ˣ) (k : ℤ)
     {g : Ω ≃ₐ[K] Ω}
@@ -201,7 +199,6 @@ theorem val_smul_of_mem_torsion {n : ℕ}
     rw [← sub_eq_zero, ← sub_smul, hc, mul_comm, mul_smul, h0, smul_zero]
   rw [this, val_natCast_smul]
 
-omit [TopologicalSpace Ω] [IsValuativeTopology Ω] [Algebra.IsAlgebraic ℚ_[p] Ω] in
 
 theorem valuation_sub_one_lt_one {n : ℕ} {ζ : Ω} (hζ : ζ ^ (p ^ n) = 1) :
     valuation Ω (ζ - 1) < 1 := by

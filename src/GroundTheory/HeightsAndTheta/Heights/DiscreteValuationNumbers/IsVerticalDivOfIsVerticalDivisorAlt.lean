@@ -65,7 +65,6 @@ theorem isMultiProjPrime_iff (P : Ideal (ReciprocityTheory.ChartRestriction.G.Ge
   ⟨fun h => ⟨h.isPrime, (isMultiHomogIdeal_iff P).mp h.multiHomog, h.relevant⟩,
     fun h => ⟨h.1, (isMultiHomogIdeal_iff P).mpr h.2.1, h.2.2⟩⟩
 
-omit [DecidableEq K] in
 
 end Ring
 
@@ -73,9 +72,7 @@ section DVR
 
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
-omit [IsDomain O] [IsDiscreteValuationRing O] in
 
 end DVR
 

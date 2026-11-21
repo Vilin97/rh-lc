@@ -46,9 +46,7 @@ theorem mem_typeSp {π : Representation ℂ (GL n k) V} {e : (Σ a, m a) ≃ n} 
 def HasTypeVec (π : Representation ℂ (GL n k) V) (e : (Σ a, m a) ≃ n) (θ : α → 𝓀[k]ˣ →* ℂˣ) : Prop :=
   ∃ v : V, v ≠ 0 ∧ ∀ g : parahoric k e, π g v = (typeChar e θ g : ℂ) • v
 
-variable (k) in
 
-variable (k) in
 
 abbrev blockOf {s N : ℕ} (d : Fin s → ℕ) (hd : ∑ a, d a = N) (i : Fin N) : Fin s := ((stdBlocks d hd).symm i).1
 

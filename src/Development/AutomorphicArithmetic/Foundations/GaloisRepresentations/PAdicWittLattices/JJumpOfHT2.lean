@@ -72,7 +72,6 @@ private theorem chiPow_eq {l : ℕ} [Fact l.Prime] (P : LocPrime l) (σ : GQ l) 
 
 end UpperTheory.Gal.G3
 
-set_option maxHeartbeats 1000000 in
 
 theorem UpperTheory.Gal.G3.jJumpOfHT2 :
     PositivityTheory.AutomorphicGaloisHodgeTate.G8.JumpOfHT2 := by

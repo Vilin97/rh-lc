@@ -41,7 +41,6 @@ variable {p : ℕ} {G : GAtP p} {Fl : Fills G} (Lv : Levels Fl) {LL : Type} [Fie
   (cmp : ∀ j, V j →ₛₗ[e] Lv.Fm j) (li : ∀ j, j ≤ m → LinearIndependent G.Kf fun a => cmp j (b j a))
   (KL : ∀ j, V j →ₗ[LL] V (j + 1))
 
-open Classical in
 
 end Chain
 

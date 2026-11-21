@@ -113,7 +113,6 @@ theorem ringHom_ext {S : Scheme.{0}} {V : S.Opens} (hV : IsAffineOpen V) {R : Ty
 
 variable {F : Type} [Field F] [NumberField F] {Y : Var F}
 
-omit [NumberField F] in
 
 end Geo
 
@@ -135,4 +134,3 @@ end Coord
 
 end GlobalTheory.LineNorm.Chart
 
-open GlobalTheory.LineNorm.Chart GlobalTheory.LieMet in

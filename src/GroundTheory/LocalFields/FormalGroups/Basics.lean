@@ -103,7 +103,6 @@ theorem substPoint_inv_subst {φ : PowerSeries R} (hφ : PowerSeries.constantCoe
   exact PowerSeries.subst_comp_subst_apply (PowerSeries.HasSubst.of_constantCoeff_zero' hφ)
     x.prop _
 
-variable (F G) in
 
 @[ext]
 structure Hom where
@@ -177,7 +176,6 @@ noncomputable def comp (g : Hom G H) (f : Hom F G) : Hom F H :=
 theorem toPowerSeries_comp (g : Hom G H) (f : Hom F G) :
     (g.comp f).toPowerSeries = PowerSeries.subst f.toPowerSeries g.toPowerSeries := rfl
 
-variable (F) in
 
 noncomputable def id : Hom F F :=
   ofPoints PowerSeries.X PowerSeries.constantCoeff_X fun x y => by
@@ -304,7 +302,6 @@ theorem add_comp [H.IsComm] (g₁ g₂ : Hom G H) (f : Hom F G) :
     (g₁ + g₂).comp f = g₁.comp f + g₂.comp f :=
   toPoint_injective (by rw [toPoint_comp, add_apply, toPoint_add]; rfl)
 
-variable (F) in
 
 end Comm
 
@@ -382,7 +379,6 @@ theorem coeff_one_id : PowerSeries.coeff 1 (id F).toPowerSeries = 1 := by
 
 end Hom
 
-variable (F) in
 
 noncomputable def linearCoeff [F.IsComm] : Hom F F →+* R where
   toFun f := PowerSeries.coeff 1 f.toPowerSeries
@@ -391,7 +387,6 @@ noncomputable def linearCoeff [F.IsComm] : Hom F F →+* R where
   map_zero' := by simp [Hom.toPowerSeries_zero]
   map_add' f g := Hom.coeff_one_add f g
 
-variable (F G) in
 
 structure Iso where
 
@@ -403,7 +398,6 @@ structure Iso where
 
 namespace Iso
 
-variable (F) in
 
 def symm (e : Iso F G) : Iso G F := ⟨e.inv, e.hom, e.inv_comp_hom, e.hom_comp_inv⟩
 

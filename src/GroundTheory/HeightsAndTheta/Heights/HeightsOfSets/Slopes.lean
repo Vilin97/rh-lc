@@ -66,19 +66,12 @@ structure HermitianExtension (E' E E'' : HermitianBundle K) where
 abbrev firstIncl (K : Type*) [Field K] : 𝓞 K →ₗ[𝓞 K] (Fin 2 → 𝓞 K) :=
   LinearMap.single (𝓞 K) (fun _ : Fin 2 ↦ 𝓞 K) 0
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
-variable (K) in
 
-variable (K) in
 
 def standardFlag : Fin 3 → Submodule (𝓞 K) (HermitianBundle.standard K 2).carrier :=
   ![⊥, LinearMap.range (firstIncl K), ⊤]

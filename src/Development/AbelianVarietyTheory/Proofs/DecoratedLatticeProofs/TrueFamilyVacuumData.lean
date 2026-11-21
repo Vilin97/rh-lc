@@ -163,6 +163,5 @@ end GlobalTheory.XGeoStd.Frames
 
 namespace GlobalTheory.XGeoStd.Frames
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.XGeoStd.Frames

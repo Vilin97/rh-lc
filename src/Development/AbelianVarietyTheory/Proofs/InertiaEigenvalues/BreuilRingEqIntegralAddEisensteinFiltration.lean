@@ -32,7 +32,6 @@ theorem norm_choose_mul_le (q k : ℕ) :
       (mul_nonneg (norm_nonneg _) (norm_nonneg _))
   · simp [Nat.choose_eq_zero_of_lt hkq]
 
-variable (K) in
 
 def beta (e : ℕ) (c : K) (m k : ℕ) : K :=
   c * (((m / e).choose k : K) * (k.factorial : K) * (-(l : K)) ^ (m / e - k))

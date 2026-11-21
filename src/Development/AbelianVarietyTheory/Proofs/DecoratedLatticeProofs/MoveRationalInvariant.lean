@@ -210,7 +210,6 @@ theorem xiN_rat {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (hθ : IsInfFam
       ((congrFun (congrFun s1.1 i) j).trans (congrFun (congrFun t1 i) j).symm)
       fun τ => (congrFun (congrFun (t2 τ) i) j).symm
 
-open Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3 GlobalTheory.Mem.NatEqui in
 
 theorem thMoved_rat {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Formalism.L2.Ker.Base D cc δ) (hc : IsCurveIdeal D cc)
     (hδ : IsDiscriminantTwelfthRootOfIdealLattice D cc δ) {n n' : ℕ} (hn : Even n) (hn' : Even n') {L L'} (hL : SD D L) (hL' : SD D L')
@@ -233,7 +232,6 @@ theorem thMoved_rat {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Formalism.L2.Ke
   change (∏ τ, tauE D τ U.1.det ^ _) * _ * ((∏ τ, tauE D τ U'.1.det ^ _) * _) = _
   ring
 
-open scoped ComplexOrder in
 
 theorem move_rat {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} {a b : ℕ} (hS : S.rank = a) (hT : T.rank = b)
     {δ : ℂ} {sc : ℝ} (hp : StdPair θ S T δ sc ψ) {μ : (AE D)ˣ →* Circle} {om : Om S T} (hom : IsWeilDatumO ψ S T μ μ om)

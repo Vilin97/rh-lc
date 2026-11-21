@@ -148,7 +148,6 @@ end GlobalTheory.TypeSum.CasBasis.Expand
 
 namespace GlobalTheory.TypeSum.CasBasis
 
-open Expand in
 
 theorem lieSet_expand_bases : ∀ (n : ℕ) (ε : Fin n → Bool), ∀ U ∈ lieSet ε,
     U = ∑ b, (trace (U * pB ε b)).re • pB ε b - ∑ i, (trace (U * kB ε i)).re • kB ε i := by

@@ -18,7 +18,6 @@ namespace GlobalTheory.FinLatF
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F E) in
 
 def finSubF (nS nT : ℕ) : Submodule (AEF F E) (WOF F E nS nT) where
   carrier := {u | u.map (infPartF F E) = 0}
@@ -37,7 +36,6 @@ def finSubF (nS nT : ℕ) : Submodule (AEF F E) (WOF F E nS nT) where
     show infPartF F E (a * x i j) = 0
     rw [map_mul, h1, mul_zero]
 
-variable (F E) in
 
 def XFF (nS nT : ℕ) : Type := finSubF F E nS nT
 
@@ -69,11 +67,9 @@ theorem XFF.coe_zero : ((0 : XFF F E nS nT) : WOF F E nS nT) = 0 := rfl
 theorem XFF.coe_asmul (a : AEF F E) (x : XFF F E nS nT) : ((a • x : XFF F E nS nT) : WOF F E nS nT) = a • (x : WOF F E nS nT) :=
   rfl
 
-variable (F E nS nT) in
 
 def XFF.incl : XFF F E nS nT →+ WOF F E nS nT := AddMonoidHom.mk' XFF.val XFF.coe_add
 
-variable (F) in
 
 def intAF : 𝓞 E →+* AEF F E := (incAF F E).comp (algebraMap (𝓞 E) E)
 
@@ -121,7 +117,6 @@ theorem actOF_mem_finSubF (g : GAF σ JS) (h : GAF σ JT) {u : WOF F E nS nT} (h
   unfold actOF
   rw [Matrix.map_mul, Matrix.map_mul, hu, Matrix.mul_zero, Matrix.zero_mul]
 
-variable (σ JS JT) in
 
 def rhoFF : GAF σ JS × GAF σ JT →* Module.End (𝓞 E) (XFF F E nS nT) where
   toFun p :=
@@ -134,21 +129,17 @@ def rhoFF : GAF σ JS × GAF σ JT →* Module.End (𝓞 E) (XFF F E nS nT) wher
 theorem coe_rhoFF (p : GAF σ JS × GAF σ JT) (x : XFF F E nS nT) :
     (rhoFF σ JS JT p x : WOF F E nS nT) = actOF σ JS JT p.1 p.2 x := rfl
 
-variable (σ JS JT) in
 
 def gamFF (ξ₀ : E) (ψ : AddChar (AF F) ℂ) (x y : XFF F E nS nT) : ℂ := ψ (symplOF σ JS JT ξ₀ x y)
 
-variable (σ JS JT) in
 
 def phaseF (ξ₀ : E) (ψ : AddChar (AF F) ℂ) (w : 𝓞 E) (x : XFF F E nS nT) : ℂ :=
   ψ (-symplOHF σ JS JT ξ₀ (intAF F w • (x : WOF F E nS nT)) x)
 
-variable (σ JS JT) in
 
 def HeisClosedF (ξ₀ : E) (ψ : AddChar (AF F) ℂ) : Prop :=
   ∀ (w₀ : WOF F E nS nT) (f : WOF F E nS nT → ℂ), IsThetaFunOF σ JS JT ξ₀ ψ f → IsThetaFunOF σ JS JT ξ₀ ψ (heisOF σ JS JT ξ₀ ψ w₀ f)
 
-variable (σ JS JT) in
 
 def heisLF (ξ₀ : E) (ψ : AddChar (AF F) ℂ) (w : WOF F E nS nT) : (WOF F E nS nT → ℂ) →ₗ[ℂ] (WOF F E nS nT → ℂ) where
   toFun := heisOF σ JS JT ξ₀ ψ w
@@ -164,7 +155,6 @@ def opFF (hc : HeisClosedF σ JS JT ξ₀ ψ) (w : 𝓞 E) (x : XFF F E nS nT) :
 theorem coe_opFF (hc : HeisClosedF σ JS JT ξ₀ ψ) (w : 𝓞 E) (x : XFF F E nS nT) (f : GlobalTheory.WeilPartsF.thetaSubF σ JS JT ξ₀ ψ) :
     (opFF hc w x f : WOF F E nS nT → ℂ) = phaseF σ JS JT ξ₀ ψ w x • heisOF σ JS JT ξ₀ ψ x f := rfl
 
-variable (F E nS nT) in
 
 def latOF (Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) E)) : AddSubgroup (WOF F E nS nT) :=
   AddSubgroup.closure {z | ∃ α ∈ Formalism.MainNotions.StandardLattice.intAf F, ∃ γ ∈ Λ, z = algebraMap (AF F) (AEF F E) (pairA F 0 α) • ratWF (F := F) γ}
@@ -184,7 +174,6 @@ theorem intAF_smul_mem_latOF (Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) 
   | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [smul_neg]; exact neg_mem hx
 
-variable (F E nS nT) in
 
 def latF (Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) E)) : Submodule (𝓞 E) (XFF F E nS nT) where
   carrier := {x | (x : WOF F E nS nT) ∈ latOF F E nS nT Λ}
@@ -195,7 +184,6 @@ def latF (Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) E)) : Submodule (�
 theorem mem_latF {Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) E)} {x : XFF F E nS nT} :
     x ∈ latF F E nS nT Λ ↔ (x : WOF F E nS nT) ∈ latOF F E nS nT Λ := Iff.rfl
 
-variable (σ) in
 
 def InertQF (q : ℕ) : Prop :=
   ∀ P : Ideal (𝓞 E), P.IsMaximal → (q : 𝓞 E) ∈ P → ∀ r ∈ P, sgOF σ r ∈ P
@@ -293,7 +281,6 @@ theorem isHeis_opFF (hσ : ∀ x, σ (σ x) = x) (hS : IsHermND σ JS) (hT : IsH
 
 end Heis
 
-variable (σ JS JT ξ₀ ψ) in
 
 structure IsLatRepF (hc : HeisClosedF σ JS JT ξ₀ ψ) (Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) E)) (w : 𝓞 E)
     (lam : ℕ →* ℂ) (Om : GAF σ JS × GAF σ JT →* Module.End ℂ (GlobalTheory.WeilPartsF.thetaSubF σ JS JT ξ₀ ψ)) : Prop where

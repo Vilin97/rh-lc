@@ -224,7 +224,6 @@ theorem hasCover_univ {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) 
     have := h.union (hasCover_affine p W.1.ι)
     rwa [Scheme.Opens.range_ι] at this
 
-open GlobalTheory.Spread GlobalTheory.SpreadSep in
 
 theorem exists_finset_isProper (k V : Type) [CommRing k] [IsNoetherianRing k] [CommRing V]
     [Algebra k V] {X : Scheme.{0}} (p : X ⟶ Sp k) [LocallyOfFiniteType p] [QuasiCompact p] [IsSeparated p]

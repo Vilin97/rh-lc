@@ -37,6 +37,5 @@ theorem r_mem {O : Type} [CommRing O] {X : Type} (T : Subalgebra O (X → O)) {d
   funext x
   simp
 
-set_option maxHeartbeats 1000000 in
 
 end Formalism.RepresentationBoundsCohomology.ringDataObjects

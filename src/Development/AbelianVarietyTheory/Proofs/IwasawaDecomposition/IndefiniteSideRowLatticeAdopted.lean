@@ -70,7 +70,6 @@ end
 section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.DivisionValues Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows
 open scoped Matrix
-set_option maxHeartbeats 1000000 in
 
 end
 
@@ -278,7 +277,6 @@ end
 section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.DivisionValues Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows
 open scoped Matrix
-set_option maxHeartbeats 1000000 in
 
 end
 
@@ -379,7 +377,6 @@ end
 section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.DivisionValues Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows
 open scoped Matrix
-set_option maxHeartbeats 1000000 in
 
 end
 
@@ -454,7 +451,6 @@ end
 section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.DivisionValues Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows
 open scoped Matrix
-set_option maxHeartbeats 1000000 in
 
 end
 

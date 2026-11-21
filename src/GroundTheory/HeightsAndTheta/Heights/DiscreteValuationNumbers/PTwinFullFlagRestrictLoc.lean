@@ -176,7 +176,6 @@ theorem aeval_ne_zero (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {G : MRingOver O ι
 theorem aeval_genPt_red_ne_zero {G : MRingOver O ι} (hGQ : red O G ∉ Q) :
     aeval (genPt (kap O) Q) (red O G) ≠ 0 := fun h => hGQ ((aeval_genPt_eq_zero_iff Q _).1 h)
 
-variable (O Q) in
 
 def resOf (F G : MRingOver O ι) : FractionRing (MRingOver (kap O) ι ⧸ Q) :=
   aeval (genPt (kap O) Q) (red O F) / aeval (genPt (kap O) Q) (red O G)
@@ -227,7 +226,6 @@ theorem resOf_congr (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {F G F' G' : MRingOve
   rw [div_eq_div_iff (aeval_genPt_red_ne_zero hGQ) (aeval_genPt_red_ne_zero hG'Q)]
   exact hmem
 
-variable (x Q) in
 
 def locAlg : Subalgebra O Ω where
   carrier := {z | ∃ F G : MRingOver O ι, IsLocFrac O Q F G ∧ aeval x G ≠ 0 ∧ z = aeval x F / aeval x G}
@@ -248,8 +246,6 @@ theorem mem_locAlg (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {F G : MRingOver O ι}
     aeval x F / aeval x G ∈ locAlg x Q :=
   ⟨F, G, h, aeval_ne_zero hPQ h.choose_spec.2.1 h.choose_spec.2.2, rfl⟩
 
-open Classical in
-variable (x Q) in
 
 def rs (z : Ω) : FractionRing (MRingOver (kap O) ι ⧸ Q) :=
   if h : z ∈ locAlg x Q then resOf O Q (mem_locAlg_iff.1 h).choose (mem_locAlg_iff.1 h).choose_spec.choose else 0
@@ -419,7 +415,6 @@ theorem chartMon_ratio (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {s s₀ : ∀ k, �
     rw [rs_prod hPQ _ _ fun k _ => (hk k).1]
     exact Finset.prod_congr rfl fun k _ => (hk k).2⟩
 
-variable (x Q) in
 
 def goodSub (hPQ : redIdeal O (mcIdeal O x) ≤ Q) (s : ∀ k, ι k) : Subalgebra O Ω where
   carrier := {a | a ∈ locAlg x Q ∧ rs x Q a ∈ chartRing (kap O) (mseg (genPt (kap O) Q)) s}

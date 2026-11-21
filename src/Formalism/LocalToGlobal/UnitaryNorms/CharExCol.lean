@@ -24,7 +24,6 @@ open Formalism.L2.Col
 
 variable {X : Fields} (σ₀ : X.K →+* ℂ)
 
-open Classical in
 
 end CharEx
 

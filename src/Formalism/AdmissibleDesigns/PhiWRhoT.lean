@@ -48,7 +48,6 @@ theorem phiW_rhoT' (n : ℕ) (hn : K.plOf i dc n ∈ placesOver D.host.E (D.nd.l
   rw [Matrix.transpose_apply, KLat.matK, Matrix.map_apply, Algebra.smul_def, ← mul_assoc, ← map_mul, map_mul]
   rfl
 
-variable {i dc Dd hK hε hM} in
 
 theorem rowMat_at
     (hD : Formalism.RepresentationBoundsCohomology.ringDataObjects.RingDef (D.nd.O i) (D.nd.T i) (RepresentationBoundsCohomology.repX D.nd r) π (chiU D.nd i 1) (epsU D.nd i) g0
@@ -94,7 +93,6 @@ theorem rowMat_at
       show eK (D.nbr i _ hn) (v (H0.e0 ((H0.e0 (D := D)).symm b))) = _
       rw [Equiv.apply_symm_apply]
 
-variable {i dc Dd hK hε hM} in
 
 theorem orbC_dat (n : ℕ) :
     KHf.OrbC i dc (n := n)

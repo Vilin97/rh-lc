@@ -39,7 +39,6 @@ theorem mvPolynomial_stdSmooth (R : Type) [CommRing R] (n : ℕ) :
         simp }
   exact P₂.isStandardSmoothOfRelativeDimension (by simp [Algebra.Presentation.dimension])
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem affineSpace_smooth (S : Scheme.{0}) (n : ℕ) : Smooth (𝔸(Fin n; S) ↘ S) := by
   have : SmoothOfRelativeDimension n (𝔸(Fin n; S) ↘ S) := by

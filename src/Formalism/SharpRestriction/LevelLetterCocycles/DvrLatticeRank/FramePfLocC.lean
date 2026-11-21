@@ -162,7 +162,6 @@ theorem framepf_Qpow_mem {p : W.DD T} {m₀ m : ℕ} (h : W.Q ^ m₀ • p ∈ W
   rw [pow_add, mul_comm, mul_smul]
   exact Submodule.smul_mem _ _ h
 
-include Ct in
 
 theorem framepf_span_vanish (hc : IsCrys PD T.ρ) (c : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p)
     (hQ0 : PowerSeries.constantCoeff (W.lev c ζ W.Q) = 0)
@@ -207,7 +206,6 @@ theorem framepf_span_vanish (hc : IsCrys PD T.ρ) (c : ZMod n) (ζ : LL) (hζ : 
     rw [this, ModelFPf.levN_eq_serMul, framepf_serMul_congr _ 0 (fun j hj => by omega) _ (fun _ => 0) m
       b₁ i (by omega), framepf_serMul_zero]
 
-include Ct in
 
 theorem framepf_loc_core (hc : IsCrys PD T.ρ) (c : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p)
     (hQ0 : PowerSeries.constantCoeff (W.lev c ζ W.Q) = 0)
@@ -259,7 +257,6 @@ theorem framepf_loc_core (hc : IsCrys PD T.ρ) (c : ZMod n) (ζ : LL) (hζ : IsP
   congr 1
   ring
 
-include Ct in
 
 theorem framepf_valAt_mod (hc : IsCrys PD T.ρ) (c : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p)
     (hQ0 : PowerSeries.constantCoeff (W.lev c ζ W.Q) = 0)
@@ -290,7 +287,6 @@ theorem framepf_lev_π_one (i : ZMod n) : PowerSeries.constantCoeff (W.lev i 1 l
   obtain ⟨E, hE1, -, hE⟩ := W.lev_π i 1 ⟨0, by rw [pow_zero]; exact IsPrimitiveRoot.one⟩
   simpa [hE1] using congrArg PowerSeries.constantCoeff hE
 
-include Ct in
 
 theorem framepf_locC (hc : IsCrys PD T.ρ) (hs : W.s = 1) (c : ZMod n) (ζ : LL)
     (hζ : IsPrimitiveRoot ζ PD.p)

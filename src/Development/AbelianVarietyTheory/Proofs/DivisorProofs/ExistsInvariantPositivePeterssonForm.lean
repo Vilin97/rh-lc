@@ -97,7 +97,6 @@ end GlobalTheory.DefU.Petersson
 
 namespace GlobalTheory.DefU.Petersson
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_invariant_pos_form : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ),
     ∃ B : GlobalTheory.DefU.autU E n →ₗ⋆[ℂ] GlobalTheory.DefU.autU E n →ₗ[ℂ] ℂ, (∀ u v, star (B u v) = B v u) ∧ (∀ v, 0 ≤ (B v v).re) ∧

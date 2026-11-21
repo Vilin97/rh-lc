@@ -15,7 +15,6 @@ namespace GlobalTheory.AutGrowth
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E a) in
 
 def growth : Submodule ℂ (GA E a → ℂ) where
   carrier := {f | ∀ g, ∃ (C : ℝ) (N : ℕ), ∀ y, ‖f (g * infGL E a y)‖ ≤ C * height y ^ N}
@@ -44,7 +43,6 @@ def growth : Submodule ℂ (GA E a → ℂ) where
     rw [Pi.smul_apply, norm_smul, mul_assoc]
     exact mul_le_mul_of_nonneg_left (hC y) (norm_nonneg c)
 
-variable (E a) in
 
 def tame : Submodule ℂ (Sm E a) where
   carrier := {ψ | ∀ l : List (Lie E a), ((l.map (lie E a)).prod ψ).1 ∈ growth E a}

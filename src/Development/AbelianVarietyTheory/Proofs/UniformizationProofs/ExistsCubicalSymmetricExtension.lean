@@ -51,7 +51,6 @@ section DVR
 variable {V K : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field K] [Algebra V K]
   [IsFractionRing V K] {G : Over (Spec (CommRingCat.of V))} [GrpObj G] [IsCommMonObj G]
 
-omit [IsDomain V] [IsDiscreteValuationRing V] [GrpObj G] [IsCommMonObj G] in
 
 theorem corr_of_generic_val [IsSeparated G.hom] (T : Over (Spec (CommRingCat.of V))) [Flat T.hom]
     {L : LB G.left} (hL : L.IsLB) {I I' : Type} [Fintype I] [Fintype I']
@@ -181,7 +180,6 @@ theorem nonempty_cubical (hE : cubical_extendsSt.{0}) (gp : IsGrpPullback A G (e
     rw [Category.assoc, κ₁, q]
     rfl
 
-omit [IsCommMonObj A] [QuasiCompact G.hom] in
 
 theorem exists_symmetry (gp : IsGrpPullback A G (etaK V K) F) {L : LB G.left} (hL : L.IsLB)
     {M : LB A.left} (hM : M.IsLB) (hs : Out.Sym A M) (w : LB.Iso M (L.pull F)) (hw : w.IsGen) :

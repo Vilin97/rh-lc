@@ -103,7 +103,6 @@ theorem secNZ_pull {φ : S →+* T} {x : Sp S ⟶ Xo.X} {x' : Sp T ⟶ Xo.X} (hx
 
 end GlobalTheory.Frames.NonzeroGenerates
 
-open GlobalTheory.Frames.NonzeroGenerates in
 
 theorem GlobalTheory.Frames.secGen_of_secNZ : Out.SecBaseChangeSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (S : Type) [CommRing S] (x : Sp S ⟶ Xo.X) (s : LB.Sec (PPx x)), SecNZ x s → SecGen x s := by
   intro hBC E _ _ _ H Dw l Xo S _ x s hs t

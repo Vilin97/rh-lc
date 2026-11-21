@@ -42,7 +42,6 @@ namespace AnRead
 
 variable {p : Y ⟶ Sp k} {σ : k →+* ℂ} {D : ℕ}
 
-variable (p σ D) in
 
 def all [SmoothOfRelativeDimension D p] : AnRead p σ D := ⟨_, id, AlgChart.exists_mem_source⟩
 
@@ -169,7 +168,6 @@ theorem HoloOn.zpow {f : CxPts p σ → ℂ} (hf : R.HoloOn S f) (h0 : ∀ y ∈
 theorem HoloOn.inv {f : CxPts p σ → ℂ} (hf : R.HoloOn S f) (h0 : ∀ y ∈ S, f y ≠ 0) :
     R.HoloOn S fun y => (f y)⁻¹ := fun i => (hf i).inv fun _ hv => h0 _ hv.2
 
-variable (R B) in
 
 def holSec : Submodule ℂ (B.ι → CxPts p σ → ℂ) where
   carrier := {s | s ∈ fibSec p σ B ∧ ∀ i, R.HoloOn (ptsIn p σ (B.U i)) (s i)}
@@ -177,12 +175,10 @@ def holSec : Submodule ℂ (B.ι → CxPts p σ → ℂ) where
   add_mem' hs ht := ⟨add_mem hs.1 ht.1, fun i j => (hs.2 i j).add (ht.2 i j)⟩
   smul_mem' c _ hs := ⟨Submodule.smul_mem _ c hs.1, fun i j => (hs.2 i j).const_smul c⟩
 
-variable (R) in
 
 theorem secVal_mem_holSec (s : B.Sec) : secVal p σ s ∈ R.holSec B :=
   ⟨secVal_mem s, fun _ => R.holoOn_ev _ _⟩
 
-variable (R B) in
 
 def valC : SecC p σ B →ₗ[ℂ] R.holSec B :=
   SecC.val.codRestrict _ (SecC.val_mem_of R.secVal_mem_holSec)
@@ -267,7 +263,6 @@ def topDens (y : CxPts p σ) : ℝ :=
   2 ^ D * (‖c.topCoeff K f (pick K.isLB y) (pick φ.isLB y) y‖ ^ 2 *
     Real.exp (-φ.φ (pick φ.isLB y) y))
 
-variable {f} in
 
 theorem topDens_eq (hf : f ∈ fibSec p σ (tens K.bundle B)) (hy : y ∈ c.e.source) {a : K.bundle.ι}
     {b : B.ι} (ha : y ∈ ptsIn p σ (K.bundle.U a)) (hb : y ∈ ptsIn p σ (B.U b)) :
@@ -324,7 +319,6 @@ theorem topMeasure_apply (c : AlgChart p σ D) {A : Set (CxPts p σ)} (hA : Meas
   rw [← chartMeas_apply_of_subset c.e (fun y => ENNReal.ofReal (c.topDens K φ f y)) hA h,
     ← Measure.restrict_apply_self, key, Measure.restrict_apply_self]
 
-variable {R φ f} in
 
 theorem isLocallyFiniteMeasure_topMeasure (hφ : φ.IsSmooth R) (hf : f ∈ R.holSec (tens K.bundle B)) :
     IsLocallyFiniteMeasure (R.topMeasure K φ f) := ⟨fun y => by
@@ -352,7 +346,6 @@ theorem isLocallyFiniteMeasure_topMeasure (hφ : φ.IsSmooth R) (hf : f ∈ R.ho
   rintro _ ⟨z, hz, rfl⟩
   exact interior_subset hz.2⟩
 
-variable {R φ f} in
 
 theorem topInt_lt_top [CompactSpace (CxPts p σ)] (hφ : φ.IsSmooth R)
     (hf : f ∈ R.holSec (tens K.bundle B)) : R.topInt K φ f < ⊤ :=
@@ -543,9 +536,7 @@ def Isometric (φ : Weight p σ B) : Prop :=
   ∀ c i y, y ∈ (F.atlas.chart c).source → y ∈ ptsIn p σ (B.U i) →
     F.atlas.ph m c y = φ.φ i y + Real.log (‖r.u c i y‖ ^ 2)
 
-variable {r} in
 
-variable (F) in
 
 def ofMem (a : κ) : F.Reading (F.L a) (wt a) where
   isLB := (F.φ a).isLB
@@ -560,11 +551,8 @@ theorem isometric_ofMem (a : κ) : (ofMem F a).Isometric (F.φ a) := fun c i y h
   rw [atlas_ph_wt, (F.φ a).trans _ i y (mem_L h a) hi]
   exact (sub_add_cancel _ _).symm
 
-variable (F) in
 
-variable (F) in
 
-variable {r} in
 
 def tens (r' : F.Reading A m') (r : F.Reading B m) : F.Reading (tens A B) (m' + m) where
   isLB := isLB_tens r'.isLB r.isLB
@@ -577,7 +565,6 @@ def tens (r' : F.Reading A m') (r : F.Reading B m) : F.Reading (tens A B) (m' + 
       r'.compat c c' i.1 i'.1 y h h' (mem_ptsIn_inf.1 hi).1 (mem_ptsIn_inf.1 hi').1,
       r.compat c c' i.2 i'.2 y h h' (mem_ptsIn_inf.1 hi).2 (mem_ptsIn_inf.1 hi').2, mul_mul_mul_comm]
 
-variable {r} in
 
 def zpow (n : ℤ) : F.Reading (LB.LinComb B (K := PUnit) (fun _ => 𝟙 Y) fun _ => n) (n • m) where
   isLB := Semi.LB.isLB_linComb r.isLB _ _
@@ -593,15 +580,10 @@ def zpow (n : ℤ) : F.Reading (LB.LinComb B (K := PUnit) (fun _ => 𝟙 Y) fun 
 
 abbrev pow (n : ℕ) : F.Reading (lbPow B n) ((n : ℤ) • m) := r.zpow n
 
-variable {r} in
 
-variable {r} in
 
-variable {r} in
 
-variable {r} in
 
-variable {r} in
 
 end Reading
 

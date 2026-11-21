@@ -18,7 +18,6 @@ namespace GlobalTheory.Mem.JointsTrue
 
 open Formalism.L2 Formalism.L2.Host ReciprocityTheory.Neutral.Bridge.HCFR
 
-set_option maxHeartbeats 1000000 in
 
 theorem isDetLift_local (D : D7) (P : HeightOneSpectrum (𝓞 D.host.E)) (e : Theta.AE D) (he : JoinChr.IsPlIdem D e P)
     (k : D.host.Eˣ) (y : Theta.AE D) (hy : Joints.IsRatioAt D e (k : D.host.E) y) (x : Herm.unitaryOneFiniteAdeles D.sp.cm)
@@ -43,7 +42,6 @@ theorem isDetLift_local (D : D7) (P : HeightOneSpectrum (𝓞 D.host.E)) (e : Th
   rw [MonoidHom.div_apply, div_eq_iff_eq_mul]
   exact Units.ext (h2.symm.trans (by rw [Units.val_mul, hx]; rfl))
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.Mem.JointsTrue
 

@@ -89,7 +89,6 @@ def ltrans (g : G) (f : G → ℂ) : G → ℂ := fun x => f (g⁻¹ * x)
 omit [IsTopologicalGroup G] [MeasurableSpace G] [BorelSpace G] in
 theorem ltrans_apply (g : G) (f : G → ℂ) (x : G) : ltrans g f x = f (g⁻¹ * x) := rfl
 
-omit [MeasurableSpace G] [BorelSpace G] in
 
 theorem ltrans_mem (g : G) {f : G → ℂ} (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) :
     ltrans g f ∈ locallyConstantCompactSupport G ℂ ℂ :=
@@ -102,7 +101,6 @@ theorem groupConv_mul_right {f₁ f₂ : G → ℂ} {k : G} (hk : ∀ g, f₂ (g
     groupConv μ f₁ f₂ (x * k) = groupConv μ f₁ f₂ x := by
   simp only [groupConv, ← mul_assoc, hk]
 
-variable (μ) in
 
 theorem groupConv_mem [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
     {f₁ f₂ : G → ℂ} (hf₁ : f₁ ∈ locallyConstantCompactSupport G ℂ ℂ)
@@ -120,7 +118,6 @@ theorem groupConv_mem [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSp
     exact ⟨y, subset_tsupport _ h'.1, y⁻¹ * x, subset_tsupport _ h'.2, mul_inv_cancel_left y x⟩
   simp only [groupConv, this, integral_zero]
 
-omit [IsTopologicalGroup G] in
 
 theorem integrable_mul_of_mem [IsFiniteMeasureOnCompacts μ] {f : G → ℂ}
     (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) {h : G → ℂ} (hh : Continuous h) :
@@ -138,7 +135,6 @@ def heckeAct (ρ : Representation ℂ G V) (f : G → ℂ) (v : V) : V :=
 
 variable {μ} {ρ : Representation ℂ G V}
 
-omit [MeasurableSpace G] [BorelSpace G] in
 
 theorem isLocallyConstant_orbit {v : V} (hv : v ∈ smoothVectors ρ) :
     IsLocallyConstant fun g => ρ g v := by
@@ -147,20 +143,17 @@ theorem isLocallyConstant_orbit {v : V} (hv : v ∈ smoothVectors ρ) :
   rintro _ ⟨s, hs, rfl⟩
   simp only [smul_eq_mul, map_mul, Module.End.mul_apply, mem_stabilizerOf.1 hs]
 
-omit [MeasurableSpace G] [BorelSpace G] in
 
 theorem continuous_dual_orbit {v : V} (hv : v ∈ smoothVectors ρ) (φ : Module.Dual ℂ V) :
     Continuous fun g => φ (ρ g v) :=
   ((isLocallyConstant_orbit hv).comp φ).continuous
 
-omit [MeasurableSpace G] [BorelSpace G] in
 
 theorem smul_orbit_mem {f : G → ℂ} (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) {v : V}
     (hv : v ∈ smoothVectors ρ) :
     (fun g => f g • ρ g v) ∈ locallyConstantCompactSupport G ℂ V :=
   ⟨hf.1.comp₂ (isLocallyConstant_orbit hv) (fun a b => a • b), hf.2.smul_right⟩
 
-omit [IsTopologicalGroup G] [BorelSpace G] in
 
 theorem heckeAct_eq_sum {f : G → ℂ} {v : V} (hfin : (range fun g => f g • ρ g v).Finite) :
     heckeAct μ ρ f v = ∑ w ∈ hfin.toFinset, ((μ.real {g | f g • ρ g v = w} : ℝ) : ℂ) • w := by
@@ -174,9 +167,7 @@ theorem heckeAct_eq_sum {f : G → ℂ} {v : V} (hfin : (range fun g => f g • 
     exact fun hg => h ⟨g, hg⟩
   simp [this]
 
-omit [IsTopologicalGroup G] [BorelSpace G] in
 
-variable (μ) in
 
 theorem dual_heckeAct [IsFiniteMeasureOnCompacts μ] {f : G → ℂ}
     (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) {v : V} (hv : v ∈ smoothVectors ρ)
@@ -356,7 +347,6 @@ instance : FunLike (HeckeAlgebra μ) G ℂ where
 theorem mem (f : HeckeAlgebra μ) : (f : G → ℂ) ∈ locallyConstantCompactSupport G ℂ ℂ :=
   (show locallyConstantCompactSupport G ℂ ℂ from f).2
 
-variable (μ) in
 
 def mk (f : G → ℂ) (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) : HeckeAlgebra μ :=
   (⟨f, hf⟩ : locallyConstantCompactSupport G ℂ ℂ)
@@ -380,14 +370,12 @@ theorem coe_mul (f g : HeckeAlgebra μ) : ((f * g : HeckeAlgebra μ) : G → ℂ
 
 theorem mul_apply (f g : HeckeAlgebra μ) (x : G) : (f * g) x = ∫ y, f y * g (y⁻¹ * x) ∂μ := rfl
 
-variable (μ) in
 
 def evalₗ (x : G) : Module.Dual ℂ (HeckeAlgebra μ) where
   toFun f := f x
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-variable (μ) in
 
 def leftReg : Representation ℂ G (HeckeAlgebra μ) where
   toFun g :=

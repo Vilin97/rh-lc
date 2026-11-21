@@ -213,8 +213,6 @@ private lemma equiv_symm_realifyFun_unrealify {m : ℕ} (x : EuclideanSpace ℝ 
   obtain ⟨i, j, b⟩ := p
   cases b <;> simp [_root_.Formalism.MainNotions.S.unrealify, _root_.Formalism.MainNotions.S.realifyFun]
 
-open MeasureTheory Matrix Filter Topology in
-open scoped InnerProductSpace ENNReal Nat in
 
 theorem _root_.GlobalTheory.CellDens.LieN.lieE_Nset : ∀ (k r : ℕ)
     (x : EuclideanSpace ℝ (Fin (2 * r + k + 1) × Fin (2 * r + k + 1) × Bool)),

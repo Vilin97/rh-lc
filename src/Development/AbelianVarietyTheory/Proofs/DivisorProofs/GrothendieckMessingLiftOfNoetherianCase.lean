@@ -190,7 +190,6 @@ theorem ann_bc {Q Q' : Type*} [AddCommGroup Q] [Module S Q] [AddCommGroup Q'] [M
 
 end Linear
 
-open scoped CategoryTheory.Obj in
 
 theorem exists_factor {S S' S'' : Scheme.{0}} {G : Over S} [GrpObj G] {G'' : Over S''} [GrpObj G'']
     {f : S' ⟶ S} {k : S'' ⟶ S'} {t : S'' ⟶ S} {φ : G''.left ⟶ G.left} (h : IsGrpPullback G'' G t φ)

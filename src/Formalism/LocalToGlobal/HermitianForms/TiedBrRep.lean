@@ -78,6 +78,5 @@ end Row
 
 variable {D : D7} {u : D.what₂.Word}
 
-set_option maxHeartbeats 2000000 in
 
 end Formalism.L2.Forms

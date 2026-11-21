@@ -50,8 +50,6 @@ private theorem conj_cartan_involution_props {n : ℕ} (F J : Matrix (Fin n) (Fi
       Matrix.nonsing_inv_mul_cancel_left _ _ hdh, Matrix.mul_nonsing_inv_cancel_left _ _ hd, hJJ]
   · simp only [Matrix.mul_assoc, Matrix.mul_nonsing_inv_cancel_left _ _ hd, hJJ]
 
-open Matrix in
-open scoped ComplexOrder in
 
 theorem cart_isCartanInv {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (τ : D.what₂.Tau) :
     IsCartanInv (gramAt D V τ) (cart M τ) := by

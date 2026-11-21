@@ -42,7 +42,6 @@ variable (L : D S G)
 
 variable {L}
 
-variable (L) in
 
 variable {χ : (∀ v, Fin 3 → G v) → ℂ}
 

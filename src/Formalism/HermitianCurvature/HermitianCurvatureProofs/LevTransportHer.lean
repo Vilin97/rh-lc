@@ -18,7 +18,6 @@ section reindex
 
 variable {K A S S' : Type}
 
-open Classical in
 
 end reindex
 

@@ -130,7 +130,6 @@ theorem nearC_of_smooth [Finite J]
     (fun i K _ _ x s t φ ht hφ => hF i K x s t φ ((good_comp _ _ _).1 ht) (hfib K x s t φ hφ) hφ.1.w)
   exact nearC_of_grpFam h1 h2 hn hodd hj hq₁ (span_map _ hv) hG
 
-omit h1 hodd hj in
 
 theorem nearC_of_fam
     (H : ∀ {R : Type} [CommRing R] [IsNoetherianRing R] [IsReduced R] {β : o →+* R}
@@ -155,7 +154,6 @@ theorem nearC_of_fam
     (Over.mk (pullback.snd Z.hom (spMap (loc f)))) _ (IsPullback.of_hasPullback _ _) hZ
   exact nearC_of_den_loc h2 h hf fun q₁ hq₁ => H hq₁ (span_map _ hv) hZ' hs
 
-omit h1 hodd hj in
 
 theorem nearC_of_unimodular
     (H : ∀ {R : Type} [CommRing R] [IsNoetherianRing R] [IsReduced R] {β : o →+* R}

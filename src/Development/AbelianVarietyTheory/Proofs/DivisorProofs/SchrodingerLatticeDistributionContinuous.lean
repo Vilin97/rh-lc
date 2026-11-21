@@ -46,7 +46,6 @@ theorem exists_weighted_clm {D : Type} [NormedAddCommGroup D] [NormedSpace ℝ D
     unfold schwartzSeminormFamily
     rw [integral_mul_const, ← mul_assoc, mul_comm (2 ^ n)]
 
-variable (F) in
 
 def iotaI : F →+* mixedEmbedding.mixedSpace F :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp (algebraMap F (InfiniteAdeleRing F))
@@ -99,11 +98,9 @@ def Xv (u : Fin r → (κ → F) × (κ → F)) (x : Fin r → AF F) : (κ → A
 def sc (u : Fin r → (κ → F) × (κ → F)) (x : Fin r → AF F) : AF F :=
   ⅟(2 : AF F) * ((Xv u x).1 ⬝ᵥ (Xv u x).2)
 
-variable (F) in
 
 def fstH : AF F →+* InfiniteAdeleRing F := RingHom.fst _ _
 
-variable (F) in
 
 def sndH : AF F →+* FiniteAdeleRing (𝓞 F) F := RingHom.snd _ _
 
@@ -143,7 +140,6 @@ end GlobalTheory.LagrForm
 noncomputable section
 namespace GlobalTheory.LagrForm
 
-open GlobalTheory.WeilAdm.HaarSplit in
 
 theorem lagr_form_admitted : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∀ (κ : Type) [Fintype κ] (r : ℕ) (u : Fin r → (κ → F) × (κ → F)), LinearIndependent F (fun j => (u j).1) →
     ∀ μ : @Measure (Fin r → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →

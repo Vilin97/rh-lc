@@ -183,7 +183,6 @@ theorem idemSum_mul {U ε : AE D} {P : Finset (Pl D.host.E)} (hε : IsIdemSum ε
     · rw [h, hU w hw, mul_one]
     · rw [(cpt_of_isIdemAt (hes w hw)).2 Q h, zero_mul]
 
-open GlobalTheory.AdelicLatMove in
 
 theorem smul_mem_latO {S T : HSp D} {LS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)}
     {LT LT' : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} {U : AE D} {I J : FI D} (hIJ : I * J = 1)
@@ -397,7 +396,6 @@ theorem latO_neg (S T : HSp D) (LS : Set (Fin S.rank → D.host.E)) (LT : Set (F
 
 end GlobalTheory.TopFlip.TwistElt
 
-open GlobalTheory.TopFlip.TwistElt GlobalTheory.LatExchPf GlobalTheory.RouteSeesaw in
 
 theorem GlobalTheory.TopFlip.exists_twistElt : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc} {μ₀ : T}, L.Is μ₀ → ∀ i j : Fin D.R.m, ∃ h ∈ GfC (spX G i j), ∃ Λ : Submodule (𝓞 D.host.E) (Fin (spX G i j).rank → D.host.E),
       IsSelfDualC (spX G i j) Λ ∧

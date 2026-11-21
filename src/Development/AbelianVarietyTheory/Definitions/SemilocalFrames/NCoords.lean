@@ -51,7 +51,6 @@ def IsDomN (σ : E →+* E) {k r : ℕ} (J : Matrix (Fin (2 * r + k + 1)) (Fin (
 
 variable {F : Type} [Field F] [NumberField F] [Algebra F E]
 
-open scoped Classical in
 
 end Glob
 

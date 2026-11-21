@@ -55,7 +55,6 @@ theorem theta_realPt {θ : InfFam D} (hθ : IsInfFam θ) (w : D.what₂.Tau → 
     θ τ (infPart D (realPt D w)) = w τ := by
   rw [realPt, infPart_incInf, Formalism.IndefR.Eqv.eq_thetaC D hθ, Formalism.IndefR.Eqv.thetaC_splitInv]
 
-open Classical in
 
 def shift {m n : ℕ} (P : Fin m → Fin n → Prop) (z : D.what₂.Tau × Fin m × Fin n → ℤ × ℤ) : Mx D m n :=
   Matrix.of fun i j => if P i j then

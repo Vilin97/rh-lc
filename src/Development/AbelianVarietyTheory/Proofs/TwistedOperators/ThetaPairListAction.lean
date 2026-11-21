@@ -90,4 +90,3 @@ theorem om_one_one (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModel
 
 end GlobalTheory.LineAdd
 
-open GlobalTheory.LineAdd GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels in

@@ -31,7 +31,6 @@ theorem unif_ne_zero : (uniformizer F : F) ≠ 0 := by
   intro h0
   exact (irreducible_uniformizer F).ne_zero (Subtype.ext h0)
 
-variable (F) in
 
 def scal (m M : ℕ) : GL (Fin m) F where
   val := ((uniformizer F : F)⁻¹ ^ M) • (1 : Matrix (Fin m) (Fin m) F)

@@ -18,7 +18,6 @@ open GlobalTheory.DatumEigen
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable {A D D' : Type} [Fintype A] [DecidableEq A] [Fintype D] [DecidableEq D] [Fintype D'] [DecidableEq D']
 
-omit [Fintype D] [DecidableEq D] in
 
 theorem inSupp_mul_left {x : Matrix (A ⊕ D') (A ⊕ D) k} (hx : InSupp x) {j : GL (A ⊕ D') k}
     (hj : j ∈ parahoric k A D') : InSupp (j.val * x) ∧

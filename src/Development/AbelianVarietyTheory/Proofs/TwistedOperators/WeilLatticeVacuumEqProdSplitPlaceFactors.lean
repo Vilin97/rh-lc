@@ -299,7 +299,6 @@ theorem om_locPart_pair {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {χS χT 
     hvac.2 _ (GlobalTheory.SplitScalar.isSplitIdem_conj he) u hu hh
   exact GlobalTheory.VacStabFixed.om_split_halves hW hΛS hΛT he sa sb hL hx hy hf v1 v2
 
-open Classical in
 
 theorem weilLatticeVacuum_placeSet_induction {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {χS χT : (AE D)ˣ →* Circle}
     {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)} (hW : IsWeilDatumO ψ S T χS χT om)

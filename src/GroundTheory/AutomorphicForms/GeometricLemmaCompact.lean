@@ -22,7 +22,6 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
 
 section Bounds
 
-variable (F) in
 
 abbrev EntryBound (e : ℕ) (A : Matrix (Fin n) (Fin n) F) : Prop :=
   ∀ i j, (uniformizer F : F) ^ e * A i j ∈ 𝒪[F]

@@ -28,7 +28,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels (Chars Base PsiUnr
 
 variable {D : D7} {T : Type} {Lc : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts}
 
-open Classical in
 
 def chs (G : GridData Lc sc) (i j : Fin D.R.m) (t : T) : Chars D.host.F D.host.E where
   α := Lc.mu t (j + 1) * Lc.eta ^ (rankV D i j % 2)

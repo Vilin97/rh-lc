@@ -141,7 +141,6 @@ theorem descent {E K : Type} [Field E] [Field K] [Algebra E K] {M : ℕ}
 
 end CyclotomicKummerDescent
 
-open CyclotomicKummerDescent in
 
 theorem exists_pow_descent_cyclotomic :
     ∀ (E : Type) [Field E] [NumberField E] (l r : ℕ), l.Prime → ∃ M : ℕ, 0 < M ∧ l ^ r ∣ M ∧

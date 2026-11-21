@@ -141,7 +141,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-open Classical in
 
 def nInf (w : InfinitePlace D.host.F) (z : AE D) : ℝ≥0 :=
   Finset.univ.sup fun τ : EmbOver D.host.E w => ‖infEmb τ (compInf D.host.F D.host.E w z)‖₊

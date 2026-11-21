@@ -38,9 +38,7 @@ theorem exists_norm_eq_zpow_maxUnramified {x : K₀} (hx : x ≠ 0) :
 theorem norm_p_algCl_pos : 0 < ‖(p : PadicAlgCl p)‖ :=
   norm_pos_iff.2 (Nat.cast_ne_zero.2 hp.out.ne_zero)
 
-open Classical in
 
-variable (K) in
 
 end Valuation
 

@@ -106,7 +106,6 @@ theorem gmCoord_ext {x y : SpAlg O B ⟶ Gm (Sp O)} (h : gmCoord x = gmCoord y) 
   exact Diag.charVal_ext fun k =>
     congrArg (fun g : Multiplicative ℤ →* Bˣ => (g (Multiplicative.ofAdd k.down) : B)) e
 
-variable (O) in
 
 def gmPoint (u : Bˣ) : SpAlg O B ⟶ Gm (Sp O) :=
   Diag.ofVal _ ((Units.coeHom B).comp ((zpowersHom Bˣ u).comp
@@ -147,7 +146,6 @@ variable (p O) [Fact p.Prime]
 def muIncl (n : ℕ) : SpAlg O ((mu p O).A n) ⟶ Gm (Sp O) :=
   gmPoint O (Units.ofPowEqOne (muT O (p ^ n)) (p ^ n) (muT_pow_self O _) (NeZero.ne _))
 
-variable {p O} in
 
 theorem gmCoord_muIncl {n : ℕ} {B : Type} [CommRing B] [Algebra O B]
     (φ : (mu p O).A n →ₐ[O] B) : gmCoord (spOver φ ≫ muIncl p O n) = φ (muT O (p ^ n)) := by
@@ -169,7 +167,6 @@ def muTower : (mu p O).TorsionTower (Gm (Sp O)) where
     rw [gmCoord_muIncl, muIncl, gmCoord_gmPoint]
     exact muRes_muT p O n
 
-variable {p O} in
 
 theorem gmCoord_muTower {n : ℕ} {B : Type} [CommRing B] [Algebra O B]
     (φ : (mu p O).A n →ₐ[O] B) :
@@ -188,7 +185,6 @@ variable (t : G.TorsionTower A) (n : ℕ) (B : Type) [CommRing B] [Algebra O B]
 def pts : WithConv (G.A n →ₐ[O] B) →* (SpAlg O B ⟶ A) :=
   MonoidHom.mk' (fun φ => spOver φ.ofConv ≫ t.y n) (t.mul n B)
 
-variable {B} in
 
 @[simp] theorem pts_apply (φ : WithConv (G.A n →ₐ[O] B)) :
     t.pts n B φ = spOver φ.ofConv ≫ t.y n := rfl
@@ -204,7 +200,6 @@ theorem exists_iff (z : SpAlg O B ⟶ A) :
   rintro ⟨φ, rfl⟩
   rw [← ofConv_toConv φ, ← pts_apply, ← map_pow, G.pts_pow_self, map_one]
 
-variable (B) in
 
 theorem y_pow : t.y n ^ p ^ n = 1 :=
   (t.exists_iff n _).1 ⟨AlgHom.id O _, by rw [spOver_id, Category.id_comp]⟩
@@ -436,7 +431,6 @@ end BaseChange
 
 section Lie
 
-variable (O) in
 
 def _root_.GlobalTheory.PDiv.epsTo (B : Type) [CommRing B] [Algebra O B] :
     DualNumber O →ₐ[O] DualNumber B :=
@@ -450,11 +444,9 @@ def _root_.GlobalTheory.PDiv.epsTo (B : Type) [CommRing B] [Algebra O B] :
 @[simp] theorem _root_.GlobalTheory.PDiv.snd_epsTo (B : Type) [CommRing B] [Algebra O B]
     (z : DualNumber O) : (epsTo O B z).snd = algebraMap O B z.snd := zero_add _
 
-variable (p O) in
 
 abbrev _root_.GlobalTheory.PDiv.ModPow (n : ℕ) : Type := O ⧸ Ideal.span {(p : O) ^ n}
 
-variable (p) in
 
 abbrev _root_.GlobalTheory.PDiv.epsRedPow {A : Over (Sp O)} (n : ℕ) (v : epsR O ⟶ A) :
     SpAlg O (DualNumber (ModPow p O n)) ⟶ A := spOver (epsTo O (ModPow p O n)) ≫ v
@@ -536,7 +528,6 @@ theorem LieCorr.unique_left [IsHausdorff (Ideal.span {(p : O)}) O] (h : t.LieCor
     rw [SModEq.zero, smul_eq_mul, Ideal.mul_top, Ideal.span_singleton_pow, ← Ideal.Quotient.eq,
       (t.lieCorr_iff h.1 x).1 h, (t.lieCorr_iff h.1 x').1 h']
 
-variable (t) in
 
 theorem tanDer_succ (hv : IsTangent v) (n : ℕ) (w : Cot O (G.A (n + 1))) (c : O)
     (hc : Ideal.Quotient.mk _ c = t.tanDer hv (n + 1) w) :
@@ -561,7 +552,6 @@ theorem tanDer_succ (hv : IsTangent v) (n : ℕ) (w : Cot O (G.A (n + 1))) (c : 
   exact ((congrArg TrivSqZeroExt.snd (DFunLike.congr_fun e a)).trans
     ((snd_epsTo ..).trans (congrArg π hc.symm))).symm
 
-variable (t) in
 
 theorem existsUnique_lieCorr [IsAdicComplete (Ideal.span {(p : O)}) O] (hv : IsTangent v) :
     ∃! x : G.Lie, t.LieCorr x v := by

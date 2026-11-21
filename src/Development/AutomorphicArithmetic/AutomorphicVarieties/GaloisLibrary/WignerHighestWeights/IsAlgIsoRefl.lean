@@ -68,12 +68,10 @@ section Hol
 
 variable {N : Type} [AddCommGroup N] [Module ℂ N] [Module ℝ N] [IsScalarTower ℝ ℂ N]
 
-omit [NumberField E] in
 
 def eL (L : Lie E a →ₗ[ℝ] N) (τ : E →+* ℂ) (i j : Fin a) : N :=
   (1 / 2 : ℂ) • (L (toL (Matrix.single i j (atEmb τ 1))) - Complex.I • L (toL (Matrix.single i j (atEmb τ Complex.I))))
 
-omit [NumberField E] in
 
 def hol (τ : E →+* ℂ) (L : Lie E a →ₗ[ℝ] N) : Matrix (Fin a) (Fin a) ℂ →ₗ[ℂ] N where
   toFun x := ∑ i, ∑ j, x i j • eL L τ i j
@@ -95,12 +93,10 @@ theorem dualE_eq (Ξ : AlgRep E a) (τ : E →+* ℂ) (i j : Fin a) :
   simp only [GlobalTheory.WignerGL.dualE, GlobalTheory.WignerGL.dualS, eL, Matrix.transpose_smul, Matrix.transpose_sub]
   module
 
-omit [NumberField E] in
 
 def IsLieHom {A : Type} [Ring A] [Module ℝ A] (L : Lie E a →ₗ[ℝ] A) : Prop :=
   ∀ X Y : Matrix (Fin a) (Fin a) (Cinf E), L (toL X) * L (toL Y) - L (toL Y) * L (toL X) = L (toL (X * Y - Y * X))
 
-omit [NumberField E] in
 
 def hp : Lie E a →ₗ[ℝ] Herm E a where
   toFun X := ⟨(1 / 2 : ℝ) • (Matrix.of X + star (Matrix.of X)), by
@@ -116,7 +112,6 @@ def hp : Lie E a →ₗ[ℝ] Herm E a where
 omit [NumberField E] in
 theorem hp_val (X : Matrix (Fin a) (Fin a) (Cinf E)) : (hp (toL X)).1 = (1 / 2 : ℝ) • (X + star X) := rfl
 
-omit [NumberField E] in
 
 def brH (Z : Matrix (Fin a) (Fin a) (Cinf E)) (hZ : star Z = -Z) (Y : Herm E a) : Herm E a :=
   ⟨Z * Y.1 - Y.1 * Z, by
@@ -130,7 +125,6 @@ section Complex
 variable {M : Type} [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M]
   (κ : Kinf E a → Module.End ℂ M) (L : Lie E a →ₗ[ℝ] Module.End ℂ M)
 
-omit [NumberField E] in
 
 def InfEq {q : ℕ} (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] M) : Prop :=
   ∀ (Z : Matrix (Fin a) (Fin a) (Cinf E)) (hZ : star Z = -Z) (Y : Fin q → Herm E a),
@@ -140,7 +134,6 @@ def SepDer : Prop :=
   ∀ (k : ℝ → Kinf E a) (Z : Matrix (Fin a) (Fin a) (Cinf E)), k 0 = 1 → HasDerivAt (fun t => toL (k t).1) (toL Z) 0 →
     ∀ m' : M, m' ≠ 0 → ∃ l : M →ₗ[ℂ] ℂ, l m' ≠ 0 ∧ ∀ m, HasDerivAt (fun t => l (κ (k t) m)) (l (L (toL Z) m)) 0
 
-omit [NumberField E] in
 
 structure IsRetr (α : (Lie E a →ₗ[ℝ] M) →ₗ[ℝ] M) : Prop where
   lie : ∀ (Y : Matrix (Fin a) (Fin a) (Cinf E)) (f f' : Lie E a →ₗ[ℝ] M),

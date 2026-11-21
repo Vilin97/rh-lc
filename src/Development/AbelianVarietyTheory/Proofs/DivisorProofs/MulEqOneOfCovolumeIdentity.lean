@@ -185,7 +185,6 @@ theorem M_mem : (l.M : 𝓞 D.host.E) ∈ l.Mb := by
 theorem exists_split : ∃ m ∈ l.Mb, ∃ c ∈ Mc l, m + c = 1 :=
   Submodule.mem_sup.1 (by rw [show l.Mb ⊔ Mc l = ⊤ from l.coprime]; exact Submodule.mem_top)
 
-variable (V) in
 
 def Ind (ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)) (γ : LevGrp Dw l) (κ : GA D V) : Prop :=
   κ ∈ IndefiniteRowSideFullHecke.EmbeddingLevelSets.levSet V 1 ∧ ∀ a : Dw.La, (finHom V κ).1 *ᵥ finVec V (ι a) - finVec V (ι (liftLa γ a)) ∈ idl V l.Mb

@@ -21,8 +21,6 @@ theorem sumElim_weylM_map {F : Type} [Field F] {κ : Type} [Fintype κ] [Decidab
   simp only [weylM, Matrix.fromBlocks_map, Matrix.fromBlocks_mulVec]
   simp [Matrix.map_neg, Matrix.neg_mulVec, dotProduct_comm b a', sub_eq_add_neg]
 
-set_option synthInstance.maxHeartbeats 200000 in
-set_option maxHeartbeats 1600000 in
 
 theorem darboux_change_rat : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n d : ℕ)
     (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin d) (Fin d) E)

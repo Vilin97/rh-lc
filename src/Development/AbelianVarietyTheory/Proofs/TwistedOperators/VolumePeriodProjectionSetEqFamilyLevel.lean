@@ -131,7 +131,6 @@ theorem inBasis_off {V : HSp D} {e : AE D} {P : Finset (Pl D.host.E)} (he : IsId
       exact h0.symm
   exact (GlobalTheory.OffPartLattice.inBasis_mix β _ _ c hX w).1 (GlobalTheory.OffPartLattice.cpt_pair_zero V he w hw)
 
-set_option maxHeartbeats 800000 in
 
 theorem KO_frame {n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)} {β β' : GL (Fin n) (Lev.EAf D)} (h : IsFrame β Λ)
     (h' : IsFrame β' Λ) (w : Pl D.host.E) {x : GL (Fin n) (Lev.EAf D)} (hx : inBasis rfl β' w x ∈ KO (Kw w) (Fin n)) :
@@ -175,7 +174,6 @@ theorem mem_conj_KO {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [
 
 variable {D : D7}
 
-set_option maxHeartbeats 1600000 in
 
 theorem pr_iff {A B : HSp D} {c : ℕ} {ε : D.host.E} {d : HermitianOrthogonalExtensionData A B c ε} {N : Subgroup (GA D B)} {em : GA D A →* GA D B}
     (hS : Shape d N em) (hc : 1 ≤ c) {Λ : Submodule (𝓞 D.host.E) (Fin B.rank → D.host.E)} {β : GL (Fin A.rank) (Lev.EAf D)}
@@ -295,7 +293,6 @@ theorem sgn_diag (t : T) (s : ℤˣ) (w : Pl D.host.E) (j : ℕ)
   simp only [Function.comp_apply]
   rw [if_neg (by omega), Units.val_one]
 
-set_option maxHeartbeats 1600000 in
 
 theorem prSet_eq (S : GridChoice W U) {t : T} (ht : t ∈ U) (Φ : G.Datum) (s : ℤˣ) (β : CosFam G t) {b : Pts G}
     (h : IsRep t S.B s β b) {j : ℕ} (hi : j ∈ idx D) (hj : j < D.R.m) (hb : b j ∈ GfC _) :

@@ -61,7 +61,6 @@ def LatticeNormalFormUnip : Prop :=
       ∃ (n : Y ≃ₗ[F] Y) (e : Fin c → ℤ) (z : Y), IsUnip X a n ∧ z ∈ X ∧
         moveBy n Λ = normalForm F q (Λ ⊓ X.restrictScalars O) a e z
 
-open Formalism.L2.Col in
 
 def LatticeNormalFormCoord : Prop :=
   ∀ (O F : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field F] [Algebra O F] [IsFractionRing O F]

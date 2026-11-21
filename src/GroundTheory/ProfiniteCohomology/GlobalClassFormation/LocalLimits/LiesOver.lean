@@ -21,7 +21,6 @@ variable {K : FiniteSubfield} {v : HeightOneSpectrum (𝓞 K.1)}
 instance isScalarTower_finiteSubfield_of_fact : IsScalarTower K.1 F.1 E.1 :=
   IsScalarTower.of_algebraMap_eq fun _ ↦ rfl
 
-variable (F E) in
 
 def completionEmbeddingBelow (u : PlacesOver F.1 v)
     [(placeOfEmbedding ι E).1.asIdeal.LiesOver u.1.asIdeal] :

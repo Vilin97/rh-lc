@@ -54,7 +54,6 @@ def relPhi (i : ℕ) {n : ℕ} (h : (X.Pj i).m + 1 = n) (a : D.what₂.Tau → �
 def phiC (i : ℕ) {n : ℕ} (h : (X.Pj i).m + 1 = n) (a : D.what₂.Tau → ℤ) : MvPolynomial (GL3Theta.FrV D n) ℂ →ₗ[ℂ] XR (X.Pj i) ℂ :=
   selOf (relPhi X D pos i h a)
 
-open Classical in
 
 def phi0 {Kc : Type} [Field Kc] (ι : ℂ →+* Kc) (j : ℕ) :
     MvPolynomial (GL3Theta.FrV D (D.R.N (j + 1))) ℂ →ₛₗ[ι] XspC (X.Pj (j + 1)) Kc :=

@@ -302,7 +302,6 @@ theorem hMat_rmul_diagFr : hMat X bas idx (rmul x (diagFr X d)) =
   congr 1
   exact Matrix.inv_eq_left_inv (by simp [diagonal_mul_diagonal, rowFac_ne_zero hd])
 
-omit hd in
 
 theorem polyDeriv_smul_letter {σ W : Type*} [NormedAddCommGroup W] [NormedSpace ℂ W]
     (P : MvPolynomial σ ℂ) (s : σ → ℂ) (t : ℂ) (h : ∀ m ∈ P.support, (m.prod fun l e => s l ^ e) = t)

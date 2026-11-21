@@ -64,7 +64,6 @@ theorem volume_fundamentalDomain_basisFun (g : ℕ) :
 
 end PGaussLatticeCovolume
 
-open PGaussLatticeCovolume in
 
 theorem GaussLatticeCovolume.proof (hL : GaussLatticeIsLattice.Statement) :
     GaussLatticeCovolume.Statement := by

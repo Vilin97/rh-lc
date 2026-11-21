@@ -81,7 +81,6 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestric
 
 variable {D : D7}
 
-open Classical in
 
 end Dict
 
@@ -89,7 +88,6 @@ section Forms
 
 variable {D : D7}
 
-set_option maxHeartbeats 1600000 in
 
 end Forms
 

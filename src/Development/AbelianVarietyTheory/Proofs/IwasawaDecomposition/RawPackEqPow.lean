@@ -49,8 +49,6 @@ theorem pow_of_tied (hc : GlobalTheory.TwSys.Cheb) {D : D7} (cf : CharFrame D) (
   rw [MonoidHom.pow_apply, ← hu]
   exact h3
 
-set_option maxHeartbeats 4000000 in
-set_option maxRecDepth 100000 in
 
 theorem transfer {D₁ D₂ : D7} (h : SameExport D₁ D₂) (p : TwPack D₁) (A : Finset (PlE D₁.host))
     (ι : TwChar.RootIso D₁ p.1 p.2.2.1) (χ : HChar D₁.host.E) (hO : BlochKatoReduction.Gen.PsiOk p.1 A p.2.1 p.2.2.1 p.2.2.2)

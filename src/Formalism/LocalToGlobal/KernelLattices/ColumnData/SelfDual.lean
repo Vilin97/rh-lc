@@ -188,7 +188,6 @@ theorem alg_step (cc : Ideal (𝓞 D.host.K)) (hcc : cc ≠ ⊥) {N N' : ℕ}
   have h1 := main c0 (by rw [← hcc']; exact Ideal.mem_span_singleton_self c0)
   rwa [div_self hc0K, IntermediateField.coe_one, one_smul] at h1
 
-variable (D) in
 
 theorem coord (δ : ℂ) (hδ : δ ≠ 0) (u : D.what₂.Tau → ℂ)
     (hu : ∀ y : D.host.E, ∃ k : D.host.K,

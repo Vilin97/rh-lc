@@ -21,11 +21,9 @@ variable {G : Type} [Group G] [TopologicalSpace G]
 
 def conjFn (g : G) (f : G → ℂ) : G → ℂ := fun x => f (g⁻¹ * x * g)
 
-variable (G) in
 
 abbrev testFn : Submodule ℂ (G → ℂ) := locallyConstantCompactSupport G ℂ ℂ
 
-variable (G) in
 
 def PInvIsGInv (P : Subgroup G) : Prop :=
   ∀ D : (G → ℂ) →ₗ[ℂ] ℂ, (∀ p ∈ P, ∀ f ∈ testFn G, D (conjFn p f) = D f) →

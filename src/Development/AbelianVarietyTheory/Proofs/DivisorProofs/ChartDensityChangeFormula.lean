@@ -42,7 +42,6 @@ variable {A B ι κ : Type} [TopologicalSpace A] [TopologicalSpace B] [T2Space A
   [MeasurableSpace B] [BorelSpace B]
   {e : ι → OpenPartialHomeomorph A (_root_.ReciprocityTheory.L2DbarEstimates.V n)} {ρ : ι → A → ℝ≥0∞}
   {e' : κ → OpenPartialHomeomorph B (_root_.ReciprocityTheory.L2DbarEstimates.V n)} {ρ' : κ → B → ℝ≥0∞} {m : B → A} in
-omit [T2Space A] [T2Space B] in
 
 theorem _root_.GlobalTheory.GlueCover.exists_sheet
     (hd : ∀ i j, DifferentiableOn ℂ (e j ∘ (e i).symm) (_root_.ReciprocityTheory.L2DbarEstimates.Y.ovl e i j))

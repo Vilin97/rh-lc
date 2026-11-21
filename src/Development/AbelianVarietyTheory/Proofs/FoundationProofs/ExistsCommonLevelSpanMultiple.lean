@@ -13,8 +13,6 @@ noncomputable section
 
 namespace GlobalTheory.KZ
 
-open scoped MatrixGroups TensorProduct in
-open Matrix in
 
 theorem _root_.GlobalTheory.KZ.gamma_le_of_dvd {M M' : ℕ} (h : M ∣ M') :
     CongruenceSubgroup.Gamma M' ≤ CongruenceSubgroup.Gamma M := by

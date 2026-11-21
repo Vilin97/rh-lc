@@ -64,7 +64,6 @@ theorem smoothKZ_le_archSmooth : smoothKZ K n ≤ archSmooth K n := fun _ hφ =>
 
 def toArchSmooth : smoothKZ K n →ₗ[ℂ] archSmooth K n := Submodule.inclusion smoothKZ_le_archSmooth
 
-variable (K n) in
 
 def uActionKZ : UEnv K n →ₐ[ℝ] Module.End ℂ (smoothKZ K n) where
   toFun u := LinearMap.codRestrict (smoothKZ K n)
@@ -91,9 +90,7 @@ def uActionKZ : UEnv K n →ₐ[ℝ] Module.End ℂ (smoothKZ K n) where
     ((uActionKZ K n u φ : smoothKZ K n) : AdelicGLn.AdelicGL K n → ℂ) =
       ((uAction u (toArchSmooth φ) : archSmooth K n) : AdelicGLn.AdelicGL K n → ℂ) := rfl
 
-variable (K n) in
 
-variable (K n) in
 
 def archCompactRepKZ : Representation ℂ (archCompact K n) (smoothKZ K n) where
   toFun k := (rightTranslateL (infEmb K n k)).restrict fun _ hφ => hφ.rightTranslate_infEmb k.2
@@ -232,7 +229,6 @@ section GK
 
 attribute [local instance 100] LieRing.ofAssociativeRing
 
-variable (K n) in
 
 def gkModule : (isExpLieAlgebra K n).GKModule (archCompact K n) (smoothKZ K n) where
   ρ :=

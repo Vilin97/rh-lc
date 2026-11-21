@@ -49,7 +49,6 @@ variable {W : (LL →+* ℂ) → Type} [∀ σ, NormedAddCommGroup (W σ)] [∀ 
 variable {G0 : Type} [Group G0] [Fintype G0]
 variable (A : FormsL LL Ks WL W G0)
 
-omit [Fintype G0] in
 
 theorem isLattice_span_MK (hK : A.IsKsForm) (hM : A.MKFull) :
     Submodule.IsLattice LL (Submodule.span (𝓞 LL) (A.MK : Set WL)) := by

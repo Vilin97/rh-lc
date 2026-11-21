@@ -218,4 +218,3 @@ theorem approx_pow {V : HSp D} {La : Type} [AddCommGroup La] [Module (𝓞 D.hos
 
 end GlobalTheory.LevelUnip
 
-open GlobalTheory.LevelUnip in

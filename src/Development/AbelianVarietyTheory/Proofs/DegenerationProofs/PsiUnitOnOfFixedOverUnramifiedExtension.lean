@@ -41,7 +41,6 @@ theorem exists_good_ext [X.IsSeparated] (hL : L.IsLB) (i : W →+* F) (hi : Func
     (fun a b e => by rw [ext_of_isDominant (spMap i) e])
     (fun ψ => top_le_of_mem ψ (h₀ _) trivial)
 
-omit [IsDomain W] in
 
 theorem val_integral (i : W →+* F) {J₀ : X → L.ι} (h₀ : ∀ x, x ∈ L.U (J₀ x)) {J : (Sp F ⟶ X) → L.ι}
     (hJ : ∀ ψ : Sp W ⟶ X, J (spMap i ≫ ψ) = J₀ (ψ (closedPoint W))) {K : Type} [Fintype K] {φ : K → (Y ⟶ X)}

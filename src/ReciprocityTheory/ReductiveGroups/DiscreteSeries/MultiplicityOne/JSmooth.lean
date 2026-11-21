@@ -26,7 +26,6 @@ section cf
 
 variable {D : RealPlaceData k r Wp Wq} {X : SigData k r}
 
-variable (D X) in
 
 def cf (Φ Φ' : Mat k r → ℂ) : Mat k r → ℂ := mc X (V D X Φ) (V D X Φ')
 

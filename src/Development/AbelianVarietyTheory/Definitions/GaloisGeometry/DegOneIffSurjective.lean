@@ -42,20 +42,12 @@ def DegOne (F : Type) [Field F] [NumberField F] [Algebra F L] (w : HeightOneSpec
 
 variable (L)
 
-open NumberField IsDedekindDomain in
-variable (L : Type) [Field L] [NumberField L] in
-variable {L} in
-variable (L) in
 
 theorem _root_.GlobalTheory.HeckeSplit.unrAt_iff (χ : _root_.Formalism.L2.Host.HChar L) (v : HeightOneSpectrum (𝓞 L)) :
     _root_.GlobalTheory.HeckeSplit.UnrAt χ.1 v ↔ χ.UnrAt v := by
   unfold _root_.GlobalTheory.HeckeSplit.UnrAt _root_.Formalism.L2.Host.HChar.UnrAt _root_.Formalism.L2.Host.IsUnitAt _root_.Formalism.L2.Host.HChar.loc
   rfl
 
-open NumberField IsDedekindDomain in
-variable (L : Type) [Field L] [NumberField L] in
-variable {L} in
-variable (L) in
 
 theorem _root_.GlobalTheory.HeckeSplit.trivAt_iff (χ : _root_.Formalism.L2.Host.HChar L) (v : HeightOneSpectrum (𝓞 L)) :
     _root_.GlobalTheory.HeckeSplit.TrivAt χ.1 v ↔ χ.loc v = 1 := by
@@ -64,49 +56,29 @@ theorem _root_.GlobalTheory.HeckeSplit.trivAt_iff (χ : _root_.Formalism.L2.Host
   unfold _root_.Formalism.L2.Host.HChar.loc
   rfl
 
-open NumberField IsDedekindDomain in
-variable (L : Type) [Field L] [NumberField L] in
-variable {L} in
-variable (L) in
 
 @[simp] theorem _root_.GlobalTheory.HeckeSplit.infPart_infIdele (x : (InfiniteAdeleRing L)ˣ) :
     _root_.GlobalTheory.HeckeSplit.infPart L (_root_.GlobalTheory.HeckeSplit.infIdele L x) = x :=
   Units.ext rfl
 
-open NumberField IsDedekindDomain in
-variable (L : Type) [Field L] [NumberField L] in
-variable {L} in
-variable (L) in
 
 @[simp] theorem _root_.GlobalTheory.HeckeSplit.finPart_infIdele (v : HeightOneSpectrum (𝓞 L))
     (x : (InfiniteAdeleRing L)ˣ) :
     _root_.GlobalTheory.HeckeSplit.finPart L v (_root_.GlobalTheory.HeckeSplit.infIdele L x) = 1 :=
   Units.ext rfl
 
-open NumberField IsDedekindDomain in
-variable (L : Type) [Field L] [NumberField L] in
-variable {L} in
-variable (L) in
 
 @[simp] theorem _root_.GlobalTheory.HeckeSplit.finPart_localIdele (v : HeightOneSpectrum (𝓞 L))
     (x : (v.adicCompletion L)ˣ) :
     _root_.GlobalTheory.HeckeSplit.finPart L v (_root_.HeckeValGen.localIdele L v x) = x :=
   Units.ext (_root_.Neutral.B1.localIdele_snd_self L v x)
 
-open NumberField IsDedekindDomain in
-variable (L : Type) [Field L] [NumberField L] in
-variable {L} in
-variable (L) in
 
 @[simp] theorem _root_.GlobalTheory.HeckeSplit.infPart_localIdele (v : HeightOneSpectrum (𝓞 L))
     (x : (v.adicCompletion L)ˣ) :
     _root_.GlobalTheory.HeckeSplit.infPart L (_root_.HeckeValGen.localIdele L v x) = 1 :=
   Units.ext rfl
 
-open NumberField IsDedekindDomain in
-variable (L : Type) [Field L] [NumberField L] in
-variable {L} in
-variable (L) in
 
 theorem _root_.GlobalTheory.HeckeSplit.finPart_localIdele_ne {v w : HeightOneSpectrum (𝓞 L)} (h : w ≠ v)
     (x : (v.adicCompletion L)ˣ) : _root_.GlobalTheory.HeckeSplit.finPart L w (_root_.HeckeValGen.localIdele L v x) = 1 :=

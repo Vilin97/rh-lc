@@ -29,7 +29,6 @@ theorem isLocalHomeomorph_addMonoidHom_of_eventuallyEq {ψ : OpenPartialHomeomor
     simp only [map_sub] at this
     simp [← this]
 
-omit [IsTopologicalAddGroup A] in
 
 theorem discreteTopology_ker_of_isLocalHomeomorph (he : IsLocalHomeomorph e) :
     DiscreteTopology e.ker := by
@@ -144,7 +143,6 @@ theorem doubling_law :
 theorem analyticAt_doubling : AnalyticAt ℂ (fun x => m (x, x)) 0 :=
   AnalyticAt.comp (f := fun x : V => (x, x)) h.analyticAt (analyticAt_id.prod analyticAt_id)
 
-omit h in
 
 noncomputable def twoEquiv (V : Type*) [NormedAddCommGroup V] [NormedSpace ℂ V] : V ≃L[ℂ] V :=
   ContinuousLinearEquiv.equivOfInverse ((2 : ℂ) • ContinuousLinearMap.id ℂ V)
@@ -434,7 +432,6 @@ theorem exp_log : ∀ᶠ a in 𝓝 (0 : A), h.exp (h.log (φ a)) = a := by
   filter_upwards [h.log_exp] with v hv
   rw [hv]
 
-omit [FiniteDimensional ℂ V] in
 
 theorem chart_exp_eventuallyEq :
     (fun v => φ (h.exp v)) =ᶠ[𝓝 0] h.isLocalCommGroupLaw.logChart.symm := by

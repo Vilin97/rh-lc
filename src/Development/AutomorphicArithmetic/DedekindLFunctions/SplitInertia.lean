@@ -25,20 +25,16 @@ structure HostFactsS (D : ArithData H) (S : Finset ℕ) : Prop where
   split_frob : ∀ p ∈ S, InPhi (D.frob p)
   inertia_d : ∀ x, x ∈ D.inertia D.d ↔ x = 0 ∨ x = sgc0
 
-open Classical in
 
 def PsiA (A0 : AddSubgroup H) : Finset (AddChar (E0 × H) ℂ) := univ.filter fun ψ => ∀ s ∈ A0, ψ (0, s) = 1
 
-open Classical in
 
 def wtA (c : ℝ) (ψ : AddChar (E0 × H) ℂ) : ℝ := if ∀ h : H, ψ (0, h) = 1 then 1 else c
 
-open Classical in
 
 def GmA (D : ArithData H) (ell : AddChar (E0 × H) ℂ → ℂ) (Kp : Finset (AddChar (E0 × H) ℂ)) (c y : ℝ) : ℝ :=
   ∑ ψ ∈ Kp, wtA c ψ * (GPsi D ell ψ y).re
 
-open Classical in
 
 def SigA (D : ArithData H) (ell : AddChar (E0 × H) ℂ → ℂ) (A0 : AddSubgroup H) (Kp : Finset (AddChar (E0 × H) ℂ)) (y : ℝ) : ℝ :=
   ∑ ψ ∈ PsiA A0 \ Kp, ‖GPsi D ell ψ y‖
@@ -55,7 +51,6 @@ def gapA (D : ArithData H) (N : ℕ) (ell : AddChar (E0 × H) ℂ → ℂ) {m : 
     (w : H → Fin m → E0 × H → ℝ) (u0 : H) : ℝ :=
   ∑ t ∈ TT, ∑ j : Fin m, (ASK D N (a t) t (w u0 j) - (MAIN ell (a t) (w u0 j)).re)
 
-open Classical in
 
 def CharsA (ell : AddChar (E0 × H) ℂ → ℂ) (A0 : AddSubgroup H) (Kp : Finset (AddChar (E0 × H) ℂ)) (TT : Finset H)
     (c M Ko CE ε x : ℝ) : Prop :=
@@ -80,7 +75,6 @@ def BNBoundsU (Dd : Data U0 W Top m f) (T2 : Finset H) : Prop :=
   Dd.Nc ≤ (T2.card : ℝ) * Dd.k * Dd.b * Dd.x ^ Dd.ε
     / ((Fintype.card H : ℝ) * ((Fintype.card H : ℝ) * Dd.x ^ (-Dd.ε)))
 
-open Classical in
 
 end Deduction.CH
 

@@ -97,7 +97,6 @@ theorem onto (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [A
 
 open scoped Pointwise
 
-set_option maxHeartbeats 1000000 in
 
 theorem haar_fundDomain_transfer : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     B.IsGood σ → IsStdCharF (fun w : InfinitePlace F => (B.emb w).1) B.ψ (-1) →

@@ -104,7 +104,6 @@ def phase (ψ : AddChar K ℂ) {w : Point K} (p : lowW K w.1 w.2 × upUniG K w.1
   ψ (sLow ((p.1 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K) +
     sUp ((p.2 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K))
 
-open Classical in
 
 def pairTerm (ψ : AddChar K ℂ) (w w' : Point K) (q : Cos R w × Cos R w') : ℂ :=
   (if IsInt R (orbZ w (rep R q.1)) ∧ IsInt R (orbZ w' (rep R q.2)) then
@@ -113,7 +112,6 @@ def pairTerm (ψ : AddChar K ℂ) (w w' : Point K) (q : Cos R w × Cos R w') : �
 
 def Kp (ψ : AddChar K ℂ) (w w' : Point K) : ℂ := ∑ᶠ q : Cos R w × Cos R w', pairTerm R ψ w w' q
 
-open Classical in
 
 def intTT (ψ : AddChar K ℂ) (k : ℕ) (w w' : Point K) : ℂ :=
   ∑ᶠ q : Cos R w × Cos R w',
@@ -253,7 +251,6 @@ def A2 : Prop := BlockKernelPosSemidef ∧ BlockKernelSupport
 def BlockKernelPropertiesOfSteps : Prop :=
   KpGram → ModMul → TripleForm → AvgClaim → TTEnd → A2
 
-open Classical in
 
 def CharOrthDual : Prop :=
   ∀ (K : Type) [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] (R : Subring K)
@@ -262,7 +259,6 @@ def CharOrthDual : Prop :=
         ∑ᶠ α : coker R Z →ₗ[R] KR R, psiKR R ψ (α x) =
           ((if x = 0 then Nat.card (coker R Z) else 0 : ℕ) : ℂ)
 
-open Classical in
 
 def CharOrth : Prop :=
   ∀ (K : Type) [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] (R : Subring K)
@@ -271,7 +267,6 @@ def CharOrth : Prop :=
         ∑ᶠ β : coker R Z, psiKR R ψ (μ β) =
           ((if μ = 0 then Nat.card (coker R Z) else 0 : ℕ) : ℂ)
 
-open Classical in
 
 def singleBlockInner {K : Type} [CommRing K] (R : Subring K) (ψ : AddChar K ℂ) {n n' : ℕ}
     (Z : Matrix (Fin n) (Fin n) K) (Z' : Matrix (Fin n') (Fin n') K) (c : K) : ℂ :=
@@ -281,7 +276,6 @@ def singleBlockInner {K : Type} [CommRing K] (R : Subring K) (ψ : AddChar K ℂ
         (lamLin R Z (Quotient.out β) - lamLin R Z' (Quotient.out (θ β))))
     else 0
 
-open Classical in
 
 def SingleBlockFormula : Prop :=
   ∀ (K : Type) [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] (R : Subring K)
@@ -322,7 +316,6 @@ def BaseKernelOne : Prop :=
   ∀ (K : Type) [CommRing K] (R : Subring K) (ψ : AddChar K ℂ), (∀ r ∈ R, ψ r = 1) →
     ∀ h h' : Point K, h.1.sum = h'.1.sum → InGLR R h → InGLR R h' → N0 R ψ h h' = 1
 
-open Classical in
 
 def ThetaProps {K : Type} [CommRing K] [TopologicalSpace K] (R : Subring K) (ψ : AddChar K ℂ)
     (s : ℕ) (F : Finset (Point K)) (Θ : K → Point K → Point K → ℂ) : Prop :=

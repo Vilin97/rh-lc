@@ -68,7 +68,6 @@ structure Fr (l : ℕ) (O : Type) [CommRing O] where
 
 attribute [instance] Fr.eeRing Fr.eeAlgA Fr.eeAlgO Fr.eeTow
 
-open Classical in
 
 namespace Fr
 

@@ -30,9 +30,7 @@ theorem delAtr_isLattice (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.
     Submodule.IsLattice K (delAtr emb lam L) :=
   (nabDelLattice K ι n lam _ fun τ => dualFr_tauLat_isLattice emb τ L hL).2
 
-omit [NumberField E] [NumberField K] [Fintype ι] in
 
-omit [NumberField E] [NumberField K] [Fintype ι] in
 
 variable [StarRing K]
 

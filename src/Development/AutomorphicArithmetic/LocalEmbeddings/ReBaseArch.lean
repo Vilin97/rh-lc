@@ -77,7 +77,6 @@ open GlobalTheory.WeilSchUnique
 
 variable {F : Type} [Field F] [NumberField F] {E : Type} [Field E] [NumberField E] [Algebra F E]
 
-variable (F) in
 
 def eInf : AF F := ((1 : InfiniteAdeleRing F), (0 : FiniteAdeleRing (𝓞 F) F))
 

@@ -97,7 +97,6 @@ theorem exists_splitPt {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k
   rw [e.apply_symm_apply] at h
   exact (GlobalTheory.LocMod.LevelPlaces.splitPt_v_eq_under _ h).symm
 
-set_option maxHeartbeats 2000000 in
 
 theorem uloc_le_of_std (hOk : I.Ok) (hP : TC.Pins B X) {a a' : I.ι} {Ch Ch' : ℕ → Type} {A : TwDat I l Z u a Ch}
     {A' : TwDat I l Z u a' Ch'} (hA : A.Is) (hA' : A'.Is)
@@ -140,7 +139,6 @@ theorem uloc_le_of_std (hOk : I.Ok) (hP : TC.Pins B X) {a a' : I.ι} {Ch Ch' : �
 
 end Level
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.PenLevPrime
 end

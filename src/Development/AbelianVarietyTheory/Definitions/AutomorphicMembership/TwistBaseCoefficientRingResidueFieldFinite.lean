@@ -13,7 +13,6 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.ConjugateSelf
 
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} [NumberField what₂.LL] [StarRing what₂.LL]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure TwR (LL0 : IntermediateField ℚ what₂.LL) (N : NData R H what₂) where
   cc : N.Om ≃+* N.Om
@@ -103,7 +102,6 @@ attribute [instance] TwR.lPrime TwR.crO0 TwR.twistBaseCoefficientRing_isDomain T
 
 variable {LL0 : IntermediateField ℚ what₂.LL} {N : NData R H what₂}
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure TwF (T : TwR LL0 N) where
   Sig : T.Tw → Type
@@ -127,7 +125,6 @@ structure TwF (T : TwR LL0 N) where
   hk_zero : ∀ i j b P, hk i j b 0 P = 1
   hEig : ∀ i, Sig i → ℕ → HeightOneSpectrum (𝓞 H.E) → T.O i
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure TwL (T : TwR LL0 N) where
   abelian₂ : T.Tw → Type

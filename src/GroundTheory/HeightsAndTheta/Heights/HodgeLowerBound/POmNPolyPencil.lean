@@ -163,7 +163,6 @@ theorem ptsIntegral_pencil {e : ℕ} {Q : Ideal (MRing ι)} (hQ : IsArithVar Q (
     exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
   · simp
 
-open Matrix in
 
 theorem integrable_of_nodes {Y : Type*} [MeasurableSpace Y] {μ : Measure Y} {N : ℕ} (M : ℕ → Y → ℝ)
     (h : ∀ j : Fin N, Integrable (fun y => ∑ i ∈ Finset.range N,

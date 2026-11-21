@@ -123,7 +123,6 @@ end GlobalTheory.CompanionTheory.LvChain
 
 namespace GlobalTheory.CompanionTheory.LvChain
 
-open GlobalTheory.CompanionTheory.FarReg in
 
 theorem highest_preimage {n : ℕ} {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] {ι : Type}
     (T : Submodule ℂ (Cq n V)) (a b : ι → Module.End ℂ (Cq n V)) (D : Module.End ℂ (Cq n V)) (y : Cq n V)

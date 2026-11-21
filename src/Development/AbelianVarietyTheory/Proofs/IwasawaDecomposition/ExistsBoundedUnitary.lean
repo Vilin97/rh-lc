@@ -118,7 +118,6 @@ theorem exists_basis [IsTotallyComplex E] (hτ : Function.Bijective fun i => Inf
       IsTotallyComplex.nrRealPlaces_eq_zero, zero_add, smul_eq_mul, mul_comm]
   exact ⟨basisOfLinearIndependentOfCardEqFinrank hli hcard, fun k => by simp⟩
 
-omit [NumberField E] in
 
 theorem abs_det_eq_one {n : ℕ} {J G : Matrix (Fin n) (Fin n) (I → ℂ)} (hJ : IsUnit J.det)
     (hG : Formalism.UG.cT (starRingEnd (I → ℂ)) G * J * G = J) :

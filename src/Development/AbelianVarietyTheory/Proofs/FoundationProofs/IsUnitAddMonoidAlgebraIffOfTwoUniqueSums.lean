@@ -17,7 +17,6 @@ variable [IsDomain A]
 
 variable [Module.Free ℤ X]
 
-variable (A X) in
 
 end Units
 
@@ -111,11 +110,9 @@ section Tensor
 variable {R : Type*} [CommRing R] {H : Type*} [Ring H] [Bialgebra R H]
 variable {M : Type*} [AddCommGroup M] [Module R M]
 
-variable (R H M) in
 
 variable {X : Type*} [AddMonoid X]
 
-variable (R M X) in
 
 end Tensor
 

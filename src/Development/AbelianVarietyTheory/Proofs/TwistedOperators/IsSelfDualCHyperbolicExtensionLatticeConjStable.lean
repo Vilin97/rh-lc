@@ -15,7 +15,6 @@ section General
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E]
 
-omit [NumberField E] in
 
 theorem star_mem_int {x : E} (h : x ∈ (algebraMap (𝓞 E) E).range) : star x ∈ (algebraMap (𝓞 E) E).range := by
   obtain ⟨b, rfl⟩ := h

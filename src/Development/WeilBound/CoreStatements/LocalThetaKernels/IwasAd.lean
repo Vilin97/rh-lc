@@ -30,7 +30,6 @@ theorem mul_sg (u : AF F) (a : Fv F v) : u * sg v a = sg v (evFin F v u * a) := 
 theorem at_sg (a : Fv F v) : At (evFin F v) (sg v a) := fun u hu => by
   rw [smul_eq_mul, mul_sg, hu, zero_mul, map_zero]
 
-variable (E) in
 
 def sgE (v : Pl F) : Fv F v ⊗[F] E →ₗ[F] AE F E := TensorProduct.map (sg v) LinearMap.id
 

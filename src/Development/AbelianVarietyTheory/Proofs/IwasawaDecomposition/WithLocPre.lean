@@ -23,8 +23,6 @@ open GlobalTheory.HeightCounting GlobalTheory.Mem.R3.Tr
 noncomputable section
 namespace GlobalTheory.LayerMove
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure Mv (D : D7) : Type 1 where
   N : ∀ u, Submodule (𝓞 D.what₂.LL) (D.div.Nu u).V

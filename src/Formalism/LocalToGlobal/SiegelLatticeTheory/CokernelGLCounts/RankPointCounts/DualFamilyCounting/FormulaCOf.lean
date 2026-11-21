@@ -66,6 +66,5 @@ theorem cExpl_pos' (D : Formalism.BasicNotions.D7) (u : D.what₂.Word) (F0 : Fl
   unfold cExpl
   positivity
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Formalism.L2.SG.Pf.Cnt

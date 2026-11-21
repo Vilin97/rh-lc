@@ -10,7 +10,6 @@ namespace Formalism.MainNotions.V.Pf.V2.Calc
 
 open IsLocalRing Filter
 
-open E4 in
 
 theorem ruleMono : RuleMono := by
   intro k X ts F' F F'' hv hF' hF hF'' S hA

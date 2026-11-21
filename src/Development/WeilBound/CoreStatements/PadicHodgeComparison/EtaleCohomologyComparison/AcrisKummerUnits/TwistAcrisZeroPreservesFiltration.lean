@@ -17,7 +17,6 @@ namespace CrystallineSemistableComparison.PAlg
 
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
-variable (l) in
 
 def base : PAlg l where
   A := Ob l

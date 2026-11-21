@@ -98,7 +98,6 @@ theorem ELL.isAlgebraic_j (x : ELL K) : IsAlgebraic ℚ (ELL.j x) :=
 
 end Quadratic
 
-omit [NumberField K] in
 
 end Elliptic
 end GroundTheory.Global

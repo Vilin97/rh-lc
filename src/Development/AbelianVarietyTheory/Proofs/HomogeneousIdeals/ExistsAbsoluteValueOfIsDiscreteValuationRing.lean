@@ -222,7 +222,6 @@ theorem exists_complete_isAlgClosed_isometry (K : Type u) [NontriviallyNormedFie
   have h₃ : ∀ y : K, ‖algebraMap K K₁ y‖ = ‖y‖ := fun y => UniformSpace.Completion.norm_coe y
   rw [RingHom.comp_apply, RingHom.comp_apply, h₁, h₂, h₃]
 
-open IsDedekindDomain in
 
 theorem exists_absoluteValue_of_isDiscreteValuationRing (V K : Type*) [CommRing V] [IsDomain V]
     [IsDiscreteValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K]

@@ -19,7 +19,6 @@ section Core
 variable {K V M : Type} [Field K] {σ : K →+* ℂ} [AddCommGroup V] [Module K V]
   [NormedAddCommGroup M] [InnerProductSpace ℂ M] [FiniteDimensional ℂ M]
 
-omit [FiniteDimensional ℂ M] in
 
 theorem inner_of_norm_sq {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] (f : M →ₗ[ℂ] H) {n : ℝ} (hn : 0 < n)
     (h : ∀ x, ‖f x‖ ^ 2 = n * ‖x‖ ^ 2) (x y : M) : inner ℂ (f x) (f y) = (n : ℂ) * inner ℂ x y := by
@@ -187,9 +186,7 @@ theorem span_range_mulVec {σ : K →+* ℂ} {M : Type} [AddCommGroup M] [Module
 variable {σ : K →+* ℂ} {H M ML : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
   [NormedAddCommGroup M] [InnerProductSpace ℂ M] [FiniteDimensional ℂ M] [AddCommGroup ML] [Module K ML]
 
-omit [FiniteDimensional ℂ M] in
 
-omit [FiniteDimensional ℂ M] in
 
 end Block
 

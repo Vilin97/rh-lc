@@ -84,7 +84,6 @@ theorem isCptGen_of_isIso_stalkMap (f : Y ⟶ P) (hf : ∀ y, IsIso (f.stalkMap 
 
 variable {F : Type} [Field F] [NumberField F]
 
-omit [NumberField F] in
 
 theorem injective_of_charZero [CharZero Ω] (φ : 𝓞 F →+* Ω) : Function.Injective φ := by
   rw [RingHom.injective_iff_ker_eq_bot]

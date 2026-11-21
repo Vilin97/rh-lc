@@ -46,7 +46,6 @@ def toG (a : u.PtC) : Sp (PadicAlgCl p) ⟶ u.G.left := a.left ≫ pullback.fst 
 def toA (a : u.PtC) : Sp (PadicAlgCl p) ⟶ ρ.P.A.left := a.left ≫ u.U.gen.hom.left ≫ u.φ
 
 def Int (a : u.PtC) : Prop := ∃ c : Sp (OO p) ⟶ u.G.left, c ≫ u.G.hom = spMap u.j ∧ gPt p ≫ c = u.toG a
-open Classical in
 
 def Basis (l : u.Lab) (k : ℕ) {J : Type} [Fintype J] (σ : J → (u.H k).Sec) (cls : J → u.D.toPre.X)
     (f : J → ∀ α, u.D.toPre.SecB k α) : Prop :=

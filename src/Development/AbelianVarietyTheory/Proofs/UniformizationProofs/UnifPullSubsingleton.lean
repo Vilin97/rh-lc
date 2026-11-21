@@ -40,7 +40,6 @@ theorem isGrpPullback_of_bc (bc : G' ≅ (Over.pullback (specOf φ)).obj G) (hbc
     IsGrpPullback G' G (specOf φ) (bc.hom.left ≫ pullback.fst G.hom (specOf φ)) :=
   ((isGrpPullback_of_iso bc).comp (isGrpPullback_pullback G (specOf φ))).congr (Category.id_comp _) rfl
 
-omit [IsDomain R] [IsDomain R'] in
 
 variable [IsCommMonObj G] [IsCommMonObj G']
 

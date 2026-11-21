@@ -245,7 +245,6 @@ theorem adjA_adjA (X : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) : adjA σ J (adjA
   simp only [adjA_apply, cT_mul, GlobalTheory.AutFunCounterexample.cT_map_gen, cT_form hJ, cT_form_inv hJ, h, Matrix.mul_assoc]
   rw [inv_mul_form hJ, Matrix.mul_one, ← Matrix.mul_assoc, inv_mul_form hJ, Matrix.one_mul]
 
-omit [NumberField F] in
 
 theorem exists_dualCols {C : Matrix (Fin n) (Fin r) E} (hC : IsIsoCols σ J C) :
     ∃ L : Matrix (Fin r) (Fin n) E, L * C = 1 ∧ L * J⁻¹ * cT (σ : E →+* E) L = 0 := by

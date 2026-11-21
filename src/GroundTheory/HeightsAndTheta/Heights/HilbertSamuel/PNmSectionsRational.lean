@@ -35,10 +35,8 @@ theorem aeval_mul_prod_zpow (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) {d : K �
   simp only [hsub, div_pow, Finset.prod_div_distrib, hden, zpow_neg, zpow_natCast, Finset.prod_inv_distrib]
   ring
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 end NmSectionsRationalProof
 
-open NmSectionsRationalProof in
 
 end GroundTheory.Heights₂.Heights.HilbertSamuel

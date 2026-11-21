@@ -37,7 +37,6 @@ private theorem char_finext (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] [Top
   have h1 : ψ (h : Γ) = 1 := h.2
   simp only [hh, map_mul, h1, mul_one]
 
-open TensorProduct in
 
 private theorem desc {l : ℕ} [Fact l.Prime] {H : Type} [Group H] [TopologicalSpace H] (φ : H →* GQ l)
     (κ : H →* (PadicAlgCl l)ˣ) (E₀ : IntermediateField ℚ_[l] (PadicAlgCl l)) [FiniteDimensional ℚ_[l] E₀]

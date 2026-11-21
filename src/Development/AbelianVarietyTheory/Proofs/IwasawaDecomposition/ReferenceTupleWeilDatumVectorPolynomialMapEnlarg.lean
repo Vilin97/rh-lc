@@ -20,7 +20,6 @@ namespace GlobalTheory.Mem.R3.Rw.WeilAtExt
 
 open Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.WeilFull GlobalTheory.Mem.R3.Rw.LiftExt
 
-set_option hygiene false in
 
 section Leaves
 
@@ -148,7 +147,6 @@ private theorem thPVec_of (hP : B'.toPre = B.toPre) (hV : HEq V' V) (hW : HEq W'
 
 variable {S : a.D.what₂.Tau → SPar} {S' : a'.D.what₂.Tau → SPar} {M : DSModel W S} {M' : DSModel W' S'}
 
-set_option hygiene false in
 
 private theorem cart_heq (hP : B'.toPre = B.toPre) (hW : HEq W' W) (h : DSTie M' M) : HEq (cart M') (cart M) := by
   tie_cases
@@ -185,7 +183,6 @@ section Fields
 
 variable {B B' : Base} {C : Cols B} {C' : Cols B'} {a : Late B C} {a' : Late B' C'}
 
-set_option hygiene false in
 
 private theorem delta_heq (hP : B'.toPre = B.toPre) {i : Fin a.D.R.m} {i' : Fin a'.D.R.m} (h : (i : ℕ) = i') :
     HEq (RealDat.Delta i') (RealDat.Delta i) := by

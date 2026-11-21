@@ -22,7 +22,6 @@ theorem nonempty_monomialOrder (σ : Type) [Finite σ] : Nonempty (MonomialOrder
   let : LinearOrder σ := WellOrderingRel.isWellOrder.linearOrder
   exact ⟨MonomialOrder.degLex⟩
 
-open MvPolynomial MonomialOrder in
 
 theorem mem_span_of_aeval_eq_zero {O O' : Type} [CommRing O] [CommRing O'] [IsDomain O'] [Algebra O O']
     (hinj : Function.Injective (algebraMap O O')) {n R : ℕ} (hn : 0 < n) {ζ : O'} (hζ : IsPrimitiveRoot ζ n)
@@ -99,7 +98,6 @@ theorem mem_span_of_aeval_eq_zero {O O' : Type} [CommRing O] [CommRing O'] [IsDo
         simp [b, add_comm (1 : O'), this]
       · simp [b, Finset.mem_singleton.1 (hx (.inr i))]
 
-open Polynomial in
 
 theorem det_eq_mul_X_pow {k ι : Type} [Field k] (n r e : ℕ) (t : ℕ → Matrix (Fin n) (Fin n) k) (q : ι)
     (he : (e : k) ≠ 0) :
@@ -157,7 +155,6 @@ theorem det_eq_mul_X_pow {k ι : Type} [Field k] (n r e : ℕ) (t : ℕ → Matr
     rw [← this, hp, map_mul, map_pow, map_sub, aeval_X, aeval_C, map_one, hs]
     ring
 
-open Module in
 
 private theorem index_span_matrix_eq_val_det (O : Type) [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] (W : Type) [AddCommGroup W] [Module O W] (l n : ℕ)
@@ -319,7 +316,6 @@ theorem sIdx_le_of_coords {O O' : Type} [CommRing O] [IsDomain O] [IsDiscreteVal
   rw [baseChange_span_range]
   linarith
 
-open IsLocalRing in
 
 theorem isUnit_det_of_eigen {O : Type} [CommRing O] [IsLocalRing O] [IsAlgClosed (ResidueField O)] {W : Type}
     [AddCommGroup W] [Module O W] {n : ℕ} {bs : Fin n → W} (hbs : LinearIndependent O bs) {κ : Type}
@@ -449,7 +445,6 @@ theorem exists_basis_fin {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuati
   subst h3
   exact ⟨_, h1, h2⟩
 
-open Classical in
 
 def IsChi {V ι A : Type} [Fintype ι] [CommGroup A] {n : ℕ} (P : ι → V) (Q : Finset V) (u : ι → A)
     (χ : Multiplicative (↥Q → ZMod n) →* A) : Prop :=
@@ -470,7 +465,6 @@ theorem IsChi.unique {V ι A : Type} [Fintype ι] [CommGroup A] {n : ℕ} {P : �
     {χ χ' : Multiplicative (↥Q → ZMod n) →* A} (h : IsChi P Q u χ) (h' : IsChi P Q u χ') : χ = χ' :=
   MonoidHom.ext fun x => (h x.toAdd).trans (h' x.toAdd).symm
 
-open MvPolynomial in
 
 theorem exists_coords {O W V ι : Type} [CommRing O] [AddCommGroup W] [Module O W] [Fintype ι] {N n : ℕ}
     (bs : Fin n → W) (P : ι → V) (Q : Finset V) (w : W ⊗[O] AddMonoidAlgebra O (↥Q → ZMod N))

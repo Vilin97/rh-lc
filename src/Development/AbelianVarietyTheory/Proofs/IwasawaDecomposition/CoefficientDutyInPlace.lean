@@ -33,6 +33,5 @@ theorem classSum_loc_of_sumTw {D : D7} {M : MtFam D} (h : SumTw D M) (i : D.nd.L
 
 end GlobalTheory.HeightCounting.Up.OPinAt
 
-open GlobalTheory.HeightCounting.Up.OPinAt in
 
 end

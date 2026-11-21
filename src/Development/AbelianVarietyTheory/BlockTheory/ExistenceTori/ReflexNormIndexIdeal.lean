@@ -43,7 +43,6 @@ theorem latIdeal_ne_bot (Λ : Lat E n) : latIdeal Λ ≠ ⊥ := by
   rw [h, Ideal.mem_bot] at hm
   exact pow_ne_zero n (nonZeroDivisors.coe_ne_zero k) hm
 
-omit [IsCMField E] in
 
 variable {H : Host E} (Dw : Datum H) {l : Level H} (c : Coeff l)
 
@@ -67,7 +66,6 @@ theorem isBe_top : IsBe Dw c ⊤ 1 :=
 
 variable {Dw c}
 
-open scoped Classical in
 
 def beIdeal (hK : ReflexLe Dw c) (𝔞 : Ideal (𝓞 E)) (h𝔞 : 𝔞 ≠ ⊥) : c.F :=
   if 𝔞 = ⊤ then 1 else (hK 𝔞 h𝔞).choose

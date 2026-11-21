@@ -70,7 +70,6 @@ def rkP (τ : E →+* ℂ) : Vsp dim →ₗ[ℂ] (Fin (dim τ) → ℂ) where
   map_add' v w := by ext a; simp
   map_smul' c v := by ext a; simp
 
-open Classical in
 
 def rkQ (τ : E →+* ℂ) : (Fin (dim τ) → ℂ) →ₗ[ℂ] Vsp dim where
   toFun y := ∑ a, y a • EuclideanSpace.single (⟨τ, a⟩ : Idx dim) (1 : ℂ)

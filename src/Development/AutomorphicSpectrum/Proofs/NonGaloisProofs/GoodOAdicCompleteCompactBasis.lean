@@ -177,7 +177,6 @@ section Main
 variable {l : ℕ} [Fact l.Prime] {LL O : Type} [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL]
   [CommRing O] [Algebra O LL]
 
-open GlobalTheory.TateTopCompare in
 
 theorem t2_and_compact (h : GoodO (Qp := ℚ_[l]) LL O) :
     T2Space LL ∧ IsCompact (Set.range (algebraMap O LL)) := by
@@ -210,7 +209,6 @@ theorem t2_and_compact (h : GoodO (Qp := ℚ_[l]) LL O) :
   rw [heq]
   exact hball.image hc2
 
-open GlobalTheory.TateTop in
 
 theorem not_isUnit_natCast (h : GoodO (Qp := ℚ_[l]) LL O) : ¬ IsUnit (l : O) := by
   rintro ⟨u, hu⟩
@@ -249,7 +247,6 @@ theorem exists_pow_mem (h : GoodO (Qp := ℚ_[l]) LL O) {ϖ : O} (hϖ : Irreduci
     rw [this, pow_succ]
     ring
 
-open GlobalTheory.TateTop in
 
 theorem goodO_structure : ∀ (l : ℕ) [Fact l.Prime], ∀ (LL : Type) [Field LL] [Algebra ℚ_[l] LL]
     [TopologicalSpace LL] (O : Type) [CommRing O] [Algebra O LL], GoodO (Qp := ℚ_[l]) LL O →

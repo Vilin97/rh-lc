@@ -23,7 +23,6 @@ theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (c : A
   simp only [spMap, ← Spec.map_comp]
   rfl
 
-omit [GrpObj G] in
 
 theorem ringHom_ext_of_mono {R A : Type} [CommRing R] [CommRing A] (x : Sp R ⟶ X) [Mono x] {a b : R →+* A}
     (h : spMap a ≫ x = spMap b ≫ x) : a = b :=
@@ -108,7 +107,6 @@ end GlobalTheory.CompanionTheory.Ar.LieSections
 
 namespace GlobalTheory.CompanionTheory.Ar
 
-open GlobalTheory.CompanionTheory.Ar.LieTangent GlobalTheory.CompanionTheory.Ar.LieVB GlobalTheory.CompanionTheory.Ar.LieSections in
 
 theorem lieLat_germs_eq_sections : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶ X) (E : Type) [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (p : Cpt ξ) (N : X.Opens) (J : Type) [Finite J] (c : J → E), p.1 ∈ N → (∀ i, c i ∈ M.lat p) → ∃ (R : Type) (_ : CommRing R) (x : Sp R ⟶ X) (_ : IsOpenImmersion x) (F : Type) (_ : AddCommGroup F) (_ : Module R F) (MR : LieModel G x F) (e : J → F), p.1 ∈ x.opensRange ∧ x.opensRange ≤ N ∧ ∀ (q : Cpt ξ) (ψ : R →+* X.presheaf.stalk q.1), spMap ψ ≫ x = X.fromSpecStalk q.1 → ∀ (i : J) (v : epsAt (R := X.presheaf.stalk q.1) (X.fromSpecStalk q.1) ⟶ G), v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (MR.pt (e i)).left → M.Extends q (c i) v := by
   intro X G _ _ _ Ω _ ξ E _ _ M p N J _ c hN hc

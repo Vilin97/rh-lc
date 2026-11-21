@@ -20,7 +20,6 @@ def idealPow {K : Type} [Field K] [NumberField K] (n : FinPl K →₀ ℤ) :
     FractionalIdeal (nonZeroDivisors (𝓞 K)) K :=
   n.prod fun w k => ((w.1 : FractionalIdeal (nonZeroDivisors (𝓞 K)) K)) ^ k
 
-open Classical in
 
 def modLat {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V]
     [Module (𝓞 K) V] (σ : FinPl K →₀ ℤ) (N : Submodule (𝓞 K) V) : Submodule (𝓞 K) V :=

@@ -31,17 +31,14 @@ def ptsHom {S : Scheme.{0}} {A B : Over S} [GrpObj A] [GrpObj B] (f : A ⟶ B) [
     (T ⟶ A) →* (T ⟶ B) :=
   MonoidHom.mk' (fun x => x ≫ f) fun x y => MonObj.mul_comp x y _
 
-variable (p) in
 
 variable [IsAlgClosed C] [CharZero C]
 
 variable [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [Algebra ℤ_[p] O]
 
-omit [Algebra ℤ_[p] O] in
 
 variable [Algebra ℤ_[p] C] [IsScalarTower ℤ_[p] O C] (e : P.T ≃ₗ[ℤ_[p]] P'.T)
 
-omit [IsAlgClosed C] [CharZero C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] in
 
 omit [IsAlgClosed C] [CharZero C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]
   [Algebra ℤ_[p] O] [IsScalarTower ℤ_[p] O C] in

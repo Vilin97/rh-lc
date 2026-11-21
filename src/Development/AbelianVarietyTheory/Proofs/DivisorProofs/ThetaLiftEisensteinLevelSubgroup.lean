@@ -39,12 +39,10 @@ theorem integrable_of_mem (hθ : IsInfFam θ) {m : ℕ} (μ : Measure (Mx D m n)
   obtain ⟨C, hC⟩ := hC N
   exact ((hN K hK).const_mul C).mono' hc.aestronglyMeasurable (.of_forall hC)
 
-variable (τ) in
 
 variable {X : Matrix (Fin V.rank) (Fin V.rank) ℂ} {ψ : AddChar (AF D.host.F) ℂ} {χ : (AE D)ˣ →* Circle}
   {μ : Measure (Mx D V.rank n)} {𝓕 : Set (Mx D V.rank n)} {ω : StdUnn.G D n →* Module.End ℂ (schwartzA θ V.rank n)}
 
-variable (ω) in
 
 section
 

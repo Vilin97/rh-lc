@@ -80,7 +80,6 @@ theorem ptsIntegral_twist_term (P : Ideal (MRing ι)) (A : HermLine ι) (c : ℝ
 
 end TopConstantTwistAlt
 
-open TopConstantTwistAlt in
 
 theorem TopConstantTwist.proof : TopConstantTwist.Statement := by
   intro K _ ι _ P D A c II hII hP hA

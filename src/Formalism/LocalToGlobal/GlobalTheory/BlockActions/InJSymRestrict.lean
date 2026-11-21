@@ -108,7 +108,6 @@ theorem redM_entry {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (
   · rw [dite_eq_left (by rw [h]; exact hY), dite_eq_left hY]
   · rw [dite_eq_right (by rw [h]; exact hY), dite_eq_right hY]
 
-set_option maxHeartbeats 4000000 in
 
 theorem lev_bad (Tf : FormsTiedSym D u Ch chOf) (K : GL (Fin (D.R.N D.R.m - 1)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
     (G : GL (Fin (D.R.N D.R.m)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
@@ -152,7 +151,6 @@ theorem lev_bad (Tf : FormsTiedSym D u Ch chOf) (K : GL (Fin (D.R.N D.R.m - 1)) 
   rw [hmatK, hmatG]
   exact (hb x y).symm
 
-set_option maxHeartbeats 4000000 in
 
 theorem lev_mem (Tf : FormsTiedSym D u Ch chOf) (K : GL (Fin (D.R.N D.R.m - 1)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
     (G : GL (Fin (D.R.N D.R.m)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))

@@ -97,7 +97,6 @@ theorem exists_genericMap {ρ : R →+* R'} (hρ : Function.Injective ρ) :
   ext r
   simp
 
-omit [IsDomain R] in
 
 theorem ne_zero_of_isRelParam {o : Type} [CommRing o] [IsLocalRing R] {b : o →+* R} {m : ℕ} {t : Fin m → R}
     (h : IsRelParam b t) (i : Fin m) : t i ≠ 0 := fun h0 => by

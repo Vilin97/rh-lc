@@ -79,7 +79,6 @@ theorem part_cyclic (hC : KHCombContract.Statement) (hY : KHCombCyclic.Statement
     rw [zero_smul, sub_zero]
     rwa [h0, sub_zero] at hg'
 
-omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 
 theorem negSet_empty {a : (Σ k, ι k) → ℤ} {e : K → ℤ} (ha : blockSum a = e) (he : ∀ k, 0 ≤ e k) (hb : Bad a)
     (k : K) : negSet a k = ∅ := by
@@ -100,7 +99,6 @@ theorem nonneg_of_negSet_empty {a : (Σ k, ι k) → ℤ} (h : ∀ k, negSet a k
   rw [h p.1] at hm
   exact Finset.notMem_empty _ hm
 
-omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 
 theorem singOne_eq_zero {J : ∀ k, Finset (ι k)} (hJ : ∀ k, J k = ∅) {n : ℕ} (hn : 1 ≤ n) :
     singOne S J n = 0 := by
@@ -113,7 +111,6 @@ theorem singOne_eq_zero {J : ∀ k, Finset (ι k)} (hJ : ∀ k, J k = ∅) {n : 
   simp only [h1, Finset.sum_const_zero] at hs
   omega
 
-omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 
 theorem singOne_zero {J : ∀ k, Finset (ι k)} (I : CombCell ι J 0) : singOne S J 0 I = 1 := by
   simp only [singOne]

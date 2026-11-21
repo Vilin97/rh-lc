@@ -24,7 +24,6 @@ def LevRead : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n 
   ∀ (W₁ : Submodule ℂ (Kinf E a → ℂ)) (W₂ : Submodule ℂ (Kinf E (n - a) → ℂ)) (G : H E a (n - a) → ℂ),
     TypeH (lev₁ S d a) (lev₂ S d a) W₁ W₂ G → OfLev S (d.lev a) (d.lev₂ a) G
 
-set_option maxHeartbeats 1000000 in
 
 def FRGood : Prop := ∀ (hR : Rd.ReadLimit) (E : Type) [Field E] [NumberField E] [IsCMField E], GlobalTheory.BCT.Unr E → ∀ (n : ℕ)
   (π : Submodule ℂ (UA E n → ℂ)), IsAutRepU π → ∀ (S T : Finset (Pl E)) (F₀ : Frame0 hR π S) (F : RunFrame F₀ T) (i : F₀.C.ι)
@@ -35,7 +34,6 @@ def FRGood : Prop := ∀ (hR : Rd.ReadLimit) (E : Type) [Field E] [NumberField E
     convF (F.B i).ν (F.ψ i (F.d.hL _ (F₀.C.le i) x.1.1 x.2.1 x.2.2)) G = (F.ug (.inr (.inr x))).p F.fam F.i₀ • G) →
   ∀ᶠ w : Pl E in cofinite, IsSplitAt w → D.SplitAt π w
 
-set_option maxHeartbeats 1000000 in
 
 def FRWeight : Prop := ∀ (hR : Rd.ReadLimit) (E : Type) [Field E] [NumberField E] [IsCMField E], GlobalTheory.BCT.Unr E → ∀ n : ℕ, 1 ≤ n →
   ∀ π : Submodule ℂ (UA E n → ℂ), IsAutRepU π → ∀ (S : Finset (Pl E)) (F₀ : Frame0 hR π S) (d : LocData E n) (i : F₀.C.ι)

@@ -130,13 +130,10 @@ theorem zeta_level_mem (c : Coeff l) : zeta l.M ∈ c.F := by
   rw [this]
   exact pow_mem c.zeta_mem k
 
-variable {l} in
 
 def zetaM (c : Coeff l) : c.F := ⟨zeta l.M, zeta_level_mem l c⟩
 
-variable {l} in
 
-variable {l} in
 
 variable {l}
 
@@ -156,7 +153,6 @@ def levPtCl (Xo : Moduli D l) {S : Type} [CommRing S] (x0 : Sp S ⟶ Xo.X) (x : 
       exact h2
     simp only [levPt, this])
 
-variable (D l) in
 
 def levelIndex (n : ℕ) : Finset (Fin n → NamedCl D l) := (Set.finite_univ).toFinset
 
@@ -169,7 +165,6 @@ def FirstInv {n : ℕ} (x₀ : Fin n → ConjCl D l) : Prop :=
 
 def RankFull {n : ℕ} (x₀ : Fin n → ConjCl D l) : Prop := SpansAtEvery Set.univ x₀
 
-open Classical in
 
 def Admissible (nV : ℕ) {n : ℕ} (x₀ : Fin n → ConjCl D l) : Prop :=
   if n = nV then RankFull x₀ else FirstInv x₀
@@ -181,10 +176,7 @@ def fourier (c : Coeff l) {n : ℕ} (φ : (Fin n → ConjCl D l) → c.F) (t : F
 def indicatorCl (c : Coeff l) {n : ℕ} (x₀ : Fin n → ConjCl D l) : (Fin n → ConjCl D l) → c.F :=
   Set.indicator {x₀} 1
 
-variable (D l) in
 
-variable (D) in
 
-variable (D l) in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.LevelSpanSeparation

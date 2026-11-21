@@ -86,6 +86,5 @@ def InChiFixReal (M : Type) [AddCommGroup M] [Module A M] [Module O M] [SMulComm
 
 end Defs
 
-set_option maxHeartbeats 2000000 in
 
 end Formalism.RepresentationBoundsCohomology.FIN

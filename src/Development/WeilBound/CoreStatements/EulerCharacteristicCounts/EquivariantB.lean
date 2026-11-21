@@ -101,6 +101,5 @@ theorem final_count (h1 w z h0 h0' q a d : ℕ) (hw : 0 < w) (hq : w = q ^ a)
   rw [hC, hZ, pow_succ, pow_mul, ← hq]
   ring
 
-set_option maxHeartbeats 4000000 in
 
 end PositivityTheory.LocalTateOrthogonality.Bk.Eul

@@ -14,7 +14,6 @@ private theorem pull_congr' {B : Scheme.{0}} {R : Type} [Field R] (Θ : UpperThe
   subst e
   rfl
 
-open CategoryTheory Limits AlgebraicGeometry in
 
 private theorem pull_base {B : Scheme.{0}} {R : Type} [Field R] (Θ : UpperTheory.Gal.G3.Th.{0} B R) {W Z Z' : Scheme.{0}}
     {p : Z ⟶ B} {p' : Z' ⟶ B} (c : W ⟶ Z) {J : Type} [Fintype J] (f : J → (W ⟶ Z')) (A : Θ.H p' →ₗ[R] Θ.H p)
@@ -24,7 +23,6 @@ private theorem pull_base {B : Scheme.{0}} {R : Type} [Field R] (Θ : UpperTheor
   subst hc
   exact H x
 
-open CategoryTheory Limits AlgebraicGeometry in
 
 private theorem op_core (hFn : CntFn) (hSum : CntSum) (hSig : SigmaFEt) (hSpl : SigmaSplit)
     (hGal : UpperTheory.Gal.G3.TwGal) (hEx : UpperTheory.Gal.G3.HopEx.{0})

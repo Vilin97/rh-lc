@@ -119,7 +119,6 @@ theorem gram_hspOf_transpose {D : D7} {k : ℕ} (J : Matrix (Fin k) (Fin k) D.ho
   rw [GlobalTheory.WeilSchrodinger.gram_hspOf]
   exact Matrix.transpose_transpose J
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_weil_of_oriented : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D), IsInfFam θ →
     ∀ (ε : Bool) (S X : HSp D) (A : Fr S) (B : Fr X) {d : ℕ} (e : Fin X.rank ≃ Fin d)

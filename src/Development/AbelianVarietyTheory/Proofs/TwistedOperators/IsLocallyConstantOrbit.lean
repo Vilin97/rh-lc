@@ -63,7 +63,6 @@ theorem exists_orbit (hπ : IsSmooth π) {H : Subgroup G} (hH : IsCompact (H : S
   · rw [← Module.End.mul_apply, ← map_mul]; simp
   · rw [← Module.End.mul_apply, ← map_mul]; simp
 
-variable (π) in
 
 def Inj (I J : Subgroup G) : Prop := ∀ v ∈ fixed π I, v ∈ twKer π J 1 → v = 0
 
@@ -273,7 +272,6 @@ open Matrix
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {n : Type} [Fintype n] [DecidableEq n]
 
-variable (k) in
 
 def grp {f : n → n → ℤ} (hf : Conc f) : Subgroup (GL n k) where
   carrier := {g | (∀ i j, Deep (f i j) (g.val i j)) ∧ ∀ i j, Deep (f i j) ((g⁻¹).val i j)}

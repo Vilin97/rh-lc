@@ -50,7 +50,6 @@ theorem Acris.logTeich_padicPow (η : tateModule p R) (a : ℤ_[p]) :
   rw [hη', Acris.logTeich_mul, Acris.logTeich_pow, Acris.logTeich_pow, ha, Nat.cast_pow]
   ring
 
-variable (p R) in
 
 theorem Bcris.algebraMap_padicInt (a : ℤ_[p]) :
     algebraMap ℚ_[p] (Bcris p R) a =
@@ -63,7 +62,6 @@ variable [IsDomain R] [ValuationRing R] [IsAlgClosed (FractionRing R)] [CharZero
 
 variable (p R)
 
-variable {p R} in
 
 variable {p R}
 
@@ -77,11 +75,8 @@ variable [IsDomain R] [CharZero R] [ValuationRing R]
 
 variable [IsAlgClosed (FractionRing R)]
 
-variable (p R) in
 
-variable (p R) in
 
-variable (p R) in
 
 def u : Bst p R := logFlat (pflat p R)
 

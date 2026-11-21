@@ -57,7 +57,6 @@ theorem continuous_trace_NL [Unram F E] (A : Et F E) (hK : IsField A.K) (hL : Is
 
 end GlobalTheory.JR.WeilQuad.GaussProd
 
-open GlobalTheory.JR.WeilQuad.FourierTest GlobalTheory.JR.WeilQuad.GaussProd in
 
 theorem GlobalTheory.JR.WeilQuad.gaussInt_one_mul_neg_one : ∀ (F E : Type) [NontriviallyNormedField F]
     [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E) (ψ : AddChar F ℂ)

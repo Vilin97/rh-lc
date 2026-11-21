@@ -26,6 +26,5 @@ variable {Xo c} in
 theorem rdU_mem_offZero {σ : c.F →+* ℂ} (V : Unf Xo c σ r) (f : Rul Xo c) : rdU V f ∈ offZero V.X :=
   fun _ _ hx => dif_neg hx
 
-variable {Xo c} in
 
 end Formalism.L2.Pj

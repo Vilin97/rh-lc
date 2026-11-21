@@ -40,8 +40,6 @@ def Lipschitz : Prop :=
       Summable (fun ν : dualCone M z => rhsTerm k z ν) ∧
       ∑' a : (M : Set F), lhsTerm k z a = lipConst k M * ∑' ν : dualCone M z, rhsTerm k z ν
 
-open NumberField nonZeroDivisors in
-variable {F : Type} [Field F] [NumberField F] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.mem_traceDual_iff {M : FractionalIdeal (𝓞 F)⁰ F} (hM : M ≠ 0) (y : F) :
     y ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.traceDual M ↔ y ∈ FractionalIdeal.dual ℤ ℚ M := by
@@ -50,8 +48,6 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.mem_tr
   refine forall₂_congr fun a _ => ?_
   simp [Algebra.traceForm_apply, eq_comm]
 
-open NumberField nonZeroDivisors in
-variable {F : Type} [Field F] [NumberField F] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_pos {M : FractionalIdeal (𝓞 F)⁰ F} (hM : M ≠ 0) :
     0 < _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol M := by
@@ -59,9 +55,6 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_
   exact_mod_cast lt_of_le_of_ne (FractionalIdeal.absNorm_nonneg M)
     (Ne.symm (FractionalIdeal.absNorm_eq_zero_iff.not.2 hM))
 
-open NumberField nonZeroDivisors in
-variable {F : Type} [Field F] [NumberField F] in
-open Classical in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_eq_covolume [IsTotallyReal F]
     (M : (FractionalIdeal (𝓞 F)⁰ F)ˣ) :
@@ -71,8 +64,6 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_
     mul_one, mul_comm]
   rfl
 
-open NumberField nonZeroDivisors in
-variable {F : Type} [Field F] [NumberField F] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.card_realEmb [IsTotallyReal F] :
     Fintype.card (F →+* ℝ) = Module.finrank ℚ F := by

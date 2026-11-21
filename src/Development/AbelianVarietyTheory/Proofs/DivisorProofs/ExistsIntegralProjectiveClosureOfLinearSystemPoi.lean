@@ -94,7 +94,6 @@ private theorem eq_top_of_span {K V Ω ι : Type} [Field K] [AddCommGroup V] [Mo
   rw [hg.2] at h
   exact top_unique fun x _ => h (IntermediateField.mem_top (x := x))
 
-open MvPolynomial in
 
 private theorem trdeg_eq {K V Ω : Type} [Field K] [AddCommGroup V] [Module K V] [Field Ω] [Algebra K Ω]
     (ev : V →ₗ[K] Ω) (D : ℕ) (hg : GlobalTheory.DegVal.GenRatios ev) (hD : 0 < imageDeg ev D) :

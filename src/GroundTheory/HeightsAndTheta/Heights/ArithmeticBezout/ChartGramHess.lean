@@ -90,7 +90,6 @@ theorem ChartGram.hessian_half_log_apply [CompleteSpace F] {u : E → F} {y : E}
   rw [ChartGram.re_inner_comm (fderiv ℂ u y a) (u y)]
   ring
 
-open ReciprocityTheory.ChartRestriction.G.Geo (cxHessian) in
 
 theorem ChartGram.cxHessian_half_log [CompleteSpace F] {D : ℕ} {u : (Fin D → ℂ) → F}
     {y : Fin D → ℂ} (hu : ∀ᶠ y' in 𝓝 y, AnalyticAt ℂ u y') (h0 : u y ≠ 0) (i j : Fin D) :

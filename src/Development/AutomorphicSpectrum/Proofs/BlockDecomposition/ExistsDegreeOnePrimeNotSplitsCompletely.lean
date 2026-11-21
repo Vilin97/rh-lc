@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain GroundTheory.Global
 
 namespace GlobalTheory.CompanionTheory.Density
 
-open Filter Topology Set in
 
 theorem exists_degreeOnePrime_not_splitsCompletely :
     ∀ (L F M : Type) [Field L] [NumberField L] [Field F] [NumberField F] [Algebra L F] [Field M]

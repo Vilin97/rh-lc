@@ -347,7 +347,6 @@ theorem fibMor (h : IsGrpPullback A A' (DeRham.epsRed K) i) : GrpMor (dp0 (DualN
     (TrivSqZeroExt.fstHom K K K).toRingHom (DeRham.epsRed K) i := GrpMor.of_isGrpPullback (isDPMorphism_of_eq_bot _ rfl _ _)
   (by rw [Category.comp_id, Category.id_comp] <;> rfl) h
 
-omit [GrpObj A] in
 
 @[reducible] def Pt.eps (P : GPt A) : Thick (epsDP K) (A.hom ≫ DeRham.epsRed K) where
   B := DualNumber P.B

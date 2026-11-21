@@ -50,7 +50,6 @@ theorem comap_span_X_pow_atPrime (a : ℕ) :
   rw [Ideal.mem_comap, Ideal.mem_span_singleton, Ideal.mem_span_singleton,
     algebraMap_X_pow_dvd_iff_atPrime]
 
-include O in
 
 theorem algebraMap_injective_atPrime_X : Function.Injective (algebraMap O⟦X⟧ S) :=
   IsLocalization.injective S (Ideal.span {X} : Ideal O⟦X⟧).primeCompl_le_nonZeroDivisors
@@ -84,7 +83,6 @@ theorem exists_associated_X_pow_atPrime {z : S} (hz : z ≠ 0) :
   rw [← hfs]
   exact associated_mul_unit_left _ _ hs
 
-include O in
 
 theorem isDiscreteValuationRing_atPrime_X [IsDomain S] : IsDiscreteValuationRing S :=
   IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
@@ -109,7 +107,6 @@ section FractionField
 variable {O : Type*} [CommRing O] [IsDomain O] (K : Type*) [Field K] [Algebra O K]
   [IsFractionRing O K]
 
-omit [IsDomain O] in
 
 theorem order_map_of_injective {A : Type*} [CommRing A] {φ : O →+* A}
     (hφ : Function.Injective φ) (f : O⟦X⟧) : (f.map φ).order = f.order :=
@@ -149,7 +146,6 @@ instance isFractionRing_residueField_span_X :
     rw [Ideal.algebraMap_quotient_residueField_mk, Ideal.algebraMap_quotient_residueField_mk,
       algebraMap_residueField_span_X, algebraMap_residueField_span_X]⟩
 
-variable (O) in
 
 def residueFieldSpanXEquiv : (Ideal.span {X} : Ideal O⟦X⟧).ResidueField ≃ₐ[O] K :=
   IsLocalization.algEquiv (nonZeroDivisors O) _ _
@@ -161,7 +157,6 @@ def residueFieldSpanXEquiv : (Ideal.span {X} : Ideal O⟦X⟧).ResidueField ≃�
 variable (S : Type*) [CommRing S] [Algebra O⟦X⟧ S]
   [IsLocalization.AtPrime S (Ideal.span {X} : Ideal O⟦X⟧)]
 
-variable (O) in
 
 end FractionField
 

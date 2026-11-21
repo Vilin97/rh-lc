@@ -79,7 +79,6 @@ end GlobalTheory.FirstRowTermLaw
 
 namespace GlobalTheory.FirstRowTermLaw
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.FirstRowTermLaw
 

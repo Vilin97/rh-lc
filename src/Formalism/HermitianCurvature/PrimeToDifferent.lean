@@ -123,7 +123,6 @@ def NormIdl : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (g : ℕ) (k ν : ℤ), 0 < g →
     √(FractionalIdeal.absNorm (idl E g k ν) : ℝ) = ((g : ℝ) ^ k * rd E ^ ν) ^ deg E
 
-open scoped Classical in
 
 def CovolumeIndex : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (B : FI E) (L : Submodule ℤ E) (c : ℝ),
@@ -164,7 +163,6 @@ end Small
 
 section Text
 
-open scoped Classical in
 
 def LatticeFacts (E : Type) [Field E] [NumberField E] [IsCMField E] (g : ℕ) (ν : ℤ) (s : ℕ) :
     Prop :=

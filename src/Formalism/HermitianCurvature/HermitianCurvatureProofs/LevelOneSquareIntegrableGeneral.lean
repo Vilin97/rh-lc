@@ -274,9 +274,7 @@ theorem pairAt_add_left_lc {u1 u2 v : RadSp k r z z' π π'} (h1 : u1 ∈ lcSub 
   ext x
   simp only [Submodule.coe_add, Pi.add_apply, hadd]
 
-include hμ in
 
-include hμ in
 
 end Fs
 

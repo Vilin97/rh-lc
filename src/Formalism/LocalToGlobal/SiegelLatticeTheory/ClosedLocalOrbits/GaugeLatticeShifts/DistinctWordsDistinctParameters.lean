@@ -65,7 +65,6 @@ theorem eq_of_inner_tens (tens : (∀ i, V i) → W) (hspan : Submodule.span ℂ
 variable (tens : (∀ i, V i) → W) (hin : ∀ x y, ⟪tens x, tens y⟫_ℂ = ∏ i, ⟪x i, y i⟫_ℂ)
   (hspan : Submodule.span ℂ (Set.range tens) = ⊤)
 
-include hin in
 
 theorem inner_tens_update (z x : ∀ i, V i) (i : ι) (p : V i) :
     ⟪tens z, tens (Function.update x i p)⟫_ℂ =
@@ -78,7 +77,6 @@ theorem inner_tens_update (z x : ∀ i, V i) (i : ι) (p : V i) :
     have hji : j ≠ i := by simpa using hj
     simp [Function.update_apply, hji]
 
-include hin hspan in
 
 theorem tens_update_add (x : ∀ i, V i) (i : ι) (p q : V i) :
     tens (Function.update x i (p + q)) = tens (Function.update x i p) + tens (Function.update x i q) := by
@@ -87,7 +85,6 @@ theorem tens_update_add (x : ∀ i, V i) (i : ι) (p q : V i) :
   rw [inner_add_right, inner_tens_update tens hin, inner_tens_update tens hin, inner_tens_update tens hin,
     inner_add_right, add_mul]
 
-include hin hspan in
 
 theorem tens_update_smul (x : ∀ i, V i) (i : ι) (c : ℂ) (p : V i) :
     tens (Function.update x i (c • p)) = c • tens (Function.update x i p) := by
@@ -102,7 +99,6 @@ def intersection_update_fsHerm_neg_one (x : ∀ i, V i) (i : ι) : V i →ₗ[�
 
 def fill (e x : ∀ i, V i) (s : Finset ι) : ∀ i, V i := fun i => if i ∈ s then e i else x i
 
-include hin hspan in
 
 theorem commutant_scalar [FiniteDimensional ℂ W] [∀ i, FiniteDimensional ℂ (V i)] [∀ i, Nontrivial (V i)]
     {G : Type*} (H : Set G) (π : G → (W →ₗ[ℂ] W)) (hiso : ∀ s ∈ H, ∀ p q, ⟪π s p, π s q⟫_ℂ = ⟪p, q⟫_ℂ)
@@ -183,7 +179,6 @@ theorem commutant_scalar [FiniteDimensional ℂ W] [∀ i, FiniteDimensional ℂ
   rw [LinearMap.smul_apply, LinearMap.id_apply] at h2
   exact h2
 
-include hin hspan in
 
 theorem tens_irr [FiniteDimensional ℂ W] [∀ i, FiniteDimensional ℂ (V i)] [∀ i, Nontrivial (V i)]
     {G : Type*} (H : Set G) (π : G → (W →ₗ[ℂ] W)) (hiso : ∀ s ∈ H, ∀ p q, ⟪π s p, π s q⟫_ℂ = ⟪p, q⟫_ℂ)
@@ -800,7 +795,6 @@ variable {D : D7} {X : HidaSetting D} {u u' : D.what₂.Word}
   {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)} {F0' : FlagG (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)}
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
-variable (F0 F0' what₂ rows') in
 
 def IdOffLift : Prop :=
   u ≠ u' → ∀ t : GTerm X u u' F0 F0' what₂ rows', t.isId → ∀ v : InfinitePlace X.B.I.F,

@@ -67,6 +67,5 @@ theorem frsF_top {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l 
   refine (sumE_one_single _ _ r b).trans ?_
   rw [unitOf_val (hπ ⟨P.1, hQ⟩)]
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.Fam.TopFrame

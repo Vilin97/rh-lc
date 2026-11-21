@@ -118,7 +118,6 @@ private theorem dualCoord_down (A WW : HSp D) (βA : GL (Fin A.rank) (EAf D)) (�
   rw [inv_aux d h1]
   exact mul_mem hx (hi i j)
 
-set_option maxHeartbeats 1000000 in
 
 private theorem stdSnd_isSB {ν : (AE D)ˣ →* Circle} (hν : Continuous ν) {e : AE D} {S : Finset (Pl D.host.E)}
     (he : IsIdemSum e S) {I : Ideal (𝓞 D.host.E)} (hI : I ≠ ⊥) (a : ℕ) (A WW : HSp D) (βA : GL (Fin A.rank) (EAf D))

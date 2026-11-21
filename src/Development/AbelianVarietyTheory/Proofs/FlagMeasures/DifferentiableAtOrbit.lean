@@ -89,7 +89,6 @@ variable {B} (hU : ∀ v, IsURepOn (UJset (B.I.ε v)) (B.σ v))
 
 include hU hd
 
-open Classical in
 
 theorem hasDerivAt_orbit_sum {P k : ℕ} (E : gInf B) (u : Fin k → ∀ v, B.H v)
     (hu : ∀ l v, u l v ∈ stepSpace (B.I.ε v) (B.lam v) (B.σ v) P) :
@@ -101,7 +100,6 @@ theorem hasDerivAt_orbit_sum {P k : ℕ} (E : gInf B) (u : Fin k → ∀ v, B.H 
   exact GlobalTheory.TensDer.hasDerivAt_orbit_tens B E (u l) _
     (fun v => (hd v P _ (hu l v) _ (E v).2).hasDerivAt) (fun v => (hU v).1.1)
 
-open Classical in
 
 theorem dAct_atPlace_sum {P k : ℕ} (v : InfinitePlace B.I.F) (X : gLie (B.I.ε v))
     (u : Fin k → ∀ v, B.H v) (hu : ∀ l v, u l v ∈ stepSpace (B.I.ε v) (B.lam v) (B.σ v) P) :

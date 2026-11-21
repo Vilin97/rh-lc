@@ -18,9 +18,7 @@ namespace GlobalTheory.CompanionTheory.ThetaCoord
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type}
 
-variable (F κ) in
 
-variable (F κ) in
 
 def finOf (a : κ → AF F) : κ → FiniteAdeleRing (𝓞 F) F := fun i => (a i).2
 

@@ -262,7 +262,6 @@ section Torsion
 variable (K : Type*) [DivisionRing K] [CharZero K] {M : Type*} [AddCommGroup M] [Module K M]
   (Λ : Submodule ℤ M) (n : ℕ) [NeZero n]
 
-omit [NeZero n] in
 
 end Torsion
 

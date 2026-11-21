@@ -187,7 +187,6 @@ theorem isIntegral_of_isIntegral_algebraMap {c : F}
 theorem mem_integer_of_isIntegral {c : F} (hc : IsIntegral (S.integer F) c) : c ∈ S.integer F :=
   fun v _ => valuation_le_one_of_isIntegral (v.valuation F) (fun r => r.2 v ‹_›) hc
 
-variable {E} in
 
 theorem map_mem_sUnitsOf_iff {a : Fˣ} :
     Units.map (algebraMap F E : F →* E) a ∈ sUnitsOf S E ↔ a ∈ S.unit F := by

@@ -33,7 +33,6 @@ theorem Iso.hasSatGL (h : Iso π π') {w : HeightOneSpectrum (𝓞 E)} {B : Mult
       T.toLinearMap hf h0
     exact (hf k x).trans (GlobalTheory.LGrp.mem_fixed.1 hy k hk)
 
-variable (π) in
 
 def HasCentChar (ω : HChar E) : Prop := GlobalTheory.SmGL.HasCentralChar π.finPart (ω.1.comp (finId E))
 
@@ -134,7 +133,6 @@ theorem hasCentChar_ofChar (χ : HChar E) : (ofChar χ).HasCentChar χ := by
 
 theorem isUnitary_ofChar {χ : HChar E} (h : χ.IsUnitary) : (ofChar χ).IsUnitary := ⟨χ, h, hasCentChar_ofChar χ⟩
 
-omit [IsTotallyComplex E] in
 
 theorem loc_eq_zpow {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (h : χ.UnrAt w) (x : (w.adicCompletion E)ˣ) :
     χ.loc w x = χ.val w ^ Formalism.UG.ordV E w x := by

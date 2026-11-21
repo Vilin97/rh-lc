@@ -15,7 +15,6 @@ universe u
 
 variable {k G : Type u} [CommRing k] [Group G] [Fintype G] (S : Subgroup G) [Fintype S]
 
-omit [Fintype G] [Fintype S] in
 
 section Res
 
@@ -39,7 +38,6 @@ end Res
 
 section Cores
 
-open scoped Classical in
 
 noncomputable def tateCores (n : ℤ) :
     resFunctor S.subtype ⋙ tateCohomologyFunctor (R := k) (G := S) n ⟶

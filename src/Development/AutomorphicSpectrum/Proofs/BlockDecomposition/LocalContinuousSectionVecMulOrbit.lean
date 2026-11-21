@@ -46,7 +46,6 @@ theorem vecMul_shear (j : Fin n) (ζ ξ : Fin n → k) (h0 : ζ j ≠ 0) :
 theorem shear_self (j : Fin n) (c : k) (ζ : Fin n → k) : shear j c ζ ζ = 1 := by
   simp [shear]
 
-open Classical in
 
 noncomputable def orbitSection (j : Fin n) (ζ ξ : Fin n → k) : GL (Fin n) k :=
   if h : ζ j ≠ 0 ∧ ξ j ≠ 0 then

@@ -23,7 +23,6 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.SpinPRV
 
-open ReciprocityTheory.ChartRestriction.DS.HW in
 
 lemma tens_single {n : ℕ} {Z : Type} [NormedAddCommGroup Z] [InnerProductSpace ℂ Z] {ι : Type} [Fintype ι] [DecidableEq ι]
     (A : Fin n → Fin n → Module.End ℂ Z) (G : Fin n → Fin n → Matrix ι ι ℂ) (a b : Fin n) (z : Z) (i : ι) :

@@ -91,7 +91,6 @@ theorem om_vac_base {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ν : Twist D Ci
   exact GlobalTheory.StepVecLaw.om_vac hω hS hB.sigOK (fun τ => GlobalTheory.GalLift.Vec.isCartanInv_one (hF.onbS τ)) hF.cartT hF.sdS hF.sdT hF.frS hF.frT
     hF.vac (dualTypePlaces_isSplitNonconjugate_of_admissible hQ).isIdemSum (fun PP hP => (h1 PP hP).1) (fun PP hP => (h1 PP hP).2) h2 h3 hg hh sg sh
 
-open Classical in
 
 theorem om_vec_move {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ν : Twist D Circle} (hν : ν.Good) (hQ : B.admitted ν.Q)
     {ω : PairRep S T} (hω : B.IsWeil ν.chi ω) {g : GA D S} {h : GA D T} (hg : g ∈ GfC S) (hh : h ∈ GfC T)
@@ -131,7 +130,6 @@ theorem frMapAdj_act (F : Frame S T) {g : GA D S} {h : GA D T} (sg : Lev.finE S 
   have := (GlobalTheory.AdjDatumMove.red_actO S T _ _ sg' sh' hx).1
   rwa [GlobalTheory.SplitHecke.actO_inv_actO] at this
 
-open Classical in
 
 theorem datumFn_act (F : Frame S T) (G : TypeDat D T.rank) (Q' : Finset (Pl D.host.E)) {g : GA D S} {h : GA D T}
     (sg : Lev.finE S g ∈ St F.βS) (sh : Lev.finE T h ∈ St F.βT) {ω ω' : Reds D T.rank S.rank → ℂ} {a b : ℂ}
@@ -159,7 +157,6 @@ theorem blockTri_blkOf_one_top {κ : Type} [CommRing κ] (g : GL (Fin r) κ) : g
   refine mem_blockTri.2 fun i j h => ?_
   simp [blkOf] at h
 
-open Classical in
 
 theorem omegaG_levT_of (G : TypeDat D r) {y : ∀ PP : Pl D.host.E, Matrix (Fin n) (Fin r) (kP PP)}
     (h0 : ∀ PP ∈ G.Pg, LowZero r (y PP)) (g : G0 G.Pg r) (hg : ∀ PP : ↥G.Pg, (g PP).val = topL r (y PP.1)) (hH : g ∈ G.P.H) :
@@ -189,7 +186,6 @@ theorem omegaG_levT_zero (G : TypeDat D r) {y : ∀ PP : Pl D.host.E, Matrix (Fi
   refine ⟨g, h1, ?_⟩
   rwa [show (fun PP => upperLeftBlock G.levT.hr (g PP)) = g from funext fun PP => GlobalTheory.AdjDatumMove.restrictedBlock_self_apply _] at h3
 
-open Classical in
 
 theorem omegaG_levT_mul (G : TypeDat D r) (hr : r ≤ n) (K : ∀ PP : Pl D.host.E, GL (Fin n) (kP PP))
     (hK : ∀ PP ∈ G.Pg, K PP ∈ blockTri (blk2 r)) (a : G0 G.Pg r) (ha : ∀ PP : ↥G.Pg, a PP = upperLeftBlock hr (K PP.1)) (hH : a ∈ G.P.H)
@@ -268,7 +264,6 @@ theorem one_mem_St (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) : Lev.finE V 1
 def blkA (B : Base S T) (k : GA D S) (PP : Pl D.host.E) : (kP PP)ˣ :=
   GeneralLinearGroup.det (upperLeftBlock B.hr (redFn B.F.βS PP (Lev.finE S k)))
 
-open Classical in
 
 def srcC (B : Base S T) (ψ : Twist D Circle) (k : GA D S)
     (hk : Lev.finE S k ∈ Formalism.L2.DIV.lev D.sp.cm S.gram B.F.βS (B.levS ψ)) : ℂˣ :=
@@ -348,7 +343,6 @@ theorem resP_dq {ν : Twist D Circle} (hQ : B.admitted ν.Q) {PP : Pl D.host.E} 
   have h1 : PP ∉ B.G.Pg := fun h => Finset.disjoint_left.1 hQ.1.disj h hP
   simp [resP, h1]
 
-open Classical in
 
 theorem levFn_eq {ψ : Twist D Circle} (hQ : B.admitted ψ.Q) {k : GA D S}
     (hk : Lev.finE S k ∈ Formalism.L2.DIV.lev D.sp.cm S.gram B.F.βS (B.levS ψ)) :
@@ -425,7 +419,6 @@ section Target
 
 variable {B : Base S T}
 
-open Classical in
 
 theorem om_tgt_of_red (hB : B.Good) (hS : S.SigOK) {Q : Finset (Pl D.host.E)} (hQ : B.admitted Q) {ω : PairRep S T} (hω : B.IsWeil 1 ω)
     {κ : GA D T} (hκ : κ ∈ GfC T) (sκ : Lev.finE T κ ∈ St B.F.βT) (hpg : ∀ PP ∈ B.G.Pg, redFn B.F.βT PP (Lev.finE T κ) = 1)
@@ -480,7 +473,6 @@ section TargetSeriesAll
 
 variable {B : Base S T}
 
-open Classical in
 
 theorem gen_mul_right_of_red (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle} (hψ : ψ.Good) (hQ : B.admitted ψ.Q) {ω : PairRep S T}
     (hω : B.IsWeil 1 ω) {κ : GA D T} (hκ : κ ∈ GfC T) (sκ : Lev.finE T κ ∈ St B.F.βT)
@@ -519,7 +511,6 @@ section Xi
 
 variable {B : Base S T} {C : Type} [AddCommGroup C] [Fintype C]
 
-open Classical in
 
 theorem delQ_det_of_red (hB : B.Good) {u : UnivTwist D C} {Q : Finset (Pl D.host.E)} (hu : u.Good Q) {κ : GA D T} (hκ : κ ∈ GfC T)
     (sκ : Lev.finE T κ ∈ St B.F.βT) :
@@ -536,7 +527,6 @@ theorem delQ_det_of_red (hB : B.Good) {u : UnivTwist D C} {Q : Finset (Pl D.host
     (AddMonoidHom.single (fun _ : ↥Q => C) ⟨PP.1, PP.2⟩)).comp (u.kap PP.1)) from dif_pos PP.2]
   rfl
 
-open Classical in
 
 theorem xiCoef_mul_right_of_red (hB : B.Good) (hS : S.SigOK) {u : UnivTwist D C} {Q : Finset (Pl D.host.E)} (hu : u.Good Q)
     (hQ : B.admitted Q) {Φ : ∀ PP : Pl D.host.E, C → Matrix (Fin T.rank) (Fin S.rank) (kP PP) → ℚ} (hΦ : Base.IsAdmFam u Q Φ)
@@ -580,7 +570,6 @@ section Statement
 
 variable {B : Base S T}
 
-open Classical in
 
 theorem thetaSeriesData_have_dualType (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle} (hψ : ψ.Good) (hQ : B.admitted ψ.Q) :
     (∀ ω : PairRep S T, B.IsWeil ψ.chi ω → ∀ k ∈ GfC S, ∀ hJ : finPt S k ∈ B.levJ ψ,

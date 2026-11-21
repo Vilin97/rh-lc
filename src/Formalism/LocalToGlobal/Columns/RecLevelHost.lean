@@ -82,7 +82,6 @@ section Primes
 
 variable {X : Fields} {Pr : Primes X}
 
-open Classical in
 
 end Primes
 

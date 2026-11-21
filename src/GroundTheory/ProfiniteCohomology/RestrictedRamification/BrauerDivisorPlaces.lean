@@ -20,7 +20,6 @@ variable {K : FiniteSubfield} {S : Set (HeightOneSpectrum (𝓞 K.1))}
 
 variable (L : IntermediateField K.1 (maxUnramifiedOutside K.1 ℚ̄ S)) [FiniteDimensional K.1 L]
 
-omit [FiniteDimensional K.1 L] in
 
 theorem ordEmb_galUnitsHom_eq {v : HeightOneSpectrum (𝓞 K.1)}
     (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1)) (hv : v ∉ S)
@@ -53,7 +52,6 @@ theorem ordEmb_galUnitsHom_eq {v : HeightOneSpectrum (𝓞 K.1)}
   rw [ordEmb_apply]
   omega
 
-omit [FiniteDimensional K.1 L] in
 
 theorem placeOfEmbedding_congr_of_eqOn {v : HeightOneSpectrum (𝓞 K.1)} (F : FiniteSubfield) [Fact (K ≤ F)]
     (ι₁ ι₂ : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1)) (h : ∀ z : F.1, ι₁ z = ι₂ z) :
@@ -62,7 +60,6 @@ theorem placeOfEmbedding_congr_of_eqOn {v : HeightOneSpectrum (𝓞 K.1)} (F : F
     rw [completionEmbedding_algebraMap]
     exact (h z).symm).symm
 
-omit [FiniteDimensional K.1 L] in
 
 theorem exists_algEquiv_of_placeOfEmbedding_eq {v : HeightOneSpectrum (𝓞 K.1)} (F : FiniteSubfield)
     [Fact (K ≤ F)] (ι₁ ι₂ : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1))

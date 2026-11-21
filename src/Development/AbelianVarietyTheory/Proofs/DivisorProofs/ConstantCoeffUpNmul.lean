@@ -172,10 +172,6 @@ private lemma subst_nmul_nmul_eq_nmul_mul {μ : Fin d → MvPowerSeries (Fin d �
     simp_rw [ih, subst_X hm]
     rw [Nat.succ_mul, nmul_add_eq_op hG]
 
-set_option autoImplicit false in
-open MvPowerSeries TensorProduct in
-variable {R Q : Type} [CommRing R] [CommRing Q] [Algebra R Q] {d : ℕ} in
-variable {S : Type} [CommRing S] in
 
 theorem _root_.GlobalTheory.DefectComp.main : ∀ (R Q : Type) [CommRing R] [CommRing Q] [Algebra R Q] (d : ℕ) (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) R), _root_.GlobalTheory.Katz.IsLaw μ → Function.Injective (algebraMap R Q) → ∀ (f : MvPowerSeries (Fin d) Q), constantCoeff f = 0 → ∀ (k m : ℕ) (s t u : MvPowerSeries (Fin d) R), map (algebraMap R Q) s = _root_.GlobalTheory.QLog.defect μ k f → map (algebraMap R Q) t = _root_.GlobalTheory.QLog.defect μ m f → map (algebraMap R Q) u = _root_.GlobalTheory.QLog.defect μ (k * m) f → u = subst (_root_.GlobalTheory.QLog.nmul μ m) s + (k : R) • t := by
   intro R Q _ _ _ d μ hG hinj f _ k m s t u hs ht hu

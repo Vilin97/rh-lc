@@ -63,7 +63,6 @@ theorem cancel_spec_field {K L : Type} [Field K] [Field L] (φ : L →+* K) {X :
 
 end GlobalTheory.FixedCx
 
-open GlobalTheory.FixedCx Cardinal in
 
 theorem GlobalTheory.FixedCx.exists_fixed_complex_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (k : Type) [Field k] (x : Sp k ⟶ Xo.X) (ρ : Xo.X ⟶ Xo.X), x ≫ ρ = x → ∃ x' : Sp ℂ ⟶ Xo.X, x' ≫ ρ = x' := by
   intro E _ _ _ H Dw l Xo k _ x ρ hx

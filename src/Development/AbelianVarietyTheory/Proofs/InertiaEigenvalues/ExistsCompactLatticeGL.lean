@@ -20,7 +20,6 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.IndefiniteRowSideF
 
 namespace GlobalTheory.IdeleCovolume
 
-open NumberField.Units NumberField.Units.dirichletUnitTheorem in
 
 theorem exists_bound_log (E : Type) [Field E] [NumberField E] :
     ∃ R : ℝ, ∀ t : InfinitePlace E → ℝ, ∃ (u : (𝓞 E)ˣ) (n : ℤ), ∀ w : InfinitePlace E,

@@ -35,7 +35,6 @@ theorem redThrough_eq_of_val_sub_lt_one {Ω : Type} [Field Ω] (A : ValuationSub
   show (⟨a, ha⟩ - ⟨b, hb⟩ : A) ∈ IsLocalRing.maximalIdeal A
   exact (A.valuation_lt_one_iff _).mpr hab
 
-open scoped Pointwise in
 
 end GlobalTheory.DepthZeroBridge
 

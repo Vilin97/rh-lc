@@ -152,7 +152,6 @@ theorem geo_agree {t₀ : T0} (O : OMDat C R i Unit (fun _ => t₀)) (M : OMDat 
   simp only [Fin.sum_univ_one, Matrix.cons_val_zero, map_one, OneMemClass.coe_one, one_mul] at e
   rw [mul_left_comm, e, mul_left_comm]
 
-set_option maxHeartbeats 1000000 in
 
 theorem oneMapOf_of_extends (O : OMDat C R i Unit (fun _ => A.μ0)) (M : OMDat C R i Tp tup) (t₀ : Tp) (hle : O.c'.F ≤ M.c'.F)
     (hlev : M.lev = O.lev) {κ : WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ ι x₀} (hM : M.Pins κ v₀ ι x₀)
@@ -233,7 +232,6 @@ def PinnedDataExist (i : Fin D.R.m) : Prop :=
 
 variable {T R κ v₀}
 
-set_option maxHeartbeats 1600000 in
 
 variable (T R κ v₀)
 

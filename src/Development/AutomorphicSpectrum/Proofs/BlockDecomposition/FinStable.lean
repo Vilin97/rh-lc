@@ -28,7 +28,6 @@ section Lin
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N r s : ℕ}
 
-variable (E) in
 
 abbrev KO (n : ℕ) : Subgroup (GL (Fin n) (Af E)) := GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E n
 

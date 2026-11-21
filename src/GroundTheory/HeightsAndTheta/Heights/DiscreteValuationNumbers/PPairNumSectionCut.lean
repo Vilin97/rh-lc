@@ -110,7 +110,6 @@ section Cut
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : O}
   {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-open Classical in
 
 theorem cut_list (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irreducible ϖ) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}
     {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hD : IsVerticalDivisor P ϖ b f g) {c : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
@@ -124,7 +123,6 @@ theorem cut_list (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irreducible 
   simp only [vNum_vecCons_eq, List.ofFn_get] at h
   exact h
 
-open Classical in
 
 theorem cut_list_ratDiv (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irreducible ϖ)
     {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hD : IsVerticalDivisor P ϖ b f g)
@@ -153,7 +151,6 @@ theorem cut_list_ratDiv (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irred
   rw [hadd]
   ring
 
-open Classical in
 
 theorem pairNum_cut_section (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irreducible ϖ)
     {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {e : ℕ} (hP : IsModelOver P (e + 1)) {r : ℕ} (z z' : Fin r → K → ℤ)

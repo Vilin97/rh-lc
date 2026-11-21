@@ -24,7 +24,6 @@ theorem inv_coord' (z : (Af E)ˣ) (w : HeightOneSpectrum (𝓞 E)) : (↑z⁻¹ 
   show (((coord w z)⁻¹ : (w.adicCompletion E)ˣ) : w.adicCompletion E) = _
   rw [Units.val_inv_eq_inv_val, coe_coord]
 
-open Classical in
 
 theorem prod_single_coord (S : Finset (HeightOneSpectrum (𝓞 E)))
     (x : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ) (w' : HeightOneSpectrum (𝓞 E)) :

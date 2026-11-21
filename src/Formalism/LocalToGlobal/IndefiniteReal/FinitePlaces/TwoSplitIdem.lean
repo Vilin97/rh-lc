@@ -39,7 +39,6 @@ def LatSelfDual (D : D7) : Prop :=
           ∀ u ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True),
             ψ (symplO S T x u) = 1)
 
-open Classical in
 
 def HeisStable (D : D7) : Prop :=
   ∀ ψ : AddChar (AF D.host.F) ℂ, IsStdChar D ψ (-1) → ∀ (S T : HSp D) (w₀ : WO S T) (f : WO S T → ℂ),

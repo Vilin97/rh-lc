@@ -31,7 +31,6 @@ noncomputable section
 
 namespace GlobalTheory.AdaptedFrame
 
-open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX) in
 
 theorem exists_basis_dFun {k : Type} [CommRing k] {Y : Scheme.{0}} (p : Y ⟶ Sp k) (D : ℕ)
     [SmoothOfRelativeDimension D p] {O : Y.Opens} {x : Y} (hxO : x ∈ O) :
@@ -93,7 +92,6 @@ theorem linearIndependent_tmul_D {k A : Type} [CommRing k] [CommRing A] [IsLocal
   rw [key] at this
   exact this
 
-open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX) in
 
 theorem formallySmooth_residueField {k : Type} [Field k] [PerfectField k] {X : Scheme.{0}}
     (p : X ⟶ Sp k) {n : ℕ} [SmoothOfRelativeDimension n p] {U : X.Opens} (hU : IsAffineOpen U)
@@ -122,7 +120,6 @@ theorem formallySmooth_residueField {k : Type} [Field k] [PerfectField k] {X : S
     Algebra.EssFiniteType.comp k (X.presheaf.stalk y) _
   exact Algebra.FormallySmooth.of_perfectField
 
-open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX) in
 
 theorem exists_adapted_frame : ∀ {X : Scheme.{0}} {p : X ⟶ Sp ℂ} {n : ℕ} [SmoothOfRelativeDimension n p] (y : X) {J : Type}
     [Fintype J] (f : J → X.presheaf.stalk y)

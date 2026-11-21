@@ -85,7 +85,6 @@ theorem pushField_comp_fieldEvalRed {x y : gaussRing (gaussCurve W W)}
   · rw [RingHom.comp_apply, fieldEvalRed_genY, AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
       genEval_genY, hRy]
 
-set_option maxHeartbeats 1000000 in
 
 theorem pushPt_redU_genEval {x y : gaussRing (gaussCurve W W)}
     (h : ((W.baseChange K).baseChange (liftField K W)).toAffine.Nonsingular
@@ -125,7 +124,6 @@ theorem pushPt_redU_genEval {x y : gaussRing (gaussCurve W W)}
     pointMapRing_pointMapRing, pointMapRing_congr hring, map_eq_pointCongr_pointMapRing]
   exact pointCongr_pointCongr_eq _ _ _ _
 
-set_option maxHeartbeats 1000000 in
 
 theorem univAdd_reduceFF
     (Q : ((W'.baseChange K).baseChange (W.baseChange K).toAffine.FunctionField).toAffine.Point)

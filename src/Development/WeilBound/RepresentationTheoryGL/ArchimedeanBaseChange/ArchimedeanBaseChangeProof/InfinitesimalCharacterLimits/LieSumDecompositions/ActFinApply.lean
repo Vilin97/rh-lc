@@ -161,7 +161,6 @@ theorem RS_stable : IsStable (RS U T) := by
   | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
-omit hU in
 
 theorem LS_aut : ∀ φ ∈ LS U T, IsAutForm φ := by
   intro φ hφ
@@ -175,7 +174,6 @@ theorem LS_aut : ∀ φ ∈ LS U T, IsAutForm φ := by
   | add x y _ _ hx hy => exact GlobalTheory.CompanionTheory.AffglAssembly.isAutForm_add hx hy
   | smul a x _ hx => exact GlobalTheory.CompanionTheory.AffglAssembly.isAutForm_smul a hx
 
-omit hU in
 
 theorem RS_aut : ∀ φ ∈ RS U T, IsAutForm φ := by
   intro φ hφ

@@ -14,7 +14,6 @@ open UpperTheory.V UpperTheory.V.Af UpperTheory.V.Af.Bc
 open UpperTheory.Gal.Int.Core
 open scoped Pointwise
 
-open GlobalTheory.RealGal.AttConj in
 
 theorem UpperTheory.Gal.Int.Core.oneConj_holds :
     OneConj := by

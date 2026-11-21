@@ -13,7 +13,6 @@ open Polynomial GlobalTheory.CuspGL
 
 namespace GlobalTheory.CuspGL.MassMult
 
-open Classical in
 
 theorem finsum_subtype_dite {α : Type} [Fintype α] (p : α → Prop) (f : {x // p x} → ℂ) :
     ∑ᶠ x, f x = ∑ x, if h : p x then f ⟨x, h⟩ else 0 := by
@@ -23,7 +22,6 @@ theorem finsum_subtype_dite {α : Type} [Fintype α] (p : α → Prop) (f : {x /
   rw [h1, add_zero]
   exact Finset.sum_congr rfl fun i _ => by rw [dite_eq_left i.2]
 
-open Classical in
 
 theorem mass_eq {F : Type} [Field F] {V : Type} [AddCommGroup V] [Module F V] [FiniteDimensional F V]
     (φ : Module.End F V → ℂ) (P : F[X]) :
@@ -53,7 +51,6 @@ theorem mass_eq_zero {F : Type} [Field F] {V : Type} [AddCommGroup V] [Module F 
   rintro rfl
   exact h (LinearMap.charpoly_natDegree g).symm
 
-open Classical in
 
 theorem indicator_split {F : Type} [Field F] (P : F[X])
     (T : Finset (F[X] × F[X])) (hT : ∀ x, x ∈ T ↔ x.1.Monic ∧ x.2.Monic ∧ x.1 * x.2 = P)
@@ -82,7 +79,6 @@ theorem indicator_split {F : Type} [Field F] (P : F[X])
       · rw [if_neg h2, mul_zero]
     · rw [if_neg h1, zero_mul]
 
-open Classical in
 
 theorem stab_sum (F : Type) [Field F] [Finite F] (V : Type) [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] (W : Submodule F V) (φ : Module.End F W → ℂ) (P : F[X])

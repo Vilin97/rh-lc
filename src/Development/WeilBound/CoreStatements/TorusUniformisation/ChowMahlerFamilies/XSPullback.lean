@@ -38,7 +38,6 @@ theorem vNumL_perm (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOve
   simp only [vNumL, vNum, intNum, mixedDiff, List.ofFn_get]
   rw [h.foldr_eq]
 
-open Classical in
 
 noncomputable def vertEval (ϖ : O) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (l : List (K → ℤ)) : ℤ :=
   cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNumL W l else 0) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)))

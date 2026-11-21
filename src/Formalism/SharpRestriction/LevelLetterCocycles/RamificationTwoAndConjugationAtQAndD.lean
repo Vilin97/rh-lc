@@ -26,7 +26,6 @@ section AlgDefs
 variable {O LL : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field LL]
     [Algebra O LL] [IsFractionRing O LL]
 
-variable (O LL) in
 
 abbrev OL : Submodule O LL := LinearMap.range (Algebra.linearMap O LL)
 
@@ -451,8 +450,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Algebra O LL]
     [IsFractionRing O LL]
 
-variable (LL) in
-include LL in
 
 theorem p_ne_zero : ((PD.p : ℕ) : O) ≠ 0 := by
   intro h0
@@ -909,7 +906,6 @@ theorem equivariance_defect_mem_lattice {X U : GRep G Qp LL O} (LY : Lattice (O 
   rw [h2] at h1
   exact (Submodule.Quotient.eq LT.T).mp h1.symm
 
-omit [TopologicalSpace Qp] [IsTopologicalRing LL] in
 
 theorem shear_pairing_mem_integers {X U X' U' : GRep G Qp LL O} (PX : X.V →ₗ[LL] X'.V →ₗ[LL] LL)
     (PU : U.V →ₗ[LL] U'.V →ₗ[LL] LL) (Y : Submodule O X.V) (ψ : X.V →ₗ[LL] U.V)

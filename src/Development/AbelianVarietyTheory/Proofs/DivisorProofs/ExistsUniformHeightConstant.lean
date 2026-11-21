@@ -107,6 +107,5 @@ theorem size_smul_hodgeWt {s : ℤ} (hs : 0 ≤ s) :
 
 end Weight
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.ShortDet

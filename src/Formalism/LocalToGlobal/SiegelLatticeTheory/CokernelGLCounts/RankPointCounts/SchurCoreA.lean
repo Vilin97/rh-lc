@@ -49,7 +49,6 @@ def WfrSpan : Prop :=
     hJ (X.B.I.ε v) (rv X.B.I v (X.zR u)) y = 0 →
     y = ∑ b, hJ (X.B.I.ε v) (X.wfr u v b) y • X.wfr u v b
 
-variable {D : D7} in
 
 def spanAt (X : HidaSetting D) (v : InfinitePlace X.B.I.F) (U : Submodule D.host.E (VS D).V) :
     Submodule ℂ (Fin X.B.I.n → ℂ) :=

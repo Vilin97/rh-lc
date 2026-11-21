@@ -154,7 +154,6 @@ theorem nrComplexPlaces_host (D : Formalism.BasicNotions.D7) [IsTotallyComplex D
     ring
   omega
 
-set_option maxHeartbeats 1600000 in
 
 theorem card_eq (hPT : PoitouTateTotallyComplex) (hLF : LocalFiniteness) (hLD : LocalTateDuality) (hLE : LocalEulerChar)
     (hGF : GlobalFiniteness) (hGE : GlobalEulerChar) (h4 : Gen.ArchimedeanSignatureMatching) (bkP : BKPh X) (i : X.Tw) (s : X.Sig i)

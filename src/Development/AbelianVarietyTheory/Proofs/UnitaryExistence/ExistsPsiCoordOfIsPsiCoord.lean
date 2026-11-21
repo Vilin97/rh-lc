@@ -82,7 +82,6 @@ section At
 
 variable [IsLocalRing R] {C : Type} [NormedField C]
 
-omit [IsLocalRing R] in
 
 variable {φ : FractionRing R →+* C}
 

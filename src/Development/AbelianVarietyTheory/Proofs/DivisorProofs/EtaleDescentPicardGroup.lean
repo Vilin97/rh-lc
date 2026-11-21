@@ -246,7 +246,6 @@ end GlobalTheory.EtC.PicardFirstCohomology
 
 namespace GlobalTheory.EtC
 
-open PicardFirstCohomology in
 
 theorem b6pic_holds : DivisorPicardCompatibility := by
   intro A _

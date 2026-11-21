@@ -98,7 +98,6 @@ theorem isSmoothHerm_pull {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')}
   subst h2
   exact ⟨pi, by rw [hp]; exact hi'⟩
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 
 theorem pullDeg_add (κ : K → K') (a b : K → ℤ) : pullDeg κ (a + b) = pullDeg κ a + pullDeg κ b := by
   funext k'
@@ -106,7 +105,6 @@ theorem pullDeg_add (κ : K → K') (a b : K → ℤ) : pullDeg κ (a + b) = pul
   unfold Function.extend
   split_ifs <;> simp
 
-omit [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)] in
 
 theorem isPullHerm_tensor {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {A B : HermLine ι}
     {A' B' : HermLine ι'} (hA : IsPullHerm κ v A A') (hB : IsPullHerm κ v B B') :
@@ -117,8 +115,6 @@ theorem isPullHerm_tensor {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')}
   · show A'.h z' * B'.h z' = A.h _ * B.h _
     rw [hA.2, hB.2]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
-open Classical in
 
 theorem sum_block (F : (Σ k', ι' k') → ℕ) (k' : K') :
     ∑ i, F ⟨k', i⟩ = ∑ q, if q.1 = k' then F q else 0 := by
@@ -163,7 +159,6 @@ theorem isMultiHomog_rename {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k'
 
 end ArithmeticIntersectionIntegral
 
-open ArithmeticIntersectionIntegral in
 
 theorem ArithmeticIntersectionIntegral.proof (hInt : PtsIntegrableStatement) (hSec : IntersectionWithSection.Statement) : ArithmeticIntersectionIntegral.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' n G J L L' A A' f g hv hP' hP hJ hL hLL' hA hAA' hfg

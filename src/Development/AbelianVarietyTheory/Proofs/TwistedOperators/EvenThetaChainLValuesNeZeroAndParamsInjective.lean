@@ -95,7 +95,6 @@ theorem eulerProd_add_segFam {K : Type} [Field K] [NumberField K] {ι : Type} (T
 
 end GlobalTheory.EvenOnto.ChainVal
 
-open GlobalTheory.EvenOnto.ChainVal in
 
 theorem GlobalTheory.EvenOnto.chainL_and_inj : ∀ D : D7, ChainL D ∧ ∀ (c : Com D) (k : ℕ) (B B' : GlobalTheory.LFun.Fam D.host.E)
     (w : HeightOneSpectrum (𝓞 D.host.E)), chainPar c B k w = chainPar c B' k w → B w = B' w := by

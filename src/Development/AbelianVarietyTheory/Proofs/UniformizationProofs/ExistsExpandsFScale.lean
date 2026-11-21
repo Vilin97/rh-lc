@@ -202,7 +202,6 @@ theorem expandsG_iff_comb (k : ℕ) (v : GroupSec U F k) (s : Fam D.toPre F k) :
     (exists_fam_coord D.toPre F k s)).trans ?_)
   refine exists₄_congr fun n c σ f => and_congr Iff.rfl (and_congr Iff.rfl (famComb_iff D.toPre F k c f s).symm)
 
-variable (G) in
 
 abbrev prGK : (UnifPre.GF (G := G) F).left ⟶ pullback G.hom (jK R) :=
   (snd (TFK (R := R) F) ((Over.pullback (jK R)).obj G)).left

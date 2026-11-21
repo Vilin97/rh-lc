@@ -138,8 +138,6 @@ theorem inY_of_span (z : S.X' → MatN D.nd i)
       simp [h, Finset.smul_sum, mul_smul]
     · simp [Finset.smul_sum]
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in
 
 theorem inCut_of_cocW (Xs : Set (D.nd.X i)) {k : ℕ} (M : GE D.nd →* Matrix (Fin k) (Fin k) (D.nd.O i))
     (ψ : (S.X' → MatN D.nd i) → Matrix (Fin k) (Fin k) (D.nd.O i))

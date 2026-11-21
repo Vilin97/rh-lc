@@ -77,7 +77,6 @@ theorem exists_sheet_nhds {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fi
 
 end SheetAreaCompare
 
-open SheetAreaCompare in
 
 theorem SheetAreaCompare.proof (h₁ : SheetImageArea.Statement) : SheetAreaCompare.Statement := by
   classical

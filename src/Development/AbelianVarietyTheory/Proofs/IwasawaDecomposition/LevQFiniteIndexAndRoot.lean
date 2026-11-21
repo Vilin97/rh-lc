@@ -104,7 +104,6 @@ theorem natCast_smul_mem {N : ℕ} (L : Submodule (𝓞 E) (Sp E N)) (c : ℕ) {
   rw [Nat.cast_smul_eq_nsmul]
   exact nsmul_mem hx c
 
-omit [StarRing E] in
 
 theorem stab_of_cong {N q : ℕ} (hq : (q : E) ≠ 0) (L : Submodule (𝓞 E) (Sp E N)) (g : Sp E N ≃ₗ[E] Sp E N)
     (h1 : ∀ x ∈ L, (q : E)⁻¹ • (g x - x) ∈ L) (h2 : ∀ x ∈ L, (q : E)⁻¹ • (g⁻¹ x - x) ∈ L) : g ∈ stabL E N L := by

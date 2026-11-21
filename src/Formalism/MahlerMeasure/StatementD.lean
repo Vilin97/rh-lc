@@ -31,7 +31,6 @@ noncomputable def binMatK (K : Type) [Field K] {n : ℕ} (del₀ : ℕ) (c : Fin
     Matrix (Fin n) (Fin n) K[X] :=
   fun i j => ∑ k ∈ range (del₀ + 1), Polynomial.C (c i j k) * binK K k
 
-open Classical in
 
 def ValuationWindowLowerBound : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (K : Type) [NormedField K] [NormedAlgebra ℚ_[p] K] [IsUltrametricDist K]
@@ -45,6 +44,5 @@ def ValuationWindowLowerBound : Prop :=
       (-Real.logb p ‖lead‖ + (roots.map (fun ζ => vmin p h ((t₀ : K) - ζ))).sum) +
         E * ((roots.filter (fun ζ => ‖(t₀ : K) - ζ‖ ≤ (p : ℝ) ^ (-(h : ℤ)))).card : ℝ)
 
-open Classical in
 
 end Formalism.GM

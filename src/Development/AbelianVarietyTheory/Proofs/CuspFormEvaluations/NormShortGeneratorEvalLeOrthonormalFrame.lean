@@ -77,7 +77,6 @@ theorem norm_mean_le (hr : X.p0 + q0 = r) (idx : Fin g ≃ X.Ψ × Fin r) (hs : 
     exact mul_le_mul (hW i) (hb i) (norm_nonneg _) hC
   · rw [Finset.card_univ, ← Nat.card_eq_fintype_card, nsmul_eq_mul]
 
-omit [IsCMField E] in
 
 theorem index_Ln (Λ : GenLat E n) (h : stdLat E n = stdL E n) :
     (Λ.Ln.toAddSubgroup.addSubgroupOf Λ.La.toAddSubgroup).index =
@@ -85,7 +84,6 @@ theorem index_Ln (Λ : GenLat E n) (h : stdLat E n = stdL E n) :
   rw [← h, ← AddSubgroup.inf_relIndex_left]
   rfl
 
-omit [IsCMField E] in
 
 theorem zCard_eq (Λ : GenLat E n) (h : stdLat E n = stdL E n) {N M : ℕ} (hN : Λ.LevOK N M) (r : ℕ) :
     Λ.zCard N r = Λ.mIdx N r * ((stdL E n).toAddSubgroup.relIndex Λ.La.toAddSubgroup) ^ r := by

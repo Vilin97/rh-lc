@@ -150,7 +150,6 @@ theorem z_dvd {ζ : LL} (hζ : IsPrimitiveRoot ζ PD.p) {z : O} (hz : algebraMap
   dvd_zeta PD.p PD.hp z (hinj (by rw [map_pow, hz, map_one, hζ.pow_eq_one]))
     (fun h => hζ.ne_one PD.hp.one_lt (by rw [← hz, h, map_one]))
 
-include hinj in
 
 theorem expansion_low_coeffs_integral {ζ : LL} (hζ : IsPrimitiveRoot ζ PD.p) {z : O} (hz : algebraMap O LL z = ζ)
     (a : LetA O n) : ∃ o₀ o₁ : O, constantCoeff (W.lev c ζ a) = algebraMap O LL o₀ ∧
@@ -179,7 +178,6 @@ theorem expansion_low_coeffs_integral {ζ : LL} (hζ : IsPrimitiveRoot ζ PD.p) 
       hy0, constantCoeff_C, map_mul, hz]
     ring
 
-include hinj hp9 hs in
 
 theorem root {ζ : LL} (hζ : IsPrimitiveRoot ζ PD.p) {z : O} (hz : algebraMap O LL z = ζ) :
     ∃ r : O, constantCoeff (W.lev c ζ π') = algebraMap O LL r ∧ (PD.p : O) ∣ r ^ 2 := by
@@ -198,7 +196,6 @@ theorem cc_π' (i : ZMod n) : constantCoeff (π' i) = 0 := by
   have : π' i = (w : LetA O n) i * PowerSeries.X ^ s' := by rw [hw]; rfl
   rw [this, map_mul, map_pow, constantCoeff_X, zero_pow (by omega), mul_zero]
 
-include hp9 hs1 in
 
 theorem dv {r : O} (hr : (PD.p : O) ∣ r ^ 2) : Dv (evA W c) O (yR W π' c r) := by
   intro a
@@ -232,8 +229,6 @@ theorem is_root {ζ : LL} (hζ : IsPrimitiveRoot ζ PD.p) {r : O}
   rw [← cc_aeval _ r hr, ← lev_Eat, he, map_zero]
   simp
 
-omit [IsDomain O] [IsAdicComplete (Ideal.span {((PD.p : ℕ) : O)}) O] in
-include hinj hp9 in
 
 theorem simple {ζ : LL} (hζ : IsPrimitiveRoot ζ PD.p) {r : O}
     (hr : constantCoeff (W.lev c ζ π') = algebraMap O LL r) :
@@ -251,7 +246,6 @@ theorem simple {ζ : LL} (hζ : IsPrimitiveRoot ζ PD.p) {r : O}
   apply he₁
   rw [← h2, map_mul, h0, zero_mul]
 
-include hinj hp9 hs hs1 in
 
 theorem fact2 {ζU ζD : LL} (hU : IsPrimitiveRoot ζU PD.p) (hD : IsPrimitiveRoot ζD PD.p) {z : O}
     (hz : algebraMap O LL z = ζU) {rU rD : O}

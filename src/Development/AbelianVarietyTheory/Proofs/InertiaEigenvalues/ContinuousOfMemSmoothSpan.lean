@@ -34,7 +34,6 @@ theorem det_rowMat (ℓ : Fin a) (y : Fin a → R) : (rowMat ℓ y).det = y ℓ 
 theorem isUnit_rowMat_iff {ℓ : Fin a} {y : Fin a → R} : IsUnit (rowMat ℓ y) ↔ IsUnit (y ℓ) := by
   rw [isUnit_iff_isUnit_det, det_rowMat]
 
-open Classical in
 
 def rowGL (ℓ : Fin a) (y : Fin a → R) : GL (Fin a) R :=
   if h : IsUnit (y ℓ) then (isUnit_rowMat_iff.2 h).unit else 1
@@ -59,8 +58,6 @@ end Row
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-omit [NumberField E] [IsTotallyComplex E] in
-variable (E) in
 
 def rowSet (ℓ : Fin a) : Set (Fin a → Cinf E) := {u | ∀ w, u ℓ w ≠ 0}
 
@@ -73,7 +70,6 @@ theorem isOpen_rowSet (ℓ : Fin a) : IsOpen (rowSet E ℓ) := by
   rw [rowSet, Set.setOf_forall]
   exact isOpen_iInter_of_finite fun w => isOpen_ne_fun (by fun_prop) continuous_const
 
-omit [IsTotallyComplex E] in
 
 theorem continuousOn_rowGL (ℓ : Fin a) : ContinuousOn (rowGL ℓ) (rowSet E ℓ) := by
   refine GlobalTheory.CuspQuot.isOpenEmbedding_val.isInducing.continuousOn_iff.2 ?_

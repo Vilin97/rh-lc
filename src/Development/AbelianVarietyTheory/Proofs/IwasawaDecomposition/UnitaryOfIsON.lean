@@ -97,7 +97,6 @@ section Step
 variable {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] [StarRing K] [Fintype ι] {n : ℕ}
   (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : ι → DomWeight n)
 
-omit [NumberField E] [StarRing E] [NumberField K] in
 
 theorem map_pairVr_rat (s : K →+* ℂ) (F F' : VV K lam) (hF : ∀ i, (bVV K lam).repr F i ∈ cmMax K) :
     s (pairVr emb lam (1 : Matrix (Fin n) (Fin n) E) F F') = nfL lam (MvPolynomial.map s F.1) (MvPolynomial.map s F'.1) := by
@@ -161,7 +160,6 @@ theorem norm_step (S : GStep E K n) (hF : FOk emb σ) (hS : S.Ok) (h : (S.fam em
   rw [hd, mul_one, e, hl, ← hu]
   rfl
 
-omit [NumberField E] [StarRing E] [NumberField K] [StarRing K] in
 
 theorem ipVal_step {lam' : ι → DomWeight n} (hl : nfAll lam = nfAll lam') {sh : ι → ℤ} (hsh : sh = shiftOf lam)
     {G : ι → Matrix (Fin n) (Fin n) ℂ} (hG : ∀ τ, G τ = 1) (eY : Fr emb σ n → Frames G) (hY : ∀ y, (eY y).1 = y.1)
@@ -197,7 +195,6 @@ end GlobalTheory.Mem.Col2.MetricTie
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Ker Formalism.UG Formalism.L2.Forms GlobalTheory.Mem GlobalTheory.Mem.Chr GlobalTheory.Mem.Col2 GlobalTheory.Mem.Col2.TC Matrix
 attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 1000000 in
 
 theorem GlobalTheory.Mem.Col2.MetricTie.ipV_norm_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (I.rec7 l Z) i hi), I.IdY l Z u a i hi eY → IpVTieG (D := (I.rec7 l Z)) (I.fm l u a) eY ∧ NormTieG (D := (I.rec7 l Z)) (I.fm l u a) eY := by
   intro B X I hI hp l Z u a i hi eY hY

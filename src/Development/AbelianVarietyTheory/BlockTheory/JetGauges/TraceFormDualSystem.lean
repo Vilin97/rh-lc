@@ -88,7 +88,6 @@ def pairingValues (β : balancedForms E Y) : Set ℝ := Set.range fun l : Expone
 
 def IsPhiC (β : balancedForms E Y) (r : ℝ) : Prop := IsLeast (pairingValues β) r
 
-omit [Module.Finite (𝓞 E) Y] [Module.Projective (𝓞 E) Y] in
 
 end Forms
 

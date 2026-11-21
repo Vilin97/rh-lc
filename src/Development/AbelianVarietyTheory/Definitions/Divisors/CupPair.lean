@@ -47,7 +47,6 @@ section Cech
 
 variable {k : Type} [Field k] {ι : Type} [LinearOrder ι] {E : Type} [AddCommGroup E] [Module k E]
 
-variable (k ι E) in
 
 def deltaL : (Finset ι → E) →ₗ[k] (Finset ι → E) where
   toFun := GlobalTheory.DI.delta

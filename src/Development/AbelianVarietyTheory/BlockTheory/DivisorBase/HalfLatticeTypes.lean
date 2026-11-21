@@ -54,7 +54,6 @@ def superSum {R : Type} [CommRing R] (u : Matrix (Fin r) (Fin r) R) : R :=
 variable (Xo' : Moduli Dw l') (c' : Coeff l') {K : Type} [Field K] (ι : K →+* c'.F)
   (e : Basis (Fin r) (Rs l) (LaMod Dw l))
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def typeSub (ψ₀ : AddChar (Rs l) K) : Submodule c'.F (Rul Xo' c') where
   carrier := {f | ∀ (γ : LaMod Dw l' ≃ₗ[𝓞 E] LaMod Dw l') (u : Matrix (Fin r) (Fin r) (Rs l)), Reads e γ u → IsUnip u →
@@ -78,7 +77,6 @@ def actG (g : Gz l r) : Rul Xo' c' →ₗ[c'.F] Rul Xo' c' :=
 def idemCoeff (X : Finset (Gz l r → K)) (χ : (Rs l)ˣ →* Kˣ) (k : Gz l r) : K :=
   (Formalism.L2.DIV.idemOf X).coeff k * (((χ (Matrix.GeneralLinearGroup.det k))⁻¹ : Kˣ) : K)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def idemOp (X : Finset (Gz l r → K)) (χ : (Rs l)ˣ →* Kˣ) : Rul Xo' c' →ₗ[c'.F] Rul Xo' c' :=
   ∑ k : Gz l r, HSMul.hSMul (α := c'.F) (ι (idemCoeff X χ k)) (actG Xo' c' e k)
@@ -95,9 +93,7 @@ def goodLat (ψ₀ : AddChar (Rs l) K) (X : Finset (Gz l r → K)) (χ : (Rs l)�
       (idemOp Xo' c' ι e X χ ∘ₗ (cuspW Xo' c' U' G).subtype)).comap
         (cuspW Xo' c' U' G).subtype).restrictScalars (𝓞 c'.F)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-open MonObj in
 
 end Action
 

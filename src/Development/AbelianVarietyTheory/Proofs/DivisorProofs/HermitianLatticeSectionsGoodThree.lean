@@ -97,4 +97,3 @@ private theorem chart_bound {E : Type} [Field E] [NumberField E] [IsCMField E] {
   exact mul_le_mul_of_nonneg_right hb (pow_nonneg (norm_nonneg _) _)
 
 attribute [-instance] GlobalTheory.CompHS.cuspAddCommGroup in
-set_option maxHeartbeats 1000000 in

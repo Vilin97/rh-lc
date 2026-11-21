@@ -30,7 +30,6 @@ theorem isStdChar_unique {D : D7} {ψ ψ' : AddChar (AF D.host.F) ℂ} {s : ℤ}
 theorem isInfFam_unique {D : D7} {θ θ' : Formalism.IndefR.Datum.InfFam D} (h : IsInfFam θ) (h' : IsInfFam θ') : θ = θ' :=
   Formalism.IndefR.Eqv.infFamUnique_holds D θ θ' h h'
 
-open Formalism.IndefR.Mult in
 
 end GlobalTheory.Mem.R3.Rw
 

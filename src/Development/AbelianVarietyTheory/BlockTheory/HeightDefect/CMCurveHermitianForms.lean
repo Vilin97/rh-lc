@@ -53,6 +53,5 @@ def HasSig (H : Host E) (p q : ℕ) {R : Type} [CommRing R] {G : Over (Sp R)} [G
 def herm (D : Datum H) (x y : D.La) : Zw H :=
   ((D.EF (H.w0 • x) y - D.EF x y : ℤ) : Zw H) + ((D.EF x y : ℤ) : Zw H) * wz H
 
-open Classical in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.CMCurveHermitianForms

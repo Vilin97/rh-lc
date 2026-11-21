@@ -524,7 +524,6 @@ theorem errorTerm_nonneg (O : OnObj S P c) (hPg : LeafPage O) (hSz : LeafSizes O
       linarith
     · rw [if_neg hY]
 
-set_option maxHeartbeats 800000 in
 
 theorem bad_sum (O : OnObj S P c) (hPg : LeafPage O) (hSz : LeafSizes O) (hX : LeafX O) (hBad : LeafBad O) (j : Bs.J) :
     ∑ p ∈ O.Bad, Real.log (p : ℝ) * O.errP j p ≤ O.Cb * (O.f * O.m * O.b * O.L) := by
@@ -956,7 +955,6 @@ abbrev exampleDf (v0 : InfinitePlace K) : DefSide (exampleBs K v0) where
   Tl := fun _ _ => stdLat K 1
   Zp := fun _ _ _ => ⊤
 
-open Classical in
 
 abbrev exampleIndefiniteData (v0 : InfinitePlace K) (Tw0 : Finset (HeightOneSpectrum (𝓞 K))) (er : ℝ) : IndefData (exampleDf K v0) where
   μ := fun w => decide (w ∈ Tw0)

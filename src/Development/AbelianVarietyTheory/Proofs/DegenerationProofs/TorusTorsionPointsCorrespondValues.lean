@@ -182,7 +182,6 @@ theorem pt_iff (g : GtPtF D F) (c : N.Gt) :
 
 theorem c_eq (χ : N.X) : ν.eA (N.c χ) = cP D _ (ν.eX χ) := ν.c_eq χ
 
-omit y in
 
 theorem exists_val (g : GtPtF D F) : ∃ c, ν.Pt g c := by
   let y : Sp F := (⊥ : PrimeSpectrum F)
@@ -193,12 +192,10 @@ theorem exists_val (g : GtPtF D F) : ∃ c, ν.Pt g c := by
   rw [map_mul, map_mul, hs, hs, hs, theta_eq ν y, c_eq, c_eq, ν.eA.apply_symm_apply, map_add (f := _)]
   exact e
 
-omit y in
 
 theorem val_unique {g : GtPtF D F} {c c' : N.Gt} (h : ν.Pt g c) (h' : ν.Pt g c') : c = c' :=
   NumD.Gt.ext (ν.eA.injective (h.1.trans h'.1.symm)) (funext fun χ => Units.ext ((h.2 χ).trans (h'.2 χ).symm))
 
-omit y in
 
 theorem exists_pt (c : N.Gt) : ∃ g, ν.Pt g c := by
   let y : Sp F := (⊥ : PrimeSpectrum F)
@@ -209,7 +206,6 @@ theorem exists_pt (c : N.Gt) : ∃ g, ν.Pt g c := by
       exact e)
   exact ⟨g, (pt_iff ν y _ _).2 ⟨hb.symm, fun χ => ((hv _).trans (by rw [ν.eX.symm_apply_apply])).symm⟩⟩
 
-omit y in
 
 theorem pt_unique {g g' : GtPtF D F} {c : N.Gt} (h : ν.Pt g c) (h' : ν.Pt g' c) : g = g' := by
   let y : Sp F := (⊥ : PrimeSpectrum F)
@@ -219,7 +215,6 @@ theorem pt_unique {g g' : GtPtF D F} {c : N.Gt} (h : ν.Pt g c) (h' : ν.Pt g' c
   obtain ⟨χ, rfl⟩ := ν.eX.surjective χ
   exact (b χ).symm.trans (b' χ)
 
-omit y in
 
 theorem isZero_val {g : GtPtF D F} {c : N.Gt} (h : ν.Pt g c) : g.IsZero ↔ c = 1 := by
   let y : Sp F := (⊥ : PrimeSpectrum F)
@@ -229,7 +224,6 @@ theorem isZero_val {g : GtPtF D F} {c : N.Gt} (h : ν.Pt g c) : g.IsZero ↔ c =
   · rw [← a]; exact ν.eA.map_eq_one_iff
   · exact (Eq.congr (b χ).symm (map_one (toStkU y)).symm).trans (toStkU_bijective y).1.eq_iff
 
-omit y in
 
 theorem isAdd_val {g g' g'' : GtPtF D F} {c c' c'' : N.Gt} (h : ν.Pt g c) (h' : ν.Pt g' c') (h'' : ν.Pt g'' c'') :
     GtPtF.IsAdd g g' g'' ↔ c'' = c * c' := by
@@ -244,7 +238,6 @@ theorem isAdd_val {g g' g'' : GtPtF D F} {c c' c'' : N.Gt} (h : ν.Pt g c) (h' :
     rw [c_eq, a, a'] at t
     rw [NumD.Gt.mul_s, eq_div_iff_mul_eq', ← (toStkU_bijective y).1.eq_iff, map_mul, map_mul, b, b', b'', t]
 
-omit y in
 
 theorem isIota_val {z : N.X} {g : GtPtF D F} {c : N.Gt} (h : ν.Pt g c) : GtPtF.IsIota (ν.eX z) g ↔ c = N.io z := by
   let y : Sp F := (⊥ : PrimeSpectrum F)
@@ -254,7 +247,6 @@ theorem isIota_val {z : N.X} {g : GtPtF D F} {c : N.Gt} (h : ν.Pt g c) : GtPtF.
   · rw [← a, ← c_eq]; exact ν.eA.injective.eq_iff
   · exact (Eq.congr (b χ).symm (tau_eq ν y z χ).symm).trans (toStkU_bijective y).1.eq_iff
 
-omit y in
 
 theorem isNsmul_val (k : ℕ) {g g' : GtPtF D F} {c c' : N.Gt} (h : ν.Pt g c) (h' : ν.Pt g' c') :
     GtPtF.IsNsmul k g g' ↔ c' = c ^ k := by

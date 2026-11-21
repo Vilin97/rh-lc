@@ -29,7 +29,6 @@ theorem red_smul {Q q : ℕ} [NeZero Q] [NeZero q] (h : q ∣ Q) (c : ZMod Q) (z
   conv_lhs => rw [← ZMod.natCast_zmod_val c, Nat.cast_smul_eq_nsmul, map_nsmul]
   rw [ZMod.castHom_apply, ZMod.cast_eq_val, Nat.cast_smul_eq_nsmul]
 
-open LateralTheory.KummerTheory in
 
 theorem gen_mod {ι : Type*} (g : ι → Hl l E n i)
     (hg : ∀ x : Hl l E n i, ∃ t y, x = g t + ((l : ℤ_[l]) ^ 1) • y) :

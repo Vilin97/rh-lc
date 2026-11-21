@@ -67,7 +67,6 @@ theorem isDerivAt0_of_isDiff {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {g :
     rw [← this, Scheme.Hom.comp_appLE]
     rfl
 
-open FibreUnif in
 
 theorem exists_equiv_of_polAV {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Geo.Tor.Host E} {D : Datum H}
     {l : Level H} {Xo : Moduli D l} {σ : KA l →+* ℂ} {g₀ : ℕ} {ty : Fin g₀ → (E →+* ℂ)} (FU : FamilyUnif Xo σ ty)

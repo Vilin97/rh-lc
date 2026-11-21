@@ -58,7 +58,6 @@ section Maps
 
 variable {V Z : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup Z] [Module ℂ Z]
 
-open Classical in
 
 end Maps
 

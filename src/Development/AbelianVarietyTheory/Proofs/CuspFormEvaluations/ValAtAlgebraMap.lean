@@ -245,7 +245,6 @@ theorem valAt_algebraMap (k : (T.U j T.σ₀).Comp) (x : ((T.U j T.σ₀).X k).d
   change T.σ₀ a * rdU (T.U j T.σ₀) 1 k x.1 = _
   rw [h1, mul_one]
 
-include h hj in
 
 theorem homRel_of_cusp (u : WeightFamilies.Wt D j) {m : ℕ} (hm : WeightFamilies.dimY D j + 2 ≤ m) (F : Fin m → T.R j)
     (hF : ∀ a, F a ∈ T.C j u) (k : (T.U j T.σ₀).Comp) (v : Fin m → Frame ((T.U j T.σ₀).X k).Ψ D.R.r → ℂ)

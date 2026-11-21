@@ -86,7 +86,6 @@ theorem pw_expand (j : ℕ) (s : Fin j → Fin 2) (ζ0 : ℂ) (X : Wq →L[ℂ] 
   congr 1
   ring
 
-variable (z z' μs π π' Pr) in
 
 def Bsl (T : Module.End ℂ (Q.RadSp k r z z' π π')) (c0 : Fin r → ℂ) (j : ℕ) (s : Fin j → Fin 2) (ζ0 : ℂ) :
     (Wq →L[ℂ] Wp) →L[ℝ] (Wq →L[ℂ] Wp) :=
@@ -128,7 +127,6 @@ theorem Bsl_smooth (hG : Gd z z' μs π π' Pr) (hc0 : c0 ∈ OmX r) (j : ℕ) (
   refine (ContDiffOn.sum fun t _ => ?_).congr fun ζ0 _ => key ζ0
   exact (contDiff_prod fun i _ => (crd (s i)).contDiff.neg).contDiffOn.smul (VV_smooth hG hc0)
 
-variable (z z' μs π π' Pr T c0) in
 
 def AA (j : ℕ) (ζ0 : ℂ) :
     ContinuousMultilinearMap ℝ (fun _ : Fin j => ℂ) (Wq →L[ℂ] Wp) →L[ℝ] (Wq →L[ℂ] Wp) :=

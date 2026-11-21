@@ -180,7 +180,6 @@ theorem tri_om {X X' X'' Z : Scheme.{0}} {L : LB X} {L' : LB X'} {L'' : LB X''} 
 
 variable {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R'] [IsLocalRing R'] {ρ : R →+* R'}
 
-omit [IsDomain R] [IsDomain R'] [IsLocalRing R'] in
 
 theorem spMap_gal (σ : Gal ρ) : spMap (Gal.hom σ) ≫ spMap ρ = spMap ρ :=
   (spMap_comp ρ (Gal.hom σ)).symm.trans (congrArg spMap (RingHom.ext σ.2))

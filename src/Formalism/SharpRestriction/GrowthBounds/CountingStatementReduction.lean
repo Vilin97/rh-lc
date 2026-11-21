@@ -1079,7 +1079,6 @@ theorem isoProj_of_set (E : GLOps n K V) (lam : Fin n → ℤ) (e : Module.End K
     IsIsoProj E lam e :=
   ⟨fun x hx => h.1 lam rfl x hx, fun mu hmu x hx => h.2 mu (by simpa using hmu) x hx⟩
 
-open Classical in
 
 theorem setProj_eq_sum (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, isoSub E mu) = ⊤) (T : Set (Fin n → ℤ))
     (e : Module.End K V) (he : IsIsoProjSet E T e) (ee : (Fin n → ℤ) → Module.End K V)
@@ -1111,7 +1110,6 @@ theorem setProj_eq_sum (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, isoSub E
 
 end Abs
 
-open Classical in
 
 theorem subOps_int (D : Formalism.BasicNotions.D7) (p n' : ℕ) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     (S0 : UniformizedDVR p O) (hG : AdmissibleDVR p n' O) (N r n : ℕ) (hn : 0 < n) (Lt : Letters (Fin N)) (S : Set (Fin N))
@@ -2284,7 +2282,6 @@ def blockForm (b : SegBlock s r) :
     MvPolynomial (BVar (2 * s + 1) r S.t) (KK O) → MvPolynomial (BVar (2 * s + 1) r S.t) (KK O) → KK O :=
   fun f g => ((specConst p S b : ℕ) : KK O) * fock f g
 
-open Classical in
 
 def segSub (aTop : Fin s → ℕ)
     (L₂ : SegBlock s r → Submodule O (MvPolynomial (BVar (2 * s + 1) r S.t) (KK O))) :
@@ -2295,7 +2292,6 @@ theorem fock_zero_right' {R : Type*} [CommSemiring R] {σ : Type*} (F : MvPolyno
     fock F (0 : MvPolynomial σ R) = 0 := by
   unfold fock; simp
 
-open Classical in
 
 theorem segSub_good (aTop : Fin s → ℕ) (aPlus : ℕ) (m D : ℝ)
     (L₂ : SegBlock s r → Submodule O (MvPolynomial (BVar (2 * s + 1) r S.t) (KK O)))
@@ -2585,7 +2581,6 @@ def segSubMap (aTop : Fin s → ℕ)
   map_add' := fun x y => by funext b; apply Subtype.ext; rfl
   map_smul' := fun c x => by funext b; apply Subtype.ext; rfl
 
-open Classical in
 
 def segSubEquiv (aTop : Fin s → ℕ)
     (L₂ : SegBlock s r → Submodule O (MvPolynomial (BVar (2 * s + 1) r S.t) (KK O))) :
@@ -2723,7 +2718,6 @@ namespace Formalism.MainNotions.G.CountingStatementReduction
 
 open Formalism.MainNotions.flipOneThree Formalism.MainNotions.G Finset
 
-open Classical in
 
 theorem double_count {α δ : Type*} (A : Finset α) (Dl : Finset δ) (rel : δ → α → Prop)
     (n rk m : δ → α → ℝ) (ε K : ℝ) (hε : 0 ≤ ε) (hK : 0 ≤ K)
@@ -2860,7 +2854,6 @@ theorem segPos_ne_next (TT : Finset (Fin n')) (j : Fin (numSeg TT)) (i : Fin (se
   · omega
   · omega
 
-open Classical in
 
 def realW (TT : Finset (Fin n')) (j : Fin (numSeg TT)) (a0 : ℕ) (aTop : Fin (segS TT j) → ℕ) (aPlus : ℕ) :
     Fin n' → ℕ :=
@@ -2911,12 +2904,10 @@ def mCl (dl : DCl X) (aTop : Fin X.s → ℕ) : ℕ :=
             (fun i => coarseC X.L.p (X.S C0 CE1 CE2) aTop (Formalism.MainNotions.ColumnSystems.digitBlock dl.1 dl.2) i) *
     Formalism.MainNotions.ColumnSystems.symDim (X.L.m + 1) ((X.S C0 CE1 CE2).bPlus : ℤ)
 
-open Classical in
 
 def keptSum (f : SegBlock X.s X.r → ℕ) (aTop : Fin X.s → ℕ) : ℕ :=
   ∑ᶠ b : SegBlock X.s X.r, if Kept X.p X.r (X.S C0 CE1 CE2) aTop b then f b else 0
 
-open Classical in
 
 def clSum (f : SegBlock X.s X.r → ℕ) (aTop : Fin X.s → ℕ) (dl : DCl X) : ℕ :=
   ∑ᶠ b : SegBlock X.s X.r,
@@ -2962,7 +2953,6 @@ theorem clSum_eq_sum {aTop : Fin X.s → ℕ} (hfin : {b | Kept X.p X.r (X.S C0 
     by_contra hk
     exact hb (if_neg fun h => hk h.1)
 
-open Classical in
 
 theorem keptSum_eq_classes {aTop : Fin X.s → ℕ} (hfin : {b | Kept X.p X.r (X.S C0 CE1 CE2) aTop b}.Finite)
     (f : SegBlock X.s X.r → ℕ) :
@@ -3026,12 +3016,10 @@ theorem rank_ge {D : Formalism.BasicNotions.D7} {CYb Cde Ck CD Cb Cc : ℝ} (hH 
 
 variable (C0 CE1 CE2 X)
 
-open Classical in
 
 def MCl (aTop : Fin X.s → ℕ) : ℝ :=
   ∑ dl ∈ (clSet C0 CE1 CE2 X).filter (fun dl => Compat C0 CE1 CE2 X dl aTop), (mCl C0 CE1 CE2 X dl aTop : ℝ)
 
-open Classical in
 
 def DigitClassDimensionComparison (g : (Fin X.s → ℕ) → ℕ → SegBlock X.s X.r → ℕ) (ε : ℝ) : Prop :=
   ∀ dl ∈ clSet C0 CE1 CE2 X,
@@ -3053,7 +3041,6 @@ theorem meanBox_eq (κ : (Fin X.s → ℕ) → ℕ → ℝ) :
   unfold meanBox box
   rw [Finset.sum_product]
 
-open Classical in
 
 theorem mean_of_classes {D : Formalism.BasicNotions.D7} {CYb Cde Ck CD Cb Cc : ℝ} (hH : flipOneThree.HI C0 CYb Cde Ck CD Cb Cc X)
     (h11 : adm11 D C0 CYb Cde Ck CD Cb CE1 CE2 Cc X)
@@ -3169,7 +3156,6 @@ theorem card_Ev (k n : ℕ) : (Ev k n).card = (k + n - 1).choose n := by
     rw [Finset.mem_finsuppAntidiag]
     exact ⟨(mem_Ev e).1 he, Finset.subset_univ _⟩
 
-open Classical in
 
 theorem card_Ev_digits (k a P : ℕ) (hP : 0 < P) :
     (Ev k a).card = ∑ ρ ∈ Fintype.piFinset (fun _ : Fin k => range P),
@@ -3246,7 +3232,6 @@ theorem symDim_choose (r n : ℕ) : Formalism.MainNotions.ColumnSystems.symDim (
   have e3 : r + 1 - 1 = r := by omega
   rw [e1, e3]
 
-open Classical in
 
 theorem symDim_digits (r a P : ℕ) (hP : 0 < P) :
     ∑ ρ ∈ Fintype.piFinset (fun _ : Fin (r + 1) => range P),
@@ -3303,13 +3288,11 @@ section Flat
 
 variable (C0 CE1 CE2 : ℝ) (X : flipOneThree.Inst)
 
-open Classical in
 
 def fA (i : Fin X.s) (ρ : Fin (X.r + 1) → ℕ) : ℕ :=
   if (∑ c, ρ c ≤ (X.S C0 CE1 CE2).bTop i ∧ (X.S C0 CE1 CE2).P X.p i ∣ (X.S C0 CE1 CE2).bTop i - ∑ c, ρ c) then
     Formalism.MainNotions.ColumnSystems.symDim (X.r + 1) ((((X.S C0 CE1 CE2).bTop i - ∑ c, ρ c) / (X.S C0 CE1 CE2).P X.p i : ℕ) : ℤ) else 0
 
-open Classical in
 
 def fC (i : Fin X.s) (a : ℕ) (ρ : Fin (X.r + 1) → ℕ) : ℕ :=
   if (∑ c, ρ c ≤ a ∧ (X.S C0 CE1 CE2).P X.p i ∣ a - ∑ c, ρ c) then
@@ -3360,7 +3343,6 @@ theorem mCl_factor (rz ry : Fin X.s → Fin (X.r + 1) → ℕ) (hrz : rz ∈ dig
         exact h2 i (Finset.mem_univ i) (by unfold fC; exact if_neg hn)
     rw [hz, mul_zero]
 
-open Classical in
 
 theorem MCl_eq (hp : 0 < X.p) (aTop : Fin X.s → ℕ) :
     MCl C0 CE1 CE2 X aTop =

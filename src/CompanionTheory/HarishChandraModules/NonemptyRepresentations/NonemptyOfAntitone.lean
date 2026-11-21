@@ -48,7 +48,6 @@ def detPow (k : ℕ) (m : ℤ) : HWRep k (fun _ => m) where
     ext i
     simp [Matrix.mulVec, dotProduct, Matrix.det_of_upperTriangular hb, Finset.prod_zpow]
 
-open Kronecker in
 
 def tensor {ν μ : Fin k → ℤ} (R : HWRep k ν) (S : HWRep k μ) : HWRep k (ν + μ) where
   I := R.I × S.I

@@ -84,7 +84,6 @@ section Inflation
 variable (X : ShortComplex (Rep.{u} k G)) [IsDiscreteRep X.X₁] [IsDiscreteRep X.X₂]
   [IsDiscreteRep X.X₃] (N : Subgroup G) [N.Normal]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 instance quotientToInvariantsFunctor_preservesZeroMorphisms :
     (Rep.quotientToInvariantsFunctor.{u} k N).PreservesZeroMorphisms where

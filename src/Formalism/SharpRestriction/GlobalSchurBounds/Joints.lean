@@ -27,9 +27,7 @@ namespace Formalism.MainNotions.GlobalTheoryTheory
 open NumberField Formalism.FrobeniusOrbits Formalism.BasicNotions
 open scoped Pointwise
 
-open IsDedekindDomain TensorProduct Formalism.MainNotions.UnusedSlot33 in
 
-open IsDedekindDomain in
 
 section DlogL
 

@@ -155,7 +155,6 @@ theorem toClass_sum (D : HeightOneSpectrum W.toAffine.CoordinateRing →₀ ℤ)
   refine Finset.sum_congr rfl fun v _ => ?_
   rw [map_zsmul, toClass_pointOfIdeal, map_zpow, ofMul_zpow]
 
-omit [DecidableEq F] in
 
 omit [DecidableEq F] in
 theorem classGroup_mk_eq_one_iff
@@ -245,7 +244,6 @@ theorem finsum_ordAtIdeal_algebraMap {a : W.toAffine.CoordinateRing} (ha : a ≠
   simp_rw [ordAtIdeal_algebraMap]
   exact (natDegree_norm_eq_finsum_count W ha).symm
 
-omit [DecidableEq F] in
 
 theorem finsum_ordAtIdeal_add_ordInfty {f : W.toAffine.FunctionField} (hf : f ≠ 0) :
     ∑ᶠ v, ordAtIdeal W v f + ordInfty W f = 0 := by
@@ -278,7 +276,6 @@ theorem divisorDegree_divisorOf {f : W.toAffine.FunctionField} (hf : f ≠ 0) :
   rw [divisorDegree_eq, affinePart_divisorOf, sum_affineDivisorOf, divisorOf_zero_apply]
   exact finsum_ordAtIdeal_add_ordInfty W hf
 
-omit [DecidableEq F] in
 
 theorem exists_divisorOf_eq {D : CurveDivisor W} (hdeg : divisorDegree W D = 0)
     (hsum : divisorSum W D = 0) :
@@ -300,9 +297,7 @@ theorem exists_divisorOf_eq {D : CurveDivisor W} (hdeg : divisorDegree W D = 0)
   rw [divisorOf, haff, hinf]
   exact (eq_mapDomain_affinePart_add W D).symm
 
-omit [IsAlgClosed F] [W.IsElliptic] [DecidableEq F] in
 
-omit [IsAlgClosed F] [W.IsElliptic] in
 
 end AlgClosed
 

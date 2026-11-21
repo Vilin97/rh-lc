@@ -148,7 +148,6 @@ theorem dTot1_η (c : Tot1 F) (T : C) : (dTot1 F c).2.2 T = dOne R _ (c.2 T) := 
 
 end
 
-variable {F} in
 
 theorem Tot1.ext {c c' : Tot1 F} (h1 : ∀ T T' φ, c.1 T T' φ = c'.1 T T' φ) (h2 : ∀ T, c.2 T = c'.2 T) :
     c = c' := by
@@ -158,7 +157,6 @@ theorem Tot1.ext {c c' : Tot1 F} (h1 : ∀ T T' φ, c.1 T T' φ = c'.1 T T' φ) 
   · funext T
     exact h2 T
 
-variable {F} in
 
 theorem Tot2.ext {c c' : Tot2 F} (h1 : ∀ T T' T'' φ ψ, c.1 T T' T'' φ ψ = c'.1 T T' T'' φ ψ)
     (h2 : ∀ T T' φ, c.2.1 T T' φ = c'.2.1 T T' φ) (h3 : ∀ T, c.2.2 T = c'.2.2 T) : c = c' := by
@@ -493,7 +491,6 @@ theorem Fil1_eq_range : Fil1 F = LinearMap.range (ofForm F) := by
     rw [map_zero]
     rfl
 
-variable {F} in
 
 theorem ofForm_eq_zero {ω : Closed1 F} : ofForm F ω = 0 ↔
     ∃ g : C0 F, (∀ ⦃T T' : C⦄ (φ : T ⟶ T'), g T' = mp F φ (g T)) ∧ ∀ T, D R _ (g T) = ω.1.1 T := by

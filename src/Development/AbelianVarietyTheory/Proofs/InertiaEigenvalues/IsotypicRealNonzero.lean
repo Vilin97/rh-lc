@@ -68,6 +68,5 @@ theorem exists_irr_pair {D : D7} {μ : D.what₂.Tup} {j : ℕ} (Mr : MtReal D �
 
 end GlobalTheory.LiftRefIrr
 
-open GlobalTheory.LiftRefIrr in
 
 end

@@ -250,7 +250,6 @@ theorem cls_part
   rw [GlobalTheory.T.conjugacyClassPart_eq_weight_mul_kottwitzPointSum p G v _ Kf f hf K' f' hf' β x t hx hu y₀]
   rfl
 
-include hf hf' in
 
 theorem cxSumAtM_unfold
     (hA : ∀ (h : G.GAf × Gr G 1) (z : Fin G.n → ℂ), 0 < (star z ⬝ᵥ (herm G v β *ᵥ z)).re →

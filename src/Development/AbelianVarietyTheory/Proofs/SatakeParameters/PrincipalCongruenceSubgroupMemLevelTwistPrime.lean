@@ -128,7 +128,6 @@ theorem entry_cong {N : ℕ} (g : Sp E N ≃ₗ[E] Sp E N)
 
 end Lat
 
-open GlobalTheory.TopStep in
 
 theorem cong_mem_prCat_twist : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} {Ch : Chars X Pr R.m}
     {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} {S : Set ℕ} {mu : Tup X.F X.E X.K S}

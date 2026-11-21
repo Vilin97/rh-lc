@@ -14,7 +14,6 @@ open QuadraticAlgebra Matrix UpperTheory.V.Z.Sym UpperTheory.V.Z.Sym.Loc
 
 variable {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K] {Δ τ : K}
 
-variable (O) in
 
 structure Gen1 (x : Etau K τ) : Prop where
   tr : QuadraticAlgebra.trace x ∈ (algebraMap O K).range
@@ -132,7 +131,6 @@ theorem Gen1.cint (L : IsLoc O Δ) {x : Etau K τ} (h : Gen1 O x) {c : (Etau K �
     refine key α 1 r (.inl isUnit_one) ?_
     rw [e, algebraMap_etau r, hr, map_one, mul_add, mul_one, ← mul_assoc, ← map_mul, inv_div, mul_div_cancel₀ _ hα]
 
-variable (O τ) in
 
 def Mx : Set (Etau K τ) := {w | IsIntegral O w}
 

@@ -714,7 +714,6 @@ end Trans
 
 section TransW
 
-set_option maxHeartbeats 800000 in
 
 theorem trans_prim {l : ℕ} [Fact l.Prime] (P : LocPrime l) {K LL : FinExt l}
     (W : LocWach (P.PD K) ↥LL.1 ↥(OL LL) (P.v LL) (Module.finrank ℚ_[l] ↥(K0 K)))

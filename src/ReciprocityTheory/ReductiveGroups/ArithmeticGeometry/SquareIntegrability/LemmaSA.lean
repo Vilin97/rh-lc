@@ -86,7 +86,6 @@ lemma lemSG_det {n : ℕ} (b : Module.Basis (Fin n) ℝ (EuclideanSpace ℂ ι))
     LinearMap.det_toMatrix, Module.Basis.det_apply]
   ring
 
-set_option maxHeartbeats 800000 in
 
 lemma lemSG_inv (Y : GT ι) :
     ∃ C : Matrix (Fin (2 * Fintype.card ι)) (Fin (2 * Fintype.card ι)) ℤ,

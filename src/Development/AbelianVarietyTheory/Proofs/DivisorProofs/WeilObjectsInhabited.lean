@@ -129,9 +129,7 @@ section Pair
 
 variable {R : Type} [CommRing R]
 
-omit [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] in
 
-omit [DecidableEq β] [Fintype κ] in
 
 end Pair
 

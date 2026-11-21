@@ -46,7 +46,6 @@ theorem unram_det_dcoset {μ₀ : kˣ →* ℂˣ} (hμ : IsUnram μ₀) {n : Typ
   rw [map_mul, map_mul, map_mul, map_mul, unram_det_KO hμ hκ, unram_det_KO hμ hκ', det_torusElt_eq, sum_indic,
     map_zpow, one_mul, mul_one, zpow_natCast]
 
-open Classical in
 
 theorem isRepsK_image {m n : Type} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n] (e : m ≃ n)
     {g₀ : GL m k} {R : Finset (GL m k)} (hR : IsRepsK g₀ R) :

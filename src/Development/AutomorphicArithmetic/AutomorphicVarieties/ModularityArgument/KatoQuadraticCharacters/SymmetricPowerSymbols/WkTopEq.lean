@@ -55,13 +55,11 @@ structure IsCoc (X : Tower Ω ε) (m M : ℕ) (w : (Ω ≃ₐ[ℚ] Ω) → Fam X
   coc : ∀ s t x y, Ok x y → Cgr m (w (s * t) x y) (w s x y * tw X m M s (w t) x y)
   loc : ∃ T : Finset Ω, ∀ s t, (∀ z ∈ T, s z = t z) → ∀ x y, Ok x y → Cgr m (w s x y) (w t x y)
 
-open Classical in
 
 def pushD (X : Tower Ω ε) (k M : ℕ) [NeZero k] [NeZero M] (a : Fam X (k * M)) : Fam X M :=
   haveI : NeZero (k * M) := ⟨mul_ne_zero (NeZero.ne k) (NeZero.ne M)⟩
   fun x y => ∏ x' ∈ Finset.univ.filter (fun x' => dn k M x' = x), ∏ y' ∈ Finset.univ.filter (fun y' => dn k M y' = y), a x' y'
 
-open Classical in
 
 def pushH (X : Tower Ω ε) (k M : ℕ) [NeZero k] [NeZero M] (a : Fam X (k * M)) : Fam X M :=
   haveI : NeZero (k * M) := ⟨mul_ne_zero (NeZero.ne k) (NeZero.ne M)⟩

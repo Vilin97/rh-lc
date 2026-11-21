@@ -43,7 +43,6 @@ theorem localComponent_eq_one_of_mem_unitsLevel {v : HeightOneSpectrum (𝓞 K)}
   rw [MonoidHom.mem_ker, ofFinite_finiteUnitsSingle] at h2
   exact h2
 
-open Classical in
 
 def finiteTest (v : HeightOneSpectrum (𝓞 K)) (x : v.adicCompletion K) : ℂ :=
   if v.asIdeal ∣ χ.conductor then
@@ -239,7 +238,6 @@ theorem count_idealOfExponents {n : HeightOneSpectrum (𝓞 K) →₀ ℤ} (hn :
       n v := by
   rw [coeIdeal_idealOfExponents hn, FractionalIdeal.count_finsuppProd]
 
-open Classical in
 
 theorem finiteTestFun_mul_toIdele (b : (FiniteAdeleRing (𝓞 K) K)ˣ) :
     χ.finiteTestFun b * (χ.toIdele (ofFinite b) : ℂ) =
@@ -341,7 +339,6 @@ theorem finiteModule_ofFinite_eq {b : (FiniteAdeleRing (𝓞 K) K)ˣ}
     Real.rpow_one] at h
   exact h
 
-open Classical in
 
 def orderTerm (s : ℂ) (n : HeightOneSpectrum (𝓞 K) →₀ ℤ) : ℂ :=
   if ∀ v, 0 ≤ n v then χ.coeff (idealOfExponents n) *

@@ -339,7 +339,6 @@ end Jac
 
 end P_spUniq
 
-open P_spUniq in
 
 theorem step_spUniq {n : ℕ} (G : Grp k n) : G.SphericalVectorUniqueness := by
   intro hLat V _ _ I hI hfin hle A B _ _ _ _ α β hα hβ hsa hsb hηa hηb

@@ -88,7 +88,6 @@ def TwReads {D : D7} (C : NChoice D) (X : LocNd (lay0 D)) (T : LocTw X) : Prop :
   ∀ a : X.nd.Loc, ∃ f : D.ntw.O0 (C.twI (X.nd.w a)) →+* X.nd.O a, HEq f (T.twist₂ a) ∧
     Reads D C (X.nd.w a) (X.nd.embK a) ((algebraMap (X.nd.O a) (FractionRing (X.nd.O a))).comp f)
 
-set_option maxHeartbeats 2000000 in
 
 theorem oneField_withLoc {D : D7} (L : LocAll (lay0 D)) (C : NChoice D) :
     OneField (withLoc L) (chL L C) ↔ TwReads C L.X L.T := Iff.rfl

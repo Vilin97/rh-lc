@@ -23,7 +23,6 @@ namespace PositivityTheory.PrwZar
 
 variable {S : Scheme.{0}} {A B : Over S} [GrpObj A] [GrpObj B]
 
-omit [GrpObj A] [GrpObj B] in
 
 theorem one_comp_prj {G : Over S} [GrpObj G] {Y : Over S} (i : Fin 4) : (1 : Y ⟶ G4 G) ≫ prj G i = 1 := by
   fin_cases i <;> simp [prj]

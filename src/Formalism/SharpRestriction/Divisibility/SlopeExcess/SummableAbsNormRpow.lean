@@ -144,9 +144,7 @@ open Formalism.MainNotions.SchurIrreducible Formalism.MainNotions.PDVS MeasureTh
 section Tail
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (E) in
 
-variable (E) in
 
 end Tail
 

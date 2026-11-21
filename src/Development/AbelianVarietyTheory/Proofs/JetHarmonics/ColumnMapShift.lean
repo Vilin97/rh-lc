@@ -79,7 +79,6 @@ theorem rowInv_colMap (g : T → Fin n → Fin n → k) {P : MvPolynomial (Lette
   intro σ i i' hi t
   rw [rowShift_colMap, hP σ i i' hi t]
 
-open Classical in
 
 def rowWt (n : ℕ) (σ : T) (i : Fin (r σ)) (ℓ : Letter T r n) : ℕ :=
   if (⟨ℓ.1, ℓ.2.1⟩ : Σ s, Fin (r s)) = ⟨σ, i⟩ then 1 else 0

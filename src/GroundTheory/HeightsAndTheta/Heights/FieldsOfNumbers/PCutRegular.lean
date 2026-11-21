@@ -23,7 +23,6 @@ namespace CutRegular
 
 variable {K : Type} [DecidableEq K] {ι : K → Type} {F : Type u} [Field F]
 
-omit [DecidableEq K] in
 
 theorem mixedDiff_snoc {n : ℕ} (bs : Fin n → K → ℤ) (c : K → ℤ) (h : (K → ℤ) → ℤ) :
     mixedDiff (Fin.snoc (α := fun _ => K → ℤ) bs c) h = mixedDiff bs (diffStep c h) := by
@@ -31,7 +30,6 @@ theorem mixedDiff_snoc {n : ℕ} (bs : Fin n → K → ℤ) (c : K → ℤ) (h :
   rw [List.ofFn_succ', List.concat_eq_append, List.foldr_concat]
   simp only [Fin.snoc_castSucc, Fin.snoc_last]
 
-omit [DecidableEq K] in
 
 theorem foldr_diffStep_eventually_zero {h : (K → ℤ) → ℤ}
     (hh : ∀ᶠ m in Filter.atTop, h m = 0) :
@@ -42,7 +40,6 @@ theorem foldr_diffStep_eventually_zero {h : (K → ℤ) → ℤ}
     filter_upwards [ih, (tendsto_sub_const_atTop b).eventually ih] with m h1 h2
     simp only [List.foldr_cons, diffStep, h1, h2, sub_self]
 
-omit [DecidableEq K] in
 
 theorem eventualValue_eq_zero {f : (K → ℤ) → ℤ} (hf : ∀ᶠ m in Filter.atTop, f m = 0) :
     eventualValue f = 0 := by
@@ -126,7 +123,6 @@ theorem isMultiHomogIdeal_sup_span {P : Ideal (ReciprocityTheory.ChartRestrictio
   · exact Ideal.mem_sup_right (Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self s))
   · exact Ideal.zero_mem _
 
-omit [DecidableEq K] in
 
 theorem colon_eq_of_not_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [hP : P.IsPrime] {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hs : s ∉ P) : P.colon (Ideal.span {s}) = P := by
@@ -134,7 +130,6 @@ theorem colon_eq_of_not_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo
   rw [HilbExactDivide.mem_colon_span_iff]
   exact ⟨fun h => (hP.mem_or_mem h).resolve_right hs, fun h => P.mul_mem_right s h⟩
 
-omit [DecidableEq K] in
 
 theorem relDim_eq_natCast_iff [Fintype K] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ) :
     relDim I = ((d : ℕ) : WithBot (WithTop ℤ)) ↔
@@ -207,7 +202,6 @@ theorem le_of_height_add {h : ℕ∞} {x : WithBot ℕ∞} {e : ℕ} (hh : h ≤
         have : e ≤ y := by omega
         exact_mod_cast this
 
-omit [DecidableEq K] in
 
 theorem ringKrullDim_sup_span_add_one_le {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [P.IsPrime] {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
     (hs : s ∉ P) :
@@ -250,7 +244,6 @@ theorem ringKrullDim_minimalPrime [Fintype K] [∀ k, Fintype (ι k)] {P W : Ide
 
 end CutRegular
 
-open CutRegular in
 
 theorem CutRegular.proof (h1 : HilbExactDivide.Statement.{u}) (h2 : MultEqualsCoeff.Statement.{u})
     (_h3 : IntNumSymm.Statement.{u}) : CutRegular.Statement.{u} := by

@@ -57,7 +57,6 @@ private theorem int_unit (u : Oˣ) {x : Lsq K Δ} (h : IsInt O (algebraMap K (Ls
   have := (int_of ((u⁻¹ : Oˣ) : O)).mul h
   rwa [← mul_assoc, ← map_mul, ← map_mul, Units.inv_mul, map_one, map_one, one_mul] at this
 
-variable (O) in
 
 private def IB (x : EL Δ τ) : Prop := IsInt O x.re ∧ IsInt O x.im
 
@@ -96,7 +95,6 @@ private theorem IB.of_tr (hτ : τ ∈ (algebraMap O K).range) (u : Oˣ) (hu : a
     simp only [trace_def, re_mul, im_mul, omega_re, omega_im, map_sub, map_pow, map_ofNat]
     ring
 
-variable (O Δ τ) in
 
 private def lat : Set (Sp Δ τ) := {x | IsInt O x.1 ∧ IB O x.2}
 

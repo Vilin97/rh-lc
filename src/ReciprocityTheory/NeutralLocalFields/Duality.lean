@@ -298,7 +298,6 @@ def charRep (χ : Γ →* Rˣ) : Representation R Γ R where
 @[simp] theorem charRep_apply (χ : Γ →* Rˣ) (g : Γ) (x : R) :
     charRep χ g x = ((χ g : Rˣ) : R) * x := rfl
 
-variable (R M) in
 
 end Coeff
 
@@ -336,7 +335,6 @@ def cycN : (L ≃ₐ[K] L) →* (ZMod n)ˣ :=
   (modularCyclotomicCharacter L (HasEnoughRootsOfUnity.natCard_rootsOfUnity L n)).comp
     (MulSemiringAction.toRingAut (L ≃ₐ[K] L) L)
 
-variable {K L n} in
 
 theorem cycN_spec (σ : L ≃ₐ[K] L) (ζ : L) (h : ζ ^ n = 1) :
     σ ζ = ζ ^ ((cycN K L n σ : ZMod n)).val := by
@@ -365,7 +363,6 @@ abbrev cycK (n : ℕ) [NeZero n] : GK p K →* (ZMod n)ˣ := cycN K (PadicAlgCl 
 
 variable {p K}
 
-variable (p) in
 
 def KbarMult : Type := Additive (PadicAlgCl p)ˣ
 
@@ -373,7 +370,6 @@ instance : AddCommGroup (KbarMult p) := inferInstanceAs (AddCommGroup (Additive 
 instance : TopologicalSpace (KbarMult p) := ⊥
 instance : DiscreteTopology (KbarMult p) := ⟨rfl⟩
 
-variable (p K) in
 
 def kbarRep : Representation ℤ (GK p K) (KbarMult p) where
   toFun σ := AddMonoidHom.toIntLinearMap
@@ -405,14 +401,12 @@ variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
 def IsPlaceOver (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 F)) : Prop :=
   ∀ x : 𝓞 F, A.valuation (algebraMap F Ω (x : F)) < 1 ↔ x ∈ v.asIdeal
 
-variable (F) in
 
 abbrev Dec (A : ValuationSubring Ω) : Subgroup (G F Ω) := A.decompositionSubgroup F
 
 def Inertia (A : ValuationSubring Ω) : Set (G F Ω) :=
   {σ | σ ∈ Dec F A ∧ ∀ x, A.valuation x ≤ 1 → A.valuation (σ x - x) < 1}
 
-variable (F) in
 
 def DecInf (j : Ω →+* ℂ) : Subgroup (G F Ω) where
   carrier := {σ | (∀ x, j (σ x) = j x) ∨ ∀ x, j (σ x) = starRingEnd ℂ (j x)}
@@ -457,7 +451,6 @@ section unram
 
 variable (S : Set (HeightOneSpectrum (𝓞 F)))
 
-variable (Ω) in
 
 def NS : Subgroup (G F Ω) :=
   (Subgroup.normalClosure
@@ -467,11 +460,9 @@ def NS : Subgroup (G F Ω) :=
 instance normal_NS : (NS Ω S).Normal := by
   unfold NS; exact Subgroup.is_normal_topologicalClosure _
 
-variable (Ω) in
 
 abbrev GS := G F Ω ⧸ NS Ω S
 
-variable (Ω) in
 
 def toGS : G F Ω →* GS Ω S := QuotientGroup.mk' (NS Ω S)
 
@@ -480,14 +471,12 @@ theorem continuous_toGS : Continuous (toGS Ω S) := QuotientGroup.continuous_mk
 
 end unram
 
-variable (F Ω) in
 
 def cycG [IsAlgClosure F Ω] (n : ℕ) [NeZero n] : G F Ω →* (ZMod n)ˣ :=
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed F
   haveI : CharZero Ω := charZero_of_injective_algebraMap (algebraMap F Ω).injective
   cycN F Ω n
 
-variable (F Ω) in
 
 structure GData [IsAlgClosure F Ω] (S : Finset (HeightOneSpectrum (𝓞 F))) (n : ℕ) [NeZero n] where
 
@@ -622,7 +611,6 @@ variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
 
 end LTRecip
 
-open ValuativeRel in
 
 section Hecke
 

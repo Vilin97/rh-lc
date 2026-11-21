@@ -17,7 +17,6 @@ open NumberField IsDedekindDomain Matrix MeasureTheory ValuativeRel GlobalTheory
 open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-open Formalism.MainNotions.S Formalism.IndefR.Mult in
 
 theorem GlobalTheory.SeeSaw.exists_isJ_of_par {D : D7} {u : D.what₂.Word}
     (hsg : ∀ (i : Fin (D.R.N D.R.m - 1)) τ, (((D.fm u).sg τ).w i : ℚ) = sgHC D.R (D.hcW u τ) i - rhoVec (D.R.N D.R.m - 1) i)

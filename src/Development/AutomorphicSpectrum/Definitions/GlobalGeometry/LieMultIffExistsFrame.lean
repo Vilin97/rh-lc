@@ -87,7 +87,6 @@ theorem isEigFrame_iff (M : LieModel G x V) (act : OAct O G) (ρ : O →+* Modul
       simp only [Pi.sub_apply, sub_smul, Finset.sum_sub_distrib, hc, ← hd', sub_self])
     exact funext fun i => sub_eq_zero.1 (this i)
 
-open GlobalTheory.Diag in
 
 def torusModel (x : Sp R ⟶ S) (X : Type) [AddCommGroup X] : LieModel (splitTorus S X) x (X →+ R) where
   pt c := epsVec _ c
@@ -158,7 +157,6 @@ theorem sesq_smul_right (D : Datum H) (c : 𝓞 E) (x y : D.La) : sesq D x (H.ba
   eq_of_trace fun a => by
     rw [trace_mul_sesq, ← D.adj, ← mul_smul, ← trace_mul_sesq, ← _root_.mul_assoc, mul_comm (a : E)]; simp
 
-omit [NumberField E] [IsCMField E] in
 
 end Form
 

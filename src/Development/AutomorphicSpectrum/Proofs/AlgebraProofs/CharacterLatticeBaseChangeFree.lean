@@ -56,7 +56,6 @@ theorem swp_stable {Γ : AddSubgroup (V × Z)} (hs : ∀ a ∈ R, ∀ v ∈ Γ, 
   have := hs a ha _ (mem_swp.1 h)
   exact mem_swp.2 this
 
-include hR in
 
 theorem comap_inl (hb : IsBaseChange C b) (hb' : IsBaseChange C b')
     (Γ : AddSubgroup (V × Z)) (N : ℕ) (hs : ∀ a ∈ R, ∀ v ∈ Γ, a • v ∈ Γ)
@@ -79,7 +78,6 @@ theorem comap_inl (hb : IsBaseChange C b) (hb' : IsBaseChange C b')
   simp only [AddSubgroup.mem_comap, AddMonoidHom.inr_apply, AddMonoidHom.inl_apply]
   exact (mem_swp (Γ := spanOver RC (Prod.map b b' '' Γ))).symm
 
-include hR in
 
 theorem inf_top_prod (hb : IsBaseChange C b) (hb' : IsBaseChange C b')
     (Γ : AddSubgroup (V × Z)) (H : AddSubgroup Z) (N : ℕ) (hs : ∀ a ∈ R, ∀ v ∈ Γ, a • v ∈ Γ)
@@ -118,7 +116,6 @@ variable {o Ω C : Type} [CommRing o] [Field Ω] [Field C] [Algebra o Ω] [Algeb
   [IsScalarTower Ω C Sc]
   (a : A →ₗ[Ω] Ac) (b : B →ₗ[Ω] Bc) (c : S →ₗ[Ω] Sc)
 
-include hR in
 
 theorem core (ha : IsBaseChange C a) (hb : IsBaseChange C b) (hc : IsBaseChange C c)
     (Gam : AddSubgroup (A × B)) (Del : AddSubgroup (B × S)) (hh : AddSubgroup B) (n₁ n₂ n₃ : ℕ)

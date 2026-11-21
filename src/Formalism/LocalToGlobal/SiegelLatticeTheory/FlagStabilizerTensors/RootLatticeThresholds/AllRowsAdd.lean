@@ -25,7 +25,6 @@ variable {D : D7}
 
 instance instFactG' (k : Fin 2) : Fact (D.host.g k).Prime := ⟨D.host.g_prime k⟩
 
-open Classical in
 
 theorem ES_inter (S S' : Set (Tup2 D)) : ES S * ES S' = ES (S ∩ S') := by
   rw [ES_eq, ES_eq, ES_eq, Finset.sum_mul_sum]
@@ -50,7 +49,6 @@ theorem Ea_zero (a : CV D) (h : tupOf a ∉ labT (D := D)) : Ea a = 0 := by
   rw [Ea_coeff, Finset.prod_eq_zero (Finset.mem_univ kv) (by rw [h0]; rfl)]
   rfl
 
-open Classical in
 
 theorem ES_split (S : Set (Tup2 D)) : ES S = ∑ t ∈ (labT (D := D)).filter (· ∈ S), ES {t} := by
   simp only [ES_eq]
@@ -105,7 +103,6 @@ theorem hat_sum {ι : Type} (F : Finset ι) (f : ι → X.B.I.Gf → ℂ) (γ : 
     hat hS (fun x => ∑ i ∈ F, f i x) γ = ∑ i ∈ F, hat hS (f i) γ := by
   unfold hat; rw [Finset.mul_sum]
 
-open Classical in
 
 theorem eT_split (S : Set (Tup2 D)) :
     eT X S = fun x => ∑ t ∈ (labT (D := D)).filter (· ∈ S), eT X {t} x := by
@@ -166,7 +163,6 @@ theorem isRConvF_sum {ι : Type} (F : Finset ι) (f : ι → X.B.I.Gf → ℂ)
     (Filter.Eventually.of_forall fun c => Formalism.L2.SG.Pf.AllRowsRMul.phi_bound X x y c)]
   exact Finset.sum_congr rfl fun i _ => (h i).2 x y
 
-open Classical in
 
 theorem reT_split (S : Set (Tup2 D)) : ReT X S = ∑ t ∈ (labT (D := D)).filter (· ∈ S), ReT X {t} := by
   have h := isRConvF_sum X ((labT (D := D)).filter (· ∈ S)) (fun t => eT X {t}) (fun t => ReT X {t})
@@ -290,7 +286,6 @@ theorem reT_univ' : ReT X Set.univ = X.B.Re :=
   reT_univ X (etUniv_of X (redKer_of X (redKerOne_of X (Formalism.L2.SG.Pf.AllRowsRedKer.redKerP_holds X 0)
     (Formalism.L2.SG.Pf.AllRowsRedKer.redKerP_holds X 1)))) (etInt_holds X)
 
-open Classical in
 
 theorem rowsAdd_of (hFD : FiniteDimensional ℂ (X.B.I.eHom X.B.σs X.B.μf X.B.fund X.B.R X.B.Re)) : RowsAdd X := by
   intro S

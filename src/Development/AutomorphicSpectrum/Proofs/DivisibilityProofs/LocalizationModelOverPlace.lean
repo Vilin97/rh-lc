@@ -39,7 +39,6 @@ section Place
 variable {A O : Type} [CommRing A] [CommRing O] [Algebra A O] (m : Ideal A) [m.IsPrime]
   [IsLocalization.AtPrime O m]
 
-include m in
 
 theorem injective_toField [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω]
     (hA : Function.Injective (algebraMap A Ω)) : Function.Injective (algebraMap O Ω) := by
@@ -55,7 +54,6 @@ theorem injective_toField [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω]
     | exact hu.mul_left_eq_zero.1 hs'
     | exact hu.mul_right_eq_zero.1 hs'
 
-include m in
 
 theorem pointIdeal_eq_map [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω] :
     pointIdeal O y = (pointIdeal A y : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)).map (MvPolynomial.map (algebraMap A O)) := by
@@ -71,7 +69,6 @@ theorem pointIdeal_eq_map [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω] :
     IsLocalization.map_units (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) s
   exact (Ideal.mul_unit_mem_iff_mem _ hu).1 (by rw [hs']; exact Ideal.mem_map_of_mem _ hf)
 
-include m in
 
 theorem isAlgebraic_int [IsDomain A] [Module.Finite ℤ A] : Algebra.IsAlgebraic ℤ O := by
   haveI : Algebra.IsAlgebraic A O := IsLocalization.isAlgebraic O m.primeCompl

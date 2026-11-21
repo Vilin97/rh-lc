@@ -47,7 +47,6 @@ theorem conj_eq {D : D7} {P P' : PlE D.host} (h : Formalism.BasicNotions.IsConjP
     rw [← hc]
     exact (h y).1 hy
 
-open GlobalTheory.HeckeParts in
 
 theorem keep_adj {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)}
     {M : DSModel V S} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} {N : ℕ}
@@ -85,7 +84,6 @@ end GlobalTheory.ComplexHeckeAdjoint
 
 namespace GlobalTheory.CxHeckeAdj
 
-set_option maxHeartbeats 1600000 in
 
 theorem hecke_adjoint : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     {A3 : Formalism.L2.DIV.FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks]

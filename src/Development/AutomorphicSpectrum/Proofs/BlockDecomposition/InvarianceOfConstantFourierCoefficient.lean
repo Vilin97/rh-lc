@@ -17,7 +17,6 @@ namespace GlobalTheory.CompanionTheory.ConstN
 
 open GlobalTheory.CompanionTheory.FourierN
 
-open Pointwise in
 
 theorem setIntegral_add_right {A : Type*} [AddCommGroup A] [MeasurableSpace A] [MeasurableAdd A] (L : AddSubgroup A)
     [Countable L] (lam : Measure A) [lam.IsAddLeftInvariant] {𝓖 : Set A} (hFD : IsAddFundamentalDomain L 𝓖 lam)
@@ -33,8 +32,6 @@ theorem setIntegral_add_right {A : Type*} [AddCommGroup A] [MeasurableSpace A] [
   rw [hpre] at h
   exact h.trans (hFD'.setIntegral_eq hFD fun γ x => hper γ.1 γ.2 x)
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 theorem nb_inv_of_const (D : D7) (p : ℕ) (ψ : AddChar (AF D.host.F) ℂ) (nb : hermA D p → G D p)
     (lam : Measure (hermA D p)) (𝓖 : Set (hermA D p)) (hC : CoefData (D := D) (n := p) nb lam 𝓖)

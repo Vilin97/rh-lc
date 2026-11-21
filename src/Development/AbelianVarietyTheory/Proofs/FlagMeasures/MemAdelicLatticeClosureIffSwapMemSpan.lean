@@ -35,7 +35,6 @@ private lemma one_mem_intAf_flag_measures : (1 : Af F) ∈ Formalism.MainNotions
   rw [map_one]
   exact one_mem _
 
-omit [NumberField E] in
 
 theorem gen_smul_mem (a : Af F) (ha : a ∈ Formalism.UG.intAd F) (c : 𝓞 E)
     (y : Fin n → Af F ⊗[F] E) (hy : y ∈ Formalism.MainNotions.StandardLattice.latHat F E (L : Set (Fin n → E))) :

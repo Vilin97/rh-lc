@@ -45,7 +45,6 @@ variable (v : HeightOneSpectrum (𝓞 K)) [MeasurableSpace (v.adicCompletion K)]
 
 variable {μ v}
 
-omit [MeasurableSpace (v.adicCompletion K)] [BorelSpace (v.adicCompletion K)] in
 
 def ccStar (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ) :
     CompactlySupportedContinuousMap (normOneGL K n) ℂ where
@@ -58,7 +57,6 @@ def ccStar (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ) :
 @[simp] theorem ccStar_apply (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ)
     (g : normOneGL K n) : ccStar f g = conj (f g⁻¹) := rfl
 
-variable (μ) in
 
 theorem ccToL1_ccStar [μ.IsInvInvariant] (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ) :
     UnitaryRep.ccToL1 μ (ccStar f) = UnitaryRep.involution μ (UnitaryRep.ccToL1 μ f) := by

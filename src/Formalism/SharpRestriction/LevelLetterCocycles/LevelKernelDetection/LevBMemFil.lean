@@ -32,7 +32,6 @@ theorem levB_mem_fil (hP4 : LevelMapHodgeFiltration W) (hcrys : IsCrys PD T.ρ)
   rw [← hLb]
   exact (hP4 T hcrys c s ζ hprim).1 x k
 
-open Classical in
 
 theorem expN_mem_xi (hP4 : LevelMapHodgeFiltration W) (hcrys : IsCrys PD T.ρ)
     (hLb : ∀ (i : ZMod n) (ζ : LL) (x : ↥(W.N T)) (k : ℤ),

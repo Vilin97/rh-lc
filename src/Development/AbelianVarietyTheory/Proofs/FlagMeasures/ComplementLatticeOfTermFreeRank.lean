@@ -142,12 +142,6 @@ private theorem isNoetherianRing_locE_O (L : _root_.Formalism.MainNotions.S.Loc.
       exact Submodule.smul_mem _ _ (Submodule.subset_span (by simp))
   exact IsNoetherianRing.of_finite (ValuativeRel.valuation F).integer L.O
 
-open ValuativeRel MeasureTheory in
-open scoped Pointwise ENNReal Classical in
-variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] in
-variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] in
-variable {L : _root_.Formalism.MainNotions.S.Loc.LocE F E} {r k : ℕ} (S : _root_.GlobalTheory.HL.Frames L r k) in
-variable [IsNonarchimedeanLocalField F] [CharZero F] in
 
 theorem _root_.GlobalTheory.HL.CompLat.main : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : _root_.Formalism.MainNotions.S.Loc.LocE F E), ∀ (r k : ℕ) (S : _root_.GlobalTheory.HL.Frames L r k), ∀ (d : S.Datum) (Λ : Submodule L.O S.V), S.IsTerm d Λ → ∃ b : Fin (k - 1) → S.V, LinearIndependent E b ∧ S.complementLatticeOfDatum d = (Submodule.span L.O (Set.range b) : Set S.V) := by
   intro F _ _ _ _ _ E _ _ _ L r k S d Λ hT

@@ -119,7 +119,6 @@ theorem measurableSet_box (S : Finset (Pl D)) :
   have o : OpensMeasurableSpace (Mx D a r × Mx D a t) := g1.opensMeasurable
   exact (((isOpen_intOff S).preimage continuous_fst).inter ((isOpen_intOff S).preimage continuous_snd)).measurableSet
 
-open Classical in
 
 theorem exists_box (S : Finset (Pl D)) {e : AE D} (hS : IsIdem S e) (a b : ℕ) :
     ∃ T : Set (Mx D a b), IsCompact T ∧ ∀ x, IntOff S x → (1 - e) • x ∈ T := by

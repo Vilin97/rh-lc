@@ -67,7 +67,6 @@ theorem le_comap_of_chart (pt : (Σ o, ικ o) → Φ) {A F : Type*} [CommRing A
   obtain ⟨n, hn⟩ := hsat q hq
   exact (hWp.mem_or_mem (hmin.1.2 hn)).resolve_left (huW n)
 
-omit [Fintype κ] [DecidableEq κ] [∀ o, Fintype (ικ o)] [IsDomain O] [IsDiscreteValuationRing O] in
 
 theorem support_ratDiv {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ικ)} {s h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ικ} (hW : ratDiv P s h W ≠ 0) :
     W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
@@ -83,7 +82,6 @@ theorem support_ratDiv {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MR
 
 end SegreFlagCutLiesOverProof
 
-open SegreFlagCutLiesOverProof in
 
 theorem SegreFlagCutLiesOver.proof (hChart : SegreFlagCutChartSection.Statement) :
     SegreFlagCutLiesOver.Statement := by

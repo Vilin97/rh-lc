@@ -17,8 +17,6 @@ open scoped InnerProductSpace
 
 noncomputable section
 
-open NumberField Complex in
-open scoped InnerProductSpace in
 
 theorem _root_.GlobalTheory.greedy_splitting_thin :
     (∀ (E : Type) [Field E] [NumberField E] [IsCMField E], ∃ (n : ℕ) (ω : Fin n → 𝓞 E), (∀ j (σ : E →+* ℂ), ‖σ (ω j)‖ ≤ _root_.ReciprocityTheory.ChartRestriction.G.I2.omStar (E := E)) ∧ ∀ α : 𝓞 E, (α : E) ∈ Submodule.span ℚ (Set.range fun j => (ω j : E))) →

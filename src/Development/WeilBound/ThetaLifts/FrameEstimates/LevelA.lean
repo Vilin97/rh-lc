@@ -32,7 +32,6 @@ theorem int_zero : Int' (0 : Af F) := fun _ => zero_mem _
 theorem int_sum {ι : Type} (s : Finset ι) {a : ι → Af F} (ha : ∀ i, Int' (a i)) : Int' (∑ i ∈ s, a i) :=
   Finset.sum_induction _ _ (fun _ _ => int_add) int_zero fun i _ => ha i
 
-variable (E) in
 
 theorem exists_lattice (V : Set (AE F E)) (hV : V ∈ 𝓝 (0 : AE F E)) :
     ∃ Λ : AddSubgroup (AE F E), (∀ z ∈ Λ, ∀ z' ∈ Λ, z * z' ∈ Λ) ∧ (Λ : Set (AE F E)) ⊆ V ∧

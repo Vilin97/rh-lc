@@ -6,7 +6,6 @@ public import Mathlib
 
 namespace GlobalTheory
 
-open Module in
 
 theorem bijective_linearCombination_of_rankAtStalk :
     ∀ (R M : Type) [CommRing R] [AddCommGroup M] [Module R M] [Module.Finite R M] [Module.Flat R M] (r : ℕ),

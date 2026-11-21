@@ -81,7 +81,6 @@ open Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMas
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
   {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {R : RealDat D A T.Q.c.F}
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_comb_base {i : Fin D.R.m} {κ : WeightFamilies.Wt D ((i : ℕ) + 1)} {v : (R.MW i (sg0 D A)).Vec} {ι x₀} {ph : ℂ}
     (hn : κ.n = (Vc D i).rank) (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) (hP : O.Pins κ v ι x₀)
@@ -124,7 +123,6 @@ theorem exists_comb_base {i : Fin D.R.m} {κ : WeightFamilies.Wt D ((i : ℕ) + 
 
 variable {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
 
-set_option maxHeartbeats 1600000 in
 
 theorem expands_thF_jV {F : Face D A} (hR : GlobalTheory.Hk3.Core R F) (fw : FWTie T R κ v₀) (hU : R.LUnif) {i : Fin D.R.m}
     (O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0)) (hpins : OMPins T R κ v₀ O i) {ph : ℂ}
@@ -164,7 +162,6 @@ theorem conjTup_base {F : Face D A} (hR : GlobalTheory.Hk3.Core R F) (τ : ℂ �
   rw [GlobalTheory.ChrEqUnique.eq_one_of_chrEq h1 z]
   simp
 
-set_option maxHeartbeats 1600000 in
 
 theorem conjForm_jV {F : Face D A} (hR : GlobalTheory.Hk3.Core R F) {i : Fin D.R.m}
     (O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0)) (hpins : OMPins T R κ v₀ O i)

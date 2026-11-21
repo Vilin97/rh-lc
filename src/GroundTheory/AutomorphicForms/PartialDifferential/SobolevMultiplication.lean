@@ -363,7 +363,6 @@ theorem norm_ofSchwartz_commRem_le (r a : ℝ) (φ : 𝓢(E, ℂ)) :
         rw [ENNReal.toReal_mul, ENNReal.toReal_ofReal
           (mul_nonneg (commConst_nonneg r a) (wInt_nonneg _ _))]
 
-open Classical in
 
 def sob (s : ℝ) (u : 𝓢'(E, ℂ)) : ℝ≥0∞ :=
   if h : MemSobolev s 2 u then ‖(SobolevSpace.mk u h : SobolevSpace E ℂ s)‖ₑ else ⊤

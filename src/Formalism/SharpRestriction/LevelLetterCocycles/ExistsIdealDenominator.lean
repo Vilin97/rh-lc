@@ -158,7 +158,6 @@ def SplitLev (n : ℕ) : Prop :=
   ∀ p : ℕ, p.Prime → p ∣ n → ∀ w : HeightOneSpectrum (𝓞 D.host.E), (p : 𝓞 D.host.E) ∈ w.asIdeal →
     IsSplitPl D.host w
 
-open scoped Classical in
 
 def vdd (l : ℕ) : ℝ :=
   ⨆ v : placesOver D.host.E l,
@@ -176,7 +175,6 @@ def iO (i : D.ntw.Tw) : D.ntw.O i →+* ℂ_[D.ntw.l i] :=
 def GalF (i : D.ntw.Tw) (F : Subfield (KK i)) : Set (RingAut ℂ_[D.ntw.l i]) :=
   {s | (∀ x, ‖s x‖ = ‖x‖) ∧ ∀ x ∈ F, s (D.nth.iC i x) = D.nth.iC i x}
 
-variable (D) in
 
 structure Geo where
 
@@ -226,16 +224,11 @@ structure Geo where
   FmUr_def : ∀ i j b (f : D.nexp.Fm i j b), f ∈ D.nth.FmUr i j b ↔
     ∀ s ∈ GalF i (D.nth.MaximalUnramifiedExtension i), ∀ y, D.nth.ev i j b f (actG i j s y) = s (D.nth.ev i j b f y)
 
-variable (D) in
 
-variable (D) in
 
-variable (D) in
 
-variable (D) in
 
 variable (X : Geo D)
 
-open scoped Classical in
 
 end Formalism.MainNotions.ExistsIdealDenominator

@@ -179,7 +179,6 @@ theorem gauss_small {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
     exact hf₀ (by rw [hz, zero_smul])
   exact ⟨z' / z, by rw [hz', hz, smul_smul, div_mul_cancel₀ _ hz0]⟩
 
-set_option maxHeartbeats 1000000 in
 
 end Core
 
@@ -224,7 +223,6 @@ theorem isDatum_of_isDatumB {τ : TotT G (routeSmall t i j)} {Φ} (h : IsDatumB 
 
 end Read
 
-open GlobalTheory.SquareAgree GlobalTheory.TripleRead in
 
 theorem thetaKO_left_neg {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (hθ : IsInfFam θ) {M X : HSp D} (A : Fr M) (B : Fr X)
     {χ χ' : (AE D)ˣ →* Circle} {ω : GlobalTheory.Grid.WRep M X} (hω : GlobalTheory.Grid.IsWeil ψ true M X χ χ' ω) {Φ : WO M X → ℂ}

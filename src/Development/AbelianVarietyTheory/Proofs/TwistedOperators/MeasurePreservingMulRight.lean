@@ -87,8 +87,6 @@ theorem IsRealAll.unique (hθ : IsInfFam θ) {M : D.what₂.Tau → Matrix (Fin 
   have e := (GlobalTheory.PointAtPlace.existsUnique_isAtTau V τ θ hθ 1 (GlobalTheory.PointAtPlaceHom.one_mem_UH _)).unique hc h1
   exact (mul_inv_eq_one.1 e).symm
 
-variable (θ V) in
-open Classical in
 
 def realAll (M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) : GA D V :=
   if h : ∃ x, IsRealAll θ V M x then h.choose else 1
@@ -124,7 +122,6 @@ theorem realAll_mul (hθ : IsInfFam θ) {M M' : D.what₂.Tau → Matrix (Fin V.
     ⟨mul_mem (realAll_spec hθ hM).1 (realAll_spec hθ hM').1, fun ρ => ?_⟩
   rw [GlobalTheory.PointAtPlaceHom.infMat_mul, (realAll_spec hθ hM).2 ρ, (realAll_spec hθ hM').2 ρ]
 
-open Classical in
 
 theorem realAll_eq_atTau_mul (hθ : IsInfFam θ) {M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ}
     (hM : ∀ ρ, M ρ ∈ Formalism.QuantumDeterminants.UH (gramAt D V ρ)) (τ : D.what₂.Tau) :
@@ -229,7 +226,6 @@ theorem onbConj_mul {W : G.Weil} {X : Node} (hX : PosOnb W X) (u v : UG D.what�
         rw [h2, Matrix.mul_one]; simp only [Matrix.mul_assoc]
     _ = _ := by simp only [Matrix.mul_assoc]
 
-open Classical in
 
 def vtxPt (W : G.Weil) (X : Node) : UG D.what₂.Tau (G.V X).rank →* GA D (G.V X) where
   toFun u := if PosOnb W X then realAll W.θ (G.V X) (onbConj W X u) else 1
@@ -274,13 +270,11 @@ section Kappa
 
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc}
 
-variable (G) in
 
 def rowU (j : Fin D.R.m) : Gc D.what₂.Tau (rowSizes D) →* UG D.what₂.Tau (G.V (.top j)).rank :=
   (MonoidHom.compLeft (castU (rank_top G (j := j) j.2.le).symm) D.what₂.Tau).comp
     ((Pi.evalMonoidHom (fun j : Fin (rowSizes D).m => UG D.what₂.Tau ((rowSizes D).nR j)) j).comp (MonoidHom.fst _ _))
 
-variable (G) in
 
 def colU (i : Fin (D.R.m + 1)) : Gc D.what₂.Tau (rowSizes D) →* UG D.what₂.Tau (G.V (.grid i D.R.m)).rank :=
   (MonoidHom.compLeft (castU (rank_gridM G (i := i) (Nat.lt_succ_iff.1 i.2)).symm) D.what₂.Tau).comp

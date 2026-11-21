@@ -14,7 +14,6 @@ open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.Basi
 
 namespace GlobalTheory.CompanionTheory.InertiaEigenvalues.LPow
 
-open Polynomial in
 
 end GlobalTheory.CompanionTheory.InertiaEigenvalues.LPow
 

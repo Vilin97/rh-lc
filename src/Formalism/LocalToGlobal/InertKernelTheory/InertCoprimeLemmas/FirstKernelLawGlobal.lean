@@ -64,6 +64,5 @@ theorem twInt_all (X : Sys p) [IsFractionRing X.G.O X.G.Kf] (E : CEmbC X.G) : Fo
   rw [Formalism.L2.KerInert.RepFrob.twE_eq, Formalism.L2.KerInert.RepFrob.twT_alg]
   exact Formalism.L2.G.Pend.norm_wToC_le p _
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
 end Formalism.L2.KerInert.KG

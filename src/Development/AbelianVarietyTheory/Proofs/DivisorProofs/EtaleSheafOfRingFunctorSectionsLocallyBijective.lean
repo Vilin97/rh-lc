@@ -14,7 +14,6 @@ instance instWEqLBEtRings (R : Type) [CommRing R] : (Scheme.etaleTopology.{0}).W
   have : EssentiallySmall.{1} Scheme.{0} := inferInstance
   exact GrothendieckTopology.WEqualsLocallyBijective.ofEssentiallySmall _
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem etale_affine_of_mem {U : Scheme.{0}} {S : Sieve U} (hS : S ∈ Scheme.etaleTopology U) (u : U) :
     ∃ (V : Scheme.{0}) (j : V ⟶ U) (v : V), IsAffine V ∧ Etale j ∧ j v = u ∧ S j := by

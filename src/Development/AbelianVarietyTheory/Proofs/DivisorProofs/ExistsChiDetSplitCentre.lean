@@ -35,7 +35,6 @@ theorem commute_Zalg {T : Module.End ℂ (Sm E a)} (hT : ∀ X, Commute T (lie E
   · exact S.algebraMap_mem _
   · exact S.zero_mem
 
-variable (E) in
 
 def cpowChar (s : ℂ) : HChar E :=
   ⟨MonoidHom.toHomUnits

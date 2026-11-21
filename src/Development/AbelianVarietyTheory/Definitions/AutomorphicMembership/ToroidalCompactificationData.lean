@@ -81,7 +81,6 @@ variable (s : FinalTheorems S κ) (L : CmList A) (k : s.Comp)
 
 abbrev fd : Data D.host.E N := (s.U κ.σ₀).X k
 
-include s in
 
 theorem j_le : j ≤ N := le_of_isUnf _ s.isUnf S.p_eq
 
@@ -94,7 +93,6 @@ def framePt (f : (s.fd k).dom) : CxPts (genStr s.T.Z) κ.σ₀ := cxPt s.T.Z ((s
 def lieFrame (f : (s.fd k).dom) : EigFrame s.T.Z κ.σ₀ ((s.framePt k f).1 ≫ genι s.T.Z) :=
   cxFrame s.T.Z ((s.U κ.σ₀).un k f)
 
-open Classical in
 
 def frameOver (z : Pt D.what₂.Tau j (N - j)) : (s.fd k).dom :=
   if h : ∃ f, s.zOf L k f = z then h.choose else ⟨x0F _, IW.orth_mem_dom _ _ (isOrth_x0F _)⟩

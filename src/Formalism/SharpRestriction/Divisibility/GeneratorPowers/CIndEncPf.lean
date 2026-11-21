@@ -29,6 +29,5 @@ theorem colSum_zero {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host
 
 end CIndEncPf
 
-open CIndEncPf in
 
 end Formalism.MainNotions.ModuliIntegralCharts.H1

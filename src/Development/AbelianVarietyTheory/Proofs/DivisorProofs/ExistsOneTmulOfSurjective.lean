@@ -174,7 +174,6 @@ theorem trans_injective (E F : Idx R Ω) (h : E ≤ F) : Function.Injective (tra
   haveI := Module.FaithfullyFlat.faithfulSMul (A := Lift R Ω E) (B := Lift R Ω F)
   exact FaithfulSMul.algebraMap_injective (Lift R Ω E) (Lift R Ω F)
 
-variable (R Ω) in
 
 def ofA (E : Idx R Ω) : Lift R Ω E →ₐ[R] SH R Ω := DirectLimit.Algebra.of (R := R) (Lift R Ω) (trans R Ω) E
 

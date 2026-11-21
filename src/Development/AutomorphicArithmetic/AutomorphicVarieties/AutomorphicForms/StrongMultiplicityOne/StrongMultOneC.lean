@@ -22,7 +22,6 @@ section Glob
 
 variable {E : Type} [Field E] [NumberField E] {n : ℕ}
 
-variable (E) in
 
 def psiR (x : Cinf E) : ℂ := (𝐞 (-TG.tr E x) : ℂ)
 

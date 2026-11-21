@@ -15,7 +15,6 @@ noncomputable section
 
 universe u
 
-set_option maxHeartbeats 400000 in
 
 theorem ConeLocalFlat.proof (h : ConePolyLocalization.Statement.{u}) : ConeLocalFlat.Statement.{u} := by
   intro F _ K _ _ ι _ P hP W hW hPW

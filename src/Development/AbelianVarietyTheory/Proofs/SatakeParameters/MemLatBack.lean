@@ -52,11 +52,8 @@ def latAdX (i : ℕ) (hi : i ≤ D.R.m) (β : (St i hi).Ch)
     (x : GL (Fin (D.R.N i)) (D.host.E ⊗[D.host.F] FiniteAdeleRing (𝓞 D.host.F) D.host.F)) : Submodule (𝓞 t.X.E) (Sp t.X.E (D.R.N i)) :=
   latBack t.seam (latCo D.sp (gramN D i hi) (A.crd i hi) a x ((St i hi).K β).lev.Lb)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end Ad
 

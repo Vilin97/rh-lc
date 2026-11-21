@@ -31,7 +31,6 @@ theorem inK_iff_locGen (x : T ⟶ B) : InK B L x ↔
     KerPow.LocGen L (K := Fin 2) (fst T B).left ![(translPt B x).left, (snd T B).left] ![1, -1] :=
   KerPow.locGen_iff _ _ _
 
-variable (B L) in
 
 theorem inK_one (hL : L.IsLB) (T : Over S) : InK B L (1 : T ⟶ B) := memKL_one hL T
 
@@ -66,7 +65,6 @@ theorem InK.mul (hL : L.IsLB) {x y : T ⟶ B} (hx : InK B L x) (hy : InK B L y) 
   refine (inK_iff_locGen _).2 ((hx.translate y).comb hL H fun U _ h => ?_)
   simp [Fin.prod_univ_two]
 
-variable (B) in
 
 def kSubgroup (hL : L.IsLB) (T : Over S) : Subgroup (T ⟶ B) where
   carrier := {x | InK B L x}
@@ -85,7 +83,6 @@ theorem inK_of_push {S' : Scheme.{0}} {f : S' ⟶ S} {B' : Over S'} [GrpObj B'] 
     {Z : Over S'} (x : Z ⟶ B') (hx : InK B L (pushPt h.1.w x)) : InK B' L' x :=
   memKL_of_push h hL hL' hw x hx
 
-variable (B) in
 
 theorem inK_triv (x : T ⟶ B) : InK B (Inh.trivLB B.left) x := by
   intro p

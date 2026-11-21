@@ -159,7 +159,6 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   {ι : Type u} {Hv : ι → Type u} [∀ v, Group (Hv v)] [∀ v, TopologicalSpace (Hv v)]
   [∀ v, IsTopologicalGroup (Hv v)] (φ : ∀ v, Hv v →ₜ* G)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem cupCochain_naturality {X X' Y Y' Z : Rep.{u} k G} (ν : X ⊗ Y ⟶ Z) (ν' : X' ⊗ Y' ⟶ Z)
     (α : X' ⟶ X) (β : Y ⟶ Y') (hν : (α ⊗ₘ 𝟙 Y) ≫ ν = (𝟙 X' ⊗ₘ β) ≫ ν') {r s n : ℕ}
@@ -169,7 +168,6 @@ theorem cupCochain_naturality {X X' Y Y' Z : Rep.{u} k G} (ν : X ⊗ Y ⟶ Z) (
   (cupCochain_tensorHom_eq ((α ⊗ₘ 𝟙 Y) ≫ ν) ν' β hν h F E σ).symm.trans
     (cupCochain_tensorHom_eq' _ ν α rfl h F E σ)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem resFunctor_map_naturality {K : Type u} [Group K] (ψ : K →* G)
     {X X' Y Y' Z : Rep.{u} k G} (ν : X ⊗ Y ⟶ Z) (ν' : X' ⊗ Y' ⟶ Z) (α : X' ⟶ X) (β : Y ⟶ Y')
@@ -239,7 +237,6 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   [∀ v, IsTopologicalGroup (Hv v)] (φ : ∀ v, Hv v →ₜ* G) (D : Rep.{u} k G) [IsDiscreteRep D]
   {n m r s : ℕ} (h : r + s = m) (t : compactCohomologyRes φ D m →+ ZMod n)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem tensorHom_dualEvalPairing {A B : Rep.{u} k G} (f : A ⟶ B) :
     (dualMap D f ⊗ₘ 𝟙 A) ≫ dualEvalPairing D A = (𝟙 (dualRep D B) ⊗ₘ f) ≫ dualEvalPairing D B := by

@@ -183,7 +183,6 @@ def LatAt {X : Type} [AddCommGroup X] (m : I → X →+ X) (c : T → X →+ ZMo
     (tι : splitTorus (Sp κ) X ⟶ G₀), s (closedPoint κ) = w ∧ s ≫ M.s = spMap a ∧ IsGrpPullback G₀ G s φ ∧ IsTorPart tι ∧
     Compat f gγ ζ L m c s a φ tι
 
-variable (G) in
 
 def RkAt (w : M.Z) (r : ℕ) : Prop :=
   ∃ (X : Type) (_ : AddCommGroup X) (_ : Module.Free ℤ X) (_ : Module.Finite ℤ X) (κ : Type) (_ : Field κ)
@@ -192,7 +191,6 @@ def RkAt (w : M.Z) (r : ℕ) : Prop :=
 
 variable {f gγ ζ L}
 
-omit [GrpObj G] in
 
 theorem Compat.equiv {X X' : Type} [AddCommGroup X] [AddCommGroup X'] {m : I → X →+ X} {c : T → X →+ ZMod L}
     {m' : I → X' →+ X'} {c' : T → X' →+ ZMod L} {A : Type} [CommRing A] {s : Sp A ⟶ M.Z} {a : o →+* A}
@@ -218,7 +216,6 @@ theorem Compat.equiv {X X' : Type} [AddCommGroup X] [AddCommGroup X'] {m : I →
         GlobalTheory.SplitTorus.torusMap_id, Category.id_comp]
       exact hv
 
-omit [GrpObj G] in
 
 theorem Compat.pull {X : Type} [AddCommGroup X] {m : I → X →+ X} {c : T → X →+ ZMod L} {A B : Type} [CommRing A]
     [CommRing B] {s : Sp A ⟶ M.Z} {a : o →+* A} {G₀ : Over (Sp A)} [GrpObj G₀] {φ : G₀.left ⟶ G.left}

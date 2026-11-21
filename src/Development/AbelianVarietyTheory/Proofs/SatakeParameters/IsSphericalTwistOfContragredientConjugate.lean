@@ -60,7 +60,6 @@ theorem conjFin_locGL_mem (w : HeightOneSpectrum (𝓞 E))
 
 end GlobalTheory.ContraPair.SphTwist
 
-open GlobalTheory.ContraPair.SphTwist in
 
 theorem GlobalTheory.ContraPair.isSpherical_twist_of_dualIsConjBy : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ), 1 ≤ a → ∀ (π : CuspSub E a) (ψ : HChar E), GlobalTheory.ContraPair.DualIsConjBy π ψ → ∀ w : HeightOneSpectrum (𝓞 E), ¬ GlobalTheory.UnitaryBC.IsSplitAt w → (∃ B, (CG.mk π).HasSat w B) → GlobalTheory.LGrp.IsSpherical ((π.twist ψ⁻¹).locRep w) (GlobalTheory.LFun.KGL w a) := by
   intro E _ _ _ a _ π ψ hP w hns hS

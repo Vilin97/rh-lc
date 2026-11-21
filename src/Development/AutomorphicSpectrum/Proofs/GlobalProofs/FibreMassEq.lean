@@ -99,4 +99,3 @@ theorem tendsto_mean {R : Type} [TopologicalSpace R] [MeasurableSpace R] (ν : M
 
 end GlobalTheory.CompanionTheory.Hypotheses₂.OneV.AvgV
 
-open GlobalTheory.CompanionTheory.Hypotheses₂.OneV.AvgV in

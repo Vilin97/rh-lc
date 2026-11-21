@@ -42,6 +42,5 @@ theorem isRatSec_pow {Z : Scheme.{0}} [IsIntegral Z] {L : LB Z} {r : L.ι → Z.
     ← mul_pow, hr _ _ (l h)]
   exact congrArg (fun a => (a * _) ^ τ) (fnOf_resG l h _).symm
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.TrueGeo.SmallSec

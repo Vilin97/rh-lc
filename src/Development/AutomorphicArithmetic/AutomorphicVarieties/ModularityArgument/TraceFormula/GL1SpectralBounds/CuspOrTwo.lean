@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain MeasureTheory Polynomial Formalism.L2.Host
 open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.DiscSpec GlobalTheory.CompanionTheory.CTFin
 open PositivityTheory.Rg.Rs PositivityTheory.Rg.BcB PositivityTheory.Rg.BcB.F UpperTheory.V.Z.Tf.GOne
 
-open PositivityTheory.Rg.Rs.PExpFin in
 
 private theorem cusp_or_exp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
     (V : Submodule ℂ (Sm E N)) (hV : IsDiscrete V) :

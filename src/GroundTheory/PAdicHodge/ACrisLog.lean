@@ -123,7 +123,6 @@ section Log
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-omit [IsPerfectoidField K p] in
 
 theorem pow_dvd_factorial {k n : ℕ} (h : p * k ≤ n) : p ^ k ∣ n.factorial :=
   ((pow_dvd_pow p (by rw [padicValNat_factorial_mul]; omega)).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))).trans
@@ -309,7 +308,6 @@ theorem logTermZero_pred_eq {x : AInf K p} (hx : x ∈ RingHom.ker θ) {c : ACri
     _ = (p : 𝔸) * (algebraMap (AInf K p) 𝔸 x * ((-1) ^ (p - 1) * (c : 𝔸))) := by
         rw [hcc]; ring
 
-set_option maxHeartbeats 2000000 in
 
 theorem log_pow_mem {x : AInf K p} (hx : x ∈ RingHom.ker θ) {c : ACrisZero K p}
     (hc : (algebraMap (AInf K p) (ACrisZero K p) x) ^ (p - 1) = (p : ACrisZero K p) * c) :

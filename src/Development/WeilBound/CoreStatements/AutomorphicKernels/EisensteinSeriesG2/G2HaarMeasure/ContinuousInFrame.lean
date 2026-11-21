@@ -48,6 +48,5 @@ theorem continuous_inFrame (b : GL (Fin n ⊕ Fin n) E) : Continuous (inFrame (�
   have hm : Continuous fun g : G2 σ Y => mat2 g := Units.continuous_val.comp continuous_subtype_val
   exact (continuous_const.matrix_mul hm).matrix_mul continuous_const
 
-variable (σ Y) in
 
 end GlobalTheory.EisBL.DoubledParabolic

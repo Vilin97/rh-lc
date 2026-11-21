@@ -25,7 +25,6 @@ theorem toTemperedDistribution_injective :
     (Lp.ker_toTemperedDistributionCLM_eq_bot (F := F) (μ := (volume : Measure E)))
   exact this h
 
-variable (E F) in
 
 def sobolevSubmodule (s : ℝ) : Submodule ℂ 𝓢'(E, F) where
   carrier := {u | MemSobolev s 2 u}
@@ -50,7 +49,6 @@ theorem memSobolev_besselPotential_neg (s : ℝ) (f : Lp F 2 (volume : Measure E
     MemSobolev s 2 (besselPotential E F (-s) (f : 𝓢'(E, F))) :=
   ⟨f, by simp⟩
 
-variable (E F) in
 
 def sobolevEquivLp (s : ℝ) : sobolevSubmodule E F s ≃ₗ[ℂ] Lp F 2 (volume : Measure E) where
   toFun := sobolevToLp
@@ -76,7 +74,6 @@ theorem sobolevEquivLp_apply {s : ℝ} (u : sobolevSubmodule E F s) :
     (sobolevEquivLp E F s u : 𝓢'(E, F)) = besselPotential E F s (u : 𝓢'(E, F)) :=
   (besselPotential_eq_sobolevToLp u).symm
 
-variable (E F) in
 
 def SobolevSpace (s : ℝ) : Type _ := sobolevSubmodule E F s
 
@@ -156,7 +153,6 @@ theorem exists_toDistribution_eq_iff (u : 𝓢'(E, F)) :
     (∃ v : SobolevSpace E F s, toDistribution v = u) ↔ MemSobolev s 2 u :=
   ⟨fun ⟨v, hv⟩ ↦ hv ▸ memSobolev_toDistribution v, fun hu ↦ ⟨mk u hu, rfl⟩⟩
 
-variable (E F s) in
 
 def toDistributionCLM : SobolevSpace E F s →L[ℂ] 𝓢'(E, F) :=
   besselPotential E F (-s) ∘L Lp.toTemperedDistributionCLM F (volume : Measure E) 2 ∘L
@@ -490,7 +486,6 @@ theorem lineDeriv_bound (v : E) (ξ : E) :
         gcongr
     _ = _ := by ring
 
-open LineDeriv in
 
 def lineDerivCLM (v : E) : SobolevSpace E F s →L[ℂ] SobolevSpace E F (s - 1) :=
   multiplier (m := fun ξ ↦ (2 * Real.pi * Complex.I) * ((inner ℝ ξ v : ℝ) : ℂ))

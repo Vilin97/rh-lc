@@ -152,7 +152,6 @@ theorem rightDeriv_conv (hκ : Continuous κ) (hκs : HasCompactSupport κ) {f :
   rw [iteratedFDeriv_one_apply]
   rfl
 
-variable (h X) in
 
 noncomputable def convEnd (hκ : Continuous κ) (hκs : HasCompactSupport κ) :
     Module.End ℂ (h.smoothFuns (F := ℂ)) where
@@ -200,7 +199,6 @@ theorem adjoin_commute_convEnd (hκ : Continuous κ) (hκs : HasCompactSupport �
 
 end GlobalTheory.LeftSmoothing
 
-open GlobalTheory.LeftSmoothing in
 
 theorem GlobalTheory.leftSmoothing_prodExp :
     ∀ (𝔸 : Type) [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [CompleteSpace 𝔸] [FiniteDimensional ℝ 𝔸] (G : Subgroup 𝔸ˣ) (𝔤 : Submodule ℝ 𝔸) (h : IsExpLieAlgebra G 𝔤) (n : ℕ) (X : Fin n → 𝔤) (κ : (Fin n → ℝ) → ℂ), Continuous κ → HasCompactSupport κ → ∀ f : h.smoothFuns (F := ℂ), ∃ v : h.smoothFuns (F := ℂ), (∀ y, (v : G → ℂ) y = ∫ t, κ t * (f : G → ℂ) (h.prodExp X t * y)) ∧ ∀ T ∈ Algebra.adjoin ℂ (Set.range (h.rightDerivEnd (F := ℂ))), ∀ y, (T v : G → ℂ) y = ∫ t, κ t * (T f : G → ℂ) (h.prodExp X t * y) := by

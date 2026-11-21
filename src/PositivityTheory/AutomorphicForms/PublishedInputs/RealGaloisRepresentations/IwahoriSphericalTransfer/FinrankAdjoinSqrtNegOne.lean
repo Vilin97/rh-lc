@@ -38,7 +38,6 @@ theorem QCM.sq_ne_neg_one_of_isReal {E : Type} [Field E] {v : InfinitePlace E} (
   rw [map_pow, map_neg, map_one] at this
   nlinarith [sq_nonneg (InfinitePlace.embedding_of_isReal hv x)]
 
-omit [NumberField F] in
 
 theorem QCM.isIntegral_sqrt_neg_one {i : Ω} (hi : i ^ 2 = -1) : IsIntegral F i :=
   ⟨X ^ 2 - C (-1), monic_X_pow_sub_C _ two_ne_zero, by simp [hi]⟩
@@ -87,7 +86,6 @@ theorem AttRes.normV_eq_pow (w : HeightOneSpectrum (𝓞 L)) :
   rw [← Ideal.absNorm_relNorm (𝓞 F) (𝓞 L) w.asIdeal,
     Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 F)).asIdeal, map_pow]
 
-omit [Algebra F Ω] in
 
 theorem AttRes.hasSat_trivial [IsTotallyReal F] (v : HeightOneSpectrum (𝓞 F)) :
     (TR.CuspSub.triv F (le_refl 1)).HasSat v {1} := by
@@ -110,7 +108,6 @@ theorem AttRes.hasSat_trivial [IsTotallyReal F] (v : HeightOneSpectrum (𝓞 F))
     (fun b g k _ _ => by simp [f, Formalism.UG.chiDelta]; rfl) (fun h => h0 (hi (by rw [h, map_zero])))
   simpa using this
 
-omit [Algebra F Ω] in
 
 theorem AttRes.one_triv [IsTotallyReal F] [Algebra L Ω] {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) :
     AttRes (Ω := Ω) (TR.CuspSub.triv F (le_refl 1)) ι L 1 := by

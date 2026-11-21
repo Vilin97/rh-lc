@@ -21,12 +21,10 @@ open MvPolynomial Finsupp
 
 variable {ι : Type} [Fintype ι] {a b : ℕ}
 
-open Classical in
 
 noncomputable def wD (ι : Type) (a b : ℕ) : ((ι × Fin b × Fin b) ⊕ DVar ι a b) → (ι → ℕ) :=
   Sum.elim 0 fun x => Pi.single x.1 1
 
-open Classical in
 
 noncomputable def wF (ι : Type) (a : ℕ) : (ι × Fin a × Fin a) → (ι → ℕ) := fun v => Pi.single v.1 1
 

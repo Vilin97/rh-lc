@@ -274,7 +274,6 @@ theorem obj_isHCParam_u (R : Formalism.BasicNotions.Ranks) (P : Formalism.BasicN
     show ((P.u a : ℚ) : ℝ) - ((R.k : ℝ) - 1) / 2 = _
     rw [hz, hq]; push_cast; ring
 
-open Formalism.MainNotions.CayleySignature in
 
 theorem exists_isCayleyU_eps48 (k r : ℕ) (hk : 1 ≤ k) : ∃ P, IsCayleyU k r (eps48 k r) P := by
   apply obj_cayleyU_of_card
@@ -286,7 +285,6 @@ theorem exists_isCayleyU_eps48 (k r : ℕ) (hk : 1 ≤ k) : ∃ P, IsCayleyU k r
     by_cases h : i.val < k - 1 <;> simp [h]
   rw [e, obj_card_fin (2 * r + k + 1) (fun i => i < k - 1 ∨ (i - (k - 1)) % 2 = 0), obj_count k r hk]
 
-open Formalism.MainNotions.CayleySignature in
 
 end obj
 

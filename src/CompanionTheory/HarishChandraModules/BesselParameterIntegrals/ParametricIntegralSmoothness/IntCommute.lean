@@ -116,7 +116,6 @@ theorem isSm_integral (hG : IsMatGroup G) (h : RepOn G σ) {v : H} (hv : IsSm G 
   filter_upwards [hae] with g hg
   rw [map_smul, hFv _ (h.mul_mem _ ha _ hg), h.apply_mul ha hg]
 
-open PI.UpqRep in
 
 end CompanionTheory.D.Upq.Sm
 

@@ -39,7 +39,6 @@ theorem inv_cohomologyCoresLE_cohomologyResLE (x : H2Open C U) :
       F.inv V ((cohomologyResLE C (show (V : Subgroup G) ≤ U from hVU) 2).hom x) := by
   rw [cohomologyCoresLE_cohomologyResLE, map_nsmul, F.inv_res U V hVU x]
 
-omit [CompactSpace G] in
 
 theorem cohomologyResLE_eq_of_inv (hVinj : Function.Injective (F.inv V)) {x : H2Open C V}
     {y : H2Open C U} (hy : (V : Subgroup G).relIndex U • F.inv U y = F.inv V x) :
@@ -53,7 +52,6 @@ namespace ClassFormation
 variable [CompactSpace G] {C : Rep.{u} k G} [IsDiscreteRep C] (F : ClassFormation C)
   {U V : OpenSubgroup G} (hVU : V ≤ U)
 
-include F in
 
 theorem cohomologyResLE_surjective :
     Function.Surjective (cohomologyResLE C (show (V : Subgroup G) ≤ U from hVU) 2).hom := by

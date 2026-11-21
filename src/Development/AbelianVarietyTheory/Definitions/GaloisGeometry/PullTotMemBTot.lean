@@ -90,7 +90,6 @@ def Hyp.mk (n : ℕ) : ZTot F n →ₗ[R] Hyp F n := Submodule.mkQ _
 
 theorem Hyp.mk_surjective (n : ℕ) : Function.Surjective (Hyp.mk F n) := Submodule.mkQ_surjective _
 
-variable {F} in
 
 theorem Hyp.mk_eq_zero {n : ℕ} {c : ZTot F n} : Hyp.mk F n c = 0 ↔ c.1 ∈ BTot F n :=
   Submodule.Quotient.mk_eq_zero _
@@ -128,7 +127,6 @@ def HypF.mk (p n : ℕ) : ZF F p n →ₗ[R] HypF F p n := Submodule.mkQ _
 theorem HypF.mk_surjective (p n : ℕ) : Function.Surjective (HypF.mk F p n) :=
   Submodule.mkQ_surjective _
 
-variable {F} in
 
 theorem HypF.mk_eq_zero {p n : ℕ} {c : ZF F p n} : HypF.mk F p n c = 0 ↔ c.1 ∈ BF F p n :=
   Submodule.Quotient.mk_eq_zero _
@@ -138,7 +136,6 @@ def HypF.toHyp (p n : ℕ) : HypF F p n →ₗ[R] Hyp F n :=
 
 def Hyp.fil (p n : ℕ) : Submodule R (Hyp F n) := LinearMap.range (HypF.toHyp F p n)
 
-variable {F} in
 
 theorem Hyp.mem_fil {p n : ℕ} {x : Hyp F n} :
     x ∈ Hyp.fil F p n ↔ ∃ c : ZTot F n, c.1 ∈ TotF F p n ∧ Hyp.mk F n c = x := by

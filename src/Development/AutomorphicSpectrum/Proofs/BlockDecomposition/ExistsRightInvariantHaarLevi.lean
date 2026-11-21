@@ -99,7 +99,6 @@ theorem GlobalTheory.CompanionTheory.QKAvg.exists_haar_of_prod {G₁ G₂ M : Ty
     funext x; simp [map_mul]
   rw [h, ← Measure.map_map he.measurable (measurable_mul_const _), map_mul_right_eq_self]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem GlobalTheory.CompanionTheory.QKAvg.top_GL (D : D7) (t : ℕ) : LocallyCompactSpace (GL (Fin t) (AE D)) ∧
     SecondCountableTopology (GL (Fin t) (AE D)) ∧ T2Space (GL (Fin t) (AE D)) := by

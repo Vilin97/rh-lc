@@ -85,7 +85,6 @@ theorem isPsh_potOf {P J : Ideal (MRing ι)} {e : ℕ} (R : AnLogRes P J e) {A :
 
 end StokesStep
 
-open StokesStep in
 
 theorem StokesStep.proof (hE : ResExistsStatement) : StokesStep.Statement := by
   intro K _ ι _ P n i A A' hP ha hA hA' hi

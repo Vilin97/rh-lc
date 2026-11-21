@@ -22,7 +22,6 @@ variable {l : ℕ} [Fact l.Prime]
 scoped instance algZlBdR : Algebra ℤ_[l] (Per.BdR l) :=
   ((algebraMap (Per.BdRp l) (Per.BdR l)).comp ((GlobalTheory.MemLoc.aDp l).comp (algebraMap ℤ_[l] (Ainf l)))).toAlgebra
 
-variable (l) in
 
 def bdRpToBdR : Per.BdRp l →ₐ[ℤ_[l]] Per.BdR l where
   toRingHom := algebraMap (Per.BdRp l) (Per.BdR l)
@@ -37,17 +36,14 @@ def iotaZ (C : GlobalTheory.MemLoc.Core l) : Per.Bcris l →ₐ[ℤ_[l]] Per.BdR
   toRingHom := C.ι
   commutes' z := core_ι_aB C (algebraMap ℤ_[l] (Ainf l) z)
 
-variable (l) in
 
 abbrev OdR (O : Type) [CommRing O] [Algebra ℤ_[l] O] : Type := O ⊗[ℤ_[l]] Per.BdR l
 
 variable {O : Type} [CommRing O] [Algebra ℤ_[l] O]
 
-variable (l O) in
 
 def dRO : OD l O →ₐ[O] OdR l O := Algebra.TensorProduct.map (AlgHom.id _ _) (bdRpToBdR l)
 
-variable (O) in
 
 def iotaO (C : GlobalTheory.MemLoc.Core l) : OB l O →ₐ[O] OdR l O := Algebra.TensorProduct.map (AlgHom.id _ _) (iotaZ C)
 

@@ -133,6 +133,5 @@ end meas
 
 variable [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open Classical in
 
 end GlobalTheory.RootEx.Model

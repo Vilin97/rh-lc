@@ -17,7 +17,6 @@ variable (P Q : ℕ)
 
 def cayCand (g : UpqT P Q) : Mat := (1 + 1) * (UpqT.mat g + 1)⁻¹ * (UpqT.mat g - 1)
 
-open Classical in
 
 def cayInv (g : UpqT P Q) : lieU P Q :=
   if h : cayCand P Q g ∈ lieU P Q then ⟨cayCand P Q g, h⟩ else 0

@@ -58,7 +58,6 @@ theorem gs_sec (s : M.Sec) {Y : Scheme.{0}} (r : Y ⟶ X) (z : Y) {j j' : M.ι} 
   exact (gs_res r z _ hm _).symm.trans ((congrArg (gs r z _) (s.compat j j')).trans ((gs_mul r z _ hm _ _).trans
     (congrArg₂ (· * ·) (gs_unit r z _ hm _) (gs_res r z _ hm _))))
 
-variable (M th) in
 
 def Loc (x : Sp T ⟶ X) (v : σ → T) : Prop :=
   ∀ (y : Sp T) (j : M.ι), x y ∈ M.U j → ∃ u : ((Sp T).presheaf.stalk y)ˣ, ∀ i, gs x y _ ((th i).f j) = ev y (v i) * u
@@ -318,7 +317,6 @@ theorem gs_appLE' {Z : Scheme.{0}} (r : Z ⟶ Y) (z : Z) {U : X.Opens} {V : Y.Op
     (a : Γ(X, U)) : gs r z V ((p.appLE U V h).hom a) = gs (r ≫ p) z U a :=
   (gs_res r z h hz _).trans (gs_pull r p z U (h hz) a)
 
-variable (M) in
 
 abbrev boxLB : LB Y := LB.LinComb M (K := Fin 2) ![p, q] (fun _ => 1)
 
@@ -341,7 +339,6 @@ def boxSec (a b : M.Sec) : (boxLB M p q).Sec where
       Fin.prod_univ_two, zpow_one, zpow_one, Units.val_mul, mul_mul_mul_comm]
     rfl
 
-variable (th) in
 
 def boxTh (i : σ × σ) : (boxLB M p q).Sec := boxSec p q (th i.1) (th i.2)
 
@@ -357,7 +354,6 @@ end Box
 section Segre
 variable {R : Type} [CommRing R] (I : Ideal (MvPolynomial σ R))
 
-open MvPolynomial in
 
 def segreIdeal : Ideal (MvPolynomial (σ × σ) R) :=
   Ideal.span ({G | ∃ a b c d, G = MvPolynomial.X (a, b) * MvPolynomial.X (c, d) -

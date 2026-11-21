@@ -24,7 +24,6 @@ namespace ContractMixedField
 variable {F : Type} [Field F] {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
-omit [Fintype K] [Fintype K'] in
 
 theorem isMultiHomog_rename {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {t : MRingOver F ι} {a : K → ℕ} (ht : IsMultiHomog t a) :
@@ -37,7 +36,6 @@ theorem isMultiHomog_rename {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k'
   rw [e]
   exact weightedHomogeneousComponent_isWeightedHomogeneous _ _
 
-omit [Fintype K] [Fintype K'] in
 
 theorem isMultiProjPrime_imageVar {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {W : Ideal (MRingOver F ι')} (hW : IsMultiProjPrime W) : IsMultiProjPrime (imageVar F v W) := by
@@ -90,7 +88,6 @@ theorem component [DecidableEq K'] {κ : K → K'} {v : (Σ k, ι k) → (Σ k',
   refine ⟨D - Fintype.card K, by omega, hIm, ?_⟩
   rw [hD, Nat.sub_add_cancel hKD]
 
-open Classical in
 
 theorem intNum_eq_zero [DecidableEq K'] {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v) :
     ∀ (n : ℕ) (V' : Ideal (MRingOver F ι')) (d₀ : ℕ) (bs : Fin n → K' → ℤ),
@@ -159,7 +156,6 @@ theorem intNum_eq_zero [DecidableEq K'] {κ : K → K'} {v : (Σ k, ι k) → (�
 
 end ContractMixedField
 
-open ContractMixedField in
 
 theorem contractMixedField : ReciprocityTheory.ChartRestriction.G.AI.I4.ContractMixedFieldStatement := by
   intro F _ K _ ι _ K' _ ι' _ J' hJ' κ v V' d₀ d r L N hv hV' hI hd

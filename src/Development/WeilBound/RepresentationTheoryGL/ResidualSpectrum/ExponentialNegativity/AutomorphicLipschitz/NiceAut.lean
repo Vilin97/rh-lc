@@ -19,7 +19,6 @@ namespace PositivityTheory.Rg.Rs.JNiceAut
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem diffSum_one (ψ : AdelicGLn.AdelicGL E N → ℂ) (x : AdelicGLn.AdelicGL E N) (Y : ArchMatrix E N) :
     diffSum ψ x (fun _ : Fin 1 => Y) = ψ (x * CuspidalSpectrum.archExp Y) - ψ x := by

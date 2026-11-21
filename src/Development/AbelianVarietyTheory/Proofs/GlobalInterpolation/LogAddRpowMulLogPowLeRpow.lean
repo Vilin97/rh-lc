@@ -8,7 +8,6 @@ open Real
 
 namespace GlobalTheory
 
-open Filter Asymptotics in
 
 theorem log_add_rpow_mul_log_pow_le_rpow :
     ∀ a b c C κ : ℝ, ∀ p : ℕ, 0 ≤ a → a < b → 0 < κ → ∃ x0 : ℝ, ∀ x ≥ x0,

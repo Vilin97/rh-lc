@@ -146,7 +146,6 @@ theorem isSimpleUnder_heckeOps [ρ.IsIrreducible] (hK : fixedVectors ρ K ≠ �
     Subtype.ext (fixedProj_apply_of_mem hρ hKc hKo m'.2)
   rwa [he] at this
 
-omit hρ hKc hKo in
 
 theorem isIrreducible_of_forall (hρ : IsSmooth ρ) [Nontrivial V]
     (h : ∀ x y : V, x ≠ 0 → ∃ (K : Subgroup G) (hKc : IsCompact (K : Set G))
@@ -187,7 +186,6 @@ theorem isIrreducible_of_forall (hρ : IsSmooth ρ) [Nontrivial V]
       rw [h0]; trivial
     exact this
 
-omit hρ hKc hKo in
 
 theorem fixedProj_comp_eq {L : Type*} [Group L] [TopologicalSpace L] [IsTopologicalGroup L]
     [LocallyCompactSpace L] [T2Space L] [TotallyDisconnectedSpace L] (ι : L →* G)

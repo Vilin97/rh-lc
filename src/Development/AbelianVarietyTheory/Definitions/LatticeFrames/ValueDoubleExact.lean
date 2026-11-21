@@ -140,7 +140,6 @@ def IsGlueConst (p : ι → SplitPt D k) (q : Unif k) (I : List ι) (N : ℕ) {r
   ∃ (a : ℤ) (m : Fin r → ℤ), c = (I.map fun i => ((resCard k : ℂ) ^ N - 1) * ((√(resCard k : ℝ) : ℝ) : ℂ) ^ a *
     ∏ j, ((μ j ((p i).idele (Units.mk0 _ q.ne_zero)) ^ m j : Circle) : ℂ)).prod
 
-variable (k) in
 
 end GlobalTheory.FinPl
 

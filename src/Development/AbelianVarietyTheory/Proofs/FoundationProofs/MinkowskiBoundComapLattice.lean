@@ -45,7 +45,6 @@ section Nabla
 
 variable {K : Type} [Field K] [NumberField K] {ι C : Type} [Fintype ι] {n N : ℕ}
 
-open Classical in
 
 omit [NumberField K] in
 theorem pairK_basis [StarRing K] (lam : ι → DomWeight n) (g : ι → GL (Fin n) K) (i j : VVIdx lam) :

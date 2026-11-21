@@ -24,7 +24,6 @@ theorem UB.ann_sup_le_ann {k : ℕ} {B R : Type} [CommRing B] [CommRing R] [Alge
       fun x => Subtype.ext x.2
     exact hx x
 
-open E4 in
 
 theorem ruleUB : RuleUB := by
   intro k X ts us

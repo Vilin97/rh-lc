@@ -31,8 +31,6 @@ private lemma locPiecesEtale_localization_atPrime {R A : Type} [CommRing R] [Com
     fun _ => ⟨(), Algebra.mem_top⟩, fun _ => ⟨A, inferInstance, inferInstance, inferInstance, q,
       inferInstance, ⟨Subalgebra.topEquiv.symm⟩⟩⟩
 
-open IsLocalRing Polynomial in
-open scoped TensorProduct in
 
 theorem _root_.GlobalTheory.strictHenselisation_etale_over_polynomial : ∀ (T E : Type) [CommRing T] [IsDomain T]
     [IsLocalRing T] [CommRing E]

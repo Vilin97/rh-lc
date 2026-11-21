@@ -14,7 +14,6 @@ namespace GlobalTheory.AutGrowth
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E a) in
 
 def leftInv : Submodule ℂ (Sm E a) where
   carrier := {ψ | ∀ γ g, ψ.1 (ratGL E a γ * g) = ψ.1 g}
@@ -32,7 +31,6 @@ theorem lie_mem_leftInv (X : Lie E a) {ψ : Sm E a} (h : ψ ∈ leftInv E a) : l
     · rfl
   simp only [lie_apply, lieD, e]
 
-variable (E a) in
 
 def fixL (L : Subgroup (GL (Fin a) (Af E))) : Submodule ℂ (Sm E a) where
   carrier := {ψ | ∀ k ∈ L, finRep E a k ψ = ψ}

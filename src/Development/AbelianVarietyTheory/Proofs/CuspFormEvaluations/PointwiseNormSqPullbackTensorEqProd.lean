@@ -51,7 +51,6 @@ theorem pointwiseNormSq_le_l2_of_firstMinimum (hsup : GSupStatement) (Y : GT ι)
   have h2 : 0 < Y.la1 := hlam.trans_le h1
   gcongr
 
-open Classical in
 
 end General
 
@@ -89,7 +88,6 @@ end Columns
 
 end ThetaBound
 
-open Classical in
 
 theorem theta_value_bound (hsup : GSupStatement) {ι : Type} [Fintype ι] (U : ℕ → EuclideanSpace ℂ ι → (EuclideanSpace ℂ ι → ℂ) → EuclideanSpace ℂ ι → ℂ)
     (hU : ∀ (q : ℕ) a F v, U q a F v = cexp (q * Real.pi * Hf v a - q * Real.pi * Hf a a / 2) * F (v - a))

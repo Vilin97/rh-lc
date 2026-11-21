@@ -49,7 +49,6 @@ theorem opL_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (N l : �
 
 end GlobalTheory.KZ.H3.LamStab
 
-open GlobalTheory.KZ.H3 GlobalTheory.KZ.H3.LamStab in
 
 theorem GlobalTheory.KZ.H3.lam_stable : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε) (N l : ℕ) [Fact l.Prime]
     {E : Type} [Field E] [Algebra ℤ_[l] E] (T : Letter) (p : (E ⊗[ℤ_[l]] X.Fn l) × (ℂ → MvPolynomial (Fin 2) E)),

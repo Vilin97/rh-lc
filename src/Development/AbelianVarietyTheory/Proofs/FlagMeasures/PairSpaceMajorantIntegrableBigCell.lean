@@ -64,7 +64,6 @@ theorem good_point (k r : ℕ) (L : Formalism.MainNotions.S.LocBessel k r) (hk :
   have h1 : 0 < Complex.normSq P := Complex.normSq_pos.2 hP0
   nlinarith
 
-open Formalism.FourierDecayAlt in
 
 theorem conv_good (k r : ℕ) (L : Formalism.MainNotions.S.LocBessel k r) (h : ℝ) (hok : Formalism.FourierDecayAlt.ThreeDimData.GapOK k r h)
     (hgap : GlobalTheory.CellAmp.GapCell k r h) (hκ : L.κN ≠ ⊤) (c : Fin r → ℂ)

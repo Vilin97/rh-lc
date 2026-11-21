@@ -137,14 +137,12 @@ omit [Fintype K] [DecidableEq K] in
 theorem ofPositionAdditive_apply {n : ℕ} (L : (Fin n → K → ℤ) → ℤ) (hadd) (m : Fin n → K → ℤ) :
     ofPositionAdditive L hadd m = L m := rfl
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem vecCons_const_of_ne_zero {d : ℕ} (y x : K → ℤ) (k : Fin (d + 1)) (hk : k ≠ 0) :
     Matrix.vecCons y (fun _ : Fin d => x) k = x := by
   obtain ⟨k', rfl⟩ := Fin.exists_succ_eq.mpr hk
   simp
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem multilinear_step {d : ℕ} (f : MultilinearMap ℤ (fun _ : Fin (d + 1) => K → ℤ) ℤ)
     (hsym : ∀ (σ : Equiv.Perm (Fin (d + 1))) (m : Fin (d + 1) → K → ℤ), f (m ∘ σ) = f m)

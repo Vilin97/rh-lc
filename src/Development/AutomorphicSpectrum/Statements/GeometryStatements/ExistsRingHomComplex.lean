@@ -96,11 +96,8 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {E : Ψ → Type} [∀ τ, AddCommGroup (E τ)] [∀ τ, Module Ω (E τ)]
   {D : ComponentData II Ψ K ι Ω E} {O Lt : Type} [CommRing O] [AddCommGroup Lt] [Module O Lt]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
-omit [DecidableEq Ψ] in
 
-omit [DecidableEq Ψ] in
 
 end Main
 

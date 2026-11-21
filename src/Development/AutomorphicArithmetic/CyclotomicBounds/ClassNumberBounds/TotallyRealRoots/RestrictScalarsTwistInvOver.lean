@@ -75,7 +75,6 @@ theorem twistInvOver_eq_torsionBy (A : Type*) [AddCommGroup A] [Module O A] {U :
 variable [IsDomain O] [IsDiscreteValuationRing O]
   (K : Type*) [Field K] [Algebra O K] [IsFractionRing O K]
 
-omit [Algebra ℤ_[l] O] in
 
 theorem length_torsionBy_fracMod (b : O) :
     Module.length O (Submodule.torsionBy O (Selmer.FracMod O K) b) = addVal O b := by

@@ -132,7 +132,6 @@ end CompanionTheory.Groth.ClsOfF
 
 namespace CompanionTheory.Groth
 
-open ClsOfF in
 
 theorem cls_of (hZ : GlobalTheory.Published.SegmentRepresentation) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (hI : Zc.Cos.LUnlinkedIrr k)

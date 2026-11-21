@@ -80,11 +80,8 @@ theorem _root_.GlobalTheory.BiextInhab.mem_serW {κ : Type} {F : MvPowerSeries �
 
 variable [NeZero d]
 
-omit hl in
 
-omit hl in
 
-omit hl [NeZero d] in
 
 open MvPowerSeries in
 variable {l : ℕ} [hl : Fact l.Prime] {d : ℕ} in
@@ -99,9 +96,6 @@ private theorem coeff_mapDomain_rename_of_injective {σ τ R : Type} [CommSemiri
   · intro hn
     exact absurd (by simp) hn
 
-open MvPowerSeries in
-variable {l : ℕ} [hl : Fact l.Prime] {d : ℕ} in
-variable [NeZero d] in
 
 theorem _root_.GlobalTheory.BiextInhab.bridge (l : ℕ) [Fact l.Prime] (d : ℕ) [NeZero d]
     {β : Type} (b : β) (s : ZMod d) :

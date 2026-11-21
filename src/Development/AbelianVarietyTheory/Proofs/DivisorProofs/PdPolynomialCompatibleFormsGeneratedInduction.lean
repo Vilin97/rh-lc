@@ -105,7 +105,6 @@ theorem D_mem_closure {δ : DividedPowers J} (hs : Q.IsStd δ η) (b : Q.P) :
     have e : ι1 (D R Q.P (algebraMap B Q.P c)) = h.mDR (ι1 (D R B c)) := by rw [h.mDR_ι, h.m1_D]
     rw [e]; exact (smul_gen_mem η h x _).1
 
-omit [IsScalarTower R B Q.P] in
 
 theorem mDR_mul_dtau (α β : DR R B) :
     h.mDR α * (ι1 (D R Q.P (Q.e 1)) * h.mDR β) = ι1 (D R Q.P (Q.e 1)) * h.mDR (sgn α * β) := by

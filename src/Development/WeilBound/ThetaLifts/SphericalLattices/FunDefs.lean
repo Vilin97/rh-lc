@@ -46,7 +46,6 @@ def AvgSt : Prop :=
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {d : ℕ}
 
-variable (σ) in
 
 def PSub (W : Spc F E d) (v : Pl F) {m : ℕ} (Cy : Matrix (Fin d) (Fin m) (AE F E)) : Subgroup (UA σ W.J) where
   carrier := {p | p ∈ PAt σ W v Cy ∧ p⁻¹ ∈ PAt σ W v Cy}

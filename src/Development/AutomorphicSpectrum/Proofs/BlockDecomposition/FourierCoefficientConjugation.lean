@@ -129,7 +129,6 @@ theorem trace_cg (a : GL (Fin n) D.host.E) (β : HermE D n) (b : hermA D n) :
       _ = _ := by rw [rat_gl_mul_inv]; simp only [mul_assoc, mul_one]
   rw [e, Matrix.trace_mul_comm, mul_assoc, h2, mul_one]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem fc_levi : ∀ {D : D7} {n : ℕ} {ψ : AddChar (AF D.host.F) ℂ}, IsCharAF D.host.F ψ → ∀ F : G D n → ℂ, Continuous F →
     LeftInv (GF D n) F → ∀ {nb : hermA D n → G D n} {lam : Measure (hermA D n)} {𝓖 : Set (hermA D n)}, CoefData nb lam 𝓖 →

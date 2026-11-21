@@ -116,7 +116,6 @@ lemma root_pow_one (n : ℕ) : root p O ε (n + 1) ^ p ^ n = root p O ε 1 := by
 theorem zeta_succ_pow (n : ℕ) : zetaV p O ε (n + 1) ^ p = zetaV p O ε n := by
   rw [zetaV, zetaV, ← map_pow, ← map_pow, root_succ_pow]
 
-include hv hε in
 
 theorem zeta_primitive (n : ℕ) : IsPrimitiveRoot (zetaV p O ε n) (p ^ (n + 1)) := by
   have hz1 : zetaV p O ε n ^ p ^ (n + 1) = 1 := by
@@ -136,13 +135,11 @@ theorem zeta_primitive (n : ℕ) : IsPrimitiveRoot (zetaV p O ε n) (p ^ (n + 1)
   rw [← hjn, ← hj']
   exact IsPrimitiveRoot.orderOf _
 
-include hv hε in
 
 theorem c_val : v (algebraMap O C (fontaineTheta O p (nu p O ε))) ^ (p - 1) = v (p : C) := by
   obtain ⟨-, -, -, hX, -, -⟩ := a0 p C v O hv
   exact (hX ε hv hε).2.2.1
 
-include hv hε in
 
 end Ainf
 

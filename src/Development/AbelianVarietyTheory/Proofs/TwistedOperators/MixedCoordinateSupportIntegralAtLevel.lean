@@ -93,8 +93,6 @@ theorem mat_den {D : D7} {m : ℕ} (A : Matrix (Fin m) (Fin m) D.host.E) :
     simpa using (isIntegral_algebraMap (R := ℤ) (A := D.host.E) (x := ((∏ p ∈ Finset.univ.erase (i, j), n p : ℕ) : ℤ)))
   exact hc.mul (hint (i, j))
 
-set_option maxHeartbeats 2000000 in
-open GlobalTheory.MixModel in
 
 theorem mixS_support_integral : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) →
     ∀ (V X S₀ : HSp D) (r : ℕ) (d : GlobalTheory.MixModel.HypDec V S₀ r) (μ' : Measure (Mx D X.rank r))

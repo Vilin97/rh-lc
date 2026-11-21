@@ -296,7 +296,6 @@ section Agree
 
 variable (hr : ∀ T : Thick κ t, ∀ x ∈ rel R T.δ, ∀ y, x * y ∈ rel R T.δ)
 
-include hr in
 
 theorem natAgree {T T' : Thick κ t} (φ : T ⟶ T') (ρ : DR R (ER T) → DR R T.B) (ρ' : DR R (ER T') → DR R T'.B)
     (ha : ∀ x y, ρ (x + y) - ρ x - ρ y ∈ rel R T.δ) (hm : ∀ x y, ρ (x * y) - ρ x * ρ y ∈ rel R T.δ)
@@ -338,7 +337,6 @@ theorem natAgree {T T' : Thick κ t} (φ : T ⟶ T') (ρ : DR R (ER T) → DR R 
     rw [sub_sub_sub_cancel_right] at e4
     exact e4
 
-include hr in
 
 theorem uAgree (T : Thick κ t) (ρ : DR R (ER T) → DR R T.B)
     (ha : ∀ x y, ρ (x + y) - ρ x - ρ y ∈ rel R T.δ) (hm : ∀ x y, ρ (x * y) - ρ x * ρ y ∈ rel R T.δ)
@@ -359,7 +357,6 @@ theorem uAgree (T : Thick κ t) (ρ : DR R (ER T) → DR R T.B)
     simp only [SemiHom.mDR_ι, SemiHom.m1_D, z, map_zero, sub_zero] at e ⊢
     exact e
 
-include hr in
 
 theorem vAgree (T : Thick κ t) (ρ : DR R (ER T) → DR R T.B)
     (ha : ∀ x y, ρ (x + y) - ρ x - ρ y ∈ rel R T.δ) (hm : ∀ x y, ρ (x * y) - ρ x * ρ y ∈ rel R T.δ)

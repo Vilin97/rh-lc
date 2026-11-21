@@ -134,7 +134,6 @@ theorem exists_unit [Infinite Qp] [FiniteDimensional Qp LL] (hB : IsField BdR) (
   rintro _ ⟨i, rfl⟩
   exact (v i).2
 
-variable (V) in
 
 def mulR : BdR ⊗[Qp] LL →ₗ[Qp] (V ⊗[Qp] BdR →ₗ[LL] V ⊗[Qp] BdR) :=
   TensorProduct.lift (LinearMap.mk₂ Qp

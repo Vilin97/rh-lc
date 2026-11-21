@@ -119,7 +119,6 @@ def BesselUniquenessReal : Prop :=
       (π₀ : Matrix (Fin m) (Fin m) ℂ → Module.End ℂ W), IsContIrred (UH J₀) π₀ →
       Module.rank ℂ (besselForms J J₀ F e χ σ π₀ (smSub J σ)) ≤ 1
 
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.IndefR.Mult in
 
 end GlobalTheory.Published
 

@@ -17,7 +17,6 @@ variable {D : D7} {Tc : Core D} (hL : LawsCore Tc) (j : ℕ)
 def SupPtAt (σ : Tc.Q.c.F →+* ℂ) : Type :=
   Σ k : (Tc.U j σ).Comp, {x : ReciprocityTheory.ChartRestriction.G.FD.Frame ((Tc.U j σ).X k).Ψ D.R.r // x ∈ ((Tc.U j σ).X k).dom}
 
-variable {j} in
 
 def DensK (h : GenFrEx (Tc.Q.Xo j) Tc.Q.c) (ka : WeightFamilies.Wt D j)
     (pt : ∀ (Z : Comp (Tc.Q.Xo j) Tc.Q.c) (P : Om Z →+* ℂ), SupPtAt j (goodOf Tc.Q.c (sgOf P))) : Prop :=

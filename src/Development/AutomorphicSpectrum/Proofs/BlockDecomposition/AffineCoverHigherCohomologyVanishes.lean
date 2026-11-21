@@ -57,7 +57,6 @@ def Compat (V : X.Opens) (s : ∀ α, κ α → Γ(X, V ⊓ U α)) : Prop :=
     ∑ k' : κ β, rs (show V ⊓ U α ⊓ U β ≤ U α ⊓ U β from inf_le_inf_right _ inf_le_right) (g α β k k') *
       rs (show V ⊓ U α ⊓ U β ≤ V ⊓ U β from inf_le_inf_right _ inf_le_left) (s β k')
 
-variable {U κ g} in
 
 theorem Compat.on {V : X.Opens} {s : ∀ α, κ α → Γ(X, V ⊓ U α)} (hs : Compat U κ g V s) (α β : ι)
     (k : κ α) {T : X.Opens} (h₁ : T ≤ V ⊓ U α) (h₂ : T ≤ U α ⊓ U β) (h₃ : T ≤ V ⊓ U β) :
@@ -98,7 +97,6 @@ instance secGroupModule (V : X.Opens) : Module Γ(X, V) (secGroup U κ g V) wher
     change rs _ 0 * s.1 α k = 0
     rw [map_zero, zero_mul]
 
-variable {U κ g} in
 
 theorem smul_val {V : X.Opens} (a : Γ(X, V)) (s : secGroup U κ g V) (α : ι) (k : κ α) :
     (a • s).1 α k = rs inf_le_left a * s.1 α k := rfl
@@ -271,7 +269,6 @@ section Frames
 variable {X : Scheme.{0}} {ι : Type} {U : ι → X.Opens} {κ : ι → Type} [∀ α, Fintype (κ α)]
   {g : ∀ α β, κ α → κ β → Γ(X, U α ⊓ U β)}
 
-open Classical in
 
 def frame (hg : IsCoc U κ g) (β : ι) (k : κ β) : Γ(toMod U κ g, U β) :=
   show secGroup U κ g (U β) from ofCoord hg le_rfl (Pi.single k 1)
@@ -319,7 +316,6 @@ theorem mul_g_tuple {n : ℕ} (a b c : Fin (n + 1)) (i : Fin (n + 1) → ι) (k 
     Finset.sum_ite_eq', Finset.mem_univ, if_true] at h1
   exact h1
 
-open Classical in
 
 theorem g_self_tuple {n : ℕ} (a : Fin (n + 1)) (i : Fin (n + 1) → ι) (k m : V.κ (i a)) :
     rs (le_inf (capO_le U i a) (capO_le U i a)) (V.g (i a) (i a) k m) = if k = m then 1 else 0 := by

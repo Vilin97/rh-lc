@@ -48,7 +48,6 @@ theorem iotaO_iSl {e : ℕ} [NeZero e] [Module.Free ℤ_[l] O] [Module.Finite �
 
 end GlobalTheory.BKGal.HatVal
 
-open GlobalTheory.BKGal.HatVal in
 
 theorem GlobalTheory.BKGal.HatVal.iotaO_iB_eq_Epow_mul : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O K : Type) [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K] [NormedAlgebra ℚ_[l] K] [TameDescentExponentData K l e a] (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e) [CompleteSpace K] (C : GlobalTheory.MemLoc.Core l) (η : ℕ) (f : ZMod a → invL l (S O K e)), (∀ τ, ∃ r ∈ Rpi O K l e, (f τ : K⟦X⟧) = E K l e ^ η * r) → ∃ z : OD l O, iotaO O C (ϖ.iB t K f) = dRO l O (toOD l O ((1 : O) ⊗ₜ[ℤ_[l]] ϖ.ev a (eis l a e) : OA l O) ^ η * z) := by
   intro l _ a e _ _ O K _ _ _ _ _ _ _ _ _ _ t ϖ _ C η f hf

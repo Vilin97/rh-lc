@@ -52,11 +52,7 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotio
   {Spf : ∀ Zs : DefSub P.A3.fam3.amb3, SPer (Dcf Zs)} {Zscf : DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3}
   {S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
-open GlobalTheory.IndefiniteRowSideFullHecke.FractionalBaseInclusion in
-set_option synthInstance.maxHeartbeats 400000 in
 
-open GlobalTheory.IndefiniteRowSideFullHecke.FractionalBaseInclusion in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem fracExt_algebraMap (c : NChoice D) (w : D.what₂.places.Pl) (x : D.ntw.O (c.twI w)) :
     fracExt c w (algebraMap _ (FractionRing (D.ntw.O (c.twI w))) x) =
@@ -64,13 +60,8 @@ theorem fracExt_algebraMap (c : NChoice D) (w : D.what₂.places.Pl) (x : D.ntw.
   rw [IsScalarTower.algebraMap_apply (D.ntw.O (c.twI w)) (c.Oe w) (FractionRing (c.Oe w))]
   simp [fracExt, IsFractionRing.map]
 
-open GlobalTheory.IndefiniteRowSideFullHecke.FractionalBaseInclusion in
-set_option synthInstance.maxHeartbeats 400000 in
 
-open GlobalTheory.IndefiniteRowSideFullHecke.FractionalBaseInclusion in
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.CompanionTheory.ReadingExt
 

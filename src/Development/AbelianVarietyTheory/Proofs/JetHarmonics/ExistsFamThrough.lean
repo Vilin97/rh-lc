@@ -60,6 +60,5 @@ theorem box_secScal {S : Fam D' F k} {s : Fin j → Fam D F k} (hS : IsBoxFam pD
 
 end Fam
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.UnitBallBox

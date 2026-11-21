@@ -15,7 +15,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.CompanionTheory.RswEmTop
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem topX : PositivityTheory.Rg.Rsw.Em.TopX := by
   intro D a r t e

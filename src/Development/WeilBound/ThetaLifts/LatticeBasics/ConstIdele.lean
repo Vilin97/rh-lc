@@ -31,7 +31,6 @@ theorem cA_eq (z : AE F E) : cA σ z = sigR (AF F) σ z := by
 theorem cA_cA (h : IsCMExt F E σ) (z : AE F E) : cA σ (cA σ z) = z := by
   rw [cA_eq, cA_eq]; exact GlobalTheory.UnitaryHeckeBaseChange.cA_cA h z
 
-variable (F) in
 
 def badSet (T : Finset (Pl F)) : Set (Pl E) := {w | w.under (𝓞 F) ∈ T} ∪ {w | w.asIdeal.ramificationIdx ℤ ≠ 1}
 

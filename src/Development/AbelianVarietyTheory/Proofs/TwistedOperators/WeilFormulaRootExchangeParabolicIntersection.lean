@@ -122,7 +122,6 @@ end Abstract
 section Pattern
 variable {k : Type} [Field k] {ι : Type} [Fintype ι] [DecidableEq ι]
 
-open Classical in
 
 def ext (S : ι × ι → Prop) (e : {rs // S rs} → k) : Matrix ι ι k :=
   Matrix.of fun r s => if h : S (r, s) then e ⟨(r, s), h⟩ else 0

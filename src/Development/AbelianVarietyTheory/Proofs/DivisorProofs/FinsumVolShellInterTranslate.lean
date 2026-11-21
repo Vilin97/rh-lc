@@ -28,9 +28,6 @@ open scoped TensorProduct in
 attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar _root_.GlobalTheory.LocalData.complRel
   _root_.GlobalTheory.LocalData.isLocalField _root_.GlobalTheory.FunObj.borelKw
   _root_.GlobalTheory.FunObj.borelSpaceKw in
-attribute [local instance] _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.measFv _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.borelFv in
-open ValuativeRel in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem _root_.GlobalTheory.PureMatch.ShellVolume.isOpen_translate {a : ℕ} (u u' : GL (Fin a) k) :
     IsOpen {g : GL (Fin a) k | u * g * u' ∈ _root_.GlobalTheory.SplitWeil.KO k (Fin a)} :=
@@ -44,8 +41,6 @@ open scoped TensorProduct in
 attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar _root_.GlobalTheory.LocalData.complRel
   _root_.GlobalTheory.LocalData.isLocalField _root_.GlobalTheory.FunObj.borelKw
   _root_.GlobalTheory.FunObj.borelSpaceKw in
-attribute [local instance] _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.measFv _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.borelFv in
-open ValuativeRel in
 
 theorem _root_.GlobalTheory.PureMatch.ShellVolume.finsum_vol_shell_inter_translate : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k]
     (a : ℕ) (ϖ : kˣ) (u u' : GL (Fin a) k), _root_.GlobalTheory.SplitFlip.IsUnif ϖ →

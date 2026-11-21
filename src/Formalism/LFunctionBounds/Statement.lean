@@ -42,7 +42,6 @@ def logOm1 (l : ℕ) (S : ℕ × ℕ × ℕ) : ℝ :=
 def inCM (l : ℕ) (S : ℕ × ℕ × ℕ) (n : ℕ) : Prop :=
   Int.fract ((n * S.1 : ℝ) / l) + Int.fract ((n * S.2.1 : ℝ) / l) < 1
 
-open ArithmeticFunction in
 
 def AS (l : ℕ) (S : ℕ × ℕ × ℕ) (y : ℝ) : ℝ :=
   2 * ∑ n ∈ Finset.Icc 1 ⌊y⌋₊,

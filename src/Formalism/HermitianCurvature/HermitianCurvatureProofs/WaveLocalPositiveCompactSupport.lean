@@ -39,7 +39,6 @@ def WaveLocBPCpt : Prop :=
 
 end Formalism.FourierDecayAlt.P.PBL
 
-open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P.PBL in
 
 theorem Formalism.FourierDecayAlt.P.wave_local_compact_support_route : Formalism.FourierDecayAlt.P.PBL.WaveLocBC := by
   intro hA hPSC hDW hSS hVI hFP Cb Cc E _ _ _ Wp Wq _ _ _ _ _ _ S p f χ A₀ hCc hB

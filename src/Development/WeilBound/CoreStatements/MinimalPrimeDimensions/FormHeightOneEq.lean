@@ -132,7 +132,6 @@ private theorem isMultiHomog_of_isMultiHomogeneous_const {K : Type} [Field K] {B
   rw [← hb, Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finset.sum_apply, Fintype.sum_prod_type]
   simp [GroundTheory.Heights₂.Heights.groupWeight, Pi.single_apply]
 
-open ChowFormHeightComparison₂.CF.D in
 
 theorem ChowFormHeightComparison₂.CF.stForm : ChowFormHeightComparison₂.CF.StForm := by
   intro K Ω _ _ _ _ d N m δ g A hspan hA y Φ hΦ H hH

@@ -46,12 +46,7 @@ def IsBalanced (β : Bil Y) : Prop :=
 
 def IsBalancedSpace (S : Submodule ℝ (Bil Y)) : Prop := ∀ β, β ∈ S ↔ IsBalanced E β
 
-omit [NumberField E] [IsCMField E] in
 
-open NumberField NumberField.IsCMField TensorProduct in
-variable (E : Type) [Field E] [NumberField E] [IsCMField E] in
-variable {Y : Type} [AddCommGroup Y] [Module (𝓞 E) Y] in
-omit [NumberField E] [IsCMField E] [Module (𝓞 E) Y] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.BalancedHermitianSpace.isIntegralFn_evalSum (S : Submodule ℝ (_root_.GlobalTheory.IndefiniteRowSideFullHecke.BalancedHermitianSpace.Bil Y))
     {k : ℕ} (x x' : Fin k → Y) :

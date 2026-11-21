@@ -34,7 +34,6 @@ variable {J : Type} (V : J → Z.Opens) (e : J → ∀ O : Z.Opens, Γ(Z, O) →
 def loc (O : Z.Opens) (f : Γ(Z, O)) (i : J) : Γ(Z, O ⊓ V i) :=
   e i (O ⊓ V i) (resG Z inf_le_left f)
 
-open Classical in
 
 def glue (O : Z.Opens) (f : Γ(Z, O)) : Γ(Z, O) :=
   if h : ∃ s : Γ(Z, O), ∀ i, resG Z (inf_le_left : O ⊓ V i ≤ O) s = loc V e O f i then h.choose else 0

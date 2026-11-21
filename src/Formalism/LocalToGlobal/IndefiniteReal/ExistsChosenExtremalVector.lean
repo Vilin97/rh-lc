@@ -274,7 +274,6 @@ theorem exists_chosen_extremal_vector (i : Fin D.R.m) (σ : D.what₂.LL →+* �
   · obtain ⟨v, hv⟩ := exists_isExtVec _ h
     exact ⟨v, hv, fun h' => absurd h' hσ⟩
 
-open Classical in
 
 def v0 (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) : (R.MW i σ).Vec :=
   if h : ∃ v, IsChosenExtremalVector R i σ v then h.choose else 0

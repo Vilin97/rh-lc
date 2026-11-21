@@ -199,8 +199,6 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] {P : SlopeBoundParame
 
 end Leaves
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end Formalism.L2.Indef.Tree

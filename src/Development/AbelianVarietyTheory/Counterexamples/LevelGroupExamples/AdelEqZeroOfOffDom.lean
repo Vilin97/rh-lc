@@ -34,7 +34,6 @@ theorem conjEmb_inj {τ τ' : E →+* ℂ} (h : conjEmb τ = conjEmb τ') : τ =
   ext a
   exact (starRingEnd ℂ).injective (RingHom.congr_fun h a)
 
-open Classical in
 
 def step (ρ : E →+* ℂ) (m : ℕ) : (E →+* ℂ) × ℕ → ℕ := fun p => if p.1 = ρ ∧ p.2 < m then 1 else 0
 

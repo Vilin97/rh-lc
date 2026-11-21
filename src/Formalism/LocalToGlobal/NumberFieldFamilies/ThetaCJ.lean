@@ -38,7 +38,6 @@ variable {D : D7}
 
 variable {V W : HSp D}
 
-variable (D) in
 
 end Formalism.L2.Fam.ThC
 

@@ -126,7 +126,6 @@ theorem genIndex_span_pos [NumberField K'] [Fintype T] {p0 : Σ _ : Unit, T} (hp
 
 end SectionIndexNormAlt
 
-open SectionIndexNormAlt in
 
 theorem SectionIndexNorm.proof (hC : CurveCharts.Statement) (hI : InvertibleIdealIndex.Statement) :
     SectionIndexNorm.Statement := by

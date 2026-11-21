@@ -106,9 +106,7 @@ def EstimatedPrimesExceedScale (D : D7) (L : SizeData₂ D) : Prop :=
 def MertensBound (_D : D7) : Prop :=
   ∀ y : ℝ, 1 ≤ y → ∑ p ∈ (Finset.range ⌈y⌉₊).filter Nat.Prime, Real.log p / p ≤ 2 * Real.log y
 
-open Classical in
 
-open Classical in
 
 def OrdersSmallPrimeBound (D : D7) (L : SizeData₂ D) : Prop :=
   ∑ p ∈ (Finset.range ⌈L.sc.X'' D.R.n⌉₊).filter (fun p => p.Prime ∧ p ≠ 2 ∧
@@ -120,7 +118,6 @@ def GlobalOrderEstimate (D : D7) (C₄ : ℝ) : Prop := Formalism.MainNotions.Un
 def FrobeniusClassCompatibility (D : D7) : Prop := ∀ p : ℕ, p.Prime → IsResidueClassZero D p →
   p ≠ 2 ∧ D.R.h (hP D p) = Additive.ofMul (iotaH _ (Formalism.MainNotions.GlobalTheoryTheory.hOf D.R.e p))
 
-open Classical in
 
 def OrdersLargePrimeBound (D : D7) (L : SizeData₂ D) (K : Consts) : Prop :=
   rho D K L.sc ≤ L.sc.x ^ (-2 : ℝ) ∧
@@ -144,7 +141,6 @@ def ServiceLowerValuation (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatIn
       Y.vKge u w hg F
         ((∑ j ∈ SizeData₂.lifts D, gainP X K (aL L) (bL L) (D.what₂.places.resChar w) j) + lowFE L u w)
 
-open Classical in
 
 def IMP {D : D7} {L : SizeData₂ D} (X : Inst D L) (Y : LatInst D) (K : Consts) (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) :

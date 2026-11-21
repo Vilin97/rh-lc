@@ -45,7 +45,6 @@ theorem star_pureA {κ : Type} [Fintype κ] (f : SchwartzMap (κ → mixedEmbedd
 
 end GlobalTheory.DoublingEv.ConjTame
 
-open GlobalTheory.DoublingEv.ConjTame in
 
 theorem GlobalTheory.DoublingEv.isTame_conjMap : ∀ (F : Type) [Field F] [NumberField F] (κ κ' : Type) [Fintype κ] [Fintype κ']
     (T : ((κ → AF F) → ℂ) →ₗ[ℂ] ((κ' → AF F) → ℂ)), IsTame F T → IsTame F (conjMap T) := by

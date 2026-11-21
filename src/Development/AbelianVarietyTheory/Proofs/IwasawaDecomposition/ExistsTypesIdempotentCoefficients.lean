@@ -99,7 +99,6 @@ theorem exists_char {A : Type} [Ring A] [Algebra ℂ A] [Module.Finite ℂ A] (z
   refine ⟨l.comp (Ideal.Quotient.mkₐ ℂ M), ?_⟩
   exact (congrArg l (Ideal.Quotient.eq_zero_iff_mem.2 (hle (Ideal.mem_span_singleton_self z)))).trans (map_zero l)
 
-open Classical in
 
 theorem good_sum {I : Type} [Fintype I] {Γ : I → Type} [∀ i, Group (Γ i)] [∀ i, Finite (Γ i)]
     {P : I → Type} [∀ i, Finite (P i)] (E : ∀ i, P i → MonoidAlgebra ℂ (Γ i)) (good : (∀ i, P i) → Prop)
@@ -188,7 +187,6 @@ theorem goodTupleIdempotent_coeff_mem_subring (T : NTypes A) (S : Subring ℂ) (
   · exact prod_mem fun _ _ => hS _ _ _
   · exact zero_mem S
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def types0 [IsEmpty N.Loc] (hl : ∀ k w (p : A.LP w), A.items₂ k w p = (X - 1) ^ A.lpDim p)
     (hi : ∀ w (p : A.LP w) σ, A.inePol p σ = (X - 1) ^ A.lpDim p)

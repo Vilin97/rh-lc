@@ -135,7 +135,6 @@ theorem levChar_mem (R : RealDat D A Ks) (hL : R.toLevCh.Is A.μ0) (hW : R.grp_c
   rw [Units.val_inv_eq_inv_val]
   exact inv_mem (chi_mem R hW i PP hP u)
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.ConjForms
 

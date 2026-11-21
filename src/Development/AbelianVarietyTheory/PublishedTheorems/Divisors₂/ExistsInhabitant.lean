@@ -19,17 +19,13 @@ namespace GlobalTheory.Published.LeviCentreModel
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-variable (F) in
 
 def big (δ : E) : Spc F E 3 := ⟨!![0, 0, 1; 0, δ, 0; -1, 0, 0], ⊥, fun _ => 1, fun _ => 1⟩
 
-variable (F) in
 
 def small (δ : E) : Spc F E 1 := ⟨!![δ], ⊥, fun _ => 1, fun _ => 1⟩
 
-variable (E) in
 
-open Matrix GlobalTheory.LeviUnitary in
 
 end GlobalTheory.Published.LeviCentreModel
 

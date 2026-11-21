@@ -46,8 +46,6 @@ def XiIn (X : Sys p) [IsFractionRing X.G.O X.G.Kf] (E : CEmbC X.G) (hfin : ∀ j
 
 end Gen
 
-open Formalism.L2.KerInert.SecondKernelInstances Formalism.L2.KerInert.SecondKernelCoupled in
 
-open Formalism.L2.KerInert.SecondKernelInstances in
 
 end Formalism.L2.KerInert.AdmLoc

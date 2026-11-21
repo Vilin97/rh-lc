@@ -76,7 +76,6 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) (p : PlF D)
   (hge : g.e = sg.e) (hgq : g.q = sg.q)
 include hR hM hge hgq
 
-set_option maxHeartbeats 1000000 in
 
 theorem zz_fact (u u' : D.what₂.Word) (w : Point D.host.E (D.R.rS + 1)) {L B : PairVal.MatR D} (hL : IsLo L)
     (hB : IsUp B) :
@@ -135,7 +134,6 @@ theorem zz_fact (u u' : D.what₂.Word) (w : Point D.host.E (D.R.rS + 1)) {L B :
     rw [l2, Matrix.map_mul, Matrix.map_mul, glue_map_snd, glue_map_snd, glue_map_snd, Matrix.mul_sub, Matrix.sub_mul]
     simp only [Matrix.mul_smul, Matrix.smul_mul, lo_corner_up hΛ2 hV2]
 
-set_option maxHeartbeats 1000000 in
 
 theorem target_fact (u u' : D.what₂.Word) (w : Point D.host.E (D.R.rS + 1)) :
     ∃ Gl Gu : MatP D p, IsLo Gl ∧ IsUp Gu ∧

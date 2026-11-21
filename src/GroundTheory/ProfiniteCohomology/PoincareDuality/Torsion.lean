@@ -14,7 +14,6 @@ open Function
 
 variable {n : ℕ}
 
-variable (n) in
 
 noncomputable def zmodToQZ : ZMod n →+ QZ :=
   ZMod.lift n ⟨zmultiplesHom QZ (QZ.mk (1 / n)), by

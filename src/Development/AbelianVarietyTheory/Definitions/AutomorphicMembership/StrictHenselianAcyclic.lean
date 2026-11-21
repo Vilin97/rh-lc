@@ -29,7 +29,6 @@ abbrev Dof (x : St P) : D7 := (w.st x.o.Z).toD7
 
 abbrev cfOf (x : St P) : CharFrame (Dof x) := TC.cf w.I w.l x.o.Z
 
-open Classical in
 
 def QOf (P : Pre2 K w) (v : B.places.Pl) : Finset (HeightOneSpectrum (𝓞 B.host.E)) := if v ∈ P.Wt then T.Q v else ∅
 

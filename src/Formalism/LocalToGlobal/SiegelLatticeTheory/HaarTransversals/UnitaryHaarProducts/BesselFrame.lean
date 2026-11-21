@@ -196,7 +196,6 @@ section Frame
 variable {ε : Fin (2 * r + k + 1) → Bool} {e f : Fin r → Fin (2 * r + k + 1) → ℂ}
   {wf : Fin k → Fin (2 * r + k + 1) → ℂ} {z0 : Fin (2 * r + k + 1) → ℂ}
 
-variable (ε e f wf z0) in
 
 def Qi : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ := Hpk k r * (Qm e f wf z0)ᴴ * Formalism.REAL.Jm ε
 
@@ -427,7 +426,6 @@ theorem hJ_colQ_Qm (hF : IsFrameJ ε e f wf z0) (i : Fin (2 * r + k + 1)) (v : F
   rw [← gramQ hF, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec]
   simp only [hJ, mulVec, dotProduct, conjTranspose_apply, Qm, Matrix.of_apply, Pi.star_apply]
 
-variable (ε e f wf z0) in
 
 def piB {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (πl : Matrix (Fin k) (Fin k) ℂ → (V →L[ℂ] V)) (g : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) :
@@ -603,7 +601,6 @@ section Meas3
 variable {ε : Fin (2 * r + k + 1) → Bool} {e f : Fin r → Fin (2 * r + k + 1) → ℂ}
   {wf : Fin k → Fin (2 * r + k + 1) → ℂ} {z0 : Fin (2 * r + k + 1) → ℂ}
 
-variable (ε e f wf z0) in
 
 def HNset (zB : Fin (2 * r + k + 1) → ℂ) : Set (Formalism.REAL.UJ ε) :=
   {s | Qi ε e f wf z0 * uMat s * Qm e f wf z0 ∈ Sset k r zB}

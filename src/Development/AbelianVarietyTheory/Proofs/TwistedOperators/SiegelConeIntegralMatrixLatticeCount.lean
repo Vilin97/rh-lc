@@ -135,7 +135,6 @@ theorem cone_pow_le {r : ℕ} {c : ℝ} (hc : 0 < c) {t : Fin r → ℝ}
   calc min c 1 ^ r ≤ min c 1 ^ (r - (k + 1) + 1) := pow_le_pow_of_le_one hm0.le hm1 (by omega)
     _ ≤ t k := key _ k hk
 
-open NumberField in
 
 theorem exists_repr_le (D : D7) : ∃ C : ℝ, 0 < C ∧ ∀ y : D.host.E,
     ∑ l, |((integralBasis D.host.E).repr y l : ℝ)| ≤ C * ∑ τ, ‖tauE D τ y‖ := by

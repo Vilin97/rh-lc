@@ -84,7 +84,6 @@ theorem div_mem_locRing_of_mem_pow {P : Ideal (𝓞 K)} (hP : P.IsMaximal) {a a'
   rw [e]
   exact Submodule.mem_one.mpr ⟨_, rfl⟩
 
-omit hK in
 
 theorem mul_inv_pow_mem {P : Ideal (𝓞 K)} {π : K}
     (h1 : ∀ z ∈ extP K (P.comap ι), Dv (locRing P) π (κ z)) (j : ℕ) :

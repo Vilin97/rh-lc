@@ -294,7 +294,6 @@ end Subst
 
 end SegreFlagCutPreimage
 
-open SegreFlagCutPreimage in
 
 theorem SegreFlagCutPreimage.proof : SegreFlagCutPreimage.Statement := by
   intro O _ _ _ ϖ hϖ Ω _ _ K _ _ ι _ y d hV N E _ _ B B' hB w w' x x' f₀ g₀ hfl M M' a₀ a₀' φ φ' hφ hφ'

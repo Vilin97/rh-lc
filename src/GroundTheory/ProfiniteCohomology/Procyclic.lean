@@ -78,7 +78,6 @@ section Cocycles
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   {A : Rep.{u} k G} {σ : G}
 
-omit [IsTopologicalGroup G] in
 
 theorem IsTopologicalGenerator.cocycle_eq_zero (hσ : IsTopologicalGenerator σ)
     {f : (Fin 1 → G) → A} (hlc : IsLocallyConstant f)
@@ -117,7 +116,6 @@ section Existence
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   {A : Rep.{u} k G} {σ : G}
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem sum_range_mul_eq_zero {a : A} {N m : ℕ} (hN : A.ρ (σ ^ N) a = a) (hm : m • a = 0) :
     ∑ i ∈ Finset.range (N * m), A.ρ (σ ^ i) a = 0 := by

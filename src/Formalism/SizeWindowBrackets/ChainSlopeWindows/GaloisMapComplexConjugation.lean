@@ -295,9 +295,7 @@ lemma sgn2_toAdd_eq_zero_iff : ∀ s : ℤˣ, Multiplicative.toAdd (sgn2 s) = 0 
 
 variable [Fact q.Prime] [Fact d.Prime]
 
-omit [Fact q.Prime] [Fact d.Prime] in
 
-omit [Fact q.Prime] [Fact d.Prime] in
 
 end Field
 

@@ -81,7 +81,6 @@ theorem aeval_dehomCoords {Ω : Type*} [Field Ω] [Algebra ℤ Ω] (z : Coord n 
     simp [dehomCoords, inv_mul_cancel₀ (hz k)]) F]
   exact aeval_mul_of_homog (fun k ↦ (z ⟨k, c k⟩)⁻¹) z (isWeightedHomogeneous_homogenize c F)
 
-omit [DecidableEq ι] in
 
 theorem prod_inv_pow_ne_zero {Ω : Type*} [Field Ω] (z : Coord n → Ω) (c : (k : ι) → Fin (n k + 1))
     (hz : ∀ k, z ⟨k, c k⟩ ≠ 0) (D : ι → ℕ) : ∏ k, (z ⟨k, c k⟩)⁻¹ ^ D k ≠ 0 :=
@@ -112,13 +111,11 @@ theorem aeval_dehomCoords_of_homog {Ω : Type*} [Field Ω] [Algebra ℤ Ω] (z :
     aeval (dehomCoords z c) G = aeval z G * ∏ k, (z ⟨k, c k⟩)⁻¹ ^ b k :=
   aeval_mul_of_homog (fun k ↦ (z ⟨k, c k⟩)⁻¹) z hG
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem val_comp_chartEval (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1)) :
     (chartRing x c).val.comp (chartEval x c) = aeval (chartRatio x c) :=
   MvPolynomial.algHom_ext fun _ ↦ by simp [chartEval]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem chartEval_surjective (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1)) :
     Function.Surjective (chartEval x c) := by
@@ -128,7 +125,6 @@ theorem chartEval_surjective (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) �
   obtain ⟨F, hF⟩ := hu'
   exact ⟨F, Subtype.ext ((DFunLike.congr_fun (val_comp_chartEval x c) F).trans hF)⟩
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem coe_chartEval (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1))
     (F : MvPolynomial (Coord n) ℤ) :
@@ -141,14 +137,12 @@ theorem coe_chartEval (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin 
     rw [map_mul, Subalgebra.coe_mul, IntermediateField.coe_mul, hp, map_mul]
     simp [chartEval, chartRatio, dehomCoords, flatCone, div_eq_inv_mul]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem chartEval_eq_zero_iff (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1))
     (F : MvPolynomial (Coord n) ℤ) :
     chartEval x c F = 0 ↔ aeval (dehomCoords (flatCone x) c) F = 0 := by
   rw [← coe_chartEval, ZeroMemClass.coe_eq_zero, ZeroMemClass.coe_eq_zero]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem chartEval_X_chart (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1))
     (hxc : ∀ k, flatCone x ⟨k, c k⟩ ≠ 0) (k : ι) : chartEval x c (X ⟨k, c k⟩) = 1 := by
@@ -161,12 +155,10 @@ section Generic
 
 variable (V : Ideal (MvPolynomial (Coord n) ℤ)) [V.IsPrime]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 def genPt : Coord n → FractionRing (MvPolynomial (Coord n) ℤ ⧸ V) :=
   fun p ↦ algebraMap _ _ (Ideal.Quotient.mk V (X p))
 
-omit [Fintype ι] [DecidableEq ι] [V.IsPrime] in
 
 theorem aeval_genPt (F : MvPolynomial (Coord n) ℤ) :
     aeval (genPt V) F = algebraMap _ (FractionRing (MvPolynomial (Coord n) ℤ ⧸ V))
@@ -180,13 +172,11 @@ theorem aeval_genPt (F : MvPolynomial (Coord n) ℤ) :
       (fun p ↦ by simp [genPt])
   exact DFunLike.congr_fun h F
 
-omit [Fintype ι] [DecidableEq ι] [V.IsPrime] in
 
 theorem aeval_genPt_eq_zero_iff (F : MvPolynomial (Coord n) ℤ) : aeval (genPt V) F = 0 ↔ F ∈ V := by
   rw [aeval_genPt, map_eq_zero_iff _ (IsFractionRing.injective _ _),
     Ideal.Quotient.eq_zero_iff_mem]
 
-omit [Fintype ι] [DecidableEq ι] [V.IsPrime] in
 
 theorem genPt_ne_zero {p : Coord n} (hp : (X p : MvPolynomial (Coord n) ℤ) ∉ V) : genPt V p ≠ 0 := by
   have h := (aeval_genPt_eq_zero_iff V (X p)).not.mpr hp

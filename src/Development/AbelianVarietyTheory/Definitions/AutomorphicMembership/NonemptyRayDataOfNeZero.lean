@@ -154,7 +154,6 @@ theorem ne_bot_of_cop {M : ℕ} (hM : 2 ≤ M) {I : Ideal (𝓞 K)} (h : IsCopri
   · omega
   · exact (Module.finrank_pos (R := ℤ) (M := 𝓞 K)).ne' h2
 
-open Classical in
 
 def rcl (M : ℕ) (I : Ideal (𝓞 K)) : (rayCon K M).Quotient :=
   if h : I ∈ primeTo K M then (rayCon K M).mk' ⟨I, h⟩ else 1
@@ -240,7 +239,6 @@ theorem cls_span {a : 𝓞 K} (ha : a ≠ 0) (h : a - 1 ∈ Ideal.span {(M : �
     ⟨1, a, one_ne_zero, ha, by simp, h, ?_⟩
   rw [Ideal.span_singleton_one, Ideal.top_mul]
 
-open Classical in
 
 theorem card_eq_classNumber (D : RayData K 1) : Fintype.card D.G = classNumber K := by
   classical

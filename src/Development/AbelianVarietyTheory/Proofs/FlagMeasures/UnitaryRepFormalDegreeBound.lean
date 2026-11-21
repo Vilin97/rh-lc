@@ -85,13 +85,11 @@ theorem inner_move {ρ : G → (H →L[ℂ] H)} (hρ : IsURep ρ) (x : G) (v u :
   show _ = ⟪ρ x v, ρ x (ρ x⁻¹ u)⟫_ℂ
   rw [e]
 
-omit [TopologicalSpace G] in
 
 theorem act_mul [TopologicalSpace G] {ρ : G → (H →L[ℂ] H)} (hρ : IsURep ρ) (x y : G) (u : H) :
     ρ (x * y) u = ρ x (ρ y u) := by
   rw [hρ.2.1]; rfl
 
-omit [Group G] [TopologicalSpace G] in
 
 theorem decays_span_left {ρ : G → (H →L[ℂ] H)} {D : G → ℝ} {c : ℝ} {S : Set H} {u : H}
     (h : ∀ v ∈ S, Decays ρ D c v u) : ∀ v ∈ Submodule.span ℂ S, Decays ρ D c v u := by
@@ -103,7 +101,6 @@ theorem decays_span_left {ρ : G → (H →L[ℂ] H)} {D : G → ℝ} {c : ℝ} 
   | (intros; apply @_root_.GlobalTheory.DecayOfMemSpan.decay_of_mem_span <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.DecayOfMemSpan.decay_of_mem_span ..)
 
-omit [Group G] [TopologicalSpace G] in
 
 theorem decays_span_right {ρ : G → (H →L[ℂ] H)} {D : G → ℝ} {c : ℝ} {S : Set H} {v : H}
     (h : ∀ u ∈ S, Decays ρ D c v u) : ∀ u ∈ Submodule.span ℂ S, Decays ρ D c v u := by
@@ -180,7 +177,6 @@ theorem integral_conj {ν : Measure G} {x : G} {t : ℝ}
   rw [← integral_map hm.aemeasurable hf.aestronglyMeasurable, h, integral_smul_measure,
     ENNReal.toReal_ofReal (Real.exp_pos t).le, Complex.real_smul]
 
-omit [IsTopologicalGroup G] in
 
 theorem Decays.integrable {ρ : G → (H →L[ℂ] H)} (hρ : IsURep ρ) {D : G → ℝ} {c : ℝ} {ν : Measure G}
     (hi : Integrable (fun m => Real.exp (-(c * D m))) ν) {v u : H} (h : Decays ρ D c v u) :
@@ -189,7 +185,6 @@ theorem Decays.integrable {ρ : G → (H →L[ℂ] H)} (hρ : IsURep ρ) {D : G 
   have hc : Continuous fun g => ⟪v, ρ g u⟫_ℂ := continuous_const.inner (hρ.2.2.2 u)
   exact (hi.const_mul C).mono' hc.aestronglyMeasurable (Filter.Eventually.of_forall hC)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [BorelSpace G] [Group G] in
 
 theorem exists_form (ρ : G → (H →L[ℂ] H)) (ν : Measure G) (V : Submodule ℂ H)
     (hi : ∀ v ∈ V, ∀ u ∈ V, Integrable (fun m => ⟪v, ρ m u⟫_ℂ) ν) :
@@ -203,7 +198,6 @@ theorem exists_form (ρ : G → (H →L[ℂ] H)) (ν : Measure G) (V : Submodule
     exact integral_add (hi _ x.2 _ y.2) (hi _ x.2 _ y'.2)
   · simp only [Submodule.coe_smul, map_smul, inner_smul_right, smul_eq_mul, RingHom.id_apply, integral_const_mul]
 
-omit [IsTopologicalGroup G] in
 
 theorem torus_decay {ρ : G → (H →L[ℂ] H)} {D : G → ℝ} {c : ℝ} (hc : 0 ≤ c) {ν : Measure G} {N : Set G}
     (hN : ν Nᶜ = 0) (hD : ∀ g g', D (g * g') ≤ D g + D g') (hDi : ∀ g, D g⁻¹ = D g)

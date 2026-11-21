@@ -116,7 +116,6 @@ noncomputable def intMulRes (m : ℤ) : Rep.res ρ (Rep.trivial ℤ G ℤ) ⟶ R
     ext
     rfl⟩
 
-omit [Fintype G] [Fintype G'] in
 
 theorem h2IntAddEquiv_map_intMulRes (m : ℤ) (z : groupCohomology (Rep.trivial ℤ G ℤ) 2) :
     GroundTheory.GroupCoh.h2IntAddEquiv G' ((groupCohomology.map ρ (intMulRes ρ m) 2).hom z) =

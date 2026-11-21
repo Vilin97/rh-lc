@@ -187,7 +187,6 @@ namespace Formalism.MainNotions
 
 open Formalism.BasicNotions Formalism.MainNotions.Lnk Formalism.MainNotions.GlobalTheoryTheory
 
-set_option linter.unusedVariables false in
 
 end Formalism.MainNotions
 

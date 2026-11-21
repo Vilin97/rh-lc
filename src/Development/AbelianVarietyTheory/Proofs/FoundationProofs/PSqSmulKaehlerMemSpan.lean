@@ -60,8 +60,6 @@ theorem D_qS_mem_span (T : Tower p Ω) {k m : ℕ} (h : k ≤ m) :
 
 end Klc
 
-set_option hygiene false in
-set_option hygiene false in
 
 theorem p_sq_smul_kaehler_mem_span : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω],
     p ≠ 2 → IsClo p Ω → ∀ (T : Tower p Ω) (η : KaehlerDifferential (O0 p) (integralClosure (O0 p) Ω))

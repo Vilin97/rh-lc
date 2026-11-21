@@ -29,7 +29,6 @@ theorem translate_mem {A : Subalgebra R (T → R)} (hA : IsHopfOrder A) {f : T �
     | smul r x _ hx => exact A.smul_mem hx r
   exact key _ (hA.comul f hf)
 
-omit [CommGroup T] in
 
 theorem mul_mem_prodSpan {A : Subalgebra R (T → R)} {a b : T → R} (ha : a ∈ A) (hb : b ∈ A)
     {g : T × T → R} (hg : g ∈ prodSpan A) : (fun z => a z.1 * b z.2 * g z) ∈ prodSpan A := by
@@ -53,12 +52,10 @@ theorem mul_mem_prodSpan {A : Subalgebra R (T → R)} {a b : T → R} (ha : a �
     convert this using 1
     ring
 
-open Classical in
 
 def extZero (H : Subgroup T) (t : T) (a : H → R) : T → R :=
   fun x => if h : t⁻¹ * x ∈ H then a ⟨_, h⟩ else 0
 
-open Classical in
 
 def extZero₂ (H : Subgroup T) (t s : T) (g : H × H → R) : T × T → R :=
   fun z => if h : t⁻¹ * z.1 ∈ H ∧ s⁻¹ * z.2 ∈ H then g (⟨_, h.1⟩, ⟨_, h.2⟩) else 0

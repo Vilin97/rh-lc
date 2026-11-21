@@ -20,7 +20,6 @@ def UnramifiedPlace (v : HeightOneSpectrum (𝓞 F)) : Prop :=
   ∀ w : HeightOneSpectrum (𝓞 E), w.asIdeal.LiesOver v.asIdeal →
     Algebra.IsUnramifiedAt (𝓞 F) w.asIdeal
 
-open Classical in
 
 def eta (v : HeightOneSpectrum (𝓞 F)) : ℝ :=
   if IsField (Fv F v ⊗[F] E) then -1 else 1
@@ -80,8 +79,6 @@ def LocalDensity : Prop :=
           (1 - eta F E v ^ M * (resCard F v ^ M)⁻¹)) ∧
       ∀ t : Fv F v, Valued.v (t - β) < 1 → fib t {X | X 0 ∈ L} = fib β {X | X 0 ∈ L}
 
-open scoped TensorProduct in
-open NumberField IsDedekindDomain MeasureTheory Topology in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualUnramifiedPlaces.one_lt_resCard (F : Type) [Field F] [NumberField F]
     (v : HeightOneSpectrum (𝓞 F)) :
@@ -95,8 +92,6 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualUnramifiedPlaces.
     exact v.ne_bot
   exact_mod_cast (by omega : 1 < Ideal.absNorm v.asIdeal)
 
-open scoped TensorProduct in
-open NumberField IsDedekindDomain MeasureTheory Topology in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualUnramifiedPlaces.density_factor_pos (F E : Type) [Field F] [NumberField F] [Field E]
     [NumberField E] [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) (M : ℕ) (hM : 1 ≤ M) :

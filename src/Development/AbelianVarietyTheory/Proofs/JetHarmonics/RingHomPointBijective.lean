@@ -72,9 +72,6 @@ private lemma ringHomPoint_eq_zero_iff {k k' : Type*} [Field k] [Field k']
   · rw [ringHomPoint_some]
     simp
 
-open PowerSeries WeierstrassCurve WeierstrassCurve.Affine in
-open scoped ComplexConjugate BigOperators Topology in
-open Classical in
 
 theorem _root_.GlobalTheory.MomOne.Mdl.exists_pointHom (q : ℕ) [Fact q.Prime]
     (M : _root_.GlobalTheory.MomOne.Mdl q) (hM : M.Ok) :

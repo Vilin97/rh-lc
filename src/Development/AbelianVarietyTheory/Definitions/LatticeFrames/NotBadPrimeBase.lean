@@ -23,7 +23,6 @@ variable {D : D7}
 
 theorem idx_top {j m : ℕ} (h : j + 2 * 0 + 2 = m) : m - 1 = j + 1 := by omega
 
-set_option maxHeartbeats 1000000 in
 
 structure Geo (D : D7) where
 
@@ -110,7 +109,6 @@ def volLev (t : T) (j : ℕ) : ℝ :=
 
 def cIOf (t : T) (j : ℕ) : ℂ := (Nat.card P.H : ℂ) * (g.κ (j + 1) : ℂ) * (volLev R g t j : ℂ)
 
-set_option maxHeartbeats 1000000 in
 
 structure RowCh (t : T) where
   vP : ∀ j, WO (Yc D j) (Yc D (j + 1)) → ℂ
@@ -180,7 +178,6 @@ structure GeoMeas : Prop where
   vol : ∀ t j, j + 1 < D.R.m → (g.vol (j + 1)).μ = ENNReal.ofReal (g.κ (j + 1) * volLev R g t j) • R.νY t (j + 1)
   volT : ∀ t, g.volT.μ = ENNReal.ofReal (g.κ D.R.m * volLev R g t (D.R.m - 1)) • R.νX t
 
-variable {R g} in
 
 theorem GeoMeas.cIOf_ne_zero (h : GeoMeas R g) (t : T) (j : ℕ) (hj : j < D.R.m) : cIOf R P g t j ≠ 0 := by
   have hv : volLev R g t j ≠ 0 := fun h0 => by
@@ -292,7 +289,6 @@ abbrev FamCh.B : Base f.c := baseOf (pk W) (lvP W) u f.g
 abbrev FamCh.t (t : W.P.T) : Tup f.c :=
   tupOf (pk W) (lvP W) u f.g t (f.row t) (f.col t) fun ψ F => tailOf W u f.j f.g.bT (W.P.I.tup t) ψ F.1
 
-open Formalism.L2.Host Formalism.L2 Formalism.L2.Rows in
 
 end Real
 

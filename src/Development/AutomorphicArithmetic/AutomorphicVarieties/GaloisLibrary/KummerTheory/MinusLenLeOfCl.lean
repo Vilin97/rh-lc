@@ -34,13 +34,11 @@ theorem levU_anti (U : Subgroup (G F Ω)) {m n : ℕ} (h : m ≤ n) : levU l U n
   simp only [levU, Subgroup.mem_inf, Subgroup.mem_comap, KStar.TotallyRealRoots.mem_princ] at hg ⊢
   exact ⟨hg.1, (pow_dvd_pow _ h).trans hg.2⟩
 
-omit [IsAlgClosure F Ω] in
 
 theorem galOf_Fn (n : ℕ) : galOf F (Fn F Ω l n) Ω = Un F Ω l n := by
   have := (fnCyc F Ω l n).1
   rw [galOfCyc F Ω l n F (Fn F Ω l n), galOf_self]
 
-omit [NumberField F] in
 
 private theorem princ_smul_eq_self_of_pow_smul_eq_zero {k : ℕ} {x : QZ l} (hx : l ^ k • x = 0) {w : ℤ_[l]ˣ}
     (hw : w ∈ KStar.TotallyRealRoots.princ l k) : (w : ℤ_[l]) • x = x := by

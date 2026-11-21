@@ -24,7 +24,6 @@ theorem card_quot_pow {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationR
   rw [Submodule.cardQuot_apply, Submodule.cardQuot_apply, Ideal.span_singleton_pow] at hq
   exact hq
 
-open Module Submodule in
 
 theorem card_coker {R M ι : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     [AddCommGroup M] [Module R M] [Fintype ι] (b : Basis ι R M) {p : R} (hp : Irreducible p)

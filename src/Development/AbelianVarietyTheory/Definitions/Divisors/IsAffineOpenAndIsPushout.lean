@@ -121,14 +121,11 @@ theorem appLE_base (h : V ≤ e ⁻¹ᵁ W) (k : W ≤ π ⁻¹ᵁ U) (hV : V �
 theorem le_nhd (h : V ≤ e ⁻¹ᵁ W) : V ≤ e ⁻¹ᵁ (W ⊓ π ⁻¹ᵁ e ⁻¹ᵁ W) :=
   le_inf h ((le_preimage_iff he).2 h)
 
-omit he in
-variable (e π W) in
 
 def center : Γ(X, W) →+ Γ(X, W ⊓ π ⁻¹ᵁ e ⁻¹ᵁ W) :=
   (resG X inf_le_left).toAddMonoidHom -
     ((π.appLE _ _ inf_le_right).hom.comp (e.appLE W _ le_rfl).hom).toAddMonoidHom
 
-omit he in
 
 theorem center_apply (f : Γ(X, W)) : center e W π f =
     resG X inf_le_left f - π.appLE _ _ inf_le_right (e.appLE W _ le_rfl f) := rfl
@@ -154,7 +151,6 @@ end Def
 
 variable {π : X ⟶ S} {e : S ⟶ X} {F F' : S.Modules} {U V V' : S.Opens} {W W' : X.Opens}
 
-variable (π e F) in
 
 @[ext] structure Der where
 
@@ -248,7 +244,6 @@ def comp (D : Der π e F) (φ : F ⟶ F') : Der π e F' where
 
 end Der
 
-variable (F) in
 
 def homEquivDer : (conormal e ⟶ F) ≃ Der π e F where
   toFun := (univ he).comp
@@ -291,7 +286,6 @@ theorem map_id {φ : X ⟶ X} (hφ : φ = 𝟙 X) (w : φ ≫ π = π) (we : e �
   exact hom_ext he fun W f => (map_d he he w we _ le_rfl le_rfl f).trans
     (congrArg _ (resG_self _ f))
 
-include he in
 
 theorem map_comp (he'' : e'' ≫ π'' = 𝟙 S) (w' : ψ ≫ π' = π'') (we' : e'' ≫ ψ = e')
     {χ : X'' ⟶ X} (hχ : ψ ≫ φ = χ) (w'' : χ ≫ π = π'') (we'' : e'' ≫ χ = e) :
@@ -303,7 +297,6 @@ theorem map_comp (he'' : e'' ≫ π'' = 𝟙 S) (w' : ψ ≫ π' = π'') (we' : 
       map_d he' he'' w' we' _ h'' le_rfl, map_d he he'' w'' we'' _ h''
         ((le_preimage_of_comp hχ).1 le_rfl), appLE_appLE hχ]
 
-include he in
 
 theorem map_eq_zero (hφ : π' ≫ e = φ) : map he' w we = 0 :=
   hom_ext he fun W f => by
@@ -368,7 +361,6 @@ theorem pullback_hom_ext {F : S'.Modules}
 
 end Base
 
-variable (π e) in
 
 structure IsChart (U : S.Opens) (W : X.Opens) : Prop where
 
@@ -392,7 +384,6 @@ theorem isAffineOpen_and_isPushout {Y T : Scheme.{0}} {f : T ⟶ S} {g : Y ⟶ X
   have : IsAffine W := hW
   exact .of_isIso (Scheme.Hom.isPullback_resLE H k k' rfl).isoPullback.hom
 
-include he in
 
 theorem exists_isChart_inf (hU : IsAffineOpen U) (hW : IsAffineOpen W) (k : W ≤ π ⁻¹ᵁ U) {x : S}
     (hx : e x ∈ W) (hV : x ∈ V) : ∃ U', x ∈ U' ∧ U' ≤ V ∧ U' ≤ U ∧ IsChart π e U' (W ⊓ π ⁻¹ᵁ U') := by
@@ -402,7 +393,6 @@ theorem exists_isChart_inf (hU : IsAffineOpen U) (hW : IsAffineOpen W) (k : W �
     (isAffineOpen_and_isPushout (IsPullback.id_horiz π) hU hU' hW h k).1,
     le_inf (hle.trans inf_le_right) ((le_preimage_iff he).2 le_rfl), inf_le_right⟩
 
-include he in
 
 theorem exists_isChart {x : S} (hV : x ∈ V) : ∃ U W, x ∈ U ∧ U ≤ V ∧ IsChart π e U W := by
   obtain ⟨U, hU, hx, -⟩ := QCoh.exists_affine_mem_le x hV
@@ -482,9 +472,7 @@ theorem d_surjective : Function.Surjective (d he c.le) := fun s => by
   obtain ⟨a, rfl⟩ := AugCot.d_surjective _ x
   exact ⟨a, (c.augCotEquiv_d he a).symm⟩
 
-open scoped TensorProduct in
 
-open scoped TensorProduct in
 
 end IsChart
 
@@ -560,7 +548,6 @@ theorem IsChart.isFrame_d [QuasiCompact e] (c : IsChart π e U W) {R A ι : Type
   convert Summand.isFrame_of_affine_basis c.affine_base (hl.basis b) using 2 with i
   rw [IsBaseChange.basis_apply, hb, hd]
 
-include he in
 
 theorem isIso_baseMap {π' : X' ⟶ S'} {e' : S' ⟶ X'} {φ : X' ⟶ X} {f : S' ⟶ S} [QuasiCompact e]
     [QuasiCompact e'] (he' : e' ≫ π' = 𝟙 S') (H : IsPullback φ π' π f) (we : e' ≫ φ = f ≫ e) :
@@ -600,7 +587,6 @@ theorem isIso_baseMap {π' : X' ⟶ S'} {e' : S' ⟶ X'} {φ : X' ⟶ X} {f : S'
     (key V x hx).imp fun _ h => ⟨h.1, h.2.1, h.2.2.2⟩
   exact isIso_of_mono_of_epi _
 
-include he in
 
 theorem exists_isFrame [QuasiCompact e] [Smooth π] (x : S) :
     ∃ (U : S.Opens) (n : ℕ) (s : Fin n → Γ(conormal e, U)), x ∈ U ∧ IsFrame s := by
@@ -611,7 +597,6 @@ theorem exists_isFrame [QuasiCompact e] [Smooth π] (x : S) :
   have := Module.Projective.of_equiv (c.augCotEquiv he)
   exact Summand.exists_frame_of_projective c.affine_base ⟨x, hx⟩
 
-include he in
 
 theorem isVB_conormal [QuasiCompact e] (n : ℕ) [h : SmoothOfRelativeDimension n π] :
     IsVB (conormal e) n := fun x => by
@@ -626,7 +611,6 @@ theorem isVB_conormal [QuasiCompact e] (n : ℕ) [h : SmoothOfRelativeDimension 
   obtain ⟨b⟩ := AugCot.nonempty_basis_of_isStandardSmoothOfRelativeDimension (c.aug he) n
   exact ⟨U', _, hx', Summand.isFrame_of_affine_basis c.affine_base (b.map (c.augCotEquiv he))⟩
 
-include he in
 
 theorem exists_isVB_conormal [QuasiCompact e] [Smooth π] [PreconnectedSpace S] :
     ∃ n, IsVB (conormal e) n := by

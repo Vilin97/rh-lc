@@ -126,7 +126,6 @@ theorem analyticAt_affCoord {e : ℕ} {Z : Type*} [TopologicalSpace Z] (A : FinH
 variable {P : Ideal (MRing ι)} {D e : ℕ} (R : AnLogRes P ⊤ D) {Y : Type*} [TopologicalSpace Y]
   (B : FinHolAtlas e Y) {V : Y → Set Y} {μ : Y → Y → (Σ k, ι k) → ℂ} {h : Y → R.X}
 
-include R in
 
 theorem local_orbit (hVm : ∀ y, y ∈ V y)
     (hc : ∀ y y', ∀ u ∈ V y ∩ V y', SameOrbit (μ y u) (μ y' u))

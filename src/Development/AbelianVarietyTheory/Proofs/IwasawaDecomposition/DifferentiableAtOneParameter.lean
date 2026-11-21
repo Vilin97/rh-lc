@@ -82,7 +82,6 @@ variable {β b b'}
 
 variable {d : U →ₗ[ℝ] Module.End ℂ S} {κ : ℂ} {Y : U →ₗ[ℝ] U}
 
-omit [FiniteDimensional ℝ U] in
 
 section Main
 
@@ -97,13 +96,9 @@ variable {Γ I : Type} [Group Γ] (ω : Γ →* Module.End ℂ S) (G : Γ →* (
   (hline : ∀ w u, ∃ ℓ : ℝ → S →ₗ[ℂ] ℂ, ℓ 0 = ev w ∧ (∀ Ψ s, HasDerivAt (fun s => ℓ s Ψ) (ℓ s (d u Ψ)) s) ∧
     ∀ s, ∃ (c : ℂ) (w' : I), ∀ Ψ, ℓ s Ψ = c * ev w' Ψ)
 
-include hN in
 
-include hN hvac in
 
-include hs hκ hd hω hG hN hvac hev hline in
 
-include hβ hs hκ hd hω hG hN hvac hev hline in
 
 end Main
 

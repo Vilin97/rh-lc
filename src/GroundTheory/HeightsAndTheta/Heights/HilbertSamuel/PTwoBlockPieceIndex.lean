@@ -161,7 +161,6 @@ section TwoBlock
 
 variable {Ω : Type} [Field Ω] [CharZero Ω] {κ : Type} [Fintype κ]
 
-omit [CharZero Ω] in
 
 theorem relIndex_map_mulLeft {γ : Ω} (hγ : γ ≠ 0) (A B : Submodule ℤ Ω) :
     (A.map (LinearMap.mulLeft ℤ γ)).toAddSubgroup.relIndex (B.map (LinearMap.mulLeft ℤ γ)).toAddSubgroup =
@@ -223,7 +222,6 @@ end TwoBlock
 
 end TwoBlockPieceIndex
 
-open TwoBlockPieceIndex in
 
 theorem TwoBlockPieceIndex.proof : TwoBlockPieceIndex.Statement := by
   intro D Ω _ _ κ _ x B c l hX hx hB hsp hl a b

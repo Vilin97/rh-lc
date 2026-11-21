@@ -28,7 +28,6 @@ theorem baseInc_injective : Function.Injective (baseInc (ι := ι) blk) := by
   cases h2
   rfl
 
-open Classical in
 
 def extDeg (b : NonPluckerBlocks blk → ℕ) : K → ℕ := fun k => if h : ∀ p, blk p ≠ some k then b ⟨k, h⟩ else 0
 

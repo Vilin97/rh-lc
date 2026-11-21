@@ -189,7 +189,6 @@ theorem exists_real_idele (D : D7) (θ : InfFam D) (hθ : IsInfFam θ) :
   · rw [ha1, map_one, map_one]; simp
   · rw [ha2, map_one]
 
-set_option maxHeartbeats 1000000 in
 
 theorem dil_exists : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (n ρ p : ℕ) (hn : ρ + p = n) (M : Maps D hn),
     ∃ e : ℝ → G D n, Continuous e ∧ (∀ u v, e (u + v) = e u * e v) ∧

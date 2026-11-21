@@ -29,7 +29,6 @@ theorem s_mem {n : G} (hn : n ∈ N) : s n ∈ N := by
   have h : s n = (r n)⁻¹ * n := by rw [eq_inv_mul_iff_mul_eq, hrs]
   rw [h]; exact N.mul_mem (N.inv_mem (hr n)) hn
 
-include hc hrs hr hrn hsn in
 
 theorem stepA (h0 : ∀ n ∈ N, ∀ m ∈ N, c n m = 0) (n : G) (hn : n ∈ N) (g : G) :
     c n g - D1 ρ (fun x => - c (r x) (s x)) n g = 0 := by
@@ -55,7 +54,6 @@ theorem theta_mul [N.Normal] (h0 : ∀ n ∈ N, ∀ g, c n g = 0) (g m : G) (hm 
   rw [h0 m hm, map_zero, h2] at h1
   linear_combination (norm := abel) h1
 
-include hc hrs hr hrn hsn in
 
 theorem stepB [N.Normal] (h0 : ∀ n ∈ N, ∀ g, c n g = 0) (e : G → A) (he0 : ∀ g ∈ N, e g = 0)
     (he : ∀ g, ∀ n ∈ N, c g (g⁻¹ * n * g) = e g - ρ n (e g)) (n : G) (hn : n ∈ N) (g : G) :
@@ -83,7 +81,6 @@ theorem stepB [N.Normal] (h0 : ∀ n ∈ N, ∀ g, c n g = 0) (e : G → A) (he0
     rw [ha0, map_zero, h1, hrn _ hconj, hsn _ hconj, h2, map_mul ρ (g * n * g⁻¹) (r g), Module.End.mul_apply]
     abel
 
-include hc in
 
 theorem stepC [N.Normal] (h0 : ∀ n ∈ N, ∀ g, c n g = 0) (h0' : ∀ n ∈ N, ∀ g, c g n = 0) (n : G) (hn : n ∈ N)
     (g h : G) : c g (h * n) = c g h ∧ c (g * n) h = c g h ∧ ρ n (c g h) = c g h := by

@@ -99,6 +99,5 @@ end GlobalTheory.TrMultEnd
 
 namespace GlobalTheory.TrMultEnd
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.TrMultEnd

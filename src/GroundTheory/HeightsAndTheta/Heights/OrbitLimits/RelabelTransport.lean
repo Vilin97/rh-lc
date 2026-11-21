@@ -43,7 +43,6 @@ theorem cycEval_mapDomain (c : Ideal (MRingOver F ι) → Ideal (MRingOver F ι'
 def vars : (Σ k, ι k) ≃ (Σ k', ι' k') :=
   Equiv.sigmaCongr e h
 
-variable (F) in
 
 def ringEquiv : MRingOver F ι ≃+* MRingOver F ι' :=
   (renameEquiv F (vars e h)).toRingEquiv

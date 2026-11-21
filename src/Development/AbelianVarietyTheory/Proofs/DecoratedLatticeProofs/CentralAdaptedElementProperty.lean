@@ -44,11 +44,8 @@ theorem h0_eq (D : D7) : 0 + 2 * D.R.rS + 2 = D.R.m := by
   unfold Ranks.rS
   omega
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 2000000 in
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.LevZeroMem
 

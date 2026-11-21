@@ -11,7 +11,6 @@ open scoped TensorProduct
 
 namespace GlobalTheory
 
-open Classical in
 
 theorem equivFinsuppOfBasisLeft_lTensor {K M N N' ι : Type*} [Field K] [AddCommGroup M] [Module K M]
     [AddCommGroup N] [Module K N] [AddCommGroup N'] [Module K N'] [DecidableEq ι]

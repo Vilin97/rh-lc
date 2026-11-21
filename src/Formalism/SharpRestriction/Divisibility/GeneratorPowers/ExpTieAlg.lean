@@ -23,7 +23,6 @@ theorem continuous_pderiv_disc {σ R : Type} [CommRing R] [TopologicalSpace R] [
   exact ((continuous_of_discreteTopology (f := fun x : R => x * ((n i : R) + 1))).comp
     (continuous_apply (n + Finsupp.single i 1))).congr fun f => (coeff_pderiv f n).symm
 
-open scoped MvPowerSeries.WithPiTopology in
 
 theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ → MvPowerSeries τ S} (ha : HasSubst a)
     (t : τ) (g : MvPowerSeries σ S) :

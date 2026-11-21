@@ -28,7 +28,6 @@ def fnField (x : κ → Ω) : IntermediateField ℚ Ω :=
 def projDeg (x : κ → Ω) (e : Fin (D + 1) → κ) : ℕ :=
   IntermediateField.relfinrank (fnField (x ∘ e)) (fnField x)
 
-open Classical in
 
 def scaleOff (e : Fin (D + 1) → κ) (m : ℕ) (x : κ → Ω) : κ → Ω :=
   fun i => if i ∈ Set.range e then x i else (m : Ω) * x i

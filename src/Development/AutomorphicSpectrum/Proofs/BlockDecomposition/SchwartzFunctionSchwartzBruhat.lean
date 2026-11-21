@@ -33,7 +33,6 @@ theorem exists_homeomorph_of_sections {A Y Z : Type} [TopologicalSpace A] [Topol
   exact ⟨{ toFun := c, invFun := fun z => p (σ z), left_inv := h3, right_inv := h2,
            continuous_toFun := hcc, continuous_invFun := hp.comp hσ }, fun _ => rfl⟩
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_infHomeo {θ : InfFam D} (hθ : IsInfFam θ) :
     ∃ P : (Ainf D.host.F ⊗[D.host.F] D.host.E) ≃ₜ (D.what₂.Tau → ℂ), ∀ y τ, P y τ = θ τ y := by

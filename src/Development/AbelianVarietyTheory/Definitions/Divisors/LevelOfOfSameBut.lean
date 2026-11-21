@@ -131,7 +131,6 @@ abbrev Tgt (ex : Extra D L hT Gi Gl Kc Y cX) (w : D.what₂.places.Pl) (j : Fin 
 
 abbrev Can : Type := (Fin ((R2 p).nW j) → D.what₂.LL) →ₛₗ[ex.nch.embW w] Tgt ex w j
 
-variable {w j} in
 
 def IsCan (rd : Can p w j) : Prop :=
   ∀ f : NX.FmK p.Sx ((j : ℕ) + 1), rd ((p.nexp.fi j).e (Subtype.val f)) = (1 : FractionRing (ex.nch.Oe w)) ⊗ₜ[D.ntw.O (ex.nch.twI w)]
@@ -158,12 +157,10 @@ def twLat {ρ : Setup D.ntw} (hρ : ρ.Good) (ν : ℂ) : Submodule (ex.nch.Oe w
   Submodule.span _ (incl D.nexp (ex.nch.twI w) _ (ex.nch.sd w) (ex.nch.Oe w) (ex.nch.k' w) ''
     twSet hρ (rdAt p w j hρ ν) (ex.nch.k' w) (ex.nch.Q w) (GlobalTheory.TwistIndex.chosenChar ex.nch w))
 
-variable {w j} in
 
 def realBase (rd : Can p w j) : Submodule (ex.nch.Oe w) (Tgt ex w j) :=
   Submodule.span _ (rd '' thetaBase (R2 p) j (F2 p).P0 (F2 p).ψ0⁻¹ 1 (D.plEq w) (ownAt D (D.plEq w)))
 
-variable {w j} in
 
 def realTw (rd : Can p w j) : Submodule (ex.nch.Oe w) (Tgt ex w j) :=
   Submodule.span _ (rd '' thetaTuple (R2 p) j (F2 p).P0 (F2 p).ψ0⁻¹ 1 ((R2 p).mu (D.plEq w)))

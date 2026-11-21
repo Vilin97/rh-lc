@@ -142,7 +142,6 @@ end Pins
 
 end Main
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.Mem.R3.SelC
 
@@ -182,20 +181,15 @@ theorem heq_app {A M M' : Type} (e : M = M') {f : A → M} {g : A → M'} (h : H
 
 variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl}
 
-set_option maxHeartbeats 1000000 in
 
 variable {L : SizeData₂ (w.st Z).toD7} {hT : GatTies (w.st Z).toD7} {Gi : Formalism.MainNotions.G.Inst (w.st Z).toD7 L} {Gl : Formalism.MainNotions.G.LatInst (w.st Z).toD7}
   {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (w.st Z).toD7} {cX : ExtraC} {ex : Extra (w.st Z).toD7 L hT Gi Gl Kc Yd cX}
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 400000 in
 
-set_option maxHeartbeats 400000 in
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.Mem.R3.SelC
 

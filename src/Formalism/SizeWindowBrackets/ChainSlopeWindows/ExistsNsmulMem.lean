@@ -581,7 +581,6 @@ section Local
 variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
   [IsScalarTower (𝓞 K) K V]
 
-omit [Module K V] [IsScalarTower (𝓞 K) K V] in
 
 end Local
 

@@ -39,9 +39,7 @@ end GlobalTheory.CoefDuty.MemberO
 
 namespace GlobalTheory.CoefDuty.MemberO
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.CoefDuty.MemberO
 

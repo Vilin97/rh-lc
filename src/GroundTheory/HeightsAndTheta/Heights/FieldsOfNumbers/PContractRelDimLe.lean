@@ -66,7 +66,6 @@ section Contract
 variable {K K' : Type*} [Fintype K] [DecidableEq K] [Fintype K'] [DecidableEq K'] {F : Type*}
   [Field F] (j : K ↪ K') (ι' : K' → Type*)
 
-omit [DecidableEq K] in
 
 theorem killBlocks_compl_rename :
     (killBlocks (ι := ι') (F := F) (Finset.univ.map j)ᶜ).comp (rename (blockIncl j ι')) =
@@ -75,7 +74,6 @@ theorem killBlocks_compl_rename :
   intro v
   simp [killBlocks_X, blockIncl]
 
-omit [DecidableEq K] in
 
 theorem exists_rename_eq_killBlocks_compl (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι') :
     ∃ a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)),

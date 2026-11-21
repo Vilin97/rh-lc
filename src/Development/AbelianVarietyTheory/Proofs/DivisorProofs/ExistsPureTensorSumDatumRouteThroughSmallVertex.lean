@@ -215,7 +215,6 @@ theorem exists_bases (hL : L.Is μ₀) (h : IsTripleOf W M t i j e Bs Γ X) (hT 
     rw [dite_eq_left v.2]
     exact hb₂ v
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_vac (hL : L.Is μ₀) (h : IsTripleOf W M t i j e Bs Γ X) (hT : IsTriple Bs Γ X om om') (v : Pl D.host.F) :
     (latSmall G i j).IsLattice D.host.E ∧ (latSkew e).IsLattice D.host.E ∧

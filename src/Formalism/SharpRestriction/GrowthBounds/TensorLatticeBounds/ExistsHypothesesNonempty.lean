@@ -18,7 +18,6 @@ section InstSec
 
 variable (D : D7) (L : SizeData₂ D)
 
-open Classical in
 
 end InstSec
 

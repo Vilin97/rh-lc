@@ -44,7 +44,6 @@ end GlobalTheory.CompanionTheory.CuspFinite
 
 namespace GlobalTheory.CompanionTheory.Published
 
-open GlobalTheory.CompanionTheory.CuspFinite in
 
 theorem cuspFiniteVectorsGL : GlobalTheory.Published.CuspFiniteVectorsGL := by
   intro E _ _ _ a μ _ _ H hH hi

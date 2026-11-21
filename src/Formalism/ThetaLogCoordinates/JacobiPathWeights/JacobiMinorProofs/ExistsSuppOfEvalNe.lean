@@ -16,13 +16,9 @@ section Laurent
 
 variable {A : Type*} [CommRing A] [IsDomain A]
 
-omit [IsDomain A] in
 
-omit [IsDomain A] in
 
-omit [IsDomain A] in
 
-omit [IsDomain A] in
 
 omit [IsDomain A] in
 theorem lp_coeff_TC (p : A) (m j : ℤ) :

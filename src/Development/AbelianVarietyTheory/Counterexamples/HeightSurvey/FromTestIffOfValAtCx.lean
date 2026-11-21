@@ -43,11 +43,8 @@ variable (hWD : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMa
   (htr : ∀ y i, |fn _ (cj y) i| = |fn σ y i|) {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ} {f : Rul Xo c}
   (hS : f ∈ sec Xo c a n)
 
-include hWD hcj htr hS in
 
-include hWD hcj htr hS in
 
-include hWD hcj htr hS in
 
 end Conj
 

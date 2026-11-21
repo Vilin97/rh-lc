@@ -68,7 +68,6 @@ theorem exists_hom_ker {R : Type} [CommRing R] (z : PrimeSpectrum R) :
 
 variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S : ThetaSys o Ω}
 
-open GlobalTheory.CechPic EndoExtend in
 
 theorem exists_th_notMem (hL : Laws) (hL₂ : Laws2) (ρ : S.Real) (z : PrimeSpectrum S.R) (a : S.Gam) :
     ∃ c : S.Gam, ρ.n • c = 0 ∧ (⟨S.th (a + c), S.th_mem _⟩ : S.R) ∉ z.asIdeal := by
@@ -122,7 +121,6 @@ end Transfer
 
 variable (ρ : S.Real) (c : CubicalStr ρ.P.A ⟨ρ.P.L, ρ.rig, ρ.P.isLB, ρ.rig_gen⟩)
 
-open PreModel in
 
 section Support
 
@@ -132,7 +130,6 @@ include ρ
 
 end Support
 
-open PreModel in
 
 end GlobalTheory.ZH.GoodOut
 

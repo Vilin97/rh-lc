@@ -68,7 +68,6 @@ theorem completionRingHomOf_coe {σ : Gal(L/K)} (hσ : σ ∈ MulAction.stabiliz
       w.Completion) :=
   Completion.ext <| (isometry_withAbsMapOf hσ).mapRingHom_coe x
 
-variable (w) in
 
 theorem ringHom_ext_completion {f g : w.Completion →+* w.Completion} (hf : Continuous f)
     (hg : Continuous g) (h : ∀ x : WithAbs w.1, f (x : w.Completion) = g (x : w.Completion)) :

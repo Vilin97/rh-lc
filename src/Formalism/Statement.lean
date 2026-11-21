@@ -10,7 +10,6 @@ noncomputable section
 
 namespace Formalism
 
-open ArithmeticFunction in
 
 def LamF {N : ℕ} (χ : DirichletCharacter ℂ N) (n : ℕ) : ℝ :=
   Λ n * (1 + (χ n).re)

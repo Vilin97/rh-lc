@@ -19,9 +19,7 @@ section Notions
 
 variable {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
 
-variable (σ W) in
 
-variable (W) in
 
 def LocMap (om : Rep σ X W) (v : Pl F) (T : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (UA σ W.J → ℂ)) : Prop :=
   (∀ φ ∈ SB _, IsRapid (Y := W) (T φ)) ∧ ∀ h ∈ UAt σ W (evFin F v), ∀ φ ∈ SB _, ∀ φ₁ ∈ SB _,

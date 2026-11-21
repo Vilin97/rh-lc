@@ -128,7 +128,6 @@ theorem vec_bc_of_chart {S : Type} [CommRing S] {x : Sp S ⟶ X} {n : ℕ}
   rw [key, Category.assoc, hφ, ← Category.assoc, hcomp cc, Category.assoc]
   rfl
 
-variable (t) in
 
 theorem exists_affine_chart {Y : Scheme.{0}} (i : Y ⟶ X) (y : Y) :
     ∃ (U : Y.Opens) (hU : IsAffineOpen U), y ∈ U ∧ ∃ (x : Sp Γ(Y, U) ⟶ X) (_ : x = hU.fromSpec ≫ i)

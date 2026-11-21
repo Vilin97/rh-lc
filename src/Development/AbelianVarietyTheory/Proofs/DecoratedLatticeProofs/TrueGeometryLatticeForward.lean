@@ -78,7 +78,6 @@ end GlobalTheory.FamTrace.LatFwd
 
 namespace GlobalTheory.FamTrace.LatFwd
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.FamTrace.LatFwd
 

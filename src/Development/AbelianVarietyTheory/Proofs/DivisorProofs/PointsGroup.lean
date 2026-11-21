@@ -11,7 +11,6 @@ namespace GlobalTheory.HopfShear
 variable {R A B X Y : Type} [CommRing R] [CommRing A] [CommRing B] [CommRing X] [CommRing Y]
   [HopfAlgebra R A] [HopfAlgebra R B] [Algebra R X] [Algebra R Y]
 
-open Algebra.TensorProduct Bialgebra HopfAlgebra in
 
 @[reducible] noncomputable def pointsGroup : Group (WithConv (A →ₐ[R] X)) where
   __ := (inferInstance : Monoid (WithConv (A →ₐ[R] X)))

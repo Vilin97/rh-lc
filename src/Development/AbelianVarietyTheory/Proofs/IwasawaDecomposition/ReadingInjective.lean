@@ -104,7 +104,6 @@ variable (h : CopyTw D D' ι e) {X : RealSide D} {X' : RealSide D'} (m : RealMov
   (hl : LowIn D) (hl' : LowIn D') {Sb Sb'} (hSb : OverSet D Sb (lowAll D)) (hSb' : OverSet D' Sb' (lowAll D'))
   {hL hL'} (H : HkAd X Sb hL) (H' : HkAd X' Sb' hL')
 
-include hfi hl hl' hSb hSb' H H' in
 
 theorem hk_intertwine {i : D.ntw.Tw} {i' : D'.ntw.Tw} (j : Fin D.R.m) (k : ℕ) {P : PlE D.host} {P' : PlE D'.host} (hP : HEq P P')
     (p0 : P ∉ D.ntw.S0 i) (p1 : P' ∉ D'.ntw.S0 i') (p2 : IsSplitPl D'.host P') (p3 : k ≤ D'.R.r)
@@ -124,7 +123,6 @@ theorem hk_intertwine {i : D.ntw.Tw} {i' : D'.ntw.Tw} (j : Fin D.R.m) (k : ℕ) 
   have e2 := hecke_sameMap h m j hF (read_move h m YS j ⟨_, hy⟩) (read_move h m YS j y) (e0.trans (congrArg (· • _) e1))
   exact (fiOfEq X' (NX.idxOf_succ D' (h.cm j))).e.injective (reading_injective X' _ (e2.trans e0'.symm))
 
-include hfi hl hl' hSb hSb' H H' in
 
 theorem hkLaw_move (hsup) {hs c} (hs') {c'} (hc : SameUnits c c') (L : HkLaw D _ YS.eF hL hs c) :
     HkLaw D' (dat h m YS) (tie h m YS hsup).eF hL' hs' c' := by

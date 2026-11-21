@@ -60,7 +60,6 @@ theorem LiesUnder.compPt_eq {k : s.Comp} {y : Pt s} {x : (Φ.C k).Y.X} (h : Lies
   exact (isPreconnected_range (Φ.C k).π.continuous).subset_connectedComponent ⟨p o, by rw [← hp]; rfl⟩
     (Φ.label k ⟨z, hz⟩ pt)
 
-variable (Φ) in
 
 theorem existsUnique_liesUnder (y : Pt s) : ∃! x, LiesUnder Φ (compPt s y) y x := by
   have : IsAlgClosed Qb := (algebraicClosure.isAlgClosure ℚ ℂ).isAlgClosed
@@ -70,7 +69,6 @@ theorem existsUnique_liesUnder (y : Pt s) : ∃! x, LiesUnder Φ (compPt s y) y 
   rintro _ ⟨q, h₁, h₂, rfl⟩
   rw [eq_of_heq (Sigma.mk.inj (hu ⟨_, q⟩ ⟨h₁, h₂⟩)).2]
 
-variable (Φ) in
 
 theorem liesUnder_basePt (y : Pt s) : LiesUnder Φ (compPt s y) y (basePt Φ y) :=
   Classical.epsilon_spec (existsUnique_liesUnder Φ y).exists
@@ -83,7 +81,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 def rootEx (τ : E →+* ℂ) (i : ℕ) : Letter Dw → ℤ := expo Dw (rootSym Dw (fun _ => false) none τ i)
 
-open Classical in
 
 theorem expo_single (a : Sym E) (n : ℤ) (x : Letter Dw) :
     expo Dw (Finsupp.single a n) x = if letterOf Dw a.2.2 = some x then n else 0 :=

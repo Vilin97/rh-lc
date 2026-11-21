@@ -82,7 +82,6 @@ section CechSide
 
 variable (S : Type) [CommRing S] {Ω : Type} [Field Ω] [Algebra S Ω] {N : ℕ} {x : Fin (N + 1) → Ω}
 
-open Classical in
 
 noncomputable def extZ {p : ℕ} (s : Kleiman.Cech.Cochain (fun _ : Kleiman.Chart x => Ω) p)
     (K : Finset (Fin (N + 1))) : Ω :=

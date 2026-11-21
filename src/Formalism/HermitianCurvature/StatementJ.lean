@@ -121,7 +121,6 @@ def EmbFacts : Prop :=
     (∀ (c : ℝ) (t : E), semb E c t = c • cemb E t) ∧
     ∀ (g : ℕ) (c : ℝ) (l : E) (w : InfinitePlace E), ‖coord E w (dm E g c l)‖ = |2 / ((g : ℝ) * c)| * w l
 
-open scoped Classical in
 
 def EuclidFrame : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (L : Submodule ℤ E) (c : ℝ),
@@ -149,9 +148,7 @@ def BlockFrame : Prop :=
         ZLattice.covolume (eLat E (S6.perLat E g ν s) (S6.rd E ^ (-ν))) =
           (S6.rd E / 2) ^ S6.deg E * (g : ℝ) ^ (3 * S6.deg E)
 
-open scoped Classical in
 
-open scoped Classical in
 
 section Poisson
 
@@ -379,7 +376,6 @@ def PhaseOk : Prop :=
   ∀ (E α : Type) [Field E] (d : E → ℂ) (S : LocSys E α) (F : Finset α), (∀ t, ‖d t‖ = 1) → S.Ok F →
     (phaseSys d S).Ok F
 
-open Classical in
 
 def OutsideOk : Prop :=
   ∀ (E α : Type) [Field E] (L : AddSubgroup E) (F : Finset α),
@@ -388,7 +384,6 @@ def OutsideOk : Prop :=
     (∀ R : Finset E, (∀ t ∈ R, ∀ t' ∈ R, t - t' ∈ L → t = t') →
       TB.PSDOn F (fun _ _ : α => (1 : ℂ) - ∑ t ∈ R, if t ∈ L then (1 : ℂ) else 0))
 
-open Classical in
 
 def OutsideSysOk : Prop :=
   ∀ (E α : Type) [Field E] (N : E → E → α → α → ℂ) (L L' : AddSubgroup E) (F : Finset α),
@@ -397,7 +392,6 @@ def OutsideSysOk : Prop :=
     (∀ t : E, t ≠ 0 → TB.PSDOn F (fun h h' => (if t ∈ L then (1 : ℂ) else 0) - N t t h h')) →
     (LocSys.mk N (fun t _ _ => if t ∈ L then 1 else 0) (fun _ _ => 1) L L').Ok F
 
-open Classical in
 
 def OutsideDomination : Prop :=
   ProductDomination →
@@ -417,7 +411,6 @@ def UniformMajorantOn : Prop :=
     ∃ Th, (∀ F : Finset α, (∀ h ∈ F, h ∈ A) → (LocSys.mk N Th B L L').Ok F) ∧
       (∀ t h h', ¬ (h ∈ A ∧ h' ∈ A) → Th t h h' = 0) ∧ ∀ t (F : Finset α), TB.PSDOn F (Th t)
 
-open Classical in
 
 def pullSys {E α K : Type} [Field E] [CommRing K] (R : Subring K) (ψ : AddChar K ℂ) (s : ℕ)
     (σ : E →+* K) (u : Kˣ) (η : α → A5.Point K) (Θ : K → A5.Point K → A5.Point K → ℂ) :
@@ -433,7 +426,6 @@ def pullSys {E α K : Type} [Field E] [CommRing K] (R : Subring K) (ψ : AddChar
   L := R.toAddSubgroup.comap ((AddMonoidHom.mulLeft (u : K)).comp σ.toAddMonoidHom)
   L' := R.toAddSubgroup.comap ((AddMonoidHom.mulLeft ((u⁻¹ : Kˣ) : K)).comp σ.toAddMonoidHom)
 
-open Classical in
 
 def LocalPullback : Prop :=
   PSDAgree → A5.A2 →
@@ -444,7 +436,6 @@ def LocalPullback : Prop :=
       1 ≤ s → (∀ h ∈ F, (η h).1.sum = m) → A5.ThetaProps R ψ s (F.image η) Θ →
       (pullSys R ψ s σ u η Θ).Ok F
 
-open Classical in
 
 def LocalUnitHeads : Prop :=
   PSDAgree → A5.BaseKernelOne →
@@ -456,7 +447,6 @@ def LocalUnitHeads : Prop :=
       ∀ t : E, t ≠ 0 → TB.PSDOn F (fun h h' =>
         (if t ∈ (pullSys R ψ s σ u η Θ).L then (1 : ℂ) else 0) - (pullSys R ψ s σ u η Θ).N t t h h')
 
-open Classical in
 
 def topSys {E α K : Type} [Field E] [CommRing K] (R : Subring K) (ψ : AddChar K ℂ) (σ : E →+* K)
     (u : Kˣ) (τ₀ : K) (η : α → A5.Point K) (Θ : K → A5.Point K → A5.Point K → ℂ) : LocSys E α where
@@ -466,7 +456,6 @@ def topSys {E α K : Type} [Field E] [CommRing K] (R : Subring K) (ψ : AddChar 
   L := R.toAddSubgroup.comap ((AddMonoidHom.mulLeft (u : K)).comp σ.toAddMonoidHom)
   L' := ⊥
 
-open Classical in
 
 def TopPullback : Prop :=
   PSDAgree →
@@ -604,7 +593,6 @@ def PullLiftTypedUnit : Prop :=
           x ∈ (pullSys R ψ s (σ.prod (σ.comp (IsCMField.complexConj E).toAlgHom.toRingHom)) u η Θ).L' ↔
             x ∈ S6.locAt E P (S6.liftLat E g ν s)
 
-open Classical in
 
 def TopUnitHeads : Prop :=
   PSDAgree → A5.BaseKernelOne →

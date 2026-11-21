@@ -256,7 +256,6 @@ theorem exists_prod_pullback {b : S' ⟶ S} {f : A'.left ⟶ A.left} {g : B'.lef
       rw [Category.assoc, Category.assoc, m.1.w, n.1.w, ← Category.assoc, ← Category.assoc, Over.w, Over.w]),
     Limits.pullback.lift_fst _ _ _, Limits.pullback.lift_snd _ _ _⟩
 
-omit [GrpObj A] [GrpObj B] [GrpObj A'] [GrpObj B'] in
 
 theorem isPullback_prod {b : S' ⟶ S} {f : A'.left ⟶ A.left} {g : B'.left ⟶ B.left}
     (m : IsPullback f A'.hom A.hom b) (n : IsPullback g B'.hom B.hom b) {h : (A' ⊗ B').left ⟶ (A ⊗ B).left}
@@ -275,7 +274,6 @@ open GlobalTheory.Published
 
 variable {A B : Over (Sp R)} [GrpObj A] [GrpObj B] {g g' : ℕ}
 
-omit [GrpObj A] [GrpObj B] in
 
 theorem smooth_prod (hg : SmoothOfRelativeDimension g A.hom) (hg' : SmoothOfRelativeDimension g' B.hom) :
     SmoothOfRelativeDimension (g' + g) (A ⊗ B).hom := by

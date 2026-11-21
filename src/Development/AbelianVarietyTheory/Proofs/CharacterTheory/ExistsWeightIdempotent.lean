@@ -6,7 +6,6 @@ public import Mathlib
 
 namespace GlobalTheory
 
-open Finset in
 
 theorem exists_weight_idempotent (L : Type) [Field L] [CharZero L] (G : Type) [Group G] [Finite G]
     (V : Type) [AddCommGroup V] [Module L V] (ρ : Representation L G V) (B T : Subgroup G)

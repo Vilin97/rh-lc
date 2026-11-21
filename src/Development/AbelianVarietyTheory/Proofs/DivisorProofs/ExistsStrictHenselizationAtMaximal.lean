@@ -37,7 +37,6 @@ theorem isSepClosed_of_ringEquiv {K L : Type} [Field K] [Field L] [IsSepClosed K
 
 end GlobalTheory.HensMax
 
-open IsLocalRing in
 
 theorem GlobalTheory.HensMax.exists_strictHens_of_maximal : ∀ (B : Type) [CommRing B] (P : Ideal B) [P.IsMaximal],
     IsSepClosed (IsLocalRing.ResidueField (Localization.AtPrime P)) → ∃ (O : Type) (_ : CommRing O) (_ : Algebra B O),

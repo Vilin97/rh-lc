@@ -533,7 +533,6 @@ theorem d_size_eq (hrd : 0 < D.host.rdE) {Ch : ℝ} (hCh : 0 ≤ Ch) (t : D.s.Te
   rw [d_norm_Dmin Y hrd t τ (i + 1) (by have := Finset.mem_range.1 hi; omega), add_comm 1 i]
   rfl
 
-open Classical in
 
 theorem rowBound_relevant {Q : D.s.Pair u u' → Prop}
     (hQ : ∀ p, Q p → D.s.Gterm (D.s.pfst p) ≠ 0 ∧ D.s.Gterm (D.s.psnd p) ≠ 0) {B : ℝ}

@@ -120,7 +120,6 @@ theorem thick_iff (D : D7) (z : Bool × HH D) : plGG D z ∈ D.host.thickPlaces 
 
 variable {D : D7}
 
-open Classical in
 
 def offC (L : SizeData₂ D) (j : ℕ) (z : Bool × HH D) : ℝ :=
   if j ∈ SizeData₂.lifts D then wPl D j z - (if z.1 = false ∧ z.2 ∈ D.host.TT then (bL L z.2 : ℝ) else 0)
@@ -271,7 +270,6 @@ theorem exists_big (L : SizeData₂ D) (hf : {w | D.what₂.muAt w ≠ D.what₂
     have := Nat.le_of_dvd (hG u) h
     omega
 
-open Classical in
 
 def refill (L : SizeData₂ D) (X : Inst D L) (K : Consts) (Cr : ℝ) (EX : ErrX D) (c : ErrC) (S : Finset D.what₂.places.Pl)
     (hS : Big L S) (hA : HostArith D.host) (hw : 1 ≤ L.sc.w'' D.R.n) (hX : L.sc.X' ≤ L.sc.X'' D.R.n)

@@ -60,7 +60,6 @@ private theorem tame_fwd (P : PlaceIso A w A' w' φ j i) {y : WD h} {y' : WD h'}
   rw [← he, hwild _ hσ]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 private theorem typeLaw_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (w.adicCompletion E) → WD h)
     (rc' : IrrGL (w'.adicCompletion E') → WD h') (hrel : ∀ x x', RepRel i x x' → WDRel φ (rc x) (rc' x'))
@@ -127,7 +126,6 @@ private theorem typeLaw_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (w.adicC
   show φ (t₁ z) = (t : G E'' Ω') (φ z)
   rw [← this, RingEquiv.apply_symm_apply]
 
-set_option maxHeartbeats 1000000 in
 
 private theorem isRecT_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (w.adicCompletion E) → WD h)
     (H : UpperTheory.Zero.LLC.IsRecT h rc) (a' : Weil h' →* (w'.adicCompletion E')ˣ) (ha' : IsLocalArtin h' a') :

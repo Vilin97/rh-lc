@@ -13,7 +13,6 @@ open scoped TensorProduct Matrix Classical Topology
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (E) in
 
 def eSp (v : HeightOneSpectrum (𝓞 F)) : ℂ := if IsField (Fv F v ⊗[F] E) then -1 else 1
 

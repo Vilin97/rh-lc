@@ -21,7 +21,6 @@ section Expo
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} (Dw : Datum H)
 
-open Classical in
 
 theorem expo_detSym (τ : GlobalTheory.AllWt.Psi H) (a : ℕ → Bool) (R : Option ℝ) (z : Letter Dw) :
     expo Dw (detSym Dw a R τ.1) z = if z.1 = τ.1 then 1 else if z.1 = conjEmb τ.1 then -1 else 0 := by
@@ -102,7 +101,6 @@ def IsBetti (k : s.Comp) (τ : D.what₂.Tau) (σ : (Φ.C k).Y.Fn) (b : ℂˣ) :
   ∀ (x : ((s.U κ.σ₀).X k).dom) (a : ℂ),
     CoordAtC (Φ.C k) ((s.U κ.σ₀).un k x) (detEx S τ) σ a ↔ a = b * bettiCo s L k τ x.1
 
-open Classical in
 
 def flBetti (k : s.Comp) (τ : D.what₂.Tau) : ℂˣ :=
   if h : ∃ b, IsBetti s Φ L k τ (flatSec s Φ k τ) b then h.choose else 1

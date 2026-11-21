@@ -207,4 +207,3 @@ theorem comp_agree : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (s :
 
 end GlobalTheory.TypeBlockFix
 
-open GlobalTheory.TypeBlockFix in

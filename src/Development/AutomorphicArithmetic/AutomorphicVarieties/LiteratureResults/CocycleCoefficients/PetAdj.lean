@@ -170,4 +170,3 @@ private theorem good_cusp {M k : â„•} [NeZero M] (f : CuspForm (Gamma1 M) (k : â
 
 end UpperTheory.V.Lit.KT
 
-open UpperHalfPlane ModularForm UpperTheory.V.Lit.KT in

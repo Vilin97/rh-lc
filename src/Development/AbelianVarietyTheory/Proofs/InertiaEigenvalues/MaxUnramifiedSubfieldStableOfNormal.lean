@@ -64,7 +64,6 @@ theorem mem_stdG_OL {LL : FinExt l} {k : ℕ} (x : Fin k → ↥LL.1) :
   · intro h
     exact ⟨fun j => ⟨x j, h j⟩, rfl⟩
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def bridgeLat {m : ℕ} (r : ↥Gw →* Matrix.GeneralLinearGroup (Fin m) O)
     (hr : Continuous fun g => ((r g : Matrix.GeneralLinearGroup (Fin m) O) : Matrix (Fin m) (Fin m) O))

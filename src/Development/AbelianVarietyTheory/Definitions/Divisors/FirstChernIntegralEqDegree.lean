@@ -135,12 +135,10 @@ namespace VB.Chart
 
 variable {E : X.Modules} {r : ℕ} (c c' c'' : Chart E r) {V W : X.Opens} {y : CxPts p σ}
 
-variable (p σ) in
 
 def crd (s : Γ(E, V)) (y : CxPts p σ) : Fin r → ℂ := fun a =>
   ev p σ (V ⊓ c.U) ((c.isFrame.basis inf_le_right).repr (resM E inf_le_left s) a) y
 
-variable (p σ) in
 
 def tr (y : CxPts p σ) : Matrix (Fin r) (Fin r) ℂ := Matrix.of fun a b => c.crd p σ (c'.e b) y a
 
@@ -456,7 +454,6 @@ theorem ofCover_G {hE : IsVB E r} {ι : Sort*} {c : ι → Chart E r} {hc}
 
 def IsCInf : Prop := ∀ (c : Chart E r), ∀ y ∈ ptsIn p σ c.U, MInfAt (h.G c) y
 
-variable {h} in
 
 theorem isCInf_of_exists (H : ∀ y, ∃ c : Chart E r, y ∈ ptsIn p σ c.U ∧ MInfAt (h.G c) y) :
     h.IsCInf := fun c y hy => by
@@ -468,7 +465,6 @@ def IsConj (h' : Met p σ' E r) : Prop :=
   ∀ (c : Chart E r) (y : CxPts p σ) (y' : CxPts p σ'), y'.1 = spMap (starRingEnd ℂ) ≫ y.1 →
     h'.G c y' = (h.G c y).map star
 
-variable {h} in
 
 theorem isConj_of_exists {h' : Met p σ' E r}
     (H : ∀ (y : CxPts p σ) (y' : CxPts p σ'), y'.1 = spMap (starRingEnd ℂ) ≫ y.1 →
@@ -605,7 +601,6 @@ def dual : VMetric p (VB.dual E) r :=
 def map (φ : E ≅ E') : VMetric p E' r :=
   ⟨h.isVB.of_iso φ, fun σ => (h.met σ).map φ, fun σ σ' => (h.conj σ σ').map φ⟩
 
-variable (p) in
 
 def IsIsometry (h' : VMetric p E' r) (φ : E ≅ E') : Prop :=
   ∀ σ (V : X.Opens) (s t : Γ(E, V)), ∀ y ∈ ptsIn p σ V,
@@ -627,9 +622,7 @@ def det (H : h.IsCInf) : HermLB p where
   cInf σ := (H σ).detWeight
   conj σ σ' := (h.conj σ σ').detWeight
 
-variable (h) in
 
-variable (h) in
 
 end VMetric
 
@@ -652,7 +645,6 @@ def dual : HermVB p r := ⟨_, E.h.dual, E.cInf.dual⟩
 
 def det : HermLB p := VMetric.det E.cInf
 
-variable (p r) in
 
 end HermVB
 

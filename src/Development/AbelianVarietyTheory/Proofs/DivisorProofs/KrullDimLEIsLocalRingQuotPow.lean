@@ -106,7 +106,6 @@ theorem projective_coker_of_approx [IsNoetherianRing R] {A B : Type} [AddCommGro
 
 end GlobalTheory.AbCoh.LowBaseChange
 
-open GlobalTheory.AbCoh.LowBaseChange in
 
 theorem GlobalTheory.AbCoh.projective_coker_of_liftsAt :
     ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (K : CochainComplex (ModuleCat.{0} R) ℕ),

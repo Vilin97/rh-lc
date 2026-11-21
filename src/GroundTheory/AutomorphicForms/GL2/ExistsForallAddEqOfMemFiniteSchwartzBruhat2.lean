@@ -79,7 +79,6 @@ theorem exists_idealFiniteAdeles2_subset {W : Set (Fin 2 → 𝔸ᶠ[K])} (hW : 
   refine ⟨I, fun x hx ↦ hJt fun i _ ↦ ?_⟩
   exact Set.mem_iInter.mp (hI ((mem_idealFiniteAdeles2.mp hx) i)) i
 
-open Classical in
 
 theorem finiteTensor2_cosetIndicator_apply (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ)
     (a x : Fin 2 → 𝔸ᶠ[K]) :

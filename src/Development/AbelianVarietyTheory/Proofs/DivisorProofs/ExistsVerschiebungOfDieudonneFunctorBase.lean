@@ -48,7 +48,6 @@ theorem frobInv_app_pow (G : PDivGroup p k) (n : ℕ) (y : (frobTwist (p_eq_zero
     rw [map_add (f := _), map_add (f := _), ← hx, ← hy]
     simpa using map_add (frobRing h0) ((frobInv G).app n x) ((frobInv G).app n y)
 
-omit [CharP k p] [PerfectRing k p] in
 
 theorem Base.smap_ofHom_nsmul_id {P : ∀ (k : Type) [CommRing k], PDivGroup p k → Prop} (B : Base p P)
     [CharP k p] [PerfectRing k p] (G : PDivGroup p k) (h : P k G) (n : ℕ) (m : B.M G h) :

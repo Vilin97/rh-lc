@@ -31,7 +31,6 @@ theorem detSet_eq (M : Submodule (𝓞 E) (Fin n → E)) :
   rw [← Matrix.det_transpose (Matrix.of v)]
   rfl
 
-omit [NumberField E] in
 
 theorem isUnit_detSpan (Λ : Lat E n) : IsUnit (detSpan Λ.L) := by
   obtain ⟨J, -, h0, -, hJ, -⟩ := GlobalTheory.TensorLat.exists_coe_eq_span_det (le_refl Λ.L) Λ.fg Λ.span_top
@@ -121,7 +120,6 @@ theorem isBe_ne_zero {𝔞 : Ideal (𝓞 E)} (h0 : 𝔞 ≠ ⊥) {β : c.F} (h :
   rw [map_zero, norm_zero, zero_pow two_ne_zero] at this
   exact pow_ne_zero _ (Nat.cast_ne_zero.2 (Ideal.absNorm_eq_zero_iff.not.2 h0)) this.symm
 
-variable {Dw c} in
 
 theorem isBe_unique {𝔞 : Ideal (𝓞 E)} (h0 : 𝔞 ≠ ⊥) {β β' : c.F} (h : IsBe Dw c 𝔞 β) (h' : IsBe Dw c 𝔞 β') :
     ∃ ζ : c.F, IsOfFinOrder ζ ∧ β' = ζ * β := by

@@ -26,7 +26,6 @@ theorem hermLine_ext {ι : Unit → Type} [∀ k, Fintype (ι k)] {A B : Recipro
 
 variable {T T₂ : Type} [Fintype T] [DecidableEq T] [Fintype T₂] [DecidableEq T₂]
 
-omit [DecidableEq T₂] in
 
 theorem subst_subst {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B = 1) (f : MRing (dualBlocks T)) :
     intCoordSubst A (intCoordSubst B f) = f := by
@@ -52,7 +51,6 @@ theorem subst_subst {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B
 
 variable {K : Type} [Field K] [NumberField K] {i : ℕ} {F : HermLattice K i}
 
-omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 
 theorem basis_coe (b : Module.Basis T ℤ (dualLattice F)) (b₂ : Module.Basis T₂ ℤ (dualLattice F))
     (s : T₂) (j : Fin i) :
@@ -61,7 +59,6 @@ theorem basis_coe (b : Module.Basis T ℤ (dualLattice F)) (b₂ : Module.Basis 
   simp only [Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, zsmul_eq_mul] at h
   exact h.symm
 
-omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 
 theorem coord_change {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
@@ -80,7 +77,6 @@ theorem coord_change {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattic
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [map_mul, map_intCast]
 
-omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 
 theorem coneMap_subst {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
@@ -103,7 +99,6 @@ theorem coneMap_subst {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLatti
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [mul_assoc]
 
-omit [DecidableEq T₂] in
 
 theorem ideal_map {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B = 1)
     {b : Module.Basis T ℤ (dualLattice F)} {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
@@ -115,7 +110,6 @@ theorem ideal_map {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B =
     simp only [dualIdeal, mCoordIdeal, Ideal.mem_comap, RingHom.mem_ker, coneMap_subst hA]
   rw [hker, Ideal.map_comap_of_surjective _ hsurj]
 
-omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 
 theorem embMatrix_apply {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
@@ -125,7 +119,6 @@ theorem embMatrix_apply {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLat
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [dualEmbMatrix, hA, map_sum, map_mul, map_intCast]
 
-omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 
 theorem recover_eq {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b)))
@@ -151,7 +144,6 @@ theorem recover_eq {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice 
   refine Finset.sum_congr rfl fun p _ => ?_
   ring
 
-omit [DecidableEq T₂] in
 
 theorem line_eq {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b)))
@@ -167,7 +159,6 @@ theorem line_eq {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
 
 end TopDualBasisChange
 
-open TopDualBasisChange in
 
 theorem DualTopBasisChange.proof (hChange : IntCoordChange.Statement) : DualTopBasisChange.Statement := by
   intro K _ _ i F T T₂ _ _ _ _ b hb b₂ hb₂ II hi hII

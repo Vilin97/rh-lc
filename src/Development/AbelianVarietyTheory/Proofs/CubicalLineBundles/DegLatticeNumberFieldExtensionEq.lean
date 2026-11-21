@@ -399,8 +399,6 @@ private lemma log_relIndex_map_lemma_4 (h : _root_.ReciprocityTheory.GeometryOfN
       Real.log_mul (Nat.cast_ne_zero.2 ha') (Nat.cast_ne_zero.2 hb'), add_div, add_div, e1, e2,
       hIH, neg_div, neg_div, hN]
 
-open NumberField Module in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.deg_span_image_eq :
     ∀ (K K' : Type) [Field K] [NumberField K] [Field K'] [NumberField K'] (j : K →+* K') (n : ℕ)

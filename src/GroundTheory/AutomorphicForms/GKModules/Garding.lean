@@ -153,7 +153,6 @@ theorem isSmoothVector_integrated {f : G → ℂ} (hf : h.IsTestFunction f) (v :
       · intro h0; apply hne; simp [h0]
       · simp [expG_neg]
 
-omit [MeasurableSpace G] [BorelSpace G] in
 
 end IsExpLieAlgebra
 

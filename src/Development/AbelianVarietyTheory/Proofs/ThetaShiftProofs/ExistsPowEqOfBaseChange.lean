@@ -305,7 +305,6 @@ theorem IsTorusPtF.gtSmul {g : GtPtF D F} {t : D.X → F} (h : IsTorusPtF g t) (
   rw [gtSmul_val hG oa a g χ hJ, b, mul_eq_left.1 e.symm, _root_.mul_one]
   exact v _ y J hJ
 
-include hG in
 
 end Action
 

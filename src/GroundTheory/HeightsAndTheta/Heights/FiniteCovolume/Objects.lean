@@ -128,7 +128,6 @@ def stab (M : Majorant h v) : Subgroup (archUnitary h v) :=
 
 end Majorant
 
-variable (E) in
 
 structure IsLattice (La : AddSubgroup W) : Prop where
 
@@ -169,12 +168,10 @@ def latticeStab (h : HermitianForm F E W) (La : AddSubgroup W) : Subgroup h.unit
 def IsIsotropicLine (h : HermitianForm F E W) (l : Submodule E W) : Prop :=
   finrank E l = 1 ∧ ∀ x ∈ l, ∀ y ∈ l, h.toSesq x y = 0
 
-variable (E) in
 
 def ringMultiples (x : W) : AddSubgroup W :=
   (((smulAddHom E W).flip x).comp (algebraMap (𝓞 E) E).toAddMonoidHom).range
 
-variable (E) in
 
 def lineIndex (La : AddSubgroup W) (x : W) : ℕ :=
   (ringMultiples E x).relIndex (La ⊓ (Submodule.span E {x}).toAddSubgroup)
@@ -195,12 +192,10 @@ def archLatticeGroup (h : HermitianForm F E W) (v : Basis ι E W) (La : AddSubgr
     Subgroup (archUnitary h v) :=
   (latticeStab h La).map (archEmbed h v)
 
-variable {h : HermitianForm F E W} {v : Basis ι E W} in
 
 def countBelow (M : Majorant h v) (VV : Set W) (g : archUnitary h v) (t : ℝ) : ℝ≥0∞ :=
   (({x ∈ VV | M.len (invApply g (vecAt v x)) < t}.encard : ℕ∞) : ℝ≥0∞)
 
-variable {h : HermitianForm F E W} {v : Basis ι E W} in
 
 def massBelow (M : Majorant h v) (μ : Measure (archUnitary h v)) (FD : Set (archUnitary h v))
     (VV : Set W) (t : ℝ) : ℝ≥0∞ :=

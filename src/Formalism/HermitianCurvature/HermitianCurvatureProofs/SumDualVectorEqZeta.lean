@@ -897,7 +897,6 @@ theorem capelli_two_polynomial (hD : IsOpen D) {f : Mx k r → E} (hf : SmoothLe
   · simp only [if_neg hc]
     exact polyAt_zero _
 
-open Classical in
 
 def coefOf (N : ℕ) (φ : ℂ → E) : ℕ → E := if h : PolyAt N φ then h.choose else 0
 

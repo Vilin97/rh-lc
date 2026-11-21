@@ -19,12 +19,10 @@ namespace GlobalTheory.GLExt
 
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
-variable (E a) in
 
 def toLCLM : Matrix (Fin a) (Fin a) (Cinf E) →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap (Matrix.ofLinearEquiv ℝ).symm.toLinearMap
 
-variable (E a) in
 
 def ofCLM : Lie E a →L[ℝ] Matrix (Fin a) (Fin a) (Cinf E) :=
   LinearMap.toContinuousLinearMap (Matrix.ofLinearEquiv ℝ).toLinearMap
@@ -61,7 +59,6 @@ theorem detL_ne_zero {x : Lie E a} (hx : x ∈ invSet E a) : detL x ≠ 0 := by
   rw [h0, zero_mul] at h1
   exact zero_ne_one h1
 
-open Classical in
 
 def extZ (α : glG E a → ℂ) (x : Lie E a) : ℂ :=
   if h : IsUnit (Matrix.of x) then ((|detL x|⁻¹ : ℝ) : ℂ) * α ⟨h.unit, Subgroup.mem_top _⟩ else 0

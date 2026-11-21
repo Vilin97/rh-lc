@@ -24,7 +24,6 @@ variable {D : D7}
 
 def tay {a b : ℕ} (G : TaylorLogMetric.VC D a b → ℂ) : MvPowerSeries (D.what₂.Tau × Fin b × Fin a) ℂ := fun α => TaylorLogMetric.taylor D G α
 
-open Classical in
 
 def pullMat {a b : ℕ} (e : Matrix (Fin a) (Fin a) D.host.E) (e' : Matrix (Fin b) (Fin b) D.host.E)
     (x y : D.what₂.Tau × Fin b × Fin a) : ℂ :=
@@ -42,7 +41,6 @@ def reframe (fd : FData X D) (ρ : ∀ v : X.Pl, D.host.E →+* X.G.P.Qq v)
 variable {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G.LatInst D} {Kc : G.Consts} {Dx : DivX D} {cX : ExtraC}
   {ex : Extra D L hT Gi Gl Kc Dx cX}
 
-open Classical in
 
 def thCl (t : KerEntTied ex) (u : D.what₂.Word) (μ : D.what₂.Tup) (cls : ∀ j, X.Lv.comp j → (X.Pj j).Tup → (D.chTw u μ).cls j)
     (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1)) : TaylorLogMetric.VC D ((X.Pj j).m + 1) ((X.Pj (j + 1)).m + 1) → ℂ :=
@@ -69,8 +67,6 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G
   {Lv : Levels (Gl.Fl u w hg)} {I : CmpJIn ex.tw u μ w hg Lv} {H : CmpJHyp ex.cmp I} {X : LabIn I}
   [Fact (D.what₂.places.resChar w).Prime] {t : KerEntTied ex} (J : Joint t H X) (std : Lt.StdAtW D Gl u w hg)
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure Dec where
   gam : ∀ j (_ : j ≤ D.R.m), (sysS H X std).Lt j → GL (Fin (D.R.N j)) D.host.E
@@ -85,7 +81,6 @@ def gMat (j : ℕ) (hj : j ≤ D.R.m) (γ : GL (Fin (D.R.N j)) D.host.E) : Matri
 
 variable {J std} (d : Dec J std)
 
-open Classical in
 
 def Dec.eM (j : ℕ) (La : (sysS H X std).Lt j) :
     Matrix (Fin (((sysS H X std).Pj j).m + 1)) (Fin (((sysS H X std).Pj j).m + 1)) D.host.E :=

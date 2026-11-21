@@ -60,11 +60,9 @@ def dE (hS : ∀ f ∈ S, Sm ρ f) (hD : ∀ v, ∀ f ∈ S, dH ρ v f ∈ S) (v
 variable (hJ : ∀ x, J (J x) = -x) (h : IsHeis (omJ J) ρ) (hΦ : ∀ v f, ‖Φ (ρ v f)‖ = ‖Φ f‖)
   (hS : ∀ f ∈ S, Sm ρ f) (hD : ∀ v, ∀ f ∈ S, dH ρ v f ∈ S)
 
-variable (J) in
 
 def cE (z : V) : Module.End ℂ S := dE hS hD z - I • dE hS hD (J z)
 
-variable (J) in
 
 def aE (z : V) : Module.End ℂ S := -(dE hS hD z + I • dE hS hD (J z))
 
@@ -102,7 +100,6 @@ theorem adjoint (z : V) (x y : S) :
     inner_smul_right, inner_dH hΦ h (hS _ x.2) (hS _ y.2), conj_I]
   ring
 
-include hJ h hΦ in
 
 theorem inner_translate (K : Submodule ℂ S) (hK : ∀ z, ∀ x ∈ K, cE J hS hD z x ∈ K) {v : S} (hv : v ∈ K)
     (ha : ∀ z, aE J hS hD z v = 0) {y : H} (hy : ∀ x ∈ K, inner ℂ y (Φ x) = 0) (w : V) :
@@ -142,7 +139,6 @@ theorem inner_translate (K : Submodule ℂ S) (hK : ∀ z, ∀ x ∈ K, cE J hS 
           rw [mul_pow, mul_assoc, mul_assoc, ← mul_assoc (‖Φ v‖ ^ 2)]
           exact mul_le_mul_of_nonneg_left (h2 k) (by positivity)
 
-include hJ hΦ in
 
 theorem dense_zero (hρ : ∀ w, ∀ f ∈ S, ρ w f ∈ S) (hP : ∀ f ∈ S, proj h f ∈ S) (K : Submodule ℂ S)
     (hK : ∀ z, ∀ x ∈ K, cE J hS hD z x ∈ K) (hK0 : ∀ v, (∀ z, aE J hS hD z v = 0) → v ∈ K) (f : S) {δ : ℝ}
@@ -201,7 +197,6 @@ theorem wordSum_le {X Y ι : Type} [Fintype ι] (A : ι → X → X) (p : X → 
   simp only [wordSum, Finset.sum_mul]
   exact Finset.sum_le_sum fun k hk => Finset.sum_le_sum fun a _ => hC' _ (e k hk a) y
 
-include hJ h hΦ in
 
 theorem exists_number {ι : Type} [Fintype ι] (u : ι → V) (d : ℕ) : ∃ M : Module.End ℂ S,
     (∀ v, (∀ z, aE J hS hD z v = 0) → M v = ((8 * π : ℝ) : ℂ) • v) ∧
@@ -230,7 +225,6 @@ theorem exists_number {ι : Type} [Fintype ι] (u : ι → V) (d : ℕ) : ∃ M 
   rw [← hw, ← ofReal_norm_eq_enorm, ← ofReal_norm_eq_enorm, ← ENNReal.ofReal_mul (le_max_right _ _)]
   exact ENNReal.ofReal_le_ofReal ((hC x).trans (mul_le_mul_of_nonneg_right (le_max_left _ _) (norm_nonneg _)))
 
-include hJ hΦ hS hD in
 
 theorem dense_words (hρ : ∀ w, ∀ f ∈ S, ρ w f ∈ S) (hP : ∀ f ∈ S, proj h f ∈ S) (F : Submodule ℂ B)
     (hF0 : ∀ f ∈ S, (∀ z, dH ρ z f + I • dH ρ (J z) f = 0) → f ∈ F)
@@ -264,7 +258,6 @@ theorem dense_words (hρ : ∀ w, ∀ f ∈ S, ρ w f ∈ S) (hP : ∀ f ∈ S, 
   rw [← ofReal_norm_eq_enorm, ← ENNReal.ofReal_coe_nnreal]
   exact ENNReal.ofReal_le_ofReal hd.le
 
-include hJ in
 
 theorem dense_transport {V' : Type} [NormedAddCommGroup V'] [NormedSpace ℝ V'] (E : V ≃L[ℝ] V') {J' : V' → V'}
     (hE : ∀ x, E (J x) = J' (E x)) {ρ : V' → B →L[ℂ] B} (hρ : IsHeis (omJ J) fun v => ρ (E v))
@@ -391,7 +384,6 @@ theorem mem_level {U : AddSubgroup (WO V W)} (hU : IsOpen (U : Set (WO V W))) (G
       rw [← coe_rhoB hψ, hG.2 u hu h0]
     exact ⟨theta_of_sm h hψ G hG.1 ⟨U, hU, e⟩, e⟩
 
-include hψ in
 
 theorem crea_mem (A : Fr V) (B : Fr W) (U : AddSubgroup (WO V W)) (τ : D.what₂.Tau)
     (z : Matrix (Fin W.rank) (Fin V.rank) ℂ) {g : WO V W → ℂ} (hg : g ∈ fockSpan ψ θ A B U) :

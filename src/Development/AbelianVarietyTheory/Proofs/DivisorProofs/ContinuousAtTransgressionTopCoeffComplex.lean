@@ -25,9 +25,6 @@ private lemma continuousAt_dbar_ofReal_of_contDiffAt_one {n : ℕ} {ρ : _root_.
   simp only [_root_.GlobalTheory.dbar_apply]
   fun_prop
 
-set_option autoImplicit false in
-open MeasureTheory Filter Topology in
-open scoped ContDiff Matrix in
 
 theorem _root_.GlobalTheory.GoodTop.continuousAt_corrC :
     ∀ {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] {ρ : _root_.ReciprocityTheory.L2DbarEstimates.V n → ℝ}

@@ -169,7 +169,6 @@ theorem eOf_spec (D : D7) (hF : OFull D) (x : 𝓞 (FO D)) :
   rw [h1] at h2
   exact h2.symm
 
-open Classical in
 
 def epsW (D : D7) (j : ℕ) : ℤˣ := if ∃ hI : DatInt D j, DomFor D j (intForm (efQ D j) hI) then 1 else -1
 
@@ -190,7 +189,6 @@ theorem inR_one (D : D7) : InR D 1 := by
   unfold InR
   exact ⟨le_refl 1, le_trans (by norm_num) D.R.two_le_m⟩
 
-open Classical in
 
 def datumAtLift (D : D7) (hU) (hDat : ∀ j, InR D j → ∃ hI : DatInt D j, DatLaws D j hI) (j : ℕ) :
     Datum (hostOf D hU) :=

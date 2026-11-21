@@ -25,14 +25,12 @@ theorem classSmul_of_restrictHom (g : K.1.fixingSubgroup) (c : IdeleClassGroup F
     (g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • IdeleClassLimit.of F c = IdeleClassLimit.of F (restrictHom (E := F) g • c) :=
   IdeleClassLimit.smul_of_of_normal g c
 
-variable (K F) in
 
 def classLevelMor :
     Rep.res (restrictHom (F := K) (E := F)) (ideleClassRep K.1 F.1) ⟶ classLimitRep K :=
   Rep.ofHom ⟨(MonoidHom.toAdditive (IdeleClassLimit.of F)).toIntLinearMap, fun g => LinearMap.ext fun x =>
     congrArg Additive.ofMul (classSmul_of_restrictHom g x.toMul).symm⟩
 
-variable (K F) in
 
 def classLevelInfl (n : ℕ) : cohomology (ideleClassRep K.1 F.1) n ⟶ cohomology (classLimitRep K) n :=
   cohomologyMapAlong restrictHom continuous_restrictHom (classLevelMor K F) n
@@ -44,9 +42,7 @@ section Transition
 variable {F E : FiniteSubfield} [Fact (K ≤ F)] [Fact (K ≤ E)] [Fact (F ≤ E)]
   [F.1.fixingSubgroup.Normal] [E.1.fixingSubgroup.Normal]
 
-variable (K F E) in
 
-variable (K F E) in
 
 end Transition
 
@@ -140,11 +136,9 @@ theorem exists_classLevelInfl_eq (n : ℕ) (x : cohomology (classLimitRep K) n) 
   apply (ModuleCat.mono_iff_injective ((cochainsComplex (classLimitRep K)).iCycles n)).1 inferInstance
   rw [iCycles_cyclesMap_apply, hw, hy₀]
 
-set_option maxHeartbeats 1600000 in
 
 end Colimit
 
-variable (K) in
 
 theorem isZero_cohomology_one_classLimitRep : Limits.IsZero (cohomology (classLimitRep K) 1) := by
   rw [ModuleCat.isZero_iff_subsingleton]

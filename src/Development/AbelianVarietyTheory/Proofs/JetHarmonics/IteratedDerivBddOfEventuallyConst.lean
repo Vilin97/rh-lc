@@ -139,9 +139,6 @@ private theorem inCC_real_smul_comp_Gf_of_inCC {k r : ℕ} {Wp Wq : Type} [Norme
           ring
         rw [h0, Real.rpow_zero, mul_one]
 
-open MeasureTheory in
-open scoped ContDiff in
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem _root_.GlobalTheory.HatNF.mulG_ckOn_inCC : ∀ (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
     [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]

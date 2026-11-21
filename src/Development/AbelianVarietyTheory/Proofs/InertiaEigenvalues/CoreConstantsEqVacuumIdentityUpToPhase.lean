@@ -75,7 +75,6 @@ theorem realPt_mul (V W : HSp D) (X : Matrix (Fin W.rank) (Fin V.rank) D.host.E)
   change _ * ((1 : AF D.host.F) ⊗ₜ[D.host.F] _) = _
   rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one]
 
-open scoped ComplexOrder in
 
 theorem exists_phase {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {V W : HSp D} {χV χW : (AE D)ˣ →* Circle}
     {om : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} (hP : IsPair ψ θ V W χV χW om)
@@ -167,7 +166,6 @@ theorem exists_theta_ne_zero {E : Type} [Field E] [NumberField E] [IsCMField E] 
   have h9 := Y.c9
   simp [h0] at h9
 
-set_option maxHeartbeats 1000000 in
 
 theorem baseCc_of_framePin : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : Formalism.L2.DIV.FamIn D.what₂.LL G Pl0 T0 D.R.m) (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (F : Face D A) (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec), LawsJ T → R.toLevCh.Is A.μ0 → R.IsGrp F → R.IsFam → R.IsModels → R.IsThP → TieIn T R κ v₀ → ∀ (i : Fin D.R.m), VStd D i → ∀ hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i, GlobalTheory.IndefiniteRowSideFullHecke.OrthonormalLatticeThetaValues.FramePin T R i T.σ₀ hV → ∃ ph : ℂ, ‖ph‖ = 1 ∧ BaseCc T R i hV ph := by
   intro D G _ _ Pl0 T0 A T _ R F κ v₀ hL hlev hgrp hfam hmod hthP hT i hS hV hpin

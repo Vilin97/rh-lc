@@ -83,7 +83,6 @@ theorem global_basis (hs : Splits χ) {m : ι → ℕ} (u : (Σ τ, Fin (m τ)) 
 variable {S N : Type} [CommRing S] [Algebra K S] [AddCommGroup N] [Module S N] {ρ' : O →+* Module.End S N}
   {φ : R →+* S} (f : M →ₛₗ[φ] N)
 
-omit [Algebra K R] [Algebra K S] in
 
 end Alg
 
@@ -133,7 +132,6 @@ theorem comb_lf {n : ℕ} (v : Fin n → TanM x t.G) (a : Fin n → R) (w : TanM
   · rw [← h, lf, tv_comb]
     rfl
 
-variable (t) in
 
 variable {Dw : Datum H} {l : Level H} {c : Coeff l}
 

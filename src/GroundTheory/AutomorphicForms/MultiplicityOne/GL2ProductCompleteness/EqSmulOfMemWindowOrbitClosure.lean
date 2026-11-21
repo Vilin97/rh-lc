@@ -51,17 +51,12 @@ variable (D : Submodule ℂ V) [CompleteSpace D]
 
 variable {τ ι₁ ι₂ D}
 
-variable (τ ι₁) in
 
 variable {v : V}
 
-variable (τ ι₁) in
 
-variable (τ ι₁) in
 
-variable (τ ι₁) in
 
-variable (τ ι₁) in
 
 end GL2ProductCompleteness
 

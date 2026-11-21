@@ -20,7 +20,6 @@ theorem ι_comp_apply {X U : Scheme.{0}} (f : X ⟶ U) (W : X.Opens) (y : X) (h 
     (Scheme.Opens.ι W ≫ f) ⟨y, h⟩ = f y :=
   rfl
 
-omit [CommRing R] in
 
 theorem cov_pt {U : Scheme.{0}} (S : Sieve U) (hS : S ∈ Scheme.etaleTopology U) (u : U) :
     ∃ (V : Scheme.{0}) (j : V ⟶ U) (v : V), IsAffine V ∧ Etale j ∧ j v = u ∧ S.arrows j := by

@@ -130,7 +130,6 @@ theorem exists_gt_of_lt {N e' g T : ℝ} (hN : 0 < N) (h : N * e' * g < T) :
 
 end LatticeWithoutBigness
 
-open LatticeWithoutBigness in
 
 end
 

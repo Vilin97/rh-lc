@@ -42,7 +42,6 @@ theorem levPOf_bot {D : D7} {G K : Type} [Group G] [Field K] {Pg : Finset (Pl D.
 
 end GlobalTheory.OccW
 
-open GlobalTheory.OccW in
 
 theorem GlobalTheory.Hk3.eec_ne_bot_of_wcc_ne_bot : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A) {s : ℕ}, A.fam.Ok s → Core R F → SchurAll R → GoodStable A.X → GlobalTheory.CuspMult.CuspDecomp D → GlobalTheory.CuspMult.MultEq R → ∀ SF, IsSF R SF → ∀ i c, Wcc R SF i c ≠ ⊥ → EEc R SF c ≠ ⊥ := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F s hOk hCore hSchur hGood hCusp hMult SF hSF i c hW

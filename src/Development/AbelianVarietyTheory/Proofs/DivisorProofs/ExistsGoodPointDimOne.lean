@@ -181,7 +181,6 @@ theorem homV_bLie (f : B.A ⟶ B'.A) [IsMonHom f] (x : LieG (goodPoint hv ε j B
 
 variable {f : B.A ⟶ B'.A} [IsMonHom f]
 
-omit [Algebra ℤ_[p] C] [IsScalarTower ℤ_[p] O C] in
 
 end Good
 

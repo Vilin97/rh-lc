@@ -35,7 +35,6 @@ variable (E)
 def inclV (v : HeightOneSpectrum (𝓞 F)) : E →+* Kv E v :=
   (Algebra.TensorProduct.includeRight : E →ₐ[F] Kv E v).toRingHom
 
-variable (F) in
 
 def evalAt (v : HeightOneSpectrum (𝓞 F)) : FiniteAdeleRing (𝓞 F) F →ₐ[F] v.adicCompletion F where
   toFun a := a v
@@ -48,8 +47,6 @@ def evalAt (v : HeightOneSpectrum (𝓞 F)) : FiniteAdeleRing (𝓞 F) F →ₐ[
 def compAt (v : HeightOneSpectrum (𝓞 F)) : AE F E →+* Kv E v :=
   (Algebra.TensorProduct.map (evalAt F v) (AlgHom.id F E)).toRingHom
 
-variable (F) in
-open Classical in
 
 def singleF (v : HeightOneSpectrum (𝓞 F)) : v.adicCompletion F →ₗ[F] FiniteAdeleRing (𝓞 F) F where
   toFun x := ⟨Pi.single v x, by
@@ -292,9 +289,7 @@ theorem compAt_tmul (a : FiniteAdeleRing (𝓞 ℚ) ℚ) (y : GaussQ) :
 theorem singleV_tmul (x : v5.adicCompletion ℚ) (y : GaussQ) :
     singleV GaussQ v5 (x ⊗ₜ[ℚ] y) = singleF ℚ v5 x ⊗ₜ[ℚ] y := rfl
 
-open Classical in
 
-open Classical in
 
 theorem inv_mem_SU {R : Type*} [CommRing R] (σ : R →+* R) {N : ℕ} (J : Matrix (Fin N) (Fin N) R)
     {a : Matrix (Fin N) (Fin N) R} (ha : a ∈ SU σ J) : a⁻¹ ∈ SU σ J := by

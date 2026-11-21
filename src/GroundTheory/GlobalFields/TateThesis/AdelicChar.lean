@@ -157,7 +157,6 @@ theorem forall_coe_mem_localInvDifferent_iff (k : K) :
 @[simp] theorem adeleRing_algebraMap_snd (k : K) :
     (algebraMap K 𝔸[K] k).2 = algebraMap K (FiniteAdeleRing (𝓞 K) K) k := rfl
 
-variable (K) in
 
 def finiteInvDifferent : AddSubgroup (FiniteAdeleRing (𝓞 K) K) where
   carrier := {a | ∀ v : HeightOneSpectrum (𝓞 K), a v ∈ localInvDifferent v}
@@ -173,7 +172,6 @@ theorem mem_finiteInvDifferent_of_mem_integralFiniteAdeles {a : FiniteAdeleRing 
     (ha : a ∈ integralFiniteAdeles (𝓞 K) K) : a ∈ finiteInvDifferent K :=
   fun v => mem_localInvDifferent_of_mem (ha v)
 
-variable (K) in
 
 theorem isOpen_finiteInvDifferent :
     IsOpen (finiteInvDifferent K : Set (FiniteAdeleRing (𝓞 K) K)) :=
@@ -200,7 +198,6 @@ theorem exists_trace_eq_intCast {k : K}
   rw [← hn]
   simp
 
-variable (K) in
 
 def invDifferentAdeles : AddSubgroup 𝔸[K] :=
   (⊤ : AddSubgroup (InfiniteAdeleRing K)).prod (finiteInvDifferent K)
@@ -209,7 +206,6 @@ theorem mem_invDifferentAdeles {x : 𝔸[K]} :
     x ∈ invDifferentAdeles K ↔ x.2 ∈ finiteInvDifferent K := by
   exact ⟨fun h => h.2, fun h => ⟨AddSubgroup.mem_top _, h⟩⟩
 
-variable (K) in
 
 theorem fourierChar_infiniteTrace_eq (x : InfiniteAdeleRing K) (a : FiniteAdeleRing (𝓞 K) K)
     {k k' : K} (hk : a - algebraMap K _ k ∈ finiteInvDifferent K)
@@ -226,7 +222,6 @@ theorem fourierChar_infiniteTrace_eq (x : InfiniteAdeleRing K) (a : FiniteAdeleR
     ring
   rw [this, AddChar.map_sub_eq_div, fourierChar_intCast, div_one]
 
-variable (K) in
 
 def adelicCharFun (x : 𝔸[K]) : Circle :=
   𝐞 (-infiniteTrace K (x.1 - algebraMap K _ (exists_sub_mem_finiteInvDifferent x.2).choose))
@@ -236,7 +231,6 @@ theorem adelicCharFun_eq (x : 𝔸[K]) {k : K}
     adelicCharFun K x = 𝐞 (-infiniteTrace K (x.1 - algebraMap K _ k)) :=
   fourierChar_infiniteTrace_eq _ _ (exists_sub_mem_finiteInvDifferent x.2).choose_spec hk
 
-variable (K) in
 
 def adelicChar : AddChar 𝔸[K] Circle where
   toFun := adelicCharFun K

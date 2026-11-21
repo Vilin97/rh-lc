@@ -132,7 +132,6 @@ theorem natCast_le_one {K Γ : Type} [Field K] [LinearOrderedCommGroupWithZero �
     rw [Nat.cast_succ]
     exact (v.map_add _ _).trans (max_le ih (le_of_eq v.map_one))
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_root_same_value : ∀ (D : D7) (c : (AE D)ˣ →* Circle), IsHeckeChar D c → ∃ N₀ : ℕ, ∀ (V : HSp D) {n : ℕ} (hn : V.rank = n) (g w : GA D V), w ∈ GfC V → (∀ (P : HeightOneSpectrum (𝓞 D.host.E)) (r s : Fin n), Valued.v (adAt D.host.F P (finM V hn w r s - (1 : Matrix (Fin n) (Fin n) (EF D)) r s)) ≤ WithZero.exp (-(N₀ : ℤ))) → ∀ x, IsDetRoot V g x → ∃ x₁, IsDetRoot V (g * w) x₁ ∧ c x₁ = c x := by
   intro D c hc

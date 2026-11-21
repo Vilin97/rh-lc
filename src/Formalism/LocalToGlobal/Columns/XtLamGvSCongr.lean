@@ -68,7 +68,6 @@ theorem xtLamGvS_congr (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → 
     simp only [Matrix.map_apply, Matrix.of_apply]
     exact (h _ _ (hblk i hi s s').1 (hblk i hi s s').2).2.2
 
-open Classical in
 
 theorem xtPhiGS_congr (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hq0 : (q : E) ≠ 0) (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K)
     (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {k₀ rS r t j c' n' c n : ℕ} (x x' : HomE E (n' + c') (n + c))
@@ -196,7 +195,6 @@ theorem xtTilH_mem (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT :
   rw [mem_localization_tilN]
   rfl
 
-open Classical in
 
 theorem xtTilH_be (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
     (w : SG) (v : Sp E N) (hv : v ∈ (DecoSet.tilH (ST := ST) hN pi d).1.at w.1) (i : Fin N) :

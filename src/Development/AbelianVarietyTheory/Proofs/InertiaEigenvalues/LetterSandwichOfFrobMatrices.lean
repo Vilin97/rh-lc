@@ -52,7 +52,6 @@ theorem φD_smulA (a : LetA O n) (x : W.DD T) : W.φD T (a • x) = W.φA a • 
   rw [algebraMap_smul, W.φE_ext, algebraMap_smul] at this
   exact this
 
-include W in
 
 theorem neZero_letters : NeZero n := by
   have := PD.finK₀

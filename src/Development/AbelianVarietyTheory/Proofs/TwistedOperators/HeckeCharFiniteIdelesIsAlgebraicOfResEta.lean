@@ -134,7 +134,6 @@ theorem pairE_mul_eq_one' (z : (AE D)ˣ) :
   · rw [map_mul, infPart_pairE, infPart_pairE, ← map_mul, Units.inv_mul]
   · rw [map_mul, finPart_pairE, finPart_pairE, mul_one, map_one]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_decomp (x : (AE D)ˣ) (hx : infPart D (x : AE D) = 1) :
     ∃ h : ℕ, 0 < h ∧ ∃ (k : D.host.Eˣ) (y u : (AE D)ˣ), finPart D (y : AE D) = 1 ∧ Formalism.L2.Pj.FinUnit u ∧

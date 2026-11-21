@@ -14,7 +14,6 @@ open NumberField IsDedekindDomain
 open scoped TensorProduct
 open Formalism.MainNotions.S (AutInst)
 
-open Classical in
 
 def liftOne (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (y : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv I.F v ⊗[I.F] I.E) :
     I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F :=

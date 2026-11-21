@@ -249,7 +249,6 @@ def TraceEqX : Prop :=
           ∃ c : ℂ, HasTrace (RopG V μ (tensor D.sp.cm.sig V.gram fa ff)) c ∧
             HasTrace (RopG V' μ' (tensor D.sp.cm.sig V'.gram fa' (transfer j ff))) c
 
-set_option maxHeartbeats 1000000 in
 
 theorem realStableX : RealStableX := by
   intro D V lam S M μa fa hodd hlam hM hμa hfa hO P ρ dt hdt
@@ -368,7 +367,6 @@ def TRCusp' : Prop :=
       σ.IsIrreducible → IsAdmissible σ → HasTypeVec T σ →
       mCuspDS μ σ M = mCuspDS μ' (σ.comp Φ.symm.toMulEquiv.toMonoidHom) M'
 
-set_option maxHeartbeats 1000000 in
 
 theorem trCusp'_of_steps (hL : LocalPC) (hF : SpecFin) (hT : GlobalTheory.TrMult.SpecTraceX) (hS : Separation)
     (hE : TraceEqX) : TRCusp' := by
@@ -539,7 +537,6 @@ theorem params_match' : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : T
       (lamAt_anti_fin _ hW.le) (parAt_fst R i ρ hW) a]
     exact (keyR ρ (a : ℕ)).symm
 
-set_option maxHeartbeats 1000000 in
 
 theorem multEq_of_trCusp' : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.DixmierMalliavinFactorisation → GlobalTheory.Published.GreenCuspidal → TRCusp' → ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → GlobalTheory.CuspMult.MultEq R := by
   intro hRD hHC hDM hGC hTR D G _ _ Pl0 T A Ks _ _ _ R F hG

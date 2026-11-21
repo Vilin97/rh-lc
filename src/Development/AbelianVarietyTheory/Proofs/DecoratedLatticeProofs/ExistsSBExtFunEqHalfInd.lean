@@ -37,7 +37,6 @@ theorem wr_rd (α : Frame p S n') (β : Frame p T n) {t : WO S T} (ht : IsHalf p
   rw [wr_apply, rd_eq, Matrix.mul_assoc β.b', ← Matrix.mul_assoc β.b, β.bb', Matrix.one_mul, Matrix.mul_assoc, α.bb',
     Matrix.mul_one, Matrix.map_apply, p.sec_pr, ht i j]
 
-set_option maxHeartbeats 800000 in
 
 theorem open_compact_sec (p : SplitPt D k) {LS : Lat S} {LT : Lat T} (hS : Submodule.IsLattice D.host.E LS)
     (hT : Submodule.IsLattice D.host.E LT) :

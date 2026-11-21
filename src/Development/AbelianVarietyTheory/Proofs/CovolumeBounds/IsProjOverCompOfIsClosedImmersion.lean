@@ -89,7 +89,6 @@ theorem pt_preimage_basicOpen {n : ℕ} (hn : 0 < n) {f : MvPolynomial (Fin (N +
 theorem pt_preimage_chart (i : Fin (N + 1)) : pt c v hv ⁻¹ᵁ chart R N i = spOpen (v i) := by
   rw [pt_preimage_basicOpen c v hv one_pos (isHomogeneous_X R i), eval₂_X]
 
-include hv in
 
 theorem span_range_comp_eq_top (ψ : A →+* B) : Ideal.span (Set.range (ψ ∘ v)) = ⊤ := by
   rw [Set.range_comp, ← Ideal.map_span, hv, Ideal.map_top]
@@ -281,7 +280,6 @@ section Valuation
 
 variable {V K : Type} [CommRing V] [IsDomain V] [ValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K]
 
-variable (V) in
 
 theorem exists_smul_eq_primitive {ι : Type} [Finite ι] {v : ι → K} (hv : v ≠ 0) :
     ∃ (u : Kˣ) (w : ι → V), (∃ i, w i = 1) ∧ algebraMap V K ∘ w = u • v := by
@@ -621,7 +619,6 @@ theorem isProjOver_of_disjoint_cover {ι : Type} [Finite ι] (f : Y ⟶ Sp R) (U
   convert isProjOver_sigmaDesc _ h using 1
   exact Sigma.hom_ext _ _ fun i => by rw [Sigma.ι_desc_assoc, Sigma.ι_desc]
 
-variable (R N) in
 
 theorem points_and_stability :
     (∀ (A : Type) [CommRing A] [Algebra R A],

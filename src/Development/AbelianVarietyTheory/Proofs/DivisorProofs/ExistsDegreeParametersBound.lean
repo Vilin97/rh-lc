@@ -143,6 +143,5 @@ end Weights
 
 variable {D : D7} {T : Core D} {j : ℕ} {Y : Deep T j}
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.HSShortRun

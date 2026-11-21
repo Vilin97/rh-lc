@@ -40,7 +40,6 @@ theorem frame_matrix_mul_inverse {k : Type} [CommRing k] {r : ℕ} [NeZero r] (c
       linear_combination (-(cc b)) * hu
   · simp [h1]
 
-open Classical in
 
 def frameCoordinateEvaluation {R : Type} [CommRing R] {ι : Type} {r : ℕ} (LL : Letters ι) (S : Set ι) {k1 : Type} [CommRing k1]
     (ph : MvPolynomial (ι × Fin r) R →+* k1) (g0 g0inv : Matrix (Fin r) (Fin r) k1) :
@@ -85,7 +84,6 @@ theorem frame_evaluation_comp_change {R : Type} [CommRing R] {ι : Type} {r : �
           _ = ph (X (i, c)) := by simp [hh]
     · simp [frameCoordinateEvaluation, eBeta, hS]
 
-open Classical in
 
 def letterDegreeWeight {ι : Type} {r : ℕ} (i : ι) : ι × Fin r → ℕ := fun v => if v.1 = i then 1 else 0
 

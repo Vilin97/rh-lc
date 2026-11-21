@@ -107,7 +107,6 @@ theorem isCompact_IntAf : IsCompact ((IntAf I.F I.E : Subring (AEf I)) : Set (AE
   rw [nsmul_eq_mul]
   exact AfT.crd_mem I b hDb (AfT.IntAf_le_sumsInt I hx) j
 
-open Classical in
 
 end Top
 

@@ -314,7 +314,6 @@ theorem wickExp_of (hH : HalfSt) : WickExpSt := by
     half_pow hH F u c q hc hq0 hq1 hq2 n P G, dpolyOf_smul_P, map_mul, MvPowerSeries.constantCoeff_C]
   ring
 
-open G2 in
 
 theorem gauge_exp_identity (hA : ExpAddZeroConstant) (hE : ConstantCoeffSubstitution) (hG : CanonicalGaugeDiffBiadditive) (hQ : QuadraticFormDerivatives)
     (hH : HalfSt) : GaugeExpSt := by

@@ -79,15 +79,12 @@ theorem topologicalKrullDim_eq : topologicalKrullDim Y.X = Y.dim := by
       (Opens.mem_top (genericPoint Y.X))
     exact (hc U hU ⟨_, hx⟩).ge.trans (topologicalKrullDim_subspace_le _ _)
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 def coneIdeal : Ideal (MvPolynomial (Fin (Y.N + 1)) F) :=
   (show ProjectiveSpectrum (ProjSpace.grading F Y.N) from
     Y.ι (genericPoint Y.X)).asHomogeneousIdeal.toIdeal
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 section OfImmersion
 
@@ -152,13 +149,10 @@ def Eff (Δ : Y.Dv) : Prop := Δ.Eff
 
 def H0 (Δ : Y.Dv) : Submodule F Y.Fn := Δ.sections.restrictScalars F
 
-variable {Y} in
 
 theorem mem_riemannRochSpace_iff_regularAt_everywhere {Δ : Y.Dv} {f : Y.Fn} : f ∈ Y.H0 Δ ↔ ∀ x, Δ.RegularAt x f := mem_sections
 
-variable {Y} in
 
-variable {Y} in
 
 theorem eff_iff_one_mem {Δ : Y.Dv} : Y.Eff Δ ↔ (1 : Y.Fn) ∈ Y.H0 Δ := mem_riemannRochSpace_iff_regularAt_everywhere.symm
 
@@ -175,13 +169,11 @@ theorem riemannRoch_mono (Δ Δ' : Y.Dv) (h : Y.Eff (Δ' - Δ)) : Y.H0 Δ ≤ Y.
 
 abbrev lb (Δ : Y.Dv) : LB Y.X := toLB Δ
 
-variable {Y} in
 
 def cohEquiv {Δ : Y.Dv} {L : LB Y.X} {r : L.ι → Y.Fnˣ} (h : Presents Δ L r) :
     coh (twist (structureModule Y.X) L) 0 ≃ₗ[F] Y.H0 Δ :=
   ((cohZeroTwistEquiv L).trans h.secEquiv).restrictScalars F
 
-variable {Y} in
 
 theorem finrank_sections_projectiveLine {Δ : Y.Dv} {L : LB Y.X} {r : L.ι → Y.Fnˣ} (h : Presents Δ L r) :
     Module.finrank F (Y.H0 Δ) = lbH0 F L := (cohEquiv h).finrank_eq.symm
@@ -212,9 +204,7 @@ theorem properCl_iff (Z : Y.Cl) : Y.properCl Z ↔ genericPoint Y.X ∉ Z :=
   not_congr ⟨fun h => h.ge (Set.mem_univ _), fun h => top_le_iff.1
     (((genericPoint_spec Y.X).mem_closed_set_iff Z.isClosed).1 h)⟩
 
-variable {Y} in
 
-variable {Y} in
 
 theorem isCompleteCurve_iff (Z : Y.Cl) : IsCompleteCurve F Z ↔
     IsIrreducible (Z : Set Y.X) ∧ topologicalKrullDim (Z : Set Y.X) = 1 :=
@@ -229,9 +219,7 @@ abbrev sysOf {L : LB Y.X} (hL : L.IsLB) {n : ℕ} (s : Fin n → L.Sec) : LinSys
   N := n
   b := s
 
-variable {Y} in
 
-variable {Y} in
 
 section LinSys
 
@@ -278,7 +266,6 @@ theorem chartEval_coordSec (i : Fin (Y.N + 1)) (g : MvPolynomial (Fin (Y.N + 1))
     rfl
   · exact funext fun l => LB.resG_self _ _
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem mem_nonzeroLocus_form {d : ℕ} {g : MvPolynomial (Fin (Y.N + 1)) F} (hg : g.IsHomogeneous d)
     (y : Y.X) : y ∈ nonzeroLocus (Y.coordSys.form hg) ↔
@@ -295,7 +282,6 @@ theorem basePointFree_coordSys : Y.coordSys.BasePointFree := eq_top_iff.2 fun y 
   have ⟨j, hj⟩ := exists_mem_chart F Y.N (Y.ι y)
   Opens.mem_iSup.2 ⟨j, (Y.nonzeroLocus_coordSec j).ge hj⟩
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem eq_of_sameImage {y y' : Y.X} (h : Y.coordSys.SameImage y y') : y = y' := by
   refine Y.ι.isClosedEmbedding.injective
@@ -313,7 +299,6 @@ theorem noContract_coordSys (bd : Set Y.X) : Y.coordSys.NoContract bd := fun C _
 
 variable {i : Fin (Y.N + 1)} (hi : Y.ι (genericPoint Y.X) ∈ chart F Y.N i)
 
-include hi in
 
 theorem genericPoint_mem_twistingSheafOne_chart : genericPoint Y.X ∈ Y.O1.U (Y.idx i) := (Y.twistingSheafOne_chart_eq_preimage_standardChart i).ge hi
 

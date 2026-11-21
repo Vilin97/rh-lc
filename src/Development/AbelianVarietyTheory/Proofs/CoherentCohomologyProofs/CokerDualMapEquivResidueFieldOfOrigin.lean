@@ -76,7 +76,6 @@ def loc (x : C.X 0) (p : κ × M.ι) : Γ(Y, (⨅ l ∈ ({p.1} : Finset κ), D l
 variable {R' : Type} [CommRing R'] [Algebra R R'] {Y' : Scheme.{0}} {π : Y' ⟶ Y}
   {f' : Y' ⟶ Spec (CommRingCat.of R')}
 
-omit [Fintype κ] in
 
 theorem cech_d (f : Y ⟶ Spec (CommRingCat.of R)) (M : LB Y) (D : κ → Y.Opens) (p : ℕ) :
     ((cechLB f M D).d p (p + 1)).hom = Cube.d (secCube f M D) (p + 1) :=
@@ -139,7 +138,6 @@ theorem exact_of_h1Zero (hM : M.IsLB) (hc : ⨆ i, D i = ⊤)
     exact ⟨x, h₂.1 ((d_secTermBaseChange M D H.w 1 x).symm.trans hz)⟩
   · exact (d_secTermBaseChange M D H.w 1 x).trans (congrArg _ hx)
 
-omit [Fintype κ] in
 
 theorem coord_secTermBaseChange (w : π ≫ f = f' ≫ Spec.map (CommRingCat.ofHom (algebraMap R R')))
     {a : ℕ} (v : Fin a → R') (x : Fin a → C.X 0) (p : κ × M.ι)

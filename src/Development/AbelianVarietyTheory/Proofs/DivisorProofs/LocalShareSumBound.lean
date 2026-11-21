@@ -49,7 +49,6 @@ local instance neZeroG {D : D7} (k : Fin 2) : NeZero (D.host.g k) := ⟨(D.host.
 theorem tieAdmG_rec (D : D7) : TieAdmG D := fun k =>
   ⟨D.host.g_prime k, D.nd.g_split k, D.ntypes.g_Mray k, D.ntypes.g_cond k⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem locShare_eUk_le_Wg {D : D7} (hL : admLq D) (hA : TieAdmG D) (hR : RangeW D)
     (ψ₀ : ∀ k : Fin 2, AddChar (ZMod (D.host.g k)) ℂ) (hψ : ∀ k, ψ₀ k ≠ 1)
@@ -158,7 +157,6 @@ theorem locShare_eUk_le_Wg {D : D7} (hL : admLq D) (hA : TieAdmG D) (hR : RangeW
   unfold Wg
   ring
 
-set_option maxHeartbeats 1000000 in
 
 theorem sizesRec_at_point {eps : ℝ} (Fm : FamP eps) {x : ℝ} (hx : Fm.x1 < x) (hx4 : 4 ≤ x) (i : Fm.Ix x) {Cs : ℝ}
     (hCs : 6 ≤ Cs) : SizesRec (Fm.D x i) x Fm.ez Cs := by

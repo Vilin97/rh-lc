@@ -157,7 +157,6 @@ theorem part_iff_k (k : Fin 2) (x y : KSub X.B.I) :
       exact hv
     · rw [if_neg hk, if_neg hk]
 
-open Classical in
 
 def redD (k : Fin 2) : X.B.I.RedDatum (D.host.g (1 - k) ^ 1) (D.host.g k ^ 1) where
   G₁ := ↥(Sub (fun kv : (Σ k', D.nd.PlG k') => ¬ kv.1 = k))
@@ -235,7 +234,6 @@ theorem sumW_all (k : Fin 2) (g : GL (Fin D.R.r) (ZMod (D.host.g k))) :
       (1 : MonoidAlgebra ℂ (GL (Fin D.R.r) (ZMod (D.host.g k)))).coeff g := by
   rw [← Formalism.L2.SG.AllRowsOf.sum_eSer' k, MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
 
-open Classical in
 
 theorem ES_cyl_pA (k : Fin 2) (S : Finset (Tup D k)) : ES (cyl D k (S : Set (Tup D k))) = ∑ t ∈ S, pA (Gt k t) := by
   apply MonoidAlgebra.ext; ext γ

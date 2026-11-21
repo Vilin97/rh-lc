@@ -56,14 +56,12 @@ theorem exists_char_pow {C X : Type} [Field C] [IsAlgClosed C] [AddCommGroup X] 
 variable {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C] [CompleteSpace C] [IsAlgClosed C]
   {N : NumD C} {q : QuadraticMap ℤ N.X ℝ}
 
-omit [IsUltrametricDist C] [CompleteSpace C] [IsAlgClosed C] in
 
 theorem norm_txT_le (hI : N.Int q) {m : ℕ} (hm : Odd m) (p : N.QT (m ^ 2)) (χ : N.X) :
     ‖N.txT m p χ‖ ≤ Real.exp (-(q (p.1.1.toAdd + m • χ) / (m : ℝ) ^ 2)) := by
   rw [(GlobalTheory.T.norm_rep_generators_and_thetaSeriesTerm C N q hI).2 m hm p χ]
   exact mul_le_of_le_one_right (Real.exp_pos _).le (hI.th _)
 
-omit [CompleteSpace C] [IsAlgClosed C] in
 
 theorem norm_tx_le (hI : N.Int q) {m : ℕ} (hm : Odd m) (p : N.QT (m ^ 2)) {χ₀ : N.X}
     (h₀ : ∀ χ, q (p.1.1.toAdd + m • χ₀) ≤ q (p.1.1.toAdd + m • χ)) :
@@ -72,7 +70,6 @@ theorem norm_tx_le (hI : N.Int q) {m : ℕ} (hm : Odd m) (p : N.QT (m ^ 2)) {χ�
   refine (norm_txT_le hI hm p χ).trans (Real.exp_le_exp.2 (neg_le_neg ?_))
   exact div_le_div_of_nonneg_right (h₀ χ) (by positivity)
 
-omit [IsUltrametricDist C] [CompleteSpace C] in
 
 theorem exists_lift {n g : ℕ} (hn : (n : C) ≠ 0) (hT : N.Tors n g) (j : ℕ) {t : N.A} (ht : t ^ n = 1) :
     ∃ γ : N.Gt, γ ^ n ^ (j + 1) = 1 ∧ γ.b ^ n ^ j = t := by

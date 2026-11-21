@@ -125,7 +125,6 @@ include hff hef in
 theorem psiF_f' (U U' : Matrix (Fin r) (Fin r) E) (j : Fin r) : psiF e f U U' (f j) = ∑ c, U' c j • f c := by
   simp [psiF, hff, hef, ite_smul]
 
-include hee hff hef in
 
 theorem levi_exists (U : Matrix (Fin r) (Fin r) E) (hdet : U.det = 1) :
     ∃ ν : S.V ≃ₗ[E] S.V, (∀ x y, S.hT (ν x) (ν y) = S.hT x y) ∧ (∀ j, ν (e j) = ∑ c, U c j • e c) ∧
@@ -298,7 +297,6 @@ theorem B_le : latSpan (fun a => (aa a)⁻¹) f ≤ Λ := by
   rw [hΛeq]
   exact le_sup_right
 
-include hΛeq hff hL hint in
 
 theorem levi_keeps (hUn : Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ) (U : Matrix (Fin r) (Fin r) E)
     (hU0 : ∀ c b, b < c → U c b = 0) (hU1 : ∀ c, U c c = 1)
@@ -422,7 +420,6 @@ variable {Λ : Submodule (𝓞 E) S.V} (aa : Fin r → FractionalIdeal (nonZeroD
   (hL : ∀ x ∈ L, ∀ a, S.hT (e a) x = 0 ∧ S.hT (f a) x = 0)
   (hint : ∀ x ∈ Λ, ∀ y ∈ Λ, ∃ o : 𝓞 E, (o : E) = S.hT x y)
 
-include hΛeq hee hef hL hint in
 
 theorem eich_keeps (y₀ : S.V) (hy₀ : y₀ ∈ L) (v : Fin r → E) (hv : ∀ c, v c ∈ aa c) (α : 𝓞 E) :
     ∀ w ∈ Λ, nilF e (aE y₀ v) (sE (α : E) y₀ v) w ∈ Λ := by
@@ -462,7 +459,6 @@ theorem eich_keeps (y₀ : S.V) (hy₀ : y₀ ∈ L) (v : Fin r → E) (hv : ∀
     rw [e2]
     exact A_le aa e f L hΛeq (Submodule.subset_span ⟨c, _, mem_aa_mul (hv c) _, rfl⟩)
 
-include hΛeq hL hint in
 
 theorem exists_eigenvalueGLOne_eq_cuspidalLabel_gen (hUn : Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ) (z : S.V) (hzL : z ∈ L) (hzz : S.hT z z ≠ 0)
     (he_z : ∀ a, S.hT (e a) z = 0) (hprim : ∀ c : E, c • z ∈ Λ → ∃ o : 𝓞 E, (o : E) = c) :

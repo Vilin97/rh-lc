@@ -47,6 +47,5 @@ theorem cone_low {r : ℕ} {c : ℝ} (hc : 0 < c) {t : Fin r → ℝ}
 
 end GlobalTheory.SiegelHt
 
-open GlobalTheory.SiegelHt in
 
 end

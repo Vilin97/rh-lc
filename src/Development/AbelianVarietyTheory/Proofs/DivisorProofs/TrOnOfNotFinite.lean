@@ -226,12 +226,10 @@ theorem levOp_nat {X : Type} [AddCommGroup X] [Module ℂ X] (σ : Representatio
 variable (ι : H →* G) (r : G →* H) (hr : ∀ h, r (ι h) = h) (hc : ∀ x ∈ r.ker, ∀ h, Commute x (ι h))
   {U : Subgroup G} {K : Subgroup H} (hK1 : ∀ k ∈ K, ι k ∈ U) (hK2 : ∀ k ∈ U, r k ∈ K)
 
-include hr in
 
 theorem exists_split (g : G) : ∃ x : r.ker, g = ι (r g) * x :=
   ⟨⟨(ι (r g))⁻¹ * g, by rw [MonoidHom.mem_ker, map_mul, map_inv, hr, inv_mul_cancel]⟩, by simp⟩
 
-include hr hc hK1 hK2 in
 
 theorem mk_eq_iff (h h' : H) (x x' : r.ker) :
     ((ι h * x : G) : G ⧸ U) = (ι h' * x' : G) ↔
@@ -252,7 +250,6 @@ theorem mk_eq_iff (h h' : H) (x x' : r.ker) :
   · rintro ⟨h1, h2⟩
     exact U.mul_mem (hK1 _ h1) h2
 
-include hr hc hK1 hK2 in
 
 theorem levOp_split (ρ : Representation ℂ G V) (U₀ : Subgroup G) (K₀ : Subgroup H) (h0 : K.relIndex K₀ ≠ 0)
     (F : G → ℂ) (a : H → ℂ) (b : r.ker → ℂ) (hF : ∀ h (x : r.ker), F (ι h * x) = a h * b x)
@@ -300,7 +297,6 @@ theorem levOp_split (ρ : Representation ℂ G V) (U₀ : Subgroup G) (K₀ : Su
     · conv_rhs => rw [← QuotientGroup.out_eq' q, hx]
       exact (mk_eq_iff ι r hr hc hK1 hK2 _ _ _ _).2 ⟨QuotientGroup.out_eq' _, QuotientGroup.out_eq' _⟩
 
-include hr hc hK1 hK2 in
 
 theorem trOn_levOp_cross (ρ : Representation ℂ G V) (X : Submodule ℂ V) (hX : ∀ g, ∀ v ∈ X, ρ g v ∈ X)
     (σ : Representation ℂ H W) [σ.IsIrreducible] (hiso : X ≤ LocUniq.isoPart σ (ρ.comp ι))

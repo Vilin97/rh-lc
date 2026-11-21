@@ -174,7 +174,6 @@ theorem basis_iff_locBasis {R K : Type} [CommRing R] [Field K] {n : ℕ} (π : R
       refine ⟨_, hΛs w hw, ?_⟩
       simpa only [hg, hs, hc] using e
 
-open IsDedekindDomain NumberField in
 
 theorem hasDiv_iff {E : Type} [Field E] [NumberField E] {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) {ϖ : P.adicCompletion E}
     (hϖ : Valued.v ϖ = WithZero.exp (-1 : ℤ)) (d : List ℤ) (g : GL (Fin n) (P.adicCompletion E)) :

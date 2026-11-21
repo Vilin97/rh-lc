@@ -104,7 +104,6 @@ theorem shInv_smul (c : ℂ) (x : CM cs) : shInv hb (c • x) = (starRingEnd ℂ
 
 def shInvAdd : CM cs →+ ColT hinj := AddMonoidHom.mk' (shInv hb) (shInv_add hb)
 
-include hb in
 
 theorem finiteDimensional_colT : FiniteDimensional ℂ (ColT hinj) := by
   classical
@@ -138,7 +137,6 @@ def trL (A : CM cs' →L[ℂ] CM cs) : ColT hinj' →ₗ[ℂ] ColT hinj where
     rw [shT_smul, map_smul, shInv_smul, starRingEnd_self_apply]
     rfl
 
-include hb' in
 
 def tr (A : CM cs' →L[ℂ] CM cs) : ColT hinj' →L[ℂ] ColT hinj :=
   haveI := finiteDimensional_colT hb'
@@ -193,7 +191,6 @@ variable {Y : Full X}
 theorem FinX.shBij (hF : FinX Y) (u : D.what₂.Word) : Function.Bijective (shT (hF.shInj u)) :=
   ⟨hF.shInj u, hF.shSurj u⟩
 
-variable (Y) in
 
 def RP (u u' : D.what₂.Word) : Type :=
   {q : RT Y u u' × RT Y u u' // ∃ (s₁ : fib Y q.1) (s₂ : fib Y q.2),
@@ -229,7 +226,6 @@ def aR (u u' : D.what₂.Word) (t : RT Y u u') : ColT (hF.shInj u') →L[ℂ] Co
   haveI := hF.fibFT t
   ∑ s : fib Y t, aT hF u u' s.1
 
-variable (Y) in
 
 def vT (u u' : D.what₂.Word) (s : TT Y u u') : H1 X u u' (Y.what₂ u) (Y.what₂ u') :=
   vec (Y.cs u) (Y.cs u') (Y.FN u) (Y.FN u') s

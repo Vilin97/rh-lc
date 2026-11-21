@@ -126,7 +126,6 @@ section Projection
 variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]
   (U : OpenSubgroup G)
 
-omit [IsTopologicalGroup G] [CompactSpace G] in
 
 theorem coindTrace_naturality {k : Type} [CommRing k] [(U : Subgroup G).FiniteIndex]
     {A B : Rep.{0} k G} (φ : A ⟶ B) :

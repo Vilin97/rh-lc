@@ -537,7 +537,6 @@ theorem mkAd_apply (f : ∀ v : HeightOneSpectrum (𝓞 F), v.adicCompletion F)
     (h : ∀ v, f v ∈ v.adicCompletionIntegers F) (v : HeightOneSpectrum (𝓞 F)) :
     ((mkAd f h : intAd F) : Af F) v = f v := rfl
 
-open Classical in
 
 def idemAd (P : HeightOneSpectrum (𝓞 F) → Prop) : intAd F :=
   mkAd (fun v => if P v then 1 else 0) (fun v => by
@@ -1114,7 +1113,6 @@ theorem resS_sigS_selector (hc : CMData F E) {T : Finset (Pl E)} {c : intAf F E}
     rwa [map_sub, map_sub, map_one, map_one, sub_eq_zero] at h2
   · exact fun QQ hQ => (resS_sigS_eq_zero_iff hc (isConjPl_conjPl QQ).symm c).2 (hc2 _ hQ)
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_unitary_lift (hc : CMData F E) (G : GL (Fin n) (intAf F E))
     (hGh : cT (sigS hc) (G : Matrix (Fin n) (Fin n) (intAf F E)) = (G : Matrix (Fin n) (Fin n) (intAf F E)))

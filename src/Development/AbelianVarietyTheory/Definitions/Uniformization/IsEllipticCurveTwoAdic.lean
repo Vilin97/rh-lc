@@ -56,15 +56,10 @@ variable {S S' S'' : Scheme.{0}} {G : Over S} {G' : Over S'} {G'' : Over S''} [G
 
 variable (hG : IsAbelianScheme G) (hG' : IsAbelianScheme G') (X : Type) [AddCommGroup X] [Subsingleton X]
 
-omit [IsCommMonObj G] [IsCommMonObj G'] in
 
-omit [IsCommMonObj G'] in
 
-omit [IsCommMonObj G] [IsCommMonObj G'] in
 
-omit [IsCommMonObj G] [IsCommMonObj G'] in
 
-omit [IsCommMonObj G] [IsCommMonObj G'] in
 
 omit hG' in
 theorem ab_even (P : CP G) : ∃ σ : CubTriv P.c (TQ.abelian G hG X).i, σ.Even :=
@@ -75,11 +70,8 @@ end Generic
 section Thick
 variable {R : Type} [CommRing R] [IsDomain R] (I : Ideal R) (e : ℕ) (G : Over (Spec (CommRingCat.of R))) [GrpObj G]
 
-omit [IsDomain R] [GrpObj G] in
 
-omit [IsDomain R] [GrpObj G] in
 
-omit [IsDomain R] in
 
 end Thick
 

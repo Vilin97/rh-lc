@@ -133,11 +133,8 @@ section Values
 
 variable {K : Type} [Field K] {Y : Var F} (y : Sp K ⟶ Y.X) {τ : F →+* K}
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
 end Values
 
@@ -156,10 +153,7 @@ theorem extEmb_eq {σ : 𝓞 F →+* ℂ} {τ : F →+* ℂ} (h : τ.comp (algeb
 
 variable [StarRing F]
 
-omit [NumberField F] [StarRing F] in
 
-omit [StarRing F] in
 
-omit [StarRing F] in
 
 end GlobalTheory.TrueGeo.OfLattice

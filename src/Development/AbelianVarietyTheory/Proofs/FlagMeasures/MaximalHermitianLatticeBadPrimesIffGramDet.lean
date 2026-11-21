@@ -87,7 +87,6 @@ theorem val_star (w : HeightOneSpectrum (𝓞 K)) (hw : conjIdeal (K := K) w.asI
     have := h2 (star k) (star_ne_zero.2 hk) (by rwa [star_star])
     rwa [star_star] at this
 
-omit [StarRing K] in
 
 theorem val_unif (w : HeightOneSpectrum (𝓞 K)) {a : 𝓞 K} (h1 : a ∈ w.asIdeal) (h2 : a ∉ w.asIdeal ^ 2) :
     w.valuation K (algebraMap (𝓞 K) K a) = WithZero.exp (-1 : ℤ) := by

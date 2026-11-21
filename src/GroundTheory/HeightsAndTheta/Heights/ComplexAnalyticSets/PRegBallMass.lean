@@ -62,7 +62,6 @@ theorem measurable_chartDens_indicator (hJ : J.IsPrime)
 
 end RegBallMass
 
-open RegBallMass in
 
 theorem RegBallMass.proof (hF : RegFixedBallMass.Statement) (hM : RegLelongMono.Statement)
     (hN : RegDensNonneg.Statement) : RegBallMass.Statement := by

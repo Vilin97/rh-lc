@@ -35,7 +35,6 @@ theorem exists_one_tmul_add_smul (l : ℕ) [Fact l.Prime] (H : Type) [AddCommGro
 
 end GlobalTheory.LatticeModL
 
-open GlobalTheory.LatticeModL in
 
 theorem GlobalTheory.latticeMap_liftBaseChange_injective_saturated :
     ∀ (l : ℕ) [Fact l.Prime] (H T : Type) [AddCommGroup H] [Module.Finite ℤ H] [Module.Free ℤ H]

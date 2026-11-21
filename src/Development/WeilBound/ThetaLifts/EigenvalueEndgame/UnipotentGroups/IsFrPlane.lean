@@ -22,7 +22,6 @@ open PositivityTheory.ThKG.Tow.Levi
 
 variable {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H : Plane E d d₁}
 
-variable (σ) in
 
 def fa (J : Matrix (Fin d) (Fin d) E) (w z : Fin d → AE F E) : AE F E := w ⬝ᵥ incM F J *ᵥ fun i => cA σ (z i)
 

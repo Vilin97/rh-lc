@@ -129,7 +129,6 @@ theorem sum_eq_chArg {k₀ m t j n' c n : ℕ} (hN : Nums k₀ m t j n' c n) (τ
     split_ifs <;> omega
   rw [e1, e2]
 
-open Classical in
 
 theorem prod_blocks {k₀ m t j n' c n : ℕ} (hN : Nums k₀ m t j n' c n) (χ : ℕ → kˣ →* ℂˣ)
     (τ : FC n' (c + 1) n c → k) :
@@ -157,7 +156,6 @@ theorem prod_blocks {k₀ m t j n' c n : ℕ} (hN : Nums k₀ m t j n' c n) (χ 
       exact h (Fin.ext (by omega))
   rw [hM, Matrix.det_one, chiV_one]
 
-open Classical in
 
 theorem top_block {k₀ m t j n' c n : ℕ} (hN : Nums k₀ m t j n' c n) (χ : ℕ → kˣ →* ℂˣ)
     (τ : FC n' (c + 1) n c → k)
@@ -190,7 +188,6 @@ theorem top_block {k₀ m t j n' c n : ℕ} (hN : Nums k₀ m t j n' c n) (χ : 
         split_ifs at hA <;> omega
   rw [hdet, chiV_one]
 
-open Classical in
 
 theorem term_eq {k₀ m t j n' c n : ℕ} (hN : Nums k₀ m t j n' c n) (ψ₀ : AddChar k ℂ) (χ : ℕ → kˣ →* ℂˣ)
     (τ : FC n' (c + 1) n c → k) :

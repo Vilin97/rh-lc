@@ -20,7 +20,6 @@ namespace GlobalTheory.MulLawsCompare
 
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationEtaleTorsion
 
-set_option backward.isDefEq.respectTransparency false in
 
 variable {S : Scheme.{0}}
 

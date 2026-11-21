@@ -7,7 +7,6 @@ public import GroundTheory.GlobalFields.IdeleGroups.NormOneCompact
 
 open UpperTheory.V.Lit.Geo
 
-open NumberField Formalism.L2.Host GroundTheory.Global in
 
 private theorem norm_of_normOne {E : Type} [Field E] [NumberField E] (χ : HChar E) {y : IdeleGroup E}
     (hy : y ∈ IdeleGroup.normOneSubgroup E) : ‖((χ.1 y : ℂˣ) : ℂ)‖ = 1 := by

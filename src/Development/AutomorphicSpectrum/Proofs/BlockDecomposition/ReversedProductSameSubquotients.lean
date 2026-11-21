@@ -28,7 +28,6 @@ theorem isSubquotient_of_equiv_left {G V W U : Type} [Group G] [AddCommGroup V] 
     {ρ : Representation ℂ G V} (E : σ.Equiv τ) (h : IsSubquotient σ ρ) : IsSubquotient τ ρ :=
   (IsSubquotient.of_surjective E.toIntertwiningMap E.surjective).trans h
 
-set_option maxHeartbeats 2000000 in
 
 theorem isSubquotient_prodIrr_rev : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k], GlobalTheory.Published.IrreducibleAdmissibleGL → Zc.Cos.GKLocal k →

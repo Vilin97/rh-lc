@@ -57,14 +57,12 @@ section Fin
 
 variable {K : Type} [Field K] [NumberField K] [Algebra c.F K]
 
-omit [Algebra c.F K] in
 
 theorem nrmOf_nonneg (la : HeightOneSpectrum (𝓞 K)) (w : EReal) : 0 ≤ nrmOf la w := by
   simp only [nrmOf]
   split_ifs
   exacts [le_rfl, by positivity]
 
-omit [Algebra c.F K] in
 
 theorem nrmOf_anti (la : HeightOneSpectrum (𝓞 K)) {w w' : EReal} (hw : w ≠ ⊥) (h : w ≤ w') :
     nrmOf la w' ≤ nrmOf la w := by
@@ -218,11 +216,9 @@ section Inf
 
 variable {K : Type} [Field K] [Algebra c.F K] {r : ℕ}
 
-variable (c) in
 
 abbrev baseEmb (τ : K →+* ℂ) : c.F →+* ℂ := goodOf c (τ.comp (algebraMap c.F K))
 
-variable (c) in
 
 def goodHom (τ : K →+* ℂ) : K →ₐ[c.F] CAt (baseEmb c τ) :=
   if h : GoodEmb c (τ.comp (algebraMap c.F K)) then
@@ -328,9 +324,7 @@ section Statements
 variable {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (x : ℝ) {D : Formalism.BasicNotions.D7} (V : (c.F →+* ℂ) → Formalism.BasicNotions.TH.HSp D)
   (dict : ∀ σ, Formalism.L2.Theta.GA D (V σ) → Σ k, FD.Frame ((U σ).X k).Ψ r) (Z : Comp Xo c) (P : WtPar Dw)
 
-variable {U Z} in
 
-variable {U Z} in
 
 def WtPar.tauWt : AllWt.Weight Dw := (dimFlag Dw + 3) • P.u₁ - P.uc
 

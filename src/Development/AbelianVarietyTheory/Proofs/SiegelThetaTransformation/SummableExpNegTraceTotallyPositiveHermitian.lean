@@ -60,7 +60,6 @@ theorem house_le_of_isType {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 end GlobalTheory.SW.PosSum
 
-open GlobalTheory.SW.PosSum in
 
 theorem GlobalTheory.SW.summable_exp_neg_trace : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (N c : ℕ) (δ : ℝ), 0 < c → 0 < δ → Summable fun T : {T : Matrix (Fin N) (Fin N) E // ccT T = T ∧ Den c T ∧ ∀ τ : Ψ, (T.map τ.1).PosSemidef} => Real.exp (-(δ * ∑ τ : Ψ, (T.1.map τ.1).trace.re)) := by
   intro E _ _ _ Ψ hΨ N c δ hc hδ

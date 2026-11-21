@@ -28,14 +28,12 @@ def baseGL (X : Data E r) (τ : X.Ψ) : GL (Fin r) ℂ :=
 
 theorem val_baseGL (X : Data E r) (τ : X.Ψ) : (baseGL X τ : Matrix (Fin r) (Fin r) ℂ) = mat (baseFr X) τ := rfl
 
-omit [NumberField E] [IsCMField E] in
 
 theorem gram_mul_right (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (A g : Matrix (Fin r) (Fin r) ℂ) :
     gram τ G (A * g) = gᵀ * gram τ G A * g.map (starRingEnd ℂ) := by
   rw [UnitaryFrames.gram_eq_mul, UnitaryFrames.gram_eq_mul, Matrix.transpose_mul, Matrix.map_mul]
   simp only [Matrix.mul_assoc]
 
-omit [NumberField E] [IsCMField E] in
 
 theorem isometry_iff_gram (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (n : Matrix (Fin r) (Fin r) ℂ)
     (P : GL (Fin r) ℂ) :

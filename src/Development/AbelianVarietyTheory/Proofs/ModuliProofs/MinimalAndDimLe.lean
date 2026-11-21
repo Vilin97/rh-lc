@@ -17,8 +17,6 @@ open GlobalTheory.ZM
 
 namespace GlobalTheory.ZM.FullLevel
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj TensorProduct in
 
 theorem _root_.GlobalTheory.ZM.FullLevel.lft_of_qproj {R : Type} [CommRing R] {X : Scheme.{0}}
     {f : X ⟶ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp R} (h : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsQProjOver f) :
@@ -47,8 +45,6 @@ private theorem krullDim_zeroLocus_le_of_isEmbedding {S T : Type} [CommRing S] [
     · exact (hle a.1 b.1).2 hab
     · exact Subtype.ext (hf.injective (congrArg Subtype.val hab))
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj TensorProduct in
 
 theorem _root_.GlobalTheory.ZM.FullLevel.dim_generic_chart {o K : Type} [CommRing o] [IsDomain o] [Field K]
     [Algebra o K] [IsFractionRing o K]
@@ -138,8 +134,6 @@ theorem _root_.GlobalTheory.ZM.FullLevel.dim_generic_chart {o K : Type} [CommRin
       krullDim_zeroLocus_le_of_isEmbedding gf hgemb z
     _ = ringKrullDim (R ⧸ q) := by rw [hq', ringKrullDim_quotient]
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj TensorProduct in
 
 theorem _root_.GlobalTheory.ZM.FullLevel.charZero_of_hom {k K : Type} [Field k] [CharZero k] [Field K]
     (x : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp K ⟶ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp k) : CharZero K :=
@@ -157,8 +151,6 @@ private theorem isNilpotent_ker_fstHom_dualNumber {K : Type} [Field K] :
   rw [Ideal.mem_bot]
   ext <;> simp [hr, hs]
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj TensorProduct in
 
 theorem _root_.GlobalTheory.ZM.FullLevel.eq_constPt {k K : Type} [Field k] [CharZero k]
     [Algebra.IsAlgebraic ℚ k] [Field K]

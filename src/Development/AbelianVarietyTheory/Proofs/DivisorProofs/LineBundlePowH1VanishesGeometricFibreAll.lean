@@ -23,7 +23,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 open GlobalTheory.AbLaw.SecBC
 
-open GlobalTheory.AbLaw in
 
 theorem GlobalTheory.AbLaw.SecBC.exists_h1Zero_of_abVar
     (hV : ∀ (K : Type) [Field K] [IsAlgClosed K] (B : Over (Spec (CommRingCat.of K))) [GrpObj B] [IsCommMonObj B]

@@ -20,7 +20,6 @@ def cstS : Wq l a →+* (ZMod a → K⟦X⟧) :=
 
 theorem cstS_apply (w : Wq l a) (τ : ZMod a) : cstS t K w τ = C (algebraMap O K (emb t τ w)) := rfl
 
-variable (a) {K} in
 
 def dpS (e n : ℕ) : ZMod a → K⟦X⟧ := fun _ => monomial n (((n / e).factorial : K)⁻¹)
 

@@ -21,7 +21,6 @@ namespace lbSheaf
 
 variable {M M' : LB X} {V W : X.Opens}
 
-variable (M V) in
 
 theorem exists_restrict_iso (hM : M.IsLB) (x : X) :
     ∃ (U : X.Opens) (_ : x ∈ U), Nonempty (unitMod U.toScheme ≅ (lbSheaf M).restrict U.ι) := by

@@ -128,7 +128,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 attribute [local instance] finiteFE modTop topRing
 
-variable (F E) in
 
 def crd : AEF F E ≃ₗ[AF F] (Fin (Module.finrank F E) → AF F) :=
   (Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).equivFun
@@ -145,7 +144,6 @@ theorem eInf_mul_pair (x : Ainf F) : eInf F * pairA F x 0 = pairA F x 0 :=
 theorem pair_fst_eInf_mul (a : AF F) : pairA F (eInf F * a).1 0 = eInf F * a :=
   Prod.ext rfl (zero_mul a.2).symm
 
-variable (F E) in
 
 def realCh (nS nT : ℕ) : (Fin nT × Fin nS × Fin (Module.finrank F E) → mixedEmbedding.mixedSpace F) →+ WOF F E nS nT where
   toFun t := fun i j => (crd F E).symm fun l => pairA F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (t (i, j, l))) 0
@@ -165,7 +163,6 @@ def realCh (nS nT : ℕ) : (Fin nT × Fin nS × Fin (Module.finrank F E) → mix
     rw [map_add (f := _)]
     exact Prod.ext rfl (add_zero (0 : Af F)).symm
 
-variable (F E) in
 
 def realCo (nS nT : ℕ) (y : WOF F E nS nT) : Fin nT × Fin nS × Fin (Module.finrank F E) → mixedEmbedding.mixedSpace F :=
   fun p => InfiniteAdeleRing.ringEquiv_mixedSpace F ((crd F E (y p.1 p.2.1)) p.2.2).1

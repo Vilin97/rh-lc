@@ -24,7 +24,6 @@ def idemHom {R : Type} [CommRing R] (e : R) (he : IsIdempotentElem e) : R →ₙ
 
 variable {E : Type} [Field E] [NumberField E]
 
-open Classical in
 
 def idemSf (S : Finset (HeightOneSpectrum (𝓞 E))) : Af E :=
   ⟨fun w => if w ∈ S then 1 else 0, Filter.Eventually.of_forall fun w => by
@@ -99,7 +98,6 @@ theorem blk_unblk (P : Matrix (Fin (m + 1) ⊕ Fin (r + 1)) (Fin (m + 1) ⊕ Fin
 
 end Blocks
 
-open Classical in
 
 def mkGL {R : Type} [CommRing R] {k : ℕ} (M : Matrix (Fin k) (Fin k) R) : GL (Fin k) R :=
   if h : IsUnit M.det then Matrix.nonsingInvUnit M h else 1

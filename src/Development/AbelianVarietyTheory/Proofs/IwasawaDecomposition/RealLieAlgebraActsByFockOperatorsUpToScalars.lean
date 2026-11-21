@@ -13,7 +13,6 @@ namespace GlobalTheory.LieFock
 
 section Abstract
 
-open Formalism.IndefR.Datum in
 
 theorem exists_lift_on {ι X : Type} [DecidableEq ι] (M : Submodule ℂ (X → ℂ)) (A : ι → (X → ℂ) → (X → ℂ))
     (a b : ι → Module.End ℂ M) (hA : ∀ i (g : M), A i g = a i g) (haa : ∀ i j, a i * a j = a j * a i)

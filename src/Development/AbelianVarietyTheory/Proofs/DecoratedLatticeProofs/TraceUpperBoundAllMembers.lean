@@ -235,7 +235,6 @@ namespace GlobalTheory.LevelPrimeUpper
 
 open Formalism.MainNotions.StandardLattice Finset
 
-set_option maxHeartbeats 1000000 in
 
 theorem tr_le_of (C : Formalism.MainNotions.Inhab.FC) (hC : C.CTu = 25) (cD ch : ℝ) {D : D7} (L : SizeData₂ D) (hv : Val C cD ch L)
     (N : Formalism.MainNotions.Inhab.NumAt C L) (hX : L.sc.x ≤ L.sc.X') (hL100 : 100 ≤ L.sc.L)

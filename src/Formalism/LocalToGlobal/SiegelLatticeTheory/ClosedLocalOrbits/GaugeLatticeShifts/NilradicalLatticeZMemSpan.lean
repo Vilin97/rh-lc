@@ -230,7 +230,6 @@ include h3 in
 theorem mcrd (v : (VS D).V) : (M - 1) *ᵥ X.crd v = X.crd (n v - v) := by
   rw [Matrix.sub_mulVec, Matrix.one_mulVec, ← h3, crd_sub']
 
-include hn h3 in
 
 theorem nlam_e (a : Fin D.R.rS) : (M - 1) *ᵥ X.eR a ∈ Submodule.span X.B.I.E (X.eR '' {b | b.1 < a.1}) := by
   have hx : X.eX a ∈ Xflag (lf D (X.Fu u)) (a.1 + 1) := by
@@ -247,7 +246,6 @@ theorem nlam_e (a : Fin D.R.rS) : (M - 1) *ᵥ X.eR a ∈ Submodule.span X.B.I.E
   rw [mcrd X h3]
   exact this
 
-include hn h3 in
 
 theorem nilradical_lattice_z_mem_span : (M - 1) *ᵥ X.zR u ∈ Submodule.span X.B.I.E (Set.range X.eR) := by
   have ho := orth_of_e X (u := u) (v := X.zu u) fun a => (X.zu_orth u a).1
@@ -260,7 +258,6 @@ theorem nilradical_lattice_z_mem_span : (M - 1) *ᵥ X.zR u ∈ Submodule.span X
   rw [mcrd X h3]
   exact this
 
-include hn h3 in
 
 theorem nlam_orth (w : Fin X.B.I.n → X.B.I.E)
     (hw : ∀ a, hfL (starRingEnd X.B.I.E) X.B.I.J (X.eR a) w = 0) :

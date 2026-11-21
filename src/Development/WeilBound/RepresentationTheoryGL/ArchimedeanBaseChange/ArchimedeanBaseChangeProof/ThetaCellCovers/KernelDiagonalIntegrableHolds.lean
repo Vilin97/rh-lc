@@ -35,6 +35,5 @@ theorem opEx_holds : F.OpEx := opEx_of ratProper_holds opExA opAdj opMul
 theorem kernel_operator_exists_holds : E.SmoothSeminormGrowth := kernel_operator_exists_of opEx_holds
 theorem growthJ_of_ell (h : D4.EllFormula2J) : GrowthJ := growthJ_of h sBound_holds bridge_holds domEx_holds
 
-open MeasureTheory GlobalTheory.CuspRep GlobalTheory.CuspRep.CuspidalL2GL in
 
 end PositivityTheory.Rg.BcB.E1

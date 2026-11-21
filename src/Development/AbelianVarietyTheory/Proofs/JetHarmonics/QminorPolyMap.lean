@@ -9,7 +9,6 @@ open Formalism.REAL Finset
 
 namespace GlobalTheory
 
-open Finset in
 
 theorem _root_.GlobalTheory.qminor_polyMap (A : Type) [Ring A] [Algebra ℂ A] (n t : ℕ) (E : Fin n → Fin n → A)
     (a b : Fin t → Fin n) (s : ℂ) :

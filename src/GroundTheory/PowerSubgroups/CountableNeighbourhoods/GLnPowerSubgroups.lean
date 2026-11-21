@@ -47,17 +47,12 @@ section Section
 
 variable {K : Type*} [Field K]
 
-open Classical in
 
 variable [NumberField K]
 
-variable (K) in
 
-variable (K) in
 
-variable (K) in
 
-variable (K) in
 
 end Section
 

@@ -133,13 +133,11 @@ theorem cc_notMem (e : Formalism.HC.Frame) : e.cc ∉ e.Psi := e.cc_notMem_Psi
 theorem frob_eq_mul (h : R.MA) : ((c0, h) : R.GG) = (zPsi R.toFrame h : R.GG) * R.cc := by
   rw [zPsi_eq, mul_assoc, cc_mul_cc, mul_one]
 
-variable (H) in
 
 def tw (i : H.E →+* Qn p n) (g : R.GG) : H.E →+* Qn p n := i.comp (H.sigmaOf g : H.E →+* H.E)
 
 theorem tw_apply (i : H.E →+* Qn p n) (g : R.GG) (x : H.E) : tw H i g x = i (H.sigmaOf g x) := rfl
 
-variable (H) in
 
 def twF (i : H.E →+* Qn p n) (g : R.GG) : H.F →+* Qn p n := (tw H i g).comp (algebraMap H.F H.E)
 
@@ -204,7 +202,6 @@ theorem fr_pow_apply {Q : HeightOneSpectrum (𝓞 H.E)} {i : H.E →+* Qn p n} (
   | zero => simp [Host.sigmaOf]
   | succ s ih => rw [pow_succ, pow_succ, RingAut.mul_apply, fr_apply hfr hi, ih, sigmaOf_mul]
 
-include hfr h2 he in
 
 theorem degree_eq {Q : HeightOneSpectrum (𝓞 H.E)} {i : H.E →+* Qn p n} (hi : Good Q i) (hn : n ≠ 0) : n = orderOf h := by
   have h1 : ((c0, h) : R.GG) ^ n = 1 := sigmaOf_inj (H := H) (AlgEquiv.ext fun x => i.injective (by
@@ -222,7 +219,6 @@ variable {Q₀ : HeightOneSpectrum (𝓞 H.E)} {i : H.E →+* Qn p n} (hi : Good
 include hi in
 theorem good_tw (g : R.GG) : Good (plc (tw H i g)) (tw H i g) := good_aut hi _ fun _ => rfl
 
-include hun hfr hi hn in
 
 theorem exists_pow_of_plc_eq {g g' : R.GG} (e : plc (tw H i g') = plc (tw H i g)) : ∃ s : ℕ, g' = g * (c0, h) ^ s := by
   have := hun _ (p_mem_plc (tw H i g))
@@ -232,7 +228,6 @@ theorem exists_pow_of_plc_eq {g g' : R.GG} (e : plc (tw H i g') = plc (tw H i g)
   rw [sigmaOf_mul]
   exact (hs x).trans (fr_pow_apply hfr (good_tw hi g) s x)
 
-include hun hfr he hi hn in
 
 theorem plc_ne_conj (g : R.GG) : plc (tw H i (g * R.cc)) ≠ plc (tw H i g) := fun e => by
   obtain ⟨s, hs⟩ := exists_pow_of_plc_eq hun hfr hi hn e
@@ -240,7 +235,6 @@ theorem plc_ne_conj (g : R.GG) : plc (tw H i (g * R.cc)) ≠ plc (tw H i g) := f
     rw [mul_left_cancel hs]; exact Subgroup.npow_mem_zpowers _ s)
   exact Nat.not_even_iff_odd.2 h1.2 he
 
-include hun hfr he hi hn in
 
 theorem good_twF (g : R.GG) : Good (plc (twF H i g)) (twF H i g) :=
   good_plc fun y => by

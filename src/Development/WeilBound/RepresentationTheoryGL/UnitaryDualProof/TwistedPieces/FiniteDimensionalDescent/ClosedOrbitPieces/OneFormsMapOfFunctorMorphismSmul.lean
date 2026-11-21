@@ -243,7 +243,6 @@ theorem continuous_psi (x₀ : Matrix (Fin N) (Fin N) k) : Continuous (psi D x�
   (continuous_pi fun i => (continuous_re _ _).comp continuous_fst).prodMk
     (((continuous_re _ _).comp continuous_fst).prodMk continuous_snd)
 
-variable (D τ) in
 
 def Ys2 (x₀ : Matrix (Fin N) (Fin N) k) : Set (Sp k N) :=
   {y | psi D x₀ y ∈ Ys D τ ∧ sw D (psi D x₀ y).1 (psi D x₀ y).2.1 = (fun j => pe (D.a j) x₀) ∧

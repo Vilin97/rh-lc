@@ -48,7 +48,6 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsLocalRing O] {Γ H : Type} [Gro
   [Group H] [TopologicalSpace H] {η : Γ →* ℤˣ} {Ψ : Γ →* Oˣ} {N : Set Γ} {ι : H →* Γ} {hι : Continuous ι}
   {U : Univ (GCond.noCondition O (η.comp ι) (Ψ.comp ι))} {I : Ideal U.R} {c g₁ : Γ}
 
-variable (N hι U I c g₁) in
 
 abbrev SRing : Type 1 := Univ (NormCond c g₁ (BoxCond N ι hι U I))
 
@@ -93,7 +92,6 @@ attribute [instance] Model.cr Model.al Model.gr
 def Model.len {S : SRing N hι U I c g₁} {K : Type} [NormedField K] [Algebra O K] (M : Model S K) : ℕ∞ :=
   cotLen M.x M.𝒜 (-1) M.Q.F
 
-variable (η) in
 
 def TwoPt {R K : Type} [CommRing R] [Algebra O R] [IsLocalRing R] [NormedField K] [Algebra O K] (r : Γ →* GG 3 R)
     (f : R →ₐ[O] K) : Prop := IsLocPt f ∧ ¬ Upper η (push f r) ∧ ¬ Lower η (push f r)
@@ -106,7 +104,6 @@ def trDiff {R K : Type} [CommRing R] [Algebra O R] [CommRing K] [Algebra O K] (�
     (r : Γ →* GG 3 R) (σ : Γ) (f : R →ₐ[O] K) : K :=
   f (r σ).mat.trace - algebraMap O K (r0 η Ψ σ).mat.trace
 
-variable (η Ψ N ι c g₁) in
 
 def shaCoc (a : O) : Set (Γ → Matrix (Fin 3) (Fin 3) (O ⧸ Ideal.span {a})) :=
   {γ | IsLocallyConstant γ ∧ (∀ g, γ g ∈ gw _ (-1)) ∧

@@ -77,6 +77,5 @@ theorem exists_zpow (s : TwSec U x Z (wtOf Dw 0 1)) (he : evI y' (idem Z) = 1)
 
 end GlobalTheory.TwistVal
 
-set_option maxHeartbeats 2000000 in
 
 end

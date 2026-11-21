@@ -275,7 +275,6 @@ theorem exists_smul_mem (I : Ideal (𝓞 F)) {α : Af F}
     TensorProduct.tmul_smul, TensorProduct.smul_tmul', TensorProduct.smul_tmul', ← TensorProduct.add_tmul, h1,
     Algebra.smul_def, mul_one]
 
-omit [NumberField E] in
 
 theorem tmul_mem_of_mov {m : Matrix (Fin r) (Fin r) (Af F ⊗[F] E)} {L L' : Set (Fin r → E)}
     (hm : ∀ u, u ∈ latHat F E L' ↔ ∃ u₀ ∈ latHat F E L, u = m *ᵥ u₀) {α : Af F} (hα : α ∈ intAf F)

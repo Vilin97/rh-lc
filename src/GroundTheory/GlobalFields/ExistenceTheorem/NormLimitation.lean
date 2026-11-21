@@ -156,7 +156,6 @@ theorem range_ideleClassNorm_maxAbelian :
     exact this
   exact le_antisymm (Subgroup.relIndex_eq_one.1 h1) hle
 
-omit [IsGalois K M] in
 
 theorem exists_isAbelianGalois_range_ideleClassNorm_le (L : Type u) [Field L] [NumberField L]
     [Algebra K L] :

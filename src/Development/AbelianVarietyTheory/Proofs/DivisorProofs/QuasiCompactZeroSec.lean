@@ -128,7 +128,6 @@ section Phi
 
 variable {O : Type} [CommRing O]
 
-variable (A : Over (Sp O)) [GrpObj A] in
 
 def Wmod : Type := Γ(omega A, ⊤)
 
@@ -160,7 +159,6 @@ open GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.DeRham
 variable {p : ℕ} {O : Type} [CommRing O] {G : PDivGroup p O} {A : Over (Sp O)} [GrpObj A]
   {M : Type} [AddCommGroup M] [Module O M] [Module Oᵐᵒᵖ M] [IsCentralScalar O M]
 
-variable (G) in
 
 end Tower
 

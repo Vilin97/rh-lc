@@ -68,6 +68,5 @@ end GlobalTheory.FlatValZero
 
 open GlobalTheory.FlatValZero
 
-set_option maxHeartbeats 1000000 in
 
 end

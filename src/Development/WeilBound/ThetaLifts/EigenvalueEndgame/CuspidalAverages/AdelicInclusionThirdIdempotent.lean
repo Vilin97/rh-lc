@@ -20,7 +20,6 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {d j : ℕ}
   {W : Spc F E d} {u u' : Matrix (Fin d) (Fin j) E}
 
-variable (σ) in
 
 abbrev cR : AE F E →+* AE F E := (cA σ : AE F E →+* AE F E)
 

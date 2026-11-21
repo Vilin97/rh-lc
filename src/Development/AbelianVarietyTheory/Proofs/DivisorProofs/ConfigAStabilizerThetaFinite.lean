@@ -98,7 +98,6 @@ section Fin
 
 variable {F : Type} [Field F] [NumberField F]
 
-variable (F) in
 
 def intA : AddSubgroup (Af F) where
   carrier := {a | ∀ v, a v ∈ v.adicCompletionIntegers F}
@@ -181,7 +180,6 @@ section Heis
 
 variable {F : Type} [Field F] [NumberField F] {ψ : AddChar (AF F) ℂ} {κ : Type} [Fintype κ]
 
-variable (F) in
 
 def infOne : AF F := pairA F 1 0
 

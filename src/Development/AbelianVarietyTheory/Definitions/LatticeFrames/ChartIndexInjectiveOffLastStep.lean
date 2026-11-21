@@ -33,7 +33,6 @@ theorem chartIndex_injective_offLastStep (hA : A.Is) {j : ℕ} (hj : j ≤ B.R.m
 theorem subsingleton_top (hA : A.Is) : Subsingleton (Ch B.R.m) :=
   ⟨fun α β => chartIndex_injective_offLastStep hA le_rfl (by omega) (by rw [Idx.eq_top (A.b0 _ α) le_rfl, Idx.eq_top (A.b0 _ β) le_rfl])⟩
 
-set_option maxHeartbeats 800000 in
 
 section Pin
 variable {ψ : AddChar (AF (I.rec7 l Z).host.F) ℂ} {θ : InfFam (I.rec7 l Z)}

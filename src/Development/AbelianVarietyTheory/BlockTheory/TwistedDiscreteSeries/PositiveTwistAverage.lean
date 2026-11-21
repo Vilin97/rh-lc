@@ -31,10 +31,7 @@ variable {P P' A A' : Type} [AddCommGroup P] [Module ℂ P] [AddCommGroup P'] [M
 
 variable [MeasurableSpace k] [BorelSpace k]
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.PositiveTwistAverage

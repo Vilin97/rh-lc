@@ -31,7 +31,6 @@ section General
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [StarRing E]
 
-omit [StarRing E] in
 
 theorem val_mulVec_le {P : HeightOneSpectrum (𝓞 E)} {n : ℕ} (A : Matrix (Fin n) (Fin n) E)
     (hA : ∀ i j, P.valuation E (A i j) ≤ 1) {v : Fin n → E} (hv : ∀ i, P.valuation E (v i) ≤ 1) (i : Fin n) :
@@ -47,7 +46,6 @@ omit [StarRing E] in
 theorem det_matE {n : ℕ} (M : Matrix (Fin n) (Fin n) (𝓞 E)) : (matE M).det = algebraMap (𝓞 E) E M.det :=
   (RingHom.map_det _ _).symm
 
-open Classical in
 
 def frOf {n : ℕ} (M : Matrix (Fin n) (Fin n) (𝓞 E)) : Sp E n ≃ₗ[E] Sp E n :=
   if h : IsUnit (matE M).det then (matE M).toLinearEquiv' (Matrix.invertibleOfIsUnitDet _ h) else LinearEquiv.refl E _

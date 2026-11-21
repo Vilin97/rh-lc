@@ -15,8 +15,6 @@ open scoped CategoryTheory.Obj TensorProduct Pointwise
 
 namespace GlobalTheory
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj TensorProduct Pointwise in
 
 theorem _root_.GlobalTheory.exists_sum_smul_separating_inertia :
     ∀ (Γ : Type) [Group Γ] [Finite Γ] (B : Type) [CommRing B] [MulSemiringAction Γ B]

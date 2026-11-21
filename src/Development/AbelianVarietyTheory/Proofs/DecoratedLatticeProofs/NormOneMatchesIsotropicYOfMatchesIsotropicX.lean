@@ -20,7 +20,6 @@ namespace GlobalTheory.Core.Mi.LatMatch
 
 variable {D : D7}
 
-open GlobalTheory.IwaPlace in
 
 theorem hermAt_colMul_jY {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (i : Fin ρ) (a : AE D)
     (x : Fin S.rank → AE D) : hermAt S (colMul d.jY i a) x = a * cA D ((d.pX *ᵥ x) i) := by

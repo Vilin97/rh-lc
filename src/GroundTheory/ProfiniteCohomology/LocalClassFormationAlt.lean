@@ -30,7 +30,6 @@ theorem index_openSubgroup (U : OpenSubgroup Gal(Ksep/K)) :
     (U : Subgroup Gal(Ksep/K)).index = Module.finrank K (fixedField (U : Subgroup Gal(Ksep/K))) := by
   rw [finrank_eq_fixingSubgroup_index, fixingSubgroup_fixedField_openSubgroup]
 
-omit [IsGalois K Ksep] in
 
 theorem fixedField_le_fixedField {U V : OpenSubgroup Gal(Ksep/K)} (h : V ≤ U) :
     fixedField (U : Subgroup Gal(Ksep/K)) ≤ fixedField (V : Subgroup Gal(Ksep/K)) :=

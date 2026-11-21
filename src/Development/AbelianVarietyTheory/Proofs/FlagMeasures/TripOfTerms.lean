@@ -85,7 +85,6 @@ theorem mem_smul_iff (γ : V ≃ₗ[K] V) (Λ : Submodule (𝓞 K) V) (x : V) : 
     exact this ▸ hy
   · exact fun h => ⟨x, h, rfl⟩
 
-omit [NumberField K] in
 
 theorem mem_graph {F G : FlagD H r} {HW : HermSpace K W} {e : W →ₗ[K] V} (he : IsEmb F HW e)
     (hI : ∀ v ∈ F.X, (∀ w ∈ V0 F G, H.B v w = 0) → v ∈ G.X)

@@ -47,7 +47,6 @@ def finiteComponent (n : ℕ) :
   cohomologyMapAlong (MulAction.stabilizer (F.1 ≃ₐ[K.1] F.1) w.1.asIdeal).subtype
     continuous_of_discreteTopology (finiteComponentRep w) n
 
-set_option maxHeartbeats 2000000 in
 
 theorem placeProj_comp_finiteShapiroIso (n : ℕ) :
     cohomologyMap (finiteProjAboveRep (K := K.1) (L := F.1) v) n ≫ (finiteShapiroIso v w n).hom =
@@ -60,7 +59,6 @@ theorem placeProj_comp_finiteShapiroIso (n : ℕ) :
   rw [← HomologicalComplex.homologyMap_comp, ← HomologicalComplex.homologyMap_comp]
   congr 1
 
-omit [Fact (K ≤ F)] [F.1.fixingSubgroup.Normal] in
 
 theorem ideleEmbedding_snd_of_below_eq {E : FiniteSubfield} [Algebra F.1 E.1]
     (w' : HeightOneSpectrum (𝓞 E.1)) (u : HeightOneSpectrum (𝓞 F.1)) (hu : below F.1 w' = u)
@@ -72,7 +70,6 @@ theorem ideleEmbedding_snd_of_below_eq {E : FiniteSubfield} [Algebra F.1 E.1]
 
 variable {E : FiniteSubfield} [Fact (K ≤ E)] [Fact (F ≤ E)] [E.1.fixingSubgroup.Normal]
 
-set_option maxHeartbeats 2000000 in
 
 theorem levelTransition_comp_finiteComponent (w' : PlacesOver E.1 v)
     [w'.1.asIdeal.LiesOver w.1.asIdeal] (n : ℕ) :
@@ -130,7 +127,6 @@ def infiniteComponent (n : ℕ) :
   cohomologyMapAlong (MulAction.stabilizer (F.1 ≃ₐ[K.1] F.1) w.1).subtype
     continuous_of_discreteTopology (infiniteComponentRep w) n
 
-set_option maxHeartbeats 2000000 in
 
 theorem placeProj_comp_infiniteShapiroIso (n : ℕ) :
     cohomologyMap (infiniteProjAboveRep (K := K.1) (L := F.1) v) n ≫ (infiniteShapiroIso v w n).hom =
@@ -143,7 +139,6 @@ theorem placeProj_comp_infiniteShapiroIso (n : ℕ) :
   rw [← HomologicalComplex.homologyMap_comp, ← HomologicalComplex.homologyMap_comp]
   congr 1
 
-omit [Fact (K ≤ F)] [F.1.fixingSubgroup.Normal] in
 
 theorem ideleEmbedding_fst_of_comap_eq {E : FiniteSubfield} [Algebra F.1 E.1]
     (w' : InfinitePlace E.1) (u : InfinitePlace F.1) (hu : w'.comap (algebraMap F.1 E.1) = u)
@@ -155,7 +150,6 @@ theorem ideleEmbedding_fst_of_comap_eq {E : FiniteSubfield} [Algebra F.1 E.1]
 
 variable {E : FiniteSubfield} [Fact (K ≤ E)] [Fact (F ≤ E)] [E.1.fixingSubgroup.Normal]
 
-set_option maxHeartbeats 2000000 in
 
 theorem levelTransition_comp_infiniteComponent (w' : v.placesOver E.1) [w'.1.LiesOver w.1] (n : ℕ) :
     levelTransition K F E n ≫ infiniteComponent w' n =

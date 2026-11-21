@@ -542,7 +542,6 @@ section G0
 
 variable {E : Type} [Field E] [NumberField E]
 
-open Classical in
 
 def primesOf (a : 𝓞 E) : Finset (Pl E) :=
   if h : a = 0 then ∅ else

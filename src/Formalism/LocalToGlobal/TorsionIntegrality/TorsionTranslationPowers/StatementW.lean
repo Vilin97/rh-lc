@@ -17,7 +17,6 @@ variable (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l]) (W :
 
 def Unif : Prop := Formalism.L2.Th1.A.g₂ W = ι L.g₂ ∧ Formalism.L2.Th1.A.g₃ W = ι L.g₃
 
-open Classical in
 
 def ptW (t : ℂ) : W.toAffine.Point :=
   if h : t ∉ L.lattice ∧ W.toAffine.Nonsingular (ι (L.weierstrassP t) - W.b₂ / 12)
@@ -36,7 +35,6 @@ def gW (t : ℂ) : PowerSeries ℂ_[l] :=
 
 end Gen
 
-open Classical in
 
 def PtWAdd : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l]) (W : WeierstrassCurve ℂ_[l]), Unif l L ι W →
@@ -46,7 +44,6 @@ def PtWZero : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l]) (W : WeierstrassCurve ℂ_[l]), Unif l L ι W →
     ∀ t : ℂ, ptW l L ι W t = 0 ↔ t ∈ L.lattice
 
-open Classical in
 
 def AnalyticSysW : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l]) (W : WeierstrassCurve ℂ_[l]), Unif l L ι W →

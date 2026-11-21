@@ -19,7 +19,6 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 abbrev IOPt {n : ℕ} (ε : Fin n → Bool) : Type := {g : Matrix (Fin n) (Fin n) ℂ // inUJ ε g}
 
-open Classical in
 
 def ioExt {n : ℕ} (ε : Fin n → Bool) {E : Type} [Zero E] (φ : IOPt ε → E) :
     Matrix (Fin n) (Fin n) ℂ → E :=
@@ -163,7 +162,6 @@ lemma io_eab_zero (a b : Fin n) (g : Matrix (Fin n) (Fin n) ℂ) :
     EabV ε a b (fun _ : Matrix (Fin n) (Fin n) ℂ => (0 : E)) g = 0 := by
   simp only [EabV, EcV, RdV, deriv_const, smul_zero, add_zero]
 
-variable (ε E) in
 
 def ioS : Submodule ℂ (IOPt ε → E) where
   carrier := {φ | SmoothOnGV ε (ioExt ε φ)}
@@ -178,7 +176,6 @@ lemma io_mem_smooth (x : ioS ε E) : SmoothOnGV ε (ioExt ε (x : IOPt ε → E)
 def IORep (F : Matrix (Fin n) (Fin n) ℂ → E) (φ : IOPt ε → E) : Prop :=
   ∀ g (hg : inUJ ε g), F g = φ ⟨g, hg⟩
 
-variable (ε) in
 
 def ioT (a b : Fin n) (φ : IOPt ε → E) : IOPt ε → E := fun g => EabV ε a b (ioExt ε φ) g.1
 
@@ -208,7 +205,6 @@ lemma ioT_smul {φ : IOPt ε → E} (hφ : φ ∈ ioS ε E) (c : ℂ) (a b : Fin
     (fun h hh => by simp only [ioExt_at hh, Pi.smul_apply, zero_add]) a b g.2,
     io_eab_lin io_smooth_zero hφ c a b g.2, io_eab_zero, zero_add]
 
-variable (ε E) in
 
 def ioE (a b : Fin n) : Module.End ℂ (ioS ε E) where
   toFun x := ⟨ioT ε a b x.1, ioT_mem x.2 a b⟩

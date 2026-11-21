@@ -24,7 +24,6 @@ section Frame
 
 variable {z : (Σ _ : Unit, Fin 2) → ℂ} (d : MuFrameAt (lineHodge II hII) z)
 
-set_option maxHeartbeats 2000000 in
 
 end Frame
 

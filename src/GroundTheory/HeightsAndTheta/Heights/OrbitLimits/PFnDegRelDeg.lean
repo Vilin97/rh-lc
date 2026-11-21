@@ -70,7 +70,6 @@ section Dehom
 variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
   [∀ k, Fintype (ι k)]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem dehom_mem_homFracDegZero (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [V.IsPrime] (i : ∀ k, ι k)
     (hi : ∀ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ V) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :

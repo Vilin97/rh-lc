@@ -25,7 +25,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 section Ext
 variable {ι : Type} (P : ι → Type) [∀ v, AddCommGroup (P v)] [∀ v, Module ℂ (P v)]
 
-open Classical in
 
 def extFam {S T : Finset ι} (w : ∀ v, P v) (g : ∀ v : S, P v) : ∀ v : T, P v :=
   fun v => if h : v.1 ∈ S then g ⟨v.1, h⟩ else w v.1

@@ -53,6 +53,5 @@ theorem conjU_one {D : D7} (V : HSp D) {J : Matrix (Fin V.rank) (Fin V.rank) D.h
 
 end GlobalTheory.SquareAgree.LineDerFunB
 
-open GlobalTheory.SquareAgree.LineDerFunB in
 
 end

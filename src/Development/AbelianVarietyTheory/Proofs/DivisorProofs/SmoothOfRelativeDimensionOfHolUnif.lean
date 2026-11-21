@@ -38,6 +38,5 @@ theorem smoothOfRelativeDimension_of_holUnif (A : Over (Sp ℂ)) [GrpObj A] (hA 
   rw [Obj.holUnif_dim_eq_of_linear u u₀ T hT]
   exact hd
 
-open GlobalTheory.ComplexPoints in
 
 end GlobalTheory.TorusAction

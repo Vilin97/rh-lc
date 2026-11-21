@@ -362,12 +362,10 @@ theorem mem_vanS {k : ℕ} {f : MvPolynomial (Fin (N + 1)) ℂ} :
 def vanAt (k : ℕ) (x : X) : Submodule ℂ (vanS ι S k) :=
   ((ι.base x).asHomogeneousIdeal.toIdeal.restrictScalars ℂ).comap (vanS ι S k).subtype
 
-variable (p) in
 
 abbrev evS {U : X.Opens} {y : CxPts p (RingHom.id ℂ)} (hy : y ∈ CxPts.ptsIn p (RingHom.id ℂ) U) : Sec p U →+* ℂ :=
   CxPts.evHom hy
 
-variable (p) in
 
 def sqI {U : X.Opens} {y : CxPts p (RingHom.id ℂ)} (hy : y ∈ CxPts.ptsIn p (RingHom.id ℂ) U) : Submodule ℂ (Sec p U) :=
   ((RingHom.ker (evS p hy)) ^ 2).restrictScalars ℂ

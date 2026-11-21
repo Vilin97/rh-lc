@@ -52,9 +52,7 @@ theorem bcOver {S T : Type} [CommRing S] [Algebra c.F S] [CommRing T] [Algebra c
   ext a
   simp
 
-variable (Xo c) in
 
-variable (Xo c) in
 
 end BC
 

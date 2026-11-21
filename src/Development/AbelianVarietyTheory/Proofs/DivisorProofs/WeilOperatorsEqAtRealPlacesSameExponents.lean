@@ -125,7 +125,6 @@ section Adelic
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F) in
 
 def eInf : AF F := LinearMap.inl F (Ainf F) (Af F) 1
 
@@ -140,7 +139,6 @@ theorem evI_one_sub_eInf : evI F (1 - eInf F) = 0 := by
   show InfiniteAdeleRing.ringEquiv_mixedSpace F (1 - (eInf F).1) = 0
   rw [show (eInf F).1 = 1 from rfl, sub_self, map_zero]
 
-variable (F E) in
 
 def eE : AE F E := algebraMap (AF F) (AE F E) (eInf F)
 
@@ -181,7 +179,6 @@ abbrev archUG (σ : E →ₐ[F] E) {ι : Type} [Fintype ι] [DecidableEq ι] (J 
 theorem continuous_archUG (σ : E →ₐ[F] E) {ι : Type} [Fintype ι] [DecidableEq ι] (J : Matrix ι ι (AE F E)) :
     Continuous (archUG σ J) := continuous_cutUG eE_mul_self (cA σ) (cA_eE σ) J
 
-open GlobalTheory.WeilSchUnique in
 
 theorem member_eq_of_arch (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) {a b : ℕ} (JA : Matrix (Fin a) (Fin a) E)
     (JB : Matrix (Fin b) (Fin b) E) (ε : ℤˣ) (hJ : ∀ i j, σ (JB j i) = ((ε : ℤ) : E) * JB i j) (hdet : JB.det ≠ 0)

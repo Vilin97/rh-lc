@@ -21,7 +21,6 @@ def tensorInvariants {A B : Rep.{u} k G} (x : A.ρ.invariants) (y : B.ρ.invaria
     change A.ρ g x.1 ⊗ₜ[k] B.ρ g y.1 = x.1 ⊗ₜ[k] y.1
     rw [x.2 g, y.2 g]⟩
 
-omit [Fintype G] in
 
 theorem cupH_zero_zero_π {A B : Rep.{u} k G} (f : (Fin 0 → G) → A) (g : (Fin 0 → G) → B)
     (hf : (inhomogeneousCochains.d A 0).hom f = 0) (hg : (inhomogeneousCochains.d B 0).hom g = 0)
@@ -38,8 +37,6 @@ theorem cupH_zero_zero_π {A B : Rep.{u} k G} (f : (Fin 0 → G) → A) (g : (Fi
   rw [hv (fun i : Fin 0 => v ⟨i, by omega⟩), hv (fun j : Fin 0 => v ⟨0 + j, by omega⟩)]
   simp [Fin.partialProd]
 
-set_option maxHeartbeats 1600000 in
-set_option backward.isDefEq.respectTransparency false in
 
 theorem tateCup_zero_zero (A B : Rep.{u} k G) (x : A.ρ.invariants) (y : B.ρ.invariants) :
     tateCup 0 0 A B 0 (add_zero 0)
@@ -102,7 +99,6 @@ theorem tateCup_zero_zero (A B : Rep.{u} k G) (x : A.ρ.invariants) (y : B.ρ.in
   rw [hs]
   rfl
 
-set_option maxHeartbeats 800000 in
 
 theorem tateCup_unique_of_agrees (μ : ∀ p q : ℤ, TateCupFam k G p q)
     (hpos : ∀ (n m l : ℕ) [NeZero n] [NeZero m] [NeZero l] (hl : n + m = l) (A B : Rep.{u} k G)

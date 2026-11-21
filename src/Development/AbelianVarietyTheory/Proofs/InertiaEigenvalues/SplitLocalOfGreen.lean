@@ -140,7 +140,6 @@ theorem exists_hasLabel {p : ℕ} [Fact p.Prime] (t : Formalism.CyclotomicNorms.
     ((GlobalTheory.T.isCuspidalCharacter_iff_isCuspidal_GLnFiniteField p d V hd hs).2 hc) (hO d V hd hs hc)) (GlobalTheory.T.trace_harishChandra_induced_eq_product_characters p) (GlobalTheory.T.isConstituent_harishChandraRep_iff_pairing_ne_zero p) r ρ f hρ
     (hasLabelO_of_mul O ρ hρ h0 h)⟩
 
-open Formalism.BasicNotions GlobalTheory.HeightCounting in
 
 end GlobalTheory.BlockTypeSplit
 

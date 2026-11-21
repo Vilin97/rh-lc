@@ -30,7 +30,6 @@ noncomputable def tgClass (z : cocycles (Rep.res N.subtype A) 1) {y : G → A}
   (cohomologyπ _ 2).hom (cocycleOf 2 (tgCochain (isCocycleOne_cocycleOneApply A N z) hy hyc)
     (tgCochain_d _ hy hyc))
 
-omit [IsTopologicalGroup G] in
 
 theorem quotientToInvariants_ρ_apply_coe (c : G ⧸ N) (w : Representation.invariants (A.ρ.comp N.subtype)) :
     (((A.quotientToInvariants N).ρ c w : Representation.invariants (A.ρ.comp N.subtype)) : A) =
@@ -186,7 +185,6 @@ theorem tgClass_smul (r : k) (z : cocycles (Rep.res N.subtype A) 1) {y : G → A
   change r • tgDiff A y _ _ = tgDiff A (r • y) _ _
   simp only [tgDiff, Pi.smul_apply, map_smul, smul_add, smul_sub]
 
-variable (A N) in
 
 def IsTransgression (h : cohomology (Rep.res N.subtype A) 1)
     (t : cohomology (A.quotientToInvariants N) 2) : Prop :=

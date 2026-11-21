@@ -16,6 +16,5 @@ theorem integral_inert_of_weakApprox (h : WeakApproxAndOrthonormalBases) : IntIn
     (thFourInt_of (oneCopyLoc_of_isom h.2.2 AlgP.zero_value_algebraic) (locInv_of unit_substitution_local) four_products_from_one
       (MMOnb.globONB_of h.2.1) AlgP.zero_value_algebraic)
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
 end Formalism.L2.KerInert

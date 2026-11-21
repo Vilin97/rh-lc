@@ -91,13 +91,11 @@ def meanVal_vw (w : Formalism.PairingDivisionLocalBalance.Pl K) (p : K[X]) : ℝ
 
 variable {σ}
 
-omit [NumberField K] in
 
 theorem IsMinPol.eq_minpoly {β : ℂ} {p : K[X]} (h : IsMinPol σ β p) : p = @minpoly K ℂ _ _ σ.toAlgebra β := by
   let := σ.toAlgebra
   exact minpoly.eq_of_irreducible_of_monic h.2.1 h.2.2 h.1
 
-omit [NumberField K] in
 
 theorem exists_isMinPol {β : ℂ} (h : IsAlgebraic ℚ β) [Algebra ℚ K] : ∃ p, IsMinPol σ β p := by
   let := σ.toAlgebra
@@ -105,7 +103,6 @@ theorem exists_isMinPol {β : ℂ} (h : IsAlgebraic ℚ β) [Algebra ℚ K] : �
   have hi : IsIntegral K β := (h.tower_top K).isIntegral
   exact ⟨minpoly K β, minpoly.monic hi, minpoly.irreducible hi, minpoly.aeval K β⟩
 
-omit [NumberField K] in
 
 theorem IsMinPol.ne_zero {β : ℂ} {p : K[X]} (h : IsMinPol σ β p) (h0 : β ≠ 0) : p.coeff 0 ≠ 0 ∧ p.natDegree ≠ 0 := by
   refine ⟨fun hc => h0 ?_, h.2.1.natDegree_pos.ne'⟩
@@ -185,7 +182,6 @@ def maxWt (C : ℝ) : ℕ :=
 
 variable {D} {T : Type} {L : LevCh D T} {sc : Consts}
 
-open Classical in
 
 def condExp (P : Places L) (v : HeightOneSpectrum (𝓞 D.host.F)) : ℕ := if v = P.v0 then 1 else 2
 
@@ -214,7 +210,6 @@ def alphaH (L : LevCh D T) (t : T) (i j : Fin D.R.m) : HChar D.host.E := L.C.mu0
 
 def betaH : HChar D.host.E := G.ch.chiH (D.R.m - i) * L.C.eta ^ (rankV D i j % 2)
 
-open Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR.Datum in
 
 theorem chrEq_nu {μ₀ : T} (hL : L.Is μ₀) : ChrEq (G.nu t i (j + 1)) (nuH G t i j) := by
   have h1 := hL.mu0 j
@@ -339,7 +334,6 @@ theorem delOf_ch {l : ℕ} (hl : l.Prime) {w : Formalism.PairingDivisionLocalBal
 
 end IsSqOf
 
-open Classical in
 
 theorem exists_isSqOf {W : G.Weil} {B : Frames G} {ρ : RealMatch W} {C : ℝ} {μ₀ : T} {μ : Formalism.PairingDivisionLocalBalance.Pl D.what₂.LL → T}
     {rq : T → Fin D.R.m × Fin D.R.m → D.what₂.LL} {zA zA' : Fin D.R.m × Fin D.R.m → D.what₂.LL} {dl}

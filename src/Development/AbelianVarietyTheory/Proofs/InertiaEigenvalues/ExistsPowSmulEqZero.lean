@@ -152,7 +152,6 @@ def AdicBasis : Prop :=
 
 abbrev act : Representation O G ↥L.T := twistRep (latRep L) χ⁻¹
 
-omit [TopologicalSpace G] [TopologicalSpace V] [IsTopologicalAddGroup V] [ContinuousConstSMul LL V] in
 
 theorem act_coe (g : G) (t : ↥L.T) : (act L χ g t : V) = twistRep ρ (chiLL LL χ⁻¹) g t :=
   (algebraMap_smul LL (χ⁻¹ g : O) (ρ g t)).symm
@@ -245,7 +244,6 @@ theorem mk_cobZ (hc : ∀ v, Continuous fun g => twistRep ρ (chiLL LL χ⁻¹) 
     (Submodule.Quotient.mk (cobZ χ hc t) : H1tw L χ) = 0 :=
   (Submodule.Quotient.mk_eq_zero _).mpr ⟨t, t.2, rfl⟩
 
-omit [IsTopologicalAddGroup V] [ContinuousConstSMul LL V] [TopologicalSpace V] [TopologicalSpace G] in
 
 theorem eq_zero_of_smul (hl : algebraMap O LL lam ≠ 0) (t : ↥L.T) (h : lam • t = 0) : t = 0 := by
   have h1 : lam • (t : V) = 0 := congrArg Subtype.val h
@@ -452,6 +450,5 @@ theorem free_and_tensIso_gal {G Qp LL O : Type} [Group G] [TopologicalSpace G] [
     obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
     exact Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton.mpr hd))
 
-open GlobalTheory.TopSteps in
 
 end GlobalTheory.FreeCoh

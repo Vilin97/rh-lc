@@ -45,7 +45,6 @@ theorem ext_coords_self (hA : IsAbelianScheme A₀) {e e' : Crys (divided₂ (Gl
     (h1 : fstC A₀ e = fstC A₀ e') (h2 : (sndC A₀ e : HdR A₀) = sndC A₀ e') : e = e' :=
   ext_coords hA h1 h2
 
-set_option maxHeartbeats 1600000 in
 
 theorem dualNumber_hodge_summand_eq_graph_coords_of_compl (hA : IsAbelianScheme A₀) (f : HdR A₀ →ₗ[k] HdR A₀)
     (E M : Submodule (TrivSqZeroExt k k)

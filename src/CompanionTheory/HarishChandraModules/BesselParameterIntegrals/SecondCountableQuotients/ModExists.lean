@@ -105,7 +105,6 @@ theorem MG.range_toM : Set.range (MG.toM : MG G hG → MtM m) = {x | Matrix.of x
   · rintro ⟨a, rfl⟩; exact a.mem
   · intro hx; exact ⟨MG.mk hG (Matrix.of x) hx, rfl⟩
 
-open Classical in
 
 theorem measurable_lmulQ (a : (Matrix (Fin m) (Fin m) ℂ)) : Measurable (lmulQ a) :=
   Continuous.measurable (α := MtM m) (γ := MtM m)

@@ -323,17 +323,11 @@ variable (M : DSModel V S)
 
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 
-variable (V) in
 
-open Classical in
 
 variable {M θ} {J : Set (GA D V)} {χ : GA D V → ℂ} {μ : Measure (GA D V)} {𝓕 : Set (GA D V)}
 
-open Classical in
 
-set_option maxHeartbeats 1000000 in
-open Classical in
 
-open Classical in
 
 end Formalism.IndefR.SchurOrthogonalityAlt

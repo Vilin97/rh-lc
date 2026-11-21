@@ -186,7 +186,6 @@ theorem finiteClasses_comap (hπ : Function.Surjective π) (hΓ : Set.InjOn π �
 
 end Transport
 
-open MeasureTheory in
 
 theorem FiniteClasses.measure_toReal [MeasurableSpace G] [MeasurableMul G] [Countable Γ] (h : FiniteClasses Γ K)
     (μ : Measure G) [μ.IsMulLeftInvariant] (hK : MeasurableSet (K : Set G)) (hK1 : μ K = 1) {𝓕 : Set G}
@@ -273,7 +272,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 def unitaryMass (K : Subgroup (HA (Af F) σ J)) : ℝ :=
   classMass (ratIn (Af F) σ J) K
 
-omit [NumberField E] in
 
 theorem unitaryMass_comap_swapPts (L : Subgroup (UPts σ J (Af F))) :
     unitaryMass σ J (L.comap (swapPts (Af F) σ J : HA (Af F) σ J →* UPts σ J (Af F))) =
@@ -493,7 +491,6 @@ theorem IsFinProj.surjective (h : IsFinProj σ J π) : Function.Surjective π :=
   obtain ⟨g, h1, h2⟩ := (parts_spec σ J).2 1 (HA.mat (Af F) σ J b)
   refine ⟨⟨g, ((parts_spec σ J).1 g).2 ⟨h1 ▸ one_mem _, h2 ▸ b.2⟩⟩, Subtype.ext ((h _).trans h2)⟩
 
-omit [NumberField E] in
 
 theorem IsFinProj.injOn (h : IsFinProj σ J π) : Set.InjOn π (ratIn (AF F) σ J) := by
   haveI : Nontrivial (Af F) := by
@@ -577,6 +574,5 @@ theorem classMass_bot {G : Type} [Group G] (K : Subgroup G) [K.FiniteIndex] :
     ⟨one_mem_stabAt _ _ _, fun _ _ => Subsingleton.elim _ _⟩, e]
   rfl
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 
 end GlobalTheory.Mass

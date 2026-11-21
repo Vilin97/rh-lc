@@ -123,7 +123,6 @@ def projOf (E : Spc) (k : ℕ) : DirectSum ℕ (A q E) →+ A q E k where
   map_zero' := rfl
   map_add' x y := DirectSum.add_apply x y k
 
-include hn in
 
 def mapOf {E E' : Spc} (f : E ⟶ E') (h : Inv q E) (h' : Inv q E') :
     letI := ringOf hr E h; letI := ringOf hr E' h'; DirectSum ℕ (A q E') →+* DirectSum ℕ (A q E) :=

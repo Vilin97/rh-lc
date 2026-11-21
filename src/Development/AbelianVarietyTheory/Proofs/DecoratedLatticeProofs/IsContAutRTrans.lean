@@ -65,5 +65,3 @@ theorem isContAut_multT {V : HSp D} {S : D.what₂.Tau → SPar} {θ : InfFam D}
 
 end GlobalTheory.Core.Mi.BotPin
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.Core.Mi.BotPin in

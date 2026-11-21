@@ -190,7 +190,6 @@ theorem isZero_cohomology_res_coind (hU : FreeOnCosets ψ (U : Subgroup G)) (w :
     ⟨fun c c' => hb.1 (funext fun d => Subsingleton.elim _ _)⟩
   exact ModuleCat.isZero_of_subsingleton _
 
-omit [IsTopologicalGroup G] [CompactSpace G] [∀ w, IsTopologicalGroup (F w)] [IsDiscreteRep N] in
 
 theorem exists_norm_eq_res_coind' (hU : FreeOnCosets ψ (U : Subgroup G)) (w : κ)
     (f : Rep.res (ψ w).toMonoidHom (Rep.coind (U : Subgroup G).subtype N))

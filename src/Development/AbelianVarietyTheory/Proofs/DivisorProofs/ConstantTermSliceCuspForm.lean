@@ -22,7 +22,6 @@ section General
 variable {X P : Type} [TopologicalSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
   [NormedAddCommGroup P] [NormedSpace ℝ P] [FiniteDimensional ℝ P]
 
-omit [FiniteDimensional ℝ P] in
 
 theorem iteratedFDeriv_fderiv_eq' {F : Type} [NormedAddCommGroup F] [NormedSpace ℝ F] (f : P → F) (m : ℕ) (x : P) :
     iteratedFDeriv ℝ m (fderiv ℝ f) x =
@@ -30,7 +29,6 @@ theorem iteratedFDeriv_fderiv_eq' {F : Type} [NormedAddCommGroup F] [NormedSpace
   rw [iteratedFDeriv_succ_eq_comp_right]
   simp
 
-omit [MeasurableSpace X] [OpensMeasurableSpace X] [FiniteDimensional ℝ P] in
 
 theorem continuousOn_of_iteratedFDeriv_zero {F : Type} [NormedAddCommGroup F] [NormedSpace ℝ F] {H : X → P → F}
     {s : Set (X × P)} (h : ContinuousOn (fun p : X × P => iteratedFDeriv ℝ 0 (H p.1) p.2) s) :
@@ -107,7 +105,6 @@ theorem contDiffOn_integral_param (ν : Measure X) [IsFiniteMeasure ν] {U : Set
       ⟨fun x hx => (hder x hx).differentiableAt.differentiableWithinAt, by simp,
         hD.congr fun x hx => (hder x hx).fderiv⟩
 
-omit [TopologicalSpace X] [MeasurableSpace X] [OpensMeasurableSpace X] [FiniteDimensional ℝ P] in
 
 theorem contDiffAt_iteratedFDeriv_param {M F : Type} [NormedAddCommGroup M] [NormedSpace ℝ M]
     [NormedAddCommGroup F] [NormedSpace ℝ F] (Φ : M → P → F) {O : Set (M × P)}
@@ -143,7 +140,6 @@ open GlobalTheory.LeviGA GlobalTheory.SliceTwo
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a r : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem contDiff_mulL {n : ℕ} :
     ContDiff ℝ ∞ (fun p : Lie E n × Lie E n => toL (Matrix.of p.1 * Matrix.of p.2)) := by
@@ -153,7 +149,6 @@ theorem contDiff_mulL {n : ℕ} :
     ((contDiff_apply_apply ℝ (Cinf E) i k).comp contDiff_fst).mul
       ((contDiff_apply_apply ℝ (Cinf E) k j).comp contDiff_snd)
 
-omit [IsTotallyComplex E] in
 
 theorem contDiff_blkMat_entry (hr : r ≤ a) (i k : Fin a) :
     ContDiff ℝ ∞ (fun x : Lie E (a - r) => blkMat (Cinf E) hr (1, Matrix.of x) i k) := by
@@ -165,19 +160,16 @@ theorem contDiff_blkMat_entry (hr : r ≤ a) (i k : Fin a) :
   · simp only [Matrix.fromBlocks_apply₂₁]; exact contDiff_const
   · simp only [Matrix.fromBlocks_apply₂₂, Matrix.of_apply]; exact contDiff_apply_apply ℝ (Cinf E) i k
 
-omit [IsTotallyComplex E] in
 
 def blkA (hr : r ≤ a) (κ : Kinf E a) (x : Lie E (a - r)) : Lie E a :=
   toL (blkMat (Cinf E) hr (1, Matrix.of x) * κ.1)
 
-omit [IsTotallyComplex E] in
 
 theorem contDiff_blkA (hr : r ≤ a) (κ : Kinf E a) : ContDiff ℝ ∞ (blkA hr κ) := by
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => ?_
   change ContDiff ℝ ∞ fun x : Lie E (a - r) => ∑ k, blkMat (Cinf E) hr (1, Matrix.of x) i k * κ.1 k j
   exact ContDiff.sum fun k _ => (contDiff_blkMat_entry hr i k).mul contDiff_const
 
-omit [IsTotallyComplex E] in
 
 theorem blkA_mem (hr : r ≤ a) (κ : Kinf E a) {x : Lie E (a - r)} (hx : x ∈ invSet E (a - r)) :
     blkA hr κ x ∈ invSet E a := by

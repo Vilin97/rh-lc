@@ -17,11 +17,9 @@ variable {D : D7} {L : SizeData₂ D}
 def bndP (L : SizeData₂ D) : ℕ :=
   max ⌊L.sc.a + L.sc.a / ((D.R.k : ℝ) * L.sc.x ^ (Scale.A / 2))⌋₊ ⌊L.sc.X'' D.R.n⌋₊ + 1
 
-open Classical in
 
 def PsAt (L : SizeData₂ D) : Finset ℕ := (Finset.range (bndP L)).filter (fun p => p.Prime ∧ InertK D p)
 
-open Classical in
 
 def sAt (L : SizeData₂ D) (K : G.Consts) : Finset ℕ := (Finset.range ⌈L.sc.X'⌉₊).filter (fun p => G.Cand D L K p)
 
@@ -29,7 +27,6 @@ def TTv (D : D7) : Finset ℕ := D.host.TT.image Formalism.HC.Frame.A.val
 
 def badAt (X : G.Inst D L) (p n : ℕ) : Prop := ¬ G.Good X p (X.bs (G.stepP D p) (D.R.ofNat n))
 
-open Classical in
 
 def clAt (X : G.Inst D L) (K : G.Consts) (p : ℕ) : PClass :=
   if p ∉ L.drop then PClass.served
@@ -37,7 +34,6 @@ def clAt (X : G.Inst D L) (K : G.Consts) (p : ℕ) : PClass :=
   else if G.Cand D L K p ∧ L.sc.x ^ (-L.sc.eps) < G.Sig X K (G.aL L) (G.bL L) p then PClass.second
   else PClass.first
 
-open Classical in
 
 def gainQ (X : G.Inst D L) (K : G.Consts) (j p : ℕ) : ℝ :=
   if p ∈ L.drop then 0 else G.gainP X K (G.aL L) (G.bL L) p j

@@ -18,7 +18,6 @@ open Formalism.REAL (GlRel)
 
 variable {n : ℕ}
 
-open Classical in
 
 def trOn {M : Type*} [AddCommGroup M] [Module ℂ M] (S : Submodule ℂ M) (f : M →ₗ[ℂ] M) : ℂ :=
   if h : ∀ x ∈ S, f x ∈ S then LinearMap.trace ℂ S (f.restrict h) else 0
@@ -130,7 +129,6 @@ def rhoU (lev : Fin n → ℕ) : Fin n → ℝ := fun a =>
 
 def muQ (lam : Fin n → ℤ) (lev : Fin n → ℕ) : Fin n → ℝ := fun a => 2 * (lam a : ℝ) + 2 * rhoU lev a
 
-open Classical in
 
 def harmSet (lam : Fin n → ℤ) : Finset (Fin n → ℝ) :=
   ((univ : Finset (Fin n → Fin n)).filter fun lev => IsLev lam fun a => (lev a : ℕ)).image fun lev => muQ lam fun a => (lev a : ℕ)

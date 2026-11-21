@@ -34,12 +34,10 @@ namespace GlobalTheory.Mem.R3.Rw
 def labEE {D : D7} (e : D.host.E →+* ℂ) (τ : D.what₂.Tau) : D.host.E →+* ℂ :=
   e.comp (D.host.sigmaOf (D.eTau τ).1 : D.host.E →+* D.host.E)
 
-open Classical in
 
 def labX {D : D7} (e : D.host.E →+* ℂ) (ρ : D.what₂.Tau) : D.what₂.Tau :=
   if h : ∃ τ, labEE e τ = tauE D ρ ∨ labEE e τ = (starRingEnd ℂ).comp (tauE D ρ) then h.choose else ρ
 
-open Classical in
 
 def parAtE {D : D7} (W : HSp D) (e : D.host.E →+* ℂ) (ρ : D.what₂.Tau) : SPar :=
   if labEE e (labX e ρ) = tauE D ρ then
@@ -104,7 +102,6 @@ theorem forms_crdOver {L L' Ks : Type} [Field L] [NumberField L] [Field L'] [Num
     obtain rfl := eq_of_heq e
     exact h6 lp' y' y ey φ' φ ((hc _ _).1 hx)
 
-set_option maxHeartbeats 4000000 in
 
 theorem resetW : ∀ {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T} {w' : ColW B' f' T'}
   {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl} {Wt' : Set B'.places.Pl}

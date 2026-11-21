@@ -82,7 +82,6 @@ section Family
 
 variable {n' : ℕ} {La c₁ : ℝ}
 
-set_option maxHeartbeats 1600000 in
 
 end Family
 
@@ -91,7 +90,6 @@ section Comparison₂
 variable {σ : T.Q.c.F →+* ℂ} {k : (T.U j σ).Comp} {x : ((T.U j σ).X k).dom} {ξ : Fin D.R.r → D.host.E}
   {ν : ((T.U j σ).X k).Ψ → ℝ} {lam : Fin (D.R.r - 2) → Fin D.R.r → D.host.E}
 
-set_option maxHeartbeats 1600000 in
 
 end Comparison₂
 
@@ -101,7 +99,6 @@ variable {n' : ℕ} {La c₁ : ℝ} {Wp : ValuationSubring ℂ} {Y : Model (T.Q.
   {σ : T.Q.c.F →+* ℂ} {k : (T.U j σ).Comp} {x : ((T.U j σ).X k).dom} {ξ : Fin D.R.r → D.host.E}
   {ν : ((T.U j σ).X k).Ψ → ℝ} {lam : Fin (D.R.r - 2) → Fin D.R.r → D.host.E}
 
-set_option maxHeartbeats 1600000 in
 
 end Claims
 

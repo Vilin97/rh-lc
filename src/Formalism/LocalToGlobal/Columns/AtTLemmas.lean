@@ -40,7 +40,6 @@ theorem diamond_action_apply (P : ST) (c : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (φ : (
   unfold diamondOperatorOnForms'
   exact LocOp.ofMap_op_apply (S := formGSD C Λ) (S' := formGSD C Λ) _ _ _ _ _ φ d
 
-open Classical in
 
 end OpsL
 

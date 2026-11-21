@@ -85,7 +85,6 @@ theorem at_liftV {κ : Type} (y : κ → mixedEmbedding.mixedSpace F) : At (evI 
 
 end GlobalTheory.HeisDerivArch
 
-open GlobalTheory.HeisDeriv GlobalTheory.HeisDerivArch in
 
 theorem GlobalTheory.HeisDerivArch.exists_heisLine_actsD_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
     {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ), IsStd ψ →

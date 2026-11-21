@@ -28,7 +28,6 @@ lemma bd_sub {N : ℕ} (a b : Pr N →₀ ℤ) : Pr.bd (a - b) = Pr.bd a - Pr.bd
 lemma aw_zero_eq_wa_zero : Pr.aw 0 = Pr.wa 0 := by
   simp [Pr.aw, Pr.wa]
 
-open Classical in
 
 noncomputable def step (N : ℕ) (c : Pr N →₀ ℤ) : Pr (N + 1) →₀ ℤ :=
   if H : ∃ e, Pr.Deg (N + 2) e ∧ Pr.d (N + 1) e = Pr.aw (N + 1) - Pr.wa (N + 1) - Pr.bd c then H.choose else 0

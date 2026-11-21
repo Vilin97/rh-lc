@@ -24,7 +24,6 @@ variable {H : Type} [Group H] [MeasurableSpace H] (T : Subgroup H) (dt : Measure
 def IsQuotMeasure (ν : Measure (Quot T)) : Prop :=
   ∀ f : H → ℝ≥0∞, Measurable f → ∫⁻ g, f g ∂dh = ∫⁻ q, ∫⁻ t : T, f (t * q.out) ∂dt ∂ν
 
-open Classical in
 
 def quotMeas : Measure (Quot T) := if h : ∃ ν, IsQuotMeasure T dt dh ν then h.choose else 0
 
@@ -40,7 +39,6 @@ theorem IsQuotMeasure.quotMeas {ν : Measure (Quot T)} (h : IsQuotMeasure T dt d
   rw [Orb.quotMeas, dite_eq_left h']
   exact h'.choose_spec
 
-omit [MeasurableSpace H] in
 
 theorem measurable_descend {X : Type*} [MeasurableSpace X] {φ : H → X} (h : LeftInv T φ) (hm : Measurable φ) :
     Measurable (descend T φ) :=
@@ -89,7 +87,6 @@ theorem IsQuotMeasure.unique {ν ν' : Measure (Quot T)} (h : IsQuotMeasure T dt
 theorem IsQuotMeasure.eq_quotMeas {ν : Measure (Quot T)} (h : IsQuotMeasure T dt dh ν) : ν = Orb.quotMeas T dt dh :=
   h.unique hT h.quotMeas
 
-variable (dt dh) in
 
 theorem isQuotMeasure_quotMeas [SFinite dh] [dh.IsMulLeftInvariant] : IsQuotMeasure T dt dh (quotMeas T dt dh) := by
   obtain ⟨b, hb, h1⟩ := exists_bruhat hT dt
@@ -253,7 +250,6 @@ instance isMulRightInvariant_map (μ : Measure H) [μ.IsMulRightInvariant] : (μ
     ext x
     simp⟩
 
-include hT in
 
 theorem quotMeas_map :
     quotMeas T' (dt.map (subEquiv e h)) (dh.map e) = (quotMeas T dt dh).map (quotMap e h) := by
@@ -287,7 +283,6 @@ theorem measurableEmbedding_quotMap : MeasurableEmbedding (quotMap e h) :=
       measurable_toFun := measurable_from_quotient.2 (measurable_mk.comp e.continuous.measurable)
       measurable_invFun := measurable_from_quotient.2 (measurable_mk.comp e.symm.continuous.measurable) }
 
-include hT in
 
 theorem hasQuotInt_map {φ : H' → ℂ} (hi : LeftInv T' φ) (c : ℂ) :
     (HasQuotInt T' (dt.map (subEquiv e h)) (dh.map e) φ c ↔ HasQuotInt T dt dh (φ ∘ e) c) ∧
@@ -344,13 +339,11 @@ theorem HasOrbInt.smul (h : HasOrbInt dh γ dt f c) (a : ℂ) : HasOrbInt dh γ 
 
 variable [TopologicalSpace H] [IsTopologicalGroup H] [T2Space H]
 
-omit [MeasurableSpace H] in
 
 theorem isClosed_cent (γ : H) : IsClosed (cent γ : Set H) := by
   rw [show (cent γ : Set H) = {t | t * γ = γ * t} from Set.ext fun _ => mem_cent]
   exact isClosed_eq (by fun_prop) (by fun_prop)
 
-omit [MeasurableSpace H] in
 
 theorem isProperOrbit_of_isClosed [LocallyCompactSpace H] [SecondCountableTopology H]
     (h : IsClosed (range fun x : H => x⁻¹ * γ * x)) : IsProperOrbit (cent γ) γ := by
@@ -416,7 +409,6 @@ theorem hasOrbInt_map {H' : Type} [Group H'] [TopologicalSpace H'] [IsTopologica
     (isClosed_cent γ) dt dh (leftInv_conjFn le_rfl f) c
   rwa [e1] at this
 
-omit [MeasurableSpace H] [T2Space H] [LocallyCompactSpace H] [SecondCountableTopology H] [BorelSpace H] in
 
 def conjEquiv (g : H) : H ≃ₜ* H :=
   { MulAut.conj g with

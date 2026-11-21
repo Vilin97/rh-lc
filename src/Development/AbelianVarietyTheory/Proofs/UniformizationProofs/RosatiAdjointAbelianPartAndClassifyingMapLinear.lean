@@ -37,7 +37,6 @@ variable (e : ℕ) {f g : G ⟶ G} [IsMonHom f] [IsMonHom g] {a b : D.toPre.P.A 
   (hg : (Over.pullback (thick R I e)).map g ≫ (U.gt e).q = (U.gt e).q ≫ (Over.pullback (thick R I e)).map b)
 include hf hg
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_gen_invariant [ConnectedSpace (thickObj R I e G).left]
     (sj : Function.Surjective (G ⊗ G ⊗ G).hom.appTop.hom)
@@ -218,7 +217,6 @@ theorem cls_of_rosati {S : Scheme.{0}} {B : Over S} [GrpObj B] [IsCommMonObj B] 
 
 end GlobalTheory.EndRosati
 
-open GlobalTheory.EndRosati in
 
 theorem GlobalTheory.UT.rosatiAdj_and_c_linear_of_endU : LL → AllU fun {R} _ _ {I} {D} {A} {G} _ _ U => ∀ E E' : EndU U.toUnifPre, LBIso (cubeLB G ![fst G G ≫ E.aG, snd G G] U.LG.L) (cubeLB G ![fst G G, snd G G ≫ E'.aG] U.LG.L) → RosatiAdj A.A A.L E.aA E'.aA ∧ RosatiAdj D.toPre.P.A D.toPre.P.L E.aB E'.aB ∧ (∀ χ, D.toPre.c (E.h χ) = D.toPre.c χ ≫ E'.aB) ∧ ∀ χ, D.toPre.c (E'.h χ) = D.toPre.c χ ≫ E.aB := by
   intro hLL R _ _ _ I hR D A G _ _ hG U E E' H

@@ -180,7 +180,6 @@ theorem main (n : ℕ) : ∀ (N : Type) [AddCommGroup N] [Module R N] [Finite N]
 
 end logCardLength
 
-open logCardLength in
 
 theorem LogCardLength.proof : LogCardLength.Statement := by
   intro R _ N _ _ _

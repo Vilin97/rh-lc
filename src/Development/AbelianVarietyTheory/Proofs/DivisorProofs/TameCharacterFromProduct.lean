@@ -48,6 +48,5 @@ theorem FinUnit_conj {x : (AE D)ˣ} (hx : FinUnit x) : FinUnit (Units.map (cA D)
   refine ⟨?_, finPart_cA_mem hx.2.1, finPart_cA_mem hx.2.2⟩
   exact (parts_cA (x : AE D)).1.trans (by rw [hx.1, RingHom.map_one])
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.GeoActCompare.TameConj

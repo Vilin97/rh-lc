@@ -50,7 +50,6 @@ theorem intAt_n1Arg {n c : ℕ} (a : E) (r : Sp E (n + c) ≃ₗ[E] Sp E (n + c)
   · exact mem_stdAt'.1 (h _ eN_mem) ⟨n + i, hi⟩
   · simpa using intAt_zero'
 
-omit [StarRing E] in
 
 theorem unitV_root {K : Type} [Field K] (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) (h : LocE.unitV χ a ≠ 0) :
     ∃ k : ℕ, 0 < k ∧ LocE.unitV χ a ^ k = 1 := by

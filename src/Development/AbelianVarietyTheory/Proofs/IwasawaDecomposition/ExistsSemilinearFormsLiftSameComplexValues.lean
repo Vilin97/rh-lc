@@ -29,8 +29,6 @@ open scoped Matrix
 
 namespace GlobalTheory.Mem.R3.DefLatBC.LiftExt
 
-open Formalism.L2.Col in
-set_option maxHeartbeats 1000000 in
 
 private theorem liftHom_reidx (X : Fields) {L : Type} [Field L] [NumberField L] [StarRing L] (ι : X.K →+* L)
     (e : X.Tau → X.E →+* L) (he : ∀ τ, ι.comp (X.emb τ) = e τ) {n : ℕ} (lam₁ lam₂ : X.Tau → DomWeight n)
@@ -81,7 +79,6 @@ private theorem liftHom_reidx (X : Fields) {L : Type} [Field L] [NumberField L] 
     have hc' : c₂.comp ι = c₁ := RingHom.ext hc
     rw [hc']
 
-open Formalism.L2.Col in
 
 private theorem formsLift_of_eqFunLift {K₁ K₂ : Type} [Field K₁] [NumberField K₁] [StarRing K₁] [Field K₂] [NumberField K₂] [StarRing K₂]
     (ι : K₁ →+* K₂) (S₁ : GSD K₁) (S₂ : GSD K₂) (h₁ : S₁.Ok) (h₂ : S₂.Ok) (Lf : S₁.EqFun →+ S₂.EqFun)
@@ -95,7 +92,6 @@ private theorem formsLift_of_eqFunLift {K₁ K₂ : Type} [Field K₁] [NumberFi
   · show (S₂.res h₂).symm (S₂.res h₂ (Lf ((S₁.res h₁).symm f))) = _
     exact LinearEquiv.symm_apply_apply _ _
 
-set_option maxHeartbeats 4000000 in
 
 private theorem eqFun_lift {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} (w : ColW B f T)
     (w' : ColW B' f' T') (W : Set B.places.Pl) (W' : Set B'.places.Pl) (hpre : B'.toPre = B.toPre) (hf : HEq f' f)
@@ -143,7 +139,6 @@ private theorem eqFun_lift {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T 
     rw [eC] at e1
     exact e1.trans e2.symm
 
-set_option maxHeartbeats 4000000 in
 
 private theorem forms_lift {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} (w : ColW B f T)
     (w' : ColW B' f' T') (W : Set B.places.Pl) (W' : Set B'.places.Pl) (hpre : B'.toPre = B.toPre) (hf : HEq f' f)

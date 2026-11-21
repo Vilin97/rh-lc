@@ -20,8 +20,6 @@ private theorem subrepresentation_isCompl_iff {G V : Type} [Group G] [AddCommGro
     Subrepresentation.toSubmodule_sup]
   rfl
 
-open Matrix in
-open scoped Kronecker ComplexOrder TensorProduct in
 
 theorem _root_.GlobalTheory.ClassFin.ss_range_toMatrix_iff_isSemisimpleRepresentation :
     ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (G : Type) [Group G] (V : Type) [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) (b : Module.Basis ι ℂ V), _root_.GlobalTheory.ClassFin.SS (Set.range fun g => LinearMap.toMatrix b b (ρ g)) ↔ ρ.IsSemisimpleRepresentation := by

@@ -94,7 +94,6 @@ theorem clear_at (p : PlF D) {ι : Type} [Fintype ι] (z : ι → (D.s.atP p).Ep
 
 variable {M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep} {δ : ∀ p : PlF D, (D.s.atP p).Fp}
 
-set_option maxHeartbeats 1000000 in
 
 theorem locReal_ord (hA : ∀ p, Agree δ M p) (u u' : D.what₂.Word) (w : Point D.host.E (D.R.rS + 1)) (p : PlF D)
     (hM : (M p).split = none) (O : Set (MatP D p)) (hO : IsLCls M δ (D.mem u).A.T (D.mem u').A.T p w O) :

@@ -137,7 +137,6 @@ section Data
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {ι : Type} [Fintype ι] [DecidableEq ι]
 
-variable (F E ι) in
 
 abbrev mpp : GL ι (AE F E) →* GL ι 𝔸[E] := Matrix.GeneralLinearGroup.map (eqv F E).toRingHom
 

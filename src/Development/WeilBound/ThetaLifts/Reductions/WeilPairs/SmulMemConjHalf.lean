@@ -65,7 +65,6 @@ theorem mul_mem_conjHalf {m : ℕ} {e : AEF F E} (M : Matrix (Fin m) (Fin nT) (A
   rw [Matrix.mul_apply, Finset.mul_sum]
   exact Finset.sum_congr rfl fun k _ => by rw [mul_left_comm, hy k j]
 
-variable (F E) in
 
 def hlf : AEF F E := incAF F E (1 / 2)
 

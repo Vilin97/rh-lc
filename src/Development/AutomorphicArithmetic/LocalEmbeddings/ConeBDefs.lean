@@ -28,7 +28,6 @@ theorem continuous_ec : Continuous (ec : (ι → ℂ) → ℂ) := by
   unfold ec
   fun_prop
 
-omit [Fintype ι] in
 
 end FreeSingleHomotopyEquivDiscreteChains.UpperTheory.Dv.ConeB
 

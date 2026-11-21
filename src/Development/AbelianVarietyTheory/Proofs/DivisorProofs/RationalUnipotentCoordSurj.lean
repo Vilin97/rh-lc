@@ -100,7 +100,6 @@ theorem vecMulVec_mulVec_rect (x : Fin n → R) (a z : Fin m → R) : vecMulVec 
 
 end GlobalTheory.ThK.UnipRat
 
-open Matrix GlobalTheory.LeviLine GlobalTheory.ThK.UnipRat GlobalTheory.ThK.UnipDom.Additive in
 
 theorem GlobalTheory.ThK.UnipRat.exists_rat_unip_coA : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n n₁ : ℕ) (Y : Spc F E n) (Y₁ : Spc F E n₁) (H : Plane E n n₁), IsCMExt F E σ → (∀ i j, σ (Y.J j i) = -Y.J i j) → IsIsoPlane σ B H Y Y₁ → ∀ α : Fin n₁ → E, ∃ γ ∈ unip σ Y H, γ ∈ ratU σ Y.J ∧ coA σ Y.J H γ = fun j => inclR (F := F) (AF F) (α j) := by
   intro F E _ _ _ _ _ σ B n n₁ Y Y₁ H hcm hskew hP α

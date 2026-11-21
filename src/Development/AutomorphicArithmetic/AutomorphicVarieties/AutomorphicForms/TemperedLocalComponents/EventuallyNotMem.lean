@@ -41,4 +41,3 @@ private theorem sep_theta {K : Type} [Field K] [NumberField K] [IsCMField K] {n 
 
 end UpperTheory.V.Af
 
-open UpperTheory.V.Af in

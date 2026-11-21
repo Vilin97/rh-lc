@@ -36,7 +36,6 @@ def quotWedge (F : Submodule Ω E) {j : ℕ} (hj : j ≤ N) (b : Fin N → E) : 
 variable {y : (Σ k, ι k) → Ω} {W : ChartBundle ℤ (segreCoord y) N E} {Xo : Set ((Σ k, ι k) → ℂ)}
   {P : Ideal (MRing ι)} {n nc : ℕ} {Bd : Set ((Σ k, ι k) → ℂ)} {χ : Fin nc → SncChart P n Bd}
 
-open Classical in
 
 def gramAt (hm : HermMetric y W Xo χ) (b : Fin N → E) (z : (Σ k, ι k) → ℂ) :
     Matrix (Fin N) (Fin N) ℂ :=
@@ -94,7 +93,6 @@ def MuFrameAt.norm {H : HodgeData D} {z : (Σ k, ι k) → ℂ} (d : MuFrameAt H
   ‖valAt D.y d.u z‖ * (∏ k, ‖z ⟨k, d.c k⟩‖ ^ H.aMu k) *
     ∏ τ, Real.sqrt (quotNormSq D.j_le_N (gramAt (D.h τ) (d.b τ) z))
 
-open Classical in
 
 def muMetric (H : HodgeData D) (z : (Σ k, ι k) → ℂ) : ℝ :=
   if h : Nonempty (MuFrameAt H z) then h.some.norm else 0

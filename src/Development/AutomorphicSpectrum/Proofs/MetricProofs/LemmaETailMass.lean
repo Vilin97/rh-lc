@@ -15,7 +15,6 @@ public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PLogNormSecInte
 
 namespace GlobalTheory.CompanionTheory.Ar.Giv
 
-open GroundTheory.Heights₂.Heights.AnalyticLimit in
 
 theorem lemmaETailMass : GroundTheory.Heights₂.Heights.AnalyticLimit.LemmaETailMass.Statement :=
   LemmaETailMass.proof LemmaETrunc.proof LemmaETruncMass.proof

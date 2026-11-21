@@ -251,7 +251,6 @@ section Depth
 variable {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n N : ℕ} (hN : N = n + 1) {P : HeightOneSpectrum (𝓞 E)}
   (l : Lev (𝓞 E ⧸ P.asIdeal) K n)
 
-omit [StarRing E] in
 
 end Depth
 

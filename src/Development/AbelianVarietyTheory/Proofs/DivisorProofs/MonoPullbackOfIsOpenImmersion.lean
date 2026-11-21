@@ -52,7 +52,6 @@ variable {J : Type*} {T : J → Scheme.{0}} (a : ∀ i, T i ⟶ X) [∀ i, IsOpe
 
 variable {G : ∀ i, (T i).Modules} (v : ∀ i, G i ⟶ (Scheme.Modules.pullback (a i)).obj E)
 
-omit [∀ i, IsOpenImmersion (a i)] in
 
 end Cover
 

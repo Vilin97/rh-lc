@@ -183,7 +183,6 @@ theorem exists_of_stab (C : LatEmb F) (γ : latticeStab C.h C.e.range) :
   rw [C.form_eq, C.form_eq, hφ, hφ]
   exact congrArg (fun t => Algebra.trace ℚ E (C.xi * t)) hu
 
-open scoped Pointwise in
 
 theorem exists_of_aut (C : LatEmb F) (φ : autGrp (E := E) F.form) :
     ∃ γ : latticeStab C.h C.e.range, ∀ x,

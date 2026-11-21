@@ -228,7 +228,6 @@ end Chart
 
 end ChartHessianComparison
 
-open ChartHessianComparison in
 
 theorem ChartHessCompare.proof (hCmp : HermFormCompare.Statement) : ChartHessCompare.Statement := by
   intro e M N hM hN

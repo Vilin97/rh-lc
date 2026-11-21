@@ -81,10 +81,7 @@ variable {u : D.what₂.Word} {A : CF.AtTTied u} {P : ∀ i hi, CF.LvTied u A i 
 
 variable (T : CF.TilTied u A K (P D.R.m le_rfl))
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end Formalism.L2.Col

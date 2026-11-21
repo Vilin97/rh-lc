@@ -100,7 +100,6 @@ theorem tensorSub_const (Q : SubSystem k x Ω) {n : ℕ} (T : Finset (Fin n)) :
 
 end VeryAmpleHilbert
 
-open VeryAmpleHilbert in
 
 theorem VeryAmpleHilbert.proof (hS : VeryAmpleSnapper.Statement.{u, w}) : VeryAmpleHilbert.Statement.{u, w} := by
   intro k _ Ω _ _ N x e Nb hZ hN

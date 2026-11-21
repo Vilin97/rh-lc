@@ -30,7 +30,6 @@ def xiS (H : Sesq V) (α : V → ℂ) (vol : ℝ) (SA SB : Finset V) (Φ : V →
 def xiL (H : Sesq V) (α : V → ℂ) (vol : ℝ) (SX SA SB : Finset V) (Φ : V → ℂ) (e : V → ℂ) : V → ℂ :=
   fun z => ∑ x ∈ SX, α x * opU H x (xiS H α vol SA SB (fun s => Φ (s - x)) e) z
 
-open Classical in
 
 def indL (M : AddSubgroup V) (t : V) : ℂ := if t ∈ M then 1 else 0
 
@@ -124,7 +123,6 @@ def homO (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b)) : 
 def perO (AA0 : Submodule (𝓞 E) E) (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b)) : Submodule (𝓞 E) (HomE E a b) :=
   Submodule.span (𝓞 E) {z | ∃ r ∈ AA0, ∃ x ∈ homO N N', z = r • x}
 
-open Classical in
 
 def expS (SS : Finset (HeightOneSpectrum (𝓞 E))) (Q : HeightOneSpectrum (𝓞 E)) : ℤ :=
   if Q ∈ SS then 1 else if conjPrime₂ Q ∈ SS then -1 else 0

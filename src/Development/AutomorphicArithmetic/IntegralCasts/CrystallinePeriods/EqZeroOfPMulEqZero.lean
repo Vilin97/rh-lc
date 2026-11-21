@@ -216,7 +216,6 @@ theorem logTeich_mul (η η' : tateModule p R) : logTeich (η * η') = logTeich 
 @[simp] theorem logTeich_one : logTeich (1 : tateModule p R) = 0 :=
   (log_congr _ (map_one _) (map_one _)).trans (log_one _)
 
-variable (p R) in
 
 theorem logTeich_pow (η : tateModule p R) (m : ℕ) : logTeich (η ^ m) = m * logTeich η := by
   induction m with

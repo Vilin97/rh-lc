@@ -100,13 +100,9 @@ theorem dim_of (ρ : E →+* ℂ) :
     have := A.dim_neg ⟨conjEmb ρ, hc⟩
     rwa [conjugate_eq, conjEmb_conjEmb] at this
 
-include hU hσ in
 
-include hU hσ in
 
-include hU hσ in
 
-include hU hσ in
 
 end Letters
 
@@ -136,7 +132,6 @@ theorem index_lt_complementSignature_of_not_mem {ρ : E →+* ℂ} (h : ρ ∉ (
   have := a.2
   omega
 
-include hU in
 
 def wt (i : ReciprocityTheory.ChartRestriction.G.I2.Idx A.T.dim) : ℂ :=
   if h : i.1 ∈ (U.X k).Ψ then
@@ -147,7 +142,6 @@ def wt (i : ReciprocityTheory.ChartRestriction.G.I2.Idx A.T.dim) : ℂ :=
       yf A ⟨conjEmb i.1, (conj_mem_iff _).mpr h⟩
         ⟨(U.X k).p0 + i.2, by have := index_lt_complementSignature_of_not_mem hU A h i.2; have := (U.X k).p0_le; omega⟩
 
-include hU hσ in
 
 end Map
 

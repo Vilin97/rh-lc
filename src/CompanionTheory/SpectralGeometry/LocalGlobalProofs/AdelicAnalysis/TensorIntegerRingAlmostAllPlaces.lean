@@ -75,7 +75,6 @@ section Quad
 
 variable {R O : Type} [CommRing R] [CommRing O] (ι : R →+* O) (τ : O →+* O) (δ : O) (D : R)
 
-include ι in
 
 theorem finite_maxSpec [IsLocalRing R] (hsp : ∀ y : O, ∃ p q : R, y = ι p + ι q * δ) :
     Finite (MaximalSpectrum O) := by

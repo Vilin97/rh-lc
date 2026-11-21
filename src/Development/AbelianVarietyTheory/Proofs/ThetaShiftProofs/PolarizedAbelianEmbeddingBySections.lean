@@ -574,7 +574,6 @@ section Group
 
 variable {S : Scheme.{0}} (A : Over S) [GrpObj A] {L : LB A.left} {N : ℕ}
 
-omit [GrpObj A] in
 
 theorem exists_isPullback_restrict {U : S.Opens} {φ : X' ⟶ A.left} {f' : X' ⟶ Y'}
     {g : Y' ⟶ U.toScheme} (sq : IsPullback φ f' A.hom (g ≫ U.ι)) :
@@ -675,7 +674,6 @@ theorem translate_powOver_LPow (hL : L.IsLB) (N : ℕ) {U : S.Opens} (T : Over S
   have : IsIso h := sq.isIso_fst_of_isIso
   exact exists_equiv_secScal hL (formEq_const e (sum_one_fin N))
 
-omit [GrpObj A] in
 
 end Group
 

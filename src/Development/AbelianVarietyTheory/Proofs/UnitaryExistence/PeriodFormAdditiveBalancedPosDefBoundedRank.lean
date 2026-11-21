@@ -73,7 +73,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open Formalism.MainNotions.DIV.Cons GlobalTheory.ToricRank
 open scoped CategoryTheory.Obj
 
-open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem finrank_le_of_lieMult_valued {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     {D : DegData R (maximalIdeal R)} {P : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]

@@ -155,7 +155,6 @@ theorem RealDat.preliminary_zero_of_model_update {R : RealDat D A Ks} {F : Face 
   exact ⟨lev, red_R, red_L, levels, record, ⟨tie, Sb, roots, pl_onto, degR, degL, muVal, etaVal⟩, inf, vpos, cX, cV,
     prX, order, std⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem models_args (hFD : MeasFDExists D) (hLD : MeasLevDefExists D) (hFund : FundDomExists D) (hSp : SpOK D)
     (hLev : LevOK D) (hHC : HCAll D) (hSch : SchurAll D) (hPet : PetAll D) (hSm : SmAll D) (hDim : DimOK D)
@@ -297,7 +296,6 @@ theorem weak_theta_props_of_scalar_update (h : R.IsThPW) (kap lam) : (R.upd6 kap
 
 end RealDat
 
-set_option maxHeartbeats 2000000 in
 
 theorem chainW_exists (Q : RealDat D A Ks → Prop)
     (hQ3 : ∀ R ωY ωX vac vacX vY vX ItY ItX ioY ioX Th, Q R → Q (R.upd3 ωY ωX vac vacX vY vX ItY ItX ioY ioX Th))
@@ -314,7 +312,6 @@ theorem chainW_exists (Q : RealDat D A Ks → Prop)
     ⟨fun t k hk => (hK.1.1 t k hk).datum, fun t => (hK.1.2 t).datum, hK.2.1, hK.2.2.1, hK.2.2.2.1,
       hK.2.2.2.2, fun k _ => hY k, hX, fun t k _ => hioY t k, hioX, hTh⟩, hK.1, hQ3 _ _ _ _ _ _ _ _ _ _ _ _ hq⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem thPW_exists (Q : RealDat D A Ks → Prop) (hQ4 : ∀ R ωP vacP vP ioP thF thG, Q R → Q (R.upd4 ωP vacP vP ioP thF thG))
     (R : RealDat D A Ks) (h : R.Pre1 F) (hc : R.IsChainW) (hf : R.FullY) (hK : R.KerP) (hq : Q R) :

@@ -215,7 +215,6 @@ theorem supp_glue {R : Type} [CommRing R] {n : Type} [Fintype n] [DecidableEq n]
   generalize (1 : Matrix n n R) i j = o
   linear_combination (1 - e') * k1 + (1 - e) * k2 + (X i j + z - 2 * o) * h0 - o * h1 - o * h2
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_glue (V : HSp D) {e : AE D} (h0 : e * cA D e = 0) (hee : e * e = e) {X Y : Mx D V.rank V.rank} (hX : e • X = X)
     (hY : e • Y = Y) (hYX : HMul.hMul Y X = e • (1 : Mx D V.rank V.rank)) :
@@ -241,7 +240,6 @@ theorem exists_glue (V : HSp D) {e : AE D} (h0 : e * cA D e = 0) (hee : e * e = 
     have := map_glue (piAt w) h0 hw hY' X (gA V) (giA V)
     exact this
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_suppAt_loc_eq : ∀ {D : D7} (V : HSp D) (P : Finset (Formalism.L2.DIV.Pl D.host.E)) (e : AE D), IsIdemSum e P → ∀ (g : ∀ w : P, GL (Fin V.rank) (Kw w.1)), ∃ r : GA D V, SuppAt e V r ∧ ∀ w : P, GlobalTheory.StdFrames.loc w.1 (Lev.finE V r) = g w := by
   intro D V P e he g
@@ -658,7 +656,6 @@ end GlobalTheory.RowRep
 namespace GlobalTheory.RowRep
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-set_option maxHeartbeats 1600000 in
 
 theorem rep_at : Big fun ch => ∀ s, RepAt ch s := by
   refine ⟨0, fun _ _ _ => ⟨0, fun D large₂ _ _ Γ _ _ Pl0 T A Ks _ _ _ R F hS ch _ _ => ?_⟩⟩

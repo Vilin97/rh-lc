@@ -73,7 +73,6 @@ private theorem mem_KO_iff (g : GL (Fin n) k) :
     · rw [map_mul, map_one]; exact g.mul_inv
     · rw [map_mul, map_one]; exact g.inv_mul
 
-variable (C) in
 
 private def Good (M : Matrix (Fin n) (Fin n) k) : Prop :=
   (∀ a c, valuation k (M a c) ≤ 1) ∧ (∀ a c, c < a → valuation k (M a c) < 1) ∧

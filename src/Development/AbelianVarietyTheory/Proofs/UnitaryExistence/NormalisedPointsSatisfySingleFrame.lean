@@ -87,7 +87,6 @@ theorem period_bas {g : ℕ} {L : Type} [AddCommGroup L] (bas : (Fin g ⊕ Fin g
     simp only [map_sum, map_zsmul, map_add (f := _), Matrix.mulVec_add, Matrix.mulVec_sum, Matrix.mulVec_smul,
     Fintype.sum_sum_type, (hn _).1, (hn _).2]
 
-open MonoidalCategory CartesianMonoidalCategory MonObj in
 
 theorem ex_add_period {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {D : Datum H} {l : Level H} {Xo : Moduli D l} {σ : KA l →+* ℂ} {g : ℕ} {ty : Fin g → (E →+* ℂ)}
@@ -95,7 +94,6 @@ theorem ex_add_period {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
     (a : (F.Di k).La) (z : Fin g → ℂ) : F.ex k P (z + P a) = F.ex k P z := by
   rw [F.ex_add k _ hP, (F.ex_ker k _ hP _).2 ⟨a, rfl⟩, _root_.mul_one]
 
-set_option maxHeartbeats 1600000 in
 
 theorem frameOK_of_isNormUn : Out.SecTwistSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (g : ℕ) (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => relab c σ (e j).1)) (r : ℕ) (M : ModelsOf F r) (k : Fin F.n) (T : ThetaData e F M k) (un : (M.X k).dom → FrPt Xo c (CAt σ)), GoodEmb c σ → ModelBase M → NegXi M → IsNormUn T un → ∀ x, FrameOK e F M k x (un x) := by
   intro _ E _ _ _ H Dw l Xo c σ g e F r M k T un hG hM hX hN x

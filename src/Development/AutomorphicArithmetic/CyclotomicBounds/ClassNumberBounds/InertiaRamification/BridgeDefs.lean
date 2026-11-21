@@ -18,7 +18,6 @@ noncomputable def fieldChars (N : ℕ) [NeZero N] {K : Type*} [Field K] [NumberF
     Subgroup (DirichletCharacter ℂ N) :=
   annihilator ℂ (fieldUnits N E : Set (ZMod N)ˣ)
 
-open Classical in
 
 noncomputable def rootWeight (l m : ℕ) : ℚ :=
   if m ≠ 1 ∧ ∃ s, m = l ^ s then 1 / (Nat.totient m : ℚ) else 0

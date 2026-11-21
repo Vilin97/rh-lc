@@ -20,7 +20,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} [NeZero n] {W : LocWach PD LL O v n}
     [Fintype (K →ₐ[Qp] LL)]
 
-variable (W) in
 
 def EEl (i : ZMod n) : AddSubgroup W.EE where
   carrier := {ε | (letE i : LetA O n) • ε = ε ∧ ∀ δ ∈ W.DelF, W.γE δ ε = ε}
@@ -35,7 +34,6 @@ def EEl (i : ZMod n) : AddSubgroup W.EE where
 def lc {T : LocLat G Qp LL O} {ι : Type} [Fintype ι] (b : ι → W.DD T) (c : ι → W.EE) : W.DD T :=
   ∑ j, c j • b j
 
-variable (W) in
 
 def LBasis (T : LocLat G Qp LL O) (i : ZMod n) {ι : Type} [Fintype ι] (b : ι → W.DD T) : Prop :=
   (∀ c : ι → W.EE, (∀ j, c j ∈ EEl W i) → lc b c ∈ DDl W T i) ∧
@@ -59,7 +57,6 @@ attribute [instance] CoeffData.acg CoeffData.mod
 
 def CoeffStep (hR : Ring9 W) : Prop := Nonempty (CoeffData hR)
 
-variable (W) in
 
 def SplitStep : Prop :=
   ∀ (T₁ T₂ : LocLat G Qp LL O) (F : LatHom T₁.L T₂.L), CrysLat PD T₁ → CrysLat PD T₂ → F.Onto →
@@ -67,7 +64,6 @@ def SplitStep : Prop :=
       LBasis W T₁ i b₁ ∧ LBasis W T₂ i b₂ ∧ (∀ j, W.map F (b₁ (Sum.inl j)) = b₂ j) ∧
         ∀ j, W.map F (b₁ (Sum.inr j)) = 0
 
-variable (W) in
 
 def UnitStep (e : W.DD W.one) : Prop := ∀ i : ZMod n, LBasis W W.one i (fun _ : Unit => e)
 

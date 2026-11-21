@@ -37,12 +37,10 @@ theorem comb_iff_symm (z : Fin g → R) (w : epsR R ⟶ G) :
   have e : B = fun i => (Lie.basis a hB i).hom := funext fun i => (Lie.hom_basis hB i).symm
   rw [Module.Basis.equivFun_symm_apply, ← Lie.isLieComb_iff, ← e]
 
-include a in
 
 theorem exists_comb (z : Fin g → R) : ∃ w, IsTangent w ∧ IsLieComb z B w :=
   ⟨_, Lie.isTangent _, (comb_iff_symm a hB z _).2 rfl⟩
 
-include a in
 
 theorem comb_coord {m : ℕ} {U : Fin m → Fin g → R} {u : Fin m → (epsR R ⟶ G)} (hU : ∀ k, IsLieComb (U k) B (u k))
     {z : Fin g → R} {w : epsR R ⟶ G} (hz : IsLieComb z B w) (cf : Fin m → R) :
@@ -208,7 +206,6 @@ end Push
 
 end GlobalTheory.ArcQ.DatumBasis
 
-open GlobalTheory.ArcQ.DatumBasis in
 
 theorem GlobalTheory.ArcQ.arcDatum_arcLieBasis : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (K₁ : Type) [Field K₁] [Algebra c.F K₁] (d : ArcDatum Xo c K₁), (∀ τ k, GtTanR (d.e τ k)) → ArcLieBasis d.W d.e := by
   intro hL hL2 E _ _ _ H Dw l Xo c K₁ _ _ d htan

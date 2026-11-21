@@ -85,7 +85,6 @@ def wave (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (Λ : AddSubgroup (WO S 
     WO S T → ℂ :=
   fun t => ψ (symplO S T t y) * halfInd e Λ (t + x)
 
-open Classical in
 
 def prodHalf {S T : HSp D} {ι : Type} (s : Finset ι) (a : ι → AE D) (Φ : ι → WO S T → ℂ) : WO S T → ℂ :=
   fun t => if IsHalf (∑ i ∈ s, a i) t then ∏ i ∈ s, Φ i (a i • t) else 0
@@ -128,7 +127,6 @@ theorem isFam_update {S T : HSp D} {ι : Type} [DecidableEq ι] [DecidableEq (Pl
   · rw [Function.update_of_ne (hp j hj)]
     exact hx.2 p hp
 
-set_option maxHeartbeats 2000000 in
 
 theorem isPure_of_facts (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D)
     (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)

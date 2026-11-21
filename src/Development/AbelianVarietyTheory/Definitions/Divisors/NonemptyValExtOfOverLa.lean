@@ -158,7 +158,6 @@ theorem sum_gap_tail (g : ℕ → ℕ) (hg : Antitone g) (m i : ℕ) (hi : i < m
   refine Finset.sum_congr rfl fun j hj => ?_
   rw [if_pos (show j + 1 < k + 1 by have := Finset.mem_range.1 hj; omega)]
 
-open Classical in
 
 theorem sum_gap_row {a : (E →+* ℂ) × ℕ → ℕ} (ha : ∀ τ, Antitone fun i => a (τ, i)) (τ : E →+* ℂ)
     (i : Fin (Dw.mult τ)) :
@@ -289,7 +288,6 @@ theorem le_nuFac {f : Lt1 Dw} {k : ℕ} {r : EReal}
     (h : ∀ (Ch : IntegralChartA3 Xo c T io y) (X : ValExt T p), r ≤ nuFacC Ch X f k) : r ≤ nuFac p y f k :=
   le_iInf₂ h
 
-omit [StarRing (𝓞 E)] in
 
 theorem not_isUnit_of_overLa (la : PointsOfFlagModel.abelian₂ p c) {e : ℕ} (ho : OverLa la.1 T.V io e) : ¬ IsUnit (p : T.V) := by
   intro hu
@@ -313,7 +311,6 @@ theorem not_isUnit_of_overLa (la : PointsOfFlagModel.abelian₂ p c) {e : ℕ} (
   have h6 : (0 : ℤ) < e := by exact_mod_cast ho.1
   nlinarith [mul_pos h6 h2]
 
-omit [StarRing (𝓞 E)] in
 
 theorem nonempty_valExt_of_overLa (la : PointsOfFlagModel.abelian₂ p c) {e : ℕ} (ho : OverLa la.1 T.V io e) : Nonempty (ValExt T p) :=
   nonempty_valExt T p (not_isUnit_of_overLa la ho)
@@ -417,8 +414,6 @@ def IsGen (Y : Model Xo c β) (y : IntFr Xo c T io) : Prop :=
 def GenEx (Y : Model Xo c β) (Z : Comp Xo c) (la : HeightOneSpectrum (𝓞 c.F)) : Prop :=
   ∃ (T : CDVR) (io : c.F →+* T.Fr) (e : ℕ) (_ : OverLa la T.V io e) (y : IntFr Xo c T io), OnComp Z y ∧ IsGen Y y
 
-attribute [local instance] Over.cartesianMonoidalCategory in
-open MonObj in
 
 theorem isTanAtG_map {X0 : Scheme.{0}} (t : SAB H X0) {S S' : Type} [CommRing S] [CommRing S'] (φ : S →+* S')
     {x : Sp S ⟶ X0} {v : Sp (DualNumber S) ⟶ t.G.left} (hv : IsTanAtG t x v) :

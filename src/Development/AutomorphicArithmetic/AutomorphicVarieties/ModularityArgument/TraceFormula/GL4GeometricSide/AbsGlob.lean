@@ -140,7 +140,6 @@ private theorem trOn_self {f : Module.End ℂ U} {g : Module.End ℂ F}
   ext x
   exact (h x).symm
 
-variable (F) in
 
 private def resAlg (B : Subalgebra ℂ (Module.End ℂ U)) : Subalgebra ℂ (Module.End ℂ F) where
   carrier := {g | ∃ b ∈ B, ∀ x, (g x : U) = b x}

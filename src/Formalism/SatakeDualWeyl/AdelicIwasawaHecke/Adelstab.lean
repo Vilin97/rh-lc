@@ -17,7 +17,6 @@ section Trace
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F E) in
 
 def adelstabT : E ⊗[F] FiniteAdeleRing (𝓞 F) F →ₗ[F] FiniteAdeleRing (𝓞 F) F :=
   (TensorProduct.lid F _).toLinearMap ∘ₗ (Algebra.trace F E).rTensor _
@@ -101,7 +100,6 @@ theorem adelstab_algebraMap_ne_zero (d : 𝓞 F) (hd : d ≠ 0) : algebraMap (�
      exact IsFractionRing.injective (𝓞 F) F (h.trans (map_zero _).symm))
   | simpa using h
 
-variable (F E) in
 
 def adelstabLam (G : GL n (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) (L : Submodule 𝒮 (n → 𝒜)) :
     Submodule (𝓞 E) (n → E) where

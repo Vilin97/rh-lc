@@ -36,4 +36,3 @@ def IsAdm (S : Set (BdR l)) {d : ℕ} (G : Subgroup (PadicAlgCl l ≃ₐ[ℚ_[l]
 
 end DeRhamPotentiallySemistable.DRPst
 
-open Formalism.Per6 GroundTheory.PAdicHodge DeRhamPotentiallySemistable.DRPst in

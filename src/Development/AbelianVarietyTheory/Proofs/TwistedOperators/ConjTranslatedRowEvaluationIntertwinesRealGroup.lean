@@ -71,7 +71,6 @@ theorem memLp_mul_right (B : RowsAut) (f : B.I.GA → ℂ) (hf : ∀ γ ∈ B.I.
   have h := rightReg_ae B f hf (hm.toLp f) hm.coeFn_toLp g
   exact (Lp.memLp (B.R g (hm.toLp f))).ae_eq h
 
-open Classical in
 
 theorem mult_props {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar}
     (θ : D.what₂.Tau → (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
@@ -109,7 +108,6 @@ end GlobalTheory.RowEvalHH
 
 namespace GlobalTheory.RowEvalHH
 
-open Classical in
 
 theorem star_dite_mul_right (B : RowsAut) (f f' : B.I.GA → ℂ) (G : B.I.GA)
     (hf : ∀ γ ∈ B.I.GFset, ∀ y, f (γ * y) = f y) (key : ∀ x, f' x = f (x * G)) :

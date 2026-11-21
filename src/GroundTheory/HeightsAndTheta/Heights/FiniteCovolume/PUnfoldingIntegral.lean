@@ -35,7 +35,6 @@ theorem two_le_finrank_of_isotropic [FiniteDimensional E W] (h : HermitianForm F
   obtain ⟨c, rfl⟩ := hspan y
   rw [LinearMap.zero_apply, map_smul, hiso, smul_zero]
 
-omit [DecidableEq ι] in
 
 theorem re_form_smul (P : Matrix ι ι ℂ) (b : ℂ) (y : ι → ℂ) :
     (star (b • y) ⬝ᵥ (P *ᵥ (b • y))).re = (star y ⬝ᵥ (P *ᵥ y)).re * ‖b‖ ^ 2 := by

@@ -261,7 +261,6 @@ theorem exists_intLat [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower
         refine Submodule.smul_mem _ _ ?_
         exact Submodule.mem_one.2 ⟨r, hr⟩
 
-omit [NumberField K] in
 
 theorem exists_basis_ext {n : ℕ} (h : V →ₗ⋆[K] V →ₗ[K] K) (β : K) (b : Module.Basis (Fin n) K V) :
     ∃ (j : ℕ) (c : Module.Basis (Fin j) K (V × K)), (Matrix.of fun i l => ext h β (c i) (c l)).det =

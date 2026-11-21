@@ -90,7 +90,6 @@ theorem denseRange_toL2cusp : DenseRange (toL2cusp μ) := by
   rw [coe_toL2cusp]
   exact l2DiscreteQuotient_ext_iff_lift_ae_eq.2 (h2.lift_toL2_ae_eq.trans e.symm)
 
-variable {μ ν} in
 
 def toCusp (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν)) :
     cuspidalL2Functions μ →ₗ[ℂ] cuspidalL2 ν where

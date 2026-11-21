@@ -6,7 +6,6 @@ public import Mathlib
 
 namespace GlobalTheory
 
-open Topology Filter in
 
 theorem exists_subfield_valuation_closure :
     ∀ (U : Type) [Field U] (v : Valuation U (WithZero (Multiplicative ℤ))) (S : Subfield U),

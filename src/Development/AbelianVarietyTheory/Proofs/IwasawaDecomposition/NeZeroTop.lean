@@ -55,11 +55,9 @@ section Ad
 variable {F E K : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] [Field K] {n : ℕ}
   {Q : Finset (HeightOneSpectrum (𝓞 E))}
 
-variable (F) in
 
 abbrev rhoP (P : HeightOneSpectrum (𝓞 E)) : GL (Fin n) (AfE F E) →* GL (Fin n) (P.adicCompletion E) := bc (adAt F P)
 
-variable (F) in
 
 def rhoT (P : HeightOneSpectrum (𝓞 E)) (t : GL (Fin n) (AfE F E)) : GL (Fin n) (AfE F E) →* GL (Fin n) (P.adicCompletion E) :=
   (rhoP F P).comp (MulAut.conj t⁻¹).toMonoidHom

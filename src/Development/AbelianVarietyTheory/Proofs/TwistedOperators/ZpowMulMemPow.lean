@@ -115,7 +115,6 @@ theorem N_mulVec {p : ℕ} {u : GL (n ⊕ Fin c) k} (hu : u ∈ N k n c p) (y : 
   · exact congrArg (· * y s) (hu' r s hs)
   · simp [h s hs]
 
-omit [ValuativeRel k] in
 
 theorem N_fix {u : GL (n ⊕ Fin c) k} (hu : u ∈ N k n c 1) (y : n ⊕ Fin c → k)
     (h : ∀ l : Fin c, 0 < l.val → y (.inr l) = 0) : u.val *ᵥ y = y := by

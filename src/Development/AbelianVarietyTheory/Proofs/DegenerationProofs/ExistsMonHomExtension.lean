@@ -82,7 +82,6 @@ theorem hom_ext_points {X Y : Over (Sp k)}
   have h3 : p.left (IsLocalRing.closedPoint k) = x := hp _
   exact (congrArg f.left h3).symm.trans (h2.trans (congrArg g.left h3))
 
-omit [IsAlgClosed k] in
 
 theorem exists_lift {U H Z : Over (Sp k)} (j : U ⟶ H) [IsOpenImmersion j.left] (x : Z ⟶ H)
     (hx : ∀ p, x.left p ∈ Set.range j.left) : ∃ y : Z ⟶ U, y ≫ j = x := by
@@ -117,7 +116,6 @@ theorem exists_generic {U H : Over (Sp k)} [LocallyOfFiniteType H.hom] [Irreduci
   obtain ⟨u, hu⟩ := exists_point_mem H W h1.isLocallyClosed h2
   exact ⟨u, fun φ hφ => exists_lift j _ fun p => h3 φ hφ _ (hu p)⟩
 
-omit [IsAlgClosed k] in
 
 theorem point_comp_mul {X G : Over (Sp k)} [GrpObj G] (x : 𝟙_ (Over (Sp k)) ⟶ X)
     (a : 𝟙_ (Over (Sp k)) ⟶ G) (g : X ⟶ G) : x ≫ ((toUnit X ≫ a) * g) = a * (x ≫ g) := by

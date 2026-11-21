@@ -16,8 +16,6 @@ variable {O F L : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [F
   [Algebra.IsSeparable F L] [Algebra O L] [IsScalarTower O F L]
   [IsDedekindDomain (integralClosure O L)] [IsFractionRing (integralClosure O L) L]
 
-variable (O F) in
-include F in
 
 theorem addv_eq_of_mem {w : AddValuation L (WithTop ℤ)} (hw : w ∈ PlacesOver O L) :
     ∃ v : HeightOneSpectrum (integralClosure O L), w = addv L v := by
@@ -99,7 +97,6 @@ theorem addv_mem (v : HeightOneSpectrum (integralClosure O L)) : addv L v ∈ Pl
           have h2 : (0 : ℤ) < -WithZero.log (v.valuation L (algebraMap O L x)) := by omega
           exact_mod_cast h2
 
-omit [IsFractionRing O F] [FiniteDimensional F L] [Algebra.IsSeparable F L] [IsScalarTower O F L] in
 
 theorem addv_nonneg_iff (v : HeightOneSpectrum (integralClosure O L)) {y : L} (hy : y ≠ 0) :
     0 ≤ addv L v y ↔ v.valuation L y ≤ 1 := by
@@ -148,8 +145,6 @@ theorem mem_integralClosure_iff (y : L) :
       rw [← hb]
       exact b.2
 
-variable (O F) in
-include F in
 
 theorem exists_val_eq (n : AddValuation L (WithTop ℤ) → ℤ) :
     ∃ g : L, g ≠ 0 ∧ ∀ w ∈ PlacesOver O L, w g = n w := by

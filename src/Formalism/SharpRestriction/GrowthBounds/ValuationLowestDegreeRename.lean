@@ -96,7 +96,6 @@ def ColumnFamilyLowerSet (_D : Formalism.BasicNotions.D7) : Prop :=
     stCount (m + 1) ν =
       ∑ μ ∈ Fintype.piFinset (fun i : Fin m => Finset.Icc (ν i.succ) (ν i.castSucc)), stCount m μ
 
-open Classical in
 
 def GenericProjectionCriterion (_D : Formalism.BasicNotions.D7) : Prop :=
   ∀ (m : ℕ) (ν : Fin (m + 1) → ℤ) (b : ℕ), Dominant ν →

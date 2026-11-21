@@ -31,6 +31,4 @@ theorem GlobalTheory.BaseChain.thetaKO_sum_smul_act {D : D7} {S T : HSp D} {ι :
   congr 1
   rw [← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, mul_one]
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in

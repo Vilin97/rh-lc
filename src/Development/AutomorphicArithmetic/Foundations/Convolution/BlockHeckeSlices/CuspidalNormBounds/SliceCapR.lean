@@ -96,7 +96,6 @@ private theorem exists_form (hr : 0 < r) {Φ ψ : Sm E r} (hΦ : Umg Φ) (hψ : 
   · refine Eq.trans ?_ (integral_const_mul (starRingEnd ℂ c) _)
     simp only [pr, onQ, map_smul, LinearMap.smul_apply, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul, mul_left_comm]
 
-variable (E r) in
 
 private noncomputable def zL : Lie E r := ((r * Module.finrank ℚ E : ℕ) : ℝ)⁻¹ • oneL E r
 

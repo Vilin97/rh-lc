@@ -42,7 +42,6 @@ theorem exists_cyclotomic_root (q : ℕ) [NeZero q] (A : Type) [CommRing A] (hA 
 
 end GlobalTheory.EtC.CyclotomicGlobalSections
 
-open GlobalTheory.EtC.ConnectedGlobalSections in
 
 theorem GlobalTheory.EtC.tateTwistCohomology_zero_strictlyHenselian_equiv : ∀ (q : ℕ) [NeZero q] (A : Type) [CommRing A], SH A → IsUnit (q : A) →
     ∀ j : ℤ, Nonempty (Ht q (sp A) 0 j ≃+ ZMod q) := by

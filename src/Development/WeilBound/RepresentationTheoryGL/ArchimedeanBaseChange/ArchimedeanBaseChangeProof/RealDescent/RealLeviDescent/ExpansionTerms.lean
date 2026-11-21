@@ -21,7 +21,6 @@ def spinSq (ν : Fin n → ℝ) : ℝ := nsq (domC (ν - rhoV n) + rhoV n)
 
 def LSq (lam : Fin n → ℤ) : ℝ := nsq fun a => 2 * ((lam a : ℝ) + rhoV n a)
 
-open Classical in
 
 def topTypes (lam : Fin n → ℤ) : Finset (Fin n → ℝ) :=
   (((univ : Finset (Finset (Fin n × Fin n))).filter fun B => ∀ p ∈ B, p.1 < p.2).image fun B =>

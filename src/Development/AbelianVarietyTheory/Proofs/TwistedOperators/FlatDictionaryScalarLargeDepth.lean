@@ -93,7 +93,6 @@ section Grid0
 
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts}
 
-variable (G : GridData L sc) in
 
 def grid0 (w : Pl D.host.E) : Grid (Kw w) where
   m := D.R.m
@@ -104,15 +103,12 @@ def grid0 (w : Pl D.host.E) : Grid (Kw w) where
   chi i := (G.ch.chiH i).loc w
   eta := L.C.eta.loc w
 
-variable (G : GridData L sc) in
-open Classical in
 
 def eps0 (w : Pl D.host.E) : (grid0 G w).VertexGroup :=
   onColumn (G := grid0 G w) fun j => if j ∈ idx D then GlobalTheory.SplitFlip.diagGL fun a =>
     if Odd j ∧ topRank (grid0 G w) j + (D.R.m - 1 - j) / 2 ≤ a.1 then Units.map (Int.castRingHom (Kw w)).toMonoidHom (-1) else 1
     else 1
 
-variable (G : GridData L sc) in
 
 def stair0 (w : Pl D.host.E) : (grid0 G w).VertexGroup :=
   onColumn (G := grid0 G w) fun j => if j + 2 ≤ D.R.m then stair (grid0 G w) (unifAt w) (cosExp G w) j else 1
@@ -140,7 +136,6 @@ theorem elt_stair (G : GridData L sc) (t : T) (w : Pl D.host.E)
 
 end Grid0
 
-open Classical in
 
 theorem scal : Big fun ch => ScalP ch := by
   refine ⟨0, fun ε CF _ => ⟨0, fun D large₂ _ _ Γ _ _ Pl0 T A Ks _ _ _ R F s ch hch _ => ?_⟩⟩

@@ -157,6 +157,5 @@ open Formalism.HermitianLattices.Ext.L3 Formalism.L2.SG.Pf.Cnt Formalism.L2.SG.P
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Formalism.L2.SG.Pf

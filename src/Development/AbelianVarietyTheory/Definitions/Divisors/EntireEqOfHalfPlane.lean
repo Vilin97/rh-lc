@@ -52,7 +52,6 @@ abbrev TrivOnF (χ : HChar E) : Prop := χ.TrivOn (maximalRealSubfield E)
 
 def hatF : Subring (Af E) := (((maximalRealSubfield E).toSubring).map (algebraMap E (Af E))).topologicalClosure
 
-open Classical in
 
 def eulerFactor (χ : HChar E) (s : ℂ) (v : HeightOneSpectrum (𝓞 E)) : ℂ :=
   if χ.UnrAt v then (1 - (χ.val v : ℂ) * ((Ideal.absNorm v.asIdeal : ℕ) : ℂ) ^ (-s))⁻¹ else 1
@@ -114,7 +113,6 @@ def latDisc (Λ : PeriodPair) : ℂ := Λ.g₂ ^ 3 - 27 * Λ.g₃ ^ 2
 def beta (E : Type) [Field E] [NumberField E] (d s : ℕ) (κ : I → ℕ) (Λ : PeriodPair) (T : ℂ) : ℂ :=
   ((C0 E d (2 * s) κ : ℂ) * T) ^ 12 / latDisc Λ ^ Formalism.PairingDivisionLocalBalance.wtM (2 * s) κ
 
-open Classical in
 
 theorem single_apply (v : HeightOneSpectrum (𝓞 E)) (x : (v.adicCompletion E)ˣ) (w : HeightOneSpectrum (𝓞 E)) :
     (single v x : Af E) w = Function.update (fun w : HeightOneSpectrum (𝓞 E) => (1 : w.adicCompletion E)) v x w := rfl

@@ -41,7 +41,6 @@ theorem linearIndependent_of_isUnit_gram {F E : Type} [Field F] [Field E] [Algeb
   rw [Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ h, Matrix.one_mulVec, Matrix.mulVec_zero] at h1
   exact fun i => congrFun h1 i
 
-open Classical in
 
 theorem isFibreFamily_restrict {V X Y : Type} [TopologicalSpace V] [MeasurableSpace V] [TopologicalSpace X]
     [MeasurableSpace X] (μ : Measure V) (f : V → Y) (ι : X → Y) (U W : Set V) (ν : Measure X)

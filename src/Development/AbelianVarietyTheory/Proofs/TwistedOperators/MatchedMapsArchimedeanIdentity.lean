@@ -36,7 +36,6 @@ theorem mem_of_isExp {V : Type} [AddCommGroup V] [Module ℂ V] {L U : Module.En
   rw [h0] at hs
   exact hl (hs.unique hasSum_zero)
 
-open scoped Classical in
 
 end GlobalTheory.KStableLie
 

@@ -50,9 +50,7 @@ variable {F : Type} [Field F] [NumberField F] {Y : Var F}
 
 def qDiv {C : CxSt F} (A : Adl C Y) : ℚ ⊗[ℤ] Y.Dv := ((A.n : ℕ) : ℚ)⁻¹ ⊗ₜ A.D
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
 def curvMet {σ : F →+* ℂ} {Δ : Y.Dv} (m : Var.Met Y σ Δ) : ChartForm Y.str σ Y.dim :=
   fun c y => ddcForm (m.wt (Var.eqn Δ y)) c y
@@ -100,7 +98,6 @@ variable {T : Type} {N : ℕ}
 
 def varpi (j : ℕ) (i : Fin N) : ℚ := if (i : ℕ) < j then 0 else -1
 
-open Classical in
 
 def fund (τ : T) (i : Fin N) : T → Fin N → ℝ := fun τ' a => if τ' = τ ∧ a ≤ i then 1 else 0
 
@@ -120,7 +117,6 @@ def bdPull (k : s.Comp) : (Φ.C k).Y.Dv :=
   pullDiv s.T.BD ((Φ.C k).π ≫ genι s.T.Z) fun h => CartierDiv.genericPoint_notMem_supp (Φ.C k).bd
     (((Φ.C k).bd_supp _).2 ((mem_support_BD_iff Φ k _).1 h))
 
-variable (S) in
 
 abbrev rootExp (x : DV.Rt D.what₂.Tau N) : Letter S.Dw → ℤ := rootEx S.Dw (DV.tauEmb D x.1) x.2
 
@@ -132,7 +128,6 @@ abbrev RefMets : Type :=
 
 def offBd (k : s.Comp) (σ : D.what₂.LL →+* ℂ) : Set (Pts (Φ.C k).Y σ) := {y | (Φ.C k).π (under y) ∉ genBd s.T.Z}
 
-open Classical in
 
 def extBd {k : s.Comp} {σ : D.what₂.LL →+* ℂ} (f : Pts (Φ.C k).Y σ → ℝ) (y : Pts (Φ.C k).Y σ) : ℝ :=
   if y ∈ offBd Φ k σ then f y else limsup f (𝓝[offBd Φ k σ] y)
@@ -150,12 +145,10 @@ def CommonConst (om : ∀ k σ, ChartForm (Φ.C k).Y.str σ (Φ.C k).Y.dim) (E :
   0 ≤ a ∧ 0 ≤ K ∧ 0 < δ ∧ ∀ k σ τ (i : Fin N), (i : ℕ) + 1 < N →
     IsRegConst (om k σ) (thW h0 k σ (fund τ i)) (rho (om k σ) (E k σ) (phW hm h0 k σ (fund τ i))) a K δ
 
-variable (s) in
 
 def dirOf (b : ℕ) (η : ℚ) (μ : Fin N → ℤ) : D.what₂.Tau → Fin N → ℚ :=
   fun _ i => (2 * b * s.T.m0 : ℕ) * varpi j i + η * μ i
 
-variable (s Φ) in
 
 structure PolDat : Type where
 
@@ -227,7 +220,6 @@ end PolDat
 
 variable {hm h0}
 
-open Classical in
 
 def mbarOf (P : PolDat s Φ hm h0) (B : ℝ) (u : D.what₂.Tau → Fin N → ℝ) (r : ℚ) (k : s.Comp) :
     Adl (cxSt D.what₂.LL) (Φ.C k).Y :=

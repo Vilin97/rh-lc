@@ -28,7 +28,6 @@ theorem gOf_place (w : InfinitePlace D.host.E) :
   congr 1
   exact (Formalism.MainNotions.BridgeLemma.m_eq D).symm
 
-include e in
 
 theorem card_places : Fintype.card (InfinitePlace D.host.E) = D.R.f := by
   rw [Fintype.card_congr e]; exact Formalism.MainNotions.BridgeLemma.szf_card_Tau D
@@ -287,7 +286,6 @@ theorem sizesAt_of {large₂ : SizeData₂ D} {C0 C' Cl Cg cb Cu CT CA Cn : ℝ}
       ((d9 u).2 : _ ≡ 1 [MOD _]).trans ((d9 u').2 : _ ≡ 1 [MOD _]).symm
     exact e1
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 section Row
 

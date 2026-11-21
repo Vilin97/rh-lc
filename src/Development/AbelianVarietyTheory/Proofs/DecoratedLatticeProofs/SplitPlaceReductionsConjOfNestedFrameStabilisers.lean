@@ -192,7 +192,6 @@ theorem map_frGL {v : FinPl D} (φ : SplitProj D v) {n : ℕ}
   simp only [map_mul, map_inv]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem conj_int {V : HSp D} {β₁ β₂ : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)}
     {N : ℕ} (hB : Formalism.IndefR.Lev.IsBaseFrame V β₁ Λ N) {e : Formalism.L2.Theta.AE D} {PP : Formalism.L2.DIV.Pl D.host.E}
@@ -229,7 +228,6 @@ namespace GlobalTheory.NestedStab
 
 open GlobalTheory.IndefiniteRowSideFullHecke.RestrictedTensorSplitting (FinPl SplitProj IsProjAt IsIdemOf rdA grpCo frCo)
 
-set_option maxHeartbeats 1000000 in
 
 theorem redFn_conj_of_stab_le : ∀ (D : D7) (V : HSp D) (β₁ β₂ : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (N : ℕ), Formalism.IndefR.Lev.IsBaseFrame V β₁ Λ N → ∀ (e : Formalism.L2.Theta.AE D) (PP : Formalism.L2.DIV.Pl D.host.E), Formalism.L2.NTheta.IsIdemAt e PP → (∀ κ ∈ GfC V, Formalism.IndefR.Lev.finE V κ ∈ Formalism.L2.DIV.St β₁ → Formalism.IndefR.Lev.finE V κ ∈ Formalism.L2.DIV.St β₂) → ∃ m : GL (Fin V.rank) (Formalism.L2.DIV.kP PP), ∀ y, y ∈ Formalism.L2.DIV.St β₁ → y ∈ Formalism.L2.DIV.St β₂ → Formalism.L2.DIV.redFn β₂ PP y = m * Formalism.L2.DIV.redFn β₁ PP y * m⁻¹ := by
   intro D V β₁ β₂ Λ N hB e PP he hSt

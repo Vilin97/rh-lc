@@ -57,12 +57,8 @@ variable {ζ₀ : Fin a.Lz.rank → D.host.E} {PP : Formalism.L2.DIV.Pl D.host.E
 
 end AtLevel
 
-variable {o G} in
 
-variable {o G} in
 
-open scoped Pointwise in
-variable {o G} in
 
 end GlobalTheory.SeeSaw
 

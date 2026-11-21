@@ -58,7 +58,6 @@ abbrev gaussFields : Fields := quadFields 1 ι LL hE
 
 def iE : (gaussFields ι LL hE).E := (⟨iQb, sqrts_sub _ iQb_mem⟩ : KQ 1)
 
-set_option maxRecDepth 100000 in
 
 end Gauss
 

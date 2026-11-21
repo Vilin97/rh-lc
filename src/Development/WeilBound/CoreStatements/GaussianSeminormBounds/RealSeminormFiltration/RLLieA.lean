@@ -47,7 +47,6 @@ theorem taylor2 (φ φ' φ'' : ℝ → ℂ) (h1 : ∀ t, HasDerivAt φ (φ' t) t
 
 variable {l : Type} [Fintype l] [DecidableEq l]
 
-omit [DecidableEq l] in
 
 end PositivityTheory.RL.Up
 

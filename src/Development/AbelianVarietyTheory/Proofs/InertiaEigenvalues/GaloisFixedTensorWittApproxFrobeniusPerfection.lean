@@ -210,7 +210,6 @@ private theorem crd_map_lemma_6 {Z O W : Type} [CommRing Z] [CommRing O] [Algebr
       LinearMap.coe_comp, Function.comp_apply, LinearMap.lsmul_apply, map_smul]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-set_option maxHeartbeats 1000000 in
 
 theorem fixSub_approx_perfection (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
     (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) (W : Wach P K LL)

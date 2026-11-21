@@ -103,7 +103,6 @@ theorem fromBlocks_unip_mul {c d : Type} (u : Matrix A D k) (W : Matrix (A ⊕ D
   conv_lhs => rw [← fromBlocks_toBlocks W]
   rw [fromBlocks_multiply]; simp
 
-variable (A) in
 
 def dg : GL D k →* GL (A ⊕ D) k where
   toFun G := ⟨fromBlocks 1 0 0 G.val, fromBlocks 1 0 0 (G⁻¹).val, by simp [fromBlocks_multiply],
@@ -214,7 +213,6 @@ namespace GlobalTheory.ParHeckeSource
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable {A D : Type} [Fintype A] [DecidableEq A] [Fintype D] [DecidableEq D]
 
-open Classical in
 
 def lowerDiagonalBlockAsGL (j : GL (A ⊕ D) k) : GL D k :=
   if h : IsUnit j.val.toBlocks₂₂.det then nonsingInvUnit _ h else 1
@@ -252,7 +250,6 @@ namespace GlobalTheory.ParHeckeSource
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable {A D : Type} [Fintype A] [DecidableEq A] [Fintype D] [DecidableEq D]
 
-open Classical in
 
 theorem card_filter_eq {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformizer k) (s : Finset D)
     {R : Finset (GL (A ⊕ D) k)} {d : GL (A ⊕ D) k → kˣ} (hR : IsReps (mtor ϖ (-indic s)) R d)
@@ -410,7 +407,6 @@ theorem unip_int {x : Matrix (A ⊕ D') (A ⊕ D) k} (hx : InSupp x) : IsIntM (x
   obtain ⟨i11, i12, -, -⟩ := isIntM_toBlocks (show IsIntM x from hx.1)
   exact isIntM_mul (isIntM_inv i11 hx.2.1) i12
 
-open Classical in
 
 theorem term_eq {ξ : kˣ →* ℂˣ} (hξ : IsTame ξ) {x : Matrix (A ⊕ D') (A ⊕ D) k} (hx : InSupp x) {j : GL (A ⊕ D) k}
     (hj : j ∈ parahoric k A D) {d : kˣ} (hd : (d : k) = j.val.toBlocks₂₂.det) (T : GL D k) :

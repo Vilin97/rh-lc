@@ -63,7 +63,6 @@ open GlobalTheory.PrismHodge GlobalTheory.Dieudonne GlobalTheory.IndefiniteRowSi
 variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [Fact ¬IsUnit (p : O)]
   [IsAdicComplete (span {(p : O)}) O]
 
-omit [IsAdicComplete (span {(p : O)}) O] in
 
 theorem frobenius_ofPadic_eq (c : ℤ_[p]) :
     (WittVector.frobenius (ofPadic p O c) : Ainf p O) = ofPadic p O c := by

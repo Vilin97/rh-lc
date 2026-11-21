@@ -30,7 +30,6 @@ section Dense
 
 variable {V W : HSp D} {S S' : D.what₂.Tau → SPar}
 
-open Classical in
 
 def SepCont (M : DSModel V S) (Λ : SmT M →ₗ[ℂ] ℂ) : Prop :=
   ∀ τ (v : M.Vec), ∃ ℓ : M.H τ →ₗ[ℂ] ℂ, Sobolev₂ (lieAt V τ) (M.rep τ) ℓ ∧
@@ -148,7 +147,6 @@ variable {F₀ : ∀ u, Formalism.L2.Forms.Forms0 D u} (S : STrue D F₀) (u : D
 
 end MI
 
-open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 
 end GlobalTheory.Core.Mi
 

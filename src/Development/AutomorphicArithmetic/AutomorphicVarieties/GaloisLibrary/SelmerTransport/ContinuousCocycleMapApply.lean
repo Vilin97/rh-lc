@@ -177,13 +177,11 @@ theorem coordSum_mem_locSel (hb : IsBaseChange O j) (𝒟 : Set (Subgroup G)) (x
   rw [forall_comm]
   exact imp_congr_right fun _ => exists_cob_iff ρ ρ' j hj U b hb (fun u => u.1 ∈ D) fun i => (z i).1
 
-omit [Fintype ι] in
 
 theorem isBaseChange_h1Map [Module.Free R O] [Module.Finite R O] [DiscreteTopology M'] (hb : IsBaseChange O j) :
     IsBaseChange O (h1Map ρ ρ' j hj U) :=
   isBaseChange_h1Map' ρ ρ' j hj U (Module.Free.chooseBasis R O) hb
 
-omit [Fintype ι] in
 
 theorem isBaseChange_selMap [Module.Free R O] [Module.Finite R O] [DiscreteTopology M'] (hb : IsBaseChange O j)
     (𝒟 : Set (Subgroup G)) : IsBaseChange O (selMap ρ ρ' j hj U 𝒟) :=

@@ -37,7 +37,6 @@ theorem length_localized_add {N M Q : Type*} [AddCommGroup N] [Module C N] [AddC
     (IsLocalizedModule.map_surjective P.primeCompl fM fQ g hg)
     (IsLocalizedModule.map_exact P.primeCompl fN fM fQ f g H)
 
-omit [P.IsPrime] in
 
 theorem length_quotSMulTop_add (y : C) {N M Q : Type*} [AddCommGroup N] [Module C N]
     [AddCommGroup M] [Module C M] [AddCommGroup Q] [Module C Q] (f : N →ₗ[C] M) (g : M →ₗ[C] Q)
@@ -71,7 +70,6 @@ theorem smul_injective_pi {y : C} (hy : y ∉ P) (n : ℕ) (v : Fin n → C ⧸ 
   rw [Pi.smul_apply, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, Pi.zero_apply] at hi
   exact (mul_eq_zero.1 hi).resolve_left (fun h => hy (Ideal.Quotient.eq_zero_iff_mem.1 h))
 
-omit [P.IsPrime] in
 
 theorem length_quotSMulTop_quot {y : C} (hmax : (P ⊔ Ideal.span {y}).IsMaximal) :
     Module.length C (QuotSMulTop y (C ⧸ P)) = 1 := by

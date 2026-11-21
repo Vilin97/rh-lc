@@ -101,7 +101,6 @@ theorem commute_of_read (hL : Rl.toRealDat.toLevCh.Is A3.A.μ0) (hSb : Rl.toReal
   exact MultilinearMap.ext fun v => cosetSum_comm hL hSb i hso hso' ha ha' hR hR'
     (fun k hk h => GlobalTheory.HeckeSup.model_inv_cl hW i _ _ v k hk h)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem baseChange_comm (i : D.ntw.Tw) (j : ℕ) (b : Bool) {f : ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)}
     (hs : HeckeStabR S j f) (k k' : ℕ) (P P' : PlE D.host) (h : Commute (f k P) (f k' P')) :
@@ -114,7 +113,6 @@ theorem baseChange_comm (i : D.ntw.Tw) (j : ℕ) (b : Bool) {f : ℕ → PlE D.h
     (Module.End.baseChangeHom S.Ks (KB S i b) (FmK S j) (r k' P')) * (Module.End.baseChangeHom S.Ks (KB S i b) (FmK S j) (r k P))
   rw [← map_mul, ← map_mul, hr]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem hkComm_of_family (f : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j))
     (hs : ∀ j, 1 ≤ j → j ≤ D.R.m → HeckeStabR S j (f j))
@@ -155,9 +153,7 @@ theorem family_comm (hL : Rl.toRealDat.toLevCh.Is A3.A.μ0) (hF : Rl.toRealDat.I
   obtain ⟨c', hc'⟩ := hr i m k' P' hk' α' Rc' ha' hR'
   exact commute_of_read Rl cG S Y hL hF.Sb hW m (hinj m) so so' ha ha' hR hR' hc hc'
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end Tied
 

@@ -62,7 +62,6 @@ private theorem glRed_hEmbGL {R S : Type} [CommRing R] [CommRing S] (π : R →+
   change (hEmb r (B : Matrix (Fin k) (Fin k) R)).map π = hEmb r ((B : Matrix (Fin k) (Fin k) R).map π)
   simp [hEmb, midEmb, Matrix.fromBlocks_map, Matrix.map_one, Matrix.map_zero]
 
-set_option maxHeartbeats 800000 in
 
 theorem hImU_of_model (X : HidaSetting D) (hb : AdBridgeIso X.B.I) (hK : X.LevelSubgroupCharacter) (hL : X.LevelSubgroupNormalized)
     (u : D.what₂.Word) (p : TypX X) (h : HModelU X hb u p) : HImU X hb u p := by

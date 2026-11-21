@@ -521,9 +521,6 @@ theorem main_case {p : ℕ} [Fact p.Prime] (ι : ℂ ≃+* ℂ_[p]) {dK : ℕ} (
 
 end UnitKernelIntegral
 
-open UnitKernelIntegral Formalism.L2.Th1.Top.CalcPAux in
-open Formalism.L2.Th1.CM (omegaK) in
-open Formalism.L2.Th1.D (normInt) in
 
 theorem unit_kernel_integral_coords : UnitKerInt := by
   intro dK L _hsq hmod hcm p _ ι hp2 hpd hW α t hαQ hα1 hαt ht

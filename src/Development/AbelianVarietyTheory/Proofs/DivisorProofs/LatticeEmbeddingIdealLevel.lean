@@ -14,7 +14,6 @@ set_option maxHeartbeats 800000
 
 namespace GlobalTheory.BasePoint
 
-open GlobalTheory.AdjDatumNe in
 
 theorem exists_point {O La ι : Type} [CommRing O] [AddCommGroup La] [Module O La] (P : Finset ι) (k : ι → Type)
     [∀ i, CommRing (k i)] (φ : ∀ i, O → k i) (crt : ∀ t : ∀ i, k i, ∃ c, ∀ i ∈ P, φ i c = t i) {n r : ℕ}
@@ -336,7 +335,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Form
 open scoped TensorProduct Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.BasePoint
 

@@ -15,9 +15,6 @@ open GlobalTheory GlobalTheory.AbLaw
 
 namespace GlobalTheory
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory AlgebraicGeometry DirectSum TensorProduct in
-attribute [local instance] Over.cartesianMonoidalCategory in
-open Pointwise in
 
 theorem _root_.GlobalTheory.finite_quotSMulTop_X_sub_one_of_chart : ∀ (ι : Type) [LinearOrder ι] [Fintype ι] (R : Type)
     [CommRing R] (G : Type) [AddCommGroup G] [Module R G] [Module (MvPolynomial ι R) G]

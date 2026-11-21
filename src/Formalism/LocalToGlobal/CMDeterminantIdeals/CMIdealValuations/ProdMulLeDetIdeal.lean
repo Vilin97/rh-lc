@@ -118,14 +118,12 @@ theorem exists_det_ne {m : ℕ} (M : Submodule (𝓞 K) (Fin m → K))
 
 end A2
 
-open A2 in
 
 namespace A2
 variable {K : Type} [Field K] [NumberField K]
 
 end A2
 
-open A2 in
 
 namespace A2
 variable {K : Type} [Field K] [NumberField K]
@@ -172,7 +170,6 @@ theorem gramC_det {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (σ : K →+* ℂ) 
 
 end A2
 
-open A2 in
 
 theorem hadamardInequality : HadamardPD := by
   intro m A hA
@@ -251,6 +248,5 @@ open scoped Pointwise
 
 end A2
 
-open A2 in
 
 end Formalism.L2.LamCM

@@ -246,7 +246,6 @@ def ConclusionG6 (i : N.Loc) : Prop :=
         Matrix (Fin R.nV) (Fin R.nV) (Kf N i)).mulVec v = algebraMap (N.O i) (Kf N i) (chi1 N i g) • v) →
     x ∈ ZN N A i ∧ ∀ Sig, HasParamX N A i x Sig → IsCuspIso N A Sig
 
-open Classical in
 
 def ConclusionZ (i : N.Loc) : Prop :=
   HG N A i →

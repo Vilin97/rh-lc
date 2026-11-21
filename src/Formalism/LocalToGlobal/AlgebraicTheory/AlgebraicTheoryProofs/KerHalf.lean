@@ -262,7 +262,6 @@ theorem ne_zero_E (hp : 0 < p) (hprod : ϖ * cO E ϖ = p) :
     rw [h0, mul_zero] at h
     exact hp' h.symm
 
-include hS hprod hcop in
 
 theorem half_to (hp : 0 < p) (c' : ℕ) (hc' : 0 < c') {w : W} (hw : w ∈ twist₂ M (p * c') (expS S)) (hpw : (p : E) • w ∈ M) :
     (algebraMap (𝓞 E) E ϖ / algebraMap (𝓞 E) E (cO E ϖ)) • w ∈ M := by
@@ -293,7 +292,6 @@ theorem half_to (hp : 0 < p) (c' : ℕ) (hc' : 0 < c') {w : W} (hw : w ∈ twist
     rw [e]
     exact hpw
 
-include hS hprod hcop in
 
 theorem half_of (hp : 0 < p) (c' : ℕ) (hc' : 0 < c') (u : ℤ) {m : W} (hm : m ∈ M) :
     ((u * c' : ℤ) : E) • (algebraMap (𝓞 E) E (cO E ϖ) / algebraMap (𝓞 E) E ϖ) • m ∈ twist₂ M (p * c') (expS S) ∧

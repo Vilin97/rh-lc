@@ -23,7 +23,6 @@ namespace DegZeroLocResidue
 
 variable {F : Type u} [Field F] {K : Type} [DecidableEq K] {ι : K → Type}
 
-omit [DecidableEq K] in
 
 theorem fr_ne_zero (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [Q.IsPrime] {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hh : h ∉ Q) :
     fr Q h ≠ 0 := by
@@ -31,7 +30,6 @@ theorem fr_ne_zero (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOve
 
 variable {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [P.IsPrime] [W.IsPrime]
 
-omit [DecidableEq K] in
 
 theorem residue_eq (hPW : P ≤ W) {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hg : g ∉ W) (hg' : g' ∉ W)
     (h : fr P f / fr P g = fr P f' / fr P g') : fr W f / fr W g = fr W f' / fr W g' := by
@@ -40,14 +38,11 @@ theorem residue_eq (hPW : P ≤ W) {f g f' g' : ReciprocityTheory.ChartRestricti
   rw [div_eq_div_iff (fr_ne_zero W hg) (fr_ne_zero W hg'), ← map_mul, ← map_mul, ← map_mul,
     ← map_mul, Ideal.Quotient.eq.mpr (hPW (Ideal.Quotient.eq.mp (IsFractionRing.injective _ _ h)))]
 
-variable (P W) in
-open Classical in
 
 def res (x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) :=
   if h : ∃ fg : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι × ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, fg.2 ∉ W ∧ x = fr P fg.1 / fr P fg.2 then
     fr W h.choose.1 / fr W h.choose.2 else 0
 
-omit [DecidableEq K] in
 
 theorem res_eq (hPW : P ≤ W) {x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hg : g ∉ W)
     (hx : x = fr P f / fr P g) : res P W x = fr W f / fr W g := by

@@ -62,7 +62,6 @@ private theorem over_two (h2 : Module.finrank F E = 2) {w w' w'' : HeightOneSpec
 
 variable (sat : HeightOneSpectrum (𝓞 E) → Multiset ℂˣ → Prop)
 
-variable (F) in
 
 private def HasPair (u : HeightOneSpectrum (𝓞 F)) : Prop :=
   ∃ w w' : HeightOneSpectrum (𝓞 E), w ≠ w' ∧ w.under (𝓞 F) = u ∧ w'.under (𝓞 F) = u

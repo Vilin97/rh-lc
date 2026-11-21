@@ -7,7 +7,6 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.Eigenchar
 
 open Formalism.MainNotions.N
 
-open scoped Matrix in
 
 private theorem ker_transfer {Γ K : Type} [Group Γ] [Field K] {n m : ℕ} (ρ : Γ →* GL (Fin n) K)
     (σ : Γ →* GL (Fin m) K) (hρ : IsSSRep ρ) (hσ : IsSSRep σ)

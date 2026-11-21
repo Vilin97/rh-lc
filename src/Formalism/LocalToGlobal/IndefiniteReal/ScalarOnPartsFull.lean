@@ -77,7 +77,6 @@ abbrev MMap (M : DSModel V S) : Type := MultilinearMap ℂ (fun τ : D.what₂.T
 
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 
-open Classical in
 
 structure IsMultMap (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ) (T : MMap M) : Prop where
   aut : ∀ v, IsAutFunSm θ V (T v)
@@ -95,7 +94,6 @@ def IsMultIP (M : DSModel V S) (μ : Measure (GA D V)) (𝓕 : Set (GA D V)) (T 
   ∀ v v' : M.Vec, IntegrableOn (fun g => star (T v g) * T' v' g) 𝓕 μ ∧
     ∫ g in 𝓕, star (T v g) * T' v' g ∂μ = c * ∏ τ, ⟪(v τ : M.H τ), (v' τ : M.H τ)⟫_ℂ
 
-open Classical in
 
 def ipM (M : DSModel V S) (μ : Measure (GA D V)) (𝓕 : Set (GA D V)) (T T' : MMap M) : ℂ :=
   if h : ∃ c, IsMultIP M μ 𝓕 T T' c then h.choose else 0
@@ -113,19 +111,16 @@ def heckeLin (V : HSp D) (R : Finset (GA D V)) : (GA D V → ℂ) →ₗ[ℂ] (G
 def locPart (V : HSp D) (K : Set (GA D V)) (e : Formalism.L2.Theta.AE D) : Set (GA D V) :=
   {k | k ∈ K ∧ Formalism.L2.Theta.SuppAt e V k}
 
-variable (V) in
 
 def IsCosetRep (K : Set (GA D V)) (α : GA D V) (R : Finset (GA D V)) : Prop :=
   (∀ γ ∈ R, γ ∈ GfC V ∧ ∃ k₁ ∈ K, ∃ k₂ ∈ K, γ = k₁ * α * k₂) ∧
     ∀ x : GA D V, (∃ k₁ ∈ K, ∃ k₂ ∈ K, x = k₁ * α * k₂) → ∃! γ, γ ∈ R ∧ γ⁻¹ * x ∈ K
 
-variable (D) in
 
 def OffS (S : Finset (HeightOneSpectrum (𝓞 D.host.F))) (P : HeightOneSpectrum (𝓞 D.host.E)) : Prop :=
   ∀ v ∈ S, ∃ x : 𝓞 D.host.F, x ∈ v.asIdeal ∧
     ∀ y : 𝓞 D.host.E, (y : D.host.E) = algebraMap D.host.F D.host.E (x : D.host.F) → y ∉ P.asIdeal
 
-variable (V) in
 
 def IsHeckeOpAt (J : Set (GA D V)) (χ : GA D V → ℂ) (S : Finset (HeightOneSpectrum (𝓞 D.host.F)))
     (P : HeightOneSpectrum (𝓞 D.host.E)) (k : ℕ) (R : Finset (GA D V)) : Prop :=
@@ -157,14 +152,12 @@ def IsPrimeIdem (P : HeightOneSpectrum (𝓞 D.host.E)) (e f : Formalism.L2.Thet
     ∀ x : 𝓞 D.host.E, x ≠ 0 →
       (x ∈ P.asIdeal ↔ finPart D (e * incA D ((x : D.host.E)⁻¹)) ∉ intAE D))
 
-variable (V) in
 
 def SuppF (f : Formalism.L2.Theta.AE D) (g : GA D V) : Prop :=
   ∀ i j, f * (Formalism.L2.Theta.mt V g - 1) i j = (Formalism.L2.Theta.mt V g - 1) i j
 
 def IntVec {n : ℕ} (z : Fin n → Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E) : Prop := ∀ i, z i ∈ intAE D
 
-variable (V) in
 
 def DivAt (e : Formalism.L2.Theta.AE D) (ϖ : D.host.E) (d : List ℤ) (α : GA D V) : Prop :=
   d.length = V.rank ∧ ∃ B : Matrix (Fin V.rank) (Fin V.rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E),
@@ -178,7 +171,6 @@ def DivAt (e : Formalism.L2.Theta.AE D) (ϖ : D.host.E) (d : List ℤ) (α : GA 
       (fun a => finPart D e * (finMat D.sp.cm.sig V.gram α).mulVec y a) =
         fun a => finPart D e * B.mulVec (fun i => finPart D (incA D (ϖ ^ (d.getD i.1 0))) * z i) a)
 
-variable (V) in
 
 def Hecke₂ (J : Set (GA D V)) (χ : GA D V → ℂ) (S : Finset (HeightOneSpectrum (𝓞 D.host.F)))
     (P : HeightOneSpectrum (𝓞 D.host.E)) (d : List ℤ) (R : Finset (GA D V)) : Prop :=
@@ -254,7 +246,6 @@ theorem ipM_spec (M : DSModel V S) (μ : Measure (GA D V)) (𝓕 : Set (GA D V))
   rw [ipM, dite_eq_left h]
   exact h.choose_spec
 
-variable (V) in
 
 def DSExists (S : D.what₂.Tau → SPar) : Prop :=
   V.SigOK → (∀ τ, GoodPar V.rank (V.sig (tauE D τ)).1 (V.sig (tauE D τ)).2 (S τ)) → Nonempty (DSModel V S)

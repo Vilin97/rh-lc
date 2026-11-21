@@ -141,7 +141,6 @@ def eS (T : GoodSet K G) (s : T.S) : MonoidAlgebra K G :=
 
 def eG (T : GoodSet K G) : MonoidAlgebra K G := ∑ s, eS T s
 
-open Classical in
 
 def eps (P : Pair K G) : MonoidAlgebra K G :=
   ((Nat.card P.H : ℕ) : K)⁻¹ • ∑ x : G, if h : x ∈ P.H then
@@ -309,7 +308,6 @@ theorem mapDomain_mulSingle (i : ι) (a : MonoidAlgebra ℂ (G i)) :
 
 variable {P : ι → Type} [∀ i, Fintype (P i)]
 
-open Classical in
 
 def eGood (E : ∀ i, P i → MonoidAlgebra ℂ (G i)) (good : (∀ i, P i) → Prop) :
     MonoidAlgebra ℂ (∀ i, G i) :=
@@ -445,7 +443,6 @@ theorem atPlace_eq (D : D7) [DecidableEq (Σ k : Fin 2, D.nd.PlG k)] (k : Fin 2)
 
 end Ten
 
-open Ten in
 
 end GoodType
 

@@ -17,7 +17,6 @@ namespace GlobalTheory.StdPar
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) {r : ℕ}
 
-variable (F) in
 
 def colSpan (C : Matrix (Fin n) (Fin r) E) (I : Set (Fin r)) : Submodule (AF F ⊗[F] E) (Fin n → AF F ⊗[F] E) :=
   Submodule.span _ ((fun i => (adMat F C)ᵀ i) '' I)
@@ -97,7 +96,6 @@ def IsSqIntOn (φ : GAd σ J → ℂ) : Prop :=
     IsFundamentalDomain ((ratPts σ J).subgroupOf (leviOne σ J X Y S)) 𝓕 μ → ∀ g,
       IntegrableOn (fun m : leviOne σ J X Y S => ‖φ (m * g)‖ ^ 2) 𝓕 μ
 
-variable (F n) in
 
 def expChar (s : Fin r → ℂ) (v : Fin r → ℝ) : ℂ :=
   √(modulus F n fun i => Real.exp (v i)) * Complex.exp (2 * Module.finrank ℚ F * ∑ i, s i * v i)
@@ -117,7 +115,6 @@ section Empty
 
 variable {σ J X Y}
 
-omit [NumberField E] in
 
 theorem unip_empty : unip σ J X ∅ = ⊥ := eq_bot_iff.2 fun g hg => by
   refine Subtype.ext (Units.ext (Matrix.ext fun i j => ?_))
@@ -165,16 +162,13 @@ theorem negExp_empty {s : Fin r → ℂ} : NegExp S ∅ s ↔ ∀ k ∈ S, ∑ i
 
 end Empty
 
-omit [NumberField E] in
 
 theorem isConstAlong_const (c : ℂ) : IsConstAlong σ J X S (fun _ => c) fun _ => c := fun μ 𝓕 _ _ h _ => by
   simp [Measure.real, h]
 
-variable (n r) in
 
 def negRho (i : Fin r) : ℂ := ((i.val - (n - 1) / 2 : ℝ) : ℂ)
 
-variable {σ J X Y} in
 
 section Single
 

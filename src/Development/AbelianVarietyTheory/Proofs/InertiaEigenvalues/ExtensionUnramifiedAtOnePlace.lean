@@ -92,7 +92,6 @@ theorem adjoin_gen_eq_top (E : Type) [Field E] [Algebra E Ω] (β : Ω) (hβ : I
     IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic hβ.isAlgebraic]
   rfl
 
-open IntermediateField in
 
 theorem core {E : Type} [Field E] [NumberField E] [Algebra E Ω] [IsAlgClosure E Ω] {g : ℕ} [Fact g.Prime]
     {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} (h : IsPlaceOver A w)

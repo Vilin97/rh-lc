@@ -36,7 +36,6 @@ theorem heckeLevel_inv_of_comm (K : Subgroup Γ) {h : Γ} (hc : ∀ u, h * u = u
   ext u
   rw [mem_heckeLevel_inv, hc u, mul_inv_cancel_right, and_self]
 
-open Classical in
 
 end Side
 
@@ -66,7 +65,6 @@ def c1 : Z X' k ⟶ Z X k := GlobalTheory.KS.powMap C.q1 C.φ1 C.φ1_w k
 
 def c2 : Z X' k ⟶ Z X k := GlobalTheory.KS.powMap C.q2 C.φ2 C.φ2_w k
 
-variable {k} in
 
 theorem firstLeg_overComplex : C.c1 k ≫ zs X k = zs X' k := by
   rw [zs, zs, c1, ← Category.assoc, GlobalTheory.KS.PowPB.powMap_w, Category.assoc, C.firstProjection_structure]
@@ -74,14 +72,11 @@ theorem firstLeg_overComplex : C.c1 k ≫ zs X k = zs X' k := by
 theorem secondLeg_overComplex : C.c2 k ≫ zs X k = zs X' k := by
   rw [zs, zs, c2, ← Category.assoc, GlobalTheory.KS.PowPB.powMap_w, Category.assoc, C.secondProjection_structure]
 
-variable {k} in
 
 def op [IsFinite (C.c1 k)] [Etale (C.c1 k)] (a b : ℕ) : hodgeH (zs X k) a b →ₗ[ℂ] hodgeH (zs X k) a b :=
   corrOp (C.c1 k) (C.c2 k) (C.firstLeg_overComplex k) (C.secondLeg_overComplex k) a b
 
-variable {k} in
 
-variable {k} in
 
 def mulBy (X : GenModel gb N) (c : ℕ) : Corr X X where
   q1 := 𝟙 _

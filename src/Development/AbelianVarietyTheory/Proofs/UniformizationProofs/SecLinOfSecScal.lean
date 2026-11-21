@@ -83,10 +83,7 @@ theorem exists_famPull (hθ : θ.left ≫ jFK (R := R) F' = jFK (R := R) F) (k :
   rw [val_famMult _ hJ, val_famMult _ hJ, a, uVal, uVal, toBK_prB, comp_cP, comp_cP, comp_cP, comp_cP,
     Category.id_comp (DegPre.prB D F)]
 
-omit [Algebra (FractionRing R) F] in
 
-omit [Algebra (FractionRing R) F'] in
 
-variable (F) in
 
 end GlobalTheory.ExpansionTotal

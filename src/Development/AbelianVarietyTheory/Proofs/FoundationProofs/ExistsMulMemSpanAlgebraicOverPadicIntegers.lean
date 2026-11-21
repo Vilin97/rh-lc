@@ -24,7 +24,6 @@ theorem isAlgZp_mul {x y : Ω} (hx : IsAlgZp p x) (hy : IsAlgZp p y) : IsAlgZp p
   rw [key] at hx hy ⊢
   exact hx.mul hy
 
-variable (p Ω) in
 
 def algZpMonoid : Submonoid Ω where
   carrier := {x | IsAlgZp p x}

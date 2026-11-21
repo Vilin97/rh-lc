@@ -23,7 +23,6 @@ namespace GlobalTheory.ChiRatStd
 
 open GlobalTheory.Mem.Col2.TC GlobalTheory.Mem.Col2.AdT
 
-set_option maxHeartbeats 1600000 in
 
 theorem chiRatAll_of_reads {B : Base} {X : PreX B.toPre} (I : TC B X) (hOk : I.Ok) (hP : TC.Pins B X) (l : I.Laws)
     (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 B.host.F)))
@@ -47,7 +46,6 @@ theorem chiRatAll_of_reads {B : Base} {X : PreX B.toPre} (I : TC B X) (hOk : I.O
   have hc := hR.chr c x κ' hg (by rw [hq']; exact hq)
   exact ⟨_, by rw [← hx]; exact hc.symm⟩
 
-set_option maxHeartbeats 1600000 in
 
 theorem chiRatAll_twChart : ∀ {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T), K.Over B.toPre → Forced K B T → Pinned K B f T w →
     ∀ (Z : w.Lt) (t : ColumnDataSplitPrimes K w Z) (Wt : Set B.places.Pl) (nch : NChoice (w.D Z)) (n : NchT w Z Wt nch),

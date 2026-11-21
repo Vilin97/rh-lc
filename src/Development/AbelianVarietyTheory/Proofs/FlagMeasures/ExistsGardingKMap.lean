@@ -19,7 +19,6 @@ open scoped InnerProductSpace ComplexOrder
 
 namespace GlobalTheory.SmoothKType
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem exists_garding_kMap (n : ℕ) (ε : Fin n → Bool) (μ : Fin n → ℝ) (H : Type) [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] [CompleteSpace H] (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) (S : Submodule ℂ H)

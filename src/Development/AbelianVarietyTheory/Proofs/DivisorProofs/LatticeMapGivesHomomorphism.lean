@@ -18,7 +18,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.HolUnifHom
 
-open GlobalTheory.SS GlobalTheory.EighthPowerFactor CechPic in
 
 theorem exists_polAV_retract_dim (k : Type) [Field k] [IsAlgClosed k] (B : Over (Sp k)) [GrpObj B] (g : ℕ)
     (hB : IsAbelianScheme B) (hd : SmoothOfRelativeDimension g B.hom) (M : LB B.left) (hM : M.IsLB)
@@ -45,7 +44,6 @@ end GlobalTheory.HolUnifHom
 
 namespace GlobalTheory.HolUnifHom
 
-open GlobalTheory GlobalTheory.SurjIsogeny GlobalTheory.IsogenyModel GlobalTheory.HolUnifEnd in
 
 theorem exists_linear_factor (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (hA : IsAbelianScheme A)
     (hgA : SmoothOfRelativeDimension g A.hom) (L : LB A.left) (u : HolUnif A L g) :
@@ -128,7 +126,6 @@ end GlobalTheory.HolUnifHom
 
 namespace GlobalTheory.HolUnifHom
 
-open GlobalTheory.HolUnifEnd in
 
 theorem exists_isMonHom_of_map_lattice :
     ∀ (A A' : Over (Sp ℂ)) [GrpObj A] [GrpObj A'] (g : ℕ), IsAbelianScheme A → IsAbelianScheme A' →

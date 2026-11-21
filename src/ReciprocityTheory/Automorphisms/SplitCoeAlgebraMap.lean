@@ -118,6 +118,5 @@ def SplitPlace.q (s : SplitPlace L) : ℕ := Nat.card (𝓞 L⁺ ⧸ s.v.asIdeal
 
 def SplitPlace.Above (s : SplitPlace L) (l : ℕ) : Prop := ((l : ℕ) : 𝓞 L⁺) ∈ s.v.asIdeal
 
-variable (L) in
 
 end ReciprocityTheory.Aut

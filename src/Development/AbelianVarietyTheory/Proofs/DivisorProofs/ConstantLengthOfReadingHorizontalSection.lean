@@ -25,7 +25,6 @@ section Linear
 
 variable {E : Type} [Field E] [NumberField E]
 
-open Classical in
 
 theorem char_part {g : ℕ} (ty : Fin g → E →+* ℂ) (t : Fin g → ℂ) (s : E)
     (h : ∀ α : 𝓞 E, (∑ j, ty j α * t j).im = ((Algebra.trace ℚ E (α * s) : ℚ) : ℝ)) (ρ : E →+* ℂ) :
@@ -55,7 +54,6 @@ theorem char_part {g : ℕ} (ty : Fin g → E →+* ℂ) (t : Fin g → ℂ) (s 
   simp only [Complex.ofReal_ofNat, Finset.mul_sum, Finset.sum_mul]
   exact sub_eq_zero.2 (Finset.sum_congr rfl fun _ _ => by ring)
 
-omit [NumberField E] in
 
 theorem eq_zero_of_span {r : ℕ} (τ : E →+* ℂ) (Λ : Set (Fin r → E)) (hΛ : Submodule.span E Λ = ⊤)
     (f : (Fin r → ℂ) → ℂ) (ha : ∀ u v, f (u + v) = f u + f v) (hs : ∀ (s : ℂ) u, f (s • u) = conj s * f u)
@@ -115,7 +113,6 @@ theorem det_sum_elim {p q r : ℕ} (ε : Fin q ⊕ Fin p ≃ Fin r) (Γ : Matrix
 
 variable [IsCMField E]
 
-open Classical in
 
 theorem flatCoord_eq {p q r g : ℕ} (ε : Fin q ⊕ Fin p ≃ Fin r) (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E)
     (hG : ∀ a b, cc (G a b) = G b a) (ξ : E) (X : Matrix (Fin r) (Fin r) ℂ) (hX : X.det ≠ 0)
@@ -209,7 +206,6 @@ open AlgebraicGeometry CategoryTheory Limits IsDedekindDomain Module Formalism.B
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ}
 
-open Classical in
 
 theorem sum_letters (σ : c.F →+* ℂ) {g : ℕ} (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (τ : E →+* ℂ) {n : ℕ}
     (hn : n = Dw.mult τ) (F : Fin g → ℂ) :

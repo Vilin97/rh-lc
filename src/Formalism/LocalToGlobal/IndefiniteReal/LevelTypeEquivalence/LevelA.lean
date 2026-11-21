@@ -45,7 +45,6 @@ theorem kf_isCompact_isOpen_of_levelA (K : Subgroup (GL (Fin V.rank) (Lev.EAf D)
     rw [e]
     exact hK.2.preimage hjc
 
-variable (V) in
 
 end Formalism.IndefR.Eqv
 

@@ -40,7 +40,6 @@ theorem cycEval_single {K : Type} {ι : K → Type} {F : Type} [Field F]
 
 end FlagBundleCutProof
 
-open FlagBundleCutProof in
 
 theorem FlagBundleCut.proof (hDim : FlagBundleDim.Statement)
     (hForms : FlagBundleSectionForms.Statement) (hDiv : FlagBundleSectionDiv.Statement)

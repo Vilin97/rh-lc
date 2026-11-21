@@ -217,7 +217,6 @@ lemma exists_scale (v : Valuation K ℤᵐ⁰) (hv : Function.Surjective v) {x y
 
 end FiveVar
 
-open FiveVar in
 
 theorem exists_zero_five_of_valuation {K : Type*} [Field K] (h2 : (2 : K) ≠ 0)
     (v : Valuation K ℤᵐ⁰) (hv : Function.Surjective v)

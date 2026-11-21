@@ -55,7 +55,6 @@ theorem lamAt_mem (i : Fin D.R.m) (τ : D.what₂.Tau) {a : ℕ} (ha : a < D.R.r
   · exact Finset.mem_union_right _ (Finset.mem_image.2 ⟨_, Finset.mem_univ _, rfl⟩)
   · omega
 
-open GlobalTheory.IndefiniteRowSideFullHecke.InfinityTypes in
 
 theorem lam_parDef (i : Fin D.R.m) (M : DSModel (Vc D i) (parDef D i)) (τ : D.what₂.Tau) :
     M.lam τ = fun a => (((Bridge.lamLdef (D := D) (Vc D i).rank ((i : ℕ) + 1) τ).w a : ℝ) +

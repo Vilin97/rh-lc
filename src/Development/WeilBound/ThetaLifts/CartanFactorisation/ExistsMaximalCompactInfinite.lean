@@ -54,11 +54,9 @@ theorem exists_maximal_compact_infinite :
         simp only [mul_assoc]
     _ = _ := by rw [← h, ← mul_assoc, e0, one_mul]
 
-variable (E) in
 
 abbrev Ix : Type := Module.Free.ChooseBasisIndex ℤ (𝓞 E)
 
-variable (F) in
 
 def bA (i : Ix E) : AE F E := inclR (F := F) (AF F) (integralBasis E i)
 

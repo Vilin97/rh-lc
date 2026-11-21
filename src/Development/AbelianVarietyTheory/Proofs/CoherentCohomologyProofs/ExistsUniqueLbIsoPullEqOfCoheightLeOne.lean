@@ -526,7 +526,6 @@ theorem exists_sec_res_eq_iff {L : LB X} (hL : L.IsLB) {W : X.Opens} [Nonempty W
     rw [ht, ht]
     exact hs i j
 
-omit [IsLocallyNoetherian X] [GlobalTheory.IsNormalScheme X] in
 
 theorem lbSec_eq_of_res_eq {L : LB X} (W : X.Opens) [Nonempty W] {t t' : L.Sec}
     (h : ∀ i, resG X (inf_le_right : W ⊓ L.U i ≤ L.U i) (t.f i) = resG X inf_le_right (t'.f i)) :

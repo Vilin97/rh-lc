@@ -25,7 +25,6 @@ open AlgebraicGeometry CategoryTheory NumberField IsDedekindDomain ReciprocityTh
 noncomputable section
 namespace GlobalTheory.FlatCM.ImageDeg
 
-open GlobalTheory.HermHom in
 
 theorem form_diff_eq_pair : ThetaUnifAV → Out.Laws → ∀ (K : Type) [Field K] [NumberField K] (P : Out.PolAV (Sp (𝓞 K))) (F : GenFib P)
   (P' : Out.PolAV (Sp (𝓞 K))) (F' : GenFib P') (h : HermFam K (Fin F.P₀.g → K)) (h' : HermFam K (Fin F'.P₀.g → K))

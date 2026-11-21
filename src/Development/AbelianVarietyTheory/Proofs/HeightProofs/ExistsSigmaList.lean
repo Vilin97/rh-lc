@@ -86,7 +86,6 @@ def jInf (V : HSp D) : LieN V →ₗ[ℝ] AlgInf V where
 
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 
-open Classical in
 
 def secInf (V : HSp D) (u : AlgInf V) : GA D V :=
   if h : ∃ g ∈ GinfC V, ∀ τ, infMat D.sp.cm.sig V.gram (θ τ) g = u τ then h.choose else 1

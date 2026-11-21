@@ -465,6 +465,5 @@ end Supp
 
 end StepBAux
 
-open StepBAux in
 
 end Formalism.DivisionValues

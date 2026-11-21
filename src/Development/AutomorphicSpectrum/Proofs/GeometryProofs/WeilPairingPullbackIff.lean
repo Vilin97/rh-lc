@@ -149,7 +149,6 @@ variable {S S' : Scheme.{0}} {G : Over S} [GrpObj G] {A : Over S'} [GrpObj A]
   {f : S' ⟶ S} {φ : A.left ⟶ G.left} (hp : IsGrpPullback A G f φ)
   {T : Over S'} {T₀ : Over S} (τ : T.left ⟶ T₀.left) (hτ : τ ≫ T₀.hom = T.hom ≫ f)
 
-omit [GrpObj G] [GrpObj A] in
 
 theorem left_ext {B C : Over S} {Z : Scheme.{0}} {u v : Z ⟶ (B ⊗ C).left}
     (h₁ : u ≫ (fst B C).left = v ≫ (fst B C).left) (h₂ : u ≫ (snd B C).left = v ≫ (snd B C).left) : u = v := by

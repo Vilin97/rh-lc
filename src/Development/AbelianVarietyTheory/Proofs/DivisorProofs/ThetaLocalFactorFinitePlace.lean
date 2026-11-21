@@ -20,7 +20,6 @@ open Matrix GlobalTheory.UnitaryPlaceSplit
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F) in
 
 def idemInf : AF F := LinearMap.inl F (Ainf F) (Af F) 1
 

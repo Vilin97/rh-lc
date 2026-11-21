@@ -56,7 +56,6 @@ theorem hcN {Λ : Type} [CommRing Λ] {c : Λ →+* b.R} {φb : b.R →+* b.R} {
   | succ N ih =>
     rw [pow_succ, pow_succ, RingHom.mul_def, RingHom.mul_def, RingHom.comp_apply, RingHom.comp_apply, hc, ih]
 
-variable (ht) in
 
 def morN {Λ : Type} [CommRing Λ] (c : Λ →+* b.R) {φb : b.R →+* b.R} (dφ : IsDPMorphism b.γ b.γ φb)
     (P : F.ptK κ ⟶ F.ptK κ) (str : ∀ (B₀ : CommRingCat.{0}) (y : (F.ptK κ).obj B₀) (r : b.R),
@@ -66,7 +65,6 @@ def morN {Λ : Type} [CommRing Λ] (c : Λ →+* b.R) {φb : b.R →+* b.R} (dφ
   B.omMor (B.crMor (F := F) (F' := F) (ht := ht) (ht' := ht) (φb ^ N) rfl (dpPow dφ N) (PtN P N) (strN P str N))
     (σ₀ ^ N) (hcN hc N)
 
-variable (ht) in
 
 def mor1 {Λ : Type} [CommRing Λ] (c : Λ →+* b.R) {φb : b.R →+* b.R} (dφ : IsDPMorphism b.γ b.γ φb)
     (P : F.ptK κ ⟶ F.ptK κ) (str : ∀ (B₀ : CommRingCat.{0}) (y : (F.ptK κ).obj B₀) (r : b.R),

@@ -62,7 +62,5 @@ def precompₛ {V C : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup C] [Mo
 
 end GlobalTheory.PairReadPf
 
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.ThetaGL GlobalTheory.PairReadPf in
-attribute [local instance] GlobalTheory.NPin.ThetaMod.acg GlobalTheory.NPin.ThetaMod.mod in
 
 end

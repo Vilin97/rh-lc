@@ -61,13 +61,9 @@ theorem sgStar_eq (L : PeriodPair) : Formalism.MainNotions.TaylorLogMetric.sgSta
   unfold Formalism.MainNotions.TaylorLogMetric.sgStar
   exact huniq _ _ hE hF
 
-variable [Fact _root_.Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5.CMConjSetF] in
 
-variable [Fact _root_.Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5.CMConjSetF] in
 
-variable [Fact _root_.Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5.CMConjSetF] in
 
-variable [Fact _root_.Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5.CMConjSetF] in
 
 end Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.RestA
 

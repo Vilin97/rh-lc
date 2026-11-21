@@ -74,7 +74,6 @@ def intAE : AddSubgroup (Af F ⊗[F] E) :=
 def idF : (AF F)ˣ →* (AE F E)ˣ :=
   Units.map (algebraMap (AF F) (AE F E)).toMonoidHom
 
-open HeckeCharacterZeroLocus.ThmBIn in
 
 def IsHeckeChar (χ : (AE F E)ˣ →* Circle) : Prop :=
   Continuous χ ∧ ∀ x : Eˣ, χ (Units.map (incA F E).toMonoidHom x) = 1
@@ -107,7 +106,6 @@ def IsUnramAt (σ : E →ₐ[F] E) (χ : (AE F E)ˣ →* Circle) (P : HeightOneS
   ∃ e f : AE F E, IsPrimeIdem σ P e f ∧ ∀ x : (AE F E)ˣ, (x : AE F E) = e * (x : AE F E) + (1 - e) →
     finPart F E (x : AE F E) ∈ intAE F E → finPart F E ((x⁻¹ : (AE F E)ˣ) : AE F E) ∈ intAE F E → χ x = 1
 
-open Classical in
 
 def chiAt (σ : E →ₐ[F] E) (χ : (AE F E)ˣ →* Circle) (P : HeightOneSpectrum (𝓞 E)) : ℂ :=
   if h : IsUnramAt σ χ P ∧ ∃ x, IsUnifIdele σ P x then ((χ h.2.choose : Circle) : ℂ) else 0

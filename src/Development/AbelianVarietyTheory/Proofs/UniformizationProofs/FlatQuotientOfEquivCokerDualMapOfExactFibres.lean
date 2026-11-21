@@ -113,7 +113,6 @@ theorem mem_sup_of_exact_fibres {A B : Type} [CommRing A] [IsLocalRing A] [CommR
 
 end DualCokernelFlat
 
-open DualCokernelFlat in
 
 theorem flat_quotient_of_equiv_coker_dualMap_of_exact_fibres :
     ∀ (V A : Type) [CommRing V] [IsNoetherianRing V] [IsLocalRing V] [CommRing A]

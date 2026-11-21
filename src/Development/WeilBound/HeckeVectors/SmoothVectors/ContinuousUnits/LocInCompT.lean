@@ -25,7 +25,6 @@ theorem continuous_finGL : Continuous (finGL E a) := by
     Continuous fun x : Af E => ((0, x) : InfiniteAdeleRing E × Af E))
   exact Continuous.units_map (corner (matN a (sFin E))) (continuous_const.add (continuous_id.matrix_map hs))
 
-omit [NumberField E] in
 
 theorem continuous_toUnits_Kinf : Continuous fun k : Kinf E a => (Unitary.toUnits k : GL (Fin a) (Cinf E)) :=
   Units.continuous_iff.2 ⟨continuous_subtype_val, continuous_subtype_val.star⟩

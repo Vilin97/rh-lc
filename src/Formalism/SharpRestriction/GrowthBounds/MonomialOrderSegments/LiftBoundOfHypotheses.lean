@@ -351,7 +351,6 @@ section Thm
 
 variable (K : Type) [Field K] (v : AddValuation K (WithTop ℚ)) (p : ℕ)
 
-open TwistData in
 
 def LiftBoundWith [CharZero K] (C0 kH k6 k18 kE : ℝ) : Prop :=
   DVRHyp v p → ∀ D : TwistData K, D.Valid v p → D.HypH p kH → D.Hc p C0 →

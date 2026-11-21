@@ -20,7 +20,6 @@ namespace GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSmoothLifts
 
 variable {D : D7}
 
-variable (D) in
 
 def Sizes : Prop :=
   1800 < D.R.r ∧ ∀ (τ : D.what₂.Tau) (j : ℕ) (hj : j + 1 < D.R.m),

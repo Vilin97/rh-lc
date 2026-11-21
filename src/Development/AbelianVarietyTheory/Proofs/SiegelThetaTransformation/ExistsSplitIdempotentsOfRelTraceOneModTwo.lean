@@ -211,7 +211,6 @@ theorem SplitAt.unique {v} {e e' : Formalism.L2.Theta.AE D} (he : SplitAt D v e)
   · left
     rwa [sub_self, h0, map_zero, zero_mul, add_zero, he.pl_mul] at h
 
-variable (D) in
 
 abbrev intL : AddSubgroup (Formalism.L2.Theta.AE D) :=
   AddSubgroup.closure {z : Formalism.L2.Theta.AE D | ∃ α ∈ intAf D.host.F, ∃ o : 𝓞 D.host.E,
@@ -236,7 +235,6 @@ theorem fj_mul_mem {β : Af D.host.F} (hβ : β ∈ intAf D.host.F) {z : Formali
   | add x y _ _ hx hy => rw [mul_add]; exact add_mem hx hy
   | neg x _ hx => rw [mul_neg]; exact neg_mem hx
 
-variable (D) in
 
 def inF : Af D.host.F ⊗[D.host.F] D.host.E →+ Formalism.L2.Theta.AE D :=
   (LinearMap.rTensor D.host.E (LinearMap.inr D.host.F (Ainf D.host.F) (Af D.host.F))).toAddMonoidHom

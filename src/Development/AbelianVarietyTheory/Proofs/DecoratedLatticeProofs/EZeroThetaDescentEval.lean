@@ -68,7 +68,6 @@ namespace GlobalTheory.GoodFix
 
 open Formalism.L2.DIV Formalism.IndefR.Links Formalism.IndefR.Lev
 
-set_option maxHeartbeats 1000000 in
 
 theorem thDn_act (hCR : GlobalTheory.Published.CuspRapidDecay) {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type}
     {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
@@ -92,7 +91,6 @@ namespace GlobalTheory.GoodFix
 
 open Formalism.L2.DIV Formalism.IndefR.Links Formalism.IndefR.Lev
 
-set_option maxHeartbeats 1000000 in
 
 theorem goodProjector_fixes_compositeThetaLift_of_fixed (hCR : GlobalTheory.Published.CuspRapidDecay) {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type}
     {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
@@ -110,5 +108,3 @@ theorem goodProjector_fixes_compositeThetaLift_of_fixed (hCR : GlobalTheory.Publ
 
 end GlobalTheory.GoodFix
 
-open GlobalTheory.GoodFix in
-set_option maxHeartbeats 1000000 in

@@ -73,7 +73,6 @@ theorem pt_nat {T T' : Thick (nlFun γ p X q κ)} (φ : T ⟶ T') :
   rw [← this]
   rfl
 
-variable (γ p q κ) in
 
 def fib : Pts (nlFun γ p X q κ) (qF hI q κ) where
   pt T := pullback.lift (pt T) (Spec.map (CommRingCat.ofHom ((Ideal.Quotient.mk T.J).comp T.i))) (pt_comp hI T)
@@ -120,7 +119,6 @@ theorem ev_str {W : Y.Opens} (T : Thick L) (h : InY 𝔭 W T) (a : b.R) :
     ev 𝔭 T h (strV qY W a) = Ideal.Quotient.mk T.J (T.i a) :=
   evalAt_base qY (RingHom.id b.R) ((Ideal.Quotient.mk T.J).comp T.i) (𝔭.pt T) (by rw [RingHom.comp_id]; exact 𝔭.str T) h a
 
-open Classical in
 
 def lft (W : Y.Opens) (T : Thick L) (f : Γ(Y, W)) : T.B :=
   if h : InY 𝔭 W T then Function.surjInv Ideal.Quotient.mk_surjective (ev 𝔭 T h f) else 0
@@ -133,7 +131,6 @@ theorem lft_spec {W : Y.Opens} (T : Thick L) (h : InY 𝔭 W T) (f : Γ(Y, W)) :
 def IsLift (W : Y.Opens) {d : ℕ} (t : Fin d → Γ(Y, W)) (u : Fin d → ∀ T : Thick L, T.B) : Prop :=
   ∀ i (T : Thick L) (h : InY 𝔭 W T), Ideal.Quotient.mk T.J (u i T) = ev 𝔭 T h (t i)
 
-variable (L) in
 
 abbrev GF (r : ℕ) : Thick L ⥤ ModuleCat.{0} b.R := sq (thFil L r) (thFil L ((r : ℤ) + 1))
 

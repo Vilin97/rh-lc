@@ -24,14 +24,10 @@ theorem chartLocDomain : ChartLocDomain.Statement :=
   ChartLocDomain.proof (IncIdealBelow.proof ChowFormMultiHomog.full) ChartIncDomain.proof
     (ChartKernel.proof IncidenceGeneric.full ChartIncDomain.proof)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end ChartFracSeparableInhabited
 
-open ChartFracSeparableInhabited in
 
-set_option synthInstance.maxHeartbeats 400000 in
-open ChartFracSeparableInhabited in
 
 end
 

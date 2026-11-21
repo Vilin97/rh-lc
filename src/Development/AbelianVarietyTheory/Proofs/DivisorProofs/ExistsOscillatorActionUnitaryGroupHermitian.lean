@@ -75,7 +75,6 @@ theorem continuous_dP (s : Matrix ι ι ℂ) : Continuous (dP s) := by
 def mvL (g : Matrix ι ι ℂ) : (ι → ℂ) →L[ℝ] (ι → ℂ) :=
   LinearMap.toContinuousLinearMap ((Matrix.mulVecLin g).restrictScalars ℝ)
 
-omit [DecidableEq ι] in
 
 omit [DecidableEq ι] in
 theorem form_mulVec (H a : Matrix ι ι ℂ) (x y : ι → ℂ) :

@@ -45,7 +45,6 @@ theorem isEll_conj {F : Type} [Field F]
 
 variable {F I Gf ι : Type} [Field F] [Group Gf] [Fintype I] [Fintype ι]
 
-open Classical in
 
 def uT (D : Dat F I Gf) (k : I → ℕ) (a : ι → Gf) (T : ℝ) (γ : PG F) (y : D.Y) : ℂ :=
   if IsEll γ then 0 else (D.LamF T γ).indicator (D.kk k a γ) y

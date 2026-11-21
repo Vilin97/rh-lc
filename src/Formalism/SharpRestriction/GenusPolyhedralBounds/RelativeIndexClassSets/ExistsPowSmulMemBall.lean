@@ -52,12 +52,10 @@ def fdeg (ζ : Pts O A) : ℕ := Module.finrank (ResidueField O) (ResidueField (
 def ordAt (ϖ : O) (ζ : Pts O A) (n : ℕ) (a : ↥(As O A)) : WithTop ℤ :=
   (vL ζ a).map (Nat.cast : ℕ → ℤ) + ((-((n : ℤ) * (ep ϖ ζ : ℤ)) : ℤ) : WithTop ℤ)
 
-open Classical in
 
 def ord (ϖ : O) (ζ : Pts O A) (x : A) : WithTop ℤ :=
   if h : ∃ n : ℕ, ϖ ^ n • x ∈ As O A then ordAt ϖ ζ h.choose ⟨ϖ ^ h.choose • x, h.choose_spec⟩ else ⊤
 
-variable (A) in
 
 structure IsUnif (ϖ : O) : Prop where
 
@@ -341,7 +339,6 @@ section Ball
 
 variable {V : Type*} [AddCommGroup V] [Module A V]
 
-variable (A) in
 
 def IsGen (e : V) : Prop := Function.Bijective (fun a : A => a • e)
 

@@ -59,7 +59,6 @@ variable (K : Subgroup G) (F : Submodule ℂ V) [FiniteDimensional ℂ F]
   (hF : ∀ v, v ∈ F ↔ ∀ k ∈ K, ρ k v = v)
   (horb : ∀ y, ((fun k : G => ρ k y) '' (K : Set G)).Finite)
 
-include hunit hF horb in
 
 theorem proj {U : Submodule ℂ V} (hU : Stab ρ U) {x : V} (hx : x ∈ F) :
     ∃ u ∈ U ⊓ F, ∀ y ∈ U, inner ℂ (x - u) y = 0 := by
@@ -80,7 +79,6 @@ theorem proj {U : Submodule ℂ V} (hU : Stab ρ U) {x : V} (hx : x ∈ F) :
   have h3 := inner_self_eq_zero.1 (h2 _ (U.sub_mem huU (hU k u huU)))
   exact (sub_eq_zero.1 h3).symm
 
-include hunit hF horb in
 
 theorem mem_sSup_irr : ∀ x ∈ F, x ∈ sSup {W | IrrSub ρ W} := by
   haveI hfd : ∀ U : Submodule ℂ V, FiniteDimensional ℂ ↥(U ⊓ F) :=

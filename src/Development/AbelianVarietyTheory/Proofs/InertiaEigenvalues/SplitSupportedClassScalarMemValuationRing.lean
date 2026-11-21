@@ -144,7 +144,6 @@ end GlobalTheory.LevelSeriesScal
 
 namespace GlobalTheory.LevelSeriesScal
 
-open GlobalTheory.UnitOverP Formalism.L2.Host in
 
 theorem val_mul_sqrt_unit (D : D7) (c : (AE D)ˣ →* Circle) (χ : Formalism.L2.Host.HChar D.host.E) (hχ : ChrEq c χ)
     (ex : D.what₂.Tau → ℚ) (hex : ∀ τ, HasInfExp D c τ (ex τ)) (p : ℕ) (A : ValuationSubring ℂ) (hp : p.Prime)

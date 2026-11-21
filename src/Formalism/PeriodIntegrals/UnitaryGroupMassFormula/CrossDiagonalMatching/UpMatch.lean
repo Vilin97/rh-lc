@@ -13,8 +13,6 @@ open NumberField IsDedekindDomain Matrix
 
 variable {D : D7} {u : D.what₂.Word}
 
-set_option maxHeartbeats 8000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem upMatch (T : Forms0 D u) : UpDiaMatch0F T := by
   intro v v' hvv a k hk δ hδ c γd hγd κd hx

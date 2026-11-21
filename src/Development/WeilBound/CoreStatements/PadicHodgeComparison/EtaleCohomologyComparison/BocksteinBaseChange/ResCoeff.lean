@@ -187,11 +187,9 @@ def pullS (u : B.Fn.Map F F') (j : ℕ) : Sys.Hom (HS l F' ρ j) (HS l F ρ j) (
   f m := (pullMor l ρ u m).pull j
   comm m x := red_pull l ρ u m j x
 
-variable (k) in
 
 abbrev K₀ : Type := FractionRing (WittVector l k)
 
-variable (k) in
 
 def frob₀ : K₀ l k →ₛₗ[(WittVector.frobenius : WittVector l k →+* WittVector l k)] K₀ l k where
   toFun := WittVector.FractionRing.frobeniusRingHom l k
@@ -201,7 +199,6 @@ def frob₀ : K₀ l k →ₛₗ[(WittVector.frobenius : WittVector l k →+* Wi
     congr 1
     exact IsFractionRing.ringEquivOfRingEquiv_algebraMap _ a
 
-variable (F) in
 
 def D (j : ℕ) : Type 1 := K₀ l k ⊗[WittVector l k] (HS l F ρ j).lim
 
@@ -209,7 +206,6 @@ instance (j : ℕ) : AddCommGroup (D l F ρ j) := inferInstanceAs (AddCommGroup 
 
 instance (j : ℕ) : Module (K₀ l k) (D l F ρ j) := inferInstanceAs (Module (K₀ l k) (K₀ l k ⊗[WittVector l k] (HS l F ρ j).lim))
 
-variable (F) in
 
 def phiD (j : ℕ) : D l F ρ j →+ D l F ρ j := (TensorProduct.map (frob₀ l k) (phiS l F ρ j).lim).toAddMonoidHom
 

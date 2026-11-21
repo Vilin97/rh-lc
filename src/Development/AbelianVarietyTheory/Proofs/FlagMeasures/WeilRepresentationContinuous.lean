@@ -199,9 +199,7 @@ theorem continuous_om_oriented (hom : IsWeilDatumO ψ S T χS χT om) {f : WO S 
     ψ (symplOH S T (w₀ + iotaW σ T S (x q.2)) (u q.2)))) * n1 (symplOH S T w₀ (iotaW σ T S (x q.2))) +
     om q.1 f q.2 * n1 (symplOH S T (w₀ + iotaW σ T S (x q.2)) (u q.2))
 
-open GlobalTheory.Mem.Th in
 
-open GlobalTheory.Mem.Th in
 
 end GlobalTheory.ThetaJointCont
 

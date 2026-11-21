@@ -359,7 +359,6 @@ end Ht
 
 end GlobalTheory.BlockForms.CuspGrowth
 
-open GlobalTheory.BlockForms.CuspGrowth in
 
 theorem GlobalTheory.BlockForms.growth_comp_blockEmb : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
     (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J →

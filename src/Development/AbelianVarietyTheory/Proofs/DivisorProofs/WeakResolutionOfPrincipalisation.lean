@@ -40,7 +40,6 @@ theorem isProjOver_seq {F : Type} [Field F] {Y Y' : Scheme.{0}} (f : Y ⟶ Sp F)
     rw [← heb, Category.assoc]
     exact isProjOver_comp_closed e hproj
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem weak_resolution : GlobalTheory.Published.Principalisation → ∀ (F : Type) [Field F] [CharZero F] (W : Scheme.{0}) [IsIntegral W]
     (p : W ⟶ Sp F) (n : ℕ), IsProjOver p → topologicalKrullDim W = n →

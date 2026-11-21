@@ -199,7 +199,6 @@ theorem final_bound {X M C aI E Φ : ℝ} (hC : 0 ≤ C) (ha : 0 ≤ aI)
 
 end CutOffBoundaryBound
 
-open CutOffBoundaryBound in
 
 theorem CutOffBoundaryBound.proof (hM : ChartMassCompact.Statement) (hL : MaDensLeibniz.Statement)
     (hN : EnergyDensNonneg.Statement) (hS : GradDensSheetBound.Statement) :

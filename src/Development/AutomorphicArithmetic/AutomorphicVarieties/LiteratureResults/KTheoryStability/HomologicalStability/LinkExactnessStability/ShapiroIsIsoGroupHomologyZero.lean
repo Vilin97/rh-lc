@@ -26,7 +26,6 @@ theorem linkExactnessStability_hom_fact {k G : Type} [CommRing k] [Group G] (B :
 
 end GlobalTheory.HomStab.ShapiroZero
 
-open GlobalTheory.HomStab.ShapiroZero in
 
 theorem GlobalTheory.HomStab.isIso_map_ptMap_zero : ∀ (k G H X : Type) [CommRing k] [Group G] [Group H] [MulAction G X] (φ : H →* G) (x : X)
     (hx : ∀ h, φ h • x = x), φ.range = MulAction.stabilizer G x → (∀ y : X, ∃ g : G, g • x = y) →

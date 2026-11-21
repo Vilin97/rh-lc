@@ -126,7 +126,6 @@ theorem tsum_int_lt_top_of_le_geom₂ {a : ℤ → ℝ≥0∞} {M r₁ r₂ : �
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {m : ℕ}
 
-variable (m) in
 
 structure IsCentralCoeff (α : ℂ) (c : GL (Fin m) F → ℂ) : Prop where
   continuous : Continuous c

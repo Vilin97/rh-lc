@@ -385,7 +385,6 @@ theorem transposeGL_smul' (h : ConjAct (GL (Fin n) F)) (x : GL (Fin n) F) :
     transposeGL (h • x) = thetaC h • transposeGL x :=
   transposeGL_smul h x
 
-omit [TopologicalSpace F] [IsTopologicalRing F] in
 
 theorem transl_comp_transposeGL (h : ConjAct (GL (Fin n) F)) (f : GL (Fin n) F → ℂ) :
     (fun x => transl h f (transposeGL x)) = transl (thetaC h) (fun x => f (transposeGL x)) := by
@@ -439,7 +438,6 @@ theorem transl_mem_relT_univ (h : ConjAct (GL (Fin n) F)) {f : GL (Fin n) F → 
     refine add_mem (le_sup_right (a := relSpan (1 : ConjAct (GL (Fin n) F) →* ℂ) univ)
       (Submodule.subset_span ⟨transl h f, hf', rfl⟩)) (sub_mem (hτrel _ f hf) (hτrel h f hf))
 
-omit [IsTopologicalRing F] in
 
 theorem comp_transposeGL_mem_relT_univ {f : GL (Fin n) F → ℂ}
     (hf : f ∈ relT (univ : Set (GL (Fin n) F))) :
@@ -476,7 +474,6 @@ section Fibre
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ}
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 
 theorem exists_symm_conj_transposeGL (x : GL (Fin n) F) :
     ∃ S : GL (Fin n) F, transposeGL S = S ∧ S * x * S⁻¹ = transposeGL x := by

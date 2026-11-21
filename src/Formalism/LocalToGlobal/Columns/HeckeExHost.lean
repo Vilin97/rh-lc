@@ -29,7 +29,6 @@ section Gen
 
 variable {X : Fields}
 
-open Classical in
 
 theorem conjO_conjO' (x : 𝓞 X.E) : X.conjO (X.conjO x) = x := by
   apply RingOfIntegers.ext
@@ -59,9 +58,7 @@ section Host
 variable {R : Formalism.BasicNotions.Ranks} (H : Formalism.BasicNotions.Host R) (ι : Qb →+* ℂ) (LL : Fld) [FiniteDimensional ℚ LL] [Normal ℚ LL]
   (hE : H.EQ ≤ LL)
 
-open Classical in
 
-open Classical in
 
 end Host
 

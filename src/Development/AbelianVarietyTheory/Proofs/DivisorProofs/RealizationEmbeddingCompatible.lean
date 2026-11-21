@@ -101,6 +101,5 @@ theorem readExt_injective
 
 end Generic
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.BigOn.Exp

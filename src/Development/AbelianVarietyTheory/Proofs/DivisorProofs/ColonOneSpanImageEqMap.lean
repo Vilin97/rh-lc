@@ -41,8 +41,6 @@ private theorem one_mem_colon_one_smul_of_fg {E : Type} [Field E] [NumberField E
   rw [mul_comm, ← Algebra.smul_def]
   exact Submodule.smul_mem_smul hi ha
 
-open NumberField in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.colon_one_span_image_eq_map {E K : Type} [Field E] [NumberField E] [Field K]
     [NumberField K]

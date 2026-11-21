@@ -23,7 +23,6 @@ variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
 def rtFun (h : GA E a) (φ : XB E a) : XB E a := φ.compContinuous ⟨fun g => g * h, continuous_mul_const h⟩
 
-variable (E a) in
 
 def Rt : GA E a →* (XB E a →L[ℂ] XB E a) where
   toFun h := LinearMap.mkContinuous
@@ -72,7 +71,6 @@ variable [IsTotallyComplex E]
 
 def cInf : GA E a →* GL (Fin a) (Cinf E) := GeneralLinearGroup.map (pInf E)
 
-variable (E a) in
 
 def repI : GL (Fin a) (Cinf E) →* (XB E a →L[ℂ] XB E a) := (Rt E a).comp (infGL E a)
 
@@ -133,13 +131,11 @@ def G5b : Prop := ForE fun E _ _ _ a => ∀ S : Finset (Pl E),
 def G6 : Prop := ForE fun E _ _ _ a => ∀ ψ, StdPsi ψ → ∀ (S : Finset (Pl E)) (Y Y' : Submodule ℂ (XB E a)),
   YOK ψ S Y → YOK ψ S Y' → ∀ n m, n + 1 < a → St ψ S Y Y' n m → St ψ S Y Y' (n + 1) m
 
-open Classical in
 
 def G7 : Prop := ForE fun E _ _ _ a => ∀ ψ, StdPsi ψ → ∀ (S : Finset (Pl E)) (Y Y' : Submodule ℂ (XB E a)),
   YOK ψ S Y → YOK ψ S Y' → ∀ n m, ∀ w ∈ S, m w + 1 < a → St ψ S Y Y' n m →
     St ψ S Y Y' n (Function.update m w (m w + 1))
 
-open Classical in
 
 def FourierInductionSteps : Prop := ForE fun E _ _ _ a => ∀ ψ, StdPsi ψ → ∀ (S : Finset (Pl E)) (Y Y' : Submodule ℂ (XB E a)),
   YOK ψ S Y → YOK ψ S Y' → St ψ S Y Y' 0 (fun _ => 0) → St ψ S Y Y' (a - 1) fun w => if w ∈ S then a - 1 else 0

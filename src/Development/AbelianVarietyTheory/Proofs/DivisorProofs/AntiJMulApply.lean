@@ -12,7 +12,6 @@ open Formalism.UG
 
 namespace GlobalTheory.SatakeWeyl
 
-open Classical in
 
 def cellSum {G : Type} [Group G] (K N : Subgroup G) (h : G → ℂ) (g : G) : ℂ :=
   ∑ᶠ x : G ⧸ K, if ∃ u ∈ N, ∃ k ∈ K, x.out = g * u * k then h x.out else 0

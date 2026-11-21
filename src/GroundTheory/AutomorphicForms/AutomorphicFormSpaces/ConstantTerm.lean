@@ -158,7 +158,6 @@ theorem exists_isCompact_superset_unipFundamentalDomain :
   intro X hX p _
   exact ⟨subset_closure (hX p (mem_univ p)).1, (hX p (mem_univ p)).2⟩
 
-variable (r) in
 
 def constantTerm (φ : AdelicGLn.AdelicGL K n → ℂ) (g : AdelicGLn.AdelicGL K n) : ℂ :=
   ∫ X in unipFundamentalDomain K n r, φ (unipGL X * g) ∂unipMeasure K n r
@@ -205,7 +204,6 @@ theorem constantTerm_rightTranslate (φ : AdelicGLn.AdelicGL K n → ℂ) (h g :
 def IsCuspidal (φ : AdelicGLn.AdelicGL K n → ℂ) : Prop :=
   ∀ r : ℕ, 0 < r → r < n → ∀ g, constantTerm r φ g = 0
 
-variable (K n) in
 
 def cuspForms : Submodule ℂ (AdelicGLn.AdelicGL K n → ℂ) where
   carrier := {φ | IsAutomorphicForm φ ∧ IsCuspidal φ}

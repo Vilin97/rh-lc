@@ -110,7 +110,5 @@ end GlobalTheory.AutPts
 
 namespace GlobalTheory.AutPts
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.AutPts

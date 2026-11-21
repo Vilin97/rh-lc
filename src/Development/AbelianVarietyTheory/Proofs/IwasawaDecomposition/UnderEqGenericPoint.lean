@@ -240,7 +240,6 @@ theorem refines_comb {κ : Type} [Fintype κ] (M : κ → HermLB p) (n : κ → 
     Finset.sum_mul]
   exact Finset.sum_congr rfl fun i hi => (if_neg (Finset.ne_of_mem_erase hi)).symm
 
-open Polynomial in
 
 theorem step_of_linear {R : Type*} [CommRing R] [Algebra ℝ R] (Φ : R →ₗ[ℝ] ℝ) (x y z : R) (D : ℕ) (G : ℤ → ℝ) (c : ℝ)
     (hG : ∀ a b : ℤ, Φ (((a : ℝ) • x + ((b : ℝ) • y + z)) ^ (D + 1)) = G (a + b))

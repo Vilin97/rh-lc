@@ -54,8 +54,6 @@ private theorem exists_pos_form_rt_eq_im_mul {D : _root_.ReciprocityTheory.Chart
   rw [smul_dotProduct, smul_eq_mul, Complex.mul_im, h0]
   ring
 
-open NumberField in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} in
 
 theorem _root_.GlobalTheory.CompRat.splitLat_of_definite : ∀ (E : Type) [Field E] [NumberField E]
     [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H),

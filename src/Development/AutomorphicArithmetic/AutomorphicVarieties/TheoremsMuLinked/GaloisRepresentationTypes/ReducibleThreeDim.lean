@@ -260,4 +260,3 @@ end Alg
 
 end UpperTheory.V.Th.ReducibleThreeDim
 
-open UpperTheory.V.Th.ReducibleThreeDim in

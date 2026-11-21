@@ -47,8 +47,6 @@ theorem linearIndependent_toCotangent {R : Type} [CommRing R] [IsLocalRing R] [I
   rw [← Set.range_comp] at hsp
   exact hsp.ge
 
-open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX) in
-open GlobalTheory.AdaptedFrame in
 
 theorem exists_frame_of_rsp : ∀ (k : Type) [Field k] [CharZero k] (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (q : Y ⟶ Sp k) (n : ℕ) [SmoothOfRelativeDimension n q] (y : Y) (U : Y.affineOpens) (hy : y ∈ U.1) (c : ℕ) (a : Fin c → Γ(Y, U.1)), FinalTheorems.Rsp (Y.presheaf.stalk y) c (fun i => Y.presheaf.germ U.1 y hy (a i)) → ∃ (V : Y.Opens) (hV : V ≤ U.1) (_ : y ∈ V) (z : Fin n → Γ(Y, V)) (e : Fin c ↪ Fin n), (∀ j, z (e j) = resG Y hV (a j)) ∧ IsFrame (dOn q z) := by
   classical

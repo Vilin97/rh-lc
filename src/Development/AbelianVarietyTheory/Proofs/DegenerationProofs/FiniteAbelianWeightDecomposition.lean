@@ -98,7 +98,6 @@ theorem baseChange_avg_of_weight (hu : u * (Fintype.card T : o) = 1) (A : Type) 
 
 end FiniteAbelianWeights
 
-open FiniteAbelianWeights in
 
 theorem finiteAbelian_weightDecomposition :
     ∀ (o : Type) [CommRing o] [IsDomain o] (N : ℕ) (ζ : o), 0 < N → IsUnit (N : o) →

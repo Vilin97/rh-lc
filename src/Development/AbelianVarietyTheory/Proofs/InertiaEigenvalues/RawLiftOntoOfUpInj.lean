@@ -18,7 +18,6 @@ open GlobalTheory.RawLift
 
 namespace GlobalTheory
 
-set_option maxHeartbeats 1000000 in
 
 theorem rawLift_onto_of_upInj : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Laws R F → R.FullP → RatSpan R → (∀ i, UpInj R i A.μ0) → ThOnto R := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F hL hF hS hU i

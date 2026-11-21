@@ -259,7 +259,6 @@ theorem soCoinv_of (NB : NarrowBernstein) (hD : DictSt) (hK : GlobalTheory.ThK.K
     rw [← hb.2.1 hχ.1 hs e]
     exact hχ.2
 
-open GlobalTheory.PRep GlobalTheory.SmGL in
 
 theorem soCoinv_of_narrow :
     (∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (a b : ℕ)

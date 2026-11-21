@@ -28,7 +28,6 @@ lemma inner_iota_eq_trace (x y : E) :
   intro w _
   simp only [cc, map_mul, IsCMField.complexEmbedding_complexConj]
 
-variable (E) in
 
 noncomputable def ed : Basis (Free.ChooseBasisIndex ℤ (𝓞 E)) ℚ E :=
   (Algebra.traceForm ℚ E).dualBasis (traceForm_nondegenerate (K := ℚ) (L := E)) (integralBasis E)
@@ -38,7 +37,6 @@ lemma trace_ed (i j : Free.ChooseBasisIndex ℤ (𝓞 E)) :
   rw [← Algebra.traceForm_apply]
   exact LinearMap.BilinForm.apply_dualBasis_right _ (Algebra.traceForm_isSymm ℚ) _ i j
 
-variable (E) in
 
 noncomputable def bd (j : Free.ChooseBasisIndex ℤ (𝓞 E)) : VS E := iota E (2 * cc (ed E j))
 

@@ -183,7 +183,6 @@ end GlobalTheory.Mem.Chr.DetSD
 
 namespace GlobalTheory.Mem.Chr
 
-open Classical in
 
 theorem ordSub_detSub_selfDual : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (N : ℕ), letI := H.cmStar; ∀ (M : SDLat H.E N) (w w' : HeightOneSpectrum (𝓞 H.E)), IsConjPl H w w' → ordSub w (detSub M.1) + ordSub w' (detSub M.1) = 0 := by
   intro R H N

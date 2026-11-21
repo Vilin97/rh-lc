@@ -59,7 +59,6 @@ theorem detModule_rhs (K : Type) [Field K] [NumberField K] (n r : ℕ) (X Y : UP
 end GlobalTheory.CompanionTheory.Latexp
 
 namespace GlobalTheory.CompanionTheory.Latexp
-open GroundTheory.Automorphic.Reduction in
 
 theorem exponent_mem_finset : ∀ (K : Type) [Field K] [NumberField K] (n r : ℕ), 0 < n → ∀ (Q : Set (AdelicGLn.AdelicGL K n)), IsCompact Q → ∃ M : Finset ℤ, ∀ (t : ℝ) (X Y : UPos n r → 𝔸[K]), ∀ q ∈ Q, ∀ (γ₀ : GL (Fin n) K) (m : ℤ), AdelicGLn.diagonal K n γ₀ * (PositivityTheory.Rg.Rs.An.tor K fun _ : Fin n => (1 : ℝ)) ^ m = unipGL X * PositivityTheory.Rg.Rs.An.aR K n r t * q * (PositivityTheory.Rg.Rs.An.aR K n r t)⁻¹ * (unipGL Y)⁻¹ → m ∈ M := by
   intro K _ _ n r hn Q hQ

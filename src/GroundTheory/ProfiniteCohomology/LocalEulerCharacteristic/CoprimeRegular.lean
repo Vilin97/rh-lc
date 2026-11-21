@@ -26,7 +26,6 @@ theorem regularTensorEquiv_single_tmul (g : Γ) (r : k) (n : N) :
   simp [regularTensorEquiv, finsuppScalarLeft_apply_tmul_apply, MonoidAlgebra.coeffLinearEquiv,
     MonoidAlgebra.coeff_single, Finsupp.single_apply]
 
-omit [Fintype Γ] in
 
 theorem regularTensorEquiv_tprod_apply (h : Γ) (x : MonoidAlgebra k Γ ⊗[k] N) (γ : Γ) :
     regularTensorEquiv (((leftRegular k Γ).tprod σ) h x) γ =

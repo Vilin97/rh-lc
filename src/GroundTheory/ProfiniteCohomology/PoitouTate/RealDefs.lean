@@ -115,9 +115,7 @@ theorem ptTHatMk_apply (ξ : ptTLocal φ ψ M 0) :
     ptTHatMk φ ψ M ξ = (ξ.1, fun w => Submodule.Quotient.mk (ξ.2 w)) :=
   rfl
 
-omit [IsTopologicalGroup G] in
 
-omit [IsTopologicalGroup G] in
 
 def ptTGlobalToLocalHat : cohomology M 0 →+ ptTLocalHat φ ψ M :=
   (ptTHatMk φ ψ M).comp (ptTGlobalToLocal φ ψ M 0).hom.toAddMonoidHom
@@ -126,7 +124,6 @@ theorem ptTGlobalToLocalHat_apply (x : cohomology M 0) :
     ptTGlobalToLocalHat φ ψ M x = ptTHatMk φ ψ M ((ptTGlobalToLocal φ ψ M 0).hom x) :=
   rfl
 
-omit [∀ w, Fintype (F w)] in
 
 end Sequence
 
@@ -170,7 +167,6 @@ theorem ptTCompactDualMap_apply {r s : ℕ} (h : r + s = 3) (x : tateCompactCoho
       zmodToQZ n (t (tateCompactCupRes φ ψ (evalPairing D M) h x y)) :=
   rfl
 
-omit [Fintype ι] [Fintype κ] in
 
 theorem tateCompactCupRes_ptTLocalToCompact {r s : ℕ} (h : r + s = 2) (h' : r + 1 + s = 3)
     (ξ : ptTLocal φ ψ M r) (y : cohomology (dualRep D M) s) :
@@ -180,13 +176,9 @@ theorem tateCompactCupRes_ptTLocalToCompact {r s : ℕ} (h : r + s = 2) (h' : r 
           fun w => cupPairing (ptLocalEval ψ D M w) h (ξ.2 w) (ptRes ψ (dualRep D M) w s y)) :=
   tateCompactCup_tateLocalToCompact φ ψ (evalPairing D M) _ _ _ _ h h' ξ y
 
-omit [Fintype ι] [Fintype κ] [∀ w, Fintype (F w)] [Finite M] in
 
-omit [Fintype ι] [Fintype κ] in
 
-omit [Fintype ι] [Fintype κ] [Finite M] in
 
-omit [Fintype ι] [Fintype κ] in
 
 end Pairings
 

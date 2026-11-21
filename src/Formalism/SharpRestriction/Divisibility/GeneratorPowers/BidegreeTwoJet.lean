@@ -34,7 +34,6 @@ variable {V : Type} [CommRing V] [IsDomain V] {I : Ideal V} {D' : DegData V I}
 
 end Coord
 
-open IsLocalRing in
 
 end BidegreeTwoJet
 end Formalism.MainNotions.ModuliIntegralCharts.H1

@@ -39,8 +39,6 @@ end Pull
 
 variable {F : Type} [Field F] [NumberField F] {Y : Var F}
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
 end GlobalTheory.AmpleModelPos

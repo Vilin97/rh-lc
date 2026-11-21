@@ -19,7 +19,6 @@ section NabAux
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H}
 
-open Classical in
 
 def colCoef {k : Type} [Field k] {n : ℕ} (B : ∀ f : Lt1 Dw, Fin (rk f) → Fin n → k) (cx : Lt1 Dw → ℕ)
     (lam : Let cx) (ℓ : LtN Dw n) : k :=

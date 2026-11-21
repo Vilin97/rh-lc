@@ -50,7 +50,6 @@ end GlobalTheory.CartanBound
 
 namespace GlobalTheory
 
-open Matrix GlobalTheory.CartanBound in
 
 theorem isCartan_entries_bounded : ∀ {n : ℕ} (M θ : Matrix (Fin n) (Fin n) ℂ), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsCartan M θ →
     ∃ R : ℝ, ∀ A : Matrix (Fin n) (Fin n) ℂ, A.transpose * M * A.map star = M → A * θ = θ * A →

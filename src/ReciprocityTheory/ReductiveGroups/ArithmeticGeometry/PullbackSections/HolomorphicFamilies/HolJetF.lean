@@ -15,7 +15,6 @@ open scoped ContDiff
 
 variable {Y : Scheme.{0}}
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem specMap_comp_appLE {A B : CommRingCat.{0}} (χ : A ⟶ B) (q : Spec A ⟶ Y) (U : Y.Opens)
     (h : ⊤ ≤ (Spec.map χ ≫ q) ⁻¹ᵁ U) (hq : ⊤ ≤ q ⁻¹ᵁ U) :
@@ -181,7 +180,6 @@ theorem isLocalHom_jetTan (ℓ : Fin 1 × Fin g) :
   have := hnil.isUnit_add_left_of_commute hu (Commute.all _ _)
   simpa using this
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem jetPt_tan (e : (Fin g → ℂ) → (Sp ℂ ⟶ Y)) (hol : IsHolFam e) (ℓ : Fin 1 × Fin g)
     (v : Sp (DualNumber ℂ) ⟶ Y) (hd : IsDerivAt0 e (Pi.single ℓ.2 1) v) :

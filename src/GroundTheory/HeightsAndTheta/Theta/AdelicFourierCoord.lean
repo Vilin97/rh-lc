@@ -141,7 +141,6 @@ theorem comp_mulVec_mem_schwartzBruhatPi (hNM : N * M = 1) (hMN : M * N = 1)
   | add G H _ _ hG hH => exact add_mem hG hH
   | smul c G _ hG => exact Submodule.smul_mem _ c hG
 
-omit [Fintype κ] [DecidableEq ι] [DecidableEq κ] in
 
 theorem measurePreserving_mulVec_fin {n : ℕ} (M N : Matrix (Fin n) (Fin n) K) (hNM : N * M = 1)
     (hMN : M * N = 1) :
@@ -210,7 +209,6 @@ theorem measurePreserving_mulVec (hNM : N * M = 1) (hMN : M * N = 1) :
   rw [hfun]
   exact h3.comp (h2.comp h1)
 
-omit [Fintype κ] [DecidableEq κ] in
 
 theorem adelicFourierPi_comp_mulVec (M N : Matrix ι ι K) (hNM : N * M = 1) (hMN : M * N = 1)
     (F : (ι → 𝔸[K]) → ℂ) (y : ι → 𝔸[K]) :

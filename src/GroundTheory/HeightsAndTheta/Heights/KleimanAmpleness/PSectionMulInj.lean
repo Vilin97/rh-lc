@@ -42,7 +42,6 @@ theorem exists_of_mem_idealMod (J : Ideal (Poly S N)) (I : Chart x) {z : Ω} (hz
     refine ⟨F * G, m₀ * m, e₀ + e, J.mul_mem_left _ hG, mul_mem hm₀ hm, hF.mul hGe, hm₀e.mul hme, ?_⟩
     rw [chartRing_smul_def, hr, map_mul, map_mul, div_mul_div_comm]
 
-omit [Algebra S Ω] in
 
 theorem not_mem_of_mem_monos {pp : Ideal (Poly S N)} (hpp : pp.IsPrime) {I : Chart x}
     (hX : ∀ j ∈ I.1, (X j : Poly S N) ∉ pp) {m : Poly S N} (hm : m ∈ monos I.1) : m ∉ pp := by
@@ -84,7 +83,6 @@ theorem mem_or_mem {pp : Ideal (Poly S N)} (hpp : pp.IsPrime) (hZ : primeOf (S :
 
 end SectionMulInj
 
-open SectionMulInj in
 
 theorem SectionMulInj.proof : SectionMulInj.Statement.{u, w} := by
   intro k _ Ω _ _ N x pp hpp hhom hZ D M s ⟨f, hf, hfp⟩ I y hy hsy

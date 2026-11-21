@@ -243,7 +243,6 @@ theorem sameSS_sumLat (hl : Irreducible Γ.lam) (hinj : Function.Injective (alge
     obtain ⟨d, hd⟩ := hc c g
     exact ⟨d * (e x).2 c, by rw [smul_eq_mul, smul_eq_mul, ← sub_mul, hd, mul_assoc]⟩
 
-omit [IsTopologicalRing LL] in
 
 theorem admissible_quotient_of_fullRepresentation {t : ℕ} {Ut : ZMod n → Multiset ℤ} {T : LocLat G Qp LL O} (hT : Full PD emb Γ t Ut T)
     {M : Type} [AddCommGroup M] [Module O M] [Finite M] (π : Representation O G M) (q : ↥T.L.T →ₗ[O] M)

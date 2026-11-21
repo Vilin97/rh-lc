@@ -79,7 +79,6 @@ noncomputable section
 
 namespace GlobalTheory.CuspGeo
 
-open Formalism.MainNotions.LeviCoordinates in
 
 theorem nearInst : ∀ I : AutInst, NearInst I := by
   intro I Kp hKo

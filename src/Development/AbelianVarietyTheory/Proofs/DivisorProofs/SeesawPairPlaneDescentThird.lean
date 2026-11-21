@@ -86,9 +86,6 @@ private theorem rho_om {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d
   rw [hact] at himpl
   exact himpl.symm
 
-open GlobalTheory.AnisRatInv in
 
 end
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in

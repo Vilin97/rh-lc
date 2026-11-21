@@ -168,7 +168,6 @@ theorem sd_row (j : ℕ) (hj : j ≤ D.R.m) : IsSelfDualC (G.V (.grid D.R.m j)) 
 theorem sd_top (j : ℕ) (hj : j ≤ D.R.m) : IsSelfDualC (G.V (.top j)) (G.Λ (.top j)) :=
   (G.isV (X := .top j) hj fun _ hk => by cases hk).sd
 
-variable {G} in
 
 theorem vac_moved (W : G.Weil) (ρ : RealMatch W) (t : T) (j : ℕ) (hj : j < D.R.m) {e : AE D} (he : IsIdemSum e (locPl G t))
     (Sf : Finset (GlobalTheory.FinPl.Pl D)) (hS : ∀ w ∈ locPl G t, w.under (𝓞 D.host.F) ∈ Sf) (tame : ∀ v, Tame D v)
@@ -189,7 +188,6 @@ end Row
 variable {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} (ch : Choice R)
 
-set_option maxHeartbeats 1000000 in
 
 theorem offAt_of_shape (hS : ShapeAt ch) (hB : ∀ t, ∃ b, IsBase t ch.S.B b) : OffAt ch := by
   classical

@@ -48,9 +48,6 @@ private lemma twoDelta_sub_eq_two_mul_blockWt_sub {X : _root_.ReciprocityTheory.
       omega
   exact_mod_cast key
 
-open NumberField Topology in
-open scoped ContDiff in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.ThetaRecordCompare.levi_twoDelta {X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r} {de : _root_.ReciprocityTheory.ChartRestriction.G.FD.Wt X.Ψ r}
     (h : _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightedNorm.IsTwoDelta X de) {x0 : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r}
@@ -86,9 +83,6 @@ theorem _root_.GlobalTheory.ThetaRecordCompare.gapsGe_mono {X : _root_.Reciproci
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightedNorm.GapsGe X la g' :=
   fun τ i j hij hne => hg.trans (h τ i j hij hne)
 
-open NumberField Topology in
-open scoped ContDiff in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.ThetaRecordCompare.cusp_of_gaps {X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r} (hn : 2 ≤ _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.nd X)
     (h0 : 0 < X.p0) (hr : X.p0 < r) {la : _root_.ReciprocityTheory.ChartRestriction.G.FD.Wt X.Ψ r}
@@ -213,10 +207,6 @@ private lemma diagForm_Fp_sub_pos (A : _root_.ReciprocityTheory.ChartRestriction
   have h3 := mul_pos (mul_pos two_pos hc) h1
   linarith
 
-open NumberField Topology in
-open scoped ContDiff in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
-variable {X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r} in
 
 theorem _root_.GlobalTheory.ThetaRecordCompare.arch_gaps (A : _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.ArchInM X) (h0 : 0 < X.p0)
     (hr : X.p0 < r) :

@@ -75,7 +75,6 @@ def linearGradedMap : grading W →+*ᵍ grading W' where
 
 variable (hs : ∀ i, coord W' i ∈ Ideal.span (Set.range L))
 
-include hs in
 
 theorem irrelevant_le_map_linearGradedMap :
     irrelevant (grading W') ≤ (irrelevant (grading W)).map (linearGradedMap W L hL h) := by
@@ -93,7 +92,6 @@ def linearHom : scheme W' ⟶ scheme W :=
 variable {A : Type u} [CommRing A] (ρ : R →+* A) (P : Fin 3 → A)
   (hP : IsUnimodularSol (W'.map ρ) P)
 
-include h hs in
 
 theorem isUnimodularSol_linear :
     IsUnimodularSol (W.map ρ) (evalHom W' ρ P hP.equation ∘ L) := by
@@ -258,7 +256,6 @@ theorem IsSumTriple.baseChange {R : Type*} [CommRing R] [Algebra R A] [Algebra R
   have := h.map (g : A →+* B)
   rwa [WeierstrassCurve.map_baseChange] at this
 
-open WeierstrassCurve.Projective in
 
 theorem IsSumTriple.equiv_add {k : Type*} [Field k] {V : WeierstrassCurve k} {P Q T : Fin 3 → k}
     (h : IsSumTriple V P Q T) (hP : V.toProjective.Nonsingular P)
@@ -321,7 +318,6 @@ theorem comp_ptOver_eq_fieldAdd {A : Type u} [CommRing A] [Algebra R A] {P Q T :
   rw [specOverMap_ptOver, specOverMap_ptOver, specOverMap_ptOver]
   exact (fieldAdd_ptOver W _ _ _ (h.baseChange g)).symm
 
-omit [W.IsElliptic] in
 
 theorem exists_nhds_eq_ptOver {T : Over (Spec (.of R))} (p q : T ⟶ schemeOver W) (t : T.left) :
     ∃ (A : Type u) (_ : CommRing A) (_ : Algebra R A) (j : specOver R A ⟶ T) (P Q : Fin 3 → A)

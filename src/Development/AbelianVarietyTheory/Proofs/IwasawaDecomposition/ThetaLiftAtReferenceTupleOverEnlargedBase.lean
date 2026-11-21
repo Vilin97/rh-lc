@@ -47,9 +47,7 @@ section Comparison₂
 variable {B B' : Base} {C : Cols B} {C' : Cols B'} {a : Late B C} {a' : Late B' C'}
   {V W : HSp a.D} {V' W' : HSp a'.D} {S : a.D.what₂.Tau → SPar} {S' : a'.D.what₂.Tau → SPar} {M : DSModel W S} {M' : DSModel W' S'}
 
-set_option hygiene false in
 
-set_option hygiene false in
 
 theorem isAutFunSm_iff (hP : B'.toPre = B.toPre) (hW : HEq W' W) {θ : InfFam a.D} {θ' : InfFam a'.D} (hθ : HEq θ' θ)
     {φ : GA a.D W → ℂ} {φ' : GA a'.D W' → ℂ} (hφ : HEq φ' φ) : IsAutFunSm θ' W' φ' ↔ IsAutFunSm θ W φ := by
@@ -150,7 +148,6 @@ section Fields
 
 variable {B B' : Base} {C : Cols B} {C' : Cols B'} {a : Late B C} {a' : Late B' C'}
 
-set_option hygiene false in
 
 theorem m_eq (hP : B'.toPre = B.toPre) : a'.D.R.m = a.D.R.m := by
   rcases B' with ⟨P'⟩
@@ -234,7 +231,6 @@ theorem lift_of (hP : B'.toPre = B.toPre) {i : Fin a.D.R.m} {i' : Fin a'.D.R.m} 
 
 end Fields
 
-set_option maxHeartbeats 1000000 in
 
 theorem liftAt_of_rSide : ∀ {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T} {w' : ColW B' f' T'}
   {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl}

@@ -34,7 +34,6 @@ def matrixCoordT (x : Matrix n n X) : n × n → X :=
 omit [Fintype n] in
 theorem matrixCoord_neg [Neg X] (x : Matrix n n X) : matrixCoord (-x) = -matrixCoord x := rfl
 
-variable (n X) in
 
 def matrixCoordHomeomorph [TopologicalSpace X] : Matrix n n X ≃ₜ (n × n → X) where
   toFun := matrixCoord
@@ -44,7 +43,6 @@ def matrixCoordHomeomorph [TopologicalSpace X] : Matrix n n X ≃ₜ (n × n →
   continuous_toFun := continuous_pi fun p ↦ (continuous_apply p.2).comp (continuous_apply p.1)
   continuous_invFun := continuous_pi fun i ↦ continuous_pi fun j ↦ continuous_apply (i, j)
 
-variable (n X) in
 
 def matrixCoordTHomeomorph [TopologicalSpace X] : Matrix n n X ≃ₜ (n × n → X) where
   toFun := matrixCoordT

@@ -179,7 +179,6 @@ theorem pair_comm (p : D.what₂.Tau → ℕ) (g : GLR D n) (τ : D.what₂.Tau)
         rw [Finset.sum_ite_eq']
         simp
 
-open GlobalTheory.IndefiniteRowSideFullHecke.RaisingLoweringOperators in
 
 theorem fockSubst_fockT (D : D7) (m n : ℕ) (p : D.what₂.Tau → ℕ) (g : GLR D n) (τ : D.what₂.Tau)
     (Y : Matrix (Fin m) (Fin m) ℂ) (P : PolF D m n) :

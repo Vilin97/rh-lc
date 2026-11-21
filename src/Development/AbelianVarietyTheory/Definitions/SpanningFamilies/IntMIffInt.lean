@@ -22,7 +22,6 @@ def Quad {M : Type} [AddCommGroup M] (S : AddSubgroup M) (f : M → ℂ) : Prop 
 
 variable {κ ι : Type} [Fintype κ] [Fintype ι]
 
-open Classical in
 
 def Shape (φ : Matrix κ ι ℚ → ℂ) : Prop :=
   IsSB φ ∧ ∃ (c : ℂ) (a : Matrix κ ι ℚ) (S : AddSubgroup (Matrix κ ι ℚ)) (f : Matrix κ ι ℚ → ℂ),
@@ -74,9 +73,7 @@ theorem Ph.inv {a : ℂ} (ha : Ph a) : Ph a⁻¹ := by
   obtain ⟨m, hm, h⟩ := ha
   exact ⟨m, hm, by rw [inv_pow, h, norm_inv, Complex.ofReal_inv, inv_pow]⟩
 
-omit [Fintype κ] [Fintype ι] in
 
-open Classical in
 
 end
 

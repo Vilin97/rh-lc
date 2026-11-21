@@ -71,7 +71,6 @@ end GlobalTheory.SqLevel
 
 namespace GlobalTheory
 
-open RigidIsoCube SqLevel in
 
 theorem sq_iso_carries_sq_cube : GlobalFnsSt → ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (I : Ideal R), AdmBase R I →
     ∀ (D D' : DegData R I) (A A' : PolAV (Spec (CommRingCat.of (FractionRing R)))) (G : Over (Spec (CommRingCat.of R)))

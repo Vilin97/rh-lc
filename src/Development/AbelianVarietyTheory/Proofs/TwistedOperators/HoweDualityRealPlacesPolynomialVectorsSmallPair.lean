@@ -35,7 +35,6 @@ private theorem acts_zero₀ (T : Module.End ℂ ((κ → AF F) → ℂ)) :
   have e : tens (evI F) (⇑(0 : SInf F κ)) r = 0 := by funext y; simp [tens]
   rw [e, map_zero]
 
-open scoped Classical in
 
 theorem acts_comb_eq (T : Module.End ℂ ((κ → AF F) → ℂ)) (c : ℂ) {f f₁ g g₁ h : SInf F κ}
     (hf : Acts (evI F) ⇑T ⇑f ⇑f₁) (hg : Acts (evI F) ⇑T ⇑g ⇑g₁) (hh : Acts (evI F) ⇑T ⇑(c • f + g) ⇑h) :

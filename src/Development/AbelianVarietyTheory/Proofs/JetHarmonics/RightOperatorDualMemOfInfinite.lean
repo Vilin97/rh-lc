@@ -149,7 +149,6 @@ private lemma isPol_eq_zero_of_infinite_zeros {f : ℂ → V} (hf : _root_.Globa
     (hS.mono fun x hx => by simp [← hp, h0 x hx])
   simp [hp, this]
 
-open MeasureTheory in
 
 theorem _root_.GlobalTheory.RhvPoly.rhv_mem_of_infinite : ∀ (P : _root_.Formalism.FourierDecayAlt.M.Par) (A : Type) [Ring A] [StarRing A] [Algebra ℂ A]
     (d : _root_.Formalism.FourierDecayAlt.Q.NFData P A) (K : Submodule ℂ A) (S : Set ℂ), S.Infinite →

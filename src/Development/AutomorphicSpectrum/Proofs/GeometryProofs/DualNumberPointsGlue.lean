@@ -94,7 +94,6 @@ theorem compat_of_pair {X : Scheme.{0}} {J : Type} (f : J → R)
     Category.assoc]
   exact congrArg (Spec.map (CommRingCat.ofHom χ) ≫ ·) e
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem glue_of_compat {X : Scheme.{0}} {J : Type} (f : J → R) (hf : Ideal.span (Set.range f) = ⊤)
     (w : ∀ i, Sp (DualNumber (Localization.Away (f i))) ⟶ X)

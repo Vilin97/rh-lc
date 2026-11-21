@@ -48,7 +48,6 @@ def sigTow (D : D7) (t : ℕ) : Tow D t where
       rw [Nat.mul_succ]
       omega) _ _ (fun i => (negTail_false _ _ _ (by have := i.isLt; omega)).symm) x y
 
-open Classical in
 
 def towC (D : D7) (t : ℕ) : Tow D t := if h : t = D.R.t then h ▸ recTow D else sigTow D t
 
@@ -56,7 +55,6 @@ def SpSig (D : D7) : Prop :=
   ∀ j, j ≤ D.R.m → (D.sp.X j).IsPosDef ∧
     ∀ τ, (D.sp.Y j).sig τ = (D.R.r + j * D.R.t - (D.R.m - j) / 2, (D.R.m - j) / 2)
 
-open Classical in
 
 def lowC (V : HSp D) (i : ℕ) : HSp D :=
   if i = 0 then V else if h : ∃ V' : HSp D, IsWittLower V V' i then fixSig h.choose else V
@@ -73,7 +71,6 @@ def TopInt (D : D7) : Prop := ∀ (A B : HSp D) (ι : B.V →ₗ[D.host.E] A.V),
   ∀ (φ : GA D A → ℂ) (F : GA D B → ℂ), IsAutFunSm (th0 D) A φ → IsAutFunSm (th0 D) B F → IsCuspFun B F →
     IntegrableOn (fun h => star (φ (s h)) * F h) 𝓕 μ
 
-open Classical in
 
 section Bessel
 
@@ -113,7 +110,6 @@ section Bessel2
 
 variable {ψ : AddChar (AF D.host.F) ℂ} {A B : HSp D} {ι : A.V →ₗ[D.host.E] B.V}
 
-open Classical in
 
 end Bessel2
 

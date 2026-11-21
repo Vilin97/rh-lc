@@ -17,7 +17,6 @@ namespace Formalism.L2.Th1.F
 
 namespace TaylorSigmaUniqueness
 
-open PowerSeries in
 
 lemma formal_unique (P U V : PowerSeries ℂ) (hV : X * derivative ℂ V = -(X * P))
     (hV0 : constantCoeff V = 0) (hU : X * derivative ℂ U = X * (V * U))
@@ -108,7 +107,6 @@ lemma ode_v (L : PeriodPair) :
 
 end TaylorSigmaUniqueness
 
-open TaylorSigmaUniqueness in
 
 theorem taylorSigma_of (hr : TaylorRing) (hd : TaylorDeriv) : TaylorSigma := by
   intro L
@@ -186,7 +184,6 @@ lemma dblInt_eq (e : PowerSeries ℂ) : C.dblInt e = B.prim (B.prim e) := by
 
 end TaylorSigmaUniqueness
 
-open TaylorSigmaUniqueness in
 
 theorem taylorSgStar'_of (h : TaylorSgStar) : TaylorSgStar' := by
   intro L

@@ -162,8 +162,6 @@ theorem trace_gen_mem (hT : LawsFull T) (hj : InR D j) (hxi : TwistTrivialOnRati
   exact Submodule.subset_span ⟨f', ⟨Λ, N, x₀, Q, x, h1, h2, h3, h4, by simpa [hn] using h5, h6,
     fun u => ⟨hx u, by simpa [hn] using ax u, (hf u).2.2⟩⟩, rfl⟩
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 theorem trace_mem_thetaEig (hT : LawsFull T) (hj : InR D j) (hxi : TwistTrivialOnRational T j) (hn : w.n = D.R.nV)
     (hl : w.LastPos) (hρ : ∀ g F, ρ g (z.symm (1 ⊗ₜ F)) = z.symm (1 ⊗ₜ act g F)) (hact : IsLevAct T.toTop h j w ℓ act)
@@ -226,7 +224,6 @@ theorem clauses_of_onTie {T : Full D} [Algebra T.J.Q.c.F D.what₂.LL] {R : Real
     have := trace_mem_thetaEig (ψ := O.ψ) hT (inR_succ ι) hxi hn hl t.rho_eq t.act_eq hd hx
     rwa [trace_of_mem_eig h1 hψ he] at this
 
-variable (A) in
 
 def TiedAt (hinj : Function.Injective D.what₂.OtoLL) (EX : ErrX D) (O : OnObj S P oc) (inc : P →* G) (U : Subgroup G)
     (ψ : U →* D.what₂.LLˣ)
@@ -298,7 +295,6 @@ theorem kaR_lastPos (Tp : ParamsT D L Pm) (hK : DV.KapDef D) {j : ℕ} (hj : InR
 
 variable {Bs : DefBase D.what₂.LL} {Df : DefSide Bs} {S : IndefData Df} {P : Type} [Group P] [Finite P] {oc : OnConst}
 
-variable (A) in
 
 variable {Tp : ParamsT D L Pm} {hK : DV.KapDef D} {hinj : Function.Injective D.what₂.OtoLL} {EX : ErrX D} {O : OnObj S P oc}
   {inc : P →* G} {U : Subgroup G} {ψ : U →* D.what₂.LLˣ}

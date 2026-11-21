@@ -31,7 +31,6 @@ theorem chartMon_not_mem {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MR
 
 end FlagLineSectionProof
 
-open FlagLineSectionProof in
 
 theorem FlagLineSection.proof : FlagLineSection.Statement := by
   intro F _ Ω _ _ K _ _ ι _ y e hy _ N E _ _ B w b hB M a φ hφ Φ _ _ t ht h0

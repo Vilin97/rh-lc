@@ -48,7 +48,6 @@ theorem modPMap_mk (a : normInteger K) :
       Ideal.Quotient.mk (Ideal.span {(p : normInteger L)}) (integerMap φ hφ a) :=
   Ideal.quotientMap_mk
 
-variable (p) in
 
 def preTiltMap : 𝒪K♭ →+* 𝒪L♭ :=
   Perfection.map p (modPMap φ hφ)
@@ -91,7 +90,6 @@ theorem preTiltMap_injective : Function.Injective (preTiltMap p φ hφ) := by
     map_eq_zero_iff φ φ.injective] at h1
   exact (IsPerfectoidField.untilt_eq_zero_iff p).1 (Subtype.ext h1)
 
-variable (p) in
 
 def tiltMap : K♭ →+* L♭ :=
   IsFractionRing.map (preTiltMap_injective (p := p) φ hφ)

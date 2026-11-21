@@ -271,7 +271,6 @@ theorem pair_le {I J : Type} [Countable I] [Countable J]
       (by rwa [emb_mul_mul, h, ← emb_mul_mul, inv_mul_cancel, emb_one_mul])
     exact ⟨e1, (inv_mul_eq_one.1 e2).symm⟩
 
-variable (E j) in
 
 abbrev Cls : Type :=
   Quot (fun Λ Λ' : {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsLattice E Λ} =>

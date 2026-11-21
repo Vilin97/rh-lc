@@ -199,7 +199,6 @@ theorem term_eq (B : Base S T) {ψ : Twist D Circle} (hQ : B.admitted ψ.Q) {g :
           rfl
   · simp
 
-open Classical in
 
 theorem datum_sum (B : Base S T) {ψ : Twist D Circle} (hQ : B.admitted ψ.Q) {ι : Type} [Fintype ι] (g : ι → GA D S)
     (hk : ∀ i, Lev.finE S (g i) ∈ lev D.sp.cm S.gram B.F.βS (B.levS ψ))
@@ -257,7 +256,6 @@ theorem datum_sum (B : Base S T) {ψ : Twist D Circle} (hQ : B.admitted ψ.Q) {�
         rintro ⟨h0, h1⟩
         exact hy ⟨h0, _, h1, (hk i).2⟩
 
-open Classical in
 
 theorem om_princ_move {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle} (hψ : ψ.Good) (hQ : B.admitted ψ.Q)
     {ω : PairRep S T} (hω : B.IsWeil ψ.chi ω) {g : GA D S} (hg : g ∈ GfC S) (sg : Lev.finE S g ∈ St B.F.βS) :
@@ -286,7 +284,6 @@ theorem om_princ_move {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D 
   rw [inv_one] at this
   rw [one_mul, this]
 
-open Classical in
 
 theorem vec_sum {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle} (hψ : ψ.Good) (hQ : B.admitted ψ.Q)
     {ω : PairRep S T} (hω : B.IsWeil ψ.chi ω) {ι : Type} [Fintype ι] (g : ι → GA D S) (hg : ∀ i, g i ∈ GfC S)

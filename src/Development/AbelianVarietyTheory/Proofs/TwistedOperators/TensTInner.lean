@@ -43,7 +43,6 @@ def vecOf (R : RealDat D A Ks) (X : Formalism.L2.SG.HidaSetting.HidaSetting D)
 def tensT {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (y : ∀ τ, X.B.H (X.pl.symm τ)) : X.B.Hs :=
   X.B.tens (Equiv.piCongrLeft X.B.H X.pl.symm y)
 
-open Classical in
 
 def evF (R : RealDat D A Ks) (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D)
     (t : GA D (Yc D 0)) (c : ∀ τ, (MP R).H τ ≃ₗᵢ⋆[ℂ] X.B.H (X.pl.symm τ)) (S : MMap (MP R))

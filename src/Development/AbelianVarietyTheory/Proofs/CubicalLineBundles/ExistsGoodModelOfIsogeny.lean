@@ -35,8 +35,6 @@ private theorem over_pullback_map_left_snd {S S' : Scheme} (φ : S' ⟶ S) (Ga X
     ((Over.pullback φ).map io).left ≫ pullback.snd X.hom φ = pullback.snd _ _ :=
   pullback.lift_snd _ _ _
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj UpperHalfPlane TensorProduct in
 
 theorem _root_.GlobalTheory.IsogenyModel.exists_flat_closure (T K : Type) [CommRing T] [IsDedekindDomain T] [Field K] [Algebra T K]
     [IsFractionRing T K] (X : Over (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp T)) (Z : Over (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp K))
@@ -79,9 +77,6 @@ theorem _root_.GlobalTheory.IsogenyModel.exists_flat_closure (T K : Type) [CommR
 
 variable {S : Scheme.{0}}
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj UpperHalfPlane TensorProduct in
-variable {S : Scheme.{0}} in
 
 theorem _root_.GlobalTheory.IsogenyModel.exists_kernel {G B : Over S} [GrpObj G] [GrpObj B] [IsSeparated B.hom] (f : G ⟶ B)
     [IsMonHom f] [IsFinite f.left] :
@@ -118,9 +113,6 @@ theorem _root_.GlobalTheory.IsogenyModel.exists_kernel {G B : Over S} [GrpObj G]
     simpa using this
   · simpa [toUnit_unique (pullback.snd f η[B]) (toUnit _)] using hP
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj UpperHalfPlane TensorProduct in
-variable {S : Scheme.{0}} in
 
 theorem _root_.GlobalTheory.IsogenyModel.exists_iso_of_same_kernel {G A B Z : Over S} [GrpObj G] [GrpObj A] [GrpObj B]
     (q : G ⟶ A) (f : G ⟶ B) (i : Z ⟶ G) [IsMonHom q] [IsMonHom f] [Flat q.left]

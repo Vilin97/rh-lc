@@ -39,7 +39,6 @@ theorem embLL_chi {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T) (j 
   have h1 := (w.ok.ch_tied.mu0 j).atg p x y c hx hc
   rw [h1, Units.val_inv_eq_inv_val, map_inv₀, inv_inv]
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 
 theorem app_chiW {E : Type} [Field E] [NumberField E] [IsCMField E] {A : Type} [Monoid A]
     {H₁ H₂ : Host E} {l₁ : Level H₁} {l₂ : Level H₂} {c₁ : Coeff l₁} {c₂ : Coeff l₂}

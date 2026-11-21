@@ -39,7 +39,6 @@ def equivComp {G H V V' : Type} [Group G] [Group H] [AddCommGroup V] [Module ℂ
       ext x; exact LinearMap.congr_fun (e.isIntertwining' (ψ h)) x⟩ e.invFun
     e.left_inv e.right_inv
 
-set_option maxHeartbeats 1000000 in
 
 theorem jacquetOfInducedFiltration : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k], GlobalTheory.SmGL.JacquetOfInducedFiltration k := by

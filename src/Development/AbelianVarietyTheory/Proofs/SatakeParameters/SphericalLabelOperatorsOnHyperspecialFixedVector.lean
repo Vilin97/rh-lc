@@ -166,7 +166,6 @@ theorem idem_mul_span_mem (V : HSp D) (he : e * e = e) (h : Comparison₂ P e) {
     rw [mul_mul_mul_comm, hee, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
     rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_basis (V : HSp D) (he : e * e = e) (h : Comparison₂ P e) :
     ∃ B : Matrix (Fin V.rank) (Fin V.rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E),
@@ -203,7 +202,6 @@ theorem exists_basis (V : HSp D) (he : e * e = e) (h : Comparison₂ P e) :
       refine ⟨-z, fun i => neg_mem (hz i), funext fun a => ?_⟩
       rw [Matrix.mulVec_neg, Pi.neg_apply, Pi.neg_apply, mul_neg, mul_neg, congrFun hu a]
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_component (he : e * e = e) (h : Comparison₂ P e) :
     ∃ (φ : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E →+* P.adicCompletion D.host.E)
@@ -411,7 +409,6 @@ theorem unif_ne_zero (h2 : ϖ ∉ P.asIdeal ^ 2) : (ϖ : D.host.E) ≠ 0 := fun 
   rw [show ϖ = 0 from RingOfIntegers.ext h]
   exact zero_mem _)
 
-open GlobalTheory.HeckeDual in
 
 theorem exists_dual {R : Finset (GA D V)} (hR : SphOp V P d R) :
     ∃ R', SphOp V P (dualLab d) R' ∧ R'.card = R.card := by
@@ -453,7 +450,6 @@ theorem opOf_single {M : Type} [AddCommGroup M] [Module ℂ M] (π : GA D V →*
 
 end Labels
 
-open GlobalTheory.IdemSupport in
 
 theorem label_operators : ∀ {D : D7} (V : HSp D) (P : Pl D.host.E), (∀ d R, SphOp V P d R → R.card = (rep V P d).card ∧ ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (π : GA D V →* Module.End ℂ M) (u : M), (∀ k ∈ hyp V P, π k u = u) → ∑ γ ∈ R, π γ u = opOf π P (Finsupp.single d 1) u) ∧ (∀ c, ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (π : GA D V →* Module.End ℂ M) (u : M), (∀ k ∈ hyp V P, π k u = u) → ∀ k ∈ hyp V P, π k (opOf π P c u) = opOf π P c u) ∧ (IsLab V P (List.replicate V.rank 0) ∧ ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (π : GA D V →* Module.End ℂ M) (u : M), (∀ k ∈ hyp V P, π k u = u) → opOf π P (Finsupp.single (List.replicate V.rank 0) 1) u = u) ∧ (∀ d, (IsLab V P d ↔ IsLab V P (dualLab d)) ∧ (rep V P (dualLab d)).card = (rep V P d).card) ∧ ∀ e f g, IsPrimeIdem P e f → SuppF V f g → ∃ d, IsLab V P d ∧ (∀ γ ∈ rep V P d, ∃ k₁ ∈ hyp V P, ∃ k₂ ∈ hyp V P, γ = k₁ * g * k₂) ∧ ∀ γ ∈ rep V P (dualLab d), ∃ k₁ ∈ hyp V P, ∃ k₂ ∈ hyp V P, γ = k₁ * g⁻¹ * k₂ := by
   intro D V P

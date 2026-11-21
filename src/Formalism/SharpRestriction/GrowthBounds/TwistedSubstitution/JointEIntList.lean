@@ -302,7 +302,6 @@ theorem greedy_list (S : UniformizedDVR p O) (l : List (NIdx Dt)) (hl : l.Nodup)
     rw [List.map_cons, List.prod_cons, Module.End.mul_apply, hmap, hi']
     exact hmu.trans hka'
 
-include D in
 
 theorem restJP {n' : ℕ} (S : UniformizedDVR p O) (hR : AdmissibleDVR p n' O) (dNo : TL J Dt.nL r → ℕ)
     (y : MvPolynomial (TL J Dt.nL r × Fin K) (KK O)) :

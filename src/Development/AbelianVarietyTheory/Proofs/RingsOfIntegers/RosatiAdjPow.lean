@@ -86,7 +86,6 @@ private theorem exists_isGen_of_isGen_iso_of_isGen {X : Scheme.{0}} {A B : LB X}
 
 end GlobalTheory.RosatiPower
 
-open GlobalTheory.RosatiPower in
 
 theorem GlobalTheory.rosatiAdj_pow : ∀ (S : Scheme.{0}) (G' G : Over S) [GrpObj G'] [IsCommMonObj G'] [GrpObj G] [IsCommMonObj G] (j : ℕ) (p : IsPowGrp G' G j) (L : LB G.left) (L' : LB G'.left), L.IsLB → L'.IsLB → Geo.Tor.LBIso L' (boxLB L p.pr) → ∀ (f g : G ⟶ G) (f' g' : G' ⟶ G'), (∀ i, f' ≫ p.pr i = p.pr i ≫ f) → (∀ i, g' ≫ p.pr i = p.pr i ≫ g) → RosatiAdj G L f g → RosatiAdj G' L' f' g' := by
   intro S G' G _ _ _ _ j p L L' hL hL' hiso f g f' g' hf hg hr

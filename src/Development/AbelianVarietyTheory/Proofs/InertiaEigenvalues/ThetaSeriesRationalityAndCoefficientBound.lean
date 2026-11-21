@@ -41,7 +41,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-set_option maxHeartbeats 8000000 in
 
 theorem exists_framed (hP : GlobalTheory.Published.CuspRapidDecay) (X : RealSide D) {E : IntegralHeckeForms.XD D} (Y : SerSide X E) (hF : FieldOk X) :
     ∃ (X' : RealSide D) (Y' : SerSide X' E), FieldOk X' ∧

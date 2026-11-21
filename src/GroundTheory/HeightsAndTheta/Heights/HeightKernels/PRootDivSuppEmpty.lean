@@ -43,7 +43,6 @@ theorem isIntegral_rootCoord {f j m : ℕ} {ζ : Fin f → Matrix (Fin j) (Fin m
 
 end RootDivisorSupportEmpty
 
-open RootDivisorSupportEmpty in
 
 theorem RootDivSuppEmpty.proof : RootDivSuppEmpty.Statement := by
   intro f j m ζ hζ

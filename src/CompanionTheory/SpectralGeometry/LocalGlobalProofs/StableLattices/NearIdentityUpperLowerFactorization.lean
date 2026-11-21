@@ -14,13 +14,9 @@ namespace GlobalTheory.CompanionTheory.CartGL.IwahoriLU
 
 variable {L : Type} [NontriviallyNormedField L] [IsUltrametricDist L] {n : ℕ}
 
-omit [IsUltrametricDist L] in
 
-omit [IsUltrametricDist L] in
 
-omit [IsUltrametricDist L] in
 
-omit [IsUltrametricDist L] in
 
 theorem factor (n : ℕ) (r : ℝ) (h0 : 0 ≤ r) (h1 : r < 1) :
     ∀ A : Matrix (Fin n) (Fin n) L, (∀ i j, ‖(A - 1) i j‖ ≤ r) →

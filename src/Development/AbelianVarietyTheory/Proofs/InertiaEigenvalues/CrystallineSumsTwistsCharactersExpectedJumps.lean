@@ -197,7 +197,6 @@ theorem multV_char_zero (hc : Nat.card (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) = finran
   rw [multV_of_only_zero (P.PD K) _ τ h, ← hone, Multiset.count_singleton]
   split_ifs <;> rfl
 
-omit T in
 
 theorem card_emb {lam : ↥(OL LL)} (h : Standing P K LL emb lam) :
     Nat.card (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) = finrank ℚ_[l] ↥K.1 := by

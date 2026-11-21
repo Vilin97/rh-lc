@@ -56,7 +56,6 @@ theorem polMatch_iso {R R₃ : RealMaps F a a'} {Rf Rf₃ : FinMaps F a a'} {ψ�
         Finset.prod_coe_sort, hΛT]
     simp only [lhs, rhs, ← Finset.smul_sum, h1]
 
-variable (B G V V' Z) in
 
 def kapId : (AE F E)ˣ :=
   ∏ v : B.P, locIdele F (splitPrime (B.τ v))
@@ -69,7 +68,6 @@ theorem chr_kapId (χ : Chr F E) :
 
 variable {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W}
 
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 
 theorem acts_pureA {κ : Type} [Fintype κ] {T : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {f f₁ : SInf F κ}
     (h : Acts (evI F) T f f₁) {g : (κ → Af F) → ℂ} (hg : g ∈ SB (κ → Af F)) : T (pureA F f g) = pureA F f₁ g := by

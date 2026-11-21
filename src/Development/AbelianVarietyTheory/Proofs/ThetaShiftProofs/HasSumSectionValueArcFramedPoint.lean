@@ -30,7 +30,6 @@ variable {K : Type} [Field K] (σ : K →+* ℂ) [Algebra K ℂ⸨X⸩]
   (hK : ∀ x : K, algebraMap K ℂ⸨X⸩ x = HahnSeries.ofPowerSeries ℤ ℂ (PowerSeries.C (R := ℂ) (σ x)))
   {v : ℂ} (hv : v ≠ 0)
 
-include hK in
 
 theorem hasSum_algebraMap_const (v : ℂ) (x : K) :
     HasSum (fun n : ℤ => (algebraMap K ℂ⸨X⸩ x).coeff n * v ^ n) (σ x) := by

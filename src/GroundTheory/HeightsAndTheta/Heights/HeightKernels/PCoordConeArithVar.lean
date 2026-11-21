@@ -20,7 +20,6 @@ namespace CoordinateConeArithVar
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem mConeMap_monomial (y : (Σ k, ι k) → Ω) (e : (Σ k, ι k) →₀ ℕ) (a : ℤ) :
     mConeMap y (monomial e a) =
@@ -36,7 +35,6 @@ theorem mConeMap_monomial (y : (Σ k, ι k) → Ω) (e : (Σ k, ι k) →₀ ℕ
     congr 1
     rw [map_finsuppProd]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem coe_mapDomain_fst [DecidableEq K] (e : (Σ k, ι k) →₀ ℕ) :
     ⇑(e.mapDomain Sigma.fst) = Finsupp.weight (NumbersDVR.blockWeight ι) e := by
@@ -46,7 +44,6 @@ theorem coe_mapDomain_fst [DecidableEq K] (e : (Σ k, ι k) →₀ ℕ) :
   refine Finset.sum_congr rfl fun p _ ↦ ?_
   simp [NumbersDVR.blockWeight, Finsupp.single_apply, Pi.single_apply, eq_comm]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem component_mem [DecidableEq K] (y : (Σ k, ι k) → Ω) (f : MRing ι)
     (hf : f ∈ mCoordIdeal y) (m : K → ℕ) :
@@ -81,7 +78,6 @@ theorem isMultiHomogIdeal (y : (Σ k, ι k) → Ω) : IsMultiHomogIdeal (mCoordI
   classical
   exact (Bridge.isMultiHomogIdeal_iff _).mp fun f hf m ↦ component_mem y f hf m
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem relevant (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) :
     IsRelevant (mCoordIdeal y) := by
@@ -90,7 +86,6 @@ theorem relevant (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k
   rw [mCoordIdeal, RingHom.mem_ker, mConeMap, aeval_X] at h
   exact mul_ne_zero (by rw [Ne, C_eq_zero]; exact hc k) (X_ne_zero _) h
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem horizontal [CharZero Ω] (y : (Σ k, ι k) → Ω) : IsHorizontal (mCoordIdeal y) := by
   rw [IsHorizontal, eq_bot_iff]
@@ -99,7 +94,6 @@ theorem horizontal [CharZero Ω] (y : (Σ k, ι k) → Ω) : IsHorizontal (mCoor
     MvPolynomial.algebraMap_apply, C_eq_zero, eq_intCast] at ha
   exact (Ideal.mem_bot).mpr (by exact_mod_cast ha)
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem algebraMap_injective (I : Ideal (MRing ι)) (h : IsHorizontal I) :
     Function.Injective (algebraMap ℤ (MRing ι ⧸ I)) := by
@@ -117,7 +111,6 @@ def ratioPt (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) : (Σ k, ι k) → Ω :=
 def scaleT (a : K → Ω) : MvPolynomial K Ω →ₐ[Ω] MvPolynomial K Ω :=
   aeval fun k ↦ C (a k) * X k
 
-omit [Fintype K] in
 
 theorem scaleT_inv (a : K → Ω) (ha : ∀ k, a k ≠ 0) (g : MvPolynomial K Ω) :
     scaleT (fun k ↦ (a k)⁻¹) (scaleT a g) = g := by
@@ -128,7 +121,6 @@ theorem scaleT_inv (a : K → Ω) (ha : ∀ k, a k ≠ 0) (g : MvPolynomial K Ω
     rw [← mul_assoc, ← C_mul, mul_inv_cancel₀ (ha k), C_1, one_mul]
   exact congrArg (fun φ : MvPolynomial K Ω →ₐ[Ω] MvPolynomial K Ω ↦ φ g) h
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem mConeMap_eq_scale (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0)
     (f : MRing ι) :
@@ -144,7 +136,6 @@ theorem mConeMap_eq_scale (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ 
       rw [← mul_assoc, ← C_mul, div_mul_cancel₀ _ (hc p.1)]
   exact RingHom.congr_fun h f
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem mCoordIdeal_ratioPt (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) :
     mCoordIdeal y = mCoordIdeal (ratioPt y c) := by
@@ -158,7 +149,6 @@ theorem mCoordIdeal_ratioPt (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : �
   · intro h
     rw [h, map_zero]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem mCoordIdeal_comp {L : Type} [Field L] (σ : L →+* Ω) (z : (Σ k, ι k) → L) :
     mCoordIdeal (fun p ↦ σ (z p)) = mCoordIdeal z := by
@@ -177,14 +167,12 @@ abbrev ratioField [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) : In
 def ratioPtL [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) : (Σ k, ι k) → ratioField y c :=
   fun p ↦ ⟨ratioPt y c p, IntermediateField.subset_adjoin _ _ ⟨p, rfl⟩⟩
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem mCoordIdeal_ratioPtL [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k)
     (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) : mCoordIdeal (ratioPtL y c) = mCoordIdeal y := by
   rw [mCoordIdeal_ratioPt y c hc, ← mCoordIdeal_comp (algebraMap (ratioField y c) Ω)]
   rfl
 
-omit [Fintype K] in
 
 theorem rep_of_mem [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0)
     {x : Ω} (hx : x ∈ ratioField y c) :
@@ -243,7 +231,6 @@ theorem rep_of_mem [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc
     · rw [map_mul, map_mul, e₁, e₂]
       ring
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem coe_aeval_ratioPtL [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (f : MRing ι) :
     ((aeval (ratioPtL y c) f : ratioField y c) : Ω) = aeval (ratioPt y c) f := by
@@ -252,7 +239,6 @@ theorem coe_aeval_ratioPtL [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, �
   | add p q hp hq => simp [hp, hq]
   | mul_X p q hp => simp [hp, ratioPtL]
 
-omit [Fintype K] in
 
 theorem birational [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) :
     Birational (ratioPtL y c) := by
@@ -263,7 +249,6 @@ theorem birational [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc
     rfl
   · rw [coe_aeval_ratioPtL, IntermediateField.coe_mul, coe_aeval_ratioPtL, e]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem trdeg_ratioField [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (d : ℕ) (t : Fin d → Ω)
     (ht : AlgebraicIndependent ℚ t) (htL : ∀ i, t i ∈ ratioField y c)
@@ -299,7 +284,6 @@ theorem trdeg_ratioField [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι 
 
 end CoordinateConeArithVar
 
-open CoordinateConeArithVar in
 
 theorem CoordConeArithVar.proof (hDim : IntDomainDim.Statement) : CoordConeArithVar.Statement := by
   intro K _ ι _ Ω _ _ y c d t hK hc ht htL halg

@@ -449,7 +449,6 @@ end Rel
 
 end DworkIntegrality
 
-open DworkIntegrality in
 
 theorem dwork_multivariable : DworkMv := by
   intro K ι _ _ _ _ p σ hp hnp hσ Ψ h0

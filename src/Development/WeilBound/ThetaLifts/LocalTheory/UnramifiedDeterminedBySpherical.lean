@@ -21,7 +21,6 @@ def MeasEx : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n : ℕ) (X : Spc F E n) (r s : ℕ), B.IsGood σ → X.IsHerm σ B r s →
     ∀ K : Subgroup (UA σ X.J), IsStab B K → ∃ m : LocMeas K, m.Is
 
-open Classical in
 
 def ConeFacB : Prop :=
   ∃ e₁ e₂ : ℤˣ, ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (a b : ℕ) (G : Geo σ a (b + 2)) (G₁ : Geo σ a b) (H : Plane E (b + 2) b) (H' : Plane E (a + (b + 2)) (a + b)), CfgB B G G₁ H H' →
@@ -39,7 +38,6 @@ def ConeFacB : Prop :=
             (κ * ((idealVal X.ν H.𝔟 ^ (e₁ : ℤ) * idealVal X.ν H'.𝔟 ^ (e₂ : ℤ) : ℂˣ) : ℂ) * charL X.ν (X.S₀ : Set (Pl F)) ((((a - (b + 2)) / 2 + 1) : ℕ) : ℂ)) •
               pure (L f) fun v => if v ∈ T then Λ v (φ v) else G₁.M'.vac v
 
-open Classical in
 
 def ConeFacA : Prop :=
   ∃ e₁ e₂ : ℤˣ, ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a') (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →

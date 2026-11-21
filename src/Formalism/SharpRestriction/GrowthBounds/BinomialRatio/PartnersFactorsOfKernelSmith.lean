@@ -67,7 +67,6 @@ theorem segForm_smul_right (p r : ℕ) {s : ℕ} (S : SegData s) (c : O) (f g : 
     rw [Pi.smul_apply, ← algebraMap_smul (KK O) c (g b), fock_form_smul_right, smul_eq_mul]
     ring
 
-open Classical in
 
 theorem blockDiag_of_smith {p : ℕ} {w : O} (hw : Irreducible w) (h2 : w ^ 2 = (p : O)) {r s : ℕ} (S : SegData s)
     (L : Submodule O (SegVs O r s S.t)) {n : ℕ} {al be : Fin n → SegVs O r s S.t} {β : Fin n → SegBlock s r}
@@ -107,7 +106,6 @@ def SmithAt (C0 CYb Cde Ck CD Cb CE1 CE2 Cm Cc : ℝ) : Prop :=
       (β : Fin n → SegBlock (segS X.TT j) X.m),
       SmithData (segForm O X.p X.m (X.seg C0 CE1 CE2 j)) (Lj O C0 CE1 CE2 Cm X j) n al be β
 
-open Classical in
 
 def CountSmithAt (C0 CYb Cde Ck CD Cb CE1 CE2 Cm Cc : ℝ) : Prop :=
   ∀ (X : Loc) [NeZero X.m] (W Qq O Kf : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [Field Qq]
@@ -167,7 +165,6 @@ theorem rank_le_of_ker {V : Type} [AddCommGroup V] [Module O V] {n : ℕ} (al : 
 
 end Rank
 
-open Classical in
 
 def KerSmithAt (C0 CYb Cde Ck CD Cb CE1 CE2 Cm Cc : ℝ) : Prop :=
   ∀ (X : Loc) [NeZero X.m] (W Qq O Kf : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [Field Qq]
@@ -233,7 +230,6 @@ theorem bad_sum {p : ℕ} {D : ℝ} {ι : Type} (s : Finset ι) (f : ι → KK O
     rw [Finset.sum_insert hi]
     exact bad_add (h i (Finset.mem_insert_self i s)) (ih fun j hj => h j (Finset.mem_insert_of_mem hj))
 
-open Classical in
 
 theorem prim_div {w : O} (hw : Irreducible w) {n : ℕ} (a : Fin n → O) (ha : a ≠ 0) :
     ∃ (k : ℕ) (a' : Fin n → O), (∀ i, a i = w ^ k * a' i) ∧ ∃ i0, IsUnit (a' i0) := by

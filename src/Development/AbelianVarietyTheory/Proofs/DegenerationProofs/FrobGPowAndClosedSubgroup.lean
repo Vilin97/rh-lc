@@ -90,7 +90,6 @@ theorem isMonHom_pow {k : Type} [Field k] (G : Over (Sp k)) [GrpObj G] (F : End 
 
 end GlobalTheory.SS.FrobSub
 
-open GlobalTheory.SS.FrobSub in
 
 theorem GlobalTheory.SS.frobG_pow_and_closed_subgroup : ∀ (k : Type) [Field k] (G : Over (Sp k)) [GrpObj G], SmConn G → ∀ (F : End G) (q : ℕ), FrobG G F q → (∀ m, 1 ≤ m → FrobG G (F ^ m) (q ^ m)) ∧ ∀ (N : Over (Sp k)) [GrpObj N] (ν : N ⟶ G) (F' : End N), IsMonHom ν → IsClosedImmersion ν.left → IsMonHom (show N ⟶ N from F') → (show N ⟶ N from F') ≫ ν = ν ≫ (show G ⟶ G from F) → FrobG N F' q := by
   intro k _ G _ _ F q hF

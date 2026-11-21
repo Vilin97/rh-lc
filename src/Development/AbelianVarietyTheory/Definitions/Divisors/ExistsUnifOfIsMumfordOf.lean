@@ -117,11 +117,8 @@ def IsMumfordOf [IsLocalRing R] (ξ : Sp R ⟶ S) (Q : Data R) : Prop :=
       ∃ (G' : Over (Sp R')) (_ : GrpObj G') (_ : IsCommMonObj G') (π : G'.left ⟶ G.left) (A : PolAV (Sp (FractionRing R')))
         (U : Unif (maximalIdeal R') D A G'), IsUnifOf F j e (spMap ρ ≫ ξ) π U
 
-variable {F j e} in
 
-variable {F j e} in
 
-variable {F j e} in
 
 theorem IsMumfordOf.unif [IsLocalRing R] {ξ : Sp R ⟶ S} {Q : Data R} (h : IsMumfordOf F j e ξ Q) :
   ∀ (R' : Type) [CommRing R'] [IsDomain R'] [IsLocalRing R'] (ρ : R →+* R'), IsCN R' → Function.Injective ρ → ρ.Finite →
@@ -230,7 +227,6 @@ theorem refines_ofDeg (D : DegPre R) (hB : D.TauBimult) : Refines (ofDeg D hB) (
     refine (Finset.prod_congr rfl fun k _ => congrArg (· ^ negε k) (inv (𝟙 _ ≫ _))).trans ?_
     exact prod_neg_lamPts _ _ (fun q => gm q z _ (D.P.L.g (J q) (J' q)))
 
-open InhTate in
 
 def tate (k : ℤ) : Data InhTate.R where
   B := P0.A
@@ -254,9 +250,7 @@ def tate (k : ℤ) : Data InhTate.R where
       (Eq.trans ?_ (congrArg₂ (· * ·) (gm_res _ z _ (hJ.mem _ _) _) (gm_res _ z _ (hJ.mem _ _) _)).symm)
     rw [_root_.mul_one, ← map_mul, ← zpow_add, mul_add, add_mul]
 
-open InhTate in
 
-open InhTate in
 
 theorem not_isPos_tate_zero : ¬ (tate 0).IsPos (maximalIdeal (PowerSeries ℚ)) := fun h => by
   obtain ⟨r, hr, k, hk, u, -, hu⟩ := h (1 : ℤ) (one_ne_zero (α := ℤ))
@@ -283,7 +277,6 @@ theorem not_isPos_tate_zero : ¬ (tate 0).IsPos (maximalIdeal (PowerSeries ℚ))
     exact (Scheme.ΓSpecIso (CommRingCat.of (FractionRing InhTate.R))).inv_hom_id_apply k.val
   exact (mem_maximalIdeal r).1 hr (IsUnit.of_mul_eq_one x (IsFractionRing.injective _ _ e').symm)
 
-open InhTate in
 
 end Wit
 

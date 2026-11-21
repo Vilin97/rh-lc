@@ -41,9 +41,7 @@ theorem gal_smul_untilt_iterate_of_eq_mul {ε x : 𝒪♭} (hε : PreTilt.untilt
   rw [← coe_untilt_iterate_tiltGal, h, iterate_frobSymm_mul, map_mul, untilt_iterate_epsPow,
     MulMemClass.coe_mul, SubmonoidClass.coe_pow]
 
-omit [Fact p.Prime] in
 
-set_option maxHeartbeats 1600000 in
 
 end Contradiction
 

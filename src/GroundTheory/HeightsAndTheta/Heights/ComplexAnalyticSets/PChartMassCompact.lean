@@ -103,7 +103,6 @@ theorem chartAbsDens_le (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin 
 
 end ChartMassCompact
 
-open ChartMassCompact in
 
 theorem ChartMassCompact.proof (hC : ChartMassCompare.Statement) (hMF : MassFinite.Statement) :
     ChartMassCompact.Statement := by

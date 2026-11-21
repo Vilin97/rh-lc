@@ -42,7 +42,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.Fam.LinkedPins
 
-set_option maxHeartbeats 4000000 in
 
 theorem seeAt_twArgs {K : Ctx} {B : GlobalTheory.Mem.Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl}
     {L : SizeData₂ (w.st Z).toD7} {hT : GatTies (w.st Z).toD7} {Gi : Formalism.MainNotions.G.Inst (w.st Z).toD7 L} {Gl : Formalism.MainNotions.G.LatInst (w.st Z).toD7}
@@ -65,9 +64,7 @@ theorem setting_congr {D : D7} (M : ∀ X : Formalism.L2.SG.HidaSetting.HidaSett
   cases hP
   exact h
 
-set_option maxHeartbeats 4000000 in
 
-open Classical in
 
 theorem image_congr {D : D7} {X X' : Formalism.L2.Col.Fields} (hX : X = X') {s : Formalism.L2.Ker.Seam D X} {s' : Formalism.L2.Ker.Seam D X'}
     (hs : HEq s s') {Pr : Formalism.L2.Col.Primes X} {Pr' : Formalism.L2.Col.Primes X'} (hP : HEq Pr Pr') :
@@ -77,7 +74,6 @@ theorem image_congr {D : D7} {X X' : Formalism.L2.Col.Fields} (hX : X = X') {s :
   cases hP
   rfl
 
-open Classical in
 
 theorem image_refl {E : Type} [Field E] [NumberField E] (f : E ≃+* E) (hf : f = RingEquiv.refl E)
     (S : Finset (HeightOneSpectrum (𝓞 E))) : S.image (Formalism.L2.Host.CT.plMap f) = S := by
@@ -90,9 +86,6 @@ theorem image_refl {E : Type} [Field E] [NumberField E] (f : E ≃+* E) (hf : f 
 
 variable {hL : GlobalTheory.Published.LocalLanglandsGL} {p : Prm hL} {K : Ctx}
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.Fam.LinkedPins
 
-open GlobalTheory.MiS GlobalTheory.Fam in
-set_option maxHeartbeats 4000000 in

@@ -67,7 +67,6 @@ section Main
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-open Classical in
 
 noncomputable def vertTerm (p : Nat.Primes) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (l : List (K → ℤ)) : ℤ :=
   haveI : Fact (p : ℕ).Prime := ⟨p.2⟩
@@ -104,7 +103,6 @@ theorem support_term_subset {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo
   · exact (key_of_mem hP hs hsP b hW p hm).1
   · exact absurd (vertTerm_of_not_mem p W _ hm) hp
 
-open Classical in
 
 theorem finsum_term {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)} {D : ℕ} (hP : IsArithVar P (D + 1)) {a : K → ℕ}
     {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι} (hs : IsMultiHomog s a) (hsP : s ∉ P) (b : Fin D → K → ℤ)

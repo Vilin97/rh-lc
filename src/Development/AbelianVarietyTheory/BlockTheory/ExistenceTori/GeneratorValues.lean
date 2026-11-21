@@ -163,7 +163,6 @@ variable [IsLocalRing R] {F : Type} [NormedField F]
 
 variable {φ : FractionRing R →+* F}
 
-omit [IsDomain R] in
 
 end Normed
 

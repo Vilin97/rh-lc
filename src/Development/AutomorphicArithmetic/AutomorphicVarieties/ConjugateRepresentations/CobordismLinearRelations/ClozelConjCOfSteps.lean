@@ -60,7 +60,6 @@ def Rel (σ : ℂ ≃+* ℂ) {Ξ Ξ' : AlgRep E a} (h : Ξ.d = Ξ'.d) {q : ℕ} 
 def IsPiHarm (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ) {n : ℕ} (e : Fin n → Herm E a) {q : ℕ} (ω : Co Ξ q) : Prop :=
   Lev Ξ ω ∧ dCo (smLie Ξ) ω = 0 ∧ Coclosed (smAdj Ξ r) e ω ∧ ∀ X, ω X ∈ tens Ξ.d π.V
 
-variable (E a) in
 
 def ConjAt : Prop :=
   ∀ (π : CuspSub E a), (CG.mk π).IsRegAlg → ∀ σ : ℂ ≃+* ℂ,

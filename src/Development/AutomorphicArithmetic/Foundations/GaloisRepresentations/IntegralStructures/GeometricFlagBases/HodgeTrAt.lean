@@ -25,7 +25,6 @@ section Defs
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime] {a dd : ℕ}
 
-omit [NumberField E] [IsAlgClosure E Ω] in
 
 def IsPiece (H : HTower E) (θ : H.Γ → Qbar l) (ρ : G E Ω →* GL (Fin dd) (Qbar l)) : Prop :=
   ∃ ρ₀ : G E Ω →* GL (Fin dd) (Qbar l), IsMat l H Ω (Qbar l) θ ρ₀ ∧ IsGr ρ₀ ρ
@@ -45,7 +44,6 @@ def JOcc (ι : Qbar l ≃+* ℂ) (ρ : G E Ω →* GL (Fin dd) (Qbar l)) (w : He
       ∀ (τ : E →+* Qbar l) (LL' : FinExt l) (τ' : ↥Bw.Kw.1 →ₐ[ℚ_[l]] ↥LL'.1), IsInduced Bw τ τ' →
         ∃ J : Multiset ℤ, IsJumpsAt P Bw (ρ.comp (Dec (F := E) A).subtype) τ J ∧ ∀ j, Q (ι.toRingHom.comp τ) j → j ∈ J
 
-omit [NumberField E] in
 
 def HodgeAt (ι : Qbar l ≃+* ℂ) (H : HTower E) (θ : H.Γ → Qbar l) (τ : E →+* ℂ) (j : ℤ) : Prop :=
   ∃ b : ℕ, (b : ℤ) = j ∧ HOcc (bcAlong H τ) (fun g => ι (θ g)) b

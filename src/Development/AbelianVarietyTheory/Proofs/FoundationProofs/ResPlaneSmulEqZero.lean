@@ -20,7 +20,6 @@ variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {l : ℕ} [Fact l.Prime]
 
 abbrev ResL (c : Coef l) : Type := c.O ⧸ Ideal.span {((l : ℕ) : c.O)}
 
-open Classical in
 
 def redL (c : Coef l) (x : Qbar l) : ResL c :=
   if h : x ∈ c.O then Ideal.Quotient.mk _ ⟨x, h⟩ else 0

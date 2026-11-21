@@ -284,8 +284,6 @@ private lemma ideal_le_pi_or_le_cj_pi_of_proper (L : _root_.Formalism.MainNotion
   show (z : E) * y = 1
   rw [hzE, hy1]
 
-open ValuativeRel MeasureTheory in
-open scoped Pointwise ENNReal Classical in
 
 theorem _root_.GlobalTheory.UnramOrder.proper_ideals : ∀ {F : Type} [Field F] [ValuativeRel F]
     [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E]

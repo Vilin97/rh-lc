@@ -40,7 +40,6 @@ theorem gen_smooth_iff {P : Type} [NormedAddCommGroup P] [NormedSpace ℝ P] [Fi
     convert this using 2 with t
     exact congrArg (fun q => f (w + q)) (h3 _ (h0 t)).symm
 
-omit [TopologicalSpace M] [TopologicalSpace N] in
 
 end Gen
 

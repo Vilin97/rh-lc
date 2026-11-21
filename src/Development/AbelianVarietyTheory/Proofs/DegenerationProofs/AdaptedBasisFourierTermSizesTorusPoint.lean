@@ -160,7 +160,6 @@ theorem cst_prB (y : (DegPre.BF D.toPre F).left) (a : V) :
   refine (gs_pull _ _ y ⊤ trivial _).symm.trans (Eq.trans ?_ (gs_pull (𝟙 _) (fst (TF (R := V) F) D.toPre.P.A).left y ⊤ trivial _).symm)
   exact congrArg (gs _ y ⊤) n.symm
 
-include hϖ hv in
 
 theorem exists_comb {α : D.toPre.X} {I : Type} [Fintype I] {β : I → D.toPre.SecB k α} (hβ : IsBasisB D.toPre β)
     (s : I → Fam D.toPre F k)

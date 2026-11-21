@@ -31,7 +31,6 @@ end Defs
 
 section Steps
 
-open Classical in
 
 end Steps
 
@@ -47,7 +46,6 @@ section PolHelp
 
 variable {m n : ℕ}
 
-open Classical in
 
 end PolHelp
 
@@ -61,14 +59,10 @@ section Gen
 
 variable {Sm : Set (Mx D m n → ℂ)} {aP aM : FVar D m n → (Mx D m n → ℂ) → (Mx D m n → ℂ)}
 
-open Classical in
 
 end Gen
 
-open Classical in
 
-set_option maxHeartbeats 1000000 in
-open Classical in
 
 end Assembly
 
@@ -92,7 +86,6 @@ section QuadPf
 
 variable {m n : ℕ}
 
-open Classical in
 
 end QuadPf
 
@@ -100,7 +93,6 @@ section DRhoPf
 
 open Formalism.IndefR.Fock.Alg Formalism.IndefR.Fock.CCR
 
-open Classical in
 
 end DRhoPf
 

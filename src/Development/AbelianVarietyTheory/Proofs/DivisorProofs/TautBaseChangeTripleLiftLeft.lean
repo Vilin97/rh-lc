@@ -99,7 +99,6 @@ section Charts
 
 variable {o W : Type} [CommRing o] [CommRing W] [IsDomain W] [IsLocalRing W] (T : TautBase o W) (N : ℕ)
 
-open Classical in
 
 end Charts
 

@@ -233,7 +233,6 @@ end Perm
 
 end CDX
 
-open CDX in
 
 theorem cayDensEx_holds : CayDensEx := by
   intro n ε

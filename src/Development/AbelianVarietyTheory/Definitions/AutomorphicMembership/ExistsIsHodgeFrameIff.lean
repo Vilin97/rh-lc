@@ -61,7 +61,6 @@ variable {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} {κ : Lv A} {s : Final
 theorem xiR_pos (D : D7) : 0 < xiR D :=
   norm_embedding_xi_zero D D.host.φ₀ ▸ norm_pos_iff.2 ((map_ne_zero _).2 (cmHost_imaginaryGenerator_ne_zero Formalism.IndefR.Fin.factPrincipalDatum D))
 
-variable (s) in
 
 theorem FinalTheorems.im_neg_xi (σ : κ.c.F →+* ℂ) (k : (s.U σ).Comp) (τ : ((s.U σ).X k).Ψ) :
     (τ.1 (-((s.U σ).X k).ξ0)).im = xiR D := by
@@ -100,8 +99,6 @@ def muExp : ℝ := Classical.epsilon x.IsMuExp
 
 def kap : ℝ := 2 * x.muExp + 3
 
-open Classical in
-variable (σ) in
 
 def wt (R : ℝ) (y : CxPts (genStr s.T.Z) σ) : ℝ :=
   if LiesIn y (genBd s.T.Z) then 0 else cutWt x.kap (max R 2) (x.r σ y)
@@ -111,7 +108,6 @@ theorem wt_mem (R : ℝ) (y : CxPts (genStr s.T.Z) σ) : x.wt σ R y ∈ Set.Icc
   split_ifs
   exacts [⟨le_rfl, zero_le_one⟩, cutWt_mem _ (le_max_of_le_right zero_le_two) ((Real.exp_pos 1).le.trans (x.exp_le_r σ y))]
 
-variable (σ) in
 
 def eigMetAt : Option ℝ → EigMet s.T.Z σ
   | none => x.hodge σ

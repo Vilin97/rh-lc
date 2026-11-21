@@ -61,7 +61,6 @@ def IsSecBasis (x : J → Ω) (n : ℕ) {r : ℕ} (b : Fin r → MvPolynomial J 
     LinearIndependent ℤ (fun k => aeval x (b k)) ∧
     Submodule.span ℤ (Set.range fun k => aeval x (b k)) = sec ℤ x n
 
-open Classical in
 
 def chi (x : J → Ω) (m : ConeMetric ℂ J) (μ : Measure (J → ℂ)) (n : ℕ) : ℝ :=
   if h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial J ℚ), IsSecBasis x n p.2 then

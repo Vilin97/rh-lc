@@ -18,14 +18,12 @@ namespace OrbitChartMult
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {n : ι → ℕ}
 
-omit [DecidableEq ι] in
 
 theorem prod_X_pow_eq_monomial_fintype {D : Type*} [CommRing D] (d : ι → ℕ) :
     ∏ k, (X k : MvPolynomial ι D) ^ d k = monomial (Finsupp.equivFunOnFinite.symm d) 1 := by
   rw [monomial_eq, C_1, one_mul, Finsupp.prod_fintype _ _ (fun _ ↦ pow_zero _)]
   simp
 
-omit [DecidableEq ι] in
 
 theorem coeff_sum_C_mul_prod_X_pow {D : Type*} [CommRing D] (S : Finset (ι → ℕ))
     (a : (ι → ℕ) → D) {d : ι → ℕ} (hd : d ∈ S) :
@@ -40,7 +38,6 @@ section General
 
 variable {O : Type*} [CommRing O] [IsDomain O]
 
-omit [IsDomain O] in
 
 abbrev fibO (ι : Type) (m : Ideal O) : Ideal (MvPolynomial ι O) := Ideal.map C m
 
@@ -52,7 +49,6 @@ instance fibO_isPrime (ι : Type) (m : Ideal O) [m.IsPrime] : (fibO ι m).IsPrim
   rw [h]
   exact RingHom.ker_isPrime _
 
-omit [IsDomain O] in
 
 abbrev locB (ι : Type) (m : Ideal O) [m.IsPrime] := Localization.AtPrime (fibO ι m)
 
@@ -60,7 +56,6 @@ theorem locB_injective (ι : Type) (m : Ideal O) [m.IsPrime] :
     Function.Injective (algebraMap (MvPolynomial ι O) (locB ι m)) :=
   IsLocalization.injective (locB ι m) (Ideal.primeCompl_le_nonZeroDivisors (fibO ι m))
 
-omit [IsDomain O] in
 
 theorem isUnit_prod_X_pow (m : Ideal O) [hm : m.IsPrime] (a : ι → ℕ) :
     IsUnit (algebraMap (MvPolynomial ι O) (locB ι m) (∏ k, X k ^ a k)) := by
@@ -71,7 +66,6 @@ theorem isUnit_prod_X_pow (m : Ideal O) [hm : m.IsPrime] (a : ι → ℕ) :
     exact hm.ne_top ((Ideal.eq_top_iff_one _).mpr h')
   exact IsLocalization.map_units (locB ι m) (⟨∏ k, X k ^ a k, hnot⟩ : (fibO ι m).primeCompl)
 
-omit [Fintype ι] [DecidableEq ι] [IsDomain O] in
 
 theorem isUnit_C_locB (m : Ideal O) [m.IsPrime] (u : m.primeCompl) :
     IsUnit (((algebraMap (MvPolynomial ι O) (locB ι m)).comp C) (u : O)) := by
@@ -81,7 +75,6 @@ theorem isUnit_C_locB (m : Ideal O) [m.IsPrime] (u : m.primeCompl) :
     rwa [coeff_C, if_pos rfl] at h')
   exact IsLocalization.map_units (locB ι m) (⟨C (u : O), hnot⟩ : (fibO ι m).primeCompl)
 
-omit [IsDomain O] in
 
 abbrev betaB (γ : MvPolynomial (Coord n) ℤ →+* MvPolynomial ι O) (m : Ideal O) [m.IsPrime] :
     MvPolynomial (Coord n) ℤ →+* locB ι m :=
@@ -103,14 +96,11 @@ theorem betaB_X (p : Coord n) :
   congr 2
   simp [coordDeg, Pi.single_apply, pow_ite]
 
-omit [Fintype ι] [DecidableEq ι] [RingHomClass Fε (MvPolynomial (Coord n) ℤ) O] in
 
 theorem betaB_eq_zero_iff (F : MvPolynomial (Coord n) ℤ) :
     betaB γ (V.map ε) F = 0 ↔ γ F = 0 := by
   rw [betaB, RingHom.comp_apply, map_eq_zero_iff _ (locB_injective ι _)]
 
-include hγ in
-omit [IsDomain O] [RingHomClass Fε (MvPolynomial (Coord n) ℤ) O] in
 
 theorem betaB_mem_maximalIdeal_iff
     (hV : ∀ v ∈ V, ∀ e, weightedHomogeneousComponent (coordDeg n) e v ∈ V)
@@ -140,8 +130,6 @@ theorem betaB_mem_maximalIdeal_iff
     exact Ideal.sum_mem _ fun e _ ↦ Ideal.mul_mem_right _ _
       (Ideal.mem_map_of_mem _ (Ideal.mem_map_of_mem _ (hV F h e)))
 
-include hγ in
-omit [IsDomain O] in
 
 theorem exists_betaB_mul_eq [hVp : V.IsPrime] (hε : Function.Surjective ε)
     (c : (k : ι) → Fin (n k + 1)) (hXc : ∀ k, ε (X ⟨k, c k⟩) = 1)
@@ -327,7 +315,6 @@ variable {O : Type*} [CommRing O] [IsDomain O]
     γ F = C (ε F) * ∏ k, X k ^ d k)
   (V : Ideal (MvPolynomial (Coord n) ℤ)) [(V.map ε).IsPrime]
 
-include hγ in
 
 theorem multAt_eq_localQuotLength_of [hVp : V.IsPrime] (hε : Function.Surjective ε)
     (W : Ideal (MvPolynomial (Coord n) ℤ)) (hW : ∀ F, γ F = 0 ↔ F ∈ W)

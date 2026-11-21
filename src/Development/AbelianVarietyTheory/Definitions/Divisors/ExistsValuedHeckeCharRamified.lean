@@ -62,7 +62,6 @@ end CM
 
 section Cyclotomic
 
-attribute [local instance] FractionRing.liftAlgebra in
 
 end Cyclotomic
 

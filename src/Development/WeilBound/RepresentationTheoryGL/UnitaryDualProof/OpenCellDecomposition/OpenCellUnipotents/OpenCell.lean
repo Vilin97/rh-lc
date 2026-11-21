@@ -11,7 +11,6 @@ open Matrix GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.
 
 namespace PositivityTheory.RgUd.CellA
 
-set_option maxHeartbeats 2000000 in
 
 theorem openCell (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] :
     PositivityTheory.RgUd.OpenCell k := by

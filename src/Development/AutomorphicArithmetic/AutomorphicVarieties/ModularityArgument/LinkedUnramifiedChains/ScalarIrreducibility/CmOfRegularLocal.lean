@@ -22,7 +22,6 @@ private theorem cm_of_regular_local (A : Type) [CommRing A] [IsRegularLocalRing 
   rw [← hmax]
   exact Ideal.subset_span hr
 
-open GroundTheory.Heights₂.Heights in
 
 private theorem ass_min_of_surj {A B : Type} [CommRing A] [IsCohenMacaulayLocalRing A] [CommRing B]
     [Nontrivial B] (φ : A →+* B) (hφ : Function.Surjective φ) {k : ℕ} (x : Fin k → A)

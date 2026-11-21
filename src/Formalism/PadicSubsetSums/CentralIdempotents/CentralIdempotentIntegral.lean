@@ -22,10 +22,7 @@ def relLen {O V : Type} [CommRing O] [AddCommGroup V] [Module O V] (M N : Submod
 def sIdx {O V : Type} [CommRing O] [AddCommGroup V] [Module O V] (M N : Submodule O V) : ℤ :=
   ((relLen M N).toNat : ℤ) - ((relLen N M).toNat : ℤ)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end Formalism.IrreducibleCountingLemmas.TW

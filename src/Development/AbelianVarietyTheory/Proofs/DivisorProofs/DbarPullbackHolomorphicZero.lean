@@ -23,10 +23,6 @@ open GlobalTheory.CxForm.FormMul
 
 variable {n m : ℕ}
 
-open Set Filter Topology in
-open scoped ComplexConjugate ContDiff in
-set_option autoImplicit false in
-variable {n m : ℕ} in
 
 theorem _root_.GlobalTheory.CxForm.PullClosed.repr_sum_smul {ι : Type} [Fintype ι] (f : ι → _root_.ReciprocityTheory.L2DbarEstimates.V n → ℂ)
     (e : ι → _root_.GlobalTheory.CxForm.Alt n) (S : Finset (Fin (n + n))) :
@@ -36,10 +32,6 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.repr_sum_smul {ι : Type} [Fintype
   set_option synthInstance.maxHeartbeats 100000 in
     simp [map_sum, Finsupp.finsetSum_apply]
 
-open Set Filter Topology in
-open scoped ComplexConjugate ContDiff in
-set_option autoImplicit false in
-variable {n m : ℕ} in
 
 theorem _root_.GlobalTheory.CxForm.PullClosed.dbarAt_sum_smul {ι : Type} [Fintype ι] {v : _root_.ReciprocityTheory.L2DbarEstimates.V n}
     {f : ι → _root_.ReciprocityTheory.L2DbarEstimates.V n → ℂ} (e : ι → _root_.GlobalTheory.CxForm.Alt n)
@@ -66,10 +58,6 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.dbarAt_sum_smul {ι : Type} [Finty
   rw [key, Finset.mul_sum]
   simp [mul_smul_comm]
 
-open Set Filter Topology in
-open scoped ComplexConjugate ContDiff in
-set_option autoImplicit false in
-variable {n m : ℕ} in
 
 theorem _root_.GlobalTheory.CxForm.PullClosed.sum_symm_dzb {s : Fin n → Fin n → ℂ}
     (hs : ∀ a c, s a c = s c a) :
@@ -98,10 +86,6 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.sum_symm_dzb {s : Fin n → Fin n 
     exact add_neg_cancel X
   exact (smul_eq_zero.mp h2).resolve_left two_ne_zero
 
-open Set Filter Topology in
-open scoped ComplexConjugate ContDiff in
-set_option autoImplicit false in
-variable {n m : ℕ} in
 
 theorem _root_.GlobalTheory.CxForm.PullClosed.analyticOnNhd_of_holo {φ : _root_.ReciprocityTheory.L2DbarEstimates.V n → _root_.ReciprocityTheory.L2DbarEstimates.V m}
     {U : Set (_root_.ReciprocityTheory.L2DbarEstimates.V n)} (hU : IsOpen U) (hφ : DifferentiableOn ℂ φ U) :
@@ -135,10 +119,6 @@ private theorem dbarAt_add_of_differentiableAt {v : _root_.ReciprocityTheory.L2D
   simp only [map_add (f := _), Finsupp.add_apply, _root_.GlobalTheory.CxForm.FormMul.repr_coefwise]
   rw [_root_.GlobalTheory.dbar_add (hF S) (hG S), ContinuousLinearMap.add_apply]
 
-open Set Filter Topology in
-open scoped ComplexConjugate ContDiff in
-set_option autoImplicit false in
-variable {n m : ℕ} in
 
 theorem _root_.GlobalTheory.CxForm.PullClosed.diff_and_closed {φ : _root_.ReciprocityTheory.L2DbarEstimates.V n → _root_.ReciprocityTheory.L2DbarEstimates.V m} {v : _root_.ReciprocityTheory.L2DbarEstimates.V n}
     (hφ : ContDiffAt ℂ 2 φ v) (θ : _root_.GlobalTheory.CxForm.Alt m) :
@@ -254,10 +234,6 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.diff_and_closed {φ : _root_.Recip
     exact hadd _ _ (hsum _ _ hdz) (hsum _ _ hdzb)
   exact ExteriorAlgebra.induction hconst hι hmul hadd θ
 
-open Set Filter Topology in
-open scoped ComplexConjugate ContDiff in
-set_option autoImplicit false in
-variable {n m : ℕ} in
 
 theorem _root_.GlobalTheory.CxForm.PullClosed.dbarAt_pull_fderiv : ∀ {n m : ℕ}
     {φ : _root_.ReciprocityTheory.L2DbarEstimates.V n → _root_.ReciprocityTheory.L2DbarEstimates.V m} {U : Set (_root_.ReciprocityTheory.L2DbarEstimates.V n)}, IsOpen U → DifferentiableOn ℂ φ U →

@@ -14,7 +14,6 @@ noncomputable section
 
 namespace GlobalTheory.CatCoh.Desc
 
-open Classical in
 
 theorem restrict_upwardClosed_subcategory_pull1_bijective : ∀ (R : Type) [CommRing R] (C : Type 1) [Category.{0} C]
     (F : C ⥤ CommAlgCat.{0} R) (P : ObjectProperty C), (∀ S S', (S ⟶ S') → P S → P S') →

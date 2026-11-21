@@ -67,7 +67,6 @@ theorem vV_sub_one {p : ℕ} (hp : p.Prime) {ζ : V} (hζ : IsPrimitiveRoot ζ p
       (GroundTheory.Heights₂.Heights.RootsOfUnityValuation.one_sub_pow_associated hp hζ)
   rw [← vV_associated hass (pow_ne_zero _ h0), map_pow, vV_pow ((map_ne_zero_iff _ inj).2 h0)]
 
-variable (V K) in
 
 def realVal : Valuation K NNReal :=
   (valV V).map (WithZeroMulInt.toNNReal (e := 2) two_ne_zero)

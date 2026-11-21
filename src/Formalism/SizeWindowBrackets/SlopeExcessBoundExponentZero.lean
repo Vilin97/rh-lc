@@ -19,7 +19,6 @@ def ErrF (del u HH η e : ℝ) : ℝ :=
 def ConclF (s mu logI del u HH η e : ℝ) : Prop :=
   s - logI - ErrF del u HH η e ≤ mu
 
-open Formalism.LFunctionChainParameters.WeightedMeanLemmas in
 
 section SizeData₂
 

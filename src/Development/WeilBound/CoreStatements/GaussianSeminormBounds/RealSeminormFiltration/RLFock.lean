@@ -868,7 +868,6 @@ theorem evI_add (a b : AF F) : evI F (a + b) = evI F a + evI F b := map_add (Inf
 
 theorem evI_mul (a b : AF F) : evI F (a * b) = evI F a * evI F b := map_mul (InfiniteAdeleRing.ringEquiv_mixedSpace F) _ _
 
-variable (F) in
 
 def evIh : AF F →+* mixedEmbedding.mixedSpace F :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp (RingHom.fst _ _)
@@ -968,7 +967,6 @@ section Main
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {α β κ : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] {P Q R S : ℕ}
 
-variable (F κ) in
 
 def trB : (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ((κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ) :=
   (LinearMap.toContinuousLinearMap (𝕜 := ℝ) (E := κ → mixedEmbedding.mixedSpace F) (F' := ℝ)).toLinearMap.comp

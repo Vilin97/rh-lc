@@ -15,14 +15,12 @@ open MeasureTheory NumberField Topology Set Formalism.BasicNotions Formalism.L2.
 
 def BetaSym : Prop := ∀ {D : D7} (X : HidaSetting D) (x y : EuclideanSpace ℝ (KapI X)), betaI X x y = betaI X y x
 
-open Classical in
 
 def MatND : Prop := ∀ {D : D7} (X : HidaSetting D), (matI X).det ≠ 0
 
 section
 variable {D : D7} (X : HidaSetting D)
 
-open Classical in
 
 def Alin : EuclideanSpace ℝ (KapI X) →ₗ[ℝ] EuclideanSpace ℝ (KapI X) :=
   ((EuclideanSpace.equiv (KapI X) ℝ).toLinearEquiv.symm : (KapI X → ℝ) →ₗ[ℝ] EuclideanSpace ℝ (KapI X)) ∘ₗ
@@ -49,6 +47,5 @@ theorem inner_Alin (x y : EuclideanSpace ℝ (KapI X)) : ⟪x, Alin X y⟫ = bet
 
 end
 
-open Classical in
 
 end PI.AprimeInfW

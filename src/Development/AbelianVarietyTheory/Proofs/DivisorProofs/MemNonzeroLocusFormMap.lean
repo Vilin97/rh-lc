@@ -192,7 +192,6 @@ include H
 theorem isFinite_proj : IsFinite π :=
   MorphismProperty.of_isPullback H.flip ((IsFinite.SpecMap_iff _).2 (RingHom.finite_algebraMap.2 inferInstance))
 
-omit [FiniteDimensional k E] in
 
 theorem surjective_proj : Function.Surjective π :=
   have : Surjective (spMap (algebraMap k E)) := ⟨Function.surjective_to_subsingleton _⟩
@@ -204,7 +203,6 @@ theorem dim_eq : topologicalKrullDim X' = topologicalKrullDim X :=
   le_antisymm (dim_le_of_isDiscrete π.continuous π.isDiscrete_preimage_singleton)
     (dim_le_of_isClosedMap π.isClosedMap (surjective_proj H))
 
-omit [FiniteDimensional k E] in
 
 theorem isProjOver_of_isPullback (hf : IsProjOver f) : IsProjOver f' := by
   obtain ⟨N, i, hi, e⟩ := ProjSpace.isProjOver_pullback_snd (algebraMap k E) hf
@@ -359,7 +357,6 @@ theorem isNef_baseChange (h : IsNef F G.LA) : IsNef E (G.baseChange E).LA :=
 theorem isBig_baseChange (h : IsBig F G.LA) : IsBig E (G.baseChange E).LA :=
   PosBaseChange.isBig_baseChange (G.isPullback_fst E) G.geom.alg.variety.proj h
 
-variable {G} in
 
 theorem Positivity.baseChange (h : G.Positivity) : (G.baseChange E).Positivity :=
   ⟨h.bir.baseChange G.geom.alg.variety E, G.isNef_baseChange E h.nef, G.isBig_baseChange E h.big⟩

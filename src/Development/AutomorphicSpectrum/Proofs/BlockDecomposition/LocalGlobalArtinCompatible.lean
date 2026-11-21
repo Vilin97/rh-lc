@@ -23,7 +23,6 @@ open scoped GroundTheory.PAdicHodge.CyclNorms
 
 namespace GlobalTheory.CompanionTheory.LTLink
 
-open GroundTheory.Global GroundTheory.Global.SemiLocal in
 
 theorem local_restriction_abelianization_artin : ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (w : HeightOneSpectrum (𝓞 E)) {Ωv : Type} [Field Ωv] [Algebra (w.adicCompletion E) Ωv]
     [IsSepClosure (w.adicCompletion E) Ωv] (j : Ω →+* Ωv),

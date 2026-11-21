@@ -15,7 +15,6 @@ namespace GlobalTheory.SBInduced
 variable {G X Y : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [TopologicalSpace X]
   [TopologicalSpace Y]
 
-omit [IsTopologicalGroup G] in
 
 theorem isClosedEmbedding_translate (r : X → G → X) (h1 : ∀ x, r x 1 = x)
     (hm : ∀ x g h, r x (g * h) = r (r x g) h) (hc : Continuous (fun p : X × G => r p.1 p.2))

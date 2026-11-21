@@ -158,7 +158,6 @@ theorem lintegral_dens_trans (dV : SmoothVolume A) (j k : Fin A.n)
   refine setLIntegral_congr_fun T.open_source.measurableSet fun y hy => ?_
   simp only [T.left_inv hy]
 
-omit [MeasurableSpace X] [BorelSpace X] in
 
 theorem jacC_trans_continuousOn (j k : Fin A.n) :
     ContinuousOn (jacC ((A.chart j).symm.trans (A.chart k)))
@@ -241,7 +240,6 @@ theorem densIn_eq (W : Weight L) (dV : SmoothVolume A) (j k : Fin A.n) {x : X}
   rw [hc, hd, show (D.factorial : ℝ) * (n * dV.dens k (A.chart k x)) =
     n * ((D.factorial : ℝ) * dV.dens k (A.chart k x)) by ring, mul_div_mul_left _ _ hn]
 
-omit [BorelSpace X] in
 
 theorem densIn_continuousAt (W : Weight L) (dV : SmoothVolume A) (j : Fin A.n) {x : X}
     (hx : x ∈ (A.chart j).source) : ContinuousAt (densIn W dV j) x := by
@@ -269,7 +267,6 @@ theorem bergmanDens_continuous (W : Weight L) (dV : SmoothVolume A) :
     exact densIn_eq W dV _ _ ⟨hx', Classical.choose_spec (A.cover x')⟩
   exact (densIn_continuousAt W dV _ hx).congr hev
 
-omit [MeasurableSpace X] [BorelSpace X] in
 
 theorem continuous_of_smooth {f : X → ℝ} (hf : A.Smooth f) : Continuous f := by
   rw [continuous_iff_continuousAt]

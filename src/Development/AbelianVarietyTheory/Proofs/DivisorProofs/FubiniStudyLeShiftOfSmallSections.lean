@@ -30,7 +30,6 @@ theorem regAt_inv_of_unitAt {x : X} {a : X.functionField} (ha : UnitAt x a) : Re
 
 end GlobalTheory.HSNef.FsTop
 
-open GlobalTheory.HSNef.FsTop in
 
 theorem GlobalTheory.HSNef.le_shift_of_isFS : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k), ∀ (M B : HermLB p) (J : Type) [Fintype J] (f : J → X.functionField) (w : J → ℝ), IsFS M f w → SmallFam B f w → Le M (B.shift (fun _ => Real.log (Fintype.card J) / 2) fun _ => rfl) := by
   intro k _ X _ p M B J _ f w hM hB

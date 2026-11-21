@@ -23,7 +23,6 @@ open GlobalTheory.PRep GlobalTheory.SmGL Matrix
 
 namespace GlobalTheory.MixedCell
 
-open GlobalTheory.Published in
 
 theorem isIrreducible : GlobalTheory.Published.GeometricLemmaFiltration → GlobalTheory.Published.BernsteinZelevinskyFiniteness →
     GlobalTheory.Published.BernsteinUnitaryProductIrreducible →

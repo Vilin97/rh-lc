@@ -55,7 +55,6 @@ theorem sec_off (X : ∀ v : Fin G.P.nV, GL (Fin n) ((A.pl v).1.adicCompletion F
     bc (prV (E := E) w) (H.sec X : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) = 1 :=
   bc_secAll_off F E σ J (fun v => (A.pl v).1) (pl_inj A) w (fun v h => hw (h ▸ (A.pl v).2)) _
 
-include H in
 
 theorem eq_one_of_ph (v : Fin G.P.nV) (x : GL (Fin n) (E ⊗[F] (A.pl v).1.adicCompletion F))
     (hx : x ∈ UPts σ J ((A.pl v).1.adicCompletion F)) (h1 : bc (A.ph v) x = 1) : x = 1 := by

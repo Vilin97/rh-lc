@@ -14,7 +14,6 @@ namespace UpperTheory.ConvolutionTheory.R2
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (D : Dat F E)
 
-variable (E) in
 
 abbrev am : A F →+* A E := AdeleBaseChange.adeleMap F E
 

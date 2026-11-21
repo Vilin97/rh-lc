@@ -138,7 +138,6 @@ def IsoInv (Q : Submodule (𝓞 E) S.V → LFlag S r T → LFlag S r T' → Prop
   ∀ (β : S.V ≃ₗ[E] S.V) (hβ : β ∈ Formalism.HermitianLatticesTheory.isom S.hT) (Λ : Submodule (𝓞 E) S.V) (F : LFlag S r T)
     (F' : LFlag S r T'), Q (Formalism.HermitianLatticesTheory.gmap β Λ) (mapL β hβ F) (mapL β hβ F') ↔ Q Λ F F'
 
-variable (Λ F) in
 
 def Inv (Q : LFlag S r T' → Prop) : Prop := ∀ (β : AutF Λ F) (F' : LFlag S r T'), Q (act β F') ↔ Q F'
 
@@ -154,11 +153,8 @@ theorem gval_act (β : AutF Λ F) (F' : LFlag S r T') : Gval F (act β F') = Gva
   rw [mapL_eq_self β.1 (AutF.isom β) F (mem_AutF.mp β.2).2.1 (mem_AutF.mp β.2).2.2] at h
   exact h
 
-variable (Λ) in
 
-variable (Λ) in
 
-variable (Λ) in
 
 def BBneP (g : ℕ) (F : LFlag S r T) (F' : LFlag S r T') (P : HeightOneSpectrum (𝓞 E)) : Prop :=
   (((g : 𝓞 E) ∈ P.asIdeal) → ∀ ξ, AdmWit Λ g F F' ξ →
@@ -175,7 +171,6 @@ theorem not_BBneP_of_generic {g : ℕ} {F' : LFlag S r T'} (h : IsGeneric Λ g F
   · exact h1 hg ξ hξ ((hP P).1 hg)
   · exact h2 hg ((hP P).2 hg)
 
-variable (Λ F) in
 
 def MplusIndep (g : ℕ) (F' : LFlag S r T') : Prop :=
   IsLift Λ F → IsFixedConv Λ g F → ∀ P : HeightOneSpectrum (𝓞 E), ((g : 𝓞 E) ∈ P.asIdeal) → ∀ ξ₁ ξ₂,
@@ -193,44 +188,34 @@ theorem generic_of_not_BBneP {g : ℕ} {F' : LFlag S r T'} (hI : MplusIndep Λ F
   · by_contra hne
     exact h P (And.intro (fun hg' => absurd hg' hg) (fun _ => hne))
 
-variable (S r) in
 
 def GenIso (g : ℕ) : Prop :=
   ∀ T T' : E, IsoInv (S := S) (r := r) (T := T) (T' := T') (fun Λ F F' => IsGeneric Λ g F F')
 
-variable (S r) in
 
-variable (S r) in
 
 def FeqFIso : Prop :=
   ∀ T T' : E, IsoInv (S := S) (r := r) (T := T) (T' := T')
     (fun Λ F F' => ∃ n ∈ NLam Λ F, ∀ a, n (frame F a) = frame F' a)
 
-variable (S r) in
 
-variable (S r) in
 
-variable (S r) in
 
 def DCIso : Prop :=
   ∀ (T T' : E) (β : S.V ≃ₗ[E] S.V) (hβ : β ∈ Formalism.HermitianLatticesTheory.isom S.hT) (Λ : Submodule (𝓞 E) S.V)
     (F : LFlag S r T) (F₁ F₂ : LFlag S r T'),
     DCRel (Formalism.HermitianLatticesTheory.gmap β Λ) (mapL β hβ F) (mapL β hβ F₁) (mapL β hβ F₂) ↔ DCRel Λ F F₁ F₂
 
-variable (S r) in
 
 variable {P : LFlag S r T' → Prop}
 
-variable (Λ F P) in
 
 def IsSat (TT : Set (TermQ Λ F P)) : Prop :=
   ∀ (β : AutF Λ F) (x : Carrier P) (h : P (act β x.1)), mk Λ F P x ∈ TT → mk Λ F P ⟨act β x.1, h⟩ ∈ TT
 
-variable (Λ F P) in
 
 def famOf (Q : LFlag S r T' → Prop) : Set (TermQ Λ F P) := {t | ∃ F', Rep Λ F P t F' ∧ Q F'}
 
-variable (Λ F P) in
 
 def QFun (Q : LFlag S r T' → Prop) : Prop := ∀ x y : Carrier P, Rel Λ F P x y → (Q x.1 ↔ Q y.1)
 

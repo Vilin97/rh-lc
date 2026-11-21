@@ -13,7 +13,6 @@ namespace GlobalTheory.Mem.CosetFin
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
-omit [StarRing E] in
 
 theorem exists_reps (N : Submodule (𝓞 E) (Sp E n)) (hN : N.FG) (m : ℕ) (hm : m ≠ 0) :
     ∃ T : Set (Sp E n), T.Finite ∧ ∀ x ∈ N, ∃ t ∈ T, ∃ z ∈ N, x - t = (m : 𝓞 E) • z := by

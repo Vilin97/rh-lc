@@ -99,7 +99,6 @@ theorem exists_norm_eq (hF : IsFixF K F) (hs : h.IsSymm) (S : VecSplit h h')
   obtain ⟨t, ht⟩ := (conjO_eq_iff_mem_range hF y).mp hc
   exact ⟨t, by rw [← hy, ← ht]; rfl⟩
 
-open Classical in
 
 theorem sum_genus (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') {L : Submodule (𝓞 K) V}

@@ -56,7 +56,6 @@ theorem exists_adapted_basis {K M : Type} [Field K] [AddCommGroup M] [Module K M
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
   {hc : CMData F E} {V : HSpace E}
 
-omit [NumberField F] in
 
 theorem mem_extSub_span_depth {R : Type} [CommRing R] [Algebra F R] {r : ℕ} {C : Matrix (Fin V.rank) (Fin r) E}
     (d : Fin r → ℕ) (i : ℕ) (y : Fin V.rank → R ⊗[F] E) :

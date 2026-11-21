@@ -180,11 +180,9 @@ abbrev StdIndex (R K : Type u) [CommRing R] [Field K] [Algebra R K] := Σ P : St
 
 noncomputable abbrev stdObj (i : StdIndex R K) : PointedEtale R K := ⟨i.1.Ring, i.2⟩
 
-variable (R K) in
 
 abbrev Std := InducedCategory (PointedEtale R K) (stdObj (R := R) (K := K))
 
-variable (R K) in
 
 noncomputable abbrev incl : Std R K ⥤ PointedEtale R K := inducedFunctor _
 
@@ -235,7 +233,6 @@ namespace PointedEtale
 
 variable {R : Type u} [CommRing R] {K : Type u} [CommRing K] [Algebra R K]
 
-variable (R K) in
 
 noncomputable def diagram : PointedEtale R K ⥤ CommRingCat.{u} where
   obj X := CommRingCat.of X

@@ -141,7 +141,6 @@ def FoInv (S : StepLevel F E σ J T fT bad) (emb : ι → E →+* ℂ) (y0 : UPt
 
 variable (S : StepLevel F E σ J T fT bad) (emb : ι → E →+* ℂ)
 
-open Classical in
 
 variable {S emb}
 

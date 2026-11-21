@@ -92,6 +92,5 @@ namespace GlobalTheory.CompanionTheory.BZSeg
 
 open GlobalTheory.CompanionTheory.BZSeg.TwoSeg
 
-set_option maxHeartbeats 3000000 in
 
 end GlobalTheory.CompanionTheory.BZSeg

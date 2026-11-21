@@ -105,7 +105,6 @@ def Zunr (ρ : Representation R (G F Ω) M) (S : Finset (HeightOneSpectrum (𝓞
 def TrivAt (l : ℕ) [Fact l.Prime] (ρ : Representation R (G F Ω) M) (v : HeightOneSpectrum (𝓞 F)) : Prop :=
   ∀ A, IsPlaceOver A v → ∀ g ∈ Dec (F := F) A, ρ g = 1 ∧ cycMod F Ω l 1 g = 1
 
-open Classical in
 
 def gysL (S₀ S : Finset (HeightOneSpectrum (𝓞 F))) (ρ : Representation R (GS Ω (S : Set (HeightOneSpectrum (𝓞 F)))) M)
     (Av : S → ValuationSubring Ω) (m0 : M) : LocCond ρ (locFam S Av) := fun v =>

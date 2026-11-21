@@ -90,7 +90,6 @@ theorem exists_decomp (a : Ideles L) :
     · rfl
     · exact fun _ _ => rfl
 
-open Classical in
 
 theorem finite_order_of_inf_eq_one : ∀ (L : Type) [Field L] [NumberField L] (χ : HChar L),
     (∀ k, χ.inf k = 1) → ∃ n : ℕ, 0 < n ∧ χ.OrderDvd n := by

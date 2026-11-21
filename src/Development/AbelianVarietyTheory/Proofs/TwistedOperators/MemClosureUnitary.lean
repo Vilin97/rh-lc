@@ -238,7 +238,6 @@ private theorem exists_norm_one_isUnit_det_one_add_smul {K R : Type} [Field K] [
     Set.mem_biUnion hI hmem
   exact Nat.not_succ_le_self N (hN hm)
 
-open GlobalTheory.UnRep.WeakApprox in
 
 theorem mem_closure_unitary {K R : Type} [Field K] [CharZero K] [CommRing R] [TopologicalSpace R]
     [IsTopologicalRing R] [IsArtinianRing R] [Nontrivial R] (ι : K →+* R) (c : K →+* K) (σ : R →+* R)
@@ -323,7 +322,6 @@ theorem mem_closure_unitary {K R : Type} [Field K] [CharZero K] [CommRing R] [To
       (c lam • ((1 - skewPart c G A₀) * (1 + skewPart c G A₀)⁻¹)).map ι
     rw [hPmap, map_smul'' ι (c lam), Matrix.map_mul, ← map_inv' ι _ hS₀u, esub, eadd]
 
-open Formalism.UG in
 
 theorem dense_unitary {K R : Type} [Field K] [CharZero K] [CommRing R] [TopologicalSpace R]
     [IsTopologicalRing R] [IsArtinianRing R] [Nontrivial R] (ι : K →+* R) (c : K →+* K) (σ : R →+* R)
@@ -397,7 +395,6 @@ theorem dense_unitary {K R : Type} [Field K] [CharZero K] [CommRing R] [Topologi
   rw [hψF]
   rfl
 
-open NumberField Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 
 theorem dense_inf (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (hc : ∀ x, σ (σ x) = x) (hne : ∃ z, σ z ≠ z) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)

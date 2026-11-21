@@ -31,7 +31,6 @@ theorem invT_mem_Sm {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a) : (fun y => φ (
   ((hφ (invT a (Ad E) g)).comp (fun _ hx => (contDiffAt_invTL hx).contDiffWithinAt) fun _ hx => isUnit_invTL hx).congr
     fun _ hx => chart_invT φ g hx
 
-variable (E a) in
 
 def dualFn : Sm E a ≃ₗ[ℂ] Sm E a where
   toFun φ := ⟨fun y => φ.1 (invT a (Ad E) y), invT_mem_Sm φ.2⟩
@@ -64,7 +63,6 @@ theorem invTOp_invTOp (o : Op E a) : invTOp (invTOp o) = o := by
   | cpt k => exact congrArg Op.cpt (Subtype.ext (Matrix.ext fun i j => star_star (k.1 i j)))
   | lie X => exact congrArg Op.lie (funext fun i => funext fun j => neg_neg (X i j))
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem invT_toUnits (k : Kinf E a) : invT a (Cinf E) (Unitary.toUnits k) = Unitary.toUnits (barK k) := Units.ext rfl
 
@@ -124,7 +122,6 @@ theorem Zalg_dualFn {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) :
     obtain ⟨y', h3, h4⟩ := hy
     exact ⟨x' * y', mul_mem h1 h3, fun φ => by simp [h2, h4]⟩
 
-omit [IsTotallyComplex E] in
 
 theorem height_invT (y : GL (Fin a) (Cinf E)) : height (invT a _ y) = height y := by
   unfold height

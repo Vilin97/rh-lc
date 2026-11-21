@@ -136,7 +136,6 @@ end GlobalTheory.ZarhinFam.KappaEx
 
 namespace GlobalTheory.ZarhinFam
 
-open KappaEx in
 
 theorem exists_kappaOK : ∀ (h M d : ℕ), 1 ≤ h → 3 ≤ M → Odd M → 0 < d → M.Coprime d →
     ∃ κ : Fin 8 → (Fin (8 * h) ⊕ Fin (8 * h) → ℤ) →+ (Fin h ⊕ Fin h → ℤ), GlobalTheory.ZarhinFam.KappaOK h M d κ := by

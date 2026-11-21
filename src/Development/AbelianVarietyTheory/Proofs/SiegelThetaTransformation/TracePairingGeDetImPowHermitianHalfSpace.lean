@@ -168,9 +168,6 @@ private lemma card_mul_det_mul_det_rpow_le_trace_mul_of_posDef {N : ℕ} (hN : 0
   rw [htr, ← hre]
   exact card_mul_det_rpow_le_trace_of_posDef hN hP
 
-open Matrix Complex NumberField Filter Topology in
-open scoped ComplexConjugate ComplexOrder Real Classical in
-variable {E : Type} [Field E] [NumberField E] in
 
 theorem _root_.GlobalTheory.SW.TracePair.trace_ge :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)),

@@ -61,7 +61,6 @@ theorem Majorant.isMajorantOf {h : HermitianForm F E W} {v : Basis ι E W} (M : 
     (w : InfinitePlace E) : IsMajorantOf (gramAt h v w) (M.P w) :=
   ⟨M.posDef w, (GramAtData.proof h v w).1, (GramAtData.proof h v w).2, M.siegel w⟩
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem Majorant.sqrt_le_len {h : HermitianForm F E W} {v : Basis ι E W} (M : Majorant h v)
     (y : InfinitePlace E → ι → ℂ) (w : InfinitePlace E) :

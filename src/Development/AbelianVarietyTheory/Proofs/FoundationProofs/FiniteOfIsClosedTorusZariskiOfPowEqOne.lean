@@ -154,7 +154,6 @@ noncomputable def torusPrime (t : Multiplicative X →* Rˣ) : PrimeSpectrum (Ad
     f ∈ (torusPrime t).asIdeal ↔ torusEval t f = 0 := by
   simp [torusPrime]
 
-variable (R X) in
 
 @[reducible] noncomputable def torusZariski : TopologicalSpace (Multiplicative X →* Rˣ) :=
   TopologicalSpace.induced torusPrime inferInstance
@@ -276,7 +275,6 @@ theorem finite_of_isClosed_torusZariski_of_pow_eq_one [Module.Finite ℤ X] {n :
   rw [h3, orderOf_one] at hs
   exact hp.one_lt.ne hs
 
-variable (R X) in
 
 end Torus
 
@@ -286,7 +284,6 @@ open AddMonoidAlgebra
 
 variable {R : Type*} [CommRing R] {X : Type*} [AddCommGroup X] {ι : Type*}
 
-variable (R) in
 
 end Coordinates
 

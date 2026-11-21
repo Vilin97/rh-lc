@@ -110,7 +110,6 @@ theorem end_ext (A B : Module.End ℂ (Q.RadSp k r z z' π π'))
   · exact h Φ c g hx
   · exact ((A Φ).2.1 (c, g) hx).trans ((B Φ).2.1 (c, g) hx).symm
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem differentiableAt_coord (Φ : Q.RadSp k r z z' π π') (c : Fin r → ℂ) (g : Q.Mx k r)
     (hx : (c, g) ∈ Q.DomR k r z z') :

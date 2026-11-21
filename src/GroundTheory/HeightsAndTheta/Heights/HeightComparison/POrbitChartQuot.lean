@@ -17,7 +17,6 @@ noncomputable section
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {n : ι → ℕ}
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem val_chartEval_eq_aeval_div (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1))
     (f : MvPolynomial (Coord n) ℤ) :
@@ -30,7 +29,6 @@ theorem val_chartEval_eq_aeval_div (x : Cone n (AlgebraicClosure ℚ)) (c : (k :
     simp only [map_mul, Subalgebra.coe_mul, IntermediateField.coe_mul, hp]
     simp [chartEval, chartRatio]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem chartEval_surjective (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1)) :
     Function.Surjective (chartEval x c) := by
@@ -42,7 +40,6 @@ theorem chartEval_surjective (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) �
     MvPolynomial.algHom_ext fun p ↦ by simp [chartEval]
   exact AlgHom.congr_fun h f
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem mem_ker_chartEval_iff (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin (n k + 1))
     (f : MvPolynomial (Coord n) ℤ) :

@@ -46,7 +46,6 @@ theorem ordAt_integerUnit_eq_of_associated {a b : 𝓞 F} (ha : a ≠ 0) (hb : b
   rw [hu, ordAt_mul]
   simp [ordAt, valuation_of_unit_eq]
 
-open scoped Classical in
 
 theorem ordAt_placeUnit (v w : HeightOneSpectrum (𝓞 F)) :
     ordAt w (GroundTheory.Global.SUnit.placeUnit v) = if w = v then (classNumber F : ℤ) else 0 := by
@@ -61,7 +60,6 @@ theorem placeUnit_eq_integerUnit (v : HeightOneSpectrum (𝓞 F)) :
 def primeNZD (v : HeightOneSpectrum (𝓞 F)) : (Ideal (𝓞 F))⁰ :=
   ⟨v.asIdeal, mem_nonZeroDivisors_of_ne_zero v.ne_bot⟩
 
-open scoped Classical in
 
 theorem exists_ordAt_eq_of_mk0_eq {v p : HeightOneSpectrum (𝓞 F)}
     (h : ClassGroup.mk0 (primeNZD v) = ClassGroup.mk0 (primeNZD p)) :
@@ -127,7 +125,6 @@ theorem classNumber_nsmul_sPic (c : sPic S) : classNumber F • c = 0 := by
     by_cases hw : v = w <;> simp [hw]
     ring
 
-open scoped Classical in
 
 noncomputable def sPicGen (c : ClassGroup (𝓞 F)) : sPic S :=
   if h : ∃ v : {v : HeightOneSpectrum (𝓞 F) // v ∉ S}, ClassGroup.mk0 (primeNZD v.1) = c then

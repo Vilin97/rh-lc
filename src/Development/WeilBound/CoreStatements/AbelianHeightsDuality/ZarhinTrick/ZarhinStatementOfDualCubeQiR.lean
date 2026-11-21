@@ -44,7 +44,6 @@ theorem principal_of_quasiInverse {S : Scheme.{0}} (A B : Over S) [GrpObj A] [Gr
     kTriv_zb hA hB hD hD' l mu α Ω s L hL e m hm h₁ h₂ hα hα',
     lam_zb hA hB hD hD' l mu α Ω s L hL e⟩
 
-open GlobalTheory.CompanionTheory.Hypotheses₂.Zarhin in
 
 theorem zarhinStatement_of_dual_cube_qiR (hD : GlobalTheory.Published.DualAbelianScheme) (hC : GlobalTheory.Published.CubeTheorem)
     (hQ : QuasiInverseR) : GlobalTheory.CompanionTheory.Ar.GR.ZarhinStatement := by

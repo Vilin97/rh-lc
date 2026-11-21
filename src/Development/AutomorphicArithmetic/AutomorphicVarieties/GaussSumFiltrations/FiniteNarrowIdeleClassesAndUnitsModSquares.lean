@@ -67,7 +67,6 @@ theorem reAt_eq (v : InfinitePlace F) (x : F) :
   rw [reAt, ← InfinitePlace.embedding_of_isReal_apply]
   exact Complex.ofReal_re _
 
-open Classical in
 
 def sgn (k : Fˣ) : InfinitePlace F → Bool := fun v => decide (0 < reAt v (k : F))
 

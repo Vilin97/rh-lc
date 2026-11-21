@@ -30,7 +30,6 @@ theorem det_eq_prod_of_apply {ι : Type*} [Fintype ι] [DecidableEq ι]
     split_ifs <;> simp
   rw [this, Matrix.det_diagonal]
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
 theorem modulus_prod {ι : Type*} (s : Finset ι) (f : ι → F) :
     LocalField.modulus (∏ i ∈ s, f i) = ∏ i ∈ s, LocalField.modulus (f i) := by
@@ -43,7 +42,6 @@ theorem distribHaarChar_pi_eq_modulus {ι : Type*} [Fintype ι] [DecidableEq ι]
     (distribHaarChar (ι → F) L : ℝ≥0) = LocalField.modulus (LinearEquiv.det L : F) := by
   rw [distribHaarChar_pi_eq, GroundTheory.LocalField.distribHaarChar_eq_modulus]
 
-variable (β) in
 
 abbrev leviDiag (μ : Fin n → ℤ) : levi F n β := ⟨Cartan.diagPow F n μ, diagPow_mem_levi μ⟩
 
@@ -96,7 +94,6 @@ theorem modulus_det_diagPow (μ : Fin n → ℤ) :
       ∏ i, LocalField.modulus ((uniformizer F : F) ^ μ i) := by
   rw [Cartan.coe_diagPow, Matrix.det_diagonal, modulus_prod]
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
 theorem prod_leviIndex_eq (f : Fin n → ℝ≥0) :
     ∏ s : LeviIndex n β, f s.1.1 = ∏ i, f i ^ blockSize β (blockOf β i) := by
@@ -188,7 +185,6 @@ theorem prod_identity (t : Fin n → ℝ≥0) (ht : ∀ i, t i ≠ 0) :
   rw [hA, hP, hU, hall]
   field_simp
 
-variable (β) in
 
 def leviAbsDet : levi F n β →* ℝ≥0 where
   toFun m := LocalField.modulus (((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F).det)
@@ -200,7 +196,6 @@ theorem leviAbsDet_apply (m : levi F n β) :
     leviAbsDet β m = LocalField.modulus (((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F).det) :=
   rfl
 
-variable (β) in
 
 def leviModulusHom : levi F n β →* ℝ≥0 where
   toFun := leviModulus β
@@ -216,7 +211,6 @@ def leviModulusHom : levi F n β →* ℝ≥0 where
 omit [MeasurableSpace F] [BorelSpace F] in
 theorem leviModulusHom_apply (m : levi F n β) : leviModulusHom β m = leviModulus β m := rfl
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
 theorem modulus_eq_one_of_ord {x : F} (hx : x ≠ 0) (h : LocalField.ord x = 0) :
     LocalField.modulus x = 1 :=
@@ -239,7 +233,6 @@ theorem leviRatio_of_mem_integralGL {k : levi F n β}
   eq_one_of_mem_compact (leviRatio β) continuous_leviRatio (isCompact_leviIntegral (F := F))
     (Subgroup.mem_subgroupOf.2 hk)
 
-omit [TopologicalSpace F] [IsNonarchimedeanLocalField F] [MeasurableSpace F] [BorelSpace F] in
 
 theorem hom_cartan (f : levi F n β →* ℝ≥0)
     (hf : ∀ k : levi F n β, (k : GL (Fin n) F) ∈ integralGL F n → f k = 1) {k₁ k₂ : levi F n β}

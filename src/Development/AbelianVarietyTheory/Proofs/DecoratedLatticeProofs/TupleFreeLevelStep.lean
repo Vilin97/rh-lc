@@ -59,6 +59,5 @@ end GlobalTheory.PenLev.CongruenceSubgroupLevelSupport
 end
 
 noncomputable section
-open GlobalTheory.FinPl GlobalTheory.FinPl.SetCut GlobalTheory.PenLev.CongruenceSubgroupLevelSupport in
 
 end

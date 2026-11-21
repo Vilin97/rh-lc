@@ -25,7 +25,6 @@ variable {k k' : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarc
   [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNonarchimedeanLocalField k'] {j : k ≃+* k'}
   {n : Type} [Fintype n] [DecidableEq n]
 
-omit [IsNonarchimedeanLocalField k] [IsNonarchimedeanLocalField k'] in
 
 theorem val_le_iff (hj : IsLocIso j) (x y : k) :
     valuation k' (j x) ≤ valuation k' (j y) ↔ valuation k x ≤ valuation k y := by
@@ -146,7 +145,6 @@ theorem shell_map (hj : IsLocIso j) {ϖ : kˣ} {ϖ' : k'ˣ} (h : IsUnif ϖ) (h' 
   show _ = φ (glEquiv j _ g).val * ν' (gdet (glEquiv j _ g)) * apow (gdet (glEquiv j _ g)) _
   rw [gdet_glEquiv, apow_map hj, ← hν, glEquiv_val]
 
-omit [DecidableEq C] in
 
 theorem bigF_map (hj : IsLocIso j) {a : ℕ} {ϖ : kˣ} {ϖ' : k'ˣ} (h : IsUnif ϖ) (h' : IsUnif ϖ')
     (hν : ∀ x, ν x = ν' (Units.map (j : k →* k') x)) (Ξ : Matrix (Fin a) C k' → ℂ) (X : Matrix (Fin a) C k) :
@@ -156,7 +154,6 @@ theorem bigF_map (hj : IsLocIso j) {a : ℕ} {ϖ : kˣ} {ϖ' : k'ˣ} (h : IsUnif
   rw [← shell_map hj h h' hν]
   simp only [Matrix.map_mul]
 
-omit [DecidableEq C] in
 
 theorem smallF_map (hj : IsLocIso j) (μ : Measure (GL n k))
     (hν : ∀ x, ν x = ν' (Units.map (j : k →* k') x)) (Ψ : Matrix n C k' → ℂ) (Y : Matrix n C k) :

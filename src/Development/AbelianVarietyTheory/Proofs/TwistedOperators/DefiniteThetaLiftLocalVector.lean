@@ -118,7 +118,6 @@ theorem map_eq_one_iff (z : Matrix (Fin a) (Fin a) (v.adicCompletionIntegers D.h
   rw [this, this]
   simp only [red_eq_zero_iff r hr]
 
-open Classical in
 
 theorem phi_princ (ht : a + t = n) (mu : (Fv D.host.F v)ˣ →* ℂˣ)
     (hmu : ∀ u : (Fv D.host.F v)ˣ, Valued.v ((u : Fv D.host.F v) - 1) < 1 → mu u = 1)
@@ -137,7 +136,6 @@ theorem phi_princ (ht : a + t = n) (mu : (Fv D.host.F v)ˣ →* ℂˣ)
     rw [← h2]
     exact congrArg Units.val hg
 
-open Classical in
 
 theorem phi_top (ht : a + t = n) (mu : (Fv D.host.F v)ˣ →* ℂˣ) (ξ : kˣ →* ℂˣ)
     (hmu : ∀ (u : (Fv D.host.F v)ˣ) (b : kˣ) (h : (u : Fv D.host.F v) ∈ v.adicCompletionIntegers D.host.F),
@@ -162,12 +160,10 @@ end Pure
 
 section Local
 
-open Classical in
 
 def locK {k : Type} [CommRing k] {n a : ℕ} (y : Matrix (Fin n) (Fin a) k) : ℂ :=
   if LowZero a y ∧ topL a y = 1 then 1 else 0
 
-open Classical in
 
 def locQ {k : Type} [CommRing k] {n a : ℕ} (ξ : kˣ →* ℂˣ) (y : Matrix (Fin n) (Fin a) k) : ℂ :=
   if h : LowZero a y ∧ IsUnit (topL a y).det then ((ξ h.2.unit : ℂˣ) : ℂ) ^ (-1 : ℤ) else 0
@@ -227,7 +223,6 @@ theorem mem_int_of_rdE {v : FinPl D} {φ : SplitProj D v} {e : AE D} (he : IsIde
   rw [hφ] at h
   exact GlobalTheory.IdemRes.toEAf_mem_of_finPart ((hc.2.2.2 w).2 (GlobalTheory.SplitHecke.isInt_Ov.2 h))
 
-open Classical in
 
 def redFun (a : AE D) (PP : Formalism.L2.DIV.Pl D.host.E) (ω : Matrix (Fin S.rank) (Fin T.rank) (Formalism.L2.DIV.kP PP) → ℂ) :
     WO S T → ℂ :=
@@ -283,7 +278,6 @@ theorem isSBHalf_redFun {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.
     (GlobalTheory.PlaceVec.frMapAdj_up S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_down S T βS βT) {PP} (fun y => ω (y PP))
     fun _ _ h => by rw [h PP (Finset.mem_singleton_self _)]
 
-open Classical in
 
 theorem prod_redFun (s : Finset (Formalism.L2.DIV.Pl D.host.E)) (es : Formalism.L2.DIV.Pl D.host.E → AE D)
     (hes : ∀ PP ∈ s, Formalism.L2.NTheta.IsIdemAt (es PP) PP)

@@ -124,7 +124,6 @@ theorem closure_iff {V : Type} [AddCommGroup V] (φ : V ≃+ V) {S S' : Set V}
     (AddSubgroup.closure_le _).2 h2
   exact ⟨fun h => by simpa using b h, fun h => a h⟩
 
-include hs in
 
 end Scalar
 

@@ -119,7 +119,6 @@ section Unip
 
 variable {K M : Type*} [Field K] [CharZero K] [AddCommGroup M] [Module K M]
 
-open Polynomial in
 
 theorem unip_fin (A : Module.End K M) {k N : ℕ} (hk : 0 < k) (h1 : A ^ k = 1) (h2 : (A - 1) ^ N = 0) : A = 1 := by
   set B := A - 1 with hB

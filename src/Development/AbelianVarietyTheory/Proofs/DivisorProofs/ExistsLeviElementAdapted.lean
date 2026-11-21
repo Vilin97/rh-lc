@@ -170,4 +170,3 @@ theorem fm_inc (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (x 
 
 end GlobalTheory.LeviPlane
 
-open GlobalTheory.LeviPlane in

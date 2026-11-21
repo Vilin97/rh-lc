@@ -113,7 +113,6 @@ section Many
 variable {B : Scheme.{0}} {κ : Type} {N : κ → LB B} {G : Scheme.{0}} {q : G ⟶ B}
   {u : ∀ k (i : (N k).ι), Γ(G, q ⁻¹ᵁ (N k).U i)ˣ}
 
-variable (N q u) in
 
 def Univ : Prop :=
   ∀ (Z : Scheme.{0}) (b : Z ⟶ B) (s : ∀ k (i : (N k).ι), Γ(Z, b ⁻¹ᵁ (N k).U i)ˣ),
@@ -160,7 +159,6 @@ theorem exists_torus_hom {S : Scheme.{0}} {T : Over S} (t : κ → Γ(T.left, �
   rw [val_ofVal]
   simp
 
-open SplitTorus in
 
 theorem exists_isPullback (hN : ∀ k, (N k).IsLB) (hu : ∀ k, Compat (N k) q (u k)) (hU : Univ N q u)
     {V : Scheme.{0}} (v : V ⟶ B) (j : ∀ k, (N k).ι) (hj : ∀ k, ⊤ ≤ v ⁻¹ᵁ (N k).U (j k)) :

@@ -222,8 +222,6 @@ def Good (D : Dat) (V : Submodule ℂ (G3 → ℂ)) (hV : WhA V) : Prop :=
 
 def Glob : Prop := LocF → LocU → LocR → Mellin → ∀ D, An D → ∃ V hV, Good D V hV
 
-open UpperHalfPlane CongruenceSubgroup in
-open scoped MatrixGroups ModularForm in
 
 structure IsForm (k N : ℕ) (χ : DirichletCharacter ℂ N) (f : CuspForm (Gamma1 N) (k : ℤ)) (a : ℕ → ℂ) : Prop where
   char : ∀ γ : SL(2, ℤ), γ ∈ Gamma0 N → (f : ℍ → ℂ) ∣[(k : ℤ)] γ = χ ((γ 1 1 : ℤ) : ZMod N) • (f : ℍ → ℂ)

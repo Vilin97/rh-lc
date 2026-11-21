@@ -148,7 +148,6 @@ theorem five_le_type (H : Host R) {k : Fin 2} (hc : H.g k % (H.QS * H.q * H.d) =
     rw [← Nat.mod_mod_of_dvd (H.g k) (show 4 ∣ H.QS * H.q * H.d from ((((pow_dvd_pow 2 (Nat.le_add_left 2 _)).trans H.tower_dvd).mul_right _).mul_right _)), hc]
   omega
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def retype [IsEmpty N.Loc] (T : NTypes A) (hl : ∀ k w (p : A.LP w), A.items₂ k w p = (X - 1) ^ A.lpDim p)
     (hi : ∀ w (p : A.LP w) σ, A.inePol p σ = (X - 1) ^ A.lpDim p) (L : ∀ k, LabelDatum (H.g k))

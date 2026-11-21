@@ -93,7 +93,6 @@ theorem twZeta_zpow_congr (hz : σ₀ (twZeta σ₀ (qOf P ^ D)) = Complex.exp (
     field_simp
   rw [e, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
 
-open Classical in
 
 theorem twPsiQ_eq (hz : σ₀ (twZeta σ₀ (qOf P ^ D)) = Complex.exp (2 * Real.pi * Complex.I / ((qOf P ^ D : ℕ) : ℂ)))
     (hq : (qOf P).Prime) {a : X.E} (ha : IntAt P ((qOf P : X.E) ^ D * a)) {b : ℤ}
@@ -335,7 +334,6 @@ theorem twAlg {E : Type} [Field E] {q y y' : E} {j : ℕ} {b b' k : ℤ} (hq : q
   field_simp
   ring
 
-open Classical in
 
 def twDig (P : HeightOneSpectrum (𝓞 X.E)) (N : ℕ) (y : X.E) : ℤ :=
   if h : ∃ b : ℤ, IntAt P ((y - b) / (qOf P : X.E) ^ N) then h.choose else 0

@@ -27,15 +27,11 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) [Fintype 
   (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M] [Finite M]
   (hM : ∀ m : M, N • m = 0)
 
-omit [Fintype S] [NeZero N] in
 
 instance isDiscreteRep_dualRep_gsRoots : IsDiscreteRep (dualRep (gsRoots S N) M) :=
   isDiscreteRep_dualRep (gsRoots S N) M
 
-include H hM in
 
-include H hM in
 
-include H hM in
 
 end GroundTheory.ProfCoh

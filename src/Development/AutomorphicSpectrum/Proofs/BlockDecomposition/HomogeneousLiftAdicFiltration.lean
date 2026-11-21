@@ -127,7 +127,6 @@ theorem exists_form_in_all (I : Ideal R) [IsPrecomplete I R]
   rw [h3]
   exact sub_mem h1 h2
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem exists_limit_ideal : ∀ (R : Type) [CommRing R] (I : Ideal R), IsAdicComplete I R → ∀ (N : ℕ)
     (L : ℕ → Ideal (MvPolynomial (Fin (N + 1)) R)),

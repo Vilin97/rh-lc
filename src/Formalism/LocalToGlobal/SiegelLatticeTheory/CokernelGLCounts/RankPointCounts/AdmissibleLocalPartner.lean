@@ -150,7 +150,6 @@ theorem admissible_local_term {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS 
   rw [e]
   exact Submodule.subset_span ⟨_, hmem, rfl⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem admissible_local_partner {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u))
     (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))

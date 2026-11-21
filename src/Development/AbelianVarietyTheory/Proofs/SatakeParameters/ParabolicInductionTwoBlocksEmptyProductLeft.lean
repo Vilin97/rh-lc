@@ -80,7 +80,6 @@ theorem ind₂_line_left {r : ℕ} (h : 0 + r = r) {M V : Type} [AddCommGroup M]
       exact h1.symm
   exact ⟨(GlobalTheory.LocGL.equivOfBijective f hb).symm⟩
 
-variable (k) in
 
 theorem ind₂_unit_left (r t : ℕ) (h : t + r = r) (V : Type) [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin r) k) V) (hπ : IsSmooth π) (d : Fin 0 → ℕ) (X : Fin 0 → Type)

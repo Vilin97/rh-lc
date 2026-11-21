@@ -125,7 +125,6 @@ private theorem idem_smul_sum_eq_ite {D : D7} {M : Type*} [AddCommGroup M] [Modu
     · rw [show v = cP w by rw [h, cP_cP]]; exact hq w hw
     · rw [← hq w hw, smul_smul, idem_mul_ne (fun e => h (by rw [e, cP_cP])), zero_smul]
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_isGlueVec (D : D7) (u : D.what₂.Word) (π : 𝓞 D.host.E) (hπ : IsPi u π) (X : HSp D) (L₀ : Lat X)
     (f₀ : Pl D.host.E → Fin X.rank → EAf D) (H : IsBasePair X u π L₀ f₀) :

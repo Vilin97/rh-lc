@@ -294,7 +294,6 @@ theorem val_det_of_mem_int (hc : Formalism.BasicNotions.CMData F E) {u : GL (Fin
   rw [← c]
   exact mul_le_of_le_one_right' (key _ (inv_mem hu))
 
-omit h1 h2 in
 
 theorem exists_u1Af (hc : Formalism.BasicNotions.CMData F E) (z : unitary E) : ∃ x : unitaryOneFiniteAdeles hc,
     Matrix.GeneralLinearGroup.det (x : GL (Fin 1) (E ⊗[F] Af F)) = unitaryOneRationalAdele F z := by
@@ -308,7 +307,6 @@ theorem exists_u1Af (hc : Formalism.BasicNotions.CMData F E) (z : unitary E) : �
     rw [starRingEnd_apply, hz]
   · simp
 
-omit h1 h2 in
 
 theorem val_eq_pow (hc : Formalism.BasicNotions.CMData F E) {G : Type} [Group G] (dt : unitaryOneFiniteAdeles hc →* G)
     (hker : ∀ x : unitaryOneFiniteAdeles hc, dt x = 1 → (x : GL (Fin 1) (E ⊗[F] Af F)) ∈ IntegralUnitGroup hc) {z : unitary E} {x : unitaryOneFiniteAdeles hc}
@@ -589,7 +587,6 @@ theorem relDet_eq_of_pinned (D : D7) (idl : D.Dt ⧸ D.UO → IdE D) (hp : RelDe
     (mul_ne_zero (detFI_ne_zero L'.2.1 L'.2.2.1) (inv_ne_zero (detFI_ne_zero L.2.1 L.2.2.1))) hz0 hh hJz
     (val_eq_pow hc dt hker hUO hk (hrat z) e L.2.1 L.2.2.1 L'.2.1 L'.2.2.1 hg hx)
 
-open GlobalTheory.Mem.Col2 in
 
 theorem pinned_of_finer (D : D7) (SQ : Finset (HeightOneSpectrum (𝓞 D.host.E))) (ε : DtQ D.host SQ ≃* D.Dt)
     (hU : D.UO = (UOQ D.host SQ).map ε.toMonoidHom) (h1 : ∀ z, D.e1Dt z = ε (e1Q D.host SQ z))

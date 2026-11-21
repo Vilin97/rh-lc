@@ -14,7 +14,6 @@ namespace GlobalTheory.HeightCounting
 section
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N NumberField IsDedekindDomain Formalism.L2 Formalism.L2.NT
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure NAllC (D : D7) (C : NChoice D) where
   gal : NGalTied D

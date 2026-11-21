@@ -13,11 +13,9 @@ open NumberField IsDedekindDomain MeasureTheory Filter Topology GlobalTheory.Wei
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-variable (F κ) in
 
 abbrev V : Type := κ → mixedEmbedding.mixedSpace F
 
-variable (F κ) in
 
 abbrev Pt : Type := (κ → AF F) × (κ → AF F)
 

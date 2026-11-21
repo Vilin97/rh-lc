@@ -38,7 +38,6 @@ theorem twistM_one_apply {O Γ : Type} [CommRing O] [Group Γ] (χ : Γ →* Oˣ
     twistM (1 : Γ →* Matrix (Fin 1) (Fin 1) O) χ g 0 0 = ((χ g : Oˣ) : O) := by
   simp [twistM]
 
-set_option maxHeartbeats 1000000 in
 
 theorem blockE_of_isBlockSum (D : D7) (i : D.nd.Loc)
     (r : D.nd.X i → (Formalism.MainNotions.N.GE D.nd →* GL (Fin D.R.nV) (D.nd.O i)))

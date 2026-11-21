@@ -17,7 +17,6 @@ variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ}
 def InvMod (X : Tower Ω ε) (M m : ℕ) (a : X.Kˣ) : Prop :=
   ∀ γ ∈ CongruenceSubgroup.Gamma M, ∃ h : X.Kˣ, X.sl (ofSL γ) (a : X.K) = a * (h : X.K) ^ m
 
-open Classical in
 
 def img (Γ : Subgroup SL(2, ℤ)) (M : ℕ) [NeZero M] : Finset SL(2, ZMod M) :=
   Finset.univ.filter fun γ => γ ∈ Γ.map (Matrix.SpecialLinearGroup.map (Int.castRingHom (ZMod M)))

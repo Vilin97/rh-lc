@@ -83,11 +83,8 @@ variable {n : ℕ} {e : Fin n → ↥L'.1} {A : Fin n → V' →ₗ[ℚ_[l]] V}
 variable (he : ∀ g x, f (ρ g x) = ρ' g (f x)) (hA : ∀ i g y, A i (ρ' g y) = ρ g (A i y))
   (hs : ∀ y, ∑ i, e i • f (A i y) = y)
 
-include hs in
 
-include he hA hs in
 
-include hA hs in
 
 end Decomp
 

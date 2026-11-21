@@ -38,7 +38,6 @@ def shA {l : Λ} {k k' : K.K} (h : K.le l k' k) : Hol (K.W k) →ₐ[ℂ] Hol (K
 
 theorem shA_apply {l : Λ} {k k' : K.K} (h : K.le l k' k) (x : Hol (K.W k)) : shA h x = sh h x := rfl
 
-variable (K) in
 
 structure DObj (η : Hol F.V →+* R) (M : Ideal R) : Type 1 where
 
@@ -59,24 +58,20 @@ instance : Category (K.DObj η M) where
   comp_id f := Subtype.ext (Category.comp_id _)
   assoc f f' f'' := Subtype.ext (Category.assoc _ _ _)
 
-variable (K η M) in
 
 @[reducible] def OD : K.DObj η M ⥤ CommAlgCat.{0} R where
   obj S := CommAlgCat.of _ S.T.C
   map f := CommAlgCat.ofHom { (f.1.φ : _ →+* _) with commutes' := f.2 }
 
-variable (K η M) in
 
 def perZD (q : Λ →+ R) : Z1 (K.OD η M) :=
   ⟨fun _ S' f ↦ algebraMap R S'.T.C (q f.1.deg), fun S S' S'' f f' ↦ by
     change algebraMap _ S''.T.C (q (f.1.deg + f'.1.deg)) = f'.1.φ (algebraMap _ _ _) + algebraMap _ S''.T.C _
     rw [f'.2, map_add (f := _), map_add (f := _)]⟩
 
-variable (K η M) in
 
 def perClD (q : Λ →+ R) : CatCoh.H1 (K.OD η M) := H1.mk _ (K.perZD η M q)
 
-variable (K η M) in
 
 end Charts
 

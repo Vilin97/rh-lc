@@ -48,7 +48,6 @@ section Test
 def tensFun (β : TI K n) (e : TF K n) (x : normOneGL K n) : ℂ :=
   kbar β (infPart K n (x : AdelicGLn.AdelicGL K n)) * e (finPart K n (x : AdelicGLn.AdelicGL K n))
 
-open Classical in
 
 def tens (β : TI K n) (e : TF K n) : TG K n :=
   if h : Continuous (tensFun β e) ∧ HasCompactSupport (tensFun β e) then ⟨⟨tensFun β e, h.1⟩, h.2⟩ else 0
@@ -60,7 +59,6 @@ def rUC : UC K n →ₐ[ℂ] Module.End ℂ ((isExpLieAlgebra K n).smoothFuns (F
 def uAct : UC K n →ₐ[ℂ] Module.End ℂ (archSmooth K n) :=
   Algebra.TensorProduct.lift (Algebra.ofId ℂ _) uAction fun c _ => Algebra.commute_algebraMap_left c _
 
-open Classical in
 
 def lact (u : UC K n) (β : TI K n) : TI K n :=
   if h : ∃ (h : (fun g => β g⁻¹) ∈ (isExpLieAlgebra K n).smoothFuns (F := ℂ)) (γ : TI K n),
@@ -71,7 +69,6 @@ def SmoothT (β : TI K n) : Prop := (isExpLieAlgebra K n).IsSmoothFun fun g => �
 def LeftFin (β : TI K n) : Prop :=
   FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : archCompact K n => fun g : archGroup K n => β ((k : archGroup K n) * g)))
 
-open Classical in
 
 def along (τ : K →+* ℂ) (z : ℂ) : mixedEmbedding.mixedSpace K :=
   (0, fun w => if w.1 = InfinitePlace.mk τ then (if w.1.embedding = τ then z else starRingEnd ℂ z) else 0)
@@ -172,7 +169,6 @@ def msOf (L : Ix K n → ℂ) (τ : K →+* ℂ) : Multiset ℂ := Finset.univ.v
 
 def hval (t : Pl K → Multiset ℂ) (x : Pl K × Fin n) : ℂ := (t x.1).esymm (x.2 + 1)
 
-variable (K n) in
 
 structure Datum where
   r : ℕ
@@ -192,7 +188,6 @@ def Datum.Pt (b : Datum K n) (S : Set (Pl K)) (Λ : (K →+* ℂ) → Multiset �
     (∀ i, At (b.μ i) S (b.V i) (m i) (B i)) ∧ (∀ τ, Λ τ = ∑ i, (m i τ).map (· + lam i)) ∧
       ∀ w ∉ S, t w = ∑ i, (B i w).map (· * (Ideal.absNorm w.asIdeal : ℂ) ^ (-lam i))
 
-open Classical in
 
 def admitted (S : Set (Pl K)) (F : KF (Ix K n) (Pl K × Fin n)) : Prop :=
   (∀ w : (K →+* ℂ) → Equiv.Perm (Fin n), map (ren fun x : Ix K n => (x.1, w x.1 x.2)) F = F) ∧ ∀ x ∈ F.vars, x.1 ∉ S

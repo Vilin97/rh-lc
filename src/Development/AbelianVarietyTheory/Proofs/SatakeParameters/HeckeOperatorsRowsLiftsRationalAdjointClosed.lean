@@ -34,7 +34,6 @@ theorem csum_zero_left {K : Type} [Field K] [NumberField K] [StarRing K] (S : CS
 theorem csum_zero_right {K : Type} [Field K] [NumberField K] [StarRing K] (S : CSD K) (f : S.Cl → S.V) : S.csum f 0 = 0 := by
   simp [CSD.csum]
 
-set_option maxHeartbeats 4000000 in
 
 theorem inertHeckeOperators_rows_rational_adjointClosed (R : RealDat3 D A3 Ks) (F : Face3 D A3) (hW : R.WeakCharacterisation F) (hJ : InertJunk A3) (t : T) :
     (A3.rowI t).InertRationalAdjoint := by
@@ -68,7 +67,6 @@ theorem inertHeckeOperators_rows_rational_adjointClosed (R : RealDat3 D A3 Ks) (
       rw [h1]
       exact (key (k.1, s') hs').2.1 f g
 
-set_option maxHeartbeats 4000000 in
 
 theorem inertHeckeOperators_lifts_rational_adjointClosed (R : RealDat3 D A3 Ks) (F : Face3 D A3) (hW : R.WeakCharacterisation F) (hJ : InertJunk A3) (j : Fin D.R.m) (t : T) :
     (A3.liftI j t).InertRationalAdjoint := by

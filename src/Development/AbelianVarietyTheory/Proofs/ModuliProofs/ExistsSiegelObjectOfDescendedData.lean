@@ -98,7 +98,6 @@ theorem one_comp (h : IsGrpPullback G' G f φ) (T : Over S') (T₀ : Over S) (τ
   obtain ⟨ρ, hρ⟩ := exists_liftHom h T T₀ τ hτ
   exact (hρ _ _).1 (map_one ρ)
 
-omit [GrpObj G'] in
 
 theorem weilIs_congr {X : Scheme.{0}} {a b : X ⟶ S} (e : a = b) (L : LB G.left) (k : ℤ)
     (x y : Over.mk a ⟶ G) (x' y' : Over.mk b ⟶ G) (hx : x.left = x'.left) (hy : y.left = y'.left)

@@ -19,7 +19,6 @@ open GlobalTheory.PDivGroup GlobalTheory.Sandwich GlobalTheory.IndefiniteRowSide
 variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [Fact ¬IsUnit (p : O)]
   [IsAdicComplete (span {(p : O)}) O]
 
-variable (p O) in
 
 def ghost (n : ℕ) (a : Ainf p O) : O :=
   fontaineTheta O p ((WittVector.frobenius : Ainf p O →+* Ainf p O)^[n] a)
@@ -72,7 +71,6 @@ def lattMap {G H : PDivGroup p O} (f : G ⟶ H) : latt H →ₗ[Ainf p O] latt G
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-variable (p O) in
 
 def lattFunctor : (PDivGroup p O)ᵒᵖ ⥤ ModuleCat.{0} (Ainf p O) where
   obj G := ModuleCat.of _ (latt G.unop)

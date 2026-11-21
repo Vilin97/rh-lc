@@ -127,7 +127,6 @@ theorem exists_span_mul_eq [IsDomain R] {I J : ι → Ideal R}
 
 end GlobalTheory.DetClass
 
-open GlobalTheory.DetClass in
 
 theorem GlobalTheory.prod_classGroup_mk0_eq_of_pi_linearEquiv (R : Type) [CommRing R] [IsDedekindDomain R]
     (ι : Type) [Fintype ι] (I J : ι → (Ideal R)⁰)

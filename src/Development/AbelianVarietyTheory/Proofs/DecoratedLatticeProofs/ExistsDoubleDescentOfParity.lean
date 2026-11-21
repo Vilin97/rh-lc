@@ -159,7 +159,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.FramePositiveSum (IsCO)
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k]
 variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem exists_open_fix {Y : Type} [Fintype Y] [DecidableEq Y] (L : Level (GL Y k)) (hL : IsOpen (L.J : Set (GL Y k))) (α : GL Y k) :
     ∃ U : Subgroup (GL Y k), IsOpen (U : Set (GL Y k)) ∧ ∀ (A : Type) [AddCommGroup A] [Module ℂ A] (σ : Representation ℂ (GL Y k) A),
@@ -190,7 +189,6 @@ theorem exists_isOneComb {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν :
     Finsupp.sum_mapDomain_index (by simp) (fun _ _ _ => add_mul _ _ _)]
   simp only [map_mul, Module.End.mul_apply]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] in
 
 theorem exists_covers {ι V : Type} [Zero V] {p : ℕ} {J : Subgroup (GL (n ⊕ Fin c) k)} (s : Finset ι)
     (f : ι → GL (n ⊕ Fin c) k → V) (hf : ∀ i, ∃ T, Covers p J T (f i)) (t₀ : GL (n ⊕ Fin c) k) :
@@ -222,14 +220,12 @@ theorem exists_covers_flat {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) (ν
   convert hT using 2 with h
   rw [GlobalTheory.StepData.flat, ← GlobalTheory.SplitWeil.om_mul, one_mul, mul_one]
 
-omit [BorelSpace k] in
 
 theorem xi_mem_SB (ψ : AddChar k Circle) (ν : Measure k) (μ : kˣ →* ℂˣ) (Φ : SB (Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k))
     (J : Subgroup (GL (n ⊕ Fin c) k)) (b : GL (n ⊕ Fin c) k) (h' : GL (n' ⊕ Fin (c + 1)) k) (h : GL (n ⊕ Fin c) k) :
     GlobalTheory.StepData.xi ψ ν μ Φ.1 J b h' h ∈ SB (Matrix n n' k) :=
   (SB _).smul_mem _ (GlobalTheory.RootEx.opE_mem_SB 1 ψ ν (GlobalTheory.SplitWeil.om_mem_SB μ h' h Φ.2))
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem exists_isCombAt {D : D7} {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) (p : Place D k) {S T : HSp D}
     (FS : GlobalTheory.LocMod.Frame k S.rank n') (FT : GlobalTheory.LocMod.Frame k T.rank n) {Ξ : Matrix n n' k → ℂ} (hΞ : Ξ ∈ SB (Matrix n n' k)) :
@@ -240,13 +236,11 @@ theorem exists_isCombAt {D : D7} {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdCh
   rw [show Φ = ⟨Ξ, hΞ⟩ from Subtype.ext h, show Φ₀ = O from Subtype.ext (h₀.trans hO.symm)]
   exact h2 Tm hT
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 end Local
 
 variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {σ : ℕ}
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_qstep (hψ : IsStdChar D ψ (-1)) (S : Dbl2 ψ σ) {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k) (hν : IsUnitVol ν)
@@ -281,9 +275,7 @@ theorem exists_qstep (hψ : IsStdChar D ψ (-1)) (S : Dbl2 ψ σ) {k : Type} [Fi
   exact ⟨gl₀, gl₁, gl₂, l₀, l₁, l₂, D₁, D₂, dat₁, dat₂, A₁, A₂, cov₁ () (Finset.mem_univ _), cov₂, d₁, d₂, ent₁, ent₂, e₀, e₂,
     one₀, one₂, m₁, m₂, a₁, a₂, b₁, b₂, g₁, g₂, _, rfl⟩
 
-set_option maxHeartbeats 1000000 in
 
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 
 end GlobalTheory.QPl.Inhab
 end

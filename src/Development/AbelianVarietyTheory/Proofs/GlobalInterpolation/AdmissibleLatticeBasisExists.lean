@@ -26,7 +26,6 @@ theorem exists_basis_primeTo {K V : Type} [Field K] [NumberField K] [AddCommGrou
   | (intros; apply @_root_.GlobalTheory.CoprimeBasisExistence.exists_basis_coprime <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.CoprimeBasisExistence.exists_basis_coprime ..)
 
-open Formalism.MainNotions.TaylorLogMetric in
 
 theorem exists_nnBasis : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (p N N' : ℕ) (L : Submodule (𝓞 D.host.E) (Fin N → D.host.E)) (L' : Submodule (𝓞 D.host.E) (Fin N' → D.host.E)), p.Prime → Nat.Coprime (Ideal.absNorm cc) p → TaylorLogMetric.admitted D N N' L L' → ∃ (r : ℕ) (b : Fin r → Matrix (Fin N') (Fin N) D.host.E), TaylorLogMetric.NNBasis D (TaylorLogMetric.tor0 D cc δ) δ p L L' b := by
   intro D cc δ p N N' L L' hp hcc hA

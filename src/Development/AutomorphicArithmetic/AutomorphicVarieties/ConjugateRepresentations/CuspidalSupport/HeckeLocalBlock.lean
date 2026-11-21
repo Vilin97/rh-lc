@@ -56,11 +56,9 @@ def NI (r : ℕ) {n : ℕ} (F : GA E n → ℂ) : Prop := ∀ (X : UPos n r → 
 
 variable [IsTotallyComplex E]
 
-variable (a) in
 
 abbrev fL (w : Pl E) : Representation ℂ (GL (Fin a) (w.adicCompletion E)) (Sm E a) := locOf (finRep E a) w
 
-variable (a) in
 
 def tOp (w : Pl E) {ϖ : w.adicCompletion E} (hu : IsUnifV E w ϖ) (j : ℕ) : Module.End ℂ (Sm E a) :=
   hkOp (fL a w) (Final.GLintComm E w a) (Tj_mem_hecke hu j)
@@ -71,14 +69,12 @@ structure Eig (φ : Sm E a) (m : (E →+* ℂ) → Multiset ℂ) (B : Pl E → M
   cap : HasCap φ m
   sat : ∀ᶠ w in Filter.cofinite, IsSatVecGL w (fL a w) φ (B w)
 
-variable (E a) in
 
 def Supp (k : ℕ) (m : (E →+* ℂ) → Multiset ℂ) (B : Pl E → Multiset ℂˣ) : Prop :=
   ∃ (ι : Type) (_ : Fintype ι) (n : ι → ℕ) (π : ∀ i, CG E (n i)) (μ : ι → (E →+* ℂ) → Multiset ℂ),
     k ≤ Fintype.card ι ∧ (∀ i, 1 ≤ n i) ∧ ∑ i, n i = a ∧ (∀ i t, (π i).HasInfChar t (μ i t)) ∧ (∀ t, ∑ i, μ i t = m t) ∧
     ∀ᶠ w in Filter.cofinite, ∃ C : ι → Multiset ℂˣ, (∀ i, (π i).HasSat w (C i)) ∧ ∑ i, C i = B w
 
-variable (a) in
 
 abbrev Ix (T : Set (Pl E)) : Type :=
   ((E →+* ℂ) × ℂ) ⊕ (Σ w : {w : Pl E // w ∉ T}, {h : GL (Fin a) (w.1.adicCompletion E) → ℂ // h ∈ Hecke ℂ (KGL w.1 a)})
@@ -89,7 +85,6 @@ def opIx {T : Set (Pl E)} : Ix a T → Module.End ℂ (Sm E a)
 
 abbrev BddS (S : Submodule ℂ (Sm E a)) : Prop := Bdd (S.map (Cm.smEq E a).toLinearMap)
 
-variable (E a) in
 
 def Comm : Set (Module.End ℂ (Sm E a)) :=
   {T | (∀ k, Commute T (cptRep E a k)) ∧ (∀ z ∈ (isExpLieAlgebra E a).centerU, Commute T (Cm.uTC E a z)) ∧
@@ -100,7 +95,6 @@ def hull (S : Submodule ℂ (Sm E a)) : Submodule ℂ (Sm E a) := Submodule.span
 def capB {n : ℕ} (e : Fin a ↪ Fin n) (t : E →+* ℂ) (u : ℂ) : Module.End ℂ (Sm E n) :=
   Formalism.REAL.qdet (fun i j => Eop t (e i) (e j)) (u + ((a : ℂ) - 1) / 2)
 
-variable (a) in
 
 def CI (m : (E →+* ℂ) → Multiset ℂ) : Submodule ℂ (Sm E a) :=
   LinearMap.range (Cm.ofCusp E a) ⊓ ⨅ (t) (u), Module.End.eigenspace (cap t u) ((m t).map (u + ·)).prod

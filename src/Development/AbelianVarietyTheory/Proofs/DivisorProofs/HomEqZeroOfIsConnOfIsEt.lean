@@ -19,7 +19,6 @@ namespace PDivGroup
 
 variable {p : ℕ} {k : Type} [Field k]
 
-omit [Field k] in
 
 theorem mem_augIdeal_iff' {R A : Type} [CommRing R] [CommRing A] [Bialgebra R A] (a : A) :
     a ∈ augIdeal R A ↔ counit (R := R) a = 0 := by

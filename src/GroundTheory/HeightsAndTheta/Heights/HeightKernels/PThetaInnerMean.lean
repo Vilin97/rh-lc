@@ -33,7 +33,6 @@ theorem thetaSummand_shift {g : ℕ} (X Y : Matrix (Fin g) (Fin g) ℝ) (a b u�
 
 end KThetaInnerMean
 
-open KThetaInnerMean in
 
 theorem ThetaInnerMean.proof (h₁ : ThetaSummandNorm.Statement) (h₂ : ThetaCubeParseval.Statement) :
     ThetaInnerMean.Statement := by

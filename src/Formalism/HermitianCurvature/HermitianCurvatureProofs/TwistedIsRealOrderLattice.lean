@@ -207,7 +207,6 @@ open Formalism.FourierDecayAlt.S6 Formalism.FourierDecayAlt.P.S6x5
 open NumberField NumberField.IsCMField Module MeasureTheory
 open scoped nonZeroDivisors
 
-open scoped Classical in
 
 theorem covolumeIndex : Formalism.FourierDecayAlt.S6.CovolumeIndex := by
   intro E _ _ _ B L c hB hc hBL hn

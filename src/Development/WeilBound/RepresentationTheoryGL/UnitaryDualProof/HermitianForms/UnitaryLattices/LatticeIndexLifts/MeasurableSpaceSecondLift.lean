@@ -90,7 +90,6 @@ theorem Ct_apply (g : GL (Fin (m + 1)) k) (v w : V) :
     Ct gl s C g v w = ((md g ^ (s + 1) : ℝ) : ℂ) * C (gl g⁻¹ v) (gl g⁻¹ w) := by
   simp [Ct]
 
-open Classical in
 
 def sect (ξ : Fin (m + 1) → k) : GL (Fin (m + 1)) k :=
   if h : ξ = 0 then 1 else (Classical.choose (GlobalTheory.T.exists_GL_last_basis_vecMul_eq k m ξ h))⁻¹
@@ -100,7 +99,6 @@ theorem sect_spec {ξ : Fin (m + 1) → k} (h : ξ ≠ 0) :
   rw [sect, dite_eq_right h, inv_inv]
   exact Classical.choose_spec (GlobalTheory.T.exists_GL_last_basis_vecMul_eq k m ξ h)
 
-open Classical in
 
 def Df (ξ : Fin (m + 1) → k) : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ := if ξ = 0 then 0 else Ct gl s C (sect ξ)
 
@@ -233,7 +231,6 @@ theorem Df_ker (Y : Submodule ℂ V) (hY : ∀ g, ∀ y ∈ Y, gl g y ∈ Y) (hC
   · simp only [Df, if_neg h]
     rw [Ct_apply, hCY _ (hY _ _ hy), mul_zero]
 
-omit hCp hCc in
 
 theorem Df_loc {ζ : Fin (m + 1) → k} (hζ : ζ ≠ 0) (v w : V) : ∀ᶠ ξ in 𝓝 ζ, Df gl s C ξ v w = Df gl s C ζ v w := by
   obtain ⟨N, hNo, hζN, f, hf, hf1, hfN⟩ := GlobalTheory.T.local_continuous_section_vecMul_orbit k (m + 1) ζ hζ
@@ -393,7 +390,6 @@ variable {ψ : AddChar k Circle} (hψ : Continuous ψ) (hψ1 : ψ ≠ 1) {m : �
   (hCB : ∀ v, (C v v).re ≤ (B' v v).re)
   {ν : Measure (Fin (m + 1) → k)} [ν.IsAddHaarMeasure] (hν : ν (perp ψ A₀) = 1)
 
-include hψ hψ1 hS hA₀ hBg hD hCp hC hCB hν in
 
 theorem locB {ζ : Fin (m + 1) → k} (hζ : ζ ≠ 0) (v : V) :
     ∃ M₀ : AddSubgroup (Fin (m + 1) → k), Lat M₀ ∧ ∀ ξ, ξ - ζ ∈ perp ψ M₀ →

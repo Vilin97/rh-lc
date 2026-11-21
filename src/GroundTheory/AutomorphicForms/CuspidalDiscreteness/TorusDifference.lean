@@ -91,7 +91,6 @@ open AutomorphicForm
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (K n) in
 
 def scaledUnipFD (r M : ℕ) : Set (UPos n r → 𝔸[K]) :=
   {X | (fun p => algebraMap K 𝔸[K] ((M : K)⁻¹) * X p) ∈ unipFundamentalDomain K n r}
@@ -167,7 +166,6 @@ theorem exists_finite_eq_natCast_mul (hM : 0 < M) {X : UPos n r → 𝔸[K]}
   conv_lhs => rw [h1]
   rfl
 
-variable (K) in
 
 def scaledInfSet (M : ℕ) : Set (InfiniteAdeleRing K) :=
   (fun x => (M : InfiniteAdeleRing K) * x) '' closure (GroundTheory.Global.fundamentalSetInfinite K)

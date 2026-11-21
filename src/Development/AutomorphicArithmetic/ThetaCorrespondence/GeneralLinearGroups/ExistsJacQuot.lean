@@ -123,7 +123,6 @@ theorem exists_sub_le {G V U W : Type} [Group G] [AddCommGroup V] [Module ℂ V]
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open GroundTheory.Automorphic.Parabolic (isotypicKernel isotypicPart mem_isotypicKernel) in
 
 theorem exists_quot {G V Y W : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup V]
     [Module ℂ V] [AddCommGroup Y] [Module ℂ Y] [AddCommGroup W] [Module ℂ W] {d : ℕ}

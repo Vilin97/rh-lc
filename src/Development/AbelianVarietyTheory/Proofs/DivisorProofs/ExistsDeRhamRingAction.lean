@@ -64,4 +64,3 @@ variable {H : T.Modules} (e : ∀ (V : T.Opens) (hV : IsAffineOpen V), Γ(H, V) 
 
 end GlobalTheory.AbDatum.DRAct
 
-open GlobalTheory.AbDatum.DRAct in

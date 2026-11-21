@@ -150,7 +150,6 @@ noncomputable def invariantSections (U : X.Opens) (hU : ∀ g, U ≤ (ρ g).hom 
   letI := sectionsAction ρ U hU
   FixedPoints.subring Γ(X, U) G
 
-variable {ρ} in
 
 theorem mem_invariantSections {U : X.Opens} {hU : ∀ g, U ≤ (ρ g).hom ⁻¹ᵁ U} {s : Γ(X, U)} :
     s ∈ invariantSections ρ U hU ↔ IsInvariantSection ρ U s := by
@@ -225,7 +224,6 @@ instance StableAffineOpens.preorder : Preorder (StableAffineOpens ρ) where
   le_trans U V W h h' := le_trans (α := X.AffineZariskiSite) (a := ⟨_, U.isAffineOpen⟩)
     (b := ⟨_, V.isAffineOpen⟩) (c := ⟨_, W.isAffineOpen⟩) h h'
 
-variable {ρ} in
 
 theorem StableAffineOpens.toOpens_le {U V : StableAffineOpens ρ} (f : U ⟶ V) :
     U.toOpens ≤ V.toOpens := by
@@ -376,7 +374,6 @@ noncomputable abbrev stableAffineCover : X.OpenCover where
     obtain ⟨V, hV, hst, hx⟩ := exists_stable_isAffineOpen ρ x
     exact ⟨⟨V, hV, hst⟩, hV.range_fromSpec.ge hx⟩
 
-set_option backward.isDefEq.respectTransparency false in
 
 noncomputable instance locallyDirected_stableAffineCover : (stableAffineCover ρ).LocallyDirected where
   trans f := Spec.map (X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le f)).op)
@@ -504,7 +501,6 @@ section Base
 
 variable {S S' : Scheme.{u}} (f : X ⟶ S) (hf : ∀ g, (ρ g).hom ≫ f = f)
 
-include hf in
 
 instance locallyOfFiniteType_desc [IsLocallyNoetherian S] [LocallyOfFiniteType f] :
     LocallyOfFiniteType (desc ρ f hf) :=
@@ -663,9 +659,6 @@ variable (ρ : G →* Aut X) [Finite G] [OrbitsInAffineOpens (overAction ρ)]
 
 end Over
 
-open NumberField in
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 
 end GlobalTheory

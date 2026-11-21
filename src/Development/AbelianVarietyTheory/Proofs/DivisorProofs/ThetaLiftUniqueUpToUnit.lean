@@ -36,7 +36,6 @@ open Matrix Formalism.MainNotions.S
 variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {V W : HSp D} {χV χW : (AE D)ˣ →* Circle}
   {ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} {S : D.what₂.Tau → SPar} {M : DSModel W S}
 
-variable (ψ V W) in
 
 def thetaSub : Submodule ℂ (WO V W → ℂ) where
   carrier := {g | IsThetaFunO ψ V W g}
@@ -44,7 +43,6 @@ def thetaSub : Submodule ℂ (WO V W → ℂ) where
   zero_mem' := GlobalTheory.OrientedHeis.theta_zero
   smul_mem' c _ := GlobalTheory.OrientedHeis.theta_smul c
 
-variable (ω) in
 
 structure IsInvForm (b : thetaSub ψ V W →ₗ⋆[ℂ] thetaSub ψ V W →ₗ[ℂ] ℂ) : Prop where
   symm : ∀ x y, b y x = conj (b x y)
@@ -125,8 +123,6 @@ theorem exists_kop (h1 : LowSm M) (h2 : GlobalTheory.IndefiniteRowSideFullHecke.
   have : u = g ⟨k, hk⟩ v := Subtype.ext (Subtype.ext hu)
   exact this ▸ hU _ v hv
 
-open Classical in
-variable (θ ω) in
 
 def Eqv {c : CoefA V} (F : LowT M →ₗ[ℂ] c.W →ₗ[ℂ] thetaSub ψ V W) : Prop :=
   (∀ u ∈ GinfC V, ∀ x w, (F x (c.ρ u w)).1 = ω (u, 1) (F x w).1) ∧

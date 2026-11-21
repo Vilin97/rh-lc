@@ -26,7 +26,6 @@ section Defs
 
 variable (k : Type) [Field k] {X : Scheme.{0}} [Algebra k Γ(X, ⊤)]
 
-variable (X) in
 
 def strHom : X ⟶ Sp k := X.toSpecΓ ≫ Spec.map (CommRingCat.ofHom (algebraMap k Γ(X, ⊤)))
 
@@ -81,7 +80,6 @@ theorem strHom_eq {f : X ⟶ Sp k}
   rw [strHom, e, Spec.map_comp, ← Scheme.toSpecΓ_naturality_assoc,
     toSpecΓ_SpecMap_ΓSpecIso_inv, Category.comp_id]
 
-variable (k X) in
 
 theorem algebraMap_eq_strHom (r : k) :
     algebraMap k Γ(X, ⊤) r = (strHom k X).appTop ((Scheme.ΓSpecIso (.of k)).inv r) := by
@@ -273,7 +271,6 @@ theorem interNum_one_nonneg_of_sec (hH : IsAmpleLB H) (hd : topologicalKrullDim 
   rw [Pi.single_eq_same] at this
   exact ha this
 
-omit [IsIntegral C] in
 
 theorem interNum_one_of_cls_eq_add (hH : IsAmpleLB H) (hd : topologicalKrullDim C = 1)
     {A B : LB C} (hL : L.IsLB) (hA : A.IsLB) (hB : B.IsLB) (e : cls L hL = cls A hA + cls B hB) :
@@ -390,7 +387,6 @@ variable {k : Type} [Field k] {X Y : Scheme.{0}} [Algebra k Γ(X, ⊤)] {H L M N
 theorem IsNef.of_cls_eq (h : IsNef k M) (hL : L.IsLB) (e : cls L hL = cls M h.isLB) : IsNef k L :=
   ⟨hL, fun Z hZ => (h.2 Z hZ).trans_eq (interNumRed_one_congr hL h.isLB e Z).symm⟩
 
-variable (k X) in
 
 theorem isNef_triv : IsNef k (LB.triv X) :=
   ⟨LB.isLB_triv X, fun Z _ => (interNumRed_one_eq_zero (LB.isLB_triv X) rfl Z).ge⟩
@@ -486,7 +482,6 @@ theorem IsPsEff.exists_hasNonzeroSec [IsLocallyNoetherian X] (h : IsPsEff N) (hA
     cls_tens (isLB_dual hB.isLB) (isLB_lbPow hA.isLB q), cls_dual hB.isLB, cls_lbPow hA.isLB]
   module
 
-omit [IsIntegral X] in
 
 theorem IsPsEff.of_cls_eq (h : IsPsEff M) (hL : L.IsLB) (e : cls L hL = cls M h.isLB) :
     IsPsEff L := by
@@ -497,7 +492,6 @@ theorem IsPsEff.of_cls_eq (h : IsPsEff M) (hL : L.IsLB) (e : cls L hL = cls M h.
     (isLB_lbPow (isLB_tens (isLB_lbPow h.1 m) hA.isLB) r)
     (by rw [cls_lbPow_tens_lbPow hL hA.isLB, cls_lbPow_tens_lbPow h.1 hA.isLB, e])⟩
 
-omit [IsIntegral X] in
 
 theorem isPsEff_of_hasNonzeroSec_pow (hH : IsAmpleLB H) (hL : L.IsLB) {n : ℕ} (hn : 1 ≤ n)
     (h : HasNonzeroSec (lbPow L n)) : IsPsEff L := by

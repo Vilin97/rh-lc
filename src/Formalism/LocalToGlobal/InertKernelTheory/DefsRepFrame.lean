@@ -28,7 +28,6 @@ def linFrame {j : ℕ} {L0 : X.Lt j} {La' : X.Lt (j + 1)} (φ : Frm X j L0 La')
   letI := Formalism.L2.G.Pend.algKfC E.toCEmb
   ∑ y, MvPowerSeries.C (S k y) * invF ℂ_[p] φ (kapInv X pos j y)
 
-open Classical in
 
 def subGen (M : ∀ j, X.Lt j → ∀ v : X.Pl, Matrix (Fin ((X.Pj j).m + 1)) (Fin ((X.Pj j).m + 1)) (X.G.P.Qq v))
     (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1))
@@ -89,7 +88,6 @@ def lamB (k : D.what₂.Tau × Fin N' × Fin N) (i : Fin r) : ℂ_[p] := lamC la
 def lamBc (k : D.what₂.Tau × Fin N' × Fin N) (i : Fin r) : ℂ_[p] :=
   lamC lam (embT D k.1 (D.host.conj (b i k.2.1 k.2.2)))
 
-open Classical in
 
 def LamONB : Prop :=
   ∀ k k' : D.what₂.Tau × Fin N' × Fin N, ∑ i, lamB D lam b k i * lamBc D lam b k' i = if k = k' then 1 else 0
@@ -119,7 +117,6 @@ variable {p : ℕ} [Fact p.Prime] (X : Sys p) (hfin : ∀ j c, (X.Lv.lev j c).Fi
     (large₂ : ∀ j, X.Lt j → X.Lt (j + 1) → Submodule (𝓞 D.host.E) (Fin ((X.Pj j).m + 1) → D.host.E))
     (Lg' : ∀ j, X.Lt j → X.Lt (j + 1) → Submodule (𝓞 D.host.E) (Fin ((X.Pj (j + 1)).m + 1) → D.host.E))
 
-open Classical in
 
 def ColTie (lam : Qbar →+* ℂ_[p]) : Prop :=
   ∀ j (L0 : X.Lt j), L0 ∈ Formalism.L2.G.Pend.repOf X.Lv hfin j → ∀ La' : X.Lt (j + 1), (X.Pj (j + 1)).IsLatTup La'.2 →

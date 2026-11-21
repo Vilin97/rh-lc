@@ -32,7 +32,6 @@ theorem vanish_off_uni (ψ₀ : AddChar k ℂ) (hψ : ψ₀ ≠ 1) (f : mirabSub
   by_contra hf
   exact hne (mul_left_cancel₀ hf (h2.symm.trans (mul_comm _ _)))
 
-open Classical in
 
 def deltaU (ψ₀ : AddChar k ℂ) (x : mirabSub k n) : ℂ :=
   if h : x ∈ uniSub k n then genericChar n ψ₀ ⟨x, h⟩ else 0

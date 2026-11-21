@@ -118,7 +118,6 @@ theorem isMultiHomog_prod {α : Type} (s : Finset α) (f : α → MRingOver ℂ 
     exact isMultiHomog_mul (h j (Finset.mem_insert_self _ _))
       (ih fun x hx => h x (Finset.mem_insert_of_mem hx))
 
-open Classical in
 
 def wt (p : Σ k, ι k) : K → ℕ := fun k => if p.1 = k then 1 else 0
 
@@ -156,7 +155,6 @@ theorem cmp_of_homog {h : MRingOver ℂ ι} {b : K → ℕ} (hh : IsMultiHomog h
       simp [hh m hm]
     · rw [if_neg hb, coeff_zero, if_neg (by rw [hh m hm]; exact hb)]
 
-open Classical in
 
 theorem cmp_mul {q : MRingOver ℂ ι} {d : K → ℕ} (hq : IsMultiHomog q d) (D : K → ℕ)
     (p : MRingOver ℂ ι) : cmp D (p * q) = if d ≤ D then cmp (D - d) p * q else 0 := by
@@ -237,7 +235,6 @@ theorem eval_cmp_eq_zero {S : Set (MRingOver ℂ ι)} (hS : ∀ s ∈ S, ∃ a, 
     · rw [map_mul, hx, zero_mul]
     · simp
 
-open Classical in
 
 def spike (j : ∀ k, ι k) (f : K → ℕ) : (Σ k, ι k) →₀ ℕ :=
   Finsupp.equivFunOnFinite.symm (fun p => if p.2 = j p.1 then f p.1 else 0)
@@ -474,7 +471,6 @@ theorem phi_smul {G : MRingOver ℂ ι} {e : K → ℕ} (hG : IsMultiHomog G e) 
     rw [Pi.smul_apply, smul_eq_mul, mul_comm, pow_mul]
   rw [hpow, mul_pow, mul_div_mul_left _ _ (pow_ne_zero _ hP)]
 
-open Classical in
 
 theorem isMultiHomog_X (k : K) (a : ι k) :
     IsMultiHomog (X ⟨k, a⟩ : MRingOver ℂ ι) (fun k' => if k' = k then 1 else 0) := by
@@ -544,7 +540,6 @@ theorem exists_sep {e : K → ℕ} (he : ∀ k, 1 ≤ e k) {z w : (Σ k, ι k) �
 
 end AvoidFormFinite
 
-open AvoidFormFinite in
 
 theorem AvoidFormFinite.proof : AvoidFormFinite.Statement := by
   intro K _ ι _ S G e he hG hS hcone

@@ -16,7 +16,6 @@ open GlobalTheory.LeviGA
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a r : ℕ}
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem blkMat_one_mem (hr : r ≤ a) (k : Kinf E (a - r)) :
     blkMat (Cinf E) hr (1, k.1) ∈ Matrix.unitaryGroup (Fin a) (Cinf E) := by
@@ -36,7 +35,6 @@ omit [NumberField E] [IsTotallyComplex E] in
 theorem toUnits_blkK (hr : r ≤ a) (k : Kinf E (a - r)) :
     Unitary.toUnits (blkK hr k) = blkGL hr (1, Unitary.toUnits k) := Units.ext rfl
 
-variable (E) in
 
 def slice [MeasurableSpace (BlockIx a r → Ad E)] (μ : Measure (BlockIx a r → Ad E)) (𝓕 : Set (BlockIx a r → Ad E))
     (hr : r ≤ a) (φ : GA E a → ℂ) (m₁ : GA E r) (t : GL (Fin a) (Af E)) (κ : Kinf E a) : GA E (a - r) → ℂ :=

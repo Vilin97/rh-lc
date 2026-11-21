@@ -33,7 +33,6 @@ theorem aeval_scale_of_isMultiHomog (y : (Σ k, ι k) → Ω) (t : K → Ω) {f 
   rw [hsplit, hpow]
   ring
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem eval_mConeMap (y : (Σ k, ι k) → Ω) (t : K → Ω) (f : MRing ι) :
     eval t (mConeMap y f) = aeval (fun p => t p.1 * y p) f := by
@@ -107,7 +106,6 @@ theorem exists_sum_eq_one [CharZero Ω] (P : Ideal (MRing ι)) (y' : (Σ k, ι k
     rw [hzZ, Ideal.Quotient.eq_zero_iff_mem.mpr (hJm (Ideal.mem_sup_right
       (Ideal.subset_span ⟨j, rfl⟩))), map_zero]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem aeval_mem_of_forall [CharZero Ω] (V : Subring Ω) (hQ : ∀ r : ℚ, algebraMap ℚ Ω r ∈ V)
     (y' : (Σ k, ι k) → Ω) (hy : ∀ p, y' p ∈ V) (b : MvPolynomial (Σ k, ι k) ℚ) : aeval y' b ∈ V := by

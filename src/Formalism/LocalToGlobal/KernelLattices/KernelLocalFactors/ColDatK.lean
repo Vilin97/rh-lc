@@ -69,7 +69,6 @@ variable (d : ColDat)
 
 variable {d}
 
-set_option maxHeartbeats 1600000 in
 
 end OverColDat
 

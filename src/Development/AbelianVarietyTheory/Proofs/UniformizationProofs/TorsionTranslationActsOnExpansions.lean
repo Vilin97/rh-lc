@@ -35,7 +35,6 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegPre R}
   {U : PreU I D A G} {S : Type} [CommRing S] {φ : R →+* S} [IsLocalRing S]
 open ReciprocityTheory.ChartRestriction.G.DVR FormalPoint
 
-omit [IsDomain R] [IsLocalRing S] in
 
 def levelPt (I : Ideal R) (φ : R →+* S) (e : ℕ) :
     (Over.map (thick R I e)).obj (Over.mk (levelMap I φ e)) ⟶ Over.mk (spMap φ) :=

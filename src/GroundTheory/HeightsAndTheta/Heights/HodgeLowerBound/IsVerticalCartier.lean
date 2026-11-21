@@ -27,7 +27,6 @@ def IsValueAt (y : (Σ k, ι k) → Ω) (a : Ω) (z : (Σ k, ι k) → ℂ) (v :
 def RegularAt (y : (Σ k, ι k) → Ω) (a : Ω) (z : (Σ k, ι k) → ℂ) : Prop :=
   ∃ v, IsValueAt y a z v
 
-open Classical in
 
 def valAt (y : (Σ k, ι k) → Ω) (a : Ω) (z : (Σ k, ι k) → ℂ) : ℂ :=
   if h : RegularAt y a z then h.choose else 0
@@ -49,7 +48,6 @@ def IsFrameAt (y : (Σ k, ι k) → Ω) (W : ChartBundle ℤ (NumbersDVR.segreVe
   (∀ q, IsLocSection y W z (b q)) ∧
     ∀ e, IsLocSection y W z e → ∃ a : Fin N → Ω, (∀ q, RegularAt y (a q) z) ∧ e = ∑ q, a q • b q
 
-open scoped ComplexOrder in
 
 end Frames
 

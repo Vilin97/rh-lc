@@ -102,7 +102,6 @@ theorem sqRatio_mem_grid {D : D7} {T : Type} {Lc : LevCh D T} {sc : GlobalTheory
   exact div_mem (mul_mem (mul_mem (mul_mem (RingHom.mem_fieldRange.2 ⟨ζ, rfl⟩) hU) hl) (prod_mem hP2))
     (prod_mem fun k hk => (hP1 k hk).1)
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.RowClaim
 

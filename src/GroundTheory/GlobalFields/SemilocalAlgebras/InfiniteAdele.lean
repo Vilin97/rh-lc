@@ -36,7 +36,6 @@ def piPlacesOverEquiv :
 
 variable [NumberField K] [NumberField L]
 
-open scoped Classical in
 
 def tensorInfiniteAdeleRingEquiv :
     L ⊗[K] InfiniteAdeleRing K ≃ₐ[L] InfiniteAdeleRing L :=
@@ -52,7 +51,6 @@ theorem tensorInfiniteAdeleRingEquiv_tmul (l : L) (x : InfiniteAdeleRing K)
     (l ⊗ₜ x (w.comap (algebraMap K L))) ⟨w, liesOver_comap w⟩ = _
   rw [tensorPiEquivLeft_tmul]
 
-omit [NumberField K] [NumberField L] in
 
 def infiniteAdeleRingMap : InfiniteAdeleRing K →+* InfiniteAdeleRing L :=
   RingHom.pi fun w : InfinitePlace L =>
@@ -66,7 +64,6 @@ theorem infiniteAdeleRingMap_apply (x : InfiniteAdeleRing K) (w : InfinitePlace 
       algebraMap (w.comap (algebraMap K L)).Completion w.Completion
         (x (w.comap (algebraMap K L))) := rfl
 
-omit [NumberField K] [NumberField L] in
 
 theorem continuous_infiniteAdeleRingMap :
     Continuous (infiniteAdeleRingMap (K := K) (L := L)) :=
@@ -74,7 +71,6 @@ theorem continuous_infiniteAdeleRingMap :
     (NumberField.LiesOver.continuous_completionMap (v := w.comap (algebraMap K L)) (w := w)).comp
       (continuous_apply (w.comap (algebraMap K L)))
 
-omit [NumberField K] [NumberField L] in
 
 theorem infiniteAdeleRingMap_algebraMap (k : K) :
     infiniteAdeleRingMap (algebraMap K (InfiniteAdeleRing K) k) =

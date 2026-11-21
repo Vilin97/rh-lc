@@ -17,8 +17,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Comp
 
 variable (hLK : L ≤ K) [((L : Subgroup G).subgroupOf K).Normal]
 
-include hLK in
-omit [TotallyDisconnectedSpace G] [((L : Subgroup G).subgroupOf K).Normal] in
 
 theorem exists_frobeniusLift {τ : G} (hτ : τ ∈ (K : Subgroup G)) :
     ∃ s : D.FrobeniusLift K, τ⁻¹ * s.elt ∈ (L : Subgroup G) := by
@@ -114,7 +112,6 @@ omit [TotallyDisconnectedSpace G] [((L : Subgroup G).subgroupOf K).Normal] in
 theorem liftOf_spec (τ : (K : Subgroup G)) : (τ : G)⁻¹ * (liftOf (D := D) hLK τ).elt ∈ (L : Subgroup G) :=
   (exists_frobeniusLift hLK τ.2).choose_spec
 
-omit [TotallyDisconnectedSpace G] [((L : Subgroup G).subgroupOf K).Normal] in
 
 theorem mk_liftOf (τ : (K : Subgroup G)) :
     ((⟨(liftOf (D := D) hLK τ).elt, (liftOf (D := D) hLK τ).mem⟩ : (K : Subgroup G)) :
@@ -174,8 +171,6 @@ theorem reciprocity_mk_eq_norm (s : D.FrobeniusLift K)
           tateZero A (K : Subgroup G) (L : Subgroup G)) := by
   rw [reciprocity_mk, D.mk_norm_eq_recFrob hLK hax s hπ]
 
-include hLK in
-omit [IsDiscreteModule G A] [TotallyDisconnectedSpace G] [((L : Subgroup G).subgroupOf K).Normal] in
 
 theorem exists_frobeniusLift_mk (q : (K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) :
     ∃ s : D.FrobeniusLift K,

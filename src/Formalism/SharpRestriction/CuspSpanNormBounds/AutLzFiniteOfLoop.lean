@@ -130,7 +130,6 @@ namespace Formalism.MainNotions.S.Lem.Glob
 
 variable {D : Formalism.BasicNotions.D7}
 
-attribute [local instance] Formalism.BasicNotions.Host.cmStar in
 
 end Formalism.MainNotions.S.Lem.Glob
 end E

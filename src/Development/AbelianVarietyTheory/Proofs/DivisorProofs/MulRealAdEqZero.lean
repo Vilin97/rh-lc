@@ -74,7 +74,6 @@ theorem isPairing_trP (κ : Type) [Fintype κ] : IsPairing (trP F κ) where
     have h := hy (Pi.single i b)
     simpa [trP, Pi.single_apply, ite_mul, Finset.sum_ite_eq', mul_comm] using h
 
-variable (F) in
 
 def evH : AF F →+* mixedEmbedding.mixedSpace F :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp (RingHom.fst _ _)

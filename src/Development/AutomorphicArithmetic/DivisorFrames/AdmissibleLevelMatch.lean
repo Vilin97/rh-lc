@@ -228,4 +228,3 @@ private theorem core {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Rec
   rw [← Category.assoc, ← hθ, Category.assoc, Category.assoc, hw']
   exact hψ
 
-set_option backward.isDefEq.respectTransparency true in

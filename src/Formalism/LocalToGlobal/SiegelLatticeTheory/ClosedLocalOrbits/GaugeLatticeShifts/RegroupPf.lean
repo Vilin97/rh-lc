@@ -60,7 +60,6 @@ def SupportReindex (hK : X.LevelSubgroupCharacter) (Dt' : Set X.B.I.GA) : Prop :
       (∑' δ : Dt', ‖Ph X u' hK T' ((δ : X.B.I.GA) * (y, aC cs ρ))‖ₑ) =
         ∑ ρ', ∑' c : ColCl cs cs' ρ ρ', ‖Ph X u' hK T' ((ColCl.pt cs cs' c)⁻¹ * (y, aC cs ρ))‖ₑ
 
-variable (F0) in
 
 def SlabAbs (hK : X.LevelSubgroupCharacter) (Dt' : Set X.B.I.GA) : Prop :=
   ∀ (Ωs : cs.Cl → Set X.B.I.Ginf), (∀ ρ, Formalism.L2.SG.HidaSetting.IsSFund X.B.I (NOcol F0 cs ρ) (Ωs ρ)) →
@@ -68,7 +67,6 @@ def SlabAbs (hK : X.LevelSubgroupCharacter) (Dt' : Set X.B.I.GA) : Prop :=
     ∫⁻ y in Ωs ρ, ‖Ph X u hK T (y, aC cs ρ)‖ₑ * ∑' δ : Dt', ‖Ph X u' hK T' ((δ : X.B.I.GA) * (y, aC cs ρ))‖ₑ
       ∂(Formalism.L2.SG.ProjRows.muInf X.B.I) < ⊤
 
-variable (F0 F0') in
 
 def OrbitUnfold (hK : X.LevelSubgroupCharacter) : Prop :=
   ∀ (Ωs : cs.Cl → Set X.B.I.Ginf), (∀ ρ, Formalism.L2.SG.HidaSetting.IsSFund X.B.I (NOcol F0 cs ρ) (Ωs ρ)) →
@@ -86,7 +84,6 @@ def OrbitUnfold (hK : X.LevelSubgroupCharacter) : Prop :=
         if TermOn cs cs' t ρ ρ' then ∫ x in FundOf t, Fterm cs hK T T' t ρ x ∂(Formalism.L2.SG.ProjRows.muInf X.B.I)
         else 0
 
-variable (F0 F0') in
 
 def TermVal (hK : X.LevelSubgroupCharacter) : Prop :=
   ∀ (T : Cu X u hK) (T' : Cu X u' hK) (t : GTerm X u u' F0 F0' what₂ rows') (ρ : cs.Cl) (ρ' : cs'.Cl),
@@ -108,7 +105,6 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
   (cs : ColSys X u what₂) (cs' : ColSys X u' rows') (FdN FdN' : Set X.B.I.Ginf)
 
-variable (X u) in
 
 theorem psiFinU_one : X.psiFinU u 1 = 1 := by
   unfold Formalism.L2.SG.HidaSetting.HidaSetting.psiFinU Formalism.L2.SG.HidaSetting.psiFin
@@ -340,7 +336,6 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
   (cs : ColSys X u what₂) (cs' : ColSys X u' rows')
 
-variable (F0 F0') in
 
 def OrbitAlg : Prop :=
   ∀ (ρ : cs.Cl) (ρ' : cs'.Cl), ∃ (N : Subgroup X.B.I.Ginf) (lift : N → X.B.I.GA),

@@ -29,7 +29,6 @@ noncomputable section
 namespace GlobalTheory.ZM.LocalGraph
 open GlobalTheory.ZM.SegreCoord GlobalTheory.AbLaw.Segre
 
-open MvPolynomial in
 
 theorem homogeneousComponent_mem_vanIdeal {R σ Hh : Type} [CommRing R] (d : ℕ) (p : Hh → σ → R)
     (F : MvPolynomial σ R) (hF : F ∈ vanIdeal d p) (e : ℕ) : homogeneousComponent e F ∈ vanIdeal d p := by
@@ -41,7 +40,6 @@ theorem homogeneousComponent_mem_vanIdeal {R σ Hh : Type} [CommRing R] (d : ℕ
   rwa [show ((DirectSum.decompose (homogeneousSubmodule σ R) F e : homogeneousSubmodule σ R e) : MvPolynomial σ R)
     = homogeneousComponent e F from MvPolynomial.decomposition.decompose'_apply F e] at this
 
-open MvPolynomial in
 
 theorem eval₂_eq_zero_of_forms_le {K σ : Type} [CommRing K] {I J : Ideal (MvPolynomial σ K)} {d : ℕ}
     (hI : ∀ F ∈ I, ∀ e, homogeneousComponent e F ∈ I)
@@ -67,7 +65,6 @@ theorem eval₂_eq_zero_of_forms_le {K σ : Type} [CommRing K] {I J : Ideal (MvP
   rw [← sum_homogeneousComponent F, eval₂_sum]
   exact Finset.sum_eq_zero fun e _ => key e
 
-open MvPolynomial in
 
 theorem mem_of_forall_map_mem {S σ : Type} [CommRing S] (J : Ideal (MvPolynomial σ S)) (e : ℕ)
     (hJ : ∀ F ∈ J, homogeneousComponent e F ∈ J)

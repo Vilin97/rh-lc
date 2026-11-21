@@ -22,7 +22,6 @@ variable {k p ρ n : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSp
 
 def sE (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) (x : PBQ.XP k p ρ) : B.Mat k n := D.castM e (PBQ.sP Bj x)
 
-open Classical in
 
 def gI (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) (Ψ : B.Mat k n → (Wq →L[ℂ] Wp)) (x : PBQ.XP k p ρ)
     (g : B.Mat k n) : Wq →L[ℂ] Wp :=
@@ -471,14 +470,12 @@ theorem int_comb {α : Type*} [MeasurableSpace α] {μ : Measure α} {V : Type*}
   rw [integral_smul, integral_finsetSum s (f := fun i x => b i • f i x) (fun i hi => (hf i hi).smul (b i))]
   simp_rw [integral_smul]
 
-open Classical in
 
 def cfA (m : ℕ) (hm : m ≤ n) (g : B.Mat k n) (c : Fin m → Fin (2 * n + k + 1)) : ℂ :=
   if StrictMono c then
     (Matrix.of fun a l : Fin m => herm (Hpk k n) (g *ᵥ bvec (c l)) (bvec (eI k n (Fin.castLE hm a)))).det
   else 0
 
-open Classical in
 
 def cfV (m : ℕ) (hm : m ≤ n) (g : B.Mat k n) (c : Fin m → Fin (2 * n + k + 1)) : ℂ :=
   if StrictMono (fun l => C3.keyS k n (c l)) then
@@ -533,7 +530,6 @@ theorem qminor_TI (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) {Ψ : B.Mat
     unfold TI
     rw [hfun, int_comb _ 1 _ _ hI, one_smul]
 
-open Classical in
 
 theorem AA_TI (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) {Ψ : B.Mat k n → (Wq →L[ℂ] Wp)}
     (hΨ : CkOn ⊤ (GV k n) Ψ) {U : Set (B.Mat k n)} (hU : IsOpen U) (hv : VanishL Bj e Ψ U) (m : ℕ) (hm : m ≤ n)
@@ -557,7 +553,6 @@ theorem AA_TI (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) {Ψ : B.Mat k n
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [(hI c).2]; rfl
 
-open Classical in
 
 theorem AAv_TI (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) {Ψ : B.Mat k n → (Wq →L[ℂ] Wp)}
     (hΨ : CkOn ⊤ (GV k n) Ψ) {U : Set (B.Mat k n)} (hU : IsOpen U) (hv : VanishL Bj e Ψ U) (m : ℕ) (hm : m ≤ n)
@@ -589,7 +584,6 @@ section vlet
 variable {k p ρ n : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
   [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
 
-open Classical in
 
 theorem vLet_TI (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) {Ψ : B.Mat k n → (Wq →L[ℂ] Wp)}
     (hΨ : CkOn ⊤ (GV k n) Ψ) {U : Set (B.Mat k n)} (hU : IsOpen U) (hv : VanishL Bj e Ψ U)

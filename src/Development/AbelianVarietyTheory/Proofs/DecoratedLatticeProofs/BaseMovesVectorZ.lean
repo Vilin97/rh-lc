@@ -260,11 +260,8 @@ theorem sc_mul_mu {c : Comm D} {v : VCom c} (G : GLoc v) (μ lam : D.host.E) (h�
   refine mul_right_cancel₀ (pow_ne_zero (G.S.ρ + 1) hne) ?_
   linear_combination (-1 : G.k) * h5
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.MiTop.MoveZ
 
-open GlobalTheory.MiTop.MoveZ in
-set_option maxHeartbeats 1000000 in
 
 end

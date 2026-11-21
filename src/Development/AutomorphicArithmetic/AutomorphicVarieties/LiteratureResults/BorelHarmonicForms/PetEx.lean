@@ -13,7 +13,6 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Conti
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Bor
 open scoped TensorProduct
 
-open MeasureTheory GlobalTheory.CuspRep.CuspidalL2GL in
 
 theorem UpperTheory.V.Lit.Bor.petEx :
     UpperTheory.V.Lit.Bor.PetEx := by

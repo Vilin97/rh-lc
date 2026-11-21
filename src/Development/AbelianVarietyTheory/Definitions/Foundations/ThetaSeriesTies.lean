@@ -61,7 +61,6 @@ def InCoefLat (h : GA D (Vc D i)) (w : (R.cV i).W) : Prop :=
       (fun i τ => Bridge.lamLdef (Vc D i).rank ((i : ℕ) + 1) τ) gramR c0R c0L ∧
     ∃ P ∈ nabAtr (labLL D) (lamV D i) (Bridge.hLat (Vc D i) (fin (Vc D i) h)), w = c0L i P
 
-open Classical in
 
 def levelTrace (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) : (GA D (Wc D i) → ℂ) →ₗ[ℂ] (GA D (Wc D i) → ℂ) :=
   gaL (Wc D i) (R.βW i) (R.datWp i R.triv) R.eG fun g =>
@@ -86,7 +85,6 @@ def IsKernel (ξ : Formalism.L2.Host.HChar D.host.E) (Q : Finset (Pl D.host.E)) 
     Datum.IsThPVecOf R.ψ R.θ (Vc D i) (Wc D i) (fun _ => 1) (cart (R.MW i (sg0 D A))) (R.ΛV i) (R.ΛW i) (R.βV i) (R.βW i)
       R.Pg Q ξR (R.vacP i) φ
 
-open Classical in
 
 def placesOver (t : T0) (p : ℕ) : Finset (Pl D.host.E) := (R.Q t).filter fun PP => (p : 𝓞 D.host.E) ∈ PP.asIdeal
 
@@ -99,11 +97,9 @@ def thetaTuple (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) (ph : ℂ) (t : T0)
     Submodule (𝓞 D.what₂.LL) (Fin (R.nW i) → D.what₂.LL) :=
   Submodule.span (𝓞 D.what₂.LL) (seriesSet R i U ψ ph (R.ωP i t) (R.vP i t))
 
-variable (A) in
 
 abbrev srcDim (t : T0) (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) : ℕ := (A.MtCSD i t).lvlDim (A.leftGroupActionLift i t) U ψ
 
-variable (A) in
 
 def srcForm (t : T0) (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) :
     (Fin (srcDim A i t U ψ) → D.what₂.LL) →ₗ[D.what₂.LL] (A.MtCSD i t).Forms :=
@@ -394,7 +390,6 @@ theorem OnTie.rho_eq_of_actionPin (t : OnTie h fw hinj EX p ι wL wF nT O v i z 
 
 end Use
 
-open Classical in
 
 def charInt {K : Type} [Field K] [NumberField K] {P : Type} [Group P] (inc : P →* G) (U : Subgroup G) (ψ : U →* Kˣ) (g : P) :
     𝓞 K :=

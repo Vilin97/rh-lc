@@ -77,9 +77,7 @@ def TwAllF {eps : ℝ} (Fm : FamP eps) : Prop :=
 def Duty {eps : ℝ} (Fm : FamP eps) : Prop :=
   PageFix Fm ∧ PageWin Fm ∧ Formalism.MainNotions.DIV.Align.SmallFirstModulusBelowScale Fm ∧ TameDistinctF Fm ∧ ChosenWall Fm ∧ TupUsedF Fm ∧ TwAllF Fm
 
-open Formalism.L2.DIV in
 
-open Formalism.L2.DIV in
 
 abbrev SelDH (𝒜 : FamClass) (sel : Formalism.L2.TSel 𝒜) :=
   ∀ {eps : ℝ} (Fm : FamP eps) (hc : 𝒜 Fm) (x : ℝ) (hx : Fm.x1 < x) (h : (sel Fm hc).1 ≤ x) (i : Fm.Ix x),
@@ -105,9 +103,7 @@ structure ColChoice (P : Formalism.L2.Rows.RowSideFamily ex) where
 
 end ColChoice
 
-open Formalism.L2.DIV in
 
-open Formalism.L2.DIV in
 
 end Formalism.L2.Top3
 

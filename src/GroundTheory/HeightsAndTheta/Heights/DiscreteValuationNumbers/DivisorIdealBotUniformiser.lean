@@ -68,7 +68,6 @@ def LeftExpansion.Statement : Prop :=
       cycEval (fun G => vNum G (Matrix.vecCons (fun k => (c k : ℤ)) L)) (ratDiv P f g) =
         cycEval (fun U => vNum U L) (fun U => cycEval (fun G => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ)) (ratDiv P f g))
 
-open Classical in
 
 def RightExpansion.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →

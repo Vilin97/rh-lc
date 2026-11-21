@@ -23,7 +23,6 @@ def lineCoef : Option (Ψ × Fin N) → Option (Ψ × Fin N) → ℤ
   | some _, none => 0
   | some r, some p => Cmp.rootCoef r p
 
-omit [DecidableEq Ψ] in
 
 theorem line_smooth (M : RootModel Ψ N) (o : Option (Ψ × Fin N)) : IsSmoothHerm (M.line 1 o) := by
   cases o with
@@ -63,7 +62,6 @@ theorem geoMono_word (hI : PB.Inputs) (M : RootModel Ψ N) {J : Ideal (MRing M.�
     (fun j => line_smooth M _)).trans ?_
   exact mIntSymm R.A (fun j => potOf R (M.line 1 (w j))) ρ _
 
-omit [DecidableEq Ψ] in
 
 theorem geoFun_pow (M : RootModel Ψ N) (a : Option (Ψ × Fin N) → ℝ) :
     M.geoFun ((∑ o, C (a o) * X o) ^ dimFl Ψ N) =
@@ -89,7 +87,6 @@ theorem geoFun_pow (M : RootModel Ψ N) (a : Option (Ψ × Fin N) → ℝ) :
     rw [coe_basisMonomials]
   rw [this, RootModel.geoFun, Module.Basis.constr_basis]
 
-omit [DecidableEq Ψ] in
 
 theorem linA_eq (lam : Wt Ψ N) (s : ℝ) :
     linA lam s = ∑ o : Option (Ψ × Fin N), C (o.elim s fun r => -lam r.1 r.2) * X o := by
@@ -141,7 +138,6 @@ theorem line_deg {M : RootModel Ψ N} {S : PB.AnSys (dimFl Ψ N) (Option (Ψ × 
     show (M.x 1 r).a k = _
     rw [M.x_deg, xdeg_eq R r k]
 
-omit [DecidableEq Ψ] in
 
 theorem prod_coef (M : RootModel Ψ N) (lam : Wt Ψ N) (s : ℝ) (w : Fin (dimFl Ψ N) → Option (Ψ × Fin N)) :
     ∏ j, M.coef lam s (w j) =

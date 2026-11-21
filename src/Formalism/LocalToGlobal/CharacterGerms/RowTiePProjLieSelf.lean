@@ -41,7 +41,6 @@ theorem keySelf (hE : KeyEigSt) {C : Type} [Field C] [CharZero C] {V : VF C} {O 
 
 end ProjLieSelf
 
-open PartialDerivEval RowTiePE0 RowTiePProj RowTiePLSmall RowTiePLie RowTiePSplit RowTiePKey in
 
 theorem projLieSelf_of (hE : KeyEigSt) : ProjLieSelfSt := by
   intro C _ _ V O _ _ dd Y d _ I0 _ p ε hε hε1 hεx e he v

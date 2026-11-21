@@ -22,7 +22,6 @@ set_option linter.unusedSectionVars false
 variable {K : Type*} [Field K] [NumberField K]
 variable {X : Type*} [AddCommGroup X] [Module K X] [FiniteDimensional K X]
 
-variable (K X) in
 
 abbrev AdelicPoints : Type _ := 𝔸[K] ⊗[K] X
 
@@ -38,17 +37,12 @@ instance : BorelSpace (AdelicPoints K X) := ⟨rfl⟩
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {κ : Type*} [Fintype κ] [DecidableEq κ]
 
-variable (K X) in
 
-variable (K X) in
 
 variable (B : LinearMap.BilinForm K X)
 
-variable (K) in
 
-variable (K ι) in
 
-variable (K) in
 
 end
 

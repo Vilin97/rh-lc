@@ -57,7 +57,6 @@ open Formalism.MainNotions.S Formalism.IndefR.Mult Formalism.IndefR.Lev GlobalTh
 
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_local_lift' {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
     {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} (hf : IsFrame β Λ) (hsd : HatSelfDual D.sp.cm.sig V.gram Λ)
@@ -138,7 +137,6 @@ theorem suppAt_list_prod {e : AE D} {V : HSp D} (L : List (GA D V)) (h : ∀ g �
     rw [List.prod_cons]
     exact GlobalTheory.SplitHecke.suppAt_mul (h a List.mem_cons_self) (ih fun g hg => h g (List.mem_cons_of_mem _ hg))
 
-open Classical in
 
 theorem exists_lift_at (hB : B.Good) {Q : Finset (Pl D.host.E)} (hQ : B.admitted Q)
     (hb : ∀ PP : ↥Q, GL (Fin S.rank) (kP PP.1)) :

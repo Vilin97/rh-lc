@@ -26,7 +26,6 @@ theorem jj_iK (w : D.what₂.places.Pl) (v : B.ch.A.vT) (x : B.E) :
   unfold jj
   split_ifs <;> simp [starRingEnd_apply]
 
-variable (M) in
 
 def co : M.Val →ₗ[ℂ] Pol ℂ D.what₂.Tau (D.R.N i) :=
   polOf (Gr B.emb D.what₂.embLL (D.R.N i)) (shiftOf (B.lam i)) (fr0 B.emb D.what₂.embLL (D.R.N i)) ∘ₗ M.Val.subtype
@@ -90,7 +89,6 @@ theorem co_range : LinearMap.range (co M) = Formalism.MainNotions.product_first_
       exact Submodule.mem_map_of_mem hP
     exact ⟨⟨_, h⟩, co_of_eq rfl⟩
 
-variable (M) in
 
 def wl (w : D.what₂.places.Pl) (L : Submodule (𝓞 B.E) (Fin (D.R.N i) → B.E)) : AddSubgroup M.Val where
   carrier := {y | ∃ F ∈ B.valAt w i L, y.1 = B.ev i F}

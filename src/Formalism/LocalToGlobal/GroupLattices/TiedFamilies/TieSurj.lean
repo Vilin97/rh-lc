@@ -45,7 +45,6 @@ theorem cmpLin_mem_span (H : CmpCore T Gt I) (hloc : ValIntRec T Gt I) (u : D.wh
   | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
   | smul a y _ h1 => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ h1
 
-set_option maxHeartbeats 1000000 in
 
 theorem surjRat_pf (H : CmpCore T Gt I) (hloc : ValIntRec T Gt I)
     (hfrac : ∀ u w hg, IsFractionRing (D.gat u w hg).O (D.gat u w hg).Kf)

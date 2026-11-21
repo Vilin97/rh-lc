@@ -114,7 +114,6 @@ def ChartNorm.Statement : Prop :=
             LinearMap.det (LinearMap.mulLeft (Localization.AtPrime p)
               (algebraMap (ChartInc I t e) (ChartLoc I t e p) (chartLin I t e u)))
 
-open Classical in
 
 def ChartLength.Statement : Prop :=
   ∀ (F : Type) [Field F] [CharZero F] (n e : ℕ) (I : Ideal (MvPolynomial (Fin n) F))

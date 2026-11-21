@@ -178,7 +178,6 @@ theorem restrRight_apply {m n m' n' m'' n'' : ℕ} (r : Mx D m n ≃+ Mx D m' n'
     (T' : (Mx D m n → ℂ) →ₗ[ℂ] (Mx D m n → ℂ)) (x : Mx D m' n') (Φ : Mx D m'' n'' → ℂ) (y : Mx D m'' n'') :
     restrRight r h T' x Φ y = T' (fun t => h (r t).1 * Φ (r t).2) (r.symm (x, y)) := rfl
 
-open GlobalTheory.PlaceModel GlobalTheory.PlaceDatum GlobalTheory.SchrTheta in
 
 theorem isTheta_image (p : SplitPt D k) {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {S T : HSp D}
     {LS : Lat S} {LT : Lat T} (hS : IsSelfDualC S LS) (hT : IsSelfDualC T LT) {f₀ : WO S T → ℂ}

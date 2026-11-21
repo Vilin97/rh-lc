@@ -22,7 +22,6 @@ theorem resEta_one_two_mul (D : D7) (k : ℕ) : ResEta D 1 (2 * k) :=
   ⟨GlobalTheory.VolHeckeCompare.exists_isEta D, fun η h x => by
     rw [pow_mul, pow_two, GlobalTheory.VolHeckeCompare.IsEta_mul_self h x, one_pow]; rfl⟩
 
-open scoped Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 
 end GlobalTheory.Eis.SimplePoleModel
 

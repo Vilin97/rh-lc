@@ -48,7 +48,6 @@ variable (hν : ∀ l k' k, K₀.le l k' k → K.le l (ν k') (ν k))
   (hd : ∀ k a h, Ta k (dw a h) = LinearMap.lTensor D (dw a).toLinearMap (Ta k h))
   (hcl : ∀ l k' k (h₀ : K₀.le l k' k), Close ((RingHom.ker π).map (Algebra.TensorProduct.includeLeft : D →ₐ[ℂ] D ⊗[ℂ] Hol (K₀.W k'))) ((Ta k').toRingHom.comp (Charts.sh (hν l k' k h₀))) (((Algebra.TensorProduct.map (AlgHom.id ℂ D) (Hol.comap (F₀.shift l) (F₀.shift_analytic l (K₀.base k')) (K₀.maps h₀))).comp (Ta k)).toRingHom))
 
-include hd hcl in
 
 theorem close {T T' : K₀.Obj} (f : T ⟶ T') :
     Close (T'.tenJ π) ((obj π hπ K ν Ta τV hc T').ρ.comp (Charts.sh (hν _ _ _ (Charts.Hom.le f))))

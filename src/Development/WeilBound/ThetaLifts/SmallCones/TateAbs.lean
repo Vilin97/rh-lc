@@ -32,7 +32,6 @@ namespace Tate
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-variable (F E) in
 
 abbrev Φ : AE F E ≃ₐ[AF F] AdeleRing (𝓞 E) E := adeleTensorAlgEquivLeft F E
 
@@ -45,7 +44,6 @@ theorem cont_Φ_symm : Continuous (Φ F E).symm := by
   haveI := (ideleTop F E).1.1
   exact IsModuleTopology.continuous_of_linearMap (Φ F E).symm.toLinearMap
 
-variable (F E) in
 
 def Ψ : (AE F E)ˣ ≃ₜ* IdeleGroup E where
   toMulEquiv := Units.mapEquiv (Φ F E).toMulEquiv

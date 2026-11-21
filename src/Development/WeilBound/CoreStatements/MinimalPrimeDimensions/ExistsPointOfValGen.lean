@@ -79,7 +79,6 @@ theorem exists_point_of_val_gen {K Ω : Type} [Field K] [NumberField K] [Field �
   · have : φ (Ideal.Quotient.mk _ t) = 0 := h
     exact Ideal.Quotient.eq_zero_iff_mem.1 ((map_eq_zero_iff φ hφi).1 this)
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_cdvr_point_gen {K Ω : Type} [Field K] [NumberField K] [Field Ω] [Algebra K Ω]
     (la : HeightOneSpectrum (𝓞 K)) {Γ : Type} [LinearOrderedCommGroupWithZero Γ] (ν : Valuation Ω Γ)

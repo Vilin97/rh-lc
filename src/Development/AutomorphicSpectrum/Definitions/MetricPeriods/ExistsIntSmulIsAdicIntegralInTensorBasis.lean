@@ -15,7 +15,6 @@ section Field
 
 variable {k V O : Type} [Field k] [AddCommGroup V] [Module k V] [CommRing O]
 
-open Classical in
 
 def eigComp (ρ : O →+* Module.End k V) (σ : O →+* k) (x : V) : V :=
   if h : ∃ p ∈ eigSp ρ σ, x - p ∈ ⨆ σ' ∈ {σ' : O →+* k | σ' ≠ σ}, eigSp ρ σ' then h.choose else 0

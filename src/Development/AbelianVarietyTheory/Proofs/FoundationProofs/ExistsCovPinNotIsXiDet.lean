@@ -55,13 +55,11 @@ section Pins
 
 variable [StarRing (𝓞 E)]
 
-omit [StarRing (𝓞 E)] in
 
 variable {Tup : Type} (σ : c.F →+* ℂ) (Q : Tup → Finset (Ideal (𝓞 E))) (xi : Tup → (Ideal (𝓞 E) →*₀ c.F))
   (I : Tup → Ideal (𝓞 E))
 
 end Pins
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 end GlobalTheory.CoverPinCompare

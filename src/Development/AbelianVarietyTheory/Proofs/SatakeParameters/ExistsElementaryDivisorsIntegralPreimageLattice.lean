@@ -44,7 +44,6 @@ end GlobalTheory.Hk3.IntWitt.ElemDiv
 
 end
 
-open GlobalTheory.Hk3.IntWitt.ElemDiv in
 
 theorem GlobalTheory.Hk3.IntWitt.exists_glInt_mulVec_mem_iff_forall_dvdPow : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ϖ : L),
     Valued.v ϖ = ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) →

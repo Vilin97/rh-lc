@@ -256,7 +256,6 @@ theorem exists_isometry_mod {G G' : Matrix (Fin r) (Fin r) E} {L L' : Submodule 
       abel
     exact ⟨m, hm, congrFun e 0⟩
 
-omit [IsCMField E] in
 
 theorem isLattice_ideal {I : FractionalIdeal (𝓞 E)⁰ E} (hI : I ≠ 0) :
     ReciprocityTheory.MultiplicativeHeights.IsLattice (Submodule.pi Set.univ fun _ : Fin 1 => (I : Submodule (𝓞 E) E)) := by

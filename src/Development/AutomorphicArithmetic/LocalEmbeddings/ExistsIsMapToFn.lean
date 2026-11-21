@@ -22,11 +22,9 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β} {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} {Y : Var F}
   {ρ : Y.X ⟶ gen Z}
 
-variable (e ρ) in
 
 abbrev GenFrame : Type := EigFrame Z (constF e Y) (genericPt Y ≫ ρ ≫ genι Z)
 
-variable (ρ) in
 
 abbrev StalkFrame (y : Y.X) (φ : c.F →+* Y.X.presheaf.stalk y) : Type := EigFrame Z φ (stalkPt Y y ≫ ρ ≫ genι Z)
 
@@ -84,7 +82,6 @@ omit [NumberField F] in
 theorem toFn_injective (y : Y.X) : Function.Injective (toFn y) :=
   IsFractionRing.injective (Y.X.presheaf.stalk y) Y.X.functionField
 
-omit [NumberField F] in
 
 theorem fits_iff {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f : StalkFrame ρ y φ} {f' : GenFrame e ρ}
     (hφ : constF e Y = (toFn y).comp φ) (hf : f.IsMap (toFn y) f')
@@ -111,7 +108,6 @@ theorem Fits.φ_eq {y : Y.X} {φ φ' : c.F →+* Y.X.presheaf.stalk y} {f : Stal
     φ = φ' :=
   RingHom.ext fun a => toFn_injective y ((RingHom.congr_fun h.1 a).symm.trans (RingHom.congr_fun h'.1 a))
 
-omit [NumberField F] in
 
 theorem Fits.eq_mul {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f f' : StalkFrame ρ y φ}
     {P P' : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn} (h : Fits g₀ τ y φ f P) (h' : Fits g₀ τ y φ f' P') :
@@ -121,7 +117,6 @@ theorem Fits.eq_mul {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f f' : Stal
   rw [← (fits_iff h.1 hk).1 h, ← (fits_iff h.1 hk').1 h', ← hk.co τ hk' (by rw [← spMap_toFn y, Category.assoc]),
     EigFrame.co_mul]
 
-omit [NumberField F] in
 
 theorem Fits.co_eq {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f f' : StalkFrame ρ y φ}
     {P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn} {T : Matrix _ _ (Y.X.presheaf.stalk y)}
@@ -130,8 +125,6 @@ theorem Fits.co_eq {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f f' : Stalk
   rw [((isUnit_iff_isUnit_det _).2 h.isUnit_det).mul_right_inj] at this
   exact (Matrix.map_injective (toFn_injective y) this).symm
 
-attribute [local instance] Over.cartesianMonoidalCategory in
-open MonoidalCategory CartesianMonoidalCategory MonObj ReciprocityTheory.ChartRestriction.G.PullbackSections GlobalTheory.LieMet in
 
 theorem exists_co_eq {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : (E →+* ℂ) → EigFrame Z φ x)
     (T : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) R) (hT : ∀ τ, IsUnit (T τ).det) :
@@ -151,7 +144,6 @@ theorem exists_co_eq {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.
       rw [key, mulVec_mulVec, mul_nonsing_inv _ (hT τ), one_mulVec]; exact hb, fun a ha => ?_⟩
     rw [← hu _ (ha.trans (key τ a)), mulVec_mulVec, nonsing_inv_mul _ (hT τ), one_mulVec]
 
-omit [NumberField F] in
 
 theorem Fits.exists_mul {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f : StalkFrame ρ y φ}
     {P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn} (h : Fits g₀ τ y φ f P)
@@ -168,7 +160,6 @@ theorem Fits.exists_mul {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f : Sta
   refine ⟨f', e₁, ?_⟩
   rwa [h.eq_mul h', e₁] at h'
 
-omit [NumberField F] in
 
 omit [NumberField F] in
 theorem stalk_le {y : Y.X} {U : X.Opens} (h : j y ∈ U) : ⊤ ≤ (stalkPt Y y ≫ j) ⁻¹ᵁ U := fun p _ => by
@@ -188,7 +179,6 @@ theorem trAt_gen {r : ℕ} {y : Y.X} (ch ch' : Chart M r) (h : j y ∈ ch.U) (h'
 
 variable {j dual A}
 
-omit [NumberField F] in
 
 theorem Fits.change (hA : IsCo (genericPt Y ≫ j) A) {y : Y.X} {ch ch' : Chart M (Dw.mult τ)} (h : j y ∈ ch.U)
     (h' : j y ∈ ch'.U) {φ : c.F →+* Y.X.presheaf.stalk y} {f : StalkFrame ρ y φ}
@@ -198,9 +188,7 @@ theorem Fits.change (hA : IsCo (genericPt Y ≫ j) A) {y : Y.X} {ch ch' : Chart 
   rw [hA.2 ch ch' (gen_le j h) (gen_le j h'), lieMat_mul, trAt_gen j ch ch' h h', lieMat_map _ _ hu]
   exact hf.exists_mul (isUnit_det_lieMat dual hu)
 
-omit [NumberField F] in
 
-variable (e) in
 
 def IsOver {B : Var F} (ρB : B.X ⟶ gen Z) (ρ : Y.X ⟶ gen Z) (f : Y.X ⟶ B.X) (φ : B.Fn →+* Y.Fn) : Prop :=
   f ≫ ρB = ρ ∧ f ≫ B.str = Y.str ∧ genericPt Y ≫ f = spMap φ ≫ genericPt B ∧ constF e Y = φ.comp (constF e B)
@@ -223,9 +211,7 @@ theorem IsOver.toFn_comp (h : IsOver e ρB ρ f φ) (y : Y.X) :
     change _ ≫ stalkPt B (f y) = _ ≫ stalkPt B (f y)
     rw [h₁, h₂, Category.assoc, Category.assoc, spMap_stalkMap, spMap_toFn, ← Category.assoc, spMap_toFn, h.2.2.1]))
 
-omit [NumberField F] in
 
-omit [NumberField F] in
 
 theorem Fits.pull (h : IsOver e ρB ρ f φ) {g : GenFrame e ρB} {g' : GenFrame e ρ} (hg : g.IsMap φ g') (g₁ : GenFrame e ρ)
     {y : Y.X} {φ₀ : c.F →+* B.X.presheaf.stalk (f y)} {k : StalkFrame ρB (f y) φ₀}
@@ -244,7 +230,6 @@ theorem Fits.pull (h : IsOver e ρB ρ f φ) {g : GenFrame e ρB} {g' : GenFrame
   rw [← g₁.co_mul g', hg.co τ hm (by rw [← h.1, Category.assoc, ← Category.assoc, h.2.2.1, Category.assoc]),
     (fits_iff hk.1 hk').1 hk]
 
-omit [NumberField F] in
 
 end Pull
 

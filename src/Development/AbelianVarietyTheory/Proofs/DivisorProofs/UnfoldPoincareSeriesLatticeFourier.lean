@@ -67,8 +67,6 @@ private lemma setIntegral_exp_linear_fundamentalDomain_eq_zero {V : Type}
     rw [two_mul]; nth_rewrite 2 [h3]; ring
   simpa using h4
 
-open MeasureTheory in
-open scoped Pointwise in
 
 theorem _root_.GlobalTheory.PoincareUnfold.unfold_poincare_fourier : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V]
     [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (μ : Measure V) [μ.IsAddHaarMeasure]

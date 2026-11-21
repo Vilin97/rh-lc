@@ -34,7 +34,6 @@ theorem isIntM_map {b a : ℕ} (X : Matrix (Fin b) (Fin a) SI) : IsIntM (X.map (
   rw [Matrix.map_apply]
   exact (X i j).2
 
-open Classical in
 
 def redE (PP : Formalism.L2.DIV.Pl D.host.E) (x : EAf D) : Formalism.L2.DIV.kP PP :=
   if h : x ∈ SI then Formalism.L2.DIV.resS D.host.F PP ⟨x, h⟩ else 0

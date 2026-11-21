@@ -62,6 +62,5 @@ theorem mem_nonzeroLocus_secAlong {L : LB X} (s : L.Sec) (φ : Y ⟶ X) {y : Y} 
 
 end SpecialFibreGenerator
 
-open SpecialFibreGenerator TopologicalSpace in
 
 end GlobalTheory

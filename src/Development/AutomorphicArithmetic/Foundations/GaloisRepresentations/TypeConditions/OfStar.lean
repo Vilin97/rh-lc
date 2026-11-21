@@ -77,6 +77,5 @@ end
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] {l : ℕ} [Fact l.Prime] {a : ℕ}
   [IsAlgClosure E Ω] [IsCMField E]
 
-omit [IsCMField E] [Fact l.Prime] in
 
 end UpperTheory.GalS

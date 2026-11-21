@@ -73,7 +73,6 @@ end GlobalTheory.CompanionTheory.NullFr.SmallUnit
 
 namespace GlobalTheory.CompanionTheory.NullFr
 
-open SmallUnit in
 
 theorem exists_unit_small_module {A : Type} [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
     [LocallyCompactSpace A] [T2Space A] [SecondCountableTopology A] [MeasurableSpace A]

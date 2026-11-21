@@ -133,7 +133,6 @@ def skewGram (ξ0 : E) (B : LinearMap.BilinForm ℚ (Fin r → E)) : Matrix (Fin
   Matrix.of fun a b =>
     (-ξ0)⁻¹ * traceRep (B.flip (Pi.single b 1) ∘ₗ LinearMap.single ℚ (fun _ : Fin r => E) a)
 
-omit [IsCMField E] in
 
 theorem trace_skewGram {ξ0 : E} (h0 : ξ0 ≠ 0) (B : LinearMap.BilinForm ℚ (Fin r → E))
     (a b : Fin r) (t : E) :
@@ -176,7 +175,6 @@ theorem skewGram_det_ne_zero_iff {ξ0 : E} (h0 : ξ0 ≠ 0) {B : LinearMap.Bilin
     (hB : IsConjAdj B) : (skewGram ξ0 B).det ≠ 0 ↔ B.Nondegenerate := by
   rw [← traceFormBilin_nondegenerate_iff h0, traceFormBilin_skewGram h0 hB]
 
-omit [IsCMField E] in
 
 section Integral
 

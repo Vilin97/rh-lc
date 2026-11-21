@@ -109,7 +109,6 @@ theorem evalHom_combo (c : 𝓞 E →₀ ℂ) (s : E →+* ℂ) :
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [combo, map_sum, Finset.sum_apply, evalHom_tmul]
 
-open Classical in
 
 theorem exists_coeff (s : E →+* ℂ) : ∃ c : 𝓞 E →₀ ℂ, evalHom E (combo c) = Pi.single s 1 := by
   have h : (Pi.single s 1 : (E →+* ℂ) → ℂ) ∈ Submodule.span ℂ (Set.range (charVec (E := E))) := by

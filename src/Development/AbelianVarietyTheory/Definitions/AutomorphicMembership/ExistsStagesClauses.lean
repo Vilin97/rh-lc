@@ -40,15 +40,10 @@ theorem mem_iff {X : Stages} {f : Fr X.B.toPre} {T : TwDat X.B} {Wt : Set X.B.pl
 
 variable (hH : DC.HostExQ) (hLP : LevelPrime) (hSP : SmallPrimeOne) (h2b : StandardLattice.SiegelMassRatioCM)
 
-include hH hLP hSP h2b in
 
-include hH hLP hSP h2b in
 
-include hH hLP hSP h2b in
 
-open RowsModel in
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.Mem.Top.V4.Model
 

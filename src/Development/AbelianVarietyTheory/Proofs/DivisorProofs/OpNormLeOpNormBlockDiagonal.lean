@@ -44,11 +44,9 @@ theorem mdbar_blockDiagonal' (A : ∀ i, E → Matrix (m i) (m' i) ℂ) (z ξ : 
   · subst h; simp
   · simp [blockDiagonal'_apply_ne _ _ _ h]
 
-omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
 variable [Fintype o] [∀ i, Fintype (m i)] [∀ i, Fintype (m' i)]
 
-omit [∀ i, Fintype (m' i)] in
 
 variable [∀ i, DecidableEq (m i)] {H : ∀ i, E → Matrix (m i) (m i) ℂ} {z : E}
 
@@ -80,7 +78,6 @@ theorem curv_blockDiagonal' {k : WithTop ℕ∞} (d : ∀ i, MContDiffAt k (H i)
   rw [curv, mdbar_congr he, mdbar_blockDiagonal' fun i x => conn (H i) x ξ, ← blockDiagonal'_neg]
   rfl
 
-omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
 end Family
 

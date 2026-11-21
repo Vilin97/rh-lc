@@ -82,7 +82,6 @@ theorem rel_indep {G M : Type} [AddCommGroup G] [AddCommGroup M] [Module ℂ M] 
 
 variable {D : D7}
 
-open GlobalTheory.ThetaVacuumAE in
 
 theorem exists_latO_le (S T : HSp D) (U : AddSubgroup (WO S T)) (hU : IsOpen (U : Set (WO S T))) :
     ∃ Sb : Finset (HeightOneSpectrum (𝓞 D.host.F)), latO S T (L0c D S) (L0c D T) (fun v => v ∉ Sb) ≤ U := by
@@ -224,7 +223,6 @@ theorem half_of_offPl (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))) {u : WO 
     rw [e, RingHom.map_sub, RingHom.map_sub, RingHom.map_one, map_sum, sub_mul, sub_mul, one_mul, h1, Finset.sum_mul,
     Finset.sum_eq_zero h2, sub_zero, sub_zero]
 
-open GlobalTheory.PlaceModel in
 
 theorem exists_rel_off {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {s f : WO S T → ℂ}
     (hs : IsThetaFunO ψ S T s) (hs0 : s ≠ 0) (hf : IsThetaFunO ψ S T f) :

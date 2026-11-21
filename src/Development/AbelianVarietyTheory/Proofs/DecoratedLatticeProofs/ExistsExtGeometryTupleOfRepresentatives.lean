@@ -156,7 +156,6 @@ def wtT (j : ℕ) (α : ChT G δ hδ η A M j) : ℂ :=
       (Nat.card {yb | SameOrb ((G.T δ hδ η).lev (G.s + 1) 0 rfl).J (box _ (G.ϖ ^ M)) (cosT G δ hδ η A M α) yb} : ℂ))
   else (idxT G δ hδ η (G.s + 1 + 1) : ℂ)
 
-open Classical in
 
 def epsT (j : ℕ) (α : ChT G δ hδ η A M j) : GA D (c.V j) →₀ ℂ :=
   if j = 0 then Finsupp.single 1 1 else
@@ -205,7 +204,6 @@ theorem repT_mem {D : D7} {c : Comm D} {v : VCom c} {B : GlobalTheory.Fam.Base c
   · exact x.1.2 d h
   · exact absurd o.2 (by omega)
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_qExt : ∀ (D : D7) (c : Comm D) (v : VCom c) (B : GlobalTheory.Fam.Base c) (PP : Formalism.L2.DIV.Pl D.host.E) (G : QGeo v B PP) (χ : ℕ → (AE D)ˣ →* Circle), c.Is → ∀ (δ : G.kˣ →* ℂˣ) (hδ : IsTame δ) (η : ℕ → G.kˣ →* ℂˣ), (∀ j, IsUnram (η j)) → (∀ j, j ≤ G.s + 1 → (ofSplit G.q).IsComp (χ j)⁻¹ (η (j + 1) * δ)) → ∀ A, (G.T δ hδ η).IsRepSystem A G.ψk G.ν → ∀ M : ℕ, (G.T δ hδ η).Adapted A (box _ (G.ϖ ^ M)⁻¹) (box _ (G.ϖ ^ M)) → ∃ E : QExt G χ, E.δ = δ ∧ E.η = η ∧ E.A = A ∧ E.M = M := by
   intro D c v B PP G χ hc δ hδ η hη hcomp A hA M hM

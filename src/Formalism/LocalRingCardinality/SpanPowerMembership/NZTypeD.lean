@@ -69,7 +69,6 @@ theorem tens_central (x : ∀ i, MonoidAlgebra k (G i)) (h : ∀ i a, x i * a = 
 variable {L : I → Type} [∀ i, Fintype (L i)] [DecidableEq I] (E : ∀ i, L i → MonoidAlgebra k (G i))
   (S : (∀ i, L i) → Prop)
 
-open Classical in
 
 def eSum : MonoidAlgebra k (∀ i, G i) := ∑ a : (∀ i, L i), if S a then tens (fun i => E i (a i)) else 0
 
@@ -123,7 +122,6 @@ theorem eSum_idem : eSum E S * eSum E S = eSum E S := by
     exact this
   · simp
 
-include hidem horth in
 
 theorem eSum_coeff (g : ∀ i, G i) : (eSum E S).coeff g =
     open Classical in ∑ a : (∀ i, L i), if S a then ∏ i, (E i (a i)).coeff (g i) else 0 := by

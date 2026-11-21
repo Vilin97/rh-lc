@@ -36,7 +36,6 @@ omit [CharZero K] in
 theorem ks_pd (𝒱 : Set X.Opens) (s : ℕ) (c : (KS q s 𝒱).FullSubcategory) : ((KS q s 𝒱).ι.obj c).pdPow s = ⊥ :=
   c.property.1.1
 
-omit [CharZero K] in
 
 def clsK (D : E.LineData X) (s : ℕ) (Λ : CLiftK (KS q s (𝒱D D)).ι D) :
     CH.H ((KS q s (𝒱D D)).ι ⋙ O (smFun X q)) 2 :=

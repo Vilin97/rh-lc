@@ -74,7 +74,6 @@ theorem trivialBound_of_ne_zero {q n : ℕ} (hq : 1 ≤ q) (β : Fin (n / 2) →
     field_simp
     ring
 
-open GlobalTheory.IndefiniteRowSideFullHecke.SphericalSectionVariables in
 
 def denom (n : ℕ) (c : ℂ) (α : Fin (n / 2) → ℂˣ) (X : ℂ) : ℂ :=
   (∏ i, (1 - c * X * (α i : ℂ)) * (1 - c * X / (α i : ℂ))) * (if Odd n then 1 - c * X else 1)
@@ -117,7 +116,6 @@ theorem numer_ne_zero {q n : ℕ} (hq : 1 ≤ q) {X : ℂ} (hX : ‖X‖ < ((q :
     _ < (q : ℝ) ^ (2 * (n - 1)) * ((q : ℝ) ^ (2 * (n - 1)))⁻¹ := mul_lt_mul_of_pos_left hX (by positivity)
     _ = 1 := mul_inv_cancel₀ (by positivity)
 
-open GlobalTheory.IndefiniteRowSideFullHecke.SphericalSectionVariables in
 
 theorem domain_of_bound {r : ℕ} {y : ℂ} {α : Fin r → ℂˣ} {M : ℝ} (hM : 1 ≤ M)
     (hα : ∀ i, ‖(α i : ℂ)‖ ≤ M ∧ ‖(α i : ℂ)‖⁻¹ ≤ M) (hy : ‖y‖ * M < 1) : Domain y α := by
@@ -134,7 +132,6 @@ theorem exists_bound {r : ℕ} (α : Fin r → ℂˣ) :
   have h3 : 0 ≤ ‖(α i : ℂ)‖⁻¹ := by positivity
   constructor <;> linarith
 
-open GlobalTheory.IndefiniteRowSideFullHecke.SphericalSectionVariables in
 
 theorem exists_deg {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] [CompleteSpace L] (ϖ : Lˣ)
     {σ : L →+* L} {q n : ℕ} (hU : IsUnramInv (ϖ : L) σ q) (hn : 1 ≤ n) :
@@ -168,7 +165,6 @@ theorem exists_deg {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ)
     field_simp
   · rw [hval1, ← zpow_natCast, Int.toNat_of_nonneg (Finset.sum_nonneg fun i _ => le_max_right _ _)]
 
-open GlobalTheory.IndefiniteRowSideFullHecke.SphericalSectionVariables in
 
 theorem trivialBound_of_bounded : GlobalTheory.IndefiniteRowSideFullHecke.SphericalSectionVariables.UnramDoublingInert → ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] [CompleteSpace L] (ϖ : Lˣ) (σ : L →+* L) (q n : ℕ), IsUnramInv (ϖ : L) σ q → ∀ (α : Fin (n / 2) → ℂˣ) (w : GU σ n → ℂ), GlobalTheory.IndefiniteRowSideFullHecke.SphericalSectionVariables.IsZonal (ϖ : L) q α w → (∃ C : ℝ, ∀ g, ‖w g‖ ≤ C) → GlobalTheory.IndefiniteRowSideFullHecke.TrivialParameterBound.TrivialBound q n α := by
   intro H L _ _ _ ϖ σ q n hU α w hw hb

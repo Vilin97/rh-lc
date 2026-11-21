@@ -269,7 +269,6 @@ theorem le_wchart_sum {U : X₁.Opens} {V : X₂.Opens} {j : K₁ → L.ι} {k :
     rintro (a | a)
     exacts [Set.mem_iInter.1 (hU hy.1) a, Set.mem_iInter.1 (hV hy.2) a])
 
-include H in
 
 theorem exists_sum (hL : L.IsLB) [IsAffine S] (hS : IsField Γ(S, ⊤)) [CompactSpace X₁] [CompactSpace X₂]
     [X₁.IsSeparated] [X₂.IsSeparated]
@@ -333,7 +332,6 @@ theorem exists_sum (hL : L.IsLB) [IsAffine S] (hS : IsField Γ(S, ⊤)) [Compact
   rw [sval, sval, hs i _ _ z x _ hx m₁, ht i _ _ z y _ hy m₂, Units.val_mul]
   ring
 
-include H in
 
 theorem eq_zero_of_sum (hL : L.IsLB) [IsAffine S] (hS : IsField Γ(S, ⊤)) [CompactSpace X₁] {n : ℕ}
     (a : Fin n → LB.Sec (LB.LinComb L φ₁ ε₁)) (b : Fin n → LB.Sec (LB.LinComb L φ₂ ε₂))

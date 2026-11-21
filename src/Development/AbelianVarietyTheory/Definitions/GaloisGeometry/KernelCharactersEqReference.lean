@@ -55,6 +55,5 @@ theorem eDt_finPart (a : Ideles D.host.E) : Dt.eDt (finPartI D.host.E a) = Dt.eD
   conv_rhs => rw [← hy]
   rw [map_mul, map_prod, Finset.prod_eq_one fun w _ => Dt.inf w (y w), one_mul]
 
-include Dt Tp in
 
 end GlobalTheory.KerJ.CharModel

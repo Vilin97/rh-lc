@@ -129,7 +129,6 @@ namespace Formalism.FT.SymmetricSeries
 
 variable {R : Type*} [CommRing R] {n : ℕ}
 
-variable (R n) in
 
 end Formalism.FT.SymmetricSeries
 

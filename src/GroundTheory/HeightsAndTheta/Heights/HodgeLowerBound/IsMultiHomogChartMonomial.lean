@@ -160,7 +160,6 @@ theorem RegularAt.sum {σ : Type} (s : Finset σ) {a : σ → Ω} (h : ∀ i ∈
     rw [Finset.sum_insert hi]
     exact (h i (Finset.mem_insert_self i s)).add (ih fun j hj => h j (Finset.mem_insert_of_mem hj))
 
-omit [Fintype κ] [∀ k, Fintype (ι k)] in
 
 theorem eval_conj (f : MRing ι) (z : (Σ k, ι k) → ℂ) :
     eval (fun p => starRingEnd ℂ (z p)) (map (Int.castRingHom ℂ) f) =

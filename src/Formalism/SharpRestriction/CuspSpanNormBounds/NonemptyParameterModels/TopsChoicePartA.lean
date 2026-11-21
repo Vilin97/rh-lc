@@ -14,7 +14,6 @@ open Matrix MeasureTheory
 open scoped ContDiff
 open Formalism.QuantumDeterminants Formalism.MainNotions.S.TopsChoicePartA Formalism.MainNotions.S.LevR
 
-open Classical in
 
 theorem hermitian_form_basis_vectors {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (i j : Fin n) : herm H (bvec i) (bvec j) = H j i := by
   simp [herm, bvec, dotProduct, Pi.single_apply, Matrix.col_apply]

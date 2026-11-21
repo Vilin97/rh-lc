@@ -125,4 +125,3 @@ private theorem exists_open (K : FinExt l) {M : ℕ} (hM : 1 ≤ M) : ∃ U : Su
 
 end UpperTheory.V.Af.JumpsAbove
 
-open UpperTheory.V UpperTheory.V.Af UpperTheory.V.Af.JumpsAbove in

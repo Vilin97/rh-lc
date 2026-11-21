@@ -183,7 +183,6 @@ theorem card_subring_eq_zero [NumberField L] (B : Subring L) : Nat.card B.toAddS
 
 end InvertibleIdealIndexAlt
 
-open InvertibleIdealIndexAlt in
 
 theorem InvertibleIdealIndex.proof (h1 : OrderIdealIndexExtension.Statement)
     (h2 : LocallyPrincipalCoprime.Statement) : InvertibleIdealIndex.Statement := by

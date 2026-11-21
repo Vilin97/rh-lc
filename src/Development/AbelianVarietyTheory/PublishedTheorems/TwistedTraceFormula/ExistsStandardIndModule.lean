@@ -179,7 +179,6 @@ section Structure
 
 variable {j : Fin a → ℕ} {W : Flag n a}
 
-variable (ε) in
 
 theorem KG_eq : (KG ε : Set (UJ ε)) = maxK ε := by
   ext g
@@ -436,7 +435,6 @@ section Model
 
 variable {j : Fin a → ℕ} {W : Flag n a}
 
-variable (ε W) in
 
 def parab : Subgroup (UJ ε) where
   carrier := {g | ∀ i, ∀ y ∈ W i, uMat g *ᵥ y ∈ W i}
@@ -444,7 +442,6 @@ def parab : Subgroup (UJ ε) where
   mul_mem' := fun {g h} hg hh i y hy => by rw [uMat_mul, ← mulVec_mulVec]; exact hg i _ (hh i y hy)
   inv_mem' := fun {g} hg i => inv_keeps (uMat_inv_mul g) _ (hg i)
 
-open scoped Pointwise in
 
 variable {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] {σ : Matrix (Fin n) (Fin n) ℂ → (V →L[ℂ] V)}
 
@@ -502,7 +499,6 @@ theorem leviOne_zero {j : Fin 0 → ℕ} {W : Flag n 0} (hW : IsIsoFlag ε j W) 
 
 end Models
 
-variable (ε) in
 
 structure Datum where
 
@@ -529,12 +525,10 @@ structure Datum where
 
 attribute [instance] Datum.nacg Datum.ips Datum.cs
 
-variable (ε) in
 
 def IsMinimalFlag {b : ℕ} (W₀ : Flag n b) : Prop :=
   IsIsoFlag ε (fun _ => 1) W₀ ∧ ∀ (b' : ℕ) (W' : Flag n b'), IsIsoFlag ε (fun _ => 1) W' → b' ≤ b
 
-variable (ε) in
 
 namespace Datum
 
@@ -563,7 +557,6 @@ def IsIntegral (ν : Measure (UJ ε)) (f h : UJ ε → D.V) : Prop :=
 
 end Datum
 
-variable (ε) in
 
 structure IndModule extends Datum ε where
 

@@ -60,4 +60,3 @@ end GlobalTheory.Fam.OffLevel
 
 end
 
-open GlobalTheory.Fam.OffLevel in

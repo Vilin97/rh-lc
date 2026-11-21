@@ -14,7 +14,6 @@ open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor F
 
 variable {D : D7} {T : Top D} (h : LawsP T) (j : ℕ) (hj : InR D j)
 
-include h hj in
 
 theorem pt_realise (la : HeightOneSpectrum (𝓞 T.Q.c.F))
     (y : PtV (T.Q.Xo j) T.Q.c (algCls _ _) Unit (fun _ _ _ _ => True) la) :

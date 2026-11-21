@@ -104,7 +104,6 @@ end Op
 def lvlCoef {K G : Type} [Field K] [Group G] (P : Subgroup G) (ψ : P →* Kˣ) (h : P) : K :=
   (Nat.card P : K)⁻¹ * ((ψ h⁻¹ : Kˣ) : K)
 
-open Classical in
 
 theorem coeff_chiIdem_mul_lvlIdem {K G : Type} [Field K] [Group G] [Fintype G] (χ : G → K) (P : Subgroup G)
     (ψ : P →* Kˣ) (t : G) :
@@ -122,7 +121,6 @@ end GlobalTheory.Hk3.Meet
 
 namespace GlobalTheory.Hk3
 
-open GlobalTheory.Hk3.Meet in
 
 theorem exists_level_vector : ∀ {K G W : Type} [Field K] [CharZero K] [Group G] [Fintype G] [AddCommGroup W] [Module ℂ W]
     [FiniteDimensional ℂ W] (σ : K →+* ℂ) (X : Finset (G → K)) (P : Subgroup G) (ψ : P →* Kˣ) (ρ : Representation ℂ G W)

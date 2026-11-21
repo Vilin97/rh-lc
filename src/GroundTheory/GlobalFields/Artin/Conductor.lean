@@ -51,11 +51,8 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
   [IsGalois K L] {V : Type*} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {W : Type*} [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W]
 
-omit [FiniteDimensional ℂ V] [FiniteDimensional ℂ W] in
 
-variable (K) in
 
-omit [FiniteDimensional ℂ V] in
 
 end Ideal
 

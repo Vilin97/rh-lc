@@ -181,7 +181,6 @@ theorem toPoly_algebraMap (d : D) : toPoly Q j e (algebraMap D (Chart Q j e) d) 
 
 end ChartDomain
 
-open ChartDomain in
 
 theorem ChartDomain.proof : ChartDomain.Statement := by
   intro D _ _ n e Q j hQ hQD hXj

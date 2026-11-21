@@ -84,7 +84,6 @@ theorem exists_good_cmPt_frame_ne_zero {D : D7} {T : Core D} {j : ℕ} (Y : Deep
   obtain ⟨y, hy, hyne⟩ := GlobalTheory.T.exists_numberFieldFrame_value_ne_zero_of_complex _ _ _ _ _ _ z.K z.y _ F hFm.1 _ σ₁ _ hzx hev
   exact ⟨z, La, y, hz, hy.trans hz.2.2.2.1, hyne⟩
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.CovTop.ShiftFG
 

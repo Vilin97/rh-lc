@@ -17,7 +17,6 @@ namespace AdeleBaseChange
 
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-variable (K L) in
 
 def adeleMap : 𝔸[K] →+* 𝔸[L] :=
   RingHom.prodMap (GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap (K := K) (L := L))
@@ -36,7 +35,6 @@ theorem adeleMap_algebraMap (k : K) :
   Prod.ext (GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap_algebraMap k)
     (finiteAdeleMap_algebraMap k)
 
-variable (K L) in
 
 def adeleTensorEquiv : L ⊗[K] 𝔸[K] ≃ₐ[L] 𝔸[L] :=
   (Algebra.TensorProduct.prodRight K L L (InfiniteAdeleRing K) (FiniteAdeleRing (𝓞 K) K)).trans

@@ -36,7 +36,6 @@ namespace Par
 
 variable {k : ℕ} (P : Par F E k)
 
-open Classical in
 
 end Par
 

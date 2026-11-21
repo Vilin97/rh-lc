@@ -89,13 +89,10 @@ def BadSetSmaller.Statement : Prop :=
         ∀ Q ∈ (J ⊔ Ideal.span {pullback A P}).minimalPrimes,
           ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ Q) < d
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 section Inhabitants
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 end Inhabitants
 

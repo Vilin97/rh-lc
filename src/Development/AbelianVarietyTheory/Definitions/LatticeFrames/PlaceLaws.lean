@@ -52,7 +52,6 @@ def lst (j : ℕ) (h : j + 2 * 0 + 2 = D.R.m) (τ : Matrix (Fin (c.bes j 0 h).L.
 
 end Comm
 
-set_option maxHeartbeats 1000000 in
 
 structure VCom (c : Comm D) where
 

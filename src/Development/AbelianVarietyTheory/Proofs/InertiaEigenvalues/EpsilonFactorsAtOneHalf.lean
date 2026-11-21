@@ -40,4 +40,3 @@ variable {χ : Fˣ →* ℂˣ} {ψ : AddChar F Circle}
 
 end GlobalTheory.DelEps.GaussBridge
 
-open GlobalTheory.DelEps.GaussBridge in

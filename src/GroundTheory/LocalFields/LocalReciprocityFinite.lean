@@ -154,7 +154,6 @@ theorem valuation_top_localClassFieldData
   erw [norm_self]
   rfl
 
-variable (K Ω) in
 
 noncomputable def unramifiedFrobenius (L : IntermediateField K Ω) [Normal K L] : L ≃ₐ[K] L :=
   ((maximalUnramifiedExtensionFrobenius K Ω).liftNormal Ω).restrictNormal L
@@ -190,9 +189,7 @@ section Relative
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ω : Type*} [Field Ω] [Algebra K Ω] [IsSepClosure K Ω]
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω] in
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω] in
 
 theorem fixingOpenSubgroup_anti {L F : IntermediateField K Ω} [FiniteDimensional K L]
     [FiniteDimensional K F] (h : L ≤ F) : fixingOpenSubgroup F ≤ fixingOpenSubgroup L :=
@@ -234,11 +231,8 @@ section ConjSquare
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ω : Type*} [Field Ω] [Algebra K Ω] [IsSepClosure K Ω]
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω] in
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω] in
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω] in
 
 variable {E F : IntermediateField K Ω} (h : E ≤ F) [FiniteDimensional K F]
   [IsGalois E (IntermediateField.extendScalars h)] (σ : Ω ≃ₐ[K] Ω)
@@ -249,14 +243,11 @@ variable {E F : IntermediateField K Ω} (h : E ≤ F) [FiniteDimensional K F]
 omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω]
   [FiniteDimensional K F] [IsGalois E (IntermediateField.extendScalars h)] [FiniteDimensional K F₂]
   [IsGalois E₂ (IntermediateField.extendScalars h₂)] in
-include hE in
 
 omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω]
   [FiniteDimensional K F] [IsGalois E (IntermediateField.extendScalars h)] [FiniteDimensional K F₂]
   [IsGalois E₂ (IntermediateField.extendScalars h₂)] in
 
-omit [IsGalois E₂ (IntermediateField.extendScalars h₂)] in
-include hE hF in
 
 end ConjSquare
 

@@ -122,7 +122,6 @@ def selP {W : Type*} (Z : Set W) (V : ℕ → Set W) : ℕ → W → Prop
   | 0, y => y ∉ Z
   | k + 1, y => y ∈ V k
 
-open Classical in
 
 def selT {W G : Type*} (g₁ : G) (Z : Set W) (V : ℕ → Set W) (f : ℕ → W → G) : ℕ → W → G
   | 0, _ => g₁

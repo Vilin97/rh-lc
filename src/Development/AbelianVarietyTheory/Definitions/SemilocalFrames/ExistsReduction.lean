@@ -85,7 +85,6 @@ theorem fmat_mul (I : AutInst) (x y : I.Gf) : I.fmat (x * y) = I.fmat x * I.fmat
 
 theorem fmat_one (I : AutInst) : I.fmat 1 = 1 := rfl
 
-open Classical in
 
 end Inhab
 
@@ -201,12 +200,10 @@ def residueEquiv : (𝓞 I.E ⧸ w.asIdeal) ≃+* ZMod p :=
   (Ideal.quotEquivOfEq (Ideal.ext fun a => (fr.r_psi a).symm)).trans
     (RingHom.quotientKerEquivOfSurjective (f := fr.r.comp (psi I.F I.E)) (ZMod.ringHom_surjective _))
 
-include fr in
 
 theorem absNorm_eq : Ideal.absNorm w.asIdeal = p := by
   rw [Ideal.absNorm_apply, Submodule.cardQuot_apply, Nat.card_congr fr.residueEquiv.toEquiv, Nat.card_zmod]
 
-include fr in
 
 theorem prime : p.Prime := by
   have h0 : p ≠ 0 := by
@@ -222,9 +219,7 @@ theorem c_eq_zero_iff (y : I.Lf) :
     fr.c y = 0 ↔ y ∈ extId I w.asIdeal • (⊤ : Submodule (IntAf I.F I.E) I.Lf) :=
   (fr.c_ker y).trans (Submodule.mem_smul_top_iff _ _ y).symm
 
-include fr in
 
-include fr in
 
 def ActsAs (x : I.Gf) (M : Matrix (Fin N) (Fin N) (ZMod p)) : Prop :=
   ∀ (y : I.Lf) (h : I.fmat x *ᵥ (y : Fin I.n → _) ∈ I.Lf), fr.c ⟨_, h⟩ = M *ᵥ fr.c y

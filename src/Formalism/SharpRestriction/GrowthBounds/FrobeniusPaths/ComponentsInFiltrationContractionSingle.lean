@@ -11,7 +11,6 @@ open MvPolynomial Finset Formalism.MainNotions.G Formalism.MainNotions.Covariant
 
 namespace Formalism.MainNotions.LemmaBAlt
 
-open Classical in
 
 def twistedMatrixSubstitution {R B : Type*} [CommRing R] [CommRing B] {ι : Type*} {n : ℕ} (LL : Letters ι) (S : Set ι)
     (φ : R →+* B) (m m' : Matrix (Fin n) (Fin n) B) :

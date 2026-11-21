@@ -53,7 +53,6 @@ theorem IsAdm.spans {R : ℕ} (hR : 1 < R) {n : ℕ} {x₀ : Fin n → Dw.La} (h
     EtaAn.Spans (shiftFam R x₀ : (Fin n → LatMod Dw R) → Fin n → LatMod Dw (R ^ 4)) := fun u =>
   (EtaCard.card_levGrp_and_span E H Dw R hR).2.2.2.2.2.2 n x₀ h u (LinearEquiv.refl _ _)
 
-variable (Dw) in
 
 theorem exists_isAdm {R : ℕ} (hR : 1 < R) : ∃ x₀ : Fin (Dw.p + Dw.q) → Dw.La, IsAdm R x₀ :=
   (EtaCard.card_levGrp_and_span E H Dw R hR).2.2.2.2.2.1
@@ -150,7 +149,6 @@ theorem exists_cover (hR : Odd R) (hM : R ^ 4 ∣ l.M) {S : Type} [CommRing S] [
   choose w hw using fun q => (existsUnique_nullVal GlobalTheory.firstFiveLaws.1 hR hev.2.1 q).exists
   exact ⟨B, inferInstance, inferInstance, φ, y', ev, w, hφ, hm, hev, hw⟩
 
-variable (cf x) in
 
 theorem exists_tauValAt (hR : Odd R) (hM : R ^ 4 ∣ l.M) {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) :
     ∃ v, TauValAt Xo c R cf x y v := by
@@ -186,7 +184,6 @@ theorem TauValAt.frBor {S : Type} [CommRing S] [Algebra c.F S] {t : Ix Dw → S�
   · exact NullValue.triangular hb (ev q) (ev' q) (he q) (hw q)
   · rw [tauExpr_scale, map_mul, map_pow, hv]
 
-variable (Xo c cf x) in
 
 theorem existsUnique_isTauRule (hR : Odd R) (hM : R ^ 4 ∣ l.M) : ∃! f, IsTauRule Xo c R cf x f :=
   ⟨fun _ y => (exists_tauValAt cf x hR hM y).choose, fun _ y => (exists_tauValAt cf x hR hM y).choose_spec,

@@ -251,7 +251,6 @@ end GlobalTheory.SchurExt.SmoothPart
 
 namespace GlobalTheory.SchurExt
 
-open GlobalTheory.SchurExt.SmoothPart in
 
 theorem contDiffOn_chart_schurF : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m r : ℕ)
     (β : GA E (m + 1) → ℂ) (b₁ : GA E (r + 1) → ℂ) (χ : (Fin (r + 1) → Fin (m + 1) → Cinf E) → ℝ),

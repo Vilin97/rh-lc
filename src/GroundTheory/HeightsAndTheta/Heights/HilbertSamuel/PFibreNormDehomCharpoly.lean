@@ -51,7 +51,6 @@ theorem finiteDimensional_pullField (hR : PullRatiosAlgebraic.Statement) {K : Ty
 
 end FibreNormDehomCharpoly
 
-open FibreNormDehomCharpoly in
 
 theorem FibreNormDehomCharpoly.proof (hG : PullFormsGeneric.Statement) (hR : PullRatiosAlgebraic.Statement)
     (hI : PullSectionIntegral.Statement) (hC : DehomCharpolyForms.Statement) : FibreNormDehomCharpoly.Statement := by

@@ -18,7 +18,6 @@ namespace GlobalTheory.IndefiniteRowSideFullHecke.HermitianLocalData
 
 variable {F : Type} [Field F] [NumberField F]
 
-open scoped Classical in
 
 variable {E : Type} [Field E] [NumberField E] [Algebra F E]
 
@@ -29,9 +28,7 @@ variable (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (Λ : Sub
 
 end Loc
 
-open scoped Classical in
 
-omit [NumberField F] [NumberField E] in
 
 section Meas
 

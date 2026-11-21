@@ -19,11 +19,8 @@ open GlobalTheory.Doubling (absE)
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 variable {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc F E d₁}
 
-variable (F) in
 
-variable (F E) in
 
-variable (E) in
 
 theorem resEta_div {K : Subgroup (AF F)ˣ} {χ χ' : Chr F E} {a b m : ℕ} (h : ResEtaPow K χ a) (h' : ResEtaPow K χ' b)
     (hm : m = a + b) : ResEtaPow K (χ / χ') m := fun x => by
@@ -44,9 +41,7 @@ theorem isPair_of_isTriple {a a' : ℕ} {B : Base F E} {G : Geo σ a a'} {Y : Ch
     h.base, h.geo.hV', h.geo.hW, h.geo.hM', h.chars.heckeα, isHecke_div h.chars.heckeα h.chars.heckeβ, h.chars.resα,
       resEta_div h.chars.resα h.chars.resβ (add_comm _ _), h.weil'⟩
 
-open scoped Classical in
 
-open scoped Classical in
 
 end GlobalTheory.ThK.Check
 

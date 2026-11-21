@@ -36,7 +36,6 @@ end Grp
 section Loc
 variable {a a' : ℕ} {B : Base F E} (G : Geo σ a a') {X : Chars F E}
 
-open Classical in
 
 variable {G} {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W}
 

@@ -75,7 +75,6 @@ theorem perfectField_residueField {o : Type} [CommRing o] [IsDedekindDomain o] [
   · have : CharZero q.ResidueField := CharP.charP_to_charZero _
     infer_instance
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem formallySmooth_stalkMap {o : Type} [CommRing o] [IsDedekindDomain o] {S : Scheme.{0}} (s : S ⟶ Sp o)
     [LocallyOfFiniteType s] (hp : ∀ (q : Ideal o) [q.IsPrime], PerfectField q.ResidueField) {R : Type} [CommRing R] [IsDomain R]

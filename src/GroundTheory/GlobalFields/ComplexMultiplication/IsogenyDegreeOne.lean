@@ -65,7 +65,6 @@ section Poles
 variable {F : Type u} [Field F] [IsAlgClosed F] [DecidableEq F] {W : WeierstrassCurve F}
   [W.IsElliptic]
 
-omit [DecidableEq F] in
 
 theorem valuationPoint_genY_le_one {P : W.toAffine.Point} (hP : P ≠ 0) :
     valuationPoint W P (genY W) ≤ 1 := by

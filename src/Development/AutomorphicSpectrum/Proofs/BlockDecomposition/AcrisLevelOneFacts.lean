@@ -19,11 +19,9 @@ namespace GlobalTheory.CompanionTheory.ACrisMod
 
 variable {l : ℕ} [Fact l.Prime]
 
-variable (l) in
 
 abbrev Qt : Type := Ob l ⧸ Ideal.span {pFlat l ^ l}
 
-variable (l) in
 
 abbrev Nm : Type := ℕ →₀ Qt l
 

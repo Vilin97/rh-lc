@@ -139,7 +139,6 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
   {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)} {F0' : FlagG (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)}
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
-variable (X F0 F0') in
 
 def ROset (Λ Λ' : Submodule (𝓞 D.host.E) (VS D).V) (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V) : Set X.B.I.Ginf :=
   {y | ∃ (x : X.B.I.GA) (n : (VS D).V ≃ₗ[D.host.E] (VS D).V), RatLink X x n ∧ y = x.1 ∧
@@ -177,12 +176,10 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D)
 
-open Formalism.L2.SG.HidaSetting in
 
 def chiN (κ : X.B.I.Gf) : ℂ :=
   X.psiEf (divN X.B.I X.B.g (∑ a, hA X.B.I (X.f0 a) (X.B.I.fmat κ *ᵥ nxt X.e0 X.z0 a)))
 
-open Formalism.L2.SG.HidaSetting in
 
 def chiL (κ : X.B.I.Gf) : ℂ :=
   X.psiEf (divN X.B.I X.B.g (∑ i : Fin D.R.k,
@@ -326,14 +323,12 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
 def iotaOf (t : GTerm X u u' F0 F0' what₂ rows') : Iof TR :=
   levi TR (kOf X u u' (cs.h (cs.base t.lam) : X.B.I.Gf) (cs'.h (cs'.base t.lam') : X.B.I.Gf) t.pt)
 
-variable (what₂ rows') in
 
 abbrev Rw : Type := {Λ // Λ ∈ what₂} × {Λ' // Λ' ∈ rows'} × Iof TR
 
 def rowOf (t : GTerm X u u' F0 F0' what₂ rows') : Rw what₂ rows' TR :=
   (⟨t.lam, t.mem⟩, ⟨t.lam', t.mem'⟩, iotaOf TR cs cs' t)
 
-variable (X u u' what₂ rows') in
 
 abbrev H1 : Type :=
   PiLp 2 (fun _ : {Λ // Λ ∈ what₂} × {Λ' // Λ' ∈ rows'} => Formalism.L2.SG.PackageTie.HS (X.Vpi u') (X.Vpi u))
@@ -363,7 +358,6 @@ def scalT (t₁ t₂ : GTerm X u u' F0 F0' what₂ rows') : Prop :=
     Lat.s0 t₁.lam (lf D F0) t₁.frame t₂.frame (t₂.lin * t₁.lin⁻¹) D.R.k = 1 ∧
     IsScalar t₁.lam (lf D F0) t₁.frame t₂.frame (t₂.lin * t₁.lin⁻¹)
 
-variable (F0 F0') in
 
 def tOf : Formalism.FourierDecayAlt.PB.Terms (GTerm X u u' F0 F0' what₂ rows') (Rw what₂ rows' TR) (Iof TR)
     (Formalism.L2.SG.PackageTie.HS (CM cs') (CM cs)) (H1 X u u' what₂ rows') where

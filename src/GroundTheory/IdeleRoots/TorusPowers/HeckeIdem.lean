@@ -21,7 +21,6 @@ section Single
 
 variable {K : Type} [Field K] [NumberField K]
 
-open Classical in
 
 end Single
 
@@ -31,7 +30,6 @@ theorem adeleMap_snd_apply (a : AF F) (w : HeightOneSpectrum (𝓞 E)) :
     (adeleMap F E a).2 w = completionMap (below F w) w (a.2 (below F w)) :=
   rfl
 
-open Classical in
 
 section Conj
 

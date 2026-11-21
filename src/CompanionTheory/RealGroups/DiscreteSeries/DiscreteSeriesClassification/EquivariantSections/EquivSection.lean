@@ -16,7 +16,6 @@ variable {n : ℕ}
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
-open Classical in
 
 abbrev Wd (n m : ℕ) : Type := Σ l : Fin (m + 1), (Fin l → Fin n × Fin n)
 

@@ -122,7 +122,6 @@ theorem mult_smul (g : L ≃ₐ[K] L) (w : InfinitePlace L) : (g • w).mult = w
   · exact absurd (this.mpr h2) h1
   · rfl
 
-omit [NumberField K] [NumberField L] in
 
 theorem fullLog_unitsRep (g : L ≃ₐ[K] L) (x : Additive (𝓞 L)ˣ) :
     fullLog L (unitsRep K L g x) = funPermRep ℝ (L ≃ₐ[K] L) (InfinitePlace L) g (fullLog L x) := by
@@ -137,7 +136,6 @@ theorem funPermRep_mem_logLattice (g : L ≃ₐ[K] L) {m : InfinitePlace L → �
   obtain ⟨x, rfl⟩ := hm
   exact ⟨unitsRep K L g x, fullLog_unitsRep g x⟩
 
-variable (K L) in
 
 def logLatticeRep : Representation ℤ (L ≃ₐ[K] L) (logLattice L) where
   toFun g := ((funPermRep ℝ (L ≃ₐ[K] L) (InfinitePlace L) g).restrictScalars ℤ).restrict
@@ -161,7 +159,6 @@ theorem coe_logLatticeRep (g : L ≃ₐ[K] L) (m : logLattice L) :
 
 variable [FiniteDimensional K L]
 
-omit [NumberField K] in
 
 theorem cycHerbrand_unitsRep_eq_logLattice {σ : L ≃ₐ[K] L} (hσ : ∀ g, g ∈ Subgroup.zpowers σ) :
     cycHerbrand (unitsRep K L) σ = cycHerbrand (logLatticeRep K L) σ := by

@@ -19,7 +19,6 @@ def rowsProj {n d : ℕ} (U : Matrix (Fin n) (Fin n) ℂ) (s : Fin d → Fin n)
     (z : EuclideanSpace ℂ (Fin n)) : EuclideanSpace ℂ (Fin d) :=
   WithLp.toLp 2 ((U.submatrix s id).mulVec fun j => z j)
 
-open Classical in
 
 def VarietyProjectionMass.Statement : Prop :=
   ∀ (n d : ℕ) (J : Ideal (MvPolynomial (Fin n) ℂ)), J.IsPrime →

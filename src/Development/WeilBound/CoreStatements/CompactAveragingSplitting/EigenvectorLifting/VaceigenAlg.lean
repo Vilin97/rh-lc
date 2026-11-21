@@ -51,7 +51,6 @@ theorem dual_family (R K : Type) {V : Type} [CommRing R] [IsDedekindDomain R] [F
   | add x y _ _ hx hy => simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, ← hx, ← hy]
   | smul a x _ hx => simp only [map_smul, smul_eq_mul, mul_smul, ← Finset.smul_sum, ← hx]
 
-open GlobalTheory.CompanionTheory.FinHeis in
 
 theorem line_of_eigen {X M : Type} [AddCommGroup X] [AddCommGroup M] [Module ℂ M] (S : Sys X M) (Γ : Set X) (χ : X → ℂ)
     (hΓ : ∀ x, (∀ γ ∈ Γ, S.c γ x ^ 2 = 1) → x ∈ Γ) {φ φ' : M} (h0 : φ ≠ 0) (hc : Cyclic S φ)

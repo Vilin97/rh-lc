@@ -70,7 +70,6 @@ theorem measurableSet_level (hf : ∀ v, Measurable (pf v)) (hK : ∀ v, Measura
 variable [Fintype W] {μa : ∀ w, Measure (Ya w)} {μf : ∀ v, Measure (Yf v)} {μ : Measure X}
   [∀ w, SigmaFinite (μa w)] [∀ v, SigmaFinite (μf v)]
 
-omit [Countable V] in
 
 theorem IsCylProd.measurePreserving_level (h : IsCylProd pa pf K μa μf μ) (ha : ∀ w, Measurable (pa w))
     (hf : ∀ v, Measurable (pf v)) {S : Finset V} (hS : ∀ v ∉ S, μf v (K v) = 1) :
@@ -136,7 +135,6 @@ theorem IsCylProd.integral_tensor_indicator (hX : ∀ x, ∀ᶠ v in cofinite, p
     rw [finprod_eq_zero_of_notMem h1 (hX x) hx, mul_zero]
   exact ⟨hi.integrable_of_forall_notMem_eq_zero h0, by rw [← e, setIntegral_eq_integral_of_forall_compl_eq_zero h0]⟩
 
-omit h ha hf [Countable V] [∀ v, SigmaFinite (μf v)] in
 
 end GlobalTheory.RestrMeas
 

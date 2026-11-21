@@ -100,7 +100,6 @@ private theorem gl_ext {S C : Type} [CommRing S] [CommRing C] (F : S →+* C) (u
 
 end GlobalTheory.OrdLoc.RootConjugation
 
-open GlobalTheory.OrdLoc.RootConjugation in
 
 theorem GlobalTheory.OrdLoc.rtConj :
     LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ) (C : Type) [CommRing C] [Algebra O C] [IsCO O C] (r : GQ l →* GG 3 C) (h : GL (Fin 3) C), UpperTheory.V.UnitaryThreeInertia.InHat h → GlobalTheory.OrdLoc.On D U r → GlobalTheory.OrdLoc.On D U (conjBy h r) := by

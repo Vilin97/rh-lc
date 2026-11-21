@@ -285,7 +285,6 @@ theorem one_le_NDPt (γ : Formalism.FourierDecayAlt.PN.Pts D.host.E D.R.rS)
 
 end Bounds
 
-open Formalism.L2.SG.HidaSetting Formalism.L2.SG.TermOp Formalism.L2.SG.Full Formalism.FourierDecayAlt Formalism.L2.SG.NGData Formalism.L2.SG.NGCut in
 
 theorem stepNormOne_of
     (hOV : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word),
@@ -361,6 +360,5 @@ theorem stepNormOne_of
     have hE := PtPf.blockEndMinors_of_cell _ (PtPf.zhatOM_isIntegral _ _ hun hF hF') _ hcell
     exact ⟨o, ho, by rw [e, endMin_eq], (hE a).2⟩
 
-open Formalism.L2.SG.TermOp.Vanish in
 
 end Formalism.L2.SG.NGCut.LeadingMinorIntegrality

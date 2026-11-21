@@ -38,8 +38,6 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) [Fintype 
 
 section Hypotheses
 
-set_option maxHeartbeats 1000000 in
-include hS in
 
 theorem gsTrace_eq_gsOddTrace (hodd : Odd N) : gsTrace S ιr ιs N = gsOddTrace S ιr ιs hS hodd := by
   have : Finite (gsRoots S N) :=
@@ -56,7 +54,6 @@ theorem gsTrace_eq_gsOddTrace (hodd : Odd N) : gsTrace S ιr ιs N = gsOddTrace 
           (gsOddTrace_localToCompact S ιr ιs hS hodd ξ).symm)
     _ = gsOddTrace S ιr ιs hS hodd z := congrArg _ hξ
 
-include hS in
 
 theorem gsTatePoitouTateHypotheses :
     TatePoitouTateHypotheses (gsFinFamily S ιs) (gsRealFamily S ιr) (gsRoots S N)
@@ -70,15 +67,10 @@ end Hypotheses
 variable (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M] [Finite M]
   (hM : ∀ m : M, N • m = 0)
 
-include hS hM in
 
-include hS hM in
 
-include hS hM in
 
-include hS hM in
 
-include ιs hS hM in
 
 theorem injective_gsRealRes_three : Function.Injective (gsRealRes S ιr M 3).hom := by
   refine (injective_iff_map_eq_zero _).2 fun x hx => ?_
@@ -89,7 +81,6 @@ theorem injective_gsRealRes_three : Function.Injective (gsRealRes S ιr M 3).hom
   exact (gsTatePoitouTateHypotheses S ιr ιs hS).injective_ptTGlobalToLocal_three M hM
     (h0.trans (map_zero _).symm)
 
-include ιs hS hM in
 
 theorem bijective_gsRealRes {r : ℕ} (hr : 3 ≤ r) : Function.Bijective (gsRealRes S ιr M r).hom := by
   refine ⟨?_, surjective_gsRealRes_of_three_le S ιr (NeZero.ne N) hS M hM hr⟩

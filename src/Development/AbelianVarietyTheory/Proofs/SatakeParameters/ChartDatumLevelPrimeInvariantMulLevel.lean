@@ -14,7 +14,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.TwV.PhiTLev
 
-set_option maxHeartbeats 2000000 in
 
 theorem deco_mul_lev : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =>
     ∀ (j : ℕ) (hj : j ≤ D.R.m) (β : (St j hj).Ch) (x x₁ : UA D j hj) (κ : ((St j hj).K β).lev.U) p p₁,
@@ -46,7 +45,6 @@ theorem deco_mul_lev : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a
     ((St j hj).K β).lev.Lb_span ((St j hj).K β).lev.Lb_int v _ hu₁
   rw [hp₁.fnl P v (hTv j hj) hov w hw₁ z hz, H w hw z hz]
 
-set_option maxHeartbeats 2000000 in
 
 theorem phiT_mul_lev : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =>
   ∀ (i : ℕ) (hi : i + 1 ≤ D.R.m) (β : (St i (Nat.le_of_succ_le hi)).Ch) (β' : (St (i + 1) hi).Ch)

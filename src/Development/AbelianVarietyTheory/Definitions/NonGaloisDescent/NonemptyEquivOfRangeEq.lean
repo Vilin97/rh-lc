@@ -299,7 +299,6 @@ variable {G V W : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [A
 def cosetSum (π : Representation ℂ G V) {H : Subgroup G} (U : Subgroup H) [Fintype (H ⧸ U)] : V →ₗ[ℂ] V :=
   ∑ q : H ⧸ U, π (q.out : H)
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem out_apply (π : Representation ℂ G V) {H : Subgroup G} {U : Subgroup H} {v : V} (hv : ∀ u ∈ U, π (u : H) v = v)
     (h : H) : π ((h : H ⧸ U).out : H) v = π h v := by
@@ -411,7 +410,6 @@ section Classes
 
 variable {G : Type} [Group G] [TopologicalSpace G]
 
-omit [TopologicalSpace G] in
 
 def orbitMap {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) (v : V) :
     (Representation.leftRegular ℂ G).IntertwiningMap ρ where
@@ -420,7 +418,6 @@ def orbitMap {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ
     ext h
     simp
 
-omit [TopologicalSpace G] in
 
 theorem orbitMap_surjective {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V} (h : ρ.IsIrreducible)
     {v : V} (hv : v ≠ 0) : Function.Surjective (orbitMap ρ v) := by
@@ -433,7 +430,6 @@ theorem orbitMap_surjective {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Rep
     have : w ∈ (orbitMap ρ v).range := e ▸ trivial
     exact this
 
-variable (G) in
 
 variable {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 

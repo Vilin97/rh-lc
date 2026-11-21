@@ -127,7 +127,6 @@ theorem map_mem_of_normal (L : Fld) (h : j.fieldRange ≤ L) (hn : letI := algTh
   have h1 : ((s'.restrictNormal L ⟨x, hx⟩ : L) : Qb) = s x := AlgEquiv.restrictNormal_commutes s' L ⟨x, hx⟩
   exact h1 ▸ (s'.restrictNormal L ⟨x, hx⟩).2
 
-omit j in
 
 theorem hilbert_qb : GlobalArtinReciprocity → ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
     (j : E →ₐ[ℚ] Qb) (ι : Qb →+* ℂ) (M : IntermediateField ℚ ℂ), IsRayFieldIn (ι.comp j.toRingHom) ⊤ M →
@@ -150,7 +149,6 @@ theorem hilbert_qb : GlobalArtinReciprocity → ∀ (E : Type) [Field E] [Number
       ((GlobalTheory.UnramDiscr.unramIn_iff_natAbs_discr E L).2 hd)
     exact le_of_algHom j hL h inferInstance ψ
 
-omit j in
 
 theorem hilbert_qb_aut : GlobalArtinReciprocity → ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
     (j : E →ₐ[ℚ] Qb) (ι : Qb →+* ℂ) (M : IntermediateField ℚ ℂ), IsRayFieldIn (ι.comp j.toRingHom) ⊤ M →

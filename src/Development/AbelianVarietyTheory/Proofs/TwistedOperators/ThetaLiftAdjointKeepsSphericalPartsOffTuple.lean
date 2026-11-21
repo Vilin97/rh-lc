@@ -48,7 +48,6 @@ theorem blockPoly_ne_zero (ν : ℂ) (q t : ℕ) : blockPoly ν q t ≠ 0 := by
   rw [h, eval_zero] at h0
   exact zero_ne_one h0
 
-set_option maxHeartbeats 1000000 in
 
 theorem transfer_good {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
     {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
@@ -128,7 +127,6 @@ theorem transfer_good {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
 
 end Transfer
 
-set_option maxHeartbeats 1000000 in
 
 theorem kept : GlobalTheory.Published.CuspRapidDecay → HoweUnram → ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
     {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)

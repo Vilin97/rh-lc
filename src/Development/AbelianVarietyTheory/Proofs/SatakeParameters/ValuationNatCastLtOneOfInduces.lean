@@ -14,7 +14,6 @@ namespace GlobalTheory.GalCut
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] [IsCMField E] {l : ℕ} [Fact l.Prime] {a : ℕ}
 
-omit [IsAlgClosure E Ω] [IsCMField E] in
 
 theorem norm_natCast_om_lt_one : ‖((l : ℕ) : Om l)‖ < 1 := by
   have h := PadicAlgCl.norm_extends l ((l : ℕ) : ℚ_[l])
@@ -22,7 +21,6 @@ theorem norm_natCast_om_lt_one : ‖((l : ℕ) : Om l)‖ < 1 := by
   rw [h]
   exact Padic.norm_p_lt_one
 
-omit [NumberField E] [IsAlgClosure E Ω] [IsCMField E] in
 
 theorem valuation_natCast_lt_one_of_induces {A : ValuationSubring Ω} {O : Type} [CommRing O] [Algebra ℤ_[l] O]
     [TopologicalSpace O] (Bw : LocBridge l E Ω (Dec (F := E) A) O) (hj : Pst.Induces Bw) :
@@ -44,7 +42,6 @@ theorem valuation_natCast_lt_one_of_induces {A : ValuationSubring Ω} {O : Type}
   refine lt_of_le_of_ne ((A.valuation_le_one_iff _).2 hmem) fun h1 => hinv ?_
   rw [← A.valuation_le_one_iff, map_inv₀, h1, inv_one]
 
-omit [IsAlgClosure E Ω] [IsCMField E] in
 
 theorem mem_of_induces {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} (hA : IsPlaceOver A w) {O : Type} [CommRing O]
     [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω (Dec (F := E) A) O) (hj : Pst.Induces Bw) :

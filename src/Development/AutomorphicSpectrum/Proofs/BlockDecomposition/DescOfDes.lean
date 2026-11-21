@@ -82,7 +82,6 @@ theorem res_of_comp {K : Cx.{w} R} {M M' : Type*} [AddCommGroup M] [AddCommGroup
   · obtain ⟨x, hx⟩ := h2 y hy
     exact ⟨e x, hx⟩
 
-include hθ in
 
 theorem desc_of_des (s : R) (h : CrystallineSemistableComparison.D.DesJ W.ι Ff s) : Desc s Gf (jG W P) := by
   intro T
@@ -125,7 +124,6 @@ def stepEquiv (T : P.Elements) :
       obtain ⟨x, hx⟩ := (v_mem T _).1 y.2
       exact ⟨x, Subtype.ext hx⟩⟩
 
-include v_add v_smul v_inj v_mem in
 
 theorem desc_step (v_nat : ∀ {T T' : P.Elements} (f : T ⟶ T') (x : Ff.obj T.1),
       v T' ((Ff.map f.1).hom x) = (gG.map f).φ (v T x)) (s : Λ) (h : CrystallineSemistableComparison.D.DesJ W.ι Ff s) :
@@ -133,13 +131,11 @@ theorem desc_step (v_nat : ∀ {T T' : P.Elements} (f : T ⟶ T') (x : Ff.obj T.
   desc_of_des W P Ff _ (stepEquiv P c gG Ff ρ hρ μ hμ r v v_add v_smul v_inj v_mem)
     (fun f x => Subtype.ext (v_nat f x)) s h
 
-include hρ in
 
 theorem raise (T : Thick L) (ξ : Λ) (hξ : T.i (c ξ) ∈ T.J) (x : (OM L c).obj T)
     (hx : x ∈ (pdS L c (ρ r)).S T) : ξ • x ∈ (pdS L c (ρ (r + 1))).S T :=
   T.pdPow_anti (hρ.2 r) (mul_pdPow L T _ hξ hx)
 
-include hρ in
 
 theorem desc_flt {C' : Type*} [Category C'] (G : C' ⥤ P.Elements) (μ' ξ : Λ) (hμ' : μ = μ' * ξ)
     (hm : ∀ T : P.Elements, (gG.obj T).i (c ξ) ∈ (gG.obj T).J)

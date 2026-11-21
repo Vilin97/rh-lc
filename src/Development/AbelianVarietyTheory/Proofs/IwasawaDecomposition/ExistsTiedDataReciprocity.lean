@@ -19,8 +19,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.Mem.Top.Bl
 
-open Formalism.L2 in
-set_option maxHeartbeats 1000000 in
 
 theorem ColW.cf_eq {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T) (Z : w.Lt) :
     Fr.at (w.st Z) f = TC.cf w.I w.l Z := by
@@ -28,6 +26,5 @@ theorem ColW.cf_eq {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T) (Z
   have : Fr.at (w.st Z) w.I.C = TC.cf w.I w.l Z := rfl
   rw [← this, h]
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.Mem.Top.Bl

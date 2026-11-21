@@ -73,13 +73,11 @@ def diagMap [Algebra B B'] [IsScalarTower R B B'] :
   commutes' r := by
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl', ← IsScalarTower.algebraMap_apply]
 
-variable {B B'} in
 
 theorem fst_diagMap [Algebra B B'] [IsScalarTower R B B'] (c : TrivSqZeroExt B Ω[B⁄R]) :
     (diagMap R B B' c).fst = algebraMap B B' c.fst := by
   exact add_zero _
 
-variable {B B'} in
 
 theorem snd_diagMap [Algebra B B'] [IsScalarTower R B B'] (c : TrivSqZeroExt B Ω[B⁄R]) :
     (diagMap R B B' c).snd = KaehlerDifferential.map R R B B' c.snd := by
@@ -139,7 +137,6 @@ variable (γ : DividedPowers I) (s : X ⟶ Sp R)
 def IsSmall {ι : Type} (U : ι → X.Opens) : ObjectProperty (Thick γ s) :=
   fun T ↦ ∃ i, ⊤ ≤ T.x ⁻¹ᵁ U i
 
-variable {γ s} in
 
 theorem Thick.Hom.le_preimage {T T' : Thick γ s} (φ : T ⟶ T') {U : X.Opens} (h : ⊤ ≤ T.x ⁻¹ᵁ U) :
     ⊤ ≤ T'.x ⁻¹ᵁ U := by

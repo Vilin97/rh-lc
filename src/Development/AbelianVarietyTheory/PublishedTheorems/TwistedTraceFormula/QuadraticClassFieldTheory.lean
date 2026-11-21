@@ -20,7 +20,6 @@ def globalNorms : Subgroup Kˣ := (Units.map (Algebra.norm K : L →* K)).range
 def normGroup (A : Type) [CommRing A] [Algebra K A] : Subgroup Aˣ :=
   (Units.map (Algebra.norm A : A ⊗[K] L →* A)).range
 
-open Classical in
 
 def eta (A : Type) [CommRing A] [Algebra K A] (x : Aˣ) : ℤˣ :=
   if x ∈ normGroup K L A then 1 else -1
@@ -66,10 +65,6 @@ private theorem isUnit_of_isUnit_norm' {A S : Type} [CommRing A] [CommRing S] [A
   rw [Units.val_mul, Module.End.mul_apply, hu] at h2
   exact IsUnit.of_mul_eq_one _ (by simpa using h2)
 
-open NumberField IsDedekindDomain in
-open scoped TensorProduct in
-variable (K L : Type) [Field K] [Field L] [Algebra K L] in
-variable {K L} in
 
 theorem _root_.GlobalTheory.QuadSymbol.mem_normGroup_iff [FiniteDimensional K L] {A : Type} [CommRing A]
     [Algebra K A] {x : Aˣ} :
@@ -81,10 +76,6 @@ theorem _root_.GlobalTheory.QuadSymbol.mem_normGroup_iff [FiniteDimensional K L]
     have hu : IsUnit z := isUnit_of_isUnit_norm' (A := A) (by rw [hz]; exact x.isUnit)
     exact ⟨hu.unit, Units.ext (by simp [hz])⟩
 
-open NumberField IsDedekindDomain in
-open scoped TensorProduct in
-variable (K L : Type) [Field K] [Field L] [Algebra K L] in
-variable {K L} in
 
 theorem _root_.GlobalTheory.QuadSymbol.mem_globalNorms_iff [FiniteDimensional K L] {x : Kˣ} :
     x ∈ _root_.GlobalTheory.QuadSymbol.globalNorms K L ↔ ∃ z : L, Algebra.norm K z = x := by
@@ -106,10 +97,6 @@ private theorem norm_one_tmul_eq_algebraMap_norm [FiniteDimensional K L] {A : Ty
   ext w
   simp
 
-open NumberField IsDedekindDomain in
-open scoped TensorProduct in
-variable (K L : Type) [Field K] [Field L] [Algebra K L] in
-variable {K L} in
 
 theorem _root_.GlobalTheory.QuadSymbol.toUnits_mem_normGroup [FiniteDimensional K L] (A : Type) [CommRing A]
     [Algebra K A] {x : Kˣ} (hx : x ∈ _root_.GlobalTheory.QuadSymbol.globalNorms K L) :
@@ -137,10 +124,6 @@ private theorem norm_smul_add_smul_basis_eq_sq_sub_mul_sq {A S : Type} [CommRing
   simp
   ring
 
-open NumberField IsDedekindDomain in
-open scoped TensorProduct in
-variable (K L : Type) [Field K] [Field L] [Algebra K L] in
-variable {K L} in
 
 theorem _root_.GlobalTheory.QuadSymbol.mem_normGroup_iff_form (e : Module.Basis (Fin 2) K L)
     (h0 : e 0 = 1) {δ : K} (h1 : e 1 * e 1 = algebraMap K L δ) {A : Type} [CommRing A]
@@ -196,9 +179,6 @@ def etaProd (x : FinFam K) (y : InfFam K) : ℤˣ :=
   (∏ᶠ v : HeightOneSpectrum (𝓞 K), eta K L (v.adicCompletion K) (x v)) *
     ∏ w : InfinitePlace K, eta K L w.Completion (y w)
 
-open NumberField IsDedekindDomain in
-open scoped TensorProduct in
-variable (K L : Type) [Field K] [NumberField K] [Field L] [Algebra K L] in
 
 theorem _root_.GlobalTheory.QuadSymbol.AlmostNorm.finite_mulSupport
     {K L : Type} [Field K] [NumberField K] [Field L] [Algebra K L]

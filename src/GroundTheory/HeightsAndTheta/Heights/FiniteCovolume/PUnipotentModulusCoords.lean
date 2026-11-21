@@ -38,7 +38,6 @@ theorem hyperbolic_at_place (h : HermitianForm F E W) (v : Basis ι E W) {x₀ w
   · rw [hForm, ← HermAtPlace.proof h v w, h2, map_zero]
   · rw [hForm, ← HermAtPlace.proof h v w, h3, map_one]
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem archUnitary_at_place {h : HermitianForm F E W} {v : Basis ι E W} (g : archUnitary h v)
     (w : InfinitePlace E) :
@@ -138,7 +137,6 @@ theorem heisPoint_val (hp : IsHyperbolicPair h x₀ w₀) (p : HeisCoord h v x�
     ((((heisPoint hp p : unipRadical h v x₀) : archUnitary h v) : InfinitePlace E → GL ι ℂ) w :
       Matrix ι ι ℂ) = heisMatAt h v x₀ p.1 p.2 w := rfl
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem unipRadical_at_place (n : unipRadical h v x₀) (w : InfinitePlace E) :
     (((n : archUnitary h v) : InfinitePlace E → GL ι ℂ) w : Matrix ι ι ℂ)ᴴ * gramAt h v w *

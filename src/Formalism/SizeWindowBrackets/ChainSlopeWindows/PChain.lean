@@ -112,7 +112,6 @@ open Model
 section
 variable {H : Type} [AddCommGroup H] [Fintype H] [DecidableEq H]
 
-set_option maxHeartbeats 1600000 in
 
 end
 

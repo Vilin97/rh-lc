@@ -190,7 +190,6 @@ end GlobalTheory.KroneckerCongruence
 
 namespace GlobalTheory.KZ
 
-open GlobalTheory.KroneckerCongruence in
 
 theorem kronecker_congruence_tower : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε), Function.Injective ε → (∃ φ : ℂ → ℂ, DifferentiableOn ℂ φ Hs ∧ X.an X.jK = (φ : Mero)) → ∀ (M q : ℕ) (f : X.K), 0 < M → q.Prime → Nat.Coprime q M → (∀ γ ∈ CongruenceSubgroup.Gamma M, X.sl (ofSL γ) f = f) → ∀ (σ : SL(2, ℤ)), ((en σ 1 0 : ZMod M) = 0 ∧ (en σ 1 1 : ZMod M) = q) → ∀ (V : ValuationSubring Ω) (s : Ω ≃ₐ[ℚ] Ω), ((q : ℕ) : Ω) ∈ V.nonunits → (∀ x ∈ V, s x ∈ V ∧ s.symm x ∈ V ∧ V.valuation (s x - x ^ q) < 1) → (∀ r, (X.exp f).coeff r ∈ V) → (∀ r, (X.exp (X.sl (ofSL σ) f)).coeff r ∈ V) → ∀ r, (X.exp ((∏ j ∈ Finset.range q, X.sl (toGQ !![1, (j * M : ℤ); 0, (q : ℤ)]) f) * X.sl (toGQ ((σ : Matrix (Fin 2) (Fin 2) ℤ) * !![(q : ℤ), 0; 0, 1])) f - X.gal s f * (X.gal s.symm (X.sl (ofSL σ) f)) ^ q)).coeff r ∈ V.nonunits := by
   intro Ω _ _ _ ε X hε _ M q f hM hq _ hf σ _ V s hqV hs hfV hσV r

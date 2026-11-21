@@ -16,9 +16,7 @@ namespace GlobalTheory.SerSys.Opp
 
 open GlobalTheory.GLq.Opp
 
-open MonoidAlgebra in
 
-open MonoidAlgebra in
 
 variable {g : ℕ} [Fact g.Prime] {k l n : ℕ}
 

@@ -53,9 +53,7 @@ section Padic
 
 variable [NormedAlgebra ℚ_[p] C]
 
-omit [CompleteSpace C] [CharZero C] [Fact (‖(p : C)‖ < 1)] in
 
-variable {p O} in
 
 variable [IsAlgClosed C] {L : Type w} [Field L] [Algebra ℚ_[p] L] [Algebra.IsAlgebraic ℚ_[p] L]
 

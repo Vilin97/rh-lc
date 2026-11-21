@@ -52,7 +52,6 @@ theorem eval_twist_of_isTwG {φ : InvFun O} (hφ : IsTwG w0 φ) (τ : O ≃+* O)
   letI := hf
   exact (φ.eval_eq (r := ⟨g.toAddHom, hg⟩) hs _).symm
 
-omit [Module O X] in
 
 theorem depthSet_twist_subset (hb : CMOrd O bar) {ψ w : InvFun O} (hψ : IsTwG w0 ψ) (hw : IsTwG w0 w) (σ : O ≃+* O)
     (hσ : σ w0 = w0) (n : ℕ) (B : (Fin n → O) → (Fin n → O) → ℝ) :

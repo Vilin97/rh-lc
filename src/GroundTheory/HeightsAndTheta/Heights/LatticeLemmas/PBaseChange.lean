@@ -20,7 +20,6 @@ variable {K : Type*} [Field K] [NumberField K] {L : Type*} [Field L] [NumberFiel
 variable {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K) E]
   [Module.Projective (𝓞 K) E]
 
-omit [NumberField K] [NumberField L] [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 K) E] in
 
 theorem baseChangeCoord_one_tmul (τ : L →+* ℂ) (e : E) :
     baseChangeCoord τ ((1 : ComplexAt τ) ⊗ₜ ((1 : 𝓞 L) ⊗ₜ[𝓞 K] e)) =

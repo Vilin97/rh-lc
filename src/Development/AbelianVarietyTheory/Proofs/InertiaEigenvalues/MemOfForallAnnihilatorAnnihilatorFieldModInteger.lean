@@ -107,7 +107,6 @@ end GlobalTheory.DoubleAnnihilator
 
 namespace GlobalTheory
 
-open GlobalTheory.DoubleAnnihilator in
 
 theorem mem_of_forall_annihilator_annihilator :
     ∀ (l : ℕ) [Fact l.Prime] (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL]

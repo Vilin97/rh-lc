@@ -120,7 +120,6 @@ theorem _root_.GlobalTheory.QuadricSection.measurable_qf {P Q : ℕ} :
   unfold _root_.GlobalTheory.IndefiniteRowSideFullHecke.PerpendicularEmbedding.qf
   fun_prop
 
-open Classical in
 
 def sectMat {P Q : ℕ} (β : ℝ) (x₀ y : Sp P Q) : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ :=
   if qf y = β then
@@ -204,7 +203,6 @@ theorem _root_.GlobalTheory.QuadricSection.measurable_sectMat {P Q : ℕ} (β : 
   · exact ((_root_.GlobalTheory.QuadricSection.measurable_qrefl _ x₀ i j).comp measurable_neg).neg
   · exact _root_.GlobalTheory.QuadricSection.measurable_qrefl _ x₀ i j
 
-open MeasureTheory Matrix in
 
 theorem _root_.GlobalTheory.QuadricSection.exists_isSection : ∀ (P Q : ℕ) (β : ℝ) (x₀ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.PerpendicularEmbedding.Sp P Q), β ≠ 0 →
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.PerpendicularEmbedding.qf x₀ = β →

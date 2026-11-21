@@ -119,6 +119,5 @@ theorem zip_given (W : G.Weil) (t : T) (ρ : G.RealVec) (q : ∀ j : ℕ, PolF D
 
 end GlobalTheory.FlipStart
 
-open GlobalTheory.FlipStart in
 
 end

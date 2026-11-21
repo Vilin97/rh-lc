@@ -63,7 +63,6 @@ omit [CommRing S] in
 @[simp] theorem cc_pt {n : ℕ} (j : Fin n) (i : Fin d) : constantCoeff (pt R d j i) = 0 := by
   simp [pt]
 
-omit [CommRing S] in
 
 omit [CommRing S] in
 @[simp] theorem cc_comp1 {n : ℕ} (ψ : Pt R 1 d) (hψ : ∀ i, constantCoeff (ψ i) = 0)

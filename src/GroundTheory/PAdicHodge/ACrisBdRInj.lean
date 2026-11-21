@@ -64,7 +64,6 @@ theorem span_p_pow_map (k : ℕ) :
       Ideal.span {(p : ACris K p)} ^ k := by
   rw [Ideal.map_pow, Ideal.map_span, Set.image_singleton, map_natCast]
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_eq_pow_mul_of_iota_eq_zero {y : ACris K p} (hy : iota K p y = 0) {k : ℕ}
     {yk : ACrisZero K p}
@@ -106,7 +105,6 @@ theorem exists_eq_pow_mul_of_iota_eq_zero {y : ACris K p} (hy : iota K p y = 0) 
     exact ((hu.pow k).dvd_mul_left).1 h4
   · rw [← mul_assoc, Units.val_pow_eq_pow_val, ← mul_pow, IsUnit.mul_val_inv, one_pow, one_mul]
 
-set_option maxHeartbeats 1600000 in
 
 theorem iota_injective : Function.Injective (iota K p) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]

@@ -155,7 +155,6 @@ theorem continuous_ρS (S : Finset (Pl E)) : Continuous (ρS S) := by
   change Continuous fun y : InfiniteAdeleRing E × Af E => (y.2 : Af E) v.1
   exact (RestrictedProduct.continuous_eval v.1).comp continuous_snd
 
-open Classical in
 
 def fSr (S : Finset (Pl E)) (p : (v : S) → v.1.adicCompletion E) : (w : Pl E) → w.adicCompletion E :=
   fun w => if h : w ∈ S then p ⟨w, h⟩ else 0

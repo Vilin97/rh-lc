@@ -110,7 +110,6 @@ section Law
 
 variable {S : Type} [CommRing S] {d : ℕ}
 
-open MvPowerSeries Formalism.FG.SolveVAux in
 
 theorem coeff_single_subst' {σ τ : Type} [Fintype σ] [DecidableEq σ] [DecidableEq τ]
     (a : σ → MvPowerSeries τ S) (ha : ∀ s, constantCoeff (a s) = 0) (f : MvPowerSeries σ S) (t : τ) :
@@ -429,7 +428,6 @@ theorem embK_sep {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
   ext x
   exact congrArg (fun f : E →+* c.F => ((f x : c.F) : ℂ)) hF
 
-set_option maxHeartbeats 1000000 in
 
 theorem linEig_holds : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H)
     (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)] (S : Type) [CommRing S] [Algebra c.F S]

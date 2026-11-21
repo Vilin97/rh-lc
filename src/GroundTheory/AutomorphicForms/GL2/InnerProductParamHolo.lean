@@ -74,9 +74,7 @@ theorem differentiableOn_integral_of_bound {α : Type*} [MeasurableSpace α] {μ
     rw [closure_ball s hr0.ne']
     exact (hF x).mono ((hball s hs).trans hsub)
 
-open GroundTheory.Global.Elliptic in
 
-open GroundTheory.Global.Elliptic in
 
 end PseudoEisenstein
 

@@ -69,7 +69,6 @@ end GlobalTheory.DblSchr
 
 namespace GlobalTheory.DblSchr
 
-set_option maxHeartbeats 1000000 in
 
 theorem isUSplitting_omdOf : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) →
     ∀ (S T : HSp D) (χS χT : (AE D)ˣ →* Circle), IsHeckeChar D χS → IsHeckeChar D χT →

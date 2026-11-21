@@ -111,11 +111,9 @@ theorem isUnif_unifAt (w : Pl D.host.E) : IsUnif (unifAt w) := by
   rw [← WithZero.exp_zero] at h1
   exact WithZero.lt_mul_exp_iff_le (by simp) |>.1 (by simpa [← WithZero.exp_add] using h1)
 
-open Classical in
 
 def locPl (G : GridData L sc) (t : T) : Finset (Pl D.host.E) := G.pl.W0 ∪ L.Q t
 
-open Classical in
 
 def cosExp (G : GridData L sc) (w : Pl D.host.E) : ℕ := if w ∈ G.pl.W0 then G.pl.depth sc (w.under (𝓞 D.host.F)) else 0
 
@@ -131,7 +129,6 @@ theorem depthAt_w (G : GridData L sc) {v : Pl D.host.F} (hv : v ∈ G.pl.S0) :
 theorem depthAt_of_notMem (G : GridData L sc) {w : Pl D.host.E} (hw : w ∉ G.pl.W0) : cosExp G w = 0 ∧ depthAt G w = 1 := by
   simp [depthAt, cosExp, hw]
 
-variable (L) in
 
 def muBase : ℕ → HChar D.host.E
   | 0 => 1
@@ -178,11 +175,9 @@ theorem isTame_muBase (w : Pl D.host.E) (j : ℕ) : IsTame ((muBase L j).loc w)�
       · exact fun _ _ _ => rfl
   rw [MonoidHom.inv_apply, isTame_loc this x hx, inv_one]
 
-open Classical in
 
 def atPl (w : Pl D.host.E) (x : Kw w) : AE D := ((comp_toAd D).surj (RestrictedProduct.single _ w x)).choose
 
-open Classical in
 
 theorem atPl_spec (w : Pl D.host.E) (x : Kw w) :
     infPart D (atPl w x) = 0 ∧ ∀ Q, cpt (D := D) Q (toEAf D (atPl w x)) = (Pi.single w x : ∀ Q, Kw Q) Q :=
@@ -277,16 +272,12 @@ def ixFin (j : ℕ) : Ix (Fin D.R.r) (Fin D.R.t) j ≃ Fin ((locGrid G t w).rank
 theorem ixFin_val (j : ℕ) : (∀ a, (ixFin G t w j (.inl a)).val = a.val) ∧
     ∀ c b, (ixFin G t w j (.inr (c, b))).val = D.R.r + (b.val + D.R.t * c.val) := ⟨fun _ => rfl, fun _ _ => rfl⟩
 
-variable (L) in
-open Classical in
 
 def stepGroup (j : ℕ) : Subgroup (GL (Ix (Fin D.R.r) (Fin D.R.t) j) (Kw w)) :=
   if w ∈ L.Pg then
     ((TypeDatum.principal (Kw w) (Fin D.R.r)).iter (Fin D.R.t) (fun c => ((muBase L c).loc w)⁻¹) (isTame_muBase w) j).J
   else if w ∈ L.Q t then (parahoric (k := Kw w) (Fin D.R.r) (Fin j × Fin D.R.t) 1 fun _ _ => rfl).J else KO (Kw w) _
 
-variable (L) in
-open Classical in
 
 def stepFn (j : ℕ) : Matrix (Ix (Fin D.R.r) (Fin D.R.t) (j + 1)) (Ix (Fin D.R.r) (Fin D.R.t) j) (Kw w) → ℂ :=
   if w ∈ L.Pg then
@@ -307,7 +298,6 @@ def givenDatum (Φ : G.Datum) : ∀ b : Edge,
   | .ex i 0 => if hi : i < D.R.m then (cosetSet t w B hi (Φ ⟨i, hi⟩)).indicator 1 else 0
   | _ => 0
 
-variable (G) in
 
 def givenLevel : (locGrid G t w).Level
   | (_, 0) => glLatCong (unifAt w ^ cosExp G w) (stdLat (Kw w) _)
@@ -343,7 +333,6 @@ theorem flipStage_path_level (W : G.Weil) (Φ : G.Datum) :
     (flipStage t w B W Φ).path = oppositePath D.R.m ∧ (flipStage t w B W Φ).level = givenLevel G t w :=
   ⟨(flips_path _ _ _ _ _ _).trans (canFlip_flipOrder _).2.2, flips_level _ _ _ _ _ _ fun _ _ => rfl⟩
 
-variable (L) in
 
 end GlobalTheory.FunObj
 

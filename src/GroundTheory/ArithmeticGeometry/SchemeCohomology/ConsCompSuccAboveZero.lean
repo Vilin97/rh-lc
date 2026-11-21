@@ -83,7 +83,6 @@ lemma d_d (n : ℕ) (σ : Cochain P U n) : d P U (n + 1) (d P U n σ) = 0 := by
   have h2 := congrArg (fun f => f.hom σ) this
   exact h2
 
-variable {P} in
 
 def push {P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P') (n : ℕ) :
     Cochain P U n →+ Cochain P' U n where
@@ -129,7 +128,6 @@ lemma push_injective {P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P'
     Function.Injective (push U φ n) := fun _ _ hστ =>
   funext fun i => h i (congrFun hστ i)
 
-variable {P} in
 
 lemma CechAcyclic.of_retract {G : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (ι' : P ⟶ G) (r : G ⟶ P)
     (hr : ι' ≫ r = 𝟙 P) (hG : CechAcyclic G U) : CechAcyclic P U := by
@@ -138,7 +136,6 @@ lemma CechAcyclic.of_retract {G : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (ι' : 
   refine ⟨push U r n τ, ?_⟩
   rw [← push_d, hτ, push_comp, hr, push_id]
 
-variable {P} in
 
 def discPresheaf (A : X → AddCommGrpCat.{u}) : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u} where
   obj W := AddCommGrpCat.of (∀ x : W.unop, A x.1)

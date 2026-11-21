@@ -34,12 +34,10 @@ def homFracDegZero (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOve
     x = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P f) /
       algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P g)}
 
-open Classical in
 
 def resDeg (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : ℕ :=
   if h : P.IsPrime then haveI := h; Module.finrank F (homFracDegZero P) else 0
 
-open Classical in
 
 def topCycle [Fintype K] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (n : ℕ) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : ℤ :=
   if h : W ∈ I.minimalPrimes ∧ IsRelevant W ∧ relDim W = n then
@@ -151,7 +149,6 @@ def IntNumBase.Statement : Prop :=
     FiniteDimensional F (homFracDegZero P) ∧
       intNum F P (n := 0) ![] = Module.finrank F (homFracDegZero P)
 
-open Classical in
 
 def PrimeFiltration.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)

@@ -467,7 +467,6 @@ theorem one_mem_ipow_mul {𝔡 : Ideal (𝓞 K)} (h : 𝔡 ≠ ⊥) (n : ℤ) : 
 
 variable [StarRing K]
 
-omit [NumberField K] in
 
 theorem star_mem_one {t : K} (ht : t ∈ (1 : Submodule (𝓞 K) K)) : star t ∈ (1 : Submodule (𝓞 K) K) := by
   obtain ⟨a, rfl⟩ := Submodule.mem_one.1 ht
@@ -534,13 +533,11 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
   {H : HermSpace K V} {r : ℕ} (N : NF H r)
 
-omit [NumberField K] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem isotropicMeet_le_jointSpan (F F' : FlagD H r) : II F F' ≤ V0 F F' := by
   show F.X ⊓ F'.X ≤ F.X ⊔ F'.X ⊔ _
   exact inf_le_left.trans (le_sup_left.trans le_sup_left)
 
-omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem sub_mem_wSp {s : V ≃ₗ[K] V} (hs : s ∈ N.R1) (y : V) : s y - y ∈ wSp N.F N.F' := by
   obtain ⟨hR, hfix⟩ := Subgroup.mem_inf.1 hs

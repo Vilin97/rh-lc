@@ -123,7 +123,6 @@ namespace An
 
 variable {e : ℕ} {M : Man e} {ι : Type} [Fintype ι] {N : ℕ} (F : An M ι N) (j : ℕ)
 
-omit [Fintype ι] in
 
 end An
 
@@ -147,11 +146,8 @@ structure Real0 where
 
 variable {Y} (T : Real0 Y) (A : SlopeTestRemainingChoices Y)
 
-variable {T A} in
 
-variable {T A} in
 
-variable (Y) in
 
 structure Ht where
 
@@ -169,10 +165,8 @@ variable (H : Ht Y)
 
 variable {T} (P : T.Pts)
 
-variable (Y) in
 
 def midWt : Wt Y := fun _ i => if (i : ℕ) < Y.j then 1 else 0
 
-variable (T) in
 
 end GlobalTheory.Mean4O

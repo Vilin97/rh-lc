@@ -113,7 +113,6 @@ theorem prod_norm_unitDeg (c : K → ℂ) (k₀ : K) : ∏ k, ‖c k‖ ^ unitDe
   rw [Fintype.prod_eq_single k₀ fun k hk => by simp [unitDeg, hk]]
   simp [unitDeg]
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem isOpen_blockNonzero : IsOpen {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   simp only [Set.ofPred_forall, Set.ofPred_exists]
@@ -373,7 +372,6 @@ end Datum
 
 end BlockResolutionMetricPair
 
-open BlockResolutionMetricPair in
 
 theorem BlockResolutionMetricPair.proof (h : BergmanDensChartSum.Statement) : BlockResolutionMetricPair.Statement := by
   intro D K _ _ ι _ Ω _ _ d A' P0' hA' hP0' hsp'

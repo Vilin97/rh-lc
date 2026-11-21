@@ -54,7 +54,6 @@ theorem lbIso_cube_zero (PP : RigLB G) {T : Over S} {n : ℕ} (x : Fin n → (T 
 
 variable {U : Scheme.{0}} {A : Over U} [GrpObj A] [IsCommMonObj A] {j : U ⟶ S} {a : A.left ⟶ G.left}
 
-omit [IsCommMonObj G] [IsCommMonObj A] in
 
 theorem isPullback_square (h : IsGrpPullback A G j a) :
     IsPullback (lift (pushPt h.1.w (fst A A)) (pushPt h.1.w (snd A A))).left (A ⊗ A).hom (G ⊗ G).hom j := by

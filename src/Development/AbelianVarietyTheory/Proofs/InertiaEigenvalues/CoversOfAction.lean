@@ -156,7 +156,6 @@ theorem covers_of_root {O K : Type} [CommRing O] [Algebra ℤ_[l] O] [Module.Fre
 
 end GlobalTheory.BKGal.CoverBridge
 
-open GlobalTheory.BKGal.CoverBridge in
 
 theorem GlobalTheory.BKGal.covers_of_action : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (ϖ : PiSys l e)
     (LL : FinExt l) [HasUnr a LL] [TameDescentExponentData ↥LL.1 l e a] (γ : TameGal ↥LL.1 l e a), ∀ k ∈ ϖ.GKinf,

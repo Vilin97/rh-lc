@@ -34,7 +34,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ}
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu)) (L : ChIdx X Pr R (QE sel (mu : Chr X.F X.E X.K)))
 
-open Classical in
 
 def PhiTopG (sharp : Bool) (i j n : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : Loc.SF X.E X.K (R.N i + cOf R i) ((n - 1) + 0) :=
   if P ∈ Pr.vGs then
@@ -45,7 +44,6 @@ def PhiTopG (sharp : Bool) (i j n : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : Lo
 def prXpG (E : Type) [Field E] (n : ℕ) : Sp E n →ₗ[E] Sp E ((n - 1) + 0) :=
   LinearMap.funLeft E E fun i : Fin ((n - 1) + 0) => (⟨i.1, by have := i.2; omega⟩ : Fin n)
 
-open Classical in
 
 def frsG {n : ℕ} {ST : Finset (HeightOneSpectrum (𝓞 X.E))} (p : DecoF X.E n ST Pr.vGs (QE sel (mu : Chr X.F X.E X.K))) :
     Frs X.E n (rowSG Pr sel mu) := fun P =>
@@ -65,7 +63,6 @@ def XiTop {u : Pr.Word} (i : ℕ) (p : ChPt (R := R) sel mu u i) (Y : Set (Sp X.
 
 variable {u : Pr.Word} {m2 : ℕ} (T : ChTh W sel mu u m2)
 
-open Classical in
 
 end Top
 
@@ -286,7 +283,6 @@ theorem PhiTopG_eq (sharp : Bool) (m2 : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) 
 
 theorem frsG_eq {u : Pr.Word} {j : ℕ} (p : ChPt (R := R) sel mu u j) : frsG sel mu p = frsF sel mu p := rfl
 
-open Classical in
 
 end Cmp
 

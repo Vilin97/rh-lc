@@ -93,7 +93,6 @@ theorem chi_inert {n : ℕ} (χ : HeckeU D n) {y : 𝓞 D.host.E} (hy : y ≠ 0)
     change (1 - e) * inc D y + (1 - (1 - e)) * 1 - _ = _
     ring
 
-include h3 in
 
 theorem chi_split {n : ℕ} (χ : HeckeU D n) {y : D.host.E} (hy : y ≠ 0) {y₁ c : 𝓞 D.host.E} (a1 : y₁ ≠ 0)
     (a2 : c ≠ 0) (h : y * c = y₁) :
@@ -133,7 +132,6 @@ theorem split_part (g : GA D N) {x : (AE D)ˣ}
     rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, h2]
     linear_combination e * hxv + (d + sgA D x - 1 - d * sgA D x) * h1
 
-include h2 h3 in
 
 theorem vac (hc : Crv D cc δ) (hN : Even (N * N')) {e0 : VC D N N' → ℂ}
     (he : e0 ∈ Th D (tor0 D cc δ) (stdL D N) (stdL D N')) (W : WeilO D cc δ N N' e0) {g : GA D N} {g' : GA D N'}

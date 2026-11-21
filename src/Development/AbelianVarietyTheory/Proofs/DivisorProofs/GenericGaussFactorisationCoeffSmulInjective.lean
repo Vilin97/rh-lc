@@ -236,7 +236,6 @@ end GlobalTheory.GenCoef.LduLead
 
 namespace GlobalTheory.GenCoef
 
-open LduLead in
 
 theorem lduHom_coeff_smul_injective : ∀ (O : Type) [CommRing O] (N : ℕ) (M : Type) [AddCommGroup M] [Module O M]
     (s : Finset (Fin N × Fin N →₀ ℕ)) (c : (Fin N × Fin N →₀ ℕ) → M),

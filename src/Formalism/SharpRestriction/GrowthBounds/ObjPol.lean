@@ -31,7 +31,6 @@ abbrev FF (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] := I
 def ramE (p : ℕ) (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] : ℕ :=
   (IsDiscreteValuationRing.addVal O (p : O)).toNat
 
-open Classical in
 
 def ordW (x : KK O) : WithTop ℤ :=
   if x = 0 then ⊤ else
@@ -91,7 +90,6 @@ def twistMat (R : Type*) [CommRing R] (n : ℕ) (j : Fin n) (k : ℤ) : Matrix (
 def coefL (R : Type*) [CommRing R] (n : ℕ) : R →+* GLLaurent R n :=
   (LaurentPolynomial.C).comp ((algebraMap (MvPolynomial (Fin n × Fin n) R) (GLCoord R n)).comp MvPolynomial.C)
 
-open Classical in
 
 def twistSub {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Letters ι) (S : Set ι) (j : Fin n) :
     MvPolynomial (ι × Fin n) R →+* MvPolynomial (ι × Fin n) (GLLaurent R n) :=
@@ -119,7 +117,6 @@ def ASet {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} [NeZero n] (LL : Letter
     Set (MvPolynomial (ι × Fin n) R) :=
   {F | ((th : ℤ) : WithTop ℤ) ≤ valS LL S F}
 
-open Classical in
 
 def glAct (R : Type*) [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι) (a b : Fin n) :
     MvPolynomial (ι × Fin n) R →ₗ[R] MvPolynomial (ι × Fin n) R :=
@@ -147,7 +144,6 @@ def wtS {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι) (m : 
   open Classical in
   fun a => ∑ l : ι, if l ∈ S then (if LL.vec l then (m (l, a) : ℤ) else -(m (l, a) : ℤ)) else 0
 
-open Classical in
 
 def divPowMono (R : Type*) [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι)
     (a b : Fin n) (k : ℕ) (m : ι × Fin n →₀ ℕ) : MvPolynomial (ι × Fin n) R :=
@@ -306,7 +302,6 @@ def sigMat (p f : ℕ) [Fact p.Prime] (O : Type*) [CommRing O] [IsDomain O] [Alg
 
 def IsGLW {k : ℕ} (g : Matrix (Fin k) (Fin k) (WF p f)) : Prop := IsUnit g.det
 
-open Classical in
 
 def liftSubst (p f : ℕ) [Fact p.Prime] (O : Type*) [CommRing O] [IsDomain O] [Algebra (WF p f) O]
     (w : O) (r : ℕ) {ι : Type*} {k : ℕ} (LL : LiftLetters ι) (g : Matrix (Fin k) (Fin k) (WF p f)) :
@@ -364,7 +359,6 @@ def NormalOrder (n : ℕ) (ord : List (Fin n × Fin n)) : Prop :=
       (ord.idxOf (a, b) < ord.idxOf (a, c) ∧ ord.idxOf (a, c) < ord.idxOf (b, c)) ∨
       (ord.idxOf (b, c) < ord.idxOf (a, c) ∧ ord.idxOf (a, c) < ord.idxOf (a, b))
 
-open Classical in
 
 def degIn {ι : Type*} [Fintype ι] (d : ι → ℕ) (S : Set ι) : ℕ := ∑ l, if l ∈ S then d l else 0
 
@@ -475,7 +469,6 @@ def IsCostly (mu : Fin (N + 1) → Fin (r + K) → ℤ) (c : ℤ) (i : Fin N) : 
   (colH (mu i.castSucc) c < colH (mu i.succ) c ∧ r ≤ colH (mu i.castSucc) c) ∨
   (colH (mu i.succ) c < colH (mu i.castSucc) c ∧ colH (mu i.castSucc) c ≤ r)
 
-open Classical in
 
 def oc (om : Fin N → ℕ) (mu : Fin (N + 1) → Fin (r + K) → ℤ) (c : ℤ) : ℕ :=
   ∑ i : Fin N, if IsCostly mu c i then om i else 0
@@ -489,7 +482,6 @@ section Lifts
 
 variable (p f : ℕ) [Fact p.Prime] {O : Type*} [CommRing O] [IsDomain O] [Algebra (WF p f) O] {k : ℕ}
 
-open Classical in
 
 def degUS {ι : Type*} (LL : LiftLetters ι) (r : ℕ) (m : ι × Fin k →₀ ℕ) : ℕ :=
   ∑ v ∈ m.support, if (LL.vec v.1 = true ∧ r ≤ v.2.val) ∨ (LL.vec v.1 = false ∧ v.2.val < r) then m v else 0

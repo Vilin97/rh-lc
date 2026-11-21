@@ -56,7 +56,6 @@ section Pair
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
-open scoped Classical in
 
 end Pair
 

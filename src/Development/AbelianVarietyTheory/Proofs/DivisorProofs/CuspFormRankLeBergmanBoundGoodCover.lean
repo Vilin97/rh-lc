@@ -52,7 +52,6 @@ open GlobalTheory.AllWt (ptN petE muOn muPart framesOn bergE bergOn modelWt mem_
   isProbabilityMeasure_muPart muPart_univ_le petE_ne_top bergE_le_iff)
 open scoped ENNReal
 
-set_option maxHeartbeats 1000000 in
 
 theorem rkC_le_of_bergLe : ∀ (D : D7) (T : Core D) (j : ℕ) (Y : Deep T j) (e : ℕ) (o : ℝ), Y.Good e o →
     ∀ (la : AllWt.Weight (T.Q.Dw j)) (Z : Comp Y.d.Xo₂ Y.d.c₂) (β : ℝ), 0 ≤ β →

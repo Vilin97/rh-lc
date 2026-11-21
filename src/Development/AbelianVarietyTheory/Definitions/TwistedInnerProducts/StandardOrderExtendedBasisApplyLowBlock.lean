@@ -32,7 +32,6 @@ section Plain
 variable {k : Type*} [Field k]
 variable {a b t : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] [Fintype t] [DecidableEq t]
 
-open Classical in
 
 def extZ (J : Subgroup (GL a k)) (ρ : J →* ℂˣ) (M : Matrix a a k) : ℂ :=
   if h : ∃ g : J, (g : GL a k).val = M then (ρ h.choose : ℂ) else 0
@@ -104,7 +103,6 @@ section Local
 variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable {a b t : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] [Fintype t] [DecidableEq t]
 
-variable (k a) in
 
 structure TypeDatum extends Level (GL a k) where
   KOne_le : KOne k a ≤ J
@@ -113,11 +111,9 @@ structure TypeDatum extends Level (GL a k) where
 
 namespace TypeDatum
 
-variable (k a) in
 
 def full : TypeDatum k a := ⟨⟨KO k a, 1⟩, StepData.KOne_le_KO, le_rfl, fun _ _ => rfl⟩
 
-variable (k a) in
 
 def principal : TypeDatum k a := ⟨⟨KOne k a, 1⟩, le_rfl, StepData.KOne_le_KO, fun _ _ => rfl⟩
 
@@ -195,7 +191,6 @@ theorem rho_congr {μ : kˣ →* ℂˣ} (hμ : IsTame μ) {g g' : P.J} (h : MaxM
   rw [map_mul, map_inv, inv_mul_eq_one] at this
   exact this.symm
 
-variable (t) in
 
 def stepJ : Subgroup (GL (a ⊕ t) k) where
   carrier := {h | h ∈ KO k (a ⊕ t) ∧ (∃ g ∈ P.J, g.val = h.val.toBlocks₁₁) ∧ IntM h.val.toBlocks₁₂ ∧
@@ -237,7 +232,6 @@ theorem corner_mul (h h' : P.stepJ t) :
   rw [corner_val, Subgroup.coe_mul, Units.val_mul, mul_toBlocks₁₁, Subgroup.coe_mul, Units.val_mul, corner_val, corner_val]
   simpa using h.2.2.2.1.mul_maxM h'.2.2.2.2.1
 
-variable (t) in
 
 def stepLam (μ : kˣ →* ℂˣ) (hμ : IsTame μ) : P.stepJ t →* ℂˣ :=
   MonoidHom.mk' (fun h => P.lam (P.corner h) * (μ (Matrix.GeneralLinearGroup.det (P.corner h : GL a k)))⁻¹ *
@@ -245,7 +239,6 @@ def stepLam (μ : kˣ →* ℂˣ) (hμ : IsTame μ) : P.stepJ t →* ℂˣ :=
     simp only [← rho_apply]
     rw [P.rho_congr hμ (P.corner_mul h h'), map_mul, Subgroup.coe_mul, map_mul, map_mul, mul_mul_mul_comm]
 
-variable (t) in
 
 def step (μ : kˣ →* ℂˣ) (hμ : IsTame μ) : TypeDatum k (a ⊕ t) where
   J := P.stepJ t
@@ -279,8 +272,6 @@ theorem step_lam_eq (μ : kˣ →* ℂˣ) (hμ : IsTame μ) (h : P.stepJ t) (g :
     (P.step t μ hμ).lam h = P.lam g * μ (Matrix.GeneralLinearGroup.det D) := by
   rw [P.step_lam μ hμ h g hg, tame_det_blocks hμ h.2.1 h.2.2.2.2.1 hg hD, mul_assoc, inv_mul_cancel_left]
 
-open Classical in
-variable (t) in
 
 def Phi (μ : kˣ →* ℂˣ) : Matrix (a ⊕ t) a k → ℂ := fun x =>
   if MaxM x.toRows₂ then extZ P.J (P.rho μ) x.toRows₁ else 0
@@ -307,8 +298,6 @@ theorem extZ_add {μ : kˣ →* ℂˣ} (hμ : IsTame μ) (M : Matrix a a k) {Y :
     rintro ⟨g, hg, e⟩
     exact h (P.exists_of_congr hg (by simpa [e] using hY.neg))
 
-open Classical in
-omit [Fintype t] [DecidableEq t] in
 
 theorem Phi_add {μ : kˣ →* ℂˣ} (hμ : IsTame μ) (x : Matrix (a ⊕ t) a k) {y : Matrix (a ⊕ t) a k} (hy : MaxM y) :
     P.Phi t μ (x + y) = P.Phi t μ x := by
@@ -320,7 +309,6 @@ theorem Phi_add {μ : kˣ →* ℂˣ} (hμ : IsTame μ) (x : Matrix (a ⊕ t) a 
   unfold Phi
   exact if_congr e e' rfl
 
-omit [Fintype t] [DecidableEq t] in
 
 theorem intM_of_Phi_ne_zero (μ : kˣ →* ℂˣ) {x : Matrix (a ⊕ t) a k} (h : P.Phi t μ x ≠ 0) : IntM x := by
   obtain ⟨⟨g, hg, e⟩, h2⟩ := (P.Phi_ne_zero_iff μ).1 h
@@ -331,7 +319,6 @@ theorem intM_of_Phi_ne_zero (μ : kˣ →* ℂˣ) {x : Matrix (a ⊕ t) a k} (h 
 
 end TypeDatum
 
-omit [DecidableEq a] [DecidableEq b] in
 
 theorem mem_SB_of_periodic {f : Matrix b a k → ℂ} (hs : ∀ x, f x ≠ 0 → IntM x)
     (hp : ∀ x y, MaxM y → f (x + y) = f x) : f ∈ SB (Matrix b a k) := by
@@ -344,12 +331,10 @@ theorem mem_SB_of_periodic {f : Matrix b a k → ℂ} (hs : ∀ x, f x ≠ 0 →
   exact IsOpen.preimage (f := fun x' : Matrix b a k => (x' - x) i j) (t := {z | valuation k z < 1}) (by fun_prop)
     (by simpa using (valuation k).isOpen_ball 1)
 
-omit [DecidableEq t] in
 
 section Iter
 variable {r : Type*} [Fintype r] [DecidableEq r]
 
-variable (t) in
 
 def TypeDatum.iter (P : TypeDatum k r) (μ : ℕ → kˣ →* ℂˣ) (hμ : ∀ j, IsTame (μ j)) (j : ℕ) :
     TypeDatum k (Ix r t j) :=
@@ -362,7 +347,6 @@ theorem TypeDatum.iter_zero (P : TypeDatum k r) (μ : ℕ → kˣ →* ℂˣ) (h
 theorem TypeDatum.iter_succ (P : TypeDatum k r) (μ : ℕ → kˣ →* ℂˣ) (hμ : ∀ j, IsTame (μ j)) (j : ℕ) :
     P.iter t μ hμ (j + 1) = ((P.iter t μ hμ j).step t (μ (j + 1)) (hμ _)).reindex (ixSucc r t j) := rfl
 
-variable (t) in
 
 def TypeDatum.iterPhi (P : TypeDatum k r) (μ : ℕ → kˣ →* ℂˣ) (hμ : ∀ j, IsTame (μ j)) (j : ℕ) :
     Matrix (Ix r t (j + 1)) (Ix r t j) k → ℂ := fun x =>
@@ -380,7 +364,6 @@ end Iter
 section Parahoric
 variable {r s s' : Type*} [Fintype r] [DecidableEq r] [Fintype s] [DecidableEq s]
 
-variable (r s) in
 
 def parahoric (δ : kˣ →* ℂˣ) (hδ : IsTame δ) : TypeDatum k (r ⊕ s) := (TypeDatum.full k r).step s δ hδ
 
@@ -395,7 +378,6 @@ theorem parahoric_lam {δ : kˣ →* ℂˣ} {hδ : IsTame δ} (h : (parahoric r 
   have := (TypeDatum.full k r).step_lam_eq δ hδ h _ (TypeDatum.corner_val _ h) D hD
   exact this.trans (one_mul _)
 
-open Classical in
 
 def parPhi (δ : kˣ →* ℂˣ) : Matrix (r ⊕ s) (r ⊕ s') k → ℂ := fun x =>
   if MaxM x.toBlocks₂₁ ∧ IntM x.toBlocks₁₂ ∧ IntM x.toBlocks₂₂ then
@@ -413,7 +395,6 @@ theorem parPhi_fromBlocks (δ : kˣ →* ℂˣ) {A : Matrix r r k} {B : Matrix r
     parPhi δ (fromBlocks A B C D) = ((δ (Matrix.GeneralLinearGroup.det g))⁻¹ : ℂˣ) :=
   parPhi_of_mem δ hg e h21 h12 h22
 
-omit [Fintype s] [DecidableEq s] in
 
 omit [Fintype s] [DecidableEq s] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem parPhi_ne_zero_iff (δ : kˣ →* ℂˣ) {x : Matrix (r ⊕ s) (r ⊕ s') k} :
@@ -455,7 +436,6 @@ variable {k : Type*} [Field k]
 variable {ι ι' Y Y' : Type*} [Fintype ι] [DecidableEq ι] [Fintype ι'] [DecidableEq ι'] [Fintype Y] [DecidableEq Y]
   [Fintype Y'] [DecidableEq Y']
 
-variable (k ι Y) in
 
 structure LatFrame where
 
@@ -465,7 +445,6 @@ structure LatFrame where
 
 namespace LatFrame
 
-variable (k ι) in
 
 def refl : LatFrame k ι ι := ⟨Equiv.refl ι, 1⟩
 
@@ -693,7 +672,6 @@ def xi (J : Subgroup (GL (n ⊕ Fin c) k)) (b : GL (n ⊕ Fin c) k) (h' : GL (n'
     (h : GL (n ⊕ Fin c) k) : Matrix n n' k → ℂ := fun x₀ =>
   (((volNat ν b (Cgrp J h))⁻¹ : ℝ) : ℂ) * flat ψ ν μ Φ h' h x₀
 
-omit [BorelSpace k] in
 
 theorem volN_stabLat [ν.IsAddHaarMeasure] (b : GL (n ⊕ Fin c) k) :
     0 < (volN ν n c 1 ((stabLat b).subgroupOf (N k n c 1))).toReal := by
@@ -738,11 +716,9 @@ def cosetInd (M : Submodule 𝒪[k] (n → k)) (yb : (n → k) ⧸ M) : (n → k
 
 variable [Fintype n] [MeasurableSpace k] (ψ : AddChar k Circle) (ν : Measure k) (ε : k)
 
-omit [ValuativeRel k] in
 
 def hat (f : (n → k) → ℂ) (η : n → k) : ℂ := ∫ y, f y * (ψ (ε * (η ⬝ᵥ y)) : ℂ) ∂(Measure.pi fun _ => ν)
 
-omit [ValuativeRel k] in
 
 variable [TopologicalSpace k] [IsNonarchimedeanLocalField k] [BorelSpace k]
 
@@ -753,7 +729,6 @@ theorem integrable_hat [ν.IsAddHaarMeasure] (hψ : Continuous ψ) {f : (n → k
   refine Continuous.integrable_of_hasCompactSupport (hf.1.continuous.mul ?_) hf.2.mul_right
   exact continuous_subtype_val.comp (hψ.comp (by fun_prop))
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem cosetInd_mem_SB (c : kˣ) (yb : (n → k) ⧸ box n c) : cosetInd (box n c) yb ∈ SB (n → k) := by
   have := t2Space k
@@ -834,7 +809,6 @@ def coupIdx : Set ((X (s + 1) → k) ⧸ M) :=
 def xiPen (h : GL (X s ⊕ Fin (0 + 1)) k) (yb : (X (s + 1) → k) ⧸ M) : Matrix (X (s + 1)) (X s) k → ℂ :=
   fun x₀ => T.Psi h x₀ (Quotient.out yb)
 
-variable {T A S M} in
 
 theorem xiPen_mk (H : T.Adapted A S M) {g : GL (X s ⊕ Fin (0 + 1)) k} (hg : g ∈ A s 0 rfl) (y : X (s + 1) → k)
     (x₀ : Matrix (X (s + 1)) (X s) k) : T.xiPen M g (Submodule.Quotient.mk y) x₀ = T.Psi g x₀ y := by
@@ -863,7 +837,6 @@ structure IsRepSystem : Prop where
     Set.BijOn (DoubleCoset.mk (R k (X (j + 1)) (c + 1) 1) (T.lev (j + 1) (c + 1) (by omega)).J) (A (j + 1) c h)
       (⋃ g ∈ A j (c + 1) (by omega), T.idx ψ ν j c h g)
 
-omit [BorelSpace k] in
 
 end Chain
 
@@ -903,13 +876,11 @@ theorem Chain.ofTwist_regular (δ : kˣ →* ℂˣ) (hδ : IsTame δ) (ν : ℕ 
 
 variable {κ : Type*} [Fintype κ] [DecidableEq κ]
 
-variable (t) in
 
 def typeChain (ϖ : kˣ) (P : TypeDatum k (κ ⊕ Fin (s + 1))) (μ : ℕ → kˣ →* ℂˣ) (hμ : ∀ j, IsTame (μ j)) :
     Chain k s (XIx κ t) (Ix (κ ⊕ Fin (s + 1)) t (s + 2)) :=
   Chain.ofType P μ hμ (fun j c h => typeFrame ϖ (stdOrd κ t j c h)) (LatFrame.refl k _)
 
-variable (κ t s) in
 
 def twistChain (δ : kˣ →* ℂˣ) (hδ : IsTame δ) (ν : ℕ → kˣ →* ℂˣ) :
     Chain k s (XIx κ t) (Ix (κ ⊕ Fin (s + 1)) t (s + 2)) :=
@@ -1104,7 +1075,6 @@ variable {n n' : Type*} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype n] [DecidableEq n] [Fintype n']
   [DecidableEq n'] in
 
-omit [DecidableEq n] [DecidableEq n'] in
 
 end Nonempty
 

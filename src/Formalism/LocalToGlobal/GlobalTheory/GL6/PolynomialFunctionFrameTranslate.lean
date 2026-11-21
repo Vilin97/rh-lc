@@ -71,7 +71,6 @@ variable {D : D7} {u : D.what₂.Word}
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 1000000 in
 
 theorem diamond_value_root_of_unity (Tf : FormsTied D u) (hC : ChiFin Tf) (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v)ˣ)
     (c : (D.mem u).C.cls 0) :
@@ -246,7 +245,6 @@ theorem t2iRes_spec (Tf : FormsTied D u) (hS : Formalism.MainNotions.product_fir
     (D.fm u).emb 0 (t2iRes Tf hS x c) = fun c' => if c' = c then (D.fm u).emb 0 x c' else 0 :=
   (restriction_rational_form Tf hS x (fun c' => c' = c)).choose_spec
 
-set_option maxHeartbeats 1000000 in
 
 theorem polynomial_rep_residue_eval (Tf : FormsTied D u) (hS : Formalism.MainNotions.product_first_zeroth_parts.admS D u) (x : ((D.fm u).lat 0).V) (c : (D.mem u).C.cls 0)
     (P : MvPolynomial (D.what₂.Tau × Fin (D.R.N 0) × Fin (D.R.N 0)) D.what₂.LL)
@@ -273,7 +271,6 @@ def t2iDil (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v)ˣ) : (D.mem u).C.cls 0 �
   left_inv c := by rw [← (D.fm u).dil_mul, inv_mul_cancel, (D.fm u).dil_one]
   right_inv c := by rw [← (D.fm u).dil_mul, mul_inv_cancel, (D.fm u).dil_one]
 
-set_option maxHeartbeats 1000000 in
 
 theorem majorant_norm_diamond_invariant (Tf : FormsTied D u) (hC : ChiFin Tf) (hS : Formalism.MainNotions.product_first_zeroth_parts.admS D u) (v : (D.mem u).A.vT)
     (a : ((D.mem u).A.Fv v)ˣ) (x : ((D.fm u).lat 0).V) (s : D.what₂.LL →+* ℂ) :

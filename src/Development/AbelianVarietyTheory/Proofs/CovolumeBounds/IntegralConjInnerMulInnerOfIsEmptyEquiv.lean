@@ -83,7 +83,6 @@ variable {K : Type*} [Group K] [TopologicalSpace K] [IsTopologicalGroup K] [Comp
   {V W : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V] [FiniteDimensional ℂ V]
   [NormedAddCommGroup W] [InnerProductSpace ℂ W] [FiniteDimensional ℂ W]
 
-omit [Group K] [IsTopologicalGroup K] in
 
 theorem integrable_of_continuous_of_compactSpace [IsFiniteMeasure μ] {E : Type*}
     [NormedAddCommGroup E] {f : K → E} (hf : Continuous f) : Integrable f μ :=
@@ -120,7 +119,6 @@ noncomputable def rankOneAverage (hρc : ∀ v, Continuous fun k => ρ k v)
     rw [← h1]
     simpa using h2
 
-omit [FiniteDimensional ℂ V] in
 
 theorem inner_rankOneAverage (hρc : ∀ v, Continuous fun k => ρ k v)
     (hρu : ∀ k v, ‖ρ k v‖ = ‖v‖) (hσc : ∀ w, Continuous fun k => σ k w) (u v : V) (u' w : W) :

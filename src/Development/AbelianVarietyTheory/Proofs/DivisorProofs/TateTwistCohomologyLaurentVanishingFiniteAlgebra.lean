@@ -104,7 +104,6 @@ theorem subsingleton_laurent_prod (q : ℕ) (n i : ℤ) (T₁ T₂ : Type) [Comm
 
 end GlobalTheory.EtC.LaurentFinite
 
-open GlobalTheory.EtC.LaurentFinite in
 
 theorem GlobalTheory.EtC.laurent_vanishing_finite : ∀ (q : ℕ) [NeZero q] (n : ℤ), (∀ (A : Type) [CommRing A] [IsNoetherianRing A], SH A → IsUnit (q : A) →
     ∀ m i : ℤ, 2 ≤ m → m < n → Subsingleton (Ht q (sp (LaurentPolynomial A)) m i)) →

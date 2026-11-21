@@ -77,7 +77,6 @@ theorem comb_comm {ι M : Type} [AddCommGroup M] [Module ℂ M] (S : ι → Modu
 
 end Abstract
 
-open GlobalTheory.IdemSupport in
 
 theorem label_ops_comm : ∀ {D : D7} (V : HSp D) (P : Pl D.host.E), ∀ c c', ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (π : GA D V →* Module.End ℂ M) (u : M), (∀ k ∈ hyp V P, π k u = u) → opOf π P c (opOf π P c' u) = opOf π P c' (opOf π P c u) := by
   intro D V P c c' M _ _ π u hu

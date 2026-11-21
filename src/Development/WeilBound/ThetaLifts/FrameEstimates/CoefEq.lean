@@ -73,7 +73,6 @@ theorem lintegral_sq_schwartz (f : SchwartzMap (κ → mixedEmbedding.mixedSpace
   have h0 : BorelSpace (mixedEmbedding.mixedSpace F) := Prod.borelSpace
   exact lintegral_sq_schwartz_gen Pi.borelSpace _ (GlobalTheory.WeilAdm.HaarSplit.volume_isAddHaar F κ) f
 
-open scoped Classical in
 
 theorem memLp_two_schA (μ : Measure (κ → AF F)) [μ.IsAddHaarMeasure] {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) :
     MemLp Φ 2 μ := by

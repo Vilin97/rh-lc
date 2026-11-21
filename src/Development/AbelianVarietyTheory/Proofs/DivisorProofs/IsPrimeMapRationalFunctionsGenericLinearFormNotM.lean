@@ -13,8 +13,6 @@ open scoped ENNReal
 
 namespace GlobalTheory.ExtPrime
 
-open MvPolynomial Filter in
-open scoped ENNReal in
 
 theorem _root_.GlobalTheory.ExtPrime.isPrime_map_and_generic_form_notMem (K L : Type) [Field K] [Field L] (N : ℕ) [Algebra K L]
     [Algebra (MvPolynomial (Fin N) K) L] [IsScalarTower K (MvPolynomial (Fin N) K) L]

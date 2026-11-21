@@ -19,7 +19,6 @@ namespace GlobalTheory.ShortDet
 
 section Generic
 
-open Polynomial in
 
 theorem card_le_of_det_eq_zero {Ω S : Type} [Field Ω] [CharZero Ω] [Fintype S] [DecidableEq S] (A B : Matrix S S Ω) {a : Ω}
     (ha : (A + a • B).det ≠ 0) (T : Finset ℕ) (hT : ∀ n ∈ T, (A + (n : Ω) • B).det = 0) : T.card ≤ Fintype.card S := by

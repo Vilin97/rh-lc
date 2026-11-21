@@ -31,7 +31,6 @@ end GlobalTheory.HilbertThetaSeries.RepsLat
 
 namespace GlobalTheory.HilbertThetaSeries
 
-open GlobalTheory.HilbertThetaSeries.RepsLat in
 
 theorem exists_isReps_aL : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] [DecidableEq κ] (a b : F),
     a ≠ 0 → b ≠ 0 → IsIntegral ℤ (a / b) → ∃ T : Finset (κ → F), IsReps (aL κ a) (aL κ b) T ∧ 0 ∈ T ∧

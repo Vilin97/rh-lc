@@ -232,8 +232,6 @@ end Forms
 
 end BlockImageInverse
 
-set_option maxHeartbeats 1000000 in
-open BlockImageInverse in
 
 theorem BlockImageInverse.proof : BlockImageInverse.Statement := by
   intro D K _ _ ι _ Ω _ _ y k₀ r M N x J hA hB hI _ hJ hJy

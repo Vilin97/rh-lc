@@ -98,7 +98,6 @@ theorem rho_smul_surjInv (l : Fin g) {e : ℕ} {t : ℤ} {S : Finset ι} (hS : S
   have := H.smul_eq_zero_of_p hS (rho_mem l) h
   rwa [smul_sub, sub_eq_zero] at this
 
-omit H in
 
 def lam (H : TowerAx ρ res p mm) (l : Fin g) (e : ℕ) (t : ℤ) (S : Finset ι) (hS : S.Nonempty) :
     T (e + 1) t S →ₗ[R] T (e + 1 + 1) t S where
@@ -117,7 +116,6 @@ theorem lam_p (H : TowerAx ρ res p mm) (l : Fin g) {e : ℕ} {t : ℤ} {S : Fin
     (hS : S.Nonempty) (b : T (e + 1 + 1) t S) :
     H.lam l e t S hS (p (e + 1) t S b) = ρ l • b := H.rho_smul_surjInv l hS b
 
-omit H in
 
 def yK (H : TowerAx ρ res p mm) (l : Fin g) (e : ℕ) (t : ℤ) (S : Finset ι) :
     Ks p e t S →ₗ[R] Ks p (e + 1) t S :=
@@ -128,7 +126,6 @@ def yK (H : TowerAx ρ res p mm) (l : Fin g) (e : ℕ) (t : ℤ) (S : Finset ι)
       exact H.smul_eq_zero_of_p hS (rho_mem l) ((mem_Ks hS).1 ha)
   else 0
 
-omit H in
 
 theorem coe_yK (H : TowerAx ρ res p mm) (l : Fin g) {e : ℕ} {t : ℤ} {S : Finset ι}
     (hS : S.Nonempty) (a : Ks p e t S) (b : T (e + 1 + 1) t S) (hb : p (e + 1) t S b = a) :
@@ -136,7 +133,6 @@ theorem coe_yK (H : TowerAx ρ res p mm) (l : Fin g) {e : ℕ} {t : ℤ} {S : Fi
   simp only [yK, dif_pos hS, LinearMap.restrict_coe_apply]
   rw [← hb, H.lam_p]
 
-omit H in
 
 def xK (H : TowerAx ρ res p mm) (j : ι) (e : ℕ) (t : ℤ) (S : Finset ι) :
     Ks p e t S →ₗ[R] Ks p e (t + 1) S :=
@@ -151,7 +147,6 @@ omit H in
 theorem coe_xK (H : TowerAx ρ res p mm) (j : ι) (e : ℕ) (t : ℤ) (S : Finset ι) (a : Ks p e t S) :
     (H.xK j e t S a : T (e + 1) (t + 1) S) = mm j (e + 1) t S a := rfl
 
-omit H in
 
 def resK (H : TowerAx ρ res p mm) (e : ℕ) (t : ℤ) {S S' : Finset ι} (h : S ⊆ S') :
     Ks p e t S →ₗ[R] Ks p e t S' :=
@@ -166,7 +161,6 @@ omit H in
 theorem coe_resK (H : TowerAx ρ res p mm) (e : ℕ) (t : ℤ) {S S' : Finset ι} (h : S ⊆ S')
     (a : Ks p e t S) : (H.resK e t h a : T (e + 1) t S') = res (e + 1) t S S' h a := rfl
 
-omit H in
 
 def ops (H : TowerAx ρ res p mm)
     (hc : ∀ e S, OperatorsCommute (ι := ι) (R := R) (A := fun t => T e t S) fun j t => mm j e t S)
@@ -194,7 +188,6 @@ def ops (H : TowerAx ρ res p mm)
     · apply Subtype.ext
       simp [yK, hS]
 
-omit H in
 
 theorem resK_xK (H : TowerAx ρ res p mm) (j : ι) (e : ℕ) (t : ℤ) {S S' : Finset ι} (h : S ⊆ S')
     (a : Ks p e t S) :
@@ -222,7 +215,6 @@ theorem resK_xK (H : TowerAx ρ res p mm) (j : ι) (e : ℕ) (t : ℤ) {S S' : F
   · rw [eq_zero_of_mem_Ks hS a.2]
     simp
 
-omit H in
 
 theorem resK_yK (H : TowerAx ρ res p mm) (l : Fin g) (e : ℕ) (t : ℤ) {S S' : Finset ι}
     (h : S ⊆ S') (a : Ks p e t S) :
@@ -239,13 +231,11 @@ theorem resK_yK (H : TowerAx ρ res p mm) (l : Fin g) (e : ℕ) (t : ℤ) {S S' 
 variable (hc : ∀ e S, OperatorsCommute (ι := ι) (R := R) (A := fun t => T e t S)
   fun j t => mm j e t S)
 
-omit H in
 
 abbrev Tot (H : TowerAx ρ res p mm) (hc : ∀ e S, OperatorsCommute (ι := ι) (R := R)
     (A := fun t => T e t S) fun j t => mm j e t S) (S : Finset ι) : Type :=
   (H.ops hc S).Tot
 
-omit H in
 
 def resTot (H : TowerAx ρ res p mm) (hc : ∀ e S, OperatorsCommute (ι := ι) (R := R)
     (A := fun t => T e t S) fun j t => mm j e t S) (S S' : Finset ι) (h : S ⊆ S') :
@@ -262,7 +252,6 @@ theorem resTot_of (H : TowerAx ρ res p mm) (hc : ∀ e S, OperatorsCommute (ι 
   BiOps.map_of (H.ops hc S) (H.ops hc S') (fun e t => H.resK e t h)
     (fun j e t a => H.resK_xK j e t h a) (fun l e t a => H.resK_yK l e t h a) e t a
 
-omit H in
 
 theorem comp_resTot (H : TowerAx ρ res p mm) (hc : ∀ e S, OperatorsCommute (ι := ι) (R := R)
     (A := fun t => T e t S) fun j t => mm j e t S) {S S' : Finset ι} (h : S ⊆ S') (e : ℕ) (t : ℤ)

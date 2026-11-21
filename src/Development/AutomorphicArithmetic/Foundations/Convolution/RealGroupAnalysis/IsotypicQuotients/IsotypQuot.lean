@@ -15,11 +15,9 @@ namespace UpperTheory.ConvolutionTheory.R2.Pp
 
 variable (F : Type) [Field F] [NumberField F]
 
-variable {F} in
 
 def FinOne (g : G1 F) : Prop := ∀ i j, (g i j).2 = ((1 : Matrix (Fin 2) (Fin 2) (A F)) i j).2
 
-variable {F} in
 
 def Lf (f : GL (Fin 2) (A F) → ℂ) : Prop := Continuous f ∧ ∀ γ g, f (ratGL F 2 γ * g) = f g
 

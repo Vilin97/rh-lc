@@ -33,7 +33,6 @@ theorem IsIntersectionFamily.isRFamily {I : Ideal (MRing ι) → (n : ℕ) → (
     (h : IsIntersectionFamily I) : IsRFamily I :=
   h.2
 
-open Classical in
 
 def cycR (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι)) {n : ℕ}
     (L : Fin n → HermLine ι) (s : MRing ι) : ℝ :=
@@ -45,7 +44,6 @@ theorem recR_eq (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) 
     recR I P L A s = cycR I P L s - arInt P s A L :=
   rfl
 
-open Classical in
 
 def vertR (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → HermLine ι) (s : MRing ι) : ℝ :=
   ∑ᶠ W ∈ divSupp P s, (multAt (P ⊔ Ideal.span {s}) W : ℝ) *

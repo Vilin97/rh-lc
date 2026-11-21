@@ -138,7 +138,6 @@ theorem toZMod_natCast_prime_pow {k : ℕ} (hk : 1 ≤ k) :
     PadicInt.toZMod ((p : ℤ_[p]) ^ k) = 0 := by
   rw [map_pow, map_natCast, ZMod.natCast_self, zero_pow (by omega)]
 
-variable (p) in
 
 def levelHom (k : ℕ) (hk : 1 ≤ k) : unitsOneAdd p k →* Multiplicative (ZMod p) where
   toFun u := Multiplicative.ofAdd (PadicInt.toZMod (levelQuot u))

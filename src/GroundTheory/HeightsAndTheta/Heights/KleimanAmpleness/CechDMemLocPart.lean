@@ -30,7 +30,6 @@ theorem face_subset (I : ∀ k, Finset (ι k)) (k : K) (i : ι k) (l : K) :
     exact Finset.erase_subset _ _
   · rw [Function.update_of_ne hl]
 
-open Classical in
 
 theorem cechD_apply' {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] (n : ℕ) (f : CechC S ι M n)
     (I : Cell K ι (n + 1)) :

@@ -103,7 +103,6 @@ theorem loc_mul_inv {E A : Type} [Field E] [CommRing A] (i : E →+* A) (e : A) 
     rw [← map_mul, Units.mul_inv, map_one]
   linear_combination (i (k : E) - 1) * (i ((k⁻¹ : Eˣ) : E) - 1) * he + e * hkk
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_local (D : D7) (P : HeightOneSpectrum (𝓞 D.host.E)) (k : D.host.Eˣ)
     (hk : P.valuation D.host.E (k : D.host.E) = 1) (N : ℕ) (hN : (N : 𝓞 D.host.E) ∉ P.asIdeal) :
@@ -145,7 +144,6 @@ theorem exists_local (D : D7) (P : HeightOneSpectrum (𝓞 D.host.E)) (k : D.hos
     exact Valuation.map_sub_le _ hk.le (map_one _).le
   · exact loc_sub_one (incA D) (finPart D) e k N hN0
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_xiRec : ∀ (D : D7) (p : ℕ) (δ : Formalism.L2.Host.HChar D.host.E), (p = D.host.pde ∨ p = D.host.pde') → Formalism.L2.Host.IsDelta (H := D.host) p δ → (∀ x, ((δ.1 x : ℂˣ) : ℂ) ∈ FO D) → ∃ (χ : (AE D)ˣ →* Circle) (de : (GlobalTheory.FinalJoin.AfE D)ˣ →* ℂˣ), ChrEq χ δ ∧ XiRec D p de ∧ ∀ (x : (AE D)ˣ) (y : (GlobalTheory.FinalJoin.AfE D)ˣ), Formalism.L2.Theta.finPart D (x : AE D) = (y : GlobalTheory.FinalJoin.AfE D) → ((de y : ℂˣ) : ℂ) = ((χ x : Circle) : ℂ) := by
   intro D p χ hp hδ hval

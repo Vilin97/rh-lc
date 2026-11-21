@@ -24,7 +24,6 @@ def resCGram (d : HSMDatum D Ω κ) (n : ℕ) {r : ℕ} (b : Fin r → MvPolynom
     Matrix (Fin r) (Fin r) ℂ :=
   fun k l => ∫ y, pairVal d.m n (b k) (b l) (resPt d y) ∂d.dV
 
-open Classical in
 
 def resCChi (d : HSMDatum D Ω κ) (n : ℕ) : ℝ :=
   if h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Ix κ) ℚ), IsSecBasis d.x n p.2 then

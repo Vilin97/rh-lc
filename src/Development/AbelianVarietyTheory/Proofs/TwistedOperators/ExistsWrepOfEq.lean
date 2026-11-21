@@ -21,7 +21,6 @@ noncomputable section
 
 namespace GlobalTheory.GridJoin
 
-open GlobalTheory.Grid GlobalTheory.ChiGrid in
 
 theorem exists_wrep_of_eq {D : D7} {S T S' T' : HSp D} (hS : S = S') (hT : T = T') (ψ : AddChar (AF D.host.F) ℂ)
     (χ χ' : (AE D)ˣ →* Circle) (om : GA D (negSp S') × GA D T' →* Module.End ℂ (WO (negSp S') T' → ℂ))

@@ -17,7 +17,6 @@ section Eigen
 variable {R O O' : Type*} [CommRing R] [CommRing O] [CommRing O'] [Algebra O O'] [Algebra O R]
   [Algebra O' R] [IsScalarTower O O' R]
 
-variable (R O O') in
 
 def mulChar : R ⊗[O] O' →ₐ[R] R :=
   Algebra.TensorProduct.lift (AlgHom.id R R) (IsScalarTower.toAlgHom O O' R) fun _ _ ↦ .all _ _
@@ -100,7 +99,6 @@ theorem exists_eigen_of_unramified (N : Type*) [AddCommGroup N] [Module R N] [Mo
       | tmul r x => rw [hρ, hz, mulChar_tmul, mul_smul]
     rw [hsq, this, he₁, one_smul]
 
-omit [Algebra O R] in
 
 theorem exists_eigen_of_projective (M : Type*) [AddCommGroup M] [Module O M] [Module.Finite O M]
     [Module.Projective O M] {N L : Type*} [AddCommGroup N] [Module R N] [Module O N]
@@ -181,7 +179,6 @@ open NumberField
 variable (k K E : Type*) [Field k] [CharZero k] [Field K] [Field E] [NumberField K] [NumberField E]
   [Algebra K E]
 
-omit [NumberField K] in
 
 theorem ringOfIntegers_injective (τ : 𝓞 K →+* k) : Function.Injective τ := by
   rw [RingHom.injective_iff_ker_eq_bot]
@@ -204,9 +201,7 @@ theorem formallyUnramified_ringOfIntegers [Algebra (𝓞 K) k] :
     .of_equiv (Algebra.IsPushout.equiv (𝓞 K) K (𝓞 E) E).symm
   exact .of_equiv (Algebra.TensorProduct.cancelBaseChange (𝓞 K) K k k (𝓞 E))
 
-omit [CharZero k] [NumberField K] in
 
-omit [CharZero k] in
 
 end Integers
 

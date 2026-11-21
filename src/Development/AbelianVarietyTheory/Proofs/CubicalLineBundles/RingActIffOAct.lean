@@ -13,8 +13,6 @@ open GlobalTheory GlobalTheory.CM GlobalTheory.LamF
 
 namespace GlobalTheory.LamF
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField IsDedekindDomain in
-open scoped CategoryTheory.Obj ComplexOrder in
 
 theorem _root_.GlobalTheory.LamF.ringAct_iff_oAct :
     ∀ (O : Type) [CommRing O] (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G],

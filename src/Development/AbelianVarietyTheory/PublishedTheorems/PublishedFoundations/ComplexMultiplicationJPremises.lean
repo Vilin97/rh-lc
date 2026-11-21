@@ -55,9 +55,6 @@ section Lemmas
 
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ]
 
-open NumberField in
-open scoped nonZeroDivisors IntermediateField in
-variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] in
 
 theorem _root_.GlobalTheory.Published.latticeCurve_j_eq (L : PeriodPair) :
     (_root_.GlobalTheory.latticeCurve L).j = 1728 * L.g₂ ^ 3 / (L.g₂ ^ 3 - 27 * L.g₃ ^ 2) := by
@@ -65,9 +62,6 @@ theorem _root_.GlobalTheory.Published.latticeCurve_j_eq (L : PeriodPair) :
     _root_.GlobalTheory.latticeCurve_c₄, _root_.GlobalTheory.latticeCurve_Δ]
   ring
 
-open NumberField in
-open scoped nonZeroDivisors IntermediateField in
-variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] in
 
 theorem _root_.GlobalTheory.Published.exists_isIdealLattice [IsTotallyComplex K] (h2 : Module.finrank ℚ K = 2)
     (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) : ∃ L, _root_.GlobalTheory.Published.IsIdealLattice 𝔞 L := by
@@ -80,11 +74,7 @@ theorem _root_.GlobalTheory.Published.exists_isIdealLattice [IsTotallyComplex K]
   obtain ⟨L, hL⟩ := _root_.GlobalTheory.QuadraticZeta.exists_periodPair h2 hd (algebraMap K ℂ) 𝔞
   exact ⟨L, hL⟩
 
-omit [NumberField K] in
 
-open NumberField in
-open scoped nonZeroDivisors IntermediateField in
-variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] in
 
 theorem _root_.GlobalTheory.Published.ComplexMultiplicationJSt.finrank_eq
     (h : _root_.GlobalTheory.Published.ComplexMultiplicationJSt) [IsTotallyComplex K]
@@ -97,9 +87,6 @@ theorem _root_.GlobalTheory.Published.ComplexMultiplicationJSt.finrank_eq
   rw [← IsGalois.card_aut_eq_finrank, ← Nat.card_congr art.toEquiv, classNumber,
     Nat.card_eq_fintype_card]
 
-open NumberField in
-open scoped nonZeroDivisors IntermediateField in
-variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] in
 
 end Lemmas
 

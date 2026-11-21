@@ -36,7 +36,6 @@ theorem isMultiHomogIdeal_iff_isHomogeneous (I : Ideal (ReciprocityTheory.ChartR
   · intro h f hf b
     exact weightedHomogeneousComponent_mem_of_mem F (blockWeight ι) h hf b
 
-omit [Fintype K] in
 
 theorem isMultiHomog_X (v : Σ k, ι k) :
     IsMultiHomog (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (Pi.single v.1 1) :=
@@ -111,7 +110,6 @@ theorem hilbFn_eq_zero_of_block {I : Ideal (ReciprocityTheory.ChartRestriction.G
     simp
   · rfl
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem eventually_sub {P : (K → ℤ) → Prop} (h : ∀ᶠ m in Filter.atTop, P m) (e : K → ℤ) :
     ∀ᶠ m in Filter.atTop, P (m - e) := by
@@ -123,7 +121,6 @@ theorem eventually_sub {P : (K → ℤ) → Prop} (h : ∀ᶠ m in Filter.atTop,
   simp only [Pi.sub_apply]
   linarith
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem eval_shift (p : MvPolynomial K ℚ) (e m : K → ℤ) :
     eval (fun k => ((m - e) k : ℚ)) p =
@@ -135,7 +132,6 @@ theorem eval_shift (p : MvPolynomial K ℚ) (e m : K → ℤ) :
   refine congrArg (fun x => eval x p) (funext fun j => ?_)
   simp
 
-omit [Fintype K] in
 
 theorem cast_single (k : K) :
     (fun k' => (((Pi.single k 1 : K → ℕ) k' : ℕ) : ℤ)) = Pi.single k 1 := by

@@ -83,7 +83,6 @@ def majCore {x : Frame X.Ψ r} (hx : x ∈ X.dom) : InnerProductSpace.Core ℝ (
     rw [Data.Hf_self X hx, Complex.ofReal_re] at h0
     exact (X.maj_pos hx τ hne).ne' h0
 
-open NumberField.ComplexEmbedding in
 
 theorem card_cmType : X.Ψ.card = fdeg E := by
   classical

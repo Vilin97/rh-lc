@@ -177,7 +177,6 @@ theorem exists_smul_sphere {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k
 
 end EmbeddingWeight
 
-open EmbeddingWeight in
 
 theorem EmbeddingWeight.proof : EmbeddingWeight.Statement := by
   intro K _ ι _ Ω _ F _ _ _ y Λ hpos hconjΛ huniq

@@ -27,7 +27,6 @@ section BaseChange
 variable {k k' : Type} [CommRing k] [CommRing k'] {Y Y' : Scheme.{0}} {p : Y ⟶ Sp k} {q : Y' ⟶ Sp k'}
   {r : Y' ⟶ Y} {σ : k →+* ℂ} {τ : k' →+* ℂ} {D D' : ℕ} {m : CxPts q τ → CxPts p σ} {B : LB Y}
 
-variable (r m B) in
 
 def pullVal : (B.ι → CxPts p σ → ℂ) →ₗ[ℂ] ((B.pull r).ι → CxPts q τ → ℂ) where
   toFun s J z := s (J PUnit.unit) (m z)

@@ -40,13 +40,9 @@ variable {k ι Y : Type} [Field k] [Fintype ι] [DecidableEq ι] [Fintype Y] [De
 
 def vec (β : LatFrame k ι Y) (i : ι) : Y → k := fun y => β.bas.val y (β.ord i)
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] in
 
-omit [DecidableEq ι] in
 
-omit [DecidableEq ι] in
 
 end Bases
 

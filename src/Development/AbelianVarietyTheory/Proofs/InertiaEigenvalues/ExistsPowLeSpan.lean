@@ -30,7 +30,6 @@ theorem exists_norm_le : ∃ C : ℝ, ∀ b : N.O i, ‖iotaOQ N A i b‖ ≤ C 
     exact PadicInt.norm_le_one _
   exact mul_le_of_le_one_left (norm_nonneg _) h1
 
-include A in
 
 theorem exists_pow_le_span : ∃ e : ℕ, IsLocalRing.maximalIdeal (N.O i) ^ e ≤
     Ideal.span {((N.l i : ℕ) : N.O i)} := by

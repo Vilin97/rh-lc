@@ -353,7 +353,6 @@ private theorem exists_ringOfIntegers_eq_algEquiv_apply {E : Type} [Field E] [Nu
     ∃ y : NumberField.RingOfIntegers E, (y : E) = f (x : E) :=
   ⟨⟨f (x : E), (NumberField.RingOfIntegers.isIntegral_coe x).map f.toAlgHom.toRingHom.toIntAlgHom⟩, rfl⟩
 
-open NumberField IsDedekindDomain in
 
 theorem conjPl_unique {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] E)
     (u v v' : HeightOneSpectrum (𝓞 E))
@@ -365,7 +364,6 @@ theorem conjPl_unique {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] E
   have hx' : (y : E) = cj (x : E) := by rw [hx]; exact (cj.apply_symm_apply _).symm
   exact (h x y hx').symm.trans (h' x y hx')
 
-open NumberField IsDedekindDomain in
 
 theorem conjPl_unique' {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] E)
     (u u' v : HeightOneSpectrum (𝓞 E))
@@ -376,7 +374,6 @@ theorem conjPl_unique' {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] 
   obtain ⟨y, hy⟩ := exists_ringOfIntegers_eq_algEquiv_apply cj x
   exact (h x y hy).trans (h' x y hy).symm
 
-open NumberField IsDedekindDomain Pointwise in
 
 theorem ef_conj {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] E)
     (u w : HeightOneSpectrum (𝓞 E))
@@ -727,7 +724,6 @@ theorem multW_eq (hπ : π ∈ D.nd.Z i) (hg0 : D.nd.l i ≠ D.host.g 0) (hg1 : 
 
 variable {ep : Bool}
 
-set_option maxHeartbeats 1600000 in
 
 theorem jump_bound_of_admitted (hL : hypL i) (hD : hypDecl i dc ep) (hπ : π ∈ D.nd.Z i) (hG2 : admG2 i r ep)
     (hBl : ambBlock i r ρ π) (h56 : ColumnH0Vanishing i ρ π dc) (hBK : admBK i) (hTie : TruncatedSeriesCountingIdentities.LocalCoefficientCompatibility i)
@@ -758,7 +754,6 @@ theorem jump_bound_of_admitted (hL : hypL i) (hD : hypDecl i dc ep) (hπ : π �
   rw [hdeg] at h
   exact h
 
-set_option maxHeartbeats 1600000 in
 
 theorem length_bound_of_admitted (e' : ℕ) (c0 : HeightOneSpectrum (𝓞 D.host.E) → ℕ) (hL : hypL i)
     (hD : hypDecl i dc ep) (hπ : π ∈ D.nd.Z i) (hG2 : admG2 i r ep) (hBl : ambBlock i r ρ π)

@@ -160,7 +160,6 @@ def ValDia (T : Forms0 D u) : Prop :=
       ∀ (k : ℤ), (k : (D.mem u).A.Fv v) = ((τ a : ((D.mem u).A.Fv v)ˣ) : (D.mem u).A.Fv v) →
       ∀ δ, IsDia T.cls0.lev (T.atT.eV v).1 (T.atT.eV v).2 k δ → G (T.cls0.y c * hcomp T η κ μ) = G (T.cls0.y c * δ)
 
-set_option maxHeartbeats 8000000 in
 
 theorem dUPt0F_of (T : Forms0 D u) (hE : PtEx T) (hW : PtWd T) (hI : PtInj T) (hS : PtSurj T)
     (vS : ValSame T) (vT : ValTe T) (vD : ValDia T) : DUPt0F T := by

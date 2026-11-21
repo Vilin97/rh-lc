@@ -92,7 +92,6 @@ theorem betaH_sub_right (ξ η η' : (Fin d → k) × (Fin d → k)) : betaH k �
   simp only [Prod.fst_sub, Prod.snd_sub, Pi.sub_apply]
   ring
 
-open Classical in
 
 theorem eigLiftRam_core (hRQ : IsRQ (R := R) k) (B : FB R d O) (h : PS k 2 d) (hc : B.IsCanonGauge k h)
     {L Ty Pl π : Type} [Fintype Ty] (ty : L → Ty) (χ : Ty → O →+* k) (cjT : Ty → Ty)

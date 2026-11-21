@@ -24,7 +24,6 @@ theorem finite_placesOver (g : ℕ) (hg : g ≠ 0) :
   intro v hv
   exact Ideal.dvd_iff_le.2 ((Ideal.span_singleton_le_iff_mem _).2 hv)
 
-open Classical in
 
 def placesOver (g : ℕ) : Finset (HeightOneSpectrum (𝓞 F)) :=
   if h : {v : HeightOneSpectrum (𝓞 F) | ((g : ℕ) : 𝓞 F) ∈ v.asIdeal}.Finite then h.toFinset else ∅

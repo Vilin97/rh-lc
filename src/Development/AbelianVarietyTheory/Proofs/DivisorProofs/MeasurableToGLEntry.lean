@@ -27,7 +27,6 @@ def rowCut (ρ : Fin n) (x : Matrix (Fin n) (Fin n) ℂ) : Fin n → ℂ := fun 
 def secMat (ρ j : Fin n) (v : Fin n → ℂ) : Fin n → Fin n → ℂ :=
   fun i l => if i = ρ then (if l ≤ ρ then v l else 0) else if l = Equiv.swap j ρ i then 1 else 0
 
-open Classical in
 
 def toGL (x : Matrix (Fin n) (Fin n) ℂ) : GL (Fin n) ℂ := if h : IsUnit x then h.unit else 1
 
@@ -114,6 +113,5 @@ theorem measurable_dual {X Z : Type} [MeasurableSpace X] [NormedAddCommGroup Z] 
   rw [this]
   exact Finset.measurable_sum _ fun i _ => (h _).smul_const _
 
-open Classical in
 
 end GlobalTheory.JSW

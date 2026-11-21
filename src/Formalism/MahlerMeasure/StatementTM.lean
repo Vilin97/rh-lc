@@ -12,7 +12,6 @@ def Letters.takeD {N : ℕ} (LL : Letters N) (k : ℕ) : Letters k where
   vec := fun i => if h : (i : ℕ) < N then LL.vec ⟨i, h⟩ else false
   deg := fun i => if h : (i : ℕ) < N then LL.deg ⟨i, h⟩ else 0
 
-open Classical in
 
 noncomputable def Letters.setTies {N : ℕ} (LL : Letters N) (T : TieData) (n : Fin T.t → ℕ) : Letters N where
   vec := LL.vec

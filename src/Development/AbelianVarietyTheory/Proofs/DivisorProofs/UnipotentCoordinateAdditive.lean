@@ -82,4 +82,3 @@ theorem unip_spec {d d₁ : ℕ} {W : Spc F E d} {H' : Plane E d d₁} {u : UA �
 
 end GlobalTheory.ThK.UnipDom.Additive
 
-open GlobalTheory.ThK.UnipDom.Additive in

@@ -101,7 +101,6 @@ end GlobalTheory.DetRootRead
 
 namespace GlobalTheory.DetRootRead
 
-set_option maxHeartbeats 1000000 in
 
 theorem chr_at_detRoot : ∀ (D : D7) (c : (AE D)ˣ →* Circle) (χ : Formalism.L2.Host.HChar D.host.E), ChrEq c χ → χ.TrivOn D.host.F →
   ∀ (V : HSp D) {n : ℕ} (hn : V.rank = n) (g : GA D V) (y : GL (Fin n) (Formalism.L2.DIV.AfE D.host.F D.host.E)), g ∈ GfC V →

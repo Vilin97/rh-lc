@@ -132,4 +132,3 @@ theorem schA_le_of_pure {κ : Type} [Fintype κ] {N : Submodule ℂ ((κ → AF 
 
 end GlobalTheory.ThetaInterchange
 
-open GlobalTheory.ThetaInterchange in

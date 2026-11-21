@@ -93,7 +93,6 @@ def rQ (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i)
 def rankOneCharacterQbar (i : D.nd.Loc) : GE D.nd →* GL (Fin 1) (Qbar (D.nd.l i)) :=
   mapRep (iotaOQ D.nd D.naut i) (PairedCharacterCondition.chiGL i)
 
-open Classical in
 
 def hodgeTateJumpsAtModulesForSign (ep : Bool) : Prop :=
   ∀ (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))), GoodR D.nd i r →
@@ -140,7 +139,6 @@ def jcCondition : Prop :=
     (∀ q ∈ cloudJ D j ρ, (D.R.t : ℚ) + 1 < q) ∧
     (0 : ℚ) ∉ cloudJ D j ρ ∪ lowJ D j ρ
 
-variable (D) in
 
 def JumpLowsSignCount : Prop :=
   ∀ j, 1 ≤ j → j ≤ D.R.m → ∀ ρ : D.what₂.Tau,
@@ -226,7 +224,6 @@ def AdmPar : Prop :=
   L.etaSz + D.R.t + L.Sc < L.sc.w'' D.R.n ∧ 3 * L.sc.w'' D.R.n ≤ L.sc.b ∧
     (∀ tt, (L.bT tt : ℝ) + L.sc.b' / L.sc.x ≤ L.sc.b) ∧ (D.R.t : ℝ) ≤ L.etaSz
 
-variable (D) in
 
 end admitted
 

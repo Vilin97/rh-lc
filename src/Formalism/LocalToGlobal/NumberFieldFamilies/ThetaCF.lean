@@ -50,15 +50,12 @@ end Gaps
 
 variable {D : D7}
 
-variable (D) in
 
 def afC (V : HSp D) : Submodule ℂ (GA D V → ℂ) := Submodule.span ℂ {φ | IsAutFunSm (th0 D) V φ}
 
-variable (D) in
 
 def cuspC (V : HSp D) : Submodule ℂ (afC D V) := Submodule.span ℂ {F | IsCuspFun V F.1}
 
-variable (D) in
 
 theorem emb_star (τ : D.host.E →+* ℂ) (x : D.host.E) : τ (star x) = starRingEnd ℂ (τ x) := by
   exact @NumberField.IsCMField.complexEmbedding_complexConj D.host.E _ _ D.host.isCMField_hostE _ τ x
@@ -80,7 +77,6 @@ theorem sig_ex (V : HSp D) (τ : D.host.E →+* ℂ) : ∃ s : ℕ × ℕ, Forma
     exact ((map_ne_zero τ).2 (gram_det_ne V)).isUnit)
   exact ⟨(p, q), h⟩
 
-open Classical in
 
 def fixSig (V : HSp D) : HSp D := { V with sig := if V.SigOK then V.sig else fun τ => (sig_ex V τ).choose }
 
@@ -93,7 +89,6 @@ theorem fixSig_ok (V : HSp D) : (fixSig V).SigOK := by
   · simp only [fixSig, h, if_false]
     exact (sig_ex V τ).choose_spec
 
-variable (D) in
 
 end Formalism.L2.Fam.ThC
 

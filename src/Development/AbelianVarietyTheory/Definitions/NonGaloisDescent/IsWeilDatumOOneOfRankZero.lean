@@ -103,7 +103,6 @@ section Inhabitants
 variable {ψ : AddChar (AF D.host.F) ℂ} {V W : HSp D} {χV χW : (AE D)ˣ →* Circle}
   {om : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)}
 
-open scoped ComplexOrder in
 
 theorem SWSetup.posDef {νV 𝓗 νW 𝓖 μ 𝓕 fr} (h : SWSetup ψ V W χV χW om νV 𝓗 νW 𝓖 μ 𝓕 fr) (τ : D.host.E →+* ℂ) :
     (V.gram.map τ).PosDef := by

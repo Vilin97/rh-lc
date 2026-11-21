@@ -15,7 +15,6 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 
 noncomputable section
 
-set_option maxHeartbeats 1000000 in
 
 theorem RegularityLocal.proof (hO : RegularityOrder.Statement) (hE : RegularityMaximalSpectrum.Statement) :
     RegularityLocal.Statement := by

@@ -60,7 +60,6 @@ theorem signs_eq : (fun i => (e.symm i).isLeft) = ε := by
   · simp [h1]
   · simp [h2]
 
-include h1 h2 in
 
 theorem sq_inUJ {C : Matrix (Fin P ⊕ Fin Q) (Fin n) ℂ} (hC : Cᴴ * Formalism.UG.Jpq P Q * C = Formalism.REAL.Jm ε) :
     (C.submatrix e.symm id)ᴴ * Formalism.REAL.Jm ε * C.submatrix e.symm id = Formalism.REAL.Jm ε := by

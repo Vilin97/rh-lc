@@ -18,7 +18,6 @@ namespace AutomorphicForm
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (K n) in
 
 abbrev UEnv : Type _ := UniversalEnvelopingAlgebra ℝ (isExpLieAlgebra K n).lieSubalgebra
 
@@ -37,7 +36,6 @@ theorem archSlice_mul (φ : AdelicGLn.AdelicGL K n → ℂ) (g : AdelicGLn.Adeli
 def IsArchSmooth (φ : AdelicGLn.AdelicGL K n → ℂ) : Prop :=
   ∀ g, (isExpLieAlgebra K n).IsSmoothFun (archSlice φ g)
 
-variable (K n) in
 
 def archSmooth : Submodule ℂ (AdelicGLn.AdelicGL K n → ℂ) where
   carrier := {φ | IsArchSmooth φ}

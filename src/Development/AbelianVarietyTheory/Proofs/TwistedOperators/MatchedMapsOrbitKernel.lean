@@ -71,4 +71,3 @@ theorem locOp_mem (hT : IsTriple Bs G Xc om om') (v : Pl F) {h : UA σ G.W.J} (h
 
 end GlobalTheory.HoweGlobalPair.FinPlaceSmall
 
-open GlobalTheory.HoweGlobalPair.FinPlaceSmall in

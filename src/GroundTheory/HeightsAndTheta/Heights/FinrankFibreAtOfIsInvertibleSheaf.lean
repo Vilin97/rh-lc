@@ -31,7 +31,6 @@ end Via
 
 variable {X : Scheme.{u}} (L : X.Modules)
 
-variable (X) in
 
 abbrev locRing (p : X) : CommRingCat.{u} := TopCat.Presheaf.stalk (X := X.toTopCat) X.sheaf.obj p
 
@@ -118,17 +117,14 @@ instance : Module ℂ (fibreAt L p φ) :=
 
 lemma complex_smul_def (c : ℂ) (s : fibreAt L p φ) : c • s = Via.ofComplex φ c • s := rfl
 
-variable (L φ) in
 
 def fibreMk (c : Via φ) (m : modStalk L p) : fibreAt L p φ :=
   (c ⊗ₜ[locRing X p] m : TensorProduct (locRing X p) (Via φ) (modStalk L p))
 
-variable (φ) in
 
 def value {U : X.Opens} (hp : p ∈ U) (s : ((preMod X).obj L).obj (op U)) : fibreAt L p φ :=
   fibreMk L φ 1 (germM hp s)
 
-variable (φ) in
 
 def fibreEquiv {U : X.Opens} (hp : p ∈ U) {e : ((preMod X).obj L).obj (op U)}
     (he : IsBasisOn ((preMod X).obj L) U e) : fibreAt L p φ ≃ₗ[Via φ] Via φ :=
@@ -136,9 +132,7 @@ def fibreEquiv {U : X.Opens} (hp : p ∈ U) {e : ((preMod X).obj L).obj (op U)}
     (stalkEquiv hp he).symm).trans
       (TensorProduct.AlgebraTensorModule.rid (locRing X p) (Via φ) (Via φ))
 
-variable (φ) in
 
-variable (φ) in
 
 end Fibre
 

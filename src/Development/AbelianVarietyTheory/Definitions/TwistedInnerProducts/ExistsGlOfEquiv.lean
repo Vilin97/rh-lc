@@ -44,7 +44,6 @@ theorem mem_max : q.1 ∈ maximalIdeal 𝒪[k] := q.mem_max_iff.2 dvd_rfl
 
 end Unif
 
-variable (k) in
 
 structure Pair (n : Type*) where
 
@@ -237,7 +236,6 @@ theorem eq_glue_iff (h : IsGlue L e) {P : Pair k n} : P = glue h ↔ P.ker = L �
 
 end
 
-variable (k) in
 
 structure GluePair (n : Type*) where
 
@@ -284,7 +282,6 @@ theorem dia_hasVal_one {c : 𝓀[k]ˣ} {P : Pair k n} {e : n → k} (he : P.HasV
   rw [dia_hasVal, ← hs]
   exact he.smul s
 
-open Classical in
 
 def ev (P : Pair k n) (x : n → k) : 𝓀[k] := if h : x ∈ P.lat then P.fn ⟨x, h⟩ else 0
 
@@ -566,7 +563,6 @@ theorem exists_gl_of_equiv {L L' : Submodule 𝒪[k] (n → k)} [L.IsLattice k] 
   rw [LinearMap.toMatrix'_mulVec]
   rfl
 
-omit [Fintype n] [DecidableEq n] in
 
 theorem Pair.exists_split (P : Pair k n) :
     ∃ (K : Submodule 𝒪[k] P.lat) (e : (K × 𝒪[k]) ≃ₗ[𝒪[k]] P.lat), ∀ z, P.fn (e z) = residue 𝒪[k] z.2 := by
@@ -621,11 +617,9 @@ end Action
 section Std
 variable [Fintype n]
 
-variable (k n) in
 
 def stdLat : Submodule 𝒪[k] (n → k) := LinearMap.range ((Algebra.linearMap 𝒪[k] k).compLeft n)
 
-omit [Fintype n] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem mem_stdLat {x : n → k} : x ∈ stdLat k n ↔ ∀ i, x i ∈ 𝒪[k] :=
   ⟨fun ⟨y, hy⟩ i => hy ▸ (y i).2, fun h => ⟨fun i => ⟨x i, h i⟩, rfl⟩⟩
@@ -641,7 +635,6 @@ instance : (stdLat k n).IsLattice k := by
   split_ifs
   exacts [one_mem _, zero_mem _]
 
-variable (k) in
 
 def stdPair (i : n) : Pair k n where
   lat := stdLat k n

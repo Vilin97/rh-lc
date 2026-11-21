@@ -34,7 +34,6 @@ theorem herm_neg_eq {D : D7} (V : HSp D) (u v : Fin V.rank → D.host.E) :
   change u a * (-V.gram b a) * cc (v b) = -(u a * V.gram b a * cc (v b))
   ring
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_rep_suppSplit : ∀ (D : D7) (V : HSp D) (N : ℕ), 0 < N → ∀ g : GA D V, ∃ γ ∈ GQ V, ∃ a ∈ GinfC V, ∃ h ∈ GfC V, ∃ k ∈ GfC V, g = γ * a * h * k ∧ FinCong V N k ∧ GlobalTheory.UnRep.SuppSplit (cF D) N (finHom V h).1 := by
   intro D V N hN g

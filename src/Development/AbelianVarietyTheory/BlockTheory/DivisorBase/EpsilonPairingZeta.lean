@@ -115,15 +115,10 @@ section Inhabitant
 
 variable [IsDomain O] {ε : PreTilt O p} (hε : IsPrimitiveSystem ε)
 
-omit [IsDomain O] in
 
-omit [IsDomain O] in
 
-variable (ε) in
 
-omit [IsDomain O] in
 
-omit [IsDomain O] in
 
 end Inhabitant
 

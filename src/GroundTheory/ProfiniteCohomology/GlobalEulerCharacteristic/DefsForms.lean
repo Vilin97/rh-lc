@@ -29,7 +29,6 @@ theorem card_cohomology_eq_of_iso {A B : Rep.{u} k G} [IsDiscreteRep A] [IsDiscr
       inv_hom_id := by rw [← cohomologyMap_comp, e.inv_hom_id, cohomologyMap_id] }
   exact Nat.card_congr i.toLinearEquiv.toEquiv
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
 theorem card_eq_of_iso {A B : Rep.{u} k G} (e : A ≅ B) : Nat.card A = Nat.card B :=
   Nat.card_congr ((forget (Rep.{u} k G)).mapIso e).toEquiv

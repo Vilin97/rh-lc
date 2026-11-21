@@ -102,7 +102,6 @@ end GlobalTheory.Mem.R3.RowDeco
 namespace GlobalTheory.Mem.R3.RowDeco
 open GlobalTheory.Mem.R3.RowAd
 
-set_option maxHeartbeats 1000000 in
 
 theorem inv_redG_mul_g0Hat_mem_grp : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B px) (U : Set I.ι)
     (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)) (eG : Gc X.B px ≃* G0 L.Pg X.toD7.R.r),

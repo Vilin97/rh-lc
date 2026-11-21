@@ -128,7 +128,6 @@ theorem ofHom_toSpecZero (φ : A →+* B) (hφ : (irrelevant 𝒜).toIdeal.map �
   ext a
   simp
 
-set_option backward.isDefEq.respectTransparency false in
 
 @[reassoc]
 theorem SpecMap_ofHom_eq_awayι (φ : A →+* B) (hφ : (irrelevant 𝒜).toIdeal.map φ = ⊤)

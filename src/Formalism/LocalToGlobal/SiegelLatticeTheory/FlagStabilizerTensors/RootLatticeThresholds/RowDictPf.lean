@@ -438,7 +438,6 @@ theorem schur_orthogonality_discrete_series : DSSchurOrth := by
 
 variable {D : D7} (X : HidaSetting D)
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
 theorem hint_of_gap (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) (v : InfinitePlace X.B.I.F) :
     Integrable (Formalism.L2.SG.ProjRows.phLoc (ε := X.B.I.ε v) (X.B.σ v) (X.B.w v)
@@ -449,7 +448,6 @@ theorem hint_of_gap (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) (v : I
     Complex.conjCLE.toContinuousLinearMap.integrable_comp h
   exact h2.const_mul _
 
-variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 
 theorem finiteDimensional_HHX_of_gap (hHC : Formalism.L2.SG.RowsDef.RowsFinDim) (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) :
     FiniteDimensional ℂ (HHX X) :=

@@ -53,7 +53,6 @@ theorem selfDualOK (D : D7) : SelfDualOK D := by
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · rw [← GlobalTheory.SDFrameLattice.mem_dualL_iff, hd]
 
-open scoped Pointwise in
 
 theorem petAll (D : D7) : PetAll D := by
   intro V μ 𝓕 hμ h𝓕 F hc hl h0 hi

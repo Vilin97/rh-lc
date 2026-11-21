@@ -228,7 +228,6 @@ section Sp
 variable {V V' : Type} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   [AddCommGroup V'] [Module ℂ V'] [FiniteDimensional ℂ V']
 
-variable (h) in
 
 def lastEig (k : ℕ) (σ : Weil h) : ℂ := (WDRep.spEig w (k + 1) ⟨k, by omega⟩ : ℂ) ^ deg σ
 

@@ -84,7 +84,6 @@ theorem row_lt_of_smul_pair_eq {k : Type} [Field k] [ValuativeRel k] [Topologica
   rw [← h5]
   exact h4
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_gl {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     {p : GlobalTheory.FinPl.SplitPt D k} {V : HSp D} (β : GlobalTheory.FinPl.Frame p V (Fin V.rank)) (κ : GA D V) :
@@ -105,7 +104,6 @@ theorem exists_gl {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpa
   calc (mt V κ).map p.pr = (β.b * β.b') * (mt V κ).map p.pr * (β.b * β.b') := by rw [β.bb', Matrix.one_mul, Matrix.mul_one]
     _ = _ := by simp only [Matrix.mul_assoc]
 
-set_option maxHeartbeats 2000000 in
 
 theorem entry_cong (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p : GlobalTheory.FinPl.SplitPt D k) (P : HeightOneSpectrum (𝓞 D.host.E)) (hP : Formalism.L2.NTheta.IsIdemAt p.e P) (T : ℕ)
@@ -144,6 +142,5 @@ theorem entry_cong (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSp
 
 end GlobalTheory.FamTrace.LastRow
 
-set_option maxHeartbeats 4000000 in
 
 end

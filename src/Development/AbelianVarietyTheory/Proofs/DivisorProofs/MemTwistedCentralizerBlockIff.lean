@@ -50,7 +50,6 @@ theorem blk_zero_mul {n a b : ℕ} (h : a + b = n) (w : Pl E) (x y : GLw a w × 
 
 end GlobalTheory.LeviDesc.CentPar
 
-open GlobalTheory.LeviDesc.CentPar in
 
 theorem GlobalTheory.LeviDesc.mem_twistedCentralizer_parabolic_iff : ∀ (E : Type) [Field E] [NumberField E] (n a b : ℕ) (h : a + b = n) (w : Pl E)
     (m : GLw a w × GLw b w), (m.1.val.charpoly * m.2.val.charpoly).Separable →

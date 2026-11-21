@@ -15,7 +15,6 @@ noncomputable section
 
 namespace GlobalTheory.Mem.HFld
 
-open Classical in
 
 def chiC {B : Base} {px : PreX B.toPre} (I : Col2.ColIn B px) :
     Fin B.R.m → IsDedekindDomain.HeightOneSpectrum (𝓞 B.host.E) → 𝓞 B.host.E → ℂ :=
@@ -24,7 +23,6 @@ def chiC {B : Base} {px : PreX B.toPre} (I : Col2.ColIn B px) :
       if hu : IsUnit (Ideal.Quotient.mk w.asIdeal y) then B.embLL ((I.Ch.chi j ⟨w, h⟩ hu.unit : B.LLˣ) : B.LL) else 0
     else 0
 
-open Classical in
 
 def qC {B : Base} {px : PreX B.toPre} (I : Col2.ColIn B px) :
     Formalism.L2.Host.HChar B.host.E → Finset (IsDedekindDomain.HeightOneSpectrum (𝓞 B.host.E)) :=

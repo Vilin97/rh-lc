@@ -140,8 +140,6 @@ section Hypotheses
 variable [Fintype S] {N : ℕ} [NeZero N]
   (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((N : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S) (hev : Even N)
 
-set_option maxHeartbeats 1000000 in
-include hS in
 
 theorem surjective_of_localToCompact_two [hne : Nonempty S]
     (t : tateCompactCohomologyRes (gsFinFamily S ιs) (gsRealFamily S ιr) (gsRoots S N) 3 →+ ZMod N)
@@ -155,8 +153,6 @@ theorem surjective_of_localToCompact_two [hne : Nonempty S]
     (gsLocalInvRootsQZ S ιs N) (gsRealInvRootsQZ S ιr N) ht v η
     ((zmodToQZ_gsLocalInvRoots S ιs N v η).symm.trans (congrArg (zmodToQZ N) hη))
 
-omit [Fintype S] in
-include hS hev in
 
 theorem isTotallyComplex_of_gsOpenSubgroup_le {L : FiniteSubfield} [Fact (K ≤ L)]
     (hL : ∀ x : L.1, algebraMap L.1 ℚ̄ x ∈ maxUnramifiedOutside K.1 ℚ̄ S)
@@ -173,8 +169,6 @@ theorem isTotallyComplex_of_gsOpenSubgroup_le {L : FiniteSubfield} [Fact (K ≤ 
   push_cast
   exact hz2
 
-omit [Fintype S] in
-include hS hev in
 
 theorem freeOnCosets_gsRealFamily_of_le (W₀ : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S))
     (hW₀ : ∀ σ ∈ W₀, ∀ ζ : (maxUnramifiedOutside K.1 ℚ̄ S)ˣ, ζ ^ (2 * N) = 1 →

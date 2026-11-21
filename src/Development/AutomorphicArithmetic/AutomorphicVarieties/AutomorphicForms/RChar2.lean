@@ -21,21 +21,17 @@ def expU (z : ι → ℝ) : (ι → ℝ)ˣ :=
 omit [Fintype ι] in
 @[simp] theorem expU_val (z : ι → ℝ) (i : ι) : (expU z).val i = Real.exp (z i) := rfl
 
-omit [Fintype ι] in
 
 theorem expU_add (z z' : ι → ℝ) : expU (z + z') = expU z * expU z' :=
   Units.ext (funext fun i => Real.exp_add (z i) (z' i))
 
-omit [Fintype ι] in
 
 theorem expU_zero : expU (0 : ι → ℝ) = 1 := Units.ext (funext fun _ => Real.exp_zero)
 
-omit [Fintype ι] in
 
 theorem unit_ne_zero (u : (ι → ℝ)ˣ) (i : ι) : (u : ι → ℝ) i ≠ 0 :=
   left_ne_zero_of_mul_eq_one (congrFun u.mul_inv i)
 
-omit [Fintype ι] in
 
 theorem exists_sign_mul_expU (u : (ι → ℝ)ˣ) :
     ∃ s : (ι → ℝ)ˣ, s * s = 1 ∧ u = s * expU fun i => Real.log ((u : ι → ℝ) i) := by
@@ -48,7 +44,6 @@ theorem exists_sign_mul_expU (u : (ι → ℝ)ˣ) :
   field_simp
   rw [sq_abs]
 
-omit [Fintype ι] in
 
 theorem continuous_expU : Continuous (expU : (ι → ℝ) → (ι → ℝ)ˣ) :=
   Units.continuous_iff.2 ⟨continuous_pi fun i => Real.continuous_exp.comp (continuous_apply i),
@@ -71,11 +66,9 @@ theorem exists_lin (ψ : (ι → ℝ)ˣ →* ℂˣ) (hψ : Continuous ψ) :
     rw [← this]; ring
   exact ⟨(AddMonoidHom.mk' F hadd).toRealLinearMap F.continuous, fun z => (hF' z).symm⟩
 
-open Classical in
 
 def extZero (ψ : (ι → ℝ)ˣ →* ℂˣ) (x : ι → ℝ) : ℂ := if h : IsUnit x then (ψ h.unit : ℂˣ) else 0
 
-omit [Fintype ι] in
 
 theorem extZero_unit (ψ : (ι → ℝ)ˣ →* ℂˣ) (u : (ι → ℝ)ˣ) : extZero ψ u = (ψ u : ℂˣ) := by
   simp [extZero]

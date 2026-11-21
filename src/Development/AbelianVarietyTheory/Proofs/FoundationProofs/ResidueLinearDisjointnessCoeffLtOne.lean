@@ -120,7 +120,6 @@ theorem exists_pow_eq {k : Type} [Field k] [Algebra (ZMod p) k] {ι : Type} [Fin
   rw [hn] at this
   exact congrArg Subtype.val this
 
-open Polynomial in
 
 theorem exists_prim (P : ℤ_[p][X]) (hP : P ≠ 0) :
     ∃ (c : ℤ_[p]) (Q : ℤ_[p][X]), c ≠ 0 ∧ P = C c * Q ∧ Q.map (PadicInt.toZMod (p := p)) ≠ 0 := by

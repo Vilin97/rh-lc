@@ -18,7 +18,6 @@ open GlobalTheory.HostModel
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-omit [IsCMField E] in
 
 theorem int_dvd_of_mul_eq_ringOfIntegers {N m : ℤ} {z : 𝓞 E} (h : (N : 𝓞 E) * z = m) : N ∣ m := by
   have h1 : algebraMap ℤ (𝓞 E) N ∣ algebraMap ℤ (𝓞 E) m := ⟨z, by simpa using h.symm⟩

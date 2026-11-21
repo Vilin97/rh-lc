@@ -19,7 +19,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.GodementSectionReduction
 
-open GlobalTheory.SummCount in
 
 theorem summable_of_count (ι : Type) (n N : ℕ) (b C t : ℝ) (k : ι → Fin n → ℕ)
     (h : ι → ℝ) (hb : 1 < b) (ht : (N : ℝ) < t)
@@ -64,7 +63,6 @@ theorem summable_of_count (ι : Type) (n N : ℕ) (b C t : ℝ) (k : ι → Fin 
         simp only [hg_def, hr, ← pow_mul_inv_rpow_eq hb0 N, Finset.prod_mul_distrib]
         ring
 
-open GlobalTheory.Eis.Conv.CovSkew in
 
 theorem cover_adele (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (hσ : IsCMExt F E σ) : ∃ (Ω : Set (AF F ⊗[F] E)) (C : ℝ), IsCompact Ω ∧ ∀ m : ℕ, ∃ Y : Finset (AF F ⊗[F] E),

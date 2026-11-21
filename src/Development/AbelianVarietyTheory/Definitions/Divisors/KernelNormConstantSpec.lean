@@ -20,7 +20,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7} {T : Type}
 
-open Classical in
 
 def wtOf (n : ℕ) (E : Finset ℚ) : DomWeight n :=
   if h : E.card = n ∧ InCoset (((n : ℚ) - 1) / 2) E then
@@ -191,16 +190,13 @@ def Off (S : Finset ℕ) (w : Pl D.host.E) : Prop := ∀ q ∈ S, (q : 𝓞 D.ho
 def UnrIdem (χ : (AE D)ˣ →* Circle) (e : AE D) : Prop :=
   ∀ x : (AE D)ˣ, e * x + (1 - e) = x → finPart D (x : AE D) ∈ intAE D → finPart D ((x⁻¹ : (AE D)ˣ) : AE D) ∈ intAE D → χ x = 1
 
-variable (G) in
 
 def topEmb : Matrix (Fin (G.V (.top D.R.m)).rank) (Fin (G.V (.grid D.R.m D.R.m)).rank) (AE D) :=
   (frameMat _ _ G.sp.topDec.ι).map (incA D)
 
-variable (G) in
 
 def topVec : Fin (G.V (.top D.R.m)).rank → AE D := fun i => incA D (G.sp.topDec.a i 0)
 
-variable (G) in
 
 structure Std (U : Set T) where
 
@@ -298,7 +294,6 @@ def kkMap (c : D.what₂.Tau → ℂ) (d : FinDatum G t p) (x : FinPt G p.small)
     VV ℂ (wt G p.small) →ₗ[ℂ] VV ℂ (wt G p.big) :=
   Z.scal c p • fockComp W N.frC p (Z.vec d) (x * N.u _) (y * N.u _)
 
-open Classical in
 
 def kkIn (c : D.what₂.Tau → ℂ) (d : FinDatum G t p) (x : FinPt G p.small) (y : FinPt G p.big) :
     Matrix (VVIdx (wt G p.big)) (VVIdx (wt G p.small)) ℂ :=

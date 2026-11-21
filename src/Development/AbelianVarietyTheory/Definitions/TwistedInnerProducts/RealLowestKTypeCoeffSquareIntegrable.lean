@@ -104,7 +104,6 @@ def SourceLevelLawC (F : Face D A) : Prop :=
     ∀ κ ∈ Lev.levA (Vc D i) (levV R i t P m), ∀ Q : PolF D (Wc D i).rank (Vc D i).rank,
       ω (κ, 1) (ptAt R i σ BW f Q) = (Lev.levChi (Vc D i) (R.βV i) (datV i R.Pg (R.Q t) P m) κ)⁻¹ • ptAt R i σ BW f Q
 
-open Datum in
 
 def InnerProductFormulaC (F : Face D A) : Prop :=
   ForLiftDataC R F fun i t σ P m ω BW f _ _ =>
@@ -124,7 +123,6 @@ def InnerProductFormulaC (F : Face D A) : Prop :=
       ∫⁻ b, ∑' x, ‖Z (pt x b)‖ₑ ∂(Measure.pi mR) < ⊤ ∧
       l2 ν 𝓕 (upLift R i ω φ₁ F₁) (upLift R i ω φ₂ F₂) = ((ν 𝓕).toReal : ℂ) * ∫ b, ∑' x, Z (pt x b) ∂(Measure.pi mR)
 
-open Datum in
 
 def FockCoefficientC (F : Face D A) : Prop :=
   ForLiftDataC R F fun i _ σ _ _ ω BW f c io =>
@@ -137,7 +135,6 @@ def FockCoefficientC (F : Face D A) : Prop :=
           (∏ ρ, ⟪((e' ρ : (R.MW i σ).sm ρ) : (R.MW i σ).H ρ), (R.MW i σ).rep ρ (g ρ) ((e ρ : (R.MW i σ).sm ρ) : (R.MW i σ).H ρ)⟫_ℂ) *
           ⟪w', w⟫_ℂ * l2 μ 𝓧 (ω (1, x) f) f
 
-open Datum in
 
 def FiniteZetaL (F : Face D A) : Prop :=
   ∀ i t σ s P cμ cη m ω BW f₀ f c io, IsLiftDataC R F i t σ s P cμ cη m ω BW f₀ f c io →
@@ -154,7 +151,6 @@ def FiniteZetaL (F : Face D A) : Prop :=
             ((Nat.card P.H : ℂ) * (nrm2 μ 𝓧 f : ℂ) * (GlobalTheory.LFun.LSD D (finS R t) B cμ ((1 + (D.R.t : ℂ)) / 2) / (dOff D (finS R t) : ℂ)) *
               starRingEnd ℂ (petW R i (U₁ v₁) (U₂ v₂)))
 
-open Datum in
 
 def LevelIndexNormC (F : Face D A) : Prop :=
   ForLiftDataC R F fun i t _ P m _ _ f _ _ =>

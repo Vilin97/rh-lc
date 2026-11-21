@@ -37,7 +37,6 @@ theorem isHeckeChar_inv_sph {D : D7} {χ : (AE D)ˣ →* Circle} (h : IsHeckeCha
     rw [this]; exact h.1.inv
   · rw [MonoidHom.inv_apply, h.2 x, inv_one]
 
-set_option maxHeartbeats 1000000 in
 
 theorem sphFactor_of_weilRepresentationUnitaryPair (hW : GlobalTheory.Published.WeilRepresentationUnitaryPair) (D : D7) : SphFactor D := by
   intro ψ θ A B χA χB sA sB t cA a om ν 𝓕 hP LA LB Sf Φ₁ Φ₂ hΦ₁ hΦ₂ hU v hv s

@@ -238,7 +238,6 @@ theorem cent_eq {δ : Matrix (Fin n) (Fin n) R} (hδ : Reg δ) :
 end Cent
 end GlobalTheory.Tw.CentralizerAdjoin
 
-open GlobalTheory.Tw.CentralizerAdjoin in
 
 theorem GlobalTheory.Tw.twisted_centraliser :
     ∀ (n : ℕ) (R : Type) [CommRing R] [StarRing R] [IsArtinianRing R] [IsReduced R] (δ : Matrix (Fin n) (Fin n) R),

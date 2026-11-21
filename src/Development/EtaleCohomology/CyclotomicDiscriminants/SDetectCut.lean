@@ -43,7 +43,6 @@ theorem val_le (B : ValuationSubring Ω) (x : 𝓞 F) : B.valuation (algebraMap 
   have hz : IsIntegral ℤ (algebraMap F Ω (x : F)) := x.isIntegral_coe.map (algebraMap F Ω).toIntAlgHom
   exact (Valuation.integer.integers B.valuation).mem_of_integral hz.tower_top
 
-omit [NumberField F] in
 
 theorem frob_fix {v : HeightOneSpectrum (𝓞 F)} {B : ValuationSubring Ω} (hB : IsPlaceOver B v) {N : ℕ} (hN : N ≠ 0)
     {σ : G F Ω} (hσ : IsFrob B N σ) {q : ℕ} (hq0 : q ≠ 0) (hq : (q : 𝓞 F) ∉ v.asIdeal) {ζ : 𝓞 F}

@@ -95,8 +95,6 @@ theorem chart_isFractionRing (w : (Σ k, J k) → K) (hbir : Birational w) (c : 
   show z = aeval w g * _ / (aeval w h * _)
   rw [mul_div_mul_right _ _ hm, hz, mul_div_cancel_right₀ _ h0]
 
-include p in
-omit [Fintype B] [∀ k, Fintype (J k)] in
 
 theorem prime_isMaximal_of_isFractionRing (A : Type) [CommRing A] [IsDomain A] [Algebra A K] [IsFractionRing A K]
     [Algebra.FiniteType ℤ A] (q : Ideal A) (hq : q.IsPrime) (h0 : q ≠ ⊥) : q.IsMaximal := by
@@ -115,7 +113,6 @@ theorem prime_isMaximal_of_isFractionRing (A : Type) [CommRing A] [IsDomain A] [
     rw [Ring.krullDimLE_iff, hd]; simp
   exact Ring.krullDimLE_one_iff_of_noZeroDivisors.1 hle q h0 hq
 
-include p in
 
 theorem chart_prime_isMaximal (w : (Σ k, J k) → K) (hbir : Birational w) (c : ∀ k, J k)
     (hc : ∀ k, w ⟨k, c k⟩ ≠ 0) (q : Ideal (chartRingZ w c)) (hq : q.IsPrime) (h0 : q ≠ ⊥) : q.IsMaximal := by

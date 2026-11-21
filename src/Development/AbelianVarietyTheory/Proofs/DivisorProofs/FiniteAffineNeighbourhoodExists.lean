@@ -146,7 +146,6 @@ theorem affine_pair {V : X.Opens} {W : Y.Opens} (hV : IsAffineOpen V) (hW : IsAf
     exact exists_etale_away Γ(X, V) Γ(Y, W) (X.residueField (π (genericPoint Y)))
       (Y.residueField (genericPoint Y))
 
-omit hη hd in
 
 theorem genericPoint_mem_basicOpen {V : X.Opens} {h : Γ(X, V)} (hh : h ≠ 0) :
     genericPoint X ∈ X.basicOpen h := by
@@ -202,7 +201,6 @@ theorem eq_genericPoint {y : Y} (hy : π y = genericPoint X) : y = genericPoint 
   congr 1
   exact PrimeSpectrum.ext hqbot
 
-omit hη hd [IsIntegral X] [IsIntegral Y] in
 
 theorem finite_app_of_le {V U : X.Opens} [IsFinite (π ∣_ V)] (hU : IsAffineOpen U) (e : U ≤ V) :
     IsAffineOpen (π ⁻¹ᵁ U) ∧ (π.app U).hom.Finite := by
@@ -296,6 +294,5 @@ theorem exists_finite_etale_of_isProper [IsProper π] [IsLocallyNoetherian X] [C
     Algebra.Etale.of_restrictScalars Γ(X, V') Γ(X, X.basicOpen h) Γ(Y, π ⁻¹ᵁ X.basicOpen h)
   exact this
 
-omit hη hd π in
 
 end GlobalTheory.GenFiniteEtale

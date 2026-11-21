@@ -133,7 +133,6 @@ theorem hasProjectiveDimensionLT_residueField [IsRegularLocalRing R] {d : ℕ}
     (Shrink.linearEquiv R _).trans (Submodule.quotEquivOfEq _ _ hof)
   exact hasProjectiveDimensionLT_of_iso e.toModuleIso (d + 1)
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem hasProjectiveDimensionLT_of_residueField [IsLocalRing R] [IsNoetherianRing R] (n : ℕ)
     (hk : HasProjectiveDimensionLT (ModuleCat.of R (R ⧸ maximalIdeal R)) (n + 1))

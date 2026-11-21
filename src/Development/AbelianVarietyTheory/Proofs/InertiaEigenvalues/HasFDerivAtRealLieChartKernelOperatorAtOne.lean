@@ -14,7 +14,6 @@ namespace GlobalTheory.JSW.KerDeriv
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
 
 def rmulL : Lie E a →L[ℝ] Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap
@@ -31,7 +30,6 @@ theorem norm_mul_le (x y : Lie E a) :
     ‖toL (Matrix.of x * Matrix.of y)‖ ≤ ‖(rmulL : Lie E a →L[ℝ] Lie E a →L[ℝ] Lie E a)‖ * ‖y‖ * ‖x‖ :=
   (rmulL (E := E) (a := a)).le_opNorm₂ y x
 
-omit [IsTotallyComplex E] in
 
 theorem eventually_inv_bdd :
     ∀ᶠ Y in 𝓝 (oneL E a), Y ∈ invSet E a ∧ ‖toL (Matrix.of Y)⁻¹‖ < ‖oneL E a‖ + 1 := by

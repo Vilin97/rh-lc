@@ -1595,7 +1595,6 @@ def badN (k : ℕ) (w w' : Point K) (q : Cos R w × Cos R w') : ℕ :=
       InTT R (k + 1) (orbZ w (rep R q.1)) (orbZ w' (rep R q.2)) φ ∧
       ¬ InTT R k (orbZ w (rep R q.1)) (orbZ w' (rep R q.2)) φ}
 
-open Classical in
 
 theorem fib_core (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R)
     (hun : ∀ x : K, conj (ψ x) = ψ (-x))
@@ -1691,7 +1690,6 @@ theorem fib_core (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r)
   rw [hsum]
   exact key
 
-open Classical in
 
 theorem fibre_zero (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R)
     (hun : ∀ x : K, conj (ψ x) = ψ (-x))

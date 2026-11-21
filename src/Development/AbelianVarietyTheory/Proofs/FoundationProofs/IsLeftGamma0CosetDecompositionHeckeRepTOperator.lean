@@ -24,7 +24,6 @@ end GlobalTheory.EisM.LRepTriangular
 
 namespace GlobalTheory.EisM
 
-open GlobalTheory.EisM.LRepTriangular in
 
 theorem lRep_DT_repT : ∀ L q : ℕ, q.Prime → ¬ q ∣ L → LRep L (DT L q) (repT q) := by
   intro L q hq hqL

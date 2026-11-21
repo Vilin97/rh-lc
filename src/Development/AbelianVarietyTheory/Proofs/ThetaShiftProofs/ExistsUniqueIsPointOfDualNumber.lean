@@ -65,7 +65,6 @@ section Level
 variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegPre R} {e : ℕ}
   {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G]
 
-omit [IsDomain R] [IsCommMonObj G] in
 
 theorem map_mul_fstG {Z : Over (Spec (CommRingCat.of (R ⧸ I ^ (e + 1))))} (a b : Z ⟶ thickObj R I e G) :
     (Over.map (thick R I e)).map (a * b) ≫ fstG I e G =
@@ -274,7 +273,6 @@ theorem HasCoords.comp {e : ℕ} {g : GtPt D.toPre T} {Z W : Scheme.{0}} {r : Z 
   (hasCoords_iff U e g _ _).2 ⟨by rw [Category.assoc, h.1, Category.assoc], fun χ _ _ hJ =>
     (val_pull hJ _ _ _).symm.trans ((val_corr hJ (h.2 χ) k).trans (val_pull hJ _ _ _))⟩
 
-variable {U} in
 
 theorem HasCoords.unique {e : ℕ} {g : GtPt D.toPre T} {Z : Scheme.{0}} {r : Z ⟶ T.left}
     {y y' : Z ⟶ (thickObj R I e G).left} (h : HasCoords U e g r y) (h' : HasCoords U e g r y') : y = y' := by
@@ -289,7 +287,6 @@ theorem exists_hasCoords (e : ℕ) (g : GtPt D.toPre T) {Z : Scheme.{0}} (r : Z 
   have := h₂ χ _ (𝟙 _) z J hJ
   rwa [Category.id_comp, Category.id_comp] at this
 
-variable {U} in
 
 theorem HasCoords.succ {e : ℕ} {g : GtPt D.toPre T} {Z : Scheme.{0}} {r : Z ⟶ T.left}
     {y : Z ⟶ (thickObj R I e G).left} (h : HasCoords U e g r y) :
@@ -351,7 +348,6 @@ theorem IsPointOf.pull {T' : Over (Spec (CommRingCat.of R))} (k : T' ⟶ T) {g :
   exact (hasCoords_iff U e g' _ _).2 ⟨by rw [h₁, h.1, Category.assoc], fun χ z J hJ =>
     (h₂ χ z J hJ).trans ((val_pull hJ _ _ _).symm.trans (val_corr hJ (h.2 χ) r).symm)⟩
 
-variable (U) in
 
 theorem isPointOf_one {g : GtPt D.toPre T} (h : g.IsZero) : IsPointOf U g 1 := by
   rw [isPointOf_iff]
@@ -513,7 +509,6 @@ theorem existsUnique_isPointOf' [IsAdicComplete (I.map φ) S] {s : Spec (CommRin
   subst hs
   exact existsUnique_isPointOf U g
 
-omit [IsLocalRing S] in
 
 theorem existsUnique_isPointOf_unit [IsLocalRing R] [IsAdicComplete I R]
     (g : GtPt D.toPre (𝟙_ (Over (Spec (CommRingCat.of R))))) :

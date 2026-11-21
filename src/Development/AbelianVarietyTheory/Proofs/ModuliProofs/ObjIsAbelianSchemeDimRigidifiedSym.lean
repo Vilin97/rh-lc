@@ -148,7 +148,6 @@ section Count
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host E) {k : Type} [Field k] [IsAlgClosed k]
   [CharZero k]
 
-open Classical in
 
 theorem two_mul_sum_embeddings {r : k} (hr : r ^ 2 = -(H.d : k)) (p q : ℕ) :
     2 * ∑ φ : E →+* k, (if φ (H.rt : E) = r then p else q) = Module.finrank ℚ E * (p + q) := by

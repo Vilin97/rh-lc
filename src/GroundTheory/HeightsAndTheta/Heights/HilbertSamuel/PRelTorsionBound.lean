@@ -33,7 +33,6 @@ theorem weight_blockWeight (μ : (Σ k, ι k) →₀ ℕ) :
     simp [blockWeight, Ne.symm hk]
   · simp
 
-omit [DecidableEq K] in
 
 theorem aeval_monomial_one (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (μ : (Σ k, ι k) →₀ ℕ) :
     aeval y (monomial μ (1 : R)) = ∏ p, y p ^ μ p := by
@@ -51,7 +50,6 @@ theorem relSecM_le_map (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (b : K 
     simpa using hμ k
   · simp [aeval_monomial_one]
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem exists_chart_le (N : ℕ) (μ : (Σ k, ι k) → ℕ)
     (h : ∀ k, Fintype.card (ι k) * N < ∑ i, μ ⟨k, i⟩) : ∃ c : ∀ k, ι k, ∀ k, N ≤ μ ⟨k, c k⟩ := by
@@ -64,15 +62,11 @@ theorem exists_chart_le (N : ℕ) (μ : (Σ k, ι k) → ℕ)
     exact absurd (h k) (not_lt.2 hle)
   exact ⟨fun k => (hk k).choose, fun k => (hk k).choose_spec⟩
 
-omit [Fintype K] [DecidableEq K] in
-open Classical in
 
 theorem sum_chart (c : ∀ k, ι k) (N : ℕ) (k : K) : ∑ i, (if c k = i then N else 0) = N := by
   rw [Finset.sum_ite_eq]
   simp
 
-omit [DecidableEq K] in
-open Classical in
 
 theorem prod_chart (z : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (N : ℕ) :
     ∏ p : Σ k, ι k, z p ^ (if c p.1 = p.2 then N else 0) = (∏ k, z ⟨k, c k⟩) ^ N := by
@@ -84,7 +78,6 @@ theorem prod_chart (z : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (N : ℕ) :
     simp [Ne.symm hi]
   · simp
 
-omit [DecidableEq K] in
 
 theorem chart_pow_mem (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (N : ℕ) :
     (∏ k, y ⟨k, c k⟩) ^ N ∈ relSecM R y (fun _ => N) := by
@@ -92,7 +85,6 @@ theorem chart_pow_mem (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (c : ∀
   rw [← prod_chart]
   exact monomial_mem_relSecM R y _ fun k => sum_chart c N k
 
-omit [DecidableEq K] in
 
 theorem exists_chart_factor (N : ℕ) (μ : (Σ k, ι k) → ℕ) (c : ∀ k, ι k) (hc : ∀ k, N ≤ μ ⟨k, c k⟩) :
     ∃ ν : (Σ k, ι k) → ℕ, (∀ k, ∑ i, ν ⟨k, i⟩ + N = ∑ i, μ ⟨k, i⟩) ∧
@@ -116,8 +108,6 @@ theorem exists_chart_factor (N : ℕ) (μ : (Σ k, ι k) → ℕ) (c : ∀ k, ι
     refine Finset.prod_congr rfl fun p _ => ?_
     rw [← pow_add, ← hsplit p]
 
-omit [∀ k, Fintype (ι k)] in
-open Classical in
 
 theorem comp_mul (R : Type*) [CommRing R] {d : K → ℕ} (m : K → ℕ) {G : MvPolynomial (Σ k, ι k) R}
     (hG : G ∈ weightedHomogeneousSubmodule R (blockWeight (ι := ι)) d) (A : MvPolynomial (Σ k, ι k) R) :

@@ -39,7 +39,6 @@ theorem measurePreserving_mulVec {A : Matrix ι ι ℂ} (hA : Complex.normSq A.d
   refine ⟨hm, ?_⟩
   simpa using hmap
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem normSq_det (h : HermitianForm F E W) (v : Basis ι E W) (g : archUnitary h v)
     (w : InfinitePlace E) : Complex.normSq ((g : InfinitePlace E → GL ι ℂ) w : Matrix ι ι ℂ).det = 1 := by
@@ -66,7 +65,6 @@ def sqrtMap (Q : InfinitePlace E → Matrix ι ι ℂ) :
   map_add' y z := by ext p; simp [mulVec_add]
   map_smul' c y := by ext p; simp [mulVec_smul]
 
-omit [IsTotallyComplex E] [DecidableEq ι] in
 
 theorem norm_sq_sqrtMap (Q : InfinitePlace E → Matrix ι ι ℂ) (y : InfinitePlace E → ι → ℂ) :
     ‖sqrtMap Q y‖ ^ 2 = ∑ w, (star (y w) ⬝ᵥ (((Q w)ᴴ * Q w) *ᵥ y w)).re := by
@@ -78,7 +76,6 @@ theorem norm_sq_sqrtMap (Q : InfinitePlace E → Matrix ι ι ℂ) (y : Infinite
   refine Finset.sum_congr rfl fun i _ => ?_
   norm_cast
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem exists_isometry {h : HermitianForm F E W} {v : Basis ι E W} (M : Majorant h v) :
     ∃ (d : ℕ) (S : (InfinitePlace E → ι → ℂ) ≃L[ℝ] EuclideanSpace ℝ (Fin d)),
@@ -126,7 +123,6 @@ def invApplyEquiv {h : HermitianForm F E W} {v : Basis ι E W} (g : archUnitary 
       left_inv := fun y => by funext w; simp [invApply, mulVec_mulVec]
       right_inv := fun y => by funext w; simp [invApply, mulVec_mulVec] }
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem measurePreserving_invApply {h : HermitianForm F E W} {v : Basis ι E W}
     (g : archUnitary h v) : MeasurePreserving (invApply g) volume volume :=
@@ -135,7 +131,6 @@ theorem measurePreserving_invApply {h : HermitianForm F E W} {v : Basis ι E W}
 
 end MajorantTransport
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 theorem MajorantTransport.proof (h : HermitianForm F E W) (v : Basis ι E W) :
     MajorantTransport.Statement h v := by

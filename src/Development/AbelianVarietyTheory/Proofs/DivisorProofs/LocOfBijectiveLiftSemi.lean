@@ -34,9 +34,7 @@ include hA in
 theorem isAbelianScheme_onAff {V : T.Opens} (hV : IsAffineOpen V) : IsAbelianScheme (onAff A hV) :=
   isAbelianScheme_pullback_obj hV.fromSpec A hA
 
-include hg in
 
-include H hA hg in
 
 end Data
 

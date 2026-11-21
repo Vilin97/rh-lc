@@ -66,7 +66,6 @@ theorem int_star {x : Lsq K Δ} (h : IsIntegral O x) : IsIntegral O (star x) := 
         refine QuadraticAlgebra.ext ?_ ?_ <;> simp [starRingEnd_apply, QuadraticAlgebra.re_star, QuadraticAlgebra.im_star] }
   exact h.map φ
 
-variable (Δ) in
 
 def RL : Subring (Matrix (Fin 2) (Fin 2) (Lsq K Δ)) where
   carrier := {m | Shape m ∧ ∀ i j, IsIntegral O (m i j)}

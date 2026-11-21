@@ -45,6 +45,5 @@ end GlobalTheory.FinPl.VLast.KernPf
 
 namespace GlobalTheory.FinPl.VLast.KernPf
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.FinPl.VLast.KernPf

@@ -59,7 +59,6 @@ theorem proj_of_free_idem [Module A Q] [IsScalarTower A R Q] [Module.Free A Q] (
   rw [← Finsupp.linearCombination_apply]
   exact b.linearCombination_repr q
 
-variable (A) in
 
 theorem proj_of_idem [IsDomain A] [IsPrincipalIdealRing A] [Module.Finite R Q] (e : R)
     (he : ∀ x : R, ∃ a : A, x * e = algebraMap A R a * e) (hQ : ∀ q : Q, e • q = q)
@@ -90,7 +89,6 @@ theorem proj_of_idem [IsDomain A] [IsPrincipalIdealRing A] [Module.Finite R Q] (
   have : Module.Free A Q := Module.free_of_finite_type_torsion_free'
   exact proj_of_free_idem e he hQ
 
-variable (A) in
 
 theorem proj_of_two_idem [IsDomain A] [IsPrincipalIdealRing A] [Module.Finite R Q] (e : R)
     (hee : e * e = e)

@@ -57,9 +57,7 @@ attribute [local instance] borelG borelF borelA borelH GlobalTheory.LocalData.co
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-open PositivityTheory.Rg.BcB.F.F5.Bo PositivityTheory.Rg.BcB.F.F5.Bo.GlobalFixedVectorsAlt in
 
-open PositivityTheory.Rg.BcB.F.F5.Bo PositivityTheory.Rg.BcB.F.F5.Bo.GlobalFixedVectorsAlt in
 
 section Conj
 

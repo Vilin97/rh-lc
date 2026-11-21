@@ -102,7 +102,6 @@ theorem specPhi_norm {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Type} 
 
 variable {l : ℕ} [Fact l.Prime]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem specPhi_co (K LL : FinExt l) (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) {d : ℕ}
     (M : GQ l → Matrix (Fin d) (Fin d) (PadicComplex l))

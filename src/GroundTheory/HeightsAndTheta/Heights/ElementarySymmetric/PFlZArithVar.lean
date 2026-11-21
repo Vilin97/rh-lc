@@ -30,7 +30,6 @@ section Rename
 
 variable {K : Type} [Fintype K] {ι ι' : K → Type} [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
 
-omit [Fintype K] in
 
 theorem isMultiHomog_rename_sigma (e : ∀ k, ι k ≃ ι' k) {g : MRing ι} {a : K → ℕ}
     (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) :
@@ -88,9 +87,7 @@ end Rename
 
 variable (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ)
 
-omit [Fintype Ψ] [DecidableEq Ψ] in
 
-omit [Fintype Ψ] [DecidableEq Ψ] in
 
 end FlZArithVar
 

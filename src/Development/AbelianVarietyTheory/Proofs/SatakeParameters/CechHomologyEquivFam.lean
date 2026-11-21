@@ -192,7 +192,6 @@ theorem ker_cocMap (hinj : ∀ s, s.Nonempty → Function.Injective (g s))
 
 end GlobalTheory.CechFam
 
-open GlobalTheory.CechFam in
 
 theorem GlobalTheory.cechHomologyEquivFam : ∀ (R : Type) [Field R] (ι : Type) [LinearOrder ι] (E : Type) [AddCommGroup E] [Module R E]
     (A : Finset ι → Submodule R E) (C : GlobalTheory.Cube ι R) (g : ∀ s, C.obj s →ₗ[R] E),

@@ -20,7 +20,6 @@ open GlobalTheory.QPl
 
 variable {D : D7} {c : Comm D}
 
-set_option maxHeartbeats 4000000 in
 
 structure QGeo (v : VCom c) (B : GlobalTheory.Fam.Base c) (PP : Formalism.L2.DIV.Pl D.host.E) where
   k : Type
@@ -114,7 +113,6 @@ theorem T_openTop :
 
 end QGeo
 
-set_option maxHeartbeats 4000000 in
 
 structure QExt (G : QGeo v B PP) (χ : ℕ → (AE D)ˣ →* Circle) where
   δ : G.kˣ →* ℂˣ
@@ -189,7 +187,6 @@ theorem mu : ∀ j, j ≤ G.s + 1 →
 
 end QExt
 
-set_option maxHeartbeats 4000000 in
 
 def QExt.toAt {G : QGeo v B PP} {χ : ℕ → (AE D)ˣ →* Circle} (E : QExt G χ) : QAt v χ where
   k := G.k

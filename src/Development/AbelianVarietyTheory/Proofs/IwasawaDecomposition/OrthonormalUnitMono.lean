@@ -19,11 +19,9 @@ variable {σ : Type} [DecidableEq σ]
 
 def unitMono (F : Fock σ) (α : σ →₀ ℕ) : F.H := (wt α)⁻¹ • F.ι (monomial α 1)
 
-omit [DecidableEq σ] in
 
 theorem conj_wt (α : σ →₀ ℕ) : (starRingEnd ℂ) (wt α) = wt α := Complex.conj_ofReal _
 
-omit [DecidableEq σ] in
 
 theorem wt_mul_self (α : σ →₀ ℕ) : wt α * wt α = (mfact α : ℕ) := by
   rw [← star_wt_mul, conj_wt]

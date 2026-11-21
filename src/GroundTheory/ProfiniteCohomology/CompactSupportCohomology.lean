@@ -231,7 +231,6 @@ theorem compactCohomologyMap_comp (g' : B ⟶ C) (gᵥ' : ∀ v, Bᵥ v ⟶ Cᵥ
   exact (congrArg (HomologicalComplex.homologyMap · n) h).trans
     (HomologicalComplex.homologyMap_comp _ _ n)
 
-include hg in
 
 theorem localToCompact_compactCohomologyMap (n : ℕ) :
     localToCompact φ A Aᵥ a n ≫ compactCohomologyMap φ g gᵥ hg (n + 1) =
@@ -281,7 +280,6 @@ noncomputable def compactδ (hS : S.ShortExact) (hSᵥ : ∀ v, (Sᵥ v).ShortEx
       compactCohomology φ S.X₁ (fun v => (Sᵥ v).X₁) (fun v => (s v).τ₁) (n + 1) :=
   (compactCochains_shortExact φ s hS hSᵥ).δ n (n + 1) rfl
 
-include hS hSᵥ in
 
 theorem compactCohomology_exact₃ (n : ℕ) :
     (ShortComplex.mk (compactCohomologyMap φ S.g (fun v => (Sᵥ v).g) (fun v => (s v).comm₂₃) n)

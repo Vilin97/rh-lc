@@ -12,7 +12,6 @@ namespace ReciprocityTheory.EigenFramesTheory
 
 universe u v
 
-open Classical in
 
 def EigenFrameDual : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (E : Type u) [Field E] [NumberField E] (κ : Type v) [Fintype κ]

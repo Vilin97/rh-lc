@@ -39,8 +39,6 @@ theorem finiteDimensional_piece (n : K → ℕ) :
   have := hfin.to_subtype
   exact Module.Finite.of_basis (basisRestrictSupport F {d | Finsupp.weight (blockWeight ι) d = n})
 
-omit [∀ k, Fintype (ι k)] in
-open Classical in
 
 theorem component_mul {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {s : K → ℕ} (hf : IsMultiHomog f s) (c : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)
     (n : K → ℕ) :
@@ -51,8 +49,6 @@ theorem component_mul {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F 
   rw [← weightedDecomposition.decompose'_apply, ← weightedDecomposition.decompose'_apply]
   exact h
 
-omit [∀ k, Fintype (ι k)] in
-open Classical in
 
 theorem mem_sup_span {L : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {s : K → ℕ}
     (hL : IsMultiHomogIdeal L) (hf : IsMultiHomog f s) {n : K → ℕ} {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
@@ -67,7 +63,6 @@ theorem mem_sup_span {L : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingO
   rw [← hx2, map_add (f := _), mul_comm c f, component_mul hf, add_sub_cancel_right]
   exact hL l hl n
 
-open Classical in
 
 theorem finrank_step (L : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (s : K → ℕ)
     (hL : IsMultiHomogIdeal L) (hf : IsMultiHomog f s) (n : K → ℕ) :

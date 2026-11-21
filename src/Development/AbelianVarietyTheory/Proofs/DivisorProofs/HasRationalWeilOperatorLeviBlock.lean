@@ -145,7 +145,6 @@ noncomputable section
 namespace GlobalTheory.RatWeilOp
 variable {κ : Type} [Fintype κ] [DecidableEq κ] {F : Type} [Field F] [NumberField F]
 
-open scoped Classical in
 
 theorem funLeft_pure_levi {g h : Matrix κ κ F} (hI1 : hᵀ.map (mixedEmbedding F) * g.map (mixedEmbedding F) = 1)
     (hI2 : g.map (mixedEmbedding F) * hᵀ.map (mixedEmbedding F) = 1) (f : SInf F κ) (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) :
@@ -190,7 +189,6 @@ end GlobalTheory.RatWeilOp
 noncomputable section
 namespace GlobalTheory.RatWeilOp
 
-open scoped Classical in
 
 theorem hasOp_levi (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (κ : Type) [Fintype κ] [DecidableEq κ]
     (g h : Matrix κ κ F) (hg : gᵀ * h = 1) : HasOp ψ (Matrix.fromBlocks g 0 0 h) := by

@@ -33,7 +33,6 @@ def KillsForm {Y : Scheme.{0}} (φ : Y ⟶ PSpace R N) (n : ℕ) (f : MvPolynomi
 def vanIdeal {Y : Scheme.{0}} (φ : Y ⟶ PSpace R N) : Ideal (MvPolynomial (Fin (N + 1)) R) :=
   Ideal.span {f | ∃ n, ∃ hf : f.IsHomogeneous n, KillsForm φ n f hf}
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem vanIdeal_homog {Y : Scheme.{0}} (φ : Y ⟶ PSpace R N) : HomogIdeal (vanIdeal φ) := by
   intro d f hf

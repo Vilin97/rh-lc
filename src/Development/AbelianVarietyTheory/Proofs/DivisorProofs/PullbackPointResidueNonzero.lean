@@ -17,8 +17,6 @@ open GlobalTheory GlobalTheory.CxPts GlobalTheory.VB
 
 namespace GlobalTheory.PullbackFinitePoint
 
-set_option autoImplicit false in
-open CategoryTheory AlgebraicGeometry TopologicalSpace in
 
 theorem _root_.GlobalTheory.PullbackFinitePoint.residueDegree_ne_zero_iff_finite {X Y : Scheme.{0}} (f : X ⟶ Y) (x : X) :
     f.residueDegree x ≠ 0 ↔ (f.residueFieldMap x).hom.Finite := by
@@ -40,8 +38,6 @@ private theorem residueFieldMap_surjective_of_surjectiveOnStalks {X Y : Scheme.{
   refine ⟨Y.residue (f x) t, ?_⟩
   rw [← ConcreteCategory.comp_apply, Scheme.residue_residueFieldMap, ConcreteCategory.comp_apply]
 
-set_option autoImplicit false in
-open CategoryTheory AlgebraicGeometry TopologicalSpace in
 
 theorem _root_.GlobalTheory.PullbackFinitePoint.residueDegree_ne_zero_of_surjectiveOnStalks {X Y : Scheme.{0}} (f : X ⟶ Y)
     [SurjectiveOnStalks f] (x : X) : f.residueDegree x ≠ 0 :=

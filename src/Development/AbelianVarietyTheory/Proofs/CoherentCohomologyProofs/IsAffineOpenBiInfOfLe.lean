@@ -45,7 +45,6 @@ theorem acyclic_comap_secCube [LinearOrder ν] [LinearOrder κ] [Fintype κ] (hM
     isAffineOpen_biInf_of_le E hE _ hV
       ((iInf_le_iInf_of_subset E Finset.subset_union_left).trans h)
 
-variable (M) in
 
 def comapSecCubeIso (E : ν → Y.Opens) (D : κ → Y.Opens) (g : Finset κ → Finset ν) (hg : Monotone g)
     (h : ∀ t, ⨅ i ∈ g t, E i = ⨅ k ∈ t, D k) :

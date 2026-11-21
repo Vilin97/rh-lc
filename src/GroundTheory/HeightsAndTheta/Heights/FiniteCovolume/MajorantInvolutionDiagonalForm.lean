@@ -104,7 +104,6 @@ def LenSq.Statement (h : HermitianForm F E W) (v : Basis ι E W) : Prop :=
 def VecAtNeZero.Statement (v : Basis ι E W) : Prop :=
   ∀ x : W, x ≠ 0 → ∀ w : InfinitePlace E, vecAt v x w ≠ 0
 
-variable (E) in
 
 def IntegerSmallAtPlaces.Statement : Prop :=
   ∀ a ∈ integralClosure ℤ E, (∀ w : InfinitePlace E, w a < 1) → a = 0
@@ -116,7 +115,6 @@ section Line
 variable {E : Type*} [Field E] [NumberField E]
 variable {W : Type*} [AddCommGroup W] [Module E W]
 
-variable (E) in
 
 def intSubgroup : AddSubgroup E := (algebraMap (𝓞 E) E).toAddMonoidHom.range
 
@@ -134,13 +132,11 @@ def weightedEmbed (c : InfinitePlace E → ℝ) : E →+ EuclideanSpace ℝ (Inf
     simp only [map_add (f := _), Complex.add_re, Complex.add_im, PiLp.add_apply]
     split_ifs <;> ring
 
-variable (W) in
 
 def LineIndexCoeffs.Statement : Prop :=
   ∀ (La : AddSubgroup W) (x : W), x ≠ 0 →
     lineIndex E La x = (intSubgroup E).relIndex (lineCoeffs La x)
 
-variable (W) in
 
 def LineCoeffsFG.Statement : Prop :=
   ∀ (La : AddSubgroup W) (x : W), La.FG → x ≠ 0 → (lineCoeffs (E := E) La x).FG

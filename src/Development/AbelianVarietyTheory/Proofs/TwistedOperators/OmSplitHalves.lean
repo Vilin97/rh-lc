@@ -98,7 +98,6 @@ theorem unram_detAt {V : HSp D} {L : Submodule (𝓞 D.host.E) (Fin V.rank → D
   · rw [← MonoidHom.map_inv]
     exact GlobalTheory.Mem.DetUnit.part_mem_intAE he (det_int hL g⁻¹ (GlobalTheory.LocalLatStab.inv_keeps V _ g h))
 
-open GlobalTheory.SplitScalar GlobalTheory.SplitHecke in
 
 theorem om_split_halves {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D}
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}

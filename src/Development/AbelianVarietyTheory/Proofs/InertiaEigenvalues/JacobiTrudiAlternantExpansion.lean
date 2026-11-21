@@ -130,7 +130,6 @@ theorem antisym_gap {m : ℕ} {s : Fin m → ℕ} (hs : StrictAnti s) :
   | (intros; apply @_root_.GlobalTheory.StrictAntiAddLe.add_le_of_strictAnti <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.StrictAntiAddLe.add_le_of_strictAnti ..)
 
-open Classical in
 
 theorem antisym_sum_sort {M : Type*} [AddCommMonoid M] (m d : ℕ) (g : (Fin m → ℕ) → M) :
     ∑ l ∈ antiParts m d, ∑ τ : Perm (Fin m), g (fun i => l (τ i) + staircase m (τ i)) =

@@ -60,7 +60,6 @@ section
 
 variable {E Ω : Type} [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
 
-variable (E Ω) in
 
 def Fld.base : Fld E Ω := { K := E }
 

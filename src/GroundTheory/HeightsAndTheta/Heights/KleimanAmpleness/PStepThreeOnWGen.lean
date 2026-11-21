@@ -50,7 +50,6 @@ theorem primeOf_le_zeroIdeal (D : SubSystem S x Ω) (s : Ω) : primeOf (S := S) 
   rw [(mem_primeOf_of_isHomogeneous x (homogeneousComponent_isHomogeneous d f)).mp
     (homogeneousComponent_mem_primeOf x hf d), zero_mul, mul_zero]
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem homog_of_mem_minimalPrimes (D : SubSystem S x Ω) (s : Ω) {pp : Ideal (Poly S N)}
     (hpp : pp ∈ (zeroIdeal D s).minimalPrimes) :
@@ -107,7 +106,6 @@ end Helpers
 
 end StepThree.OnW.Gen
 
-open StepThree.OnW.Gen in
 
 theorem StepThree.OnW.Gen.proof (hRL : RestrLenRestrict.Statement.{u, w})
     (hRG : RestrictGenerated.Statement.{u, w}) : StepThree.OnW.Gen.Statement.{u, w} := by

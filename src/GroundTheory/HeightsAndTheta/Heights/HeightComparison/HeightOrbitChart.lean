@@ -38,7 +38,6 @@ def localQuotLength {O : Type*} [CommRing O] (m : Ideal O) [m.IsPrime] (f : O) :
   (Module.length (Localization.AtPrime m)
     (Localization.AtPrime m ⧸ Ideal.span {algebraMap O (Localization.AtPrime m) f})).toNat
 
-open Classical in
 
 end
 

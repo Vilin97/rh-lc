@@ -220,7 +220,6 @@ theorem latSpan_stable {ι : Type} (u : L) (hu : u ≠ 0) (e : ι → ℤ → M)
 
 end Series
 
-set_option maxHeartbeats 1000000 in
 
 theorem ex_gam {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {H : LocHW l P}
     {F : LocFon l P AI H} (C : LocCmpT l P AI H F) {K : FinExt l} {s : ℕ} {LL : FinExt l}
@@ -238,7 +237,6 @@ theorem ex_gam {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {H :
     (by rw [Nat.cast_one]; exact hjs.trans hg.ge) (pow_one ζ).symm x
     ((H.W K s LL h).N_Γ T (H.W K s LL h).gam x x.2) k
 
-set_option maxHeartbeats 1000000 in
 
 theorem graded_Lat {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {H : LocHW l P}
     {F : LocFon l P AI H} (C : LocCmpT l P AI H F) {K : FinExt l} {s : ℕ} {LL : FinExt l}

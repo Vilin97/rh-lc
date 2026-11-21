@@ -28,7 +28,6 @@ noncomputable section
 
 namespace GlobalTheory.ArcCM.CxFibre
 
-open ReciprocityTheory.ChartRestriction.G.DVR in
 
 theorem exists_primGen {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] (L : RigLB G) (f : G ⟶ G) [IsMonHom f]
     (h : LBIso L.L (cubeLB G ![𝟙 G, f] L.L)) :
@@ -149,7 +148,6 @@ theorem lieMult_card (unif : ThetaUnifAV) {E : Type} [Field E] [NumberField E] (
   exact Nat.card_congr (Equiv.subtypeEquivRight fun i =>
     ⟨fun e => by rw [e], fun e => IsLocalization.ringHom_ext (nonZeroDivisors (𝓞 E)) e⟩)
 
-open FibreUnif in
 
 theorem exists_holUnif_of_exp (hT : ThetaUnifAV) {S : Scheme.{0}} {G : Over S} [GrpObj G] {L₀ : LB G.left}
     (hL₀ : L₀.IsLB) (t : Sp ℂ ⟶ S) (P : Out.PolAV (Sp ℂ)) (rig : LB.Gen (P.L.pull (eSec P.A))) (hrig : rig.IsGen)

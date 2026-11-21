@@ -105,7 +105,6 @@ theorem rows_mean_real {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (what₂ : Fi
         rw [ENNReal.ofReal_mul (Finset.sum_nonneg fun Λ _ => hw Λ),
           ENNReal.ofReal_sum_of_nonneg (fun Λ _ => hw Λ)]
 
-open Classical in
 
 theorem rows_sum_wRow (S : Finset (D.s.Pair u u')) :
     ∑ p ∈ S, X.wRow p =
@@ -119,7 +118,6 @@ theorem rows_sum_wRow (S : Finset (D.s.Pair u u')) :
     fun p hp => by rw [(Finset.mem_filter.mp hp).2]
   rw [Finset.sum_congr rfl hc, Finset.sum_const, nsmul_eq_mul, mul_comm]
 
-open Classical in
 
 theorem rows_count {C' Cl Cg cb Cu cT CT C0 A Ad C : ℝ} (hH : Cnt.Hyp D large₂ u u' C' Cl Cg cb Cu cT CT C0 A)
     (hC3 : UnitaryVolumeMass.MeanFlagPairCount D large₂ u u' C' Cl Cg cb Cu cT CT C0 A Ad C) (Z' Z'' : GramM D) (hZ' : RelZ D Z') (hZ'' : RelZ D Z'')
@@ -142,7 +140,6 @@ end Count
 
 section One
 
-open Classical in
 
 theorem rows_card_le_mul {α ι : Type} (Xs : Set α) (R : α → α → Prop) (hR : ∀ a ∈ Xs, R a a) (S : Finset ι) (f : ι → α)
     (hf : ∀ i ∈ S, f i ∈ Xs) (P : ℝ≥0∞)
@@ -221,7 +218,6 @@ def wordPairSwapBound (D : D7) (large₂ : SizeData₂ D) (u u' : D.what₂.Word
 def gramPairQuadrupleBound (D : D7) (large₂ : SizeData₂ D) (C : ℝ) (Z' Z'' : GramM D) : ℝ :=
   C ^ D.R.f * (HHZ D large₂.sc.b C Z' * HHZ D large₂.sc.b C Z'') ^ (C * (D.R.rS : ℝ) ^ 2)
 
-open Classical in
 
 theorem rows_countOne {C' Cl Cg cb Cu cT CT C0 A CSW C4 : ℝ} (hH : Cnt.Hyp D large₂ u u' C' Cl Cg cb Cu cT CT C0 A)
     (hSW : UnitaryVolumeMass.stSW D large₂ u u' C' Cl Cg cb Cu cT CT C0 A CSW) (hC4 : UnitaryVolumeMass.PartnerCountBound D large₂ u u' C' Cl Cg cb Cu cT CT C0 A C4)
@@ -284,7 +280,6 @@ def wordPairTermSingleFibre (X : TermTie D) (Y : LoopTie D large₂ X u u' C1) :
       TEqv D (X.abelian₂ (D.s.pfst p₀)) (lf D Y.F0) (X.fl' (D.s.psnd p₀)) (X.fl' (D.s.psnd p))) →
     ((S.card : ℕ) : ℕ∞) ≤ cntPartners D (X.abelian₂ (D.s.pfst p₀)) (lf D Y.F0) (X.fl' (D.s.psnd p₀)) Z'
 
-open Classical in
 
 theorem rows_countOne' {C' Cl Cg cb Cu cT CT C0 A CSW C4 : ℝ} (hH : Cnt.Hyp D large₂ u u' C' Cl Cg cb Cu cT CT C0 A)
     (hSW : UnitaryVolumeMass.stSW D large₂ u u' C' Cl Cg cb Cu cT CT C0 A CSW) (hC4 : UnitaryVolumeMass.PartnerCountBound D large₂ u u' C' Cl Cg cb Cu cT CT C0 A C4)

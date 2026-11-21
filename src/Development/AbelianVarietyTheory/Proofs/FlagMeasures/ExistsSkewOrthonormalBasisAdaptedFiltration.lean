@@ -179,7 +179,6 @@ theorem exists_re_orthonormal_adapted {n d m : ℕ} (P : ℕ → Submodule ℝ (
     rw [h3] at h2
     exact h2
 
-open GlobalTheory.RadicalAlg Formalism.REAL in
 
 theorem trace_im_eq_zero {n : ℕ} (ε : Fin n → Bool) {X Y : Matrix (Fin n) (Fin n) ℂ}
     (hX : negAdj ε X = X) (hY : negAdj ε Y = Y) : ((X * Yᴴ).trace).im = 0 := by
@@ -203,7 +202,6 @@ theorem trace_im_eq_zero {n : ℕ} (ε : Fin n → Bool) {X Y : Matrix (Fin n) (
     rw [h2, h1, Matrix.trace_mul_comm]
   exact Complex.conj_eq_iff_im.mp h3
 
-open GlobalTheory.RadicalAlg in
 
 theorem exists_skew_basis : ∀ (n d m : ℕ) (ε : Fin n → Bool) (A : ℕ → Submodule ℂ (Matrix (Fin n) (Fin n) ℂ)) (deg : Fin d → ℕ), (∀ c, A (c + 1) ≤ A c) → A m = ⊥ → (∀ c, ∀ X ∈ A c, Formalism.REAL.Jm ε * Xᴴ * Formalism.REAL.Jm ε ∈ A c) → (∀ c, Module.finrank ℂ (A c) = Module.finrank ℂ (A (c + 1)) + Fintype.card {i : Fin d // deg i = c}) → ∃ B : Fin d → Matrix (Fin n) (Fin n) ℂ, (∀ i k, (B i * (B k)ᴴ).trace = if i = k then 1 else 0) ∧ (∀ i, Formalism.REAL.inG ε (B i)) ∧ ∀ c, A c = Submodule.span ℂ (B '' {i | c ≤ deg i}) := by
   intro n d m ε A deg hA hm hstab hd

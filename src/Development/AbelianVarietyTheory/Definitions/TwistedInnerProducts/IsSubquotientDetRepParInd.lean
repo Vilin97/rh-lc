@@ -26,7 +26,6 @@ theorem nabs_pos' (x : kˣ) : 0 < nabs k x := by
 
 theorem nabs_mul' (x y : kˣ) : nabs k (x * y) = nabs k x * nabs k y := by simp [nabs]
 
-open scoped Pointwise in
 
 theorem nabs_eq_one {x : kˣ} (hx : valuation k (x : k) = 1) : nabs k x = 1 := by
   borelize k
@@ -75,7 +74,6 @@ theorem absPow_neg (s : ℂ) : absPow k (-s) = (absPow k s)⁻¹ := by
 theorem isUnram_absPow (s : ℂ) : IsUnram (absPow k s) := fun x hx => by
   ext; simp [val_absPow, nabs_eq_one k hx]
 
-variable {k} in
 
 theorem isSmoothChar_of_isUnram {χ : kˣ →* ℂˣ} (h : IsUnram χ) : IsSmoothChar χ := by
   have ho : IsOpen (𝒪[k] : Set k) := Valuation.isOpen_integer
@@ -99,11 +97,9 @@ theorem ord_mul (x y : kˣ) : ord k (x * y) = ord k x + ord k y := by
   rw [WithZero.log_mul (by simp) (by simp)]
   ring
 
-variable {k} in
 
 theorem ord_eq_zero {x : kˣ} (hx : valuation k (x : k) = 1) : ord k x = 0 := by simp [ord, hx]
 
-variable {k} in
 
 theorem ord_eq_one {x : kˣ} (hx : valuation k (x : k) = uniformizer k) : ord k x = 1 := by
   set φ := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k
@@ -120,7 +116,6 @@ theorem ord_eq_one {x : kˣ} (hx : valuation k (x : k) = uniformizer k) : ord k 
       simpa using φ.strictMono.monotone this
   simp [ord, hx, φ, key]
 
-variable {k} in
 
 theorem ord_eq_zero_iff {x : kˣ} : ord k x = 0 ↔ valuation k (x : k) = 1 := by
   refine ⟨fun h => ?_, ord_eq_zero⟩
@@ -144,7 +139,6 @@ theorem unrChar_uniformizer (α : ℂˣ) {x : kˣ} (hx : valuation k (x : k) = u
     unrChar k α x = α := by
   rw [unrChar_apply, ord_eq_one hx, zpow_one]
 
-variable {k} in
 
 theorem eq_unrChar {χ : kˣ →* ℂˣ} (h : IsUnram χ) {ϖ : kˣ}
     (hϖ : valuation k (ϖ : k) = uniformizer k) : χ = unrChar k (χ ϖ) := by
@@ -278,7 +272,6 @@ def jacMap (e : (Σ a, m a) ≃ n) {π : Representation ℂ (GL n k) V} {τ : Re
     (f : π.IntertwiningMap τ) : (jac e π).IntertwiningMap (jac e τ) :=
   twistMap (jacquetMap f _ _ _) _
 
-omit [∀ a, DecidableEq (m a)] in
 
 abbrev IndSpLower (e : (Σ a, m a) ≃ n) (ρ : Representation ℂ (Levi k m) W) : Type :=
   smoothPart (ind (parabLower k e) ((twist ρ (deltaHalf k m)⁻¹).comp (leviProjLower k e)))
@@ -391,7 +384,6 @@ def jacBU (π : Representation ℂ (GL n k) V) : Representation ℂ (n → kˣ) 
 def jacB (π : Representation ℂ (GL n k) V) : Representation ℂ (n → kˣ) (Jacquet π (unipB k n)) :=
   (jac (points n) π).comp (leviTorus k n).toMonoidHom
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem jacBU_mk (π : Representation ℂ (GL n k) V) (t : n → kˣ) (v : V) :
     jacBU π t (Submodule.Quotient.mk v) = Submodule.Quotient.mk (π (diagT k n t) v) := rfl
@@ -471,7 +463,6 @@ def jacBUFixed (π : Representation ℂ (GL n k) V) :
 def expMult (π : Representation ℂ (GL n k) V) (χ : (n → kˣ) →* ℂˣ) : ℕ∞ :=
   jhMult (ofChar χ) (jacBUFixed π)
 
-omit [LinearOrder n] in
 
 def IsSpherical (π : Representation ℂ (GL n k) V) : Prop := IsSphericalFor π (KO k n)
 

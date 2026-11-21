@@ -26,7 +26,6 @@ theorem det_of_smul_rows {n : ℕ} (s : Fin n → 𝓞 K) (x : Fin n → Fin n �
     simp [Algebra.smul_def]
   rw [h, Matrix.det_mul_column, Algebra.smul_def, map_prod]
 
-omit [NumberField K] in
 
 theorem prod_notMem_asIdeal {n : ℕ} (p : HeightOneSpectrum (𝓞 K)) (s : Fin n → 𝓞 K)
     (hs : ∀ i, s i ∉ p.asIdeal) : ∏ i, s i ∉ p.asIdeal := by

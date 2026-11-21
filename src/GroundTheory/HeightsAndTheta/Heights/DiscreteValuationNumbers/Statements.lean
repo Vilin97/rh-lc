@@ -26,7 +26,6 @@ def ConservationOfNumber.Statement : Prop :=
       ∀ a : Fin d → K → ℤ,
         cycEval (fun W => vNum W a) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C ϖ)) W : ℤ))) = gNum P a
 
-open Classical in
 
 def CutByEffectiveDivisor.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →

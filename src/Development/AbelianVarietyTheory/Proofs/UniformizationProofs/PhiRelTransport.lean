@@ -156,7 +156,6 @@ theorem liftB_fam (ρ : T' ⟶ DegPre.BF D' F) (x : D'.X) (κ : Fin 4) :
       rw [MonObj.comp_one, MonObj.comp_one, map_one]
     exact congrArg (fun q => q.left) e
 
-include hΘ₂ in
 
 theorem sval_rel {k : ℕ} (x : D'.X) (s : LB.Sec (LB.LinComb D.P.L (DegPre.famφ D F (hD.xe x)) (DegPre.famε k)))
     (s' : LB.Sec (LB.LinComb D'.P.L (DegPre.famφ D' F x) (DegPre.famε k)))

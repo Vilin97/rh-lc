@@ -13,11 +13,9 @@ namespace GlobalTheory.BZMir
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 def rightUnip (n t : ℕ) : Subgroup (GL (Fin n) k × GL (Fin t) k) := Subgroup.prod ⊥ (unipB k (Fin t))
 
-variable (k) in
 
 def rightWhit (ψ : AddChar k Circle) (n t : ℕ) : rightUnip k n t →* ℂˣ :=
   (whitChar ψ t).comp
@@ -37,7 +35,6 @@ theorem inl_stab (ψ : AddChar k Circle) (n t : ℕ) (m : GL (Fin n) k) (u : rig
   congr 1
   exact Subtype.ext hconj
 
-variable (k) in
 
 def derRep (ψ : AddChar k Circle) {n t N : ℕ} (h : n + t = N) {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) :

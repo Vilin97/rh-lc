@@ -102,7 +102,6 @@ theorem exists_common_level {M R : ℕ} (hM : 0 < M) (hR : 0 < R) :
     congr 3
     push_cast; ring
 
-omit [IsCMField E] in
 
 theorem differentiableOn_of_isHeat {D : CM Ψ N N → CM Ψ n N → CM Ψ n N → ℂ} (hD : IsHeat Ψ D) :
     DifferentiableOn ℂ (fun Z : CF Ψ N N => D Z 0 0) {Z | (Z : CM Ψ N N) ∈ Hn Ψ N} := by

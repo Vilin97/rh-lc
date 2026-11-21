@@ -22,7 +22,6 @@ def rhoH (X : lieU P Q) : ℝ≥0∞ :=
   ENNReal.ofReal (‖((1 + 1) - ((X : lieU P Q) : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ)).det‖⁻¹ ^
     (2 * (P + Q)))
 
-open Classical in
 
 def cayF (X : lieU P Q) : UpqT P Q :=
   if h : ∃ g : UpqT P Q, UpqT.mat g *

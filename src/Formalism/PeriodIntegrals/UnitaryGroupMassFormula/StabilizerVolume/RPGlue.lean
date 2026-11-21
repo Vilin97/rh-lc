@@ -35,7 +35,6 @@ theorem evalV_mkAf (x : ∀ v : HeightOneSpectrum (𝓞 F), Fv F v)
     (h : ∀ᶠ v in cofinite, x v ∈ v.adicCompletionIntegers F) (v : HeightOneSpectrum (𝓞 F)) :
     evalV F v (mkAf x h) = x v := rfl
 
-open Classical in
 
 def finAd (p : (Fin a → Fin M → Ainf F ⊗[F] E) ×
     (∀ v : HeightOneSpectrum (𝓞 F), Fin a → Fin M → Fv F v ⊗[F] E)) (i : Fin a) (j : Fin M)

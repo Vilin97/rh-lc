@@ -73,7 +73,6 @@ section RootsSubgroupOf
 variable {K Ksep : Type} [Field K] [Field Ksep] [Algebra K Ksep] [IsSepClosure K Ksep] {l : ℕ}
   {U V : OpenSubgroup Gal(Ksep/K)}
 
-omit [IsSepClosure K Ksep] in
 
 theorem rootsRepZMod_ρ_of_mem
     (hμ : ∀ ζ : Ksep, ζ ^ l = 1 → ζ ∈ fixedField (V : Subgroup Gal(Ksep/K)))
@@ -96,7 +95,6 @@ theorem rootsRepZMod_ρ_of_mem
     exact (mem_fixedField_iff _ _).1 (hμ _ hs) _ hg
   exact key t
 
-variable (l) in
 
 noncomputable def rootsCohomologyZModEquiv (n : ℕ) :
     cohomology (Rep.res ((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))).subtype
@@ -170,7 +168,6 @@ variable {K Ksep : Type} [Field K] [Field Ksep] [Algebra K Ksep] [IsSepClosure K
 
 attribute [local instance] Subgroup.fintypeQuotientOfFiniteIndex
 
-include h in
 
 theorem toFun_cohomologyConjRep_eq
     (d : letI := (IntermediateField.inclusion (fixedField_le_fixedField h)).toRingHom.toAlgebra
@@ -213,7 +210,6 @@ variable {K Ksep : Type} [Field K] [ValuativeRel K] [TopologicalSpace K]
   [ValuativeRel Ksep] [TopologicalSpace Ksep] [IsValuativeTopology Ksep] [ValuativeExtension K Ksep]
   {l : ℕ} [Fact l.Prime] {U V : OpenSubgroup Gal(Ksep/K)}
 
-set_option maxHeartbeats 400000 in
 
 theorem finrank_cohomology_alternating_sum_coprime (hl : (l : K) ≠ 0) (h : V ≤ U)
     [((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))).Normal]

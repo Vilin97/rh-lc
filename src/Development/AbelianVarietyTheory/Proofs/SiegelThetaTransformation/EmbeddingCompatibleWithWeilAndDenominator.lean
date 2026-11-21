@@ -284,7 +284,6 @@ def extV (E : Type) [Field E] (N : ℕ) :
   map_smul' c v := by
     ext (i | i) <;> refine Fin.cases ?_ (fun i => ?_) i <;> simp
 
-omit [IsCMField E] in
 
 theorem botSpan_eq (h : M2 E (N + 1)) (h0 : h (Sum.inr 0) = Pi.single (Sum.inr 0) 1)
     (h1 : ∀ a, h (Sum.inr a) (Sum.inl 0) = 0) :
@@ -365,7 +364,6 @@ theorem botSpan_mul_le {m : ℕ} (a d : Matrix (Fin m) (Fin m) E) (g : M2 E m) :
   rw [e]
   exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
 
-omit [NumberField E] [IsCMField E] in
 
 theorem exists_col (v : Fin (N + 1) → E) (hv : v ≠ 0) :
     ∃ b : Matrix (Fin (N + 1)) (Fin (N + 1)) E, IsUnit b.det ∧ ∀ i, b i 0 = v i := by

@@ -18,7 +18,6 @@ section Frames
 
 variable {K : Type} [Field K] [NumberField K]
 
-open Classical in
 
 def frm {n : ℕ} (H : Matrix (Fin n) (Fin n) K) : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ :=
   fun v => if (H.map v.embedding).PosDef then frameOf (H.map v.embedding) else 1

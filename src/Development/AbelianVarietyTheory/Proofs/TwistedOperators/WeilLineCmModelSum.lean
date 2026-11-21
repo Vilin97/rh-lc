@@ -63,4 +63,3 @@ open scoped SchwartzMap RealInnerProductSpace
 
 end GlobalTheory.ArchCont
 
-open scoped Classical in

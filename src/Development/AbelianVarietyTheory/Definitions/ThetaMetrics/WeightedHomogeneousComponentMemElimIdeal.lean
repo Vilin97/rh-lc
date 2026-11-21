@@ -15,7 +15,6 @@ section Defs
 
 variable {K : Type*} [CommRing K] {σ β β' : Type*} [Fintype σ]
 
-variable (K σ) in
 
 def genericForm (i : β) : MvPolynomial (β × σ) (MvPolynomial σ K) :=
   linForm (X : σ → MvPolynomial σ K) i
@@ -23,7 +22,6 @@ def genericForm (i : β) : MvPolynomial (β × σ) (MvPolynomial σ K) :=
 theorem genericForm_eq (i : β) :
     genericForm K σ i = ∑ j, C (X j) * X (i, j) := rfl
 
-variable (β) in
 
 def incidenceIdeal (p : Ideal (MvPolynomial σ K)) :
     Ideal (MvPolynomial (β × σ) (MvPolynomial σ K)) :=
@@ -43,7 +41,6 @@ theorem incidenceIdeal_le {p : Ideal (MvPolynomial σ K)}
   rw [incidenceIdeal, sup_le_iff, Ideal.map_le_iff_le_comap, Ideal.span_le, Set.range_subset_iff]
   rfl
 
-variable (β) in
 
 def elimIdeal (p : Ideal (MvPolynomial σ K)) : Ideal (MvPolynomial (β × σ) K) where
   carrier := {f | ∃ m : ℕ, ∀ j, map C f * C (X j ^ m) ∈ incidenceIdeal β p}

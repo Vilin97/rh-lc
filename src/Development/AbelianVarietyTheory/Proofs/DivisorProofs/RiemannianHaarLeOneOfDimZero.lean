@@ -69,7 +69,6 @@ theorem fromFrame_eq_zero {E : Type} [Field E] [NumberField E] [IsCMField E] {r 
 
 end GlobalTheory.SUVol.Degenerate
 
-open GlobalTheory.SUVol.Degenerate in
 
 theorem GlobalTheory.SUVol.Degenerate.riemHaar_le_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) (x : Frame Ψ r), 1 ≤ r → (∀ τ, (mat x τ).det ≠ 0) → Ψ.card * (r ^ 2 - 1) = 0 → ∀ S : Set (realSU Ψ G), riemHaar Ψ G x S ≤ 1 := by
   intro E _ _ _ r Ψ G x hr hdet hc S

@@ -21,7 +21,6 @@ def InR (ψ : O0 p →+* Ω) (y : Ω) : Prop :=
   ∃ (d : ℕ) (e : Fin d → Ω) (b : Fin d → O0 p), (∀ t, IsInt p (e t) ∧ IsAlgZp p (e t)) ∧
     y = ∑ t, e t * ψ (b t)
 
-variable (p Ω) in
 
 abbrev zpAlg : Algebra ℤ_[p] Ω := ((algebraMap (O0 p) Ω).comp (algebraMap ℤ_[p] (O0 p))).toAlgebra
 

@@ -15,7 +15,6 @@ open GlobalTheory.Mum
 
 namespace GlobalTheory.Mum.InvFun
 
-open TensorProduct in
 
 theorem alg_inv {R A R' B : Type} [CommRing R] [CommRing A] [CommRing R'] [CommRing B] [Algebra R A] [Algebra R R']
     [Algebra R B] [Algebra A B] [Algebra R' B] [IsScalarTower R A B] [IsScalarTower R R' B]

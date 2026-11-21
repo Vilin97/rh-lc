@@ -55,4 +55,3 @@ theorem finrank_level_one {p : ℕ} {k : Type} [Field k] (G : PDivGroup p k) :
 
 end GlobalTheory.PDivGroup.CotDim
 
-open GlobalTheory.PDivGroup.CotDim in

@@ -14,7 +14,6 @@ namespace GramSubmodular
 variable {m α β γ : Type} [Fintype m] [Fintype α] [Fintype β] [Fintype γ]
   [DecidableEq α] [DecidableEq β] [DecidableEq γ]
 
-omit [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β] in
 
 end GramSubmodular
 

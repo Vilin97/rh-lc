@@ -304,7 +304,6 @@ theorem isGPull_comp {b : Base D R} {gb : GBase D.toG R'} {N : ℕ} {S₁ S₂ S
   · exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ ψ) (h₁.eta y)).trans
       ((Category.assoc _ _ _).trans ((congrArg (f ≫ ·) (heta y)).trans (Category.assoc _ _ _).symm)))
 
-open GlobalTheory.UPel.HT.Hecke in
 
 theorem tate_hecke {b : Base D R} (g : D.La →ₗ[D.O] D.La) (c k N : ℕ) (cpos : 0 < c) (kpos : 0 < k) (Npos : 0 < N)
     (hEF : ∀ x y, D.EF (g x) (g y) = c * D.EF x y) (hg : ∀ x, ∃ y, g y = k • x) {S : Scheme.{0}} {s : S ⟶ Sp R}

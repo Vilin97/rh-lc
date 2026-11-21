@@ -75,7 +75,6 @@ end GlobalTheory.KrullZero
 
 namespace GlobalTheory.KrullZero
 
-open GlobalTheory.MixHt in
 
 theorem exists_irreducible_zero : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k) (D : ℕ),
     IsArithVar p D → ∀ (M : LB X) (s : M.Sec) (C : Set X), M.IsLB → IsIrreducible C → IsClosed C →

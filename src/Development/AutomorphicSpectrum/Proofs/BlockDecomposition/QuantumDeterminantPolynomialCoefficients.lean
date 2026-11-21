@@ -36,7 +36,6 @@ theorem coeff_mem_span_values {M : Type*} [AddCommGroup M] [Module ℂ M] (n : �
   rw [← key]
   exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨v i, rfl⟩)
 
-open Polynomial GroundTheory.BlockD.FourierDecayAlt.GaugeExists in
 
 theorem qdet_eq_sum_coeff {A : Type} [Ring A] [Algebra ℂ A] (n : ℕ) (E : Fin n → Fin n → A) (w : ℂ) :
     Formalism.REAL.qdet E w = ∑ j ∈ Finset.range (n + 1), w ^ j • (qdetPoly E).coeff j := by

@@ -54,7 +54,6 @@ def realOf (o : TowerOrigin Y T) : RealTower T where
       phT_none := fun t x => ((o.Fx a).ph_none x).2 t }
   kA_eq B B' a := by rw [(o.Or B a).kA_eq, (o.Or B' a).kA_eq]
 
-variable (Y T) in
 
 structure GoodOrigin extends TowerOrigin Y T where
   omVB : ∀ B a, (toTowerOrigin.Or B a).𝔐.OmVB

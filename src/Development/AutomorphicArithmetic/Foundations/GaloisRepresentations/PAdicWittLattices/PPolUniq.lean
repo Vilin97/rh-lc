@@ -11,7 +11,6 @@ open UpperTheory.Gal.Int.Geo (Lv IsTrans Integ KS Mem FEt KSEx KSNice)
 open scoped TensorProduct
 universe u
 
-open GlobalTheory.CechPic GlobalTheory.BirigUniq in
 
 theorem UpperTheory.Gal.G3.pPolUniq :
     PolUniq := by

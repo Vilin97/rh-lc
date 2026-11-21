@@ -38,7 +38,6 @@ end ParamIntegral
 
 open ParamIntegral
 
-set_option synthInstance.maxHeartbeats 200000 in
 
 theorem hasFDerivAt_integral_iter (F : P → α → F')
     (hF : ∀ a, ContDiff ℝ ∞ (fun Y => F Y a))

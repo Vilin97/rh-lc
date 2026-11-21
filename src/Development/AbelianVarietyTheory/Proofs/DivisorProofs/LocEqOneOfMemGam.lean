@@ -87,4 +87,3 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 end GlobalTheory.EulerTwRestr
 
-open GlobalTheory.EulerTw GlobalTheory.EulerTwRestr in

@@ -32,8 +32,6 @@ private theorem hasFDerivAt_gau {V : Type} [NormedAddCommGroup V]
   push_cast
   ring
 
-open MeasureTheory Complex Matrix in
-open scoped RealInnerProductSpace ContDiff Real ComplexOrder in
 
 theorem _root_.GlobalTheory.Mem.Lift.VacAnn.fderiv_gau_apply {V : Type} [NormedAddCommGroup V]
     [InnerProductSpace ℝ V] (w v : V) :
@@ -44,8 +42,6 @@ theorem _root_.GlobalTheory.Mem.Lift.VacAnn.fderiv_gau_apply {V : Type} [NormedA
     Complex.ofRealCLM_apply, innerSL_apply_apply, smul_eq_mul]
   ring
 
-open MeasureTheory Complex Matrix in
-open scoped RealInnerProductSpace ContDiff Real ComplexOrder in
 
 theorem _root_.GlobalTheory.Mem.Lift.VacAnn.proj_annihilated : ∀ (V : Type) [NormedAddCommGroup V]
     [InnerProductSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (B : Type)

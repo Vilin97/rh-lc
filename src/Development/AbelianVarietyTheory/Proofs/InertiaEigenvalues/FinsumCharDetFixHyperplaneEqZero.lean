@@ -9,7 +9,6 @@ open scoped InnerProductSpace BigOperators
 
 namespace GlobalTheory
 
-open Matrix in
 
 theorem finsum_char_det_fix_hyperplane_eq_zero :
     ∀ (k : Type) [Field k] [Finite k] (r : ℕ) (ξ : kˣ →* ℂˣ), ξ ≠ 1 → ∀ a : Fin r → k, a ≠ 0 →

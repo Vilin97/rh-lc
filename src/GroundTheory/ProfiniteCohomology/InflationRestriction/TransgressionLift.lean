@@ -80,7 +80,6 @@ section Cochains
 variable [TopologicalSpace G] [IsTopologicalGroup G] (A : Rep.{u} k G) [IsDiscreteRep A]
   (N : Subgroup G) [N.Normal]
 
-omit [IsTopologicalGroup G] in
 
 def liftCochain {y : G → A} (hy : IsLocallyConstant y) : locallyConstantCochains A 1 :=
   ⟨fun g => y (g 0), hy.comp_continuous (continuous_apply 0)⟩
@@ -110,7 +109,6 @@ theorem IsTgLift.tgDiff_out (hx : IsCocycleOne A N x) (hy : IsTgLift A N x y) (g
   change tgDiff A y (g : G ⧸ N).out (h : G ⧸ N).out = _
   rw [hm, hn, hy.tgDiff_mul_mul hx]
 
-omit [IsTopologicalGroup G] in
 
 noncomputable def tgCochain (hx : IsCocycleOne A N x) (hy : IsTgLift A N x y)
     (hyc : IsLocallyConstant y) : locallyConstantCochains (A.quotientToInvariants N) 2 :=
@@ -129,7 +127,6 @@ noncomputable def tgCochain (hx : IsCocycleOne A N x) (hy : IsTgLift A N x y)
     rw [this]
     exact isLocallyConstant_tgDiff A hyc⟩
 
-variable (A N) in
 
 theorem cochainsMapAlong_mk_injective (n : ℕ) :
     Function.Injective ((cochainsMapAlong (A := A.quotientToInvariants N) (B := A)

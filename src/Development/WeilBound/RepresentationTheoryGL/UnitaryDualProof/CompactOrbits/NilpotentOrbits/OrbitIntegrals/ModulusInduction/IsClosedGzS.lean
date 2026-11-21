@@ -105,7 +105,6 @@ theorem isOpen_UU : IsOpen (UU : Set (Sp k n)) := by
   have := GlobalTheory.SplitWeil.t2Space k
   exact isOpen_compl_singleton.preimage continuous_snd
 
-open scoped Pointwise in
 
 theorem relIndex_ne_zero {H : Type*} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] {J A : Subgroup H}
     (hJ : IsCompact (J : Set H)) (hA : IsOpen (A : Set H)) : A.relIndex J ≠ 0 := by

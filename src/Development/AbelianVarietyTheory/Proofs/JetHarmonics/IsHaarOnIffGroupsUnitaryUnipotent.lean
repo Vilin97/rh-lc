@@ -15,7 +15,6 @@ open scoped InnerProductSpace ENNReal
 
 namespace GlobalTheory.HaarNotions
 
-open Formalism.FourierDecayAlt.P.B2x1 in
 
 theorem finite_compact_of_sigmaFinite {k r : ℕ} {U : Set (B.Mat k r)} (hU : B2.IsClosedSubgroup U)
     (μ : Measure (Formalism.QuantumDeterminants.Mt k r)) [SigmaFinite μ] (hc : μ Uᶜ = 0)

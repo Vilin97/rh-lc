@@ -51,7 +51,6 @@ theorem dvd_of_intAt_div (hq : (Formalism.L2.Col.qOf P).Prime) (d : ℕ) :
     field_simp
     ring
 
-open Classical in
 
 theorem card_vals_le (hq : (Formalism.L2.Col.qOf P).Prime) (A B c : ℕ) :
     ((LocE.valsQ E (Formalism.L2.Col.qOf P) A B).filter fun a => IntAt P ((Formalism.L2.Col.qOf P : E) ^ c * a)).card ≤

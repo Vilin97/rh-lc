@@ -24,13 +24,10 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
 
 variable {W ΛM}
 
-variable (ΛM) in
 
 variable {Λm}
 
-variable (W Λm ΛM) in
 
-variable (W Λm ΛM) in
 
 end XpL
 
@@ -42,13 +39,9 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Λ : Le
 
 variable {W Λ bm ΛM}
 
-variable (W Λ bm ΛM) in
 
-variable (W Λ bm ΛM) in
 
-variable (W Λ bm) in
 
-variable (bm) in
 
 end XpC
 

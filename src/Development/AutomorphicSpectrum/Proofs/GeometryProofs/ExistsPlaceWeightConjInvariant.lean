@@ -360,7 +360,6 @@ theorem average {y : (Σ k, ι k) → Ω} {φ : F →+* Ω} {t : (F →+* ℂ) �
 
 end PlaceWeightSmooth
 
-open PlaceWeightSmooth in
 
 theorem exists_placeWeight (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     (F : Type) [Field F] [NumberField F] (y : (Σ k, ι k) → Ω) (φ : F →+* Ω) (t : (F →+* ℂ) → ℝ)

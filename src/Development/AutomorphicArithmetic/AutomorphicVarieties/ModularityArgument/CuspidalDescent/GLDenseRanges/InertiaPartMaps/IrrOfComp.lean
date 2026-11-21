@@ -189,4 +189,3 @@ private theorem irrOf {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberFi
   have e : Af.RepIso (ρ₀.comp V.pr) ρ := iso_of_det (ss_of_irr hi) (ss_comp hpr hs) (hρ.symm.trans hr)
   exact irr_of_comp V.pr (irr_iso e.symm' hi)
 
-set_option maxHeartbeats 2000000 in

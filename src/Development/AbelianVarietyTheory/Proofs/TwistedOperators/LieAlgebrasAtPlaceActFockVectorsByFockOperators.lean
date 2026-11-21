@@ -33,7 +33,6 @@ namespace GlobalTheory.ArchRec.LieAtPlace
 
 variable {D : D7}
 
-open scoped ComplexOrder in
 
 theorem cart_isCartanInv {V : HSp D} (A : Fr V) (τ : D.what₂.Tau) : IsCartanInv (gramAt D V τ) (A.cart τ) := by
   have h1 : A.fr τ * (A.fr τ)⁻¹ = 1 := Matrix.mul_nonsing_inv _ ((Matrix.isUnit_iff_isUnit_det _).1 (A.fr_unit τ))

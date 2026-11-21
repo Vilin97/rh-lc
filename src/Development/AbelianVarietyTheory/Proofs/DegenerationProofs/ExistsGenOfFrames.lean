@@ -81,7 +81,6 @@ theorem exists_pull (hL : L.IsLB) {T T' : Over Z} (h : T' ⟶ T) (a : LB.Sec (LP
   refine ⟨s, fun Y r z J hJ => (hs Y r z J hJ).trans ((sval_pullMulSec _ _ _ _ r z hJ).trans ?_)⟩
   rw [val_one, Units.val_one, _root_.mul_one]; rfl
 
-variable (G L N) in
 
 def Rel {T T₁ T₂ : Over Z} {m n : ℕ} (h₁ : T ⟶ T₁) (a : Fin m → LB.Sec (LPow G L (N : ℤ) T₁)) (h₂ : T ⟶ T₂)
     (b : Fin n → LB.Sec (LPow G L (N : ℤ) T₂)) (M : Matrix (Fin m) (Fin n) Γ(T.left, ⊤)) : Prop :=
@@ -184,7 +183,6 @@ theorem exists_chart_local {A : LB Z} (hA : A.IsLB) {W : Type} [CommRing W] [IsL
   obtain ⟨i, hi⟩ := exists_chart hA (χ (IsLocalRing.closedPoint W))
   exact ⟨i, fun t => ((IsLocalRing.specializes_closedPoint t).map χ.continuous).mem_open (A.U i).isOpen hi⟩
 
-variable (G L N) in
 
 def TraitBasis (U : Z.Opens) {m : ℕ} (b : Fin m → LB.Sec (LPow G L (N : ℤ) (Over.mk U.ι))) : Prop :=
   ∀ (W : Type) [CommRing W] [IsDomain W] [IsLocalRing W], CDvr W → ∀ χ : Sp W ⟶ U.toScheme,

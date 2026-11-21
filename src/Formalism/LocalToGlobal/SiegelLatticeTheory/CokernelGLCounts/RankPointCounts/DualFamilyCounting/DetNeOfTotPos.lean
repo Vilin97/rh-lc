@@ -93,7 +93,6 @@ open Formalism.L2.SG.Pf.Cnt.R1
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem ratPair_of (hD : TotPosAll) : RatPair := by
   intro D u u' _ F0 what₂ _ Z hP

@@ -182,7 +182,6 @@ theorem d_mem {Fil : ℤ → IdF Φ.A} (hF : IsFil Φ Fil) {d j : ℕ} (u : Fin 
 
 end GlobalTheory.CompanionTheory.GrForm.Coc
 
-open GlobalTheory.CompanionTheory.GrForm.Coc in
 
 theorem GlobalTheory.CompanionTheory.GrForm.stCocycle : GlobalTheory.CompanionTheory.GrForm.StCocycle := by
   intro R _ C _ Φ Fil hF d j u hu y hy I

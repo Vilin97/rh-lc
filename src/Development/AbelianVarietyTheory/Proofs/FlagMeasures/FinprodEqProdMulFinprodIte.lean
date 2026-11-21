@@ -6,7 +6,6 @@ public import Mathlib
 
 namespace GlobalTheory.FinprodProdMulIte
 
-open Classical in
 
 theorem finprod_eq_prod_mul_finprod_ite {ι : Type} (S₁ : Finset ι) (f g : ι → ℂ)
     (hf : (Function.mulSupport f).Finite) (hfg : ∀ p, p ∉ S₁ → f p = g p) :

@@ -47,7 +47,6 @@ section Real
 
 variable (v : InfinitePlace K.1) (hv : v.IsReal)
 
-include hv in
 
 theorem card_gal_infAlgClosure_of_isReal :
     Fintype.card Gal(AlgebraicClosure v.Completion/v.Completion) = 2 := by
@@ -58,14 +57,12 @@ theorem card_gal_infAlgClosure_of_isReal :
   have h2 := card_gal_le_two v.Completion (AlgebraicClosure v.Completion) (infAlgClosure_finrank_le_two v)
   omega
 
-include hv in
 
 theorem isCyclic_gal_infAlgClosure_of_isReal :
     IsCyclic Gal(AlgebraicClosure v.Completion/v.Completion) :=
   isCyclic_of_prime_card (p := 2)
     (by rw [Nat.card_eq_fintype_card, card_gal_infAlgClosure_of_isReal v hv])
 
-include hv in
 
 theorem natCard_localGaloisCohomology_two_of_isReal :
     Nat.card (localGaloisCohomology K 2 (.inl v)) = 2 := by
@@ -91,7 +88,6 @@ theorem natCard_localGaloisCohomology_two_of_isReal :
     rw [quadraticInv_apply, quadraticInv_apply, quadraticInvFun_of_ne_zero _ _ hx,
       quadraticInvFun_of_ne_zero _ _ hx0]
 
-include hv in
 
 theorem subsingleton_localGaloisCohomology_of_isReal_of_odd {r : ℕ} (hr : Odd r) :
     Subsingleton (localGaloisCohomology K r (.inl v)) := by
@@ -109,7 +105,6 @@ theorem subsingleton_localGaloisCohomology_of_isReal_of_odd {r : ℕ} (hr : Odd 
       (Rep.FiniteCyclicGroup.groupCohomologyIsoOdd A g hg 1 odd_one).symm
   exact e.toLinearEquiv.injective.subsingleton
 
-include hv in
 
 theorem natCard_localGaloisCohomology_of_isReal_of_even {r : ℕ} (hr0 : r ≠ 0) (hr : Even r) :
     Nat.card (localGaloisCohomology K r (.inl v)) = 2 := by

@@ -11,7 +11,6 @@ namespace Formalism.L2.GlobalTheoryTheory.Br
 open MvPolynomial Formalism.BasicNotions Formalism.MainNotions.product_first_zeroth_parts Formalism.L2.Forms Matrix NumberField
 open scoped ComplexOrder
 
-set_option maxHeartbeats 1000000 in
 
 theorem normClsAt_of_tors (hT : ChiTors) : NormClsAt := by
   intro D u Ch chOf Tf hL hBe h s x Pc hPc Qc hQc o ho o' ho' c

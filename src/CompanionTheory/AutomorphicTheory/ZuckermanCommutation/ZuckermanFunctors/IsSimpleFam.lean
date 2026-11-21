@@ -117,14 +117,12 @@ theorem URep.repOn (U : URep k r) : RepOn (GG k r) U.R.σ where
   map_one := U.rep.1.1
   map_mul := U.rep.1.2
 
-open Classical in
 
 def URep.sig (U : URep k r) (g : Mx k r) : Module.End ℂ U.R.smSub :=
   if hg : g ∈ GG k r then
     ((U.R.σ g : U.R.H →ₗ[ℂ] U.R.H).restrict fun v hv => IsSm.apply U.repOn (w := v) hv hg)
   else 0
 
-open Classical in
 
 def URep.dsig (U : URep k r) (X : Mx k r) : Module.End ℂ U.R.smSub :=
   if hX : InLieHpk k r X then

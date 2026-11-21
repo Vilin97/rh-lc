@@ -96,7 +96,6 @@ end GlobalTheory.CompanionTheory.MixZ.ArchEq
 
 namespace GlobalTheory.CompanionTheory.MixZ
 
-open ArchEq in
 
 theorem archIntEq_of_integrable : ArchIntegrableOn → ArchIntEq := by
   intro hI m n Nh M B A hB hA X _ i _ D hX sB sA r hr f g hfg hrat

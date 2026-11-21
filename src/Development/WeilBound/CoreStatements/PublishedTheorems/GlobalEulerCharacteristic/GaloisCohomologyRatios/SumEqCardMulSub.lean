@@ -20,7 +20,6 @@ theorem sum_eq_card_mul_sub {ι : Type*} [Fintype ι] (a b : ι → ℤ) (m : �
     ∑ i, a i = Fintype.card ι * m - ∑ i, b i := by
   rw [Finset.sum_congr rfl fun i _ => h i, Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
 
-open scoped Classical in
 
 theorem altSum [Finite S] (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) ∉ v.asIdeal)
     (hPn : (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).Normal)

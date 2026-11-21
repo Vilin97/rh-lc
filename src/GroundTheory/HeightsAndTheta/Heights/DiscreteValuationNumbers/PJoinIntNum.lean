@@ -46,7 +46,6 @@ variable {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K →
 
 def newVar : (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) := ⟨.inr (), (0 : Fin 1)⟩
 
-variable (F) in
 
 def dropPt : (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι
   | ⟨.inl k, i⟩ => X ⟨k, i⟩

@@ -110,7 +110,6 @@ theorem dualLatticeCoord_eq (b : Module.Basis T ℤ (dualLattice F)) (t : T) :
 
 end DualArithmeticVariety
 
-open DualArithmeticVariety in
 
 theorem DualArithVar.proof (h : CoordConeArithVar.Statement) : DualArithVar.Statement := by
   intro K _ _ i F T _ _ b hi

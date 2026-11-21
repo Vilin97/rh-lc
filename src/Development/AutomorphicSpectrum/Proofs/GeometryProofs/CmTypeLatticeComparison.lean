@@ -52,7 +52,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {l : Le
   {M : LieModel t.G ξ V} {M' : LieModel t'.G ξ' V'} {ρ : 𝓞 E →+* Module.End Ω₀ V}
   {ρ' : 𝓞 E →+* Module.End Ω V'} {j : V →+ V'}
 
-include m in
 
 theorem map_act (hact : M.IsActOf t.act.act ρ) (hact' : M'.IsActOf t'.act.act ρ')
     (hj : ∀ e, (M'.pt (j e)).left ≫ m.φ = spMap (dualMap i) ≫ (M.pt e).left) (a : 𝓞 E) (e : V) :
@@ -67,7 +66,6 @@ theorem map_act (hact : M.IsActOf t.act.act ρ) (hact' : M'.IsActOf t'.act.act �
     ← Category.assoc (M'.pt (j e)).left]
   exact congrArg (· ≫ _) (hj e).symm
 
-include m in
 
 theorem map_mem_eigSp (hact : M.IsActOf t.act.act ρ) (hact' : M'.IsActOf t'.act.act ρ')
     (hj : ∀ e, (M'.pt (j e)).left ≫ m.φ = spMap (dualMap i) ≫ (M.pt e).left)

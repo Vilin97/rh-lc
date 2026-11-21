@@ -72,7 +72,6 @@ theorem exists_nat_of_nonneg_of_lt {x : WithBot (WithTop ℤ)} {n : ℕ} (h0 : 0
 
 variable [Fintype K] [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
 
-omit [DecidableEq K] in
 
 theorem relDim_nonneg_of_card_le (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
     (h : ((Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I)) : 0 ≤ relDim I := by
@@ -132,7 +131,6 @@ theorem hilbFn_eventually_zero_of_not_relevant (I : Ideal (ReciprocityTheory.Cha
 
 end MultEqualsCoeff
 
-open MultEqualsCoeff in
 
 theorem MultEqualsCoeff.proof (h1 : PrimeFiltration.Statement.{u})
     (h2 : MixedDiffConst.Statement.{u}) (h3 : RelevantPrimeDimGe.Statement.{u}) :

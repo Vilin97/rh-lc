@@ -73,7 +73,6 @@ end
 
 abbrev Big (D : D7) : Type := ∀ (l : ℕ) [Fact l.Prime], (↥D.LL0 →+* PadicAlgCl l) → Loc.FinExt l
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure RingSpec (D : D7) (cf : CharFrame D) (b0 b1 : Big D) (Sx : Finset (PlE D.host)) (T : TwR D.LL0 D.nd) where
   eTw : T.Tw ≃ HeightOneSpectrum (𝓞 ↥D.LL0)
@@ -132,7 +131,6 @@ structure RingSpec (D : D7) (cf : CharFrame D) (b0 b1 : Big D) (Sx : Finset (PlE
       ∃ x : D.LL0, D.what₂.embLL (x : D.what₂.LL) = (((cf.delAt (T.l s)).val w)⁻¹ : ℂˣ).1 ∧
         algebraMap (T.O0 s) (FractionRing (T.O0 s)) ((T.delta s σ : (T.O0 s)ˣ) : T.O0 s) = T.emb0 s x
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure TwFrameC (D : D7) where
   K0 : ∀ i, Loc.FinExt (D.ntw.l i)
@@ -144,7 +142,6 @@ structure TwFrameC (D : D7) where
   iCq : ∀ i, FractionRing (D.ntw.O i) →+* ℂ
   S0x : D.ntw.Tw → Finset (HeightOneSpectrum (𝓞 D.host.E))
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure TwistFrameLowIndexCompatibility (D : D7) (F : TwFrameC D) (low : Finset ℕ) : Prop where
   pl_emb : ∀ i, ∃ w : HeightOneSpectrum (𝓞 ↥D.LL0), ((D.ntw.l i : ℕ) : 𝓞 ↥D.LL0) ∈ w.asIdeal ∧

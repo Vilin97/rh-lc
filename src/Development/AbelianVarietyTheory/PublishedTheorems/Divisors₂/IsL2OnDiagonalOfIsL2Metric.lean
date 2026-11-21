@@ -34,9 +34,7 @@ section Global
 
 variable {D' r : ℕ}
 
-variable (g) in
 
-variable (g) in
 
 end Global
 

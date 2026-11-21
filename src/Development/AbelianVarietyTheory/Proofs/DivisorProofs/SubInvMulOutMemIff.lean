@@ -11,7 +11,6 @@ namespace GlobalTheory.HeisUnit
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open Classical in
 
 theorem intInd_apply {n d : ℕ} (M : Matrix (Fin n) (Fin d) k) :
     intInd k n d M = if ∀ i j, M i j ∈ 𝒪[k] then 1 else 0 := by

@@ -165,7 +165,6 @@ def gram : Matrix S.ιV S.ιV ℂ := Matrix.of fun i j => E.ip (E.ev (S.bV i)) (
 
 def ipB : (E.Y → ℂ) →ₗ[ℂ] (S.ιV → ℂ) := LinearMap.pi fun j => E.ip (E.ev (S.bV j))
 
-open Classical in
 
 def co : (E.Y → ℂ) →ₗ[ℂ] (S.ιV → ℂ) :=
   if IsUnit E.gram.det then Matrix.toLin' E.gram⁻¹ ∘ₗ E.ipB
@@ -390,7 +389,6 @@ def modP.lift (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (Sp E n))
 theorem modP.lift_mk (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (Sp E n)) (f : ↥M →ₗ[𝓞 E] 𝓞 E ⧸ P.asIdeal)
     (x : ↥M) : modP.lift P M f (modP.mk P M x) = f x := rfl
 
-open Classical in
 
 def modP.ext (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (Sp E n)) (g : modP P M → 𝓞 E ⧸ P.asIdeal) (y : Sp E n) :
     𝓞 E ⧸ P.asIdeal :=
@@ -472,7 +470,6 @@ theorem first_raising_mem_equivariant (d : DecoSet E n ST SG) (P : ST) : d.e1 P 
 
 theorem functional_firstBasis_eq_one (d : DecoSet E n ST SG) (P : ST) : d.1.f P (d.e1 P) = 1 := d.2.exists_dualBasis.choose_spec.2.1 P
 
-open Classical in
 
 def te (d : DecoSet E n ST SG) (P : ST) (q : 𝓞 E) : d.lk P :=
   if h : q • d.e1 P ∈ d.1.kerAt P then modP.mk P.1 (d.1.kerAt P) ⟨_, h⟩ else 0
@@ -731,7 +728,6 @@ abbrev StCl (u : Pr.Word) (j : ℕ) : Type := (stepGSD W Λ u j).Cl
 abbrev StStab (u : Pr.Word) (j : ℕ) (c : StCl W Λ u j) : Type :=
   MulAction.stabilizer (stepGSD W Λ u j).G ((stepGSD W Λ u j).outSec.rep c)
 
-open Classical in
 
 end Mem
 
@@ -788,7 +784,6 @@ theorem rec_norm_detTw {ξ : Formalism.L2.DIV.Chr X.F X.E X.K} (σ₀ : X.K →+
   · exact rec_norm_tilde σ₀ hξ σ _
   · simp
 
-variable (W : Wts X Pr.Word R) in
 
 structure ChainGlob (σ₀ : X.K →+* ℂ) where
   hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x)
@@ -809,11 +804,9 @@ structure ChainGlob (σ₀ : X.K →+* ℂ) where
 
 attribute [instance] ChainGlob.ιFin
 
-open Classical in
 
 variable {W : Wts X Pr.Word R} {σ₀ : X.K →+* ℂ}
 
-open Classical in
 
 end Glob
 
@@ -822,7 +815,6 @@ section Mem2
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
   (Λ : ∀ j, LevFam X.E X.K (R.N j) Pr.vGs)
 
-set_option linter.unusedVariables false in
 
 @[irreducible] def recDGamAll (Λ : ∀ j, LevFam X.E X.K (R.N j) Pr.vGs) {σ₀ : X.K →+* ℂ} (hX : X.Ok) (G : ChainGlob W σ₀) : ℕ := dGamAut X R
 
@@ -845,14 +837,11 @@ theorem recDGamAll_dvd {σ₀ : X.K →+* ℂ} (hX : X.Ok) (G : ChainGlob W σ�
       | (show R.k + j * (R.t + 1) ≤ R.k + R.m * (R.t + 1); exact Nat.add_le_add_left (Nat.mul_le_mul_right _ hj) _)
       | (unfold Ranks.N; nlinarith)) _ _ _
 
-variable (W Λ) in
 
 def repPt (hc : Formalism.BasicNotions.CMData X.F X.E) (u : Pr.Word) (j : ℕ) (c : StCl W Λ u j) : GL (Fin (R.N j)) (Formalism.L2.DIV.AfE X.F X.E) :=
   letI : NeZero (R.N j) := ⟨(R.N_pos j).ne'⟩
   ((ptOf hc (R.N j) (Pr.vT u) Pr.vGs ((stepGSD W Λ u j).outSec.rep c) : GL (Fin (R.N j)) (X.E ⊗[X.F] Formalism.L2.Herm.Af X.F)))
 
-variable (W Λ) in
-open Classical in
 
 def rhoK (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u i) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
@@ -860,8 +849,6 @@ def rhoK (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u i) : X.Kˣ
       (Formalism.L2.DIV.detTw hc.sig Dc.chi (repPt W Λ hc u i c)) ^ (-((R.N (i + 1) / 2 : ℕ) : ℤ))
   else 1
 
-variable (W Λ) in
-open Classical in
 
 def rhoK' (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u (i + 1)) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
@@ -896,17 +883,14 @@ theorem rhoK'_norm {σ₀ : X.K →+* ℂ} (G : ChainGlob W σ₀) (u : Pr.Word)
       (rec_norm_detTw σ₀ G.chr_unit.2 hc.sig _) _).2
   · simp
 
-variable (W) in
 
 def sSharpC (u : Pr.Word) (i : ℕ) (τ : X.Tau) : ℤ := ⌊sExp' R ((RowPar.of (W.hc u τ)).eAt i) (i + 1)⌋
 
-variable (W) in
 
 def sDivC (u : Pr.Word) (i : ℕ) (τ : X.Tau) : ℤ := ⌊sExp R ((RowPar.of (W.hc u τ)).eAt i) (i + 1)⌋
 
 def dePow (σ₀ : X.K →+* ℂ) (n : ℕ) (e : X.Tau → ℤ) (y : FrS X σ₀ n) : ℂ := ∏ τ, deFr y τ ^ e τ
 
-variable (W Λ) in
 
 structure ChainArg {σ₀ : X.K →+* ℂ} (G : ChainGlob W σ₀) (u : Pr.Word) where
   kk : ∀ i, ClsKer (stepGSD W Λ u i) (stepGSD W Λ u (i + 1))
@@ -973,7 +957,6 @@ structure AtTNum where
   GamP : ℝ
   one_lt_gammaP : 1 < GamP
 
-variable (W Λ) in
 
 def duStarC (u : Pr.Word) : ℕ :=
   Nat.card (formGSD (colVal W u 0 ∅ Pr.vGs) (Λ 0)).Cl * Module.finrank X.K (colVal W u 0 (∅ : Finset _) Pr.vGs).V
@@ -1073,7 +1056,6 @@ theorem rec_LshKer_lattice {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.
     rw [Submodule.span_le]
     exact fun x hx => hx.1
 
-variable (W Λ) in
 
 def stepBv (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) : Submodule (𝓞 X.K) (stepGSD W Λ u j).EqFun :=
   (stepGSD W Λ u j).intOf fun d => BvLat W u j P d
@@ -1120,7 +1102,6 @@ structure XpArg {hc : X.Tau → HCParam R} (σ₀ : X.K →+* ℂ) (C : ColumnCh
   thFree : ∀ i, (X.K →+* ℂ) → C.cls i → C.cls (i + 1) → ℝ
   thFree_nonneg : ∀ i s L L', 0 ≤ thFree i s L L'
 
-open Classical in
 
 def tauOfR (hX : X.Ok) (hPr : Pr.Ok) (u : Pr.Word) (w : HeightOneSpectrum (𝓞 X.K)) : {P // P ∈ Pr.vT u} ≃ X.Tau :=
   haveI := hX.nonempty_Tau
@@ -1233,7 +1214,6 @@ variable {W ΛM}
 def tilR (u : Pr.Word) (d : DecoSet X.E (R.N R.m - 1) ∅ SG') : DecoSet X.E (R.N R.m) (Pr.vT u) Pr.vGs :=
   (DecoSet.tilH (ST := Pr.vT u) (N_m_succ R) (Pr.piT u) d).res hSG
 
-variable (R) in
 
 def extR : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) SG' →* UF X.E (R.N R.m) × GLG X.E (R.N R.m) Pr.vGs :=
   MonoidHom.prodMap (extUH (N_m_succ R))
@@ -1263,7 +1243,6 @@ theorem rec_extUH_injective {E : Type} [Field E] [NumberField E] [StarRing E] {N
     rw [initL_extE, initL_incl]
   rwa [e, e] at h3
 
-variable (ΛM) in
 
 def LevExt : Prop := ∀ h : ↥(ΛM.inv).grp, (extR R hSG ((1 : UF X.E (R.N R.m - 1)), h.1)).2 ∈ (Λ R.m).grp
 
@@ -1289,7 +1268,6 @@ theorem tilR_smulF (hPr : Pr.Ok) (u : Pr.Word) (hpi : ∀ w : SG', Pr.piT u ∉ 
   | exact tilR_smul hSG hPr u hpi (a.1, a.2.1) d
   | exact tilR_smul hSG hPr u hpi _ d
 
-variable (W Λ ΛM) in
 
 def tilCl (u : Pr.Word) (c : (ptGSD W ΛM).Cl) : StCl W Λ u R.m :=
   (stepGSD W Λ u R.m).cls (tilR hSG u ((ptGSD W ΛM).outSec.rep c))
@@ -1322,22 +1300,18 @@ def pairSemi (σ₀ : X.K →+* ℂ) {n : ℕ} (lam : X.Tau → DomWeight n) (y 
   map_add' x x' := by rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)]
   map_smul' a x := by rw [map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, smul_eq_mul]
 
-variable (W Λ ΛM) in
 
 def lowC (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x)) (u : Pr.Word) :
     (FrS X σ₀ (R.N R.m) → ℂ) →ₗ[ℂ] (FrS X σ₀ (R.N R.m - 1) → ℂ) :=
   (stepEv W Λ σ₀ hσ u R.m).extend ((ptEv W ΛM σ₀ hσ).ev.comp (brC W u))
 
-variable (W ΛM) in
 
 def periodC (hX : X.Ok) (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x)) (hM : (rowGSD W ΛM).Ok) :
     ((ptGSD W ΛM).Cl → FrS X σ₀ (R.N R.m - 1) → ℂ) →ₗ[ℂ] (Fin ((rowGSD W ΛM).hDim hM) → ℂ) →ₗ[ℂ] ℂ :=
   (ptEv W ΛM σ₀ hσ).perCl (ptOk W ΛM hX) fun c a => pairSemi σ₀ W.sgTrue
     ((((rowGSD W ΛM).hB hM a : (rowGSD W ΛM).EqFun) : (rowGSD W ΛM).D → (rowGSD W ΛM).V) ((ptGSD W ΛM).outSec.rep c))
 
-variable (W ΛM) in
 
-variable (W ΛM) in
 
 def recPer (hX : X.Ok) (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x)) (u : Pr.Word)
     (G : ChainGlob W σ₀) (A : ChainArg W Λ G u) (hM : (rowGSD W ΛM).Ok) : PeriodMap R (recChain hX σ₀ G u A) where
@@ -1414,7 +1388,6 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
 variable {X : Fields} {R : Ranks}
 
-variable (R) in
 
 end Fam
 
@@ -1443,7 +1416,6 @@ def recFormsX (hX : X.Ok) (hPr : Pr.Ok) (hf : X.f = R.f) (σ₀ : X.K →+* ℂ)
       (recPer hSG hX σ₀ hσ u G A hM) :=
   recForms hX hPr hf σ₀ hσ u G A Ps hPs hfree N Pl pw (recPer hSG hX σ₀ hσ u G A hM) (recXp hSG hX hPr σ₀ hσ u G A hM hpi hL Th)
 
-variable (W Λ) in
 
 end All
 

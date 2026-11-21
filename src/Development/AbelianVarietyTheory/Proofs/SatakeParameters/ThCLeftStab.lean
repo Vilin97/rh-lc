@@ -139,7 +139,6 @@ theorem leftV_emb (f : Sp X.E b →ₗ[X.E] Sp X.E b) (x : HomE X.E a b) : leftV
     simp only [emb_apply, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum, LinearMap.toMatrix'_apply]
   exact Finset.sum_congr rfl fun k _ => by ring
 
-variable (a) in
 
 def leftE (g : Sp X.E b ≃ₗ[X.E] Sp X.E b) : VCx X.Tau a b ≃+ VCx X.Tau a b where
   toFun := leftV A g.toLinearMap
@@ -404,7 +403,6 @@ theorem vac_leftE (hok : s.Ok) (hE : B.EqP χ) {a b : ℕ} {N : Submodule (𝓞 
 
 end Record
 
-open GlobalTheory.ThetaMove.SeamMoves in
 
 theorem thC_left_stab : ∀ (D : D7) (X : Fields) (s : Seam D X) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (B : Base D cc δ) (χ : TaylorLogMetric.IdE D → ℂ) (cD : D.what₂.Tau → ℂ), s.Ok → TaylorLogMetric.IsCurveIdeal D cc → TaylorLogMetric.IsDiscriminantTwelfthRootOfIdealLattice D cc δ → TaylorLogMetric.IsChi D χ → ∀ (a b : ℕ) (N : Submodule (𝓞 X.E) (Sp X.E a)) (N' : Submodule (𝓞 X.E) (Sp X.E b)), TaylorLogMetric.admitted D a b (s.lat N) (s.lat N') → ∀ (SS : Finset (HeightOneSpectrum (𝓞 X.E))) (c : ℕ) (Ξ : HomE X.E a b → ℂ), 0 < c → (∀ P ∈ SS, conjPrime₂ P ∉ SS) → (∀ P ∈ SS, ((D.host.QS : ℕ) : 𝓞 X.E) ∉ P.asIdeal ∧ ((D.host.q : ℕ) : 𝓞 X.E) ∉ P.asIdeal) → (∀ x, ∀ z ∈ mulLat c (homAt SS N N'), Ξ (x + z) = Ξ x) → ∀ (γ : UF X.E b), gmap γ.1 N' = N' → ∀ k : ℂ, (∀ x, Ξ (γ.1.toLinearMap ∘ₗ x) = k * Ξ x) → ∀ z : VCx X.Tau a b, thC (X.embC (ambOf s B χ cD : Amb X).σ₀) (ambOf s B χ cD : Amb X).δ (ambOf s B χ cD : Amb X).d (ambOf s B χ cD : Amb X).sc (ambOf s B χ cD : Amb X).AA SS N N' c Ξ ((ambOf s B χ cD : Amb X).e a b N N') (fun τ => (((LinearMap.toMatrix' γ.1.toLinearMap).map (X.embC (ambOf s B χ cD : Amb X).σ₀ τ)) * Matrix.of (z τ) : Matrix _ _ ℂ)) = k * thC (X.embC (ambOf s B χ cD : Amb X).σ₀) (ambOf s B χ cD : Amb X).δ (ambOf s B χ cD : Amb X).d (ambOf s B χ cD : Amb X).sc (ambOf s B χ cD : Amb X).AA SS N N' c Ξ ((ambOf s B χ cD : Amb X).e a b N N') z := by
   intro D X s cc δ B χ cD hok hcc hδ hχ a b N N' hA SS c Ξ hc hSS h2q hΞ γ hγ k hk z

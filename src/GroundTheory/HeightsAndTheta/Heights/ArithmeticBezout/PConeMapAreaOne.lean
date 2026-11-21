@@ -269,7 +269,6 @@ theorem coordBall_eq (m k : ℕ) :
 
 end ConeMapAreaFormula
 
-open ConeMapAreaFormula in
 
 theorem ConeMapAreaOne.proof (hA : AreaFormulaInj.Statement) : ConeMapAreaOne.Statement := by
   intro n e U D v F hU hD hDU hv hinj hF

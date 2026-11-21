@@ -211,7 +211,6 @@ lemma segre_resLE_comp_segreRetr (k : Fin (n + 1)) (l : Fin (m + 1)) :
       rw [segre_resLE_appTop_chart A k l (X_mem _), segreRing_X, segreU_self, one_mul]
       rfl
 
-variable (n m) in
 
 instance isClosedImmersion_segre : IsClosedImmersion (segre A n m) := by
   rw [IsZariskiLocalAtTarget.iff_of_iSup_eq_top (P := @IsClosedImmersion)

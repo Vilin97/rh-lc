@@ -63,7 +63,6 @@ end GlobalTheory.SumExpAt
 
 namespace GlobalTheory.SumExpAt
 
-open Formalism.CohomologicalDescent.LD in
 
 theorem exZ_res_eq_natW (n : ℕ) (lam : Formalism.BasicNotions.DomWeight n) (f : ℕ → ℕ) (c : ℤ)
     (hc : ∀ a : Fin n, (f a : ℤ) = lam.w a + c) (l : ℕ) (hl : l.Prime) :

@@ -39,14 +39,12 @@ section Finite
 variable (K : Type*) [Field K] (n : ℕ) [NeZero n] [HasEnoughRootsOfUnity K n]
 variable (L : Type*) [Field L] [Algebra K L]
 
-omit [NeZero n] [HasEnoughRootsOfUnity K n] in
 
 lemma kummerGroup_pow_eq_one (x : kummerGroup K n L) : x ^ n = 1 :=
   Subtype.ext (UnitsModPow.pow_eq_one K n x.1)
 
 variable {K n L}
 
-omit [NeZero n] [HasEnoughRootsOfUnity K n] in
 
 lemma exists_eigenvector_of_character [FiniteDimensional K L] (χ : Gal(L/K) →* Kˣ) :
     ∃ β : Lˣ, ∀ σ : Gal(L/K), σ (β : L) = algebraMap K L (χ σ : K) * β := by
@@ -64,7 +62,6 @@ lemma exists_eigenvector_of_character [FiniteDimensional K L] (χ : Gal(L/K) →
     f] at this
   rw [← this, div_mul_cancel₀ _ β.ne_zero]
 
-omit [NeZero n] [HasEnoughRootsOfUnity K n] in
 
 lemma exists_kummer_eigenvector [FiniteDimensional K L] [IsGalois K L]
     (hexp : Monoid.exponent Gal(L/K) ∣ n) (χ : Gal(L/K) →* Kˣ) :

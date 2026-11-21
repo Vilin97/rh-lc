@@ -22,7 +22,6 @@ variable {l : ℕ} [hl : Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e]
   [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K] [NormedAlgebra ℚ_[l] K]
   [TameDescentExponentData K l e a] (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e)
 
-variable (O) in
 
 def actS (γ : TameGal K l e a) : (ZMod a → S O K e) →+* (ZMod a → S O K e) where
   toFun f τ := ⟨ringAct γ (fun σ => (f σ : K⟦X⟧)) τ, rot_S.ringAct_mem γ (fun σ => (f σ).2) τ⟩
@@ -94,7 +93,6 @@ variable {l : ℕ} [hl : Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e]
   [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K] [NormedAlgebra ℚ_[l] K]
   [TameDescentExponentData K l e a] (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e)
 
-omit [TameDescentExponentData K l e a] in
 
 theorem pow_mul_iB (N : ℕ) (F : ZMod a → invL l (S O K e)) (G : ZMod a → S O K e)
     (hG : ∀ τ, (G τ : K⟦X⟧) = (l : K⟦X⟧) ^ N * F τ) :

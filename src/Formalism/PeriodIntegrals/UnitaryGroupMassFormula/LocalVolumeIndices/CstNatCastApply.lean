@@ -30,7 +30,6 @@ theorem Cst_not_mem (g1 g2 : ℕ) (v : HeightOneSpectrum (𝓞 I.F)) (hv : ¬ Is
   rw [Nat.cast_mul] at h
   exact hv (v.isPrime.mem_or_mem h)
 
-open Classical in
 
 def cElt (g1 g2 : ℕ) : Af I.F :=
   (⟨fun v => if IsTyped I.F g1 g2 v then 0 else (((g1 * g2 : ℕ) : Fv I.F v))⁻¹,

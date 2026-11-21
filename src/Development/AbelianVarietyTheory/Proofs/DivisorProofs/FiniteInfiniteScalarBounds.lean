@@ -329,7 +329,6 @@ theorem log_discr_le {large₂ : SizeData₂ D} {F : Face D A} (s : HidaSetting 
   rw [e, div_le_iff₀ (by positivity)] at h1
   nlinarith
 
-set_option maxHeartbeats 1000000 in
 
 theorem core {large₂ : SizeData₂ D} {F : Face D A} (s : HidaSetting large₂ R F) (ch : Choice R) (hF : ch.FieldOK) {C : ℝ} (hC : 2 ≤ C) :
     FinScalAt ch C large₂.sc.b ∧ InfScalAt ch C large₂.sc.b := by

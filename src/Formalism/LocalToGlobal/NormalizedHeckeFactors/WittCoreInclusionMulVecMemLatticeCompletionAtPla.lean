@@ -15,7 +15,6 @@ open scoped TensorProduct NNReal
 
 namespace Formalism.L2
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure TwFrame (D : D7) where
 
@@ -33,7 +32,6 @@ structure TwFrame (D : D7) where
 
   S0x : D.ntw.Tw → Finset (HeightOneSpectrum (𝓞 D.host.E))
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 structure NTwTied (D : D7) (F : TwFrame D) : Prop where
 
@@ -86,7 +84,6 @@ structure NTwTied (D : D7) (F : TwFrame D) : Prop where
 
   S0x_contains_ramified_places : ∀ i (p : ℕ), p.Prime → p ∣ (NumberField.discr D.host.E).natAbs → placesOver D.host.E p ⊆ ↑(F.S0x i)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem placesOver_conj (D : D7) (p : ℕ) {P P' : HeightOneSpectrum (𝓞 D.host.E)} (hP : P ∈ placesOver D.host.E p)
     (hc : IsConjPl D.host P P') : P' ∈ placesOver D.host.E p := by

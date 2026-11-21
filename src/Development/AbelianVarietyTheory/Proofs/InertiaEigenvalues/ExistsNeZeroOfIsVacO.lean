@@ -77,7 +77,6 @@ theorem isOpen_comap_St (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) :
     with x hh
   exact hh.1
 
-set_option maxHeartbeats 1000000 in
 
 theorem isOpen_map_levelGroup (V : HSp D) {N : ℕ} (hN : 0 < N) :
     IsOpen (((GlobalTheory.Member.PrincLevel.levelGroup V N).map (finHom V).rangeRestrict : Subgroup (Bridge.Gf V)) :

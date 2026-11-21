@@ -252,7 +252,6 @@ theorem mem_parab_single (e : (Σ j, X j) ≃ n) (a₀ : β) (h0 : ∀ j, j ≠ 
   · exact (h0 b fun e => by rw [e, ha] at hab; exact lt_irrefl _ hab).elim j
   · exact (h0 a ha).elim i
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem eq_one_single (e : (Σ j, X j) ≃ n) (a₀ : β) (h0 : ∀ j, j ≠ a₀ → IsEmpty (X j))
     {g : GL n k} (hg : g ∈ unipRad k e) : g = 1 := by

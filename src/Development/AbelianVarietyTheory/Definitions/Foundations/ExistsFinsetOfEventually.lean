@@ -29,7 +29,6 @@ theorem cyl_self (S : Finset V) (A : ∀ w, Set (Ya w)) :
   Set.ext fun _ => and_congr_right fun _ =>
     ⟨fun h v => (Classical.em (v ∈ S)).elim (h.1 v) (h.2 v), fun h => ⟨fun v _ => h v, fun v _ => h v⟩⟩
 
-open Classical in
 
 theorem cyl_eq_of_subset {S T : Finset V} (h : S ⊆ T) (hK : ∀ v ∉ T, K v = K' v) (A : ∀ w, Set (Ya w))
     (B : ∀ v, Set (Yf v)) : cyl pa pf K' S A B = cyl pa pf K T A fun v => if v ∈ S then B v else K' v := by
@@ -122,7 +121,6 @@ def noArch (X : Type) [Group X] : ∀ _ : Empty, X →* PUnit := fun _ => 1
 
 variable {pa : ∀ w, X →* Ya w} {pf : ∀ v, X →* Yf v} {K K' : ∀ v, Subgroup (Yf v)}
 
-omit [∀ v, TopologicalSpace (Yf v)] in
 
 theorem exists_extend_one {V' : Type} {j : V' → V} (hj : Function.Injective j) (y : ∀ v', Yf (j v')) :
     ∃ z : ∀ v, Yf v, (∀ v', z (j v') = y v') ∧ ∀ v ∉ range j, z v = 1 := by
@@ -239,12 +237,10 @@ theorem IsRestrGroup.measurableSet_cyl (h : IsRestrGroup pa pf K) {S : Finset V}
     ((S.measurableSet_biInter fun v hv => (h.continuous_pf v).measurable (hB v hv)).inter
       (h.isOpen_levelAway S).measurableSet)
 
-omit [BorelSpace X] [∀ w, BorelSpace (Ya w)] [IsTopologicalGroup X] in
 
 variable [LocallyCompactSpace X] [SecondCountableTopology X] [∀ w, IsTopologicalGroup (Ya w)]
   [∀ w, LocallyCompactSpace (Ya w)] [∀ w, T2Space (Ya w)]
 
-omit [∀ w, IsTopologicalGroup (Ya w)] in
 
 theorem IsHaarProd.unique (hK : ∀ v, IsOpen (K v : Set (Yf v))) (hK' : ∀ v, IsCompact (K v : Set (Yf v)))
     (h : IsHaarProd pa pf K μa μf μ) (h' : IsHaarProd pa pf K μa μf μ') : μ = μ' := by
@@ -268,7 +264,6 @@ theorem IsHaarProd.unique (hK : ∀ v, IsOpen (K v : Set (Yf v))) (hK' : ∀ v, 
 variable [∀ w, SecondCountableTopology (Ya w)] [∀ v, IsTopologicalGroup (Yf v)] [∀ v, LocallyCompactSpace (Yf v)]
   [∀ v, SecondCountableTopology (Yf v)]
 
-omit [LocallyCompactSpace X] [SecondCountableTopology X] [∀ w, T2Space (Ya w)] in
 
 theorem IsRestrGroup.exists_factor (h : IsRestrGroup pa pf K) (μa : ∀ w, Measure (Ya w)) (μf : ∀ v, Measure (Yf v))
     [∀ w, (μa w).IsHaarMeasure] [∀ v, (μf v).IsHaarMeasure] (ν : Measure X) [ν.IsHaarMeasure] (S : Finset V) :
@@ -349,7 +344,6 @@ theorem IsRestrGroup.existsUnique_isHaarProd (h : IsRestrGroup pa pf K) (μa : �
     rw [div_eq_mul_inv, mul_right_comm, mul_comm k, ← show t = c * k from e, ENNReal.mul_inv_cancel t0 tt]
   rw [Measure.smul_apply, hc A B hA hB, smul_eq_mul, ← mul_assoc, e', one_mul]
 
-omit [∀ w, SecondCountableTopology (Ya w)] [∀ v, LocallyCompactSpace (Yf v)] [∀ v, SecondCountableTopology (Yf v)] in
 
 theorem IsHaarProd.isMulRightInvariant (h : IsHaarProd pa pf K μa μf μ) (hX : IsRestrGroup pa pf K)
     [∀ w, (μa w).IsMulRightInvariant] [∀ v, (μf v).IsMulRightInvariant] : μ.IsMulRightInvariant := by

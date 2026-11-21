@@ -16,7 +16,6 @@ namespace GlobalTheory.InertLocFrame
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {L : Type} [Field L]
 
-open Classical in
 
 def pre (ι : L →+ AE F E) (z : AE F E) : L := if h : ∃ x, ι x = z then h.choose else 0
 

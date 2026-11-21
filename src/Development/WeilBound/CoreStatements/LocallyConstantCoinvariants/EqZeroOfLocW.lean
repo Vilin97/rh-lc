@@ -98,7 +98,6 @@ theorem exists_e (h : IsSec σ t sec) (hG : Grams σ t JA JB) (d : Darboux (symp
   have := congrArg (evFin F v) ((d.form (s w) (s w')).symm.trans (symp_eq h hG (hs1 w) (s w')))
   rwa [ev_sgl, hs2, hs2, map_sub, ev_dot, ev_dot] at this
 
-variable (t ψ) in
 
 structure LM (d : Darboux (symp (R := AF F) (cA σ) (-1) JA JB) κ) (ι : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ((α × β → Fv F v) → ℂ)) : Prop where
   bij : Set.BijOn ι (SB (κ → Fv F v) : Set _) (SB (α × β → Fv F v) : Set _)

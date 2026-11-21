@@ -190,7 +190,6 @@ theorem stdMap_mulVec (A : Mx ↥(OL LL) n' n) (x : Fin n → ↥(OL LL)) :
   push_cast
   rfl
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def latOf (r : ↥(GK K) →* GL (Fin n) ↥(OL LL)) (hr : Cont r) : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL) where
   V := Fin n → ↥LL.1
@@ -216,13 +215,11 @@ def latOf (r : ↥(GK K) →* GL (Fin n) ↥(OL LL)) (hr : Cont r) : LocLat ↥(
         funext j'
         by_cases h : j' = j <;> simp [stdMap_apply, Pi.single_apply, h] }
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def basisOf (r : ↥(GK K) →* GL (Fin n) ↥(OL LL)) (hr : Cont r) :
     Module.Basis (Fin n) ↥(OL LL) ↥(latOf r hr).L.T :=
   (Pi.basisFun ↥(OL LL) (Fin n)).map (LinearEquiv.ofInjective _ stdMap_injective)
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def homOf {r : ↥(GK K) →* GL (Fin n) ↥(OL LL)} (hr : Cont r) {r' : ↥(GK K) →* GL (Fin n') ↥(OL LL)} (hr' : Cont r')
     (A : Mx ↥(OL LL) n' n) (hA : Tw r r' A) : LatHom (latOf r hr).L (latOf r' hr').L where

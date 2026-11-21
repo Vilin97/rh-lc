@@ -73,7 +73,6 @@ open scoped NNReal
 
 variable {D : D7}
 
-open Classical in
 
 def bI {m n : ℕ} (Y : Matrix (Fin m) (Fin n) (AE D)) (w : InfinitePlace D.host.F) : ℝ≥0 :=
   max 1 (Finset.univ.sup fun p : EmbOver D.host.E w × Fin m =>

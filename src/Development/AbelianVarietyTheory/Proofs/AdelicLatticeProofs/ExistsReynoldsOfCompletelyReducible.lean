@@ -31,7 +31,6 @@ private lemma sub_projection_mem' {p q : Submodule ℂ V} (h : IsCompl p q) (v :
     (Submodule.IsCompl.projection_eq_self_iff h _).mpr
       (Submodule.IsCompl.projection_apply_mem h v), sub_self]
 
-variable {V : Type} [AddCommGroup V] [Module ℂ V] in
 
 theorem _root_.GlobalTheory.ClassFin.exists_reynolds_of_completelyReducible (V : Type) [AddCommGroup V] [Module ℂ V]
     (S : Set (V →ₗ[ℂ] V)) :

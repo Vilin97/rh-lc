@@ -337,7 +337,6 @@ end Enlarge
 
 section Data
 
-open Classical in
 
 def avoidPlaces (P : Pre) (s : Finset ℕ) : Finset (HeightOneSpectrum (𝓞 P.host.E)) :=
   (((finite_offSet P).union s.finite_toSet).inter_of_left {p | p.Prime}).toFinset.attach.biUnion fun p =>
@@ -351,14 +350,12 @@ theorem subset_avoidPlaces (P : Pre) (s : Finset ℕ) {p : ℕ} (h : p ∈ offSe
 
 end Data
 
-open Classical in
 
 def settingChar {D : D7} {art : Ideles D.host.E →* Gab D.host.E D.nd.Om} (ha : IsGlobalArtin art)
     (A Q : D.ntw.Tw → Finset (PlE D.host)) (k : D.ntw.Tw → ℕ) (ψ : ∀ i, D.ntw.RCG i (Q i) →* (D.ntw.Ok i (k i))ˣ)
     (ι : ∀ i, RootIso D i (k i)) (i : D.ntw.Tw) : HChar D.host.E :=
   if h : BlochKatoReduction.Gen.PsiOk i (A i) (Q i) (k i) (ψ i) then pickChar ha h (ι i) else 1
 
-open Classical in
 
 def ofFamilyOn (B : Base) (pl : Finset ℕ) (Wt : Set B.places.Pl) (hsub : ∀ w ∈ Wt, B.places.resChar w ∈ pl)
     (hc : ∀ w, B.places.conj w ∈ Wt ↔ w ∈ Wt) {I : Type} (s : B.places.Pl → I)

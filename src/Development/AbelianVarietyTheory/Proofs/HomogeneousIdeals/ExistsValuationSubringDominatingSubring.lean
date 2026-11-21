@@ -32,7 +32,6 @@ theorem exists_valuativeExtension (p : X ⟶ S) [UniversallyClosed p] (r : Spec 
   obtain ⟨⟨l⟩⟩ := hE { R := V, K := K, i₁ := y, i₂ := r, commSq := ⟨h⟩ }
   exact ⟨l.l, l.fac_left, l.fac_right⟩
 
-variable (K) in
 
 theorem valuativePoint_ext (p : X ⟶ S) [IsSeparated p] {x x' : Spec (.of V) ⟶ X}
     (h : specAlgebraMap V K ≫ x = specAlgebraMap V K ≫ x') (h' : x ≫ p = x' ≫ p) : x = x' := by
@@ -41,7 +40,6 @@ theorem valuativePoint_ext (p : X ⟶ S) [IsSeparated p] {x x' : Spec (.of V) �
       commSq := ⟨Category.assoc _ _ _⟩ }
   exact congrArg (fun l ↦ l.l) (hU.elim ⟨x, rfl, rfl⟩ ⟨x', h.symm, h'.symm⟩)
 
-variable (K) in
 
 theorem valuativePoint_ext_of_isSeparated [X.IsSeparated] {x x' : Spec (.of V) ⟶ X}
     (h : specAlgebraMap V K ≫ x = specAlgebraMap V K ≫ x') : x = x' :=
@@ -67,7 +65,6 @@ theorem specAlgebraMap_valExt : specAlgebraMap V K ≫ valExt p r y h = y :=
 theorem valExt_over : valExt p r y h ≫ p = r :=
   (existsUnique_valuativeExtension p r y h).exists.choose_spec.2
 
-variable (K) in
 
 variable {V' K' : Type u} [CommRing V'] [IsDomain V'] [ValuationRing V'] [Field K']
   [Algebra V' K'] [IsFractionRing V' K']
@@ -163,7 +160,6 @@ section Centre
 
 variable {X X' S : Scheme.{u}} [IsIntegral X] [IsIntegral X']
 
-variable (X) in
 
 def genericFieldPoint : Spec (.of X.functionField) ⟶ X := X.fromSpecStalk (genericPoint X)
 

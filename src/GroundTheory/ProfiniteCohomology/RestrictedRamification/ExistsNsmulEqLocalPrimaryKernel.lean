@@ -20,7 +20,6 @@ theorem QZ.nsmul_mk (j : ℕ) (r : ℚ) : j • QZ.mk r = QZ.mk (j * r) := by
   rw [nsmul_eq_mul] at h
   exact h.symm
 
-open Classical in
 
 def qzDiv (ℓ : ℕ) (q : QZ) : QZ :=
   if q = 0 then 0 else QZ.mk ((QZ.mk_surjective q).choose / ℓ)
@@ -55,7 +54,6 @@ theorem eq_zero_inl_of_pow_nsmul_eq_zero {ℓ : ℕ} (hℓ : ℓ.Prime) (v : Inf
 variable (K) (S : Set (HeightOneSpectrum (𝓞 K.1))) (ℓ : ℕ) (hℓ : ℓ.Prime)
   (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
-include hℓ hS in
 
 theorem exists_nsmul_eq_localPrimaryKernel (hK : ℓ ≠ 2 ∨ IsTotallyComplex K.1)
     (t : localPrimaryKernel K S ℓ) : ∃ s : localPrimaryKernel K S ℓ, ℓ • s = t := by
@@ -107,8 +105,6 @@ theorem exists_nsmul_eq_localPrimaryKernel (hK : ℓ ≠ 2 ∨ IsTotallyComplex 
     change c - e v₀ ((e v₀).symm c) = 0
     rw [AddEquiv.apply_symm_apply, sub_self]
 
-set_option maxHeartbeats 1000000 in
-include hℓ hS in
 
 theorem exists_nsmul_eq_h2SUnits (hK : ℓ ≠ 2 ∨ IsTotallyComplex K.1)
     (y : AddCommGroup.primaryComponent (cohomology (galSUnitsMax K.1 ℚ̄ S) 2) ℓ) :

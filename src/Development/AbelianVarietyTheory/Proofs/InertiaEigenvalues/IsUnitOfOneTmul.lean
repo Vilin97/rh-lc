@@ -55,7 +55,6 @@ theorem isUnit_Q (R : WSer Γ) : IsUnit (algebraMap (LetA O n) R.EE R.Q) := by
     rw [pow_succ', AlgHom.mul_apply, ← R.φE_ext]
     exact ih.map R.φE
 
-set_option maxHeartbeats 1000000 in
 
 theorem build (E : WEt I) [Nontrivial R.EE] {Zl S W : Type} [CommRing Zl] [CommRing S] [CommRing W]
     (a : S →+* LetA O n) (z : PowerSeries Zl →+* S) (c : W →+* RW) (ψ : S →+* W) (π Q : S)
@@ -311,7 +310,6 @@ theorem kappa_basis (κ : W ⊗[Z] T ≃+ RW ⊗[O] T) (hκ : ∀ w t, κ (w ⊗
   refine ⟨b.equivFun (κ.symm y), by simp only [key]; simp, fun w hw => ?_⟩
   rw [hw, key, AddEquiv.symm_apply_apply, LinearEquiv.apply_symm_apply]
 
-omit [Module Z T] in
 
 theorem map_mulLeft (r : RW) (y : RW ⊗[O] T) :
     TensorProduct.map (LinearMap.mulLeft O r) (LinearMap.id : T →ₗ[O] T) y = r • y := by

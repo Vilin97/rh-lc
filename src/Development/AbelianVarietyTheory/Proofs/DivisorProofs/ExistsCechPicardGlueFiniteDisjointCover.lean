@@ -36,7 +36,6 @@ variable {Y : Scheme.{0}} {κ : Type} {Z : κ → Scheme.{0}} (f : ∀ i, Z i �
 def gT (i : κ) (k k' : (L i).ι) : Γ(Y, (f i) ''ᵁ (L i).U k ⊓ (f i) ''ᵁ (L i).U k')ˣ :=
   res (image_inf_le (f i) _ _) (extUnit (f i) _ ((L i).g k k'))
 
-open Classical in
 
 def gS : ∀ p q : (Σ i, (L i).ι),
     Γ(Y, (f p.1) ''ᵁ (L p.1).U p.2 ⊓ (f q.1) ''ᵁ (L q.1).U q.2)ˣ

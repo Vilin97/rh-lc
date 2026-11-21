@@ -53,7 +53,6 @@ theorem continuous_lact {Ψ : Finset (E →+* ℂ)} (γ : GL (Fin r) E) :
   simp only [lact, mat, Matrix.mul_apply, Matrix.of_apply]
   fun_prop
 
-omit [IsCMField E] in
 
 theorem countable_fg : {L : Lt E r | L.FG}.Countable := by
   have : Countable E := Finsupp.Countable.of_moduleFinite (R := ℚ)
@@ -62,7 +61,6 @@ theorem countable_fg : {L : Lt E r | L.FG}.Countable := by
   rintro L ⟨s, hs⟩
   exact ⟨s, hs⟩
 
-omit [IsCMField E] in
 
 theorem exists_den {L : Lt E r} (hL : L.FG) :
     ∃ d : 𝓞 E, d ≠ 0 ∧ ∀ v ∈ L, ∀ a, ∃ c : 𝓞 E, (c : E) = (d : E) * v a := by

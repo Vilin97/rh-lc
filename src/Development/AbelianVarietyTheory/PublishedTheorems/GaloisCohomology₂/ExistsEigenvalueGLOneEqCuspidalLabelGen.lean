@@ -165,8 +165,6 @@ variable {g : ℕ} [hg : Fact g.Prime] in
 private theorem gn_one_mul_comm (x y : _root_.GlobalTheory.GLq.Gn g 1) : x * y = y * x :=
   _root_.GlobalTheory.Published.GreenModel.ev_inj (by rw [map_mul, map_mul, mul_comm])
 
-open Polynomial CategoryTheory in
-variable {g : ℕ} [hg : Fact g.Prime] in
 
 theorem _root_.GlobalTheory.Published.GreenModel.green_one (L : _root_.GlobalTheory.GLq.LabelDatum g) :
     ∃ τ : (ZMod g)[X] → _root_.GlobalTheory.GLq.Gn g 1 → ℂ,

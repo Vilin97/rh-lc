@@ -166,4 +166,3 @@ def sqUnif {L : LB A.left} (u : HolUnif A L g) : HolUnif (A ‚äó A) (trivLB (A ‚ä
 
 end GlobalTheory.ProdUnifSq
 
-open GlobalTheory.ProdUnifSq in

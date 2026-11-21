@@ -39,7 +39,6 @@ theorem norm_coeff_out (hs : IsSmooth π) (hi : π.IsIrreducible) (hu : IsUnitar
   obtain ⟨c, h1, hc⟩ := exists_central_scalar hs hi hu z.2
   rw [hz, map_mul, Module.End.mul_apply, hc, map_smul, map_smul, norm_smul, h1, one_mul]
 
-omit [ValuativeRel k] in
 
 theorem isLocallyConstant_orbit [IsTopologicalRing k] (hs : IsSmooth π) (v : V) :
     IsLocallyConstant fun g : GL (Fin N) k => π g v := by

@@ -68,7 +68,6 @@ lemma point_extend {V F : Type} [CommRing V] [IsDomain V] [ValuationRing V] [Alg
   obtain ⟨⟨l, h1, h2⟩⟩ := hE S
   exact ⟨Over.homMk l h2, by ext1; exact h1⟩
 
-open PowerSeries in
 
 lemma units_family_trivial {B : Over (Spec (CommRingCat.of K))} [GrpObj B] [IsProper B.hom]
     (Φ : ∀ (R : Type) [CommRing R] [Algebra K R], Rˣ →* (sp K R ⟶ B))
@@ -223,7 +222,6 @@ lemma pt_univ : (pt K X _ (univ K X)).left = (Rosenlicht.torusIso K X).hom := by
     simp [univ]
   · exact (Over.w (pt K X _ (univ K X))).trans (Rosenlicht.torusIso_hom_hom K X).symm
 
-variable {X} in
 
 def coch (l : X →+ ℤ) (G : Type) [CommGroup G] : G →* (Multiplicative X →* G) where
   toFun x :=
@@ -245,7 +243,6 @@ lemma char_eq_prod {I : Type} [Fintype I] (e : Module.Basis I ℤ X) (G : Type) 
 
 end TorusToProper
 
-open TorusToProper in
 
 theorem splitTorus_hom_proper_trivial_field (K : Type) [Field K] (X : Type) [AddCommGroup X]
     [Module.Free ℤ X] [Module.Finite ℤ X] (B : Over (Spec (CommRingCat.of K))) [GrpObj B]

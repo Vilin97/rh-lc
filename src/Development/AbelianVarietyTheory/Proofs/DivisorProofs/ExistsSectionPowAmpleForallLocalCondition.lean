@@ -98,7 +98,6 @@ theorem exists_prod (hL : H.IsLB) (P : W → W.functionField → Prop)
 
 end SecLocalCondition
 
-open SecLocalCondition in
 
 theorem exists_sec_forall_local_condition : ∀ (W : Scheme.{0}) [IsIntegral W] (H : LB W), IsAmpleLB H →
     ∀ (P : W → W.functionField → Prop), (∀ y c c', P y c → RegAt y c' → P y (c' * c)) →

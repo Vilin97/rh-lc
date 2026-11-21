@@ -26,7 +26,6 @@ open PositivityTheory.ThKG PositivityTheory.ThKF
 variable {n d : ℕ} {X X₂ : Spc F E n} {W W₂ : Spc F E d} {B : Base F E} {M : Model σ X W} {χX χW : Chr F E} {om : Rep σ X W}
   {r s r' s' : ℕ}
 
-variable (M X₂ W₂) in
 
 def reM : Model σ (reS X X₂) (reS W W₂) := ⟨M.co, M.vac, M.μ, M.dom⟩
 

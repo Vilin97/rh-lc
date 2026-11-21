@@ -12,7 +12,6 @@ open Matrix
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {R : Type*} [CommRing R] {σ : R →+* R}
   {J : Matrix ι ι R}
 
-variable (σ J) in
 
 def tor (e f : ι → R) (l m : R) : Matrix ι ι R :=
   1 + (l - 1) • vecMulVec e (J *ᵥ (σ ∘ f)) + (m - 1) • vecMulVec f (J *ᵥ (σ ∘ e))

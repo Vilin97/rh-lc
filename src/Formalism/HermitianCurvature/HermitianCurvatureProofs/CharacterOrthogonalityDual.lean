@@ -111,7 +111,6 @@ theorem finite_dual (h : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R) [
     Finite (C →ₗ[R] KR R) :=
   Finite.of_injective _ (chC_injective h)
 
-open Classical in
 
 theorem sum_over_C (h : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R) [Finite C]
     (μ : C →ₗ[R] KR R) :
@@ -137,7 +136,6 @@ theorem chS_apply (h : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R)
     (S : Submodule R (C →ₗ[R] KR R)) (c : C) (α : S) :
     chS h S c α = psiKR R ψ ((α : C →ₗ[R] KR R) c) := rfl
 
-open Classical in
 
 theorem sum_over_S (h : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R) [Finite C]
     (S : Submodule R (C →ₗ[R] KR R)) (c : C) :
@@ -166,7 +164,6 @@ section Alg2
 variable {K : Type} [CommRing K] {R : Subring K} {ψ : AddChar K ℂ}
 variable {C : Type} [AddCommGroup C] [Module R C]
 
-open Classical in
 
 theorem sum_over_dual' (h : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R) [Finite C]
     (hsep : ∀ c : C, (∀ α : C →ₗ[R] KR R, α c = 0) → c = 0) (x : C) :

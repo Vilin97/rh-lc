@@ -18,7 +18,6 @@ namespace SectionProduct
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [Fintype K] in
 
 theorem isMultiHomog_pow {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) (j : ℕ) :
     IsMultiHomog (g ^ j) (j • d) := by
@@ -34,7 +33,6 @@ theorem isMultiHomog_pow {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) 
 
 end SectionProduct
 
-open SectionBoundedMul SectionProduct in
 
 theorem SectionProduct.proof : SectionProduct.Statement := by
   intro K _ ι _ Ω _ y A B C n j τ s t hdeg hmet hs ht

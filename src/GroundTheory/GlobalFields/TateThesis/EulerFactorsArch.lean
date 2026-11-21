@@ -85,7 +85,6 @@ theorem infinitePlaceMeasure_zero (w : InfinitePlace K) : infinitePlaceMeasure w
     change ringEquivComplexOfIsComplex hc 0 = 0
     exact map_zero _
 
-omit [NumberField K] in
 
 theorem integral_infinitePlaceUnitsMeasure_of_isReal {w : InfinitePlace K} (hw : w.IsReal)
     (g : w.Completion → ℂ) :
@@ -105,7 +104,6 @@ theorem integral_infinitePlaceUnitsMeasure_of_isReal {w : InfinitePlace K} (hw :
   push_cast
   rw [div_eq_inv_mul]
 
-omit [NumberField K] in
 
 theorem integral_infinitePlaceUnitsMeasure_of_isComplex {w : InfinitePlace K} (hw : w.IsComplex)
     (g : w.Completion → ℂ) :
@@ -220,18 +218,14 @@ def infiniteTest (w : InfinitePlace K) (a : w.Completion) : ℂ :=
   (if 0 < χ.infiniteWeight w then conj (extensionEmbedding w a) else extensionEmbedding w a) ^
       (χ.infiniteWeight w).natAbs * ((Real.exp (-(π * w.mult * ‖a‖ ^ 2)) : ℝ) : ℂ)
 
-open Classical in
 
 def infiniteGamma (w : InfinitePlace K) (s : ℂ) : ℂ :=
   if w.IsReal then Gammaℝ (s + χ.infiniteTau w * I + χ.infiniteWeight w)
   else Gammaℂ (s + χ.infiniteTau w * I + ((χ.infiniteWeight w).natAbs : ℂ) / 2)
 
-omit [NumberField K] in
-open Classical in
 
 def infiniteConst (w : InfinitePlace K) : ℂ := if w.IsReal then 1 else π
 
-omit [NumberField K] in
 
 theorem integral_infiniteTest (w : InfinitePlace K) {s : ℂ} (hs : 0 < s.re) :
     ∫ a : (w.Completion)ˣ, χ.infiniteTest w a * χ.infiniteComponent w a *

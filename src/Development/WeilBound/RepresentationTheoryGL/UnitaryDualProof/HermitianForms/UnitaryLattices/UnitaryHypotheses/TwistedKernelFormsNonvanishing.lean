@@ -89,7 +89,6 @@ theorem chain_kills (hB : IsInvForm π B) : ∀ d, d + 1 ≤ N → Kills ψ π (
   | d + 1, hd => kills_congr (by omega)
       (chain_succ hUD hψc hψ1 π hs B d (by omega) (chain_lvl hUD hψc hψ1 π hs B hB d (by omega))).2.2.1
 
-include hUA in
 
 theorem twisted_kernel_forms_nonvanishing (hUS : USplit k) (hB : IsInvForm π B) :
     ∀ e d, d + e + 1 = N → (∃ v, chain hUD hψc hψ1 π hs B d v v ≠ 0) →

@@ -71,7 +71,6 @@ def GoodAt (x : X.B.I.Gf) (γ : G0g D.nd) : Prop :=
     RedMat X (D.naut.plGw kv.1 kv.2) (D.host.g kv.1) x ((γ kv : GL (Fin D.R.r) (ZMod (D.host.g kv.1))) :
       Matrix (Fin D.R.r) (Fin D.R.r) (ZMod (D.host.g kv.1)))
 
-open Classical in
 
 def eg (x : X.B.I.Gf) : ℂ :=
   if h : x ∈ X.B.I.Kset ∧ ∃ γ : G0g D.nd, GoodAt X x γ then

@@ -985,7 +985,6 @@ theorem FFl_smul {J : Mx k r → (Wq →L[ℂ] Wp)} (hJ : J ∈ FFl k r z z' π 
 theorem FFl_zero : (0 : Mx k r → (Wq →L[ℂ] Wp)) ∈ FFl k r z z' π π' i D :=
   ⟨smooth_zero, fun _ _ _ _ => by simp, fun _ _ _ _ => by simp, fun _ _ _ _ _ _ => by simp⟩
 
-variable (k r z z' π π' i D) in
 
 def FFV : Submodule ℂ (Mx k r → (Wq →L[ℂ] Wp)) where
   carrier := {J | J ∈ FFl k r z z' π π' i D ∧ ∀ g, g ∉ Glev k r i ∩ D → J g = 0}
@@ -1001,7 +1000,6 @@ theorem FFV_ext {Φ Ψ : FFV k r z z' π π' i D}
   · exact h g hg
   · rw [Φ.2.2 g hg, Ψ.2.2 g hg]
 
-open Classical in
 
 def cutV (hD : IsDom k r z z' i D) (J : Mx k r → (Wq →L[ℂ] Wp)) (hJ : J ∈ FFl k r z z' π π' i D) :
     FFV k r z z' π π' i D :=
@@ -1603,15 +1601,10 @@ variable {k r : ℕ} {z z' : Fin (2 * r + k + 1) → ℂ} {Wp Wq : Type} [Normed
 
 def UU (Dc : (Fin r → ℂ) → Set (Mx k r)) : Set (XX k r) := {x | x.1 ∈ OmX r ∧ x.2 ∈ Dc x.1}
 
-variable (k r z z' i Dc) in
 
-variable (k r z z' π π' i Dc) in
 
-open Classical in
 
-variable (k r z z' π π' i Dc) in
 
-variable (k r z z' π π' i Dc) in
 
 theorem sf_slice {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] {Φ : Fn k r E}
     (h : SmoothFam k r i (UU Dc) Φ) {c : Fin r → ℂ} (hc : c ∈ OmX r) : SmoothLev k r i (Dc c) (Φ c) := by

@@ -202,7 +202,6 @@ theorem pairCocycle_cocycle (V : J → A.left.Opens) (φ : ∀ a b, Γ(A.left, V
     (fun _ h ↦ (ha h).2) (fun _ h ↦ (hb h).2) (fun _ h ↦ (hd h).2)
   linear_combination e1 - e2 - e3
 
-omit [GrpObj A] in
 
 theorem axis_coboundary {I : Type} (V : J → A.left.Opens) (φ : ∀ a b, Γ(A.left, V a ⊓ V b))
     (hφ : ∀ (a b c : J) (P : GPt A), P.In (V a) → P.In (V b) → P.In (V c) →

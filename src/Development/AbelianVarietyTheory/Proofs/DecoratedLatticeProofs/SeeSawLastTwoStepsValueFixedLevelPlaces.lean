@@ -167,7 +167,6 @@ theorem lst_theta (hc : c.Is) (j : ℕ) (h : j + 2 * 0 + 2 = D.R.m)
   · exact OrthDec.isThetaFunO_boxT (c.oT (j + 1 + 1) h) hΦ
       (GlobalTheory.LastSeeSaw.isThetaFunO_kap (v.τ j h) hτ (c.X (j + 1)) (GlobalTheory.BoxSlice.isThetaFunO_slice_right (c.bes j 0 h).o hΞ u))
 
-set_option maxHeartbeats 1000000 in
 
 theorem one_place (hc : c.Is) (hv : v.Is) (G : GLoc v) (j : ℕ) (h : j + 2 * 0 + 2 = D.R.m) (hr : c.Lz.rank = 1)
     (hτ : (v.τ j h)ᴴ * ((c.bes j 0 h).L.gram * v.τ j h) = (-(D.host.xi0 * star D.host.xi0)) • c.Lz.gram)

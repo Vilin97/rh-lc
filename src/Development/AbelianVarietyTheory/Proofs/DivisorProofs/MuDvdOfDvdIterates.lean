@@ -59,7 +59,6 @@ variable {p : ℕ} [hp : Fact p.Prime] {C : Type} [Field C] [IsAlgClosed C] [Cha
   {v : Valuation C NNReal} {O : Type} [CommRing O] [Algebra O C]
   [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]
 
-omit [IsAlgClosed C] [IsAdicComplete (Ideal.span {(p : O)}) O] in
 
 theorem modP_isNilpotent_of_not_isUnit (hv : v.Integers O) (x : ModP O p) (hx : ¬IsUnit x) : IsNilpotent x := by
   obtain ⟨o, rfl⟩ := Ideal.Quotient.mk_surjective (I := Ideal.span {(p : O)}) x
@@ -77,7 +76,6 @@ theorem modP_isNilpotent_of_not_isUnit (hv : v.Integers O) (x : ModP O p) (hx : 
   rw [← map_pow]
   exact Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton.2 hdvd)
 
-omit [IsAlgClosed C] [IsAdicComplete (Ideal.span {(p : O)}) O] in
 
 theorem eq_zero_of_forall_pow_dvd (hv : v.Integers O) (c m : PreTilt O p) (hc : ¬IsUnit c)
     (h : ∀ n, c ^ p ^ n ∣ m) : m = 0 := by

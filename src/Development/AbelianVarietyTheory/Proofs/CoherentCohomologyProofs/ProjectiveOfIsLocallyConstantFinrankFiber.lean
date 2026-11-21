@@ -53,9 +53,7 @@ theorem eventually_finrank_fiber_le [Module.Finite R M] (p : PrimeSpectrum R) :
   filter_upwards [(isOpen_setOf_baseChange_surjective φ).mem_nhds hφ] with q hq
   exact (LinearMap.finrank_le_finrank_of_surjective hq).trans_eq (finrank_baseChange_fin _ _)
 
-variable (M) in
 
-variable (M) in
 
 theorem isLocallyConstant_finrank_fiber [Module.Finite R M] [Module.Projective R M] :
     IsLocallyConstant fun p : PrimeSpectrum R =>
@@ -282,7 +280,6 @@ section Valuation
 variable {R : Type*} [CommRing R] [IsDomain R] [ValuationRing R] {M₀ M₁ : Type*}
   [AddCommGroup M₀] [Module R M₀] [AddCommGroup M₁] [Module R M₁]
 
-variable (R) in
 
 theorem free_of_finite_of_isTorsionFree (M : Type*) [AddCommGroup M] [Module R M]
     [Module.Finite R M] [Module.IsTorsionFree R M] : Module.Free R M := by

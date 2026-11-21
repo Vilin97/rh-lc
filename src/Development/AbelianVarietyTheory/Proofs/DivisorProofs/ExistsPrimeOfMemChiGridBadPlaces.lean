@@ -45,7 +45,6 @@ theorem continuous_of_level {v : HeightOneSpectrum (𝓞 L)} {θ : (v.adicComple
 theorem localIdele_inj (v : HeightOneSpectrum (𝓞 L)) : Function.Injective (localIdele L v) := fun x y h => by
   rw [← finEv_local_self v x, h, finEv_local_self]
 
-open Classical in
 
 theorem exists_hecke_level {F : Type} [Field F] [NumberField F] [Algebra F L] {c : L ≃ₐ[F] L} {I : Type} [Fintype I]
     {φ : I → L →+* ℂ} (h : CMData F c φ) (e : I → ℤ) (S : Finset (HeightOneSpectrum (𝓞 L)))
@@ -141,7 +140,6 @@ theorem lt_one_iff_le (t : v.adicCompletion L) : Valued.v t < 1 ↔ Valued.v t �
   rw [← WithZero.lt_mul_exp_iff_le WithZero.exp_ne_zero, ← WithZero.exp_add]
   simp
 
-open Classical in
 
 def resInt (t : v.adicCompletion L) : 𝓞 L ⧸ v.asIdeal :=
   if h : Valued.v t ≤ 1 then Ideal.Quotient.mk v.asIdeal (ReciprocityTheory.Aut.adic_exists_approx v t h).choose else 0

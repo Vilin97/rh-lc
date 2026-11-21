@@ -31,7 +31,6 @@ theorem exists_boxPt {q : ℕ} (β : Fin d →₀ ℕ) (h : ∀ i, β i < q) :
 
 end GlobalTheory.BoxMonomials
 
-open GlobalTheory.BoxMonomials in
 
 theorem GlobalTheory.coeff_eq_zero_of_evA_eq_zero_of_le_finrank :
     ∀ (K A : Type) [Field K] [CommRing A] [Algebra K A] [Module.Finite K A] (d q : ℕ)

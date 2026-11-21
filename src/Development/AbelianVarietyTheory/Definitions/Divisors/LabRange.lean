@@ -32,7 +32,6 @@ namespace GlobalTheory.Poinc
 
 variable {g n : ℕ}
 
-open MonObj in
 
 def IsDiagEnd (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (Fin 8) ℤ) {T : Scheme.{0}} (P : PolAV T) (u : T ⟶ F.X)
     (ε : Matrix (Fin 8) (Fin 8) ℤ → (P.A ⟶ P.A)) : Prop :=

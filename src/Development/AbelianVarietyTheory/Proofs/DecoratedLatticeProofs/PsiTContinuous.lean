@@ -51,7 +51,6 @@ theorem back_unitary {G B u : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hB : Bᴴ *
     _ = (Gᴴ * B * Bᴴ) * G := by rw [hu, Matrix.mul_one]
     _ = G := by rw [gB hB, Matrix.one_mul]
 
-open Formalism.IndefR.Eqv in
 
 theorem psiT_continuous (τ : D.what₂.Tau) : Continuous (psiT D τ) := by
   have hsum : ∀ x : AE D, psiT D τ x = ∑ c, psiT D τ (algebraMap (AF D.host.F) (AE D) ((basAF D).repr x c)) *
@@ -85,7 +84,6 @@ theorem inB_eq (V : HSp D) (B : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.ran
 
 end GlobalTheory.SeeSaw.KUni
 
-open GlobalTheory.SeeSaw.KUni Formalism.IndefR.Eqv in
 
 theorem GlobalTheory.SeeSaw.ontoUni_inB : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (B : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ),
     IsInfFam θ → (∀ τ, (B τ)ᴴ * gramAt D V τ * B τ = 1) → OntoUni fun k : GinfC V => inB θ V B k.1 := by

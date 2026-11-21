@@ -75,7 +75,6 @@ theorem mul_finIncl_mem (v : Pl D) (t : Af D.host.F ⊗[D.host.F] D.host.E) (ht 
 
 end GlobalTheory.SeeSaw.IdVOne
 
-open GlobalTheory.SeeSaw.IdVOne in
 
 theorem GlobalTheory.SeeSaw.idV_one_eq_intAt :
     ∀ (D : D7) (v : Pl D) (a : AE D), a ∈ idV (1 : FI D) v ↔ a ∈ intAt D (· = v) := by

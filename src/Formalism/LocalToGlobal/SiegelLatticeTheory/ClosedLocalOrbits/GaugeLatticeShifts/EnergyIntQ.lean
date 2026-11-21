@@ -62,7 +62,6 @@ theorem mem_DD (C : Choice X θ) (τ : D.what₂.Tau) (γ : Formalism.REAL.UJ (X
   rw [← e]
   exact Submodule.subset_span ⟨_, hxU, rfl⟩
 
-variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
 theorem locDDQ (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) (hRT : ReproTr) (hL2 : L2RightTranslation) (hGp : GapOfHyp)
     (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) (C : Choice X θ) (hLF : LocFactor C) (u : D.what₂.Word)

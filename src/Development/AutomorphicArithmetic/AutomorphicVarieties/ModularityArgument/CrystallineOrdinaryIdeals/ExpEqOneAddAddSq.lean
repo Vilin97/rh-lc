@@ -26,7 +26,6 @@ theorem exp_eq_one_add_add_sq {A : Type} [CommRing A] [Algebra ℚ A] {a : A} (h
 
 end GlobalTheory.UnrUnipChar
 
-open GlobalTheory.UnrUnipChar in
 
 theorem GlobalTheory.unr_unip_char_frob :
     ∀ {l : ℕ} [Fact l.Prime] {B : Type} [CommRing B] [Algebra ℚ_[l] B] [Module.Finite ℚ_[l] B] (t : B),

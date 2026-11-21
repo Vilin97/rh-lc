@@ -193,7 +193,6 @@ theorem det_gm_one_ne : (gm I (rho I) 1 (eB I)).det ≠ 0 := by
 
 end GlobalTheory.RealCoordCusp
 
-open GlobalTheory.RealCoordCusp in
 
 theorem GlobalTheory.CuspGeo.covolume_const : ∀ I : AutInst, ∃ (N : ℕ) (e : Fin N → Fin I.n → I.E)
     (ρ : (InfinitePlace I.F → Fin I.n → ℂ) ≃ₗ[ℝ] (Fin N → ℝ)) (d : ℝ),

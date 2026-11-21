@@ -12,9 +12,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 namespace GlobalTheory
 
-open NumberField MeasureTheory Topology in
-open scoped ComplexOrder ENNReal Matrix in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 
 theorem _root_.GlobalTheory.norm_entry_le_of_gram_eq_smul_one {r : ℕ} (G x : Matrix (Fin r) (Fin r) ℂ) (s : ℂ)
     (hs : s * s = 1) (h : xᵀ * G * x.map (starRingEnd ℂ) = s • (1 : Matrix (Fin r) (Fin r) ℂ))
@@ -44,9 +41,6 @@ theorem _root_.GlobalTheory.norm_entry_le_of_gram_eq_smul_one {r : ℕ} (G x : M
   rw [hnorm]
   nlinarith [sq_nonneg (‖x a b‖ - 1), norm_nonneg (x a b)]
 
-open NumberField MeasureTheory Topology in
-open scoped ComplexOrder ENNReal Matrix in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 
 theorem _root_.GlobalTheory.orthonormal_frames_bounded_of_definite :
     (∀ (r : ℕ) (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r), (X.p0 = 0 ∨ X.p0 = r) →

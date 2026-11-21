@@ -27,7 +27,6 @@ def Iter2 {G₁ G₂ : Type} [Group G₁] [MeasurableSpace G₁] [TopologicalSpa
     (f : G₁ → G₂ → ℂ) (z : ℂ) : Prop :=
   ∃ f₁ : G₁ → ℂ, IsQuotIntL1 ρ₁ μ₁ f₁ z ∧ ∀ q, IsQuotIntL1 ρ₂ μ₂ (f q) (f₁ q)
 
-set_option maxHeartbeats 2000000 in
 
 structure Comm (D : D7) where
   θ : InfFam D
@@ -78,7 +77,6 @@ structure Comm.Is (c : Comm D) : Prop where
   span : ∀ j, j + 1 < D.R.m → GlobalTheory.Core.Mi.ItSpans (c.M j) (c.M (j + 1)) (c.It j)
   spanT : ∀ j h, GlobalTheory.Core.Mi.ItSpans (c.M (j + 1)) c.MT (c.ItT j h)
 
-set_option maxHeartbeats 2000000 in
 
 structure Tup (c : Comm D) where
   om : ∀ j, Om (c.V j) (c.V (j + 1))

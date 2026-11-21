@@ -23,7 +23,6 @@ open GlobalTheory.LB
 
 variable {L M H : LB X} {V W : X.Opens}
 
-variable (M V) in
 
 def equivFamilies : SecOn M V ≃ Geo.Tor.secOn M V := secOnEquiv M V
 
@@ -32,7 +31,6 @@ theorem compat (s : SecOn M V) (i j : M.ι) {O : X.Opens} (hi : O ≤ V ⊓ M.U 
     rs X hi (coord s i) = rs X hij (M.g i j).val * rs X hj (coord s j) :=
   coord_rel s i j hi hj hij
 
-variable (M) in
 
 def restrict (h : W ≤ V) : SecOn M V →ₛₗ[rs X h] SecOn M W where
   toFun s := (toMod M).presheaf.map (homOfLE h).op s
@@ -70,7 +68,6 @@ theorem existsUnique_glue {I : Type} (O : I → X.Opens) (hO : ∀ a, O a ≤ V)
   TopCat.Sheaf.existsUnique_gluing' (C := Ab.{0}) ⟨secPresheaf M, isSheaf_secPresheaf M⟩ O V
     (fun a => homOfLE (hO a)) hc s h
 
-variable (M) in
 
 def topEquiv : SecOn M ⊤ ≃ₗ[Γ(X, ⊤)] LB.Sec M := globalEquiv M
 
@@ -148,12 +145,10 @@ theorem congr_restrict (hL : L.IsLB) (hM : M.IsLB) (w : LB.Iso L M) (hw : w.IsGe
     congr hL hM w hw W (restrict L h s) = restrict M h (congr hL hM w hw V s) :=
   mulFun_map hL hM _ h s
 
-variable (M) in
 
 def pull (π : X' ⟶ X) (V : X.Opens) :
     SecOn M V →ₛₗ[(π.app V).hom] SecOn (M.pull π) (π ⁻¹ᵁ V) := pullSec M π V
 
-variable (M) in
 
 def pullLE (π : X' ⟶ X) (V : X.Opens) (V' : X'.Opens) (e : V' ≤ π ⁻¹ᵁ V) :
     SecOn M V →ₛₗ[(π.appLE V V' e).hom] SecOn (M.pull π) V' where
@@ -240,7 +235,6 @@ def twMk (t : ℤ) (y : ∀ (p : M.ι) (k : H.ι), Γ(X, V ⊓ (M.U p ⊓ H.U k)
 @[simp] theorem twCoord_twMk (y : ∀ (p : M.ι) (k : H.ι), Γ(X, V ⊓ (M.U p ⊓ H.U k))) (hy) (p : M.ι)
     (k : H.ι) : twCoord (twMk t y hy) p k = y p k := rfl
 
-variable (M t) in
 
 def mulSec (s : LB.Sec H) (V : X.Opens) :
     SecOn (tw M H t) V →ₗ[Γ(X, V)] SecOn (tw M H (t + 1)) V where
@@ -309,9 +303,7 @@ theorem mulSec_bijective (s : LB.Sec H) (h : V ≤ nonzeroLocus s) :
   simp only [Units.val_mul]
   ring
 
-variable (M t) in
 
-variable (M H) in
 
 def twZeroIso : LB.Iso M (tw M H 0) where
   s a := res (inf_le_inf_right _ inf_le_left : M.U a.1.1 ⊓ H.U a.1.2 ⊓ M.U a.2 ≤ M.U a.1.1 ⊓ M.U a.2)
@@ -378,7 +370,6 @@ instance : Module Γ(X, V) (SecOnR f M V) := inferInstanceAs (Module Γ(X, V) (S
 
 instance : Module R (SecOnR f M V) := Module.compHom (SecOnR f M V) (cst f V)
 
-variable {f} in
 
 theorem smul_def (r : R) (s : SecOnR f M V) : r • s = cst f V r • s := rfl
 
@@ -387,11 +378,9 @@ instance isScalarTower :
   letI := cstAlgebra f V
   ⟨fun r a s => mul_smul (cst f V r) a s⟩
 
-variable (M V) in
 
 def of : SecOn M V ≃ₗ[Γ(X, V)] SecOnR f M V := LinearEquiv.refl _ _
 
-variable {f} in
 
 def coord (s : SecOnR f M V) (i : M.ι) : Γ(X, V ⊓ M.U i) := GlobalTheory.LB.coord ((of f M V).symm s) i
 
@@ -421,7 +410,6 @@ theorem compat (s : SecOnR f M V) (i j : M.ι) {O : X.Opens} (hi : O ≤ V ⊓ M
 
 variable (f)
 
-variable (M) in
 
 def restrict (h : W ≤ V) : SecOnR f M V →ₗ[R] SecOnR f M W where
   toFun s := of f M W (SecOn.restrict M h ((of f M V).symm s))
@@ -467,7 +455,6 @@ def linEquiv (φ : SecOn L V ≃ₗ[Γ(X, V)] SecOn M V) : SecOnR f L V ≃ₗ[R
 @[simp] theorem linEquiv_of (φ : SecOn L V ≃ₗ[Γ(X, V)] SecOn M V) (s : SecOn L V) :
     linEquiv f φ (of f L V s) = of f M V (φ s) := rfl
 
-variable (M) in
 
 def topEquiv : SecOnR f M ⊤ ≃ₗ[Γ(X, ⊤)] LB.Sec M := (of f M ⊤).symm ≪≫ₗ SecOn.topEquiv M
 
@@ -480,7 +467,6 @@ def chart (hM : M.IsLB) (i : M.ι) (h : V ≤ M.U i) : SecOnR f M V ≃ₗ[Γ(X,
 theorem chart_apply (hM : M.IsLB) (i : M.ι) (h : V ≤ M.U i) (s : SecOnR f M V) :
     chart f hM i h s = rs X (le_inf le_rfl h) (coord s i) := rfl
 
-variable (M) in
 
 def mulSec (t : ℤ) (s : LB.Sec H) (V : X.Opens) :
     SecOnR f (tw M H t) V →ₗ[R] SecOnR f (tw M H (t + 1)) V := lin f (SecOn.mulSec M t s V)
@@ -496,7 +482,6 @@ section Pull
 variable {f} {f' : X' ⟶ Spec (CommRingCat.of R')} {π : X' ⟶ X} {g : R →+* R'}
   (w : π ≫ f = f' ≫ Spec.map (CommRingCat.ofHom g))
 
-variable (M) in
 
 def pull (V : X.Opens) (V' : X'.Opens) (e : V' ≤ π ⁻¹ᵁ V) :
     SecOnR f M V →ₛₗ[g] SecOnR f' (M.pull π) V' where
@@ -570,7 +555,6 @@ def cechLBTwZero [LinearOrder κ] {H : LB X} (hM : M.IsLB) (hH : H.IsLB) :
     cechLB f M D ≅ cechLB f (tw M H 0) D :=
   cechLBCongr f D hM (isLB_tw hM hH 0) (SecOn.twZeroIso M H) (SecOn.twZeroIso_isGen hM)
 
-variable (M) in
 
 def secCubeMul {H : LB X} (t : ℤ) (s : LB.Sec H) :
     secCube f (tw M H t) D ⟶ secCube f (tw M H (t + 1)) D :=
@@ -586,7 +570,6 @@ theorem preimage_biInf (π : X' ⟶ X) (s : Finset κ) :
 variable {f} {f' : X' ⟶ Spec (CommRingCat.of R')} {π : X' ⟶ X} {g : R →+* R'}
   (w : π ≫ f = f' ≫ Spec.map (CommRingCat.ofHom g))
 
-variable (M) in
 
 def secCubePull (s : Finset κ) :
     (secCube f M D).obj s →ₛₗ[g] (secCube f' (M.pull π) fun i => π ⁻¹ᵁ D i).obj s :=

@@ -44,7 +44,6 @@ open GlobalTheory.CompanionTheory.MPDict GlobalTheory.CompanionTheory.MixZ
 
 namespace GlobalTheory.ArithmeticHeightTower.FormZc
 
-open ReciprocityTheory.ChartRestriction.G.Geo.ResK (ResKStatement) in
 
 theorem formZ_direct :
     Geo.ArithIntersectionSystemStatement → ResKStatement → GlobalTheory.ArithmeticHeightTower.FormZ := by

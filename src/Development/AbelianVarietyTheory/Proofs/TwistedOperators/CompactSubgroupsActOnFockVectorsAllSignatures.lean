@@ -231,7 +231,6 @@ theorem unfr_mem (hh : h ∈ Formalism.REAL.Kset (A.ε τ)) : (A.fr τ)⁻¹ * h
         A.fr τ := by simp only [Matrix.mul_assoc]
     _ = _ := by rw [h1, h2, Matrix.one_mul, Matrix.mul_one, ← hh.2, ← Matrix.mul_assoc hᴴ, h3, Matrix.one_mul]
 
-open Classical in
 
 def atPl {k : ℕ} (τ : D.what₂.Tau) (h : Matrix (Fin k) (Fin k) ℂ) (ρ : D.what₂.Tau) : Matrix (Fin k) (Fin k) ℂ :=
   if ρ = τ then h else 1

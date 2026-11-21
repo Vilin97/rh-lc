@@ -208,7 +208,6 @@ section Count
 
 variable {D : D7} {X : HidaSetting D}
 
-variable (Y) in
 
 def RowFree (Y : Full X) : Prop :=
   ∀ (u u' : D.what₂.Word) (s s' : TT Y u u'), s.toTerm = s'.toTerm →

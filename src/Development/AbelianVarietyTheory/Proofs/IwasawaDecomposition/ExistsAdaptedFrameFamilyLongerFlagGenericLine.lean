@@ -128,7 +128,6 @@ theorem exists_completion (hk : k τ < m τ) (c : Rest m k τ → K) (i : Rest m
 
 end StepLoc
 
-open StepLoc in
 
 theorem exists_fr_stepSet (F Ω Ω' : Type) [Field F] [Field Ω] [Algebra F Ω] [Field Ω'] [Algebra F Ω']
     (M : RatModel F Ω) (M' : RatModel F Ω') (φ : Ω →ₐ[F] Ω') (f : M'.Z ⟶ M.Z) (ι : Type) [Finite ι]

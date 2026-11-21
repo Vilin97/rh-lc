@@ -25,7 +25,6 @@ section Frames
 
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
-omit [NumberField K] in
 
 theorem mem_colLat_iff (B : GL (Fin n) K) (x : Fin n → K) :
     x ∈ colLat B ↔ ∃ c : Fin n → 𝓞 K, (B : Matrix (Fin n) (Fin n) K) *ᵥ (fun j => (c j : K)) = x := by
@@ -54,7 +53,6 @@ theorem isLattice_colLat (B : GL (Fin n) K) : Submodule.IsLattice K (colLat B) :
   rw [e]
   exact sum_mem fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span (Submodule.subset_span ⟨j, rfl⟩))
 
-omit [NumberField K] in
 
 theorem form_frame [StarRing K] (G B : Matrix (Fin n) (Fin n) K) (hB : Bᴴ * G * B = 1) (c d : Fin n → K) :
     ∑ i, ∑ j, star ((B *ᵥ c) i) * G i j * (B *ᵥ d) j = ∑ i, star (c i) * d i := by

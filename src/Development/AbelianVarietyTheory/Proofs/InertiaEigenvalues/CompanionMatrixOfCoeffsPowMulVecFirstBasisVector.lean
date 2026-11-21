@@ -149,7 +149,6 @@ section Unit
 variable {F E : Type} [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E]
   [Unram F E] {r : ℕ}
 
-omit [Unram F E] in
 
 theorem continuousStar (F : Type) [NontriviallyNormedField F] [NormedAlgebra F E] [Unram F E] : ContinuousStar E :=
   ⟨(Isometry.of_dist_eq fun x y => by

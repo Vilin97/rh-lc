@@ -93,7 +93,6 @@ private lemma centralBinom_le_pow_mul_four_pow_mul_prod_large_primes (m : ℕ) (
             _ ≤ 4 ^ (2 * m / 3) := primorial_le_four_pow _
         · rw [← Finset.prod_filter]
 
-open Polynomial Classical in
 
 theorem _root_.GlobalTheory.BadShare.inv_log_le_sum_inv_primes_between :
     ∀ N : ℕ, 100000 ≤ N → 1 / (10 * Real.log N) ≤

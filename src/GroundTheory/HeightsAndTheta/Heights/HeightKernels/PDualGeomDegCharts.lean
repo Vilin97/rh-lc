@@ -47,7 +47,6 @@ theorem recLin_apply (b : Module.Basis T ℤ (dualLattice F))
     (z : (Σ _ : Unit, T) → ℂ) (j : Fin (D + 1)) :
     recLin b hb σ z j = dualRecover b hb (fun t => z ⟨(), t⟩) (σ, j) := rfl
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem recLin_planePt (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (σ : K →+* ℂ) (v : Fin (D + 1) → ℂ) :
@@ -56,7 +55,6 @@ theorem recLin_planePt (b : Module.Basis T ℤ (dualLattice F))
   rw [recLin_apply, recover_planePt]
   simp
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem eq_planePt (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) {z : (Σ _ : Unit, T) → ℂ}
@@ -77,7 +75,6 @@ theorem eq_planePt (b : Module.Basis T ℤ (dualLattice F))
   cases u
   exact congrFun h1 t
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem h_planePt (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (σ : K →+* ℂ) (v : Fin (D + 1) → ℂ) :
@@ -100,7 +97,6 @@ theorem hermChartPot_eq (A h : Matrix (Fin (D + 1)) (Fin (D + 1)) ℂ) (y : Fin 
   unfold hermChartPot
   rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, ← Matrix.star_mulVec]
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem planePt_inj (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) {σ τ : K →+* ℂ}
@@ -256,7 +252,6 @@ theorem atProj (hOn : DualPtsOnPlane.Statement) (hOf : DualPtsOfPlane.Statement)
 
 end DualGeometricDegreeCharts
 
-open DualGeometricDegreeCharts in
 
 theorem DualGeomDegCharts.proof (hInt : ChartDensityIntegrable.Statement) : DualGeomDegCharts.Statement := by
   intro K _ _ i F T _ _ b hb hi

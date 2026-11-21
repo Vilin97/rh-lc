@@ -45,7 +45,6 @@ theorem eat_mem (E : ZMod n → Polynomial O) (hπ : π' ∈ W.AΔ) : Formalism.
   simp only [Formalism.MainNotions.DeltaInvariantLattices.Eat]
   rw [← Polynomial.aeval_algHom_apply, hi]
 
-open PowerSeries in
 
 theorem filtration_value_local (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (Eπ : LetA O n) (h' : ℕ)
     (hEΔ : Eπ ∈ W.AΔ)
@@ -120,8 +119,6 @@ theorem lattice_contains_power_local (Pt : ZMod n → LL → (K →ₐ[Qp] LL) �
 
 end Local
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 theorem val_fil (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F)
     (h1 : adm1 D HW F Cm) {l : ℕ} [Fact l.Prime] (K LL : FinExt l) (hG : Good K 1 LL)
@@ -156,9 +153,6 @@ theorem val_fil (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : Cmp
   · exact Submodule.smul_mem _ _ (key _ _)
   · exact Submodule.zero_mem _
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
-open PowerSeries in
 
 theorem lev_eat_zero (D : D7) (HW : HWOf D.loc) {l : ℕ} [Fact l.Prime] (K LL : FinExt l)
     (hG : Good K 1 LL) (π' : LetA ↥(OL LL) (finrank ℚ_[l] ↥(K0 K)))
@@ -177,8 +171,6 @@ theorem lev_eat_zero (D : D7) (HW : HWOf D.loc) {l : ℕ} [Fact l.Prime] (K LL :
     (PowerSeries.isUnit_iff_constantCoeff).mp (w.isUnit.map _)
   exact (hwu.mul_right_eq_zero).mp h1.symm
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 theorem model_lattice_filtration (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F)
     (CA CB CK : ℝ) (hA : Adm1 D HW F Cm CA CB CK) (l : ℕ) [Fact l.Prime] (hl : l ≠ 2) (K LL : FinExt l)
@@ -197,8 +189,6 @@ theorem model_lattice_filtration (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.l
     (fun τ ζ hpt y hy => val_fil D HW F Cm hA.1 K LL hG T hT h' hJ π' c ζ τ hpt y hy)
     (fun τ a' a h => u3upPf_FilC_anti (PD := (D.loc l).PD K) T τ h)
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
 
 theorem model_lattice_power (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F)
     (CA CB CK : ℝ) (hA : Adm1 D HW F Cm CA CB CK) (l : ℕ) [Fact l.Prime] (hl : l ≠ 2) (K LL : FinExt l)

@@ -90,8 +90,6 @@ theorem alg {U K : Type} [CommGroup U] [Fintype K] (ε : K → ℤ) (a b c d : K
 
 end WCub
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor WCub in
-set_option maxHeartbeats 1600000 in
 
 theorem w_cub_pull : GlobalFnsSt → ∀ (R R' : Type) [CommRing R] [IsDomain R] [CommRing R'] [IsDomain
     R'] (I : Ideal R) (I' : Ideal R') (φ : R →+* R') (D : DegData R I) (D' : DegData R' I') (hD

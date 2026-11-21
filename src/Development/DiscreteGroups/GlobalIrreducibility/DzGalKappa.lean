@@ -17,7 +17,6 @@ namespace DiscreteGroups.sglob.DzType
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-set_option linter.style.haveILetI false in
 
 section Ring
 

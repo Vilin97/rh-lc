@@ -14,7 +14,6 @@ noncomputable section
 
 namespace GlobalTheory.GLCuspNorm
 
-open scoped Classical in
 
 theorem norm_pInf_le (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (x : Ad E) :
     ‖pInf E x‖ ≤ ‖InfiniteAdeleRing.ringEquiv_mixedSpace E x.1‖ := by

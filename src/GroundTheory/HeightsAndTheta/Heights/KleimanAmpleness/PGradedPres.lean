@@ -95,7 +95,6 @@ theorem coordIncl_mem {d : Fin r → ℤ} (j : Fin r) {e : ℤ} {p : Poly S N}
   · rw [Pi.single_eq_of_ne h]
     exact zero_mem _
 
-variable (N) in
 
 def freeGraded (d : Fin r → ℤ) : GradedPMod S N (ULift.{v} (Fin r → Poly S N)) where
   piece := freePiece d
@@ -132,7 +131,6 @@ def freeGraded (d : Fin r → ℤ) : GradedPMod S N (ULift.{v} (Fin r → Poly S
     rw [smul_eq_mul, show c - d j + n = c + n - d j by ring] at h
     exact h
 
-variable (S N) in
 
 def freeBasis (r : ℕ) : Module.Basis (Fin r) (Poly S N) (ULift.{v} (Fin r → Poly S N)) :=
   (Pi.basisFun (Poly S N) (Fin r)).map (ULift.moduleEquiv (R := Poly S N)).symm
@@ -185,7 +183,6 @@ variable {M : Type w} [AddCommGroup M] [Module (Poly S N) M] [Module S M]
   [IsScalarTower S (Poly S N) M]
 variable {𝓕 : GradedPMod S N F} {𝓜 : GradedPMod S N M}
 
-omit [IsScalarTower S (Poly S N) F] [IsScalarTower S (Poly S N) M] in
 
 theorem component_map (g : GradedHom 𝓕 𝓜) (y : DirectSum ℤ fun c => 𝓕.piece c) (c : ℤ) :
     (((LinearEquiv.ofBijective (DirectSum.coeLinearMap 𝓜.piece) 𝓜.isInternal).symm

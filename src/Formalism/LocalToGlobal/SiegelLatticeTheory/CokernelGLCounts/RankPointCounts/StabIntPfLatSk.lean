@@ -41,7 +41,6 @@ def trunc (y : FreeE w → D.host.E) (n : ℕ) : FreeE w → D.host.E := fun q =
 
 def cf (y : FreeE w → D.host.E) (q : FreeE w) : D.host.E := ((Xmat w (trunc w y (hgt w q)))⁻¹) q.1.1 q.1.2
 
-variable (D) in
 
 def mOdd : ℕ := (gS D + 1) / 2
 
@@ -50,7 +49,6 @@ def τA (q : FreeE w) (y : FreeE w → D.host.E) : D.host.E :=
   else if upperM w q then sgq w (qbar w q) * D.conjF (-(y (qbar w q)) + cf w y (qbar w q))
   else 0
 
-variable (D) in
 
 def sLat (h : ℕ) (s : D.host.E) (_hs : D.conjF s = s) : AddSubgroup D.host.E where
   carrier := {z | z ∈ ddPow D h ∧ z + s * D.conjF z ∈ qdPow D h}
@@ -77,15 +75,12 @@ def Λq (q : FreeE w) : AddSubgroup D.host.E :=
   if selfP w q then sLat D (hgt w q) (sgq w q) (sgq_conj w q)
   else ((Iq w q : FI D) : Submodule (𝓞 D.host.E) D.host.E).toAddSubgroup
 
-variable (D) in
 
 def TwistC : Prop :=
   ∀ (δ : ∀ p : PlF D, (D.s.atP p).Fp) (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep),
     (∀ p, Agree δ M p) → Odd (gS D) → ∀ (w : Point D.host.E (D.R.rS + 1)) (y : FreeE w → D.host.E),
       CondX w (Xmat w y) ↔ ∀ q, y q - τA w q y ∈ Λq w q
 
-variable (D) in
 
-variable (D) in
 
 end Formalism.L2.SG.Pf.StabIntLat

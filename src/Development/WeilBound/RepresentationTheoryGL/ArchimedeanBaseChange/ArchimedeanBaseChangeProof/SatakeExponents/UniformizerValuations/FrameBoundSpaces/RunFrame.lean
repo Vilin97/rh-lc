@@ -24,8 +24,6 @@ attribute [local instance] borelG borelF borelA GlobalTheory.LocalData.complRel 
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure RunFrame {hR : Rd.ReadLimit} {π : Submodule ℂ (UA E n → ℂ)} {S : Finset (Pl E)} (F₀ : Frame0 hR π S)
     (T : Finset (Pl E)) : Type 1 where

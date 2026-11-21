@@ -65,7 +65,6 @@ theorem classes_fixed {W : Type} [CommRing W] [IsDomain W] [IsLocalRing W] (hW :
 end GlobalTheory.TorsRam
 
 namespace GlobalTheory.TorsRam
-open GlobalTheory.BXOf in
 
 theorem psiLoc_not_unit {W : Type} [CommRing W] [IsDomain W] [IsLocalRing W] (D : DegData W (maximalIdeal W))
     (J₀ : D.toPre.P.A.left → D.toPre.P.L.ι) (h₀ : ∀ x, x ∈ D.toPre.P.L.U (J₀ x)) (χ : D.toPre.X) (hχ : χ ≠ 0) (u : Wˣ)

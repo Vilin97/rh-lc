@@ -86,7 +86,6 @@ theorem kap_add (C : ℝ) (i j : Fin D.R.m) (τ : D.what₂.Tau) {s : ℕ} (hs :
 
 variable {D} {T : Type} {L : LevCh D T} {sc : Consts}
 
-open Classical in
 
 theorem expIn_condF (P : Places L) (v : HeightOneSpectrum (𝓞 D.host.F)) :
     GlobalTheory.CMVal.expIn (condF P) v = if v ∈ P.S0 then condExp P v else 0 := by

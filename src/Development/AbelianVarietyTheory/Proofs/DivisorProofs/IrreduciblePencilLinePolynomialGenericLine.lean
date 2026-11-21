@@ -104,7 +104,6 @@ private theorem irreducible_rename_of_injective' {σ τ K : Type} [Field K] (g :
     · exact Or.inl (h.map _)
     · exact Or.inr (h.map _)
 
-open GlobalTheory.PencilDisc.GenericLine in
 
 theorem GlobalTheory.PencilDisc.irreducible_line_generic (F : Type) [Field F] (D N : ℕ)
     (f : MvPolynomial (Fin (D + 1) × Fin N) F) (hf : Irreducible f) :

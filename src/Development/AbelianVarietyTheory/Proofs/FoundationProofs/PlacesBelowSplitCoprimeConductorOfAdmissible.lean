@@ -32,7 +32,6 @@ def below {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E)) 
 
 theorem over_below {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E)) : Over P (below P) := rfl
 
-open Classical in
 
 def belowSet {E : Type} [Field E] [NumberField E] (Q : Finset (HeightOneSpectrum (𝓞 E))) : Finset (HeightOneSpectrum (OF E)) :=
   Q.image below

@@ -16,7 +16,6 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 noncomputable section
 namespace PositivityTheory.ThKF0.Chr
 
-open GlobalTheory.SchwartzBox in
 
 theorem exists_boxCLM {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {κ κ' : Type} [Fintype κ]
     [Fintype κ'] (f₂ : SchwartzMap (κ' → V) ℂ) :

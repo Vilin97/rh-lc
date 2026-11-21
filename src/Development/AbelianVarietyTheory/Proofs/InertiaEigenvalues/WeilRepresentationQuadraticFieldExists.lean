@@ -188,7 +188,6 @@ end GlobalTheory.JR.WeilQuad
 
 namespace GlobalTheory.JR.WeilQuad
 
-open Classical in
 
 theorem weilField_main : WeilField := by
   intro F E _ _ _ _ _ A hK hL ψ hψ x μ hμ ω hω

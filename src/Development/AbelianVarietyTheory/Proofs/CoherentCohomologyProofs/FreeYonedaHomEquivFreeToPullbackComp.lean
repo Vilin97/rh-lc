@@ -101,7 +101,6 @@ instance additive_sheafPushforwardContinuous :
     (p.sheafPushforwardContinuous AddCommGrpCat.{v} J K).Additive where
   map_add := rfl
 
-variable (J K) in
 
 def freeToPullback {V : C} {W : D} (i : W ⟶ p.obj V) :
     (freeYoneda K).obj W ⟶ (p.sheafPullback AddCommGrpCat.{v} J K).obj ((freeYoneda J).obj V) :=

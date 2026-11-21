@@ -270,7 +270,5 @@ end GlobalTheory.Mem.LiteralAutomorphy
 
 namespace GlobalTheory.Fc.S0
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 end GlobalTheory.Fc.S0

@@ -149,7 +149,6 @@ def pullH {p : Y ⟶ Spec (CommRingCat.of K)} (u : X ⟶ Y) (hu : u ≫ p = q) (
   ((smS u hu).sq (a := thFil _ (a : ℤ)) (b := thFil _ ((a : ℤ) + 1)) (a' := thFil _ (a : ℤ)) (b' := thFil _ ((a : ℤ) + 1))
     (fun _ _ hx => hx) fun _ _ hx => hx).pull n
 
-variable (q) in
 
 def IsDlogFirstChernClass (D : E.LineData X) (x : Hdg q 1 2) : Prop :=
   ∀ (C : Type 1) [Category.{0} C] (g : C ⥤ Thick (smFun X q)), (∀ c, ∃ V ∈ 𝒱D D, InU V (g.obj c)) → ∀ Λ : CLiftK g D,

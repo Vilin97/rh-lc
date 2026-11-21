@@ -76,7 +76,6 @@ theorem exists_base (hp : p.Prime) (hW : (p : ℂ) ∈ W.nonunits) (Z : Mdl Y i�
   have h2 : LocallyOfFiniteType (spMap σ) := by rw [e]; infer_instance
   exact ⟨σ, (HasRingHomProperty.Spec_iff (P := @Flat)).1 h1, (HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)).1 h2⟩
 
-open GlobalTheory.ShFam.Pad.Pull in
 
 end Model
 

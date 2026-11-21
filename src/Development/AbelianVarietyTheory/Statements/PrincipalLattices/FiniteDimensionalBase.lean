@@ -70,7 +70,6 @@ def IsSpread {D : Datum H} {l : Level H} {Xo : Moduli D l} {g : ℕ} {ty : Fin g
 
 end PureType
 
-open PureType in
 
 def CMPoint : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l)
@@ -118,7 +117,6 @@ theorem disjoint_lat {ρ ρ' : ℂ} (h : ρ ≠ ρ') : Disjoint (lat hP ρ) (lat
   · exact ha' j (hj ▸ h)
   · exact ha j hj
 
-include hP in
 
 theorem eq_zero_of_line {a : D.La} (h : ∀ z : ℂ, z • Pe a ∈ Pe.range) : a = 0 := by
   have := hP.2.2.1

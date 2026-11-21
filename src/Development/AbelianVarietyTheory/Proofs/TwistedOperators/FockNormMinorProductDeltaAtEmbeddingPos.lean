@@ -93,7 +93,6 @@ theorem fock_self_pos {σ : Type*} (P : MvPolynomial σ ℂ) (hP : P ≠ 0) :
 
 end GlobalTheory.FockDelta
 
-open GlobalTheory.IndefiniteRowSideFullHecke.TwistedLevelValues in
 
 theorem GlobalTheory.FockDelta.fock_deltaAtEmb_pos :
     ∀ (D : D7) (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), ∃ a : ℝ, 0 < a ∧

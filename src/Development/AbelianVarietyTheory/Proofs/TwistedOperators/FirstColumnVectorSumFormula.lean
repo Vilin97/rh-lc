@@ -85,7 +85,6 @@ theorem sum_prod_map_eq_zero₂ {κ : Type} {m : ℕ} {X Y : Fin m → Type} (TX
     exact Finset.sum_congr rfl fun d _ => by ring) y
   rw [← hy]
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.FirstRowDatum
 

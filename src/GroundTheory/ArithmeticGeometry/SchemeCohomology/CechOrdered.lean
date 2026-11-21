@@ -270,7 +270,6 @@ lemma bd_ocone {q : ℕ} (c : ι) (S : Set ι) (hc : ∀ s ∈ S, c ≤ s) (z : 
     rw [h3]
     simp
 
-omit [LinearOrder ι] in
 
 noncomputable def aug {q : ℕ} : Chain ι q →+ ℤ :=
   Finsupp.liftAddHom fun _ => AddMonoidHom.id ℤ
@@ -472,7 +471,6 @@ lemma inter_le_of_inRange {q r : ℕ} {i : Fin (r + 1) → ι} {t : Fin (q + 1) 
 
 variable {P U}
 
-open Classical in
 
 noncomputable def pair {q : ℕ} (σ : Cochain P U q) (V : Opens X) : Chain ι q →+ P.obj (op V) :=
   Finsupp.liftAddHom fun t =>

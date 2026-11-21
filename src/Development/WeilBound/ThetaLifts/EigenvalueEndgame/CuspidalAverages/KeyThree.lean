@@ -27,7 +27,6 @@ def LeftLaw (ξ : kˣ →* ℂˣ) (l : (Matrix (Fin n) (Fin d) k → ℂ) →ₗ
 def ColLaw (ψ : AddChar k ℂ) (S : Set (Fin d)) (i i' : Fin d) (l : (Matrix (Fin n) (Fin d) k → ℂ) →ₗ[ℂ] ℂ) : Prop :=
   ∀ φ ∈ SB (Matrix (Fin n) (Fin d) k), ∀ ρ : Fin d → k, (∀ s ∈ S, ρ s = 0) → l (fun Y => φ (colOp i ρ Y)) = ψ (ρ i') * l φ
 
-variable (k n d) in
 
 def oneO : Matrix (Fin n) (Fin d) k → ℂ := Set.indicator {Y | ∀ a b, ValuativeRel.valuation k (Y a b) ≤ 1} 1
 
@@ -73,7 +72,6 @@ def Places : Prop :=
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {d j : ℕ}
 
-variable (σ) in
 
 structure IsFrame (W : Spc F E d) (u u' : Matrix (Fin d) (Fin j) E) : Prop where
   uu : uᵀ * W.J * u.map σ = 0
@@ -82,7 +80,6 @@ structure IsFrame (W : Spc F E d) (u u' : Matrix (Fin d) (Fin j) E) : Prop where
 
 def colSp (u : Matrix (Fin d) (Fin j) E) : Submodule E (Fin d → E) := Submodule.span E (Set.range uᵀ)
 
-variable (σ) in
 
 def levM (W : Spc F E d) (u u' : Matrix (Fin d) (Fin j) E) (g : GL (Fin j) (AE F E)) : Matrix (Fin d) (Fin d) (AE F E) :=
   1 + incM F u * (g.1 - 1) * incM F (W.J * u'.map σ)ᵀ - incM F u' * (((g⁻¹).1.map (cA σ))ᵀ - 1) * incM F (W.J * u.map σ)ᵀ

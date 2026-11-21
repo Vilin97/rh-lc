@@ -1240,16 +1240,13 @@ theorem K_finite_decay : CutKFin := by
   exact Classical.choose_spec Formalism.FourierDecayAlt.P.orbital_integral_converges (k0 + 1) r L.Wp L.Wq Ds g (wPt γ) (dPt γ) (A0 (k0 + 1) r) F hg
     hrel (dPt_ne γ) hZ hG le_rfl hdec
 
-open Classical in
 
-open scoped ContDiff in
 
 section jc12
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.JF
 
 end jc12
 
-open scoped ContDiff in
 
 section HSadj
 variable {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [FiniteDimensional ℂ Wp]
@@ -1338,6 +1335,5 @@ def zeroOp (o : ℕ) : Formalism.FourierDecayAlt.B.DiffOp k r Wp Wq :=
 
 end zeroOp
 
-open scoped ContDiff in
 
 end Formalism.MainNotions.BigCellDensity

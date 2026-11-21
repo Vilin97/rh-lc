@@ -41,6 +41,5 @@ theorem hasSatake_of_isSatVecGL (hπ : IsIrrSmooth π) {x : V} (α : Fin n → �
 
 end GlobalTheory.CompanionTheory.SatComp
 
-open GlobalTheory.CompanionTheory.SatComp in
 
 end

@@ -78,7 +78,6 @@ theorem mem_cl_im (a : Fin D.R.rS) (z : InfinitePlace X.B.I.F → ℝ) :
 
 end Onto
 
-open Onto in
 
 theorem fibOnto_holds : FibOnto := by
   intro D X u x hx

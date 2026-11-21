@@ -57,7 +57,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 variable {H : Geo.Tor.Host E} {Dw : Datum H} {l : Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l} [Algebra c.F ℂ]
   {r g : ℕ}
 
-open MonObj in
 
 end Classical
 
@@ -91,4 +90,3 @@ end Adelic
 
 end GlobalTheory.FrameEquiv.GenMove
 
-open GlobalTheory.FrameEquiv.GenMove GlobalTheory.IndefiniteRowSideFullHecke.ColumnDataLaws in

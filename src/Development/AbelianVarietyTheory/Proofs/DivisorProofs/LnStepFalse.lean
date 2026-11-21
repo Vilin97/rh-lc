@@ -28,7 +28,6 @@ section Loc
 variable {K : Type} [Field K] [NumberField K] {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
   [IsScalarTower (𝓞 K) K V]
 
-open Classical in
 
 end Loc
 
@@ -68,7 +67,6 @@ end Tan
 
 variable (K : Type) [Field K] [NumberField K] {n : ℕ} (e : Fin n ≃ Letter Dw)
 
-variable {K} in
 
 end Steps
 

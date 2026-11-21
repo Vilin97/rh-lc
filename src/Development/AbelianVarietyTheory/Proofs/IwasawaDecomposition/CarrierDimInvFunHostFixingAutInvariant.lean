@@ -66,7 +66,6 @@ theorem pullA_mem (hc : ∀ a, σ (bar a) = bar (σ a)) {τ : Y' ≃+ Y} (hτ : 
     {β : LinearMap.BilinForm ℤ Y} (h : β ∈ balForms bar Y) : pullA τ β ∈ balForms bar Y' :=
   ⟨fun y z => h.1 _ _, fun a y z => by simp only [pullA_apply, hτ, h.2, hc]⟩
 
-variable (σ ψ) in
 
 def TwEval : Prop :=
   ∀ (Y Y' : Type) [AddCommGroup Y] [Module O Y] [Module.Finite O Y] [AddCommGroup Y'] [Module O Y'] [Module.Finite O Y']

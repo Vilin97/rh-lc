@@ -128,7 +128,6 @@ private theorem of_reimE_reim {p q : ℕ} (Z : Matrix (Fin p) (Fin q) ℂ) :
 private theorem continuous_reim {p q : ℕ} : Continuous (fun Y : Matrix (Fin p) (Fin q) ℂ => reim Y) :=
   (reimL (n := p) (m := q)).continuous_of_finiteDimensional.congr fun Y => reimL_apply Y
 
-set_option maxHeartbeats 800000 in
 
 private theorem key_lemma_12 {n m : ℕ} {ι η : Type} [Fintype ι] [Fintype η] (ε : Fin n → Bool)
     (S : Finset (Fin n)) (eS : Fin S.card ≃ ↥S) (eU : Fin m ≃ {i // i ∉ S})
@@ -154,7 +153,6 @@ private theorem key_lemma_12 {n m : ℕ} {ι η : Type} [Fintype ι] [Fintype η
   · rw [Matrix.zero_mul, smul_zero, add_zero]
   · exact dg_smul_mul_add_half_eq_half_mul_add W0 Dg (H z2) (H t) hW0 hDD
 
-set_option maxHeartbeats 800000 in
 
 private theorem map_volume_reim_block_eq_of_det_ne_zero {m : ℕ} {η : Type} [Fintype η]
     (H : EuclideanSpace ℝ η →ₗ[ℝ] Matrix (Fin m) (Fin m) ℂ) (hH : ∀ t, (H t)ᴴ = H t)
@@ -199,7 +197,6 @@ private theorem inv_pow_mul_inv_pow_eq_two_pow_div_pow (N : ℝ) (m k : ℕ) (hN
   congr 1
   ring
 
-set_option maxHeartbeats 800000 in
 
 theorem placeJac_holds : PlaceJac := by
   intro n m ε S w ι η _ _ L H hn hw hG hL hnL hLs hH hnH hsH

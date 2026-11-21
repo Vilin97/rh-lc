@@ -47,7 +47,6 @@ def recTow (D : D7) : Tow D D.R.t where
     simp only [LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply] at h2
     exact h1.trans h2.symm
 
-open Classical in
 
 end Formalism.MainNotions.Inhab
 

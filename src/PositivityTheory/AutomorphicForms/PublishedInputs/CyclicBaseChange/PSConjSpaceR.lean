@@ -216,7 +216,6 @@ theorem map_map' {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R �
     GeneralLinearGroup.map g (GeneralLinearGroup.map f x) = GeneralLinearGroup.map (g.comp f) x := by
   ext i j; rfl
 
-variable (M a) in
 
 def sA (S : Ad M ≃+* Ad M) : GA M a →* GA M a := GeneralLinearGroup.map S.toRingHom
 
@@ -235,7 +234,6 @@ theorem sA_infGL (hS : Good S p) (y : GL (Fin a) (Rinf M)) :
       rw [pFin_infGL, sA, map_map']
       exact map_cornerGL_of_zero (sInf M) ((pFin M).comp S.toRingHom) hS.fin0 y)
 
-variable (S) in
 
 def finPart (k : GL (Fin a) (Af M)) : GL (Fin a) (Af M) := GeneralLinearGroup.map (pFin M) (sA M a S (finGL M a k))
 
@@ -243,7 +241,6 @@ theorem sA_finGL (hS : Good S p) (k : GL (Fin a) (Af M)) : sA M a S (finGL M a k
   ga_ext (by rw [pInf_finGL, sA, map_map_comm (pInf M) S.toRingHom (permR p).toRingHom hS.inf, pInf_finGL, map_one])
     (by rw [pFin_finGL]; rfl)
 
-variable (p) in
 
 def permL : Lie M a →L[ℝ] Lie M a :=
   LinearMap.toContinuousLinearMap
@@ -279,7 +276,6 @@ theorem height_perm (y : GL (Fin a) (Rinf M)) : height (GeneralLinearGroup.map (
   unfold height
   rw [← map_inv, h1, h1]
 
-variable (p) in
 
 def permK (k : Kinf M a) : Kinf M a :=
   ⟨(k : Matrix (Fin a) (Fin a) (Rinf M)).map (permR p).toRingHom, by
@@ -324,7 +320,6 @@ theorem lie_pull (hS : Good S p) (X : Lie M a) (φ : Sm M a) :
   rw [e.fderiv_eq, h2.fderiv]
   rfl
 
-variable (S p) in
 
 def opS : Op M a → Op M a
   | .fin k => .fin (finPart S k)
@@ -359,7 +354,6 @@ section Conj
 variable {M : Type} [Field M] [NumberField M] [IsTotallyReal M] {a : ℕ}
 variable {σ : M ≃+* M} {s : Ad M ≃+* Ad M} {p : InfinitePlace M ≃ InfinitePlace M}
 
-variable (a) in
 
 def pullE (hs : IsGalAd σ s) (hp : ∀ x, pInf M (s x) = permR p (pInf M x)) : Sm M a ≃ₗ[ℂ] Sm M a where
   toFun := pullL (good_alt hs hp)
@@ -479,8 +473,6 @@ theorem symm_mem_ratN {r : ℕ} {x : BlockIx a r → Ad M} (hx : x ∈ ratN M a 
   change algebraMap M (Ad M) (σ.symm (y q)) = s.symm (algebraMap M (Ad M) (y q))
   rw [RingEquiv.eq_symm_apply, hs.2.1, RingEquiv.apply_symm_apply]
 
-include hs in
-open MeasureTheory in
 
 theorem isCuspidal_pull {φ : GA M a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal fun g => φ (sA M a s g) := by
   intro r h0 h1 _ _ μ 𝓕 hμ hF g

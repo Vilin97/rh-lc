@@ -32,7 +32,6 @@ private lemma latticeEquivProd_symm_coe (L : PeriodPair) (p : ℤ × ℤ) :
   simp [PeriodPair.latticeEquivProd, Finsupp.linearCombination_apply, Finsupp.sum_fintype,
     PeriodPair.latticeBasis]
 
-open scoped UpperHalfPlane MatrixGroups Matrix ModularForm ComplexConjugate in
 
 lemma _root_.GlobalTheory.WpFam.hasSum_rows_G2_add_weierstrassP (τ : ℍ) (z : ℂ) :
     HasSum (fun n : ℤ => ∑' m : ℤ, 1 / (z + n * τ + m) ^ 2)

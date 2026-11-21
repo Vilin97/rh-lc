@@ -67,7 +67,6 @@ section Admissible
 variable {σ V₀}
 variable {U₀ : Subgroup (AdelicGLn.FiniteAdelicGL K n)} (hV₀U : V₀ ≤ fixedSubspace σ U₀)
 
-include hV₀ hV₀U in
 
 variable {μ : Measure (normOneGL K n)} [μ.IsHaarMeasure]
 

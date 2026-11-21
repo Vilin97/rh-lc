@@ -24,13 +24,9 @@ section GroupAlg
 
 variable {K : Type} [Field K] [CharZero K] {G : Type} [Group G] [Fintype G]
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end GroupAlg
 

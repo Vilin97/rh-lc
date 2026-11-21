@@ -100,7 +100,6 @@ variable {ψ W N} {n : ℕ}
       Subsingleton (cohomology (mackeyRep (W : Subgroup G) (ψ w).toMonoidHom N d.out) n))
 include h
 
-omit [CompactSpace G] [∀ w, CompactSpace (F w)] in
 
 theorem injective_mackeyRealRes_iff :
     Function.Injective (mackeyRealRes ψ W N n) ↔ Function.Injective (mackeyTopRes ψ W N n) := by
@@ -113,7 +112,6 @@ theorem injective_mackeyRealRes_iff :
   · intro hi c c' hcc
     exact hi (funext fun p => congrFun (congrFun hcc p.1.1) p.1.2)
 
-omit [CompactSpace G] [∀ w, CompactSpace (F w)] in
 
 theorem surjective_mackeyRealRes_iff :
     Function.Surjective (mackeyRealRes ψ W N n) ↔ Function.Surjective (mackeyTopRes ψ W N n) := by

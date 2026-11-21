@@ -9,8 +9,6 @@ open NumberField IsDedekindDomain
 
 namespace GlobalTheory
 
-open scoped TensorProduct in
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.quadratic_unramified_iff_inert_or_split (F E : Type) [Field F] [NumberField F] [Field E]
     [NumberField E] [Algebra F E] (h2 : Module.finrank F E = 2) (v : HeightOneSpectrum (𝓞 F)) :

@@ -16,7 +16,6 @@ section Objects
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {n n' : Type} {c : ℕ}
 
-variable (k n) in
 
 def flagSub (c i : ℕ) : Submodule 𝒪[k] (n ⊕ Fin c → k) where
   carrier := {y | ∀ l : Fin c, i ≤ l.val → y (Sum.inr l) = 0}
@@ -64,7 +63,6 @@ def OneOrbit : Prop :=
 
 variable [MeasurableSpace k] [BorelSpace k] (ψ : AddChar k Circle) (ν : Measure k)
 
-open Classical in
 
 end Statements
 

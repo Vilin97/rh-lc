@@ -143,6 +143,5 @@ end GlobalTheory.PairTerm
 
 namespace GlobalTheory.PairTerm
 
-open Classical in
 
 end GlobalTheory.PairTerm

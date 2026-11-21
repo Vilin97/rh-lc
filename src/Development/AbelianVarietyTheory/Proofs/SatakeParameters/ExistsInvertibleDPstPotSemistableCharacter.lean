@@ -107,8 +107,6 @@ theorem exists_common_fixed {K L : FinExt l} (ρ : Representation ↥L.1 ↥(GK 
 
 end GlobalTheory.Pst.UnitLetter
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.Pst.UnitLetter GlobalTheory.NormBC in
 
 theorem GlobalTheory.Pst.UnitLetter.exists_unit_Dpst : ∀ {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), Nonempty (LocTied l P AI) → ∀ {K L : FinExt l} (ρm : Representation ↥L.1 ↥(GK K) (Fin 1 → ↥L.1)) (χ : ↥(GK K) → ↥L.1), (∀ g v, ρm g v = χ g • v) → IsPst P ρm → ∃ y ∈ Dpst P ρm, ∃ y' : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P, GlobalTheory.Pst.TwistLetters.mulB P (Fin 1 → ↥L.1) y' y = (fun _ => (1 : ↥L.1)) ⊗ₜ (1 : Bst P) := by
   intro l _ P AI hT K L ρm χ hm hpst

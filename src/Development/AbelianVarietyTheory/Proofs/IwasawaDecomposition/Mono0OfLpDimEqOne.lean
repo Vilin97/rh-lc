@@ -15,7 +15,6 @@ variable {E Ω : Type*} [Field E] [NumberField E] [Field Ω] [Algebra E Ω]
 variable {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} [IsAlgClosure E Ω]
 variable {h : IsPlaceOver A w}
 
-variable (h) in
 
 theorem lpDim_zero : lpDim (lpZero h) = 0 := by simp [lpZero]
 

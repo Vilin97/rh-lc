@@ -74,7 +74,6 @@ theorem sgl_map_f_zero {F G : Shv R} (φ : F ⟶ G) {U : Scheme.{0}} (x : Sec F 
 
 end LateralTheory.EtaleFoundations.TwMulPf
 
-open LateralTheory.EtaleFoundations.TwMulPf in
 
 def LateralTheory.EtaleFoundations.EtaleTateTwistTensorPairingExists : Prop :=
   ∀ (q : ℕ) [NeZero q] (i j : ℤ), ∃ (T : Shv (ZMod q)) (μ : Pair (sgl (tw q i)) (sgl (tw q j)) (sgl T)), μ.IsTensor

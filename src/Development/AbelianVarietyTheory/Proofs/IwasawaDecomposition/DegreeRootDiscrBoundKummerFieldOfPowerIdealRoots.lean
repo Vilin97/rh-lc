@@ -62,7 +62,6 @@ namespace GlobalTheory.FieldSize.KummerSize
 
 variable {E : Type} [Field E] [NumberField E]
 
-open GlobalTheory.IndefiniteRowSideFullHecke.RootValueClassBasis in
 
 theorem exists_decomp (b : ClassBasis E) (J : Fin b.k → (Ideal (𝓞 E))⁰)
     (hJc : ∀ i, ClassGroup.mk0 (J i) = ClassGroup.mk E (b.c i)) (γ : Fin b.k → 𝓞 E) (hγ0 : ∀ i, γ i ≠ 0)

@@ -60,7 +60,6 @@ variable {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSp
   (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H))
   (hσ : ∀ g : KG ε, σ (toMK g) = ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H))
 
-include hder in
 
 lemma conj (g : KG ε) {Y : Matrix (Fin n) (Fin n) ℂ} (hY : inK ε Y) :
     ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) * dτ Y * star ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) =
@@ -94,7 +93,6 @@ lemma conj (g : KG ε) {Y : Matrix (Fin n) (Fin n) ℂ} (hY : inK ε Y) :
   have h3 := h2.unique (by simpa [Function.comp_def, mul_assoc] using h1)
   simpa [mul_assoc] using h3
 
-include hder in
 
 lemma conj_single (g : KG ε) {a b : Fin n} (hab : ε a = ε b) :
     ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) * dτ (Matrix.single a b 1) *
@@ -107,7 +105,6 @@ lemma conj_single (g : KG ε) {a b : Fin n} (hab : ε a = ε b) :
   rw [e, map_add (f := _), map_smul, map_add (f := _), map_smul, ← conj τ dτ hder g (inK_hermitian_unit hab),
     ← conj τ dτ hder g (inK_skew_hermitian_unit hab), mul_add, add_mul, mul_smul_comm, smul_mul_assoc]
 
-include hder hσ in
 
 lemma dτ_of_wt {μ : Fin n → ℝ} {v : H}
     (hv : Formalism.MainNotions.S.IsWtOn (Formalism.REAL.Kset ε) σ μ v) (a : Fin n) :
@@ -151,7 +148,6 @@ lemma dτ_of_wt {μ : Fin n → ℝ} {v : H}
   rw [hdX, _root_.smul_apply, mul_comm, mul_smul] at heq
   exact smul_right_injective _ Complex.I_ne_zero heq
 
-include hder hσ in
 
 lemma hw {Λ : Fin n → ℝ}
     (hK5 : ∀ (μ : Fin n → ℝ) (v : H), v ∈ (⊤ : Submodule ℂ H) → v ≠ 0 →

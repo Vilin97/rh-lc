@@ -53,7 +53,6 @@ theorem cosetInd_add (q : Unif k) {L : Submodule 𝒪[k] (n → k)} {f : Module.
 
 variable {χ : AddChar k Circle} (hχ : HasConductor χ 1) {e : k}
 
-include hχ in
 
 theorem char_dual (he : e = 1 ∨ e = -1) {L : Submodule 𝒪[k] (n → k)} {η y : n → k} (hη : InDual L η) (hy : y ∈ L) :
     χ (e * (η ⬝ᵥ y)) = 1 := by

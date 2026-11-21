@@ -20,7 +20,6 @@ section Local
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
 variable {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)}
 
-omit [IsAlgClosure E Ω] in
 
 theorem exists_open_subgroup {S : Set (Ine (F := E) A)} (hS : IsOpen S) (h1 : 1 ∈ S) :
     ∃ U : Subgroup (G E Ω), IsOpen (U : Set (G E Ω)) ∧ ∀ σ : Ine (F := E) A, (σ : G E Ω) ∈ U → σ ∈ S := by
@@ -148,7 +147,6 @@ theorem exists_order {g : ℕ} [Fact g.Prime] {x : Fbar g} (hx : x ≠ 0) :
     rw [hn]; exact dvd_pow_self _ n.ne_zero
   · exact congrArg Subtype.val (FiniteField.pow_card_sub_one_eq_one y hy)
 
-open Classical in
 
 theorem exists_tameOm (γ : Fin 2 → PlE D.host → GE D.nd) (hγ : GenFam D γ) :
     ∃ Ω : TameOm D, ∀ k : Fin 2, ∀ w ∈ placesOver D.host.E (D.host.g k), ∀ x, x ≠ 0 →
@@ -209,7 +207,6 @@ section Ties
 
 variable {D : D7} (T : GlobalTheory.RowTie.WDTie D.nd D.naut)
 
-include T in
 
 theorem ineRep_of_tie : IneRep D := by
   intro k w _ L
@@ -268,7 +265,6 @@ section Rec
 
 open GlobalTheory.RowTie.Model GlobalTheory.HeightCounting
 
-set_option maxHeartbeats 2000000 in
 
 end Rec
 

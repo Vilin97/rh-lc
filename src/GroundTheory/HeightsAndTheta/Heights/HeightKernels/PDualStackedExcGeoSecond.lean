@@ -34,7 +34,6 @@ theorem charOf_linPrime {n : ℕ} (α : T → k) (M : T → Fin n → k) : charO
     rw [h, Int.natAbs_natCast]
   exact key _ ((comap_linPrime α M).trans hker)
 
-omit [Fintype T] in
 
 theorem exists_alpha_ne {α : T → k} (hα : Submodule.span ℤ (Set.range α) = ⊤) : ∃ s, α s ≠ 0 := by
   by_contra h
@@ -110,7 +109,6 @@ theorem geoNum_linPrime (hCut : LinPrimeCut.Statement) (hBase : LinPrimeBase.Sta
 
 end StackedExceptionalSecondGeometric
 
-open StackedExceptionalSecondGeometric in
 
 theorem DualStackedExcGeoSecond.proof (hLin : DualStackedExcLinear.Statement) (hCut : LinPrimeCut.Statement)
     (hBase : LinPrimeBase.Statement) : DualStackedExcGeoSecond.Statement := by

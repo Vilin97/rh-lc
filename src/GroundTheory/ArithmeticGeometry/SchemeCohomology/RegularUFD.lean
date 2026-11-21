@@ -79,7 +79,6 @@ theorem isPrincipal_of_isStablyFree {D : Type u} [CommRing D] [IsDomain D] [IsNo
   · rw [Submodule.span_le, Set.singleton_subset_iff]
     exact (f 1).2
 
-open CategoryTheory in
 
 theorem isStablyFree_localizedModule {R : Type u} [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     (T : Submonoid R) (k : ℕ) (M : Type u) [AddCommGroup M] [Module R M] [Module.Finite R M]

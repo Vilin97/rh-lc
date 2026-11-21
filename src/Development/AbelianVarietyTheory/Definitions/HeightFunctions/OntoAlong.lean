@@ -21,8 +21,6 @@ namespace GlobalTheory.PlugPt
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure Side (D : D7) (nch : NChoice D) : Type 1 where
   G : Type

@@ -19,7 +19,6 @@ section Phi
 
 variable (D : D7) (i : D.nd.Loc) (w : HeightOneSpectrum (𝓞 D.host.E)) (hw : w ∈ placesOver D.host.E (D.nd.l i))
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem phi_injective (k : ℕ) : Function.Injective (Br.phi (D.nbr i w hw) k) := by
   rw [← LinearMap.ker_eq_bot (τ₁₂ := (D.nbr i w hw).eO.toRingHom), eq_bot_iff]
@@ -40,7 +39,6 @@ theorem phi_injective (k : ℕ) : Function.Injective (Br.phi (D.nbr i w hw) k) :
   rw [Br.toLLK_alg, RingEquiv.apply_symm_apply]
   exact this
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem phi_act {k : ℕ} (M : Gw D.nd w →* Matrix (Fin k) (Fin k) (D.nd.O i)) (g : ↥(GK (D.nbr i w hw).Kw))
     (x : KOG (D.nd.O i) k) :

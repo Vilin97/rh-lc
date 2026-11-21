@@ -44,9 +44,7 @@ namespace GAll
 
 variable (A : GAll) (K : G.Consts)
 
-open Classical in
 
-open Classical in
 
 end GAll
 
@@ -86,7 +84,6 @@ variable {D : D7} (L0 : SizeData₂ D) (X0 : G.Inst D L0) (K : G.Consts) (dr : S
   (hg : ∀ i, ¬ (G.IsResidueClassZero D (D.host.g i) ∨ G.IsSg D (D.host.g i)))
   (hu : ∀ w, D.what₂.muAt w = D.what₂.mu0 → ∀ j, 1 ≤ j → j ≤ D.R.m → Fval L0 j w = 0)
 
-open Classical in
 
 end Tied
 

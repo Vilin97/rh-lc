@@ -84,7 +84,6 @@ theorem quotEquiv_symm (a : L) (x : Γ) (h : T.red x = a) :
     T.quotEquiv.symm a = Ideal.Quotient.mk T.I x := by
   rw [RingEquiv.symm_apply_eq, quotEquiv_mk, h]
 
-variable (p) in
 
 def toPerfection : L →+* Perfection (Γ ⧸ T.I) p :=
   Perfection.lift p L (Γ ⧸ T.I) T.quotEquiv.symm.toRingHom

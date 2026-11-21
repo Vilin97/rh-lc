@@ -79,7 +79,6 @@ theorem ArithVariety.isMultiProjPrime (P : ArithVariety n) :
 
 namespace HermLine
 
-open Classical in
 
 def toGeo (A : HermLine n) : Geo.HermLine (blockIdx n) where
   a := A.deg

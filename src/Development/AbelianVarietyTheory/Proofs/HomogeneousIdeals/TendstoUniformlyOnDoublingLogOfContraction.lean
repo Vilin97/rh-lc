@@ -130,7 +130,6 @@ theorem tendstoUniformlyOn_doublingLog_of_contraction
   have := (mem_ball_zero_iff.mp hx).le
   gcongr
 
-omit [CompleteSpace V] in
 
 theorem exists_ball_contraction
     (h : (fun x => ε x - (2 : ℂ)⁻¹ • x) =O[𝓝 0] fun x => ‖x‖ ^ 2) :

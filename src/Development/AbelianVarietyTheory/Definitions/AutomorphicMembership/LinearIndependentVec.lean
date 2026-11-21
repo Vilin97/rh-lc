@@ -50,8 +50,6 @@ theorem le_preimage_of_eq {X : Scheme.{0}} {R : Type} [CommRing R] {U : X.Opens}
   subst hx
   exact le_preimage_specMap_fromSpec hU (CommRingCat.ofHom φ)
 
-open Classical in
-variable (Dw) in
 
 def oneAt (σ : E →+* ℂ) (n : ℕ) (σ' : E →+* ℂ) (a : Fin (Dw.mult σ')) : ℤ := if σ' = σ ∧ (a : ℕ) = n then 1 else 0
 
@@ -232,7 +230,6 @@ theorem isGrLB_grLB : IsGrLB Z e (grLB hZ e) := by
   rw [(diagAt_iff_chg hZ c c' φ φ' hx σ (d σ)).1 (hd σ)]
   rfl
 
-variable {e} in
 
 def grCls : (∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) →+ CechPic.Pic Z.X :=
   AddMonoidHom.mk' (fun e => cls _ (isLB_grLB hZ e)) fun e e' => by
@@ -241,7 +238,6 @@ def grCls : (∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) →+ CechPic.Pic Z.
     refine .trans ?_ (CechPic.gm_tens (grLB hZ e) (grLB hZ e') (𝟙 _) y (c, c) (c', c') ⟨hc, hc⟩ ⟨hc', hc'⟩).symm
     exact (congrArg _ (IntChart.tr_add c c' hZ e e')).trans (map_mul _ _ _)
 
-variable {e} in
 
 end Graded
 
@@ -283,11 +279,7 @@ def degOf (L : LB X) : ℤ := VB.degLB k (L.pull c.f)
 
 def degPic : CechPic.Pic X →+ ℤ := c.isProjCurve.degPic.comp (CechPic.pull c.f)
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
-open ProjSpace ProjCoh in
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
-open ProjSpace ProjCoh in
 
 end Curve
 
@@ -350,7 +342,6 @@ abbrev Crv : Type := Curve ct.Fbar ct.YY.X
 
 abbrev CrvQ : Type := Curve (AlgebraicClosure κ.c.F) ct.YY.X
 
-open Classical in
 
 def indWt (τ : PsiT D) (i : ℕ) : PsiT D → ℕ → ℤ := fun τ' i' => if τ' = τ ∧ i' = i then 1 else 0
 
@@ -393,7 +384,6 @@ namespace At
 
 variable (ct : At S κ p)
 
-open Classical in
 
 theorem expo_indWt_apply (τ : PsiT D) (i : ℕ) (σ : D.host.E →+* ℂ) (a : Fin (S.Dw.mult σ)) :
     ct.expo (indWt τ i) σ a = (if σ = embOf D τ ∧ (a : ℕ) + 1 = i then 1 else 0) -

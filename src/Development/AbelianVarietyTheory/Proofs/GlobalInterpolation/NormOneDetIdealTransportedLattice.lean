@@ -71,7 +71,6 @@ section Vp
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E]
 
-omit [StarRing E] in
 
 end Vp
 
@@ -79,9 +78,7 @@ section Val
 
 variable {K : Type} [Field K] [NumberField K] (σ : K →+* ℂ)
 
-omit [NumberField K] in
 
-omit [NumberField K] in
 
 end Val
 

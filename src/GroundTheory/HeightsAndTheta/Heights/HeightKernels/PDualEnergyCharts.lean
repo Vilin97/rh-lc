@@ -177,7 +177,6 @@ theorem atProj (hOn : DualPtsOnPlane.Statement) (hOf : DualPtsOfPlane.Statement)
 
 end DualEnergyChartsAlt
 
-open DualEnergyChartsAlt DualGeometricDegreeCharts in
 
 theorem DualEnergyCharts.proof (hInt : ChartEnergyIntegrable.Statement) : DualEnergyCharts.Statement := by
   intro K _ _ i F T _ _ b hb hi

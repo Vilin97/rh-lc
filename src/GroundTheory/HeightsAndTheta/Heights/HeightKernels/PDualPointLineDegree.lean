@@ -74,7 +74,6 @@ theorem dualNormSq_point (b : Module.Basis T ℤ (dualLattice F))
 
 end DualPointLineDegreeAlt
 
-open DualPointLineDegreeAlt in
 
 theorem DualPointLineDegree.proof (hPt : DualCurvePoint.Statement) (hPos : PointDegCPos.Statement)
     (hAr : PointArInt.Statement) (hVert : PointVertR.Statement) (hIdx : DualLineIndex.Statement)

@@ -449,7 +449,6 @@ theorem map_conj_of_unitary {n : ℕ} {u : Matrix (Fin n) (Fin n) ℂ} (hu : u �
 
 end Grid
 
-open GlobalTheory.KJInf GlobalTheory.SeeSaw in
 
 theorem real_average_jet : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {μ0 : T},
     L.Is μ0 → ∀ (i : ℕ), i < D.R.m →

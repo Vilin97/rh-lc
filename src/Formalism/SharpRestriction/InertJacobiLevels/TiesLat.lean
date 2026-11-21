@@ -46,7 +46,6 @@ namespace LatHyp
 
 variable {D : D7} {hT : GatTies D} {L : SizeData₂ D} {X : G.Inst D L} (H : LatHyp hT X)
 
-open Classical in
 
 end LatHyp
 

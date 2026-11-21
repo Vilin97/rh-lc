@@ -20,9 +20,6 @@ variable {O : Type} [CommRing O] [StarRing O] (A : AnArc O)
 def perFactor (w : ℂ) (la : A.La) (v : A.V) : ℂ :=
   A.ah la.l (v.2 + A.ct la.y) * (A.psi la.y * eTwoPi (v.1 la.y) * eTwoPi (w * A.q la.y))⁻¹
 
-open AlgebraicGeometry CategoryTheory Limits in
-variable {O : Type} [CommRing O] [StarRing O] (A : _root_.GlobalTheory.AnArc O) in
-open _root_.GlobalTheory.AnArc.La in
 
 theorem _root_.GlobalTheory.AnArc.term_add_period {j : ℕ} {α : A.X} {th : (Fin A.gB → ℂ) → ℂ} (h : th ∈ A.Theta j α) (w : ℂ)
     (la : A.La) (μ : A.X) (v : A.V) :
@@ -75,8 +72,6 @@ theorem _root_.GlobalTheory.AnArc.term_add_period {j : ℕ} {α : A.X} {th : (Fi
         rw [key, hterm, hfac]
         ring
 
-open AlgebraicGeometry CategoryTheory Limits in
-variable {O : Type} [CommRing O] [StarRing O] (A : _root_.GlobalTheory.AnArc O) in
 
 theorem _root_.GlobalTheory.AnArc.Sum_add_period {j : ℕ} {α : A.X} {th : (Fin A.gB → ℂ) → ℂ} (h : th ∈ A.Theta j α) (w : ℂ)
     (la : A.La) (v : A.V) :
@@ -115,7 +110,6 @@ def IsRigFrame (L : RigLB G) (y : Sp ℂ ⟶ S) (e : V → (Sp ℂ ⟶ G.left)) 
 
 variable {V' : Type} [NormedAddCommGroup V'] [NormedSpace ℂ V']
 
-omit [NormedAddCommGroup V] [NormedSpace ℂ V] [NormedAddCommGroup V'] [NormedSpace ℂ V'] in
 
 end Along
 

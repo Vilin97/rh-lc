@@ -122,7 +122,6 @@ lemma entry_bound (z : I.Ginf) {N : ℕ} (e₀ : Fin N → Fin I.n → I.E) (c :
 
 end GlobalTheory.HtMinPf
 
-open GlobalTheory.HtMinPf in
 
 theorem GlobalTheory.htMin_of_reduced : ∀ I : AutInst, HtMin I := by
   intro I

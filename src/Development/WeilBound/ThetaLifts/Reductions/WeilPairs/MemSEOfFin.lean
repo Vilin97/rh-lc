@@ -43,7 +43,6 @@ theorem exists_ext {G : Type} [CommGroup G] (U V : Subgroup G) (lam : G →* Cir
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F E) in
 
 def fI : AF F ⊗[F] E := algebraMap (AF F) (AF F ⊗[F] E) (uFin F)
 
@@ -114,7 +113,6 @@ theorem small (T : Set (AF F ⊗[F] E)) (hT : T ∈ 𝓝 0) : ∃ N : ℕ, 0 < N
   rw [e, ← map_nsmul]
   exact hsub fun i _ => Set.mem_iInter.1 (hNW _ (h2 i)) i
 
-variable (F E) in
 
 def GF : Subgroup (AF F ⊗[F] E)ˣ where
   carrier := {w | (1 - fI F E) * (w : AF F ⊗[F] E) = 1 - fI F E}
@@ -207,7 +205,6 @@ theorem CE_mul {M N : ℕ} {z : AF F ⊗[F] E} (h : z ∈ CE F E (M * N)) : z �
   obtain ⟨s, hs, e⟩ := mem_CE.1 h
   exact mem_CE.2 ⟨N • s, nsmul_mem hs N, by rw [← e, smul_smul]⟩
 
-open Classical in
 
 def sing (v : HeightOneSpectrum (𝓞 F)) (x : Fv F v) : Af F :=
   ⟨Function.update (0 : ∀ w : HeightOneSpectrum (𝓞 F), Fv F w) v x, by

@@ -60,7 +60,6 @@ theorem mk_surj {X : Fields} (P : HeightOneSpectrum (𝓞 X.E)) : Function.Surje
 theorem mk_zero {X : Fields} (P : HeightOneSpectrum (𝓞 X.E)) (x : 𝓞 X.E) : x ∈ P.asIdeal ↔ Ideal.Quotient.mk P.asIdeal x = 0 :=
   Ideal.Quotient.eq_zero_iff_mem.symm
 
-set_option maxHeartbeats 1000000 in
 
 def atTTied {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) :
     AtTTied (D := (I.rec7 l Z)) u where

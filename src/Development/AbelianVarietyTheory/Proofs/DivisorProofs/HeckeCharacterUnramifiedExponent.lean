@@ -55,7 +55,6 @@ private theorem eq_or_eq_of_comp_eq_of_finrank_two {F E : Type} [Field F] [Numbe
   have := Finset.card_le_univ ({mk ρ hρ, mk α hα, mk β hβ} : Finset (E →ₐ[F] ℂ))
   omega
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.BotLValue.isCMType_embOver {F E : Type} [Field F] [NumberField F] [Field E]
     [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}

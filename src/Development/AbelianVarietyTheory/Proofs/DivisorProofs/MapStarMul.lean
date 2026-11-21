@@ -14,8 +14,6 @@ section Exp
 
 variable {m n : Type} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
 
-open scoped Matrix in
-variable {m n : Type} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.IndLine.Iwasawa.exp_mul_eq {A : Matrix m m ℂ} {D : Matrix n n ℂ}
     {B : Matrix m n ℂ} (h : A * B = B * D) :

@@ -133,7 +133,6 @@ theorem map_frDet {R : Type} [CommRing R] (φ : Pol K ι a →+* R) (τ : ι) :
   rw [frDet, RingHom.map_det]
   rfl
 
-omit [Fintype ι] in
 
 end Expand
 

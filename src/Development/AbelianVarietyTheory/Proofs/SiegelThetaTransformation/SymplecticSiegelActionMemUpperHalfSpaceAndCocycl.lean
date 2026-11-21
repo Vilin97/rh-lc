@@ -14,7 +14,6 @@ open scoped ComplexOrder
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι]
 
-omit [DecidableEq ι] in
 
 theorem posDef_ofReal {Y : Matrix ι ι ℝ} (h : Y.PosDef) :
     (Y.map (fun t => (t : ℂ))).PosDef := by
@@ -43,7 +42,6 @@ theorem posDef_ofReal {Y : Matrix ι ι ℝ} (h : Y.PosDef) :
   · exact add_pos_of_pos_of_nonneg (h.dotProduct_mulVec_pos h1)
       (h.posSemidef.dotProduct_mulVec_nonneg _)
 
-omit [DecidableEq ι] in
 
 theorem posDef_of_ofReal {Y : Matrix ι ι ℝ} (h : (Y.map (fun t => (t : ℂ))).PosDef) :
     Y.PosDef := by

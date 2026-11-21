@@ -60,7 +60,6 @@ theorem Rel.variableChange {K : Type*} [CommRing K] {W : WeierstrassCurve K}
   rw [hp, hs]
   linear_combination ((C.u⁻¹ : Kˣ) : K) ^ 10 * (h1 - 2 * C.r * h2 + C.r ^ 2 * h3)
 
-open IsLocalRing in
 
 theorem multiples {K : Type*} [Field K] (O : ValuationSubring K) (W : WeierstrassCurve K)
     (h2 : W.b₂ ∈ O) (h4 : W.b₄ ∈ O) (h6 : W.b₆ ∈ O) (h8 : W.b₈ ∈ O) (X Z : ℕ → K)

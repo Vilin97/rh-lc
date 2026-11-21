@@ -66,7 +66,6 @@ theorem sum_emb_bijective : Function.Bijective
     · obtain ⟨t, ht⟩ := (emb_cm H σ).2 h
       exact ⟨Sum.inl t, ht⟩
 
-open Classical in
 
 end host
 

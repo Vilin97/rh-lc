@@ -30,11 +30,8 @@ variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n']
 def sph (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : Type) [Fintype n]
     [DecidableEq n] : Level (GL n k) := ⟨KO k n, 1⟩
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 theorem exists_haar (ν : Measure k) [ν.IsAddHaarMeasure] (n : Type) [Fintype n] [DecidableEq n] :
     ∃ m : Measure (GL n k), m.IsHaarMeasure ∧ m (KO k n) = 1 := by
@@ -44,7 +41,6 @@ theorem exists_haar (ν : Measure k) [ν.IsAddHaarMeasure] (n : Type) [Fintype n
   let K : TopologicalSpace.PositiveCompacts (GL n k) := ⟨⟨KO k n, h1⟩, by rw [h2.interior_eq]; exact ⟨1, one_mem _⟩⟩
   exact ⟨Measure.haarMeasure K, inferInstance, Measure.haarMeasure_self⟩
 
-omit [MeasurableSpace k] [BorelSpace k] in
 
 end Local
 
@@ -56,9 +52,7 @@ theorem exists_gl {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [Is
   let ⟨gl, h1, h2⟩ := GlobalTheory.GlEmbed.exists_gl D k q V Y F.β F.γ F.βγ F.γβ
   ⟨gl, fun g => ⟨h1 g, h2 g⟩⟩
 
-set_option maxHeartbeats 1000000 in
 
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 
 end GlobalTheory.QPl.Model
 end

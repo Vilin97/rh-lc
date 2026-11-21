@@ -173,7 +173,6 @@ theorem mem_zetaSet_of_translate (μ : Measure (GL (Fin n) F)) [μ.IsHaarMeasure
   rw [zetaIntegral_translate, hZ s ((le_max_left _ _).trans_lt hs),
     hs₁ s ((le_max_right _ _).trans_lt hs)]
 
-omit [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] in
 
 theorem ordDet_diagPow_single [NeZero n] :
     ordDet (Cartan.diagPow F n (Pi.single 0 1)) = 1 := by
@@ -413,7 +412,6 @@ theorem zetaIdeal_eq_of_isHaarMeasure (μ ν : Measure (GL (Fin n) F)) [μ.IsHaa
     exact zetaIdeal_le_smul μ (Measure.haarScalarFactor_pos_of_isHaarMeasure ν μ).ne'
   exact le_antisymm (key μ ν) (key ν μ)
 
-variable (π) in
 
 def LPolynomial : ℂ[X] := by
   classical
@@ -421,7 +419,6 @@ def LPolynomial : ℂ[X] := by
       R ∈ zetaIdeal π (Measure.haar : Measure (GL (Fin n) F)) ↔
         ∃ L ∈ laurentSubalgebra, R = L / algebraMap ℂ[X] (RatFunc ℂ) P then h.choose else 1
 
-variable (π) in
 
 def LFunction (s : ℂ) : ℂ :=
   ((LPolynomial π).eval (qs F s))⁻¹

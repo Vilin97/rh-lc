@@ -20,7 +20,6 @@ section Eigen
 
 variable {I LL : Type} [Group I] [Field LL]
 
-open Classical in
 
 theorem exists_separating (S : Finset (I →* LLˣ)) (a : I →* LLˣ) :
     ∃ e : I →₀ LL, ∀ b ∈ S, (e.sum fun g c => c * (b g : LL)) = if b = a then 1 else 0 := by
@@ -98,7 +97,6 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     {U : Type} [AddCommGroup U] [Module LL U] [Module Qp U] [IsScalarTower Qp LL U]
     {W : Type} [AddCommGroup W] [Module LL W] [Module Qp W] [IsScalarTower Qp LL W]
 
-variable (Qp B) in
 
 def pairB (m : V →ₗ[LL] U →ₗ[LL] W) : V ⊗[Qp] B →ₗ[LL] U ⊗[Qp] B →ₗ[LL] W ⊗[Qp] B :=
   (TensorProduct.mk LL _ _).compr₂ (tensorB (TensorProduct.lift m) ∘ₗ prodB)

@@ -23,7 +23,6 @@ variable {V : Type u} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]
   {HK : Scheme.{u}} {j : HK ⟶ H} {fK : HK ⟶ Spec (.of K)}
   {Hs : Scheme.{u}} {i : Hs ⟶ H} {fs : Hs ⟶ Spec (.of (ResidueField V))}
 
-variable (K) in
 
 theorem isLocalization_away (hϖ : Irreducible ϖ) : IsLocalization.Away ϖ K := by
   refine (IsLocalization.iff_of_le_of_exists_dvd (Submonoid.powers ϖ) (nonZeroDivisors V)
@@ -32,7 +31,6 @@ theorem isLocalization_away (hϖ : Irreducible ϖ) : IsLocalization.Away ϖ K :=
     (nonZeroDivisors.ne_zero ha) hϖ
   exact ⟨ϖ ^ n, ⟨n, rfl⟩, hn.dvd⟩
 
-variable (f) in
 
 theorem notMem_basicOpen_iff (hϖ : Irreducible ϖ) (x : H) :
     x ∉ H.basicOpen cst[f, V, ϖ] ↔ f x = closedPoint V := by
@@ -82,8 +80,6 @@ theorem mem_range_special
       (h.trans (PrimeSpectrum.comap_residue V _).symm)
     exact ⟨y, hy⟩
 
-variable (f) in
-omit [IsDiscreteValuationRing V] in
 
 theorem res_mem_nonZeroDivisors [Flat f] {c : V} (hc : c ≠ 0) {U : H.Opens}
     (hU : IsAffineOpen U) :
@@ -145,7 +141,6 @@ theorem isDiscreteValuationRing_stalk_generic (hϖ : Irreducible ϖ) [Flat f]
   haveI := isLocallyNoetherian f
   isDiscreteValuationRing_stalk (notMem_basicOpen_iff_specializes hϖ hs) (prime_res_generic hϖ hs)
 
-omit [IsDomain V] [IsDiscreteValuationRing V] [IsFractionRing V K] in
 
 theorem appTop_cst (hw : j ≫ f = fK ≫ Spec.map (CommRingCat.ofHom (algebraMap V K))) (c : V) :
     j.appTop cst[f, V, c] = cst[fK, K, algebraMap V K c] := by

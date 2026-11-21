@@ -28,9 +28,7 @@ theorem isoTyp_congr {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ
 variable {cf : CharFrame D} {jE : D.host.E →+* Qb} {A : SideA D cf jE} {M : MtFam D} {C : NChoice D}
   {tup : D.what₂.Tup → Fin D.R.m → HChar D.host.E}
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.ExtTheta
 

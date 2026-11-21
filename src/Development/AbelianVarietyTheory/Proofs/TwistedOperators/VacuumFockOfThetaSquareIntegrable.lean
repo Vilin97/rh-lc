@@ -332,7 +332,6 @@ theorem fockScale_ne (τ : D.what₂.Tau) : (fockScale D τ : ℂ) ≠ 0 := by
   have h3 : (8 * Real.pi * (tauE D τ D.host.xi0).im : ℝ) = 0 := by exact_mod_cast h2.symm
   exact hp.ne' h3
 
-variable (V W) in
 
 def thetaSub (ψ : AddChar (AF D.host.F) ℂ) : Submodule ℂ (WO V W → ℂ) where
   carrier := {g | IsThetaFunO ψ V W g}

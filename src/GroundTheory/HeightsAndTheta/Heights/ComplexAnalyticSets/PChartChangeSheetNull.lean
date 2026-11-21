@@ -204,7 +204,6 @@ theorem exists_det_ne_zero (h₁ : IndefiniteRowSideFullHecke.ComplexSets.Finite
 
 end ChartChangeSheetNull
 
-open ChartChangeSheetNull in
 
 theorem ChartChangeSheetNull.proof (h₁ : IndefiniteRowSideFullHecke.ComplexSets.FiniteMapOpen.Statement)
     (h₂ : IndefiniteRowSideFullHecke.ComplexSets.CriticalImageNull.Statement) : ChartChangeSheetNull.Statement := by

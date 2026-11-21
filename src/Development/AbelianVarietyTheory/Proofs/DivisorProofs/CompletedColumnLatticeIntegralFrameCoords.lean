@@ -43,7 +43,6 @@ theorem inclEAf_intOE_mem {D : D7} (e : D.host.E) (he : e ∈ Formalism.UG.intOE
     inclEAf D e ∈ Formalism.L2.Herm.intAf D.host.F D.host.E :=
   Subring.subset_closure (Or.inl ⟨⟨e, he⟩, rfl⟩)
 
-set_option maxHeartbeats 1000000 in
 
 theorem hatL_colLat_coord_int {D : D7} {n : ℕ} (fr : GL (Fin n) D.host.E) (y : Fin n → Lev.EAf D)
     (hy : y ∈ Formalism.L2.Herm.hatL (F := D.host.F) (colLat fr)) :

@@ -29,7 +29,6 @@ variable {S : Scheme.{0}} {F F₁ F₂ : S.Modules} {p₁ : F₁ ⟶ F} {p₂ : 
     (h₄ : p₂ ≫ i₁ = 0) {U V : S.Opens} {n m : ℕ} {e₁ : Fin n → Γ(F₁, U)} {e₂ : Fin m → Γ(F₂, U)}
     (he₁ : VB.IsFrame e₁) (he₂ : VB.IsFrame e₂)
 
-include h h₁ h₂ h₃ h₄ in
 
 theorem repr_left (hV : V ≤ U) (y : Γ(F, V)) (i : Fin n) :
     ((GlobalTheory.TorusCot.isFrame_append h h₁ h₂ h₃ h₄ he₁ he₂).basis hV).repr y (Fin.castAdd m i) =
@@ -55,7 +54,6 @@ theorem repr_left (hV : V ≤ U) (y : Γ(F, V)) (i : Fin n) :
       omega
   exact LinearMap.congr_fun key y
 
-include h h₁ h₂ h₃ h₄ in
 
 theorem repr_right (hV : V ≤ U) (y : Γ(F, V)) (i : Fin m) :
     ((GlobalTheory.TorusCot.isFrame_append h h₁ h₂ h₃ h₄ he₁ he₂).basis hV).repr y (Fin.natAdd n i) =
@@ -81,7 +79,6 @@ theorem repr_right (hV : V ≤ U) (y : Γ(F, V)) (i : Fin m) :
       simp [Fin.natAdd_inj]
   exact LinearMap.congr_fun key y
 
-include h h₁ h₂ h₃ h₄ in
 
 theorem detUnit_append {U' : S.Opens} {e₁' : Fin n → Γ(F₁, U')} {e₂' : Fin m → Γ(F₂, U')}
     (he₁' : VB.IsFrame e₁') (he₂' : VB.IsFrame e₂') (hV : V ≤ U) (hV' : V ≤ U') :

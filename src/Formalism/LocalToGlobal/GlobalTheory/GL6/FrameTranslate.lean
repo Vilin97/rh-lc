@@ -61,7 +61,6 @@ theorem rnd_uniq (S : StepLevel F E σ J T f bad) (x0 : UPts σ J (FiniteAdeleRi
   subst hab
   exact ⟨rfl, Subtype.ext (mul_left_cancel h)⟩
 
-open Classical in
 
 def rndFillG (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ) (hc : ∀ τ x, emb τ (σ x) = starRingEnd ℂ (emb τ x))
     (x0 : UPts σ J (FiniteAdeleRing (𝓞 F) F)) (h : Frames (gramC J emb) → ℂ) :

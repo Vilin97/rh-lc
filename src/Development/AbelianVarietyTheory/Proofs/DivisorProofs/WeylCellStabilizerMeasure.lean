@@ -54,7 +54,6 @@ theorem mem_antiBall {σ : L →+* L} {j : ℤ} {b : L} :
 theorem mem_fixBall {σ : L →+* L} {j : ℤ} {f : L} :
     f ∈ fixBall σ j ↔ σ f = f ∧ Valued.v f ≤ WithZero.exp j := Iff.rfl
 
-omit [Valued L (WithZero (Multiplicative ℤ))] in
 
 theorem relIndex_eq_of_mul {c : L} (hc : c ≠ 0) {A B A' B' : AddSubgroup L}
     (hA : ∀ x, x ∈ A ↔ c * x ∈ A') (hB : ∀ x, x ∈ B ↔ c * x ∈ B') : A.relIndex B = A'.relIndex B' := by

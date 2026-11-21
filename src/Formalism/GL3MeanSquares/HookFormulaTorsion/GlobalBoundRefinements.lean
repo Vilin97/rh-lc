@@ -320,7 +320,6 @@ theorem shortIntervalImpliesProgressions_statement : ShortIntervalImpliesProgres
 
 end ShortIntervalLowerBound
 
-open Formalism.HermitianLattices.GL2PrimeSums in
 
 section T2
 

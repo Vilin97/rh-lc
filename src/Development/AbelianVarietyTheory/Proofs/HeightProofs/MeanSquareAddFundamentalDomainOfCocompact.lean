@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain MeasureTheory
 
 namespace GlobalTheory
 
-open Pointwise in
 
 theorem measure_addFundamentalDomain_lt_top_of_cocompact {G : Type} [AddGroup G]
     [TopologicalSpace G] [IsTopologicalAddGroup G] [MeasurableSpace G] [BorelSpace G]

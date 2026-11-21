@@ -178,7 +178,6 @@ instance isLocalRing_trivSqZeroExt {M : Type} [AddCommGroup M] [Module K M] [Mod
     simp only [isUnit_iff_isUnit_fst, fst_sub, fst_one]
     exact IsLocalRing.isUnit_or_isUnit_one_sub_self _
 
-variable (Dw) in
 
 abbrev FIx : Type := Option (Σ σ : E →+* ℂ, Fin (Dw.mult σ) × Fin (Dw.mult σ))
 
@@ -208,15 +207,12 @@ end
 
 variable [Algebra c.F K]
 
-variable (c K) in
 
 abbrev red : DualNumber K →ₐ[c.F] K := fstHom c.F K K
 
-variable (c K) in
 
 abbrev cst : K →ₐ[c.F] DualNumber K := inlAlgHom c.F K K
 
-variable (c) in
 
 def dir {ι : Type} [Fintype ι] (m : ι → K) : TrivSqZeroExt K (ι → K) →ₐ[c.F] DualNumber K :=
   (TrivSqZeroExt.map (Fintype.linearCombination K m)).restrictScalars c.F

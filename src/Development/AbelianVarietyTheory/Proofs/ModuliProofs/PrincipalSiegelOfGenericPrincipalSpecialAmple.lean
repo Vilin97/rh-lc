@@ -122,7 +122,6 @@ theorem sym : Out.Sym G L := fun _ => ⟨⊤, trivial, by
     simpa [Hom.inv_def] using h
   simp only [e, quad_inv hadd hsym, add_neg_cancel]⟩
 
-include hadd hsym hLW hmon huniv in
 
 theorem kTriv_of_kernel (hdet : (W + W.transpose).det = 1)
     (hker : ∀ (T : Over S) (x : T ⟶ A), pair π (snd A T ≫ x) (fst A T) = 0 → x = 1) : Out.KTriv G L := by
@@ -169,7 +168,6 @@ theorem kTriv_of_kernel (hdet : (W + W.transpose).det = 1)
   have e : j ≫ x ≫ pr u₀ = j ≫ 1 := (hker T' _ k₁).trans (MonObj.comp_one j).symm
   exact congrArg (fun q => q.left) e
 
-include hadd hsym hLW hmon huniv in
 
 theorem kernel_of_kTriv (u₀ : Fin n) (hK : Out.KTriv G L) (T : Over S) (x : T ⟶ A)
     (hx : pair π (snd A T ≫ x) (fst A T) = 0) : x = 1 := by

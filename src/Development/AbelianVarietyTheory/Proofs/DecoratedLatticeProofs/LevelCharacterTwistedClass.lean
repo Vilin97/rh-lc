@@ -50,7 +50,6 @@ open scoped TensorProduct
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [StarRing E]
 
-set_option maxHeartbeats 1000000 in
 
 theorem chi_deep (hc : CMData F E) {n T f : ℕ} {J : Matrix (Fin n) (Fin n) E} (hJ : J = 1) {bad : Set (HeightOneSpectrum (𝓞 F))}
     (S : StepLevel F E hc.sig J T f bad) (m : ℕ) (hm : 0 < m) (hchi : ∀ κ : S.U, S.chi κ ^ m = 1) (P : HeightOneSpectrum (𝓞 E))
@@ -132,7 +131,6 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Ho
 
 variable {B : Base} {X : PreX B.toPre} (I : TC B X)
 
-set_option maxHeartbeats 1000000 in
 
 theorem chi_near_one (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (a : I.ι)
     {bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))}
@@ -198,7 +196,6 @@ def LevRead (l : I.Laws) (Z : TC.Later B (I.cols l)) {T : Type} (L : LevCh (I.re
     LevIs S (levS _ L.βX (Lev.datY _ (I.rec7 l Z).R.r (I.rec7 l Z).R.t (I.rec7 l Z).R.m r_le_X L.Pg (L.Q t) P L.chi (L.xiR t) Lev.Frm.B))
       (Lev.levChi _ L.βX (Lev.datY _ (I.rec7 l Z).R.r (I.rec7 l Z).R.t (I.rec7 l Z).R.m r_le_X L.Pg (L.Q t) P L.chi (L.xiR t) Lev.Frm.B))
 
-set_option maxHeartbeats 2000000 in
 
 theorem levRead_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) {T : Type} (L : LevCh (I.rec7 l Z) T)
     (μ0 : T) (hL : L.Is μ0) (hC : ∀ j, L.C.mu0 j = I.C.mu0 j) (tup : T → I.ι) (hxi : ∀ t, L.xiH t = I.xi (tup t))
@@ -263,7 +260,6 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 open Formalism.BasicNotions.TH Formalism.L2.Theta Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev GlobalTheory.Mem.Col2
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-set_option maxHeartbeats 1000000 in
 
 theorem levRead_rows (K : Ctx) (B : GlobalTheory.Mem.Base) (f : Top.Fr B.toPre) (T : TwDat B) (w : Bl.ColW B f T) (Z : w.Lt)
     (Wt : Set B.places.Pl) (p0 : BaseLevelRowSide (w.D Z)) (t : Bl.RowsT K w Z Wt p0) :
@@ -272,7 +268,6 @@ theorem levRead_rows (K : Ctx) (B : GlobalTheory.Mem.Base) (f : Top.Fr B.toPre) 
     (fun s => (t.r.z.lev.xiH s).trans (congrArg w.I.xi (t.r.tup_ix s).symm)) t.r.z.lev.Pg
     (fun s => (t.r.z.lev.Q s).trans (congrArg w.I.Q (t.r.tup_ix s).symm)) t.r.z.lev.beta.2 t.r.z.R.eG t.r.z.idG
 
-set_option maxHeartbeats 1000000 in
 
 theorem levRead_twArgs (K : Ctx) (B : GlobalTheory.Mem.Base) (f : Top.Fr B.toPre) (T : TwDat B) (w : Bl.ColW B f T) (Z : w.Lt)
     (Wt : Set B.places.Pl) (L : SizeData₂ (w.st Z).toD7) (hT : GatTies (w.st Z).toD7) (Gi : G.Inst (w.st Z).toD7 L)
@@ -289,9 +284,7 @@ theorem levRead_twArgs (K : Ctx) (B : GlobalTheory.Mem.Base) (f : Top.Fr B.toPre
   rw [← hT'] at h
   exact (h)
 
-set_option maxHeartbeats 1000000 in
 
-set_option maxHeartbeats 1000000 in
 
 end Pack
 

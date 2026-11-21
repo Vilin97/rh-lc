@@ -42,4 +42,3 @@ private theorem open_ker {K Ω C : Type} [Field K] [NumberField K] [Field Ω] [A
 
 end UpperTheory.V.Z.Kato.WeilSphericalRecords.TwistWitness
 
-open UpperTheory.V.Z.Kato.WeilSphericalRecords.TwistWitness in

@@ -23,8 +23,6 @@ namespace GenericPointsInAffineChart
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
-omit [∀ k, Fintype (ι k)] in
-open Classical in
 
 theorem exists_normalise {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {P' : Ideal (MRing ι')} (hP' : IsMultiHomogIdeal P') {j : ∀ k : FibreBlock κ, ι' k.1}
@@ -56,7 +54,6 @@ theorem exists_normalise {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} 
     simp only [d, dif_neg h]
     exact inv_mul_cancel₀ (hj k)
 
-omit [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 
 theorem eq_of_normalised {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {j : ∀ k : FibreBlock κ, ι' k.1} {w : (Σ k, ι k) → ℂ} (hw : ∀ k, ∃ i, w ⟨k, i⟩ ≠ 0)
@@ -84,7 +81,6 @@ theorem eq_of_normalised {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} 
 
 end GenericPointsInAffineChart
 
-open GenericPointsInAffineChart PullbackDegreeCount in
 
 theorem GenericPointsInAffineChart.proof (hFin : ArithmeticIntersectionChartFinite.Statement) (hNorm : ChartNormCount.Statement)
     (hOrb : OrbitCompNonvanish.Statement) : GenericPointsInAffineChart.Statement := by

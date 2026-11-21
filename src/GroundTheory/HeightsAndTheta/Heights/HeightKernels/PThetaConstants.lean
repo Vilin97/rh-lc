@@ -32,7 +32,6 @@ lemma log_rhs (C ρ d : ℝ) (g : ℕ) (hd : 0 < d) :
 
 end KThetaConstants
 
-open KThetaConstants in
 
 theorem ThetaConstants.proof : ThetaConstants.Statement := by
   intro C₃ hC₃

@@ -24,7 +24,6 @@ open scoped TensorProduct
 
 namespace GlobalTheory.Decompl
 
-set_option maxHeartbeats 2000000 in
 
 theorem decompletion_matrix (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
     (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) (W : Wach P K LL)

@@ -34,7 +34,6 @@ theorem z_mem_orth_range : F0.z ∈ orth (hS D) (LinearMap.range (D.sp.iXY 0)) :
   rw [hz]
   exact Formalism.MainNotions.hT_swap_zero (z_orth_embedding D u w)
 
-include hT he hz in
 
 theorem exists_decomp_orth_isotropic_plus (x : (VS D).V) (hx : x ∈ orth (hS D) F0.Xplus) :
     ∃ w, x - D.sp.iXY 0 w ∈ F0.X := by
@@ -43,7 +42,6 @@ theorem exists_decomp_orth_isotropic_plus (x : (VS D).V) (hx : x ∈ orth (hS D)
   obtain ⟨a, ⟨w, rfl⟩, ξ, hξ, rfl⟩ := Submodule.mem_sup.1 hx'
   exact ⟨w, by simpa using hξ⟩
 
-include hT he hz in
 
 theorem exists_decomp_orth_isotropic (x : (VS D).V) (hx : x ∈ orth (hS D) F0.X) :
     ∃ (w : (D.sp.X 0).V) (c : D.host.E), x - (D.sp.iXY 0 w + c • F0.z) ∈ F0.X := by
@@ -62,7 +60,6 @@ theorem exists_decomp_orth_isotropic (x : (VS D).V) (hx : x ∈ orth (hS D) F0.X
   rw [add_comm, ← sub_sub]
   exact hw
 
-include hT he hz in
 
 theorem Lsub_eq_of_latticeWithZ_eq (Λ₁ Λ₂ : LatV D) (h : latticeWithZ D F0 Λ₁ = latticeWithZ D F0 Λ₂) :
     Lsub Λ₁ (lf D F0) = Lsub Λ₂ (lf D F0) := by
@@ -103,7 +100,6 @@ theorem projW_apply (w : (D.sp.X 0).V) (b : (VS D).V) (hb : b ∈ orth (hS D) (L
   unfold projWAlt
   simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply, LinearMap.fst_apply]
 
-include hT he hz in
 
 theorem exists_induced_isometry_W (σ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hσ : σ ∈ stabF D F0) :
     ∃ γ ∈ isom (D.sp.X 0).hT, ∀ w, σ (D.sp.iXY 0 w) - D.sp.iXY 0 (γ w) ∈ F0.X := by

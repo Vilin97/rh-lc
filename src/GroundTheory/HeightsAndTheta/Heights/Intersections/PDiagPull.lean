@@ -81,9 +81,7 @@ variable {Ω : Type*} [Field Ω] {ι ν κ : Type u} [Fintype ι] [Fintype ν] [
   {E : Type*} [AddCommGroup E] [Module Ω E] {Φ : Type*} [Field Φ] [Algebra Ω Φ]
   (x : ι → Ω) (δ : ν → Ω) (e : Module.Basis (Fin 2) Ω E) (φ : κ → E →ₗ[Ω] Ω) (a₀ : Φ)
 
-omit [Fintype ι] [Fintype ν] [Fintype κ] in
 
-omit [Fintype ι] [Fintype ν] [Fintype κ] in
 
 end Models
 

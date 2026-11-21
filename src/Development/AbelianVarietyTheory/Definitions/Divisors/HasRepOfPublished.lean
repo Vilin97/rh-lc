@@ -25,6 +25,5 @@ theorem Fam.ev {T Y : Over S} {N : LB (A ⊗ T).left} (h : Fam A N) (y : Y ⟶ T
   simp only [evc_ev h.isLB (fst A Y) (snd A Y ≫ y) hN', lift_fst, lift_snd_assoc]
   exact (isAdditive_iff h.isLB).1 h.add Z a a' (t ≫ y)
 
-omit [GrpObj A] in
 
 end GlobalTheory.DualCon

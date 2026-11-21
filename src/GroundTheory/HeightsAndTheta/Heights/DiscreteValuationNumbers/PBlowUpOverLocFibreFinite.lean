@@ -126,7 +126,6 @@ theorem chartVal_of_homog (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.M
 
 variable [∀ k, Fintype (ι k)] [Fintype J]
 
-set_option maxHeartbeats 1000000 in
 
 theorem eq_of_le_of_mem_fibre (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime]
     (hN : IsNoetherianRing (homLocRing P W)) (hD : ringKrullDim (homLocRing P W) = 1)
@@ -313,7 +312,6 @@ theorem eq_of_le_of_mem_fibre (P W : Ideal (ReciprocityTheory.ChartRestriction.G
 
 end BlowUpOverLocFibreFinite
 
-open BlowUpOverLocFibreFinite in
 
 theorem BlowUpOverLocFibreFinite.proof : BlowUpOverLocFibreFinite.Statement.{u} := by
   intro O _ _ _ K _ _ ι _ J _ P n hP N u hu hu' c x hx hxP W hWmin hWrel

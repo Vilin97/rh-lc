@@ -36,4 +36,3 @@ theorem exists_factor {V Q P : Type} [AddCommGroup V] [Module ℂ V] [AddCommGro
 
 end GlobalTheory.TripleAssembly.Transport
 
-open GlobalTheory.TripleAssembly.Transport in

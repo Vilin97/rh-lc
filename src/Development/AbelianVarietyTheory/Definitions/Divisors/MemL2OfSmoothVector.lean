@@ -27,17 +27,11 @@ variable (μ : Measure (GA E a)) [μ.IsMulLeftInvariant]
 
 variable {μ} {H : Submodule ℂ (L2 (latticeGL E a) μ)}
 
-variable (μ H) in
 
-variable (μ H) in
 
-variable (μ H) in
 
-open Classical in
 
-variable (μ H) in
 
-variable (μ H) in
 
 end GlobalTheory.GLFin
 

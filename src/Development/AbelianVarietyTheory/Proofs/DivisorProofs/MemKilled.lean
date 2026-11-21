@@ -14,7 +14,6 @@ namespace GlobalTheory.CapKilled
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-variable (E a) in
 
 def ktype (W : Submodule ℂ (Kinf E a → ℂ)) : Submodule ℂ (Sm E a) where
   carrier := {ψ | ∀ g : GA E a, (fun k : Kinf E a => (cptRep E a k ψ).1 g) ∈ W}
@@ -33,12 +32,10 @@ def ktype (W : Submodule ℂ (Kinf E a → ℂ)) : Submodule ℂ (Sm E a) where
     rw [e]
     exact W.smul_mem c (h g)
 
-variable (E a) in
 
 def killed (q : (E →+* ℂ) → ℂ → Polynomial ℂ) : Submodule ℂ (Sm E a) :=
   ⨅ τ, ⨅ u, LinearMap.ker (Polynomial.aeval (cap τ u) (q τ u))
 
-variable (E a) in
 
 def space (L : Subgroup (GL (Fin a) (Af E))) (W : Submodule ℂ (Kinf E a → ℂ))
     (q : (E →+* ℂ) → ℂ → Polynomial ℂ) : Submodule ℂ (Sm E a) :=

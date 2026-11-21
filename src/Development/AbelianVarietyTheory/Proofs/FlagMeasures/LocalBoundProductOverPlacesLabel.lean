@@ -21,7 +21,6 @@ open MeasureTheory Matrix NumberField Formalism.BasicNotions Formalism.MainNotio
 namespace GlobalTheory.TypeAsm.CompatibleChartOperations
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-open GlobalTheory.Amp in
 
 theorem prod_degBd_le_explicit (C' : ℝ) (ι : Type) [Fintype ι] (k r j q : ℕ) (H₁ : ℝ) (Dm : ι → Fin (r + 1) → ℝ)
     (De D sg : ι → ℝ) (hj : 1 ≤ j) (hjr : j ≤ r) (hk5 : 5 * r ≤ k) (hk : 40 * r ^ 4 ≤ k)

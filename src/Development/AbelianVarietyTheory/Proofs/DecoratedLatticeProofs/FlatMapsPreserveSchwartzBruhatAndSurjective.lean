@@ -28,7 +28,6 @@ section Gen
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
 
-open Classical in
 
 def freeMat (p : ℕ) (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k) :
     Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
@@ -102,7 +101,6 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   [MeasurableSpace k] [BorelSpace k]
   {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
 
-open Classical in
 
 theorem flatSB_generic {X : Type} [TopologicalSpace X] [T2Space X] (ψ : AddChar k Circle) (ν : Measure k) (p : ℕ)
     (A : X → ({rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k) → Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k)
@@ -125,7 +123,6 @@ theorem flatSB_generic {X : Type} [TopologicalSpace X] [T2Space X] (ψ : AddChar
   exact integral_mul_mem_SB (Measure.pi fun _ => ν) (fun q => Φ (A q.1 q.2))
     ⟨hΦ.1.comp_continuous hA, hΦ.2.comp_isClosedEmbedding hemb⟩ (fun e => (ψ (-ch (affPt p (0 : Matrix n n' k) e)) : ℂ))
 
-open Classical in
 
 theorem flatOnto_generic {X : Type} [TopologicalSpace X] [T2Space X] (ψ : AddChar k Circle) (hψ : Continuous ψ)
     (ν : Measure k) (hν : ν.IsAddHaarMeasure) (p : ℕ)

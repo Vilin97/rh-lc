@@ -137,7 +137,6 @@ end Nondeg
 
 end GlobalTheory.TraceCasimir
 
-open GlobalTheory.TraceCasimir in
 
 theorem GlobalTheory.exists_separability_element_of_trace_nondegenerate :
     ∀ (A : Type) [Ring A] [Module.Free ℤ A] [Module.Finite ℤ A],

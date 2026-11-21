@@ -28,7 +28,6 @@ theorem map_cA {p q : Type} (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : Emb
     (X.map (cA σ)).map (piInf τ) = (X.map (piInf τ)).map star :=
   Matrix.ext fun i j => piInf_cA h τ (X i j)
 
-omit [NumberField E] in
 
 theorem compFin_finOne (v : Pl F) (z : AE F E) : compFin F E v (finOne F • z) = compFin F E v z := by
   have e0 := St.compFin_smul (E := E) v (a := 1 - St.eF F) (sub_self (1 : Af F)) z
@@ -43,7 +42,6 @@ theorem mat_ext (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w)
     (h1 : ∀ w, a.map (piInf (τ w)) = b.map (piInf (τ w))) (h2 : finOne F • a = finOne F • b) : a = b :=
   Matrix.ext fun i j => ad_ext h τ (fun w => congrFun (congrFun (h1 w) i) j) (congrFun (congrFun h2 i) j)
 
-omit [NumberField E] in
 
 theorem piInf_finOne {w : InfinitePlace F} (τ : EmbOver E w) (z : AE F E) : piInf τ (finOne F • z) = 0 := by
   rw [St.piInf_smul]

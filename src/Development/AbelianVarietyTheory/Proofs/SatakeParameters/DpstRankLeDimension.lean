@@ -26,4 +26,3 @@ theorem tensV_eq_rTensor {V' : Type} [AddCommGroup V'] [Module LL V'] [Module â„
 
 end GlobalTheory.Pst.DmapNonzero
 
-open GlobalTheory.Pst.DmapNonzero in

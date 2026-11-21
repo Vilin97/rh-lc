@@ -21,7 +21,6 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) [Fintype 
   (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
   (hodd : Odd n ∨ IsTotallyComplex K.1) (h3 : Subsingleton (cohomology (gsRoots S n) 3))
 
-include hℓ hnk hS in
 
 theorem gsBaseBijective_of_fixing (hP : GsPairingInput n ℓ)
     (hcores : ∀ U : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S),
@@ -34,8 +33,6 @@ theorem gsBaseBijective_of_fixing (hP : GsPairingInput n ℓ)
   (exists_gsOpenSubgroup_eq K S U).elim fun _ h1 => h1.elim fun _ h2 => h2.elim fun hL hUeq =>
     hUeq ▸ gsBaseBijective_of_le S ιs n ℓ k hℓ hnk hS hodd h3 hP hcores W₀ hW₀ hL (hUeq ▸ hU)
 
-set_option maxHeartbeats 1600000 in
-include hℓ hnk hS in
 
 theorem exists_compactDualityHypotheses_gs_of_pairing (hP : GsPairingInput n ℓ) :
     ∃ U₀ : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S),
@@ -54,12 +51,10 @@ theorem exists_compactDualityHypotheses_gs_of_pairing (hP : GsPairingInput n ℓ
       bijective_base := fun U hU {r s} h => gsBaseBijective_of_fixing S ιs n ℓ k hℓ hnk hS hodd h3 hP hcores W₀ hW₀
         U hU h }⟩
 
-include hℓ hnk in
 
 theorem gsPairingInput : GsPairingInput n ℓ := fun _ S' _ ιs' hS' _ hodd' h3' =>
   ⟨gsCompactInv_ker_left S' ιs' n ℓ k hℓ hnk hS' hodd' h3', gsCompactInv_ker_right S' ιs' n ℓ k hℓ hnk hS' hodd' h3'⟩
 
-include hℓ hnk hS in
 
 theorem exists_compactDualityHypotheses_gs :
     ∃ U₀ : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S),

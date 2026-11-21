@@ -33,7 +33,6 @@ def cLoc (l : D.what₂.Tau → ℝ) (τ : D.what₂.Tau) : ℝ := 2 * Real.pi *
 
 def tLoc (l : D.what₂.Tau → ℝ) (τ : D.what₂.Tau) : ℝ := 2 * Real.pi * l τ
 
-open Classical in
 
 def gAway (V : HSp D) (l : D.what₂.Tau → ℝ) (s : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) (τ : D.what₂.Tau)
     (z : D.what₂.Tau → Matrix (Fin V.rank) (Fin n) ℂ) : ℂ :=
@@ -54,7 +53,6 @@ def tens {m : ℕ} (θ : InfFam D) (τ : D.what₂.Tau) (fr : Matrix (Fin m) (Fi
 
 def fP {m : ℕ} (c : ℝ) (P : PX m n) : (Fin m → Fin n → ℂ) → ℂ := fun u => evX P u * gs c u
 
-open Classical in
 
 def phiS {m : ℕ} (θ : InfFam D) (τ : D.what₂.Tau) (fr : Matrix (Fin m) (Fin m) ℂ) (c : ℝ) (Ψ : Mx D m n → ℂ)
     (P : PX m n) : schwartzA θ m n :=

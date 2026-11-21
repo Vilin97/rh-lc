@@ -113,7 +113,6 @@ theorem prim_ne_zero {A : ValuationSubring Ω} {φ : HahnSeries ℚ Ω} (h : Pri
   obtain ⟨-, r, hr, -⟩ := h
   rintro rfl; simp at hr
 
-omit [IsAlgClosed Ω] in
 
 theorem wron_prod (k : ℕ) {U V : ℕ → HahnSeries ℚ Ω} (hU : ∀ i, U i ≠ 0) (hV : ∀ i, V i ≠ 0) :
     theta 1 (∏ i ∈ Finset.range k, U i) * ∏ i ∈ Finset.range k, V i -

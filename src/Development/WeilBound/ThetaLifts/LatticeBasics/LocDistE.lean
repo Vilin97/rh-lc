@@ -20,7 +20,6 @@ def invT : GL (Fin d) k →* GL (Fin d) k where
 theorem cont_invT : Continuous (invT (k := k) (d := d)) :=
   Units.continuous_iff.2 ⟨Units.continuous_coe_inv.matrix_transpose, Units.continuous_val.matrix_transpose⟩
 
-open Classical in
 
 noncomputable def toGL (X : Matrix (Fin d) (Fin d) k) : GL (Fin d) k := if h : IsUnit X then h.unit else 1
 

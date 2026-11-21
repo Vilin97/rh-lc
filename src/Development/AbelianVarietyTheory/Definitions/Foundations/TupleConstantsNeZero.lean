@@ -77,17 +77,14 @@ def StepRatio {T : Type} (σ₀ : K →+* ℂ) (Qn : ℕ) (S0 : Finset T) (cc qq
     (∀ v ∈ S0, g v ∣ (qq v : 𝓞 K) ^ cc v ∧ g' v ∣ (qq v : 𝓞 K) ^ cc v) ∧
     u1 = σ₀ (b * ∏ v ∈ S0, (g v : K) / (g' v : K)) * u0
 
-omit [NumberField K] [StarRing K] in
 
 theorem IsAwayUnit.of_dvd {m k : ℕ} {a : 𝓞 K} (h : a ∣ (m : 𝓞 K) ^ k) : IsAwayUnit m (a : K) :=
   ⟨a, 0, k, h, by simp⟩
 
-omit [NumberField K] [StarRing K] in
 
 theorem IsAwayUnit.one (m : ℕ) : IsAwayUnit m (1 : K) :=
   ⟨1, 0, 0, by simp, by simp⟩
 
-omit [NumberField K] [StarRing K] in
 
 theorem IsAwayUnit.mul {m : ℕ} {x x' : K} (h : IsAwayUnit m x) (h' : IsAwayUnit m x') : IsAwayUnit m (x * x') := by
   obtain ⟨a, k, j, ha, hx⟩ := h
@@ -97,7 +94,6 @@ theorem IsAwayUnit.mul {m : ℕ} {x x' : K} (h : IsAwayUnit m x) (h' : IsAwayUni
   rw [this, ← hx, ← hx']
   ring
 
-omit [StarRing K] in
 
 theorem vw_eq_zero_of_notMem (w : Pl K) {a : 𝓞 K} (ha : a ∉ w.asIdeal) : vw w (a : K) = 0 := by
   classical
@@ -133,7 +129,6 @@ theorem IsAwayUnit.ne_zero_and_vw {m : ℕ} {x : K} (h : IsAwayUnit m x) (w : Pl
   rw [hx, h2, h3] at h1
   omega
 
-omit [NumberField K] in
 
 namespace TwoStep
 
@@ -141,9 +136,7 @@ theorem vw_natCast_nonneg (w : Pl K) (n : ℕ) : (0 : ℝ) ≤ (vw w (n : K) : �
   have : 0 ≤ vw w (n : K) := by simpa using Formalism.DivisionValues.ValuationRepresentative.vw_int_nonneg w (n : 𝓞 K)
   exact_mod_cast this
 
-omit [NumberField K] [StarRing K] in
 
-omit [NumberField K] [StarRing K] in
 
 end TwoStep
 

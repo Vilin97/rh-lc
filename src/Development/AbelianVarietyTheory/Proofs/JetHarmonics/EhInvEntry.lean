@@ -11,7 +11,6 @@ public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ActualAdjoin
 open Formalism.FourierDecayAlt Formalism.REAL Formalism.QuantumDeterminants Finset
 
 namespace GlobalTheory
-open Matrix in
 
 theorem eh_inv_entry : ∀ (k r : ℕ) (a b c i : Fin (2 * r + k + 1)), ∀ g ∈ B.GV k r, Q.EH k r a b (fun y : B.Mat k r => y⁻¹ c i) g = -(if a = c then g⁻¹ b i else 0) := by
   intro k r a b c i g _

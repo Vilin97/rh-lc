@@ -17,7 +17,6 @@ section Abstract
 
 variable {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] {ι : Type} [Fintype ι]
 
-open Classical in
 
 def words (D : ι → Module.End ℂ V) (m : ℕ) : Finset (Module.End ℂ V) :=
   Nat.rec {1} (fun _ W => W ∪ Finset.univ.biUnion fun i => W.image (D i * ·)) m

@@ -169,7 +169,6 @@ end GlobalTheory.TwistRat.Right
 
 namespace GlobalTheory.TwistRat.Right
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_root_one {D : D7} {V : HSp D} {M pd : ℕ} {k : Type} [Field k] {σ : k →+* ℂ}
     {δ : Formalism.L2.Host.HChar D.host.E} {δc : (AE D)ˣ →* Circle} (hA : IsAuxiliarySplitSquarefreeLevel D M pd) (hT : IsTwist pd σ δ δc)

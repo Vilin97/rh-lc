@@ -12,7 +12,6 @@ public import Mathlib
     (R : Type) → [CommRing R] → R → Type :=
     fun (R : Type) [CommRing R] (Δ : R) ↦ QuadraticAlgebra R Δ (0 : R)
 
-open NumberField NumberField.IsCMField in
 
 private theorem UpperTheory.Reformulated.B.Qh37.exists_anti (L : Type) [Field L] [NumberField L] [IsCMField L] :
     ∃ δ : L, δ ≠ 0 ∧ complexConj L δ = -δ := by

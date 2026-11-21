@@ -107,6 +107,5 @@ def tensHomeo {κ : Type} [Finite κ] (b : Module.Basis κ F E) : R ⊗[F] E ≃
 
 end HermTop
 
-open GlobalTheory.IndefiniteRowSideFullHecke.SiegelWeilGramDensity in
 
 end GlobalTheory.SiegelWeilConvCompare

@@ -39,7 +39,6 @@ variable {A B U X G : Type} [AddCommGroup A] [MeasurableSpace A] [MeasurableAdd�
   [Group U] [MeasurableSpace U] [MeasurableSpace X] [Group G] [MulAction G X]
   {mA : Measure A} {mB : Measure B} {ν : Measure U} [SFinite mA] [SFinite mB] [SFinite ν]
 
-omit [AddCommGroup A] [MeasurableAdd₂ A] [AddGroup B] [Group U] in
 
 theorem null_last {N : Set U} (hN : ν N = 0) : (mA.prod (mB.prod ν)) {p | p.2.2 ∈ N} = 0 := by
   have h : {p : A × (B × U) | p.2.2 ∈ N} = Set.univ ×ˢ (Set.univ ×ˢ N) := by
@@ -47,7 +46,6 @@ theorem null_last {N : Set U} (hN : ν N = 0) : (mA.prod (mB.prod ν)) {p | p.2.
   rw [h, Measure.prod_prod, Measure.prod_prod, hN]
   simp
 
-omit [AddCommGroup A] [MeasurableAdd₂ A] [AddGroup B] [Group U] in
 
 theorem null_mid {β : B → B} (hβ : Measure.QuasiMeasurePreserving β mB mB) {N : Set B} (hN : mB N = 0) :
     (mA.prod (mB.prod ν)) {p | β p.2.1 ∈ N} = 0 := by
@@ -56,7 +54,6 @@ theorem null_mid {β : B → B} (hβ : Measure.QuasiMeasurePreserving β mB mB) 
   rw [h, Measure.prod_prod, Measure.prod_prod, hβ.preimage_null hN]
   simp
 
-omit [AddGroup B] [Group U] in
 
 theorem null_first [mA.IsAddLeftInvariant] {α : A → A} (hα : Measure.QuasiMeasurePreserving α mA mA) {φ : B → A}
     (hφ : Measurable φ) {N : Set A} (hN : mA N = 0) :

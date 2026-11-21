@@ -42,7 +42,6 @@ theorem card_signs {n p q : ℕ} (hpq : p + q = n) :
   rw [h1, Finset.card_univ, Fintype.card_fin] at h2
   omega
 
-open Formalism.L2.NTheta in
 
 theorem goodPar_holPar {R : Ranks} (h : HCParam R) {n p q : ℕ} (hn : n = R.r) (hpq : p + q = n) :
     GoodPar n p q (holPar p q (kapW h p q)) := by

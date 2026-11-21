@@ -35,7 +35,6 @@ theorem cell_cases (J : Subgroup G) (g : G) : g ∉ cell P J ∨ ∃ p : P, ∃ 
     exact Or.inr ⟨p, _, hp, by simp⟩
   · exact Or.inl h
 
-open Classical in
 
 def extFun (σ : Representation ℂ P W) (J : Subgroup G) (φ : G → W) (g : G) : W :=
   if h : g ∈ cell P J then σ h.choose (φ ((h.choose : G)⁻¹ * g)) else 0

@@ -98,7 +98,6 @@ theorem mul_mem_inertInt {f : AE D} (hf : finPart D f ∈ intAE D) : ∀ z ∈ i
   fun z hz => ⟨by rw [RingHom.map_mul, hz.1, mul_zero], by rw [RingHom.map_mul]; exact GlobalTheory.HostAdeleIso.intAE_mul_mem D hf hz.2.1,
     fun v ε h h' => by rw [mul_left_comm, hz.2.2 v ε h h', mul_zero]⟩
 
-set_option maxHeartbeats 800000 in
 
 theorem congrGroup_le (V : HSp D) (H : Subgroup (GA D V)) (hH : IsClosed (H : Set (GA D V)))
     (hpl : ∀ v ε, NonSplitAt D v ε → ∀ g ∈ congrGroup V (inertInt D), SuppPl ε V g → g ∈ H) :

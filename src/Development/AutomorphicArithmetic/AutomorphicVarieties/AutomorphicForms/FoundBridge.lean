@@ -42,9 +42,7 @@ theorem ofCusp_τ (k : GL (Fin a) (Af E)) (ψ : cuspForms E a) :
     ofCusp E a (finRepCusp E a k ψ) = TR.act (.fin k) (ofCusp E a ψ) :=
   Subtype.ext (funext fun g => congrArg (fun f : GL (Fin a) (Af E) →* GA E a => ψ.1 (g * f k)) finEmb_eq)
 
-variable (E a) in
 
-omit [IsTotallyReal E] in
 
 structure Stab (U : Submodule ℂ (cuspForms E a)) : Prop where
   ρ : ∀ X, ∀ φ ∈ U, (gkModuleCusp E a).ρ X φ ∈ U
@@ -74,7 +72,6 @@ theorem stab_comap {V : Submodule ℂ (TR.Sm E a)} (h : TR.IsStable V) : Stab (V
   · rw [Submodule.mem_comap, ofCusp_τ]
     exact h _ _ hψ
 
-omit [IsTotallyReal E] in
 
 theorem Stab.isIrreducible_iff {U : Submodule ℂ (cuspForms E a)} (h : Stab U) :
     (cuspSubmodule E a U h.ρ h.σ h.τ).IsIrreducible ↔ U ≠ ⊥ ∧ ∀ W ≤ U, Stab W → W = ⊥ ∨ W = U := by

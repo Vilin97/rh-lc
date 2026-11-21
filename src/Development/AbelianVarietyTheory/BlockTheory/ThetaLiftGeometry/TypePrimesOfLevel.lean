@@ -18,13 +18,11 @@ section Generic
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-variable (E n SG) in
 
 end Generic
 
 variable (D : D7)
 
-open Classical in
 
 def TypePrimesLarge : Prop := ∀ i, 2 * D.R.f * D.R.k + 1 < D.host.g i
 

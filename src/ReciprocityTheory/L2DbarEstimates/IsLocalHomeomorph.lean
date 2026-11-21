@@ -46,7 +46,6 @@ def SmoothR {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (f : M �
 def Holo {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (f : M → ℂ) : Prop :=
   ∀ e : OpenPartialHomeomorph M (V n), IsChart n z e → DifferentiableOn ℂ (f ∘ e.symm) e.target
 
-open scoped Classical in
 
 def d {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (j : Fin n) (f : M → ℂ) (x : M) :
     ℂ :=
@@ -54,7 +53,6 @@ def d {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (j : Fin n) (f 
     wd n j (f ∘ (Classical.choose h).symm) (z x)
   else 0
 
-open scoped Classical in
 
 def db {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (j : Fin n) (f : M → ℂ) (x : M) :
     ℂ :=
@@ -87,7 +85,6 @@ def VolAdditive {M : Type*} [MeasurableSpace M] (n : ℕ) (z : M → V n) : Prop
   ∀ ⦃f : ℕ → Set M⦄, (∀ i, MeasurableSet (f i)) → Pairwise (Function.onFun Disjoint f) →
     volFun n z (⋃ i, f i) = ∑' i, volFun n z (f i)
 
-open scoped Classical in
 
 def vol {M : Type*} [MeasurableSpace M] (n : ℕ) (z : M → V n) : Measure M :=
   if h : VolAdditive n z then

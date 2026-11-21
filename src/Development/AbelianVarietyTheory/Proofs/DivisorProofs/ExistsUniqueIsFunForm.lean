@@ -492,7 +492,6 @@ theorem funEquiv_mem_delStd (F : VV K σ) : F.1 ∈ delStd K σ ↔ (funEquiv σ
   funEquiv_mem_iff σ _ _ (delStd_mem_VV σ)
     (fun τ => funMap_fwd _ _ (funPos_weyl _ (σ τ))) (fun τ => funMap_rev _ _ (funPos_weyl_rev _ (σ τ))) F
 
-omit [NumberField K] in
 
 theorem funForm : ∃ Φ : VV K σ ≃ₗ[K] VV K (fun τ => (σ τ).dual),
     (∀ F f, IsFunForm σ F f ↔ f = Φ F) ∧

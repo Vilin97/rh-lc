@@ -39,7 +39,6 @@ section Dedekind
 
 variable {R : Type*} [CommRing R] [IsDedekindDomain R] {M : Type*} [AddCommGroup M] [Module R M]
 
-variable (R M) in
 
 end Dedekind
 
@@ -55,7 +54,6 @@ section Valuation
 variable {R : Type*} [CommRing R] [IsDomain R] [ValuationRing R]
   {M : Type*} [AddCommGroup M] [Module R M]
 
-variable (R M) in
 
 theorem free_of_finite_of_isTorsionFree_of_valuationRing [Module.Finite R M]
     [Module.IsTorsionFree R M] : Module.Free R M :=

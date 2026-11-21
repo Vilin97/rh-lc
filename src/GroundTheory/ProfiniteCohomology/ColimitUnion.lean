@@ -74,8 +74,6 @@ theorem subrepCochainsCocone_inj (n : ℕ) (i : ι)
 
 variable [CompactSpace G]
 
-omit [IsTopologicalGroup G] [IsDiscreteRep A] in
-include hW in
 
 theorem exists_forall_mem_of_isLocallyConstant [Nonempty ι] [IsDirectedOrder ι]
     (hunion : ∀ a : A, ∃ i, a ∈ W i) {n : ℕ} {f : (Fin n → G) → A} (hf : IsLocallyConstant f) :
@@ -106,7 +104,6 @@ theorem subrepCochainsCocone_surj [Nonempty ι] [IsDirectedOrder ι]
   apply (ModuleCat.mono_iff_injective ((cochainsComplexι A).f n)).1 inferInstance
   rfl
 
-include hW in
 
 theorem exists_cohomologyMap_subtype_eq [Nonempty ι] [IsDirectedOrder ι]
     (hunion : ∀ a : A, ∃ i, a ∈ W i) (n : ℕ) (x : cohomology A n) :

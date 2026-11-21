@@ -31,7 +31,6 @@ variable {U : Type} [NormedAddCommGroup U] [InnerProductSpace ℂ U] (π : G n �
 
 def uG (k : Matrix.unitaryGroup (Fin n) ℂ) : G n := Unitary.toUnits k
 
-open Classical in
 
 def piM (g : Mat n) : U →L[ℂ] U := if h : IsUnit g then π h.unit else 0
 

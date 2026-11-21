@@ -66,7 +66,6 @@ theorem std_norm_eq (n : ℕ) (v : Fin n → ℂ) : (HermNorm.std n).norm v = �
 
 end SphereMean
 
-open SphereMean in
 
 theorem sphereMeanLinear : SphereMeanLinear.Statement := by
   intro n p hp

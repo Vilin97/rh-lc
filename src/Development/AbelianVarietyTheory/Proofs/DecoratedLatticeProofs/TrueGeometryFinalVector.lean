@@ -61,7 +61,6 @@ set_option maxHeartbeats 2000000
 
 namespace GlobalTheory.FamTraceChiCol
 
-open GlobalTheory.StepData GlobalTheory.RootEx GlobalTheory.SymChain in
 
 theorem conj_embX_toBlocks₂₂ {k : Type} [Field k] {ι n : Type} [Fintype n] [DecidableEq n] {c : ℕ}
     (ϖ : kˣ) (ord : ι ≃ n ⊕ Fin c) (g : GL n k) :
@@ -81,7 +80,6 @@ end GlobalTheory.FamTraceChiCol
 noncomputable section
 namespace GlobalTheory.FamTraceChiCol
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.FamTraceChiCol
 end

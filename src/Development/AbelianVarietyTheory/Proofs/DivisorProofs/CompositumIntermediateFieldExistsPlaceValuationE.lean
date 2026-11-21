@@ -91,7 +91,6 @@ theorem exists_valuation_eq (F F' K : Type) [Field F] [NumberField F] [Field F']
   change _ ^ (Q.under (𝓞 K)).ramificationIdx (𝓞 F) = _
   rw [he, pow_one]
 
-open Formalism.L2.Pj in
 
 theorem exists_vLa_eq : ∀ (F F' K : IntermediateField ℚ ℂ) [NumberField F] [NumberField F'] [NumberField K]
     (hF : F ≤ K), K = F ⊔ F' → ∀ q : ℕ, q.Prime → ¬ (q : ℤ) ∣ discr F' → ∀ w : HeightOneSpectrum (𝓞 F),

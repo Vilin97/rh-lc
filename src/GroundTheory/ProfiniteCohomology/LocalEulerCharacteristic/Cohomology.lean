@@ -31,7 +31,6 @@ theorem rootsOfUnityTwoInv_apply (V : OpenSubgroup Gal(Ksep/K))
       ((cohomologyMap (kummerSequenceRes (K := K) (Ksep := Ksep) l (V : Subgroup Gal(Ksep/K))).f 2).hom x) :=
   AddMonoidHom.comp_apply _ _ x
 
-include hl in
 
 theorem rootsOfUnityTwoInv_injective (V : OpenSubgroup Gal(Ksep/K)) :
     Function.Injective (rootsOfUnityTwoInv (K := K) (Ksep := Ksep) l V) :=
@@ -40,7 +39,6 @@ theorem rootsOfUnityTwoInv_injective (V : OpenSubgroup Gal(Ksep/K)) :
       (kummerSequenceRes_shortExact (Ksep := Ksep) l (V : Subgroup Gal(Ksep/K)) hl) 1
       (subsingleton_cohomology_one_galUnits_open K Ksep V))
 
-include hl in
 
 theorem range_rootsOfUnityTwoInv (V : OpenSubgroup Gal(Ksep/K)) :
     (rootsOfUnityTwoInv (K := K) (Ksep := Ksep) l V).range = (zmodToQZ l).range := by

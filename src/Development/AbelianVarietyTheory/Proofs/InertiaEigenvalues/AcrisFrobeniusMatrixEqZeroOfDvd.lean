@@ -33,7 +33,6 @@ theorem eq_zero_of_forall_dvd {A : Type*} [CommRing A] (p : A)
 
 end GlobalTheory.CrZero
 
-open GlobalTheory.CrZero in
 
 theorem GlobalTheory.BKLim.acris_frob_eq_zero : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (d c : ℕ)
     (D₀ F F' : Matrix (Fin d) (Fin d) (Per.Acris l)),

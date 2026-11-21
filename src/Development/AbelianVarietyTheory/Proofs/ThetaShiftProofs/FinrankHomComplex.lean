@@ -83,8 +83,6 @@ variable (hconj : ∀ z w, starRingEnd ℂ (S z w) = S w z) (hpos : ∀ z, z ≠
   (hR : ∀ r ∈ R, ∀ r' ∈ R, (S r r').im = 0) {b : W →ₗ[ℝ] W} (hb : ∀ w, b w ∈ R)
   (hb' : ∀ w, ∀ r ∈ R, S (b w) r = (S w r).im)
 
-omit [IsScalarTower ℝ ℂ W] in
-include hpos hb hb' in
 
 theorem imPart_eq {w c : W} (hc : c ∈ R) (h : ∀ r ∈ R, (S c r).re = (S w r).im) : b w = c := by
   by_contra hne
@@ -93,8 +91,6 @@ theorem imPart_eq {w c : W} (hc : c ∈ R) (h : ∀ r ∈ R, (S c r).re = (S w r
   rw [map_sub S, LinearMap.sub_apply, hb' w _ h2, Complex.sub_re, h _ h2] at h1
   simp at h1
 
-omit [IsScalarTower ℝ ℂ W] in
-include hconj hb' in
 
 theorem apply_imPart (w : W) {r : W} (hr : r ∈ R) : S r (b w) = (S w r).im := by
   rw [← hconj, hb' w r hr, Complex.conj_ofReal]
@@ -102,14 +98,11 @@ theorem apply_imPart (w : W) {r : W} (hr : r ∈ R) : S r (b w) = (S w r).im := 
 variable {O : Type} [CommRing O] [StarRing O] {ρ : O →+* Module.End ℂ W}
   (hρ : ∀ a z w, S (ρ a z) w = S z (ρ (star a) w)) (hρR : ∀ a, ∀ r ∈ R, ρ a r ∈ R)
 
-omit [IsScalarTower ℝ ℂ W] in
-include hpos hb hb' hρ hρR in
 
 theorem imPart_act (a : O) (w : W) : b (ρ a w) = ρ a (b w) :=
   imPart_eq hpos hb hb' (hρR _ _ (hb w)) fun r hr => by
     rw [hρ, hρ, hb' _ _ (hρR _ _ hr), Complex.ofReal_re]
 
-include hpos hb hb' hρ hρR in
 
 theorem exists_compl [FiniteDimensional ℂ W] (Q : ∀ n : ℕ, (O →+* Module.End ℂ (Fin n → ℂ)) → Prop)
     (hQ : ∀ (U : Type) [AddCommGroup U] [Module ℂ U] [FiniteDimensional ℂ U] (σ : O →+* Module.End ℂ U),
@@ -165,8 +158,6 @@ theorem exists_compl [FiniteDimensional ℂ W] (Q : ∀ n : ℕ, (O →+* Module
     rw [← hk]
     simp [σ]
 
-omit [IsScalarTower ℝ ℂ W] in
-include hconj hR hb in
 
 theorem sub_swap {w w' u u' : W} (hu : ∀ r ∈ R, S u r = 0) (hu' : ∀ r ∈ R, S u' r = 0)
     (h : w = b (I • w) + I • b w + u) (h' : w' = b (I • w') + I • b w' + u') :
@@ -188,7 +179,6 @@ theorem sub_swap {w w' u u' : W} (hu : ∀ r ∈ R, S u r = 0) (hu' : ∀ r ∈ 
 
 end
 
-open NumberField in
 
 theorem exists_diag {E : Type} [Field E] [NumberField E] (U : Type) [AddCommGroup U] [Module ℂ U]
     [FiniteDimensional ℂ U] (σ : 𝓞 E →+* Module.End ℂ U) :

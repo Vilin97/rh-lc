@@ -184,7 +184,6 @@ def stdG (G : Set (Matrix (Fin n) (Fin n) ℂ)) [hG : Fact (GlobalTheory.LinRed.
           rw [h1]; simp only [Matrix.mul_assoc, Matrix.one_mul]
       _ = _ := by simp only [Matrix.mul_assoc]
 
-omit hG in
 
 theorem admissible_of_polynomial_identity (h1 : FinOfPI) (h2 : GoodPI) (h3 : Transfer) (h4 : ExistsAvg)
     (hLR : GlobalTheory.LinRed.IsLinRed G) (h5 : PositivityTheory.Tls2.Iua.IwaOn G) : PositivityTheory.Tls2.Iua.AdmG G := by

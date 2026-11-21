@@ -186,7 +186,6 @@ theorem tau_defect (hφ : Function.Injective φ) (hD : IsPullDeg φ D D') (a b :
   rw [c a ha, c b hb, c (a + b) (by rw [cPoint_add, ha, hb, _root_.mul_one]), hr z J hJ, val_one] at e
   simpa using e.symm
 
-set_option maxHeartbeats 1000000 in
 
 theorem bimult_defect (hG : GlobalFnsSt) (hφ : Function.Injective φ) (hD : IsPullDeg φ D D') (a a' b : D'.X) :
     ∃ r : (FractionRing R)ˣ, ∀ (y : (TK R').left) J', Good D'.P.L y J' →

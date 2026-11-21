@@ -135,7 +135,6 @@ section Unitary
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
 
 def unitaryPointsComplexEquiv {R : Type*} [CommRing R] [Algebra F R] [TopologicalSpace R]
     [IsTopologicalRing R] (H : Matrix ι ι E) (Ψ : R ⊗[F] E ≃+* ℂ) (hc : Continuous Ψ)
@@ -183,7 +182,6 @@ def unitaryPointsPlaceEquiv (h : HermitianForm F E W) (v : Basis ι E W) (w : In
     (completionTensorEquiv_conjBase _)
     (by rw [map_completionTensorEquiv_gram, Equiv.apply_symm_apply])
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 
 def piUnitaryEquivArch (h : HermitianForm F E W) (v : Basis ι E W) :
     (∀ w : InfinitePlace E, unitaryGroupMatrix (starRingEnd ℂ) (gramAt h v w)) ≃ₜ*

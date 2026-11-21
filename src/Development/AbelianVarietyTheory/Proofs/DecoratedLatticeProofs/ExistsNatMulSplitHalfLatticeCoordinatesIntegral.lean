@@ -57,7 +57,6 @@ theorem exists_nat_mul_mem_family {ι : Type} [Fintype ι] (f : ι → k) : ∃ 
 
 end GlobalTheory.FinPl.RdBound
 
-open GlobalTheory.FinPl.RdBound in
 
 theorem GlobalTheory.FinPl.RdBound.exists_nat_mul_rd_mem : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : SplitPt D k) (n n' : Type) [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] (S T : HSp D) (α : Frame p S n') (β : Frame p T n) (LS : Lat S) (LT : Lat T), IsSelfDualC S LS → IsSelfDualC T LT → ∃ N : ℕ, 0 < N ∧ ∀ u ∈ latO S T (LS : Set _) (LT : Set _) (· = p.v), IsHalf p.e u → ∀ i j, (N : k) * rd α β u i j ∈ 𝒪[k] := by
   intro D k _ _ _ _ p n n' _ _ _ _ S T α β LS LT hS hT

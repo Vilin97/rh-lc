@@ -101,7 +101,6 @@ variable {R : Type} [CommRing R] [IsDomain R] (D : DegPre R) (F : Type) [Field F
 theorem exists_frame (k : ℕ) (b : TF (R := R) F ⟶ D.P.A) : ∃ w : Frm D F k b, w.IsGen :=
   exists_gen_of_local (V := F) D.P.L D.P.isLB _ _
 
-variable {D F} in
 
 theorem exists_frame_pow {k : ℕ} {b : TF (R := R) F ⟶ D.P.A} (w : Frm D F k b) (hw : w.IsGen) (n : ℕ) :
     ∃ ω : Frm D F (k * n) b, ω.IsGen ∧ ∀ z J, Good D.P.L z J → val ω (𝟙 _) z J = val w (𝟙 _) z J ^ n := by
@@ -175,7 +174,6 @@ theorem exists_transport (hG : GlobalFnsSt) (U : Unif I D A G) (F : Type) [Field
 
 end Unif
 
-attribute [local instance] GlobalTheory.TorusExt.gtGroup in
 
 theorem exists_qk_mul {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} (hB : D.TauBimult) {F : Type} [Field F]
     [Algebra (FractionRing R) F] {k : ℕ} (p : QkPt D F k) (n : ℕ) :

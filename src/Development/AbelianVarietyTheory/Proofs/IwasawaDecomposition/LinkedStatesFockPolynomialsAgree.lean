@@ -53,7 +53,6 @@ theorem exists_form {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} 
   have hRw := complex_data_conditions_base_level_of_primitive_links hH.ok hH.sep hP.char hH.prim
   cx_form (R.toCx3 F) F.cr false (hH.prim.pos false) (hRw.what₂ false).1 hRw.lifts0.1 (hH.prim.sumE false) hH.prim.dimParts i
 
-set_option maxHeartbeats 1000000 in
 
 theorem coefFam_roots {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} {Ks : Type}
     [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
@@ -75,7 +74,6 @@ theorem sameModel_of_eq {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type
 variable {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T} {w' : ColW B' f' T'}
   {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl} {Wt' : Set B'.places.Pl}
 
-set_option maxHeartbeats 4000000 in
 
 theorem heq_io (q : B'.toPre = B.toPre) (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i')
     {S : (w.st Z).toD7.what₂.Tau → SPar} {S' : (w'.st Z').toD7.what₂.Tau → SPar}
@@ -108,7 +106,6 @@ theorem heq_io (q : B'.toPre = B.toPre) (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w
   subst e2
   exact HEq.rfl
 
-set_option maxHeartbeats 4000000 in
 
 theorem heq_pol (q : B'.toPre = B.toPre) (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i')
     (ι : (w.st Z).toD7.what₂.LL →+* (w'.st Z').toD7.what₂.LL)
@@ -130,7 +127,6 @@ theorem heq_pol (q : B'.toPre = B.toPre) (i : Fin (w.st Z).toD7.R.m) (i' : Fin (
 section Lift
 open OmExt LiftUnit Formalism.DivisionValues Formalism.L2.Col
 
-set_option maxHeartbeats 4000000 in
 
 theorem coef_schur (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hN : ExtN z z')
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hii : (i : ℕ) = i')
@@ -161,7 +157,6 @@ theorem coef_schur (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' 
     (labLL (w'.st Z').toD7) (fun τ => (htau' τ).trans (htau τ).symm) (c0L i) hmapL c'' hcc (c0L'' i) hmapL'.1
   exact ⟨μ, fun v v' hv => hμ v v' (eq_of_heq hv)⟩
 
-set_option maxHeartbeats 8000000 in
 
 theorem agree_root (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hf : HEq f' f)
     (hpx : HEq w'.px w.px) (hstd : z.Std) (hB : z'.Std) (hN : ExtN z z')
@@ -218,7 +213,6 @@ theorem agree_root (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' 
   exact ⟨v, v', u, u', n, n', hn, hu, hn', hu', hv1'.trans (hd.trans hv1.symm), h0,
     (heq_of_eq hv2'.symm).trans (hjh.trans (heq_of_eq hv2))⟩
 
-set_option maxHeartbeats 4000000 in
 
 theorem one_lift (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hf : HEq f' f)
     (hpx : HEq w'.px w.px) (hstd : z.Std) (hB : z'.Std) (hN : ExtN z z')
@@ -255,7 +249,6 @@ theorem one_lift (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T'
 
 end Lift
 
-set_option maxHeartbeats 2000000 in
 
 theorem exists_roots (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hf : HEq f' f)
     (hpx : HEq w'.px w.px) (hstd : z.Std) (hB : z'.Std) (hN : ExtN z z') (hH : Holds z.R z.F)
@@ -273,7 +266,6 @@ theorem exists_roots (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX
     exact h2.2.2
   · exact ⟨1, 1, one_ne_zero, one_pow _, fun i hi => absurd ⟨i, hi⟩ h⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem sameModel_extN (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hN : ExtN z z')
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i') :
@@ -285,7 +277,6 @@ theorem sameModel_extN (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I 
     s.σ.trans (m.2.2.2.1.symm.trans s'.σ.symm), s.lam.trans (m.2.2.2.2.1.symm.trans s'.lam.symm),
     s.ε.trans (m.2.2.2.2.2.1.symm.trans s'.ε.symm), s.fr.trans (m.2.2.2.2.2.2.1.symm.trans s'.fr.symm)⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem io_at (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hN : ExtN z z')
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i')
@@ -300,7 +291,6 @@ theorem io_at (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt
     (z'.R.cV i').nW (z'.R.cV i').iW (eq_of_heq h1.1) h2.1 h2.2 ((by with_unfolding_all exact ((z.R.ioP i) :))) ((by with_unfolding_all exact ((z'.R.ioP i') :))) ((by with_unfolding_all exact (h1.2.2.2.1 :))) u u' ((by with_unfolding_all exact (hu :))) y y' hy
   exact (by with_unfolding_all exact (k :))
 
-set_option maxHeartbeats 4000000 in
 
 theorem io_of_extN (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hf : HEq f' f)
     (hpx : HEq w'.px w.px) (hstd : z.Std) (hB : z'.Std) (hN : ExtN z z') (hH : Holds z.R z.F)

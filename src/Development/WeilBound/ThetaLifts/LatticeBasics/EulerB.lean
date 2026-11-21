@@ -40,7 +40,6 @@ theorem idem_sq (v : Pl F) : idem v * idem v = idem v := by
   have := mul_idem (v := v) (a := 1 - idem v) (by rw [map_sub, map_one, ev_self, sub_self])
   linear_combination -this
 
-variable (F) in
 
 def Oh : AddSubgroup (AF F) where
   carrier := {a | evI F a = 0 ∧ ∀ v, evFin F v a ∈ v.adicCompletionIntegers F}
@@ -69,7 +68,6 @@ theorem idem_mem {v : Pl F} {a : AF F} (h : evFin F v a ∈ v.adicCompletionInte
     · subst e; rwa [ev_self, one_mul]
     · rw [ev_ne e, zero_mul]; exact zero_mem _
 
-variable (F) in
 
 def incA : (Fin n → E) →+ (Fin n → AE F E) := AddMonoidHom.mk' (incV F) fun _ _ => funext fun _ => map_add _ _ _
 

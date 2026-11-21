@@ -53,7 +53,6 @@ def fam (μ₀ : T) (i j : Fin D.R.m) : Option Bool → HChar D.host.E
   | none => nuH G μ₀ i j
   | some c => nuH G μ₀ i j * delOf Lc c
 
-open Classical in
 
 def twPl (t : T) : Finset (HeightOneSpectrum (𝓞 D.host.E)) := (locPl G t).filter fun w => w ∉ G.pl.W0
 

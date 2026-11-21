@@ -50,7 +50,6 @@ def Coord.gen {G : Geo K} {s : Fin G.D → Fin G.N → K} {hs : G.IsGood s} {δ 
 def Coord.c₁ {G : Geo K} {s : Fin G.D → Fin G.N → K} {hs : G.IsGood s} {δ : ℕ} (Co : Coord G hs δ) (σ : K →+* ℂ) (p : Fin δ) : ℝ :=
   archSize (G.A σ) fun k => σ (Co.y p k)
 
-variable (X) in
 
 end Geometry
 

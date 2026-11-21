@@ -19,7 +19,6 @@ section Lin
 variable {X Y : Type} [NormedAddCommGroup X] [InnerProductSpace ℂ X] [FiniteDimensional ℂ X]
   [NormedAddCommGroup Y] [InnerProductSpace ℂ Y] [FiniteDimensional ℂ Y]
 
-omit [FiniteDimensional ℂ X] in
 
 end Lin
 

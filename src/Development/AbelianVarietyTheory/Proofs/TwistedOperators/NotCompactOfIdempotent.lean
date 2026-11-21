@@ -450,9 +450,6 @@ theorem _root_.GlobalTheory.RegSS.commute_of_mem_genAlg {M N l : Matrix n n A} (
   unfold _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.genAlg at hl
   exact (Algebra.commute_of_mem_adjoin_singleton_of_commute hl h).eq
 
-open Matrix NumberField in
-open scoped TensorProduct in
-variable {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.RegSS.mem_genAlg_of_commute {M N : Matrix n n A} {v : n → A}
     (hv : Function.Bijective (fun l : _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.genAlg M => (l : Matrix n n A) *ᵥ v))
@@ -494,9 +491,6 @@ theorem _root_.GlobalTheory.RegSS.quad_nontrivial
     (h : _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.IsQuadInvol F E σ) : Nontrivial E :=
   Module.nontrivial_of_finrank_pos (R := F) (by rw [h.finrank_eq]; norm_num)
 
-open Matrix NumberField in
-open scoped TensorProduct in
-variable {F E : Type} [Field F] [CommRing E] [Algebra F E] {σ : E →ₐ[F] E} in
 
 theorem _root_.GlobalTheory.RegSS.quad_exists_basis [CharZero F]
     (h : _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.IsQuadInvol F E σ) :
@@ -571,9 +565,6 @@ theorem _root_.GlobalTheory.RegSS.sigR_sigR (hσ : ∀ x, σ (σ x) = x) (R : Ty
   | tmul e r => simp [_root_.Formalism.UG.sigR, hσ]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-open Matrix NumberField in
-open scoped TensorProduct in
-variable {F E : Type} [Field F] [CommRing E] [Algebra F E] {σ : E →ₐ[F] E} in
 
 theorem _root_.GlobalTheory.RegSS.continuous_rTensor {B B' : Type} [CommRing B] [Algebra F B]
     [CommRing B'] [Algebra F B'] (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R]
@@ -619,9 +610,6 @@ theorem _root_.GlobalTheory.RegSS.continuous_sigR (σ : E →ₐ[F] E) (R : Type
   rw [hσR]
   exact _root_.GlobalTheory.RegSS.continuous_rTensor R _
 
-open Matrix NumberField in
-open scoped TensorProduct in
-variable {F E : Type} [Field F] [CommRing E] [Algebra F E] {σ : E →ₐ[F] E} in
 
 theorem _root_.GlobalTheory.RegSS.etale_of_isReduced [CharZero F] (B : Type) [CommRing B]
     [Algebra F B] [Module.Finite F B] [IsReduced B] : Algebra.Etale F B := by
@@ -647,10 +635,6 @@ theorem _root_.GlobalTheory.RegSS.genAlg_isReduced
     Algebra.Etale.comp F E _
   exact Algebra.FormallyUnramified.isReduced_of_field F _
 
-open Matrix NumberField in
-open scoped TensorProduct in
-variable {F E : Type} [Field F] [CommRing E] [Algebra F E] {σ : E →ₐ[F] E} in
-variable {n : Type} [Fintype n] [DecidableEq n] {J : Matrix n n E} {γ : GL n E} in
 
 theorem _root_.GlobalTheory.RegSS.exists_adjEquiv (h : _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.IsRegular σ J γ)
     (hA : _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.ClauseAlg σ J γ) :
@@ -709,10 +693,6 @@ theorem _root_.GlobalTheory.RegSS.exists_adjEquiv (h : _root_.GlobalTheory.Indef
             rw [Matrix.mul_assoc, Matrix.mul_nonsing_inv_cancel_left _ _ hJ]
         _ = J * l := by rw [hl]
 
-open Matrix NumberField in
-open scoped TensorProduct in
-variable {F E : Type} [Field F] [CommRing E] [Algebra F E] {σ : E →ₐ[F] E} in
-variable {n : Type} [Fintype n] [DecidableEq n] {J : Matrix n n E} {γ : GL n E} in
 
 theorem _root_.GlobalTheory.RegSS.plusTensor_tConj (h : _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.IsRegular σ J γ)
     (x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.plusAlg σ J (γ : Matrix n n E) ⊗[F] E) :

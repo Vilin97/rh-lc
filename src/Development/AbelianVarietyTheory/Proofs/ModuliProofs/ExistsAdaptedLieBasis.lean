@@ -88,7 +88,6 @@ open ReciprocityTheory.ChartRestriction.G.Chart (prodPts scaleD tvec tmap IsUniv
 variable {k : Type} [Field k] {G : Over (Sp k)} [GrpObj G] {n : ℕ}
   {x : ∀ m : ℕ, Chart.sp (R₀ := k) (Chart.JetR k (Fin n) m) ⟶ G} (hx : IsUnivChart G n x)
 
-include hx in
 
 theorem exists_tangent_action {O : Type} [CommRing O] (act : OAct O G) :
     ∃ r : O →+* Module.End k (Fin n → k), ∀ a c, tvec (x := x) (r a c) = tvec (x := x) c ≫ act.act a := by
@@ -127,7 +126,6 @@ private theorem tvec_sum' {k : Type} [Field k] {G : Over (Sp k)} [GrpObj G] {n :
   | zero => simp [h0]
   | succ N ih => rw [List.ofFn_succ, List.prod_cons, ih (fun i => f i.succ), Fin.sum_univ_succ, Chart.tvec_add hx]
 
-include hx in
 
 theorem isLieComb_tvec_iff {N : ℕ} (b : Fin N → Fin n → k) (c : Fin n → k) (d : Fin N → k) :
     IsLieComb d (fun i => tvec (x := x) (b i)) (tvec (x := x) c) ↔ c = ∑ i, d i • b i := by
@@ -152,7 +150,6 @@ theorem isLieComb_tvec_iff {N : ℕ} (b : Fin N → Fin n → k) (c : Fin n → 
 
 end GlobalTheory.AdaptedBasis
 
-open ReciprocityTheory.ChartRestriction.G.Chart (tvec) in
 
 theorem GlobalTheory.exists_adapted_lieBasis : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (K : Type) [Field K] [IsAlgClosed K] [CharZero K] (G : Over (Sp K)) [GrpObj G] [IsCommMonObj G] (act : OAct (𝓞 E) G) (ρ : K), Smooth G.hom → DetCond D act (𝟙 (Sp K)) ρ → ∃ (g : ℕ) (v : Fin g → (epsR K ⟶ G)) (ty : Fin g → (𝓞 E →+* K)), IsLieBasis v ∧ (∀ τ : 𝓞 E →+* K, (τ H.rt = ρ → Nat.card {i // ty i = τ} = D.p) ∧ (τ H.rt ≠ ρ → Nat.card {i // ty i = τ} = D.q)) ∧ ∀ a j, IsLieComb (fun i => Matrix.diagonal (fun i => ty i a) i j) v (v j ≫ act.act a) := by
   intro E _ _ _ H D K _ _ _ G _ _ act ρ hsm hdet

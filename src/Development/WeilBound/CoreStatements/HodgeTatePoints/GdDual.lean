@@ -17,7 +17,6 @@ variable {C : Type} [Field C] {v : Valuation C NNReal} {O : Type} [CommRing O] [
   {V : Type} [AddCommGroup V] [Module C V] [Module O V] [IsScalarTower O C V]
   {Ω : Type} [AddCommGroup Ω] [Module C Ω] [Module O Ω] [IsScalarTower O C Ω]
 
-omit [IsAlgClosed C] [CharZero C] in
 
 theorem proj_ht_mem (P : HTPoint C O c κ N V Ω) (τ : E →+* C) {y : V} (hy : y ∈ P.T) :
     eigProj P.ρΩ τ (P.ht y) ∈ P.omHT τ := by
@@ -102,7 +101,6 @@ private theorem htPoint_exists_e_left_eq_linearMap (P : HTPoint C O c κ N V Ω)
   obtain ⟨w, hw⟩ := hsurj ℓ
   exact ⟨w, fun y => by rw [hw]⟩
 
-omit [IsAlgClosed C] [CharZero C] in
 
 omit [IsAlgClosed C] [CharZero C] in
 private theorem htPoint_exists_smul_mem_T (hv : v.Integers O) (P : HTPoint C O c κ N V Ω) (y : V) :

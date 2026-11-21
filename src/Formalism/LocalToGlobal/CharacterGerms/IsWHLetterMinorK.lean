@@ -104,7 +104,6 @@ theorem num_mon (g0 : Fin 2) (t0 : ZMod d) (c0 : ℕ) (g : Fin 2) (e : ZMod d �
       | (intro k _; rw [if_neg (fun h => hg h.1)])
       | (intro t _; exact Finset.sum_eq_zero fun k _ => by rw [if_neg (fun h => hg h.2.2.1.1.symm), smul_zero])
 
-include std in
 
 theorem blockPoly_isWeightedHomogeneous' (b : GlobalTheory d) (g0 : Fin 2) (t0 : ZMod d) (c0 : ℕ) :
     IsWeightedHomogeneous (wRowG X idx g0 t0 c0) (b.poly X F)

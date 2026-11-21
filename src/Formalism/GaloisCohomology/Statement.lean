@@ -49,11 +49,9 @@ section Field
 variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
   (l : ℕ) [Fact l.Prime]
 
-variable (F) in
 
 def Above : Set (HeightOneSpectrum (𝓞 F)) := {v | ((l : ℕ) : 𝓞 F) ∈ v.asIdeal}
 
-variable (F Ω) in
 
 structure LData where
 
@@ -138,7 +136,6 @@ variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
   {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] [TopologicalSpace M]
   [IsTopologicalAddGroup M] [ContinuousConstSMul R M]
 
-variable (F Ω) in
 
 abbrev Places : Type :=
   {A : HeightOneSpectrum (𝓞 F) → ValuationSubring Ω // ∀ v, IsPlaceOver (A v) v}

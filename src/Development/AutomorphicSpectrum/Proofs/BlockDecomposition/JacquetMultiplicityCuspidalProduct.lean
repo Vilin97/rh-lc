@@ -32,7 +32,6 @@ def permMatrix {l c : ℕ} (x : Fin l → IrrGL k) (y : Fin c → IrrGL k) (e : 
     rw [Finset.sum_ite_eq]
     simp [h j]⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem exists_choice (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {l c : ℕ} (x : Fin l → IrrGL k) (y : Fin c → IrrGL k) :
     ∃ (f : ∀ (b : SizeMatrix (fun i => Fin (x i).1) (fun j => Fin (y j).1)) i, (Σ j, Fin (b.1 i j)) ≃ Fin (x i).1)
@@ -75,7 +74,6 @@ theorem card_permCell {l c : ℕ} (x : Fin l → IrrGL k) (y : Fin c → IrrGL k
     obtain ⟨e, he, hb⟩ := (Finset.mem_filter.1 hb).2
     exact ⟨e, Set.mem_toFinset.2 he, Subtype.ext (funext fun i => funext fun j => (hb i j).symm)⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem main (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {l c N : ℕ} (x : Fin l → IrrGL k) (y : Fin c → IrrGL k)
     (hx : ∑ a, (x a).1 = N) (hy : ∑ a, (y a).1 = N) (hxc : ∀ a, (x a).IsCusp) (hyc : ∀ a, (y a).IsCusp) :

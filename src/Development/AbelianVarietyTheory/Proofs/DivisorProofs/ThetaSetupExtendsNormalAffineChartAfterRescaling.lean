@@ -19,7 +19,6 @@ noncomputable section
 namespace GlobalTheory.ThetaExtend
 open GlobalTheory.ThetaPtMove GlobalTheory.CommPairing GlobalTheory.ConstFam GlobalTheory.GlobalLift GlobalTheory.ThetaReal GlobalTheory.UnivBasisMove GlobalTheory.ThetaGeom
 
-set_option maxHeartbeats 2000000 in
 
 theorem exists_real_rechart (hL : Laws) {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω]
     (S : ThetaSys o Ω) (ρ : S.Real) (R' : Subalgebra o Ω) [IsIntegrallyClosed R'] (fg : R'.FG)

@@ -140,7 +140,6 @@ theorem prod_sizes {M : Type} [CommMonoid M] (g : ℕ → M) (hg : g 0 = 1) (n :
   unfold shapeDeg
   omega
 
-open scoped Pointwise in
 
 theorem bidet_reorder (R : Type) [CommRing R] (n : ℕ) {K K' : ℕ} (sz : Fin K → ℕ) (hsz : ∀ k, sz k ≤ n)
     (sz' : Fin K' → ℕ) (hsz' : ∀ k, sz' k ≤ n) (h : shapeDeg (n := n) sz = shapeDeg sz')

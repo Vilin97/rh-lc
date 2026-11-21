@@ -182,7 +182,6 @@ theorem exists_levi_lower (hpot : IsPotential A om) (hpos : IsPosPot A om)
 
 end ChartLeviThGe
 
-open ChartLeviThGe in
 
 end
 

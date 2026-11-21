@@ -91,4 +91,3 @@ theorem eq_of_dense {X O : Type*} [TopologicalSpace X] [CommRing O] [IsLocalRing
 
 end GlobalTheory.ChiExtend
 
-open GlobalTheory.ChiExtend in

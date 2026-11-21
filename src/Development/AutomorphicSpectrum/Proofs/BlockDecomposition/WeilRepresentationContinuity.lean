@@ -46,7 +46,6 @@ theorem continuous_mixS_joint {D : D7} (ψ : AddChar (AF D.host.F) ℂ) {S T S�
     ((GlobalTheory.Unf.jointCont_all D ψ S T χS χT om hω f hf).comp
       (((continuous_fst.comp continuous_fst).prodMk continuous_const).prodMk ((c1.add c2).add continuous_const)))
 
-set_option maxHeartbeats 1000000 in
 
 theorem weilCont : WeilCont := by
   intro D n V ψ hψ χ hχ hr θ hθ μ 𝓕 hμ ω hω Φ

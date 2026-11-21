@@ -45,7 +45,6 @@ def translates {H : Type} [Mul H] (z : H →₀ ℂ) (φ : H → ℂ) : H → �
 
 def zdeg {H : Type} (z : H →₀ ℂ) : ℂ := z.sum fun _ c => c
 
-variable (G) in
 
 abbrev PolRoute (X M Y : Node) : Type := PolF D (G.V X).rank (G.V M).rank ⊗[ℂ] PolF D (G.V M).rank (G.V Y).rank
 
@@ -197,7 +196,6 @@ end Finite
 
 variable (W : G.Weil) (B : Frames G) (ρ : RealMatch W) (t : T) (i j : Fin D.R.m)
 
-variable {t} in
 
 def SquareConv {i j : ℕ} (M : Vol G) (Θ : TotT G (routeBig t i j)) (Θ' : TotT G (routeSmall t i j))
     (z : GA D (G.V (.grid i j)) →₀ ℂ) (g : GA D (G.V (.grid i (j + 1)))) (g₁ : GA D (G.V (.grid (i + 1) j))) : Prop :=

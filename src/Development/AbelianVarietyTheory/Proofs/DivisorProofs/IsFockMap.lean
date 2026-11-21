@@ -65,7 +65,6 @@ section Adelic
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {α β κ : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] {P Q R S : ℕ}
 
-variable (F) in
 
 abbrev Tens (P Q R S : ℕ) : Type := ⨂[ℂ] _ : InfinitePlace F, Formalism.BasicNotions.TH.Pol P Q R S
 
@@ -87,7 +86,6 @@ def IsFockMap (ψ : AddChar (AF F) ℂ) (τ : ∀ w : InfinitePlace F, EmbOver E
     (∀ w, u.map (piInf (τ w)) = A w * c w * (C w)ᵀ) →
       ∀ T, SD (fun t => d.rho ψ (realAd F t • u)) (Φ T) (Φ (sumPl (fun w => heisOp (c w)) T))
 
-variable (σ) in
 
 def RLines (J : Matrix β β (AE F E)) : Set (Multiplicative ℝ →* UG (cA σ) J) :=
   {γ | Continuous γ ∧ ∀ t, At (evI F) (((γ t).1 : Matrix β β (AE F E)) - 1)}

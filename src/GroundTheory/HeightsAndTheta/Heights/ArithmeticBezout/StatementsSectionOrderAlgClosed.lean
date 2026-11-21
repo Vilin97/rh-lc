@@ -13,7 +13,6 @@ namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial
 
-open Classical in
 
 def SectionOrderAlgClosed.Statement : Prop :=
   ∀ (F : Type) [Field F] [IsAlgClosed F] (n e : ℕ) (I : Ideal (MvPolynomial (Fin n) F))

@@ -27,8 +27,6 @@ open GlobalTheory.AdjDatumMove
 
 variable {D : D7}
 
-open Matrix in
-open scoped ComplexOrder in
 
 theorem isCartanInv_one_of_onb {k : ℕ} {G B : Matrix (Fin k) (Fin k) ℂ} (h : IsONBasis G 1 B k) : IsCartanInv G 1 := by
   obtain ⟨e, he, h1, -⟩ := h
@@ -131,7 +129,6 @@ theorem omegaQ_mul_right {n r : ℕ} (hr : r ≤ n) (Q : Finset (Pl D.host.E)) (
   have e1 : upperLeftBlock hr (1 : GL (Fin n) (kP PP)) = 1 := blockDiagonalExtendByOnePrimeField_one _ _
   rw [e1, map_one, map_one, inv_one, one_mul, map_inv, map_inv, Units.val_inv_eq_inv_val]
 
-open Formalism.IndefR.Lev (finE) in
 
 theorem levDatum_actO (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D))
     (L : LevDat D.host.E ℂ T.rank) (hs : L.s = 0) (Q : Finset (Pl D.host.E)) (m : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ)
@@ -166,8 +163,6 @@ theorem levDatum_actO (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)) (βT : GL (F
     rw [e'] at h3 h4
     exact hx ⟨h3, h4⟩
 
-open Formalism.IndefR.Lev (finE) in
-set_option maxHeartbeats 1000000 in
 
 theorem zeta_law : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A) i t σ s P cμ cη m ω BW f₀ f c io, IsLiftDataC R F i t σ s P cμ cη m ω BW f₀ f c io → ∀ k ∈ levG (Wc D i) (R.βW i) (R.datWp i P), ω (1, k) f = levChi (Wc D i) (R.βW i) (R.datWp i P) k • f := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F i t σ s P cμ cη m ω BW f₀ f c io h k hk

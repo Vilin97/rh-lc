@@ -38,7 +38,6 @@ structure XPart (D : D7) (u : D.what₂.Word) where
 
 @[reducible] def XPart.geo (a : XPart D u) (bot : StAt (D.sp.Y 0)) (mid : ℕ → GlobalTheory.ChainOnto.PiLocalization₂ D) : Geo D := ⟨a.c, bot, mid, a.top⟩
 
-set_option maxHeartbeats 1000000 in
 
 structure YPart (a : XPart D u) where
   bot : StAt (D.sp.Y 0)

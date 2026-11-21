@@ -12,7 +12,6 @@ section Eval
 
 variable {k A : Type*} [CommSemiring k] [Semiring A] [Algebra k A] {σ ι κ : Type*}
 
-open scoped IsMulCommutative in
 
 noncomputable def commEval (k : Type*) [CommSemiring k] [Algebra k A] (a : σ → A)
     (ha : ∀ i j, Commute (a i) (a j)) : MvPolynomial σ k →ₐ[k] A :=
@@ -85,7 +84,6 @@ theorem multiChoose_mul_sub (n β : σ →₀ ℕ) (i : σ) :
   calc _ = (n i).choose (β i) * (n i - β i) * multiChoose n (β.erase i) := by ring
     _ = _ := by rw [← this]; ring
 
-variable (R) in
 
 noncomputable def dividedDeriv (β : σ →₀ ℕ) : Module.End R (MvPolynomial σ R) :=
   (basisMonomials σ R).constr R fun n => multiChoose n β • monomial (n - β) 1
@@ -201,7 +199,6 @@ theorem rowContraction_X_inl_mul (γ : ι → κ → R) (i i' : ι) (P : MvPolyn
 
 variable [Fintype ι]
 
-open scoped Classical in
 
 noncomputable def dividedContraction (γ : ι → κ → R) (n : ℕ) :
     Module.End R (MvPolynomial (ι ⊕ κ) R) :=

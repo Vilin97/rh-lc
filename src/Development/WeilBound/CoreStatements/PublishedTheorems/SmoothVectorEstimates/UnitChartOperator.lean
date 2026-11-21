@@ -444,7 +444,6 @@ section KeyE
 
 variable {ι : Type} [Fintype ι] {a : ℕ} {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X]
 
-open Classical in
 
 def unitChartOperator (ρ : GL (Fin a) (ι → ℂ) →* (X →L[ℂ] X)) (M : LieI ι a) : X →L[ℂ] X :=
   if h : IsUnit (Matrix.of M) then ρ h.unit else 0

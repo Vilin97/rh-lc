@@ -29,7 +29,6 @@ structure IsWittFrame (X Y : Matrix (Fin n) (Fin r) E) : Prop where
   aniso : ∀ z : Fin n → E, (cT (σ : E →+* E) X * J) *ᵥ z = 0 → (cT (σ : E →+* E) Y * J) *ᵥ z = 0 →
     hE σ J z z = 0 → z = 0
 
-variable (F) in
 
 abbrev adMat {m m' : Type} (X : Matrix m m' E) : Matrix m m' (AF F ⊗[F] E) := X.map (inclR (F := F) (AF F))
 
@@ -44,7 +43,6 @@ def IsTorusElt (X Y : Matrix (Fin n) (Fin r) E) (t : Fin r → ℝ) (a : GAd σ 
     ∀ z : Fin n → E, (cT (σ : E →+* E) X * J) *ᵥ z = 0 → (cT (σ : E →+* E) Y * J) *ᵥ z = 0 →
       archMat σ J τ (projArch σ J w a) *ᵥ (fun i => τ.1 (z i)) = fun i => τ.1 (z i)
 
-variable (r) in
 
 def cone (c : ℝ) : Set (Fin r → ℝ) :=
   {t | (∀ i, 0 < t i) ∧ (∀ i j : Fin r, j.val = i.val + 1 → c * t j ≤ t i) ∧ ∀ i : Fin r, i.val + 1 = r → c ≤ t i}
@@ -52,7 +50,6 @@ def cone (c : ℝ) : Set (Fin r → ℝ) :=
 def siegelSet (X Y : Matrix (Fin n) (Fin r) E) (Ω : Set (GAd σ J)) (c : ℝ) (K : Subgroup (GAd σ J)) : Set (GAd σ J) :=
   {g | ∃ p ∈ Ω, ∃ t ∈ cone r c, ∃ a, IsTorusElt σ J X Y t a ∧ ∃ k ∈ K, g = p * a * k}
 
-variable (F n) in
 
 def modulus (t : Fin r → ℝ) : ℝ := ∏ i : Fin r, t i ^ (2 * (Module.finrank ℚ F : ℤ) * ((n : ℤ) - 2 * (i.val : ℤ) - 1))
 
@@ -60,7 +57,6 @@ def IsRealLine (γ : ℝ → GAd σ J) : Prop :=
   ∃ (w : InfinitePlace F) (τ : EmbOver E w) (Z : Matrix (Fin n) (Fin n) ℂ), Zᴴ * J.map τ.1 + J.map τ.1 * Z = 0 ∧
     ∀ t : ℝ, ∃ y : GArch σ J w, γ t = embArch σ J w y ∧ archMat σ J τ y = NormedSpace.exp (t • Z)
 
-variable {σ J} in
 
 def lineDer (γ : ℝ → GAd σ J) (φ : GAd σ J → ℂ) : GAd σ J → ℂ := fun g => deriv (fun t => φ (g * γ t)) 0
 
@@ -90,7 +86,6 @@ end GlobalTheory.SiegelSet
 
 namespace GlobalTheory.Published
 
-open GlobalTheory.SiegelSet in
 
 def SiegelSetUnitary : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ →
@@ -198,7 +193,6 @@ theorem exists_isWittFrame (h : IsCMExt F E σ) (hJ : IsHermND σ J) :
   exact hr (exists_cons B hs hx hy hxy (fun i => (gram_mulVec (of x)ᵀ z i).symm.trans (congrFun h1 i))
     (fun i => (gram_mulVec (of y)ᵀ z i).symm.trans (congrFun h2 i)) ((hB z z).trans h3) hw₀)
 
-omit [NumberField F] [NumberField E] in
 
 theorem isWittFrame_plane : IsWittFrame σ !![0, 1; 1, 0] (!![1; 0] : Matrix (Fin 2) (Fin 1) E) !![0; 1] := by
   refine ⟨?_, ?_, ?_, fun z h1 h2 _ => ?_⟩
@@ -268,7 +262,6 @@ theorem exists_isRealLine (h : IsCMExt F E σ) (hJ : IsHermND σ J) {w : Infinit
   exact ⟨fun t => embArch σ J w (y t), ⟨w, τ, Z, hZ, fun t => ⟨y t, rfl, hy t⟩⟩, fun t => by
     rw [projArch_embArch_self, hy]⟩
 
-variable (σ J) in
 
 theorem isSmoothModerate_const (c : ℂ) : IsSmoothModerate σ J fun _ => c := by
   refine ⟨fun _ _ _ => rfl, ⟨⊤, isOpen_univ, fun _ _ _ _ => rfl⟩, continuous_const, fun _ _ _ _ => contDiff_const, 0,
@@ -308,7 +301,6 @@ theorem exists_cover (hP : GlobalTheory.Published.SiegelSetUnitary) (h : IsCMExt
   rw [Real.norm_of_nonneg (by positivity)]
   exact hC g hg
 
-omit [NumberField E] in
 
 theorem ug_eq_hr (hσ : ∀ x, σ (σ x) = x) {c : E} (hc : c ≠ 0) :
     GlobalTheory.WeilM.UG (Algebra.TensorProduct.map (AlgHom.id (AF F) (AF F)) σ) (adMat F J) = HR (AF F) σ (c • J.map σ) := by
@@ -330,7 +322,6 @@ theorem ug_eq_hr (hσ : ∀ x, σ (σ x) = x) {c : E} (hc : c ≠ 0) :
   rw [e, Matrix.mul_smul, Matrix.smul_mul, hu.smul_left_cancel, ← e2]
   exact (Matrix.map_injective (Function.LeftInverse.injective hs)).eq_iff.symm
 
-attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 
 theorem conj_exp (Z : Matrix (Fin n) (Fin n) ℂ) :
     (starRingEnd ℂ).mapMatrix (NormedSpace.exp Z) = NormedSpace.exp ((starRingEnd ℂ).mapMatrix Z) :=

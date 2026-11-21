@@ -21,7 +21,6 @@ section Fin
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-variable (E) in
 
 def PosStar : Prop := ∀ a : E, a ≠ 0 → 0 < Algebra.trace ℚ E (star a * a)
 
@@ -275,7 +274,6 @@ section Glue
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
-variable (E) in
 
 def cO : 𝓞 E →+* 𝓞 E := RingOfIntegers.mapRingHom (starRingEnd E)
 

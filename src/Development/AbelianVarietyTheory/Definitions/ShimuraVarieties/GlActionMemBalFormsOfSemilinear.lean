@@ -32,7 +32,6 @@ theorem mem_symForms_iff_flip {b : Bil Y A} : b ∈ symForms S Y A ↔ b.flip = 
     conv_lhs => rw [← h]
     rfl⟩
 
-variable (Y) in
 
 abbrev SymLattice : Type _ := symForms ℤ Y ℤ
 
@@ -56,11 +55,8 @@ def pullback (f : Y →ₗ[ℤ] Y') : Bil Y' A →ₗ[S] Bil Y A where
 
 variable {S A}
 
-variable (S A) in
 
-variable (S Y A) in
 
-variable (S Y A) in
 
 end Pullback
 
@@ -109,7 +105,6 @@ theorem mk_comm (y y' : Y) : mk y y' = mk y' y := by
 
 variable {A : Type*} [AddCommGroup A] [Module S A]
 
-variable (S Y A) in
 
 def lift : symForms S Y A ≃ₗ[S] (SymSq Y →ₗ[ℤ] A) where
   toFun b := AddMonoidHom.toIntLinearMap (M := SymSq Y) <|
@@ -157,9 +152,7 @@ theorem finrank_eq [Module.Finite ℤ Y] [Module.Free ℤ Y] :
   rw [Module.finrank_eq_card_basis (basis (Module.Free.chooseBasis ℤ Y)), Sym2.card,
     Module.finrank_eq_card_chooseBasisIndex]
 
-variable (Y) in
 
-variable (Y) in
 
 end SymSq
 
@@ -189,7 +182,6 @@ theorem IsBalanced.add_of_add_star {b : Bil Y A} (hb : IsBalanced O b) {w : O}
 
 variable [Module S A]
 
-variable (S O Y A) in
 
 def balForms : Submodule S (Bil Y A) where
   carrier := {b | b ∈ symForms S Y A ∧ IsBalanced O b}
@@ -199,32 +191,18 @@ def balForms : Submodule S (Bil Y A) where
   smul_mem' s b hb := ⟨Submodule.smul_mem _ s hb.1, fun a y y' => by
     simp only [LinearMap.smul_apply, hb.2 a y y']⟩
 
-variable (O Y) in
 
-variable (S O Y A) in
 
-variable (O Y) in
 
-variable (O Y) in
 
-variable (O Y) in
 
-variable (O Y) in
 
-variable (O Y) in
 
-variable (S A) in
 
-omit [StarRing O] in
-variable (O Y) in
 
-omit [StarRing O] in
 
-omit [StarRing O] in
 
-variable (S O Y A) in
 
-variable (O Y) in
 
 def balRel : Submodule ℤ (SymSq Y) :=
   saturation (Submodule.span ℤ
@@ -234,13 +212,11 @@ theorem mem_balRel {x : SymSq Y} : x ∈ balRel O Y ↔ ∃ n : ℤ, n ≠ 0 ∧
     {x : SymSq Y | ∃ (a : O) (y y' : Y), x = SymSq.mk (a • y) y' - SymSq.mk y (star a • y')} :=
   mem_saturation_iff
 
-variable (O Y) in
 
 abbrev BalSq : Type _ := SymSq Y ⧸ balRel O Y
 
 namespace BalSq
 
-variable (O) in
 
 def mk : Bil Y (BalSq O Y) := SymSq.mk.compr₂ (balRel O Y).mkQ
 
@@ -257,7 +233,6 @@ theorem mk_mem_balForms : mk O ∈ balForms ℤ O Y (BalSq O Y) :=
 
 instance : Module.IsTorsionFree ℤ (BalSq O Y) := isTorsionFree_quotient_saturation _
 
-variable (S O Y A) in
 
 def lift [Module.IsTorsionFree ℤ A] : balForms S O Y A ≃ₗ[S] (BalSq O Y →ₗ[ℤ] A) where
   toFun b := (balRel O Y).liftQ (SymSq.lift S Y A ⟨b.1, b.2.1⟩) <| by
@@ -277,11 +252,9 @@ def lift [Module.IsTorsionFree ℤ A] : balForms S O Y A ≃ₗ[S] (BalSq O Y �
   left_inv b := by ext; rfl
   right_inv l := by ext; rfl
 
-variable (O Y) in
 
 end BalSq
 
-variable (O Y) in
 
 end Balanced
 
@@ -289,9 +262,7 @@ section Level
 
 variable {Y Y' : Type*} [AddCommGroup Y] [AddCommGroup Y']
 
-variable (Y) in
 
-variable (Y) in
 
 end Level
 

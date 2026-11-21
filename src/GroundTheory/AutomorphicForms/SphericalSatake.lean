@@ -149,7 +149,6 @@ theorem sphericalFun_unramifiedChar (w : Fin n → ℂˣ) (g : GL (Fin n) F) :
   rw [sphericalFun_mul (isUnramified_unramifiedChar w) b hk, borelChar_unramifiedChar,
     iwasawaExponent_mul_of_mem_integralGL F n _ hk]
 
-variable (F n) in
 
 def integralOpen : OpenSubgroup (GL (Fin n) F) := ⟨integralGL F n, isOpen_integralGL F n⟩
 
@@ -189,7 +188,6 @@ theorem sphericalEigen_unramifiedChar (w : Fin n → ℂˣ) (h : SphericalHecke 
     by_contra hxs
     exact hx (by simp [apply_out_eq_zero hxs])
 
-variable (μ) in
 
 def satake (h : SphericalHecke μ (F := F) (n := n)) : LaurentRing n :=
   (μ.real (integralGL F n : Set (GL (Fin n) F)) : ℂ) •
@@ -216,7 +214,6 @@ theorem evalAt_satake (w : Fin n → ℂˣ) (h : SphericalHecke μ (F := F) (n :
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [evalAt_single]
 
-variable (μ) in
 
 def satakeHom : SphericalHecke μ (F := F) (n := n) →ₐ[ℂ] LaurentRing n where
   toFun := satake μ

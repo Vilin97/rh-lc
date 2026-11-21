@@ -28,7 +28,6 @@ instance final_opensMap (f : Y ⟶ Z) : (Opens.map f.base).Final :=
   Functor.final_of_exists_of_isFiltered _ (fun _ => ⟨⊤, ⟨homOfLE le_top⟩⟩)
     (fun _ _ => ⟨_, 𝟙 _, rfl⟩)
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 def pullbackUnitIso (f : Y ⟶ Z) :
     (Scheme.Modules.pullback f).obj (SheafOfModules.unit Z.ringCatSheaf) ≅
@@ -50,7 +49,6 @@ lemma pullbackUnitApp_naturality (f : Y ⟶ Z) {N N' : Z.Modules} (φ : N ⟶ N'
     AddCommGrpCat.hom_comp, AddMonoidHom.coe_comp, Function.comp_apply] at h
   exact h.symm
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 lemma pullbackUnitIso_hom_one (f : Y ⟶ Z) :
     (pullbackUnitIso f).hom.app ⊤

@@ -64,7 +64,6 @@ section OnOpen
 
 variable {D : DegPre R} {W : (Spec (CommRingCat.of R)).Opens}
 
-variable (D W) in
 
 theorem psiOn_unique (ψ ψ' : PsiOn D W) : ψ = ψ' := by
   have hd : IsDominant (jK R) := by

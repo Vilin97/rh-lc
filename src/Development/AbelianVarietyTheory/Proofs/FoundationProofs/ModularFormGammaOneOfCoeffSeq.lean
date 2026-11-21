@@ -136,7 +136,6 @@ theorem growth {f : ℍ → ℂ} (hf : Mod f) (k L : ℕ) (γ : SL(2, ℤ)) :
 
 end GlobalTheory.EisM.OnGammaOne
 
-open GlobalTheory.EisM.OnGammaOne in
 
 theorem GlobalTheory.EisM.modularForm_gammaOne_of_MF :
     ∀ (k L N : ℕ) (ε : DirichletCharacter ℂ N) (a : ℕ → ℂ), 0 < L → N ∣ L → MF k L (ch ε) a →

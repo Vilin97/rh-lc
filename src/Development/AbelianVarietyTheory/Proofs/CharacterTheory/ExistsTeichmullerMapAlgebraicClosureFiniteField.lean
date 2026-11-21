@@ -24,7 +24,6 @@ private theorem exists_pow_eq_one_algebraicClosure_of_finite (F : Type) [Field F
   have := congrArg (fun u : (F⟮x⟯)ˣ => ((u : F⟮x⟯) : AlgebraicClosure F)) hpow
   simpa using this
 
-open Polynomial IntermediateField in
 
 theorem _root_.GlobalTheory.CuspGL.TeichEmb.exists_teichmuller :
     ∀ (F : Type) [Field F] [Finite F], ∃ θ : AlgebraicClosure F →* ℂ,

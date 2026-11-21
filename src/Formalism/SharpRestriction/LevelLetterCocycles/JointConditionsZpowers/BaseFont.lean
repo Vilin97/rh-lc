@@ -355,7 +355,6 @@ theorem cj_sum (hF : Formalism.MainNotions.TruncatedSeriesCountingIdentities.Fon
         | rfl
         | (show cons0 LL k m u b.succ = u b; simp [cons0])
 
-include hc in
 
 theorem subquot_crys (hF : Formalism.MainNotions.TruncatedSeriesCountingIdentities.FontaineAt PD LL O) {S : (K →ₐ[Qp] LL) → Set ℤ}
     (hcr : ∀ x, IsCrys PD (matRep (Ms x))) (hS : ∀ x τ, JumpsInV PD (matRep (Ms x)) τ (S τ))
@@ -388,7 +387,6 @@ theorem subquot_crys (hF : Formalism.MainNotions.TruncatedSeriesCountingIdentiti
   unfold CJ at hT'
   exact hT'
 
-include hc in
 
 theorem subsum_crys (hF : Formalism.MainNotions.TruncatedSeriesCountingIdentities.FontaineAt PD LL O) {S : (K →ₐ[Qp] LL) → Set ℤ}
     (hcr : ∀ x, IsCrys PD (matRep (Ms x))) (hS : ∀ x τ, JumpsInV PD (matRep (Ms x)) τ (S τ))
@@ -429,7 +427,6 @@ theorem subsum_crys (hF : Formalism.MainNotions.TruncatedSeriesCountingIdentitie
   unfold CJ at hA'
   exact hA'
 
-include hc in
 
 theorem jumps_of_multV_eq (hF : Formalism.MainNotions.TruncatedSeriesCountingIdentities.FontaineAt PD LL O) (x y : ι) (hx : IsCrys PD (matRep (Ms x)))
     (hy : IsCrys PD (matRep (Ms y))) (τ : K →ₐ[Qp] LL)

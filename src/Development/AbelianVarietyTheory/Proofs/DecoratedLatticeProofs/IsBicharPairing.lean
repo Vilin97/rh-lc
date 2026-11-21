@@ -73,7 +73,6 @@ theorem exists_fixed {G V : Type} [AddCommGroup G] [AddCommGroup V] [Module ℂ 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y']
 
-variable (Y Y') in
 
 def box (a : kˣ) : AddSubgroup (Matrix Y Y' k) where
   carrier := {x | ∀ r q, valuation k (x r q) ≤ valuation k (a : k)}

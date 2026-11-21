@@ -45,7 +45,6 @@ theorem exists_finset_of_mem_closure (R A : Set Ω) {x : Ω} (hx : x ∈ Subfiel
     · refine ⟨{y}, by simpa using hy, Subfield.subset_closure (Or.inr (by simp))⟩
   exact hle hx
 
-variable (p Ω) in
 
 def geoField : Subfield Ω :=
   Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x : Ω | IsAlgZp p x})

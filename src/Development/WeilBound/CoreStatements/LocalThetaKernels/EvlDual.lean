@@ -17,7 +17,6 @@ open NumberField IsDedekindDomain Topology GlobalTheory.WeilM GlobalTheory.Adeli
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
 
-open scoped nonZeroDivisors in
 
 theorem exists_dual_frame {R K V : Type} [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
     [AddCommGroup V] [Module K V] [Module R V] [IsScalarTower R K V] (L : Submodule R V) [Module.Finite R L]

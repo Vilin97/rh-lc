@@ -95,9 +95,7 @@ variable [SmoothOfRelativeDimension d p]
 def rho (a : ChartForm p σ d) (E : ChartMap p σ d) (ψ : CxPts p σ → ℝ) (y : CxPts p σ) (t : ℝ) : ℝ :=
   rhoIn a E ψ (AlgChart.exists_mem_source (D := d) y).choose y t
 
-omit [SmoothOfRelativeDimension d p] in
 
-omit [SmoothOfRelativeDimension d p] in
 
 end Manifold
 

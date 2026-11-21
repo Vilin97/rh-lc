@@ -16,7 +16,6 @@ section Transport
 
 variable {A B : Type*} [CommRing A] [CommRing B] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [Fintype ι] [DecidableEq ι] in
 
 end Transport
 

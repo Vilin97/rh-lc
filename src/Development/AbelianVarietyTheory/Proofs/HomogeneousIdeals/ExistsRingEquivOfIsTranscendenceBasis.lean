@@ -8,7 +8,6 @@ open MvPolynomial Cardinal
 
 namespace GlobalTheory.GaloisDescent
 
-open MvPolynomial Cardinal in
 
 theorem _root_.GlobalTheory.GaloisDescent.exists_ringEquiv_of_isTranscendenceBasis {F F' L L' ι κ : Type*} [Field F] [Field F']
     [Field L] [Field L'] [Algebra F L] [Algebra F' L'] [IsAlgClosed L] [IsAlgClosed L']
@@ -68,7 +67,6 @@ theorem exists_algEquiv_apply_eq_add_one {K L : Type*} [Field K] [Field L] [Alge
   · simpa [e] using hσ (C k)
   · simpa [e] using hσ (X ⟨x, hxs rfl⟩)
 
-open MvPolynomial Cardinal in
 
 theorem _root_.GlobalTheory.GaloisDescent.mem_range_algebraMap_of_forall_algEquiv {K L : Type*} [Field K] [Field L] [Algebra K L]
     [PerfectField K] [IsAlgClosed L] (x : L) (hx : ∀ σ : L ≃ₐ[K] L, σ x = x) :
@@ -106,14 +104,12 @@ theorem _root_.GlobalTheory.GaloisDescent.mem_range_algebraMap_of_forall_algEqui
     rw [hτx] at h2
     simp at h2
 
-open MvPolynomial Cardinal in
 
 theorem _root_.GlobalTheory.GaloisDescent.complex_mem_range_of_forall_algEquiv {K : Type*} [Field K] [Algebra K ℂ] (x : ℂ)
     (hx : ∀ σ : ℂ ≃ₐ[K] ℂ, σ x = x) : x ∈ Set.range (algebraMap K ℂ) := by
   haveI : CharZero K := RingHom.charZero (algebraMap K ℂ)
   exact _root_.GlobalTheory.GaloisDescent.mem_range_algebraMap_of_forall_algEquiv x hx
 
-open MvPolynomial Cardinal in
 
 theorem _root_.GlobalTheory.GaloisDescent.exists_complex_ringEquiv_comp_eq {K : Type} [Field K] [Countable K] (f g : K →+* ℂ) :
     ∃ σ : ℂ ≃+* ℂ, ∀ a, σ (f a) = g a := by

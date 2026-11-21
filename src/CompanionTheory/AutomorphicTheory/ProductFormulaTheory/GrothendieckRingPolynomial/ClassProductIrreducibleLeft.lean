@@ -334,7 +334,6 @@ theorem class_parabolic_product {V W : Type} [AddCommGroup V] [Module ℂ V] [Ad
 
 end Main
 
-variable (k) in
 
 theorem mulCls : MulCls k := by
   intro r t V W _ _ _ _ π₁ π₂ h₁ h₂ s₁ s₂

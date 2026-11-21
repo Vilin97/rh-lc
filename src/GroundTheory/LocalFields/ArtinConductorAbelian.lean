@@ -20,9 +20,7 @@ section HasseArf
 variable {L : Type*} [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L] [IsGalois K L]
 
-omit [IsGalois K L] in
 
-omit [IsGalois K L] in
 
 end HasseArf
 
@@ -37,7 +35,6 @@ def charRep (ψ : G →* ℂˣ) : Representation ℂ G ℂ :=
 theorem charRep_apply (ψ : G →* ℂˣ) (g : G) (v : ℂ) : charRep ψ g v = (ψ g : ℂ) * v :=
   rfl
 
-open Classical in
 
 end OneDim
 
@@ -46,7 +43,6 @@ section Conductor
 variable {L : Type*} [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
-open Classical in
 
 end Conductor
 

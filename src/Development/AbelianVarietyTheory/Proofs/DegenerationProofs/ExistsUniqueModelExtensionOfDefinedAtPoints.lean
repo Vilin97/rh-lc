@@ -51,7 +51,6 @@ theorem Model.hom_ext_of_flat (M : Model R A) {P X : Scheme.{0}} (p : P ⟶ M.Y.
     (pullback.fst p M.j) (a := Over.homMk a rfl) (b := Over.homMk b hab.symm) h
   exact congr(($this).left)
 
-omit [IsDomain R] [IsFractionRing R K] in
 
 theorem Extends.comp_eq {M : Model R A} {N : Model R A'} {f : A ⟶ A'} {U : M.Y.left.Opens}
     {g : U.toScheme ⟶ N.Y.left} (h : Extends M N f U g) {W : Scheme.{0}} (u : W ⟶ U.toScheme)
@@ -140,9 +139,6 @@ private lemma comp_eq_of_extends_of_genericFibre_comm {M : _root_.GlobalTheory.S
   have h2 := hg.2
   rw [← hP.lift_fst t s hts.symm, Category.assoc, h2, ← Category.assoc, hP.lift_snd]
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-variable {R K : Type} [CommRing R] [Field K] [Algebra R K] {A A' : Over (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp K)} in
 
 theorem _root_.GlobalTheory.SS.existsUnique_extension_of_forall_defAt :
     ∀ (R K : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [Field K] [Algebra R K]

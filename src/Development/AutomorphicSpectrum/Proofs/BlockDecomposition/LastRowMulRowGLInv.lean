@@ -127,7 +127,6 @@ theorem rowI_mul_rowM (h : IsUnit (lastEnt r)) : rowM (rowI r) * rowM r = 1 := b
     · rw [if_neg hi, rowM_apply_ne _ _ _ hi]
   · exact absurd ⟨⟨k - 1, by have := i.2; omega⟩, by have := i.2; simp; omega⟩ hk
 
-open Classical in
 
 def rowGL (r : Fin k → R) : GL (Fin k) R :=
   if h : IsUnit (lastEnt r) then ⟨rowM r, rowM (rowI r), rowM_mul_rowI h, rowI_mul_rowM h⟩ else 1
@@ -189,7 +188,6 @@ def latS (S : Finset (Pl E)) (B : ∀ w : Pl E, AddSubgroup (w.adicCompletion E)
       rw [map_neg]; exact neg_mem (ha.1 w hw), fun w hw => by
       rw [map_neg]; exact neg_mem (ha.2 w hw)⟩
 
-variable (E k) in
 
 def nuFin : Measure (Fin k → Af E) := Measure.pi fun _ => GroundTheory.Global.finiteAdeleMeasure E
 
@@ -197,7 +195,6 @@ def boxL (L : Set (Af E)) (c : Fin k → Af E) : Set (Fin k → Af E) := {f | �
 
 variable [IsTotallyComplex E]
 
-variable (E k) in
 
 def nuInf : Measure (Fin k → Cinf E) :=
   (Measure.pi fun _ => GroundTheory.Global.infiniteAdeleMeasure E).map fun y i => (infEq E).symm (y i)

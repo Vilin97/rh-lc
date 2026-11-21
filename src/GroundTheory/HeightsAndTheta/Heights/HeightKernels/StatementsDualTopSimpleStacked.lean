@@ -28,7 +28,6 @@ def DualTopSimpleStacked.Statement : Prop :=
         (∑ t, Real.log |(a t : ℝ)|) *
           geomDeg (grassIdeal 1 1 (i - 1)) (fsMulti (plBlocks 1 1 (i - 1))) (1 * 1 * (i - 1))
 
-open DualTopSimpleSubExample in
 
 end
 

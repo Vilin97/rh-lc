@@ -73,7 +73,6 @@ namespace Data
 
 variable (d : Data K ι Ω WT A)
 
-set_option maxHeartbeats 800000 in
 
 theorem PlaceTrivialOrPositive (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (p : Ideal (KTp K d.D d.N))
     (hp : p ∈ d.HtOne) (w : AddValuation (OmS (Ω c) d.D d.N) (WithTop ℤ)) (hw : w ∈ d.OverP c p) :

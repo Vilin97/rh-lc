@@ -84,12 +84,10 @@ theorem mu_mem (h : Wt' ⊆ Wt) {v : HeightOneSpectrum (𝓞 X.toD7.what₂.LL)}
   have hm := (tup_mem_tuOf I).2 hu
   rwa [tup_ixOf] at hm
 
-open Classical in
 
 def resMu (h : Wt' ⊆ Wt) (v : HeightOneSpectrum (𝓞 X.toD7.what₂.LL)) : TupU I (usedOf I T Wt') :=
   if hv : (plB X).symm v ∈ Wt' then ⟨(z.R.mu v).1, Or.inr (z.mu_mem h hv)⟩ else mu0F (X := X.B.fields) (tuOf I (usedOf I T Wt'))
 
-open Classical in
 
 def resTw (Wt' : Set X.B.places.Pl) : Finset (HeightOneSpectrum (𝓞 X.toD7.what₂.LL)) :=
   z.R.twPl.filter fun v => (plB X).symm v ∈ Wt'
@@ -165,13 +163,11 @@ theorem muOf_res (h : Wt' ⊆ Wt) : MuOf X I T Wt' (z.resMu h) (z.resTw Wt') := 
       rw [z.lev.xiH, ixOf_mu0F] at hb
       exact hb
 
-set_option maxHeartbeats 1000000 in
 
 def resR (h : Wt' ⊆ Wt) : RealDat3 X.toD7 (famR X I hX (usedOf I T Wt') z.Xg z.tr) z.core.Q.c.F :=
   Res.dat3 (A3 := famR X I hX (usedOf I T Wt) z.Xg z.tr) (inclU I (usedOf_mono I T h))
     (mu0F (X := X.B.fields) (tuOf I (usedOf I T Wt'))) z.R (z.resMu h) (z.resTw Wt')
 
-set_option maxHeartbeats 1000000 in
 
 theorem newTup (h : Wt' ⊆ Wt) (hc : ConjStable X Wt') :
     Res.NewTup (A3 := famR X I hX (usedOf I T Wt) z.Xg z.tr) (f := inclU I (usedOf_mono I T h))

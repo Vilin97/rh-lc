@@ -90,7 +90,6 @@ theorem weilIs_one_one (hG : Out.GlobalFnsSt) {S : Scheme.{0}} {A : Over S} [Grp
   exact match GlobalTheory.DescendedPrincipal.exists_theta_one (A := A) hM _ with
   | ⟨θ, hθ, _⟩ => ⟨θ, hθ.trans (MonObj.comp_one _).symm⟩
 
-open SiegelOfPolarised PrimNorm in
 
 def siegOne (hG : Out.GlobalFnsSt) {k : Type} [Field k] {B : Over (Sp k)} [GrpObj B] [IsCommMonObj B]
     (hB : IsAbelianScheme B) {M : LB B.left} (hM : M.IsLB) (g : ℕ) :

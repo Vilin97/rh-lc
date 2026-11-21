@@ -57,7 +57,6 @@ section Residual
 
 variable {k : Type} [CommRing k] {D : Type} [Group D]
 
-variable (k) in
 
 def Gb (j : ℤ) : Type := gw k j
 

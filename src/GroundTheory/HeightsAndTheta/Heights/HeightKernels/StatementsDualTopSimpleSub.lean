@@ -30,7 +30,6 @@ namespace DualTopSimpleSubExample
 
 end DualTopSimpleSubExample
 
-open DualTopSimpleSubExample in
 
 end
 

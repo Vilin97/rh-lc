@@ -28,7 +28,6 @@ def resTrivMor {X Y : Rep.{u} k G} (hX : ∀ (m : N) (x : X), X.ρ m x = x)
     change f (X.ρ m x) = Y.ρ m (f x)
     rw [hX, hY]⟩
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [N.Normal] in
 
 theorem cohomologyMap_comp_cohomologyConj_of_apply {T A : Rep.{u} k G} [IsDiscreteRep T]
     [IsDiscreteRep A] (φ ψ : Rep.res N.subtype T ⟶ Rep.res N.subtype A) (g : G)
@@ -81,7 +80,6 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
 
 attribute [local instance] Subgroup.fintypeQuotientOfFiniteIndex
 
-omit [(U : Subgroup G).Normal] in
 
 theorem sum_quotient_out_apply_eq_zero (A : Rep.{u} k G)
     (hA : ∀ (m : (U : Subgroup G)) (a : A), A.ρ m a = a)

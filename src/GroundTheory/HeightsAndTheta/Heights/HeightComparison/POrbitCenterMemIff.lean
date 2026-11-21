@@ -15,7 +15,6 @@ namespace OrbitCenterMemIff
 
 variable {ι : Type} [DecidableEq ι] {n : ι → ℕ}
 
-open Classical in
 
 theorem weightedHomogeneousComponent_X_mul (j : Coord n) (G : MvPolynomial (Coord n) ℤ)
     (e : ι → ℕ) :
@@ -50,7 +49,6 @@ theorem weightedHomogeneousComponent_X_mul (j : Coord n) (G : MvPolynomial (Coor
 
 end OrbitCenterMemIff
 
-open OrbitCenterMemIff in
 
 theorem OrbitCenterMemIff.proof : OrbitCenterMemIff.Statement := by
   classical

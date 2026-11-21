@@ -254,7 +254,6 @@ theorem nsK_unit (hMM : MM R) (h h' : Point K) (z : Kˣ) :
   unfold Ns
   rw [(hMM z z).2, Nat.add_sub_cancel, mul_comm (m + 1) m, tri_pow]
 
-open Classical in
 
 def amp (h h' : Point K) (t₁ ζ : Kˣ) (z : K) : ℂ :=
   if hz : IsUnit z then

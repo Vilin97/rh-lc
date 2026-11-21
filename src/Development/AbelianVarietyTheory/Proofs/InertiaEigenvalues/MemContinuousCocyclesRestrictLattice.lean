@@ -119,7 +119,6 @@ def resRep {K LL : FinExt l} (E : FinExt l) (hle : K.1 ≤ E.1) (T : Lt K LL) :
   ρ := T.ρ.comp (Subgroup.inclusion (GK_le hle))
   cont x := (T.cont x).comp (continuous_incl hle)
 
-set_option maxHeartbeats 1600000 in
 
 theorem lift_rational (P : LocPrime l) (AI : LocAinf l P) (hP : LocTied l P AI) {K LL : FinExt l}
     (E : FinExt l) (hle : K.1 ≤ E.1) (H : Subgroup ↥(GK K))
@@ -165,7 +164,6 @@ theorem mem_GKs_iff (P : LocPrime l) {K LL : FinExt l} {s m : ℕ}
   rw [GlobalTheory.Cyc.mem_GKs_iff_mem_Gj, hs]
   rfl
 
-set_option maxHeartbeats 1600000 in
 
 theorem lift_cocycle (P : LocPrime l) (AI : LocAinf l P) (hP : LocTied l P AI) {K LL : FinExt l}
     {s m : ℕ} (hK : K.1 ≤ Ks K s) (W : LocWach (P.PD K) ↥LL.1 ↥(OL LL) (P.v LL) m) (hs : W.s = s)

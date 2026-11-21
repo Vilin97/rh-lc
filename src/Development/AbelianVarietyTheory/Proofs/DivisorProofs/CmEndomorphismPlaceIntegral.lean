@@ -44,11 +44,6 @@ open scoped CategoryTheory.Obj
 
 namespace GlobalTheory.PlaceModel
 
-set_option autoImplicit false in
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj NumberField IsDedekindDomain in
-attribute [local instance] Over.cartesianMonoidalCategory in
-open scoped nonZeroDivisors in
-open scoped CategoryTheory.Obj in
 
 theorem _root_.GlobalTheory.PlaceModel.exists_factor_pullback {S S' S'' : Scheme.{0}} {G : Over S}
     {G' : Over S'} {G'' : Over S''} [GrpObj G]

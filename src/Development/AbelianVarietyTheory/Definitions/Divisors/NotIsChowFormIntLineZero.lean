@@ -14,9 +14,6 @@ namespace GlobalTheory.CompHt.Test
 open MvPolynomial NumberField IsDedekindDomain Module Filter GlobalTheory.ChowHt GlobalTheory.AllWt GlobalTheory.CompHt
 open scoped ENNReal
 
-set_option autoImplicit false in
-open MvPolynomial NumberField IsDedekindDomain Module Filter in
-open scoped ENNReal in
 
 theorem _root_.GlobalTheory.CompHt.Test.imageDeg_zero {K V Ω : Type} [Field K] [AddCommGroup V] [Module K V]
     [Field Ω] [Algebra K Ω] (D : ℕ) :

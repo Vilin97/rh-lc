@@ -105,7 +105,6 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Fi
 
 def DecoSet.lat (d : DecoSet E n ST SG) : UniLat E n := ⟨d.1.N, d.2.lat, d.2.uni⟩
 
-variable (E n ST SG) in
 
 end Count
 
@@ -137,9 +136,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks}
 theorem rankN_zero (R : Ranks) : R.N 0 = R.k := by
   simp [Ranks.N]
 
-variable (X R) in
 
-variable (Pr R) in
 
 variable (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
 
@@ -164,9 +161,7 @@ open Finset Formalism.LogVandermondeBounds.StandardLattice
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks}
 
-variable (X R) in
 
-variable (Pr R) in
 
 variable (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
 

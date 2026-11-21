@@ -38,18 +38,14 @@ omit [∀ s, Fintype (m s)] in
 @[simp] theorem entries_apply {α : Type*} (b : ∀ s, Matrix (m s) (n s) α) (s : ι) (i : m s)
     (j : n s) : entries b ⟨s, i, j⟩ = b s i j := rfl
 
-omit [∀ s, Fintype (m s)] in
 
-omit [∀ s, Fintype (m s)] in
 
-omit [∀ s, Fintype (m s)] in
 
 end Semiring
 
 variable [Fintype ι] {r : ι → ℕ} [Field K] [∀ s, AddCommGroup (V s)] [∀ s, Module K (V s)]
   {W : Type*} [AddCommGroup W] [Module K W]
 
-variable (K) in
 
 end Frames
 

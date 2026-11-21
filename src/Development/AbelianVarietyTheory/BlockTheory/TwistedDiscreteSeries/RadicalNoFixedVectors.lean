@@ -36,6 +36,5 @@ def FixedVectorBlocks : Prop :=
     ∀ a : ℕ, 0 < a → a < r → ¬ NoFixed τ (radical k r a) →
       ∃ J ⊆ Finset.univ.image b, a = ∑ c ∈ J, Fintype.card {i : Fin r // b i = c}
 
-open Classical in
 
 end GlobalTheory.IndefiniteRowSideFullHecke.RadicalNoFixedVectors

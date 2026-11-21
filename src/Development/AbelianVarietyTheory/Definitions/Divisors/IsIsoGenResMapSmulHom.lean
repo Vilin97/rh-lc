@@ -56,7 +56,6 @@ instance : Nonempty f.genFibre :=
   have ⟨x, hx⟩ := f.f.surjective (genericPoint Z.X)
   ((f.f.range_fiberι _).ge hx).elim fun w _ => ⟨w⟩
 
-include f in
 
 end Hom
 
@@ -91,7 +90,6 @@ namespace GenIso
 
 def ofHom (ψ : E' ⟶ E) [IsIso (Z.genRes.map ψ)] : Z.GenIso E E' := (asIso (Z.genRes.map ψ)).symm
 
-variable (E) in
 
 def smul (g : O) (hg : g ≠ 0) : Z.GenIso E E :=
   haveI := isIso_genRes_map_smulHom E hg
@@ -260,7 +258,6 @@ instance mono_ι (i : Fin (N + 1)) : Mono (fl.ι i) := (fl.isSubbundle i).mono
 
 instance mono_step (i : Fin N) : Mono (fl.step i) := mono_of_mono_fac (fl.step_ι i)
 
-include fl in
 
 theorem isVB_self : IsVB E N := (fl.isVB (Fin.last N)).of_iso (asIso (fl.ι _))
 
@@ -297,7 +294,6 @@ def ofIso {E' : X.Modules} (e : E ≅ E') : Flag E' N where
   step_ι i := fl.step_ι_assoc i _
   isIso_last := inferInstance
 
-open ZeroObject in
 
 def ofRankOne {L : X.Modules} (h : IsVB L 1) : Flag L 1 where
   F := ![0, L]
@@ -309,7 +305,6 @@ def ofRankOne {L : X.Modules} (h : IsVB L 1) : Flag L 1 where
   step_ι := Fin.cons zero_comp finZeroElim
   isIso_last := IsIso.id L
 
-open ZeroObject in
 
 def ofBiprod {L M : X.Modules} (hL : IsVB L 1) (hM : IsVB M 1) : Flag (L ⊞ M) 2 where
   F := ![0, L, L ⊞ M]

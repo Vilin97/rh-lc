@@ -29,7 +29,6 @@ def Conclusion1 (D : D7) : Prop :=
       (primesOver 𝔭 (𝓞 D.host.E)).ncard = 2) ∧
   rdF D = D.host.rdE
 
-open Classical in
 
 def Conclusion2 (D : D7) : Prop :=
   (∀ φ : D.host.E →+* ℂ, φ ∈ PhiEmb D ↔ (starRingEnd ℂ).comp φ ∉ PhiEmb D) ∧
@@ -68,7 +67,6 @@ def PointsLemma (D : D7) : Prop :=
       (Set.range fun i : ℕ => Formalism.HC.Frame.placeOf ((gOf D φ₀ h) ^ i * τ)).ncard = addOrderOf h ∧
         (D.R.h h ≠ 0 → Even (addOrderOf h)))
 
-open Classical in
 
 def Conclusion4 (D : D7) (C : ℝ) : Prop :=
   (∀ l : ℕ, l.Prime → l ≠ 2 → ∀ j : ℕ, j ≤ D.R.e →
@@ -95,7 +93,6 @@ def transl {φ : Formalism.HC.Frame} (T : Finset ℕ) (u₀ : φ.A) : Set φ.A :
 
 def coset {G : Type} [AddCommGroup G] (t h : G) : Set G := {x | ∃ i : ℤ, x = t + i • h}
 
-open Classical in
 
 def Conclusion5 (D : D7) (C : ℝ) : Prop :=
   ∀ Lw : ℕ, 2 ≤ Lw → ∃ T₂ : Finset ℕ,
@@ -115,7 +112,6 @@ def TorusPairsWithVariant (D : D7) : Prop :=
 def bern {α : Type*} [Fintype α] (δ : ℝ) (T : Finset α) : ℝ :=
   δ ^ T.card * (1 - δ) ^ (Fintype.card α - T.card)
 
-open Classical in
 
 def Conclusion6 (D : D7) (sc : Scale) : Prop :=
   ∀ δ : ℝ, 0 < δ → δ ≤ 1 → 16 ≤ δ * D.R.n →
@@ -223,7 +219,6 @@ end Points
 def IsProG {G : Type} [Group G] [TopologicalSpace G] (g : ℕ) (Uw : Subgroup G) : Prop :=
   IsCompact (Uw : Set G) ∧ ∀ N : Subgroup Uw, IsOpen (N : Set Uw) → N.Normal → ∃ m : ℕ, N.index = g ^ m
 
-open IsDedekindDomain TensorProduct in
 
 def division_rows_rational_lattice (D : D7) : Prop :=
   ∀ σ : D.host.E →ₐ[D.host.F] D.host.E, (∀ x, σ x = D.host.conj x) →

@@ -37,15 +37,12 @@ def prod2 {r t N : ℕ} (hN : r + t = N) {V W : Type} [AddCommGroup V] [Module �
     (π₁ : Representation ℂ (GL (Fin r) k) V) (π₂ : Representation ℂ (GL (Fin t) k) W) :=
   multiProd (k := k) (two (stdSum hN)) (twoRep π₁ π₂)
 
-variable (k) in
 
 def eGP (m j : ℕ) : (Σ x, Two (Fin m) (Fin (j + 1)) x) ≃ Fin (m + j + 1) := two (stdSum rfl)
 
-variable (k) in
 
 def MirabolicParabolic (m j : ℕ) : Subgroup (Mir k (m + j)) := (parab k (eGP m j)).comap (Mir k (m + j)).subtype
 
-variable (k) in
 
 def hgpIncl (m j : ℕ) : MirabolicParabolic k m j →* parab k (eGP m j) where
   toFun h := ⟨((h : Mir k (m + j)) : GL (Fin (m + j + 1)) k), h.2⟩
@@ -94,7 +91,6 @@ theorem hgp_block_mem (m j : ℕ) (h : MirabolicParabolic k m j) :
       fun h' => hb ((GlobalTheory.BZMir.Leib.blockIndex_true_eq_last_iff m j b).1 h')
     simp [GlobalTheory.BZMir.eLast, Pi.single_apply, hne, hb]
 
-variable (k) in
 
 def gpProj (m j : ℕ) : MirabolicParabolic k m j →* GL (Fin m) k × Mir k j :=
   MonoidHom.prod ((Pi.evalMonoidHom (fun x => GL (Two (Fin m) (Fin (j + 1)) x) k) false).comp
@@ -107,18 +103,15 @@ def prodGP {m j : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGrou
     Representation ℂ (Mir k (m + j)) (cIndSpace (MirabolicParabolic k m j) ((extTensor ρ τ).comp (gpProj k m j))) :=
   cInd (MirabolicParabolic k m j) ((extTensor ρ τ).comp (gpProj k m j))
 
-variable (k) in
 
 def ePG (i t : ℕ) : (Σ x, Two (Fin (i + 1)) (Fin t) x) ≃ Fin (i + t + 1) :=
   two ((Equiv.sumCongr (finSumFinEquiv.symm : Fin (i + 1) ≃ Fin i ⊕ Fin 1) (Equiv.refl (Fin t))).trans
     ((Equiv.sumAssoc _ _ _).trans ((Equiv.sumCongr (Equiv.refl (Fin i)) (Equiv.sumComm (Fin 1) (Fin t))).trans
       ((Equiv.sumAssoc _ _ _).symm.trans ((Equiv.sumCongr finSumFinEquiv (Equiv.refl (Fin 1))).trans finSumFinEquiv)))))
 
-variable (k) in
 
 def HPG (i t : ℕ) : Subgroup (Mir k (i + t)) := (parab k (ePG i t)).comap (Mir k (i + t)).subtype
 
-variable (k) in
 
 def hpgIncl (i t : ℕ) : HPG k i t →* parab k (ePG i t) where
   toFun h := ⟨((h : Mir k (i + t)) : GL (Fin (i + t + 1)) k), h.2⟩
@@ -158,7 +151,6 @@ theorem hpg_block_mem (i t : ℕ) (h : HPG k i t) :
       fun h' => hb ((GlobalTheory.BZMir.Leib.ePG_false_eq_last_iff i t b).1 h')
     simp [GlobalTheory.BZMir.eLast, Pi.single_apply, hne, hb]
 
-variable (k) in
 
 def pgProj (i t : ℕ) : HPG k i t →* Mir k i × GL (Fin t) k :=
   MonoidHom.prod

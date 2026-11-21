@@ -60,7 +60,6 @@ variable {n : ℕ} (s : Fin (n + 1) → LB.Sec H) (r : ∀ i, Fin (n + 1) → Γ
     rs X (inf_le_left : nonzeroLocus (s i) ⊓ H.U k ≤ nonzeroLocus (s i)) (r i j) *
       rs X (inf_le_right : nonzeroLocus (s i) ⊓ H.U k ≤ H.U k) ((s i).f k))
 
-include hr in
 
 theorem basicOpen_ratio (i j : Fin (n + 1)) :
     X.basicOpen (r i j) = nonzeroLocus (s i) ⊓ nonzeroLocus (s j) := by
@@ -86,7 +85,6 @@ theorem basicOpen_ratio (i j : Fin (n + 1)) :
     rw [key k] at hm
     exact hm.2
 
-include hr in
 
 theorem ratio_cocycle (i j l : Fin (n + 1)) :
     rs X (inf_le_left : nonzeroLocus (s i) ⊓ nonzeroLocus (s j) ≤ nonzeroLocus (s i)) (r i l) =
@@ -159,13 +157,11 @@ theorem isNilpotent_ker_factor (e : ℕ) (h : I ^ (e + 1 + 1) ≤ I ^ (e + 1)) :
 variable {Y : ∀ e : ℕ, Over (Spec (CommRingCat.of (R ⧸ I ^ (e + 1))))}
   {β : ∀ e, (Y e).left ⟶ (Y (e + 1)).left} {n : ℕ}
 
-variable (Y n) in
 
 abbrev Lvl (e : ℕ) : Type :=
   {p : (Σ D : Fin (n + 1) → (Y e).left.Opens, ∀ i, Fin (n + 1) → Γ((Y e).left, D i)) //
     ∀ i, IsAffineOpen (p.1 i)}
 
-variable (β) in
 
 def Lifts (e : ℕ) (q : Lvl Y n e) (q' : Lvl Y n (e + 1)) : Prop :=
   ∃ h : ∀ i, β e ⁻¹ᵁ q'.1.1 i = q.1.1 i,
@@ -191,7 +187,6 @@ theorem exists_lifts {e : ℕ} (hsq : IsPullback (β e) (Y e).hom (Y (e + 1)).ho
   choose ρ' hρ' using fun i j => hs i (q.1.2 i j)
   exact ⟨⟨⟨D', ρ'⟩, hD'⟩, hpre, hρ'⟩
 
-variable (β) in
 
 def seq (hsq : ∀ e, IsPullback (β e) (Y e).hom (Y (e + 1)).hom (thickTrans R I e))
     (q₀ : Lvl Y n 0) (e : ℕ) : Lvl Y n e :=
@@ -205,7 +200,6 @@ end Tower
 
 end GlobalTheory.FormalAlg.ChartsEx
 
-open GlobalTheory.FormalAlg.ChartsEx in
 
 theorem GlobalTheory.FormalAlg.exists_charts_of_veryAmpleBy : ∀ (R : Type) [CommRing R] (I : Ideal R), ∀ (Y : ∀ e : ℕ, Over (Spec (CommRingCat.of (R ⧸ I ^ (e + 1))))) (β : ∀ e, (Y e).left ⟶ (Y (e + 1)).left), (∀ e, IsPullback (β e) (Y e).hom (Y (e + 1)).hom (thickTrans R I e)) → ∀ (H₀ : LB (Y 0).left) (n : ℕ) (s₀ : Fin (n + 1) → LB.Sec H₀), H₀.IsLB → VeryAmpleBy (Y 0).hom H₀ s₀ → ∃ C : Charts I Y β n, (∀ i, C.D 0 i = nonzeroLocus (s₀ i)) ∧ ∀ i j (m : H₀.ι), rs (Y 0).left (inf_le_right : C.D 0 i ⊓ H₀.U m ≤ H₀.U m) ((s₀ j).f m) = rs (Y 0).left (inf_le_left : C.D 0 i ⊓ H₀.U m ≤ C.D 0 i) (C.ρ 0 i j) * rs (Y 0).left (inf_le_right : C.D 0 i ⊓ H₀.U m ≤ H₀.U m) ((s₀ i).f m) := by
   intro R _ I Y β hsq H₀ n s₀ _ hva

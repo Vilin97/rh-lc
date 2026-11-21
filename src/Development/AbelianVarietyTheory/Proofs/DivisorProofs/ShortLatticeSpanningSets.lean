@@ -111,6 +111,5 @@ end GlobalTheory.ShortSpanComp
 
 namespace GlobalTheory.ShortSpanComp
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.ShortSpanComp

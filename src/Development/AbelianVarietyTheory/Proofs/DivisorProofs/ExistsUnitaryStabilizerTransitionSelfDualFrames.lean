@@ -122,7 +122,6 @@ private theorem frame_inv_mul_int {D : D7} {n : ℕ} {Λ : Submodule (𝓞 D.hos
   rw [Matrix.mulVec_mulVec, Matrix.mulVec_single_one] at h2
   exact h2
 
-set_option maxHeartbeats 800000 in
 
 private theorem mem_St_of_comp {D : D7} (e : AE D) (he : e * e = e) (V : HSp D)
     (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (hΛ : IsSelfDualC V Λ)
@@ -165,7 +164,6 @@ private theorem mem_St_of_comp {D : D7} (e : AE D) (he : e * e = e) (V : HSp D)
   show b * intGL D.host.F D.host.E V.rank y * b⁻¹ = X
   rw [hy']; group
 
-set_option maxHeartbeats 800000 in
 
 private theorem exists_unitary_frame_change : ∀ {D : D7} (e : AE D) (S : Finset (Formalism.L2.DIV.Pl D.host.E)), IsIdemSum e S →
     ∀ (V : HSp D) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)), IsSelfDualC V Λ →

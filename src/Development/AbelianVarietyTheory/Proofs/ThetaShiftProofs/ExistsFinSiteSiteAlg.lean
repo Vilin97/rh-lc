@@ -56,7 +56,6 @@ theorem norm_map_le_one_iff {π : V} (hπ : Irreducible π) (h1 : ‖f (algebraM
 
 end Norm
 
-open DiscEval in
 
 theorem exists_finSite_siteAlg :
     ∀ (K₁ : Type) [Field K₁] [NumberField K₁] (w : HeightOneSpectrum (𝓞 K₁)),

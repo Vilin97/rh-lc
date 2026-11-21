@@ -59,4 +59,3 @@ theorem isThetaAt_smul {D : D7} {m n : ℕ} {ψ : AddChar (AF D.host.F) ℂ} {B 
 
 end GlobalTheory.MidDat
 
-open GlobalTheory.MidDat in

@@ -210,7 +210,6 @@ theorem cas_eigen (hσ : IsURepOn (UJset ε) σ) (hD : IsDer ε σ V E) {μ : Fi
       have hre := cas_real hU hu0 hc'
       rw [hc', ← hre]
 
-omit [CompleteSpace H] in
 
 theorem pow_growth (hD : IsDer ε σ V E) {μ : Fin n → ℝ} {u : V} (hu : KHighest ε E μ u)
     (hf : FiniteDimensional ℂ (kSpan ε E u)) {c : ℝ} (hc : Cas E u = (c : ℂ) • u) (X : Matrix (Fin n) (Fin n) ℂ) :

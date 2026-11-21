@@ -36,7 +36,6 @@ section OverF
 variable {F : Type u} [Field F] [DecidableEq F] {E E' : WeierstrassCurve F} [E.IsElliptic]
   [E'.IsElliptic] (Ω : Type u) [Field Ω] [Algebra F Ω] [DecidableEq Ω]
 
-omit [DecidableEq F] in
 
 theorem isogBaseChange_app (φ : Isogeny E E')
     (X : ((E.baseChange Ω).baseChange (E.baseChange Ω).toAffine.FunctionField).toAffine.Point)
@@ -62,7 +61,6 @@ theorem isogBaseChange_app (φ : Isogeny E E')
   generalize Point.map (W' := E') (bcEmb (F' := Ω) E) φ.1 = Y
   cases Y <;> rfl
 
-omit [DecidableEq F] [E.IsElliptic] [DecidableEq Ω] in
 
 theorem isGenPt_of_isGenPt_baseChange
     (X : ((E.baseChange Ω).baseChange (E.baseChange Ω).toAffine.FunctionField).toAffine.Point)
@@ -72,7 +70,6 @@ theorem isGenPt_of_isGenPt_baseChange
   | zero => exact h.elim
   | some x y _ => exact Transcendental.restrictScalars (algebraMap F Ω).injective h
 
-omit [E.IsElliptic] in
 
 theorem constMap_constMap_baseChange (V : WeierstrassCurve F) (R : V.toAffine.Point) :
     (constMap (V.baseChange Ω) (E.baseChange Ω).toAffine.FunctionField (constMap V Ω R) :
@@ -172,7 +169,6 @@ theorem reduceFF_genericPoint_add_constMap (R : (W.baseChange K).toAffine.Point)
           (reducePoint K W R) := by
   rw [map_add (f := _), reduceFF_genericPoint, reduceFF_constMap]
 
-set_option maxHeartbeats 1000000 in
 
 theorem reduceIsogeny_app_add_constMap (φ : Isogeny (W.baseChange K) (W'.baseChange K))
     (R : (W.baseChange K).toAffine.Point) (S : (W'.baseChange K).toAffine.Point)

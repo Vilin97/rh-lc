@@ -46,6 +46,5 @@ def tensIncl {k : ℕ} (e : Fin k → Fin k → O) : tensO A act e ⟶ powO A k 
 def tcoord {k : ℕ} (e : Fin k → Fin k → O) (j : Fin k) : tensO A act e ⟶ A :=
   tensIncl A act e ≫ prj A k j
 
-open Classical in
 
 end Formalism.L2.Pj

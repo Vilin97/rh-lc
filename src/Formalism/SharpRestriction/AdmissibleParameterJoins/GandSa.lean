@@ -15,9 +15,7 @@ open scoped BigOperators
 
 variable {D : D7} {L : SizeData₂ D}
 
-open Classical in
 
-open Classical in
 
 theorem delta1_pos (s : Scale) : 0 < s.delta1 := by
   unfold Scale.delta1

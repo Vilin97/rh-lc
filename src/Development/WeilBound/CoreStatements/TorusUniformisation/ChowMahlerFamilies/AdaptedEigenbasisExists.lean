@@ -37,7 +37,6 @@ theorem eigProj_fst {ρ : 𝓞 E →+* Module.End K W} {ρH : 𝓞 E →+* Modul
     (HT.eigProj ρH σ y).1 = HT.eigProj ρ σ y.1 := by
   simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, Prod.fst_sum, Prod.smul_fst, h]
 
-omit [NumberField E] in
 
 theorem inr_mem_iff {ρ : 𝓞 E →+* Module.End K W} {ρH : 𝓞 E →+* Module.End K (W × Module.Dual K W)}
     {bar : 𝓞 E ≃+* 𝓞 E} {σ σ' : E →+* K} (h : ∀ a φ, ρH a (0, φ) = (0, φ ∘ₗ ρ (bar a)))

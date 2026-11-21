@@ -112,7 +112,6 @@ theorem dual_left (hσ : ∀ r, algebraMap R K (σ r) = star (algebraMap R K r))
   rw [← hs.eq m y]
   exact star_one_mem hσ ((dualBasic_mem_dual h M y).1 hy m hm)
 
-omit [IsDedekindDomain R] [IsFractionRing R K] in
 
 theorem mem_of_int (hσ : ∀ r, algebraMap R K (σ r) = star (algebraMap R K r)) (hs : h.IsSymm)
     (hM : IsMaxLat h M) {y : V} (hy : y ∈ dual h M) (hyy : h y y ∈ (1 : Submodule R K)) : y ∈ M := by
@@ -152,7 +151,6 @@ theorem inert_of_tors (hσ : ∀ r, algebraMap R K (σ r) = star (algebraMap R K
       ((dualBasic_mem_dual h M y).1 hy _ (hPy r hr))) (dual_left hσ hs hy (hPy p hp))
   exact fun r => ⟨fun hr => hσσ r ▸ key _ hr, key r⟩
 
-omit [IsDedekindDomain R] [IsFractionRing R K] in
 
 theorem tors_sq (hσ : ∀ r, algebraMap R K (σ r) = star (algebraMap R K r)) (hs : h.IsSymm)
     (hM : IsMaxLat h M) {P : Ideal R} (hin : ∀ r, σ r ∈ P ↔ r ∈ P) {y : V} (hy : y ∈ dual h M)

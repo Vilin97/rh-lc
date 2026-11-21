@@ -11,8 +11,6 @@ namespace GlobalTheory.LocalQuad
 
 namespace SquareTheorem
 
-open NumberField IsDedekindDomain in
-open scoped Matrix WithZero in
 
 theorem _root_.GlobalTheory.LocalQuad.SquareTheorem.isSquare_of_norm_sub_one_lt {K : Type*} [NormedField K] [CompleteSpace K]
     [IsUltrametricDist K] (x : K) (h : ‖x - 1‖ < ‖(4 : K)‖) : IsSquare x := by
@@ -56,8 +54,6 @@ theorem _root_.GlobalTheory.LocalQuad.SquareTheorem.isSquare_of_norm_sub_one_lt 
 
 end SquareTheorem
 
-open NumberField IsDedekindDomain in
-open scoped Matrix WithZero in
 
 theorem _root_.GlobalTheory.LocalQuad.isSquare_of_valued_sub_one_lt (F : Type) [Field F] [NumberField F]
     (v : HeightOneSpectrum (𝓞 F)) (x : v.adicCompletion F)

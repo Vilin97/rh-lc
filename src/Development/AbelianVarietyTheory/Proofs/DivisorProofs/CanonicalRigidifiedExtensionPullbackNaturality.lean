@@ -113,7 +113,6 @@ variable {A : Over (Sp R)} [GrpObj A] {A' : Over (Sp R')} [GrpObj A'] {φ : A'.l
   {m : GrpMor (dp0 R) (𝟙 _) A (dp0 R') (𝟙 _) A' σ (spMap σ) φ}
 variable {p : ℕ} {G : PDivGroup p R} {G' : PDivGroup p R'} {t : G.TorsionTower A} {t' : G'.TorsionTower A'}
 
-variable (σ m t t') in
 
 def sL (n : ℕ) : letI := via σ (G'.A n ⊗[R'] G'.A n); G.A n →ₐ[R] G'.A n ⊗[R'] G'.A n :=
   letI := via σ (G'.A n ⊗[R'] G'.A n)
@@ -122,7 +121,6 @@ def sL (n : ℕ) : letI := via σ (G'.A n ⊗[R'] G'.A n); G.A n →ₐ[R] G'.A 
       change ((t'.semiHom t m).app n) (algebraMap R _ r) ⊗ₜ[R'] (1 : G'.A n) = _
       rw [SemiBialgHom.map_algebraMap]; rfl }
 
-variable (σ m t t') in
 
 def sRt (n : ℕ) : letI := via σ (G'.A n ⊗[R'] G'.A n); G.A n →ₐ[R] G'.A n ⊗[R'] G'.A n :=
   letI := via σ (G'.A n ⊗[R'] G'.A n)

@@ -43,7 +43,6 @@ variable {o : Type*} [CommRing o] {C : Type*} [NormedField C] {ι : Type*}
 def conePts (σ : o →+* C) (I : Ideal (MvPolynomial (ι) o)) : Set (ι → C) :=
   {z | z ≠ 0 ∧ ∀ f ∈ I, eval z (map σ f) = 0}
 
-variable (C ι) in
 
 structure ConeMetric where
 
@@ -51,14 +50,12 @@ structure ConeMetric where
   pos : ∀ z, z ≠ 0 → 0 < ρ z
   smul : ∀ (c : C) (z : ι → C), ρ (c • z) = ‖c‖ * ρ z
 
-variable (C ι) in
 
 def maxMetric [Fintype ι] : ConeMetric C ι where
   ρ z := ‖z‖
   pos _ hz := norm_pos_iff.mpr hz
   smul c z := norm_smul c z
 
-variable (ι) in
 
 def fsMetric [Fintype ι] : ConeMetric ℂ ι where
   ρ z := ‖WithLp.toLp 2 z‖

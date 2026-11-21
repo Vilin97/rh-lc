@@ -346,7 +346,6 @@ theorem isLocOp_integral (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) {μ : Mea
     rw [(fix_iff hψ u F).1 (hl u hu h0)] at e1
     exact (map_smul _ _ _).trans (congrArg (c v • ·) e1)
 
-set_option maxHeartbeats 800000 in
 
 theorem isLocOp_coord (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T)} {𝓕 : Set (WO S T)}
     (hμ : IsCovolOne (ratL T S) μ 𝓕) {X F₀ : BB ψ S T} (hb : IsBase ψ θ S T sS sT ΛS ΛT F₀.1)

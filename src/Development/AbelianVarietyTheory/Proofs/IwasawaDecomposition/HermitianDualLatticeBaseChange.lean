@@ -15,7 +15,6 @@ namespace GlobalTheory.Mem.DualBC
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
-omit [NumberField K] in
 
 theorem mem_dual_iff {d : ℕ} (H : Matrix (Fin d) (Fin d) K) (A : Submodule (𝓞 K) (Fin d → K)) (x : Fin d → K) :
     x ∈ Formalism.HermitianLatticesTheory.dual (Formalism.DivisionValues.hform H) A ↔
@@ -23,7 +22,6 @@ theorem mem_dual_iff {d : ℕ} (H : Matrix (Fin d) (Fin d) K) (A : Submodule (�
   simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
     LinearMap.restrictScalars_apply, Submodule.mem_one]
 
-omit [NumberField K] in
 
 theorem hform_eq {d : ℕ} (H : Matrix (Fin d) (Fin d) K) (x y : Fin d → K) :
     Formalism.DivisionValues.hform H x y = ∑ j, star (x j) * (H.mulVec y) j := by
@@ -33,11 +31,9 @@ theorem hform_eq {d : ℕ} (H : Matrix (Fin d) (Fin d) K) (x y : Fin d → K) :
   simp only [smul_eq_mul]
   ring
 
-omit [NumberField K] in
 
 theorem star_int (c : 𝓞 K) : algebraMap (𝓞 K) K (Formalism.DivisionValues.cO K c) = star (algebraMap (𝓞 K) K c) := rfl
 
-omit [StarRing K] in
 
 theorem exists_extend {d : ℕ} (A : Submodule (𝓞 K) (Fin d → K)) (hA : Submodule.IsLattice K A)
     (f : A →ₗ[𝓞 K] 𝓞 K) :

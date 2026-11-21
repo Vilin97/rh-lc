@@ -152,7 +152,6 @@ theorem IsLat.shift {N : Submodule k⟦X⟧ V} (h : IsLat N) (a : ℤ) : IsLat (
     Submodule.subset_span (mem_sh_iff_exists.2 ⟨y, hy, rfl⟩)
   exact (Submodule.smul_mem_iff _ (zpow_ne_zero a (vv_ne_zero k))).1 h1
 
-omit [IsScalarTower k⟦X⟧ k⸨X⸩ V] in
 
 theorem pull_le_pull [Module k V] (f : V →ₗ[k] V) {N N' : Submodule k⟦X⟧ V} (h : N ≤ N') :
     pull f N ≤ pull f N' :=

@@ -62,7 +62,6 @@ section Present
 
 variable {S : Scheme.{0}}
 
-attribute [local instance] SplitExt.free SplitExt.finite in
 
 end Present
 

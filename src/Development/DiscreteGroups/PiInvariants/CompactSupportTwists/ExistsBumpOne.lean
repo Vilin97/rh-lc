@@ -18,7 +18,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 def aS (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (s : ℝ) : H E n 0 := (splitCentre E n s, 1)
 
-open GlobalTheory.CuspRep.CuspidalL2GL in
 
 def AvgInt : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ), 1 ≤ n → ∀ (D : Dom E n 0)
   (L : H E n 0 → ℂ), (∀ (γ : ratH E n 0) x, L ((γ : H E n 0) * x) = L x) → Continuous L → Integrable L D.ν →

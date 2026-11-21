@@ -18,7 +18,6 @@ noncomputable section
 
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {n : ι → ℕ}
 
-omit [Fintype ι] in
 
 namespace ArithVariety
 
@@ -101,7 +100,6 @@ theorem chartMonomial_nsmul (c : (k : ι) → Fin (n k + 1)) (m : ℕ) (d : ι �
     chartMonomial c (m • d) = chartMonomial c d ^ m := by
   simp only [chartMonomial, Pi.smul_apply, smul_eq_mul, ← Finset.prod_pow, ← pow_mul, mul_comm]
 
-omit [DecidableEq ι] in
 
 namespace IntegralSection
 
@@ -135,7 +133,6 @@ def blockIncl (k₀ : ι) : Coord (fun _ : Unit ↦ n k₀) → Coord n := fun v
 
 variable {K : Type*} [Field K] [NumberField K] {e r : ℕ}
 
-open Matrix in
 
 end
 

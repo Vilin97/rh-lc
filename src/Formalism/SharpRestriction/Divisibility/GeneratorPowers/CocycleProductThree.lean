@@ -61,7 +61,6 @@ private theorem padd_eq_lemma_2 {T : Over Xo.X} (a b : T ⟶ Xo.univ.t.G) :
 
 private theorem pzero_eq_lemma_3 (T : Over Xo.X) : pzero Xo.univ.t.G T = 1 := rfl
 
-set_option maxHeartbeats 800000 in
 
 theorem prod_cφ2 {T : Over Xo.X} {U : Type} [CommGroup U] (h : (T.left ⟶ Xo.univ.t.G.left) → U)
     (xs : Fin 2 → (T ⟶ Xo.univ.t.G)) :
@@ -86,7 +85,6 @@ theorem prod_cφ2 {T : Over Xo.X} {U : Type} [CommGroup U] (h : (T.left ⟶ Xo.u
   rw [mul_assoc (h (Over.Hom.left (1 : T ⟶ Xo.univ.t.G))),
     mul_assoc (h (Over.Hom.left (1 : T ⟶ Xo.univ.t.G))), mul_assoc (h (xs 0 * 1).left)⁻¹]
 
-set_option maxHeartbeats 800000 in
 
 theorem cocycle_product_three {T : Over Xo.X} {U : Type} [CommGroup U] (h : (T.left ⟶ Xo.univ.t.G.left) → U)
     (xs : Fin 3 → (T ⟶ Xo.univ.t.G)) :

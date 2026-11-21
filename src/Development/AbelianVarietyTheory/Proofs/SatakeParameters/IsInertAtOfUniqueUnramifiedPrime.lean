@@ -12,8 +12,6 @@ open scoped TensorProduct Matrix
 
 namespace GlobalTheory.SelfDualGenus
 
-open IsDedekindDomain NumberField in
-open scoped TensorProduct Matrix in
 
 theorem _root_.GlobalTheory.SelfDualGenus.isInertAt_of_unique_unramified (E : Type) [Field E] [NumberField E] [IsCMField E]
     (v : HeightOneSpectrum (𝓞 (maximalRealSubfield E))) (P : HeightOneSpectrum (𝓞 E))

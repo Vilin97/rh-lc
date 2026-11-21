@@ -32,16 +32,13 @@ section Char
 
 variable (p : ℕ) [Fact p.Prime] [CharZero O] [CharP (ResidueField O) p]
 
-omit [IsDomain O] [IsDiscreteValuationRing O] in
 
 theorem natCast_ne_zero : (p : O) ≠ 0 := Nat.cast_ne_zero.2 (Fact.out : p.Prime).ne_zero
 
-omit [Fact p.Prime] [CharZero O] in
 
 theorem natCast_mem_maximalIdeal : (p : O) ∈ maximalIdeal O :=
   (residue_eq_zero_iff _).1 ((map_natCast _ p).trans (CharP.cast_eq_zero _ p))
 
-omit [CharP (ResidueField O) p] in
 
 theorem natCast_ramIdx : (ramIdx O p : ℕ∞) = IsDiscreteValuationRing.addVal O p :=
   ENat.natCast_toNat (mt IsDiscreteValuationRing.addVal_eq_top_iff.1 (natCast_ne_zero O p))
@@ -82,7 +79,6 @@ theorem exists_isPullback_gen (K : Type) [Field K] [Algebra O K] [IsFractionRing
 
 abbrev VDivQ : Type := ℚ ⊗[ℤ] Z.VDivZ
 
-variable {Z} in
 
 def toQ : Z.VDivZ →+ Z.VDivQ := (TensorProduct.mk ℤ ℚ Z.VDivZ 1).toAddMonoidHom
 
@@ -111,9 +107,7 @@ variable (Z) (p : ℕ) [Fact p.Prime] [CharZero O] [CharP (ResidueField O) p]
 
 def divP : Z.VDivZ := Z.div p (natCast_ne_zero O p)
 
-omit [CharP (ResidueField O) p] in
 
-set_option linter.overlappingInstances false in
 
 @[reducible] def toITh [CharP (ResidueField O) p] : ITh where
   LB := SmallPic Z.X
@@ -151,7 +145,6 @@ theorem FlagPair.toFPair_ofSMul_Dv (fl : Flag E N) (i : Fin N) :
 
 end Theory
 
-variable (O) in
 
 def base : Model O where
   X := Sp O
@@ -162,7 +155,6 @@ def base : Model O where
   relDim_eq_iff.2 ((PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim (R := O)).trans
     (IsDiscreteValuationRing.ringKrullDim_eq_one O))
 
-variable (Z) in
 
 def toBase : Hom Z (base O) where
   f := Z.str
@@ -223,7 +215,6 @@ theorem algebraTop_projSpace : (projSpace O N).algebraTop = algebraSections O N 
     congrArg (fun φ => φ.hom ((Scheme.ΓSpecIso (.of O)).inv r))
       ((PSpace.str O N).app_eq_appLE (U := ⊤))
 
-variable {O} in
 
 theorem chiLen_projSpace {g : O} (hg : g ≠ 0) {j : ℕ} (hj : j ≤ N + 1) :
     chiLenPic O (divMod ((projSpace O (N + 1)).effConst g hg).1)
@@ -244,7 +235,6 @@ theorem chiLen_projSpace {g : O} (hg : g ≠ 0) {j : ℕ} (hj : j ≤ N + 1) :
   · simp [h]
   · rw [Nat.choose_eq_zero_of_lt (by omega)]; simp
 
-variable {O} in
 
 theorem vDeg_div_projSpace {g : O} (hg : g ≠ 0) :
     (projSpace O (N + 1)).vDeg ((projSpace O (N + 1)).div g hg)
@@ -273,9 +263,7 @@ theorem capDeg_divP_line : ((projSpace O 1).toITh p).capDeg ((projSpace O 1).toI
   rw [← pow_one (c1 _ _)]
   exact capDeg_divP_projSpace O 0 p
 
-omit [CharZero O] in
 
-omit [CharP (ResidueField O) p] in
 
 end Proj
 

@@ -24,7 +24,6 @@ section General
 variable {F : Type} [Field F] {K : Type} [Field K] [NumberField K] [Algebra F K]
   {C : Type} [AddCommGroup C] [Module F C] [Module (𝓞 F) C] [IsScalarTower (𝓞 F) F C] {n : ℕ}
 
-omit [NumberField K] [Module (𝓞 F) C] [IsScalarTower (𝓞 F) F C] in
 
 theorem coord_one_tmul_smul (z : (Fin n → K) ≃ₗ[K] K ⊗[F] C) (r : F) (f : C) :
     z.symm (1 ⊗ₜ[F] (r • f)) = algebraMap F K r • z.symm (1 ⊗ₜ[F] f) := by

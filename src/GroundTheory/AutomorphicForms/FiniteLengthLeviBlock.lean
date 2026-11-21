@@ -58,7 +58,6 @@ section Block
 
 variable {δ : Fin n → ℕ}
 
-variable (F δ) in
 
 def blockEmb (a : Set.range δ) : GL (Fin (blockSize δ a)) F →* levi F n δ :=
   (leviEquivPi F δ).symm.toMulEquiv.toMonoidHom.comp
@@ -85,7 +84,6 @@ theorem blockEmb_commute (a : Set.range δ) (y : GL (Fin (blockSize δ a)) F) (x
     simp [hx]
   · simp [Pi.mulSingle_eq_of_ne hb]
 
-variable (F δ) in
 
 def blockRest (a : Set.range δ) (x : levi F n δ) : levi F n δ :=
   (leviEquivPi F δ).symm (Function.update (leviEquivPi F δ x) a 1)
@@ -178,7 +176,6 @@ theorem eq_one_of_mem_unipotentRadical_const {m : ℕ} {c : ℕ} {g : GL (Fin m)
   obtain ⟨-, h⟩ := mem_unipotentRadical.1 hg
   exact Units.ext (Matrix.ext fun i j => h i j rfl)
 
-variable (δ) in
 
 def blockExtend (a : Set.range δ) (ε : Fin (blockSize δ a) → ℕ) : Fin n → ℕ := fun i =>
   if h : blockOf δ i = a then ε ((fiberFin δ a).symm ⟨i, h⟩) else 0

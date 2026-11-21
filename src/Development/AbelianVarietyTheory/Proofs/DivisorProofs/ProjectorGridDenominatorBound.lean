@@ -101,7 +101,6 @@ end GlobalTheory.LeviCut.GridIntProof
 
 namespace GlobalTheory.LeviCut
 
-open GridIntProof in
 
 theorem gridInt_holds : GridInt := by
   intro V _ _ a b K w Λ e L M hL hM hw hΛ c T hT

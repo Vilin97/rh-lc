@@ -103,7 +103,6 @@ end Density
 
 variable {D : D7}
 
-set_option maxHeartbeats 800000 in
 
 theorem chi_locE_congr (δ : Twist D Circle) (hδ : δ.Good) {PP : Pl D.host.E} (hPP : PP ∈ δ.Q) (a b : 𝓞 D.host.E)
     (ha : a ∉ PP.asIdeal) (hab : a - b ∈ PP.asIdeal) (x y : (AE D)ˣ)
@@ -138,7 +137,6 @@ theorem chi_locE_congr (δ : Twist D Circle) (hδ : δ.Good) {PP : Pl D.host.E} 
     exact (Ideal.Quotient.eq.mpr hab).symm
   rw [key a x hx rfl, key b y hy hb]
 
-set_option maxHeartbeats 800000 in
 
 theorem locK_congr_conj (δ : Twist D Circle) (hδ : δ.Good) (χ : Formalism.L2.Host.HChar D.host.E) (hc : ChrEq δ.chi χ)
     {P' : Pl D.host.E} (hP' : P' ∈ δ.Q) {P : Pl D.host.E} (hPP : Formalism.IndefR.Lev.IsConjPl P' P)

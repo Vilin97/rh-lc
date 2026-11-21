@@ -83,7 +83,6 @@ end GlobalTheory.Mum.LamTransl
 
 namespace GlobalTheory.Mum
 
-open LamTransl in
 
 theorem lam_transl_iso : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (L : RigLB G), CubicalStr G L →
     ∀ (a : 𝟙_ (Over S) ⟶ G) (N : LB G.left), N.IsLB → LBIso N (L.L.pull ((toUnit G ≫ a) * 𝟙 G).left) →

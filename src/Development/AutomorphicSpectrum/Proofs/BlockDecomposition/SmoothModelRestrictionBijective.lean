@@ -133,7 +133,6 @@ variable {O R : Type} [CommRing O] [CommRing R] {I : Ideal R} {X : Scheme.{0}}
 theorem st_le (𝒱 : Set X.Opens) : St (γ := γ) (p := p) (q := q) (κ := κ) FlatT 𝒱 ≤ St ⊤ 𝒱 :=
   fun _ hT => ⟨trivial, hT.2⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem glue (hp : p ≠ 0) (hn : IsNilpotent (p : R)) (U : Cov q) (j : ℕ) :
     Function.Bijective ((incl (st_le (γ := γ) (p := p) (q := q) (κ := κ) (Set.range U.U))).o.pull j) := by
@@ -237,7 +236,6 @@ theorem nil_l (k : Type) [Field k] [CharP k l] [PerfectRing k l] (m : ℕ) : IsN
   rw [← map_natCast (Ideal.Quotient.mk (Ideal.span {(l : WittVector l k) ^ m})), ← map_pow, Ideal.Quotient.eq_zero_iff_mem]
   exact Ideal.mem_span_singleton_self _⟩
 
-set_option maxHeartbeats 1600000 in
 
 theorem resF_bij (q : X ⟶ Spec (CommRingCat.of O)) (ρ : O →+* k) (U : Cov q) (m j : ℕ) :
     Function.Bijective (resF l (B.schFn q) ρ m j) := by

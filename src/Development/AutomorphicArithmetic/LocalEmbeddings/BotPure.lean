@@ -53,7 +53,6 @@ theorem genP_subset (v : Pl D.host.F) : genP m Λ v ⊆ lattice₂ m Λ v := by
 
 variable {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
 
-variable (ΛS ΛT) in
 
 abbrev latA : AddSubgroup (WO S T) := latO S T (ΛS : Set _) (ΛT : Set _) fun _ => True
 
@@ -236,7 +235,6 @@ theorem mem_localLattice_of_forall_addChar_eq_one (hS : IsSelfDualC S ΛS) (hT :
     rw [map_smul, m.apply_symm_apply]; exact GlobalTheory.LatticeStable.smul_mem_latO D _ _ _ _ _ _ hfc l hl⟩ hy
   rwa [hB, map_smul, m.apply_symm_apply, GlobalTheory.BigDat.symplO_cA_smul, GlobalTheory.BigDat.smul_of_isHalf hx'] at this
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_pure (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) {Bs : Base D.host.F D.host.E}
     (hψ : IsStdChar D Bs.ψ (-1)) (hBs : Bs.IsGood D.sp.cm.sig) {r s r' s' : ℕ}

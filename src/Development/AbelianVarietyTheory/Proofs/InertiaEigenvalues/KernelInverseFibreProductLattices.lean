@@ -41,7 +41,6 @@ def subLattice [IsDomain O] [IsPrincipalIdealRing O] (T : LocLat G Qp LL O) {lam
 
 variable {k : Type} [Field k] [Algebra O k]
 
-omit [Algebra O LL] in
 
 theorem lam_smul {lam : O} (hk : algebraMap O k lam = 0) {m : ℕ} (t : Fin m → k) : lam • t = 0 := by
   ext i

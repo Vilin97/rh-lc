@@ -135,7 +135,6 @@ theorem ipA_eq {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
     (toLiftReal R F tupT hm hTop hinj).ipA μ i x y = (((RealDat.nP F false)⁻¹ : ℝ) : ℂ) * ipVia (R.extV i (tupT μ)) x y :=
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem inner_eq {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch} (X : GlobalTheory.NJoin.RealAt D cf nch tp)
     (μ : D.what₂.Tup) (hμ : Used0 D μ) (j : Fin D.R.m) :
@@ -174,7 +173,6 @@ namespace GlobalTheory.VFormCls
 
 open Formalism.IndefR Formalism.L2.Theta
 
-set_option maxHeartbeats 4000000 in
 
 theorem frame_bij {D : D7} {V : TH.HSp D} {n : ℕ} (P : principalLevelFrame.RowPsi V n) :
     Function.Bijective ((finHom V).rangeRestrict.comp P.ψ) := by
@@ -210,7 +208,6 @@ namespace GlobalTheory.VFormCls
 
 open Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.RecTie Formalism.L2.Theta
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.VFormCls
 

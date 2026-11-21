@@ -66,8 +66,6 @@ theorem secZ_nat (a : (E →+* ℂ) × ℕ → ℕ) : secZ Xo c (fun x => (a x :
     forall_congr' fun _ => ?_)
   rw [h]
 
-variable {Xo c} in
-open Classical in
 
 def laZ {σ : c.F →+* ℂ} {r : ℕ} (U : Unf Xo c σ r) (a : WZ E) (k : U.Comp) : Wt (U.X k).Ψ r :=
   fun τ j => if (U.X k).p0 ≤ (j : ℕ) then a (Function.invFun (relab c σ) τ.1, (j : ℕ) - (U.X k).p0)
@@ -99,9 +97,7 @@ def lieFacZ (Dw : Datum H) (x : ℝ) (a : WZ E) : ℝ :=
 
 variable {D : D7} (W : HSp D) (dict : ∀ σ, GA D W → Σ k, Frame ((U σ).X k).Ψ r)
 
-open Classical in
 
-open Classical in
 
 end Forms
 

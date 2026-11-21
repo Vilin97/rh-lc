@@ -138,7 +138,6 @@ def rayUnits (m₀ : Ideal (𝓞 K)) (mInf : Set (InfinitePlace K)) : Set (Idele
       ∃ x ∈ m₀, Valued.v ((a : AdeleRing (𝓞 K) K).2 v - 1) ≤
         Valued.v (algebraMap K (v.adicCompletion K) (x : K))}
 
-open Classical in
 
 def finiteSingle (v : HeightOneSpectrum (𝓞 K)) :
     v.adicCompletion K →* FiniteAdeleRing (𝓞 K) K where
@@ -174,7 +173,6 @@ theorem valued_algebraMap_eq_one (v : HeightOneSpectrum (𝓞 K)) (y : 𝓞 K) (
     HeightOneSpectrum.valuation_eq_one_iff_notMem]
   exact hy
 
-open Pointwise in
 
 def localComposite (Art : IdeleClassGroup K →* Field.absoluteGaloisGroupAbelianization K)
     (L : IntermediateField K (AlgebraicClosure K)) (h : IsFiniteAbelian K L)

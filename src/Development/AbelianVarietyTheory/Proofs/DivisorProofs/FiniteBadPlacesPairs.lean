@@ -129,6 +129,5 @@ theorem sh_inv_unit {p : ℕ} [Fact p.Prime] (G : HTGroup p) (β : G.Cˣ) (hβ :
         rw [← mul_assoc, Units.inv_mul, one_mul]
     _ = _ := by rw [h, mul_one]
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.LocTriv

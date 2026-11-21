@@ -21,8 +21,6 @@ namespace GlobalTheory.CuspRep
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-omit [NumberField E] [IsTotallyComplex E] in
-open Classical in
 
 def coord (τ : E →+* ℂ) : Cinf E →+* ℂ :=
   if (InfinitePlace.mk τ).embedding = τ then Pi.evalRingHom (fun _ => ℂ) (InfinitePlace.mk τ)
@@ -37,19 +35,15 @@ theorem coord_algebraMap (τ : E →+* ℂ) (x : E) : coord τ (pInf E (algebraM
     rw [pInf_algebraMap, h']
     simp
 
-omit [NumberField E] [IsTotallyComplex E] in
-open Classical in
 
 def atEmb (τ : E →+* ℂ) (z : ℂ) : Cinf E :=
   Pi.single (InfinitePlace.mk τ) (if (InfinitePlace.mk τ).embedding = τ then z else starRingEnd ℂ z)
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem coord_atEmb (τ : E →+* ℂ) (z : ℂ) : coord τ (atEmb τ z) = z := by
   unfold coord atEmb
   split_ifs <;> simp
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem atEmb_mul (τ : E →+* ℂ) (z z' : ℂ) : atEmb τ z * atEmb τ z' = atEmb τ (z * z') := by
   classical
@@ -57,7 +51,6 @@ theorem atEmb_mul (τ : E →+* ℂ) (z z' : ℂ) : atEmb τ z * atEmb τ z' = a
   rw [← Pi.single_mul]
   split_ifs <;> simp
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem atEmb_eq (τ : E →+* ℂ) (z : ℂ) : atEmb τ z = z.re • atEmb τ 1 + z.im • atEmb τ Complex.I := by
   classical
@@ -66,7 +59,6 @@ theorem atEmb_eq (τ : E →+* ℂ) (z : ℂ) : atEmb τ z = z.re • atEmb τ 1
   congr 1
   split_ifs <;> apply Complex.ext <;> simp
 
-omit [NumberField E] in
 
 theorem atEmb_conj (τ : E →+* ℂ) (z : ℂ) :
     atEmb (ComplexEmbedding.conjugate τ) z = atEmb τ (starRingEnd ℂ z) := by
@@ -79,7 +71,6 @@ theorem atEmb_conj (τ : E →+* ℂ) (z : ℂ) :
   · rw [if_pos h, if_neg (by rw [InfinitePlace.mk_conjugate_eq, h]; exact hne.symm)]
   · rw [if_pos (by rw [InfinitePlace.mk_conjugate_eq, h]), if_neg (by rw [h]; exact hne)]; simp
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem atEmb_mul_of_ne {τ τ' : E →+* ℂ} (h : InfinitePlace.mk τ ≠ InfinitePlace.mk τ') (z z' : ℂ) :
     atEmb τ z * atEmb τ' z' = 0 := by
@@ -90,7 +81,6 @@ theorem atEmb_mul_of_ne {τ τ' : E →+* ℂ} (h : InfinitePlace.mk τ ≠ Infi
   · subst hw; simp [Pi.single_eq_of_ne h]
   · simp [Pi.single_eq_of_ne hw]
 
-variable (E a) in
 
 def lieS (i j : Fin a) : Cinf E →ₗ[ℝ] Module.End ℂ (Sm E a) :=
   (lie E a).comp (Matrix.singleLinearMap ℝ i j : Cinf E →ₗ[ℝ] Matrix (Fin a) (Fin a) (Cinf E))
@@ -159,7 +149,6 @@ theorem cap_highest (τ : E →+* ℂ) (ν : Fin a → ℂ) (φ : Sm E a) (h : F
   congr 1
   exact Finset.prod_congr rfl fun k _ => by ring
 
-variable (E a) in
 
 def Zalg : Subalgebra ℂ (Module.End ℂ (Sm E a)) := Algebra.adjoin ℂ {z | ∃ τ u, z = cap τ u}
 
@@ -199,7 +188,6 @@ theorem Zalg_stable {V : Submodule ℂ (Sm E a)} (hV : ∀ X, ∀ φ ∈ V, lie 
   · exact S.algebraMap_mem _
   · exact S.zero_mem
 
-omit [IsTotallyComplex E] in
 
 def chiDet (a : ℕ) (χ : HChar E) : GA E a →* ℂˣ := χ.1.comp GeneralLinearGroup.det
 
@@ -271,7 +259,6 @@ theorem mul_chi_mem_Sm (χ : HChar E) {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a
   rw [chart_mul_chi]
   exact (hφ g).mul (contDiffOn_const.mul fun x hx => (contDiffAt_chi_det χ hx).contDiffWithinAt)
 
-variable (a) in
 
 def mulChi (χ : HChar E) : Sm E a ≃ₗ[ℂ] Sm E a where
   toFun φ := ⟨fun x => φ.1 x * (chiDet a χ x : ℂˣ), mul_chi_mem_Sm χ φ.2⟩
@@ -294,7 +281,6 @@ theorem rt_mulChi (χ : HChar E) (h : GA E a) (φ : Sm E a) :
   Subtype.ext <| funext fun g => by
     simp only [rt_apply, mulChi_apply, map_mul, Units.val_mul, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul]; ring
 
-omit [IsTotallyComplex E] in
 
 theorem fderiv_det_one (X : Lie E a) :
     fderiv ℝ (fun x : Lie E a => (Matrix.of x).det) (oneL E a) X = (Matrix.of X).trace := by

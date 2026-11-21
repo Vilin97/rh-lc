@@ -48,7 +48,6 @@ theorem span_eq_top :
   rw [LinearMap.pi_apply_eq_sum_univ φ w]
   simp only [hc, smul_zero, Finset.sum_const_zero, LinearMap.zero_apply]
 
-open Classical in
 
 theorem exists_coeffs (s : 𝓞 E →+* ℂ) : ∃ (N : ℕ) (a : Fin N → 𝓞 E) (c : Fin N → ℂ),
     ∀ t : E →+* ℂ, ∑ i, c i * t (algebraMap (𝓞 E) E (a i)) = if t = extend s then 1 else 0 := by

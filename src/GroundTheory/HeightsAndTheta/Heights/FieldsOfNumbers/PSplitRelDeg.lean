@@ -31,7 +31,6 @@ theorem contractFracMap_mk (f : MRing (fun k => ι' (j k)) F) :
   simp [contractFracMap, contractQuot]
   rfl
 
-omit [P'.IsPrime] in
 
 end SplitRelDeg
 

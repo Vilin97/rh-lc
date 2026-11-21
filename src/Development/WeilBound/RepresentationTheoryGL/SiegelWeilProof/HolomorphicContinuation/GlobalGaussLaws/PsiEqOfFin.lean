@@ -21,7 +21,6 @@ namespace PositivityTheory.Rg.Sw.Glob.FTP
 
 variable {D : D7}
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem incl_trA (z : AE D) : algebraMap (AF D.host.F) (AE D) (trA z) = z + cA D z := by
   induction z using TensorProduct.induction_on with
@@ -40,7 +39,6 @@ theorem incl_trA (z : AE D) : algebraMap (AF D.host.F) (AE D) (trA z) = z + cA D
     simp only [trA, map_add (f := _)] at hx hy ⊢
     rw [hx, hy]; abel
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem psi_eq_of_fin {θ : InfFam D} (hθ : IsInfFam θ) {ψ : AddChar (AF D.host.F) ℂ} {l : D.what₂.Tau → ℝ}
     (hl : HasRealPar ψ θ l) (a : AF D.host.F) (ha : finPart D (algebraMap (AF D.host.F) (AE D) a) = 0) :
@@ -56,7 +54,6 @@ theorem psi_eq_of_fin {θ : InfFam D} (hθ : IsInfFam θ) {ψ : AddChar (AF D.ho
   rw [h1, hl, eq_thetaC D hθ]
   rfl
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem psi_trA_tau {θ : InfFam D} (hθ : IsInfFam θ) {ψ : AddChar (AF D.host.F) ℂ} {l : D.what₂.Tau → ℝ}
     (hl : HasRealPar ψ θ l) (τ : D.what₂.Tau) (z : AE D) (hz : ∀ τ', τ' ≠ τ → psiT D τ' z = 0)

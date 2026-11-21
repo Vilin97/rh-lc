@@ -112,7 +112,6 @@ theorem J_perm (θ : AlgebraicClosure F →* ℂ) (L L' : List (ℕ × ℕ)) (n 
 
 end GlobalTheory.Shin.ListProd
 
-open GlobalTheory.Shin.ListProd in
 
 theorem GlobalTheory.Shin.J_list_props : ∀ (F : Type) [Field F] [Finite F] (θ : AlgebraicClosure F →* ℂ),
     (∀ L n, IsCl (J θ L n)) ∧

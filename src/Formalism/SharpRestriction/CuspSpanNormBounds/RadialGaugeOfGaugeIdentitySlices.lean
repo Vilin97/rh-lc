@@ -423,7 +423,6 @@ section Transfer
 
 variable {m : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {U : Set (Fin m → ℂ)}
 
-open Classical in
 
 end Transfer
 

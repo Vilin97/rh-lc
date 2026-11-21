@@ -20,7 +20,6 @@ open ValuativeRel
 noncomputable section
 namespace GlobalTheory.PenBridge.SuppLev
 
-set_option maxHeartbeats 1000000 in
 
 theorem bc_prV_eq_one_of_not (D : D7) (S : HSp D) (n : ℕ) (hn : S.rank = n) (κ : GA D S)
     (g : GL (Fin n) (D.host.E ⊗[D.host.F] FiniteAdeleRing (𝓞 D.host.F) D.host.F))
@@ -43,7 +42,6 @@ theorem bc_prV_eq_one_of_not (D : D7) (S : HSp D) (n : ℕ) (hn : S.rank = n) (�
     exact GlobalTheory.FamTrace.prV_toEAf_eq_swap D w _
   rw [hE, h1, map_one]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_mem_level_set (D : D7) (S : HSp D) (n : ℕ) (hn : S.rank = n) {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 D.host.F))}
     (K : StepLevel D.host.F D.host.E (sigD D) (S.gram.reindex (finCongr hn) (finCongr hn)) T f bad)
@@ -79,7 +77,5 @@ theorem exists_mem_level_set (D : D7) (S : HSp D) (n : ℕ) (hn : S.rank = n) {T
 
 end GlobalTheory.PenBridge.SuppLev
 
-open GlobalTheory.PenBridge in
-set_option maxHeartbeats 2000000 in
 
 end

@@ -27,7 +27,6 @@ theorem genIndex_map_of_injective {G G' : Type*} [AddCommGroup G] [AddCommGroup 
 
 end KLinesLineDegree
 
-open KLinesLineDegree in
 
 end
 

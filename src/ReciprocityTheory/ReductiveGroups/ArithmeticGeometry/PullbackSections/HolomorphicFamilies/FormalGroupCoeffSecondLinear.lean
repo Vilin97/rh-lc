@@ -19,7 +19,6 @@ section Lin
 
 variable {R : Type} [CommRing R] {d : ℕ}
 
-open Formalism.FG.SolveVAux in
 
 theorem coeff_lin_ev {m n : ℕ} (a : Fin m → Pt R n d) (ha : ∀ j i, constantCoeff (a j i) = 0) (f : PS R m d)
     (q : Fin n × Fin d) :

@@ -71,7 +71,6 @@ theorem Rder_mem {φ : GA D V → ℂ} (hφ : φ ∈ SmFun θ V) {τ : D.what₂
   have h4 := ContDiff.fderiv (n := ∞) h3 (contDiff_const (c := (0 : ℝ))) (by simp)
   exact h4.clm_apply (contDiff_const (c := (1 : ℝ)))
 
-variable (θ V) in
 
 structure LinOnSm (T : (GA D V → ℂ) → (GA D V → ℂ)) : Prop where
   mem : ∀ φ ∈ SmFun θ V, T φ ∈ SmFun θ V
@@ -146,7 +145,6 @@ theorem infMat_mul_inv (τ : D.what₂.Tau) (g : GA D V) :
   rw [e, e, ← Matrix.map_mul, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one,
     Matrix.map_one _ (map_zero _) (map_one _)]
 
-variable (θ V) in
 
 theorem normInf_dichotomy : (∀ g, normInf θ V g = 0) ∨ ∀ g, 1 ≤ normInf θ V g := by
   by_cases h : Nonempty D.what₂.Tau ∧ Nonempty (Fin V.rank)

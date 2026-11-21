@@ -190,7 +190,6 @@ noncomputable def galFFPoint (σ : L ≃ₐ[K] L) :
       ((W₀.baseChange L).baseChange (W₀.baseChange L).toAffine.FunctionField).toAffine.Point :=
   autPoint _ (galFF W₀ σ) (map_galFF_curve W₀ σ)
 
-omit [DecidableEq L] in
 
 theorem galFFPoint_genericPoint (σ : L ≃ₐ[K] L) :
     galFFPoint W₀ σ (genericPoint (W₀.baseChange L)) = genericPoint (W₀.baseChange L) := by
@@ -198,7 +197,6 @@ theorem galFFPoint_genericPoint (σ : L ≃ₐ[K] L) :
   simp only [Affine.Point.some.injEq]
   exact ⟨galFF_genX W₀ σ, galFF_genY W₀ σ⟩
 
-omit [W₀.IsElliptic] in
 
 theorem galFFPoint_constPoint (σ : L ≃ₐ[K] L) (R : (W₀.baseChange L).toAffine.Point) :
     galFFPoint W₀ σ (constPoint (W₀.baseChange L) R) =

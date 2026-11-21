@@ -27,16 +27,13 @@ section Tame
 
 variable {t t' : Ine (F := E) A →* Multiplicative ℤ_[l]}
 
-omit [IsAlgClosure E Ω] in
 
 @[simp] theorem tval_mul (σ τ : Ine (F := E) A) : tval t (σ * τ) = tval t σ + tval t τ := by
   simp [tval]
 
-omit [IsAlgClosure E Ω] in
 
 @[simp] theorem tval_one : tval t 1 = 0 := by simp [tval]
 
-omit [IsAlgClosure E Ω] in
 
 @[simp] theorem tval_pow (σ : Ine (F := E) A) (k : ℕ) : tval t (σ ^ k) = k * tval t σ := by
   simp [tval]
@@ -136,7 +133,6 @@ section Monodromy
 variable {t t' : Ine (F := E) A →* Multiplicative ℤ_[l]} {r : G E Ω →* GL n (Qbar l)}
   {N N' : Matrix n n (Qbar l)} {φ φ' : Weil h}
 
-omit [IsAlgClosure E Ω] in
 
 theorem IsMonodromy.of_nhds (hN : IsNilpotent N)
     (hr : ∀ᶠ σ : Ine (F := E) A in nhds 1, (r σ : Matrix n n (Qbar l)) = exp (tval t σ • N)) :
@@ -149,7 +145,6 @@ theorem IsMonodromy.of_nhds (hN : IsNilpotent N)
     Subgroup.isOpen_of_mem_nhds _ (g := 1) (hr.mono fun σ hσ => Units.ext hσ),
     fun σ hσ => congrArg Units.val hσ⟩
 
-omit [IsAlgClosure E Ω] in
 
 theorem isMonodromy_zero_iff : IsMonodromy t r 0 ↔ IsSmooth (r.comp (Weil h).subtype) := by
   constructor
@@ -168,7 +163,6 @@ theorem IsMonodromy.unique (ht : IsTameChar t) (hN : IsMonodromy t r N)
   refine eq_of_exp_smul_eq h1 h1' h0 fun k => ?_
   rw [← tval_pow, ← H _ (pow_mem hσ.1 k), ← H' _ (pow_mem hσ.2 k)]
 
-omit [IsAlgClosure E Ω] in
 
 theorem IsMonodromy.smul {c : Qbar l} (hc : ∀ σ, tval t σ = c * tval t' σ)
     (hN : IsMonodromy t r N) : IsMonodromy t' r (c • N) := by
@@ -345,8 +339,6 @@ def IsWDOf (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL n (Qbar l)) (x : WD h) : 
   ∃ t : Ine (F := E) A →* Multiplicative ℤ_[l], IsTameChar t ∧
     ∃ (φ : Weil h) (hφ : deg φ = 1), IsWDOfWith t hφ ι r x
 
-variable (h) in
-open Classical in
 
 def wdOf (_hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL n (Qbar l)) :
     WD h :=
@@ -358,7 +350,6 @@ variable {t : Ine (F := E) A →* Multiplicative ℤ_[l]} {r : G E Ω →* GL n 
   {N : Matrix n n (Qbar l)} {φ : Weil h} {ι : Qbar l ≃+* ℂ}
   (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal)
 
-include hl in
 
 theorem IsMonodromy.exists_isFrobSS (ht : IsTameChar t) (hN : IsMonodromy t r N) (hφ : deg φ = 1)
     (ι : Qbar l ≃+* ℂ) : ∃ a : WDRep h (n → ℂ),
@@ -366,7 +357,6 @@ theorem IsMonodromy.exists_isFrobSS (ht : IsTameChar t) (hN : IsMonodromy t r N)
   WeilDeligne.exists_isFrobSS (hN.rep hl ht hφ ι) _ (hN.isSmooth_rep hl ht hφ ι) (hN.1.map _)
     (hN.rep_comm hl ht hφ ι)
 
-include hl in
 
 theorem IsWDOf.unique {x y : WD h} (hx : IsWDOf ι r x) (hy : IsWDOf ι r y) : x = y := by
   obtain ⟨t, ht, φ, hφ, N, a, hN, ha, rfl⟩ := hx
@@ -393,7 +383,6 @@ theorem IsWDOf.wdOf_eq {x : WD h} (hx : IsWDOf ι r x) : wdOf h hl ι r = x := b
   rw [wdOf, dite_eq_left ⟨x, hx⟩]
   exact (Exists.choose_spec (⟨x, hx⟩ : ∃ x : WD h, IsWDOf ι r x)).unique hl hx
 
-include hl in
 
 theorem exists_isWDOf_iff (ht : IsTameChar t) :
     (∃ x : WD h, IsWDOf ι r x) ↔ ∃ N, IsMonodromy t r N := by
@@ -458,7 +447,6 @@ theorem wdOf_eq_mk (a : WDRep h (n → ℂ)) (ha : a.N = 0)
   · simp only [wdMat_zero, hr, map_zero, ← ha]
     exact isFrobSS_self a
 
-include hl in
 
 theorem IsWDOf.of_conj {r' : G E Ω →* GL n (Qbar l)} (P : GL n (Qbar l))
     (hP : ∀ g : Weil h, P * r g = r' g * P) {x : WD h} (hx : IsWDOf ι r x) : IsWDOf ι r' x := by
@@ -501,7 +489,6 @@ end Param
 
 section Examples
 
-variable (l) in
 
 end Examples
 

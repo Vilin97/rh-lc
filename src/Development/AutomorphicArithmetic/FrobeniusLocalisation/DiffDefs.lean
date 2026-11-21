@@ -25,7 +25,6 @@ def inertG (l : ℕ) : Subgroup φ.GG := H.imgOne (ordCompl[l] H.condN)
 
 def el (l : ℕ) : ℕ := Nat.card (H.inertG l)
 
-open Classical in
 
 def artL (l : ℕ) : φ.GG :=
   if h : ∃ u : (ZMod H.condN)ˣ, (u : ZMod H.condN).val ≡ l [MOD ordCompl[l] H.condN] ∧

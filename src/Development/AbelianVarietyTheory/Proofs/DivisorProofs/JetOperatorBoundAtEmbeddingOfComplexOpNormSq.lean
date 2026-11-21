@@ -58,7 +58,6 @@ theorem sqAt_eq {n : ℕ} (lam : ι → DomWeight n) (x : Formalism.L2.DIV.VV K 
 
 variable {a b : ℕ}
 
-omit [StarRing K] in
 
 theorem degAt_eq (lam nu : ι → DomWeight a) (lam' : ι → DomWeight b) (hw : ∀ τ, StepWeights (lam τ) (nu τ) (lam' τ))
     (P : Pol K ι a) (hP : P ∈ Formalism.L2.DIV.VV K lam) (μ : ((ι × Fin b × Fin b) ⊕ DVar ι a b) →₀ ℕ)
@@ -85,7 +84,6 @@ theorem degAt_eq (lam nu : ι → DomWeight a) (lam' : ι → DomWeight b) (hw :
     ring
   simp [e, Finset.sum_add_distrib, mul_comm]
 
-omit [StarRing K] in
 
 theorem map_jetMap_eq (lam nu : ι → DomWeight a) (lam' : ι → DomWeight b) (hw : ∀ τ, StepWeights (lam τ) (nu τ) (lam' τ))
     (J : (DVar ι a b →₀ ℕ) → K) (J' : (DVar ι a b →₀ ℕ) → ℂ)

@@ -9,7 +9,6 @@ open GlobalTheory.TypeLeaf Formalism.BasicNotions Formalism.MainNotions Formalis
 
 namespace GlobalTheory.TypeLeaf
 
-open Polynomial NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.TypeLeaf.lpChar_eq_triv_of_mul_eq_one (D : _root_.Formalism.BasicNotions.D7) (w : _root_.Formalism.BasicNotions.PlE D.host)
     (χ χ' : D.naut.LP w) (c c' : ℂ)
@@ -33,7 +32,6 @@ private lemma exists_frobEig_etaT_inv_etaTinv (D : _root_.Formalism.BasicNotions
   rw [(D.naut.etaTinv_def w).2, hc]
   simp
 
-open Polynomial NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.TypeLeaf.twistInv_of_charLaws_multOne :
     ∀ D : _root_.Formalism.BasicNotions.D7, _root_.GlobalTheory.TypeLeaf.CharLaws D → _root_.GlobalTheory.TypeLeaf.MultOne D →

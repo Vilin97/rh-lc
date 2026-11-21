@@ -52,8 +52,6 @@ theorem exists_relDegFn :
 
 end Fibre
 
-open Classical in
-set_option synthInstance.maxHeartbeats 400000 in
 
 def SemilocalLengthSum.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K K' : Type) [Fintype K] [DecidableEq K] [Fintype K']

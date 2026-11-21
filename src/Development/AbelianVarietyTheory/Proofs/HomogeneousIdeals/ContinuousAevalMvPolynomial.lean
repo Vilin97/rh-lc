@@ -80,7 +80,6 @@ variable {R A B C : Type*} [CommRing R] [CommRing A] [Algebra R A] [CommRing B] 
 
 noncomputable def coords (g : MvPolynomial σ R →ₐ[R] A) (p : A →ₐ[R] C) : σ → C := fun i => p (g (X i))
 
-omit [TopologicalSpace C] in
 
 omit [TopologicalSpace C] in
 theorem aeval_coords (g : MvPolynomial σ R →ₐ[R] A) (p : A →ₐ[R] C) (q : MvPolynomial σ R) :
@@ -99,7 +98,6 @@ theorem continuous_aeval_mvPolynomial [IsTopologicalRing C] (q : MvPolynomial σ
   | add P Q hP hQ => simp only [map_add (f := _)]; exact hP.add hQ
   | mul_X P i hP => simp only [map_mul, aeval_X]; exact hP.mul (continuous_apply i)
 
-variable (σ R C) in
 
 noncomputable def mvPolynomialHomeomorph [IsTopologicalRing C] :
     (MvPolynomial σ R →ₐ[R] C) ≃ₜ (σ → C) where
@@ -110,7 +108,6 @@ noncomputable def mvPolynomialHomeomorph [IsTopologicalRing C] :
   continuous_toFun := continuous_pi fun _ => continuous_eval _
   continuous_invFun := continuous_iff.2 continuous_aeval_mvPolynomial
 
-omit [TopologicalSpace C] in
 
 theorem exists_comap_eq_of_surjective (φ : A →ₐ[R] B) (hφ : Function.Surjective φ)
     (p : A →ₐ[R] C) (hp : ∀ a, φ a = 0 → p a = 0) : ∃ q : B →ₐ[R] C, comap φ q = p := by

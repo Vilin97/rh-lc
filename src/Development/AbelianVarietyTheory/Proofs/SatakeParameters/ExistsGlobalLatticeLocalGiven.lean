@@ -27,9 +27,7 @@ theorem exists_pow_smul {π : R} (hπ : Irreducible π) {k : ℕ} (g : Matrix (F
   rw [Matrix.smul_apply, Matrix.map_apply, Matrix.of_apply, map_mul, hy, ← map_pow, h1, map_mul, smul_eq_mul,
     Algebra.smul_def, mul_assoc]
 
-omit [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K] in
 
-omit [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K] in
 
 end TupApx
 

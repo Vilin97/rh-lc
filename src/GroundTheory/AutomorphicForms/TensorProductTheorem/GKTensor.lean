@@ -62,7 +62,6 @@ theorem _root_.GroundTheory.Automorphic.IsExpLieAlgebra.GKModule.isKFinite {V : 
     [Module ℂ V] (M : h.GKModule K V) : IsKFinite M.σ :=
   ⟨M.locallyFinite, M.hasContinuousCoeff⟩
 
-variable (h K) in
 
 structure GKLModule (L : Type*) [Group L] (V : Type*) [AddCommGroup V] [Module ℂ V] where
 
@@ -93,7 +92,6 @@ def IsAdmissible : Prop :=
       (hc : c ∈ isotypicComponents (MonoidAlgebra ℂ K) Mx.gk.σ.asModule),
       FiniteDimensional ℂ (LinearMap.range (kProj Mx.gk.isKFinite hc ∘ₗ (fixedVectors Mx.τ H).subtype))
 
-set_option maxHeartbeats 2000000 in
 
 theorem exists_equiv_outerTensor_gkl (hirr : Mx.IsIrreducible) (hadm : Mx.IsAdmissible) :
     ∃ (H : Subgroup L) (hHc : IsCompact (H : Set L)) (hHo : IsOpen (H : Set L))

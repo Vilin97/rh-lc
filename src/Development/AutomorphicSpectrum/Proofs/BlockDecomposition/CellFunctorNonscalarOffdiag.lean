@@ -160,7 +160,6 @@ def twoChar (χ₁ χ₂ : kˣ →* ℂˣ) (a b : Type) [Fintype a] [DecidableEq
     simp only [Pi.mul_apply, map_mul]
     exact mul_mul_mul_comm _ _ _ _
 
-variable (k) in
 
 theorem exists_nabs_lt : ∃ s : kˣ, GlobalTheory.SplitWeil.nabs k s < 1 := by
   obtain ⟨z, -, hz⟩ := GlobalTheory.CentralExponent.exists_nabs_lt_one k

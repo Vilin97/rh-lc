@@ -26,7 +26,6 @@ structure AdelicLine where
 
 variable {F}
 
-open Classical in
 
 def AdelicLine.of (a : InfinitePlace F → ℝ) (b : HeightOneSpectrum (𝓞 F) → ℝ) : AdelicLine F :=
   if h : (Function.mulSupport b).Finite then ⟨a, b, h⟩ else ⟨a, 1, by simp⟩

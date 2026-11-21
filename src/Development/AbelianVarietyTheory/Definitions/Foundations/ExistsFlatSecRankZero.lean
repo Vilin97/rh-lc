@@ -23,7 +23,6 @@ variable {K : Type} [Field K] [NumberField K]
 def lineDeg (r : (K →+* ℂ) → ℝ) (ρ : HeightOneSpectrum (𝓞 K) → ℝ) : ℝ :=
   (∑ᶠ la, ρ la * lw K la) - (∑ σ, Real.log (r σ)) / (finrank ℚ K : ℝ)
 
-omit [NumberField K] in
 
 theorem fin_mul {ρ : HeightOneSpectrum (𝓞 K) → ℝ} (h : (Function.support ρ).Finite)
     (g : HeightOneSpectrum (𝓞 K) → ℝ) : (Function.support fun la => ρ la * g la).Finite :=
@@ -156,7 +155,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 def parWt (Dw : Datum H) (w : Psi H → ℤ) : Weight Dw := fun τ _ => w τ
 
-open Classical in
 
 def flatWt (Dw : Datum H) (τ : Psi H) : Weight Dw := parWt Dw fun τ' => if τ' = τ then -1 else 0
 
@@ -257,7 +255,6 @@ variable {r : ℕ}
 
 def horizGen {Ψ : Finset (E →+* ℂ)} (τ : Ψ) (x : Frame Ψ r) : ℂ := (mat x τ).det⁻¹
 
-open Classical in
 
 def modelFlat {Ψ : Finset (E →+* ℂ)} (r : ℕ) (τ : Ψ) : Wt Ψ r := fun τ' _ => if τ' = τ then -1 else 0
 
@@ -435,7 +432,6 @@ theorem homN_eq {σ : c.F →+* ℂ} {z} (hz : z ∈ framesOn (U (goodOf c σ)) 
 theorem val_eq {w} {v : Rul Xo c → EReal} (hv : v ∈ valOn Z w) : v s.sig = ((δ w + s.rho_vw w : ℝ) : EReal) :=
   (image_eq_singleton_iff.1 (s.val_fin w)).2 v hv
 
-include s in
 
 theorem hasPts : HasPts U Z :=
   ⟨fun σ => ⟨(image_eq_singleton_iff.1 (s.norm_inf σ)).1, fun _ hz hd =>
@@ -478,7 +474,6 @@ def copy (s : ConstSec U x Z la δ) (h : la = la') (h' : δ = δ') : ConstSec U 
   { s with
     sig_mem := h ▸ s.sig_mem, inv_mem := h ▸ s.inv_mem, norm_inf := h ▸ s.norm_inf, val_fin := h' ▸ s.val_fin }
 
-variable (x) in
 
 def one (h : HasPts U Z) : ConstSec U x Z 0 0 where
   sig := idem Z
@@ -672,7 +667,6 @@ theorem shift_spec (h : HasPts U Z) (s : ∀ τ, FlatSec U x Z τ) (w : Psi H �
 
 end FlatSec
 
-open Classical in
 
 def degFlat (Z : Comp Xo c) (τ : Psi H) : ℝ := if h : Nonempty (FlatSec U x Z τ) then h.some.deg else 0
 
@@ -722,6 +716,5 @@ theorem FlatDegree.c1_eq {logOm : ℝ} (h : FlatDegree U x logOm) (hne : CompNe 
 
 theorem FlatDegree.flatExists {logOm : ℝ} (h : FlatDegree U x logOm) : FlatExists U x := ⟨_, h⟩
 
-variable (x) in
 
 end GlobalTheory.FlatLine

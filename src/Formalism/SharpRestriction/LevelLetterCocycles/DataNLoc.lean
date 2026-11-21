@@ -163,7 +163,6 @@ def herrZ1Δ {O D ι : Type} [CommRing O] [AddCommGroup D] [Module O D] (γ φ :
     (S : Finset ι) (δ : ι → D →ₗ[O] D) : Submodule O (D × D) :=
   herrCocycles γ φ ⊓ ⨅ d ∈ S, LinearMap.ker (LinearMap.prodMap (δ d) (δ d) - LinearMap.id)
 
-set_option maxHeartbeats 1000000 in
 
 structure LocWach (PD : PeriodData G Qp K₀ K B BdR) (LL O : Type) [Field LL] [Algebra Qp LL]
     [CommRing O] [Algebra O LL] [TopologicalSpace LL] (v : AddValuation LL (WithTop ℚ)) (n : ℕ) where

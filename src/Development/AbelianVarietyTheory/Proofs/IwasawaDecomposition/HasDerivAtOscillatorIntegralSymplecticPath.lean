@@ -219,7 +219,6 @@ open scoped RealInnerProductSpace ContDiff Real ComplexOrder Topology in
 variable {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V]
   [BorelSpace V] {B : Type} [NormedAddCommGroup B] [NormedSpace ℂ B] [CompleteSpace B] {J : V ≃ₗᵢ[ℝ] V}
   {ρ : V → B →L[ℂ] B} in
-set_option linter.unusedSectionVars false in
 
 theorem _root_.GlobalTheory.Mem.Lift.OscDeriv.hasDerivAt_osc : ∀ (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (B : Type) [NormedAddCommGroup B] [NormedSpace ℂ B] [CompleteSpace B] (J : V ≃ₗᵢ[ℝ] V) (ρ : V → B →L[ℂ] B), (∀ x, J (J x) = -x) → ∀ h : _root_.GlobalTheory.RealWeil.IsHeis (_root_.GlobalTheory.RealWeil.omJ J) ρ, ∀ (a : ℝ → V →L[ℝ] V) (X : V →L[ℝ] V), a 0 = 1 → HasDerivAt a X 0 → (∀ t x y, _root_.GlobalTheory.RealWeil.omJ J (a t x) (a t y) = _root_.GlobalTheory.RealWeil.omJ J x y) → ∀ (κ : Type) [Fintype κ] (c : κ → ℂ) (p q : κ → V), _root_.GlobalTheory.Mem.Lift.IsQuadOf (_root_.GlobalTheory.RealWeil.omJ J) X c p q → ∃ lam : ℂ, ∀ f, _root_.GlobalTheory.RealWeil.Sm ρ f → HasDerivAt (fun t : ℝ => ∫ w, ρ (a t w) (∫ u, _root_.GlobalTheory.RealWeil.gau u • ρ (a t u) (_root_.GlobalTheory.RealWeil.proj h (ρ (-w) f)))) (_root_.GlobalTheory.Mem.Lift.quad ρ c p q f + lam • f) 0 := by
   intro V _ _ _ _ _ B _ _ _ J ρ hJ h a X ha0 hX hsym κ _ c p q hQ

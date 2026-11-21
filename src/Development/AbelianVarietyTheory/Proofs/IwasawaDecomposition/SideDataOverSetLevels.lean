@@ -31,5 +31,4 @@ def sideB_congr {D : D7} {cf cf' : CharFrame D} {Rw Rw' : RowSide D} {low low' :
   cases e6
   exact h
 
-open GlobalTheory.Mem.R3.Tr in
 end GlobalTheory.HeightCounting.Up

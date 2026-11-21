@@ -21,7 +21,6 @@ variable [TopologicalSpace R]
 
 end Ad
 
-open Classical in
 
 open scoped TensorProduct
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.AdelicU

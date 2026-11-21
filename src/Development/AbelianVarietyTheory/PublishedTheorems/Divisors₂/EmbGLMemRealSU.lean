@@ -220,9 +220,6 @@ private lemma hermC_map_mulVec_eq_of_preserves_form (τ : E →+* ℂ) (G M : Ma
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ =>
     Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
-open NumberField IsDedekindDomain Matrix MeasureTheory Filter Topology in
-open scoped ENNReal NNReal in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.SUVol.embGL_mem_realSU (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E)
     (γ : GL (Fin r) E) (h1 : (γ : Matrix (Fin r) (Fin r) E).det = 1)

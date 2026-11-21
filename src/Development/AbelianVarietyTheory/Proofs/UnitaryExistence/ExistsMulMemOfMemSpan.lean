@@ -41,7 +41,6 @@ theorem span_smul_le_iff (k : ℕ) (A B : Submodule (𝓞 E) (Fin n → E)) :
     rw [mul_smul, Nat.cast_smul_eq_nsmul]
     exact B.smul_mem _ (h x hx)
 
-omit [NumberField E] in
 
 theorem fg_of_smul_mem {A : Submodule (𝓞 E) (Fin n → E)} {o : 𝓞 E} (ho : o ≠ 0)
     (h : ∀ x ∈ A, o • x ∈ stdMod E n) : A.FG := by
@@ -70,7 +69,6 @@ theorem eq_zero_of_sum_conj (v : Fin n → E) (h : ∑ j, IsCMField.complexConj 
   funext j
   simpa using h2 j (Finset.mem_univ j)
 
-omit [IsCMField E] in
 
 private theorem exists_mul_mem_of_mem_span (A : Submodule (𝓞 E) (Fin n → E)) {x : Fin n → E}
     (hx : x ∈ Submodule.span E (A : Set (Fin n → E))) : ∃ o : 𝓞 E, o ≠ 0 ∧ o • x ∈ A := by

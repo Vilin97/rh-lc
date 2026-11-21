@@ -26,7 +26,6 @@ open NumericalSegreProof
 variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
   [∀ k, Fintype (ι k)]
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem length_rootList {n : ℕ} (x : Fin n → K → ℤ) (α : Fin n → ℕ) :
     (rootList x α).length = ∑ i, α i := by
@@ -114,7 +113,6 @@ theorem H_add (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F �
   exact cons_add W hW _
     (by rw [hd, List.length_append, hlen, show c + 1 + L.length = c + L.length + 1 by omega]) a b
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem H_succ (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {i : ℕ} (x : Fin (i + 1) → K → ℤ) (c : ℕ)
     (L : List (K → ℤ)) :

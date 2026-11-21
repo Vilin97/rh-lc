@@ -18,7 +18,6 @@ section Alg
 variable {F E : Type} [Field F] [Field E] [Algebra F E] {R : Type} [CommRing R] [Algebra F R]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
 
-open Classical in
 
 def projD (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E)
     {m : ℕ} (Y D : Fin m → Fin n → E) (s : Set (Fin m)) (y : Fin n → R ⊗[F] E) :

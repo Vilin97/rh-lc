@@ -27,7 +27,6 @@ theorem nonempty_of_basis {K : Type} [Field K] [NumberField K] {i : ℕ} {F : He
 
 end StandardDualFibreRatios
 
-open StandardDualFibreRatios in
 
 theorem DualStdFibreRatios.proof (hTr : GenFibreModelTransport.Statement) (hMod : DualStdGraphModel.Statement)
     (hRk : DualStdModelRank.Statement) (hTc : DualStdModelTransc.Statement) : DualStdFibreRatios.Statement := by

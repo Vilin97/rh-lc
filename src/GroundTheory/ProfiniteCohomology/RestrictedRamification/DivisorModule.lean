@@ -94,7 +94,6 @@ theorem coe_divFunAction_apply (g : G) (f : divFun φ A) (i : I) (x : G) :
     ((divFunAction φ A g f : divFun φ A) : I → G → A) i x = (f : I → G → A) i (x * g) :=
   rfl
 
-omit [IsTopologicalGroup G] in
 
 theorem exists_mem_nhds_one_forall_mul_eq {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [CompactSpace G] {X : Type*} {f : G → X} (hf : IsLocallyConstant f) :
@@ -272,7 +271,6 @@ theorem isZero_cohomology_of_bijective_nsmul_ulift (M : Rep.{0} (ULift.{0} ℤ) 
   rw [map_zero, cohomologyMap_nsmul_id_apply]
   exact hx
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem exists_coprime_smul_cohomology_eq_zero (M : Rep.{0} (ULift.{0} ℤ) G) [IsDiscreteRep M]
     (ℓ : ℕ) (hM : ∀ m : M.V, ∃ N : ℕ, N.Coprime ℓ ∧ N • m = 0) (n : ℕ) (x : cohomology M n) :
@@ -295,7 +293,6 @@ theorem exists_coprime_smul_cohomology_eq_zero (M : Rep.{0} (ULift.{0} ℤ) G) [
     rw [hd, mul_comm, ← smul_smul, hNm, smul_zero]
   rw [← map_nsmul, hz, map_zero]
 
-omit [TotallyDisconnectedSpace G] in
 
 variable {I : Type} {H : I → Type} [∀ i, Group (H i)] [∀ i, TopologicalSpace (H i)]
   [∀ i, IsTopologicalGroup (H i)] [∀ i, CompactSpace (H i)] [∀ i, TotallyDisconnectedSpace (H i)]
@@ -385,7 +382,6 @@ section TrivSeq
 
 variable (Γ : Type) [Group Γ]
 
-omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 
 def trivMap {A B : Type} [AddCommGroup A] [AddCommGroup B] (g : A →+ B) :
     trivRep Γ A ⟶ trivRep Γ B :=

@@ -141,7 +141,6 @@ theorem triv_mul_inv (R : Type) [CommRing R] [Algebra ℚ R] (β β' : G.C) (x U
         (starT G.star R x).unop := by simp only [mul_assoc]
     _ = _ := by rw [h1, Units.inv_mul, mul_one, mul_one]
 
-omit [NumberField M] in
 
 theorem exists_basis (ha : G.a = 1) (P : Pair G) (μ : ℂ) (hm : P.Mark μ) (pb : PowerBasis G.F M)
     (hpol : P.pol = minpoly G.F pb.gen) (j : M →ₐ[G.F] G.C) (hj : j pb.gen = P.γ) (w : InfinitePlace G.F) :

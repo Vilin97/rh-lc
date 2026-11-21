@@ -132,7 +132,6 @@ theorem isCompact_mul_conj (c : AE D) {K : Set (AE D)} (hK : IsCompact K) :
   haveI : IsTopologicalRing (AE D) := IsModuleTopology.isTopologicalRing (AF D.host.F) _
   exact hK.image (continuous_const.mul (GlobalTheory.ConjAutProps.continuous_conjA D))
 
-set_option maxHeartbeats 1000000 in
 
 theorem annihilator_finPart_compact : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ U : AddSubgroup (AE D),
     IsOpen (U : Set (AE D)) → ∃ K : Set (AE D), IsCompact K ∧ ∀ x : AE D,

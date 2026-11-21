@@ -47,7 +47,6 @@ theorem linForm_apply (B y : κ → mixedEmbedding.mixedSpace F) :
   set_option synthInstance.maxHeartbeats 100000 in
     simp [linForm, map_sum, LinearMap.sum_apply]
 
-open scoped Classical in
 
 theorem hasDerivAt_line (f : SInf F κ) (y A : κ → mixedEmbedding.mixedSpace F) (l c : ℝ) (ρ : ℂ) :
     HasDerivAt (fun t : ℝ => Complex.exp (-(2 * Real.pi * Complex.I) * ((t * l + t ^ 2 * c : ℝ) : ℂ)) * (f (y + t • A) * ρ))
@@ -69,7 +68,6 @@ theorem hasDerivAt_line (f : SInf F κ) (y A : κ → mixedEmbedding.mixedSpace 
     exact hf.comp_hasDerivAt (0 : ℝ) h3
   exact (h2.fun_mul (h4.mul_const ρ)).congr_deriv (by simp; ring)
 
-open scoped Classical in
 
 theorem phase_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b x : κ → AF F) (hb : At (evI F) b) (t : ℝ) :
     ψ (x ⬝ᵥ (realAd F t • b) + ⅟(2 : AF F) * ((realAd F t • a) ⬝ᵥ (realAd F t • b))) =
@@ -262,7 +260,6 @@ theorem exists_real_structure (σ : E →ₐ[F] E) (h : IsCMExt F E σ) (emb : �
   · have : Ψ ((Ψe.symm.toLinearMap ∘ₗ Cp ∘ₗ Ψ) p) = Cp (Ψ p) := Ψe.apply_symm_apply _
     exact congrFun this w
 
-open scoped Classical in
 
 def dOp {κ : Type} [Fintype κ] (A B : κ → mixedEmbedding.mixedSpace F) (f : SInf F κ) : SInf F κ :=
   ∂_{A} f + (-(2 * Real.pi * Complex.I)) • SchwartzMap.smulLeftCLM ℂ (linForm B) f

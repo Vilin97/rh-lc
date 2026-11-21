@@ -21,12 +21,10 @@ abbrev TwPick (D : D7) (i : D.ntw.Tw) : Type :=
 def ExpHyp (D : D7) (I : TwIn D) (i : D.ntw.Tw) : Prop :=
   Formalism.MainNotions.IntegralHeckeEveryConjugate D (BlochKatoReduction.bk0 D) I.E I.N0 ∧ D.ntw.NonzeroIndexPlace i ∧ BlochKatoReduction.Gen.SetHyp (BlochKatoReduction.bk0 D) i ∧ I.Ok i
 
-open Classical in
 
 def ExpGood (D : D7) (I : TwIn D) (A : Finset (PlE D.host)) (i : D.ntw.Tw) (p : TwPick D i) : Prop :=
   IntegralHeckeForms.GoodTw D.nexp (BlochKatoReduction.bk0 D) I.E I.N0 i (twEps D i) (I.S i) A p.1 p.2.1 p.2.2
 
-open Classical in
 
 theorem expGood_anti {D : D7} {I : TwIn D} {A A' : Finset (PlE D.host)} (hA : A ⊆ A') {i : D.ntw.Tw} {p : TwPick D i}
     (h : ExpGood D I A' i p) : ExpGood D I A i p := by
@@ -112,7 +110,6 @@ structure NChoiceTied (D : D7) (C : NChoice D) (I : TwIn D) (Av : TwAv D) : Prop
 
 variable {D : D7} {C : NChoice D} {I : TwIn D} {Av : TwAv D}
 
-open Classical in
 
 theorem emb0_mem_maximalIdeal_iff_val_pos_of_sidePl (D : D7) (w : D.what₂.places.Pl) (i : D.ntw.Tw) (h : SidePl D w i true)
     (x : D.LL0) :
@@ -166,7 +163,6 @@ theorem emb0_mem_maximalIdeal_iff_val_pos_of_sidePl (D : D7) (w : D.what₂.plac
     rw [hsum] at this
     exact lt_irrefl _ this
 
-open Classical in
 
 section Vac
 

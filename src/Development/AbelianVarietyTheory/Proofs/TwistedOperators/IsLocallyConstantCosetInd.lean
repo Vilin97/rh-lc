@@ -14,7 +14,6 @@ namespace GlobalTheory.InvBilinTest
 
 variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G]
 
-open Classical in
 
 def cosetInd (K : Subgroup G) (ho : IsOpen (K : Set G)) (hK : IsCompact (K : Set G)) (g : G) :
     SB G :=
@@ -31,7 +30,6 @@ def cosetInd (K : Subgroup G) (ho : IsOpen (K : Set G)) (hK : IsCompact (K : Set
     · refine HasCompactSupport.intro (hK.image (continuous_id.mul (continuous_const (y := g))))
         fun x hx => if_neg fun h => hx ⟨_, h, by simp⟩⟩
 
-open Classical in
 
 theorem cosetInd_apply (K : Subgroup G) (ho : IsOpen (K : Set G)) (hK : IsCompact (K : Set G))
     (g x : G) : (cosetInd K ho hK g).1 x = if x * g⁻¹ ∈ K then 1 else 0 := rfl
@@ -45,8 +43,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Spa
 variable [MeasurableSpace G] [BorelSpace G] {μ : Measure G} [μ.IsHaarMeasure]
   {V : Type} [AddCommGroup V] [Module ℂ V] {π : Representation ℂ G V}
   {Y : Type} [AddCommGroup Y] [Module ℂ Y] in
-omit [T2Space G] in
-open Classical in
 
 theorem _root_.GlobalTheory.InvBilinTest.integral_ite (K : Subgroup G) (ho : IsOpen (K : Set G)) (c : ℂ) :
     ∫ g, (if g ∈ K then c else 0) ∂μ = (μ.real K : ℂ) * c := by

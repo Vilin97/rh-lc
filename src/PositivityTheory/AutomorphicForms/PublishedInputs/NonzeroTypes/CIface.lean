@@ -14,12 +14,10 @@ namespace UpperTheory.TNZ
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 def KC (n r : ℕ) : Set (GL (Fin n) k) :=
   {g | g ∈ KO k (Fin n) ∧ ∀ i j, InPow r ((g : Matrix (Fin n) (Fin n) k) i j - if i = j then 1 else 0)}
 
-variable (k) in
 
 def KCg (n r : ℕ) : Subgroup (GL (Fin n) k) := Subgroup.closure (KC k n r)
 

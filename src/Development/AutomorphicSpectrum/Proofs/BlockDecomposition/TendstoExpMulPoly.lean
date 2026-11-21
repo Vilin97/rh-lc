@@ -78,7 +78,6 @@ theorem re_lt_of_dec {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGr
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
-omit [IsCMField E] in
 
 theorem mult_of_lat {S : Set (GA E N)} {n : ℕ}
     (h : ∀ x, {γ : An.lat E N | (γ : GA E N) * x ∈ S}.encard ≤ n) : Mult S n := by
@@ -170,7 +169,6 @@ end GlobalTheory.CompanionTheory.LocExponent
 
 namespace GlobalTheory.CompanionTheory.LocExponent
 
-open PositivityTheory.Rg.Rs.JExpNegGlue in
 
 theorem locNonPosGlue_holds : LocNonPosGlue := by
   intro hSize E _ _ _ N φ hA hLoc r hr0 hrN c hc

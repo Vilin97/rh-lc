@@ -253,14 +253,12 @@ section Red
 variable {S κ K : Type} [CommRing S] [CommRing κ] [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K] {φ : S →+* κ} {ψ : S →+* K}
 
-variable (φ ψ) in
 
 structure IsRed : Prop where
   field : IsField κ
   int : ∀ s, ψ s ∈ 𝒪[K]
   ker : ∀ s, φ s = 0 ↔ valuation K (ψ s) < 1
 
-variable (φ ψ) in
 
 def Compat (c : κˣ →* ℂˣ) (μ : Kˣ →* ℂˣ) : Prop := ∀ (s : S) (u : κˣ) (k : Kˣ), u = φ s → k = ψ s → c u = μ k
 
@@ -316,7 +314,6 @@ theorem topL_r (ha : IsIx ea) (hb : IsIx eb) (y : Matrix (Fin b) (Fin a) κ) :
   rw [topL, dif_pos h]
   exact congrArg₂ y (Fin.ext (hb.2.1 i).symm) (Fin.ext (ha.2.1 l).symm)
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem lowZero_r (h : IsRed φ ψ) (ha : IsIx ea) (hb : IsIx eb) (N : Matrix (Fin b) (Fin a) S) :
     LowZero r (N.map φ) ↔ MaxM ((N.map ψ).submatrix eb ea).toBlocks₂₁ := by
@@ -327,7 +324,6 @@ theorem lowZero_r (h : IsRed φ ψ) (ha : IsIx ea) (hb : IsIx eb) (N : Matrix (F
   · exact (h.ker _).2 (H i l)
   · rw [ha.2.2] at hl; omega
 
-open Classical in
 
 theorem parPhi_eq (h : IsRed φ ψ) (ha : IsIx ea) (hb : IsIx eb) {c : κˣ →* ℂˣ} {μ : Kˣ →* ℂˣ} (hc : Compat φ ψ c μ)
     (N : Matrix (Fin b) (Fin a) S) : parPhi μ⁻¹ ((N.map ψ).submatrix eb ea) =
@@ -358,7 +354,6 @@ theorem topL_a (ha : IsIx ea) (hb : IsIx eb) (y : Matrix (Fin b) (Fin a) κ) (i 
   rw [topL, dif_pos h]
   exact congrArg₂ y (Fin.ext (val_succ_inl ha hb i).symm) rfl
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 
 theorem lowZero_a (h : IsRed φ ψ) (ha : IsIx ea) (hb : IsIx eb) (N : Matrix (Fin b) (Fin a) S) :
     LowZero a (N.map φ) ↔ MaxM (((N.map ψ).submatrix eb ea).submatrix (ixSucc _ _ j) id).toRows₂ := by
@@ -506,7 +501,6 @@ theorem compat_of_isRes {w : Pl D.host.E} {χ : HChar D.host.E} {c : (kP w)ˣ �
   rwa [Units.val_mul, Units.val_inv_eq_inv_val, ← mul_inv_cancel₀ (atFin w (Units.mk0 _ h4)).ne_zero, ← sub_mul, h5,
     map_mul, map_inv₀, h3, inv_one, mul_one]
 
-open Classical in
 
 theorem omegaG_eq_prod {a b r t j : ℕ} (hr : r ≤ a) (Pg Q : Finset (Pl D.host.E))
     (χ : ℕ → ∀ w : Pl D.host.E, (kP w)ˣ →* ℂˣ) (ξ : ∀ w : Pl D.host.E, (kP w)ˣ →* ℂˣ)
@@ -527,7 +521,6 @@ theorem omegaG_eq_prod {a b r t j : ℕ} (hr : r ≤ a) (Pg Q : Finset (Pl D.hos
     exact ⟨fun w hw => h2 ⟨w, hw⟩, g, fun w => (hg w).1, fun w => (hg w).2.1,
       Subgroup.mem_bot.2 (funext fun w => (hg w).2.2)⟩
 
-open Classical in
 
 theorem omegaQ_eq_prod {a b : ℕ} (r : ℕ) (Q : Finset (Pl D.host.E)) (ξ : ∀ w : Pl D.host.E, (kP w)ˣ →* ℂˣ)
     (y : ∀ w : Pl D.host.E, Matrix (Fin b) (Fin a) (kP w)) : omegaQ Q r ξ 1 y =
@@ -558,7 +551,6 @@ theorem compat_chi {μ₀ : T} (hL : L.Is μ₀) (hw : w ∈ L.Pg) {c : ℕ} (hc
   have h := compat_of_isRes ((L.C.isMu0 ⟨c, hc⟩).tame w) (hL.chi ⟨c, hc⟩ w hw) s u k hu hk
   rw [muBase, dif_pos hc, MonoidHom.inv_apply, ← h, MonoidHom.inv_apply, inv_inv]
 
-open Classical in
 
 theorem stepFn_eq_of_mem_Q {μ₀ : T} (hL : L.Is μ₀) (hw : w ∈ L.Q t) {j a b : ℕ} (ha : a = D.R.r + j * D.R.t)
     (hb : b = D.R.r + (j + 1) * D.R.t) (N : Matrix (Fin b) (Fin a) (OA D)) :
@@ -569,7 +561,6 @@ theorem stepFn_eq_of_mem_Q {μ₀ : T} (hL : L.Is μ₀) (hw : w ∈ L.Q t) {j a
   refine (congrFun (stepFn_of_mem_Q t w hw' hw j) _).trans ?_
   exact parPhi_eq (isRed w) (isIx_ixOf G t w ha) (isIx_ixOf G t w hb) (compat_of_isRes (hL.xi_tame t w) (hL.xiR t w hw)) N
 
-open Classical in
 
 theorem omega_eq_prod_stepFn {μ₀ : T} (hL : L.Is μ₀) {j a b : ℕ} (hj : j < D.R.m) (ha : a = D.R.r + j * D.R.t)
     (hb : b = D.R.r + (j + 1) * D.R.t) (hr : D.R.r ≤ a) (N : Matrix (Fin b) (Fin a) (EAf D)) (hN : IsIntM N) :
@@ -607,7 +598,6 @@ theorem givenDatum_theta_coord {G : GridData L sc} (B : Frames G) (t : T) (w : P
   rw [coord_map]
   rfl
 
-open Classical in
 
 theorem local_factors {G : GridData L sc} (B : Frames G) (t : T) {μ₀ : T} (hL : L.Is μ₀) :
     (∀ e : AE D, IsIdemSum e G.pl.W0 → ∀ (i : ℕ) (hi : i < D.R.m) (κ : G.CosAt i)

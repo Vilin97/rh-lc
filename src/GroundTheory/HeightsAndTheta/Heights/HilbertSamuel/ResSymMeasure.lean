@@ -24,7 +24,6 @@ section Normalise
 
 variable {J : Type} [Fintype J]
 
-open Classical in
 
 def NZAt (z : J → ℂ) (k : ℕ) : Prop :=
   ∀ h : k < Fintype.card J, z ((Fintype.equivFin J).symm ⟨k, h⟩) ≠ 0
@@ -32,11 +31,9 @@ def NZAt (z : J → ℂ) (k : ℕ) : Prop :=
 theorem exists_nzAt (z : J → ℂ) : ∃ k, NZAt z k :=
   ⟨Fintype.card J, fun h => absurd h (lt_irrefl _)⟩
 
-open Classical in
 
 def idx (z : J → ℂ) : ℕ := Nat.find (exists_nzAt z)
 
-open Classical in
 
 def normPt (z : J → ℂ) : J → ℂ :=
   if h : idx z < Fintype.card J then (z ((Fintype.equivFin J).symm ⟨idx z, h⟩))⁻¹ • z else z

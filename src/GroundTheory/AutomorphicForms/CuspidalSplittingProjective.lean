@@ -62,7 +62,6 @@ theorem exists_lift_of_isSupercuspidal [π.IsIrreducible] (hπ : IsSmooth π)
 
 section Injective
 
-variable (σ π) in
 
 def pairingSum (K : Subgroup (GL (Fin n) F)) (ψ : Module.Dual ℂ W) (v : V) (b : W)
     (ũ : smoothVectors (Representation.dual π)) : ℂ :=
@@ -105,7 +104,6 @@ variable (hπ : IsSmooth π) (hsc : IsSupercuspidal π) (hωπ : HasCentralChar 
 
 include hπ hsc hωπ hωσ hω hKo hψ hv
 
-omit hπ hsc hKo in
 
 theorem pairingSum_act (h : GL (Fin n) F) (b : W) (ũ : smoothVectors (Representation.dual π)) :
     pairingSum π σ K ψ v (σ h b) ũ = pairingSum π σ K ψ v b (contragredient π h⁻¹ ũ) := by
@@ -152,7 +150,6 @@ theorem pairingSum_smul_left (c : ℂ) (b : W) (ũ : smoothVectors (Representati
   simp only [map_smul, smul_eq_mul]
   ring
 
-omit hωπ hωσ hω hψ hv in
 
 def pairingForm (b : W) : Module.Dual ℂ (smoothVectors (Representation.dual π)) where
   toFun := pairingSum π σ K ψ v b
@@ -170,7 +167,6 @@ theorem pairingForm_mem (hσ : IsSmooth σ) (b : W) :
   change pairingSum π σ K ψ v b (contragredient π h⁻¹ ũ) = pairingSum π σ K ψ v b ũ
   rw [← pairingSum_act hωπ hωσ hω hψ hv, hh]
 
-omit hπ hsc hωπ hωσ hω hKo hψ hv in
 
 def pairingMap (hπ : IsSmooth π) (hsc : IsSupercuspidal π) (hωπ : HasCentralChar π ω)
     (hωσ : HasCentralChar σ ω) (hω : ∀ z ∈ Subgroup.center (GL (Fin n) F), ω z⁻¹ * ω z = 1)

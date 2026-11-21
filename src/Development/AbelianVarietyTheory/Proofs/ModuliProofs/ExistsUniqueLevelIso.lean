@@ -20,17 +20,14 @@ section Formal
 variable {V : Type} [CommRing V] [IsDomain V] [IsLocalRing V] {G : Over (Spec (CommRingCat.of V))} [GrpObj G]
   [IsCommMonObj G] {X : Type} [AddCommGroup X] [Module.Free ℤ X] [Module.Finite ℤ X]
 
-omit [IsDomain V] in
 
 instance connectedSpace_level (e : ℕ) : ConnectedSpace (Spec (CommRingCat.of (V ⧸ 𝔪 ^ (e + 1)))) :=
   SplitTorus.connectedSpace_of_isLocalRing _
 
-omit [IsDomain V] [GrpObj G] [IsCommMonObj G] in
 
 theorem thickMap_pr (e : ℕ) : thickMap V 𝔪 e G ≫ pr 𝔪 (e + 1) G = pr 𝔪 e G :=
   (pullback.lift_fst _ _ _).trans (Category.comp_id _)
 
-omit [IsDomain V] in
 
 theorem nonempty_formalTorus (hG : IsSemiAbelian G) (Q₀ : TQ (thickObj V 𝔪 0 G) X) :
     Nonempty (FormalTorus 𝔪 Q₀.i) := by
@@ -47,9 +44,7 @@ theorem nonempty_formalTorus (hG : IsSemiAbelian G) (Q₀ : TQ (thickObj V 𝔪 
   let Q : ∀ e, TQ (thickObj V 𝔪 e G) X := fun e => Nat.rec (motive := fun e => TQ (thickObj V 𝔪 e G) X) Q₀ nxt e
   exact ⟨⟨fun e => (Q e).i, fun e => (Q e).i_hom, rfl, fun e => hnxt e (Q e)⟩⟩
 
-omit [IsLocalRing V] [Module.Free ℤ X] [Module.Finite ℤ X] in
 
-omit [IsLocalRing V] in
 
 end Formal
 

@@ -235,7 +235,6 @@ theorem zId : ∀ i, constantCoeff (pt C (n := 1) dd 0 i) = 0 := fun i => by sim
 
 end SelfAdjointLinearTerm
 
-open SelfAdjointLinearTerm PartialDerivEval FirstUnitSeriesIntegrality MulLFrob in
 
 theorem linear_part_first_unit {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ}
     (Y : FBChart C V O dd) (v : Fin dd → C) :
@@ -261,7 +260,6 @@ theorem linear_part_first_unit {C : Type} [Field C] [CharZero C] {V : VF C} {O :
     zl_sub, zl_smul, zl_hAB Y hM zId, zl_hAB Y zId zId, linAct_id, germEval_oneStandardPoint_self, smul_neg]
   ring
 
-open SelfAdjointLinearTerm PartialDerivEval FirstUnitSeriesIntegrality MulLFrob in
 
 theorem constant_zero_first_zero_self {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ}
     (Y : FBChart C V O dd) (e eb : Pt C 1 dd) (he0 : ∀ i, MvPowerSeries.constantCoeff (e i) = 0)

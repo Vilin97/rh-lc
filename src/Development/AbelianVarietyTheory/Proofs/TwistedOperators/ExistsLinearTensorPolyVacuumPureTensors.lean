@@ -35,7 +35,6 @@ theorem finite_nonint {κ : Type} [Finite κ] (x : κ → AF F) :
 variable {E : Type} [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
   {Y : Spc F E n} {W : Spc F E d}
 
-open Classical in
 
 def vacOff (M : Model σ Y W) (T : Finset (Pl F)) (x : Fin n × Fin d → AF F) : ℂ :=
   ∏ᶠ w, if w ∈ T then (1 : ℂ) else M.vac w fun i => evFin F w (x i)
@@ -72,7 +71,6 @@ def multiL (M : Model σ Y W) (T : Finset (Pl F)) :
       RingHom.id_apply]
     ring
 
-open Classical in
 
 theorem finprod_split (M : Model σ Y W)
     (hstd : ∀ᶠ v in Filter.cofinite, M.vac v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1)

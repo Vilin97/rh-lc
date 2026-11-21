@@ -21,6 +21,5 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.RatHeckeBall
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.RatHeckeBall

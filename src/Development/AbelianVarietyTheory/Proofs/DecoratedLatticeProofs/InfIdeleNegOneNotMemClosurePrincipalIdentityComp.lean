@@ -115,7 +115,6 @@ theorem norm_ne_one_of_sign {w : InfinitePlace E} (hw : w.IsReal) {k : E} (hk : 
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ w.embedding), h2, h3, mul_one] at h1
   norm_num at h1
 
-open GlobalTheory.RayFromArtin GlobalTheory.Mem.LocTriv in
 
 theorem infIdele_neg_one_not_mem :
     ∀ (E : Type) [Field E] [NumberField E] (w : InfinitePlace E), w.IsReal →

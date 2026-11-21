@@ -44,7 +44,6 @@ structure LawsV (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a)
     Nonempty (π'.ρ.Equiv (contra π.ρ)) → rc (cls π') = (rc (cls π)).lpDual
   inj : ∀ x y, Good y → rc x = rc y → x = y
 
-variable (h) in
 
 def IsRecV (rc : IrrGL (w.adicCompletion E) → WD h) : Prop :=
   ∃ (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) (ε : EpsFamily A), LawsV a ha ε rc

@@ -86,7 +86,6 @@ theorem exists_rescale {z : T ⟶ A} {τ : Frame L k z} (hτ : τ.IsGen) (u : Γ
       linear_combination (-(c * d)) * h
     exact key _ _ _ _ e
 
-omit [GrpObj A] in
 
 theorem exists_frame (hL : L.IsLB) [Subsingleton T.left] [Nonempty T.left] (z : T ⟶ A) :
     ∃ τ : Frame L k z, τ.IsGen := by
@@ -289,7 +288,6 @@ theorem IsThetaFam.span_eq_top {k N : ℕ} (hk : 1 ≤ k) (hN : 4 ≤ N) (hK : (
     have : w = r • SecM.ofSec P.A th := Subtype.ext (funext hr')
     exact hw (by rw [this, hz', smul_zero])
 
-omit [IsAlgClosed K] in
 
 theorem span_pull_eq_top {N : ℕ} (hN : 1 ≤ N) {I : Type} {t : I → SecM P.A P.L N (Over.mk s)}
     (H : Submodule.span Γ((Over.mk s).left, ⊤) (Set.range t) = ⊤) (T' : Over S) [IsAffine T'.left]
@@ -313,7 +311,6 @@ theorem span_pull_eq_top {N : ℕ} (hN : 1 ≤ N) {I : Type} {t : I → SecM P.A
   rw [hc, ← pullM_comp P.A P.isLB]
   exact key _ (H.ge trivial)
 
-omit [IsAlgClosed K] in
 
 theorem eq_of_span {N : ℕ} (hN : 3 ≤ N) {I : Type} {t : I → LB.Sec (LPow P.A P.L N (Over.mk s))}
     (H : Submodule.span Γ((Over.mk s).left, ⊤) (Set.range fun i => SecM.ofSec P.A (t i)) = ⊤)

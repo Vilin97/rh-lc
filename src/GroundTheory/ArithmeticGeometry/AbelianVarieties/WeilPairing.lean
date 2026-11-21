@@ -32,9 +32,7 @@ theorem divisorOf_prod {ι' : Type*} (s : Finset ι') (φ : ι' → W.toAffine.F
         (Finset.prod_ne_zero_iff.mpr fun i hi => hφ i (Finset.mem_insert_of_mem hi)),
       ih fun i hi => hφ i (Finset.mem_insert_of_mem hi)]
 
-omit [DecidableEq F] [IsAlgClosed F] in
 
-open Classical in
 
 variable {W}
 
@@ -42,6 +40,5 @@ variable (W)
 
 variable {W}
 
-omit [IsAlgClosed F] [W.IsElliptic] in
 
 end GroundTheory.Arith.Abelian

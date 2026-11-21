@@ -74,7 +74,6 @@ def kd2 : K R δ 2 →+ K R δ 3 := qmap _ _ (dTwo R B).toAddMonoidHom fun _ h �
 variable {R δ} {R' B' : Type} [CommRing R'] [CommRing B'] [Algebra R' B'] {J' : Ideal B'} {δ' : DividedPowers J'}
   {σ : R →+* R'} {α : B →+* B'} (h : SemiHom σ α) (hd : IsDPMorphism δ δ' α)
 
-include hd in
 
 theorem mDR_mem_rel {x : DR R B} (hx : x ∈ rel R δ) : h.mDR x ∈ rel R' δ' := by
   refine Submodule.span_induction (p := fun y _ ↦ h.mDR y ∈ rel R' δ') ?_ ?_ ?_ ?_ hx
@@ -164,7 +163,6 @@ def lie (v : Derivation R B B) : DR R B →ₗ[R] DR R B :=
 def hot (v : Derivation R B B) (e : ℕ → B) (n : ℕ) (x : DR R B) : DR R B :=
   ∑ k ∈ Finset.range n, ((-1) ^ k * e (k + 1)) • (lie v ^ k) (ctr v x)
 
-variable (R δ) in
 
 def filDR (n : ℕ) : Ideal (DR R B) := Ideal.span (algebraMap B (DR R B) '' fil δ n) ⊔ rel R δ
 
@@ -286,13 +284,11 @@ section Sections
 variable (D : Data) (δ : ∀ U : D.X.affineOpens, DividedPowers (D.I.map (algebraMap D.R (Sec D.s U.1))))
   (hn : ∀ U, IsNilDP (δ U)) (hd : ∀ U, IsDPMorphism D.κ (δ U) (algebraMap D.R (Sec D.s U.1)))
 
-include hd in
 
 end Sections
 
 end Inhab
 
-open Polynomial in
 
 variable {D : Data} (Λ : Lift D)
 

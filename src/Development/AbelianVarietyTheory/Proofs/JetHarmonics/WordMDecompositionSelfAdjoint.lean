@@ -74,10 +74,6 @@ private lemma star_l0_sub_one_add_eq_m0_add {P : _root_.Formalism.FourierDecayAl
   · rw [← mul_assoc d.L.GGi, hperm]
     exact hcE.eq
 
-open MeasureTheory in
-variable {P : _root_.Formalism.FourierDecayAlt.M.Par} {A : Type} [Ring A] [StarRing A] [Algebra ℂ A] in
-variable {S : Type} [Fintype S] [DecidableEq S] in
-variable [StarModule ℂ A] in
 
 theorem _root_.GlobalTheory.HatNF.MShapeNF.mshape : ∀ (P : _root_.Formalism.FourierDecayAlt.M.Par) (A : Type) [Ring A] [StarRing A]
     [Algebra ℂ A] [StarModule ℂ A] (d : _root_.Formalism.FourierDecayAlt.Q.NFData P A), _root_.GlobalTheory.HatNF.HatHyp d →

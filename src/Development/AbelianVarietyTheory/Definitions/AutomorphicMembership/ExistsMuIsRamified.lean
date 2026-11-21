@@ -65,7 +65,6 @@ theorem g_big (eps : ℝ) (h0 : 0 < eps) (h1 : eps < 1 / 52) : ∃ x0 : ℝ, ∀
   have c4 : 2 * R.f * R.k + 1 < g := by exact_mod_cast c3
   omega
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.Mem.Top.Inh
 

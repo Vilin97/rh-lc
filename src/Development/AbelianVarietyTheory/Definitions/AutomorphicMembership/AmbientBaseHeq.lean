@@ -47,7 +47,6 @@ section Lemmas
 
 variable {D : D7}
 
-open Classical in
 
 end Lemmas
 

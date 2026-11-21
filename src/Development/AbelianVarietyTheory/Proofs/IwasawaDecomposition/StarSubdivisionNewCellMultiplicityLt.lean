@@ -65,7 +65,6 @@ theorem inRCone_cons_zero {n : ℕ} (x : LinearMap.BilinForm ℤ X) (p : Fin n �
 
 end GlobalTheory.PolFan.StarNewCell
 
-open GlobalTheory.PolFan.StarNewCell in
 
 theorem GlobalTheory.PolFan.cellMult_lt_of_star_new : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (q : ℕ) (φ lab w ψ' : InvFun (𝓞 E)),
     SimpLab H.bar q φ lab → IsCentreSet H.bar q φ w →

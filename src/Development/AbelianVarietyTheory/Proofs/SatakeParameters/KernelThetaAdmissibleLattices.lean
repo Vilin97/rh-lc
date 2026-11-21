@@ -64,7 +64,6 @@ theorem isReps_image {Λ₁ Λ₂ M₁ M₂ : AddSubgroup V} {S : Finset V} (hS 
   | (intros; apply @_root_.GlobalTheory.TransportLemma.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.TransportLemma.main ..)
 
-omit [DecidableEq V] in
 
 theorem repsOf_of_exists {Λ₁ Λ₂ : AddSubgroup V} (h : ∃ S, IsReps Λ₁ Λ₂ S) : IsReps Λ₁ Λ₂ (repsOf Λ₁ Λ₂) := by
   unfold repsOf
@@ -111,7 +110,6 @@ theorem tPull_one (z : TaylorLogMetric.VC D a b) :
   rw [Matrix.map_one _ (map_zero _) (map_one _), Matrix.map_one _ (map_zero _) (map_one _), Matrix.conjTranspose_one,
     Matrix.one_mul, Matrix.mul_one]
 
-variable (cc δ) in
 
 def TT (e : Matrix (Fin a) (Fin a) D.host.E) (e' : Matrix (Fin b) (Fin b) D.host.E) (he : e * star e = 1) (he' : e' * star e' = 1) :
     TaylorLogMetric.VC D a b ≃+ TaylorLogMetric.VC D a b where

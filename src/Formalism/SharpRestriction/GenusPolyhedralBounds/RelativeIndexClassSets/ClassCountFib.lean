@@ -189,6 +189,5 @@ def fib {Γ K U : Subgroup G} (hUK : U ≤ K) :
         orbitRel.Quotient (Gam Γ K (Quotient.out c)) (K ⧸ U.subgroupOf K) :=
   fibRep hUK Quotient.out (DoubleCoset.out_eq' Γ K)
 
-open Formalism.UG in
 
 end Formalism.MainNotions.Gaps.CC.Fib

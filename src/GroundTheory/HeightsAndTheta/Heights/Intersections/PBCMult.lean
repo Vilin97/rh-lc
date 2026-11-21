@@ -42,7 +42,6 @@ theorem length_quot_map_of_flat {A L : Type*} [CommRing A] [IsLocalRing A] [Comm
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-omit [DecidableEq K] in
 
 end BCMultProof
 

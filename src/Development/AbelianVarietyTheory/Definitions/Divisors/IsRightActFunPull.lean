@@ -81,7 +81,6 @@ def latCap (L : Submodule O C) (W : Submodule K R) : Submodule O C :=
 
 def spanQ (N : Submodule O C) : Submodule K R := (Submodule.span K (N : Set C)).map C.subtype
 
-omit [Algebra O K] [IsScalarTower O K C] in
 
 theorem mem_spanQ {N : Submodule O C} {F : C} (hF : F ∈ N) : (F : R) ∈ spanQ N :=
   ⟨F, Submodule.subset_span hF, rfl⟩
@@ -160,7 +159,6 @@ def autRed (h : I ≤ J) : QAut N I →* QAut N J where
 theorem autRed_qProj (h : I ≤ J) (γ : QAut N I) (q : QMod N I) : autRed h γ (qProj h q) = qProj h (γ q) :=
   endRed_qProj h _ q
 
-variable (N I J) in
 
 def trivMod : Subgroup (QAut N I) where
   carrier := {γ | ∀ q, γ q - q ∈ J • (⊤ : Submodule O (QMod N I))}

@@ -41,15 +41,12 @@ def galOver (M : IntermediateField K (PadicAlgCl p)) (σ : Gal(PadicAlgCl p/K))
   { σ.toRingEquiv with
     commutes' := fun m => (IntermediateField.mem_fixingSubgroup_iff _ _).1 hσ m m.2 }
 
-omit [FiniteDimensional ℚ_[p] K] in
 
 variable (M M' : IntermediateField K (PadicAlgCl p)) (hMM' : M ≤ M') [FiniteDimensional K M']
   {τ : Gal(PadicAlgCl p/K)} (hτM : τ ∈ M.fixingSubgroup)
   (hτp : τ ^ p ∈ M'.fixingSubgroup) (hτ1 : τ ∉ M'.fixingSubgroup)
   (hgen : ∀ σ ∈ M.fixingSubgroup, ∃ j : ℕ, ∀ y ∈ M', σ y = (τ ^ j) y)
 
-omit [FiniteDimensional ℚ_[p] K] [FiniteDimensional K M'] in
-include hτp hτ1 in
 
 theorem pow_mem_fixingSubgroup_iff (m : ℕ) : τ ^ m ∈ M'.fixingSubgroup ↔ p ∣ m := by
   constructor
@@ -69,10 +66,7 @@ section Embeddings
 
 variable {M M'} {hMM'}
 
-omit [FiniteDimensional ℚ_[p] K] [FiniteDimensional K M'] in
-include hτM in
 
-variable (hMM') in
 
 def stepEmb (hτM : τ ∈ M.fixingSubgroup) (j : ℕ) :
     IntermediateField.extendScalars hMM' →ₐ[M] PadicAlgCl p :=
@@ -145,8 +139,6 @@ theorem finiteDimensional_extendScalars_of_le :
   rw [finrank_eq_mul_finrank_extendScalars hMM'] at h
   exact Nat.pos_of_ne_zero fun h0 => by simp [h0] at h
 
-include hMM' hτM hτp hτ1 hgen in
-omit [FiniteDimensional ℚ_[p] K] in
 
 theorem natCast_mul_normTrace_eq_sum {y : PadicAlgCl p} (hy : y ∈ M') :
     (p : PadicAlgCl p) * normTrace M y = ∑ j ∈ Finset.range p, (τ ^ j) y := by
@@ -171,7 +163,6 @@ theorem natCast_mul_normTrace_eq_sum {y : PadicAlgCl p} (hy : y ∈ M') :
     mul_div_cancel₀ _ hp0]
   rfl
 
-omit [FiniteDimensional ℚ_[p] K] in
 
 theorem sum_range_pow_apply_eq (τ : Gal(PadicAlgCl p/K)) (n : ℕ) (y : PadicAlgCl p) :
     ∑ j ∈ Finset.range n, (τ ^ j) y = ∑ i ∈ Finset.range n, (n.choose (i + 1) : PadicAlgCl p) *
@@ -195,7 +186,6 @@ theorem sum_range_pow_apply_eq (τ : Gal(PadicAlgCl p/K)) (n : ℕ) (y : PadicAl
   rw [← key]
   exact Finset.sum_congr rfl fun j _ => (hT j y).symm
 
-omit [FiniteDimensional K M'] in
 
 theorem nrm_pow_sub_one_apply_le (τ : Gal(PadicAlgCl p/K)) (hτM' : ∀ z ∈ M', τ z ∈ M') {ρ : ℝ}
     (hρ0 : 0 ≤ ρ) (hρ : ∀ z ∈ M', nrm K (τ z - z) ≤ ρ * nrm K z) {y : PadicAlgCl p} (hy : y ∈ M') (i : ℕ) :
@@ -214,7 +204,6 @@ theorem nrm_pow_sub_one_apply_le (τ : Gal(PadicAlgCl p/K)) (hτM' : ∀ z ∈ M
       _ ≤ ρ * (ρ ^ i * nrm K y) := mul_le_mul_of_nonneg_left ih.2 hρ0
       _ = ρ ^ (i + 1) * nrm K y := by ring
 
-include hMM' hτM hτp hτ1 hgen in
 
 theorem nrm_normTrace_mul_le (hτM' : ∀ z ∈ M', τ z ∈ M') {ρ : ℝ} (hρ0 : 0 ≤ ρ) (hρ1 : ρ ≤ 1)
     (hρ : ∀ z ∈ M', nrm K (τ z - z) ≤ ρ * nrm K z) {y : PadicAlgCl p} (hy : y ∈ M') :

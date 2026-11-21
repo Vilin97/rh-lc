@@ -158,7 +158,6 @@ def Langlands : Prop := ∀ (S : Set (Pl E)) (n : ℕ) (ρ : Typ E n) (φ : Sm E
   ((∀ (k : KA E n) (d : Dat S n), d.HasTyp ρ.ρ → d.comp (rt E n k φ).1 = 0) → φ = 0) ∧
   ((∀ (k : KA E n) (d : Dat S n), d.HasTyp ρ.ρ → 2 ≤ d.len → d.comp (rt E n k φ).1 = 0) → Cusp φ.1)
 
-open Classical in
 
 def NearBlo : Prop := ∀ (S : Set (Pl E)) (r : ℕ) (ρ : Typ E r) (B : ℝ),
   {p : ((E →+* ℂ) → Fin r → ℂ) × (Pl E → Multiset ℂˣ) | ∃ b : Blo S r, Killed ρ.ρ b.f.1 ∧ (∀ τ i, ‖b.Λ τ i‖ ≤ B) ∧

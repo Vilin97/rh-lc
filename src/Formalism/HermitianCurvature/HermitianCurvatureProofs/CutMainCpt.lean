@@ -323,7 +323,6 @@ end Formalism.FourierDecayAlt.P.CutBP
 namespace Formalism.FourierDecayAlt.P.CutBP
 open Formalism.FourierDecayAlt Formalism.QuantumDeterminants
 noncomputable section
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem _root_.Formalism.FourierDecayAlt.P.CutBP.thmBpAt_mainCpt (hA : P5.ThmPActualCpt) (Cb C₃ CΛ C₀ Cκ : ℝ) (hC₃ : 0 ≤ C₃) (hCΛ : 0 ≤ CΛ) (hC₀ : 1 / 2 ≤ C₀) :
     ∃ C₄ c₃ Cc : ℝ, ∀ (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
@@ -370,7 +369,6 @@ end Formalism.FourierDecayAlt.P.CutBP
 namespace Formalism.FourierDecayAlt.P.CutBP
 open Formalism.FourierDecayAlt Formalism.QuantumDeterminants
 noncomputable section
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem _root_.Formalism.FourierDecayAlt.P.CutBP.thmBpAt_main1Cpt (hA : P5.ThmPActualCpt) (Cb C₃ CΛ C₀ : ℝ) (hC₃ : 0 ≤ C₃) (hCΛ : 0 ≤ CΛ) (hC₀ : 1 / 2 ≤ C₀) :
     ∃ C₄ c₃ Cc : ℝ, ∀ (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
@@ -401,7 +399,6 @@ end Formalism.FourierDecayAlt.P.CutBP
 namespace Formalism.FourierDecayAlt.P.CutBP
 open Formalism.FourierDecayAlt Formalism.QuantumDeterminants Filter Topology
 noncomputable section
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem _root_.Formalism.FourierDecayAlt.P.CutBP.thmBpAt_main2Cpt (hA : P5.ThmPActualCpt) (Cb C₃ CΛ C₀ : ℝ) (hC₃ : 0 ≤ C₃) (hCΛ : 0 ≤ CΛ) (hC₀ : 1 / 2 ≤ C₀) :
     ∃ C₄ c₃ Cc Cc' : ℝ, ∀ (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
@@ -502,7 +499,6 @@ end Formalism.FourierDecayAlt.P.CutBP
 namespace Formalism.FourierDecayAlt.P.CutBP
 open Formalism.FourierDecayAlt Formalism.QuantumDeterminants Filter Topology MeasureTheory
 noncomputable section
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 theorem _root_.Formalism.FourierDecayAlt.P.CutBP.thmBpAt_main4Cpt (hA : P5.ThmPActualCpt) (h1 : NFTopFormAllCpt) (h2 : NFTopPtwAll) (h3 : NFTopDomAll)
     (h4 : NFTopIdAll) (Cb C₃ CΛ C₀ : ℝ) (hC₃ : 0 ≤ C₃) (hCΛ : 0 ≤ CΛ) (hC₀ : 1 / 2 ≤ C₀) :
@@ -544,7 +540,6 @@ open Formalism.FourierDecayAlt Formalism.QuantumDeterminants Filter Topology Mea
 open scoped ComplexConjugate InnerProductSpace
 noncomputable section
 open Classical
-open GLG in
 
 theorem _root_.Formalism.FourierDecayAlt.P.CutBP.low_level_germCpt : GLGermCpt := by
   intro _hA Wp Wq _ _ _ _ _ _ P p nn F Y N Cb _hCb hF hnn b s hb hs hbs h hh w _hw _hN H _ _ _ Vec hVec K hK hK0

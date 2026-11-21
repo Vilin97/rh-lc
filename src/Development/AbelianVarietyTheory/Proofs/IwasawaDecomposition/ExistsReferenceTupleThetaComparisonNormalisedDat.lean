@@ -42,7 +42,6 @@ section Cover
 
 open GlobalTheory.Member
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_unf_one {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
     {n r : ℕ} (d : DeltaDat Xo c n) (V : HSp D) (hr : V.rank = r) (ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E))
@@ -122,7 +121,6 @@ theorem exists_BIs (hL : R.toLevCh.Is A.μ0) (hv : Formalism.L2.Host.ValLL D R.C
   simp only [dif_pos (And.intro h0 h1)]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_phi_of_empty (hL : R.toLevCh.Is A.μ0) (hvP : R.thP_vP) (i : Fin D.R.m) (hV : VStd D i) (t : T0) (hQ : R.Q t = ∅)
     {La : Type} [AddCommGroup La] [Module (𝓞 D.host.E) La] (ι : La →ₗ[𝓞 D.host.E] (Fin (Wc D i).rank → D.host.E))
@@ -192,7 +190,6 @@ theorem exists_coeff_rows (ha : AlgTie T) (hp : T.Q.PinField) :
   exact ⟨⟨_, LinearEquiv.finiteDimensional (D.what₂.embLL.toRatAlgHom.equivFieldRange).toLinearEquiv,
     fun τ a => hle (T.Q.c.conj τ a), hle T.Q.c.zeta_mem, T.Q.c.le.trans hle⟩, rfl, hle⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem exists_pins_ref (hR : PreChar R) (hv : Formalism.L2.Host.ValLL D R.C) (ht : TieIn T R κ v₀) (hpb : T.pb = R.C.P.pb)
     (hG : QGuard R) (i : Fin D.R.m) (hV : VStd D i) :

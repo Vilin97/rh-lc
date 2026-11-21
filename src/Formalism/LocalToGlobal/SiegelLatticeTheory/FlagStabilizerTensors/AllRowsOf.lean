@@ -24,7 +24,6 @@ section Events
 
 variable {D : D7} (X : HidaSetting D)
 
-open Classical in
 
 def egA (a : MonoidAlgebra ℂ (G0g D.nd)) (x : X.B.I.Gf) : ℂ :=
   if h : x ∈ X.B.I.Kset ∧ ∃ γ : G0g D.nd, GoodAt X x γ then
@@ -50,7 +49,6 @@ theorem ES_good : ES (D := D) {t | D.ntypes.goodTuple t} = D.ntypes.e0 := rfl
 def eT (S : Set (Tup2 D)) : X.B.I.Gf → ℂ :=
   X.B.I.convF X.B.μf X.B.e (egA X (ES S))
 
-open Classical in
 
 def ReT (S : Set (Tup2 D)) : X.B.I.L2 X.B.μf X.B.fund →L[ℂ] X.B.I.L2 X.B.μf X.B.fund :=
   if h : ∃ T, X.B.I.IsRConvF X.B.μf X.B.fund X.B.R (eT X S) T then Classical.choose h else 0
@@ -350,7 +348,6 @@ theorem Kg_inv {k : X.B.I.Gf} (hk : k ∈ X.B.I.Kg X.B.g) : k⁻¹ ∈ X.B.I.Kg 
 theorem one_mem_Kg : (1 : X.B.I.Gf) ∈ X.B.I.Kg X.B.g :=
   ⟨K_one _, fun y _ => ⟨0, zero_mem _, by rw [fmat_one, sub_self, Matrix.zero_mulVec, smul_zero]⟩⟩
 
-open Classical in
 
 theorem conv_Kg (x : X.B.I.Gf) :
     X.B.I.convF X.B.μf X.B.e
@@ -430,7 +427,6 @@ theorem ES_univ_coeff (γ : G0g D.nd) : (ES (D := D) Set.univ).coeff γ = if γ 
   congr 1
   exact propext ⟨fun h => funext fun kv => h kv (Finset.mem_univ _), fun h kv _ => by rw [h]; rfl⟩
 
-open Classical in
 
 theorem egA_univ (hK : RedKer X) (x : X.B.I.Gf) :
     egA X (ES Set.univ) x =
@@ -598,7 +594,6 @@ def KgN (m : ℕ) : Subgroup (KSub I) where
 
 instance KgN_normal (m : ℕ) : (KgN I m).Normal := ⟨fun _ hn g => Kg_conj' I m g.2 hn⟩
 
-open Classical in
 
 end RedQ
 
@@ -681,7 +676,6 @@ end FinalK
 
 section Count
 
-open Classical in
 
 theorem exists_lab {α : Type} [DecidableEq α] (T : Finset α) (m : α → ℕ) (good : α → Prop) [DecidablePred good]
     (Dg N : ℕ) (G : Fin Dg → α) (hGT : ∀ σ, G σ ∈ T) (hGg : ∀ σ, good (G σ))
@@ -758,17 +752,14 @@ open Formalism.L2.SG.Pf.RowDictPf
 
 variable {D : D7} (X : HidaSetting D)
 
-open Classical in
 
 def labT : Finset (Tup2 D) :=
   haveI : ∀ k, NeZero (D.host.g k) := fun k => ⟨(D.host.g_prime k).ne_zero⟩
   (Finset.univ.image (tupOf (D := D))).filter (fun t => ∀ k v, IsLabel D k (t k v))
 
-open Classical in
 
 def RowsAdd : Prop := ∀ S : Set (Tup2 D), dimX X S = ∑ t ∈ labT, if t ∈ S then dimX X {t} else 0
 
-open Classical in
 
 def RowsGood : Prop :=
   (∀ σ k v, IsLabel D k (D.nd.lab k (D.what₂.ft σ) v)) ∧ (∀ σ, D.ntypes.goodTuple (fun k => D.nd.lab k (D.what₂.ft σ))) ∧

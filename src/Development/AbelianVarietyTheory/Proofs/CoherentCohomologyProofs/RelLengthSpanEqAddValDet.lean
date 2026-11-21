@@ -11,7 +11,6 @@ open IsDiscreteValuationRing
 variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
   {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [Fintype ι] in
 
 theorem addVal_prod (s : Finset ι) (c : ι → R) :
     addVal R (∏ i ∈ s, c i) = ∑ i ∈ s, addVal R (c i) := by

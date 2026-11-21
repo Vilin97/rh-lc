@@ -169,12 +169,10 @@ attribute [instance] Tower.nK Tower.nF Tower.nL Tower.cmK Tower.realF Tower.cmL 
 def TameL (l : ℕ) (F : IntermediateField ℚ Ω) : Prop :=
   ∀ A : ValuationSubring Ω, A.valuation (l : Ω) < 1 → ∀ g ∈ Ine (F := ℚ) A, ∃ m : ℕ, l.Coprime m ∧ g ^ m ∈ F.fixingSubgroup
 
-variable (l) in
 
 def IsLayer (m : ℕ) (F F' : IntermediateField ℚ Ω) : Prop :=
   ∀ g : G ℚ Ω, g ∈ F'.fixingSubgroup ↔ g ∈ F.fixingSubgroup ∧ cycZ ℚ Ω l g ^ (l - 1) ∈ KStar.TotallyRealRoots.princ l (m + 1)
 
-variable (l) in
 
 def Dies (w : ℕ) (F : IntermediateField ℚ Ω) : Prop :=
   ∀ θ : G ℚ Ω →* Multiplicative (ZMod l), IsOpen (θ.ker : Set (G ℚ Ω)) →

@@ -18,7 +18,6 @@ section CommGroup
 variable {R G : Type u} [CommRing R] [CommGroup G] [Fintype G] (A : Rep.{u} R G) {σ : G}
   (hσ : ∀ x, x ∈ Subgroup.zpowers σ)
 
-include hσ in
 
 theorem invariants_eq_ker_normHomCompSub_g :
     A.ρ.invariants = LinearMap.ker (normHomCompSub A σ).g.hom := by

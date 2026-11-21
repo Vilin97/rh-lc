@@ -50,23 +50,14 @@ section Examples
 
 variable (n)
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] in
 
-omit [Fintype ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] [DecidableEq ι] in
 
-omit [Fintype ι] in
 
-omit [Fintype ι] in
 
 end Examples
 

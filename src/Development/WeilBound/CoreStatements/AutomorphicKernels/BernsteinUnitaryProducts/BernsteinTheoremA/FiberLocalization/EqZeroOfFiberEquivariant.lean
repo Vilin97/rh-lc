@@ -30,9 +30,7 @@ section General
 variable {Y : Type*} [TopologicalSpace Y] [T2Space Y] [LocallyCompactSpace Y]
   [TotallyDisconnectedSpace Y]
 
-omit [TopologicalSpace Y] [T2Space Y] [LocallyCompactSpace Y] [TotallyDisconnectedSpace Y] in
 
-omit [T2Space Y] [LocallyCompactSpace Y] [TotallyDisconnectedSpace Y] in
 
 end General
 
@@ -79,11 +77,8 @@ section OpenSubset
 
 variable {U : Set X}
 
-open Classical in
 
-omit [TopologicalSpace X] in
 
-omit [TopologicalSpace X] in
 
 variable [T2Space X]
 

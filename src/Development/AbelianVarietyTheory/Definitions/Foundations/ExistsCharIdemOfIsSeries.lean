@@ -18,7 +18,6 @@ end Central
 
 variable {g : ℕ} [Fact g.Prime] {N : ℕ}
 
-open Formalism.MainNotions.ArithmeticCylinders in
 
 theorem isUp_iff_isUniUp (u : GG g N) : IsUp g N u ↔ IsUniUp u.val := by
   unfold IsUp IsUniUp
@@ -30,7 +29,6 @@ theorem isUp_iff_isUniUp (u : GG g N) : IsUp g N u ↔ IsUniUp u.val := by
   · intro h
     exact ⟨fun a => (h a a).2 rfl, fun a b hab => (h a b).1 hab⟩
 
-open Formalism.MainNotions.ArithmeticCylinders in
 
 theorem coeff_eDat (P : Matrix (Fin N) (Fin N) (ZMod g) → Prop) (φ : Matrix (Fin N) (Fin N) (ZMod g) → ZMod g)
     (ψ : AddChar (ZMod g) ℂ) (x : GG g N) :
@@ -45,7 +43,6 @@ theorem coeff_eDat (P : Matrix (Fin N) (Fin N) (ZMod g) → Prop) (φ : Matrix (
   · rw [Nat.card_eq_fintype_card, Fintype.card_subtype, div_eq_inv_mul]
   · simp
 
-open Formalism.MainNotions.ArithmeticCylinders in
 
 theorem sum_ite_entN (M : Matrix (Fin N) (Fin N) (ZMod g)) (a : Fin N) (c : ℕ) :
     (∑ b : Fin N, if (b : ℕ) = c then M a b else 0) = entN M a c := by
@@ -73,7 +70,6 @@ private theorem sum_superdiag_eq_sum_entN (M : Matrix (Fin N) (Fin N) (ZMod g)) 
   rw [Finset.sum_range_succ, Nat.add_sub_cancel,
     show Formalism.MainNotions.ArithmeticCylinders.entN M n (n + 1) = 0 by unfold Formalism.MainNotions.ArithmeticCylinders.entN; rw [dite_eq_right (by omega)], add_zero]
 
-open Formalism.MainNotions.ArithmeticCylinders in
 
 theorem coeff_eU (ψ : AddChar (ZMod g) ℂ) (hψ : ψ ≠ 1) (s k : ℕ) (h : s + k < N) (x : GG g N) :
     (eU g N ψ).coeff x = (levOfChar ψ hψ N false s k h).e x := by
@@ -130,7 +126,6 @@ private theorem sum_range_eq_sum_split_of_last_eq_zero {R : Type} [AddCommMonoid
     rw [e1, e2, e3]
     abel_nf
 
-open Formalism.MainNotions.ArithmeticCylinders in
 
 theorem sum_edge_eq_phiJ (ψ : AddChar (ZMod g) ℂ) (hψ : ψ ≠ 1) (s k : ℕ) (hN : N = k + 2 * s + 1) (h : s + k < N)
     (M : Matrix (Fin N) (Fin N) (ZMod g)) :
@@ -175,7 +170,6 @@ theorem sum_edge_eq_phiJ (ψ : AddChar (ZMod g) ℂ) (hψ : ψ ≠ 1) (s k : ℕ
   · simp only [if_neg hs]
     abel
 
-open Formalism.MainNotions.ArithmeticCylinders in
 
 theorem coeff_eJ (ψ : AddChar (ZMod g) ℂ) (hψ : ψ ≠ 1) (s k : ℕ) (hN : N = k + 2 * s + 1) (h : s + k < N) (x : GG g N) :
     (eJ g N k s ψ).coeff x = (levOfChar ψ hψ N true s k h).e x := by

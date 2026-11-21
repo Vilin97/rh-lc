@@ -111,7 +111,6 @@ theorem vec_eq_tOp {W : G.Weil} {U : Set T} {N : Std G U} (Z : Normal W N) {t : 
     rfl
   exact ⟨h2.trans h1, h1 ▸ GlobalTheory.VecTheta.isThetaFunO_of_thetaAt W.ψ_std W.θ_is hf (Z.vac_is p hp).2.theta⟩
 
-variable (D) in
 
 def pr (t : T) : Fin D.R.m ⊕ Fin D.R.m → Pair T := Sum.elim (fun j => .top t j) (fun i => .chi i D.R.m)
 
@@ -282,7 +281,6 @@ def pairML (S : GridChoice W U) (t : T) (e : AE D) (x : ∀ j, FinPt G (.top j))
     · rw [rowOf_smul, colOf_inr, colOf_inr]
       exact compl₁₂_smul_right _ _ _ _
 
-open Classical in
 
 def gd (S : GridChoice W U) (t : T) (e : AE D) (d : PureDat G t) (k : Fin D.R.m ⊕ Fin D.R.m) : aSub S t e k :=
   if h : (intersection_update_fsHerm_neg_one d k).fn ∈ aSub S t e k then ⟨(intersection_update_fsHerm_neg_one d k).fn, h⟩ else 0
@@ -322,7 +320,6 @@ theorem rowMap_eq (S : GridChoice W U) (t : T) (e : AE D) (d : PureDat G t)
 
 end GlobalTheory.FunObj.PairIndep
 
-open GlobalTheory.FunObj.PairIndep in
 
 theorem GlobalTheory.FunObj.sumOK_vec_indep : ∀ (D : D7) (T : Type) (L : LevCh D T) (sc : GlobalTheory.ChiGrid.Consts) (G : GridData L sc) (W : G.Weil) (U : Set T) (S : GridChoice W U) (μ₀ : T), L.Is μ₀ → ∀ t ∈ U, ∀ Φ : G.Datum, (∀ β τ, S.IsExpansion t Φ β τ → ∀ d ∈ τ.support, (∀ j, S.Z.HasVec (d.1 j)) ∧ ∀ i, S.Z.HasVec (d.2 i)) ∧ ∀ β τ τ', S.IsExpansion t Φ β τ → S.IsExpansion t Φ β τ' → ∀ c : S.Classes t Φ β, S.pairAt τ c = S.pairAt τ' c := by
   intro D T L sc G W U S μ₀ hL t ht Φ

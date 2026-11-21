@@ -51,7 +51,6 @@ def HoweSpan (ι : Type) [Fintype ι] : Prop :=
     ∃ (m : ℕ) (y' : Fin m → ι → Matrix (Fin b) (Fin b) ℂ) (s : Fin m → ℂ), (∀ j, IsInv (y' j)) ∧
       ∀ F ∈ Vn lam n, Q F = ∑ j, s j • subY hab (y' j) F
 
-omit [Fintype ι] in
 
 theorem evalAt_lft (g y : ι → Matrix (Fin a) (Fin a) ℂ) (F : PY ι a) :
     evalAt y (lft g F) = evalAt (fun τ => g τ * y τ) F := by
@@ -75,7 +74,6 @@ private lemma mvZ_one_right_X_eq_sum {κ : Type} (h : κ → Matrix (Fin b) (Fin
     simp [Ne.symm hj]
   · simp
 
-omit [Fintype ι] in
 
 theorem mvZ_subY (hab : a ≤ b) (h y' : ι → Matrix (Fin b) (Fin b) ℂ) (F : PY ι a) :
     mvZ (fun _ => 1) h (subY hab y' F) = subY hab (fun τ => h τ * y' τ) F := by
@@ -90,7 +88,6 @@ theorem mvZ_subY (hab : a ≤ b) (h y' : ι → Matrix (Fin b) (Fin b) ℂ) (F :
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   exact AlgHom.congr_fun key F
 
-omit [Fintype ι] in
 
 theorem subY_eq_subD (hab : a ≤ b) (y' : ι → Matrix (Fin b) (Fin b) ℂ) (F : PY ι a) :
     subY hab y' F = aeval (Sum.elim (fun x : ι × Fin b × Fin b => (C (y' x.1 x.2.1 x.2.2) : FP ι a b)) X)

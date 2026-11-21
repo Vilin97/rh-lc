@@ -64,6 +64,5 @@ variable (K : Type) [Field K] [NumberField K] [IsCMField F] [IsCMField K] [Algeb
 
 end
 
-omit [IsAlgClosure F Ω] in
 
 end UpperTheory.GalN.V

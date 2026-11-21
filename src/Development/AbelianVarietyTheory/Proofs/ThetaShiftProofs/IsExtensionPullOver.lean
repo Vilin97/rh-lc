@@ -168,7 +168,6 @@ theorem trF_comp {φ' : K → (Y' ⟶ X)} {p : Y' ⟶ Y} (hφ : ∀ k, φ' k = p
 variable {π' : Y' ⟶ Spec (CommRingCat.of R')} {f : R →+* R'} {p : Y' ⟶ Y}
   (hp : p ≫ π = π' ≫ Spec.map (CommRingCat.ofHom f)) {φ' : K → (Y' ⟶ X)} (hφ : ∀ k, φ' k = p ≫ φ k)
 
-variable (L ε) in
 
 def pullOver : SecOver π (LB.LinComb L φ ε) →ₛₗ[f] SecOver π' (LB.LinComb L φ' ε) where
   toFun s :=
@@ -318,7 +317,6 @@ theorem isExtension_pullFn {U : Y.Opens} {U' : Y'.Opens} (h : U' = p ⁻¹ᵁ U)
 variable {L : LB X} (hL : L.IsLB) {I : Type} [Fintype I] {φ : I → (Y ⟶ X)} (ε : I → ℤ) {φ' : I → (Y' ⟶ X)}
   (hφ : ∀ k, φ' k = p ≫ φ k)
 
-include hL in
 
 theorem isExtension_pullOver : IsExtension (pullOver L ε H.w hφ) := by
   obtain ⟨T, hT⟩ := (NoetherianSpace.isCompact (Set.univ : Set Y)).elim_finite_subcover

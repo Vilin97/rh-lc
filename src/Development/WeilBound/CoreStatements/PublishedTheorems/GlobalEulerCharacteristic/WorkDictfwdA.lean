@@ -223,7 +223,6 @@ theorem real_H0_card_eq_fixed (K : FiniteSubfield) (S' : Set (HeightOneSpectrum 
           Nat.card {b : B // B.ρ (resS (Ω := AlgebraicClosure ℚ) S' cc) b = b} := by
   exact PositivityTheory.Lit1.GEN.W_dictfwd_b.real_H0_card_eq_fixed K S' ιr v
 
-open scoped Classical in
 
 theorem transport_data {l : ℕ} [Fact l.Prime] (S : Finset (HeightOneSpectrum (𝓞 F)))
     (hS : ContainsAbove S l) :
@@ -260,7 +259,6 @@ theorem transport_data {l : ℕ} [Fact l.Prime] (S : Finset (HeightOneSpectrum (
     show A.ρ (θ.symm (θ _)) a = a ↔ _
     rw [ContinuousMulEquiv.symm_apply_apply]
 
-open scoped Classical in
 
 theorem ratio_F_exists {l : ℕ} [Fact l.Prime] (h : RatioOne l (fun _ => True))
     (S : Finset (HeightOneSpectrum (𝓞 F))) (hS : ContainsAbove S l) :
@@ -287,7 +285,6 @@ theorem ratio_F_exists {l : ℕ} [Fact l.Prime] (h : RatioOne l (fun _ => True))
   rw [hcard, h1]
   exact (Fintype.prod_equiv e _ _ (fun w => by rw [hfix A w])).symm
 
-open scoped Classical in
 
 theorem ratio_F {l : ℕ} [Fact l.Prime] (h : RatioOne l (fun _ => True))
     (S : Finset (HeightOneSpectrum (𝓞 F))) (hS : ContainsAbove S l)

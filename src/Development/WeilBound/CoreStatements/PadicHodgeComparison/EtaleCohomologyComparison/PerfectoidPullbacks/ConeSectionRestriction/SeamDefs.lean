@@ -18,7 +18,6 @@ def tpow (t : Fin d → Rˣ) (m : Fin d → ℤ) : R := ((∏ k, t k ^ m k : Rˣ
 def expS (S : Finset (Fin (d + 1))) : Set (Fin d → ℤ) :=
   {m | (∀ k : Fin d, k.succ ∉ S → 0 ≤ m k) ∧ ((0 : Fin (d + 1)) ∉ S → ∑ k, m k ≤ 0)}
 
-variable (K) in
 
 def torusS (t : Fin d → Rˣ) (S : Finset (Fin (d + 1))) : Subalgebra K R := Algebra.adjoin K (tpow t '' expS S)
 

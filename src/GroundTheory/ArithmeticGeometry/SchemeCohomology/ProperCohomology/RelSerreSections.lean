@@ -63,7 +63,6 @@ lemma algebraMap_overBase {V : X.Opens} (hV : IsAffineOpen V) (b : Γ(X, V)) :
   refine (app_eqToHom_apply ψ (Scheme.Opens.ι_image_top V) _ _ b).trans ?_
   simp
 
-omit [X.Over (Spec (.of A))] in
 
 lemma smul_restrict_top (M : X'.Modules) (U : X'.Opens) (a : Γ(U.toScheme, ⊤))
     (y : Γ(M.restrict U.ι, ⊤)) :

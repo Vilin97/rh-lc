@@ -79,7 +79,6 @@ theorem rep_mem_sm (M : DSModel V S) (τ : D.what₂.Tau) {g : Matrix (Fin V.ran
 
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 
-open Classical in
 
 variable {θ} {M : DSModel V S}
 

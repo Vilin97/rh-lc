@@ -123,7 +123,6 @@ def PPF (C b : ℝ) : ℝ :=
   C * (O.f : ℝ) ^ 2 * (O.nr : ℝ) ^ 6 *
     Real.log (b * O.nr * O.g1 * O.g2 * O.pd * O.pd' * |(O.dE : ℝ)|)
 
-open Classical in
 
 def ee (C b : ℝ) (q : O.Sq) : ℕ :=
   if q = O.sv0 then ⌊O.PPF C b / Real.log (O.qq O.sv0)⌋₊ + 1 else 2
@@ -232,7 +231,6 @@ def LeafPol (O : FunData K Df) (C x CH b : ℝ) : Prop := O.pol C b ≤ x ^ CH
 
 end Leaves
 
-set_option maxHeartbeats 4000000 in
 
 theorem size_arith (f k m N L PPF Bw C b lx Sg cs np Rp lg l1 l2 l3 EM hI FP Arch Del T : ℝ)
     (hm : 1 ≤ m) (hf : 1 ≤ f) (hfk : f ≤ k) (hrN : k + m - 1 ≤ N) (hb : 1 ≤ b) (hL : 1 ≤ L) (hC : 1 ≤ C)
@@ -402,7 +400,6 @@ theorem Sig0_nonneg (O : FunData K Df) (C b : ℝ) : 0 ≤ O.Sig0 C b := by
   unfold FunData.Sig0
   exact Finset.sum_nonneg fun q _ => mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg _)
 
-set_option maxHeartbeats 1000000 in
 
 theorem size_le (O : FunData K Df) (C x CH b : ℝ) (hC : 1 ≤ C) (hx : 1 ≤ x)
     (hL1 : 1 ≤ Real.log b) (hLx : Real.log b + Real.log x ≤ 3 * Real.log b)

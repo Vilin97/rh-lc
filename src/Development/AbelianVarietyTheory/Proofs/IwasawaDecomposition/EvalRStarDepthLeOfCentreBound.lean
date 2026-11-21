@@ -49,7 +49,6 @@ theorem inCone_cell {n : ℕ} {γ' : Fin m' → LinearMap.BilinForm ℤ X} (hγ'
     · linarith
   exact h3 _ (hβ i) (hβp i) he
 
-omit [Module O X] [Module.Finite O X] in
 
 theorem sum_mem_rcone {p : ℕ} {δ : Fin p → LinearMap.BilinForm ℤ X} {γ : Fin m → LinearMap.BilinForm ℤ X}
     (x : Fin p → ℝ) (hx : ∀ i, 0 ≤ x i)
@@ -77,7 +76,6 @@ theorem sum_mem_rcone {p : ℕ} {δ : Fin p → LinearMap.BilinForm ℤ X} {γ :
 
 end StarUpper
 
-open StarUpper in
 
 theorem evalR_starDepth_le : ∀ (O : Type) [CommRing O] (bar : O → O) (ψ w : InvFun O) (X : Type) [AddCommGroup X]
     [Module O X] [Module.Finite O X] (m : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X) (B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) (s : ℝ),

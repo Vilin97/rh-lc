@@ -42,7 +42,6 @@ theorem unipGL_mem_normOneGL {r : ℕ} (X : UPos n r → 𝔸[K]) :
   rw [mem_normOneGL, h1, map_one]
   rfl
 
-variable (K n) in
 
 def unipOne (r : ℕ) (X : UPos n r → 𝔸[K]) : normOneGL K n :=
   ⟨unipGL X, unipGL_mem_normOneGL X⟩
@@ -143,7 +142,6 @@ theorem exists_lintegral_unip_sq_le (r : ℕ) {S : Set (normOneGL K n)} (hS : Is
     _ = ∫⁻ y in T, ‖φ (mk Γ₁ y)‖ₑ ∂μ := by
         rw [setLIntegral_const, unipMeasure_unipFundamentalDomain, mul_one]
 
-variable (K n) in
 
 def ctFun (r : ℕ) (F : RightCosetSpace Γ₁ → ℂ) (y : normOneGL K n) : ℂ :=
   ∫ X in unipFundamentalDomain K n r, F (mk Γ₁ (unipOne K n r X * y)) ∂unipMeasure K n r

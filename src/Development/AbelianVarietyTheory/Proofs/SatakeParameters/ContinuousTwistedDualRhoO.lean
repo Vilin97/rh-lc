@@ -33,7 +33,6 @@ theorem mem_stdG_OL (x : Fin k → ↥LL.1) : x ∈ stdG ↥(OL LL) ↥LL.1 k �
   · intro h
     exact ⟨fun j => ⟨x j, h j⟩, rfl⟩
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def stdLat (M : ↥(GK K) →* Matrix (Fin k) (Fin k) ↥LL.1) (hO : ∀ g a b, M g a b ∈ OL LL)
     (hc : ∀ v, Continuous fun g => (M g).mulVec v) : Lat K LL where

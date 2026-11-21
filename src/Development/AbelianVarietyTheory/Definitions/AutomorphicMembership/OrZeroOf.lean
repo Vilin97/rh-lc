@@ -66,7 +66,6 @@ section Two
 variable {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
   (f : T' → T) (μ : T')
 
-set_option maxHeartbeats 2000000 in
 
 def dat2 (R : RealDat D (A.comap id (f μ)) Ks) (mu : HeightOneSpectrum (𝓞 D.what₂.LL) → T')
     (tw : Finset (HeightOneSpectrum (𝓞 D.what₂.LL))) : RealDat D (A.comap f μ) Ks where
@@ -141,12 +140,10 @@ def bare2 (A : FamIn D.what₂.LL G Pl0 T D.R.m) (P0 : Subgroup G) (ψ0 : P0 →
 variable {f μ} {R : RealDat D (A.comap id (f μ)) Ks} (mu : HeightOneSpectrum (𝓞 D.what₂.LL) → T')
   (tw : Finset (HeightOneSpectrum (𝓞 D.what₂.LL))) {P0 : Subgroup G} {ψ0 : P0 →* D.what₂.LLˣ} {P1 : Subgroup G} {ψ1 : P1 →* D.what₂.LLˣ}
 
-set_option maxHeartbeats 2000000 in
 
 theorem isGrp (h : R.IsGrp (bare2 _ P0 ψ0 P1 ψ1)) : (dat2 f μ R mu tw).IsGrp (bare2 _ P0 ψ0 P1 ψ1) :=
   ⟨fun t => h.red_R (f t), fun i t => h.red_L i (f t), h.levels, h.record, h.chiW⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem isFam (h : R.IsFam) : (dat2 f μ R mu tw).IsFam := by
   obtain ⟨g, c, l, ht⟩ := h.tie
@@ -154,14 +151,12 @@ theorem isFam (h : R.IsFam) : (dat2 f μ R mu tw).IsFam := by
     fun t => ht.coefR (f t), fun i t => ht.coefL i (f t)⟩, h.Sb, fun t => h.roots (f t), h.pl_onto, fun t => h.degR (f t),
     fun i t => h.degL i (f t), fun i t => h.muVal i (f t), h.etaVal⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem isModels (h : R.IsModels) : (dat2 f μ R mu tw).IsModels :=
   ⟨h.inf, h.vpos, h.cX, h.cV, h.prX, fun t => h.HX (f t), fun i t => h.HV i (f t), h.HE, h.HW, h.gE, h.gW, fun t => h.jX (f t),
     fun i t => h.jV i (f t), fun t => h.νY (f t), fun t => h.νY' (f t), h.ν0, fun t => h.νX (f t), fun i t => h.νV i (f t),
     h.νW, h.BV, h.order⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem exAt (e : R.ExAt) : (dat2 f μ R mu tw).ExAt :=
   ⟨fun k hk => (e.ItY k hk).imp fun _ h t => h (f t), e.ItX.imp fun _ h t => h (f t), fun t => e.ioY (f t), fun t => e.ioX (f t),
@@ -170,14 +165,12 @@ theorem exAt (e : R.ExAt) : (dat2 f μ R mu tw).ExAt :=
 theorem orZero_of {X : Type} [Zero X] {p : X → Prop} {x : X} (h : p x) : OrZero p x :=
   ⟨fun _ => h, fun hn => absurd ⟨x, h⟩ hn⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem isChainW (h : R.IsChainW) (e : R.ExAt) : (dat2 f μ R mu tw).IsChainW :=
   ⟨fun t => h.ωY (f t), fun t => h.ωX (f t), fun t => h.vY (f t), fun t => h.vX (f t), fun t => h.ptY (f t), fun t => h.ptX (f t),
     fun k hk => orZero_of fun t => (h.ItY k hk).1 (e.ItY k hk) (f t), orZero_of fun t => h.ItX.1 e.ItX (f t),
     fun t => h.ioY (f t), fun t => h.ioX (f t), fun t => h.Th (f t)⟩
 
-set_option maxHeartbeats 2000000 in
 
 theorem isThPW (h : R.IsThPW) (e : R.ExAt) : (dat2 f μ R mu tw).IsThPW :=
   ⟨fun i t => h.ωP i (f t), fun i t => h.vP i (f t), fun i t => h.pt_theta i (f t),

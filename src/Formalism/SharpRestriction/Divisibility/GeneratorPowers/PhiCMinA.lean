@@ -116,7 +116,6 @@ theorem tr_ed_int (c : 𝓞 E) (i : Free.ChooseBasisIndex ℤ (𝓞 E)) :
   have h := integralBasis_repr_apply E c i
   simpa using h
 
-open scoped Classical in
 
 theorem ortho (σ τ : E →+* ℂ) :
     ∑ i, σ (ed E i) * τ (integralBasis E i) = if σ = τ then 1 else 0 := by
@@ -140,7 +139,6 @@ theorem ortho (σ τ : E →+* ℂ) :
   · exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   · exact if_congr eq_comm rfl rfl
 
-open scoped Classical in
 
 abbrev Dinv (E : Type) [Field E] [NumberField E] : FractionalIdeal (𝓞 E)⁰ E :=
   FractionalIdeal.dual ℤ ℚ (1 : FractionalIdeal (𝓞 E)⁰ E)

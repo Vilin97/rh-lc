@@ -68,7 +68,6 @@ theorem trB_expand {N : ℕ} (ℓ : Module.Basis (Fin N) ℤ (X.Lb.restrictScala
 
 end DetH
 
-open DetH in
 
 theorem detHOne_holds : DetHOne := by
   intro D X N ℓ ℓs

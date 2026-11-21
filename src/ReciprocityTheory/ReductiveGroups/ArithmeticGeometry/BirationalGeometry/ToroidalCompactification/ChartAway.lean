@@ -21,7 +21,6 @@ variable {S : Type} [CommRing S] (G : Over (Spec (CommRingCat.of S))) [GrpObj G]
 abbrev Gs (s : S) : Over (Spec (CommRingCat.of (Localization.Away s))) :=
   (Over.pullback (fB S (Localization.Away s))).obj G
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 theorem chart_away (U : G.left.Opens) (hU : IsAffineOpen U) (s : S)
     (hs : ∀ x : Spec (CommRingCat.of S), s ∉ x.asIdeal → (η[G]).left x ∈ U) : Nonempty (Chart (Gs G s)) := by

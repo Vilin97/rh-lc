@@ -147,7 +147,6 @@ def stabFin {a : ℕ} (φ : Sm E a) : Subgroup (GL (Fin a) (Af E)) where
     conv_lhs => rw [← hx']
     rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one]; rfl
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem cofin_ann {a : ℕ} (φ : Sm E a)
     [hφ : FiniteDimensional ℂ (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) '' Zalg E a))] :

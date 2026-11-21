@@ -163,7 +163,6 @@ def HdR.affZeroEquiv : LinearMap.ker (dOm k B 0) ≃ₗ[k] HdR (algStr k B) 0 :=
   LinearEquiv.ofBijective (HdR.ofForm 0) (coneCl_zero_bijective (R := k) (B := B) (C := AffPt (algStr k B)) (F := OPt (algStr k B))
     (fun T ↦ toPt T) (fun _ _ φ b ↦ toPt_comp φ b) (T₀ := idPt k B) toPt_idPt_bijective idPt_isInitial)
 
-variable (k) in
 
 theorem dOm_zero_self (x : Om k k 0) : dOm k k 0 x = 0 := by
   refine Subtype.ext ?_
@@ -173,20 +172,16 @@ theorem dOm_zero_self (x : Om k k 0) : dOm k k 0 x = 0 := by
     exact (D k k).map_algebraMap _
   rw [this, map_zero]; rfl
 
-variable (k) in
 
 def HdR.pointEquiv : k ≃ₗ[k] HdR (algStr k k) 0 :=
   (fn0 k).symm ≪≫ₗ (LinearEquiv.ofTop _ (eq_top_iff.2 fun x _ ↦ LinearMap.mem_ker.2 (dOm_zero_self k x))).symm ≪≫ₗ
     HdR.affZeroEquiv
 
-open Polynomial in
-variable (k) in
 
 def tdtForm : LinearMap.ker (dOm k k[X] 1) :=
   ⟨⟨ι1 ((Polynomial.X : k[X]) • D k k[X] Polynomial.X), ι_mem _⟩, by
     rw [LinearMap.mem_ker, ← dOne_eq_dOm, dOne_line]⟩
 
-open Polynomial in
 
 theorem HdR.ofForm_tdt_ne_zero [Nontrivial k] (h2 : (2 : k) = 0) : HdR.ofForm 1 (tdtForm k) ≠ 0 := by
   rw [Ne, HdR.ofForm_eq_zero_iff]

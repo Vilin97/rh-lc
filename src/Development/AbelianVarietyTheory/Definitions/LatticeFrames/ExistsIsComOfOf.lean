@@ -171,7 +171,6 @@ def BaseOne (i : ℕ) (hi : i ≤ B.R.m) : Prop :=
 
 def BaseEnds : Prop := BaseOne A 0 (Nat.zero_le _) ∧ BaseOne A B.R.m le_rfl
 
-variable {A} in
 
 variable {a : XPart (I.rec7 l Z) v}
 
@@ -184,7 +183,6 @@ structure TiedX {ζ₀ : Fin a.Lz.rank → (I.rec7 l Z).host.E} {PP : Formalism.
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open GlobalTheory.FinPl in
 
 structure OffsetCompatibility (o : OffX a k ((B.primes X).vT v)) : Prop where
   idem : ∀ i, Formalism.L2.NTheta.IsIdemAt (o.p i).e i.1
@@ -209,7 +207,6 @@ structure OffsetCompatibility (o : OffX a k ((B.primes X).vT v)) : Prop where
   frameTop : ∀ i, (o.γ i).b = 1
   sum : ∀ n h i, IsSumFrame (a.oT n h) o.ζ₀ (o.γ i) (o.γ₀ n h i)
 
-variable (a) in
 
 structure StdCol {chOf : ∀ i, ((I.rec7 l Z).mem v).C.cls i → Ch i} (F : FormsTiedSym (I.rec7 l Z) v Ch chOf) : Prop where
   is : A.Is F a.c.ψ a.c.θ

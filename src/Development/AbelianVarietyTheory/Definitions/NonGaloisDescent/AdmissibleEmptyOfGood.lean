@@ -114,7 +114,6 @@ variable (B : Base S T)
 def IsWeil (ν : (AE D)ˣ →* Circle) (ω : PairRep S T) : Prop :=
   IsWeilDatumO B.F.ψ S T (B.mu * ν) (B.mu * ν * B.eta⁻¹) ω
 
-open Classical in
 
 def admitted (Q : Finset (Pl D.host.E)) : Prop := PlacesOK B.G.Pg (B.de.Q ∪ Q) ∧ Disjoint B.de.Q Q
 
@@ -128,7 +127,6 @@ def locFn (Q : Finset (Pl D.host.E)) (φ : ∀ PP : ↥Q, Matrix (Fin T.rank) (F
     (y : Reds D T.rank S.rank) : ℂ :=
   (∏ PP ∈ B.de.Q, flat (B.de.resC PP) (y PP)) * ∏ PP : ↥Q, φ PP (y PP.1)
 
-open Classical in
 
 def vecAt (Q : Finset (Pl D.host.E)) (φ : ∀ PP : ↥Q, Matrix (Fin T.rank) (Fin S.rank) (kP PP.1) → ℂ) : WO S T → ℂ :=
   B.F.vec B.G (B.de.Q ∪ Q) (B.locFn Q φ)
@@ -145,7 +143,6 @@ theorem vecAt_empty (φ : ∀ PP : ↥(∅ : Finset (Pl D.host.E)), Matrix (Fin 
     B.vecAt ∅ φ = B.vecBase :=
   congrArg (B.vecAt ∅) (funext fun PP => absurd PP.2 (Finset.notMem_empty _))
 
-open Classical in
 
 theorem isThetaAt_vecAt {B : Base S T} (h : B.Good) {Q : Finset (Pl D.host.E)} (hQ : B.admitted Q)
     (φ : ∀ PP : ↥Q, Matrix (Fin T.rank) (Fin S.rank) (kP PP.1) → ℂ) :
@@ -189,7 +186,6 @@ section Univ
 
 variable {C : Type} [AddCommGroup C] [Fintype C]
 
-open Classical in
 
 def xi (ω : PairRep S T) (u : UnivTwist D C) (Q : Finset (Pl D.host.E))
     (Φ : ∀ PP : Pl D.host.E, C → Matrix (Fin T.rank) (Fin S.rank) (kP PP) → ℚ) (h : GA D S) (P : PolF D T.rank S.rank)
@@ -217,13 +213,11 @@ theorem xiCoef_apply (ω : PairRep S T) (u : UnivTwist D C) (Q : Finset (Pl D.ho
     exact fun e => hb (by rw [← e, add_sub_cancel_left])
   · exact fun hb => absurd (Finset.mem_univ _) hb
 
-omit [Fintype C] in
 
 def univFam (u : UnivTwist D C) (β : ∀ PP : Pl D.host.E, DetBases (kP PP) T.rank S.rank) (PP : Pl D.host.E) :
     C → Matrix (Fin T.rank) (Fin S.rank) (kP PP) → ℚ :=
   univCoef (β PP) (u.kap PP)
 
-omit [Fintype C] in
 
 def IsAdmFam (u : UnivTwist D C) (Q : Finset (Pl D.host.E))
     (Φ : ∀ PP : Pl D.host.E, C → Matrix (Fin T.rank) (Fin S.rank) (kP PP) → ℚ) : Prop :=
@@ -236,7 +230,6 @@ theorem isAdmFam_univFam (u : UnivTwist D C) (Q : Finset (Pl D.host.E))
 
 end Univ
 
-open Classical in
 
 def levS (ψ : Twist D Circle) : LevDat D.host.E ℂ S.rank :=
   { r := T.rank, hr := B.hr, t := S.rank - T.rank, s := 1, Pg := B.G.Pg, Q := B.de.Q ∪ ψ.Q, P := B.G.P,

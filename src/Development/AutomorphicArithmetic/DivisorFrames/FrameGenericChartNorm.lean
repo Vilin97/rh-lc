@@ -19,8 +19,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 variable {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
   {Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β}
 
-attribute [local instance] Over.cartesianMonoidalCategory in
-open MonoidalCategory CartesianMonoidalCategory MonObj ReciprocityTheory.ChartRestriction.G.PullbackSections GlobalTheory.LieMet in
 
 private theorem eq_zero_of_mulVec {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x)
     (τ : E →+* ℂ) {g : ℕ} {B : Fin g → (Sp (DualNumber R) ⟶ Z.t.G.left)} (hB : ∀ k, IsTanAtG Z.t x (B k))

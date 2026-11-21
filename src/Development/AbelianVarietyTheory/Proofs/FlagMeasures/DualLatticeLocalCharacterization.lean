@@ -255,7 +255,6 @@ theorem bwd_loc (hJ : J.det ≠ 0) (L : Submodule (𝓞 E) (Fin n → E)) (hL : 
   simp only [Pi.smul_apply, smul_eq_mul, map_mul]
   linear_combination (-(C j * inclE (F := F) (v.adicCompletion F) (yb j i))) * hus'
 
-omit [NumberField E] in
 
 theorem prV_int (v : HeightOneSpectrum (𝓞 F)) (c : E ⊗[F] Ad F) (hc : c ∈ OAd F E) :
     prV (E := E) v c ∈ intV E v := by

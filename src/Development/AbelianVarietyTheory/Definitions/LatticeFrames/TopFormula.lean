@@ -25,7 +25,6 @@ def HasMat (h : GA D D.sp.X')
 def TopLev (K : ClsPTied u) (J : Set (GA D D.sp.X')) (χ : GA D D.sp.X' → ℂ) : Prop :=
   (∀ h, h ∈ J ↔ ∃ κ : K.lev.U, HasMat h κ.1) ∧ ∀ h (κ : K.lev.U), HasMat h κ.1 → χ h = star ((K.lev.chi κ : ℂˣ) : ℂ)
 
-open Classical in
 
 structure IsJ (u : D.what₂.Word) {S : D.what₂.Tau → SPar} (M : DSModel D.sp.X' S) (j : SmT M →ₗ[ℂ] (FrP D → ℂ)) : Prop where
   inj : Function.Injective j
@@ -34,7 +33,6 @@ structure IsJ (u : D.what₂.Word) {S : D.what₂.Tau → SPar} (M : DSModel D.s
     ∀ y y' : FrP D, IsTr (Function.update (fun _ => 1) τ (g.reindex (finCongr (rankP D)) (finCongr (rankP D)))) y' y →
       j (PiTensorProduct.tprod ℂ (Function.update v τ w)) y = j (PiTensorProduct.tprod ℂ v) y'
 
-open Classical in
 
 end GlobalTheory.Core.Rk.Top
 

@@ -20,7 +20,6 @@ open CategoryTheory Limits MonoidalCategory groupCohomology
 variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]
   [TotallyDisconnectedSpace G]
 
-omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 
 theorem subsingleton_cohomology_of_top {k : Type} [CommRing k] (A : Rep.{0} k G) [IsDiscreteRep A]
     (r : ℕ) (h : Subsingleton (cohomology (Rep.res (⊤ : Subgroup G).subtype A) r)) :
@@ -36,7 +35,6 @@ section Int
 
 variable {C : Rep.{0} ℤ G} [IsDiscreteRep C] (F : ClassFormation C)
 
-include F in
 
 theorem ClassFormation.exists_cupH_quot (U : OpenSubgroup G) (N : Subgroup (U : Subgroup G))
     [N.Normal] (hN : IsOpen (N : Set (U : Subgroup G))) (n : ℕ) [NeZero n]
@@ -69,7 +67,6 @@ theorem rightUnitor_quotientToInvariants {k H : Type} [CommRing k] [Group H] (A 
       (ρ_ (A.quotientToInvariants N)).hom.hom.toLinearMap :=
   TensorProduct.ext' fun _ _ => Subtype.ext rfl
 
-include F in
 
 theorem ClassFormation.subsingleton_cohomology_of_three_le_int (U : OpenSubgroup G) {r : ℕ}
     (hr : 3 ≤ r) : Subsingleton (cohomology (Rep.res (U : Subgroup G).subtype C) r) := by
@@ -124,7 +121,6 @@ theorem ClassFormation.subsingleton_cohomology_of_three_le_int (U : OpenSubgroup
     (F.inv_bijective U).1 (by rw [map_nsmul, hq])
   rw [hz, ← hβ, map_nsmul, LinearMap.smul_apply, ← map_nsmul, hmt, map_zero, map_zero]
 
-include F in
 
 theorem ClassFormation.subsingleton_cohomology_top_of_three_le_int {r : ℕ} (hr : 3 ≤ r) :
     Subsingleton (cohomology C r) :=
@@ -136,14 +132,12 @@ section ULift
 
 variable {C : Rep.{0} (ULift.{0} ℤ) G} [IsDiscreteRep C] (F : ClassFormation C)
 
-include F in
 
 theorem ClassFormation.subsingleton_cohomology_of_three_le (U : OpenSubgroup G) {r : ℕ}
     (hr : 3 ≤ r) : Subsingleton (cohomology (Rep.res (U : Subgroup G).subtype C) r) := by
   have := (ClassFormation.toInt C F).subsingleton_cohomology_of_three_le_int U hr
   exact (cohomologyULiftIntAddEquiv (Rep.res (U : Subgroup G).subtype C) r).injective.subsingleton
 
-include F in
 
 theorem ClassFormation.subsingleton_cohomology_top_of_three_le {r : ℕ} (hr : 3 ≤ r) :
     Subsingleton (cohomology C r) :=

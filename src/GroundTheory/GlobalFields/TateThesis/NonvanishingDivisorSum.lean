@@ -250,7 +250,6 @@ theorem hasSum_LSeries_term_divisorSum {ψ : Ideal (𝓞 K) → ℝ} (hψb : ∀
     refine tsum_congr fun y ↦ ?_
     simp [e, hh, y.2, cpow_neg, div_eq_mul_inv]
 
-open scoped ComplexOrder in
 
 theorem divisorSumCoeff_nonneg {ψ : Ideal (𝓞 K) → ℝ} (hψ : ∀ A B, ψ (A * B) = ψ A * ψ B)
     (hψ1 : ψ ⊤ = 1) (hψb : ∀ A, |ψ A| ≤ 1) (n : ℕ) : 0 ≤ divisorSumCoeff ψ n := by

@@ -192,7 +192,6 @@ theorem Sys.prod (s : Sys P K U good) {ι : Type} [DecidableEq ι] (e : ι → R
     refine ⟨j1, ?_⟩
     rw [j2, i2, hk, Finset.prod_insert hi]; simp [mul_assoc]
 
-omit [IsTopologicalGroup G] [LocallyCompactSpace G] [SecondCountableTopology G] [T2Space G] in
 
 theorem transport {S S' : Subgroup G} (h : S = S') (mS : MeasurableSpace S) (hm : mS = borel S) (x : @Measure S mS) :
     ∃ x' : Measure S', (@Measure.IsHaarMeasure _ _ _ mS x → x'.IsHaarMeasure) ∧

@@ -74,11 +74,9 @@ def GLift.comap {H : Type} [Group H] [TopologicalSpace H] (φ : H →* Γ) (hφ 
   cont a b N := (r.cont a b N).comp_continuous hφ
   red g := r.red (φ g)
 
-variable (O η Ψ) in
 
 def GCond : Type 1 := ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R], GLift O η Ψ R → Prop
 
-variable (O η Ψ) in
 
 def GCond.noCondition : GCond O η Ψ := fun _ _ _ _ _ => True
 

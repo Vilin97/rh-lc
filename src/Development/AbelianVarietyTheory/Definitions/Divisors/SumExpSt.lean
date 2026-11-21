@@ -70,7 +70,6 @@ abbrev lvlL := p.P.A3.A.fam.lvlA p.P.P0 p.P.ψ0
 abbrev subZ (j : Fin D.R.m) (t : p.P.T) : Submodule D.what₂.LL (blk p j t).S.Forms :=
   (p.P.A3.fam3.toSub2 (p.R.toCx3 p.F).zs).Zl j t
 
-open Classical in
 
 def ModelAt (j : Fin D.R.m) (P : Par) (W : Wts D.what₂.Tau) (w : HeightOneSpectrum (𝓞 D.what₂.LL)) : Prop :=
   ∃ (fr : ℕ → D.what₂.Tau → D.what₂.Tau) (cj : ℕ → D.what₂.Tau → Bool) (I : Type) (X : I → HidaSetting D.what₂.Tau P.Nr W.lam),
@@ -79,7 +78,6 @@ def ModelAt (j : Fin D.R.m) (P : Par) (W : Wts D.what₂.Tau) (w : HeightOneSpec
 
 end Point
 
-open Classical in
 
 end GlobalTheory.ExpTie
 

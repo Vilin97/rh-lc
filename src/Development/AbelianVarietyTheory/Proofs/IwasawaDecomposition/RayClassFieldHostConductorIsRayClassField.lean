@@ -27,7 +27,6 @@ def toIF (D : D7) (jE : D.host.E →+* Qb) (L : Fld) (h : KQbar D jE ≤ L) :
   letI := algQb D jE
   { L.toSubfield with algebraMap_mem' := fun x => h ⟨x.1, x.2, rfl⟩ }
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem exists_embedded (hray : GlobalTheory.Published.RayClassFieldSt) (D : D7) (jE : D.host.E →+* Qb) :
     ∃ (M : Fld) (h : KQbar D jE ≤ M) (hf : FiniteDimensional ℚ M),
@@ -54,8 +53,6 @@ theorem exists_embedded (hray : GlobalTheory.Published.RayClassFieldSt) (D : D7)
   haveI := GlobalTheory.ParRay.nfOf hf
   exact hM.of_algEquiv (AlgEquiv.ofRingEquiv (f := e₀.toRingEquiv) fun x => Subtype.ext (hψ x))
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem le_of_rayAdm (D : D7) (jE : D.host.E →+* Qb) (M : Fld) (h : KQbar D jE ≤ M) (hf : FiniteDimensional ℚ M)
     (hM : letI := GlobalTheory.ParRay.algK D jE h; haveI := GlobalTheory.ParRay.nfOf hf;

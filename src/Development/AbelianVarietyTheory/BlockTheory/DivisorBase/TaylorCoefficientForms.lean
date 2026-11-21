@@ -24,7 +24,6 @@ def dirDeriv (v : E) (F : E → ℂ) : E → ℂ := fun z => fderiv ℂ F z v
 def monoDeriv (v : κ → E) (e : κ → ℕ) (F : E → ℂ) : E → ℂ :=
   (univ : Finset κ).toList.foldr (fun x G => (dirDeriv (v x))^[e x] G) F
 
-open Classical in
 
 def coordVec (x : κ) : κ → ℂ := Pi.single x 1
 
@@ -51,7 +50,6 @@ variable {Pl : Type} [Fintype Pl] {X₀ X₁ : Pl → Type}
   [∀ τ, NormedAddCommGroup (X₁ τ)] [∀ τ, InnerProductSpace ℂ (X₁ τ)] [∀ τ, FiniteDimensional ℂ (X₁ τ)]
   {n₀ n₁ : ℕ}
 
-open Classical in
 
 end AllPlaces
 

@@ -241,7 +241,6 @@ theorem map_map_symm {X Y : Type} [Group X] [Group Y] [TopologicalSpace X] [Topo
   have hid : (e ∘ e.symm) = id := funext fun y => e.apply_symm_apply y
   rw [hid, Measure.map_id]
 
-omit [Submodule.IsLattice E L] in
 
 theorem IsRestrictedProdFin.prod [∀ w, (μa w).IsHaarMeasure] {ν : Measure (GFin σ J)}
     (h : IsRestrictedProdFin σ J L μf ν) :
@@ -260,7 +259,6 @@ theorem IsRestrictedProd.map_archFin (h : IsRestrictedProd σ J L μa μf μ) {�
   rw [h.unique (IsRestrictedProdFin.prod h')]
   exact map_map_symm (archFinEquiv σ J) _
 
-omit [Submodule.IsLattice E L] in
 
 theorem IsRestrictedProdFin.map_finPts {ν : Measure (GFin σ J)} (h : IsRestrictedProdFin σ J L μf ν) :
     IsRestrictedProdFinPts σ J L μf (ν.map (finPtsEquiv σ J)) := by

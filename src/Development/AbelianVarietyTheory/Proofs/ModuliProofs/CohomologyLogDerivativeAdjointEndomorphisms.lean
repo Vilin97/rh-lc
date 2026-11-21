@@ -382,7 +382,6 @@ theorem exists_units_thick {X : Scheme.{0}} (m : A.left ⟶ X) {L : LB X} (hL : 
     show psum A x' {0, 1} = _ from p₃'] at r
   exact r
 
-omit [IsCommMonObj A] in
 
 theorem pbT_g_transl {X : Scheme.{0}} (m : A.left ⟶ X) (L : LB X) {v : epsR K ⟶ A} (hv : IsTangent v) {dd}
     (hd : IsInvDer v dd) (f : A ⟶ A) (i i' : L.ι) (c : Γ(A.left, m ⁻¹ᵁ L.U i ⊓ m ⁻¹ᵁ L.U i'))

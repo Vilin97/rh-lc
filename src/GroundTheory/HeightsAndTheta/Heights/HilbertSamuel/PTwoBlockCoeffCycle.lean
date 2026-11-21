@@ -163,7 +163,6 @@ theorem logNorm_eq {x : Ix κ → Ω} {B : Matrix (Ix κ) (Ix κ) ℚ} {m m' : C
     rw [div_eq_div_iff hmw.ne' hmu.ne']
     linarith [hnorm]
 
-open Classical in
 
 theorem cycR_split {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
     (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι)) {n : ℕ}
@@ -176,7 +175,6 @@ theorem cycR_split {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι 
   refine finsum_mem_congr rfl fun W _ => ?_
   split_ifs <;> ring
 
-open Classical in
 
 theorem horiz_eq (hH : TwoBlockHorizDiv.Statement) {x : Ix κ → Ω} {B : Matrix (Ix κ) (Ix κ) ℚ} {c : κ}
     {l : Ix κ → ℤ} (hsp : Submodule.span ℤ (Set.range x) ≤ Submodule.span ℤ (Set.range (matAct B x)))
@@ -200,7 +198,6 @@ theorem horiz_eq (hH : TwoBlockHorizDiv.Statement) {x : Ix κ → Ω} {B : Matri
 
 end TwoBlockCoeffCycle
 
-open TwoBlockCoeffCycle in
 
 theorem TwoBlockCoeffCycle.proof (hA : CoordArithOfFnField.Statement) (hF : TwoBlockFnField.Statement)
     (hH : TwoBlockHorizDiv.Statement) : TwoBlockCoeffCycle.Statement := by

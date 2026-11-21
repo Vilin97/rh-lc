@@ -17,7 +17,6 @@ namespace GlobalTheory.Mem.RayZeta
 variable {K M L : Type} [Field K] [NumberField K] [Field M] [NumberField M] [Field L] [NumberField L]
   [Algebra K M] [Algebra K L] [Algebra M L] [IsScalarTower K M L]
 
-omit [NumberField M] [NumberField L] in
 
 open NumberField IsDedekindDomain in
 open scoped nonZeroDivisors IntermediateField in

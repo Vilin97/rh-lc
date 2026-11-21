@@ -20,14 +20,11 @@ section Sys
 
 variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] {l : ℕ} [Fact l.Prime] {n : ℕ}
 
-variable (n) in
 
 def IsCusp (sat : HeightOneSpectrum (𝓞 F) → Multiset ℂˣ → Prop) (inf : (F →+* ℂ) → Multiset ℂ → Prop) : Prop :=
   (∃ (_ : IsTotallyComplex F) (π : CuspSub F n), sat = (CG.mk π).HasSat ∧ inf = π.HasInfChar) ∨
     ∃ (_ : IsTotallyReal F) (π : TR.CuspSub F n), sat = π.HasSat ∧ inf = fun τ => π.HasInfChar (InfinitePlace.mk τ)
 
-omit [NumberField F] in
-variable (n) in
 
 def RegInf (inf : (F →+* ℂ) → Multiset ℂ → Prop) : Prop :=
   ∀ τ, ∃ m, inf τ m ∧ m.Nodup ∧ ∀ z ∈ m, ∃ k : ℤ, z = (k : ℂ) + ((n : ℂ) - 1) / 2
@@ -40,7 +37,6 @@ def IsCharOf [IsAlgClosure F Ω] (ι : Qbar l ≃+* ℂ) (χ : HChar F) (μ : G 
 
 def IsAlgChar [IsAlgClosure F Ω] (ι : Qbar l ≃+* ℂ) (μ : G F Ω →* (Qbar l)ˣ) : Prop := ∃ χ : HChar F, IsCharOf ι χ μ
 
-omit [NumberField F] in
 
 def IsConjEl (c : G F Ω) : Prop := ∃ j : Ω →+* ℂ, ∀ x, j (c x) = starRingEnd ℂ (j x)
 
@@ -56,7 +52,6 @@ def IsPairing (c : G F₀ Ω) (r : G F Ω →* GL (Fin n) k) (μ : G F Ω →* k
     (r s : Matrix (Fin n) (Fin n) k)ᵀ * (P : Matrix (Fin n) (Fin n) k) * (r s' : Matrix (Fin n) (Fin n) k) =
       (μ s : k) • (P : Matrix (Fin n) (Fin n) k)
 
-variable (F₀ F) in
 
 abbrev resG (Ω : Type) [Field Ω] [Algebra F₀ Ω] [Algebra F Ω] [IsScalarTower F₀ F Ω] : G F Ω →* G F₀ Ω :=
   AlgEquiv.restrictScalarsHom F₀

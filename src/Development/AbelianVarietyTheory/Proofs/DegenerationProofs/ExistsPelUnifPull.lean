@@ -32,7 +32,6 @@ namespace GlobalTheory.ArcDataDescent
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_pelUnif_pull (hC : CubePullSt) (hP : PolBaseChangeSt) (hU : UnifBaseChangeSt) (h5 : Laws5)
     {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R'] {I : Ideal R} {I' : Ideal R'}
@@ -186,7 +185,6 @@ variable {D : Datum H} {l : Level H} {Xo : Moduli D l} {c : Coeff l} {O : Type} 
   {R V : Type} [CommRing R] [IsDomain R] [CommRing V] [IsDomain V] {I : Ideal R} {I' : Ideal V} {f : O' →+* R} {u : R}
   {χ : Sp R ⟶ Y.X} {t : SAB H (Sp R)} {g : R →+* V}
 
-set_option maxHeartbeats 1600000 in
 
 theorem toA_down (hL : Laws) (hR : AdmBase R I) (hV : AdmBase V I') (m : SABMap t Y.t χ) (P : PELUnif I t)
     (W : ArcWit Y a I' (g.comp f) (g u) (spMap g ≫ χ)) (hD : IsPullDeg g P.D.toPre W.P.D.toPre)
@@ -250,7 +248,6 @@ theorem pmaps_rig' {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDoma
   (maps_iff hD.w _ (fun _ => eSec D.P.A) _ D'.rig D.rig (specOf φ) _
     (rigPull_le (hD.e.hom.left ≫ pullback.fst D.P.A.hom (specOf φ)) (specOf φ) hD.he D.P.L) (fun _ => rfl)).1 hD.w_rig
 
-set_option maxHeartbeats 3200000 in
 
 theorem exists_match (hL : Laws) (h2 : Laws2) (hR : AdmBase R I) (hV : AdmBase V I') (hginj : Function.Injective g)
     (m : SABMap t Y.t χ) (P : PELUnif I t) (W : ArcWit Y a I' (g.comp f) (g u) (spMap g ≫ χ)) (hD : IsPullDeg g P.D.toPre W.P.D.toPre)
@@ -392,7 +389,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
   {R V : Type} [CommRing R] [IsDomain R] [CommRing V] [IsDomain V] {I : Ideal R} {I' : Ideal V} {f : O' →+* R} {u : R}
   {χ : Sp R ⟶ Y.X} {t : SAB H (Sp R)} {g : R →+* V}
 
-set_option maxHeartbeats 3200000 in
 
 theorem agree (hL : Laws) (h2 : Laws2) (h5 : Laws5) (hR : AdmBase R I) (hV : AdmBase V I') (hf : Function.Injective f)
     (hg : Function.Injective g) (y : Sp (FractionRing R) ⟶ Xo.XF c) (hy : y ≫ Y.j = jK R ≫ χ) (m : SABMap t Y.t χ)

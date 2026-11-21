@@ -98,7 +98,5 @@ variable {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 
 end Rep
 
-open CompanionTheory.D.DSIC (hHWofType hStabLink hSmMod) in
-open PI.UpqRep (IsKTypeOf) in
 
 end UpperTheory.Lit.Bur.KShift

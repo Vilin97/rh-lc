@@ -8,7 +8,6 @@ open Polynomial UniqueFactorizationMonoid
 
 namespace Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 
-set_option maxHeartbeats 800000 in
 
 theorem type_count_exact : TypeCountExact := by
   classical

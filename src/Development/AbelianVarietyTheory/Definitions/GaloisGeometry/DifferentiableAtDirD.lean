@@ -288,7 +288,6 @@ def forms : Subalgebra ℂ A.Fld where
     rw [Algebra.algebraMap_eq_smul_one]
     exact ((isForm_algebra M n A).2 c _ _ (isForm_algebra M n A).1 (isForm_algebra M n A).1).2.2
 
-variable {A} in
 
 variable {A}
 
@@ -324,20 +323,16 @@ theorem dExt_smul (c : ℂ) {α : A.Fld} (hα : A.IsForm α) : A.dExt (c • α)
   rw [dExt, h₁, h₂, ← smul_add]
   rfl
 
-variable (A) in
 
 def dForms : A.forms →ₗ[ℂ] A.forms where
   toFun α := ⟨A.dExt α, IsForm.dExt α.2⟩
   map_add' α β := Subtype.ext (dExt_add α.2 β.2)
   map_smul' c α := Subtype.ext (dExt_smul c α.2)
 
-variable (A) in
 
-variable (A) in
 
 @[simp] theorem dExt_zero : A.dExt 0 = 0 := congrArg Subtype.val (map_zero A.dForms)
 
-variable (A) in
 
 theorem del_dbar_mul {α β : A.Fld} (hα : A.IsForm α) (hβ : A.IsForm β) :
     A.del (α * β) = A.del α * β + A.parFld α * A.del β ∧ A.dbar (α * β) = A.dbar α * β + A.parFld α * A.dbar β := by
@@ -361,7 +356,6 @@ theorem degFld_dExt {α : A.Fld} (hα : A.IsForm α) (k : ℕ) :
   · rw [degFld_apply, dExt_apply, map_add (f := _), (degPart_opAt _ k (A.loc_diffAt hα x)).2,
       (degPart_opAt _ k (A.loc_diffAt hα x)).2, add_zero, Pi.zero_apply]
 
-variable (A) in
 
 theorem loc_prop {P : Alt n → Prop} (h₀ : P 0) {α : A.Fld} (hα : ∀ x, P (α x)) (i : A.ι) (v : V n) : P (A.loc α i v) := by
   unfold loc
@@ -388,7 +382,6 @@ theorem typeGe_iff {p : ℕ} {α : A.Fld} : A.TypeGe p α ↔ ∀ x, α x ∈ ho
 
 variable {A' A''}
 
-variable (A A') in
 
 theorem IsForm.pullback {f : M' → M} (hf : A.IsHolo A' f) {α : A.Fld} (hα : A.IsForm α) : A'.IsForm (A.pullback A' f α) :=
   PullbackForm.isForm_pullback M M' n n' A A' f α hf hα

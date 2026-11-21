@@ -28,7 +28,6 @@ private theorem eval_smul_of_isHomogeneous_toric_geometry {σ : Type} {P : MvPol
   simp_rw [mul_pow, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, hdeg]
   ring
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem isHomogeneous_ideal_cone {σ E : Type} [Fintype σ] (f : σ → E → ℂ) (I : Ideal (MvPolynomial σ ℂ))
     (hI : ∀ F, F ∈ I ↔ ∀ (t : ℂ) (z : E), MvPolynomial.eval (fun c => t * f c z) F = 0) :

@@ -68,13 +68,9 @@ theorem entries_zero_or_d {d l : ℕ} (hd : 0 < d) (σ : IrrRep (GL (Fin d) k)) 
   have : x' = y' := Subtype.ext (Subsingleton.elim _ _)
   rw [this]
 
-open GlobalTheory.LocGL in
 
-open GlobalTheory.LocGL in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end PositivityTheory.Pf1.SegRepC.Perm
 

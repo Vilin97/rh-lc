@@ -34,6 +34,5 @@ variable (Tf : FormsTied D u)
 
 include hB
 
-omit hB in
 
 end Formalism.L2.Forms

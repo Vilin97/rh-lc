@@ -67,7 +67,6 @@ lemma conv_mem {A : Subalgebra R (T → R)} (hc : ∀ f ∈ A, (fun z : T × T =
   refine ⟨r, ?_⟩
   rw [hr, sum_conv_mul l m (fun t => algebraMap R K (f t))]
 
-open Classical in
 
 noncomputable def psi {A : Subalgebra R (T → R)} (d : R) (hd : ∀ f : T → R, d • f ∈ A) :
     Module.Dual R A →ₗ[R] (T → K) where
@@ -153,7 +152,6 @@ lemma isIntegral_pairWith [FaithfulSMul R K] {A : Subalgebra R (T → R)} (hA : 
 
 end GlobalTheory.CompanionTheory.Ar.BT.CharExt
 
-open GlobalTheory.CompanionTheory.Ar.BT.CharExt in
 
 theorem GlobalTheory.CompanionTheory.Ar.BT.char_mem_hopfOrder : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T] [Finite T]
     [IsIntegrallyClosed R] (A : Subalgebra R (T → R)), IsHopfOrder A →

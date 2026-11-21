@@ -191,7 +191,6 @@ end Waves
 
 namespace Lev
 
-open Classical in
 
 def HomU (L : Lev) (g : Mat L.k0 L.r) : Set L.Hom :=
   {T | ∀ h ∈ L.UUset g, (L.π (g * h * g⁻¹)).comp T = T.comp (L.π' h)}
@@ -200,7 +199,6 @@ def IsHSProj (L : Lev) (P : L.Hom →L[ℂ] L.Hom) (S : Set L.Hom) : Prop :=
   P.comp P = P ∧ (∀ A B, Formalism.MainNotions.S.hsInner (P A) B = Formalism.MainNotions.S.hsInner A (P B)) ∧
     (∀ A, P A ∈ S) ∧ ∀ A ∈ S, P A = A
 
-open Classical in
 
 end Lev
 

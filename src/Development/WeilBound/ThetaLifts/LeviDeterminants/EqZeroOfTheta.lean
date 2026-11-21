@@ -36,7 +36,6 @@ theorem isStd_ne_one (hψ : IsStd ψ) : ψ ≠ 1 := by
   rw [e3, Complex.exp_pi_mul_I] at e
   norm_num at e
 
-variable (F) in
 
 def ratPt (y z : κ → F) : (κ → AF F) × (κ → AF F) :=
   (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i))

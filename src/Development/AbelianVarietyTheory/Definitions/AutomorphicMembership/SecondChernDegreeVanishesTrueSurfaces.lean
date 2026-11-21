@@ -114,7 +114,6 @@ namespace Surf
 
 variable (s : Surf)
 
-variable {s} in
 
 end Surf
 
@@ -136,7 +135,6 @@ attribute [instance] prime
 
 variable (s : SurfFp)
 
-open IndefiniteRowSideFullHecke.GenericFiniteMaps in
 
 end SurfFp
 

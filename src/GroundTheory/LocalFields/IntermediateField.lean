@@ -20,7 +20,6 @@ variable {K L : Type*} [Field K] [Field L] [Algebra K L] [ValuativeRel L]
 instance intermediateField_valuativeRel : ValuativeRel E :=
   ValuativeRel.ofValuation ((valuation L).comap (algebraMap E L))
 
-variable {E} in
 
 @[simp]
 theorem IntermediateField.coe_vle_coe_iff (x y : E) : (x : L) ≤ᵥ (y : L) ↔ x ≤ᵥ y :=
@@ -35,7 +34,6 @@ instance intermediateField_valuativeExtension_left [ValuativeRel K] [ValuativeEx
     rw [← IntermediateField.coe_vle_coe_iff, IntermediateField.coe_algebraMap_apply,
       IntermediateField.coe_algebraMap_apply, ValuativeExtension.vle_iff_vle]⟩
 
-variable {E} in
 
 theorem IntermediateField.valuation_coe (x : E) :
     valuation L (x : L) = ValuativeExtension.mapValueGroupWithZero E L (valuation E x) :=

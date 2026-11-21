@@ -256,7 +256,6 @@ theorem lhs_eq_sum {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] (
 
 end GLG
 
-open GLG in
 
 end
 

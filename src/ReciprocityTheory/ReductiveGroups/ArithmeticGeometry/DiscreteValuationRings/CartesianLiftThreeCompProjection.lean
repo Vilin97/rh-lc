@@ -61,7 +61,6 @@ lemma cartesian_lift_three_comp_projection (x y z : T ⟶ A) : (fun k => lift x 
 def lamP (u v : T ⟶ A) : (T ⟶ A) →₀ ℤ :=
   Finsupp.single (u * v) 1 - Finsupp.single u 1 - Finsupp.single v 1 + Finsupp.single 1 1
 
-open scoped Classical in
 
 private lemma fsum_eq_sum_single {X Y : Scheme} {K : Type} [Fintype K] (φ : K → (Y ⟶ X)) (ε : K → ℤ) :
     fsum φ ε = ∑ k, Finsupp.single (φ k) (ε k) := rfl

@@ -21,14 +21,12 @@ open Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism
 
 variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
 
-open Classical in
 
 def IsDualPair {V : HSp D} {S : D.what₂.Tau → SPar} (θ : InfFam D) (M : DSModel V S) (c : CoefA V)
     (pr : c.W →ₗ[ℂ] SmT M →ₗ[ℂ] ℂ) : Prop :=
   pr ≠ 0 ∧ ∀ τ, ∀ g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ), ∀ (w : c.W) (v : M.Vec) (u : M.sm τ), (u : M.H τ) = M.rep τ g (v τ) →
     pr (c.ρ (atTau θ V τ g) w) (PiTensorProduct.tprod ℂ (Function.update v τ u)) = pr w (PiTensorProduct.tprod ℂ v)
 
-open Classical in
 
 def IsIoW {V W : HSp D} {S' : D.what₂.Tau → SPar} (θ : InfFam D) (M' : DSModel W S') (c : CoefA V)
     (ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)) (pt : PolF D W.rank V.rank → (WO V W → ℂ))
@@ -46,7 +44,6 @@ variable {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S)
 
 def inclT : SmT M →ₗ[ℂ] ⨂[ℂ] τ, M.H τ := PiTensorProduct.map fun τ => (M.sm τ).subtype
 
-open Classical in
 
 def actT (τ : D.what₂.Tau) (g : Matrix (Fin V.rank) (Fin V.rank) ℂ) : (⨂[ℂ] ρ, M.H ρ) →ₗ[ℂ] ⨂[ℂ] ρ, M.H ρ :=
   PiTensorProduct.map (Function.update (fun ρ => (LinearMap.id : M.H ρ →ₗ[ℂ] M.H ρ)) τ (M.rep τ g : M.H τ →ₗ[ℂ] M.H τ))

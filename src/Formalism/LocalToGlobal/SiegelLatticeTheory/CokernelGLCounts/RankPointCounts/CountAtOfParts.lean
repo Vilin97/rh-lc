@@ -61,7 +61,6 @@ theorem Ag_eq :
     · exact (fixes_base_iff M δ u u' w p a hB (tauU p y)).2 (by rw [tauU_tauU]; exact hyS)
     · exact tau_mem_KP M p hyK
 
-include hD in
 
 theorem countAt_of_parts (v : ℝ)
     (hv : (Nat.card (Quotient (CountAb.cellRel a.mat πa.ker (KU M p) (gU M δ u u' w hA L U hL hU a hB))) : ℝ) = v)

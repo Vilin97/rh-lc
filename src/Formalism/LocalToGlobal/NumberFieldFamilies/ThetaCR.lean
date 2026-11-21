@@ -25,7 +25,6 @@ variable (p q : ℕ)
 
 end Cover
 
-open Classical in
 
 variable {D : D7}
 

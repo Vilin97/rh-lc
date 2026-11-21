@@ -51,7 +51,6 @@ theorem ros_right_one (hG : GlobalFnsSt) {f g : D.P.A ⟶ D.P.A} [IsMonHom f] [I
   rw [val_pull hJ, ← Over.comp_left, comp_lift, hq]
   exact mul_eq_left.1 e.symm
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_sq (hG : GlobalFnsSt) (oa : D.OAct O) (w0 : O) (hw : TraceFormTwistIso D oa w0) (a : O) (N : ℕ)
     (haa : star a * a = ((N + 1 : ℕ) : O)) :
@@ -117,7 +116,6 @@ theorem exists_sq (hG : GlobalFnsSt) (oa : D.OAct O) (w0 : O) (hw : TraceFormTwi
   rw [vs _ _ z J hJ, val_mul hJ, val_mul hJ, val_mul hJ, val_inv, val_inv, val_inv, val_pow, b₁, b₂, b₃, b₄]
   simp
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_pullGenB (hG : GlobalFnsSt) (oa : D.OAct O) (w0 : O) (hw : TraceFormTwistIso D oa w0) (a : O) (N : ℕ) (hN : 1 ≤ N)
     (haa : star a * a = (N : O)) (k : ℕ) (χ : D.X) :

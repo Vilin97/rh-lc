@@ -25,7 +25,6 @@ variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
 open GlobalTheory.InertUmax
 
-omit [IsCMField L] in
 
 theorem exists_trunc (b : AFplus L) : ∃ c : AFplus L, (∀ w, c w ∈ w.adicCompletionIntegers (maximalRealSubfield L)) ∧
     ∀ w, b w ∈ w.adicCompletionIntegers (maximalRealSubfield L) → c w = b w := by

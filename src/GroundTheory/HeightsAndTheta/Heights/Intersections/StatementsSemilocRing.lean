@@ -35,7 +35,6 @@ def fibreOver (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (W
     Set (Ideal (MRing ι')) :=
   {W' | IsMultiProjPrime W' ∧ P' ≤ W' ∧ imageZ v W' = W}
 
-open Classical in
 
 theorem rename_isMultiHomog {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) :
@@ -84,7 +83,6 @@ theorem quotMapZ_injective (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (M
     Function.Injective (quotMapZ v P') :=
   Ideal.quotientMap_injective
 
-omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 
 theorem imageZ_isPrime_of_prime (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) [P'.IsPrime] :
     (imageZ v P').IsPrime :=
@@ -148,11 +146,9 @@ namespace SemilocRing
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-open Classical in
 
 def blkW : (Σ k, ι k) → K → ℕ := fun p => Pi.single p.1 1
 
-open Classical in
 
 theorem isMultiHomog_of_wh {s : MRing ι} {a : K → ℕ} (h : IsWeightedHomogeneous (blkW (ι := ι)) s a) :
     IsMultiHomog s a := by

@@ -12,7 +12,6 @@ namespace GlobalTheory.LocGL
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {V : Type} [AddCommGroup V] [Module ℂ V] {N : ℕ}
 
-variable (k N) in
 
 abbrev AdGL : Type := GL (Fin N) k ⧸ Subgroup.center (GL (Fin N) k)
 

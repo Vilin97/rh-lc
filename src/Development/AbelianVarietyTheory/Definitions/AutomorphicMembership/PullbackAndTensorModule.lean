@@ -88,7 +88,6 @@ abbrev isTensor : IsTensor (Λ.obj a) (Λ.act a) G a Λ.L := Λ.pres.isTensor a
 
 end Group
 
-variable (E) in
 
 def stdForm (n : ℕ) : HermForm E (Fin n → E) :=
   HermForm.ofFun (fun x y => ∑ i, x i * star (y i)) (fun x y z => by simp [add_mul, Finset.sum_add_distrib])
@@ -125,18 +124,15 @@ def ofGenLat {n : ℕ} (Γ : Formalism.L2.Pj.GenLat E n) (hL : Submodule.IsLatti
     rw [e]
     exact ⟨fun ⟨c, hc⟩ => ⟨star c, congrArg star hc⟩, fun ⟨c, hc⟩ => ⟨star c, (congrArg star hc).trans (star_star _)⟩⟩
 
-omit [NumberField E] [IsCMField E] in
 
 theorem mem_stdLat {n : ℕ} (x : Fin n → E) : x ∈ Formalism.L2.Pj.stdLat E n ↔ ∀ i, ∃ c : 𝓞 E, algebraMap (𝓞 E) E c = x i := by
   simp [Formalism.L2.Pj.stdLat, Submodule.mem_pi, Submodule.mem_one]
 
-omit [NumberField E] [IsCMField E] in
 
 theorem single_mem_stdLat {n : ℕ} (i : Fin n) : (Pi.single i 1 : Fin n → E) ∈ Formalism.L2.Pj.stdLat E n :=
   (mem_stdLat _).2 fun j => ⟨Pi.single (M := fun _ => 𝓞 E) i 1 j, by
     by_cases h : j = i <;> simp [h]⟩
 
-variable (E) in
 
 def stdEquiv (n : ℕ) : Formalism.L2.Pj.stdLat E n ≃ₗ[𝓞 E] (Fin n → 𝓞 E) where
   toFun x i := ⟨x.1 i, by obtain ⟨c, hc⟩ := (mem_stdLat _).1 x.2 i; exact hc ▸ c.isIntegral_coe⟩
@@ -146,7 +142,6 @@ def stdEquiv (n : ℕ) : Formalism.L2.Pj.stdLat E n ≃ₗ[𝓞 E] (Fin n → �
   left_inv _ := rfl
   right_inv _ := rfl
 
-omit [NumberField E] [IsCMField E] in
 
 theorem isLattice_stdLat (n : ℕ) : Submodule.IsLattice E (Formalism.L2.Pj.stdLat E n) where
   fg := Module.Finite.iff_fg.1 (Module.Finite.equiv (stdEquiv E n).symm)
@@ -166,7 +161,6 @@ theorem unimod_stdLat (n : ℕ) : (⟨Formalism.L2.Pj.stdLat E n⟩ : Formalism.
     rw [Finset.sum_eq_single i (fun j _ hj => by simp [hj]) (by simp), Pi.single_eq_same, _root_.mul_one] at hc
     exact ⟨star c, (congrArg star hc).trans (star_star (v i))⟩
 
-variable (E) in
 
 def std (n : ℕ) : Unim E := ofGenLat ⟨Formalism.L2.Pj.stdLat E n⟩ (isLattice_stdLat n) (unimod_stdLat n)
 

@@ -17,7 +17,6 @@ section Ext
 
 variable {V : Type} [TopologicalSpace V] [T2Space V]
 
-open Classical in
 
 def extZ (U : Set V) (φ : U → ℝ) : V → ℝ := fun v => if h : v ∈ U then φ ⟨v, h⟩ else 0
 
@@ -71,7 +70,6 @@ section Dens
 variable {V X Y : Type} [TopologicalSpace V] [MeasurableSpace V] [TopologicalSpace X]
   [MeasurableSpace X] {μ : Measure V} {ν : Measure X} {f : V → Y} {ι : X → Y} {U : Set V}
 
-open Classical in
 
 def G (hD : DensAll μ f ι ν U) (φ : V → ℝ) : X → ℝ :=
   if h : IsCcOn U φ then Classical.choose (hD φ h.1 h.2.1 h.2.2) else 0

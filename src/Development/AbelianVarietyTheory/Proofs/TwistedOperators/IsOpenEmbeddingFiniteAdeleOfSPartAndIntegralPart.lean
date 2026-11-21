@@ -22,7 +22,6 @@ theorem cofinite_le_principal_compl :
     cofinite ≤ 𝓟 ((S : Set (HeightOneSpectrum (𝓞 F)))ᶜ) := by
   rw [le_principal_iff]; exact S.finite_toSet.compl_mem_cofinite
 
-open Classical in
 
 def jSP : SPart F S × OPart F S →
     Πʳ v : HeightOneSpectrum (𝓞 F), [v.adicCompletion F, (v.adicCompletionIntegers F : Set (v.adicCompletion F))]_[𝓟 ((S : Set (HeightOneSpectrum (𝓞 F)))ᶜ)] :=

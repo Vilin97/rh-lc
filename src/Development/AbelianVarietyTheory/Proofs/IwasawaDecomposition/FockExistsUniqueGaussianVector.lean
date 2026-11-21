@@ -15,7 +15,6 @@ namespace GlobalTheory.FockGauss
 
 section Mat
 
-open scoped MatrixOrder in
 
 theorem re_sum_inner_nonneg {n H : Type} [Fintype n] [DecidableEq n] [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     {M : Matrix n n ℂ} (hM : M.PosSemidef) (u : n → H) :
@@ -46,7 +45,6 @@ theorem re_sum_inner_le {n H : Type} [Fintype n] [DecidableEq n] [NormedAddCommG
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Complex.re_ofReal_mul, ← inner_self_eq_norm_sq (𝕜 := ℂ)]; rfl
 
-open scoped MatrixOrder in
 
 theorem exists_bound {P Q : ℕ} {A : Matrix (Fin P) (Fin Q) ℂ} (h : (1 - Aᴴ * A).PosDef) :
     ∃ r : ℝ, 0 < r ∧ r < 1 ∧ ((r : ℂ) • (1 : Matrix (Fin Q) (Fin Q) ℂ) - Aᴴ * A).PosSemidef ∧

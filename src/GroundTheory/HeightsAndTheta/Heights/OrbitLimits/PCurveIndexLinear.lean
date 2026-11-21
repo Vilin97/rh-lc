@@ -38,14 +38,12 @@ theorem cu_add {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, 
   rw [cu, cu, cu, ← Finset.prod_mul_distrib]
   exact Finset.prod_congr rfl fun k _ => zpow_add₀ (hc k) _ _
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem cu_div (y : (Σ k, ι k) → Ω) (c c' : ∀ k, ι k) (a : K → ℤ) :
     cu y c' a / cu y c a = ∏ k, (y ⟨k, c' k⟩ / y ⟨k, c k⟩) ^ a k := by
   rw [cu, cu, ← Finset.prod_div_distrib]
   exact Finset.prod_congr rfl fun k _ => (div_zpow _ _ _).symm
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem mem_chartLat_one {y : (Σ k, ι k) → Ω} {a : K → ℤ} {s : Ω} :
     s ∈ chartLat y a 1 ↔ ∀ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) → s / cu y c a ∈ chartRingZ y c := by
@@ -72,7 +70,6 @@ theorem gen_add {y : (Σ k, ι k) → Ω} {c c' : ∀ k, ι k} (hc : ∀ k, y �
     (hc' : ∀ k, y ⟨k, c' k⟩ ≠ 0) (a a' : K → ℤ) : gen y c (a + a') c' = gen y c a c' * gen y c a' c' := by
   rw [gen, gen, gen, cu_add hc, cu_add hc', mul_div_mul_comm]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem mem_secIdeal {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {a : K → ℤ} {z : Ω} :
     z ∈ secIdeal y c a ↔ ∀ c' : ∀ k, ι k, (∀ k, y ⟨k, c' k⟩ ≠ 0) → z / gen y c a c' ∈ chartRingZ y c' := by
@@ -93,7 +90,6 @@ theorem mem_secIdeal {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y 
     · show (cu y c a)⁻¹ * (z * cu y c a) = z
       rw [mul_comm z, ← mul_assoc, inv_mul_cancel₀ hu, one_mul]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem mul_mem_secIdeal {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {a : K → ℤ} :
     ∀ b ∈ curveRing y, ∀ z ∈ secIdeal y c a, b * z ∈ secIdeal y c a := by
@@ -103,7 +99,6 @@ theorem mul_mem_secIdeal {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k
   rw [mul_div_assoc]
   exact (chartRingZ y c').mul_mem (mem_curveRing.mp hb c' hc') (hz c' hc')
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem chartIndexLog_eq {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) (a : K → ℤ) :
     chartIndexLog y c a 1 = Real.log (genIndex (secIdeal y c a) (curveRing y).toAddSubgroup) := by
@@ -143,14 +138,12 @@ def locRing {y : (Σ k, ι k) → Ω} (m : Ideal (curveRing y)) (hm : m.IsPrime)
     rintro r ⟨b, hb, hbr⟩
     exact ⟨b, hb, by rw [mul_neg]; exact S.neg_mem hbr⟩
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem zpow_mem_of {S : Subring Ω} {x : Ω} (hx : x ∈ S) (hx' : x⁻¹ ∈ S) (n : ℤ) : x ^ n ∈ S := by
   cases n with
   | ofNat n => rw [Int.ofNat_eq_natCast, zpow_natCast]; exact S.pow_mem hx n
   | negSucc n => rw [zpow_negSucc, ← inv_pow]; exact S.pow_mem hx' _
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem chartRingZ_le_loc {y : (Σ k, ι k) → Ω} {m : Ideal (curveRing y)} (hm : m.IsPrime) {c' : ∀ k, ι k}
     (hr : ∀ p : Σ k, ι k, ∃ α β : curveRing y, β ∉ m ∧ (β : Ω) * (y p / y ⟨p.1, c' p.1⟩) = α) {r : Ω}
@@ -221,7 +214,6 @@ theorem local_gen {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y ⟨
     simp only
     field_simp
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem gen_frac {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {m : Ideal (curveRing y)}
     {c0 : ∀ k, ι k} (hc0 : ∀ k, y ⟨k, c0 k⟩ ≠ 0)
@@ -259,7 +251,6 @@ theorem gen_frac {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y ⟨k
 
 end CurveIndexLinearAlt
 
-open CurveIndexLinearAlt in
 
 theorem CurveIndexLinear.add (hF : CurveRingFinite.Statement) (hC : CurveClosedPointChart.Statement)
     (hI : InvertibleIndexMul.Statement) {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type}

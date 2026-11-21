@@ -72,7 +72,6 @@ theorem nu_ew {ν : Chr F E} {w} (hν : UnrAt ν w) {l} (h : l ∈ part PI ⊤ (
   rw [e]
   exact Circle.coe_eq_one.1 (congrArg Units.val this)
 
-variable (F) in
 
 def pw (w : HeightOneSpectrum (𝓞 E)) : (AE F E)ˣ := locIdele F w (Formalism.L2.Host.atFin w (Formalism.L2.Host.unif w))
 
@@ -205,7 +204,6 @@ theorem prodW {B : Base F E} (hB : B.IsGood σ) {ν : Chr F E} {z : ℕ} (hz : 1
   rw [e]
   exact ⟨p1, p2.trans (by simp)⟩
 
-open Classical in
 
 def ab (T : Finset (Pl F)) : Finset (HeightOneSpectrum (𝓞 E)) := T.biUnion (Formalism.L2.Host.aboveF (L := E) F)
 

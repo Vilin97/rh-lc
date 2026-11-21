@@ -49,7 +49,6 @@ theorem scal_one {R : Type} [CommRing R] {Y : Scheme.{0}} (p : Y ⟶ Spec (CommR
 
 end UnifBaseChange
 
-open UnifBaseChange ExpandsLinear in
 
 theorem unifBaseChange :
     PolBaseChangeSt → GlobalFnsSt → SecBaseChangeSt → DVR.TwistBaseChangeStatement → UnifBaseChangeSt := by

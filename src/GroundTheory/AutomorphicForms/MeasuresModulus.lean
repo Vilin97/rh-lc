@@ -82,7 +82,6 @@ instance continuousConstSMul_linearEquiv :
     ContinuousConstSMul ((ι → F) ≃ₗ[F] (ι → F)) (ι → F) :=
   ⟨fun L => (L.toLinearMap).continuous_on_pi⟩
 
-variable (F ι) in
 
 def box : Set (ι → F) := Set.univ.pi fun _ => (𝒪[F] : Set F)
 

@@ -23,7 +23,6 @@ universe u
 
 variable {V : Type u} [AddCommGroup V] [Module ℂ V] {π : Representation ℂ (GL (Fin n) F) V}
 
-variable (F) in
 
 def IsGammaFactor (π : Representation ℂ (GL (Fin n) F) V) (μ : Measure (GL (Fin n) F))
     (ψ : AddChar F Circle) (γ : RatFunc ℂ) : Prop :=
@@ -32,44 +31,28 @@ def IsGammaFactor (π : Representation ℂ (GL (Fin n) F) V) (μ : Measure (GL (
       RatFE F γ (zetaIntegral μ Φ (matrixCoeff π v ℓ))
         (fun s => zetaIntegral μ (localMatrixFourier ψ Φ) (fun g => matrixCoeff π v ℓ g⁻¹) (1 - s))
 
-omit [BorelSpace (GL (Fin n) F)] in
 
-variable (F π) in
 
-variable (F) in
 
 abbrev qInv : ℂ := ((LocalField.residueCard F : ℂ))⁻¹
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
 theorem qs_one_sub (s : ℂ) : qs F (1 - s) = qInv F / qs F s := by
   have h1 : qs F (1 - s) * qs F s = qs F 1 := by rw [← qs_add, sub_add_cancel]
   have h2 : qs F 1 = qInv F := by rw [qs, Complex.cpow_neg_one]
   rw [eq_div_iff (qs_ne_zero s), h1, h2]
 
-variable (F) in
 
-variable (F) in
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
-variable (F) in
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
-omit [MeasurableSpace F] [BorelSpace F] in
 
 theorem exists_eq_C_mul_X_pow_of_mem {ε : RatFunc ℂ} (h : ε ∈ laurentSubalgebra)
     (h' : ε⁻¹ ∈ laurentSubalgebra) (hε : ε ≠ 0) :
@@ -102,7 +85,6 @@ include hπ hψ hψ1 hγ
 
 end Contragredient
 
-variable (F π) in
 
 end GodementJacquet
 

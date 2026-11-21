@@ -130,7 +130,6 @@ theorem uniformizerRatio_mem {n : ℕ} (σ : lowerRamificationGroup K L n) :
   (mem_lowerRamificationGroup_iff_uniformizerRatio hϖ
     (lowerRamificationGroup_antitone K L (by omega) σ.2) n).mp σ.2
 
-omit hϖ in
 
 theorem map_mul_inv_mem {n : ℕ} {σ : L ≃ₐ[K] L} (hσ : σ ∈ lowerRamificationGroup K L n)
     (u : 𝒪[L]ˣ) :
@@ -142,7 +141,6 @@ theorem map_mul_inv_mem {n : ℕ} {σ : L ≃ₐ[K] L} (hσ : σ ∈ lowerRamifi
   rw [h]
   exact Ideal.mul_mem_right _ _ (mem_lowerRamificationGroup_natCast_iff.mp hσ (u : 𝒪[L]))
 
-omit hϖ in
 
 abbrev unitFiltrationSucc (L : Type*) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] (n : ℕ) : Subgroup (unitFiltration L n) :=

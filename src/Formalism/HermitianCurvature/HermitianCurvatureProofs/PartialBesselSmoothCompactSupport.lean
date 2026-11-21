@@ -210,7 +210,6 @@ section main
 variable {k p ρ n : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
   [InnerProductSpace ℂ Wq]
 
-open Classical in
 
 def fam (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) (Φt : Mat k n → (Wq →L[ℂ] Wp)) (x : PBQ.XP k p ρ)
     (g : Mat k n) : Wq →L[ℂ] Wp :=

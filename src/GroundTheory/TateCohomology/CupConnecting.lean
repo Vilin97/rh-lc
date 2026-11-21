@@ -52,7 +52,6 @@ theorem comp_d_apply {A A' : Rep k G} (φ : A ⟶ A') (i : ℕ) (y : (Fin i → 
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [inhomogeneousCochains.d_hom_apply, map_add (f := _), map_sum, map_smul, Rep.hom_comm_apply]
 
-include hX in
 
 theorem δ_π_eq {p : ℕ} (z : cocycles X.X₃ p) (y : (Fin p → G) → X.X₂)
     (hy : ∀ v, X.g.hom (y v) = iCocycles X.X₃ p z v) (x : cocycles X.X₁ (p + 1))
@@ -66,9 +65,6 @@ theorem δ_π_eq {p : ℕ} (z : cocycles X.X₃ p) (y : (Fin p → G) → X.X₂
   congr 1
   exact cocycles_ext (iCocycles_mk _ _)
 
-include hX in
-set_option backward.defeqAttrib.useBackward true in
-set_option backward.isDefEq.respectTransparency false in
 
 theorem exists_f_eq_of_g_eq_zero (e : X.X₂) (he : X.g.hom e = 0) : ∃ a : X.X₁, X.f.hom a = e := by
   have : LinearMap.range X.f.hom.toLinearMap = LinearMap.ker X.g.hom.toLinearMap :=
@@ -77,7 +73,6 @@ theorem exists_f_eq_of_g_eq_zero (e : X.X₂) (he : X.g.hom e = 0) : ∃ a : X.X
   obtain ⟨a, ha⟩ := hmem
   exact ⟨a, ha⟩
 
-include hX in
 
 theorem exists_lift_of_cocycle {p : ℕ} (z : cocycles X.X₃ p) :
     ∃ (y : (Fin p → G) → X.X₂) (x : cocycles X.X₁ (p + 1)),

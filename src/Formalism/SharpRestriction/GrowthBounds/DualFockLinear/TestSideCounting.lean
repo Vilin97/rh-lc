@@ -307,7 +307,6 @@ theorem cntTop : CntTop := by
     rw [hf, dGT_weylDim _ _ hanti]
     exact weylDim_const_sub_rev m (fun i => lo i.succ) (lo 0)
 
-open Formalism.MainNotions.Pf14 (restW dT flW flatDeg vecE remainingWeightVectorCount) in
 
 theorem card_all {n' m : ℕ} (hm : 2 ≤ m) (TT : Finset (Fin n')) (lam0 : Fin n' → Fin (m + 1) → ℤ)
     (hdom : IsDominant lam0) :

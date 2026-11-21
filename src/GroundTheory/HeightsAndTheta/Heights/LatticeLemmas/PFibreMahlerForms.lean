@@ -49,7 +49,6 @@ end Fibre
 
 end FibreMahlerForms
 
-open FibreMahlerForms in
 
 end
 

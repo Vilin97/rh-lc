@@ -69,7 +69,6 @@ section Square
 
 variable {S : Scheme.{0}} {B : Over S} [GrpObj B] [IsCommMonObj B]
 
-omit [IsCommMonObj B] in
 
 theorem exists_biadditive {P : LB (G2 B).left} (hP : P.IsLB) (hs : LBIso P (P.pull (lift (snd B B) (fst B B)).left))
     (T : Over S) (hb : ∀ x x' y : T ⟶ B, ∃ t : LB.Gen (LB.LinComb P (K := Fin 3)

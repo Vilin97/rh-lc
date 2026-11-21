@@ -102,7 +102,6 @@ theorem mem_natLat_iff {N : ℕ} (hN : 0 < N) (z : Af E) :
 
 end GlobalTheory.RSParams
 
-open GlobalTheory.RSParams in
 
 theorem GlobalTheory.RSParams.exists_level_nat_bump : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))),

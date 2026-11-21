@@ -16,9 +16,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.Examples₂ NumberField
 
 variable {R : Ranks} {x eps : ℝ} {Del h : ℕ}
 
-open Classical in
 
-open Classical in
 
 end GlobalTheory.Diag.PG.Wit
 

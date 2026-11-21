@@ -18,7 +18,6 @@ noncomputable section
 
 namespace GlobalTheory.RootOpen
 
-open Classical in
 
 theorem finite_roots (E : Type) [Field E] [NumberField E] :
     {t : Eˣ | ∃ n : ℕ, 0 < n ∧ t ^ n = 1}.Finite := by

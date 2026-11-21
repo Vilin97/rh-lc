@@ -75,9 +75,7 @@ variable (ψ : AddChar (AF D.host.F) ℂ) (om : ∀ j, Om (X j) (X (j + 1))) (f 
 
 variable (μ : ∀ j, Measure (GA D (X j))) (𝓕 : ∀ j, Set (GA D (X j)))
 
-open Classical in
 
-open Classical in
 
 end Chain
 

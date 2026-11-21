@@ -139,7 +139,6 @@ theorem spMap_inj {A B : Type} [CommRing A] [CommRing B] {f g : A →+* B} (h : 
 
 end GlobalTheory.KeyFam.PolFamPf
 
-open GlobalTheory.KeyFam.PolFamPf in
 
 theorem GlobalTheory.KeyFam.polFam : Out.Laws → Out.Laws2 → ThetaUnifAV → GlobalTheory.TorusAlgebraic → PolFam := by
   intro hL hL2 hU hA P hg

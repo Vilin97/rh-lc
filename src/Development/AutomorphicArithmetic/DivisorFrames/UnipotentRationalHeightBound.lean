@@ -97,4 +97,3 @@ private theorem indep {B : Base F E} {d d₁ r₁ s₁ i₀ i₁ : ℕ} {W : Spc
 
 end
 
-open GlobalTheory.LeviDecomp in

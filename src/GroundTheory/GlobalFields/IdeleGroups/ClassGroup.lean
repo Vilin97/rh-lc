@@ -137,7 +137,6 @@ theorem ord_diagonal (v : HeightOneSpectrum (𝓞 K)) (a : Kˣ) :
     ord v (diagonal K a) = -log (v.valuation K a) := by
   rw [ord, ← coe_finiteProj, coe_finiteProj_diagonal, valuedAdicCompletion_eq_valuation']
 
-open Classical in
 
 theorem exists_ord_eq_ite (v : HeightOneSpectrum (𝓞 K)) :
     ∃ x : IdeleGroup K, ∀ w, ord w x = if w = v then 1 else 0 := by
@@ -184,7 +183,6 @@ theorem ker_toFractionalIdeal :
   rw [MonoidHom.mem_ker, toFractionalIdeal_eq_iff, mem_standardOpenSubgroup_iff_ord]
   simp only [Units.val_one, count_one]
 
-open Classical in
 
 theorem primeIdealUnit_mem_range (v : HeightOneSpectrum (𝓞 K)) :
     primeIdealUnit v ∈ (toFractionalIdeal (K := K)).range := by

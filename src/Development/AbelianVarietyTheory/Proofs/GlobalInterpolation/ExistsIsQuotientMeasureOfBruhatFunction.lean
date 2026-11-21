@@ -10,8 +10,6 @@ open scoped ENNReal
 
 namespace GlobalTheory
 
-open MeasureTheory Topology in
-open scoped ENNReal in
 
 theorem _root_.GlobalTheory.exists_isQuotientMeasure_of_bruhatFunction :
     ∀ (T T' : Type) [Group T] [MeasurableSpace T] [MeasurableMul₂ T] [Group T'] [MeasurableSpace T']

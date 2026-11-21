@@ -94,7 +94,6 @@ end Flat
 
 variable {E : Type} [Field E] [NumberField E] {dim : (E →+* ℂ) → ℕ} {n : ℕ}
 
-open Classical in
 
 theorem flat_dir (l : Letter n dim) : flat (dir l) = EuclideanSpace.single l 1 := by
   have := flat_single (n := n) l.1 l.2 (1 : ℂ)
@@ -329,7 +328,6 @@ theorem mem_tensorLat_span {S : Set (Fin n → E)} {γ : Fin n → Vsp X.dim} :
     exact actE_mem_of_isIntegral X
       (α.isIntegral_coe.map (IsCMField.complexConj E).toRingEquiv.toRingHom.toIntAlgHom) ha
 
-omit [IsCMField E] in
 
 theorem mem_stdLat {v : Fin n → E} : v ∈ stdLat E n ↔ ∀ k, IsIntegral ℤ (v k) := by
   rw [stdLat, Submodule.mem_span_range_iff_exists_fun]
@@ -346,7 +344,6 @@ theorem mem_stdLat {v : Fin n → E} : v ∈ stdLat E n ↔ ∀ k, IsIntegral �
     funext k
     simp [Finset.sum_apply, Pi.single_apply, Algebra.smul_def, hc]
 
-omit [IsCMField E] in
 
 theorem stdLat_fg : (stdLat E n).FG := Submodule.fg_span (Set.finite_range _)
 
@@ -371,9 +368,7 @@ theorem mem_tensorLat_stdLat {γ : Fin n → Vsp X.dim} :
     γ ∈ tensorLat X (stdLat E n) ↔ ∀ k, γ k ∈ X.L := by
   simp [stdLat, mem_tensorLat_span]
 
-omit [IsCMField E] in
 
-omit [IsCMField E] in
 
 end
 

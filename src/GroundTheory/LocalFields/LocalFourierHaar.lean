@@ -105,7 +105,6 @@ end Topology
 
 section Residue
 
-variable (K) in
 
 def residueCard : ℕ := Nat.card 𝓀[K]
 
@@ -314,7 +313,6 @@ theorem measure_valBall (n : ℤ) :
       rw [show -(-(k : ℤ) - 1) = 1 + -(-(k : ℤ)) by ring, zpow_add₀ hq0, zpow_one]
     rw [h, ← mul_assoc, ← ENNReal.coe_mul, e]
 
-variable (K) in
 
 def integersPositiveCompacts : PositiveCompacts K where
   carrier := valBall K 0
@@ -323,7 +321,6 @@ def integersPositiveCompacts : PositiveCompacts K where
     rw [(isOpen_valBall 0).interior_eq]
     exact ⟨0, zero_mem _⟩
 
-variable (K) in
 
 def haarIntegers : Measure K := addHaarMeasure (integersPositiveCompacts K)
 

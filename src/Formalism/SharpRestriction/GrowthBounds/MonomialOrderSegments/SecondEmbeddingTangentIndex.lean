@@ -16,7 +16,6 @@ variable {K : Type} [Field K] (D : TwistData K) (j : Fin D.J)
 
 def Marked (o : Finset (Fin (D.nB j + D.r))) : Prop := ∃ l ∈ o, l.val < D.nB j
 
-open Classical in
 
 def fk (o : Finset (Fin (D.nB j + D.r))) : Fin (D.nB j + D.r) → D.ML :=
   if D.Marked j o then D.e1 j else D.e0 j

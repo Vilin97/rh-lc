@@ -28,8 +28,6 @@ theorem cohomologyMap_res_nsmul_apply (O : Rep.{u} (ULift.{u} ℤ) G) [IsDiscret
   rw [Functor.map_nsmul, CategoryTheory.Functor.map_id]
   exact cohomologyMap_nsmul_id_apply _ n i x
 
-set_option linter.unusedSectionVars false in
-include hS in
 
 theorem nsmul_cohomologyMap_res_f_apply (i : ℕ) (x : cohomology (Rep.res N.subtype T) i) :
     n • (cohomologyMap ((Rep.resFunctor N.subtype).map f) i).hom x = 0 := by
@@ -116,7 +114,6 @@ theorem kummerTorsHom_eq_zero_iff (i : ℕ) (x : cohomology (Rep.res N.subtype T
       apply Subtype.ext
       exact congrArg (fun φ => φ.hom y) (δ_comp (shortExact_map_res N hS) i (i + 1) rfl)
 
-include hS in
 
 theorem cohomologyMap_res_f_injective_zero :
     Function.Injective (cohomologyMap ((Rep.resFunctor N.subtype).map f) 0).hom := by
@@ -154,7 +151,6 @@ variable {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   (N : Subgroup G) [N.Normal] [CompactSpace N] {Γ : Type*} [Group Γ] (π : G →* Γ)
   (hπ : Function.Surjective π) (hker : π.ker ≤ N)
 
-include hker in
 
 theorem cohomologyConj_eq_of_map_eq (A : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep A] (i : ℕ)
     {g h : G} (hgh : π g = π h) : cohomologyConj A N i g = cohomologyConj A N i h := by
@@ -188,7 +184,6 @@ theorem conjActionOf_smul (A : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep A] (i :
 variable {T O : Rep.{u} (ULift.{u} ℤ) G} [IsDiscreteRep T] [IsDiscreteRep O]
   {l : ℕ} {f : T ⟶ O} {w : f ≫ (l • 𝟙 O) = 0} (hS : (ShortComplex.mk f (l • 𝟙 O) w).ShortExact)
 
-include hS in
 
 theorem toFun_eq_modN_add_torsN (d : AdditiveFunction.{u} l Γ) (i : ℕ)
     [Finite (ModN (cohomology (Rep.res N.subtype O) i) l)]
@@ -244,7 +239,6 @@ theorem toFun_eq_modN_add_torsN (d : AdditiveFunction.{u} l Γ) (i : ℕ)
       change kummerTorsHom N hS (i + 1) (e (e.symm x)) = z
       rw [AddEquiv.apply_symm_apply, hx]⟩
 
-include hS in
 
 theorem toFun_eq_torsN_zero (d : AdditiveFunction.{u} l Γ)
     [Finite (TorsN (cohomology (Rep.res N.subtype O) 0) l)]

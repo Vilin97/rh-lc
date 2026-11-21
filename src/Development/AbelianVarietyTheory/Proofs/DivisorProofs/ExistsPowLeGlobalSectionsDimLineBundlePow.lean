@@ -145,7 +145,6 @@ theorem exists_isLocalFn_mul [CompactSpace X] [QuasiSeparatedSpace X] (hL : L.Is
 
 variable {k : Type} [Field k] [Algebra k Γ(X, ⊤)]
 
-variable (k) in
 
 abbrev algebraOpen (U : X.Opens) : Algebra k Γ(X, U) :=
   ((resG X le_top).comp (algebraMap k Γ(X, ⊤))).toAlgebra
@@ -200,7 +199,6 @@ theorem topologicalKrullDim_affineOpen {U : X.Opens} (hU : IsAffineOpen U) :
 
 end AmpleBig
 
-open AmpleBig in
 
 theorem IsAmpleLB.isBig : ∀ (k : Type) [Field k] (X : Scheme.{0}) [IsIntegral X]
     [Algebra k Γ(X, ⊤)], IsProjOver (strHom k X) → ∀ A : LB X, IsAmpleLB A → IsBig k A := by

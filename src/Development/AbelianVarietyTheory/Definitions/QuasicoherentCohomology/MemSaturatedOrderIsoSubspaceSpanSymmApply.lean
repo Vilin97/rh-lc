@@ -57,7 +57,6 @@ theorem saturation_saturation (N : Submodule R M) : saturation (saturation N) = 
   refine mem_saturation_iff'.2 ⟨b * a, mul_mem hb ha, ?_⟩
   rwa [mul_smul]
 
-variable (R M) in
 
 theorem IsSaturatedSubmodule.saturation_eq {N : Submodule R M} (h : IsSaturatedSubmodule N) :
     saturation N = N := h
@@ -264,29 +263,19 @@ theorem saturation_eq_span (N : Submodule R V) :
   ext x
   rw [Submodule.restrictScalars_mem, mem_span_localization_iff K R⁰ N x, mem_saturation_iff']
 
-variable {K} in
 
-variable {K} in
 
-variable {K} in
 
-variable {K} in
 
-variable {K} in
 
 theorem rank_eq_rank_span (N : Submodule R V) :
     Module.rank R N = Module.rank K (Submodule.span K (N : Set V)) := by
   have := isLocalizedModule_inclusionSpan K R⁰ N
   rw [IsLocalization.rank_eq K R⁰ le_rfl, IsLocalizedModule.rank_eq R⁰ le_rfl (N.inclusionSpan K)]
 
-variable {K} in
 
-variable {K} in
 
-variable {K} in
-omit [IsFractionRing R K] in
 
-variable {K} in
 
 end Lattice
 

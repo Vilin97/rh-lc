@@ -9,7 +9,6 @@ namespace GlobalTheory
 
 open IsLocalRing
 
-open IsLocalRing in
 
 theorem _root_.GlobalTheory.dvr_finite_over_complete_dvr :
     ∀ (O V : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]

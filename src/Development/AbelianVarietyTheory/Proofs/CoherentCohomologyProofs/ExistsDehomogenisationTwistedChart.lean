@@ -42,7 +42,6 @@ theorem secUnit_compat (σ : LB.Sec H) (k l : H.ι) {O : Y.Opens} (hH : O ≤ H.
       res hH (H.g k l) * secUnit σ l (hH.trans inf_le_right) h :=
   Units.ext (GlobalTheory.LB.sec_rel σ k l _ (hH.trans inf_le_right) hH)
 
-variable (M) in
 
 def divPow (σ : LB.Sec H) (h : V ≤ nonzeroLocus σ) (t : ℤ) :
     SecOn (tw M H t) V →ₗ[Γ(Y, V)] SecOn (tw M H 0) V where
@@ -116,7 +115,6 @@ theorem dehom_of (t : ℤ) (a : SecOnR f (tw M H t) V) :
     dehom f s hx i h r hr (GrSum.of hx t a) = SecOnR.lin f (divPow M (s i) h t) a :=
   GrSum.desc_of hx _ t a
 
-include h hr in
 
 theorem ratio_self : r i = 1 := by
   refine Y.sheaf.eq_of_locally_eq' (fun k : H.ι => V ⊓ H.U k) V

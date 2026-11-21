@@ -114,7 +114,6 @@ theorem mem_KM_iff (V : HSp D) (M : ℕ) (h : GA D V) : h ∈ KM V M ↔ GlobalT
       refine ⟨(finHom V h⁻¹).1 *ᵥ x, hm, ?_⟩
       rw [mulVec_mulVec, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one, one_mulVec]
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 
 theorem isOpen_KM (V : HSp D) (M : ℕ) (hM : 1 ≤ M) : IsOpen (KM V M) := by
   let K : Subgroup (GA D V) :=
@@ -142,7 +141,6 @@ theorem isOpen_KM (V : HSp D) (M : ℕ) (hM : 1 ≤ M) : IsOpen (KM V M) := by
     rw [← e'']
     exact hc
 
-open Formalism.IndefR.Links in
 
 theorem mem_Stab_of_lev (D : D7) (Tu : Type) (C : LevCh D Tu) (t0 : Tu) (hC : C.Is t0) (i : Fin D.R.m)
     (P : Formalism.L2.DIV.LevelP C.Pg D.R.r ℂ) (h : GA D (Wc D i))

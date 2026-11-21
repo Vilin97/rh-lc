@@ -41,9 +41,7 @@ structure GtAn [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing
 
   sec : letI := H.starRing; toGtAn₀.toGtDict.SecFn
 
-omit [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
-omit [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
 namespace GtAn₀
 

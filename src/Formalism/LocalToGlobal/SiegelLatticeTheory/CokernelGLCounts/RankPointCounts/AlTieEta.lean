@@ -144,7 +144,6 @@ def maxEquiv : HeightOneSpectrum (𝓞 X.B.I.F) ≃ {𝔭 : Ideal (𝓞 D.host.F
     show ((plEquiv X) ((plEquiv X).symm _)).asIdeal = 𝔭.1
     rw [Equiv.apply_symm_apply]
 
-variable {X} in
 
 theorem summable_absNorm_inv (i : ℕ) (hi : 2 ≤ i) :
     Summable (fun p : PlF D => (((Ideal.absNorm p.asIdeal : ℕ) : ℝ))⁻¹ ^ i) := by

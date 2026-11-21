@@ -25,9 +25,7 @@ theorem secRow_eLast {R : Type*} [CommRing R] : secRow (eLast R a) = 1 := by
     · rw [if_neg h2, if_neg (fun e : i = j => h2 (e ▸ h))]
   · rw [if_neg h]
 
-omit [NumberField E] [IsTotallyComplex E] in
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 omit [NumberField E] [IsTotallyComplex E] in
 theorem secInv_eLast : secInv (eLast (Cinf E) a) = 1 := by
@@ -36,15 +34,12 @@ theorem secInv_eLast : secInv (eLast (Cinf E) a) = 1 := by
   · rw [inv_eq_one]; exact Units.ext secRow_eLast
   · rfl
 
-omit [IsTotallyComplex E] in
 
 omit [IsTotallyComplex E] in
 theorem detPow_mul (x : ℝ) (g h : GA E a) : detPow E a x (g * h) = detPow E a x g * detPow E a x h := by
   simp [detPow]
 
-omit [IsTotallyComplex E] in
 
-omit [IsTotallyComplex E] in
 
 theorem detPow_ratGL (x : ℝ) (γ : GL (Fin a) E) : detPow E a x (ratGL E a γ) = 1 := by
   have h : Matrix.GeneralLinearGroup.det (ratGL E a γ) = diagUnits E (Matrix.GeneralLinearGroup.det γ) :=
@@ -53,18 +48,11 @@ theorem detPow_ratGL (x : ℝ) (γ : GL (Fin a) E) : detPow E a x (ratGL E a γ)
   unfold detPow chiDet
   rw [MonoidHom.comp_apply, h, h2]; simp
 
-omit [IsTotallyComplex E] in
 
-omit [IsTotallyComplex E] in
 
-omit [IsTotallyComplex E] in
 
-omit [IsTotallyComplex E] in
 
-open Classical in
 
-open Classical in
 
-omit [IsTotallyComplex E] in
 
 end GlobalTheory.RSJ.Model

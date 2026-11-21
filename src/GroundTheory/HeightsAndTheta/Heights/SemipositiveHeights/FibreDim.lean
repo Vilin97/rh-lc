@@ -79,7 +79,6 @@ theorem aeval_mem_closure {σ : Type} {L : Type} [Field L] (y : σ → L) (f : M
 
 end FibreTranscendenceDegree
 
-open FibreTranscendenceDegree in
 
 theorem FibreDim.proof : FibreDimStatement := by
   intro K _ ι _ K' _ ι' _ κ v P' d r G hv hP' hP

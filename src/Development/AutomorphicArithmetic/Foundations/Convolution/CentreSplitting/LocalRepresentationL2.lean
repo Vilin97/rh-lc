@@ -38,7 +38,6 @@ def localRepresentationL2 (w : HeightOneSpectrum (𝓞 K)) : Representation ℂ 
     simp only [map_mul, RG]
     rw [retractOne_mul, UnitaryRep.map_mul]; rfl
 
-variable {μ} in
 
 def locOn {V : Submodule ℂ (LL μ)} (hV : IsSummand μ V) (w : HeightOneSpectrum (𝓞 K)) :
     Representation ℂ (GL (Fin n) (w.adicCompletion K)) V :=

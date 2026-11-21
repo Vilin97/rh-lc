@@ -231,7 +231,6 @@ theorem pairM_entry {a : ℕ} (X : Matrix (Fin n) (Fin a) E) (i j : Fin a) :
 
 end GlobalTheory.SgAlg.WittField
 
-open GlobalTheory.SgAlg Matrix in
 
 theorem GlobalTheory.SgAlg.witt_free_field : ∀ {E : Type} [Field E] (σ : E →+* E), IsQA σ → ∀ {n a : ℕ}
     (J : Matrix (Fin n) (Fin n) E), IsHermU σ J → ∀ (X X' : Matrix (Fin n) (Fin a) E), Free X →

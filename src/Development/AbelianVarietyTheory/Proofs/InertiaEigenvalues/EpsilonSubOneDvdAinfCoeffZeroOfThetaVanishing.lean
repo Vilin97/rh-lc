@@ -200,7 +200,6 @@ end GlobalTheory.EpsCoeff
 
 namespace GlobalTheory
 
-open GlobalTheory.EpsCoeff in
 
 theorem eps_sub_one_dvd_coeff_zero : ∀ (l : ℕ) [Fact l.Prime] (ε : OCb l), IsEps ε → ∀ a : Ainf l,
     (∀ n : ℕ, Per.θ l (WittVector.frobenius^[n] a) = 0) → (ε - 1) ∣ a.coeff 0 := by

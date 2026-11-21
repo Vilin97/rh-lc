@@ -392,7 +392,6 @@ theorem emb_mem (s : CMType H ⊕ CMType H) (q : Cpt 𝔐.ξ) (a : 𝓞 E) : �
     rw [ho]
   rwa [e] at h1
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem lat_act (q : Cpt 𝔐.ξ) (x : 𝓞 E) (e : 𝔐.Li) (he : e ∈ 𝔐.M.lat q) : 𝔐.ρ x e ∈ 𝔐.M.lat q := by
   rw [LieModel.mem_lat_iff] at he ⊢

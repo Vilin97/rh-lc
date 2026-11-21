@@ -758,7 +758,6 @@ open Formalism.BasicNotions Formalism.QuantumDeterminants Formalism.MainNotions.
 
 attribute [local instance] Classical.propDecidable
 
-open scoped Pointwise in
 
 section Num
 

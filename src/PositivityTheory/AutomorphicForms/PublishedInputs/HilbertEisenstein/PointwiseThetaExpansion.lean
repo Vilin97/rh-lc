@@ -288,7 +288,6 @@ theorem summable_kern {ω : HChar F} {c : HeightOneSpectrum (𝓞 F) → ℕ} (h
         exact kernF_le c _ _
     _ = _ := by ring
 
-open Classical in
 
 def rowEquiv : Fˣ ⊕ (Fˣ × F) ≃ {ξ : Fin 2 → F // ξ ≠ 0} where
   toFun s := match s with

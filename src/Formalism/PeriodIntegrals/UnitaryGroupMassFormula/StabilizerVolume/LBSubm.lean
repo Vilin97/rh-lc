@@ -90,7 +90,6 @@ private theorem isAddHaarMeasure_map_restrict_slab {n m : ℕ} (μ : Measure (Fi
         rw [e, norm_zero]; exact hr
     exact hopen.measure_ne_zero μ ⟨_, hmem⟩
 
-set_option maxHeartbeats 800000 in
 
 theorem submLB_holds : SubmLB := by
   intro n m μ ν hμ hν f hf x0 hsurj W hW hx0W

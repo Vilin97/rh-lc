@@ -58,7 +58,6 @@ theorem siegelMassRatio_of_LI (hH : HermRepUnram) (hLI : LIStat) : Formalism.Her
   rw [e1, e2, hprod, div_eq_iff (by positivity)]
   ring
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem siegelMassRatio : Formalism.HermitianLatticesTheory.SiegelMassRatio := siegelMassRatio_of_LI hermRepUnram liStat
 

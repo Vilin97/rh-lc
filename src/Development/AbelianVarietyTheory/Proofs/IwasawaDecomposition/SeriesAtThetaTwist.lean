@@ -65,29 +65,17 @@ private def base {S T : HSp a.D} (x : ExportSeries.Base S T) : @ExportSeries.Bas
   mu0 := (by with_unfolding_all exact (x.mu0 :))
   eta := (by with_unfolding_all exact (x.eta :))
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
 end L1
 
@@ -108,13 +96,9 @@ variable {N : NData (lt c a).D.R (lt c a).D.host (lt c a).D.what₂} {X : NTw (l
 
 end
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
-variable (a) in
 
 section
 variable {N : NData (lt c a).D.R (lt c a).D.host (lt c a).D.what₂} {X : NTw (lt c a).D.R (lt c a).D.host (lt c a).D.what₂ (lt c a).D.LL0 N} {ρ : Setup X}

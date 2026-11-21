@@ -19,7 +19,6 @@ theorem mem_latticeImage {F : Type*} [Field F] (L : AddSubgroup F) (y : mixedSpa
   change y ∈ L.map (mixedEmbedding F).toAddMonoidHom ↔ _
   simp
 
-open scoped Classical in
 
 def LatticeImageZLattice.Statement : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (L : AddSubgroup F), L.FG →

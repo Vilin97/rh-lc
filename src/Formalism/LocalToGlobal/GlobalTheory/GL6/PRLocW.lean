@@ -104,7 +104,6 @@ variable {D : D7} {u : D.what₂.Word}
 theorem rlv_sig_sig (x : D.host.E) : sigD D (sigD D x) = x := by
   rw [forms_involution_eq_host_conj, forms_involution_eq_host_conj, host_conj_involutive]
 
-set_option maxHeartbeats 2000000 in
 
 theorem rlv_coordFacts (i : ℕ) (hi : i ≤ D.R.m) :
     (∀ c, Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D i hi) (Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D i hi) (clsCrd D u i hi c)) =
@@ -152,7 +151,6 @@ theorem rlv_coordFacts (i : ℕ) (hi : i ≤ D.R.m) :
     rw [hform_eq, hform_eq, LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply] at h
     exact h.symm
 
-set_option maxHeartbeats 2000000 in
 
 end TiedQ
 
@@ -160,17 +158,9 @@ section TiedW
 
 variable {D : D7} {u : D.what₂.Word}
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 2000000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 4000000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 4000000 in
 
 end TiedW
 

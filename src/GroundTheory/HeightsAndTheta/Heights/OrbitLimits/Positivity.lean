@@ -74,7 +74,6 @@ theorem nonneg_of_isFieldIntersection {I : IFamily F ι} (hI : IsFieldIntersecti
     exact cycEval_ratDiv_one_nonneg _ _ _ fun W hW =>
       ih W (isProjVarF_of_mem_divSupp hV hf hfV hW) _ fun j k => hL _ k
 
-omit [Fintype K] in
 
 theorem const_one_eq_snoc (n : ℕ) :
     (fun _ _ => (1 : ℤ) : Fin (n + 1) → K → ℤ) =

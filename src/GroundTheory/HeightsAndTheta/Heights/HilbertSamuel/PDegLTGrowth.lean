@@ -15,12 +15,10 @@ section Growth
 
 variable {K : Type} [Fintype K] [DecidableEq K]
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem mixedDiff_of_fin_zero (bs : Fin 0 → K → ℤ) (f : (K → ℤ) → ℤ) : mixedDiff bs f = f := by
   simp [mixedDiff]
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem mixedDiff_snoc_eq_diffStep {n : ℕ} (bs : Fin n → K → ℤ) (b : K → ℤ) (f : (K → ℤ) → ℤ) :
     mixedDiff (Fin.snoc bs b : Fin (n + 1) → K → ℤ) f = mixedDiff bs (diffStep b f) := by
@@ -28,7 +26,6 @@ theorem mixedDiff_snoc_eq_diffStep {n : ℕ} (bs : Fin n → K → ℤ) (b : K �
   rw [List.ofFn_succ']
   simp [List.concat_eq_append, List.foldr_append]
 
-omit [Fintype K] [DecidableEq K] in
 
 theorem degLT_diffStep_of_degLT_succ {n : ℕ} {f : (K → ℤ) → ℤ} (hf : DegLT f (n + 1)) (b : K → ℤ) :
     DegLT (diffStep b f) n := by
@@ -36,7 +33,6 @@ theorem degLT_diffStep_of_degLT_succ {n : ℕ} {f : (K → ℤ) → ℤ} (hf : D
   have h := hf (Fin.snoc bs b : Fin (n + 1) → K → ℤ)
   rwa [mixedDiff_snoc_eq_diffStep] at h
 
-omit [Fintype K] in
 
 theorem diffStep_single_natCast (g : (K → ℤ) → ℤ) (m : K → ℕ) (k : K) :
     diffStep (Pi.single k 1) g (fun j => ((m + Pi.single k 1 : K → ℕ) j : ℤ)) =

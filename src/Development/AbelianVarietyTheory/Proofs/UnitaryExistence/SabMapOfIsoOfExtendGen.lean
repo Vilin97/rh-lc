@@ -176,7 +176,6 @@ section Group
 variable {T K : Type} [CommRing T] [IsDomain T] [IsDiscreteValuationRing T] [Field K] [Algebra T K]
   [IsFractionRing T K]
 
-omit [IsDiscreteValuationRing T] in
 
 theorem app_injective_generic {X P : Scheme.{0}} {p : X ⟶ Sp T} [Flat p] {d : P ⟶ X} {q : P ⟶ Sp K}
     (h : IsPullback d q p (spMap (algebraMap T K))) (V : X.Opens) : Function.Injective (d.app V) := by

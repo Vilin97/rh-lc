@@ -130,9 +130,7 @@ section Families
 variable {S : Type} [CommRing S] {N : ℕ} {Ω : Type} [Field Ω] [Algebra S Ω] {x : Fin (N + 1) → Ω}
 variable {E : Type} [AddCommGroup E] [Module Ω E] [Module S E] [IsScalarTower S Ω E]
 
-open Classical in
 
-omit [Module S E] [IsScalarTower S Ω E] in
 
 theorem mem_twist_twistSys_iff (F : Kleiman.SubSystem S x E) (c : ℤ) (I : Kleiman.Chart x)
     {i : Fin (N + 1)} (hi : i ∈ I.1) (z : E) :

@@ -59,7 +59,6 @@ theorem kummer_coc {ζ : AlgebraicClosure ℚ} (hζ : IsPrimitiveRoot ζ (l ^ r)
   rw [← e4]
   ring
 
-set_option maxHeartbeats 1000000 in
 
 theorem kummer_ev_isLocallyConstant
     (hev : ∀ σ x, ιs v (((ev σ : Dec (F := Kf.1) A) : G Kf.1 (AlgebraicClosure ℚ)) x) = σ (ιs v x))

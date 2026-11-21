@@ -23,9 +23,7 @@ open Reduction AutomorphicForm RightCosetSpace CuspidalSpectrum
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (K n) in
 
-variable (K n) in
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 
@@ -40,7 +38,6 @@ variable (σ : UnitaryRep (normOneGL K n) H) (U : Subgroup (AdelicGLn.FiniteAdel
 
 variable {μ : Measure (normOneGL K n)} [μ.IsHaarMeasure]
 
-set_option maxHeartbeats 4000000 in
 
 end MultiplicityOne
 

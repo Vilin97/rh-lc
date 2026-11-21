@@ -12,7 +12,6 @@ noncomputable section
 
 namespace DiscreteGroups.sglob.DzType.Rt
 
-open GlobalTheory.SerSys.LabLoc in
 
 theorem actK_e_eq_self_le : ∀ (g : ℕ) [Fact g.Prime] (S : Sys g) (τ : Formalism.CyclotomicNorms.Fbar g →* ℂ) (ine : ∀ n, QRep g n → ℂ[X]) (b : ℕ), Set.InjOn τ {x | x ≠ 0} → DiscreteGroups.sglob.DzType.Rt.SerParamLe b S.e τ ine → ∀ (n : ℕ), n ≤ b → ∀ (π : QRep g n), IrrSm π → ∀ f : (ZMod g)[X], f.Monic → f.coeff 0 ≠ 0 → ine n π = ((Formalism.CyclotomicNorms.rootsBar f).map fun x => X - C (τ x)).prod → ∀ v ∈ fixK1 π.ρ, actK π.ρ (S.e n f) v = v := by
   intro g _ S τ ine b hτ hP n hn π hπ f hm h0 hine v hv

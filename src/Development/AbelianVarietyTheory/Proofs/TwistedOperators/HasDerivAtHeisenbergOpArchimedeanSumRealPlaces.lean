@@ -52,7 +52,6 @@ theorem infPart_smul (u : AF D.host.F) (a : AE D) :
     infPart D (u • a) = infPart D (algebraMap (AF D.host.F) (AE D) u) * infPart D a := by
   rw [Algebra.smul_def, map_mul]
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem realAd_smul_eq {θ : InfFam D} (hθ : IsInfFam θ) {S T : HSp D} {w : WO S T}
     (hw : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) w) (t : ℝ) :
@@ -92,7 +91,6 @@ namespace GlobalTheory.ArchLineSum
 
 open GlobalTheory.SplitScalar GlobalTheory.LatVac
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem hasDerivAt_realAd_smul : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D), IsStdChar D ψ (-1) → IsInfFam θ →
     ∀ (S T : HSp D) (f : WO S T → ℂ), IsThetaFunO ψ S T f →

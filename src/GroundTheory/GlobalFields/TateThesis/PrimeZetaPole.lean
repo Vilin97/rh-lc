@@ -302,7 +302,6 @@ theorem abs_log_dedekindZetaReal_sub_tsum_le {s : ℝ} (hs : 1 < s)
   rw [abs_le]
   constructor <;> linarith
 
-variable (K) in
 
 theorem eventually_summable_dedekindZetaTerm :
     ∀ᶠ s in 𝓝[>] (1 : ℝ), Summable (dedekindZetaTerm K s) := by
@@ -319,7 +318,6 @@ theorem primeIdealZetaSum_univ (s : ℝ) :
   rw [Set.primeIdealZetaSum_def]
   exact tsum_univ (f := fun w : HeightOneSpectrum (𝓞 K) => (absNorm w.asIdeal : ℝ) ^ (-s))
 
-variable (K) in
 
 theorem exists_abs_primeIdealZetaSum_add_log_le :
     ∃ C : ℝ, ∀ᶠ s in 𝓝[>] (1 : ℝ),
@@ -351,7 +349,6 @@ theorem exists_abs_primeIdealZetaSum_add_log_le :
   have h2 := neg_abs_le (Real.log R)
   constructor <;> linarith [hs.1, hs.2, hcmp.1, hcmp.2]
 
-variable (K) in
 
 theorem tendsto_primeIdealZetaSum_univ_atTop :
     Tendsto (fun s => (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s)

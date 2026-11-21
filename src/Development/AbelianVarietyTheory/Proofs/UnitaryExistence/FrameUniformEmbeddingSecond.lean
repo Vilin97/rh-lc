@@ -213,6 +213,5 @@ theorem transport {G A : Type} [Group G] [CommRing A] {n : ℕ} (f : G →* GL (
   simp only [Matrix.mulVec_add, Matrix.mulVec_smul, smul_sub]
   abel
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.MarkCoset

@@ -13,7 +13,6 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace
 
 namespace GlobalTheory.Published
 
-open CategoryTheory AlgebraicGeometry TopologicalSpace in
 
 theorem _root_.GlobalTheory.Published.generic_of_isIso_restrict {X X' : Scheme.{0}} [IsIntegral X]
     [IsIntegral X'] (π : X' ⟶ X) (U : X.Opens)
@@ -47,7 +46,6 @@ theorem _root_.GlobalTheory.Published.generic_of_isIso_restrict {X X' : Scheme.{
     _root_.GlobalTheory.CurveDegreesCompare.residueDegree_of_isOpenImmersion (π ∣_ U), hx] at h1
   simpa using h1
 
-open CategoryTheory AlgebraicGeometry TopologicalSpace in
 
 theorem _root_.GlobalTheory.Published.arBirational_of_arProj (H : _root_.GlobalTheory.Published.ArProj) :
     _root_.GlobalTheory.Published.ArBirational := by

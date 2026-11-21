@@ -107,7 +107,6 @@ end At
 
 end XXb
 
-open XXb in
 
 theorem restXXG_b : RestXXG := by
   intro p _ n' r K _ _ _ O _ _ _ S Fr TT L₁ L₂ N₁ G' deg d Y cP hM J _ Dt dPl dNo ka hT δ j A B hPl hNo

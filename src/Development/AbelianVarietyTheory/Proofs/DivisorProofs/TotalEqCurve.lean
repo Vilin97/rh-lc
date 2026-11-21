@@ -65,15 +65,11 @@ section Cell
 
 variable {ι : Type} [Fintype ι] {r : ι → ℕ} (e : Fin (d + 1) ≃ Option (Σ a, Low (r a)))
 
-omit [Fintype ι] in
 
-omit [Fintype ι] in
 
 def emb {m : ℕ} (i : Fin m) : Fin i ⊕ Fin 1 → Fin m := Sum.elim (Fin.castLE i.isLt.le) fun _ => i
 
-open Classical in
 
-open Classical in
 
 variable {m : ℕ}
 

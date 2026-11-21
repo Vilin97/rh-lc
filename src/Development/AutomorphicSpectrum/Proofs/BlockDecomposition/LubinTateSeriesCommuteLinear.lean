@@ -353,7 +353,6 @@ end GlobalTheory.CompanionTheory.LTPer.LogGal
 
 namespace GlobalTheory.CompanionTheory.LTPer
 
-open LogGal in
 
 theorem galois_log : ∀ {B : Type} [CommRing B] {S : Subring B} {F : ℕ → Ideal B} {ϖ : B} {R : Type} [CommRing R], PerEnv S F ϖ → ∀ (ϖ' : B), ϖ * ϖ' = 1 →
     ∀ (h : R →+* B), (∀ c, h c ∈ S) → ∀ (π : R), h π = ϖ → ∀ (q : ℕ), 2 ≤ q → (∃ s ∈ S, (q : B) = ϖ * s) →

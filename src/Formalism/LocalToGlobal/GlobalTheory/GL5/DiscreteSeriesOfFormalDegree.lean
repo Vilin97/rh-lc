@@ -21,12 +21,10 @@ open scoped TensorProduct
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem standardLattice_aux2b (D : D7) : Formalism.MainNotions.StandardLattice.MassRatio₂ D :=
   Formalism.MainNotions.StandardLattice.massRatio_of_modelMassRatio D Formalism.HermitianLattices.SiegelMassBounds.siegel_mass_ratio
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem siegel_mass_ratio_family {eps : ℝ} (Fm : Formalism.MainNotions.FamP eps) : Formalism.MainNotions.flipTwoThree.fam0 Fm Formalism.MainNotions.StandardLattice.MassRatio₂ :=
   ⟨0, fun x _ _ i => standardLattice_aux2b (Fm.D x i)⟩
@@ -60,7 +58,6 @@ theorem volume_mass_ge_two (D : D7) (h2 : Conclusion2 D) (h : volumeAtLevelZero 
   | base => exact h
   | succ n hn ih => exact volume_mass_succ D h2 n hn ih
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem vol_indef (D : D7) (h2 : Conclusion2 D) (h : volumeAtLevelZero D 2) :
     ∀ (Q : ℕ) (W : HSpace D.host.E) (P : ℕ), W.SigOK → (∀ τ, W.sig τ = (P, Q)) → 2 ≤ P →
@@ -91,11 +88,8 @@ theorem vol_indef (D : D7) (h2 : Conclusion2 D) (h : volumeAtLevelZero D 2) :
     field_simp at hr
     exact hr
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem volume_eq_mass_rank_two (D : D7) (h2 : Conclusion2 D) (h : volumeAtLevelZero D 2) : BaseVolumeEqualsMass D := by
   have hh := vol_indef D h2 h D.R.sigY0.2 (D.sp.Y 0) D.R.sigY0.1 (D.sp.Y_sig 0) (fun τ => D.sp.baseSpace_signature_eq τ)
@@ -166,11 +160,8 @@ theorem volume_mass_of_class_data (D : D7) (n : ℕ) (hT : VolTie D) (hG : Genus
 
 def ClassItemsAt (D : D7) (n : ℕ) : Prop := GenusMassAt D n ∧ ClassFinAt D n ∧ ClassMassAt D n
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Formalism.L2.GlobalTheoryTheory.GenusMassVolumes
 

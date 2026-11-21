@@ -108,13 +108,11 @@ variable {k : Type} [Field k] {S : LinSys k} [IsIntegral S.Y] [Algebra k S.Y.fun
 
 def ratSet : Set S.Y.functionField := Set.range fun j => h.rat (S.b j)
 
-omit [Algebra k S.Y.functionField] [IsScalarTower k Γ(S.Y, ⊤) S.Y.functionField] in
 
 theorem mem_of_mem_ratSet : ∀ f ∈ h.ratSet, f ∈ D.sections := by
   rintro _ ⟨j, rfl⟩
   exact h.rat_mem _
 
-omit [Algebra k S.Y.functionField] [IsScalarTower k Γ(S.Y, ⊤) S.Y.functionField] in
 
 theorem basePointFree_iff : D.BasePointFree h.ratSet ↔ S.BasePointFree := by
   refine ⟨fun hb => eq_top_iff.2 fun x _ => ?_, fun hb => ⟨h.mem_of_mem_ratSet, fun x => ?_⟩⟩

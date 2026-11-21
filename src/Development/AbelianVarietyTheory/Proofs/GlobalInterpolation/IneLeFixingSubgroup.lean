@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain
 
 namespace GlobalTheory.UnramDiscr
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.UnramDiscr.mem_of_isIntegral {Ω : Type*} [Field Ω] (A : ValuationSubring Ω)
     {x : Ω} (hx : IsIntegral ℤ x) : x ∈ A := by
@@ -17,7 +16,6 @@ theorem _root_.GlobalTheory.UnramDiscr.mem_of_isIntegral {Ω : Type*} [Field Ω]
   obtain ⟨y, rfl⟩ := IsIntegrallyClosed.isIntegral_iff.mp h
   exact y.2
 
-open NumberField IsDedekindDomain in
 
 theorem _root_.GlobalTheory.UnramDiscr.embedding_eq {K Ω : Type*} [Field K] [NumberField K]
     [Field Ω] [CharZero Ω] [IsAlgClosed Ω] (A : ValuationSubring Ω)

@@ -48,7 +48,6 @@ def CoverEx : Prop := ForCyc fun K M => ∀ η : HChar K, IsGenChar M η → ∀
     (u : Off M T → Off K S) (f : Off M T → ℕ), S₀ ⊆ S ∧ T₀ ⊆ T ∧ (∀ w, (u w).1 = w.1.under (𝓞 K)) ∧ (∀ v : Off K S, η.UnrAt v.1) ∧
       (∀ w, normV w.1 = normV (u w).1 ^ f w) ∧ Cover (Module.finrank K M) nq nq u f fun v => (η.val v.1 : ℂ)
 
-open Classical in
 
 def Count : Prop := ForCyc fun K M => ∀ η : HChar K, IsGenChar M η → ∀ (n : ℕ) (π π₁ : CG K n) (ι : Type) [Fintype ι] (m : ι → ℕ)
   (P : ∀ i, CG M (m i)), 1 ≤ n → (∀ i, 1 ≤ m i) → WeakBC π.HasSat (sumSat P) → WeakBC π₁.HasSat (sumSat P) →

@@ -128,7 +128,6 @@ end GlobalTheory.MomOne.LiftChange
 namespace GlobalTheory.MomOne
 open LiftChange
 
-open scoped ComplexConjugate BigOperators ComplexOrder in
 
 theorem _root_.GlobalTheory.MomOne.lift_change : ∀ (q : ℕ) [Fact q.Prime] (lam : _root_.Formalism.L2.Ker.JMB.Qbar →+* ℂ_[q]) (g : ℕ) (S : _root_.Formalism.L2.Ker.JMB.Setup g) (r : ℕ) (b : Fin r → Fin g → ℂ) (e : (Fin g → ℂ) → ℂ) (t : Fin g → ℂ) (n m s : ℕ) (eps : ℂ) (y : Fin r → Fin (q ^ n)), S.Ok → (∀ i, b i ∈ S.La) → S.IsTheta e → _root_.Formalism.L2.Ker.JMB.IsIdem lam S.d m eps → 2 * n ≤ m → (∀ i, ∃ z : ℤ, (_root_.Formalism.L2.Ker.JMB.hf S.Hm (eps • b i) t).im = z) → s ≡ 1 [MOD q ^ n] → _root_.Formalism.L2.Ker.JMB.opW S.d S.Hm ((s : ℂ) • _root_.Formalism.L2.Ker.JMB.liftY q n eps b y) (_root_.Formalism.L2.Ker.JMB.opU S.Hm t e) = _root_.Formalism.L2.Ker.JMB.opW S.d S.Hm (_root_.Formalism.L2.Ker.JMB.liftY q n eps b y) (_root_.Formalism.L2.Ker.JMB.opU S.Hm t e) ∧ ∀ v ∈ S.La, _root_.Formalism.L2.Ker.JMB.kap S.Hm v ((s : ℂ) • _root_.Formalism.L2.Ker.JMB.liftY q n eps b y) = _root_.Formalism.L2.Ker.JMB.kap S.Hm v (_root_.Formalism.L2.Ker.JMB.liftY q n eps b y) := by
   intro q _ lam g S r b e t n m s eps y hS hb he hid hnm hti hs

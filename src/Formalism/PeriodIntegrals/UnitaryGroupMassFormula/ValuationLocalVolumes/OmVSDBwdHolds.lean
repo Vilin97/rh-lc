@@ -93,7 +93,6 @@ theorem val_le (v : PlX X) (f : X.B.I.F)
     HeightOneSpectrum.valuedAdicCompletion_eq_valuation'] at this
   exact this
 
-open Polynomial in
 
 theorem denom (v : PlX X) (e : X.B.I.E) (he : inclR (F := X.B.I.F) (Fv X.B.I.F v) e ∈ OEv (E := X.B.I.E) v) :
     ∃ s : 𝓞 X.B.I.F, s ∉ v.asIdeal ∧ ∃ c : 𝓞 X.B.I.E, (c : X.B.I.E) = algebraMap X.B.I.F X.B.I.E s * e := by

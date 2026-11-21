@@ -35,7 +35,6 @@ open Formalism.IndefR.principalLevelFrame Formalism.IndefR.Mult
 
 namespace GlobalTheory.RowSphSmall
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_form_rowRepR (hH : GlobalTheory.Published.HarishChandraFinite) (hC : GlobalTheory.Published.CuspRapidDecay) (D : D7) (G : Type) [Group G]
     [Fintype G] (Pl0 I0 T : Type) (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks]

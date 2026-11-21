@@ -104,7 +104,6 @@ namespace Unf
 
 variable {i : ℕ} {v : (D.mem u).A.vT} (H : Unf D u i v)
 
-omit H in
 
 include H
 
@@ -336,7 +335,6 @@ lemma S_span (i : ℕ) (w : D.what₂.places.Pl) :
   rw [eq_top_iff, ← ((D.fm u).lat_good i).2.2]
   exact Submodule.span_mono (fun x hx => Submodule.subset_span hx)
 
-variable (D u) in
 
 def LatticeChainWithoutLast (C : ℝ) : Prop :=
   ∀ w, OverT D u w →
@@ -842,7 +840,6 @@ lemma Nlam_eq (hS : HidaSetting D u) (hR : Rat0 D u) (w : D.what₂.places.Pl) :
   refine Finset.sum_congr rfl (fun v hv => ?_)
   exact Int.toNat_of_nonneg (hS.2.2 _ (mem_VV hv).2)
 
-variable (D u) in
 
 lemma dense_embLL (D : D7) : DenseRange D.what₂.embLL := by
   have hv : (InfinitePlace.mk D.what₂.embLL).IsComplex := IsTotallyComplex.isComplex _
@@ -1012,7 +1009,6 @@ theorem Pt_integral (P : Pend D u) (h4 : ArchimedeanSignatureMatching P) (hPF : 
   have := D.inLoc_of_mem_locW (D.plEq.symm p) (D.fm u).ptLat.L y hy
   rwa [Equiv.apply_symm_apply, e] at this
 
-variable (D u) in
 
 def ClassMapInjectiveBijectiveNorms : Prop :=
   Function.Injective (D.fm u).til ∧
@@ -1027,6 +1023,5 @@ theorem classMap_estimate_of_partial (P : Pend D u) (h4 : ArchimedeanSignatureMa
     ⟨PRat_of P h4 h.2.2.1, Pt_integral P h4 h.2.2.1 _, h.2.2.2 _⟩,
     cplx_of_place (PRat_of P h4 h.2.2.1) (fun x => h.2.2.2 _ (InfinitePlace.mk D.what₂.embLL) x)⟩
 
-variable (D u) in
 
 end Formalism.MainNotions.product_first_zeroth_parts

@@ -120,7 +120,6 @@ theorem WData.exists_closed_off (w : WData P D hP) (Q : AffPres (w.π ≫ toSpec
     rw [hco] at this
     exact hyF this
 
-set_option backward.isDefEq.respectTransparency.types false in
 
 theorem WData.ringKrullDim_stalk_off (w : WData P D hP) (e : ℕ)
     (hdim : ∀ (p : (k : K) → ι k) (z : (Σ k, ι k) → ℂ), (∀ h ∈ chartIdeal P p, eval z h = 0) →

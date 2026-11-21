@@ -242,16 +242,13 @@ lemma IsMulLeft.value_mul {ρ : Γ((splitTorus S X ⊗ Y).left, ⊤)} (hρ : IsM
 
 attribute [local instance] TorusInj.zuAlg
 
-variable (X) in
 
 abbrev grpAlg (R : CommRingCat.{0}) : CommRingCat.{0} := CommRingCat.of (AddMonoidAlgebra R X)
 
-variable (X) in
 
 def fromInt (R : CommRingCat.{0}) : torusRing ZU X ⟶ grpAlg X R :=
   CommRingCat.ofHom (algebraMap (AddMonoidAlgebra ZU.{0} X) (AddMonoidAlgebra R X))
 
-variable (X) in
 
 def const (R : CommRingCat.{0}) : R ⟶ grpAlg X R :=
   CommRingCat.ofHom (algebraMap R (AddMonoidAlgebra R X))
@@ -393,7 +390,6 @@ lemma IsMulLeft.exists_isCharNear {ρ : Γ((splitTorus S X ⊗ Y).left, ⊤)} (h
 
 end TorusUnit
 
-open TorusUnit in
 
 theorem existsUnique_character_of_mul (S : Scheme.{0}) (X : Type) [AddCommGroup X] (Y : Over S)
     [ConnectedSpace Y.left] (ρ : Γ((splitTorus S X ⊗ Y).left, ⊤)ˣ)

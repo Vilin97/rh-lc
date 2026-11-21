@@ -31,19 +31,16 @@ section sets
 
 variable (K L : Type) [Field K] [Fintype K] [Field L] [Algebra K L] [IsAlgClosed L]
 
-open Classical in
 
 noncomputable def e3A (δ l : ℕ) : Finset (Fin δ → K) :=
   (Finset.univ : Finset (Fin δ → K)).filter (fun c => Irreducible (monicOf c) ∧
       ¬ Set.InjOn (primeToPart l) ((monicOf c).rootSet L))
 
-open Classical in
 
 noncomputable def e3I (δ : ℕ) : Finset (Fin δ → K) :=
   (Finset.univ : Finset (Fin δ → K)).filter
       (fun c => Irreducible (monicOf c) ∧ (monicOf c).coeff 0 ≠ 0)
 
-open Classical in
 
 noncomputable def e3C (δ l : ℕ) (P' : K[X]) : Finset (Fin δ → K) :=
   (Finset.univ : Finset (Fin δ → K)).filter (fun c => Irreducible (monicOf c) ∧

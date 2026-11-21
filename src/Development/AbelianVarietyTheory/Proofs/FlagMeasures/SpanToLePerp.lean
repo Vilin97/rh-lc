@@ -82,7 +82,6 @@ theorem spanTo_le_perp : S.spanTo g r ≤ perp L S.Hm (S.spanTo g r) := by
   rintro _ ⟨i, -, rfl⟩
   exact mem_perp S g T gram i
 
-include gram in
 
 theorem exists_matrix (n : S.GLV) (hn : n ∈ S.Nof g) :
     ∃ s : Matrix (Fin (r + 1)) (Fin (r + 1)) E, ((∀ i j, j < i → s i j = 0) ∧ (∀ i, s i i = 1)) ∧
@@ -107,7 +106,6 @@ theorem exists_dual (j : Fin (r + 1)) : ∃ u : S.V, ∀ i, hf L S.Hm (g i) u = 
   · simp [h, ← map_mul]
   · simp [h]
 
-include gram dual in
 
 theorem exists_step [IsNonarchimedeanLocalField F] [CharZero F] (j : Fin (r + 1)) (x : S.V)
     (hx : x ∈ S.spanTo g j) :
@@ -180,7 +178,6 @@ theorem exists_upto [IsNonarchimedeanLocalField F] [CharZero F] (x : Fin (r + 1)
       have := j.2
       rw [h, if_pos (by omega), if_pos (by omega)]
 
-include gram dual in
 
 theorem exists_elt [IsNonarchimedeanLocalField F] [CharZero F]
     (s : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (hs : (∀ i j, j < i → s i j = 0) ∧ (∀ i, s i i = 1)) :

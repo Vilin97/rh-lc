@@ -32,7 +32,6 @@ section Pin
 
 variable (T : TiedDataSK ex) (P : RowSideFamily ex) (hp : RowSideDetermined T P) (hL : RowsHoldLam3 P) (h : RowsHold0_3 P)
 
-include h in
 
 theorem wf0 : (P.A3.side3 P.P0 P.ψ0 P.Zs).WF := by
   obtain ⟨s, hs⟩ := h.famOk
@@ -48,10 +47,7 @@ theorem Ep_decomp : iSupIndep P.S0.Ep ∧ (⨆ p, P.S0.Ep p) = ⊤ := by
   obtain ⟨R0, hR0⟩ := h.rows0
   exact hR0 ▸ R0.Ep_decomp (wf0 P h)
 
-include hp hL h in
-open Classical in
 
-include hp hL h in
 
 end Pin
 

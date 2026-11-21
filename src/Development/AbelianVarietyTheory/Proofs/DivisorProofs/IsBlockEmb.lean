@@ -43,7 +43,6 @@ def IsBlockEmb {l d : ℕ} (h : l + d ≤ r) (ι : GlobalTheory.CuspRep.GA E d �
         adMat F (blkCols h Y) * (cT (sigR (AF F) σ) ((g⁻¹).1.map Φ.symm) - 1) *
           adMat F (cT (σ : E →+* E) (blkCols h X) * J)
 
-omit [NumberField F] [NumberField E] in
 
 end GlobalTheory.BlockForms
 

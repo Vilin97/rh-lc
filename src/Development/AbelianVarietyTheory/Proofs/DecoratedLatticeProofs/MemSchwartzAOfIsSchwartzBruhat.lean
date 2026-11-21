@@ -106,7 +106,6 @@ namespace GlobalTheory.SchwartzBruhatTensor
 
 variable {D : D7}
 
-open Classical in
 
 theorem coset_mem_SB {m n : ℕ} (W : AddSubgroup (Matrix (Fin m) (Fin n) (Af D.host.F ⊗[D.host.F] D.host.E)))
     (hWo : IsOpen (W : Set (Matrix (Fin m) (Fin n) (Af D.host.F ⊗[D.host.F] D.host.E))))
@@ -144,7 +143,6 @@ end GlobalTheory.SchwartzBruhatTensor
 
 namespace GlobalTheory.SchwartzBruhatTensor
 
-open Classical in
 
 theorem mem_schwartzA_of_isSchwartzBruhat : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (m n : ℕ) (φ : Mx D m n → ℂ),
     GlobalTheory.IndefiniteRowSideFullHecke.SchwartzBruhatMixedFamilies.IsSchwartzBruhat φ → φ ∈ GlobalTheory.IndefiniteRowSideFullHecke.ModerateGrowthSchwartz.schwartzA θ m n := by

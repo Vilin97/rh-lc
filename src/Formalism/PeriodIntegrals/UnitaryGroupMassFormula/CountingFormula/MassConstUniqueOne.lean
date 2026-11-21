@@ -59,6 +59,5 @@ theorem massConst_cMass (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF
 
 end Const
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end PI.UnitaryGroupMassFormula.CntFormula.RowsMassW

@@ -111,13 +111,8 @@ instance [IsAlgClosed C] : IsAlgClosed (FractionRing O) :=
 @[simp] theorem awayEquiv_algebraMap [CharZero C] [NeZero p] (x : O) :
     awayEquiv O p (algebraMap O _ x) = (x : C) := (awayEquiv O p).commutes x
 
-omit hp in
 
-omit hp in
-variable {O} in
 
-omit hp in
-variable {O} in
 
 section Action
 
@@ -127,7 +122,6 @@ omit hp in
 theorem norm_smul_eq (g : G) (x : C) : ‖g • x‖ = ‖x‖ := by
   simpa using (isometry_smul C g).dist_eq x 0
 
-omit hp in
 
 instance : MulSemiringAction G O where
   smul g x := ⟨g • (x : C), (mem_iff _).2 (by rw [norm_smul_eq]; exact norm_le_one x)⟩
@@ -138,8 +132,6 @@ instance : MulSemiringAction G O where
   smul_one g := Subtype.ext (smul_one g)
   smul_mul g x y := Subtype.ext (smul_mul' g (x : C) y)
 
-omit hp in
-variable {O G} in
 
 end Action
 
@@ -154,7 +146,6 @@ instance (priority := 100) uniformContinuousConstSMul_of_isIsometricSMul :
     UniformContinuousConstSMul G E :=
   ⟨fun g => (isometry_smul E g).uniformContinuous⟩
 
-open UniformSpace in
 
 instance completionMulSemiringAction : MulSemiringAction G (Completion E) where
   __ := (inferInstance : DistribMulAction G (Completion E))

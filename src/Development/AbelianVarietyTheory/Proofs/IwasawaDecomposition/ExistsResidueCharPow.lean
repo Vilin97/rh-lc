@@ -26,7 +26,6 @@ section General
 
 variable {L : Type} [Field L] [NumberField L]
 
-open Classical in
 
 theorem trivOn_pow {F : Type} [Field F] [NumberField F] [Algebra F L] {χ : HChar L} (h : χ.TrivOn F) (n : ℕ) :
     (χ ^ n).TrivOn F := by
@@ -34,14 +33,11 @@ theorem trivOn_pow {F : Type} [Field F] [NumberField F] [Algebra F L] {χ : HCha
   | zero => rw [pow_zero, ← mul_inv_cancel χ]; exact h.mul h.inv
   | succ n ih => rw [pow_succ]; exact ih.mul h
 
-omit [NumberField L] in
 
 end General
 
 variable {R : Ranks} (H : Formalism.BasicNotions.Host R)
 
-open Classical in
 
-open Classical in
 
 end GlobalTheory.Mem.PsiExist

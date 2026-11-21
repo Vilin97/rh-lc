@@ -17,7 +17,6 @@ namespace RootsOfUnityValuation
 
 variable {A : Type*} [CommRing A] [IsDomain A]
 
-omit [IsDomain A] in
 
 theorem associated_sub_comm (a b : A) : Associated (a - b) (b - a) :=
   ⟨-1, by simp⟩

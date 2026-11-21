@@ -171,7 +171,6 @@ theorem jhMult_ofChar_ne {G : Type} [Group G] {χ ψ : G →* ℂˣ} (h : χ ≠
     rw [hx'] at h1
     simpa using h1.symm
 
-open NumberField IsDedekindDomain in
 
 theorem not_inSupport_of_isCuspidal [Nontrivial n] {π : Representation ℂ (GL n k) V} (h : IsCuspidal π)
     (ψ : kˣ →* ℂˣ) : ¬ InSupport π ψ := by

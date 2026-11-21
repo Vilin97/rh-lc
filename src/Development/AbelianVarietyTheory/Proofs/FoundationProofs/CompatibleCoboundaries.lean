@@ -41,7 +41,6 @@ namespace Comp
 
 variable (S : Comp b A A')
 
-include S in
 
 def Compat (N : Submodule O A) (N' : Submodule O' A') : Prop := ∀ x, x ∈ N' ↔ ∀ a, S.p a x ∈ N
 
@@ -125,7 +124,6 @@ open Formalism.MainNotions.BlochKatoReduction Formalism.MainNotions.BlochKatoRed
 variable {D : D7} {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N} (bkP : BKPh X)
   (i : X.Tw) (s : X.Sig i)
 
-open Classical in
 
 end Main
 

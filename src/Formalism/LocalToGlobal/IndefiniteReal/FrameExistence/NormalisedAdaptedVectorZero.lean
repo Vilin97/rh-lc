@@ -23,7 +23,6 @@ def betaYOf (βY : ∀ j, GL (Fin (Yc D j).rank) (EAf D)) (j : ℕ) : GL (Fin (D
       unfold Yc; rw [Nat.min_eq_left h]) ▸ βY j
   else 1
 
-open Classical in
 
 def SDFrames (ΛY : ∀ j, Submodule (𝓞 D.host.E) (Fin (Yc D j).rank → D.host.E))
     (ΛX : Submodule (𝓞 D.host.E) (Fin D.sp.X'.rank → D.host.E))
@@ -35,19 +34,13 @@ def SDFrames (ΛY : ∀ j, Submodule (𝓞 D.host.E) (Fin (Yc D j).rank → D.ho
     IsSDFrame D.sp.X' βX ΛX 1 ∧ (∀ i, IsSDFrame (Vc D i) (βV i) (ΛV i) 1) ∧
     ∀ i, IsSDFrame (Wc D i) (βW i) (ΛW i) 1
 
-variable (D) in
-open Classical in
 
-open Classical in
 
 theorem vecY_repr (j : ℕ) (v : (D.sp.Y j).V) : vecY (D := D) j ⇑((D.sp.Y j).frame.repr v) = v := by
   simp [vecY]
 
-open Classical in
 
-variable (D) in
 
-open Classical in
 
 end Formalism.IndefR.Seed.Frm
 

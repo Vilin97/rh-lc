@@ -112,7 +112,6 @@ theorem isDomain_of_indEt {A O : Type} [CommRing A] [IsDomain A] [IsIntegrallyCl
     rw [map_mul, map_zero, hw] at this
     exact Or.inr (((hq t ht).mul_right_eq_zero).mp this)
 
-attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 
 theorem isIntegral_tmul_one {A O : Type} [CommRing A] [IsDomain A] [CommRing O] [Algebra A O]
     (h : GlobalTheory.EtC.IndEt A O) (o : O) :
@@ -134,8 +133,6 @@ theorem isIntegral_tmul_one {A O : Type} [CommRing A] [IsDomain A] [CommRing O] 
 
 end AICStalk
 
-open AICStalk in
-attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 
 theorem isField_aic_tensor_fractionRing_of_strictlyHenselian :
     ∀ (A O : Type) [CommRing A] [IsDomain A] [CommRing O] [Algebra A O], GlobalTheory.EtC.AIC A →

@@ -18,7 +18,6 @@ def wordSpan {V : Type} [AddCommGroup V] [Module ℂ V] {m : ℕ} (E : Fin m →
     Submodule ℂ (Module.End ℂ V) :=
   Submodule.span ℂ {T | ∃ w : List (Fin m × Fin m), w.length ≤ L ∧ T = (w.map fun p => E p.1 p.2).prod}
 
-open Classical in
 
 def ap {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {S : Submodule ℂ H} (T : Module.End ℂ S) (x : H) : H :=
   if hx : x ∈ S then (T ⟨x, hx⟩ : H) else 0

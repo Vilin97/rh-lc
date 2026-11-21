@@ -77,7 +77,6 @@ theorem extensionEmbedding_algebraMap (hv : v.IsReal) (x : v.Completion) :
   rw [extensionEmbeddingOfIsReal_apply]
   exact Completion.liesOver_extensionEmbedding_apply w v
 
-open scoped Classical in
 
 def completionConj (hv : v.IsReal) : Gal(w.Completion/v.Completion) :=
   if hw : w.IsComplex then
@@ -112,7 +111,6 @@ theorem completionConj_ne_one (hv : v.IsReal) (hw : w.IsComplex) :
   have h2 : (2 : ℂ) * Complex.I = 0 := by linear_combination this
   simp at h2
 
-open scoped Classical in
 
 theorem eq_one_or_eq_completionConj (hv : v.IsReal) (hw : w.IsComplex)
     (σ : Gal(w.Completion/v.Completion)) : σ = 1 ∨ σ = completionConj hv := by
@@ -126,7 +124,6 @@ theorem eq_one_or_eq_completionConj (hv : v.IsReal) (hw : w.IsComplex)
   have := Finset.card_le_univ ({1, completionConj hv, σ} : Finset Gal(w.Completion/v.Completion))
   omega
 
-open scoped Classical in
 
 theorem univ_eq_one_completionConj (hv : v.IsReal) (hw : w.IsComplex) :
     (Finset.univ : Finset Gal(w.Completion/v.Completion)) = {1, completionConj hv} := by
@@ -140,7 +137,6 @@ theorem card_gal_eq_two (hv : v.IsReal) (hw : w.IsComplex) :
   rw [← Finset.card_univ, univ_eq_one_completionConj hv hw]
   exact Finset.card_pair (completionConj_ne_one hv hw).symm
 
-variable (w) in
 
 theorem subsingleton_gal (h : ¬ (v.IsReal ∧ w.IsComplex)) :
     Subsingleton Gal(w.Completion/v.Completion) := by
@@ -148,7 +144,6 @@ theorem subsingleton_gal (h : ¬ (v.IsReal ∧ w.IsComplex)) :
   rw [(finrank_completion_eq_one_iff w).2 h] at hcard
   exact Fintype.card_le_one_iff_subsingleton.1 hcard
 
-variable (w) in
 
 theorem natCard_gal_completion :
     Nat.card Gal(w.Completion/v.Completion) = Module.finrank v.Completion w.Completion := by
@@ -182,7 +177,6 @@ theorem extensionEmbeddingOfIsReal_norm (hv : v.IsReal) (hw : w.IsComplex) (y : 
   rw [← extensionEmbedding_algebraMap (w := w) hv, algebraMap_norm_completion hv hw, map_mul,
     extensionEmbedding_completionConj, Complex.mul_conj]
 
-variable (v w) in
 
 def normSubgroup : Subgroup v.Completionˣ :=
   (Units.map (Algebra.norm v.Completion : w.Completion →* v.Completion)).range
@@ -208,7 +202,6 @@ theorem mem_normSubgroup_iff (hv : v.IsReal) (hw : w.IsComplex) (x : v.Completio
     apply (extensionEmbeddingOfIsReal hv).injective
     rw [map_pow, ha, Real.sq_sqrt hx.le]
 
-variable (w) in
 
 theorem normSubgroup_eq_top (h : ¬ (v.IsReal ∧ w.IsComplex)) : normSubgroup v w = ⊤ := by
   rw [eq_top_iff]
@@ -224,7 +217,6 @@ section LocalSymbol
 
 variable (v)
 
-open scoped Classical in
 
 def localSymbol : v.Completionˣ →* Gal(w.Completion/v.Completion) :=
   if hv : v.IsReal then

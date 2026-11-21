@@ -45,7 +45,6 @@ theorem isPullback_kernel_of_kernelPair {S : Scheme.{0}} {A H B : Over S} [GrpOb
     rw [MonObj.comp_mul, h2, _root_.mul_one] at h1'
     rw [← cancel_mono i, Category.assoc, h1', h1]
 
-open GlobalTheory.TorsionKernelModel in
 
 theorem exists_model (R K : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [Field K] [Algebra R K]
     [IsFractionRing R K] (A : Over (Sp R)) [GrpObj A] [IsCommMonObj A] (hA : IsAbelianScheme A)

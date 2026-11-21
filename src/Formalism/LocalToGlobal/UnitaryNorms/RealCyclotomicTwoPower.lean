@@ -53,7 +53,6 @@ def condN (e q d : ℕ) : ℕ := 2 ^ (e + 2) * q * d
 
 def IsCond (L : Fld) (N : ℕ) : Prop := L ≤ cycQ N ∧ ∀ M : ℕ, 0 < M → L ≤ cycQ M → N ∣ M
 
-open Classical in
 
 def sqSign {p : ℕ} (u : (ZMod p)ˣ) : ℤˣ := if IsSquare (u : ZMod p) then 1 else -1
 

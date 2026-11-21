@@ -29,7 +29,6 @@ theorem allLeaves_imp {P Q : ∀ M : ℕ, Submodule ℂ (Sm E M) → Prop} (h : 
   | _, .leaf V _, hp => h _ V hp
   | _, .node t₁ t₂, hp => ⟨allLeaves_imp h t₁ hp.1, allLeaves_imp h t₂ hp.2⟩
 
-set_option maxHeartbeats 2000000 in
 
 def CandTOut : Prop := ∀ (hR : Rd.ReadLimit) (E : Type) [Field E] [NumberField E] [IsCMField E], GlobalTheory.BCT.Unr E →
   ∀ n : ℕ, 1 ≤ n → ∀ (π : Submodule ℂ (UA E n → ℂ)), IsAutRepU π → ∀ (S T : Finset (Pl E)) (F₀ : Frame0 hR π S)

@@ -258,7 +258,6 @@ theorem prod_c_apply (X : ActualOps k r z z' π π') (L : R.LevelData (Pr (RadSp
     rw [X.op_apply]
     rfl
 
-omit [FiniteDimensional ℂ Wp] in
 
 theorem ahat_apply (hz : inWb k r z) (hz' : inWb k r z') (X : ActualOps k r z z' π π')
     (L : R.LevelData (Pr (RadSp k r z z' π π')) r) (hL : IsActualLevel X L) (Y : ℂ)

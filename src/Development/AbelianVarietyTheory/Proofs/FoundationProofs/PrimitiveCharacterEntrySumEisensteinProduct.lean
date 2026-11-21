@@ -22,7 +22,6 @@ theorem isUnit_natCast_of_not_dvd (p m N : ℕ) [Fact p.Prime] (hpN : ¬ p ∣ N
   rw [ZMod.isUnit_iff_coprime]
   exact (hp.coprime_iff_not_dvd.mpr hpN).symm.pow_right m
 
-omit [CharZero K] in
 
 theorem sum_pick (p m N : ℕ) [Fact p.Prime] (hm : 1 ≤ m) (hpN : ¬ p ∣ N) (x z : ℤ) (F : ZMod (p ^ m) → K) :
     ∑ u ∈ primeTo p m, (if z ≡ N * u.val + (p : ℤ) ^ m * x [ZMOD (N * p ^ m : ℕ)] then F u else 0) =

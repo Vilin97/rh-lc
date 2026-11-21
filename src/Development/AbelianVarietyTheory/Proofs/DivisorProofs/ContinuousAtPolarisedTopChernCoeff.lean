@@ -13,9 +13,6 @@ open scoped ContDiff Matrix
 
 namespace GlobalTheory.GoodTop
 
-set_option autoImplicit false in
-open MeasureTheory Filter Topology in
-open scoped ContDiff Matrix in
 
 theorem _root_.GlobalTheory.GoodTop.continuousAt_mixTop :
     ∀ {n : ℕ} {r : Type} [Fintype r] [DecidableEq r]

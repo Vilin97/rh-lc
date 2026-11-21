@@ -79,7 +79,6 @@ theorem psi_zero : ψ0 0 = 1 := by
   have h2 : ψ0 0 * (ψ0 0 - 1) = 0 := by rw [mul_sub, mul_one, ← h, sub_self]
   exact sub_eq_zero.mp ((mul_eq_zero.mp h2).resolve_left hne)
 
-include hψa hψn in
 
 include hψa hψn in
 theorem psi_natCast_mul (m : ℕ) (t : Fv F v) : ψ0 ((m : Fv F v) * t) = ψ0 t ^ m := by

@@ -111,4 +111,3 @@ end Small
 
 end GlobalTheory.FrameModel
 
-set_option maxHeartbeats 1600000 in

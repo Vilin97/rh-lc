@@ -73,7 +73,6 @@ theorem ringKrullDim_of_mem_minimalPrimes (q W : Ideal (ReciprocityTheory.ChartR
   subst this
   rfl
 
-omit [Fintype ι₀] in
 
 theorem isRelevant_of_ringKrullDim (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ι₀))) [W.IsPrime] (e : ℕ)
     (hW : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ι₀) ⧸ W) = ((e + 1 : ℕ) : WithBot ℕ∞)) :
@@ -103,7 +102,6 @@ theorem isRelevant_of_ringKrullDim (W : Ideal (ReciprocityTheory.ChartRestrictio
   have : e + 1 ≤ 0 := by exact_mod_cast hle
   omega
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem hilbFn_pos (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ι₀))) (hq : IsMultiProjPrime q) (n : ℕ) :
     0 < hilbFn q (fun _ => (n : ℤ)) := by
@@ -133,7 +131,6 @@ theorem hilbFn_pos (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOve
   have hpos : 0 < Module.finrank F (gradedPiece q (fun _ : Unit => n)) := Module.finrank_pos
   exact_mod_cast hpos
 
-omit [Fintype ι₀] in
 
 theorem le_ker_constantCoeff (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ι₀))) (hq : IsMultiProjPrime q) :
     q ≤ RingHom.ker (constantCoeff : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ι₀) →+* F) := by

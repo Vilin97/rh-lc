@@ -18,7 +18,6 @@ variable {p : ℕ} [Fact p.Prime]
 
 section Algebra
 
-variable (p) in
 
 def algClToBdRField : PadicAlgCl p →+* 𝔹dR := (algebraMap 𝔹 𝔹dR).comp (algClToBdR p).toRingHom
 
@@ -154,9 +153,7 @@ variable {V : Type*} [AddCommGroup V] [Module ℚ_[p] V]
 
 variable [FiniteDimensional ℚ_[p] K] [FiniteDimensional ℚ_[p] V]
 
-omit [FiniteDimensional ℚ_[p] V] in
 
-omit [FiniteDimensional ℚ_[p] K] in
 
 end DeRham
 
@@ -167,24 +164,17 @@ variable (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (V : Type*) [AddCommGrou
 
 variable {K V}
 
-variable (K V) in
 
 variable [FiniteDimensional ℚ_[p] V]
 
 variable (ρ : Representation ℚ_[p] Gal(PadicAlgCl p/K) V)
 
-variable (K) in
 
-omit [FiniteDimensional ℚ_[p] V] in
-variable (K) in
 
-omit [FiniteDimensional ℚ_[p] V] in
 
 variable [FiniteDimensional ℚ_[p] K]
 
-variable (K) in
 
-variable (K) in
 
 end Filtration
 

@@ -19,6 +19,5 @@ theorem chartIndep2_of_gauge_glob (hGauge : ExpGaugeOfSt) (hGlob : ReciprocityTh
 theorem chartIndep2_of_glob (hGlob : ReciprocityTheory.ChartRestriction.G.Out.GlobalFnsSt) : ChartIndepSt2 :=
   chartIndep2_of_gauge_glob (ExpGauge.expGaugeOf_of (expActOf_of linEigSt_holds)) hGlob
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj in
 
 end Formalism.MainNotions.ModuliIntegralCharts.H1

@@ -465,7 +465,6 @@ theorem det_moves : (lowMat X b τ).det * (upMat X b τ).det =
     · exact one_apply_ne h'.ne'
     · exact PerMove.bor_inv_tri hb τ h'
 
-omit hb in
 
 theorem borMat_mulVec (v : Fin g → ℂ) (a : Fin r) :
     ((borMat X b).submatrix idx idx *ᵥ v) (idx.symm (τ, a)) =
@@ -478,7 +477,6 @@ theorem borMat_mulVec (v : Fin g → ℂ) (a : Fin r) :
       zero_mul]
   · simp
 
-omit τ in
 
 theorem kRed_rmul (x₁ x₂ : Frame X.Ψ r) (z w : Fin n → Fin g → ℂ) :
     kRed X idx (rmul x₁ b) x₂ (fun k => (borMat X b).submatrix idx idx *ᵥ z k) w =

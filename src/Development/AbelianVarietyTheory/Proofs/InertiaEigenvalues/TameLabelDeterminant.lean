@@ -36,4 +36,3 @@ theorem loc_artin_ine {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebr
 
 end GlobalTheory.LabConjPlace
 
-open GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.CuspRep GlobalTheory.SmGL GlobalTheory.LabConjPlace in

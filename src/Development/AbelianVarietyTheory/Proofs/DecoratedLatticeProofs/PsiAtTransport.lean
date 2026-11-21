@@ -135,7 +135,6 @@ theorem lift_cong {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (h : IsPtOf
 def homM (P : HeightOneSpectrum (𝓞 E)) (x : HomE E a b) : Matrix (Fin b) (Fin a) (P.adicCompletion E) :=
   (LinearMap.toMatrix' x).map (algebraMap E (P.adicCompletion E))
 
-omit [StarRing E] in
 
 theorem ratM_mul_homM (P : HeightOneSpectrum (𝓞 E)) (f : Sp E a ≃ₗ[E] Sp E a) (f' : Sp E b ≃ₗ[E] Sp E b) (x : HomE E a b) :
     ratM P f' * homM P (inFr f f' x) = homM P x * ratM P f := by
@@ -159,7 +158,6 @@ theorem mem_homS_iff (P : HeightOneSpectrum (𝓞 E)) (x : HomE E a b) :
     have := h i j
     rwa [e, valued_algebraMap, ← CharValCompare.intAt_iff] at this
 
-omit [StarRing E] in
 
 theorem val_le_q {P : HeightOneSpectrum (𝓞 E)} (hq : ((qOf P : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) {z : WithZero (Multiplicative ℤ)}
     (hz : z < 1) : z ≤ P.valuation E ((qOf P : ℕ) : E) := by

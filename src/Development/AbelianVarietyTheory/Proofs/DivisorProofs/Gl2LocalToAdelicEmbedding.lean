@@ -23,7 +23,6 @@ section Matrices
 
 variable {R : Type} [CommRing R]
 
-variable (R) in
 
 end Matrices
 
@@ -37,9 +36,7 @@ def singleNU (w : HeightOneSpectrum (𝓞 E)) : w.adicCompletion E →ₙ+* Fini
   map_zero' := map_zero _
   map_add' := map_add _
 
-variable (F) in
 
-variable (F) in
 
 end GlobalTheory.GLTwoHecke
 

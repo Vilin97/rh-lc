@@ -108,7 +108,6 @@ theorem inJ_iff {k : Type} [Field k] {n a t fc : ℕ} (ha : n ≤ a) (hfc : n �
 variable {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 F))}
   {gp : Fin 2 → ℕ}
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_Uloc_iff_iwU (S : Formalism.L2.Forms.StepLevel F E σ J T f bad) {G : GLoc F E σ gp} {a t nb skip fc : ℕ}
     (L : GLev S G a t nb skip fc false) (ha : n ≤ a) (hfc : n ≤ fc) (i : Fin 2) (v : HeightOneSpectrum (𝓞 F))
@@ -143,7 +142,6 @@ theorem mem_Uloc_iff_iwU (S : Formalism.L2.Forms.StepLevel F E σ J T f bad) {G 
     exact (L.mem i v hv x (h1.2 ⟨g, e⟩)).2
       ((key g e).2 (Formalism.L2.G.Triv.closure_upperUni _ _ (Subgroup.mem_comap.1 hg)))
 
-set_option maxHeartbeats 1000000 in
 
 theorem stab_class_lattice (S : Formalism.L2.Forms.StepLevel F E σ J T f bad) (M : Submodule (𝓞 E) (Fin n → E))
     (hfin : Module.Finite (𝓞 E) M) (hspan : Submodule.span E (M : Set (Fin n → E)) = ⊤)
@@ -201,7 +199,6 @@ theorem crdLat0_span (D : D7) (u : D.what₂.Word) (c : (D.mem u).C.cls 0) :
   rw [this, Submodule.span_image, (D.clsLat_lat u 0 c).span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
   exact D.sp.crd0.surjective
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_colLevel (D : D7) (u : D.what₂.Word) {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
     (F : FormsTiedSym D u Ch chOf) :
@@ -260,7 +257,6 @@ theorem exists_colLevel (D : D7) (u : D.what₂.Word) {Ch : ℕ → Type} {chOf 
     stabI_lat := fun c γ x => stab_class_lattice S _ (crdLat0_fin D u c) (crdLat0_span D u c) (y c).1 (hlat c)
       (st c γ).1 ((hrange c (st c γ)).1 ⟨γ, rfl⟩) x }, hcar, rfl, hfr⟩
 
-set_option maxHeartbeats 4000000 in
 
 theorem colLevel_of_forms : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i} (F : FormsTiedSym (I.rec7 l Z) u Ch chOf), I.StdF l Z u F →
   ∃ L : ColLevel (I.rec7 l Z).R (I.rec7 l Z).host.F (I.rec7 l Z).host.E (I.rec7 l Z).sp (I.rec7 l Z).host.g ((I.rec7 l Z).mem u).C ((I.rec7 l Z).mem u).A ((I.rec7 l Z).clsLat u),

@@ -187,6 +187,5 @@ theorem exists_finOf (V W : HSp D) (hr : W.rank = r) (y : Matrix (Fin V.rank) (F
   subst hr
   exact ⟨(yᵀ, GlobalTheory.LatVac.finTens 1 yᵀ), rfl, (GlobalTheory.VacSign.isFinOf_iff _ _).2 rfl⟩
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.AdTh.ShortSeries

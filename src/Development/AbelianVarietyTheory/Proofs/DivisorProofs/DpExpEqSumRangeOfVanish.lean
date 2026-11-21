@@ -13,9 +13,6 @@ namespace GlobalTheory.Cris
 
 variable {B B' : Type} [CommRing B] [CommRing B'] {J : Ideal B} {J' : Ideal B'}
 
-set_option autoImplicit false in
-open CategoryTheory AlgebraicGeometry DividedPowers in
-variable {B B' : Type} [CommRing B] [CommRing B'] {J : Ideal B} {J' : Ideal B'} in
 
 theorem _root_.GlobalTheory.Cris.dpExp_eq_sum_range_of_vanish (δ : DividedPowers J) (a : B) (N : ℕ)
     (h : ∀ n, N ≤ n → δ.dpow n a = 0) :
@@ -27,9 +24,6 @@ theorem _root_.GlobalTheory.Cris.dpExp_eq_sum_range_of_vanish (δ : DividedPower
   by_contra hlt
   exact hn (h n (not_lt.mp hlt))
 
-set_option autoImplicit false in
-open CategoryTheory AlgebraicGeometry DividedPowers in
-variable {B B' : Type} [CommRing B] [CommRing B'] {J : Ideal B} {J' : Ideal B'} in
 
 theorem _root_.GlobalTheory.Cris.IsNilDP.dpExp_add_eq_mul {δ : DividedPowers J}
     (h : _root_.GlobalTheory.Cris.IsNilDP δ) {a b : B} (ha : a ∈ J) (hb : b ∈ J) :
@@ -61,9 +55,6 @@ theorem _root_.GlobalTheory.Cris.IsNilDP.dpExp_add_eq_mul {δ : DividedPowers J}
     Finset.mem_range]
   omega
 
-set_option autoImplicit false in
-open CategoryTheory AlgebraicGeometry DividedPowers in
-variable {B B' : Type} [CommRing B] [CommRing B'] {J : Ideal B} {J' : Ideal B'} in
 
 theorem _root_.GlobalTheory.Cris.dpExp_add_and_natural (B B' : Type) [CommRing B] [CommRing B'] (J : Ideal B) (J' : Ideal B')
     (δ : DividedPowers J) (δ' : DividedPowers J') (h : _root_.GlobalTheory.Cris.IsNilDP δ) :

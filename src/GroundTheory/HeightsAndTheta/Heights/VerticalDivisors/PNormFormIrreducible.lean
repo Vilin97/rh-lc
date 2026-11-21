@@ -297,7 +297,6 @@ end Forms
 
 end NormFormIrreducible
 
-open NormFormIrreducible in
 
 theorem NormFormIrreducible.proof : NormFormIrreducible.Statement := by
   intro E L _ _ _ _ _ _ n x t hgen ht

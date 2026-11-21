@@ -154,7 +154,6 @@ section Delta
 variable {Γ A K M : Type} [Group Γ] [Group A] [Field K] [AddCommGroup M] [Module K M]
   (ι : Γ →* A) (U : Subgroup A) (ρ : Γ →* Module.End K M)
 
-open Classical in
 
 theorem deltaForm_eq_sum (x g : A) (hf : {γ : Γ | x⁻¹ * ((ι γ)⁻¹ * g) ∈ U}.Finite) (v : M) :
     deltaForm ι U ρ x v g = ∑ γ ∈ hf.toFinset, ρ γ v := by
@@ -249,7 +248,6 @@ section Core
 
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T}
 
-open Classical in
 
 theorem vCore_lin {S : GridChoice W U} {t : T} {Φ : G.Datum} (h : S.SumOK t Φ) {J : Type} (s : Finset J) (a : J → ℂ)
     (Ψs : J → FinPt G (.top 0) → VV ℂ (wt G (.top 0))) (Ψ0 : FinPt G (.top 0) → VV ℂ (wt G (.top 0)))
@@ -280,8 +278,6 @@ section Sum
 variable {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}
 
-set_option maxHeartbeats 1600000 in
-open Classical in
 
 theorem core_loss (ch : Choice R) {t : T} {w : PlL D} {Φ : ch.G.Datum} (hS : ch.S.SumOK t Φ)
     (hD : ∀ β ∈ ch.S.supp t Φ, ∃ τ, IsCosetExpansion ch.S.toGridChoice t Φ β (expDepth ch.S.toGridChoice t Φ β) τ)
@@ -396,8 +392,6 @@ theorem gam_ne {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U
   rw [h4]
   simp
 
-set_option maxHeartbeats 1600000 in
-open Classical in
 
 theorem exists_intMod_levelPrimePow_eq_add_mul (ch : Choice R) {t : T} {w : PlL D} {B : ℝ} (hB : 0 ≤ B) (hO : ∀ a, ch.S.SumOK t (ch.Phi a))
     {X' : InfinitePlace D.what₂.LL → Matrix (Fin ch.n) (Fin ch.n) ℂ} {M : Submodule (𝓞 D.what₂.LL) (Fin ch.n → D.what₂.LL)}
@@ -510,7 +504,6 @@ section Main
 variable {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}
 
-set_option maxHeartbeats 1600000 in
 
 theorem fin_at (F : Face D A) (ch : Choice R) (C b : ℝ) (hO : ∀ t a, ch.S.SumOK t (ch.Phi a)) (hD : DepthAt ch)
     (hS : FinScalAt ch (C / 16) b) (hC : FinCoefAt ch (C / 16) b) (hDt : FinDatAt ch (C / 16) b) (hG : FinGamAt ch (C / 16) b)
@@ -538,7 +531,6 @@ theorem fin_at (F : Face D A) (ch : Choice R) (C b : ℝ) (hO : ∀ t a, ch.S.Su
     (hP w) (psiC (ch.rp.delta cl u)) (fun z => hΨ w cl u hu z) (ch.S.formC t (R.jX t (formOf F t x))) (fun z => hF t w x hx z)
   exact LossLe.mono (loss_mul (hS w) core) (le_of_eq (by ring))
 
-set_option maxHeartbeats 1600000 in
 
 theorem fin_of_factors : SumOKK → DepthK → FinScalK → FinCoefK → FinDatK → FinGamK → FinTopK → FinRowK → FinPairK → FinPsiK →
     FinFormK → FinK := by

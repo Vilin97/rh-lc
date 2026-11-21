@@ -178,7 +178,6 @@ theorem level_ge {eps : ℝ} {Fm : Formalism.MainNotions.FamP eps} {x : ℝ} {hx
   push_cast
   exact mul_le_mul_of_nonneg_left hb (by positivity)
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.ThetaSizeBounds
 end

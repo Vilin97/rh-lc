@@ -364,7 +364,6 @@ end Generic
 
 end GlobalTheory.FormalGeneric
 
-open GlobalTheory.FormalGeneric GlobalTheory.SectionRingIso in
 
 theorem GlobalTheory.generic_iso_agrees_on_complete_points : Laws → Laws2 → ∀ (R : Type) [CommRing
     R] [IsDomain R] [IsDiscreteValuationRing R] (I

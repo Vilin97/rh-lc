@@ -28,8 +28,6 @@ abbrev tensCast {E : Type} [Field E] [NumberField E] {F1 F2 : Subfield E} (h : F
 abbrev StdFrame {D : D7} {V : HSp D} {n : ℕ} (hF : D.host.F = maximalRealSubfield D.host.E) (P : RowPsi V n) : Prop :=
   Formalism.IndefR.principalLevelFrame.StdPsi hF P
 
-set_option genInjectivity false in
-set_option genSizeOfSpec false in
 
 structure RealAt (D : D7) (cf : CharFrame D) (nch : NChoice D) (tp : TupTied D cf nch) : Type 1 where
   G : Type

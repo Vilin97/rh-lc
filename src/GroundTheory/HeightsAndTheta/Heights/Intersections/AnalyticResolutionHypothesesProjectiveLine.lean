@@ -37,7 +37,6 @@ abbrev MCone (ι : K → Type) := (Σ k, ι k) → ℂ
 
 def logH (L : HLine ι) : MCone ι → ℝ := fun z => Real.log (L.h z)
 
-variable (ι) in
 
 structure Res (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) (e : ℕ) where
 
@@ -53,7 +52,6 @@ variable {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)}
 
 end Res
 
-open Classical in
 
 def IsProjVarQ (P0 : Ideal (MRing ι ℚ)) (e : ℕ) : Prop :=
   IsMultiProjPrime P0 ∧ ringKrullDim (MRing ι ℚ ⧸ P0) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞)

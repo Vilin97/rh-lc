@@ -214,7 +214,6 @@ theorem norm_le_sizeA {d n M : ℕ} (Z : Fin n → Fin M → Fin d → AF F) (a 
         Finset.sum_nonneg fun _ _ => norm_nonneg _) (Finset.mem_univ a)
   exact h1.trans (h2.trans (h3.trans h4))
 
-variable (F) in
 
 def boxT (d n M N : ℕ) (r : ℝ) : Set (Fin n → Fin M → Fin d → AF F) :=
   {Z | (∀ a i k, sndA F (Z a i k) ∈ latN F N) ∧ sizeA Z ≤ r}

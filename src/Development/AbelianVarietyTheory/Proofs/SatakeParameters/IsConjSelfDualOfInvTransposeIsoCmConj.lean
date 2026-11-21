@@ -31,7 +31,6 @@ theorem invT_map {R : Type} [CommRing R] (c : R →+* R) (g : GL (Fin a) R) :
   Units.ext (by rw [show (invT a R (GeneralLinearGroup.map c g)).val = ((GeneralLinearGroup.map c g)⁻¹).valᵀ from rfl,
     ← map_inv]; rfl)
 
-omit [NumberField L] [IsCMField L] in
 
 theorem barK_barK (k : Kinf L a) : barK (barK k) = k := by
   refine Subtype.ext ?_

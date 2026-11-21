@@ -9,7 +9,6 @@ open Classical
 
 namespace GlobalTheory.InvDiffLocal
 
-open IsDedekindDomain.HeightOneSpectrum in
 
 theorem exists_not_mem_mul_mem {R : Type} [CommRing R] [IsDedekindDomain R] {K : Type} [Field K]
     [Algebra R K] [IsFractionRing R K] (v : HeightOneSpectrum R) (t : K)
@@ -81,7 +80,6 @@ end GlobalTheory.InvDiffLocal
 
 namespace GlobalTheory.InvDiffLocal
 
-open IsDedekindDomain.HeightOneSpectrum in
 
 theorem exists_approx_idempotent {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] (la : HeightOneSpectrum (𝓞 L)) (p : HeightOneSpectrum (𝓞 K)) (N : ℕ) :
@@ -117,7 +115,6 @@ end GlobalTheory.InvDiffLocal
 
 namespace GlobalTheory.InvDiffLocal
 
-open IsDedekindDomain.HeightOneSpectrum in
 
 theorem valuation_mul_different_le_one : ∀ (K L : Type) [Field K] [NumberField K] [Field L]
     [NumberField L] [Algebra K L] (la : HeightOneSpectrum (𝓞 L)) (p : HeightOneSpectrum (𝓞 K)),

@@ -15,7 +15,6 @@ open AddMonoidAlgebra Finset
 
 variable {n : ℕ}
 
-variable (n) in
 
 def antisymm : LaurentRing n →ₗ[ℂ] LaurentRing n where
   toFun p := ∑ σ : Equiv.Perm (Fin n), Equiv.Perm.sign σ • permAct σ p
@@ -106,7 +105,6 @@ theorem alternant_eq_det (μ : Fin n → ℤ) :
   · intro h
     exact absurd (Finset.mem_univ _) h
 
-variable (n) in
 
 def staircase : Fin n → ℤ := fun i => (n : ℤ) - 1 - i
 
@@ -123,7 +121,6 @@ theorem monomial_single_natCast (a : Fin n) (m : ℕ) :
   congr 1
   split_ifs <;> simp
 
-open Polynomial in
 
 def rootPoly (n : ℕ) : (LaurentRing n)[X] := ∏ a : Fin n, (X - C (varL a))
 
@@ -141,11 +138,9 @@ theorem eval_rootPoly (a : Fin n) : (rootPoly n).eval (varL a) = 0 := by
   rw [rootPoly, eval_prod]
   exact Finset.prod_eq_zero (Finset.mem_univ a) (by simp)
 
-open Polynomial in
 
 def remCoeff (m k : ℕ) : LaurentRing n := ((X ^ m : (LaurentRing n)[X]) %ₘ rootPoly n).coeff k
 
-open Polynomial in
 
 theorem pow_eq_sum_remCoeff (hn : 0 < n) (a : Fin n) (m : ℕ) :
     varL a ^ m = ∑ k : Fin n, remCoeff (n := n) m k * varL a ^ (k : ℕ) := by

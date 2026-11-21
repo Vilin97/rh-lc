@@ -41,7 +41,6 @@ theorem evT_piTensor_locRepU {c : ℕ} {n : Fin c → ℕ} (w : HeightOneSpectru
 
 end Core
 
-open PositivityTheory.Rg.Rs.SatakeVectors.Core in
 
 theorem isSatVecGL_of_ind {c N : ℕ} {n : Fin c → ℕ} (h : ∑ i, n i = N) {w : HeightOneSpectrum (𝓞 E)}
     (U : ∀ i, Submodule ℂ (Sm E (n i)))

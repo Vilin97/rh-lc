@@ -131,7 +131,6 @@ theorem isSmooth_rhoW : IsSmooth (rhoW (m := m) ψ) := fun x => by
   have : y = g * (g⁻¹ * y) := by simp
   rw [this, map_mul, Module.End.mul_apply, h (g⁻¹ * y) hy, hg']
 
-variable (ψ) in
 
 def Good (K : Subgroup (GL (Fin m) k)) : Prop :=
   IsOpen (K : Set (GL (Fin m) k)) ∧ IsCompact (K : Set (GL (Fin m) k)) ∧
@@ -180,8 +179,6 @@ theorem exists_good (hψ : Continuous ψ) {U : Set (GL (Fin m) k)} (hU : U ∈ �
   rw [← hp]
   exact (hr (pow_mem huK n)).2
 
-open Classical in
-variable (ψ) in
 
 def deltaFun (K : Subgroup (GL (Fin m) k)) (g : GL (Fin m) k) : ℂ :=
   if h : ∃ u ∈ unipB k (Fin m), ∃ κ ∈ K, g = u * κ then (ψ (superDiag h.choose) : ℂ) else 0
@@ -227,8 +224,6 @@ theorem isWhitTest_deltaFun {K : Subgroup (GL (Fin m) k)} (hK : Good ψ K) : IsW
   · by_contra h
     exact hg (deltaFun_eq_zero h)
 
-open Classical in
-variable (ψ) in
 
 def delta (K : Subgroup (GL (Fin m) k)) : WT (m := m) ψ :=
   if h : Good ψ K then ⟨deltaFun ψ K, isWhitTest_deltaFun h⟩ else 0

@@ -205,7 +205,6 @@ variable (hfr : IsFrame W Pt π' Eπ h' M σ c α β) (hc1 : IsCrys PD T₁.ρ) 
     (hj2 : ∀ τ, JumpsInV PD T₂.ρ τ (Set.Icc (-(h' : ℤ)) h'))
     (hMF1 : ModelF W T₁ Pt π' Eπ h' M c α β) (hMF2 : ModelF W T₂ Pt π' Eπ h' M c α β) (hM : 1 ≤ M)
 
-include hfr hc1 hc2 hj1 hj2 hMF1 hMF2 hM in
 
 theorem core (f : W.EE) (x : W.DD T₂) (hx : x ∈ NcS W T₂ (c - 1)) (x₁ : W.DD T₁)
     (hx₁ : x₁ ∈ NcS W T₁ (c - 1)) (ρ : ℕ)
@@ -238,7 +237,6 @@ theorem core (f : W.EE) (x : W.DD T₂) (hx : x ∈ NcS W T₂ (c - 1)) (x₁ : 
   refine ⟨hyI, w₁, hw₁I, ?_⟩
   simpa using hP
 
-include hMF2 hM in
 
 theorem combine (ρ y : ℕ) (o : O) (X XK XN : ↥(LamLA W T₂ π' Eπ h' c ⊤))
     (hX : ((PD.p : ℕ) : O) ^ y • X = o • XK + XN)
@@ -301,7 +299,6 @@ theorem NL_rep (T : LocLat G Qp LL O) {x : LA W T π' c} (hx : x ∈ NL W T Pt �
         rw [Subalgebra.coe_smul, lev_smul, smul_smul]
       · rw [smul_zero]
 
-include hfr hc1 hc2 hj1 hj2 hMF1 hMF2 in
 
 theorem compare {ρ : ℕ} (hW : WKill W F ρ) (hNL : NinLam W T₁ Eπ h') (V₂ : ValH W T₂ Pt π' c)
     (hEu : IsUnit (algebraMap (LetA O n) W.EE Eπ)) (hh : 1 ≤ h')

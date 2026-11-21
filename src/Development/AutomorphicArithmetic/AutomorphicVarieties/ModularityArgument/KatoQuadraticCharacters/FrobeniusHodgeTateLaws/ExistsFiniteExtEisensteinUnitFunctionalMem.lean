@@ -48,7 +48,6 @@ theorem mes_smul (k : ℕ) (u w : ℤ → ℂ) (α : ℂ) (B : ℕ) (c : ℕ →
   refine Finset.sum_congr rfl fun n _ => ?_
   ring
 
-open Classical in
 
 def sym (ι : Qbar l ≃+* ℂ) (s : ℂ) {N : ℕ} (g : ZMod N → Qbar l) : ZMod N → ℂ :=
   fun y => if IsUnit y then (ι (g y⁻¹) + s * ι (g (-y)⁻¹)) / 2 else 0

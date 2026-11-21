@@ -37,7 +37,6 @@ end GlobalTheory.PDForm.FreeThick
 
 namespace GlobalTheory.PDForm
 
-open GlobalTheory.PDForm.FreeThick in
 
 theorem exists_isFree_one_qAt : ∀ (R : Type) [CommRing R] (I : Ideal R) (κ : DividedPowers I) (X : Scheme.{0})
     (t : X ⟶ Sp R) (n : ℕ) (T : Thick κ t), IsLev T.δ (n + 1) → ∃ (F : Thick κ t) (u : T ⟶ F) (τ : Unit → F.B),

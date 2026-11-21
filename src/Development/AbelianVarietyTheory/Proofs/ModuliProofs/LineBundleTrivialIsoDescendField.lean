@@ -121,7 +121,6 @@ theorem exists_gen {K₀ K : Type} [Field K₀] [Field K] (i : K₀ →+* K) (p�
 
 end FieldDescentGen
 
-open FieldDescentGen in
 
 theorem lb_gen_iso_descend_field : ∀ (K₀ K : Type) [Field K₀] [Field K] (i : K₀ →+* K) (X₀ X : Scheme.{0}) (p₀ : X₀ ⟶ Sp K₀) (p : X ⟶ Sp K) (φ : X ⟶ X₀), Smooth p₀ → IsProper p₀ → GeometricallyConnected p₀ → IsPullback φ p p₀ (spMap i) → (∀ M : LB X₀, M.IsLB → (∃ t : (M.pull φ).Gen, t.IsGen) → ∃ t : M.Gen, t.IsGen) ∧ ∀ M N : LB X₀, M.IsLB → N.IsLB → LBIso (M.pull φ) (N.pull φ) → LBIso M N := by
   intro K₀ K _ _ i X₀ X p₀ p φ h₁ h₂ h₃ H

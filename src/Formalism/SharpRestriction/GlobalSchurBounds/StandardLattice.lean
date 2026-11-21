@@ -140,7 +140,6 @@ def L0c (D : D7) : letI := D.host.cmStar; ∀ W : HSpace D.host.E, Set (Fin W.ra
   letI := D.host.cmStar
   fun W => {x | ∑ i, x i • W.frame i ∈ W.L0}
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes MeasureTheory in
 
 def IsVolMeas (D : D7) : letI := D.host.cmStar; ∀ (W : HSpace D.host.E) (_P _Q : ℕ),
     Measure (HA (AF D.host.F) D.sp.cm.sig W.gram) → Prop :=
@@ -157,7 +156,6 @@ def IsVolMeas (D : D7) : letI := D.host.cmStar; ∀ (W : HSpace D.host.E) (_P _Q
         ∀ ρ, ∃ b ∈ B ρ, UpqT.mat b * A ρ = A ρ * infMat D.sp.cm.sig W.gram (θ ρ) h} =
       ∏ ρ, D.cd.cd P Q (B ρ)
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes MeasureTheory in
 
 def VolTie (D : D7) : Prop :=
   letI := D.host.cmStar

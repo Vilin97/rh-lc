@@ -43,7 +43,6 @@ variable {R ι : Type*} [CommRing R] [Fintype ι] [DecidableEq ι] {A : ι → T
   [∀ i, CommRing (A i)] [∀ i, Algebra R (A i)] [∀ i, Module.Free R (A i)]
   [∀ i, Module.Finite R (A i)]
 
-omit [∀ i, Module.Free R (A i)] [∀ i, Module.Finite R (A i)] in
 
 theorem leftMulMatrix_pi {κ : ι → Type*} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
     (b : ∀ i, Module.Basis (κ i) R (A i)) (x : ∀ i, A i) :
@@ -98,7 +97,6 @@ theorem tensorPiHom_tmul (x : v.Completion) (l : L) (w : v.placesOver L) :
       algebraMap v.Completion _ x * (l : (w : InfinitePlace L).Completion) := by
   simp [tensorPiHom]
 
-variable {v} in
 
 theorem finrank_completion_pos (w : InfinitePlace L) [w.LiesOver v] :
     0 < Module.finrank v.Completion w.Completion := by
@@ -112,7 +110,6 @@ instance finiteDimensional_completion (w : InfinitePlace L) [w.LiesOver v] :
 
 variable [NumberField K] [NumberField L]
 
-open scoped Classical in
 
 theorem sum_finrank_completion :
     ∑ w : v.placesOver L, Module.finrank v.Completion (w : InfinitePlace L).Completion =
@@ -132,7 +129,6 @@ theorem finrank_tensor :
     Module.finrank v.Completion (v.Completion ⊗[K] L) = Module.finrank K L :=
   Module.finrank_baseChange
 
-omit [NumberField K] in
 
 theorem denseRange_algebraMap_piPlacesOver :
     DenseRange (algebraMap L (PiPlacesOver (L := L) v)) := by
@@ -174,7 +170,6 @@ def tensorPiEquiv : v.Completion ⊗[K] L ≃ₐ[v.Completion] PiPlacesOver (L :
 theorem tensorPiEquiv_apply (x : v.Completion ⊗[K] L) :
     tensorPiEquiv (L := L) v x = tensorPiHom v x := rfl
 
-omit [NumberField K] in
 
 def tensorPiEquivLeft : L ⊗[K] v.Completion ≃ₐ[L] PiPlacesOver (L := L) v :=
   AlgEquiv.ofRingEquiv
@@ -188,13 +183,9 @@ theorem tensorPiEquivLeft_tmul (l : L) (x : v.Completion) (w : v.placesOver L) :
       (l : (w : InfinitePlace L).Completion) * algebraMap v.Completion _ x := by
   simp [tensorPiEquivLeft, mul_comm]
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
 end InfinitePlace
 

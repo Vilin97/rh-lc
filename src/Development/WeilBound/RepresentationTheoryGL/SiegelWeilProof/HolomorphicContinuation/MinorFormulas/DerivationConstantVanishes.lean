@@ -133,7 +133,6 @@ theorem key2 (s : ℂ) (b b' : Bool) (k l k' l' : Fin n) : ⁅dl s b k l, dl s b
 
 end CommPf
 
-open CommPf in
 
 theorem comm : Comm := by
   intro n s m b b' k l k' l'

@@ -151,7 +151,6 @@ theorem secCoord_one {X : Scheme.{0}} {I : Type} [Unique I] {R : Type} [CommRing
       simp only [Units.coe_map_inv, MonoidHom.coe_coe, RingHom.toMonoidHom_eq_coe, RingHom.coe_comp,
         Function.comp_apply, ← map_mul, IsUnit.mul_val_inv, map_one]
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem isQProjOver_id (R : Type) [CommRing R] : IsQProjOver (𝟙 (Sp R)) := by
   classical

@@ -158,7 +158,6 @@ theorem eig_of_isPull {ν : Out.GtPt a.D₀ (epsR A)} {v : epsR (PowerSeries A) 
   exact congrArg (fun q => q.left) ((ConstLie.main hG E H Dw l Xo c O β Y A b a χ W ν').1.unique
     (ConstLie.lieImg_of_tr W hg' (hp.smul hG W.P.lin x s)) (ConstLie.lieImg_of_tr W hg' (hp.pull k p')))
 
-include hG in
 
 theorem isZero_of_lieImg {ν : Out.GtPt a.D₀ (epsR A)} (h : LieImg W ν 1) : ν.IsZero := by
   obtain ⟨o, ho⟩ := ConstLie.exists_gtComb (D := a.D₀) (m := 0) Fin.elim0 Fin.elim0

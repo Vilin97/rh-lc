@@ -24,7 +24,6 @@ section jets
 
 variable {r : ℕ} {TT : ℝ}
 
-open scoped Classical in
 
 end jets
 

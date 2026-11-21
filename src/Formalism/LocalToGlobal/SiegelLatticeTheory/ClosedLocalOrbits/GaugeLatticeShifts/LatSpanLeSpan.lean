@@ -74,9 +74,7 @@ include hff in
 theorem pX_pY (v : S.V) : pX e f (pY e f v) = 0 := by
   rw [pX_apply]; simp [hT_f_pY hff]
 
-include hee in
 
-include hef in
 
 include hef in
 theorem pY_pY (v : S.V) : pY e f (pY e f v) = pY e f v := by
@@ -86,9 +84,7 @@ include hff hef in
 theorem pX_pj (v : S.V) : pX e f (pj e f v) = 0 := by
   rw [pX_apply]; simp [hT_f_pj hff hef]
 
-include hee hef in
 
-include hee hef in
 
 include hff hef in
 theorem pj_pY (v : S.V) : pj e f (pY e f v) = 0 := by
@@ -163,7 +159,6 @@ theorem hT_pj_left (v w : S.V) : S.hT (pj e f v) w = S.hT (pj e f v) (pj e f w) 
       simp [pY_apply, map_sum, h0']
   simp [map_add (f := _), h1, h2]
 
-include hee hff hef in
 
 theorem hT_coord (v w : S.V) :
     S.hT v w = ∑ a, starRingEnd E (S.hT (f a) v) * S.hT (e a) w +
@@ -198,7 +193,6 @@ theorem pj_lmap (v : S.V) : pj e f (lmap e f δ v) = pj e f v := by
     pj_pY hff hef]
   abel
 
-include hee hff hef hδ hX in
 
 theorem lmap_isom (v w : S.V) : S.hT (lmap e f δ v) (lmap e f δ w) = S.hT v w := by
   rw [hT_coord hee hff hef (lmap e f δ v), hT_coord hee hff hef v w]
@@ -281,7 +275,6 @@ variable (hee : ∀ a b, S.hT (e a) (e b) = 0) (hff : ∀ a b, S.hT (f a) (f b) 
   (hLp : ∀ x ∈ L, ∀ a, S.hT (e a) x = 0 ∧ S.hT (f a) x = 0) (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ)
   (hδ1 : ∀ x ∈ latSpan aa e, δ x ∈ Λ) (hδ2 : ∀ x ∈ latSpan aa e, δ.symm x ∈ Λ)
 
-include hee hff hef hδ hX hΛ hLp hU hδ1 hδ2 in
 
 theorem lmap_mem (v : S.V) (hv : v ∈ Λ) : lmap e f δ v ∈ Λ := by
   have hXΛ : latSpan aa e ≤ Λ := by rw [hΛ]; exact le_sup_left.trans le_sup_left
@@ -316,7 +309,6 @@ theorem lmap_mem (v : S.V) (hv : v ∈ Λ) : lmap e f δ v ∈ Λ := by
     exact int_of_unimod hU (hδ2 xw hxw) (hYΛ hy)
   rwa [hU] at hd
 
-include hee hff hef hδ hX hΛ hLp hU hδ1 hδ2 in
 
 theorem gmap_lequiv : Formalism.HermitianLatticesTheory.gmap (lequiv hee hff hef hδ hX) Λ = Λ := by
   ext x

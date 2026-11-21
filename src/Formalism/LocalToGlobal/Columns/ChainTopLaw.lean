@@ -136,7 +136,6 @@ theorem ctl_atN_prXp {N p : ℕ} (v : Sp E N) (hp : p < N - 1) : Loc.atN (prXpG 
   rw [dite_eq_left h1, dite_eq_left h2]
   rfl
 
-open Classical in
 
 theorem ctl_congr (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K)
     (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {k₀ rS r t j n' N : ℕ} (hk : k₀ ≤ r) (hN1 : 1 ≤ N) (hn' : r + (j - 1) * t = n')

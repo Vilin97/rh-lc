@@ -40,7 +40,6 @@ theorem range_eq {T Φ' : Type} [Field Φ'] {i : ℕ} (x' : (Σ k, Sum.elim (dua
 
 end DualStdGenDeg
 
-open DualStdGenDeg in
 
 theorem DualStdGenDeg.proof (hPt : OneBlockPointDeg.Statement) (hRat : DualStdFibreRatios.Statement) :
     DualStdGenDeg.Statement := by

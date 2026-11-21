@@ -22,7 +22,6 @@ section Objects
 variable {K : Type} [DecidableEq K] {ι : K → Type} {J : Type}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-open Classical in
 
 def specialRelDeg (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J))) : ℕ :=
   if h : (specialIdeal W').IsPrime then

@@ -138,7 +138,6 @@ end PI.ExpIntWProof.Key
 
 namespace PI.ExpIntWProof
 
-open Key in
 
 theorem keyW : KeyW := by
   intro p _ x hx h

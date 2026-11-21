@@ -97,4 +97,3 @@ end Y
 
 end GlobalTheory.WH.PullCoc
 
-open GlobalTheory.WH.PullCoc in

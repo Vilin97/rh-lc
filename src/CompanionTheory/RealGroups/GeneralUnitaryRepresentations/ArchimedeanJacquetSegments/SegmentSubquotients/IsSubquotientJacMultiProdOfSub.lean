@@ -23,7 +23,6 @@ theorem isSmooth_multiProd_segTerm {d : ℕ} (σ : IrrRep (GL (Fin d) k)) (l : �
     IsSmooth (multiProd (consecBlocks l d) (segTerm σ.ρ l)) :=
   isSmooth_parInd _ _
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 theorem isSubquotient_jac_multiProd_of_sub {d l : ℕ} (σ : IrrRep (GL (Fin d) k))
     (S : Subrepresentation (multiProd (consecBlocks l d) (segTerm σ.ρ l)))

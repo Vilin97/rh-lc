@@ -20,7 +20,6 @@ section Cycle
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-open Classical in
 
 def vertCycleNum (P : Ideal (MRing ι)) (s : MRing ι) {n : ℕ} (e : Fin n → K → ℤ) : ℝ :=
   ∑ᶠ W ∈ divSupp P s, (multAt (P ⊔ Ideal.span {s}) W : ℝ) *

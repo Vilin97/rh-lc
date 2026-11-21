@@ -44,9 +44,7 @@ def IsHermitian [IsCMField E] (h : W →ₗ[ℚ] W →ₗ[ℚ] E) : Prop :=
 def traceForm (ξ₀ : E) (h : W →ₗ[ℚ] W →ₗ[ℚ] E) : LinearMap.BilinForm ℚ W :=
   h.compr₂ (Algebra.trace ℚ E ∘ₗ LinearMap.mulLeft ℚ ξ₀)
 
-variable (W) in
 
-omit [Module E W] [IsScalarTower ℚ E W] in
 
 variable [Module (𝓞 E) W] [IsScalarTower (𝓞 E) E W]
 

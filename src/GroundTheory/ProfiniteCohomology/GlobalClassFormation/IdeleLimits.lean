@@ -49,7 +49,6 @@ def places : CompatiblePlaces K where
 
 end LocalEmbeddings
 
-variable (K) in
 
 def localGaloisCohomology (n : ℕ) : Place K.1 → Type
   | .inl v => cohomology (galUnitsZ v.Completion (AlgebraicClosure v.Completion)) n
@@ -67,7 +66,6 @@ def localInflHom : ∀ (v : Place K.1) (p : GLevel K),
   | .inl v, p => (infLocalInfl (ι.inf v) p.1 n).hom.toAddMonoidHom
   | .inr v, p => (localInfl (ι.fin v) p.1 n).hom.toAddMonoidHom
 
-set_option maxHeartbeats 8000000 in
 
 def localLimit : LocalLimit (ι.places.levelDecomposition n) where
   T := localGaloisCohomology K n

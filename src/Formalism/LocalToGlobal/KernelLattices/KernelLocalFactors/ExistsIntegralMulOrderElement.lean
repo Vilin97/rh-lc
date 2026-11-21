@@ -246,7 +246,6 @@ theorem mem_of_divs {A : Type} [CommRing A] [IsDedekindDomain A] {a : A} {P : He
   · exact hf.mem_toFinset.mp h
   · simp at h
 
-open Classical in
 
 theorem bad_gen (hPr : Pr.Ok) (u : Pr.Word) {P : HeightOneSpectrum (𝓞 X.E)} (hP : P ∈ Pr.vT u ∪ Pr.vGs) :
     ∃ (π : 𝓞 X.E) (p : ℕ), π ∈ P.asIdeal ∧ IsCoprime π (X.conjO π) ∧ π * X.conjO π = (p : 𝓞 X.E) ∧ p.Prime ∧
@@ -263,7 +262,6 @@ theorem bad_gen (hPr : Pr.Ok) (u : Pr.Word) {P : HeightOneSpectrum (𝓞 X.E)} (
       (p = Pr.T u ∧ π = Pr.piT u ∨ ∃ i, p = Pr.g i ∧ π = X.conjO (Pr.piG i)))
     exact h.elim (key 0) (key 1)
 
-open Classical in
 
 theorem tg_noConj (hPr : Pr.Ok) (u : Pr.Word) : ∀ P ∈ Pr.vT u ∪ Pr.vGs, conjPrime₂ P ∉ Pr.vT u ∪ Pr.vGs := by
   intro P hP hP'
@@ -352,7 +350,6 @@ theorem conjP_twice (P : HeightOneSpectrum (𝓞 X.E)) : conjPrime₂ (conjPrime
   ext r
   rw [mem_conjP, mem_conjP, cO_cO]
 
-open Classical in
 
 theorem sall_noConj (hX : X.AbelianUnramifiedExtensionConditions) (hPr : Pr.Ok) (hsel : IsSel X sel) (u : Pr.Word) (hT : Pr.T u ∈ S) (hg : ∀ i, Pr.g i ∈ S) :
     ∀ P ∈ Sall sel mu u, conjPrime₂ P ∉ Sall sel mu u := by
@@ -379,7 +376,6 @@ theorem sall_noConj (hX : X.AbelianUnramifiedExtensionConditions) (hPr : Pr.Ok) 
   · exact hmix (conjPrime₂ P) h' (by rw [conjP_twice]; exact h)
   · exact qe_noConj mu hX hsel P h h'
 
-open Classical in
 
 theorem sall_nat (hPr : Pr.Ok) (hsel : IsSel X sel) (u : Pr.Word) {P : HeightOneSpectrum (𝓞 X.E)} (hP : P ∈ Sall sel mu u) :
     ∃ p : ℕ, p.Prime ∧ (p : 𝓞 X.E) ∈ P.asIdeal ∧ (p = Pr.T u ∨ (∃ i, p = Pr.g i) ∨ p ∉ S) := by

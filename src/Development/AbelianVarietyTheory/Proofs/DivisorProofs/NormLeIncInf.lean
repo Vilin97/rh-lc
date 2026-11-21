@@ -21,17 +21,13 @@ def colEq {d d₁ : ℕ} (h : d = d₁ + 2) : Fin d ≃ Fin d₁ ⊕ Fin 2 := (f
 def idx {n d d₁ : ℕ} (h : d = d₁ + 2) : Fin n × Fin d ≃ (Fin n × Fin d₁) ⊕ (Fin n × Fin 2) :=
   (Equiv.prodCongr (Equiv.refl _) (colEq h)).trans (Equiv.prodSumDistrib _ _ _)
 
-variable (F E) in
 
 variable (σ : E →ₐ[F] E) {n d d₁ : ℕ} (h2 : Module.finrank F E = 2) (X : Spc F E n) (W : Spc F E d) {W₁ : Spc F E d₁}
   (h : d = d₁ + 2) (H' : Plane E d d₁) (M₁ : Model σ X W₁)
 
 omit σ h2 X W H' M₁
 
-open scoped Classical in
 
-open scoped Classical in
 
-open scoped Classical in
 
 end GlobalTheory.ThK.EvAt0

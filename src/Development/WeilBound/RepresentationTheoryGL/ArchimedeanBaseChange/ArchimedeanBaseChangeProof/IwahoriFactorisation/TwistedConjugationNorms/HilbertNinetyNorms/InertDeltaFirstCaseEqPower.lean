@@ -103,7 +103,6 @@ theorem absHalf_eq (w : Pl E) (x : w.adicCompletion E) : absHalf w x = qh w ^ (-
   unfold absHalf qh
   rw [key _ (Nat.cast_nonneg _), Complex.ofReal_zpow]
 
-omit [IsCMField E] in
 
 theorem delta_inert (w : Pl E) (hw : ¬ IsSplitAt w) (μ : (w.adicCompletion E)ˣ →* ℂˣ)
     (Q₁ Q₂ : (w.adicCompletion E)[X]) :
@@ -350,7 +349,6 @@ private theorem strictAnti_sub_rev {n : ℕ} (x : Fin n → ℤ) (hx : StrictAnt
   simp only
   linarith
 
-open V1 in
 
 theorem inert_delta_first_case_eq_power (w : Pl E) (hw : ¬ IsSplitAt w) (n a : ℕ) (ha : a ≤ n) (x : Fin n → ℤ) (hx : StrictAnti x)
     (Q₁ Q₂ : (w.adicCompletion E)[X]) (s : Finset (Fin (n / 2))) (hA : CaseA w n a x Q₁ Q₂ s) :

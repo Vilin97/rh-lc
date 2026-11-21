@@ -52,7 +52,6 @@ structure HasVertex : Prop where
   zero : ∀ x ∈ P 0, ∃ c : C, algebraMap C K c = x
   cross : ∀ j, j ≠ 0 → ∀ x ∈ P j, ∀ y ∈ P (-j), ∃ c ∈ maximalIdeal C, algebraMap C K c = x * y
 
-variable {P} in
 
 def vertex (h : HasVertex P) : Ideal (lauSub P) where
   carrier := {p | ∃ c ∈ maximalIdeal C, algebraMap C K c = p.1.coeff 0}

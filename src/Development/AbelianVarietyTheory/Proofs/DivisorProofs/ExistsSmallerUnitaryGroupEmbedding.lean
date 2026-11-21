@@ -118,7 +118,6 @@ theorem extendMatrixByIdentityAlongIndices_unitary [Valued L (WithZero (Multipli
 
 end GlobalTheory.SatakeWeyl.InclusionMultiplication
 
-open GlobalTheory.SatakeWeyl.InclusionMultiplication in
 
 theorem GlobalTheory.SatakeWeyl.embExists : GlobalTheory.SatakeWeyl.EmbExists := by
   intro L _ _ σ n r e he hr

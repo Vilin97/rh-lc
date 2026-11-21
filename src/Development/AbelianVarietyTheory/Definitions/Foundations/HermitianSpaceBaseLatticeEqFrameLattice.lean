@@ -17,7 +17,6 @@ section Lattice
 
 variable (F : Type) [Field F] [NumberField F] {E : Type} [Field E] [NumberField E] [Algebra F E] {n : ℕ}
 
-variable (E) in
 
 def intLoc (v : HeightOneSpectrum (𝓞 F)) : Subring (Fv F v ⊗[F] E) where
   carrier := AddSubgroup.closure {z | ∃ a ∈ v.adicCompletionIntegers F, ∃ x : 𝓞 E, z = a ⊗ₜ[F] (x : E)}
@@ -71,7 +70,6 @@ theorem sigR_mem_intLoc (σ : E →ₐ[F] E) {v : HeightOneSpectrum (𝓞 F)} {y
     (by simp) (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
     (fun y hy => by rw [map_neg]; exact neg_mem hy) hy
 
-variable (F) in
 
 def latLoc (L : Submodule (𝓞 E) (Fin n → E)) (v : HeightOneSpectrum (𝓞 F)) :
     Submodule (intLoc F E v) (Fin n → Fv F v ⊗[F] E) where
@@ -110,11 +108,9 @@ theorem latLoc_induction {L : Submodule (𝓞 E) (Fin n → E)} {v : HeightOneSp
   | add y z _ _ hy hz => exact hadd y z hy hz
   | neg y _ hy => exact hneg y hy
 
-variable (E n) in
 
 abbrev stdLattice : Submodule (𝓞 E) (Fin n → E) := Formalism.UG.stdLat (𝓞 E)
 
-omit [NumberField E] in
 
 theorem mem_latLoc_stdLattice {v : HeightOneSpectrum (𝓞 F)} {y : Fin n → Fv F v ⊗[F] E} :
     y ∈ latLoc F (stdLattice E n) v ↔ ∀ i, y i ∈ intLoc F E v := by
@@ -371,9 +367,7 @@ theorem htInf_le_height (w : InfinitePlace F) (g : GAd σ J) :
     (fun _ _ => one_le_htOf _ _) (Finset.mem_univ w)).trans
     (le_mul_of_one_le_right' (one_le_finprod' fun _ => one_le_htOf _ _))
 
-variable {σ} in
 
-variable {σ J} in
 
 end Height
 

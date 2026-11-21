@@ -199,7 +199,6 @@ theorem exists_unbox (hG : GlobalFnsSt) (hB : D.TauBimult) {k : ℕ} (p' : QkPt 
 
 end Deg
 
-open FieldBaseChange TorsionImage in
 
 theorem image_unique (hL : Laws) {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I}
     {A : PolAV (Spec (CommRingCat.of (FractionRing R)))} {G : Over (Spec (CommRingCat.of R))} [GrpObj G]

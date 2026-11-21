@@ -21,10 +21,6 @@ variable (F : Type) [Field F] [NumberField F]
 
 variable (E : Type) [Field E] [NumberField E] [Algebra F E]
 
-open NumberField IsDedekindDomain in
-open scoped TensorProduct Topology Matrix in
-variable (F : Type) [Field F] [NumberField F] in
-variable (E : Type) [Field E] [NumberField E] [Algebra F E] in
 
 variable {F E}
 
@@ -38,9 +34,7 @@ theorem _root_.GlobalTheory.AdLat.UnitRoot.conj_mem (c : E ≃ₐ[F] E) :
   rintro _ ⟨a, rfl⟩
   exact ⟨⟨c (a : E), a.2.map c.toAlgHom.toRingHom.toIntAlgHom⟩, rfl⟩
 
-variable (F E) in
 
-variable (F E) in
 
 end inst
 
@@ -220,8 +214,6 @@ private lemma exists_norm_sum_tmul_eq_tmul_one {F E : Type} [Field F] [NumberFie
       map_mul, sg_sg_of_quadratic c h2 hc, hσ]
     linear_combination hN
 
-open NumberField IsDedekindDomain in
-open scoped TensorProduct Topology Matrix in
 
 theorem _root_.GlobalTheory.AdLat.exists_integral_unit_root : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (c : E ≃ₐ[F] E), Module.finrank F E = 2 → c ≠ 1 → (∀ P : Ideal (𝓞 E), P.IsMaximal → ∃ t s : 𝓞 E, (s : E) = c (t : E) ∧ t - s ∉ P) → ∀ u ∈ _root_.GlobalTheory.AdLat.hat1 F (Set.range (algebraMap (𝓞 E) E)), u * _root_.GlobalTheory.AdLat.sg (FiniteAdeleRing (𝓞 F) F) c u = 1 → ∃ x ∈ _root_.GlobalTheory.AdLat.hat1 F (Set.range (algebraMap (𝓞 E) E)), (∃ y ∈ _root_.GlobalTheory.AdLat.hat1 F (Set.range (algebraMap (𝓞 E) E)), x * y = 1) ∧ x = u * _root_.GlobalTheory.AdLat.sg (FiniteAdeleRing (𝓞 F) F) c x := by
   intro F E _ _ _ _ _ c h2 hc hP u hu hnorm

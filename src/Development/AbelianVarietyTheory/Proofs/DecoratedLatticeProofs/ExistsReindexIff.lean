@@ -25,12 +25,10 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
 variable {n m n' m' : Type*} [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
   [Fintype n'] [DecidableEq n'] [Fintype m'] [DecidableEq m'] {c : ℕ}
 
-omit [DecidableEq n] [DecidableEq m] [DecidableEq n'] [DecidableEq m'] in
 
 omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
   [Fintype n'] [DecidableEq n'] [Fintype m'] [DecidableEq m'] in
 
-omit [Fintype n'] [DecidableEq n'] [Fintype m'] [DecidableEq m'] in
 
 end Local
 

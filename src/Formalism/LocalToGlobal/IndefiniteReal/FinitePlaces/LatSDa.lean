@@ -182,7 +182,6 @@ theorem lsd_mem (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
     · rw [if_neg (fun h => hj h.2), if_neg hj, mul_zero, TensorProduct.tmul_zero, mul_zero]
   · rw [if_neg (fun h => hi h.1), if_neg hi, mul_zero, zero_mul, TensorProduct.tmul_zero, mul_zero]
 
-open Formalism.IndefR.PHeisFC in
 
 theorem lsd_finPart_expand (z : AE D) :
     finPart D z = ∑ k, sndA D.host.F (cE D.host.F D.host.E z k) ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E k := by
@@ -208,8 +207,6 @@ theorem lsdE_finPart (i : Fin T.rank) (j : Fin S.rank) (β : Af D.host.F) (e : D
   · rfl
   · exact map_zero _
 
-set_option maxHeartbeats 1600000 in
-open Formalism.IndefR.PHeisFC in
 
 theorem latO_isOpen (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
     IsOpen {w : WO S T | ∃ u ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E))
@@ -330,8 +327,6 @@ theorem lsd_cE_of_inf (z : AE D) (hz : infPart D z = 0) (k : Fin (Module.finrank
   rw [lsd_fst, hz, map_zero, Finsupp.zero_apply]
   rfl
 
-set_option maxHeartbeats 1600000 in
-open Formalism.IndefR.PHeisFC in
 
 theorem lsd_decomp (Y : WO S T) (hY : ∀ i j, infPart D (Y i j) = 0) :
     Y = ∑ i, ∑ j, ∑ k, lsdE S T i j (sndA D.host.F (cE D.host.F D.host.E (Y i j) k))
@@ -358,8 +353,6 @@ theorem lsdE_nsmul (N : ℕ) (i : Fin T.rank) (j : Fin S.rank) (β : Af D.host.F
   · rw [key, VacEx.nsmul_pairA, nsmul_eq_mul, ← map_natCast (algebraMap D.host.F (Af D.host.F))]
   · rw [smul_zero]
 
-set_option maxHeartbeats 1600000 in
-open Formalism.IndefR.PHeisFC in
 
 theorem latO_nsmul_mem (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
     ∃ N : ℕ, 0 < N ∧ ∀ Y : WO S T, (∀ i j, finPart D (Y i j) ∈ intAE D) → (∀ i j, infPart D (Y i j) = 0) →
@@ -404,8 +397,6 @@ theorem lsd_fi : ∀ x ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT :
   | add x y _ _ hx hy => intro i j; rw [Matrix.add_apply, map_add (f := _), hx, hy, add_zero]
   | neg x _ hx => intro i j; rw [Matrix.neg_apply, map_neg, hx, neg_zero]
 
-set_option maxHeartbeats 1600000 in
-open Formalism.IndefR.PHeisFC in
 
 theorem latO_isCompact (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
     IsCompact ((latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True :

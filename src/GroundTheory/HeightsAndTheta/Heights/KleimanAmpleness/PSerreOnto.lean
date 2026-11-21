@@ -55,7 +55,6 @@ variable {M : Type v} [AddCommGroup M] [Module (Poly S N) M] [Module S M] [IsSca
 variable {M' : Type w} [AddCommGroup M'] [Module (Poly S N) M'] [Module S M']
   [IsScalarTower S (Poly S N) M']
 
-omit [IsScalarTower S (Poly S N) M] in
 
 theorem GradedPMod.smul_mem_int (𝓜 : GradedPMod S N M) {p : Poly S N} {e a : ℤ} {m : M}
     (hp : p ∈ (polyGraded S N).piece e) (hm : m ∈ 𝓜.piece a) : p • m ∈ 𝓜.piece (a + e) := by
@@ -93,7 +92,6 @@ section Free
 
 variable {S : Type u} [CommRing S] {N : ℕ}
 
-variable (S N) in
 
 def freeGraded {r : ℕ} (deg : Fin r → ℤ) : GradedPMod S N (Fin r → Poly S N) where
   piece c := Submodule.pi Set.univ fun j => (polyGraded S N).piece (c - deg j)
@@ -164,7 +162,6 @@ theorem single_one_mem_freeGraded {r : ℕ} (deg : Fin r → ℤ) (j : Fin r) :
 
 variable {M : Type v} [AddCommGroup M] [Module (Poly S N) M] [Module S M] [IsScalarTower S (Poly S N) M]
 
-variable (S N) in
 
 def freeMap {r : ℕ} (g : Fin r → M) : (Fin r → Poly S N) →ₗ[Poly S N] M :=
   ∑ j, (LinearMap.proj j).smulRight (g j)
@@ -174,7 +171,6 @@ theorem freeMap_apply {r : ℕ} (g : Fin r → M) (f : Fin r → Poly S N) :
     freeMap S N g f = ∑ j, f j • g j := by
   simp [freeMap]
 
-omit [IsScalarTower S (Poly S N) M] in
 
 theorem GradedPMod.exists_gens (𝓜 : GradedPMod S N M) (hM : Module.Finite (Poly S N) M) :
     ∃ (r : ℕ) (g : Fin r → M) (deg : Fin r → ℤ), (∀ j, g j ∈ 𝓜.piece (deg j)) ∧
@@ -223,7 +219,6 @@ variable {M' : Type w} [AddCommGroup M'] [Module (Poly S N) M'] [Module S M']
   [IsScalarTower S (Poly S N) M']
 variable {𝓕 : GradedPMod S N M} {𝓜 : GradedPMod S N M'}
 
-omit [IsScalarTower S (Poly S N) M] [IsScalarTower S (Poly S N) M'] in
 
 theorem GradedHom.map_decompose (φ : GradedHom 𝓕 𝓜) [DirectSum.Decomposition 𝓕.piece]
     [DirectSum.Decomposition 𝓜.piece] (c : ℤ) (m : M) :

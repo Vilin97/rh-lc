@@ -145,7 +145,6 @@ open GlobalTheory.JSW GlobalTheory.JSW.MirPatch Topology
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 
-variable (E) in
 
 def Zset (S : Finset (HeightOneSpectrum (𝓞 E))) (m : ℕ) : Set (GA E (m + 1)) :=
   {c | (∀ j, (c : Matrix (Fin (m + 1)) (Fin (m + 1)) (Ad E)) (Fin.last m) j = if j = Fin.last m then 1 else 0) ∧

@@ -24,7 +24,6 @@ theorem actLev_levB (p : PtAt ex Csz) (i : Fin D.R.m) :
   have h : ActLev (Xo := p.T.Q.Xo ((i : ℕ) + 1)) p.T.Q.c (p.O i).lev2 := (p.pins i).2.act.1
   exact ⟨fun g => h.total g, fun g => h.func g, h.one, fun g g' => h.mul g g', fun g => h.nat g, fun g => h.bor g⟩
 
-set_option maxHeartbeats 1000000 in
 
 theorem mem_eigSub_iff (p : PtAt ex Csz) (i : Fin D.R.m) (χ : (p.F.lv2.lvl false).P →* (p.T.Q.c.F)ˣ)
     (f : p.T.R ((i : ℕ) + 1)) :
@@ -36,6 +35,5 @@ theorem mem_eigSub_iff (p : PtAt ex Csz) (i : Fin D.R.m) (χ : (p.F.lv2.lvl fals
     LinearMap.id_apply, sub_eq_zero]
   rfl
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.DefEig

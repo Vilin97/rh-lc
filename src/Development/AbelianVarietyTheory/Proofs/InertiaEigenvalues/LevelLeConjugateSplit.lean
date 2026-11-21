@@ -56,6 +56,5 @@ theorem exists_cong [IsCMField E] {v : HeightOneSpectrum (OF E)} (hs : Splits v)
     congr 1
     push_cast; ring
 
-open Formalism.BasicNotions GlobalTheory.ToricDenom in
 
 end GlobalTheory.LamTie.ConjLevel

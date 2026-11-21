@@ -113,7 +113,6 @@ theorem cspB_idem_map {S T : Type} [CommRing S] [Algebra c.F S] [CommRing T] [Al
   rw [cspB_idem_spec C hC z hz q, cspB_lift_map φ hx hz hzx]
   exact cspB_idem_spec C hC x hx (PrimeSpectrum.comap φ.toRingHom q)
 
-variable (Xo c) in
 
 def cspB_rule : Rul Xo c := fun _ y => cspB_idem C hC y.x y.x_over
 
@@ -180,8 +179,6 @@ theorem cspB_isClopen (hdisj : ∀ Z Z' : Comp Xo c, Z ≠ Z' → Disjoint (Z : 
   exact (isClosed_iUnion_of_finite fun Z' : {Z' : Comp Xo c // Z' ≠ Z} =>
     isClosed_of_mem_irreducibleComponents _ Z'.1.2).isOpen_compl
 
-open Classical in
 
-open Classical in
 
 end Formalism.L2.Pj.CompSplitPfB

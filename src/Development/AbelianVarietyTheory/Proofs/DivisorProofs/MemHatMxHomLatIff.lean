@@ -16,7 +16,6 @@ open Matrix TensorProduct NumberField IsDedekindDomain Formalism.UG Formalism.UG
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {m n : ℕ}
 
-variable (F) in
 
 def genGrp (M : Submodule (𝓞 E) (Matrix (Fin m) (Fin n) E)) :
     AddSubgroup (Matrix (Fin m) (Fin n) 𝒜) :=

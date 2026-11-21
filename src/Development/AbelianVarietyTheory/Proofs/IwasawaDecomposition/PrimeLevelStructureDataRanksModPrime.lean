@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formal
 
 namespace GlobalTheory.Mem.Col2.LRank
 
-open scoped TensorProduct in
 
 theorem natCard_quot {R N : Type} [CommRing R] [IsDomain R] [AddCommGroup N] [Module R N]
     [Module.Finite R N] [Module.Projective R N] (I : Ideal R) [Finite (R ⧸ I)] :
@@ -50,7 +49,6 @@ theorem finrank_of_card {F V : Type} [Field F] [Finite F] [AddCommGroup V] [Modu
   rw [h] at h2
   exact (Nat.pow_right_injective h1 h2).symm
 
-set_option maxHeartbeats 800000 in
 
 theorem finrank_red {E : Type} [Field E] [NumberField E] {n : ℕ} (N : Submodule (𝓞 E) (Fin n → E))
     (hN : Submodule.IsLattice E N) (P : HeightOneSpectrum (𝓞 E)) :
@@ -66,7 +64,6 @@ theorem finrank_red {E : Type} [Field E] [NumberField E] {n : ℕ} (N : Submodul
   rw [hr] at h
   exact finrank_of_card (F := Res P) h
 
-set_option maxHeartbeats 1600000 in
 
 theorem ranks : ∀ {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ} {S : GStep E K n} {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ), S.Ok → A.Ok T → (∀ P c, Module.finrank (Res P.1) (A.lv P c) = n) ∧ ∀ P c, Module.finrank (Res P.1) (A.lk P c) = n := by
   intro E K _ _ _ _ n S ST A T _ h

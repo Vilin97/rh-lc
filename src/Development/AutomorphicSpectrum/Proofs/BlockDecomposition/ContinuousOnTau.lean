@@ -46,7 +46,6 @@ theorem cell_eq {e : AE D} (hee : e * e = e) :
   change IsUnit _ ↔ IsUnit _
   rw [det_mix_one hee]
 
-open Classical in
 
 def tau (e : AE D) (g : G D p) : hermS D p e := if h : ∃ x, IsB e g x then h.choose else 0
 

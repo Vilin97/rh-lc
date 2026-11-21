@@ -41,7 +41,6 @@ theorem zOf_of_rk_eq_zero (A : ∀ s, Matrix (Fin (n s)) (Fin (rk Ψ p q s)) Ω)
   haveI : IsEmpty (Fin (rk Ψ p q s)) := by rw [h]; infer_instance
   exact Matrix.det_isEmpty
 
-open Classical in
 
 def stepFac (z : Ω) (s : Ψ ⊕ Ψ) : K₀ ⊕ StepIx Ψ p q → Ω :=
   Sum.elim (fun _ => 1) fun t => if t.1 = s then z else 1

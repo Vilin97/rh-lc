@@ -244,7 +244,6 @@ abbrev Ix (S T : HSp D) : Type := (Fin T.rank × Fin S.rank) × D.what₂.Tau
 
 def iotaV (σ : (D.what₂.Tau → ℂ) →+ Formalism.L2.Theta.AE D) (S T : HSp D) (v : Ix S T → ℂ) : WO S T := iotaW σ T S (unvecL v)
 
-open Classical in
 
 def HM (S T : HSp D) : Matrix (Ix S T) (Ix S T) ℂ :=
   blk (fun τ => ((2 * (tauE D τ D.host.xi0).im : ℝ) : ℂ) • gramAt D T τ) fun τ => (gramAt D S τ)⁻¹
@@ -320,7 +319,6 @@ theorem HM_det : (HM S T).det ≠ 0 := by
     · rw [mul_nonsing_inv _ (GlobalTheory.SmoothForms.RealPts.gramAt_unit S τ)]
   exact (isUnit_det_of_right_inverse this).ne_zero
 
-open Classical in
 
 def mM (θ : InfFam D) (S T : HSp D) : GA D S × GA D T →* Matrix (Ix S T) (Ix S T) ℂ where
   toFun p := blk (fun τ => compAt θ τ (Formalism.L2.Theta.mt T p.2)) fun τ => compAt θ τ (Formalism.L2.Theta.mt S p.1⁻¹)

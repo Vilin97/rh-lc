@@ -57,12 +57,10 @@ namespace Tr
 
 variable {a : Late B C} (b : Late B C) {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
 
-variable {b} in
 
 def _root_.GlobalTheory.Mem.R3.SameGrp.back (s : SameGrp a b) : (Σ k : Fin 2, b.D.nd.PlG k) ≃ (Σ k : Fin 2, a.D.nd.PlG k) :=
   Equiv.sigmaCongrRight fun k => (s.e k).symm
 
-variable {b} in
 
 theorem _root_.GlobalTheory.Mem.R3.SameGrp.pl_back (s : SameGrp a b) (kv : Σ k : Fin 2, b.D.nd.PlG k) :
     (a.D.naut.plGw kv.1 ((s.e kv.1).symm kv.2) : HeightOneSpectrum (𝓞 B.host.E)) = b.D.naut.plGw kv.1 kv.2 := s.symm.pl kv.1 kv.2
@@ -74,7 +72,6 @@ def GrpCl (D : D7) (Pg : Finset (Pl D.host.E)) (c : G → ℂ) (Dv : Fin 2 → P
     (∀ kv, Dv kv.1 (plg kv).1) ∧
     ∀ g kv, eG g (plg kv) = Formalism.UG.bc (iso kv : ZMod (D.host.g kv.1) →+* kP (plg kv).1) (eR g kv)
 
-omit [Fintype G] in
 
 theorem grpCl_tr (s : SameGrp a b) {Pg c Dv eG} {eR : G ≃* G0g a.D.nd} (h : GrpCl a.D Pg c Dv eG eR) :
     GrpCl b.D ((Pg)) c ((Dv)) ((eG)) (eR.trans s.iso) := by
@@ -85,7 +82,6 @@ theorem grpCl_tr (s : SameGrp a b) {Pg c Dv eG} {eR : G ≃* G0g a.D.nd} (h : Gr
   · exact (by with_unfolding_all exact ((h3 (s.back kv)) :))
   · exact (by with_unfolding_all exact ((h4 g (s.back kv)) :))
 
-omit [Fintype G] in
 
 theorem psiPPTie_transport (s : SameGrp a b) {P0 P1 : Subgroup G} {ψ0 ψ1} {eR : G ≃* G0g a.D.nd} (h : PsiPPTie a.D P0 ψ0 P1 ψ1 eR) :
     PsiPPTie b.D P0 ((ψ0)) P1 ((ψ1)) (eR.trans s.iso) := by
@@ -179,7 +175,6 @@ end Kept
 
 variable {R : RealDat3 a.D A Ks} {F : Face3 a.D A}
 
-set_option maxHeartbeats 800000 in
 
 theorem weakCharInertPart_realAdelicDataTransport (s : SameGrp a b) (h : R.WeakCharacterisation F) : letI := alg b iK; (real3 b R).WeakCharacterisation (face3 b F) := by
   letI := alg b iK

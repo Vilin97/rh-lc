@@ -142,7 +142,6 @@ namespace GlobalTheory.VacMoveLow
 
 variable {D : D7}
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_cut_pair (V : HSp D) {e : AE D} (he : e * e = e) (hc : e * cA D e = 0) :
     ∃ κe κo : GA D V →* GA D V, (∀ g, g = κe g * κo g) ∧ (∀ g, SuppAt e V (κe g)) ∧ (∀ g ∈ GfC V, κo g ∈ GfC V) ∧

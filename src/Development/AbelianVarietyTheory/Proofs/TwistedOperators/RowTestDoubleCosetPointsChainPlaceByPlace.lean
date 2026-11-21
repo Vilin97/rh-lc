@@ -204,7 +204,6 @@ theorem sum_orth (he : IsIdemSum e P) (h : ∀ w, Formalism.L2.NTheta.IsIdemAt (
   rw [Finset.sum_mul]
   exact Finset.sum_eq_zero fun u hu => orth he h (fun huw => hw (huw ▸ hu))
 
-variable (eL) in
 
 def cutS (S : Finset P) {V : HSp D} (g : GA D V) : GA D V := cutPart (∑ w ∈ S, (eL w + cA D (eL w))) V g
 
@@ -270,7 +269,6 @@ private lemma suppAt_one_twisted_operators {D : D7} {e : AE D} {V : HSp D} : Sup
 private lemma zero_not_mem_idx' {D : D7} : 0 ∉ idx D := by
   simp [idx]
 
-set_option maxHeartbeats 800000 in
 
 theorem points : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (s : ℤˣ) (t : T) (β : CosFam ch.G t) (b b₀ : Pts ch.G), IsRep t ch.S.B s β b → IsBase t ch.S.B b₀ → ∀ (eL : locPl ch.G t → AE D), (∀ w, IsIdemSum (eL w) {w.1}) → ∀ p : Pts ch.G, IsRealPt p → ∃ q : Finset (locPl ch.G t) → Pts ch.G, q ∅ = p * b₀ ∧ q Finset.univ = p * b ∧ ∀ (S : Finset (locPl ch.G t)) (w : locPl ch.G t), w ∉ S → ∃ r r₀ h : Pts ch.G, OneLoc t w.1 (eL w) r (fun j => if j ∈ idx D then sgnAt ch.G t s w.1 j * (repsAt ch.G t w.1).elt (β w) (D.R.m, j) else 1) ∧ OneLoc t w.1 (eL w) r₀ (fun j => if j = 0 then (stair (locGrid ch.G t w.1) (unifAt w.1) (cosExp ch.G w.1) j)⁻¹ else 1) ∧ (∀ j, j ≤ D.R.m → ∃ δ, IsTilt ch.G j δ ∧ δ⁻¹ * h j ∈ GlobalTheory.FinPl.grpOff _ (· = w.1.under (𝓞 D.host.F))) ∧ h * r = q (insert w S) ∧ h * r₀ = q S := by
   refine Exists.intro 0 (fun ε CF _ => Exists.intro 0 ?_)

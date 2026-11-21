@@ -38,7 +38,6 @@ def muT : TRep ℤ (GK p K) where
   rho := muRep p K n
   cont := contAction_muRep p K n
 
-variable {p n} in
 
 def iP {ζ : (PadicAlgCl p)ˣ} (hζ : IsPrimitiveRoot ζ n) : Pair (muT p K n) (kT p K) :=
   Pair.ofMap (M := muT p K n) (M' := kT p K) (muMap ζ hζ.pow_eq_one)

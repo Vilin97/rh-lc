@@ -129,7 +129,6 @@ theorem incl_single (j : Fin n) (c : E) :
   · subst hi; simp
   · simp [hi]
 
-include hLb in
 
 theorem col_mem {g : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)} (hg : g ∈ lev.U) (j : Fin n) (hj : ¬ j.1 + 1 = n)
     (a : Fin n) : g.1 a j ∈ IA F E := by
@@ -156,7 +155,6 @@ theorem pi_ne_zero (l : Fin n) (hl : l.1 + 1 = n) : π ≠ 0 := by
     rw [h2]; trivial
   simp at h1
 
-include hLb in
 
 theorem last_mem {g : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)} (hg : g ∈ lev.U) (l : Fin n) (hl : l.1 + 1 = n) :
     g.1 l l ∈ IA F E := by
@@ -174,7 +172,6 @@ theorem last_mem {g : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)} (hg : g 
   rw [hu.mul_left_cancel e2]
   exact hs
 
-include hLb in
 
 theorem entry_mem (hJ : J = 1) {g : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)} (hg : g ∈ lev.U) (a b : Fin n) :
     g.1 a b ∈ IA F E := by

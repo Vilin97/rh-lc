@@ -54,7 +54,6 @@ theorem isConj_comp_iff [IsMulCommutative (L ≃ₐ[K] L)] {φ : L →+* ℂ} {�
     rw [hc]
     exact h (ν y)
 
-open scoped Classical in
 
 def conjOfEmbedding (φ : L →+* ℂ) : L ≃ₐ[K] L :=
   if h : ∃ σ : L ≃ₐ[K] L, IsConj φ σ then h.choose else 1
@@ -86,7 +85,6 @@ theorem conjOfEmbedding_mul_self (φ : L →+* ℂ) :
     exact AlgEquiv.ext fun x ↦ isConj_apply_apply hσ x
   · rw [conjOfEmbedding_of_not hφ, mul_one]
 
-variable (K) in
 
 def conjAt (w : InfinitePlace L) : L ≃ₐ[K] L :=
   conjOfEmbedding w.embedding
@@ -152,7 +150,6 @@ section Symbol
 variable {K : Type*} [Field K] [NumberField K] (L : Type*) [Field L] [NumberField L] [Algebra K L]
   [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)] (v : InfinitePlace K)
 
-open scoped Classical in
 
 def infiniteLocalSymbol : v.Completionˣ →* (L ≃ₐ[K] L) :=
   if hv : v.IsReal then
@@ -168,7 +165,6 @@ theorem infiniteLocalSymbol_apply (hv : v.IsReal) (w : v.placesOver L) (x : v.Co
     conjAt_eq _ w]
   rfl
 
-omit [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)] in
 
 theorem infiniteLocalSymbol_of_not_isReal (hv : ¬ v.IsReal) : infiniteLocalSymbol L v = 1 := by
   rw [infiniteLocalSymbol, dite_eq_right hv]
@@ -210,7 +206,6 @@ theorem ker_infiniteLocalSymbol (w : v.placesOver L) :
       rw [infiniteLocalSymbol_apply L v hv w, conjAt_of_isReal hw, ite_self]
     · rw [infiniteLocalSymbol_of_not_isReal L v hv, MonoidHom.one_apply]
 
-open scoped Classical in
 
 theorem range_infiniteLocalNorm_le_ker_infiniteLocalSymbol :
     (IdeleNorm.infiniteLocalNorm L v).range ≤ (infiniteLocalSymbol L v).ker := by

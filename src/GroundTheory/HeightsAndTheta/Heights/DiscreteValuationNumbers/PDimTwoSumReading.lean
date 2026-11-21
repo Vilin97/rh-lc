@@ -74,7 +74,6 @@ theorem mem_minimalPrimes_iff {a : A} (ha : a ≠ 0) (W : Ideal A) [W.IsPrime] :
       exact absurd this (by decide)
     · exact hQ
 
-omit [IsDomain A] [IsNoetherianRing A] in
 
 theorem max_mem_minimalPrimes [IsLocalRing A] (h2 : ringKrullDim A = 2) (W : Ideal A) [hW : W.IsPrime]
     (h1 : W.height = 1) {b : A} (hbW : b ∉ W) (hbm : b ∈ maximalIdeal A) :
@@ -98,7 +97,6 @@ theorem max_mem_minimalPrimes [IsLocalRing A] (h2 : ringKrullDim A = 2) (W : Ide
 
 end DimTwoSumReading
 
-open DimTwoSumReading in
 
 theorem DimTwoSumReading.proof : DimTwoSumReading.Statement := by
   intro A _ _ _ _ h2 a b ha hab

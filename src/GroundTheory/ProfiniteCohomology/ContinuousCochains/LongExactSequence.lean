@@ -80,7 +80,6 @@ theorem cohomology_exact₁ (i j : ℕ) (hij : i + 1 = j) :
     (ShortComplex.mk (δ hS i j hij) (cohomologyMap S.f j) (δ_comp hS i j hij)).Exact :=
   (cochainsShortComplex_shortExact hS).homology_exact₁ i j hij
 
-include hS in
 
 theorem cohomology_exact₂ (i : ℕ) :
     (ShortComplex.mk (cohomologyMap S.f i) (cohomologyMap S.g i)

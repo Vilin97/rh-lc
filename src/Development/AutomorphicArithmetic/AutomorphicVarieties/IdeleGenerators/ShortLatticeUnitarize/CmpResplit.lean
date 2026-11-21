@@ -113,7 +113,6 @@ section Sp
 
 variable {W : Type} [AddCommGroup W] [Module ℂ W]
 
-variable (W) in
 
 def Cen (ω : (Af F)ˣ →* ℂˣ) : Submodule ℂ (GF F → W) where
   carrier := {f | ∀ z g, f (g * zc F z) = (ω z : ℂ) • f g}
@@ -124,11 +123,9 @@ def Cen (ω : (Af F)ˣ →* ℂˣ) : Submodule ℂ (GF F → W) where
 def Sp (Q : DefQuat F) (R : Representation ℂ (GF F) W) (c : Pl F → ℕ) (ω : (Af F)ˣ →* ℂˣ) : Submodule ℂ (GF F → W) :=
   AF Q.toFin R ⊓ Hi.fixd (Hi.rtr ℂ (GF F) W) (Kc c) ⊓ Cen W ω
 
-variable (W) in
 
 end Sp
 
-variable (F) in
 
 structure LDat {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) where
 
@@ -156,9 +153,7 @@ def gl : GF F →* (InfinitePlace F → GL (Fin 2) ℂ) := Pi.monoidHom fun v =>
 
 def R (n : InfinitePlace F → ℕ) (e : InfinitePlace F → ℤ) : Representation ℂ (GF F) (Wt n) := (wRep n e).comp D.gl
 
-open Classical in
 
-open Classical in
 
 def uf (e : InfinitePlace F → ℤ) (w : Pl F) : ℂ :=
   ∏ v, if D.pl v = w then (v.embedding (Formalism.L2.Host.unif w : Fˣ) / (l : ℂ)) ^ e v else 1

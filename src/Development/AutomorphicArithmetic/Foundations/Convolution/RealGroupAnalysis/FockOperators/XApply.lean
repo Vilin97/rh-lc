@@ -42,7 +42,6 @@ def Vac (δ : F) : Submodule ℂ (S4 F) where
     change (c * φ.1 v) * _ = (c * φ.1 v') * _
     rw [mul_assoc, mul_assoc, h v v' e]
 
-omit [IsTotallyReal F] in
 
 def Fix (δ : F) (Λ : OpenAddSubgroup (FiniteAdeleRing (𝓞 F) F)) : Submodule ℂ (S4 F) where
   carrier := {φ | ∀ a : V4 F, (∀ i, (a i).1 = 0 ∧ (a i).2 ∈ Λ) → ∀ v, φ.1 (v + a) = φ.1 v ∧ ψ (B4 δ a v) * φ.1 v = φ.1 v}
@@ -60,7 +59,6 @@ def Fix (δ : F) (Λ : OpenAddSubgroup (FiniteAdeleRing (𝓞 F) F)) : Submodule
     · change _ * (c * φ.1 v) = c * φ.1 v
       rw [mul_left_comm, (h a ha v).2]
 
-omit [IsTotallyReal F] in
 
 def FinOne (g : G1 F) : Prop := ∀ i j, (g i j).2 = ((1 : Matrix (Fin 2) (Fin 2) (A F)) i j).2
 
@@ -87,8 +85,6 @@ end Base
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
 
-variable (F) in
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
 
 def pl (τ : E →+* ℂ) : InfinitePlace F := InfinitePlace.mk (τ.comp (algebraMap F E))
 

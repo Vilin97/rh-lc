@@ -69,7 +69,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {C : InfinitePlace F → Matrix (Fin d) (Formalism.BasicNotions.TH.Ix R S) ℂ} {Φ : Tens F P Q R S →ₗ[ℂ] SInf F (Fin n × Fin d)}
   {c : InfinitePlace F → ℂ}
 
-set_option maxHeartbeats 1000000 in
 
 theorem pair_skew (hcm : IsCMExt F E σ)
     (hC : ∀ w, IsFrame (Complex.I • (incM F W.J).map (piInf (B.emb w))) (C w))
@@ -159,7 +158,6 @@ theorem pair_stable (hcm : IsCMExt F E σ)
   rw [hZ', map_add (f := _), map_smul]
   exact this
 
-set_option maxHeartbeats 1000000 in
 
 theorem kill_noncompact {M : Model σ X W} {A : InfinitePlace F → Matrix (Fin n) (Formalism.BasicNotions.TH.Ix P Q) ℂ} (hcm : IsCMExt F E σ)
     (hA : ∀ w, IsFrame ((1 : ℂ) • (incM F X.J).map (piInf (B.emb w))) (A w))
@@ -201,7 +199,6 @@ theorem kill_noncompact {M : Model σ X W} {A : InfinitePlace F → Matrix (Fin 
 
 end Pair
 
-set_option maxHeartbeats 1000000 in
 
 theorem map_lowPartInf_mem : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W)

@@ -9,7 +9,6 @@ open Complex DirichletCharacter ArithmeticFunction MeasureTheory
 
 namespace GlobalTheory
 
-open Complex DirichletCharacter ArithmeticFunction MeasureTheory in
 
 theorem _root_.GlobalTheory.classNumber_le_abs_discr_of_finrank_eq_two (K : Type) [Field K] [NumberField K]
     (h : Module.finrank ℚ K = 2) :
@@ -26,7 +25,6 @@ theorem _root_.GlobalTheory.classNumber_le_abs_discr_of_finrank_eq_two (K : Type
     _ ≤ s * s := by apply mul_le_mul_of_nonneg_left _ (by linarith); linarith
     _ = |(NumberField.discr K : ℝ)| := hsq
 
-open Complex DirichletCharacter ArithmeticFunction MeasureTheory in
 
 theorem _root_.GlobalTheory.classNumber_le_four_mul_abs_discr :
     ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →

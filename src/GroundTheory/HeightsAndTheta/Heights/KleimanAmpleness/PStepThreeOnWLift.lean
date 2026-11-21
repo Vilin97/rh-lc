@@ -75,7 +75,6 @@ theorem exists_finset_forms (P : Ideal (Poly k N)) :
     intro z hz
     exact Finset.mem_coe.mpr (Finset.mem_biUnion.mpr ⟨g, hg, hz⟩)
 
-variable (x) in
 
 def idealGraded (P : Ideal (Poly k N)) : FinGradedSub (S := k) (x := x) Ω where
   piece c := Submodule.span k {z | ∃ (f : Poly k N) (e : ℕ), f ∈ P ∧ f.IsHomogeneous e ∧ (e : ℤ) = c ∧
@@ -280,7 +279,6 @@ end Lift
 
 end StepThreeOnWLift
 
-open StepThreeOnWLift in
 
 theorem StepThree.OnW.Lift.proof (hSeq : ClaimSeq.Statement.{u, w}) (hVan : ClaimVanish.Statement.{u, w})
     (hTwo : StepTwo.Statement.{u, w, w}) : StepThree.OnW.Lift.Statement.{u, w} := by

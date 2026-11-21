@@ -140,7 +140,6 @@ theorem iota_swap {F F' : FlagD H r} {Λ : Submodule (𝓞 K) V} {g : ℕ} {y' y
   obtain ⟨h1, h2, l', hl', m, hm, h3, h4⟩ := h
   refine ⟨h2, h1, _, Λ.add_mem hl' (gsmul_mem g hm), -m, Λ.neg_mem hm, h4, by simpa using h3⟩
 
-omit [NumberField K] in
 
 theorem isAdm_symm {F F' : FlagD H r} {Λ : Submodule (𝓞 K) V} {g : 𝓞 K}
     (hl : ∀ a, lead F Λ a = lead F' Λ a) (h : IsAdm F F' Λ g) : IsAdm F' F Λ g := by
@@ -219,7 +218,6 @@ theorem form_lift (F F' : FlagD H r) {y₁ y₂ l₁ l₂ : V} (h₁ : ∀ v ∈
   simp only [map_sub, LinearMap.sub_apply] at a b c
   linear_combination a + b - c
 
-omit [NumberField K] in
 
 theorem iota_form {F F' : FlagD H r} {Λ : Submodule (𝓞 K) V} {g : ℕ} (hU : IsUnimod H Λ) {p q : V × V}
     (hp : p ∈ iotaGraph F F' Λ (g : 𝓞 K)) (hq : q ∈ iotaGraph F F' Λ (g : 𝓞 K)) :

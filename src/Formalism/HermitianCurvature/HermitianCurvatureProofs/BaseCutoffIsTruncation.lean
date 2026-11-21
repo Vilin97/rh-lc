@@ -25,7 +25,6 @@ namespace Formalism.FourierDecayAlt.P.Topx2
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
-open Formalism.FourierDecayAlt.P.Dx3 in
 
 section helpers
 

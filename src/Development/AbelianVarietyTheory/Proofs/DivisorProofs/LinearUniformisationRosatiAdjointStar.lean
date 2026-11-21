@@ -20,7 +20,6 @@ namespace GlobalTheory.Mum.OLinRosati
 
 variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R}
 
-omit [IsDomain R] in
 
 theorem thickMap_pullback_map {G : Over (Sp R)} (b : G ⟶ G) (e : ℕ) :
     thickMap R I e G ≫ ((Over.pullback (thick R I (e + 1))).map b).left =

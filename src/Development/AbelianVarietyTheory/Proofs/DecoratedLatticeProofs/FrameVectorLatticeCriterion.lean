@@ -40,6 +40,5 @@ end GlobalTheory.Core.Mi.LatMatch
 
 namespace GlobalTheory.Core.Mi.LatMatch
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.Core.Mi.LatMatch

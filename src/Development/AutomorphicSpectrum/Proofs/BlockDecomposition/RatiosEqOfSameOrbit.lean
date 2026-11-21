@@ -31,7 +31,6 @@ abbrev LinProj (n : Fin (m + 1) → ℕ) (D : ℕ) := (((k : Fin (m + 1)) → Bk
 def ratios (Ψ : LinProj n D) (z : (Σ k, Bk n k) → ℂ) : Fin D → ℂ :=
   fun a => Ψ (segre z) a.succ / Ψ (segre z) 0
 
-open Classical in
 
 def liftOf {X : Scheme.{0}} (i : X ⟶ MP ℤ m n) (y : GlobalTheory.CxPts (i ≫ mpStr ℤ m n) σ₀) : (Σ k, Bk n k) → ℂ :=
   if h : ∃ z, Over i y z then h.choose else 0

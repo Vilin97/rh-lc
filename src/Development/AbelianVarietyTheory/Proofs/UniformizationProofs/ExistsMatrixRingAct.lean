@@ -23,10 +23,6 @@ namespace GlobalTheory.MatrixAction
 
 variable {S : Scheme.{0}}
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
-variable {S : Scheme.{0}} in
 
 theorem _root_.GlobalTheory.MatrixAction.comp_finsetProd {G : Over S} [GrpObj G] [IsCommMonObj G] {T T' : Over S}
     (a : T' ⟶ T) {κ : Type} (s : Finset κ) (x : κ → (T ⟶ G)) :
@@ -36,10 +32,6 @@ theorem _root_.GlobalTheory.MatrixAction.comp_finsetProd {G : Over S} [GrpObj G]
   | empty => simp
   | insert i s hi ih => rw [Finset.prod_insert hi, Finset.prod_insert hi, comp_mul, ih]
 
-open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
-variable {S : Scheme.{0}} in
 
 theorem _root_.GlobalTheory.MatrixAction.isMonHom_of_points {G H : Over S} [GrpObj G] [GrpObj H] (f : G ⟶ H)
     (h1 : ∀ T : Over S, (1 : T ⟶ G) ≫ f = 1)

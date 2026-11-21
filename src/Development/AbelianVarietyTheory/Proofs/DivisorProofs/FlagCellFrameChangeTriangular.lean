@@ -81,17 +81,14 @@ theorem det_cellMat (U : Y.X.affineOpens) (σ : E →+* ℂ) : (cellMat (Dw := D
     have h2 : i ≠ j := ne_of_lt hij
     simp [cellMat, cell, h1, h2]
 
-variable (A) in
 
 abbrev cC (b : A.B) : Γ(Y.X, (A.k b).V) →+* CR Dw.mult (A.V b) := MvPolynomial.C
 
-variable (A) in
 
 def uC (b : A.B) (w : Pm Dw.mult) (σ : E →+* ℂ) :
     Matrix (Fin (A.k b).M.n) (Fin (Dw.mult σ)) (CR Dw.mult (A.V b)) :=
   (((A.k b).u σ).map (cC A b)).submatrix id (w σ) * cellMat (A.V b) σ
 
-variable (A) in
 
 def wC (b : A.B) (w : Pm Dw.mult) (σ : E →+* ℂ) :
     Matrix (Fin (Dw.mult σ)) (Fin (A.k b).M.n) (CR Dw.mult (A.V b)) :=
@@ -111,7 +108,6 @@ theorem wC_mul_uC (b : A.B) (w : Pm Dw.mult) (σ : E →+* ℂ) : wC A b w σ * 
 variable {Z : Scheme.{0}} {π : Z ⟶ Y.X} {g : ∀ en : En Dw.mult, Z ⟶ PSpace c.F (plN A.N en.1)}
   {κ : ∀ b, Pm Dw.mult → (Sp (CR Dw.mult (A.V b)) ⟶ Z)} [∀ b w, IsOpenImmersion (κ b w)] (hZ : Cells A π g κ)
 
-variable (κ) in
 
 def cellθ (k : A.B × Pm Dw.mult) : CR Dw.mult (A.V k.1) ≃+* Γ(Z, (κ k.1 k.2).opensRange) :=
   (exists_ringEquiv (κ k.1 k.2)).choose

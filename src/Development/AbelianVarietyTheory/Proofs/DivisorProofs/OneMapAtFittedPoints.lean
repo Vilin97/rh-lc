@@ -50,6 +50,5 @@ theorem mul_eq_one_of_covolume_identity (κ zt z0 ct c0 v : ℂ) (hκ : κ ≠ 0
     κ⁻¹ * z0 * c0 * (κ * v / (zt * ct)) = (zt / z0 * (ct / c0))⁻¹ * v := by
   field_simp
 
-set_option maxHeartbeats 1600000 in
 
 end GlobalTheory.BigTop.Fun

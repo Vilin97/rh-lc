@@ -12,7 +12,6 @@ open IsLocalRing
 
 namespace GlobalTheory
 
-open Pointwise in
 
 theorem modDepthGE_quotient_map_span_singleton :
     ∀ (R A : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] [CommRing A] [Algebra R A]

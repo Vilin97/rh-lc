@@ -44,9 +44,7 @@ variable (D) (C : CharFrame D) {art : Ideles D.host.E →* Gab D.host.E D.nd.Om}
 
 def rd (i : D.ntw.Tw) : Reading D.ntw i true := (Reading.nonempty i true).some
 
-include hs in
 
-include hC in
 
 structure Chars (art : Ideles D.host.E →* Gab D.host.E D.nd.Om) (i : D.ntw.Tw) where
   delta : GalE D →* (D.ntw.O0 i)ˣ
@@ -66,11 +64,9 @@ structure Chars (art : Ideles D.host.E →* Gab D.host.E D.nd.Om) (i : D.ntw.Tw)
   h8 : ∀ j b k v, v ∈ placesOver D.host.E (D.host.g k) → v ∉ placesOver D.host.E (D.ntw.l i) →
     ∀ A : ValuationSubring D.nd.Om, IsPlaceOver A v → ∀ σ ∈ Ine (F := D.host.E) A, chi1 j b σ ^ (D.host.g k - 1) = 1
 
-include ha hC hs in
 
 variable {art' : Ideles D.host.E →* Gab D.host.E D.nd.Om} (K : ∀ i, Chars D C art' i) [IsEmpty D.nd.Loc]
 
-include hs in
 
 end Record
 

@@ -229,7 +229,6 @@ lemma W_toPresheaf_iff (φ : M ⟶ N) :
 
 end
 
-variable (J R) in
 
 abbrev W : MorphismProperty (PresheafOfModules.{u} (R ⋙ forget₂ CommRingCat RingCat)) :=
   J.W.inverseImage (PresheafOfModules.toPresheaf _)

@@ -113,9 +113,7 @@ variable (Y : NExp D.R D.host D.what₂ D.LL0 N X)
 
 variable {Y}
 
-open Classical in
 
-open Classical in
 
 end Chain
 
@@ -130,7 +128,6 @@ variable {O Fm : Type} [CommRing O] [AddCommGroup Fm] [Module O Fm]
 variable {B : Submodule O Fm} {d : ℕ} (β : Module.Basis (Fin d) O B)
   (Λ : Type) [CommRing Λ] [Algebra O Λ]
 
-open Classical in
 
 variable {Λ}
 
@@ -237,7 +234,6 @@ variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂}
 
 variable {n : ℕ} (β : Module.Basis (Fin n) (X.O i) p.B) (es : Fin n ≃ ↥p.S)
 
-include es in
 
 def Pack.x (a : Y.Dat i j b) : Y.Fm i j b := ((X.l i : X.O i) ^ p.c) • p.A (Y.th i j b a)
 
@@ -268,7 +264,6 @@ open scoped TensorProduct
 variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂}
   {X : NTw D.R D.host D.what₂ D.LL0 N} {Y : NExp D.R D.host D.what₂ D.LL0 N X}
 
-open Classical in
 
 end Fin
 

@@ -145,7 +145,6 @@ theorem le_re_trace_smul_one_of_posSemidef {A : Matrix n n 𝕜} (hA : A.PosSemi
   rw [← smul_eq_re_smul_of_nonneg hA.trace_nonneg]
   exact le_trace_smul_one_of_posSemidef hA
 
-omit [Fintype n] [DecidableEq n] in
 
 section Gram
 

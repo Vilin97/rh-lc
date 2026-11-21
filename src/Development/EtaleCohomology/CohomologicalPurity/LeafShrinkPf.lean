@@ -8,7 +8,6 @@ noncomputable section
 
 namespace LateralTheory.CohomologicalPurity.ChartCut
 
-open RingHom in
 
 theorem shrink_away {n : ℕ} {R S : Type} [CommRing R] [CommRing S] (ψ : R →+* S) (u v : S)
     (T : Type) [CommRing T] [Algebra S T] [IsLocalization.Away (u * v) T]

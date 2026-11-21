@@ -67,8 +67,6 @@ theorem ev_dvd_iff {L A : Type*} [Field L] [CommRing A] [IsDomain A] (t : A) (ht
   · intro h
     simpa [hX] using map_dvd ev h
 
-open Reformulated.AutPerF Formalism in
-open scoped Formalism.Per in
 
 theorem main (l : ℕ) [Fact l.Prime] {B L : Type*} [CommRing B] [Field L]
     (e : B ≃+* BdR l (Per.OC l)) (Fil : ℤ → B → Prop)
@@ -115,8 +113,6 @@ theorem main (l : ℕ) [Fact l.Prime] {B L : Type*} [CommRing B] [Field L]
   · exact e.injective (by
       rw [map_zero]; exact BdR.eq_zero_of_forall_mem_fil fun a => (hF _ _).1 (hb a))
 
-open Reformulated.AutPerF Formalism in
-open scoped Formalism.Per in
 
 theorem exists_gen (l : ℕ) [Fact l.Prime] (x : BdR l (Per.OC l))
     (h1 : x ∈ BdR.fil l (Per.OC l) 1) (h2 : x ∉ BdR.fil l (Per.OC l) 2) :
@@ -145,7 +141,6 @@ theorem main' (l : ℕ) [Fact l.Prime] {B L : Type*} [CommRing B] [Field L]
   obtain ⟨π, hπ, ht⟩ := exists_gen l (e t) ((hF _ _).1 h1) (fun h => h2 ((hF _ _).2 h))
   exact main l e Fil hF t π hπ ht ι hι
 
-open Reformulated.AutPerF in
 
 theorem mem_zero_of_isIntegral (l : ℕ) [Fact l.Prime] {F B : Type*} [Field F] [CommRing B]
     [Algebra F B] (e : B ≃+* BdR l (Per.OC l))

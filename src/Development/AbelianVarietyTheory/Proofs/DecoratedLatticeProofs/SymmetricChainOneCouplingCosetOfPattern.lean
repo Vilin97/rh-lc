@@ -14,7 +14,6 @@ section SlopeTestRemainingChoices
 variable {k : Type} [Field k] {ι ι' n n' : Type} [Fintype ι] [DecidableEq ι] [Fintype ι'] [DecidableEq ι']
   [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n']
 
-omit [Fintype ι] [DecidableEq ι] in
 
 theorem typeFrame_bas_zero (ϖ : kˣ) (ord : ι ≃ n ⊕ Fin 0) : (typeFrame ϖ ord).bas = 1 := by
   apply Units.ext
@@ -25,7 +24,6 @@ theorem typeFrame_bas_zero (ϖ : kˣ) (ord : ι ≃ n ⊕ Fin 0) : (typeFrame ϖ
     · exact j.elim0
   · exact i.elim0
 
-omit [Fintype ι] [DecidableEq ι] [Fintype ι'] [DecidableEq ι'] in
 
 theorem coords_withCol (ϖ : kˣ) (ord : ι ≃ n ⊕ Fin 0) (ord' : ι' ≃ n' ⊕ Fin (0 + 1)) (x₀ : Matrix n n' k)
     (y : n → k) : (typeFrame ϖ ord).coords (typeFrame ϖ ord') (withCol x₀ y) =
@@ -62,7 +60,6 @@ theorem SymData.Psi_one_eq (x₀ : Matrix (XIx (Fin κ) t (s + 1)) (XIx (Fin κ)
   simp only [Chain.Psi, om_one, SymData.T, typeChain, Chain.ofType, LatFrame.transport, coords_withCol,
     TypeDatum.iterPhi]
 
-omit [Fintype t] [DecidableEq t] in
 
 theorem not_freeIx_col (ρ : ℕ) {l j : ℕ} (a : Ix (Fin κ ⊕ Fin (l + 1)) t j) :
     ¬ FreeIx ρ a (.inl (.inr 0)) := by

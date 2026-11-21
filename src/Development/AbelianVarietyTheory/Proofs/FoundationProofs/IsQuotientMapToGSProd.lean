@@ -18,7 +18,6 @@ abbrev Ix : Type := Module.Free.ChooseBasisIndex ℤ_[l] c.O
 
 def bas : Module.Basis (Ix c) ℤ_[l] c.O := Module.Free.chooseBasis ℤ_[l] c.O
 
-open Classical in
 
 def crd (n : ℕ) (i : Ix c) (x : Qbar l) : ZMod (l ^ n) :=
   if h : x ∈ c.O then PadicInt.toZModPow n ((bas c).repr ⟨x, h⟩ i) else 0
@@ -215,7 +214,6 @@ section Glob
 variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] {n : ℕ} {S : Finset Pl}
   {ξ : G ℚ Ω → G ℚ Ω → Qbar l}
 
-variable (c n S ξ) in
 
 def zc (i : Ix c) (p : GS Ω (S : Set Pl) × GS Ω (S : Set Pl)) : ZMod (l ^ n) :=
   crd c n i (ξ (Quotient.out p.1) (Quotient.out p.2))

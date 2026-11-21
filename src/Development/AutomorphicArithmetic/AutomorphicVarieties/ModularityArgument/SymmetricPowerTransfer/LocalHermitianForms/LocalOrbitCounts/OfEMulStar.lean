@@ -93,7 +93,6 @@ private theorem int_star {y : Lsq K Δ} (hy : IsInt O y) : IsInt O (star y) := b
         ext <;> simp }
   exact hy.map φ
 
-variable (O) in
 
 private def IB (x : EL Δ τ) : Prop := IsInt O x.re ∧ IsInt O x.im
 
@@ -151,7 +150,6 @@ private theorem IB.of_tr (hτ : τ ∈ (algebraMap O K).range) (u : Oˣ) (hu : a
     simp only [trace_def, re_mul, im_mul, omega_re, omega_im, map_sub, map_pow, map_ofNat]
     ring
 
-variable (O Δ) in
 
 private def lat (r : K) (y : (Etau K τ)ˣ) : Set (Sp Δ τ) :=
   {x | IsInt O (algebraMap K (Lsq K Δ) r * x.1) ∧ IB O (ofE Δ ((y⁻¹ : (Etau K τ)ˣ) : Etau K τ) * x.2)}

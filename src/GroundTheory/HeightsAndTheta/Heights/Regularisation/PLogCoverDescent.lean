@@ -158,7 +158,6 @@ lemma isOpen_puncturedChart : IsOpen (puncturedChart h (ball (0 : Fin n → ℂ)
 
 end LogCoverDescent
 
-open LogCoverDescent in
 
 theorem LogCoverDescent.proof : LogCoverDescent.Statement := by
   intro n a h φ hφa hφ

@@ -183,7 +183,6 @@ theorem image_expU {P Q : ℕ} (S : Set (lieU P Q)) :
   · rintro ⟨X, hX, h⟩
     exact ⟨X, hX, mat_injective h.symm⟩
 
-attribute [local instance] sumNormedAddCommGroup sumNormedSpace in
 
 theorem exists_omegaDensity {P Q : ℕ} (μ : Measure (UpqT P Q)) [μ.IsHaarMeasure] :
     ∃ c : ℝ≥0∞, c ≠ 0 ∧ c ≠ ⊤ ∧ OmegaDensity μ c := by

@@ -30,9 +30,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 def revTensor {d : ℕ} (σ : IrrRep (GL (Fin d) k)) :=
   piTensor fun a : Fin 2 => segTerm σ.ρ 2 a.rev
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end CompanionTheory.Pf1.SegRepC.SegTwo
 

@@ -552,7 +552,6 @@ end Helpers
 
 section Final
 
-open Formalism.L2.SG.PackageTie2 in
 
 theorem dictC_holds : DictC := by
   intro D X Y u u' t _ hGt w _ F' L U hN γw s s' _ _ hs' hdec

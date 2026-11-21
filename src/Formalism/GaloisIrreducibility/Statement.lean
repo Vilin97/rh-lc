@@ -57,9 +57,7 @@ def Irred : Prop :=
     ∀ W : Submodule K V, (∀ v, ∀ x ∈ W, τ v x ∈ W) → (∀ v, ∀ x ∈ W, F v x ∈ W) →
       W = ⊥ ∨ W = ⊤
 
-open Classical in
 
-open Classical in
 
 def PowerPCycle : Prop :=
   ∀ (α : Type) [Fintype α] [DecidableEq α] (σ : Equiv.Perm α) (p : ℕ), p.Prime →

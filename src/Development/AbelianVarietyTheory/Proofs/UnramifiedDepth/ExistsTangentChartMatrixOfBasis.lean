@@ -105,7 +105,6 @@ private theorem chart_add {R₀ : Type} [CommRing R₀] {B : BX R₀} {O : LAlg 
   simp only [Pi.zero_apply, mul_zero, Finset.sum_const_zero, add_zero, zero_add] at h1 h2
   rw [add_mul, add_mul, ← h1, ← h2]
 
-open GlobalTheory.IndefiniteRowSideFullHecke.EtaDualPairing in
 
 theorem exists_tanMat : ∀ (R₀ : Type) [CommRing R₀] (B : BX R₀) (O : LAlg R₀) (g : ℕ) (F : FGLaw (O : Type) g) (Y : ∀ R : LAlg R₀, LHom O R → (Fin g → (R : Type)) → B.G R), BXChart B O F.F Y → ∀ gb : Module.Basis (Fin g) R₀ B.gg, ∃ S : Matrix (Fin g) (Fin g) (O : Type), IsUnit S ∧ TanMat B O Y gb S := by
   intro R₀ _ B O g F Y h gb

@@ -81,7 +81,6 @@ open Pointwise
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-open Classical in
 
 end Rev
 
@@ -93,7 +92,6 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {SG : Finset (HeightO
 
 variable {K : Type} [Field K] {a b : ℕ}
 
-open Classical in
 
 end PhiLem
 
@@ -107,7 +105,6 @@ section Count
 
 variable (E : Type) [Field E] [NumberField E] [StarRing E]
 
-open Classical in
 
 end Count
 

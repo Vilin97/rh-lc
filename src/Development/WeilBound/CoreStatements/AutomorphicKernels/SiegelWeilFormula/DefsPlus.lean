@@ -15,12 +15,10 @@ namespace PositivityTheory.SiegelWeilFormula
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n : ℕ}
   {Y : Spc F E n}
 
-variable (σ Y) in
 
 def nA (b : GL (Fin n ⊕ Fin n) E) : AddSubgroup (Matrix (Fin n) (Fin n) (AE F E)) :=
   AddSubgroup.closure {β | ∃ x : G2 σ Y, inFrame b x = Matrix.fromBlocks 1 β 0 1}
 
-variable (σ Y) in
 
 def nF (b : GL (Fin n ⊕ Fin n) E) : AddSubgroup (nA σ Y b) :=
   AddSubgroup.closure {β | ∃ T : Matrix (Fin n) (Fin n) E, β.1 = incM F T}

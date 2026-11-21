@@ -129,7 +129,6 @@ theorem mem_uPow_succ_of_inertia {j : ℕ} {w : Vec K a ι} (hw : w ∈ uPow K a
 
 end Descent
 
-omit [NeZero e] in
 
 theorem le_mul_pow_of_frobPeriod_le {j r b : ℕ} (hb : 0 < b) (hlb : (l : ZMod e) ^ b = 1) (hj : 0 < j)
     (hc : frobPeriod l (-(j : ZMod e)) ≤ r) : e ≤ j * l ^ r := by

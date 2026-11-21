@@ -209,7 +209,6 @@ theorem IsLocData.length_eq (h : IsLocData R T S V) (x : R) :
 
 end LocData
 
-open Classical in
 
 noncomputable def lenAt {R : Type*} [CommRing R] (J W : Ideal R) : ℕ∞ :=
   if h : W.IsPrime then

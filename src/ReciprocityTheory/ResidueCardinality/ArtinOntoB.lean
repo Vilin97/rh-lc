@@ -13,7 +13,6 @@ open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum
 
 variable {F : Type} [Field F] [NumberField F]
 
-set_option maxHeartbeats 800000 in
 
 theorem card_residue (v : HeightOneSpectrum (𝓞 F)) :
     Nat.card (IsLocalRing.ResidueField (v.adicCompletionIntegers F)) = Nat.card (𝓞 F ⧸ v.asIdeal) := by

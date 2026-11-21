@@ -71,7 +71,6 @@ namespace GlobalTheory.Poinc.PreSys
 variable {g n : ℕ} {F : SFam g n (zetaAway n)} {W : Matrix (Fin 8) (Fin 8) ℤ} {Z : Scheme.{0}} {i : F.X ⟶ Z}
   {X₁ : Setup F W i} {p : ℕ} [Fact p.Prime] {z₁ : X₁.M.Z}
 
-variable (X₁ p) in
 
 abbrev Key : Type := (Sp (OO p) ⟶ X₁.M.Z) × (Σ k : ℕ, (Fin k → ℤ) → (Fin k → ℤ) → ℝ)
 
@@ -86,7 +85,6 @@ def keyOf (c : CTrait X₁ p z₁) : Key X₁ p :=
 
 theorem rep_keyOf (c : CTrait X₁ p z₁) : Rep c (keyOf c) := ⟨rfl, coord c, fun _ _ => rfl⟩
 
-variable (X₁ p z₁) in
 
 def Pts : Type := {q : Key X₁ p // ∃ c : CTrait X₁ p z₁, Rep c q}
 
@@ -94,7 +92,6 @@ noncomputable def pick (y : Pts X₁ p z₁) : CTrait X₁ p z₁ := Classical.c
 
 theorem pick_rep (y : Pts X₁ p z₁) : Rep (pick y) y.1 := Classical.choose_spec y.2
 
-variable (X₁ p z₁) in
 
 noncomputable def sys : FPre (id : ℤ → ℤ) g p (X₁.M.Z.presheaf.stalk z₁) where
   Y := Pts X₁ p z₁

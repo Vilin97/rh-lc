@@ -84,7 +84,6 @@ variable {R₁ R₂ R₃ : Type} [CommRing R₁] [CommRing R₂] [CommRing R₃]
   {C₁ : Cx.{w₁} R₁} {C₂ : Cx.{w₂} R₂} {C₃ : Cx.{w₃} R₃}
   {σ₁₂ : R₁ →+* R₂} {σ₂₃ : R₂ →+* R₃} {σ₁₃ : R₁ →+* R₃}
 
-variable (C) in
 
 def id : Hom C C (RingHom.id R) where
   f _ := LinearMap.id
@@ -297,7 +296,6 @@ def cupC {p q n : ℕ} (h : p + q = n) : Cn F₁ p →ₗ[R] Cn F₂ q →ₗ[R]
     (fun f g g' => funext fun s => by simp [term_add])
     (fun r f g => funext fun s => by simp [term_smul])
 
-open Classical in
 
 def cup {p q n : ℕ} (h : p + q = n) (x : H F₁ p) (y : H F₂ q) : H F₃ n :=
   if hz : d F₃ n (P.cupC h (Quotient.out x).1 (Quotient.out y).1) = 0 then (cx F₃).cls _ hz else 0

@@ -78,7 +78,6 @@ section Mat
 
 variable {R : Type} [CommRing R]
 
-variable (R) in
 
 def hAB : Submodule R (M4 R) where
   carrier := {Y | ∀ i j, ¬ lamW i < lamW j → Y i j = 0}
@@ -86,7 +85,6 @@ def hAB : Submodule R (M4 R) where
   add_mem' ha hb i j h := by simp [ha i j h, hb i j h]
   smul_mem' c a ha i j h := by simp [ha i j h]
 
-variable (R) in
 
 def uM : Submodule R (M4 R) := hAB R ⊓ sp4 R
 

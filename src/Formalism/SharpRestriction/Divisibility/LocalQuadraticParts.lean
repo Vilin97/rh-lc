@@ -82,7 +82,6 @@ def ArchimedeanSignatureMatching (D : D7) (L : SizeData₂ D) (X : Loc D) (C Cab
       ∑' w, SizeData₂.lwP w * ur D w (err j w + X.Jx j w) ≤
         C * L.sc.x ^ (Cabs * L.sc.eps) * (L.B0 + L.Nc))
 
-open Classical in
 
 def adm11 (D : D7) (L : SizeData₂ D) (C : ℝ) : Prop :=
   ∀ u, ∀ j ∈ SizeData₂.lifts D,
@@ -130,7 +129,6 @@ open Formalism.FrobeniusOrbits
 
 def MuH (D : D7) (u : D.what₂.Word) : HLat D.what₂.LL := { D.div.Nu u with L := MramL D u }
 
-open Classical in
 
 def wAt (D : D7) (j : ℕ) (g : D.R.GG) : ℝ :=
   if h : g ∈ D.R.Psi then wSz D j (D.eTau.symm ⟨g, h⟩) else 0
@@ -143,7 +141,6 @@ def IOsum : ℝ := ∑ w ∈ L.supp, SizeData₂.lwP w * (D.what₂.places.ramId
 
 def askPrimes (a : ℤ) : Finset ℕ := (Finset.range (a.toNat + 1)).filter Nat.Prime
 
-open Classical in
 
 def ASK : ℝ :=
   ∑ j ∈ SizeData₂.lifts D, ∑ t : D.host.TT,
@@ -155,7 +152,6 @@ def LoU (C : ℝ) (u : D.what₂.Word) : ℝ :=
   C * IOsum L + C * nTT D * D.R.m * (L.sc.a / D.R.k + L.sc.b') * Real.log ((D.mem u).A.T : ℝ) +
     C * L.sc.X'' D.R.n + 1
 
-open Classical in
 
 end Derived
 
@@ -181,7 +177,6 @@ section Adm3
 
 variable {D : D7} {L : SizeData₂ D}
 
-open Classical in
 
 end Adm3
 
@@ -200,7 +195,6 @@ def FrobeniusExpansionCongruence (C : ℝ) : Prop :=
       C * D.R.f * (L.sc.b' + L.Sc) * (D.R.k * Real.log (D.R.k * D.host.v) +
         Real.log ((D.mem u).A.T : ℝ)) + C * D.R.f * (D.R.k : ℝ) ^ 2 * L.sc.L
 
-open Classical in
 
 def adm26 (C : ℝ) : Prop :=
   ∀ u,

@@ -65,7 +65,6 @@ theorem isBlockUpper_iff {M : Matrix (Fin n) (Fin n) K} :
     have := h _ (single_mem_U0 hj 1) i hi
     simpa [Matrix.mulVec_single_one] using this
 
-variable (k) in
 
 def parabolic : Subgroup (GL (Fin n) K) where
   carrier := {γ | IsBlockUpper k (γ : Matrix (Fin n) (Fin n) K) ∧
@@ -125,7 +124,6 @@ theorem U0_le_kerM_iff {Z : Matrix (Fin n) (Fin n) K} :
     · rw [h i j hj, zero_mul]
     · rw [hv j (not_lt.1 hj), mul_zero]
 
-variable (k) in
 
 def R : Set (Matrix (Fin n) (Fin n) K) :=
   {Z | (∀ i j : Fin n, (j : ℕ) < k → Z i j = 0) ∧ Z.rank = n - k}
@@ -204,7 +202,6 @@ theorem rank_mul_GL (Z : Matrix (Fin n) (Fin n) K) (γ : GL (Fin n) K) :
     (Z * (γ : Matrix (Fin n) (Fin n) K)).rank = Z.rank :=
   Matrix.rank_mul_eq_left_of_isUnit_det _ _ (Matrix.isUnits_det_units γ)
 
-variable (k) in
 
 def mulMap (S : Set (GL (Fin n) K)) (x : S × R (K := K) (n := n) k) :
     {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k} :=

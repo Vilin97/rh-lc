@@ -172,4 +172,3 @@ variable {D : D7}
 
 end GlobalTheory.TripleAssembly.LieInv
 
-open GlobalTheory.TripleAssembly.LieInv in

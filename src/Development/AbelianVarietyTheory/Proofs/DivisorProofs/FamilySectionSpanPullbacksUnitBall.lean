@@ -73,7 +73,6 @@ theorem isPullback_jT : IsPullback (jT S g hg (D := D)).left (fst (TF (R := V) F
   rw [← jT_snd S g hg, ← Over.w (ιT S g hg)] at H₀
   exact H₀.of_right (jT_fst S g hg) H₁
 
-include hg in
 
 theorem span_gen (hloc : IsLocalHom g) {k : ℕ} (hk : 1 ≤ k) {α : D.toPre.X}
     (s : LB.Sec (LB.LinComb D.toPre.P.L (DegPre.famφ D.toPre F α) (DegPre.famε k))) :

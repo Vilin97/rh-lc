@@ -175,7 +175,6 @@ theorem serClause_of_typesTrue (hG : GlobalTheory.Published.GreenCuspidal) (D : 
   have hr : 1 ≤ D.R.r := by unfold Ranks.r; have := D.R.two_le_m; omega
   exact ⟨_, O, fun f => (hT.ser k f).trans (GlobalTheory.T.greenSeriesIdempotent_eq_classFunctionIdempotent hG _ _ _ _ _ (hT.teich k) O hO D.R.r f hr)⟩
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.Mem.R3.Rw.AtDatumEvaluation
 

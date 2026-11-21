@@ -34,7 +34,6 @@ theorem K'_split (x : G) (hx : x ∈ K') : (X.j (X.pr x))⁻¹ * x ∈ K := by
 
 variable (y : ClassSet H K' → G) (hy : ∀ i, mkC H K' (y i) = i) (hp : ∀ i, X.pr (y i) = 1)
 
-include hy hp in
 
 theorem cls_iff (i i' : ClassSet H K') (g g' : Gp) :
     mkC H K (y i * X.j g) = mkC H K (y i' * X.j g') ↔
@@ -71,7 +70,6 @@ theorem cls_iff (i i' : ClassSet H K') (g g' : Gp) :
     convert Kp.inv_mem hg using 1
     group
 
-include hy in
 
 theorem cls_surj (x : G) : ∃ i g, mkC H K (y i * X.j g) = mkC H K x := by
   obtain ⟨h, hh, κ, hκ, he⟩ := (mk_eq_iff H K' (y (mkC H K' x)) x).1 (hy _)
@@ -80,7 +78,6 @@ theorem cls_surj (x : G) : ∃ i g, mkC H K (y i * X.j g) = mkC H K x := by
   conv_lhs => rw [he]
   group
 
-include hp in
 
 theorem stab_iff (i : ClassSet H K') (g : Gp) (γ : G) :
     (y i * X.j g)⁻¹ * γ * (y i * X.j g) ∈ K ↔ (y i)⁻¹ * γ * y i ∈ K' ∧ g⁻¹ * (X.pr γ * g) ∈ Kp := by

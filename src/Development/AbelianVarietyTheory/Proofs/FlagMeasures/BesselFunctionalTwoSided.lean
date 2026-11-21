@@ -21,7 +21,6 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteS
 variable {Wp : Type*} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
 variable {Wq : Type*} [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq]
 
-omit [CompleteSpace H] in
 
 theorem integrable_inner_prod {μ : Measure α} {ν : Measure β} [SFinite μ] [SFinite ν]
     {F : α → H} {G : β → H} (hF : Integrable F μ) (hG : Integrable G ν) :
@@ -37,7 +36,6 @@ theorem inner_integral_integral {μ : Measure α} {ν : Measure β} [SFinite μ]
   rw [← inner_conj_symm, ← integral_inner hF, ← integral_conj]
   simp_rw [inner_conj_symm]
 
-omit [CompleteSpace H] in
 
 theorem integrable_coord_smul {μ : Measure α} [IsFiniteMeasure μ] {u : α → H} {a : α → Wp} {C D : ℝ}
     (hu : AEStronglyMeasurable u μ) (ha : AEStronglyMeasurable a μ)

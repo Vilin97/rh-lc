@@ -16,7 +16,6 @@ section Bi
 variable {k : Type} [Field k] {ι κ : Type} [LinearOrder ι] [LinearOrder κ]
   {E E' E'' : Type} [AddCommGroup E] [Module k E] [AddCommGroup E'] [Module k E'] [AddCommGroup E''] [Module k E'']
 
-variable (k ι κ E'') in
 
 def biD : (Finset ι × Finset κ → E'') →ₗ[k] (Finset ι × Finset κ → E'') :=
   LinearMap.pi fun x =>
@@ -36,8 +35,6 @@ def bicech (μ : E →ₗ[k] E' →ₗ[k] E'') (A : Finset ι → Submodule k E)
 def boxC (μ : E →ₗ[k] E' →ₗ[k] E'') (a : Finset ι → E) (b : Finset κ → E') : Finset ι × Finset κ → E'' :=
   fun x => μ (a x.1) (b x.2)
 
-variable (k ι κ E'') in
-open Classical in
 
 end Bi
 

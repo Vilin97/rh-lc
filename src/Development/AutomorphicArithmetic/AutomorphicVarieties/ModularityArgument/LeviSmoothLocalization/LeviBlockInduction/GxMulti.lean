@@ -21,7 +21,6 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchim
   [∀ n : ℕ, MeasurableSpace (GL (Fin n) F)] [∀ n : ℕ, BorelSpace (GL (Fin n) F)]
   {W : Type} [AddCommGroup W] [Module ℂ W]
 
-variable (F W) in
 
 def GxMulti (ψ : AddChar F Circle) (r : ℕ) : Prop :=
   ∀ (ι : Type) [Fintype ι] [DecidableEq ι], Fintype.card ι = r →

@@ -23,7 +23,6 @@ open scoped TensorProduct
 
 namespace GlobalTheory.SplitFrameLattice
 
-set_option maxHeartbeats 1000000 in
 
 theorem glint_mul_frame_basis : ∀ {D : D7} (hF : D.host.F = maximalRealSubfield D.host.E) {V : TH.HSp D}
     (Ps : Formalism.IndefR.principalLevelFrame.RowPsi V V.rank) (sp : SplitPlace D.host.E)

@@ -227,7 +227,6 @@ theorem x_of_descended {R A S₀ T₁ T : Type} [CommRing R] [CommRing A] [CommR
   rw [hv.1, hu, ← Category.assoc, ← spec_comp_alg, e3, ← hj.2.1, ← Category.assoc,
       ← hψ₁, Category.assoc]
 
-set_option maxHeartbeats 800000 in
 
 theorem exists_fg_descent (hB : Out.SecBaseChangeSt) {S : Type} [CommRing S] [Algebra c.F S]
     (y : FrPt Xo c S) :

@@ -69,7 +69,6 @@ theorem baseChangeAt_frame (p : PlF D) (j : Fin (nV D)) : baseChange₂ D p ((VS
   simp only [baseChange₂, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Module.Basis.repr_self, Finsupp.single_apply, Pi.single_apply]
   split_ifs with h1 h2 h2 <;> simp_all [eq_comm]
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_isLattice_eq_localLattice (Zd : LocDat D) (p : PlF D) (M : Submodule (Zd.M p).L.O (Vp D p)) (hfg : M.FG)
     (hsp : Submodule.span (D.s.atP p).Ep (M : Set (Vp D p)) = ⊤) :

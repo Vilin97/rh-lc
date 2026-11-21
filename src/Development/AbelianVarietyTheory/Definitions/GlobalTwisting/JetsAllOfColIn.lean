@@ -21,9 +21,7 @@ open Formalism.BasicNotions Formalism.HermitianLatticesTheory Formalism.MainNoti
 
 namespace GlobalTheory.KerT
 
-open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 
-open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 
 theorem hyp_of_colIn (B : GlobalTheory.Mem.Base) (C : Cols B) (W : RowsRest B C) (V : DivStage B C W) (S : SStage B C W) (N : NStage B C W)
     (G : GJStage B C) {X : PreX B.toPre} (I : ColIn B X) (h : I.Ok) (a : I.ι) (u : B.Word) :
@@ -35,7 +33,6 @@ theorem hyp_of_colIn (B : GlobalTheory.Mem.Base) (C : Cols B) (W : RowsRest B C)
   rintro p ((rfl | rfl | rfl | rfl | rfl) | ⟨u, rfl⟩)
   exacts [h.two_q_d_mem.1, h.two_q_d_mem.2.1, h.two_q_d_mem.2.2, h.g_mem 0, h.g_mem 1, h.T_mem u]
 
-open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 
 theorem jetsAll_of_colIn (B : GlobalTheory.Mem.Base) (C : Cols B) (W : RowsRest B C) (V : DivStage B C W) (S : SStage B C W) (N : NStage B C W)
     (G : GJStage B C) {X : PreX B.toPre} (I : ColIn B X) (h : I.Ok) (hJ : I.JetsIn) (a : I.ι) (u : B.Word) {i : ℕ} (hi : i < B.R.m) :

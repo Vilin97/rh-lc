@@ -153,6 +153,5 @@ lemma URep_K {ε : Fin n → Bool} {H : Type} [NormedAddCommGroup H] [InnerProdu
   exact ⟨⟨h1, fun a ha b hb => hm a (K_UJ ha) b (K_UJ hb)⟩, fun g hg v => hi g (K_UJ hg) v,
     fun v => (hc v).mono (fun g hg => K_UJ hg)⟩
 
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 
 end GlobalTheory.Dec.FormF

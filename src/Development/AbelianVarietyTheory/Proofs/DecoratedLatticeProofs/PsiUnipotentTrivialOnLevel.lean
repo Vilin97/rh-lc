@@ -18,7 +18,6 @@ namespace GlobalTheory.FinPl.PsiUnit
 
 variable {D : D7}
 
-open Formalism.IndefR.Fin.LevelGroupLemmas in
 
 theorem char_eq_one_of_local (ψ : AddChar (AF D.host.F) ℂ) (hψ : Continuous ψ) (t : AF D.host.F)
     (ht : fstA D.host.F t = 0) (h : ∀ v : Pl D, ψ (pairA D.host.F 0 (ePl D (· = v)) * t) = 1) : ψ t = 1 := by

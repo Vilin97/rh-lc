@@ -177,14 +177,11 @@ theorem restrictAb_surjective (E : IntermediateField F Ω) [Normal F E]
   obtain ⟨τ, rfl⟩ := AlgEquiv.restrictNormalHom_surjective (F := F) (K₁ := E) (E := Ω) ρ
   exact ⟨_, restrictAb_topologicalAbelianizationEquiv E h τ⟩
 
-variable (F Ω) in
 
 def finiteAbelianExtensions : Set (IntermediateField F Ω) :=
   {L | FiniteDimensional F L ∧ IsAbelianGalois F L}
 
-omit [IsGalois F Ω] in
 
-variable (F Ω) in
 
 noncomputable def restrictAbPi (σ : maximalAbelianExtension F Ω ≃ₐ[F] maximalAbelianExtension F Ω)
     (L : finiteAbelianExtensions F Ω) : (L : IntermediateField F Ω) ≃ₐ[F] (L : IntermediateField F Ω) :=

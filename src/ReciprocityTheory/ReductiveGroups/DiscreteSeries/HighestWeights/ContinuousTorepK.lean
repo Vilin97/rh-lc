@@ -45,7 +45,6 @@ lemma continuous_torepK (ε : Fin n → Bool) :
   refine Units.continuous_iff.2 ⟨continuous_subtype_val, ?_⟩
   exact continuous_star.comp continuous_subtype_val
 
-open Classical in
 
 def torepSig {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) (g : Matrix (Fin n) (Fin n) ℂ) :
     T.V →L[ℂ] T.V :=

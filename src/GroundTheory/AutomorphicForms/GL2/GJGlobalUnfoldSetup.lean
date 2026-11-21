@@ -80,7 +80,6 @@ instance isNegInvariant_unipMeasure (k : ℕ) : (unipMeasure K n k).IsNegInvaria
 theorem unipOne_injective (k : ℕ) : Injective (unipOne K n k) := fun _ _ h =>
   unipGL_injective (congrArg Subtype.val h)
 
-variable (K n) in
 
 def ratOne : GL (Fin n) K →* normOneGL K n :=
   (AdelicGLn.diagonal K n).codRestrict (normOneGL K n)
@@ -107,7 +106,6 @@ instance countable_GL : Countable (GL (Fin n) K) := by
   exact Function.Injective.countable (f := fun γ : GL (Fin n) K => (γ : Matrix (Fin n) (Fin n) K))
     Units.val_injective
 
-variable (K n) in
 
 def parabolicOne (k : ℕ) : Subgroup (normOneGL K n) :=
   (parabolic (K := K) (n := n) k).map (ratOne K n)

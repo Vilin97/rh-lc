@@ -56,7 +56,6 @@ theorem tm_one (U) (Φ) : tm B M om H' e U Φ 1 = thetaSum F (e (M.co.rho B.ψ (
 
 end Gen
 
-variable (σ W H') in
 
 structure MeanOK (μ : Measure (unip σ W H')) (𝓕 : Set (unip σ W H')) : Prop where
   haar : μ.IsHaarMeasure

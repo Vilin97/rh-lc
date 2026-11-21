@@ -63,7 +63,6 @@ def inertia (θ : A → ℂ) : Subgroup G where
     calc θ (conjNormal A g⁻¹ a) = θ (conjNormal A g (conjNormal A g⁻¹ a)) := (hg _).symm
       _ = θ a := by rw [← conjNormal_mul, inv_mul_cancel, conjNormal_one]
 
-open Classical in
 
 end Conj
 
@@ -71,7 +70,6 @@ section Clifford
 
 variable {G : Type*} [Group G] [Fintype G] {A : Subgroup G} [A.Normal]
 
-open Classical in
 
 end Clifford
 

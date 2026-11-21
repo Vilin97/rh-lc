@@ -97,7 +97,6 @@ theorem div_eq_of_isFrac {x : Fin (N + 1) → Ω} {y : Fin (N + 1) → K'}
   rw [map_sub, map_mul, map_mul, sub_eq_zero] at hy0
   rw [div_eq_div_iff hy hy', hy0]
 
-variable (S) in
 
 def twistRes (x : Fin (N + 1) → Ω) (y : Fin (N + 1) → K') (c : ℤ) (z : Ω) : K' := by
   classical
@@ -205,7 +204,6 @@ theorem map_list_sum_of {Q : SubSystem S x Ω} {Q' : SubSystem S y K'} {r : Ω �
       h.add I a (hl a List.mem_cons_self) _ (list_sum_mem fun q hq => hl q (List.mem_cons_of_mem _ hq)),
       map_list_sum_of h I l fun q hq => hl q (List.mem_cons_of_mem _ hq)]
 
-variable (S x y) in
 
 def red (I : Finset (Fin (N + 1))) (a : Ω) : K' := by
   classical

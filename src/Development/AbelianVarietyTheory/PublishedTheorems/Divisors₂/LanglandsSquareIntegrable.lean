@@ -44,7 +44,6 @@ theorem isSqInt_iff (H : GlobalTheory.Published.LanglandsSquareIntegrable) (h : 
   simpa only [isSqIntOn_empty, negExp_empty, Finset.empty_subset, forall_const] using
     H F E σ h n J hJ r X Y hW K hK ∅ φ (isAutOn_empty.2 hφ)
 
-omit [NumberField E] in
 
 end GlobalTheory.StdPar
 

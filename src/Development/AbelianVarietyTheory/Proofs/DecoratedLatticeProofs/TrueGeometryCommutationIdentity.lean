@@ -107,7 +107,6 @@ theorem inBox_of_orb (E : QExt G χ) {y : E.Ch (G.s + 1)} {z} (hz : z ∈ box _ 
   have := add_mem (box_le G.unif _ ((Submodule.Quotient.eq _).1 e1)) hz
   rwa [sub_add_cancel] at this
 
-set_option maxHeartbeats 4000000 in
 
 @[reducible] def restr (E : QExt G χ) : QExt G χ :=
   { E with
@@ -142,7 +141,6 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
 
 abbrev Orb := SameOrb ((G.T E.δ E.tame E.η).lev (G.s + 1) 0 rfl).J (box (XIx (Fin B.R.k) (Fin B.R.t) (G.s + 1)) (G.ϖ ^ E.M))
 
-variable (G) in
 
 abbrev locV (e : XIx (Fin B.R.k) (Fin B.R.t) (G.s + 1) ≃ Fin (B.R.N (G.s + 1))) (z : Formalism.L2.Col.Sp B.fields.E (B.R.N (G.s + 1))) :
     XIx (Fin B.R.k) (Fin B.R.t) (G.s + 1) → G.k := fun r => (ofSplit G.q).pr (z (e r))
@@ -153,7 +151,6 @@ def OrbAt (j : ℕ) (y : E.Ch j) (β : Ch₀ j) : Prop :=
 
 variable {A E} {P : BadPr I a} {hψ : Continuous G.ψk} {sg : ℂ}
 
-set_option maxHeartbeats 1000000 in
 
 theorem orb_iff (hI : I.Ok)
     (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
@@ -194,7 +191,6 @@ theorem orbAt_unique {j : ℕ} (hj : j + 1 = B.R.m) {y y' : E.Ch j} {β : Ch₀ 
   have H := sameOrb_equiv (E.le (G.s + 1) 0 rfl) (G.ϖ ^ E.M)
   exact E.cos_inj _ _ (H.trans (h rfl e he) (H.symm (h' rfl e he)))
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_orbAt (hI : I.Ok) (hA : A.Is)
     (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
@@ -216,7 +212,6 @@ theorem exists_orbAt (hI : I.Ok) (hA : A.Is)
   obtain rfl : e' = e := Equiv.ext fun r => Fin.ext ((he' r).trans (he r).symm)
   exact hy
 
-set_option maxHeartbeats 1000000 in
 
 theorem lev_of_orbAt (hI : I.Ok) (hA : A.Is)
     (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
@@ -233,7 +228,6 @@ theorem lev_of_orbAt (hI : I.Ok) (hA : A.Is)
   rw [if_neg tw.nmem]
   exact h1
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_vec (hI : I.Ok) (hA : A.Is)
     (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
@@ -297,6 +291,5 @@ theorem couplingCoset_sub_basePoint_integral_typePrime (hI : I.Ok) (hA : A.Is) {
 
 end Level
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.PenChart

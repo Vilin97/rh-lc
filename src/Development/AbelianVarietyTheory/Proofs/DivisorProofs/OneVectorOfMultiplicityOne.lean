@@ -19,7 +19,6 @@ section GroupAlgebra
 
 variable {K : Type} [Field K] [CharZero K] {G : Type} [Group G] [Fintype G]
 
-open Classical in
 
 def typeSum (P : Subgroup G) (ψ : P →* Kˣ) (χ : G → K) : K := ∑ h : P, χ (h : G) * (((ψ h)⁻¹ : Kˣ) : K)
 
@@ -37,9 +36,7 @@ theorem asAlg_eq_sum (r : Representation K G V) (a : MonoidAlgebra K G) (x : V) 
   set_option synthInstance.maxHeartbeats 100000 in
     simp [map_sum, LinearMap.sum_apply]
 
-omit [CharZero K] in
 
-omit [CharZero K] in
 
 end Modules
 

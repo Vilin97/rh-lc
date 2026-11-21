@@ -82,7 +82,6 @@ theorem sub_mem_of_ex_eq (hinj : Function.Injective (pv X idx x)) {u v : Fin r �
   rw [hinj hpw]
   exact hw
 
-omit [IsCMField E] in
 
 theorem sum_mem_of_tens {n : ℕ} {Λ : Lt E n} {mu : Matrix (Fin n) (Fin n) E}
     (hmu : ∀ v ∈ Λ, mu.mulVec v ∈ stdLat E n) {u : Matrix (Fin n) (Fin r) E} (hu : u ∈ tens Λ L) (i : Fin n) :
@@ -168,7 +167,6 @@ theorem geoInj (hinj : Function.Injective (pv X idx x)) {n N : ℕ} (hN : 0 < N)
   refine ⟨(N : E)⁻¹ • u i b - (N : E)⁻¹ • u i' b, sub_mem_of_ex_eq A hinj he, ?_⟩
   rw [← smul_sub, nsmul_inv_smul hN]
 
-omit [Algebra c.F ℂ] in
 
 theorem levPt_levRep {S : Type} [CommRing S] (x0 : Sp S ⟶ Xo.X) (a : Dw.La) :
     levPt Xo x0 (levRep (l := l) (Submodule.Quotient.mk a)) = levPt Xo x0 a := by
@@ -181,7 +179,6 @@ theorem levPt_levRep {S : Type} [CommRing S] (x0 : Sp S ⟶ Xo.X) (a : Dw.La) :
       Xo.univ.eta_ker _ hq, _root_.one_mul]
   unfold levPt
   rw [he]
-set_option maxHeartbeats 1000000 in
 
 theorem roots {N : ℕ} (hN : 0 < N) {mk : Dw.La →ₗ[𝓞 E] (Fin r → E)} (hm : IsMark l L mk) (hA : A.Marked mk)
     (hM : l.M ∣ N) {Y : Fin r → E} {q : LevQ Dw l}

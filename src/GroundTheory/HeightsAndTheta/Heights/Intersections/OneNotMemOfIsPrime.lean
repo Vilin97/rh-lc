@@ -124,7 +124,6 @@ theorem fracHom_eq_zero_iff {u : MRing ι} : fracHom P u = 0 ↔ u ∈ P := by
 theorem one_notMem_of_isPrime : (1 : MRing ι) ∉ W :=
   (Ideal.ne_top_iff_one W).mp (Ideal.IsPrime.ne_top ‹_›)
 
-variable {P W} in
 
 theorem mem_locRing_iff (hPW : P ≤ W) {x : FractionRing (MRing ι ⧸ P)} :
     x ∈ locRing P W ↔ ∃ (u v : MRing ι) (a : K → ℕ), IsMultiHomog u a ∧ IsMultiHomog v a ∧ v ∉ W ∧
@@ -167,7 +166,6 @@ theorem mem_locRing_iff (hPW : P ≤ W) {x : FractionRing (MRing ι ⧸ P)} :
     rw [IsLocalization.eq_mk'_iff_mul_eq]
     exact hx
 
-variable {P W} in
 
 theorem div_mem_locRing (hPW : P ≤ W) {u v : MRing ι} {a : K → ℕ} (hu : IsMultiHomog u a)
     (hv : IsMultiHomog v a) (hvW : v ∉ W) : fracHom P u / fracHom P v ∈ locRing P W := by
@@ -175,7 +173,6 @@ theorem div_mem_locRing (hPW : P ≤ W) {u v : MRing ι} {a : K → ℕ} (hu : I
   rw [Ne, fracHom_eq_zero_iff]
   exact fun h => hvW (hPW h)
 
-variable {P W} in
 
 theorem isUnit_iff (hPW : P ≤ W) (x : locRing P W) {u v : MRing ι} {a : K → ℕ} (hu : IsMultiHomog u a)
     (hv : IsMultiHomog v a) (hvW : v ∉ W)
@@ -206,7 +203,6 @@ theorem isUnit_iff (hPW : P ≤ W) (x : locRing P W) {u v : MRing ι} {a : K →
     rw [eq_div_of_mul_eq hv0 hx]
     field_simp
 
-variable {P W} in
 
 theorem isLocalRing (hPW : P ≤ W) : IsLocalRing (locRing P W) := by
   refine IsLocalRing.of_nonunits_add fun x y hx hy hxy => ?_
@@ -232,7 +228,6 @@ theorem isLocalRing (hPW : P ≤ W) : IsLocalRing (locRing P W) := by
   exact (isUnit_iff hPW (x + y) hnum (homog_mul hv hv') hden heq).mp hxy
     (W.add_mem (W.mul_mem_right _ huW) (W.mul_mem_right _ hu'W))
 
-variable {P W} in
 
 theorem mem_maximalIdeal_iff (hPW : P ≤ W) (x : locRing P W) {u v : MRing ι} {a : K → ℕ}
     (hu : IsMultiHomog u a) (hv : IsMultiHomog v a) (hvW : v ∉ W)

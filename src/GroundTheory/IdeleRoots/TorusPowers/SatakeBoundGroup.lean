@@ -61,7 +61,6 @@ end ValuesCons
 
 variable {n : ℕ} [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)]
 
-omit [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] in
 
 end SatakeBound
 

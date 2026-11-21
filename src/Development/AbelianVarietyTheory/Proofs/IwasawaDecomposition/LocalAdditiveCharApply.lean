@@ -24,7 +24,6 @@ def liftHom {K : Type} [Field K] (σ : K →+* ℂ) {G : Type} [Monoid G] (f : G
 theorem liftHom_spec {K : Type} [Field K] (σ : K →+* ℂ) {G : Type} [Monoid G] (f : G →* ℂ) (h : ∀ g, ∃ y, σ y = f g)
     (g : G) : σ (liftHom σ f h g) = f g := (h g).choose_spec
 
-open Classical in
 
 def pullUnit {K : Type} [Field K] (σ : K →+* ℂ) (z : ℂ) : Kˣ := if h : ∃ y : Kˣ, σ y = z then h.choose else 1
 
@@ -252,7 +251,6 @@ theorem unit_of_valuation {E : Type} [Field E] [NumberField E] (w : HeightOneSpe
     rw [← h', map_mul, hx, (HeightOneSpectrum.valuation_eq_one_iff_notMem w).2 hd', one_mul]
   exact (HeightOneSpectrum.valuation_eq_one_iff_notMem w).1 h2 (Ideal.Quotient.eq_zero_iff_mem.1 h1.symm)
 
-open Classical in
 
 def idx (w : {w // w ∈ Pr.vGs}) : Fin 2 := if w.1 ∈ Pr.vG 0 then 0 else 1
 

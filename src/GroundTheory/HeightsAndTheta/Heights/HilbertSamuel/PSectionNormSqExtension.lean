@@ -404,7 +404,6 @@ end Levi
 
 end SectionNormSqExtension
 
-open SectionNormSqExtension in
 
 theorem SectionNormSqExtension.proof (h₁ : LeviLogFlat.Statement) (h₂ : LeviHolPerturb.Statement)
     (h₃ : LeviCompHol.Statement) (h₄ : LeviFSInvariant.Statement) : SectionNormSqExtension.Statement := by

@@ -13,7 +13,6 @@ noncomputable section
 
 namespace GlobalTheory.RatFrame
 
-set_option maxHeartbeats 400000 in
 
 theorem frame_rat : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =>
     ∀ i (hi : i ≤ D.R.m) (β : (St i hi).Ch) (x x₁ : UA D i hi) (γ : GL (Fin (D.R.N i)) D.host.E),

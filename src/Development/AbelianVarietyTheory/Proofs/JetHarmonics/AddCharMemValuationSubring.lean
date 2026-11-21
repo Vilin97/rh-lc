@@ -22,7 +22,6 @@ variable {A B K : Type} [AddCommGroup A] [AddCommGroup B] [Field K]
 
 variable [Fintype A] [Fintype B]
 
-omit [Fintype B] in
 
 end Duality
 

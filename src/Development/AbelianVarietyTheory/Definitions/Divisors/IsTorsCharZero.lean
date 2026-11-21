@@ -24,7 +24,6 @@ abbrev RootFn (X : Over (Sp R)) (D : Type) [CommRing D] [Algebra R D] : Type 1 :
 
 variable {A : Over (Sp R)} [GrpObj A]
 
-variable (A) in
 
 def HasRoots (n : ℕ) : Prop :=
   ∀ (D : Type) [CommRing D] [Algebra R D] (x : Pt A D), ∃ (D' : Type) (_ : CommRing D') (_ : Algebra R D')
@@ -53,7 +52,6 @@ def IsSecAdd (n : ℕ) (S : SecFam A) (g : Fn2 A) : Prop :=
     (z w : Pt A E), z ^ n = spOver ψ ≫ x → w ^ n = spOver ψ ≫ y →
     ψ (g D x y) = S D (x * y) E ψ (z * w) - S D x E ψ z - S D y E ψ w
 
-variable (R) in
 
 def diagSum (D : Type) [CommRing D] [Bialgebra R D] [Coalgebra.IsCocomm R D] (m : ℕ) : D ⊗[R] D →ₗ[R] D :=
   ∑ i ∈ Finset.range m, (Algebra.TensorProduct.lift (mulBy R D i : D →ₐ[R] D) (AlgHom.id R D)

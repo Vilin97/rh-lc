@@ -83,7 +83,6 @@ def sFin : Af E →ₙ+* Ad E where
 def pLoc (w : HeightOneSpectrum (𝓞 E)) : Af E →+* w.adicCompletion E :=
   RestrictedProduct.evalRingHom (fun v : HeightOneSpectrum (𝓞 E) => v.adicCompletion E) w
 
-open Classical in
 
 def sLoc (w : HeightOneSpectrum (𝓞 E)) : w.adicCompletion E →ₙ+* Af E where
   toFun x := ⟨Pi.single w x, by
@@ -103,7 +102,6 @@ def locGL (a : ℕ) (w : HeightOneSpectrum (𝓞 E)) : GL (Fin a) (w.adicComplet
 
 def finId : (Af E)ˣ →* Ideles E := Units.map (corner (sFin E))
 
-variable {E} in
 
 theorem pLoc_locGL {a : ℕ} (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicCompletion E)) :
     GeneralLinearGroup.map (pLoc E w) (locGL E a w g) = g := by
@@ -112,7 +110,6 @@ theorem pLoc_locGL {a : ℕ} (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w
     Pi.single_eq_same (M := fun v : HeightOneSpectrum (𝓞 E) => v.adicCompletion E) w x]
   rfl
 
-variable {E} in
 
 theorem pLoc_locGL_of_ne {a : ℕ} {w v : HeightOneSpectrum (𝓞 E)} (h : v ≠ w) (g : GL (Fin a) (w.adicCompletion E)) :
     GeneralLinearGroup.map (pLoc E v) (locGL E a w g) = 1 := by
@@ -120,7 +117,6 @@ theorem pLoc_locGL_of_ne {a : ℕ} {w v : HeightOneSpectrum (𝓞 E)} (h : v ≠
   exact map_cornerGL_of_zero _ _ (fun x =>
     Pi.single_eq_of_ne (M := fun v : HeightOneSpectrum (𝓞 E) => v.adicCompletion E) h x) g
 
-variable {E} in
 
 theorem finId_det_locGL {a : ℕ} (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicCompletion E)) :
     finId E (GeneralLinearGroup.det (locGL E a w g)) = localIdele E w (GeneralLinearGroup.det g) := by
@@ -220,22 +216,18 @@ theorem det_finGL (k : GL (Fin a) (Af E)) :
     change _ = (1 : Af E) - 1 + (GeneralLinearGroup.det k : (Af E)ˣ)
     simp
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 abbrev toL (x : Matrix (Fin a) (Fin a) (Cinf E)) : Lie E a := Matrix.of.symm x
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 def invSet (E : Type) [Field E] (a : ℕ) : Set (Lie E a) := {x | IsUnit (Matrix.of x)}
 
-omit [IsTotallyComplex E] in
 
 theorem contDiff_det : ContDiff ℝ ∞ fun x : Lie E a => (Matrix.of x).det := by
   simp only [Matrix.det_apply', Matrix.of_apply]
   refine ContDiff.sum fun σ _ => contDiff_const.mul (contDiff_prod fun i _ => ?_)
   exact (contDiff_apply ℝ _ i).comp (contDiff_apply ℝ _ (σ i))
 
-omit [IsTotallyComplex E] in
 
 theorem isOpen_invSet : IsOpen (invSet E a) := by
   have : invSet E a = (fun x : Lie E a => (Matrix.of x).det) ⁻¹' {u | IsUnit u} := by
@@ -243,11 +235,9 @@ theorem isOpen_invSet : IsOpen (invSet E a) := by
   rw [this]
   exact Units.isOpen.preimage contDiff_det.continuous
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem val_mem_invSet (y : GL (Fin a) (Cinf E)) : (toL y.val) ∈ invSet E a := y.isUnit
 
-open Classical in
 
 def chart (φ : GA E a → ℂ) (g : GA E a) (x : Lie E a) : ℂ :=
   if h : IsUnit (Matrix.of x) then φ (g * infGL E a h.unit) else 0
@@ -258,12 +248,10 @@ theorem chart_val (φ : GA E a → ℂ) (g : GA E a) (y : GL (Fin a) (Cinf E)) :
   have e : h.unit = y := Units.ext h.unit_spec
   rw [chart, dite_eq_left h, e]
 
-omit [IsTotallyComplex E] in
 
 def lmul (y : Lie E a) : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap (LinearMap.mulLeft ℝ (Matrix.of y) : Matrix (Fin a) (Fin a) (Cinf E) →ₗ[ℝ] _)
 
-omit [IsTotallyComplex E] in
 
 def rmul (y : Lie E a) : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap (LinearMap.mulRight ℝ (Matrix.of y) : Matrix (Fin a) (Fin a) (Cinf E) →ₗ[ℝ] _)
@@ -295,7 +283,6 @@ theorem chart_rt_fin (φ : GA E a → ℂ) (g : GA E a) (k : GL (Fin a) (Af E)) 
   funext x
   simp only [chart, mul_assoc, infGL_comm]
 
-variable (E a) in
 
 def Sm : Submodule ℂ (GA E a → ℂ) where
   carrier := {φ | ∀ g, ContDiffOn ℝ ∞ (chart φ g) (invSet E a)}
@@ -317,13 +304,11 @@ theorem rt_mem_Sm (h : GA E a) (φ : GA E a → ℂ) (hφ : φ ∈ Sm E a) : Glo
   rw [e, chart_rt_inf (fun x => φ (x * finGL E a k)), chart_rt_fin]
   exact (hφ _).comp (rmul (toL y.val)).contDiff.contDiffOn fun x hx => IsUnit.mul hx y.isUnit
 
-variable (E a) in
 
 def rt : Representation ℂ (GA E a) (Sm E a) := GlobalTheory.PRep.sub (GlobalTheory.PRep.rightReg ℂ (GA E a) ℂ) (Sm E a) rt_mem_Sm
 
 @[simp] theorem rt_apply (h g : GA E a) (φ : Sm E a) : (rt E a h φ).1 g = φ.1 (g * h) := rfl
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 abbrev oneL (E : Type) [Field E] (a : ℕ) : Lie E a := toL 1
 
@@ -350,7 +335,6 @@ theorem lieD_mem_Sm (X : Lie E a) {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a) : 
   (((hφ g).fderiv_of_isOpen isOpen_invSet (by simp)).clm_apply (rmul X).contDiff.contDiffOn).congr
     fun _ hx => chart_lieD hφ X g hx
 
-variable (E a) in
 
 def lie : Lie E a →ₗ[ℝ] Module.End ℂ (Sm E a) where
   toFun X :=

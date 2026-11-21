@@ -35,7 +35,6 @@ section Linear
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {w : HeightOneSpectrum (𝓞 E)}
 
-omit [IsTotallyComplex E] in
 
 theorem isCompact_KGL : IsCompact (KGL w a : Set (GL (Fin a) (w.adicCompletion E))) :=
   IntPtsUnitary.isCompact_GLint _

@@ -18,7 +18,6 @@ section Lemmas
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-variable (k) in
 
 theorem exists_unif : ∃ ϖ : kˣ, valuation k (ϖ : k) = uniformizer k := by
   obtain ⟨x, hx⟩ := valuation_surjective (uniformizer k)
@@ -197,7 +196,6 @@ theorem torusElt_eq_mul {N : ℕ} (ϖ : kˣ) (ν : Fin N → ℤ) (c : ℤ) :
 
 end Lemmas
 
-open GlobalTheory.GLDoubling in
 
 theorem isSupercuspidal_of_isCuspidal : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (N : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V), GlobalTheory.SmGL.IsCuspidal π → GlobalTheory.PRep.IsSupercuspidal π := by
   intro k _ _ _ _ N V _ _ π hπ

@@ -10,8 +10,6 @@ open IsLocalRing Polynomial
 
 namespace GlobalTheory.VertUnits
 
-open GlobalTheory.LocAcyc in
-open CategoryTheory in
 
 theorem divConstAll_of_divConstLocal : DivConstLocal → DivConstAll := by
   intro hL T O _ _ _ _ _ _ _ _ hAIC P _ φ hφ hSH

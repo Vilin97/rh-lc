@@ -73,7 +73,6 @@ theorem isSmoothChar_whitChar {ψ : AddChar k Circle} (hψ : Continuous ψ) : Is
     simp [GlobalTheory.SplitWeil.cball]
   · rw [val_whitChar, hr _ hu]; rfl
 
-open GlobalTheory.JacInj GlobalTheory.IwahoriInj in
 
 end Exact
 
@@ -88,8 +87,6 @@ def CuspidalGeneric : Prop :=
     (w : HeightOneSpectrum (𝓞 E)) (ψ : AddChar (w.adicCompletion E) Circle), Continuous ψ → ψ ≠ 1 →
     GlobalTheory.Whittaker.IsGeneric ψ (π.locRep w)
 
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
-open GlobalTheory.CuspGeneric GlobalTheory.CuspRep.Generic in
 
 theorem cuspidalGeneric_holds : CuspidalGeneric := by
   intro E _ _ _ a _ P w ψ' hc' h1'

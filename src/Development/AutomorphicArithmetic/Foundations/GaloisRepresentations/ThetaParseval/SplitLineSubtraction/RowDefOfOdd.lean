@@ -57,11 +57,8 @@ def SatU (U : Submodule ℂ (UA E a → ℂ)) (w : HeightOneSpectrum (𝓞 E)) (
   ∃ σ : SmIrr (GL (Fin a) (w.adicCompletion E)),
     IsCompAlong U (locU a w) ((cLoc w).comp (locU a w).subtype) σ.ρ ∧ GlobalTheory.LFun.HasSatGL w σ.ρ B
 
-omit [IsAlgClosure E Ω] in
 
-variable (E Ω) in
 
-variable (E) in
 
 def wtJumps {n : ℕ} (lam : DomWeight n) : Multiset ℤ := Finset.univ.val.map fun k : Fin n => (k : ℤ) - lam.w k
 
@@ -76,7 +73,6 @@ structure IsUp {n t : ℕ} (U : Submodule ℂ (UA E n → ℂ)) (lam : (E →+* 
     algSat (n + t) (normV w) B' = (algSat n (normV w) B).map (· * ((κ.val w : ℂˣ) : ℂ)⁻¹) +
       Finset.univ.val.map fun i => (((ψ i).val w : ℂˣ) : ℂ)
 
-variable (E) in
 
 def TwoUp (n : ℕ) : Prop :=
   ∀ (U : Submodule ℂ (UA E n → ℂ)), IsAutRepU U → ∀ lam : (E →+* ℂ) → DomWeight n, (∀ τ, HasWeightAt U τ (lam τ)) →
@@ -86,7 +82,6 @@ def TwoUp (n : ℕ) : Prop :=
       Odd (n + t) ∧ IsAlgPos κ m ∧ IsUp U lam κ m U₁ lam₁ ψ₁ p₁ ∧ IsUp U lam κ m U₂ lam₂ ψ₂ p₂ ∧
         (∀ i j, ψ₁ i ≠ ψ₂ j) ∧ κ.UnrAt w₀ ∧ ∀ i, (ψ₁ i).UnrAt w₀
 
-omit [IsAlgClosure E Ω] in
 
 end UpperTheory.Gal.TP.Sub
 

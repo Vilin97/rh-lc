@@ -263,7 +263,6 @@ theorem norm_Eis_le (ω : HChar F) (Ψ : (Fin 2 → Ad F) → ℂ) (h : GA F 2) 
     ENNReal.toReal_ofReal hK] at h2
   linarith [h2]
 
-open Classical in
 
 theorem norm_Phi_le (c : HeightOneSpectrum (𝓞 F) → ℕ) (v : Fin 2 → Ad F) :
     ‖Phi c v‖ ≤ ‖arch (UpperTheory.V.TR.pInf F (v 0)) (UpperTheory.V.TR.pInf F (v 1))‖ *
@@ -292,7 +291,6 @@ theorem norm_Phi_le (c : HeightOneSpectrum (𝓞 F) → ℕ) (v : Fin 2 → Ad F
   · simp
   · simp
 
-open Classical in
 
 theorem norm_PhiH_le (c : HeightOneSpectrum (𝓞 F) → ℕ) (v : Fin 2 → Ad F) :
     ‖PhiH c v‖ ≤ ‖arch (UpperTheory.V.TR.pInf F (v 0)) (UpperTheory.V.TR.pInf F (v 1))‖ *

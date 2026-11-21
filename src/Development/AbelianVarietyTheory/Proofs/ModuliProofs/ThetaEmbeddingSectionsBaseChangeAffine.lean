@@ -290,7 +290,6 @@ end GlobalTheory.EmbPull
 
 namespace GlobalTheory
 
-open ReciprocityTheory.ChartRestriction.G.Out VVRank EmbPull in
 
 theorem emb_baseChange : Out.Laws2 → ∀ (o : Type) [CommRing o] (g N' : ℕ) (J : Type) (b : TBase o (N' ^ 2)) (S : Scheme.{0}) (s : S ⟶ Sp o) (t : TObj g (N' ^ 2) J b s) (m : ℕ) (T T' : Over S) (h : T' ⟶ T) σ, IsAffine T.left → IsAffine T'.left → t.Emb m T σ → ∃ σ', t.Emb m T' σ' ∧ ∀ (R : Type) [CommRing R] (y : Sp R ⟶ (T' ⊗ t.A).left) (w : Ix g (N' ^ 2) → R), SecCoord _ σ' y w ↔ SecCoord _ σ (y ≫ (h ▷ t.A).left) w := by
   intro hl o _ g N' J b S s t m T T' h σ _ _ ⟨th, s₁, α, U, hth, hα, hs₁, hU, hσ⟩

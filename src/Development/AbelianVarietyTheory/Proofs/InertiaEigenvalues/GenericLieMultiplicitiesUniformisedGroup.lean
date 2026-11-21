@@ -172,7 +172,6 @@ section Torus
 
 variable {O X k : Type} [CommRing O] [StarRing O] [AddCommGroup X] [Module O X] [CommRing k]
 
-variable (O X k) in
 
 def torusRep : O →+* Module.End k (X →+ k) where
   toFun a := Diag.transpose k (DistribSMul.toAddMonoidHom X (star a))
@@ -210,7 +209,6 @@ theorem finrank_eigenSub_torusRep {k : Type} [Field k] [IsDomain O] [Module.Fini
 
 end Torus
 
-open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out in
 
 theorem trace_of_unif {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     {D : DegData R (maximalIdeal R)} {P : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]

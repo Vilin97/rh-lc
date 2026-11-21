@@ -69,7 +69,6 @@ theorem tateTheorem_δ_δ_tateOne :
     (show (0 : ℤ) + 1 + 1 = 0 + 2 by norm_num) (by norm_num) (by norm_num) _).trans ?_
   exact tateTheoremIso_zero_apply M u h1 h2 h3 S
 
-set_option maxHeartbeats 1600000 in
 
 theorem tateTheoremIso_hom_apply (n : ℤ) (x : tateCohomology (Rep.trivial ℤ S ℤ) n) :
     (tateTheoremIso M u h1 h2 h3 S n).hom.hom x =

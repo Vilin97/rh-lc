@@ -18,9 +18,7 @@ noncomputable section
 
 namespace GlobalTheory.InertEigSat
 
-set_option maxHeartbeats 4000000 in
 
-open Formalism.IndefR Formalism.IndefR.Links in
 
 theorem real_cast {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch}
     {X : GlobalTheory.NJoin.RealAt D cf nch tp} {M : MtFam D} {rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r}
@@ -36,8 +34,6 @@ theorem cast_eq_zero {D : D7} {μ : D.what₂.Tup} {a k : ℕ} (hk : a = k) (x :
   subst hk
   exact h
 
-open Formalism.BasicNotions.TH Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.Datum Formalism.IndefR.Cx Formalism.IndefR.Mult Formalism.L2.Theta Formalism.L2.DIV GlobalTheory.Hk3 in
-set_option maxHeartbeats 1000000 in
 
 theorem sum_ext {D : D7} {V : HSp D} (c : CoefA V) (hc : c.Is)
     {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} (hβ : IsSDFrame V β Λ 1)
@@ -62,8 +58,6 @@ theorem sum_ext {D : D7} {V : HSp D} (c : CoefA V) (hc : c.Is)
     Finset.sum_apply] at h3
   exact h3.trans h4.symm
 
-open Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.L2.Theta GlobalTheory.Hk3 in
-set_option maxHeartbeats 1000000 in
 
 theorem sum_extV {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch}
     (X : GlobalTheory.NJoin.RealAt D cf nch tp) (j : Fin D.R.m) (t : X.T) (h) (hh : IsOpsV X.R j t h)
@@ -75,7 +69,6 @@ theorem sum_extV {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D c
     ((hC.models.HV j t).2.1.le (LinearMap.mem_range_self _ y)) hR c
     ((hh w hG _ y).symm.trans ((congrArg (X.R.HV j t).e hy).trans (map_smul _ _ _))) g
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.InertEigSat
 

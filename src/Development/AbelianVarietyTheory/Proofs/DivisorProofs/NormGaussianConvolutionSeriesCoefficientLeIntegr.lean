@@ -45,7 +45,6 @@ theorem continuous_wt {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℝ E
 
 end CoefNorm
 
-open CoefNorm in
 
 theorem norm_coef_le_integral (E : Type) [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
     [MeasurableSpace E] [BorelSpace E] (b c : ℝ) (hb : 0 ≤ b) (hc : 0 ≤ c) (h : SchwartzMap E ℂ) (j : ℕ) :

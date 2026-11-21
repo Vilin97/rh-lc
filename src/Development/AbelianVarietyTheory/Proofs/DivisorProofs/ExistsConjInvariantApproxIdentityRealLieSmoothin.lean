@@ -44,7 +44,6 @@ theorem tendsto_integral_of_concentrate {V : Type} [NormedAddCommGroup V] [Measu
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
 
 theorem sum_norm_sq_eq (N : Matrix (Fin a) (Fin a) (Cinf E)) (w : InfinitePlace E) :
     ∑ i, ∑ j, ‖N i j w‖ ^ 2 = (Matrix.trace (star N * N) w).re := by
@@ -55,7 +54,6 @@ theorem sum_norm_sq_eq (N : Matrix (Fin a) (Fin a) (Cinf E)) (w : InfinitePlace 
   rw [Complex.star_def, Complex.conj_mul']
   norm_cast
 
-omit [NumberField E] [IsTotallyComplex E] in
 
 theorem trace_star_mul_conj (k : Kinf E a) (N : Matrix (Fin a) (Fin a) (Cinf E)) :
     Matrix.trace (star ((k : Matrix (Fin a) (Fin a) (Cinf E)) * N * star (k : Matrix (Fin a) (Fin a) (Cinf E))) *
@@ -70,7 +68,6 @@ theorem trace_star_mul_conj (k : Kinf E a) (N : Matrix (Fin a) (Fin a) (Cinf E))
       _ = K * (star N * N * star K) := by rw [h1, mul_one]; simp only [mul_assoc]
   rw [e, Matrix.trace_mul_comm, mul_assoc, h1, mul_one]
 
-variable (E a) in
 
 def frobSq (x : Lie E a) : ℝ := ∑ w, ∑ i, ∑ j, ‖x i j w - (1 : Matrix (Fin a) (Fin a) (Cinf E)) i j w‖ ^ 2
 
@@ -83,7 +80,6 @@ theorem frobSq_eq (x : Lie E a) :
   rw [← sum_norm_sq_eq]
   rfl
 
-omit [IsTotallyComplex E] in
 
 theorem frobSq_conj (k : Kinf E a) (x : Lie E a) :
     frobSq E a (toL ((k : Matrix (Fin a) (Fin a) (Cinf E)) * Matrix.of x *
@@ -119,7 +115,6 @@ theorem norm_sq_le_frobSq (x : Lie E a) (i j : Fin a) (w : InfinitePlace E) :
   exact Finset.single_le_sum (f := fun j => ‖x i j w - (1 : Matrix (Fin a) (Fin a) (Cinf E)) i j w‖ ^ 2)
     (fun j _ => by positivity) (Finset.mem_univ j)
 
-variable (E a) in
 
 def bumpR (m : ℝ) (x : Lie E a) : ℝ := Real.smoothTransition (1 - m ^ 2 * frobSq E a x)
 

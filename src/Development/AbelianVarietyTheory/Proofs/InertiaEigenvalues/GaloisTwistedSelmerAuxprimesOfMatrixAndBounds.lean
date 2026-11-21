@@ -10,7 +10,6 @@ open scoped TensorProduct
 
 namespace GlobalTheory.TwSys
 
-open Classical in
 
 theorem aeval_gen_sub_one_surjective (O : Type) [CommRing O] (n : ℕ) [NeZero n] (ι : Type) [Fintype ι] :
     Function.Surjective (MvPolynomial.aeval (R := O) fun q : ι =>

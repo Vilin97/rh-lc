@@ -78,9 +78,7 @@ namespace Data
 
 variable {X : Data F} (E : Type) [Field E] [NumberField E] [Algebra F E]
 
-variable (X) in
 
-variable (X) in
 
 theorem toExtV_mem {j : ℕ} {x : X.V j} (hx : x ∈ X.M j) : X.toExtV E j x ∈ (X.baseChange E).M j :=
   (Submodule.subset_span ⟨x, hx, rfl⟩ : extMap (X.toExt E j) (X.V j) x ∈
@@ -106,11 +104,8 @@ theorem MulStable.baseChange (h : X.MulStable) : (X.baseChange E).MulStable := f
       obtain ⟨g, hg, e⟩ := h j hj _ (Submodule.subset_span ⟨k, rfl⟩) f hf
       exact ⟨_, X.toExtV_mem E hg, (congrArg (X.toExt E (j + 1)) e).trans (X.toExt_mulW E j _ _)⟩
 
-variable {E} in
 
-variable (X) in
 
-variable (X) in
 
 end Data
 

@@ -86,7 +86,6 @@ end GlobalTheory.SepReal.powerIntegrability
 
 namespace GlobalTheory.SepReal
 
-open GlobalTheory.SepReal.powerIntegrability in
 
 theorem powInt_of_volBall : VolBall → PowInt := by
   intro hV m ε A hm hA

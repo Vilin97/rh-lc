@@ -22,7 +22,6 @@ def uNull : Submodule R (∀ i, M i) where
   zero_mem' _ := Eventually.of_forall fun _ => zero_mem _
   smul_mem' c _ h j := (h j).mono fun _ h => Submodule.smul_mem _ c h
 
-variable {F I M} in
 
 abbrev ULim : Type := (∀ i, M i) ⧸ uNull F I M
 
@@ -37,7 +36,6 @@ theorem ULim.mk_eq_zero {p : ∀ i, M i} :
   rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
   rfl
 
-variable {I M} in
 
 def ULim.map {I' : ℕ → Ideal R} {M' : ι → Type} [∀ i, AddCommGroup (M' i)] [∀ i, Module R (M' i)]
     (h : ∀ j, I j ≤ I' j) (f : ∀ i, M i →ₗ[R] M' i) : ULim F I M →ₗ[R] ULim F I' M' :=
@@ -55,9 +53,7 @@ theorem ULim.map_mk {I' : ℕ → Ideal R} {M' : ι → Type} [∀ i, AddCommGro
 def ULim.scal (r : ι → R) : ULim F I M →ₗ[R] ULim F I M :=
   ULim.map F (fun _ => le_rfl) fun i => r i • LinearMap.id
 
-variable (R) in
 
-variable {F M} in
 
 end ULim
 

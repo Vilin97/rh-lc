@@ -294,11 +294,9 @@ theorem idealLattice2_poisson_summation (I : Fin 2 → (FractionalIdeal (𝓞 K)
   rw [hlhs, hrhs, covolume_euclidLattice2] at h
   exact h
 
-variable (K) in
 
 def emb2 (ξ : Fin 2 → K) : Fin 2 → mixedSpace K := fun i => mixedEmbedding K (ξ i)
 
-variable (K) in
 
 def coset2 (I : Fin 2 → (FractionalIdeal (𝓞 K)⁰ K)ˣ) (c : Fin 2 → K) : Set (Fin 2 → K) :=
   {ξ | ∀ i, ξ i - c i ∈ (I i : FractionalIdeal (𝓞 K)⁰ K)}

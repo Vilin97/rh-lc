@@ -51,7 +51,6 @@ theorem PermutesFactors.eq_zero_of_invariant [MulAction.IsPretransitive G X]
 
 variable [MulAction.IsPretransitive G X]
 
-variable (G) in
 
 noncomputable def orbitRep (x₀ y : X) : G :=
   (MulAction.exists_smul_eq G x₀ y).choose
@@ -59,7 +58,6 @@ noncomputable def orbitRep (x₀ y : X) : G :=
 theorem orbitRep_smul (x₀ y : X) : orbitRep G x₀ y • x₀ = y :=
   (MulAction.exists_smul_eq G x₀ y).choose_spec
 
-variable (G) in
 
 theorem finite_of_isPretransitive [Finite G] (x₀ : X) : Finite X :=
   Finite.of_surjective (fun g : G => g • x₀) fun y => MulAction.exists_smul_eq G x₀ y

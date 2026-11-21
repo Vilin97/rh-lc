@@ -83,12 +83,10 @@ def LevMoves {n : ℕ} (γ : Matrix (Fin n) (Fin n) E) (q q' : Fin n → LevQ Dw
 def FixesDatum {n : ℕ} (γ : Matrix (Fin n) (Fin n) E) (w : (Fin n → LevQ Dw l) → c.F) : Prop :=
   ∀ q q', LevMoves γ q q' → w q' = w q
 
-variable (Dw) in
 
 def IsBeta {n : ℕ} (Λ : GenLat E n) (β : c.F) : Prop :=
   β ≠ 0 ∧ BetaIs (Dw := Dw) c Λ β ∧ BetaAbs (Dw := Dw) c Λ β
 
-variable (l) in
 
 def BadOK (bad : ℕ) : Prop :=
   0 < bad ∧ 2 ∣ bad ∧ l.M ∣ bad ∧ ∀ p : ℕ, p.Prime → (p : ℤ) ∣ NumberField.discr E → p ∣ bad

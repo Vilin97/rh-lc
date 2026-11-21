@@ -29,7 +29,6 @@ namespace GlobalTheory.MtRead.IdFrameStd
 
 variable {D : D7}
 
-open GlobalTheory.StdFrameExist in
 
 theorem exists_idFrame_of (hF : D.host.F = maximalRealSubfield D.host.E) (V : HSp D) (hg : V.gram = 1)
     (hV : Seed.FrmC.StdLat V) (n : ℕ) (hn : V.rank = n) :

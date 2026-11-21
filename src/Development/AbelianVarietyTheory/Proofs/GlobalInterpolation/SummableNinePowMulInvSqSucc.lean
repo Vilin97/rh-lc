@@ -269,7 +269,6 @@ theorem LFunction_eq (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q) (hχ :
 
 end LLeft
 
-open LLeft in
 
 theorem norm_LFunction_le_poly_left :
     ∃ C : ℝ, 0 < C ∧ ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q), χ ≠ 1 → ∀ s : ℂ,

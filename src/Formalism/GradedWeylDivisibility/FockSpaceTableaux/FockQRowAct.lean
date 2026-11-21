@@ -152,7 +152,6 @@ private lemma coeff_zero_rowAct_eq {r n : ℕ} (h : Matrix (Fin r) (Fin r) ℚ) 
     change constantCoeff (rowAct ℚ h (p * X v)) = constantCoeff (p * X v)
     rw [map_mul, map_mul, hx, map_mul, MvPolynomial.constantCoeff_X, mul_zero, mul_zero]
 
-set_option maxHeartbeats 800000 in
 
 private lemma pderiv_rowAct_eq_sum_C_mul_rowAct_pderiv {r n : ℕ} (h : Matrix (Fin r) (Fin r) ℚ) (w : Fin r × Fin n)
     (Q : MvPolynomial (Fin r × Fin n) ℚ) :

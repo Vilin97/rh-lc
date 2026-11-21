@@ -297,7 +297,6 @@ theorem blk_empty {R : Type} [Zero R] {n k : ℕ} (e : Fin k ≃ Fin n) (A : Mat
     GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.blk ((Equiv.sumEmpty (Fin n) (Fin 0)).trans e.symm) A Z = A.submatrix e e := by
   ext a b; rfl
 
-open scoped ComplexOrder in
 
 theorem exists_isSkew {D : D7} (B : Base D.host.F D.host.E) (τf : InfinitePlace D.host.F → D.what₂.Tau)
     (hB : ∀ w x, (B.emb w).1 x = conj (tauE D (τf w) x)) (X : HSp D) {k : ℕ} (e : Fin k ≃ Fin X.rank)

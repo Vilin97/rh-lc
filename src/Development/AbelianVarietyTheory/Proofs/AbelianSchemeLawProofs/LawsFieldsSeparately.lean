@@ -11,7 +11,6 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.O
 
 namespace GlobalTheory
 
-open CategoryTheory AlgebraicGeometry in
 
 theorem _root_.GlobalTheory.lawsFieldsSeparately :
     _root_.ReciprocityTheory.ChartRestriction.G.Out.GlobalSectionsRankAlgClosed ∧ _root_.ReciprocityTheory.ChartRestriction.G.Out.SecBaseChangeSt ∧ _root_.ReciprocityTheory.ChartRestriction.G.Out.AmpleSt ∧ _root_.ReciprocityTheory.ChartRestriction.G.Out.KerPowSt ∧ _root_.ReciprocityTheory.ChartRestriction.G.Out.MulPullSt ∧ _root_.ReciprocityTheory.ChartRestriction.G.Out.MulNSt ∧ _root_.ReciprocityTheory.ChartRestriction.G.Out.CubeSt ∧ _root_.ReciprocityTheory.ChartRestriction.G.Out.SquareSt ∧ _root_.ReciprocityTheory.ChartRestriction.G.Out.RigiditySt ∧

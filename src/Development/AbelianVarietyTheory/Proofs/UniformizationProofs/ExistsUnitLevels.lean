@@ -150,10 +150,7 @@ theorem formEq_mult {T : Over (Spec (CommRingCat.of R))} (b : T ⟶ D.P.A) (χ �
 variable {A : PolAV (Spec (CommRingCat.of (FractionRing R)))} {G : Over (Spec (CommRingCat.of R))} [GrpObj G]
   [IsCommMonObj G] (U : PreU I D A G) {S : Type} [CommRing S] {φ : R →+* S}
 
-open FormalPoint in
 
-omit [IsDomain R] [GrpObj G] [IsCommMonObj G] in
-open FormalPoint in
 
 theorem reduction_succ (x : Over.mk (spMap φ) ⟶ G) (e : ℕ) :
     adicLevelMap (I.map φ) (Nat.le_succ (e + 1)) ≫ reduction I x (e + 1) = reduction I x e ≫ thickMap R I e G := by
@@ -164,9 +161,7 @@ theorem reduction_succ (x : Over.mk (spMap φ) ⟶ G) (e : ℕ) :
 
 variable [IsLocalRing S]
 
-open FormalPoint in
 
-open FormalPoint in
 
 end Main
 

@@ -62,7 +62,6 @@ open GlobalTheory.ProjSpace
 open ReciprocityTheory.ChartRestriction.G.Semi (LB)
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor (PSpace)
 
-attribute [local instance] ProjSpace.algebraSections in
 
 end Projective
 

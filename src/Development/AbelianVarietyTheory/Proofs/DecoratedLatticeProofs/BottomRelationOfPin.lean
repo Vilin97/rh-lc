@@ -102,7 +102,5 @@ theorem comb_integral {Y : Type} [MeasurableSpace Y] (ν : Measure Y) (c α α' 
 
 end GlobalTheory.MiTop.BotTwo
 
-set_option maxHeartbeats 1000000 in
-open GlobalTheory.MiTop.BotTwo in
 
 end

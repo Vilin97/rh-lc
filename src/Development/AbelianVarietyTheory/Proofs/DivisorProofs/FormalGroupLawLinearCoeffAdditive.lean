@@ -67,7 +67,6 @@ end GlobalTheory.Katz.LowLaw
 
 namespace GlobalTheory.Katz
 
-open LowLaw in
 
 theorem coeff_law_of_degree_le_one (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p]
     [PerfectRing k p] (d : ℕ) (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) k) (h : IsLaw μ)

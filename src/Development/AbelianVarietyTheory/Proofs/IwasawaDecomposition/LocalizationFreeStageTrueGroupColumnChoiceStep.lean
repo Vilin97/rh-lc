@@ -48,7 +48,6 @@ theorem cenPull_eq {G H : Type} [Group G] [Group H] (e : G ≃* H) {z : Subalgeb
 
 attribute [local instance] GlobalTheory.Mem.Top.factType
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 def reser {R : Ranks} {H : Host R} {what₂ rows' : Rows.Data R} {N : NData R H what₂} {N' : NData R H rows'} {A : NAut N} {A' : NAut N'}
     (T : NTypes A) (T' : NTypes A')

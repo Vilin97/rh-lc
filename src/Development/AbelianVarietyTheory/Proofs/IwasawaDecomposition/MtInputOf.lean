@@ -19,6 +19,5 @@ theorem mtInput_of {D : D7} {cf : CharFrame D} {M : MtFam D} {ch : NChoice D} (t
   subst hx hQ
   exact h
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.HeightCounting.JumpsSt

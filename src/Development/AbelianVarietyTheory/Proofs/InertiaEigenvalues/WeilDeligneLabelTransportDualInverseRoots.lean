@@ -30,7 +30,6 @@ theorem val_lt_iff (c : Ω ≃+* Ω) (hc : ∀ y, y ∈ A ↔ c y ∈ A') (y : �
   rw [valuation_lt_one_iff', valuation_lt_one_iff', ← hc, ← map_inv₀, ← hc,
     map_eq_zero_iff _ c.injective]
 
-omit [NumberField E] in
 
 theorem normV_eq (s : E ≃+* E) (c : Ω ≃+* Ω)
     (hs : ∀ x : E, c (algebraMap E Ω x) = algebraMap E Ω (s x)) (hc : ∀ y, y ∈ A ↔ c y ∈ A')
@@ -45,7 +44,6 @@ theorem normV_eq (s : E ≃+* E) (c : Ω ≃+* Ω)
     exact (Ideal.map_comap_of_surjective (t : 𝓞 E →+* 𝓞 E) t.surjective _).symm
   exact (Nat.card_congr (Ideal.quotientEquiv w.asIdeal w'.asIdeal t h2).toEquiv).symm
 
-open Pointwise in
 
 theorem mem_Ine_of (c : Ω ≃+* Ω) (hc : ∀ y, y ∈ A ↔ c y ∈ A') {γ γ' : G E Ω}
     (hγ : ∀ y, γ' (c y) = c (γ y)) (h : γ ∈ Ine (F := E) A) : γ' ∈ Ine (F := E) A' := by
@@ -67,7 +65,6 @@ theorem mem_Ine_iff (c : Ω ≃+* Ω) (hc : ∀ y, y ∈ A ↔ c y ∈ A') {γ �
   ⟨mem_Ine_of c.symm (fun y => by rw [hc, c.apply_symm_apply])
     (fun y => by rw [eq_comm, c.symm_apply_eq, ← hγ, c.apply_symm_apply]), mem_Ine_of c hc hγ⟩
 
-omit [NumberField E] in
 
 theorem mem_Wild_iff (c : Ω ≃+* Ω) (hc : ∀ y, y ∈ A ↔ c y ∈ A') {γ γ' : G E Ω}
     (hγ : ∀ y, γ' (c y) = c (γ y)) : γ' ∈ Wild E A' ↔ γ ∈ Wild E A := by
@@ -76,7 +73,6 @@ theorem mem_Wild_iff (c : Ω ≃+* Ω) (hc : ∀ y, y ∈ A ↔ c y ∈ A') {γ 
   rw [map_ne_zero_iff _ c.injective, hγ, ← val_lt_iff c hc, map_sub c,
     map_div₀ c, map_one c]
 
-omit [NumberField E] in
 
 theorem exists_conj (s : E ≃+* E) (c : Ω ≃+* Ω)
     (hs : ∀ x : E, c (algebraMap E Ω x) = algebraMap E Ω (s x)) (γ : G E Ω) :
@@ -89,7 +85,6 @@ theorem exists_conj (s : E ≃+* E) (c : Ω ≃+* Ω)
   · show c (γ (c.symm _)) = _
     rw [c.symm_apply_apply]
 
-omit [NumberField E] in
 
 theorem exists_conj' (s : E ≃+* E) (c : Ω ≃+* Ω)
     (hs : ∀ x : E, c (algebraMap E Ω x) = algebraMap E Ω (s x)) (γ' : G E Ω) :

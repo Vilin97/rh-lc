@@ -23,7 +23,6 @@ variable (U : Submodule ℂ (cuspForms K n))
   (hρ : ∀ X, ∀ φ ∈ U, (gkModuleCusp K n).ρ X φ ∈ U) (hσ : ∀ k, ∀ φ ∈ U, (gkModuleCusp K n).σ k φ ∈ U)
   (hτ : ∀ g, ∀ φ ∈ U, finRepCusp K n g φ ∈ U)
 
-include hρ in
 
 theorem uActionCusp_mem (u : UEnv K n) {φ : cuspForms K n}
     (hφ : φ ∈ U) : uActionCusp K n u φ ∈ U := by

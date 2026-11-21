@@ -11,8 +11,6 @@ namespace GlobalTheory.WeilM.HaarUniq
 
 variable {V : Type} [AddCommGroup V] [TopologicalSpace V]
 
-open MeasureTheory Filter Topology in
-variable {V : Type} [AddCommGroup V] [TopologicalSpace V] in
 
 theorem _root_.GlobalTheory.WeilM.HaarUniq.exists_compact_openAddSubgroup [NonarchimedeanAddGroup V]
     [LocallyCompactSpace V] :
@@ -21,8 +19,6 @@ theorem _root_.GlobalTheory.WeilM.HaarUniq.exists_compact_openAddSubgroup [Nonar
   obtain ⟨K, hK⟩ := NonarchimedeanAddGroup.is_nonarchimedean C hC0
   exact ⟨K, hC.of_isClosed_subset K.isClosed hK⟩
 
-open MeasureTheory Filter Topology in
-variable {V : Type} [AddCommGroup V] [TopologicalSpace V] in
 
 theorem _root_.GlobalTheory.WeilM.HaarUniq.indicator_mem [IsTopologicalAddGroup V] [T2Space V]
     (K : OpenAddSubgroup V) (hK : IsCompact (K : Set V)) :
@@ -36,8 +32,6 @@ theorem _root_.GlobalTheory.WeilM.HaarUniq.indicator_mem [IsTopologicalAddGroup 
   · exact ⟨(K : Set V)ᶜ, K.isClosed.isOpen_compl, hx, fun y hy => by
       simp [Set.indicator_of_notMem hy, Set.indicator_of_notMem hx]⟩
 
-open MeasureTheory Filter Topology in
-variable {V : Type} [AddCommGroup V] [TopologicalSpace V] in
 
 theorem _root_.GlobalTheory.WeilM.HaarUniq.exists_invariant [NonarchimedeanAddGroup V] {φ : V → ℂ}
     (hφ : φ ∈ _root_.GlobalTheory.WeilM.SB V) :
@@ -76,8 +70,6 @@ theorem _root_.GlobalTheory.WeilM.HaarUniq.exists_invariant [NonarchimedeanAddGr
     rw [hval i _ hxi', hval i _ hx']
   rw [image_eq_zero_of_notMem_tsupport hx, image_eq_zero_of_notMem_tsupport hxk]
 
-open MeasureTheory Filter Topology in
-variable {V : Type} [AddCommGroup V] [TopologicalSpace V] in
 
 theorem _root_.GlobalTheory.WeilM.HaarUniq.exists_decomp [IsTopologicalAddGroup V] (K : OpenAddSubgroup V)
     {φ : V → ℂ} (hc : HasCompactSupport φ) (hinv : ∀ k ∈ K, ∀ x, φ (x + k) = φ x) :
@@ -151,8 +143,6 @@ private theorem exists_coeff_form_and_integral [IsTopologicalAddGroup V] [T2Spac
             exact (hint.comp_add_right _).const_mul _
       _ = _ := by rw [Finset.sum_mul]
 
-open MeasureTheory Filter Topology in
-variable {V : Type} [AddCommGroup V] [TopologicalSpace V] in
 
 theorem _root_.GlobalTheory.WeilM.HaarUniq.exists_eq_mul_integral : ∀ (V : Type) [AddCommGroup V]
     [TopologicalSpace V] [NonarchimedeanAddGroup V]

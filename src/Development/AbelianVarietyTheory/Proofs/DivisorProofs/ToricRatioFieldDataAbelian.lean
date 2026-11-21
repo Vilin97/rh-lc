@@ -77,7 +77,6 @@ theorem isClassTerm_reindex {E : Type} [Field E] [NumberField E] {I I' : Type} [
   simp only [this]
   exact hS.2 σ hσ
 
-open GlobalTheory.ChiGrid GlobalTheory.FunObj.SqNum GlobalTheory.ToricDenom in
 
 theorem cond0_eq {D : D7} {T : Type} {Lc : Formalism.IndefR.Links.LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} (G : GridData Lc sc)
     (hb : IsBaseCond (condF G.pl)) : GlobalTheory.LamTie.cond0 D.host (G.pl.w G.pl.v0) = condF G.pl := by
@@ -206,7 +205,6 @@ theorem sum_th_eq {ι : ℂ →+* Kbar X i}
 
 end Record
 
-open GlobalTheory.ToricDenom in
 
 theorem exists_pow_char {D : D7} {C : Formalism.L2.Host.CharFrame D} {nch : NChoice D} {Tp : Formalism.L2.Host.TupTied D C nch}
     (hψ : Formalism.L2.Host.PsiChoiceCompatible D C nch Tp) {w : D.what₂.places.Pl} (hw : TwistedAt D w)
@@ -259,6 +257,5 @@ end GlobalTheory.ThmAUpper.Read
 
 namespace GlobalTheory.ThmAUpper
 
-open Read GlobalTheory.ToricDenom GlobalTheory.FunObj.SqNum in
 
 end GlobalTheory.ThmAUpper

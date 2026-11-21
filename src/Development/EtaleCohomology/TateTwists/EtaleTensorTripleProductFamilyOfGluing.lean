@@ -207,7 +207,6 @@ end
 
 end LateralTheory.EtaleFoundations.TensTriFamPf
 
-open LateralTheory.EtaleFoundations.TensTriFamPf in
 
 theorem LateralTheory.EtaleFoundations.etale_tensor_triple_product_family_of_gluing (hglue : SecGlue) : LateralTheory.EtaleFoundations.EtaleTensorTripleProductFamilyExists := by
   intro R _ I J K T τ hτ M L μ' ν'

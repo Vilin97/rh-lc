@@ -37,4 +37,3 @@ theorem GlobalTheory.BotFormula.root_unit {ζ : ℂ} {n : ℕ} (hn : 0 < n) (h :
   rw [h3]
   exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hn.ne').1 h4
 
-set_option maxHeartbeats 4000000 in

@@ -226,7 +226,6 @@ theorem free_at (hp : p ≠ 0) (hn : IsNilpotent (p : R)) {V W : X.Opens} (h : W
   exact free_of_frame _ GlobalTheory.CompanionTheory.LocGrStep.loc_gr (fun T => sq_inY hI _ T.property) u _ E σ θ hGr hbot hco hσ hpt Qp r
     (fun r' _ => (hQp r').1)
 
-include hI in
 
 theorem off_at (hp : p ≠ 0) (hn : IsNilpotent (p : R)) {W : X.Opens} {d : ℕ} (c : Coord q W d) (r j : ℕ) (hj : j ≠ r) :
     Subsingleton (HU (GF (nlFun γ p X q κ) r) (SQ q κ γ p W) j) := by
@@ -334,7 +333,6 @@ theorem cover_pre (U : Cov q) : (⨆ α, jF hI q κ ⁻¹ᵁ U.U α) = ⊤ := by
   obtain ⟨α, hα⟩ := TopologicalSpace.Opens.mem_iSup.1 hx
   exact TopologicalSpace.Opens.mem_iSup.2 ⟨α, hα⟩
 
-include hI in
 end Fin
 
 end GlobalTheory.CompanionTheory.FibGr

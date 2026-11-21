@@ -43,10 +43,8 @@ theorem isDiscreteRep_iff (A : Rep.{w} k G) :
     IsDiscreteRep A ↔ ∀ a : A, IsOpen (stabilizer A.ρ a : Set G) :=
   ⟨fun h => h.isOpen_stabilizer, fun h => ⟨h⟩⟩
 
-variable (k G) in
 
 def isDiscreteRep : ObjectProperty (Rep.{w} k G) := fun A => IsDiscreteRep A
 
-variable (k G) in
 
 end GroundTheory.ProfCoh

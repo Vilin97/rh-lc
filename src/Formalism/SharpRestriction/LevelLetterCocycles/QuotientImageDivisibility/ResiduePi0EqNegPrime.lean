@@ -57,7 +57,6 @@ theorem letE_idem (i : ZMod n) : (letE i : LetA O n) * letE i = letE i := Formal
 
 theorem letE_mul_mem {i : ZMod n} {g : LetA O n} (hg : g ∈ W.AΔ) : (letE i : LetA O n) * g ∈ W.AΔ := W.AΔ.mul_mem (letE_mem_AΔ W i) hg
 
-include hAq in
 
 def resq (i : ZMod n) (g : LetA O n) : O :=
   if h : g ∈ W.AΔ then

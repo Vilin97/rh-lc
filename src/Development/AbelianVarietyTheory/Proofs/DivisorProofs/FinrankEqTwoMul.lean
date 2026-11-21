@@ -13,7 +13,6 @@ open Module NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNo
 
 namespace GlobalTheory.PlaceWeights
 
-open Classical in
 
 theorem sum_ind_algHom (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (v : InfinitePlace K) :
     (∑ f : K →ₐ[ℚ] ℂ, (if InfinitePlace.mk (f : K →+* ℂ) = v then (1 : ℝ) else 0)) = 2 := by
@@ -28,7 +27,6 @@ theorem finrank_eq_two_mul (K : Type) [Field K] [NumberField K] [IsTotallyComple
   rw [← InfinitePlace.sum_mult_eq]
   simp [IsTotallyComplex.mult_eq, mul_comm]
 
-open Classical in
 
 theorem sum_ind_placeUnder (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (σ₀ : K →+* ℂ)
     (M : IntermediateField ℚ ℂ) [FiniteDimensional ℚ M] (h : ∀ k, σ₀ k ∈ M) (v : InfinitePlace K) :

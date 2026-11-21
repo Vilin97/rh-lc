@@ -18,7 +18,6 @@ theorem exists_compact_clopen {X : Type} [TopologicalSpace X] [T2Space X] [Local
   have hVK' : V ⊆ K := hVK.trans interior_subset
   exact ⟨V, hK.of_isClosed_subset hV.isClosed hVK', hV, hxV, hVK'.trans hKu⟩
 
-open Classical in
 
 theorem fiber_ind_mem {X S : Type} [TopologicalSpace X] [T2Space X] {ξ : X → S}
     (hξ : IsLocallyConstant ξ) (s : S) (hs : IsCompact (ξ ⁻¹' {s})) :
@@ -28,7 +27,6 @@ theorem fiber_ind_mem {X S : Type} [TopologicalSpace X] [T2Space X] {ξ : X → 
   have : ξ x ≠ s := hx
   simp [this]
 
-open Classical in
 
 theorem isLocallyConstant_pattern {X ι : Type} [TopologicalSpace X] [Fintype ι] {U : ι → Set X}
     (hU : ∀ i, IsClopen (U i)) :
@@ -47,7 +45,6 @@ theorem isLocallyConstant_pattern {X ι : Type} [TopologicalSpace X] [Fintype ι
   ext i
   simp [hy i]
 
-open Classical in
 
 theorem isCompact_pattern_fiber {X ι : Type} [TopologicalSpace X] [T2Space X] [Fintype ι]
     {U : ι → Set X} (hU : ∀ i, IsClopen (U i)) (hc : ∀ i, IsCompact (U i)) (s : Finset ι)
@@ -60,7 +57,6 @@ theorem isCompact_pattern_fiber {X ι : Type} [TopologicalSpace X] [T2Space X] [
   rw [← hx'] at hi
   simpa using hi
 
-open Classical in
 
 theorem span_of_factor {A B S T : Type} [TopologicalSpace A] [T2Space A] [TopologicalSpace B]
     [T2Space B] [Fintype S] [Fintype T] {ξ : A → S} {η : B → T}
@@ -123,7 +119,6 @@ theorem span_of_factor {A B S T : Type} [TopologicalSpace A] [T2Space A] [Topolo
     rw [hz]
     exact Submodule.zero_mem _
 
-open Classical in
 
 theorem span_box : ∀ (A B : Type) [TopologicalSpace A] [T2Space A] [LocallyCompactSpace A] [TotallyDisconnectedSpace A] [TopologicalSpace B] [T2Space B] [LocallyCompactSpace B] [TotallyDisconnectedSpace B] (f : SB (A × B)), (f : A × B → ℂ) ∈ Submodule.span ℂ {F : A × B → ℂ | ∃ a : SB A, ∃ b : SB B, (∀ q : A × B, (a : A → ℂ) q.1 ≠ 0 → (b : B → ℂ) q.2 ≠ 0 → (f : A × B → ℂ) q ≠ 0) ∧ F = fun q => (a : A → ℂ) q.1 * (b : B → ℂ) q.2} := by
   intro A B _ _ _ _ _ _ _ _ f

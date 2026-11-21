@@ -167,7 +167,6 @@ def GenIn (Y : Model Xo c β) : Prop :=
     (h : ⊤ ≤ (y ≫ Y.j) ⁻¹ᵁ M.U), y ≫ pullback.snd _ _ = spMap (algebraMap c.F L) ∧
       Function.Injective (ev (y ≫ Y.j) M.U h)
 
-variable (Y) in
 
 structure ECh where
   M : GChart Y
@@ -193,7 +192,6 @@ theorem ECh.fix_iff (k : ECh Y p) (σ : E →+* ℂ) (z : Sp S ⟶ Y.X) (hz : �
   rw [Matrix.mulVec_mulVec (M := (k.w σ).map _), ← Matrix.map_mul, k.wu, Matrix.map_one _ (map_zero _) (map_one _),
     Matrix.one_mulVec]
 
-variable (p) in
 
 end Frames
 

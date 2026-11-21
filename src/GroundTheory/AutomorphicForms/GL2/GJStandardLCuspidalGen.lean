@@ -69,7 +69,6 @@ theorem abstract_form {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ 
     change N⁻¹ * L u * N = _
     rw [hLa, mul_comm N⁻¹, mul_assoc, inv_mul_cancel₀ hN0, mul_one]
 
-include μ hKc hKo in
 
 theorem schur_form {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] (B : V →ₗ[ℂ] H)
     (hB : ∀ u, B u = 0 → u = 0)

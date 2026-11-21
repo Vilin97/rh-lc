@@ -24,14 +24,12 @@ theorem weight_blockWeight_apply (e : (Σ k, ι k) →₀ ℕ) (k : K) :
     Fintype.sum_sigma]
   simp [blockWeight, Pi.single_apply]
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem blockWeight_unit (v : Σ _ : Unit, ∀ k, ι k) :
     blockWeight (fun _ : Unit => ∀ k, ι k) v = fun _ => 1 := by
   funext u
   simp [blockWeight]
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem segreMap_isMultiHomog {m : ℕ} {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k)}
     (hp : IsWeightedHomogeneous (blockWeight (fun _ : Unit => ∀ k, ι k)) p (fun _ => m)) :
@@ -63,7 +61,6 @@ theorem segreMap_isMultiHomog {m : ℕ} {p : ReciprocityTheory.ChartRestriction.
     rw [← hdeg]
     exact IsWeightedHomogeneous.prod _ _ _ fun v _ => (hX v).pow _
 
-omit [DecidableEq K] in
 
 theorem monomial_mem_map_segreMap (m : ℕ) :
     ∀ e : (Σ k, ι k) →₀ ℕ, (∀ k, ∑ i, e ⟨k, i⟩ = m) →
@@ -141,7 +138,6 @@ def segreQuotMap (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver 
     ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k) ⧸ segrePrime F q →ₐ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q :=
   Ideal.quotientMapₐ (I := segrePrime F q) q (segreMap F) fun _ h => h
 
-omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 
 theorem segreQuotMap_injective (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : Function.Injective (segreQuotMap F q) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]

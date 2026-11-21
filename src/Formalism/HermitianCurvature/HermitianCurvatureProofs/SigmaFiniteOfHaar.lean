@@ -120,7 +120,6 @@ section rule
 variable {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
   [InnerProductSpace ℂ Wq]
 
-open Formalism.FourierDecayAlt.Q.QRR in
 
 theorem rdV_kr (Bs : B.RealPlaceData k r Wp Wq) (F : B.Mat k r → (Wq →L[ℂ] Wp)) (x : B.Mat k r) (l : Fin r)
     (X : B.Mat k r) (hX : Pat k r l X) (hS : dag k r X = -X) :

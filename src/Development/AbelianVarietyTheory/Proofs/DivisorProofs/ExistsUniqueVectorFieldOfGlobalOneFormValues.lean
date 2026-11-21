@@ -35,7 +35,6 @@ section Main
 
 variable {R : Type} [CommRing R] (A : Over (Sp R)) (V : A.left.affineOpens)
 
-set_option quotPrecheck false in
 
 theorem affPt_hom : affPt (𝔰) V ≫ A.hom = spMap (algebraMap R 𝔅) :=
   (congrArg (affPt (𝔰) V ≫ ·) (Category.comp_id A.hom).symm).trans (affPt_w _ V)

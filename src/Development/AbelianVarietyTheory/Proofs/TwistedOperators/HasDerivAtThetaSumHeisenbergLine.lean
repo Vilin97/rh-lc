@@ -297,7 +297,6 @@ theorem snd_add_realAd_mul (t : ℝ) (x z : AF F) : Prod.snd (x + realAd F t * z
 
 end GlobalTheory.HeisLineTheta
 
-open GlobalTheory.HeisLineTheta in
 
 theorem GlobalTheory.HeisLineTheta.hasDerivAt_thetaSum_line : ∀ {F : Type} [Field F] [NumberField F] {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W → AF F}
     {κ : Type} [Fintype κ] (d : GlobalTheory.WeilM.Darboux B κ) (ψ : AddChar (AF F) ℂ), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsStd ψ →

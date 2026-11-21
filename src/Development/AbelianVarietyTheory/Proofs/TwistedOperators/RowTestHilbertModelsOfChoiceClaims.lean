@@ -48,7 +48,6 @@ theorem rat_of_formula {K : Type} [Field K] (σ : K →+* ℂ) {z : K} {c c₀ �
   rw [hp]
   field_simp
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_good (hP : GlobalTheory.Published.CuspRapidDecay) (R : RealDat D A Ks) (F : Face D A) (hC : GlobalTheory.Hk3.Core R F) (t : T0)
     (x : A.fam.amb.FR t) :
@@ -105,7 +104,6 @@ private theorem exists_embLL_mul_psiK_eq_vK_of_formulaAt (hP : GlobalTheory.Publ
   rw [← hxx]
   exact hF.2 t x' hx' a
 
-set_option maxHeartbeats 1600000 in
 
 theorem rowTest_of_choice (hP : GlobalTheory.Published.CuspRapidDecay) {R : RealDat D A Ks} {F : Face D A} (hC : GlobalTheory.Hk3.Core R F)
     (ch : Choice R) (hlin : ∀ a u, ConvK ch a u) (hinj : ∀ u, (∀ a, psiK ch a u = 0) → u = 0)
@@ -138,7 +136,6 @@ theorem rowTest_of_choice (hP : GlobalTheory.Published.CuspRapidDecay) {R : Real
         Subfield.prod_mem _ fun j _ => RingHom.mem_fieldRange.2 (hr i j t))
     exact rat_of_formula D.what₂.embLL (hz0 t) (hcT t) (hcT _) hκ hfo (hv t x' a) hrat
 
-set_option maxHeartbeats 1000000 in
 
 theorem rowTestModel_of_claims : GlobalTheory.Published.CuspRapidDecay → LinK → InjK → ConstK → SumOKK → Formula2K → SumRatK → RatioK → ∃ CF0 : ℝ, ∀ ε CF : ℝ, CF0 ≤ CF → ∃ x₀ : ℝ, ∀ (D : D7) (large₂ : SizeData₂ D), large₂.sc.eps = ε → x₀ ≤ large₂.sc.x → ∀ (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.RowClaim.HidaSetting large₂ R F → (∃ ch : GlobalTheory.RowTest.Choice R, ch.Is ∧ ch.AtScale CF large₂.sc.b ∧ ch.FieldOK) → GlobalTheory.IndefiniteRowSideFullHecke.RationalRowTestKernel.RowTestModel R := by
   intro hP hL hI hC _ hF hR hRa

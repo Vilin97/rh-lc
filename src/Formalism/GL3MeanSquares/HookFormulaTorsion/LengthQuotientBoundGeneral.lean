@@ -45,7 +45,6 @@ section
 variable {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
 variable {M : Type} [AddCommGroup M] [Module R M]
 
-set_option maxHeartbeats 800000 in
 
 theorem length_quotient_bound_general (ϖ : R) (hϖ : Irreducible ϖ) (S S0 B : Submodule R M) (U D : M →ₗ[R] M)
     (e : ℕ) (hSB : S0 ≤ B) (hU : B.map U ≤ S) (hD : S.map D ≤ B)

@@ -216,7 +216,6 @@ variable {A : Type} [CommRing A] {J : Ideal A} {X : Type} [AddCommGroup X]
   {F : G₀.left ⟶ G.left} {hw : F ≫ G.hom = G₀.hom ≫ red J} {P : CP G} {P₀ : CP G₀}
   {w : LB.Iso P₀.L.L (P.L.L.pull F)} {i : splitTorus _ X ⟶ G} {i₀ : splitTorus _ X ⟶ G₀}
 
-variable (w) in
 
 def Reduces (t : LB.Gen (LB.LinComb P.L.L (K := Fin 2) ![i.left, (1 : splitTorus _ X ⟶ G).left] ![1, -1]))
     (σ₀ : CubTriv P₀.c i₀) : Prop :=

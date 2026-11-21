@@ -104,7 +104,6 @@ theorem embTau_ne_bar (D : D7) (τ τ' : D.what₂.Tau) : embTauBar D τ ≠ Glo
   rw [h2]
   exact (D.R.Psi).mul_mem (D.eTau τ').2 ((D.R.Psi).inv_mem (D.eTau τ).2)
 
-open Classical in
 
 end GlobalTheory.Survey.EmbeddingValuationsAnti
 

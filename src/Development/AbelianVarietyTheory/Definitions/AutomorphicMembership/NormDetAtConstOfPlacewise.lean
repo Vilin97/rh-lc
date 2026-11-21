@@ -21,7 +21,6 @@ def inclQb {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTh
     haveI := c.fin
     mem_algebraicClosure_iff.2 ((Algebra.IsAlgebraic.isAlgebraic (R := ℚ) a).algHom c.F.val)
 
-open Classical in
 
 def carry {F : Type} [Field F] (f g : F →+* Qb) : Qb →+* Qb :=
   haveI : Nonempty (Qb →+* Qb) := ⟨RingHom.id Qb⟩
@@ -34,7 +33,6 @@ def ioAt (p : ℕ) [Fact p.Prime] (y : Pt s) : Qb →+* ℂ_[p] := (iotaP p).com
 def normDetIo (p : ℕ) [Fact p.Prime] (b : Bool) (τ : D.what₂.Tau) (y : Pt s) (io : Qb →+* ℂ_[p]) (a : Qb) : ℝ :=
   ‖io a‖ * Real.exp (∑ i : Fin N, y.lnRoot io p b (DV.tauEmb D τ) i)
 
-open Classical in
 
 def normDetAt (p : ℕ) (b : Bool) (τ : D.what₂.Tau) (y : Pt s) (a : Qb) : ℝ :=
   if h : p.Prime then (haveI := Fact.mk h; normDetIo s p b τ y (ioAt s p y) a) else 1

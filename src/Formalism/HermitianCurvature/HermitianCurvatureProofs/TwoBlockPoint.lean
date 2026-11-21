@@ -197,7 +197,6 @@ end GlobalTheory
 section Phi
 variable {K : Type} [CommRing K] (R : Subring K)
 
-open Classical in
 
 def Fz {n n' : ℕ} (Z' : Matrix (Fin n') (Fin n') K) (Z : Matrix (Fin n) (Fin n) K) : ℂ :=
   if IsInt R Z then (Nat.card (isoZZ R Z Z') : ℂ) else 0

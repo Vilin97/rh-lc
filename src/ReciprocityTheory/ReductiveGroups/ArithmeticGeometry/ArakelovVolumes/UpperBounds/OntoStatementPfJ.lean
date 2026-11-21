@@ -22,7 +22,6 @@ def Dt (X : Data E r) (x0 : Frame X.Ψ r) (W : Frame X.Ψ r → ℝ≥0∞) (bb 
   DifferentiableOn ℂ F (OmF X x0) ∧ InAt X x0 W bb F ∧ IsBEq X la P ∧
     ∀ z ∈ OmF X x0, P (cpt X x0 z) = F z
 
-open Classical in
 
 def TL {α : Type*} [MeasurableSpace α] (ν : Measure α) (f : α → ℂ) : Lp ℂ 2 ν :=
   if h : MemLp f 2 ν then h.toLp f else 0

@@ -24,7 +24,6 @@ section Weights
 
 variable {O R Γ : Type} [CommRing O] [IsLocalRing O] [CommRing R] [Algebra O R] [Group Γ] (u : Γ →* GG 3 R)
 
-variable (O) in
 
 def wpart (j : ℤ) : Submodule O R where
   carrier := {x | ∀ (R' : Type) [CommRing R'] [Algebra O R'] [IsCO O R'] (f f' : R →ₐ[O] R') (t : R'ˣ),
@@ -38,7 +37,6 @@ instance : SetLike.GradedMonoid (wpart O u) where
   mul_mem := fun i j x y hx hy R' _ _ _ f f' t h => by
     rw [map_mul, map_mul, hx R' f f' t h, hy R' f f' t h, _root_.zpow_add, Units.val_mul]; ring
 
-variable (O) in
 
 def Sring : Subalgebra O R := gradedSub (wpart O u)
 

@@ -69,7 +69,6 @@ end Formalism.L2.SG.Pf.Cnt.R1
 
 namespace Formalism.L2.SG.Pf.Cnt
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem rational_pair_holds : RatPair := ratPair_of R1.totally_positive_all
 

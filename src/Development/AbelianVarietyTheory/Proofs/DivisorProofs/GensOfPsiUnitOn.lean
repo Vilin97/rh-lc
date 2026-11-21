@@ -169,7 +169,6 @@ theorem gens_of_psiUnitOn {R : Type} [CommRing R] [IsDomain R] (D : DegPre R) (h
       val (D.tau a b) (𝟙 _) z J = val (τ₀ a b) (toUnit (TK R)).left z J :=
   GlobalTheory.DDataGens.main R D hb hU
 
-open GlobalTheory.UChart in
 
 theorem fromBase_self {V : Type} [CommRing V] [IsDomain V] (Q : DegPre V) (τ₀ : Gens Q) (h : ∀ a b, (τ₀ a b).IsGen) :
     FromBase Q τ₀ (RingHom.id V) := by

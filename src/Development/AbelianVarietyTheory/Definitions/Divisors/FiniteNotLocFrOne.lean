@@ -35,7 +35,6 @@ open scoped Matrix Classical
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
-open scoped ComplexOrder in
 
 theorem posDef_of_isMetric {σ : c.F →+* ℂ} {y : FrPt Xo c (CAt σ)} {N : ℝ} {Gr : Mats Dw ℂ}
     (h : GlobalTheory.LamT.IsMetric y N Gr) (b : E →+* ℂ) : (Gr b).PosDef := by

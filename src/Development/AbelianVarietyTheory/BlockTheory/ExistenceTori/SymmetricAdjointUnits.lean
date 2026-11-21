@@ -29,7 +29,6 @@ variable (G : Over X₀) [GrpObj G] [IsCommMonObj G]
 
 variable (x : Sp S ⟶ X₀) {d : ℕ}
 
-omit [GrpObj G] [IsCommMonObj G] in
 
 def jPt (j : JetPts G x d) (n m : ℕ) (k : Fin n) : algO x (Jet S (Fin n × Fin d) m) ⟶ G :=
   algMap x (jetIn k) ≫ j m

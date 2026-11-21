@@ -96,7 +96,6 @@ theorem ocbS_intAt_div_pow (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q :
       rw [e]
       exact ocbS_intAt_natCast j
 
-open Classical in
 
 theorem ocbS_card_res (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hp : q.Prime) (hcard : Nat.card (𝓞 E ⧸ P.asIdeal) = q) {M : ℕ}
     (hM : 1 ≤ M) (ρ : 𝓞 E ⧸ P.asIdeal) :
@@ -133,7 +132,6 @@ theorem ocbS_card_res (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hp : q.Prime) (
       rw [hi.2] at this
       exact this
 
-open Classical in
 
 theorem ocbS_card_vals (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) (hp : q.Prime)
     (hcard : Nat.card (𝓞 E ⧸ P.asIdeal) = q) {A B d : ℕ} (hd : d ≤ A) (hB : 1 ≤ B) (ρ : 𝓞 E ⧸ P.asIdeal) :

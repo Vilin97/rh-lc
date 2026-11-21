@@ -94,7 +94,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
 variable {d M : ℕ} (b : Module.Basis (Fin d) F E) (S : Finset (HeightOneSpectrum (𝓞 F)))
   (A : ∀ v : HeightOneSpectrum (𝓞 F), Set (Fin 1 → Fin M → Fv F v ⊗[F] E))
 
-include b in
 
 end Main
 

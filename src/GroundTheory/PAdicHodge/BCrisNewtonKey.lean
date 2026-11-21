@@ -17,7 +17,6 @@ open _root_.WittVector Laurent Polynomial WittTilt
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-set_option maxHeartbeats 4000000 in
 
 theorem exists_norm_eq_zpow_of_iota_eq {y : PadicAlgCl p} (hy : y ≠ 0) {a b : ACris ℂ_[p] p}
     (hb : b ≠ 0) (h : iota ℂ_[p] p a = algClToBdR p y * iota ℂ_[p] p b) :

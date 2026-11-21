@@ -135,7 +135,6 @@ def lenPre : ↥(Formalism.RepresentationBoundsCohomology.LocallyConstantCohomol
     rw [map_smul, rep_mk, rep_mk, Submodule.coe_smul, sub_self]
     exact F.zero_mem
 
-include heG hp hW hB in
 
 theorem lenMap_gen : LenMap PD σ
     (↥(Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology.lcH1 (resRep (uRep O' (M := M) r χ) Dw) ⊓ divBy F ((ℓ : O') ^ cB)) ⧸
@@ -238,7 +237,6 @@ theorem unr_exists (I' : Subgroup Dw) (z : coZ1s (resRep (uRep O' (M := M) r χ)
 
 variable {I : Subgroup G} {I' : Subgroup Dw}
 
-include heG in
 
 theorem hW_zero (hzero : divisibleCocycles Cd.Ce.L ⊓ HfD PD Cd.Ce.L = divisibleCocycles Cd.Ce.L ⊓ (Z1urD Cd.Ce.L I ⊔ BD Cd.Ce.L))
     (hI' : ∀ h ∈ I, eG.symm h ∈ I')
@@ -258,7 +256,6 @@ theorem hW_zero (hzero : divisibleCocycles Cd.Ce.L ⊓ HfD PD Cd.Ce.L = divisibl
   rw [← hzero] at hmem
   exact (Submodule.mem_inf.1 hmem).2
 
-include heG in
 
 theorem hB_zero (hzero : divisibleCocycles Cd.Ce.L ⊓ HfD PD Cd.Ce.L = divisibleCocycles Cd.Ce.L ⊓ (Z1urD Cd.Ce.L I ⊔ BD Cd.Ce.L))
     (hI : ∀ g : Dw, g ∈ I' → eG g ∈ I)

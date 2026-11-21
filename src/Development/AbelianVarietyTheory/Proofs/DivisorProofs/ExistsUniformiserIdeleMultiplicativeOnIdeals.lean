@@ -13,7 +13,6 @@ namespace GlobalTheory.CMVal.IdealIdele
 
 variable {E : Type} [Field E] [NumberField E]
 
-open Classical in
 
 def primeIdele (p : Ideal (𝓞 E)) : (Af E)ˣ :=
   if h : p.IsPrime ∧ p ≠ ⊥ then unifAt ⟨p, h.1, h.2⟩ else 1

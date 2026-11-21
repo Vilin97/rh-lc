@@ -20,7 +20,5 @@ namespace GlobalTheory.HeightCounting.Up
 theorem galoisRepsCusp_of_galEx {D : D7} (h : GalEx D) : GlobalTheory.BlockComplement.GaloisRepsCusp D :=
   fun i a ha π hc hr => h (D.nd.l i) (D.naut.iotaQC i) a ha π hc hr
 
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 
 end GlobalTheory.HeightCounting.Up

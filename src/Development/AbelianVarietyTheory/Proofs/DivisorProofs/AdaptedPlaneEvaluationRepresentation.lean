@@ -19,7 +19,6 @@ noncomputable section
 
 namespace GlobalTheory.ThKSwapLoc
 
-open scoped ENNReal in
 
 theorem tsum_norm_le_of_bdd_pairing : ∀ {ι K : Type} (x : K → ι → ℂ), (∀ u, Summable fun i => ‖x u i‖) →
     (∀ c : ι → ℂ, (∃ b : ℝ, ∀ i, ‖c i‖ ≤ b) → ∃ C : ℝ, ∀ u, ‖∑' i, c i * x u i‖ ≤ C) →

@@ -24,7 +24,6 @@ section Lattice
 
 variable (E : Type) [Field E] {X : Type} [AddCommGroup X] [Module (𝓞 E) X]
 
-variable (X) in
 
 end Lattice
 
@@ -144,7 +143,6 @@ omit [IsCMField E] in
 theorem rankOne_apply (η : Module.Dual (𝓞 E) X) (τ : E →+* ℂ) (a c : X) :
     rankOne E η τ a c = (τ (η a : E) * starRingEnd ℂ (τ (η c : E))).re := rfl
 
-omit [NumberField E] [IsCMField E] [Module (𝓞 E) X] in
 
 theorem bar_outer {n : ℕ} (x x' : Fin n → X) (η η' : Module.Dual (𝓞 E) X) :
     bar E (outer E x x' η η') = outer E x' x η' η := by

@@ -46,7 +46,6 @@ theorem gs_ι (z : (TF (R := R) F).left) (a : Γ(Spec (CommRingCat.of E), ⊤)) 
   exact congrArg ((TF (R := R) F).left.presheaf.germ ⊤ z trivial).hom
     (appTop_specMap (CommRingCat.ofHom (algebraMap E F)) a)
 
-omit [IsDomain R] in
 
 theorem sec_rat (hL : L.IsLB) {K : Type} [Fintype K] {φ : K → ((TF (R := R) E).left ⟶ X)} {ε : K → ℤ}
     (s : LB.Sec (LB.LinComb L φ ε))

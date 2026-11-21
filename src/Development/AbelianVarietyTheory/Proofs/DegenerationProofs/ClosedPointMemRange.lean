@@ -92,7 +92,6 @@ section Level
 variable {S S' Z : Scheme.{0}} {B : Over S} {B' : Over S'} [GrpObj B] [IsCommMonObj B] [GrpObj B'] [IsCommMonObj B']
   {f : S' ⟶ S} {F : B'.left ⟶ B.left}
 
-omit [IsCommMonObj B] [IsCommMonObj B'] in
 
 theorem toBase_mul (h : IsGrpPullback B' B f F) (T : Over S') (x y : T ⟶ B') :
     toBase h.1.w (x * y) = toBase h.1.w x * toBase h.1.w y :=

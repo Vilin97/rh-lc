@@ -67,8 +67,6 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : Formalis
   {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
   {i : Fin D.R.m} {Tp : Type} {tup : Tp → T0}
 
-set_option maxHeartbeats 800000 in
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.AdTh.SerOne

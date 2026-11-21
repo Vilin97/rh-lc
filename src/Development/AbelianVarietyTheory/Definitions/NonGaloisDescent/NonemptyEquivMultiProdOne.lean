@@ -178,7 +178,6 @@ theorem nonempty_equiv_multiProd_one {π : Representation ℂ (GL n k) V} (hπ :
 
 end Invariance
 
-variable (k) in
 
 abbrev IrrGL : Type 1 := Σ n : ℕ, IrrCl (GL (Fin n) k)
 
@@ -189,7 +188,6 @@ abbrev rep (x : IrrGL k) : Representation ℂ (GL (Fin x.1) k) x.2.rep.V := x.2.
 def of {N : ℕ} (π : Representation ℂ (GL (Fin N) k) V) (hs : IsSmooth π) (hi : π.IsIrreducible) : IrrGL k :=
   ⟨N, (⟨V, π, hs, hi⟩ : IrrRep _).cl⟩
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 
 theorem of_eq_of {N : ℕ} {π : Representation ℂ (GL (Fin N) k) V} {hs : IsSmooth π} {hi : π.IsIrreducible}
     {σ : Representation ℂ (GL (Fin N) k) W} {hs' : IsSmooth σ} {hi' : σ.IsIrreducible} :
@@ -197,7 +195,6 @@ theorem of_eq_of {N : ℕ} {π : Representation ℂ (GL (Fin N) k) V} {hs : IsSm
   simp only [IrrGL.of, Sigma.mk.inj_iff, heq_eq_eq, true_and]
   exact IrrRep.cl_eq_iff
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 
 @[simp] theorem of_rep (x : IrrGL k) : of x.rep x.2.rep.smooth x.2.rep.irr = x := Sigma.ext rfl (heq_of_eq (IrrCl.cl_rep _))
 
@@ -538,7 +535,6 @@ def spehFactor (x : IrrGL k) (d : ℕ) (i : Fin d) : IrrGL k := x.nu (((d : ℂ)
 def IsSpeh (x : IrrGL k) (d : ℕ) (π : Representation ℂ (GL (Fin N) k) V) : Prop :=
   ∃ hd : ∑ a, (spehFactor x d a).1 = N, IsCosocle π (prodIrr (spehFactor x d) hd)
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem unipB_mul_apply (u v : unipB k (Fin N)) {i j : Fin N} (hij : (j : ℕ) = i + 1) :
     ((u * v : unipB k (Fin N)) : GL (Fin N) k).val i j = (u : GL (Fin N) k).val i j + (v : GL (Fin N) k).val i j := by
@@ -843,6 +839,5 @@ theorem isSpeh_one (x : IrrGL k) : IsSpeh x 1 x.rep := by
   obtain ⟨e⟩ := nonempty_equiv_prodIrr_fin_one (spehFactor x 1) x h0 hd
   exact ⟨hd, (isCosocle_self x.2.rep.irr).of_equiv (.refl _) e⟩
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 
 end GlobalTheory.LocGL

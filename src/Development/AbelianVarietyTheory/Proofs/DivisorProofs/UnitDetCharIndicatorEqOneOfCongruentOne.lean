@@ -63,7 +63,6 @@ theorem exists_inv {u : Formalism.MainNotions.StandardLatticesGL3.AE D} (hu : u 
   rw [RingHom.map_mul, RingHom.map_one, hv]
   exact congrArg Subtype.val hw
 
-set_option maxHeartbeats 1000000 in
 
 theorem unitChar_cong : ∀ {D : D7} (e : AE D) (𝔪 : Ideal (𝓞 D.host.E)), GoodMod e 𝔪 → ∀ ν : (AE D)ˣ →* Circle, KillsCong ν 𝔪 →
   ∀ {k : ℕ} (P : Matrix (Fin k) (Fin k) (Formalism.MainNotions.StandardLatticesGL3.AE D)), (∀ i j, (P - 1) i j ∈ hatId D 𝔪) →

@@ -6,7 +6,6 @@ public import Mathlib
 
 namespace GlobalTheory
 
-open Submodule in
 
 theorem pow_maps_torsion_into_smul_top (R : Type) [CommRing R] [IsDedekindDomain R] (M : Type)
     [AddCommGroup M] [Module R M] (I J : Ideal R) (f : M →ₗ[R] M) (m : ℕ) :

@@ -118,7 +118,6 @@ theorem evalAt_mul (k : ℕ) (u v : A) : evalAt φ k (u * v) = evalAt φ k u * e
 theorem evalAt_pow (k : ℕ) (u : A) {m : ℕ} (hm : m ≠ 0) : evalAt φ k (u ^ m) = evalAt φ k u ^ m := by
   unfold evalAt; split_ifs <;> simp [zero_pow hm]
 
-open Classical in
 
 noncomputable def firstIdx (u : A) : ℕ := if h : ∃ k, evalAt φ k u ≠ 0 then Nat.find h else 0
 
@@ -312,7 +311,6 @@ end Vectors
 
 end HilbertSamuelPS
 
-open HilbertSamuelPS MvPowerSeries in
 
 theorem finrank_mul_pow_le_finrank_of_powerSeries :
     ∀ (D n : ℕ) (A : Type) [CommRing A] [Algebra ℂ A] (φ : Fin n → (A →ₐ[ℂ] MvPowerSeries (Fin D) ℂ)) (x : Fin D → A) (c : Fin D → ℂ), (∀ u : A, (∀ j, φ j u = 0) → u = 0) → (∀ j i, φ j (x i) = MvPowerSeries.X i + MvPowerSeries.C (c i)) → ∀ (F G : Submodule ℂ A) [Module.Finite ℂ F] [Module.Finite ℂ G] (m : ℕ), 0 < m → (∀ (f : Fin m → A) (a : Fin D → ℕ), (∀ l, f l ∈ F) → (∀ i, a i < m) → (∏ l, f l) * ∏ i, x i ^ a i ∈ G) → Module.finrank ℂ F * m ^ D ≤ Module.finrank ℂ G := by

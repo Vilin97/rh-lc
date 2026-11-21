@@ -20,7 +20,6 @@ theorem natCard_kerModRange_eq_relIndex {A : Type*} [AddCommGroup A] (f g : A �
 
 variable {R G : Type u} [CommRing R] [Group G] [Fintype G]
 
-omit [Fintype G] in
 
 theorem ker_repSubOne (A : Rep.{u} R G) {σ : G} (hσ : ∀ x, x ∈ Subgroup.zpowers σ) :
     (repSubOne A σ).ker = A.ρ.invariants.toAddSubgroup := by

@@ -97,7 +97,6 @@ namespace Formalism.MainNotions.Wire
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.GlobalTheoryTheory
 
-open Formalism.MainNotions.flipTwoThree in
 
 end Formalism.MainNotions.Wire
 

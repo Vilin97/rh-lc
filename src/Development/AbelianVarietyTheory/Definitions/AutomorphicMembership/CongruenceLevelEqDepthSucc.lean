@@ -195,12 +195,10 @@ theorem N_succ_of_eq {j : ℕ} (h : j = R.m) : R.N j = (R.N R.m - 1) + 1 := h �
 
 def levGTop : LevFam X.E X.K (R.N R.m) Pr.vGs := fun w => levDiag (Nat.sub_le _ 1) (rowTyG Ch P w)
 
-variable (R) in
 
 def levQTop (c : ℕ) : LevQFam X.E X.K (R.N R.m) (QE sel (mu : Chr X.F X.E X.K)) := fun Q =>
   levCong (N_m_succ R) Q.1 c (rowTyQ R (mu : Chr X.F X.E X.K) (QE sel (mu : Chr X.F X.E X.K)) Q)
 
-open Classical in
 
 def topLevAt (c : ℕ) : TopLev X Pr R (QE sel (mu : Chr X.F X.E X.K)) where
   levG j := if h : j = R.m then fun w => levDiag (by have := N_succ_of_eq h; omega) (rowTyG Ch P w) else fun _ => ⟨⊤, 1⟩
@@ -209,22 +207,18 @@ def topLevAt (c : ℕ) : TopLev X Pr R (QE sel (mu : Chr X.F X.E X.K)) where
     else LevQFam.top X.E X.K (R.N j) _
   pref u j p := ∀ h : j = R.m, ∃ d : XPt Pr R sel mu, p = tilFr (N_succ_of_eq h) (Pr.piT u) d
 
-variable (R) in
 
 def topDep (M : ℕ) : ℕ := max (4 * R.m) (2 * R.m + 2 * M - 1)
 
-variable (R) in
 
 theorem topDep_succ (M : ℕ) : topDep R M + 1 = max (4 * R.m + 1) (2 * R.m + 2 * M) := by
   have := R.two_le_m
   unfold topDep
   omega
 
-variable (R) in
 
 theorem topDep_succ_eq_default (M : ℕ) : topDep R M + 1 = (default : TopDepth R M).1 := topDep_succ R M
 
-variable (R) in
 
 theorem two_mul_le_topDep (M : ℕ) : 2 * M ≤ topDep R M := by
   have := R.two_le_m
@@ -291,17 +285,13 @@ theorem levGTop_PsymF (w : Pr.vGs) : levGTop Ch (rPsymF Ch) w =
     ⟨HXmsym _ (R.N R.m) R.k R.r R.t R.m R.rS ((r_le_X' R).trans (Nat.sub_le _ 1)),
       lamXmsym (Ch.psi0 w) (chiAt Ch w) (R.N R.m) R.k R.r R.t R.m R.rS _⟩ := levGTop_eq Ch _ w
 
-variable {sel mu} in
 
-variable {sel mu} in
 
-variable {sel mu} in
 
 theorem extQ_mem_levQTop (c : ℕ) (a : GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K))) :
     extQ X.E (N_m_succ R) _ a ∈ (levQTop R sel mu c).grp ↔ a ∈ (levQX R sel mu).grp :=
   forall₂_congr fun Q _ => extI_mem_levCong (N_m_succ R) c _ (a Q)
 
-variable (R) in
 
 theorem levQTop_eq_topLevQ' {c c' : ℕ} (e : c + 1 = c') (hc : 0 < c') : levQTop R sel mu c = topLevQ R sel mu hc := by
   subst e

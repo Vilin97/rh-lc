@@ -10,7 +10,6 @@ namespace GroundTheory.Heights₂.Heights
 
 noncomputable section
 
-open Classical in
 
 def locLen {R : Type*} [CommRing R] (m : Ideal R) (N : Type*) [AddCommGroup N] [Module R N] : ℕ :=
   if h : m.IsPrime then

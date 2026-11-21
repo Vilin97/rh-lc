@@ -59,7 +59,6 @@ theorem qsp_frac (x : E) (hx : P.valuation E x ≤ 1) :
   apply mul_right_cancel₀ hD
   linear_combination (algebraMap (𝓞 E) E t) * hnd - hat
 
-include hint hPv in
 
 theorem qsp_le_of_val (x : E) (hx : P.valuation E x ≤ 1) : Valued.v (φ x) ≤ 1 := by
   obtain ⟨a, t, ht, hxt⟩ := qsp_frac P x hx
@@ -68,7 +67,6 @@ theorem qsp_le_of_val (x : E) (hx : P.valuation E x ≤ 1) : Valued.v (φ x) ≤
   rw [← hxt, map_mul, Valuation.map_mul, h1, mul_one] at h2
   exact h2
 
-include hint hPv in
 
 theorem qsp_lt_of_val (x : E) (hx : P.valuation E x < 1) : Valued.v (φ x) < 1 := by
   obtain ⟨a, t, ht, hxt⟩ := qsp_frac P x hx.le
@@ -82,7 +80,6 @@ theorem qsp_lt_of_val (x : E) (hx : P.valuation E x < 1) : Valued.v (φ x) < 1 :
   rw [← hxt, map_mul, Valuation.map_mul, h1, mul_one] at h2
   exact h2
 
-include hint hPv in
 
 theorem qsp_val_iff (x : E) : Valued.v (φ x) ≤ 1 ↔ P.valuation E x ≤ 1 := by
   refine ⟨fun h => ?_, qsp_le_of_val P φ hint hPv x⟩
@@ -97,7 +94,6 @@ theorem qsp_val_iff (x : E) : Valued.v (φ x) ≤ 1 ↔ P.valuation E x ≤ 1 :=
   have hφ : φ x ≠ 0 := (map_ne_zero φ).2 hx0
   exact absurd h (not_le.2 ((Valuation.one_lt_val_iff _ hφ).2 hlt))
 
-include hint hPv in
 
 theorem qsp_mod (x d : E) (hd : d ≠ 0) (z : v.adicCompletion F) (hz : Valued.v z ≤ 1) (hxz : φ x = φ d * z) :
     P.valuation E x ≤ P.valuation E d := by

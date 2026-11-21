@@ -22,7 +22,6 @@ namespace GlobalTheory.ProjVar.Var
 
 variable {F : Type} [Field F] (Y : Var F) {κ : Type} (Δ : κ → Y.Dv)
 
-open Classical in
 
 def interPoly : MvPolynomial κ ℝ →ₗ[ℝ] ℝ :=
   (basisMonomials κ ℝ).constr ℝ fun d =>
@@ -160,8 +159,6 @@ def fibrePoint : MvPolynomial (Root m) ℝ := ∏ x : Root m, (-X x) ^ (m x.1 - 
 def rootDiscr : MvPolynomial (Root m) ℝ :=
   ∏ τ, ∏ j : Fin (m τ), ∏ i ∈ Finset.Iio j, (X ⟨τ, j⟩ - X ⟨τ, i⟩)
 
-variable {m} in
-open Classical in
 
 def antisymm (Q : MvPolynomial (Root m) ℝ) : MvPolynomial (Root m) ℝ :=
   ∑ w : ∀ τ, Equiv.Perm (Fin (m τ)),

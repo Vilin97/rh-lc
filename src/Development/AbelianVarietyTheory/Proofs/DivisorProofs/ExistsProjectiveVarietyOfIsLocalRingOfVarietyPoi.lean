@@ -26,7 +26,6 @@ noncomputable section
 
 namespace GlobalTheory.LocModelProj
 
-open ReciprocityTheory.ChartRestriction.G.Out GlobalTheory.AbLaw in
 
 theorem exists_projective_openImmersion (S : Type) [CommRing S] [IsDomain S] [Algebra ℂ S] [Algebra.FiniteType ℂ S] :
     ∃ (Y : Scheme.{0}) (_ : IsIntegral Y) (p : Y ⟶ Sp ℂ) (j : Sp S ⟶ Y),

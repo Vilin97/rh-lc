@@ -42,7 +42,6 @@ def atPlL (w : InfinitePlace F) :
 def ladder (i : InfinitePlace F × Formalism.BasicNotions.TH.Ln P Q R S × Bool) : Module.End ℂ (Tens F P Q R S) :=
   atPlL i.1 (if i.2.2 then Formalism.BasicNotions.TH.raiB i.2.1 else Formalism.BasicNotions.TH.lowB i.2.1)
 
-variable (F P Q R S) in
 
 def lev (k : ℕ) : Submodule ℂ (Tens F P Q R S) :=
   Nat.rec (motive := fun _ => Submodule ℂ (Tens F P Q R S))

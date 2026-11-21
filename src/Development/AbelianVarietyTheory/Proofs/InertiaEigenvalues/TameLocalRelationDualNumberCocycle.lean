@@ -15,7 +15,6 @@ section Abstract
 
 variable {Γ : Type} [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ]
 
-omit [IsTopologicalGroup Γ] in
 
 theorem hom_trivial {l : ℕ} (hU : ∀ U : Subgroup Γ, U.Normal → IsOpen (U : Set Γ) → U.index.Coprime l)
     {C : Type} [Group C] (f : Γ →* C) (hf : IsOpen (f.ker : Set Γ)) (n : ℕ) (hC : ∀ x : C, x ^ l ^ n = 1) (j : Γ) :
@@ -27,7 +26,6 @@ theorem hom_trivial {l : ℕ} (hU : ∀ U : Subgroup Γ, U.Normal → IsOpen (U 
   have h3 := pow_gcd_eq_one.2 ⟨h1, hC (f j)⟩
   rwa [h2, pow_one] at h3
 
-omit [IsTopologicalGroup Γ] in
 
 theorem vanish_of_additive {l : ℕ} {J : Subgroup Γ}
     (hU : ∀ U : Subgroup J, U.Normal → IsOpen (U : Set J) → U.index.Coprime l)
@@ -41,7 +39,6 @@ theorem vanish_of_additive {l : ℕ} {J : Subgroup Γ}
   apply Multiplicative.toAdd.injective
   rw [toAdd_pow, pow_one, ← Nat.cast_smul_eq_nsmul K, CharP.cast_eq_zero, zero_smul, toAdd_one]
 
-omit [TopologicalSpace Γ] [IsTopologicalGroup Γ] in
 
 theorem additive_zpow {D : Subgroup Γ} {W : Type} [AddCommGroup W] (w : Γ → W)
     (hadd : ∀ g ∈ D, ∀ h ∈ D, w (g * h) = w g + w h) {γ : Γ} (hγ : γ ∈ D) (k : ℤ) : w (γ ^ k) = k • w γ := by
@@ -65,7 +62,6 @@ theorem vanish_closure {D J : Subgroup Γ} (hJ : J ≤ D) {W : Type} [AddCommGro
   intro σ hσ
   exact closure_minimal hsub (hw.isClosed_fiber 0) hσ
 
-omit [TopologicalSpace Γ] [IsTopologicalGroup Γ] in
 
 theorem second_pow {D : Subgroup Γ} {K : Type} [Field K] {W : Type} [AddCommGroup W] [Module K W] (z0 z1 : Γ → W)
     (lam : Γ → K) (hlam : ∀ g ∈ D, ∀ h ∈ D, lam (g * h) = lam g + lam h)

@@ -117,12 +117,10 @@ variable [FiniteDimensional ℝ V']
 theorem differentiable_opFst (T : 𝓢(V, ℂ) →L[ℂ] 𝓢(W, E)) (f : 𝓢(V × V', ℂ)) :
     Differentiable ℝ (opFst T f) := fun p => (GlobalTheory.T.has_fderiv_at_schwartz_operator_first T f p.1 p.2).differentiableAt
 
-variable (W V' E) in
 
 def compFst : (W →L[ℝ] E) →L[ℝ] (W × V' →L[ℝ] E) :=
   (ContinuousLinearMap.compL ℝ (W × V') W E).flip (ContinuousLinearMap.fst ℝ W V')
 
-variable (W V' E) in
 
 def coordSnd (i : Fin (Module.finrank ℝ V')) : E →L[ℝ] (W × V' →L[ℝ] E) :=
   ContinuousLinearMap.smulRightL ℝ (W × V') E

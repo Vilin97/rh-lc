@@ -28,7 +28,6 @@ open GlobalTheory.Cusp GlobalTheory.Mem.AutSpace
 
 variable {D : D7} {θ : GlobalTheory.Mem.Th.InfF D} {V : HSp D}
 
-variable (θ V) in
 
 abbrev Mc : Submodule ℂ (GA D V → ℂ) := cuspForms θ V ⊥
 

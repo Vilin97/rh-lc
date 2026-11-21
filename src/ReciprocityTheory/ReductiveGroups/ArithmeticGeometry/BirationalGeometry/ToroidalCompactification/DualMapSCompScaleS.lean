@@ -200,7 +200,6 @@ theorem glue_tan' {n : ℕ} (s : Fin n → S) (hs : Ideal.span (Set.range s) = �
   rw [hα, hβ, CommRingCat.ofHom_comp, CommRingCat.ofHom_comp, Spec.map_comp, Spec.map_comp,
     Category.assoc, Category.assoc, hk]
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem tan_ext_cover {n : ℕ} (s : Fin n → S) (hs : Ideal.span (Set.range s) = ⊤)
     {v₁ v₂ : sp (R₀ := S) (DualNumber S) ⟶ G}

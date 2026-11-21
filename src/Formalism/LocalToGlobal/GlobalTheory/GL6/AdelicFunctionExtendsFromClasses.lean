@@ -54,7 +54,6 @@ theorem translate_mem_span_adelic (S : StepLevel F E σ J T f bad) (emb : ι →
       funext y; simp only [Pi.smul_apply, smul_eq_mul]; ring
     rw [e]; exact Submodule.smul_mem _ r ha
 
-set_option maxHeartbeats 1000000 in
 
 theorem adelic_function_extends_from_classes (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ)
     (hc : ∀ τ x, emb τ (σ x) = starRingEnd ℂ (emb τ x)) (lam : ι → DomWeight n)
@@ -106,9 +105,7 @@ section Tied
 
 variable {D : D7} {u : D.what₂.Word}
 
-set_option maxHeartbeats 4000000 in
 
-set_option maxHeartbeats 4000000 in
 
 end Tied
 

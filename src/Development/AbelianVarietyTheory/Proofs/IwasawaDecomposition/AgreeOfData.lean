@@ -105,7 +105,6 @@ section Main
 theorem iso_of_eq {Lf : Type} [Field Lf] [NumberField Lf] [IsCMField Lf] {n : ℕ} {π π' : NG.FinTyp Lf n} (h : π = π') : π.Iso π' :=
   h ▸ NG.IsoRep.refl _
 
-set_option maxHeartbeats 4000000 in
 
 end Main
 

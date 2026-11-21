@@ -71,7 +71,6 @@ omit [DecidableEq K] in
 theorem comp_apply [DirectSum.Decomposition piece] (m : K → ℤ) (y : M) :
     comp (piece := piece) m y = (DirectSum.decompose piece y m : M) := rfl
 
-open Classical in
 
 theorem comp_smul (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piece] {c : K → ℤ}
     {x : M} (hx : x ∈ piece c) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (m : K → ℤ) :
@@ -99,7 +98,6 @@ theorem comp_mem_span (hM : IsMultigrading ι M piece) [DirectSum.Decomposition 
   rw [comp_smul hM hx]
   exact Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self x)
 
-omit [DecidableEq K] [IsScalarTower F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] in
 
 theorem comp_mem_sup [DirectSum.Decomposition piece] {N₁ N₂ : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M}
     (h₁ : ∀ y ∈ N₁, ∀ m, comp (piece := piece) m y ∈ N₁)
@@ -110,7 +108,6 @@ theorem comp_mem_sup [DirectSum.Decomposition piece] {N₁ N₂ : Submodule (Rec
   rw [map_add (f := _)]
   exact Submodule.add_mem_sup (h₁ a ha m) (h₂ b hb m)
 
-open Classical in
 
 theorem step [∀ k, Fintype (ι k)] (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piece]
     {N N' : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M} {x : M} {c : K → ℤ} {q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}

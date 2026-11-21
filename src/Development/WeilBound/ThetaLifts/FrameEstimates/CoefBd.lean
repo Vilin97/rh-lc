@@ -87,7 +87,6 @@ theorem dual_cpt [IsTotallyReal F] {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F �
     simp only
     rw [nsmul_eq_mul, ← mul_assoc, ← map_natCast (algebraMap F (Af F)), ← map_mul, inv_mul_cancel₀ this, map_one, one_mul]
 
-variable (F κ) in
 
 def spl : ((κ → mixedSpace F) × (κ → Af F)) ≃+ (κ → AF F) where
   toFun p i := re F (p.1 i) + fi F (p.2 i)

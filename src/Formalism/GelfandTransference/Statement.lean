@@ -10,11 +10,8 @@ noncomputable section
 
 namespace Formalism.HadamardInequality
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 def Hadamard : Prop :=
   ∀ (ρ : ℕ) (A : Matrix (Fin ρ) (Fin ρ) ℂ), ‖A.det‖ ^ 2 ≤ ∏ i, ∑ j, ‖A i j‖ ^ 2

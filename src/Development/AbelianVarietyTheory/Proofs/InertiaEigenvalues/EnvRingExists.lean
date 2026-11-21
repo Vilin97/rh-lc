@@ -48,7 +48,6 @@ theorem polyEval_isδ [Fact l.Prime] {A C : Type} [CommRing A] [CommRing C] (D :
 
 end GlobalTheory.BSP.EnvExist
 
-open GlobalTheory.BSP.EnvExist in
 
 theorem GlobalTheory.BSP.envRing_exists : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [CommRing A] (D : Delta l A) (J : Ideal A)
     (d p : A), J.FG → (l : A) ∈ J → d ∈ J → IsUnit (D.δ d) → IsAdicComplete J A →

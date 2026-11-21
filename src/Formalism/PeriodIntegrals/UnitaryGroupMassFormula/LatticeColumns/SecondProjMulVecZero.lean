@@ -237,7 +237,6 @@ theorem bwd_coords (hW : WClause X hb u p θ Q) (x : KvH X u p.1) (Bo : Matrix (
     rw [hsum, neg_neg]
     exact hG2 s
 
-set_option maxHeartbeats 1000000 in
 
 theorem bwd_col (hLB : LatBasis X p θ (reindex₂ X p Q)) (hε : θ (epsP X p) = (1, 0))
     (hW : WClause X hb u p θ Q) (x : KvH X u p.1) (Bo : Matrix (Fin D.R.k) (Fin D.R.k) (Op X p))

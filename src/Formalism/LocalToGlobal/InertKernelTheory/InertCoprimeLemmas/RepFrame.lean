@@ -737,8 +737,6 @@ theorem coe_LBc (v : X.Pl) (k : PIx X (j := j) v) (i : Fin r) :
     ((LBc X D b ρ twK v k i : MaximalUnramifiedExtension p) : ℂ_[p]) = lamBc D lam b (pos ⟨v, k.1⟩, k.2.1, k.2.2) i := by
   rw [LBc, htwK, lamBc, hρ]
 
-open Classical in
-include hρ htwK in
 
 theorem kurONB (hL : LamONB D lam b) (v v' : X.Pl) (k : PIx X (j := j) v) (k' : PIx X (j := j) v') :
     ∑ i, LB X D b ρ twK v k i * LBc X D b ρ twK v' k' i =

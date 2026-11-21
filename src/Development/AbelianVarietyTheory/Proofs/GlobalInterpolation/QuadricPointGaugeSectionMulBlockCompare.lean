@@ -38,9 +38,6 @@ private lemma sum_norm_sum_mul_matrix_le_mul_sum_norm_of_norm_le {α : Type*} [F
         rw [Finset.sum_comm, Finset.mul_sum]
         simp_rw [Finset.mul_sum]
 
-open MeasureTheory Matrix Filter Topology in
-open scoped ENNReal NNReal in
-variable {P Q P' Q' : ℕ} in
 
 theorem _root_.GlobalTheory.SectionGaugeCompare.gauge_section_mul_block : ∀ (P Q P' Q' : ℕ)
     (e : Option (Fin P' ⊕ Fin Q') ≃ (Fin P ⊕ Fin Q)) (j : _root_.Formalism.BasicNotions.UpqT P' Q' → _root_.Formalism.BasicNotions.UpqT P Q),

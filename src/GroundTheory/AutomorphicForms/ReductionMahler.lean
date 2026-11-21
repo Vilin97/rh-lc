@@ -72,7 +72,6 @@ theorem exists_adelicNorm_vecMul_le_mul {C : Set (AdelicGLn.AdelicGL K n)} (hC :
     · exact norm_vecMul_le_of_norm_le v (zero_le_one.trans (hb1 v)) (hb v g hg) _
     · rw [norm_vecMul_integralGL v (hS g hg v hv), one_mul]
 
-variable (K n) in
 
 def normOneGL : Subgroup (AdelicGLn.AdelicGL K n) :=
   (normOneSubgroup K).comap (AdelicGLn.det K n)
@@ -308,7 +307,6 @@ theorem exists_isCompact_forall_of_pos_le_height {ε : ℝ} (hε : 0 < ε) :
     dsimp only
     rw [← heq, inv_mul_cancel_left]
 
-variable (K n) in
 
 abbrev rationalGLOne : Subgroup (normOneGL K n) :=
   (AdelicGLn.rationalGL K n).subgroupOf (normOneGL K n)

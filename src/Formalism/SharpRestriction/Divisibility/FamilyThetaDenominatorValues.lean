@@ -45,7 +45,6 @@ structure Loc where
   g_mem : ∀ k, D.host.g k ∈ ffP
   pde_mem : D.host.pde ∈ ffP ∧ D.host.pde' ∈ ffP
 
-variable {D} in
 
 def ThetaDenominatorValues (X : Loc D) (C : ℝ) : Prop :=
   ∃ n : ∀ i, D.ntw.abelian₂ i → ℕ,
@@ -58,9 +57,7 @@ def ThetaDenominatorValues (X : Loc D) (C : ℝ) : Prop :=
     ∀ i, D.ntw.NonzeroIndexPlace i → ∀ (Q : Finset (HeightOneSpectrum (𝓞 D.host.E))), QOk D i Q →
       ∀ (lam : D.ntw.abelian₂ i) (s : ℤ), SOk D i lam s → ∀ δ, IntAfter D i (X.cE i lam + n i lam) (D.ntw.th i Q lam δ)
 
-variable {D} in
 
-open Classical in
 
 def oW (l : ℕ) [Fact l.Prime] (E : Type) [Field E] [NumberField E] (Λ : Type) [AddCommGroup Λ]
     [Module (𝓞 E) Λ] (a : 𝓞 E) : (ℂ_[l] ⊗[ℤ] Λ) →ₗ[ℂ_[l]] (ℂ_[l] ⊗[ℤ] Λ) :=
@@ -106,21 +103,13 @@ structure PtTie {l : ℕ} [Fact l.Prime] (E : Type) [Field E] [NumberField E] {�
 
 attribute [instance] PtTie.acgHA PtTie.modHA PtTie.acgLA PtTie.modLA
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
 def AO (i : D.ntw.Tw) (j : ℕ) (b : Bool) : Module.End (D.ntw.O i) (D.nexp.Fm i j b) :=
   Formalism.MainNotions.IntegralHeckeForms.AO D.nexp i j b
@@ -140,13 +129,9 @@ def ConjugationNormInvariance : Prop :=
       ((D.what₂.restRowsFiniteGroupCard : ℕ) : FractionRing (D.ntw.O i)) • D.nexp.eAlg i b) ∧
   ∀ (i : D.ntw.Tw), ∀ j ∈ Finset.Icc 1 D.R.m, ∀ b : Bool, (M0 D i j b).map (AO D i j b) ≤ Mj D i j b
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
-variable {D} in
 
 def wJ (j : ℕ) : ℝ := ∑ ρ : D.what₂.Tau, DV.wSz D j ρ
 
@@ -156,9 +141,7 @@ def onBoundJ (L : SizeData₂ D) (C : ℝ) : ℝ :=
   C * (L.sc.L * Real.log (D.R.k : ℝ) * (D.R.m : ℝ) * wMax D +
     (D.R.f : ℝ) * (D.R.m : ℝ) * L.sc.b * Real.log L.sc.x)
 
-variable {D} in
 
-variable {D} in
 
 structure ThetaDenominatorData where
 
@@ -267,7 +250,6 @@ section FamON
 
 variable {eps : ℝ} (Fm : Formalism.MainNotions.FamP eps) (OF : ONObjF Fm)
 
-variable {Fm OF} in
 
 end FamON
 

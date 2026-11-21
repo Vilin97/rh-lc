@@ -44,7 +44,6 @@ end GlobalTheory.LocOver.InnerDual
 
 namespace GlobalTheory.LocOver.InnerDual
 
-open GlobalTheory.LocOver.UnipOnto in
 
 theorem exists_inner_lattice_vector_anisotropic' : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] {E : Type} [CommRing E]
     [Algebra F E] [TopologicalSpace E] [MeasurableSpace E] (M : Model F E), M.OK → ∀ {V : Type}

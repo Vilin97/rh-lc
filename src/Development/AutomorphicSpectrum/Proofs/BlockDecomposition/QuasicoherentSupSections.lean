@@ -55,7 +55,6 @@ end GlobalTheory.CompanionTheory.GE.SupSecs
 
 namespace GlobalTheory.CompanionTheory.GE
 
-open SupSecs in
 
 theorem supsecs {X : Scheme.{0}} {E : X.Modules} (hE : E.IsQuasicoherent) (S T : Subobject E)
     (hS : (S : X.Modules).IsQuasicoherent) (hT : (T : X.Modules).IsQuasicoherent) :

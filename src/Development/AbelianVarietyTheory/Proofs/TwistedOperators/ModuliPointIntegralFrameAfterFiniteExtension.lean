@@ -34,7 +34,6 @@ namespace GlobalTheory.AnyLevelFrame
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l l₂ : Level H}
 
-open RationalTorsion in
 
 theorem exists_obj_of_rational {B B₂ K Ω : Type} [CommRing B] [CommRing B₂] [Field K] [CharZero K] [Field Ω]
     [IsAlgClosed Ω] {b : Base l B} {b₂ : Base l₂ B₂} (b₀ : B →+* K) (j : B₂ →+* K) (σ : K →+* Ω)
@@ -176,7 +175,6 @@ theorem exists_obj_level (c : Coeff l) (c₂ : Coeff l₂) (hle : c.F ≤ c₂.F
     hρ hrat
   exact ⟨L, inferInstance, inferInstance, inferInstance, j, o₂, ho₂ ▸ ⟨m⟩⟩
 
-set_option maxHeartbeats 400000 in
 
 theorem exists_intFr {Xo : Moduli D l} {c : Coeff l} (T : CDVR) (io : c.F →+* T.Fr) (x : Sp T.Fr ⟶ Xo.X)
     (hx : letI := io.toAlgebra; x ≫ Xo.s = sOf c T.Fr) (G : SAB H (Sp T.V)) (t' : SAB H (Sp T.Fr))

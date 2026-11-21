@@ -15,7 +15,6 @@ namespace GlobalTheory.CompanionTheory.SplitRatio
 
 variable (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ]
 
-open GroundTheory.Global in
 
 theorem exists_schA_compact : ∃ Φ ∈ schA F κ, Continuous Φ ∧ HasCompactSupport Φ ∧ Φ 0 ≠ 0 := by
   let b : ContDiffBump (0 : κ → mixedEmbedding.mixedSpace F) := default

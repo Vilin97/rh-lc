@@ -23,7 +23,6 @@ def thK (l : ℕ) [Fact l.Prime] (e : ℕ) (ψ : ZMod l → Qbar l) (s : G ℚ �
 def rhoK {l : ℕ} [Fact l.Prime] (W : R2 Ω l) (e : ℕ) (ψ : ZMod l → Qbar l) (s : G ℚ Ω) : Matrix (Fin 2) (Fin 2) (Qbar l) :=
   (thK l e ψ s)⁻¹ • mat W s
 
-open Classical in
 
 def nuD {l : ℕ} [Fact l.Prime] (W : R2 Ω l) (e : ℕ) (ψ : ZMod l → Qbar l) (s : G ℚ Ω) : (Qbar l)ˣ :=
   if h : rhoK W e ψ s 1 1 ≠ 0 then Units.mk0 _ h else 1
@@ -67,7 +66,6 @@ def wkMu (X : Tower Ω ε) (l n r N : ℕ) (x : ZMod N) (c d : ℕ) (σ : Ω ≃
   ((topW (K := topL X M) (topZeta X M l n) (topChar X M l n u) (topChar X M l n v)
     (topEta X M (topChar X M l n u) (topChar X M l n v)) (topLift X M σ)⁻¹ : topL X M) : X.K)
 
-open Classical in
 
 def clsBmu (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n r N : ℕ) [NeZero N] (x : ZMod N) (c d k : ℕ) (g : (ZMod l)ˣ → SL(2, ℤ))
     (σ : Ω ≃ₐ[ℚ] Ω) : X.Fn l :=
@@ -94,7 +92,6 @@ def wkTmu (X : Tower Ω ε) (l n r N l' : ℕ) (x : ZMod N) (c d : ℕ) (σ : Ω
   ((topW (K := topL X M) (topZeta X M l n) (topChar X M l n u) (topChar X M l n v)
     (topEta X M (topChar X M l n u) (topChar X M l n v)) (topLift X M σ)⁻¹ : topL X M) : X.K)
 
-open Classical in
 
 def clsBTmu (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n r N l' : ℕ) [NeZero N] [NeZero l'] (x : ZMod N) (c d k : ℕ)
     (g : (ZMod l)ˣ → SL(2, ℤ)) (σ : Ω ≃ₐ[ℚ] Ω) : X.Fn l :=
@@ -118,7 +115,6 @@ def YfBT (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (pr : X.Fn l → Fin 2 → Q
 def cycT (l r l' : ℕ) [Fact l.Prime] (s : Ω ≃ₐ[ℚ] Ω) : (ZMod l')ˣ × (ZMod (l ^ r))ˣ :=
   ((cycM l' s)⁻¹, (cycMod (F := ℚ) (Ω := Ω) l r s)⁻¹)
 
-open Classical in
 
 def lsqInv (l l' r : ℕ) : (ZMod l')ˣ :=
   if h : IsUnit ((l : ZMod l') ^ (2 * r)) then h.unit⁻¹ else 1

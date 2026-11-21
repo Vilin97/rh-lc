@@ -86,7 +86,6 @@ variable {P : ArithVariety n} (D : AddBlockData P)
 
 variable {d : ι → ℕ} {g : ((k : ι) → Fin (n k + 1)) → Fin (D.size + 1) → MvPolynomial (Coord n) ℤ}
 
-omit [Fintype ι] in
 
 end AddBlock
 

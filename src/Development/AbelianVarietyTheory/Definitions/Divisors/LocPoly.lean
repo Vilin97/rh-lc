@@ -26,12 +26,10 @@ section Inf
 
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
-open Classical in
 
 def pdL (v : InfinitePlace K) (i j : Fin n) (F : Lie K n → ℂ) (x : Lie K n) : ℂ :=
   fderiv ℝ F x (toL (Matrix.single i j (Pi.single v 1)))
 
-open Classical in
 
 def detD (v : InfinitePlace K) (F : Lie K n → ℂ) (x : Lie K n) : ℂ :=
   ∑ p : Equiv.Perm (Fin n), (((Equiv.Perm.sign p : ℤˣ) : ℤ) : ℂ) * (List.finRange n).foldr (fun j G => pdL v (p j) j G) F x

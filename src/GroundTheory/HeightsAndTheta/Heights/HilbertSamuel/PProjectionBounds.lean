@@ -163,7 +163,6 @@ theorem rank_bound {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} (hfr : IsProjF
 
 end ProjectionBounds
 
-open ProjectionBounds in
 
 theorem ProjectionBounds.proof (hR : ResChiBounds.Statement) : ProjectionBounds.Statement := by
   classical

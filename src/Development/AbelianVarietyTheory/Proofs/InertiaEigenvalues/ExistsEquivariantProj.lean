@@ -26,7 +26,6 @@ theorem cuspFormsBounded : CuspFormsBoundedGL :=
   GlobalTheory.CuspBoundSiegel.cuspFormsBounded_of_rapidDecay
     (GlobalTheory.cuspRapidDecaySiegelGL_of_finite GlobalTheory.automorphicFormsFiniteGL)
 
-variable (ω) in
 
 abbrev bddSm : Submodule ℂ (Sm E a) := (bddForms E a ω).comap (Sm E a).subtype
 

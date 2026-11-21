@@ -78,4 +78,3 @@ theorem psiAt_comp {Γ Γ' A : Type} [Group Γ] [Group Γ'] [CommGroup A] (b : B
 
 end GlobalTheory.BigOn.Exp.TwAdmProof
 
-open GlobalTheory.BigOn.Exp.TwAdmProof in

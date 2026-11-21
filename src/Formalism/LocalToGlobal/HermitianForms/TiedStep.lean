@@ -69,7 +69,6 @@ theorem lamT_zero (u : D.what₂.Word) : lamT u 0 = (D.fm u).lam 0 := by
   funext τ
   simp [lamT, shW_zero]
 
-set_option maxHeartbeats 1000000 in
 
 structure ClsTied (u : D.what₂.Word) (i : ℕ) (hi : i ≤ D.R.m) where
 
@@ -92,7 +91,6 @@ structure ClsTied (u : D.what₂.Word) (i : ℕ) (hi : i ≤ D.R.m) where
       bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ.1 ∈
         lev.U.map (MulAut.conj (y c).1).toMonoidHom
 
-set_option maxHeartbeats 1000000 in
 
 structure ValTied (u : D.what₂.Word) (eV : (D.mem u).A.vT ≃ PlT D u) (i : ℕ) (hi : i ≤ D.R.m) (K : ClsTied u i hi) where
 

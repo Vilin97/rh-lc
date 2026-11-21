@@ -59,13 +59,11 @@ def tSet (s : SplitPlace L) (ϖ : s.v.adicCompletion L⁺) (j : ℕ) : Set (GAf 
       ((s.loc n x : GL (Fin n) (s.v.adicCompletion L⁺)) : Matrix (Fin n) (Fin n) _) =
         (a : Matrix (Fin n) (Fin n) _) * Formalism.UG.diagJ n ϖ j * (b : Matrix (Fin n) (Fin n) _)}
 
-open Classical in
 
 def heckeFun {W : Type} [AddCommGroup W] [Module ℂ W] (U : Subgroup (GAf L n)) (D : Set (GAf L n))
     (f : GAf L n → W) : GAf L n → W :=
   fun g => ∑ᶠ c : GAf L n ⧸ U, if (∃ x ∈ D, (x : GAf L n ⧸ U) = c) then f (g * c.out) else 0
 
-open Classical in
 
 def heckeEnd {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (GQ L n) W)
     (U : Subgroup (GAf L n)) (D : Set (GAf L n)) : Module.End ℂ (Forms L n ρ U) :=
@@ -101,6 +99,5 @@ structure Part (S : Formalism.ConjugateSelfDual.SpectrumFamily) (L : Type) [Fiel
 
 end GeneralLinearIntegers
 
-open ReciprocityTheory.Aut in
 
 end Formalism.AUTREP

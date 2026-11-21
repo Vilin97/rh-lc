@@ -311,7 +311,6 @@ theorem chernPart_apply (h : φ.IsCInf) (ε : ℤˣ) (c : AlgChart p σ D) (hS :
     rw [c.chernDens_trans c' h hy hy', mul_left_comm, ENNReal.ofReal_mul (sq_nonneg _)]) c hS hc,
     chartMeas_apply_of_subset _ _ hS hc]
 
-omit [SecondCountableTopology (CxPts p σ)] in
 
 theorem chernPart_neg_eq_zero (h : φ.IsCInf) (h' : φ.SemiPosReg D) : φ.chernPart D (-1) = 0 := by
   refine le_antisymm (iSup_le fun c => le_of_eq (Measure.measure_univ_eq_zero.1 ?_)) bot_le
@@ -401,7 +400,6 @@ variable {q : Z ⟶ Sp k} {y : CxPts q σ} {f g : Z.functionField}
 
 abbrev under (y : CxPts q σ) : Z := y.1 (IsLocalRing.closedPoint ℂ)
 
-open Classical in
 
 def ratVal (f : Z.functionField) (y : CxPts q σ) : ℂ :=
   if h : RegAt (under y) f then
@@ -468,7 +466,6 @@ theorem fnOf_sec_ne_zero {s : L.Sec} (hs : genericPoint Z ∈ nonzeroLocus s) {i
     (h : genericPoint Z ∈ L.U i) : fnOf _ h (s.f i) ≠ 0 :=
   ((unitAt_fnOf_iff h h _).2 ((mem_nonzeroLocus_iff s i h).1 hs)).ne_zero
 
-open Classical in
 
 def ratOfSec (s : L.Sec) (hs : genericPoint Z ∈ nonzeroLocus s) (i : L.ι) :
     Z.functionFieldˣ :=
@@ -480,14 +477,12 @@ theorem val_ratOfSec {i : L.ι} (h : genericPoint Z ∈ L.U i) :
     (ratOfSec s hs i : Z.functionField) = fnOf _ h (s.f i) := by
   rw [ratOfSec, dif_pos h, Units.val_mk0]
 
-variable (s hs) in
 
 theorem isRatSec_ratOfSec : IsRatSec L (ratOfSec s hs) := fun i j h => by
   rw [val_ratOfSec h.1, val_ratOfSec h.2, ← fnOf_resG inf_le_left h, ← fnOf_resG inf_le_right h,
     ← map_mul]
   exact congrArg _ (s.compat i j)
 
-variable (hL s hs) in
 
 abbrev divOfSec : CartierDiv Z := divOfRatSec hL (isRatSec_ratOfSec s hs)
 
@@ -716,7 +711,6 @@ theorem nsq_shift (t : (k →+* ℂ) → ℝ) (ht : ∀ σ, t ((starRingEnd ℂ)
     ((L.shift t ht).φ σ).nsq s y = (L.φ σ).nsq s y * Real.exp (-(2 * t σ)) :=
   (L.φ σ).nsq_addFn _ s y
 
-variable (p) in
 
 def triv : HermLB p where
   B := LB.triv X
@@ -725,7 +719,6 @@ def triv : HermLB p where
   cInf _ := Weight.isCInf_ofFun (cInfAt_const 0)
   conj _ _ _ _ _ _ _ := rfl
 
-variable (p) in
 
 def fs {B : LB X} (hB : B.IsLB) {α : Type} [Fintype α] [DecidableEq α] (b : α → B.Sec)
     (hb : ⨆ j, nonzeroLocus (b j) = ⊤) (A : (k →+* ℂ) → Matrix α α ℂ) (hA : ∀ σ, (A σ).det ≠ 0)
@@ -748,7 +741,6 @@ theorem zero_mem_smallSec : 0 ∈ L.smallSec := fun σ y => by
 
 def SemiPos (D : ℕ) : Prop := ∀ σ, (L.φ σ).SemiPosReg D
 
-variable {L} in
 
 end HermLB
 
@@ -1095,7 +1087,6 @@ theorem SemiPos.shift {L : HermLB p} (h : L.SemiPos D) (t : (k →+* ℂ) → �
     (ht : ∀ σ, t ((starRingEnd ℂ).comp σ) = t σ) : (L.shift t ht).SemiPos D :=
   fun σ => (h σ).addFn_const _
 
-variable (p D) in
 
 theorem isNef_triv : (triv p).IsNef D where
   semiPos σ i c y _ ξ := (congrArg Complex.re (ReciprocityTheory.L2DbarEstimates.Y.cmpb_leviV_const 0 _ ξ)).ge
@@ -1126,7 +1117,6 @@ namespace ProjSpace
 
 variable (k) (N : ℕ)
 
-attribute [local instance] MvPolynomial.gradedAlgebra in
 
 theorem isIntegral_of_isDomain [IsDomain k] : IsIntegral (PSpace k N) := by
   let η : ProjectiveSpectrum (grading k N) := ⟨⊥, Ideal.isPrime_bot, fun h =>
@@ -1318,7 +1308,6 @@ theorem mem_asIdeal_iff (n : ℤ) : n ∈ (i (genericPoint Z)).asIdeal ↔ (n : 
   rw [← unitAt_fnOf_iff (Opens.mem_top _) (Opens.mem_top _), ← ne_eq, ← map_ne_zero_iff _ (fnOf_injective ⊤ (Opens.mem_top _))]
   exact ⟨UnitAt.ne_zero, unitAt_genericPoint⟩
 
-omit [IsIntegral Z] in
 
 theorem surjective_intCast [IsClosedImmersion i] :
     Function.Surjective (Int.castRingHom Γ(Z, ⊤)) := by
@@ -1328,7 +1317,6 @@ theorem surjective_intCast [IsClosedImmersion i] :
 
 def trivShift (t : ℝ) : HermLB (𝟙 (Sp ℤ)) := (HermLB.triv _).shift (fun _ => t) fun _ => rfl
 
-open Classical in
 
 theorem isArithHeight_trivShift (t : ℝ) : (trivShift t).IsArithHeight fun x =>
     if x.asIdeal = ⊥ then t else Real.log (Nat.card (ℤ ⧸ x.asIdeal)) where

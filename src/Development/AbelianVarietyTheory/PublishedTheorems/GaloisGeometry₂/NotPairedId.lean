@@ -58,7 +58,6 @@ theorem twist {π : CuspSub E a} (h : Paired π π invTOp) (χ : HChar E) : Pair
     simp only [Units.val_one, one_smul, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
     linear_combination e
 
-omit [IsTotallyComplex E] in
 
 end GlobalTheory.Published.InvTransposeModel
 

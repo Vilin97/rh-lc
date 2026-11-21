@@ -169,7 +169,6 @@ theorem isTypeAt_of_hasTypeAt_model {D : D7} (θ : D.what₂.Tau → (Ainf D.hos
 
 end ClosureSeries
 
-open Formalism.MainNotions.S Formalism.REAL GlobalTheory.SmoothGlob GlobalTheory.LowTypeDetermined GlobalTheory.TypeSum in
 
 end GlobalTheory.AvgTypeOther
 

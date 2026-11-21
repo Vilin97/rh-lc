@@ -93,7 +93,6 @@ def SelObs : Prop :=
       Nat.card (↥(selOn bkP i (Tgl i s) κ B'' Q) ⧸ ((selOn bkP i (Tgl i s) κ B Q).map (h1Map (Tgl i s) κ g)).comap
         (selOn bkP i (Tgl i s) κ B'' Q).subtype) ≤ Nat.card (selOn bkP i (Tgl i s) κ K Q)
 
-open CategoryTheory in
 
 def KernelRep : Prop :=
   ∀ (Λ : Type) [CommRing Λ] [IsLocalRing Λ] [IsNoetherianRing Λ] [IsAdicComplete (IsLocalRing.maximalIdeal Λ) Λ]

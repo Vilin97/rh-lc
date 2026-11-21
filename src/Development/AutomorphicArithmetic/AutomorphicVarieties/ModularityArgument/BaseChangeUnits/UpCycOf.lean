@@ -35,4 +35,3 @@ private theorem algSat_pow (n q f : ℕ) (B : Multiset ℂˣ) :
       ← Real.rpow_mul (Nat.cast_nonneg q), mul_comm]
   rw [h, mul_pow, Units.val_pow_eq_pow_val, Complex.ofReal_pow]
 
-open UpperTheory.V.Sd in

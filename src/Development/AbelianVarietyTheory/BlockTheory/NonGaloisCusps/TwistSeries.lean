@@ -76,13 +76,11 @@ end Series
 variable (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (i : Fin D.R.m)
   (κ : WeightFamilies.Wt D ((i : ℕ) + 1))
 
-omit [Algebra T.Q.c.F D.what₂.LL] in
 
 def IsTowerCover (l : ℕ) (C : Cover T ((i : ℕ) + 1) T.σ₀) : Prop :=
   C.IsUnif ∧ Squarefree C.d.pd ∧ Nat.Coprime C.d.pd l ∧
     Nat.Coprime C.d.pd (D.host.QS * D.host.q * Ideal.absNorm D.host.ccK)
 
-variable {T i} in
 
 def FieldBig (Lat : Submodule ℤ (VsV D i ℂ)) (C : Cover T ((i : ℕ) + 1) T.σ₀) : Prop :=
   (R.C.mu0 i * R.C.eta⁻¹).ValuesIn (-1 / 2) C.σ₂ ∧
@@ -100,7 +98,6 @@ def SerIntAt (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (u : ∀ ρ, lowT (R.MW
               castDict hV φ g = (l : ℂ) ^ c *
                 (ph * (((xi (Matrix.GeneralLinearGroup.det (finHom (Wc D i) g)) : ℂˣ) : ℂ) * series R i u s f (c0 v) g))
 
-omit [Algebra T.Q.c.F D.what₂.LL] in
 
 def DescIntAt : Prop :=
   ∀ l : ℕ, l.Prime → ∀ C : Cover T ((i : ℕ) + 1) T.σ₀, IsTowerCover T i l C → C.IsPinned (wtA κ) κ.n →

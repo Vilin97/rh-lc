@@ -46,7 +46,6 @@ def AscComp : Prop :=
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-open GlobalTheory.BaseChangeBridge in
 
 theorem definiteN_of : BaseChangeIsobaricN → DefiniteN := by
   intro hBC E _ _ _ hun n hn π hπ

@@ -245,7 +245,6 @@ theorem unr_iff_ine (a : WD h) :
       rw [map_one] at h4
       exact sub_eq_zero.mp (End.eq_zero_of_isNilpotent_isSemisimple ⟨_, h3⟩ h4)
 
-variable (h) in
 
 theorem unramified_laws :
     (∀ m : Multiset ℂ, (0 : ℂ) ∉ m → unr (lpUnr h m) ∧ frobEig (lpUnr h m) = m ∧

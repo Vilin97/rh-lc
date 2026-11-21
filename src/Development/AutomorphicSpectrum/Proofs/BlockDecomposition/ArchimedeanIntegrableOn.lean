@@ -179,7 +179,6 @@ end GlobalTheory.CompanionTheory.ArchI
 
 namespace GlobalTheory.CompanionTheory.MixZ
 
-open GlobalTheory.CompanionTheory.ArchI in
 
 theorem archIntegrableOn_of_resK : ReciprocityTheory.ChartRestriction.G.Geo.ResK.ResKStatement → ArchIntegrableOn := by
   intro hK m n N M X _ i _ D hX r hr σ

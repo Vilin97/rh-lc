@@ -251,7 +251,6 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {P : HeightOneSpectru
 
 def cqLev (n l : ℕ) : ℕ := if l < n then 0 else l - n + 1
 
-set_option maxHeartbeats 1600000 in
 
 theorem finite_sum_target_equality (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) (hp : q.Prime)
     (hcard : Nat.card (𝓞 E ⧸ P.asIdeal) = q) {K : Type} [Field K] {n' n c : ℕ} (psi : E → K) {D a b e A B : ℕ}

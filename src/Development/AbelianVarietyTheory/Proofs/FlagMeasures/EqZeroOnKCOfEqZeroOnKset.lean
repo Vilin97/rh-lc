@@ -10,7 +10,6 @@ open scoped InnerProductSpace
 
 namespace GlobalTheory.Dec.KCIdent
 
-open scoped MatrixOrder Matrix.Norms.L2Operator ComplexOrder in
 
 theorem exists_herm_log {n : ℕ} (y J : Matrix (Fin n) (Fin n) ℂ) (hy : IsUnit y)
     (hJ : Commute (yᴴ * y) J) :

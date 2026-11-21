@@ -128,6 +128,5 @@ theorem _root_.GlobalTheory.LevelUnfold.embX_smul_gluedS (g : GL n k) (L : Submo
   rw [← _root_.GlobalTheory.LatPair.gluedLat_one, ← _root_.GlobalTheory.LatPair.gluedLat_one,
     _root_.GlobalTheory.LatPair.embX_smul_gluedLat]
 
-omit [Fintype n] [DecidableEq n] in
 
 end GlobalTheory.LevelUnfold

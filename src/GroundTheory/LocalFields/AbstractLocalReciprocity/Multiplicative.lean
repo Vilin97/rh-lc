@@ -17,7 +17,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Comp
 
 namespace FrobeniusLift
 
-omit [TotallyDisconnectedSpace G] in
 
 def mul (s t : D.FrobeniusLift K) : D.FrobeniusLift K where
   elt := s.elt * t.elt
@@ -29,7 +28,6 @@ def mul (s t : D.FrobeniusLift K) : D.FrobeniusLift K where
     push_cast
     ring_nf
 
-omit [TotallyDisconnectedSpace G] in
 
 def ofDegOne {φ : G} (hφK : φ ∈ (K : Subgroup G))
     (hdφ : D.deg φ = Multiplicative.ofAdd (inertiaDegree D.deg K : ℤ̂)) : D.FrobeniusLift K where
@@ -89,7 +87,6 @@ theorem smul_prod_pow_div (φ : G) (y : A) (n : ℕ) :
     rw [smul_smul, ← pow_succ']
   rw [this, div_eq_div_iff_mul_eq_mul, ← hs', hs, mul_comm]
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem valuation_eq_of_inf_ker_eq {S P : OpenSubgroup G}
     (h : (S : Subgroup G) ⊓ D.deg.ker = (P : Subgroup G) ⊓ D.deg.ker) {y : A}
@@ -316,7 +313,6 @@ end DegOne
 
 section General
 
-omit [TotallyDisconnectedSpace G] in
 
 theorem exists_deg_eq (K : OpenSubgroup G) :
     ∃ φ ∈ (K : Subgroup G), D.deg φ = Multiplicative.ofAdd (inertiaDegree D.deg K : ℤ̂) := by

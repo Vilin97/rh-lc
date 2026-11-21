@@ -73,4 +73,3 @@ end Loc
 
 end UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter.Ad
 
-open UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter.Ad in

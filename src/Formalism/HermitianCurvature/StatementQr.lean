@@ -96,7 +96,6 @@ def SV : Submodule ℂ (Mx k r → E) where
 
 variable {k r i D E}
 
-open Classical in
 
 def cutF (k r : ℕ) (i : Fin (r + 1)) (D : Set (Mx k r)) (f : Mx k r → E) : Mx k r → E :=
   fun g => if g ∈ Glev k r i ∩ D then f g else 0
@@ -129,7 +128,6 @@ theorem SV_ext {φ ψ : SV k r i D E} (h : ∀ g ∈ Glev k r i ∩ D, φ.1 g = 
   · exact h g hg
   · rw [φ.2.2 g hg, ψ.2.2 g hg]
 
-open Classical in
 
 def opV (k r : ℕ) (i : Fin (r + 1)) (D : Set (Mx k r)) (T : (Mx k r → E) → Mx k r → E) : Module.End ℂ (SV k r i D E) :=
   if h : IsOpen D ∧ Qx2.Good k r i D T then

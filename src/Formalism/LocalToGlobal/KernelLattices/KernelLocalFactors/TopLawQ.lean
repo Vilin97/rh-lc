@@ -19,7 +19,6 @@ section Alg
 
 variable {k K : Type} [CommRing k] [Field K]
 
-open Classical in
 
 def xiZ (ξ : kˣ →* Kˣ) (a : k) : K := if h : IsUnit a then ((ξ h.unit : Kˣ) : K) else 0
 
@@ -66,7 +65,6 @@ theorem tl_mul {r a b c : ℕ} (ha : r ≤ a) (hb : r ≤ b) (hc : r ≤ c) (P :
   rw [Matrix.submatrix_apply, mul_colA hb P Q hQ _ _ (show (Fin.castLE hc t).1 < r from t.2), Matrix.mul_apply]
   rfl
 
-open Classical in
 
 def phiZ (ξ : kˣ →* Kˣ) {r a b : ℕ} (ha : r ≤ a) (hb : r ≤ b) (M : Matrix (Fin a) (Fin b) k) : K :=
   if LLz r M then xiZ ξ (M.submatrix (Fin.castLE ha) (Fin.castLE hb)).det else 0
@@ -252,7 +250,6 @@ variable {P} {K : Type} [Field K]
 
 theorem unitV_eq (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : LocE.unitV χ a = xiZ χ (redP P a) := rfl
 
-open Classical in
 
 theorem phiQ_eq {q : ℕ} (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ)
     (k₀ r n' n : ℕ) (hn' : r ≤ n') (hn : r ≤ n) (x : HomE E (n' + 0) (n + 0)) :
@@ -402,9 +399,7 @@ theorem kj_midQ {m2 : ℕ} (hm : R.m = m2 + 2) : R.k + (m2 + 1) = R.r := by
   unfold Ranks.r
   omega
 
-open Classical in
 
-open Classical in
 
 end Main
 
@@ -413,7 +408,6 @@ section FtYQ
 variable {X : Fields} {Pr : Primes X} (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ}
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu))
 
-open Classical in
 
 theorem ftY_moveQ (hcst : cst.Ok) (w : rowSG Pr sel mu) (hw : w.1 ∉ Pr.vGs) (hD : 2 * cst.M ≤ cst.D w) {n : ℕ} (κ : ↥(GLint X.E n w.1))
     (η : Sp X.E n →ₗ[X.E] X.E) (y y₁ : Sp X.E n) (hδ : ((qOf w.1 : X.E) ^ cst.M)⁻¹ • (κ.1 y₁ - y) ∈ stdAt X.E n w.1)
@@ -482,7 +476,6 @@ end FtYQ
 
 section ProdU
 
-open Classical in
 
 theorem prod_uSG_dite {α M : Type} [CommMonoid M] {A B : Finset α} (hd : ∀ P ∈ B, P ∉ A) (f : {w // w ∈ A} → M) (g : {P // P ∈ B} → M) :
     ∏ w : {w // w ∈ A ∪ B}, (if h : w.1 ∈ A then f ⟨w.1, h⟩ else g ⟨w.1, (Finset.mem_union.mp w.2).resolve_left h⟩) =
@@ -508,7 +501,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ}
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu)) {u : Pr.Word}
 
-open Classical in
 
 end InvQ
 
@@ -519,7 +511,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu)) (L : ChIdx X Pr R (QE sel (mu : Chr X.F X.E X.K)))
   (A : Amb X) (u : Pr.Word) (m2 : ℕ)
 
-open Classical in
 
 theorem frsF_smulQ {j : ℕ} (p : ChPt (R := R) sel mu u j)
     (Λ : LevFam X.E X.K (R.N j) Pr.vGs) (Θ : LevQFam X.E X.K (R.N j) (QE sel (mu : Chr X.F X.E X.K)))
@@ -537,13 +528,11 @@ theorem frsF_smulQ {j : ℕ} (p : ChPt (R := R) sel mu u j)
     rw [dif_neg hw, dif_neg hw]
     rfl
 
-open Classical in
 
 variable {u m2}
 
 variable (u m2)
 
-open Classical in
 
 end Cp2Q
 
@@ -557,7 +546,6 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 theorem qSep_of (hPr : Pr.Ok) (hsel : IsSel X sel) (hS : ∀ i, Pr.g i ∈ S) : QSep Pr sel mu :=
   fun P hP hw => QE_disj mu hPr hsel hS P hw hP
 
-open Classical in
 
 theorem qUnif_of (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) : QUnif sel mu :=
   fun P hP => mq_rowSG_unif (Pr := Pr) mu hX hPr hsel ⟨P, Finset.mem_union_right _ hP⟩

@@ -289,7 +289,6 @@ theorem pff_refl (X : Scheme.{0}) [IsIntegral X] : PFF (𝟙 X) (𝟙 X) (RingHo
 
 end GaussDvr
 
-open GaussDvr in
 
 theorem gaussAt_chart_of_height_one : ∀ (σ : Setup) (p : Sp σ.R) (z : (σ.C p).G.left), p.asIdeal.height = 1 → Vert (σ.C p).G.hom (σ.ρ p σ.f) z → GaussAt (GlobalTheory.Desc.cst (σ.C p).G.hom) (maximalIdeal (σ.C p).R) (σ.θ p) (σ.W p) (regSet z) := by
   intro σ p z hp hz

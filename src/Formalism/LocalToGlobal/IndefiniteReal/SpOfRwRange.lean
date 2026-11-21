@@ -83,7 +83,6 @@ end Sp
 
 section Seam
 
-open Classical in
 
 end Seam
 

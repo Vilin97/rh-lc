@@ -426,7 +426,6 @@ theorem exists_generator_sum_charCocycle [IsCyclic G] (χ : Additive G →+ AddC
     rw [hy, mul_one_div_cancel hmpos.ne'] at this
     exact_mod_cast this
 
-omit [Fintype G] in
 
 theorem mem_coboundaries₂_of_subsingleton [Subsingleton G] (z : cocycles₂ A) :
     ⇑z ∈ coboundaries₂ A := by

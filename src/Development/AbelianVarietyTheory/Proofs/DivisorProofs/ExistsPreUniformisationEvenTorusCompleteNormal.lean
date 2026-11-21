@@ -26,7 +26,6 @@ namespace GlobalTheory.Mum.PreUnifEven
 
 open GlobalTheory.UU GlobalTheory.LN
 
-set_option maxHeartbeats 1000000 in
 
 theorem nonempty_towerR_of_even {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R]
     {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G] (P : CP G) (hs : IsSemiAbelian G)
@@ -57,7 +56,6 @@ theorem nonempty_towerR_of_even {R : Type} [CommRing R] [IsDomain R] [IsLocalRin
   choose β hβ hq using fun e => TowerEx.exists_levelMap hs (l e).1 (l (e + 1)).1 (tor e)
   exact ⟨⟨fun e => (l e).1, tor, β, hβ, hq⟩⟩
 
-set_option maxHeartbeats 800000 in
 
 theorem fibres (laws : Laws) (hU : USt) (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (I : Ideal R)
     (hR : admitted R I) (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G] (P : CP G) (hG : IsSemiAbelian G)
@@ -101,7 +99,6 @@ theorem isAdmissibleCompleteLocalDomainPrime_of_completeNormal {R : Type} [CommR
 
 end GlobalTheory.Mum.PreUnifEven
 
-set_option maxHeartbeats 1600000 in
 
 theorem GlobalTheory.Mum.exists_preU_even : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R → ∀ (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (P : GlobalTheory.UU.CP G), IsSemiAbelian G → EvenOn P → ∀ (A : PolAV (Sp (FractionRing R))) (gen : (Over.pullback (jK R)).obj G ≅ A.A), IsMonHom gen.hom → LBIso (A.L.pull gen.hom.left) (P.L.L.pull (pullback.fst G.hom (jK R))) → ∃ (D : DegPre R) (U : GlobalTheory.UU.PreU (maximalIdeal R) D A G), U.P = P ∧ U.gen = gen := by
   intro R _ _ _ hB G _ _ P hs ⟨X, _, _, _, Q₀, P₀, hlev, hev⟩ A gen hgen hA

@@ -28,7 +28,6 @@ theorem lieDer_polyFun (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.hos
     (R : RealPoints θ V) (τ : D.what₂.Tau) (X : LieAt V τ) (P : PolyE V) :
     lieDer V (expInf θ V) (atPlace V τ X) (polyFun θ V P) = polyFun θ V (matDer τ X.1 P) := GlobalTheory.T.rightLieDerivative_realEntryPolynomialFunction D θ V R τ X P
 
-open Classical in
 
 theorem aeval_matDer_single {T : Type} {n : ℕ} (τ τ' : T) (a b c d : Fin n) :
     MvPolynomial.aeval (fun p : T × Fin n × Fin n => if p.2.1 = p.2.2 then (1 : ℂ) else 0)
@@ -95,8 +94,6 @@ theorem realEntries_one (R : RealPoints θ V) :
   funext p
   simp only [realEntries, R.2.2.2.2.1 1 (one_mem _) p.1, Matrix.one_apply]
 
-set_option maxHeartbeats 1000000 in
-open Classical in
 
 theorem envRepAll_injective (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (_hθ : IsInfFam θ)
     (V : HSp D) (R : RealPoints θ V) : Function.Injective (envRepAll R) := by

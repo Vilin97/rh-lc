@@ -20,7 +20,6 @@ variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMF
 
 def IrrPt (x : B.Pt) : Prop := ∃ ρ : G L Ω →* GL (Fin n) (Qbar l), Continuous ρ ∧ x.IsRep ρ ∧ IsIrr ρ
 
-variable (B) in
 
 def Num (Λ : LamObj r) (J : Ideal B.B) : Prop :=
   ∃ (M : Type) (_ : AddCommGroup M) (_ : Module B.B M) (_ : Module Λ.Λ M) (h : Dat (Λ.toPair B.u) J M)
@@ -29,7 +28,6 @@ def Num (Λ : LamObj r) (J : Ideal B.B) : Prop :=
       1 ≤ Z.Desc.V0.muE (Λ.toPair B.u) M h.hs e x ∧
         Z.Desc.V0.muE (Λ.toPair B.u) M h.hs e x ≤ Z.Desc.V0.muE (Λ.toPair B.u) M h.hs e y
 
-variable (B) in
 
 def UnrAt (J : Ideal B.B) : Prop :=
   ∀ (x : B.Pt) (w : s.Wt n), J ≤ RingHom.ker x → x.Arith w → IrrPt x → ∀ δ ∈ PtDer x (Qbar l), (∀ a ∈ J, δ a = 0) →

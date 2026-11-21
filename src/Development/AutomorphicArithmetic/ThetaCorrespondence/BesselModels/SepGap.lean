@@ -171,7 +171,6 @@ theorem lastVertex_besselDatum_isFrame_isGeneric {D : D7} {T : Type} {L : LevCh 
     rw [h4, GlobalTheory.T.standardChar_trace_single_realPlace D W.ψ W.ψ_std W.θ W.θ_is τ t h1 h2, h3, Finset.mul_sum]
     simp only [mul_assoc]
 
-set_option maxHeartbeats 1600000 in
 
 theorem topLine_gap (hB : BurGapPos) (hCT : CoefTensor) (hTS : TopSep) :
     All fun {D} _ _ _ {G} W M => ∀ (S : D.what₂.Tau → SPar) (MB : DSModel (G.V (.grid D.R.m 0)) S), HasGap MB →

@@ -359,7 +359,6 @@ def chartPartialDeriv (hV : IsAffineOpen V) (c : EtaleChart p V n) (j : Fin n)
     c.algebra_formallyEtale hV
   EtaleCoordinates.partialDeriv k (ULift.{u} (Fin n)) Γ(X, V) (ULift.up j) f
 
-omit [AlgebraicGeometry.Smooth p] in
 
 private theorem derivation_sum_apply {R A : Type*} [CommRing R] [CommRing A] [Algebra R A]
     {ι : Type*} [DecidableEq ι] (s : Finset ι) (D : ι → Derivation R A A) (a : A) :

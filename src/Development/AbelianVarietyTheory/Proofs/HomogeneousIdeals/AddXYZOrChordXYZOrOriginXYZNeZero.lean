@@ -63,17 +63,11 @@ lemma proportional_diagXYZ_addXYZ {P Q : Fin 3 → R} (hP : W.Equation P) (hQ : 
     Proportional (diagXYZ W P Q) (W.addXYZ P Q) :=
   proportional_negY W (diagX_mul_addZ hP hQ) (negDiagY_mul_addZ hP hQ) (diagX_mul_negAddY hP hQ)
 
-variable (W) in
 
-variable (W) in
 
-variable (W) in
 
-variable (W) in
 
-variable (W) in
 
-variable (W) in
 
 end Ring
 
@@ -108,7 +102,6 @@ lemma equiv_of_proportional {T U : Fin 3 → F} (h : Proportional T U) (hT : T �
   have hu : T j / U j ≠ 0 := fun h0 => hT <| by rw [← e, h0, zero_smul]
   exact ⟨Units.mk0 _ hu, e⟩
 
-variable (W) in
 
 lemma addXYZ_ne_zero_iff {P Q : Fin 3 → F} (hP : W.Nonsingular P) (hQ : W.Nonsingular Q) :
     W.addXYZ P Q ≠ 0 ↔ ¬P ≈ Q := by

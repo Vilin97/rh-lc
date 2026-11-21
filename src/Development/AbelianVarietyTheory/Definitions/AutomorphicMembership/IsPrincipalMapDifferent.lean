@@ -30,7 +30,6 @@ def HasCoord (g : Z.X ⟶ B.X) (L : Lat B) {V : B.X.Opens} {n : ℕ} (m : Fin n 
     LocM.IsTrans B.i Z.i τ mu ∧ ∀ σ i, ∃ (v : Sp (DualNumber k) ⟶ B.t.G.left) (hv : IsTanAtG B.t (x ≫ g) v),
       v ≫ B.tMap.φ = u σ i ≫ mu.φ ∧ ∀ l, tanEv B.t hv h (L.N.incl.app V (m l)) = c σ i l
 
-variable (Z) in
 
 structure LatChart (L : Lat B) : Type where
 
@@ -48,7 +47,6 @@ structure LatChart (L : Lat B) : Type where
 
     ∃ u, Z.FlagAt x u ∧ HasCoord g L m x u fun σ i l => valR x U (c σ i l)
 
-variable (Z) in
 
 def HasLatFlags (L : Lat B) : Prop :=
   (∀ σ, Z.ty σ = Finset.range (Dw.mult σ + 1)) ∧ ∀ x : Z.X, ∃ q : LatChart Z L, x ∈ q.U
@@ -65,18 +63,15 @@ def IsTr (q q' : LatChart Z L) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → �
     q.FrameAt x u → q'.FrameAt x u' → (∀ σ, DiagAt (Y Z.i).t (x ≫ Z.π) (u' σ) (u σ) (d σ)) →
       valR x _ a = ∏ σ, ∏ i, d σ i ^ e σ i
 
-open Classical in
 
 def tr (q q' : LatChart Z L) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) : Γ(Z.X, q.U ⊓ q'.U)ˣ :=
   if h : ∃ a : Γ(Z.X, q.U ⊓ q'.U)ˣ, q.IsTr q' e a.val then h.choose else 1
 
 end LatChart
 
-variable (Z L) in
 
 def latLB (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) : LB Z.X := ⟨LatChart Z L, LatChart.U, fun q q' => q.tr q' e⟩
 
-variable (L) in
 
 def Curve.degLat {k : Type} [Field k] (c : Curve k Z.X) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) : ℤ :=
   c.degOf (latLB Z L e)

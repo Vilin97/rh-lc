@@ -224,7 +224,6 @@ end GlobalTheory.WeylCell.WeylUnipotentShell.ShellGroup
 
 namespace GlobalTheory.WeylCell.WeylUnipotentShell
 
-open ShellGroup in
 
 theorem shellU_open_compact_subgroup : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] [CompleteSpace L] (ϖ : L)
     (σ : L →+* L) (q : ℕ), IsUnramInv ϖ σ q →

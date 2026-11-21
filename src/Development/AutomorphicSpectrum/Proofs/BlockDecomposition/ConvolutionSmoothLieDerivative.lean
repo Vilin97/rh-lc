@@ -23,7 +23,6 @@ def psi (v : GA E a) : Lie E a := toL (GeneralLinearGroup.map (pInf E) v⁻¹).v
 def wt (U : Subgroup (GL (Fin a) (Af E))) (F : GA E a → ℂ) (g : GA E a) : GA E a → ℂ :=
   Set.indicator {v | GeneralLinearGroup.map (pFin E) v⁻¹ ∈ U} fun v => F (g * v)
 
-open Classical in
 
 theorem wt_apply (U : Subgroup (GL (Fin a) (Af E))) (F : GA E a → ℂ) (g v : GA E a) :
     wt U F g v = if GeneralLinearGroup.map (pFin E) v⁻¹ ∈ U then F (g * v) else 0 := by
@@ -173,7 +172,6 @@ theorem integrand_eq_zero {U : Subgroup (GL (Fin a) (Af E))} {β : Lie E a → �
 
 end GlobalTheory.CompanionTheory.SmoothRep.TstConv
 
-open GlobalTheory.CompanionTheory.SmoothRep.TstConv in
 
 theorem GlobalTheory.CompanionTheory.SmoothRep.convR_tst_mem_Sm : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (U : Subgroup (GL (Fin a) (Af E))), IsOpen (U : Set (GL (Fin a) (Af E))) → IsCompact (U : Set (GL (Fin a) (Af E))) → ∀ β : Lie E a → ℂ, IsTest β → ∀ Fl : GA E a → ℂ, LocallyIntegrable Fl μ → convR μ (tst U β) Fl ∈ Sm E a ∧ ∀ (X : Lie E a) (g : GA E a), lieD X (convR μ (tst U β) Fl) g = convR μ (tst U (dTest X β)) Fl g := by
   intro E _ _ _ a μ _ _ U hU hUc β hβ Fl hFl

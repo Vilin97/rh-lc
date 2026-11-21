@@ -42,7 +42,6 @@ section Field
 
 variable {k : Type u} [Field k] {G : Over (Spec (CommRingCat.of k))} [GrpObj G]
 
-variable (G) in
 
 end Field
 

@@ -47,7 +47,6 @@ theorem integrable_chart_mul (ψ : Sm E a) (g : GA E a) (β : Lie E a → ℂ) (
 
 end GlobalTheory.HCF.ReproSpan
 
-open GlobalTheory.HCF.ReproSpan in
 
 theorem GlobalTheory.HCF.repro_span : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E)))
     (W : Submodule ℂ (Kinf E a → ℂ)) (X : Set (Module.End ℂ (Sm E a) → ℂ)) (N : ℕ) (β : Lie E a → ℂ),

@@ -26,7 +26,6 @@ private theorem rp_injective : Function.Injective (rp : (Fin 4 → ℚ) → V4 �
 private theorem quadraticForm_rational_points (δ : ℚ) (ξ : Fin 4 → ℚ) : q4 δ (rp ξ) = rt (qr δ ξ) := by
   simp [q4, qr, rp, map_sub, map_mul, map_pow]
 
-variable (E) in
 
 private noncomputable def jE : G1 ℚ →* G1 E := Matrix.SpecialLinearGroup.map (am E)
 

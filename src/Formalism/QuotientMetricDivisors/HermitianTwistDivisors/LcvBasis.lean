@@ -323,7 +323,6 @@ end Formalism.DivisionValues.LocalCovolumeBasis
 
 namespace Formalism.DivisionValues
 
-open LocalCovolumeBasis in
 
 theorem covolume_via_basis : LcvBasis := by
   intro K _ _ _ _ d X hX L hL e he

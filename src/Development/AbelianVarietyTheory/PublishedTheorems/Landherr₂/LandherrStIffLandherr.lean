@@ -19,18 +19,12 @@ namespace LandherrSt
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.Published.LandherrSt.herm_eq (G : Matrix (Fin r) (Fin r) E) (x y : Fin r → E) :
     _root_.ReciprocityTheory.ChartRestriction.G.FD.herm G x y = x ⬝ᵥ (G *ᵥ fun b => _root_.ReciprocityTheory.ChartRestriction.G.FD.cc (y b)) := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.herm
   simp only [dotProduct, mulVec, Finset.mul_sum, mul_assoc]
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.Published.LandherrSt.herm_mulVec (G P : Matrix (Fin r) (Fin r) E) (x y : Fin r → E) :
     _root_.ReciprocityTheory.ChartRestriction.G.FD.herm G (P *ᵥ x) (P *ᵥ y) = _root_.ReciprocityTheory.ChartRestriction.G.FD.herm (Pᵀ * G * P.map _root_.ReciprocityTheory.ChartRestriction.G.FD.cc) x y := by
@@ -51,8 +45,6 @@ private lemma cc_inv' {E : Type} [Field E] [NumberField E] [IsCMField E] (z : E)
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.cc
   exact map_inv₀ _ _
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.Published.landherrSt_of_landherr (H : _root_.GlobalTheory.Published.Landherr) :
     _root_.GlobalTheory.Published.LandherrSt := by
@@ -158,9 +150,6 @@ private lemma sgn_ne_zero_published_landherr (p a : ℕ) : _root_.ReciprocityThe
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.sgn
   split_ifs <;> norm_num
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.Published.LandherrSt.exists_gram_eq_sgn {G : Matrix (Fin r) (Fin r) E}
     (hG : ∀ a b, _root_.ReciprocityTheory.ChartRestriction.G.FD.cc (G a b) = G b a) (hd : G.det ≠ 0) (τ : E →+* ℂ) :
@@ -199,8 +188,6 @@ private lemma one_map_cc {E : Type} [Field E] [NumberField E] [IsCMField E] {r :
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.cc
   exact Matrix.map_one _ (map_zero _) (map_one _)
 
-open NumberField Matrix in
-open scoped nonZeroDivisors in
 
 theorem _root_.GlobalTheory.Published.landherr_of_landherrSt (H : _root_.GlobalTheory.Published.LandherrSt) :
     _root_.GlobalTheory.Published.Landherr := by

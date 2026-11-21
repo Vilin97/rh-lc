@@ -42,7 +42,6 @@ end Curry
 variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 variable {A C : Type*} [Fintype A] [DecidableEq C]
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] [Fintype A] in
 
 def restrictCols (P : Finset C) (X : Matrix A C k) : Matrix A P k := Matrix.of fun i j => X i j
 
@@ -86,7 +85,6 @@ theorem pairCols_eq_dotProduct (P : Finset C) (Y : Matrix A C k) (U : Matrix A P
 
 variable [MeasurableSpace k] [BorelSpace k]
 
-omit [DecidableEq C] in
 
 theorem isAddHaarMeasure_volM (m : Measure k) [m.IsAddHaarMeasure] (B : Type*) [Fintype B] :
     (volM m A B).IsAddHaarMeasure := by
@@ -94,7 +92,6 @@ theorem isAddHaarMeasure_volM (m : Measure k) [m.IsAddHaarMeasure] (B : Type*) [
   haveI : (Measure.pi fun _ : B => m).IsAddHaarMeasure := inferInstance
   exact Measure.pi.isAddHaarMeasure (fun _ : A => (Measure.pi fun _ : B => m))
 
-omit [DecidableEq C] in
 
 theorem integral_volM (m : Measure k) [SigmaFinite m] (B : Type*) [Fintype B] (f : Matrix A B k → ℂ) :
     ∫ U, f U ∂(volM m A B) =

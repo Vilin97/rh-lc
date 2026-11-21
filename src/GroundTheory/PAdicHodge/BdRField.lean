@@ -42,7 +42,6 @@ theorem maximalIdeal_eq_span_of_ker_eq_span {a : 𝔸} (ha : J = span {a}) :
     maximalIdeal 𝔹 = span {toBDeRhamPlus 𝒪 p a} := by
   rw [← map_ker_fontaineThetaInvertP K p, ha, Ideal.map_span, Set.image_singleton]
 
-variable (K p) in
 
 def varpi : 𝔹 := wittToBDeRhamPlus 𝒪 p (kerThetaGenerator K p)
 
@@ -111,7 +110,6 @@ theorem isLocalization_away_bDeRham {π : 𝔹} (hπ : maximalIdeal 𝔹 = span 
     have hu' : (y : 𝔹) * ↑u⁻¹ = π ^ n := by rw [hu, mul_comm (↑u : 𝔹), mul_assoc, Units.mul_inv, mul_one]
     rw [← hu', map_mul, ← mul_assoc, hxy, map_mul]
 
-variable (K p) in
 
 def fil (i : ℤ) : Submodule 𝔹 𝔹dR := Submodule.span 𝔹 {algebraMap 𝔹 𝔹dR (varpi K p) ^ i}
 
@@ -138,7 +136,6 @@ theorem mem_fil_iff {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) {i : ℤ} 
   · rintro ⟨b, rfl⟩
     exact ⟨b, by rw [Algebra.smul_def, mul_comm]⟩
 
-variable (K p) in
 
 theorem fil_antitone : Antitone (fil K p) := by
   intro i j hij
@@ -149,9 +146,7 @@ theorem fil_antitone : Antitone (fil K p) := by
   rw [map_pow, ← zpow_natCast, Int.toNat_of_nonneg (by omega),
     ← zpow_add₀ (algebraMap_ne_zero_of_maximalIdeal_eq_span hϖ), add_sub_cancel]
 
-variable (K p) in
 
-variable (K p) in
 
 theorem mem_fil_zero_iff {x : 𝔹dR} : x ∈ fil K p 0 ↔ ∃ b : 𝔹, x = algebraMap 𝔹 𝔹dR b := by
   rw [mem_fil_iff (maximalIdeal_eq_span_varpi K p), zpow_zero]
@@ -168,7 +163,6 @@ theorem algebraMap_mem_fil_iff (b : 𝔹) (n : ℕ) :
   · rintro ⟨c, hc⟩
     exact ⟨c, by rw [hc]⟩
 
-variable (K p) in
 
 theorem iInf_fil : ⨅ i, fil K p i = ⊥ := by
   have hϖ := maximalIdeal_eq_span_varpi K p
@@ -191,7 +185,6 @@ theorem iInf_fil : ⨅ i, fil K p i = ⊥ := by
   rw [Submodule.mem_bot]
   exact (mul_eq_zero.1 ha).resolve_right (pow_ne_zero _ hne)
 
-variable (K p) in
 
 theorem iSup_fil : ⨆ i, fil K p i = ⊤ := by
   have hϖ := maximalIdeal_eq_span_varpi K p
@@ -204,7 +197,6 @@ theorem iSup_fil : ⨆ i, fil K p i = ⊤ := by
   rw [← ha, zpow_neg, zpow_natCast, mul_comm x, ← mul_assoc, inv_mul_cancel₀ (pow_ne_zero _ hne),
     one_mul]
 
-variable (K p) in
 
 def filMk {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) (i : ℤ) : 𝔹 →ₗ[𝔹] fil K p i where
   toFun b := ⟨algebraMap 𝔹 𝔹dR π ^ i * algebraMap 𝔹 𝔹dR b, (mem_fil_iff hπ).2 ⟨b, rfl⟩⟩

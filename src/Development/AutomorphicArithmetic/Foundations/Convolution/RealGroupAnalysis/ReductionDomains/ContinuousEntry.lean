@@ -119,10 +119,8 @@ instance : DiscreteTopology (Gam F) := by
     fun a b h => Subtype.ext (gl_inj (congrArg (·.1) h))
   exact (continuous_gl.comp continuous_subtype_val).subtype_mk _
 
-variable (F) in
 
 def Ks : Subgroup (G1 F) := (Reduction.maxCompact (K := F) (n := 2)).comap Matrix.SpecialLinearGroup.toGL
-variable (F) in
 
 def Bor : Subgroup (G1 F) := (Reduction.adelicBorel (K := F) (n := 2)).comap Matrix.SpecialLinearGroup.toGL
 

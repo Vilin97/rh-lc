@@ -38,7 +38,6 @@ namespace GlobalTheory.HeckeSupReal
 
 open Formalism.L2.Pj Formalism.IndefR.FWT GlobalTheory.HeckeSup
 
-set_option maxHeartbeats 1600000 in
 
 theorem hkSupAt_realSide : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.IndefiniteRowSideFullHecke.UnusedSlot39.HeckeInt → GlobalTheory.IndefiniteRowSideFullHecke.SplitOffDetection.HeckeTransform → GlobalTheory.HeckeSupSt.HeckeReadTie → ∀ (D : D7) (X : RealSide D) j, GlobalTheory.IndefiniteRowSideFullHecke.LatticesOverBalls.HkSupAt X.core X.R.toRealDat j := by
   intro hDec hI hT hRT D X i

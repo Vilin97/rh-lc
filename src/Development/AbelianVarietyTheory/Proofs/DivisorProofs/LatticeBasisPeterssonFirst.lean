@@ -174,6 +174,5 @@ end GlobalTheory.CovTop.ShortSpanUnitCover
 
 namespace GlobalTheory.CovTop.ShortSpanUnitCover
 
-set_option maxHeartbeats 1000000 in
 
 end GlobalTheory.CovTop.ShortSpanUnitCover

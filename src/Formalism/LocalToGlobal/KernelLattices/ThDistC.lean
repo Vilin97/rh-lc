@@ -53,7 +53,6 @@ variable {ι : Type} [Fintype ι] {a b : ℕ}
 
 abbrev VCx (ι : Type) (a b : ℕ) : Type := ι → Fin b → Fin a → ℂ
 
-open Classical in
 
 def coordX (k : DVar ι a b) : VCx ι a b := fun τ i j => if τ = k.1 ∧ i = k.2.1 ∧ j = k.2.2 then 1 else 0
 
@@ -64,7 +63,6 @@ def derivAt0 (G : VCx ι a b → ℂ) (m : DVar ι a b →₀ ℕ) : ℂ :=
 def jetC (cD : ι → ℂ) (G : VCx ι a b → ℂ) (m : DVar ι a b →₀ ℕ) : ℂ :=
   (m.prod fun k n => cD k.1 ^ n) * derivAt0 G m
 
-open Classical in
 
 def desc {K : Type} [Field K] (σ : K →+* ℂ) (z : ℂ) : K := if h : ∃ k : K, σ k = z then h.choose else 0
 
@@ -115,7 +113,6 @@ def frameAt {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E)
 def ordDet {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E)) (N : Submodule (𝓞 E) (Sp E n)) : ℤ :=
   ordE P ((LinearEquiv.det (frameAt P N) : Eˣ) : E)
 
-open Classical in
 
 def muOff (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) (SB : Finset (HeightOneSpectrum (𝓞 X.E)))
     (mU : HeightOneSpectrum (𝓞 X.E) → X.Kˣ) (N : Submodule (𝓞 X.E) (Sp X.E n)) : X.K :=
@@ -154,7 +151,6 @@ def IsUnifVal (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) (k : Lˣ) : Prop
     y₀ - toRInt F E b ∈ (P.asIdeal ^ 2).map (toRInt F E) →
     (∀ P' : HeightOneSpectrum (𝓞 E), P' ≠ P → y₀ - 1 ∈ P'.asIdeal.map (toRInt F E)) → ξ y = k
 
-open Classical in
 
 def unifVal (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) : Lˣ := if h : ∃ k, IsUnifVal ξ P k then h.choose else 1
 
@@ -177,12 +173,10 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 
 def nuLast (u : Pr.Word) (i : ℕ) (τ : X.Tau) : ℕ := (W.nuW u (i + 1) τ).detShift.toNat
 
-open Classical in
 
 def mUof (i : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : X.Kˣ :=
   (if h : i < R.m then Ch.muVal ⟨i, h⟩ P else 1)⁻¹ * (unifVal (mu : Chr X.F X.E X.K) P)⁻¹
 
-open Classical in
 
 def muqT (i : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : X.Kˣ :=
   (if h : i < R.m then Ch.muVal ⟨i, h⟩ P else 1)⁻¹ * (qVal (mu : Chr X.F X.E X.K) P)⁻¹
@@ -195,7 +189,6 @@ def MuqTieG (σ₀ : X.K →+* ℂ) (m0 : Fin R.m → Formalism.L2.Host.HChar X.
     σ₀ (cst.muq (i + 1) P) =
       ((((m0 ⟨i, h⟩).locK P.1 qu : ℂˣ) : ℂ))⁻¹ * σ₀ (((qVal (mu : Chr X.F X.E X.K) P.1)⁻¹ : X.Kˣ) : X.K)
 
-open Classical in
 
 def muAtT (i : ℕ) (P : rowSG Pr sel mu) : X.E → X.K :=
   LocE.locChar (Col.qOf P.1) (if P.1 ∈ Pr.vGs then cst.muq (i + 1) P else ((muqT Ch mu i P.1 : X.Kˣ) : X.K))
@@ -247,7 +240,6 @@ def Amb.IndSmooth : Prop :=
   ∀ (N : Submodule (𝓞 X.E) (Sp X.E a)) (N' : Submodule (𝓞 X.E) (Sp X.E b)) (c : ℕ) (x : HomE X.E a b), InRange Sall D c N N' x →
     ∀ k : ℕ, ContDiff ℂ k (A.thInd Sall N N' c x)
 
-open Classical in
 
 def cosInd {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ} (S : Finset (HeightOneSpectrum (𝓞 E)))
     (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b)) (c : ℕ) (x t : HomE E a b) : ℂ :=
@@ -350,7 +342,6 @@ def matK (i : ℕ) (al : L.β i) (be : L.β (i + 1)) (p : ChPt (R := R) sel mu u
   kerOf (T.th i) (Sall sel mu u) (cAof sel mu cst) (cBof sel mu cst u) p.deco.1.N (frsF sel mu p)
     p'.deco.1.N (frsF sel mu p') (XiEntry Ch sel mu cst L i al be p p')
 
-open Classical in
 
 def cp1K (al : L.β m2) (p₀ : ChPt (R := R) sel mu u m2) (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Set (Sp X.E (R.N (m2 + 1)))) :
     (colValF W sel mu u m2).V →ₗ[X.K] (colValF W sel mu u (m2 + 1)).V :=
@@ -359,7 +350,6 @@ def cp1K (al : L.β m2) (p₀ : ChPt (R := R) sel mu u m2) (p : ChPt (R := R) se
       p.deco.1.N (frsF sel mu p) (XiCpl1 Ch sel mu cst L m2 al p₀ p Y)
   else 0
 
-open Classical in
 
 def cp2K (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Set (Sp X.E (R.N (m2 + 1)))) (d : RowPt Pr R sel mu) :
     (colValF W sel mu u (m2 + 1)).V →ₗ[X.K] (colVal W u R.m (Pr.vT u) (rowSG Pr sel mu)).V :=
@@ -405,7 +395,6 @@ def Cp1EquivOn : Prop :=
 def zeroKer {K : Type} [Field K] [NumberField K] [StarRing K] (S S' : GSD K) : ClsKer S S' :=
   ⟨fun _ _ => 0, fun _ _ _ _ => by rw [LinearMap.zero_comp, LinearMap.comp_zero]⟩
 
-open Classical in
 
 def chKer (P : LevFam X.E X.K R.r Pr.vGs) (hM : MatEquiv W Ch sel mu cst L T) (h1 : Cp1Equiv W Ch sel mu cst L T b hY)
     (h2 : Cp2Equiv W Ch sel mu cst L T b hY P) : ChKer W Ch sel mu cst L P u m2 b hY where

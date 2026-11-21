@@ -41,6 +41,5 @@ theorem padicValFactorialBounds : FactValBounds := by
   · rw [le_div_iff₀ hl1]
     nlinarith
 
-set_option maxHeartbeats 800000 in
 
 end Formalism.IncomingBounds

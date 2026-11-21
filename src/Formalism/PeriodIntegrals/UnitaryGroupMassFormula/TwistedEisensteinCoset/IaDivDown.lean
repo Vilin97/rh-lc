@@ -105,7 +105,6 @@ variable {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E))
 
 def UnitAt (w : E) : Prop := w ≠ 0 ∧ IntAt P w ∧ IntAt P w⁻¹
 
-open Classical in
 
 def vq (a : E) : ℤ :=
   if h : ∃ e : ℤ, ∃ w : E, a = (qOf P : E) ^ e * w ∧ UnitAt P w then h.choose else 0

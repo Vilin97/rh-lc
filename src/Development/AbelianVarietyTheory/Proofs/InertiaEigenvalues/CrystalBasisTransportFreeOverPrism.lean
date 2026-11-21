@@ -83,7 +83,6 @@ theorem indep_of_coord {Z O S W B R M N ι : Type} [CommRing Z] [CommRing O] [Co
 
 variable {l : ℕ} [hl : Fact l.Prime] {a : ℕ} [NeZero a] {e : ℕ} [NeZero e]
 
-variable (a) in
 
 noncomputable def evW (ϖ : PiSys l e) : (Wq l a)⟦X⟧ →ₐ[ℤ_[l]] WCb l where
   toRingHom := (inclW l).comp (ϖ.ev a)

@@ -80,7 +80,6 @@ theorem simplicialSpectralRowDifferential_degreeZeroClass (E : Spc) (p : ℕ) (s
 
 end GlobalTheory.EtC.GmStep.DegRow
 
-open GlobalTheory.EtC.GmStep.DegRow in
 
 theorem GlobalTheory.EtC.GmStep.rowExact_zero_of_acyclic : ∀ (R : Type) [CommRing R] (F : Shv R) (E : Spc),
     (∀ (p : ℕ) (s : ℤ), 0 < s → Subsingleton (H R (disc.obj (E.obj (op ⦋p⦌))) F s)) →

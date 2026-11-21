@@ -26,7 +26,6 @@ def localSchwartzBruhatPi : Submodule ℂ ((ι → F) → ℂ) where
   add_mem' hf hg := ⟨hf.1.add hg.1, hf.2.add hg.2⟩
   smul_mem' c _ hf := ⟨hf.1.comp (c • ·), hf.2.comp_left (smul_zero c)⟩
 
-omit [Field F] [ValuativeRel F] [IsNonarchimedeanLocalField F] [Fintype ι] in
 
 variable {F}
 
@@ -194,7 +193,6 @@ section Matrix
 
 variable {n : ℕ}
 
-omit [Field F] [ValuativeRel F] [IsNonarchimedeanLocalField F] in
 
 theorem isSchwartzBruhat_iff_comp_symm (Φ : Matrix (Fin n) (Fin n) F → ℂ) :
     IsSchwartzBruhat Φ ↔

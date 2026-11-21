@@ -229,7 +229,6 @@ theorem mem_bdSub {r : ℕ} (hr : 0 < r) (hrN : r < N) {ρ : ℝ} {φ : Sm E N} 
 
 end GlobalTheory.CompanionTheory.HullExp
 
-open GlobalTheory.CompanionTheory.HullExp in
 
 theorem GlobalTheory.CompanionTheory.HullExp.hullNonPos : PositivityTheory.Rg.BcB.E.E3.HullNonPos := by
   intro E _ _ _ N S hS φ hφ r hr hrN c hc

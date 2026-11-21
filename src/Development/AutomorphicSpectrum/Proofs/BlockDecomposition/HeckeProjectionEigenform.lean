@@ -220,7 +220,6 @@ theorem isLoc2_comm {v : Pl} {x : GL (Fin 2) (Qv v)} {k h : G2}
   · subst e; rw [hv, mul_one, one_mul]
   · rw [hx.2.1 v' e, one_mul, mul_one]
 
-open GroundTheory.Automorphic.Reduction in
 
 theorem det_eq_of_comps {h h' : G2}
     (hf : ∀ v : Pl, GeneralLinearGroup.det (finAt v h) = GeneralLinearGroup.det (finAt v h'))
@@ -283,7 +282,6 @@ theorem ord_det_of_mem {x : GL (Fin 2) F} (hx : x ∈ integralGL F 2) :
 
 end Key
 
-open GroundTheory.Automorphic.Reduction in
 
 theorem eig_relation {φ : G2 → ℂ} {ω c : HeckeCharacter ℚ} {μ : Measure G2} {𝓕 : Set G2} {C : ℝ}
     (hc : Continuous φ) (hb : ∀ g, ‖φ g‖ ≤ C) (hl : LInv φ)

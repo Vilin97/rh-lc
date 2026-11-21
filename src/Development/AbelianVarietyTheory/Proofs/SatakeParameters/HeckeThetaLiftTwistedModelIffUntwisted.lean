@@ -131,7 +131,6 @@ theorem intw_of_rat (hM : R.toRealDat.IsModels) (j : Fin D.R.m) (t : T) (i : (A3
       Tw (twAt D.what₂.embLL A3.A.v0) (R.HW j (sg0 D A3.A)).H)) (h _)
   exact LinearMap.congr_fun key u
 
-open Classical in
 
 abbrev SysC (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m) (j : Fin D.R.m) (p : A3.fam3.base3.Ix) :
     ((A3.liftI j A3.A.fam.μ0).OpIx → ℂ) → Prop :=

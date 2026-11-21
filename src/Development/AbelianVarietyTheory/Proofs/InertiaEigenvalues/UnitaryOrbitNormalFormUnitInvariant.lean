@@ -72,7 +72,6 @@ noncomputable section
 
 namespace GlobalTheory.JR.Step
 
-open GlobalTheory.JR.Step.UNormal in
 
 theorem uNormal : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E]
     [StarRing E] [Unram F E] (r : ℕ) (X : Hn (r + 1) F E) (a : Inv (r + 1) F), HasInv X a →

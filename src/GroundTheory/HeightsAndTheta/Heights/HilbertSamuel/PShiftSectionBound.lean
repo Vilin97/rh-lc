@@ -22,7 +22,6 @@ section Shift
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [CharZero Ω]
   {y : (Σ k, ι k) → Ω}
 
-omit [Fintype K] in
 
 theorem shift_succ_sub_one (b : K → ℤ) (j : ℕ) :
     (b + fun _ => ((j + 1 : ℕ) : ℤ)) - 1 = b + fun _ => (j : ℤ) := by
@@ -31,7 +30,6 @@ theorem shift_succ_sub_one (b : K → ℤ) (j : ℕ) :
   push_cast
   ring
 
-omit [∀ k, Fintype (ι k)] in
 
 theorem pow_mul_mem_chartLatQ (c : ∀ k, ι k) (b : K → ℤ) {s : Ω} (hs : s ∈ chartLatQ y b 1) (j : ℕ) :
     (∏ k, y ⟨k, c k⟩) ^ j * s ∈ chartLatQ y (b + fun _ => (j : ℤ)) 1 := by

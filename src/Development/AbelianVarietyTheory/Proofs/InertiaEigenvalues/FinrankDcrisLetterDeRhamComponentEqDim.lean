@@ -59,7 +59,6 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
     [FiniteDimensional LL V]
 
-open GlobalTheory.DRFil in
 
 theorem component_le [FiniteDimensional Qp K] [CharZero Qp] (hF : IsField F) (ρ : Representation LL G V)
     (τ : K →ₐ[Qp] LL) [FiniteDimensional LL ↥(DdRE PD ρ τ)] :
@@ -94,7 +93,6 @@ theorem component_eq [CharZero Qp] (hF : IsField F) (ρ : Representation LL G V)
     fun τ _ => component_le PD hF ρ τ).1 ?_ τ (Finset.mem_univ τ)
   rw [← hs, h, Finset.sum_const, Finset.card_univ, hc, smul_eq_mul]
 
-omit [FiniteDimensional Qp LL] in
 
 theorem finite_Dcris (ρ : Representation LL G V) (h : IsCrys PD ρ) : Module.Finite LL ↥(Dcris PD ρ) := by
   haveI := PD.finK₀
@@ -106,8 +104,6 @@ theorem finite_Dcris (ρ : Representation LL G V) (h : IsCrys PD ρ) : Module.Fi
       rw [h]
       exact Nat.mul_pos finrank_pos h0)
 
-omit [FiniteDimensional Qp LL] in
-open GlobalTheory.RegularRing in
 
 theorem letter_eq [IsDomain B] (ρ : Representation LL G V)
     (hc : Nat.card (K₀ →ₐ[Qp] LL) = finrank Qp K₀) (h : IsCrys PD ρ) (τ : K₀ →ₐ[Qp] LL) :

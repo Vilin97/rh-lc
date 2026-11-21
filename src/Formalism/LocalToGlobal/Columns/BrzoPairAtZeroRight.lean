@@ -123,11 +123,8 @@ section GSDOrth
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K] (S : GSD K) (h : S.Ok) (hf : S.Free)
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 end GSDOrth
 

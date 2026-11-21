@@ -325,7 +325,6 @@ theorem exists_inj_near_one {E : Fin (n ^ 2) → Matrix (Fin n) (Fin n) ℂ} (hG
   have : ‖D‖ ≤ 0 := by nlinarith
   exact sub_eq_zero.1 (norm_le_zero_iff.1 this)
 
-open Metric Filter Topology in
 
 theorem eventually_ball_subset {s lam : ℝ} {E : Fin (n ^ 2) → Matrix (Fin n) (Fin n) ℂ}
     (hG : ∀ i, inG ε (E i)) (hE : ∀ i j, ip (E i) (E j) = if i = j then 1 else 0) (hs : 0 ≤ s)
@@ -438,8 +437,6 @@ theorem one_le_exp_mul_pow {N : ℕ} {δ : ℝ} (h0 : 0 ≤ δ) (h1 : δ ≤ 1 /
   have := Real.add_one_le_exp (2 * δ)
   nlinarith
 
-open Metric Filter Topology in
-open scoped ENNReal Matrix.Norms.Frobenius in
 
 theorem lintegral_chart_le : ∀ (n : ℕ) (ε : Fin n → Bool) (c s : ℝ) (E : Fin (n ^ 2) → Matrix (Fin n) (Fin n) ℂ) (Θ : (Fin (n ^ 2) → ℝ) → UJ ε), IsGauge ε c → (∀ i, inG ε (E i)) → (∀ i j, ((E i * (E j)ᴴ).trace).re = if i = j then 1 else 0) → 0 < s → n * (Real.exp (3 * n ^ 2 * s) - 1) ≤ 1 / 2 → (∀ t, uMat (Θ t) = (List.ofFn fun i => NormedSpace.exp ((t i : ℂ) • E i)).prod) → ∀ Φ : UJ ε → ENNReal, Measurable Φ → ∫⁻ t in Set.pi Set.univ (fun _ : Fin (n ^ 2) => Set.Icc (0 : ℝ) s), Φ (Θ t) ≤ ENNReal.ofReal (Real.exp (2 * n ^ 3 * (Real.exp (2 * n ^ 2 * s) - 1)) * c) * ∫⁻ y in Θ '' Set.pi Set.univ (fun _ : Fin (n ^ 2) => Set.Icc (0 : ℝ) s), Φ y ∂(muG ε) := by
   intro n ε c s E Θ hc hG hE hs hn hΘ Φ hΦ

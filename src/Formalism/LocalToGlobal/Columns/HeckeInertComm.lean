@@ -181,7 +181,6 @@ section Count
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-open Classical in
 
 theorem hi_count_eq {I J : Ideal (𝓞 E)} (hIJ : I ⊔ J = ⊤) (hIc : HiConj I) (hJc : HiConj J) (hI0 : I ≠ ⊥)
     (hJ0 : J ≠ ⊥) {Rx Ry : Submodule (𝓞 E) (Sp E n) → Submodule (𝓞 E) (Sp E n) → Prop} (hx : HiBd I Rx)
@@ -236,7 +235,6 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K]
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))} {S : GSD K}
 
-open Classical in
 
 theorem hi_commute (c : DecoPts S E n ST SG) (A B : LocOp S S)
     (a b : DecoSet E n ST SG → Finset (DecoSet E n ST SG))

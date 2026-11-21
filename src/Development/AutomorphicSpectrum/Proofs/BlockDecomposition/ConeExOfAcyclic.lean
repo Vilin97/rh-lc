@@ -557,7 +557,6 @@ theorem coindη_inj {E : Type} [Category.{0} E] (G : E ⥤ ModuleCat.{0} R) (x :
   have h2 : (G.map (𝟙 x)).hom v = (G.map (𝟙 x)).hom w := congrFun h ⟨x, 𝟙 x⟩
   simpa using h2
 
-variable (R) in
 
 structure Tr (C D : Type) [Category.{0} C] [Category.{0} D] where
 
@@ -835,7 +834,6 @@ theorem qiso_of_cone {A B : Cx R} (f : Hm A B) (h : ∀ k, (cone f).Ex k) :
   · obtain ⟨y, w, h1, h2⟩ := (cone_ex_succ f n).1 (h (n + 2)) 0 z (map_zero _) (by rw [map_zero, hz])
     exact ⟨y, w, h1, by rw [← h2]; abel⟩
 
-open MainStatements.Hodge in
 
 theorem fubiniSt : CxSt → FubiniSt := by
   intro _ R _ C _ F D _ _ _ G m h

@@ -116,7 +116,6 @@ theorem kappa_eq (F G : FinIso L n) : F.κ = G.κ := by
     change F.κ (1 ⊗ₜ a) w = G.κ (1 ⊗ₜ a) w
     rw [h1, h2, this]
 
-variable (L n) in
 
 end GlobalTheory.FormDict.Model
 

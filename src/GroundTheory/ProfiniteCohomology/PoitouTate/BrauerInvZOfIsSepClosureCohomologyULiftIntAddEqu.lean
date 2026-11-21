@@ -135,7 +135,6 @@ theorem tensorHom_dualToCartierDual_cartierPairing :
   | tmul a f => rfl
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-omit [Finite M] in
 
 theorem localDualityPairing_dualToCartierDual [Finite M] {r s : ℕ} (h : r + s = 2)
     (ξ : cohomology (Rep.res ψ.toMonoidHom M) r)

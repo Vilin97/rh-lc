@@ -296,6 +296,5 @@ theorem exists_anArc_of_period (D : Datum H) {g : ℕ} {ty : Fin g → (E →+* 
       simp
     exact ⟨h1, h2, h3, exists_datum_Lam A _ _ tyB h3 hF⟩
 
-open HostModel in
 
 end GlobalTheory.OfPeriod

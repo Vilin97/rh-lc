@@ -116,7 +116,6 @@ theorem injective (hD : 1 ≤ wd g) (h : O⟦X⟧ →ₐ[O] O⟦X⟧) (hX : h X 
     simp [ha])
   simpa using congrFun this ⟨0, hD⟩
 
-omit hg in
 
 noncomputable def cf (g : O⟦X⟧) (f : O⟦X⟧) (i : ℕ) : O⟦X⟧ :=
   mk fun n => ((fun q => q /ʷ g)^[n] f %ʷ g).coeff i

@@ -25,7 +25,6 @@ def PDPoly.expTerm (Q : PDPoly B) (k : ℕ) (b : B) : PowerSeries Q.P :=
 
 def PDPoly.augExp (Q : PDPoly B) (p : Q.P) : PowerSeries Q.P := (Q.e.repr p).prod Q.expTerm
 
-open Classical in
 
 def PDPoly.augDP (Q : PDPoly B) (n : ℕ) (p : Q.P) : Q.P :=
   if p ∈ Q.aug then PowerSeries.coeff n (Q.augExp p) else 0

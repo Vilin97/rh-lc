@@ -43,8 +43,6 @@ private theorem etLoc_of_forall {U : Scheme} {P : (V : Scheme) → (V ⟶ U) →
     (h : ∀ V g, P V g) : _root_.GlobalTheory.EtC.Loc U P :=
   ⟨⊤, GrothendieckTopology.top_mem _ _, fun V g _ => h V g⟩
 
-open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
-variable {R : Type} [CommRing R] in
 
 theorem _root_.GlobalTheory.EtC.SuppRes.supp_res : ∀ (q : ℕ) [NeZero q] (i : ℤ)
     (D : _root_.GlobalTheory.EtC.Cx (ZMod q))

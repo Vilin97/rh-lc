@@ -65,7 +65,6 @@ theorem mem_latQ {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LT : Set (F
 def gamQ (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (x y : Matrix (Fin T.rank) (Fin S.rank) D.host.E) : ℂ :=
   ψ (symplO S T (finRat S T x) (finRat S T y))
 
-open Classical in
 
 def chiLat (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (LS : Set (Fin S.rank → D.host.E)) (LT : Set (Fin T.rank → D.host.E))
     (w : 𝓞 D.host.E) (x : WO S T) : ℂ :=

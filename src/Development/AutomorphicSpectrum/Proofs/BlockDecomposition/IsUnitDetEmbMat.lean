@@ -39,12 +39,10 @@ theorem ev_smul (σ : LL →ₐ[Qp] Om) (c : LL) (z : (Fin 1 → LL) ⊗[Qp] BdR
 
 variable [FiniteDimensional Qp LL] [Algebra.IsSeparable Qp LL] [IsAlgClosed Om]
 
-variable (Qp Om LL) in
 
 def embBasis : Basis (LL →ₐ[Qp] Om) Qp LL :=
   (finBasis Qp LL).reindex (Fintype.equivFinOfCardEq (AlgHom.card Qp LL Om)).symm
 
-variable (Qp Om LL) in
 
 def embMat : Matrix (LL →ₐ[Qp] Om) (LL →ₐ[Qp] Om) Om :=
   Algebra.embeddingsMatrixReindex Qp Om (embBasis Qp Om LL) (Equiv.refl _)

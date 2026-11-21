@@ -168,4 +168,3 @@ theorem Formalism.FourierDecayAlt.P.power_matching : Formalism.FourierDecayAlt.U
 open Formalism.FourierDecayAlt.P.Ux7 in
 theorem Formalism.FourierDecayAlt.P.derivative_bound_of_decay : Formalism.FourierDecayAlt.U.DerivBoundOfDecay := by
   exact derivBoundOfDecay
-open Formalism.FourierDecayAlt.P.Ux7 in

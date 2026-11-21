@@ -134,7 +134,6 @@ theorem nvl_redL (L : ∀ e, LB (Y e).left) (w : ∀ e, LB.Iso (L e) ((L (e + 1)
   show SecOn.congr (hL e).1 hP (w e) (hL e).2 V' ((SecOn.congr (hL e).1 hP (w e) (hL e).2 V').symm _) = _
   exact (SecOn.congr (hL e).1 hP (w e) (hL e).2 V').apply_symm_apply _
 
-include hβ in
 
 theorem surjective_beta (e : ℕ) : Function.Surjective (β e) := by
   have hf : Function.Surjective (Ideal.Quotient.factor (Ideal.pow_le_pow_right (Nat.le_succ (e + 1))) :

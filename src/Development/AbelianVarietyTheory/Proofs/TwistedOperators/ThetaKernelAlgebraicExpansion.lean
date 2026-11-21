@@ -287,6 +287,5 @@ namespace GlobalTheory.BotFourier
 
 open GlobalTheory.PlaceModel GlobalTheory.AlgWave
 
-set_option maxHeartbeats 2000000 in
 
 end GlobalTheory.BotFourier

@@ -11,7 +11,6 @@ open NumberField Formalism.HermitianLattices.Ext.L3
 
 namespace GlobalTheory.Mass
 
-open NumberField in
 
 theorem _root_.GlobalTheory.Mass.binary_hermitian_represents : _root_.Formalism.HermitianLattices.Ext.L3.HermRepUnram := by
   unfold _root_.Formalism.HermitianLattices.Ext.L3.HermRepUnram

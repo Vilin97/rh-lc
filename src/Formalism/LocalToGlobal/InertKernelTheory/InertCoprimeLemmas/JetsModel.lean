@@ -49,10 +49,8 @@ theorem wModel_Δ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (hcc : IsCurv
     WeierstrassCurve.b₈, map_sub, map_mul, map_pow, map_div₀, map_neg, map_ofNat]
   ring
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
 end JetsModel
 
-variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
 end Formalism.L2.KerInert

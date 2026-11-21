@@ -64,7 +64,6 @@ theorem map_coinvariantsKer_le {W : Type*} [AddCommGroup W] [Module ℂ W]
     f.isIntertwining]
   exact sub_mem_coinvariantsKer h.2 (f v)
 
-variable {ρ} in
 
 theorem coinvariantsKer_le_ker_of_invariant {W : Type*} [AddCommGroup W] [Module ℂ W]
     {K : Subgroup G} {f : V →ₗ[ℂ] W} (hf : ∀ k ∈ K, ∀ v, f (ρ k v) = f v) :
@@ -250,7 +249,6 @@ section Decomposition
 
 variable {ρ} {K : Subgroup G}
 
-omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 
 theorem exists_nhds_cosetSum_eq_zero (hρ : IsSmooth ρ) {x : V} (hx : x ∈ coinvariantsKer ρ K) :
     ∃ U ∈ 𝓝 (1 : G), ∀ N : Subgroup G, (N : Set G) ⊆ U →
@@ -312,7 +310,6 @@ theorem isCompl_fixedVectors_coinvariantsKer (hρ : IsSmooth ρ) (hKc : IsCompac
   ⟨disjoint_fixedVectors_coinvariantsKer hρ hKc hKo,
     codisjoint_fixedVectors_coinvariantsKer hρ hKc hKo⟩
 
-variable (ρ) in
 
 def fixedProj (hρ : IsSmooth ρ) (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G)) :
     V →ₗ[ℂ] fixedVectors ρ K :=
@@ -360,7 +357,6 @@ theorem eq_of_invariant_of_eqOn {W : Type*} [AddCommGroup W] [Module ℂ W] {f g
     rw [← sub_eq_zero, ← map_sub]; exact coinvariantsKer_le_ker_of_invariant hg hs
   rw [e1, e2, h _ (fixedProj ρ hρ hKc hKo v).2]
 
-omit hρ in
 
 theorem fixedProj_map {W : Type*} [AddCommGroup W] [Module ℂ W] {σ : Representation ℂ G W}
     (hρ : IsSmooth ρ) (hσ : IsSmooth σ) (f : Representation.IntertwiningMap ρ σ) (v : V) :

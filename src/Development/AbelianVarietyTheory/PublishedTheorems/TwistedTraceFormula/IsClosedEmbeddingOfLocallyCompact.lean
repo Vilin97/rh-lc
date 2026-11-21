@@ -57,15 +57,11 @@ theorem isClosedEmbedding_toHomUnits {H n : Type} [Group H] [TopologicalSpace H]
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
 
-open Classical in
-variable (σ) in
 
 def infMat : GInf σ J →* Matrix (Fin n × Σ w : InfinitePlace F, EmbOver E w) (Fin n × Σ w : InfinitePlace F, EmbOver E w) ℂ :=
   (Matrix.blockDiagonalRingHom (Fin n) _ ℂ).toMonoidHom.comp
     (MonoidHom.pi fun t => (archMat σ J t.2).comp (projInfArch σ J t.1))
 
-open Classical in
-variable (σ) in
 
 theorem ccInf_eq : CcInf σ J = CcMat (infMat σ J) := by
   refine le_antisymm (ccSmooth_le (p := fun y w τ i j => y (i, ⟨w, τ⟩) (j, ⟨w, τ⟩)) (by fun_prop) fun g => ?_)
@@ -78,7 +74,6 @@ theorem ccInf_eq : CcInf σ J = CcMat (infMat σ J) := by
     · exact contDiff_pi.1 (contDiff_pi.1 (contDiff_pi.1 (contDiff_pi.1 contDiff_id _) _) _) _
     · exact contDiff_const
 
-open Classical in
 
 theorem isEmbedding_infMat (h : IsCMExt F E σ) : Topology.IsEmbedding (matCoord (infMat σ J)) := by
   let τ : ∀ w : InfinitePlace F, EmbOver E w := fun _ => Classical.arbitrary _

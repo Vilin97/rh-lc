@@ -108,4 +108,3 @@ theorem exists_scale (M : FlagModel y Ψ N j) {F : Type} [Field F] (f : MvPolyno
 
 end GlobalTheory.CompanionTheory.Ar.PB.CovGraph.GenIdeal
 
-open GlobalTheory.CompanionTheory.Ar.PB.CovGraph.GenIdeal in

@@ -156,7 +156,6 @@ variable {O : Type} [CommRing O] {M : Type} [AddCommGroup M] [Module O M] [Modul
   [IsCentralScalar O M] {A : Over (Sp O)} [GrpObj A]
   (D : Der A.hom (unitSec A) (pushO O M))
 
-variable (O M A) in
 
 def VanD (D : Der A.hom (unitSec A) (pushO O M)) : Prop :=
   ∀ (W : A.left.Opens) (V : (Sp O).Opens) (h : V ≤ unitSec A ⁻¹ᵁ W) (f : Γ(A.left, W)),
@@ -291,7 +290,6 @@ theorem centerFn_app_zero {W : (TM O M).left.Opens} {V : (Sp O).Opens}
     (sec (zeroSec O M)).app _ (centerFn h b) = 0 := by
   rw [app_zeroSec_eq, centerFn_van, map_zero]
 
-variable (O M) in
 
 def centerDer : Der (TM O M).hom (sec (zeroSec O M)) (pushO O M) where
   app {W V} h := AddMonoidHom.mk' (fun b => ofFn (centerFn h b)) fun a b => by
@@ -331,7 +329,6 @@ theorem toFn_centerDer {W : (TM O M).left.Opens} {V : (Sp O).Opens}
     (h : V ≤ sec (zeroSec O M) ⁻¹ᵁ W) (b : Γ((TM O M).left, W)) :
     toFn ((centerDer O M).app h b) = centerFn h b := rfl
 
-variable (O M) in
 
 def rhoM : conormal (sec (zeroSec O M)) ⟶ pushO O M := (centerDer O M).lift
 

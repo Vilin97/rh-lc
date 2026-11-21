@@ -134,7 +134,6 @@ theorem nonempty_homology_restrictScalars_equiv {K R : Type} [CommRing K] [CommR
     ((cechFunctor κ K).mapIso e ≪≫ (cechRestrictScalarsIso a (secCube f M D)).symm) n ≪≫
     ((cechLB f M D).sc n).mapHomologyIso (ModuleCat.restrictScalars a)).toLinearEquiv⟩
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 
 theorem lbIso_pull_pull_comp {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) (φ : Y ⟶ X)
     (ψ : Z ⟶ Y) : LBIso ((L.pull φ).pull ψ) (L.pull (ψ ≫ φ)) :=

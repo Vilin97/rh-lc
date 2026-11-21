@@ -75,6 +75,5 @@ theorem val_pow_succ_nonneg {la : IsDedekindDomain.HeightOneSpectrum (𝓞 c.F)}
   | zero => rw [pow_one]; exact hf
   | succ n ih => rw [pow_succ, hv.mul]; exact add_nonneg ih hf
 
-set_option maxHeartbeats 800000 in
 
 end GlobalTheory.WtMatchBar

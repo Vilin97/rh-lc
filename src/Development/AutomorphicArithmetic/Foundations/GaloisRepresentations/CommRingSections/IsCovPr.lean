@@ -66,7 +66,6 @@ def Bd (U : ι → X.left.Opens) : (n : ℕ) → Submodule K (Co U n)
 
 abbrev HC (U : ι → X.left.Opens) (n : ℕ) : Type := LinearMap.ker (dC U n) ⧸ (Bd U n).submoduleOf (LinearMap.ker (dC U n))
 
-open Classical in
 
 abbrev all (X : Sch K) : X.left.affineOpens → X.left.Opens := Subtype.val
 

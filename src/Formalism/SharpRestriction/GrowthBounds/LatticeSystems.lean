@@ -76,7 +76,6 @@ theorem pr_iter (v : Fin G.P.nV) (m : ℕ) (x : G.Fn) : (y v ^ m) x = (G.yv v)^[
   | succ n ih =>
     rw [pow_succ, Module.End.mul_apply, ih, hy, Function.iterate_succ_apply]
 
-include hy in
 
 theorem pr_list {V : ℕ} (e : Fin V → Fin G.P.nV) (m : ℕ) (Sv : Fin G.P.nV → ℕ) (π : G.O) (c : ℕ)
     (hπ : π ^ c = (p : G.O)) (ε : Fin V → Bool) (l : List (Fin V)) (x : G.Fn) :
@@ -97,7 +96,6 @@ theorem pr_list {V : ℕ} (e : Fin V → Fin G.P.nV) (m : ℕ) (Sv : Fin G.P.nV 
         List.map_cons, List.sum_cons, LinearMap.smul_apply, Module.End.one_apply]
       rw [pow_mul, hπ, smul_smul, pow_add]
 
-include hy in
 
 theorem pr_le {V : ℕ} (e : Fin V ↪ Fin G.P.nV)
     (hcomm : ∀ (u v : Fin G.P.nV) (F : G.Fn), G.yv u (G.yv v F) = G.yv v (G.yv u F))

@@ -73,7 +73,6 @@ end GlobalTheory.Col.Interp
 
 namespace GlobalTheory.Col
 
-open Interp in
 
 theorem X_mul_mem_span_of_levels (R : Type) [CommRing R] (p : ℕ) [hp : Fact p.Prime] (hR : IsDomain R)
     (hpR : Prime (p : R)) (_hc : IsAdicComplete (Ideal.span {(p : R)}) R)

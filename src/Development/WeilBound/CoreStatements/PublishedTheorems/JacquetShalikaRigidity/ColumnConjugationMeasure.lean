@@ -261,7 +261,6 @@ def InfinitePlaceStep : Prop := ForE fun E _ _ _ k => ∀ w ρ J, WRep (E := E) 
       ∃ x' C₀, C₀ ⊆ U ∧ J x' ∈ Y ∧ SmV (ρ.comp (infGL E k)) x' ∧ Lev S (J x') ∧ (∀ c ∈ C₀, GlobalTheory (n + 1) c) ∧
         Bump ψ S (Om (n + 1) m) (Set.image2 (· * ·) C C₀) (Wh ψ (J x'))
 
-open Classical in
 
 def FinitePlaceStep : Prop := ForE fun E _ _ _ k => ∀ w ρ J, WRep (E := E) (k := k) w ρ J → ∀ ψ, StdPsi ψ →
   ∀ (S : Finset (Pl E)) (Y : Submodule ℂ (XB E k)), YOK ψ S Y → ∀ n m, ∀ v ∈ S, m v + 1 < k → (∀ v, v ∉ S → m v = 0) →

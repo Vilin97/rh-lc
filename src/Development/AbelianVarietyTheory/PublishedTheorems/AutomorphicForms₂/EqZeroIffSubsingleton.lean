@@ -36,7 +36,6 @@ section Local
 
 variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {m : ℕ}
 
-omit [IsLocalRing R] in
 
 end Local
 

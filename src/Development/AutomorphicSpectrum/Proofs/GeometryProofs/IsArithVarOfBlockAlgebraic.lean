@@ -21,7 +21,6 @@ section Dim
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [CharZero Ω]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem ratioField_eq_blockFnField (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) :
     ratioField y c = blockFnField y := by
@@ -59,7 +58,6 @@ theorem ringKrullDim_coord (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀
   rw [mCoordIdeal_ratioPtL y c hc] at htr
   rw [hdim, htr, ratioField_eq_blockFnField y c hc]
 
-omit [Fintype K] [∀ k, Fintype (ι k)] in
 
 theorem trdeg_eq_of_le_of_isAlgebraic {L₁ L₂ : IntermediateField ℚ Ω} (h : L₁ ≤ L₂)
     (halg : ∀ t ∈ L₂, IsAlgebraic L₁ t) : Algebra.trdeg ℤ L₂ = Algebra.trdeg ℤ L₁ := by

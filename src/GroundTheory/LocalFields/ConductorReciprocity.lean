@@ -23,7 +23,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 attribute [local instance] isDiscreteModule_units
 
-include hf in
 
 theorem restrictAb_localArtinMap_lubinTate {n : ℕ} (hn : 0 < n) (E : IntermediateField K Ω)
     [FiniteDimensional K E] [IsGalois K E] (hE : E ≤ maximalUnramifiedExtension K Ω)
@@ -60,7 +59,6 @@ section Compositum
 variable {n : ℕ} (hn : 0 < n) {E : IntermediateField K Ω} [FiniteDimensional K E] [IsGalois K E]
   (hE : IsUnramifiedSubextension E)
 
-include hn hE in
 
 theorem mem_upperRamificationGroup_lubinTateField_sup {v : ℝ} (hv : -1 < v)
     (σ : (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω) ≃ₐ[K]
@@ -92,7 +90,6 @@ theorem mem_upperRamificationGroup_lubinTateField_sup {v : ℝ} (hv : -1 < v)
     have : σ' = σ := (bijective_restrictAut_prod hπ hf hn hE).1 (Prod.ext he (h1'.trans h1.symm))
     exact this ▸ hσ'
 
-include hn hE in
 
 theorem restrictAut_localArtinMap_unitsIncl
     [IsAbelianGalois K (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω)] (u : 𝒪[K]ˣ) :
@@ -119,7 +116,6 @@ theorem restrictAut_localArtinMap_unitsIncl
     intro x hx
     rw [AlgEquiv.restrictNormalHom_apply, ← hτ x hx, lubinTateGalPointMap_val]
 
-include hn hE in
 
 theorem map_unitFiltrationUnits_lubinTateField_sup
     [IsAbelianGalois K (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω)] (j : ℕ) :

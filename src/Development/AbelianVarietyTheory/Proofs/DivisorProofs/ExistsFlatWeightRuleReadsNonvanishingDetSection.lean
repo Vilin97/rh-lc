@@ -105,11 +105,9 @@ theorem ptF_map {φ : S →ₐ[c.F] T} {y : FrPt Xo c S} {z : FrPt Xo c T} (h : 
   · rw [Category.assoc, ptF_snd, ptF_snd, ← DetExtendZero.spMap_comp]
     exact congrArg spMap φ.comp_algebraMap.symm
 
-variable (Y) in
 
 abbrev pt (y : FrPt Xo c S) : Sp S ⟶ Y.X := ptF y ≫ Y.jQ ≫ genι Y
 
-variable (Y) in
 
 def fr (y : FrPt Xo c S) : EigFrame Y (algebraMap c.F S) (pt Y y) := EigFrame.ofFrPt Y y rfl
 

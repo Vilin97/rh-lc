@@ -26,7 +26,6 @@ noncomputable section
 
 namespace GlobalTheory.Core.Rk.SumBox
 
-open Matrix ComplexOrder in
 
 theorem isCartanInv_blockSum {k k₁ k₂ : ℕ} (G : Matrix (Fin k) (Fin k) ℂ) (GW : Matrix (Fin k₁) (Fin k₁) ℂ)
     (GH : Matrix (Fin k₂) (Fin k₂) ℂ) (iW : Matrix (Fin k) (Fin k₁) ℂ) (iH : Matrix (Fin k) (Fin k₂) ℂ)
@@ -108,7 +107,6 @@ theorem isCartanInv_blockSum {k k₁ k₂ : ℕ} (G : Matrix (Fin k) (Fin k) ℂ
     · exact add_pos_of_pos_of_nonneg (hPW.dotProduct_mulVec_pos hw)
         (hPH.posSemidef.dotProduct_mulVec_nonneg _)
 
-open Matrix in
 
 theorem isCartanInv_sumMat : ∀ (D : D7) (B W H : HSp D) (o : OrthDec B W H) (sW : RealMat W) (sH : RealMat H), (∀ τ, IsCartanInv (gramAt D W τ) (sW τ)) → (∀ τ, IsCartanInv (gramAt D H τ) (sH τ)) → ∀ τ, IsCartanInv (gramAt D B τ) (sumMat o sW sH τ) := by
   intro D B W H o sW sH hW hH τ

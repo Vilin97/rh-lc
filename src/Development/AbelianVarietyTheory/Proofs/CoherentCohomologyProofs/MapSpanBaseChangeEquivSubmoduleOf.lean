@@ -104,7 +104,6 @@ def spanBaseChange (M : Submodule R V) : Submodule S (L ⊗[K] V) :=
 
 variable [Algebra R S] [Algebra R L] [IsScalarTower R K L] [IsScalarTower R S L]
 
-variable (R V) in
 
 noncomputable def baseChangeToField : S ⊗[R] V →ₗ[S] L ⊗[K] V :=
   LinearMap.liftBaseChange S ((TensorProduct.mk K L V 1).restrictScalars R)
@@ -131,7 +130,6 @@ omit [Algebra R K] [IsScalarTower R K V] [IsScalarTower R K V'] [Algebra R S] [A
 
 variable [IsFractionRing R K] [FaithfulSMul S L]
 
-variable (R V) in
 
 theorem baseChangeToField_injective : Function.Injective (baseChangeToField R K S L V) := by
   have hflat : Module.Flat R V :=

@@ -311,7 +311,6 @@ theorem mem_KD_of_approx (a : Ideles H.E)
   exact mul_mem (mem_KD_of_congG H ⟨hb, fun k v hv => hb' v (Set.mem_iUnion.2 ⟨k, hv⟩)⟩)
     (prod_mem fun v _ => locF_mem_KD H v k)
 
-open Classical in
 
 theorem exists_detClass : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (σ : H.E →ₐ[H.F] H.E), (∀ x, σ x = H.conj x) → ∀ (ι : Formalism.L2.DIV.AfE H.F H.E ≃+* FiniteAdeleRing (𝓞 H.E) H.E), (∀ x : H.E, ι (TensorProduct.tmul H.F x 1) = algebraMap H.E _ x) → (∀ z, z ∈ Formalism.L2.DIV.RInt H.F H.E ↔ ∀ Q : HeightOneSpectrum (𝓞 H.E), Valued.v (ι z Q) ≤ 1) → (Formalism.L2.DIV.h90 σ).range = Formalism.L2.DIV.U1 σ ∧ ∃ f : Formalism.L2.DIV.U1 σ →* DtT H, Function.Surjective f ∧ ∀ (x : (Formalism.L2.DIV.AfE H.F H.E)ˣ) (h : Formalism.L2.DIV.h90 σ x ∈ Formalism.L2.DIV.U1 σ) (a : Ideles H.E), (a : AdeleRing (𝓞 H.E) H.E).2 = ι (x : Formalism.L2.DIV.AfE H.F H.E) → f ⟨_, h⟩ = QuotientGroup.mk a := by
   intro R H σ hσ ι h1 h2

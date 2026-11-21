@@ -118,6 +118,5 @@ theorem rtr_mem_Cu (hK : X.LevelSubgroupCharacter) {δ : Hfin X u} (hδ : ∀ k 
 
 end GlobalTheory.Core.Mi.CenAct
 
-open GlobalTheory.Core.Mi.CenAct in
 
 end

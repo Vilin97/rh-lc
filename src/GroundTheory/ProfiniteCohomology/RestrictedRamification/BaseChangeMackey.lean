@@ -91,7 +91,6 @@ def fixingOfAlgHom : Subgroup Gal(AlgebraicClosure (v.adicCompletion F) / v.adic
     rw [AlgEquiv.aut_inv]
     exact σ.symm_apply_eq.2 (hσ l).symm
 
-omit [NumberField L] in
 
 def fixingOfAlgHomToAut (σ : fixingOfAlgHom j) :
     Gal(AlgebraicClosure ((placeOfAlgHom j).1.adicCompletion L) / (placeOfAlgHom j).1.adicCompletion L) :=
@@ -276,7 +275,6 @@ theorem gsLocalPlace_mul (v : S) (x : galUnramifiedOutside F Ω S) {u : galUnram
     AlgHom.ext fun l => gsLocalEmbedding_mul hL ιs v x hu h l
   rw [gsLocalPlace, e, placeOfAlgHom_comp]
 
-variable (S) in
 
 def mackeyPlace (p : MackeyIndex (gsOpenSubgroup S hL) (gsFinFamily S ιs)) :
     (placesOver S : Set (HeightOneSpectrum (𝓞 L))) :=
@@ -326,14 +324,11 @@ theorem mackeyPlace_surjective : Function.Surjective (mackeyPlace S hL ιs) := b
   have e1 : d.out = a * x * gsFinFamily S ιs v h := hab
   rw [e1, gsLocalPlace_mul hL ιs v x ha h, gsLocalPlace, hx, hj]
 
-variable (S) in
 
 def mackeyPlaceEquiv :
     MackeyIndex (gsOpenSubgroup S hL) (gsFinFamily S ιs) ≃ (placesOver S : Set (HeightOneSpectrum (𝓞 L))) :=
   Equiv.ofBijective (mackeyPlace S hL ιs) ⟨mackeyPlace_injective hL ιs, mackeyPlace_surjective hL ιs⟩
 
-omit [IsScalarTower F L Ω] in
-variable (S) in
 
 def gsAutLift (x : galUnramifiedOutside F Ω S) : Gal(Ω/F) :=
   (AlgEquiv.restrictNormalHom_surjective (K₁ := maxUnramifiedOutside F Ω S) Ω x).choose

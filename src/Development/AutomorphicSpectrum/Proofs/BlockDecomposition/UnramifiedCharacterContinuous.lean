@@ -20,7 +20,6 @@ open GroundTheory.ProfCoh GroundTheory.LocalField ValuativeRel CategoryTheory
 
 namespace GlobalTheory.CompanionTheory.LocalUnram
 
-open GroundTheory.LocalField.Abstract in
 
 theorem continuous_of_additive_of_frobenius_eq_one :
     ∀ (K Ω : Type) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]

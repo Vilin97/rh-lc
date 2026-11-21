@@ -26,7 +26,6 @@ theorem pow_notMem_asIdeal_of_forall (ℓ k : ℕ)
 
 variable (hnS : ∀ v ∉ S, ((n : ℕ) : 𝓞 K.1) ∉ v.asIdeal)
 
-include hnS in
 
 theorem nsmul_gsRootsCompact (m : ℕ) (w : gsRootsCompact S ιs n m) : n • w = 0 := by
   obtain ⟨w', rfl⟩ := (bijective_gsRootsComparison S ιs n hnS m).2 w

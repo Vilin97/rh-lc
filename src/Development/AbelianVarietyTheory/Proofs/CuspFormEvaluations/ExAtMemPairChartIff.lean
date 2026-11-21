@@ -212,20 +212,17 @@ theorem IsPullConst.eq_one (hL : L.IsLB) {rig : LB.Gen (L.pull (eSec A))} (hrig 
   rw [ex_zero] at hi
   exact fun _ hy => Set.mem_iInter.2 fun _ => hi hy
 
-variable (p) in
 
 theorem exAt_snd_comp {f : A ⟶ A} {z w : Fin g → ℂ} (h : u.ex w = u.ex z ≫ f) :
     exAt u p z ≫ (snd T A ≫ f).left = (u.ex w).left := by
   rw [Over.comp_left, ← Category.assoc, exAt_snd, h, Over.comp_left]
 
-variable (u) in
 
 theorem ex_natCast_smul (k : ℕ) (z : Fin g → ℂ) : u.ex ((k : ℂ) • z) = u.ex z ^ k := by
   induction k with
   | zero => rw [Nat.cast_zero, zero_smul, ex_zero, pow_zero]
   | succ n ih => rw [Nat.cast_succ, add_smul, one_smul, u.ex_add, ih, pow_succ]
 
-variable (u p) in
 
 theorem exAt_mulT (k : ℕ) (z : Fin g → ℂ) :
     exAt u p z ≫ (mulT A T k).left = exAt u p ((k : ℂ) • z) :=

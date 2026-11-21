@@ -29,7 +29,6 @@ noncomputable section
 
 namespace GlobalTheory.ChainOnto
 
-set_option maxHeartbeats 1000000 in
 
 theorem transferOn_inert : GlobalTheory.Hk3.HoweUnram → ∀ D : D7, TransferOn D fun v => ¬ IsSplit (E := D.host.E) v := by
   intro hH D ψ S T χS χT om hW t ht v hv hunr w h U hU f hf X _ _ ρ x B hx X' _ _ ρ' b hb hbne

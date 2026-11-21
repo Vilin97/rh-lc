@@ -252,7 +252,6 @@ variable {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] {K : T
 theorem isOpenImmersion_j (M : Model R A) : IsOpenImmersion M.j :=
   DvrModel.isOpenImmersion_generic (isPullback_j M)
 
-omit [IsFractionRing R K] in
 
 theorem mem_basicOpen_cst (hπ : Irreducible π) (M : Model R A) (U : M.Y.left.Opens) (x : M.Y.left) :
     x ∈ M.Y.left.basicOpen (cst M U π) ↔ x ∈ U ∧ x ∉ M.sp := by
@@ -308,7 +307,6 @@ theorem exists_pow_mul_eq (hπ : Irreducible π) (M : Model R A) {U : M.Y.left.O
   simp only [hid, map_pow] at this
   rw [← this, _root_.mul_comm]
 
-omit [IsFractionRing R K] in
 
 theorem prime_cst (hπ : Irreducible π) (M : Model R A) (hM : M.Irr) {U : M.Y.left.Opens} (hU : IsAffineOpen U)
     (h : ((U : Set M.Y.left) ∩ M.sp).Nonempty) : Prime (cst M U π) := by
@@ -329,7 +327,6 @@ theorem prime_cst (hπ : Irreducible π) (M : Model R A) (hM : M.Irr) {U : M.Y.l
   have := isIntegral_of_smooth_field (pullback.snd M.Y.hom (Spec.map (CommRingCat.ofHom (IsLocalRing.residue R))))
   exact DvrModel.prime_res hπ hp hU hx hs
 
-omit [IsFractionRing R K] in
 
 theorem nonempty_basicOpen_inter (hπ : Irreducible π) (M : Model R A) (hM : M.Irr) {U : M.Y.left.Opens}
     (hU : IsAffineOpen U) (h : ((U : Set M.Y.left) ∩ M.sp).Nonempty) {b : Γ(M.Y.left, U)}
@@ -343,7 +340,6 @@ theorem nonempty_basicOpen_inter (hπ : Irreducible π) (M : Model R A) (hM : M.
       (mem_basicOpen_cst hπ M U _).2 ⟨hU.range_fromSpec.le ⟨p, rfl⟩, hn⟩
     exact (hU.fromSpec_preimage_basicOpen _).le this (Ideal.mem_span_singleton_self _)
 
-omit [IsFractionRing R K] in
 
 theorem dvd_of_dvd_rs (hπ : Irreducible π) (M : Model R A) (hM : M.Irr) {U W : M.Y.left.Opens}
     (hU : IsAffineOpen U) (hW : W ≤ U) (h : ((W : Set M.Y.left) ∩ M.sp).Nonempty) {b : Γ(M.Y.left, U)}
@@ -377,7 +373,6 @@ section Order
 variable {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] {K : Type} [Field K] [Algebra R K]
   [IsFractionRing R K] {A : Over (Sp K)} {π : R} {I : Type} [Fintype I] [DecidableEq I]
 
-omit [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K] in
 
 theorem jac_mem_basicOpen (M : Model R A) (D : I → VF A) {U : M.Y.left.Opens} (hU : IsAffineOpen U)
     (g : Γ(M.Y.left, U)) (N : AddSubgroup Γ(A.left, M.j ⁻¹ᵁ M.Y.left.basicOpen g))

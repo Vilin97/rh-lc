@@ -307,7 +307,6 @@ end GlobalTheory.CompanionTheory.Hodge.Prism
 
 namespace GlobalTheory.CompanionTheory.Hodge
 
-open Prism in
 
 theorem htpySt_of_cxSt : CxSt → HtpySt := by
   intro hC R _ C _ F D _ G m m' θ hθ

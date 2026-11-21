@@ -21,7 +21,6 @@ section Count
 variable {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V]
   [MeasurableSpace V] [BorelSpace V]
 
-omit [MeasurableSpace V] [BorelSpace V] in
 
 theorem finite_latticePoints (La : Submodule ℤ V) [DiscreteTopology La] (ρ : ℝ) :
     {x : V | x ∈ La ∧ ‖x‖ ≤ ρ}.Finite := by

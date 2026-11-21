@@ -47,7 +47,6 @@ private theorem lift_bij {A : Type} [Ring A] [Algebra R A] [Algebra F A] [IsScal
   funext x
   exact LinearMap.congr_fun h x
 
-variable {R} in
 
 private noncomputable def spl {c d : R} (p q : R) (hc : c = -1) (hd : d = p ^ 2 + q ^ 2) :
     ℍ[R,c,0,d] →ₐ[R] Matrix (Fin 2) (Fin 2) R :=

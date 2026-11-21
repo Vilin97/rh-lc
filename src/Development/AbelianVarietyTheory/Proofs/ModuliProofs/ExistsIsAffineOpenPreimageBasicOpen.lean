@@ -100,7 +100,6 @@ theorem exists_basicOpen_le {V : (Sp R).Opens} (hV : genericPoint (Sp R) ∈ V) 
   rintro rfl
   exact (PrimeSpectrum.mem_basicOpen _ _).1 hf (Ideal.zero_mem _)
 
-omit [IsDomain R] in
 
 theorem isAffineOpen_inf_preimage_basicOpen (p : X ⟶ Sp R) {U : X.Opens} (hU : IsAffineOpen U) (f : R) :
     IsAffineOpen (U ⊓ p ⁻¹ᵁ PrimeSpectrum.basicOpen f) := by
@@ -109,7 +108,6 @@ theorem isAffineOpen_inf_preimage_basicOpen (p : X ⟶ Sp R) {U : X.Opens} (hU :
   rw [basicOpen_eq_of_affine] at e
   exact e ▸ this
 
-set_option backward.isDefEq.respectTransparency false in
 
 theorem exists_isAffineOpen_preimage_basicOpen (H : IsPullback φ π p (spMap (algebraMap R K))) [QuasiCompact p]
     [QuasiSeparated p] [IsAffine X'] : ∃ f : R, f ≠ 0 ∧ IsAffineOpen (p ⁻¹ᵁ PrimeSpectrum.basicOpen f) := by

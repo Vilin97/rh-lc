@@ -203,7 +203,6 @@ theorem core_termS {A A' w w' g g' K q : ℕ} (hA : A ≤ A' + K) (hw : w' ≤ w
   push_cast
   omega
 
-set_option maxHeartbeats 1600000 in
 
 theorem numCore_std {C0 CYb Cde Ck CD Cb CE1 CE2 Cc : ℝ}
     (hstd : ∀ X : Loc, D1num X → HIext C0 CYb Cde Ck CD Cb X → CBound Cc X → Std C0 Cde CE1 CE2 1 X) :
@@ -358,7 +357,6 @@ theorem numCore_std {C0 CYb Cde Ck CD Cb CE1 CE2 Cc : ℝ}
 theorem numCore_thr : RestNumCore :=
   TransportedAlt.mono (fun _ _ _ _ _ _ _ _ _ _ h => numCore_std h.2) thr_std
 
-set_option maxHeartbeats 3200000 in
 
 theorem keptPair_bounds {C0 CYb Cde Ck CD Cb CE1 CE2 Cc : ℝ}
     (hstd : ∀ X : Loc, D1num X → HIext C0 CYb Cde Ck CD Cb X → CBound Cc X → Std C0 Cde CE1 CE2 1 X) :

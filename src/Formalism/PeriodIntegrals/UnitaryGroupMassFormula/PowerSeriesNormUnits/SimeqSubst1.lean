@@ -54,7 +54,6 @@ variable (hE : CalcEquiv) (hSub : CalcSubst)
 variable {l ex : PowerSeries ℂ_[p]} (hex0 : PowerSeries.constantCoeff ex = 0)
   (hinv : PowerSeries.subst ex l = PowerSeries.X)
 
-include hSub hex0 hinv in
 
 theorem simeq_subst1 {τ : Type} (w : MvPowerSeries τ ℂ_[p]) (hw0 : MvPowerSeries.constantCoeff w = 0)
     (hw : IntegralMv w) {f g : MvPowerSeries Unit ℂ_[p]} (h : Simeq f g) :
@@ -76,7 +75,6 @@ theorem simeq_subst2 {τ : Type} (x y : MvPowerSeries τ ℂ_[p]) (hx0 : MvPower
     · simpa using hy
   exact (hSub p (Fin 2) τ ![x, y] hs0 hsI).1 f g h
 
-include hSub hex0 hinv in
 
 theorem norm_at {ph : PowerSeries ℂ_[p]} (c N : ℂ_[p])
     (h : Simeq (phAt ph (mulBy l ex c (Xv ())) : MvPowerSeries Unit ℂ_[p]) (MvPowerSeries.C N * phAt ph (Xv ())))

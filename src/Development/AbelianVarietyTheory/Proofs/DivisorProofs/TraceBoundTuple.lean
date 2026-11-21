@@ -50,7 +50,6 @@ end GlobalTheory.BigOn.Exp.TupLe.Swap
 
 namespace GlobalTheory.BigOn.Exp.TupLe
 
-open GlobalTheory.BigOn.Exp.TupLe.Swap in
 
 end GlobalTheory.BigOn.Exp.TupLe
 

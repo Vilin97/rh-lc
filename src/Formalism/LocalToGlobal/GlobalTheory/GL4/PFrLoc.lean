@@ -72,9 +72,7 @@ section Lev
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 
-open Formalism.L2.Herm in
 
-open Formalism.L2.Herm in
 
 end Lev
 

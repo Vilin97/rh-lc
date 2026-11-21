@@ -36,15 +36,10 @@ theorem mem_actLat (γ : Matrix (Fin n) (Fin n) E) (Λ : GenLat E n) (v' : Fin n
     v' ∈ (UnitaryAdjointCongruence.actLat γ Λ).La ↔ ∃ v ∈ Λ.La, γ.mulVec v = v' := by
   simp [UnitaryAdjointCongruence.actLat]
 
-omit [NumberField E] [IsCMField E] in
 
-omit [NumberField E] [IsCMField E] in
 
-omit [NumberField E] [IsCMField E] in
 
-omit [NumberField E] [IsCMField E] in
 
-omit [NumberField E] [IsCMField E] in
 
 theorem mul_adj {γ : Matrix (Fin n) (Fin n) E} (h : UnitaryAdjointCongruence.IsUnitaryM γ) : γ * UnitaryAdjointCongruence.adjM γ = 1 :=
   mul_eq_one_comm.1 h
@@ -127,11 +122,8 @@ section Clauses
 
 variable {Xo : Moduli Dw l} {c : Coeff l} [StarRing (𝓞 E)] {nab : NabV Xo c} {n : ℕ}
 
-variable (Xo c nab n) in
 
-variable (Xo c nab) in
 
-variable (Xo c nab n) in
 
 end Clauses
 

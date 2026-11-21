@@ -22,7 +22,6 @@ open scoped BigOperators
 
 namespace GlobalTheory.ConjJet
 
-open MeasureTheory in
 
 theorem mean_transport {V : Type} [NormedAddCommGroup V] [SecondCountableTopology V]
     [MeasurableSpace V] [BorelSpace V] (μ : Measure V) [μ.IsAddLeftInvariant]

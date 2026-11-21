@@ -353,7 +353,6 @@ end GlobalTheory.SphTheta.IntTranslate
 
 namespace GlobalTheory.SphTheta
 
-open IntTranslate in
 
 theorem sum_ordL_diag_eq_of_indicator : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ϖ : L)
     (σ : L →+* L) (q : ℕ), IsUnramInv ϖ σ q → ∀ (m : ℕ) (ι κ : Type) [Fintype ι] [Fintype κ] (c : ι → ℂ)

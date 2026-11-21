@@ -19,7 +19,6 @@ noncomputable section
 
 namespace GlobalTheory.HomFixGlob
 
-open TopologicalSpace in
 
 theorem lc_props {Rg : Type} [CommRing Rg] [IsNoetherianRing Rg] {N : ℕ} {X H : Scheme.{0}}
     (c : X ⟶ Sp (MvPolynomial (Fin N) Rg)) (i : H ⟶ X) [IsClosedImmersion c] [IsOpenImmersion i] :

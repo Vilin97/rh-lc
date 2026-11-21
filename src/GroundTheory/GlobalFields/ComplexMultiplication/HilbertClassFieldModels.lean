@@ -36,7 +36,6 @@ section Models
 
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ]
 
-omit [Algebra K ℂ] in
 
 theorem exists_cmCurve_toEll_of_j_eq (x : ELL K) (W : WeierstrassCurve ℂ) [W.IsElliptic]
     (hW : W.j = ELL.j x) :
@@ -49,7 +48,6 @@ theorem exists_cmCurve_toEll_of_j_eq (x : ELL K) (W : WeierstrassCurve ℂ) [W.I
 
 variable (hK : finrank ℚ K = 2) [IsTotallyComplex K]
 
-include hK in
 
 theorem nonempty_isogeny_of_cmCurve (A B : CMCurve K) : Nonempty (Isogeny A.curve B.curve) := by
   classical
@@ -71,7 +69,6 @@ theorem nonempty_isogeny_of_cmCurve (A B : CMCurve K) : Nonempty (Isogeny A.curv
     exact mul_ne_zero hc ((_root_.map_ne_zero _).2 ht0) hQ.symm
   exact ⟨isogOfHom Q hQ0⟩
 
-include hK in
 
 theorem exists_models_isogenous (M : IntermediateField K ℂ) [FiniteDimensional K M] :
     ∃ L : IntermediateField K ℂ, M ≤ L ∧ FiniteDimensional K L ∧ IsGalois K L ∧

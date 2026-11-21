@@ -9,7 +9,6 @@ open scoped ComplexOrder ENNReal Pointwise
 
 namespace GlobalTheory
 
-open scoped MatrixOrder Matrix.Norms.L2Operator in
 
 theorem exists_scalar_sub_posSemidef {r : ℕ} (A : Matrix (Fin r) (Fin r) ℂ) (hA : A.IsHermitian) :
     ∃ c : ℝ, 1 ≤ c ∧ ((c : ℂ) • (1 : Matrix (Fin r) (Fin r) ℂ) - A).PosSemidef := by

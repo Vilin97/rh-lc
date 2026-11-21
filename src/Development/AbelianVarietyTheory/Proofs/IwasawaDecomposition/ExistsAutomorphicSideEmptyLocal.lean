@@ -162,10 +162,8 @@ theorem f_infW (a : NG.AlgWt D.host.E D.R.nV) (τ : D.host.E →+* ℂ) (lam : F
   unfold hwOf
   rw [dite_eq_left hex, huniq.unique hex.choose_spec.1 hr]
 
-set_option maxHeartbeats 1000000 in
 
 end
 
 end GlobalTheory.AutQuot
 
-open Formalism.BasicNotions GlobalTheory.HeightCounting in

@@ -25,7 +25,6 @@ theorem dot_mulVec_self {g : ℕ} (B : Matrix (Fin g) (Fin g) ℝ) (w : Fin g �
 
 end PGaussPoissonDual
 
-open PGaussPoissonDual in
 
 theorem GaussPoissonDual.proof (hS : GaussSqrt.Statement) (hP : GaussPoissonBound.Statement)
     (hM : GaussDualMin.Statement) (hD : GaussDetFactor.Statement) :

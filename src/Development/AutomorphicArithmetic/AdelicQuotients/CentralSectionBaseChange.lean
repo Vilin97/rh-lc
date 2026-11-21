@@ -10,7 +10,6 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Gl
 
 noncomputable section
 
-open Classical in
 
 private def psi {K : Type} [Field K] (w : InfinitePlace K) : ℝ →+* w.Completion :=
   if hw : w.IsReal then ((ringEquivRealOfIsReal hw).symm : ℝ ≃+* w.Completion).toRingHom

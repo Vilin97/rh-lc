@@ -18,9 +18,6 @@ def IsCsr (P : B[X]) : Prop := P.Monic ∧ C (s (P.coeff 0)) * P = (P.map s).ref
 
 variable {s}
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
 
 theorem _root_.GlobalTheory.UTr.IsCsr.conj_mul_coeff_zero {P : B[X]}
     (h : _root_.GlobalTheory.UTr.IsCsr s P) : s (P.coeff 0) * P.coeff 0 = 1 := by
@@ -50,7 +47,6 @@ theorem IsCsr.map {P : B[X]} (hP : IsCsr s P) (φ : B →+* B') (hφ : ∀ b, φ
   have e : s'.comp φ = φ.comp s := RingHom.ext fun b => (hφ b).symm
   rw [hP.1.natDegree_map, Polynomial.map_map, e, ← Polynomial.map_map, reflect_map, ← hP.2, Polynomial.map_mul, map_C, coeff_map, hφ]
 
-variable (s) in
 
 abbrev Csr : Type := {P : B[X] // IsCsr s P}
 
@@ -75,38 +71,24 @@ def powBasis : Module.Basis (Fin P.1.natDegree) B (Alg P) := (AdjoinRoot.powerBa
 
 instance : Module.Finite B (Alg P) := .of_basis (powBasis P)
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
 
 theorem _root_.GlobalTheory.UTr.aeval_root_eq_zero_iff {q : B[X]} :
     aeval (_root_.GlobalTheory.UTr.root P) q = 0 ↔ P.1 ∣ q := by
   change aeval (AdjoinRoot.root P.1) q = 0 ↔ _
   rw [AdjoinRoot.aeval_eq, AdjoinRoot.mk_eq_zero]
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
 
 theorem _root_.GlobalTheory.UTr.aeval_root :
     aeval (_root_.GlobalTheory.UTr.root P) P.1 = 0 :=
   (_root_.GlobalTheory.UTr.aeval_root_eq_zero_iff P).2 dvd_rfl
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
 
 theorem _root_.GlobalTheory.UTr.exists_aeval_root (z : _root_.GlobalTheory.UTr.Alg P) :
     ∃ q : B[X], aeval (_root_.GlobalTheory.UTr.root P) q = z := by
   obtain ⟨q, hq⟩ : ∃ q, AdjoinRoot.mk P.1 q = z := AdjoinRoot.mk_surjective z
   exact ⟨q, (AdjoinRoot.aeval_eq q).trans hq⟩
 
-variable {P} in
 
-variable {P} in
 
 def gamma : (Alg P)ˣ :=
   Units.mkOfMulEqOne (root P) (-(algebraMap B _ (s (P.1.coeff 0)) * aeval (root P) P.1.divX)) (by
@@ -116,10 +98,6 @@ def gamma : (Alg P)ˣ :=
     rw [map_mul, map_one] at h1
     linear_combination (-algebraMap B (Alg P) (s (P.1.coeff 0))) * h + h1)
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
 
 theorem _root_.GlobalTheory.UTr.eval₂_gamma_inv :
     P.1.eval₂ ((algebraMap B (_root_.GlobalTheory.UTr.Alg P)).comp s)
@@ -134,29 +112,17 @@ theorem _root_.GlobalTheory.UTr.eval₂_gamma_inv :
 
 def conj : Alg P →+* Alg P := AdjoinRoot.lift _ _ (eval₂_gamma_inv P)
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
 
 @[simp] theorem _root_.GlobalTheory.UTr.conj_algebraMap (b : B) :
     _root_.GlobalTheory.UTr.conj P (algebraMap B _ b) = algebraMap B _ (s b) :=
   AdjoinRoot.lift_of _
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
 
 @[simp] theorem _root_.GlobalTheory.UTr.conj_root :
     _root_.GlobalTheory.UTr.conj P (_root_.GlobalTheory.UTr.root P) =
       ((_root_.GlobalTheory.UTr.gamma P)⁻¹ : (_root_.GlobalTheory.UTr.Alg P)ˣ) :=
   AdjoinRoot.lift_root _
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
 
 theorem _root_.GlobalTheory.UTr.conj_conj (hs : ∀ b, s (s b) = b)
     (z : _root_.GlobalTheory.UTr.Alg P) :
@@ -192,15 +158,9 @@ def normU : (Alg P)ˣ →* (Alg P)ˣ := MonoidHom.id _ * Units.map (conj P : Alg
 
 @[simp] theorem val_normU (z : (Alg P)ˣ) : (normU P z : Alg P) = z * conj P z := rfl
 
-variable {P} in
 
 def plus : Subgroup (Alg P)ˣ := (Units.map (conj P : Alg P →* Alg P)).eqLocus (MonoidHom.id _)
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
-variable {P} in
 
 theorem _root_.GlobalTheory.UTr.mem_plus {x : (_root_.GlobalTheory.UTr.Alg P)ˣ} :
     x ∈ _root_.GlobalTheory.UTr.plus P ↔ _root_.GlobalTheory.UTr.conj P x = x := by
@@ -208,10 +168,6 @@ theorem _root_.GlobalTheory.UTr.mem_plus {x : (_root_.GlobalTheory.UTr.Alg P)ˣ}
   rw [Units.ext_iff]
   rfl
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
 
 theorem _root_.GlobalTheory.UTr.normU_mem_plus (hs : ∀ b, s (s b) = b)
     (z : (_root_.GlobalTheory.UTr.Alg P)ˣ) :
@@ -219,7 +175,6 @@ theorem _root_.GlobalTheory.UTr.normU_mem_plus (hs : ∀ b, s (s b) = b)
   rw [_root_.GlobalTheory.UTr.mem_plus, _root_.GlobalTheory.UTr.val_normU,
     map_mul, _root_.GlobalTheory.UTr.conj_conj P hs, mul_comm]
 
-variable {P} in
 
 section Map
 
@@ -230,12 +185,8 @@ include hφ
 
 end Map
 
-variable {P} in
 
-variable {P} in
 
-open Classical in
-variable (s) in
 
 def normSign (d : B) : ℤˣ := if ∃ u : Bˣ, d = u * s u then 1 else -1
 
@@ -246,27 +197,15 @@ def evalMat (g : Matrix n n B) (hg : aeval g P.1 = 0) : Alg P →ₐ[B] Matrix n
     obtain ⟨r, rfl⟩ := Ideal.mem_span_singleton.1 hq
     rw [map_mul, hg, zero_mul]
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
-variable {n : Type} [Fintype n] [DecidableEq n] in
 
 @[simp] theorem _root_.GlobalTheory.UTr.evalMat_root (g : Matrix n n B) (hg : aeval g P.1 = 0) :
     _root_.GlobalTheory.UTr.evalMat P g hg (_root_.GlobalTheory.UTr.root P) = g := by
   change Ideal.Quotient.liftₐ _ _ _ (Ideal.Quotient.mk _ X) = g
   exact aeval_X g
 
-variable {P} in
 
 variable {J : Matrix n n B}
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
-variable {n : Type} [Fintype n] [DecidableEq n] in
-variable {J : Matrix n n B} in
 
 theorem _root_.GlobalTheory.UTr.cT_evalMat (g : _root_.Formalism.UG.UJ s J)
     (hg : aeval g.1.1 P.1 = 0) (z : _root_.GlobalTheory.UTr.Alg P) :
@@ -318,22 +257,12 @@ theorem _root_.GlobalTheory.UTr.cT_evalMat (g : _root_.Formalism.UG.UJ s J)
       ← map_mul, ← map_mul,
       mul_comm ((γ⁻¹ : (_root_.GlobalTheory.UTr.Alg P)ˣ) : _root_.GlobalTheory.UTr.Alg P)]
 
-variable (J) in
 
 variable {P}
 
 variable {x x' : Alg P}
 
-variable (P) in
 
-open Polynomial Matrix in
-variable {B B' : Type} [CommRing B] [CommRing B'] (s : B →+* B) {s' : B' →+* B'} in
-variable {s} in
-variable (P : _root_.GlobalTheory.UTr.Csr s) in
-variable {n : Type} [Fintype n] [DecidableEq n] in
-variable {J : Matrix n n B} in
-variable {P} in
-variable {x x' : _root_.GlobalTheory.UTr.Alg P} in
 
 theorem _root_.GlobalTheory.UTr.aeval_map_map (φ : B →+* B') (g : Matrix n n B) (q : B[X]) :
     aeval (g.map φ) (q.map φ) = (aeval g q).map φ := by

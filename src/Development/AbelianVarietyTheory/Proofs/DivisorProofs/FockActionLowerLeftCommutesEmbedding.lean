@@ -219,7 +219,6 @@ end GlobalTheory.CharPair.Down
 
 namespace GlobalTheory.CharPair
 
-open GlobalTheory.CharPair.Down in
 
 theorem fockAct1_embR_inr_inl (P Q R : ℕ) (h : P ≤ R) (k : ℕ) (a : Fin P) (b : Fin Q) (G : Mdl P Q) :
     fockAct1 P Q R 0 (Eab (Sum.inr b) (Sum.inl a)) (embR P Q R h k G) =

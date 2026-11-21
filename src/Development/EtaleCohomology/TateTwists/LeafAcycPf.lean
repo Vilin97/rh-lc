@@ -164,7 +164,6 @@ lemma deg_H {N k : ℕ} {c : Pr N →₀ ℤ} (hdeg : Pr.Deg (k + 1) c) : Pr.Deg
 
 end LateralTheory.EtaleFoundations.AcycPf
 
-open LateralTheory.EtaleFoundations.AcycPf in
 
 theorem LateralTheory.EtaleFoundations.SteenPf.leaf_acyc_of : LateralTheory.EtaleFoundations.SteenPf.leaf_acyc := by
   intro N k c hdeg hcyc

@@ -34,13 +34,9 @@ theorem herm_expand (v w : Fin (2 * r + k + 1) → ℂ) :
     herm (Hpk k r) v w = ∑ l, star (w l) * (WeylGroupFacts.sgn k r l * v (tau k r l)) := by
   unfold herm; simp only [dotProduct, mulVec_hpk, Pi.star_apply]
 
-variable (k r) in
 
-variable (k r) in
 
-variable (k r) in
 
-variable (k r) in
 
 end N1
 

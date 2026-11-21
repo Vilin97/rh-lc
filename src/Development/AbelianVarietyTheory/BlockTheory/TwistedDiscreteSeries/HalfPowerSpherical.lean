@@ -15,11 +15,8 @@ namespace GlobalTheory.IndefiniteRowSideFullHecke.HalfPowerSpherical
 section Defs
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-open Classical in
 
-open Classical in
 
-open Classical in
 
 def chainGen (α α' : kˣ) (m j i : ℕ) : kˣ :=
   α ^ (-(j : ℤ)) * (α / α') ^ (m / 2) * (α * α') ^ (((m / 2 : ℕ) : ℤ) - (i : ℤ))

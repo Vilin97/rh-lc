@@ -47,7 +47,6 @@ theorem smul_mem_of_weighted {𝓜 : (K → ℤ) → Submodule S M} (hM : KH.IsM
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
-open Classical in
 
 theorem component_smul_eq_zero {𝓜 : (K → ℤ) → Submodule S M} (hM : KH.IsMGraded S ι 𝓜)
     {f : MRingOver S ι} (hf : f ∈ Module.annihilator (MRingOver S ι) M) (i : K → ℤ) {e : K → ℤ} {m : M}
@@ -141,9 +140,6 @@ theorem mem_iSup_span_inf {𝓜 : (K → ℤ) → Submodule S M} (hM : KH.IsMGra
 
 end GradedSubmodules
 
-open GradedSubmodules in
-attribute [local instance] MvPolynomial.weightedGradedAlgebra in
-open Classical in
 
 theorem GradedSubmodules.proof : GradedSubmodules.Statement := by
   intro S _ K _ ι _ M _ _ _ _ 𝓜 hM

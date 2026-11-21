@@ -19,7 +19,6 @@ noncomputable section
 
 variable {K : FiniteSubfield}
 
-variable (K) in
 
 def unitsInvariantLimit (a : K.1ˣ) : (unitsLimitRep K).ρ.invariants :=
   ⟨Additive.ofMul (Units.map (algebraMap K.1 ℚ̄ : K.1 →* ℚ̄) a), fun g => by

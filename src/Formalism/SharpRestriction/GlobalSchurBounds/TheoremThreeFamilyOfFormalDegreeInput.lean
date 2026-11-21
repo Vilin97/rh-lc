@@ -59,18 +59,15 @@ theorem chosenProviso_min (C0 : ℝ) (hC0 : Real.exp 1 ≤ C0)
     (hR : RankTiesF Fm) : ChosenProviso Fm C0 :=
   chosenProviso_4f Fm C0 hC0 (familyRankFormula_of_classNumber Fm hn) hR
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem explicitConstants_family_of_volume_eq_mass (h2v : flipTwoThree.fam0 Fm BaseVolumeEqualsMass) (h3 : flipTwoThree.fam0 Fm SigmaDegreeTwoSidedBoundOfGap) : FamilyVandermondeCountExplicit Fm :=
   division_level_prime_family Fm (Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.siegel_mass_ratio_family Fm) h2v h3
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Fam
 
 def cTmin (y : ℝ) : ℝ := max 11 (16 + 3 * max 5 (y + 1))
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 theorem tuSize_min {eps : ℝ} (Fm : FamP eps) (hle : cTmin Fm.CYL ≤ Fm.CTu)
     (h2v : flipTwoThree.fam0 Fm BaseVolumeEqualsMass) (h3 : flipTwoThree.fam0 Fm SigmaDegreeTwoSidedBoundOfGap) : TuSize Fm := by
@@ -80,15 +77,12 @@ theorem tuSize_min {eps : ℝ} (Fm : FamP eps) (hle : cTmin Fm.CYL ≤ Fm.CTu)
   exact part_five_all_of_explicit _ _ _ _ _ (hx0 x (le_trans (le_max_left _ _) hx) hxx i)
     (fun Δ w hB => hx1 x (le_trans (le_max_right _ _) hx) hxx i Δ w hB) (le_max_left _ _) (le_max_right _ _)
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 section Fam3
 
 variable {eps : ℝ} (Fm : FamP eps)
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Fam3
 
@@ -96,11 +90,8 @@ section Inputs
 
 variable {eps : ℝ} (Fm : FamP eps)
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
-variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 
 end Inputs
 

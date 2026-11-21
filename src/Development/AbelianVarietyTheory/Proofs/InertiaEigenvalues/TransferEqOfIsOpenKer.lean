@@ -35,7 +35,6 @@ section Places
 
 variable {K L Ω : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Field Ω] [Algebra K Ω] [Algebra L Ω]
 
-omit [NumberField L] in
 
 variable [Algebra K L] [IsScalarTower K L Ω]
 
@@ -68,8 +67,6 @@ variable {K L Ω B : Type} [Field K] [NumberField K] [Field L] [NumberField L] [
 
 variable [Algebra K L]
 
-omit [Algebra K L] in
-variable (K L Ω) in
 
 variable [IsScalarTower K L Ω] [IsAlgClosure K Ω] [IsAlgClosure L Ω]
 

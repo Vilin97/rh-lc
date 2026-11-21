@@ -43,8 +43,6 @@ theorem isUnit_iff_norm {x : O} : IsUnit x ↔ ‖algebraMap O K x‖ = 1 := by
   · rw [dvd_iff_norm hx, map_one, norm_one]
     exact ⟨fun h => le_antisymm (norm_algebraMap_le x) h, fun h => h.ge⟩
 
-variable (O K) in
-include K in
 
 omit [IsUltrametricDist K] in
 theorem mem_max_iff [IsLocalRing O] {x : O} :
@@ -105,8 +103,6 @@ theorem isAdicComplete_max [CompleteSpace K] [FiniteDimensional ℚ_[l] K] [IsLo
   rw [this]
   exact isAdicComplete_span h0 hy
 
-omit [IsUltrametricDist K] in
 
-variable (O K) in
 
 end PositivityTheory.CompleteLocalMinorRing.Minor

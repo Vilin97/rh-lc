@@ -106,9 +106,6 @@ private lemma linear_form_pow_smul_mem_homF_add {A : Submodule R M} {n : ℕ}
     show _ ∈ _root_.GlobalTheory.KZ.PolAct.homF A (n + k + 1)
     convert h using 1
 
-open scoped MatrixGroups TensorProduct in
-open Matrix in
-variable {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] in
 
 theorem _root_.GlobalTheory.KZ.PolAct.subst_mem {A : Submodule R M} {w : ℕ} (φ : M →ₗ[R] M)
     (hφ : ∀ a ∈ A, φ a ∈ A)
@@ -135,9 +132,6 @@ theorem _root_.GlobalTheory.KZ.PolAct.subst_mem {A : Submodule R M} {w : ℕ} (�
   set_option synthInstance.maxHeartbeats 100000 in
     simp [hbu, map_sum, map_smul, Matrix.mulVec, dotProduct, Fin.sum_univ_two, Finset.sum_apply]
 
-open scoped MatrixGroups TensorProduct in
-open Matrix in
-variable {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] in
 
 theorem _root_.GlobalTheory.KZ.PolAct.act_mem_pol {Ω : Type} [Field Ω] [Algebra ℚ Ω]
     {ε : Ω →+* ℂ} (X : _root_.GlobalTheory.KZ.Tower Ω ε) (l w : ℕ) [Fact l.Prime]

@@ -246,7 +246,6 @@ end GlobalTheory.FinPl.Vertex
 
 namespace GlobalTheory.FinPl.Vertex
 
-open Classical in
 
 theorem vertexGlued (D : D7) : VertexGlued D := by
   intro k _ _ _ _ p q ψ χ hχ hIs

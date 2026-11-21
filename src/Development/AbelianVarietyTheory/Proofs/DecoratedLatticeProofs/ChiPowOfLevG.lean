@@ -108,7 +108,6 @@ end Gen
 
 variable {B : Base} {X : PreX B.toPre} (I : TC B X)
 
-set_option maxHeartbeats 1600000 in
 
 theorem exists_ka (u : B.Word) (a : I.ι) {Ch : Type} {chOf : (I.stp u a B.R.m).Cl → Ch}
     {Lb : Ch → Submodule (𝓞 B.host.E) (Fin (B.R.N B.R.m) → B.host.E)}
@@ -163,7 +162,6 @@ theorem exists_ka (u : B.Word) (a : I.ι) {Ch : Type} {chOf : (I.stp u a B.R.m).
   · rw [map_inv, inv_inv]
     exact hchr
 
-set_option maxHeartbeats 3200000 in
 
 theorem ext_mem_of_pt (l : I.Laws) (u : B.Word) (a : I.ι) {Ch : Type} {chOf : (I.stp u a B.R.m).Cl → Ch}
     {Lb : Ch → Submodule (𝓞 B.host.E) (Fin (B.R.N B.R.m) → B.host.E)}
@@ -228,7 +226,6 @@ theorem mem_sb {a : I.ι} {P : HeightOneSpectrum (𝓞 B.fields.E)} (hP : P ∈ 
   show P ∈ uSG _ _
   exact Finset.mem_union_right _ hP
 
-set_option maxHeartbeats 3200000 in
 
 theorem ext_mem (hI : I.Ok) (l : I.Laws) (u : B.Word) (a : I.ι) {Ch : Type} {chOf : (I.stp u a B.R.m).Cl → Ch}
     {Lb : Ch → Submodule (𝓞 B.host.E) (Fin (B.R.N B.R.m) → B.host.E)}
@@ -350,7 +347,6 @@ theorem finM_of_hasMat {D : D7} {h : GA D D.sp.X'} {y} (hy : GlobalTheory.Core.R
   simp only [Equiv.apply_symm_apply] at a
   exact a
 
-set_option maxHeartbeats 2000000 in
 
 theorem emb_mem_chi : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (Ch₀ : ℕ → Type) (A : TwDat I l Z u a Ch₀), A.Is → ∀ emb : GA (I.rec7 l Z) (I.rec7 l Z).sp.X' →* GA (I.rec7 l Z) ((I.rec7 l Z).sp.X B.R.m), IsEmbTop (D := (I.rec7 l Z)) (TC.z0 X u) emb → ∀ (bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (K : ClassesAtPrimes (D := (I.rec7 l Z)) (u := u) (I.fm l u a) bad), I.ReadsP a K.lev.Lb K.lev.U K.lev.chi (fun c => (K.y c).1) K.lat (fun c s => (K.stabI c s).1) → (∃ n : ℕ, 0 < n ∧ ∀ κ, K.lev.chi κ ^ n = 1) → ∀ β h (κ : K.lev.U), GlobalTheory.Core.Rk.Top.HasMat h κ.1 → ∃ hU : emb h ∈ A.U B.R.m β, A.chi B.R.m β ⟨emb h, hU⟩ = K.lev.chi κ ∧ ‖((K.lev.chi κ : ℂˣ) : ℂ)‖ = 1 := by
   intro B X I hI hP l Z u a Ch₀ A hA emb hemb bad K hK hfin β h κ hh

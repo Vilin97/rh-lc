@@ -21,7 +21,6 @@ variable {K : Type} [Field K] [NumberField K] {i : ℕ} {F : HermLattice K i}
 def conjPerm (K : Type) [Field K] : Equiv.Perm (K →+* ℂ) :=
   Function.Involutive.toPerm _ (involutive_conjugate K)
 
-omit [Fintype T] [DecidableEq T] in
 
 theorem conj_mulVec (b : Module.Basis T ℤ (dualLattice F)) (w : (K →+* ℂ) × Fin i → ℂ) :
     (fun t => starRingEnd ℂ ((dualEmbMatrix b *ᵥ w) t)) =

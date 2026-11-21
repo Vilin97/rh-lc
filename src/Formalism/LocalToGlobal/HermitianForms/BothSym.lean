@@ -26,7 +26,6 @@ theorem one_le_m (R : Ranks) : 1 ≤ R.m := by
   have h2 := R.two_le_m
   omega
 
-set_option maxHeartbeats 4000000 in
 
 structure ColsTiedSym (D : D7) where
   herm : Formalism.L2.Herm.ColsHermS D
@@ -87,7 +86,6 @@ structure ColsTiedSym (D : D7) where
   frame_level_zero_const : ∀ u u', (forms u).glev0.fr = (forms u').glev0.fr
   frP_const : ∀ u u', (forms u).glevP.fr = (forms u').glevP.fr
 
-set_option maxHeartbeats 4000000 in
 
 end Formalism.L2.Forms
 

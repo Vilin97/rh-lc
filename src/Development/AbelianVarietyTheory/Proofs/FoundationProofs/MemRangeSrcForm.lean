@@ -32,7 +32,6 @@ section Level
 variable {K G M : Type} [Field K] [NumberField K] [Group G] [Fintype G] [AddCommGroup M] [Module K M]
   (r : Representation K G M) (U : Subgroup G) (ψ : U →* Kˣ)
 
-open Classical in
 
 def invChar (g : G) : K := if hg : g ∈ U then (((ψ ⟨g, hg⟩)⁻¹ : Kˣ) : K) else 0
 

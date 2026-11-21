@@ -24,7 +24,6 @@ theorem red_mem (p : O) (hp : Continuous (Lev.mk p)) (θ : Γ →* Oˣ) (a : Γ 
   rw [map_sub, sub_eq_zero, map_add (f := _), ← smul_eq_mul ((θ s : Oˣ) : O), map_smul] at h
   exact h
 
-omit [TopologicalSpace O] in
 
 theorem lift_cob (p : O) (θ : Γ →* Oˣ) (z : Z1 (Formalism.GaloisCohomology.scalRep (Lev p) θ)) (f : Γ → O)
     (hf : ∀ s, z.1 s = Lev.mk p (f s))
@@ -36,7 +35,6 @@ theorem lift_cob (p : O) (θ : Γ →* Oˣ) (z : Z1 (Formalism.GaloisCohomology.
   have h : z.1 s = ((θ s : Oˣ) : O) • Lev.mk p y - Lev.mk p y := hy' s
   rw [map_sub, map_sub, ← hf, h, ← smul_eq_mul, map_smul, sub_self]
 
-omit [TopologicalSpace O] in
 
 theorem kill (p : O) (θ : Γ →* Oˣ) (h : H1 (Formalism.GaloisCohomology.scalRep (Lev p) θ)) : p • h = 0 := by
   obtain ⟨z, rfl⟩ := Submodule.Quotient.mk_surjective _ h

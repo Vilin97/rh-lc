@@ -55,7 +55,6 @@ theorem gsvVec_w (cc : Fin n → L) :
   rw [gsvVec, Category.assoc, pullback.condition, ← Category.assoc]
   exact congrArg (· ≫ x) h1
 
-variable (xc) in
 
 def gsvW (cc : Fin n → L) : tEps x ⟶ Xo.univ.t.G := Over.homMk (gsvVec x xc cc) (gsvVec_w cc)
 

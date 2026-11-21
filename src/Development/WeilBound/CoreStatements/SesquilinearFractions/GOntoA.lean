@@ -43,7 +43,6 @@ theorem ty_eq_of_rt {i j : Fin g} (h : ty i (H.rt : E) = ty j (H.rt : E)) (α : 
     push_cast
     rw [map_mul, map_mul, hx, hy]
 
-open Classical in
 
 def kap (ty : Fin g → (E →+* ℂ)) (H : Host E) (b : Bool) (α : OK H) : ℂ :=
   if h : ∃ i, ty i (H.rt : E) = sgnRt H b then ty h.choose ((α : 𝓞 E) : E) else 0

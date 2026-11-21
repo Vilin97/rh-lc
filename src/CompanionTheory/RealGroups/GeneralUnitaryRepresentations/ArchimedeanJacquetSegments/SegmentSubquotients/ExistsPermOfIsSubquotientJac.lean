@@ -50,13 +50,9 @@ theorem entries_zero_or_d {d l : ℕ} (hd : 0 < d) (σ : IrrRep (GL (Fin d) k)) 
       fun j φ hφ => GlobalTheory.CompanionTheory.SocleFrob.exists_eq_smul_id _ (s i j).smooth (s i j).irr φ hφ
   exact jhMult_ne_zero_iff.2 (hs i) (jhMult_of_subsingleton hirr _)
 
-open GlobalTheory.LocGL in
 
-open GlobalTheory.LocGL in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
-set_option synthInstance.maxHeartbeats 400000 in
 
 end CompanionTheory.Pf1.SegRepC.Perm
 

@@ -190,7 +190,6 @@ theorem span_dForm (α : k →+* A) (D : ℕ) :
   choose v hv using fun i => hw (Set.mem_range_self i)
   exact ⟨v, congrArg (exteriorPower.ιMulti A D) (funext hv)⟩
 
-variable (D) in
 
 def formMap (ρ : A →+* B) (h : ρ.comp α = β) : Forms α D →ₛₗ[ρ] Forms β D :=
   letI := α.toAlgebra

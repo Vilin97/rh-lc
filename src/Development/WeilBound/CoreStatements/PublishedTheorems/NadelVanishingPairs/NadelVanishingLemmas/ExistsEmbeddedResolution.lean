@@ -25,7 +25,6 @@ set_option autoImplicit false
 
 namespace GlobalTheory.LogResStep
 
-open GlobalTheory.Cartier.CartierDiv in
 
 theorem supp_neg_le {X : Scheme.{0}} [IsIntegral X] (D : CartierDiv X) : (-D).supp ≤ D.supp := fun x hx h =>
   hx (by simpa using h.neg)

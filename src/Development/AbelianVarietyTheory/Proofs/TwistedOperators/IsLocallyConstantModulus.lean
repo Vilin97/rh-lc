@@ -255,7 +255,6 @@ theorem exists_iwasawa (x : GL n k) :
   simp only [conj, inv_mul_cancel_right]
   rw [← h]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
 theorem det_rmat_unip (u : unipRad k e) : (rmat e ((u : GL n k) : Matrix n n k)).det = 1 := by
   rw [← det_transpose, det_of_blocks _ (fun p : Idx e => blk e p.1.2) ?_ (fun a => {j : n // blk e j < a})

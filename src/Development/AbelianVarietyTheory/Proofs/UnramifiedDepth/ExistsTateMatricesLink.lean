@@ -238,7 +238,6 @@ open TensorProduct IsLocalRing Matrix CategoryTheory AlgebraicGeometry MonoidalC
 open scoped CategoryTheory.Obj CategoryTheory.MonObj
 attribute [local instance] Over.cartesianMonoidalCategory
 
-open TateMatrices in
 
 theorem exists_tateMatrices_link :
   (∀ (p : ℕ) [Fact p.Prime] (κ Γ : Type) [Fintype κ] [DecidableEq κ] [AddCommGroup Γ] (τ : κ → ℕ → Γ),

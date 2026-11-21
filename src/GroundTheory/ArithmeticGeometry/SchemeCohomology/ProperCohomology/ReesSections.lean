@@ -19,12 +19,10 @@ noncomputable section
 variable {A : Type u} [CommRing A] {I : Ideal A} {X : Scheme.{u}} [X.Over (Spec (.of A))]
   {F : X.Modules} {V : X.Opens}
 
-variable (I F V) in
 
 abbrev unitPr : Γ(F, V) →+ Γ((Scheme.Modules.pullback (reesPr I X)).obj F, reesPr I X ⁻¹ᵁ V) :=
   Etale.pullbackUnitApp (reesPr I X) F V
 
-variable (I F V) in
 
 abbrev unitB : Γ((Scheme.Modules.pullback (reesPr I X)).obj F, reesPr I X ⁻¹ᵁ V) →+
     Γ((Scheme.Modules.pullback (reesPolyMap I X)).obj
@@ -107,12 +105,10 @@ lemma thetaMap_smul (s : polyRing I V) (x : Γ((Scheme.Modules.pullback (reesPol
     thetaMap hF hV (s • x) = polyRingHom (I := I) hV s • thetaMap hF hV x :=
   (exists_theta hF hV).choose_spec.2 s x
 
-variable (I F V) in
 
 abbrev polySec := Γ((Scheme.Modules.pullback (reesPolyMap I X)).obj
       ((Scheme.Modules.pullback (reesPr I X)).obj F), reesPolyMap I X ⁻¹ᵁ (reesPr I X ⁻¹ᵁ V))
 
-variable (I F V) in
 
 def lambdaMap : PolynomialModule Γ(X, V) Γ(F, V) →+ polySec I F V where
   toFun q := q.coeff.sum fun n m =>
@@ -180,7 +176,6 @@ lemma lambdaMap_theta₁ (y : Γ((Scheme.Modules.pullback (reesPr I X)).obj F, r
   exact congrArg (fun L : _ →ₗ[Γ(reesScheme I X, reesPr I X ⁻¹ᵁ V)] polySec I F V => L y)
     (e1.trans e2.symm)
 
-include hF hV in
 
 theorem lambdaMap_thetaMap (x : polySec I F V) : lambdaMap I F V (thetaMap hF hV x) = x := by
   let L3 : polySec I F V →ₗ[polyRing I V] polySec I F V :=

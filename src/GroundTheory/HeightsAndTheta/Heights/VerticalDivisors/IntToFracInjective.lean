@@ -138,7 +138,6 @@ def SpecMax.Statement : Prop :=
       (∀ W ∈ specComps I v, (secIdealOf e I v W).IsMaximal) ∧
         ∀ 𝔫 : Ideal (SecB e I v), 𝔫.IsMaximal → ∃! W, W ∈ specComps I v ∧ secIdealOf e I v W = 𝔫
 
-open Classical in
 
 def SpecLength.Statement : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (n e : ℕ) (I : Ideal (MvPolynomial (Fin n) K))

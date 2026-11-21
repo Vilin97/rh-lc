@@ -55,7 +55,6 @@ lemma wEta_ω₂ (L : PeriodPair) : wEta L L.ω₂ = 2 * wZeta L (L.ω₂ / 2) :
 
 end WeierstrassZetaQuasiPeriod
 
-open WeierstrassZetaQuasiPeriod in
 
 theorem zetaQuasi_of (hd : ZetaHasDeriv) (ho : ZetaOdd) : ZetaQuasi := by
   intro L ω z hω hz

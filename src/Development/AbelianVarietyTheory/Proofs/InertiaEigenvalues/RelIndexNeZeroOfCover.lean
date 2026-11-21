@@ -58,7 +58,6 @@ theorem cong_inv {N : ℕ} {a : GAf L n} (ha : NG.Cong L n N a) : NG.Cong L n N 
   simp only [Matrix.sub_apply, Matrix.neg_apply, Matrix.smul_apply, Matrix.mul_apply, Matrix.of_apply, smul_eq_mul] at this
   rw [this]; ring
 
-variable (L n) in
 
 def congSub (N : ℕ) : Subgroup (GAf L n) where
   carrier := {κ | NG.Cong L n N κ}

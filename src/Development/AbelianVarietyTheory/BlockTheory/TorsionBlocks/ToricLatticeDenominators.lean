@@ -24,7 +24,6 @@ variable {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
 def IsLatIn (V : Submodule (FractionRing R) W) (L : Submodule R W) : Prop :=
   L.FG ∧ Submodule.span (FractionRing R) (L : Set W) = V
 
-omit [IsScalarTower R (FractionRing R) W] in
 
 end Index
 

@@ -340,7 +340,6 @@ theorem integer_endomorphism_instance : EndoZInstance := by
     exact EndoZ.clause2 L (hS.1 P P.2).2 (hneg P)
   · exact EndoZ.clause3 L α S hα hm hS
 
-open EndoZ TaylorWp in
 
 theorem isogeny_formula_instance : IsogenyFormulaInstance := by
   intro L α S hα hm hS

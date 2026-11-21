@@ -197,7 +197,6 @@ open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopologicalSpace
 variable {O K : Type u} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K]
   [Algebra O K] [IsFractionRing O K]
 
-variable (K) in
 
 end Scheme
 

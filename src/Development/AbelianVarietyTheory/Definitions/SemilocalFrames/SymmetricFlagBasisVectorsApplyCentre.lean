@@ -87,9 +87,7 @@ theorem mem_perp_xPlus (F : FlagD H r) (y : V) :
   rw [xPlus, perp_sup, Submodule.mem_inf, mem_perp_span]
   simp
 
-omit [IsScalarTower R K V] [Algebra R K] [StarRing K] [Field K] [Module K V] in
 
-omit [StarRing K] in
 
 theorem xPlus_sup (F F' : FlagD H r) : xPlus F ⊔ xPlus F' = V0 F F' := by
   rw [xPlus, xPlus, V0, Submodule.span_insert, sup_sup_sup_comm]

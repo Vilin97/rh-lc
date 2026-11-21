@@ -21,7 +21,6 @@ namespace GlobalTheory.TestConstTerm
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
 
-open Classical in
 
 theorem tensor_eq_mul_update {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L]
     {fa : ∀ w, GArch σ J w → ℂ} {ff : ∀ v, GLoc σ J v → ℂ} (hf : IsFinFamily σ J L ff)
@@ -42,7 +41,6 @@ theorem tensor_eq_mul_update {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.I
     finprod_congr fun i => finprod_congr fun hi => by rw [Function.update_of_ne hi]
   rw [this]; ring
 
-open Classical in
 
 theorem tensor_update_mul_emb (fa : ∀ w, GArch σ J w → ℂ) (ff : ∀ v, GLoc σ J v → ℂ)
     (v : HeightOneSpectrum (𝓞 F)) (a b : GAd σ J) (h : GLoc σ J v) :
@@ -89,7 +87,6 @@ end GlobalTheory.TestConstTerm
 
 namespace GlobalTheory.TestConstTerm
 
-open Classical in
 
 theorem unipIntegralsVanish_tensor : ∀ (D : D7) (V : HSp D) (𝔉 : IsoFlag V) (fa : ∀ w, GArch D.sp.cm.sig V.gram w → ℂ)
     (ff : ∀ v, GLoc D.sp.cm.sig V.gram v → ℂ), (∀ w, fa w ∈ CcArch D.sp.cm.sig V.gram w) →

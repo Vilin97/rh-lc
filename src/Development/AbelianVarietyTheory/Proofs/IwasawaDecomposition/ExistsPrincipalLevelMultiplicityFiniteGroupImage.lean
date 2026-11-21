@@ -108,7 +108,6 @@ theorem gaL_act (hl : LiftsExist V β L) {c : G → ℂ} (hc : ∀ g a, c (g * a
   show _ = c (g * a * g⁻¹) • postOn M (actL V β L (eG (g * a * g⁻¹ * g))) U
   rw [hc, inv_mul_cancel_right]
 
-omit [Fintype G] in
 
 end GlobalTheory.MultAction
 

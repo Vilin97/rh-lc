@@ -70,8 +70,6 @@ private lemma mem_span_rational_of_vanishing {ι : Type} (Γ : Set (Matrix ι ι
   rw [ev_eq_evC_map_algebraMap]
   exact hwW g hg
 
-open Matrix in
-open scoped Kronecker ComplexOrder TensorProduct in
 
 theorem _root_.GlobalTheory.ClassFin.evC_eq_zero_of_mem_pts_of_stable : ∀ (ι : Type) [Fintype ι] [DecidableEq ι]
     (Γ : Set (Matrix ι ι ℂ)), (∀ σ : ℂ ≃+* ℂ, ∀ g ∈ Γ, g.map σ ∈ Γ) →

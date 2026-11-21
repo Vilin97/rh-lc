@@ -86,7 +86,6 @@ theorem continuous_gl (h : ∀ g, (ofSplit q).IsLoc F (gl g) g) : Continuous gl 
   simp only [Function.comp]
   rw [map_inv]; rfl
 
-variable (F) in
 
 def comp (x : GA D V) : GL Y k :=
   have key : ∀ x y : GA D V, x * y = 1 →

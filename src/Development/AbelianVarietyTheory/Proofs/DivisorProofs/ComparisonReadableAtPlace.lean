@@ -103,6 +103,5 @@ end GlobalTheory.BigOn.Exp
 
 namespace GlobalTheory.BigOn.Exp.SerBase
 
-set_option maxHeartbeats 4000000 in
 
 end GlobalTheory.BigOn.Exp.SerBase

@@ -16,7 +16,6 @@ noncomputable section
 
 universe u
 
-set_option maxHeartbeats 400000 in
 
 theorem ConeVarSurj.proof : ConeVarSurj.Statement.{u} := by
   intro F _ K _ _ ι _ P hP W hW hPW v hv

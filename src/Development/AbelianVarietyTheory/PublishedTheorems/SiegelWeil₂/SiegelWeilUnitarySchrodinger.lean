@@ -33,7 +33,6 @@ abbrev G : Type := GAd D.sp.cm.sig (Jst D n)
 
 abbrev GF : Subgroup (G D n) := AdelicU.ratPts D.sp.cm.sig (Jst D n)
 
-variable {D n} in
 
 def mat (g : G D n) : Mx D (n + n) (n + n) := (AdelicU.matHom _ D.sp.cm.sig (Jst D n) g).1
 

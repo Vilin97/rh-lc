@@ -44,7 +44,6 @@ def rowSubst (g : Matrix (Fin ν) (Fin ν) ℂ) :
     MvPolynomial (Fin ν × ι) ℂ →ₐ[ℂ] MvPolynomial (Fin ν × ι) ℂ :=
   aeval fun p => ∑ l, C (g l p.1) * X (l, p.2)
 
-open scoped Classical in
 
 def fischer (P Q : MvPolynomial (Fin ν × ι) ℂ) : ℂ :=
   ∑ A ∈ P.support ∪ Q.support,

@@ -30,9 +30,7 @@ instance rf_neZero_X' (R : Ranks) : NeZero (R.N R.m - 1) := ⟨(X'_pos R).ne'⟩
 
 instance rf_neZero_nV (R : Ranks) : NeZero R.nV := ⟨(nV_pos R).ne'⟩
 
-open Classical in
 
-open Classical in
 
 end Rows
 

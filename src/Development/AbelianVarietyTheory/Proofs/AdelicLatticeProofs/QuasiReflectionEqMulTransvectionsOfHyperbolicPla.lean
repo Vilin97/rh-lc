@@ -151,9 +151,6 @@ private lemma transvection_mul_isotropic {E : Type} [Field E] {n : ℕ} (σ : E 
   congr 2
   ring
 
-open NumberField IsDedekindDomain Matrix in
-open scoped TensorProduct in
-variable {R : Type} [CommRing R] {n : ℕ} (σ : R →+* R) (G : Matrix (Fin n) (Fin n) R) in
 
 theorem _root_.GlobalTheory.UTrans.PlaneRefl.quasiRefl_eq_mul_of_plane : ∀ (E : Type) [Field E] [CharZero E]
     (n : ℕ) (σ : E →+* E) (G : Matrix (Fin n) (Fin n) E), _root_.GlobalTheory.UTrans.IsHerm σ G →

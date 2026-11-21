@@ -34,7 +34,6 @@ variable {K Ω D m}
 
 def sec (x : Fin m → Ω) (i : Fin D) : ΩT Ω D m := ∑ j, X (i.succ, j) * C (x j)
 
-variable (K) in
 
 def Is (x : Fin m → Ω) : Ideal (RS K Ω D m) :=
   Ideal.span (Set.range fun i : Fin D => algebraMap (ΩT Ω D m) (RS K Ω D m) (sec x i))
@@ -43,7 +42,6 @@ def Zs (j₀ : Fin m) (p : Fin (D + 1) × Fin m) : Prop := p.1 ≠ 0 ∧ p.2 = j
 
 instance (j₀ : Fin m) : DecidablePred (Zs (D := D) j₀) := fun p => by unfold Zs; infer_instance
 
-variable (Ω D) in
 
 abbrev CT (j₀ : Fin m) : Type := MvPolynomial {p : Fin (D + 1) × Fin m // ¬ Zs j₀ p} Ω
 

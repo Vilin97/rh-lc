@@ -62,4 +62,3 @@ private theorem exists_mul_mem' {K : Type} [Field K] [NumberField K] {V : Type} 
 
 end
 
-open GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.LieRead in

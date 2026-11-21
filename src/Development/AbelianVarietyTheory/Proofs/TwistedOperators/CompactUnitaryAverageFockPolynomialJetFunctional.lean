@@ -84,7 +84,6 @@ theorem integrable_term {a b : ℕ} {K : Type} [Group K] [TopologicalSpace K] [I
 
 end GlobalTheory.AvgJet
 
-open GlobalTheory.AvgJet in
 
 theorem GlobalTheory.AvgJet.avg_jet : ∀ (ι : Type) [Fintype ι] (a b : ℕ), a ≤ b → 0 < a → ∀ (lam : ι → DomWeight a) (lam' : ι → DomWeight b)
     (nn : ι → ℕ), Formalism.L2.Ker.JetInVV ℂ lam lam' nn → ∀ (K : Type) [Group K] [TopologicalSpace K] [IsTopologicalGroup K]

@@ -11,7 +11,6 @@ namespace Formalism.MainNotions.G.SymmetricFormBlocks
 
 open MvPolynomial Finset
 
-open Classical in
 
 def GoodLeSmallMat : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (n m : ℕ) (X Y : Fin n → Fin m → ℤ_[p]) (c : Fin m → ℚ_[p]) (D : ℤ),

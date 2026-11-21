@@ -48,7 +48,6 @@ structure Recip.Good (a : Recip D Ω) : Prop where
 
 def Recip.sym (a : Recip D Ω) : (AE D)ˣ →* Gab D.host.E Ω := a.art.comp (Units.map a.κ.toMonoidHom)
 
-open Classical in
 
 def descend (φ : G D.host.E Ω →* A) : Gab D.host.E Ω →* A :=
   if h : (commutator (G D.host.E Ω)).topologicalClosure ≤ φ.ker then QuotientGroup.lift _ φ h else 1
@@ -106,7 +105,6 @@ structure IsChoice (ch : Set (Pl D.host.E)) : Prop where
   one : ∀ P ∈ ch, ∀ P' ∈ ch, (∃ p : ℕ, p.Prime ∧ (p : 𝓞 D.host.E) ∈ P.asIdeal ∧ (p : 𝓞 D.host.E) ∈ P'.asIdeal) →
     P.asIdeal.comap (algebraMap (𝓞 D.host.K) (𝓞 D.host.E)) = P'.asIdeal.comap (algebraMap (𝓞 D.host.K) (𝓞 D.host.E))
 
-open Classical in
 
 def half (ch : Set (Pl D.host.E)) (Q : Finset (Pl D.host.E)) : Finset (Pl D.host.E) := Q.filter (· ∈ ch)
 
@@ -142,8 +140,6 @@ variable {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N}
 
 instance (i : X.Tw) (M : ℕ) : NeZero (X.l i ^ M) := ⟨pow_ne_zero _ (X.lPrime i).out.ne_zero⟩
 
-variable (X) in
-open Classical in
 
 def admissibleConjugatePairPlaces (i : X.Tw) (Q : Finset (Pl D.host.E)) (M : ℕ) : Finset (Pl D.host.E) :=
   Q.filter fun P => ∃ P' ∈ Q, IsConjPl D.host P P' ∧ Formalism.MainNotions.NAdm.AdmQ X i {P, P'} M
@@ -175,7 +171,6 @@ theorem isSplit_of_mem_admissibleConjugatePairPlaces {i : X.Tw} {Q : Finset (Pl 
 
 variable (Y : NExp D.R D.host D.what₂ D.LL0 N X) (i : X.Tw) (Q : Finset (Pl D.host.E)) (M : ℕ)
 
-open Classical in
 
 def coord (P : Pl D.host.E) : G D.host.E N.Om →* Multiplicative (ZMod (X.l i ^ M)) :=
   if h : P ∈ Q then
@@ -190,7 +185,6 @@ theorem coord_apply {P : Pl D.host.E} (h : P ∈ Q) (σ : G D.host.E N.Om) :
 def univOf (a : Recip D N.Om) : UnivTwist D (ZMod (X.l i ^ M)) :=
   ⟨fun P => a.pull (coord Y i Q M P), fun P => resOf (a.pull (coord Y i Q M P)) P⟩
 
-open Classical in
 
 def weight (P : ↥Q) (v : Pl D.host.E) : ZMod (X.l i ^ M) :=
   if v = P.1 then 1

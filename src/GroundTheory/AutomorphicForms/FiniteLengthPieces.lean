@@ -210,7 +210,6 @@ theorem piece_apply_eq (σ : Representation ℂ (levi F n β) W)
     ((f : levi F n δ → innerJacquetSpace β δ w σ) 1)]
   rw [innerEquiv_apply, innerEquiv_apply, levJacquetAction_mk, leviInfIncl_cellInnerHom h]
 
-variable (w) in
 
 def pieceEval (σ : Representation ℂ (levi F n β) W) (h : ∀ a b, δ a = δ b ↔ β (w a) = β (w b)) :
     Representation.IntertwiningMap (indRep (cellLeviSub F β δ w) (normInducing σ δ w))

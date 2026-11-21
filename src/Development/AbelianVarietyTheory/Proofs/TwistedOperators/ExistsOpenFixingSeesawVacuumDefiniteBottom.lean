@@ -85,7 +85,6 @@ namespace GlobalTheory.VacFixTarget
 
 open GlobalTheory.Grid (neg)
 
-set_option maxHeartbeats 1000000 in
 
 theorem exists_open_fix_vac_target : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil}
     {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}, IsBottomTri W i j X → ∀ t : T,

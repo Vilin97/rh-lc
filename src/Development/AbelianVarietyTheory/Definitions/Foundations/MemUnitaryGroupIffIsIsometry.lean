@@ -124,7 +124,6 @@ def unitaryGroup (h : HermForm R M) : Subgroup (M ≃ₗ[R] M) where
 
 namespace unitaryGroup
 
-variable (h) in
 
 end unitaryGroup
 
@@ -196,17 +195,13 @@ section NoStar
 
 variable (F E A : Type*) [CommRing F] [CommRing E] [CommRing A] [Algebra F E] [Algebra F A]
 
-variable {E A} in
 
 variable {F E A}
 
-variable (F E A) in
 
 variable {B C : Type*} [CommRing B] [CommRing C] [Algebra F B] [Algebra F C]
 
-variable (E) in
 
-variable (F E) in
 
 end NoStar
 
@@ -215,7 +210,6 @@ section Star
 variable {F E A : Type*} [CommRing F] [CommRing E] [CommRing A] [Algebra F E] [Algebra F A]
   [StarRing E] [IsStarFixed F E]
 
-variable (F E A) in
 
 variable {B : Type*} [CommRing B] [Algebra F B]
 
@@ -227,7 +221,6 @@ section RingOfIntegers
 
 variable (K : Type*) [Field K] (V : Type*) [AddCommGroup V] [Module K V]
 
-variable {K V} in
 
 end RingOfIntegers
 
@@ -240,7 +233,6 @@ variable {E}
 @[simp] theorem complexEmbedding_star (τ : E →+* ℂ) (x : E) : τ (star x) = star (τ x) :=
   IsCMField.complexEmbedding_complexConj E τ x
 
-variable (E) in
 
 theorem exists_star_ne : ∃ x : E, star x ≠ x := by
   by_contra! H
@@ -252,7 +244,6 @@ noncomputable instance : StarRing (𝓞 E) where
   star_mul x y := by rw [map_mul, mul_comm]
   star_add x y := map_add _ x y
 
-variable (E) in
 
 abbrev CMTensor (A : Type*) [CommRing A] [Algebra (maximalRealSubfield E) A] : Type _ :=
   StarTensor (maximalRealSubfield E) E A

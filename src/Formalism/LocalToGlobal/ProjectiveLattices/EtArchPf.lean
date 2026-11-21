@@ -25,15 +25,10 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 def thRat (X : PT E) (s : (Fin 1 → Vsp X.dim) → ℂ) (a : Fin X.r → Vsp X.dim) : ℝ :=
   ∏ j, Real.sqrt (X.ptN2 1 s fun _ => a j) / Real.sqrt (X.l2 1 s)
 
-variable (E) in
 
-variable (E) in
 
-variable (E) in
 
-variable (E) in
 
-variable (E) in
 
 end Torus
 

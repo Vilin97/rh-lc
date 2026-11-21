@@ -44,9 +44,7 @@ theorem exists_eq_teichmuller_add_mul_p (x : WittVector p A) :
   obtain ⟨v, hv⟩ := Ideal.mem_span_singleton'.1 this
   exact ⟨v, by rw [hv]; ring⟩
 
-omit [PerfectRing A p] in
 
-omit [PerfectRing A p] in
 
 theorem coeff_one_teichmuller_add_mul_p (c : A) (v : WittVector p A) :
     (teichmuller p c + v * p).coeff 1 = v.coeff 0 ^ p := by
@@ -94,7 +92,6 @@ theorem isUnit_iff_norm_eq_one {u : 𝒪} : IsUnit u ↔ ‖(u : K)‖ = 1 := by
     ext
     simp [h0]
 
-omit [Fact p.Prime] [IsPerfectoidField K p] in
 
 theorem norm_le_of_mem_span_p {b : 𝒪} (hb : b ∈ Ideal.span {(p : 𝒪)}) :
     ‖(b : K)‖ ≤ ‖(p : K)‖ := by
@@ -106,7 +103,6 @@ theorem norm_le_of_mem_span_p {b : 𝒪} (hb : b ∈ Ideal.span {(p : 𝒪)}) :
   calc ‖(c : K)‖ * ‖(p : K)‖ ≤ 1 * ‖(p : K)‖ := by gcongr
     _ = _ := one_mul _
 
-variable (p) in
 
 theorem norm_eq_one_of_mk_eq {b c : 𝒪}
     (h : Ideal.Quotient.mk (Ideal.span {(p : 𝒪)}) b = Ideal.Quotient.mk _ c)
@@ -123,8 +119,6 @@ theorem norm_eq_one_of_mk_eq {b c : 𝒪}
   · linarith
   · linarith
 
-omit [Fact p.Prime] [IsPerfectoidField K p] in
-variable (p) in
 
 theorem norm_eq_of_mk_eq {b c : 𝒪}
     (h : Ideal.Quotient.mk (Ideal.span {(p : 𝒪)}) b = Ideal.Quotient.mk _ c)
@@ -383,14 +377,12 @@ theorem ker_fontaineTheta_eq_span_p_sub_teichmuller {pflat : 𝒪♭}
     (isUnit_coeff_one_mul_p_sub_teichmuller (by rw [map_one]; exact isUnit_one) h')
   rwa [one_mul] at this
 
-variable (p) in
 
 theorem exists_norm_untilt_eq {b : 𝒪} (hb : ‖(p : K)‖ < ‖(b : K)‖) :
     ∃ a : 𝒪♭, ‖((PreTilt.untilt a : 𝒪) : K)‖ = ‖(b : K)‖ := by
   obtain ⟨a, ha⟩ := exists_mk_untilt_eq p b
   exact ⟨a, norm_eq_of_mk_eq p ha hb⟩
 
-variable (K p) in
 
 theorem exists_untilt_eq_p_mul_unit :
     ∃ ϖ : 𝒪♭, ∃ u : 𝒪, IsUnit u ∧ PreTilt.untilt ϖ = p * u := by
@@ -421,28 +413,23 @@ theorem exists_untilt_eq_p_mul_unit :
   simp only [Subring.coe_mul]
   rw [show ((p : 𝒪) : K) = (p : K) by simp, mul_div_cancel₀ _ hpK]
 
-variable (K p) in
 
 theorem exists_mem_ker_fontaineTheta_isUnit_coeff_one :
     ∃ ξ ∈ RingHom.ker θ, IsUnit (ξ.coeff 1) := by
   obtain ⟨ϖ, u, hu, h⟩ := exists_untilt_eq_p_mul_unit K p
   exact exists_mem_ker_isUnit_coeff_one_of_untilt_eq hu h
 
-variable (K p) in
 
 theorem isPrincipal_ker_fontaineTheta : (RingHom.ker θ).IsPrincipal := by
   obtain ⟨ξ, hξ, h1⟩ := exists_mem_ker_fontaineTheta_isUnit_coeff_one K p
   exact ⟨⟨ξ, ker_fontaineTheta_eq_span hξ h1⟩⟩
 
-variable (K p) in
 
-variable (K p) in
 
 end Kernel
 
 section WittTilt
 
-variable (K p) in
 
 theorem isDomain_wittVector_preTilt : IsDomain 𝕎𝒪♭ :=
   have := isDomain_preTilt (K := K) p

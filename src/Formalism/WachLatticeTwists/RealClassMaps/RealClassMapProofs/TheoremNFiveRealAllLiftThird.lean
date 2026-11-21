@@ -140,12 +140,8 @@ theorem pi_ko_torsion (O : Type) [CommRing O] [IsDomain O] (d : Type) [Fintype d
   rw [Pi.smul_apply, ← Finset.prod_erase_mul _ _ (Finset.mem_univ i), mul_smul, hc i, smul_zero]
   rfl
 
-set_option maxHeartbeats 8000000 in
 
-set_option maxHeartbeats 8000000 in
 
-set_option maxHeartbeats 8000000 in
 
-set_option maxHeartbeats 8000000 in
 
 end Formalism.RepresentationBoundsCohomology.FIN
