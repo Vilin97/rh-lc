@@ -15,7 +15,8 @@ open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.
 
 namespace GlobalTheory.Dieu.Base
 
-variable {p : ℕ} [Fact p.Prime] {P : ∀ (k : Type) [CommRing k], PDivGroup p k → Prop} (B : Base p P)
+variable {p : ℕ} [Fact p.Prime] {P : ∀ (k : Type) [CommRing k], PDivGroup p k → Prop}
+  (B : GlobalTheory.Dieu.Base p P)
   {k : Type} [Field k] [CharP k p] [PerfectRing k p]
 
 theorem map_id' {G : PDivGroup p k} (hG : P k G) : B.map hG hG (𝟙 G) = LinearMap.id :=
@@ -74,7 +75,7 @@ theorem eq_zero_of_pow_smul {G : PDivGroup p k} (hG : P k G) (n : ℕ) (m : B.M 
   rw [← Nat.cast_smul_eq_nsmul (WittVector p k)] at h
   refine (smul_eq_zero.1 h).resolve_left ?_
   rw [Nat.cast_pow]
-  exact pow_ne_zero _ (WittVector.p_nonzero p k)
+  exact pow_ne_zero _ (WittVector.p_ne_zero p k)
 
 end GlobalTheory.Dieu.Base
 

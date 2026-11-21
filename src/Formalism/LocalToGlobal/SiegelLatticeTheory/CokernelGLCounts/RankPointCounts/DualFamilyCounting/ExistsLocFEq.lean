@@ -36,11 +36,11 @@ theorem isLattice_sup {X Y : Submodule K V} (hc : IsCompl X Y) {A B : Submodule 
   refine ⟨hA.1.sup hB.1, ?_⟩
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli
-theorem exists_locF_eq {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A)
-    (hB : Submodule.IsLattice K B) :
+theorem exists_locF_eq {A B : Submodule (𝓞 K) V} (hA : Submodule.IsFullLattice K A)
+    (hB : Submodule.IsFullLattice K B) :
     ∃ s : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, ∀ 𝔭 ∉ s, locF 𝔭.1 A = locF 𝔭.1 B := by
-  obtain ⟨n, hn, hnA⟩ := LocF.exists_zsmul_le hA hB
-  obtain ⟨m, hm, hmB⟩ := LocF.exists_zsmul_le hB hA
+  obtain ⟨n, hn, hnA⟩ := LocF.exists_zsmul_le hA.toIsLattice hB
+  obtain ⟨m, hm, hmB⟩ := LocF.exists_zsmul_le hB.toIsLattice hA
   have hc : ((n * m : ℤ) : 𝓞 F) ≠ 0 := by
     exact_mod_cast mul_ne_zero hn hm
   obtain ⟨s, hs⟩ := (LocalFactorEquality.finite_vF_ne_zero hc).exists_finset

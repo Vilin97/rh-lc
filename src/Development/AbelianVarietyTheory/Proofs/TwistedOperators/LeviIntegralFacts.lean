@@ -64,7 +64,7 @@ theorem _root_.GlobalTheory.SmGL.LeviInt.levi_integral_facts : ∀ (k : Type) [F
     apply _root_.GlobalTheory.SmGL.mem_parab_iff.2
     intro a b i j hab
     classical
-    simp [_root_.GlobalTheory.SmGL.leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+    simp [_root_.GlobalTheory.SmGL.leviEmb, Matrix.blockDiagonal'_apply, hab.ne']
   have hdec : ∀ p : _root_.GlobalTheory.SmGL.parab k e,
       ∃ u ∈ _root_.GlobalTheory.SmGL.unipRad k e,
         (p : GL n k) = _root_.GlobalTheory.SmGL.leviEmb k e (_root_.GlobalTheory.SmGL.leviProj k e p) * u := by

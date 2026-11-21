@@ -32,13 +32,12 @@ theorem exists_injective_mulBy_pow_eq_comp_resOne (n : ℕ) : ∃ q : G.A 1 →�
   induction n with
   | zero =>
     refine ⟨BialgHom.id R _, Function.injective_id, fun a => ?_⟩
-    rw [pow_zero, mulBy, pow_one]
-    rfl
+    simp only [pow_zero, mulBy, pow_one, ofConv_toConv, BialgHom.coe_id, id_eq, resOne_zero]
   | succ n ih =>
     obtain ⟨q, hq, hq'⟩ := ih
     refine ⟨(G.mulP (n + 1)).comp q, (Test.mulP_injective G (n + 1)).comp hq, fun a => ?_⟩
-    rw [pow_succ', ← mulBy_mulBy, ← mulP_res, map_mulBy, hq']
-    rfl
+    rw [pow_succ', ← mulBy_mulBy, ← mulP_res, map_mulBy, hq', BialgHom.comp_apply,
+      resOne_succ]
 
 theorem mulBy_pow_zero_eq_id (n : ℕ) : mulBy R (G.A n) (p ^ 0) = BialgHom.id R _ := by
   rw [pow_zero, mulBy, pow_one]

@@ -64,6 +64,7 @@ theorem geoNum_mixed_eq_zero
     rw [hD, Nat.sub_add_cancel hKD]
   obtain ⟨I, hI, -⟩ := hR4 (ZMod p) K' ι'
   rw [hGeo K' ι' p I hI W (d + r) _ hWm hpW hWp]
+  unfold ContractMixedFieldStatement at hCMF
   exact hCMF (ZMod p) K ι K' ι' I hI κ v _ (D - Fintype.card K) d r L N hv hWp hVi (by omega)
 
 end ProjectionFormulaVertical

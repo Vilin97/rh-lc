@@ -166,28 +166,7 @@ theorem exists_globLat_eq (hfix : ∀ e : E, σ e = e → ∃ a : F, algebraMap 
   letI := starOfInv (σ : E →+* E) hs
   obtain ⟨hL, hG⟩ := hN
   have hNf : Module.Finite (𝓞 E) N := Module.Finite.iff_fg.2 hL.fg
-  have hNsp : Submodule.span E (N : Set (Fin n → E)) = ⊤ := by
-    obtain ⟨p, hp⟩ := Ideal.exists_maximal (𝓞 E)
-    have hp' : p.IsPrime := hp.isPrime
-    obtain ⟨u, _, hu⟩ := hG p hp
-    have hmap : (Submodule.span E (Λ : Set (Fin n → E))).map u.toLinearMap ≤
-        Submodule.span E (N : Set (Fin n → E)) := by
-      rw [Submodule.map_span, Submodule.span_le]
-      rintro _ ⟨x, hx, rfl⟩
-      have hxloc : u x ∈ Formalism.HermitianLatticesTheory.loc (K := E) p N := by
-        rw [← hu]
-        exact Submodule.mem_map.2 ⟨x, Formalism.HermitianLatticesTheory.locBasic_le_locS _ _ hx, rfl⟩
-      obtain ⟨s, hs, hxN⟩ := hxloc
-      have hs0 : algebraMap (𝓞 E) E s ≠ 0 := by
-        intro hz
-        apply Formalism.HermitianLatticesTheory.locBasic_hcompl_not_mem p s hs
-        rw [show s = 0 from RingOfIntegers.coe_injective (hz.trans (map_zero _).symm)]
-        exact p.zero_mem
-      apply (Submodule.smul_mem_iff _ hs0).1
-      rw [algebraMap_smul]
-      exact Submodule.subset_span hxN
-    rw [hsp, Submodule.map_top, LinearMap.range_eq_top.2 u.surjective] at hmap
-    exact top_unique hmap
+  have hNsp : Submodule.span E (N : Set (Fin n → E)) = ⊤ := hL.span_eq_top
   have h1 : ∀ v : HeightOneSpectrum (𝓞 F), ∃ γ ∈ UJ (σ : E →+* E) J, ∀ x : Fin n → E,
       afsplitEps E v • (((bc ιA γ)⁻¹).1 *ᵥ fun i => ιA (x i)) ∈ 𝓛 Λ ↔
         (afsplitEps E v • fun i => ιA (x i)) ∈ 𝓛 N := by

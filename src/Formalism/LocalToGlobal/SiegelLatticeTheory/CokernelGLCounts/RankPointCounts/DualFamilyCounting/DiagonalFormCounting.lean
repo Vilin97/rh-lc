@@ -21,7 +21,7 @@ open Formalism.HermitianLattices.Ext.L3 Formalism.L2.SG.Pf.Cnt
 theorem alphaDisc_of (hP : PhiCount) (hKc : KerCount) (hD : DiscOnto) : AlphaDisc := by
   unfold AlphaDisc
   intro K F V _ _ _ _ _ _ _ _ _ _ _ hK hF h hs hd L hL hLi 𝔭 h𝔭 b a hJ
-  haveI : Fact (IsFixF K F) := ⟨hF⟩
+  have : Fact (IsFixF K F) := ⟨hF⟩
   have hk1 : 2 * vd h L 𝔭 + 1 ≤ 2 * vd h L 𝔭 + 2 * vJof 𝔭 a + 1 := by omega
   have hk2 : 2 * vJof 𝔭 a + 1 ≤ 2 * vd h L 𝔭 + 2 * vJof 𝔭 a + 1 := by omega
   have hk0 : 1 ≤ 2 * vd h L 𝔭 + 2 * vJof 𝔭 a + 1 := by omega
@@ -35,8 +35,7 @@ theorem alphaDisc_of (hP : PhiCount) (hKc : KerCount) (hD : DiscOnto) : AlphaDis
     apply Submodule.eq_of_le_of_finrank_eq le_top
     rw [finrank_span_eq_card hlin, Fintype.card_fin]
   have hfull : Submodule.IsFullLattice K L := by
-    letI : Submodule.IsLattice K L := hL
-    refine { span_eq_top := ?_ }
+    refine { toIsLattice := hL, span_eq_top := ?_ }
     rw [eq_top_iff, ← hspan, Submodule.span_le]
     rintro _ ⟨i, rfl⟩
     apply Formalism.L2.SG.Pf.GluingBases.locF_subset_span h𝔭.isPrime L

@@ -10,5 +10,6 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.Abe
 
 @[expose] public section
 
-theorem GlobalTheory.T.existsUnique_pushoutTorsorSection_mul_difference :=
+theorem GlobalTheory.T.existsUnique_pushoutTorsorSection_mul_difference :
+    type_of% @GlobalTheory.sec_mul_diff :=
   @GlobalTheory.sec_mul_diff

@@ -32,7 +32,7 @@ theorem stFix : StFix := by
   have h12 : algebraMap F R (1 / 2) * (2 * a) = a := by
     rw [← mul_assoc, show (2 : R) = algebraMap F R 2 from (map_ofNat _ 2).symm, ← map_mul]
     norm_num
-  rw [quad_trace (R := R) (hd := hd), hb, add_zero, h12]
+  rw [quad_trace (h2 := h2) (hli := hli) (R := R) (hd := hd), hb, add_zero, h12]
   simp [Algebra.TensorProduct.algebraMap_apply]
 
 end PIW.AdelicOrbitU

@@ -64,9 +64,12 @@ theorem model (q : GlobalTheory.FinPl.SplitPt D k) (FS : Frame k S.rank Y') (FT 
     (by
       obtain ⟨K, hK, h⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO hS hT βS βT
       exact ⟨K, hK, fun t ht => h t (GlobalTheory.PlaceDatum.infPart_of_half hinf' ht)⟩) (P.erase w) W hW
+  letI := hS
+  letI := hT
   refine ⟨_, isModel_extend (ofSplit q) FS FT hqe hTm
-    (GlobalTheory.DiagLiftFix.isTheta_placeModel hψ hS.toIsLattice hT.toIsLattice hee he.2 hinf hf₀ Tm hTm) _
-    (GlobalTheory.T.isSchwartzBruhatHalf_splitPlace_product D k q Y Y' S T FS FT ΛS ΛT hS.toIsLattice hT.toIsLattice e hee hqe _ hΩ), fun om Φ₀ h0 h1 Φ hΦ => ?_⟩
+    (GlobalTheory.DiagLiftFix.isTheta_placeModel hψ inferInstance inferInstance hee he.2 hinf hf₀ Tm hTm) _
+    (GlobalTheory.T.isSchwartzBruhatHalf_splitPlace_product D k q Y Y' S T FS FT ΛS ΛT
+      inferInstance inferInstance e hee hqe _ hΩ), fun om Φ₀ h0 h1 Φ hΦ => ?_⟩
   refine congrArg Tm (funext fun x => ?_)
   rw [extend_apply, hΦ]
   have h3 : ∀ i j, frMapO S T βS βT ((1 - q.e) • x) i j = (1 - toEAf D q.e) * frMapO S T βS βT x i j :=

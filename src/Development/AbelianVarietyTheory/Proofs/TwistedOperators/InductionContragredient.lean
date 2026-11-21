@@ -358,7 +358,7 @@ theorem inductionContragredient : ∀ (k : Type) [Field k] [ValuativeRel k] [Top
       rw [Submodule.range_subtype]
       have hemb : ∀ g : Levi k m, leviEmb k e g ∈ parab k e := fun g =>
         mem_parab_iff.2 fun a b i j h => by
-          simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ h.ne']
+          simp [leviEmb, Matrix.blockDiagonal'_apply, h.ne']
       have hproj : ∀ g : Levi k m, leviProj k e ⟨leviEmb k e g, hemb g⟩ = g := by
         intro g
         funext a

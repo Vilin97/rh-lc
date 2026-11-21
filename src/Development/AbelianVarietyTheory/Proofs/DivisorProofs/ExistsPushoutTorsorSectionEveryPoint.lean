@@ -72,7 +72,8 @@ theorem map_val {D' F G : Type} [CommRing D'] [Algebra R D'] [CommRing F] [Algeb
     g₁ (val b z₀ a ρ φ' z) = val b z₀ a (g₁.comp ρ) (g₁.comp φ') z := by
   unfold val
   rw [map_add (f := _), ← hb.1 F G g₁ _ (val_tors ψ x z₀ hz₀ φ z hz ρ φ' h), MonObj.comp_mul, GrpObj.comp_inv,
-    ← Category.assoc, ← Category.assoc, spOver_comp, spOver_comp] <;> rfl
+    ← Category.assoc, ← Category.assoc, spOver_comp, spOver_comp]
+  rfl
 
 
 include hb hz₀ ha in

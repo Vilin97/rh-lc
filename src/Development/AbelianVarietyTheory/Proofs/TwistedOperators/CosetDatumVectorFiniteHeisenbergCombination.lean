@@ -238,7 +238,14 @@ theorem GlobalTheory.RowEx.fourierVec : ∀ {D : D7} {T : Type} {L : LevCh D T} 
   obtain ⟨hSd, hTd⟩ := stdSelfDual S.N hp
   have hv := S.Z.vac_is p hp
   obtain ⟨f, hf⟩ : ∃ f, d.IsTheta W (S.N.latS p) (S.N.latT p) (S.Z.vac p) f :=
-    VecEx.exists_isThetaAt_of_vac hSd.1 hTd.1 hSd hTd d.e_is hv hsb
+    VecEx.exists_isThetaAt_of_vac
+      (by
+        letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hSd
+        infer_instance)
+      (by
+        letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hTd
+        infer_instance)
+      hSd hTd d.e_is hv hsb
   obtain ⟨⟨Tm, hTm⟩, hall⟩ := id hf
   have hfT : f = Tm d.fn := hall Tm hTm
   have hvec : S.Z.vec d = f := by

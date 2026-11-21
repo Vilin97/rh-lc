@@ -198,7 +198,9 @@ theorem vecs_last : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (t : T) (e : A
       (fun w => coordHom ch.S.B t w.1 (X := (D.R.m, (j : ℕ) + 1)) (Y := (D.R.m, (j : ℕ))) ⟨le_rfl, j.2⟩ ⟨le_rfl, j.2.le⟩)
       (fun w z => coordHom_int_iff ch.S.B t w.1 (X := (D.R.m, (j : ℕ) + 1)) (Y := (D.R.m, (j : ℕ))) ⟨le_rfl, j.2⟩ ⟨le_rfl, j.2.le⟩ z) (fun w => depthAt ch.G w.1) (fun w => φ w (.theta D.R.m j))
       (fun w => (natDatum_props (hφ w _ hmem)).1) (fun w => (natDatum_props (hφ w _ hmem)).2)
-    obtain ⟨f, hf⟩ := GlobalTheory.FunObj.VecEx.exists_isThetaAt_of_vac hS.1 hT.1 hS hT he (ch.rm.vT_is t D.R.m j le_rfl j.2) hSB
+    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS
+    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT
+    obtain ⟨f, hf⟩ := GlobalTheory.FunObj.VecEx.exists_isThetaAt_of_vac inferInstance inferInstance hS hT he (ch.rm.vT_is t D.R.m j le_rfl j.2) hSB
     exact ⟨f, hSB, hf⟩
   · have hS : IsSelfDualC (ch.G.pS (.chi i D.R.m)) (ch.G.latS (.chi i D.R.m)) :=
       isSelfDualC_neg (node_isV ch.G hL (X := .grid ((i : ℕ) + 1) D.R.m) ⟨i.2, le_rfl⟩).sd
@@ -212,7 +214,9 @@ theorem vecs_last : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (t : T) (e : A
       (fun w => coordHom ch.S.B t w.1 (X := ((i : ℕ), D.R.m)) (Y := ((i : ℕ) + 1, D.R.m)) ⟨i.2.le, le_rfl⟩ ⟨i.2, le_rfl⟩)
       (fun w z => coordHom_int_iff ch.S.B t w.1 (X := ((i : ℕ), D.R.m)) (Y := ((i : ℕ) + 1, D.R.m)) ⟨i.2.le, le_rfl⟩ ⟨i.2, le_rfl⟩ z) (fun w => depthAt ch.G w.1) (fun w => φ w (.ex i D.R.m))
       (fun w => (natDatum_props (hφ w _ hmem)).1) (fun w => (natDatum_props (hφ w _ hmem)).2)
-    obtain ⟨f, hf⟩ := GlobalTheory.FunObj.VecEx.exists_isThetaAt_of_vac hS.1 hT.1 hS hT he (ch.rm.vX_is i D.R.m i.2 le_rfl) hSB
+    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS
+    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT
+    obtain ⟨f, hf⟩ := GlobalTheory.FunObj.VecEx.exists_isThetaAt_of_vac inferInstance inferInstance hS hT he (ch.rm.vX_is i D.R.m i.2 le_rfl) hSB
     exact ⟨f, hSB, hf⟩
 
 end GlobalTheory.VecsLast

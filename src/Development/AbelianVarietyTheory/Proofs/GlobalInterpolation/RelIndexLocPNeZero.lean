@@ -88,10 +88,10 @@ theorem volC_pos : Formalism.L2.Ker.VolCPos := by
   have lb : Submodule.IsLattice E (Formalism.L2.Col.stdLat E b) := Formalism.L2.Col.stdLat_lattice
   have hspan (n : ℕ) : Submodule.span E (Formalism.L2.Col.stdLat E n : Set (Sp E n)) = ⊤ := by
     rw [Formalism.L2.Col.stdLat_eq_span, Submodule.span_span_of_tower]
-    convert (Pi.basisFun E (Fin n)).span_eq using 1
-    congr 2
-    ext i
-    exact congrFun (Pi.basisFun_apply E (Fin n) i).symm _
+    have hbasis : (fun i : Fin n => (Pi.single i (1 : E) : Sp E n)) =
+        ⇑(Pi.basisFun E (Fin n)) :=
+      funext fun i => (Pi.basisFun_apply E (Fin n) i).symm
+    rw [hbasis, (Pi.basisFun E (Fin n)).span_eq]
   have full₀ : Submodule.IsFullLattice E (Formalism.L2.Col.stdLat E b) :=
     { toIsLattice := lb, span_eq_top := hspan b }
   have full₁ : Submodule.IsFullLattice E N' :=

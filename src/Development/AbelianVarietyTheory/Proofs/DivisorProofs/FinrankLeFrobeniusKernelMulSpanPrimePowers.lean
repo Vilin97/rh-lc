@@ -83,7 +83,7 @@ def iterFrobSemi : SemiBialgHom (algebraMap (IterFrobBase K p r) K) H H where
 def iterRelFrob : K ⊗[IterFrobBase K p r] H →ₐc[K] H := (iterFrobSemi p K H r).liftBC
 
 theorem iterRelFrob_tmul (c : K) (a : H) : iterRelFrob p K H r (c ⊗ₜ a) = c • a ^ p ^ r :=
-  SemiBialgHom.liftBC_tmul _ c a
+  SemiBialgHom.liftBC_tmul (iterFrobSemi p K H r) c a
 
 end GlobalTheory.PDiv
 
@@ -99,13 +99,11 @@ theorem finrank_le_frobKer_mul_span_pow (p : ℕ) [Fact p.Prime] (K H : Type) [F
   · have hle : frobKerIdeal (p ^ r) K H ≤ kerIdeal f := by
       refine Ideal.span_le.2 ?_
       rintro _ ⟨a, ha, rfl⟩
-      have ha' : counit (R := K) a = 0 := ha
+      have ha' : counit (R := IterFrobBase K p r) a = 0 := ha
       have hb : (1 : K) ⊗ₜ[IterFrobBase K p r] a ∈
           augIdeal K (K ⊗[IterFrobBase K p r] H) := by
         change counit (R := K) ((1 : K) ⊗ₜ[IterFrobBase K p r] a) = 0
-        rw [← toBaseChange_apply (IterFrobBase K p r) K H a, SemiBialgHom.counit_map]
-        have ha'' : counit (R := IterFrobBase K p r) a = 0 := ha'
-        rw [ha'', map_zero]
+        rw [TensorProduct.counit_tmul, ha', zero_smul]
       have e : f ((1 : K) ⊗ₜ a) = a ^ p ^ r := by
         rw [iterRelFrob_tmul, one_smul]
       show a ^ p ^ r ∈ _

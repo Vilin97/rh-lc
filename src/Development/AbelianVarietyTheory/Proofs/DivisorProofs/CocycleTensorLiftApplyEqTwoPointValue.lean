@@ -40,10 +40,11 @@ theorem Dat.lift_coc (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
       toConv Algebra.TensorProduct.includeRight).ofConv = Bialgebra.comulAlgHom R (G.A n) := by
     apply AlgHom.ext
     intro a
-    change (toConv Algebra.TensorProduct.includeLeft * toConv Algebra.TensorProduct.includeRight) a =
-      Coalgebra.comul (R := R) a
-    simp only [AlgHom.convMul_apply, ofConv_toConv,
-      Algebra.TensorProduct.lift_includeLeft_includeRight, AlgHom.id_apply]
+    simpa only [ofConv_toConv, Algebra.TensorProduct.lift_includeLeft_includeRight, AlgHom.id_apply,
+      Bialgebra.comulAlgHom_apply]
+      using AlgHom.convMul_apply
+        (toConv (Algebra.TensorProduct.includeLeft : G.A n →ₐ[R] G.A n ⊗[R] G.A n))
+        (toConv Algebra.TensorProduct.includeRight) a
   have m := t.mul n (G.A n ⊗[R] G.A n) (toConv Algebra.TensorProduct.includeLeft)
     (toConv Algebra.TensorProduct.includeRight)
   rw [e4] at m

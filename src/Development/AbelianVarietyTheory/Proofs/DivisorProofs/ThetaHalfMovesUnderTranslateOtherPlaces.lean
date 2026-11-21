@@ -109,7 +109,9 @@ theorem thAt_move : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type
       ∀ Ψ, IsSBHalf (cA D a) (latO (Vc D i) (Wc D i) (R.ΛV i) (R.ΛW i) fun _ => True) Ψ →
         IsThetaFunO R.ψ (Vc D i) (Wc D i) (Tm Ψ) := by
     intro a P h f₀ hf₀ Tm hTm Ψ hΨ
-    exact GlobalTheory.DiagLiftFix.isTheta_placeModel hψ hSV.1 hSW.1 (by rw [← map_mul, GlobalTheory.PlaceVec.idemSum_mul_self h])
+    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hSV
+    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hSW
+    exact GlobalTheory.DiagLiftFix.isTheta_placeModel hψ inferInstance inferInstance (by rw [← map_mul, GlobalTheory.PlaceVec.idemSum_mul_self h])
       (by rw [← map_mul, h.2, map_zero]) (GlobalTheory.PlaceVec.infPart_cA (GlobalTheory.PlaceVec.idemSum_infPart h)) hf₀ Tm hTm Ψ hΨ
   have hSBg := GlobalTheory.PlaceVec.isSBHalf_of_red hSV.1 hSW.1 (GlobalTheory.PlaceVec.infPart_cA (GlobalTheory.PlaceVec.idemSum_infPart hg))
     (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i))

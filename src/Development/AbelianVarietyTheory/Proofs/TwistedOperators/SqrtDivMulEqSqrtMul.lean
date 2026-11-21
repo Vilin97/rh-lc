@@ -135,7 +135,9 @@ theorem exists_halfReps (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) (hL : 
       w - cA D e • w ∈ latO S T ΛS ΛT (fun _ => True) := by
     rw [hL]; exact off_conj_mem he hα
   have hst := @GlobalTheory.SplitScalar.idem_smul_mem D S T (ΛS : Set _) (ΛT : Set _) _ he'.1
-  haveI := GlobalTheory.SplitLinear.finite_enlarge hS.1 hT.1 he'.1 hle
+  letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S ΛS hS
+  letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T ΛT hT
+  haveI := GlobalTheory.SplitLinear.finite_enlarge inferInstance inferInstance he'.1 hle
   obtain ⟨R, -, r2, r3⟩ := GlobalTheory.SplitLinear.exists_reps
     ((latO S T ΛS ΛT fun _ => True) ⊓ GlobalTheory.PlaceModel.half S T (cA D e))
     ((latO S T ΛS ΛT fun _ => True).comap (GlobalTheory.SplitHecke.actAdd S T 1⁻¹ α⁻¹) ⊓ GlobalTheory.PlaceModel.half S T (cA D e))
@@ -177,7 +179,9 @@ theorem card_halfReps (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) (hL : (�
   have hle : ∀ w ∈ latO S T ΛS ΛT (fun _ => True), IsHalf (cA D e) w →
       actO S T 1⁻¹ α⁻¹ w ∈ latO S T ΛS ΛT (fun _ => True) := by
     rw [hL, inv_one]; exact inv_act_mem he hα
-  have h1 := GlobalTheory.SplitLinear.sqrt_index hS.1 hT.1 he' (GlobalTheory.VecInv.isDetAt_detAt _ he'.1 S 1)
+  letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S ΛS hS
+  letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T ΛT hT
+  have h1 := GlobalTheory.SplitLinear.sqrt_index inferInstance inferInstance he' (GlobalTheory.VecInv.isDetAt_detAt _ he'.1 S 1)
     (GlobalTheory.VecInv.isDetAt_detAt _ he'.1 T α) hle
   rw [inv_one, ← card_reps ((latO S T ΛS ΛT fun _ => True) ⊓ GlobalTheory.PlaceModel.half S T (cA D e))
     ((latO S T ΛS ΛT fun _ => True).comap (GlobalTheory.SplitHecke.actAdd S T 1 α⁻¹) ⊓ GlobalTheory.PlaceModel.half S T (cA D e))

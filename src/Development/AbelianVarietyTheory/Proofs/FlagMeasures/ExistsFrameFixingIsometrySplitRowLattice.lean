@@ -573,9 +573,15 @@ theorem main : ∀ (D : D7) (u : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D), Is
     | smul c x _ hx => simp [hx]
   have hXL := XLam_gmap (lf D F0) Λ n hnX
   obtain ⟨-, -, -, hu', hl'⟩ := Formalism.HermitianLatticesTheory.isomAct _ _ _ (hS D).hT n hn Λ
+  have hfull : Submodule.IsFullLattice D.host.E (Formalism.HermitianLatticesTheory.gmap n Λ) := by
+    letI := hl'.2 hl
+    refine { span_eq_top := ?_ }
+    change Submodule.span D.host.E (n.toLinearMap '' (Λ : Set (hS D).V)) = ⊤
+    rw [← Submodule.map_span n.toLinearMap, hgen.1.span_eq_top, Submodule.map_top,
+      LinearEquiv.range]
   obtain ⟨heq, hsg, -⟩ := Formalism.HermitianLatticesTheory.genusBasic (𝓞 D.host.E) D.host.E _ (hS D).hT (hS D).herm
     (fun r => ⟨⟨_, star_int r.isIntegral_coe⟩, rfl⟩)
-  refine ⟨n, ⟨hn, fun b => ?_, hq⟩, ?_, ⟨hl'.2 hl, heq.trans hgen.2 (hsg Λ n hn)⟩,
+  refine ⟨n, ⟨hn, fun b => ?_, hq⟩, ?_, ⟨hfull, heq.trans hgen.2 (hsg Λ n hn)⟩,
     ⟨hl'.2 hl, hu'.2 hu, ⟨⟨_, hlift.1, hnz⟩, rfl⟩, ?_, fun c hc => ?_⟩, hXL.trans hX⟩
   · refine Fin.lastCases ?_ (fun a => ?_) b
     · simpa [frame, FlagG.fvec] using hnz

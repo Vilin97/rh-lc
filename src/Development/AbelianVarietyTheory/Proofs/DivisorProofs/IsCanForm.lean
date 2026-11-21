@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDatNeZero
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsionTowersOfDivisibleGroup
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsionTowerPresentationCotangentPullbackResRigiStatement
 
 @[expose] public section
@@ -21,8 +22,8 @@ namespace GlobalTheory.PtExt
 variable {R : Type} [CommRing R] {A : Over (Sp R)}
 
 theorem fv_form (β : Form (A.hom ≫ 𝟙 _)) {D D' : Type} [CommRing D] [Algebra R D] [CommRing D'] [Algebra R D']
-    (φ : D →ₐ[R] D') (x : Pt A D) : fv β.1 D D' φ x = 0 :=
-  β.2 (trivMap φ x) rfl rfl
+    (φ : D →ₐ[R] D') (x : Pt A D) : fv β.1 D D' φ x = 0 := by
+  simpa only [fv, GlobalTheory.Cris.ev] using β.2 (trivMap φ x) rfl rfl
 
 variable [GrpObj A] {p : ℕ} {G : PDivGroup p R}
 

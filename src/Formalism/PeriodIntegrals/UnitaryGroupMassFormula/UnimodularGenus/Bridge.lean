@@ -33,7 +33,7 @@ theorem isomLocStd : IsomLocStd := by
         congrArg (fun f : Module.Dual E W => f ⟨y, hy⟩) (LinearMap.mem_ker.mp hx)
       rw [← (LinearMap.isSymm_def.mp hs) (e x) y, hxy, map_zero]
     -- Localization preserves the ambient span, and self-duality puts the orthogonal vector in it.
-    letI : p.IsPrime := hp.isPrime
+    let : p.IsPrime := hp.isPrime
     have hloc {y : Sp E n}
         (hy : y ∈ Formalism.HermitianLatticesTheory.loc (K := E) p N) : y ∈ W := by
       obtain ⟨s, hs', hsy⟩ := hy
@@ -54,8 +54,7 @@ theorem isomLocStd : IsomLocStd := by
     obtain ⟨φ⟩ : Nonempty (E →+* ℂ) := inferInstance
     have hpos := ReciprocityTheory.ChartRestriction.L3.isTotPosDef_of_ortho hE hs hI (e x)
       (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) φ
-    rw [horth (e x) hxW, map_zero] at hpos
-    simpa using hpos
+    simp [horth (e x) hxW] at hpos
   exact ReciprocityTheory.ChartRestriction.L3.exists_isom_loc hE hs hI hFull p hp hu
 
 end PI.UG.W

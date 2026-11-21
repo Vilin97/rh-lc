@@ -4,6 +4,7 @@ public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.Divisors.RedSurjective
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerEqRangeOfRangeEqKer
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobKerIdealLeAugIdeal
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobTwistBaseChangeHomApp
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CobOneEqZeroOfConnecting
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OmegaBaseChangeBijectiveOfPEqZero
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DieudonneTheoryVEqVerschiebungInjectiveStatement
@@ -24,8 +25,7 @@ theorem frobProj_omega_surjective {p : ℕ} [Fact p.Prime] {k : Type} [Field k] 
   letI := (frobRing (p_eq_zero p k)).toAlgebra
   intro t
   obtain ⟨x, rfl⟩ := (omega_baseChange_bijective G k (p_eq_zero p k)).2 t
-  induction x using TensorProduct.induction_on with
-  | zero => exact ⟨0, (map_zero _).trans (map_zero _).symm⟩
+  induction x using TensorProduct.inductionOn with
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
@@ -42,7 +42,7 @@ theorem hodge_filtration : ∀ (p : ℕ) [Fact p.Prime] (T : Theory p) (k : Type
   obtain ⟨-, hVinj, hVsm, -, -⟩ := GlobalTheory.T.dieudonneTheory_V_eq_verschiebung_injective p T k G
   obtain ⟨hbij, -, -⟩ := GlobalTheory.T.dieudonne_frobeniusTwist_bijective_relFrobenius p T.base k G
   obtain ⟨-, -, -, hver, -, -, -⟩ := rigExt_field_of_charP p k (p_eq_zero p k) G
-  have key : ∀ m, (frobProj (p_eq_zero p k) G).rig (T.red G (T.V G m)) =
+  have key : ∀ m, SemiHom.rig (frobProj (p_eq_zero p k) G) (T.red G (T.V G m)) =
       rigExtMap (verschiebung (p_eq_zero p k) G) (T.red G m) := by
     intro m
     rw [← T.base.red_smap trivial trivial (frobProj (p_eq_zero p k) G), hVsm]
@@ -64,14 +64,14 @@ theorem hodge_filtration : ∀ (p : ℕ) [Fact p.Prime] (T : Theory p) (k : Type
     intro x
     constructor
     · rintro ⟨m, rfl⟩
-      have hm : (frobProj (p_eq_zero p k) G).rig (T.red G (T.V G m)) ∈
+      have hm : SemiHom.rig (frobProj (p_eq_zero p k) G) (T.red G (T.V G m)) ∈
           LinearMap.range (frobTwist (p_eq_zero p k) G).rigOfOmega := by
         rw [key, ← hver]; exact ⟨_, rfl⟩
       obtain ⟨w', hw'⟩ := hm
       obtain ⟨w, rfl⟩ := osurj w'
       exact ⟨w, rinj ((SemiHom.rig_rigOfOmega _ w).trans hw')⟩
     · rintro ⟨w, rfl⟩
-      have hw : (frobTwist (p_eq_zero p k) G).rigOfOmega ((frobProj (p_eq_zero p k) G).omega w) ∈
+      have hw : (frobTwist (p_eq_zero p k) G).rigOfOmega (SemiHom.omega (frobProj (p_eq_zero p k) G) w) ∈
           LinearMap.range (rigExtMap (verschiebung (p_eq_zero p k) G)) := by
         rw [hver]; exact ⟨_, rfl⟩
       obtain ⟨y, hy⟩ := hw

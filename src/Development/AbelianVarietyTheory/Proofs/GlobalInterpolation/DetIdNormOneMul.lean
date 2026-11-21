@@ -5,6 +5,7 @@ public import Formalism.LocalToGlobal.KernelLattices.ThDistC
 public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.IndexExponentDegree
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.EmbHInjective
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.StandardRankOneLatticeOfLocal
+import Formalism.LocalToGlobal.Columns.MemLocPOfSmul
 
 @[expose] public section
 
@@ -124,13 +125,14 @@ theorem gen_relDet {P : HeightOneSpectrum (𝓞 E)} {L L' : Submodule (𝓞 E) (
       rw [Algebra.smul_def, map_mul]
       exact le_trans (mul_le_of_le_one_left' (P.valuation_le_one (K := E) c)) ha
 
-theorem relDet_mul {L L' L'' : Submodule (𝓞 E) (Sp E n)} (hL : IsSdLat L) (hL' : IsSdLat L')
-    (hL'' : IsSdLat L'') : relDet L L'' = relDet L L' * relDet L' L'' := by
-  choose f hf using fun P => exists_isFr P hL
-  choose f' hf' using fun P => exists_isFr P hL'
-  choose f'' hf'' using fun P => exists_isFr P hL''
-  refine eq_of_gen _ _ (fun P => gen_relDet hL.1.fg (hf P) (hf'' P))
-    (fun P => gen_mul (gen_relDet hL.1.fg (hf P) (hf' P)) (gen_relDet hL'.1.fg (hf' P) (hf'' P))) fun P => ?_
+theorem relDet_mul {L L' L'' : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsFullLattice E L)
+    (hL' : Submodule.IsFullLattice E L') (hL'' : Submodule.IsFullLattice E L'') :
+    relDet L L'' = relDet L L' * relDet L' L'' := by
+  choose f hf using fun P => (DetChrL.frame_exists P hL : ∃ f, IsFr P L f)
+  choose f' hf' using fun P => (DetChrL.frame_exists P hL' : ∃ f, IsFr P L' f)
+  choose f'' hf'' using fun P => (DetChrL.frame_exists P hL'' : ∃ f, IsFr P L'' f)
+  refine eq_of_gen _ _ (fun P => gen_relDet hL.fg (hf P) (hf'' P))
+    (fun P => gen_mul (gen_relDet hL.fg (hf P) (hf' P)) (gen_relDet hL'.fg (hf' P) (hf'' P))) fun P => ?_
   congr 1
   have := dt_ne (f P)
   have := dt_ne (f' P)
@@ -162,11 +164,12 @@ theorem detId_normOne_mul (D : D7) (n : ℕ) (L L' L'' : Submodule (𝓞 D.host.
     TaylorLogMetric.N1 D (TaylorLogMetric.detId D L L') ∧ TaylorLogMetric.detId D L L'' = TaylorLogMetric.detId D L L' * TaylorLogMetric.detId D L' L'' := by
   letI := D.host.cmStar
   have hs : ∀ x : D.host.E, star x = D.host.conj x := bridge_star_holds D.R D.host
-  have h1 := isSdLat_of hL
-  have h2 := isSdLat_of hL'
-  have h3 := isSdLat_of hL''
-  refine ⟨?_, relDet_mul h1 h2 h3⟩
-  obtain ⟨J, hJ, e⟩ := normOne_relDet h1 h2
+  have hfull {N : Submodule (𝓞 D.host.E) (Fin n → D.host.E)} (h : IsSDLat D.host.E n N) :
+      Submodule.IsFullLattice D.host.E N :=
+    { toIsLattice := Submodule.IsLattice.of_fg _ h.1
+      span_eq_top := h.2.1 }
+  refine ⟨?_, relDet_mul (hfull hL) (hfull hL') (hfull hL'')⟩
+  obtain ⟨J, hJ, e⟩ := normOne_relDet (isSdLat_of hL) (isSdLat_of hL')
   exact ⟨J, fun x => by rw [hJ, hs]; rfl, e⟩
 
 end GlobalTheory.RelDetIdeal

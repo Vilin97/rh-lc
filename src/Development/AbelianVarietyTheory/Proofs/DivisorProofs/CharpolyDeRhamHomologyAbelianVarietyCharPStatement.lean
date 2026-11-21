@@ -36,8 +36,8 @@ theorem _root_.GlobalTheory.T.charpoly_deRhamHomology_abelianVariety_charP : ∀
     rw [CharP.cast_eq_zero]
     exact IsNilpotent.zero
   let E := e hR B.ab t
-  have : Module.Finite k (primDR B.X) := Module.Finite.equiv E.symm
   have : Module.Finite k G.RigExt := hfin
+  have : Module.Finite k (primDR B.X) := Module.Finite.equiv E.symm
   have : Module.Free k G.RigExt := Module.Free.of_divisionRing k G.RigExt
   have hConj : primPull (dp0 k) (𝟙 _) f.hom = E.symm.conj (rigExtMap (t.map t f.hom)) := by
     refine LinearMap.ext fun c => ?_

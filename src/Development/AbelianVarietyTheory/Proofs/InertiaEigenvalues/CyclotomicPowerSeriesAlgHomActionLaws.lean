@@ -14,8 +14,8 @@ namespace GlobalTheory.Cyc
 
 variable (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [Algebra ℤ_[l] O]
 
-theorem cyc_eq_binomialSeries (c : ℤ_[l]) : cyc l O c = PowerSeries.binomialSeries O c - 1 := by
-  rw [cyc, GlobalTheory.Fon.map_binomialSeries ℤ_[l] (algebraMap ℤ_[l] O) (fun _ => rfl) c]
+theorem cyc_eq_binomialSeries (c : ℤ_[l]) : cyc l O c = PowerSeries.binomialSeries O c - 1 :=
+  Series.cyc_eq l O c
 
 theorem act_X (c : ℤ_[l]) : act l O c PowerSeries.X = cyc l O c := PowerSeries.substAlgHom_X _
 
@@ -24,9 +24,7 @@ theorem act_apply (c : ℤ_[l]) (a : PowerSeries O) :
   congrFun (PowerSeries.coe_substAlgHom _) a
 
 theorem act_eq_gam (c : ℤ_[l]) : act l O c = GlobalTheory.Fon.gam O c :=
-  GlobalTheory.Fon.algHom_ext_X O (f := act l O c) (g := GlobalTheory.Fon.gam O c)
-    (by rw [act_X, GlobalTheory.Fon.gam_X, cyc_eq_binomialSeries])
-    (by rw [act_X, cyc_const])
+  Series.act_eq l O c
 
 theorem act_act (c c' : ℤ_[l]) (a : PowerSeries O) :
     act l O c (act l O c' a) = act l O (c * c') a := by

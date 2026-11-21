@@ -83,8 +83,8 @@ theorem isSelfDualC_colLat (V : HSp D) (B : GL (Fin V.rank) D.host.E)
 variable {S T : HSp D} {ΛS ΛS' : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)}
   {ΛT ΛT' : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
 
-theorem exists_nsmul_latO (hS : ΛS.FG) (hT : ΛT.FG) (hS' : Submodule.IsLattice D.host.E ΛS')
-    (hT' : Submodule.IsLattice D.host.E ΛT') : ∃ c : ℕ, 0 < c ∧ ∀ u : WO S T, u.map (infPart D) = 0 →
+theorem exists_nsmul_latO (hS : ΛS.FG) (hT : ΛT.FG) (hS' : Submodule.IsFullLattice D.host.E ΛS')
+    (hT' : Submodule.IsFullLattice D.host.E ΛT') : ∃ c : ℕ, 0 < c ∧ ∀ u : WO S T, u.map (infPart D) = 0 →
       u ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True) →
       c • u ∈ latO S T (ΛS' : Set (Fin S.rank → D.host.E)) (ΛT' : Set (Fin T.rank → D.host.E)) (fun _ => True) := by
   obtain ⟨K, hK, h⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO hS' hT'
@@ -98,12 +98,12 @@ theorem exists_nsmul_latO (hS : ΛS.FG) (hT : ΛT.FG) (hS' : Submodule.IsLattice
     rw [nsmul_eq_mul, RingHom.map_mul, map_natCast]
     exact h' t hu i j
 
-theorem isSBHalf_of_lattices (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT)
-    (hS' : Submodule.IsLattice D.host.E ΛS') (hT' : Submodule.IsLattice D.host.E ΛT') {e : AE D}
+theorem isSBHalf_of_lattices (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT)
+    (hS' : Submodule.IsFullLattice D.host.E ΛS') (hT' : Submodule.IsFullLattice D.host.E ΛT') {e : AE D}
     (he : infPart D e = 0) {Φ : WO S T → ℂ} (hΦ : IsSBHalf e (latO S T ΛS ΛT fun _ => True) Φ) :
     IsSBHalf e (latO S T ΛS' ΛT' fun _ => True) Φ := by
-  obtain ⟨c, hc, h⟩ := exists_nsmul_latO hS.fg hT.fg hS' hT'
-  obtain ⟨c', hc', h'⟩ := exists_nsmul_latO hS'.fg hT'.fg hS hT
+  obtain ⟨c, hc, h⟩ := exists_nsmul_latO hS.toIsLattice.fg hT.toIsLattice.fg hS' hT'
+  obtain ⟨c', hc', h'⟩ := exists_nsmul_latO hS'.toIsLattice.fg hT'.toIsLattice.fg hS hT
   obtain ⟨h1, k, hk, h2, h3⟩ := hΦ
   have hh : ∀ (m : ℕ) (u : WO S T), IsHalf e u → IsHalf e (m • u) := fun m u hu =>
     (GlobalTheory.PlaceModel.isHalf_iff S T).2 (nsmul_mem ((GlobalTheory.PlaceModel.isHalf_iff S T).1 hu) m)
@@ -114,13 +114,16 @@ theorem isSBHalf_of_lattices (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submo
     exact nsmul_mem (h _ (GlobalTheory.PlaceDatum.infPart_of_half he (hh _ _ (h1 t ht))) (h3 t ht)) c'
 
 theorem exists_isThetaAt_of_vac {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {sS sT}
-    (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) (hS' : IsSelfDualC S ΛS')
+    (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT) (hS' : IsSelfDualC S ΛS')
     (hT' : IsSelfDualC T ΛT') {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) {f₀ Φ : WO S T → ℂ}
     (hf : IsVacO ψ θ S T sS sT ΛS' ΛT' f₀) (hΦ : IsSBHalf e (latO S T ΛS ΛT fun _ => True) Φ) :
     ∃ f, IsThetaAt ψ (symplO S T) (heisO ψ S T) e (latO S T ΛS' ΛT' fun _ => True) 1 f₀ Φ f :=
   GlobalTheory.PlaceDatum.exists_isThetaAt hf.1 hS' hT' (GlobalTheory.PlaceDatum.idemSum_mul_self he) (GlobalTheory.PlaceDatum.infPart_idemSum he)
     (GlobalTheory.PlaceModelSum.placeModelExistsSum D ψ hf.1 S T ΛS' ΛT' hS' hT' _ e he f₀ hf.2.theta hf.2.lat).1
-    (isSBHalf_of_lattices hS hT hS'.1 hT'.1 (GlobalTheory.PlaceDatum.infPart_idemSum he) hΦ)
+    (isSBHalf_of_lattices hS hT
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S ΛS' hS')
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T ΛT' hT')
+      (GlobalTheory.PlaceDatum.infPart_idemSum he) hΦ)
 
 end VecEx
 
@@ -142,12 +145,14 @@ theorem Normal.hasVec_of_defPair {G : ChiGrid.GridData L sc} {W : G.Weil} {μ0 :
     (Z : Normal W N) {t : T} {p : Pair T} (hp : DefPair D.R.m p) (d : FinDatum G t p) : Z.HasVec d := by
   obtain ⟨h1, h2⟩ := hp.nodes
   have hv := Z.vac_is p hp
+  letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ (h1.selfDual G hL)
+  letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ (h2.selfDual G hL)
   rcases p with ⟨i, j⟩ | ⟨t', i, j⟩ | i | ⟨t', j⟩
-  · exact VecEx.exists_isThetaAt_of_vac (S := G.pS (.chi i j)) (T := G.pT (.chi i j)) (h2.selfDual G hL).1 (h1.selfDual G hL).1 (isSelfDualC_neg (N.selfDual h2))
+  · exact VecEx.exists_isThetaAt_of_vac (S := G.pS (.chi i j)) (T := G.pT (.chi i j)) inferInstance inferInstance (isSelfDualC_neg (N.selfDual h2))
       (N.selfDual h1) d.e_is hv d.sb
   · exact hp.elim
   · exact hp.elim
-  · exact VecEx.exists_isThetaAt_of_vac (h1.selfDual G hL).1 (h2.selfDual G hL).1 (N.selfDual h1)
+  · exact VecEx.exists_isThetaAt_of_vac inferInstance inferInstance (N.selfDual h1)
       (N.selfDual h2) d.e_is hv d.sb
 
 theorem hasVec {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : ChiGrid.GridData L sc) (W : G.Weil) :

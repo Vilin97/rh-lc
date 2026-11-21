@@ -45,6 +45,7 @@ theorem isIsog_corner {G H G' H' : PDivGroup p k} (q : G ⟶ H) (hq : IsIsog q) 
     (π : G ⟶ G') (j : H' ⟶ H) (r : H ⟶ H') (hiπ : i ≫ π = 𝟙 G') (hjr : j ≫ r = 𝟙 H')
     (hq' : i ≫ q ≫ r ≫ j = i ≫ q) (hg : ∀ g : H ⟶ G, j ≫ g ≫ π ≫ i = j ≫ g) :
     IsIsog (i ≫ q ≫ r) := by
+  unfold IsIsog at hq ⊢
   obtain ⟨n, g, h1, h2⟩ := hq
   refine ⟨n, j ≫ g ≫ π, ?_, ?_⟩
   · calc (i ≫ q ≫ r) ≫ j ≫ g ≫ π = (i ≫ q ≫ r ≫ j) ≫ g ≫ π := by
@@ -72,6 +73,7 @@ theorem omegaMap_corner_surjective {G H G' H' : PDivGroup p k} (q : G ⟶ H)
 
 theorem isIsog_dualHom_of_isIsog {G H : PDivGroup p k} (f : G ⟶ H) (hf : IsIsog f) :
     IsIsog (dualHom G H f) := by
+  unfold IsIsog at hf ⊢
   obtain ⟨n, g, h1, h2⟩ := hf
   refine ⟨n, dualHom H G g, ?_, ?_⟩
   · rw [← dualHom_comp, h2, map_smul, dualHom_id]
@@ -89,10 +91,11 @@ theorem isIso_of_isIso_dualHom {G H : PDivGroup p k} (f : G ⟶ H) (h : IsIso (d
 theorem isIso_of_isConn_of_omegaMap_surjective [CharP k p] {G H : PDivGroup p k} (f : G ⟶ H)
     (hG : G.IsConn) (hf : IsIsog f) (hs : Function.Surjective (omegaMap G H f)) : IsIso f := by
   have hsurj := GlobalTheory.T.app_surjective_of_omegaMap_surjective_connected p k G H f hG hs
-  have hdeg : HasLogDeg f 0 := ⟨0, fun n _ => by
-    rw [pow_zero]
-    exact (GlobalTheory.T.bialgHom_surjective_iff_finrank_kernelQuotient_eq_one k _ _ _).1 (hsurj n)⟩
-  exact ((GlobalTheory.T.pDivisibleGroup_isogeny_basic_properties p k G).2.2.2 H f hf).1 hdeg
+  apply ((GlobalTheory.T.pDivisibleGroup_isogeny_basic_properties p k G).2.2.2 H f hf).1
+  unfold HasLogDeg
+  refine ⟨0, fun n _ => ?_⟩
+  rw [pow_zero]
+  exact (GlobalTheory.T.bialgHom_surjective_iff_finrank_kernelQuotient_eq_one k _ _ _).1 (hsurj n)
 
 end Corner
 

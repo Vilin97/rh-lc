@@ -1,6 +1,8 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.RedSurjective
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CobOneEqZeroOfConnecting
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DieudonneRanksFieldCharP
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerEqRangeOfRangeEqKer
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobKerIdealLeAugIdeal
 
@@ -23,7 +25,7 @@ theorem exists_mem_span_red_eq (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [Com
     ∃ n ∈ Submodule.span (WittVector p k') (Set.range fun i => B.smap hG' hG (G.toBase k') (b i)),
       B.red _ hG' n = z := by
   obtain ⟨x, rfl⟩ := G.liftSemi_rig_bijective k' (CharP.cast_eq_zero k p) (.inl inferInstance) |>.2 z
-  induction x with
+  induction x using TensorProduct.inductionOn with
   | add x y hx hy =>
     obtain ⟨n, hn, h1⟩ := hx
     obtain ⟨n', hn', h2⟩ := hy
@@ -50,10 +52,10 @@ theorem smap_toBase_basis (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [CommRing
     (ι : Type) [Fintype ι] (b : Module.Basis ι (WittVector p k) (B.M G hG)) :
     ∃ b' : Module.Basis ι (WittVector p k') (B.M (G.baseChange k') hG'),
       ∀ i, b' i = B.smap hG' hG (G.toBase k') (b i) := by
-  haveI := B.free G hG
-  haveI := B.finite G hG
-  haveI := B.free _ hG'
-  haveI := B.finite _ hG'
+  have := B.free G hG
+  have := B.finite G hG
+  have := B.free _ hG'
+  have := B.finite _ hG'
   have hp : (p : k) = 0 := CharP.cast_eq_zero k p
   have hp' : (p : k') = 0 := CharP.cast_eq_zero k' p
   obtain ⟨-, hr⟩ := finrank_eq_of_semilinear_surjective (WittVector.constantCoeff_surjective p) hp
@@ -71,11 +73,12 @@ theorem smap_toBase_basis (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [CommRing
     have := hu.map (WittVector.constantCoeff : WittVector p k' →+* k')
     rw [map_natCast, hp'] at this
     exact not_isUnit_zero this
+  have hjac : Ideal.span {(p : WittVector p k')} ≤ Ring.jacobson (WittVector p k') := by
+    rw [IsLocalRing.ringJacobson_eq_maximalIdeal]
+    exact Ideal.span_le.2 (Set.singleton_subset_iff.2 hmax)
   have hspan : ⊤ ≤ Submodule.span (WittVector p k')
       (Set.range fun i => B.smap hG' hG (G.toBase k') (b i)) := by
-    refine Submodule.le_of_le_smul_of_le_jacobson_bot (I := Ideal.span {(p : WittVector p k')})
-      Module.Finite.fg_top ((Ideal.span_le.2 (Set.singleton_subset_iff.2 hmax)).trans
-        (IsLocalRing.maximalIdeal_le_jacobson _)) fun m _ => ?_
+    refine Submodule.le_of_le_smul_of_le_jacobson Module.Finite.fg_top hjac fun m _ => ?_
     obtain ⟨n, hn, h1⟩ := exists_mem_span_red_eq p P B k k' G hG hG' ι b (B.red _ hG' m)
     obtain ⟨q, hq⟩ := (B.red_eq_zero _ hG' (m - n)).1 (by
       rw [LinearMap.map_sub (B.red _ hG') m n, h1, sub_self])

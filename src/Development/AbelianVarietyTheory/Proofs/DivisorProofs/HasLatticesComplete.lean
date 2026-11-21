@@ -21,6 +21,7 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.Poi
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.CrysToDRBijective
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsQuasicoherentEigenQuot
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.HenselianLocalRingOfIsAdicComplete
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsionTowersOfDivisibleGroup
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ExistsUniquePairsToTower
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ToKnownTheoremsOf
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntEmbCoe
@@ -115,8 +116,11 @@ def IsWeilHom {𝒜 ℬ : PDivGroup p R} {A B : Over (Sp R)} [GrpObj A] [GrpObj 
     (u : ℬ.TorsionTower B) (P : LB (A ⊗ B).left) (w : 𝒜 ⟶ ℬ.dual) : Prop :=
   ∀ n, ∃ U : (𝒜.A n ⊗[R] ℬ.A n)ˣ,
     Out.WeilIs (A ⊗ B) P ((p ^ n : ℕ) : ℤ) (T := SpAlg R (𝒜.A n ⊗[R] ℬ.A n))
-      (CartesianMonoidalCategory.lift (spOver Algebra.TensorProduct.includeLeft ≫ t.y n) 1)
-      (CartesianMonoidalCategory.lift 1 (spOver Algebra.TensorProduct.includeRight ≫ u.y n)) (unitOn U) ∧
+      (CartesianMonoidalCategory.lift
+        (spOver (Algebra.TensorProduct.includeLeft : 𝒜.A n →ₐ[R] 𝒜.A n ⊗[R] ℬ.A n) ≫ t.y n) 1)
+      (CartesianMonoidalCategory.lift 1
+        (spOver (Algebra.TensorProduct.includeRight : ℬ.A n →ₐ[R] 𝒜.A n ⊗[R] ℬ.A n) ≫ u.y n))
+      (unitOn U) ∧
     ∀ χ : CartierDual R (ℬ.A n), w.app n χ = TensorProduct.rid R _ (χ.ofConv.lTensor _ U.val)
 
 variable [Fact p.Prime] {Γ : PDivGroup p R} {𝒜 : PDivGroup p K}

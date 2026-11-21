@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDatNeZero
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsionTowersOfDivisibleGroup
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CocycleTensorLiftApplyEqTwoPointValueStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CrystallineCocycleOnPointsIsCocycleAndEvalEqStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CrystallineCocycleCotangentValueBaseChangeNaturaStatement
@@ -113,32 +114,26 @@ variable {A : Over (Sp R)} [GrpObj A] {A' : Over (Sp R')} [GrpObj A'] {φ : A'.l
   {m : GrpMor (dp0 R) (𝟙 _) A (dp0 R') (𝟙 _) A' σ (spMap σ) φ}
 variable {p : ℕ} {G : PDivGroup p R} {G' : PDivGroup p R'} {t : G.TorsionTower A} {t' : G'.TorsionTower A'}
 
-
 variable (σ m t t') in
 def sL (n : ℕ) : letI := via σ (G'.A n ⊗[R'] G'.A n); G.A n →ₐ[R] G'.A n ⊗[R'] G'.A n :=
+  letI := via σ (G'.A n)
   letI := via σ (G'.A n ⊗[R'] G'.A n)
-  { (Algebra.TensorProduct.includeLeftRingHom).comp ((t'.semiHom t m).app n).toRingHom with
-    commutes' := fun r ↦ by
-      change ((t'.semiHom t m).app n) (algebraMap R _ r) ⊗ₜ[R'] (1 : G'.A n) = _
-      rw [SemiBialgHom.map_algebraMap]; rfl }
-
+  (down σ (Algebra.TensorProduct.includeLeft : G'.A n →ₐ[R'] G'.A n ⊗[R'] G'.A n)).comp
+    (sR σ m t t' n)
 
 variable (σ m t t') in
 def sRt (n : ℕ) : letI := via σ (G'.A n ⊗[R'] G'.A n); G.A n →ₐ[R] G'.A n ⊗[R'] G'.A n :=
+  letI := via σ (G'.A n)
   letI := via σ (G'.A n ⊗[R'] G'.A n)
-  { (Algebra.TensorProduct.includeRight.toRingHom).comp ((t'.semiHom t m).app n).toRingHom with
-    commutes' := fun r ↦ by
-      change (1 : G'.A n) ⊗ₜ[R'] ((t'.semiHom t m).app n) (algebraMap R _ r) = _
-      rw [SemiBialgHom.map_algebraMap]
-      exact (Algebra.TensorProduct.algebraMap_apply' _).symm }
+  (down σ (Algebra.TensorProduct.includeRight : G'.A n →ₐ[R'] G'.A n ⊗[R'] G'.A n)).comp
+    (sR σ m t t' n)
 
 theorem lift_eq_two (n : ℕ) (c : G.A n ⊗[R] G.A n) :
     letI := via σ (G'.A n ⊗[R'] G'.A n)
     Algebra.TensorProduct.lift (sL σ m t t' n) (sRt σ m t t' n) (fun _ _ ↦ Commute.all _ _) c =
       ((t'.semiHom t m).app n).two c := by
   letI := via σ (G'.A n ⊗[R'] G'.A n)
-  induction c using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
+  induction c using TensorProduct.inductionOn with
   | tmul a b =>
     rw [Algebra.TensorProduct.lift_tmul]
     change ((t'.semiHom t m).app n a ⊗ₜ[R'] (1 : G'.A n)) * ((1 : G'.A n) ⊗ₜ[R'] (t'.semiHom t m).app n b) = _
@@ -158,8 +153,7 @@ private theorem coc_naturality (n : ℕ) :
   rw [AlgHom.comp_apply, down_apply, sR_apply, AlgHom.convMul_apply, AlgHom.convMul_apply,
     ← SemiBialgHom.two_comul]
   generalize Coalgebra.comul (R := R) a = c
-  induction c using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
+  induction c using TensorProduct.inductionOn with
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a b => rfl
 
@@ -189,24 +183,19 @@ private theorem coc_naturality_algHom {T : Type} [CommRing T] [Algebra R' T] (n 
 private theorem tensorProduct_lift_includeLeft_includeRight_apply (n : ℕ) (c : G'.A n ⊗[R'] G'.A n) :
     Algebra.TensorProduct.lift (Algebra.TensorProduct.includeLeft : G'.A n →ₐ[R'] G'.A n ⊗[R'] G'.A n)
       (Algebra.TensorProduct.includeRight : G'.A n →ₐ[R'] G'.A n ⊗[R'] G'.A n) (fun _ _ ↦ Commute.all _ _) c = c := by
-  induction c using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
-  | tmul a b => simp
-  | add x y hx hy => simp only [map_add (f := _), hx, hy]
+  simpa only [AlgHom.id_apply] using
+    AlgHom.congr_fun
+      (Algebra.TensorProduct.lift_includeLeft_includeRight (R := R') (S := R') (A := G'.A n) (B := G'.A n)) c
 
 private theorem coc_naturality_tensor (n : ℕ) :
     letI := via σ (G'.A n); letI := via σ (G'.A n ⊗[R'] G'.A n)
     (down σ (Algebra.TensorProduct.includeLeft : G'.A n →ₐ[R'] G'.A n ⊗[R'] G'.A n)).comp (sR σ m t t' n) =
-      sL σ m t t' n := by
-  letI := via σ (G'.A n); letI := via σ (G'.A n ⊗[R'] G'.A n)
-  exact AlgHom.ext fun _ ↦ rfl
+      sL σ m t t' n := rfl
 
 private theorem coc_naturality_tensor_swap (n : ℕ) :
     letI := via σ (G'.A n); letI := via σ (G'.A n ⊗[R'] G'.A n)
     (down σ (Algebra.TensorProduct.includeRight : G'.A n →ₐ[R'] G'.A n ⊗[R'] G'.A n)).comp (sR σ m t t' n) =
-      sRt σ m t t' n := by
-  letI := via σ (G'.A n); letI := via σ (G'.A n ⊗[R'] G'.A n)
-  exact AlgHom.ext fun _ ↦ rfl
+      sRt σ m t t' n := rfl
 
 private theorem coc_naturality_of_dat_pt {c : primDR A} (d : Dat t c) {T : Type} [CommRing T] [Algebra R' T] (x y : Pt A' T) :
     letI := via σ T
@@ -256,7 +245,12 @@ theorem om_nat {c : primDR A} (d : Dat t c) (n : ℕ) :
   simp only [dUnit, map_add (f := _)]
   abel
 
-theorem isCan_pull : ∀ (p : ℕ) (R R' : Type) [CommRing R] [CommRing R'] (A : Over (Sp R)) [GrpObj A] (A' : Over (Sp R')) [GrpObj A'] (G : PDivGroup p R) (G' : PDivGroup p R') (t : G.TorsionTower A) (t' : G'.TorsionTower A') (σ : R →+* R') (φ : A'.left ⟶ A.left) (m : GrpMor (dp0 R) (𝟙 _) A (dp0 R') (𝟙 _) A' σ (spMap σ) φ) (c : primDR A) (x : ((G.cocycles × G.omega) ⧸ _root_.LinearMap.range (G.cob.prod (_root_.LinearMap.codRestrict G.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G.A i))).domRestrict G.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))), IsCan t c x → IsCan t' (m.pull c) ((t'.semiHom t m).rig x) := by
+theorem isCan_pull : ∀ (p : ℕ) (R R' : Type) [CommRing R] [CommRing R']
+    (A : Over (Sp R)) [GrpObj A] (A' : Over (Sp R')) [GrpObj A']
+    (G : PDivGroup p R) (G' : PDivGroup p R') (t : G.TorsionTower A) (t' : G'.TorsionTower A')
+    (σ : R →+* R') (φ : A'.left ⟶ A.left)
+    (m : GrpMor (dp0 R) (𝟙 _) A (dp0 R') (𝟙 _) A' σ (spMap σ) φ) (c : primDR A) (x : G.RigExt),
+    IsCan t c x → IsCan t' (m.pull c) ((t'.semiHom t m).rig x) := by
   intro p R R' _ _ A _ A' _ G G' t t' σ φ m c x hx
   obtain ⟨d, z, w, hz, hw, rfl⟩ := hx
   refine ⟨natDat (m := m) (t' := t') d, ((t'.semiHom t m).pair (z, w)).1, ((t'.semiHom t m).pair (z, w)).2,

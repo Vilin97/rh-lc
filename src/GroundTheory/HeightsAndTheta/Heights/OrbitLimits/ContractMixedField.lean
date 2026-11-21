@@ -161,6 +161,7 @@ end ContractMixedField
 
 open ContractMixedField in
 theorem contractMixedField : ReciprocityTheory.ChartRestriction.G.AI.I4.ContractMixedFieldStatement := by
+  unfold ReciprocityTheory.ChartRestriction.G.AI.I4.ContractMixedFieldStatement
   intro F _ K _ ι _ K' _ ι' _ J' hJ' κ v V' d₀ d r L N hv hV' hI hd
   classical
   rw [NumbersDVR.Numbers.agree_of FieldNumbers.IntNumBase.full FieldNumbers.CutRational.full

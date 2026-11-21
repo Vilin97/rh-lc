@@ -18,9 +18,14 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.ModelExtend
 
-theorem isLattice_span {D : D7} {L : HSp D} {ζ : Fin L.rank → D.host.E} (h : IsLineVec L ζ) :
-    Submodule.IsLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
-  exact Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span_singleton ζ)
+theorem isFullLattice_span {D : D7} {L : HSp D} {ζ : Fin L.rank → D.host.E} (h : IsLineVec L ζ) :
+    Submodule.IsFullLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
+  have hζ : ζ ≠ 0 := by
+    rintro rfl
+    exact h.2 (by simp)
+  refine ⟨Submodule.IsLattice.of_fg _ (Submodule.fg_span_singleton ζ), ?_⟩
+  rw [Submodule.span_span_of_tower]
+  exact (finrank_eq_one_iff_of_ne_zero ζ hζ).1 (by rw [Module.finrank_fin_fun, h.1])
 
 
 open GlobalTheory.LocMod in
@@ -29,8 +34,10 @@ theorem exists_placeModel_ext : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel 
   classical
   set P := GlobalTheory.LocMod.Place.ofSplitPt p with hP
   set Λ := latO S L'' (LS : Set _) ((Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ₀} : Lat L'') : Set _) (· = p.v) with hΛ
-  obtain ⟨hAo, hAc⟩ := GlobalTheory.T.splitPlace_homLattice_completion_openCompact D k p S L'' LS (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ₀}) hLS.1
-    (isLattice_span hζ) Unit n FS FL''
+  letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S LS hLS
+  letI := isFullLattice_span hζ
+  obtain ⟨hAo, hAc⟩ := GlobalTheory.T.splitPlace_homLattice_completion_openCompact D k p S L'' LS
+    (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ₀}) inferInstance inferInstance Unit n FS FL''
   have hinj : Function.Injective (Witness.ext P FS FL'') := by
     intro Φ Ψ h
     apply Subtype.ext; funext x

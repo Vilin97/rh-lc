@@ -19,13 +19,14 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.PtExt
 
 theorem exists_isSecAdd : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] [IsCommMonObj A] (n : ℕ),
-    HasRoots A n → ∀ b : Fn0 A, IsTorsChar n b → ∀ S : SecFam A,
+    HasRoots (A := A) n → ∀ b : Fn0 A, IsTorsChar n b → ∀ S : SecFam A,
     (∀ (D : Type) [CommRing D] [Algebra R D] (x : Pt A D), IsSec n b x (S D x)) → ∃ g : Fn2 A, IsSecAdd n S g := by
   intro R _ A _ _ n hr b hb S hS
-  refine ⟨fun D _ _ x y ↦ (GlobalTheory.T.existsUnique_pushoutTorsorSection_mul_difference R A n hr b hb D x y (S D x) (S D y) (S D (x * y)) (hS D x) (hS D y)
-    (hS D (x * y))).exists.choose, ?_⟩
+  have difference (D : Type) [CommRing D] [Algebra R D] (x y : Pt A D) :=
+    (GlobalTheory.sec_mul_diff R A n hr b hb D x y (S D x) (S D y) (S D (x * y))
+      (hS D x) (hS D y) (hS D (x * y))).exists
+  refine ⟨fun D _ _ x y ↦ (difference D x y).choose, ?_⟩
   intro D _ _ x y E _ _ ψ z w hz hw
-  exact ((GlobalTheory.T.existsUnique_pushoutTorsorSection_mul_difference R A n hr b hb D x y (S D x) (S D y) (S D (x * y)) (hS D x) (hS D y)
-    (hS D (x * y))).exists.choose_spec E ψ z w hz hw).symm
+  exact ((difference D x y).choose_spec E ψ z w hz hw).symm
 
 end GlobalTheory.PtExt

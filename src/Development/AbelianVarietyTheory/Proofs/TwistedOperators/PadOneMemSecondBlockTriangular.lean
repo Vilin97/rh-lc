@@ -322,8 +322,8 @@ theorem idem_smul_mem {a : AE D} (ha : a * a = a) {u : WO S T} (hu : u ∈ latO 
     a • u ∈ latO S T ΛS ΛT fun _ => True := by
   exact (AddSubgroup.mem_inf.1 (GlobalTheory.PlaceModelSum.idem_smul_half ha hu)).1
 
-theorem exists_nsmul_latO (hS : ΛS.FG) (hT : ΛT.FG) (hS' : Submodule.IsLattice D.host.E ΛS')
-    (hT' : Submodule.IsLattice D.host.E ΛT') :
+theorem exists_nsmul_latO (hS : ΛS.FG) (hT : ΛT.FG) (hS' : Submodule.IsFullLattice D.host.E ΛS')
+    (hT' : Submodule.IsFullLattice D.host.E ΛT') :
     ∃ M : ℕ, 0 < M ∧ ∀ u ∈ latO S T ΛS ΛT fun _ => True, M • u ∈ latO S T ΛS' ΛT' fun _ => True := by
   obtain ⟨M, hM, hMu⟩ := GlobalTheory.PlaceDatum.exists_den_latO (S := S) (T := T) hS hT
   obtain ⟨K, hK, hKt⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO (S := S) (T := T) hS' hT'
@@ -356,16 +356,16 @@ private theorem symplO_nsmul_left_eq_nsmul_right (n : ℕ) (x y : WO S T) :
   | zero => simp only [zero_smul, GlobalTheory.PlaceModel.symplO_zero_left, GlobalTheory.PlaceModel.symplO_zero_right]
   | succ n ih => rw [succ_nsmul, succ_nsmul, GlobalTheory.PlaceModel.symplO_add_left, GlobalTheory.PlaceModel.symplO_add_right, ih]
 
-theorem latO_bidual (hψ : IsStdChar D ψ (-1)) (hS : Submodule.IsLattice D.host.E ΛS)
-    (hT : Submodule.IsLattice D.host.E ΛT) {a : AE D} (ha : a * a = a) (hinf : infPart D a = 0) (x : WO S T)
+theorem latO_bidual (hψ : IsStdChar D ψ (-1)) (hS : Submodule.IsFullLattice D.host.E ΛS)
+    (hT : Submodule.IsFullLattice D.host.E ΛT) {a : AE D} (ha : a * a = a) (hinf : infPart D a = 0) (x : WO S T)
     (hx : IsHalf a x) (hn : x ∉ latO S T ΛS ΛT fun _ => True) :
     ∃ y, IsHalf (cA D a) y ∧ (∀ u ∈ latO S T ΛS ΛT fun _ => True, IsHalf a u → ψ (symplO S T u y) = 1) ∧
       ψ (symplO S T x y) ≠ 1 := by
   classical
   have hSf := GlobalTheory.PlaceModel.isSelfDualC_latFrame S
   have hTf := GlobalTheory.PlaceModel.isSelfDualC_latFrame T
-  have hSl : Submodule.IsLattice D.host.E (GlobalTheory.PlaceModel.latFrame S) := hSf.1
-  have hTl : Submodule.IsLattice D.host.E (GlobalTheory.PlaceModel.latFrame T) := hTf.1
+  have hSl := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S _ hSf
+  have hTl := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T _ hTf
   have hI := (GlobalTheory.T.self_dual_lattice_pairing_dual D ψ S T (GlobalTheory.PlaceModel.latFrame S) (GlobalTheory.PlaceModel.latFrame T) hψ hSf hTf).1
   have hmap : ∀ u : WO S T, IsHalf a u → u.map (infPart D) = 0 := by
     intro u hu
@@ -391,9 +391,9 @@ theorem latO_bidual (hψ : IsStdChar D ψ (-1)) (hS : Submodule.IsLattice D.host
     exact h _ (idem_smul_mem (ΛS := GlobalTheory.PlaceModel.latFrame S) (ΛT := GlobalTheory.PlaceModel.latFrame T) hcc hu')
       (half_smul hcc u')
   obtain ⟨M1, hM1, h1⟩ := exists_nsmul_latO (ΛS := ΛS) (ΛT := ΛT) (ΛS' := GlobalTheory.PlaceModel.latFrame S)
-    (ΛT' := GlobalTheory.PlaceModel.latFrame T) hS.fg hT.fg hSl hTl
+    (ΛT' := GlobalTheory.PlaceModel.latFrame T) hS.toIsLattice.fg hT.toIsLattice.fg hSl hTl
   obtain ⟨M2, hM2, h2⟩ := exists_nsmul_latO (ΛS := GlobalTheory.PlaceModel.latFrame S) (ΛT := GlobalTheory.PlaceModel.latFrame T)
-    (ΛS' := ΛS) (ΛT' := ΛT) hSl.fg hTl.fg hS hT
+    (ΛS' := ΛS) (ΛT' := ΛT) hSl.toIsLattice.fg hTl.toIsLattice.fg hS hT
   have hmul : ∀ u : WO S T, (M1 * M2) • u = M2 • (M1 • u) := fun u => by
     rw [mul_comm, mul_smul]
   have hmul' : ∀ u : WO S T, (M1 * M2) • u = M1 • (M2 • u) := fun u => mul_smul M1 M2 u
@@ -433,7 +433,7 @@ theorem latO_bidual (hψ : IsStdChar D ψ (-1)) (hS : Submodule.IsLattice D.host
         have e := congrArg (fun z : WO S T => incA D ((k : D.host.E))⁻¹ • z) h
         simpa only [GlobalTheory.PlaceModel.inv_smul_nsmul S T hk] using e)
       (fun k hk => half_finite_mod (ΛS := GlobalTheory.PlaceModel.latFrame S) (ΛT := GlobalTheory.PlaceModel.latFrame T)
-        hSl.fg hTl.fg ha k hk)
+        hSl.toIsLattice.fg hTl.toIsLattice.fg ha k hk)
       inf_le_right hMpos
       (fun u hu => ⟨by rw [hmul]; exact AddSubgroup.nsmul_mem _ (h1 u hu.1) _,
         AddSubgroup.nsmul_mem _ hu.2 _⟩)
@@ -489,8 +489,8 @@ private theorem isThetaFunO_smul_twisted_operators (c : ℂ) {f : WO S T → ℂ
   case cont => exact hf.cont.const_smul c
   case smooth => intro k L hL hL0 w; exact (hf.smooth k L hL hL0 w).const_smul c
 
-theorem isTheta_placeModel (hψ : IsStdChar D ψ (-1)) (hS : Submodule.IsLattice D.host.E ΛS)
-    (hT : Submodule.IsLattice D.host.E ΛT) {a : AE D} (ha : a * a = a) (hc : a * cA D a = 0) (hinf : infPart D a = 0)
+theorem isTheta_placeModel (hψ : IsStdChar D ψ (-1)) (hS : Submodule.IsFullLattice D.host.E ΛS)
+    (hT : Submodule.IsFullLattice D.host.E ΛT) {a : AE D} (ha : a * a = a) (hc : a * cA D a = 0) (hinf : infPart D a = 0)
     {f₀ : WO S T → ℂ} (hf₀ : IsThetaFunO ψ S T f₀) (Tm : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ))
     (hTm : IsPlaceModel ψ (symplO S T) (heisO ψ S T) a (latO S T ΛS ΛT fun _ => True) 1 f₀ Tm) (Φ : WO S T → ℂ)
     (hΦ : IsSBHalf a (latO S T ΛS ΛT fun _ => True) Φ) : IsThetaFunO ψ S T (Tm Φ) := by
@@ -503,11 +503,11 @@ theorem isTheta_placeModel (hψ : IsStdChar D ψ (-1)) (hS : Submodule.IsLattice
     simp [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_mul, hb]
   have hSf := GlobalTheory.PlaceModel.isSelfDualC_latFrame S
   have hTf := GlobalTheory.PlaceModel.isSelfDualC_latFrame T
-  have hSl : Submodule.IsLattice D.host.E (GlobalTheory.PlaceModel.latFrame S) := hSf.1
-  have hTl : Submodule.IsLattice D.host.E (GlobalTheory.PlaceModel.latFrame T) := hTf.1
+  have hSl := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S _ hSf
+  have hTl := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T _ hTf
   have hI := (GlobalTheory.T.self_dual_lattice_pairing_dual D ψ S T (GlobalTheory.PlaceModel.latFrame S) (GlobalTheory.PlaceModel.latFrame T) hψ hSf hTf).1
   obtain ⟨M1, hM1, h1⟩ := exists_nsmul_latO (ΛS := ΛS) (ΛT := ΛT) (ΛS' := GlobalTheory.PlaceModel.latFrame S)
-    (ΛT' := GlobalTheory.PlaceModel.latFrame T) hS.fg hT.fg hSl hTl
+    (ΛT' := GlobalTheory.PlaceModel.latFrame T) hS.toIsLattice.fg hT.toIsLattice.fg hSl hTl
   have hTd := isPlaceModel_dualLat (ψ := ψ) hc hTm
   have hΦd := (isSBHalf_dualLat (ψ := ψ) (Λ := latO S T ΛS ΛT fun _ => True) hc Φ).2 hΦ
   refine GlobalTheory.SchrTheta.placeModel_induction ψ (e := a) (dualLat ψ a (latO S T ΛS ΛT fun _ => True))
@@ -522,7 +522,7 @@ theorem isTheta_placeModel (hψ : IsStdChar D ψ (-1)) (hS : Submodule.IsLattice
     obtain ⟨y, hy, hyL, hxy⟩ := latO_bidual hψ hS hT ha hinf x hxh hn
     exact hxy (h y ⟨(mem_dualLat_conj (ψ := ψ) hc hy).2 hyL, (GlobalTheory.PlaceModel.isHalf_iff S T).1 hy⟩)
   · intro k hk
-    obtain ⟨R, hR, hRt⟩ := half_finite_mod hS.fg hT.fg ha k hk
+    obtain ⟨R, hR, hRt⟩ := half_finite_mod hS.toIsLattice.fg hT.toIsLattice.fg ha k hk
     refine ⟨R, hR, fun t ht => ?_⟩
     have ht' : t ∈ (latO S T ΛS ΛT fun _ => True) ⊓ GlobalTheory.PlaceModel.half S T a :=
       ⟨(mem_dualLat_half (ψ := ψ) hc ((GlobalTheory.PlaceModel.isHalf_iff S T).2 ht.2)).1 ht.1, ht.2⟩

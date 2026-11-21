@@ -17,8 +17,8 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
 
 
 omit [StarRing K] [FiniteDimensional K V] in
-theorem isSquare_idxN_of_covBy {X : Submodule (𝓞 K) V} (hX : Submodule.IsLattice K X) : ∀ (n : ℕ)
-    (Y : Submodule (𝓞 K) V), Submodule.IsLattice K Y → X ≤ Y → idxN Y X = n →
+theorem isSquare_idxN_of_covBy {X : Submodule (𝓞 K) V} (hX : Submodule.IsFullLattice K X) : ∀ (n : ℕ)
+    (Y : Submodule (𝓞 K) V), Submodule.IsFullLattice K Y → X ≤ Y → idxN Y X = n →
     (∀ Z Z' : Submodule (𝓞 K) V, X ≤ Z → Z ⋖ Z' → Z' ≤ Y → IsSquare (idxN Z' Z)) → IsSquare n := by
   intro n
   induction n using Nat.strong_induction_on with
@@ -29,7 +29,7 @@ theorem isSquare_idxN_of_covBy {X : Submodule (𝓞 K) V} (hX : Submodule.IsLatt
       exact ⟨1, rfl⟩
     · have hlt : X < Y := lt_of_le_of_ne hXY (fun h => hYX (h ▸ le_rfl))
       obtain ⟨Z, hXZ, hZY⟩ := GlobalTheory.Mass.DiscOrder.exists_covBy hY.fg hlt
-      have hZ : Submodule.IsLattice K Z := GlobalTheory.Mass.DiscOrder.lattice_between hX hY hXZ hZY.le
+      have hZ : Submodule.IsFullLattice K Z := GlobalTheory.Mass.DiscOrder.lattice_between hX hY hXZ hZY.le
       have hmul : idxN Z X * idxN Y Z = idxN Y X := GlobalTheory.Mass.DiscOrder.idxN_mul hXZ hZY.le
       have hne : idxN Y X ≠ 0 := GlobalTheory.Mass.DiscOrder.idxN_ne_zero hX hY.fg
       have h1 : idxN Y Z ≠ 1 := fun h => not_le_of_gt hZY.lt (GlobalTheory.Mass.DiscOrder.idxN_eq_one.1 h)
@@ -108,16 +108,16 @@ theorem isSquare_disc (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h
   induction n using Nat.strong_induction_on with
   | _ n ih =>
   intro M hM hle hidx
-  have hD : Submodule.IsLattice K (dual h M) :=
-    (Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K V h hs hn hstar M hM).1.toIsLattice
+  have hD : Submodule.IsFullLattice K (dual h M) :=
+    (Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K V h hs hn hstar M hM).1
   by_cases hall : ∀ Z Z' : Submodule (𝓞 K) V, M ≤ Z → Z ⋖ Z' → Z' ≤ dual h M → IsSquare (idxN Z' Z)
-  · exact isSquare_idxN_of_covBy hM.toIsLattice n (dual h M) hD hle hidx hall
+  · exact isSquare_idxN_of_covBy hM n (dual h M) hD hle hidx hall
   push_neg at hall
   obtain ⟨Z, Z', hMZ, hcov, hZ'D, hnsq⟩ := hall
-  have hZl : Submodule.IsLattice K Z :=
-    GlobalTheory.Mass.DiscOrder.lattice_between hM.toIsLattice hD hMZ (hcov.le.trans hZ'D)
-  have hZ'l : Submodule.IsLattice K Z' :=
-    GlobalTheory.Mass.DiscOrder.lattice_between hM.toIsLattice hD (hMZ.trans hcov.le) hZ'D
+  have hZl : Submodule.IsFullLattice K Z :=
+    GlobalTheory.Mass.DiscOrder.lattice_between hM hD hMZ (hcov.le.trans hZ'D)
+  have hZ'l : Submodule.IsFullLattice K Z' :=
+    GlobalTheory.Mass.DiscOrder.lattice_between hM hD (hMZ.trans hcov.le) hZ'D
   obtain ⟨P, hPmax, hPiff, hPcard⟩ := GlobalTheory.Mass.DiscOrder.exists_max_of_covBy hcov
   have hcard : idxN Z' Z = Ideal.absNorm P := by
     rw [hPcard, Ideal.absNorm_apply, Submodule.cardQuot_apply]
@@ -187,8 +187,7 @@ theorem isSquare_disc (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h
   have hyM' : j • w ∈ M' := Submodule.mem_sup_right (Submodule.mem_span_singleton_self _)
   have hM'D : M' ≤ dual h M := sup_le hle ((Submodule.span_singleton_le_iff_mem _ _).2 hyD)
   have hM'l : Submodule.IsFullLattice K M' := by
-    haveI : Submodule.IsLattice K M' := GlobalTheory.Mass.DiscOrder.lattice_between hM.toIsLattice hD hMM' hM'D
-    exact Submodule.IsFullLattice.of_le K hMM'
+    exact GlobalTheory.Mass.DiscOrder.lattice_between hM hD hMM' hM'D
   have hM'int : M' ≤ dual h M' := by
     refine (hint M').1 ?_
     intro x hx z hz
@@ -215,11 +214,11 @@ theorem isSquare_disc (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h
 
   have hDM'le : dual h M' ≤ dual h M := hanti M M' hMM'
   have hM'DM : M ≤ dual h M' := hMM'.trans hM'int
-  have hk := GlobalTheory.Mass.DiscOrder.idxN_dual h hs hn hM.toIsLattice (idxN M' M) M' hM'l.toIsLattice hMM' rfl
+  have hk := GlobalTheory.Mass.DiscOrder.idxN_dual h hs hn hM (idxN M' M) M' hM'l hMM' rfl
   have hm1 := GlobalTheory.Mass.DiscOrder.idxN_mul hMM' hM'int
   have hm2 := GlobalTheory.Mass.DiscOrder.idxN_mul hM'DM hDM'le
-  have hn0 : n ≠ 0 := hidx ▸ GlobalTheory.Mass.DiscOrder.idxN_ne_zero hM.toIsLattice hD.fg
-  have hk0 : idxN M' M ≠ 0 := GlobalTheory.Mass.DiscOrder.idxN_ne_zero hM.toIsLattice hM'l.fg
+  have hn0 : n ≠ 0 := hidx ▸ GlobalTheory.Mass.DiscOrder.idxN_ne_zero hM hD.fg
+  have hk0 : idxN M' M ≠ 0 := GlobalTheory.Mass.DiscOrder.idxN_ne_zero hM hM'l.fg
   have hk1 : idxN M' M ≠ 1 := fun h1 => hjM (GlobalTheory.Mass.DiscOrder.idxN_eq_one.1 h1 hyM')
   have hnn : n = idxN M' M * idxN (dual h M') M' * idxN M' M := by
     rw [← hidx, ← hm2, ← hm1, hk]
@@ -307,7 +306,7 @@ theorem latDetH_nat (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (ha : ∀
         intro y hy
         exact (Formalism.HermitianLatticesTheory.dualBasic_mem_dual h M v).1 hv1 y hy
     rw [h1, AddSubgroup.relIndex_comap, h2]
-  have hne : idxN (dual g MU) MU ≠ 0 := GlobalTheory.Mass.DiscOrder.idxN_ne_zero hMUl.toIsLattice hDU.1.fg
+  have hne : idxN (dual g MU) MU ≠ 0 := GlobalTheory.Mass.DiscOrder.idxN_ne_zero hMUl hDU.1.fg
   rw [hidx] at hsq hne
   obtain ⟨r, hr⟩ := hsq
   have hgen := GlobalTheory.Mass.DetAgree.genIdxH_eq_idxN hle hne

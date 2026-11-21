@@ -49,7 +49,7 @@ structure Base (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [CommRing k], PDivGr
     SemiHom σ G' G → (M G h →+ M G' h')
 
   red : ∀ {k : Type} [Field k] [CharP k p] [PerfectRing k p] (G : PDivGroup p k) (h : P k G),
-    M G h →ₛₗ[(WittVector.constantCoeff : WittVector p k →+* k)] ((G.cocycles × G.omega) ⧸ _root_.LinearMap.range (G.cob.prod (_root_.LinearMap.codRestrict G.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G.A i))).domRestrict G.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))
+    M G h →ₛₗ[(WittVector.constantCoeff : WittVector p k →+* k)] PDivGroup.RigExt G
   free : ∀ {k : Type} [Field k] [CharP k p] [PerfectRing k p] (G : PDivGroup p k) (h : P k G),
     Module.Free (WittVector p k) (M G h)
   finite : ∀ {k : Type} [Field k] [CharP k p] [PerfectRing k p] (G : PDivGroup p k) (h : P k G),
@@ -148,7 +148,8 @@ abbrev F (G : PDivGroup p k) :
     T.M G →ₛₗ[(WittVector.frobenius : WittVector p k →+* WittVector p k)] T.M G := T.base.F G trivial
 
 abbrev red (G : PDivGroup p k) :
-    T.M G →ₛₗ[(WittVector.constantCoeff : WittVector p k →+* k)] ((G.cocycles × G.omega) ⧸ _root_.LinearMap.range (G.cob.prod (_root_.LinearMap.codRestrict G.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G.A i))).domRestrict G.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n)))))) := T.base.red G trivial
+    T.M G →ₛₗ[(WittVector.constantCoeff : WittVector p k →+* k)] PDivGroup.RigExt G :=
+  T.base.red G trivial
 
 end Theory
 

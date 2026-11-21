@@ -56,8 +56,10 @@ theorem fock_jets_heisenberg_orbit_finite : _root_.GlobalTheory.FunPr.ThetaLocal
         c * ((k.prod fun v n => GlobalTheory.FunObj.period δ v.1 ^ n) * GL3Theta.applyAt0 D (MvPolynomial.monomial k 1)
           (StandardLatticesGL3.comb D (TaylorLogMetric.tor0 D D.host.ccK δ) a s e0)) := by
   intro _hP _hI D ψ θ S T sS sT frS frT hS hT hcS hcT δ t0 _hC hδ _ht0 e0 he0 f hf c hjets u hu
-  have hlS : Submodule.IsLattice D.host.E (Formalism.L2.DIV.colLat frS) := GlobalTheory.FunObj.VecEx.isLattice_colLat frS
-  have hlT : Submodule.IsLattice D.host.E (Formalism.L2.DIV.colLat frT) := GlobalTheory.FunObj.VecEx.isLattice_colLat frT
+  have hlS := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S (colLat frS)
+    (GlobalTheory.FunObj.VecEx.isSelfDualC_colLat S frS hS)
+  have hlT := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T (colLat frT)
+    (GlobalTheory.FunObj.VecEx.isSelfDualC_colLat T frT hT)
   obtain ⟨n, hn, hnu⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' hlS hlT u hu
   rw [← inV_stdL_eq_colLat frS, ← inV_stdL_eq_colLat frT] at hf hnu
   have he0d : Differentiable ℂ e0 := he0.1.1

@@ -42,7 +42,7 @@ theorem hasLogDeg_pow_smul_id (G : PDivGroup p k) (m : ℕ) :
     HasLogDeg ((p : ℤ_[p]) ^ m • 𝟙 G) (m * G.height) := by
   refine ⟨m, fun n hn => ?_⟩
   obtain ⟨f, hf, hk⟩ := G.exists_res_le hn
-  have e : Hom.app ((p : ℤ_[p]) ^ m • 𝟙 G) n = mulBy k _ (p ^ m) := by
+  have e : Hom.app ((p : ℤ_[p]) ^ m • 𝟙 G) n = mulBy (R := k) (A := G.A n) (p ^ m) := by
     rw [← Nat.cast_pow, natCast_smul_id_app]
   rw [e]
   change Module.finrank k (G.A n ⧸ torsionIdeal (R := k) (A := G.A n) (p ^ m)) = _

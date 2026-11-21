@@ -55,10 +55,10 @@ theorem isSec_sub_existsUnique : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [
   obtain ⟨D₁, _, _, ψ, z₀, hψ, hz₀⟩ := hR D x
   have hdesc := GlobalTheory.ff_descent_pairs R D D₁ ψ hψ (s D₁ ψ z₀ - s' D₁ ψ z₀) (fun E _ _ α β hαβ ↦ by
     rw [← isSec_sub_natural hs hs' ψ α z₀ hz₀, ← isSec_sub_natural hs hs' ψ β z₀ hz₀]
-    have h1 := root_spOver ψ α z₀ hz₀
-    have h2 := root_spOver ψ β z₀ hz₀
-    rw [hαβ] at h1 ⊢
-    exact isSec_sub_root_eq hs hs' _ _ _ h2 h1)
+    have hα := root_spOver ψ α z₀ hz₀
+    have hβ := root_spOver ψ β z₀ hz₀
+    rw [hαβ] at hα ⊢
+    exact isSec_sub_root_eq hs hs' (β.comp ψ) (spOver β ≫ z₀) (spOver α ≫ z₀) hβ hα)
   obtain ⟨e, he, heu⟩ := hdesc
   have key : ∀ (D' : Type) [CommRing D'] [Algebra R D'] (φ : D →ₐ[R] D') (z : Pt A D'), z ^ n = spOver φ ≫ x →
       s D' φ z - s' D' φ z = φ e := by

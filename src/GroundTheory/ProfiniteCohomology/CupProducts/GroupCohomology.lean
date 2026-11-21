@@ -82,11 +82,7 @@ theorem cup_inflation (h : p + q = n)
   rw [inflation_π, inflation_π, cup_cohomologyπ, GroundTheory.GroupCoh.cupH_π,
     GroundTheory.GroupCoh.map_π_apply, inflation_π]
   congr 1
-  have hExt {z w : cocycles (A ⊗ B) n}
-      (e : cochainOf (A := A ⊗ B) (cocycleι (p := n) z) =
-        cochainOf (A := A ⊗ B) (cocycleι (p := n) w)) : z = w :=
-    cocycleι_injective (cochainOf_injective e)
-  apply hExt
+  apply cocycles_ext
   rw [cocycleι_cupCocycles, cochainOf_cupLocallyConstant,
     cochainOf_cocycleι_cyclesMap_inflationCochains, cochainOf_cocycleι_cyclesMap_inflationCochains,
     cochainOf_cocycleι_cyclesMap_inflationCochains, GroundTheory.GroupCoh.iCocycles_cocyclesMap,

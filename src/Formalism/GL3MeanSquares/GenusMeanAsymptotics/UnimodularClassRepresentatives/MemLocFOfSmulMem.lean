@@ -192,7 +192,7 @@ theorem exists_redEnd_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
       simp [E]
     rw [e3]
     exact h3
-  obtain ⟨Z, hZ, hZA⟩ := exists_equiv_of_mem_endL hA₀.toIsLattice h𝔭 hE
+  obtain ⟨Z, hZ, hZA⟩ := exists_equiv_of_mem_endL hA₀ h𝔭 hE
   have hXD : ∀ x, (g * Z) x = D x := fun x => by
     rw [LinearEquiv.mul_apply, hZ]
     simp [E]

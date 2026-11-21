@@ -31,7 +31,7 @@ variable {K W : Type} [Field K] [NumberField K] [AddCommGroup W] [Module K W]
   [FiniteDimensional K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
 
 theorem exists_gen (h1 : Module.finrank K W = 1) {B C : Submodule (𝓞 K) W}
-    (hB : Submodule.IsLattice K B) (hBC : B ≤ C) (hC : C.FG) :
+    (hB : Submodule.IsFullLattice K B) (hBC : B ≤ C) (hC : C.FG) :
     ∃ y, C = B ⊔ Submodule.span (𝓞 K) {y} := by
   letI : StarRing K := starRingOfComm
   obtain ⟨t, ht, e⟩ := (LatticeGens.gens_and_count K W B C hBC
@@ -43,7 +43,7 @@ theorem exists_gen (h1 : Module.finrank K W = 1) {B C : Submodule (𝓞 K) W}
   · exact ⟨y, by simpa using e⟩
 
 theorem encard_between (h1 : Module.finrank K W = 1) {B : Submodule (𝓞 K) W}
-    (hB : Submodule.IsLattice K B) (T : 𝓞 K) (hT : T ≠ 0) :
+    (hB : Submodule.IsFullLattice K B) (T : 𝓞 K) (hT : T ≠ 0) :
     {C : Submodule (𝓞 K) W | B ≤ C ∧ ∀ x ∈ C, T • x ∈ B}.encard ≤
       ((Ideal.absNorm (Ideal.span {T}) : ℕ) : ℕ∞) := by
   set D : Submodule (𝓞 K) W := B.comap (LinearMap.lsmul (𝓞 K) W T) with hD
@@ -158,7 +158,9 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
         exact ⟨_, hu, hπ u w⟩
     have hBB' : B ≤ B' := fun w hw => (mB' w).2 ⟨0, by simpa using (mB w).1 hw⟩
     have hB'fg : B'.FG := hL.1.fg.map π
-    have hB'l : Submodule.IsLattice K B' := Submodule.IsLattice.of_fg K hB'fg
+    have hB'l : Submodule.IsFullLattice K B' := by
+      letI := hB.1
+      exact Submodule.IsFullLattice.of_le_of_fg K hBB' hB'fg
     have mC : ∀ x : perp h U, x ∈ dual (hRes h (perp h U)) B' ↔ (x : V) ∈ dual h L := by
       intro x
       rw [dualBasic_mem_dual, dualBasic_mem_dual]
