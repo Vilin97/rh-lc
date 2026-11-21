@@ -18,7 +18,7 @@ theorem colon_map_expand_le : ∀ (O K : Type) [CommRing O] [NormedField K] [IsU
   intro O K _ _ _ _ _ l _ ι κ _ _ G
   rw [Ideal.map_le_iff_le_comap]
   intro α hα
-  rw [Ideal.mem_comap, mem_colon]
+  rw [Ideal.mem_comap]
   intro w hw
   have hl2 : 2 ≤ l := (Fact.out : l.Prime).two_le
   have hf : ∀ i, ∃ f : O⟦X⟧, PowerSeries.map (algebraMap O K) f = w i := fun i => by
@@ -28,7 +28,7 @@ theorem colon_map_expand_le : ∀ (O K : Type) [CommRing O] [NormedField K] [IsU
   have hdec := fun i => (GlobalTheory.T.powerSeries_existsUnique_decomp_over_frobeniusLike_endo l hl2 (PowerSeries.expand l (Fact.out : l.Prime).ne_zero)
     (fun g m => PowerSeries.coeff_expand _ _ g) (f i)).exists
   choose g hg using hdec
-  have hα' := fun j : Fin l => (mem_colon.1 hα) (fun i => PowerSeries.map (algebraMap O K) (g i j))
+  have hα' := fun j : Fin l => hα (fun i => PowerSeries.map (algebraMap O K) (g i j))
     (fun i => map_mem_A _)
   choose m hm hmeq using hα'
   have hX : (X : K⟦X⟧) ∈ A O K := by simpa using map_mem_A (O := O) (K := K) X

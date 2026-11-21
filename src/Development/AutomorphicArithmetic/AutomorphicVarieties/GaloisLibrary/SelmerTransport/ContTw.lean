@@ -29,15 +29,11 @@ private theorem locConst {Γ A : Type} [Group Γ] [TopologicalSpace Γ] [IsTopol
     (h : IsOpen (ψ.ker : Set Γ)) : IsLocallyConstant ψ :=
   _root_.UpperTheory.Reformulated.B.LocallyConstantFunctions.locConst ψ h
 
-private noncomputable abbrev UpperTheory.V.LDataCardLeFinrank.qzG
-    (k Ω : Type) [Field k] [Field Ω] [Algebra k Ω] (l : ℕ) [Fact l.Prime] (e : ℤ) :
-    Representation ℤ_[l] (G k Ω) (QZ l) := scalRep (QZ l) (ReciprocityTheory.Gal.cycZ k Ω l ^ (-e))
-
 theorem UpperTheory.V.Base.contTw :
     ∀ (k Ω : Type) [Field k] [NumberField k] [Field Ω] [Algebra k Ω] [IsAlgClosure k Ω] (l : ℕ) [Fact l.Prime],
-      Continuous (cycZ k Ω l) ∧ (∀ e : ℤ, ContAction (LDataCardLeFinrank.qzG k Ω l e)) ∧
+      Continuous (cycZ k Ω l) ∧ (∀ e : ℤ, ContAction (UpperTheory.V.LDataCardLeFinrank.qzG k Ω l e)) ∧
       ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] (ψ : G k Ω →* Oˣ) (n : ℤ), IsOpen (ψ.ker : Set (G k Ω)) →
-        ContAction (twist₂ l (ψ * chiO k Ω l O ^ n)) := by
+        ContAction (twist₂ l (ψ * chiO (k := k) (Ω := Ω) l O ^ n)) := by
   intro k Ω _ _ _ _ _ l _
   have hc := ReciprocityTheory.Gal.continuous_cycZ k Ω l
   have hcPow (n : ℤ) : Continuous fun g : G k Ω => (((cycZ k Ω l ^ n) g : ℤ_[l]ˣ) : ℤ_[l]) :=
@@ -50,8 +46,9 @@ theorem UpperTheory.V.Base.contTw :
   have h2 := ((locConst ψ hψ).prodMk ((IsLocallyConstant.iff_continuous _).2 h1)).comp
     fun p : Oˣ × QO l O => (p.1 : O) • p.2
   refine h2.continuous.congr fun g => ?_
-  show (ψ g : O) • (((cycZ k Ω l g ^ n : ℤ_[l]ˣ) : ℤ_[l]) • m) = ((ψ g * chiO k Ω l O g ^ n : Oˣ) : O) • m
-  have e : chiO k Ω l O g ^ n = Units.map (algebraMap ℤ_[l] O).toMonoidHom (cycZ k Ω l g ^ n) :=
+  show (ψ g : O) • (((cycZ k Ω l g ^ n : ℤ_[l]ˣ) : ℤ_[l]) • m) =
+    ((ψ g * chiO (k := k) (Ω := Ω) l O g ^ n : Oˣ) : O) • m
+  have e : chiO (k := k) (Ω := Ω) l O g ^ n = Units.map (algebraMap ℤ_[l] O).toMonoidHom (cycZ k Ω l g ^ n) :=
     (map_zpow (Units.map (algebraMap ℤ_[l] O).toMonoidHom) (cycZ k Ω l g) n).symm
   rw [Units.val_mul, mul_smul, e]
   exact congrArg _ (algebraMap_smul O _ m).symm

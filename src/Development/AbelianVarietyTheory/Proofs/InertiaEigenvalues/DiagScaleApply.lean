@@ -16,6 +16,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebr
   [IsUnitBall O K] {l e a : ℕ} {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
 
 
+variable (K a ι) in
 def diagScale (s : ZMod a → K) : Module.End K (Vec K a ι) where
   toFun v τ := s τ • v τ
   map_add' v w := by ext1 τ; simp [smul_add]
