@@ -19,11 +19,11 @@ theorem ptEntry_inj : ∀ (bs cs : List (E × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 �
   | [], [], _, _, _, _ => rfl
   | [], (t, s) :: cs, _, h, e, _ => by
     have := (h (t, s) (by simp)).2
-    simp only [List.map_cons, List.sum_cons, List.map_nil, List.sum_nil] at e this
+    simp only [List.map_cons, List.sum_cons, List.map_nil, List.sum_nil] at e
     omega
   | (t, s) :: bs, [], h, _, e, _ => by
     have := (h (t, s) (by simp)).2
-    simp only [List.map_cons, List.sum_cons, List.map_nil, List.sum_nil] at e this
+    simp only [List.map_cons, List.sum_cons, List.map_nil, List.sum_nil] at e
     omega
   | (t, s) :: bs, (t', s') :: cs, h, h', e, k => by
     obtain ⟨ht, hs⟩ : t ≠ 0 ∧ 1 ≤ s := h (t, s) (by simp)
