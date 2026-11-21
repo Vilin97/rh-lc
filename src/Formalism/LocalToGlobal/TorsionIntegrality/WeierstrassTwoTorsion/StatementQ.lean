@@ -55,7 +55,8 @@ def BridgeTwoMore : Prop :=
 
 def FlowUniqueZ : Prop :=
   ∀ (K : Type u) [Field K] [CharZero K] (W : WeierstrassCurve K) (x y x' y' : K⟦X⟧),
-    IsFlow (curveS W) (derivative K) x y → IsFlow (curveS W) (derivative K) x' y' →
+    IsFlow (curveS W) (derivative (R := K)) x y →
+    IsFlow (curveS W) (derivative (R := K)) x' y' →
     constantCoeff x = constantCoeff x' → constantCoeff y = constantCoeff y' → x = x' ∧ y = y'
 
 end Formalism.L2.Th1.A

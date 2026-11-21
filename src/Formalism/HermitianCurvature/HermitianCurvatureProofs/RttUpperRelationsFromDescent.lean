@@ -18,6 +18,10 @@ open scoped ContDiff
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
+local macro "distrib_module" : tactic =>
+  `(tactic| (simp only [mul_sub, sub_mul, mul_add, add_mul, smul_mul_assoc, mul_smul_comm,
+    mul_assoc, smul_sub, smul_add, smul_smul]; module))
+
 section Qdet
 
 variable {A : Type} [Ring A] [Algebra ℂ A]

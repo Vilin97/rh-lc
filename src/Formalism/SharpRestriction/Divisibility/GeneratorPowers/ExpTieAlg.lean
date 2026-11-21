@@ -17,7 +17,7 @@ variable {S : Type} [CommRing S]
 
 open scoped MvPowerSeries.WithPiTopology in
 theorem continuous_pderiv_disc {σ R : Type} [CommRing R] [TopologicalSpace R] [DiscreteTopology R]
-    (i : σ) : Continuous (fun f : MvPowerSeries σ R => pderiv R i f) := by
+    (i : σ) : Continuous (fun f : MvPowerSeries σ R => pderiv (R := R) i f) := by
   classical
   refine continuous_pi fun n => ?_
   exact ((continuous_of_discreteTopology (f := fun x : R => x * ((n i : R) + 1))).comp
@@ -27,7 +27,7 @@ theorem continuous_pderiv_disc {σ R : Type} [CommRing R] [TopologicalSpace R] [
 open scoped MvPowerSeries.WithPiTopology in
 theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ → MvPowerSeries τ S} (ha : HasSubst a)
     (t : τ) (g : MvPowerSeries σ S) :
-    pderiv S t (subst a g) = ∑ s, subst a (pderiv S s g) * pderiv S t (a s) := by
+    pderiv (R := S) t (subst a g) = ∑ s, subst a (pderiv (R := S) s g) * pderiv (R := S) t (a s) := by
   classical
   have hsa : ∀ x y : MvPowerSeries σ S, subst a (x + y) = subst a x + subst a y := fun x y => by
     rw [← coe_substAlgHom ha, map_add (f := _)]
@@ -42,8 +42,8 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ → Mv
     have hc : (C c : MvPowerSeries σ S) = c • (1 : MvPowerSeries σ S) := by
       rw [smul_eq_C_mul, mul_one]
     rw [hc, ← coe_substAlgHom ha, map_smul, map_one, smul_eq_C_mul, mul_one]
-  have hpoly : ∀ p : MvPolynomial σ S, pderiv S t (subst a (p : MvPowerSeries σ S)) =
-      ∑ s, subst a (pderiv S s (p : MvPowerSeries σ S)) * pderiv S t (a s) := by
+  have hpoly : ∀ p : MvPolynomial σ S, pderiv (R := S) t (subst a (p : MvPowerSeries σ S)) =
+      ∑ s, subst a (pderiv (R := S) s (p : MvPowerSeries σ S)) * pderiv (R := S) t (a s) := by
     intro p
     induction p using MvPolynomial.induction_on
     next c =>
@@ -62,9 +62,9 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ → Mv
     first
     | exact inferInstance
     | exact { continuous_add := continuous_of_discreteTopology, continuous_mul := continuous_of_discreteTopology, continuous_neg := continuous_of_discreteTopology }
-  have hc1 : Continuous fun f : MvPowerSeries σ S => pderiv S t (subst a f) :=
+  have hc1 : Continuous fun f : MvPowerSeries σ S => pderiv (R := S) t (subst a f) :=
     (continuous_pderiv_disc t).comp (MvPowerSeries.continuous_subst ha)
-  have hc2 : Continuous fun f : MvPowerSeries σ S => ∑ s, subst a (pderiv S s f) * pderiv S t (a s) :=
+  have hc2 : Continuous fun f : MvPowerSeries σ S => ∑ s, subst a (pderiv (R := S) s f) * pderiv (R := S) t (a s) :=
     continuous_finsetSum _ fun s _ =>
       ((MvPowerSeries.continuous_subst ha).comp (continuous_pderiv_disc s)).mul continuous_const
   have heq := MvPowerSeries.WithPiTopology.denseRange_toMvPowerSeries.equalizer hc1 hc2 (funext hpoly)
@@ -131,14 +131,14 @@ private theorem subst_zero_lemma_3 {σ τ : Type} [Finite σ] (g : MvPowerSeries
     simp [hp]
 
 theorem dof_addF (u : Fin N → S) (g : PS S 1 N) :
-    Dof (ReciprocityTheory.ChartRestriction.G.TB.MV.addF S N) u g = ∑ j, C (u j) * pderiv S ((0 : Fin 1), j) g := by
+    Dof (ReciprocityTheory.ChartRestriction.G.TB.MV.addF S N) u g = ∑ j, C (u j) * pderiv (R := S) ((0 : Fin 1), j) g := by
   classical
   have hs : HasSubst (fun p : Fin 2 × Fin N => (![pt S N 0, 0] : Fin 2 → Pt S 1 N) p.1 p.2) :=
     hasSubst0 (by rintro ⟨b, i⟩; fin_cases b <;> simp [pt])
   have h1 : ∀ i j : Fin N, ev (n := 1) ![pt S N 0, 0]
-      (pderiv S ((1 : Fin 2), i) (ReciprocityTheory.ChartRestriction.G.TB.MV.addF S N j)) = if j = i then 1 else 0 := by
+      (pderiv (R := S) ((1 : Fin 2), i) (ReciprocityTheory.ChartRestriction.G.TB.MV.addF S N j)) = if j = i then 1 else 0 := by
     intro i j
-    have hp : pderiv S ((1 : Fin 2), i) (ReciprocityTheory.ChartRestriction.G.TB.MV.addF S N j) =
+    have hp : pderiv (R := S) ((1 : Fin 2), i) (ReciprocityTheory.ChartRestriction.G.TB.MV.addF S N j) =
         if j = i then (1 : PS S 2 N) else 0 := by
       by_cases h : j = i
       · subst h
@@ -193,8 +193,8 @@ theorem subst_sz_cpy (b : Fin 2) (g : MvPowerSeries (Fin 1 × Fin N) S) :
     rw [hZ, if_neg hb, subst_zero_lemma_3]
 
 theorem pderiv_cpy (b : Fin 2) (q : Fin N) (g : MvPowerSeries (Fin 1 × Fin N) S) :
-    pderiv S ((1 : Fin 2), q) (subst (cpy (S := S) b) g) =
-      if b = 1 then subst (cpy (S := S) b) (pderiv S ((0 : Fin 1), q) g) else 0 := by
+    pderiv (R := S) ((1 : Fin 2), q) (subst (cpy (S := S) b) g) =
+      if b = 1 then subst (cpy (S := S) b) (pderiv (R := S) ((0 : Fin 1), q) g) else 0 := by
   classical
   rw [pderiv_subst (hasSubst_cpy b), Fintype.sum_prod_type, Fin.sum_univ_one]
   simp only [cpy, pderiv_X, Pi.single_apply, Prod.mk.injEq, mul_ite, mul_one, mul_zero]
@@ -209,20 +209,20 @@ theorem key (h0 : ∀ j, constantCoeff (φ j) = 0) (w : Fin N → Fin d → S)
       subst (fun r : Fin 1 × Fin N =>
         (X ((0 : Fin 2), r.2) + X ((1 : Fin 2), r.2) : MvPowerSeries (Fin 2 × Fin N) S)) (φ j))
     (q : Fin N) (j : Fin d) :
-    pderiv S ((0 : Fin 1), q) (φ j) =
-      ∑ i, subst (famL φ) (ev (n := 1) ![pt S d 0, 0] (pderiv S ((1 : Fin 2), i) (F j))) * C (w q i) := by
+    pderiv (R := S) ((0 : Fin 1), q) (φ j) =
+      ∑ i, subst (famL φ) (ev (n := 1) ![pt S d 0, 0] (pderiv (R := S) ((1 : Fin 2), i) (F j))) * C (w q i) := by
   have hAs : HasSubst (fun p : Fin 2 × Fin d => subst (cpy (S := S) p.1) (φ p.2)) := hasSubst0 fun p =>
     constantCoeff_subst_eq_zero (hasSubst_cpy _) (fun r => by simp [cpy]) (h0 p.2)
   have hBs : HasSubst (fun r : Fin 1 × Fin N =>
       (X ((0 : Fin 2), r.2) + X ((1 : Fin 2), r.2) : MvPowerSeries (Fin 2 × Fin N) S)) :=
     hasSubst0 fun r => by simp
-  have hE := congrArg (fun G => subst (sz (S := S) (N := N)) (pderiv S ((1 : Fin 2), q) G)) (hhom j)
+  have hE := congrArg (fun G => subst (sz (S := S) (N := N)) (pderiv (R := S) ((1 : Fin 2), q) G)) (hhom j)
 
-  have eR : subst (sz (S := S) (N := N)) (pderiv S ((1 : Fin 2), q) (subst (fun r : Fin 1 × Fin N =>
+  have eR : subst (sz (S := S) (N := N)) (pderiv (R := S) ((1 : Fin 2), q) (subst (fun r : Fin 1 × Fin N =>
       (X ((0 : Fin 2), r.2) + X ((1 : Fin 2), r.2) : MvPowerSeries (Fin 2 × Fin N) S)) (φ j))) =
-      pderiv S ((0 : Fin 1), q) (φ j) := by
+      pderiv (R := S) ((0 : Fin 1), q) (φ j) := by
     rw [pderiv_subst hBs]
-    have hdB : ∀ r : Fin 1 × Fin N, pderiv S ((1 : Fin 2), q)
+    have hdB : ∀ r : Fin 1 × Fin N, pderiv (R := S) ((1 : Fin 2), q)
         (X ((0 : Fin 2), r.2) + X ((1 : Fin 2), r.2) : MvPowerSeries (Fin 2 × Fin N) S) =
         if r = ((0 : Fin 1), q) then 1 else 0 := by
       rintro ⟨i, r⟩
@@ -281,8 +281,8 @@ theorem dof_comp (q : Fin N) (g : PS S 1 d) :
       subst (famL φ) (Dof F (w q) g) := by
   classical
   have hL : HasSubst (famL φ) := hasSubst0 (fun p => h0 p.2)
-  have hk : ∀ k : Fin d, pderiv S ((0 : Fin 1), q) (famL φ ((0 : Fin 1), k)) =
-      ∑ i, subst (famL φ) (ev (n := 1) ![pt S d 0, 0] (pderiv S ((1 : Fin 2), i) (F k))) * C (w q i) :=
+  have hk : ∀ k : Fin d, pderiv (R := S) ((0 : Fin 1), q) (famL φ ((0 : Fin 1), k)) =
+      ∑ i, subst (famL φ) (ev (n := 1) ![pt S d 0, 0] (pderiv (R := S) ((1 : Fin 2), i) (F k))) * C (w q i) :=
     fun k => key F φ h0 w hlin hhom q k
   rw [dof_addF, Finset.sum_eq_single q (fun j _ hj => by simp [Pi.single_apply, hj]) (by simp)]
   simp only [Pi.single_eq_same, map_one, one_mul]
@@ -334,7 +334,7 @@ namespace Formalism.MainNotions.ModuliIntegralCharts.H1
 open MvPowerSeries ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ Formalism.L2.Pj ExpTieAlg NumberField
 
 private theorem iter_coeff_lemma {S : Type} [CommRing S] {σ : Type} [DecidableEq σ] (i : σ)
-    (h : MvPowerSeries σ S) (k : ℕ) : ∀ n : σ →₀ ℕ, ((n i).factorial : S) * coeff n ((pderiv S i)^[k] h) =
+    (h : MvPowerSeries σ S) (k : ℕ) : ∀ n : σ →₀ ℕ, ((n i).factorial : S) * coeff n ((pderiv (R := S) i)^[k] h) =
       ((n i + k).factorial : S) * coeff (n + Finsupp.single i k) h := by
   induction k with
   | zero => intro n; simp
@@ -353,7 +353,7 @@ private theorem iter_coeff_lemma {S : Type} [CommRing S] {σ : Type} [DecidableE
 private theorem foldr_coeff_lemma_2 {S : Type} [CommRing S] {σ κ : Type} [DecidableEq σ] (v : κ → σ)
     (hv : Function.Injective v) (α : κ → ℕ) (h : MvPowerSeries σ S) : ∀ L : List κ, L.Nodup →
       ∀ n : σ →₀ ℕ, (∀ l ∈ L, n (v l) = 0) →
-        coeff n (L.foldr (fun l g => (pderiv S (v l))^[α l] g) h) =
+        coeff n (L.foldr (fun l g => (pderiv (R := S) (v l))^[α l] g) h) =
           (L.map fun l => ((α l).factorial : S)).prod *
             coeff (n + (L.map fun l => Finsupp.single (v l) (α l)).sum) h := by
   intro L
@@ -364,7 +364,7 @@ private theorem foldr_coeff_lemma_2 {S : Type} [CommRing S] {σ κ : Type} [Deci
     rw [List.nodup_cons] at hnd
     have hnl : n (v l) = 0 := hn l (by simp)
     simp only [List.foldr_cons, List.map_cons, List.prod_cons, List.sum_cons]
-    have key1 := iter_coeff_lemma (v l) (t.foldr (fun l g => (pderiv S (v l))^[α l] g) h) (α l) n
+    have key1 := iter_coeff_lemma (v l) (t.foldr (fun l g => (pderiv (R := S) (v l))^[α l] g) h) (α l) n
     rw [hnl, Nat.factorial_zero, Nat.cast_one, one_mul, zero_add] at key1
     rw [key1, ih hnd.2 (n + Finsupp.single (v l) (α l)) ?_]
     · rw [add_assoc]
@@ -379,7 +379,7 @@ private theorem const_dpoly_lemma_3 {E : Type} [Field E] [NumberField E] [IsCMFi
       (MvPolynomial.monomial α 1) G) = expVal G α := by
   classical
   have hD : ∀ q : Fin (dL Dw), (Dof (ReciprocityTheory.ChartRestriction.G.TB.MV.addF S (dL Dw)) (Pi.single q 1) :
-      PS S 1 (dL Dw) → PS S 1 (dL Dw)) = pderiv S ((0 : Fin 1), q) := by
+      PS S 1 (dL Dw) → PS S 1 (dL Dw)) = pderiv (R := S) ((0 : Fin 1), q) := by
     intro q
     funext f
     rw [dof_addF, Finset.sum_eq_single q (fun j _ hj => by simp [Pi.single_apply, hj]) (by simp)]

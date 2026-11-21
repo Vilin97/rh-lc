@@ -10,7 +10,7 @@ open Matrix IsLocalRing UpperTheory.V.Alg
 
 namespace UpperTheory.V.U3.Mop
 
-theorem emb_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (x : GG 3 R)
+theorem emb_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (x : GG (m := 3) (R := R))
     (a b : Fin 3 ⊕ Fin 3) : emb (GG.map f x) a b = f (emb x a b) := by
   have h : (theta (GG.map f x).left : Matrix (Fin 3) (Fin 3) S) =
       (theta x.left : Matrix (Fin 3) (Fin 3) R).map f :=
@@ -23,14 +23,14 @@ theorem emb_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (x : GG 3
   split_ifs <;> rcases a with a | a <;> rcases b with b | b <;> simp
 
 theorem emb_push {O G R S : Type} [CommRing O] [Group G] [CommRing R] [CommRing S] [Algebra O R] [Algebra O S]
-    (f : R →ₐ[O] S) (r : G →* GG 3 R) (g : G) (a b : Fin 3 ⊕ Fin 3) :
+    (f : R →ₐ[O] S) (r : G →* GG (m := 3) (R := R)) (g : G) (a b : Fin 3 ⊕ Fin 3) :
     emb (push f r g) a b = f (emb (r g) a b) := emb_map (f : R →+* S) (r g) a b
 
-theorem emb_apply {R : Type} [CommRing R] (x : GG 3 R) : emb x =
+theorem emb_apply {R : Type} [CommRing R] (x : GG (m := 3) (R := R)) : emb x =
     if x.right = 1 then Matrix.fromBlocks x.mat 0 0 (theta x.left : Matrix (Fin 3) (Fin 3) R)
     else Matrix.fromBlocks 0 x.mat (theta x.left : Matrix (Fin 3) (Fin 3) R) 0 := rfl
 
-theorem mat_eq_emb {R : Type} [CommRing R] (x : GG 3 R) (a b : Fin 3) :
+theorem mat_eq_emb {R : Type} [CommRing R] (x : GG (m := 3) (R := R)) (a b : Fin 3) :
     x.mat a b = emb x (.inl a) (.inl b) + emb x (.inl a) (.inr b) := by
   rw [emb_apply]
   split_ifs <;> simp
@@ -69,7 +69,7 @@ theorem mem_max_of_zero {O R : Type} [CommRing O] [IsLocalRing O] [IsNoetherianR
   rw [← res_eq_zero_iff O, ← res_map x, hz, map_zero]
 
 theorem base_coord {O G R : Type} [CommRing O] [Group G] [CommRing R] [Algebra O R] {η : G →* ℤˣ} {Ψ : G →* Oˣ}
-    {r : G →* GG 3 R} {x : R →ₐ[O] O} (hx : push x r = r0 η Ψ) (g : G) (a b : Fin 3 ⊕ Fin 3) :
+    {r : G →* GG (m := 3) (R := R)} {x : R →ₐ[O] O} (hx : push x r = r0 η Ψ) (g : G) (a b : Fin 3 ⊕ Fin 3) :
     x (emb (r g) a b - algebraMap O R (emb (r0 η Ψ g) a b)) = 0 := by
   rw [map_sub, AlgHom.commutes, ← emb_push, hx]
   exact sub_self _
@@ -107,7 +107,7 @@ theorem approx {O X R σ : Type} [CommRing O] [AddCommGroup X] [CommRing R] [Alg
     · exact MvPowerSeries.coeff_truncTotal_eq_zero _ (not_lt.1 hlt)
   exact hw ▸ hmon d
 
-def nEq {G R : Type} [Group G] [CommRing R] (c g₁ : G) (r : G →* GG 3 R) : Fin 8 → R :=
+def nEq {G R : Type} [Group G] [CommRing R] (c g₁ : G) (r : G →* GG (m := 3) (R := R)) : Fin 8 → R :=
   ![(r c).mat 0 0 - 1, (r c).mat 1 1 - 1, (r c).mat 0 1, (r c).mat 1 0, (r c).mat 0 2, (r c).mat 2 0,
     zmat c g₁ r 0 1, zmat c g₁ r 1 0]
 

@@ -117,7 +117,7 @@ theorem mk_seriesEval_eq_truncEval {z : B} (hz : z ∈ I) (f : ℚ⟦X⟧) (n : 
 
 theorem logOnePlus_mul {x y z : B} (hx : x ∈ I) (hy : y ∈ I) (hz : z ∈ I)
     (hxyz : 1 + z = (1 + x) * (1 + y)) :
-    logOnePlus z hz = logOnePlus x hx + logOnePlus y hy := by
+    logOnePlus I z hz = logOnePlus I x hx + logOnePlus I y hy := by
   refine eq_of_forall_sub_mem_pow I fun n => ?_
   rw [← Ideal.Quotient.eq, map_add (f := _), logOnePlus, logOnePlus, logOnePlus,
     mk_seriesEval_eq_truncEval, mk_seriesEval_eq_truncEval, mk_seriesEval_eq_truncEval]

@@ -138,16 +138,14 @@ variable (H : DualityHypotheses n D)
 
 
 omit [IsTopologicalGroup G] [CompactSpace G] [IsDiscreteRep D] in
-variable (n) in
-def zmodSubgroupOfHom {U V : OpenSubgroup G} (hVU : V ≤ U) :
+def zmodSubgroupOfHom (n : ℕ) {U V : OpenSubgroup G} (hVU : V ≤ U) :
     Rep.res (Subgroup.subgroupOfEquivOfLe (show (V : Subgroup G) ≤ U from hVU)).symm.toMonoidHom
       (zmodRep.{u} ((V : Subgroup G).subgroupOf U) n) ⟶ zmodRep.{u} (V : Subgroup G) n :=
   Rep.ofHom ⟨LinearMap.id, fun _ => rfl⟩
 
 
 omit [IsTopologicalGroup G] [CompactSpace G] [IsDiscreteRep D] in
-variable (n) in
-def zmodSubgroupOfInvHom {U V : OpenSubgroup G} (hVU : V ≤ U) :
+def zmodSubgroupOfInvHom (n : ℕ) {U V : OpenSubgroup G} (hVU : V ≤ U) :
     Rep.res (Subgroup.subgroupOfEquivOfLe (show (V : Subgroup G) ≤ U from hVU)).toMonoidHom
       (zmodRep.{u} (V : Subgroup G) n) ⟶ zmodRep.{u} ((V : Subgroup G).subgroupOf U) n :=
   Rep.ofHom ⟨LinearMap.id, fun _ => rfl⟩
