@@ -125,7 +125,7 @@ theorem ratioW_of_hasSat [IsTotallyReal F] (P : Hypotheses₂) {n : ℕ} {π : T
 theorem isWDOf_satR [IsTotallyReal F] {n : ℕ} {π : TR.CuspSub F n} {ι : Qbar l ≃+* ℂ} {r : G F Ω →* GL (Fin n) (Qbar l)}
     {wt : ℤ} {HT : (F →+* Qbar l) → Multiset ℤ} (H : IsGalRU π ι r wt HT) {w : HeightOneSpectrum (𝓞 F)}
     (hl : ((l : ℕ) : 𝓞 F) ∉ w.asIdeal) {A : ValuationSubring Ω} {h : IsPlaceOver A w}
-    {rc : IrrGL (w.adicCompletion F) → WD h} (hrc : IsRec h rc) {σ : SmIrr (GL (Fin n) (w.adicCompletion F))}
+    {rc : IrrGL (k := w.adicCompletion F) → WD h} (hrc : IsRec h rc) {σ : SmIrr (GL (Fin n) (w.adicCompletion F))}
     (hσ : π.IsLocComp w σ) {S : Multiset ℂˣ} (hS : GlobalTheory.LFun.HasSatGL w σ.ρ S) : IsWDOf ι r (rc (algNorm σ)) := by
   rw [← (H.away w hl A h rc hrc σ hσ).eq_unr (unr_algNorm hrc σ S hS)]
   exact isWDOf_wdOf (h := h) hl ι (Units.continuous_val.comp H.cont)

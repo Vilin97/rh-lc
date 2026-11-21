@@ -36,7 +36,7 @@ theorem charPol_sumList (l : List (WD h)) (σ : Weil h) :
     rw [this, WD.charPol_lpSum, ih, List.map_cons, List.prod_cons]
 
 variable {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
-  {e : AddChar (w.adicCompletion E) Circle → WD h → ℂˣ} {r : IrrGL (w.adicCompletion E) → WD h}
+  {e : AddChar (w.adicCompletion E) Circle → WD h → ℂˣ} {r : IrrGL (k := w.adicCompletion E) → WD h}
 
 end GlobalTheory.LocLanglands.CuspExt
 

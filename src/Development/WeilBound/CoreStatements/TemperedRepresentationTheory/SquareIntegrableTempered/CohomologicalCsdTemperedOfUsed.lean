@@ -22,6 +22,6 @@ namespace PositivityTheory.Zltwo
 
 def EssSqIntUsed : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
-    (δ : IrrGL k), 1 ≤ δ.1 → IsSqIntCoeff δ.rep → ∃ Δ : Segment k, IsLSeg Δ δ.rep
+    (δ : IrrGL (k := k)), 1 ≤ δ.1 → IsSqIntCoeff δ.rep → ∃ Δ : Segment k, IsLSeg Δ δ.rep
 
 end PositivityTheory.Zltwo

@@ -22,8 +22,8 @@ variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algeb
 
 theorem isZero_groupCohomology_decomposition_integerUnits
     (he : w.asIdeal.ramificationIdx (𝓞 K) = 1) {n : ℕ} (hn : 1 ≤ n) :
-    IsZero (groupCohomology (Rep.ofMulDistribMulAction (MulAction.stabilizer Gal(L/K) w.asIdeal)
-      (w.adicCompletionIntegers L)ˣ) n) := by
+    IsZero (groupCohomology (@Rep.ofMulDistribMulAction (MulAction.stabilizer Gal(L/K) w.asIdeal)
+      (w.adicCompletionIntegers L)ˣ _ _ (decompositionIntegerUnitsAction w)) n) := by
   have := isUnramified_adicCompletion v w he
   have : FiniteDimensional (v.adicCompletion K) (w.adicCompletion L) := finite_adicCompletion v w
   refine (isZero_groupCohomology_integerUnits (v.adicCompletion K) (w.adicCompletion L) hn).of_iso
@@ -33,8 +33,8 @@ theorem isZero_groupCohomology_decomposition_integerUnits
 
 theorem isZero_cohomology_decomposition_integerUnits
     (he : w.asIdeal.ramificationIdx (𝓞 K) = 1) {n : ℕ} (hn : 1 ≤ n) :
-    IsZero (cohomology (Rep.ofMulDistribMulAction (MulAction.stabilizer Gal(L/K) w.asIdeal)
-      (w.adicCompletionIntegers L)ˣ) n) :=
+    IsZero (cohomology (@Rep.ofMulDistribMulAction (MulAction.stabilizer Gal(L/K) w.asIdeal)
+      (w.adicCompletionIntegers L)ˣ _ _ (decompositionIntegerUnitsAction w)) n) :=
   (isZero_groupCohomology_decomposition_integerUnits v w he hn).of_iso
     (cohomologyIsoGroupCohomology _ n)
 

@@ -17,15 +17,14 @@ namespace Col
 theorem extend_hom {M : Type} [AddCommGroup M] [Module.Free ℤ M] [Module.Finite ℤ M]
     (N : Submodule ℤ M) (hsat : ∀ (k : ℤ) (x : M), k ≠ 0 → k • x ∈ N → x ∈ N) (ψ : N →ₗ[ℤ] ℤ) :
     ∃ Ψ : M →ₗ[ℤ] ℤ, ∀ x : N, Ψ x = ψ x := by
-  have : IsAddTorsionFree (M ⧸ N) := by
-    refine ⟨fun n hn a b hab => ?_⟩
+  have : Module.IsTorsionFree ℤ (M ⧸ N) := by
+    refine ⟨fun k hk a b hab => ?_⟩
     induction a using Submodule.Quotient.induction_on with | H x => ?_
     induction b using Submodule.Quotient.induction_on with | H y => ?_
     simp only at hab
     rw [← Submodule.Quotient.mk_smul, ← Submodule.Quotient.mk_smul, Submodule.Quotient.eq] at hab
     rw [Submodule.Quotient.eq]
-    refine hsat n (x - y) (by exact_mod_cast hn) ?_
-    rw [natCast_zsmul, smul_sub]; exact hab
+    exact hsat k (x - y) hk.ne_zero (by simpa only [smul_sub] using hab)
   have : Module.Free ℤ (M ⧸ N) := Module.free_of_finite_type_torsion_free'
   obtain ⟨σ, hσ⟩ := Module.projective_lifting_property N.mkQ (LinearMap.id) (Submodule.mkQ_surjective N)
   have hmem : ∀ x : M, x - σ (N.mkQ x) ∈ N := by
@@ -214,7 +213,7 @@ theorem exp_sign (q : ℕ) (k : ℤ) :
   congr 1
   rw [← zpow_natCast, ← zpow_mul, mul_comm]
 
-
+open scoped Classical in
 def kaB (X : PT E) (I : Submodule ℤ (Vsp X.dim)) (q : ℕ) (t : EuclideanSpace ℂ (Fin (gB (IR I)))) : ℂ :=
   if h : ∃ x ∈ Ip X I, wmap (IR I) x = t then (X.eps h.choose : ℂ) ^ q else 1
 

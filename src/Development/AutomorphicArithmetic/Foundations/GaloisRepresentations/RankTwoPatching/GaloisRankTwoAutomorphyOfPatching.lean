@@ -132,7 +132,7 @@ structure At (π : TR.CuspSub F a) (ι : Qbar l ≃+* ℂ) (r : G F Ω →* GL (
     {v : HeightOneSpectrum (𝓞 F)} {A : ValuationSubring Ω} (h : IsPlaceOver A v) : Prop where
   plain : ∀ B, π.HasSat v B → PlainAtR π v
   cmp : ∀ σ, π.IsLocComp v σ → GlobalTheory.RoadU.PlainTor (IrrGL.of σ.ρ σ.smooth σ.irred) →
-    ∀ rc : IrrGL (v.adicCompletion F) → WD h, IsRecT h rc → CmpT ι r (rc (algNorm σ))
+    ∀ rc : IrrGL (k := v.adicCompletion F) → WD h, IsRecT h rc → CmpT ι r (rc (algNorm σ))
   ht : ∀ σ, π.IsLocComp v σ → GlobalTheory.RoadU.PlainTor (IrrGL.of σ.ρ σ.smooth σ.irred) →
     ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l F Ω (Dec (F := F) A) O), Induces Bw →
       IsdRAt (Loc.PP l) Bw (r.comp (Dec (F := F) A).subtype) ∧

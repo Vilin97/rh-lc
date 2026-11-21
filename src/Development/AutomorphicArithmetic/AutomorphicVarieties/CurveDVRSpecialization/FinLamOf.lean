@@ -59,7 +59,7 @@ private theorem flo_cont {Γ O R R' : Type} [TopologicalSpace Γ] [CommRing O] [
     refine le_trans (Ideal.pow_right_mono (J := (maximalIdeal R').comap (f : R →+* R')) ?_ N) (Ideal.le_comap_pow _ N)
     intro x hx
     rw [Ideal.mem_comap, ← res_eq_zero_iff O R']
-    exact (res_map f x).trans ((res_eq_zero_iff O R x).2 hx)
+    exact (res_map O R f x).trans ((res_eq_zero_iff O R x).2 hx)
   exact (h N).comp (Ideal.quotientMap _ (f : R →+* R') hle)
 
 private theorem flo_lam {l : ℕ} [Fact l.Prime] {F : W.GFrame l} {O : Type} [CommRing O] [IsLocalRing O]
@@ -140,7 +140,7 @@ private theorem flo_lam {l : ℕ} [Fact l.Prime] {F : W.GFrame l} {O : Type} [Co
     have hs := congrArg (fun χ => ((χ g : Rˣ) : R)) (W.LamObj.toPair_spec r Λ p v i)
     change Λ.toPair p (Λ.κ v i g : Λ.Λ) = ((p.ψ v i (g : F.Gv v)) : R) at hs
     show iota (res O Λ.Λ (Λ.κ v i g : Λ.Λ)) = Ideal.Quotient.mk P (Λ.toPair p (Λ.κ v i g : Λ.Λ))
-    rw [← res_map (Λ.toPair p), hs]
+    rw [← res_map O Λ.Λ (Λ.toPair p), hs]
     exact key _ (Units.isUnit _) (hψ v i g g.2)
   have hx' : Ideal.Quotient.mk P (Λ.toPair p x) = 0 := by
     show φ x = 0

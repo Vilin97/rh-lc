@@ -35,6 +35,7 @@ theorem dbl.inl_map' {P' P : Arrow Spc} (φ : P' ⟶ P) : dbl.inl P' ≫ dbl.map
 
 theorem dbl.map_comp' {P'' P' P : Arrow Spc} (φ : P'' ⟶ P') (ψ : P' ⟶ P) :
     dbl.map (φ ≫ ψ) = dbl.map φ ≫ dbl.map ψ := by
+  set_option synthInstance.maxHeartbeats 200000 in
   apply pushout.hom_ext
   · change dbl.inl P'' ≫ dbl.map (φ ≫ ψ) = dbl.inl P'' ≫ dbl.map φ ≫ dbl.map ψ
     rw [dbl.inl_map', ← Category.assoc, dbl.inl_map', Category.assoc, dbl.inl_map', Arrow.comp_right,

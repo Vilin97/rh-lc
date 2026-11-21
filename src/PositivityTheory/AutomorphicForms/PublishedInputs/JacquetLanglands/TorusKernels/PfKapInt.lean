@@ -29,7 +29,7 @@ theorem lint_prod {I : Type} [Fintype I] [SigmaFinite (volume : Measure P)]
     exact Integrable.fintype_prod hint
   rw [← ofReal_integral_eq_lintegral_ofReal hP (ae_of_all _ hnn),
     integral_fintype_prod_volume_eq_prod,
-    ENNReal.ofReal_prod_of_nonneg (fun v _ => integral_nonneg (hf0 v)), ENNReal.coe_finset_prod]
+    ENNReal.ofReal_prod_of_nonneg (fun v _ => integral_nonneg (hf0 v)), ENNReal.ofNNReal_finsetProd]
   refine Finset.prod_le_prod' fun v _ => ?_
   rw [ofReal_integral_eq_lintegral_ofReal (hint v) (ae_of_all _ (hf0 v))]
   exact hC v

@@ -25,14 +25,14 @@ abbrev xOf (h : IsPlaceOver A w) {n : ℕ} (χ : Fin n → Dec (F := E) A →* �
     (ho : ∀ i, IsOpen ((χ i).ker : Set (Dec (F := E) A))) : WD h :=
   WD.mk (WDRep.ofChars h _ (hsm h χ ho))
 
-def Cond (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h) {n : ℕ} (χ : Fin n → Dec (F := E) A →* ℂˣ)
+def Cond (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h) {n : ℕ} (χ : Fin n → Dec (F := E) A →* ℂˣ)
     (ho : ∀ i, IsOpen ((χ i).ker : Set (Dec (F := E) A))) (π : SmIrr (GL (Fin n) (w.adicCompletion E))) : Prop :=
   (rc (IrrGL.of π.ρ π.smooth π.irred)).mono0 ∧ ∀ s : ↥(Ine (F := E) A),
     (rc (IrrGL.of π.ρ π.smooth π.irred)).charPol (ineIncl h s) = (xOf h χ ho).charPol (ineIncl h s)
 
 def NZ : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
-    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), IsRec h rc →
+    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRec h rc →
     ∀ (n : ℕ) (χ : Fin n → Dec (F := E) A →* ℂˣ) (ho : ∀ i, IsOpen ((χ i).ker : Set (Dec (F := E) A))),
       ∃ (d : ℕ) (ξ : Representation ℂ ↥(GlobalTheory.LFun.KGL w n) (Fin d → ℂ)), ξ.IsIrreducible ∧ GlobalTheory.PRep.IsSmooth ξ ∧
         ∀ π : SmIrr (GL (Fin n) (w.adicCompletion E)),
@@ -40,7 +40,7 @@ def NZ : Prop :=
 
 def TypeData : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
-    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), IsRec h rc →
+    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRec h rc →
     ∀ (n : ℕ) (χ : Fin n → Dec (F := E) A →* ℂˣ) (ho : ∀ i, IsOpen ((χ i).ker : Set (Dec (F := E) A))),
       ∃ (J : Subgroup ↥(GlobalTheory.LFun.KGL w n)) (lam : ↥J →* ℂˣ) (m : ℕ) (V0 : Representation ℂ ↥(GlobalTheory.LFun.KGL w n) (Fin m → ℂ))
         (v0 : Fin m → ℂ), IsOpen (J : Set ↥(GlobalTheory.LFun.KGL w n)) ∧ IsOpen (lam.ker : Set ↥J) ∧ GlobalTheory.PRep.IsSmooth V0 ∧

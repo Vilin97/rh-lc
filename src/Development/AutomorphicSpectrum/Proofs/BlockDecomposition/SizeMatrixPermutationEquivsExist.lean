@@ -216,11 +216,11 @@ theorem cell_bij {α β : Type} [Fintype α] [LinearOrder α] [Fintype β] [Line
     exact congrArg φ.1.1 (mul_one x)
 
 theorem isIrreducible_piTensor (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {β : Type} [Fintype β]
-    (x : β → IrrGL k) : (piTensor fun j => (x j).rep).IsIrreducible := by
+    (x : β → IrrGL (k := k)) : (piTensor fun j => (x j).rep).IsIrreducible := by
   exact GlobalTheory.ExtTensorIrr.piTensor_isIrreducible GlobalTheory.CompanionTheory.Published.bernsteinZelevinskyFiniteness k β
     (fun j => Fin (x j).1) (fun j => (x j).2.rep)
 
-theorem jhMult_cell_comp (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {l c : ℕ} (x : Fin l → IrrGL k)
+theorem jhMult_cell_comp (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {l c : ℕ} (x : Fin l → IrrGL (k := k))
     (e : Fin c ≃ Fin l)
     (b : SizeMatrix (fun i => Fin (x i).1) (fun j => Fin (x (e j)).1))
     (hb : ∀ i j, b.1 i j = if e j = i then (x i).1 else 0) :
@@ -237,7 +237,7 @@ theorem jhMult_cell_comp (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {
 
 theorem jhMult_cell_bij : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k], GlobalTheory.Published.IrreducibleAdmissibleGL →
-    ∀ {l c : ℕ} (x : Fin l → IrrGL k) (y : Fin c → IrrGL k) (e : Fin c ≃ Fin l),
+    ∀ {l c : ℕ} (x : Fin l → IrrGL (k := k)) (y : Fin c → IrrGL (k := k)) (e : Fin c ≃ Fin l),
       (∀ a, y a = x (e a)) →
       ∀ (b : SizeMatrix (fun i => Fin (x i).1) (fun j => Fin (y j).1)),
         (∀ i j, b.1 i j = if e j = i then (x i).1 else 0) →

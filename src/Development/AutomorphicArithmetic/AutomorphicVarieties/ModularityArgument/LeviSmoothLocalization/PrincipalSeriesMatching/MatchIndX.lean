@@ -31,8 +31,8 @@ private theorem indCore [IsTotallyComplex K] [IsTotallyComplex M]
     (hK : GroundTheory.Automorphic.GJStandardL.ramifiedPlaces K ⊆ S)
     (hM : ∀ w ∈ GroundTheory.Automorphic.GJStandardL.ramifiedPlaces M, w.under (𝓞 K) ∈ S)
     (v : HeightOneSpectrum (𝓞 K)) (hv : v ∈ S)
-    (sK : ∀ u : HeightOneSpectrum (𝓞 K), Multiset (IrrGL (u.adicCompletion K)))
-    (sM : ∀ w : HeightOneSpectrum (𝓞 M), Multiset (IrrGL (w.adicCompletion M)))
+    (sK : ∀ u : HeightOneSpectrum (𝓞 K), Multiset (IrrGL (k := u.adicCompletion K)))
+    (sM : ∀ w : HeightOneSpectrum (𝓞 M), Multiset (IrrGL (k := w.adicCompletion M)))
     (hsK : ∀ u, SuppAt P u (sK u)) (hsM : ∀ w, SuppAt π w (sM w))
     (zK : ∀ u ∈ S, u ≠ v → cnt (sK u) 1 = 0)
     (zM : ∀ w : HeightOneSpectrum (𝓞 M), w.under (𝓞 K) ∈ S → w.under (𝓞 K) ≠ v → cnt (sM w) 1 = 0) :

@@ -182,7 +182,7 @@ private theorem flag_cont {Γ : Type} [Group Γ] [TopologicalSpace Γ] [IsTopolo
   exact Units.continuous_iff.2 ⟨h1, (h1.comp continuous_inv).congr fun s => by simp⟩
 private theorem above [IsCMField L] (P : _root_.UpperTheory.V.Af.Hypotheses') (hPs : _root_.UpperTheory.V.Z.Desc.W.PseudoLocalDescent) (hl : l ≠ 2) {ρ : G L Ω →* GL (Fin n) (Qbar l)}
     {HT : (L →+* Qbar l) → Multiset ℤ} (hρ : Continuous ρ) (HG : HasHTAt ρ HT w) (h : IsPlaceOver A w)
-    (hw : ((l : ℕ) : 𝓞 L) ∈ w.asIdeal) {τ : SmIrr (GLw n w)} (H : LocGlobT ι ρ w τ) {rc : IrrGL (w.adicCompletion L) → WD h}
+    (hw : ((l : ℕ) : 𝓞 L) ∈ w.asIdeal) {τ : SmIrr (GLw n w)} (H : LocGlobT ι ρ w τ) {rc : IrrGL (k := w.adicCompletion L) → WD h}
     (hrc : IsRecT h rc) (hp : GlobalTheory.RoadU.PlainTor (IrrGL.of τ.ρ τ.smooth τ.irred)) (hg : Gd (rc (algNorm τ)))
     (lam : Wt L l n) {ψ : Fin n → Dec (F := L) A →* (Qbar l)ˣ}
     (hψ : ∀ i, W.IsLocAlg h (ψ i) fun t => htW lam i (t.1.comp (algebraMap L _)))
@@ -243,7 +243,7 @@ private theorem ker_le {n : ℕ} {k Γ H : Type} [Field k] [CharZero k] [Group �
     ((AlgebraTools.Det.repApi (W.mat ρ)).2.1 z).symm.trans (by rw [← e, chi_comap])
   rw [Matrix.trace_eq_neg_charpoly_coeff, Matrix.trace_eq_neg_charpoly_coeff, h1, h1, map_mul, hg, mul_one]
 theorem UpperTheory.V.Z.Desc.W.isRecT_of_isRecT (_P : _root_.UpperTheory.V.Af.Hypotheses') {L Ω : Type} [Field L] [NumberField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω]
-    {w : Plc L} {A : ValuationSubring Ω} {h : IsPlaceOver A w} {rc : IrrGL (w.adicCompletion L) → WD h} (k : IsRecT h rc) : IsRecT h rc := k
+    {w : Plc L} {A : ValuationSubring Ω} {h : IsPlaceOver A w} {rc : IrrGL (k := w.adicCompletion L) → WD h} (k : IsRecT h rc) : IsRecT h rc := k
 theorem UpperTheory.V.Z.Desc.W.jPT_of_alt :
     RecTExists → CompatT → PlainRec → Same → _root_.UpperTheory.V.Z.Desc.W.SphTAlt → _root_.UpperTheory.V.Z.Desc.W.PseudoLocalDescent → UnlOf → _root_.UpperTheory.V.Af.HypothesesH' → Z.Desc.DescWeak → ∀ (l : ℕ) [Fact l.Prime] (L Ω : Type) [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (s : HidaSetting l L Ω) (n : ℕ), 1 ≤ n →
     ∀ (V : s.Lev) (Q : QData V) (c : Coef l), ∀ (r : Resid V.frame c.O n) (ι : Qbar l ≃+* ℂ), ∀ (B : UniversalOrdinaryDeterminantRing r) (Λ : LamObj r) (R : _root_.UpperTheory.V.Hi.CaseU.UnitaryHeckeData Q ι Λ) (K : (hset Q R.τ₀).Lev), V.S' = s.S → ∀ J : Ideal B.B, R.IsJ B K J →

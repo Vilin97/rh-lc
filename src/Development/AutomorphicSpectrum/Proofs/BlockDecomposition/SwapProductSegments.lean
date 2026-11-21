@@ -19,7 +19,7 @@ namespace GlobalTheory.CompanionTheory.BZSwap
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem prodIrr_congr {r r' N : ℕ} (hr : r = r') (v : Fin r → IrrGL k) (w : Fin r' → IrrGL k)
+theorem prodIrr_congr {r r' N : ℕ} (hr : r = r') (v : Fin r → IrrGL (k := k)) (w : Fin r' → IrrGL (k := k))
     (hvw : ∀ i, v i = w (Fin.cast hr i)) (hv : ∑ a, (v a).1 = N) (hw : ∑ a, (w a).1 = N) :
     Nonempty ((prodIrr v hv).Equiv (prodIrr w hw)) := by
   subst hr
@@ -27,9 +27,9 @@ theorem prodIrr_congr {r r' N : ℕ} (hr : r = r') (v : Fin r → IrrGL k) (w : 
   subst e
   exact ⟨Representation.Equiv.refl _⟩
 
-theorem flatten {s h N : ℕ} (t : Fin s → ℕ) (u : ∀ a, Fin (t a) → IrrGL k) (d : Fin s → ℕ)
+theorem flatten {s h N : ℕ} (t : Fin s → ℕ) (u : ∀ a, Fin (t a) → IrrGL (k := k)) (d : Fin s → ℕ)
     (hd : ∀ a, ∑ b, (u a b).1 = d a) (hN : ∑ a, d a = N) (F : Fin h ≃o Σₗ a, Fin (t a))
-    (x : Fin h → IrrGL k) (hx : ∀ c, u (ofLex (F c)).1 (ofLex (F c)).2 = x c) (hxN : ∑ a, (x a).1 = N) :
+    (x : Fin h → IrrGL (k := k)) (hx : ∀ c, u (ofLex (F c)).1 (ofLex (F c)).2 = x c) (hxN : ∑ a, (x a).1 = N) :
     Nonempty ((multiProd (stdBlocks d hN) fun a => prodIrr (u a) (hd a)).Equiv (prodIrr x hxN)) := by
   have e : (fun c => u (ofLex (F c)).1 (ofLex (F c)).2) = x := funext hx
   subst e
@@ -103,11 +103,11 @@ theorem fin_three_forall {P : Fin 3 → Prop} (h0 : P 0) (h1 : P 1) (h2 : P 2) (
 
 section Main
 
-variable {h N j M : ℕ} (hj : j + 1 < h) (x : Fin h → IrrGL k)
+variable {h N j M : ℕ} (hj : j + 1 < h) (x : Fin h → IrrGL (k := k))
 
-def fac (a : Fin 3) (b : Fin (grp h j a)) : IrrGL k := x (place hj (toLex ⟨a, b⟩))
+def fac (a : Fin 3) (b : Fin (grp h j a)) : IrrGL (k := k) := x (place hj (toLex ⟨a, b⟩))
 
-def fac' (a : Fin 3) (b : Fin (grp h j a)) : IrrGL k :=
+def fac' (a : Fin 3) (b : Fin (grp h j a)) : IrrGL (k := k) :=
   x (Equiv.swap ⟨j, by omega⟩ ⟨j + 1, hj⟩ (place hj (toLex ⟨a, b⟩)))
 
 theorem fac'_zero : fac' hj x 0 = fac hj x 0 := by
@@ -135,13 +135,13 @@ theorem place_one_one : place hj (toLex ⟨1, (1 : Fin 2)⟩) = ⟨j + 1, hj⟩ 
   show off j 1 + 1 = j + 1
   simp [off])
 
-theorem fac_one : (fac hj x 1 : Fin 2 → IrrGL k) = ![x ⟨j, by omega⟩, x ⟨j + 1, hj⟩] := by
+theorem fac_one : (fac hj x 1 : Fin 2 → IrrGL (k := k)) = ![x ⟨j, by omega⟩, x ⟨j + 1, hj⟩] := by
   funext b
   fin_cases b
   · exact congrArg x (place_one_zero hj)
   · exact congrArg x (place_one_one hj)
 
-theorem fac'_one : (fac' hj x 1 : Fin 2 → IrrGL k) = ![x ⟨j + 1, hj⟩, x ⟨j, by omega⟩] := by
+theorem fac'_one : (fac' hj x 1 : Fin 2 → IrrGL (k := k)) = ![x ⟨j + 1, hj⟩, x ⟨j, by omega⟩] := by
   funext b
   fin_cases b
   · refine congrArg x ?_

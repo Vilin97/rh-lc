@@ -46,7 +46,7 @@ theorem hasSatake_of {n : ℕ} (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) {B
   obtain ⟨x, hx⟩ := hB.exists_vec
   exact ⟨l.get, e, GlobalTheory.CompanionTheory.SatComp.hasSatake_of_isSatVecGL ⟨σ.smooth, σ.irred⟩ _ (e ▸ hx)⟩
 
-theorem rec_diag {rc : IrrGL (w.adicCompletion E) → WD h} (H : IsRecT h rc) {n : ℕ}
+theorem rec_diag {rc : IrrGL (k := w.adicCompletion E) → WD h} (H : IsRecT h rc) {n : ℕ}
     (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) (B : Multiset ℂˣ) (hB : GlobalTheory.LFun.HasSatGL w σ.ρ B) :
     ∃ α : Fin n → ℂˣ, B = Finset.univ.val.map α ∧
       rc (algNorm σ) = WD.mk (WDRep.diag h fun i => (α i)⁻¹ * qPow w ((1 - (n : ℝ)) / 2)) := by
@@ -63,7 +63,7 @@ theorem rec_diag {rc : IrrGL (w.adicCompletion E) → WD h} (H : IsRecT h rc) {n
 theorem frob_of {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ} {n : ℕ} {r : G E Ω →* GL (Fin n) (Qbar l)}
     (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) {B : Multiset ℂˣ}
     (hB : GlobalTheory.LFun.HasSatGL w σ.ρ B)
-    (H : ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), IsRecT h rc →
+    (H : ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRecT h rc →
       IsWDOf ι r (rc (algNorm σ))) : FrobEig ι r w (algSat n (normV w) B) := by
   intro A h
   obtain ⟨rc, hrec⟩ := recTExists E Ω A w h

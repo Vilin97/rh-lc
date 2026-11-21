@@ -31,7 +31,7 @@ private theorem exists_unr {ξ : kˣ →* ℂˣ} (h : IsUnram ξ) : ∃ a : ℂ�
   have h0 : x ≠ 0 := fun e => ValuativeRel.uniformizer_ne_zero (R := k) (by rw [← hx, e, map_zero])
   exact ⟨_, eq_unrChar h (ϖ := Units.mk0 x h0) hx⟩
 
-private theorem exists_family {n : ℕ} {s : Multiset (IrrGL k)} (h1 : ∀ y ∈ s, y.1 = 1) (hn : (s.map Sigma.fst).sum = n)
+private theorem exists_family {n : ℕ} {s : Multiset (IrrGL (k := k))} (h1 : ∀ y ∈ s, y.1 = 1) (hn : (s.map Sigma.fst).sum = n)
     (hu : ∀ ξ ∈ chars s, IsUnram ξ) : ∃ α : Fin n → ℂˣ,
       s = Finset.univ.val.map fun i => IrrGL.ofChar (unrChar k (α i)) (isSmoothChar_of_isUnram (isUnram_unrChar k (α i))) := by
   have hc : Multiset.card s = n := by

@@ -107,7 +107,8 @@ theorem LeadAt.prod {ι : Type*} {w : σ → M} (s : Finset ι) (γ : ι → M) 
 theorem LeadAt.comp_eq_zero {w : σ → M} {γ γ' : M} {f t : MvPolynomial σ R} (hf : LeadAt w γ f t)
     (h : γ < γ') : weightedHomogeneousComponent w γ' f = 0 := by
   ext e
-  rw [coeff_weightedHomogeneousComponent, coeff_zero]
+  rw [coeff_weightedHomogeneousComponent, AddMonoidAlgebra.coeff_zero]
+  change (if Finsupp.weight w e = γ' then f.coeff e else 0) = 0
   split_ifs with he
   · by_contra hne
     have := hf.1 e (mem_support_iff.mpr hne)
@@ -128,11 +129,11 @@ theorem LeadAt.sum {ι : Type*} {w : σ → M} (T : Finset ι) (v : ι → M) (t
     · exact (hlt m hm hmt).le
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.sum_eq_single top]
-    · exact (Formalism.InvariantFactorPaths.GelfandTsetlinBases.A1.LeadAt.of_hom (ht top htop)).2
-    · intro m hm hmt
-      exact (Formalism.InvariantFactorPaths.GelfandTsetlinBases.A1.LeadAt.of_hom (ht m hm)).comp_eq_zero (hlt m hm hmt)
-    · intro h
-      exact absurd htop h
+      · exact (Formalism.InvariantFactorPaths.GelfandTsetlinBases.A1.LeadAt.of_hom (ht top htop)).2
+      · intro m hm hmt
+        exact (Formalism.InvariantFactorPaths.GelfandTsetlinBases.A1.LeadAt.of_hom (ht m hm)).comp_eq_zero (hlt m hm hmt)
+      · intro h
+        exact absurd htop h
 
 end Top
 

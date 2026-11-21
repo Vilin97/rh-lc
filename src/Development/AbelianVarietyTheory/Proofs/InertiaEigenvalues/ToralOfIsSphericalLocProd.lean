@@ -21,7 +21,7 @@ namespace GlobalTheory.BCSupport
 variable {E : Type} [Field E] [NumberField E]
 
 abbrev clsOf {w : HeightOneSpectrum (𝓞 E)} {a : ℕ} (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) :
-    IrrGL (w.adicCompletion E) :=
+    IrrGL (k := w.adicCompletion E) :=
   IrrGL.of σ.ρ σ.smooth σ.irred
 
 theorem good_of_good_locProd {c n : ℕ} {N : Fin c → ℕ} (h : ∑ i, N i = n) (w : HeightOneSpectrum (𝓞 E))

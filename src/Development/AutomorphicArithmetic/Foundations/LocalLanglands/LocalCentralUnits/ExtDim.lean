@@ -18,7 +18,7 @@ namespace UpperTheory.Zero.LLC
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-  {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {r : IrrGL (w.adicCompletion E) → WD h}
+  {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {r : IrrGL (k := w.adicCompletion E) → WD h}
 
 private theorem charPol_seg (H : CuspT a ha r) (Δ : Segment (w.adicCompletion E)) (σ : Weil h) :
     (((r Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len)).charPol σ
@@ -32,8 +32,8 @@ private theorem charPol_seg (H : CuspT a ha r) (Δ : Segment (w.adicCompletion E
   rw [Fin.prod_univ_eq_prod_range (fun j => ((r Δ.first).lpTw (j : ℝ)).charPol σ) Δ.len]
   rfl
 
-private theorem dim_charPol {rc : IrrGL (w.adicCompletion E) → WD h} (H : CuspT a ha r) (L : IsLExt r rc)
-    (x : IrrGL (w.adicCompletion E)) :
+private theorem dim_charPol {rc : IrrGL (k := w.adicCompletion E) → WD h} (H : CuspT a ha r) (L : IsLExt r rc)
+    (x : IrrGL (k := w.adicCompletion E)) :
     (rc x).lpDim = x.1 ∧ ∃ s, HasSupport x.rep s ∧ (∀ y ∈ s, y.IsCusp) ∧
       ∀ σ, (rc x).charPol σ = (s.map fun y => (r y).charPol σ).prod := by
   haveI : CharZero (w.adicCompletion E) := charZero_of_injective_algebraMap (algebraMap E _).injective

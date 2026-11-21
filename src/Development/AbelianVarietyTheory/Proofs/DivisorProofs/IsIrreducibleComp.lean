@@ -45,7 +45,7 @@ theorem isIrreducible_comp {n : ℕ} {π : Representation ℂ (GL (Fin n) k) V} 
     Representation.IsIrreducible (π.comp (invTranspose n) : Representation ℂ (GL (Fin n) k) V) :=
   GlobalTheory.CosocleComp.isIrreducible_comp (fun g => ⟨_, invTranspose_invTranspose n g⟩) h
 
-def dual (x : IrrGL k) : IrrGL k :=
+def dual (x : IrrGL (k := k)) : IrrGL (k := k) :=
   IrrGL.of (x.rep.comp (invTranspose x.1)) (isSmooth_comp x.2.rep.smooth) (isIrreducible_comp x.2.rep.irr)
 
 
@@ -54,7 +54,7 @@ theorem dual_of {n : ℕ} (π : Representation ℂ (GL (Fin n) k) V) (hs : IsSmo
   IrrGL.of_eq_of.2 ⟨compEquiv (IrrGL.equivOf π hs hi).symm (invTranspose n)⟩
 
 
-theorem dual_dual (x : IrrGL k) : dual (dual x) = x := by
+theorem dual_dual (x : IrrGL (k := k)) : dual (dual x) = x := by
   refine (dual_of _ _ _).trans (Eq.trans (IrrGL.of_eq_of.2 ⟨?_⟩) (IrrGL.of_rep x))
   refine Representation.Equiv.mk (LinearEquiv.refl ℂ _) fun g => ?_
   ext v

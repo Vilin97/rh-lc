@@ -41,39 +41,39 @@ private theorem eq_of_unram (ξ ξ' : kˣ →* ℂˣ) (h : IsUnram (ξ * ξ'⁻�
   rw [← b] at a
   exact mul_inv_eq_one.1 a
 
-private noncomputable def pfac (χ : kˣ →* ℂˣ) (y : IrrGL k) : ℂ[X] :=
+private noncomputable def pfac (χ : kˣ →* ℂˣ) (y : IrrGL (k := k)) : ℂ[X] :=
   if h : ∃ ξ : kˣ →* ℂˣ, (∃ hξ, y = IrrGL.ofChar ξ hξ) ∧ IsUnram (ξ * χ) then
     1 - C (((h.choose * χ) (unif k) : ℂˣ) : ℂ) * X else 1
 
-private theorem pol_cons (y : IrrGL k) (s : Multiset (IrrGL k)) (χ : kˣ →* ℂˣ) :
+private theorem pol_cons (y : IrrGL (k := k)) (s : Multiset (IrrGL (k := k))) (χ : kˣ →* ℂˣ) :
     pol (y ::ₘ s) χ = pfac χ y * pol s χ := by
   simp only [pol, Multiset.map_cons, Multiset.prod_cons]
   rfl
 
-private theorem pol_zero (χ : kˣ →* ℂˣ) : pol (0 : Multiset (IrrGL k)) χ = 1 := by
+private theorem pol_zero (χ : kˣ →* ℂˣ) : pol (0 : Multiset (IrrGL (k := k))) χ = 1 := by
   simp [pol]
 
 private theorem fac_pos (χ ξ : kˣ →* ℂˣ) (hξ : IsSmoothChar ξ) (hu : IsUnram (ξ * χ)) :
     pfac χ (IrrGL.ofChar ξ hξ) = 1 - C (((ξ * χ) (unif k) : ℂˣ) : ℂ) * X := by
-  have h : ∃ ξ' : kˣ →* ℂˣ, (∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ') ∧ IsUnram (ξ' * χ) :=
+  have h : ∃ ξ' : kˣ →* ℂˣ, (∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL (k := k)) = IrrGL.ofChar ξ' hξ') ∧ IsUnram (ξ' * χ) :=
     ⟨ξ, ⟨hξ, rfl⟩, hu⟩
   unfold pfac
   rw [dite_eq_left h]
   obtain ⟨h', e⟩ := h.choose_spec.1
   rw [← IrrGL.ofChar_inj.1 e]
 
-private theorem fac_neg (χ : kˣ →* ℂˣ) (y : IrrGL k) (h : ¬ ∃ ξ hξ, y = IrrGL.ofChar ξ hξ ∧ IsUnram (ξ * χ)) :
+private theorem fac_neg (χ : kˣ →* ℂˣ) (y : IrrGL (k := k)) (h : ¬ ∃ ξ hξ, y = IrrGL.ofChar ξ hξ ∧ IsUnram (ξ * χ)) :
     pfac χ y = 1 := by
   unfold pfac
   rw [dite_eq_right]
   rintro ⟨ξ, ⟨hξ, e⟩, hu⟩
   exact h ⟨ξ, hξ, e, hu⟩
 
-private theorem fac_eval (χ : kˣ →* ℂˣ) (y : IrrGL k) : (pfac χ y).eval 0 = 1 := by
+private theorem fac_eval (χ : kˣ →* ℂˣ) (y : IrrGL (k := k)) : (pfac χ y).eval 0 = 1 := by
   unfold pfac
   split_ifs <;> simp
 
-private theorem pol_eval (s : Multiset (IrrGL k)) (χ : kˣ →* ℂˣ) : (pol s χ).eval 0 = 1 := by
+private theorem pol_eval (s : Multiset (IrrGL (k := k))) (χ : kˣ →* ℂˣ) : (pol s χ).eval 0 = 1 := by
   induction s using Multiset.induction_on with
   | empty => rw [pol_zero, eval_one]
   | cons y s ih => rw [pol_cons, eval_mul, ih, fac_eval, mul_one]
@@ -81,7 +81,7 @@ private theorem pol_eval (s : Multiset (IrrGL k)) (χ : kˣ →* ℂˣ) : (pol s
 private theorem natDegree_lin (a : ℂ) (ha : a ≠ 0) : (1 - C a * X : ℂ[X]).natDegree = 1 := by
   rw [natDegree_sub_eq_right_of_natDegree_lt] <;> simp [natDegree_C_mul_X _ ha]
 
-private theorem pol_deg (s : Multiset (IrrGL k)) (χ : kˣ →* ℂˣ) : (pol s χ).natDegree = cnt s χ := by
+private theorem pol_deg (s : Multiset (IrrGL (k := k))) (χ : kˣ →* ℂˣ) : (pol s χ).natDegree = cnt s χ := by
   induction s using Multiset.induction_on with
   | empty => simp [pol_zero, cnt]
   | cons y s ih =>
@@ -94,7 +94,7 @@ private theorem pol_deg (s : Multiset (IrrGL k)) (χ : kˣ →* ℂˣ) : (pol s 
         Multiset.card_add, Multiset.card_singleton]
     · rw [fac_neg χ y hy, if_neg hy, natDegree_one, zero_add, zero_add]
 
-private theorem fac_root (χ : kˣ →* ℂˣ) (y : IrrGL k) (x : ℂ) : (pfac χ y).eval x = 0 ↔
+private theorem fac_root (χ : kˣ →* ℂˣ) (y : IrrGL (k := k)) (x : ℂ) : (pfac χ y).eval x = 0 ↔
     ∃ ξ hξ, y = IrrGL.ofChar ξ hξ ∧ IsUnram (ξ * χ) ∧ (((ξ * χ) (unif k) : ℂˣ) : ℂ) * x = 1 := by
   by_cases hy : ∃ ξ hξ, y = IrrGL.ofChar ξ hξ ∧ IsUnram (ξ * χ)
   · obtain ⟨ξ, hξ, rfl, hu⟩ := hy
@@ -112,7 +112,7 @@ private theorem fac_root (χ : kˣ →* ℂˣ) (y : IrrGL k) (x : ℂ) : (pfac �
     rintro ⟨ξ, hξ, e, hu, _⟩
     exact hy ⟨ξ, hξ, e, hu⟩
 
-private theorem pol_root (s : Multiset (IrrGL k)) (χ : kˣ →* ℂˣ) (x : ℂ) : (pol s χ).eval x = 0 ↔
+private theorem pol_root (s : Multiset (IrrGL (k := k))) (χ : kˣ →* ℂˣ) (x : ℂ) : (pol s χ).eval x = 0 ↔
     ∃ ξ ∈ chars s, IsUnram (ξ * χ) ∧ (((ξ * χ) (unif k) : ℂˣ) : ℂ) * x = 1 := by
   induction s using Multiset.induction_on with
   | empty =>
@@ -139,7 +139,7 @@ private theorem unram_mul_iff (a μ : kˣ →* ℂˣ) (hμ : IsUnram μ) : IsUnr
   · intro h x hx
     rw [MonoidHom.mul_apply, h x hx, hμ x hx, mul_one]
 
-private theorem fac_comp (χ μ : kˣ →* ℂˣ) (hμ : IsUnram μ) (y : IrrGL k) :
+private theorem fac_comp (χ μ : kˣ →* ℂˣ) (hμ : IsUnram μ) (y : IrrGL (k := k)) :
     pfac (χ * μ) y = (pfac χ y).comp (C ((μ (unif k) : ℂˣ) : ℂ) * X) := by
   by_cases hy : ∃ ξ hξ, y = IrrGL.ofChar ξ hξ ∧ IsUnram (ξ * χ)
   · obtain ⟨ξ, hξ, rfl, hu⟩ := hy
@@ -154,7 +154,7 @@ private theorem fac_comp (χ μ : kˣ →* ℂˣ) (hμ : IsUnram μ) (y : IrrGL 
       exact hy ⟨ξ, hξ, e, hu⟩
     rw [fac_neg _ _ hy', fac_neg _ _ hy, one_comp]
 
-private theorem pol_comp (s : Multiset (IrrGL k)) (χ μ : kˣ →* ℂˣ) (hμ : IsUnram μ) :
+private theorem pol_comp (s : Multiset (IrrGL (k := k))) (χ μ : kˣ →* ℂˣ) (hμ : IsUnram μ) :
     pol s (χ * μ) = (pol s χ).comp (C ((μ (unif k) : ℂˣ) : ℂ) * X) := by
   induction s using Multiset.induction_on with
   | empty => rw [pol_zero, pol_zero, one_comp]

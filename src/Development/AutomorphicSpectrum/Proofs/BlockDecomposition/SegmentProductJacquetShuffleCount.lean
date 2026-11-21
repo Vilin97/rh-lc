@@ -30,7 +30,7 @@ theorem sum_map_filter {β : Type*} (p : β → Prop) [DecidablePred p] (f : β 
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem deg_sub {h : ℕ} (W : List (IrrGL k)) (c : Fin W.length → Fin h) (i : Fin h) :
+theorem deg_sub {h : ℕ} (W : List (IrrGL (k := k))) (c : Fin W.length → Fin h) (i : Fin h) :
     ((sub W c i).map Sigma.fst).sum = ∑ j, if c j = i then (W.get j).1 else 0 := by
   show ((List.map W.get (List.filter (fun p => decide (c p = i)) (List.finRange W.length))).map
     Sigma.fst).sum = _
@@ -43,17 +43,17 @@ theorem deg_decWord (Γ : Segment k) : ((decWord Γ).map Sigma.fst).sum = Γ.deg
   rw [List.map_reverse, List.sum_reverse, List.map_ofFn, List.sum_ofFn]
   simp only [Function.comp_def, h, Finset.sum_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul]
 
-def colourMat {h : ℕ} (W : List (IrrGL k)) (c : Fin W.length → Fin h) (i : Fin h) (j : Fin W.length) : ℕ :=
+def colourMat {h : ℕ} (W : List (IrrGL (k := k))) (c : Fin W.length → Fin h) (i : Fin h) (j : Fin W.length) : ℕ :=
   if c j = i then (W.get j).1 else 0
 
-theorem sum_colourMat {h : ℕ} (W : List (IrrGL k)) (c : Fin W.length → Fin h) (j : Fin W.length) :
+theorem sum_colourMat {h : ℕ} (W : List (IrrGL (k := k))) (c : Fin W.length → Fin h) (j : Fin W.length) :
     ∑ i, colourMat W c i j = (W.get j).1 := by
   simp [colourMat]
 
 end GlobalTheory.CompanionTheory.FineProd
 
 
-theorem GlobalTheory.CompanionTheory.FineProd.jmL_prodIrr : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.Published.IrreducibleAdmissibleGL → LSegJacquet k → ∀ {h N : ℕ} (Γ : Fin h → Segment k) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N), (∀ i, IsLSeg (Γ i) (x i).rep) → ∀ W : List (IrrGL k), (∀ w ∈ W, w.IsCusp) → jmL W (prodIrr x hd) = (shuffleCount W (fun i => decWord (Γ i)) : ℕ∞) := by
+theorem GlobalTheory.CompanionTheory.FineProd.jmL_prodIrr : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.Published.IrreducibleAdmissibleGL → LSegJacquet k → ∀ {h N : ℕ} (Γ : Fin h → Segment k) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), (∀ i, IsLSeg (Γ i) (x i).rep) → ∀ W : List (IrrGL (k := k)), (∀ w ∈ W, w.IsCusp) → jmL W (prodIrr x hd) = (shuffleCount W (fun i => decWord (Γ i)) : ℕ∞) := by
   intro k _ _ _ _ hA hJ h N Γ x hd hΓ W hW
   classical
   have hΓd : ∀ i, ((decWord (Γ i)).map Sigma.fst).sum = (x i).1 := fun i =>

@@ -51,7 +51,7 @@ def ExpLow : Prop :=
     (∀ z, ‖(ω z : ℂ)‖ = nabs k z ^ ((m : ℝ) * s)) → -1 / 2 < s
 
 def ExpBound : Prop :=
-  ∀ (h N : ℕ) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N), (prodIrr x hd).IsIrreducible → IsUnitarisable (prodIrr x hd) →
+  ∀ (h N : ℕ) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), (prodIrr x hd).IsIrreducible → IsUnitarisable (prodIrr x hd) →
     IsGeneric (prodIrr x hd) → ∀ (j : Fin h) (ω : kˣ →* ℂˣ) (s : ℝ), 0 < (x j).1 → HasCentralChar (x j).rep ω →
     (∀ z, ‖(ω z : ℂ)‖ = nabs k z ^ (((x j).1 : ℝ) * s)) → |s| < 1 / 2
 

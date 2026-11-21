@@ -25,7 +25,7 @@ def NmEq : Prop :=
 def ChsTr : Prop :=
   ∀ (k k' : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNonarchimedeanLocalField k'] (i : k ≃+* k') (hi' : Continuous i.symm)
-    (s : Multiset (IrrGL k)),
+    (s : Multiset (IrrGL (k := k))),
     chs (s.map (GlobalTheory.SuppIne.trGL i hi')) = (chs s).map fun ξ => ξ.comp (Units.map (i.symm : k' →* k))
 
 def SplitSupp : Prop :=
@@ -49,7 +49,7 @@ def RkLift : Prop :=
 
 def UpThru : Prop :=
   ∀ (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] (v : HeightOneSpectrum (𝓞 K)) (w : PlacesOver L v)
-    (s : Multiset (IrrGL (v.adicCompletion K))), (up w s).filter (Thru w) = up w s
+    (s : Multiset (IrrGL (k := v.adicCompletion K))), (up w s).filter (Thru w) = up w s
 
 def SplitSuppOf : Prop := NmEq → SuppFacts → UpperTheory.ConvolutionTheory.Sph.WeakStable → UpperTheory.ConvolutionTheory.T.SplitStrong → SplitSupp
 def RkLiftOf : Prop := NormLoc → RkLift

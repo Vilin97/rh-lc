@@ -90,7 +90,7 @@ structure LevPt (A : LevMod b h w) (ι : Qbar l ≃+* ℂ) : Type 1 where
   sp_act : ∀ g m, sp (A.ρ g m) = π g (sp m)
   σ : ∀ j, SmIrr (GLw n (w j))
   iso : ∀ j, IsoSum (π.comp (atJ n w j)) ⊤ (σ j)
-  lg : ∀ j (Bq : ValuationSubring Ω) (hB : IsPlaceOver Bq (w j)) (rc : IrrGL ((w j).adicCompletion L) → WD hB), IsRec hB rc →
+  lg : ∀ j (Bq : ValuationSubring Ω) (hB : IsPlaceOver Bq (w j)) (rc : IrrGL (k := (w j).adicCompletion L) → WD hB), IsRec hB rc →
     UpperTheory.V.Lev.WO ι (rep.comp V.pr) (rc (algNorm (σ j)))
 
 attribute [instance] LevPt.add LevPt.mod

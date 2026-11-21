@@ -108,13 +108,13 @@ def TensInc : Prop :=
 
 def UnlFull : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (N : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
-    (s : ℕ) (x : Fin s → IrrGL k) (hd : ∑ a, (x a).1 = N), HasSupport π (Finset.univ.val.map x) →
+    (s : ℕ) (x : Fin s → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), HasSupport π (Finset.univ.val.map x) →
     GlobalTheory.RoadU.Unlinked (Finset.univ.val.map x) → Nonempty (π.Equiv (prodIrr x hd))
 
 def LblFull : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (θ : AlgebraicClosure 𝓀[k] →* ℂ) (N : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V), IsSmooth π → π.IsIrreducible →
-    ∀ (s : ℕ) (x : Fin s → IrrGL k) (c : Fin s → ℕ) (hd : ∑ a, (x a).1 = N), Nonempty (π.Equiv (prodIrr x hd)) →
+    ∀ (s : ℕ) (x : Fin s → IrrGL (k := k)) (c : Fin s → ℕ) (hd : ∑ a, (x a).1 = N), Nonempty (π.Equiv (prodIrr x hd)) →
     (∀ a γ, LinearMap.trace ℂ _ (levelZero (x a).rep γ) = cusp θ (x a).1 (c a) γ) →
     ∀ T : GL (Fin N) 𝓀[k] → ℂ, GlobalTheory.BI.IsChar ℂ ℂ T → Pairs (J θ (List.ofFn fun a => ((x a).1, c a)) N) T → Meets (levelZero π) T
 
@@ -131,7 +131,7 @@ def LblMixed : Prop :=
     (v : HeightOneSpectrum (𝓞 E)), IsPlaceOver A v → ∀ (g : ℕ) [Fact g.Prime] (i : ℚ_[g] ≃+* v.adicCompletion E), Continuous i →
     ∀ (θ : AlgebraicClosure 𝓀[v.adicCompletion E] →* ℂ), Inj θ → ∀ (n : ℕ) (τ : SmIrr (GL (Fin n) (v.adicCompletion E))),
       Mixed (IrrGL.of τ.ρ τ.smooth τ.irred) →
-      ∃ (a : Lbl) (s : Multiset (IrrGL (v.adicCompletion E))), HasLbl θ τ.ρ a ∧ a.Apart ∧ HasSupport τ.ρ s ∧
+      ∃ (a : Lbl) (s : Multiset (IrrGL (k := v.adicCompletion E))), HasLbl θ τ.ρ a ∧ a.Apart ∧ HasSupport τ.ρ s ∧
         ∀ p ∈ a.L, ∃ y ∈ s, y.1 = p.1
 
 end UpperTheory.Gal.InertialTypesAlt

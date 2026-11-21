@@ -19,7 +19,7 @@ section Dual
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-def DualCl (x y : IrrGL k) : Prop :=
+def DualCl (x y : IrrGL (k := k)) : Prop :=
   ∃ (n : ℕ) (π π' : IrrRep (GL (Fin n) k)), x = cls π ∧ y = cls π' ∧ Nonempty (π'.ρ.Equiv (contra π.ρ))
 
 def SegDual (Δ Δ' : Segment k) : Prop :=
@@ -30,8 +30,8 @@ end Dual
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
-def IsLExt (r rc : IrrGL (w.adicCompletion E) → WD h) : Prop :=
-  ∀ (l : List (Segment (w.adicCompletion E))) (x : IrrGL (w.adicCompletion E)),
+def IsLExt (r rc : IrrGL (k := w.adicCompletion E) → WD h) : Prop :=
+  ∀ (l : List (Segment (w.adicCompletion E))) (x : IrrGL (k := w.adicCompletion E)),
     IsL (l : Multiset (Segment (w.adicCompletion E))) x.rep → rc x = segSum r l
 
 end GlobalTheory.LocLanglands

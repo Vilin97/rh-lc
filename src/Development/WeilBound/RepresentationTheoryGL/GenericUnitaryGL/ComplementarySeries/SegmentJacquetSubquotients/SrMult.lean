@@ -29,7 +29,7 @@ theorem isIrreducible_segTerm' {d l : ℕ} (σ : IrrRep (GL (Fin d) k)) (a : Fin
     (segTerm σ.ρ l a).IsIrreducible :=
   GlobalTheory.LocGL.isIrreducible_twist σ.irr _
 
-def cl {d : ℕ} (σ : IrrRep (GL (Fin d) k)) (l : ℕ) (a : Fin l) : IrrGL k :=
+def cl {d : ℕ} (σ : IrrRep (GL (Fin d) k)) (l : ℕ) (a : Fin l) : IrrGL (k := k) :=
   IrrGL.of (segTerm σ.ρ l a) (isSmooth_segTerm' σ a) (isIrreducible_segTerm' σ a)
 
 theorem cl_injective {d l : ℕ} (hd : 0 < d) (σ : IrrRep (GL (Fin d) k)) : Function.Injective (cl σ l) := by
@@ -60,7 +60,7 @@ def jacEquivOf {α : Type} [Fintype α] [LinearOrder α] {m : α → Type} [∀ 
         show (Submodule.Quotient.mk (φ (φ.symm v)) : _) = _
         rw [φ.apply_symm_apply]⟩)
 
-def cl' {d : ℕ} (σ : IrrRep (GL (Fin d) k)) (l : ℕ) (a : Fin l) : IrrGL k := ⟨d, (cl σ l a).2⟩
+def cl' {d : ℕ} (σ : IrrRep (GL (Fin d) k)) (l : ℕ) (a : Fin l) : IrrGL (k := k) := ⟨d, (cl σ l a).2⟩
 
 end SrMult
 

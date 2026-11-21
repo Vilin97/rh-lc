@@ -38,7 +38,7 @@ theorem LeafRoot_of (h1 : LeafRootStd) (h2 : LeafRootHens) : LeafRoot := by
   apply huniq
   · have h4 : (f.map φ).map χ' = f.map ψ := by rw [Polynomial.map_map, hχ']
     rw [← h4]
-    exact Polynomial.IsRoot.map hb
+    exact Polynomial.IsRoot.map χ' hb
   · have h3 : (I.map φ).map χ' ≤ J := by
       rw [Ideal.map_map, hχ', Ideal.map_le_iff_le_comap]; exact hIJ
     have h5 := h3 (Ideal.mem_map_of_mem χ' hba)

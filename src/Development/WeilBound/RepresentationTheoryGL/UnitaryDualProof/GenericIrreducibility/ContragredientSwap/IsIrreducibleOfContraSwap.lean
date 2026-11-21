@@ -43,7 +43,7 @@ theorem isIrreducible_of_contra_swap {r t N : ℕ} {V W X Y : Type} [AddCommGrou
     (((compEquiv eX _).trans κ.symm).trans ((ind₂Equiv _ (τ.trans (extTensorCongr gb ga))).trans eY))
     (isIrreducible_comp_invT _ hX)
 
-theorem prodIrr_swap_isIrreducible (F G : Fin 2 → IrrGL k) (e₀ : G 0 = F 1) (e₁ : G 1 = F 0) {N : ℕ}
+theorem prodIrr_swap_isIrreducible (F G : Fin 2 → IrrGL (k := k)) (e₀ : G 0 = F 1) (e₁ : G 1 = F 0) {N : ℕ}
     (hd : ∑ a, (F a).1 = N) (hd' : ∑ a, (G a).1 = N) (hX : (prodIrr F hd).IsIrreducible) :
     (prodIrr G hd').IsIrreducible := by
   have hA := PositivityTheory.Tls2.BZGL.irreducibleAdmissibleGL_top
@@ -67,7 +67,7 @@ theorem prodIrr_swap_isIrreducible (F G : Fin 2 → IrrGL k) (e₀ : G 0 = F 1) 
   have e0 := R0.2.1.some
   have e1 := R1.2.1.some
   obtain ⟨m⟩ := nonempty_ind₂_equiv_multiProd (k := k) (d := fun a => (G a).1) hd' h' fun a => (G a).rep
-  have E₃ : ∀ (u v : IrrGL k), u = F 1 → v = F 0 → ∀ h₁ : u.1 + v.1 = N,
+  have E₃ : ∀ (u v : IrrGL (k := k)), u = F 1 → v = F 0 → ∀ h₁ : u.1 + v.1 = N,
       Nonempty ((ind₂ (stdSum h'') (extTensor (F 1).rep (F 0).rep)).Equiv
         (ind₂ (stdSum h₁) (extTensor u.rep v.rep))) := by
     rintro _ _ rfl rfl _

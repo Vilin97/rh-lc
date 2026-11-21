@@ -20,8 +20,8 @@ namespace GlobalTheory.CompanionTheory.FineProdCell
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem exists_class_of_degree (n : ℕ) (t : IrrGL k) (h : t.1 = n) :
-    ∃ u : IrrCl (GL (Fin n) k), (⟨n, u⟩ : IrrGL k) = t := by
+theorem exists_class_of_degree (n : ℕ) (t : IrrGL (k := k)) (h : t.1 = n) :
+    ∃ u : IrrCl (GL (Fin n) k), (⟨n, u⟩ : IrrGL (k := k)) = t := by
   subst h
   exact ⟨t.2, rfl⟩
 
@@ -29,12 +29,12 @@ theorem subsingleton_irrCl_of_eq_zero (n : ℕ) (h : n = 0) : Subsingleton (IrrC
   subst h
   exact GlobalTheory.SmGL.SegModel.subsingleton_irrCl_zero
 
-theorem class_eq_of_sigma_eq (t : IrrGL k) (z : IrrCl (GL (Fin t.1) k))
-    (h : (⟨t.1, z⟩ : IrrGL k) = t) : z = t.2 :=
+theorem class_eq_of_sigma_eq (t : IrrGL (k := k)) (z : IrrCl (GL (Fin t.1) k))
+    (h : (⟨t.1, z⟩ : IrrGL (k := k)) = t) : z = t.2 :=
   eq_of_heq (Sigma.ext_iff.1 h).2
 
 
-theorem jhMult_cell_colour : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {h : ℕ} (x : Fin h → IrrGL k) (W : List (IrrGL k)) (b : Fin h → Fin W.length → ℕ) (hrow : ∀ i, ∑ j, b i j = (x i).1) (hcol : ∀ j, ∑ i, b i j = (W.get j).1) (c : Fin W.length → Fin h), (∀ i j, b i j = if c j = i then (W.get j).1 else 0) → jhMult (piTensor fun j => (W.get j).rep) (cellFunctor (c := fun i j => Fin (b i j)) (fun i => stdBlocks (b i) (hrow i)) (fun j => stdBlocks (fun i => b i j) (hcol j)) (piTensor fun i => (x i).rep)) = ∏ i, jmL (sub W c i) (x i).rep := by
+theorem jhMult_cell_colour : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {h : ℕ} (x : Fin h → IrrGL (k := k)) (W : List (IrrGL (k := k))) (b : Fin h → Fin W.length → ℕ) (hrow : ∀ i, ∑ j, b i j = (x i).1) (hcol : ∀ j, ∑ i, b i j = (W.get j).1) (c : Fin W.length → Fin h), (∀ i j, b i j = if c j = i then (W.get j).1 else 0) → jhMult (piTensor fun j => (W.get j).rep) (cellFunctor (c := fun i j => Fin (b i j)) (fun i => stdBlocks (b i) (hrow i)) (fun j => stdBlocks (fun i => b i j) (hcol j)) (piTensor fun i => (x i).rep)) = ∏ i, jmL (sub W c i) (x i).rep := by
   intro k _ _ _ _ h x W b hrow hcol c hb
   have hBZ := GlobalTheory.CompanionTheory.Published.bernsteinZelevinskyFiniteness
   have hC : CellSemisimplification k := (GlobalTheory.CompanionTheory.GeoLink.geometricLemma k).2
@@ -50,14 +50,14 @@ theorem jhMult_cell_colour : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
   have hzero : ∀ i j, c j ≠ i → b i j = 0 := fun i j hij => by rw [hb, if_neg hij]
 
   have hcolumn : ∀ (s : ∀ i j, IrrCl (GL (Fin (b i j)) k)) (j : Fin W.length),
-      ∃ z : IrrCl (GL (Fin (W.get j).1) k), (⟨_, z⟩ : IrrGL k) = ⟨b (c j) j, s (c j) j⟩ ∧
+      ∃ z : IrrCl (GL (Fin (W.get j).1) k), (⟨_, z⟩ : IrrGL (k := k)) = ⟨b (c j) j, s (c j) j⟩ ∧
         Nonempty ((multiProd (stdBlocks (fun i => b i j) (hcol j))
           fun i => (s i j).rep.ρ).Equiv z.rep.ρ) := fun s j =>
-    GlobalTheory.T.product_single_nonzero_factor_equiv (fun i => (⟨b i j, s i j⟩ : IrrGL k)) (hcol j) (c j)
+    GlobalTheory.T.product_single_nonzero_factor_equiv (fun i => (⟨b i j, s i j⟩ : IrrGL (k := k))) (hcol j) (c j)
       fun i hi => hzero i j (Ne.symm hi)
 
   have hex : ∀ i j, ∃ u : IrrCl (GL (Fin (b i j)) k),
-      c j = i → (⟨b i j, u⟩ : IrrGL k) = W.get j := by
+      c j = i → (⟨b i j, u⟩ : IrrGL (k := k)) = W.get j := by
     intro i j
     by_cases hij : c j = i
     · obtain ⟨u, hu⟩ := exists_class_of_degree (b i j) (W.get j) (by rw [hb, if_pos hij])
@@ -66,7 +66,7 @@ theorem jhMult_cell_colour : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
   choose s₀ hs₀ using hex
   have hfirst : ∀ i, jhMult (piTensor fun j => (s₀ i j).rep.ρ)
       (jac (stdBlocks (b i) (hrow i)) (x i).rep) = jmL (sub W c i) (x i).rep := fun i =>
-    GlobalTheory.T.jacquet_multiplicity_sublist_padding W c i (fun j => (⟨b i j, s₀ i j⟩ : IrrGL k)) (fun j hj => hs₀ i j hj)
+    GlobalTheory.T.jacquet_multiplicity_sublist_padding W c i (fun j => (⟨b i j, s₀ i j⟩ : IrrGL (k := k))) (fun j hj => hs₀ i j hj)
       (fun j hj => hzero i j hj) (hrow i) (x i).rep
   rw [Finset.sum_eq_single s₀]
   · choose z hz e using hcolumn s₀
@@ -97,7 +97,7 @@ theorem jhMult_cell_colour : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
     refine hs (funext fun i => funext fun j => ?_)
     by_cases hij : c j = i
     · subst hij
-      have h1 : (⟨b (c j) j, s (c j) j⟩ : IrrGL k) = ⟨b (c j) j, s₀ (c j) j⟩ := by
+      have h1 : (⟨b (c j) j, s (c j) j⟩ : IrrGL (k := k)) = ⟨b (c j) j, s₀ (c j) j⟩ := by
         rw [hs₀ (c j) j rfl, ← hz j, ← hcl j]
       exact eq_of_heq (Sigma.mk.inj_iff.1 h1).2
     · haveI := subsingleton_irrCl_of_eq_zero (k := k) (b i j) (hzero i j hij)

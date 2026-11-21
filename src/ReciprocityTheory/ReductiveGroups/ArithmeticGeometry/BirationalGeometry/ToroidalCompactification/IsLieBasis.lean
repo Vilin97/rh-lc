@@ -66,8 +66,9 @@ variable {X : Scheme.{0}}
 def valAt (x : Sp ℂ ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)) : ℂ :=
   (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom.hom ((x.appLE U ⊤ h).hom f)
 
-
-def valAt' (x : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X, U)) : ℂ := if h : ⊤ ≤ x ⁻¹ᵁ U then valAt x U h f else 0
+def valAt' (x : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X, U)) : ℂ := by
+  classical
+  exact if h : ⊤ ≤ x ⁻¹ᵁ U then valAt x U h f else 0
 
 structure HolUnif (A : Over (Sp ℂ)) [GrpObj A] (L : LB A.left) (g : ℕ) where
   ex : (Fin g → ℂ) → (𝟙_ (Over (Sp ℂ)) ⟶ A)

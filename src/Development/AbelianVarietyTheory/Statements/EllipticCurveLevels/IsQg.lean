@@ -21,13 +21,13 @@ def R1 : Prop :=
     InScope .all l π χ → ∀ r : G E Ω →* GL (Fin n) (Qbar l), Weak π ι r →
     ∀ (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin n) (w.adicCompletion E))), π.IsLocComp w σ → PlainTor (algNorm σ) →
       (∀ (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (A : ValuationSubring Ω) (h : IsPlaceOver A w),
-        (wdOf h hl ι r).mono0 ∧ ∀ rc : IrrGL (w.adicCompletion E) → WD h, UpperTheory.Zero.LLC.IsRecT h rc → wdOf h hl ι r = rc (algNorm σ)) ∧
+        (wdOf h hl ι r).mono0 ∧ ∀ rc : IrrGL (k := w.adicCompletion E) → WD h, UpperTheory.Zero.LLC.IsRecT h rc → wdOf h hl ι r = rc (algNorm σ)) ∧
       (((l : ℕ) : 𝓞 E) ∈ w.asIdeal → ClauseAt .dR π ι r w ∧
         ∀ (P : LocPrime l) (AI : LocAinf l P), Nonempty (LocTied l P AI) →
         ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O]
           (Bw : LocBridge l E Ω (Dec (F := E) A) O) (hj : Pst.Induces Bw),
           IsPstAt P Bw (r.comp (Dec (F := E) A).subtype) ∧ (wdAt P ι Bw h hj (r.comp (Dec (F := E) A).subtype)).mono0 ∧
-          ∀ rc : IrrGL (w.adicCompletion E) → WD h, UpperTheory.Zero.LLC.IsRecT h rc →
+          ∀ rc : IrrGL (k := w.adicCompletion E) → WD h, UpperTheory.Zero.LLC.IsRecT h rc →
             ∀ g : Weil h, (wdAt P ι Bw h hj (r.comp (Dec (F := E) A).subtype)).charPol g = (rc (algNorm σ)).charPol g)
 
 def IsQg {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) : Prop :=

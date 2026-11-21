@@ -13,7 +13,7 @@ namespace GlobalTheory.SmGL.Segment
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem mem_carrier_nu {Δ : Segment k} {s : ℂ} {x : IrrGL k} :
+theorem mem_carrier_nu {Δ : Segment k} {s : ℂ} {x : IrrGL (k := k)} :
     x ∈ (Δ.nu s).carrier ↔ ∃ a : ℕ, a < Δ.len ∧ Δ.first.nu (s + a) = x := by
   rw [mem_carrier]
   show (∃ a : ℕ, a < Δ.len ∧ (Δ.first.nu s).nu a = x) ↔ _

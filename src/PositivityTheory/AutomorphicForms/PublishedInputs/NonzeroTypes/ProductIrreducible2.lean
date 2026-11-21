@@ -50,7 +50,7 @@ theorem char_eq_of_equiv {μ μ' χ : kˣ →* ℂˣ} {W : Type} [AddCommGroup W
   rw [h1] at key
   exact smul_left_injective ℂ hne key
 
-theorem eq_on_units (y : IrrGL k) (h : 1 = y.1) (μ μ' : kˣ →* ℂˣ) (hμ : IsSmoothChar μ)
+theorem eq_on_units (y : IrrGL (k := k)) (h : 1 = y.1) (μ μ' : kˣ →* ℂˣ) (hμ : IsSmoothChar μ)
     (hs' : IsSmooth (detRep (Fin 1) μ')) (hi' : (detRep (Fin 1) μ').IsIrreducible)
     (hy : IrrGL.of (detRep (Fin 1) μ') hs' hi' = y) (j : ℤ)
     (hφ : Nonempty ((h ▸ GlobalTheory.SplitRead.Irr.ofDet 1 μ hμ : GlobalTheory.SplitRead.Irr k y.1).π.Equiv

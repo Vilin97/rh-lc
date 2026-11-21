@@ -22,7 +22,7 @@ private theorem equiv_prinSeries {k : Type} [Field k] [ValuativeRel k] [Topologi
     (ξ : Fin n → kˣ →* ℂˣ) (hξ : ∀ i, IsSmoothChar (ξ i)) (hs : HasSupport ρ (GlobalTheory.RoadU.chars ξ hξ))
     (hu : GlobalTheory.RoadU.Unlinked (GlobalTheory.RoadU.chars ξ hξ)) : Nonempty (ρ.Equiv (prinSeries ξ)) := by
   obtain ⟨hi, hq⟩ := (UpperTheory.Gal.LocD.ofSupport_holds k n V ρ ξ hξ).1 hs
-  let y : Fin n → IrrGL k := fun i => IrrGL.ofChar (ξ i) (hξ i)
+  let y : Fin n → IrrGL (k := k) := fun i => IrrGL.ofChar (ξ i) (hξ i)
   have hy : ∀ i, (y i).IsCusp := fun i => IrrGL.isCusp_ofChar _ _
   have hd : ∑ i, (y i).1 = n := by simp [y, IrrGL.ofChar]
   have hmem : ∀ i, y i ∈ GlobalTheory.RoadU.chars ξ hξ := fun i => Multiset.mem_map_of_mem _ (Finset.mem_univ i)

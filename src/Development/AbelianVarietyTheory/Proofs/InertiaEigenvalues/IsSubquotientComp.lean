@@ -43,13 +43,13 @@ theorem isSubquotient_comp {G G' V W : Type} [Group G] [Group G'] [AddCommGroup 
   obtain ⟨S, f, hf⟩ := h
   exact ⟨⟨S.toSubmodule, fun g _ hv => S.apply_mem_toSubmodule (ψ g) hv⟩, ⟨f.toLinearMap, fun g => f.isIntertwining' (ψ g)⟩, hf⟩
 
-def trGL (i : k ≃+* k') (hi' : Continuous i.symm) (x : IrrGL k) : IrrGL k' :=
+def trGL (i : k ≃+* k') (hi' : Continuous i.symm) (x : IrrGL (k := k)) : IrrGL (k := k') :=
   IrrGL.of (x.rep.comp (Matrix.GeneralLinearGroup.map (n := Fin x.1) i.symm.toRingHom))
     (fun v => (x.2.rep.smooth v).preimage (continuous_glMap _ hi'))
     (GlobalTheory.CuspRep.ParLaws.isIrreducible_comp x.2.rep.irr _ (glMap_surjective i))
 
 theorem hasSupport_comp (i : k ≃+* k') (hi : Continuous i) (hi' : Continuous i.symm) {N : ℕ} {V : Type}
-    [AddCommGroup V] [Module ℂ V] {π : Representation ℂ (GL (Fin N) k) V} {s : Multiset (IrrGL k)}
+    [AddCommGroup V] [Module ℂ V] {π : Representation ℂ (GL (Fin N) k) V} {s : Multiset (IrrGL (k := k))}
     (h : HasSupport π s) :
     HasSupport (π.comp (Matrix.GeneralLinearGroup.map (n := Fin N) i.symm.toRingHom)) (s.map (trGL i hi')) := by
   obtain ⟨c, x, rfl, hir, hc, e, hsub⟩ := h

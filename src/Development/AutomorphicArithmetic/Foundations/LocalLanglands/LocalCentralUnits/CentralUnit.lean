@@ -45,9 +45,9 @@ theorem parEx : ParEx := by
   haveI : CharZero (HeightOneSpectrum.adicCompletion E w) :=
     (RingHom.charZero_iff (ϕ := i.toRingHom) i.injective).1 inferInstance
   obtain ⟨n, c⟩ := y
-  have hcls : GlobalTheory.LocLanglands.cls c.rep = (⟨n, c⟩ : IrrGL _) := by
+  have hcls : GlobalTheory.LocLanglands.cls c.rep = (⟨n, c⟩ : IrrGL (k := _)) := by
     simp [GlobalTheory.LocLanglands.cls, IrrCl.cl_rep]
-  obtain ⟨⟨ω, -, hω, hωu⟩, -, -, hpos, -⟩ := clBasic _ (⟨n, c⟩ : IrrGL _)
+  obtain ⟨⟨ω, -, hω, hωu⟩, -, -, hpos, -⟩ := clBasic _ (⟨n, c⟩ : IrrGL (k := _))
   have hn : 0 < n := hpos hy
   obtain ⟨φ, hφ⟩ := deg_surjective (h := h) 1
   rw [← hcls] at hy hdz

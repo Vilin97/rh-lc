@@ -25,7 +25,7 @@ namespace UpperTheory.V.Af.Es
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime]
 
 theorem exists_rec (P : Hypotheses₂) {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} (h : IsPlaceOver A w) :
-    ∃ rc : IrrGL (w.adicCompletion E) → WD h, IsRec h rc := by
+    ∃ rc : IrrGL (k := w.adicCompletion E) → WD h, IsRec h rc := by
   have L := P.litN.loc
   obtain ⟨rc, hrc⟩ := L.llc E Ω A w h
   exact ⟨rc, GlobalTheory.T.rec_of_rec_literal L.dzc L.dzi L.exh L.multi L.cos L.zel L.geo L.bz E Ω A w h rc hrc⟩

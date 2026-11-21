@@ -75,7 +75,7 @@ end GlobalTheory.FixedKOneTransport
 
 theorem GlobalTheory.FixedKOneTransport.fixed_kOne_transport : ∀ (k k' : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
     [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNonarchimedeanLocalField k'] [CharZero k'] (i : k ≃+* k'),
-    Continuous i → ∀ (x : GlobalTheory.LocGL.IrrGL k) (x' : GlobalTheory.LocGL.IrrGL k'), GlobalTheory.LocLanglands.RepRel i x x' →
+    Continuous i → ∀ (x : GlobalTheory.LocGL.IrrGL (k := k)) (x' : GlobalTheory.LocGL.IrrGL (k := k')), GlobalTheory.LocLanglands.RepRel i x x' →
       GlobalTheory.PRep.fixed x.rep (GlobalTheory.SplitWeil.KOne k (Fin x.1)) ≠ ⊥ → GlobalTheory.PRep.fixed x'.rep (GlobalTheory.SplitWeil.KOne k' (Fin x'.1)) ≠ ⊥ := by
   intro k k' _ _ _ _ _ _ _ _ _ _ i hi x x' H hx
   rw [← GlobalTheory.LocLanglands.FieldCompat.cls_rep x] at H

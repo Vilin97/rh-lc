@@ -67,7 +67,7 @@ section Rep
 variable {k k' : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNonarchimedeanLocalField k']
 
-theorem exists_of_repRel {i : k ≃+* k'} {n : ℕ} (π : IrrRep (GL (Fin n) k)) {x' : IrrGL k'} (H : RepRel i (cls π) x') :
+theorem exists_of_repRel {i : k ≃+* k'} {n : ℕ} (π : IrrRep (GL (Fin n) k)) {x' : IrrGL (k := k')} (H : RepRel i (cls π) x') :
     ∃ (π' : IrrRep (GL (Fin n) k')) (e : π.V ≃ₗ[ℂ] π'.V), x' = cls π' ∧
       ∀ g v, e (π.ρ g v) = π'.ρ (GeneralLinearGroup.map i.toRingHom g) (e v) := by
   obtain ⟨m, π₀, π', e, h1, rfl, he⟩ := H
@@ -96,7 +96,7 @@ theorem contra_transport (i : k ≃+* k') (hi : Continuous i) (hs : Continuous i
   show d (φ.toLinearEquiv (u.symm (τ'.ρ g v))) = contra π'.ρ g (d (φ.toLinearEquiv (u.symm v)))
   rw [symm_rel i τ τ' u hu, h2, hd, map_map_symm]
 
-theorem central_transport (i : k ≃+* k') {x : IrrGL k} {x' : IrrGL k'} (H : RepRel i x x') {ω : kˣ →* ℂˣ}
+theorem central_transport (i : k ≃+* k') {x : IrrGL (k := k)} {x' : IrrGL (k := k')} (H : RepRel i x x') {ω : kˣ →* ℂˣ}
     (hω : HasCentralChar x.rep ω) :
     HasCentralChar x'.rep (ω.comp (Units.map i.symm.toRingHom.toMonoidHom)) := by
   rw [← cls_rep x] at H

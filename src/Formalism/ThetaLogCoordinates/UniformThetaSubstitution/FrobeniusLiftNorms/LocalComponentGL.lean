@@ -307,6 +307,7 @@ theorem norm_fact_bound (hp : p.Prime) (hnp : ‖(p : K)‖ = (p : ℝ)⁻¹) (k
   have hlt : ‖(p : K)‖ < 1 := by rw [hnp]; exact inv_lt_one_of_one_lt₀ hp1
   have hv : padicValNat p (k + 1).factorial ≤ k := by
     have h := sub_one_mul_padicValNat_factorial_lt_of_ne_zero (p := p) (n := k + 1) (by omega)
+    rw [← Nat.padicValNat_def] at h
     have h2 : 1 ≤ p - 1 := by have := hp.two_le; omega
     have h3 : 1 * padicValNat p (k + 1).factorial ≤ (p - 1) * padicValNat p (k + 1).factorial :=
       Nat.mul_le_mul_right _ h2
@@ -451,36 +452,38 @@ end DworkIntegrality
 
 
 theorem dwork_multivariable : DworkMv := by
-  intro K ι _ _ _ _ p σ hp hnp hσ Ψ h0
-  have hpos : (0 : ℝ) ≤ (p : ℝ)⁻¹ := by positivity
-  rw [← PhiH_apply hp.ne_zero]
-  have hΦ0 : MvPowerSeries.constantCoeff (PhiH hp.ne_zero σ Ψ) = 0 := by
-    rw [PhiH_apply, frobVar_eq_expand hp.ne_zero, MvPowerSeries.constantCoeff_expand,
-      MvPowerSeries.constantCoeff_map, h0, map_zero]
-  have hpΨ0 : MvPowerSeries.constantCoeff (MvPowerSeries.C (p : K) * Ψ) = 0 := by simp [h0]
-  have hDe0 : MvPowerSeries.constantCoeff (PhiH hp.ne_zero σ Ψ - MvPowerSeries.C (p : K) * Ψ) = 0 := by
-    rw [map_sub, hΦ0, hpΨ0, sub_zero]
-  have hpow : mvExp (MvPowerSeries.C (p : K) * Ψ) = (mvExp Ψ) ^ p := by
-    obtain ⟨n, rfl⟩ : ∃ n, p = n + 1 := ⟨p - 1, by have := hp.pos; omega⟩
-    exact mvExp_natMul h0 n
-  have hid : PhiH hp.ne_zero σ (mvExp Ψ) =
-      (mvExp Ψ) ^ p * mvExp (PhiH hp.ne_zero σ Ψ - MvPowerSeries.C (p : K) * Ψ) := by
-    rw [PhiH_mvExp hp.ne_zero σ h0, ← hpow, ← mvExp_add hpΨ0 hDe0]
-    congr 1
-    ring
-  have hF1 := constantCoeff_mvExp h0
-  have hG1 := constantCoeff_mvExp hDe0
-  constructor
-  · intro hint
-    have hB := frob_congr hp hnp hσ (f := mvExp Ψ) hint
-    refine small_of_exp hp hnp hDe0 (bd_of_mul hpos (U := (mvExp Ψ) ^ p) (int_pow hint p)
-      (by rw [map_pow, hF1, one_pow]) ?_)
-    have e : (mvExp (PhiH hp.ne_zero σ Ψ - MvPowerSeries.C (p : K) * Ψ) - 1) * (mvExp Ψ) ^ p =
-        -((mvExp Ψ) ^ p - PhiH hp.ne_zero σ (mvExp Ψ)) := by
-      rw [hid]; ring
-    rw [e]
-    exact bd_neg hB
-  · intro hsm
-    exact int_of_frob hp hnp hσ hF1 hG1 (exp_small hp hnp hDe0 hsm) hid
-
+  open DworkIntegrality in
+    intro K ι _ _ _ _ p σ hp hnp hσ Ψ h0
+    have hpos : (0 : ℝ) ≤ (p : ℝ)⁻¹ := by positivity
+    rw [← PhiH_apply hp.ne_zero σ Ψ]
+    change Integral (mvExp Ψ) ↔ DworkIntegrality.Bd (p : ℝ)⁻¹
+      (PhiH hp.ne_zero σ Ψ - MvPowerSeries.C (p : K) * Ψ)
+    have hΦ0 : MvPowerSeries.constantCoeff (PhiH hp.ne_zero σ Ψ) = 0 := by
+      rw [PhiH_apply, frobVar_eq_expand hp.ne_zero, MvPowerSeries.constantCoeff_expand,
+        MvPowerSeries.constantCoeff_map, h0, map_zero]
+    have hpΨ0 : MvPowerSeries.constantCoeff (MvPowerSeries.C (p : K) * Ψ) = 0 := by simp [h0]
+    have hDe0 : MvPowerSeries.constantCoeff (PhiH hp.ne_zero σ Ψ - MvPowerSeries.C (p : K) * Ψ) = 0 := by
+      rw [map_sub, hΦ0, hpΨ0, sub_zero]
+    have hpow : mvExp (MvPowerSeries.C (p : K) * Ψ) = (mvExp Ψ) ^ p := by
+      obtain ⟨n, rfl⟩ : ∃ n, p = n + 1 := ⟨p - 1, by have := hp.pos; omega⟩
+      exact mvExp_natMul h0 n
+    have hid : PhiH hp.ne_zero σ (mvExp Ψ) =
+        (mvExp Ψ) ^ p * mvExp (PhiH hp.ne_zero σ Ψ - MvPowerSeries.C (p : K) * Ψ) := by
+      rw [PhiH_mvExp hp.ne_zero σ h0, ← hpow, ← mvExp_add hpΨ0 hDe0]
+      congr 1
+      ring
+    have hF1 := constantCoeff_mvExp h0
+    have hG1 := constantCoeff_mvExp hDe0
+    constructor
+    · intro hint
+      have hB := frob_congr hp hnp hσ (f := mvExp Ψ) hint
+      refine small_of_exp hp hnp hDe0 (bd_of_mul hpos (U := (mvExp Ψ) ^ p) (int_pow hint p)
+        (by rw [map_pow, hF1, one_pow]) ?_)
+      have e : (mvExp (PhiH hp.ne_zero σ Ψ - MvPowerSeries.C (p : K) * Ψ) - 1) * (mvExp Ψ) ^ p =
+          -((mvExp Ψ) ^ p - PhiH hp.ne_zero σ (mvExp Ψ)) := by
+        rw [hid]; ring
+      rw [e]
+      exact bd_neg hB
+    · intro hsm
+      exact int_of_frob hp hnp hσ hF1 hG1 (exp_small hp hnp hDe0 hsm) hid
 end Formalism.InvariantFactorPaths.G7

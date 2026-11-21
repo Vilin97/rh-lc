@@ -23,7 +23,7 @@ namespace GlobalTheory.FormDict.RecTLaws
 section Core
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-  {rc : IrrGL (w.adicCompletion E) → WD h}
+  {rc : IrrGL (k := w.adicCompletion E) → WD h}
 theorem hasSatGL_rec_alt (H : _root_.UpperTheory.Zero.LLC.IsRecT h rc) {n : ℕ} (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) (S : Multiset ℂˣ)
     (hS : GlobalTheory.LFun.HasSatGL w σ.ρ S) :
     (rc (cls (ParLaws.toRep σ))).unr ∧

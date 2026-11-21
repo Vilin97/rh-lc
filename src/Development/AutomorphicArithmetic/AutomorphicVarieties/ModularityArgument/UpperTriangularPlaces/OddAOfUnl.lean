@@ -43,7 +43,7 @@ namespace UpperTheory.V.Keep
 
 theorem sphV {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] {n : ℕ}
     {w : HeightOneSpectrum (𝓞 F)} {A : ValuationSubring Ω} {h : IsPlaceOver A w}
-    {rc : IrrGL (w.adicCompletion F) → WD h} (hrc : IsRecV h rc) (σ : SmIrr (GL (Fin n) (w.adicCompletion F)))
+    {rc : IrrGL (k := w.adicCompletion F) → WD h} (hrc : IsRecV h rc) (σ : SmIrr (GL (Fin n) (w.adicCompletion F)))
     (h0 : (rc (algNorm σ)).mono0) (d : ℕ)
     (hI : ∀ s : ↥(Ine (F := F) A), (rc (algNorm σ)).charPol (ineIncl h s) = (X - 1) ^ d) : GlobalTheory.SmGL.IsSpherical σ.ρ := by
   obtain ⟨a, ha, ε, H⟩ := hrc

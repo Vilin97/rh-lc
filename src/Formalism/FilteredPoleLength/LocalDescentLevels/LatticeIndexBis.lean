@@ -177,7 +177,6 @@ theorem indep_baseChange {K K' V V₁ ι : Type} [Field K] [Field K'] [Algebra K
     convert h1 using 1
     funext i
     rw [IsBaseChange.basis_apply, Module.Basis.coe_extend]
-    rfl
   have hsub : ∀ i, a i ∈ hs.extend (Set.subset_univ _) :=
     fun i => hs.subset_extend _ ⟨i, rfl⟩
   exact hB'.comp (fun i => ⟨a i, hsub i⟩) (fun i i' h => ha.injective (congrArg Subtype.val h))

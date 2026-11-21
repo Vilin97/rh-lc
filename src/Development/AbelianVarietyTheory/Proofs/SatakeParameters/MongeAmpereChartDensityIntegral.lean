@@ -29,7 +29,7 @@ namespace GlobalTheory.RoadU.CharTwist
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem hasSupport_rep_tw {x : IrrGL k} {s : Multiset (IrrGL k)} (hx : HasSupport x.rep s) (χ : kˣ →* ℂˣ)
+theorem hasSupport_rep_tw {x : IrrGL (k := k)} {s : Multiset (IrrGL (k := k))} (hx : HasSupport x.rep s) (χ : kˣ →* ℂˣ)
     (hχ : IsSmoothChar χ) : HasSupport (x.tw χ hχ).rep (s.map (·.tw χ hχ)) :=
   (hx.tw χ hχ).of_equiv (x.twEquiv χ hχ)
 

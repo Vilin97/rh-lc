@@ -143,7 +143,7 @@ private theorem equiv_of_isCosocle (hBZ : GlobalTheory.Published.BernsteinZelevi
   exact ⟨(equivOfBijective f ⟨hinj, hfs⟩).symm⟩
 
 theorem UpperTheory.Lit.Cas.cosocleUnit :
-    GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (h N : ℕ) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N) (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V), (∀ a, IsUnitarisable (x a).rep) → IsCosocle π (prodIrr x hd) → Nonempty (π.Equiv (prodIrr x hd)) := by
+    GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (h N : ℕ) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N) (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V), (∀ a, IsUnitarisable (x a).rep) → IsCosocle π (prodIrr x hd) → Nonempty (π.Equiv (prodIrr x hd)) := by
   intro hBZ k _ _ _ _ h N x hd V _ _ π hun hc
   have hIA : GlobalTheory.Published.IrreducibleAdmissibleGL := fun k' _ _ _ _ n W _ _ ρ hs hi => (hBZ k').1 (Fin n) W ρ hs hi
   have hsm : IsSmooth (piTensor fun a => (x a).rep) := isSmooth_piTensor (fun a => (x a).snd.rep.smooth)

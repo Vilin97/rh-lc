@@ -72,7 +72,7 @@ theorem siegelHeight : SiegelHeight := by
   set A := max 1 (C₁ * P / s)
   set B := max 1 (C₂ / p)
   set e := 2 * Fintype.card (InfinitePlace K)
-  set c := AutomorphicForm.heightConst K (m + 1)
+  set c := AutomorphicForm.heightConst (K := K) (n := m + 1)
   have hc : 0 ≤ c := zero_le_one.trans AutomorphicForm.one_le_heightConst
   refine ⟨c * (c * M * (B * A ^ (m + 1)) ^ e), (N₂ + N₁ * (m + 1)) * e, ?_⟩
   rintro g γ ⟨b, hb, _, ⟨r, hr, hch, rfl⟩, k, hk, heq⟩

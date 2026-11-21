@@ -19,7 +19,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
 private theorem par_of_laws {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
-    {rc : IrrGL (w.adicCompletion E) → WD h} (L : LawsT a ha rc) {y : IrrGL (w.adicCompletion E)}
+    {rc : IrrGL (k := w.adicCompletion E) → WD h} (L : LawsT a ha rc) {y : IrrGL (k := w.adicCompletion E)}
     (hc : y.IsCusp) (hG : Good y) (hd : DZ y) : Par a y (rc y) where
   irr := L.cusp y hc
   dim := L.dim y
@@ -35,7 +35,7 @@ theorem UpperTheory.Zero.LLC.recTUnique :
   haveI : CharZero (w.adicCompletion E) :=
     charZero_of_injective_algebraMap (algebraMap E (w.adicCompletion E)).injective
   obtain rfl : a' = a := (artEx E Ω A w h).unique ha' ha
-  have key : ∀ y : IrrGL (w.adicCompletion E), y.IsCusp → GoodCusp y → rc y = rc' y := by
+  have key : ∀ y : IrrGL (k := w.adicCompletion E), y.IsCusp → GoodCusp y → rc y = rc' y := by
     intro y hc hg
     rcases id hg with h1 | ⟨⟨g, hgp, i, hi⟩, y₀, χ, hχ, hdz, rfl⟩
     · obtain ⟨χ, hχ, rfl⟩ := ((clBasic _ y).2.2.2.2.1 h1).2

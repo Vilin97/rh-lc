@@ -47,7 +47,7 @@ theorem localLanglandsGL_of_depthZero_zelevinsky_bernstein : LocalLanglandsExist
     have hbb : WD.mk b = WD.mk b' := WD.sound ⟨LinearEquiv.refl ℂ _, fun σ v => by
       simp only [LinearEquiv.refl_apply]; rw [hρ σ σ (fun _ => rfl)], fun v => by
       simp only [LinearEquiv.refl_apply]; rw [hN]⟩
-    have hx : (⟨n, c⟩ : IrrGL (w.adicCompletion E)) = cls c.rep := congrArg (Sigma.mk _) c.cl_rep.symm
+    have hx : (⟨n, c⟩ : IrrGL (k := w.adicCompletion E)) = cls c.rep := congrArg (Sigma.mk _) c.cl_rep.symm
     rw [hx, ← hb, ← hb', hbb]
   · intro E Ω _ _ _ _ _ A w h E' Ω' _ _ _ _ _ A' w' h' rc rc' hrc hrc'
     exact hComp E Ω A w h E' Ω' A' w' h' rc rc' hrc.toLit hrc'.toLit

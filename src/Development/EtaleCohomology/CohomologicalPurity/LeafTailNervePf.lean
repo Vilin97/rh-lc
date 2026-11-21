@@ -60,7 +60,7 @@ theorem LeafTailNerve_of (hN : LeafNerveSplit) (hU : LeafUnitsRep) : LeafTailNer
   simp only [← Category.assoc]
   congr 1
   apply prod.hom_ext
-  · simp; rw [w1, w2]
-  · simp; rw [w1, w2]
+  · simp [w1, w2]
+  · simp [w1, w2]
 
 end LateralTheory.CohomologicalPurity.Thom

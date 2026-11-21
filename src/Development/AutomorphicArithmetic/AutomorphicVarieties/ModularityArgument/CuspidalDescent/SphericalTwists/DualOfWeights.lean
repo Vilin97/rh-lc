@@ -224,7 +224,7 @@ private theorem flag_cont {Γ : Type} [Group Γ] [TopologicalSpace Γ] [IsTopolo
 
 private theorem above [IsCMField L] (P : Af.Hypotheses₂) (hPs : PsT) (hl : l ≠ 2) {ρ : G L Ω →* GL (Fin n) (Qbar l)}
     {HT : (L →+* Qbar l) → Multiset ℤ} (hρ : Continuous ρ) (HG : HasHTAt ρ HT w) (h : IsPlaceOver A w)
-    (hw : ((l : ℕ) : 𝓞 L) ∈ w.asIdeal) {τ : SmIrr (GLw n w)} (H : LocGlobT ι ρ w τ) {rc : IrrGL (w.adicCompletion L) → WD h}
+    (hw : ((l : ℕ) : 𝓞 L) ∈ w.asIdeal) {τ : SmIrr (GLw n w)} (H : LocGlobT ι ρ w τ) {rc : IrrGL (k := w.adicCompletion L) → WD h}
     (hrc : IsRecT h rc) (hp : GlobalTheory.RoadU.PlainTor (IrrGL.of τ.ρ τ.smooth τ.irred)) (hg : Gd (rc (algNorm τ)))
     (lam : Wt L l n) {ψ : Fin n → Dec (F := L) A →* (Qbar l)ˣ}
     (hψ : ∀ i, W.IsLocAlg h (ψ i) fun t => htW lam i (t.1.comp (algebraMap L _)))
@@ -290,5 +290,5 @@ private theorem ker_le {n : ℕ} {k Γ H : Type} [Field k] [CharZero k] [Group �
   rw [Matrix.trace_eq_neg_charpoly_coeff, Matrix.trace_eq_neg_charpoly_coeff, h1, h1, map_mul, hg, mul_one]
 
 theorem UpperTheory.V.Z.Desc.W.toT (P : Af.Hypotheses₂) {L Ω : Type} [Field L] [NumberField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω]
-    {w : Plc L} {A : ValuationSubring Ω} {h : IsPlaceOver A w} {rc : IrrGL (w.adicCompletion L) → WD h} (k : IsRec h rc) : IsRecT h rc :=
+    {w : Plc L} {A : ValuationSubring Ω} {h : IsPlaceOver A w} {rc : IrrGL (k := w.adicCompletion L) → WD h} (k : IsRec h rc) : IsRecT h rc :=
   isRecT_of_isRec P.litN.loc.dzt k

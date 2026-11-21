@@ -22,27 +22,27 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 theorem geometricLemmaGL : GlobalTheory.Published.GeometricLemma :=
   fun k _ _ _ _ => ⟨GlobalTheory.T.jacquet_of_induced_filtration k, GlobalTheory.T.induced_cell_semisimplification k⟩
 
-theorem embL_of_eq {x : IrrGL k} {l : List (IrrGL k)} {y : Fin l.length → IrrGL k} (e : y = l.get)
+theorem embL_of_eq {x : IrrGL (k := k)} {l : List (IrrGL (k := k))} {y : Fin l.length → IrrGL (k := k)} (e : y = l.get)
     (hd : ∑ a, (y a).1 = x.1) (f : x.rep.IntertwiningMap (prodIrr y hd)) (hf : Function.Injective f) : EmbL x l := by
   subst e
   exact ⟨hd, f, hf⟩
 
-theorem embL_pair {x : IrrGL k} {y : Fin 2 → IrrGL k} {hd : ∑ a, (y a).1 = x.1}
+theorem embL_pair {x : IrrGL (k := k)} {y : Fin 2 → IrrGL (k := k)} {hd : ∑ a, (y a).1 = x.1}
     {f : x.rep.IntertwiningMap (prodIrr y hd)} (hf : Function.Injective f) : EmbL x [y 0, y 1] :=
   embL_of_eq (l := [y 0, y 1]) (y := y) (funext fun i => by fin_cases i <;> rfl) hd f hf
 
-theorem embL_nil (x : IrrGL k) (h0 : x.1 = 0) : EmbL x [] := by
+theorem embL_nil (x : IrrGL (k := k)) (h0 : x.1 = 0) : EmbL x [] := by
   obtain ⟨n, c⟩ := x
   obtain rfl : n = 0 := h0
-  have hd : ∑ a, (([] : List (IrrGL k)).get a).1 = (⟨0, c⟩ : IrrGL k).1 := by simp
-  obtain ⟨φ⟩ := exh_equiv_zero (stdBlocks (fun a => (([] : List (IrrGL k)).get a).1) hd)
-    (piTensor fun a => (([] : List (IrrGL k)).get a).rep) (PiTensorProduct.isEmptyEquiv (Fin 0)) c.rep.ρ c.rep.irr
+  have hd : ∑ a, (([] : List (IrrGL (k := k))).get a).1 = (⟨0, c⟩ : IrrGL (k := k)).1 := by simp
+  obtain ⟨φ⟩ := exh_equiv_zero (stdBlocks (fun a => (([] : List (IrrGL (k := k))).get a).1) hd)
+    (piTensor fun a => (([] : List (IrrGL (k := k))).get a).rep) (PiTensorProduct.isEmptyEquiv (Fin 0)) c.rep.ρ c.rep.irr
   exact ⟨hd, φ.symm.toIntertwiningMap, fun v w h => φ.symm.toLinearEquiv.injective h⟩
 
 
 theorem cuspEmbP (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hR : RefineP k) : CuspEmbP k := by
   have hJ : JacquetSubLeft k := GlobalTheory.T.jacquet_sub_left_of_admissible hA
-  suffices H : ∀ n : ℕ, ∀ x : IrrGL k, x.1 = n → ∃ l : List (IrrGL k), (∀ ρ ∈ l, ρ.IsCusp) ∧ EmbL x l from
+  suffices H : ∀ n : ℕ, ∀ x : IrrGL (k := k), x.1 = n → ∃ l : List (IrrGL (k := k)), (∀ ρ ∈ l, ρ.IsCusp) ∧ EmbL x l from
     fun x => H _ x rfl
   intro n
   induction n using Nat.strong_induction_on with
@@ -75,7 +75,7 @@ theorem suppP : SuppP k := by
     GlobalTheory.CompanionTheory.Hypotheses₂.TD.hasSupport_of_isSubquotient_prodIrr (fun i => (hz i).hasSupport) y.2.rep.irr
       hcos.isSubquotient
   obtain ⟨sa, hsa⟩ := GlobalTheory.CompanionTheory.Hypotheses₂.TD.exists_hasSupport hBZ hG a
-  have ht : ∀ i, HasSupport (([a, y] : List (IrrGL k)).get i).rep (![sa, ∑ i, (D i).ms] i) := by
+  have ht : ∀ i, HasSupport (([a, y] : List (IrrGL (k := k))).get i).rep (![sa, ∑ i, (D i).ms] i) := by
     intro i
     fin_cases i
     exacts [hsa, hsy]

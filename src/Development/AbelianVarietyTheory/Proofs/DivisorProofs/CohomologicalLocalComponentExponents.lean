@@ -149,7 +149,7 @@ theorem map_eq_zero_of_equivariant (e : (Σ a, m a) ≃ n) {ρ : Representation 
     rw [hl, hlv, smul_zero]] at h3
   exact (smul_eq_zero.1 h3.symm).resolve_left (by exact_mod_cast hN.ne')
 
-theorem deg_eq_one_of_isCusp (x : IrrGL k) (hx : x.IsCusp) (hs : IsSpherical x.rep) : x.1 = 1 := by
+theorem deg_eq_one_of_isCusp (x : IrrGL (k := k)) (hx : x.IsCusp) (hs : IsSpherical x.rep) : x.1 = 1 := by
   by_contra hne
   have h2 : 2 ≤ x.1 := by have := hx.1; omega
   let e : (Σ _ : Fin x.1, Fin 1) ≃ Fin x.1 := Equiv.sigmaUnique _ _
@@ -178,7 +178,7 @@ theorem deg_eq_one_of_isCusp (x : IrrGL k) (hx : x.IsCusp) (hs : IsSpherical x.r
   exact h0 (congrArg Subtype.val ((injective_iff_map_eq_zero _).1
     (IwahoriInj.iwahoriProj_injective k _ _ x.rep x.2.rep.smooth) _ h3))
 
-theorem exists_span_of_deg_one (x : IrrGL k) (hx : x.1 = 1) : ∃ t : x.2.rep.V, ∀ v, ∃ c : ℂ, v = c • t := by
+theorem exists_span_of_deg_one (x : IrrGL (k := k)) (hx : x.1 = 1) : ∃ t : x.2.rep.V, ∀ v, ∃ c : ℂ, v = c • t := by
   have : Subsingleton (Fin x.1) := hx ▸ inferInstance
   obtain ⟨ψ, -, ⟨e⟩⟩ := RankLeOne.exists_equiv_detRep k (Fin x.1) _ x.rep x.2.rep.smooth x.2.rep.irr
   exact ⟨e.toLinearEquiv.symm 1, fun v => ⟨e.toLinearEquiv v, by
@@ -230,7 +230,7 @@ theorem tprod_line {X : α → Type} [∀ a, AddCommGroup (X a)] [∀ a, Module 
     obtain ⟨d, rfl⟩ := hb
     exact ⟨c + d, (add_smul _ _ _).symm⟩
 
-theorem not_isSpherical_quotient {h N : ℕ} (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N) (h1 : ∀ a, (x a).1 = 1)
+theorem not_isSpherical_quotient {h N : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N) (h1 : ∀ a, (x a).1 = 1)
     (hN : 2 ≤ N) {χ : kˣ →* ℂˣ} (hχ : IsUnram χ) (φ : (detRep (Fin N) χ).IntertwiningMap (prodIrr x hd))
     (hφ : Function.Injective φ) {σ : Representation ℂ (GL (Fin N) k) Y} (hσ : σ.IsIrreducible)
     (q : (prodIrr x hd).IntertwiningMap σ) (hq : Function.Surjective q) : ¬ IsSpherical σ := by
@@ -255,7 +255,7 @@ theorem not_isSpherical_quotient {h N : ℕ} (x : Fin h → IrrGL k) (hd : ∑ a
   simp only
   omega
 
-theorem deg_eq_one_of_isLSeg [CharZero k] {Δ : Segment k} {y : IrrGL k} (hL : IsLSeg Δ y.rep) (hs : IsSpherical y.rep) :
+theorem deg_eq_one_of_isLSeg [CharZero k] {Δ : Segment k} {y : IrrGL (k := k)} (hL : IsLSeg Δ y.rep) (hs : IsSpherical y.rep) :
     y.1 = 1 := by
   obtain ⟨hd, hc⟩ := id hL
   have hsph := LocLanglands.SphFac.isSpherical_factor k Δ.len _ Δ.term hd _ y.rep hc.isSubquotient hs

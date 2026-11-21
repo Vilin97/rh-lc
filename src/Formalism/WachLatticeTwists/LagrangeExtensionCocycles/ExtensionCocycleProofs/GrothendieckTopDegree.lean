@@ -23,7 +23,7 @@ theorem lift_to_subgroup_exists : StatLiftSub := by
     have h5 : ℓ ^ (v + 1) ∣ g := by
       rw [hm, pow_succ]
       exact mul_dvd_mul_left _ hdvd
-    exact pow_succ_padicValNat_not_dvd (by omega) h5
+    exact pow_succ_multiplicity_not_dvd (p := ℓ) (n := g) (Nat.ne_of_gt hg) (by simpa [hv, Nat.padicValNat_def] using h5)
   have hu : IsUnit (m : ℤ_[ℓ]) := by
     rw [PadicInt.isUnit_iff]
     have h1 : ‖((m : ℤ) : ℤ_[ℓ])‖ ≤ 1 := PadicInt.norm_le_one _

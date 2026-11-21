@@ -39,7 +39,6 @@ def unitaryCongr (e : R ≃ₐ[K] S) (he : Continuous e) (he' : Continuous e.sym
         (Algebra.TensorProduct.basis R b).repr (tensorMap e.symm.toAlgHom z) k =
           e.symm ((Algebra.TensorProduct.basis S b).repr z k)) := by
     constructor <;> intro z k <;> induction z using TensorProduct.inductionOn with
-    | zero => simp
     | tmul r x => simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.mapRange_apply]
     | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
   have hcoords :
@@ -53,12 +52,14 @@ def unitaryCongr (e : R ≃ₐ[K] S) (he : Continuous e) (he' : Continuous e.sym
     constructor
     · apply (tensorCoordsHomeomorph S b).isEmbedding.continuous_iff.mpr
       refine continuous_pi fun k => ?_
-      simpa only [Function.comp_apply, tensorCoordsHomeomorph_apply, hrepr.1] using
-        he.comp ((continuous_apply k).comp (tensorCoordsHomeomorph R b).continuous)
+      have hk := he.comp ((continuous_apply k).comp (tensorCoordsHomeomorph R b).continuous)
+      change Continuous (fun z => e (tensorCoordsHomeomorph R b z k)) at hk
+      simpa only [Function.comp_apply, tensorCoordsHomeomorph_apply, hrepr.1] using hk
     · apply (tensorCoordsHomeomorph R b).isEmbedding.continuous_iff.mpr
       refine continuous_pi fun k => ?_
-      simpa only [Function.comp_apply, tensorCoordsHomeomorph_apply, hrepr.2] using
-        he'.comp ((continuous_apply k).comp (tensorCoordsHomeomorph S b).continuous)
+      have hk := he'.comp ((continuous_apply k).comp (tensorCoordsHomeomorph S b).continuous)
+      change Continuous (fun z => e.symm (tensorCoordsHomeomorph S b z k)) at hk
+      simpa only [Function.comp_apply, tensorCoordsHomeomorph_apply, hrepr.2] using hk
   refine
     { toFun := f
       invFun := f'
@@ -80,17 +81,17 @@ def unitaryCongr (e : R ≃ₐ[K] S) (he : Continuous e) (he' : Continuous e.sym
     apply continuous_induced_rng.2
     rw [Units.continuous_iff]
     refine ⟨hm.comp (Units.continuous_val.comp continuous_subtype_val), ?_⟩
-    simpa only [Function.comp_apply, map_inv, Subgroup.coe_inv] using
-      hm.comp (Units.continuous_val.comp (continuous_subtype_val.comp continuous_inv :
-        Continuous fun g : unitaryPoints K E H R => ((g⁻¹ : unitaryPoints K E H R) : GL ι _)))
+    change Continuous (fun g => ((f g : GL ι (S ⊗[K] E))⁻¹).val)
+    simp only [← Subgroup.coe_inv, ← map_inv]
+    exact hm.comp (Units.continuous_val.comp (continuous_subtype_val.comp continuous_inv))
   · have hm : Continuous fun M : Matrix ι ι (S ⊗[K] E) => M.map (tensorMap e.symm.toAlgHom) :=
       continuous_id.matrix_map htensor.2
     apply continuous_induced_rng.2
     rw [Units.continuous_iff]
     refine ⟨hm.comp (Units.continuous_val.comp continuous_subtype_val), ?_⟩
-    simpa only [Function.comp_apply, map_inv, Subgroup.coe_inv] using
-      hm.comp (Units.continuous_val.comp (continuous_subtype_val.comp continuous_inv :
-        Continuous fun g : unitaryPoints K E H S => ((g⁻¹ : unitaryPoints K E H S) : GL ι _)))
+    change Continuous (fun g => ((f' g : GL ι (R ⊗[K] E))⁻¹).val)
+    simp only [← Subgroup.coe_inv, ← map_inv]
+    exact hm.comp (Units.continuous_val.comp (continuous_subtype_val.comp continuous_inv))
 
 theorem unitaryCongr_apply (e : R ≃ₐ[K] S) (he : Continuous e) (he' : Continuous e.symm)
     (g : unitaryPoints K E H R) :

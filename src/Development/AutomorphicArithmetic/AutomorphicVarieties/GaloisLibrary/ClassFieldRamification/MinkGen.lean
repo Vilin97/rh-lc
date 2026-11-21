@@ -41,7 +41,6 @@ theorem UpperTheory.V.CF.minkGen :
   haveI hFgal := IsGalois.of_fixedField_normal_subgroup I
   haveI hgF : IsGalois ℚ F := by
     convert hFgal
-    exact Subsingleton.elim _ _
   have hunr : ∀ p, Nat.Prime p → UnramAt F p := by
     intro p hp
     refine (UpperTheory.V.CF.ineFixQ F K p hp).mpr ?_

@@ -33,7 +33,7 @@ theorem prod_mul_pow (l : ℕ) (c e : ℂ) :
     Finset.card_range, Finset.prod_pow_eq_pow_sum, Finset.sum_range_id]
 
 theorem scalarBy_of_isLSeg (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-    (Γ : Segment k) (y : IrrGL k) : IsLSeg Γ y.rep → ∀ (t : kˣ) (c : ℂ), Zl.ScalarBy Γ.first t c →
+    (Γ : Segment k) (y : IrrGL (k := k)) : IsLSeg Γ y.rep → ∀ (t : kˣ) (c : ℂ), Zl.ScalarBy Γ.first t c →
       Zl.ScalarBy y t (c ^ Γ.len * ((absPow k (Γ.first.1 : ℂ) t : ℂˣ) : ℂ) ^ (Γ.len * (Γ.len - 1) / 2)) := by
   intro hL t c hc
   obtain ⟨hd, -, f, hf, -⟩ := hL

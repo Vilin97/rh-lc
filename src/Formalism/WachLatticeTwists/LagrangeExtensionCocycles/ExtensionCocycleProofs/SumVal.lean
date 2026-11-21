@@ -36,7 +36,8 @@ lemma one_lt_cast : (1 : ℝ) < (ℓ : ℝ) := by
 
 lemma val_factorial_le (w : ℕ) :
     (padicValNat ℓ w.factorial : ℝ) ≤ (w : ℝ) / ((ℓ : ℝ) - 1) := by
-  have h := sub_one_mul_padicValNat_factorial (p := ℓ) w
+  have h := (Fact.out : ℓ.Prime).sub_one_mul_multiplicity_factorial (n := w)
+  rw [← Nat.padicValNat_def] at h
   have h' : (ℓ - 1) * padicValNat ℓ w.factorial ≤ w := by rw [h]; exact Nat.sub_le _ _
   have hl := one_lt_cast ℓ
   rw [le_div_iff₀ (by linarith)]
@@ -49,7 +50,7 @@ lemma val_factorial_le (w : ℕ) :
 lemma val_choose_le (N w : ℕ) :
     (padicValNat ℓ (N.choose w) : ℝ) ≤ Real.logb ℓ N := by
   have h1 : padicValNat ℓ (N.choose w) ≤ Nat.log ℓ N := by
-    rw [← Nat.factorization_def _ (Fact.out : ℓ.Prime)]
+    rw [Nat.padicValNat_def, ← Nat.factorization_def _ (Fact.out : ℓ.Prime)]
     exact Nat.factorization_choose_le_log
   calc (padicValNat ℓ (N.choose w) : ℝ) ≤ (Nat.log ℓ N : ℝ) := by exact_mod_cast h1
     _ ≤ Real.logb ℓ N := Real.natLog_le_logb N ℓ
@@ -134,7 +135,7 @@ private theorem sum_padicValInt_sub_le_of_lt_forall (ℓ : ℕ) [Fact ℓ.Prime]
     omega
   · intro b hb
     have h3 := hlt b hb
-    simp only [padicValInt]
+    simp only [padicValInt, Nat.padicValNat_def]
     congr 1
     omega
 
@@ -155,7 +156,7 @@ private theorem sum_padicValInt_sub_le_of_gt_forall (ℓ : ℕ) [Fact ℓ.Prime]
     omega
   · intro b hb
     have h3 := hgt b hb
-    simp only [padicValInt]
+    simp only [padicValInt, Nat.padicValNat_def]
     congr 1
     omega
 

@@ -63,7 +63,7 @@ theorem charPol_lpTw (x : WD h) (s : ℝ) (g : Weil h) :
   rw [WD.lpTw, WD.lpTwist_mk, WD.charPol_mk, WD.charPol_mk, WDRep.twist_ρ,
     charpoly_smul_scaleRoots _ (Units.ne_zero _)]
 
-theorem isGeneric_nu {x : IrrGL (w.adicCompletion E)} (hx : IsGeneric x.rep) (s : ℂ) : IsGeneric (x.nu s).rep :=
+theorem isGeneric_nu {x : IrrGL (k := w.adicCompletion E)} (hx : IsGeneric x.rep) (s : ℂ) : IsGeneric (x.nu s).rep :=
   (isGeneric_congr (IrrGL.twEquiv x _ _)).1 ((isGeneric_twist_iff _).2 hx)
 
 end GlobalTheory.GalCut.AwayMono

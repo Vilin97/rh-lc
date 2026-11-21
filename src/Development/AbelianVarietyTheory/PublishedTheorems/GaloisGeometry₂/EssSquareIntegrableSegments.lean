@@ -13,7 +13,7 @@ namespace GlobalTheory.Published
 
 def EssSquareIntegrableSegments : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
-    (δ : IrrGL k), 1 ≤ δ.1 →
+    (δ : IrrGL (k := k)), 1 ≤ δ.1 →
     ((∃ (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ), IsSqIntCoeff (δ.tw χ hχ).rep) ↔ ∃ Δ : Segment k, IsLSeg Δ δ.rep)
 
 namespace EssSquareIntegrableSegments

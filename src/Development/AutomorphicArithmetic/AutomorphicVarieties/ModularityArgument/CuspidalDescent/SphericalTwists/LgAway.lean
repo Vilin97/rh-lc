@@ -14,6 +14,6 @@ variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAl
   {ι : Qbar l ≃+* ℂ} {r : G F Ω →* GL (Fin n) (Qbar l)} {w : HeightOneSpectrum (𝓞 F)} {σ : SmIrr (GL (Fin n) (w.adicCompletion F))}
 
 theorem lgAway' (H : LocGlobT ι r w σ) (hw : ((l : ℕ) : 𝓞 F) ∉ w.asIdeal) (A : ValuationSubring Ω) (h : IsPlaceOver A w)
-    (rc : IrrGL (w.adicCompletion F) → WD h) (hrc : IsRecT h rc) : WDT ι r (rc (algNorm σ)) := (H A h rc hrc).1 hw
+    (rc : IrrGL (k := w.adicCompletion F) → WD h) (hrc : IsRecT h rc) : WDT ι r (rc (algNorm σ)) := (H A h rc hrc).1 hw
 
 end UpperTheory.V.Z.Desc.W

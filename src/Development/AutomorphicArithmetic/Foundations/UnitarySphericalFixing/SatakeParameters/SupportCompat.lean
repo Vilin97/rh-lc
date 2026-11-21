@@ -37,7 +37,7 @@ theorem mapsToProd_tw {g : ℕ} [Fact g.Prime] {n a b : ℕ} {V W W' W'' : Type}
     simp [mul_assoc]
 
 theorem inInd_reps {g : ℕ} [Fact g.Prime] {π : Supp.GLRep g} {L : List (Supp.GLRep g)} (h : Supp.InInd π L) :
-    ∀ y : List (IrrGL ℚ_[g]), List.Forall₂ (fun (ρ : Supp.GLRep g) (x : IrrGL ℚ_[g]) =>
+    ∀ y : List (IrrGL (k := ℚ_[g])), List.Forall₂ (fun (ρ : Supp.GLRep g) (x : IrrGL (k := ℚ_[g])) =>
       ∃ (hs : GlobalTheory.PRep.IsSmooth ρ.2.ρ) (hi : ρ.2.ρ.IsIrreducible), (IrrGL.of ρ.2.ρ hs hi).Inert x) L y →
       Supp.InInd π (y.map fun x => ⟨x.1, Rep.of x.rep⟩) := by
   induction h with

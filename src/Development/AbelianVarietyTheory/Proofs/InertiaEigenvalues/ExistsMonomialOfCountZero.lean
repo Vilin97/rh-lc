@@ -147,7 +147,7 @@ theorem exists_monomial_of_count_zero (I S : Type 1) (A : Type) [DecidableEq A] 
 private theorem hasSupport_segment_class {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] {Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)}
     (hS : IsSegmentClass k Z) (Δ : Segment k) :
-    HasSupport (IrrGL.rep (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k)) Δ.ms := by
+    HasSupport (IrrGL.rep (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL (k := k))) Δ.ms := by
   have hd : ∑ a, (Δ.term a).1 = Δ.len * Δ.d := by
     rw [Segment.sum_term_fst]; rfl
   obtain ⟨φ, hφ⟩ := ((hS Δ Δ.start.rep Δ.start.cl_rep (stdBlocks (fun _ : Fin Δ.len => Δ.d) hd)
@@ -171,14 +171,14 @@ theorem pos_X {Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)}
     (hX : ∀ Δ, Ψ (Finsupp.single ⟨Δ.len * Δ.d, Z Δ⟩ 1) = MvPolynomial.X Δ) (Δ : Segment k) :
     Pos Ψ (MvPolynomial.X Δ) ∧ Pos Ψ (pc Ψ Δ.ms - MvPolynomial.X Δ) := by
   classical
-  set x : IrrGL k := ⟨Δ.len * Δ.d, Z Δ⟩ with hx
+  set x : IrrGL (k := k) := ⟨Δ.len * Δ.d, Z Δ⟩ with hx
   have hb : MvPolynomial.X Δ = bas Ψ x := (hX Δ).symm
   have h1 := pos_pc_sub hΨ (hasSupport_segment_class hS Δ) x.2.rep.smooth x.2.rep.irr
   rw [IrrGL.of_rep] at h1
   rw [hb]
   exact ⟨pos_bas _, h1⟩
 
-theorem pc_nsmul {Ψ : GrothGL k ≃+ MvPolynomial (Segment k) ℤ} (t : Multiset (IrrGL k)) (a : ℕ) :
+theorem pc_nsmul {Ψ : GrothGL k ≃+ MvPolynomial (Segment k) ℤ} (t : Multiset (IrrGL (k := k))) (a : ℕ) :
     pc Ψ (a • t) = pc Ψ t ^ a := by
   unfold pc
   rw [Multiset.map_nsmul, Multiset.prod_nsmul]
@@ -269,7 +269,7 @@ theorem fixed_iwahori_ne_bot : GlobalTheory.Published.GeometricLemma → GlobalT
     GlobalTheory.Published.BernsteinZelevinskyFiniteness →
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ)
     (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin n) k) V),
-    IsSmooth π → π.IsIrreducible → (∀ s : Multiset (IrrGL k), HasSupport π s → ∀ y ∈ s, y.IsUnramChar) →
+    IsSmooth π → π.IsIrreducible → (∀ s : Multiset (IrrGL (k := k)), HasSupport π s → ∀ y ∈ s, y.IsUnramChar) →
       fixed π (iwahori k (Fin n)) ≠ ⊥ := by
   intro hG hZ hB k _ _ _ _ n V _ _ π hs hi hsupp
   classical
@@ -325,7 +325,7 @@ theorem fixed_iwahori_ne_bot : GlobalTheory.Published.GeometricLemma → GlobalT
       (Realised.monomial (hG k).1 (hG k).2 hΨ hXr m).effective
     have hy : ∀ w, wordMult (IrrGL.of π hs hi).2.rep.ρ w = 0 := fun w =>
       (wordMult_congr (IrrGL.equivOf π hs hi) w).symm.trans (hw0 w)
-    obtain ⟨m, ⟨Δ, hΔm, hΔU⟩, hm⟩ := exists_monomial_of_count_zero (IrrGL k) (Segment k) ℂˣ Ψ
+    obtain ⟨m, ⟨Δ, hΔm, hΔU⟩, hm⟩ := exists_monomial_of_count_zero (IrrGL (k := k)) (Segment k) ℂˣ Ψ
       (fun x w => wordMult x.2.rep.ρ w) U ℓ φ hinj hUl h0 H _ hy
     have hsp := hasSupport_of_monomial hS hΨ hX hs hi m hm
     have hfm : Δ.first ∈ ∑ Δ ∈ m.support, m Δ • Δ.ms := by

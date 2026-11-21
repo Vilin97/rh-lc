@@ -28,7 +28,7 @@ variable {g : ℕ} [Fact g.Prime] {E : Type} [Field E] [NumberField E] [IsTotall
   (i : ℚ_[g] ≃+* w.adicCompletion E) (hi : Continuous i)
 
 variable {Ω : Type} [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {A : ValuationSubring Ω} {h : IsPlaceOver A w}
-  {rc : IrrGL (w.adicCompletion E) → WD h} (hrc : IsRec h rc) (hDZ : DiscreteGroups.sglob.DzType.DepthZeroInertiaBig)
+  {rc : IrrGL (k := w.adicCompletion E) → WD h} (hrc : IsRec h rc) (hDZ : DiscreteGroups.sglob.DzType.DepthZeroInertiaBig)
   (κ : IsLocalRing.ResidueField A ≃+* Formalism.CyclotomicNorms.Fbar g) (L : LabelDatum g) (h5 : 5 ≤ g) (hA : AllLab L)
   {t : G E Ω} (ht : t ∈ Ine (F := E) A) (hκ : Formalism.L2.NT.TameCoupled A κ t L.gen)
 include hi hrc hDZ ht hκ

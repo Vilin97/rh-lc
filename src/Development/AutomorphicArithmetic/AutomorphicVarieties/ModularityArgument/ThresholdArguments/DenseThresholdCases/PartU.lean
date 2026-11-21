@@ -131,7 +131,7 @@ theorem UpperTheory.V.Z.Desc.P.partX_alt :
   · obtain ⟨P', hP'⟩ := hpair s.c s.hc
     exact ⟨P', hform P' hP'⟩
   · have hS : ∀ u : s.St, (u : Plc (Lp L)) ∈ s.S := fun u => Or.inr (Or.inl u.2)
-    obtain ⟨rc, hrc⟩ : ∃ rc : IrrGL ((s.w u).adicCompletion L) → WD (s.hw u), _root_.UpperTheory.Zero.LLC.IsRecT (s.hw u) rc := P.exists_reciprocity_dense (s.hw u)
+    obtain ⟨rc, hrc⟩ : ∃ rc : IrrGL (k := (s.w u).adicCompletion L) → WD (s.hw u), _root_.UpperTheory.Zero.LLC.IsRecT (s.hw u) rc := P.exists_reciprocity_dense (s.hw u)
     have hT := _root_.UpperTheory.V.Hi.partUR2Type_alt l L Ω s n hn V Q c ι m τ₀ lam d e ξ hb σ hσ hY _ (hτ t ht)
       (fun u => loc (s.w u) (hspS _ (hS u))) (fun u => hloc _ _) u rc hrc
     have hu : ((l : ℕ) : 𝓞 L) ∉ (s.w u).asIdeal := fun h => s.St_l u u.2 (by simpa only [hwv] using (hl _).1 h)

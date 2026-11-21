@@ -93,11 +93,11 @@ theorem hasCentralChar_multiProd_prod {α n : Type} [Fintype α] [LinearOrder α
   simpa using h5
 
 theorem centralChar_eq_prod_support : BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k]
-    [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (x : IrrGL k) (s : Multiset (IrrGL k))
-    (ω : kˣ →* ℂˣ), HasSupport x.rep s → HasCentralChar x.rep ω → ∃ f : IrrGL k → kˣ →* ℂˣ,
+    [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (x : IrrGL (k := k)) (s : Multiset (IrrGL (k := k)))
+    (ω : kˣ →* ℂˣ), HasSupport x.rep s → HasCentralChar x.rep ω → ∃ f : IrrGL (k := k) → kˣ →* ℂˣ,
       (∀ y ∈ s, HasCentralChar y.rep (f y)) ∧ ∀ z, ω z = (s.map fun y => f y z).prod := by
   intro _ k _ _ _ _ _ x s ω hs hω
-  choose f _ hf using fun y : IrrGL k => LocGL.exists_smooth_hasCentralChar y.2.rep.smooth y.2.rep.irr
+  choose f _ hf using fun y : IrrGL (k := k) => LocGL.exists_smooth_hasCentralChar y.2.rep.smooth y.2.rep.irr
   refine ⟨f, fun y _ => hf y, fun z => ?_⟩
   obtain ⟨h, x', rfl, hi, -, e, hsub⟩ := hs
   have hcen := hasCentralChar_multiProd_prod e (fun a => (x' a).rep) (fun a => f (x' a)) (fun a => hf (x' a))

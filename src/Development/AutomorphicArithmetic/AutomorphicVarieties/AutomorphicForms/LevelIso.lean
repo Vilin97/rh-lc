@@ -81,7 +81,7 @@ theorem eventually_not_mem : ∀ᶠ w : HeightOneSpectrum (𝓞 F) in Filter.cof
 variable [IsAlgClosure F Ω]
 
 theorem Hypotheses₂.exists_rec (P : Hypotheses₂) {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 F)} (h : IsPlaceOver A w) :
-    ∃ rc : IrrGL (w.adicCompletion F) → WD h, IsRec h rc := by
+    ∃ rc : IrrGL (k := w.adicCompletion F) → WD h, IsRec h rc := by
   have L := P.litN.loc
   obtain ⟨rc, hrc⟩ := L.llc F Ω A w h
   exact ⟨rc, GlobalTheory.T.rec_of_rec_literal L.dzc L.dzi L.exh L.multi L.cos L.zel L.geo L.bz F Ω A w h rc hrc⟩

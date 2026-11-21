@@ -19,19 +19,19 @@ section Loc
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 theorem good_loc_ofChar (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) :
-    UpperTheory.Zero.LLC.Good (⟨1, ParLaws.toCl ((CG.ofChar χ).loc w)⟩ : IrrGL (w.adicCompletion E)) := by
-  have h : (⟨1, ParLaws.toCl ((CG.ofChar χ).loc w)⟩ : IrrGL (w.adicCompletion E)) =
+    UpperTheory.Zero.LLC.Good (⟨1, ParLaws.toCl ((CG.ofChar χ).loc w)⟩ : IrrGL (k := w.adicCompletion E)) := by
+  have h : (⟨1, ParLaws.toCl ((CG.ofChar χ).loc w)⟩ : IrrGL (k := w.adicCompletion E)) =
       IrrGL.ofChar (χ.loc w) (ParLaws.isSmoothChar_loc χ w) := ParLawsT.cls_loc_eq_of_isLocComp (CG.isLoc_ofChar χ w)
   rw [h]
   exact ⟨_, hasSupport_self (IrrGL.isCusp_ofChar _ _), fun y hy => Or.inl (by rw [Multiset.mem_singleton.1 hy]; rfl)⟩
 
 theorem cls_loc_twist (π : CG E a) (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) :
-    (⟨a, ParLaws.toCl ((π.twist χ).loc w)⟩ : IrrGL (w.adicCompletion E)) =
+    (⟨a, ParLaws.toCl ((π.twist χ).loc w)⟩ : IrrGL (k := w.adicCompletion E)) =
       IrrGL.tw ⟨a, ParLaws.toCl (π.loc w)⟩ (χ.loc w) (ParLaws.isSmoothChar_loc χ w) := by
   induction π using Quotient.inductionOn with | _ π =>
   obtain ⟨σ, hσ, -⟩ := LocEx.exists_isLocComp GlobalTheory.automorphicFormsFiniteGL E a π w
   refine (ParLawsT.cls_loc_eq_of_isLocComp (hσ.twist χ)).trans ?_
-  rw [show (⟨a, ParLaws.toCl (CG.loc (Quotient.mk _ π) w)⟩ : IrrGL (w.adicCompletion E)) = _ from
+  rw [show (⟨a, ParLaws.toCl (CG.loc (Quotient.mk _ π) w)⟩ : IrrGL (k := w.adicCompletion E)) = _ from
     ParLawsT.cls_loc_eq_of_isLocComp hσ]
   exact (IrrGL.tw_of σ.ρ σ.smooth σ.irred _ _).symm
 
@@ -50,7 +50,7 @@ theorem goodAll_tw_iff (π : HostCGu H a) (χ : HostCGu H 1) :
   haveI := host_isCMField H
   refine forall_congr' fun w => ?_
   have h := cls_loc_twist π.1 χ.1.toChar w
-  have h2 := GlobalTheory.RecT.good_tw_iff (⟨a, ParLaws.toCl (π.1.loc w)⟩ : IrrGL (w.adicCompletion H.E)) (χ.1.toChar.loc w)
+  have h2 := GlobalTheory.RecT.good_tw_iff (⟨a, ParLaws.toCl (π.1.loc w)⟩ : IrrGL (k := w.adicCompletion H.E)) (χ.1.toChar.loc w)
     (ParLaws.isSmoothChar_loc _ w)
   rw [← h] at h2
   exact h2

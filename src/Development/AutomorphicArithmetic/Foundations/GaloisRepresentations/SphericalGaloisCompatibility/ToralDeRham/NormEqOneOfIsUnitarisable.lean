@@ -29,7 +29,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 theorem norm_absPow_ofReal (r : ℝ) (z : kˣ) : ‖((absPow k (r : ℂ) z : ℂˣ) : ℂ)‖ = nabs k z ^ r := by
   rw [val_absPow_ofReal, Complex.norm_real, Real.norm_of_nonneg (Real.rpow_nonneg (GlobalTheory.SmGL.nabs_pos' k z).le _)]
 
-theorem len_eq_one {Δ : Segment k} {s : ℂ} {S : Multiset (IrrGL k)} (hS : Unlinked S)
+theorem len_eq_one {Δ : Segment k} {s : ℂ} {S : Multiset (IrrGL (k := k))} (hS : Unlinked S)
     (hm : ∀ a, (Δ.term a).nu s ∈ S) : Δ.len = 1 := by
   by_contra hne
   have h2 : 2 ≤ Δ.len := by have := Δ.len_pos; omega
@@ -49,7 +49,7 @@ theorem norm_eq_one_of_isUnitarisable {μ : kˣ →* ℂˣ} (hμ : IsSmoothChar 
   rwa [detChar_apply, h2] at h
 
 theorem exponents_of_genericUnitary (hGU : GlobalTheory.Published.GenericUnitaryDualGL) (hZ : GlobalTheory.Published.ZelevinskyPolynomialRing)
-    [CharZero k] (x : IrrGL k) (hg : IsGeneric x.rep) (hu : IsUnitarisable x.rep) {n : ℕ}
+    [CharZero k] (x : IrrGL (k := k)) (hg : IsGeneric x.rep) (hu : IsUnitarisable x.rep) {n : ℕ}
     (ξ : Fin n → (kˣ →* ℂˣ)) (hξ : ∀ j, IsSmoothChar (ξ j)) (hx : HasSupport x.rep (chars ξ hξ))
     (hU : Unlinked (chars ξ hξ)) (j : Fin n) :
     ∃ e : ℝ, |e| < 1 / 2 ∧ ∀ z, ‖((ξ j z : ℂˣ) : ℂ)‖ = ‖((absPow k (e : ℂ) z : ℂˣ) : ℂ)‖ := by

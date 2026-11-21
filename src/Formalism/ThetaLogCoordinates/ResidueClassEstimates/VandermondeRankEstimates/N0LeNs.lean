@@ -255,8 +255,6 @@ lemma be_eq (D : Letters) : D.be = D.bePos + D.beNeg := by
   unfold Letters.be Letters.bePos Letters.beNeg
   rw [← Finset.sum_filter_add_sum_filter_not (Icc 1 D.n0) (fun i => D.vec i = true)]
   congr 2
-  ext i
-  simp
 
 lemma pre_size (hk : 1 ≤ D.k) (hP : D.IsPre mu) : ∀ i, i ≤ D.n0 →
     -((∑ l ∈ (Icc 1 i).filter (fun l => D.vec l = false), D.B l : ℕ) : ℤ) ≤ ent mu i (D.k - 1) ∧

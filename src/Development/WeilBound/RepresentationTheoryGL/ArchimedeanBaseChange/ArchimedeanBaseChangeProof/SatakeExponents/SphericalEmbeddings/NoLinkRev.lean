@@ -26,7 +26,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 theorem prin_irr (χ : Fin 2 → kˣ →* ℂˣ) (hχ : ∀ i, IsSmoothChar (χ i))
     (h1 : χ 1 ≠ χ 0 * absPow k 1) (h2 : χ 0 ≠ χ 1 * absPow k 1) : (prinSeries χ).IsIrreducible := by
-  let x : Fin 2 → IrrGL k := fun i => IrrGL.ofChar (χ i) (hχ i)
+  let x : Fin 2 → IrrGL (k := k) := fun i => IrrGL.ofChar (χ i) (hχ i)
   have hx : ∀ i, (x i).IsCusp := fun i => IrrGL.isCusp_ofChar _ _
   have hd : ∑ i, (x i).1 = 2 := by simp [x, IrrGL.ofChar]
   have hnu : ∀ i j, χ j ≠ χ i * absPow k 1 → x j ≠ (x i).nu 1 := fun i j h e => by

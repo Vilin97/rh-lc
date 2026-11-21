@@ -62,7 +62,7 @@ private theorem linked (θ : kˣ →* ℂˣ) :
 
 private theorem exponent_of_unl [CharZero k] {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (ρ : Representation ℂ (GL (Fin N) k) V) (hs : IsSmooth ρ) (hi : ρ.IsIrreducible)
-    (hu : IsUnitarisable ρ) (hg : IsGeneric ρ) (S : Multiset (IrrGL k)) (hS : HasSupport ρ S)
+    (hu : IsUnitarisable ρ) (hg : IsGeneric ρ) (S : Multiset (IrrGL (k := k))) (hS : HasSupport ρ S)
     (h1 : ∀ y ∈ S, y.1 = 1) (hun : Unl (resCard k) S) {ξ : kˣ →* ℂˣ} (hξ : ξ ∈ chars S) :
     ∃ e : ℝ, |e| < 1 / 2 ∧ ‖((ξ (unif k) : ℂˣ) : ℂ)‖ = (resCard k : ℝ) ^ (-e) := by
   obtain ⟨h, δ, Δ, s, hL, hc, hb, hd, ⟨φ⟩⟩ := PositivityTheory.JsR.localExpBound_holds k N V ρ hs hi hu hg

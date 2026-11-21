@@ -203,7 +203,7 @@ structure Part (lam : Wt L l n) {d : ℕ} (ξ : GV n H.Sl →* GL (Fin d) ℂ) :
   frob : ∀ (w : H.Wp) (B : ValuationSubring Ω) (σ : G L Ω), IsPlaceOver B w.1 → IsFrob B (normV w.1) σ →
     (r (H.prj σ⁻¹) : Matrix (Fin n) (Fin n) (Qbar l)).charpoly.map ι.toRingHom = heckePol n (normV w.1) (a w)
   atL : ∀ v, AtL ι (H.ovr v) (r.comp (H.dec v)) lam (σl v)
-  atQ : ∀ (q : H.Q) (B : ValuationSubring Ω) (h : IsPlaceOver B (H.wq q)) (rc : IrrGL ((H.wq q).adicCompletion L) → WD h), IsRec h rc →
+  atQ : ∀ (q : H.Q) (B : ValuationSubring Ω) (h : IsPlaceOver B (H.wq q)) (rc : IrrGL (k := (H.wq q).adicCompletion L) → WD h), IsRec h rc →
     Lev.WO ι (r.comp H.prj) (rc (algNorm (σq q)))
 
 def Aut (P : Wt L l n → (H.Gq →* GL (Fin n) (Qbar l)) → Prop) : Prop :=

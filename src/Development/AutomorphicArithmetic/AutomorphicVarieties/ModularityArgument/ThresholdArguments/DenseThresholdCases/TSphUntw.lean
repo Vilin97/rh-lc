@@ -36,7 +36,7 @@ private theorem gd_lpTwist {x : WD h} (hx : Gd x) (ξ : Weil h →* ℂˣ) (hξ 
 end WD
 section Loc
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-private theorem good_chars {n : ℕ} {x : IrrGL k} (ξ : Fin n → kˣ →* ℂˣ) (hξ : ∀ j, IsSmoothChar (ξ j))
+private theorem good_chars {n : ℕ} {x : IrrGL (k := k)} (ξ : Fin n → kˣ →* ℂˣ) (hξ : ∀ j, IsSmoothChar (ξ j))
     (hs : HasSupport x.rep (GlobalTheory.RoadU.chars ξ hξ)) : Good x := by
   refine ⟨_, hs, fun y hy => Or.inl ?_⟩
   obtain ⟨j, -, rfl⟩ := Multiset.mem_map.1 hy

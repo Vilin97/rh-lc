@@ -18,7 +18,7 @@ section Loc
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-private theorem chs_cons_some (ξ : kˣ →* ℂˣ) (hξ) (s : Multiset (IrrGL k)) :
+private theorem chs_cons_some (ξ : kˣ →* ℂˣ) (hξ) (s : Multiset (IrrGL (k := k))) :
     chs (IrrGL.ofChar ξ hξ ::ₘ s) = ξ ::ₘ chs s := by
   have h : ∃ η : kˣ →* ℂˣ, ∃ hη : IsSmoothChar η, IrrGL.ofChar ξ hξ = IrrGL.ofChar η hη := ⟨ξ, hξ, rfl⟩
   have hc : h.choose = ξ := by
@@ -28,8 +28,8 @@ private theorem chs_cons_some (ξ : kˣ →* ℂˣ) (hξ) (s : Multiset (IrrGL k
   rw [Multiset.filterMap_cons_some _ _ _ (by rw [dite_eq_left h])]
   rw [hc]
 
-private theorem chs_cons_not {y : IrrGL k} (hy : ¬ ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ)
-    (s : Multiset (IrrGL k)) : chs (y ::ₘ s) = chs s := by
+private theorem chs_cons_not {y : IrrGL (k := k)} (hy : ¬ ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ)
+    (s : Multiset (IrrGL (k := k))) : chs (y ::ₘ s) = chs s := by
   unfold chs
   rw [Multiset.filterMap_cons_none _ _ (by rw [dite_eq_right hy])]
 

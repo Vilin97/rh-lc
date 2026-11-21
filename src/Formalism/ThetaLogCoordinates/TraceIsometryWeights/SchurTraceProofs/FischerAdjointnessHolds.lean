@@ -121,7 +121,7 @@ theorem fock_nondeg (F : MvPolynomial σ ℚ_[p]) (h : ∀ G, fock p F G = 0) : 
   ext m
   have h1 := h (monomial m 1)
   rw [fock_monomial_right, mul_one] at h1
-  rw [coeff_zero]
+  change F.coeff m = 0
   exact (mul_eq_zero.1 h1).resolve_right (facProd_ne_zero m)
 
 theorem fock_disjoint (F G : MvPolynomial σ ℚ_[p]) (h : ∀ m ∈ F.support, m ∉ G.support) : fock p F G = 0 := by

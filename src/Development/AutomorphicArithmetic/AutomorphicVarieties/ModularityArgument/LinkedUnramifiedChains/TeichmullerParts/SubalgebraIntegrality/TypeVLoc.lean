@@ -62,7 +62,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 private theorem prinSeries_irreducible {n : ℕ} (ω : Fin n → kˣ →* ℂˣ) (hω : ∀ i, IsSmoothChar (ω i))
     (h : ∀ i j, ω j ≠ ω i * absPow k 1) : (prinSeries ω).IsIrreducible := by
-  let x : Fin n → IrrGL k := fun i => IrrGL.ofChar (ω i) (hω i)
+  let x : Fin n → IrrGL (k := k) := fun i => IrrGL.ofChar (ω i) (hω i)
   have hx : ∀ i, (x i).IsCusp := fun i => IrrGL.isCusp_ofChar _ _
   have hd : ∑ i, (x i).1 = n := by simp [x, IrrGL.ofChar]
   have hnu : ∀ i j, x j ≠ (x i).nu 1 := fun i j e => by
@@ -160,7 +160,7 @@ private theorem exists_char {z : WD h} (hz : IsIrrWD z) {n : ℕ} (η : Fin n �
   · simp [hN]
 
 variable {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {ε : EpsFamily A}
-  {rc : IrrGL (w.adicCompletion E) → WD h}
+  {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
 private theorem charPol_ofChar (H : UpperTheory.V.Z.Win.LawsV a ha ε rc) (χ : (w.adicCompletion E)ˣ →* ℂˣ) (hχ : IsSmoothChar χ)
     (g : Weil h) : (rc (IrrGL.ofChar χ hχ)).charPol g = X - C (χ (a g) : ℂ) := by
@@ -168,7 +168,7 @@ private theorem charPol_ofChar (H : UpperTheory.V.Z.Win.LawsV a ha ε rc) (χ : 
   simp
 
 private theorem hasSupport_of_charPol (hZ : GlobalTheory.Published.ZelevinskyPolynomialRing) (H : UpperTheory.V.Z.Win.LawsV a ha ε rc)
-    (x : IrrGL (w.adicCompletion E)) {n : ℕ} (ω : Fin n → (w.adicCompletion E)ˣ →* ℂˣ)
+    (x : IrrGL (k := w.adicCompletion E)) {n : ℕ} (ω : Fin n → (w.adicCompletion E)ˣ →* ℂˣ)
     (hω : ∀ i, IsSmoothChar (ω i)) (hp : ∀ g, (rc x).charPol g = ∏ j, (X - C (ω j (a g) : ℂ))) :
     HasSupport x.rep (Finset.univ.val.map fun i => IrrGL.ofChar (ω i) (hω i)) := by
   obtain ⟨s, hs⟩ := SupportRing.exists_hasSupport hZ x
@@ -186,9 +186,9 @@ private theorem hasSupport_of_charPol (hZ : GlobalTheory.Published.ZelevinskyPol
       ⟨{y}, hasSupport_self (hs.isCusp hy), fun u hu => Or.inl (by rwa [Multiset.mem_singleton.1 hu])⟩
     exact ⟨χ, hχ, H.inj _ _ hg e'.symm⟩
   let S := {χ : (w.adicCompletion E)ˣ →* ℂˣ // IsSmoothChar χ}
-  let F : S → IrrGL (w.adicCompletion E) := fun χ => IrrGL.ofChar χ.1 χ.2
+  let F : S → IrrGL (k := w.adicCompletion E) := fun χ => IrrGL.ofChar χ.1 χ.2
   obtain ⟨t, rfl⟩ : ∃ t : Multiset S, t.map F = s :=
-    haveI : CanLift (IrrGL (w.adicCompletion E)) S F fun y => ∃ χ, F χ = y := ⟨fun _ hy => hy⟩
+    haveI : CanLift (IrrGL (k := w.adicCompletion E)) S F fun y => ∃ χ, F χ = y := ⟨fun _ hy => hy⟩
     (Multiset.canLift F (fun y => ∃ χ, F χ = y)).prf s fun y hy => by
       obtain ⟨χ, hχ, e⟩ := hch y hy
       exact ⟨⟨χ, hχ⟩, e⟩

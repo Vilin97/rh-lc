@@ -211,13 +211,13 @@ section Par
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A A' : ValuationSubring Ω} {w w' : HeightOneSpectrum (𝓞 E)} {a : ℕ}
 
-def locRec (hL : GlobalTheory.Published.LocalLanglandsGL) (h : IsPlaceOver A w) : IrrGL (w.adicCompletion E) → WD h :=
+def locRec (hL : GlobalTheory.Published.LocalLanglandsGL) (h : IsPlaceOver A w) : IrrGL (k := w.adicCompletion E) → WD h :=
   (hL.1 E Ω A w h).exists.choose
 
 theorem isRec_locRec (hL : GlobalTheory.Published.LocalLanglandsGL) (h : IsPlaceOver A w) : IsRec h (locRec hL h) :=
   (hL.1 E Ω A w h).exists.choose_spec
 
-variable {h : IsPlaceOver A w} {rc : IrrGL (w.adicCompletion E) → WD h}
+variable {h : IsPlaceOver A w} {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
 theorem unr_iff (H : IsRec h rc) (σ : IrrRep (GL (Fin a) (w.adicCompletion E))) :
     (rc (cls σ)).unr ↔ IsSpherical σ.ρ := by

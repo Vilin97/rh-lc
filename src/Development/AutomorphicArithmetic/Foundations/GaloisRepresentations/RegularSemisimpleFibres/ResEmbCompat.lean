@@ -156,7 +156,7 @@ def KillsOn (P : Lbl → Prop) : Prop :=
       (JD θ (a.lift (Module.finrank F F')).D (a.lift (Module.finrank F F')).L a.rk)
 
 def CuspIrr : Prop :=
-  ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (y : IrrGL k), y.IsCusp → UpperTheory.Zero.LLC.DZ y →
+  ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (y : IrrGL (k := k)), y.IsCusp → UpperTheory.Zero.LLC.DZ y →
     FiniteDimensional ℂ (fixed y.rep (KOne k (Fin y.1))) ∧ (levelZero y.rep).IsIrreducible ∧
       PositivityTheory.Rg.DzCount.FinCusp (levelZero y.rep)
 
@@ -182,13 +182,13 @@ def SubqMap : Prop :=
 
 def SuppStd : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (N : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
-    (S : Multiset (IrrGL k)), HasSupport π S → ∃ (s : ℕ) (x : Fin s → IrrGL k) (hd : ∑ a, (x a).1 = N),
+    (S : Multiset (IrrGL (k := k))), HasSupport π S → ∃ (s : ℕ) (x : Fin s → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N),
       Finset.univ.val.map x = S ∧ IsSubquotient π (prodIrr x hd)
 
 def LblOf : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (θ : AlgebraicClosure 𝓀[k] →* ℂ), Inj θ → ∀ (N : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V]
-    (π : Representation ℂ (GL (Fin N) k) V) (S : Multiset (IrrGL k)), HasSupport π S → fixed π (KOne k (Fin N)) ≠ ⊥ →
-    ∃ (s : ℕ) (x : Fin s → IrrGL k) (c : Fin s → ℕ), Finset.univ.val.map x = S ∧
+    (π : Representation ℂ (GL (Fin N) k) V) (S : Multiset (IrrGL (k := k))), HasSupport π S → fixed π (KOne k (Fin N)) ≠ ⊥ →
+    ∃ (s : ℕ) (x : Fin s → IrrGL (k := k)) (c : Fin s → ℕ), Finset.univ.val.map x = S ∧
       (∀ a, (x a).IsCusp ∧ UpperTheory.Zero.LLC.DZ (x a) ∧ Reg (Nat.card 𝓀[k]) (x a).1 (c a) ∧
         ∀ γ, LinearMap.trace ℂ _ (levelZero (x a).rep γ) = cusp θ (x a).1 (c a) γ) ∧
       HasLbl θ π ⟨Nat.card 𝓀[k], [], List.ofFn fun a => ((x a).1, c a)⟩
@@ -311,7 +311,7 @@ def ArtRead : Prop :=
 
 def TypeChar : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (v : HeightOneSpectrum (𝓞 E)) (g : ℕ) [Fact g.Prime] (i : ℚ_[g] ≃+* v.adicCompletion E),
-    Continuous i → ∀ (r : 𝓀[v.adicCompletion E] ≃+* ZMod g) (y : IrrGL (v.adicCompletion E)) (τ : FDRep ℂ (GlobalTheory.GLq.Gn g y.1)),
+    Continuous i → ∀ (r : 𝓀[v.adicCompletion E] ≃+* ZMod g) (y : IrrGL (k := v.adicCompletion E)) (τ : FDRep ℂ (GlobalTheory.GLq.Gn g y.1)),
     GlobalTheory.GLq.IsCusp τ.character → GlobalTheory.SerSys.TameGen.Inflates (y.rep.comp (Matrix.GeneralLinearGroup.map i.toRingHom)) τ →
     ∀ γ, τ.character (Matrix.GeneralLinearGroup.map r.toRingHom γ) = LinearMap.trace ℂ _ (levelZero y.rep γ)
 
@@ -327,7 +327,7 @@ def CuspIne : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
     (v : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A v) (g : ℕ) [Fact g.Prime] (i : ℚ_[g] ≃+* v.adicCompletion E), Continuous i →
     ∀ (Θ : IsLocalRing.ResidueField A →* ℂ), Inj Θ → ∀ (e : AlgebraicClosure 𝓀[v.adicCompletion E] →+* IsLocalRing.ResidueField A)
-      (y : IrrGL (v.adicCompletion E)) (c : ℕ), y.IsCusp → UpperTheory.Zero.LLC.DZ y → Reg g y.1 c →
+      (y : IrrGL (k := v.adicCompletion E)) (c : ℕ), y.IsCusp → UpperTheory.Zero.LLC.DZ y → Reg g y.1 c →
       (∀ γ, LinearMap.trace ℂ _ (levelZero y.rep γ) = cusp (Θ.comp e.toMonoidHom) y.1 c γ) →
     ∀ rc, UpperTheory.Zero.LLC.IsRecT h rc → ∀ f : ℕ, 0 < f → y.1 ∣ f → ∀ (t : Ine (F := E) A) (ϖ : Ω), ϖ ^ (g ^ f - 1) = (g : Ω) →
       ∀ z : A, (z : Ω) = (t : G E Ω) ϖ / ϖ → (rc y).inePol (t : G E Ω) =
@@ -335,8 +335,8 @@ def CuspIne : Prop :=
 
 def SuppIne : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
-    (v : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A v) (rc : IrrGL (v.adicCompletion E) → WD h), UpperTheory.Zero.LLC.IsRecT h rc →
-    ∀ (x : IrrGL (v.adicCompletion E)) (S : Multiset (IrrGL (v.adicCompletion E))), HasSupport x.rep S →
+    (v : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A v) (rc : IrrGL (k := v.adicCompletion E) → WD h), UpperTheory.Zero.LLC.IsRecT h rc →
+    ∀ (x : IrrGL (k := v.adicCompletion E)) (S : Multiset (IrrGL (k := v.adicCompletion E))), HasSupport x.rep S →
     ∀ t : Ine (F := E) A, (rc x).inePol (t : G E Ω) = (S.map fun y => (rc y).inePol (t : G E Ω)).prod
 
 def TameChars : Prop :=

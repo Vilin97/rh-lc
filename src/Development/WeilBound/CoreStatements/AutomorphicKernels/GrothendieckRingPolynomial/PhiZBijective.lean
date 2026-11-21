@@ -20,7 +20,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 variable [Fact (Assoc k)] [Fact (Comm k)] [Fact (One k)]
 
 theorem ell_phiOf (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hj : LSegJacquet k) (hJ : JCls k) (hAlt : AltSum k)
-    (Lseg : Segment k → IrrGL k) (hL : ∀ Δ, IsLSeg Δ (Lseg Δ).rep)
+    (Lseg : Segment k → IrrGL (k := k)) (hL : ∀ Δ, IsLSeg Δ (Lseg Δ).rep)
     (hprod : ∀ (h N : ℕ) (Γ : Fin h → Segment k) (hd : ∑ a, (Lseg (Γ a)).1 = N),
       phiOf Lseg (∏ a, MvPolynomial.X (Γ a)) = toR (cl0 (prodIrr (fun a => Lseg (Γ a)) hd)))
     (Δ : Segment k) (p : MvPolynomial (Segment k) ℤ) :
@@ -58,7 +58,7 @@ theorem phiZ_bijective (hk : Steps k) (h1 : TriAut) (h2 : UniTri)
   obtain ⟨hC, -, -, -, -, -, -, -, hJ, hJS, hAlt⟩ := hk
   have hA := PositivityTheory.Tls2.BZGL.irreducibleAdmissibleGL_top
   have hx : ∀ Δ : Segment k, ∃ p : MvPolynomial (Segment k) ℤ,
-      phiOf Lseg p = toR (sg (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k)) ∧
+      phiOf Lseg p = toR (sg (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL (k := k))) ∧
         ∀ s ∈ p.support, msupp (Finsupp.toMultiset s) = Δ.ms := by
     intro Δ
     obtain ⟨n, hn⟩ := hC.exh ⟨Δ.len * Δ.d, Z Δ⟩

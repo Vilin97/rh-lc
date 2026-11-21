@@ -27,20 +27,21 @@ def v0 {N : ℕ} : SimplexCategory.mk 0 ⟶ SimplexCategory.mk N :=
 lemma δ0_cone {p N : ℕ} (a : SimplexCategory.mk p ⟶ SimplexCategory.mk N) :
     SimplexCategory.δ 0 ≫ cone a = a := by
   ext j
-  simp [SimplexCategory.δ]
+  simp [SimplexCategory.δ, cone]
 
 lemma δsucc_cone {p N : ℕ} (a : SimplexCategory.mk (p + 1) ⟶ SimplexCategory.mk N) (i : Fin (p + 2)) :
     SimplexCategory.δ i.succ ≫ cone a = cone (SimplexCategory.δ i ≫ a) := by
   ext j
   induction j using Fin.cases with
-  | zero => simp [SimplexCategory.δ]
-  | succ j => simp [SimplexCategory.δ, Fin.succ_succAbove_succ]
+  | zero => simp [SimplexCategory.δ, cone]
+  | succ j => simp [SimplexCategory.δ, cone, Fin.succ_succAbove_succ]
 
 lemma δ1_cone {N : ℕ} (a : SimplexCategory.mk 0 ⟶ SimplexCategory.mk N) :
     SimplexCategory.δ 1 ≫ cone a = v0 := by
   ext j
   fin_cases j
-  simp [SimplexCategory.δ]
+  simp [SimplexCategory.δ, cone, v0]
+  rfl
 
 abbrev X {N : ℕ} (p r : ℕ) (a : SimplexCategory.mk p ⟶ SimplexCategory.mk N)
     (b : SimplexCategory.mk r ⟶ SimplexCategory.mk N) : Pr N →₀ ℤ :=
@@ -167,13 +168,13 @@ end LateralTheory.EtaleFoundations.AcycPf
 
 theorem LateralTheory.EtaleFoundations.SteenPf.leaf_acyc_of : LateralTheory.EtaleFoundations.SteenPf.leaf_acyc := by
   intro N k c hdeg hcyc
-  refine ⟨H N c, deg_H hdeg, ?_⟩
-  have h : ∀ y ∈ c.support, Pr.d N (H N (Finsupp.single y (c y))) + H N (Pr.d N (Finsupp.single y (c y))) =
+  refine ⟨LateralTheory.EtaleFoundations.AcycPf.H N c, LateralTheory.EtaleFoundations.AcycPf.deg_H hdeg, ?_⟩
+  have h : ∀ y ∈ c.support, Pr.d N (LateralTheory.EtaleFoundations.AcycPf.H N (Finsupp.single y (c y))) + LateralTheory.EtaleFoundations.AcycPf.H N (Pr.d N (Finsupp.single y (c y))) =
       Finsupp.single y (c y) := by
     intro y hy
     have hy' := hdeg y hy
-    rw [← Finsupp.smul_single_one, map_zsmul, map_zsmul, map_zsmul, map_zsmul, ← smul_add, key y (by omega)]
-  have e : Pr.d N (H N c) + H N (Pr.d N c) = c := by
+    rw [← Finsupp.smul_single_one, map_zsmul, map_zsmul, map_zsmul, map_zsmul, ← smul_add, LateralTheory.EtaleFoundations.AcycPf.key y (by omega)]
+  have e : Pr.d N (LateralTheory.EtaleFoundations.AcycPf.H N c) + LateralTheory.EtaleFoundations.AcycPf.H N (Pr.d N c) = c := by
     conv_rhs => rw [← Finsupp.sum_single c]
     conv_lhs => rw [← Finsupp.sum_single c]
     set_option synthInstance.maxHeartbeats 100000 in

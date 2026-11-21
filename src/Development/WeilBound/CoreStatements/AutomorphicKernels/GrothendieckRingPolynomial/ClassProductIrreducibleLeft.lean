@@ -61,7 +61,7 @@ theorem bil_single (x y : ι) : bil f (Finsupp.single x 1) (Finsupp.single y 1) 
 end Bil
 
 theorem mulR_eq_bil (a b : GrothGL k) :
-    mulR a b = bil (fun x y : IrrGL k => cl0 (prod₂ (IrrGL.rep x) (IrrGL.rep y))) a b := rfl
+    mulR a b = bil (fun x y : IrrGL (k := k) => cl0 (prod₂ (IrrGL.rep x) (IrrGL.rep y))) a b := rfl
 
 theorem mulR_zero_left (b : GrothGL k) : mulR 0 b = 0 :=
   (mulR_eq_bil _ _).trans (bil_zero_left _ b)
@@ -77,7 +77,7 @@ theorem mulR_add_right (a b b' : GrothGL k) : mulR a (b + b') = mulR a b + mulR 
   (mulR_eq_bil _ _).trans ((bil_add_right _ a b b').trans
     (congrArg₂ (· + ·) (mulR_eq_bil a b).symm (mulR_eq_bil a b').symm))
 
-theorem mulR_sg_sg (x y : IrrGL k) : mulR (sg x) (sg y) = cl0 (prod₂ (IrrGL.rep x) (IrrGL.rep y)) :=
+theorem mulR_sg_sg (x y : IrrGL (k := k)) : mulR (sg x) (sg y) = cl0 (prod₂ (IrrGL.rep x) (IrrGL.rep y)) :=
   (mulR_eq_bil _ _).trans (bil_single _ x y)
 
 section Cl0

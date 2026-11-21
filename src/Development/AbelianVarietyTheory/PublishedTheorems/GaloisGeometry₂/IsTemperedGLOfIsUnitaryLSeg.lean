@@ -221,14 +221,14 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W] {N : ℕ}
 
 def IsTemperedGL (π : Representation ℂ (GL (Fin N) k) V) : Prop :=
-  ∃ (h : ℕ) (δ : Fin h → IrrGL k) (hd : ∑ i, (δ i).1 = N), (∀ i, IsUnitaryLSeg (δ i)) ∧ Nonempty (π.Equiv (prodIrr δ hd))
+  ∃ (h : ℕ) (δ : Fin h → IrrGL (k := k)) (hd : ∑ i, (δ i).1 = N), (∀ i, IsUnitaryLSeg (δ i)) ∧ Nonempty (π.Equiv (prodIrr δ hd))
 
 theorem IsTemperedGL.of_equiv {π : Representation ℂ (GL (Fin N) k) V} {σ : Representation ℂ (GL (Fin N) k) W}
     (H : IsTemperedGL π) (φ : π.Equiv σ) : IsTemperedGL σ := by
   obtain ⟨h, δ, hd, h1, ⟨ψ⟩⟩ := H
   exact ⟨h, δ, hd, h1, ⟨φ.symm.trans ψ⟩⟩
 
-theorem isTemperedGL_of_isUnitaryLSeg {δ : IrrGL k} (h : IsUnitaryLSeg δ) : IsTemperedGL δ.rep :=
+theorem isTemperedGL_of_isUnitaryLSeg {δ : IrrGL (k := k)} (h : IsUnitaryLSeg δ) : IsTemperedGL δ.rep :=
   ⟨1, fun _ => δ, by simp, fun _ => h, nonempty_equiv_prodIrr_one δ _⟩
 
 theorem isTemperedGL_detRep_one {χ : kˣ →* ℂˣ} (hs : IsSmoothChar χ) :

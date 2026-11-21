@@ -46,7 +46,7 @@ private theorem root_diag {n : ℕ} (α : Fin n → ℂˣ) (y : WD h)
 
 open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.CuspRep.ParLaws in
 private theorem algNorm_diag {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
-    {rc : IrrGL (w.adicCompletion E) → WD h} (L : LawsT a ha rc) {n : ℕ}
+    {rc : IrrGL (k := w.adicCompletion E) → WD h} (L : LawsT a ha rc) {n : ℕ}
     (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) (B : Multiset ℂˣ) (hB : GlobalTheory.LFun.HasSatGL w σ.ρ B) :
     ∃ α : Fin n → ℂˣ, B = Finset.univ.val.map α ∧
       rc (algNorm σ) = WD.mk (WDRep.diag h fun i => (α i)⁻¹ * qPow w ((1 - (n : ℝ)) / 2)) := by

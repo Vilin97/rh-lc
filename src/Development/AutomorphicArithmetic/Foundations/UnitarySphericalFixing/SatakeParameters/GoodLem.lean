@@ -24,11 +24,11 @@ theorem good_ofChar (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) : Good (IrrGL.
 
 variable [CharZero k]
 
-theorem good_of_one (x : IrrGL k) (h : x.1 = 1) : Good x := by
+theorem good_of_one (x : IrrGL (k := k)) (h : x.1 = 1) : Good x := by
   obtain ⟨χ, hχ, rfl⟩ := ((clBasic k x).2.2.2.2.1 h).2
   exact good_ofChar χ hχ
 
-theorem good_of_fixed (hq : IsQg k) (x : IrrGL k) (hD : fixed x.rep (KOne k (Fin x.1)) ≠ ⊥) : Good x := by
+theorem good_of_fixed (hq : IsQg k) (x : IrrGL (k := k)) (hD : fixed x.rep (KOne k (Fin x.1)) ≠ ⊥) : Good x := by
   obtain ⟨s, hs⟩ := GlobalTheory.LocGL.SupportRing.exists_hasSupport Pr.zel x
   refine ⟨s, hs, fun y hy => Or.inr ⟨hq, y, 1, isSmoothChar_one, ?_, ((clBasic k y).2.2.1 _).symm⟩⟩
   obtain ⟨n, xs, hxs, hcs⟩ := hs
@@ -51,7 +51,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-  {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {ε : EpsFamily A} {rc : IrrGL (w.adicCompletion E) → WD h}
+  {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {ε : EpsFamily A} {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
 theorem charZero_compl (w : HeightOneSpectrum (𝓞 E)) : CharZero (w.adicCompletion E) :=
   charZero_of_injective_algebraMap (algebraMap E _).injective

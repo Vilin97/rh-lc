@@ -35,13 +35,13 @@ section Classes
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-def Unlinked (s : Multiset (IrrGL k)) : Prop := ∀ y ∈ s, ∀ z ∈ s, y ≠ z.nu 1
+def Unlinked (s : Multiset (IrrGL (k := k))) : Prop := ∀ y ∈ s, ∀ z ∈ s, y ≠ z.nu 1
 
-def PlainTor (x : IrrGL k) : Prop := ∃ s, HasSupport x.rep s ∧ (∀ y ∈ s, y.1 = 1) ∧ Unlinked s
+def PlainTor (x : IrrGL (k := k)) : Prop := ∃ s, HasSupport x.rep s ∧ (∀ y ∈ s, y.1 = 1) ∧ Unlinked s
 
-def Plain (x : IrrGL k) : Prop := PlainTor x ∨ (x.IsCusp ∧ UpperTheory.Zero.LLC.GoodCusp x)
+def Plain (x : IrrGL (k := k)) : Prop := PlainTor x ∨ (x.IsCusp ∧ UpperTheory.Zero.LLC.GoodCusp x)
 
-def chars {n : ℕ} (ξ : Fin n → (kˣ →* ℂˣ)) (hξ : ∀ j, IsSmoothChar (ξ j)) : Multiset (IrrGL k) :=
+def chars {n : ℕ} (ξ : Fin n → (kˣ →* ℂˣ)) (hξ : ∀ j, IsSmoothChar (ξ j)) : Multiset (IrrGL (k := k)) :=
   Finset.univ.val.map fun j => IrrGL.ofChar (ξ j) (hξ j)
 
 end Classes

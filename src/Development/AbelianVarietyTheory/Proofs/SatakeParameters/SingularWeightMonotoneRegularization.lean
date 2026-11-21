@@ -26,7 +26,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
 theorem charPol_seg {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
-    {rc : IrrGL (w.adicCompletion E) → WD h} (H : UpperTheory.Zero.LLC.LawsT a ha rc) (Δ : Segment (w.adicCompletion E))
+    {rc : IrrGL (k := w.adicCompletion E) → WD h} (H : UpperTheory.Zero.LLC.LawsT a ha rc) (Δ : Segment (w.adicCompletion E))
     (σ : Weil h) :
     (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len)).charPol σ
       = (Δ.ms.map fun y => (rc y).charPol σ).prod := by

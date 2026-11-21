@@ -75,7 +75,7 @@ private theorem detjac_equiv {G V : Type} [Group G] [AddCommGroup V] [Module ℂ
     exact this
 
 theorem UpperTheory.Lit.Mix.detjac :
-    ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (t : ℕ) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) (q : Fin 2 → IrrGL k) (hq : ∑ a, (q a).1 = t), 0 < (q 0).1 → jm q hq (detRep (Fin t) χ) ≠ 0 → ∃ A : Multiset (IrrGL k), HasSupport (q 0).rep A ∧ (IrrGL.ofChar χ hχ).nu (-((t : ℂ) - 1) / 2) ∈ A := by
+    ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (t : ℕ) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) (q : Fin 2 → IrrGL (k := k)) (hq : ∑ a, (q a).1 = t), 0 < (q 0).1 → jm q hq (detRep (Fin t) χ) ≠ 0 → ∃ A : Multiset (IrrGL (k := k)), HasSupport (q 0).rep A ∧ (IrrGL.ofChar χ hχ).nu (-((t : ℂ) - 1) / 2) ∈ A := by
   intro k _ _ _ _ t χ hχ q hq hpos hj
   have hsub := detjac_isSubquotient hj
   have hχ' : IsSmoothChar (χ * absPow k (-((t : ℂ) - 1) / 2)) := hχ.mul (isSmoothChar_absPow _)

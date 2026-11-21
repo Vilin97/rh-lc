@@ -48,7 +48,7 @@ theorem isUnitarisable_of_isSpeh_one {a : ℕ} {X Y : Type} [AddCommGroup X] [Mo
     {τ : Representation ℂ (GL (Fin a) k) Y} (h : IsSpeh (IrrGL.of ρ hs hi) 1 τ) (hu : IsUnitarisable τ) :
     IsUnitarisable ρ := by
   obtain ⟨hd, hτ, p, hp, -⟩ := h
-  have key : ∀ y : Fin 1 → IrrGL k, y = (fun _ => IrrGL.of ρ hs hi) → ∀ hd : ∑ i, (y i).1 = a,
+  have key : ∀ y : Fin 1 → IrrGL (k := k), y = (fun _ => IrrGL.of ρ hs hi) → ∀ hd : ∑ i, (y i).1 = a,
       Nonempty ((IrrGL.of ρ hs hi).rep.Equiv (prodIrr y hd)) := by
     rintro _ rfl hd
     exact nonempty_equiv_prodIrr_one _ hd

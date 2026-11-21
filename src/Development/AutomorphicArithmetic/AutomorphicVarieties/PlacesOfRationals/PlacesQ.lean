@@ -61,6 +61,7 @@ theorem UpperTheory.V.B3.placesQ :
     ∀ (p : ℕ) (A B : ValuationSubring Ω), p.Prime → A.valuation (p : Ω) < 1 → B.valuation (p : Ω) < 1 →
       ∃ g : G ℚ Ω, ∀ x ∈ Ine (F := ℚ) B, g⁻¹ * x * g ∈ Ine (F := ℚ) A := by
   intro Ω _ _ _
+  have : CharZero Ω := charZero_of_injective_algebraMap (algebraMap ℚ Ω).injective
   have val_top {x : Ω} (h : (⊤ : ValuationSubring Ω).valuation x < 1) : x = 0 := by
     by_contra hx
     have h1 : (⊤ : ValuationSubring Ω).valuation x⁻¹ ≤ 1 :=
@@ -93,6 +94,7 @@ theorem UpperTheory.V.B3.placesQ :
     rw [eq_top_iff]
     intro x _
     have : CharZero Ω := charZero_of_injective_algebraMap (algebraMap ℚ Ω).injective
+    have h1 : Algebra.IsAlgebraic ℤ ℚ := (IsFractionRing.comap_isAlgebraic_iff (A := ℤ) (K := ℚ) (C := ℚ)).2 inferInstance
     have h2 : Algebra.IsAlgebraic ℤ Ω := Algebra.IsAlgebraic.trans ℤ ℚ Ω
     obtain ⟨n, hn, hi⟩ := (h2.isAlgebraic x).exists_integral_multiple
     have h3 : ¬ A.valuation (algebraMap ℚ Ω ((n : 𝓞 ℚ) : ℚ)) < 1 := by

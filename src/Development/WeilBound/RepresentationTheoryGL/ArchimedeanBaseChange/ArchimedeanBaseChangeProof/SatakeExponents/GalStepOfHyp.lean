@@ -42,7 +42,7 @@ def ConjPl (w u : HeightOneSpectrum (𝓞 E)) : Prop :=
 def Pre.ThetaStable (D : Pre E n) : Prop :=
   ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∃ B, D.Sat w B ∧ ∀ u, ConjPl w u → D.Sat u (B.map (·⁻¹))
 
-def Pre.cls (D : Pre E n) (i : Fin D.c) (w : HeightOneSpectrum (𝓞 E)) : GlobalTheory.LocGL.IrrGL (w.adicCompletion E) :=
+def Pre.cls (D : Pre E n) (i : Fin D.c) (w : HeightOneSpectrum (𝓞 E)) : GlobalTheory.LocGL.IrrGL (k := w.adicCompletion E) :=
   GlobalTheory.LocGL.IrrGL.of (D.σ i w).ρ (D.σ i w).smooth (D.σ i w).irred
 
 def WeightEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (π : Submodule ℂ (UA E n → ℂ)),

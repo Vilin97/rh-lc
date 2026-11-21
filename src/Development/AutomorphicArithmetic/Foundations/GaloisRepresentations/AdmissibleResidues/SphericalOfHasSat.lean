@@ -56,7 +56,7 @@ namespace UpperTheory.GalN.V
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
-theorem unr_algNorm {a : ℕ} {rc : IrrGL (w.adicCompletion E) → WD h} (hrc : IsRec h rc)
+theorem unr_algNorm {a : ℕ} {rc : IrrGL (k := w.adicCompletion E) → WD h} (hrc : IsRec h rc)
     (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (S : Multiset ℂˣ) (hS : GlobalTheory.LFun.HasSatGL w σ.ρ S) :
     (rc (algNorm σ)).unr := by
   rw [rec_algNorm hrc, WD.unr_tw]

@@ -201,7 +201,7 @@ private theorem cusp_block {n r : ℕ} {d : Fin r → ℕ} (e : (Σ j, Fin (d j)
 private theorem pol_eq {n r : ℕ} {d : Fin r → ℕ} (hd : ∀ j, 0 < d j) (e : (Σ j, Fin (d j)) ≃ Fin n) {β : Fin n → ℕ}
     (hβ : ∀ x y, β x < β y ↔ blk e x < blk e y) (φ : Levi k (fun j => Fin (d j)) ≃* levi k n β)
     (hφ : ∀ g, ((φ g : levi k n β) : GL (Fin n) k) = leviEmb k e g) {V : Type} [AddCommGroup V] [Module ℂ V]
-    {π : Representation ℂ (GL (Fin n) k) V} {s : Multiset (IrrGL k)} (hs : HasSupport π s)
+    {π : Representation ℂ (GL (Fin n) k) V} {s : Multiset (IrrGL (k := k))} (hs : HasSupport π s)
     {W : Type} [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (levi k n β) W) (hi : σ.IsIrreducible)
     (hc : GroundTheory.Automorphic.Parabolic.IsCuspidal σ) (ι : Representation.IntertwiningMap π (parabolicInd k n β σ))
     (hι : Function.Injective ι) (α : Fin r → ℂ)
@@ -293,7 +293,7 @@ end UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter
 
 open UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter GroundTheory.Automorphic.GodementJacquet GroundTheory.Automorphic.Parabolic in
 theorem UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter.gxSupp {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
-    {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] {π : Representation ℂ (GL (Fin n) F) V} {s : Multiset (IrrGL F)}
+    {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] {π : Representation ℂ (GL (Fin n) F) V} {s : Multiset (IrrGL (k := F))}
     (hs : HasSupport π s) {β : Fin n → ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
     {σ : Representation ℂ (levi F n β) W} (hi : σ.IsIrreducible) (hc : GroundTheory.Automorphic.Parabolic.IsCuspidal σ)
     (ι : Representation.IntertwiningMap π (parabolicInd F n β σ)) (hι : Function.Injective ι) {ω : Set.range β → ℂ}

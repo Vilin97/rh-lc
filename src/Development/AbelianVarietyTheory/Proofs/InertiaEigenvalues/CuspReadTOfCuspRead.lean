@@ -30,7 +30,7 @@ namespace GlobalTheory.RecT
 
 abbrev RecFam : Type 1 :=
   ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {A : ValuationSubring Ω}
-    {w : HeightOneSpectrum (𝓞 E)} (h : IsPlaceOver A w), IrrGL (w.adicCompletion E) → WD h
+    {w : HeightOneSpectrum (𝓞 E)} (h : IsPlaceOver A w), IrrGL (k := w.adicCompletion E) → WD h
 
 set_option synthInstance.maxHeartbeats 400000
 

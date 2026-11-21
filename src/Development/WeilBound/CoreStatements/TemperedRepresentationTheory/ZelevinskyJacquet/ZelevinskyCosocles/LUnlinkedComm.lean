@@ -13,10 +13,10 @@ namespace Zc.Cos
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-def decWord (Γ : Segment k) : List (IrrGL k) := (List.ofFn Γ.term).reverse
+def decWord (Γ : Segment k) : List (IrrGL (k := k)) := (List.ofFn Γ.term).reverse
 
 
-def jmL (W : List (IrrGL k)) {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
+def jmL (W : List (IrrGL (k := k))) {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) : ℕ∞ :=
   if h : ∑ a, (W.get a).1 = N then jm W.get h π else 0
 
@@ -36,11 +36,11 @@ def IsCanon {h : ℕ} (Γ : Fin h → Segment k) : Prop :=
   ∀ i j l, i < j → j < l → Γ i = Γ l → Γ j = Γ i
 
 def LUnlinkedIrr (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] : Prop :=
-  ∀ (h N : ℕ) (Δ : Fin h → Segment k) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N),
+  ∀ (h N : ℕ) (Δ : Fin h → Segment k) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N),
     (∀ i j, ¬ (Δ i).Linked (Δ j)) → (∀ i, IsLSeg (Δ i) (x i).rep) → (prodIrr x hd).IsIrreducible
 
 def LUnlinkedComm (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] : Prop :=
-  ∀ (Δ Δ' : Segment k) (x y : IrrGL k) (N : ℕ) (hd : ∑ a, (![x, y] a).1 = N) (hd' : ∑ a, (![y, x] a).1 = N),
+  ∀ (Δ Δ' : Segment k) (x y : IrrGL (k := k)) (N : ℕ) (hd : ∑ a, (![x, y] a).1 = N) (hd' : ∑ a, (![y, x] a).1 = N),
     ¬ Δ.Linked Δ' → IsLSeg Δ x.rep → IsLSeg Δ' y.rep → Nonempty ((prodIrr ![x, y] hd).Equiv (prodIrr ![y, x] hd'))
 
 end Zc.Cos

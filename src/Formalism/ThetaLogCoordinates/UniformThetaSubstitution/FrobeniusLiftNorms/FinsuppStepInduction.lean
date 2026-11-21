@@ -58,7 +58,7 @@ lemma shiftPoly_sum {α : Type*} (b : κ → ι → K) (s : Finset α) (f : α �
 
 lemma hasseDir_zero_right (b : κ → ι → K) (β : κ →₀ ℕ) :
     hasseDir b β (0 : MvPolynomial ι K) = 0 := by
-  simp only [hasseDir, shiftPoly_zero, MvPolynomial.coeff_zero]
+  simp only [hasseDir, shiftPoly_zero, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
 
 lemma hasseDir_mul [DecidableEq κ] (b : κ → ι → K) (β : κ →₀ ℕ) (f g : MvPolynomial ι K) :
     hasseDir b β (f * g) =

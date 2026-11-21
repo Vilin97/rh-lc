@@ -107,18 +107,18 @@ def multiProdTwistEquiv (e : (Σ a, m a) ≃ n) {X : α → Type} [∀ a, AddCom
 
 end Products
 
-def prodIrrTwistEquiv {h N : ℕ} (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
+def prodIrrTwistEquiv {h N : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
     (twist (prodIrr x hd) (detChar (Fin N) χ)).Equiv (prodIrr (fun a => (x a).tw χ hχ) hd) :=
   (multiProdTwistEquiv _ _ hχ).trans (multiProdEquiv _ fun a => (x a).twEquiv χ hχ)
 
-theorem exists_equiv_prodIrr_tw {h N : ℕ} {x y : Fin h → IrrGL k} (hd : ∑ a, (x a).1 = N) {χ : kˣ →* ℂˣ}
+theorem exists_equiv_prodIrr_tw {h N : ℕ} {x y : Fin h → IrrGL (k := k)} (hd : ∑ a, (x a).1 = N) {χ : kˣ →* ℂˣ}
     {hχ : IsSmoothChar χ} (hy : ∀ a, y a = (x a).tw χ hχ) :
     ∃ hd' : ∑ a, (y a).1 = N, Nonempty ((twist (prodIrr x hd) (detChar (Fin N) χ)).Equiv (prodIrr y hd')) := by
   obtain rfl : y = fun a => (x a).tw χ hχ := funext hy
   exact ⟨hd, ⟨prodIrrTwistEquiv x hd χ hχ⟩⟩
 
 theorem HasSupport.tw {n : Type} [Fintype n] [DecidableEq n] {π : Representation ℂ (GL n k) V}
-    {s : Multiset (IrrGL k)} (h : HasSupport π s) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
+    {s : Multiset (IrrGL (k := k))} (h : HasSupport π s) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
     HasSupport (twist π (detChar n χ)) (s.map (·.tw χ hχ)) := by
   obtain ⟨h', x, hx, hi, hc, e, hsq⟩ := h
   refine ⟨h', fun a => (x a).tw χ hχ, ?_, isIrreducible_twist hi _, fun a => ?_, e, ?_⟩
@@ -130,14 +130,14 @@ theorem HasSupport.tw {n : Type} [Fintype n] [DecidableEq n] {π : Representatio
     exact (isSubquotient_twist hsq _).trans (IsSubquotient.of_injective E.toIntertwiningMap
       E.toLinearEquiv.injective)
 
-theorem IrrGL.tw_nu (x : IrrGL k) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) (s : ℂ) :
+theorem IrrGL.tw_nu (x : IrrGL (k := k)) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) (s : ℂ) :
     (x.tw χ hχ).nu s = (x.nu s).tw χ hχ := by
   unfold nu
   rw [tw_tw, tw_tw]
   congr 1
   exact mul_comm _ _
 
-theorem IrrGL.tw_tw_inv (x : IrrGL k) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) : (x.tw χ hχ).tw χ⁻¹ hχ.inv = x := by
+theorem IrrGL.tw_tw_inv (x : IrrGL (k := k)) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) : (x.tw χ hχ).tw χ⁻¹ hχ.inv = x := by
   have key : ∀ (ψ : kˣ →* ℂˣ) (hψ : IsSmoothChar ψ), ψ = 1 → x.tw ψ hψ = x := by
     rintro ψ hψ rfl
     exact tw_one x hψ
@@ -145,7 +145,7 @@ theorem IrrGL.tw_tw_inv (x : IrrGL k) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar 
   exact key _ _ (mul_inv_cancel χ)
 
 theorem IrrGL.tw_injective (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
-    Function.Injective fun x : IrrGL k => x.tw χ hχ := by
+    Function.Injective fun x : IrrGL (k := k) => x.tw χ hχ := by
   intro x y h
   have h' : x.tw χ hχ = y.tw χ hχ := h
   rw [← tw_tw_inv x χ hχ, h', tw_tw_inv]
@@ -238,7 +238,7 @@ theorem IsOrderedForm.tw {h : ℕ} {Δ : Fin h → Segment k} (H : IsOrderedForm
   · rw [← hm, Multiset.map_map]; rfl
   · rw [Segment.precedes_tw_iff]; exact hp i j hij
 
-theorem LFactors.tw {h : ℕ} {x : Fin h → IrrGL k} (H : LFactors 𝔪 x) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
+theorem LFactors.tw {h : ℕ} {x : Fin h → IrrGL (k := k)} (H : LFactors 𝔪 x) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
     LFactors (𝔪.map (·.tw χ hχ)) fun a => (x a).tw χ hχ := by
   obtain ⟨Δ, hΔ, hz⟩ := H
   exact ⟨fun i => (Δ i).tw χ hχ, hΔ.tw χ hχ, fun i => ((hz i).tw χ hχ).of_equiv ((x i).twEquiv χ hχ)⟩
@@ -249,7 +249,7 @@ theorem IsL.tw (h : IsL 𝔪 π) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
   exact ⟨h', fun a => (x a).tw χ hχ, hd, hz.tw χ hχ,
     (hs.twist _).of_equiv (.refl _) (prodIrrTwistEquiv x hd χ hχ)⟩
 
-theorem IsSpeh.tw {x : IrrGL k} {d : ℕ} (h : IsSpeh x d π) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
+theorem IsSpeh.tw {x : IrrGL (k := k)} {d : ℕ} (h : IsSpeh x d π) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
     IsSpeh (x.tw χ hχ) d (twist π (detChar (Fin N) χ)) := by
   obtain ⟨hd, hs⟩ := h
   obtain ⟨hd', ⟨E⟩⟩ := exists_equiv_prodIrr_tw (y := spehFactor (x.tw χ hχ) d) hd (hχ := hχ)
@@ -369,11 +369,11 @@ theorem nonempty_prod₂_equiv_multiProd {d : Fin 2 → ℕ} (hd : ∑ a, d a = 
       rw [b1 q]
       rfl
 
-theorem nonempty_prod₂_equiv_prodIrr_rep (x : Fin 2 → IrrGL k) (hd : ∑ a, (x a).1 = (x 0).1 + (x 1).1) :
+theorem nonempty_prod₂_equiv_prodIrr_rep (x : Fin 2 → IrrGL (k := k)) (hd : ∑ a, (x a).1 = (x 0).1 + (x 1).1) :
     Nonempty ((prod₂ (x 0).rep (x 1).rep).Equiv (prodIrr x hd)) :=
   nonempty_prod₂_equiv_multiProd hd fun a => (x a).rep
 
-theorem nonempty_prod₂_equiv_prodIrr_pair (y z : IrrGL k) (hd : ∑ a, (![y, z] a).1 = y.1 + z.1) :
+theorem nonempty_prod₂_equiv_prodIrr_pair (y z : IrrGL (k := k)) (hd : ∑ a, (![y, z] a).1 = y.1 + z.1) :
     Nonempty ((prod₂ y.rep z.rep).Equiv (prodIrr ![y, z] hd)) :=
   nonempty_prod₂_equiv_prodIrr_rep ![y, z] hd
 

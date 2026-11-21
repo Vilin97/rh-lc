@@ -28,7 +28,7 @@ theorem groth_of_steps (H : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
   haveI : Fact (One k) := ⟨hOne⟩
   have hst : Steps k := ⟨hCls, hMul, hAs, hCo, hOne, hPL, hTri, hMO, hJC, hJS, hAlt⟩
   have hbij := phiZ_bijective hst h1 h2 Z hZ
-  let e := RingEquiv.ofBijective (phiOf fun Δ : Segment k => (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k)) hbij
+  let e := RingEquiv.ofBijective (phiOf fun Δ : Segment k => (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL (k := k))) hbij
   refine ⟨toR.trans e.symm.toAddEquiv, ?_, ?_, ?_⟩
   · change e.symm (toR (GrothGL.unit k)) = 1
     rw [toR_unit, map_one]
@@ -38,9 +38,9 @@ theorem groth_of_steps (H : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
       e.symm (toR (clsGL π₁ h₁)) * e.symm (toR (clsGL π₂ h₂))
     rw [GrothendieckClassGeneralLinear.class_gl_eq_class, GrothendieckClassGeneralLinear.class_gl_eq_class, GrothendieckClassGeneralLinear.class_gl_eq_class, hc, toR_mulR, map_mul]
   · intro Δ
-    change e.symm (toR (sg (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k))) = MvPolynomial.X Δ
+    change e.symm (toR (sg (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL (k := k)))) = MvPolynomial.X Δ
     rw [RingEquiv.symm_apply_eq]
-    exact (phiOf_X (fun Δ : Segment k => (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k)) Δ).symm
+    exact (phiOf_X (fun Δ : Segment k => (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL (k := k))) Δ).symm
 
 end PositivityTheory.Groth
 

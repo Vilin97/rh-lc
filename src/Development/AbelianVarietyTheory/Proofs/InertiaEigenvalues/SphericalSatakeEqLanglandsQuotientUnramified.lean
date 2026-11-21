@@ -30,7 +30,7 @@ namespace GlobalTheory.LocLanglands.SatakeL
 theorem isL_single_unrChar : LanglandsExhaustionGL → LanglandsMultisegments → StandardCosocleGL →
     ZelevinskyPolynomialRing → GeometricLemma → BernsteinZelevinskyFiniteness →
     ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
-      (x : IrrGL k) (α : Fin x.1 → ℂˣ), HasSatake x.rep α →
+      (x : IrrGL (k := k)) (α : Fin x.1 → ℂˣ), HasSatake x.rep α →
       IsL (Finset.univ.val.map fun i => Segment.single (IrrGL.ofChar (GlobalTheory.SmGL.unrChar k (α i))
         (isSmoothChar_of_isUnram (isUnram_unrChar k (α i)))) (IrrGL.isCusp_ofChar _ _)) x.rep := by
   intro hEx hLM hSC hZP hGL hBZ k _ _ _ _ _ x α hsat
@@ -62,7 +62,7 @@ theorem isL_single_unrChar : LanglandsExhaustionGL → LanglandsMultisegments �
   have hm : 𝔪 = Finset.univ.val.map fun i => Segment.single (IrrGL.ofChar (GlobalTheory.SmGL.unrChar k (α i))
       (isSmoothChar_of_isUnram (isUnram_unrChar k (α i)))) (IrrGL.isCusp_ofChar _ _) := by
     apply Multiset.map_injective hinj
-    have e1 := congrArg (Multiset.map fun ρ : IrrGL k => (ρ, 1)) heq
+    have e1 := congrArg (Multiset.map fun ρ : IrrGL (k := k) => (ρ, 1)) heq
     simp only [Multiset.map_map, Function.comp_def] at e1
     rw [← hord.1, Multiset.map_map, Multiset.map_map]
     simp only [Function.comp_def, hlen]

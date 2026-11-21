@@ -89,7 +89,7 @@ theorem locAt_unique {π π' : NG.AutRep L n} (hi : π.Iso π') {w : HeightOneSp
   have h2 := hu π' s' (hs'.trans hs.symm) σ' hi hσ'
   have key : ∀ (u u' : HeightOneSpectrum (𝓞 L)) (_ : u = u') (a : GlobalTheory.SmGL.IrrCl (GL (Fin n) (u.adicCompletion L)))
       (b : GlobalTheory.SmGL.IrrCl (GL (Fin n) (u'.adicCompletion L))), HEq a b →
-      HEq (⟨n, a⟩ : GlobalTheory.LocGL.IrrGL (u.adicCompletion L)) (⟨n, b⟩ : GlobalTheory.LocGL.IrrGL (u'.adicCompletion L)) := by
+      HEq (⟨n, a⟩ : GlobalTheory.LocGL.IrrGL (k := u.adicCompletion L)) (⟨n, b⟩ : GlobalTheory.LocGL.IrrGL (k := u'.adicCompletion L)) := by
     intro u u' hu a b hab
     subst hu
     cases eq_of_heq hab

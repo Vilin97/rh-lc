@@ -19,7 +19,7 @@ def MixedOf : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (n : ℕ) (π : CuspSub E n)
     (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin n) (w.adicCompletion E))), π.IsLocComp w σ →
     fixed σ.ρ (KOne (w.adicCompletion E) (Fin n)) ≠ ⊥ → Apart (algNorm σ) →
-    ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), UpperTheory.Zero.LLC.IsRecT h rc →
+    ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), UpperTheory.Zero.LLC.IsRecT h rc →
       (rc (algNorm σ)).mono0 → UpperTheory.Gal.InertialTypesAlt.Mixed (IrrGL.of σ.ρ σ.smooth σ.irred)
 
 def InfStep : Prop :=
@@ -38,7 +38,7 @@ def RecChars : Prop :=
     (u : HeightOneSpectrum (𝓞 M)) (h : IsPlaceOver A u) (n : ℕ) (T : SmIrr (GL (Fin n) (u.adicCompletion M)))
     (ξ : Fin n → ((u.adicCompletion M)ˣ →* ℂˣ)) (hξ : ∀ j, IsSmoothChar (ξ j)), HasSupport T.ρ (chars ξ hξ) →
     (GlobalTheory.RoadU.Unlinked (chars ξ hξ) → PlainTor (algNorm T)) ∧
-    ∀ rc : IrrGL (u.adicCompletion M) → WD h, UpperTheory.Zero.LLC.IsRecT h rc → ∀ a, IsLocalArtin h a → ∀ t : Ine (F := M) A,
+    ∀ rc : IrrGL (k := u.adicCompletion M) → WD h, UpperTheory.Zero.LLC.IsRecT h rc → ∀ a, IsLocalArtin h a → ∀ t : Ine (F := M) A,
       (rc (algNorm T)).charPol (ineIncl h t) = ∏ j, (X - C ((ξ j (a (ineIncl h t)) : ℂˣ) : ℂ))
 
 def ToTor : Prop :=
@@ -47,9 +47,9 @@ def ToTor : Prop :=
     InScope .all l π χ → ∀ r : G E Ω →* GL (Fin n) (Qbar l), Weak π ι r →
     ∀ (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin n) (w.adicCompletion E))), π.IsLocComp w σ → IsQg w →
       UpperTheory.Gal.InertialTypesAlt.Mixed (IrrGL.of σ.ρ σ.smooth σ.irred) →
-    ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), UpperTheory.Zero.LLC.IsRecT h rc →
+    ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), UpperTheory.Zero.LLC.IsRecT h rc →
     ∃ (X : UpperTheory.Gal.UnramifiedFromSplittingCriterion.Fld E Ω) (P : CuspSub X.K n) (χ' : HChar (maximalRealSubfield X.K)) (u : HeightOneSpectrum (𝓞 X.K))
-      (h' : IsPlaceOver A u) (T : SmIrr (GL (Fin n) (u.adicCompletion X.K))) (rc' : IrrGL (u.adicCompletion X.K) → WD h'),
+      (h' : IsPlaceOver A u) (T : SmIrr (GL (Fin n) (u.adicCompletion X.K))) (rc' : IrrGL (k := u.adicCompletion X.K) → WD h'),
       InScope .all l P χ' ∧ Weak P ι (resTo X.K r) ∧
       (∀ τ : X.K →+* ℂ, (CG.mk P).infChar τ = (CG.mk π).infChar (τ.comp (algebraMap E X.K))) ∧
       P.IsLocComp u T ∧ PlainTor (algNorm T) ∧ UpperTheory.Zero.LLC.IsRecT h' rc' ∧

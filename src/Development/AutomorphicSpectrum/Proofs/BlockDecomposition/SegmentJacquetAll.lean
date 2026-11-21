@@ -39,7 +39,7 @@ theorem fineJac_all (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hZ : 
 
 theorem occurs_topCut (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hZ : GlobalTheory.Published.SegmentRepresentation)
     (Δ : Segment k) {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
-    (hπ : IsLSeg Δ π) {s : ℕ} (y : Fin s → IrrGL k) (hd : ∑ a, (y a).1 = N) (hpos : ∀ a, 0 < (y a).1)
+    (hπ : IsLSeg Δ π) {s : ℕ} (y : Fin s → IrrGL (k := k)) (hd : ∑ a, (y a).1 = N) (hpos : ∀ a, 0 < (y a).1)
     (h1 : 1 ≤ jm y hd π) :
     ∃ (c : Fin s → ℕ) (hc : ∀ a, 0 < c a) (_ : ∑ a, c a = Δ.len)
       (hcat : ∑ i, (concat c (fun a => dec (topCut Δ c hc a)) i).1 = N),

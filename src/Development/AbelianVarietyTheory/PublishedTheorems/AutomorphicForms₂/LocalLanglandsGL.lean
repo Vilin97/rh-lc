@@ -17,7 +17,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace GlobalTheory.LocLanglands
 
 abbrev cls {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n : ℕ}
-    (π : IrrRep (GL (Fin n) k)) : IrrGL k := ⟨n, π.cl⟩
+    (π : IrrRep (GL (Fin n) k)) : IrrGL (k := k) := ⟨n, π.cl⟩
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
@@ -31,7 +31,7 @@ def IsTameWD (x : WD h) : Prop :=
     ∀ σ : Weil h, Formalism.MainNotions.BlochKatoReduction.IsWild A (σ : G E Ω) → a.ρ σ = 1
 
 structure Laws (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) (ε : EpsFamily A)
-    (rc : IrrGL (w.adicCompletion E) → WD h) : Prop where
+    (rc : IrrGL (k := w.adicCompletion E) → WD h) : Prop where
 
   bij : Function.Bijective rc
 
@@ -45,7 +45,7 @@ structure Laws (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) 
 
   twist : ∀ x χ hχ, rc (x.tw χ hχ) = (rc x).lpChar (rc (.ofChar χ hχ))
 
-  central : ∀ (x : IrrGL (w.adicCompletion E)) ω, HasCentralChar x.rep ω →
+  central : ∀ (x : IrrGL (k := w.adicCompletion E)) ω, HasCentralChar x.rep ω →
     ∀ σ, ((rc x).eig σ).prod = (ω (a σ) : ℂ)
 
   dual : ∀ (n : ℕ) (π π' : IrrRep (GL (Fin n) (w.adicCompletion E))), Nonempty (π'.ρ.Equiv (contra π.ρ)) →
@@ -53,7 +53,7 @@ structure Laws (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) 
 
   cusp : ∀ x, x.IsCusp ↔ IsIrrWD (rc x)
 
-  langlands : ∀ (l : List (Segment (w.adicCompletion E))) (x : IrrGL (w.adicCompletion E)),
+  langlands : ∀ (l : List (Segment (w.adicCompletion E))) (x : IrrGL (k := w.adicCompletion E)),
     IsL (l : Multiset (Segment (w.adicCompletion E))) x.rep →
     rc x = sumList (l.map fun Δ => ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len))
 
@@ -64,24 +64,24 @@ structure Laws (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) 
     (π : IrrRep (GL (Fin (r + t)) (w.adicCompletion E))), Nonempty (π.ρ.Equiv (prod₂ σ.ρ τ.ρ)) →
     rc (cls π) = (rc (cls σ)).lpSum (rc (cls τ))
 
-  supp : ∀ (x : IrrGL (w.adicCompletion E)) s, HasSupport x.rep s →
+  supp : ∀ (x : IrrGL (k := w.adicCompletion E)) s, HasSupport x.rep s →
     ∀ σ, (rc x).charPol σ = (s.map fun y => (rc y).charPol σ).prod
 
-  sph : ∀ x : IrrGL (w.adicCompletion E), IsSpherical x.rep ↔ (rc x).unr
+  sph : ∀ x : IrrGL (k := w.adicCompletion E), IsSpherical x.rep ↔ (rc x).unr
 
-  sat : ∀ (x : IrrGL (w.adicCompletion E)) (α : Fin x.1 → ℂˣ), HasSatake x.rep α →
+  sat : ∀ (x : IrrGL (k := w.adicCompletion E)) (α : Fin x.1 → ℂˣ), HasSatake x.rep α →
     rc x = WD.mk (WDRep.diag h fun i => (α i)⁻¹)
 
-  depth : ∀ x : IrrGL (w.adicCompletion E),
+  depth : ∀ x : IrrGL (k := w.adicCompletion E),
     fixed x.rep (KOne (w.adicCompletion E) (Fin x.1)) ≠ ⊥ ↔ IsTameWD (rc x)
 
 
-def IsRec (rc : IrrGL (w.adicCompletion E) → WD h) : Prop :=
+def IsRec (rc : IrrGL (k := w.adicCompletion E) → WD h) : Prop :=
   ∃ (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) (ε : EpsFamily A), IsDeligneEps ε ∧ Laws a ha ε rc
 
 def FieldCompatible {E' Ω' : Type} [Field E'] [NumberField E'] [Field Ω'] [Algebra E' Ω'] [IsAlgClosure E' Ω']
     {A' : ValuationSubring Ω'} {w' : HeightOneSpectrum (𝓞 E')} {h' : IsPlaceOver A' w'}
-    (rc : IrrGL (w.adicCompletion E) → WD h) (rc' : IrrGL (w'.adicCompletion E') → WD h') : Prop :=
+    (rc : IrrGL (k := w.adicCompletion E) → WD h) (rc' : IrrGL (k := w'.adicCompletion E') → WD h') : Prop :=
   ∀ (φ : Ω ≃+* Ω') (j : E →+* E') (i : w.adicCompletion E ≃+* w'.adicCompletion E'),
     (∀ z, φ z ∈ A' ↔ z ∈ A) → (∀ x, φ (algebraMap E Ω x) = algebraMap E' Ω' (j x)) → Continuous i →
     (∀ x, i (algebraMap E _ x) = algebraMap E' _ (j x)) →
@@ -98,12 +98,12 @@ open GlobalTheory.LocLanglands
 
 def LocalLanglandsGL : Prop :=
   (∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
-    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w), ∃! rc : IrrGL (w.adicCompletion E) → WD h, IsRec h rc) ∧
+    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w), ∃! rc : IrrGL (k := w.adicCompletion E) → WD h, IsRec h rc) ∧
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
     (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w)
     (E' Ω' : Type) [Field E'] [NumberField E'] [Field Ω'] [Algebra E' Ω'] [IsAlgClosure E' Ω'] (A' : ValuationSubring Ω')
     (w' : HeightOneSpectrum (𝓞 E')) (h' : IsPlaceOver A' w')
-    (rc : IrrGL (w.adicCompletion E) → WD h) (rc' : IrrGL (w'.adicCompletion E') → WD h'),
+    (rc : IrrGL (k := w.adicCompletion E) → WD h) (rc' : IrrGL (k := w'.adicCompletion E') → WD h'),
     IsRec h rc → IsRec h' rc' → FieldCompatible rc rc'
 
 end GlobalTheory.Published
@@ -158,13 +158,13 @@ theorem IsLocalArtin.absPow_comp (ha : IsLocalArtin h a) (s : ℝ) :
     WeilDeligne.unrChar_apply, Units.val_zpow_eq_zpow_val, coe_qPow, ← Real.rpow_intCast, ← Real.rpow_mul hq, mul_comm,
     Real.rpow_mul hq, Real.rpow_intCast, Complex.ofReal_zpow, Complex.ofReal_cpow hq, Complex.ofReal_natCast]
 
-variable {ha : IsLocalArtin h a} {ε : EpsFamily A} {rc : IrrGL (w.adicCompletion E) → WD h}
+variable {ha : IsLocalArtin h a} {ε : EpsFamily A} {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
-theorem Laws.tw_eq (H : Laws a ha ε rc) (x : IrrGL (w.adicCompletion E)) (χ : (w.adicCompletion E)ˣ →* ℂˣ)
+theorem Laws.tw_eq (H : Laws a ha ε rc) (x : IrrGL (k := w.adicCompletion E)) (χ : (w.adicCompletion E)ˣ →* ℂˣ)
     (hχ : IsSmoothChar χ) : rc (x.tw χ hχ) = (rc x).lpTwist (χ.comp a) (ha.smooth hχ) := by
   rw [H.twist, H.one, lpChar_lpOfChar]
 
-theorem Laws.nu_eq (H : Laws a ha ε rc) (x : IrrGL (w.adicCompletion E)) (s : ℝ) : rc (x.nu s) = (rc x).lpTw s := by
+theorem Laws.nu_eq (H : Laws a ha ε rc) (x : IrrGL (k := w.adicCompletion E)) (s : ℝ) : rc (x.nu s) = (rc x).lpTw s := by
   rw [IrrGL.nu, H.tw_eq, WD.lpTw]
   congr 1
   exact ha.absPow_comp s

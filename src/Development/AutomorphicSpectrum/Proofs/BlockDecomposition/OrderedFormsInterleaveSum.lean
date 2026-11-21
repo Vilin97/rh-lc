@@ -34,7 +34,7 @@ theorem aPrecedes_of_precedes {Δ Δ' : Segment k} (h : Δ.Precedes Δ') : Comb.
   obtain ⟨⟨⟨Γ, hΓ⟩, h1, h2⟩, j, hj, hs⟩ := h
   refine ⟨⟨⟨toA Γ, ?_⟩, fun e => h1 (carrier_subset_of_image e), fun e => h2 (carrier_subset_of_image e)⟩, j, hj,
     Subtype.ext ?_⟩
-  · apply Set.image_injective.2 (Subtype.val_injective (p := fun x : IrrGL k => x.IsCusp))
+  · apply Set.image_injective.2 (Subtype.val_injective (p := fun x : IrrGL (k := k) => x.IsCusp))
     rw [Set.image_union, ZcWords.image_carrier, ZcWords.image_carrier, ZcWords.image_carrier, hΓ]
   · exact hs.trans (ZcWords.val_sNu_iterate (toA Δ).start j).symm
 

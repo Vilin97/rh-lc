@@ -46,14 +46,14 @@ private theorem sumList_spec (g : Weil h) : ∀ (c : ℕ) (f : Fin c → WD h) (
       rw [List.ofFn_succ]; rfl
     rw [e, WD.charPol_lpSum, h2, (H 0).2, Fin.sum_univ_succ, Multiset.map_add (f := _), Multiset.prod_add]
     exact ⟨unr_lpSum (H 0).1 h1, rfl⟩
-private theorem rec_eq_diagV {rc : IrrGL (w.adicCompletion E) → WD h} (H : IsRecV h rc) {a : ℕ}
+private theorem rec_eq_diagV {rc : IrrGL (k := w.adicCompletion E) → WD h} (H : IsRecV h rc) {a : ℕ}
     {σ : IrrRep (GL (Fin a) (w.adicCompletion E))} {α : Fin a → ℂˣ} (hα : HasSatake σ.ρ α) :
     rc (cls σ) = WD.mk (WDRep.diag h fun i => (α i)⁻¹) := by
   obtain ⟨_, _, _, L⟩ := H
   have φ := equivRep σ
   exact L.sat (cls σ) α ⟨IrrRep.irr _, fixed_ne_bot_of_equiv φ hα.2.1,
     (IsSubquotient.of_surjective φ.toIntertwiningMap φ.toLinearEquiv.surjective).trans hα.2.2⟩
-private theorem rec_tw_diag {rc : IrrGL (w.adicCompletion E) → WD h} (H : IsRecV h rc) {n : ℕ}
+private theorem rec_tw_diag {rc : IrrGL (k := w.adicCompletion E) → WD h} (H : IsRecV h rc) {n : ℕ}
     (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) (B : Multiset ℂˣ) (hB : GlobalTheory.LFun.HasSatGL w σ.ρ B) (s : ℝ) :
     ∃ α : Fin n → ℂˣ, B = Finset.univ.val.map α ∧
       (rc (cl σ)).lpTw s = WD.mk (WDRep.diag h fun i => (α i)⁻¹ * qPow w s) := by
@@ -81,7 +81,7 @@ private theorem val_inv_eq (n d k : ℕ) (a : ℂˣ) :
   simp only [ex]
   push_cast
   ring
-private theorem totPar_spec {rc : IrrGL (w.adicCompletion E) → WD h} (H : IsRecV h rc) (n c : ℕ) (a d : Fin c → ℕ)
+private theorem totPar_spec {rc : IrrGL (k := w.adicCompletion E) → WD h} (H : IsRecV h rc) (n c : ℕ) (a d : Fin c → ℕ)
     (ρ : ∀ i, SmIrr (GL (Fin (a i)) (w.adicCompletion E))) (S : Fin c → Multiset ℂˣ)
     (hS : ∀ i, GlobalTheory.LFun.HasSatGL w (ρ i).ρ (S i)) (g : Weil h) (hg : deg g = -1) :
     (totPar n d ρ A h rc).unr ∧

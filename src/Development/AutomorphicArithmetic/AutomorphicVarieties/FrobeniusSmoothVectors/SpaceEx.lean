@@ -87,6 +87,9 @@ private theorem cont_conj [TopologicalSpace H] (I : Ideal C) (M : H → Matrix (
   have := (lc_mat (fun s => (Ideal.Quotient.mk (I ^ N)).mapMatrix (M s)) fun a b => h a b N).comp
     fun X => ((Ideal.Quotient.mk (I ^ N)).mapMatrix Q * X * (Ideal.Quotient.mk (I ^ N)).mapMatrix P) i j
   convert this using 1
+  funext g
+  change (Ideal.Quotient.mk (I ^ N)).mapMatrix (Q * M g * P) i j = _
+  rw [map_mul, map_mul]
   rfl
 
 end

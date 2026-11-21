@@ -11,6 +11,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComp
 noncomputable section
 namespace GlobalTheory.EtC.BcLevel
 
+set_option synthInstance.maxHeartbeats 200000 in
 def bcIsoOfIso {E E' : Spc} {S : Scheme.{0}} (α : E ≅ E') (p : E' ⟶ sch.obj S) : bc (α.hom ≫ p) ≅ bc p :=
   haveI : ∀ U, IsIso ((bcMap α.hom p).app U) := fun U => by
     dsimp only [bcMap]; exact pullback.map_isIso _ _ _ _ _ _ _ _ _
@@ -34,6 +35,7 @@ def lvIso {E : Spc} {S : Scheme.{0}} (p : E ⟶ sch.obj S) (k : SimplexCategory�
     disc.obj ((pullback p (sch.map U.hom)).obj k) ≅ pullback (dq p k) (sch.map U.hom) :=
   (isPullback_lv p k U).isoPullback
 
+set_option synthInstance.maxHeartbeats 200000 in
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct in
 theorem _root_.GlobalTheory.EtC.BcLevel.lv_nat {E : _root_.GlobalTheory.EtC.Spc} {S : Scheme.{0}}
     (p : E ⟶ _root_.GlobalTheory.EtC.sch.obj S) (k : SimplexCategoryᵒᵖ) {U V : Over S} (g : U ⟶ V) :

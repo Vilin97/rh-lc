@@ -32,7 +32,7 @@ theorem nonempty_equiv_parInd_zero {d : Fin 0 → ℕ} (e : (Σ a, Fin (d a)) �
     rw [hg g]
     exact L.apply_symm_apply _
 
-theorem nonempty_equiv_prodIrr_zero (x : Fin 0 → IrrGL k) (hd : ∑ a, (x a).1 = 0) :
+theorem nonempty_equiv_prodIrr_zero (x : Fin 0 → IrrGL (k := k)) (hd : ∑ a, (x a).1 = 0) :
     Nonempty ((detRep (Fin 0) (1 : kˣ →* ℂˣ)).Equiv (prodIrr x hd)) :=
   nonempty_equiv_parInd_zero _ _ (PiTensorProduct.isEmptyEquiv (R := ℂ) (Fin 0) (s := fun a => (x a).2.rep.V)).symm
 

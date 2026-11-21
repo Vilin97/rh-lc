@@ -60,6 +60,7 @@ noncomputable def lowPart (m : Fin n × Fin n →₀ ℕ) : Fin n × Fin n →�
 
 
 noncomputable def vermaCoord (lam : Fin n → ℂ) : U n →ₗ[ℂ] ((Fin n × Fin n →₀ ℕ) →₀ ℂ) :=
+  open scoped Classical in
   pbw.constr ℂ fun m =>
     if HasUpper m then 0 else Finsupp.single (lowPart m) (eval lam (monomial (diagExp m) 1))
 

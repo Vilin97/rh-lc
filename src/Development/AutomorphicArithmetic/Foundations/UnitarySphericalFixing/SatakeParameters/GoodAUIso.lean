@@ -28,7 +28,7 @@ def SphAtG (π : NG.AutRep L n) (v : HeightOneSpectrum (𝓞 (maximalRealSubfiel
 theorem goodAU_iso {π π' : NG.AutRep L n} (h : π.Iso π') (hg : GoodAU π) : GoodAU π' := fun s σ' hσ' => by
   obtain ⟨x, σ₀, σ, e, hσ, hx⟩ := GlobalTheory.AutQuot.locAt_of_split π s
   have h1 : x = GlobalTheory.LocLanglands.cls σ' := GlobalTheory.AutQuot.locAt_unique h ⟨σ₀, σ, e, hσ, hx⟩ ⟨s, σ', rfl, hσ', HEq.rfl⟩
-  have key : ∀ (w : HeightOneSpectrum (𝓞 L)) (e : σ₀.w = w) (y : GlobalTheory.LocGL.IrrGL (w.adicCompletion L)),
+  have key : ∀ (w : HeightOneSpectrum (𝓞 L)) (e : σ₀.w = w) (y : GlobalTheory.LocGL.IrrGL (k := w.adicCompletion L)),
       HEq (GlobalTheory.LocLanglands.cls σ) y → Good y := by
     rintro _ rfl y hy
     exact eq_of_heq hy ▸ hg σ₀ σ hσ

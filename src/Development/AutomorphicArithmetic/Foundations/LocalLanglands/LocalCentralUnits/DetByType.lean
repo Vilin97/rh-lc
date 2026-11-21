@@ -313,5 +313,5 @@ theorem UpperTheory.Zero.LLC.detByType :
   have h1 := isTypeMap_of i hi τ hτ σ.ρ φ hφ0 hφ
   have h2 := isTypeMap_of i hi τ hτ σ'.ρ ψ hψ0 hψ
   obtain ⟨q⟩ := equiv_of_typeMaps (finCusp_comp i hi τ hτ) σ' σ hω' hω h2 h1
-  show (⟨n, σ'.cl⟩ : GlobalTheory.LocGL.IrrGL _) = ⟨n, σ.cl⟩
+  show (⟨n, σ'.cl⟩ : GlobalTheory.LocGL.IrrGL (k := _)) = ⟨n, σ.cl⟩
   rw [GlobalTheory.SmGL.IrrRep.cl_eq_iff.mpr ⟨q⟩]

@@ -24,7 +24,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algeb
 
 
 
-theorem unr_rec_of_hasSat {h : IsPlaceOver A w} {rc : IrrGL (w.adicCompletion E) → WD h} (hrc : IsRec h rc)
+theorem unr_rec_of_hasSat {h : IsPlaceOver A w} {rc : IrrGL (k := w.adicCompletion E) → WD h} (hrc : IsRec h rc)
     (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (S : Multiset ℂˣ) (hS : GlobalTheory.LFun.HasSatGL w σ.ρ S) :
     (rc (IrrGL.of σ.ρ σ.smooth σ.irred)).unr := by
   obtain ⟨α, rfl, hα⟩ := (GlobalTheory.LGrp.SatakeCompare.hasSatakeGL_iff _ _ _ σ.ρ S).1

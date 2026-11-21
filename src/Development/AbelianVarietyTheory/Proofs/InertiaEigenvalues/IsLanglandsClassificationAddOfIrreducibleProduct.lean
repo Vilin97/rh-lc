@@ -27,7 +27,7 @@ namespace GlobalTheory.LocGL.SumProd
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {V : Type} [AddCommGroup V] [Module ℂ V] {N : ℕ}
 
-theorem sum_fst_of_lFactors {𝔪 : Multiset (Segment k)} {h : ℕ} {x : Fin h → IrrGL k} (hx : LFactors 𝔪 x) :
+theorem sum_fst_of_lFactors {𝔪 : Multiset (Segment k)} {h : ℕ} {x : Fin h → IrrGL (k := k)} (hx : LFactors 𝔪 x) :
     ∑ a, (x a).1 = (𝔪.map Segment.deg).sum := by
   obtain ⟨Δ, ⟨rfl, -⟩, hΔ⟩ := hx
   rw [Multiset.map_map, ← Finset.sum_eq_multiset_sum]
@@ -39,13 +39,13 @@ theorem deg_of_isL {𝔪 : Multiset (Segment k)} {π : Representation ℂ (GL (F
   exact (sum_fst_of_lFactors hx).symm.trans hd
 
 theorem exists_isLSeg_of_isL {𝔪 : Multiset (Segment k)} {π : Representation ℂ (GL (Fin N) k) V} (h : IsL 𝔪 π)
-    {Δ : Segment k} (hΔ : Δ ∈ 𝔪) : ∃ y : IrrGL k, IsLSeg Δ y.rep := by
+    {Δ : Segment k} (hΔ : Δ ∈ 𝔪) : ∃ y : IrrGL (k := k), IsLSeg Δ y.rep := by
   obtain ⟨_, x, -, ⟨D, ⟨rfl, -⟩, hD⟩, -⟩ := h
   obtain ⟨a, -, rfl⟩ := Multiset.mem_map.1 hΔ
   exact ⟨x a, hD a⟩
 
 theorem exists_isL [CharZero k] (hS : StandardCosocleGL) {𝔪 : Multiset (Segment k)}
-    (h : ∀ Δ ∈ 𝔪, ∃ y : IrrGL k, IsLSeg Δ y.rep) (hN : (𝔪.map Segment.deg).sum = N) :
+    (h : ∀ Δ ∈ 𝔪, ∃ y : IrrGL (k := k), IsLSeg Δ y.rep) (hN : (𝔪.map Segment.deg).sum = N) :
     ∃ π : IrrRep (GL (Fin N) k), IsL 𝔪 π.ρ := by
   obtain ⟨D, hD⟩ := exists_isOrderedForm 𝔪
   have hm : ∀ i, D i ∈ 𝔪 := fun i => hD.1 ▸ Multiset.mem_map_of_mem D (Finset.mem_univ i)

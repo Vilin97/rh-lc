@@ -279,7 +279,7 @@ theorem exists_ext {ι : Type} [DecidableEq ι] {X : ι → Type} [∀ i, AddCom
       ∀ u : ∀ i, X i, (∀ i ∉ T, u i = s i) →
         e (PiTensorProduct.tprod ℂ fun v : T => u v) = PiTensorProduct.tprod ℂ fun v : T₁ => u v := by
   classical
-  let f : MultilinearMap ℂ (fun v : T => X v) (PiTensorProduct ℂ fun v : T₁ => X v) :=
+  let f : MultilinearMap (RingHom.id ℂ) (fun v : T => X v) (PiTensorProduct ℂ fun v : T₁ => X v) :=
     { toFun := fun m => PiTensorProduct.tprod ℂ fun v : T₁ => if h : (v : ι) ∈ T then m ⟨v, h⟩ else s v
       map_update_add' := fun m i x y => by
         simp only [dite_update_eq_update_dite T T₁ hT s]

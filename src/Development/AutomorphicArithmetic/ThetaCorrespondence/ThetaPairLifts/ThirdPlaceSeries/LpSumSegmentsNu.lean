@@ -22,7 +22,7 @@ theorem lpSum_segments_nu_alt : ∀ (E Ω : Type) [Field E] [NumberField E] [Fie
     (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)),
     letI := GlobalTheory.LocalData.complRel w
     haveI := GlobalTheory.LocalData.isLocalField w
-    ∀ (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), _root_.UpperTheory.Zero.LLC.IsRecT h rc →
+    ∀ (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), _root_.UpperTheory.Zero.LLC.IsRecT h rc →
     ∀ (l : List (Segment (w.adicCompletion E))) (c : ℝ),
       sumList ((l.map fun Γ => Γ.nu (c : ℂ)).map fun Δ =>
           ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len)) =

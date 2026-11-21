@@ -108,7 +108,7 @@ def jacCompThetaW {h N : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N) (hd' : �
     simp only [MonoidHom.comp_apply, thetaW_leviEmb d hd hd' g]
 
 theorem jm_comp_theta_eq_dual_reverse (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hGK : GKLocal k) {h N : ℕ}
-    (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N) (π : Representation ℂ (GL (Fin N) k) V) :
+    (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N) (π : Representation ℂ (GL (Fin N) k) V) :
     jm x hd (π.comp (thetaW k N)) = jm (dualRev hA x) (sum_dualRev hA x hd) π := by
   have hd' : ∑ a, (x (Fin.rev a)).1 = N := sum_dualRev hA x hd
   have T1 := piTensorRevEquiv (fun a => (x a).rep)
@@ -120,7 +120,7 @@ theorem jm_comp_theta_eq_dual_reverse (hA : GlobalTheory.Published.IrreducibleAd
   exact GlobalTheory.SmGL.EmptyBlocks.jhMult_comp_surjective (thetaL fun a => (x a).1) (thetaL_surjective _) _ _
 
 theorem jm_comp_thetaW (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hGK : GKLocal k) {h N : ℕ}
-    (x y : Fin h → IrrGL k) (hy : y = fun a => dualCl (x (Fin.rev a))) (hd : ∑ a, (x a).1 = N)
+    (x y : Fin h → IrrGL (k := k)) (hy : y = fun a => dualCl (x (Fin.rev a))) (hd : ∑ a, (x a).1 = N)
     (hd' : ∑ a, (y a).1 = N) (π : Representation ℂ (GL (Fin N) k) V) :
     jm x hd (π.comp (thetaW k N)) = jm y hd' π := by
   rw [← dualRev_eq hA x] at hy

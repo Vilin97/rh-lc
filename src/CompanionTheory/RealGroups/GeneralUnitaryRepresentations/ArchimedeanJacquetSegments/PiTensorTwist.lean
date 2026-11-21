@@ -26,12 +26,12 @@ namespace Model
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem prodIrr_congr {h N : ℕ} {y z : Fin h → IrrGL k} (e : y = z) (hy : ∑ a, (y a).1 = N) (hz : ∑ a, (z a).1 = N) :
+theorem prodIrr_congr {h N : ℕ} {y z : Fin h → IrrGL (k := k)} (e : y = z) (hy : ∑ a, (y a).1 = N) (hz : ∑ a, (z a).1 = N) :
     Nonempty ((prodIrr y hy).Equiv (prodIrr z hz)) := by
   subst e
   exact ⟨Representation.Equiv.refl _⟩
 
-theorem piTensor_twist (x : IrrGL k) (s : ℝ) :
+theorem piTensor_twist (x : IrrGL (k := k)) (s : ℝ) :
     piTensor (fun a : Fin 2 => twist x.rep (detChar (Fin x.1) (absPow k (![-(s : ℂ), (s : ℂ)] a)))) =
       twist (piTensor fun _ : Fin 2 => x.rep) (chi k x.1 s) := by
   ext g : 1

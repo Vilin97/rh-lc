@@ -23,7 +23,7 @@ namespace PositivityTheory.Rg.BcB.F.Rig
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 theorem of_eq_of_isSpeh {w : HeightOneSpectrum (𝓞 E)} {N N' : ℕ} (σ : SmIrr (GL (Fin N) (w.adicCompletion E)))
-    (σ' : SmIrr (GL (Fin N') (w.adicCompletion E))) (x : GlobalTheory.LocGL.IrrGL (w.adicCompletion E)) (d : ℕ)
+    (σ' : SmIrr (GL (Fin N') (w.adicCompletion E))) (x : GlobalTheory.LocGL.IrrGL (k := w.adicCompletion E)) (d : ℕ)
     (h : GlobalTheory.LocGL.IsSpeh x d σ.ρ) (h' : GlobalTheory.LocGL.IsSpeh x d σ'.ρ) :
     GlobalTheory.LocGL.IrrGL.of σ.ρ σ.smooth σ.irred = GlobalTheory.LocGL.IrrGL.of σ'.ρ σ'.smooth σ'.irred := by
   obtain ⟨hd, hc⟩ := h

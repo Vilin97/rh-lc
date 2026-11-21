@@ -107,7 +107,7 @@ def IsLBC (s : k' ≃ₐ[k] k') (π : Representation ℂ (GL (Fin n) k) V) (P : 
           (norm k s g' : Matrix (Fin n) (Fin n) k').charpoly →
         ∃ c : ℂ, TwCharVal k s P I g' c ∧ CharVal π γ c
 
-def IsLBCCl (s : k' ≃ₐ[k] k') (x : IrrGL k) (y : IrrGL k') : Prop :=
+def IsLBCCl (s : k' ≃ₐ[k] k') (x : IrrGL (k := k)) (y : IrrGL (k := k')) : Prop :=
   ∃ (m : ℕ) (π : IrrRep (GL (Fin m) k)) (P : IrrRep (GL (Fin m) k')), x = ⟨m, π.cl⟩ ∧ y = ⟨m, P.cl⟩ ∧
     IsLBC s π.ρ P.ρ
 

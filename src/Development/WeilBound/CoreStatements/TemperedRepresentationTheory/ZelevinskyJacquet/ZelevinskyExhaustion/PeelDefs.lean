@@ -13,15 +13,15 @@ namespace Zc
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-def Peel (Δ : Segment k) (x : IrrGL k) : Prop :=
-  ∃ (y : Fin 2 → IrrGL k) (hd : ∑ a, (y a).1 = x.1), IsLSeg Δ (y 0).rep ∧
+def Peel (Δ : Segment k) (x : IrrGL (k := k)) : Prop :=
+  ∃ (y : Fin 2 → IrrGL (k := k)) (hd : ∑ a, (y a).1 = x.1), IsLSeg Δ (y 0).rep ∧
     ∃ f : x.rep.IntertwiningMap (prodIrr y hd), Function.Injective f
 
 
 
 
 def PeelGoodP : Prop :=
-  ∀ (x : IrrGL k) (y : Fin 2 → IrrGL k) (hd : ∑ a, (y a).1 = x.1) (Δ : Segment k) (𝔫 : Multiset (Segment k)),
+  ∀ (x : IrrGL (k := k)) (y : Fin 2 → IrrGL (k := k)) (hd : ∑ a, (y a).1 = x.1) (Δ : Segment k) (𝔫 : Multiset (Segment k)),
     IsLSeg Δ (y 0).rep → IsL 𝔫 (y 1).rep → (∃ f : x.rep.IntertwiningMap (prodIrr y hd), Function.Injective f) →
     (∀ Δ' ∈ 𝔫, ¬ Δ'.Precedes Δ) → IsL (𝔫 + {Δ}) x.rep
 

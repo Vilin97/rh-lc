@@ -22,7 +22,7 @@ section Classes
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem good_of_toral {x : IrrGL k} (hx : Toral x) : Good x := by
+theorem good_of_toral {x : IrrGL (k := k)} (hx : Toral x) : Good x := by
   obtain ⟨s, hs, hy⟩ := hx
   exact ⟨s, hs, fun y hys => Or.inl (hy y hys)⟩
 

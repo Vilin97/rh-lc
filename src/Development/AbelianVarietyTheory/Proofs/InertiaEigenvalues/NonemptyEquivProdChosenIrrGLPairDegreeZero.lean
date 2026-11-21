@@ -192,7 +192,7 @@ theorem nonempty_equiv_multiProd_empty {m : Fin 2 → Type} [∀ a, Fintype (m a
     rw [parInd_apply, one_mul]]
   rw [hval, LinearEquiv.symm_apply_apply]
 
-theorem nonempty_equiv_prodIrr_two_zero (y : Fin 2 → IrrGL k) (hz : (y 1).1 = 0) (hd : ∑ a, (y a).1 = (y 0).1) :
+theorem nonempty_equiv_prodIrr_two_zero (y : Fin 2 → IrrGL (k := k)) (hz : (y 1).1 = 0) (hd : ∑ a, (y a).1 = (y 0).1) :
     Nonempty ((y 0).rep.Equiv (prodIrr y hd)) := by
   have : IsEmpty (Fin (y 1).1) := by rw [hz]; infer_instance
   refine nonempty_equiv_multiProd_empty (m := fun a => Fin (y a).1) (X := fun a => (y a).2.rep.V)
@@ -202,7 +202,7 @@ theorem nonempty_equiv_prodIrr_two_zero (y : Fin 2 → IrrGL k) (hz : (y 1).1 = 
   simp
 
 theorem nonempty_equiv_prodIrr_pair_zero (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
-    [IsNonarchimedeanLocalField k] (x z : IrrGL k) (hz : z.1 = 0) (hd : ∑ a, (![x, z] a).1 = x.1) :
+    [IsNonarchimedeanLocalField k] (x z : IrrGL (k := k)) (hz : z.1 = 0) (hd : ∑ a, (![x, z] a).1 = x.1) :
     Nonempty (x.rep.Equiv (prodIrr ![x, z] hd)) := nonempty_equiv_prodIrr_two_zero ![x, z] hz hd
 
 end GlobalTheory.LocGL

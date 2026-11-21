@@ -38,7 +38,7 @@ namespace Zl.JC
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 theorem claim {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
-    (hs : IsSmooth π) (hi : π.IsIrreducible) {h : ℕ} (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N)
+    (hs : IsSmooth π) (hi : π.IsIrreducible) {h : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N)
     (hjm : Zc.jm x hd π ≠ 0) (t : kˣ) (hv : ValuativeRel.valuation k (t : k) < 1) (c : Fin h → ℂ)
     (hc : ∀ i, Zl.ScalarBy (x i) t (c i)) (j : Fin h) :
     ∃ m : ℕ, 1 ≤ m ∧ ∃ (w : V) (l : Module.Dual ℂ V),
@@ -113,7 +113,7 @@ theorem claim {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Represe
   exact ⟨max m₀ 1, le_max_right _ _, w, l, hw, hl, hcoef⟩
 
 theorem lpBound {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
-    (hs : IsSmooth π) (hi : π.IsIrreducible) {h : ℕ} (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N)
+    (hs : IsSmooth π) (hi : π.IsIrreducible) {h : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N)
     (hpos : ∀ a, 0 < (x a).1) (hjm : Zc.jm x hd π ≠ 0) (t : kˣ) (hv : ValuativeRel.valuation k (t : k) < 1)
     (c : Fin h → ℂ) (hc : ∀ i, Zl.ScalarBy (x i) t (c i)) (j : Fin h) (hj : j.val + 1 < h) (p : ℝ) (hp : 0 < p)
     (hL : CoeffLp p π) :
@@ -146,7 +146,7 @@ theorem lpBound {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Repre
   exact le_of_eq (abs_of_nonneg (by positivity)).symm
 
 theorem totalNorm {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
-    (hs : IsSmooth π) (hi : π.IsIrreducible) {h : ℕ} (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N)
+    (hs : IsSmooth π) (hi : π.IsIrreducible) {h : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N)
     (hjm : Zc.jm x hd π ≠ 0) (t : kˣ) (hv : ValuativeRel.valuation k (t : k) < 1)
     (c : Fin h → ℂ) (hc : ∀ i, Zl.ScalarBy (x i) t (c i)) (hh : 0 < h) (p : ℝ) (hL : CoeffLp p π) :
     ∏ i, ‖c i‖ = 1 := by

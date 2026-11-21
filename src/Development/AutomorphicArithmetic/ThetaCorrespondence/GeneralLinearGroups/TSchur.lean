@@ -24,7 +24,7 @@ private theorem UpperTheory.Lit.Cas.exists_ne_zero_of_irr {G N : Type} [Group G]
   simp [h v]
 
 theorem UpperTheory.Lit.Cas.schur :
-    GlobalTheory.Published.IrreducibleAdmissibleGL → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (x : IrrGL k) (t : kˣ), (∃ c, ScalarBy x t c) ∧ (∀ c c', ScalarBy x t c → ScalarBy x t c' → c = c') ∧ ∀ c, x.1 = 0 → ScalarBy x t c → c = 1 := by
+    GlobalTheory.Published.IrreducibleAdmissibleGL → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (x : IrrGL (k := k)) (t : kˣ), (∃ c, ScalarBy x t c) ∧ (∀ c c', ScalarBy x t c → ScalarBy x t c' → c = c') ∧ ∀ c, x.1 = 0 → ScalarBy x t c → c = 1 := by
   intro H k _ _ _ _ x t
   obtain ⟨v, hv⟩ := UpperTheory.Lit.Cas.exists_ne_zero_of_irr x.rep x.2.rep.irr
   have uniq : ∀ c c', ScalarBy x t c → ScalarBy x t c' → c = c' := fun c c' h h' =>

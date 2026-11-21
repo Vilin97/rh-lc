@@ -18,7 +18,7 @@ namespace GlobalTheory.BCen.SuppEmbed
 theorem exists_embedding_prodIrr_support : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (n : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin n) k) V), IsSmooth π → π.IsIrreducible →
-    ∃ (t : ℕ) (x : Fin t → IrrGL k) (hx : ∑ a, (x a).1 = n) (φ : π.IntertwiningMap (prodIrr x hx)),
+    ∃ (t : ℕ) (x : Fin t → IrrGL (k := k)) (hx : ∑ a, (x a).1 = n) (φ : π.IntertwiningMap (prodIrr x hx)),
       (∀ a, (x a).IsCusp) ∧ Function.Injective φ ∧ ∀ s, HasSupport π s ↔ Finset.univ.val.map x = s := by
   intro k _ _ _ _ n V _ _ π hs hi
   obtain ⟨t, x, hx, hc, φ, hφ⟩ :=

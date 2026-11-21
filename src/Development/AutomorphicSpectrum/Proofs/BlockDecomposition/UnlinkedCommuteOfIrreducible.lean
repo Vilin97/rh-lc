@@ -189,7 +189,7 @@ theorem nonempty_ind₂_equiv_multiProd {N : ℕ} {d : Fin 2 → ℕ} (hd : ∑ 
   subst h
   exact nonempty_prod₂_equiv_multiProd hd π
 
-theorem nonempty_ind₂_contra_equiv (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (F : Fin 2 → IrrGL k) {N : ℕ}
+theorem nonempty_ind₂_contra_equiv (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (F : Fin 2 → IrrGL (k := k)) {N : ℕ}
     (hd : ∑ a, (F a).1 = N) (h : (F 0).1 + (F 1).1 = N) :
     Nonempty ((ind₂ (stdSum h) (extTensor (contra (F 0).rep) (contra (F 1).rep))).Equiv
       (contra (prodIrr F hd))) := by
@@ -198,7 +198,7 @@ theorem nonempty_ind₂_contra_equiv (hA : GlobalTheory.Published.IrreducibleAdm
   have E₃ := GlobalTheory.CompanionTheory.ContraProd.contra_prodIrr_multiProd hA F hd
   exact E₂.elim fun e₂ => E₃.elim fun e₃ => ⟨e₂.trans e₃⟩
 
-theorem prodIrr_swap_of_isIrreducible (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (F G : Fin 2 → IrrGL k)
+theorem prodIrr_swap_of_isIrreducible (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (F G : Fin 2 → IrrGL (k := k))
     (e₀ : G 0 = F 1) (e₁ : G 1 = F 0) {N : ℕ} (hd : ∑ a, (F a).1 = N) (hd' : ∑ a, (G a).1 = N)
     (hX : (prodIrr F hd).IsIrreducible) (hY : (prodIrr G hd').IsIrreducible) :
     Nonempty ((prodIrr F hd).Equiv (prodIrr G hd')) := by
@@ -207,7 +207,7 @@ theorem prodIrr_swap_of_isIrreducible (hA : GlobalTheory.Published.IrreducibleAd
   have h'' : (F 1).1 + (F 0).1 = N := by rw [← e₀, ← e₁]; exact h'
   have E₁ := nonempty_ind₂_equiv_multiProd (d := fun a => (F a).1) hd h fun a => (F a).rep
   have E₂ := nonempty_ind₂_contra_equiv hA G hd' h'
-  have E₃ : ∀ (u v : IrrGL k), u = F 1 → v = F 0 → ∀ h₁ : u.1 + v.1 = N,
+  have E₃ : ∀ (u v : IrrGL (k := k)), u = F 1 → v = F 0 → ∀ h₁ : u.1 + v.1 = N,
       Nonempty ((ind₂ (stdSum h'') (extTensor (contra (F 1).rep) (contra (F 0).rep))).Equiv
         (ind₂ (stdSum h₁) (extTensor (contra u.rep) (contra v.rep)))) := by
     rintro _ _ rfl rfl _

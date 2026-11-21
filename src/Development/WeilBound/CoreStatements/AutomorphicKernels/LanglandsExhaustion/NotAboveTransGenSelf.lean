@@ -39,7 +39,7 @@ theorem linkP : LinkP k := by
     push_cast
     ring
 
-private theorem eq_zero_of_nu_eq_of_isCusp {ρ : IrrGL k} (hρ : ρ.IsCusp) (n : ℤ) (h : ρ.nu (n : ℂ) = ρ) : n = 0 := by
+private theorem eq_zero_of_nu_eq_of_isCusp {ρ : IrrGL (k := k)} (hρ : ρ.IsCusp) (n : ℤ) (h : ρ.nu (n : ℂ) = ρ) : n = 0 := by
   have hsub : (Segment.icc ρ hρ n n le_rfl).carrier ⊆ (Segment.icc ρ hρ 0 0 le_rfl).carrier := by
     intro x hx
     rw [Segment.mem_icc] at hx ⊢
@@ -55,7 +55,7 @@ theorem minP : MinP k := by
   classical
   intro l hl hc
   obtain ⟨ρ₀, h₀⟩ := List.exists_mem_of_ne_nil l hl
-  set f : ℕ → IrrGL k := fun m => ρ₀.nu (-(m : ℂ)) with hf
+  set f : ℕ → IrrGL (k := k) := fun m => ρ₀.nu (-(m : ℂ)) with hf
   have hinj : Function.Injective f := by
     intro m m' hmm
     have h1 : (f m).nu (m : ℂ) = (f m').nu (m : ℂ) := by rw [hmm]

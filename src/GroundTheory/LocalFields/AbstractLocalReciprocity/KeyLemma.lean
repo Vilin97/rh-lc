@@ -115,7 +115,8 @@ theorem smul_mem_field [IsDiscreteModule G A] (hLK : L ≤ K) [((L : Subgroup G)
     (hcomm : ∀ y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker), s.elt • g • y = g • s.elt • y)
     {y : A} (hy : y ∈ fixedModule A ((s.field hLK : OpenSubgroup G) : Subgroup G)) :
     g • y ∈ fixedModule A ((s.field hLK : OpenSubgroup G) : Subgroup G) := by
-  rw [FrobeniusLift.coe_field, mem_fixedModule_frobeniusClosure] at hy ⊢
+  have hfield : (s.field hLK : Subgroup G) = frobeniusClosure D.deg L s.elt := rfl
+  rw [hfield, mem_fixedModule_frobeniusClosure] at hy ⊢
   exact ⟨hgJ y hy.1, by rw [hcomm y hy.1, hy.2]⟩
 
 end SlopeTestRemainingChoices
@@ -146,7 +147,7 @@ theorem field_le_field_of_pow (s1 s2 : D.FrobeniusLift K) (k : ℕ) (h2 : s2.elt
   intro x hx
   refine frobeniusClosure_le (s1.field hLK).isClosed ?_ le_frobeniusClosure hx
   rw [h2]
-  exact Subgroup.pow_mem _ (s1.elt_mem_field hLK) k
+  exact Subgroup.pow_mem _ mem_frobeniusClosure_self k
 
 theorem coe_norm_field_field (s1 s2 : D.FrobeniusLift K) (k : ℕ) (hk : 0 < k)
     (h2 : s2.elt = s1.elt ^ k) (hdeg : s2.deg = k * s1.deg)
@@ -154,22 +155,26 @@ theorem coe_norm_field_field (s1 s2 : D.FrobeniusLift K) (k : ℕ) (hk : 0 < k)
     (norm A ((s1.field hLK : OpenSubgroup G) : Subgroup G)
       ((s2.field hLK : OpenSubgroup G) : Subgroup G) z : A) =
       ∏ i : Fin k, s1.elt ^ (i : ℕ) • (z : A) := by
-  have hmap1 := map_frobeniusClosure D.continuous_deg (FrobeniusLift.mem_normalizer hLK s1.mem)
+  have hnormalizer := FrobeniusLift.mem_normalizer (D := D) hLK s1.mem
+  have hmap1 := map_frobeniusClosure D.continuous_deg hnormalizer
     s1.deg_eq (L := (L : Subgroup G))
   have hmap2 := map_frobeniusClosure D.continuous_deg (FrobeniusLift.mem_normalizer hLK s2.mem)
     s2.deg_eq (L := (L : Subgroup G))
   rw [hdeg, mul_assoc] at hmap2
   have hf : 0 < s1.deg * inertiaDegree D.deg K :=
     Nat.mul_pos s1.deg_pos (Nat.pos_of_ne_zero (D.inertiaDegree_ne_zero K))
+  have hfield_inf_ker :
+      (s1.field hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
+    frobeniusClosure_inf_ker D.continuous_deg L.isOpen hnormalizer hf.ne' s1.deg_eq
   have key := coe_norm_eq_prod_smul_norm D.deg (K := ((s1.field hLK : OpenSubgroup G) : Subgroup G))
     (S := ((s2.field hLK : OpenSubgroup G) : Subgroup G)) (J := (L : Subgroup G) ⊓ D.deg.ker)
     (f := s1.deg * inertiaDegree D.deg K) (n := k) hk hf
     (fun x hx => field_le_field_of_pow hLK s1 s2 k h2 hx) ?_ ?_ ?_ ?_
-    (s1.elt_mem_field hLK) s1.deg_eq z (fixedModule_anti le_frobeniusClosure z.2)
+    mem_frobeniusClosure_self s1.deg_eq z (fixedModule_anti le_frobeniusClosure z.2)
   · rw [key]
     refine Finset.prod_congr rfl fun i _ => ?_
     congr 1
-    exact coe_norm_of_le (fun x hx => (s1.field_inf_ker hLK).le hx) _
+    exact coe_norm_of_le hfield_inf_ker.le _
   · intro x hx
     have : D.deg x ∈ (frobeniusClosure D.deg L s2.elt).map D.deg := ⟨x, hx, rfl⟩
     rw [hmap2] at this
@@ -184,7 +189,7 @@ theorem coe_norm_field_field (s1 s2 : D.FrobeniusLift K) (k : ℕ) (hk : 0 < k)
     rw [hmap1] at this
     exact this
   · intro q hq
-    have hqJ : q ∈ (L : Subgroup G) ⊓ D.deg.ker := (s1.field_inf_ker hLK).le hq
+    have hqJ : q ∈ (L : Subgroup G) ⊓ D.deg.ker := hfield_inf_ker.le hq
     exact ⟨fun _ => hqJ, fun h => le_frobeniusClosure h⟩
 
 
@@ -241,10 +246,22 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
   have hP'P : s2.field hLK ≤ s1.field hLK := field_le_field_of_pow hLK s1 s2 g h2
   have hP'L : s2.field hLK ≤ L := fun y hy =>
     frobeniusClosure_le L.isClosed (by rw [h2]; exact L.pow_mem hψL g) inf_le_left hy
+  have hnormalizer := FrobeniusLift.mem_normalizer (D := D) hLK s1.mem
+  have hdegree_ne_zero := mul_ne_zero s1.deg_pos.ne' (D.inertiaDegree_ne_zero K)
+  have hfield_inf_ker :
+      (s1.field hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
+    frobeniusClosure_inf_ker D.continuous_deg L.isOpen hnormalizer hdegree_ne_zero s1.deg_eq
   have hu : ((s1.field hLK : OpenSubgroup G) : Subgroup G) ⊓ D.deg.ker ≤ s2.field hLK :=
-    fun y hy => le_frobeniusClosure ((s1.field_inf_ker hLK).le hy)
+    hfield_inf_ker.le.trans le_frobeniusClosure
   have hT := coe_norm_field_field hLK s1 s2 g hg h2 hdeg
-  have hrelψ := s1.relDeg_field hLK
+  have hinertiaDegree :
+      inertiaDegree D.deg (s1.field hLK : Subgroup G) = s1.deg * inertiaDegree D.deg K :=
+    inertiaDegree_frobeniusClosure D.continuous_deg hnormalizer hdegree_ne_zero s1.deg_eq
+  have hrelψ : D.relDeg (s1.field hLK) ⟨s1.elt, mem_frobeniusClosure_self⟩ =
+      Multiplicative.ofAdd 1 := by
+    refine (ProfiniteInteger.pow_left_inj (D.inertiaDegree_ne_zero (s1.field hLK))).1 ?_
+    rw [D.relDeg_pow, hinertiaDegree, ← ofAdd_nsmul, nsmul_one]
+    exact s1.deg_eq
 
   have hφJ : ∀ y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker),
       φ • y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker) :=

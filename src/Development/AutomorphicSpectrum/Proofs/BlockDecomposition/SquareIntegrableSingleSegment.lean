@@ -58,7 +58,7 @@ theorem sum_deg_of_listing {h : ℕ} {D : Fin h → Segment k} {𝔪 : Multiset 
   rw [← hD, Multiset.map_map]
   rfl
 
-theorem exists_class (hE : Zc.LSegExists k) (Δ : Segment k) : ∃ y : IrrGL k, IsLSeg Δ y.rep := by
+theorem exists_class (hE : Zc.LSegExists k) (Δ : Segment k) : ∃ y : IrrGL (k := k), IsLSeg Δ y.rep := by
   obtain ⟨π, hd, hc⟩ := hE Δ
   exact ⟨IrrGL.of π.ρ π.smooth π.irr, hd,
     hc.of_equiv (IrrGL.equivOf π.ρ π.smooth π.irr) (Representation.Equiv.refl _)⟩
@@ -76,7 +76,7 @@ theorem card_eq_one : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpac
   choose s hs using fun Δ => GlobalTheory.T.central_character_norm_eq_pow k (y Δ) (hpos Δ)
   obtain ⟨h, D, hD, hanti, hno⟩ := GlobalTheory.CompanionTheory.Multiset.exists_antitone_listing 𝔪 s Segment.Precedes
     fun a b hab => GlobalTheory.T.exponent_lt_of_precedes_of_isLSeg k a b (y a) (y b) (s a) (s b) (hy a) (hy b) (hs a) (hs b) hab
-  let x : Fin h → IrrGL k := fun i => y (D i)
+  let x : Fin h → IrrGL (k := k) := fun i => y (D i)
   have hLF : LFactors 𝔪 x := ⟨D, ⟨hD, hno⟩, fun i => hy (D i)⟩
   have hsum : ∑ a, (x a).1 = N := by
     obtain ⟨h', x', hd', ⟨D', ⟨hD', -⟩, hx'⟩, -⟩ := hL

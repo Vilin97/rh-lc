@@ -19,7 +19,6 @@ theorem UpperTheory.V.CF.kwRamSub :
   haveI : IsCyclotomicExtension {M ^ n} ℚ (CyclotomicField (M ^ n) ℚ) := by
     convert CyclotomicField.isCyclotomicExtension (M ^ n) ℚ
     · rfl
-    · exact Subsingleton.elim _ _
   haveI : NumberField (CyclotomicField (M ^ n) ℚ) :=
     IsCyclotomicExtension.numberField {M ^ n} ℚ _
   have hgal : IsGalois ℚ L := IsAbelianGalois.toIsGalois

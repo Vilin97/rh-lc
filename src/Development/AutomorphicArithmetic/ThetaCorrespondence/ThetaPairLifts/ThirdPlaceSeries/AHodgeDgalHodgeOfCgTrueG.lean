@@ -115,7 +115,7 @@ theorem galHodge0_of_cgTrue (sw : _root_.UpperTheory.One.M.TrivialCondition) (hL
   · have hm' : UpperTheory.GalS.NcW (_root_.GlobalTheory.CuspRep.ParLawsT.locParT hL (CG.mk π₀) (D.nd.plOm.2 w)) := by
       rw [← hpar]
       exact UpperTheory.GalS.ncW_of_nc T hm
-    have hgood : UpperTheory.Zero.LLC.Good (⟨D.R.r, ParLaws.toCl ((CG.mk π₀).loc w)⟩ : IrrGL (w.adicCompletion D.host.E)) := by
+    have hgood : UpperTheory.Zero.LLC.Good (⟨D.R.r, ParLaws.toCl ((CG.mk π₀).loc w)⟩ : IrrGL (k := w.adicCompletion D.host.E)) := by
       rw [hmk]
       exact _root_.UpperTheory.One.M.New.cgGood sw C _ π w
     have hs2 : 2 * s = ((D.R.r : ℤ) - 1 - wt : ℤ) := by

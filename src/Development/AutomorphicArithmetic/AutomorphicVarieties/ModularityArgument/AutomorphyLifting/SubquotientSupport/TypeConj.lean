@@ -316,7 +316,7 @@ private theorem sumList_chars : ∀ (n : ℕ) (ξ : Fin n → Weil h →* ℂˣ)
     · refine Fin.cases ?_ (fun j => ?_) i <;> simp [SatakeLaw.consEquiv]
 
 private theorem rc_cosocle {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {ε : EpsFamily A}
-    {rc : IrrGL (w.adicCompletion E) → WD h} (hrc : IsRec h rc) (H : UpperTheory.V.Z.Win.LawsV a ha ε rc)
+    {rc : IrrGL (k := w.adicCompletion E) → WD h} (hrc : IsRec h rc) (H : UpperTheory.V.Z.Win.LawsV a ha ε rc)
     (ω : Fin n → (w.adicCompletion E)ˣ →* ℂˣ) (hω : ∀ i, IsSmoothChar (ω i))
     (ho : ∀ i j, i < j → ω j ≠ ω i * absPow _ 1) (π : IrrRep (GL (Fin n) (w.adicCompletion E)))
     (hπ : IsCosocle π.ρ (prodIrr _ (sum_deg ω hω))) :

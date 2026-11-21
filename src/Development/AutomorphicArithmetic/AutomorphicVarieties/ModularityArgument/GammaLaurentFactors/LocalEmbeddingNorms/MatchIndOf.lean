@@ -257,7 +257,7 @@ private theorem unr_cancel {a b : kˣ →* ℂˣ} (ha : IsUnram a) (hab : IsUnra
   have h := hab x hx
   rwa [MonoidHom.mul_apply, ha x hx, one_mul] at h
 
-private theorem cnt_congr (s : Multiset (IrrGL k)) {a b : kˣ →* ℂˣ} (h : IsUnram (a * b⁻¹)) : cnt s a = cnt s b := by
+private theorem cnt_congr (s : Multiset (IrrGL (k := k))) {a b : kˣ →* ℂˣ} (h : IsUnram (a * b⁻¹)) : cnt s a = cnt s b := by
   have e : ∀ x : kˣ, ValuativeRel.valuation k (x : k) = 1 → a x = b x := fun x hx => by
     have := h x hx
     rwa [MonoidHom.mul_apply, MonoidHom.inv_apply, mul_inv_eq_one] at this
@@ -267,23 +267,23 @@ private theorem cnt_congr (s : Multiset (IrrGL k)) {a b : kˣ →* ℂˣ} (h : I
   refine forall_congr' fun x => forall_congr' fun hx => ?_
   rw [MonoidHom.mul_apply, MonoidHom.mul_apply, e x hx]
 
-private theorem cnt_zero (s : Multiset (IrrGL k)) (a : kˣ →* ℂˣ)
+private theorem cnt_zero (s : Multiset (IrrGL (k := k))) (a : kˣ →* ℂˣ)
     (h : ∀ ξ hξ, IrrGL.ofChar ξ hξ ∈ s → ¬ IsUnram (ξ * a)) : cnt s a = 0 := by
   unfold cnt
   rw [Multiset.card_eq_zero, Multiset.filter_eq_nil]
   rintro y hy ⟨ξ, hξ, rfl, hu⟩
   exact h ξ hξ hy hu
 
-private theorem cnt_zero_of_unr (s : Multiset (IrrGL k)) (a : kˣ →* ℂˣ) (hs : ∀ y ∈ s, y.IsUnramChar)
+private theorem cnt_zero_of_unr (s : Multiset (IrrGL (k := k))) (a : kˣ →* ℂˣ) (hs : ∀ y ∈ s, y.IsUnramChar)
     (ha : ¬ IsUnram a) : cnt s a = 0 := by
   refine cnt_zero s a fun ξ hξ hy hu => ?_
   obtain ⟨μ, hμ, e⟩ := hs _ hy
   rw [IrrGL.ofChar_inj.1 e] at hu
   exact ha (unr_cancel hμ hu)
 
-private theorem exists_bad (s : Multiset (IrrGL k)) :
+private theorem exists_bad (s : Multiset (IrrGL (k := k))) :
     ∃ T : Finset (kˣ →* ℂˣ), ∀ ξ hξ, IrrGL.ofChar ξ hξ ∈ s → ξ ∈ T := by
-  let g : IrrGL k → (kˣ →* ℂˣ) := fun y => if h : ∃ ξ hξ, y = IrrGL.ofChar ξ hξ then h.choose else 1
+  let g : IrrGL (k := k) → (kˣ →* ℂˣ) := fun y => if h : ∃ ξ hξ, y = IrrGL.ofChar ξ hξ then h.choose else 1
   refine ⟨s.toFinset.image g, fun ξ hξ hy => Finset.mem_image.2 ⟨_, Multiset.mem_toFinset.2 hy, ?_⟩⟩
   have h : ∃ ξ' hξ', IrrGL.ofChar ξ hξ = IrrGL.ofChar ξ' hξ' := ⟨ξ, hξ, rfl⟩
   change (if h : ∃ ξ' hξ', IrrGL.ofChar ξ hξ = IrrGL.ofChar ξ' hξ' then h.choose else 1) = ξ
@@ -354,8 +354,8 @@ private theorem core [IsTotallyComplex K] [IsTotallyComplex M] (hOps : PairGOps)
     (hK : GroundTheory.Automorphic.GJStandardL.ramifiedPlaces K ⊆ S)
     (hM : ∀ w ∈ GroundTheory.Automorphic.GJStandardL.ramifiedPlaces M, w.under (𝓞 K) ∈ S)
     (v : HeightOneSpectrum (𝓞 K)) (hv : v ∈ S)
-    (sK : ∀ u : HeightOneSpectrum (𝓞 K), Multiset (IrrGL (u.adicCompletion K)))
-    (sM : ∀ w : HeightOneSpectrum (𝓞 M), Multiset (IrrGL (w.adicCompletion M)))
+    (sK : ∀ u : HeightOneSpectrum (𝓞 K), Multiset (IrrGL (k := u.adicCompletion K)))
+    (sM : ∀ w : HeightOneSpectrum (𝓞 M), Multiset (IrrGL (k := w.adicCompletion M)))
     (hsK : ∀ u, SuppAt P u (sK u)) (hsM : ∀ w, SuppAt π w (sM w))
     (zK : ∀ u ∈ S, u ≠ v → cnt (sK u) 1 = 0)
     (zM : ∀ w : HeightOneSpectrum (𝓞 M), w.under (𝓞 K) ∈ S → w.under (𝓞 K) ≠ v → cnt (sM w) 1 = 0) :

@@ -25,8 +25,8 @@ namespace UpperTheory.V.Z.Win.T2
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
   {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {ε : EpsFamily A}
-  {rc : IrrGL (w.adicCompletion E) → WD h}
-private theorem good_of_sph (x : IrrGL (w.adicCompletion E)) (hx : IsSpherical x.rep) : Good x := by
+  {rc : IrrGL (k := w.adicCompletion E) → WD h}
+private theorem good_of_sph (x : IrrGL (k := w.adicCompletion E)) (hx : IsSpherical x.rep) : Good x := by
   obtain ⟨s, hs, h1⟩ := GlobalTheory.SphSupport.toral_of_isSpherical GlobalTheory.bernsteinZelevinskyFiniteness_holds _ x hx
   refine ⟨s, hs, fun y hy => Or.inl ?_⟩
   obtain ⟨χ, -, hχ, rfl⟩ := h1 y hy
@@ -91,7 +91,7 @@ private theorem good_prod (hL : _root_.GlobalTheory.Mem.LiteralAutomorphy.LitLoc
 private theorem gMainV (hLit : _root_.GlobalTheory.Mem.LiteralAutomorphy.LitLocAlt) (gi : ArtinInertiaProp) (H : UpperTheory.V.Z.Win.LawsV a ha ε rc)
     {s : ℕ} (d : Fin s → ℕ) (η : Fin s → (w.adicCompletion E)ˣ →* ℂˣ) (hη : ∀ b, IsSmoothChar (η b))
     (hdist : ∀ b c, b ≠ c → ∃ t : Ine (F := E) A, η b (a (ineIncl h t)) ≠ η c (a (ineIncl h t)))
-    (x : IrrGL (w.adicCompletion E)) (hd : ∑ b, d b = x.1) :
+    (x : IrrGL (k := w.adicCompletion E)) (hd : ∑ b, d b = x.1) :
     ((rc x).mono0 ∧ ∀ t : Ine (F := E) A,
         (rc x).charPol (ineIncl h t) = ∏ b, (X - C ((η b (a (ineIncl h t)) : ℂˣ) : ℂ)) ^ d b) ↔
       IsTwSphProd x.rep d hd η := by

@@ -17,6 +17,7 @@ noncomputable section
 
 namespace GlobalTheory.CuspGL.PsiPrimitive
 
+open scoped Classical
 
 theorem finsum_sub {α : Type} [Fintype α] (p : α → Prop) (f : {a // p a} → ℂ) :
     ∑ᶠ x, f x = ∑ a, if h : p a then f ⟨a, h⟩ else 0 := by

@@ -13,7 +13,7 @@ public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.HasSupportOfIs
 open Filter Topology GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult UpperTheory.Lit.Cas UpperTheory.Lit.Red
 
 theorem UpperTheory.Lit.Full.firstProd :
-    GlobalTheory.Published.GeometricLemma → GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (P : Set (IrrGL k)) (h : ℕ) (y : Fin h → IrrGL k) (x : IrrGL k) (hc : ∑ i, (y i).1 = x.1), (∀ i, FirstIn (y i) P) → jhMult x.rep (prodIrr y hc) ≠ 0 → FirstIn x P := by
+    GlobalTheory.Published.GeometricLemma → GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (P : Set (IrrGL (k := k))) (h : ℕ) (y : Fin h → IrrGL (k := k)) (x : IrrGL (k := k)) (hc : ∑ i, (y i).1 = x.1), (∀ i, FirstIn (y i) P) → jhMult x.rep (prodIrr y hc) ≠ 0 → FirstIn x P := by
   intro hG hBZ k _ _ _ _ P h y x hc hy hx q hq hq0 hjm
   classical
   have h1 : jm q hq (prodIrr y hc) ≠ 0 :=

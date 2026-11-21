@@ -19,7 +19,7 @@ namespace PositivityTheory.Gud.Pf
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem unitarisable_of_unitCC [CharZero k] {Δ : Segment k} {δ : IrrGL k} (hL : IsLSeg Δ δ.rep)
+theorem unitarisable_of_unitCC [CharZero k] {Δ : Segment k} {δ : IrrGL (k := k)} (hL : IsLSeg Δ δ.rep)
     (hU : PositivityTheory.RgUd.UOrder.UnitCC δ.rep) : IsUnitarisable δ.rep := by
   have hA : GlobalTheory.Published.IrreducibleAdmissibleGL := PositivityTheory.Tls2.BZGL.irreducibleAdmissibleGL_top
   have sq := Zls.FreeSingleHomotopyEquivDiscreteChains.centredSegSqInt k hA PositivityTheory.Tls2.BZGL.standardFunctorsFiniteLength_top

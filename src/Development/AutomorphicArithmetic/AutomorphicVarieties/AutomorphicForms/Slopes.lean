@@ -69,7 +69,7 @@ theorem slopesOf (hP : Hypotheses₂) {F : Type} [Field F] [NumberField F] {n : 
     (σ : SmIrr (GL (Fin n) (w.adicCompletion F))) (B : Multiset ℂˣ) (hB : GlobalTheory.LFun.HasSatGL w σ.ρ B)
     (H : ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ), ∃ r : G F (AlgebraicClosure F) →* GL (Fin n) (Qbar l), Continuous r ∧
       ((l : 𝓞 F) ∉ w.asIdeal → ∀ (A : ValuationSubring (AlgebraicClosure F)) (h : IsPlaceOver A w)
-        (rc : IrrGL (w.adicCompletion F) → WD h), IsRec h rc → IsWDOf ι r (rc (algNorm σ))) ∧
+        (rc : IrrGL (k := w.adicCompletion F) → WD h), IsRec h rc → IsWDOf ι r (rc (algNorm σ))) ∧
       ∀ (A : ValuationSubring (AlgebraicClosure F)) (h : IsPlaceOver A w)
         (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O]
         (Bw : LocBridge l F (AlgebraicClosure F) (Dec (F := F) A) O) (hj : Induces Bw),

@@ -110,7 +110,7 @@ private theorem ringEquiv_eq {F : Type} [Field F] (r r' : F ≃+* ZMod g) : r = 
   rw [← RingEquiv.symm_symm r, ← RingEquiv.symm_symm r', hs]
 
 omit hi in
-private theorem central (y : IrrGL (w.adicCompletion E)) : ∃ ω : (w.adicCompletion E)ˣ →* ℂˣ, HasCentralChar y.rep ω :=
+private theorem central (y : IrrGL (k := w.adicCompletion E)) : ∃ ω : (w.adicCompletion E)ˣ →* ℂˣ, HasCentralChar y.rep ω :=
   (GlobalTheory.T.centralCharacter_subquotient_productIrreducibles (w.adicCompletion E)).1 y
 
 private theorem trace_eq {n : ℕ} (τ : FDRep ℂ (Gn g n)) (hτ : IsCusp τ.character)

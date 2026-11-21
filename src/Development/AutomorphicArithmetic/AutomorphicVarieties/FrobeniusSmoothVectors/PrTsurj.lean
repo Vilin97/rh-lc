@@ -26,7 +26,7 @@ theorem UpperTheory.V.Fr.pr_tsurj :
   let p := TrivSqZeroExt.fstHom O (ResidueField O) (ResidueField O)
   have hresd : ∀ a : DualNumber (ResidueField O), res O (DualNumber (ResidueField O)) a = a.fst := by
     intro a
-    rw [← res_map p a, hresk]
+    rw [← res_map O (DualNumber (ResidueField O)) p a, hresk]
     rfl
   obtain ⟨-, -, hlc⟩ := pr_open hF O R B hCont
   obtain ⟨B', hB'c, hB'map, hB'snd⟩ := pr_tbox hF O (B.bar O) hlc x hx

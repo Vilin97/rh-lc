@@ -13,7 +13,7 @@ namespace Zc
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-def jm {h N : ℕ} (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N) {V : Type} [AddCommGroup V] [Module ℂ V]
+def jm {h N : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N) {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) : ℕ∞ :=
   jhMult (piTensor fun a => (x a).rep) (jac (stdBlocks (fun a => (x a).1) hd) π)
 
@@ -34,12 +34,12 @@ def LSegExists (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNon
 
 def LSegJacquet (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] : Prop :=
   ∀ (Δ : Segment k) {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V),
-    IsLSeg Δ π → ∀ (s : ℕ) (y : Fin s → IrrGL k) (hd : ∑ a, (y a).1 = N), (∀ a, 0 < (y a).1) →
+    IsLSeg Δ π → ∀ (s : ℕ) (y : Fin s → IrrGL (k := k)) (hd : ∑ a, (y a).1 = N), (∀ a, 0 < (y a).1) →
       ((∃ Γ : Fin s → Segment k, IsTopCut Δ Γ ∧ ∀ a, IsLSeg (Γ a) (y a).rep) → jm y hd π = 1) ∧
       ((¬ ∃ Γ : Fin s → Segment k, IsTopCut Δ Γ ∧ ∀ a, IsLSeg (Γ a) (y a).rep) → jm y hd π = 0)
 
 
-def dualCl (x : IrrGL k) : IrrGL k :=
+def dualCl (x : IrrGL (k := k)) : IrrGL (k := k) :=
   if h : (contra x.rep).IsIrreducible then IrrGL.of (contra x.rep) (isSmooth_smoothRep _) h else x
 
 

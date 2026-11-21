@@ -9,7 +9,6 @@ public import Mathlib
 namespace ReciprocityTheory.ChartRestriction.G.FD
 
 open Complex ReciprocityTheory.ChartRestriction.G.FD.GramDeterminantReal ReciprocityTheory.ChartRestriction.G.FD.PositiveMinorUnits ReciprocityTheory.ChartRestriction.G.FD.MajorantFamilyNorms
-  ReciprocityTheory.ChartRestriction.G.FD.TelescopingWeightedSums
 
 variable {E : Type} [Field E] [NumberField E] [NumberField.IsCMField E]
 

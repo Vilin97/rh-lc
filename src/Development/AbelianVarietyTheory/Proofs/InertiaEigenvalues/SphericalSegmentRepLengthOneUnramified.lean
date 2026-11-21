@@ -28,7 +28,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace GlobalTheory.SphSeg
 
 theorem isSubquotient_prodIrr_prinSeries {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
-    [IsNonarchimedeanLocalField k] {h : ℕ} (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = h)
+    [IsNonarchimedeanLocalField k] {h : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = h)
     (μ : Fin h → kˣ →* ℂˣ) (hμ : ∀ a, IsSmoothChar (μ a)) (hx : ∀ a, x a = IrrGL.ofChar (μ a) (hμ a)) :
     IsSubquotient (prodIrr x hd) (prinSeries μ) := by
   obtain rfl : x = fun a => IrrGL.ofChar (μ a) (hμ a) := funext hx
@@ -43,7 +43,7 @@ namespace GlobalTheory.SphSeg
 
 theorem len_eq_one_and_isUnramChar : LanglandsMultisegments → StandardCosocleGL → ZelevinskyPolynomialRing →
     GeometricLemma → BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
-    [IsNonarchimedeanLocalField k] [CharZero k] (Δ : Segment k) (y : IrrGL k), IsLSeg Δ y.rep → IsSpherical y.rep →
+    [IsNonarchimedeanLocalField k] [CharZero k] (Δ : Segment k) (y : IrrGL (k := k)), IsLSeg Δ y.rep → IsSpherical y.rep →
     Δ.len = 1 ∧ Δ.first.IsUnramChar := by
   intro hLM hSC hZP hGL hBZ k _ _ _ _ _ Δ y hL hS
   obtain ⟨N, c⟩ := y
@@ -51,7 +51,7 @@ theorem len_eq_one_and_isUnramChar : LanglandsMultisegments → StandardCosocleG
   have hsub : IsSubquotient c.rep.ρ (prodIrr Δ.term hd) := hc.isSubquotient
   have hsph := GlobalTheory.T.isSpherical_factor_of_spherical_subquotient k Δ.len N Δ.term hd _ c.rep.ρ hsub hS
   have h0 : Δ.term ⟨0, Δ.len_pos⟩ = Δ.first := by simp [Segment.term]
-  have key : ∀ x z : IrrGL k, x = z → IsSpherical x.rep → IsSpherical z.rep := by
+  have key : ∀ x z : IrrGL (k := k), x = z → IsSpherical x.rep → IsSpherical z.rep := by
     rintro _ _ rfl h; exact h
   have hU : Δ.first.IsUnramChar :=
     GlobalTheory.T.isUnramifiedChar_of_cuspidal_spherical hGL hBZ hZP k Δ.first Δ.isCusp_first (key _ _ h0 (hsph _))

@@ -23,7 +23,7 @@ theorem exh_unipRad_one {s : ℕ} {d : Fin s → ℕ} (e : (Σ a : Fin s, Fin (d
   simpa using h2
 
 theorem exh_deg_one (c : IrrCl (GL (Fin 1) k)) : ∃ 𝔪 : Multiset (Segment k), IsL 𝔪 (IrrGL.rep ⟨1, c⟩) := by
-  have hc : IrrGL.IsCusp (⟨1, c⟩ : IrrGL k) := ⟨one_pos, c.rep.smooth, fun s d e he => absurd (exh_unipRad_one e) he⟩
+  have hc : IrrGL.IsCusp (⟨1, c⟩ : IrrGL (k := k)) := ⟨one_pos, c.rep.smooth, fun s d e he => absurd (exh_unipRad_one e) he⟩
   exact ⟨_, (single_spec hc).2.2.2⟩
 
 theorem exh_equiv_zero {m : Fin 0 → Type} [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] (e : (Σ a, m a) ≃ Fin 0)
@@ -69,14 +69,14 @@ theorem exh_equiv_zero {m : Fin 0 → Type} [∀ a, Fintype (m a)] [∀ a, Decid
   exact ⟨equivOfBijective f ⟨hinj, hsurj⟩⟩
 
 theorem exh_deg_zero (c : IrrCl (GL (Fin 0) k)) : IsL (0 : Multiset (Segment k)) (IrrGL.rep ⟨0, c⟩) := by
-  let x : Fin 0 → IrrGL k := Fin.elim0
+  let x : Fin 0 → IrrGL (k := k) := Fin.elim0
   have hd : ∑ a, (x a).1 = 0 := by simp
   refine ⟨0, x, hd, ⟨Fin.elim0, ⟨rfl, fun i => i.elim0⟩, fun i => i.elim0⟩, ?_⟩
   obtain ⟨φ⟩ := exh_equiv_zero (stdBlocks (fun a => (x a).1) hd) (piTensor fun a => (x a).rep)
     (PiTensorProduct.isEmptyEquiv (Fin 0)) c.rep.ρ c.rep.irr
   exact (isCosocle_self c.rep.irr).of_equiv (.refl _) φ.symm
 
-theorem exh_le_one (x : IrrGL k) (hx : x.1 ≤ 1) : ∃ 𝔪 : Multiset (Segment k), IsL 𝔪 x.rep := by
+theorem exh_le_one (x : IrrGL (k := k)) (hx : x.1 ≤ 1) : ∃ 𝔪 : Multiset (Segment k), IsL 𝔪 x.rep := by
   obtain ⟨n, c⟩ := x
   obtain rfl | rfl : n = 0 ∨ n = 1 := by simp at hx; omega
   · exact ⟨0, exh_deg_zero c⟩

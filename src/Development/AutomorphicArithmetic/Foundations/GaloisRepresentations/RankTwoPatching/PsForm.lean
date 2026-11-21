@@ -26,7 +26,7 @@ namespace UpperTheory.Gal.SV
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
-theorem psForm {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {rc : IrrGL (w.adicCompletion E) → WD h}
+theorem psForm {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {rc : IrrGL (k := w.adicCompletion E) → WD h}
     (L : LawsT a ha rc) {n : ℕ} (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) (ξ : Fin n → (w.adicCompletion E)ˣ →* ℂˣ)
     (hξ : ∀ i, IsSmoothChar (ξ i)) (hs' : HasSupport σ.ρ (GlobalTheory.RoadU.chars ξ hξ)) (hu : GlobalTheory.RoadU.Unlinked (GlobalTheory.RoadU.chars ξ hξ)) :
     rc (algNorm σ) = (sumList (List.ofFn fun i => WD.lpOfChar h ((ξ i).comp a) (ha.smooth (hξ i)))).lpTw ((1 - (n : ℝ)) / 2) := by
@@ -61,7 +61,7 @@ theorem recTr (hG : GlobalTheory.Published.GlobalArtinReciprocity) {K : Type} [F
     (P : PlaceIso A w A u (RingEquiv.refl Ω) j i) {n : ℕ} (σ : SmIrr (GL (Fin n) (w.adicCompletion E)))
     (σ' : SmIrr (GL (Fin n) (u.adicCompletion K))) (e : σ.V ≃ₗ[ℂ] σ'.V)
     (he : ∀ g x, e (σ.ρ g x) = σ'.ρ (Matrix.GeneralLinearGroup.map i.toRingHom g) (e x))
-    {rc : IrrGL (w.adicCompletion E) → WD h} {rc' : IrrGL (u.adicCompletion K) → WD h'} (hrc : IsRecT h rc) (hrc' : IsRecT h' rc')
+    {rc : IrrGL (k := w.adicCompletion E) → WD h} {rc' : IrrGL (k := u.adicCompletion K) → WD h'} (hrc : IsRecT h rc) (hrc' : IsRecT h' rc')
     (hP : GlobalTheory.RoadU.PlainTor (IrrGL.of σ.ρ σ.smooth σ.irred)) :
     WDRel (RingEquiv.refl Ω) (rc (algNorm σ)) (rc' (algNorm σ')) := by
   obtain ⟨a, ha, L⟩ := hrc
@@ -114,7 +114,7 @@ theorem recTr (hG : GlobalTheory.Published.GlobalArtinReciprocity) {K : Type} [F
 
 def RatioT : Prop :=
   ∀ (K Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (A : ValuationSubring Ω)
-    (w : HeightOneSpectrum (𝓞 K)) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion K) → WD h), IsRecT h rc →
+    (w : HeightOneSpectrum (𝓞 K)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion K) → WD h), IsRecT h rc →
     ∀ (a : ℕ) (π : CuspSub K a) (t : ℝ), WinAt π t w → ∀ σ, π.IsLocComp w σ → UpperTheory.GalN.V.RatioW (rc (algNorm σ))
 
 end UpperTheory.Gal.SV

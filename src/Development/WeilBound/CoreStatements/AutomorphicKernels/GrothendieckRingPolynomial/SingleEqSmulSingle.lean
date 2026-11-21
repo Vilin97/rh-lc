@@ -112,11 +112,11 @@ theorem bil_one (u : ι →₀ ℤ) (h : ∀ x, bil C u (Finsupp.single x 1) = F
 
 end BilAssoc
 
-def cm (x y : IrrGL k) : GrothGL k := cl0 (prod₂ (IrrGL.rep x) (IrrGL.rep y))
+def cm (x y : IrrGL (k := k)) : GrothGL k := cl0 (prod₂ (IrrGL.rep x) (IrrGL.rep y))
 
 theorem mulR_eq (a b : GrothGL k) : mulR a b = bil cm a b := rfl
 
-theorem sg_eq (x : IrrGL k) : sg x = Finsupp.single x 1 := rfl
+theorem sg_eq (x : IrrGL (k := k)) : sg x = Finsupp.single x 1 := rfl
 
 theorem mulR_add (a b c : GrothGL k) : mulR a (b + c) = mulR a b + mulR a c := bil_add_right _ a b c
 
@@ -169,10 +169,10 @@ theorem toR_mulR (a b : GrothGL k) : toR (mulR a b) = toR a * toR b := rfl
 
 theorem toR_unit : toR (GrothGL.unit k) = 1 := rfl
 
-def phiOf (f : Segment k → IrrGL k) : MvPolynomial (Segment k) ℤ →+* R k :=
+def phiOf (f : Segment k → IrrGL (k := k)) : MvPolynomial (Segment k) ℤ →+* R k :=
   MvPolynomial.eval₂Hom (Int.castRingHom (R k)) fun Δ => toR (sg (f Δ))
 
-theorem phiOf_X (f : Segment k → IrrGL k) (Δ : Segment k) : phiOf f (MvPolynomial.X Δ) = toR (sg (f Δ)) :=
+theorem phiOf_X (f : Segment k → IrrGL (k := k)) (Δ : Segment k) : phiOf f (MvPolynomial.X Δ) = toR (sg (f Δ)) :=
   MvPolynomial.eval₂Hom_X' _ _ _
 
 end PositivityTheory.Groth

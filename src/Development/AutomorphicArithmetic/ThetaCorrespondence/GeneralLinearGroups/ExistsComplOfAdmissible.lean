@@ -195,7 +195,7 @@ private theorem isIrreducible_parInd (hBZ : GlobalTheory.Published.BernsteinZele
   exact GlobalTheory.CompanionTheory.SocleJm.one_le_jhMult_jac e hρ ιT ⟨⟨v, hv⟩, hv0⟩
 
 theorem UpperTheory.Lit.Mix.ss :
-    GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (x y : IrrGL k) (N : ℕ) (hd : ∑ a, (![x, y] a).1 = N), IsUnitarisable x.rep → IsUnitarisable y.rep → jm ![x, y] hd (prodIrr ![x, y] hd) ≤ 1 → (prodIrr ![x, y] hd).IsIrreducible := by
+    GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (x y : IrrGL (k := k)) (N : ℕ) (hd : ∑ a, (![x, y] a).1 = N), IsUnitarisable x.rep → IsUnitarisable y.rep → jm ![x, y] hd (prodIrr ![x, y] hd) ≤ 1 → (prodIrr ![x, y] hd).IsIrreducible := by
   intro hBZ k _ _ _ _ x y N hd hx hy hjm
   have hρ : (piTensor fun a => (![x, y] a).rep).IsIrreducible :=
     GlobalTheory.CompanionTheory.SocleJm.isIrreducible_piTensor (fun k _ _ _ _ n V _ _ π => (hBZ k).1 (Fin n) V π) ![x, y]

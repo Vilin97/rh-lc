@@ -22,7 +22,7 @@ def LocSub : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex 
         (fun i : Fin d => GlobalTheory.LocGL.spehFactor (GlobalTheory.LocGL.IrrGL.of σ.ρ σ.smooth σ.irred) d i.rev) hd), f ≠ 0
 
 def LocDual : Prop := ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-  [CharZero k] (N d : ℕ) (x : GlobalTheory.LocGL.IrrGL k) (σ' : SmIrr (GL (Fin N) k)), IsUnitarisable x.rep → IsUnitarisable σ'.ρ →
+  [CharZero k] (N d : ℕ) (x : GlobalTheory.LocGL.IrrGL (k := k)) (σ' : SmIrr (GL (Fin N) k)), IsUnitarisable x.rep → IsUnitarisable σ'.ρ →
   ∀ (hd : ∑ i : Fin d, (GlobalTheory.LocGL.spehFactor x d i.rev).1 = N)
     (f : σ'.ρ.IntertwiningMap (GlobalTheory.LocGL.prodIrr (fun i : Fin d => GlobalTheory.LocGL.spehFactor x d i.rev) hd)), f ≠ 0 →
     ∃ hd' : ∑ i, (GlobalTheory.LocGL.spehFactor x d i).1 = N,

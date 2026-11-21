@@ -82,10 +82,10 @@ theorem tor_of_fix {y : WD h} (ht : IsTameWD y) {γ : G E Ω} (hγ : TameGenAt A
   show (WD.mk a).charPol _ = _
   rw [WD.charPol_mk, e, LinearMap.charpoly_one, WD.lpDim_mk]
 
-variable {rc : IrrGL (w.adicCompletion E) → WD h}
+variable {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
-theorem split (hrc : IsRecT h rc) {x : IrrGL (w.adicCompletion E)} (hx : IsGeneric x.rep) (hm : (rc x).mono0) :
-    ∃ l : List (IrrGL (w.adicCompletion E)), HasSupport x.rep (l : Multiset _) ∧ GlobalTheory.RoadU.Unlinked (l : Multiset (IrrGL (w.adicCompletion E))) ∧
+theorem split (hrc : IsRecT h rc) {x : IrrGL (k := w.adicCompletion E)} (hx : IsGeneric x.rep) (hm : (rc x).mono0) :
+    ∃ l : List (IrrGL (k := w.adicCompletion E)), HasSupport x.rep (l : Multiset _) ∧ GlobalTheory.RoadU.Unlinked (l : Multiset (IrrGL (k := w.adicCompletion E))) ∧
       rc x = sumList (l.map rc) := by
   have : CharZero (w.adicCompletion E) := charZero_of_injective_algebraMap (algebraMap E _).injective
   obtain ⟨c, Δ, hun, hL⟩ := GlobalTheory.T.exists_unlinked_langlandsDatum_generic _ x hx
@@ -98,7 +98,7 @@ theorem split (hrc : IsRecT h rc) {x : IrrGL (w.adicCompletion E)} (hx : IsGener
   · rw [← Fin.univ_val_map]; exact GlobalTheory.T.unlinkedLengthOneSegments_firstTerms_not_nuTwist rc hrc c Δ h1 hun
   · rw [e, hsum, List.map_ofFn, List.map_ofFn]; rfl
 
-theorem plainTor_of_tor (hrc : IsRecT h rc) {x : IrrGL (w.adicCompletion E)} (hx : IsGeneric x.rep) (ht : Tor (rc x))
+theorem plainTor_of_tor (hrc : IsRecT h rc) {x : IrrGL (k := w.adicCompletion E)} (hx : IsGeneric x.rep) (ht : Tor (rc x))
     (hm : (rc x).mono0) : GlobalTheory.RoadU.PlainTor x := by
   obtain ⟨l, hs, hu, e⟩ := split hrc hx hm
   obtain ⟨a, ha, L⟩ := hrc
@@ -109,13 +109,13 @@ theorem plainTor_of_tor (hrc : IsRecT h rc) {x : IrrGL (w.adicCompletion E)} (hx
   rw [← k, e, CuspExt.charPol_sumList, List.map_map]
   exact List.dvd_prod (List.mem_map.2 ⟨y, hy, rfl⟩)
 
-theorem good_of_dz (hq : IsQp w) {y : IrrGL (w.adicCompletion E)} (hy : y.IsCusp) (hd : DZ y) : Good y := by
+theorem good_of_dz (hq : IsQp w) {y : IrrGL (k := w.adicCompletion E)} (hy : y.IsCusp) (hd : DZ y) : Good y := by
   have : CharZero (w.adicCompletion E) := charZero_of_injective_algebraMap (algebraMap E _).injective
   have h1 : IsSmoothChar (1 : (w.adicCompletion E)ˣ →* ℂˣ) := by
     simpa using isSmoothChar_absPow (k := w.adicCompletion E) 0
   exact ((goodSeg _).2.1 y hy).2 (Or.inr ⟨hq, y, 1, h1, hd, (y.tw_one h1).symm⟩)
 
-theorem dz_of_cusp (hq : IsQp w) (hrc : IsRecT h rc) {x : IrrGL (w.adicCompletion E)} (hx : x.IsCusp) (ht : IsTameWD (rc x)) :
+theorem dz_of_cusp (hq : IsQp w) (hrc : IsRecT h rc) {x : IrrGL (k := w.adicCompletion E)} (hx : x.IsCusp) (ht : IsTameWD (rc x)) :
     DZ x := by
   obtain ⟨a, ha, H⟩ := hrc
   obtain ⟨φ, hφ⟩ := deg_surjective (h := h) (-1)
@@ -142,7 +142,7 @@ theorem dz_of_cusp (hq : IsQp w) (hrc : IsRecT h rc) {x : IrrGL (w.adicCompletio
   rw [e]
   exact (hY P hP).2.2.1
 
-theorem charPol_of_inert (hrc : IsRecT h rc) {y z : IrrGL (w.adicCompletion E)} (hy : Good y) (k : y.Inert z)
+theorem charPol_of_inert (hrc : IsRecT h rc) {y z : IrrGL (k := w.adicCompletion E)} (hy : Good y) (k : y.Inert z)
     (t : Ine (F := E) A) : (rc z).charPol (ineIncl h t) = (rc y).charPol (ineIncl h t) := by
   obtain ⟨a, ha, H⟩ := hrc
   obtain ⟨μ, hμ, rfl⟩ := k
@@ -152,7 +152,7 @@ theorem charPol_of_inert (hrc : IsRecT h rc) {y z : IrrGL (w.adicCompletion E)} 
     hμ _ (ord_eq_zero_iff.1 (by rw [ha.ord_eq, deg_ineIncl, neg_zero]))
   rw [← hb, WD.lpTwist_mk, WD.charPol_mk, WD.charPol_mk, WDRep.twist_ρ, MonoidHom.comp_apply, h1, Units.val_one, one_smul]
 
-theorem mixed_of_tame (hq : IsQp w) (hrc : IsRecT h rc) {x : IrrGL (w.adicCompletion E)} (hx : IsGeneric x.rep)
+theorem mixed_of_tame (hq : IsQp w) (hrc : IsRecT h rc) {x : IrrGL (k := w.adicCompletion E)} (hx : IsGeneric x.rep)
     (ht : TmW (rc x)) (hs : Sqf (rc x)) (hm : (rc x).mono0) :
     DZ x ∧ ∀ s, HasSupport x.rep s → GlobalTheory.RoadU.Unlinked s ∧ (s.filter fun y => 2 ≤ y.1).Pairwise fun y z => ¬ y.Inert z := by
   have : CharZero (w.adicCompletion E) := charZero_of_injective_algebraMap (algebraMap E _).injective
@@ -183,7 +183,7 @@ theorem mixed_of_tame (hq : IsQp w) (hrc : IsRecT h rc) {x : IrrGL (w.adicComple
   simp only [decide_eq_true_eq] at h2
   omega
 
-theorem dz_of_nu {x : IrrGL (w.adicCompletion E)} (h0 : 0 < x.1) (s : ℂ) (k : DZ (x.nu s)) : DZ x := by
+theorem dz_of_nu {x : IrrGL (k := w.adicCompletion E)} (h0 : 0 < x.1) (s : ℂ) (k : DZ (x.nu s)) : DZ x := by
   have : CharZero (w.adicCompletion E) := charZero_of_injective_algebraMap (algebraMap E _).injective
   have e : x = (x.nu s).nu (-s) := by simp
   rw [e]

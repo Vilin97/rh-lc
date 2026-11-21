@@ -31,7 +31,7 @@ inductive Clause
 def ClauseAt (c : Clause) (π : CuspSub E a) (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL (Fin a) (Qbar l)) (w : HeightOneSpectrum (𝓞 E)) : Prop :=
   match c with
   | .ss => ∀ (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (A : ValuationSubring Ω) (h : IsPlaceOver A w)
-      (rc : IrrGL (w.adicCompletion E) → WD h), IsRec h rc → ∀ σ, π.IsLocComp w σ →
+      (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRec h rc → ∀ σ, π.IsLocComp w σ →
       ∀ g : Weil h, (wdOf h hl ι r).charPol g = (rc (algNorm σ)).charPol g
   | .pure => ∀ (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (A : ValuationSubring Ω) (h : IsPlaceOver A w) (wt : ℤ), IsWeight π wt →
       ((wdOf h hl ι r).lpTw ((wt : ℝ) / 2)).tempered

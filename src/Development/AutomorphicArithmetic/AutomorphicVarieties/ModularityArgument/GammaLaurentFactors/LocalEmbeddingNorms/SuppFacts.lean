@@ -32,7 +32,7 @@ section Loc
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ}
 
-private theorem supp_unique {π : Representation ℂ (GL (Fin n) k) V} {s t : Multiset (IrrGL k)}
+private theorem supp_unique {π : Representation ℂ (GL (Fin n) k) V} {s t : Multiset (IrrGL (k := k))}
     (hs : HasSupport π s) (ht : HasSupport π t) : s = t :=
   GlobalTheory.CompanionTheory.Hypotheses₂.TD.hasSupport_unique GlobalTheory.CompanionTheory.GeoLink.geometricLemma GlobalTheory.CompanionTheory.Published.bernsteinZelevinskyFiniteness hs ht
 
@@ -42,7 +42,7 @@ private theorem supp_exists {π : Representation ℂ (GL (Fin n) k) V} (h1 : IsS
     GlobalTheory.CompanionTheory.GeoLink.geometricLemma (IrrGL.of π h1 h2)
   exact ⟨s, hs.of_equiv (IrrGL.equivOf π h1 h2).symm⟩
 
-private theorem unram_of_fixed [CharZero k] {π : Representation ℂ (GL (Fin n) k) V} {s : Multiset (IrrGL k)}
+private theorem unram_of_fixed [CharZero k] {π : Representation ℂ (GL (Fin n) k) V} {s : Multiset (IrrGL (k := k))}
     (hs : HasSupport π s) {v : V} (h0 : v ≠ 0) (hv : ∀ g ∈ KO k (Fin n), π g v = v) : ∀ y ∈ s, y.IsUnramChar := by
   obtain ⟨α, hα⟩ := GlobalTheory.SatakeExists.exists_isSubquotient_prinSeries
     ((GlobalTheory.CompanionTheory.Published.bernsteinZelevinskyFiniteness k).1 (Fin n) V π hs.isSmooth hs.isIrreducible) hs.isIrreducible
@@ -54,7 +54,7 @@ private theorem unram_of_fixed [CharZero k] {π : Representation ℂ (GL (Fin n)
   obtain ⟨i, -, rfl⟩ := Multiset.mem_map.1 hy
   exact ⟨_, isUnram_unrChar k (α i), rfl⟩
 
-private theorem tw_iff (y : IrrGL k) (χ θ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
+private theorem tw_iff (y : IrrGL (k := k)) (χ θ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
     (∃ ξ hξ, y.tw χ hχ = IrrGL.ofChar ξ hξ ∧ IsUnram (ξ * θ)) ↔
       ∃ ξ hξ, y = IrrGL.ofChar ξ hξ ∧ IsUnram (ξ * (χ * θ)) := by
   constructor
@@ -86,7 +86,7 @@ private theorem exists_fixed {π : CuspSub K n} {v : HeightOneSpectrum (𝓞 K)}
     ((LocSph.iSup_range_eq π v σ hσ).symm ▸ x.2)
 
 private theorem supp_twist {v : HeightOneSpectrum (𝓞 K)} {σ : SmIrr (GL (Fin n) (v.adicCompletion K))} (χ : HChar K)
-    {s : Multiset (IrrGL (v.adicCompletion K))} (h : HasSupport σ.ρ s) :
+    {s : Multiset (IrrGL (k := v.adicCompletion K))} (h : HasSupport σ.ρ s) :
     HasSupport (σ.twist (CuspSub.locDet n χ v) (CuspSub.isOpen_ker_locDet χ v)).ρ
       (s.map (·.tw (χ.loc v) (smooth_loc χ v))) :=
   h.tw (χ.loc v) (smooth_loc χ v)

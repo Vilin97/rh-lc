@@ -20,12 +20,12 @@ namespace GlobalTheory.AVGood
 section Local
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem good_of_toral {x : IrrGL k} (h : Toral x) : Good x := by
+theorem good_of_toral {x : IrrGL (k := k)} (h : Toral x) : Good x := by
   obtain ⟨s, hs, h1⟩ := h
   exact ⟨s, hs, fun y hy => Or.inl (h1 y hy)⟩
 
-theorem fixed_ne_bot_of_mem_support {x : IrrGL k} (hx : fixed x.rep (KOne k (Fin x.1)) ≠ ⊥)
-    {s : Multiset (IrrGL k)} (hs : HasSupport x.rep s) {y : IrrGL k} (hy : y ∈ s) :
+theorem fixed_ne_bot_of_mem_support {x : IrrGL (k := k)} (hx : fixed x.rep (KOne k (Fin x.1)) ≠ ⊥)
+    {s : Multiset (IrrGL (k := k))} (hs : HasSupport x.rep s) {y : IrrGL (k := k)} (hy : y ∈ s) :
     fixed y.rep (KOne k (Fin y.1)) ≠ ⊥ := by
   obtain ⟨h, z, rfl, -, -, e, he⟩ := hs
   obtain ⟨a, -, rfl⟩ := Multiset.mem_map.1 hy
@@ -34,13 +34,13 @@ theorem fixed_ne_bot_of_mem_support {x : IrrGL k} (hx : fixed x.rep (KOne k (Fin
   exact (Submodule.ne_bot_iff _).2 ⟨w, hw, hw0⟩
 
 theorem good_of_fixed_KOne (hZ : GlobalTheory.Published.ZelevinskyPolynomialRing)
-    (hk : ∃ (g : ℕ) (_ : Fact g.Prime) (i : ℚ_[g] ≃+* k), Continuous i) (x : IrrGL k)
+    (hk : ∃ (g : ℕ) (_ : Fact g.Prime) (i : ℚ_[g] ≃+* k), Continuous i) (x : IrrGL (k := k))
     (hx : fixed x.rep (KOne k (Fin x.1)) ≠ ⊥) : Good x := by
   obtain ⟨s, hs⟩ := GlobalTheory.LocGL.SupportRing.exists_hasSupport hZ x
   exact ⟨s, hs, fun y hy => Or.inr ⟨hk, y, 1, isSmoothChar_one, fixed_ne_bot_of_mem_support hx hs hy,
     (IrrGL.tw_one y _).symm⟩⟩
 
-theorem good_of_isSpherical (hBZ : GlobalTheory.Published.BernsteinZelevinskyFiniteness) (x : IrrGL k) (hx : IsSpherical x.rep) :
+theorem good_of_isSpherical (hBZ : GlobalTheory.Published.BernsteinZelevinskyFiniteness) (x : IrrGL (k := k)) (hx : IsSpherical x.rep) :
     Good x :=
   (GlobalTheory.SphSupport.toral_and_good_of_isSpherical hBZ k x hx).2
 

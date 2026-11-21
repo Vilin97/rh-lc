@@ -323,7 +323,7 @@ theorem derivJac (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) : GlobalT
   have h2 := (isSubquotient_twist' hS _).trans (isSubquotient_twist_deriv ψ (n + 1) j π)
   obtain ⟨σ, hsub, ⟨E⟩⟩ := exists_tensor hA _ (isSmooth_jac _ hs)
     (GlobalTheory.CompanionTheory.JacquetBridge.jacquetFiniteLength k _ _ _ _ V π hs hf) _ hSi h2
-  let y : Fin 2 → IrrGL k := fun a => ⟨dd (n + 1) (j + 1) a, σ a⟩
+  let y : Fin 2 → IrrGL (k := k) := fun a => ⟨dd (n + 1) (j + 1) a, σ a⟩
   have hy0 : y 0 = (IrrGL.of S.ρ S.smooth S.irr).nu (-(((j : ℂ) + 1) / 2)) := by
     rw [IrrGL.nu, IrrGL.tw_of]
     exact (IrrGL.of_rep (y 0)).symm.trans (IrrGL.of_eq_of.2 ⟨E⟩)
@@ -332,7 +332,7 @@ theorem derivJac (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) : GlobalT
     fin_cases a
     · exact hy0
     · rfl
-  have key : ∀ (w : Fin 2 → IrrGL k) (hw : ∑ a, (w a).1 = n + 1 + j + 1), w = y → 1 ≤ Zc.jm w hw π := by
+  have key : ∀ (w : Fin 2 → IrrGL (k := k)) (hw : ∑ a, (w a).1 = n + 1 + j + 1), w = y → 1 ≤ Zc.jm w hw π := by
     intro w hw hwy
     subst hwy
     exact ENat.one_le_iff_ne_zero.2 (jhMult_ne_zero_iff.2 hsub)

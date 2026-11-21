@@ -12,7 +12,7 @@ theorem polish_of_lc (G : Type) [AddCommGroup G] [TopologicalSpace G] [IsTopolog
     [LocallyCompactSpace G] [SecondCountableTopology G] : PolishSpace G := by
   let _ : UniformSpace G := IsTopologicalAddGroup.rightUniformSpace G
   have : IsUniformAddGroup G := isUniformAddGroup_of_addCommGroup
-  have : CompleteSpace G := IsRightUniformAddGroup.completeSpace_of_weaklyLocallyCompactSpace
+  have : CompleteSpace G := IsRightUniformAddGroup.completeSpace_of_weaklyLocallyCompactSpace G
   have : (uniformity G).IsCountablyGenerated := IsUniformAddGroup.uniformity_countably_generated
   have : TopologicalSpace.IsCompletelyMetrizableSpace G := inferInstance
   infer_instance

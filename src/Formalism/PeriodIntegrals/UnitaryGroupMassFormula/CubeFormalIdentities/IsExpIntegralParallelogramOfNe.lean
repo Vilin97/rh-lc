@@ -205,9 +205,9 @@ theorem cubeRelationOfParallelogram : CubeRelationOfParallelogram := by
   intro p _ l ex ph hlep hE1 hE3
   obtain ⟨hex, hX, -⟩ := hlep
   have hl := constantCoeff_log_eq_zero hex hX
-  have product_zeroth_first_parts := isExpIntegral_parallelogram_of_ne ph 0 1 (by decide) hE1
-  have sizeConstantAtParamsWeight := isExpIntegral_parallelogram_of_ne ph 1 2 (by decide) hE1
-  have InnerProductFormulaField := isExpIntegral_parallelogram_of_ne ph 2 0 (by decide) hE1
+  have product_zeroth_first_parts := isExpIntegral_parallelogram_of_ne ph hex hl 0 1 (by decide) hE1
+  have sizeConstantAtParamsWeight := isExpIntegral_parallelogram_of_ne ph hex hl 1 2 (by decide) hE1
+  have InnerProductFormulaField := isExpIntegral_parallelogram_of_ne ph hex hl 2 0 (by decide) hE1
   have H3 := (simeq_iff_good _ _).1 hE3
   rw [simeq_iff_good]
   have key := (good_sub ((good_sub ((good_sub H3) product_zeroth_first_parts)) sizeConstantAtParamsWeight)) InnerProductFormulaField

@@ -246,6 +246,7 @@ end LemTwo
 
 
 theorem LemmaTwo_of (h1 : LemmaOne) (hL : LawSymm) : LemmaTwo := by
+  open LemTwo in
   intro K _ _ _ _ p σ hU F hF H hH hd hd'
   obtain ⟨hp, -, hnp, -, -⟩ := id hU
   have hp2 : 2 ≤ p := hp.two_le

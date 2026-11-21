@@ -21,7 +21,7 @@ namespace UpperTheory.Gal.InertialTypesAlt
 open UpperTheory.Zero.LLC in
 private theorem charPol_seg' {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
     {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-    {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {rc : IrrGL (w.adicCompletion E) → WD h}
+    {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {rc : IrrGL (k := w.adicCompletion E) → WD h}
     (L : LawsT (h := h) a ha rc) (Δ : Segment (w.adicCompletion E)) (σ : Weil h) :
     (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len)).charPol σ
       = (Δ.ms.map fun y => (rc y).charPol σ).prod := by
@@ -37,9 +37,9 @@ private theorem charPol_seg' {E Ω : Type} [Field E] [NumberField E] [Field Ω] 
 open UpperTheory.Zero.LLC in
 private theorem charPol_supp {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
     {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-    {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {rc : IrrGL (w.adicCompletion E) → WD h}
-    (L : LawsT (h := h) a ha rc) (x : IrrGL (w.adicCompletion E))
-    (S : Multiset (IrrGL (w.adicCompletion E))) (hS : HasSupport x.rep S) (σ : Weil h) :
+    {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {rc : IrrGL (k := w.adicCompletion E) → WD h}
+    (L : LawsT (h := h) a ha rc) (x : IrrGL (k := w.adicCompletion E))
+    (S : Multiset (IrrGL (k := w.adicCompletion E))) (hS : HasSupport x.rep S) (σ : Weil h) :
     (rc x).charPol σ = (S.map fun y => (rc y).charPol σ).prod := by
   haveI : CharZero (w.adicCompletion E) := charZero_of_injective_algebraMap (algebraMap E _).injective
   obtain ⟨𝔪, hm⟩ := Pr.exh (w.adicCompletion E) x

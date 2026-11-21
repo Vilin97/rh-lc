@@ -95,7 +95,7 @@ def St7 : Prop :=
 
 def St8a : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ), 0 < n →
-    ∀ ϖ : kˣ, ord k ϖ = 1 → ∀ c : ℂˣ, ∃ X : (𝓀[k])[X] → IrrGL k,
+    ∀ ϖ : kˣ, ord k ϖ = 1 → ∀ c : ℂˣ, ∃ X : (𝓀[k])[X] → IrrGL (k := k),
       (∀ P ∈ Lab 𝓀[k] n, (X P).1 = n ∧ (X P).IsCusp ∧ fixed (X P).rep (KOne k (Fin (X P).1)) ≠ ⊥ ∧
         ∃ ω : kˣ →* ℂˣ, HasCentralChar (X P).rep ω ∧ ω ϖ = c) ∧ Set.InjOn X (Lab 𝓀[k] n)
 

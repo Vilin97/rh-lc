@@ -32,9 +32,9 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.LocGL ValuativeRel
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
-abbrev uc (a : ℂˣ) : IrrGL k := IrrGL.ofChar (unrChar k a) (isSmoothChar_of_isUnram (isUnram_unrChar k a))
+abbrev uc (a : ℂˣ) : IrrGL (k := k) := IrrGL.ofChar (unrChar k a) (isSmoothChar_of_isUnram (isUnram_unrChar k a))
 
-theorem eq_first_of_isLSeg {Δ : Segment k} {y : IrrGL k} (h : IsLSeg Δ y.rep) (h1 : Δ.len = 1) : y = Δ.first := by
+theorem eq_first_of_isLSeg {Δ : Segment k} {y : IrrGL (k := k)} (h : IsLSeg Δ y.rep) (h1 : Δ.len = 1) : y = Δ.first := by
   have h2 := h.hasSupport
   obtain ⟨z, hz⟩ := Multiset.card_eq_one.1 ((Segment.card_ms Δ).trans h1)
   have h3 : z = Δ.first := by

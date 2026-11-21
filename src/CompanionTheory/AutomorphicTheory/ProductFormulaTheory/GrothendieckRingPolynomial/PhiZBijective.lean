@@ -19,7 +19,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 variable [Fact (Assoc k)] [Fact (Comm k)] [Fact (One k)]
 
 theorem ell_phiOf (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hj : LSegJacquet k) (hJ : JCls k) (hAlt : AltSum k)
-    (Lseg : Segment k → IrrGL k) (hL : ∀ Δ, IsLSeg Δ (Lseg Δ).rep)
+    (Lseg : Segment k → IrrGL (k := k)) (hL : ∀ Δ, IsLSeg Δ (Lseg Δ).rep)
     (hprod : ∀ (h N : ℕ) (Γ : Fin h → Segment k) (hd : ∑ a, (Lseg (Γ a)).1 = N),
       phiOf Lseg (∏ a, MvPolynomial.X (Γ a)) = toR (cl0 (prodIrr (fun a => Lseg (Γ a)) hd)))
     (Δ : Segment k) (p : MvPolynomial (Segment k) ℤ) :
@@ -62,7 +62,7 @@ theorem phiZ_bijective (hk : Steps k) (h1 : TriAut) (h2 : UniTri)
   obtain ⟨Lseg, hL, hbij, hpre, hprod⟩ := phiL_main hk h2
   obtain ⟨hcls, -, -, -, -, -, -, -, hJ, hS, hAlt⟩ := hk
   have key : ∀ Δ : Segment k, ∃ p : MvPolynomial (Segment k) ℤ,
-      phiOf Lseg p = toR (sg (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k)) ∧
+      phiOf Lseg p = toR (sg (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL (k := k))) ∧
       ∃ (ε : ℤˣ) (q : MvPolynomial (Segment k) ℤ), (∀ t ∈ q.vars, t.len < Δ.len) ∧
         p = (ε : ℤ) • MvPolynomial.X Δ + q := by
     intro Δ

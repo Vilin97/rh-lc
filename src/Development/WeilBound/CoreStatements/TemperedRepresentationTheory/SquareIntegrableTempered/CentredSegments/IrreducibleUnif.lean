@@ -52,7 +52,7 @@ def UnitaryCentral {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Re
   ∀ (t : kˣ) (c : ℂ), (∀ v, π (Matrix.GeneralLinearGroup.scalar (Fin N) t) v = c • v) → ‖c‖ = 1
 
 def MaxExpStrict {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V) : Prop :=
-  ∀ (x : Fin 2 → IrrGL k) (hd : ∑ a, (x a).1 = N), (∀ a, 0 < (x a).1) → Zc.jm x hd π ≠ 0 → Zl.ExpStrict x
+  ∀ (x : Fin 2 → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), (∀ a, 0 < (x a).1) → Zc.jm x hd π ≠ 0 → Zl.ExpStrict x
 
 
 def CasselmanSuffSq : Prop :=

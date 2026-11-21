@@ -21,7 +21,7 @@ def FineUniqP : Prop :=
     ∀ f : τ.IntertwiningMap (prodIrr (Zc.Seg.dec Δ) hd), Function.Injective f → IsLSeg Δ τ
 
 theorem exists_emb_of_cast {h h' N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
-    (τ : Representation ℂ (GL (Fin N) k) V) (e : h = h') (x : Fin h → IrrGL k) (y : Fin h' → IrrGL k)
+    (τ : Representation ℂ (GL (Fin N) k) V) (e : h = h') (x : Fin h → IrrGL (k := k)) (y : Fin h' → IrrGL (k := k))
     (hxy : ∀ i, x i = y (Fin.cast e i)) (hd : ∑ a, (x a).1 = N) (f : τ.IntertwiningMap (prodIrr x hd))
     (hf : Function.Injective f) :
     ∃ hd' : ∑ a, (y a).1 = N, ∃ g : τ.IntertwiningMap (prodIrr y hd'), Function.Injective g := by

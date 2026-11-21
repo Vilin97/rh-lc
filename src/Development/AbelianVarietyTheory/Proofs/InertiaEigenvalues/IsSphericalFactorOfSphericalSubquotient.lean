@@ -373,7 +373,7 @@ theorem fixed_KO_of_isSubquotient (e : (Σ a, m a) ≃ n) {X : α → Type} [∀
   obtain ⟨w, hw0, hw⟩ := exists_fixed_of_parInd_KO e (piTensor σ) hf hf0
   exact exists_fixed_ne_zero_of_piTensor_fixed σ (fun a => KO k (m a)) hw0 hw a
 
-theorem isSpherical_factor : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (h N : ℕ) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N) (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V), GlobalTheory.SmGL.IsSubquotient π (prodIrr x hd) → IsSpherical π → ∀ a, IsSpherical (x a).rep := by
+theorem isSpherical_factor : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (h N : ℕ) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N) (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V), GlobalTheory.SmGL.IsSubquotient π (prodIrr x hd) → IsSpherical π → ∀ a, IsSpherical (x a).rep := by
   intro k _ _ _ _ _ h N x hd V _ _ π hsub hsph a
   obtain ⟨v, hv, hv0⟩ := (Submodule.ne_bot_iff _).1 hsph
   obtain ⟨w, hw, hw0⟩ := fixed_KO_of_isSubquotient (stdBlocks (fun a => (x a).1) hd) (fun a => (x a).rep) hsub

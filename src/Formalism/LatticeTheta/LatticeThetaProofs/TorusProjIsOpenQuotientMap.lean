@@ -106,7 +106,7 @@ theorem boxIoc_ae_eq :
     ext x
     simp [Set.mem_univ_pi]
   rw [h1]
-  show _ =ᵐ[Measure.pi fun _ => volume] _
+  rw [volume_pi]
   exact Measure.univ_pi_Ioc_ae_eq_Icc.trans Measure.univ_pi_Ico_ae_eq_Icc.symm
 
 theorem mFourierCoeff_torusFunC (e : Module.Basis ι ℝ V) (G : V → ℂ) (hG : Continuous G)

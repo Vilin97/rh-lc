@@ -79,7 +79,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 def HasLbl (θ : AlgebraicClosure 𝓀[k] →* ℂ) (π : Representation ℂ (GL (Fin n) k) V) (a : Lbl) : Prop :=
   a.Ok ∧ a.q = Nat.card 𝓀[k] ∧ n = a.rk ∧ Meets (levelZero π) (JD θ a.D a.L n)
 
-def Mixed (x : IrrGL k) : Prop :=
+def Mixed (x : IrrGL (k := k)) : Prop :=
   UpperTheory.Zero.LLC.DZ x ∧ ∃ s, HasSupport x.rep s ∧ GlobalTheory.RoadU.Unlinked s ∧
     (s.filter fun y => 2 ≤ y.1).Pairwise fun y z => ¬ y.Inert z
 
@@ -159,7 +159,7 @@ def LblBC : Prop :=
 def ToralOver {E M Ω : Type} [Field E] [NumberField E] [Field M] [NumberField M] [Field Ω] [Algebra E M] [Algebra E Ω] [Algebra M Ω]
     [IsScalarTower E M Ω] [IsAlgClosure E Ω] [IsAlgClosure M Ω] {A : ValuationSubring Ω} {v : HeightOneSpectrum (𝓞 E)}
     {w : HeightOneSpectrum (𝓞 M)} (h : IsPlaceOver A v) (h' : IsPlaceOver A w) {n : ℕ}
-    (x : IrrGL (v.adicCompletion E)) (τ' : SmIrr (GL (Fin n) (w.adicCompletion M)))
+    (x : IrrGL (k := v.adicCompletion E)) (τ' : SmIrr (GL (Fin n) (w.adicCompletion M)))
     (ξ : Fin n → ((w.adicCompletion M)ˣ →* ℂˣ)) (hξ : ∀ j, IsSmoothChar (ξ j)) : Prop :=
   (∀ j, UpperTheory.Zero.LLC.TameChar (ξ j)) ∧ HasSupport τ'.ρ (GlobalTheory.RoadU.chars ξ hξ) ∧
     ∀ rc, UpperTheory.Zero.LLC.IsRecT h rc → ∀ a', IsLocalArtin h' a' → ∀ t : Ine (F := M) A,

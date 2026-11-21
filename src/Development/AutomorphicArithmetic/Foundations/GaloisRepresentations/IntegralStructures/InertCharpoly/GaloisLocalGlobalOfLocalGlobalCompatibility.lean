@@ -31,7 +31,7 @@ def LocalGlobalCompatibilityAtPlaceClass (Q : PlaceClass) : Prop :=
     InScope .all l π χ → ∀ r : G E Ω →* GL (Fin n) (Qbar l), Weak π ι r →
     ∀ (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin n) (w.adicCompletion E))), π.IsLocComp w σ →
       fixed σ.ρ (KOne (w.adicCompletion E) (Fin n)) ≠ ⊥ → Q E w n → IsQg w → Apart (algNorm σ) →
-    ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), IsRecT h rc →
+    ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRecT h rc →
       (rc (algNorm σ)).mono0 →
       (∀ hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal, (wdOf h hl ι r).mono0 ∧
         ∀ t : Ine (F := E) A, (wdOf h hl ι r).charPol (ineIncl h t) = (rc (algNorm σ)).charPol (ineIncl h t)) ∧
@@ -62,7 +62,7 @@ theorem dim_of_ine {x y : WD h} (k : ∀ t : Ine (F := E) A, x.charPol (ineIncl 
   rw [← WD.charPol_natDegree x (ineIncl h 1), k, WD.charPol_natDegree]
 
 variable [IsCMField E] {a : ℕ} {π : CuspSub E a} {σ : SmIrr (GL (Fin a) (w.adicCompletion E))}
-  {rc : IrrGL (w.adicCompletion E) → WD h}
+  {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
 theorem generic_algNorm (hσ : π.IsLocComp w σ) : IsGeneric (algNorm σ).rep :=
   (isGeneric_congr (IrrGL.twEquiv _ _ (isSmoothChar_absPow _))).1 ((isGeneric_twist_iff _).2
@@ -92,7 +92,7 @@ section Global
 variable {Q : PlaceClass} {E Ω : Type} [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ} {a : ℕ} {π : CuspSub E a} {χ : HChar (maximalRealSubfield E)}
   {r : G E Ω →* GL (Fin a) (Qbar l)} {w : HeightOneSpectrum (𝓞 E)} {A : ValuationSubring Ω} {h : IsPlaceOver A w}
-  {σ : SmIrr (GL (Fin a) (w.adicCompletion E))} {rc : IrrGL (w.adicCompletion E) → WD h}
+  {σ : SmIrr (GL (Fin a) (w.adicCompletion E))} {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
 theorem away (H1 : R1) (H2 : LocalGlobalCompatibilityAtPlaceClass Q) (ha : 1 ≤ a) (hI : InScope .all l π χ) (hW : Weak π ι r)
     (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (hrc : IsRecT h rc) (hσ : π.IsLocComp w σ) :

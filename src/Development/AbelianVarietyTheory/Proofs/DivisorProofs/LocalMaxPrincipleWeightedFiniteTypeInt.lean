@@ -10,7 +10,7 @@ open scoped TensorProduct
 namespace GlobalTheory
 
 theorem isLocalization_rat_tensor (B : Type) [CommRing B] :
-    letI := Algebra.TensorProduct.rightAlgebra (R := ℤ) (A := ℚ) (B := B)
+    letI := Algebra.TensorProduct.rightAlgebra (R := ℤ) (A := ℚ) (B := B);
     IsLocalization (Algebra.algebraMapSubmonoid B (nonZeroDivisors ℤ)) (ℚ ⊗[ℤ] B) :=
   IsLocalization.tensorRight ℚ (nonZeroDivisors ℤ)
 

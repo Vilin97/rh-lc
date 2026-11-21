@@ -48,7 +48,7 @@ theorem isLocallyConstant_orbit [IsTopologicalRing k] (hs : IsSmooth π) (v : V)
   show π x v = π g v
   conv_rhs => rw [← hx', ← Module.End.mul_apply, ← map_mul, mul_inv_cancel_left]
 
-theorem isSqIntCoeff_of_isSquareIntegrable {δ : IrrGL k} (h : UnitaryDual.IsSquareIntegrable δ) :
+theorem isSqIntCoeff_of_isSquareIntegrable {δ : IrrGL (k := k)} (h : UnitaryDual.IsSquareIntegrable δ) :
     IsSqIntCoeff δ.rep := by
   obtain ⟨-, hu, ν, hν, H⟩ := h
   intro m hm μ hμ v l hl

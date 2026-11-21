@@ -18,7 +18,7 @@ namespace CompanionTheory.Groth.AltS
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-def tN (Δ : Segment k) (n : ℕ) : IrrGL k := Δ.first.nu (n : ℂ)
+def tN (Δ : Segment k) (n : ℕ) : IrrGL (k := k) := Δ.first.nu (n : ℂ)
 
 theorem tN_injective (Δ : Segment k) : Function.Injective (tN Δ) := fun a b h =>
   GlobalTheory.T.cuspidal_twist_injective CompanionTheory.Tls2.BZGL.irreducibleAdmissibleGL_top Δ.first Δ.isCusp_first a b h

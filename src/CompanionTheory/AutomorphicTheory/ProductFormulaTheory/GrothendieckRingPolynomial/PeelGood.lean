@@ -41,7 +41,7 @@ theorem comm_of (hI : Zc.Cos.LUnlinkedIrr k) : Zc.Cos.LUnlinkedComm k :=
   GlobalTheory.T.unlinked_commute_of_irreducible k CompanionTheory.Tls2.BZGL.irreducibleAdmissibleGL_top hI
 
 theorem stdCos (hZ : GlobalTheory.Published.SegmentRepresentation) (hI : Zc.Cos.LUnlinkedIrr k) :
-    ∀ (𝔪 : Multiset (Segment k)) (h N : ℕ) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N), LFactors 𝔪 x →
+    ∀ (𝔪 : Multiset (Segment k)) (h N : ℕ) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), LFactors 𝔪 x →
       ∃ π : IrrRep (GL (Fin N) k), IsCosocle π.ρ (prodIrr x hd) := by
   have hA := CompanionTheory.Tls2.BZGL.irreducibleAdmissibleGL_top
   intro 𝔪 h N x hd hx
@@ -51,37 +51,37 @@ theorem stdCos (hZ : GlobalTheory.Published.SegmentRepresentation) (hI : Zc.Cos.
   exact GlobalTheory.T.cosocle_of_contragredient_socle hA (prodIrr x hd) (isSmooth_prodIrr x hd) (GlobalTheory.T.product_irreducible_finite_length hA x hd) τ
     (hτ.of_equiv (Representation.Equiv.refl _) e.symm)
 
-theorem segCl (Δ : Segment k) : ∃ x : IrrGL k, IsLSeg Δ x.rep := by
+theorem segCl (Δ : Segment k) : ∃ x : IrrGL (k := k), IsLSeg Δ x.rep := by
   obtain ⟨π, hπ⟩ := GlobalTheory.T.exists_segment_representation CompanionTheory.Tls2.BZGL.irreducibleAdmissibleGL_top Δ
   exact ⟨IrrGL.of π.ρ π.smooth π.irr, hπ.of_equiv (IrrGL.equivOf π.ρ π.smooth π.irr)⟩
 
-theorem ex_of (HS : ∀ (𝔪 : Multiset (Segment k)) (h N : ℕ) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N), LFactors 𝔪 x →
+theorem ex_of (HS : ∀ (𝔪 : Multiset (Segment k)) (h N : ℕ) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), LFactors 𝔪 x →
       ∃ π : IrrRep (GL (Fin N) k), IsCosocle π.ρ (prodIrr x hd)) (𝔪 : Multiset (Segment k)) :
-    ∃ x : IrrGL k, IsL 𝔪 x.rep := by
+    ∃ x : IrrGL (k := k), IsL 𝔪 x.rep := by
   obtain ⟨Δ, hΔ⟩ := GlobalTheory.LocGL.exists_isOrderedForm 𝔪
   choose y hy using (segCl (k := k))
-  let x : Fin 𝔪.card → IrrGL k := fun i => y (Δ i)
+  let x : Fin 𝔪.card → IrrGL (k := k) := fun i => y (Δ i)
   have hx : LFactors 𝔪 x := ⟨Δ, hΔ, fun i => hy (Δ i)⟩
   obtain ⟨π, hπ⟩ := HS 𝔪 𝔪.card _ x rfl hx
   refine ⟨IrrGL.of π.ρ π.smooth π.irr, 𝔪.card, x, rfl, hx, ?_⟩
   exact hπ.of_equiv (IrrGL.equivOf π.ρ π.smooth π.irr) (.refl _)
 
-theorem peelGood (HS : ∀ (𝔪 : Multiset (Segment k)) (h N : ℕ) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N), LFactors 𝔪 x →
+theorem peelGood (HS : ∀ (𝔪 : Multiset (Segment k)) (h N : ℕ) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), LFactors 𝔪 x →
       ∃ π : IrrRep (GL (Fin N) k), IsCosocle π.ρ (prodIrr x hd)) (HL : LSocleGL k) : Zc.PeelGoodP k := by
   intro x y hd s 𝔫 hs hn hf hp
   obtain ⟨f, hf⟩ := hf
   have hn' := hn
   obtain ⟨h, z, hz, ⟨Δ, hΔ, hzL⟩, -⟩ := hn'
-  let w : Fin (h + 1) → IrrGL k := Fin.snoc (α := fun _ => IrrGL k) z (y 0)
+  let w : Fin (h + 1) → IrrGL (k := k) := Fin.snoc (α := fun _ => IrrGL (k := k)) z (y 0)
   have hwL : LFactors (𝔫 + {s}) w := by
     refine ⟨_, isOrderedForm_snoc hΔ s hp, fun i => ?_⟩
     induction i using Fin.lastCases with
     | last =>
-      have e : w (Fin.last h) = y 0 := Fin.snoc_last (α := fun _ => IrrGL k) _ _
+      have e : w (Fin.last h) = y 0 := Fin.snoc_last (α := fun _ => IrrGL (k := k)) _ _
       rw [e, Fin.snoc_last]
       exact hs
     | cast i =>
-      have e : w i.castSucc = z i := Fin.snoc_castSucc (α := fun _ => IrrGL k) _ _ _
+      have e : w i.castSucc = z i := Fin.snoc_castSucc (α := fun _ => IrrGL (k := k)) _ _ _
       rw [e, Fin.snoc_castSucc]
       exact hzL i
   have hwd : ∑ a, (w a).1 = x.1 := by
@@ -100,8 +100,8 @@ theorem peelGood (HS : ∀ (𝔪 : Multiset (Segment k)) (h N : ℕ) (x : Fin h 
   exact hπL.of_equiv e.symm
 
 theorem exh_at (hM : MidP k) (hR : RefineP k) (hS : SwapP k) (hC : CuspEmbP k) (hP : SuppP k) (hJ : JuxtP k)
-    (hL : LinkP k) (hm : MinP k) (hG : Zc.PeelGoodP k) (x : IrrGL k) : ∃ 𝔪 : Multiset (Segment k), IsL 𝔪 x.rep := by
-  suffices H : ∀ n : ℕ, ∀ x : IrrGL k, x.1 = n → ∃ 𝔪 : Multiset (Segment k), IsL 𝔪 x.rep from H _ x rfl
+    (hL : LinkP k) (hm : MinP k) (hG : Zc.PeelGoodP k) (x : IrrGL (k := k)) : ∃ 𝔪 : Multiset (Segment k), IsL 𝔪 x.rep := by
+  suffices H : ∀ n : ℕ, ∀ x : IrrGL (k := k), x.1 = n → ∃ 𝔪 : Multiset (Segment k), IsL 𝔪 x.rep from H _ x rfl
   intro n
   induction n using Nat.strong_induction_on with
   | _ n ih =>

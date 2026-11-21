@@ -28,7 +28,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 section Par
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A A' : ValuationSubring Ω} {w w' : HeightOneSpectrum (𝓞 E)} {a : ℕ}
-variable {h : IsPlaceOver A w} {rc : IrrGL (w.adicCompletion E) → WD h}
+variable {h : IsPlaceOver A w} {rc : IrrGL (k := w.adicCompletion E) → WD h}
 theorem reciprocity_unramified_iff_spherical (H : _root_.UpperTheory.Zero.LLC.IsRecT h rc) (σ : IrrRep (GL (Fin a) (w.adicCompletion E))) :
     (rc (cls σ)).unr ↔ IsSpherical σ.ρ := by
   first | (have hOpn := UpperTheory.One.M.opn _ (H); obtain ⟨_, _, _, H⟩ := hOpn) | obtain ⟨_, _, _, -, H⟩ := H

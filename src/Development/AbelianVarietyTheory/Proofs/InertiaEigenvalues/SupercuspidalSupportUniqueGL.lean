@@ -184,7 +184,7 @@ theorem isSubquotient_jac_single {r : ℕ} {b : Fin r → ℕ} (a : Fin r) (ha :
   show Submodule.Quotient.mk (σ g v) = jac f' σ (Pi.mulSingle a g) (Submodule.Quotient.mk v)
   rw [jac_mk, h1, h3, inv_one, Units.val_one, one_smul]
 
-theorem exists_block_of_isCusp {x : IrrGL k} (hx : x.IsCusp) {r : ℕ} {b : Fin r → ℕ}
+theorem exists_block_of_isCusp {x : IrrGL (k := k)} (hx : x.IsCusp) {r : ℕ} {b : Fin r → ℕ}
     (f : (Σ j, Fin (b j)) ≃ Fin x.1) (c : ∀ j, IrrRep (GL (Fin (b j)) k))
     (h : IsSubquotient (piTensor fun j => (c j).ρ) (jac f x.rep)) :
     ∃ a, (∀ j, j ≠ a → b j = 0) ∧ IrrGL.of (c a).ρ (c a).smooth (c a).irr = x := by
@@ -215,7 +215,7 @@ theorem exists_block_of_isCusp {x : IrrGL k} (hx : x.IsCusp) {r : ℕ} {b : Fin 
   exact (IrrGL.of_eq_of.2 ⟨φ.trans ψ.symm⟩).trans (IrrGL.of_rep ⟨_, y⟩)
 
 theorem eq_zero_of_hasSupport {N : ℕ} (hN : N = 0) {π : Representation ℂ (GL (Fin N) k) V}
-    {s : Multiset (IrrGL k)} (h : HasSupport π s) : s = 0 := by
+    {s : Multiset (IrrGL (k := k))} (h : HasSupport π s) : s = 0 := by
   have h2 := h.sum_fst
   rw [Fintype.card_fin] at h2
   by_contra hne
@@ -225,12 +225,12 @@ theorem eq_zero_of_hasSupport {N : ℕ} (hN : N = 0) {π : Representation ℂ (G
   omega
 
 theorem exists_sum_of_jac (hG : GeometricLemma) (hZ : ZelevinskyPolynomialRing) {N : ℕ}
-    {π : Representation ℂ (GL (Fin N) k) V} {s : Multiset (IrrGL k)} (hs : HasSupport π s) {r : ℕ} {d : Fin r → ℕ}
+    {π : Representation ℂ (GL (Fin N) k) V} {s : Multiset (IrrGL (k := k))} (hs : HasSupport π s) {r : ℕ} {d : Fin r → ℕ}
     (e' : (Σ j, Fin (d j)) ≃ Fin N) {τ : Representation ℂ (Levi k fun j => Fin (d j)) W} (hτ : τ.IsIrreducible)
     (hτs : IsSubquotient τ (jac e' π)) (y : ∀ j, IrrRep (GL (Fin (d j)) k))
     (hy : ∀ j, IsSubquotient (y j).ρ (τ.comp (MonoidHom.mulSingle (fun j => GL (Fin (d j)) k) j) :
       Representation ℂ (GL (Fin (d j)) k) W)) :
-    ∃ t : Fin r → Multiset (IrrGL k), (∀ j, HasSupport (y j).ρ (t j)) ∧ s = ∑ j, t j := by
+    ∃ t : Fin r → Multiset (IrrGL (k := k)), (∀ j, HasSupport (y j).ρ (t j)) ∧ s = ∑ j, t j := by
   obtain ⟨Z, Ψ, -, hΨ, -⟩ := hZ k
   obtain ⟨h, x, rfl, hi, hc, e, hsub⟩ := hs
   have hx : ∀ i, (x i).IsCusp := fun i => ⟨(hc i).1, (hc i).2.2⟩
@@ -238,7 +238,7 @@ theorem exists_sum_of_jac (hG : GeometricLemma) (hZ : ZelevinskyPolynomialRing) 
     (fun i => (x i).2.rep.smooth) (fun i => (x i).2.rep.hasFiniteLength) hτ
     (hτs.trans (GlobalTheory.JacquetExact.isSubquotient_jac e' (isSmooth_parInd _ _) hsub))
   choose J hJ0 hJ using fun i => exists_block_of_isCusp (hx i) (f i) (c i) (hrow i)
-  let u : Fin h → Fin r → Multiset (IrrGL k) := fun i j => if j = J i then {x i} else 0
+  let u : Fin h → Fin r → Multiset (IrrGL (k := k)) := fun i j => if j = J i then {x i} else 0
   have hu : ∀ i j, HasSupport (IrrGL.of (c i j).ρ (c i j).smooth (c i j).irr).rep (u i j) := by
     intro i j
     by_cases hj : j = J i
@@ -362,7 +362,7 @@ theorem exists_scalar_multiProd {h N : ℕ} {d : Fin h → ℕ} (e : (Σ a, Fin 
   rw [hc, ← h1]
   exact h4
 
-theorem eq_singleton_of_isCusp {x : IrrGL k} (hx : x.IsCusp) {s : Multiset (IrrGL k)} (hs : HasSupport x.rep s) :
+theorem eq_singleton_of_isCusp {x : IrrGL (k := k)} (hx : x.IsCusp) {s : Multiset (IrrGL (k := k))} (hs : HasSupport x.rep s) :
     s = {x} := by
   obtain ⟨h, y, rfl, hi, hc, e, hsub⟩ := hs
   obtain ⟨ι, hι⟩ := exists_map_of_isCuspidal hx.1 hi hx.2 (isSmooth_parInd _ _)
@@ -394,10 +394,10 @@ theorem eq_singleton_of_isCusp {x : IrrGL k} (hx : x.IsCusp) {s : Multiset (IrrG
   obtain ⟨θ⟩ := nonempty_equiv_of_isSubquotient hi y₀.2.rep.irr
     (hsub.trans (.of_injective χ.toIntertwiningMap χ.toLinearEquiv.injective))
   have : y₀ = ⟨_, x⟩ := (IrrGL.of_rep y₀).symm.trans ((IrrGL.of_eq_of.2 ⟨θ⟩).trans (IrrGL.of_rep ⟨_, x⟩))
-  exact congrArg (fun z => ({z} : Multiset (IrrGL k))) this
+  exact congrArg (fun z => ({z} : Multiset (IrrGL (k := k)))) this
 
 theorem eq_of_hasSupport (hG : GeometricLemma) (hZ : ZelevinskyPolynomialRing) (N : ℕ) :
-    ∀ (x : IrrGL k), x.1 = N → ∀ s t : Multiset (IrrGL k), HasSupport x.rep s → HasSupport x.rep t → s = t := by
+    ∀ (x : IrrGL (k := k)), x.1 = N → ∀ s t : Multiset (IrrGL (k := k)), HasSupport x.rep s → HasSupport x.rep t → s = t := by
   induction N using Nat.strong_induction_on with
   | _ N ih =>
     rintro x rfl s t hs ht
@@ -440,7 +440,7 @@ theorem eq_of_hasSupport (hG : GeometricLemma) (hZ : ZelevinskyPolynomialRing) (
     exact ih (d j) hlt (IrrGL.of (y j).ρ (y j).smooth (y j).irr) rfl _ _
       ((hu j).of_equiv (IrrGL.equivOf _ _ _)) ((hu' j).of_equiv (IrrGL.equivOf _ _ _))
 
-theorem hasSupport_unique : GeometricLemma → BernsteinZelevinskyFiniteness → ZelevinskyPolynomialRing → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (x : IrrGL k) (s t : Multiset (IrrGL k)), HasSupport x.rep s → HasSupport x.rep t → s = t :=
+theorem hasSupport_unique : GeometricLemma → BernsteinZelevinskyFiniteness → ZelevinskyPolynomialRing → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (x : IrrGL (k := k)) (s t : Multiset (IrrGL (k := k))), HasSupport x.rep s → HasSupport x.rep t → s = t :=
   fun hG _ hZ _ _ _ _ _ _ x s t hs ht => eq_of_hasSupport hG hZ _ x rfl s t hs ht
 
 end GlobalTheory.LocGL.SupportUnique

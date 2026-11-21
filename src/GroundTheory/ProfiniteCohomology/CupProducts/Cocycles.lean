@@ -32,7 +32,8 @@ variable {A : Rep.{u} k G} [IsDiscreteRep A] {p : ℕ}
 
 
 theorem cocycles_ext {x y : cocycles A p}
-    (h : cochainOf A (cocycleι A p x) = cochainOf A (cocycleι A p y)) : x = y :=
+    (h : cochainOf (A := A) (cocycleι (A := A) (p := p) x) =
+      cochainOf (A := A) (cocycleι (A := A) (p := p) y)) : x = y :=
   cocycleι_injective (cochainOf_injective h)
 
 
@@ -48,9 +49,11 @@ variable {B : Rep.{u} k G} [IsDiscreteRep B]
 
 
 theorem cochainOf_cocycleι_cyclesMap (f : A ⟶ B) (x : cocycles A p) :
-    cochainOf B (cocycleι B p (HomologicalComplex.cyclesMap (cochainsMap f) p x)) =
-      fun g => f.hom (cochainOf A (cocycleι A p x) g) :=
-  congrArg (fun ψ => cochainOf B (ψ.hom x)) (HomologicalComplex.cyclesMap_i (cochainsMap f) p)
+    cochainOf (A := B)
+      (cocycleι (A := B) (p := p) (HomologicalComplex.cyclesMap (cochainsMap f) p x)) =
+      fun g => f.hom (cochainOf (A := A) (cocycleι (A := A) (p := p) x) g) :=
+  congrArg (fun ψ => cochainOf (A := B) (ψ.hom x))
+    (HomologicalComplex.cyclesMap_i (cochainsMap f) p)
 
 
 theorem cohomologyMap_cohomologyπ (f : A ⟶ B) (x : cocycles A p) :
@@ -66,9 +69,9 @@ variable {B : Rep.{u} k H} [IsDiscreteRep B] (φ : H →* G) (hφ : Continuous �
   (f : Rep.res φ A ⟶ B)
 
 theorem cochainOf_cocycleι_cocyclesMapAlong (x : cocycles A p) :
-    cochainOf B (cocycleι B p (cocyclesMapAlong φ hφ f p x)) =
-      fun h => f.hom (cochainOf A (cocycleι A p x) (⇑φ ∘ h)) :=
-  congrArg (fun ψ => cochainOf B (ψ.hom x))
+    cochainOf (A := B) (cocycleι (A := B) (p := p) (cocyclesMapAlong φ hφ f p x)) =
+      fun h => f.hom (cochainOf (A := A) (cocycleι (A := A) (p := p) x) (⇑φ ∘ h)) :=
+  congrArg (fun ψ => cochainOf (A := B) (ψ.hom x))
     (HomologicalComplex.cyclesMap_i (cochainsMapAlong φ hφ f) p)
 
 theorem cohomologyMapAlong_cohomologyπ (x : cocycles A p) :

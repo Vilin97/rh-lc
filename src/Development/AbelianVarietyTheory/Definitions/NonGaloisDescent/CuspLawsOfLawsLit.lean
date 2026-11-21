@@ -35,7 +35,7 @@ end Dual
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
   {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
-  {e : AddChar (w.adicCompletion E) Circle → WD h → ℂˣ} {r rc : IrrGL (w.adicCompletion E) → WD h}
+  {e : AddChar (w.adicCompletion E) Circle → WD h → ℂˣ} {r rc : IrrGL (k := w.adicCompletion E) → WD h}
 
 end GlobalTheory.LocLanglands.CuspModel
 

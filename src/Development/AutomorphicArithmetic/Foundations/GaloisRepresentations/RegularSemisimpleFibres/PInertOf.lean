@@ -129,7 +129,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.inertOf :
   have hcl := UpperTheory.Zero.LLC.detByType E Ω A v hv g i hi m hm y.rep σ' τy τx ωy hτy hch hinfy hinfσ hωy hωσ
   unfold IrrGL.Inert
   refine ⟨μ, hμ, ?_⟩
-  have e3 : IrrGL.tw (⟨m, x⟩ : IrrGL _) μ hμs = GlobalTheory.LocLanglands.cls σ' := by
+  have e3 : IrrGL.tw (⟨m, x⟩ : IrrGL (k := _)) μ hμs = GlobalTheory.LocLanglands.cls σ' := by
     conv_lhs => rw [← IrrGL.of_rep ⟨m, x⟩]
     rw [IrrGL.tw_of]
     rfl

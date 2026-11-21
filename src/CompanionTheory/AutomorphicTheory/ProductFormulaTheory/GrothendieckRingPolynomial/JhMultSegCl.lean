@@ -28,7 +28,7 @@ theorem jhMult_seg_cl (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
     {Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)} (hZ : IsSegmentClass k Z) (Δ : Segment k)
     (y : Fin Δ.len → IrrCl (GL (Fin Δ.d) k)) (hd : ∑ _ : Fin Δ.len, Δ.d = Δ.len * Δ.d) :
     jhMult (piTensor fun a => (y a).rep.ρ) (jac (stdBlocks (fun _ : Fin Δ.len => Δ.d) hd) (Z Δ).rep.ρ) =
-      if (∀ a, (⟨Δ.d, y a⟩ : IrrGL k) = Δ.term a) then 1 else 0 := by
+      if (∀ a, (⟨Δ.d, y a⟩ : IrrGL (k := k)) = Δ.term a) then 1 else 0 := by
   obtain ⟨Φ⟩ := ((hZ Δ Δ.start.rep Δ.start.cl_rep (stdBlocks (fun _ : Fin Δ.len => Δ.d) hd) (Z Δ).rep).2).1
     (Z Δ).cl_rep
   let Ψ : (piTensor (segTerm Δ.start.rep.ρ Δ.len)).Equiv (piTensor fun a => (Δ.term a).rep) :=
@@ -42,7 +42,7 @@ theorem jhMult_seg_cl (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
     exact jhMult_self hT
   · by_contra hne
     have hy : (piTensor fun a => (y a).rep.ρ).IsIrreducible :=
-      GlobalTheory.CompanionTheory.FrobJm.piTensor_rep_isIrreducible hA (fun a => (⟨Δ.d, y a⟩ : IrrGL k))
+      GlobalTheory.CompanionTheory.FrobJm.piTensor_rep_isIrreducible hA (fun a => (⟨Δ.d, y a⟩ : IrrGL (k := k)))
     obtain ⟨φ⟩ := GlobalTheory.LocGL.SupportUnique.nonempty_equiv_of_isSubquotient hy hT (jhMult_ne_zero_iff.1 hne)
     have hcl := GlobalTheory.T.tensor_product_determines_factor_classes (Fin Δ.len) (fun _ => GL (Fin Δ.d) k) (fun a => (Δ.term a).2.rep)
       (fun a => (y a).rep) ⟨φ⟩
@@ -54,8 +54,8 @@ theorem jhMult_seg_cl (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
 
 theorem jm_seg (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
     {Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)} (hZ : IsSegmentClass k Z) (Δ : Segment k)
-    {m : ℕ} (y : Fin m → IrrGL k) (hy : ∀ a, (y a).1 = Δ.d) (hd : ∑ a, (y a).1 = Δ.len * Δ.d) :
-    jm y hd (IrrGL.rep (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k)) =
+    {m : ℕ} (y : Fin m → IrrGL (k := k)) (hy : ∀ a, (y a).1 = Δ.d) (hd : ∑ a, (y a).1 = Δ.len * Δ.d) :
+    jm y hd (IrrGL.rep (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL (k := k))) =
       if ∃ h : m = Δ.len, ∀ a, y a = Δ.term (Fin.cast h a) then 1 else 0 := by
   have hm : m = Δ.len := by
     have h1 : ∑ a, (y a).1 = m * Δ.d := by simp [hy]
@@ -72,8 +72,8 @@ theorem jm_seg (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
 
 theorem jmL_seg (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
     {Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)} (hZ : IsSegmentClass k Z) (Δ : Segment k)
-    (W : List (IrrGL k)) (hW : ∀ w ∈ W, w.1 = Δ.d) (hl : W.length = Δ.len) :
-    jmL W (IrrGL.rep (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL k)) = if W = List.ofFn Δ.term then 1 else 0 := by
+    (W : List (IrrGL (k := k))) (hW : ∀ w ∈ W, w.1 = Δ.d) (hl : W.length = Δ.len) :
+    jmL W (IrrGL.rep (⟨Δ.len * Δ.d, Z Δ⟩ : IrrGL (k := k))) = if W = List.ofFn Δ.term then 1 else 0 := by
   have hy : ∀ a, (W.get a).1 = Δ.d := fun a => hW _ (List.get_mem _ _)
   have hd : ∑ a, (W.get a).1 = Δ.len * Δ.d := by
     rw [Finset.sum_congr rfl fun a _ => hy a]

@@ -310,7 +310,7 @@ private theorem sumList_chars : ∀ (n : ℕ) (ξ : Fin n → Weil h →* ℂˣ)
     · refine Fin.cases ?_ (fun j => ?_) i <;> simp [SatakeLaw.consEquiv]
 
 private theorem rc_cosocle {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {ε : EpsFamily A}
-    {rc : IrrGL (w.adicCompletion E) → WD h} (hrc : IsRec h rc) (H : Laws a ha ε rc)
+    {rc : IrrGL (k := w.adicCompletion E) → WD h} (hrc : IsRec h rc) (H : Laws a ha ε rc)
     (ω : Fin n → (w.adicCompletion E)ˣ →* ℂˣ) (hω : ∀ i, IsSmoothChar (ω i))
     (ho : ∀ i j, i < j → ω j ≠ ω i * absPow _ 1) (π : IrrRep (GL (Fin n) (w.adicCompletion E)))
     (hπ : IsCosocle π.ρ (prodIrr _ (sum_deg ω hω))) :
@@ -365,7 +365,7 @@ end UpperTheory.V.Hi.TypeConj
 
 open UpperTheory.V.Hi.TypeConj in
 theorem UpperTheory.V.Hi.typeConj :
-    GlobalTheory.Mem.LiteralAutomorphy.LitN → ∀ (L Ω : Type) [Field L] [NumberField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (n : ℕ) (w : Plc L) (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion L) → WD h), IsRec h rc → ∀ (γ : ℂ ≃+* ℂ) (σ σ' : SmIrr (GLw n w)) (f : σ.V ≃+ σ'.V), (∀ (z : ℂ) v, f (z • v) = γ z • f v) → (∀ g v, f (σ.ρ g v) = σ'.ρ g (f v)) → ∀ χ : Fin n → Dec (F := L) A →* ℂˣ, (∀ i, IsOpen ((χ i).ker : Set (Dec (F := L) A))) → IsTypeWD h (fun i => (χ i).comp (Subgroup.inclusion (Ine_le_Dec A))) (rc (algNorm σ)) → IsTypeWD h (fun i => W.pushCh γ.toRingHom ((χ i).comp (Subgroup.inclusion (Ine_le_Dec A)))) (rc (algNorm σ')) := by
+    GlobalTheory.Mem.LiteralAutomorphy.LitN → ∀ (L Ω : Type) [Field L] [NumberField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (n : ℕ) (w : Plc L) (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion L) → WD h), IsRec h rc → ∀ (γ : ℂ ≃+* ℂ) (σ σ' : SmIrr (GLw n w)) (f : σ.V ≃+ σ'.V), (∀ (z : ℂ) v, f (z • v) = γ z • f v) → (∀ g v, f (σ.ρ g v) = σ'.ρ g (f v)) → ∀ χ : Fin n → Dec (F := L) A →* ℂˣ, (∀ i, IsOpen ((χ i).ker : Set (Dec (F := L) A))) → IsTypeWD h (fun i => (χ i).comp (Subgroup.inclusion (Ine_le_Dec A))) (rc (algNorm σ)) → IsTypeWD h (fun i => W.pushCh γ.toRingHom ((χ i).comp (Subgroup.inclusion (Ine_le_Dec A)))) (rc (algNorm σ')) := by
   intro P L Ω _ _ _ _ _ n w A h rc hrc γ σ σ' f hf1 hf2 χ _ ⟨b, hb, hN, hρ⟩
   obtain ⟨a, ha, ε, -, H⟩ := id hrc
   haveI : CharZero (w.adicCompletion L) := algebraRat.charZero _

@@ -72,7 +72,7 @@ end Abs
 
 theorem expo : Expo := by
   intro E Ω _ _ _ _ _ A w h a ha
-  let ω₀ : IrrGL (HeightOneSpectrum.adicCompletion E w) → ((HeightOneSpectrum.adicCompletion E w)ˣ →* ℂˣ) :=
+  let ω₀ : IrrGL (k := HeightOneSpectrum.adicCompletion E w) → ((HeightOneSpectrum.adicCompletion E w)ˣ →* ℂˣ) :=
     fun y => Classical.choose (clBasic (HeightOneSpectrum.adicCompletion E w) y).1
   have hω₀ : ∀ y, IsSmoothChar (ω₀ y) ∧ HasCentralChar y.rep (ω₀ y) ∧
       ∀ ω', HasCentralChar y.rep ω' → ω' = ω₀ y :=

@@ -15,15 +15,15 @@ namespace GlobalTheory.GenericUnitary
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W] {N : ℕ}
 
-def IsUnitaryLSeg (δ : IrrGL k) : Prop := (∃ Δ : Segment k, IsLSeg Δ δ.rep) ∧ IsUnitarisable δ.rep
+def IsUnitaryLSeg (δ : IrrGL (k := k)) : Prop := (∃ Δ : Segment k, IsLSeg Δ δ.rep) ∧ IsUnitarisable δ.rep
 
-def factors (δ : List (IrrGL k)) (τ : List (IrrGL k × ℝ)) : List (IrrGL k) :=
+def factors (δ : List (IrrGL (k := k))) (τ : List (IrrGL (k := k) × ℝ)) : List (IrrGL (k := k)) :=
   δ ++ τ.flatMap fun p => [p.1.nu (p.2 : ℝ), p.1.nu ((-p.2 : ℝ) : ℂ)]
 
 def IsComplementaryProduct (π : Representation ℂ (GL (Fin N) k) V) : Prop :=
-  ∃ (δ : List (IrrGL k)) (τ : List (IrrGL k × ℝ)), (∀ x ∈ δ, IsUnitaryLSeg x) ∧
+  ∃ (δ : List (IrrGL (k := k))) (τ : List (IrrGL (k := k) × ℝ)), (∀ x ∈ δ, IsUnitaryLSeg x) ∧
     (∀ p ∈ τ, IsUnitaryLSeg p.1 ∧ 0 < p.2 ∧ p.2 < 1 / 2) ∧
-    ∃ (h : ℕ) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N), List.ofFn x = factors δ τ ∧
+    ∃ (h : ℕ) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), List.ofFn x = factors δ τ ∧
       Nonempty (π.Equiv (prodIrr x hd))
 
 end GlobalTheory.GenericUnitary
@@ -42,9 +42,9 @@ namespace GlobalTheory.GenericUnitary
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W] {N : ℕ}
 
-theorem exists_of_mem_factors {δ : List (IrrGL k)} {τ : List (IrrGL k × ℝ)} (hδ : ∀ x ∈ δ, IsUnitaryLSeg x)
-    (hτ : ∀ p ∈ τ, IsUnitaryLSeg p.1 ∧ 0 < p.2 ∧ p.2 < 1 / 2) {y : IrrGL k} (hy : y ∈ factors δ τ) :
-    ∃ (x : IrrGL k) (s : ℝ), IsUnitaryLSeg x ∧ |s| < 1 / 2 ∧ y = x.nu s := by
+theorem exists_of_mem_factors {δ : List (IrrGL (k := k))} {τ : List (IrrGL (k := k) × ℝ)} (hδ : ∀ x ∈ δ, IsUnitaryLSeg x)
+    (hτ : ∀ p ∈ τ, IsUnitaryLSeg p.1 ∧ 0 < p.2 ∧ p.2 < 1 / 2) {y : IrrGL (k := k)} (hy : y ∈ factors δ τ) :
+    ∃ (x : IrrGL (k := k)) (s : ℝ), IsUnitaryLSeg x ∧ |s| < 1 / 2 ∧ y = x.nu s := by
   rcases List.mem_append.1 hy with hy | hy
   · exact ⟨y, 0, hδ y hy, by norm_num, by simp⟩
   · obtain ⟨p, hp, hy⟩ := List.mem_flatMap.1 hy
@@ -54,7 +54,7 @@ theorem exists_of_mem_factors {δ : List (IrrGL k)} {τ : List (IrrGL k × ℝ)}
     · exact ⟨p.1, -p.2, h1, by rwa [abs_neg, abs_of_pos h2], rfl⟩
 
 theorem IsComplementaryProduct.exists_prod {π : Representation ℂ (GL (Fin N) k) V} (H : IsComplementaryProduct π) :
-    ∃ (h : ℕ) (δ : Fin h → IrrGL k) (Δ : Fin h → Segment k) (s : Fin h → ℝ),
+    ∃ (h : ℕ) (δ : Fin h → IrrGL (k := k)) (Δ : Fin h → Segment k) (s : Fin h → ℝ),
       (∀ j, IsLSeg (Δ j) (δ j).rep) ∧ (∀ j, IsUnitarisable (δ j).rep) ∧ (∀ j, |s j| < 1 / 2) ∧
       ∃ hd : ∑ j, ((δ j).nu (s j)).1 = N, Nonempty (π.Equiv (prodIrr (fun j => (δ j).nu (s j)) hd)) := by
   obtain ⟨δ, τ, hδ, hτ, h, x, hd, hx, φ⟩ := H
@@ -74,7 +74,7 @@ theorem isUnitarisable_of_equiv {G : Type} [Group G] {π : Representation ℂ G 
   rw [e, e, h3]
   rfl
 
-theorem isUnitaryLSeg_of_isCusp {ρ : IrrGL k} (hρ : ρ.IsCusp) (hu : IsUnitarisable ρ.rep) : IsUnitaryLSeg ρ :=
+theorem isUnitaryLSeg_of_isCusp {ρ : IrrGL (k := k)} (hρ : ρ.IsCusp) (hu : IsUnitarisable ρ.rep) : IsUnitaryLSeg ρ :=
   ⟨⟨_, (single_spec hρ).2.1⟩, hu⟩
 
 end GlobalTheory.GenericUnitary
@@ -85,7 +85,7 @@ theorem GenericUnitaryDualGL.exists_prod (H : GenericUnitaryDualGL) {k : Type} [
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     {π : Representation ℂ (GL (Fin N) k) V} (hs : IsSmooth π) (hi : π.IsIrreducible) (hu : IsUnitarisable π)
     (hg : IsGeneric π) :
-    ∃ (h : ℕ) (δ : Fin h → IrrGL k) (Δ : Fin h → Segment k) (s : Fin h → ℝ),
+    ∃ (h : ℕ) (δ : Fin h → IrrGL (k := k)) (Δ : Fin h → Segment k) (s : Fin h → ℝ),
       (∀ j, IsLSeg (Δ j) (δ j).rep) ∧ (∀ j, IsUnitarisable (δ j).rep) ∧ (∀ j, |s j| < 1 / 2) ∧
       ∃ hd : ∑ j, ((δ j).nu (s j)).1 = N, Nonempty (π.Equiv (prodIrr (fun j => (δ j).nu (s j)) hd)) :=
   (H k N V π hs hi hu hg).exists_prod

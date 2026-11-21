@@ -33,13 +33,13 @@ theorem ind₂_map_injective_right {r t N : ℕ} (e : Fin r ⊕ Fin t ≃ Fin N)
       (compMap (GlobalTheory.ParIndExact.extTensorMapRight σ f) (leviTwo k (Fin r) (Fin t)).symm.toMonoidHom),
     GlobalTheory.ParIndExact.parIndMap_injective _ _ hι'⟩
 
-theorem pair_equiv {N : ℕ} (y : Fin 2 → IrrGL k) (hd : ∑ i, (y i).1 = N) {a : IrrGL k} (ha : y 0 = a)
+theorem pair_equiv {N : ℕ} (y : Fin 2 → IrrGL (k := k)) (hd : ∑ i, (y i).1 = N) {a : IrrGL (k := k)} (ha : y 0 = a)
     (h : a.1 + (y 1).1 = N) :
     Nonempty ((ind₂ (stdSum h) (extTensor a.rep (y 1).rep)).Equiv (prodIrr y hd)) := by
   subst ha h
   exact nonempty_prod₂_equiv_prodIrr_rep y hd
 
-theorem embed_family {N c : ℕ} (y : Fin 2 → IrrGL k) (v : Fin (c + 1) → IrrGL k) (t : Fin c → IrrGL k)
+theorem embed_family {N c : ℕ} (y : Fin 2 → IrrGL (k := k)) (v : Fin (c + 1) → IrrGL (k := k)) (t : Fin c → IrrGL (k := k))
     (h0 : y 0 = v 0) (hs : ∀ i, v i.succ = t i) (hd : ∑ i, (y i).1 = N) (hv : ∑ i, (v i).1 = N)
     (ht : ∑ i, (t i).1 = (y 1).1) (g : (y 1).rep.IntertwiningMap (prodIrr t ht)) (hg : Function.Injective g) :
     ∃ F : (prodIrr y hd).IntertwiningMap (prodIrr v hv), Function.Injective F := by

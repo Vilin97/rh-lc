@@ -34,15 +34,15 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-  {rc : IrrGL (w.adicCompletion E) → WD h}
+  {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
-theorem IsRec.segment (H : IsRec h rc) {Δ : Segment (w.adicCompletion E)} {x : IrrGL (w.adicCompletion E)}
+theorem IsRec.segment (H : IsRec h rc) {Δ : Segment (w.adicCompletion E)} {x : IrrGL (k := w.adicCompletion E)}
     (hx : IsLSeg Δ x.rep) : rc x = ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len) := by
   obtain ⟨a, ha, ε, -, H⟩ := H
   exact (H.langlands [Δ] x hx.isL).trans (WD.lpSum_zero _)
 
 theorem IsRec.langlandsQuotient (H : IsRec h rc) {𝔪 : Multiset (Segment (w.adicCompletion E))} {s N : ℕ}
-    {δ : Fin s → IrrGL (w.adicCompletion E)} (hδ : LFactors 𝔪 δ) (hd : ∑ i, (δ i).1 = N)
+    {δ : Fin s → IrrGL (k := w.adicCompletion E)} (hδ : LFactors 𝔪 δ) (hd : ∑ i, (δ i).1 = N)
     {π : IrrRep (GL (Fin N) (w.adicCompletion E))} (hπ : IsCosocle π.ρ (prodIrr δ hd)) :
     rc (cls π) = sumList (List.ofFn fun i => rc (δ i)) := by
   have h1 : IsL 𝔪 (cls π).rep := IsL.of_equiv ⟨s, δ, hd, hδ, hπ⟩ (equivRep π)

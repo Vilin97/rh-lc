@@ -24,9 +24,9 @@ section Core
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-  {rc : IrrGL (w.adicCompletion E) → WD h}
+  {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
-abbrev clsOf {n : ℕ} (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) : IrrGL (w.adicCompletion E) :=
+abbrev clsOf {n : ℕ} (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) : IrrGL (k := w.adicCompletion E) :=
   cls (ParLaws.toRep σ)
 
 end Core
@@ -39,7 +39,7 @@ section Core2
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-  {rc : IrrGL (w.adicCompletion E) → WD h}
+  {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
 theorem rec_hasSatGL (H : IsRec h rc) {n : ℕ} (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) (S : Multiset ℂˣ)
     (hS : GlobalTheory.LFun.HasSatGL w σ.ρ S) :
@@ -67,7 +67,7 @@ section Record
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} {N : NData R H what₂} {A : NAut N}
 
 variable (T : GlobalTheory.RowTie.WDTie N A)
-  {rec : ∀ w : PlE H, IrrGL (w.adicCompletion H.E) → WD (E := H.E) (A := N.plOm.1 w) (w := w) (N.plOm.2 w)}
+  {rec : ∀ w : PlE H, IrrGL (k := w.adicCompletion H.E) → WD (E := H.E) (A := N.plOm.1 w) (w := w) (N.plOm.2 w)}
 
 end Record
 

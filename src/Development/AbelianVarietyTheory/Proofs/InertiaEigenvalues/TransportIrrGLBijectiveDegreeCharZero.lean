@@ -75,10 +75,10 @@ section Fields
 variable {k k' : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNonarchimedeanLocalField k']
 
-def transportFun (i : k ≃+* k') (hi' : Continuous i.symm) (x : IrrGL k) : IrrGL k' :=
+def transportFun (i : k ≃+* k') (hi' : Continuous i.symm) (x : IrrGL (k := k)) : IrrGL (k := k') :=
   ⟨x.1, (pullRep (mapGL i.symm x.1) (continuous_mapGL i.symm hi' x.1) (mapGL_surjective i.symm x.1) x.2.rep).cl⟩
 
-theorem transportFun_left (i : k ≃+* k') (hi : Continuous i) (hi' : Continuous i.symm) (x : IrrGL k) :
+theorem transportFun_left (i : k ≃+* k') (hi : Continuous i) (hi' : Continuous i.symm) (x : IrrGL (k := k)) :
     transportFun i.symm (by simpa using hi) (transportFun i hi' x) = x := by
   refine congrArg (Sigma.mk x.1) ((IrrRep.cl_eq_iff.2 ?_).trans x.2.cl_rep)
   obtain ⟨ψ⟩ := IrrRep.nonempty_equiv_rep
@@ -86,7 +86,7 @@ theorem transportFun_left (i : k ≃+* k') (hi : Continuous i) (hi' : Continuous
   exact ⟨(compEquiv ψ (mapGL i.symm.symm x.1)).trans
     (compCompEquiv x.2.rep.ρ (mapGL i.symm x.1) (mapGL i.symm.symm x.1) fun g => mapGL_symm_mapGL i x.1 g)⟩
 
-theorem repRel_iff (i : k ≃+* k') (hi' : Continuous i.symm) (x : IrrGL k) (x' : IrrGL k') :
+theorem repRel_iff (i : k ≃+* k') (hi' : Continuous i.symm) (x : IrrGL (k := k)) (x' : IrrGL (k := k')) :
     RepRel i x x' ↔ transportFun i hi' x = x' := by
   constructor
   · rintro ⟨n, π, π', e, rfl, rfl, he⟩
@@ -104,7 +104,7 @@ theorem repRel_iff (i : k ≃+* k') (hi' : Continuous i.symm) (x : IrrGL k) (x' 
     rw [mapGL_symm_mapGL]
 
 theorem exists_transport (i : k ≃+* k') (hi : Continuous i) (hi' : Continuous i.symm) :
-    ∃ T : IrrGL k ≃ IrrGL k', (∀ x x', RepRel i x x' ↔ T x = x') ∧ ∀ x, (T x).1 = x.1 := by
+    ∃ T : IrrGL (k := k) ≃ IrrGL (k := k'), (∀ x x', RepRel i x x' ↔ T x = x') ∧ ∀ x, (T x).1 = x.1 := by
   have hi2 : Continuous i.symm.symm := by simpa using hi
   refine ⟨⟨transportFun i hi', transportFun i.symm hi2, fun x => transportFun_left i hi hi' x, fun y => ?_⟩,
     repRel_iff i hi', fun x => rfl⟩
@@ -115,6 +115,6 @@ end Fields
 end GlobalTheory.FieldTransport
 
 
-theorem GlobalTheory.transport_irrGL_bijective : ∀ (k k' : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNonarchimedeanLocalField k'] [CharZero k'] (i : k ≃+* k'), Continuous i → ∃ T : IrrGL k ≃ IrrGL k', (∀ x x', RepRel i x x' ↔ T x = x') ∧ ∀ x, (T x).1 = x.1 := by
+theorem GlobalTheory.transport_irrGL_bijective : ∀ (k k' : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNonarchimedeanLocalField k'] [CharZero k'] (i : k ≃+* k'), Continuous i → ∃ T : IrrGL (k := k) ≃ IrrGL (k := k'), (∀ x x', RepRel i x x' ↔ T x = x') ∧ ∀ x, (T x).1 = x.1 := by
   intro k k' _ _ _ _ _ _ _ _ _ _ i hi
   exact exists_transport i hi (GlobalTheory.T.continuous_ringEquiv_localField_preserves_valuation k k' i hi).1

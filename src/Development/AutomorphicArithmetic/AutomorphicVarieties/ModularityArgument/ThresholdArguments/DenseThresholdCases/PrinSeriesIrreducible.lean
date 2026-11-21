@@ -21,7 +21,7 @@ section Loc
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 private theorem prinSeries_irreducible {n : ℕ} (ω : Fin n → kˣ →* ℂˣ) (hω : ∀ i, IsSmoothChar (ω i))
     (h : ∀ i j, ω j ≠ ω i * absPow k 1) : (prinSeries ω).IsIrreducible := by
-  let x : Fin n → IrrGL k := fun i => IrrGL.ofChar (ω i) (hω i)
+  let x : Fin n → IrrGL (k := k) := fun i => IrrGL.ofChar (ω i) (hω i)
   have hx : ∀ i, (x i).IsCusp := fun i => IrrGL.isCusp_ofChar _ _
   have hd : ∑ i, (x i).1 = n := by
     show ∑ _i : Fin n, 1 = n

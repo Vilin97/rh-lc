@@ -25,6 +25,6 @@ theorem UpperTheory.V.Z.Ord.useAtL' {L Ω : Type} [Field L] [NumberField L] [Fie
     (H : UpperTheory.V.Z.Ord.AtLT ι h r lam σ)
     (ω : Fin n → (w.adicCompletion L)ˣ →* ℂˣ) (hs : ∀ i, IsSmoothChar (ω i))
     (hd : ∀ i j, i ≠ j → ∃ y : Uo (w.adicCompletion L), ω i y ≠ ω j y) (he : Nonempty (σ.ρ.Equiv (PS ω)))
-    (rc : IrrGL (w.adicCompletion L) → WD h) (hrc : UpperTheory.Zero.LLC.IsRecT h rc) (hab : Lev.AbW (rc (algNorm σ))) :
+    (rc : IrrGL (k := w.adicCompletion L) → WD h) (hrc : UpperTheory.Zero.LLC.IsRecT h rc) (hab : Lev.AbW (rc (algNorm σ))) :
     DRat ι h r (fun τ => Finset.univ.val.map fun j => htW lam j τ) fun s => (rc (algNorm σ)).charPol s :=
   H ω hs hd he rc hrc hab

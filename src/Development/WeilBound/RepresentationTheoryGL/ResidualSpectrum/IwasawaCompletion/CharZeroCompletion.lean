@@ -23,7 +23,7 @@ namespace PositivityTheory.Rg.Rs.C3
 
 theorem isSpeh_of_quot {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {N : ℕ}
     {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ (GL (Fin N) k) V}
-    (hi : ρ.IsIrreducible) (x : GlobalTheory.LocGL.IrrGL k) (d : ℕ)
+    (hi : ρ.IsIrreducible) (x : GlobalTheory.LocGL.IrrGL (k := k)) (d : ℕ)
     (hd : ∑ i, (GlobalTheory.LocGL.spehFactor x d i).1 = N)
     (hc : ∃ (W : Type) (_ : AddCommGroup W) (_ : Module ℂ W) (τ : Representation ℂ (GL (Fin N) k) W),
       GlobalTheory.LocGL.IsCosocle τ (GlobalTheory.LocGL.prodIrr (GlobalTheory.LocGL.spehFactor x d) hd))

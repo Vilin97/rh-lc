@@ -97,7 +97,7 @@ private theorem piPts_comm (hH : H.Ax) (A : Type) [CommRing A] [Algebra c.O A] (
 private theorem piPts_conj (hH : H.Ax) (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) {d : ℕ}
     (ξ : GV n H.Sl →* GL (Fin d) ℂ) (Y Y' : H.Part ι lam ξ)
     (h : W.GDet.ofRep (W.mat Y.r) = W.GDet.ofRep (W.mat Y'.r)) (q : H.Q) (B : ValuationSubring Ω) (hB : IsPlaceOver B (H.wq q))
-    (rc : IrrGL ((H.wq q).adicCompletion L) → WD hB) (hrc : IsRec hB rc) :
+    (rc : IrrGL (k := (H.wq q).adicCompletion L) → WD hB) (hrc : IsRec hB rc) :
     UpperTheory.V.Lev.WO ι (Y.r.comp H.prj) (rc (algNorm (Y'.σq q))) := by
   obtain ⟨P, hP⟩ := AlgebraTools.Det.bnRep (W.mat Y.r) (W.mat Y'.r) Y.ss Y'.ss fun g => by
     rw [← piPts_chi, ← piPts_chi, h]

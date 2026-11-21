@@ -37,7 +37,7 @@ theorem isSupercuspidal_contra
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem dualCl_isCusp (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (x : IrrGL k) (hx : x.IsCusp) :
+theorem dualCl_isCusp (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (x : IrrGL (k := k)) (hx : x.IsCusp) :
     (dualCl x).IsCusp ∧ (dualCl x).1 = x.1 := by
   have hadm : IsAdmissible x.rep := hA k x.1 _ x.rep x.2.rep.smooth x.2.rep.irr
   have hG := GlobalTheory.SqIntUnit.compactOpen_basis k x.1

@@ -213,7 +213,7 @@ theorem exists_injective_comp {G A B C : Type} [Group G] [AddCommMonoid A] [Modu
 theorem exists_embedding_of_prod₂ {a b : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin (a + b)) k) V) (s : IrrRep (GL (Fin a) k)) (t : IrrRep (GL (Fin b) k))
     (ha : 0 < a) (hc : IsCuspidal s.ρ) (ψ : π.IntertwiningMap (prod₂ s.ρ t.ρ)) (hψ : Function.Injective ψ) :
-    ∃ (y : Fin 2 → IrrGL k) (hd : ∑ a, (y a).1 = a + b), (y 0).IsCusp ∧
+    ∃ (y : Fin 2 → IrrGL (k := k)) (hd : ∑ a, (y a).1 = a + b), (y 0).IsCusp ∧
       ∃ f : π.IntertwiningMap (prodIrr y hd), Function.Injective f := by
   have hd : ∑ i, (![IrrGL.of s.ρ s.smooth s.irr, IrrGL.of t.ρ t.smooth t.irr] i).1 = a + b :=
     Fin.sum_univ_two _
@@ -224,7 +224,7 @@ theorem exists_embedding_of_prod₂ {a b : ℕ} {V : Type} [AddCommGroup V] [Mod
 theorem exists_embedding {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (π : Representation ℂ (GL (Fin n) k) V) (hs : IsSmooth π)
     (hi : π.IsIrreducible) (hn : 0 < n) :
-    ∃ (y : Fin 2 → IrrGL k) (hd : ∑ a, (y a).1 = n), (y 0).IsCusp ∧
+    ∃ (y : Fin 2 → IrrGL (k := k)) (hd : ∑ a, (y a).1 = n), (y 0).IsCusp ∧
       ∃ f : π.IntertwiningMap (prodIrr y hd), Function.Injective f := by
   obtain ⟨a, b, rfl, s, t, ha, hc, φ, hφ⟩ := exists_quotient_jac₂ hA π hs hi hn
   haveI : Nontrivial s.V := GlobalTheory.JacFactor.nontrivial_of_isIrreducible s.irr

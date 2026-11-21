@@ -19,7 +19,7 @@ namespace GlobalTheory.KeyOriginNoeth
 theorem isEtaleAt_closure_of_disjoint : ∀ (A R D : Type) [CommRing A] [IsDomain A] [CommRing R] [Algebra A R] [CommRing D]
     [Algebra (GlobalTheory.LocAcyc.GenFib A R) D]
     [Module.Finite (GlobalTheory.LocAcyc.GenFib A R) D] [Algebra.Etale (GlobalTheory.LocAcyc.GenFib A R) D],
-    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D
+    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D;
     ∀ (Q : Ideal (GlobalTheory.KeyOriginNoeth.closure A R D)) [Q.IsPrime],
       (∀ a : A, a ≠ 0 → algebraMap R (GlobalTheory.KeyOriginNoeth.closure A R D) (algebraMap A R a) ∉ Q) →
       Algebra.IsEtaleAt R Q := by

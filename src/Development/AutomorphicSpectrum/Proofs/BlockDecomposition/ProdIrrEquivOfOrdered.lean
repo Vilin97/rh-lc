@@ -17,7 +17,7 @@ namespace GlobalTheory.CompanionTheory.SegReorder
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem famCongr {u : ℕ} {f g : Fin u → IrrGL k} (hfg : ∀ i, f i = g i) {T : ℕ}
+theorem famCongr {u : ℕ} {f g : Fin u → IrrGL (k := k)} (hfg : ∀ i, f i = g i) {T : ℕ}
     (e : (Σ i, Fin (f i).1) ≃ Fin T) (e' : (Σ i, Fin (g i).1) ≃ Fin T) :
     Nonempty ((multiProd e fun i => (f i).rep).Equiv (multiProd e' fun i => (g i).rep)) := by
   obtain rfl : f = g := funext hfg

@@ -109,7 +109,7 @@ theorem UpperTheory.V.Hi.partU :
   · obtain ⟨P', hP'⟩ := hpair s.c s.hc
     exact ⟨P', hform P' hP'⟩
   · have hS : ∀ u : s.St, (u : Plc (Lp L)) ∈ s.S := fun u => Or.inr (Or.inl u.2)
-    obtain ⟨rc, hrc⟩ : ∃ rc : IrrGL ((s.w u).adicCompletion L) → WD (s.hw u), IsRec (s.hw u) rc := by
+    obtain ⟨rc, hrc⟩ : ∃ rc : IrrGL (k := (s.w u).adicCompletion L) → WD (s.hw u), IsRec (s.hw u) rc := by
       have Z := P.litN.loc
       obtain ⟨rc, hrc⟩ := Z.llc L Ω _ _ (s.hw u)
       exact ⟨rc, GlobalTheory.T.rec_of_rec_literal Z.dzc Z.dzi Z.exh Z.multi Z.cos Z.zel Z.geo Z.bz L Ω _ _ _ rc hrc⟩

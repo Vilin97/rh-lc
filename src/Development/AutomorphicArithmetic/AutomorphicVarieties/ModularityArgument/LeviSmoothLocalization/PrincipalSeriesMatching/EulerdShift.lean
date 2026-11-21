@@ -50,7 +50,7 @@ private theorem eulerd_shift (B : HeightOneSpectrum (𝓞 K) → Multiset ℂ) (
   ring
 
 private theorem cnt_unram {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-    (s : Multiset (IrrGL k)) {χ : kˣ →* ℂˣ} (h : IsUnram χ) : cnt s χ = cnt s 1 := by
+    (s : Multiset (IrrGL (k := k))) {χ : kˣ →* ℂˣ} (h : IsUnram χ) : cnt s χ = cnt s 1 := by
   unfold cnt
   congr 1
   refine Multiset.filter_congr fun y _ => ?_

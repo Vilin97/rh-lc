@@ -23,7 +23,7 @@ theorem rec_spehQuot_alt : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω
     (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)),
     letI := GlobalTheory.LocalData.complRel w
     haveI := GlobalTheory.LocalData.isLocalField w
-    ∀ (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h),
+    ∀ (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h),
     _root_.UpperTheory.Zero.LLC.IsRecT h rc → GlobalTheory.Published.GenericUnitaryDualGL → GlobalTheory.Published.StandardCosocleGL →
     ∀ (a d n : ℕ) (hd : ∑ _ : Fin d, a = n) (σ : LocIrr w a) (σ' : LocIrr w n),
       IsUnitarisable σ.ρ → IsGeneric σ.ρ → IsSpehQuot hd σ σ' →

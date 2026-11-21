@@ -41,9 +41,9 @@ structure IsGalRU (π : TR.CuspSub F a) (ι : Qbar l ≃+* ℂ) (r : G F Ω →*
   cont : Continuous r
   ss : IsSSRep r
   away : ∀ (w : HeightOneSpectrum (𝓞 F)) (hl : ((l : ℕ) : 𝓞 F) ∉ w.asIdeal) (A : ValuationSubring Ω) (h : IsPlaceOver A w)
-    (rc : IrrGL (w.adicCompletion F) → WD h), IsRec h rc → ∀ σ, π.IsLocComp w σ → AwR (wdOf h hl ι r) (rc (algNorm σ))
+    (rc : IrrGL (k := w.adicCompletion F) → WD h), IsRec h rc → ∀ σ, π.IsLocComp w σ → AwR (wdOf h hl ι r) (rc (algNorm σ))
   ratio : ∀ (w : HeightOneSpectrum (𝓞 F)) (hl : ((l : ℕ) : 𝓞 F) ∉ w.asIdeal) (A : ValuationSubring Ω) (h : IsPlaceOver A w)
-    (rc : IrrGL (w.adicCompletion F) → WD h), IsRec h rc → ∀ σ, π.IsLocComp w σ → (rc (algNorm σ)).mono0 →
+    (rc : IrrGL (k := w.adicCompletion F) → WD h), IsRec h rc → ∀ σ, π.IsLocComp w σ → (rc (algNorm σ)).mono0 →
       RatioW (wdOf h hl ι r)
   weights : ∀ (τ : F →+* Qbar l) (m : Multiset ℂ), π.HasInfChar (InfinitePlace.mk (ι.toRingHom.comp τ)) m →
     (HT τ).map (fun n : ℤ => (n : ℂ)) = m.map fun z => ((a : ℂ) - 1) / 2 - z

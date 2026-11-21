@@ -94,7 +94,15 @@ theorem resMMZL (LL : Letters (K + 1)) {q : ℕ} (J : Fin q → ℕ) (M : Fin q 
   obtain ⟨hxX, hxH⟩ := Submodule.mem_inf.mp hx1
   obtain ⟨h0, hh0, hh0I, hres⟩ := hSat x hxX hxI
   obtain ⟨PE, hPE, -, hInt⟩ := hypE_eproj LL ρ e1 hHE (K + 1) le_rfl w
-  have hY := wtComp_Y LL J M w h0 hh0
+  have hY : wtComp p LL (K + 1) w h0 ∈ Y p LL J M := by
+    obtain ⟨hhP, hhY⟩ := Submodule.mem_inf.mp hh0
+    rw [Submodule.mem_iInf] at hhY
+    refine Submodule.mem_inf.mpr ⟨wtComp_keep_supp LL (K + 1) w _ h0 hhP, ?_⟩
+    rw [Submodule.mem_iInf]
+    intro k
+    have hk := hhY k
+    rw [ycond_min] at hk ⊢
+    exact wcomp_mem LL (K + 1) _ (fun c x hx => cartan_ycond LL _ (K + 1) (min_le_right _ _) (M k) c x hx) w h0 hk
   have hW := wtComp_mem (p := p) LL (K + 1) w h0
   refine ⟨((p : ℚ_[p]) ^ e1) • PE (wtComp p LL (K + 1) w h0), Submodule.mem_inf.mpr
     ⟨Submodule.smul_mem (MMw p LL J M ρ w) _ (eproj_Y LL J M ρ w e1 hHP PE hPE _ hY hW),

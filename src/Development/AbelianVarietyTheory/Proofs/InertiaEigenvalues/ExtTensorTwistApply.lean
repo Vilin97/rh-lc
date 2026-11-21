@@ -105,7 +105,7 @@ theorem supp_of_mapsToProd : GlobalTheory.Published.ZelevinskyPolynomialRing →
     (π : Representation ℂ (GL (Fin n) ℚ_[g]) V) (σ : Representation ℂ (GL (Fin a) ℚ_[g]) W)
     (ρ : Representation ℂ (GL (Fin b) ℚ_[g]) W'),
     GlobalTheory.PRep.IsSmooth π → π.IsIrreducible → Supp.MapsToProd π σ ρ →
-    ∀ (ys yr : Multiset (GlobalTheory.LocGL.IrrGL ℚ_[g])), GlobalTheory.LocGL.HasSupport σ ys → GlobalTheory.LocGL.HasSupport ρ yr →
+    ∀ (ys yr : Multiset (GlobalTheory.LocGL.IrrGL (k := ℚ_[g]))), GlobalTheory.LocGL.HasSupport σ ys → GlobalTheory.LocGL.HasSupport ρ yr →
     ∃ (μ₁ μ₂ : ℚ_[g]ˣ →* ℂˣ) (h₁ : GlobalTheory.SplitWeil.IsUnram μ₁) (h₂ : GlobalTheory.SplitWeil.IsUnram μ₂),
       GlobalTheory.LocGL.HasSupport π (ys.map (fun x => x.tw μ₁ (GlobalTheory.SmGL.isSmoothChar_of_isUnram h₁)) +
         yr.map (fun x => x.tw μ₂ (GlobalTheory.SmGL.isSmoothChar_of_isUnram h₂))) := by

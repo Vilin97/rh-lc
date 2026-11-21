@@ -23,7 +23,7 @@ section Loc
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-def cnt (s : Multiset (IrrGL k)) (χ : kˣ →* ℂˣ) : ℕ :=
+def cnt (s : Multiset (IrrGL (k := k))) (χ : kˣ →* ℂˣ) : ℕ :=
   (s.filter fun y => ∃ ξ hξ, y = IrrGL.ofChar ξ hξ ∧ IsUnram (ξ * χ)).card
 
 end Loc
@@ -39,7 +39,7 @@ def fdeg {L : Type} [Field L] [NumberField L] [Algebra K L] {v : HeightOneSpectr
 
 variable [IsTotallyComplex K] {n : ℕ}
 
-def SuppAt (π : CuspSub K n) (v : HeightOneSpectrum (𝓞 K)) (s : Multiset (IrrGL (v.adicCompletion K))) : Prop :=
+def SuppAt (π : CuspSub K n) (v : HeightOneSpectrum (𝓞 K)) (s : Multiset (IrrGL (k := v.adicCompletion K))) : Prop :=
   ∃ σ, π.IsLocComp v σ ∧ HasSupport σ.ρ s
 
 def TorAt (π : CuspSub K n) (v : HeightOneSpectrum (𝓞 K)) : Prop :=
@@ -53,7 +53,7 @@ def ThruAt {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K 
 
 def GamLoc : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 1 ≤ n → ∀ (v : HeightOneSpectrum (𝓞 K)) (V : Type) [AddCommGroup V] [Module ℂ V]
-    (π : Representation ℂ (GL (Fin n) (v.adicCompletion K)) V) (s : Multiset (IrrGL (v.adicCompletion K))), HasSupport π s →
+    (π : Representation ℂ (GL (Fin n) (v.adicCompletion K)) V) (s : Multiset (IrrGL (k := v.adicCompletion K))), HasSupport π s →
     ∃ (P : ℂ[X]) (c : ℂ) (j : ℤ), P.eval 0 = 1 ∧ P.natDegree = cnt s 1 ∧ c ≠ 0 ∧
       GroundTheory.Automorphic.GodementJacquet.IsGammaFactor (v.adicCompletion K) π (GroundTheory.Automorphic.GJStandardL.localHaar n v)
         (GroundTheory.Global.localAdelicChar K v) (RatFunc.C c * RatFunc.X ^ j * algebraMap ℂ[X] (RatFunc ℂ) P /
@@ -77,7 +77,7 @@ def LocIso : Prop :=
 def SideGAt (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} (σ : CuspSub K n) : Prop :=
   ∀ S : Finset (HeightOneSpectrum (𝓞 K)), GroundTheory.Automorphic.GJStandardL.ramifiedPlaces K ⊆ S →
     ∀ B : HeightOneSpectrum (𝓞 K) → Multiset ℂˣ, (∀ w ∉ S, (CG.mk σ).HasSat w (B w)) →
-    ∀ (s : ∀ v : HeightOneSpectrum (𝓞 K), Multiset (IrrGL (v.adicCompletion K))) (q : ℕ) (f : HeightOneSpectrum (𝓞 K) → ℕ),
+    ∀ (s : ∀ v : HeightOneSpectrum (𝓞 K), Multiset (IrrGL (k := v.adicCompletion K))) (q : ℕ) (f : HeightOneSpectrum (𝓞 K) → ℕ),
       1 < q → (∀ v ∈ S, SuppAt σ v (s v) ∧ (cnt (s v) 1 ≠ 0 → Ideal.absNorm v.asIdeal = q ^ f v)) →
       ∃ β P : ℂ[X], β ≠ 0 ∧ P.eval 0 = 1 ∧ P.natDegree = ∑ v ∈ S, f v * cnt (s v) 1 ∧
         PairG (eulerL K (cx B) S) (eulerLd K (cx B) S) β q P
@@ -130,14 +130,14 @@ def MatchBC : Prop :=
     WeakBC (CG.mk π).HasSat (CG.mk P).HasSat → ∀ η : HChar K,
     (∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite, η.UnrAt v ∧ ∀ w : PlacesOver L v,
       IsPrimitiveRoot (η.val v) (fdeg w) ∧ Fintype.card (PlacesOver L v) * fdeg w = Module.finrank K L) →
-    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver L v, Multiset (IrrGL (w.1.adicCompletion L))),
+    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver L v, Multiset (IrrGL (k := w.1.adicCompletion L))),
       SuppAt π v s → (∀ w, SuppAt P w.1 (s' w)) → ∀ θ : (v.adicCompletion K)ˣ →* ℂˣ, IsSmoothChar θ →
       ∑ j ∈ Finset.range (Module.finrank K L), cnt s (θ * (η ^ j).loc v) = ∑ w, fdeg w * cnt (s' w) (θ.comp (nm w))
 
 def MatchInd : Prop :=
   ∀ (K M : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M],
     Module.finrank K M = 2 → ∀ (P : CuspSub K (2 * 2)) (π : CuspSub M 2), IndSys (CG.mk π).HasSat (CG.mk P).HasSat →
-    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver M v, Multiset (IrrGL (w.1.adicCompletion M))),
+    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver M v, Multiset (IrrGL (k := w.1.adicCompletion M))),
       SuppAt P v s → (∀ w, SuppAt π w.1 (s' w)) → ∀ θ : (v.adicCompletion K)ˣ →* ℂˣ, IsSmoothChar θ →
       cnt s θ = ∑ w, fdeg w * cnt (s' w) (θ.comp (nm w))
 

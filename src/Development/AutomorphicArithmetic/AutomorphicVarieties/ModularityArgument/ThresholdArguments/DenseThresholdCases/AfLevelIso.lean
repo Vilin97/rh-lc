@@ -23,7 +23,7 @@ variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] {l : 
   {r r' : G F Ω →* GL (Fin n) (Qbar l)}
 variable [IsAlgClosure F Ω]
 abbrev _root_.UpperTheory.V.Af.Hypotheses'.exists_rec_ty : Prop := ∀ {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (P : _root_.UpperTheory.V.Af.Hypotheses') {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 F)} (h : IsPlaceOver A w),
-    ∃ rc : IrrGL (w.adicCompletion F) → WD h, _root_.UpperTheory.Zero.LLC.IsRecT h rc
+    ∃ rc : IrrGL (k := w.adicCompletion F) → WD h, _root_.UpperTheory.Zero.LLC.IsRecT h rc
 end UpperTheory.V.Af
 end
 end

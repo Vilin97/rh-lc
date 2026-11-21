@@ -178,7 +178,7 @@ theorem has_of_actK (S : Sys g) {n : ℕ} {V : Type} [AddCommGroup V] [Module �
   exact hz
 
 variable {Ω : Type} [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {A : ValuationSubring Ω} {h : IsPlaceOver A w}
-  {rc : IrrGL (w.adicCompletion E) → WD h} (hrc : IsRec h rc) (hDZ : GlobalTheory.Published.DepthZeroInertia)
+  {rc : IrrGL (k := w.adicCompletion E) → WD h} (hrc : IsRec h rc) (hDZ : GlobalTheory.Published.DepthZeroInertia)
   (κ : IsLocalRing.ResidueField A ≃+* Formalism.CyclotomicNorms.Fbar g) (L : LabelDatum g) (h5 : 5 ≤ g) (hA : AllLab L)
   {t : G E Ω} (ht : t ∈ Ine (F := E) A) (hκ : Formalism.L2.NT.TameCoupled A κ t L.gen)
 include hi hrc hDZ ht hκ

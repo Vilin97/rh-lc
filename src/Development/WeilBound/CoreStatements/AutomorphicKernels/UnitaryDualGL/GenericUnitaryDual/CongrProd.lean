@@ -21,12 +21,12 @@ namespace PositivityTheory.Gud.Fin
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem congrProd' {h N : ℕ} {x y : Fin h → IrrGL k} (e : x = y) (hx : ∑ a, (x a).1 = N) (hy : ∑ a, (y a).1 = N) :
+theorem congrProd' {h N : ℕ} {x y : Fin h → IrrGL (k := k)} (e : x = y) (hx : ∑ a, (x a).1 = N) (hy : ∑ a, (y a).1 = N) :
     Nonempty ((prodIrr x hx).Equiv (prodIrr y hy)) := by
   subst e
   exact ⟨Representation.Equiv.refl _⟩
 
-theorem segs_symm [CharZero k] {h N : ℕ} (δ : Fin h → IrrGL k) (Δ : Fin h → Segment k) (s : Fin h → ℝ)
+theorem segs_symm [CharZero k] {h N : ℕ} (δ : Fin h → IrrGL (k := k)) (Δ : Fin h → Segment k) (s : Fin h → ℝ)
     (hL : ∀ j, IsLSeg (Δ j) (δ j).rep) (hU : ∀ j, PositivityTheory.RgUd.UOrder.UnitCC (δ j).rep) (hs : ∀ j, |s j| < 1 / 2)
     (hd : ∑ j, ((δ j).nu (s j)).1 = N) (hi : (prodIrr (fun j => (δ j).nu (s j)) hd).IsIrreducible)
     (hu : IsUnitarisable (prodIrr (fun j => (δ j).nu (s j)) hd)) :
@@ -40,7 +40,7 @@ theorem segs_symm [CharZero k] {h N : ℕ} (δ : Fin h → IrrGL k) (Δ : Fin h 
   have hfun : (fun j => Zc.dualCl ((δ j).nu (s j))) = fun j => (Zc.dualCl (δ j)).nu (((fun j => -s j) j : ℝ) : ℂ) :=
     funext fun j => by rw [GlobalTheory.T.dual_class_twist_neg hA]; push_cast; rfl
   have hd3 : ∑ j, ((Zc.dualCl (δ j)).nu (((fun j => -s j) j : ℝ) : ℂ)).1 = N := by
-    rw [← hd2]; exact congrArg (fun f : Fin h → IrrGL k => ∑ j, (f j).1) hfun.symm
+    rw [← hd2]; exact congrArg (fun f : Fin h → IrrGL (k := k) => ∑ j, (f j).1) hfun.symm
   obtain ⟨e3⟩ := congrProd' hfun hd2 hd3
   have E := e1.symm.trans (e2.trans e3)
 

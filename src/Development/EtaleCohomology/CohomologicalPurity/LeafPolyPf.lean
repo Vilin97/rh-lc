@@ -26,6 +26,7 @@ theorem leafPoly : LateralTheory.CohomologicalPurity.ChartCut.LeafPoly := by
   let Cc := MvPolynomial (Fin d) (A ⧸ I)
   letI : Algebra P A := ψ.toAlgebra
   letI : Algebra P S := (kap d e R).toAlgebra
+  letI : Algebra S (S ⊗[P] A) := Algebra.TensorProduct.leftAlgebra (R := P) (A := S) (B := A)
   have hb : (algebraMap S (S ⊗[P] A)).Etale :=
     RingHom.IsStableUnderBaseChange.tensorProduct RingHom.Etale.isStableUnderBaseChange S hψ
   have hx : ∀ j, x j ∈ I := fun j => hI ▸ Ideal.subset_span ⟨j, rfl⟩

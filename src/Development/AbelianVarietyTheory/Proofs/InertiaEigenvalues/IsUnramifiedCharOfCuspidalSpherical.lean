@@ -27,7 +27,7 @@ namespace GlobalTheory.LocLanglands
 
 theorem isUnramChar_of_isCusp_of_isSpherical : GeometricLemma → BernsteinZelevinskyFiniteness → ZelevinskyPolynomialRing →
     ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
-      (x : IrrGL k), x.IsCusp → IsSpherical x.rep → x.IsUnramChar := by
+      (x : IrrGL (k := k)), x.IsCusp → IsSpherical x.rep → x.IsUnramChar := by
   intro hG hBZ hZ k _ _ _ _ _ x hx hs
   have hadm : IsAdmissible x.rep := (hBZ k).1 (Fin x.1) x.2.rep.V x.rep x.2.rep.smooth x.2.rep.irr
   have hI : fixed x.rep (iwahori k (Fin x.1)) ≠ ⊥ := by

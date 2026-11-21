@@ -43,7 +43,7 @@ theorem ofSupport : OfSupport := by
   refine SupportRing.isSubquotient_of_clsGL_ne hp hs.isSmooth hs.isIrreducible ?_
   have h2 := h1 (IrrGL.of π hs.isSmooth hs.isIrreducible)
   rw [SupportRing.pc_map, ← ep] at h2
-  have e1 : ∀ (A : GrothGL k) (y : IrrGL k), Ψ.symm (Ψ A - SupportRing.bas Ψ y) y = A y - 1 := by
+  have e1 : ∀ (A : GrothGL k) (y : IrrGL (k := k)), Ψ.symm (Ψ A - SupportRing.bas Ψ y) y = A y - 1 := by
     intro A y
     rw [SupportRing.bas, ← map_sub, Ψ.symm_apply_apply, Finsupp.sub_apply, Finsupp.single_eq_same]
   rw [e1] at h2

@@ -87,7 +87,7 @@ theorem hasSupport_twD {Y : Fin G.s → Type} [∀ a, AddCommGroup (Y a)] [∀ a
   have h2 := (hasSupport_of_isCuspSupport (hc a)).tw _ hψ
   rw [Multiset.map_map] at h2
   have key : (Finset.univ.val.map fun j => IrrGL.ofChar _ (hsm j)) =
-      Finset.univ.val.map ((fun y : IrrGL k => y.tw _ hψ) ∘ fun j =>
+      Finset.univ.val.map ((fun y : IrrGL (k := k) => y.tw _ hψ) ∘ fun j =>
         IrrGL.of (detRep (Fin 1) (ν a j)) ((hc a).2.1 j).2.2.1 ((hc a).2.1 j).2.1) :=
     Multiset.map_congr rfl fun j _ => (IrrGL.tw_ofChar (ν a j) _ (hν a j) hψ).symm
   rw [key]

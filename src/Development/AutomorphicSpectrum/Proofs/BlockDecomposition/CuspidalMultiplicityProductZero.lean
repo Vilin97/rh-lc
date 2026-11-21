@@ -111,8 +111,8 @@ theorem exists_pos_ne {r : ℕ} {d : Fin r → ℕ} (h2 : 2 ≤ r) (hd : ∀ a, 
   simp [a, b]
 
 theorem jhMult_eq_zero_of_isCusp : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
-    [IsNonarchimedeanLocalField k], GlobalTheory.Published.IrreducibleAdmissibleGL → ∀ (ρ : IrrGL k) {h : ℕ}
-    (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = ρ.1), ρ.IsCusp → 2 ≤ h → (∀ a, 0 < (x a).1) →
+    [IsNonarchimedeanLocalField k], GlobalTheory.Published.IrreducibleAdmissibleGL → ∀ (ρ : IrrGL (k := k)) {h : ℕ}
+    (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = ρ.1), ρ.IsCusp → 2 ≤ h → (∀ a, 0 < (x a).1) →
     jhMult ρ.rep (prodIrr x hd) = 0 := by
   intro k _ _ _ _ hA ρ h x hd hc h2 hpos
   obtain ⟨N, c⟩ := ρ
@@ -120,7 +120,7 @@ theorem jhMult_eq_zero_of_isCusp : ∀ {k : Type} [Field k] [ValuativeRel k] [To
   subst hd
   by_contra hne
   have hsub := jhMult_ne_zero_iff.1 hne
-  let ρ₀ : IrrGL k := ⟨_, c⟩
+  let ρ₀ : IrrGL (k := k) := ⟨_, c⟩
   have hs2 := isSubquotient_carry (d := fun a => (x a).1) (piTensor fun a => (x a).rep) _
     (Equiv.ext fun y => by simp [stdBlocks, GlobalTheory.CompanionTheory.BZInd.stdE]) hsub
   obtain ⟨A, p, hp⟩ := hs2

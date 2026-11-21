@@ -26,7 +26,7 @@ theorem continuous_scalarGL (k : Type) [Field k] [ValuativeRel k] [TopologicalSp
   · exact hs.comp Units.continuous_val
   · exact hs.comp (Units.continuous_val.comp continuous_inv)
 
-theorem norm_scalarBy_eq_nabs_rpow : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (x : IrrGL k), 0 < x.1 → ∃ s : ℝ, ∀ (t : kˣ) (c : ℂ), Zl.ScalarBy x t c → ‖c‖ = nabs k t ^ ((x.1 : ℝ) * s) := by
+theorem norm_scalarBy_eq_nabs_rpow : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (x : IrrGL (k := k)), 0 < x.1 → ∃ s : ℝ, ∀ (t : kˣ) (c : ℂ), Zl.ScalarBy x t c → ‖c‖ = nabs k t ^ ((x.1 : ℝ) * s) := by
   intro k _ _ _ _ x hx
   have hirr := x.2.rep.irr
   obtain ⟨v, hv⟩ : ∃ v : x.2.rep.V, v ≠ 0 := by

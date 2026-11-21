@@ -36,14 +36,14 @@ section
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem chs_cons (ξ : kˣ →* ℂˣ) (h : IsSmoothChar ξ) (s : Multiset (IrrGL k)) : chs (IrrGL.ofChar ξ h ::ₘ s) = ξ ::ₘ chs s := by
+theorem chs_cons (ξ : kˣ →* ℂˣ) (h : IsSmoothChar ξ) (s : Multiset (IrrGL (k := k))) : chs (IrrGL.ofChar ξ h ::ₘ s) = ξ ::ₘ chs s := by
   have e : ∃ ζ : kˣ →* ℂˣ, ∃ hζ, IrrGL.ofChar ξ h = IrrGL.ofChar ζ hζ := ⟨ξ, h, rfl⟩
   refine Multiset.filterMap_cons_some _ _ _ ?_
   rw [dite_eq_left e]
   obtain ⟨_, h2⟩ := e.choose_spec
   exact congrArg some (IrrGL.ofChar_inj.1 h2).symm
 
-theorem chs_cons_of_not {y : IrrGL k} (h : ¬ ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ) (s : Multiset (IrrGL k)) :
+theorem chs_cons_of_not {y : IrrGL (k := k)} (h : ¬ ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ) (s : Multiset (IrrGL (k := k))) :
     chs (y ::ₘ s) = chs s := Multiset.filterMap_cons_none _ _ (dif_neg h)
 
 theorem chs_map {ι : Type} (t : Multiset ι) (ξ : ι → (kˣ →* ℂˣ)) (hξ : ∀ j, IsSmoothChar (ξ j)) :
@@ -52,7 +52,7 @@ theorem chs_map {ι : Type} (t : Multiset ι) (ξ : ι → (kˣ →* ℂˣ)) (h�
   | empty => rfl
   | cons a t ih => rw [Multiset.map_cons, chs_cons, ih, Multiset.map_cons]
 
-theorem card_chs_le (s : Multiset (IrrGL k)) (h : ∀ y ∈ s, 0 < y.1) :
+theorem card_chs_le (s : Multiset (IrrGL (k := k))) (h : ∀ y ∈ s, 0 < y.1) :
     Multiset.card (chs s) ≤ (s.map Sigma.fst).sum ∧
       (Multiset.card (chs s) = (s.map Sigma.fst).sum → ∀ y ∈ s, ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ) := by
   induction s using Multiset.induction with
@@ -72,9 +72,9 @@ theorem card_chs_le (s : Multiset (IrrGL k)) (h : ∀ y ∈ s, 0 < y.1) :
     · rw [chs_cons_of_not c]
       exact ⟨by omega, fun H => by omega⟩
 
-theorem eq_of_chs {s t : Multiset (IrrGL k)} (hs : ∀ y ∈ s, ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ)
+theorem eq_of_chs {s t : Multiset (IrrGL (k := k))} (hs : ∀ y ∈ s, ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ)
     (ht : ∀ y ∈ t, ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ) (h : chs s = chs t) : s = t := by
-  have key : ∀ s : Multiset (IrrGL k), (∀ y ∈ s, ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ) →
+  have key : ∀ s : Multiset (IrrGL (k := k)), (∀ y ∈ s, ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ) →
       s = (chs s).map fun ξ => if h : IsSmoothChar ξ then IrrGL.ofChar ξ h else IrrGL.ofChar 1 isSmoothChar_one := by
     intro s
     induction s using Multiset.induction with

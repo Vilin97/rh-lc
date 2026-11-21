@@ -245,7 +245,7 @@ theorem nonempty_equiv_of_repRel (i : k ≃+* k') {N : ℕ} (y : IrrRep (GL (Fin
     equivOfBijective ⟨e.toLinearMap, fun g => LinearMap.ext fun v => he g v⟩ e.bijective
   exact ⟨a.trans (f.trans (equivComp _ b.symm))⟩
 
-theorem eq_of_repRel (i : k ≃+* k') (hi : Continuous i.symm) {z : IrrGL k} {z' : IrrGL k'} (h : RepRel i z z') :
+theorem eq_of_repRel (i : k ≃+* k') (hi : Continuous i.symm) {z : IrrGL (k := k)} {z' : IrrGL (k := k')} (h : RepRel i z z') :
     z' = IrrGL.of (pull z.rep (GeneralLinearGroup.map (i.symm : k' →+* k)))
       (isSmooth_comp z.2.rep.smooth (continuous_glMap (i.symm : k' →+* k) hi))
       ((isIrreducible_comp_iff (glMap_surjective i.symm)).2 z.2.rep.irr) := by
@@ -264,8 +264,8 @@ end Classes
 
 theorem isCosocle_prodIrr_transport : ∀ (k k' : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] [CharZero k] [Field k'] [ValuativeRel k'] [TopologicalSpace k']
-    [IsNonarchimedeanLocalField k'] [CharZero k'] (i : k ≃+* k'), Continuous i → ∀ (r N : ℕ) (x : Fin r → IrrGL k)
-    (x' : Fin r → IrrGL k') (hd : ∑ a, (x a).1 = N) (hd' : ∑ a, (x' a).1 = N) (y : IrrRep (GL (Fin N) k))
+    [IsNonarchimedeanLocalField k'] [CharZero k'] (i : k ≃+* k'), Continuous i → ∀ (r N : ℕ) (x : Fin r → IrrGL (k := k))
+    (x' : Fin r → IrrGL (k := k')) (hd : ∑ a, (x a).1 = N) (hd' : ∑ a, (x' a).1 = N) (y : IrrRep (GL (Fin N) k))
     (y' : IrrRep (GL (Fin N) k')), (∀ a, RepRel i (x a) (x' a)) → RepRel i (cls y) (cls y') →
     IsCosocle y.ρ (prodIrr x hd) → IsCosocle y'.ρ (prodIrr x' hd') := by
   intro k k' _ _ _ _ _ _ _ _ _ _ i hi r N x x' hd hd' y y' hx hy hc

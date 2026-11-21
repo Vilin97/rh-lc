@@ -27,13 +27,13 @@ theorem nontrivial_of_isSubquotient {G V W : Type} [Group G] [AddCommGroup V] [M
   rw [hv0, map_zero]
 
 theorem sum_concat {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {s : ℕ}
-    (c : Fin s → ℕ) (x : ∀ a, Fin (c a) → IrrGL k) :
+    (c : Fin s → ℕ) (x : ∀ a, Fin (c a) → IrrGL (k := k)) :
     ∑ i, (concat c x i).1 = ∑ a, ∑ i, (x a i).1 := by
   calc ∑ i, (concat c x i).1 = ∑ p : Σ a, Fin (c a), (x p.1 p.2).1 :=
         Fintype.sum_equiv finSigmaFinEquiv.symm _ _ fun _ => rfl
     _ = ∑ a, ∑ i, (x a i).1 := Fintype.sum_sigma _
 
-theorem exists_one_le_jm_coarse : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {s N : ℕ} (c : Fin s → ℕ) (x : ∀ a, Fin (c a) → IrrGL k) (hpos : ∀ a, 0 < ∑ i, (x a i).1) (hcat : ∑ i, (concat c x i).1 = N) {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V) (hs : IsSmooth π) (hfl : HasFiniteLength π), 1 ≤ jm (concat c x) hcat π → ∃ (σ : Fin s → IrrGL k) (hσ : ∑ a, (σ a).1 = N), (∀ a, (σ a).1 = ∑ i, (x a i).1) ∧ 1 ≤ jm σ hσ π := by
+theorem exists_one_le_jm_coarse : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {s N : ℕ} (c : Fin s → ℕ) (x : ∀ a, Fin (c a) → IrrGL (k := k)) (hpos : ∀ a, 0 < ∑ i, (x a i).1) (hcat : ∑ i, (concat c x i).1 = N) {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V) (hs : IsSmooth π) (hfl : HasFiniteLength π), 1 ≤ jm (concat c x) hcat π → ∃ (σ : Fin s → IrrGL (k := k)) (hσ : ∑ a, (σ a).1 = N), (∀ a, (σ a).1 = ∑ i, (x a i).1) ∧ 1 ≤ jm σ hσ π := by
   intro k _ _ _ _ hA s N c x _ hcat V _ _ π hs _ h1
   let d : Fin s → ℕ := fun a => ∑ i, (x a i).1
   have hd : ∑ a, d a = N := (sum_concat c x).symm.trans hcat

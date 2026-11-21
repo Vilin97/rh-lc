@@ -28,7 +28,7 @@ theorem UpperTheory.Zero.LLC.recTExists :
   obtain ⟨r, hr⟩ := UpperTheory.Zero.LLC.cuspEx E Ω A w h a ha
   obtain ⟨⟨rc, hrc⟩, hcu⟩ :=
     GlobalTheory.LocLanglands.exists_isLExt UpperTheory.Zero.LLC.Pr.exh UpperTheory.Zero.LLC.Pr.multi E Ω A w h r
-  have hcusp : ∀ x : IrrGL (HeightOneSpectrum.adicCompletion E w), x.IsCusp → rc x = r x :=
+  have hcusp : ∀ x : IrrGL (k := HeightOneSpectrum.adicCompletion E w), x.IsCusp → rc x = r x :=
     hcu rc hrc
   have hD := UpperTheory.Zero.LLC.extDim E Ω A w h a ha r rc hr hrc
   have hT := UpperTheory.Zero.LLC.extTw E Ω A w h a ha r rc hr hrc

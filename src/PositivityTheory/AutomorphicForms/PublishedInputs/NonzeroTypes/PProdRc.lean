@@ -26,7 +26,7 @@ theorem wd_eq_lpZero {x : WD h} (hx : x.lpDim = 0) : x = WD.lpZero h := by
   exact WD.sound ⟨.refl _ _, fun _ _ => Subsingleton.elim _ _, fun _ => Subsingleton.elim _ _⟩
 
 theorem main {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} {ε : EpsFamily A}
-    {rc : IrrGL (w.adicCompletion E) → WD h} (L : Laws a ha ε rc) :
+    {rc : IrrGL (k := w.adicCompletion E) → WD h} (L : Laws a ha ε rc) :
     ∀ (s N : ℕ) (d : Fin s → ℕ) (hd : ∑ b, d b = N) (X : Fin s → Type) [∀ b, AddCommGroup (X b)]
       [∀ b, Module ℂ (X b)] (σ : ∀ b, Representation ℂ (GL (Fin (d b)) (w.adicCompletion E)) (X b))
       (hs : ∀ b, IsSmooth (σ b)) (hi : ∀ b, (σ b).IsIrreducible)

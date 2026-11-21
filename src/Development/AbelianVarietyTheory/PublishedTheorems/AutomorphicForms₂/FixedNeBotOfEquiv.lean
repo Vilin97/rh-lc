@@ -35,7 +35,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
 def toIrrRep {n : ℕ} (π : Irr (w.adicCompletion E) n) : IrrRep (GL (Fin n) (w.adicCompletion E)) :=
   ⟨π.V, π.π, π.smooth, π.irr⟩
 
-theorem IsRec.recLaws {rc : IrrGL (w.adicCompletion E) → WD h} (H : IsRec h rc) :
+theorem IsRec.recLaws {rc : IrrGL (k := w.adicCompletion E) → WD h} (H : IsRec h rc) :
     RecLaws fun _ (π : Irr (w.adicCompletion E) _) => rc (cls (toIrrRep π)) := by
   obtain ⟨a, ha, ε, -, H⟩ := H
   have hc : ∀ (χ : (w.adicCompletion E)ˣ →* ℂˣ) (c : Irr (w.adicCompletion E) 1),

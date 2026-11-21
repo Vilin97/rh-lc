@@ -21,7 +21,7 @@ theorem smul_of_equiv_nu {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V
   exact φ.right_inv w
 
 theorem scalarBy_nu : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-    (x : IrrGL k) (s : ℂ) (t : kˣ) (c : ℂ), Zl.ScalarBy x t c →
+    (x : IrrGL (k := k)) (s : ℂ) (t : kˣ) (c : ℂ), Zl.ScalarBy x t c →
       Zl.ScalarBy (x.nu s) t (c * ((absPow k s (t ^ x.1) : ℂˣ) : ℂ)) := by
   intro k _ _ _ _ x s t c hx v
   have hdet : Matrix.GeneralLinearGroup.det (Matrix.GeneralLinearGroup.scalar (Fin x.1) t) = t ^ x.1 := by

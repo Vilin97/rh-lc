@@ -331,7 +331,7 @@ theorem refinePlace_stdBlocks : ∀ (s n : ℕ) (d t : Fin s → ℕ) (d' : ∀ 
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem jmL_eq_jm {L N : ℕ} (W : List (IrrGL k)) (f : Fin L → IrrGL k) (hW : W = List.ofFn f)
+theorem jmL_eq_jm {L N : ℕ} (W : List (IrrGL (k := k))) (f : Fin L → IrrGL (k := k)) (hW : W = List.ofFn f)
     (hd : ∑ a, (f a).1 = N) {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) : jmL W π = jm f hd π := by
   have hL : W.length = L := by rw [hW, List.length_ofFn]
@@ -346,8 +346,8 @@ theorem jmL_eq_jm {L N : ℕ} (W : List (IrrGL k)) (f : Fin L → IrrGL k) (hW :
 end Words
 
 theorem jm_mul_prod_jmL_le : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k],
-    GlobalTheory.Published.IrreducibleAdmissibleGL → ∀ {g N : ℕ} (y : Fin g → IrrGL k) (hy : ∑ b, (y b).1 = N)
-    (Wb : Fin g → List (IrrGL k)) {V : Type} [AddCommGroup V] [Module ℂ V]
+    GlobalTheory.Published.IrreducibleAdmissibleGL → ∀ {g N : ℕ} (y : Fin g → IrrGL (k := k)) (hy : ∑ b, (y b).1 = N)
+    (Wb : Fin g → List (IrrGL (k := k))) {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V), IsSmooth π → HasFiniteLength π →
     (∀ b, ∑ a, ((Wb b).get a).1 = (y b).1) →
     jm y hy π * ∏ b, jmL (Wb b) (y b).rep ≤ jmL (List.ofFn Wb).flatten π := by
@@ -356,7 +356,7 @@ theorem jm_mul_prod_jmL_le : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
   let d : Fin g → ℕ := fun b => (y b).1
   let t : Fin g → ℕ := fun b => (Wb b).length
   let d' : ∀ a, Fin (t a) → ℕ := fun a b => ((Wb a).get b).1
-  let f : Fin (∑ a, t a) → IrrGL k := fun c => (Wb (finSigmaFinEquiv.symm c).1).get (finSigmaFinEquiv.symm c).2
+  let f : Fin (∑ a, t a) → IrrGL (k := k) := fun c => (Wb (finSigmaFinEquiv.symm c).1).get (finSigmaFinEquiv.symm c).2
   let e : (Σ a, Fin (d a)) ≃ Fin N := stdBlocks d hy
   let e' : ∀ a, (Σ b, Fin (d' a b)) ≃ Fin (d a) := fun a => stdBlocks (d' a) (hW a)
   have hf : ∑ c, d' (finSigmaFinEquiv.symm c).1 (finSigmaFinEquiv.symm c).2 = N := by

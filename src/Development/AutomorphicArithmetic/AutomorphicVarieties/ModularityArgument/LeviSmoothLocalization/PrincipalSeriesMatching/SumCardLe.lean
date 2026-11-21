@@ -98,7 +98,7 @@ private theorem core {K : Type} [Field K] [NumberField K] {v : HeightOneSpectrum
     (he : ∀ j ∈ Finset.range 2, ∀ w : PlacesOver K v, (e j).comp (nm w) = 1)
     (hc : ∀ θ : (v.adicCompletion ℚ)ˣ →* ℂˣ, IsSmoothChar θ → ∀ w : PlacesOver K v, IsUnram (θ.comp (nm w)) →
       ((Finset.range 2).filter fun j => IsUnram (θ * e j)).card = ∑ w' : PlacesOver K v, fdeg w')
-    (s : ∀ w : PlacesOver K v, Multiset (IrrGL (w.1.adicCompletion K))) (hs : ∀ w, (s w).card ≤ 3)
+    (s : ∀ w : PlacesOver K v, Multiset (IrrGL (k := w.1.adicCompletion K))) (hs : ∀ w, (s w).card ≤ 3)
     (hm : ∀ θ : (v.adicCompletion ℚ)ˣ →* ℂˣ, IsSmoothChar θ →
       ∏ j ∈ Finset.range 2, ∏ i, lin (a i * θ * e j) = ∏ w, (pol (s w) (θ.comp (nm w))).comp (X ^ fdeg w))
     (w : PlacesOver K v) : ∀ y ∈ s w, ∃ i hζ, y = IrrGL.ofChar ((a i).comp (nm w)) hζ := by

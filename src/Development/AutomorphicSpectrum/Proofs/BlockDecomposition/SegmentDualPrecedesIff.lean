@@ -17,7 +17,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 section
 
-variable (hc : ∀ x : IrrGL k, x.IsCusp → (dualCl x).IsCusp)
+variable (hc : ∀ x : IrrGL (k := k), x.IsCusp → (dualCl x).IsCusp)
 
 include hc
 
@@ -31,7 +31,7 @@ theorem first_segDual (Δ : Segment k) : (segDual Δ).first = (dualCl Δ.first).
 theorem len_segDual (Δ : Segment k) : (segDual Δ).len = Δ.len := by
   rw [segDual_eq hc]; rfl
 
-variable (hn : ∀ (x : IrrGL k) (s : ℂ), dualCl (x.nu s) = (dualCl x).nu (-s))
+variable (hn : ∀ (x : IrrGL (k := k)) (s : ℂ), dualCl (x.nu s) = (dualCl x).nu (-s))
 
 include hn
 
@@ -62,11 +62,11 @@ theorem carrier_segDual (Δ : Segment k) : (segDual Δ).carrier = dualCl '' Δ.c
     rw [h2]
     ring
 
-variable (hd : ∀ x : IrrGL k, dualCl (dualCl x) = x)
+variable (hd : ∀ x : IrrGL (k := k), dualCl (dualCl x) = x)
 
 include hd
 
-theorem dualCl_injective : Function.Injective (dualCl : IrrGL k → IrrGL k) :=
+theorem dualCl_injective : Function.Injective (dualCl : IrrGL (k := k) → IrrGL (k := k)) :=
   Function.LeftInverse.injective hd
 
 theorem segDual_segDual (Δ : Segment k) : segDual (segDual Δ) = Δ := by

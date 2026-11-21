@@ -16,9 +16,9 @@ namespace UpperTheory.V.Z.Win.RR
 
 variable {L Ω : Type} [Field L] [NumberField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 L)} {h : IsPlaceOver A w}
-  {a : Weil h →* (w.adicCompletion L)ˣ} {ha : IsLocalArtin h a} {ε : EpsFamily A} {rc : IrrGL (w.adicCompletion L) → WD h}
+  {a : Weil h →* (w.adicCompletion L)ˣ} {ha : IsLocalArtin h a} {ε : EpsFamily A} {rc : IrrGL (k := w.adicCompletion L) → WD h}
 
-theorem charPol_supp (H : LawsV a ha ε rc) (x : IrrGL (w.adicCompletion L)) {n : ℕ} (ω : Fin n → (w.adicCompletion L)ˣ →* ℂˣ)
+theorem charPol_supp (H : LawsV a ha ε rc) (x : IrrGL (k := w.adicCompletion L)) {n : ℕ} (ω : Fin n → (w.adicCompletion L)ˣ →* ℂˣ)
     (hω : ∀ i, IsSmoothChar (ω i)) (hs : HasSupport x.rep (Finset.univ.val.map fun i => IrrGL.ofChar (ω i) (hω i))) (g : Weil h) :
     (rc x).charPol g = ∏ j, (X - C (ω j (a g) : ℂ)) := by
   rw [H.supp x _ hs g, Multiset.map_map, Finset.prod_eq_multiset_prod]

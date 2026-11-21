@@ -33,7 +33,7 @@ theorem IsGalUAlt.eq_locPar (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (hF : 
     wdOf h hl ι r = (_root_.GlobalTheory.CuspRep.ParLawsT.locParT hL (CG.mk π) h).lpTw ((1 - (a : ℝ)) / 2) :=
   (H.aw_locPar hL hF hl h).eq_unr ((WD.unr_tw _ _).2 hu)
 omit [IsCMField E] in
-theorem unr_rec_of_has_sat {h : IsPlaceOver A w} {rc : IrrGL (w.adicCompletion E) → WD h} (hrc : _root_.UpperTheory.Zero.LLC.IsRecT h rc)
+theorem unr_rec_of_has_sat {h : IsPlaceOver A w} {rc : IrrGL (k := w.adicCompletion E) → WD h} (hrc : _root_.UpperTheory.Zero.LLC.IsRecT h rc)
     (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (S : Multiset ℂˣ) (hS : GlobalTheory.LFun.HasSatGL w σ.ρ S) :
     (rc (IrrGL.of σ.ρ σ.smooth σ.irred)).unr := by
   obtain ⟨α, rfl, hα⟩ := (GlobalTheory.LGrp.SatakeCompare.hasSatakeGL_iff _ _ _ σ.ρ S).1
@@ -58,7 +58,7 @@ theorem nice_of_loc_par (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (hF : Glob
   refine ⟨σ, hσ, _, _root_.GlobalTheory.CuspRep.ParLawsT.isRecT_locRecT hL h, ?_⟩
   rw [_root_.GlobalTheory.GalOfCusp.rec_algNorm_alt (_root_.GlobalTheory.CuspRep.ParLawsT.isRecT_locRecT hL h) σ]
   rwa [_root_.GlobalTheory.CuspRep.ParLaws.local_parameter_eq_reciprocity_of_is_local_component hL hσ h] at k
-theorem nice_of_spherical' {h : IsPlaceOver A w} {rc : IrrGL (w.adicCompletion E) → WD h} (hrc : _root_.UpperTheory.Zero.LLC.IsRecT h rc)
+theorem nice_of_spherical' {h : IsPlaceOver A w} {rc : IrrGL (k := w.adicCompletion E) → WD h} (hrc : _root_.UpperTheory.Zero.LLC.IsRecT h rc)
     {σ : SmIrr (GL (Fin a) (w.adicCompletion E))} (hσ : π.IsLocComp w σ) (hs : SmGL.IsSpherical σ.ρ) : _root_.UpperTheory.GalS.NiceAlt π h := by
   refine ⟨σ, hσ, rc, hrc, NcW.of_unr ?_⟩
   rw [_root_.GlobalTheory.GalOfCusp.rec_algNorm_alt hrc, WD.unr_tw]

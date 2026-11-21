@@ -168,19 +168,19 @@ private theorem main_gen {r s t M N : ℕ} (h₂ : r + s + t = N) (h₃ : s + t 
   exact ⟨(IrrGL.of (subQuot S T) hs hi).2, (Inj.of_eqv (eqv_symm χ)).isSubquotient.trans (isSubquotient_subQuot S T),
     e5.trans (inj_left h₂ π₃ (Inj.of_eqv χ))⟩
 
-private theorem pair_eqv (y z : IrrGL k) {N : ℕ} (hN : y.1 + z.1 = N) (hd : ∑ a, (![y, z] a).1 = N) :
+private theorem pair_eqv (y z : IrrGL (k := k)) {N : ℕ} (hN : y.1 + z.1 = N) (hd : ∑ a, (![y, z] a).1 = N) :
     Nonempty ((ind₂ (stdSum hN) (extTensor y.rep z.rep)).Equiv (prodIrr ![y, z] hd)) := by
   subst hN
   exact nonempty_prod₂_equiv_prodIrr_pair y z hd
 
-private theorem sum_pair (y z : IrrGL k) : ∑ a, (![y, z] a).1 = y.1 + z.1 := by
+private theorem sum_pair (y z : IrrGL (k := k)) : ∑ a, (![y, z] a).1 = y.1 + z.1 := by
   simp [Fin.sum_univ_two]
 
 end SlopeTestRemainingChoices
 
 open GlobalTheory.ParIndExact GlobalTheory.ProdReorder in
 theorem UpperTheory.Lit.Full.assocL :
-    GlobalTheory.Published.GeometricLemma → GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (x y z u w : IrrGL k), Emb x y z → Emb z u w → ∃ v, Occ v y u ∧ Emb x v w := by
+    GlobalTheory.Published.GeometricLemma → GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (x y z u w : IrrGL (k := k)), Emb x y z → Emb z u w → ∃ v, Occ v y u ∧ Emb x v w := by
   rintro - hBZ k _ _ _ _ x y z u w ⟨hd, hf⟩ ⟨hd', hg⟩
   have h4 : y.1 + z.1 = x.1 := (sum_pair y z).symm.trans hd
   have h3 : u.1 + w.1 = z.1 := (sum_pair u w).symm.trans hd'
@@ -195,7 +195,7 @@ theorem UpperTheory.Lit.Full.assocL :
   obtain ⟨c, hc, e2⟩ := main_gen h2 h3 h4 y.rep u.rep w.rep (prod₂ y.rep u.rep) (prodIrr ![u, w] hd')
     (eqv_refl _) (eqv_symm (pair_eqv u w h3 hd')) y.2.rep.smooth u.2.rep.smooth w.2.rep.smooth
     (isSmooth_prod₂ _ _) hA x.rep x.2.rep.irr z.rep e1 hg
-  let v : IrrGL k := ⟨y.1 + u.1, c⟩
+  let v : IrrGL (k := k) := ⟨y.1 + u.1, c⟩
   refine ⟨v, ⟨sum_pair y u, jhMult_ne_zero_iff.2 ?_⟩, (sum_pair v w).trans h2, ?_⟩
   · exact hc.trans (Inj.of_eqv φ).isSubquotient
   · exact e2.trans (Inj.of_eqv (pair_eqv v w h2 _))

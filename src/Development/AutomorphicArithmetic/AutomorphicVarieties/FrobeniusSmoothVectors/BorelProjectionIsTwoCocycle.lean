@@ -17,7 +17,7 @@ theorem UpperTheory.V.Fr.borelProjection_isTwoCocycle :
   intro l _ k _ _ F C₀ n hF O _ _ C' _ _ _ C _ _ _ p B D u hK s t r
   have hKm : RingHom.ker p ≤ maximalIdeal C' := by
     intro y hy
-    rw [← res_eq_zero_iff O C', ← res_map p y, RingHom.mem_ker.mp hy, map_zero]
+    rw [← res_eq_zero_iff O C', ← res_map O C' p y, RingHom.mem_ker.mp hy, map_zero]
   obtain ⟨hom, -, -, -⟩ := pr_omk hF O C' C p B D hK
   obtain ⟨x, hx⟩ : ∃ x : F.Γ → GG n C', ∀ a, x a = ⟨D.r a, F.del a⟩ := ⟨_, fun _ => rfl⟩
   have hW : ∀ a b, x a * x b * (x (a * b))⁻¹ =

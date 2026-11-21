@@ -25,7 +25,7 @@ namespace GlobalTheory.DZeroDegOne
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem eq_of_hasSupport_singleton {y z : IrrGL k} (h : HasSupport y.rep {z}) : y = z := by
+theorem eq_of_hasSupport_singleton {y z : IrrGL (k := k)} (h : HasSupport y.rep {z}) : y = z := by
   obtain ⟨r, u, hu, hi, hc, e, hsub⟩ := h
   obtain rfl : r = 1 := by simpa using congrArg Multiset.card hu
   obtain rfl : u = fun _ => z := funext fun i => by

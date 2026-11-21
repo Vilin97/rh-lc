@@ -21,7 +21,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
 theorem charPol_of_chars {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
-    {rc : IrrGL (w.adicCompletion E) → WD h} (H : UpperTheory.Zero.LLC.LawsT a ha rc) (x : IrrGL (w.adicCompletion E)) {n : ℕ}
+    {rc : IrrGL (k := w.adicCompletion E) → WD h} (H : UpperTheory.Zero.LLC.LawsT a ha rc) (x : IrrGL (k := w.adicCompletion E)) {n : ℕ}
     (ξ : Fin n → ((w.adicCompletion E)ˣ →* ℂˣ)) (hξ : ∀ j, IsSmoothChar (ξ j))
     (hs : HasSupport x.rep (GlobalTheory.RoadU.chars ξ hξ)) (g : Weil h) :
     (rc x).charPol g = ∏ j, (X - C ((ξ j (a g) : ℂˣ) : ℂ)) := by

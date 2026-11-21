@@ -20,7 +20,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 theorem segDual_nu (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (Δ : Segment k) (s : ℂ) :
     Zc.segDual (Δ.nu s) = (Zc.segDual Δ).nu (-s) := by
-  have hc : ∀ x : IrrGL k, x.IsCusp → (Zc.dualCl x).IsCusp := fun x hx => (GlobalTheory.T.dual_class_cuspidal hA x hx).1
+  have hc : ∀ x : IrrGL (k := k), x.IsCusp → (Zc.dualCl x).IsCusp := fun x hx => (GlobalTheory.T.dual_class_cuspidal hA x hx).1
   refine Segment.ext_first ?_ ?_
   · show (Zc.segDual (Δ.nu s)).first = (Zc.segDual Δ).first.nu (-s)
     rw [GlobalTheory.CompanionTheory.SegDualPrec.first_segDual hc, GlobalTheory.CompanionTheory.SegDualPrec.first_segDual hc]
@@ -34,7 +34,7 @@ theorem segDual_nu (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (Δ : S
 
 theorem segDual_segDual (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (Δ : Segment k) :
     Zc.segDual (Zc.segDual Δ) = Δ := by
-  have hc : ∀ x : IrrGL k, x.IsCusp → (Zc.dualCl x).IsCusp :=
+  have hc : ∀ x : IrrGL (k := k), x.IsCusp → (Zc.dualCl x).IsCusp :=
     fun x hx => (GlobalTheory.CompanionTheory.DualCusp.dualCl_isCusp hA x hx).1
   apply GlobalTheory.SmGL.Segment.ext_first
   · rw [GlobalTheory.CompanionTheory.SegDualPrec.first_segDual hc, GlobalTheory.CompanionTheory.SegDualPrec.first_segDual hc,
@@ -43,12 +43,12 @@ theorem segDual_segDual (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (�
   · rw [GlobalTheory.CompanionTheory.SegDualPrec.len_segDual hc, GlobalTheory.CompanionTheory.SegDualPrec.len_segDual hc]
 
 
-theorem isLSeg_dualCl (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {Δ : Segment k} {δ : IrrGL k} (hL : IsLSeg Δ δ.rep) :
+theorem isLSeg_dualCl (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {Δ : Segment k} {δ : IrrGL (k := k)} (hL : IsLSeg Δ δ.rep) :
     IsLSeg (Zc.segDual Δ) (Zc.dualCl δ).rep := by
   have gk : Zc.Cos.GKLocal k := by
     intro N V _ _ π hs hi
     exact GlobalTheory.GelfandKazhdan.equiv_contra k N V π (hA k N V π hs hi) hi
-  have hc : ∀ x : IrrGL k, x.IsCusp → (Zc.dualCl x).IsCusp :=
+  have hc : ∀ x : IrrGL (k := k), x.IsCusp → (Zc.dualCl x).IsCusp :=
     fun x hx => (GlobalTheory.CompanionTheory.DualCusp.dualCl_isCusp hA x hx).1
   obtain ⟨hd, cos⟩ := hL
   have hlen : Δ.len = (Zc.segDual Δ).len := (GlobalTheory.CompanionTheory.SegDualPrec.len_segDual hc Δ).symm

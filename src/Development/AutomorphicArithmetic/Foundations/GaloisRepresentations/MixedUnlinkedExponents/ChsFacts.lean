@@ -21,22 +21,22 @@ section Loc
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 private theorem opt_ofChar (ξ : kˣ →* ℂˣ) (hξ) :
-    (if h : ∃ ξ' : kˣ →* ℂˣ, ∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ' then some h.choose else none)
+    (if h : ∃ ξ' : kˣ →* ℂˣ, ∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL (k := k)) = IrrGL.ofChar ξ' hξ' then some h.choose else none)
       = some ξ := by
-  have h : ∃ ξ' : kˣ →* ℂˣ, ∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ' := ⟨ξ, hξ, rfl⟩
+  have h : ∃ ξ' : kˣ →* ℂˣ, ∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL (k := k)) = IrrGL.ofChar ξ' hξ' := ⟨ξ, hξ, rfl⟩
   rw [dite_eq_left h]
   obtain ⟨_, h2⟩ := h.choose_spec
   exact congrArg some (IrrGL.ofChar_inj.1 h2).symm
 
-private theorem chs_cons_ofChar (ξ : kˣ →* ℂˣ) (hξ) (s : Multiset (IrrGL k)) :
+private theorem chs_cons_ofChar (ξ : kˣ →* ℂˣ) (hξ) (s : Multiset (IrrGL (k := k))) :
     chs (IrrGL.ofChar ξ hξ ::ₘ s) = ξ ::ₘ chs s :=
   Multiset.filterMap_cons_some _ _ _ (opt_ofChar ξ hξ)
 
-private theorem chs_cons_none {y : IrrGL k} (hy : ¬ ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ)
-    (s : Multiset (IrrGL k)) : chs (y ::ₘ s) = chs s :=
+private theorem chs_cons_none {y : IrrGL (k := k)} (hy : ¬ ∃ ξ : kˣ →* ℂˣ, ∃ hξ, y = IrrGL.ofChar ξ hξ)
+    (s : Multiset (IrrGL (k := k))) : chs (y ::ₘ s) = chs s :=
   Multiset.filterMap_cons_none _ _ (dif_neg hy)
 
-private theorem mem_chs_iff (s : Multiset (IrrGL k)) (ξ : kˣ →* ℂˣ) :
+private theorem mem_chs_iff (s : Multiset (IrrGL (k := k))) (ξ : kˣ →* ℂˣ) :
     ξ ∈ chs s ↔ ∃ hξ, IrrGL.ofChar ξ hξ ∈ s := by
   unfold chs
   rw [Multiset.mem_filterMap]
@@ -52,7 +52,7 @@ private theorem mem_chs_iff (s : Multiset (IrrGL k)) (ξ : kˣ →* ℂˣ) :
   · rintro ⟨hξ, h⟩
     exact ⟨_, h, opt_ofChar ξ hξ⟩
 
-private theorem pol_cons (y : IrrGL k) (s : Multiset (IrrGL k)) (θ : kˣ →* ℂˣ) :
+private theorem pol_cons (y : IrrGL (k := k)) (s : Multiset (IrrGL (k := k))) (θ : kˣ →* ℂˣ) :
     pol (y ::ₘ s) θ = (if h : ∃ ξ : kˣ →* ℂˣ, (∃ hξ, y = IrrGL.ofChar ξ hξ) ∧ IsUnram (ξ * θ) then
       1 - C (((h.choose * θ) (unif k) : ℂˣ) : ℂ) * X else 1) * pol s θ := by
   unfold pol
@@ -62,7 +62,7 @@ private theorem lp_cons (a : ℂˣ) (A : Multiset ℂˣ) : lp (a ::ₘ A) = (1 -
   unfold lp
   rw [Multiset.map_cons, Multiset.prod_cons]
 
-private theorem pol_eq_lp (s : Multiset (IrrGL k)) (θ : kˣ →* ℂˣ) : pol s θ = lp (vals (chs s) θ) := by
+private theorem pol_eq_lp (s : Multiset (IrrGL (k := k))) (θ : kˣ →* ℂˣ) : pol s θ = lp (vals (chs s) θ) := by
   induction s using Multiset.induction with
   | empty => simp [pol, lp, vals, chs_zero]
   | cons y s ih =>
@@ -71,7 +71,7 @@ private theorem pol_eq_lp (s : Multiset (IrrGL k)) (θ : kˣ →* ℂˣ) : pol s
     · obtain ⟨ξ, hξ, rfl⟩ := hy
       rw [chs_cons_ofChar]
       by_cases hu : IsUnram (ξ * θ)
-      · have h : ∃ ξ' : kˣ →* ℂˣ, (∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ') ∧ IsUnram (ξ' * θ) :=
+      · have h : ∃ ξ' : kˣ →* ℂˣ, (∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL (k := k)) = IrrGL.ofChar ξ' hξ') ∧ IsUnram (ξ' * θ) :=
           ⟨ξ, ⟨hξ, rfl⟩, hu⟩
         rw [dite_eq_left h]
         obtain ⟨⟨_, h2⟩, _⟩ := h.choose_spec
@@ -79,7 +79,7 @@ private theorem pol_eq_lp (s : Multiset (IrrGL k)) (θ : kˣ →* ℂˣ) : pol s
         rw [e]
         unfold vals
         rw [Multiset.filter_cons_of_pos (p := fun ξ => IsUnram (ξ * θ)) _ hu, Multiset.map_cons, lp_cons]
-      · have h : ¬ ∃ ξ' : kˣ →* ℂˣ, (∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ') ∧ IsUnram (ξ' * θ) := by
+      · have h : ¬ ∃ ξ' : kˣ →* ℂˣ, (∃ hξ', (IrrGL.ofChar ξ hξ : IrrGL (k := k)) = IrrGL.ofChar ξ' hξ') ∧ IsUnram (ξ' * θ) := by
           rintro ⟨ξ', ⟨_, h2⟩, h3⟩
           obtain rfl := IrrGL.ofChar_inj.1 h2
           exact hu h3

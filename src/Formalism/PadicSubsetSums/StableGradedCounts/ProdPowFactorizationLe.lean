@@ -73,7 +73,7 @@ private theorem lte_val (g δ l : ℕ) (hg : 2 ≤ g) (h4 : 4 ∣ g - 1) (hδ : 
     simp only [Nat.padicValNat_def]
     exact_mod_cast key
   · have := padicValNat.pow_sub_pow (p := l) hodd (x := g) (y := 1) (by omega) hd hlg (n := δ) (by omega)
-    simpa using this
+    simpa [Nat.padicValNat_def] using this
 
 theorem prime_power_order_count : PrimePowerOrderCount := by
   classical
@@ -93,7 +93,7 @@ theorem prime_power_order_count : PrimePowerOrderCount := by
       intro l hl
       rw [Finset.mem_filter] at hl
       have hp := Nat.prime_of_mem_primeFactors hl.1
-      rw [lte_val g δ l hg h4 hδ hp hl.2, Nat.factorization_mul (by omega) hA0,
+      rw [lte_val g δ l hg h4 hδ hp hl.2, Nat.padicValNat_def, Nat.padicValNat_def, Nat.factorization_mul (by omega) hA0,
         Finsupp.add_apply, Nat.factorization_def _ hp, Nat.factorization_def _ hp, add_comm]
     rw [Finset.sum_congr rfl e]
     refine le_trans (sum_le_prod_of_two_le _ _ ?_).1 (prod_pow_factorization_le _ _
@@ -113,7 +113,7 @@ theorem prime_power_order_count : PrimePowerOrderCount := by
       intro l hl
       rw [Finset.mem_filter] at hl
       have hp := Nat.prime_of_mem_primeFactors hl.1
-      rw [← Nat.factorization_def _ hp, hB, Nat.factorization_mul hA0 hB0]
+      rw [Nat.padicValNat_def, ← Nat.factorization_def _ hp, hB, Nat.factorization_mul hA0 hB0]
       have : A.factorization l = 0 := Nat.factorization_eq_zero_of_not_dvd hl.2
       simp [this]
     rw [Finset.sum_congr rfl e]

@@ -48,13 +48,14 @@ theorem bij_H_of_bij (t : R) (ht : ∀ n, Bijective fun x : B.X n => t • x) (n
 theorem isLocalized_of_cx (j : Hom A B) (t : R) (hj : ∀ n, Injective (j.f n))
     (ht : ∀ n, Bijective fun x : B.X n => t • x)
     (hc : ∀ n (x : B.X n), ∃ (m : ℕ) (y : A.X n), j.f n y = t ^ m • x) (n : ℕ) :
-    IsLocalizedModule (Submonoid.powers t) (j.H n) where
-  map_units := by
+    IsLocalizedModule (Submonoid.powers t) (j.H n) := by
+  constructor
+  case map_units =>
     rintro ⟨_, k, rfl⟩
     show IsUnit (algebraMap R (Module.End R (B.H n)) (t ^ k))
     rw [map_pow]
     exact ((Module.End.isUnit_iff _).2 (bij_H_of_bij t ht n)).pow k
-  surj := by
+  case surj =>
     intro y
     induction y using H_ind with
     | h x hx =>
@@ -65,7 +66,7 @@ theorem isLocalized_of_cx (j : Hom A B) (t : R) (hj : ∀ n, Injective (j.f n))
       show (t ^ m) • B.cls n x hx = j.H n (A.cls n a ha0)
       rw [cls_smul, Hom.H_cls]
       exact cls_congr _ _ ha.symm
-  exists_of_eq := by
+  case exists_of_eq =>
     have key : ∀ z : A.H n, j.H n z = 0 → ∃ c : Submonoid.powers t, c • z = 0 := by
       intro z hz
       induction z using H_ind with

@@ -68,13 +68,13 @@ def untwist {N : ℕ} {X Y : Type} [AddCommGroup X] [Module ℂ X] [AddCommGroup
     simp only [MonoidHom.comp_apply, GlobalTheory.CompanionTheory.ThetaInv.thetaW_thetaW] at h
     exact h
 
-theorem prodIrr_congr {h N : ℕ} {x y : Fin h → IrrGL k} (e : x = y) (hx : ∑ a, (x a).1 = N)
+theorem prodIrr_congr {h N : ℕ} {x y : Fin h → IrrGL (k := k)} (e : x = y) (hx : ∑ a, (x a).1 = N)
     (hy : ∑ a, (y a).1 = N) : Nonempty ((prodIrr x hx).Equiv (prodIrr y hy)) := by
   subst e
   exact ⟨Representation.Equiv.refl _⟩
 
 
-theorem exists_surjective_rev {h N : ℕ} (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N)
+theorem exists_surjective_rev {h N : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N)
     (σ : GlobalTheory.CuspRep.SmIrr (GL (Fin N) k)) (f : σ.ρ.IntertwiningMap (prodIrr x hd)) (hf : f ≠ 0) :
     ∃ hd' : ∑ a, (x (Fin.rev a)).1 = N,
       ∃ g : (prodIrr (fun a => x (Fin.rev a)) hd').IntertwiningMap σ.ρ, Function.Surjective g := by

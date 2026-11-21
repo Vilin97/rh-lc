@@ -61,7 +61,6 @@ theorem UpperTheory.V.HV.kstar :
     have h' : Polynomial.IsSplittingField ℚ (Polynomial.SplittingField (Polynomial.X ^ 2 + Polynomial.C (p : ℚ)))
         (Polynomial.X ^ 2 + Polynomial.C (p : ℚ)) := by
       convert h
-      exact Subsingleton.elim _ _
     exact h'
   obtain ⟨e⟩ := splitting_field_iso_quadratic p hp.pos K hK2 δ hδ (Kstar p)
   have hfr : Module.finrank ℚ (Kstar p) = 2 := e.toLinearEquiv.finrank_eq.trans hK2

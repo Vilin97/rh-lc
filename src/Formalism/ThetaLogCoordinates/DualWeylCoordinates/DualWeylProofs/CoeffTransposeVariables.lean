@@ -109,8 +109,8 @@ theorem qn_mem_otherWts' (n : ℕ) (ν : Fin n → ℕ) (g : MvPolynomial (Fin n
     have := congrFun hwt a
     simp only [qn_wt] at this
     exact_mod_cast this
-  rw [coeff_weightedHomogeneousComponent, if_pos hw, coeff_transposeVariables, coeff_zero] at h1
-  exact (mem_support_iff.mp hm) h1
+  rw [coeff_weightedHomogeneousComponent, if_pos hw, coeff_transposeVariables] at h1
+  exact (mem_support_iff.mp hm) (by simpa using h1)
 
 theorem qn_otherWts_coeff' (n : ℕ) (ν : Fin n → ℕ) (z : MvPolynomial (Fin n × Fin n) ℚ)
     (hz : z ∈ otherWts (glOps ℚ n (rowLetters n) Set.univ) (fun a => (ν a : ℤ))) :

@@ -112,7 +112,7 @@ variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAl
 
 def LocGlob (ι : Qbar l ≃+* ℂ) (r : G F Ω →* GL (Fin n) (Qbar l)) (w : HeightOneSpectrum (𝓞 F))
     (σ : SmIrr (GL (Fin n) (w.adicCompletion F))) : Prop :=
-  ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion F) → WD h), IsRec h rc →
+  ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion F) → WD h), IsRec h rc →
     (((l : ℕ) : 𝓞 F) ∉ w.asIdeal → Lev.WO ι r (rc (algNorm σ))) ∧
     ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l F Ω (Dec (F := F) A) O) (hj : Induces Bw),
       IsPstAt (Loc.PP l) Bw (r.comp (Dec (F := F) A).subtype) ∧

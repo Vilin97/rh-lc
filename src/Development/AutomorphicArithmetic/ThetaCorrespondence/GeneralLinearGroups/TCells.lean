@@ -15,7 +15,7 @@ open Filter Topology GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL 
 
 set_option maxHeartbeats 1000000 in
 theorem UpperTheory.Lit.Cas.cells :
-    GlobalTheory.Published.GeometricLemma → GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (h N : ℕ) (δ : Fin h → IrrGL k) (hd : ∑ i, (δ i).1 = N) (x : Fin 2 → IrrGL k) (hx : ∑ j, (x j).1 = N), jm x hx (prodIrr δ hd) ≠ 0 → ∃ (y : Fin h → Fin 2 → IrrGL k) (hr : ∀ i, ∑ j, (y i j).1 = (δ i).1) (hc : ∀ j, ∑ i, (y i j).1 = (x j).1), (∀ i, jm (y i) (hr i) (δ i).rep ≠ 0) ∧ ∀ j, jhMult (x j).rep (prodIrr (fun i => y i j) (hc j)) ≠ 0 := by
+    GlobalTheory.Published.GeometricLemma → GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (h N : ℕ) (δ : Fin h → IrrGL (k := k)) (hd : ∑ i, (δ i).1 = N) (x : Fin 2 → IrrGL (k := k)) (hx : ∑ j, (x j).1 = N), jm x hx (prodIrr δ hd) ≠ 0 → ∃ (y : Fin h → Fin 2 → IrrGL (k := k)) (hr : ∀ i, ∑ j, (y i j).1 = (δ i).1) (hc : ∀ j, ∑ i, (y i j).1 = (x j).1), (∀ i, jm (y i) (hr i) (δ i).rep ≠ 0) ∧ ∀ j, jhMult (x j).rep (prodIrr (fun i => y i j) (hc j)) ≠ 0 := by
   intro hGL hBZ k _ _ _ _ h N δ hd x hx hne
   classical
   obtain ⟨hJ, hC⟩ := hGL k

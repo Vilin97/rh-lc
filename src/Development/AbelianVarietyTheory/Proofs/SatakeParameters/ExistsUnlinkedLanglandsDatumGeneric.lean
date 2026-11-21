@@ -19,7 +19,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace GlobalTheory.GenericLDatum
 
 theorem exists_unlinked_isL : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
-    (x : IrrGL k), IsGeneric x.rep →
+    (x : IrrGL (k := k)), IsGeneric x.rep →
     ∃ (c : ℕ) (Δ : Fin c → Segment k), (∀ i j, i ≠ j → ¬ (Δ i).Linked (Δ j)) ∧
       IsL ((List.ofFn Δ : List (Segment k)) : Multiset (Segment k)) x.rep := by
   intro k _ _ _ _ _ x hg

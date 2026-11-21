@@ -76,8 +76,9 @@ theorem fld {d : ℕ} {k : Type} [Field k] (N E N' : Matrix (Fin d) (Fin d) k) (
     apply Subtype.ext
     have := htv
     simp only [t, LinearMap.comp_apply, hp] at this
-    simpa using this
-  have := congrArg Subtype.val (e.map_eq_zero_iff.1 this)
+    exact this
+  have he : e ⟨v, hker⟩ = e 0 := this.trans (e.toLinearMap.map_zero).symm
+  have := congrArg Subtype.val (e.injective he)
   simpa using this
 
 theorem dom (d : ℕ) (D : Type) [CommRing D] [IsDomain D] (N E N' : Matrix (Fin d) (Fin d) D)

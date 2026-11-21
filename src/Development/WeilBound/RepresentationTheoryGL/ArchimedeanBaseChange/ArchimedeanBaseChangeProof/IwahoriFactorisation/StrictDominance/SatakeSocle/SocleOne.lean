@@ -29,7 +29,7 @@ def SocleOne : Prop :=
   ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
     (n : ℕ) (ξ : Fin n → kˣ →* ℂˣ) (hξ : ∀ i, IsUnram (ξ i)), AbsAnti (atUnif k ξ) →
     ∀ hd : ∑ a, (IrrGL.ofChar (ξ a) (isSmoothChar_of_isUnram (hξ a))).1 = n,
-      (∃ x : IrrGL k, x.1 = n ∧ IsL (msOne ξ hξ) x.rep) ∧
+      (∃ x : IrrGL (k := k), x.1 = n ∧ IsL (msOne ξ hξ) x.rep) ∧
       ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin n) k) V),
         IsL (msOne ξ hξ) π → IsSocle π (prodIrr (fun a => IrrGL.ofChar (ξ a) (isSmoothChar_of_isUnram (hξ a))) hd)
 

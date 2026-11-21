@@ -45,12 +45,11 @@ theorem nabla_add (B : FB R d O) (h : PS k 2 d) (m : ℕ) (u u' φ φ' : Fin d �
 def nablaL (B : FB R d O) (h : PS k 2 d) (m : ℕ) (u φ : Fin d → k) : Module.End k (AA k d) where
   toFun := nabla k B h m u φ
   map_add' G G' := by
-    unfold nabla Dx
-    simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
+    simp only [nabla, Dx, Derivation.map_add, mul_add, Finset.sum_add_distrib]
     ring
   map_smul' c G := by
-    unfold nabla Dx
-    simp only [Derivation.map_smul, mul_smul_comm, RingHom.id_apply, smul_add, smul_sub, Finset.smul_sum]
+    simp only [nabla, Dx, Derivation.map_smul, mul_smul_comm, RingHom.id_apply, smul_add,
+      smul_sub, Finset.smul_sum]
 
 @[simp] theorem nablaL_apply (B : FB R d O) (h : PS k 2 d) (m : ℕ) (u φ : Fin d → k) (G : AA k d) :
     nablaL B h m u φ G = nabla k B h m u φ G := rfl

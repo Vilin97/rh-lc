@@ -22,7 +22,7 @@ theorem isoStab (h : IsoSum ρ Y σ) (g : H) : ∀ y ∈ Y, ρ g y ∈ Y := by
     rw [← f.2.1]
     exact f.2.2 ⟨_, rfl⟩
   · intro a b ha hb
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    rw [map_add]; exact add_mem ha hb
 
 private theorem step (Z W : Submodule ℂ M) (hZ : ∀ g, ∀ z ∈ Z, ρ g z ∈ Z) (hW : ∀ g, ∀ z ∈ W, ρ g z ∈ W)
     (hd : Z ⊓ W = ⊥) (f : σ.V →ₗ[ℂ] M) (hf : ∀ g v, f (σ.ρ g v) = ρ g (f v))
@@ -237,8 +237,10 @@ theorem exInv (ω : Fin n → kˣ →* ℂˣ) : ∃ φ : (glIwa k n).T →* ℂ�
     exact (MulEquiv.symm_apply_eq _).2 rfl
   change χ ((MonoidHom.ofInjective hinj).symm (Subgroup.inclusion (glIwa k n).T_le (eT k n i y))) = _
   rw [h1]
-  simp only [χ, MonoidHom.finset_prod_apply, MonoidHom.comp_apply, Pi.evalMonoidHom_apply, MonoidHom.inv_apply]
-  rw [Finset.prod_eq_single i (fun j _ hj => by simp [hj]) (by simp), Pi.mulSingle_eq_same]
+  simp only [χ, MonoidHom.finsetProd_apply]
+  rw [Finset.prod_eq_single i (fun j _ hj => by
+    simp [MonoidHom.comp_apply, Pi.mulSingle_apply, hj]) (by simp)]
+  simp [MonoidHom.comp_apply]
 
 theorem Uc_le (c : ℕ) : Uc k c ≤ Uo k := by
   rintro _ ⟨u, -, rfl⟩

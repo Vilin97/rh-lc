@@ -150,7 +150,7 @@ private theorem cusp_block {n r : ℕ} {d : Fin r → ℕ} (e : (Σ j, Fin (d j)
 private theorem cnt_eq {n r : ℕ} {d : Fin r → ℕ} (hd : ∀ j, 0 < d j) (e : (Σ j, Fin (d j)) ≃ Fin n) {β : Fin n → ℕ}
     (hβ : ∀ x y, β x < β y ↔ blk e x < blk e y) (φ : Levi k (fun j => Fin (d j)) ≃* levi k n β)
     (hφ : ∀ g, ((φ g : levi k n β) : GL (Fin n) k) = leviEmb k e g) {V : Type} [AddCommGroup V] [Module ℂ V]
-    {π : Representation ℂ (GL (Fin n) k) V} {s : Multiset (IrrGL k)} (hs : HasSupport π s)
+    {π : Representation ℂ (GL (Fin n) k) V} {s : Multiset (IrrGL (k := k))} (hs : HasSupport π s)
     {W : Type} [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (levi k n β) W) (hi : σ.IsIrreducible)
     (hc : GroundTheory.Automorphic.Parabolic.IsCuspidal σ) (ι : Representation.IntertwiningMap π (parabolicInd k n β σ))
     (hι : Function.Injective ι) :

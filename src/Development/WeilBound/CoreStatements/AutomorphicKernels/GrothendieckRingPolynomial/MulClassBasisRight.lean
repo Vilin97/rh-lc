@@ -34,11 +34,11 @@ theorem class_induced_cast {r t N : ℕ} (h : r + t = N) {W : Type} [AddCommGrou
   subst h
   rfl
 
-theorem class_of_chosen_rep (x : IrrGL k) : cl0 (IrrGL.rep x) = sg x := by
+theorem class_of_chosen_rep (x : IrrGL (k := k)) : cl0 (IrrGL.rep x) = sg x := by
   exact (dif_pos x.2.rep.hasFiniteLength).trans ((clsGL_irr x.2.rep x.2.rep.hasFiniteLength).trans
-    (congrArg (fun c => Finsupp.single (⟨x.1, c⟩ : IrrGL k) (1 : ℤ)) x.2.cl_rep))
+    (congrArg (fun c => Finsupp.single (⟨x.1, c⟩ : IrrGL (k := k)) (1 : ℤ)) x.2.cl_rep))
 
-theorem mulR_sg (x y : IrrGL k) : mulR (sg x) (sg y) = cl0 (prod₂ (IrrGL.rep x) (IrrGL.rep y)) := by
+theorem mulR_sg (x y : IrrGL (k := k)) : mulR (sg x) (sg y) = cl0 (prod₂ (IrrGL.rep x) (IrrGL.rep y)) := by
   have h1 := Finsupp.sum_single_index (a := x) (b := (1 : ℤ)) (h := fun z m => (sg y).sum fun w n => (m * n) • cl0 (prod₂ (IrrGL.rep z) (IrrGL.rep w))) (by simp only [Finsupp.sum, zero_mul, zero_smul, Finset.sum_const_zero])
   have h2 := Finsupp.sum_single_index (a := y) (b := (1 : ℤ)) (h := fun w n => ((1 : ℤ) * n) • cl0 (prod₂ (IrrGL.rep x) (IrrGL.rep w))) (by simp only [mul_zero, zero_smul])
   exact h1.trans (h2.trans (by simp only [mul_one, one_smul]))
@@ -101,17 +101,17 @@ theorem one : One k := by
     fun a => a.elim0
   have A : Nonempty ((multiProd e τ).Equiv (IrrRep.det (k := k) (Fin 0) 1 isSmoothChar_one).ρ) :=
     SupportRing.nonempty_equiv_unit e τ
-  have B : Nonempty ((IrrGL.rep (⟨0, c0⟩ : IrrGL k)).Equiv (multiProd e τ)) :=
+  have B : Nonempty ((IrrGL.rep (⟨0, c0⟩ : IrrGL (k := k))).Equiv (multiProd e τ)) :=
     eqv_trans (IrrRep.nonempty_equiv_rep _) (eqv_symm A)
-  have C : Nonempty ((ind₂ (stdSum (Nat.zero_add x.1)) (extTensor (IrrGL.rep (⟨0, c0⟩ : IrrGL k)) (IrrGL.rep x))).Equiv
+  have C : Nonempty ((ind₂ (stdSum (Nat.zero_add x.1)) (extTensor (IrrGL.rep (⟨0, c0⟩ : IrrGL (k := k))) (IrrGL.rep x))).Equiv
       (ind₂ (stdSum (Nat.zero_add x.1)) (extTensor (multiProd e τ) (IrrGL.rep x)))) :=
     ind₂_congr (k := k) (Nat.zero_add x.1) B (eqv_refl (IrrGL.rep x))
   have D : Nonempty ((ind₂ (stdSum (Nat.zero_add x.1)) (extTensor (multiProd e τ) (IrrGL.rep x))).Equiv (IrrGL.rep x)) :=
     GlobalTheory.T.parabolicInductionTwoBlocks_empty_product_left k x.1 0 (Nat.zero_add x.1) _ (IrrGL.rep x) x.2.rep.smooth (fun _ => 0) (fun _ => ℂ) τ e
-  have e1 : mulR (GrothGL.unit k) (sg x) = cl0 (prod₂ (IrrGL.rep (⟨0, c0⟩ : IrrGL k)) (IrrGL.rep x)) :=
+  have e1 : mulR (GrothGL.unit k) (sg x) = cl0 (prod₂ (IrrGL.rep (⟨0, c0⟩ : IrrGL (k := k))) (IrrGL.rep x)) :=
     mulR_sg _ _
-  have e2 : cl0 (prod₂ (IrrGL.rep (⟨0, c0⟩ : IrrGL k)) (IrrGL.rep x)) =
-      cl0 (ind₂ (stdSum (Nat.zero_add x.1)) (extTensor (IrrGL.rep (⟨0, c0⟩ : IrrGL k)) (IrrGL.rep x))) :=
+  have e2 : cl0 (prod₂ (IrrGL.rep (⟨0, c0⟩ : IrrGL (k := k))) (IrrGL.rep x)) =
+      cl0 (ind₂ (stdSum (Nat.zero_add x.1)) (extTensor (IrrGL.rep (⟨0, c0⟩ : IrrGL (k := k))) (IrrGL.rep x))) :=
     (class_induced_cast (Nat.zero_add x.1) _).symm
   obtain ⟨c⟩ := C
   obtain ⟨dd⟩ := D

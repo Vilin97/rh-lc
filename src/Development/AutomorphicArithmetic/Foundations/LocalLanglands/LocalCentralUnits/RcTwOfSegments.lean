@@ -21,8 +21,8 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
 private theorem rc_tw_of_segments {a : Weil h →* (w.adicCompletion E)ˣ} (ha : IsLocalArtin h a)
-    {r rc : IrrGL (w.adicCompletion E) → WD h} (hL : IsLExt r rc)
-    (l : List (Segment (w.adicCompletion E))) (x : IrrGL (w.adicCompletion E))
+    {r rc : IrrGL (k := w.adicCompletion E) → WD h} (hL : IsLExt r rc)
+    (l : List (Segment (w.adicCompletion E))) (x : IrrGL (k := w.adicCompletion E))
     (hx : IsL (l : Multiset (Segment (w.adicCompletion E))) x.rep)
     (χ : (w.adicCompletion E)ˣ →* ℂˣ) (hχ : IsSmoothChar χ)
     (hr : ∀ Δ ∈ l, r (Δ.first.tw χ hχ) = (r Δ.first).lpTwist (χ.comp a) (ha.smooth hχ)) :

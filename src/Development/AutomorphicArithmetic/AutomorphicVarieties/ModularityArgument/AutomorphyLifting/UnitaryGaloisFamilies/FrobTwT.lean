@@ -19,7 +19,7 @@ open Polynomial GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil Globa
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
-private theorem tw_diag (X : ExtraV) {rc : IrrGL (w.adicCompletion E) → WD h} (H : IsRecT h rc) {n : ℕ}
+private theorem tw_diag (X : ExtraV) {rc : IrrGL (k := w.adicCompletion E) → WD h} (H : IsRecT h rc) {n : ℕ}
     (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) (B : Multiset ℂˣ) (hB : GlobalTheory.LFun.HasSatGL w σ.ρ B) (t : ℝ) :
     ∃ α : Fin n → ℂˣ, B = Finset.univ.val.map α ∧
       (rc (cl σ)).lpTw t = WD.mk (WDRep.diag h fun i => (α i)⁻¹ * qPow w t) := by

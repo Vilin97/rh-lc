@@ -16,7 +16,7 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.Loc
 
 theorem UpperTheory.jacquet_borel_nontrivial_of_character_support :
     GlobalTheory.Published.GeometricLemma → GlobalTheory.Published.ZelevinskyPolynomialRing → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (N : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
-    (s : Multiset (IrrGL k)), HasSupport π s → (∀ y ∈ s, y.1 = 1) → Nontrivial (Jacquet π (unipB k (Fin N))) := by
+    (s : Multiset (IrrGL (k := k))), HasSupport π s → (∀ y ∈ s, y.1 = 1) → Nontrivial (Jacquet π (unipB k (Fin N))) := by
   intro hG hZ k _ _ _ _ N V _ _ π s hs h1
   have hV : Nontrivial V := by
     obtain ⟨h, x, hx, hirr, hcu, e0, hsub⟩ := hs

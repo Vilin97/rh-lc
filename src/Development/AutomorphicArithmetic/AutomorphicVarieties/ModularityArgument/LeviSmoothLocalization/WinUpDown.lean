@@ -25,13 +25,13 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 def unif : kˣ := Classical.epsilon fun p : kˣ => ValuativeRel.valuation k (p : k) < 1 ∧
   ∀ x : k, ValuativeRel.valuation k x < 1 → ValuativeRel.valuation k x ≤ ValuativeRel.valuation k (p : k)
 
-def chars (s : Multiset (IrrGL k)) : Set (kˣ →* ℂˣ) := {ξ | ∃ hξ, IrrGL.ofChar ξ hξ ∈ s}
+def chars (s : Multiset (IrrGL (k := k))) : Set (kˣ →* ℂˣ) := {ξ | ∃ hξ, IrrGL.ofChar ξ hξ ∈ s}
 
-def pol (s : Multiset (IrrGL k)) (χ : kˣ →* ℂˣ) : ℂ[X] :=
+def pol (s : Multiset (IrrGL (k := k))) (χ : kˣ →* ℂˣ) : ℂ[X] :=
   (s.map fun y => if h : ∃ ξ : kˣ →* ℂˣ, (∃ hξ, y = IrrGL.ofChar ξ hξ) ∧ IsUnram (ξ * χ) then
     1 - C (((h.choose * χ) (unif k) : ℂˣ) : ℂ) * X else 1).prod
 
-def Unl (q : ℕ) (s : Multiset (IrrGL k)) : Prop :=
+def Unl (q : ℕ) (s : Multiset (IrrGL (k := k))) : Prop :=
   ∀ ξ ∈ chars s, ∀ ξ' ∈ chars s, IsUnram (ξ * ξ'⁻¹) → (((ξ * ξ'⁻¹) (unif k) : ℂˣ) : ℂ) ≠ q
 
 end Loc
@@ -50,8 +50,8 @@ def PolFacts : Prop :=
     (ValuativeRel.valuation k (unif k : k) < 1 ∧
       ∀ x : k, ValuativeRel.valuation k x < 1 → ValuativeRel.valuation k x ≤ ValuativeRel.valuation k (unif k : k)) ∧
     (∀ ξ ξ' : kˣ →* ℂˣ, IsUnram (ξ * ξ'⁻¹) → ξ (unif k) = ξ' (unif k) → ξ = ξ') ∧
-    (∀ ξ ξ' hξ hξ', (IrrGL.ofChar ξ hξ : IrrGL k) = IrrGL.ofChar ξ' hξ' → ξ = ξ') ∧
-    ∀ (s : Multiset (IrrGL k)) (χ : kˣ →* ℂˣ), (pol s χ).eval 0 = 1 ∧ (pol s χ).natDegree = cnt s χ ∧
+    (∀ ξ ξ' hξ hξ', (IrrGL.ofChar ξ hξ : IrrGL (k := k)) = IrrGL.ofChar ξ' hξ' → ξ = ξ') ∧
+    ∀ (s : Multiset (IrrGL (k := k))) (χ : kˣ →* ℂˣ), (pol s χ).eval 0 = 1 ∧ (pol s χ).natDegree = cnt s χ ∧
       (∀ x : ℂ, (pol s χ).eval x = 0 ↔ ∃ ξ ∈ chars s, IsUnram (ξ * χ) ∧ (((ξ * χ) (unif k) : ℂˣ) : ℂ) * x = 1) ∧
       ∀ μ : kˣ →* ℂˣ, IsUnram μ → pol s (χ * μ) = (pol s χ).comp (C ((μ (unif k) : ℂˣ) : ℂ) * X)
 
@@ -64,7 +64,7 @@ def NormVal : Prop :=
 
 def GamLocX : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 1 ≤ n → ∀ (v : HeightOneSpectrum (𝓞 K)) (V : Type) [AddCommGroup V] [Module ℂ V]
-    (π : Representation ℂ (GL (Fin n) (v.adicCompletion K)) V) (s : Multiset (IrrGL (v.adicCompletion K))), HasSupport π s →
+    (π : Representation ℂ (GL (Fin n) (v.adicCompletion K)) V) (s : Multiset (IrrGL (k := v.adicCompletion K))), HasSupport π s →
     ∃ (c : ℂ) (j : ℤ), c ≠ 0 ∧
       GroundTheory.Automorphic.GodementJacquet.IsGammaFactor (v.adicCompletion K) π (GroundTheory.Automorphic.GJStandardL.localHaar n v)
         (GroundTheory.Global.localAdelicChar K v) (RatFunc.C c * RatFunc.X ^ j * algebraMap ℂ[X] (RatFunc ℂ) (pol s 1) /
@@ -78,7 +78,7 @@ def SuppTw : Prop :=
 def SideXAt (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} (σ : CuspSub K n) : Prop :=
   ∀ S : Finset (HeightOneSpectrum (𝓞 K)), GroundTheory.Automorphic.GJStandardL.ramifiedPlaces K ⊆ S →
     ∀ B : HeightOneSpectrum (𝓞 K) → Multiset ℂˣ, (∀ w ∉ S, (CG.mk σ).HasSat w (B w)) →
-    ∀ (s : ∀ v : HeightOneSpectrum (𝓞 K), Multiset (IrrGL (v.adicCompletion K))) (q : ℕ) (f : HeightOneSpectrum (𝓞 K) → ℕ),
+    ∀ (s : ∀ v : HeightOneSpectrum (𝓞 K), Multiset (IrrGL (k := v.adicCompletion K))) (q : ℕ) (f : HeightOneSpectrum (𝓞 K) → ℕ),
       1 < q → (∀ v ∈ S, SuppAt σ v (s v) ∧ (cnt (s v) 1 ≠ 0 → Ideal.absNorm v.asIdeal = q ^ f v)) →
       ∃ β : ℂ[X], β ≠ 0 ∧ PairG (eulerL K (cx B) S) (eulerLd K (cx B) S) β q (∏ v ∈ S, (pol (s v) 1).comp (X ^ f v))
 
@@ -95,14 +95,14 @@ def MatchBCX : Prop :=
     WeakBC (CG.mk π).HasSat (CG.mk P).HasSat → ∀ η : HChar K,
     (∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite, η.UnrAt v ∧ ∀ w : PlacesOver L v,
       IsPrimitiveRoot (η.val v) (fdeg w) ∧ Fintype.card (PlacesOver L v) * fdeg w = Module.finrank K L) →
-    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver L v, Multiset (IrrGL (w.1.adicCompletion L))),
+    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver L v, Multiset (IrrGL (k := w.1.adicCompletion L))),
       SuppAt π v s → (∀ w, SuppAt P w.1 (s' w)) → ∀ θ : (v.adicCompletion K)ˣ →* ℂˣ, IsSmoothChar θ →
       ∏ j ∈ Finset.range (Module.finrank K L), pol s (θ * (η ^ j).loc v) = ∏ w, (pol (s' w) (θ.comp (nm w))).comp (X ^ fdeg w)
 
 def MatchIndX : Prop :=
   ∀ (K M : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M],
     Module.finrank K M = 2 → ∀ (P : CuspSub K (2 * 2)) (π : CuspSub M 2), IndSys (CG.mk π).HasSat (CG.mk P).HasSat →
-    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver M v, Multiset (IrrGL (w.1.adicCompletion M))),
+    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver M v, Multiset (IrrGL (k := w.1.adicCompletion M))),
       SuppAt P v s → (∀ w, SuppAt π w.1 (s' w)) → ∀ θ : (v.adicCompletion K)ˣ →* ℂˣ, IsSmoothChar θ →
       pol s θ = ∏ w, (pol (s' w) (θ.comp (nm w))).comp (X ^ fdeg w)
 
@@ -110,14 +110,14 @@ def UpDownX : Prop :=
   ∀ (K L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L]
     [IsGalois K L], (Module.finrank K L).Prime → ∀ n : ℕ, 2 ≤ n → ∀ (π : CuspSub K n) (P : CuspSub L n),
     WeakBC (CG.mk π).HasSat (CG.mk P).HasSat → ∀ (v : HeightOneSpectrum (𝓞 K)) s
-      (s' : ∀ w : PlacesOver L v, Multiset (IrrGL (w.1.adicCompletion L))), SuppAt π v s → (∀ w, SuppAt P w.1 (s' w)) →
+      (s' : ∀ w : PlacesOver L v, Multiset (IrrGL (k := w.1.adicCompletion L))), SuppAt π v s → (∀ w, SuppAt P w.1 (s' w)) →
       (TorAt π v → ∀ w, ∀ ζ ∈ chars (s' w), ∃ ξ ∈ chars s, ζ = ξ.comp (nm w)) ∧
       ∀ ξ ∈ chars s, ∃ w, ξ.comp (nm w) ∈ chars (s' w)
 
 def IndX : Prop :=
   ∀ (K M : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M],
     Module.finrank K M = 2 → ∀ (P : CuspSub K (2 * 2)) (π : CuspSub M 2), IndSys (CG.mk π).HasSat (CG.mk P).HasSat →
-    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver M v, Multiset (IrrGL (w.1.adicCompletion M))),
+    ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver M v, Multiset (IrrGL (k := w.1.adicCompletion M))),
       SuppAt P v s → (∀ w, SuppAt π w.1 (s' w)) → ∀ ξ ∈ chars s, ∃ w, ξ.comp (nm w) ∈ chars (s' w)
 
 def WinUpDown : Prop :=

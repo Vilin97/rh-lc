@@ -103,8 +103,7 @@ structure SSAtlas (ϖ : O) (X : Scheme.{0}) (q : X ⟶ Spec (CommRingCat.of O)) 
   nzd : ∀ α i, F α i ∈ nonZeroDivisors Γ(X, U α)
   chart : ∀ α (x : X), x ∈ U α → ∃ (V : X.Opens) (_ : IsAffineOpen V) (_ : x ∈ V) (hV : V ≤ U α) (m r : ℕ) (_ : 1 ≤ r)
       (_ : r ≤ m) (c : Fin r ↪ ι)
-      (ψ : (MvPolynomial (Fin m) O ⧸ Ideal.span {(∏ j ∈ Finset.univ.filter (fun j : Fin m => (j : ℕ) < r),
-        MvPolynomial.X j) - MvPolynomial.C ϖ}) →+* Γ(X, V)),
+      (ψ : GlobalTheory.Et.ssModel O ϖ m r →+* Γ(X, V)),
       ψ.Etale ∧ ψ.comp (algebraMap O _) = ((Scheme.ΓSpecIso (CommRingCat.of O)).inv ≫ q.appLE ⊤ V le_top).hom ∧
       (∀ j : Fin r, ∃ u : Γ(X, V)ˣ, ψ (Ideal.Quotient.mk _ (MvPolynomial.X (Fin.castLE (by omega) j))) =
         u * X.presheaf.map (homOfLE hV).op (F α (c j))) ∧
@@ -123,7 +122,7 @@ namespace SSAtlas
 variable {ϖ : O} {X : Scheme.{0}} {q : X ⟶ Spec (CommRingCat.of O)} {ι A : Type} [Fintype ι]
   (C : SSAtlas ϖ X q ι A) {k : Type} [CommRing k] (κ : O →+* k)
 
-
+open Classical in
 def logFun : LogFun k (κ ϖ) where
   ι := ι
   A := A
@@ -182,7 +181,7 @@ theorem isStrictlySemistable (C : SSAtlas ϖ X q ι A) : GlobalTheory.Et.IsStric
   obtain ⟨V, hVa, hxV, -, m, r, h1, h2, -, ψ, het, hcomp, -, -⟩ := C.chart α x hα
   exact ⟨V, hVa, hxV, m, r, h1, h2, ψ, het, hcomp⟩
 
-
+open Classical in
 theorem isSSFun_logFun (C : SSAtlas ϖ X q ι A) : IsSSFun ϖ X q κ (C.logFun κ) := by
   refine ⟨C.isStrictlySemistable, fun B => Equiv.refl _, C.U, C.F, C.G, C.affine, C.cover, C.prod_F, C.F_eq, C.nzd,
     C.chart, fun φ y => rfl, fun {B} y => ⟨rfl, fun α => ⟨Iff.rfl, fun h => ⟨fun i => dif_pos h, fun β h' i => ?_⟩⟩⟩⟩
@@ -216,7 +215,7 @@ theorem _root_.GlobalTheory.LogCris.model_mul_eq_zero {m r : ℕ} (hϖ : ϖ ∈ 
     simp only [d, MvPolynomial.X, MvPolynomial.monomial_sum_one]
   rw [Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton']
   have h2 : MvPolynomial.C ϖ * g ∈
-      Ideal.span {(∏ i ∈ S, MvPolynomial.X i : MvPolynomial (Fin m) O) - MvPolynomial.C ϖ} := by
+      Ideal.span (Set.singleton ((∏ i ∈ S, MvPolynomial.X i : MvPolynomial (Fin m) O) - MvPolynomial.C ϖ)) := by
     rw [← Ideal.Quotient.eq_zero_iff_mem, map_mul]
     exact h
   obtain ⟨p, hp⟩ := Ideal.mem_span_singleton'.mp h2

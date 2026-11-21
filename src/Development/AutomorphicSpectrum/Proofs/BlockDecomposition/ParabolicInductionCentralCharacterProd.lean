@@ -94,7 +94,7 @@ theorem parInd_scalar {W : Type} [AddCommGroup W] [Module ℂ W] (e : (Σ a, m a
   simpa using h1
 
 theorem prodIrr_scalar : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-    (h N : ℕ) (x : Fin h → IrrGL k) (hd : ∑ a, (x a).1 = N) (t : kˣ) (c : Fin h → ℂ),
+    (h N : ℕ) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N) (t : kˣ) (c : Fin h → ℂ),
     (∀ a, Zl.ScalarBy (x a) t (c a)) →
       ∀ v, prodIrr x hd (Matrix.GeneralLinearGroup.scalar (Fin N) t) v = (∏ a, c a) • v := by
   intro k _ _ _ _ h N x hd t c hc v

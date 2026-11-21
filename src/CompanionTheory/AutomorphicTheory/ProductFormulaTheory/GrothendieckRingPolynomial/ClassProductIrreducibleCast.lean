@@ -204,17 +204,17 @@ section Pairs
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem prodIrr_congr {h N : ℕ} {z z' : Fin h → IrrGL k} (e : z = z') (hd : ∑ a, (z a).1 = N)
+theorem prodIrr_congr {h N : ℕ} {z z' : Fin h → IrrGL (k := k)} (e : z = z') (hd : ∑ a, (z a).1 = N)
     (hd' : ∑ a, (z' a).1 = N) : Nonempty ((prodIrr z hd).Equiv (prodIrr z' hd')) := by
   subst e
   exact ⟨.refl _⟩
 
-theorem class_product_irreducible_cast {h N M : ℕ} (e : N = M) (z : Fin h → IrrGL k) (hd : ∑ a, (z a).1 = N)
+theorem class_product_irreducible_cast {h N M : ℕ} (e : N = M) (z : Fin h → IrrGL (k := k)) (hd : ∑ a, (z a).1 = N)
     (hd' : ∑ a, (z a).1 = M) : cl0 (prodIrr z hd) = cl0 (prodIrr z hd') := by
   subst e
   rfl
 
-theorem hasFiniteLength_prodIrr_cast {h N M : ℕ} (e : N = M) (z : Fin h → IrrGL k) (hd : ∑ a, (z a).1 = N)
+theorem hasFiniteLength_prodIrr_cast {h N M : ℕ} (e : N = M) (z : Fin h → IrrGL (k := k)) (hd : ∑ a, (z a).1 = N)
     (hd' : ∑ a, (z a).1 = M) (hf : HasFiniteLength (prodIrr z hd)) : HasFiniteLength (prodIrr z hd') := by
   subst e
   exact hf
@@ -238,7 +238,7 @@ theorem class_eq_of_jordan_holder_mult {N : ℕ} {V W : Type} [AddCommGroup V] [
   rw [cls_apply, cls_apply, h c.rep]
 
 
-theorem jhMult_pair_le (x y : IrrGL k) {N : ℕ} (h1 : ∑ a, (![x, y] a).1 = N) (h2 : ∑ a, (![y, x] a).1 = N)
+theorem jhMult_pair_le (x y : IrrGL (k := k)) {N : ℕ} (h1 : ∑ a, (![x, y] a).1 = N) (h2 : ∑ a, (![y, x] a).1 = N)
     (σ : IrrRep (GL (Fin N) k)) : jhMult σ.ρ (prodIrr ![x, y] h1) ≤ jhMult σ.ρ (prodIrr ![y, x] h2) := by
   have hA := CompanionTheory.Tls2.BZGL.irreducibleAdmissibleGL_top
   have hGK : GKLocal k := GlobalTheory.T.local_langlands_of_irreducible_admissible hA

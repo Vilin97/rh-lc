@@ -414,7 +414,7 @@ theorem finDiscN : PositivityTheory.Rg.BcB.F.F5.FinDiscN := by
   let c : (E →+* ℂ) → ℂ → ℂ := fun τ u => ((m τ).map (u + ·)).prod
   haveI hF := PositivityTheory.Rg.HF.GL.automorphicFormsFiniteGL E N (adLevel Kf) (isOpen_adLevel hK) (Module.Dual ℂ Y)
     (dualRep Y hYl) (isContRep_dualRep Y hYl hYc) c
-  let Sys := ∀ w : HeightOneSpectrum (𝓞 E), GlobalTheory.LocGL.IrrGL (w.adicCompletion E)
+  let Sys := ∀ w : HeightOneSpectrum (𝓞 E), GlobalTheory.LocGL.IrrGL (k := w.adicCompletion E)
   let cls : (∀ w : HeightOneSpectrum (𝓞 E), SmIrr (GL (Fin N) (w.adicCompletion E))) → Sys := fun σ' w =>
     GlobalTheory.LocGL.IrrGL.of (σ' w).ρ (σ' w).smooth (σ' w).irred
   let Good : Submodule ℂ (Sm E N) → (∀ w : HeightOneSpectrum (𝓞 E), SmIrr (GL (Fin N) (w.adicCompletion E))) → Prop :=

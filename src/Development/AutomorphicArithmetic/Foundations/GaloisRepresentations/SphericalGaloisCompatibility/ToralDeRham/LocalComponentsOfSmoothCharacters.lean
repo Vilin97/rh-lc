@@ -33,7 +33,7 @@ section Local
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 theorem exists_equiv_of_eq {N h : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
-    {ρ : Representation ℂ (GL (Fin N) k) V} {x y : Fin h → IrrGL k} {hd : ∑ a, (x a).1 = N}
+    {ρ : Representation ℂ (GL (Fin N) k) V} {x y : Fin h → IrrGL (k := k)} {hd : ∑ a, (x a).1 = N}
     (φ : Nonempty (ρ.Equiv (prodIrr x hd))) (e : x = y) :
     ∃ hd' : ∑ a, (y a).1 = N, Nonempty (ρ.Equiv (prodIrr y hd')) := by
   subst e
@@ -95,7 +95,7 @@ theorem equiv_prodIrr_chars (hGU : GlobalTheory.Published.GenericUnitaryDualGL) 
   rw [ms_eq_singleton (hlen i), hτ i]
 
 theorem equiv_prodIrr_untwist {N h : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
-    (ρ : Representation ℂ (GL (Fin N) k) V) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) (x : Fin h → IrrGL k)
+    (ρ : Representation ℂ (GL (Fin N) k) V) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) (x : Fin h → IrrGL (k := k))
     (hd : ∑ a, (x a).1 = N) (φ : Nonempty ((twist ρ (detChar (Fin N) χ)).Equiv (prodIrr x hd))) :
     Nonempty (ρ.Equiv (prodIrr (fun a => (x a).tw χ⁻¹ hχ.inv) hd)) := by
   obtain ⟨φ⟩ := φ
@@ -109,7 +109,7 @@ theorem equiv_prodIrr_untwist {N h : ℕ} {V : Type} [AddCommGroup V] [Module �
   exact (twistEquiv φ _).trans (prodIrrTwistEquiv x hd χ⁻¹ hχ.inv)
 
 
-noncomputable def valAt (ϖ : kˣ) (y : IrrGL k) : ℂˣ :=
+noncomputable def valAt (ϖ : kˣ) (y : IrrGL (k := k)) : ℂˣ :=
   if h : ∃ (μ : kˣ →* ℂˣ) (hμ : IsSmoothChar μ), y = IrrGL.ofChar μ hμ then h.choose ϖ else 1
 
 theorem valAt_ofChar (ϖ : kˣ) (μ : kˣ →* ℂˣ) (hμ : IsSmoothChar μ) : valAt ϖ (IrrGL.ofChar μ hμ) = μ ϖ := by

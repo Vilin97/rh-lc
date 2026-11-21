@@ -31,13 +31,13 @@ def FrobIn {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] {l 
 
 def RecSph : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
-    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), IsRecT h rc →
+    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRecT h rc →
     ∀ (n : ℕ) (σ : SmIrr (GL (Fin n) (w.adicCompletion E))), GlobalTheory.RoadU.PlainTor (IrrGL.of σ.ρ σ.smooth σ.irred) →
       IsLevelWD 1 n (rc (algNorm σ)) → HasFixed σ.ρ (GlobalTheory.LFun.KGL w n)
 
 def RecFrob : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
-    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), IsRecT h rc →
+    (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRecT h rc →
     ∀ (n : ℕ) (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) (B : Multiset ℂˣ),
       GlobalTheory.RoadU.PlainTor (IrrGL.of σ.ρ σ.smooth σ.irred) → GlobalTheory.LFun.HasSatGL w σ.ρ B →
       ∀ φ : ↥(Weil h), deg φ = 1 → ∀ z : ℂ, (WD.charPol (rc (algNorm σ)) φ).IsRoot z → ∃ b ∈ algSat n (normV w) B, z * b = 1

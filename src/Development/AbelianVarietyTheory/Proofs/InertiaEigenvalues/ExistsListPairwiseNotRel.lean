@@ -16,7 +16,7 @@ namespace GlobalTheory.SmGL.Segment
 open GlobalTheory.LocGL
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-  {ρ : IrrGL k} {hρ : ρ.IsCusp} {c d c' d' : ℤ} {h : c ≤ d} {h' : c' ≤ d'} {Δ Δ' : Segment k}
+  {ρ : IrrGL (k := k)} {hρ : ρ.IsCusp} {c d c' d' : ℤ} {h : c ≤ d} {h' : c' ≤ d'} {Δ Δ' : Segment k}
 
 theorem first_mem_carrier (Δ : Segment k) : Δ.first ∈ Δ.carrier := mem_carrier.2 ⟨0, Δ.len_pos, by simp⟩
 
@@ -77,7 +77,7 @@ theorem precedes_icc : (icc ρ hρ c d h).Precedes (icc ρ hρ c' d' h') ↔ c <
   rw [Precedes, linked_icc, key]
   omega
 
-theorem Linked.exists_eq_icc (H : Linked Δ Δ') : ∃ (ρ : IrrGL k) (hρ : ρ.IsCusp) (c d c' d' : ℤ) (h : c ≤ d) (h' : c' ≤ d'),
+theorem Linked.exists_eq_icc (H : Linked Δ Δ') : ∃ (ρ : IrrGL (k := k)) (hρ : ρ.IsCusp) (c d c' d' : ℤ) (h : c ≤ d) (h' : c' ≤ d'),
     Δ = icc ρ hρ c d h ∧ Δ' = icc ρ hρ c' d' h' := by
   obtain ⟨⟨Γ, hΓ⟩, -⟩ := H
   have key : ∀ D : Segment k, D.carrier ⊆ Γ.carrier → ∃ (c d : ℤ) (h : c ≤ d), D = icc Γ.first Γ.isCusp_first c d h :=
@@ -170,7 +170,7 @@ theorem precedes_and_orderedForms (k : Type) [Field k] [ValuativeRel k] [Topolog
     ((∀ Δ Δ' : Segment k, Δ.Precedes Δ' → ¬ Δ'.Precedes Δ) ∧
       (∀ Δ : Segment k, ¬ Relation.TransGen Segment.Precedes Δ Δ) ∧
       ∀ 𝔪 : Multiset (Segment k), ∃ Δ : Fin 𝔪.card → Segment k, IsOrderedForm Δ 𝔪) ∧
-    ((∀ (ρ : IrrGL k) (hρ : ρ.IsCusp) (c d c' d' : ℤ) (h : c ≤ d) (h' : c' ≤ d'),
+    ((∀ (ρ : IrrGL (k := k)) (hρ : ρ.IsCusp) (c d c' d' : ℤ) (h : c ≤ d) (h' : c' ≤ d'),
         (Segment.icc ρ hρ c d h).Precedes (Segment.icc ρ hρ c' d' h') ↔ c < c' ∧ c' ≤ d + 1 ∧ d < d') ∧
       ∀ Δ Δ' : Segment k, Δ.Linked Δ' ↔ Δ.Precedes Δ' ∨ Δ'.Precedes Δ) ∧
     (∀ (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ),

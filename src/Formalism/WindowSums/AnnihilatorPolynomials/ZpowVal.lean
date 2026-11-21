@@ -92,8 +92,8 @@ lemma zv_pow_nat (x : ℤ_[ℓ]) (hx : (ℓ : ℤ_[ℓ]) ∣ x - 1)
     (zv_not_dvd_of_dvd_sub_one (by simpa using hy1)) (zv_not_dvd_cast hm)
   rw [one_pow] at h1
   have hv : padicValNat ℓ (ℓ ^ e * m) = e := by
-    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hℓ.out.ne_zero) hm0, padicValNat.prime_pow,
-      padicValNat.eq_zero_of_not_dvd hm, add_zero]
+    rw [Nat.padicValNat_def, Nat.multiplicity_mul (pow_ne_zero _ hℓ.out.ne_zero) hm0,
+      Nat.multiplicity_prime_pow, multiplicity_eq_zero_of_not_dvd hm, add_zero]
   rw [pow_mul, h1, zv_pow_prime_pow x hx h2 e, hv]
 
 end ZpowValAux
@@ -130,7 +130,7 @@ theorem valuation_zpow_sub_one : ZpowVal := by
       rintro rfl
       exact hj rfl
     rw [zpow_natCast, padicValInt.of_nat]
-    exact key u hem n hn
+    simpa only [Nat.padicValNat_def] using key u hem n hn
   · have hn : n ≠ 0 := by
       rintro rfl
       exact hj (by simp)
@@ -140,7 +140,7 @@ theorem valuation_zpow_sub_one : ZpowVal := by
         ring
       rw [e, zv_emult_unit_mul (Units.isUnit _).neg, hem]
     have hv : padicValInt ℓ (-(n : ℤ)) = padicValNat ℓ n := by
-      simp [padicValInt]
+      simp [padicValInt, Nat.padicValNat_def]
     rw [zpow_neg, zpow_natCast, ← inv_pow, hv]
     exact key u⁻¹ hinv n hn
 

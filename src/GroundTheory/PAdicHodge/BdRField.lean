@@ -38,11 +38,17 @@ namespace IsPerfectoidField
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
+local notation "𝒪" => normInteger K
+local notation "𝔸" => Localization.Away (p : WittVector p (PreTilt 𝒪 p))
+local notation "𝔹" => BDeRhamPlus 𝒪 p
+local notation "𝔹dR" => BDeRham 𝒪 p
+local notation "J" => RingHom.ker (fontaineThetaInvertP 𝒪 p)
+
 theorem maximalIdeal_eq_span_of_ker_eq_span {a : 𝔸} (ha : J = span {a}) :
     maximalIdeal 𝔹 = span {toBDeRhamPlus 𝒪 p a} := by
   rw [← map_ker_fontaineThetaInvertP K p, ha, Ideal.map_span, Set.image_singleton]
 
-
+variable (K p) in
 def varpi : 𝔹 := wittToBDeRhamPlus 𝒪 p (kerThetaGenerator K p)
 
 variable (K p) in
@@ -110,7 +116,7 @@ theorem isLocalization_away_bDeRham {π : 𝔹} (hπ : maximalIdeal 𝔹 = span 
     have hu' : (y : 𝔹) * ↑u⁻¹ = π ^ n := by rw [hu, mul_comm (↑u : 𝔹), mul_assoc, Units.mul_inv, mul_one]
     rw [← hu', map_mul, ← mul_assoc, hxy, map_mul]
 
-
+variable (K p) in
 def fil (i : ℤ) : Submodule 𝔹 𝔹dR := Submodule.span 𝔹 {algebraMap 𝔹 𝔹dR (varpi K p) ^ i}
 
 theorem algebraMap_units_zpow (u : 𝔹ˣ) (i : ℤ) :
@@ -136,7 +142,7 @@ theorem mem_fil_iff {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) {i : ℤ} 
   · rintro ⟨b, rfl⟩
     exact ⟨b, by rw [Algebra.smul_def, mul_comm]⟩
 
-
+variable (K p) in
 theorem fil_antitone : Antitone (fil K p) := by
   intro i j hij
   have hϖ := maximalIdeal_eq_span_varpi K p
@@ -145,9 +151,7 @@ theorem fil_antitone : Antitone (fil K p) := by
   refine ⟨varpi K p ^ (j - i).toNat, ?_⟩
   rw [map_pow, ← zpow_natCast, Int.toNat_of_nonneg (by omega),
     ← zpow_add₀ (algebraMap_ne_zero_of_maximalIdeal_eq_span hϖ), add_sub_cancel]
-
-
-
+variable (K p) in
 theorem mem_fil_zero_iff {x : 𝔹dR} : x ∈ fil K p 0 ↔ ∃ b : 𝔹, x = algebraMap 𝔹 𝔹dR b := by
   rw [mem_fil_iff (maximalIdeal_eq_span_varpi K p), zpow_zero]
   simp only [one_mul]
@@ -163,7 +167,7 @@ theorem algebraMap_mem_fil_iff (b : 𝔹) (n : ℕ) :
   · rintro ⟨c, hc⟩
     exact ⟨c, by rw [hc]⟩
 
-
+variable (K p) in
 theorem iInf_fil : ⨅ i, fil K p i = ⊥ := by
   have hϖ := maximalIdeal_eq_span_varpi K p
   have hne := algebraMap_ne_zero_of_maximalIdeal_eq_span (K := K) hϖ
@@ -185,7 +189,7 @@ theorem iInf_fil : ⨅ i, fil K p i = ⊥ := by
   rw [Submodule.mem_bot]
   exact (mul_eq_zero.1 ha).resolve_right (pow_ne_zero _ hne)
 
-
+variable (K p) in
 theorem iSup_fil : ⨆ i, fil K p i = ⊤ := by
   have hϖ := maximalIdeal_eq_span_varpi K p
   have hne := algebraMap_ne_zero_of_maximalIdeal_eq_span (K := K) hϖ
@@ -256,6 +260,9 @@ end IsPerfectoidField
 section Galois
 
 variable {p : ℕ} [Fact p.Prime] {L : IntermediateField ℚ_[p] (PadicAlgCl p)}
+
+local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
+local notation "𝔹dR" => BDeRham (normInteger ℂ_[p]) p
 
 def galBdRField (σ : Gal(PadicAlgCl p/L)) : 𝔹dR ≃+* 𝔹dR :=
   IsFractionRing.ringEquivOfRingEquiv (galBdR σ)

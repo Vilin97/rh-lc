@@ -140,7 +140,7 @@ theorem UpperTheory.V.Z.Sym.W.aboveWeight : _root_.UpperTheory.V.Z.Sym.W.AboveWe
     · rw [map_pow, compNorm_quadChar, one_pow]
       exact (GlobalTheory.ContraPair.dualIsConjBy_one π).2 hd
   obtain ⟨HT, hwt, hLG⟩ := P.compat L Ω l ι 2 one_le_two r π hc hreg hpol hatt
-  have hg : ∀ (w : Plc L) (A : ValuationSubring Ω) (hA : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion L) → WD hA), UpperTheory.Zero.LLC.IsRecT hA rc →
+  have hg : ∀ (w : Plc L) (A : ValuationSubring Ω) (hA : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion L) → WD hA), UpperTheory.Zero.LLC.IsRecT hA rc →
       ∀ τ, π.IsLocComp w τ → GlobalTheory.RoadU.PlainTor (IrrGL.of τ.ρ τ.smooth τ.irred) ∧ UpperTheory.GalStar.Tor (rc (algNorm τ)) ∧ (rc (algNorm τ)).mono0 :=
     fun w A hA rc hrc τ hτ => guard_of P.plain hreg hatt hr.wit (by
       by_cases e : ((l : ℕ) : 𝓞 L) ∈ w.asIdeal

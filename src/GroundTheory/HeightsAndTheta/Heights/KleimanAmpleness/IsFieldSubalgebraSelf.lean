@@ -58,6 +58,7 @@ variable {K : Type} {ι : K → Type}
 def locIn (A : Subalgebra S Ω) (p : Ideal A) : Subring Ω :=
   Subring.closure {u | ∃ a b : A, b ∉ p ∧ u = (a : Ω) / b}
 
+variable (S)
 
 def modelPts (y : (Σ k, ι k) → Ω) : Set (Subring Ω) :=
   {z | ∃ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) ∧

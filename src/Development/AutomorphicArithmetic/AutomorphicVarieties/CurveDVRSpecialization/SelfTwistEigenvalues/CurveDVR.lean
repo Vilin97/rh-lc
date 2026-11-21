@@ -46,7 +46,9 @@ private theorem curveDVR_complete {R R' : Type} [CommRing R] [IsLocalRing R] [Is
       ((maximalIdeal.isMaximal R).eq_of_le (Ideal.comap_ne_top _ h2.ne_top)
         (Ideal.map_le_iff_le_comap.1 h1)).symm
     have h4 : P.IsMaximal :=
-      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := R) P (h3 ▸ maximalIdeal.isMaximal R)
+      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap R R')
+        (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) P
+        (h3 ▸ maximalIdeal.isMaximal R)
     exact (eq_maximalIdeal h4).ge
   obtain ⟨e, he⟩ := Ideal.exists_pow_le_of_le_radical_of_fg hrad (IsNoetherian.noetherian _)
   have hP : IsPrecomplete (maximalIdeal R') R' :=

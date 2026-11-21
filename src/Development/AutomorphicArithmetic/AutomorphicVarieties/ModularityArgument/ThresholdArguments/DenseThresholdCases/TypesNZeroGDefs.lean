@@ -34,10 +34,10 @@ def Step_prodIrr_alt : Prop :=
 def GMainAlt : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
     (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a)
-    (ε : EpsFamily A) (rc : IrrGL (w.adicCompletion E) → WD h), Laws a ha ε rc → _root_.GlobalTheory.Mem.LiteralAutomorphy.LitLocAlt →
+    (ε : EpsFamily A) (rc : IrrGL (k := w.adicCompletion E) → WD h), Laws a ha ε rc → _root_.GlobalTheory.Mem.LiteralAutomorphy.LitLocAlt →
     ∀ (s : ℕ) (d : Fin s → ℕ) (η : Fin s → (w.adicCompletion E)ˣ →* ℂˣ), (∀ b, IsSmoothChar (η b)) →
     (∀ b c, b ≠ c → ∃ t : Ine (F := E) A, η b (a (ineIncl h t)) ≠ η c (a (ineIncl h t))) →
-    ∀ (x : IrrGL (w.adicCompletion E)) (hd : ∑ b, d b = x.1),
+    ∀ (x : IrrGL (k := w.adicCompletion E)) (hd : ∑ b, d b = x.1),
       ((rc x).mono0 ∧ ∀ t : Ine (F := E) A,
           (rc x).charPol (ineIncl h t) = ∏ b, (X - C ((η b (a (ineIncl h t)) : ℂˣ) : ℂ)) ^ d b) ↔
         IsTwSphProd x.rep d hd η

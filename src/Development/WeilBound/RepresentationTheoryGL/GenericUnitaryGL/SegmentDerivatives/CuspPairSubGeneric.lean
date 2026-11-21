@@ -15,7 +15,7 @@ variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 def NuPair : Prop :=
   ∀ (N : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (ω : Representation ℂ (GL (Fin N) k) V), IsSmooth ω →
-    ω.IsIrreducible → ¬ IsGeneric ω → ∃ (α β β' : IrrGL k) (hd : ∑ a, (![α, β] a).1 = N)
+    ω.IsIrreducible → ¬ IsGeneric ω → ∃ (α β β' : IrrGL (k := k)) (hd : ∑ a, (![α, β] a).1 = N)
       (hd' : ∑ a, (![β', α.nu 1] a).1 = N), 0 < α.1 ∧ 0 < β.1 ∧ β'.1 = β.1 ∧ 1 ≤ Zc.jm ![α, β] hd ω ∧
         1 ≤ Zc.jm ![β', α.nu 1] hd' ω
 

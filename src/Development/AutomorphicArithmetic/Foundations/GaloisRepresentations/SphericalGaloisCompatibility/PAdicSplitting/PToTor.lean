@@ -55,8 +55,8 @@ private theorem split_of_padic {E : Type} [Field E] [NumberField E] [IsCMField E
     exact hsq (by simpa using hne)
 
 private theorem dvd_of_support {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-    {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ (GL (Fin N) k) V) (s : Multiset (IrrGL k))
-    (hs : HasSupport ρ s) (y : IrrGL k) (hy : y ∈ s) : y.1 ∣ N.factorial := by
+    {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ (GL (Fin N) k) V) (s : Multiset (IrrGL (k := k)))
+    (hs : HasSupport ρ s) (y : IrrGL (k := k)) (hy : y ∈ s) : y.1 ∣ N.factorial := by
   have h1 : 0 < y.1 := (hs.isCusp hy).1
   have h2 := hs.sum_fst
   have h3 : y.1 ≤ (s.map Sigma.fst).sum := Multiset.single_le_sum (by simp) _ (Multiset.mem_map_of_mem _ hy)

@@ -61,8 +61,8 @@ private theorem tame_fwd (P : PlaceIso A w A' w' φ j i) {y : WD h} {y' : WD h'}
   rfl
 
 
-private theorem typeLaw_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (w.adicCompletion E) → WD h)
-    (rc' : IrrGL (w'.adicCompletion E') → WD h') (hrel : ∀ x x', RepRel i x x' → WDRel φ (rc x) (rc' x'))
+private theorem typeLaw_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (k := w.adicCompletion E) → WD h)
+    (rc' : IrrGL (k := w'.adicCompletion E') → WD h') (hrel : ∀ x x', RepRel i x x' → WDRel φ (rc x) (rc' x'))
     (hT : UpperTheory.Zero.LLC.TypeLaw h rc) : UpperTheory.Zero.LLC.TypeLaw h' rc' := by
   intro E'' _ _ _ _ _ _ g _ w'' h'' ii hii n hn hg hnorm a'' ha'' K _ _ red hred hker θ hθ τ hτ hτc σ' hσ'
   letI iE : Algebra E E'' := ((algebraMap E' E'').comp j).toAlgebra
@@ -127,9 +127,9 @@ private theorem typeLaw_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (w.adicC
   rw [← this, RingEquiv.apply_symm_apply]
 
 
-private theorem isRecT_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (w.adicCompletion E) → WD h)
+private theorem isRecT_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (k := w.adicCompletion E) → WD h)
     (H : UpperTheory.Zero.LLC.IsRecT h rc) (a' : Weil h' →* (w'.adicCompletion E')ˣ) (ha' : IsLocalArtin h' a') :
-    ∃ rc' : IrrGL (w'.adicCompletion E') → WD h', UpperTheory.Zero.LLC.IsRecT h' rc' ∧
+    ∃ rc' : IrrGL (k := w'.adicCompletion E') → WD h', UpperTheory.Zero.LLC.IsRecT h' rc' ∧
       ∀ x x', RepRel i x x' → WDRel φ (rc x) (rc' x') := by
   have h3 := P.cont
   have := charZero_compl w
@@ -142,7 +142,7 @@ private theorem isRecT_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (w.adicCo
   obtain ⟨a, ha, L⟩ := H
   have hart := GlobalTheory.T.localArtinMap_unique_transport_placeIso GlobalTheory.globalArtinReciprocity_holds GlobalTheory.Published.chevalleyUnits'
     E Ω A w h E' Ω' A' w' h' φ j i P a a' ha ha'
-  obtain ⟨rc', key⟩ : ∃ rc' : IrrGL (w'.adicCompletion E') → WD h', ∀ x', rc' x' = S (rc (T.symm x')) :=
+  obtain ⟨rc', key⟩ : ∃ rc' : IrrGL (k := w'.adicCompletion E') → WD h', ∀ x', rc' x' = S (rc (T.symm x')) :=
     ⟨_, fun _ => rfl⟩
   have hRS : ∀ x x', RepRel i x x' → rc' x' = S (rc x) := fun x x' r => by
     rw [key, ← (hT _ _).1 r, T.symm_apply_apply]
@@ -159,7 +159,7 @@ private theorem isRecT_fwd (P : PlaceIso A w A' w' φ j i) (rc : IrrGL (w.adicCo
   have heig : ∀ x' σ', (rc' x').eig σ' = (rc (T.symm x')).eig (c.symm σ') := fun x' σ' => by
     rw [hRS _ _ (hrel x')]
     exact (GlobalTheory.LawsTTransport.eig_of_wdRel (hwd _) (hσ σ')).symm
-  have hcent : ∀ (x' : IrrGL (w'.adicCompletion E')) ω, HasCentralChar x'.rep ω →
+  have hcent : ∀ (x' : IrrGL (k := w'.adicCompletion E')) ω, HasCentralChar x'.rep ω →
       HasCentralChar (T.symm x').rep (ω.comp (Units.map i.symm.symm.toRingHom.toMonoidHom)) :=
     fun x' ω hω => central_transport i.symm (repRel_symm (hrel x')) hω
   refine ⟨rc', ⟨a', ha', ⟨fun x' => ?_, fun χ' hχ' => ?_, fun l x' hx => ?_, fun x' hx => ?_, fun x' s => ?_,

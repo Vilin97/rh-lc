@@ -40,7 +40,7 @@ theorem ms_eq_singleton {Δ : Segment k} (h1 : Δ.len = 1) : Δ.ms = {Δ.first} 
   rw [hz, h3]
 
 
-noncomputable def valAt (ϖ : kˣ) (y : IrrGL k) : ℂˣ :=
+noncomputable def valAt (ϖ : kˣ) (y : IrrGL (k := k)) : ℂˣ :=
   if h : ∃ (μ : kˣ →* ℂˣ) (hμ : IsSmoothChar μ), y = IrrGL.ofChar μ hμ then h.choose ϖ else 1
 
 end Local

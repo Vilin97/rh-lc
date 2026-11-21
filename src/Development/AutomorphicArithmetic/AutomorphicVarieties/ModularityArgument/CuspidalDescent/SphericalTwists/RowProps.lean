@@ -29,7 +29,7 @@ variable [IsAlgClosure E Ω] [IsCMField E]
 
 def RowProps (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL (Fin n) (Qbar l)) (π : CuspSub E n) (HT : (E →+* Qbar l) → Multiset ℤ) : Prop :=
   (∀ τ : E →+* Qbar l, (HT τ).map (fun k : ℤ => (k : ℂ)) = ((CG.mk π).infChar (ι.toRingHom.comp τ)).map fun z => ((n : ℂ) - 1) / 2 - z) ∧
-    ∀ (w : HeightOneSpectrum (𝓞 E)) (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (w.adicCompletion E) → WD h), IsRecT h rc →
+    ∀ (w : HeightOneSpectrum (𝓞 E)) (A : ValuationSubring Ω) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRecT h rc →
       ∀ σ, π.IsLocComp w σ → UpperTheory.GalStar.Tor (rc (algNorm σ)) → (rc (algNorm σ)).mono0 →
         (((l : ℕ) : 𝓞 E) ∉ w.asIdeal → IsWDOf ι r (rc (algNorm σ))) ∧
         Hi.DRat ι h (r.comp (Dec (F := E) A).subtype) HT fun s => (rc (algNorm σ)).charPol s

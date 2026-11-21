@@ -21,7 +21,7 @@ open Filter Topology MeasureTheory GlobalTheory.PRep GlobalTheory.SplitWeil Glob
 namespace GlobalTheory.CompanionTheory.SegLink
 
 theorem one_le_deg_of_isLSeg {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
-    [IsNonarchimedeanLocalField k] {Δ : Segment k} {y : IrrGL k} (hL : IsLSeg Δ y.rep) : 1 ≤ y.1 := by
+    [IsNonarchimedeanLocalField k] {Δ : Segment k} {y : IrrGL (k := k)} (hL : IsLSeg Δ y.rep) : 1 ≤ y.1 := by
   obtain ⟨hd, -⟩ := hL
   have hterm : ∀ a, (Δ.term a).fst = Δ.d := fun a => rfl
   rw [← hd]

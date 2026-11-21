@@ -159,7 +159,7 @@ theorem kil_full (hL : Inv e ν L) {l : kˣ} (hl : valuation k (l : k) = 1) (hν
     rw [← smul_vecMul, ← e1, r, ← Pi.single_smul, smul_eq_mul, mul_one]
   by_cases h0 : cl e false X₀ ≠ 0 ∨ RI (mid e X₀)
   · obtain ⟨B, hB, hk⟩ : ∃ B ∈ 𝓝 X₀, B ⊆ {Y | cl e false Y ≠ 0 ∨ RI (mid e Y)} := by
-      refine h0.elim (fun h => ⟨_, ?_, fun _ => Or.inl⟩) fun ⟨R, h⟩ => ⟨_, ?_, fun _ => Or.inr⟩
+      refine h0.elim (fun h => ⟨{Y | cl e false Y ≠ 0}, ?_, fun _ => Or.inl⟩) fun ⟨R, h⟩ => ⟨{Y | RI (mid e Y)}, ?_, fun _ => Or.inr⟩
       · exact (isOpen_ne_fun (continuous_pi fun i => continuous_id.matrix_elem i _) continuous_const).mem_nhds h
       · have cm : Continuous (mid e : Matrix (Fin n) (Fin d) k → _) := continuous_id.matrix_submatrix _ _
         exact mem_of_superset (cm.continuousAt.preimage_mem_nhds (det_nhds h)) fun Y hY => ri_of_det hY

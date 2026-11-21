@@ -27,9 +27,14 @@ noncomputable def integerUnitsToUnits : galIntegerUnitsZ K L ⟶ galUnitsZ K L :
     rfl⟩
 
 noncomputable def unitsValuation : galUnitsZ K L ⟶ Rep.trivial ℤ Gal(L/K) ℤ :=
-  Rep.ofHom ⟨(unitsOrd L).toIntLinearMap, fun σ => by
+  Rep.ofHom ⟨(unitsOrd (L := L)).toIntLinearMap, fun σ => by
     ext x
-    exact unitsOrd_smul σ x.toMul⟩
+    change ord (↑(σ • x.toMul) : L) = ord (x.toMul : L)
+    have hOrd : ord (σ (x.toMul : L)) = ord (x.toMul : L) := by
+      rw [ord, ord, normalizedValuation_apply, normalizedValuation_apply,
+        valuation_algEquiv_apply K L σ (x.toMul : L)]
+    rw [AlgEquiv.smul_units_def, Units.coe_map]
+    exact hOrd⟩
 
 @[simp]
 theorem unitsValuation_hom_apply (x : Additive Lˣ) :
@@ -42,10 +47,24 @@ noncomputable def unitsValuationSES : ShortComplex (Rep ℤ Gal(L/K)) :=
     exact ord_unit (K := L) x.toMul)
 
 theorem unitsValuationSES_shortExact : (unitsValuationSES K L).ShortExact where
-  exact := GroundTheory.GroupCoh.shortComplex_exact_of_forall fun x hx =>
-    (exact_unitsIncl_unitsOrd (L := L) x).1 hx
+  exact := GroundTheory.GroupCoh.shortComplex_exact_of_forall fun x hx => by
+    change Additive Lˣ at x
+    change ord ((x.toMul : Lˣ) : L) = 0 at hx
+    have hMem : x.toMul ∈ (unitsIncl L).range := by
+      rwa [ord_eq_zero_iff_mem, unitFiltrationUnits, unitFiltration_zero,
+        ← MonoidHom.range_eq_map] at hx
+    obtain ⟨u, hu⟩ := hMem
+    exact ⟨Additive.ofMul u, Additive.toMul.injective hu⟩
   mono_f := (Rep.mono_iff_injective _).2 fun _ _ h =>
     Additive.toMul.injective (unitsIncl_injective (K := L) (congrArg Additive.toMul h))
-  epi_g := (Rep.epi_iff_surjective _).2 (unitsOrd_surjective (L := L))
+  epi_g := by
+    have hSurj : Function.Surjective (unitsOrd (L := L)) := by
+      obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[L]
+      intro n
+      refine ⟨n • Additive.ofMul (uniformizerUnit hϖ), ?_⟩
+      rw [map_zsmul]
+      change n • ord (uniformizerUnit hϖ : L) = n
+      rw [coe_uniformizerUnit, ord_uniformizer hϖ, smul_eq_mul, mul_one]
+    exact (Rep.epi_iff_surjective _).2 hSurj
 
 end GroundTheory.ProfCoh

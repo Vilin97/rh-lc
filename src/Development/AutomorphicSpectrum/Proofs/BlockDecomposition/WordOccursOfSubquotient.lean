@@ -16,7 +16,7 @@ namespace GlobalTheory.CompanionTheory.Words
 theorem wd_of_isSubquotient {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] {N : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W]
     [Module ℂ W] (π : Representation ℂ (GL (Fin N) k) V) (σ : Representation ℂ (GL (Fin N) k) W)
-    (hπ : IsSmooth π) (h : IsSubquotient σ π) (w : List (IrrGL k)) (hw : Wd σ w) : Wd π w := by
+    (hπ : IsSmooth π) (h : IsSubquotient σ π) (w : List (IrrGL (k := k))) (hw : Wd σ w) : Wd π w := by
   obtain ⟨hd, hne⟩ := hw
   refine ⟨hd, ?_⟩
   exact jhMult_ne_zero_iff.2
