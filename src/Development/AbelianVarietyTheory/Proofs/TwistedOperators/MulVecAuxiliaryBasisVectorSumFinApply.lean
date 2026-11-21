@@ -65,7 +65,7 @@ variable [MeasurableSpace k] [BorelSpace k]
 
 theorem oneClass (hc : 1 ≤ c) {ϖ : 𝒪[k]} (hϖ : Irreducible ϖ) {ψ : AddChar k Circle} (hψ : HasConductor ψ 1)
     {ν : Measure k} (hν : IsUnitVol ν) (L' : Submodule 𝒪[k] (n' → k)) : OneClass ϖ ψ ν n hc L' := by
-  intro Λ hΛ Ψ _ hS hP hE
+  intro Λ hΛ Ψ hSB hS hP hE
   have := hν.1
   have h0 := coe_ne_zero hϖ
   obtain ⟨x₀, hx₀⟩ : ∃ x₀, opE ψ ν 1 Ψ x₀ ≠ 0 := Function.ne_iff.1 hE
@@ -129,7 +129,49 @@ theorem oneClass (hc : 1 ≤ c) {ϖ : 𝒪[k]} (hϖ : Irreducible ϖ) {ψ : AddC
       by_cases hr : r.val = 0 <;> simp [hr, Fin.ext_iff]
   obtain ⟨u, hu, huΛ⟩ := GlobalTheory.RootEx.UnfoldFlag.exists_unipotent k n c hc ϖ h0 Λ h1 h2
   refine ⟨h1, h2, ⟨u, hu, huΛ⟩, ?_⟩
-  obtain ⟨g, hg⟩ := GlobalTheory.RootEx.UnfoldShape.exists_eq_act_stdLat k n _ ((GlobalTheory.RootEx.ChainLattice.isLattice_chainLat_and_comap k n c).2 Λ hΛ)
+  have hfull : (Λ.comap (inX k n c)).IsFullLattice k := by
+    letI := (GlobalTheory.RootEx.ChainLattice.isLattice_chainLat_and_comap k n c).2 Λ hΛ
+    constructor
+    refine Submodule.eq_top_iff'.2 fun v => ?_
+    -- Vary the column acting on the first scaled basis vector while Ψ stays constant.
+    let x := pt x₀ y
+    let B : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
+      Matrix.of fun r => Pi.single (Sum.inr (0 : Fin (c + 1))) (inX k n c v r)
+    have hB : B *ᵥ aux k n' 0 = inX k n c v := by
+      funext r
+      rw [mulVec_auxiliaryBasisVectorSumFin_apply]
+      simp [B]
+    have hloc : IsLocallyConstant Ψ := hSB.1
+    have hcont : Continuous (fun a : k => x + a • B) :=
+      continuous_const.add (continuous_id.smul continuous_const)
+    have hnear := (hloc.comp_continuous hcont).eventually_eq (0 : k)
+    obtain ⟨γ, hγ, hγnear⟩ := (IsValuativeTopology.hasBasis_nhds_zero' k).mem_iff.mp hnear
+    obtain ⟨δ, hδ, hδ1⟩ := ValuativeRel.IsNontrivial.exists_lt_one (R := k)
+    have hγpos : 0 < γ := zero_lt_iff.mpr hγ
+    obtain ⟨a, ha⟩ := ValuativeRel.valuation_surjective (γ * δ)
+    have ha0 : a ≠ 0 := by
+      intro e
+      exact (mul_ne_zero hγ hδ.ne') (by simpa [e] using ha.symm)
+    have haq : Ψ (x + a • B) = Ψ x := by
+      have hav : valuation k a < γ := by
+        simpa only [ha, mul_one] using mul_lt_mul_of_pos_left hδ1 hγpos
+      simpa only [Set.mem_setOf_eq, Function.comp_apply, zero_smul, add_zero] using hγnear hav
+    have hw := scaled_basis_mem_chainLattice ϖ L' (0 : Fin (c + 1))
+    simp only [Fin.val_zero, zero_add, pow_one] at hw
+    have hbase := hmap _ hw
+    change x *ᵥ ((ϖ : k) • aux k n' 0) ∈ Λ at hbase
+    have hshift := hS (x + a • B) (by rwa [haq]) _ hw
+    rw [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.mulVec_smul B, hB, smul_smul] at hshift
+    have hscaled : (a * (ϖ : k)) • v ∈ Λ.comap (inX k n c) := by
+      change inX k n c ((a * (ϖ : k)) • v) ∈ Λ
+      have heq : inX k n c ((a * (ϖ : k)) • v) = (a * (ϖ : k)) • inX k n c v := by
+        funext r
+        cases r <;> simp [inX_apply, Pi.smul_apply]
+      rw [heq]
+      simpa only [add_sub_cancel_left] using Λ.sub_mem hshift hbase
+    simpa only [inv_smul_smul₀ (mul_ne_zero ha0 h0)] using
+      (Submodule.span k (Λ.comap (inX k n c) : Set (n → k))).smul_mem (a * (ϖ : k))⁻¹ (Submodule.subset_span hscaled)
+  obtain ⟨g, hg⟩ := GlobalTheory.RootEx.UnfoldShape.exists_eq_act_stdLat k n _ hfull
   refine ⟨u⁻¹ * embX c g, mul_mem (inv_mem (Subgroup.mem_sup_right hu)) (Subgroup.mem_sup_left ⟨g, rfl⟩), ?_⟩
   rw [act_mul, act_embX, ← hg, ← huΛ, ← act_mul, inv_mul_cancel, act_one]
 

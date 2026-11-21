@@ -21,6 +21,10 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 variable {n : ℕ}
 
+-- Compatibility with dependency artifacts that refer to the old generated instance name.
+def instMeasurableSpaceSubtypeUnitsMatrixFinComplexMemSubgroupUJKG
+    (ε : Fin n → Bool) : MeasurableSpace (KG ε) := borel _
+
 abbrev Pt (ε : Fin n → Bool) := {a : Fin n // ε a = true}
 
 abbrev Qt (ε : Fin n → Bool) := {a : Fin n // ε a = false}
@@ -108,11 +112,11 @@ def phiL (ε : Fin n → Bool) : (Pt ε → Qt ε → ℂ) ≃ₗ[ℝ] (PCoord �
     simp only [phiF, pOfB, Matrix.of_apply]
     by_cases ha : ε a = true
     · have hb : ε b = false := by cases hb : ε b <;> simp_all
-      simp only [dif_pos ha, dif_pos hb, pmat, dif_pos (And.intro hlt hne)]
+      simp only [dite_eq_left ha, dite_eq_left hb, pmat, dite_eq_left (And.intro hlt hne)]
     · have hb : ε b = true := by cases hb : ε b <;> simp_all
       have h1 : ¬ (a < b ∧ ε b ≠ ε a) := fun h => lt_asymm h.1 hlt
       have h2 : b < a ∧ ε a ≠ ε b := ⟨hlt, hne⟩
-      simp only [dif_neg ha, dif_pos hb, pmat, dif_neg h1, dif_pos h2, star_star]
+      simp only [dite_eq_right ha, dite_eq_left hb, pmat, dite_eq_right h1, dite_eq_left h2, star_star]
 
 theorem lintegral_pmat_le (ε : Fin n → Bool) :
     ∃ c : ℝ≥0∞, c ≠ ⊤ ∧ ∀ H : Matrix (Fin n) (Fin n) ℂ → ℝ≥0∞,
@@ -173,9 +177,9 @@ theorem haar_polar_le (ε : Fin n → Bool) (hq : 1 ≤ q0 ε) (ν : Measure (UJ
         rw [lintegral_smul_measure, smul_eq_mul]
         simp only [hFg]
     _ = c * ∫⁻ k, ∫⁻ z, F (polarM (k, z)) * ENNReal.ofReal (Jac z) ∂volume ∂(dk ε) := by
-        rw [lintegral_muPolar ε F hFm]
+        exact congrArg (c * ·) (lintegral_muPolar ε F hFm)
     _ = c * ∫⁻ z, ∫⁻ k, F (polarM (k, z)) * ENNReal.ofReal (Jac z) ∂(dk ε) ∂volume := by
-        rw [lintegral_lintegral_swap hmeas]
+        exact congrArg (c * ·) (lintegral_lintegral_swap hmeas)
     _ = c * ∫⁻ z, (muK ε Set.univ)⁻¹ * ((∫⁻ k, F (toMK k * NormedSpace.exp (pmat z)) ∂(muK ε)) *
           ENNReal.ofReal (Jac z)) ∂volume := by
         congr 1

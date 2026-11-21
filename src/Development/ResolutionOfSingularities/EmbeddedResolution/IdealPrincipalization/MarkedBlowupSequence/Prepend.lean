@@ -61,6 +61,7 @@ private theorem le_length_of_succ_le_prepend_length (Z : X.IdealSheafData) (hZ :
   rw [prepend_length] at h
   omega
 
+@[no_expose]
 def prependMapOfLELength {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
     (c : SequenceOfBlowupsPullback φ d'.toSequenceOfBlowups d.toSequenceOfBlowups) (Z : X.IdealSheafData)
     (hZ : Blowup.IsBlowupAlongIdealSheaf (𝟙 X) Z) (hZ' : Blowup.IsBlowupAlongIdealSheaf (𝟙 X') (Z.comap φ)) :

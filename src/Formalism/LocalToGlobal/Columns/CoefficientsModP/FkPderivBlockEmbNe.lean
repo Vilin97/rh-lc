@@ -41,7 +41,7 @@ theorem fk_pderiv_blockEmb_ne {τ τ' : ι} (h : τ ≠ τ') (v : Fin n × Fin n
   induction g using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq => simp [hp, hq]
-  | mul_X p w hp => simp [Derivation.leibniz, hp, pderiv_X, Pi.single_apply, Prod.ext_iff, Ne.symm h]
+  | mul_X p w hp => simp [Derivation.leibniz, hp, pderiv_X, Prod.ext_iff, Ne.symm h]
 
 theorem fk_fock_right (τ : ι) (P Q : MvPolynomial (ι × Fin n × Fin n) K) (hP : ∀ v, pderiv (τ, v) P = 0)
     (g : MvPolynomial (Fin n × Fin n) K) :
@@ -171,7 +171,7 @@ theorem fk_descent {σ κ : Type} [Fintype κ] (v : κ → MvPolynomial σ K) (h
     rw [this, map_smul, smul_eq_mul, mul_comm]
   have key : ∑ i, (c i - (π (c i) : K)) • v i = 0 := by
     ext m
-    rw [coeff_sum, coeff_zero]
+    rw [coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     simp only [coeff_smul, smul_eq_mul, sub_mul, Finset.sum_sub_distrib]
     rw [sub_eq_zero]
     have h1 : AddMonoidAlgebra.coeff (∑ i, c i • v i) m = ∑ i, c i * AddMonoidAlgebra.coeff (v i) m := by

@@ -126,7 +126,7 @@ theorem exists_infPlaceOfEmbedding_eq (w : v.placesOver E.1) :
   rfl
 
 
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 8000000 in
 theorem exists_unitsLocalRes_unitsResField_eq_zero_of_infPlaceOfEmbedding
     (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure v.Completion) (x : cohomology (unitsLimitRep K) 2)
     (hx : (unitsLocalRes v.Completion ι 2).hom x = 0) :
@@ -198,7 +198,9 @@ theorem unitsResField_eq_zero_of_dvd_finrank (ι : LocalEmbeddings K) (x : cohom
       (unitsLocalRes w.Completion ιE 2).hom ((unitsResField K E 2).hom x) = 0 := by
     intro w
     let v : InfinitePlace K.1 := w.comap (algebraMap K.1 E.1)
-    let w' : v.placesOver E.1 := ⟨w, ⟨rfl⟩⟩
+    let w' : v.placesOver E.1 := by
+      set_option synthInstance.maxHeartbeats 200000 in
+        exact ⟨w, ⟨rfl⟩⟩
     obtain ⟨ι', hι'⟩ := exists_infPlaceOfEmbedding_eq w'
     have key : ∀ u : v.placesOver E.1, infPlaceOfEmbedding ι' E = u →
         ∃ ιE : ℚ̄ →ₐ[E.1] AlgebraicClosure (u : InfinitePlace E.1).Completion,

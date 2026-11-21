@@ -29,7 +29,7 @@ private theorem mapDR_deg {q : ℕ} {w : DR k K} (hw : w ∈ ⋀[K]^q Ω[K⁄k])
     rw [GlobalTheory.W1.Base.mapDR_ιMulti]
     exact ExteriorAlgebra.ιMulti_range L q ⟨_, rfl⟩
   | zero => simp
-  | add a c _ _ ha hc => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hc
+  | add a c _ _ ha hc => rw [map_add]; exact add_mem ha hc
   | smul r a _ ha => rw [mapDR_smul']; exact Submodule.smul_mem _ _ ha
 
 private theorem omB_deg {B : Subalgebra k K} {q : ℕ} {w : DR k K} (hw : w ∈ omB k K B q) :

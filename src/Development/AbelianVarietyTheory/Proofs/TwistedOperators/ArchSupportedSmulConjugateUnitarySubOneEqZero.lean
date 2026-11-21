@@ -69,7 +69,7 @@ set_option maxHeartbeats 1000000 in
 theorem eInf_smul (x : AF D.host.F ⊗[D.host.F] D.host.E) :
     eInf D.host.F • x = TensorProduct.map (incInf D.host.F) LinearMap.id
       (Algebra.TensorProduct.map (fstA D.host.F) (AlgHom.id D.host.F D.host.E) x) := by
-  have key : DistribMulAction.toLinearMap D.host.F (AF D.host.F ⊗[D.host.F] D.host.E) (eInf D.host.F) =
+  have key : DistribSMul.toLinearMap D.host.F (AF D.host.F ⊗[D.host.F] D.host.E) (eInf D.host.F) =
       (TensorProduct.map (incInf D.host.F) (LinearMap.id : D.host.E →ₗ[D.host.F] D.host.E)).comp
         (Algebra.TensorProduct.map (fstA D.host.F) (AlgHom.id D.host.F D.host.E)).toLinearMap := by
     refine TensorProduct.ext' fun a y => ?_

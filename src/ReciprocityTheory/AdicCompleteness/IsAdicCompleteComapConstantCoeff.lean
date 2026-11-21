@@ -23,7 +23,7 @@ theorem map_C_sup_span_X :
     · rw [Ideal.map_le_iff_le_comap]
       intro a ha
       simpa using ha
-    · simp [Ideal.span_singleton_le_iff_mem]
+    · simp
   · intro f hf
     rw [f.eq_X_mul_shift_add_const]
     exact add_mem
@@ -50,7 +50,7 @@ theorem mem_pow_comap_constantCoeff_iff (n : ℕ) (f : A⟦X⟧) :
         have h3 := Ideal.mul_mem_mul h1 h2
         rw [← pow_add] at h3
         exact Ideal.pow_le_pow_right (by omega) h3
-      · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha i) (hb i)
+      · rw [map_add]; exact add_mem (ha i) (hb i)
   · intro h
     have hX : (X : A⟦X⟧) ∈ I.comap (constantCoeff (R := A)) := by simp
     rw [f.eq_X_pow_mul_shift_add_trunc n]

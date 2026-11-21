@@ -310,7 +310,7 @@ theorem weierstrassP_add_of_two_mul_notMem {z w : ℂ} (hw : w ∉ L.lattice)
       exact hH.meromorphicOrderAt_nonneg
     · exact (analyticAt_addDefect hw hu0 hu1
         (by rwa [sub_neg_eq_add] at hu)).meromorphicOrderAt_nonneg
-  obtain ⟨c, hc⟩ := exists_const_of_meromorphicOrderAt_nonneg hE.1 hE.2 ho
+  obtain ⟨c, hc⟩ := exists_const_of_meromorphicOrderAt_nonneg L hE.1 hE.2 ho
   obtain ⟨H, hH, hH0, hev⟩ := exists_analyticAt_addDefect_zero (L := L) hw
   have hc0 : c = 0 := by
     have hgen : ∀ᶠ u in 𝓝[≠] (0 : ℂ), addDefect L w u = c := by

@@ -8,8 +8,9 @@ open Polynomial UpperTheory.V.Z.Sym.Wt
 
 open MvPolynomial in
 private theorem homogeneous_trace_mul {d : ℕ} (n : ℕ) (g h : GL (Fin d) ℂ) :
-    tr1 d n (g * h) = ∑ p ∈ deg1 d n ×ˢ deg1 d n, coeff p.1 (sbs (fun _ : Unit => g) (monomial p.2 1)) *
-      coeff p.2 (sbs (fun _ : Unit => h) (monomial p.1 1)) := by
+    tr1 d n (g * h) = ∑ p ∈ deg1 d n ×ˢ deg1 d n,
+      (sbs (fun _ : Unit => g) (monomial p.2 1)).coeff p.1 *
+        (sbs (fun _ : Unit => h) (monomial p.1 1)).coeff p.2 := by
   classical
   have hcomp : ∀ P, sbs (fun _ : Unit => g * h) P = sbs (fun _ : Unit => g) (sbs (fun _ : Unit => h) P) := by
     intro P
@@ -27,7 +28,7 @@ private theorem homogeneous_trace_mul {d : ℕ} (n : ℕ) (g h : GL (Fin d) ℂ)
     exact mem_homogeneousExponentsOneBlock.1 hm
   have hQ := sbs_mem (fun _ : Unit => h) hmono
   have hQsum : sbs (fun _ : Unit => h) (monomial m 1) =
-      ∑ m' ∈ deg1 d n, monomial m' (coeff m' (sbs (fun _ : Unit => h) (monomial m 1))) := by
+      ∑ m' ∈ deg1 d n, monomial m' ((sbs (fun _ : Unit => h) (monomial m 1)).coeff m') := by
     conv_lhs => rw [(sbs (fun _ : Unit => h) (monomial m 1)).as_sum]
     apply Finset.sum_subset
     · intro m' hm'
@@ -41,8 +42,8 @@ private theorem homogeneous_trace_mul {d : ℕ} (n : ℕ) (g h : GL (Fin d) ℂ)
     rw [map_sum, MvPolynomial.coeff_sum]
   apply Finset.sum_congr rfl
   intro m' _
-  rw [show monomial m' (coeff m' (sbs (fun _ : Unit => h) (monomial m 1))) =
-      coeff m' (sbs (fun _ : Unit => h) (monomial m 1)) • monomial m' (1 : ℂ) by
+  rw [show monomial m' ((sbs (fun _ : Unit => h) (monomial m 1)).coeff m') =
+      (sbs (fun _ : Unit => h) (monomial m 1)).coeff m' • monomial m' (1 : ℂ) by
     rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]]
   rw [map_smul, MvPolynomial.coeff_smul, smul_eq_mul, mul_comm]
 

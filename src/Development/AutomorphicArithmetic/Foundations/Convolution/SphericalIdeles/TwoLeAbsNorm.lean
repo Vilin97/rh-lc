@@ -80,7 +80,8 @@ theorem UpperTheory.ConvolutionTheory.Sph.up :
   obtain ⟨B', hB'e, hB'⟩ := (Dp.sSatIff E n μE (P.twist χ') V'' hP' w _).1 (hup w hw)
   have h1 := hN w
   rw [hw] at h1
-  have hf' : Ideal.absNorm w.asIdeal = Ideal.absNorm v.asIdeal ^ f := hf
+  have hf' : Ideal.absNorm w.asIdeal = Ideal.absNorm v.asIdeal ^ f := by
+    simpa only [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using hf
   have hg : f = resDeg F w := Nat.pow_right_injective (two_le_absNorm v) (hf'.symm.trans h1)
   have hB'' : B' = B.map fun b => (b * χ.val v) ^ f := by
     refine Multiset.map_injective Units.val_injective ?_

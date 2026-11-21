@@ -87,7 +87,7 @@ theorem pt_matrices {v : Valuation C NNReal} (hv : v.Integers O) (P : HTPoint C 
       rw [Submodule.coe_sum] at this
       rw [← this]
       refine Finset.sum_congr rfl fun j _ => ?_
-      rw [algebraMap_smul, Submodule.coe_smul, Basis.extendOfIsLattice_apply]
+      simp only [algebraMap_smul, Submodule.coe_smul, bC, Basis.extendOfIsLattice_apply]
     rw [e, bC.repr_sum_self]
   let Hm : Matrix (Fin g) (Ix E N) O := fun k m => bo.repr ⟨P.ht (B m), P.ht_mem _ (hB m)⟩ k
   have hHm : ∀ k m, algebraMap O C (Hm k m) = bC.repr (P.ht (B m)) k := fun k m =>
@@ -144,14 +144,14 @@ theorem pt_matrices {v : Valuation C NNReal} (hv : v.Integers O) (P : HTPoint C 
     have h0 : P.ht x = 0 := (P.lagr x).2 fun y hy => by rw [hx, LinearMap.comp_apply, hy, map_zero]
     have h1 := congrArg (fun z => bC.repr z k') h0
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [x, ← hEi, map_sum, map_smul, LinearMap.map_smul_of_tower, Finsupp.coe_finset_sum, Finset.sum_apply,
+      simp only [x, ← hEi, map_sum, map_smul, LinearMap.map_smul_of_tower, Finsupp.coe_finsetSum, Finset.sum_apply,
       map_zero, Finsupp.coe_zero, Pi.zero_apply] at h1
     rw [Matrix.zero_apply, map_zero, ← h1]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, map_sum, map_mul, Finset.sum_mul]
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, map_sum, map_mul, Finset.sum_mul,
+        Finsupp.smul_apply, Finsupp.coe_finsetSum, Finset.sum_apply, smul_eq_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun m _ => ?_
-    simp only [Finsupp.smul_apply, Finsupp.coe_finset_sum, Finset.sum_apply, smul_eq_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun m' _ => ?_
     rw [hHm k' m', ← algebraMap_smul C (Ei m m'), map_smul, Finsupp.smul_apply, smul_eq_mul, mul_assoc]
 

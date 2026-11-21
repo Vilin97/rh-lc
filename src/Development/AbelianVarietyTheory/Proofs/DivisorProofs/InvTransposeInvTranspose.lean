@@ -10,9 +10,6 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ParIndJac
 
 noncomputable section
 
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.TypeTwo GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion Matrix
-open scoped TensorProduct
-
 namespace GlobalTheory.InvTransposeEnds
 
 section General
@@ -39,28 +36,5 @@ theorem isIrreducible_comp {ρ : Representation ℂ G V} (h : ρ.IsIrreducible) 
         (congrArg (Subrepresentation.toSubmodule (ρ := ρ)) e :))
 
 end General
-
-section Matrices
-
-variable {k : Type} [Field k]
-
-section Blocks
-
-variable {b N : ℕ} (h : b + 1 = N) (h' : 1 + b = N)
-
-variable {h h'} {w : GL (Fin N) k}
-  (hw : Placing.Moves (stdSum h) ((Equiv.sumComm _ _).trans (stdSum h')) w)
-include hw
-
-end Blocks
-
-end Matrices
-
-section Local
-
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-  {V : Type} [AddCommGroup V] [Module ℂ V]
-
-end Local
 
 end GlobalTheory.InvTransposeEnds

@@ -30,13 +30,6 @@ namespace Formalism.LFunctionChainParameters.LChain6
 open Formalism Formalism.D5 Formalism.RankGapBounds.WeightedMeanData Formalism.LFunctionChainParameters.WeightedSlopeBounds Formalism.LFunctionChainParameters.characterSumData Formalism.LFunctionChainParameters.ThickSetMeanBounds Formalism.LFunctionChainParameters.LErr Formalism.LFunctionChainParameters.LChain
   Formalism.LFunctionChainParameters.LChain2 Formalism.LFunctionChainParameters.LHost Formalism.LFunctionChainParameters.LBrDiv
 
-def HostAn (c' : ℝ) : Prop :=
-  ∀ ε A : ℝ, 0 < ε → 0 < A → ∃ x₀ : ℝ, ∀ x : ℝ, x₀ ≤ x →
-    ∀ (C : ℝ) (q d : ℕ) [Fact q.Prime] [Fact d.Prime], PrimePairBounds ε C x q d →
-      FrobeniusOrbits.HostHyp q d ∧ ∀ e : ℕ, ((2 ^ e : ℕ) : ℝ) ≤ x ^ A →
-        ThinScales (hostData e q d) (hostEll e q d) (XpTx x ε) (Real.exp (-c' * x ^ (ε / 8))) ∧
-        ValuesAtX (hostData e q d) (hostEll e q d) x ε C
-
 structure Rows {I : Type} {m : ℕ} (F : Fam I m) where
 
   D : ℕ
@@ -73,22 +66,6 @@ def topPhi (H : Type) [AddCommGroup H] [Fintype H] [DecidableEq H] : H ↪ PhiSe
   ⟨fun t => ⟨topPl t, Finset.mem_filter.2 ⟨Finset.mem_univ _, rfl⟩⟩, fun _ _ h => congrArg (fun z => z.1.2) h⟩
 
 def aPhi (a : H → ℝ) : PhiSet (H := H) → ℝ := fun ρ => a ρ.1.2
-
-def DivIn (G : Glob) (C : Consts) (TT T2 : Finset H) (a : H → ℝ) (Fm : ∀ u0, Fam (W u0) m)
-    (Rw : ∀ u0, Rows (Fm u0)) (logOm C0 : ℝ) (g₁ g₂ : ℕ) : Prop :=
-  (∀ u0, 0 < (Rw u0).D ∧ (∀ v, IsUnit ((Rw u0).XE v).det) ∧ Submodule.IsLattice (Fm u0).K (Rw u0).R ∧
-    RowsAreDual (Fm u0) (Rw u0).XE (Rw u0).R (Rw u0).ψ) ∧
-  50 * C0 + 10 ≤ C.cDiv ∧ 9 * C0 ^ 2 + 6 * C0 + 20 ≤ C.cE ∧ 7 * C0 ^ 2 + 18 ≤ C.cH ∧
-  (∀ u0 (u : W u0), ThmConcl (TT.map (topPhi H)) (aPhi a)
-    (lcv (Rw u0).XE (Rw u0).R / ((Rw u0).D : ℝ)) ((Fm u0).h u) (Fam6.FoAll (Fm u0))
-    (Real.log ((Fm u0).T u : ℝ)) logOm (m : ℝ) (G.x * Real.exp (G.x ^ G.ε)) G.La
-    (budgetAtPoint H G m) (NcTx G T2) (G.x ^ (C.eDiv * G.ε)) C0) ∧
-  (∀ u0 (u : W u0), TypePrimeCostDeviationBound (TT.map (topPhi H)) (aPhi a) (Fam6.EAll (Fm u0) u)
-    (Real.log ((g₁ : ℝ) * (g₂ : ℝ))) (m : ℝ) (budgetAtPoint H G m) C0) ∧
-  (∀ u0, CorrectedHeightVariationBound (TT.map (topPhi H)) (Fm u0).h (fun u => Real.log ((Fm u0).T u : ℝ)) (fun _ => aPhi a)
-    (G.x * Real.exp (G.x ^ G.ε)) G.La (budgetAtPoint H G m) (m : ℝ) C0) ∧
-  (∀ u0, muMaxDef (Pi.basisFun (Fm u0).K (Fin (Rw u0).D)) (Rw u0).XE (Rw u0).R + Fam6.sMean (Fm u0)
-    ≤ G.x ^ C.cHH * bTx G.x G.ε)
 
 end Defs
 

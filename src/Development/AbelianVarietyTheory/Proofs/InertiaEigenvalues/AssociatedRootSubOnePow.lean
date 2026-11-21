@@ -515,8 +515,8 @@ theorem _root_.GlobalTheory.CycFr.exists_frame [IsDiscreteValuationRing O]
         (_root_.GlobalTheory.CycFr.act O (u : ℤ_[l]) P)
       rwa [hevP, map_zero, sub_zero] at this
     have hQval : constantCoeff (σ' Q) = algebraMap ℤ_[l] O u := by
-      have hd1 := congrArg (fun y => constantCoeff (σ' (d⁄dX O y))) hQ
-      have hdP : d⁄dX O P = 1 := by rw [hP, map_sub, derivative_X, derivative_C, sub_zero]
+      have hd1 := congrArg (fun y => constantCoeff (σ' (d⁄dX y))) hQ
+      have hdP : d⁄dX P = 1 := by rw [hP, map_sub, derivative_X, derivative_C, sub_zero]
       rw [Derivation.leibniz, hdP, smul_eq_mul, smul_eq_mul, mul_one, map_add (f := _), map_mul, hPσ, map_add (f := _), map_mul, constantCoeff_X,
         zero_mul, zero_add] at hd1
       rw [← hd1, hP]

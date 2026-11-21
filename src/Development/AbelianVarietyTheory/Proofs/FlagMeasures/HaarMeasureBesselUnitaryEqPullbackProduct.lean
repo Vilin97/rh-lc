@@ -186,16 +186,26 @@ theorem pullH : ∀ (D : D7) (X : HidaSetting D) (C : Choice X 1) (hB : WuBessel
     have h1 := hρ1
     rw [h] at h1
     simp at h1
-  have hHc : ρ (HinfG X u : Set X.B.I.Ginf)ᶜ = 0 := by
-    rw [HinfG_coe, hρA]
+  let H : Subgroup X.B.I.Ginf := Formalism.L2.SG.PoincareInHH.HinfS X.B.I
+    (Set.range (fun a => crdOf X.B.I X.ιE X.bas (X.eX a)) ∪
+      Set.range (fun a => crdOf X.B.I X.ιE X.bas (X.fY a)) ∪ {crdOf X.B.I X.ιE X.bas (X.zu u)})
+  have hH : (H : Set X.B.I.Ginf) = Hset X.B.I (Set.range (fun a => crdOf X.B.I X.ιE X.bas (X.eX a)) ∪
+      Set.range (fun a => crdOf X.B.I X.ιE X.bas (X.fY a)) ∪ {crdOf X.B.I X.ιE X.bas (X.zu u)}) := rfl
+  have hHclosed : IsClosed (H : Set X.B.I.Ginf) := by
+    show IsClosed {s : X.B.I.Ginf | ∀ v, ∀ x ∈ _, Formalism.MainNotions.S.uMat (s v) *ᵥ rv X.B.I v x = rv X.B.I v x}
+    simp only [Set.setOf_forall]
+    refine isClosed_iInter fun v => isClosed_iInter fun x => isClosed_iInter fun _ => isClosed_eq ?_ continuous_const
+    exact Continuous.matrix_mulVec ((Units.continuous_val.comp continuous_subtype_val).comp (continuous_apply v)) continuous_const
+  have hHc : ρ (H : Set X.B.I.Ginf)ᶜ = 0 := by
+    rw [hH, hρA]
     refine measure_mono_null ?_ hPc
     rintro _ ⟨x, hx, rfl⟩ hy
     exact hx ((mem_Hset_iff C u x).2 fun τ => hy τ (Set.mem_univ τ))
   have hmapρ : ρ.map (trI C) = μ := by
     rw [hρ, he.map_comap, Measure.restrict_eq_self_of_ae_mem (by rw [ae_iff]; exact hrc)]
-  have hinv : ∀ s ∈ HinfG X u, ρ.map (fun x => s * x) = ρ := by
+  have hinv : ∀ s ∈ H, ρ.map (fun x => s * x) = ρ := by
     intro s hs
-    have hs' := (mem_Hset_iff C u s).1 (by rw [← HinfG_coe]; exact hs)
+    have hs' := (mem_Hset_iff C u s).1 (by rw [← hH]; exact hs)
     have hcomm : trI C ∘ (fun x => s * x) =
         (fun y τ => Formalism.QuantumDeterminants.lmulM (Matrix.of (trI C s τ)) (y τ)) ∘ trI C := by
       funext x τ
@@ -218,8 +228,8 @@ theorem pullH : ∀ (D : D7) (X : HidaSetting D) (C : Choice X 1) (hB : WuBessel
       ← Measure.map_map hLm he.measurable, hmapρ, hμL]
   obtain ⟨hσ, h0, hc, hi⟩ := X.muH_haar u
   haveI := hσ
-  rw [← HinfG_coe] at hc hi
-  obtain ⟨κ, hκ0, hκT, hκ⟩ := PiM.uniq_on_closed (HinfG X u) (HinfG_closed X u) (X.muH u) ρ hc hHc hi hinv h0 hρ0
+  rw [← hH] at hc hi
+  obtain ⟨κ, hκ0, hκT, hκ⟩ := PiM.uniq_on_closed (H) hHclosed (X.muH u) ρ hc hHc hi hinv h0 hρ0
   refine ⟨κ, hκ0, hκT, ?_, fun A _ => ?_⟩
   · rw [hκ, Measure.smul_apply, hρ1, smul_eq_mul, mul_one]
   · rw [hκ, Measure.smul_apply, hρA, smul_eq_mul]

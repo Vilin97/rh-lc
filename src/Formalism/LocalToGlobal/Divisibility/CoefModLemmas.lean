@@ -80,7 +80,7 @@ def PairPos : Prop :=
     (Matrix.of fun i j : VVIdx lam => φ (pairK lam G (bVV K lam i) (bVV K lam j))).PosDef
 
 def BasisAtEx : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (M : Submodule (𝓞 K) (Fin n → K)), Submodule.IsLattice K M →
+  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (M : Submodule (𝓞 K) (Fin n → K)), Submodule.IsFullLattice K M →
     ∀ w : HeightOneSpectrum (𝓞 K), ∃ B : GL (Fin n) K, IsBasisAt w M B
 
 def NabIndep : Prop :=

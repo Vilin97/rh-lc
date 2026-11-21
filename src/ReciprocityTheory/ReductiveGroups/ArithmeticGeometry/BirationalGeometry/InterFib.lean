@@ -14,7 +14,6 @@ open MvPolynomial
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
   [∀ k, DecidableEq (ι k)]
 
-
 variable (ι) in
 def segMono (i : (k : K) → ι k) : MvPolynomial (Σ k, ι k) ℂ := ∏ k, X ⟨k, i k⟩
 
@@ -22,10 +21,10 @@ theorem eval_segMono (i : (k : K) → ι k) (z : (Σ k, ι k) → ℂ) : eval z 
   simp [segMono, segre, map_prod]
 
 theorem segMono_homog (i : (k : K) → ι k) :
-    IsWeightedHomogeneous blkW (segMono ι i) (fun _ => 1) := by
-  have := IsWeightedHomogeneous.prod (w := blkW) Finset.univ
+    IsWeightedHomogeneous (blkW ι) (segMono ι i) (fun _ => 1) := by
+  have := IsWeightedHomogeneous.prod (w := blkW ι) Finset.univ
     (fun k => (X ⟨k, i k⟩ : MvPolynomial (Σ k, ι k) ℂ))
-    (fun k => blkW ⟨k, i k⟩) (fun k _ => isWeightedHomogeneous_X ℂ _ _)
+    (fun k => blkW ι ⟨k, i k⟩) (fun k _ => isWeightedHomogeneous_X ℂ _ _)
   unfold segMono
   convert this using 1
   funext k'
@@ -51,14 +50,13 @@ theorem eval_psiPoly (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1)
   rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
 
 theorem psiPoly_homog (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (j : Fin (e + 1)) :
-    IsWeightedHomogeneous blkW (psiPoly Ψ j) (fun _ => 1) := by
-  have hmem : psiPoly Ψ j ∈ weightedHomogeneousSubmodule ℂ blkW (fun _ => 1) := by
+    IsWeightedHomogeneous (blkW ι) (psiPoly Ψ j) (fun _ => 1) := by
+  have hmem : psiPoly Ψ j ∈ weightedHomogeneousSubmodule ℂ (blkW ι) (fun _ => 1) := by
     unfold psiPoly
     refine Submodule.sum_mem _ (fun i _ => ?_)
     rw [C_mul']
     exact Submodule.smul_mem _ _ ((mem_weightedHomogeneousSubmodule _ _ _ _).mpr (segMono_homog i))
   exact (mem_weightedHomogeneousSubmodule _ _ _ _).mp hmem
-
 
 variable (ι) in
 def idealC (P : Ideal (MRing ι)) : Ideal (MvPolynomial (Σ k, ι k) ℂ) :=
@@ -76,29 +74,13 @@ theorem eval_idealC {P : Ideal (MRing ι)} {z : (Σ k, ι k) → ℂ} (hz : z �
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 theorem idealC_homog {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) :
-    (idealC ι P).IsHomogeneous (weightedHomogeneousSubmodule ℂ blkW) := by
-  have hmap {s : MRing ι} {a : K → ℕ} (hs : IsMultiHomog s a) :
-      IsWeightedHomogeneous blkW (map (Int.castRingHom ℂ) s) a := by
-    have hweight (β : (Σ k, ι k) →₀ ℕ) (k : K) :
-        Finsupp.weight blkW β k = ∑ i, β ⟨k, i⟩ := by
-      rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finset.sum_apply, Fintype.sum_sigma]
-      simp [blkW, Pi.single_apply]
-    intro d hd
-    rw [coeff_map] at hd
-    have hs' : d ∈ s.support := by
-      rw [mem_support_iff]
-      intro h0
-      apply hd
-      simp [h0]
-    funext k
-    rw [hweight]
-    exact hs d hs' k
+    (idealC ι P).IsHomogeneous (weightedHomogeneousSubmodule ℂ (blkW ι)) := by
   obtain ⟨S, hS, rfl⟩ := hP
   rw [idealC, Ideal.map_span]
   apply Ideal.homogeneous_span
   rintro _ ⟨g, hg, rfl⟩
   obtain ⟨a, ha⟩ := hS g hg
-  exact ⟨a, (mem_weightedHomogeneousSubmodule _ _ _ _).mpr (hmap ha)⟩
+  exact ⟨a, (mem_weightedHomogeneousSubmodule _ _ _ _).mpr (isWeightedHomogeneous_map_of_isMultiHomog ha)⟩
 
 theorem segre_rel {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P)
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (hΨ : IsGoodProj P Ψ) (i : (k : K) → ι k) :
@@ -134,56 +116,29 @@ theorem segre_rel {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P)
   obtain ⟨g, hg, a, ha, hga⟩ := Submodule.mem_sup.mp hn1
   obtain ⟨c, hc⟩ := Ideal.mem_span_range_iff_exists_fun.mp ha
   have hcomp : ∀ j, ∃ G : MvPolynomial ((k : K) → ι k) ℂ, G.totalDegree ≤ n ∧ ∀ z : (Σ k, ι k) → ℂ,
-      eval z (weightedHomogeneousComponent blkW (fun _ => n) (c j)) = eval (segre z) G := by
-    intro j
-    classical
-    have hweight (β : (Σ k, ι k) →₀ ℕ) (k : K) :
-        Finsupp.weight blkW β k = ∑ i, β ⟨k, i⟩ := by
-      rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finset.sum_apply, Fintype.sum_sigma]
-      simp [blkW, Pi.single_apply]
-    have hG : ∀ m : (Σ k, ι k) →₀ ℕ, ∃ G : MvPolynomial ((k : K) → ι k) ℂ,
-        m ∈ (weightedHomogeneousComponent blkW (fun _ => n) (c j)).support →
-          G.totalDegree ≤ n ∧ ∀ z : (Σ k, ι k) → ℂ,
-            ∏ p, z p ^ m p = eval (segre z) G := by
-      intro m
-      by_cases hm : m ∈ (weightedHomogeneousComponent blkW (fun _ => n) (c j)).support
-      · have hw := (weightedHomogeneousComponent_isWeightedHomogeneous _ _) (mem_support_iff.1 hm)
-        obtain ⟨G, h1, h2⟩ := diag_prod n (fun p => m p) (fun k => by
-          have := congrFun hw k
-          rwa [hweight] at this)
-        exact ⟨G, fun _ => ⟨h1, h2⟩⟩
-      · exact ⟨0, fun h => absurd h hm⟩
-    choose Gf hGf using hG
-    refine ⟨∑ m ∈ (weightedHomogeneousComponent blkW (fun _ => n) (c j)).support,
-      C (AddMonoidAlgebra.coeff (weightedHomogeneousComponent blkW (fun _ => n) (c j)) m) * Gf m, ?_, fun z => ?_⟩
-    · refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun m hm => ?_)
-      refine (totalDegree_mul _ _).trans ?_
-      rw [totalDegree_C, zero_add]
-      exact (hGf m hm).1
-    · rw [eval_eq', map_sum]
-      refine Finset.sum_congr rfl fun m hm => ?_
-      rw [eval_mul, eval_C, (hGf m hm).2 z]
+      eval z (weightedHomogeneousComponent (blkW ι) (fun _ => n) (c j)) = eval (segre z) G :=
+    fun j => diag_of_homog n (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
   choose G hG1 hG2 using hcomp
   refine ⟨n + 1, Nat.succ_pos n, G, fun j => by simpa using hG1 j, ?_⟩
   intro z hz
   have hD : (fun _ : K => n + 1) = (fun _ : K => n) + (fun _ : K => 1) := by
     funext k; simp
-  have hseg : weightedHomogeneousComponent blkW (fun _ : K => n + 1) (segMono ι i ^ (n + 1)) =
+  have hseg : weightedHomogeneousComponent (blkW ι) (fun _ : K => n + 1) (segMono ι i ^ (n + 1)) =
       segMono ι i ^ (n + 1) := by
     have hh := (segMono_homog (ι := ι) i).pow (n + 1)
     have hh' : (n + 1) • (fun _ : K => (1 : ℕ)) = fun _ : K => n + 1 := by funext k; simp
     rw [hh'] at hh
     exact weightedHomogeneousComponent_eq_self hh
-  have hgc : weightedHomogeneousComponent blkW (fun _ : K => n + 1) g ∈ idealC ι P := by
+  have hgc : weightedHomogeneousComponent (blkW ι) (fun _ : K => n + 1) g ∈ idealC ι P := by
     have h := (idealC_homog hP) (fun _ : K => n + 1) hg
-    rw [← weightedDecomposition.decompose'_apply ℂ blkW g (fun _ : K => n + 1)]
+    rw [← weightedDecomposition.decompose'_apply ℂ (blkW ι) g (fun _ : K => n + 1)]
     exact h
-  have hterm : ∀ j, weightedHomogeneousComponent blkW (fun _ : K => n + 1) (c j * psiPoly Ψ j) =
-      weightedHomogeneousComponent blkW (fun _ : K => n) (c j) * psiPoly Ψ j := by
+  have hterm : ∀ j, weightedHomogeneousComponent (blkW ι) (fun _ : K => n + 1) (c j * psiPoly Ψ j) =
+      weightedHomogeneousComponent (blkW ι) (fun _ : K => n) (c j) * psiPoly Ψ j := by
     intro j
     rw [hD]
     exact comp_mul_homog (psiPoly_homog Ψ j) (c j) _
-  have heq := congrArg (weightedHomogeneousComponent blkW (fun _ : K => n + 1)) hga
+  have heq := congrArg (weightedHomogeneousComponent (blkW ι) (fun _ : K => n + 1)) hga
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hseg, map_add (f := _), ← hc, map_sum] at heq
   simp only [hterm] at heq

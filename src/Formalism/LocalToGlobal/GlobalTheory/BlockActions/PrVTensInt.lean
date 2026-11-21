@@ -34,7 +34,7 @@ theorem prV_tensInt (v : HeightOneSpectrum (𝓞 F)) (s : E ⊗[F] FiniteAdeleRi
       rfl
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 
@@ -65,7 +65,7 @@ variable {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem
 
 theorem clsCrd_fin (u : D.what₂.Word) (c : (D.mem u).C.cls D.R.m) :
     Module.Finite (𝓞 D.host.E) (clsCrd D u D.R.m le_rfl c) := by
-  letI := D.host.cmStar
+  let := D.host.cmStar
   rw [Module.Finite.iff_fg]
   exact (D.clsLat_lat u D.R.m c).fg.map _
 

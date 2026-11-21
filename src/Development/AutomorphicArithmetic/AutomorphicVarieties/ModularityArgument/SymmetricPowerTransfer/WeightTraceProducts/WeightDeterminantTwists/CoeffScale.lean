@@ -8,7 +8,8 @@ open Polynomial UpperTheory.V.Z.Sym.Wt
 
 open MvPolynomial in
 private theorem coeff_scale {σ : Type} [Fintype σ] (t : σ → ℂ) (P : MvPolynomial σ ℂ) (m : σ →₀ ℕ) :
-    coeff m (aeval (fun p => MvPolynomial.C (t p) * MvPolynomial.X p) P : MvPolynomial σ ℂ) = (∏ p, t p ^ m p) * coeff m P := by
+    (aeval (fun p => MvPolynomial.C (t p) * MvPolynomial.X p) P : MvPolynomial σ ℂ).coeff m =
+      (∏ p, t p ^ m p) * P.coeff m := by
   classical
   induction P using MvPolynomial.induction_on' with
   | monomial u a =>
@@ -21,7 +22,8 @@ private theorem coeff_scale {σ : Type} [Fintype σ] (t : σ → ℂ) (P : MvPol
     split_ifs with h
     · rw [h]
     · simp
-  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq =>
+    simp only [map_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hp, hq, mul_add]
 
 open MvPolynomial in
 private theorem eval_scale {σ : Type} (t x : σ → ℂ) (P : MvPolynomial σ ℂ) :

@@ -14,6 +14,8 @@ open PositivityTheory.Rg.Sw PositivityTheory.Rg.Sw.LC
 
 variable {m n : ℕ}
 
+local notation "σ" => Fin m × Fin n × Bool
+
 theorem pderiv_pow_monomial (i : σ) (e : ℕ) (s : σ →₀ ℕ) (a : ℂ) :
     (((pderiv (R := ℂ) i).toLinearMap ^ e) (monomial s a) : PX m n) =
       monomial (s - Finsupp.single i e) (a * ((s i).descFactorial e : ℂ)) := by
@@ -347,7 +349,7 @@ theorem dens : Dens := by
       omega
   have mono_mem : ∀ γ ∈ Γ, (monomial γ 1 : PX m n) ∈ box ε (R : Set (Fin m → ℕ)) := fun γ hγ =>
     Submodule.subset_span ⟨γ, hΓ γ hγ, (Finset.mem_filter.mp hγ).2.2, rfl⟩
-  have hind := indicator ε Γ hΓ Γ.card
+  have hind := B1.indicator ε Γ hΓ Γ.card
   choose! P hP using fun γ (hγ : γ ∈ Γ) => hind γ hγ (Finset.card_filter_le _ _)
   refine ⟨∑ γ ∈ Γ, rename Sum.inl (T (monomial γ 1)) * P γ,
     sf_sum ε _ _ fun γ hγ => sf_renameL ε _ (hT _ (mono_mem γ hγ)) (hP γ hγ).1, ?_⟩

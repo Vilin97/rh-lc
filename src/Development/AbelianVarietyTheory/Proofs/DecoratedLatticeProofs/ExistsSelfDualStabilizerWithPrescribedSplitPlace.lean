@@ -70,7 +70,7 @@ theorem prod_ofFn_single {M : Type*} [Monoid M] :
       intro x hx
       obtain ⟨j, rfl⟩ := (List.mem_ofFn' _ _).1 hx
       exact h _ (Fin.succ_ne_zero j)
-    · obtain ⟨i', rfl⟩ := Fin.exists_succ_eq_of_ne_zero hi
+    · obtain ⟨i', rfl⟩ : ∃ j : Fin r, j.succ = i := ⟨i.pred hi, Fin.succ_pred i hi⟩
       rw [h 0 (Fin.succ_ne_zero i').symm, one_mul]
       exact prod_ofFn_single (fun j => f j.succ) i' fun j hj => h _ fun e => hj (Fin.succ_injective _ e)
 

@@ -83,7 +83,7 @@ theorem cS_mul (𝔞 𝔟 : IdE D) : cS D (𝔞 * 𝔟) = cS D 𝔞 * cS D 𝔟 
         rw [map_mul]
         exact Submodule.mul_mem_mul (by rw [mem_cS, conj_conj]; exact ha)
           (by rw [mem_cS, conj_conj]; exact hb)
-      · intro u v hu hv; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+      · intro u v hu hv; rw [map_add]; exact add_mem hu hv
     have := key _ hx
     rwa [conj_conj] at this
   · intro x hx
@@ -164,7 +164,7 @@ theorem pow_unitary {𝔞 : IdE D} (ha : N1 D 𝔞) :
     apply FractionalIdeal.coeToSubmodule_injective
     show ((I * J : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) : Submodule (𝓞 D.host.E) D.host.E) =
       ((1 : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) : Submodule (𝓞 D.host.E) D.host.E)
-    rw [FractionalIdeal.coe_mul, FractionalIdeal.coe_one]; exact hm
+    rw [FractionalIdeal.coeToSubmodule_mul, FractionalIdeal.coeToSubmodule_one]; exact hm
   have hJI : J * I = 1 := by rw [mul_comm]; exact hIJ
   let u : (FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E)ˣ := ⟨I, J, hIJ, hJI⟩
   set h := Fintype.card (ClassGroup (𝓞 D.host.E))
@@ -173,7 +173,7 @@ theorem pow_unitary {𝔞 : IdE D} (ha : N1 D 𝔞) :
   rw [ClassGroup.mk_eq_one_iff] at hcl
   obtain ⟨β, hβ⟩ := hcl.principal
   have hah : 𝔞 ^ h = Submodule.span (𝓞 D.host.E) {β} := by
-    rw [← hβ, Units.val_pow_eq_pow_val, FractionalIdeal.coe_pow]
+    rw [← hβ, Units.val_pow_eq_pow_val, FractionalIdeal.coeToSubmodule_pow]
     rfl
   have hbh : cS D 𝔞 ^ h = Submodule.span (𝓞 D.host.E) {D.host.conj β} := by
     rw [← cS_pow, hah, cS_span]

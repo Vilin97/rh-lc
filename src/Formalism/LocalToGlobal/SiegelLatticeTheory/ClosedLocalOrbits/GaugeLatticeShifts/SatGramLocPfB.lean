@@ -27,8 +27,8 @@ abbrev rcIntAlg (v : HeightOneSpectrum (𝓞 F)) :
 theorem rc_isIntegral (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adicCompletion F)
     (hx : x ∈ Formalism.UG.tensInt (F := F) (v.adicCompletion F) (Formalism.UG.intOE E)
       (v.adicCompletionIntegers F).toSubring) :
-    letI := rcIntAlg (E := E) v;
-    IsIntegral (v.adicCompletionIntegers F) x := by
+    @IsIntegral (v.adicCompletionIntegers F) (E ⊗[F] v.adicCompletion F) _ _
+      (rcIntAlg (E := E) v) x := by
   letI := rcIntAlg (E := E) v
   unfold Formalism.UG.tensInt Formalism.UG.intOE at hx
   refine (Subring.closure_le (t := (integralClosure (v.adicCompletionIntegers F)

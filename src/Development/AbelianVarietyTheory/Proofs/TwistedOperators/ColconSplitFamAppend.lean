@@ -102,7 +102,7 @@ theorem colcon_gen (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.
       rfl
   | σ + 1, j, hj, vN, h, g, φ, z, hg, hz => by
       subst hg
-      simp only [chainFrom, Chain.Iter] at hz
+      unfold Chain.Iter at hz
       obtain ⟨f₁, f₂, h1, h2⟩ := hz
       have hl : List.range' (j + 1) (2 * (σ + 1)) = (j + 1) :: (j + 1 + 1) :: List.range' (j + 1 + 1 + 1) (2 * σ) := by
         rw [show 2 * (σ + 1) = 2 * σ + 1 + 1 by ring, List.range'_succ, List.range'_succ]

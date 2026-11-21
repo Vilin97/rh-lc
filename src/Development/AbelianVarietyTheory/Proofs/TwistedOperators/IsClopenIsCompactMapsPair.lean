@@ -24,7 +24,7 @@ theorem ite_mem_SB {X : Type*} [TopologicalSpace X] {p : X → Prop} [DecidableP
 
 variable [Fintype n] [Fintype n']
 
-theorem isClopen_lattice (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] : IsClopen (L : Set (n → k)) := by
+theorem isClopen_lattice (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k] : IsClopen (L : Set (n → k)) := by
   classical
   haveI := t2Space k
   obtain ⟨g, rfl⟩ := exists_smul_lat (stdLat k n) L
@@ -50,8 +50,8 @@ theorem maps_stdLat_iff {x : Matrix n n' k} :
     split_ifs
     exacts [one_mem _, zero_mem _]
 
-theorem isClopen_isCompact_maps (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) [S.IsLattice k]
-    [L.IsLattice k] : IsClopen {x : Matrix n n' k | ∀ y ∈ S, x *ᵥ y ∈ L} ∧
+theorem isClopen_isCompact_maps (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) [S.IsFullLattice k]
+    [L.IsFullLattice k] : IsClopen {x : Matrix n n' k | ∀ y ∈ S, x *ᵥ y ∈ L} ∧
       IsCompact {x : Matrix n n' k | ∀ y ∈ S, x *ᵥ y ∈ L} := by
   classical
   haveI := t2Space k
@@ -73,7 +73,7 @@ theorem isClopen_isCompact_maps (S : Submodule 𝒪[k] (n' → k)) (L : Submodul
   rw [e]
   exact ⟨IsClopen.preimage ⟨hKc.isClosed, hKo⟩ (sideMul g h).continuous, (sideMul g h).isCompact_preimage.2 hKc⟩
 
-theorem latInd_mem_SB (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) [S.IsLattice k] [L.IsLattice k] :
+theorem latInd_mem_SB (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) [S.IsFullLattice k] [L.IsFullLattice k] :
     latInd S L ∈ SB (Matrix n n' k) := by
   classical
   exact ite_mem_SB (isClopen_isCompact_maps S L).1 (isClopen_isCompact_maps S L).2

@@ -118,11 +118,11 @@ theorem BlowUpInvariance.proof (hvert : BlowUpVerticalPush.Statement.{u})
   rw [cycEval_ite _ _ _ _ (hfin O (Option K) (extIdx ι (BlowUpIdx ι)) (blowUpOf P (blowUpGens s g f m e))
     (liftForm s)), cycEval_ite _ _ _ _ (hfin O K ι P s)]
   congr 1
-  · have hv := hvert O ϖ hϖ K ι _ P (d + 1) hP _ _ hN ⟨some none, hfm⟩ c s hs hsP (Matrix.vecCons b L)
-    convert hv using 4
-    congr 1
-    funext i
-    exact Fin.cases rfl (fun i => rfl) i
+  · have hdegrees : Matrix.vecCons (liftDeg b) (liftDegs L) = liftDegs (Matrix.vecCons b L) := by
+      funext i
+      exact Fin.cases rfl (fun _ => rfl) i
+    rw [hdegrees]
+    exact hvert O ϖ hϖ K ι _ P (d + 1) hP _ _ hN ⟨some none, hfm⟩ c s hs hsP (Matrix.vecCons b L)
   rw [← htrans (fun W => cycEval (fun G => vNum G L) (ratDiv W f g))]
   refine cycEval_congr_on_support _ fun W hW => ?_
   by_cases hϖ' : (C ϖ : MRing (extIdx ι (BlowUpIdx ι)) O) ∈ W

@@ -264,7 +264,6 @@ theorem moved_false (g : G.VertexGroup) (T : G.Args → ℂ) (z : G.Args) : move
 variable (hs) [MeasurableSpace k] [BorelSpace k] (ψ : AddChar k Circle) (ν : Measure k)
 
 
-variable (hs) in
 def flatIntegrand (S : G.Args → ℂ) (x : ColArgs G) (y : RowArgs G) (e : Vars G) : ℂ :=
   S (fill hs x y e) * (ψ (-phase x e) : ℂ)
 
@@ -273,12 +272,10 @@ variable (G) in
 def varsVol : Measure (Vars G) := Measure.pi fun _ => Measure.pi fun _ => ν
 
 
-variable (hs) in
 def flatTensor (S : G.Args → ℂ) (x : ColArgs G) (y : RowArgs G) : ℂ :=
   ∫ e, flatIntegrand hs ψ S x y e ∂(varsVol G ν)
 
 
-variable (hs) in
 def FlatIntegrable (T : G.Args → ℂ) : Prop :=
   ∀ g x y, Integrable (flatIntegrand hs ψ (moved G true g T) x y) (varsVol G ν)
 

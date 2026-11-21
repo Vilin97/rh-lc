@@ -223,19 +223,19 @@ theorem signedLength_inf_smul_inf_of_le_span {M Θ : Submodule R V} (hM : M.FG) 
   rw [fractionField_smul_inf_restrictScalars hs, ← finrank_inf_restrictScalars_of_le_span hΘ hW']
   exact ⟨h, h.signedLength_smul_right (hΘ.of_le inf_le_left) hs⟩
 
-theorem signedLength_inf_smul_inf (M Θ : Submodule R V) [Submodule.IsLattice K M]
-    [Submodule.IsLattice K Θ] (W : Submodule K V) {s : K} (hs : s ≠ 0) :
+theorem signedLength_inf_smul_inf (M Θ : Submodule R V) [Submodule.IsFullLattice K M]
+    [Submodule.IsFullLattice K Θ] (W : Submodule K V) {s : K} (hs : s ≠ 0) :
     LengthCommensurable (M ⊓ W.restrictScalars R) (Θ ⊓ W.restrictScalars R) ∧
       LengthCommensurable (M ⊓ W.restrictScalars R) (s • Θ ⊓ W.restrictScalars R) ∧
       signedLength (M ⊓ W.restrictScalars R) (s • Θ ⊓ W.restrictScalars R) =
         signedLength (M ⊓ W.restrictScalars R) (Θ ⊓ W.restrictScalars R) +
           WithZero.log (Ring.ordFrac R s) * Module.finrank K W :=
   signedLength_inf_smul_inf_of_le_span (Submodule.IsLattice.fg K M) (Submodule.IsLattice.fg K Θ)
-    (by rw [Submodule.IsLattice.span_eq_top]; exact le_top)
-    (by rw [Submodule.IsLattice.span_eq_top]; exact le_top) hs
+    (by rw [Submodule.IsFullLattice.span_eq_top]; exact le_top)
+    (by rw [Submodule.IsFullLattice.span_eq_top]; exact le_top) hs
 
 theorem signedLength_inf_smul_inf_zpow {ϖ : R} (hϖ : Irreducible ϖ) (M Θ : Submodule R V)
-    [Submodule.IsLattice K M] [Submodule.IsLattice K Θ] (W : Submodule K V) (u : Rˣ) (n : ℤ) :
+    [Submodule.IsFullLattice K M] [Submodule.IsFullLattice K Θ] (W : Submodule K V) (u : Rˣ) (n : ℤ) :
     signedLength (M ⊓ W.restrictScalars R)
         ((u • algebraMap R K ϖ ^ n) • Θ ⊓ W.restrictScalars R) =
       signedLength (M ⊓ W.restrictScalars R) (Θ ⊓ W.restrictScalars R) +

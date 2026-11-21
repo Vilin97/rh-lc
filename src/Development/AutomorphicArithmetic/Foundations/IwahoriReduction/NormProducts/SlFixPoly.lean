@@ -147,7 +147,7 @@ private theorem valuation_eq_one_of_mem_of_inv_mem {K : Type} [Field K] (W : Val
 private theorem aeval_jK_mem_of_overY {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} (X : Tower Ω ε)
     (V : ValuationSubring X.K) (hV : X.OverY V) (P : Polynomial Ω) : Polynomial.aeval X.jK P ∈ V := by
   induction P using Polynomial.induction_on' with
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | monomial n c =>
     rw [Polynomial.aeval_monomial]
     exact mul_mem (hV.1 c) (pow_mem hV.2 n)

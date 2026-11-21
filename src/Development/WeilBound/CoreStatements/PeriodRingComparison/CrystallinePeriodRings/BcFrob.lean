@@ -33,7 +33,8 @@ theorem bcris_hom_ext_acris {B : Type} [CommRing B] {f g : Reformulated.AutPerF.
   exact RingHom.congr_fun h2 z
 
 theorem cBc_frob_of
-    (hφ : ∀ x, cA l (Reformulated.AutPerF.Acris.frob l (OC l) x) = ACris.phi (cA l x))
+    (hφ : ∀ x, cA l (Reformulated.AutPerF.Acris.frob l (OC l) x) =
+      ACris.phi (K := ℂ_[l]) (p := l) (cA l x))
     (b : Reformulated.AutPerF.Bcris l (OC l)) :
     cBc l (Reformulated.AutPerF.Bcris.frob l (OC l) b) = Formalism.Per6.φB l (cBc l b) := by
   have h : (cBc l).toRingHom.comp (Reformulated.AutPerF.Bcris.frob l (OC l)) =

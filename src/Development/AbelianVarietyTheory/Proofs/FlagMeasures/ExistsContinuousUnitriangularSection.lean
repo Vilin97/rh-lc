@@ -164,6 +164,8 @@ theorem hermitian_flag_dual_basis (hσ : ∀ e, σ (σ e) = e) (hJ : IsHermND σ
     · subst h; simp
     · simp [h, Fin.castSucc_inj]
 
+local notation "hA" => Formalism.UG.hform (sigR R σ) (JR R J)
+
 variable (x : {p : Fin (r + 1) × Fin (r + 1) // p.1 < p.2} → R ⊗[F] E)
 
 theorem yv_perp (hP : P.IsStd σ J T) (b c : Fin (r + 1)) :
@@ -388,7 +390,7 @@ theorem unitri_section : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
   have hy : ∀ b, Continuous fun x : {p : Fin (r + 1) × Fin (r + 1) // p.1 < p.2} → Fv F v ⊗[F] E =>
       yv (Fv F v) P x b := by
     intro b
-    refine continuous_finset_sum _ fun a _ => ?_
+    refine continuous_finsetSum _ fun a _ => ?_
     have hc : Continuous fun x : {p : Fin (r + 1) × Fin (r + 1) // p.1 < p.2} → Fv F v ⊗[F] E =>
         coef (Fv F v) x b a := by
       by_cases h : a < b

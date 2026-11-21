@@ -55,8 +55,7 @@ theorem lift_sum {ι : Type} (s : Finset ι) (f : ι → Af D.host.F ⊗[D.host.
 theorem lift_neg (y : Af D.host.F ⊗[D.host.F] D.host.E) : lift (D := D) (-y) = -lift y := map_neg (LinearMap.rTensor D.host.E (inrL D.host.F)) y
 
 theorem finPart_lift (y : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (lift y) = y := by
-  induction y using TensorProduct.induction_on with
-  | zero => rw [lift_zero, map_zero]
+  induction y using TensorProduct.inductionOn with
   | tmul a w =>
     rw [lift_tmul]
     erw [Algebra.TensorProduct.map_tmul]
@@ -70,8 +69,7 @@ theorem liftI_add (y y' : Ainf D.host.F ⊗[D.host.F] D.host.E) : liftI (D := D)
 theorem liftI_zero : liftI (D := D) 0 = 0 := map_zero (LinearMap.rTensor D.host.E (inlL D.host.F))
 
 theorem eq_liftI_add_lift (x : AE D) : x = liftI (infPart D x) + lift (finPart D x) := by
-  induction x using TensorProduct.induction_on with
-  | zero => rw [map_zero, map_zero, liftI_zero, lift_zero, add_zero]
+  induction x using TensorProduct.inductionOn with
   | add x y hx hy =>
     rw [map_add (f := _), map_add (f := _), liftI_add, lift_add]
     conv_lhs => rw [hx, hy]
@@ -88,12 +86,10 @@ theorem eq_lift_of_infPart (x : AE D) (hx : infPart D x = 0) : x = lift (finPart
 
 set_option maxHeartbeats 1000000 in
 theorem lift_mul (y : Af D.host.F ⊗[D.host.F] D.host.E) (z : AE D) : lift y * z = lift (y * finPart D z) := by
-  induction y using TensorProduct.induction_on with
-  | zero => rw [lift_zero, zero_mul, zero_mul, lift_zero]
+  induction y using TensorProduct.inductionOn with
   | add y y' hy hy' => rw [lift_add, add_mul, hy, hy', ← lift_add, add_mul]
   | tmul a w =>
-    induction z using TensorProduct.induction_on with
-    | zero => rw [mul_zero, map_zero, mul_zero, lift_zero]
+    induction z using TensorProduct.inductionOn with
     | add z z' hz hz' => rw [mul_add, hz, hz', map_add (f := _), mul_add, lift_add]
     | tmul p w' =>
       rw [lift_tmul, Algebra.TensorProduct.tmul_mul_tmul]
@@ -114,8 +110,7 @@ theorem toEAf_lift (y : Af D.host.F ⊗[D.host.F] D.host.E) :
 
 theorem toEAf_liftE (y : EAf D) : toEAf D (liftE y) = y := by
   rw [liftE, toEAf_lift]
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul a b => simp
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
@@ -318,8 +313,7 @@ theorem liftE_mul (y : EAf D) (z : AE D) : liftE y * z = liftE (y * toEAf D z) :
   have hc : ∀ x : Af D.host.F ⊗[D.host.F] D.host.E, Algebra.TensorProduct.comm D.host.F D.host.E (Af D.host.F)
       (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E x) = x := by
     intro x
-    induction x using TensorProduct.induction_on with
-    | zero => simp
+    induction x using TensorProduct.inductionOn with
     | tmul a b => simp
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [liftE, liftE, lift_mul, map_mul]
@@ -378,8 +372,7 @@ theorem liftE_smul_mem {z : EAf D} (hz : z ∈ Formalism.L2.Herm.intAf D.host.F 
 abbrev sR (D : D7) : EAf D →+* EAf D := Formalism.UG.sigR D.sp.cm.sig (Af D.host.F)
 
 theorem toEAf_cA (x : AE D) : toEAf D (cA D x) = sR D (toEAf D x) := by
-  induction x using TensorProduct.induction_on with
-  | zero => rw [map_zero, map_zero, map_zero]
+  induction x using TensorProduct.inductionOn with
   | tmul a w => rfl
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
@@ -406,7 +399,7 @@ theorem sR_mem_intAf {z : EAf D} (hz : z ∈ Formalism.L2.Herm.intAf D.host.F D.
       exact ⟨⟨y, hy⟩, by show _ = (star (1 : D.host.E)) ⊗ₜ[D.host.F] y; rw [star_one]⟩
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
@@ -694,8 +687,7 @@ theorem infPart_of_idemSum {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)
 
 theorem comm_comm' (y : Af D.host.F ⊗[D.host.F] D.host.E) :
     Algebra.TensorProduct.comm D.host.F D.host.E (Af D.host.F) (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E y) = y := by
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul a b => simp
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
@@ -790,12 +782,11 @@ theorem cA_mem_intAE {y : Af D.host.F ⊗[D.host.F] D.host.E} (hy : y ∈ intAE 
     obtain ⟨b, hb, o, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨b, hb, ⟨_, isIntegral_star' o⟩, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem finPart_cA (x : AE D) : finPart D (cA D x) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (Af D.host.F) D.sp.cm.sig (finPart D x) := by
-  induction x using TensorProduct.induction_on with
-  | zero => rw [map_zero, map_zero, map_zero]
+  induction x using TensorProduct.inductionOn with
   | tmul a w => rfl
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
@@ -840,8 +831,7 @@ theorem heisO_fix_of_latVac (ψ : AddChar (AF D.host.F) ℂ) {f₀ : WO S T → 
 theorem gram_herm_E (V : HSp D) : V.gramᴴ = V.gram := Matrix.ext fun i j => V.herm.eq _ _
 
 theorem sR_sR (z : EAf D) : sR D (sR D z) = z := by
-  induction z using TensorProduct.induction_on with
-  | zero => rw [map_zero, map_zero]
+  induction z using TensorProduct.inductionOn with
   | tmul a b =>
     rw [show sR D (a ⊗ₜ[D.host.F] b) = (star a) ⊗ₜ b from rfl,
       show sR D ((star a) ⊗ₜ[D.host.F] b) = (star (star a)) ⊗ₜ b from rfl, star_star]

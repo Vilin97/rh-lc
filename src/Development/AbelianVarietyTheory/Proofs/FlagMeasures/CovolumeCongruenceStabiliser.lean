@@ -244,7 +244,7 @@ theorem discrete_lattice {K : Type} [Field K] [NumberField K] {ι : Type} [Finty
     ∑ q : R, τ v (U⁻¹ i q.1.1) * τ v (U q.1.2 j) * c v q
   have hΦ : Continuous Φ := by
     refine continuous_pi fun v => continuous_pi fun i => continuous_pi fun j => ?_
-    refine continuous_finset_sum _ fun q _ => ?_
+    refine continuous_finsetSum _ fun q _ => ?_
     exact continuous_const.mul ((continuous_apply q).comp (continuous_apply v))
   have hΦ0 : Φ 0 = 0 := by
     funext v i j

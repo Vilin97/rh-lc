@@ -72,6 +72,9 @@ theorem log_ncard_unit_ball_le_of_indep_bound :
     intro x hx
     by_contra hx0
     have hli : LinearIndependent ℤ (fun _ : Fin 1 => x) := by
+      letI : HasUniqueDiv G := ⟨by
+        intro n hn a b h
+        exact eq_of_nsmul_eq_nsmul_of_addCommute hn (AddCommute.all _ _) h⟩
       rw [linearIndependent_unique_iff]; exact hx0
     have h := hbound 1 (fun _ => x) (fun _ => K) hli (fun _ => hx)
     have hlt : T < (K : ℝ) + 1 := Nat.lt_floor_add_one T

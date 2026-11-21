@@ -230,7 +230,24 @@ theorem holSub0_le_span_one (D : D7) (T : CoreJ D) (h : LawsJ T) (j : ℕ) (hj :
     (T.Q.Xo j) T.Q.c D.R.r (fun s => Formalism.L2.PjFree.Unf.ofPj (T.U j s)) hr h.pins.2.1.2
     (fun s hs => (Formalism.L2.PjFree.isUnf_ofPj _).2 (h.unf j hj s hs)) σ hσ
     (fun k k' => ⟨(hM k).1.trans (hM k').1.symm, (hM k).2.trans (hM k').2.symm⟩)
-    (fun k => GlobalTheory.PrincCore.mem_group_of_congruent D T.toCore h.toLawsM j hj σ hσ k)
+    (fun k γ hγ hc0 => by
+      have hc : ∀ x ∈ ((T.U j σ).X k).Λ, ∃ y ∈ ((T.U j σ).X k).Λ,
+          Matrix.mulVec (γ : Matrix (Fin D.R.r) (Fin D.R.r) D.host.E) x - x = (T.Q.l.M : D.host.E) • y := by
+        intro x hx
+        obtain ⟨y, hy, e⟩ := hc0 x hx
+        exact ⟨y, hy, by rw [e, add_sub_cancel_left, Nat.cast_smul_eq_nsmul]⟩
+      obtain ⟨hgood, hA, -, -, -, -, hnum⟩ := GlobalTheory.PinNum.numerics_of_pins D T.Q h.pins
+      have hr : 0 < D.R.r := (hnum j hj).2.1
+      have hM' : 3 ≤ T.Q.l.M := le_trans (hgood 2 Nat.prime_two) (Nat.div_le_self _ _)
+      obtain ⟨γ', hγ', u, n, hn, hu, he⟩ := GlobalTheory.unf_group_contains_congruence_upto_rootsOfUnity _ _ _ _ _ _ σ _
+        (Formalism.L2.PjFree.Unf.ofPj (T.U j σ)) (h.unf j hj σ hσ) hA hr k γ hγ hc
+      obtain ⟨th, hrk, hth, hD⟩ := h.dictU j hj σ hσ
+      have hK := h.levelK j hj σ hσ
+      rw [← h.pins.2.1.1] at hK
+      have h1 := GlobalTheory.PrincCore.root_eq_one (T.V j σ) hrk hr (T.U j σ).X (T.dict j σ) (T.mu j σ) (T.Kf j σ) th hth hD
+        (h.muUnit j hj σ hσ) _ hM' hK k γ γ' hγ' hc u n hn hu he
+      rw [h1, one_smul] at he
+      exact Units.ext he ▸ hγ')
     (fun _ => 1) n hdom (fun _ _ _ => Nat.one_pos) hn
     (fun k => h.chiTriv j hj σ hσ _ n hdom k)
   intro P hP

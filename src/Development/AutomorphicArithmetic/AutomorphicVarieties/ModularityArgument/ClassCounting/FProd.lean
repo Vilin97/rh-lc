@@ -56,12 +56,17 @@ private theorem F_ins (u : K → K → A) (v : K → A) (hs : ∀ a b, u a b = u
       F u v (2 * E) g * v x
   | 0, g => by simp [F]
   | E + 1, g => by
-    obtain ⟨a, tail, rfl⟩ : ∃ (a : K) (tail : Fin (2 * E + 1) → K),
-        g = (Fin.cons a tail : Fin (2 * E + 1 + 1) → K) :=
-      ⟨_, _, (Fin.cons_self_tail (n := 2 * E + 1) (α := fun _ => K) g).symm⟩
-    obtain ⟨b, rest, rfl⟩ : ∃ (b : K) (rest : Fin (2 * E) → K),
-        tail = (Fin.cons b rest : Fin (2 * E + 1) → K) :=
-      ⟨_, _, (Fin.cons_self_tail (n := 2 * E) (α := fun _ => K) tail).symm⟩
+    obtain ⟨a, b, rest, rfl⟩ : ∃ (a b : K) (rest : Fin (2 * E) → K),
+        g = (Fin.cons a (Fin.cons b rest) : Fin (2 * E + 1 + 1) → K) := by
+      let tail := Fin.tail (n := 2 * E + 1) (α := fun _ => K) g
+      let rest := Fin.tail (n := 2 * E) (α := fun _ => K) tail
+      refine ⟨g 0, tail 0, rest, ?_⟩
+      calc
+        g = Fin.cons (g 0) tail :=
+          (Fin.cons_self_tail (α := fun _ => K) g).symm
+        _ = Fin.cons (g 0) (Fin.cons (tail 0) rest) :=
+          congrArg (Fin.cons (α := fun _ => K) (g 0))
+            (Fin.cons_self_tail (α := fun _ => K) tail).symm
     change ∑ i : Fin (2 * E + 1 + 1 + 1), (-1 : A) ^ (i : ℕ) * F u v (2 * E + 1 + 2)
       (Fin.insertNth (α := fun _ => K) i x (Fin.cons a (Fin.cons b rest : Fin (2 * E + 1) → K) : Fin (2 * E + 1 + 1) → K)) =
       (u a b * F u v (2 * E) rest) * v x

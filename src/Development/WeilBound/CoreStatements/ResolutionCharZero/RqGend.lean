@@ -125,13 +125,12 @@ theorem isLocallyGeneratedByNonZeroDivisor_exceptionalProduct_le {k : Type} [Fie
   | 0, _ => by
     simpa [BlowupSequence.exceptionalProduct] using Blowup.isLocallyGeneratedByNonZeroDivisor_top (s.obj 0)
   | i + 1, hi => by
-    have hprincipal := h
-    unfold IsPrincipalizingSequence at hprincipal
-    obtain ⟨_ideal, _boundary, -, -, -, -, -, -, -, -, -, hsm, -⟩ := hprincipal
     have hlt : i < s.length := hi
     have hb : Blowup.IsBlowupAlongIdealSheaf (s.blowupMap i) (s.center i) := s.isBlowup i hlt
     have ih := isLocallyGeneratedByNonZeroDivisor_exceptionalProduct_le h i hlt.le
-    have : Smooth (s.structMap (i + 1) ≫ p) := hsm (i + 1) hi
+    have : Smooth (s.structMap (i + 1) ≫ p) := by
+      obtain ⟨-, -, -, -, -, -, -, -, -, -, -, hsm, -⟩ := h
+      exact hsm (i + 1) hi
     show Blowup.IsLocallyGeneratedByNonZeroDivisor
       ((s.exceptionalProduct i).comap (s.blowupMap i) * (s.center i).comap (s.blowupMap i))
     exact isLocallyGeneratedByNonZeroDivisor_mul
@@ -146,9 +145,9 @@ theorem isLocallyGeneratedByNonZeroDivisor_exceptionalProduct {k : Type} [Field 
 
 theorem gEff : GEff := by
   intro k _ _ X p _ _ _ I L s hI hL hs
-  have hprincipal := hs
-  unfold IsPrincipalizingSequence at hprincipal
-  obtain ⟨_ideal, _boundary, -, -, -, -, -, -, -, -, htop, -, -⟩ := hprincipal
+  have htop : I.comap s.topMap = s.exceptionalProduct s.length := by
+    obtain ⟨-, -, -, -, -, -, -, -, -, -, htop, -, -⟩ := hs
+    exact htop
   rw [htop]
   exact effCartier_of (isLocallyGeneratedByNonZeroDivisor_exceptionalProduct hs)
 

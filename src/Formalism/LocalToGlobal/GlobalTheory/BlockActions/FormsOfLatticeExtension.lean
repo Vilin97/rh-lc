@@ -150,7 +150,7 @@ theorem brTen_memS (Tf : FormsTiedSym D u Ch chOf) {P : MvPolynomial (D.what₂.
     have := (Formalism.L2.Ker.brOne_member D u τ (interlaceTr D u (sg_interlace Tf.valP) τ)).1 (f τ)
     rwa [sgTr, delSq_wSh] at this
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 theorem pt_val (Tf : FormsTiedSym D u Ch chOf) (hL : Formalism.L2.Rows.LowerMapTieS Tf) (φ : Fn D u D.R.m)
@@ -207,11 +207,11 @@ theorem ext_mul_bZ (Tf : FormsTiedSym D u Ch chOf) (γ : Matrix (Fin (D.R.N D.R.
   ext a b
   simp only [Matrix.mul_apply, bZ, bZg]
   by_cases hb : (b : ℕ) < D.R.N D.R.m - 1
-  · simp only [dif_pos hb]
+  · simp only [dite_eq_left hb]
     have := congrFun (congrFun h1 a) ⟨b, hb⟩
     simp only [Matrix.mul_apply] at this
     exact_mod_cast this
-  · simp only [dif_neg hb]
+  · simp only [dite_eq_right hb]
     have := congrFun h2' a
     simp only [Matrix.mulVec, dotProduct] at this
     rw [← this, Finset.sum_div]

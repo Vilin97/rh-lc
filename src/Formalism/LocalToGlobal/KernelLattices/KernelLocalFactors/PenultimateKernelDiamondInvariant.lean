@@ -799,7 +799,7 @@ theorem intAt_smul_locPD (Q : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E
   rw [e]
   exact N.smul_mem r hz'
 
-theorem exists_frameD (Q : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) :
+theorem exists_frameD (Q : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsFullLattice E N) :
     ∃ f : Sp E n ≃ₗ[E] Sp E n, IsFrAt Q N f := by
   obtain ⟨β, hβ, hint⟩ := exists_locBasis Q hN
   refine ⟨β.equivFun.symm, fun y => ⟨fun h => (ciMem_stdAt Q y).2 fun i => ?_, fun h => ?_⟩⟩

@@ -129,8 +129,8 @@ set_option autoImplicit false in
 private lemma trace_and_finrank_of_linearEquiv_pi {A M S : Type} [Ring A] [Algebra ℚ A] [AddCommGroup M]
     [Module A M] [Module ℚ M] [IsScalarTower ℚ A M] [AddCommGroup S] [Module A S] [Module ℚ S]
     [IsScalarTower ℚ A S] [FiniteDimensional ℚ S] (k : ℕ) (e : M ≃ₗ[A] (Fin k → S)) (c : A) :
-    LinearMap.trace ℚ M (DistribMulAction.toLinearMap ℚ M c) =
-        k * LinearMap.trace ℚ S (DistribMulAction.toLinearMap ℚ S c) ∧
+    LinearMap.trace ℚ M (DistribSMul.toLinearMap ℚ M c) =
+        k * LinearMap.trace ℚ S (DistribSMul.toLinearMap ℚ S c) ∧
       Module.finrank ℚ M = k * Module.finrank ℚ S := by
   let e' : M ≃ₗ[ℚ] (Fin k → S) := e.restrictScalars ℚ
   refine ⟨?_, ?_⟩
@@ -147,8 +147,8 @@ set_option autoImplicit false in
 private lemma trace_mul_finrank_eq_finrank_mul_trace {A M : Type} [Ring A] [Algebra ℚ A] [FiniteDimensional ℚ A]
     [IsSimpleRing A] [AddCommGroup M] [Module A M] [Module ℚ M] [IsScalarTower ℚ A M]
     [FiniteDimensional ℚ M] (c : A) :
-    LinearMap.trace ℚ M (DistribMulAction.toLinearMap ℚ M c) * Module.finrank ℚ A =
-      Module.finrank ℚ M * LinearMap.trace ℚ A (DistribMulAction.toLinearMap ℚ A c) := by
+    LinearMap.trace ℚ M (DistribSMul.toLinearMap ℚ M c) * Module.finrank ℚ A =
+      Module.finrank ℚ M * LinearMap.trace ℚ A (DistribSMul.toLinearMap ℚ A c) := by
   haveI : IsArtinianRing A := IsArtinianRing.of_finite ℚ A
   haveI : IsSemisimpleRing A := (IsSimpleRing.isSemisimpleRing_iff_isArtinianRing (R := A)).mpr inferInstance
   haveI : Module.Finite A M := Module.Finite.of_restrictScalars_finite ℚ A M
@@ -200,8 +200,8 @@ theorem _root_.GlobalTheory.QTrace.q_trace : ∀ {F A V : Type} [Field F] [Numbe
   haveI : IsScalarTower ℚ A V := ⟨fun q a v => by
     show ρ (q • a) v = q • ρ a v
     rw [Algebra.smul_def, map_mul, Module.End.mul_apply, hρq, Module.algebraMap_end_apply]⟩
-  have hV : LinearMap.trace ℚ V (DistribMulAction.toLinearMap ℚ V c) = LinearMap.trace ℚ V (ρ c) := rfl
-  have hA : LinearMap.trace ℚ A (DistribMulAction.toLinearMap ℚ A c) =
+  have hV : LinearMap.trace ℚ V (DistribSMul.toLinearMap ℚ V c) = LinearMap.trace ℚ V (ρ c) := rfl
+  have hA : LinearMap.trace ℚ A (DistribSMul.toLinearMap ℚ A c) =
       Algebra.trace ℚ F (LinearMap.trace F A (LinearMap.mulLeft F c)) := by
     rw [← trace_restrictScalars_rat]
     rfl

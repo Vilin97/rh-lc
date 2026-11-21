@@ -98,7 +98,11 @@ def natW : NAt hL (withLoc L) (cfL L (cfOf x)) (chL L l.c.ch) (tpL L l.c.tp) whe
   all := al.a
   chr_eq := al.chr
   host := ⟨(by with_unfolding_all exact (l.a.host.fr :)), (by with_unfolding_all exact (l.a.host.jLL :)), (by with_unfolding_all exact (l.a.host.embLL :))⟩
-  frameN := fun y => (by with_unfolding_all exact (((congrArg (fun e : (Dof x).host.E →+* Qb => e ((by with_unfolding_all exact (y :)))) ((by with_unfolding_all exact (al.jE :)) : (kc% al.a.gal.fr.jE : (Dof x).host.E →+* Qb) = l.a.jE)).trans (l.a.frame ((by with_unfolding_all exact (y :))))) :))
+  frameN := by
+    intro y
+    with_unfolding_all
+      rw [al.jE]
+      exact l.a.frame y
   chrN := al.chrN
   chrGal := al.chrGal
   Pq := (by with_unfolding_all exact (l.Pq :))

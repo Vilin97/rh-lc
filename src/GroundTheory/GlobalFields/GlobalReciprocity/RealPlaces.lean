@@ -224,7 +224,7 @@ theorem abstractSymbol_mk_infiniteEmbedding_comap {E : FiniteSubfield} [Fact (K 
       (algebraMap K.1 (fixedSubfield τ).1)).Completionˣ) :
     abstractSymbol K L (IdeleClassGroup.mk K.1 (infiniteEmbedding ((w.comap
       (algebraMap (fixedSubfield τ).1 E.1)).comap (algebraMap K.1 (fixedSubfield τ).1)) x)) =
-      Abelianization.of (infiniteLocalSymbol L.1 ((w.comap (algebraMap (fixedSubfield τ).1 E.1)).comap
+      Group.Abelianization.of (infiniteLocalSymbol L.1 ((w.comap (algebraMap (fixedSubfield τ).1 E.1)).comap
         (algebraMap K.1 (fixedSubfield τ).1)) x) := by
   have := isMulCommutative_galFixed hτ hi hτi
   have hu := isReal_comap_fixedSubfield hτw
@@ -259,8 +259,8 @@ theorem abstractSymbol_mk_infiniteEmbedding_comap {E : FiniteSubfield} [Fact (K 
       FiniteSubfield.ideleClassNorm (le_fixedSubfield τ)
         (IdeleClassGroup.mk (fixedSubfield τ).1
           (infiniteEmbedding (w.comap (algebraMap (fixedSubfield τ).1 E.1)) y)) := rfl
-  rw [e1, e2, abstractSymbol_ideleClassNorm_eq_map (K' := fixedSubfield τ) (L' := E), hsym,
-    Abelianization.map_of, MonoidHom.comp_apply, restrictScalarsHom_apply,
+  erw [e1, e2, abstractSymbol_ideleClassNorm_eq_map (K' := fixedSubfield τ) (L' := E), hsym,
+    Group.Abelianization.map_of, MonoidHom.comp_apply, restrictScalarsHom_apply,
     show ∀ σ : E.1 ≃ₐ[K.1] E.1, AlgEquiv.restrictNormalHom L.1 σ = σ.restrictNormal L.1 from fun _ ↦ rfl,
     restrictNormal_restrictScalars_ideleSymbol, ← e1,
     ideleSymbol_infiniteEmbedding]
@@ -268,7 +268,7 @@ theorem abstractSymbol_mk_infiniteEmbedding_comap {E : FiniteSubfield} [Fact (K 
 theorem abstractSymbol_mk_infiniteEmbedding_of_isReal (v : InfinitePlace K.1) (hv : v.IsReal)
     (x : v.Completionˣ) :
     abstractSymbol K L (IdeleClassGroup.mk K.1 (infiniteEmbedding v x)) =
-      Abelianization.of (infiniteLocalSymbol L.1 v x) := by
+      Group.Abelianization.of (infiniteLocalSymbol L.1 v x) := by
   obtain ⟨I, hI⟩ := IsAlgClosed.exists_pow_nat_eq (-1 : ℚ̄) two_pos
   have : FiniteDimensional ℚ ℚ⟮I⟯ := adjoin.finiteDimensional (Algebra.IsIntegral.isIntegral I)
   let F₀ : FiniteSubfield := ⟨L.1 ⊔ ℚ⟮I⟯, inferInstance⟩
@@ -305,9 +305,9 @@ theorem abstractSymbol_mk_infiniteEmbedding_of_isReal (v : InfinitePlace K.1) (h
 theorem abstractSymbol_mk_infiniteEmbedding_of_not_isReal (v : InfinitePlace K.1) (hv : ¬ v.IsReal)
     (x : v.Completionˣ) :
     abstractSymbol K L (IdeleClassGroup.mk K.1 (infiniteEmbedding v x)) = 1 := by
-  have : Finite (Abelianization (L.1 ≃ₐ[K.1] L.1)) :=
+  have : Finite (Group.Abelianization (L.1 ≃ₐ[K.1] L.1)) :=
     Finite.of_surjective _ (QuotientGroup.mk_surjective (s := commutator (L.1 ≃ₐ[K.1] L.1)))
-  set n := Nat.card (Abelianization (L.1 ≃ₐ[K.1] L.1))
+  set n := Nat.card (Group.Abelianization (L.1 ≃ₐ[K.1] L.1))
   have hn : 0 < n := Nat.card_pos
   let e := ringEquivComplexOfIsComplex (not_isReal_iff_isComplex.1 hv)
   obtain ⟨z, hz⟩ := IsAlgClosed.exists_pow_nat_eq (e x) hn
@@ -320,11 +320,15 @@ theorem abstractSymbol_mk_infiniteEmbedding_of_not_isReal (v : InfinitePlace K.1
     apply Units.ext
     apply e.injective
     rw [Units.val_pow_eq_pow_val, Units.val_mk0, map_pow, RingEquiv.apply_symm_apply, hz]
-  rw [hxy, map_pow, map_pow, map_pow, pow_card_eq_one']
+  calc
+    _ = (abstractSymbol K L (IdeleClassGroup.mk K.1
+        (infiniteEmbedding v (Units.mk0 (e.symm z) hz0)))) ^ n := by
+      rw [← map_pow, ← map_pow, ← map_pow, ← hxy]
+    _ = 1 := pow_card_eq_one'
 
 theorem abstractSymbol_mk_infiniteEmbedding (v : InfinitePlace K.1) (x : v.Completionˣ) :
     abstractSymbol K L (IdeleClassGroup.mk K.1 (infiniteEmbedding v x)) =
-      Abelianization.of (infiniteLocalSymbol L.1 v x) := by
+      Group.Abelianization.of (infiniteLocalSymbol L.1 v x) := by
   by_cases hv : v.IsReal
   · exact abstractSymbol_mk_infiniteEmbedding_of_isReal K L v hv x
   · rw [abstractSymbol_mk_infiniteEmbedding_of_not_isReal K L v hv x,

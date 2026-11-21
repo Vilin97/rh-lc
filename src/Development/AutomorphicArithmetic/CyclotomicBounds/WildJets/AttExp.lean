@@ -60,10 +60,10 @@ theorem UpperTheory.WildA.expEx :
     rcases Nat.even_or_odd n with h | h
     · obtain ⟨k, hk⟩ := id h
       refine ⟨c - k, ?_⟩
-      rw [if_neg (Nat.not_odd_iff_even.2 h), hk]; push_cast; ring
+      simp only [Nat.not_odd_iff_even.2 h, ite_false]; rw [hk]; push_cast; ring
     · obtain ⟨k, hk⟩ := id h
       refine ⟨c - k - 1, ?_⟩
-      rw [if_pos h, hk]; push_cast; ring
+      simp only [h, ite_true]; rw [hk]; push_cast; ring
   cases p with
   | mu t i j => exact hp.elim
   | core i => exact hp.elim
@@ -73,11 +73,11 @@ theorem UpperTheory.WildA.expEx :
     have hr1 : Even (G.V (.top (j + 1))).rank := by
       rw [GlobalTheory.FunObj.rank_top G (j := j + 1) (by omega)]; exact even_rankX D (j + 1)
     have hS : G.chrS (.top t j) = L.mu t (j + 1) := by
-      simp only [GridData.chrS, Formalism.IndefR.Lift.attChr, GridData.chr, GridData.pS, Nat.not_odd_iff_even.2 hr0, if_false]
+      simp only [GridData.chrS, Formalism.IndefR.Lift.attChr, GridData.chr, GridData.pS, Nat.not_odd_iff_even.2 hr0, ite_false]
     have hT : G.chrT (.top t j) = L.mu t (j + 1) := by
-      simp only [GridData.chrT, Formalism.IndefR.Lift.attChr, GridData.chr, GridData.pT, Nat.not_odd_iff_even.2 hr1, if_false]
+      simp only [GridData.chrT, Formalism.IndefR.Lift.attChr, GridData.chr, GridData.pT, Nat.not_odd_iff_even.2 hr1, ite_false]
     have hce : ∀ τ, (((num D sc.cGap τ).e (j + 1) : ℤ) : ℚ) = (D.hc τ).e ⟨j, hj⟩ := fun τ =>
-      num_e D sc.cGap τ (l := j + 1) (by omega) hj
+      GlobalTheory.SignedHC.GridData.extend_cast 1 (D.hc τ).e_int ⟨j, hj⟩
     obtain ⟨k0, hk0⟩ := hr0
     obtain ⟨k1, hk1⟩ := hr1
     refine ⟨fun τ => -((D.hc τ).e ⟨j, hj⟩ : ℚ), fun τ => -((D.hc τ).e ⟨j, hj⟩ : ℚ),

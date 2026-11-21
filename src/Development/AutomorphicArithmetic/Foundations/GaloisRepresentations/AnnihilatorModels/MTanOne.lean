@@ -28,7 +28,7 @@ private lemma alg_core {F κ V : Type} [CommRing F] [Field κ] [AddCommGroup V] 
     rw [map_mul, map_natCast]
     have hz : ((p : ℕ) : Module.End κ V) = 0 := by
       ext y
-      rw [Module.End.natCast_apply, ← Nat.cast_smul_eq_nsmul κ, CharP.cast_eq_zero, zero_smul]
+      rw [natCast_apply_eq_smul, ← Nat.cast_smul_eq_nsmul κ, CharP.cast_eq_zero, zero_smul]
       rfl
     rw [hz, mul_zero]
   have key : ∀ a ∈ u, T a = T (a * α') := by
@@ -96,9 +96,9 @@ theorem UpperTheory.Gal.crystallineComparison.Mod.tanOne_of :
   let Tm : 𝓞 D.F →+* Module.End κ (GlobalTheory.TanPtMod.Tan (𝟙 (Sp κ)) o.A) :=
     (GlobalTheory.TanPtMod.actEnd o.act).comp (algebraMap (𝓞 D.F) D.O)
   let toE : (algPt κ (DualNumber κ) ⟶ o.A) → (epsPtR (𝟙 (Sp κ)) ⟶ o.A) :=
-    fun v => Over.homMk v.left (by simpa using Over.w v)
+    fun v => Over.homMk v.left (by simp)
   let frE : (epsPtR (𝟙 (Sp κ)) ⟶ o.A) → (algPt κ (DualNumber κ) ⟶ o.A) :=
-    fun v => Over.homMk v.left (by simpa using Over.w v)
+    fun v => Over.homMk v.left (by simp)
   have eig : ∀ v : algPt κ (DualNumber κ) ⟶ o.A, Inf (TrivSqZeroExt.fstHom κ κ κ) v →
       (∃ e', KilledBy o (uIdeal D r ^ e') v) →
       IsLieEigen (OActN.toF D o.act) (𝟙 (Sp κ)) (β.comp (b.t i0)) (toE v) := by
@@ -108,7 +108,6 @@ theorem UpperTheory.Gal.crystallineComparison.Mod.tanOne_of :
     have hkill : ∀ a ∈ uIdeal D r ^ e', Tm a (GlobalTheory.TanPtMod.Tan.mk (toE v) hmem) = 0 := by
       intro a ha'
       apply GlobalTheory.TanPtMod.Tan.ext
-      rw [GlobalTheory.TanPtMod.Tan.hom_zero]
       show toE v ≫ o.act.act (algebraMap _ _ a) = 1
       ext1
       have h4 := congrArg Over.Hom.left (hk a ha')
@@ -123,7 +122,7 @@ theorem UpperTheory.Gal.crystallineComparison.Mod.tanOne_of :
       · have hz := hu _ (sub_mem_uIdeal D r)
         rw [map_sub, LinearMap.sub_apply, sub_eq_zero, map_intCast] at hz
         have hz2 := congrArg GlobalTheory.TanPtMod.Tan.hom hz
-        rw [Module.End.intCast_apply, ← Int.cast_smul_eq_zsmul κ, GlobalTheory.TanPtMod.Tan.hom_smul] at hz2
+        rw [intCast_apply_eq_smul, ← Int.cast_smul_eq_zsmul κ, GlobalTheory.TanPtMod.Tan.hom_smul] at hz2
         rw [hρ]
         exact congrArg Over.Hom.left hz2
     obtain ⟨w', hw', hprod⟩ := o.lie κ β (𝟙 (Sp κ)) (Category.id_comp _) (toE v) hsc

@@ -48,7 +48,7 @@ theorem existsUnique_lift_of_densePart : ∀ (T U X Y : Scheme.{0}) [IsLocallyNo
       ((j ⁻¹ᵁ GlobalTheory.IsNormalScheme.component W).ι ≫ a) ((GlobalTheory.IsNormalScheme.component W).ι ≫ b)
       (by rw [Category.assoc, h, morphismRestrict_ι_assoc])
   choose c hc _ using H
-  obtain ⟨hT⟩ := GlobalTheory.IsNormalScheme.nonempty_isColimit_component T
+  obtain ⟨hT⟩ := GlobalTheory.IsNormalScheme.nonempty_isColimit_component (X := T)
   let c₀ : T ⟶ Z := Cofan.IsColimit.desc hT c
   have hc₀ (W) : (GlobalTheory.IsNormalScheme.component W).ι ≫ c₀ = c W := Cofan.IsColimit.fac hT c W
   have h₂ : c₀ ≫ p = b := Cofan.IsColimit.hom_ext hT _ _ fun W ↦ by

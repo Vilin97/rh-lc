@@ -27,8 +27,8 @@ theorem fx_wint_eq_withDensity {M : Type*} [MeasurableSpace M] (n : ℕ) (z : M 
     ← ENNReal.ofReal_mul (Real.exp_pos _).le, mul_comm]
 
 theorem fx_lintegral_enorm_sq_eq {α : Type*} [MeasurableSpace α] (μ : Measure α) (F : α → ℂ) :
-    ∫⁻ x, ‖F x‖ₑ ^ 2 ∂μ = eLpNorm F 2 μ ^ (2 : ℝ) := by
-  rw [MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num), ← ENNReal.rpow_mul]
+    ∫⁻ x, ‖F x‖ₑ ^ 2 ∂μ = eLpNorm' F 2 μ ^ (2 : ℝ) := by
+  rw [MeasureTheory.eLpNorm'_eq_lintegral_eNorm, ← ENNReal.rpow_mul]
   norm_num
 
 end

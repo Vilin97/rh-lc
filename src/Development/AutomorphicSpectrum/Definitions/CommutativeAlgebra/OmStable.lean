@@ -30,7 +30,7 @@ structure HTPoint (C O : Type) [Field C] [CommRing O] [Algebra O C] {E : Type} [
   adj : ∀ (a : 𝓞 E) (x y : V), e (ρ a x) y = e x (ρ (RingOfIntegers.mapRingEquiv c a) y)
 
   om : Submodule O Ω
-  om_lat : om.IsLattice C
+  om_lat : om.IsFullLattice C
 
   ρΩ : 𝓞 E →+* Module.End C Ω
   om_stable : ∀ (a : 𝓞 E), ∀ x ∈ om, ρΩ a x ∈ om

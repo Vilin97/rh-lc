@@ -48,7 +48,7 @@ private theorem cont_mrep [TopologicalSpace Γ] [TopologicalSpace E] [IsTopologi
     (M : Γ →* Matrix (Fin n) (Fin n) E) (h : ∀ i j, Continuous fun g => M g i j) : ContAction (mrep M) := by
   refine continuous_pi fun i => ?_
   simp only [mrep_apply]
-  exact continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun j _ =>
     ((h i j).comp continuous_fst).mul ((continuous_apply j).comp continuous_snd)
 
 private theorem tri_apply {n : ℕ} (M : Γ →* Matrix (Fin n) (Fin n) E) (h : ∀ g i j, j < i → M g i j = 0)

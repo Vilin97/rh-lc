@@ -7,7 +7,7 @@ public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
 
 @[expose] public section
 
-open Finset TensorProduct Formalism.HermitianLatticeCounting.S8
+open Finset TensorProduct
 
 noncomputable section
 
@@ -66,9 +66,9 @@ theorem isPoly_Tm {n : ℕ} (E : Fin n → Fin n → B) (c : ℂ) (a b : Fin n) 
     IsPolyFun (fun u => Tm E (u - c) a b) := by
   unfold Tm
   by_cases h : a = b
-  · simp only [h, if_true, sub_eq_add_neg, map_add (f := _)]
+  · simp only [h, ite_true, sub_eq_add_neg, map_add (f := _)]
     exact (IsPolyFun.scalar.add (IsPolyFun.const _)).add (IsPolyFun.const _)
-  · simp only [h, if_false]
+  · simp only [h, ite_false]
     exact IsPolyFun.const _
 
 theorem isPoly_qminor {n t : ℕ} (E : Fin n → Fin n → B) (a b : Fin t → Fin n) (c : ℂ) :
@@ -96,7 +96,7 @@ theorem eq_zero_of_eval (P : B[X]) (h : ∀ u : ℂ, P.eval (algebraMap ℂ B u)
     rw [← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, eval_monomial, smul_eq_mul,
       mul_comm]
   have hk := congrArg (fun r => r.coeff k) hq
-  simp only [q, Polynomial.finsetSum_coeff, coeff_monomial, coeff_zero, Finset.sum_ite_eq'] at hk
+  simp only [q, Polynomial.finsetSum_coeff, coeff_monomial_apply, coeff_zero, Finset.sum_ite_eq'] at hk
   by_cases hs : k ∈ P.support
   · simpa [hs] using hk
   · simp [notMem_support_iff.mp hs]

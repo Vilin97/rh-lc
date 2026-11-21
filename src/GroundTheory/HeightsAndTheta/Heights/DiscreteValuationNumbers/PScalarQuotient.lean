@@ -23,7 +23,7 @@ variable {K : Type*} [DecidableEq K] {ι : K → Type*}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 theorem classNum_add {σ : Type*} (cls : σ → K → ℤ) (H₁ H₂ : MvPolynomial σ ℤ)
-    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (H₁ + H₂) Q W = classNum cls H₁ Q W + classNum cls H₂ Q W := by
   classical
   unfold classNum
@@ -47,12 +47,12 @@ def classNumHom {σ : Type*} (cls : σ → K → ℤ) (Q : List (K → ℤ)) (W 
   map_add' H₁ H₂ := classNum_add cls H₁ H₂ Q W
 
 theorem classNum_sum {σ τ : Type*} (cls : σ → K → ℤ) (s : Finset τ) (H : τ → MvPolynomial σ ℤ)
-    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (∑ t ∈ s, H t) Q W = ∑ t ∈ s, classNum cls (H t) Q W :=
   map_sum (classNumHom cls Q W) H s
 
 theorem classNum_monomial {σ : Type*} (cls : σ → K → ℤ) (μ : σ →₀ ℕ) (c : ℤ)
-    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (monomial μ c) Q W = c * vNumL W (classList cls μ ++ Q) := by
   classical
   unfold classNum
@@ -71,7 +71,7 @@ theorem classList_diag {N : ℕ} (x : Fin N → K → ℤ) (i : Fin N) (j l : �
   simp [Finsupp.toMultiset_add, Finsupp.toMultiset_single, Multiset.map_nsmul]
 
 theorem classNum_psumExpansion_diag {N : ℕ} (x : Fin N → K → ℤ) (k : ℕ) (i : Fin N)
-    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum (Sum.elim x x) (psumExpansion N k i) Q W =
       k * vNumL W (classList x (Finsupp.single i (k - 1)) ++ Q) := by
   unfold psumExpansion
@@ -97,7 +97,7 @@ theorem classNum_psum {N : ℕ} (x : Fin N → K → ℤ) (m : ℕ) (Q : List (K
   rw [X_pow_eq_monomial, classNum_monomial, one_mul]
 
 theorem sum_classNum_psumExpansion_diag {N : ℕ} (x : Fin N → K → ℤ) (k : ℕ)
-    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     ∑ i, classNum (Sum.elim x x) (psumExpansion N k i) Q W =
       k * classNum x (psum (Fin N) ℤ (k - 1)) Q W := by
   simp_rw [classNum_psumExpansion_diag, classNum_psum, Finset.mul_sum]

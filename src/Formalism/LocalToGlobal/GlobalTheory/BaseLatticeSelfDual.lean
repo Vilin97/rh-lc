@@ -53,7 +53,7 @@ theorem Coord.lat_dual (K : Coord hc S n) (L : Submodule (𝓞 E) S.V) :
     obtain ⟨r, hr⟩ := h1
     exact Submodule.mem_one.2 ⟨r, hr⟩
 
-theorem Coord.isLat_lat (K : Coord hc S n) {L : Submodule (𝓞 E) S.V} (hL : Submodule.IsLattice E L) :
+theorem Coord.isLat_lat (K : Coord hc S n) {L : Submodule (𝓞 E) S.V} (hL : Submodule.IsFullLattice E L) :
     IsLat (K.lat L) := by
   refine ⟨Module.Finite.iff_fg.2 (hL.fg.map _), ?_⟩
   rw [eq_top_iff]

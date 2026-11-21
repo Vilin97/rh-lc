@@ -215,7 +215,8 @@ abbrev dUnit (a : A) : Cot (R := R) (A := A) := AugCot.d (counitAlgHom R A) a
 def cotMap (f : C →ₐc[R] A) : Cot (R := R) (A := C) →ₗ[R] Cot (R := R) (A := A) :=
   AugCot.map (f : C →ₐ[R] A) (BialgHomClass.counitAlgHom_comp f)
 
-@[simp] theorem cotMap_d (f : C →ₐc[R] A) (c : C) : cotMap f (dUnit c) = dUnit (f c) :=
+@[simp] theorem cotMap_d (f : C →ₐc[R] A) (c : C) :
+    cotMap f (dUnit (R := R) c) = dUnit (R := R) (f c) :=
   AugCot.map_d _ _ c
 
 theorem cotMap_comp (g : A →ₐc[R] B) (f : C →ₐc[R] A) :

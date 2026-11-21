@@ -38,12 +38,85 @@ theorem zeta_eval {V W : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel W S} {
         ∂(Measure.pi mR) =
       c0 * z * starRingEnd ℂ (ipM M μW 𝓖 (HW.e U₂) (HW.e U₁)) *
         ((∏ ρ, ∫ b, ‖⟪(v ρ : M.H ρ), M.rep ρ (realMat W Fr ρ b) (v ρ : M.H ρ)⟫_ℂ‖ ^ 2 ∂(mR ρ) : ℝ) : ℂ) := by
+  have hIP : IsMultIP M μW 𝓖 (HW.e U₂) (HW.e U₁) (ipM M μW 𝓖 (HW.e U₂) (HW.e U₁)) := by
+    have existsIP (x y : HW.H) (hxy : inner ℂ x y ≠ 0) : ∃ c, IsMultIP M μW 𝓖 (HW.e x) (HW.e y) c := by
+      by_contra h
+      apply hxy
+      rw [hW, ipM, dite_eq_right h, mul_zero]
+    apply ipM_spec
+    by_cases hx : U₂ = 0
+    · subst U₂
+      exact ⟨0, fun v₁ v₂ => by simp⟩
+    by_cases hxy : inner ℂ U₂ U₁ = 0
+    · obtain ⟨c, hc⟩ := existsIP U₂ (U₂ + U₁) (by
+        rw [inner_add_right, hxy, add_zero]
+        exact inner_self_ne_zero.2 hx)
+      obtain ⟨c', hc'⟩ := existsIP U₂ U₂ (inner_self_ne_zero.2 hx)
+      refine ⟨c - c', fun v₁ v₂ => ?_⟩
+      have hsub : (fun x => star (HW.e U₂ v₁ x) * HW.e U₁ v₂ x) =
+          fun x => star (HW.e U₂ v₁ x) * HW.e (U₂ + U₁) v₂ x - star (HW.e U₂ v₁ x) * HW.e U₂ v₂ x := by
+        funext x
+        simp [mul_add]
+      rw [hsub]
+      exact ⟨(hc v₁ v₂).1.sub (hc' v₁ v₂).1, by
+        rw [integral_sub (hc v₁ v₂).1 (hc' v₁ v₂).1, (hc v₁ v₂).2, (hc' v₁ v₂).2, sub_mul]⟩
+    · exact existsIP U₂ U₁ hxy
   have := fun ρ => sigmaFinite_haar (mR ρ) (hmR ρ).1
   refine integral_pi_eval mR (fun ρ b => ⟪(v ρ : M.H ρ), M.rep ρ (realMat W Fr ρ b) (v ρ : M.H ρ)⟫_ℂ) _ c0 z _ fun b => ?_
-  obtain ⟨w, h1, h2⟩ := coef_translate HW hW θ U₁ U₂ hU (fun ρ => realMat W Fr ρ (b ρ)) (fun ρ => hFr ρ _) v
+  let g := fun ρ => realMat W Fr ρ (b ρ)
+  have hg : ∀ ρ, g ρ ∈ Formalism.QuantumDeterminants.UH (gramAt D W ρ) := fun ρ => hFr ρ (b ρ)
+  let w : M.Vec := fun ρ => ⟨_, rep_mem_sm M ρ (g ρ) (hg ρ) _ (v ρ).2⟩
+  have hTranslate (U : MMap M) (hU : U ∈ Mult θ M J χ) : U w = rTr W (realElt θ W g) (U v) := by
+    classical
+    induction hU using Submodule.span_induction with
+    | mem U hU =>
+      change IsMultMap θ M J χ U at hU
+      have hList (l : List D.what₂.Tau) (hl : l.Nodup) :
+          U (fun ρ => if ρ ∈ l then w ρ else v ρ) =
+            rTr W (l.map fun ρ => atTau θ W ρ (g ρ)).prod (U v) := by
+        induction l with
+        | nil =>
+          funext x
+          simp [rTr]
+        | cons a l ih =>
+          rw [List.nodup_cons] at hl
+          have he := hU.equiv a (g a) (hg a) (fun ρ => if ρ ∈ l then w ρ else v ρ) (w a) (by
+            simp only [ite_eq_right hl.1]
+            rfl)
+          rw [ih hl.2] at he
+          rw [List.map_cons, List.prod_cons, rTr_mul, ← he]
+          congr 1
+          funext ρ
+          by_cases hρ : ρ = a
+          · subst hρ
+            simp
+          · rw [Function.update_of_ne hρ]
+            simp [hρ]
+      unfold realElt
+      rw [← hList _ (Finset.nodup_toList _)]
+      congr 1
+      funext ρ
+      simp
+    | zero =>
+      funext x
+      simp [rTr]
+    | add U U' _ _ h₁ h₂ =>
+      funext x
+      have he₁ := congrFun h₁ x
+      have he₂ := congrFun h₂ x
+      simp only [rTr, add_apply, Pi.add_apply] at he₁ he₂ ⊢
+      rw [he₁, he₂]
+    | smul c U _ h =>
+      funext x
+      have he := congrFun h x
+      simp only [rTr, smul_apply, Pi.smul_apply] at he ⊢
+      rw [he]
+  have h2 : l2 μW 𝓖 (HW.e U₁ w) (HW.e U₂ v) =
+      ipM M μW 𝓖 (HW.e U₂) (HW.e U₁) * ∏ ρ, ⟪(v ρ : M.H ρ), M.rep ρ (g ρ) (v ρ : M.H ρ)⟫_ℂ :=
+    (l2_eq_star μW 𝓖 _ _).trans (hIP v w).2
   rw [← h2]
   refine tsum_eval _ _ _ _ _ (fun x => ?_) (hZ w v)
-  rw [hF x.rep x.out.2 _ fun ρ => hFr ρ _, rTr_mul, h1]
+  rw [hF x.rep x.out.2 _ hg, rTr_mul, ← hTranslate (HW.e U₁) hU]
 
 theorem eventually_grpOf (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : LevDat D.host.E ℂ V.rank) :
     ∀ᶠ κ in nhds (1 : GA D V), ∃ h : (finHom V).rangeRestrict κ ∈ grpOf V β L, chrOf V β L ⟨_, h⟩ = 1 := by

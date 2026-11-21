@@ -879,7 +879,7 @@ theorem mem_range_normalizationMap_app [QuasiCompact π] [IsSchemeTheoreticallyD
     (hs : IsInvariantSection (normalizationActionOver f ρ hρ) _ s) :
     s ∈ Set.range ((normalizationMap f f' π (𝟙 Y) hf).app W) := by
   refine IsInvariantSection.mem_range_app _
-    (normalizationActionOver_normalizationMap f f' π hf ρ hρ hπ) (fun W hW s hs ↦ ?_) hs
+    (normalizationActionOver_normalizationMap f f' π hf ρ hπ hρ hπ) (fun W hW s hs ↦ ?_) hs
   have hq := toNormalization_normalizationMap f f' π (𝟙 Y) hf
   have : IsIntegralHom (normalizationMap f f' π (𝟙 Y) hf) := inferInstance
   generalize normalizationMap f f' π (𝟙 Y) hf = q at *
@@ -993,7 +993,7 @@ theorem normalization_quotient {G : Type v} [Group G] [Finite G] {X X' Y : Schem
   have : QuasiSeparated (π ≫ f') := by rw [hf]; infer_instance
   have : QuasiCompact π := .of_comp π f'
   have : QuasiSeparated π := .of_comp π f'
-  have h₁ := normalizationActionOver_normalizationMap f f' π hf ρ hρ hπ
+  have h₁ := normalizationActionOver_normalizationMap f f' π hf ρ hπ hρ hπ
   have h₂ := mem_range_normalizationMap_app f f' π hf ρ hπ hρ hπ
     fun W _ s hs ↦ hs.mem_range_app_of_cover π hπ hinv
   refine ⟨h₁, inferInstance, inferInstance,

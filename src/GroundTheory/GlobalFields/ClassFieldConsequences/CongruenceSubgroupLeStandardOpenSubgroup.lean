@@ -61,13 +61,18 @@ namespace Modulus
 
 variable (𝔪 : Modulus K)
 
-def exponent (v : HeightOneSpectrum (𝓞 K)) : ℕ :=
-  multiplicity v.asIdeal 𝔪.ideal
+def exponent (v : HeightOneSpectrum (𝓞 K)) : ℕ := by
+  classical
+  exact if FiniteMultiplicity v.asIdeal 𝔪.ideal then multiplicity v.asIdeal 𝔪.ideal else 1
 
 omit [NumberField K] in
 theorem exponent_eq_zero_iff (v : HeightOneSpectrum (𝓞 K)) :
-    𝔪.exponent v = 0 ↔ ¬ v.asIdeal ∣ 𝔪.ideal :=
-  multiplicity_eq_zero (FiniteMultiplicity.of_prime_left v.prime 𝔪.ideal_ne_bot)
+    𝔪.exponent v = 0 ↔ ¬ v.asIdeal ∣ 𝔪.ideal := by
+  by_cases h : FiniteMultiplicity v.asIdeal 𝔪.ideal
+  · simpa [exponent, h] using (multiplicity_eq_zero h)
+  · have hd : v.asIdeal ∣ 𝔪.ideal := by
+      simpa using (FiniteMultiplicity.not_iff_forall.1 h 1)
+    simp [exponent, h, hd]
 
 omit [NumberField K] in
 theorem one_le_exponent_iff (v : HeightOneSpectrum (𝓞 K)) :
@@ -77,10 +82,15 @@ theorem one_le_exponent_iff (v : HeightOneSpectrum (𝓞 K)) :
 
 omit [NumberField K] in
 theorem asIdeal_pow_exponent_dvd (v : HeightOneSpectrum (𝓞 K)) :
-    v.asIdeal ^ 𝔪.exponent v ∣ 𝔪.ideal :=
-  pow_multiplicity_dvd _ _
+    v.asIdeal ^ 𝔪.exponent v ∣ 𝔪.ideal := by
+  by_cases h : FiniteMultiplicity v.asIdeal 𝔪.ideal
+  · simpa [exponent, h] using (pow_multiplicity_dvd v.asIdeal 𝔪.ideal)
+  · exact FiniteMultiplicity.not_iff_forall.1 h _
 
 theorem finite_support_exponent : (support 𝔪.exponent).Finite := by
+  have he (v : HeightOneSpectrum (𝓞 K)) : 𝔪.exponent v = multiplicity v.asIdeal 𝔪.ideal := by
+    simp [exponent, FiniteMultiplicity.of_prime_left v.prime 𝔪.ideal_ne_bot]
+  simp_rw [funext he]
   have hm : HasFiniteMulSupport fun v : HeightOneSpectrum (𝓞 K) ↦
       v.asIdeal ^ multiplicity v.asIdeal 𝔪.ideal := by
     simpa only [HeightOneSpectrum.maxPowDividing_eq_pow_multiplicity 𝔪.ideal_ne_bot] using
@@ -99,12 +109,15 @@ theorem mem_congruenceSubgroup {x : IdeleGroup K} :
   rw [congruenceSubgroup, Subgroup.mem_inf, Subgroup.mem_comap, idealLevel, mem_finiteLevel,
     mem_positiveAt]
   simp only [finiteComponent_toFinite]
-  rfl
+  simp [exponent, FiniteMultiplicity.of_prime_left _ 𝔪.ideal_ne_bot, HeightOneSpectrum.prime]
 
 theorem isOpen_congruenceSubgroup : IsOpen (𝔪.congruenceSubgroup : Set (IdeleGroup K)) := by
   rw [congruenceSubgroup, Subgroup.coe_inf, Subgroup.coe_comap]
   refine IsOpen.inter ?_ (isOpen_positiveAt _)
-  exact (isOpen_finiteLevel 𝔪.finite_support_exponent).preimage (continuous_toFinite K)
+  have he (v : HeightOneSpectrum (𝓞 K)) : 𝔪.exponent v = multiplicity v.asIdeal 𝔪.ideal := by
+    simp [exponent, FiniteMultiplicity.of_prime_left v.prime 𝔪.ideal_ne_bot]
+  simpa only [idealLevel, funext he] using
+    (isOpen_finiteLevel 𝔪.finite_support_exponent).preimage (continuous_toFinite K)
 
 theorem congruenceSubgroup_le_standardOpenSubgroup :
     𝔪.congruenceSubgroup ≤ standardOpenSubgroup K := fun x hx ↦ by

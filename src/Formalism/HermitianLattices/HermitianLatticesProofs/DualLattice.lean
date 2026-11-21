@@ -164,7 +164,15 @@ theorem dualLattice_repr {ι : Type*} [Fintype ι] [DecidableEq ι] (h : V →�
 
 end
 
-theorem dualLattice : DualLattice := by
+theorem dualLattice :
+    ∀ (R K V : Type) [CommRing R] [IsDedekindDomain R] [Field K] [StarRing K] [Algebra R K]
+    [IsFractionRing R K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module R V]
+    [IsScalarTower R K V] (h : V →ₗ⋆[K] V →ₗ[K] K), h.IsSymm → h.Nondegenerate →
+    (∀ r : R, star (algebraMap R K r) ∈ Set.range (algebraMap R K)) →
+    ∀ L : Submodule R V, Submodule.IsFullLattice K L →
+      Submodule.IsFullLattice K (dual h L) ∧ dual h (dual h L) = L ∧
+      ∀ a : K, a ≠ 0 → dual h (L.map ((LinearMap.lsmul K V a).restrictScalars R)) =
+        (dual h L).map ((LinearMap.lsmul K V (star a)⁻¹).restrictScalars R) := by
   intro R K V _ _ _ _ _ _ _ _ _ _ _ h hs hnd hst L hL
   classical
   have mem_dual : ∀ (M : Submodule R V) (x : V),
@@ -172,8 +180,8 @@ theorem dualLattice : DualLattice := by
     intro M x
     simp only [dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
       LinearMap.restrictScalars_apply, Submodule.mem_one]
-  have hLfg := hL.fg
-  have hLsp := hL.span_eq_top
+  have hLfg := Submodule.IsLattice.fg K L
+  have hLsp := Submodule.IsFullLattice.span_eq_top (A := K) (M := L)
   obtain ⟨s, hfs, b, hbi, hsL⟩ := dualLattice_basis (R := R) L hLsp
   have hbL : ∀ i, b i ∈ L := fun i => hsL (by rw [hbi]; exact i.2)
   obtain ⟨bs, hbs⟩ := dualLattice_dualBasis h hnd b
@@ -240,7 +248,7 @@ theorem dualLattice : DualLattice := by
     intro x _
     rw [hexp x]
     exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (hbsK j)
-  refine ⟨⟨hfg, hspd⟩, ?_, ?_⟩
+  refine ⟨{ toIsLattice := Submodule.IsLattice.of_fg K hfg, span_eq_top := hspd }, ?_, ?_⟩
   ·
     refine le_antisymm ?_ ((dualBasic R K V h hs hst).2.1 L)
     obtain ⟨n, g, f, hgf⟩ := finitely_generated_projective_coords L hLfg (IsFractionRing.injective R K)

@@ -73,12 +73,12 @@ def Q (ψ : AddChar k Circle) {n : ℕ} : (j : ℕ) → (τ : MRep k (n + j)) �
   | 0, τ => (twKer τ.ρ (MirUin k n) 1).mkQ
   | j + 1, τ => (Q ψ j (MRep.phiM k ψ τ)) ∘ₗ (twKer τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j))).mkQ
 
-theorem Q_surj (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep k (n + j)), Function.Surjective (Q ψ j τ)
+theorem Q_surj (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep k (n + j)), Function.Surjective (Q k ψ j τ)
   | 0, τ => Submodule.mkQ_surjective _
   | j + 1, τ => (Q_surj ψ j (MRep.phiM k ψ τ)).comp (Submodule.mkQ_surjective _)
 
 theorem ker_Q (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep k (n + j)),
-    LinearMap.ker (Q ψ j τ) = twKer τ.ρ (derUnipM k (n + j) n) (derCharM k ψ (n + j) n)
+    LinearMap.ker (Q k ψ j τ) = twKer τ.ρ (derUnipM k (n + j) n) (derCharM k ψ (n + j) n)
   | 0, τ => by
     show LinearMap.ker (twKer τ.ρ (MirUin k n) 1).mkQ = _
     rw [Submodule.ker_mkQ]
@@ -105,7 +105,7 @@ def E {n : ℕ} : (j : ℕ) → GL (Fin n) k →* Mir k (n + j)
   | j + 1 => (levi k (n + j + 1)).comp ((Mir k (n + j)).subtype.comp (E j))
 
 theorem Q_equiv (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep k (n + j)) (g : GL (Fin n) k) (v : τ.V),
-    Q ψ j τ (τ.ρ (E k j g) v) = derivM k ψ j τ g (Q ψ j τ v)
+    Q k ψ j τ (τ.ρ (E k j g) v) = derivM k ψ j τ g (Q k ψ j τ v)
   | 0, τ, g, v => rfl
   | j + 1, τ, g, v => Q_equiv ψ j (MRep.phiM k ψ τ) g (Submodule.Quotient.mk v)
 
@@ -408,7 +408,7 @@ theorem derEquiv (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsN
     DerEquiv k := by
   intro ψ n j V _ _ π
   have hh : n + (j + 1) = n + j + 1 := rfl
-  let A : V →ₗ[ℂ] TwJacquet (iterPhi k ψ j (resM k π)).ρ (MirUin k n) 1 := Q ψ j (resM k π)
+  let A : V →ₗ[ℂ] TwJacquet (iterPhi k ψ j (resM k π)).ρ (MirUin k n) 1 := Q k ψ j (resM k π)
   let B : V →ₗ[ℂ] TwJacquet (jacU₂ (stdSum hh) π) (rightUnip k n (j + 1)) (rightWhit k ψ n (j + 1)) := Q' k ψ hh π
   have hAs : Function.Surjective A := Q_surj ψ j (resM k π)
   have hBs : Function.Surjective B := Q'_surj ψ hh π

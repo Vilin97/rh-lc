@@ -56,10 +56,11 @@ theorem primeIdealZetaSum_eq_mul_of_card_fiber {A : Set (HeightOneSpectrum (𝓞
     _ = _ := by
         rw [Finset.sum_const, Finset.card_univ, ← Nat.card_eq_fintype_card, hcard', nsmul_eq_mul]
 
+open private HasDirichletDensity.eq_1 from Mathlib.NumberTheory.NumberField.DirichletDensity in
 theorem HasDirichletDensity.union {A B : Set (HeightOneSpectrum (𝓞 K))} {a b : ℝ}
     (hA : A.HasDirichletDensity a) (hB : B.HasDirichletDensity b) (hd : Disjoint A B) :
     (A ∪ B).HasDirichletDensity (a + b) := by
-  delta NumberField.Set.HasDirichletDensity at hA hB ⊢
+  rw [HasDirichletDensity.eq_1] at hA hB ⊢
   refine (hA.add hB).congr' ?_
   filter_upwards [self_mem_nhdsWithin] with s hs
   rw [primeIdealZetaSum_union hd hs, add_div]
@@ -116,6 +117,7 @@ theorem hasDirichletDensity_deuringSet (σ : Gal(L/K)) :
     by_contra he
     exact hu ⟨w, he, HeightOneSpectrum.ext hw.over.symm⟩
 
+open private HasDirichletDensity.eq_1 from Mathlib.NumberTheory.NumberField.DirichletDensity in
 theorem hasDirichletDensity_chebotarevSet_isConj (σ : Gal(L/K)) :
     (chebotarevSet {τ : Gal(L/K) | IsConj σ τ}).HasDirichletDensity
       (1 / Nat.card (Subgroup.centralizer {σ})) := by
@@ -144,7 +146,7 @@ theorem hasDirichletDensity_chebotarevSet_isConj (σ : Gal(L/K)) :
   have hEK := tendsto_primeIdealZetaSum_univ_div_univ E K
   have hEpos := (tendsto_primeIdealZetaSum_univ_atTop E).eventually_gt_atTop 0
   have hKpos := (tendsto_primeIdealZetaSum_univ_atTop K).eventually_gt_atTop 0
-  delta NumberField.Set.HasDirichletDensity at hA ⊢
+  rw [HasDirichletDensity.eq_1] at hA ⊢
   have hlim := (hA.const_mul (n : ℝ)⁻¹).mul hEK
   have hval : (n : ℝ)⁻¹ * (1 / orderOf σ) * 1 = 1 / Nat.card (Subgroup.centralizer {σ}) := by
     rw [← hZ]

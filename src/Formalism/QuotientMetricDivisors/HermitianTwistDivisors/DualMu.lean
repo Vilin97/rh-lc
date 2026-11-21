@@ -17,8 +17,8 @@ namespace Formalism.DivisionValues
 
 theorem dual_lattice_measure : DualMu := by
   intro K _ _ _ _ D hD X hX R hR
-  have hFG : R.FG := hR.fg
-  have hsp : Submodule.span K (R : Set (Fin D → K)) = ⊤ := hR.2
+  have hFG : R.FG := hR.toIsLattice.fg
+  have hsp : Submodule.span K (R : Set (Fin D → K)) = ⊤ := hR.span_eq_top
   obtain ⟨hdFG, hdsp, -, hsize, -⟩ :=
     Formalism.HN.dual_polygon_identity K (Fin D → K) (Fin D) (Pi.basisFun K (Fin D)) X hX R hFG hsp
   have hdX : ∀ v, IsUnit (Formalism.HN.dualFrame X v).det := by

@@ -52,8 +52,13 @@ private theorem mem_range_of_sum [CharZero k] (a b : Fin n → H →* kˣ) (h : 
     simp only [Finsupp.single_apply, hc.eq_iff, Finset.sum_boole]
   have h3 : (Finset.univ.filter fun j => a j = a i).card ≠ 0 :=
     Finset.card_ne_zero.2 ⟨i, by simp⟩
-  simp only [L, Finsupp.coe_sub, Finsupp.coe_finset_sum, Pi.sub_apply, Finset.sum_apply, h1, h2, sub_zero] at hv
-  exact h3 (by exact_mod_cast hv)
+  change (∑ j, Finsupp.single (c (a j)) (1 : k)) (c (a i)) -
+    (∑ j, Finsupp.single (c (b j)) (1 : k)) (c (a i)) = 0 at hv
+  have hv' : (∑ j, (Finsupp.single (c (a j)) (1 : k)) (c (a i))) -
+      (∑ j, (Finsupp.single (c (b j)) (1 : k)) (c (a i))) = 0 := by
+    simpa only [Finset.sum_apply'] using hv
+  rw [h1, h2, sub_zero] at hv'
+  exact h3 (by exact_mod_cast hv')
 private theorem flag_range [CharZero k] {r : H →* GL (Fin n) k} {a b : Fin n → H →* kˣ} (ha : W.HasFlag r a) (hb : W.HasFlag r b)
     (i : Fin n) : ∃ j, a i = b j :=
   mem_range_of_sum a b (fun s => by rw [← trace_of_flag ha, ← trace_of_flag hb]) i

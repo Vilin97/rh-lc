@@ -92,7 +92,7 @@ private theorem false_of_degenerate_of_fourier_inversion (ν : Measure W) [ν.Is
   have hψs : HasCompactSupport ψ := bump.hasCompactSupport.comp_left Complex.ofReal_zero
   have hψs' : HasCompactSupport (fun x => ψ (x + k)) := hψs.comp_homeomorph (Homeomorph.addRight k)
   let Φ : W → ℂ := fun x => ψ x - ψ (x + k)
-  have hΦc : Continuous Φ := hψc.sub (hψc.comp (continuous_add_right k))
+  have hΦc : Continuous Φ := hψc.sub (hψc.comp (Homeomorph.addRight k).continuous)
   have hΦs : HasCompactSupport Φ := hψs.sub hψs'
   have hzero : ∀ y, ∫ x, Φ x * ((𝐞 (β x y) : Circle) : ℂ) ∂ν = 0 := by
     intro y

@@ -14,11 +14,16 @@ noncomputable section
 
 namespace Formalism.ExtensionFiltration
 
-theorem log_covolume_slope_mu : LcvMu := by
+theorem log_covolume_slope_mu :
+    ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
+      (d : ℕ), 0 < d → ∀ X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ,
+      (∀ v, IsUnit (X v).det) → ∀ M : Submodule (𝓞 K) (Fin d → K),
+      Submodule.IsFullLattice K M →
+      Formalism.DivisionValues.lcv X M = -((d : ℝ) * Formalism.HN.muDef (Pi.basisFun K (Fin d)) X M) := by
   intro K _ _ _ _ d hd X hX M hM
-  have hfg : M.FG := Submodule.IsLattice.fg (self := hM)
+  have hfg : M.FG := hM.toIsLattice.fg
   have hspan : Submodule.span K (M : Set (Fin d → K)) = ⊤ :=
-    Submodule.IsLattice.span_eq_top (self := hM)
+    Submodule.IsFullLattice.span_eq_top (self := hM)
   have hrk : Formalism.HN.rkK M = d := by
     unfold Formalism.HN.rkK
     rw [hspan]

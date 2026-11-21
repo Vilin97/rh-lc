@@ -246,6 +246,7 @@ theorem compField_le_maximalUnramifiedExtension (N : FiniteSubfield) [Fact (K �
       ((placeOfEmbedding ι N).1.adicCompletion N.1) (ϖ : v.adicCompletion K.1)) =
       algebraMap (v.adicCompletion K.1) (compField ι N) (ϖ : v.adicCompletion K.1) :=
     (compEquiv ι N).commutes _
+  dsimp only [ramificationIndex] at hM
   rw [Units.val_mk0, h4, h2, h1, hM] at h3
   exact_mod_cast h3
 

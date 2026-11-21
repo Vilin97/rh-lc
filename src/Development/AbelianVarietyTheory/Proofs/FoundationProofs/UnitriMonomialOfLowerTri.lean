@@ -44,18 +44,18 @@ theorem coeff_single (p : Fin r × Fin n) (e : Fin r × Fin n →₀ ℕ) (he : 
   induction G using MvPolynomial.induction_on' with
   | add G H hG hH => simp [hG, hH]
   | monomial m c =>
-    rw [single_monomial, Polynomial.coeff_monomial, coeff_monomial]
+    rw [single_monomial, Polynomial.coeff_monomial, Finsupp.single_apply, coeff_monomial]
     by_cases h : m = e + Finsupp.single p k
     · have h1 : m p = k := by simp [h, he]
       have h2 : m.erase p = e := by
         ext v
         by_cases hv : v = p
         · simp [hv, he]
-        · simp [h, Finsupp.erase_ne hv, Finsupp.single_apply, Ne.symm hv]
+        · simp [h, Finsupp.erase_ne hv]
       simp [h1, h2, ← h]
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       split_ifs with h1
-      · rw [coeff_monomial, if_neg]
+      · rw [coeff_monomial, ite_eq_right]
         intro h2
         apply h
         rw [← h2, ← h1, Finsupp.erase_add_single]
@@ -98,7 +98,7 @@ theorem eval_applyWord (e : Fin r × Fin n →₀ ℕ) (L : List (Fin r × Fin n
     (h1 : ∀ q ∈ L, q.2.val < q.1.val) (h2 : L.Pairwise fun q p => q ≠ p ∧ p.2.val ≤ q.2.val)
     (F : MvPolynomial (Fin r × Fin n) R) :
     eval (idFrame R r n) (applyWord R (L.map (letter e)) F) =
-      coeff (e.filter (· ∈ L)) (unitri R L F) := by
+      (unitri R L F).coeff (e.filter (· ∈ L)) := by
   induction L using List.reverseRecOn generalizing F with
   | nil =>
     have h : (eval (idFrame R r n)) = constantCoeff.comp (unitri R ([] : List (Fin r × Fin n))).toRingHom := by
@@ -238,6 +238,7 @@ theorem coeffWord : Formalism.GradedWeylDivisibility.CoeffWord := by
     refine eq_of_filter_eq m e hl he (fun s => by rw [← weight_colW, hw, hν]) fun v hv => ?_
     have := DFunLike.congr_fun h v
     simpa [Finsupp.filter_apply, mem_positions, hv] using this
-  · rw [unitri_monomial_of_not m hl, coeff_monomial, if_neg (fun h : m = e => hl (h ▸ he)), coeff_zero]
+  · rw [unitri_monomial_of_not m hl, coeff_monomial, ite_eq_right (fun h : m = e => hl (h ▸ he)),
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
 
 end GlobalTheory.CoeffWord

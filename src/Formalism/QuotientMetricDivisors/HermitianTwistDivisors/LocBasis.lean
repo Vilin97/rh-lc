@@ -111,7 +111,10 @@ end SemilocalBasisHermitianTwistDivisors
 
 
 open SemilocalBasisHermitianTwistDivisors in
-theorem semilocal_basis_exists : LocBasisEx := by
+theorem semilocal_basis_exists :
+    ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (d : ℕ)
+      (L : Submodule (𝓞 K) (Fin d → K)), Submodule.IsFullLattice K L →
+      ∀ w : HeightOneSpectrum (𝓞 K), ∃ f : Fin d → Fin d → K, IsLocBasis L w f := by
   intro K _ _ _ d L hL w
   have : IsDedekindDomain (A w) :=
     IsLocalization.isDedekindDomain (𝓞 K) (hcompl_le w) (A w)

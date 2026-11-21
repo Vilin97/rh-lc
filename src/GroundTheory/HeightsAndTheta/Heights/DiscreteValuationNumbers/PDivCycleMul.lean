@@ -193,7 +193,7 @@ theorem DivCycleMul.proof : DivCycleMul.Statement := by
   by_cases hrel : IsRelevant W
   swap
   · simp only [Pi.add_apply]
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+    unfold divCycle
     rw [dite_eq_right (fun h => hrel h.2), dite_eq_right (fun h => hrel h.2), dite_eq_right (fun h => hrel h.2),
       add_zero]
   by_cases hm : W ∈ (P ⊔ Ideal.span {x * y}).minimalPrimes
@@ -216,7 +216,7 @@ theorem DivCycleMul.proof : DivCycleMul.Statement := by
     push_cast
     ring
   · simp only [Pi.add_apply]
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+    unfold divCycle
     have hnx : ¬ W ∈ (P ⊔ Ideal.span {x}).minimalPrimes :=
       fun h => hm (mem_minimalPrimes_sup_span_mul hy h)
     have hny : ¬ W ∈ (P ⊔ Ideal.span {y}).minimalPrimes :=

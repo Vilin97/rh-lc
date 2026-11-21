@@ -209,6 +209,8 @@ section Local
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ} {α : Type*} [LinearOrder α] {β : Fin n → α}
 
+local notation "ϖ" => (GLnLocal.uniformizer F : F)
+
 omit [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 theorem valuation_one_apply_le (i j : Fin n) :
     valuation F ((1 : Matrix (Fin n) (Fin n) F) i j) ≤ 1 := by
@@ -391,11 +393,13 @@ section Contraction
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ} {α : Type*} [LinearOrder α] {β : Fin n → α}
 
+local notation "ϖ" => (GLnLocal.uniformizer F : F)
+
 theorem valuation_zpow_mul_le_pow_mul {x : F} {e : ℕ} {z : ℤ} (hz : (e : ℤ) ≤ z) :
     valuation F (ϖ ^ z * x) ≤ valuation F ϖ ^ e * valuation F x := by
   obtain ⟨d, rfl⟩ : ∃ d : ℕ, z = e + d := ⟨(z - e).toNat, by omega⟩
-  rw [zpow_add₀ uniformizer_ne_zero, zpow_natCast, zpow_natCast, map_mul, map_mul, map_pow,
-    map_pow, mul_right_comm]
+  rw [zpow_add₀ (GLnLocal.uniformizer_ne_zero F), zpow_natCast, zpow_natCast, map_mul, map_mul,
+    map_pow, map_pow, mul_right_comm]
   exact mul_le_of_le_one_right' (pow_le_one' (valuation_uniformizer_lt_one F).le d)
 
 

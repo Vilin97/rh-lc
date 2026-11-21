@@ -20,8 +20,12 @@ theorem centralChar (n : ℕ) : CentralCharStatement n := by
   obtain ⟨T⟩ := HW.kType_exists ε lam hlam
   obtain ⟨μ, hμ⟩ := S7.exists_mu hlam
   have hq0 : 1 ≤ S7.q0 ε := le_min hp hq
-  have hP := (S7.isPsiFor_psiM ε lam h T μ hlam hμ hg hq0
-    (by unfold S7.q0; push_cast; exact h8)).1
+  have hP : IsPsiFor ε lam T (S7.PsiM T μ) := by
+    refine ⟨fun k₁ k₂ g hg' => S7.psiM_equiv T μ k₁ k₂ hg', S7.psiM_one T μ,
+      S7.psiM_smooth T μ hμ, fun g hg' => S7.psiM_casimir T μ hμ hg', ?_⟩
+    intro ν hν
+    exact (S7.psiM_integrable T μ hμ hlam hg hq0 ν).2.1
+      (by unfold S7.q0; push_cast; exact h8)
   have hstd : StdGap ε lam := ⟨hanti, h, hg, hnpq⟩
   have hV0 : V ≠ ⊥ := by
     obtain ⟨w, hw, hw0, -⟩ := hV.2.2.2

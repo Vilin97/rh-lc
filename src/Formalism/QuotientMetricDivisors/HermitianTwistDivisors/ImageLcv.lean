@@ -75,7 +75,8 @@ variable {R K V : Type*} [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R 
   [IsFractionRing R K] [AddCommGroup V] [Module K V] [Module R V] [IsScalarTower R K V]
 
 theorem idxLcv_lidx_add (p : Ideal R) [p.IsPrime] (A B C : Submodule R V)
-    (hA : Submodule.IsLattice K A) (hB : Submodule.IsLattice K B) (hC : Submodule.IsLattice K C) :
+    (hA : Submodule.IsFullLattice K A) (hB : Submodule.IsFullLattice K B)
+    (hC : Submodule.IsFullLattice K C) :
     Formalism.HermitianLatticesTheory.lidx p A C = Formalism.HermitianLatticesTheory.lidx p A B + Formalism.HermitianLatticesTheory.lidx p B C := by
   have hfin : ∀ X Y : Submodule R V, X.FG → Formalism.HermitianLatticesTheory.locS (nonZeroDivisors R) Y = ⊤ →
       Module.length R (↥(Formalism.HermitianLatticesTheory.localization₂ p X) ⧸
@@ -85,14 +86,14 @@ theorem idxLcv_lidx_add (p : Ideal R) [p.IsPrime] (A B C : Submodule R V)
       Formalism.HermitianLatticesTheory.indexBasic_denom (nonZeroDivisors R) X Y hX (by rw [hY]; exact le_top)
     exact Module.length_ne_top_iff.mpr (Formalism.HermitianLatticesTheory.indexBasic_finLen p X Y hX hd hdY)
   have hAt := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) A
-    (Submodule.IsLattice.span_eq_top (self := hA))
+    hA.span_eq_top
   have hBt := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) B
-    (Submodule.IsLattice.span_eq_top (self := hB))
+    hB.span_eq_top
   have hCt := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) C
-    (Submodule.IsLattice.span_eq_top (self := hC))
-  have hAfg : A.FG := Submodule.IsLattice.fg (self := hA)
-  have hBfg : B.FG := Submodule.IsLattice.fg (self := hB)
-  have hCfg : C.FG := Submodule.IsLattice.fg (self := hC)
+    hC.span_eq_top
+  have hAfg : A.FG := hA.toIsLattice.fg
+  have hBfg : B.FG := hB.toIsLattice.fg
+  have hCfg : C.FG := hC.toIsLattice.fg
   have hDt : Formalism.HermitianLatticesTheory.locS (nonZeroDivisors R) (A ⊓ B ⊓ C) = ⊤ := by
     rw [Formalism.HermitianLatticesTheory.locBasic_locS_inf, Formalism.HermitianLatticesTheory.locBasic_locS_inf, hAt, hBt, hCt]
     simp
@@ -123,9 +124,13 @@ theorem imageLcv_std_li (d : ℕ) : LinearIndependent K (fun i => (Pi.single i 1
   exact (Pi.basisFun K (Fin d)).linearIndependent
 
 theorem imageLcv_std_lat (d : ℕ) :
-    Submodule.IsLattice K
+    Submodule.IsFullLattice K
       (Submodule.span (𝓞 K) (Set.range (fun i => (Pi.single i 1 : Fin d → K)))) := by
-  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
+  refine {
+    toIsLattice := Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range _))
+    span_eq_top := ?_ }
+  rw [Submodule.span_span_of_tower, imageLcv_std_eq]
+  exact (Pi.basisFun K (Fin d)).span_eq
 theorem imageLcv_gram_ne [_root_.NumberField.IsTotallyComplex K] {d : ℕ}
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (hX : ∀ v, IsUnit (X v).det)
     (e : Fin d → Fin d → K) (he : LinearIndependent K e) (v : InfinitePlace K) :

@@ -84,7 +84,7 @@ theorem r_act (c : D.O) (w : VQ D) : X.r (actQ D c w) = (actQ D c).baseChange (A
 def lat : AddSubgroup (VQ D) where
   carrier := {w | w ∈ X.M ∧ X.r w ∈ LaHat D}
   zero_mem' := ⟨zero_mem _, by rw [map_zero]; exact zero_mem _⟩
-  add_mem' := fun h h' => ⟨add_mem h.1 h'.1, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h.2 h'.2⟩
+  add_mem' := fun h h' => ⟨add_mem h.1 h'.1, by rw [map_add]; exact add_mem h.2 h'.2⟩
   neg_mem' := fun h => ⟨neg_mem h.1, by rw [map_neg]; exact neg_mem h.2⟩
 
 theorem mem_lat {w : VQ D} : w ∈ X.lat ↔ w ∈ X.M ∧ X.r w ∈ LaHat D := Iff.rfl

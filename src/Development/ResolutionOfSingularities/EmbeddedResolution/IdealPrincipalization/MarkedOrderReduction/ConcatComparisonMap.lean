@@ -248,8 +248,8 @@ def toStrictPullbackSeq {X' X : Scheme.{u}} (g : X' ⟶ X) (d' : BlowupSequenceD
   comp := toSeqComparisonMap d' d c
   comp_zero := toSeqComparisonMap_zero_comp_isoObjZero c hzero
   pullback := isPullback_toSeqComparisonMap c hpb
-  length_eq := toSequenceOfBlowups_length_eq_of_length_eq hlen
-  center_eq := toSequenceOfBlowups_center_eq_comap_toSeqComparisonMap c hc
+  length_eq := by exact toSequenceOfBlowups_length_eq_of_length_eq hlen
+  center_eq := by exact toSequenceOfBlowups_center_eq_comap_toSeqComparisonMap c hc
 
 end BlowupSequenceData
 
@@ -797,9 +797,9 @@ def concat {X' X : Scheme.{u}} {g : X' ⟶ X} (s : BlowupSequenceData X)
   BlowupSequenceData.toStrictPullbackSeq g (s'.append t') (s.append t)
     (BlowupSequenceData.append_length_eq_of_strictPullbackBlowupSeq g s t s' t' D D')
     (BlowupSequenceData.concatComparisonMap g s t s' t' D D')
-    (BlowupSequenceData.concatComparisonMap_zero_comp_isoObjZero g s t s' t' D D')
-    (BlowupSequenceData.isPullback_concatComparisonMap g s t s' t' D D')
-    (BlowupSequenceData.append_center_eq_comap_concatComparisonMap g s t s' t' D D')
+    (by exact BlowupSequenceData.concatComparisonMap_zero_comp_isoObjZero g s t s' t' D D')
+    (by exact BlowupSequenceData.isPullback_concatComparisonMap g s t s' t' D D')
+    (by exact BlowupSequenceData.append_center_eq_comap_concatComparisonMap g s t s' t' D D')
 
 end StrictPullbackBlowupSeq
 

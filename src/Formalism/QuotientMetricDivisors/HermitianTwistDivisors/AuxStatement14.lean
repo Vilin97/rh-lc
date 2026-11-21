@@ -40,9 +40,11 @@ theorem dual_map (hV : V →ₗ⋆[K] V →ₗ[K] K) (hW : W →ₗ⋆[K] W →�
     LinearMap.coe_restrictScalars, forall_exists_index, and_imp, forall_apply_eq_imp_iff₂, adj]
 
 theorem map_isLattice (P : V →ₗ[K] W) (hP : Function.Surjective P) (B : Submodule R V)
-    (hB : Submodule.IsLattice K B) : Submodule.IsLattice K (B.map (P.restrictScalars R)) := by
-  refine ⟨hB.fg.map _, ?_⟩
-  rw [Submodule.map_coe, LinearMap.coe_restrictScalars, Submodule.span_image, hB.span_eq_top,
+    (hB : B.FG ∧ Submodule.span K (B : Set V) = ⊤) :
+    (B.map (P.restrictScalars R)).FG ∧
+      Submodule.span K (B.map (P.restrictScalars R) : Set W) = ⊤ := by
+  refine ⟨hB.1.map _, ?_⟩
+  rw [Submodule.map_coe, LinearMap.coe_restrictScalars, Submodule.span_image, hB.2,
     Submodule.map_top, LinearMap.range_eq_top.mpr hP]
 
 theorem dual_comap [IsDedekindDomain R] [IsFractionRing R K] [FiniteDimensional K V]
@@ -68,7 +70,7 @@ theorem dual_comap [IsDedekindDomain R] [IsFractionRing R K] [FiniteDimensional 
   have hWn : hW.Nondegenerate := by
     refine ⟨fun x hx => hsep x fun y => ?_, hsep⟩
     rw [← hWs.eq x y, hx y, map_zero]
-  have hBP := map_isLattice (R := R) P hP _ hL
+  have hBP := Submodule.IsLattice.of_fg K (hL.fg.map (P.restrictScalars R))
   rw [← h1]
   exact (Formalism.HermitianLatticesTheory.dualLattice R K W hW hWs hWn hstar _ hBP).2.1
 
@@ -220,7 +222,8 @@ theorem idx_smLat {D : ℕ} (w : HeightOneSpectrum (𝓞 K)) (A : Submodule (�
     (hA : Submodule.IsLattice K A) {a : K} (ha : a ≠ 0) :
     idx w A (smLat a A) = (D : ℤ) * vw w a := by
   obtain ⟨f, hf⟩ := semilocal_basis_exists K D A hA w
-  have haA : Submodule.IsLattice K (smLat a A) := map_isLattice (sm D a) (sm_surj D ha) A hA
+  have haA : Submodule.IsLattice K (smLat a A) :=
+    Submodule.IsLattice.of_fg K (hA.fg.map _)
   have hspK : Submodule.span K (Set.range f) = ⊤ :=
     hf.1.span_eq_top_of_card_eq_finrank' (by simp)
   have hspan_f : Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range f)) :=
@@ -254,7 +257,8 @@ end exponent_index_lattice
 theorem exponent_index_local : ExpIndexLoc := by
   intro K _ _ _ D A B hA hB w a ha hAB
   have ha' : (a : K) ≠ 0 := (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 K) K)).mpr ha
-  have hC : Submodule.IsLattice K (smLat (a : K) A) := map_isLattice (sm D (a : K)) (sm_surj D ha') A hA
+  have hC : Submodule.IsLattice K (smLat (a : K) A) :=
+    Submodule.IsLattice.of_fg K (hA.fg.map _)
   obtain ⟨-, hsum, -⟩ := idxB w A (smLat (a : K) A) B hA hC hB
   rw [hsum, idx_smLat w A hA ha']
   have htop : (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (smLat (a : K) A ⊓ B)).comap
@@ -337,7 +341,7 @@ theorem ValuationLatticeDual : BoundsIVGen := by
   have hnZ := nondeg_of_adj (hform H) hn (hform (Eᴴ * H * E)) hsZ (Matrix.mulVecLin E)
     (Matrix.mulVecLin Pr) (adj hH hO) (E_inj hO)
   have hT : Submodule.IsLattice K (matLat Pr A) :=
-    map_isLattice (Matrix.mulVecLin Pr) (Pr_surj hO) A hA
+    Submodule.IsLattice.of_fg K (hA.fg.map _)
   have hC : Submodule.IsLattice K (cutLat E A) := cut_isLattice E (E_inj hO) A hA
   have hCT : cutLat E A ≤ matLat Pr A := by
     intro z hz

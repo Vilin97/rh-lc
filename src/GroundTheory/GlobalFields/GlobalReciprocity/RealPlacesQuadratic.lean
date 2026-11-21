@@ -12,6 +12,8 @@ open scoped GroundTheory.LocalField.Abstract
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem eq_of_ker_le_of_natCard_le_two {A B : Type*} [Group A] [Group B] [Finite B]
     (hB : Nat.card B ≤ 2) {f g : A →* B} (hfg : f.ker ≤ g.ker) {y : A} (hy : g y ≠ 1) : f = g := by
   classical
@@ -101,6 +103,7 @@ theorem abstractSymbol_mk_of_natCard_le_two (hcard : Nat.card (L.1 ≃ₐ[K.1] L
     (f := (abstractSymbol K L).comp (IdeleClassGroup.mk K.1))
     (g := Group.Abelianization.of.comp (ideleSymbol K.1 L.1)) (y := y)
     (fun z hz ↦ by
+      change abstractSymbol K L (IdeleClassGroup.mk K.1 z) = 1 at hz
       rw [MonoidHom.mem_ker, MonoidHom.comp_apply,
         ideleSymbol_eq_one_of_abstractSymbol_eq_one K L hL hz, map_one])
     (fun h1 ↦ hy (abelianization_of_injective (by rw [MonoidHom.comp_apply] at h1; rw [h1, map_one])))

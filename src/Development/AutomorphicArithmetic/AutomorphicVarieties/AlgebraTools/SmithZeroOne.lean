@@ -7,17 +7,15 @@ public import Mathlib
 open Polynomial Matrix IsLocalRing TensorProduct
 
 theorem UpperTheory.V.AlgebraTools.smith_zero_one :
-    ∀ {A : Type} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] {F V : Type} [Field F] [Algebra A F] [IsFractionRing A F] [AddCommGroup V] [Module F V] [Module A V] [IsScalarTower A F V] [Module.Finite F V] (ϖ : A) (Y Z : Submodule A V), Irreducible ϖ → Submodule.IsLattice F Z → Y ≤ Z → maximalIdeal A • Z ≤ Y → ∃ (b : Module.Basis (Fin (Module.finrank F V)) F V) (S : Finset (Fin (Module.finrank F V))), Z = Submodule.span A (Set.range b) ∧ Y = Submodule.span A (Set.range fun i => if i ∈ S then ϖ • b i else b i) := by
+    ∀ {A : Type} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] {F V : Type} [Field F] [Algebra A F] [IsFractionRing A F] [AddCommGroup V] [Module F V] [Module A V] [IsScalarTower A F V] [Module.Finite F V] (ϖ : A) (Y Z : Submodule A V), Irreducible ϖ → Submodule.IsFullLattice F Z → Y ≤ Z → maximalIdeal A • Z ≤ Y → ∃ (b : Module.Basis (Fin (Module.finrank F V)) F V) (S : Finset (Fin (Module.finrank F V))), Z = Submodule.span A (Set.range b) ∧ Y = Submodule.span A (Set.range fun i => if i ∈ S then ϖ • b i else b i) := by
   intro A _ _ _ F V _ _ _ _ _ _ _ _ ϖ Y Z hϖ hZ hYZ hmY
   classical
-  haveI : Submodule.IsLattice F Z := hZ
-  haveI : Submodule.IsFullLattice F Z :=
-    Submodule.IsFullLattice.of_finrank_le F Z (by
-      rw [← Submodule.IsLattice.finrank_span_eq_finrank F Z]
-      exact Submodule.finrank_mono (show Submodule.span F (Z : Set V) ≤ ⊤ from le_top))
+  haveI : Submodule.IsFullLattice F Z := hZ
+  haveI : Module.IsTorsionFree A V := Module.IsTorsionFree.trans F
+  haveI : Module.Finite A Z := Submodule.IsLattice.finite F Z
   have hfr : Module.finrank A Z = Module.finrank F V := by
     apply Module.finrank_eq_of_rank_eq
-    rw [Submodule.IsLattice.rank' F Z, Module.finrank_eq_rank]
+    rw [Submodule.IsFullLattice.rank_eq F Z, Module.finrank_eq_rank]
   let b0 : Module.Basis (Fin (Module.finrank F V)) A Z := Module.finBasisOfFinrankEq A Z hfr
   let N : Submodule A Z := Y.comap Z.subtype
   have hϖm : ϖ ∈ maximalIdeal A := (IsLocalRing.mem_maximalIdeal _).2 hϖ.not_isUnit
@@ -26,6 +24,9 @@ theorem UpperTheory.V.AlgebraTools.smith_zero_one :
     apply le_antisymm (Submodule.finrank_le N)
     let g : Z →ₗ[A] N := (ϖ • LinearMap.id : Z →ₗ[A] Z).codRestrict N (fun z => hN z)
     apply LinearMap.finrank_le_finrank_of_injective (f := g)
+    intro x y h
+    apply smul_right_injective Z hϖ.ne_zero
+    exact congrArg Subtype.val h
   obtain ⟨b', a, ab', hab⟩ := Submodule.exists_smith_normal_form_of_rank_eq b0 hrk
   have hdiv : ∀ i, a i ∣ ϖ := by
     intro i

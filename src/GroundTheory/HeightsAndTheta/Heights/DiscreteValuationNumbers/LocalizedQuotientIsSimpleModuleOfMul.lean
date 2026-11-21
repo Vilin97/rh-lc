@@ -20,10 +20,11 @@ section Lemmas
 def ResidualComparison.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-      (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P (d + 1) →
-    ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsEffectiveVertical P ϖ b f g →
-    ∀ (c : K → ℕ) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog s c → s ∉ P →
-    (∀ H, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H → IsVerticalDivisor H ϖ b f g) →
+      (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P (d + 1) →
+    ∀ (b : K → ℤ) (f g : MRing ι O), IsEffectiveVertical P ϖ b f g →
+    ∀ (c : K → ℕ) (s : MRing ι O), IsMultiHomog s c → s ∉ P →
+    (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H →
+      IsVerticalDivisor H ϖ b f g) →
     ∀ e : K → ℕ, (∀ k, (c k : ℤ) = b k + e k) →
     ∀ m : MRing ι O, IsMultiHomog m e → m ∉ P →
     (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → m ∉ H) →
@@ -40,10 +41,11 @@ def ResidualComparison.Statement : Prop :=
 def ExceptionalComparison.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-      (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P (d + 1) →
-    ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsEffectiveVertical P ϖ b f g →
-    ∀ (c : K → ℕ) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog s c → s ∉ P →
-    (∀ H, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H → IsVerticalDivisor H ϖ b f g) →
+      (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P (d + 1) →
+    ∀ (b : K → ℤ) (f g : MRing ι O), IsEffectiveVertical P ϖ b f g →
+    ∀ (c : K → ℕ) (s : MRing ι O), IsMultiHomog s c → s ∉ P →
+    (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H →
+      IsVerticalDivisor H ϖ b f g) →
     ∀ e : K → ℕ, (∀ k, (c k : ℤ) = b k + e k) →
     ∀ m : MRing ι O, IsMultiHomog m e → m ∉ P →
     (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → m ∉ H) →

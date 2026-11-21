@@ -37,7 +37,7 @@ theorem ExcessPositive.proof : ExcessPositive.Statement.{u} := by
   have hPp : P.IsPrime := hP.multiProj.isPrime
   have hGdef : G ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant G := by
     by_contra h
-    exact hsG (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right h])
+    exact hsG (by unfold divCycle; rw [dite_eq_right h])
   have hGp : G.IsPrime := hGdef.1.1.1
   have hPG : P ≤ G := le_sup_left.trans hGdef.1.1.2
   obtain ⟨u, v, huG, huv⟩ := hD.2 G hGp hPG hGdef.2

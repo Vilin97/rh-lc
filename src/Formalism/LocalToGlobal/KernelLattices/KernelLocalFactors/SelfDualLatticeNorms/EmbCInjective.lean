@@ -118,7 +118,7 @@ theorem La_stable (L : Submodule (𝓞 D.host.E) (Fin a → D.host.E)) (L' : Sub
     refine AddSubgroup.subset_closure ⟨w, hw, r • A, Submodule.smul_mem _ _ hA, ?_⟩
     rw [embV_eq, embV_eq, opM_smul, emV_smulO]
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [map_add (f := _)]; exact add_mem h1 h2
   | neg x _ h => rw [map_neg]; exact neg_mem h
 
 theorem mat_mem_hom {x : HomE X.E a b} (hx : x ∈ homO N N') : mat s x ∈ TaylorLogMetric.homL D (s.lat N) (s.lat N') := by
@@ -174,7 +174,7 @@ theorem phi_mem_La {z : HomE X.E a b} (hz : z ∈ perO (aaX s cc) N N') :
     obtain ⟨r, hr, x, hx, rfl⟩ := h
     exact key r hr x hx
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [map_add (f := _)]; exact add_mem h1 h2
   | smul ρ z _ h =>
     obtain ⟨ρ', hρ'⟩ := (s.int_iff (ρ : X.E)).2 ⟨ρ, rfl⟩
     rw [phi_smulO, ← hρ']

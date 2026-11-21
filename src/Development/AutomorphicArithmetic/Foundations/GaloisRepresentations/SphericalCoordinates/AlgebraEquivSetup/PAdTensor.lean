@@ -40,7 +40,7 @@ private theorem valued_completionMap_le {E : Type} [Field E] [NumberField E] (P 
     exact zero_ne_one h
   rw [GroundTheory.Global.SemiLocal.valued_completionMap]
   refine le_trans ?_ ht
-  refine pow_le_of_le_one zero_le' (ht.trans ?_) he
+  refine pow_le_of_le_one zero_le (ht.trans ?_) he
   rw [← WithZero.exp_zero, WithZero.exp_le_exp]
   omega
 
@@ -59,7 +59,7 @@ private theorem ringHom_eq {E : Type} [Field E] [NumberField E] (P : Plc E) (v :
         (continuous_id.sub continuous_const)
     obtain ⟨k, hk⟩ := hd.exists_mem_open hopen ⟨x, by simp⟩
     have hk' : Valued.v (q k - x) ≤ WithZero.exp (-(n : ℤ)) := by
-      simpa only [Set.mem_setOf_eq] using hk
+      simpa only [Set.mem_ofPred_eq] using hk
     have h : φ (q k) = ψ (q k) := RingHom.congr_fun (Subsingleton.elim (φ.comp q) (ψ.comp q)) k
     have e : φ x - ψ x = ψ (q k - x) - φ (q k - x) := by
       rw [map_sub φ, map_sub ψ, h]
@@ -139,7 +139,7 @@ theorem UpperTheory.Gal.W2.Seed.pAdTensor :
         rw [hj, hc]
         exact GlobalTheory.AdeleBaseChange.map_mem_int hι (Formalism.UG.P.levelaf_tmul_mem x ha)
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
       | neg x _ hx => rw [map_neg]; exact neg_mem hx
     exact this
   · have h : c y ∈ Formalism.L2.DIV.RInt ℚ E := GlobalTheory.AdeleBaseChange.mem_int_of_map hι hy

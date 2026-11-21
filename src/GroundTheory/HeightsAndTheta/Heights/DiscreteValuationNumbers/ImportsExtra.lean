@@ -23,7 +23,8 @@ theorem ResidualContraction.proof (hle : BlowUpOrderLe.Statement.{u})
 
   have hG'supp : G' ∈ (blowUpOf P (blowUpGens s g f m e) ⊔ Ideal.span {liftForm s}).minimalPrimes ∧
       IsRelevant G' := by
-    by_contra h; unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hsG'; rw [dite_eq_right h] at hsG'; exact lt_irrefl _ hsG'
+    by_contra h
+    simp [divCycle, h] at hsG'
 
   have hsP' : liftForm (J := BlowUpIdx ι) s ∉ blowUpOf P (blowUpGens s g f m e) := by
     rw [blowUpOf, RingHom.mem_ker, aeval_blowUpSubst_liftForm, Polynomial.C_eq_zero,

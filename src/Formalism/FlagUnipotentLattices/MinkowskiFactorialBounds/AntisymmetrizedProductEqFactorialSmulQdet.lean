@@ -8,7 +8,7 @@ public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ShiftedGeneratorEqIteS
 
 @[expose] public section
 
-open Formalism.HermitianLatticeCounting.S8 Formalism.REAL TensorProduct Finset
+open Formalism.REAL TensorProduct Finset
 
 set_option linter.all false
 

@@ -36,16 +36,16 @@ theorem pow_small {γ : WithZero (Multiplicative ℤ)} (hγ : γ < 1) (δ : (Wit
 
 variable (u : L)
 
-theorem newton_step (k : ℕ) (hs : vv (newtonSq u k - 1) < 1) (h2 : vv (2 : L) = 1) :
-    vv (newtonSq u k) = 1 ∧
+theorem newton_step (k : ℕ) (hs : Valued.v (newtonSq u k - 1) < 1) (h2 : Valued.v (2 : L) = 1) :
+    Valued.v (newtonSq u k) = 1 ∧
       newtonSq u (k + 1) * newtonSq u (k + 1) - u =
         (newtonSq u k * newtonSq u k - u) ^ 2 / (4 * newtonSq u k ^ 2) ∧
-      vv (newtonSq u (k + 1) - newtonSq u k) = vv (newtonSq u k * newtonSq u k - u) := by
+      Valued.v (newtonSq u (k + 1) - newtonSq u k) = Valued.v (newtonSq u k * newtonSq u k - u) := by
   set x := newtonSq u k with hx
-  have hx1 : vv x = 1 := by
+  have hx1 : Valued.v x = 1 := by
     have hxe : x = (x - 1) + 1 := by ring
-    have hlt : vv (x - 1) < vv (1 : L) := by rwa [Valuation.map_one]
-    rw [hxe, Valuation.map_add_eq_of_lt_right (v := vv) hlt, Valuation.map_one]
+    have hlt : Valued.v (x - 1) < Valued.v (1 : L) := by rwa [Valuation.map_one]
+    rw [hxe, Valuation.map_add_eq_of_lt_right (v := Valued.v) hlt, Valuation.map_one]
   have hx0 : x ≠ 0 := by
     intro h
     rw [h, Valuation.map_zero] at hx1
@@ -65,20 +65,20 @@ theorem newton_step (k : ℕ) (hs : vv (newtonSq u k - 1) < 1) (h2 : vv (2 : L) 
   · rw [hnext, show x - (x * x - u) / (2 * x) - x = -((x * x - u) / (2 * x)) by ring, Valuation.map_neg,
       Valuation.map_div, Valuation.map_mul, h2, hx1, one_mul, div_one]
 
-theorem newton_bound (h2 : vv (2 : L) = 1) (hu : vv (u - 1) < 1) (k : ℕ) :
-    vv (newtonSq u k - 1) < 1 ∧ vv (newtonSq u k * newtonSq u k - u) ≤ vv (u - 1) ^ (k + 1) := by
+theorem newton_bound (h2 : Valued.v (2 : L) = 1) (hu : Valued.v (u - 1) < 1) (k : ℕ) :
+    Valued.v (newtonSq u k - 1) < 1 ∧ Valued.v (newtonSq u k * newtonSq u k - u) ≤ Valued.v (u - 1) ^ (k + 1) := by
   induction k with
   | zero =>
     refine ⟨by simp [newtonSq], ?_⟩
-    show vv (1 * 1 - u) ≤ vv (u - 1) ^ (0 + 1)
+    show Valued.v (1 * 1 - u) ≤ Valued.v (u - 1) ^ (0 + 1)
     rw [one_mul, pow_one, Valuation.map_sub_swap]
   | succ k ih =>
     obtain ⟨ih1, ih2⟩ := ih
     obtain ⟨hx1, hsq, hdiff⟩ := newton_step u k ih1 h2
-    have h4 : vv (4 * newtonSq u k ^ 2) = 1 := by
+    have h4 : Valued.v (4 * newtonSq u k ^ 2) = 1 := by
       rw [Valuation.map_mul, Valuation.map_pow, hx1, one_pow, mul_one,
         show (4 : L) = 2 * 2 by norm_num, Valuation.map_mul, h2, one_mul]
-    have hlt : vv (u - 1) ^ (k + 1) < 1 := by
+    have hlt : Valued.v (u - 1) ^ (k + 1) < 1 := by
       first
       | exact pow_lt_one₀ zero_le' hu (Nat.succ_ne_zero k)
       | exact pow_lt_one' hu (Nat.succ_ne_zero k)
@@ -90,12 +90,12 @@ theorem newton_bound (h2 : vv (2 : L) = 1) (hu : vv (u - 1) < 1) (k : ℕ) :
       rw [hdiff]
       exact lt_of_le_of_lt ih2 hlt
     · rw [hsq, Valuation.map_div, Valuation.map_pow, h4, div_one]
-      calc vv (newtonSq u k * newtonSq u k - u) ^ 2 ≤ (vv (u - 1) ^ (k + 1)) ^ 2 := by
+      calc Valued.v (newtonSq u k * newtonSq u k - u) ^ 2 ≤ (Valued.v (u - 1) ^ (k + 1)) ^ 2 := by
             first
             | exact pow_le_pow_left' ih2 2
             | exact pow_le_pow_left₀ zero_le' ih2 2
-        _ = vv (u - 1) ^ ((k + 1) * 2) := by rw [← pow_mul]
-        _ ≤ vv (u - 1) ^ (k + 1 + 1) := by
+        _ = Valued.v (u - 1) ^ ((k + 1) * 2) := by rw [← pow_mul]
+        _ ≤ Valued.v (u - 1) ^ (k + 1 + 1) := by
             first
             | exact pow_le_pow_right_of_le_one' hu.le (by omega)
             | exact pow_le_pow_right_of_le_one₀ zero_le' hu.le (by omega)
@@ -113,8 +113,8 @@ theorem pow_anti {γ : WithZero (Multiplicative ℤ)} (hγ : γ ≤ 1) {a b : �
   | exact pow_le_pow_right_of_le_one' hγ hab
   | exact pow_le_pow_right_of_le_one₀ zero_le' hγ hab
 
-theorem newton_cauchy_bound (h2 : vv (2 : L) = 1) (hu : vv (u - 1) < 1) (n m : ℕ) (hnm : n ≤ m) :
-    vv (newtonSq u m - newtonSq u n) ≤ vv (u - 1) ^ (n + 1) := by
+theorem newton_cauchy_bound (h2 : Valued.v (2 : L) = 1) (hu : Valued.v (u - 1) < 1) (n m : ℕ) (hnm : n ≤ m) :
+    Valued.v (newtonSq u m - newtonSq u n) ≤ Valued.v (u - 1) ^ (n + 1) := by
   induction m, hnm using Nat.le_induction with
   | base => simp
   | succ m hnm ih =>
@@ -127,7 +127,7 @@ theorem newton_cauchy_bound (h2 : vv (2 : L) = 1) (hu : vv (u - 1) < 1) (n m : �
     rw [hdiff]
     exact le_trans (newton_bound u h2 hu m).2 (pow_anti hu.le (by omega))
 
-theorem newton_cauchy (h2 : vv (2 : L) = 1) (hu : vv (u - 1) < 1) : CauchySeq (newtonSq u) := by
+theorem newton_cauchy (h2 : Valued.v (2 : L) = 1) (hu : Valued.v (u - 1) < 1) : CauchySeq (newtonSq u) := by
   rw [(Valued.hasBasis_uniformity L (WithZero (Multiplicative ℤ))).cauchySeq_iff]
   intro γ _
   obtain ⟨N, hN⟩ := pow_small hu (Units.mk0 _ (MonoidWithZeroHom.ValueGroup₀.embedding_unit_ne_zero γ))
@@ -136,12 +136,12 @@ theorem newton_cauchy (h2 : vv (2 : L) = 1) (hu : vv (u - 1) < 1) : CauchySeq (n
   show Valued.v.restrict (newtonSq u n - newtonSq u m) < (γ : _)
   rw [Valuation.restrict_lt_iff_lt_embedding]
   rcases le_total m n with hmn | hnm
-  · calc vv (newtonSq u n - newtonSq u m) ≤ vv (u - 1) ^ (m + 1) := newton_cauchy_bound u h2 hu m n hmn
-      _ ≤ vv (u - 1) ^ N := pow_anti hu.le (by omega)
+  · calc Valued.v (newtonSq u n - newtonSq u m) ≤ Valued.v (u - 1) ^ (m + 1) := newton_cauchy_bound u h2 hu m n hmn
+      _ ≤ Valued.v (u - 1) ^ N := pow_anti hu.le (by omega)
       _ < _ := hN
   · rw [Valuation.map_sub_swap]
-    calc vv (newtonSq u m - newtonSq u n) ≤ vv (u - 1) ^ (n + 1) := newton_cauchy_bound u h2 hu n m hnm
-      _ ≤ vv (u - 1) ^ N := pow_anti hu.le (by omega)
+    calc Valued.v (newtonSq u m - newtonSq u n) ≤ Valued.v (u - 1) ^ (n + 1) := newton_cauchy_bound u h2 hu n m hnm
+      _ ≤ Valued.v (u - 1) ^ N := pow_anti hu.le (by omega)
       _ < _ := hN
 
 end HS2

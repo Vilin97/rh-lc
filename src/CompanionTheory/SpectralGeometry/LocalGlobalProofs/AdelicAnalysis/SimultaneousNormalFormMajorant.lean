@@ -24,6 +24,7 @@ theorem exists_eq_transpose_mul_self {ι : Type} [Fintype ι] [DecidableEq ι]
         diagonal (fun i => Real.sqrt (hH.eigenvalues i)) := by
     rw [diagonal_mul_diagonal]
     congr 1
+    funext i
     exact (Real.mul_self_sqrt (hT.eigenvalues_nonneg i)).symm
   refine ⟨diagonal (fun i => Real.sqrt (hH.eigenvalues i)) * Uᵀ, ?_⟩
   rw [transpose_mul, transpose_transpose, diagonal_transpose]

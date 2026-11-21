@@ -30,7 +30,7 @@ theorem OtherFactorBound.coeff_bound (hS : SchurSignCoefficient.Statement)
       ∑ nu ∈ partitionsOf r k,
         C ((numStandardTable (fun i => a + nu i) : ℕ) : ℚ) *
           aeval (fun i : Fin (r + a) => C c.sign * X i) (schur (Fin (r + a)) nu)) :
-    |coeff (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1) S| ≤
+    |S.coeff (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1)| ≤
       (Nat.choose (r * a + k) k : ℚ) * 2 ^ (k - 1) * numStandardTable (rectangle r a) / k := by
   set e := Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1 with he
   have hs : c.sign = 1 ∨ c.sign = -1 := by cases c <;> simp [SmallBlock.sign]
@@ -59,7 +59,7 @@ theorem OtherFactorBound.coeff_bound (hS : SchurSignCoefficient.Statement)
     congr 1
     simp [powerSumHom]
   have hterm : ∀ nu ∈ partitionsOf r k,
-      |((numStandardTable (fun i => a + nu i) : ℕ) : ℚ) * coeff e (T nu)| =
+      |((numStandardTable (fun i => a + nu i) : ℕ) : ℚ) * (T nu).coeff e| =
         (if ∀ i : Fin r, (i : ℕ) ≠ 0 → nu i ≤ 1 then
           ((numStandardTable (fun i => a + nu i) : ℕ) : ℚ) else 0) / k := by
     intro nu hnu
@@ -69,13 +69,13 @@ theorem OtherFactorBound.coeff_bound (hS : SchurSignCoefficient.Statement)
     split_ifs
     · rw [abs_div, abs_pow, abs_neg, abs_one, one_pow, Nat.abs_cast]; ring
     · simp
-  calc |coeff e S|
+  calc |S.coeff e|
       = |∑ nu ∈ partitionsOf r k,
-          ((numStandardTable (fun i => a + nu i) : ℕ) : ℚ) * coeff e (T nu)| := by
+          ((numStandardTable (fun i => a + nu i) : ℕ) : ℚ) * (T nu).coeff e| := by
         rw [hSsum, coeff_sum]
         simp only [coeff_C_mul]
     _ ≤ ∑ nu ∈ partitionsOf r k,
-          |((numStandardTable (fun i => a + nu i) : ℕ) : ℚ) * coeff e (T nu)| :=
+          |((numStandardTable (fun i => a + nu i) : ℕ) : ℚ) * (T nu).coeff e| :=
         Finset.abs_sum_le_sum_abs _ _
     _ = (∑ nu ∈ (partitionsOf r k).filter (fun nu => ∀ i : Fin r, (i : ℕ) ≠ 0 → nu i ≤ 1),
           |((numStandardTable (fun i => a + nu i) : ℕ) : ℚ)|) / k := by

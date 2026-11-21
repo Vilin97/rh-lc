@@ -167,7 +167,7 @@ noncomputable def invariantSectionsRes {U V : X.Opens} (hU : ∀ g, U ≤ (ρ g)
     (hV : ∀ g, V ≤ (ρ g).asIso.hom ⁻¹ᵁ V) (e : U ≤ V) :
     invariantSections ρ V hV →+* invariantSections ρ U hU :=
   (X.presheaf.map (homOfLE e).op).hom.restrict _ _ fun _ hs ↦
-    (mem_invariantSections ρ).mpr (((mem_invariantSections ρ).mp hs).res hU e)
+    (mem_invariantSections (ρ := ρ)).mpr (((mem_invariantSections (ρ := ρ)).mp hs).res hU e)
 
 @[simp]
 theorem coe_invariantSectionsRes {U V : X.Opens} (hU : ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U)
@@ -256,7 +256,7 @@ variable {ρ}
 def basicOpen (U : StableAffineOpens ρ) (r : invariantSections ρ U.toOpens U.stable) :
     StableAffineOpens ρ :=
   ⟨X.basicOpen (r : Γ(X, U.toOpens)), U.isAffineOpen.basicOpen _,
-    ((mem_invariantSections ρ).mp r.2).basicOpen_le⟩
+    ((mem_invariantSections (ρ := ρ)).mp r.2).basicOpen_le⟩
 
 noncomputable def toChart (U : StableAffineOpens ρ) :
     Spec Γ(X, U.toOpens) ⟶ (quotientDiagram ρ).obj U :=
@@ -292,7 +292,7 @@ theorem exists_basicOpen_eq {U V : StableAffineOpens ρ} (h : U ≤ V) :
   obtain ⟨f, hf⟩ := h
   obtain ⟨t, ht, hte⟩ :=
     exists_isInvariantSection_basicOpen_eq V.stable f (by rw [hf]; exact U.stable)
-  exact ⟨⟨t, (mem_invariantSections ρ).mpr ht⟩, hte.trans hf⟩
+  exact ⟨⟨t, (mem_invariantSections (ρ := ρ)).mpr ht⟩, hte.trans hf⟩
 
 instance isOpenImmersion_map {U V : StableAffineOpens ρ} (f : U ⟶ V) :
     IsOpenImmersion ((quotientDiagram ρ).map f) := by

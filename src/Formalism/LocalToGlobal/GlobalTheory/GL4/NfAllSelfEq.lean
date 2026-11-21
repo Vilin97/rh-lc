@@ -19,7 +19,7 @@ section SlopeTestRemainingChoices
 
 theorem emb_nonreal {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (φ : E →+* ℂ) : ∃ a : E, (φ a).im ≠ 0 := by
   by_contra h
-  push_neg at h
+  push Not at h
   have hr : NumberField.ComplexEmbedding.IsReal φ :=
     NumberField.ComplexEmbedding.isReal_iff.mpr (RingHom.ext fun x => by
       rw [NumberField.ComplexEmbedding.conjugate_coe_eq]
@@ -39,7 +39,7 @@ theorem map_mem_VV {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n)
     rw [MvPolynomial.map_map, show s.comp (Int.castRingHom K) = Int.castRingHom ℂ from RingHom.ext_int _ _]
     exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add p q _ _ hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q _ _ hp hq => rw [map_add]; exact add_mem hp hq
   | smul a p _ hp =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hp

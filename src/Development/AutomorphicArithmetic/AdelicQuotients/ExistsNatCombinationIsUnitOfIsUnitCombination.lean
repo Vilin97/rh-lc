@@ -11,11 +11,11 @@ private lemma UpperTheory.rational_polynomial_vanishing_naturals {K : Type} [Fie
       eval (fun i => (a i : K)) P = 0 → eval (fun i => (a i : ℚ)) Q = 0 := by
   classical
   obtain ⟨d, hd⟩ := MvPolynomial.ne_zero_iff.mp hP
-  obtain ⟨φ, hφ⟩ : ∃ φ : Module.Dual ℚ K, φ (coeff d P) ≠ 0 := by
+  obtain ⟨φ, hφ⟩ : ∃ φ : Module.Dual ℚ K, φ (P.coeff d) ≠ 0 := by
     by_contra h
     push Not at h
     exact hd ((Module.forall_dual_apply_eq_zero_iff ℚ _).mp h)
-  refine ⟨∑ e ∈ P.support, monomial e (φ (coeff e P)), ?_, ?_⟩
+  refine ⟨∑ e ∈ P.support, monomial e (φ (P.coeff e)), ?_, ?_⟩
   · apply MvPolynomial.ne_zero_iff.mpr
     refine ⟨d, ?_⟩
     rw [coeff_sum]
@@ -30,7 +30,7 @@ private lemma UpperTheory.rational_polynomial_vanishing_naturals {K : Type} [Fie
       rw [map_sum, ← h1]
     refine Finset.sum_congr rfl fun e _ => ?_
     rw [eval_monomial, Finsupp.prod_fintype _ _ (by simp)]
-    have : coeff e P * ∏ i, (a i : K) ^ e i = (∏ i, (a i : ℚ) ^ e i) • coeff e P := by
+    have : P.coeff e * ∏ i, (a i : K) ^ e i = (∏ i, (a i : ℚ) ^ e i) • P.coeff e := by
       rw [Rat.smul_def, mul_comm]
       push_cast
       rfl

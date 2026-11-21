@@ -13,8 +13,7 @@ namespace GroundTheory.Heights₂.Heights.NumbersDVR
 
 open MvPolynomial
 open ReciprocityTheory.ChartRestriction.G.AI.I1 (IFamily IsFieldIntersection)
-open IndefiniteRowSideFullHecke.NumbersDVR.Bundles (IsVertDiv mcIdeal joinCoord fnField midDeg midVar ptCoord noCoord ptIdx noIdx
-  ptFlagModel)
+open IndefiniteRowSideFullHecke.NumbersDVR.Bundles (IsVertDiv mcIdeal joinCoord fnField midDeg midVar)
 
 def PairNumberJoinRight.Statement : Prop :=
   ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (Ω : Type) [Field Ω]

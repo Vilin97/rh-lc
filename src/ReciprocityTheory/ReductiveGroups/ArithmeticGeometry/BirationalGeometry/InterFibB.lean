@@ -17,12 +17,12 @@ variable (ι) in
 def blkW : (Σ k, ι k) → (K → ℕ) := fun p => Pi.single p.1 1
 
 theorem weight_blkW (β : (Σ k, ι k) →₀ ℕ) (k : K) :
-    Finsupp.weight blkW β k = ∑ i, β ⟨k, i⟩ := by
+    Finsupp.weight (blkW ι) β k = ∑ i, β ⟨k, i⟩ := by
   rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finset.sum_apply, Fintype.sum_sigma]
   simp [blkW, Pi.single_apply]
 
 theorem isWeightedHomogeneous_map_of_isMultiHomog {s : MRing ι} {a : K → ℕ} (hs : IsMultiHomog s a) :
-    IsWeightedHomogeneous blkW (map (Int.castRingHom ℂ) s) a := by
+    IsWeightedHomogeneous (blkW ι) (map (Int.castRingHom ℂ) s) a := by
   intro d hd
   rw [coeff_map] at hd
   have hs' : d ∈ s.support := by
@@ -95,7 +95,7 @@ theorem diag_prod (d : ℕ) : ∀ e : (Σ k, ι k) → ℕ, (∀ k, ∑ i, e ⟨
       ring
 
 theorem diag_of_homog (d : ℕ) {f : MvPolynomial (Σ k, ι k) ℂ}
-    (hf : IsWeightedHomogeneous blkW f (fun _ => d)) :
+    (hf : IsWeightedHomogeneous (blkW ι) f (fun _ => d)) :
     ∃ G : MvPolynomial ((k : K) → ι k) ℂ, G.totalDegree ≤ d ∧
       ∀ z : (Σ k, ι k) → ℂ, eval z f = eval (segre z) G := by
   classical

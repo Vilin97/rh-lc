@@ -45,7 +45,7 @@ theorem swap_mem [IsCMField E] (F : Subfield E) (h : F = maximalRealSubfield E) 
       rw [Algebra.TensorProduct.comm_tmul]
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
@@ -95,13 +95,7 @@ theorem smul_eq {D : D7} (V : HSp D) (s : 𝓞 D.host.E) (w : V.V) : s • w = (
   (algebraMap_smul D.host.E s w).symm
 
 theorem exists_nat_smul_mem_L0 {D : D7} (V : HSp D) (v : V.V) : ∃ d : ℕ, 0 < d ∧ (d : 𝓞 D.host.E) • v ∈ V.L0 := by
-  first
-  | exact @_root_.GlobalTheory.NatSmulMemLattice.exists_nat_smul_mem_lattice
-  | exact _root_.GlobalTheory.NatSmulMemLattice.exists_nat_smul_mem_lattice
-  | (apply _root_.GlobalTheory.NatSmulMemLattice.exists_nat_smul_mem_lattice <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NatSmulMemLattice.exists_nat_smul_mem_lattice <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NatSmulMemLattice.exists_nat_smul_mem_lattice <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.NatSmulMemLattice.exists_nat_smul_mem_lattice ..)
+  exact _root_.GlobalTheory.NatSmulMemLattice.exists_nat_smul_mem_lattice V v
 
 theorem exists_nat_smul_frame {D : D7} (V : HSp D) :
     ∃ d : ℕ, 0 < d ∧ ∀ j, (d : 𝓞 D.host.E) • V.frame j ∈ V.L0 := by

@@ -17,6 +17,8 @@ noncomputable section
 namespace GlobalTheory.KZ.HeckeComm
 open StabHecke
 
+local notation "M₂" => Matrix (Fin 2) (Fin 2) ℤ
+
 theorem herm (p : ℕ) (hp : p.Prime) (m : M₂) (h : (p : ℤ) ∣ m.det) :
     (∃ y : M₂, m = y * !![(p : ℤ), 0; 0, 1]) ∨
       ∃ k : ℕ, k < p ∧ ∃ y : M₂, m = y * !![1, (k : ℤ); 0, (p : ℤ)] :=
@@ -170,7 +172,6 @@ theorem sum_swap (X : Tower Ω ε) (N l : ℕ) [Fact l.Prime] {ι κ : Type} [Fi
     exact ⟨(i', k'), g, hg, by rw [hy, hg', Matrix.mul_assoc]⟩
   have hdis : ∀ x x' : ι × κ, ∀ h : SL(2, ℤ), (h : M₂) * (r2 x.2 * r1 x.1) = r2 x'.2 * r1 x'.1 → x = x' := by
     rintro ⟨i, k⟩ ⟨i', k'⟩ h H
-    dsimp only at H
     rw [← Matrix.mul_assoc] at H
     obtain ⟨g, hg⟩ := bezout (p2 : ℤ) (p1 : ℤ) hcop.symm hp1' _ _ _ _
       (by rw [det_mul, Matrix.SpecialLinearGroup.det_coe, one_mul, hd2]) (hd2 k') (hd1 i) (hd1 i') H

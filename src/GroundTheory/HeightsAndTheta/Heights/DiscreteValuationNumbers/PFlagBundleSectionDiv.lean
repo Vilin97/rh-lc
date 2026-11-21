@@ -14,7 +14,7 @@ set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
 
-open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
+open MvPolynomial
 
 noncomputable section
 
@@ -157,7 +157,7 @@ theorem FlagBundleSectionDiv.proof (hDim : FlagBundleDim.Statement)
         (fun q hq => by
           obtain ⟨n, hn⟩ := hsat q hq
           exact ⟨_, hsW n, hn⟩)
-      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+      unfold divCycle
       rw [dite_eq_left ⟨hmin, hQ.relevant⟩, hmult]
       rfl
     · by_contra hne

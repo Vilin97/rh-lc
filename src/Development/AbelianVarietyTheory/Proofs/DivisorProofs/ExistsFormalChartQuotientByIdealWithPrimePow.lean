@@ -23,15 +23,15 @@ def twoRing {R R' A A' : Type} [CommRing R] [CommRing R'] {σ : R →+* R'} [Com
   map_zero' := map_zero _
   map_add' := map_add _
   map_one' := by
-    rw [Algebra.TensorProduct.one_def, TensorProduct.map_tmul, SemiBialgHom.lin_apply, map_one,
-      Algebra.TensorProduct.one_def]
+    simp only [Algebra.TensorProduct.one_def, TensorProduct.map_tmul, SemiBialgHom.lin_apply,
+      map_one f.toRingHom]
   map_mul' x y := by
     induction x with
     | add a b ha hb => simp only [add_mul, map_add (f := _), ha, hb]
     | tmul a b =>
       induction y with
       | add u v hu hv => simp only [mul_add, map_add (f := _), hu, hv]
-      | tmul u v => simp
+      | tmul u v => simp [SemiBialgHom.lin_apply, map_mul f.toRingHom]
 
 theorem ev₂_map {p m d : ℕ} {O k : Type} [CommRing O] [CommRing k] {r : O →+* k}
     {G : PDivGroup p O} {G' : PDivGroup p k} (s : SemiHom r G' G) (c : QLog.Chart G d)

@@ -44,7 +44,7 @@ theorem UpperTheory.V.Fr.pr_ofbox :
   let m : ∀ v, F.Gv v →* Matrix (Fin n) (Fin n) C := fun v => conjHom (B.g v) (rr.comp (F.loc0 v))
   have hup : ∀ v s, UpT (m v s) := fun v s => B.tri v s
   let ψ : (v : F.V) → Fin n → F.Gv v →* Cˣ := fun v i => (diagHom (m v) (hup v) i).toHomUnits
-  have hpol : ∀ g : F.G0, rr (F.star g) = Jmat C n * (rr g)ᵀ * Jmat C n := by
+  have hpol : ∀ g : F.G0, rr (F.star g) = Jmat (R := C) n * (rr g)ᵀ * Jmat (R := C) n := by
     intro g
     have hcc : F.c⁻¹ = F.c := inv_eq_of_mul_eq_one_right hF.c_sq
     have hs : ((F.star g : F.G0) : F.Γ) = F.c * (↑g)⁻¹ * F.c := by

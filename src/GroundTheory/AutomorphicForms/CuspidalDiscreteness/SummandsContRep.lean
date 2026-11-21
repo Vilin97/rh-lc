@@ -19,6 +19,8 @@ open AutomorphicForm RightCosetSpace Reduction
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => rationalGLOne (K := K) (n := n)
+
 def quotFun (F : normOneGL (K := K) (n := n) → ℂ) (hF : ∀ γ ∈ Γ₁, ∀ y, F (γ * y) = F y) :
     RightCosetSpace Γ₁ → ℂ :=
   Quotient.lift F fun a b hab => by
@@ -45,14 +47,14 @@ theorem IsContRep.unique {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F F' : norm
 
 theorem isContRep_zero : IsContRep μ (0 : Lp ℂ 2 (quotientMeasure Γ₁ μ)) 0 := by
   refine ⟨continuous_const, fun _ _ _ => rfl, ?_⟩
-  filter_upwards [(quasiMeasurePreserving_mk Γ₁ μ).ae_eq_comp
+  filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ)
     (Lp.coeFn_zero ℂ 2 (quotientMeasure Γ₁ μ))] with y hy
   exact hy
 
 theorem IsContRep.add {φ ψ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F F' : normOneGL (K := K) (n := n) → ℂ}
     (h : IsContRep μ φ F) (h' : IsContRep μ ψ F') : IsContRep μ (φ + ψ) (F + F') := by
   refine ⟨h.1.add h'.1, fun γ hγ y => by simp [h.2.1 γ hγ y, h'.2.1 γ hγ y], ?_⟩
-  filter_upwards [(quasiMeasurePreserving_mk Γ₁ μ).ae_eq_comp (Lp.coeFn_add φ ψ), h.2.2, h'.2.2]
+  filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ) (Lp.coeFn_add φ ψ), h.2.2, h'.2.2]
     with y h1 h2 h3
   simp only [Function.comp_apply, Pi.add_apply] at h1
   rw [h1, h2, h3, Pi.add_apply]
@@ -60,7 +62,7 @@ theorem IsContRep.add {φ ψ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F F' : norm
 theorem IsContRep.smul (c : ℂ) {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F : normOneGL (K := K) (n := n) → ℂ}
     (h : IsContRep μ φ F) : IsContRep μ (c • φ) (c • F) := by
   refine ⟨h.1.const_smul c, fun γ hγ y => by simp [h.2.1 γ hγ y], ?_⟩
-  filter_upwards [(quasiMeasurePreserving_mk Γ₁ μ).ae_eq_comp (Lp.coeFn_smul c φ), h.2.2]
+  filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ) (Lp.coeFn_smul c φ), h.2.2]
     with y h1 h2
   simp only [Function.comp_apply, Pi.smul_apply] at h1
   rw [h1, h2, Pi.smul_apply]
@@ -73,7 +75,7 @@ theorem IsContRep.translate {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F : norm
     rw [mul_assoc, h.2.1 γ hγ], ?_⟩
   have h2 : (fun y => φ (mk Γ₁ (y * x))) =ᵐ[μ] fun y => F (y * x) :=
     (measurePreserving_mul_right μ x).quasiMeasurePreserving.ae_eq_comp h.2.2
-  filter_upwards [(quasiMeasurePreserving_mk Γ₁ μ).ae_eq_comp (coeFn_rightRegularRep Γ₁ μ x φ), h2]
+  filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ) (coeFn_rightRegularRep Γ₁ μ x φ), h2]
     with y hy1 hy2
   simp only [Function.comp_apply, rightMul_mk] at hy1
   rw [hy1]
@@ -87,7 +89,7 @@ theorem isContRep_rconv (f : CompactlySupportedContinuousMap (normOneGL (K := K)
       (rconv Γ₁ μ f φ) := by
   have := isFiniteMeasure_quotientMeasure (K := K) (n := n) μ
   refine ⟨continuous_rconv Γ₁ μ f φ, fun γ hγ y => rconv_mul_left Γ₁ μ f φ hγ y, ?_⟩
-  filter_upwards [(quasiMeasurePreserving_mk Γ₁ μ).ae_eq_comp (integrated_ae_eq_rconvQ Γ₁ μ f φ)]
+  filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ) (integrated_ae_eq_rconvQ Γ₁ μ f φ)]
     with y hy
   simp only [Function.comp_apply] at hy
   rw [hy, rconvQ_mk]

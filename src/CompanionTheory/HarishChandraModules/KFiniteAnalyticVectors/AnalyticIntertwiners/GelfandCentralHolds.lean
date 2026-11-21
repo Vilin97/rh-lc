@@ -27,21 +27,21 @@ theorem smoothVec_of_smD_A {v : H} (hv : v ∈ smD ε σ) :
   rw [mem_smD_iff] at hv
   intro m Xs hX
   have hprod : ∀ (k : ℕ) (Ys : Fin k → Matrix (Fin n) (Fin n) ℂ),
-      ContDiff ℝ ⊤ (fun t : Fin k → ℝ =>
+      ContDiff ℝ (↑(⊤ : ℕ∞)) (fun t : Fin k → ℝ =>
         (List.ofFn fun i => NormedSpace.exp (t i • Ys i)).prod) := by
     intro k
     induction k with
     | zero =>
         intro Ys
-        simpa using (contDiff_const : ContDiff ℝ ⊤ fun _ : Fin 0 → ℝ =>
+        simpa using (contDiff_const : ContDiff ℝ (↑(⊤ : ℕ∞)) fun _ : Fin 0 → ℝ =>
           (1 : Matrix (Fin n) (Fin n) ℂ))
     | succ k ih =>
         intro Ys
-        have h1 : ContDiff ℝ ⊤ (fun t : Fin (k + 1) → ℝ =>
+        have h1 : ContDiff ℝ (↑(⊤ : ℕ∞)) (fun t : Fin (k + 1) → ℝ =>
             NormedSpace.exp (t 0 • Ys 0)) :=
           (Formalism.IndefR.PeterssonHilbertSpace.sm_exp_smul_contDiff (Ys 0)).comp
             (contDiff_apply ℝ (fun _ => ℝ) (0 : Fin (k + 1)))
-        have h2 : ContDiff ℝ ⊤ (fun t : Fin (k + 1) → ℝ =>
+        have h2 : ContDiff ℝ (↑(⊤ : ℕ∞)) (fun t : Fin (k + 1) → ℝ =>
             (List.ofFn fun i : Fin k => NormedSpace.exp (t i.succ • Ys i.succ)).prod) :=
           (ih (fun i => Ys i.succ)).comp
             (contDiff_pi.2 fun i => contDiff_apply ℝ (fun _ => ℝ) i.succ)
@@ -50,7 +50,32 @@ theorem smoothVec_of_smD_A {v : H} (hv : v ∈ smD ε σ) :
   have hc := hprod m Xs
   have hmem : ∀ t : Fin m → ℝ, Formalism.QuantumDeterminants.inUH (Formalism.REAL.Jm ε)
       ((List.ofFn fun i => NormedSpace.exp (t i • Xs i)).prod) :=
-    fun t => Formalism.IndefR.PeterssonHilbertSpace.sm_prod_exp_mem _ m Xs (fun i => hX i) t
+    fun t => by
+      have hmem' : ∀ (k : ℕ) (Ys : Fin k → Matrix (Fin n) (Fin n) ℂ),
+          (∀ i, (Ys i)ᴴ * Formalism.REAL.Jm ε + Formalism.REAL.Jm ε * Ys i = 0) →
+          ∀ t : Fin k → ℝ,
+            ((List.ofFn fun i => NormedSpace.exp (t i • Ys i)).prod)ᴴ *
+                Formalism.REAL.Jm ε * (List.ofFn fun i => NormedSpace.exp (t i • Ys i)).prod =
+              Formalism.REAL.Jm ε := by
+        intro k
+        induction k with
+        | zero =>
+            intro Ys _ t
+            simp
+        | succ k ih =>
+            intro Ys hYs t
+            have ih' := ih (fun i => Ys i.succ) (fun i => hYs i.succ)
+              (fun i => t i.succ)
+            have hl : (t 0 • Ys 0)ᴴ * Formalism.REAL.Jm ε +
+                Formalism.REAL.Jm ε * (t 0 • Ys 0) = 0 := by
+              have h := CCRuleCW.lie_smul (Formalism.REAL.Jm ε) (Ys 0) (hYs 0) (t 0)
+              simpa only [Complex.coe_smul] using h
+            have he := CCRuleCW.exp_mem_UH (Formalism.REAL.Jm ε) (t 0 • Ys 0) hl
+            have hm := CCRuleCW.UH_mul (Formalism.REAL.Jm ε) _ _ he ih'
+            simpa only [List.ofFn_succ, List.prod_cons,
+              Formalism.QuantumDeterminants.UH, Set.mem_setOf_eq] using hm
+      have hEq := hmem' m Xs (fun i => hX i) t
+      simpa [Formalism.QuantumDeterminants.inUH] using hEq
   rw [contDiff_iff_contDiffAt]
   intro t0
   obtain ⟨U, F, hU, h0, hF, hEq⟩ := hv _ (hmem t0)

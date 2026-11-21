@@ -36,7 +36,7 @@ theorem adjoint_baseChange {B B' : Scheme.{0}} {G : Over B} {G' : Over B'} [GrpO
     Over.OverMorphism.ext (by
       show (x.left ≫ _) ≫ _ = (x.left ≫ _) ≫ _
       rw [Category.assoc, hwd, Category.assoc])
-  have hB : (L.pull φ).IsLB := pull_isLB hL φ
+  have hB : (L.pull φ).IsLB := DVR.linComb_isLB L hL _ _
   have h₁ : LBIso (cubeLB G' ![fst G' G' ≫ w', snd G' G'] (L.pull φ))
       (cubeLB G' ![fst G' G', snd G' G' ≫ wd'] (L.pull φ)) := by
     let U := lift (pushPt h.1.w (fst G' G')) (pushPt h.1.w (snd G' G'))

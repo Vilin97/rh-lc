@@ -38,7 +38,7 @@ def KappaInvariance : Prop :=
       (∀ κ : InfinitePlace K → ℝ, (∀ v, 0 < κ v) →
         meanLog (fun v => t v * κ v) = meanLog t + meanLog κ) ∧
 
-      (∀ R : Submodule (𝓞 K) (Fin D → K), Submodule.IsLattice K R →
+      (∀ R : Submodule (𝓞 K) (Fin D → K), Submodule.IsFullLattice K R →
         lcv (scaleFrame t XE) R = lcv XE R + (D : ℝ) * meanLog t ∧
         Formalism.HN.muDef (Pi.basisFun K (Fin D)).dualBasis (Formalism.HN.dualFrame (scaleFrame t XE))
                   (Formalism.HN.dualLat R) =
@@ -69,7 +69,7 @@ def KappaNormalise : Prop :=
         (v : InfinitePlace K) (P : ℝ), detRatio XS XE φ v = κ v ^ D * P →
         detRatio XS (scaleFrame (fun v => (κ v)⁻¹) XE) φ v = (1 : ℝ) ^ D * P) ∧
       meanLog (fun _ : InfinitePlace K => (1 : ℝ)) = 0 ∧
-      (∀ R : Submodule (𝓞 K) (Fin D → K), Submodule.IsLattice K R →
+      (∀ R : Submodule (𝓞 K) (Fin D → K), Submodule.IsFullLattice K R →
         Formalism.HN.muDef (Pi.basisFun K (Fin D)).dualBasis (Formalism.HN.dualFrame XE) (Formalism.HN.dualLat R) =
           Formalism.HN.muDef (Pi.basisFun K (Fin D)).dualBasis
             (Formalism.HN.dualFrame (scaleFrame (fun v => (κ v)⁻¹) XE)) (Formalism.HN.dualLat R) + meanLog κ ∧

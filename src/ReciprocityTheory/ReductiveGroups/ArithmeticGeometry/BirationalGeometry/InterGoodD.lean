@@ -38,7 +38,23 @@ theorem prod_pow_natDegree_coeff {R ι : Type*} [CommRing R] (s : Finset ι) (p 
     (e : ι → ℕ) (hp : ∀ i, (p i).natDegree ≤ 1) :
     (∏ i ∈ s, p i ^ e i).natDegree ≤ ∑ i ∈ s, e i ∧
       (∏ i ∈ s, p i ^ e i).coeff (∑ i ∈ s, e i) = ∏ i ∈ s, (p i).coeff 1 ^ e i := by
-  first | exact Bl.general_b_fact_more.goal1 .. | (apply Bl.general_b_fact_more.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_more.goal1 <;> assumption)
+  classical
+  have hpow (i : ι) : (p i ^ e i).natDegree ≤ e i ∧
+      (p i ^ e i).coeff (e i) = (p i).coeff 1 ^ e i := by
+    constructor
+    · calc
+        (p i ^ e i).natDegree ≤ e i * (p i).natDegree := Polynomial.natDegree_pow_le
+        _ ≤ e i * 1 := Nat.mul_le_mul_left _ (hp i)
+        _ = e i := Nat.mul_one _
+    · simpa only [Nat.mul_one] using
+        (Polynomial.coeff_pow_of_natDegree_le (m := e i) (hp i))
+  induction s using Finset.induction_on with
+  | empty => simp
+  | insert a s ha ih =>
+    rw [Finset.prod_insert ha, Finset.sum_insert ha, Finset.prod_insert ha]
+    exact ⟨Polynomial.natDegree_mul_le.trans (Nat.add_le_add (hpow a).1 ih.1),
+      (Polynomial.coeff_mul_add_eq_of_natDegree_le (hpow a).1 ih.1).trans
+        (congrArg₂ (· * ·) (hpow a).2 ih.2)⟩
 
 theorem subst_monomial {r : ℕ} (lam : Fin r → k) (m : Fin (r + 1) →₀ ℕ) (a : k) :
     (subst lam (monomial m a)).natDegree ≤ Finsupp.degree m ∧

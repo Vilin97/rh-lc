@@ -44,7 +44,7 @@ theorem reesChart_lift {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {
       show algebraMap S S' (c k) * _ = L _ * _
       rw [← map_mul, ← hc]; exact this.symm
     | algebraMap r => exact ⟨φ r, (hL r).symm⟩
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let F : FinalTheorems.reesChart g j →+* (algebraMap S S').range :=
     (L.comp (FinalTheorems.reesChart g j).val.toRingHom).codRestrict _ (fun x => key x.1 x.2)
@@ -93,7 +93,7 @@ theorem effCartier_comap_of_isOpenImmersion' {X Y : Scheme.{0}} (I : Y.IdealShea
     rfl
 
 theorem inter_reesCharts' {X W : Scheme.{0}} (π : W ⟶ X) (J : X.IdealSheafData) (hB : FinalTheorems.Blowup π J)
-    (U : X.affineOpens) {m : ℕ} (g : Fin m → Γ(X, U.1)) (hg : Ideal.span (Set.range g) = J.ideal U)
+    (U : X.affineOpens) {m : ℕ} (g : Fin m → Γ(X, U.1)) (_hg : Ideal.span (Set.range g) = J.ideal U)
     (V : Fin m → W.Opens) (hV : ∀ i, V i ≤ π ⁻¹ᵁ U.1)
     (e : ∀ i, (V i).toScheme ≅ Spec (CommRingCat.of (FinalTheorems.reesChart g i)))
     (he : ∀ i, (e i).hom ≫ Spec.map (CommRingCat.ofHom (algebraMap Γ(X, U.1) (FinalTheorems.reesChart g i))) ≫

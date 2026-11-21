@@ -100,3 +100,5 @@ theorem _root_.GlobalTheory.T.etaleChart_localization_finiteType_formallyUnramif
       exact mul_mem (hQ x) (pow_mem (AlgHom.mem_range_self Φ _) n)
     exact this
   exact ⟨Algebra.FiniteType.of_surjective Φ hsurj, Algebra.FormallyUnramified.of_surjective Φ hsurj⟩
+
+end

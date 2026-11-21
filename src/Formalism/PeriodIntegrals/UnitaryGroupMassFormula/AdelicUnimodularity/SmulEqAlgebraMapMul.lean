@@ -93,6 +93,8 @@ section Coord
 variable {E : Type} [Field E] [NumberField E] [Algebra F E]
 variable {ι : Type} [Fintype ι] [DecidableEq ι] (b : Module.Basis ι F E)
 
+local notation "Af" => FiniteAdeleRing (𝓞 F) F
+
 def IntC (x : E ⊗[F] Af) : Prop := ∀ k, coord b x k ∈ Ohat F
 
 variable {b}

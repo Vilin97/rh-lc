@@ -178,7 +178,7 @@ theorem _root_.GlobalTheory.HermLineZeros.finite_zeros_on_line : ∀ (F E : Type
   let p : Polynomial K := Polynomial.C α * Polynomial.X ^ 2 + Polynomial.C β * Polynomial.X + Polynomial.C γ
   have hp : p ≠ 0 := by
     intro hp
-    have := congrArg (Polynomial.coeff · 2) hp
+    have := congrArg (fun q : Polynomial K => q.coeff 2) hp
     simp [p, Polynomial.coeff_X, Polynomial.coeff_C] at this
     exact hα0 this
   refine (Polynomial.finite_setOf_isRoot hp).subset fun t ht => ?_

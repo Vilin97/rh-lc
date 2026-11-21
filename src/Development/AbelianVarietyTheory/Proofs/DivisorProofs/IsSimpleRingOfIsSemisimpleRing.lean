@@ -126,7 +126,7 @@ theorem Datum.toReal_injective (D : Datum p) : Function.Injective D.toReal := by
     simpa using h)
 
 def Datum.actReal (D : Datum p) (x : D.O) : ℝ ⊗[ℤ] D.La →ₗ[ℝ] ℝ ⊗[ℤ] D.La :=
-  LinearMap.baseChange ℝ (DistribMulAction.toLinearMap ℤ D.La x)
+  LinearMap.baseChange ℝ (DistribSMul.toLinearMap ℤ D.La x)
 
 theorem Datum.actReal_tmul (D : Datum p) (x : D.O) (r : ℝ) (y : D.La) : D.actReal x (r ⊗ₜ y) = r ⊗ₜ (x • y) := rfl
 

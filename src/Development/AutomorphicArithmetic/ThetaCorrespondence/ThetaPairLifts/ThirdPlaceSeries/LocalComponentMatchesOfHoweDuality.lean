@@ -48,6 +48,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.IsRecTLocRec
 
 @[expose] public section
 
+
 set_option synthInstance.maxHeartbeats 200000
 
 section
@@ -86,7 +87,7 @@ theorem localComponent_matches_of_howeDuality_alt (hBZ : GlobalTheory.Published.
   have hηi : IsComp (a.chr.e1 D.naut.etaTinv).1 s.w ((cf.eta⁻¹).loc s.w) := by
     rw [a.chr.etaTinv]
     exact ⟨GlobalTheory.CuspRep.ParLaws.isSmoothChar_loc _ s.w, fun _ => rfl⟩
-  have hinv : (cf.eta⁻¹).loc s.w = (cf.eta.loc s.w)⁻¹ := MonoidHom.ext (HChar.loc_inv _ _)
+  have hinv : (cf.eta⁻¹).loc s.w = (cf.eta.loc s.w)⁻¹ := MonoidHom.ext fun _ => rfl
   have hrt : D.R.r < D.R.t := by
     have := D.R.rank_add_five_le
     unfold Ranks.r

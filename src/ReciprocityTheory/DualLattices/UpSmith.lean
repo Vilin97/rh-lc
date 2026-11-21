@@ -155,13 +155,18 @@ theorem exists_pivot (hv : v.Integers R) {b : ℕ} {ι : Type} [Fintype ι]
 
 theorem smith_gen (hv : v.Integers R) : ∀ (b : ℕ) {ι : Type} [Fintype ι] (g : ι → Fin b → R),
     ∃ c : Fin b → R, Nonempty (((Fin b → R) ⧸ Submodule.span R (Set.range g)) ≃ₗ[R]
-      ((i : Fin b) → R ⧸ Ideal.span {c i}))
-  | 0, _, _, g => ⟨Fin.elim0, ⟨LinearEquiv.ofSubsingleton _ _⟩⟩
-  | b + 1, ι, _, g => by
+      ((i : Fin b) → R ⧸ Ideal.span {c i})) := by
+  intro b
+  induction b with
+  | zero =>
+    intro ι _ g
+    exact ⟨Fin.elim0, ⟨LinearEquiv.ofSubsingleton _ _⟩⟩
+  | succ b ih =>
+    intro ι _ g
     have hp := exists_pivot (v := v) (b := b) (ι := ι) hv g
     obtain ⟨i0, a, u, s, hu, hau, hs, -, -⟩ := hp
     obtain ⟨e1⟩ := pivot_equiv g i0 a u s hu hau hs
-    obtain ⟨c', ⟨e2⟩⟩ := smith_gen hv b (fun j => Fin.removeNth i0 (g j - s j • a • u))
+    obtain ⟨c', ⟨e2⟩⟩ := ih (fun j => Fin.removeNth i0 (g j - s j • a • u))
     exact ⟨Fin.cons a c', ⟨(e1.trans ((LinearEquiv.refl R _).prodCongr e2)).trans (consEquiv a c')⟩⟩
 
 theorem hasLen_coker_gen (hv : v.Integers R) {b : ℕ} {ι : Type} [Fintype ι] (g : ι → Fin b → R) :
@@ -199,9 +204,14 @@ theorem det_colop {b : ℕ} (X : Matrix (Fin (b + 1)) (Fin (b + 1)) R) (j0 : Fin
 theorem smith_sq (hv : v.Integers R) : ∀ (b : ℕ) (X : Matrix (Fin b) (Fin b) R),
     ∃ c : Fin b → R, Nonempty (((Fin b → R) ⧸ LinearMap.range X.mulVecLin) ≃ₗ[R]
       ((i : Fin b) → R ⧸ Ideal.span {c i})) ∧
-      v (algebraMap R C X.det) = ∏ i, v (algebraMap R C (c i))
-  | 0, X => ⟨Fin.elim0, ⟨LinearEquiv.ofSubsingleton _ _⟩, by simp⟩
-  | b + 1, X => by
+      v (algebraMap R C X.det) = ∏ i, v (algebraMap R C (c i)) := by
+  intro b
+  induction b with
+  | zero =>
+    intro X
+    exact ⟨Fin.elim0, ⟨LinearEquiv.ofSubsingleton _ _⟩, by simp⟩
+  | succ b ih =>
+    intro X
     classical
     set g : Fin (b + 1) → Fin (b + 1) → R := fun j i => X i j with hg
     have hrange : LinearMap.range X.mulVecLin = Submodule.span R (Set.range g) := by
@@ -247,7 +257,7 @@ theorem smith_sq (hv : v.Integers R) : ∀ (b : ℕ) (X : Matrix (Fin b) (Fin b)
         · rw [Submodule.span_le]
           rintro _ ⟨l, rfl⟩
           exact Submodule.subset_span ⟨j0.succAbove l, rfl⟩
-      obtain ⟨c', ⟨e2⟩, hdet''⟩ := smith_sq hv b X''
+      obtain ⟨c', ⟨e2⟩, hdet''⟩ := ih X''
       refine ⟨Fin.cons a c', ⟨(e0.trans (e1.trans ((LinearEquiv.refl R _).prodCongr
         ((Submodule.quotEquivOfEq _ _ hspan'').trans e2)))).trans (consEquiv a c')⟩, ?_⟩
       rw [hprod, ← hdet'', ← det_colop X j0 s, Matrix.det_succ_row _ i0,

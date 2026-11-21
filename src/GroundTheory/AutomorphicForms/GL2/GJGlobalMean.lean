@@ -59,7 +59,7 @@ theorem eq_zero_of_ae_eq_const (hn : 2 ≤ n) {c : Lp ℂ 2 (quotientMeasure Γ�
     (hκ : (c : RightCosetSpace Γ₁ → ℂ) =ᵐ[quotientMeasure Γ₁ μ] fun _ => κ) : κ = 0 := by
   have h1 := (hc : IsCuspidalL2 μ c) 1 one_pos (by omega)
   have h2 := ae_ctFun_congr μ 1 hκ
-  have h3 : ∀ y, ctFun K n 1 (fun _ : RightCosetSpace Γ₁ => κ) y = κ := by
+  have h3 : ∀ y, ctFun (K := K) (n := n) 1 (fun _ : RightCosetSpace Γ₁ => κ) y = κ := by
     intro y
     simp only [ctFun]
     rw [setIntegral_const, measureReal_def, unipMeasure_unipFundamentalDomain]

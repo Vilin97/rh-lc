@@ -59,7 +59,7 @@ variable {X Y : Scheme.{u}}
 lemma subsingleton_of_restrict (j : Y ⟶ X) [IsOpenImmersion j] (F : X.Modules) (V : Y.Opens)
     (n : ℕ) (h : Subsingleton (cohOn (F.restrict j) V (n + 1))) :
     Subsingleton (cohOn F (j ''ᵁ V) (n + 1)) :=
-  subsingleton_of_sheafPullback j.isOpenEmbedding V n (toAbSheaf.obj F) h
+  subsingleton_of_sheafPullback j.isOpenEmbedding V n ((toAbSheaf X).obj F) h
 
 abbrev interModule (F : X.Modules) (W : X.Opens) : X.Modules :=
   (Scheme.Modules.pushforward W.ι).obj (F.restrict W.ι)
@@ -68,13 +68,13 @@ abbrev toInterModule (F : X.Modules) (W : X.Opens) : F ⟶ interModule F W :=
   (Scheme.Modules.restrictAdjunction W.ι).unit.app F
 
 lemma map_toInterModule_eq_zero (F : X.Modules) (W V : X.Opens) (n : ℕ) (α : cohOn F V n)
-    (h : SheafLES.map.{u} ((Kempf.toInter AddCommGrpCat.{u} W).app (toAbSheaf.obj F)) n V
+    (h : SheafLES.map.{u} ((Kempf.toInter AddCommGrpCat.{u} W).app ((toAbSheaf X).obj F)) n V
       (cohOn.toH' F V n α) = 0) :
     cohOn.map ℤ (toInterModule F W) V n α = 0 :=
-  haveI : IsIso ((Kempf.toInter AddCommGrpCat.{u} W).app (toAbSheaf.obj (interModule F W))) :=
+  haveI : IsIso ((Kempf.toInter AddCommGrpCat.{u} W).app ((toAbSheaf X).obj (interModule F W))) :=
     Kempf.isIso_toInter_app_pushforward (A := AddCommGrpCat.{u}) W.ι.base W (fun y ↦ y.2)
-      (toAbSheaf.obj (F.restrict W.ι))
-  Kempf.map_eq_zero_of_map_toInter_eq_zero.{u} (toAbSheaf.map (toInterModule F W)) h
+      ((toAbSheaf W.toScheme).obj (F.restrict W.ι))
+  Kempf.map_eq_zero_of_map_toInter_eq_zero.{u} ((toAbSheaf X).map (toInterModule F W)) h
 
 lemma mono_lift_toInterModule (F : X.Modules) {ι : Type u} [Finite ι] (W : ι → X.Opens)
     (hW : ⊤ ≤ iSup W) : Mono (Pi.lift fun i ↦ toInterModule F (W i)) := by
@@ -96,7 +96,7 @@ lemma subsingleton_top [IsAffine X] (n : ℕ)
   refine subsingleton_of_forall_eq 0 fun α ↦ ?_
   obtain ⟨𝔘, h𝔘, hfin, hsup, h0⟩ := Kempf.exists_finite_cover_map_toInter_eq_zero.{u}
     (X := X) (𝔅 := X.affineOpens) X.isBasis_affineOpens
-    (fun B hB B' hB' ↦ IsAffineOpen.inf hB hB') (toAbSheaf.obj F) ⊤
+    (fun B hB B' hB' ↦ IsAffineOpen.inf hB hB') ((toAbSheaf X).obj F) ⊤
     (isAffineOpen_top X).isCompact (Nat.le_add_left 1 n)
     (fun q hq hqn B hB ↦ ih q hq hqn F B hB) (cohOn.toH' F ⊤ (n + 1) α)
   haveI : Finite 𝔘 := hfin
@@ -112,7 +112,7 @@ lemma subsingleton_top [IsAffine X] (n : ℕ)
   have hS : (ShortComplex.mk φ (cokernel.π φ) (cokernel.condition φ)).ShortExact :=
     { exact := ShortComplex.exact_cokernel φ }
   have hT := SheafLES.shortExact_map_toAbSheaf hS
-  have hinj : Function.Injective (SheafLES.map.{u} (toAbSheaf.map φ) (n + 1) ⊤) := by
+  have hinj : Function.Injective (SheafLES.map.{u} ((toAbSheaf X).map φ) (n + 1) ⊤) := by
     cases n with
     | zero =>
       exact SheafLES.map_f_one_injective_of_sections_surjective.{u} hT ⊤

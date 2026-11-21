@@ -44,7 +44,7 @@ private theorem alg_rat (K : Type) [Field K] (n : ℕ) (A : Fin n → Type) [∀
     induction ha using Submodule.span_induction with
     | mem a ha => exact hgen a ha
     | zero => simp
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | smul c a _ ha =>
       rw [Algebra.smul_def, map_mul]
       exact mul_mem ⟨algebraMap K _ c, (RingHom.congr_fun h c).symm⟩ ha

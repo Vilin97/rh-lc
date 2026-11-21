@@ -69,7 +69,7 @@ theorem hasSum_adjoint (e : HilbertBasis ι ℂ H) (f : HilbertBasis κ ℂ K) {
 
 theorem hasSum_basis (e : HilbertBasis ι ℂ H) (e' : HilbertBasis κ ℂ H) {T : H →L[ℂ] K} {s : ℝ}
     (h : HasSum (fun i => ‖T (e i)‖ ^ 2) s) : HasSum (fun j => ‖T (e' j)‖ ^ 2) s := by
-  simpa using hasSum_adjoint (stdBasis) e' (hasSum_adjoint e (stdBasis) h)
+  simpa using hasSum_adjoint (stdBasis (H := K)) e' (hasSum_adjoint e (stdBasis (H := K)) h)
 
 theorem isHilbertSchmidt_iff (e : HilbertBasis ι ℂ H) {T : H →L[ℂ] K} :
     IsHilbertSchmidt T ↔ Summable fun i => ‖T (e i)‖ ^ 2 :=
@@ -127,7 +127,7 @@ theorem IsHilbertSchmidt.smul {T : H →L[ℂ] K} (h : IsHilbertSchmidt T) (c : 
 omit [CompleteSpace K] in
 theorem isHilbertSchmidt_of_finiteDimensional [FiniteDimensional ℂ H] (T : H →L[ℂ] K) :
     IsHilbertSchmidt T := by
-  have : Finite (stdIndex (H := H)) := (stdBasis).orthonormal.linearIndependent.finite
+  have : Finite (stdIndex (H := H)) := (stdBasis (H := H)).orthonormal.linearIndependent.finite
   exact Summable.of_finite
 
 theorem exists_hasSum_comp (e : HilbertBasis ι ℂ H) (f : HilbertBasis κ ℂ K)
@@ -150,14 +150,14 @@ theorem exists_hasSum_comp (e : HilbertBasis ι ℂ H) (f : HilbertBasis κ ℂ 
 theorem hasSum_trace_comp (e : HilbertBasis ι ℂ H)
     {B : K →L[ℂ] H} {C : H →L[ℂ] K} (hB : IsHilbertSchmidt B) (hC : IsHilbertSchmidt C) :
     HasSum (fun i => ⟪e i, (B ∘L C) (e i)⟫_ℂ) (trace (B ∘L C)) := by
-  obtain ⟨s, h1, h2⟩ := exists_hasSum_comp e (stdBasis) hB hC
-  obtain ⟨t, h3, h4⟩ := exists_hasSum_comp (stdBasis) (stdBasis) hB hC
+  obtain ⟨s, h1, h2⟩ := exists_hasSum_comp e (stdBasis (H := K)) hB hC
+  obtain ⟨t, h3, h4⟩ := exists_hasSum_comp (stdBasis (H := H)) (stdBasis (H := K)) hB hC
   have : trace (B ∘L C) = s := h3.tsum_eq.trans (h4.unique h2)
   rw [this]; exact h1
 
 theorem trace_comp_comm {B : K →L[ℂ] H} {C : H →L[ℂ] K} (hB : IsHilbertSchmidt B)
     (hC : IsHilbertSchmidt C) : trace (B ∘L C) = trace (C ∘L B) := by
-  obtain ⟨t, h3, h4⟩ := exists_hasSum_comp (stdBasis) (stdBasis) hB hC
+  obtain ⟨t, h3, h4⟩ := exists_hasSum_comp (stdBasis (H := H)) (stdBasis (H := K)) hB hC
   exact h3.tsum_eq.trans h4.tsum_eq.symm
 
 theorem IsTraceClass.hasSum_trace {T : H →L[ℂ] H} (h : IsTraceClass T) (e : HilbertBasis ι ℂ H) :
@@ -170,7 +170,7 @@ theorem IsTraceClass.hasSum_trace {T : H →L[ℂ] H} (h : IsTraceClass T) (e : 
   have h2 : HasSum (fun i => ⟪e i, (∑ k, B k ∘L C k) (e i)⟫_ℂ) (∑ k, trace (B k ∘L C k)) := by
     simpa only [ContinuousLinearMap.sum_apply, inner_sum] using
       hasSum_sum fun k (_ : k ∈ Finset.univ) => hasSum_trace_comp e (hB k) (hC k)
-  rw [show trace (∑ k, B k ∘L C k) = _ from (key (stdBasis)).tsum_eq]
+  rw [show trace (∑ k, B k ∘L C k) = _ from (key (stdBasis (H := H))).tsum_eq]
   exact h2
 
 theorem IsTraceClass.summable_norm {T : H →L[ℂ] H} (h : IsTraceClass T) (e : HilbertBasis ι ℂ H) :
@@ -266,12 +266,12 @@ theorem IsTraceClass.isHilbertSchmidt {T : H →L[ℂ] H} (h : IsTraceClass T) :
 
 theorem trace_add {S T : H →L[ℂ] H} (hS : IsTraceClass S) (hT : IsTraceClass T) :
     trace (S + T) = trace S + trace T := by
-  have := (hS.hasSum_trace (stdBasis)).add (hT.hasSum_trace (stdBasis))
+  have := (hS.hasSum_trace (stdBasis (H := H))).add (hT.hasSum_trace (stdBasis (H := H)))
   simpa only [trace, add_apply, inner_add_right] using this.tsum_eq
 
 theorem trace_sum {α : Type*} (s : Finset α) {T : α → (H →L[ℂ] H)}
     (h : ∀ a ∈ s, IsTraceClass (T a)) : trace (∑ a ∈ s, T a) = ∑ a ∈ s, trace (T a) := by
-  have := hasSum_sum fun a (ha : a ∈ s) => (h a ha).hasSum_trace (stdBasis)
+  have := hasSum_sum fun a (ha : a ∈ s) => (h a ha).hasSum_trace (stdBasis (H := H))
   simpa only [trace, ContinuousLinearMap.sum_apply, inner_sum] using this.tsum_eq
 
 theorem trace_smul (c : ℂ) (T : H →L[ℂ] H) : trace (c • T) = c * trace T := by

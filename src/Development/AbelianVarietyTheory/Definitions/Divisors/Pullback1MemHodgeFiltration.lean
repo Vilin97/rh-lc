@@ -177,6 +177,9 @@ instance : Category (Thick γ s) where
   comp f g := ⟨g.φ.comp f.φ, g.φ₀.comp f.φ₀, fun b ↦ by simp [f.comm, g.comm],
     IsDPMorphism.comp _ g.dp f.dp, by rw [spMap_comp, Category.assoc, f.pt, g.pt]⟩
 
+@[ext] theorem hom_ext {T T' : Thick γ s} {f g : T ⟶ T'}
+    (h : ∀ b, f.φ b = g.φ b) : f = g := Hom.ext' (AlgHom.ext h)
+
 @[simp] theorem comp_φ {T T' T'' : Thick γ s} (f : T ⟶ T') (g : T' ⟶ T'') (b : T.B) :
     (f ≫ g).φ b = g.φ (f.φ b) := rfl
 

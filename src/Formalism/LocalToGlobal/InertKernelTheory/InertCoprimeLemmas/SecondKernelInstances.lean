@@ -71,7 +71,7 @@ theorem cmp_mem_fq {σ : D.what₂.LL →+* X.G.Kf} (cmp : ∀ j, ((ex.tw.fm u �
     rw [← hint]
     exact Submodule.subset_span (Set.mem_image_of_mem _ hz)
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul a b _ hb => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hb
 
 theorem admissible_third_chain {σ : D.what₂.LL →+* X.G.Kf} (cmp : ∀ j, ((ex.tw.fm u μ).lat j).V →ₛₗ[σ] X.Fm j) (j : ℕ)
@@ -91,7 +91,7 @@ theorem admissible_third_chain {σ : D.what₂.LL →+* X.G.Kf} (cmp : ∀ j, ((
     rw [hCh x y hy]
     exact cmp_mem_fq cmp (j + 1) hint' y
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul a b _ hb => rw [map_smul]; exact Submodule.smul_mem _ a hb
 
 theorem second_kernel_at_place (t : KerEntTied ex) {σ : D.what₂.LL →+* X.G.Kf} (cls : ∀ j, X.Lv.comp j → (X.Pj j).Tup → (D.chTw u μ).cls j)

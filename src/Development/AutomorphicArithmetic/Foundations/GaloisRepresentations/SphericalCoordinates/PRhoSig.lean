@@ -156,6 +156,8 @@ private theorem sum_mult {F : Type} [Field F] [NumberField F] (n : ℕ) (hn : 1 
   rw [Finset.sum_add_distrib, hs] at h2
   omega
 
+#print RhoSig
+#print IsSigD
 theorem rhoSig_of : RhoSig := by
   intro p _ D ha hm t₀ ht
   haveI := D.freeO

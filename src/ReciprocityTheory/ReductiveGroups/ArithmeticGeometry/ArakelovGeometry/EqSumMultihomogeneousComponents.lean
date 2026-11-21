@@ -51,7 +51,7 @@ def i2compHom (a : K → ℕ) : MRing ι →+ MRing ι where
   map_add' x y := by
     classical
     ext m
-    rw [MvPolynomial.coeff_add, coeff_i2comp, coeff_i2comp, coeff_i2comp, MvPolynomial.coeff_add]
+    simp only [AddMonoidAlgebra.coeff_add, Pi.add_apply, coeff_i2comp]
     split_ifs <;> simp
 
 theorem i2comp_add (a : K → ℕ) (x y : MRing ι) : i2comp a (x + y) = i2comp a x + i2comp a y :=
@@ -65,7 +65,7 @@ theorem isMultiHomog_i2comp (a : K → ℕ) (h : MRing ι) : IsMultiHomog (i2com
   intro m hm
   rw [coeff_i2comp] at hm
   by_contra e
-  exact hm (if_neg e)
+  exact hm (ite_eq_right e)
 
 theorem i2comp_of_homog {a b : K → ℕ} {h : MRing ι} (hh : IsMultiHomog h b) :
     i2comp a h = if b = a then h else 0 := by
@@ -80,7 +80,7 @@ theorem i2comp_of_homog {a b : K → ℕ} {h : MRing ι} (hh : IsMultiHomog h b)
     split_ifs <;> simp_all
 
 theorem i2comp_self {a : K → ℕ} {h : MRing ι} (hh : IsMultiHomog h a) : i2comp a h = h := by
-  rw [i2comp_of_homog hh, if_pos rfl]
+  rw [i2comp_of_homog hh, ite_eq_left rfl]
 
 theorem eq_sum_multihomogeneous_components (r : MRing ι) :
     r = ∑ b ∈ r.support.image i2bdeg, i2comp b r := by
@@ -103,7 +103,7 @@ theorem mem_mHom_iff (s : MRing ι) (a : K → ℕ) : s ∈ mHom ι a ↔ IsMult
     | add x y _ _ hx hy =>
       rw [isMultiHomog_iff_coeff] at hx hy ⊢
       intro m hm
-      rw [MvPolynomial.coeff_add] at hm
+      simp only [AddMonoidAlgebra.coeff_add, Pi.add_apply] at hm
       by_cases h0 : AddMonoidAlgebra.coeff x m = 0
       · rw [h0, zero_add] at hm
         exact hy m hm
@@ -152,8 +152,8 @@ theorem i2comp_mul_right {f : MRing ι} {c : K → ℕ} (hf : IsMultiHomog f c) 
         have h3 := congrFun e2 k
         simp only [Pi.sub_apply]
         rw [← h2, h1, h3, Nat.add_sub_cancel]
-      rw [if_pos e]
-  · rw [coeff_zero, coeff_mul]
+      rw [ite_eq_left e]
+  · simp only [AddMonoidAlgebra.coeff_zero, Pi.zero_apply, coeff_mul]
     refine Finset.sum_eq_zero fun x hx => ?_
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
     by_cases h0 : AddMonoidAlgebra.coeff f x.2 = 0

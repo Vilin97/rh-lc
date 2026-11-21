@@ -51,7 +51,7 @@ theorem locG_rankOne_alt {hL : _root_.UpperTheory.Zero.LLC.RecTExists} {D : D7} 
     (cg : _root_.GlobalTheory.HeightCounting.CGTrueT hL D T) (cs : CharSide D cf) (π : D.naut.CG 1) (w : PlE D.host)
     (ξ : (w.adicCompletion D.host.E)ˣ →* ℂˣ) (h : IsComp (cs.e1 π).1 w ξ) :
     T.e w (D.naut.locG π w) = _root_.GlobalTheory.NPin.weilDeligneOfLocalIrrep hL D w 1 (Irr.ofDet 1 ξ h.1) := by
-  haveI := host_isCMField D.host
+  have := host_isCMField D.host
   set χ' := (CGu.equivChar D.host.E (cg.e 1 π)).1 with hχ'
   set χ := (cs.e1 π).1 with hχ
   have hloc : ∀ v, T.e v (D.naut.locG π v) = _root_.GlobalTheory.CuspRep.ParLawsT.locParT hL (CG.ofChar χ') (D.nd.plOm.2 v) := fun v => by
@@ -65,7 +65,8 @@ theorem locG_rankOne_alt {hL : _root_.UpperTheory.Zero.LLC.RecTExists} {D : D7} 
     have u1 := (cs.unr_iff π v).1 hv
     have u2 := (unr' v).1 hv
     refine ⟨fun x hx => ?_, ?_⟩
-    · rw [HChar.loc_mul, HChar.loc_inv, u1 x hx, u2 x hx, inv_one, mul_one]
+    · change χ'.loc v x * (χ.loc v x)⁻¹ = 1
+      rw [u2 x hx, u1 x hx, inv_one, mul_one]
     · have hf := cs.frob π v u1
       have hf' : D.naut.frobEig (D.naut.locG π v) = {(((χ'.val v)⁻¹ : ℂˣ) : ℂ)} := by
         rw [T.frobEig _ _ hv, hloc v]; exact _root_.GlobalTheory.RankOneComp.frobEig_locParT_ofChar_of_unrAt hL χ' _ u2

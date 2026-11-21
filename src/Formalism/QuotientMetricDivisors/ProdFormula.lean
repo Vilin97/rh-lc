@@ -26,7 +26,7 @@ def DetCS : Prop :=
 def LcvBasis : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ)
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ), (∀ v, IsUnit (X v).det) →
-    ∀ L : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K L →
+    ∀ L : Submodule (𝓞 K) (Fin d → K), Submodule.IsFullLattice K L →
     ∀ e : Fin d → Fin d → K, LinearIndependent K e →
       (Function.support fun w : HeightOneSpectrum (𝓞 K) =>
         lw w * (idx w (Submodule.span (𝓞 K) (Set.range e)) L : ℝ)).Finite ∧

@@ -34,7 +34,8 @@ theorem ResidualDisjoint.proof : ResidualDisjoint.Statement.{u} := by
   have hzero : ∀ x, x ∉ G' → divCycle P' x G' = 0 := fun x hx => by
     by_contra h; exact hx (form_mem_of_divCycle_ne_zero h)
   have hG'supp : G' ∈ (P' ⊔ Ideal.span {liftForm s}).minimalPrimes ∧ IsRelevant G' := by
-    by_contra h; unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hsG'; rw [dite_eq_right h] at hsG'; exact lt_irrefl _ hsG'
+    by_contra h
+    simp [divCycle, h] at hsG'
   have hP'G' : P' ≤ G' := le_sup_left.trans hG'supp.1.1.2
 
   have hY₁G' : (newVar (some none) : MRing (extIdx ι (BlowUpIdx ι)) O) ∈ G' := by

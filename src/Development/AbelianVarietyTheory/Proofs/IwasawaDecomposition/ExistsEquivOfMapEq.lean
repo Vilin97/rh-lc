@@ -212,7 +212,7 @@ theorem frobEig_ne_zero (a : WD h) (ha : unr a) : (0 : ℂ) ∉ frobEig a := by
   rw [frobEig_diag]
   simp
 
-theorem unr_eq_lpUnr (a : WD h) (ha : unr a) : a = lpUnr (frobEig a) := by
+theorem unr_eq_lpUnr (a : WD h) (ha : unr a) : a = lpUnr (h := h) (frobEig a) := by
   classical
   have h1 := (lpUnr_spec (h := h) _ (frobEig_ne_zero a ha)).2.1
   obtain ⟨n, c, hc⟩ := exists_diag ha
@@ -261,7 +261,7 @@ theorem unramified_laws :
       frobEig (lpChar a χ) = (frobEig a).map (· * c)) ∧
     unr (lpZero (h := h)) ∧
     frobEig (lpZero (h := h)) = 0 ∧
-    (∀ a : WD h, unr a → a = lpUnr (frobEig a)) ∧
+    (∀ a : WD h, unr a → a = lpUnr (h := h) (frobEig a)) ∧
     (∀ a : WD h, unr a → mono0 a) ∧
     (∀ a : WD h, unr a → (0 : ℂ) ∉ frobEig a) ∧
     (∀ a : WD h, unr a → Multiset.card (frobEig a) = lpDim a) ∧

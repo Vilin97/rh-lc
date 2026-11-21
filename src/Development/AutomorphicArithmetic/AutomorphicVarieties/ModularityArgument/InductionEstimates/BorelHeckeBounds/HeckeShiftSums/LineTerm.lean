@@ -101,7 +101,7 @@ private theorem lineTerm [_root_.NumberField.IsTotallyComplex K] (μ : Measure (
     simp only [Finset.sum_apply]
     refine integral_finsetSum _ fun i _ => ?_
     obtain ⟨-, -, C, hC, hsub, -⟩ := volOne (K := K) (2 + 2) 2
-    have hcont : Continuous fun X => th (F i) (unipOne K (2 + 2) 2 X * z) :=
+    have hcont : Continuous fun X => th (F i) (unipOne (K := K) (n := 2 + 2) 2 X * z) :=
       (hT i).2.1.comp ((continuous_unipOne 2).mul continuous_const)
     exact (hcont.continuousOn.integrableOn_compact hC).mono_set hsub
   obtain ⟨h1, -, -, -, -⟩ := hpSpec (K := K)

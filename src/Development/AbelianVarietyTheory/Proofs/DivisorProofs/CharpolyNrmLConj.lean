@@ -18,13 +18,13 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace GlobalTheory.BCT.UnitProd
 
 private theorem equivalence_twisted_conj {G : Type} [Group G] (θ : G →* G) :
-    Equivalence (fun x y : G => ∃ g, y = g⁻¹ * x * θ g) where
-  refl x := ⟨1, by simp⟩
-  symm := fun {_ _} => by
-    rintro ⟨g, rfl⟩
+    Equivalence (fun x y : G => ∃ g, y = g⁻¹ * x * θ g) := by
+  constructor
+  · intro x
+    exact ⟨1, by simp⟩
+  · rintro x y ⟨g, rfl⟩
     exact ⟨g⁻¹, by rw [map_inv]; group⟩
-  trans := fun {_ _ _} => by
-    rintro ⟨g, rfl⟩ ⟨h, rfl⟩
+  · rintro x y z ⟨g, rfl⟩ ⟨h, rfl⟩
     exact ⟨g * h, by rw [map_mul]; group⟩
 
 theorem rep_mk {G : Type} [Group G] (θ : G →* G) (x : G) :

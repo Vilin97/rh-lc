@@ -131,9 +131,9 @@ def RepLaws : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A 
   (rep : Matrix (Fin n) (Fin n) E →ₐ[ℚ] Module.End ℚ (ℚ ⊗[ℤ] (Fin n → 𝓞 E))), RepOK A n rep →
   Function.Injective rep ∧
   (∀ M : Module.End ℚ (ℚ ⊗[ℤ] (Fin n → 𝓞 E)), (∃ x, rep x = M) ↔ ∀ b : 𝓞 E,
-    M * (DistribMulAction.toLinearMap ℤ (Fin n → 𝓞 E) b).baseChange ℚ =
-      (DistribMulAction.toLinearMap ℤ (Fin n → 𝓞 E) b).baseChange ℚ * M) ∧
-  (∀ c : 𝓞 E, rep (algebraMap E _ (c : E)) = (DistribMulAction.toLinearMap ℤ (Fin n → 𝓞 E) c).baseChange ℚ) ∧
+    M * (DistribSMul.toLinearMap ℤ (Fin n → 𝓞 E) b).baseChange ℚ =
+      (DistribSMul.toLinearMap ℤ (Fin n → 𝓞 E) b).baseChange ℚ * M) ∧
+  (∀ c : 𝓞 E, rep (algebraMap E _ (c : E)) = (DistribSMul.toLinearMap ℤ (Fin n → 𝓞 E) c).baseChange ℚ) ∧
   ∀ (x : Matrix (Fin n) (Fin n) (𝓞 E)) (v : Fin n → 𝓞 E),
     rep (x.map (algebraMap (𝓞 E) E)) ((1 : ℚ) ⊗ₜ[ℤ] v) = (1 : ℚ) ⊗ₜ[ℤ] (x *ᵥ v)
 

@@ -32,7 +32,7 @@ private theorem conj_mem {d : ℕ} {x : E} (hd : 0 < d) (hx : x ^ 2 = -(d : E)) 
     have : conjE E (algebraMap ℚ E q) = algebraMap ℚ E q := by simp
     rw [this]
     exact IntermediateField.algebraMap_mem _ q
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | inv a _ ha => rw [map_inv₀]; exact inv_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 
@@ -65,7 +65,7 @@ private theorem aut_cases {d : ℕ} {x : E} (hd : 0 < d) (hx : x ^ 2 = -(d : E))
       intro a ha
       obtain rfl : a = x := Set.mem_singleton_iff.1 ha
       exact h)
-    exact AlgEquiv.coe_algHom_injective this
+    exact AlgEquiv.coe_toAlgHom_injective this
   rcases sq_eq_sq_iff_eq_or_eq_neg.1 hsq with h | h
   · exact Or.inl (ext' 1 h)
   · refine Or.inr (ext' _ (h.trans (Subtype.ext ?_)))

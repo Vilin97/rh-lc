@@ -45,8 +45,6 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
 
 end BCMultProof
 
-open BCMultProof BaseChange
-
 end
 
 end GroundTheory.Heights₂.Heights.Inter

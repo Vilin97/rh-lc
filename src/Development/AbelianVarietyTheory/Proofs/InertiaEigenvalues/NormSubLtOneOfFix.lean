@@ -74,7 +74,7 @@ theorem exists_coboundary
     (fun m : {m : ℕ // 0 < m} => (fixer ρ p m.1 : Set G))
     (fun m => Subgroup.isClosed_of_isOpen _ (isOpen_fixer ρ hopen m.2))
     (by
-      rw [← Set.disjoint_iff_inter_eq_empty, Set.disjoint_left]
+      rw [Set.disjoint_left]
       intro g hg hg'
       exact hg (hJU fun m hm => Set.mem_iInter.1 hg' ⟨m, hm⟩))
     (by
@@ -86,7 +86,7 @@ theorem exists_coboundary
   set N := fixer ρ p m with hN
   have heN : ∀ g ∈ N, e g = 0 := fun g hg => hUe (by
     by_contra hc
-    exact Set.disjoint_left.1 (Set.disjoint_iff_inter_eq_empty.2 hmU) hc hg)
+    exact Set.disjoint_left.1 hmU hc hg)
   haveI : Finite (G ⧸ N) := Subgroup.quotient_finite_of_isOpen N (isOpen_fixer ρ hopen hm)
   letI : Fintype (G ⧸ N) := Fintype.ofFinite _
   let χ : G ⧸ N → (fixedPow p R m →* R) := fun x =>

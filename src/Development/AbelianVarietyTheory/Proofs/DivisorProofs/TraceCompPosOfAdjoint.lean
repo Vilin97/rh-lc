@@ -49,15 +49,15 @@ theorem trace_comp_pos_of_adjoint {V : Type} [AddCommGroup V] [Module ℝ V] [Fi
   exact Finset.sum_pos' (fun i _ => hnn i) ⟨i, Finset.mem_univ _, hp _ hi⟩
 
 theorem trace_mul_star_pos : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p) (x : D.O), x ≠ 0 →
-    0 < LinearMap.trace ℤ D.La (DistribMulAction.toLinearMap ℤ D.La (x * (D.star x).unop)) := by
+    0 < LinearMap.trace ℤ D.La (DistribSMul.toLinearMap ℤ D.La (x * (D.star x).unop)) := by
   intro p _ D x hx
   haveI := D.freeLa
   haveI := D.finLa
   obtain ⟨J, hJJ, hJinv, hpos, hcomm, -⟩ := D.dom
   let A : D.O → (ℝ ⊗[ℤ] D.La →ₗ[ℝ] ℝ ⊗[ℤ] D.La) := fun b =>
-    (DistribMulAction.toLinearMap ℤ D.La b).baseChange ℝ
+    (DistribSMul.toLinearMap ℤ D.La b).baseChange ℝ
   have hcomp : A x ∘ₗ A (D.star x).unop =
-      (DistribMulAction.toLinearMap ℤ D.La (x * (D.star x).unop)).baseChange ℝ := by
+      (DistribSMul.toLinearMap ℤ D.La (x * (D.star x).unop)).baseChange ℝ := by
     clear hcomm hpos hJinv hJJ
     simp only [A]
     rw [← LinearMap.baseChange_comp]

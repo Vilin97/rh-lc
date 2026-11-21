@@ -35,6 +35,7 @@ theorem primeIdealZetaSum_union {A B : Set (HeightOneSpectrum (𝓞 K))} (hd : D
     (f := fun w : HeightOneSpectrum (𝓞 K) => (absNorm w.asIdeal : ℝ) ^ (-s)) hd
     (summable_absNorm_rpow_neg_subtype A hs) (summable_absNorm_rpow_neg_subtype B hs)
 
+open private HasDirichletDensity.eq_1 from Mathlib.NumberTheory.NumberField.DirichletDensity in
 theorem hasDirichletDensity_zero_of_isBoundedUnder {S : Set (HeightOneSpectrum (𝓞 K))}
     (hS : IsBoundedUnder (· ≤ ·) (𝓝[>] 1) fun s => S.primeIdealZetaSum s) :
     S.HasDirichletDensity 0 := by
@@ -42,24 +43,26 @@ theorem hasDirichletDensity_zero_of_isBoundedUnder {S : Set (HeightOneSpectrum (
   have hC' : ∀ᶠ s in 𝓝[>] (1 : ℝ), S.primeIdealZetaSum s ≤ C := eventually_map.mp hC
   have hden := tendsto_primeIdealZetaSum_univ_atTop (K := K)
   have hpos := hden.eventually_gt_atTop 0
-  delta NumberField.Set.HasDirichletDensity
+  simp only [HasDirichletDensity.eq_1]
   refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
     (Tendsto.div_atTop (tendsto_const_nhds (x := C)) hden) (Eventually.of_forall fun s => ?_) ?_
   · exact div_nonneg (S.primeIdealZetaSum_nonneg s) (univ.primeIdealZetaSum_nonneg s)
   · filter_upwards [hC', hpos] with s h1 h2
     exact div_le_div_of_nonneg_right h1 h2.le
 
+open private HasDirichletDensity.eq_1 from Mathlib.NumberTheory.NumberField.DirichletDensity in
 theorem hasDirichletDensity_univ : (univ : Set (HeightOneSpectrum (𝓞 K))).HasDirichletDensity 1 := by
-  delta NumberField.Set.HasDirichletDensity
+  simp only [HasDirichletDensity.eq_1]
   refine tendsto_const_nhds.congr' ?_
   filter_upwards [(tendsto_primeIdealZetaSum_univ_atTop (K := K)).eventually_gt_atTop 0] with s hs
   exact (div_self hs.ne').symm
 
+open private HasDirichletDensity.eq_1 from Mathlib.NumberTheory.NumberField.DirichletDensity in
 theorem hasDirichletDensity_iff_of_subset_of_isBoundedUnder {S T : Set (HeightOneSpectrum (𝓞 K))}
     (hTS : T ⊆ S) (hb : IsBoundedUnder (· ≤ ·) (𝓝[>] 1) fun s => (S \ T).primeIdealZetaSum s)
     (δ : ℝ) : T.HasDirichletDensity δ ↔ S.HasDirichletDensity δ := by
   have h0 := hasDirichletDensity_zero_of_isBoundedUnder hb
-  delta NumberField.Set.HasDirichletDensity at h0 ⊢
+  simp only [HasDirichletDensity.eq_1] at h0 ⊢
   have heq : ∀ᶠ s in 𝓝[>] (1 : ℝ),
       S.primeIdealZetaSum s / (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s =
         T.primeIdealZetaSum s / (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s +
@@ -266,6 +269,7 @@ theorem primeIdealZetaSum_primesAbove {T : Set (HeightOneSpectrum (𝓞 K))}
     _ = _ := by
         rw [Finset.sum_const, Finset.card_univ, ← Nat.card_eq_fintype_card, hcard, nsmul_eq_mul]
 
+open private HasDirichletDensity.eq_1 from Mathlib.NumberTheory.NumberField.DirichletDensity in
 theorem hasDirichletDensity_primesAbove_iff {T : Set (HeightOneSpectrum (𝓞 K))}
     (hT : ∀ v ∈ T, SplitsCompletely L v) (δ : ℝ) :
     (primesAbove L T).HasDirichletDensity (Module.finrank K L * δ) ↔ T.HasDirichletDensity δ := by
@@ -277,7 +281,7 @@ theorem hasDirichletDensity_primesAbove_iff {T : Set (HeightOneSpectrum (𝓞 K)
   have hLK := tendsto_primeIdealZetaSum_univ_div_univ L K
   have hKpos := (tendsto_primeIdealZetaSum_univ_atTop (K := K)).eventually_gt_atTop 0
   have hLpos := (tendsto_primeIdealZetaSum_univ_atTop (K := L)).eventually_gt_atTop 0
-  delta NumberField.Set.HasDirichletDensity
+  simp only [HasDirichletDensity.eq_1]
   constructor
   · intro h
     have := (h.const_mul n⁻¹).mul hLK

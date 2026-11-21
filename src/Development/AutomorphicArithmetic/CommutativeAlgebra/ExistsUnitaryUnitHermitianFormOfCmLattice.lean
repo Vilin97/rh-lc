@@ -142,7 +142,7 @@ theorem UpperTheory.exists_unitary_unit_hermitian_form_of_cm_lattice :
       exact anti_bc Y.EF Y.alt _ _
     have h4 : E (b w) u = - E u (b w) := anti_bc D.EF D.alt _ _
     linarith
-  obtain ⟨b₀, hb₀⟩ := (L.rep_range b).2 comm
+  obtain ⟨b₀, hb₀⟩ : ∃ x : G.C, L.rep x = b := (L.rep_range b).2 comm
   let e : VQ D ≃ₗ[ℚ] VQ D := LinearEquiv.ofInjectiveEndo b hinj
   have he : ∀ u, b (e.symm u) = u := fun u => e.apply_symm_apply u
   have he' : ∀ u, e.symm (b u) = u := fun u => e.symm_apply_apply u
@@ -152,7 +152,8 @@ theorem UpperTheory.exists_unitary_unit_hermitian_form_of_cm_lattice :
     have h := LinearMap.congr_fun (comm c) (e.symm u)
     simp only [Module.End.mul_apply, LinearEquiv.coe_coe, he] at h ⊢
     exact h.symm
-  obtain ⟨b₁, hb₁⟩ := (L.rep_range _).2 comm'
+  obtain ⟨b₁, hb₁⟩ : ∃ x : G.C, L.rep x = e.symm.toLinearMap :=
+    (L.rep_range e.symm.toLinearMap).2 comm'
   have h01 : b₀ * b₁ = 1 := by
     apply L.rep_inj
     rw [map_mul, map_one, hb₀, hb₁]

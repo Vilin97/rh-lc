@@ -31,7 +31,8 @@ private theorem bc_tw {χ : HChar F} {χ' : HChar E} {s : ℂ} (h : IsPow χ s) 
     WeakBC (Cusp.cx (π.twist χ)).sat (Cusp.cx (P.twist χ')).sat := by
   refine Filter.Eventually.mono H fun w hw f hf => ?_
   obtain ⟨B, hB, hB'⟩ := hw f hf
-  have hf' : Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 F)).asIdeal ^ f := hf
+  have hf' : Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 F)).asIdeal ^ f := by
+    simpa only [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using hf
   have hv : χ'.val w = χ.val (w.under (𝓞 F)) ^ f := by
     apply Units.ext
     rw [Units.val_pow_eq_pow_val, (Sph.powSat F χ s h _).2, (Sph.powSat E χ' s h' w).2, hf', Nat.cast_pow,
@@ -50,8 +51,10 @@ private theorem same_sat [IsGalois F E] (hp : (Module.finrank F E).Prime) (π : 
     ∀ᶠ w : Pl E in cofinite, ∃ B, sat w B ∧ sat' w B := by
   have hN := (places F E hp).2.2.2.2.1
   filter_upwards [H, H'] with w a b
-  obtain ⟨B, hB, hB'⟩ := a _ (hN w)
-  obtain ⟨C, hC, hC'⟩ := b _ (hN w)
+  have hn : normV w = normV (w.under (𝓞 F)) ^ resDeg F w := by
+    simpa only [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using hN w
+  obtain ⟨B, hB, hB'⟩ := a _ hn
+  obtain ⟨C, hC, hC'⟩ := b _ hn
   obtain rfl := hB.unique hC
   exact ⟨_, hB', hC'⟩
 

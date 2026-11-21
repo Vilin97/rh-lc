@@ -17,7 +17,7 @@ open Formalism.HN
 def LcvMu : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ), 0 < d →
     ∀ X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ, (∀ v, IsUnit (X v).det) →
-    ∀ M : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K M →
+    ∀ M : Submodule (𝓞 K) (Fin d → K), Submodule.IsFullLattice K M →
       Formalism.DivisionValues.lcv X M = -((d : ℝ) * muDef (Pi.basisFun K (Fin d)) X M)
 
 def DescentSlope : Prop :=

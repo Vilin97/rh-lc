@@ -96,7 +96,7 @@ theorem nabla_gram_lower_bound : NablaGramLow := by
           (Finset.mem_univ i))
     simp only [gramOf, Matrix.of_apply]
     rw [fockQ_eq_sum _ _ S hsub, Finset.sum_div, ← Finset.sum_coe_sort S]
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     simp only [mul_diagonal, transpose_apply, hV, hVz, map_apply, of_apply, hq, coeff_map, eq_intCast]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [← hh]
@@ -140,7 +140,7 @@ theorem nabla_gram_lower_bound : NablaGramLow := by
       exact mul_self_eq_zero.mp h3
     have h3 : ∑ i, v i • intQ N N (e i : MvPolynomial (Fin N × Fin N) ℤ) = 0 := by
       ext m
-      rw [MvPolynomial.coeff_sum, MvPolynomial.coeff_zero]
+      rw [MvPolynomial.coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
       simp only [MvPolynomial.coeff_smul, smul_eq_mul, we_intQ_apply, MvPolynomial.coeff_map, eq_intCast]
       by_cases hm : m ∈ S
       · have h4 := congrFun h2 ⟨m, hm⟩

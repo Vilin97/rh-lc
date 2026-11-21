@@ -8,6 +8,7 @@ public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExi
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.RregRep
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.Smooth
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiFor
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiGelfand
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.ExistsMu
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Exists
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.AnalyticVectors.Unitary
@@ -118,7 +119,7 @@ theorem schmid_casimir (n : ℕ) : SchmidCasimirStatement n := by
     have hs := Real.sqrt_nonneg (2 * (min (pOf ε) (qOf ε) : ℝ))
     rw [e]
     nlinarith
-  have hPsi := (S7.isPsiFor_psiM ε lam h T μ hHC hμ hgap hq0 h8).1
+  obtain ⟨Ψ, hPsi, -⟩ := exists_isPsiFor S7.psiExists T hHC hgap hq0 h8
   have hv₀ : T.w ≠ 0 := by
     intro h0
     have h1 := T.w_norm
@@ -132,6 +133,6 @@ theorem schmid_casimir (n : ℕ) : SchmidCasimirStatement n := by
   obtain ⟨w, hwW, hw0, -⟩ := hW.2.2.2
   have h1 := hc w hwW
   rw [hcas w hwW] at h1
-  exact (smul_left_injective ℂ hw0 h1).symm
+  simpa using (smul_left_injective ℂ hw0 h1).symm
 
 end ReciprocityTheory.ChartRestriction.DS.Lap.LemK

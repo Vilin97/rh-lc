@@ -89,7 +89,7 @@ theorem dRho_eq_at (h : Chart θ σ) {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsS
   unfold Formalism.IndefR.Datum.dRho
   congr 1
   funext t
-  rw [GlobalTheory.VacUnique.Ann.lineAt_eq h S T τ z t, heisO_real_at h hψ, (piW θ T S).map_add (f := _), h.pi_iota, add_assoc,
+  rw [GlobalTheory.VacUnique.Ann.lineAt_eq h S T τ z t, heisO_real_at h hψ, (piW θ T S).map_add, h.pi_iota, add_assoc,
     ← (iotaW σ T S).map_add]
 
 

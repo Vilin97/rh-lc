@@ -121,12 +121,6 @@ def resChi (d : HSMDatum D Ω κ) (n : ℕ) : ℝ :=
     -(1 / 2) * Real.log (resGram d n h.choose.2).det
   else 0
 
-namespace ProjLine
-
-attribute [local instance] projectiveLineMeasurableSpace
-
-end ProjLine
-
 end
 
 end GroundTheory.Heights₂.Heights.HilbertSamuel

@@ -75,8 +75,10 @@ theorem relOff_factor {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {Sb : Finse
     rw [hX u hu, GlobalTheory.SplitScalar.heisO_smul, smul_smul]
   have hsupp : ∀ u ∈ c'.support, OffPl Sb u := by
     intro u hu
-    obtain ⟨x, hx, hx'⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hu)
-    rw [Finset.mem_singleton.1 (Finsupp.support_single_subset hx')]
+    rw [hc'] at hu
+    obtain ⟨x, hx, hx'⟩ := Finsupp.mem_support_finsetSum u hu
+    have heq : u = r x := Finset.mem_singleton.1 (Finsupp.support_single_subset hx')
+    rw [heq]
     exact hr x hx
   have hp0 : comb ψ S T c' p = 0 := by
     apply heisO_injective ψ S T w

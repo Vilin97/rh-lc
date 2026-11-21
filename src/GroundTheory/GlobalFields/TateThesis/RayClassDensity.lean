@@ -68,6 +68,7 @@ def uniformizerClass {G : Type*} [Group G] (q : IdeleGroup K →* G) (v : Height
     G :=
   q (finiteEmbedding v (exists_uniformizer v).choose)
 
+open private HasDirichletDensity.eq_1 from Mathlib.NumberTheory.NumberField.DirichletDensity in
 theorem hasDirichletDensity_of_isBoundedUnder_abs_sub {S : Set (HeightOneSpectrum (𝓞 K))} {δ : ℝ}
     (h : IsBoundedUnder (· ≤ ·) (𝓝[>] 1) fun s ↦
       |S.primeIdealZetaSum s - δ * (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s|) :
@@ -80,7 +81,7 @@ theorem hasDirichletDensity_of_isBoundedUnder_abs_sub {S : Set (HeightOneSpectru
       (by simpa only [Function.comp_def, Real.norm_eq_abs] using h)
   have h1 := h0.const_add δ
   rw [add_zero] at h1
-  unfold NumberField.Set.HasDirichletDensity
+  rw [HasDirichletDensity.eq_1]
   refine h1.congr' ?_
   filter_upwards [hZ.eventually_gt_atTop 0] with s hs
   field_simp

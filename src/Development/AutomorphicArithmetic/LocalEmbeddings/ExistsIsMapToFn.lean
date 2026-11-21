@@ -87,14 +87,14 @@ theorem toFn_injective (y : Y.X) : Function.Injective (toFn y) :=
 
 omit [NumberField F] in
 theorem fits_iff {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f : StalkFrame ρ y φ} {f' : GenFrame e ρ}
-    (hφ : constF e Y = (toFn y).comp φ) (hf : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) (toFn y) f')
+    (hφ : constF e Y = (toFn y).comp φ) (hf : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) (toFn y) f')
     {P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn} : Fits g₀ τ y φ f P ↔ g₀.co f' τ = P :=
   ⟨fun h => EigFrame.co_eq fun i => by rw [hf τ i]; exact h.2 i, fun h => ⟨hφ, fun i => by
     rw [← hf τ i, ← h]; exact g₀.co_spec f' τ i⟩⟩
 
 omit [NumberField F] in
 theorem exists_isMap_toFn {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} (f : StalkFrame ρ y φ)
-    (hφ : constF e Y = (toFn y).comp φ) : ∃ f' : GenFrame e ρ, (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) (toFn y) f' :=
+    (hφ : constF e Y = (toFn y).comp φ) : ∃ f' : GenFrame e ρ, (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) (toFn y) f' :=
   f.exists_isMap _ hφ (by rw [← spMap_toFn y, Category.assoc])
 
 omit [NumberField F] in
@@ -224,10 +224,10 @@ theorem IsOver.toFn_comp (h : IsOver e ρB ρ f φ) (y : Y.X) :
 
 
 omit [NumberField F] in
-theorem Fits.pull (h : IsOver e ρB ρ f φ) {g : GenFrame e ρB} {g' : GenFrame e ρ} (hg : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v g embτ basisIdx) φ g') (g₁ : GenFrame e ρ)
+theorem Fits.pull (h : IsOver e ρB ρ f φ) {g : GenFrame e ρB} {g' : GenFrame e ρ} (hg : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v g embτ basisIdx) φ g') (g₁ : GenFrame e ρ)
     {y : Y.X} {φ₀ : c.F →+* B.X.presheaf.stalk (f y)} {k : StalkFrame ρB (f y) φ₀}
     {P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) B.Fn} (hk : Fits g τ (f y) φ₀ k P) :
-    ∃ k₁ : StalkFrame ρ y ((f.stalkMap y).hom.comp φ₀), (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v k embτ basisIdx) (f.stalkMap y).hom k₁ ∧
+    ∃ k₁ : StalkFrame ρ y ((f.stalkMap y).hom.comp φ₀), (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v k embτ basisIdx) (f.stalkMap y).hom k₁ ∧
       Fits g₁ τ y _ k₁ (g₁.co g' τ * P.map φ) := by
   obtain ⟨k₁, hk₁⟩ := k.exists_isMap (f.stalkMap y).hom (x' := stalkPt Y y ≫ ρ ≫ genι Z) rfl
     (by rw [← Category.assoc (spMap _), spMap_stalkMap, ← h.1]; simp only [Category.assoc])

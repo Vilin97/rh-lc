@@ -13,6 +13,13 @@ open NumberField Complex
 
 noncomputable section
 
+private theorem sum_inner_ob_smul_e {ι : Type} [Fintype ι]
+    (K : Submodule ℝ (EuclideanSpace ℂ ι)) (a : EuclideanSpace ℂ ι)
+    (ha : a ∈ K) : ∑ i, (inner ℝ ((Col.ob K) i) (⟨a, ha⟩ : K)) • (Col.e K i) = a := by
+  have h := congrArg (fun w : K => (w : EuclideanSpace ℂ ι)) ((Col.ob K).sum_repr' ⟨a, ha⟩)
+  simp only [Submodule.coe_sum, Submodule.coe_smul] at h
+  exact h
+
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {X : PT E} {DF : ℕ} {P : Par X DF}
   {I : Submodule ℤ (Vsp X.dim)}
 

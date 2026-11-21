@@ -12,6 +12,7 @@ public import GroundTheory.AutomorphicForms.UnitaryAdmissible.CuspFinite
 open MeasureTheory NumberField GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace
 open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory.C Polynomial Topology
 
+set_option maxHeartbeats 20000000 in
 theorem UpperTheory.finiteDimensional_cuspForms_of_level_and_derivOp_bound :
     ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (d : ℕ) (b : Module.Basis (Fin d) ℝ (isExpLieAlgebra K n).lieSubalgebra) (C : ℝ) (U : Subgroup (AdelicGLn.integralFiniteGL K n)) (S : Submodule ℂ (cuspForms K n)), IsOpen (U : Set (AdelicGLn.integralFiniteGL K n)) → S ≤ centralCuspForms K n → (∀ φ ∈ S, ∀ u ∈ U, finRepCusp K n (u : AdelicGLn.integralFiniteGL K n) φ = φ) → (∀ φ ∈ S, ∀ i, ‖cuspVecL μ ((gkModuleCusp K n).ρ (b i) φ)‖ ≤ C * ‖cuspVecL μ φ‖) → FiniteDimensional ℂ S := by
   intro K _ _ n μ _ d b C U S hU hS hfix hbound
@@ -21,7 +22,8 @@ theorem UpperTheory.finiteDimensional_cuspForms_of_level_and_derivOp_bound :
   have key : ∀ v ∈ S.map (cuspVecL μ),
       ‖(cuspRepT μ).integrated μ (UnitaryRep.ccToL1 μ f) v - v‖ ≤ 1 / 2 * ‖v‖ := by
     rintro _ ⟨φ, hφ, rfl⟩
-    refine hf _ _ fun g hg => ?_
+    apply hf (cuspVecL μ φ) (1 / 2 * ‖cuspVecL μ φ‖)
+    intro g hg
     obtain ⟨a, ha, u, hu, rfl⟩ := hN'd g hg
     have hφ' : φ ∈ centralCuspForms K n := hS hφ
     have hfx : cuspRepT μ (retractOne (finEmb K n (u : AdelicGLn.integralFiniteGL K n))) (cuspVecL μ φ) =

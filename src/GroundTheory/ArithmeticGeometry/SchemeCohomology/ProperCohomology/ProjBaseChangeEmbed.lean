@@ -24,15 +24,15 @@ variable (A B n) in
 def baseChangeIso :
     projectiveSpace B n ≅
       pullback (toSpecBase A n) (Spec.map (CommRingCat.ofHom (algebraMap A B))) :=
-  isPullback_baseChange.isoPullback
+  (isPullback_baseChange A B n).isoPullback
 
 lemma baseChangeIso_inv_baseChangeMap :
     (baseChangeIso A B n).inv ≫ baseChangeMap A B n = pullback.fst _ _ :=
-  isPullback_baseChange.isoPullback_inv_fst
+  (isPullback_baseChange A B n).isoPullback_inv_fst
 
 lemma baseChangeIso_inv_toSpecBase :
     (baseChangeIso A B n).inv ≫ toSpecBase B n = pullback.snd _ _ :=
-  isPullback_baseChange.isoPullback_inv_snd
+  (isPullback_baseChange A B n).isoPullback_inv_snd
 
 def toBaseChange (ι : Y ⟶ pullback (toSpecBase A n) (Spec.map (CommRingCat.ofHom (algebraMap A B)))) :
     Y ⟶ projectiveSpace B n :=

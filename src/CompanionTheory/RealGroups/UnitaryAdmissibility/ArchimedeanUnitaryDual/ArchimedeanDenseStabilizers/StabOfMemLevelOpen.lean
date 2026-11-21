@@ -219,12 +219,12 @@ theorem mulVec_fv (h : IsCMExt F E σ) (γ : GRat σ J) (x : Fin n → E) :
   funext i
   exact (RingHom.map_mulVec (inclR (Af F)) _ x i).symm
 
-theorem stab_of_mem_levelOpen (h : IsCMExt F E σ) {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L]
+theorem stab_of_mem_levelOpen (h : IsCMExt F E σ) {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsFullLattice E L]
     {γ : GRat σ J} (hg : ratEmb σ J γ ∈ levelOpen σ J L) (x : Fin n → E) :
     x ∈ L ↔ (γ.1 : Matrix (Fin n) (Fin n) E).mulVec x ∈ L := by
   have hfg : L.FG := Submodule.IsLattice.fg (A := E) L
   have hfin : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.2 hfg
-  have hsp : Submodule.span E (L : Set (Fin n → E)) = ⊤ := Submodule.IsLattice.span_eq_top
+  have hsp : Submodule.span E (L : Set (Fin n → E)) = ⊤ := Submodule.IsFullLattice.span_eq_top
   have h1 := (mem_levelOpen_iff_latHat σ J hfg (ratEmb σ J γ)).1 hg (fun i => (1 : Af F) ⊗ₜ[F] x i)
   rw [mulVec_fv h] at h1
   have up : ∀ {z : Fin n → E}, z ∈ L →
@@ -234,7 +234,7 @@ theorem stab_of_mem_levelOpen (h : IsCMExt F E σ) {L : Submodule (𝓞 E) (Fin 
     fun hx => Formalism.IndefR.CoreT.mem_of_latHat L hfin hsp (h1.2 (up hx))⟩
 
 theorem finite_level_rat (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : CompanionTheory.Rg.Fl.IsPosDef σ J)
-    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] :
+    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L] :
     {γ : GRat σ J | ratEmb σ J γ ∈ levelOpen σ J L}.Finite := by
   have hfg : L.FG := Submodule.IsLattice.fg (A := E) L
   have hfin : Finite (Formalism.UG.level (σ : E →+* E) J L) := Formalism.UG.Final.StabFinite F E (Fin n) σ J
@@ -242,7 +242,7 @@ theorem finite_level_rat (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : Compani
       ext i j
       exact hJ.1 i j)
     (isUnit_iff_ne_zero.2 hJ.2) (isTotDef_of_posDef h hJ hp) L
-    (Module.Finite.iff_fg.2 hfg) Submodule.IsLattice.span_eq_top
+    (Module.Finite.iff_fg.2 hfg) Submodule.IsFullLattice.span_eq_top
   let f : {γ : GRat σ J | ratEmb σ J γ ∈ levelOpen σ J L} → Formalism.UG.level (σ : E →+* E) J L :=
     fun γ => ⟨γ.1.1, γ.1.2, fun x => stab_of_mem_levelOpen h γ.2 x⟩
   have hf : Function.Injective f := fun a b e => Subtype.ext (Subtype.ext (congrArg (fun y : Formalism.UG.level (σ : E →+* E) J L => y.1) e))
@@ -250,11 +250,11 @@ theorem finite_level_rat (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : Compani
   exact Set.toFinite _
 
 theorem exists_class_cover (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : CompanionTheory.Rg.Fl.IsPosDef σ J)
-    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] :
+    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L] :
     ∃ T : Finset (GAd σ J), ∀ x, ∃ (γ : GRat σ J), ∃ a ∈ T, ∃ k ∈ levelOpen σ J L, x = ratEmb σ J γ * a * k := by
   classical
   have hfg : L.FG := Submodule.IsLattice.fg (A := E) L
-  have hsp : Submodule.span E (L : Set (Fin n → E)) = ⊤ := Submodule.IsLattice.span_eq_top
+  have hsp : Submodule.span E (L : Set (Fin n → E)) = ⊤ := Submodule.IsFullLattice.span_eq_top
   letI := cmStarRing h
   let c : E ≃ₐ[F] E := AlgEquiv.ofAlgHom σ σ (AlgHom.ext (sigma_invol h)) (AlgHom.ext (sigma_invol h))
   have hcs : ∀ x, c x = σ x := fun _ => rfl
@@ -345,7 +345,16 @@ theorem isSep_of_posDef (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : Companio
     (hKc : IsCompact (K : Set (GLoc σ J v))) : CompanionTheory.Rg.Fl.IsSep K := by
   classical
   intro S
-  haveI : Submodule.IsLattice E (stdLattice E n) := isLattice_stdLattice
+  haveI : Submodule.IsFullLattice E (stdLattice E n) := by
+    refine { toIsLattice := isLattice_stdLattice, span_eq_top := eq_top_iff.2 fun y _ => ?_ }
+    rw [← Finset.univ_sum_single y]
+    refine sum_mem fun i _ => ?_
+    have h1 : (Pi.single i 1 : Fin n → E) ∈ stdLattice E n := fun j _ => ⟨Pi.single (M := fun _ => 𝓞 E) i 1 j, by
+      by_cases e : j = i
+      · subst e; simp
+      · simp [e]⟩
+    convert Submodule.smul_mem _ (y i) (Submodule.subset_span h1) using 1
+    rw [← Pi.single_smul, smul_eq_mul, mul_one]
   set L := stdLattice E n with hL
   have hB := finite_level_rat h hJ hp L
   obtain ⟨T₁, hT₁⟩ := exists_class_cover h hJ hp L

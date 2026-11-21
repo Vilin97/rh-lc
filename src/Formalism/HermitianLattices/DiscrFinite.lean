@@ -6,7 +6,7 @@ public import Formalism.HermitianLattices.GenusCovolBound
 
 @[expose] public section
 
-open Module Formalism.K
+open Module
 
 noncomputable section
 

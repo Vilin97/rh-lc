@@ -77,7 +77,6 @@ theorem fT_perm' (σ : Equiv.Perm (Fin q)) (w : Fin q → InfinitePlace L) (Y : 
   by_cases hw : ∀ i, w (σ i) = w i
   · rw [if_pos hw]
     simp [ContinuousMultilinearMap.sum_apply, blk, ent, hw]
-    rfl
   · rw [if_neg hw]
     push_neg at hw
     obtain ⟨i, hi⟩ := hw

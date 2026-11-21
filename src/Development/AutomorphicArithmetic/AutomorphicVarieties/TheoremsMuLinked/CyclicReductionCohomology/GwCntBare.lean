@@ -247,7 +247,6 @@ private theorem cup_inj {R Γ D M : Type} [CommRing R] [TopologicalSpace R] [Dis
   subst e
   have e1 : (twDual χ ρ).comp φ = (twDual (χ.comp φ) (ρ.comp φ)).comp (MonoidHom.id D) := by
     refine MonoidHom.ext fun g => LinearMap.ext fun y => TDual.ext fun m => ?_
-    simp only [MonoidHom.comp_apply, MonoidHom.id_apply, twDual_apply, map_inv φ]
   have gen : ∀ (σ σ' : Representation R D (TDual R M)) (_ : σ = σ') h1 h2,
       Function.Injective (cupProductH1H1 σ' (ρ.comp φ) ((charRep χ).comp φ) evalPair.flip
         continuous_of_discreteTopology h2 hρ) →
@@ -316,8 +315,6 @@ theorem UpperTheory.V.Th.gwCntBare :
     obtain ⟨y, rfl⟩ := β.surjective φ
     rw [β.symm_apply_apply, β.symm_apply_eq]
     refine TDual.ext fun m => ?_
-    rw [twDual_apply, hβ', hβ', hμε, ← hb.equiv, hρS, map_inv e, ← Module.End.mul_apply, ← map_mul,
-      mul_inv_cancel, map_one, Module.End.one_apply]
   let σ : T ≃ W := pl.symm
   let Av : T → ValuationSubring Ω := fun v => A (σ v)
   have hAv : ∀ v, IsPlaceOver (Av v) v.1 := fun v => by

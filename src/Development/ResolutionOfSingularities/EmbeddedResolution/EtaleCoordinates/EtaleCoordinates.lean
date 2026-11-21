@@ -46,50 +46,8 @@ noncomputable def basisKaehler : Module.Basis ι S (KaehlerDifferential k S) :=
     basisKaehler k ι S i = KaehlerDifferential.D k S (coord k ι S i) :=
   (exists_basisKaehler k ι S).choose_spec i
 
-private noncomputable def partialDerivFun (i : ι) (s : S) : S :=
-  (basisKaehler k ι S).repr (KaehlerDifferential.D k S s) i
-
-private theorem partialFun_map_add (i : ι) :
-    ∀ x y : S, partialDerivFun k ι S i (x + y) = partialDerivFun k ι S i x + partialDerivFun k ι S i y := by
-  intro x y
-  show (basisKaehler k ι S).repr (KaehlerDifferential.D k S (x + y)) i
-      = (basisKaehler k ι S).repr (KaehlerDifferential.D k S x) i
-        + (basisKaehler k ι S).repr (KaehlerDifferential.D k S y) i
-  rw [map_add (f := _), map_add (f := _), Finsupp.add_apply]
-
-private theorem partialFun_map_smul (i : ι) :
-    ∀ (c : k) (x : S),
-      partialDerivFun k ι S i (c • x) = (RingHom.id k) c • partialDerivFun k ι S i x := by
-  intro c x
-  have h1 : c • x = algebraMap k S c * x := Algebra.smul_def c x
-  have h2 : KaehlerDifferential.D k S (c • x)
-      = algebraMap k S c • KaehlerDifferential.D k S x := by
-    rw [h1, Derivation.leibniz, Derivation.map_algebraMap, smul_zero, add_zero]
-  show (basisKaehler k ι S).repr (KaehlerDifferential.D k S (c • x)) i
-      = c • (basisKaehler k ι S).repr (KaehlerDifferential.D k S x) i
-  rw [h2, LinearEquiv.map_smul, Finsupp.smul_apply, smul_eq_mul, ← Algebra.smul_def]
-
-noncomputable def partialDerivLinear (i : ι) : S →ₗ[k] S where
-  toFun := partialDerivFun k ι S i
-  map_add' := partialFun_map_add k ι S i
-  map_smul' := partialFun_map_smul k ι S i
-
-theorem partialLinear_leibniz (i : ι) :
-    ∀ a b : S, partialDerivLinear k ι S i (a * b)
-      = a • partialDerivLinear k ι S i b + b • partialDerivLinear k ι S i a := by
-  intro a b
-  have h : KaehlerDifferential.D k S (a * b)
-      = a • KaehlerDifferential.D k S b + b • KaehlerDifferential.D k S a :=
-    (KaehlerDifferential.D k S).leibniz a b
-  have h2 : (basisKaehler k ι S).repr (KaehlerDifferential.D k S (a * b)) i
-      = a * (basisKaehler k ι S).repr (KaehlerDifferential.D k S b) i
-        + b * (basisKaehler k ι S).repr (KaehlerDifferential.D k S a) i := by
-    rw [h, map_add (f := _), Finsupp.add_apply, LinearEquiv.map_smul, LinearEquiv.map_smul,
-      Finsupp.smul_apply, Finsupp.smul_apply, smul_eq_mul, smul_eq_mul]
-  exact h2
-
 noncomputable def partialDeriv (i : ι) : Derivation k S S :=
-  Derivation.mk' (partialDerivLinear k ι S i) (partialLinear_leibniz k ι S i)
+  ((basisKaehler k ι S).coord i).compDer (KaehlerDifferential.D k S)
 
 theorem partialDeriv_apply (i : ι) (s : S) :
     partialDeriv k ι S i s = (basisKaehler k ι S).repr (KaehlerDifferential.D k S s) i := rfl
@@ -108,7 +66,7 @@ theorem partialDeriv_coord_self (i : ι) :
 theorem partialDeriv_coord_of_ne (i j : ι) (h : i ≠ j) :
     partialDeriv k ι S i (coord k ι S j) = 0 := by
   classical
-  rw [partialDeriv_coord k ι S i j, if_neg h]
+  rw [partialDeriv_coord k ι S i j, ite_eq_right h]
 
 omit [Algebra (MvPolynomial ι k) S] [IsScalarTower k (MvPolynomial ι k) S]
   [Algebra.FormallyEtale (MvPolynomial ι k) S] in

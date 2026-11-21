@@ -35,7 +35,7 @@ private theorem infOrth_wW_inv (F : Type) [Field F] [NumberField F] : InfOrth (w
   have h : ((wW F)⁻¹).1 * ((wW F)⁻¹).1ᵀ = 1 := by
     rw [Matrix.SpecialLinearGroup.coe_inv]
     ext i j; fin_cases i <;> fin_cases j <;>
-      simp [wW, Matrix.adjugate_fin_two, Matrix.mul_apply, Fin.sum_univ_two, Matrix.transpose_apply]
+      simp [wW, Matrix.adjugate_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
   rw [h]
 
 theorem UpperTheory.ConvolutionTheory.R2.I.modSpan :
@@ -56,10 +56,10 @@ theorem UpperTheory.ConvolutionTheory.R2.I.modSpan :
       have hm := UpperTheory.ConvolutionTheory.R2.I.omSL F E D W v θ hθ hne u u' hu hu' key
       exact Submodule.subset_span ⟨u', _, hm, sb_mul_w ha, key a ha x hx⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   have h := hmap _ hs
   have e : W.Om (wW F) (W.Om (wW F)⁻¹ φ) = φ := by
-    rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one]
+    rw [← mul_apply_eq_comp, ← map_mul, mul_inv_cancel, map_one]
     rfl
   rwa [e] at h

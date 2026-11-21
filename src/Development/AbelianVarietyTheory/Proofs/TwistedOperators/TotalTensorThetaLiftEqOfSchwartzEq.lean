@@ -155,7 +155,7 @@ theorem sum_liftP_eq_zero {μ₀ : T} (hL : L.Is μ₀) (M : Vol G) (ρ : RealMa
       _ = ∑ l ∈ Ls, liftA W M a (g l) (∑ k ∈ s, (c k * r k l) • Fk k) := by
           rw [Finset.sum_comm]
           refine Finset.sum_congr rfl fun l _ => ?_
-          rw [liftA_sum_form M a (g l) s _ Fk fun k hk => hconv l k hk]
+          exact (liftA_sum_form M a (g l) s (fun k => c k * r k l) Fk fun k hk => hconv l k hk).symm
       _ = 0 := by
           refine Finset.sum_eq_zero fun l _ => ?_
           rw [hIH l, liftA_zero_form]

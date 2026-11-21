@@ -61,8 +61,9 @@ private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_basis {A : Type} [C
     simp only [hρ, Matrix.toBilin'_apply']
     rw [← Matrix.vecMul_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
       Matrix.mulVec_mulVec, hr, Matrix.smul_mulVec, dotProduct_smul, smul_eq_mul]
-  have hY₀ : Submodule.IsLattice F (Submodule.span A (Set.range (Pi.basisFun F (Fin n)))) := by
-    exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
+  have hY₀ : Submodule.IsFullLattice F (Submodule.span A (Set.range (Pi.basisFun F (Fin n)))) := by
+    exact { toIsLattice := Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
+            span_eq_top := by rw [Submodule.span_span_of_tower, Module.Basis.span_eq] }
   have hst : ∀ g, ∀ y ∈ Submodule.span A (Set.range (Pi.basisFun F (Fin n))),
       ρ g y ∈ Submodule.span A (Set.range (Pi.basisFun F (Fin n))) := by
     intro g y hy
@@ -73,7 +74,7 @@ private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_basis {A : Type} [C
     simp only [Pi.basisFun_repr] at ha
     simp [hρ, Matrix.mulVec, dotProduct, ha]
   obtain ⟨Y, hY, h1, h2, h3, h4⟩ :=
-    UpperTheory.V.AlgebraTools.almost_selfdual (Matrix.toBilin' H) ρ σ u hs hn hσ hB _ hY₀ hst
+    UpperTheory.V.AlgebraTools.almost_selfdual (Matrix.toBilin' H) ρ σ u hs hn hσ hB _ (by first | exact hY₀ | exact hY₀.toIsLattice) hst
   have hZ := (UpperTheory.V.AlgebraTools.dual_lattice (Matrix.toBilin' H) hs hn Y hY).1
   obtain ⟨b, S, hb1, hb2⟩ := UpperTheory.V.AlgebraTools.smith_zero_one ϖ Y _ hϖ hZ h3 h4
   have hfin : Module.finrank F (Fin n → F) = n := by simp

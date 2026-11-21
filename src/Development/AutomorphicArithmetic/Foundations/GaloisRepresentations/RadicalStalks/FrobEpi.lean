@@ -15,7 +15,7 @@ private theorem pow_inj {R : Type*} [CommRing R] [_root_.IsReduced R] {p : ℕ} 
   rw [sub_add_cancel, e, h] at hr
   have h0 : (a - b) ^ p = 0 := by
     simpa using hr.symm
-  exact sub_eq_zero.mp (IsReduced.pow_eq_zero h0)
+  exact sub_eq_zero.mp (eq_zero_of_pow_eq_zero h0)
 
 private theorem step {p : ℕ} {A B C : CommRingCat} (u : A ⟶ B) (v : A ⟶ C) (FB : B ⟶ B) (FC : C ⟶ C)
     (r : B ⟶ C) (hB : ∀ x, FB x = x ^ p) (hC : ∀ x, FC x = x ^ p)
@@ -32,7 +32,8 @@ private theorem frob_epi (p : ℕ) [Fact p.Prime] (X : Scheme.{0}) [IsReduced X]
   refine ⟨fun {Y} f g e => ?_⟩
   have hx (x : X) : f x = g x := by
     have := congrArg (fun φ : X ⟶ Y => φ x) e
-    simpa using this
+    simpa [GlobalTheory.VB.frob, GlobalTheory.SS.FrobField.absFrob,
+      GlobalTheory.SS.FrobField.absPre] using this
   refine Scheme.Hom.ext (by ext x; exact hx x) fun U => ?_
   have hU := Scheme.Hom.congr_app e.symm U
   rw [Scheme.Hom.comp_app, Scheme.Hom.comp_app] at hU

@@ -36,7 +36,8 @@ theorem cwl_coeff_coeffT (d m : Fin r × Fin n →₀ ℕ)
   rw [Finset.sum_ite_eq']
   split_ifs with h
   · rfl
-  · rw [notMem_support_iff.mp h, coeff_zero]
+  · rw [notMem_support_iff.mp h]
+    simp
 
 theorem cwl_coeffT_add (d : Fin r × Fin n →₀ ℕ)
     (G H : MvPolynomial (Fin r × Fin n) (MvPolynomial (Fin r × Fin n) R)) :

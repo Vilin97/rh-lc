@@ -27,8 +27,8 @@ theorem den_eq_one_of_padicNorm_le_one (c : ℚ)
     have hq1 : (1 : ℚ) < q := by exact_mod_cast hq.one_lt
     have : (1 : ℚ) < (q : ℚ) ^ (-padicValRat q c) := one_lt_zpow₀ hq1 (by omega)
     linarith
-  have hden : 1 ≤ padicValNat q c.den :=
-    one_le_padicValNat_of_dvd c.den_nz hqd
+  have hden : 1 ≤ Nat.multiplicity q c.den :=
+    one_le_multiplicity_of_dvd c.den_nz hqd
   have hnum : padicValInt q c.num = 0 := by
     apply padicValInt.eq_zero_of_not_dvd
     intro hdvd

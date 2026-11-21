@@ -303,7 +303,7 @@ theorem exists_cuspForm_of_isZKFinite (v : CuspL2 μ) (hv : IsZKFinite μ v) :
     unfold constantTerm
     refine setIntegral_congr_fun (measurableSet_unipFundamentalDomain (K := K) (n := n) (r := r))
       fun X _ => ?_
-    show Φ (retractOne ((unipOne K n r X : AdelicGLn.AdelicGL K n) * g)) = _
+    show Φ (retractOne ((unipOne (K := K) (n := n) r X : AdelicGLn.AdelicGL K n) * g)) = _
     rw [retractOne_coe_mul]
   have haf : IsAutomorphicForm (liftOne Φ) :=
     { isLeftInvariant := hli

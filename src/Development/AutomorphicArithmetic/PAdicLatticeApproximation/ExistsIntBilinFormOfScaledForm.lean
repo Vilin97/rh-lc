@@ -14,7 +14,7 @@ theorem UpperTheory.exists_int_bilinForm_of_scaled_form :
   intro p _ D X
   have h : ∀ u w : X.lat, (((X.s * X.B (u : VQ D) (w : VQ D)).num : ℤ) : ℚ)
       = X.s * X.B (u : VQ D) (w : VQ D) := fun u w =>
-    Rat.coe_int_num_of_den_eq_one (UpperTheory.scaled_form_den_eq_one_on_lattice p D X u w u.2 w.2)
+    Rat.intCast_num_of_den_eq_one (UpperTheory.scaled_form_den_eq_one_on_lattice p D X u w u.2 w.2)
   refine ⟨LinearMap.mk₂ ℤ (fun u w : X.lat => (X.s * X.B (u : VQ D) (w : VQ D)).num)
     ?_ ?_ ?_ ?_, ?_⟩
   · intro u u' w

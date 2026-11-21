@@ -61,9 +61,8 @@ theorem cls_zero_of_null {Q : ObjectProperty C} : ∀ (n : ℕ) (z : Cn F n) (hz
     exact ((CrystallineSemistableComparison.P.cls_surj (cx F) 0).2.1 z hz).2 (by rw [h0]; exact zero_mem _)
   | n + 1, z, hz, h => by
     obtain ⟨b, _, hb⟩ : ∃ b ∈ relS F Q n, d F n b = z := h
-    apply ((CrystallineSemistableComparison.P.cls_surj (cx F) (n + 1)).2.1 z hz).2
-    change z ∈ LinearMap.range (d F n)
-    exact LinearMap.mem_range.mpr ⟨b, hb⟩
+    exact ((CrystallineSemistableComparison.P.cls_surj (cx F) (n + 1)).2.1 z hz).2
+      (Cx.mem_B_succ.mpr ⟨b, hb⟩)
 
 theorem null_succ {Q : ObjectProperty C} {M K : ℕ} (e : M = K + 1) (x : Cn F M) (x' : Cn F (K + 1))
     (hx : HEq x x') (h : RelNull F Q M x) : ∃ b ∈ relS F Q K, d F K b = x' := by

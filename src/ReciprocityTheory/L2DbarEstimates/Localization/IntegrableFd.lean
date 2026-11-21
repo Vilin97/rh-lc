@@ -15,8 +15,9 @@ noncomputable section
 namespace FlatWeightedEstimates
 
 lemma lint_sq {α E : Type*} [MeasurableSpace α] [NormedAddCommGroup E] (f : α → E)
-    (μ : Measure α) : ∫⁻ x, ‖f x‖ₑ ^ 2 ∂μ = eLpNorm f 2 μ ^ 2 := by
-  have h := eLpNorm_nnreal_pow_eq_lintegral (f := f) (μ := μ) (p := 2) two_ne_zero
+    (μ : Measure α) (hf : AEStronglyMeasurable f μ) :
+    ∫⁻ x, ‖f x‖ₑ ^ 2 ∂μ = eLpNorm f 2 μ ^ 2 := by
+  have h := eLpNorm_nnreal_pow_eq_lintegral (f := f) (μ := μ) (p := 2) two_ne_zero hf
   have e : ((2 : NNReal) : ℝ) = ((2 : ℕ) : ℝ) := by norm_num
   rw [e] at h
   simp only [ENNReal.rpow_natCast] at h
@@ -25,8 +26,13 @@ lemma lint_sq {α E : Type*} [MeasurableSpace α] [NormedAddCommGroup E] (f : α
 lemma tendsto_lint {ι α E : Type*} [MeasurableSpace α] [NormedAddCommGroup E] {l : Filter ι}
     {μ : Measure α} (F : ι → α → E) (h : Tendsto (fun i => eLpNorm (F i) 2 μ) l (𝓝 0)) :
     Tendsto (fun i => ∫⁻ x, ‖F i x‖ₑ ^ 2 ∂μ) l (𝓝 0) := by
-  simp_rw [lint_sq]
-  simpa using ENNReal.Tendsto.pow (n := 2) h
+  have hm : ∀ᶠ i in l, AEStronglyMeasurable (F i) μ :=
+    (h.eventually (Iio_mem_nhds ENNReal.zero_lt_top)).mono fun _ hi =>
+      aestronglyMeasurable_of_eLpNorm_ne_top hi.ne
+  have heq : (fun i => ∫⁻ x, ‖F i x‖ₑ ^ 2 ∂μ) =ᶠ[l]
+      (fun i => eLpNorm (F i) 2 μ ^ 2) := hm.mono fun i hi => lint_sq (F i) μ hi
+  exact (by simpa using ENNReal.Tendsto.pow (n := 2) h :
+    Tendsto (fun i => eLpNorm (F i) 2 μ ^ 2) l (𝓝 0)).congr' heq.symm
 
 lemma enorm_sq_V {n : ℕ} (x : V n) : ‖x‖ₑ ^ 2 = ∑ j, ‖x j‖ₑ ^ 2 := by
   simp only [← ofReal_norm]

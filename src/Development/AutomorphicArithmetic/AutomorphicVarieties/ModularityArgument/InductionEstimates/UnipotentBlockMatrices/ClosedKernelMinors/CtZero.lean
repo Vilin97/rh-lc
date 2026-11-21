@@ -142,7 +142,7 @@ private theorem bfFix {K : Type} [Field K] [NumberField K] (D : TypeDat K (2 + 2
 
 private theorem ctRep {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (G1 K n))
     [μ.IsHaarMeasure] {v : L2 μ} {Φ : G1 K n → ℂ} (h : IsContRep μ v Φ) (r : ℕ)
-    (h0 : ∀ g, ∫ X in unipFundamentalDomain K n r, Φ (unipOne K n r X * g) ∂unipMeasure K n r = 0) :
+    (h0 : ∀ g, ∫ X in unipFundamentalDomain K n r, Φ (unipOne r X * g) ∂unipMeasure K n r = 0) :
     constantTermL2 μ r v =ᵐ[μ] 0 := by
   filter_upwards [ae_ctFun_congr μ r h.ae_eq_quotFun] with y hy
   rw [constantTermL2, hy]

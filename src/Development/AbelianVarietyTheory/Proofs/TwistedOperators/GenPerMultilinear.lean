@@ -87,7 +87,7 @@ theorem pathLift_column_add (t : T) : ∀ (n : ℕ) (f f' f'' : ∀ j : Fin n, S
       rw [e1] at h1b ⊢
       rw [e2] at h2b ⊢
       exact liftA_datum_add W M (fun g h => by rw [h0]; exact kerA_col_add W t n _ _ g h) h1b h2b
-    · obtain ⟨j1, rfl⟩ := Fin.eq_castSucc_of_ne_last hj
+    · rcases Fin.eq_castSucc_of_ne_last hj with ⟨j1, rfl⟩
       have el : f (Fin.last n) = f'' (Fin.last n) := (hne _ (Ne.symm hj)).1
       have el' : f' (Fin.last n) = f'' (Fin.last n) := (hne _ (Ne.symm hj)).2
       have ih := pathLift_column_add t n (fun j => f j.castSucc) (fun j => f' j.castSucc) (fun j => f'' j.castSucc) j1
@@ -110,7 +110,7 @@ theorem pathLift_column_smul (t : T) (c : ℂ) : ∀ (n : ℕ) (f f'' : ∀ j : 
         funext fun j => hne _ (Fin.castSucc_lt_last j).ne
       rw [e1]
       exact liftA_datum_smul W M c (fun g h => by rw [h0]; exact kerA_col_smul W t n c _ g h)
-    · obtain ⟨j1, rfl⟩ := Fin.eq_castSucc_of_ne_last hj
+    · rcases Fin.eq_castSucc_of_ne_last hj with ⟨j1, rfl⟩
       have el : f (Fin.last n) = f'' (Fin.last n) := hne _ (Ne.symm hj)
       have ih := pathLift_column_smul t c n (fun j => f j.castSucc) (fun j => f'' j.castSucc) j1
         (fun j hj' => hne _ (fun e => hj' (Fin.castSucc_injective _ e))) h0 F
@@ -140,7 +140,7 @@ theorem pathLift_row_add (k : ℕ) : ∀ (n : ℕ) (f f' f'' : ∀ i : Fin n, Sc
       rw [e1] at h1b ⊢
       rw [e2] at h2b ⊢
       exact liftA_datum_add W M (fun g h => by rw [h0]; exact kerA_right_add W n k _ _ g h) h1b h2b
-    · obtain ⟨j1, rfl⟩ := Fin.eq_castSucc_of_ne_last hj
+    · rcases Fin.eq_castSucc_of_ne_last hj with ⟨j1, rfl⟩
       have el : f (Fin.last n) = f'' (Fin.last n) := (hne _ (Ne.symm hj)).1
       have el' : f' (Fin.last n) = f'' (Fin.last n) := (hne _ (Ne.symm hj)).2
       have ih := pathLift_row_add k n (fun j => f j.castSucc) (fun j => f' j.castSucc) (fun j => f'' j.castSucc) j1
@@ -163,7 +163,7 @@ theorem pathLift_row_smul (k : ℕ) (c : ℂ) : ∀ (n : ℕ) (f f'' : ∀ i : F
         funext fun j => hne _ (Fin.castSucc_lt_last j).ne
       rw [e1]
       exact liftA_datum_smul W M c (fun g h => by rw [h0]; exact kerA_right_smul W n k c _ g h)
-    · obtain ⟨j1, rfl⟩ := Fin.eq_castSucc_of_ne_last hj
+    · rcases Fin.eq_castSucc_of_ne_last hj with ⟨j1, rfl⟩
       have el : f (Fin.last n) = f'' (Fin.last n) := hne _ (Ne.symm hj)
       have ih := pathLift_row_smul k c n (fun j => f j.castSucc) (fun j => f'' j.castSucc) j1
         (fun j hj' => hne _ (fun e => hj' (Fin.castSucc_injective _ e))) h0 F

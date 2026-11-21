@@ -1,6 +1,7 @@
 module
 
 public import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.TendstoPrimeIdealZetaSumUniv
+import all Mathlib.NumberTheory.NumberField.DirichletDensity
 
 @[expose] public section
 
@@ -211,12 +212,11 @@ theorem exists_prime_absNorm_of_hasDirichletDensity {S : Set (HeightOneSpectrum 
     · refine sum_absNorm_rpow_neg_le_of_not_prime (ι := S) Subtype.val Subtype.val_injective _ ?_ hs
       intro x hx
       exact hcon x.1 x.2 (Finset.mem_filter.1 hx).2
-  have h' : Tendsto (fun s => NumberField.Set.primeIdealZetaSum S s /
-      NumberField.Set.primeIdealZetaSum Set.univ s) (𝓝[>] 1) (𝓝 δ) := h
+  unfold NumberField.Set.HasDirichletDensity at h
   have hU := tendsto_primeIdealZetaSum_univ (K := K)
   have h1 : ∀ᶠ s in 𝓝[>] (1 : ℝ), δ / 2 < NumberField.Set.primeIdealZetaSum S s /
-      NumberField.Set.primeIdealZetaSum Set.univ s :=
-    h'.eventually (lt_mem_nhds (show δ / 2 < δ by linarith))
+      NumberField.Set.primeIdealZetaSum (K := K) Set.univ s :=
+    h.eventually (lt_mem_nhds (show δ / 2 < δ by linarith))
   have h2 : ∀ᶠ s in 𝓝[>] (1 : ℝ), 2 * (B + 1) / δ <
       NumberField.Set.primeIdealZetaSum (Set.univ : Set (HeightOneSpectrum (𝓞 K))) s :=
     hU.eventually (eventually_gt_atTop (2 * (B + 1) / δ))

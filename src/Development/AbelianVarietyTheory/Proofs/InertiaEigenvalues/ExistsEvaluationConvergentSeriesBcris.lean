@@ -105,6 +105,7 @@ theorem exists_eval : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAin
   let μ : ℕ → N := fun s => b ((1 : ↥(OL LL)) ⊗ₜ[ℤ_[l]] (WittVector.teichmuller l (AI.εroot s) - 1))
   have hμ : ∀ s, Small (μ s) := hs
   have hc' : Bdd c := hc
+  set_option synthInstance.maxHeartbeats 200000 in
   let f : LetA ↥(OL LL) (Module.finrank ℚ_[l] ↥(K0 K)) →+* N := b.comp I.io.toRingHom
   have hf : ∀ a, f a = b (I.io a) := fun _ => rfl
   have hfπ : f letπ = μ s := congrArg b I.io_π

@@ -6,8 +6,6 @@ public import Formalism.HermitianLattices.StatementLat
 
 @[expose] public section
 
-open Formalism.K
-
 noncomputable section
 
 namespace Formalism.HermitianLatticesTheory

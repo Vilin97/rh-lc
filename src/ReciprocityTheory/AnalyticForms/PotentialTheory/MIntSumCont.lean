@@ -188,15 +188,16 @@ theorem pl_good (A : FinHolAtlas (e + 1) X) (L : LocPot X) (s : X → X → ℂ)
   cases hσ : σ k with
   | none =>
     simp only [reduceCtorEq, if_false, Finset.sum_const_zero]
-    refine (mInt_zero_fun (B k) _ (g := v ∘ Subtype.val) (fun p => ?_)).symm
-    by_contra hne
-    have hp : p.1 ∈ tsupport v := subset_tsupport _ hne
-    have hpψ := hVψ (hvV hp)
-    have hmem : p.1 ∈ W k ∩ ψ.source := ⟨p.2, hpψ⟩
-    rw [hWψ k] at hmem
-    obtain ⟨i, hi, -⟩ := hmem.2
-    rw [hσ] at hi
-    exact absurd hi (by simp)
+    have hv0 (p : W k) : v p.1 = 0 := by
+      by_contra hne
+      have hp : p.1 ∈ tsupport v := subset_tsupport _ hne
+      have hpψ := hVψ (hvV hp)
+      have hmem : p.1 ∈ W k ∩ ψ.source := ⟨p.2, hpψ⟩
+      rw [hWψ k] at hmem
+      obtain ⟨i, hi, -⟩ := hmem.2
+      rw [hσ] at hi
+      exact absurd hi (by simp)
+    exact (mInt_zero_fun (B k) _ (g := v ∘ Subtype.val) hv0).symm
   | some i =>
     simp only [Option.some.injEq, Finset.sum_ite_eq, Finset.mem_univ, if_true]
     haveI : CompactSpace (W k) :=

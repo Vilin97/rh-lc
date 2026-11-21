@@ -67,6 +67,18 @@ theorem cube_pull {G : Over S} {G' : Over S'} [GrpObj G] [IsCommMonObj G] [GrpOb
 theorem exists_gen_cube_one {G : Over S} [GrpObj G] [IsCommMonObj G] {L : LB G.left} (hL : L.IsLB) (T : Over S) :
     ∃ t : LB.Gen (cubeLB G (fun _ : Fin 2 => (1 : T ⟶ G)) L), t.IsGen := by
   refine (PrimNorm.hasGen_iff hL _ _).2 ?_
+  have hp (I : Finset (Fin 2)) : psum G (fun _ : Fin 2 => (1 : T ⟶ G)) I = 1 := by
+    unfold psum
+    induction (List.finRange 2).filter (· ∈ I) with
+    | nil => rfl
+    | cons k l ih => exact (congrArg ((1 : T ⟶ G) * ·) ih).trans (_root_.mul_one _)
+  simp_rw [hp]
+  rw [show (Finset.univ : Finset (ULift.{0} (Finset (Fin 2)))) =
+    {⟨∅⟩, ⟨{0}⟩, ⟨{1}⟩, ⟨{0, 1}⟩} by decide]
+  classical
+  rw [Finset.prod_insert (by decide), Finset.prod_insert (by decide),
+    Finset.prod_insert (by decide), Finset.prod_singleton]
+  simp
 
 theorem cube_zero {X Y G : Over S} [GrpObj X] [GrpObj Y] [GrpObj G] [IsCommMonObj G] {L : LB G.left} (hL : L.IsLB)
     (f₁ : X ⟶ G) (f₂ : Y ⟶ G) [IsMonHom f₁] [IsMonHom f₂] :

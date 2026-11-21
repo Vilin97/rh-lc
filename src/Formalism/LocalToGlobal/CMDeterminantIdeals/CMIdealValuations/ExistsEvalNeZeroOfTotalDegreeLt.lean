@@ -58,7 +58,7 @@ theorem coeff_aeval_scale {K σ : Type} [Field K] [Fintype σ] (c : σ → K) (F
     split_ifs with h
     · subst h; ring
     · simp
-  | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, add_mul]
+  | add p q hp hq => simp only [map_add (f := _), AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hp, hq, add_mul]
 
 theorem substGauss : SubstGauss := by
   intro R K _ _ _ B _ m P U c hP hcU μ
@@ -153,7 +153,7 @@ theorem coeffIntegralOfUnitEval : LemmaGCore := by
   have hQb0 : Qb ≠ 0 := by
     intro h0
     have := congrArg (AddMonoidAlgebra.coeff · μ1) h0
-    rw [hQb, coeff_map, coeff_zero] at this
+    simp only [hQb, coeff_map, AddMonoidAlgebra.coeff_zero] at this
     exact (residue_ne_zero_iff_isUnit _).mpr hu1 this
   have hDt0 : Dt ≠ 0 := by
     intro h0

@@ -146,9 +146,9 @@ theorem opNormAt_pos_alt [StarRing K] {n D : ℕ}
 end SlopeTestRemainingChoices
 
 theorem lattice_fg_ne_bot {K : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] {D : ℕ}
-    (hD : 0 < D) (R : Submodule (𝓞 K) (Fin D → K)) (hR : Submodule.IsLattice K R) :
+    (hD : 0 < D) (R : Submodule (𝓞 K) (Fin D → K)) (hR : Submodule.IsFullLattice K R) :
     R.FG ∧ R ≠ ⊥ := by
-  refine ⟨hR.fg, ?_⟩
+  refine ⟨hR.toIsLattice.fg, ?_⟩
   rintro rfl
   haveI : Nonempty (Fin D) := ⟨⟨0, hD⟩⟩
   have h := hR.span_eq_top
@@ -164,15 +164,14 @@ theorem kappa_invariance : KappaInvariance := by
     rw [Matrix.isUnit_nonsing_inv_det_iff, Matrix.det_transpose]
     exact hXE v
 
-  have hdual : ∀ R : Submodule (𝓞 K) (Fin D → K), Submodule.IsLattice K R →
+  have hdual : ∀ R : Submodule (𝓞 K) (Fin D → K), Submodule.IsFullLattice K R →
       Formalism.HN.muDef (Pi.basisFun K (Fin D)).dualBasis (Formalism.HN.dualFrame (scaleFrame t XE))
                 (Formalism.HN.dualLat R) =
         Formalism.HN.muDef (Pi.basisFun K (Fin D)).dualBasis (Formalism.HN.dualFrame XE) (Formalism.HN.dualLat R) +
           meanLog t := by
     intro R hR
-    have hfg : R.FG := Submodule.IsLattice.fg (self := hR)
-    have hspan : Submodule.span K (R : Set (Fin D → K)) = ⊤ :=
-      Submodule.IsLattice.span_eq_top (self := hR)
+    have hfg : R.FG := hR.toIsLattice.fg
+    have hspan : Submodule.span K (R : Set (Fin D → K)) = ⊤ := hR.span_eq_top
     obtain ⟨hdfg, hdspan, -⟩ :=
       Formalism.HN.dual_polygon_identity K (Fin D → K) (Fin D) (Pi.basisFun K (Fin D)) XE hXE R hfg hspan
     have hne : Formalism.HN.dualLat R ≠ ⊥ := by

@@ -114,13 +114,14 @@ theorem prod_det_scalAt_zpow {ι : Type} [Fintype ι] {a : ℕ} (τ₀ : ι) (ζ
 theorem integral_detZpow_colSub_eq_zero :
     ∀ {ι : Type} [Fintype ι] (a d : ℕ) (m : ι → ℤ) (τ₀ : ι), 0 < a → 0 < m τ₀ → ∀ {K : Type} [Group K]
       [MeasurableSpace K] (ν : Measure K), IsProbabilityMeasure ν → ν.IsMulLeftInvariant →
+    (∀ u : K, AEMeasurable (fun x => u * x) ν) →
     ∀ (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ)),
       (∀ τ i j, Measurable fun g => (ρ g τ : Matrix (Fin a) (Fin a) ℂ) i j) →
       Function.Surjective ρ →
     ∀ (Λ : GlobalTheory.MinorFrame.Pol ι d a →ₗ[ℂ] ℂ) (P : GlobalTheory.MinorFrame.Pol ι d a),
       ∫ g, (∏ τ, (ρ g τ : Matrix (Fin a) (Fin a) ℂ).det ^ (m τ)) *
         Λ (GlobalTheory.MinorFrame.colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) P) ∂ν = 0 := by
-  intro ι _ a d m τ₀ ha hm K _ _ ν hν hinv ρ _ hρ Λ P
+  intro ι _ a d m τ₀ ha hm K _ _ ν hν hinv hmeas ρ _ hρ Λ P
   set B : K → ι → Matrix (Fin a) (Fin a) ℂ := fun g τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ) with hB_def
   set c : K → ℂ := fun g => ∏ τ, (B g τ).det ^ (m τ) with hc_def
   set f : K → ℂ := fun g => c g * Λ (colSub (B g) P) with hf_def
@@ -132,10 +133,7 @@ theorem integral_detZpow_colSub_eq_zero :
   have hinvar : ∀ u : K, Integrable (fun x => f (u * x)) ν ∧ ∫ x, f (u * x) ∂ν = ∫ x, f x ∂ν := by
     intro u
     have hmap : Measure.map (fun x => u * x) ν = ν := map_mul_left_eq_self ν u
-    have hae : AEMeasurable (fun x => u * x) ν := by
-      by_contra h
-      rw [Measure.map_of_not_aemeasurable h] at hmap
-      exact (IsProbabilityMeasure.ne_zero ν) hmap.symm
+    have hae : AEMeasurable (fun x => u * x) ν := hmeas u
     refine ⟨?_, ?_⟩
     · have : Integrable f (Measure.map (fun x => u * x) ν) := by rw [hmap]; exact hint
       exact this.comp_aemeasurable hae

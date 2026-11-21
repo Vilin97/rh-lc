@@ -11,8 +11,7 @@ set_option maxSynthPendingDepth 1
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
 
 open ReciprocityTheory.ChartRestriction.G.Geo (ChartBundle)
-open IndefiniteRowSideFullHecke.NumbersDVR.Bundles (mseg joinCoord IsPull SameGeneric ptCoord stdE cE unif unif_frac_ne
-  unif_ne_zero sameGeneric_cE)
+open IndefiniteRowSideFullHecke.NumbersDVR.Bundles (mseg joinCoord IsPull SameGeneric)
 
 def JoinPullbackAlt.Statement : Prop :=
   ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (Ω : Type) [Field Ω]

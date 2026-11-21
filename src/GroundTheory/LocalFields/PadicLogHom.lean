@@ -138,7 +138,7 @@ theorem tendsto_logSeries {x : K} (hx : x ∈ valBall (K := K) 1) :
       (𝓝 (logSeries x)) := by
   rw [← tendsto_sub_nhds_zero_iff]
   suffices hball : ∀ N : ℤ, ∀ᶠ n : ℕ in atTop,
-      ((1 + x) ^ (p ^ n) - 1) / ((p ^ n : ℕ) : K) - logSeries x ∈ valBall N by
+      ((1 + x) ^ (p ^ n) - 1) / ((p ^ n : ℕ) : K) - logSeries x ∈ valBall (K := K) N by
     rw [(IsValuativeTopology.hasBasis_nhds_zero K).tendsto_right_iff]
     intro γ _
     obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
@@ -161,8 +161,8 @@ theorem tendsto_logSeries {x : K} (hx : x ∈ valBall (K := K) 1) :
     dsimp only [e]
     rw [absRamificationIndex, ringChar.eq 𝓀[K] p, Int.toNat_of_nonneg (by omega)]
   have he : 1 ≤ e := by omega
-  have hdiv {a : ℤ} {y : K} (hy : y ∈ valBall a) {j : ℕ} (hj : j ≠ 0) :
-      y / j ∈ valBall (a - e * padicValNat p j) := by
+  have hdiv {a : ℤ} {y : K} (hy : y ∈ valBall (K := K) a) {j : ℕ} (hj : j ≠ 0) :
+      y / j ∈ valBall (K := K) (a - e * padicValNat p j) := by
     have hvj : normalizedValuation K (j : K) = WithZero.exp (-(e * padicValNat p j : ℤ)) := by
       conv_lhs => rw [← Nat.divMaxPow_mul_pow_padicValNat p j]
       rw [Nat.cast_mul, map_mul, Nat.cast_pow, map_pow]
@@ -173,20 +173,20 @@ theorem tendsto_logSeries {x : K} (hx : x ∈ valBall (K := K) 1) :
     rw [map_div₀, hvj, div_eq_mul_inv, ← WithZero.exp_neg, neg_neg, neg_sub, sub_eq_add_neg,
       WithZero.exp_add, mul_comm]
     exact mul_le_mul_right hy _
-  have hmono {a b : ℤ} {y : K} (hab : a ≤ b) (hy : y ∈ valBall b) : y ∈ valBall a :=
+  have hmono {a b : ℤ} {y : K} (hab : a ≤ b) (hy : y ∈ valBall (K := K) b) : y ∈ valBall (K := K) a :=
     hy.trans (WithZero.exp_le_exp.mpr (neg_le_neg hab))
-  have hmul {a b : ℤ} {y z : K} (hy : y ∈ valBall a) (hz : z ∈ valBall b) :
-      y * z ∈ valBall (a + b) := by
+  have hmul {a b : ℤ} {y z : K} (hy : y ∈ valBall (K := K) a) (hz : z ∈ valBall (K := K) b) :
+      y * z ∈ valBall (K := K) (a + b) := by
     change normalizedValuation K (y * z) ≤ WithZero.exp (-(a + b))
     rw [map_mul, neg_add, WithZero.exp_add]
     exact mul_le_mul' hy hz
-  have hpow (k : ℕ) : x ^ k ∈ valBall ((k : ℤ) * 1) := by
+  have hpow (k : ℕ) : x ^ k ∈ valBall (K := K) ((k : ℤ) * 1) := by
     change normalizedValuation K (x ^ k) ≤ WithZero.exp (-((k : ℤ) * 1))
     rw [map_pow, mul_one, ← mul_neg_one, ← nsmul_eq_mul, WithZero.exp_nsmul]
     exact pow_le_pow_left' hx _
   have hterm (k : ℕ) :
       (-1) ^ k * x ^ (k + 1) / ((k + 1 : ℕ) : K) ∈
-        valBall ((k + 1 : ℕ) * 1 - e * padicValNat p (k + 1)) := by
+        valBall (K := K) ((k + 1 : ℕ) * 1 - e * padicValNat p (k + 1)) := by
     apply hdiv _ (Nat.succ_ne_zero k)
     change normalizedValuation K ((-1) ^ k * x ^ (k + 1)) ≤
       WithZero.exp (-((↑(k + 1) : ℤ) * 1))
@@ -217,7 +217,7 @@ theorem tendsto_logSeries {x : K} (hx : x ∈ valBall (K := K) 1) :
     rw [normalizedValuation_apply, h, map_zero] at hy
     exact WithZero.exp_ne_zero hy.symm
   have hclosed : IsClosed (valBall (K := K) N : Set K) :=
-    (valBall N).isClosed_of_isOpen (hball_eq ▸ isOpen_setOf_valuation_sub_le hy0)
+    (valBall (K := K) N).isClosed_of_isOpen (hball_eq ▸ isOpen_setOf_valuation_sub_le hy0)
   rw [eventually_atTop]
   refine ⟨N.toNat + 2 * K0 + 1, fun n hn ↦ ?_⟩
   have hm : p ^ n ≠ 0 := pow_ne_zero _ hp.out.ne_zero
@@ -234,7 +234,7 @@ theorem tendsto_logSeries {x : K} (hx : x ∈ valBall (K := K) 1) :
   refine hclosed.mem_of_tendsto (hs1.sub hs2).hasSum.tendsto_sum_nat
     (Eventually.of_forall fun s ↦ AddSubgroup.sum_mem _ fun k _ ↦ ?_)
   set T : K := x ^ (k + 1) / ((k + 1 : ℕ) : K) with hT_def
-  have hT : T ∈ valBall ((k + 1 : ℕ) * 1 - e * padicValNat p (k + 1)) :=
+  have hT : T ∈ valBall (K := K) ((k + 1 : ℕ) * 1 - e * padicValNat p (k + 1)) :=
     hdiv (hpow (k + 1)) (Nat.succ_ne_zero k)
   set C : ℕ := (p ^ n - 1).choose k
   have heq : (C : K) * T - (-1) ^ k * x ^ (k + 1) / ((k + 1 : ℕ) : K) =
@@ -255,7 +255,7 @@ theorem tendsto_logSeries {x : K} (hx : x ∈ valBall (K := K) 1) :
       have := congrArg (fun z : ℤ ↦ (z : K)) ht
       push_cast at this ⊢
       linear_combination this
-    have h1 : ((p ^ n : ℕ) : K) * (t : K) ∈ valBall (e * n + 0) :=
+    have h1 : ((p ^ n : ℕ) : K) * (t : K) ∈ valBall (K := K) (e * n + 0) :=
       hmul (natCast_prime_pow_mem_valBall p n) (intCast_mem_valBall_zero t)
     have h2 := hdiv h1 (Nat.factorial_ne_zero k)
     rw [← hc] at h2
@@ -391,7 +391,7 @@ theorem eq_zero_of_logSeries_eq_zero {r : ℤ} (hr : (absRamificationIndex (K :=
       rw [← hy, normalizedValuation_le_iff]
     rw [hset]
     exact (IsNonarchimedeanLocalField.isCompact_closedBall K _).isClosed
-  have htail : (∑' k, term (k + 1)) ∈ valBall (a + 1) := by
+  have htail : (∑' k, term (k + 1)) ∈ valBall (K := K) (a + 1) := by
     have hsum := (summable_nat_add_iff 1).mpr hs
     refine hclosed.mem_of_tendsto hsum.hasSum.tendsto_sum_nat
       (Eventually.of_forall fun s ↦ AddSubgroup.sum_mem _ fun k _ ↦ ?_)
@@ -417,7 +417,7 @@ theorem eq_zero_of_logSeries_eq_zero {r : ℤ} (hr : (absRamificationIndex (K :=
   rw [hterm0] at h
   have htail_eq : (∑' k, term (k + 1)) = -x := eq_neg_iff_add_eq_zero.mpr (by simpa [add_comm] using h)
   rw [htail_eq] at htail
-  have hxa : x ∈ valBall (a + 1) := by simpa using neg_mem htail
+  have hxa : x ∈ valBall (K := K) (a + 1) := by simpa using neg_mem htail
   change normalizedValuation K x ≤ WithZero.exp (-(a + 1)) at hxa
   rw [hv, WithZero.exp_le_exp] at hxa
   omega
@@ -480,7 +480,7 @@ theorem continuous_padicLog : Continuous (padicLog K) := by
   by_cases hs : Summable term
   · refine hclosed.mem_of_tendsto hs.hasSum.tendsto_sum_nat (Eventually.of_forall fun s ↦ ?_)
     have hsum (y : K) :
-        y ∈ valBall (N : ℤ) ↔ valuation K y ≤ valuation K (ϖ : K) ^ N := by
+        y ∈ valBall (K := K) (N : ℤ) ↔ valuation K y ≤ valuation K (ϖ : K) ^ N := by
       change normalizedValuation K y ≤ WithZero.exp (-(N : ℤ)) ↔ _
       rw [← map_pow, ← normalizedValuation_le_iff, hpow]
     refine (hsum _).mp (AddSubgroup.sum_mem _ fun k _ ↦ ?_)

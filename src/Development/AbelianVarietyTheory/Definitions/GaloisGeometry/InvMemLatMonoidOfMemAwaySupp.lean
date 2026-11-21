@@ -150,7 +150,7 @@ theorem gTateIso_ev_nsmul {k : Type} [Field k] {Q : Type} [Group Q] {act : G₀.
     exact mul_left_cancel (a := I.ev n 0) (by rw [_root_.mul_one]; exact h.symm)
   | succ c ih => rw [succ_nsmul, I.add, ih, pow_succ]
 
-variable {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L : Link D G) {gb : GBase D.toG R}
+variable {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L : _root_.GlobalTheory.LKGeo.Link D G) {gb : GBase D.toG R}
 
 def GActsAt {S : Scheme.{0}} {s : S ⟶ Sp R} {N N' : ℕ} {o' : GObj gb N' s} {o'' : GObj gb N s} {k : Type} [Field k]
     {t : Sp k ⟶ S} (I' : GTIsoAt o' t) (I'' : GTIsoAt o'' t) (ψ : o'.A ⟶ o''.A) (m : ℤ) (h : G.GAf) : Prop :=
@@ -243,7 +243,7 @@ end Wit
 
 section Op
 
-variable {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L : Link D G) {gb : GBase D.toG ℂ} {N : ℕ}
+variable {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L : _root_.GlobalTheory.LKGeo.Link D G) {gb : GBase D.toG ℂ} {N : ℕ}
 
 def hkIndex (N N' : ℕ) (h : G.GAf) : ℕ := (L.KN N').relIndex (heckeLevel (L.KN N) h⁻¹)
 
@@ -334,7 +334,7 @@ variable {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p}
 def awayGrp (G : HTGroup p) (S : Finset ℕ) : Subgroup G.GAf :=
   ⨅ (v : AwayP p) (_ : ∃ q ∈ S, q.Prime ∧ (q : ℤ) ∈ v.1.asIdeal), (ubcMap (AfP.eval v)).ker
 
-variable (L : Link D G)
+variable (L : _root_.GlobalTheory.LKGeo.Link D G)
 
 def awaySupp (N : ℕ) (S : Finset ℕ) : Set G.GAf :=
   {g | ∃ h ∈ awayGrp G S, h ∈ latMonoid L ∧ g ∈ DoubleCoset.doubleCoset h⁻¹ (L.KN N : Set G.GAf) (L.KN N)}
@@ -357,7 +357,7 @@ end Away
 
 section Basic₂
 
-variable {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L : Link D G) {gb : GBase D.toG ℂ} {N : ℕ}
+variable {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L : _root_.GlobalTheory.LKGeo.Link D G) {gb : GBase D.toG ℂ} {N : ℕ}
 
 end Basic₂
 
