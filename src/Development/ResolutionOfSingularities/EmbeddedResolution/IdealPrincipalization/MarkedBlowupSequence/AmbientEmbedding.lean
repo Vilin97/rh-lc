@@ -215,7 +215,7 @@ private theorem ker_succAmbientEmbedding_eq_strictTransform (hres : FunctorialRe
   exact ker_embeddingIntoBlowupImageIdealSheaf hres hno s n h st.ambient st.emb st.emb_isClosedImmersion
     (st.isNoetherian_ambient_of_le_length (Nat.le_of_lt h)) (hcen n h)
 
-private def ambientEmbedding {S X : Scheme.{u}} (ι : S ⟶ X)
+def ambientEmbedding {S X : Scheme.{u}} (ι : S ⟶ X)
     [AlgebraicGeometry.IsClosedImmersion ι] [AlgebraicGeometry.IsNoetherian X]
     (s : BlowupSequenceData S) (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
     (hno : BlowupPreservesNoetherian.{u})
@@ -225,7 +225,7 @@ private def ambientEmbedding {S X : Scheme.{u}} (ι : S ⟶ X)
   Nat.rec (motive := fun n => AmbientEmbedding s n) (ambientEmbeddingZero ι s)
     (fun m st => (ambientEmbeddingSucc hres hno s hcen m st).1) n
 
-private def ambientEmbeddingSuccMap {S X : Scheme.{u}} (ι : S ⟶ X)
+def ambientEmbeddingSuccMap {S X : Scheme.{u}} (ι : S ⟶ X)
     [AlgebraicGeometry.IsClosedImmersion ι] [AlgebraicGeometry.IsNoetherian X]
     (s : BlowupSequenceData S) (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
     (hno : BlowupPreservesNoetherian.{u})
@@ -234,7 +234,7 @@ private def ambientEmbeddingSuccMap {S X : Scheme.{u}} (ι : S ⟶ X)
     (ambientEmbedding ι s hres hno hcen (n + 1)).ambient ⟶ (ambientEmbedding ι s hres hno hcen n).ambient :=
   (ambientEmbeddingSucc hres hno s hcen n (ambientEmbedding ι s hres hno hcen n)).2
 
-private theorem isBlowupAlongIdealSheaf_ambientBlowupMorphism {S X : Scheme.{u}} (ι : S ⟶ X)
+theorem isBlowupAlongIdealSheaf_ambientBlowupMorphism {S X : Scheme.{u}} (ι : S ⟶ X)
     [AlgebraicGeometry.IsClosedImmersion ι] [AlgebraicGeometry.IsNoetherian X]
     (s : BlowupSequenceData S) (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
     (hno : BlowupPreservesNoetherian.{u})

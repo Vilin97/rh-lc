@@ -237,8 +237,9 @@ theorem ker_iff (b) (d : (B.I.S i).D b) (v : B.ch.A.vT) (x : Fin (D.R.N i) → B
   have := R.pt_f b d v x
   exact ⟨fun h => this.symm.trans h, fun h => this.trans h⟩
 
-theorem valIs (hS : B.Sees) : R.ValIs (coord R hS) where
-  dual w hw b d y := by
+theorem valIs (hS : B.Sees) : R.ValIs (coord R hS) := by
+  refine { dual := ?_, ker := ?_ }
+  · intro w hw b d y
     have hd := (B.hJ.tied i).ok b d
     obtain ⟨a, ha⟩ := exists_sepElt sp.nonconj
     by_cases hs : B.Z.seenP w = true
@@ -254,7 +255,7 @@ theorem valIs (hS : B.Sees) : R.ValIs (coord R hS) where
       rw [if_neg hs] at this
       rw [(B.hJ.tied i).Lsh_eq]
       exact this
-  ker w hw hs b d y := by
+  · intro w hw hs b d y
     have := valB_iff R hS hw Finset.univ (R.pt b d) ((B.hJ.tied i).ok b d).L_lattice (fun v x => by
       rw [if_neg fun h => h.2 (Finset.mem_univ v)]
       exact ker_iff R b d v x) y
@@ -395,8 +396,9 @@ theorem gm_unit (w : D.what₂.places.Pl) {γ : GL (Fin (D.R.N i)) B.E} (hγ : �
     rw [h2]
     rfl
 
-theorem coord_ok (hS : B.Sees) : (coord R hS).Ok where
-  act_co w _ g := by
+theorem coord_ok (hS : B.Sees) : (coord R hS).Ok := by
+  refine { act_co := ?_, S_on := ?_, B_on := ?_, off_act := ?_, S_off := ?_ }
+  · intro w _ g
     obtain ⟨γ, ζ, hγ, hl, ha⟩ := R.rat g
     obtain ⟨k, hk, h⟩ := (isOfFinOrder_iff_pow_eq_one).1 ((CommGroup.mem_torsion _).1 ζ.2)
     refine ⟨((ζ.1 : (D.what₂.LL)ˣ) : D.what₂.LL), k, hk, by rw [← Units.val_pow_eq_pow_val, h, Units.val_one], fun y => ?_⟩
@@ -409,18 +411,19 @@ theorem coord_ok (hS : B.Sees) : (coord R hS).Ok where
     rw [h2, h3, mov_eq]
     simp only [hl, gm_unit R w hγ]
     rfl
-  S_on w hw φ hφ :=
-    (forms_iff w (fun c => (B.I.S i).Lsh c.1 ((B.I.S i).rep c)) φ hφ).trans
+  · intro w hw φ hφ
+    exact (forms_iff w (fun c => (B.I.S i).Lsh c.1 ((B.I.S i).rep c)) φ hφ).trans
       (valIn_iff R w _ _ (fun c y => (valIs R hS).dual w hw c.1 _ y) φ)
-  B_on w hw hs v φ hφ :=
-    (forms_iff w (fun c => (B.J.A i).ker c.1 ((B.I.S i).rep c) (B.pr v)) φ hφ).trans
+  · intro w hw hs v φ hφ
+    exact (forms_iff w (fun c => (B.J.A i).ker c.1 ((B.I.S i).rep c) (B.pr v)) φ hφ).trans
       (valIn_iff R w _ _ (fun c y => valB_single R hS hw hs v c.1 _ y) φ)
-  off_act w _ g p y := ⟨fun h => by
+  · intro w _ g p y
+    refine ⟨?_, woff_act R w g p y⟩
+    intro h
     have := woff_act R w g⁻¹ (g • p) _ h
-    rwa [inv_smul_smul, ← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply] at this,
-    woff_act R w g p y⟩
-  S_off w hw φ hφ :=
-    (forms_iff w (fun c => (B.I.S i).Lsh c.1 ((B.I.S i).rep c)) φ hφ).trans
+    rwa [inv_smul_smul, ← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply] at this
+  · intro w hw φ hφ
+    exact (forms_iff w (fun c => (B.I.S i).Lsh c.1 ((B.I.S i).rep c)) φ hφ).trans
       (valIn_iff R w _ (fun p => (woff R w p.1 : Set M.Val)) (fun c y => woff_pt R hw c.1 _ y) φ)
 
 theorem exists_coord : ∀ (D : D7) (u : D.what₂.Word) (B : Built.Dat D u) (i : ℕ) (sp : Split (B.J.A i) B.J.T) (M : PtModel B.ch i) (R : B.Real i sp M), i ≤ D.R.m → B.Sees → ∃ Co : M.Coord, Co.Ok ∧ R.ValIs Co :=

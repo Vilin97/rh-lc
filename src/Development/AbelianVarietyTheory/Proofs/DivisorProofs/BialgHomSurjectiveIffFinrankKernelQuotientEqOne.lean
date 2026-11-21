@@ -23,7 +23,7 @@ theorem surjective_iff_finrank_quot_kerIdeal_eq_one :
     rw [kerIdeal_of_surjective hf]
     have hs : Function.Surjective (counitAlgHom k A) := fun c =>
       ⟨algebraMap k A c, by simp⟩
-    let e : (A ⧸ augIdeal k A) ≃ₐ[k] k := Ideal.quotientKerAlgEquivOfSurjective hs
+    let e : (A ⧸ augIdeal (R := k) (A := A)) ≃ₐ[k] k := Ideal.quotientKerAlgEquivOfSurjective hs
     rw [e.toLinearEquiv.finrank_eq, Module.finrank_self]
   · intro h
     have hL := GlobalTheory.T.finrank_hopfAlgebra_eq_range_mul_kernel k A C f

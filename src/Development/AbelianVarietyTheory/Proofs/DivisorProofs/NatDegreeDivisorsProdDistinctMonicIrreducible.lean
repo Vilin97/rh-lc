@@ -50,7 +50,7 @@ theorem natDegree_divisors_prod :
     exact ⟨∏ c ∈ A, P c, Finset.prod_dvd_prod_of_subset _ _ _ (Finset.subset_univ _),
       natDegree_prod_of_monic _ _ fun c _ => (hP c).1⟩
   · rintro ⟨q, hirr, hq, hQ⟩
-    obtain ⟨c, -, hc⟩ := (Prime.dvd_finset_prod_iff hirr.prime _).mp hq
+    obtain ⟨c, -, hc⟩ := (Prime.dvd_finsetProd_iff hirr.prime _).mp hq
     have ha := hirr.associated_of_dvd (hP c).2 hc
     refine ⟨c, ?_⟩
     rwa [← natDegree_eq_of_degree_eq (degree_eq_degree_of_associated ha)]

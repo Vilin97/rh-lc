@@ -98,13 +98,13 @@ omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem frame_rel (σ : R ⊕ S ≃ D) : X0 k σ * (X0 k σ)ᵀ = 1 ∧ Y0 k σ * (Y0 k σ)ᵀ = 1 ∧ X0 k σ * (Y0 k σ)ᵀ = 0 ∧
     Y0 k σ * (X0 k σ)ᵀ = 0 ∧ (X0 k σ)ᵀ * X0 k σ + (Y0 k σ)ᵀ * Y0 k σ = 1 := by
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
-  · ext i j; rw [frameMatrixFirstColumnBlock_mul_apply]; simp [X0, one_apply, eq_comm]
-  · ext i j; rw [frameMatrixSecondColumnBlock_mul_apply]; simp [Y0, one_apply, eq_comm]
+  · ext i j; rw [frameMatrixFirstColumnBlock_mul_apply]; simp [X0, Matrix.one_apply, eq_comm]
+  · ext i j; rw [frameMatrixSecondColumnBlock_mul_apply]; simp [Y0, Matrix.one_apply, eq_comm]
   · ext i j; simp [frameMatrixFirstColumnBlock_mul_apply, Y0]
   · ext i j; simp [frameMatrixSecondColumnBlock_mul_apply, X0]
   · ext i j
     obtain ⟨i | i, rfl⟩ := σ.surjective i <;> obtain ⟨j | j, rfl⟩ := σ.surjective j <;>
-      simp [X0, Y0, Matrix.mul_apply, one_apply, eq_comm]
+      simp [X0, Y0, Matrix.mul_apply, Matrix.one_apply, Function.swap, eq_comm]
 
 end Frames
 

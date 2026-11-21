@@ -185,7 +185,7 @@ private theorem toSequenceOfBlowups_length_eq_of_length_eq {X' X : Scheme.{u}} {
   rw [toSequenceOfBlowups_length, toSequenceOfBlowups_length]
   exact hlen
 
-private theorem toSeqComparisonMap_zero_comp_isoObjZero {X' X : Scheme.{u}} {g : X' ⟶ X} {d' : BlowupSequenceData X'}
+theorem toSeqComparisonMap_zero_comp_isoObjZero {X' X : Scheme.{u}} {g : X' ⟶ X} {d' : BlowupSequenceData X'}
     {d : BlowupSequenceData X} (c : ∀ i : ℕ, i ≤ d'.length → (d'.obj i ⟶ d.obj i))
     (hzero : c 0 (Nat.zero_le _) ≫ d.isoZero.hom = d'.isoZero.hom ≫ g) :
     toSeqComparisonMap d' d c 0 (Nat.zero_le _) ≫ d.toSequenceOfBlowups.isoZero.hom = d'.toSequenceOfBlowups.isoZero.hom ≫ g := by
@@ -198,7 +198,7 @@ private theorem toSeqComparisonMap_zero_comp_isoObjZero {X' X : Scheme.{u}} {g :
   rw [hp, hz, hz']
   exact hzero
 
-private theorem isPullback_toSeqComparisonMap {X' X : Scheme.{u}} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
+theorem isPullback_toSeqComparisonMap {X' X : Scheme.{u}} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
     (c : ∀ i : ℕ, i ≤ d'.length → (d'.obj i ⟶ d.obj i))
     (hpb : ∀ (i : ℕ) (hi : i < d'.length),
       IsPullback (c (i + 1) hi) (d'.map i) (d.map i) (c i hi.le))

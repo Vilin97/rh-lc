@@ -59,7 +59,7 @@ theorem mem_PJ (j) (x : P O V hV n) : x ∈ PJ O V hV j ↔
   rfl
 
 include hW in
-private theorem hr (j) : Set.range ((PJ O V hV j).ι ≫
+theorem hr (j) : Set.range ((PJ O V hV j).ι ≫
     WidePullback.base (fun _ : Fin (n + 1) => cov O V hV) ≫ O.ι) ⊆ Set.range (W j).ι := by
   rintro _ ⟨y, rfl⟩
   rw [Scheme.Opens.range_ι]

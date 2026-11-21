@@ -112,7 +112,7 @@ theorem rigidified_iso_respects_cube_and_symmetry : GlobalFnsSt → ∀ (R : Typ
     rw [_root_.mul_one, _root_.mul_one] at p
     refine ((isCub_cubV U.cubG hJ).face 1 1).trans
       (Eq.trans ?_ (congrArg₂ (· * ·) p ((isCub_cubV U'.cubG hJ').face 1 1)).symm)
-    simp
+    group
   · have oi : eSec G ≫ (ι[G]).left = eSec G := by
       have : η[G] ≫ ι[G] = η[G] := by simp
       exact congrArg (fun q => q.left) this

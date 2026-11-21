@@ -72,6 +72,8 @@ theorem descendAlong_apply (f : G →ₗ[R] Q) (hf : Function.Surjective f) (φ 
 
 end Descend
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
 
 abbrev gsRoots (n : ℕ) : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S) :=

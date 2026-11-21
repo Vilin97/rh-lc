@@ -19,7 +19,7 @@ variable {H : Type} [AddCommGroup H] [Module ℚ H] [Module.Finite ℚ H]
 theorem relIndex_nsmul (Λ : AddSubgroup H) (hΛ : Module.Finite ℤ Λ) {c : ℕ} (hc : 0 < c) :
     (Λ.map (nsmulAddMonoidHom c)).relIndex Λ ≠ 0 ∧
       (Λ.map (nsmulAddMonoidHom c)).relIndex Λ ≤ c ^ Module.finrank ℚ H := by
-  have : IsAddTorsionFree H := IsAddTorsionFree.of_module_rat H
+  have : HasUniqueDiv H := HasUniqueDiv.of_module_rat H
   have : Module.Finite ℤ Λ.toIntSubmodule := hΛ
   have : Module.Free ℤ Λ.toIntSubmodule := inferInstance
   rw [AddSubgroup.relIndex_map_nsmul]
@@ -32,7 +32,7 @@ theorem relIndex_nsmul (Λ : AddSubgroup H) (hΛ : Module.Finite ℤ Λ) {c : �
 
 theorem relIndex_of_nsmul_le (Λ B : AddSubgroup H) (hΛ : Module.Finite ℤ Λ) {c : ℕ} (hc : 0 < c)
     (hB : ∀ x ∈ B, c • x ∈ Λ) : Λ.relIndex B ≠ 0 ∧ Λ.relIndex B ≤ c ^ Module.finrank ℚ H := by
-  have : IsAddTorsionFree H := IsAddTorsionFree.of_module_rat H
+  have : HasUniqueDiv H := HasUniqueDiv.of_module_rat H
   obtain ⟨h0, h1⟩ := relIndex_nsmul Λ hΛ hc
   have hle : B.map (nsmulAddMonoidHom c) ≤ Λ := by
     rintro _ ⟨x, hx, rfl⟩

@@ -28,11 +28,9 @@ theorem bc_sch_iso : ∀ (S W : Scheme.{0}) (r : W ⟶ S), ∃ e : (Over.pullbac
     · simp only [bc, pullback.map, Functor.comp_map, Over.forget_map, Over.pullback_map_left, Category.assoc,
         pullback.lift_fst, Category.comp_id]
       erw [fV, fU, ← Functor.map_comp, pullback.lift_snd]
-      rfl
     · simp only [bc, pullback.map, Functor.comp_map, Over.forget_map, Over.pullback_map_left, Category.assoc,
         pullback.lift_snd]
       erw [sV, reassoc_of% sU, ← Functor.map_comp, ← Functor.map_comp, pullback.lift_fst]
-      rfl
   · exact ⟨IsPullback.isoPullback_hom_fst _, IsPullback.isoPullback_hom_snd _⟩
 
 end GlobalTheory.EtC

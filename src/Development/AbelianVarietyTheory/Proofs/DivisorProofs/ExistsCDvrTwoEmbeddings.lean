@@ -45,6 +45,7 @@ theorem exists_cDvr_two_embeddings : ∀ (R R₁ R' : Type) [CommRing R] [IsLoca
     intro f hf
     refine (RingHom.injective_iff_ker_eq_bot f).2 (Ideal.eq_bot_of_comap_eq_bot (R := R) ?_)
     have : Ideal.comap (algebraMap R R₁) (RingHom.ker f) = RingHom.ker (f.comp ρ) := rfl
+    change Ideal.comap (algebraMap R R₁) (RingHom.ker f) = ⊥
     rw [this]
     exact (RingHom.injective_iff_ker_eq_bot _).1 hf
   let η' : R' →+* V := g₂.comp (g₁.comp φ₀)

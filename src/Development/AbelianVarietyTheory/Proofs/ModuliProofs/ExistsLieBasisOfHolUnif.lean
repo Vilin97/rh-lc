@@ -114,12 +114,16 @@ theorem isDiff_zero : u.IsDiff 0 (1 : epsR ℂ ⟶ A) := by
 
 theorem isDiff_list_prod : ∀ {k : ℕ} (w : Fin k → Fin g → ℂ) (v : Fin k → (epsR ℂ ⟶ A)),
     (∀ i, IsTan (R := ℂ) (G := A) (v i)) → (∀ i, u.IsDiff (w i) (v i)) →
-    IsTan (R := ℂ) (G := A) (List.ofFn v).prod ∧ u.IsDiff (∑ i, w i) (List.ofFn v).prod
-  | 0, w, v, _, _ => by
+    IsTan (R := ℂ) (G := A) (List.ofFn v).prod ∧ u.IsDiff (∑ i, w i) (List.ofFn v).prod := by
+  intro k
+  induction k with
+  | zero =>
+    intro w v _ _
     simp only [List.ofFn_zero, List.prod_nil, Finset.univ_eq_empty, Finset.sum_empty]
     exact ⟨Chart.isTan_one, isDiff_zero u⟩
-  | k + 1, w, v, hv, hd => by
-    obtain ⟨h1, h2⟩ := isDiff_list_prod (k := k) (fun i => w i.succ) (fun i => v i.succ)
+  | succ k ih =>
+    intro w v hv hd
+    obtain ⟨h1, h2⟩ := ih (fun i => w i.succ) (fun i => v i.succ)
       (fun i => hv i.succ) (fun i => hd i.succ)
     rw [List.ofFn_succ, List.prod_cons, Fin.sum_univ_succ]
     exact ⟨Chart.isTan_mul (hv 0) h1, isDiff_add u (hv 0) h1 (hd 0) h2⟩

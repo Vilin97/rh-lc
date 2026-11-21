@@ -35,8 +35,7 @@ theorem hasFrame_of_isBaseChange : ∀ (R : Type) [CommRing R] (C : Type) [Categ
     exact (hb T).lift_eq _ x
   refine ⟨n, ⟨⟨fun i ↦ j (v (Pi.single i 1)), δ, ?_, ?_⟩⟩⟩
   · intro i T T' φ ω
-    refine (hb T).inductionOn ω (fun ω ↦ δ i T' (p1 F φ ω) = mp F φ (δ i T ω)) ?_ ?_ ?_ ?_
-    · simp
+    refine (hb T).inductionOn ω ?_ ?_ ?_
     · intro x
       have h1 : p1 F φ (e T x) = e T' x := by
         rw [he T x, he T' x]; exact ((j x).2 φ).symm
@@ -47,8 +46,7 @@ theorem hasFrame_of_isBaseChange : ∀ (R : Type) [CommRing R] (C : Type) [Categ
     · intro a b ha hb'
       rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb', map_add (f := _)]
   · intro T ω
-    refine (hb T).inductionOn ω (fun ω ↦ ω = ∑ i, δ i T ω • (j (v (Pi.single i 1))).1 T) ?_ ?_ ?_ ?_
-    · simp
+    refine (hb T).inductionOn ω ?_ ?_ ?_
     · intro x
       simp_rw [hδ, ← he T, algebraMap_smul]
       conv_lhs => rw [hw x]

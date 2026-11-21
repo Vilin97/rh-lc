@@ -40,6 +40,7 @@ theorem tprod_mem_chiPart {ι : Type} [Fintype ι] [DecidableEq ι] {P Q R S : �
   intro w X hX
   rw [GlobalTheory.TensIrr.atPl_tprod, (mem_chiOne _ _).1 (hg w) X hX, MultilinearMap.map_update_smul,
     Function.update_eq_self]
+  rfl
 
 theorem tprod_ne_zero' {ι V : Type} [Fintype ι] [DecidableEq ι] [AddCommGroup V] [Module ℂ V] (v : ι → V)
     (hv : ∀ w, v w ≠ 0) : PiTensorProduct.tprod ℂ v ≠ 0 := by

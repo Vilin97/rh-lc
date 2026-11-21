@@ -42,8 +42,8 @@ theorem twOrb_twConj : ∀ {G : Type} [Group G] [TopologicalSpace G] [IsTopologi
       = ∑ᶠ q, GlobalTheory.TwOrbConj.summand θ K δ f (Quotient.out (GlobalTheory.TwOrbConj.dcEquiv θ K δ g q)) := by
         refine finsum_congr fun q => ?_
         rw [GlobalTheory.TwOrbConj.summand_twist]
-        obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
-          (DoubleCoset.out_eq' (twCent θ δ) K (DoubleCoset.mk _ K (g * Quotient.out q))).symm
+        obtain ⟨t, ht, k, hk, he⟩ :=
+          DoubleCoset.mk_out_eq_mul (twCent θ δ) K (g * Quotient.out q)
         show _ = GlobalTheory.TwOrbConj.summand θ K δ f (Quotient.out (DoubleCoset.mk (twCent θ δ) K (g * Quotient.out q)))
         rw [he, GlobalTheory.TwOrbConj.summand_rep θ K δ f _ ht hk]
     _ = ∑ᶠ q, GlobalTheory.TwOrbConj.summand θ K δ f (Quotient.out q) :=
@@ -151,10 +151,9 @@ theorem summand_map' (e : G ≃ₜ* H) (θ : G →* G) (θ' : H →* H) (K : Sub
   · let ψ : K ≃* (K.map (e : G →* H)) := e.toMulEquiv.subgroupMap K
     rw [← GlobalTheory.BCT.OrbProd.avg_comp_equiv ψ]
     congr 1
-    rw [← hf]
-    congr 1
-    show (e y * e k.1)⁻¹ * e δ * θ' (e y * e k.1) = _
-    rw [← map_mul, ← he, ← map_inv, ← map_mul, ← map_mul]
+    funext k
+    change f' ((e y * e k.1)⁻¹ * e δ * θ' (e y * e k.1)) = _
+    rw [← map_mul, ← he, ← map_inv, ← map_mul, ← map_mul, hf]
 
 def dcMap' (e : G ≃ₜ* H) (T K : Subgroup G) (T' K' : Subgroup H) :
     DoubleCoset.Quotient (T : Set G) (K : Set G) → DoubleCoset.Quotient (T' : Set H) (K' : Set H) :=
@@ -164,18 +163,19 @@ theorem dcMap_bij' (e : G ≃ₜ* H) (T K : Subgroup G) (T' K' : Subgroup H) (hT
     (hK : ∀ g, g ∈ K ↔ e g ∈ K') : Function.Bijective (dcMap' e T K T' K') := by
   constructor
   · intro q1 q2 h
-    obtain ⟨a, ha, b, hb, hab⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
-    rw [← DoubleCoset.out_eq' T K q1, ← DoubleCoset.out_eq' T K q2, DoubleCoset.eq]
+    change DoubleCoset.mk T' K' (e (Quotient.out q1)) = DoubleCoset.mk T' K' (e (Quotient.out q2)) at h
+    obtain ⟨a, ha, b, hb, hab⟩ := (DoubleCoset.eq (H := T') (K := K')).1 h
+    rw [← DoubleCoset.out_eq' q1, ← DoubleCoset.out_eq' q2, DoubleCoset.eq]
     refine ⟨e.symm a, (hT _).2 (by simpa using ha), e.symm b, (hK _).2 (by simpa using hb), ?_⟩
     apply e.injective
     simp only [map_mul, ContinuousMulEquiv.apply_symm_apply]
     exact hab
   · intro q'
     refine ⟨DoubleCoset.mk T K (e.symm (Quotient.out q')), ?_⟩
-    obtain ⟨a, b, ha, hb, hab⟩ := DoubleCoset.mk_out_eq_mul T K (e.symm (Quotient.out q'))
+    obtain ⟨a, ha, b, hb, hab⟩ := DoubleCoset.mk_out_eq_mul T K (e.symm (Quotient.out q'))
     unfold dcMap'
     rw [hab]
-    conv_rhs => rw [← DoubleCoset.out_eq' T' K' q']
+    conv_rhs => rw [← DoubleCoset.out_eq' q']
     rw [DoubleCoset.eq]
     refine ⟨(e a)⁻¹, T'.inv_mem ((hT a).1 ha), (e b)⁻¹, K'.inv_mem ((hK b).1 hb), ?_⟩
     simp only [map_mul, ContinuousMulEquiv.apply_symm_apply]
@@ -188,7 +188,7 @@ theorem twOrb_transport' [IsTopologicalGroup G] [IsTopologicalGroup H] (e : G �
   rw [twOrb_eq, twOrb_eq,
     ← finsum_comp_equiv (Equiv.ofBijective _ (dcMap_bij' e (twCent θ δ) K (twCent θ' (e δ)) K' hT hK))]
   refine finsum_congr fun q => ?_
-  obtain ⟨a, b, ha, hb, hab⟩ := DoubleCoset.mk_out_eq_mul (twCent θ' (e δ)) K' (e (Quotient.out q))
+  obtain ⟨a, ha, b, hb, hab⟩ := DoubleCoset.mk_out_eq_mul (twCent θ' (e δ)) K' (e (Quotient.out q))
   have e2 : Quotient.out (Equiv.ofBijective _ (dcMap_bij' e (twCent θ δ) K (twCent θ' (e δ)) K' hT hK) q) =
       a * e (Quotient.out q) * b := hab
   rw [e2, summand_rep θ' K' (e δ) f' _ ha hb, summand_map' e θ θ' K K' δ f f' he hK hf]

@@ -70,7 +70,7 @@ theorem graphAlgebraAeval_graphRelation (f : τ → MvPolynomial σ R) (i : τ) 
     graphAlgebraAeval f (graphRelation f i) = 0 := by
   simp only [graphRelation, map_sub, graphAlgebraAeval_C, graphAlgebraAeval_map_C, MvPolynomial.aeval_X, sub_self]
 
-private theorem graphAlgebraAeval_map_C_graphAlgebraEquiv_symm (f : τ → MvPolynomial σ R) (x : GraphAlgebra f) :
+theorem graphAlgebraAeval_map_C_graphAlgebraEquiv_symm (f : τ → MvPolynomial σ R) (x : GraphAlgebra f) :
     graphAlgebraAeval f (MvPolynomial.map (MvPolynomial.C : R →+* MvPolynomial τ R)
       ((graphAlgebraEquiv f).symm x)) = x := by
   rw [graphAlgebraAeval_map_C, AlgEquiv.apply_symm_apply]
@@ -175,7 +175,7 @@ private theorem mem_ker_graphAlgebraGenerators_iff (f : τ → MvPolynomial σ R
     (p : MvPolynomial σ (MvPolynomial τ R)) :
     p ∈ (graphAlgebraGenerators f).ker ↔ graphAlgebraAeval f p = 0 := Iff.rfl
 
-private theorem span_range_graphRelation_eq_ker (f : τ → MvPolynomial σ R) :
+theorem span_range_graphRelation_eq_ker (f : τ → MvPolynomial σ R) :
     Ideal.span (Set.range (graphRelation f)) = (graphAlgebraGenerators f).ker := by
   apply le_antisymm
   · rw [Ideal.span_le]

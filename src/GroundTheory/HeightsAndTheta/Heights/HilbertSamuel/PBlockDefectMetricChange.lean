@@ -200,17 +200,17 @@ section Pivot
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem h_eq_zero_of_fs (k₀ : K) (A : HermLine ι) (hA : A.a = unitDeg k₀) (z : (Σ k, ι k) → ℂ)
-    (hz : (HermLine.ofMetrics (fun k => fsMetric (ι k)) (unitDeg k₀)).h z = 0) : A.h z = 0 := by
+    (hz : (HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (unitDeg k₀)).h z = 0) : A.h z = 0 := by
   obtain ⟨k, -, hk⟩ := Finset.prod_eq_zero_iff.mp hz
   have hk0 : k = k₀ := by
     by_contra hne
     simp [unitDeg, hne] at hk
   subst hk0
-  have hρ : (fsMetric (ι k)).ρ (fun i => z ⟨k, i⟩) = 0 := by
+  have hρ : (fsMetric (ι := ι k)).ρ (fun i => z ⟨k, i⟩) = 0 := by
     simpa [unitDeg] using hk
   have hzk : (fun i => z ⟨k, i⟩) = 0 := by
     by_contra hne
-    exact ((fsMetric (ι k)).pos _ hne).ne' hρ
+    exact ((fsMetric (ι := ι k)).pos _ hne).ne' hρ
   set c : K → ℂ := fun k' => if k' = k then 2 else 1 with hc
   have hc0 : ∀ k', c k' ≠ 0 := fun k' => by
     simp only [hc]

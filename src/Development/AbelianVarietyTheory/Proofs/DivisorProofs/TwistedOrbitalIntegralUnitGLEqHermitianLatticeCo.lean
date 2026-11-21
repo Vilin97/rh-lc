@@ -178,7 +178,7 @@ theorem GlobalTheory.TwOrbLat.twOrb_unit_eq_orbSum : ∀ (E : Type) [Field E] [N
       rw [← latOf_mul e b t, GlobalTheory.T.latticeSpannedByGLColumns_eq_iff E w K e hO a B b] at h1
       apply Subtype.ext
       simp only
-      rw [← DoubleCoset.out_eq' T' Kg q, ← DoubleCoset.out_eq' T' Kg q', DoubleCoset.eq]
+      rw [← DoubleCoset.out_eq' (H := T') (K := Kg) q, ← DoubleCoset.out_eq' (H := T') (K := Kg) q', DoubleCoset.eq]
       refine ⟨ι t, by rw [hCent]; exact ⟨t, ht, rfl⟩, _, Kg.inv_mem h1, ?_⟩
       rw [_root_.mul_inv_rev, inv_inv, mul_inv_cancel_left]
     · intro o
@@ -186,7 +186,7 @@ theorem GlobalTheory.TwOrbLat.twOrb_unit_eq_orbSum : ∀ (E : Type) [Field E] [N
       | mk L =>
         obtain ⟨q0, hq0⟩ := GlobalTheory.T.exists_GL_latticeSpannedByGLColumns_eq_fullLattice E w K e a B b L.1 L.2.1
         obtain ⟨t', ht', k, hk, he'⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
-          (DoubleCoset.out_eq' T' Kg (DoubleCoset.mk T' Kg q0)).symm
+          (DoubleCoset.out_eq' (H := T') (K := Kg) (DoubleCoset.mk T' Kg q0)).symm
         have hP0 : P q0 := (hUni q0).2 (hq0 ▸ L.2)
         refine ⟨⟨DoubleCoset.mk _ _ q0, by rw [he']; exact (hPinv q0 t' k ht' hk).2 hP0⟩, ?_⟩
         apply Quot.sound

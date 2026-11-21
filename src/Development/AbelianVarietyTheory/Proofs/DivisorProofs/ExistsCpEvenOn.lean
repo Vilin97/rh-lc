@@ -28,6 +28,17 @@ namespace GlobalTheory.Mum.PrimCube
 
 open GlobalTheory.PrimNorm GlobalTheory.MulPull
 
+#check GlobalTheory.PrimNorm.cls
+#check GlobalTheory.PrimNorm.PullClass
+#check GlobalTheory.PrimNorm.lbIso_nested
+#check GlobalTheory.PrimNorm.prod_square_id
+#check GlobalTheory.PrimNorm.prod_cub
+#check GlobalTheory.PrimNorm.hasGen_iff
+#check GlobalTheory.PrimNorm.postHom
+#check GlobalTheory.PrimNorm.normCls
+#check GlobalTheory.PrimNorm.diff₂_quadratic
+#check GlobalTheory.PrimNorm.diff₂_mul_left
+#check GlobalTheory.PrimNorm.diff₂_inv_inv
 theorem evenOn_of_prim : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R → ∀ (D : DegData R (maximalIdeal R)) (A : PolAV (Sp (FractionRing R))) (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G], IsSemiAbelian G → ∀ U : Unif (maximalIdeal R) D A G, ∀ (P : GlobalTheory.UU.CP G) (a : G ⟶ G), IsMonHom a → LBIso P.L.L (cubeLB G ![𝟙 G, a] P.L.L) → EvenOn P := by
   intro R _ _ _ hR D A G _ _ hS U P a ha hw
   have hp : IsProper (pullback.snd G.hom (jK R)) := by
@@ -74,7 +85,7 @@ theorem exists_cp_evenOn : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing
     rw [hw, oG.map_one] at e
     exact (e.trans rfl).symm
   have hadj := GlobalTheory.T.uniformisation_ringAction_adjoint_cubeBundle R hR.1 D A G hS U O o oA oG hlin w
-  have hc := fun T : Over (Sp R) => diff₃_ptCls (T := T) hM hT
+  have hc := fun T : Over (Sp R) => GlobalTheory.PrimNorm.diff₃_ptCls (T := T) hM hT
   have hq : ∀ T : Over (Sp R), (fun x : T ⟶ G => normCls U.LG.L (oG.act w) x.left) =
       fun x => diff₂ (ptCls U.LG.L T) x (postHom (oG.act w) T x) := fun T => funext fun x => normCls_left _ x
   have hs : ∀ (T : Over (Sp R)) (y : T ⟶ G), postHom (oG.act w) T y * postHom (oG.act (star w)) T y = y :=

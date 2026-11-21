@@ -27,7 +27,7 @@ variable [Algebra (MvPolynomial ι k) S] [Algebra k S]
 
 include ι
 
-private theorem exists_basisKaehler :
+theorem exists_basisKaehler :
     ∃ b : Module.Basis ι S (KaehlerDifferential k S),
       ∀ i : ι, b i = KaehlerDifferential.D k S (coord k ι S i) := by
   have h : IsBaseChange S (KaehlerDifferential.map k k (MvPolynomial ι k) S) :=
@@ -69,12 +69,12 @@ private theorem partialFun_map_smul (i : ι) :
       = c • (basisKaehler k ι S).repr (KaehlerDifferential.D k S x) i
   rw [h2, LinearEquiv.map_smul, Finsupp.smul_apply, smul_eq_mul, ← Algebra.smul_def]
 
-private noncomputable def partialDerivLinear (i : ι) : S →ₗ[k] S where
+noncomputable def partialDerivLinear (i : ι) : S →ₗ[k] S where
   toFun := partialDerivFun k ι S i
   map_add' := partialFun_map_add k ι S i
   map_smul' := partialFun_map_smul k ι S i
 
-private theorem partialLinear_leibniz (i : ι) :
+theorem partialLinear_leibniz (i : ι) :
     ∀ a b : S, partialDerivLinear k ι S i (a * b)
       = a • partialDerivLinear k ι S i b + b • partialDerivLinear k ι S i a := by
   intro a b

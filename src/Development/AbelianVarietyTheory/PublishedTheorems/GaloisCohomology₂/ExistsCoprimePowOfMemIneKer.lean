@@ -161,8 +161,9 @@ theorem exists_pow_cong {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Alge
   set Q := primeBelow (F := F) A with hQ
   have : v.asIdeal.IsMaximal := v.isMaximal
   have : Q.LiesOver v.asIdeal := ⟨(under_primeBelow hA).symm⟩
-  have : Q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := 𝓞 F) Q
-    (by rw [show Ideal.comap (algebraMap (𝓞 F) (IntCl F Ω)) Q = v.asIdeal from
+  have : Q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := 𝓞 F) Q
+    (by change (Ideal.comap (algebraMap (𝓞 F) (IntCl F Ω)) Q).IsMaximal
+        rw [show Ideal.comap (algebraMap (𝓞 F) (IntCl F Ω)) Q = v.asIdeal from
       under_primeBelow hA]; exact v.isMaximal)
   let : Field (IntCl F Ω ⧸ Q) := Ideal.Quotient.field Q
   let : Field (𝓞 F ⧸ v.asIdeal) := Ideal.Quotient.field v.asIdeal

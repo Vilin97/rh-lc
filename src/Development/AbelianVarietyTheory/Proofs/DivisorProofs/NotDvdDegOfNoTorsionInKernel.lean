@@ -68,7 +68,10 @@ theorem GlobalTheory.AV.AbVar.not_dvd_deg_of_no_torsion_in_kernel : ∀ (K : Typ
   obtain ⟨h', hh', hhh', -⟩ := GlobalTheory.IsogenyQuasiInverse.exists_quasiInverse K A.X B.X B.dim A.ab B.ab hA hB
     h.hom inferInstance m hm hkm
   let g : B ⟶ A := Hom.mk (A := B) (B := A) h' (h := hh')
-  have e1 : h ≫ g = ((m : ℤ)) • 𝟙 A := hom_ext (by simp [g, hhh'])
+  have e1 : h ≫ g = ((m : ℤ)) • 𝟙 A := by
+    apply Subtype.ext
+    change h.hom ≫ h' = (𝟙 A.X) ^ (m : ℤ)
+    simpa using hhh'
   obtain ⟨-, hdeg⟩ := GlobalTheory.T.isIsogeny_comp_iff_and_degree_mul K A B A h g hdim hdim.symm
   obtain ⟨-, hdm⟩ := GlobalTheory.MulIsogeny.mul_isogeny K A (m : ℤ) (by exact_mod_cast hm.ne')
   rw [e1, hdm, Int.natAbs_natCast] at hdeg

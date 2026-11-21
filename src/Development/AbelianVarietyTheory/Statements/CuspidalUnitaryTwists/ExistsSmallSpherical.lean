@@ -121,7 +121,7 @@ theorem reps_and_stabilisers {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ t0 : ℂ}
   · intro q
     obtain ⟨γ, k, γ', h1, h2, h3⟩ := exists_rep_trivial_at D P.d p hp.out q.out
     refine ⟨γ * q.out, ?_, k, (mem_intG k).2 h2, h3⟩
-    rw [← DoubleCoset.out_eq' (ratG D P.d) P.J q, DoubleCoset.eq]
+    rw [← DoubleCoset.out_eq' q, DoubleCoset.eq]
     exact ⟨γ⁻¹, inv_mem ((mem_ratG γ).2 ⟨γ', h1⟩), 1, one_mem _, by simp [DoubleCoset.out_eq']⟩
   · intro h
     obtain ⟨h0, hd, -⟩ := GlobalTheory.StabOrder.gam_ne_zero_dvd_invariant D P.d P.J P.J_le h

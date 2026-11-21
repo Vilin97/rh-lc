@@ -17,7 +17,7 @@ noncomputable section
 
 variable {k : Type u} [Field k] {X W : Scheme.{u}}
 
-private theorem pullbackCondition_baseChangeMap (f : X ⟶ Spec (CommRingCat.of k)) (c : W ⟶ X)
+theorem pullbackCondition_baseChangeMap (f : X ⟶ Spec (CommRingCat.of k)) (c : W ⟶ X)
     (K : Type u) [Field K] [Algebra k K] :
     (baseChangeProjection (c ≫ f) K ≫ c) ≫ f = baseChangeToSpec (c ≫ f) K ≫ specMapAlgebraMap k K := by
   rw [Category.assoc]

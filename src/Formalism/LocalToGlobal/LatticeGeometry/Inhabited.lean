@@ -437,11 +437,7 @@ def formsFl (KO : Type) [Field KO] [NumberField KO] (eO : 𝓞 KO ≃+* D.what�
   l2Norm_le_supNorm_alt := fun _ _ _ _ => le_rfl
   Cu := fun _ => PUnit.{1}
   Xc := fun j _ => Submodule.span (𝓞 D.host.E) (Set.range (Pi.basisFun D.host.E (Fin (WeightFamilies.rho D j))))
-  Xc_lat := fun j _ =>
-    { fg := Submodule.fg_span (Set.finite_range _)
-      span_eq_top := by
-        rw [Submodule.span_span_of_tower]
-        exact (Pi.basisFun D.host.E (Fin (WeightFamilies.rho D j))).span_eq }
+  Xc_lat := fun _ _ => Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span (Set.finite_range _))
   FJt := fun _ _ _ _ => KO
   sg := fun _ _ _ _ => LinearMap.id
   Pt := fun _ _ => PUnit.{1}
@@ -701,28 +697,28 @@ theorem degMFl_heq {N N' : ℕ} (hN : N = N') :
   subst hN; rfl
 
 theorem tiedX_fl : TiedX (jC := jC) (ng := ng1) (divXFl D jC X0) (fun _ => Finset.univ.image D.host.g)
-    (prime_of_mem_image D) () (fun p _ => Equiv.refl _) (fun w => shimUFl D jC w) (fun _ _ _ => Equiv.refl _) where
-  shv :=
-    { lev := rfl
-      shv := fun w h => (shimXFl_congr D jC _ _ _ _ (recN_dat D w) (recJ_dat D w h)).trans
-        (toShimX_fl D jC w h _).symm }
-  pl :=
-    { wt := fun _ _ _ => rfl
-      jc := fun _ _ _ => rfl
-      mp := fun _ _ _ _ _ => rfl
-      md := fun w h p _ la => md_heq D p (jC p la) (recJ_lt D w.S).le w.j_le (recN_dat D w) (recJ_dat D w h)
-      curveM := fun _ _ _ _ _ => HEq.rfl
-      degM := fun w _ _ _ _ => degMFl_heq D (recN_dat D w)
-      htMdl := fun _ _ _ _ _ => HEq.rfl
-      htCurve := fun w h p _ c c' hc => by
-        have e : c = c' := eq_of_heq hc
-        subst e
-        exact ⟨rfl, HEq.rfl⟩ }
-  geo :=
-    { yv := fun _ _ _ _ => rfl
-      ybd := fun _ _ _ _ => HEq.rfl
-      lw := fun _ _ _ _ _ => HEq.rfl }
-  lev_κg := rfl
+    (prime_of_mem_image D) () (fun p _ => Equiv.refl _) (fun w => shimUFl D jC w) (fun _ _ _ => Equiv.refl _) :=
+  { shv :=
+      { lev := rfl
+        shv := fun w h => (shimXFl_congr D jC _ _ _ _ (recN_dat D w) (recJ_dat D w h)).trans
+          (toShimX_fl D jC w h _).symm }
+    pl :=
+      { wt := fun _ _ _ => rfl
+        jc := fun _ _ _ => rfl
+        mp := fun _ _ _ _ _ => rfl
+        md := fun w h p _ la => md_heq D p (jC p la) (recJ_lt D w.S).le w.j_le (recN_dat D w) (recJ_dat D w h)
+        curveM := fun _ _ _ _ _ => HEq.rfl
+        degM := fun w _ _ _ _ => degMFl_heq D (recN_dat D w)
+        htMdl := fun _ _ _ _ _ => HEq.rfl
+        htCurve := fun w h p _ c c' hc => by
+          have e : c = c' := eq_of_heq hc
+          subst e
+          exact ⟨rfl, HEq.rfl⟩ }
+    geo :=
+      { yv := fun _ _ _ _ => rfl
+        ybd := fun _ _ _ _ => HEq.rfl
+        lw := fun _ _ _ _ _ => HEq.rfl }
+    lev_κg := rfl }
 
 
 end TiedFl

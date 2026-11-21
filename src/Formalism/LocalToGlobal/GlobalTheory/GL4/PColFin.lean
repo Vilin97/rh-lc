@@ -40,6 +40,8 @@ theorem rhoEquiv_symm_coe (lam : ι → DomWeight n) (g : ι → GL (Fin n) K) (
   show actP lam g⁻¹ (y : Pol K ι n) = _
   rw [← actAll_eq_actP]
   congr 1
+  funext τ
+  exact Matrix.GeneralLinearGroup.coe_inv (g τ)
 
 theorem mem_span_subtype {P : Type} [AddCommGroup P] [Module K P] (R : Subring K) (U : Submodule K P) {J : Type} (b : J → U) (y : U) :
     y ∈ Submodule.span R (Set.range b) ↔ (y : P) ∈ Submodule.span R (Set.range fun i => (b i : P)) := by

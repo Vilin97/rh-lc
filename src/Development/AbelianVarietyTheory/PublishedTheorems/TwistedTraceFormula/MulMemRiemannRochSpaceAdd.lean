@@ -104,12 +104,10 @@ theorem exists_lattice {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
   have lin : ∀ x, (∀ y ∈ G, V.hT x y ∈ (1 : Submodule (𝓞 E) E)) → ∀ y ∈ Submodule.span (𝓞 E) G,
       V.hT x y ∈ (1 : Submodule (𝓞 E) E) := fun x h y hy =>
     (Submodule.span_le (p := (1 : Submodule (𝓞 E) E).comap ((V.hT x).restrictScalars (𝓞 E)))).2 h hy
-  refine ⟨Submodule.span (𝓞 E) G, ⟨?_, ?_⟩, Submodule.ext fun x => (hd _ x).trans ⟨fun h => ?_, fun hx y hy => ?_⟩,
+  refine ⟨Submodule.span (𝓞 E) G, Submodule.IsLattice.of_fg E ?_, Submodule.ext fun x => (hd _ x).trans ⟨fun h => ?_, fun hx y hy => ?_⟩,
     fun i => ⟨hE i, hF i⟩⟩
   · rw [hG]
     exact (Submodule.fg_span ((Set.finite_range e).union (Set.finite_range f))).sup (V'.standardTuple_isLattice.fg.map _)
-  · rw [Submodule.span_span_of_tower, Submodule.span_union, Submodule.span_image, V'.standardTuple_isLattice.span_eq_top,
-      Submodule.map_top, sup_comm, ht]
   · obtain ⟨c, hx⟩ := dec x
     have sm : ∀ z ∈ (1 : Submodule (𝓞 E) E), ∀ y ∈ Submodule.span (𝓞 E) G, z • y ∈ Submodule.span (𝓞 E) G := by
       intro z hz y hy

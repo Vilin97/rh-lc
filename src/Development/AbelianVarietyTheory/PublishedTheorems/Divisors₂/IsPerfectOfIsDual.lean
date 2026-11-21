@@ -26,7 +26,8 @@ theorem isPerfect_of_isDual (D : DualAbelianScheme) {S : Scheme.{0}} {A B : Over
   obtain ⟨u, hu, -⟩ := h.univ B' P' h₁.isLB h₁.additive
   refine ⟨h.isLB, (triv_ev_iff h.isLB _ _).2 (h.additive.evc_one h.isLB _), h.zero, fun T x hx ↦ ?_,
     fun _ ↦ h.eq_one⟩
-  refine (h₁.isPerfect h₂).ker_left T x ((triv_ev_iff h₁.isLB _ _).2 ?_)
+  apply (h₁.isPerfect h₂).ker_left T x
+  apply (triv_ev_iff h₁.isLB _ _).2
   have e := congrArg (CechPic.pull (lift (fst T B') (snd T B' ≫ u)).left) ((triv_ev_iff h.isLB _ _).1 hx)
   rw [pull_evc, map_zero, lift_fst_assoc, lift_snd] at e
   have k := (cls_eq_iff h₁.isLB (pull_isLB h.isLB _)).2 hu

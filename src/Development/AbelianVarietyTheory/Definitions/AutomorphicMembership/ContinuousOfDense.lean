@@ -66,8 +66,7 @@ theorem emb_injective : Function.Injective (emb σ) := by
   ext α
   have h : emb σ f α = 0 := by rw [hf]; rfl
   rw [emb_apply] at h
-  rw [coeff_zero]
-  exact (mul_eq_zero.1 h).resolve_right (wt_ne_zero α)
+  simpa [AddMonoidAlgebra.coeff] using (mul_eq_zero.1 h).resolve_right (wt_ne_zero α)
 
 theorem dense_range_emb : Dense (Set.range (emb σ)) := by
   intro x

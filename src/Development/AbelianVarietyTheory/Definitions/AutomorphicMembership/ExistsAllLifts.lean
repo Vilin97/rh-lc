@@ -22,6 +22,7 @@ theorem exists_place (B : Base) {l : ℕ} (hl : l.Prime) : ∃ w : B.places.Pl, 
       exact bot_le)
   have hmem : ((l : ℕ) : 𝓞 B.LL) ∈ P := by
     have : ((l : ℕ) : ℤ) ∈ P.comap (algebraMap ℤ (𝓞 B.LL)) := by
+      change ((l : ℕ) : ℤ) ∈ Ideal.under ℤ P
       rw [hPl]; exact Ideal.mem_span_singleton_self _
     simpa using this
   have hne : P ≠ ⊥ := by
@@ -35,7 +36,8 @@ theorem exists_place (B : Base) {l : ℕ} (hl : l.Prime) : ∃ w : B.places.Pl, 
 theorem tau_nonempty (B : Base) : Nonempty (Tau B.R) := by
   rw [← Fintype.card_pos_iff, card_Tau B.host]
   unfold Ranks.f Ranks.n
-  positivity
+  have := B.R.ord_pos
+  omega
 
 theorem exists_inert {R : Ranks} (H : Host R) :
     ∃ l : ℕ, l.Prime ∧ 5 ≤ l ∧ (H.cls l = .signal ∨ H.cls l = .inertClass) := by

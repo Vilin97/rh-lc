@@ -72,7 +72,7 @@ theorem iSup_proj_basicOpen_reesGenerator_eq_top (I : Ideal R) :
   apply AlgebraicGeometry.Proj.iSup_basicOpen_eq_top
   exact reesGrading_irrelevant_le_span I
 
-private theorem exists_mem_range_affineBlowupChart (I : Ideal R) (x : ↥(affineBlowup I)) :
+theorem exists_mem_range_affineBlowupChart (I : Ideal R) (x : ↥(affineBlowup I)) :
     ∃ a : ↥I, x ∈ Set.range (affineBlowupChart I a).base := by
   have h2 : (⋃ a : ↥I,
       ((AlgebraicGeometry.Proj.basicOpen (reesGrading I) (reesGenerator I a) :
@@ -150,12 +150,12 @@ theorem affineBlowupChart_comp_toSpec (I : Ideal R) (a : ↥I) :
     ← AlgebraicGeometry.Spec.map_comp]
   rfl
 
-private theorem reesGenerator_pow_one_mem_reesGrading_one (I : Ideal R) (a : ↥I) :
+theorem reesGenerator_pow_one_mem_reesGrading_one (I : Ideal R) (a : ↥I) :
     reesGenerator I a ^ 1 ∈ reesGrading I 1 := by
   rw [pow_one]
   exact reesGenerator_mem_reesGrading I a
 
-private theorem reesGenerator_pow_one_mem_powers (I : Ideal R) (a : ↥I) :
+theorem reesGenerator_pow_one_mem_powers (I : Ideal R) (a : ↥I) :
     reesGenerator I a ^ 1 ∈ Submonoid.powers (reesGenerator I a) :=
   Submonoid.pow_mem _ (Submonoid.mem_powers _) 1
 

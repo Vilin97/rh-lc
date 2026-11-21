@@ -64,11 +64,12 @@ theorem sum_wt_mul {D : ℕ} (a : Fin (D + 1) → ℝ) :
     _ = (∑ i, a i) ^ 2 := by
       rw [sq, Finset.sum_mul_sum, ← Finset.sum_product', Finset.univ_product_univ]
 
-theorem fs_sq {J : Type} [Fintype J] (z : J → ℂ) : (fsMetric J).ρ z ^ 2 = ∑ i, ‖z i‖ ^ 2 := by
+theorem fs_sq {J : Type} [Fintype J] (z : J → ℂ) :
+    (fsMetric (ι := J)).ρ z ^ 2 = ∑ i, ‖z i‖ ^ 2 := by
   show ‖WithLp.toLp 2 z‖ ^ 2 = _
   rw [EuclideanSpace.norm_sq_eq]
 
-theorem fs_nonneg {J : Type} [Fintype J] (z : J → ℂ) : 0 ≤ (fsMetric J).ρ z :=
+theorem fs_nonneg {J : Type} [Fintype J] (z : J → ℂ) : 0 ≤ (fsMetric (ι := J)).ρ z :=
   norm_nonneg (WithLp.toLp 2 z)
 
 theorem metric_nonneg (D : ℕ) (u : Ix (Veronese.Idx D) → ℂ) : 0 ≤ (Veronese.metric D).ρ u :=
@@ -76,7 +77,7 @@ theorem metric_nonneg (D : ℕ) (u : Ix (Veronese.Idx D) → ℂ) : 0 ≤ (Veron
 
 theorem metric_sq (D : ℕ) (u : Ix (Veronese.Idx D) → ℂ) :
     (Veronese.metric D).ρ u ^ 2 = ∑ q, Veronese.wt q * ‖u q‖ ^ 2 := by
-  show (fsMetric _).ρ (Veronese.scale D u) ^ 2 = _
+  show (fsMetric (ι := Ix (Veronese.Idx D))).ρ (Veronese.scale D u) ^ 2 = _
   rw [fs_sq]
   refine Finset.sum_congr rfl fun q _ => ?_
   have hw : 0 ≤ Veronese.wt q := (Veronese.wt_pos q).le
@@ -89,13 +90,13 @@ theorem formApply_forms (D : ℕ) (w : Ix (Fin (D + 1)) → ℂ) (q : Ix (Verone
 
 theorem metric_forms (D : ℕ) (w : Ix (Fin (D + 1)) → ℂ) :
     (Veronese.metric D).ρ (formApply (Veronese.forms D) w) =
-      (fsMetric (Ix (Fin (D + 1)))).ρ w * (fsMetric (Ix (Fin (D + 1)))).ρ w := by
+      (fsMetric (ι := Ix (Fin (D + 1)))).ρ w * (fsMetric (ι := Ix (Fin (D + 1)))).ρ w := by
   have h0 : 0 ≤ (Veronese.metric D).ρ (formApply (Veronese.forms D) w) :=
     metric_nonneg D _
-  have h1 : 0 ≤ (fsMetric (Ix (Fin (D + 1)))).ρ w * (fsMetric (Ix (Fin (D + 1)))).ρ w :=
+  have h1 : 0 ≤ (fsMetric (ι := Ix (Fin (D + 1)))).ρ w * (fsMetric (ι := Ix (Fin (D + 1)))).ρ w :=
     mul_nonneg (fs_nonneg w) (fs_nonneg w)
   refine (sq_eq_sq₀ h0 h1).1 ?_
-  have hw : (fsMetric (Ix (Fin (D + 1)))).ρ w * (fsMetric (Ix (Fin (D + 1)))).ρ w =
+  have hw : (fsMetric (ι := Ix (Fin (D + 1)))).ρ w * (fsMetric (ι := Ix (Fin (D + 1)))).ρ w =
       ∑ i : Fin (D + 1), ‖w ⟨(), i⟩‖ ^ 2 := by
     rw [← sq, fs_sq, Fintype.sum_sigma, Fintype.sum_unique]
   rw [hw, metric_sq, ← sum_wt_mul]
@@ -174,7 +175,7 @@ theorem tensor_self {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι
       rw [h1, intersection_update_fsHerm_neg_one _ hL, h2, ih (by omega), pow_succ]
       ring
   have hn := step n le_rfl
-  simp only [Fin.is_lt, if_true] at hn
+  simp only [Fin.is_lt, ite_true] at hn
   exact hn
 
 end VeroneseTop
@@ -185,12 +186,13 @@ theorem VeroneseTop.proof (hCM : GraphChangeOfModel.Statement) (hA : VeroneseAri
     (hIm : VeroneseGraphImage.Statement) (hDeg : VeroneseGraphDeg.Statement) : VeroneseTop.Statement := by
   intro D hD I hI
   obtain ⟨G, J, hJ, hJ1⟩ := hDeg D hD
-  have hfs : IsSmoothHerm (HermLine.ofCone (fsMetric (Ix (Fin (D + 1))))) :=
+  have hfs : IsSmoothHerm (HermLine.ofCone (fsMetric (ι := Ix (Fin (D + 1))))) :=
     BlockImageTop.isSmoothHerm_ofCone ProjLine.isSmoothMetric_fs
   have hP : IsArithVar (⊥ : Ideal (MRing (GlobalTheory (Fin (D + 1))))) (D + 1) := IndefiniteRowSideFullHecke.Inter.isArithVar_bot D
   have key := hCM I hI Unit (GlobalTheory (Fin (D + 1))) Unit (GlobalTheory (Veronese.Idx D)) ⊥ (D + 1) (Veronese.forms D)
     (fun _ _ => 2) G J (fun _ => HermLine.ofCone (Veronese.metric D))
-    (fun _ => (HermLine.ofCone (fsMetric (Ix (Fin (D + 1))))).tensor (HermLine.ofCone (fsMetric (Ix (Fin (D + 1))))))
+    (fun _ => (HermLine.ofCone (fsMetric (ι := Ix (Fin (D + 1))))).tensor
+      (HermLine.ofCone (fsMetric (ι := Ix (Fin (D + 1))))))
     hP (isMultiHomog_forms D) (isBasePtFree_forms D) (by rw [hIm D]; exact hA D hD) hJ
     (fun _ => BlockImageTop.isSmoothHerm_ofCone (Veronese.isSmoothMetric_metric D)) (fun _ => hfs.mul hfs)
     (fun _ k => by cases k; simp [HermLine.tensor, HermLine.ofCone])

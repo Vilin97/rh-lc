@@ -50,7 +50,7 @@ variable {X X₁ : Scheme.{u}} {k : Type u} [Field k]
   {p : X ⟶ Spec (CommRingCat.of k)} {π : X₁ ⟶ X} {U : X.Opens} {m : ℕ}
   {c : EtaleChart p U m} {S : Finset (Fin m)} {s : Fin m}
 
-private theorem blowupChart_restrict_map_comp_coordBlowupSubstMap (B : BlowupChart π c S s) (V : X₁.Opens)
+theorem blowupChart_restrict_map_comp_coordBlowupSubstMap (B : BlowupChart π c S s) (V : X₁.Opens)
     (hV : V ≤ B.domain) :
     (B.chart.restrict hV).map ≫ coordBlowupSubstMap k m S s =
       π.resLE U V (hV.trans B.domain_le) ≫ c.map := by
@@ -174,7 +174,7 @@ theorem restrictIdeal_comap_subschemeι_eq_coordIdeal (c : EtaleChart p U m)
   exact (Scheme.IdealSheafData.equivOfIsAffine
     (X := (H.subschemeι ⁻¹ᵁ U).toScheme)).injective hideal
 
-private theorem strictTransform_preimage_domain_le_preimage (B : BlowupChart π c S s)
+theorem strictTransform_preimage_domain_le_preimage (B : BlowupChart π c S s)
     (Z H : X.IdealSheafData)
     (q : (Blowup.strictTransform π Z H).subscheme ⟶ H.subscheme)
     (hq : q ≫ H.subschemeι = (Blowup.strictTransform π Z H).subschemeι ≫ π) :
@@ -184,7 +184,7 @@ private theorem strictTransform_preimage_domain_le_preimage (B : BlowupChart π 
   rw [← hq] at h2
   exact h2
 
-private theorem restrictToSubscheme_map_comp_affineSpaceFinToSpec (B : BlowupChart π c S s)
+theorem restrictToSubscheme_map_comp_affineSpaceFinToSpec (B : BlowupChart π c S s)
     (hB : IsAffineOpen B.domain) (Z H : X.IdealSheafData)
     [QuasiCompact (strictTransformι π Z H)]
     (hs : s ∈ S) (hZ : restrictIdeal Z U = c.coordIdeal S)
@@ -199,7 +199,7 @@ private theorem restrictToSubscheme_map_comp_affineSpaceFinToSpec (B : BlowupCha
     (B.restrictIdeal_strictTransform_of_mem_of_ne Z H hs hZ a ha has hH)).comp_struct
   rw [h, ← Category.assoc (Blowup.strictTransform π Z H).subschemeι π p, ← hq, Category.assoc]
 
-private theorem restrictToSubscheme_map_comp_coordBlowupSubstMap (B : BlowupChart π c S s)
+theorem restrictToSubscheme_map_comp_coordBlowupSubstMap (B : BlowupChart π c S s)
     (hU : IsAffineOpen U) (hB : IsAffineOpen B.domain) (Z H : X.IdealSheafData)
     [QuasiCompact (strictTransformι π Z H)]
     (hs : s ∈ S) (hZ : restrictIdeal Z U = c.coordIdeal S)

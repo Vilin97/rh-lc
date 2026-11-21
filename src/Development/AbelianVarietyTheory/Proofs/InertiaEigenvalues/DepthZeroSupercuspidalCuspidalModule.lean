@@ -32,7 +32,9 @@ theorem exists_dual_frequently {M : Type} [AddCommGroup M] [Module ℂ M] (u : �
     choose i hi using this
     obtain ⟨j, hj⟩ := Finite.exists_infinite_fiber i
     obtain ⟨l, hl⟩ := LinearMap.exists_extend (β.coord j)
-    refine ⟨l, (Set.infinite_coe_iff.1 hj).mono fun m (h : i m = j) => ?_⟩
+    refine ⟨l, (Set.infinite_coe_iff.1 hj).mono ?_⟩
+    intro m h
+    change i m = j at h
     have := LinearMap.congr_fun hl ⟨u m, hm m⟩
     exact fun e => hi m (h ▸ this.symm.trans e)
   · obtain ⟨l, hl⟩ := Module.exists_dual_forall_apply_eq_one (K := ℂ) (s := b) (v := id) hl
@@ -42,6 +44,8 @@ theorem exists_dual_frequently {M : Type} [AddCommGroup M] [Module ℂ M] (u : �
 
 variable {g : ℕ} [Fact g.Prime] {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
 
+local notation "φ" => RingHom.mapMatrix (PadicInt.toZMod (p := g))
+local notation "ι" => RingHom.mapMatrix (algebraMap ℤ_[g] ℚ_[g])
 
 variable (g n) in
 def KOne : Subgroup (GL (Fin n) ℚ_[g]) := (red g n).ker.map (inc g n)

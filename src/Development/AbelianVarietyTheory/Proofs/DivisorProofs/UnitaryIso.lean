@@ -77,8 +77,7 @@ theorem lift_spec {k : ℕ} {V : Scheme.{0}} (z : Sx (disc.obj F ⨯ B) k V) :
     rw [lift, mk_fst] at h
     refine h.trans ?_
     change F.map (𝟙 V).op (Sx.map prod.fst z) = _
-    rw [op_id, FunctorToTypes.map_id_apply]
-    rfl
+    simp
   · have h := map_prodMap_snd (A := sch.obj V)
       (show sch.obj V ⟶ disc.obj F from disc.map (yonedaEquiv.symm (Sx.map prod.fst z))) (𝟙 B) (lift z)
     rw [lift, mk_snd] at h

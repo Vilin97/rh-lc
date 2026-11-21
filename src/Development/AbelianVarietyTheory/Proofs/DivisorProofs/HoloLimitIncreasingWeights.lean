@@ -101,7 +101,6 @@ theorem holo_limit_increasing_weights : ∀ (n : ℕ) (M : Type) [TopologicalSpa
   choose Cev hCev0 hCev using hEv
   have hmem : ∀ G : M → ℂ, Continuous G → Iw 0 G ≤ B → MemLp (fun x => G x - Fk 0 x) 2 μ :=
     fun G hG h => by
-    refine ⟨(hG.sub (hcont _ (hF 0))).aestronglyMeasurable, ?_⟩
     have h1 := ((hkey _).symm.trans_le (hbdB G hG h)).trans_lt hfin
     exact (ENNReal.rpow_lt_top_iff_of_pos (by norm_num)).mp h1
   let K : ℕ → Set (Lp ℂ 2 μ) := fun k => {v | ∃ G : M → ℂ, Holo n X.z G ∧

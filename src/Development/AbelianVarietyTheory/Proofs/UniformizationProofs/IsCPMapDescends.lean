@@ -259,7 +259,7 @@ theorem Eqns.ker (mul : ∀ (T : Over S') (x y : T ⟶ B'), toBase hβ (x * y) =
     have a := h.2.2 t y u
     have c : @id (T.left.presheaf.stalk z)ˣ (cubV M.c (T := Over.mk (T.hom ≫ f)) z J 1
       (toBase hβ (π y)) (toBase hβ (π u))) = 1 := (isCub_cubV M.c (T := Over.mk (T.hom ≫ f)) hJ).face _ _
-    rwa [ht, o, c, (isCub_cubV M'.c hI).face, _root_.one_mul, _root_.mul_one] at a
+    rwa [ht, o, c, (isCub_cubV M'.c hI).face _ _, _root_.one_mul, _root_.mul_one] at a
 
 theorem exists_lift [Flat q.left] [Surjective q.left] {T : Over S'} (x : T ⟶ B') :
     ∃ (T' : Over S') (ρ : T' ⟶ T) (x' : T' ⟶ G), Flat ρ.left ∧ Surjective ρ.left ∧ x' ≫ q = ρ ≫ x :=

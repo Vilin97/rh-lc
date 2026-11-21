@@ -115,10 +115,8 @@ theorem prod_eq_Wm (k r : ℕ) (c : Fin r → ℂ) : ∀ L : List (Fin r), L.Nod
         List.toFinset_cons]
       apply reflection_mul_weyl_cell
       intro hm
-      obtain ⟨b, hb, hba⟩ := List.mem_map.mp (List.mem_toFinset.mp hm)
-      have hba' : b = a := Fin.ext hba
-      subst hba'
-      exact (List.nodup_cons.1 h).1 hb
+      rw [List.mem_toFinset, List.mem_map_of_injective Fin.val_injective] at hm
+      exact (List.nodup_cons.1 h).1 hm
 
 theorem wCell_last (k r : ℕ) (c : Fin r → ℂ) : wCell k r (Fin.last r) c = Wm k r (Finset.range r) c := by
   unfold wCell

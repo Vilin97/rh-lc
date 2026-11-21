@@ -78,7 +78,7 @@ theorem smooth_projectionToBase_comp {k : Type u} [Field k] {V : Scheme.{u}}
     rw [hsucc]
     exact smooth_comp_of_isBlowupAlongIdealSheaf (u.center_snc j hj) (u.isBlowupAlongIdealSheaf_blowupMorphism j hj)
 
-private theorem le_pow_one_of_le {X : Scheme.{u}} {b Z : X.IdealSheafData} (h : b ≤ Z) :
+theorem le_pow_one_of_le {X : Scheme.{u}} {b Z : X.IdealSheafData} (h : b ≤ Z) :
     b ≤ Z ^ 1 := by
   rw [pow_one]; exact h
 

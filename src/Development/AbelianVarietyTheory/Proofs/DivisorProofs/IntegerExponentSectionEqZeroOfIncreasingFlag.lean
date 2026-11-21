@@ -58,7 +58,7 @@ theorem exists_lift {S A B : Type} [CommRing S] [Algebra K S] [CommRing A] [Alge
 theorem poly_mem {R L : Type} [CommRing R] [CommRing L] [Algebra K L] (ψ : Polynomial R →+* L) (Sb : Subalgebra K L)
     (hC : ∀ a, ψ (Polynomial.C a) ∈ Sb) (hX : ψ Polynomial.X ∈ Sb) (P : Polynomial R) : ψ P ∈ Sb := by
   refine Polynomial.induction_on P hC (fun p q hp hq => ?_) (fun n a h => ?_)
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  · rw [map_add]; exact add_mem hp hq
   · rw [pow_succ, ← mul_assoc, map_mul]; exact mul_mem h hX
 
 end TestRings

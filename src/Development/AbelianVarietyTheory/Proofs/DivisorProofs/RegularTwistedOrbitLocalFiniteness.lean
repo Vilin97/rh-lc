@@ -89,7 +89,7 @@ theorem finite_of_subset_mul (T K' : Subgroup G) (hK' : IsOpen (K' : Set G)) (D 
   simp only [Set.mem_iUnion, Set.mem_preimage, SetLike.mem_coe] at this
   obtain ⟨g, hg, hgd⟩ := this
   refine ⟨g, hg, ?_⟩
-  rw [← DoubleCoset.out_eq' T K' q, DoubleCoset.eq]
+  rw [← DoubleCoset.out_eq' q, DoubleCoset.eq]
   exact ⟨t, ht, g * d, hgd, by simp [hx, mul_assoc]⟩
 
 end Generic

@@ -220,7 +220,7 @@ theorem isotropic_five_of_localField (K : Type*) [Field K] [ValuativeRel K] [Top
     ∃ x : Fin 5 → K, x ≠ 0 ∧ ∑ i, a i * x i ^ 2 = 0 := by
   classical
   let e := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt K
-  let w : Valuation K ℤᵐ⁰ := (valuation K).map e.toMonoidWithZeroHom e.strictMono.monotone
+  let w : Valuation K ℤᵐ⁰ := Valuation.map ⟨e.toMonoidWithZeroHom, e.strictMono.monotone⟩ (valuation K)
   have hw : ∀ x, w x = e (valuation K x) := fun _ => rfl
   have hlt : ∀ x y, w x < w y ↔ valuation K x < valuation K y := fun x y => by
     rw [hw, hw]; exact e.strictMono.lt_iff_lt

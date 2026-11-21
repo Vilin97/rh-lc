@@ -28,7 +28,7 @@ theorem repr_mul_mem (hc : ∀ i j k, algebraMap ℚ R (b.repr (b i * b j) k) �
       Algebra.TensorProduct.basis_repr_tmul]
   rw [← B.sum_repr y, ← B.sum_repr y', Finset.sum_mul_sum]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [smul_mul_smul_comm, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+    simp only [smul_mul_smul_comm, map_sum, map_smul, Finset.sum_apply',
     Finsupp.smul_apply, smul_eq_mul, hB]
   exact S.sum_mem fun i _ => S.sum_mem fun j _ => S.mul_mem (S.mul_mem (hy i) (hy' j)) (hc i j k)
 

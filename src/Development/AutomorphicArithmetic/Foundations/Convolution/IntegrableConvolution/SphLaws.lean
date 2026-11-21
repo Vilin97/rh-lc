@@ -38,7 +38,7 @@ private theorem sph_at [ms : MeasurableSpace (GL (Fin n) (v.adicCompletion K))]
     (hm : m.IsHaarMeasure) (h1 : m (GLnLocal.integralGL (v.adicCompletion K) n) = 1)
     {p : MvPolynomial (Fin n) ℂ} {h : GL (Fin n) (v.adicCompletion K) → ℂ} (hs : GM.IsSph v p h) :
     ∃ H : SphericalHecke m (F := v.adicCompletion K) (n := n), (∀ x, (H : HeckeAlgebra m) x = h x) ∧
-      satakeTransform m H = polyEmb n (MvPolynomial.aeval (fun i : Fin n => MvPolynomial.esymm (Fin n) ℂ (i + 1)) p) := by
+      satakeTransform m H = polyEmb (n := n) (MvPolynomial.aeval (fun i : Fin n => MvPolynomial.esymm (Fin n) ℂ (i + 1)) p) := by
   obtain ⟨ms', bs', m', hm', h1', H, hH, S⟩ := hs
   obtain rfl : ms' = ms := bs'.measurable_eq.trans bs.measurable_eq.symm
   haveI := gl_sc (v.adicCompletion K) n

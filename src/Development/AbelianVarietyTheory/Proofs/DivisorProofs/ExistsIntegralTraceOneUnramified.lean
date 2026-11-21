@@ -49,7 +49,10 @@ theorem exists_integral_add_cc_eq_one : ∀ (E : Type) [Field E] [NumberField E]
         apply RingOfIntegers.ext
         rw [hco]
         rfl
-      have h1 : a ∈ Ideal.comap (algebraMap (𝓞 (maximalRealSubfield E)) (𝓞 E)) P := hPm ▸ hIm ⟨t, hA⟩
+      have h1 : a ∈ Ideal.comap (algebraMap (𝓞 (maximalRealSubfield E)) (𝓞 E)) P := by
+        change a ∈ Ideal.under (𝓞 (maximalRealSubfield E)) P
+        rw [hPm]
+        exact hIm ⟨t, hA⟩
       exact hA ▸ Ideal.mem_comap.1 h1
     have hσ : ∃ s, σ.toAlgHom s ≠ s := by
       by_contra hc

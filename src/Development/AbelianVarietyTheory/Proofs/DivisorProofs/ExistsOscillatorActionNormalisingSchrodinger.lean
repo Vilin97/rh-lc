@@ -167,7 +167,7 @@ theorem coordOf_mulVec (k : G →* (∀ w, Mat (R w) (S w)))
   simp only [coordOf, Function.comp_apply, Equiv.symm_symm, Equiv.symm_apply_apply]
   rw [blockDiagonal'_mulVec_apply]
   simp only [mul_apply, transpose_apply, Finset.mul_sum, Function.comp_apply]
-  exact Finset.sum_congr rfl fun _ _ => by simp only [coordOf]; ring
+  exact Finset.sum_congr rfl fun _ _ => by simp only [coordOf, transpose_apply]; ring
 
 end GlobalTheory.HoweD.Osc
 

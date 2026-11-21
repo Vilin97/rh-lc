@@ -29,9 +29,9 @@ namespace UpperTheory.Kum1
 
 private abbrev RT (q : ℕ) [NeZero q] : Shv ℤ := (restr (Int.castRingHom (ZMod q))).obj (tw q 1)
 
-private abbrev II (q : ℕ) [NeZero q] : Cx (ZMod q) := res _ (tw q 1)
+abbrev II (q : ℕ) [NeZero q] : Cx (ZMod q) := res _ (tw q 1)
 
-private abbrev JJ : Cx ℤ := res ℤ Gm
+abbrev JJ : Cx ℤ := res ℤ Gm
 
 private theorem sec_nat {R : Type} [CommRing R] {F G : Shv R} (φ : F ⟶ G) {V U : Scheme.{0}} (g : V ⟶ U)
     (x : Sec F U) : Sec.res g (Sec.map φ x) = Sec.map φ (Sec.res g x) :=

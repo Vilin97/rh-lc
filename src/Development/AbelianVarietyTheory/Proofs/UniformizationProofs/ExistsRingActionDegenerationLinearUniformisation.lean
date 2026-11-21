@@ -139,7 +139,7 @@ theorem exists_oAct : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → 
   have bal := fun a => (GlobalTheory.T.uniformisation_adjoint_endomorphisms_commute hL h₁ h₂ h₃ h₄ R I hI D A G hS U (AlgebraicClosure (FractionRing R)) _ _ (hadj a)).1
   obtain ⟨E₁, g₁, -, b₁, x₁, -⟩ := (GlobalTheory.IntEnd.exists_nsmul_and_neg hL R I hI D A G hS U).1 1
   have one := (hcalc (E 1) E₁ E₁).2.2.2.1 (by rw [EG, ιG.map_one, g₁, pow_one])
-  have add := fun a b => (hcalc (E a) (E b) (E (a + b))).2.2.2.2.1 (by rw [EG, EG, EG, ιG.map_add (f := _)]; rfl)
+  have add := fun a b => (hcalc (E a) (E b) (E (a + b))).2.2.2.2.1 (by rw [EG, EG, EG, ιG.map_add]; rfl)
   have mul := fun a b => (hcalc (E b) (E a) (E (a * b))).2.2.2.2.2 (by rw [EG, EG, EG, ιG.map_mul])
   let M : Module O D.toPre.X :=
     { smul := fun a y => (E (star a)).h y

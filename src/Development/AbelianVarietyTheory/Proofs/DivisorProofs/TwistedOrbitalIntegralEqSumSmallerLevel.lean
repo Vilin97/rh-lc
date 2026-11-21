@@ -63,8 +63,7 @@ theorem Gam_eq_stab {Γ K U : Subgroup G} (hUK : U ≤ K) (x : G) (k : K) :
     let s := (stabEquiv hUK x k).symm ⟨w, hw⟩
     exact ⟨s.1, s.2, rfl⟩
   · rintro ⟨a, ha, rfl⟩
-    have := (stabEquiv hUK x k ⟨a, ha⟩).2
-    simpa using this
+    exact (stabEquiv hUK x k ⟨a, ha⟩).2
 
 variable [TopologicalSpace G] [IsTopologicalGroup G]
 
@@ -206,7 +205,7 @@ theorem twOrb_eq_sum_smallerLevel : ∀ (G : Type) [Group G] [TopologicalSpace G
     have hq : e.symm ⟨c, ω⟩ = DoubleCoset.mk T K' (Quotient.out c * (Quotient.out ω.out : K)) := by
       have : ω = Quotient.mk'' ((Quotient.out ω.out : K) : K ⧸ S) := by
         rw [QuotientGroup.out_eq', Quotient.out_eq']
-      have h := fibRep_symm_mk hK'K Quotient.out (DoubleCoset.out_eq' T K) c (Quotient.out ω.out)
+      have h := fibRep_symm_mk hK'K Quotient.out (DoubleCoset.out_eq' (H := T) (K := K)) c (Quotient.out ω.out)
       rw [← this] at h
       exact h
     obtain ⟨γ, hγ, u, hu, hout⟩ := (@DoubleCoset.eq _ _ T K' (Quotient.out c * (Quotient.out ω.out : K))

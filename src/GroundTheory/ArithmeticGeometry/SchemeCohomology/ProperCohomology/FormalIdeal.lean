@@ -136,10 +136,11 @@ lemma quotPowπ_map (n : ℕ) : quotPowπ I F (n + 1) ≫ quotPowMap I F n = quo
 def quotPowSC (n : ℕ) : ShortComplex X.Modules :=
   ShortComplex.mk (idealPowι I F (n + 1)) (quotPowπ I F n) (cokernel.condition _)
 
-lemma quotPowSC_shortExact (n : ℕ) : (quotPowSC I F n).ShortExact where
-  exact := ShortComplex.exact_cokernel _
-  mono_f := by change Mono (idealPowι I F (n + 1)); infer_instance
-  epi_g := by change Epi (quotPowπ I F n); infer_instance
+lemma quotPowSC_shortExact (n : ℕ) : (quotPowSC I F n).ShortExact :=
+  ShortComplex.ShortExact.mk' (S := quotPowSC I F n)
+    (ShortComplex.exact_cokernel (idealPowι I F (n + 1)))
+    (inferInstanceAs (Mono (idealPowι I F (n + 1))))
+    (inferInstanceAs (Epi (quotPowπ I F n)))
 
 section Qcoh
 

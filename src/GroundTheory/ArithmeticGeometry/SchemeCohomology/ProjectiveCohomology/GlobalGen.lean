@@ -42,7 +42,7 @@ variable {A : Type u} [CommRing A] {n : ℕ}
 private abbrev yR (k j : Fin (n + 1)) : Γ(projectiveSpace A n, stdOpen A n k) :=
   ProjTwist.ratio (grading A n) (X_mem k) (X_mem j)
 
-private def upowS (k : Fin (n + 1)) (m : ℤ) :
+def upowS (k : Fin (n + 1)) (m : ℤ) :
     ((preMod (projectiveSpace A n)).obj (twistingSheaf (grading A n) m)).obj (op (stdOpen A n k)) :=
   ProjTwist.upow (grading A n) (X_mem k) m
 

@@ -82,7 +82,7 @@ theorem range_affineSpaceInl_subset_range_opensPreimageProjLeft (k : Type u) [Fi
     exact x.2
   exact ⟨⟨(U.ι ≫ affineSpaceInl k M p) x, hmem⟩, rfl⟩
 
-private theorem exists_zeroSectionOverOpen (k : Type u) [Field k] (M p : ℕ)
+theorem exists_zeroSectionOverOpen (k : Type u) [Field k] (M p : ℕ)
     (U : (affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).Opens) :
     ∃ z, z ≫ (opensPreimageProjLeft k M p U).ι = U.ι ≫ affineSpaceInl k M p ∧
       z ≫ (projLeft k M p ∣_ U) = 𝟙 _ := by

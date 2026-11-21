@@ -24,7 +24,7 @@ noncomputable section
 
 namespace FunctorialResolution.EmbeddedResolution
 
-private theorem affineSpace_reindex_symm_comp_reindex {n m : Type u} (e : n ≃ m) (S : Scheme.{u}) :
+theorem affineSpace_reindex_symm_comp_reindex {n m : Type u} (e : n ≃ m) (S : Scheme.{u}) :
     AffineSpace.reindex (e.symm : m → n) S ≫ AffineSpace.reindex (e : n → m) S =
       𝟙 (AffineSpace n S) := by
   ext1
@@ -36,7 +36,7 @@ private theorem affineSpace_reindex_symm_comp_reindex {n m : Type u} (e : n ≃ 
           (AffineSpace.coord S i)) = AffineSpace.coord S i
     simp
 
-private theorem affineSpace_reindex_comp_reindex_symm {n m : Type u} (e : n ≃ m) (S : Scheme.{u}) :
+theorem affineSpace_reindex_comp_reindex_symm {n m : Type u} (e : n ≃ m) (S : Scheme.{u}) :
     AffineSpace.reindex (e : n → m) S ≫ AffineSpace.reindex (e.symm : m → n) S =
       𝟙 (AffineSpace m S) := by
   ext1

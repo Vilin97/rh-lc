@@ -155,6 +155,13 @@ theorem lintegral_box_translate (ι κ : Type) [Fintype ι] [Fintype κ] (f : (�
       fun k => AddCircle.measurePreserving_mk (2 * Real.pi) (-Real.pi)
   have hadd : ∀ θ, e (θ0 + θ) = e θ0 + e θ := by
     intro θ; funext i k; simp [e]
+  haveI : (volume : Measure (κ → AddCircle (2 * Real.pi))).IsAddLeftInvariant := by
+    rw [volume_pi]
+    infer_instance
+  haveI : (volume : Measure (ι → κ → AddCircle (2 * Real.pi))).IsAddLeftInvariant := by
+    rw [volume_pi]
+    set_option synthInstance.maxSize 512 in
+      infer_instance
   calc ∫⁻ θ in {θ : ι → κ → ℝ | ∀ i k, θ i k ∈ Set.Ioc (-Real.pi) Real.pi}, f (θ0 + θ)
       = ∫⁻ θ in {θ : ι → κ → ℝ | ∀ i k, θ i k ∈ Set.Ioc (-Real.pi) Real.pi}, (fun u => g (e θ0 + u)) (e θ) := by
         refine lintegral_congr fun θ => ?_

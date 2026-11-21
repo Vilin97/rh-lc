@@ -226,13 +226,13 @@ private theorem exists_etale_eval₂Hom_of_submersivePresentation {k S : Type u}
   show Algebra.Etale (MvPolynomial (ULift.{u} (Fin n)) k) S
   infer_instance
 
-private theorem homOfLE_comp_map_comp_affineSpaceFinToSpec {X : Scheme.{u}} {k : Type u} [Field k]
+theorem homOfLE_comp_map_comp_affineSpaceFinToSpec {X : Scheme.{u}} {k : Type u} [Field k]
     {p : X ⟶ Spec (CommRingCat.of k)} {U : X.Opens} {m : ℕ} (c : EtaleChart p U m)
     {V : X.Opens} (hVU : V ≤ U) :
     (X.homOfLE hVU ≫ c.map) ≫ affineSpaceFinToSpec k m = V.ι ≫ p := by
   rw [Category.assoc, c.comp_struct, ← Category.assoc, Scheme.homOfLE_ι]
 
-private theorem etale_homOfLE_comp_map {X : Scheme.{u}} {k : Type u} [Field k]
+theorem etale_homOfLE_comp_map {X : Scheme.{u}} {k : Type u} [Field k]
     {p : X ⟶ Spec (CommRingCat.of k)} {U : X.Opens} {m : ℕ} (c : EtaleChart p U m)
     {V : X.Opens} (hVU : V ≤ U) :
     AlgebraicGeometry.Etale (X.homOfLE hVU ≫ c.map) := by
@@ -252,7 +252,7 @@ theorem EtaleChart.restrict_map {X : Scheme.{u}} {k : Type u} [Field k]
     {V : X.Opens} (hVU : V ≤ U) :
     (c.restrict hVU).map = X.homOfLE hVU ≫ c.map := rfl
 
-private theorem homOfVector_comp_affineSpaceFinToSpec {X : Scheme.{u}} {k : Type u} [Field k]
+theorem homOfVector_comp_affineSpaceFinToSpec {X : Scheme.{u}} {k : Type u} [Field k]
     (p : X ⟶ Spec (CommRingCat.of k)) (U : X.Opens) {m : ℕ}
     (v : ULift.{u} (Fin m) → U.toScheme.presheaf.obj (op ⊤)) :
     AffineSpace.homOfVector (U.ι ≫ p) v ≫ affineSpaceFinToSpec k m = U.ι ≫ p := by

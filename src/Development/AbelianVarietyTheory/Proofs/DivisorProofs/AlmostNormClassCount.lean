@@ -72,8 +72,10 @@ theorem neg_one_not_mem_normGroup {K L : Type} [Field K] [NumberField K] [Field 
   rw [mem_normGroup_iff_form b h0 h1]
   rintro ⟨x, y, hxy⟩
   let f := InfinitePlace.Completion.ringEquivRealOfIsReal hw
-  have hf : f (algebraMap K w.Completion δ) = InfinitePlace.embedding_of_isReal hw δ :=
-    InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw ((WithAbs.equiv _).symm δ)
+  have hf : f (algebraMap K w.Completion δ) = InfinitePlace.embedding_of_isReal hw δ := by
+    rw [InfinitePlace.Completion.algebraMap_apply]
+    simpa [f, InfinitePlace.Completion.instCoe] using
+      InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw ((WithAbs.equiv _).symm δ)
   have := congrArg f hxy
   simp only [Units.val_neg, Units.val_one, map_neg, map_one, map_sub, map_mul, map_pow, hf] at this
   nlinarith [sq_nonneg (f x), sq_nonneg (f y)]

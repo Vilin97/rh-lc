@@ -33,11 +33,10 @@ theorem finiteDimensional_fixed_of_equiv {G V W : Type} [Group G] [AddCommGroup 
     have h2 := LinearMap.congr_fun (T.isIntertwining' k) (T.toLinearEquiv.symm y)
     simp only [LinearMap.comp_apply] at h2
     rw [LinearEquiv.apply_symm_apply]
-    convert h2.trans ?_ using 1
-    · rfl
-    · change τ k (T.toLinearEquiv (T.toLinearEquiv.symm y)) = y
-      rw [LinearEquiv.apply_symm_apply]
-      exact hy k hk
+    apply h2.trans
+    change τ k (T.toLinearEquiv (T.toLinearEquiv.symm y)) = y
+    rw [LinearEquiv.apply_symm_apply]
+    exact hy k hk
   exact Submodule.finiteDimensional_of_le hle
 
 theorem exists_gelfand_anti : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (n : ℕ) (w : Pl E), ∃ θ : UL n w → UL n w, (∀ x y, θ (x * y) = θ y * θ x) ∧ (∀ x, θ (θ x) = x) ∧ ∀ g, ∃ a ∈ KL n w, ∃ b ∈ KL n w, θ g = a * g * b := by

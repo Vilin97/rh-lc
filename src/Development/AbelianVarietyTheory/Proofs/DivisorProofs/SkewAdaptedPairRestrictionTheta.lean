@@ -49,7 +49,17 @@ theorem exists_ratLagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     have h2 := hcross u' hu' z
     have h3 := hcross u hu z'
     have h4 := GlobalTheory.T.symplectic_form_restricted_plane F E σ n d d₁ X.J W.J W₁.J H'.ι hH.gram z z'
+    change symp (cA σ) (-1) (incM F X.J) (incM F W.J)
+      (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ)
+      (incM F (1 : Matrix (Fin n) (Fin n) E) * z' * (incM F H'.ι)ᵀ) =
+      symp (cA σ) (-1) (incM F X.J) (incM F W₁.J) z z' at h4
     rw [M₁.co.form, hz, hz', zero_dotProduct, zero_dotProduct, sub_zero] at h4
+    change symp (cA σ) (-1) (incM F X.J) (incM F W.J) _ _ = 0 at h4
+    change symp (cA σ) (-1) (incM F X.J) (incM F W.J) u u' = 0 at h1
+    change symp (cA σ) (-1) (incM F X.J) (incM F W.J)
+      (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ) u' = 0 at h2
+    change symp (cA σ) (-1) (incM F X.J) (incM F W.J)
+      (incM F (1 : Matrix (Fin n) (Fin n) E) * z' * (incM F H'.ι)ᵀ) u = 0 at h3
     rw [hD] at h1 h2 h3 h4
     apply (AdeleRing.algebraMap_injective (𝓞 F) F)
     have ha1 : (fun i => algebraMap F (AF F) (a.1 i)) = (hat a).1 := rfl
@@ -82,6 +92,9 @@ theorem exists_ratLagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
       rw [← he, LinearEquiv.apply_symm_apply]
     refine ⟨Matrix.vecMulVec (t • y) (incV F H'.x), ⟨t • y, rfl⟩, t • z, by simp [hz], fun φ => ?_⟩
     have h0 := hcross _ ⟨t • y, rfl⟩ (t • z)
+    change symp (cA σ) (-1) (incM F X.J) (incM F W.J)
+      (incM F (1 : Matrix (Fin n) (Fin n) E) * (t • z) * (incM F H'.ι)ᵀ)
+      (Matrix.vecMulVec (t • y) (incV F H'.x)) = 0 at h0
     rw [hD] at h0
     rw [Darboux.rho, Darboux.rho, schr_comp, ← map_add (f := _)]
     have hs : (M.co.e (Matrix.vecMulVec (t • y) (incV F H'.x))).1 ⬝ᵥ

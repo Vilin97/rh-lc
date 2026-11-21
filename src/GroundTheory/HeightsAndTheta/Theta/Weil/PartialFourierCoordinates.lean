@@ -33,7 +33,7 @@ private theorem sliceInl_apply (u : κ → mixedSpace K) :
   funext s
   cases s <;> rfl
 
-private theorem sumElim_hasTemperateGrowth (c : ι → mixedSpace K) :
+theorem sumElim_hasTemperateGrowth (c : ι → mixedSpace K) :
     (fun u : κ → mixedSpace K ↦ (Sum.elim c u : (ι ⊕ κ) → mixedSpace K)).HasTemperateGrowth := by
   have h : (fun u : κ → mixedSpace K ↦ (Sum.elim c u : (ι ⊕ κ) → mixedSpace K)) =
       fun u ↦ sliceInl (ι := ι) u + Sum.elim c 0 := by
@@ -44,7 +44,7 @@ private theorem sumElim_hasTemperateGrowth (c : ι → mixedSpace K) :
   exact (sliceInl (K := K) (ι := ι) (κ := κ)).hasTemperateGrowth.add
     (Function.HasTemperateGrowth.const _)
 
-private theorem sumElim_upper (c : ι → mixedSpace K) :
+theorem sumElim_upper (c : ι → mixedSpace K) :
     ∃ (k : ℕ) (C : ℝ), ∀ u : κ → mixedSpace K,
       ‖u‖ ≤ C * (1 + ‖(Sum.elim c u : (ι ⊕ κ) → mixedSpace K)‖) ^ k := by
   refine ⟨1, 1, fun u ↦ ?_⟩

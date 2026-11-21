@@ -207,14 +207,14 @@ theorem restrictIdeal_comap_disjointUnionMap_summandOpen (D : FiniteOpenCoverWit
   rw [restrictIdeal_eq_comap_ι, restrictIdeal_eq_comap_ι, ← Scheme.IdealSheafData.comap_comp,
     ← Scheme.IdealSheafData.comap_comp, summandOpen_ι_comp_disjointUnionMap]
 
-private theorem summandIso_inv_comp_map_comp_affineSpaceFinToSpec (D : FiniteOpenCoverWithIdeals T) (i : D.idx) {n : ℕ}
+theorem summandIso_inv_comp_map_comp_affineSpaceFinToSpec (D : FiniteOpenCoverWithIdeals T) (i : D.idx) {n : ℕ}
     (c : EtaleChart T.structMap (D.opens i) n) :
     ((D.summandIso i).inv ≫ c.map) ≫ affineSpaceFinToSpec T.base n =
       (D.summandOpen i).ι ≫ (D.disjointUnionMap ≫ T.structMap) := by
   rw [Category.assoc, c.comp_struct, ← Category.assoc, ← summandOpen_ι_comp_disjointUnionMap,
     Category.assoc]
 
-private theorem etale_summandIso_inv_comp_map (D : FiniteOpenCoverWithIdeals T) (i : D.idx) {n : ℕ}
+theorem etale_summandIso_inv_comp_map (D : FiniteOpenCoverWithIdeals T) (i : D.idx) {n : ℕ}
     (c : EtaleChart T.structMap (D.opens i) n) :
     Etale ((D.summandIso i).inv ≫ c.map) := by
   have h1 : Etale c.map := c.isEtale

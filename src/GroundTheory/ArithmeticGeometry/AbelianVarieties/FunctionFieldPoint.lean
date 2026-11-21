@@ -51,7 +51,7 @@ section Lift
 
 variable {L : Type*} [Field L] [Algebra F L] {u v : L}
 
-private theorem eval₂_polynomial (h : (W.baseChange L).toAffine.Equation u v) :
+theorem eval₂_polynomial (h : (W.baseChange L).toAffine.Equation u v) :
     W.toAffine.polynomial.eval₂ (eval₂RingHom (algebraMap F L) u) v = 0 := by
   have e := (equation_iff _ _).mp h
   simp only [WeierstrassCurve.baseChange, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂,

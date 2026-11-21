@@ -124,6 +124,7 @@ theorem cellMon_aevalQ_ne {I : ∀ k, Finset (ι k)} (hI : ∀ k, ∀ i ∈ I k,
 
 
 open Classical in
+variable (y) in
 def val (T : Submonoid (MRingOver ℚ ι)) (x : LocalizedModule T (MRingOver ℚ ι ⧸ idealOver y ℚ)) : Ω :=
   if hT : ∀ t ∈ T, aeval y t ≠ 0 then
     x.liftOn (fun p => evQ y p.1 / aeval y (p.2 : MRingOver ℚ ι)) (by
@@ -156,7 +157,7 @@ theorem val_add (T : Submonoid (MRingOver ℚ ι)) (x x' : LocalizedModule T (MR
         have hs := hT _ s.2
         have hs' := hT _ s'.2
         field_simp
-  · simp only [val, dif_neg hT, add_zero]
+  · simp only [val, dite_eq_right hT, add_zero]
 
 theorem val_smul (T : Submonoid (MRingOver ℚ ι)) (r : ℚ)
     (x : LocalizedModule T (MRingOver ℚ ι ⧸ idealOver y ℚ)) : val y T (r • x) = r • val y T x := by
@@ -164,7 +165,7 @@ theorem val_smul (T : Submonoid (MRingOver ℚ ι)) (r : ℚ)
   · induction x using LocalizedModule.induction_on with
     | h m s =>
       rw [LocalizedModule.smul'_mk, val_mk hT, val_mk hT, map_smul, smul_div_assoc]
-  · simp only [val, dif_neg hT, smul_zero]
+  · simp only [val, dite_eq_right hT, smul_zero]
 
 
 variable (y) in

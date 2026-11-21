@@ -370,7 +370,7 @@ private theorem mvPolynomialToChart_surjective (R : Type u) [CommRing R] {σ : T
     exact hr.symm
   exact (mul_cancel_right_mem_nonZeroDivisors hnzd).mp h
 
-private theorem exists_ringEquiv_away_mvPolynomial (R : Type u) [CommRing R] {σ : Type v} [DecidableEq σ]
+theorem exists_ringEquiv_away_mvPolynomial (R : Type u) [CommRing R] {σ : Type v} [DecidableEq σ]
     (S : Finset σ) (s : σ) (hs : s ∈ S) :
     ∃ e : HomogeneousLocalization.Away (Blowup.reesGrading (coordIdeal R S))
         (Blowup.reesGenerator (coordIdeal R S) (coordIdealGen R S s hs)) ≃+* MvPolynomial σ R,

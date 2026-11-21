@@ -96,14 +96,35 @@ def parIndTwistEquiv (e : (Σ a, m a) ≃ n) (ρ : Representation ℂ (Levi k m)
     show (deltaHalf k m (leviProj k e q) : ℂ) • (χ (GeneralLinearGroup.det (leviEmb k e (leviProj k e q))) : ℂ) •
         ρ (leviProj k e q) v = (χ (GeneralLinearGroup.det (q : GL n k)) : ℂ) •
           (deltaHalf k m (leviProj k e q) : ℂ) • ρ (leviProj k e q) v
-    rw [det_leviEmb, det_parab, smul_comm]
+    let g := leviProj k e q
+    have hg : leviEmb k e g ∈ parab k e := by
+      apply mem_parab_iff.2
+      intro a b i j hab
+      simp [leviEmb, blockDiagonal'_apply, hab.ne']
+    have hproj : leviProj k e ⟨leviEmb k e g, hg⟩ = g := by
+      funext a
+      ext i j
+      simp [leviEmb, blockDiagonal'_apply_eq]
+    have hdet := det_parab k e ⟨leviEmb k e g, hg⟩
+    rw [hproj, ← det_parab k e q] at hdet
+    rw [hdet, smul_comm]
 
 def multiProdTwistEquiv (e : (Σ a, m a) ≃ n) {X : α → Type} [∀ a, AddCommGroup (X a)] [∀ a, Module ℂ (X a)]
     (π : ∀ a, Representation ℂ (GL (m a) k) (X a)) {χ : kˣ →* ℂˣ} (hχ : IsSmoothChar χ) :
     (twist (multiProd e π) (detChar n χ)).Equiv (multiProd e fun a => twist (π a) (detChar (m a) χ)) :=
   (parIndTwistEquiv e (piTensor π) hχ).trans (parIndEquiv e (.mk (.refl ℂ _) fun g => by
+    have hg : leviEmb k e g ∈ parab k e := by
+      apply mem_parab_iff.2
+      intro a b i j hab
+      simp [leviEmb, blockDiagonal'_apply, hab.ne']
+    have hproj : leviProj k e ⟨leviEmb k e g, hg⟩ = g := by
+      funext a
+      ext i j
+      simp [leviEmb, blockDiagonal'_apply_eq]
+    have hdet : GeneralLinearGroup.det (leviEmb k e g) = ∏ a, GeneralLinearGroup.det (g a) := by
+      simpa only [hproj] using det_parab k e ⟨leviEmb k e g, hg⟩
     ext x
-    simp [det_leviEmb, MultilinearMap.map_smul_univ]))
+    simp [hdet, MultilinearMap.map_smul_univ]))
 
 end Products
 

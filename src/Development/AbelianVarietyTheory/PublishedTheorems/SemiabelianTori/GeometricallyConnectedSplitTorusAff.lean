@@ -58,7 +58,7 @@ theorem of_isGrpPullback (h : SemiAbelianHomExtension) (hS : ReciprocityTheory.C
       Category.assoc] at h₁
     have : IsIso a.hom.left := inferInstanceAs (IsIso ((Over.forget _).map a.hom))
     exact (cancel_epi (pullback.fst G'.hom e)).1 ((cancel_epi a.hom.left).1 h₁)
-  exact ⟨F, ⟨hF, key⟩, fun F' hF' => over_hom_ext_of_isPullback hφ.1 (hF'.2.symm.trans key)⟩
+  exact ⟨F, ⟨hF, key⟩, fun F' hF' => ExtUnique.over_hom_ext_of_isPullback hφ.1 (hF'.2.symm.trans key)⟩
 
 theorem existsUnique_oAct_of_isGrpPullback (h : SemiAbelianHomExtension)
     (hS : ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsNormalScheme S) {j : U ⟶ S} [IsOpenImmersion j] [IsDominant j]
@@ -83,7 +83,7 @@ theorem existsUnique_iso_of_isGrpPullback (h : SemiAbelianHomExtension)
   obtain ⟨_, _⟩ := flat_and_isSeparated_of_isSemiAbelian H hH
   obtain ⟨F, ⟨hF, hF'⟩, hu⟩ := h.of_isGrpPullback hS hG hH hφ hψ e.hom
   obtain ⟨F₁, ⟨-, hF₁⟩, -⟩ := h.of_isGrpPullback hS hH hG hψ hφ e.inv
-  obtain ⟨h₁, h₂⟩ := comp_eq_id_of_isPullback hφ.1 hψ.1 e F F₁ hF' hF₁
+  obtain ⟨h₁, h₂⟩ := ExtUnique.comp_eq_id_of_isPullback hφ.1 hψ.1 e F F₁ hF' hF₁
   exact ⟨⟨F, F₁, h₁, h₂⟩, ⟨hF, hF'⟩, fun E hE => Iso.ext (hu E.hom hE)⟩
 
 theorem existsUnique_iso_of_extensions (h : SemiAbelianHomExtension)

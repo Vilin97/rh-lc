@@ -75,7 +75,7 @@ theorem io_sum {O : Type} [CommRing O] (N : NumD O) {κ : Type} (s : Finset κ) 
     rw [Finset.sum_insert hk, Finset.prod_insert hk, N.io_add, ih]
     congr 1
     have := N.ioHom.map_zpow (Multiplicative.ofAdd (y k)) (m k)
-    simpa [← ofAdd_zsmul] using this
+    simpa [NumD.ioHom, ← ofAdd_zsmul] using this
 
 def qTH {O : Type} [CommRing O] (N : NumD O) (k : ℕ) : Multiplicative N.X →* N.QT k :=
   MonoidHom.mk' (fun z => N.qTriv k z.toAdd) fun a b => Subtype.ext (Prod.ext

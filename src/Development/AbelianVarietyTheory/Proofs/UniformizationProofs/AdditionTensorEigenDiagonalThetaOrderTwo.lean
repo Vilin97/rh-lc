@@ -127,7 +127,8 @@ theorem tensor_eq_smul {F : Type} [Field F] {X Y : Scheme.{0}} {L : LB X} (hL : 
         rw [ThetaLin.gs_scal_comp, gs_eq _ z ⊤ trivial, gs_eq _ z ⊤ trivial, scal, scal, map_neg, map_neg, map_neg,
           map_neg]
       rw [Fin.sum_univ_add]
-      simp only [Fin.append_left, Fin.append_right, SecMod.sval_smul hJ, ng, _root_.mul_assoc, neg_mul]
+      simp only [Fin.append_left, Fin.append_right]
+      simp only [SecMod.sval_smul hJ, ng, _root_.mul_assoc, neg_mul]
       rw [H Z r₁ r₂ h z J hJ, Finset.sum_neg_distrib, Finset.mul_sum, add_neg_cancel])
   rw [Fin.sum_univ_add] at key
   simp only [Fin.append_left, Fin.append_right, ← TensorProduct.smul_tmul', neg_smul, TensorProduct.neg_tmul,

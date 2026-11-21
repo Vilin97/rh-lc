@@ -61,7 +61,7 @@ theorem real_pos_of_int_ge {ι : Type} [Fintype ι] (M : ι → ι → ℝ) (hs 
     ext i k
     simp [hs i k]
   refine (hR x).lt_of_ne fun h0 => ?_
-  have hker : (Matrix.of M) *ᵥ x = 0 := (hpsd.dotProduct_mulVec_zero_iff x).1 ((hform x).trans h0.symm)
+  have hker : (Matrix.of M) *ᵥ x = 0 := (hpsd.dotProduct_mulVec_zero_iff).1 ((hform x).trans h0.symm)
   have hker' : x ᵥ* (Matrix.of M) = 0 := by
     ext k
     have := congrFun hker k

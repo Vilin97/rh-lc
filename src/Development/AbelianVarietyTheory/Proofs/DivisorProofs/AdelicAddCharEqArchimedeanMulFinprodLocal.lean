@@ -48,7 +48,6 @@ theorem exists_finset_trivial (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) :
         simpa using intFin_nsmul (F := F) 0 0
       show LinearMap.inr F (Ainf F) (Af F) (intFin 0) = (0 : AF F)
       rw [h, map_zero]
-      rfl
     simp [this, AddChar.map_zero_eq_one]
   obtain ⟨I, u, hu, hsub⟩ := isOpen_pi_iff.1 hopen 0 h0
   refine ⟨I, fun y hy => GlobalTheory.eq_one_of_forall_norm_pow_sub_one_lt _ fun n => ?_⟩
@@ -59,7 +58,6 @@ theorem exists_finset_trivial (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) :
   have e : (ι (n • y) : AF F) = n • (ι y : AF F) := by
     show LinearMap.inr F (Ainf F) (Af F) (intFin (n • y)) = _
     rw [intFin_nsmul, map_nsmul]
-    rfl
   have h := hsub hmem
   simp only [Set.mem_setOf_eq] at h
   rwa [e, AddChar.map_nsmul_eq_pow] at h

@@ -112,7 +112,7 @@ theorem of_coords {LL : Type} [Field LL] [Algebra ℚ_[l] LL] [FiniteDimensional
   have e : (fun g => ρ g v) = fun g => ∑ i, b.coord i (ρ g v) • b i :=
     funext fun g => (b.sum_repr _).symm
   rw [e]
-  exact continuous_finset_sum _ fun i _ => (hc v _).smul continuous_const
+  exact continuous_finsetSum _ fun i _ => (hc v _).smul continuous_const
 
 theorem pi {LL : FinExt l} {m : ℕ} (ρ : Representation ↥LL.1 ↥(GK K) (Fin m → ↥LL.1))
     (hc : ∀ v, Continuous fun g => ρ g v) (hV : IsDR (P.PD K) ρ) : IsPst P ρ :=

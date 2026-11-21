@@ -19,7 +19,7 @@ namespace UpperTheory.V.Fb
 variable (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (a : ℕ)
 
 omit [NumberField E] [IsTotallyReal E] in
-private theorem toUnits_mk (y : GL (Fin a) (TR.Rinf E)) (h : y.val ∈ Matrix.unitaryGroup (Fin a) (TR.Rinf E)) :
+theorem toUnits_mk (y : GL (Fin a) (TR.Rinf E)) (h : y.val ∈ Matrix.unitaryGroup (Fin a) (TR.Rinf E)) :
     Unitary.toUnits (⟨y.val, h⟩ : TR.Kinf E a) = y := Units.ext rfl
 
 def cptEq : TR.Kinf E a ≃* archCompact E a where

@@ -35,7 +35,7 @@ theorem ideal_norm_class_congr {I J : (Ideal (𝓞 K'))⁰} (h : ClassGroup.mk0 
   rw [map_mul, map_mul, Ideal.relNorm_singleton, Ideal.relNorm_singleton] at this
   exact this
 
-private def nFun (c : ClassGroup (𝓞 K')) : ClassGroup (𝓞 K) :=
+def nFun (c : ClassGroup (𝓞 K')) : ClassGroup (𝓞 K) :=
   ClassGroup.mk0 (idNorm K (ClassGroup.mk0_surjective c).choose)
 
 private theorem norm_function_mk (I : (Ideal (𝓞 K'))⁰) : nFun K (ClassGroup.mk0 I) = ClassGroup.mk0 (idNorm K I) :=

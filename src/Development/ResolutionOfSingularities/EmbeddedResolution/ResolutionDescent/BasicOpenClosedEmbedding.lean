@@ -110,7 +110,7 @@ private theorem appTop_comp_projLeft_coord (k : Type u) [Field k] (M : ℕ) {T :
           (⟨Sum.inl j⟩ : ULift.{u, 0} (Fin M ⊕ Fin 1))) := by
   rw [Scheme.Hom.comp_appTop, CommRingCat.comp_apply, projLeft_appTop_coord]
 
-private theorem exists_replaceLastCoord (k : Type u) [Field k] (M : ℕ)
+theorem exists_replaceLastCoord (k : Type u) [Field k] (M : ℕ)
     (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)))
     (s : ↑((↑(pullbackBasicOpen k M G) : Scheme.{u}).presheaf.obj (Opposite.op ⊤))) :
     ∃ f : (↑(pullbackBasicOpen k M G) : Scheme.{u}) ⟶ affineSpaceTimesLine k M,
@@ -201,7 +201,7 @@ private theorem mem_pullbackBasicOpen_iff (k : Type u) [Field k] (M : ℕ)
   Iff.symm (iff_of_eq (congrArg (fun U : (affineSpaceTimesLine k M).Opens => y ∈ U)
     (Scheme.preimage_basicOpen (projLeft k M 1) G)))
 
-private theorem exists_comp_ι_eq_replaceLastCoord (k : Type u) [Field k] (M : ℕ)
+theorem exists_comp_ι_eq_replaceLastCoord (k : Type u) [Field k] (M : ℕ)
     (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)))
     (s : ↑((↑(pullbackBasicOpen k M G) : Scheme.{u}).presheaf.obj (Opposite.op ⊤))) :
     ∃ g : (↑(pullbackBasicOpen k M G) : Scheme.{u}) ⟶ (↑(pullbackBasicOpen k M G) : Scheme.{u}),
@@ -253,7 +253,7 @@ private theorem appTop_surjective_of_isAffine {X Y : Scheme.{u}} (f : X ⟶ Y)
     Function.Surjective (ConcreteCategory.hom (Scheme.Hom.appTop f)) :=
   (IsClosedImmersion.isAffine_surjective_of_isAffine ..).2
 
-private theorem exists_appTop_eq_of_isClosedImmersion (k : Type u) [Field k] (M : ℕ) {A : Scheme.{u}}
+theorem exists_appTop_eq_of_isClosedImmersion (k : Type u) [Field k] (M : ℕ) {A : Scheme.{u}}
     (ρ : A ⟶ affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))) [IsClosedImmersion ρ]
     (F : ↑(A.presheaf.obj (Opposite.op ⊤))) :
     ∃ G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)),
@@ -385,7 +385,7 @@ private theorem exists_isClosedImmersion_pullbackBasicOpen (k : Type u) [Field k
       replaceLastCoord_appTop_lastCoordinate, replaceLastCoord_appTop_pullbackAlongProjection, ← unitOnPullbackBasicOpen_val, map_mul,
       map_add, h0, zero_add, ← map_mul, Units.inv_mul, map_one]
 
-private theorem exists_isClosedImmersion_basicOpen_pullbackBasicOpen (k : Type u) [Field k] (M : ℕ) {A : Scheme.{u}}
+theorem exists_isClosedImmersion_basicOpen_pullbackBasicOpen (k : Type u) [Field k] (M : ℕ) {A : Scheme.{u}}
     (ρ : A ⟶ affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))) [IsClosedImmersion ρ]
     (F : ↑(A.presheaf.obj (Opposite.op ⊤))) :
     ∃ e : (↑(A.basicOpen F) : Scheme.{u}) ⟶

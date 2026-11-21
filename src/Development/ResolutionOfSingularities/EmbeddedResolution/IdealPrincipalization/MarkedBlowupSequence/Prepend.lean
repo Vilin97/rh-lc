@@ -61,7 +61,7 @@ private theorem le_length_of_succ_le_prepend_length (Z : X.IdealSheafData) (hZ :
   rw [prepend_length] at h
   omega
 
-private def prependMapOfLELength {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
+def prependMapOfLELength {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
     (c : SequenceOfBlowupsPullback φ d'.toSequenceOfBlowups d.toSequenceOfBlowups) (Z : X.IdealSheafData)
     (hZ : Blowup.IsBlowupAlongIdealSheaf (𝟙 X) Z) (hZ' : Blowup.IsBlowupAlongIdealSheaf (𝟙 X') (Z.comap φ)) :
     ∀ j : ℕ, j ≤ (BlowupSequenceData.prepend (Z.comap φ) hZ' d').toSequenceOfBlowups.length →
@@ -75,14 +75,14 @@ private def prependMapOfLELength {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d
         c.map n (le_length_of_succ_le_prepend_length (Z.comap φ) hZ' d' n h) ≫
         eqToHom (prepend_schemeAt_succ Z hZ d (c.idx n)).symm
 
-private theorem prependIndex_length_eq_prepend_length {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
+theorem prependIndex_length_eq_prepend_length {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
     (c : SequenceOfBlowupsPullback φ d'.toSequenceOfBlowups d.toSequenceOfBlowups) (Z : X.IdealSheafData)
     (hZ : Blowup.IsBlowupAlongIdealSheaf (𝟙 X) Z) (hZ' : Blowup.IsBlowupAlongIdealSheaf (𝟙 X') (Z.comap φ)) :
     prependIndex c.idx (BlowupSequenceData.prepend (Z.comap φ) hZ' d').toSequenceOfBlowups.length =
       (BlowupSequenceData.prepend Z hZ d).toSequenceOfBlowups.length := by
   rw [prepend_length, prepend_length, prependIndex_succ, c.idx_length]
 
-private theorem prependIndex_lt_prepend_length {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
+theorem prependIndex_lt_prepend_length {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
     (c : SequenceOfBlowupsPullback φ d'.toSequenceOfBlowups d.toSequenceOfBlowups) (Z : X.IdealSheafData)
     (hZ : Blowup.IsBlowupAlongIdealSheaf (𝟙 X) Z) (hZ' : Blowup.IsBlowupAlongIdealSheaf (𝟙 X') (Z.comap φ)) (j : ℕ)
     (hj : j < (BlowupSequenceData.prepend (Z.comap φ) hZ' d').toSequenceOfBlowups.length) :
@@ -101,7 +101,7 @@ private theorem prependIndex_lt_prepend_length {φ : X' ⟶ X} {d' : BlowupSeque
       simp only [prependIndex_succ]
       omega
 
-private theorem prependIndex_lt_prependIndex_succ {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
+theorem prependIndex_lt_prependIndex_succ {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
     (c : SequenceOfBlowupsPullback φ d'.toSequenceOfBlowups d.toSequenceOfBlowups) (Z : X.IdealSheafData)
     (_hZ : Blowup.IsBlowupAlongIdealSheaf (𝟙 X) Z) (hZ' : Blowup.IsBlowupAlongIdealSheaf (𝟙 X') (Z.comap φ)) (j : ℕ)
     (hj : j < (BlowupSequenceData.prepend (Z.comap φ) hZ' d').toSequenceOfBlowups.length) :

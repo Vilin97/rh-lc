@@ -25,19 +25,19 @@ variable {B A : Type u} [CommRing B] [CommRing A]
 
 def eqModIdealSet (f g : B →+* A) (J : Ideal A) : Set B := {b | f b - g b ∈ J}
 
-private theorem one_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) :
+theorem one_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) :
     (1 : B) ∈ eqModIdealSet f g J := by
   show f 1 - g 1 ∈ J
   rw [map_one, map_one, sub_self]
   exact J.zero_mem
 
-private theorem zero_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) :
+theorem zero_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) :
     (0 : B) ∈ eqModIdealSet f g J := by
   show f 0 - g 0 ∈ J
   rw [map_zero, map_zero, sub_self]
   exact J.zero_mem
 
-private theorem add_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) {x y : B}
+theorem add_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) {x y : B}
     (hx : x ∈ eqModIdealSet f g J) (hy : y ∈ eqModIdealSet f g J) : x + y ∈ eqModIdealSet f g J := by
   show f (x + y) - g (x + y) ∈ J
   rw [map_add (f := _), map_add (f := _)]
@@ -45,7 +45,7 @@ private theorem add_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) {x y : B}
   rw [hrw]
   exact J.add_mem hx hy
 
-private theorem neg_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) {x : B}
+theorem neg_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) {x : B}
     (hx : x ∈ eqModIdealSet f g J) : -x ∈ eqModIdealSet f g J := by
   show f (-x) - g (-x) ∈ J
   rw [map_neg, map_neg]
@@ -53,7 +53,7 @@ private theorem neg_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) {x : B}
   rw [hrw]
   exact J.neg_mem hx
 
-private theorem mul_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) {x y : B}
+theorem mul_mem_eqModIdealSet (f g : B →+* A) (J : Ideal A) {x y : B}
     (hx : x ∈ eqModIdealSet f g J) (hy : y ∈ eqModIdealSet f g J) : x * y ∈ eqModIdealSet f g J := by
   show f (x * y) - g (x * y) ∈ J
   rw [map_mul, map_mul]

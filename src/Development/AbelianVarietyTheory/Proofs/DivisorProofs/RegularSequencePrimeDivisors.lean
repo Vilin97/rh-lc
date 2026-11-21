@@ -122,9 +122,8 @@ theorem exists_primeDivisors_of_regularParams : ∀ (Y : Scheme.{0}) [IsIntegral
           have hz' : algebraMap Γ(Y, V) (Y.presheaf.stalk y) z ∈ IsLocalRing.maximalIdeal (Y.presheaf.stalk y) :=
             (Ideal.span_singleton_le_iff_mem _).2
               ((IsLocalRing.mem_maximalIdeal _).2 (hprime j).not_unit) hz
-          rw [← IsLocalization.AtPrime.comap_maximalIdeal (Y.presheaf.stalk y)
-            (hV.primeIdealOf ⟨y, hyV⟩).asIdeal]
-          exact hz'
+          exact (IsLocalization.AtPrime.to_map_mem_maximal_iff (Y.presheaf.stalk y)
+            (hV.primeIdealOf ⟨y, hyV⟩).asIdeal z).1 hz'
         have hbP : b j ∈ P := Ideal.mem_span_singleton_self _
         have hqP : q j ≤ ⟨P, hPp⟩ := (hq.2.2.1 j ⟨P, hPp⟩ hPle).mp hbP
         obtain ⟨t, ht, s, hts⟩ := exists_mul_eq_of_mem_span (hV.primeIdealOf ⟨y, hyV⟩).asIdeal

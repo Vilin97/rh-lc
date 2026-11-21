@@ -180,7 +180,7 @@ private theorem coverPieceIso_inv_comp_map_comp_affineSpaceFinToSpec (T : Marked
     _ = (coverTripleOpen T hv i).ι ≫ (MaxContactCoverData.coverMap T hv ≫ T.structMap) :=
         Category.assoc _ _ _
 
-private theorem etale_coverPieceIso_inv_comp_map (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)
+theorem etale_coverPieceIso_inv_comp_map (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)
     (i : (MaxContactCoverData.chosenCoverData T hv).idx) {n : ℕ}
     (c : EtaleChart T.structMap ((MaxContactCoverData.chosenCoverData T hv).opens i) n) :
     AlgebraicGeometry.Etale ((coverPieceIso T hv i).inv ≫ c.map) := by

@@ -76,7 +76,7 @@ theorem algebraMap_reesAlgebraLiftFun (I : Ideal R) (φ : R →+* S) (s : S)
       polynomialEvalInvSelf φ s (p : Polynomial R) :=
   (exists_algebraMap_eq_polynomialEvalInvSelf I φ s hI p).choose_spec
 
-private theorem reesAlgebraLiftFun_one (I : Ideal R) (φ : R →+* S) (s : S)
+theorem reesAlgebraLiftFun_one (I : Ideal R) (φ : R →+* S) (s : S)
     (hI : Ideal.map φ I = Ideal.span {s}) (hs : s ∈ nonZeroDivisors S) :
     reesAlgebraLiftFun I φ s hI hs 1 = 1 := by
   have hinj : Function.Injective (algebraMap S (Localization.Away s)) :=
@@ -85,7 +85,7 @@ private theorem reesAlgebraLiftFun_one (I : Ideal R) (φ : R →+* S) (s : S)
   rw [algebraMap_reesAlgebraLiftFun I φ s hI hs 1]
   simp
 
-private theorem reesAlgebraLiftFun_mul (I : Ideal R) (φ : R →+* S) (s : S)
+theorem reesAlgebraLiftFun_mul (I : Ideal R) (φ : R →+* S) (s : S)
     (hI : Ideal.map φ I = Ideal.span {s}) (hs : s ∈ nonZeroDivisors S)
     (p q : ↥(reesAlgebra I)) :
     reesAlgebraLiftFun I φ s hI hs (p * q) = reesAlgebraLiftFun I φ s hI hs p * reesAlgebraLiftFun I φ s hI hs q := by
@@ -100,7 +100,7 @@ private theorem reesAlgebraLiftFun_mul (I : Ideal R) (φ : R →+* S) (s : S)
       = (p : Polynomial R) * (q : Polynomial R) := rfl
   rw [map_mul, algebraMap_reesAlgebraLiftFun, algebraMap_reesAlgebraLiftFun, algebraMap_reesAlgebraLiftFun, hcoe, map_mul]
 
-private theorem reesAlgebraLiftFun_zero (I : Ideal R) (φ : R →+* S) (s : S)
+theorem reesAlgebraLiftFun_zero (I : Ideal R) (φ : R →+* S) (s : S)
     (hI : Ideal.map φ I = Ideal.span {s}) (hs : s ∈ nonZeroDivisors S) :
     reesAlgebraLiftFun I φ s hI hs 0 = 0 := by
   have hinj : Function.Injective (algebraMap S (Localization.Away s)) :=
@@ -109,7 +109,7 @@ private theorem reesAlgebraLiftFun_zero (I : Ideal R) (φ : R →+* S) (s : S)
   rw [algebraMap_reesAlgebraLiftFun I φ s hI hs 0]
   simp
 
-private theorem reesAlgebraLiftFun_add (I : Ideal R) (φ : R →+* S) (s : S)
+theorem reesAlgebraLiftFun_add (I : Ideal R) (φ : R →+* S) (s : S)
     (hI : Ideal.map φ I = Ideal.span {s}) (hs : s ∈ nonZeroDivisors S)
     (p q : ↥(reesAlgebra I)) :
     reesAlgebraLiftFun I φ s hI hs (p + q) = reesAlgebraLiftFun I φ s hI hs p + reesAlgebraLiftFun I φ s hI hs q := by

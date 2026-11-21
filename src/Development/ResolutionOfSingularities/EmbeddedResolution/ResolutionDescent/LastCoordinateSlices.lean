@@ -40,7 +40,7 @@ def baseFieldToGlobalSections {X : Scheme.{u}} (k : Type u) [Field k]
     (p : X ⟶ Spec (CommRingCat.of k)) : k →+* ↑(X.presheaf.obj (Opposite.op ⊤)) :=
   RingHom.comp (Scheme.Hom.appTop p).hom (Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom
 
-private theorem exists_translateLastCoord (k : Type u) [Field k] (M : ℕ) (a : k) :
+theorem exists_translateLastCoord (k : Type u) [Field k] (M : ℕ) (a : k) :
     ∃ f : affineSpaceTimesLine k M ⟶ affineSpaceTimesLine k M,
       f ≫ affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin M ⊕ Fin 1)) =
           affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin M ⊕ Fin 1)) ∧
@@ -148,7 +148,7 @@ def translateLastCoordIso (k : Type u) [Field k] (M : ℕ) (a : k) : affineSpace
   hom_inv_id := translateLastCoord_comp_translateLastCoord_neg k M a
   inv_hom_id := translateLastCoord_neg_comp_translateLastCoord k M a
 
-private theorem exists_sliceAtLastCoord (k : Type u) [Field k] (M : ℕ) (a : k) :
+theorem exists_sliceAtLastCoord (k : Type u) [Field k] (M : ℕ) (a : k) :
     ∃ f : affineSpaceIndexedBy k (ULift.{u, 0} (Fin M)) ⟶ affineSpaceTimesLine k M,
       f ≫ affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin M ⊕ Fin 1)) =
           affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin M)) ∧

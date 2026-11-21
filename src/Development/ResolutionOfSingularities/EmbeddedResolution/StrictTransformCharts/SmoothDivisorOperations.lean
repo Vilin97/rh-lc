@@ -31,14 +31,14 @@ theorem restrictIdeal_mul {X : Scheme.{u}} (I J : X.IdealSheafData) (U : X.Opens
     restrictIdeal (I * J) U = restrictIdeal I U * restrictIdeal J U :=
   Scheme.IdealSheafData.comap_mul I J U.ι
 
-private theorem etaleChart_comap_map_comp_affineSpaceFinToSpec {X X' : Scheme.{u}} {k : Type u} [Field k]
+theorem etaleChart_comap_map_comp_affineSpaceFinToSpec {X X' : Scheme.{u}} {k : Type u} [Field k]
     (p : X ⟶ Spec (CommRingCat.of k)) (π : X' ⟶ X) {U : X.Opens} {m : ℕ}
     (c : EtaleChart p U m) (V : X'.Opens) (hV : V ≤ π ⁻¹ᵁ U) :
     (π.resLE U V hV ≫ c.map) ≫ affineSpaceFinToSpec k m = V.ι ≫ (π ≫ p) := by
   have h1 : π.resLE U V hV ≫ U.ι = V.ι ≫ π := by simp
   rw [Category.assoc, c.comp_struct, ← Category.assoc, h1, Category.assoc]
 
-private theorem etale_etaleChart_comap_map {X X' : Scheme.{u}} {k : Type u} [Field k]
+theorem etale_etaleChart_comap_map {X X' : Scheme.{u}} {k : Type u} [Field k]
     (p : X ⟶ Spec (CommRingCat.of k)) (π : X' ⟶ X) {U : X.Opens} {m : ℕ}
     (c : EtaleChart p U m) (V : X'.Opens) (hV : V ≤ π ⁻¹ᵁ U)
     (he : AlgebraicGeometry.Etale (π.resLE U V hV)) :

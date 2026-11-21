@@ -186,7 +186,8 @@ theorem ext_algebraMap (hc : CMData F E) (τ : E →+* ℂ) (a : F) :
   have h3 := InfinitePlace.Completion.extensionEmbedding_coe (placeOf F τ)
     ((WithAbs.equiv (placeOf F τ).1).symm a)
   rw [RingEquiv.apply_symm_apply, h2] at h3
-  exact h3
+  simpa only [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+    Algebra.algebraMap_self_apply, RingHom.comp_apply, WithAbs.equiv_symm_apply] using h3
 
 def locMap (hc : CMData F E) (τ : E →+* ℂ) : (placeOf F τ).Completion ⊗[F] E →+* ℂ :=
   letI : Algebra F ℂ := (τ.comp (algebraMap F E)).toAlgebra

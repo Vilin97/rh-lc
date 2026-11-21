@@ -33,7 +33,7 @@ namespace EmbeddingDatum
 variable {k : Type u} [Field k] [CharZero k] {Y : Scheme.{u}}
   {p : Y ⟶ Spec (CommRingCat.of k)}
 
-private theorem emb_comp_comp_eq_of_comp_eq (G : EmbeddingDatum k Y p) {A' : Scheme.{u}}
+theorem emb_comp_comp_eq_of_comp_eq (G : EmbeddingDatum k Y p) {A' : Scheme.{u}}
     (q : A' ⟶ Spec (CommRingCat.of k)) (τ : G.ambient ⟶ A')
     (hτ : τ ≫ q = G.ambientStruct) :
     (G.emb ≫ τ) ≫ q = p := by

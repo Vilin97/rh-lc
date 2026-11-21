@@ -145,6 +145,8 @@ theorem exists_transport (I : AutInst) (μf : Measure I.Gf) [μf.IsHaarMeasure] 
     conv_rhs => rw [show μ = ((I.muA μf).map (· * T g)).map T.symm by rw [map_mul_right_eq_self]]
     rw [Measure.map_map hemb.measurable (measurable_mul_const _)]
     congr 1
+    funext x
+    simp
   · have hC' : IsCompact (T.symm ⁻¹' C) := E.isCompact_preimage.2 hC
     have hf : ((fun γ : Γ => (γ : I.GA)) ⁻¹' ((T.symm ⁻¹' C) * (T.symm ⁻¹' C)⁻¹ ∩ I.GFset)).Finite :=
       (hfin _ (hC'.mul hC'.inv)).preimage Subtype.val_injective.injOn
@@ -283,7 +285,8 @@ theorem exists_mmap {D : D7} {θ : InfFam D} {V : HSp D} (hθ : IsInfFam θ) {S 
       simp only [GlobalTheory.BackForm.coe_update] at h1 ⊢
       rw [Submodule.coe_smul, Φ.map_update_smul]
       filter_upwards [GlobalTheory.LocRep.rep_smul hlin c _, h1] with x e1 e2
-      rw [e1, e2, Pi.smul_apply, smul_eq_mul])
+      rw [e1, e2, Pi.smul_apply, smul_eq_mul]
+      rfl)
   refine ⟨T, fun u => (p u).2, fun u => ⟨fun γ hγ g => ?_, ⟨U, hU, fun k hk hk' g => ?_⟩, (p u).1⟩, fun τ u x => ?_⟩
   · refine (congrFun (uniq u (fun x => R (Φ fun τ => (u τ : M.H τ)) (γ * x))
       ((p u).1.comp (continuous_const_mul γ)) ?_) g).symm
@@ -293,7 +296,37 @@ theorem exists_mmap {D : D7} {θ : InfFam D} {V : HSp D} (hθ : IsInfFam θ) {S 
     have := rep_tr htr (p u).2 k
     rwa [hfix _ k hk hk'] at this
   · obtain ⟨c, hc⟩ := hb x
-    exact GlobalTheory.BackForm.cont_value ρ Φ T hsm (fun y => (hsmM y).2) L hL x c (fun y => hc _) τ u
+    obtain ⟨ℓ, hℓ⟩ := LinearMap.exists_extend ((LinearMap.proj x : (GA D V → ℂ) →ₗ[ℂ] ℂ) ∘ₗ T.toLinearMap u τ)
+    have hℓ' : ∀ w : M.sm τ, ℓ w = T (Function.update u τ w) x := fun w => LinearMap.congr_fun hℓ w
+    refine ⟨ℓ, ?_, hℓ'⟩
+    obtain ⟨C', hC', hb'⟩ := GlobalTheory.BackForm.sum_bound
+      (fun l (w : M.sm τ) => ‖l.foldr (dL2 θ V ρ) (Φ fun σ => ((Function.update u τ w σ : M.sm σ) : M.H σ))‖)
+      (fun l (w : M.sm τ) => ‖(GlobalTheory.BackForm.lettersAt τ l).foldr (dRep (M.rep τ)) (w : M.H τ)‖) (fun _ _ => norm_nonneg _) L (by
+        intro l hl
+        refine ⟨‖Φ.toContinuousLinearMap (fun σ => (GlobalTheory.BackForm.lettersAt σ l).foldr (dRep (M.rep σ)) (u σ : M.H σ)) τ‖, fun w => ?_⟩
+        refine le_trans (le_of_eq ?_) (ContinuousLinearMap.le_opNorm _ _)
+        rw [GlobalTheory.BackForm.word_map ρ Φ hsm (fun y => (hsmM y).2) l (hL l hl), ContinuousMultilinearMap.toContinuousLinearMap_apply]
+        congr 2
+        funext σ
+        by_cases h : σ = τ
+        · subst h; simp
+        · simp [Function.update_of_ne h])
+    refine ⟨L.map (GlobalTheory.BackForm.lettersAt τ), |c| * C', ?_, fun w hw => ?_⟩
+    · intro l hl
+      obtain ⟨l', h', rfl⟩ := List.mem_map.1 hl
+      exact GlobalTheory.BackForm.lettersAt_mem (hL l' h')
+    · have hw' : w ∈ M.sm τ := Submodule.subset_span hw
+      have h1 := hℓ' ⟨w, hw'⟩
+      have h2 := hb' ⟨w, hw'⟩
+      have h3 := hc (Φ fun σ => ((Function.update u τ ⟨w, hw'⟩ σ : M.sm σ) : M.H σ))
+      rw [List.map_map, mul_assoc]
+      simp only at h1
+      rw [h1]
+      refine h3.trans ((mul_le_mul_of_nonneg_right (le_abs_self c) (List.sum_nonneg ?_)).trans
+        (mul_le_mul_of_nonneg_left h2 (abs_nonneg c)))
+      intro z hz
+      obtain ⟨q, -, rfl⟩ := List.mem_map.1 hz
+      exact norm_nonneg _
 
 theorem infMat_of_mem_fin {D : D7} (V : HSp D) (φ : Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ) {k : GA D V}
     (hk : k ∈ GfC V) : infMat D.sp.cm.sig V.gram φ k = 1 := by

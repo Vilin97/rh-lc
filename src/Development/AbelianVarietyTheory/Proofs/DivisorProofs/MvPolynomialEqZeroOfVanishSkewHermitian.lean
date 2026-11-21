@@ -125,7 +125,12 @@ theorem eq_zero_of_vanish_skew (F E : Type) [Field F] [NumberField F] [Field E] 
       rw [h1, hJS, neg_add_cancel])
     rw [← h]
     congr 2
-      map_ratCast]
+    funext p
+    simp only [Matrix.mul_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+      map_sum, map_mul, map_ratCast, Finset.mul_sum]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun G _ => Finset.sum_congr rfl fun i _ => ?_
+    ring
   · let w : ι → Matrix (Fin n) (Fin n) ℂ := fun τ => J.map (ψ τ) * Matrix.of fun i j => y (τ, i, j)
     let z : Fin n × Fin n × κ → ℂ := fun G => ∑ τ₀, w τ₀ G.1 G.2.1 * a (ψ τ₀) G.2.2
     have key : ∀ (g : E →+* ℂ) u v, ∑ k, z (u, v, k) * g (b k) =

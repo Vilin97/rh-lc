@@ -91,7 +91,7 @@ theorem act_pGl (e : ℕ) :
   simp only [GtCoord.pG, Over.comp_left, Over.map_map_left, DegPre.prBe, Over.homMk_left]
   rw [← Category.assoc, h1, Category.assoc, Category.assoc]
   congr 1
-  simp only [Over.pullback_map_left]
+  simp only [Over.pullback_map_left, pullback.lift_fst]
 
 theorem exists_secG (k' k : ℕ) (β : LB.Gen (LB.LinComb U.LG.L (K := Fin 3) ![𝟙 _, E.aG.left, (1 : G ⟶ G).left]
     ![(k' : ℤ), -(k : ℤ), (k : ℤ) - k'])) (hβ : β.IsGen) (σ : H0 U.LG.L k) :

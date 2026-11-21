@@ -70,7 +70,8 @@ theorem exists_linearEquiv {F : Type} [CommRing F] {X Y : Scheme.{0}} {L : LB X}
         h₃, Matrix.cons_val_zero, Matrix.cons_val_one, zpow_neg, inv_inv, mul_inv_cancel_left])
       (pullMulSec w.sec σ _ hv)
     refine ⟨SecMod.mk q s, ext _ _ fun y J hJ => (hf _ _ _ y J hJ).trans ?_⟩
-    rw [SecMod.sec_mk, hs _ _ y J hJ, sval_pullMulSec _ σ _ hv _ y hJ, val_pull hJ, val_inv, Category.assoc, h₂,
+    change (val u (𝟙 Y) y J).val * sval s (𝟙 Y ≫ τ) y J = sval w.sec (𝟙 Y) y J
+    rw [hs _ _ y J hJ, sval_pullMulSec _ σ _ hv _ y hJ, val_pull hJ, val_inv, Category.assoc, h₂,
       Category.comp_id, mul_left_comm, Units.mul_inv, _root_.mul_one]
 
 section Twist

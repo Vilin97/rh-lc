@@ -89,6 +89,7 @@ theorem geoNum_linPrime (hCut : LinPrimeCut.Statement) (hBase : LinPrimeBase.Sta
   | 0, α, M, hα, hM => by
     have hrel := isRelevant_linPrime hα hM
     rw [geoNum, dite_eq_left hrel]
+    unfold LinPrimeBase.Statement at hBase
     obtain ⟨e⟩ := hBase T k α M hα hM (fun κ => (hrel κ).choose) (fun κ => (hrel κ).choose_spec)
     rw [e.toAddEquiv.toIntLinearEquiv.length_eq]
   | n + 1, α, M, hα, hM => by

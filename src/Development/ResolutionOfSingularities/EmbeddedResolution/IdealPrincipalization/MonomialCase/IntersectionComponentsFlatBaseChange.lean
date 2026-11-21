@@ -260,7 +260,7 @@ theorem exists_isIrreducibleComponentOf_preimage {X Y : Scheme.{u}} (g : Y ⟶ X
   exact ((specializes_iff_mem_closure.mpr hm2).antisymm
     (specializes_iff_mem_closure.mpr hm1)).eq
 
-private theorem exists_isPullback_comapSubscheme {X Y : Scheme.{u}} (W : X.IdealSheafData)
+theorem exists_isPullback_comapSubscheme {X Y : Scheme.{u}} (W : X.IdealSheafData)
     (g : Y ⟶ X) :
     ∃ c : (W.comap g).subscheme ⟶ W.subscheme,
       IsPullback c (W.comap g).subschemeι W.subschemeι g := by

@@ -22,6 +22,6 @@ structure PtHyp [IsLocalRing R] (η : Γ →* ℤˣ) (r : Γ →* GG (m := 3) (R
   fixed : ∀ f : R →ₐ[c.O] PadicAlgCl l, IsLocPt f → Upper η (push f r) → Lower η (push f r) →
     push f r = push (toBar x₀) r
   rigid0 : ∀ j : ℤ, j ≤ 0 → RigidWt j r (toBar x₀)
-  rigid : ∀ f : R →ₐ[c.O] PadicAlgCl l, TwoPt η r f → Rigid r f
+  rigid : ∀ f : R →ₐ[c.O] PadicAlgCl l, TwoPt (η := η) r f → Rigid r f
 
 end UpperTheory.V.U3

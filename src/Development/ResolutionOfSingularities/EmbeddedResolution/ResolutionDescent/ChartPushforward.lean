@@ -65,30 +65,30 @@ section
 variable (S S' : EmbeddedBlowupSequence k Y pY) (f : S.ambient ⟶ S'.ambient)
   [AlgebraicGeometry.IsClosedImmersion f]
 
-private theorem isClosedImmersion_of_isPushforwardBlowupSeq
+theorem isClosedImmersion_of_isPushforwardBlowupSeq
     (h : IsPushforwardBlowupSeq f S.ambientSeq S'.ambientSeq) (i : ℕ) (hi : i ≤ S'.length) :
     AlgebraicGeometry.IsClosedImmersion (h.2.choose i (hi.trans_eq h.1.symm)) :=
   h.2.choose_spec.1 i (hi.trans_eq h.1.symm)
 
-private theorem isoObjZero_comm_of_isPushforwardBlowupSeq
+theorem isoObjZero_comm_of_isPushforwardBlowupSeq
     (h : IsPushforwardBlowupSeq f S.ambientSeq S'.ambientSeq) :
     h.2.choose 0 ((Nat.zero_le S'.length).trans_eq h.1.symm) ≫ S'.ambientSeq.isoZero.hom =
       S.ambientSeq.isoZero.hom ≫ f := by
   exact h.2.choose_spec.2.1
 
-private theorem blowdown_comm_of_isPushforwardBlowupSeq
+theorem blowdown_comm_of_isPushforwardBlowupSeq
     (h : IsPushforwardBlowupSeq f S.ambientSeq S'.ambientSeq) (i : ℕ) (hi : i < S'.length) :
     h.2.choose (i + 1) (hi.trans_eq h.1.symm) ≫ S'.blowdown i =
       S.blowdown i ≫ h.2.choose i (hi.le.trans_eq h.1.symm) :=
   h.2.choose_spec.2.2.1 i (hi.trans_eq h.1.symm)
 
-private theorem ambientCenter_eq_imageIdealSheaf_of_isPushforwardBlowupSeq
+theorem ambientCenter_eq_imageIdealSheaf_of_isPushforwardBlowupSeq
     (h : IsPushforwardBlowupSeq f S.ambientSeq S'.ambientSeq) (i : ℕ) (hi : i < S'.length) :
     S'.ambientCenter i =
       imageIdealSheaf (h.2.choose i (hi.le.trans_eq h.1.symm)) (S.ambientCenter i) :=
   h.2.choose_spec.2.2.2.1 i (hi.trans_eq h.1.symm)
 
-private theorem ker_succ_eq_strictTransform_of_isPushforwardBlowupSeq
+theorem ker_succ_eq_strictTransform_of_isPushforwardBlowupSeq
     (h : IsPushforwardBlowupSeq f S.ambientSeq S'.ambientSeq) (i : ℕ) (hi : i < S'.length) :
     (h.2.choose (i + 1) (hi.trans_eq h.1.symm)).ker =
       Blowup.strictTransform (S'.blowdown i) (S'.ambientCenter i)

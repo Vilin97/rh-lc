@@ -55,7 +55,7 @@ theorem flagOpen_le_sup : flagOpen X ≤ openOn X Z ⊔ openOff X Z := fun y hy 
     rw [hx]; exact (j_mem_barComp Z x).2 hZ
   · refine Or.inr ⟨hy, ?_⟩
     show X.π y ∉ closure (Y.j '' (Z : Set (Xo.XF c)))
-    rw [hx, j_mem_closure_iff (TrivOrderTieCompare.isClopen_comp Z).isClosed]
+    rw [hx, j_mem_closure_iff (isClosed_of_mem_irreducibleComponents _ Z.2)]
     exact hZ
 
 theorem not_mem_openOn_openOff {y : X.YY} (h₁ : y ∈ openOn X Z) (h₂ : y ∈ openOff X Z) : False := by
@@ -122,7 +122,7 @@ theorem exists_suppOn_sec₀_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCM
       refine ⟨hO (Set.mem_univ s), ?_⟩
       show X.π ((X.pt P' ≫ X.inc) s) ∉ closure (Y.j '' (Z : Set (Xo.XF c)))
       rw [FlagCover.pt_inc, ← Scheme.Hom.comp_apply, (X.lies_ptY P').1, Scheme.Hom.comp_apply,
-        j_mem_closure_iff (TrivOrderTieCompare.isClopen_comp Z).isClosed, ← FlagMod.frX_frMap hP,
+        j_mem_closure_iff (isClosed_of_mem_irreducibleComponents _ Z.2), ← FlagMod.frX_frMap hP,
         Scheme.Hom.comp_apply]
       exact hy _
     change evR Xo c (FlagCover.toRule (toSecO m')) y = 0

@@ -41,7 +41,7 @@ theorem mul_inclT_apply_of_not {p : Type} {e : Fin r → Fin n} (M : Matrix p (F
 
 theorem inclT_mul_incl {e : Fin r → Fin n} (he : Function.Injective e) : (incl L e)ᵀ * incl L e = 1 := by
   ext i j
-  simp [Matrix.mul_apply, incl, he.eq_iff, Matrix.one_apply, eq_comm]
+  simp [Matrix.mul_apply, incl, Function.swap, he.eq_iff, Matrix.one_apply, eq_comm]
 
 theorem antiJ_apply (i j : Fin n) : antiJ L n i j = if i.rev = j then 1 else 0 := by
   have : (i.val + j.val + 1 = n) ↔ i.rev = j := by

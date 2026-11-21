@@ -363,6 +363,8 @@ theorem exists_real_extension (ρ : F →+* ℝ) :
   have := InfinitePlace.Completion.extensionEmbedding_coe
     (InfinitePlace.mk (Complex.ofRealHom.comp ρ)) ((WithAbs.equiv _).symm s)
   rw [RingEquiv.apply_symm_apply, InfinitePlace.embedding_mk_eq_of_isReal hρ] at this
+  rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+    Algebra.algebraMap_self_apply]
   exact this
 
 theorem congr_of_local_complex (hσ : σ ≠ 1) (hG : ∀ a b, σ (G a b) = G b a)

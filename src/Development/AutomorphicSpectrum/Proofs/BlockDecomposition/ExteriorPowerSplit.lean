@@ -101,8 +101,7 @@ theorem wedgeSum_injective {i : F →ₗ[R] H} {s : L →ₗ[R] H} {r : H →ₗ
         TensorProduct.map (gradeProj R F a' ∘ₗ (⋀[R]^a F).subtype)
           (gradeProj R L b' ∘ₗ (⋀[R]^b L).subtype) t := by
     intro a b a' b' t
-    induction t using TensorProduct.induction_on with
-    | zero => simp
+    induction t using TensorProduct.inductionOn with
     | add x y hx hy =>
       simp only [map_add (f := _), Submodule.coe_add] at hx hy ⊢
       rw [hx, hy]

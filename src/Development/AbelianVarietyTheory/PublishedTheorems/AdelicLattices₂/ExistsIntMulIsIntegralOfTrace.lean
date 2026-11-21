@@ -104,7 +104,7 @@ theorem exists_bound_short (n : ℕ) (hn : n ≠ 0) {N : ℤ} (hN : N ≠ 0) :
   letI : Module ℚ V := Module.compHom V (algebraMap ℚ E)
   have : IsScalarTower ℚ E V := IsScalarTower.of_compHom ℚ E V
   have : Module.Finite ℤ Λ := Module.Finite.iff_fg.2 hfg
-  have : IsAddTorsionFree V := .of_module_rat V
+  have : HasUniqueDiv V := .of_module_rat V
   have : Module.Free ℤ Λ := inferInstance
   let β := Module.Free.chooseBasis ℤ Λ
   let κ := Module.Free.ChooseBasisIndex ℤ Λ

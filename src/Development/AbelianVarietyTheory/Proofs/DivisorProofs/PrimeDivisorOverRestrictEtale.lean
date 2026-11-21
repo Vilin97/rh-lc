@@ -72,6 +72,8 @@ theorem divOver_restrict : ∀ (M W : Scheme.{0}) [IsIntegral M] [IsIntegral W] 
       refine smul_ne_zero (Units.ne_zero _) fun h0 => ?_
       have := (E'.isFreeGen_toRat hω').1 (a₁ := 0) (a₂ := 1) (by simp [h0])
       exact zero_ne_one this
+    change E'.formOrd (ratPull p f n ((g : W.functionField) • E.toRat n ω)) =
+      E.formOrd ((g : W.functionField) • E.toRat n ω)
     rw [← hg, ← hord g]
     exact DivOver.IsFormOrd.formOrd_eq hne ⟨_, hω', _, hpull, rfl⟩
 

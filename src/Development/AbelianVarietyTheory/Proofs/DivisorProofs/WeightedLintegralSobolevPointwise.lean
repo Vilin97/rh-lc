@@ -27,6 +27,7 @@ theorem weighted_lintegral_sobolev_pointwise : ∀ {E : Type} [NormedAddCommGrou
   set S : Set E := B ∩ {v | 0 ≤ φ v} with hS
   have hSmeas : MeasurableSet S :=
     Metric.isClosed_closedBall.measurableSet.inter (measurableSet_le measurable_const φ.continuous.measurable)
+  open scoped Pointwise in
   have hβS : β ≤ 2 * μ S := by
     have hsub : B ⊆ S ∪ -S := by
       intro v hv

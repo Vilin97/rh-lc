@@ -61,7 +61,7 @@ theorem stdChar_mixed_linear : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ)
       map_add' := by intro a b; simp only [map_add (f := _), hzadd, Complex.add_re, neg_add] }
   have hg : Continuous g := by
     have : Continuous fun x : Ainf D.host.F => z x :=
-      continuous_finset_sum _ fun ρ _ => (hθ ρ).2
+      continuous_finsetSum _ fun ρ _ => (hθ ρ).2
     exact (Complex.continuous_re.comp (this.comp (continuous_ofMixed D.host.F))).neg
   refine ⟨(g.toRealLinearMap hg : mixedEmbedding.mixedSpace D.host.F →ₗ[ℝ] ℝ), ?_, fun a => rfl⟩
   intro a

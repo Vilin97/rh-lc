@@ -38,11 +38,11 @@ theorem infMat_list_prod (hθ : IsInfFam θ) (u : D.what₂.Tau → Matrix (Fin 
     have hs := GlobalTheory.PointAtPlaceHom.atTau_spec hθ V a (hu a)
     by_cases c : ρ = a
     · subst c
-      rw [hs.2.1, if_neg hl.1, if_pos List.mem_cons_self, Matrix.mul_one]
+      rw [hs.2.1, ite_eq_right hl.1, ite_eq_left List.mem_cons_self, Matrix.mul_one]
     · rw [hs.2.2 ρ c, Matrix.one_mul]
       by_cases d : ρ ∈ l
-      · rw [if_pos d, if_pos (List.mem_cons_of_mem a d)]
-      · rw [if_neg d, if_neg]
+      · rw [ite_eq_left d, ite_eq_left (List.mem_cons_of_mem a d)]
+      · rw [ite_eq_right d, ite_eq_right]
         simp [c, d]
 
 theorem eq_realElt (hθ : IsInfFam θ) {g : GA D V} (hg : g ∈ GinfC V) :
@@ -57,7 +57,7 @@ theorem eq_realElt (hθ : IsInfFam θ) {g : GA D V} (hg : g ∈ GinfC V) :
     exact GlobalTheory.PointAtPlaceHom.atTau_mem V τ (u τ)
   have e : ∀ ρ, infMat D.sp.cm.sig V.gram (θ ρ) P = infMat D.sp.cm.sig V.gram (θ ρ) g := fun ρ => by
     rw [hP, GlobalTheory.AdelicScalar.realElt, infMat_list_prod hθ u hu ρ _ (Finset.nodup_toList _),
-      if_pos (Finset.mem_toList.2 (Finset.mem_univ ρ))]
+      ite_eq_left (Finset.mem_toList.2 (Finset.mem_univ ρ))]
   refine mul_inv_eq_one.1 (GlobalTheory.PointAtPlace.eq_one_of_mem V _ ((GlobalTheory.SmoothForms.RealPts.glue θ hθ V).1 _ fun ρ => ?_)
     (mul_mem hg (inv_mem hPm)))
   rw [GlobalTheory.PointAtPlaceHom.infMat_mul, ← e, ← GlobalTheory.PointAtPlaceHom.infMat_mul, mul_inv_cancel,
@@ -75,14 +75,56 @@ theorem rTrans_eq_map : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (S : D.what₂.
   induction x using PiTensorProduct.induction_on with
   | smul_tprod c v =>
     rw [map_smul, map_smul, PiTensorProduct.map_tprod]
-    have key := GlobalTheory.RealEquiv.mult_realElt D V S θ M J χ _ hU (fun τ => infMat D.sp.cm.sig V.gram (θ τ) g)
-      (fun τ => GlobalTheory.FockCompare.RealAction.infMat_mem_UH hθ V g τ) v (fun τ => smAct hθ M g τ (v τ)) (fun τ => rfl)
-    rw [← eq_realElt hθ hg] at key
-    have e1 : ∀ w : M.Vec, PiTensorProduct.lift.symm T w = T (PiTensorProduct.tprod ℂ w) := fun w => by
-      simp
-    rw [e1, e1] at key
+    let u τ := infMat D.sp.cm.sig V.gram (θ τ) g
+    let w : M.Vec := fun τ => smAct hθ M g τ (v τ)
+    have hu (τ : D.what₂.Tau) : u τ ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ) :=
+      GlobalTheory.FockCompare.RealAction.infMat_mem_UH hθ V g τ
+    have hw (τ : D.what₂.Tau) : (w τ : M.H τ) = M.rep τ (u τ) (v τ : M.H τ) := rfl
+    have translate (U : MMap M) (hU : U ∈ Mult θ M J χ) :
+        U w = rTr V (GlobalTheory.AdelicScalar.realElt θ V u) (U v) := by
+      induction hU using Submodule.span_induction with
+      | mem U hU =>
+        have onList (l : List D.what₂.Tau) (hl : l.Nodup) :
+            U (fun τ => if τ ∈ l then w τ else v τ) =
+              rTr V (l.map fun τ => atTau θ V τ (u τ)).prod (U v) := by
+          induction l with
+          | nil =>
+            funext h
+            simp [rTr]
+          | cons a l ih =>
+            rw [List.nodup_cons] at hl
+            have ha := hU.equiv a (u a) (hu a) (fun τ => if τ ∈ l then w τ else v τ)
+              (w a) (by simpa only [ite_eq_right hl.1] using hw a)
+            rw [ih hl.2] at ha
+            have hupdate : (fun τ => if τ ∈ a :: l then w τ else v τ) =
+                Function.update (fun τ => if τ ∈ l then w τ else v τ) a (w a) := by
+              funext τ
+              by_cases hτ : τ = a
+              · subst τ
+                simp
+              · rw [Function.update_of_ne hτ]
+                simp [hτ]
+            rw [hupdate, ha]
+            funext h
+            simp only [rTr, List.map_cons, List.prod_cons, mul_assoc]
+        have hall := onList (Finset.univ : Finset D.what₂.Tau).toList (Finset.nodup_toList _)
+        simpa [GlobalTheory.AdelicScalar.realElt] using hall
+      | zero => funext h; simp [rTr]
+      | add U U' _ _ h₁ h₂ =>
+        funext h
+        simpa only [rTr, add_apply, Pi.add_apply] using
+          congrArg₂ (· + ·) (congrFun h₁ h) (congrFun h₂ h)
+      | smul a U _ h₁ =>
+        funext h
+        simpa only [rTr, smul_apply, Pi.smul_apply] using
+          congrArg (a • ·) (congrFun h₁ h)
+    have key := translate _ hU
+    have hreal : GlobalTheory.AdelicScalar.realElt θ V u = g := (eq_realElt hθ hg).symm
+    rw [hreal, PiTensorProduct.lift_symm] at key
+    simp only [LinearMap.compMultilinearMap_apply] at key
+    change c • T (PiTensorProduct.tprod ℂ w) = _
     funext h
-    simp only [rTrans, map_smul, Pi.smul_apply, key, rTr]
+    simp only [key, rTr, rTrans, map_smul, Pi.smul_apply]
   | add x y hx hy =>
     rw [map_add (f := _), map_add (f := _), hx, hy]
     funext h

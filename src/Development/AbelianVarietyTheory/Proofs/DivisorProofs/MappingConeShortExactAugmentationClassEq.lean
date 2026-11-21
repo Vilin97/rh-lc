@@ -87,7 +87,6 @@ theorem cone_class_eq : ∀ (R : Type) [CommRing R] (S : ShortComplex (Shv R)), 
   have hinr : mappingCone.inr (S.map (CochainComplex.singleFunctor (Shv R) 0)).f ≫
       mappingCone.map _ (resMap R S.f) (resAug S.X₁) (resAug S.X₂) hc = resAug S.X₂ ≫ mappingCone.inr (resMap R S.f) := by
     simp [mappingCone.map]
-    rfl
   have hres : resAug S.X₂ ≫ resMap R S.g = (CochainComplex.singleFunctor (Shv R) 0).map S.g ≫ resAug S.X₃ :=
     InjectiveResolution.Hom.ι'_comp_hom'
       ⟨InjectiveResolution.desc S.g (injectiveResolution _) (injectiveResolution _),
@@ -118,7 +117,6 @@ theorem cone_class_eq : ∀ (R : Type) [CommRing R] (S : ShortComplex (Shv R)), 
       CohomologyClass.mk (Cocycle.ofHom (mappingCone.inr (S.map (CochainComplex.singleFunctor (Shv R) 0)).f ≫
         mappingCone.map _ (resMap R S.f) (resAug S.X₁) (resAug S.X₂) hc ≫ e.hom)) := by
     rw [reassoc_of% hinr]
-    rfl
   exact hA.trans (hC.trans (hB1.trans hB2))
 
 end GlobalTheory.EtC.ConeClass

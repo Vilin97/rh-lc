@@ -68,7 +68,7 @@ theorem continuous_psiBes (hψ : Continuous ψ) (θ : D.host.E) (z : Fin S₀.ra
     (continuous_const.matrix_mul (hm.matrix_mul continuous_const)).matrix_mulVec continuous_const
   have hu : Continuous fun g => upSum (blockX d g) := by
     unfold upSum
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     split_ifs
     · exact (continuous_apply j).comp ((continuous_apply i).comp hb)
     · exact continuous_const

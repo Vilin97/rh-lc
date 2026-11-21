@@ -6,7 +6,7 @@ public import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassField
 
 @[expose] public section
 
-private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
   carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
   zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
   one_mem' z hz := by simpa only [one_mul] using hz
@@ -14,7 +14,7 @@ private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
   neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
   mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
 
-private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
     (σ : K →+* ℂ) : Subring ℂ :=
   (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 

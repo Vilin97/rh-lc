@@ -71,9 +71,13 @@ section Loc
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] {ST : Finset (Pl E)} {π : 𝓞 E} (v : HeightOneSpectrum (𝓞 F))
 
+local notation "Rv" => E ⊗[F] v.adicCompletion F
+local notation "ιv" => inclE (F := F) (E := E) (v.adicCompletion F)
+local notation "𝒪v" => Formalism.BasicNotions.intV E v
+local notation "pE" => algebraMap (𝓞 E) E π
+
 theorem sig_sig (x : Rv) : sigR hc.sig (v.adicCompletion F) (sigR hc.sig (v.adicCompletion F) x) = x := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a b =>
     have e : ∀ a : E, (hc.sig a) = star a := fun a => by
@@ -191,6 +195,11 @@ section Stab
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] {ST : Finset (Pl E)} {π : 𝓞 E} (v : HeightOneSpectrum (𝓞 F))
+
+local notation "Rv" => E ⊗[F] v.adicCompletion F
+local notation "ιv" => inclE (F := F) (E := E) (v.adicCompletion F)
+local notation "𝒪v" => Formalism.BasicNotions.intV E v
+local notation "pE" => algebraMap (𝓞 E) E π
 
 variable (h : BasePi ST π)
 include h
@@ -395,7 +404,7 @@ end Swap
 
 theorem mem_baseLb {B : Base} {X : PreX B.toPre} (hPr : (B.primes X).Ok) (u : B.Word) (n : ℕ) [NeZero n] (x : Fin n → B.host.E) :
     x ∈ baseLb B.fields.E n ((B.primes X).vT u) ↔ x ∈ baseL B n (X.piT u) := by
-  have hB := basePi_of_ok (GlobalTheory.Mem.FieldsLaws.fields_ok B) hPr u
+  have hX := GlobalTheory.Mem.FieldsLaws.fields_ok B
   have hn := NeZero.ne n
   rw [rlc_mem_baseLb]
   constructor
@@ -403,10 +412,13 @@ theorem mem_baseLb {B : Base} {X : PreX B.toPre} (hPr : (B.primes X).Ok) (u : B.
     refine ⟨r j, (h1 j).symm, fun hj => ?_⟩
     have e : j = lastIdx n := Fin.ext (by simp only [lastIdx]; omega)
     rw [e]
-    exact (hB.dvd _).1 h2
+    exact piT_dvd_of_mem hX hPr u _ fun P => h2 P.1 P.2
   · intro h
     choose r h1 h2 using h
-    exact ⟨r, fun j => (h1 j).symm, (hB.dvd _).2 (h2 _ (by simp only [lastIdx]; omega))⟩
+    refine ⟨r, fun j => (h1 j).symm, fun P hP => ?_⟩
+    obtain ⟨q, hq⟩ := h2 (lastIdx n) (by simp only [lastIdx]; omega)
+    rw [hq]
+    exact Ideal.mul_mem_right _ q ((rls_vT_iff hX hPr u P).1 hP)
 
 end GlobalTheory.Mem.Col2.Reside
 
@@ -421,7 +433,10 @@ theorem GlobalTheory.Mem.Col2.TC.charts_funKilled : ∀ {B : Base} {X : PreX B.t
   haveI : NeZero (B.R.N i) := ⟨(B.R.N_pos i).ne'⟩
   obtain ⟨-, -, -, hc⟩ := TC.spaces_in_coordinates I hI hP l Z
   obtain ⟨hgr, -, -⟩ := hc i hi
-  have hB := basePi_of_ok hX hPr u
+  have hB : BasePi ((B.primes X).vT u) (X.piT u) := by
+    refine ⟨fun r => ⟨fun hr => piT_dvd_of_mem hX hPr u r (fun P => hr P.1 P.2), ?_⟩, hPr.piT_cop u⟩
+    rintro ⟨q, rfl⟩ P hP
+    exact Ideal.mul_mem_right _ q ((rls_vT_iff hX hPr u P).1 hP)
   have hLb : ∀ β, (K β).lev.Lb = baseLb B.fields.E (B.R.N i) ((B.primes X).vT u) := fun β => by
     obtain ⟨k, hk⟩ := hK
     ext x

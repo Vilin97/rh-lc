@@ -60,6 +60,7 @@ theorem exists_theta_re_nonneg : ∀ (F : Type) [Field F] [NumberField F] (ψ : 
   have hg0 : 0 < (g 0).re := by simp [hgdef]
   obtain ⟨V₀, hV₀, hq⟩ := exists_nhds_zero_quarter hD
   obtain ⟨V, hV, hVm⟩ : ∃ V ∈ nhds (0 : κ → AF F), ∀ x ∈ V, x ∈ V₀ ∧ -x ∈ V₀ ∧ PA *ᵥ x ∈ D ∧ 0 < (g x).re := by
+    open scoped Pointwise in
     refine ⟨((V₀ ∩ -V₀) ∩ (fun x => PA *ᵥ x) ⁻¹' D) ∩ {x | 0 < (g x).re}, ?_, fun x hx => ⟨hx.1.1.1, Set.mem_neg.mp hx.1.1.2, hx.1.2, hx.2⟩⟩
     refine Filter.inter_mem (Filter.inter_mem (Filter.inter_mem hV₀ (neg_mem_nhds_zero _ hV₀)) ?_) ?_
     · exact (continuous_const.matrix_mulVec continuous_id).tendsto' (0 : κ → AF F) 0 (by simp) hD
@@ -122,7 +123,7 @@ theorem exists_theta_re_nonneg : ∀ (F : Type) [Field F] [NumberField F] (ψ : 
     have hP0 : P *ᵥ ξ₀ = 0 := by
       apply hDξ
       have h1 := (hVm _ hx).2.2.1
-      simp only [Set.mem_preimage, Matrix.mulVec_add, hP s hs, add_zero] at h1
+      simp only [Matrix.mulVec_add, hP s hs, add_zero] at h1
       convert h1 using 1
       funext i
       exact RingHom.map_mulVec _ _ _ _

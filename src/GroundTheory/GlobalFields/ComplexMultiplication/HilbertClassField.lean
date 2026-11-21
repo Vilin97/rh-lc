@@ -13,7 +13,7 @@ private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
   neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
   mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
 
-private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
     (σ : K →+* ℂ) : Subring ℂ :=
   (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1

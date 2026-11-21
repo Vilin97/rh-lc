@@ -451,8 +451,12 @@ theorem RegC.exists_nhds (h : RegC y f) : ∃ N : Set (Y.pts σ), IsOpen N ∧ y
     (isOpen_ptsIn U).inter ((hB.continuousOn (isOpen_ptsIn V)).isOpen_inter_preimage
       (isOpen_ptsIn V) isOpen_compl_singleton),
     ⟨Var.mem_ptsIn_iff.mpr hU, yV, hBy⟩, fun z hz => ⟨_, key z hz.1 hz.2.1 hz.2.2⟩, ?_⟩
-  refine ((hA.mono fun z hz => hz.1).mul ((hB.mono fun z hz => hz.2.1).inv
-    fun z hz => hz.2.2)).congr ?_
+  refine ((hA.mono (show ptsIn Y.str σ U ∩ (ptsIn Y.str σ V ∩ B ⁻¹' {0}ᶜ) ⊆
+    ptsIn Y.str σ U from fun z hz => hz.1)).mul
+    ((hB.mono (show ptsIn Y.str σ U ∩ (ptsIn Y.str σ V ∩ B ⁻¹' {0}ᶜ) ⊆
+      ptsIn Y.str σ V from fun z hz => hz.2.1)).inv
+      (show ∀ z ∈ ptsIn Y.str σ U ∩ (ptsIn Y.str σ V ∩ B ⁻¹' {0}ᶜ), B z ≠ 0 from
+        fun z hz => hz.2.2))).congr ?_
   intro z hz
   rw [(key z hz.1 hz.2.1 hz.2.2).val_eq, div_eq_mul_inv]
 

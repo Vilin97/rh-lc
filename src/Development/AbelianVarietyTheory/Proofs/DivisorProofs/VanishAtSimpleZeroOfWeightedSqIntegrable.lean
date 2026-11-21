@@ -28,7 +28,7 @@ theorem vanish_at_simple_zero_of_weighted_sq_integrable :
   have hOn : O ∈ 𝓝 p := hO.mem_nhds hpO
 
   have htr : Tendsto (fun z : V n => z + p) (𝓝 0) (𝓝 p) := by
-    have := (continuous_add_right p).tendsto (0 : V n)
+    have := (continuous_add_const p).tendsto (0 : V n)
     simpa using this
   set a := ‖u p‖ with ha
   have ha0 : 0 < a := norm_pos_iff.mpr hne

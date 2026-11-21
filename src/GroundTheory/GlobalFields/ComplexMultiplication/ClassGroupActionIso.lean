@@ -7,7 +7,7 @@ public import GroundTheory.GlobalFields.ComplexMultiplication.JInvariantSurjecti
 
 @[expose] public section
 
-private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
   carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
   zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
   one_mem' z hz := by simpa only [one_mul] using hz

@@ -288,14 +288,14 @@ theorem truncatedSeries_mul_sub_mem (σ : R →+* S) (D : Derivation A R R) (β 
   exact sum_convolution_sub_mul_mem β N J hβ (fun i => coeff σ D i f)
     (fun i => coeff σ D i g)
 
-private theorem mk_truncatedSeries_one (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ)
+theorem mk_truncatedSeries_one (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ)
     (J : Ideal S) (hN : 1 ≤ N) :
     Ideal.Quotient.mk J (truncatedSeries σ D β N 1) = 1 := by
   have h1 : D 1 = 0 := by simp
   rw [truncatedSeries_of_deriv_eq_zero σ D β N hN 1 h1]
   simp
 
-private theorem mk_truncatedSeries_mul (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ)
+theorem mk_truncatedSeries_mul (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ)
     (J : Ideal S) (hβ : β ^ N ∈ J) (f g : R) :
     Ideal.Quotient.mk J (truncatedSeries σ D β N (f * g)) =
       Ideal.Quotient.mk J (truncatedSeries σ D β N f) *
@@ -308,12 +308,12 @@ private theorem mk_truncatedSeries_mul (σ : R →+* S) (D : Derivation A R R) (
     Ideal.Quotient.eq.mpr h
   rw [h2, map_mul]
 
-private theorem mk_truncatedSeries_zero (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ)
+theorem mk_truncatedSeries_zero (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ)
     (J : Ideal S) :
     Ideal.Quotient.mk J (truncatedSeries σ D β N 0) = 0 := by
   rw [truncatedSeries_zero, map_zero]
 
-private theorem mk_truncatedSeries_add (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ)
+theorem mk_truncatedSeries_add (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ)
     (J : Ideal S) (f g : R) :
     Ideal.Quotient.mk J (truncatedSeries σ D β N (f + g)) =
       Ideal.Quotient.mk J (truncatedSeries σ D β N f) +

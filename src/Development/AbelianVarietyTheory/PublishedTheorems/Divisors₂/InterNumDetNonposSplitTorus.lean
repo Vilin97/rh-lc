@@ -61,7 +61,12 @@ theorem interNum_det_dual (hp : IsProjOver (strHom k (X := C))) (hd : topologica
       -interNum k (structureModule C) ![det W r] := by
   obtain ⟨_, H, hH⟩ := isProper_and_exists_isAmpleLB_of_isProjOver hp
   have e := interNum_one_of_cls_eq_add (k := k) hH hd (LB.isLB_triv C) hW.dual.isLB_det hW.isLB_det
-    (by rw [← (cls_eq_iff (isLB_dual hW.isLB_det) hW.dual.isLB_det).2 hW.lbIso_det_dual, cls_dual_add, cls_triv])
+    (by
+      have heq : cls (CechPic.dual (det W r)) (isLB_dual hW.isLB_det) =
+          cls (det (VB.dual W) r) hW.dual.isLB_det :=
+        (cls_eq_iff (isLB_dual hW.isLB_det) hW.dual.isLB_det).2 hW.lbIso_det_dual
+      rw [← heq]
+      exact (cls_dual_add hW.isLB_det).symm)
   rw [interNum_eq_zero_of_cls_eq_zero k _ (isLB_vecOne (LB.isLB_triv C)) 0 rfl] at e
   omega
 
@@ -103,7 +108,8 @@ theorem dual_det_nonneg {W : C.Modules} {r : ℕ} (hW : IsVB W r) (i : W ⟶ Lie
     0 ≤ interNum k (structureModule C) ![CechPic.dual (det W r)] := by
   have := isIntegral_curve hs hc
   have e := h k C hs hp hc G W r hW i inferInstance
-  have e' := interNum_congr_lbIso k (structureModule C) (isLB_vecOne (isLB_dual hW.isLB_det))
+  have e' : interNum k (structureModule C) ![CechPic.dual (det W r)] =
+      interNum k (structureModule C) ![det (VB.dual W) r] := interNum_congr_lbIso k (structureModule C) (isLB_vecOne (isLB_dual hW.isLB_det))
     (isLB_vecOne hW.dual.isLB_det) fun j => by fin_cases j; exact hW.lbIso_det_dual
   rw [e', interNum_det_dual hp (dim_curve hs) hW]
   omega

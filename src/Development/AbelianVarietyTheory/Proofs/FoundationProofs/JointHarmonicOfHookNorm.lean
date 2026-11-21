@@ -9,7 +9,7 @@ noncomputable section
 
 namespace GlobalTheory.JointHarm
 
-open MvPolynomial Matrix GlobalTheory.IndefiniteRowSideFullHecke.SubstitutionPolynomials
+open MvPolynomial Matrix
 
 section Minors
 

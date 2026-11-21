@@ -215,7 +215,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F} {Y : Model Xo c β} {S : Finset ℕ}
   {Ω : Type} [Field Ω] {K : Type} [Fintype K] {J : K → Type} {y : (Σ k, J k) → Ω} {𝔐 : HodgeCpt Y S y}
 
-theorem isDegOn_inl (Fl : HodgeCpt.Flag 𝔐) {a : CMType H × Fin (D.p + D.q) → K → ℤ} {e : CMType H × Fin (D.p + D.q) → Ω}
+theorem isDegOn_inl (Fl : 𝔐.Flag) {a : CMType H × Fin (D.p + D.q) → K → ℤ} {e : CMType H × Fin (D.p + D.q) → Ω}
     (h : Fl.RootLines a e) (τ : CMType H) (i : Fin D.p) :
     ((𝔐.V (.inl τ)).gr (Fl.b (.inl τ)) i).IsDegOn Set.univ y (a (τ, Fin.castAdd D.q i)) (e (τ, Fin.castAdd D.q i)) := by
   have h₁ := h (τ, Fin.castAdd D.q i)
@@ -227,7 +227,7 @@ theorem isDegOn_inl (Fl : HodgeCpt.Flag 𝔐) {a : CMType H × Fin (D.p + D.q) �
   subst hi
   exact isDegOn_of_tens_one (fun p => Flag.gr_gen_of_isFlagVBOn (Fl.sub _) (Set.mem_univ p) _) h₁
 
-theorem isDegOn_inr (Fl : HodgeCpt.Flag 𝔐) {a : CMType H × Fin (D.p + D.q) → K → ℤ} {e : CMType H × Fin (D.p + D.q) → Ω}
+theorem isDegOn_inr (Fl : 𝔐.Flag) {a : CMType H × Fin (D.p + D.q) → K → ℤ} {e : CMType H × Fin (D.p + D.q) → Ω}
     (h : Fl.RootLines a e) (τ : CMType H) (i : Fin D.q) :
     ((𝔐.V (.inr τ)).gr (Fl.b (.inr τ)) i.rev).IsDegOn Set.univ y (-a (τ, Fin.natAdd D.p i)) (e (τ, Fin.natAdd D.p i))⁻¹ := by
   have h₁ := h (τ, Fin.natAdd D.p i)
@@ -253,7 +253,7 @@ end GlobalTheory.CompanionTheory.Ar.RootHt
 namespace GlobalTheory.CompanionTheory.Ar.RootHt
 open GroundTheory.Heights₂.Heights
 
-theorem root_height : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (S : Finset ℕ) (Ω : Type) [Field Ω] (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω) (𝔐 : HodgeCpt Y S y) [Fintype (CMType H)] (Fl : HodgeCpt.Flag 𝔐) (h : LieMetric 𝔐.M y) (x : CMType H × Fin (D.p + D.q) → HermLine J) (e : CMType H × Fin (D.p + D.q) → Ω), (∀ r, IsSmoothHerm (x r)) → Fl.RootLines (fun r => (x r).a) e → ∃ C : ℝ, ∀ (L : Type) [Field L] [NumberField L] (w : (Σ k, J k) → L) (z : Sp (𝓞 L) ⟶ 𝔐.X), CoordsAt 𝔐.ξ y (spMap (algebraMap (𝓞 L) L) ≫ z) w → ∀ (B : GroundTheory.Heights₂.Heights.HermitianBundle.{0} L) (MB : LieModel 𝔐.t.G z B.carrier) (A : FlagPair B (CMType H) D.p D.q), IsFibre (fun z v w c => c = h.ip z v w) z B MB → ((∀ τ i, IsSubFibre 𝔐.M (flagStep Ω (Fl.b (.inl τ)) i.val) z MB ((A.W τ).F i)) ∧ ∀ τ i, IsSubFibre 𝔐.M (flagStep Ω (Fl.b (.inr τ)) i.val) z MB ((A.S τ).F i)) → (∀ τ (i : Fin D.p), |Ht.lineHt (x (τ, Fin.castAdd D.q i)) L w - (A.W τ).grDeg i| ≤ C) ∧ ∀ τ (i : Fin D.q), |Ht.lineHt (x (τ, Fin.natAdd D.p i)) L w + (A.S τ).grDeg i.rev| ≤ C := by
+theorem root_height : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (S : Finset ℕ) (Ω : Type) [Field Ω] (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω) (𝔐 : HodgeCpt Y S y) [Fintype (CMType H)] (Fl : 𝔐.Flag) (h : LieMetric 𝔐.M y) (x : CMType H × Fin (D.p + D.q) → HermLine J) (e : CMType H × Fin (D.p + D.q) → Ω), (∀ r, IsSmoothHerm (x r)) → Fl.RootLines (fun r => (x r).a) e → ∃ C : ℝ, ∀ (L : Type) [Field L] [NumberField L] (w : (Σ k, J k) → L) (z : Sp (𝓞 L) ⟶ 𝔐.X), CoordsAt 𝔐.ξ y (spMap (algebraMap (𝓞 L) L) ≫ z) w → ∀ (B : GroundTheory.Heights₂.Heights.HermitianBundle.{0} L) (MB : LieModel 𝔐.t.G z B.carrier) (A : FlagPair B (CMType H) D.p D.q), IsFibre (fun z v w c => c = h.ip z v w) z B MB → ((∀ τ i, IsSubFibre 𝔐.M (flagStep Ω (Fl.b (.inl τ)) i.val) z MB ((A.W τ).F i)) ∧ ∀ τ i, IsSubFibre 𝔐.M (flagStep Ω (Fl.b (.inr τ)) i.val) z MB ((A.S τ).F i)) → (∀ τ (i : Fin D.p), |Ht.lineHt (x (τ, Fin.castAdd D.q i)) L w - (A.W τ).grDeg i| ≤ C) ∧ ∀ τ (i : Fin D.q), |Ht.lineHt (x (τ, Fin.natAdd D.p i)) L w + (A.S τ).grDeg i.rev| ≤ C := by
   intro E _ _ _ H D l Xo c Y S Ω _ K _ J _ y 𝔐 _ Fl h x e hx hR
   obtain ⟨m, hm, hsw⟩ := GlobalTheory.T.flag_label_bases_exist E H D l Xo c Y S Ω K J y 𝔐 Fl
   haveI : Smooth 𝔐.t.G.hom := 𝔐.t.semi.smooth

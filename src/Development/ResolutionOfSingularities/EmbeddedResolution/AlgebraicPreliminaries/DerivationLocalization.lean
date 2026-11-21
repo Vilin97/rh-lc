@@ -56,7 +56,7 @@ private theorem exists_liftToLocalization (D : Derivation R S N) (M : Submonoid 
   rw [← KaehlerDifferential.map_D R R S S' s, key]
   exact D.liftKaehlerDifferential_comp_D s
 
-private theorem exists_mapToLocalization (D : Derivation R S S) (M : Submonoid S)
+theorem exists_mapToLocalization (D : Derivation R S S) (M : Submonoid S)
     [IsLocalization M S'] :
     ∃ D' : Derivation R S' S', ∀ s : S,
       D' (algebraMap S S' s) = algebraMap S S' (D s) := by
