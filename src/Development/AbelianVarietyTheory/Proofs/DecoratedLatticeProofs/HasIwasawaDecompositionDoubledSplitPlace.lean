@@ -5,6 +5,7 @@ public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.Integra
 public import Development.AbelianVarietyTheory.Definitions.Foundations.GLintEqKOAndPrincEqKOne
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDualFamilyOfIsLattice
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOfValILeOne
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 
 @[expose] public section
 
@@ -99,7 +100,7 @@ theorem mem_siegelH_of_split (h : IsCMExt F E σ) (hQ : Q = dblGram finSumFinEqu
   · rw [map_add (f := _), map_add (f := _)]; exact h2 i j
 
 theorem hasIwasawa_of_algHom (h : IsCMExt F E σ) (hQ : Q = dblGram finSumFinEquiv J) (hJ : IsHermND σ J)
-    (hQ' : IsHermND σ Q) (τ : E →ₐ[F] Fv F v) (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L]
+    (hQ' : IsHermND σ Q) (τ : E →ₐ[F] Fv F v) (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L]
     (hL : IsSelfDualAt σ J L v) : HasIwasawa σ Q (KFin σ Q L v) := fun g => by
   obtain ⟨a, ha⟩ := Frames.exists_isLatticeFrame (F := F) L
   have hβ := (isLatticeFrame_dbl ha).isSplitBasis τ h
@@ -125,7 +126,8 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem isSelfDualAt_of_isSelfDualC {D : D7} {A : HSp D} {L : Lat A} (hL : IsSelfDualC A L) (v : FinPl D) :
     IsSelfDualAt D.sp.cm.sig A.gram L v :=
-  (SelfDual.forall_isSelfDualAt_iff (σ := D.sp.cm.sig) (GlobalTheory.Doubling.isHermND_gram A).2 hL.1).2
+  (SelfDual.forall_isSelfDualAt_iff (σ := D.sp.cm.sig) (GlobalTheory.Doubling.isHermND_gram A).2
+    (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice A L hL)).2
     (fun y => hL.2 y) v
 
 theorem hasIwasawa_split : ∀ (D : D7) (A : HSp D) (L : Lat A), IsSelfDualC A L → ∀ v : FinPl D,
@@ -134,7 +136,7 @@ theorem hasIwasawa_split : ∀ (D : D7) (A : HSp D) (L : Lat A), IsSelfDualC A L
   intro D A L hL v ⟨P, P', hne, hP, hP'⟩
   obtain ⟨τ, -⟩ := existsUnique_splitPrime_eq (isCMExt_host D) (v := v) hne (HeightOneSpectrum.ext hP)
     (HeightOneSpectrum.ext hP')
-  haveI := hL.1
+  haveI := Formalism.IndefR.Fin.PDA.selfDual_isFullLattice A L hL
   exact hasIwasawa_of_algHom (isCMExt_host D) (gram_hdbl A) (GlobalTheory.Doubling.isHermND_gram A)
     (GlobalTheory.Doubling.isHermND_gram (dblSp A)) τ L (isSelfDualAt_of_isSelfDualC hL v)
 

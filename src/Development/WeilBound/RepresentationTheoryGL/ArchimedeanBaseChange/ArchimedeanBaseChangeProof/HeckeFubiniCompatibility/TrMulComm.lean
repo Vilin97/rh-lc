@@ -145,9 +145,8 @@ theorem haar_map [MeasurableSpace (G n)] [BorelSpace (G n)] [MeasurableSpace (ni
     rw [Homeomorph.toMeasurableEquiv_coe] at h
     rw [h]
     exact ((eH W₁ W₂).isCompact_preimage.2 hK).measure_lt_top
-  toIsOpenPosMeasure := (eH W₁ W₂).continuous.isOpenPosMeasure_map (eH W₁ W₂).surjective
-  toIsMulLeftInvariant := by
-    refine ⟨fun g => ?_⟩
+  open_pos := ((eH W₁ W₂).continuous.isOpenPosMeasure_map (eH W₁ W₂).surjective).open_pos
+  map_mul_left_eq_self g := by
     set Y := (eH W₁ W₂).symm g
     have hg : g = eH W₁ W₂ Y := by simp [Y]
     have hcomp : (fun x => g * x) ∘ (eH W₁ W₂) = (eH W₁ W₂) ∘ (fun X : nilrad W₁ W₂ =>

@@ -76,7 +76,8 @@ theorem hStd_mem_one_symm {x y : Sp E n} (h : hStd E n x y ∈ (1 : Submodule (�
 private theorem full_lattice_of_unimodular {L : Submodule (𝓞 E) (Sp E n)}
     (hL : Submodule.IsLattice E L) (hu : IsUnimodular (hStd E n) L) :
     Submodule.IsFullLattice E L := by
-  refine { toIsLattice := hL, span_eq_top := ?_ }
+  let := hL
+  refine { span_eq_top := ?_ }
   let W := Submodule.span E (L : Set (Sp E n))
   change W = ⊤
   by_contra h
@@ -432,7 +433,8 @@ theorem lattice_between {B M D : Submodule (𝓞 E) (Sp E n)} (hB : Submodule.Is
 private theorem full_lattice_of_smul {N B : Submodule (𝓞 E) (Sp E n)}
     (hN : Submodule.IsFullLattice E N) (hB : Submodule.IsLattice E B) {p : 𝓞 E} (hp : p ≠ 0)
     (h : ∀ x ∈ N, p • x ∈ B) : Submodule.IsFullLattice E B := by
-  refine { toIsLattice := hB, span_eq_top := top_unique ?_ }
+  let := hB
+  refine { span_eq_top := top_unique ?_ }
   rw [← hN.span_eq_top]
   refine Submodule.span_le.mpr fun x hx => ?_
   have hp' : algebraMap (𝓞 E) E p ≠ 0 :=
@@ -449,8 +451,8 @@ theorem glue_unimodular {I J : Ideal (𝓞 E)} (hIJ : ∀ p ∈ I, cO E p ∈ J)
   have hI : I ≠ ⊥ := by
     intro h
     obtain ⟨e, he, e', he', hee⟩ := hcop
-    have he0 : e = 0 := Ideal.mem_bot.mp (h ▸ he)
-    have he'0 : cO E e' = 0 := Ideal.mem_bot.mp (h ▸ hJI e' he')
+    have he0 : e = 0 := by simpa only [h, Ideal.mem_bot] using he
+    have he'0 : cO E e' = 0 := by simpa only [h, Ideal.mem_bot] using hJI e' he'
     have he'0' : e' = 0 := by rw [← cO_cO e', he'0, map_zero]
     exact zero_ne_one (by simpa only [he0, he'0', add_zero] using hee : (0 : 𝓞 E) = 1)
   obtain ⟨p, hpI, hp⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hI
@@ -1251,7 +1253,7 @@ theorem Deco.Ok.smul_Lsh_mem_L {d : Deco E n ST SG} (hd : d.Ok) {pi : 𝓞 E}
   refine hd.smul_N_mem_L ha ?_
   exact hd.smul_Lsh_mem_N (fun P => by rw [cO_cO]; exact ha P) hx
 
-private theorem Deco.Ok.L_full_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsFullLattice E d.L := by
+theorem Deco.Ok.L_full_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsFullLattice E d.L := by
   classical
   have hex : ∀ P : ST, ∃ p ∈ P.1.asIdeal, p ≠ 0 := fun P =>
     Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
@@ -1267,8 +1269,11 @@ private theorem Deco.Ok.L_full_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submod
 theorem Deco.Ok.L_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsLattice E d.L :=
   hd.L_full_lattice.toIsLattice
 
+theorem Deco.Ok.Lsh_full_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsFullLattice E d.Lsh :=
+  dual_lattice hd.L_full_lattice
+
 theorem Deco.Ok.Lsh_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsLattice E d.Lsh :=
-  (dual_lattice hd.L_full_lattice).toIsLattice
+  hd.Lsh_full_lattice.toIsLattice
 
 theorem Deco.Ok.mem_locP_L {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (x : Sp E n) :
     x ∈ localization₂ P.1.asIdeal d.L ↔ x ∈ d.at P.1 ∧ d.f P x = 0 := by

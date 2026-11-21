@@ -175,7 +175,8 @@ theorem theta_eq (ρ : Setup (Dof x).ntw) :
   funext i j b h P
   delta GlobalTheory.SeriesTie.Setup.theta GlobalTheory.ExportSeries.Base.theta GlobalTheory.ExportSeries.Base.vecBase GlobalTheory.ExportSeries.Base.vecAt
     GlobalTheory.ExportSeries.Frame.vec GlobalTheory.ExportSeries.Frame.placeMap
-  congr 1 <;> with_unfolding_all rfl
+  tr_leaves x.o.Z (oL x L).Z
+  kexactB (Eq.refl (ρ.theta (kc% i) (kc% j) b (kc% h) (kc% P)))
 
 
 open GlobalTheory.SeriesTie in

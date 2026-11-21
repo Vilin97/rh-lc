@@ -45,7 +45,7 @@ theorem lamX_move (I : AutInst) (x x' : I.Gf) (h : ∃ γ ∈ I.GFset, ∃ k ∈
 
 theorem isLattice_move {E : Type} [Field E] [NumberField E] {m : ℕ} (Λ Λ' : Submodule (𝓞 E) (Fin m → E))
     (γ : GL (Fin m) E) (h : ∀ y, (γ : Matrix (Fin m) (Fin m) E) *ᵥ y ∈ Λ' ↔ y ∈ Λ)
-    (hΛ : Submodule.IsLattice E Λ) : Submodule.IsLattice E Λ' := by
+    (hΛ : Submodule.IsFullLattice E Λ) : Submodule.IsFullLattice E Λ' := by
   have hmap : Λ' = Λ.map ((Matrix.toLin' (γ : Matrix (Fin m) (Fin m) E)).restrictScalars (𝓞 E)) := by
     ext z
     simp only [Submodule.mem_map, LinearMap.coe_restrictScalars, Matrix.toLin'_apply]
@@ -56,8 +56,20 @@ theorem isLattice_move {E : Type} [Field E] [NumberField E] {m : ℕ} (Λ Λ' : 
       · simp [Matrix.mulVec_mulVec]
     · rintro ⟨y, hy, rfl⟩
       exact (h y).2 hy
-  subst hmap
-  exact Submodule.IsLattice.of_fg E (hΛ.fg.map _)
+  have hspan : Submodule.span E (Λ : Set (Fin m → E)) ≤
+      (Submodule.span E (Λ' : Set (Fin m → E))).comap
+        (Matrix.toLin' (γ : Matrix (Fin m) (Fin m) E)) := by
+    apply Submodule.span_le.mpr
+    intro y hy
+    exact Submodule.subset_span ((h y).2 hy)
+  rw [hΛ.span_eq_top] at hspan
+  refine { toIsLattice := ?_, span_eq_top := ?_ }
+  · rw [hmap]
+    exact Submodule.IsLattice.of_fg E (hΛ.fg.map _)
+  · apply top_unique
+    intro z _
+    have hz := hspan (show ((γ⁻¹ : GL (Fin m) E) : Matrix (Fin m) (Fin m) E) *ᵥ z ∈ ⊤ from trivial)
+    simpa [Matrix.toLin'_apply, Matrix.mulVec_mulVec] using hz
 
 theorem gram_mul {E : Type} [CommRing E] [StarRing E] {n p q : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (A : Matrix (Fin n) (Fin p) E) (B : Matrix (Fin n) (Fin q) E) (P : Matrix (Fin p) (Fin p) E)

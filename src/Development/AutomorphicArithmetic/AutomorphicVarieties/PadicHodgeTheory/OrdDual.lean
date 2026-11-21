@@ -51,7 +51,7 @@ private theorem ep_mul (Y : Matrix (Fin m) (Fin m) R) (Z : Matrix (Fin m) (Fin m
   rw [ep_eq, Matrix.smul_mul, eps_smul, Matrix.map_mul, inc_pr]
 
 private theorem ad_ep (x : GG (m := m) (R := DualNumber R)) (Y : Matrix (Fin m) (Fin m) R) :
-    GG.ad x (ep Y) = ep ((GG.map (pr R) x).adFun Y) := by
+    GG.ad (m := m) (R := DualNumber R) x (ep Y) = ep ((GG.map (pr R) x).adFun Y) := by
   rw [ep_eq, map_smul, eps_smul, GG.ad_apply, adFun_map, inc_pr]
 
 private theorem ep_add (X Y : Matrix (Fin m) (Fin m) R) : ep (X + Y) = ep X + ep Y := by
@@ -94,7 +94,7 @@ private theorem exists_coc (r : G →* GG (m := m) (R := R)) (r' : G →* GG (m 
   refine ⟨fun g => (γ' g).map snd, fun g k => ep_inj ?_, fun g => ?_⟩
   · rw [ep_add, ← h4, ← h4, h2 g k, h4 k]
     congr 1
-    refine (ad_ep _ _).trans ?_
+    refine (ad_ep (R := R) (m := m) _ _).trans ?_
     rw [MonoidHom.comp_apply, h5]
     rfl
   · have e2 := ep_mul ((γ' g).map snd) (((GG.map (inc R)).comp r) g).mat
@@ -125,7 +125,7 @@ private theorem exists_conj (r : G →* GG (m := m) (R := R)) (r' : G →* GG (m
   · have e : cob r' (ep X) g = ep (X - adRep r g X) := by
       rw [ep_sub, cob]
       congr 1
-      refine (ad_ep _ _).trans ?_
+      refine (ad_ep (R := R) (m := m) _ _).trans ?_
       rw [hg]
       rfl
     rw [(hd g).2, e, Matrix.add_mul, Matrix.one_mul, ep_mul, ← GG.map_mat, hg, hγ g, Matrix.add_mul (γ g), ep_add,

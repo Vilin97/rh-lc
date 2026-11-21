@@ -308,34 +308,7 @@ theorem genusMass_eq {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (�
   rw [genusMass, genusSum_eq_sum H hs (fun _ _ _ _ => rfl), hm s hs,
     ENNReal.ofReal_sum_of_nonneg (fun _ _ => by positivity)]
   refine Finset.sum_congr rfl fun M hM => ?_
-  have hgen := hs.1 M hM
-  have hfull : Submodule.IsFullLattice K M := by
-    refine { toIsLattice := hgen.1, span_eq_top := ?_ }
-    obtain ⟨p, hp⟩ := Ideal.exists_maximal (α := 𝓞 K)
-    let _ : p.IsPrime := hp.isPrime
-    obtain ⟨g, -, hg⟩ := hgen.2 p hp
-    have hspan (N : Submodule (𝓞 K) V) :
-        Submodule.span K (loc (K := K) p N : Set V) = Submodule.span K (N : Set V) := by
-      apply le_antisymm
-      · apply Submodule.span_le.mpr
-        rintro x ⟨a, ha, hx⟩
-        have hne : algebraMap (𝓞 K) K a ≠ 0 := by
-          intro hz
-          rw [← map_zero (algebraMap (𝓞 K) K)] at hz
-          exact locBasic_hcompl_not_mem p a ha
-            ((FaithfulSMul.algebraMap_injective (𝓞 K) K hz).symm ▸ p.zero_mem)
-        have hx' : a • x ∈ Submodule.span K (N : Set V) := Submodule.subset_span hx
-        rw [← algebraMap_smul K a x] at hx'
-        have hy := (Submodule.span K (N : Set V)).smul_mem (algebraMap (𝓞 K) K a)⁻¹ hx'
-        rwa [smul_smul, inv_mul_cancel₀ hne, one_smul] at hy
-      · exact Submodule.span_mono (locBasic_le_locS _ N)
-    have hg' := congrArg (fun N : Submodule (𝓞 K) V => Submodule.span K (N : Set V)) hg
-    change Submodule.span K ((g : V →ₗ[K] V) '' (loc (K := K) p L : Set V)) =
-      Submodule.span K (loc (K := K) p M : Set V) at hg'
-    rw [← Submodule.map_span, hspan L, hspan M, hL.span_eq_top, Submodule.map_top,
-      LinearMap.range_eq_top.mpr g.surjective] at hg'
-    exact hg'.symm
-  obtain ⟨-, hpos, he⟩ := autCard_eq_natCard hH hfull
+  obtain ⟨-, hpos, he⟩ := autCard_eq_natCard hH (hs.1 M hM).1
   rw [he, ENNReal.ofReal_inv_of_pos (by exact_mod_cast hpos), ENNReal.ofReal_natCast, one_div]
 
 theorem genusMass_ne_zero {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (𝓞 K) V}

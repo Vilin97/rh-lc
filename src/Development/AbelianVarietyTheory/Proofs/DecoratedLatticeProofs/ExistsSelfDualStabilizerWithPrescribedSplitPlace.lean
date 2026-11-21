@@ -65,10 +65,11 @@ theorem prod_ofFn_single {M : Type*} [Monoid M] :
   | r + 1, f, i, h => by
     rw [List.ofFn_succ, List.prod_cons]
     rcases Fin.eq_zero_or_eq_succ i with rfl | ⟨i', rfl⟩
-    · rw [List.prod_eq_one, mul_one]
-      intro x hx
-      obtain ⟨j, rfl⟩ := (List.mem_ofFn' _ _).1 hx
-      exact h _ (Fin.succ_ne_zero j)
+    · have hprod : (List.ofFn (fun j : Fin r => f j.succ)).prod = 1 := by
+        apply List.prod_eq_one
+        rw [List.forall_mem_ofFn_iff]
+        exact fun j => h j.succ (Fin.succ_ne_zero j)
+      rw [hprod, mul_one]
     · rw [h 0 (Fin.succ_ne_zero i').symm, one_mul]
       exact prod_ofFn_single (fun j => f j.succ) i' fun j hj => h _ fun e => hj (Fin.succ_injective _ e)
 

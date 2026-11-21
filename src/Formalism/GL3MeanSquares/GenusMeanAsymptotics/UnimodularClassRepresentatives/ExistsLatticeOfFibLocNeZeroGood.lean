@@ -139,6 +139,65 @@ theorem exists_unimod_through (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodul
     (hx : h x₀ x₀ ∈ (1 : Submodule (𝓞 K) K)) :
     ∃ B : Submodule (𝓞 K) V, Submodule.IsLattice K B ∧ Formalism.HermitianLatticesTheory.IsIntegralLat h B ∧
       Formalism.HermitianLatticesTheory.IsUnimodularAt h P B ∧ x₀ ∈ B := by
+  classical
+  letI : P.IsPrime := hP
+  have hfull : Submodule.IsFullLattice K L := by
+    refine ⟨hL, ?_⟩
+    by_contra hspan
+    obtain ⟨φ, hφ₀, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
+    let b := FiniteDimensional.finBasis K V
+    obtain ⟨bs, hbs⟩ := Formalism.HermitianLatticesTheory.dualLattice_dualBasis h (nondegenerate hd) b
+    let μ := ∑ j, star (φ (b j)) • bs j
+    have hμ : ∀ v, h μ v = φ v := by
+      have key : h μ = φ := by
+        apply b.ext
+        intro i
+        dsimp only [μ]
+        rw [map_sum, LinearMap.sum_apply]
+        have hk : ∀ j, h (star (φ (b j)) • bs j) (b i) =
+            φ (b j) * (if i = j then 1 else 0) := by
+          intro j
+          rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star]
+          congr 1
+          rw [← hs.eq (b i) (bs j), hbs]
+          split_ifs <;> simp
+        simp only [hk, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      intro v
+      rw [key]
+    have hμd : μ ∈ Formalism.HermitianLatticesTheory.dualAt h P L := by
+      rw [Formalism.HermitianLatticesTheory.locDual_mem_dualAt]
+      intro y hy
+      have hy0 : φ y = 0 := LinearMap.mem_ker.mp (hφ (Submodule.subset_span hy))
+      have : h y μ = 0 := by rw [← hs.eq, hμ, hy0, map_zero]
+      rw [this]
+      exact Submodule.zero_mem _
+    have hμloc : μ ∈ Formalism.HermitianLatticesTheory.loc (K := K) P L := by
+      rw [← hU, Formalism.HermitianLatticesTheory.locDual_dualAt_loc h
+        (IsFractionRing.injective (𝓞 K) K)
+        Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range]
+      exact hμd
+    obtain ⟨s, hs', hsμ⟩ := hμloc
+    have hs0 : algebraMap (𝓞 K) K s ≠ 0 := by
+      intro e
+      have : s = 0 := (IsFractionRing.injective (𝓞 K) K) (e.trans (map_zero _).symm)
+      exact Formalism.HermitianLatticesTheory.locBasic_hcompl_not_mem (K := K) P s hs' (this ▸ P.zero_mem)
+    have hμspan : μ ∈ Submodule.span K (L : Set V) := by
+      have he : μ = (algebraMap (𝓞 K) K s)⁻¹ • (s • μ) := by
+        rw [← algebraMap_smul K s μ, smul_smul, inv_mul_cancel₀ hs0, one_smul]
+      rw [he]
+      exact Submodule.smul_mem _ _ (Submodule.subset_span hsμ)
+    have hμ0 : μ = 0 := by
+      by_contra hn
+      have hh : h μ μ ≠ 0 := by
+        intro e
+        obtain ⟨ψ⟩ : Nonempty (K →+* ℂ) := inferInstance
+        have hp := hd μ hn ψ
+        rw [e, map_zero] at hp
+        exact lt_irrefl _ hp
+      exact hh (by rw [hμ, LinearMap.mem_ker.mp (hφ hμspan)])
+    apply hφ₀
+    ext y
+    simpa [hμ0] using (hμ y).symm
   obtain ⟨hanti, hbi, hsup, hint, -⟩ := Formalism.HermitianLatticesTheory.dualBasic (𝓞 K) K V h hs Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range
   have DL := Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K V h hs (nondegenerate hd) Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range
   obtain ⟨hloc, -⟩ := Formalism.HermitianLatticesTheory.locBasic (𝓞 K) K V Formalism.HermitianLatticesTheory.genusCovol_hinj
@@ -159,12 +218,12 @@ theorem exists_unimod_through (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodul
     refine ⟨hBfg, ?_⟩
     intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
-  have lat2 : Submodule.IsLattice K (Formalism.HermitianLatticesTheory.dual h L ⊔ X) := by
-    refine ⟨(DL L hL).1.fg.sup (Submodule.fg_span_singleton x₀), ?_⟩
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  have lat2 : Submodule.IsFullLattice K (Formalism.HermitianLatticesTheory.dual h L ⊔ X) := by
+    letI := (DL L hfull).1
+    exact Submodule.IsFullLattice.of_le_of_fg K le_sup_left
+      ((DL L hfull).1.fg.sup (Submodule.fg_span_singleton x₀))
   have e1 : L ⊓ Formalism.HermitianLatticesTheory.dual h X = Formalism.HermitianLatticesTheory.dual h (Formalism.HermitianLatticesTheory.dual h L ⊔ X) := by
-    rw [hsup, (DL L hL).2.1]
+    rw [hsup, (DL L hfull).2.1]
   have e2 : Formalism.HermitianLatticesTheory.dual h (L ⊓ Formalism.HermitianLatticesTheory.dual h X) = Formalism.HermitianLatticesTheory.dual h L ⊔ X := by
     rw [e1, (DL _ lat2).2.1]
   have e3 : Formalism.HermitianLatticesTheory.dual h B = (Formalism.HermitianLatticesTheory.dual h L ⊔ X) ⊓ Formalism.HermitianLatticesTheory.dual h X := by

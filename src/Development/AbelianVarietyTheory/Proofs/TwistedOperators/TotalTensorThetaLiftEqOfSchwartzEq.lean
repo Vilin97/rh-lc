@@ -146,20 +146,18 @@ theorem sum_liftP_eq_zero {μ₀ : T} (hL : L.Is μ₀) (M : Vol G) (ρ : RealMa
       refine Finset.sum_congr rfl fun k _ => ?_
       simp only [r]
       ring
+    have hsum_lift :
+        (∑ k ∈ s, c k • liftA W M a (W.fock a.pair (d k).2 P.2) (Fk k)) =
+          ∑ k ∈ s, ∑ l ∈ Ls, (c k * r k l) • liftA W M a (g l) (Fk k) := by
+      refine Finset.sum_congr rfl fun k hk => ?_
+      rw [hstep k hk, liftA_sum_datum M ha Ls (r k) g (Fk k) (fun l _ => hconv l k hk),
+        Finset.smul_sum]
+      simp only [smul_smul]
     show ∑ k ∈ s, c k • liftA W M a (W.fock a.pair (d k).2 P.2) (Fk k) = 0
-    calc
-      (∑ k ∈ s, c k • liftA W M a (W.fock a.pair (d k).2 P.2) (Fk k))
-          = ∑ k ∈ s, ∑ l ∈ Ls, (c k * r k l) • liftA W M a (g l) (Fk k) := by
-        refine Finset.sum_congr rfl fun k hk => ?_
-        rw [hstep k hk, liftA_sum_datum M hg.last Ls (r k) g (Fk k) fun l _ => hconv l k hk, Finset.smul_sum]
-        simp only [smul_smul]
-      _ = ∑ l ∈ Ls, liftA W M a (g l) (∑ k ∈ s, (c k * r k l) • Fk k) := by
-        rw [Finset.sum_comm]
-        refine Finset.sum_congr rfl fun l _ => ?_
-        exact (liftA_sum_form M a (g l) s (fun k => c k * r k l) Fk fun k hk => hconv l k hk).symm
-      _ = 0 := by
-        refine Finset.sum_eq_zero fun l _ => ?_
-        rw [hIH l, liftA_zero_form]
+    rw [hsum_lift, Finset.sum_comm]
+    refine Finset.sum_eq_zero fun l _ => ?_
+    rw [← liftA_sum_form M a (g l) s (fun k => c k * r k l) Fk (fun k hk => hconv l k hk),
+      hIH l, liftA_zero_form]
 
 theorem liftT_tensE_expand (M : Vol G) {X Y : Node} (p : Path T X Y) (Q : PolE G →₀ ℂ) (τ : TotT G p) (F : Fn G X) :
     liftT W M p (tensE W p Q τ) F =

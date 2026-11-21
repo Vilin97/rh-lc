@@ -137,7 +137,8 @@ theorem UpperTheory.V.Z.Kato.WeilSphericalRecords.bloch_kato_selmer_vanishes_of_
       rw [hx]
       ext i j
       fin_cases i <;> fin_cases j <;> rfl
-    rw [wOf, this]
+    dsimp only [wOf]
+    rw [this]
     split_ifs
     · rfl
     · ext i j
@@ -168,16 +169,20 @@ theorem UpperTheory.V.Z.Kato.WeilSphericalRecords.bloch_kato_selmer_vanishes_of_
       pC (x.adFun X) = (if x.right = 1 then 1 else -1 : R) • pC X := by
     obtain ⟨a, b, c, d, h, hx⟩ := hx
     rw [ad_eq h hx, theta_eq, conj_eq]
-    ext i j
-    split_ifs <;> fin_cases i <;> fin_cases j <;> simp [pC]
+    by_cases hs : x.right = 1 <;> simp only [hs, if_true, if_false]
+    all_goals
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [pC]
 
   dbg_trace "ad_pC"
   have ad_pC {R : Type} [CommRing R] {x : GG (m := 3) (R := R)} (hx : IsBlockSL2Embedding x) (X : Matrix (Fin 3) (Fin 3) R) :
       x.adFun (pC X) = (if x.right = 1 then 1 else -1 : R) • pC X := by
     obtain ⟨a, b, c, d, h, hx⟩ := hx
     rw [ad_eq h hx, theta_eq, conj_eq]
-    ext i j
-    split_ifs <;> fin_cases i <;> fin_cases j <;> simp [pC]
+    by_cases hs : x.right = 1 <;> simp only [hs, if_true, if_false]
+    all_goals
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [pC]
 
   dbg_trace "pA_ad_one"
   have pA_ad_one {R : Type} [CommRing R] {x : GG (m := 3) (R := R)} (hx : IsBlockSL2Embedding x) (h1 : x.right = 1) (w : GL (Fin 2) R)

@@ -124,15 +124,14 @@ def resIdeal (em : O →+* C) (hi : ∀ x, V.Ge 0 (em x)) : Ideal O where
   add_mem' := fun hx hy => by simpa using mm_add hx hy
   smul_mem' := fun c x hx => by simpa using mm_mul (hi c) hx
 
-theorem resIdeal_prime (em : O →+* C) (hi : ∀ x, V.Ge 0 (em x)) : (resIdeal V em hi).IsPrime where
-  ne_top' := by
-    rw [Ideal.ne_top_iff_one]
+theorem resIdeal_prime (em : O →+* C) (hi : ∀ x, V.Ge 0 (em x)) : (resIdeal V em hi).IsPrime := by
+  refine Ideal.isPrime_iff.mpr ⟨?_, ?_⟩
+  · rw [Ideal.ne_top_iff_one]
     intro h
     change V.MM (em 1) at h
     rw [map_one] at h
     exact not_mm_one h
-  mem_or_mem' := by
-    intro x y h
+  · intro x y h
     change V.MM (em (x * y)) at h
     rw [map_mul] at h
     exact mm_or (hi x) (hi y) h

@@ -237,7 +237,7 @@ theorem intLat_latIn (hS : S = C ⊔ I) (hd : C ⊓ I = ⊥) (H : HermSpace K V)
     exact ⟨hM.2 ▸ Submodule.subset_span hx, fun y hy => hi x hx y hy⟩
   refine ⟨?_, ?_⟩
   · unfold GlobalTheory.Mass.IsIntLat
-    refine ⟨latIn_isLattice p hCS hpC hpI hpI0 hpC1 hM, ?_⟩
+    refine ⟨latIn_isFullLattice p hCS hpC hpI hpI0 hpC1 hM, ?_⟩
     intro x hx y hy
     rw [LinearMap.flip_apply, hH]
     exact hi _ hy _ hx

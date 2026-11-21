@@ -58,7 +58,8 @@ theorem buRat_rrFull_closed_alt (𝒜 : FamClass)
       have hR := (hDivG Fm (d3_a hc) x hx hs i).toRows hU
       have hPt := Formalism.L2.DIV.dcPt_of_G hU (hDcPtG Fm (d3_a hc) x hx hs i)
       have hF := _root_.Formalism.L2.DIV.RatFullPt.indefinite_realisation_column_facts ((_root_.Formalism.L2.Top4.indefiniteRealisationChoiceOfSelection selB) Fm (d3_a hc) x hx hs i) hok1 hsep prows ra.seeIso ra.miStar
-      exact ⟨Formalism.L2.DIV.RatFullPt.buRational_of _ hok1 hF hR hPt (Fm.ties x i).bu_def, Formalism.L2.DIV.RatFullPt.rrFull_of _ hF hR⟩
+      exact ⟨Formalism.L2.DIV.RatFullPt.buRational_of _ hok1 hF hR hPt (Fm.ties x i).bu_def,
+        Formalism.L2.DIV.RatFullPt.rrFull_of _ hok1 hF hR⟩
     exact ⟨⟨_, fun x hx i => (key x hx i).1⟩, ⟨_, fun x hx i => (key x hx i).2⟩⟩
 end Formalism.L2.DIV.RatFullFam
 end

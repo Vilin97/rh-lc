@@ -88,10 +88,12 @@ theorem _root_.UpperTheory.Lit.Tam.tamagawa_local_volume_factor : True → Globa
 
   have hpet : (∫⁻ q, Φ (dict σ q.out).1 (dict σ q.out).2 ∂(muQ1 (D.sp.W j))) =
       petE (D.sp.W j) (dict σ) (muQ1 (D.sp.W j)) la P ^ 2 := by
-    rw [petE, ← ENNReal.rpow_natCast, ← lintegral_rpow_eNorm_eq_rpow_eLpNorm' (by norm_num : (0 : ℝ) < 2)]
+    rw [petE, ← ENNReal.rpow_natCast]
+    norm_num only [Nat.cast_ofNat]
+    rw [← lintegral_rpow_eNorm_eq_rpow_eLpNorm' (by norm_num : (0 : ℝ) < 2)]
     refine lintegral_congr fun q => ?_
     simp only [hΦdef, ptN]
-    rw [pnorm_piecewise_eq _ _ _ (hdom _), Real.enorm_eq_ofReal (pnorm_nonneg₀ _ _ _ _), ← ENNReal.ofReal_pow (pnorm_nonneg₀ _ _ _ _)]
+    rw [pnorm_piecewise_eq _ _ _ (hdom _), Real.eNorm_eq_ofReal (pnorm_nonneg₀ _ _ _ _), ENNReal.rpow_ofNat, ← ENNReal.ofReal_pow (pnorm_nonneg₀ _ _ _ _)]
   set S := ∑ k, muF ((U σ).X k) (x0 k) (FF k) with hSdef
 
   have hpt : ∀ p : Formalism.L2.Pj.FPt (U σ).X, ENNReal.ofReal (((U σ).X p.1).pnorm (la p.1) (P p.1) p.2) ^ 2 ≤
@@ -433,17 +435,17 @@ theorem _root_.UpperTheory.Lit.Tam.tamagawaPeterssonLambdaSq_nonneg : True → �
     rw [← hrestrict]
     calc eLpNorm' (fun q : AutQ (D.sp.W j) => AllWt.ptN la P' (dict σ q.out)) 2 ((muQ1 (D.sp.W j)).restrict Cl)
         ≤ eLpNorm' (fun q : AutQ (D.sp.W j) => AllWt.ptN la P (dict σ q.out)) 2 ((muQ1 (D.sp.W j)).restrict Cl) := by
-          refine eLpNorm'_mono (by norm_num) fun q => ?_
+          refine eLpNorm'_mono_ae (by norm_num) (Filter.Eventually.of_forall fun q => ?_)
           rw [Real.norm_of_nonneg (AllWt.ptN_nonneg _ _ _), Real.norm_of_nonneg (AllWt.ptN_nonneg _ _ _), hpt]
           split_ifs
           · exact le_rfl
           · exact AllWt.ptN_nonneg _ _ _
       _ ≤ eLpNorm' (fun q : AutQ (D.sp.W j) => AllWt.ptN la P (dict σ q.out)) 2
             (AllWt.muOn (U σ) (D.sp.W j) (dict σ) Z) := by
-          apply eLpNorm'_mono_measure _ ?_ (by norm_num)
-          show (muQ1 (D.sp.W j)).restrict Cl ≤
-            (muQ1 (D.sp.W j) Cl)⁻¹ • (muQ1 (D.sp.W j)).restrict Cl
-          exact le_smul_of_one_le_left (zero_le _) (ENNReal.one_le_inv.2 prob_le_one)
+          show _ ≤ eLpNorm' _ 2 ((muQ1 (D.sp.W j) Cl)⁻¹ • (muQ1 (D.sp.W j)).restrict Cl)
+          rw [eLpNorm'_smul_measure (by norm_num)]
+          refine le_mul_of_one_le_left (by simp) ?_
+          exact ENNReal.one_le_rpow (ENNReal.one_le_inv.2 prob_le_one) (by norm_num)
   have h4 : ENNReal.ofReal (AllWt.ptN la P ⟨y.1, y.2.1⟩) ^ 2 ≤
       ENNReal.ofReal (MainStatements.Tam.Plug.supConst2 D.host.E D.R.r D.host.d l.M w) *
         AllWt.petE (D.sp.W j) (dict σ) (AllWt.muOn (U σ) (D.sp.W j) (dict σ) Z) la P ^ 2 :=

@@ -33,7 +33,7 @@ theorem localLattice_preserves_cofinite (g : (VS D).V ≃ₗ[D.host.E] (VS D).V)
     intro v hv
     rw [← hs] at hv
     induction hv using Submodule.span_induction with
-    | mem v hv => exact (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p (by infer_instance) _).1 (hall v hv)
+    | mem v hv => exact (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p (Λ := Λ) (by infer_instance) _).1 (hall v hv)
     | zero => rw [map_zero]; exact Submodule.zero_mem _
     | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul o x _ hx =>
@@ -44,7 +44,7 @@ theorem localLattice_preserves_cofinite (g : (VS D).V ≃ₗ[D.host.E] (VS D).V)
   | mem x hx =>
     obtain ⟨v, hv, rfl⟩ := hx
     rw [betaP_bc]
-    exact (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p (by infer_instance) _).2 (hloc v hv)
+    exact (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p (Λ := Λ) (by infer_instance) _).2 (hloc v hv)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
   | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul o x _ hx =>
@@ -66,7 +66,7 @@ theorem localLattice_preserves_cofinite_symm (g : (VS D).V ≃ₗ[D.host.E] (VS 
     intro v hv
     rw [← hs] at hv
     induction hv using Submodule.span_induction with
-    | mem v hv => exact (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p (by infer_instance) _).1 (hall v hv)
+    | mem v hv => exact (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p (Λ := Λ) (by infer_instance) _).1 (hall v hv)
     | zero => rw [map_zero]; exact Submodule.zero_mem _
     | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul o x _ hx =>
@@ -78,7 +78,7 @@ theorem localLattice_preserves_cofinite_symm (g : (VS D).V ≃ₗ[D.host.E] (VS 
   | mem x hx =>
     obtain ⟨v, hv, rfl⟩ := hx
     rw [betaP_symm_bc]
-    exact (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p (by infer_instance) _).2 (hloc v hv)
+    exact (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p (Λ := Λ) (by infer_instance) _).2 (hloc v hv)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
   | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul o x _ hx =>

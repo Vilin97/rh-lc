@@ -32,16 +32,6 @@ namespace UpperTheory.Gal.FiniteEtaleModels
 
 open UpperTheory.Gal.Int.Geo UpperTheory.Gal.Int.Geo.CovMain UpperTheory.Gal.crystallineComparison.Mod
 
-private theorem mIn : MIn where
-  ex := @GlobalTheory.T.harrisTaylorIntegralModel_nonempty
-  proj := @GlobalTheory.UPel.HT.Model.isProjOver_of_compactB
-  cmp := @GlobalTheory.T.exists_open_closed_immersion_genModel_to_fibre
-  finModel := finModel_holds (finCover_holds (repAll_holds idealInd_holds (repMul_holds crtMul_holds crtProj_holds))
-    (ptAll_holds idealInd_holds crtMul_holds) grpFin_holds)
-  placeOf := placeOf_holds
-  cong := crystallineComparison.Mod.congKS_link
-  corr := crystallineComparison.Mod.corrBC_holds crystallineComparison.Mod.quotObj_link
-
 theorem stepA : StepA := stepA_holds (multUnit_of mIn) (latGen_of mIn) (clsEx_of mIn) (trEta_of mIn) (trBack_of mIn) (qComp_of mIn)
 
 theorem baseFet : BaseFet := baseFet_holds (powCart_of mIn) (piFet_of mIn)

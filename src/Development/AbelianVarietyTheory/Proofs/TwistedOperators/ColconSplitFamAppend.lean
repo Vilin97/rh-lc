@@ -102,7 +102,18 @@ theorem colcon_gen (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.
       rfl
   | σ + 1, j, hj, vN, h, g, φ, z, hg, hz => by
       subst hg
-      dsimp only [chainFrom, Chain.Iter] at hz
+      have hj' : j + 1 + 1 + 2 * σ + 2 = D.R.m := by omega
+      let vN' := (GlobalTheory.Unf.Inhab.nonempty_volN (besDecAt G (j + 1 + 1) σ hj')).some
+      change ∃ (f₁ : GA D (G.V (.grid D.R.m (j + 1))) → ℂ)
+          (f₂ : GA D (G.V (.grid D.R.m (j + 1))) → GA D (G.V (.grid D.R.m (j + 1 + 1))) → ℂ),
+        IsQuotIntL1 (jacAt G hM (j + 1) (σ + 1) (by omega)).μR
+          (M.ν (.grid D.R.m (j + 1))) f₁ z ∧
+        ∀ a, IsQuotIntL1 (besAt G hM (j + 1 + 1) σ hj' vN').μR
+          (M.ν (.grid D.R.m (j + 1 + 1))) (f₂ a) (f₁ a) ∧
+          ∀ b, (chainFrom G W t hM σ (j + 1 + 1) hj' vN').Iter
+            (fun rest => colPer W hM (σ + 1) j hj vN
+              (dataFrom G W t hM (downFam t D.R.m D.R.m Φ) (σ + 1) j hj vN)
+              F φ (h j) (a, b, rest)) (f₂ a b) at hz
       obtain ⟨f₁, f₂, h1, h2⟩ := hz
       have hl : List.range' (j + 1) (2 * (σ + 1)) = (j + 1) :: (j + 1 + 1) :: List.range' (j + 1 + 1 + 1) (2 * σ) := by
         rw [show 2 * (σ + 1) = 2 * σ + 1 + 1 by ring, List.range'_succ, List.range'_succ]

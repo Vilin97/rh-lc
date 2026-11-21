@@ -151,15 +151,18 @@ theorem exists_isLattice_eq_localLattice (Zd : LocDat D) (p : PlF D) (M : Submod
     intro i
     rw [baseChange_smul₂, baseChangeAt_frame, iE_alg]
   have hlat : Submodule.IsFullLattice D.host.E Λ' := by
-    have hfg' : Λ'.FG := hΛ'.symm ▸ Submodule.fg_span hGfin
+    have hfg' : Λ'.FG := by
+      rw [hΛ']
+      exact Submodule.fg_span hGfin
     letI := Submodule.IsLattice.of_fg D.host.E hfg'
     refine ⟨?_⟩
     have hcE : algebraMap D.host.F D.host.E (c : D.host.F) ≠ 0 := by
-      apply (algebraMap D.host.F D.host.E).injective.ne
+      apply (map_ne_zero _).mpr
       exact_mod_cast hc0
     apply top_unique
     rw [← (VS D).frame.span_eq, Submodule.span_le]
     rintro _ ⟨i, rfl⟩
+    rw [SetLike.mem_coe]
     have hi : algebraMap D.host.F D.host.E (c : D.host.F) • (VS D).frame i ∈ Λ' := by
       rw [hΛ']
       exact Submodule.subset_span (hGc i)

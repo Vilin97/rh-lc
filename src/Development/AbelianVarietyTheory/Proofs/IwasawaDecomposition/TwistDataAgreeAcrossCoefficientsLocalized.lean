@@ -56,8 +56,7 @@ def oL (x : St P) (L : LocAll (lay0 (Dof x))) : P.q.Over :=
 
 abbrev DL (x : St P) (L : LocAll (lay0 (Dof x))) : D7 := (w.st (oL x L).Z).toD7
 
-theorem DL_eq (x : St P) (L : LocAll (lay0 (Dof x))) : DL x L = withLoc L := by
-  simp only [DL, oL, Stages.toD7, assemble, nL, etaL, etaL_nonneg, withLoc, setN, setRaw]
+theorem DL_eq (x : St P) (L : LocAll (lay0 (Dof x))) : DL x L = withLoc L := (Eq.refl (withLoc L))
 
 def sameL (x : St P) (L : LocAll (lay0 (Dof x))) : SameGrp (B := B) (C := w.C) x.o.Z (oL x L).Z where
   e k := (Equiv.refl ((Dof x).nd.PlG k))
@@ -137,11 +136,11 @@ def hkHL : NExpRealH (datL x L).R (datL x L).cG (SL L l.rat) (ysL L l) := by
 
 abbrev cfD (x : St P) (L : LocAll (lay0 (Dof x))) : CharFrame (DL x L) := TC.cf w.I w.l (oL x L).Z
 
-def chD : NChoice (DL x L) := { chL L l.c.ch with }
+def chD : NChoice (DL x L) := (chL L l.c.ch)
 
-def tpD : TupTied (DL x L) (cfD x L) (chD L l) := { tpL L l.c.tp with }
+def tpD : TupTied (DL x L) (cfD x L) (chD L l) := (tpL L l.c.tp)
 
-def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) := { X with }
+def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) := (X)
 
 theorem fitsL : (oL x L).Fits :=
   ⟨⟨x.fits.div.left, fun S N G => by

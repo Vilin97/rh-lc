@@ -183,7 +183,7 @@ theorem frame_iff (v : B.ch.A.vT) (s : Set (Fin (D.R.N i) → (M.Lc v).K)) (L : 
     rw [e, hs, h, e2]
 
 theorem gm_basis (hS : B.Sees) {w : D.what₂.places.Pl} (hw : OverT B.ch w) {L : Submodule (𝓞 B.E) (Fin (D.R.N i) → B.E)}
-    (hL : Submodule.IsLattice B.E L) (v : B.ch.A.vT) {g : GL (Fin (D.R.N i)) B.E} (hg : IsBasisAt (B.pr v).1 L g) :
+    (hL : Submodule.IsFullLattice B.E L) (v : B.ch.A.vT) {g : GL (Fin (D.R.N i)) B.E} (hg : IsBasisAt (B.pr v).1 L g) :
     IsBasisAt (D.plEq w) (dualFr (tauLat B.emb (B.ch.fm.tauOf w v) (if B.Z.seenP w then L else dual (hStd B.E _) L)))
       (gm R w v (Matrix.GeneralLinearGroup.map (R.iK v).toRingHom g)) := by
   have h := fun x => (D.val_nonneg_iff w _).symm.trans (hS w hw (B.pr v) x)
@@ -193,12 +193,12 @@ theorem gm_basis (hS : B.Sees) {w : D.what₂.places.Pl} (hw : OverT B.ch w) {L 
   · exact basis_conj B.emb _ _ _ h hL hg
 
 theorem valB_iff (hS : B.Sees) {w : D.what₂.places.Pl} (hw : OverT B.ch w) (V : Finset B.ch.A.vT) (p : M.Pt)
-    {L : Submodule (𝓞 B.E) (Fin (D.R.N i) → B.E)} (hL : Submodule.IsLattice B.E L)
+    {L : Submodule (𝓞 B.E) (Fin (D.R.N i) → B.E)} (hL : Submodule.IsFullLattice B.E L)
     (hs : ∀ v x, (fun a => R.iK v (x a)) ∈ (open Classical in
       if B.ch.fm.seenP w = true ∧ v ∉ V then ((p.2 v).1.L : Set _) else (p.2 v).ker) ↔ x ∈ localization₂ (B.pr v).1.asIdeal L)
     (y : M.Val) :
     y ∈ (coord R hS).valB w V p ↔ y ∈ wl M w (if B.Z.seenP w then L else dual (hStd B.E _) L) := by
-  have hL' : Submodule.IsLattice B.E (if B.Z.seenP w then L else dual (hStd B.E _) L) := by
+  have hL' : Submodule.IsFullLattice B.E (if B.Z.seenP w then L else dual (hStd B.E _) L) := by
     split_ifs
     · exact hL
     · exact dual_lattice hL
@@ -243,20 +243,20 @@ theorem valIs (hS : B.Sees) : R.ValIs (coord R hS) := by
     have hd := (B.hJ.tied i).ok b d
     obtain ⟨a, ha⟩ := exists_sepElt sp.nonconj
     by_cases hs : B.Z.seenP w = true
-    · have := valB_iff R hS hw ∅ (R.pt b d) hd.Lsh_lattice (fun v x => by
+    · have := valB_iff R hS hw ∅ (R.pt b d) hd.Lsh_full_lattice (fun v x => by
         rw [if_pos ⟨hs, Finset.notMem_empty v⟩, hd.locP_Lsh ha (B.pr v)]
         exact R.pt_L b d v x) y
       rw [if_pos hs] at this
       rw [(B.hJ.tied i).Lsh_eq]
       exact this
-    · have := valB_iff R hS hw ∅ (R.pt b d) hd.L_lattice (fun v x => by
+    · have := valB_iff R hS hw ∅ (R.pt b d) hd.L_full_lattice (fun v x => by
         rw [if_neg fun h => hs h.1]
         exact ker_iff R b d v x) y
       rw [if_neg hs] at this
       rw [(B.hJ.tied i).Lsh_eq]
       exact this
   · intro w hw hs b d y
-    have := valB_iff R hS hw Finset.univ (R.pt b d) ((B.hJ.tied i).ok b d).L_lattice (fun v x => by
+    have := valB_iff R hS hw Finset.univ (R.pt b d) ((B.hJ.tied i).ok b d).L_full_lattice (fun v x => by
       rw [if_neg fun h => h.2 (Finset.mem_univ v)]
       exact ker_iff R b d v x) y
     rw [if_pos hs] at this
@@ -267,7 +267,12 @@ theorem valB_single (hS : B.Sees) {w : D.what₂.places.Pl} (hw : OverT B.ch w) 
     y ∈ (coord R hS).valB w {v} (R.pt b d) ↔ y ∈ wl M w ((B.J.A i).ker b d (B.pr v)) := by
   have hd := (B.hJ.tied i).ok b d
   obtain ⟨a, ha⟩ := exists_sepElt sp.nonconj
-  have := valB_iff R hS hw {v} (R.pt b d) (hd.LshKer_lattice ha (B.pr v)) (fun v' x => by
+  have hLshKer : Submodule.IsFullLattice B.E (((B.J.A i).deco b d).LshKer (B.pr v)) := by
+    let := hd.L_full_lattice
+    let := hd.LshKer_lattice ha (B.pr v)
+    exact Submodule.IsFullLattice.of_le B.E fun x hx =>
+      (hd.mem_LshKer ha (B.pr v) x).2 ⟨hd.L_le_Lsh hx, ((hd.mem_L x).1 hx).2 (B.pr v)⟩
+  have := valB_iff R hS hw {v} (R.pt b d) hLshKer (fun v' x => by
     by_cases h : v' = v
     · subst h
       rw [if_neg fun h => h.2 (Finset.mem_singleton_self _), hd.locP_LshKer_self ha, localization_kerAt_eq hd]

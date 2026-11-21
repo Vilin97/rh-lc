@@ -177,10 +177,9 @@ theorem exists_selfDual_prescribed (E : Type) [Field E] [NumberField E] [StarRin
   have hsymm : (hStd E n).IsSymm := ⟨fun x y => by
     simp only [hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, starRingEnd_apply, star_star]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _⟩
-  have hdual : Submodule.IsFullLattice E (dual (hStd E n) M) :=
-    (dualLattice (𝓞 E) E (Sp E n) (hStd E n) hsymm hStd_nondeg star_range M hM).1
+  have hdual := dualLattice (𝓞 E) E (Sp E n) (hStd E n) hsymm hStd_nondeg star_range M hM
   obtain ⟨L, hL, hLQ, hLo⟩ := exists_glue hN hM Q
-  obtain ⟨N', hN', hc, ho⟩ := exists_glue hL hdual (conjPrime₂ Q)
+  obtain ⟨N', hN', hc, ho⟩ := exists_glue hL hdual.1 (conjPrime₂ Q)
   have h1 : SameAt Q M N' := sameAt_trans hLQ (ho Q hQ.symm)
   have h2 : ∀ Q' : HeightOneSpectrum (𝓞 E), Q' ≠ Q → Q' ≠ conjPrime₂ Q → SameAt Q' N N' :=
     fun Q' a b => sameAt_trans (hLo Q' a) (ho Q' b)
@@ -189,7 +188,7 @@ theorem exists_selfDual_prescribed (E : Type) [Field E] [NumberField E] [StarRin
   by_cases hw : w = Q
   · subst hw
     have := sameAt_dual hc
-    rw [conjP_conjP, dual_dual hM.toIsLattice] at this
+    rw [conjP_conjP, hdual.2.1] at this
     exact sameAt_trans (sameAt_symm this) h1
   by_cases hw' : w = conjPrime₂ Q
   · subst hw'

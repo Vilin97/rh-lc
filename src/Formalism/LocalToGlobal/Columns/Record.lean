@@ -619,32 +619,33 @@ private theorem rec_intDel_full {K : Type} [Field K] [NumberField K] [StarRing K
     Submodule.IsFullLattice K S.intDel := by
   classical
   let : Fintype S.Cl := h.fintypeCl
-  refine { toIsLattice := ?_, span_eq_top := top_unique ?_ }
-  · apply Submodule.IsLattice.of_fg K
+  have hfg : S.intDel.FG := by
     let e := S.coordOf h S.outSec
     apply Submodule.fg_of_fg_map_injective (e.toLinearMap.restrictScalars (𝓞 K)) e.injective
     change (S.intDel.map ((S.coordOf h S.outSec).toLinearMap.restrictScalars (𝓞 K))).FG
     rw [S.map_intDel h S.outSec]
     exact (Formalism.DivisionValues.ValuationLatticeField.valLatF_isLattice _
       (S.toCSD h).I_injective _ fun c => (hD (S.outSec.rep c)).toIsLattice).fg
-  · intro φ _
-    have hex (c : S.Cl) : ∃ a : 𝓞 K, a ≠ 0 ∧
-        a • (φ : S.D → S.V) (S.outSec.rep c) ∈ S.Del (S.outSec.rep c) := by
-      have hs : (φ : S.D → S.V) (S.outSec.rep c) ∈
-          Submodule.span K (S.Del (S.outSec.rep c) : Set S.V) := by
-        rw [(hD (S.outSec.rep c)).span_eq_top]
-        exact Submodule.mem_top
-      obtain ⟨a, ha⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 K)) K _ _ hs
-      rw [Submodule.span_eq] at ha
-      exact ⟨a, nonZeroDivisors.coe_ne_zero a, ha⟩
-    choose a ha ha_mem using hex
-    apply rec_mem_span_of_smul_mem S.intDel (a := ∏ c, a c)
-      (Finset.prod_ne_zero_iff.mpr fun c _ => ha c)
-    apply (S.mem_intDel_iff h S.outSec _).mpr
-    intro c
-    change (∏ c', a c') • (φ : S.D → S.V) (S.outSec.rep c) ∈ S.Del (S.outSec.rep c)
-    rw [← Finset.mul_prod_erase Finset.univ a (Finset.mem_univ c), mul_comm, mul_smul]
-    exact (S.Del (S.outSec.rep c)).smul_mem _ (ha_mem c)
+  let := Submodule.IsLattice.of_fg K hfg
+  refine { span_eq_top := top_unique ?_ }
+  intro φ _
+  have hex (c : S.Cl) : ∃ a : 𝓞 K, a ≠ 0 ∧
+      a • (φ : S.D → S.V) (S.outSec.rep c) ∈ S.Del (S.outSec.rep c) := by
+    have hs : (φ : S.D → S.V) (S.outSec.rep c) ∈
+        Submodule.span K (S.Del (S.outSec.rep c) : Set S.V) := by
+      rw [(hD (S.outSec.rep c)).span_eq_top]
+      exact Submodule.mem_top
+    obtain ⟨a, ha⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 K)) K _ _ hs
+    rw [Submodule.span_eq] at ha
+    exact ⟨a, nonZeroDivisors.coe_ne_zero a, ha⟩
+  choose a ha ha_mem using hex
+  apply rec_mem_span_of_smul_mem S.intDel (a := ∏ c, a c)
+    (Finset.prod_ne_zero_iff.mpr fun c _ => ha c)
+  apply (S.mem_intDel_iff h S.outSec _).mpr
+  intro c
+  change (∏ c', a c') • (φ : S.D → S.V) (S.outSec.rep c) ∈ S.Del (S.outSec.rep c)
+  rw [← Finset.mul_prod_erase Finset.univ a (Finset.mem_univ c), mul_comm, mul_smul]
+  exact (S.Del (S.outSec.rep c)).smul_mem _ (ha_mem c)
 
 section FormT
 
@@ -1137,9 +1138,8 @@ theorem stepH_good (hX : X.Ok) (u : Pr.Word) (j : ℕ) : (stepH (W := W) (Λ := 
 theorem rec_LshKer_lattice {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) (P : ST) :
     Submodule.IsFullLattice X.E (d.1.LshKer P) := by
   have hle : d.1.LshKer P ≤ d.1.Lsh := Submodule.span_le.mpr fun _ hx => hx.1
-  refine {
-    toIsLattice := Submodule.IsLattice.of_fg X.E (d.2.Lsh_lattice.fg.of_le hle)
-    span_eq_top := top_unique ?_ }
+  let := Submodule.IsLattice.of_fg X.E (d.2.Lsh_lattice.fg.of_le hle)
+  refine { span_eq_top := top_unique ?_ }
   rw [← (rec_deco_full_lattice d).span_eq_top, Submodule.span_le]
   intro x hx
   obtain ⟨a, haP, ha⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot

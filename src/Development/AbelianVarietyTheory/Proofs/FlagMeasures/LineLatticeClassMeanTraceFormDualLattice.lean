@@ -348,7 +348,7 @@ theorem covol_invT_le {Λ Λ' : Submodule (𝓞 E) (Fin j → E)} (h : trDual E 
   · rw [Set.mem_setOf_eq, detNorm_mul]; exact mul_pos (detNorm_embInf E j _) hx
   · rw [invT_mul, ← invT_embInf, invT_invT E j (detNorm_embInf E j _)]
 
-theorem term_dual (hE : IsTotallyComplex E) {Λ : Submodule (𝓞 E) (Fin j → E)} (hΛ : Submodule.IsLattice E Λ)
+theorem term_dual (hE : IsTotallyComplex E) {Λ : Submodule (𝓞 E) (Fin j → E)} (hΛ : Submodule.IsFullLattice E Λ)
     (F : Submodule ℤ (VecInf E j) → ENNReal)
     (hm : Measurable ({g | 0 < detNorm E j g}.indicator fun g => F (latAt E j (trDual E j Λ) g))) :
     term E j (fun L => F (dualAt E j L)) Λ = term E j F (trDual E j Λ) := by
@@ -370,7 +370,7 @@ theorem term_dual (hE : IsTotallyComplex E) {Λ : Submodule (𝓞 E) (Fin j → 
 
 theorem latMean_dualAt : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ j : ℕ, ∀ F : Submodule ℤ (VecInf E j) → ENNReal, (∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsLattice E Λ → Measurable (fun g : MatInf E j => {g | 0 < detNorm E j g}.indicator (fun g => F (latAt E j Λ g)) g)) → latMean E j (fun L => F (dualAt E j L)) = latMean E j F := by
   intro E _ _ hE j F hF
-  let X := {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsLattice E Λ}
+  let X := {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsFullLattice E Λ}
   let r : X → X → Prop := fun Λ Λ' => ∃ γ : GL (Fin j) E, Carries E j γ Λ.1 Λ'.1
   let d : X → X := fun Λ => ⟨trDual E j Λ.1, (GlobalTheory.T.isLattice_traceDual_and_traceDual_traceDual E j Λ.1 Λ.2).1⟩
   have hdd : ∀ Λ, d (d Λ) = Λ := fun Λ => Subtype.ext (GlobalTheory.T.isLattice_traceDual_and_traceDual_traceDual E j Λ.1 Λ.2).2
@@ -380,13 +380,13 @@ theorem latMean_dualAt : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComp
     rintro ⟨Λ⟩
     exact congrArg (Quot.mk r) (hdd Λ)
   let t : Quot r → ENNReal := Quot.lift (fun Λ => term E j F Λ.1) fun a b ⟨γ, h⟩ =>
-    le_antisymm (term_le_of_carries h F (hF _ b.2)) (term_le_of_carries h.inv F (hF _ a.2))
+    le_antisymm (term_le_of_carries h F (hF _ b.2.toIsLattice)) (term_le_of_carries h.inv F (hF _ a.2.toIsLattice))
   change ∑' c : Quot r, term E j (fun L => F (dualAt E j L)) (Quot.out c).1 =
     ∑' c : Quot r, term E j F (Quot.out c).1
   have h1 : ∀ c : Quot r, term E j F (Quot.out c).1 = t c := fun c => by
     conv_rhs => rw [← Quot.out_eq c]
   have h2 : ∀ c : Quot r, term E j (fun L => F (dualAt E j L)) (Quot.out c).1 = t (D c) := fun c => by
-    rw [term_dual hE (Quot.out c).2 F (hF _ (d (Quot.out c)).2)]
+    rw [term_dual hE (Quot.out c).2 F (hF _ (d (Quot.out c)).2.toIsLattice)]
     conv_rhs => rw [← Quot.out_eq c]
     rfl
   simp only [h1, h2]

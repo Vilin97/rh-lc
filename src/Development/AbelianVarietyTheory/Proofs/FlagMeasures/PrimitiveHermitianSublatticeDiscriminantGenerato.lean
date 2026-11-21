@@ -44,9 +44,13 @@ theorem nondeg (h : V →ₗ⋆[K] V →ₗ[K] K) (hp : PD h) : h.Nondegenerate 
 
 omit [StarRing K] [FiniteDimensional K V] in
 theorem lat_map (A : Submodule K V) (p : V →ₗ[K] A) (hp : Function.Surjective p)
-    (N : Submodule (𝓞 K) V) (hN : Submodule.IsLattice K N) :
-    Submodule.IsLattice K (N.map (p.restrictScalars (𝓞 K))) := by
-  exact Submodule.IsLattice.of_fg K (hN.fg.map _)
+    (N : Submodule (𝓞 K) V) (hN : Submodule.IsFullLattice K N) :
+    Submodule.IsFullLattice K (N.map (p.restrictScalars (𝓞 K))) := by
+  haveI : Submodule.IsLattice K (N.map (p.restrictScalars (𝓞 K))) :=
+    Submodule.IsLattice.of_fg K (hN.fg.map _)
+  refine ⟨?_⟩
+  change Submodule.span K (p '' (N : Set V)) = ⊤
+  rw [← Submodule.map_span, hN.span_eq_top, Submodule.map_top, LinearMap.range_eq_top.2 hp]
 
 theorem dual_latIn (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hp : PD h) (A : Submodule K V)
     (hsA : (hRes h A).IsSymm) (hpA : PD (hRes h A)) (p : V →ₗ[K] A) (hsur : Function.Surjective p)

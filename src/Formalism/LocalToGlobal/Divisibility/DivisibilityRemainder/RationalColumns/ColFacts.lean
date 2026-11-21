@@ -73,14 +73,21 @@ structure ColFacts {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBa
 
 theorem ColFacts.rr_lattice {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase K} {Df : DefSide Bs} {Dc : DefCols Df}
     {Sp : SPer Dc} {S : IndefData Df} {C : ColData Dc Sp S} (h : ColFacts S C) : Submodule.IsLattice K S.RR := by
-  have hfin : {w | S.μ w ≠ Bs.μ0}.Finite := S.Tw.finite_toSet.subset fun w hw => (h.h0.2 w).2 hw
-  refine (lattice_gluing K S.D (matLat (S.ι Bs.μ0) (Df.abelian₂ Bs.μ0)) (fun w => matLat (S.ι (S.μ w)) (Df.abelian₂ (S.μ w)))
-    (matLat_lattice _ (h.bij _).2 _ (h.wf.Lam_lat _)) (fun w => matLat_lattice _ (h.bij _).2 _ (h.wf.Lam_lat _))
-    (hfin.subset fun w hw => ?_)).1
-  intro h'
-  apply hw
-  show Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (matLat (S.ι (S.μ w)) (Df.abelian₂ (S.μ w))) = _
-  rw [h']
+  let localLat (t : Bs.Tup) := matLat (S.ι t) (Df.abelian₂ t)
+  let M := localLat Bs.μ0 ⊔ ⨆ w : S.Tw, localLat (S.μ w)
+  have hfg (t : Bs.Tup) : (localLat t).FG := (h.wf.Lam_lat t).fg.map _
+  have hM : M.FG := (hfg Bs.μ0).sup (Submodule.fg_iSup _ fun w => hfg (S.μ w))
+  refine Submodule.IsLattice.of_fg K (hM.of_le ?_)
+  intro x hx
+  refine GluingInclusion.lg (RingOfIntegers.not_isField K) M x fun w => ?_
+  change x ∈ glueLat (fun w => localLat (S.μ w)) at hx
+  rw [glueLat, Submodule.mem_iInf] at hx
+  have hle : localLat (S.μ w) ≤ M := by
+    by_cases hw : w ∈ S.Tw
+    · exact (le_iSup (fun u : S.Tw => localLat (S.μ u)) ⟨w, hw⟩).trans le_sup_right
+    · rw [show S.μ w = Bs.μ0 from not_ne_iff.mp (fun hn => hw ((h.h0.2 w).mpr hn))]
+      exact le_sup_left
+  exact Formalism.HermitianLatticesTheory.locBasic_locS_mono _ hle (hx w)
 
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {K : MainNotions.G.Consts} {Y : DivX D}
   {cX : ExtraC} {ex : Extra D L hT Gi Gl K Y cX}
