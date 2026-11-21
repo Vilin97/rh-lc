@@ -46,7 +46,7 @@ theorem fockDeg_stable {M : Model σ X W} {ψ : AddChar (AF F) ℂ} {χX χW : C
     change (mat (k * k⁻¹))ᵀ = 1
     rw [mul_inv_cancel]
     exact Matrix.transpose_one
-  have hcan : ∀ u : Matrix (Fin n) (Fin d) (AE F E), u * (mat k⁻¹)ᵀ * (mat k)ᵀ = u := fun u => by
+  have hcan : ∀ u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), u * (mat k⁻¹)ᵀ * (mat k)ᵀ = u := fun u => by
     rw [Matrix.mul_assoc, hkk, Matrix.mul_one]
   have hgauss : ∀ f₀, M.IsGauss ψ τ f₀ → M.IsGauss ψ τ (A f₀) := by
     intro f₀ hf₀

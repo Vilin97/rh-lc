@@ -25,8 +25,8 @@ open GlobalTheory.LinCoords GlobalTheory.WeilM
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 private theorem hTens_half (h : IsCMExt F E σ) {v : HeightOneSpectrum (𝓞 F)} (t : E →ₐ[F] Fv F v) {n d : ℕ}
-    (JA : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)) (JB : Matrix (Fin d) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E))
-    {x y : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)} (hx : At (evFin F v) x) (hx0 : x.map (piW t) = 0)
+    (JA : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (JB : Matrix (Fin d) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
+    {x y : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hx : At (evFin F v) x) (hx0 : x.map (piW t) = 0)
     (hy0 : y.map (piW t) = 0) : hTens (R := AF F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) JA JB x y = 0 := by
   have hs : ∀ e, σ (σ e) = e := fun e => by
     obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
@@ -53,13 +53,13 @@ theorem UpperTheory.exists_ne_zero_linearModel_vacuum_eq_smul :
         ∀ (b : GL (Fin n) (Fv F v)) (c : GL (Fin d) (Fv F v))
           (ι : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Matrix (Fin n) (Fin d) (Fv F v) → ℂ)),
         M.IsLin B.ψ (piW t₁) (piW t₀) (fun u => b.1 * u.map (piW t₁) * c.1) ι →
-        ∃ z : ℂ, z ≠ 0 ∧ ∀ x : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E), At (evFin F v) x → x.map (piW t₀) = 0 →
+        ∃ z : ℂ, z ≠ 0 ∧ ∀ x : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evFin F v) x → x.map (piW t₀) = 0 →
           ι (M.vac v) (b.1 * x.map (piW t₁) * c.1) = if x ∈ latAtV X W v then z else 0 := by
 
   intro F E _ _ _ _ _ σ B n d X W M r s r' s' hB hX hW hM v t₁ t₀ ht b c ι hι
   obtain rfl : t₀ = t₁.comp σ := AlgHom.ext ht
   have hat := (GlobalTheory.LatVac.latAtV_at_stable X W v).1
-  have hs : ∀ {t : E →ₐ[F] Fv F v} (ξ) {x y : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)}, At (evFin F v) x →
+  have hs : ∀ {t : E →ₐ[F] Fv F v} (ξ) {x y : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}, At (evFin F v) x →
       x.map (piW t) = 0 → y.map (piW t) = 0 → GlobalTheory.WeilM.symp (R := AF F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) ξ
         (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F X.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F W.J) x y = 0 := fun ξ x y hx hx0 hy0 => by
     unfold GlobalTheory.WeilM.symp

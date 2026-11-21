@@ -138,19 +138,19 @@ theorem exists_So (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.
     refine ⟨c • a₀, Submodule.smul_mem _ c ha₀, Submodule.smul_mem _ c ha₁, ?_⟩
     rw [← smul_sub]; exact Submodule.smul_mem _ c ha₂
 
-theorem rho_sub' (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E))
+theorem rho_sub' (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (Φ₁ Φ₂ : (Fin n × Fin d → AF F) → ℂ) : M.co.rho ψ u (Φ₁ - Φ₂) = M.co.rho ψ u Φ₁ - M.co.rho ψ u Φ₂ := by
   funext x; simp only [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, Pi.sub_apply]; ring
 
-theorem rho_add' (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E))
+theorem rho_add' (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (Φ₁ Φ₂ : (Fin n × Fin d → AF F) → ℂ) : M.co.rho ψ u (Φ₁ + Φ₂) = M.co.rho ψ u Φ₁ + M.co.rho ψ u Φ₂ := by
   funext x; simp only [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, Pi.add_apply]; ring
 
-theorem rho_smul' (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E))
+theorem rho_smul' (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (c : ℂ) (Φ : (Fin n × Fin d → AF F) → ℂ) : M.co.rho ψ u (c • Φ) = c • M.co.rho ψ u Φ := by
   funext x; simp only [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, Pi.smul_apply, smul_eq_mul]; ring
 
-theorem rho_zero' (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)) :
+theorem rho_zero' (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     M.co.rho ψ u 0 = 0 := by
   funext x; simp only [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, Pi.zero_apply, mul_zero]
 
@@ -159,7 +159,7 @@ theorem thetaSum_sub' {κ : Type} [Fintype κ] {A B : (κ → AF F) → ℂ} (hA
   (summable_of_mem_schA F hA).tsum_sub (summable_of_mem_schA F hB)
 
 variable {M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd} {ψ : AddChar (AF F) ℂ} {Z : Type}
-  {crd : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E) → Z}
+  {crd : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Z}
 
 theorem isDatum_sub (hψ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsStd ψ) {Φ₁ Φ₂ : (Fin n × Fin d → AF F) → ℂ} {f₁ f₂ : Z → ℂ}
     (h₁ : IsDatum M ψ crd Φ₁ f₁) (h₂ : IsDatum M ψ crd Φ₂ f₂) : IsDatum M ψ crd (Φ₁ - Φ₂) (f₁ - f₂) := by

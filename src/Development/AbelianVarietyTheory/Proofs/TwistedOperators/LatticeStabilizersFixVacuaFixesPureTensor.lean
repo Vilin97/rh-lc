@@ -44,7 +44,7 @@ theorem loc_mem_KAt : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     | zero => simp
     | add z z' _ _ h h' => rw [smul_add, h, h']
     | neg z _ h => rw [smul_neg, h]
-  have hphi : ∀ (M : Matrix (Fin d) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)), ∀ z ∈ GlobalTheory.InertSph.latAt W v,
+  have hphi : ∀ (M : Matrix (Fin d) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ z ∈ GlobalTheory.InertSph.latAt W v,
       GlobalTheory.FinDecomp.phi (GlobalTheory.FinDecomp.idem F v) M *ᵥ z = M *ᵥ z := by
     intro M z hz
     have h1 : (1 - GlobalTheory.FinDecomp.idem F v) • z = 0 := by rw [sub_smul, one_smul, hfix z hz, sub_self]

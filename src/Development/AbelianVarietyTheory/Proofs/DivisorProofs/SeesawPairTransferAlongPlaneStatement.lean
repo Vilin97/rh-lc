@@ -23,7 +23,7 @@ theorem _root_.GlobalTheory.T.seesaw_pair_transfer_along_plane : ∀ (F E : Type
       ∃ L : Submodule F ((Fin n × Fin d ⊕ Fin n × Fin d → F) × (Fin n × Fin d ⊕ Fin n × Fin d → F)),
         (∀ a ∈ L, ∀ b ∈ L, a.1 ⬝ᵥ b.2 = b.1 ⬝ᵥ a.2) ∧
         Module.finrank F L = Fintype.card (Fin n × Fin d ⊕ Fin n × Fin d) ∧
-        ∀ (t : AF F), ∀ w ∈ L, ∃ y : Fin d ⊕ Fin d → AE F E, ∃ z : Matrix (Fin n₁) (Fin d ⊕ Fin d) (AE F E),
+        ∀ (t : AF F), ∀ w ∈ L, ∃ y : Fin d ⊕ Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∃ z : Matrix (Fin n₁) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
           (dd₁.e z).1 = 0 ∧ dd.e (Matrix.vecMulVec (incV F H.x) y + incM F H.ι * z) =
             t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i))) := by
   first | exact @GlobalTheory.MixedLagrXDbl.exists_ratLagr | exact GlobalTheory.MixedLagrXDbl.exists_ratLagr | (intros; apply GlobalTheory.MixedLagrXDbl.exists_ratLagr <;> assumption)

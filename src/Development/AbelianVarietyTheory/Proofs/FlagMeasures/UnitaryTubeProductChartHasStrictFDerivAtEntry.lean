@@ -58,7 +58,7 @@ theorem Jet.comp_zero {f : E → ℂ} {a : ℂ} (h : Jet f a fun _ => 0) {g : �
   obtain ⟨D, hD, h0, hd⟩ := h
   have hg' : HasStrictFDerivAt g (fderiv ℝ g a) (f 0) := by
     rw [h0]
-    exact hg.hasStrictFDerivAt one_ne_zero
+    exact hg.hasStrictFDerivAt_fderiv one_ne_zero
   exact ⟨_, hg'.comp 0 hD, by simp [h0], fun v => by simp [hd]⟩
 
 theorem Jet.cexp {f : E → ℂ} {d : E → ℂ} (h : Jet f 0 d) : Jet (fun x => Complex.exp (f x)) 1 d := by

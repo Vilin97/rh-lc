@@ -18,5 +18,5 @@ theorem _root_.GlobalTheory.T.iwasawa_nonsplit_isotropic_line : ∀ (F E : Type)
     (B : Base F E) (d : ℕ) (W : Spc F E d) (r s : ℕ), B.IsGood σ → W.IsSkew σ B r s →
     ∀ (x : Fin d → E), x ≠ 0 → form σ W.J x x = 0 →
     ∀ (v : Pl (F := F)), IsEmpty (E →ₐ[F] Fv F v) → ∀ g ∈ UAt σ W (evFin F v),
-      ∃ k ∈ KAt σ W v, ∃ t : (AE F E)ˣ, mat (g * k⁻¹) *ᵥ incV F x = t.1 • incV F x := by
+      ∃ k ∈ KAt σ W v, ∃ t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, mat (g * k⁻¹) *ᵥ incV F x = t.1 • incV F x := by
   first | exact @GlobalTheory.InertLineTrans.exists_stab_line | exact GlobalTheory.InertLineTrans.exists_stab_line | (intros; apply GlobalTheory.InertLineTrans.exists_stab_line <;> assumption)

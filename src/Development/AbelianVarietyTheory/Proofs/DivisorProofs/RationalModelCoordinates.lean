@@ -36,10 +36,10 @@ theorem ratCoord_linear_injective : ∀ (F E : Type) [Field F] [NumberField F] [
     intro c x
     ext i j
     simp only [incM, Matrix.map_apply, Matrix.smul_apply]
-    show (Algebra.TensorProduct.includeRight : E →ₐ[F] AE F E) (c • x i j) =
-      algebraMap F (AF F) c • (Algebra.TensorProduct.includeRight : E →ₐ[F] AE F E) (x i j)
+    show (Algebra.TensorProduct.includeRight : E →ₐ[F] _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (c • x i j) =
+      algebraMap F (AF F) c • (Algebra.TensorProduct.includeRight : E →ₐ[F] _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (x i j)
     rw [map_smul, algebraMap_smul]
-  have hI : Function.Injective (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (AE F E)) :=
+  have hI : Function.Injective (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :=
     Matrix.map_injective (Algebra.TensorProduct.includeRight_injective hA)
   refine ⟨{ toFun := fun x => (y x, z x), map_add' := ?_, map_smul' := ?_ }, ?_, hg⟩
   · intro x x'

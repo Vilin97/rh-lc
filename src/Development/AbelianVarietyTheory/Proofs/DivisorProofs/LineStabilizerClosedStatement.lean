@@ -17,5 +17,5 @@ theorem _root_.GlobalTheory.T.line_stabilizer_closed : ∀ (F E : Type) [Field F
     (J : Matrix (Fin n) (Fin n) E) (x : Fin n → E) (ι : Matrix (Fin n) (Fin n₁) E), x ≠ 0 →
     IsClosed (GlobalTheory.IwLine.lineStab σ J x : Set (UA σ J)) ∧
     IsClosed {u : UA σ J | mat u *ᵥ incV F x = incV F x ∧
-      ∀ z, ∃ a : AE F E, mat u *ᵥ (incM F ι *ᵥ z) = incM F ι *ᵥ z + a • incV F x} := by
+      ∀ z, ∃ a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), mat u *ᵥ (incM F ι *ᵥ z) = incM F ι *ᵥ z + a • incV F x} := by
   first | exact @GlobalTheory.LineStabClosed.isClosed_lineStab_unip | exact GlobalTheory.LineStabClosed.isClosed_lineStab_unip | (intros; apply GlobalTheory.LineStabClosed.isClosed_lineStab_unip <;> assumption)

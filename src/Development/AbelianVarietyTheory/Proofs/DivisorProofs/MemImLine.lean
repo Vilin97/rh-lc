@@ -17,7 +17,7 @@ open GlobalTheory.ThK.UnipDom
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def imLine (σ : E →ₐ[F] E) : AddSubgroup (AE F E) where
+def imLine (σ : E →ₐ[F] E) : AddSubgroup (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) where
   carrier := {t | t + cA σ t = 0}
   zero_mem' := by simp
   add_mem' := by
@@ -30,12 +30,12 @@ def imLine (σ : E →ₐ[F] E) : AddSubgroup (AE F E) where
     simp only [Set.mem_ofPred_eq, map_neg] at *
     rw [← neg_add, ha, neg_zero]
 
-theorem mem_imLine {σ : E →ₐ[F] E} {t : AE F E} : t ∈ imLine σ ↔ t + cA σ t = 0 := Iff.rfl
+theorem mem_imLine {σ : E →ₐ[F] E} {t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} : t ∈ imLine σ ↔ t + cA σ t = 0 := Iff.rfl
 
-def betaOf (σ : E →ₐ[F] E) {b : ℕ} (J₁ : Matrix (Fin b) (Fin b) E) (a : Fin b → AE F E) : Fin b → AE F E :=
+def betaOf (σ : E →ₐ[F] E) {b : ℕ} (J₁ : Matrix (Fin b) (Fin b) E) (a : Fin b → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : Fin b → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) :=
   fun i => -cA σ ((incM F J₁⁻¹ *ᵥ a) i)
 
-def coT (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (H : Plane E d d₁) (g : UA σ J) : AE F E :=
+def coT (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (H : Plane E d d₁) (g : UA σ J) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) :=
   coC σ J H g - cA σ (coC σ J H g)
 
 end GlobalTheory.UnipConj

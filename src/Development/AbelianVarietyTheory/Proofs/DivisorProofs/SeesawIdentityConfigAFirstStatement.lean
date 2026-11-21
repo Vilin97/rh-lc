@@ -33,7 +33,7 @@ theorem _root_.GlobalTheory.T.seesaw_identity_config_a_first : ∀ (F E : Type) 
         (∀ h ∈ UAt σ G.W (evFin F v), GlobalTheory.KSplit.locMat t c h ∈ unipRad (Fv F v) e → h ∈ unip σ G.W H') ∧
         ∀ (l : Levi (Fv F v) (fun i : Fin 3 => Fin (blk3 (b + a') i))), ∀ h ∈ UAt σ G.W (evFin F v),
           GlobalTheory.KSplit.locMat t c h = leviEmb (Fv F v) e l →
-          ∃ (s : (AE F E)ˣ) (h₁ : UA σ G₁.W.J), IsLevi H' s h₁ h ∧ h₁ ∈ UAt σ G₁.W (evFin F v) ∧
+          ∃ (s : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (h₁ : UA σ G₁.W.J), IsLevi H' s h₁ h ∧ h₁ ∈ UAt σ G₁.W (evFin F v) ∧
             GlobalTheory.KSplit.locMat t (1 : GL (Fin (b + a')) (Fv F v)) h₁ = l 1 ∧
             (X.α s : ℂ) * (((absE F E s : ℝ) ^ ((a' : ℝ) / 2) : ℝ) : ℂ) =
               ((ξ₁ (Matrix.GeneralLinearGroup.det (l 0)) * ξ₂ (Matrix.GeneralLinearGroup.det (l 2)) : ℂˣ) : ℂ) := by

@@ -79,7 +79,7 @@ theorem finPart_right : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
   let T : (Fin d → E) →+ (Fin n × Fin d → AF F) × (Fin n × Fin d → AF F) :=
     { toFun := fun ξ => ef • M.co.e (Matrix.vecMulVec (incV F x) (incV F ξ))
       map_zero' := by
-        rw [hincV0, show Matrix.vecMulVec (incV F x) (0 : Fin d → AE F E) = 0 from by ext i j; simp [Matrix.vecMulVec_apply], map_zero, smul_zero]
+        rw [hincV0, show Matrix.vecMulVec (incV F x) (0 : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = 0 from by ext i j; simp [Matrix.vecMulVec_apply], map_zero, smul_zero]
       map_add' := fun ξ ξ' => by simp only [hincVadd, Matrix.vecMulVec_add, map_add (f := _), smul_add] }
 
   have hdec : ∀ ξ : Fin d → E, M.co.rho B.ψ (Matrix.vecMulVec (incV F x) (incV F ξ)) Ψ =

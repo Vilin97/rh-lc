@@ -74,7 +74,7 @@ theorem pGen_of_kStab_adapted (hKP : GlobalTheory.ThK.KP) {F E : Type} [Field F]
   have dK : ∀ k (hk : k ∈ KInf σ G.W B.emb), ∀ f ∈ G.M.Pol B.ψ B.emb, Acts (evI F) (om (1, k)) f (DK k hk f) :=
     fun k hk f hf => (hDKi k hk f hf _).2 rfl
   let IsP : {γ // γ ∈ Lines σ G.W} → Prop := fun γ => (∀ s, γ.1 s ∈ unip σ G.W H') ∨
-    ∃ (t : Multiplicative ℝ →* (AE F E)ˣ) (γ₁ : Multiplicative ℝ →* UA σ W₁.J), γ₁ ∈ Lines σ W₁ ∧
+    ∃ (t : Multiplicative ℝ →* (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (γ₁ : Multiplicative ℝ →* UA σ W₁.J), γ₁ ∈ Lines σ W₁ ∧
       ∀ s, IsLevi H' (t s) (γ₁ s) (γ.1 s)
   let IsK : {γ // γ ∈ Lines σ G.W} → Prop := fun γ => ∀ s, γ.1 s ∈ KInf σ G.W B.emb
   have dec : ∀ i, ∃ a b c, IsP a ∧ IsP b ∧ IsK c ∧ ρ i = ρ a + ρ b + ρ c := by

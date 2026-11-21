@@ -16,6 +16,6 @@ set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.levi_embedding_mul_of_adapted_plane : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ),
     B.IsGood σ → W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    ∀ (t t' : (AE F E)ˣ) (k k' : UA σ W.J), IsLevi H' t (1 : UA σ W₁.J) k → IsLevi H' t' (1 : UA σ W₁.J) k' →
+    ∀ (t t' : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (k k' : UA σ W.J), IsLevi H' t (1 : UA σ W₁.J) k → IsLevi H' t' (1 : UA σ W₁.J) k' →
       k * k' = k' * k := by
   first | exact @GlobalTheory.LeviCommute.levi_commute | exact GlobalTheory.LeviCommute.levi_commute | (intros; apply GlobalTheory.LeviCommute.levi_commute <;> assumption)

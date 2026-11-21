@@ -759,7 +759,7 @@ theorem strong_approximation : ∀ (I : AutInst) (W : Submodule I.E (Fin I.n →
   · exact (hN _).2 (Cond.inv (g := (toMA I).toHomUnits a) (adjA_adjA I) ((hN a).1 ha))
   · have c1 := continuous_toMA I hind
     have c2 := continuous_adjA I hσ
-    rw [show I.NA W = _ from Set.ext hN]
+    rw [show I.NA W = {x | Cond (adjA I) ((diag I) e) ((toMA I) x)} from Set.ext hN]
     exact (isClosed_eq ((c2.comp c1).mul c1) continuous_const).inter
       ((isClosed_eq ((c1.sub continuous_const).mul continuous_const) continuous_const).inter
         (isClosed_eq ((continuous_const.mul (c1.sub continuous_const)).mul continuous_const) continuous_const))

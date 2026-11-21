@@ -49,9 +49,9 @@ private theorem det_ne_zero_skew {B : Base F E} {m : ℕ} {X : Spc F E m} {r s :
   rw [Matrix.det_smul, show (X.J.map (B.emb w).1).det = (B.emb w).1 X.J.det from (RingHom.map_det (B.emb w).1 X.J).symm,
     h0, map_zero, mul_zero]
 
-private theorem bdd {X ι : Type} [TopologicalSpace X] [Finite ι] {K : Set X} (hK : IsCompact K) (f : ι → X → AE F E)
+private theorem bdd {X ι : Type} [TopologicalSpace X] [Finite ι] {K : Set X} (hK : IsCompact K) (f : ι → X → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
     (hf : ∀ i, Continuous (f i)) :
-    ∃ c : ℝ, 0 ≤ c ∧ ∀ p ∈ K, ∀ i, ∀ ξ : E, ξ ≠ 0 → ∀ u : (AE F E)ˣ, inclR (F := F) (AF F) ξ * u.1 = f i p →
+    ∃ c : ℝ, 0 ≤ c ∧ ∀ p ∈ K, ∀ i, ∀ ξ : E, ξ ≠ 0 → ∀ u : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, inclR (F := F) (AF F) ξ * u.1 = f i p →
       (absE F E u : ℝ) ≤ c := by
   obtain ⟨c, hc⟩ := UpperTheory.compact_adele_norm_bounded F E (⋃ i, f i '' K) (isCompact_iUnion fun i => hK.image (hf i))
   refine ⟨max c 0, le_max_right _ _, fun p hp i ξ hξ u hu => le_trans ?_ (le_max_left _ _)⟩

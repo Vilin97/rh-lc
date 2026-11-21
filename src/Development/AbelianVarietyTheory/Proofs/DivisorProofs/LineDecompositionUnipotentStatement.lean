@@ -15,7 +15,7 @@ theorem _root_.GlobalTheory.T.line_decomposition_unipotent : GlobalTheory.FunPr.
     (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ),
     IsPair B M χX χW om r s r' s' → ∀ (d₁ : ℕ) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ : ℕ), H'.IsAdapted σ B W W₁ i₀ i₁ →
     ∀ γ ∈ Lines σ W, ∃ γu ∈ Lines σ W, ∃ γl ∈ Lines σ W, ∃ γk ∈ Lines σ W, (∀ t, γu t ∈ unip σ W H') ∧
-      (∃ (τ : Multiplicative ℝ →* (AE F E)ˣ) (γ₁ : Multiplicative ℝ →* UA σ W₁.J), γ₁ ∈ Lines σ W₁ ∧
+      (∃ (τ : Multiplicative ℝ →* (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (γ₁ : Multiplicative ℝ →* UA σ W₁.J), γ₁ ∈ Lines σ W₁ ∧
         ∀ t, IsLevi H' (τ t) (γ₁ t) (γl t)) ∧ (∀ t, γk t ∈ KInf σ W B.emb) ∧
       ∀ f ∈ M.Pol B.ψ B.emb, ∀ f₁ g₁ g₂ g₃ : SInf F (Fin n × Fin d),
         ActsD (evI F) (fun t => om (1, γ (Multiplicative.ofAdd t))) f f₁ →

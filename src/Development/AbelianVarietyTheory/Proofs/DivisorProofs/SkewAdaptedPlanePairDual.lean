@@ -21,7 +21,7 @@ theorem conj_ev : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       H'.IsAdapted σ B W W₁ i₀ i₁ → IsPair B M₁ χX χW om₁ r s r₁ s₁ → ∀ e, IsEv B M M₁ 1 H'.ι (iso0 n H') e →
       ∀ h₁ m, IsLevi H' 1 h₁ m →
         (∀ Φ ∈ schA F (Fin n × Fin d), (om₁ (1, h₁⁻¹) ∘ₗ e ∘ₗ om (1, m)) Φ ∈ schA F (Fin n × Fin d₁)) ∧
-        (∀ z : Matrix (Fin n) (Fin d₁) (AE F E), ∀ Φ ∈ schA F (Fin n × Fin d), (om₁ (1, h₁⁻¹) ∘ₗ e ∘ₗ om (1, m)) (M.co.rho B.ψ (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ) Φ) =
+        (∀ z : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ Φ ∈ schA F (Fin n × Fin d), (om₁ (1, h₁⁻¹) ∘ₗ e ∘ₗ om (1, m)) (M.co.rho B.ψ (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ) Φ) =
           M₁.co.rho B.ψ z ((om₁ (1, h₁⁻¹) ∘ₗ e ∘ₗ om (1, m)) Φ)) ∧
         (∀ u ∈ iso0 n H', ∀ Φ ∈ schA F (Fin n × Fin d), (om₁ (1, h₁⁻¹) ∘ₗ e ∘ₗ om (1, m)) (M.co.rho B.ψ u Φ) =
           (om₁ (1, h₁⁻¹) ∘ₗ e ∘ₗ om (1, m)) Φ) := by
@@ -31,12 +31,12 @@ theorem conj_ev : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
   have hm1 : ∀ Φ ∈ schA F (Fin n × Fin d), om (1, m) Φ ∈ schA F (Fin n × Fin d) := fun Φ hΦ => hs.pres _ _ hΦ
   have hIm : incM F (1 : Matrix (Fin n) (Fin n) E) = 1 := by
     simp [incM]
-  have hinv : (mat h₁)ᵀ * (((h₁⁻¹ : UA σ W₁.J) : GL (Fin d₁) (AE F E)) : Matrix (Fin d₁) (Fin d₁) (AE F E))ᵀ = 1 := by
-    have h0 : (((h₁⁻¹ : UA σ W₁.J) : GL (Fin d₁) (AE F E)) : Matrix (Fin d₁) (Fin d₁) (AE F E)) * mat h₁ = 1 := by
-      show (((h₁⁻¹ * h₁ : UA σ W₁.J) : GL (Fin d₁) (AE F E)) : Matrix (Fin d₁) (Fin d₁) (AE F E)) = 1
+  have hinv : (mat h₁)ᵀ * (((h₁⁻¹ : UA σ W₁.J) : GL (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ = 1 := by
+    have h0 : (((h₁⁻¹ : UA σ W₁.J) : GL (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * mat h₁ = 1 := by
+      show (((h₁⁻¹ * h₁ : UA σ W₁.J) : GL (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = 1
       simp
     rw [← Matrix.transpose_mul, h0, Matrix.transpose_one]
-  have vmv : ∀ (y : Fin n → AE F E) (v : Fin d → AE F E) (A : Matrix (Fin d) (Fin d) (AE F E)),
+  have vmv : ∀ (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (v : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (A : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))),
       Matrix.vecMulVec y v * Aᵀ = Matrix.vecMulVec y (A *ᵥ v) := by
     intro y v A
     ext i j

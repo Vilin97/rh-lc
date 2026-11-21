@@ -59,7 +59,7 @@ theorem mul_vecMulVec {R : Type} [CommRing R] {m n p : Type} [Fintype n] (M : Ma
 
 theorem law : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
-    ∀ Φ ∈ PolData B G.M, ∀ h, ∀ (l : (AE F E)ˣ) (g₀ : UA σ G₁.V.J) (m : UA σ G.V.J), IsLevi H l g₀ m → ∀ k : UA σ G.V.J,
+    ∀ Φ ∈ PolData B G.M, ∀ h, ∀ (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (g₀ : UA σ G₁.V.J) (m : UA σ G.V.J), IsLevi H l g₀ m → ∀ k : UA σ G.V.J,
       thetaSum F (e (G.M.co.rho B.ψ (shiftA H H' 1) (om (m * k, h) Φ))) =
         (X.ν l : ℂ)⁻¹ * (((absE F E l : ℝ) ^ (((b + a' : ℕ) : ℝ) / 2) : ℝ) : ℂ) *
           thetaSum F (om₁ (g₀, 1) (e (G.M.co.rho B.ψ (shiftA H H' l⁻¹) (om (k, h) Φ)))) := by
@@ -70,9 +70,9 @@ theorem law : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F]
   have hΨ : G.M.co.rho B.ψ (shiftA H H' l⁻¹) (om (k, h) Φ) ∈ schA F _ :=
     GlobalTheory.HeisSchA.rho_mem_schA G.M B.ψ hT.base.std _ _ hΨ₀
   have hact : actAB (cA σ) ((m, 1) : UA σ G.V.J × UA σ G.W.J) (shiftA H H' l⁻¹) = shiftA H H' 1 := by
-    have hx : ((m : GL (Fin (b + 2)) (AE F E)) : Matrix (Fin (b + 2)) (Fin (b + 2)) (AE F E)) *ᵥ incV F H.x = l.1 • incV F H.x := hm.1
+    have hx : ((m : GL (Fin (b + 2)) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin (b + 2)) (Fin (b + 2)) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) *ᵥ incV F H.x = l.1 • incV F H.x := hm.1
     simp only [actAB, shiftA]
-    have h1 : (((1 : UA σ G.W.J) : GL (Fin (b + 2 + a')) (AE F E)) : Matrix (Fin (b + 2 + a')) (Fin (b + 2 + a')) (AE F E)) = 1 := rfl
+    have h1 : (((1 : UA σ G.W.J) : GL (Fin (b + 2 + a')) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin (b + 2 + a')) (Fin (b + 2 + a')) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = 1 := rfl
     rw [h1, Matrix.transpose_one, Matrix.mul_one, Matrix.mul_smul]
     rw [mul_vecMulVec, hx, Matrix.smul_vecMulVec, smul_smul, Units.inv_mul, Units.val_one]
   have hconj : om (m, 1) (G.M.co.rho B.ψ (shiftA H H' l⁻¹) (om (k, h) Φ)) =
@@ -88,7 +88,7 @@ theorem law : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F]
   obtain ⟨e₂, he₂⟩ := (GlobalTheory.T.adapted_plane_first_variable hK.base F E σ B (b + 2) (b + a') G.V G₁.W M₂ X.β (X.β / X.α) om₂ _ _ _ _ hP₂ b G₁.V H 0 (b + 1)
     G₁.M om₁ _ _ hC.hH hP₁).1
   obtain ⟨c, hc, hce⟩ := GlobalTheory.T.seesaw_identity_config_a_eigen hK F E σ B b a' G G₁ H H' hC e he X om om' om₁ om₁' hT hT₁ M₂ om₂ hP₂ e₁ e₂ he₁ he₂
-  have hl1 : IsLevi (W₁ := G₁.W) H' (1 : (AE F E)ˣ) (1 : UA σ G₁.W.J) (1 : UA σ G.W.J) := by
+  have hl1 : IsLevi (W₁ := G₁.W) H' (1 : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (1 : UA σ G₁.W.J) (1 : UA σ G.W.J) := by
     refine ⟨?_, ?_, ?_⟩
     · change (1 : Matrix _ _ _) *ᵥ _ = _
       simp

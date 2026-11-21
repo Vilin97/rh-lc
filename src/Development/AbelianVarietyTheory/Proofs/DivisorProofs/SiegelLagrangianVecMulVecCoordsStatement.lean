@@ -14,7 +14,7 @@ open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNo
 open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.siegel_lagrangian_vecMulVec_coords : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n d : ℕ) (κ : Type) [Fintype κ]
-    (De : Matrix (Fin d) (Fin n ⊕ Fin n) (AE F E) →ₗ[AF F] (κ → AF F) × (κ → AF F))
+    (De : Matrix (Fin d) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) →ₗ[AF F] (κ → AF F) × (κ → AF F))
     (D : Matrix (Fin d) (Fin n ⊕ Fin n) E →ₗ[F] (κ → F) × (κ → F)), (∀ u, De (incM F u) = GlobalTheory.SiegelConv.ratP (D u)) →
     ∀ (w : Fin d → E) (t : Fin n × Fin (Module.finrank F E) → AF F),
       De (Matrix.vecMulVec (incV F w) (Sum.elim (GlobalTheory.SiegelConv.basisMap F E n t) (GlobalTheory.SiegelConv.basisMap F E n t))) =

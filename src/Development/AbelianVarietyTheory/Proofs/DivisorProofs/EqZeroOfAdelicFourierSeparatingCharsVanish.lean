@@ -42,29 +42,29 @@ theorem secondCountable_AF : SecondCountableTopology (AF F) := by
   haveI := secondCountable_inf F
   exact inferInstanceAs (SecondCountableTopology (InfiniteAdeleRing F × FiniteAdeleRing (𝓞 F) F))
 
-theorem continuousAdd_AE : ContinuousAdd (AE F E) :=
-  IsModuleTopology.toContinuousAdd (AF F) (AE F E)
+theorem continuousAdd_AE : ContinuousAdd (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
+  IsModuleTopology.toContinuousAdd (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
 
-def homAE : AE F E ≃ₜ (Fin (Module.finrank F E) → AF F) :=
+def homAE : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) ≃ₜ (Fin (Module.finrank F E) → AF F) :=
   haveI := continuousAdd_AE F E
   let e := (Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).equivFun
   { toEquiv := e.toEquiv
     continuous_toFun := IsModuleTopology.continuous_of_linearMap e.toLinearMap
     continuous_invFun := IsModuleTopology.continuous_of_linearMap e.symm.toLinearMap }
 
-theorem t2Space_cm_host_adeles : T2Space (AE F E) := by
+theorem t2Space_cm_host_adeles : T2Space (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := by
   haveI := t2Space_adeleRing_of_numberField F
   exact (homAE F E).isEmbedding.t2Space
 
-theorem secondCountable_AE : SecondCountableTopology (AE F E) := by
+theorem secondCountable_AE : SecondCountableTopology (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := by
   haveI := secondCountable_AF F
   exact (homAE F E).isEmbedding.secondCountableTopology
 
-theorem locallyCompact_AE : LocallyCompactSpace (AE F E) :=
+theorem locallyCompact_AE : LocallyCompactSpace (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   (homAE F E).isClosedEmbedding.locallyCompactSpace
 
-theorem topAddGroup_AE : IsTopologicalAddGroup (AE F E) :=
-  IsModuleTopology.topologicalAddGroup (R := AF F) (AE F E)
+theorem topAddGroup_AE : IsTopologicalAddGroup (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
+  IsModuleTopology.topologicalAddGroup (R := AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
 
 end GlobalTheory.AdelicFourierUniq
 

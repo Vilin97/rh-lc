@@ -87,8 +87,7 @@ theorem isSD_smul {g : S.GLV} (hg : g ∈ isomG L S.Hm) {Λ : Submodule L.O S.V}
     IsSD L S.Hm (g • Λ) := by
   refine ⟨⟨?_, ?_⟩, fun y => ?_⟩
   · exact h.1.1.map _
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · rw [Submodule.coe_pointwise_smul, Submodule.span_smul, h.1.2, smul_top]
   · rw [mem_smul, ← h.2]
     constructor
     · intro H x hx

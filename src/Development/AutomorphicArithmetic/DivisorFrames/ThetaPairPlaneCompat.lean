@@ -56,9 +56,9 @@ section
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 private theorem symp_vmv (σ : E →ₐ[F] E) {n d : ℕ} (J : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin d) (Fin d) E)
-    (p q : Fin n → AE F E) (w : Fin d → AE F E) :
+    (p q : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (w : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     symp (R := AF F) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JW) (Matrix.vecMulVec p w) (Matrix.vecMulVec q w) =
-      -Algebra.trace (AF F) (AE F E) (fA σ J p q * GlobalTheory.UnipMass.hA σ JW w w) := by
+      -Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (fA σ J p q * GlobalTheory.UnipMass.hA σ JW w w) := by
   rw [symp, hTens_vmv, neg_one_mul, map_neg]
   rfl
 

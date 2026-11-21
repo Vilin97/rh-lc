@@ -45,7 +45,7 @@ theorem trace_hTens_integral_of_char : ∀ (F E : Type) [Field F] [NumberField F
     AddSubgroup.subset_closure ⟨GlobalTheory.EmbChart.atPlace v t, hat, by rw [GlobalTheory.EmbChart.evFin_atPlace]; exact ht,
       x, hx, y, hy, rfl⟩
   have h1 := h _ hmem
-  have hm : (-1 : AE F E) = inclR (F := F) (AF F) (-1 : E) := by rw [map_neg, map_one]
+  have hm : (-1 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = inclR (F := F) (AF F) (-1 : E) := by rw [map_neg, map_one]
   rw [GlobalTheory.LatVac.symp_smul_smul, hm, symp_incM_mat, GlobalTheory.EmbChart.atPlace_mul_right,
     GlobalTheory.EmbChart.atPlace_mul_right, GlobalTheory.EmbChart.evFin_atPlace, one_mul, AlgHom.commutes, neg_one_mul,
     mul_comm] at h1

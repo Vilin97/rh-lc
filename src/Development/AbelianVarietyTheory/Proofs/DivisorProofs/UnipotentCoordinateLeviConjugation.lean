@@ -21,7 +21,7 @@ open Matrix GlobalTheory.ThK.UnipDom GlobalTheory.ThK.UnipDom.Inverse
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem fA_smul_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (s : AE F E) (v w : Fin n → AE F E) :
+theorem fA_smul_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (s : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (v w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J v (s • w) = cA σ s * fA σ J v w := by
   have hc : (fun i => cA σ ((s • w) i)) = cA σ s • fun i => cA σ (w i) := by
     funext i; simp [map_mul]
@@ -29,9 +29,9 @@ theorem fA_smul_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n)
   rw [hc, Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul]
 
 theorem fA_mat_iota {σ : E →ₐ[F] E} {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (H : Plane E d d₁) (g : UA σ J)
-    (z : Fin d₁ → AE F E) :
+    (z : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J (mat g *ᵥ (incM F H.ι *ᵥ z)) (incV F H.y) = coA σ J H g ⬝ᵥ z := by
-  have key : ∀ z : Fin d₁ → AE F E, fA σ J (mat g *ᵥ (incM F H.ι *ᵥ z)) (incV F H.y) =
+  have key : ∀ z : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), fA σ J (mat g *ᵥ (incM F H.ι *ᵥ z)) (incV F H.y) =
       ((incM F J *ᵥ fun i => cA σ (incV F H.y i)) ᵥ* (mat g * incM F H.ι)) ⬝ᵥ z := by
     intro z
     unfold fA
@@ -44,7 +44,7 @@ theorem fA_mat_iota {σ : E →ₐ[F] E} {d d₁ : ℕ} (J : Matrix (Fin d) (Fin
 
 theorem coA_coC_levi_conj : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → B.IsGood σ → G.IsGood B → G₁.IsGood B →
-    ∀ (l : (AE F E)ˣ) (g₀ : UA σ G₁.V.J) (h : UA σ G.V.J), IsLevi H l g₀ h → ∀ n : UA σ G.V.J,
+    ∀ (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (g₀ : UA σ G₁.V.J) (h : UA σ G.V.J), IsLevi H l g₀ h → ∀ n : UA σ G.V.J,
     GlobalTheory.ThK.UnipDom.coA σ G.V.J H (h * n * h⁻¹) = l.1 • ((mat g₀⁻¹)ᵀ *ᵥ GlobalTheory.ThK.UnipDom.coA σ G.V.J H n) ∧
     GlobalTheory.ThK.UnipDom.coC σ G.V.J H (h * n * h⁻¹) = l.1 * cA σ l.1 * GlobalTheory.ThK.UnipDom.coC σ G.V.J H n := by
   intro F E _ _ _ _ _ σ B b a' G G₁ H H' _ hB _ _ l g₀ h hL n

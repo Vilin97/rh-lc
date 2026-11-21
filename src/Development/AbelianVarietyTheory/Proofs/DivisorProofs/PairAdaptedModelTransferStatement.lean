@@ -23,10 +23,10 @@ theorem _root_.GlobalTheory.T.pair_adapted_model_transfer : ∀ (F E : Type) [Fi
       IsDblCoord (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) M.co dd → IsDblCoord (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) M₁.co dd₁ →
       ∀ ed : ((Fin n × Fin d ⊕ Fin n × Fin d → AF F) → ℂ) →ₗ[ℂ] ((Fin n₁ × Fin d ⊕ Fin n₁ × Fin d → AF F) → ℂ),
         (∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), ed Φ ∈ schA F (Fin n₁ × Fin d ⊕ Fin n₁ × Fin d)) →
-        (∀ (z : Matrix (Fin n₁) (Fin d ⊕ Fin d) (AE F E)), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), ed (dd.rho B.ψ ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) H.ι * z) Φ) = dd₁.rho B.ψ z (ed Φ)) →
-        (∀ z : Fin d ⊕ Fin d → AE F E, ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), ed (dd.rho B.ψ (Matrix.vecMulVec (incV F H.x) z) Φ) = ed Φ) →
+        (∀ (z : Matrix (Fin n₁) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), ed (dd.rho B.ψ ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) H.ι * z) Φ) = dd₁.rho B.ψ z (ed Φ)) →
+        (∀ z : Fin d ⊕ Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), ed (dd.rho B.ψ (Matrix.vecMulVec (incV F H.x) z) Φ) = ed Φ) →
       ∀ l₁ : ((Fin n₁ × Fin d ⊕ Fin n₁ × Fin d → AF F) → ℂ) →ₗ[ℂ] ℂ,
-        (∀ (z : Matrix (Fin n₁) (Fin d) (AE F E)), ∀ φ ∈ schA F (Fin n₁ × Fin d ⊕ Fin n₁ × Fin d), l₁ (dd₁.rho B.ψ (z * (diagCols (Fin d))ᵀ) φ) = l₁ φ) →
+        (∀ (z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ φ ∈ schA F (Fin n₁ × Fin d ⊕ Fin n₁ × Fin d), l₁ (dd₁.rho B.ψ (z * (diagCols (Fin d))ᵀ) φ) = l₁ φ) →
       ∃ Λ : Submodule F ((Fin n × Fin d ⊕ Fin n × Fin d → F) × (Fin n × Fin d ⊕ Fin n × Fin d → F)),
         (∀ a ∈ Λ, ∀ b ∈ Λ, a.1 ⬝ᵥ b.2 = b.1 ⬝ᵥ a.2) ∧ Module.finrank F Λ = Fintype.card (Fin n × Fin d ⊕ Fin n × Fin d) ∧
         (∀ (t : AF F), ∀ v ∈ Λ, ∀ φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d),
@@ -34,7 +34,7 @@ theorem _root_.GlobalTheory.T.pair_adapted_model_transfer : ∀ (F E : Type) [Fi
         ∃ (b : Module.Basis (Fin 2) F E) (w : Fin d × Fin 2 → (Fin n × Fin d ⊕ Fin n × Fin d → F) × (Fin n × Fin d ⊕ Fin n × Fin d → F)),
           (∀ p q, (w p).1 ⬝ᵥ (w q).2 = (w q).1 ⬝ᵥ (w p).2) ∧
           (∀ c : Fin d × Fin 2 → F, (∀ v ∈ Λ, (∑ p, c p • w p).1 ⬝ᵥ v.2 = v.1 ⬝ᵥ (∑ p, c p • w p).2) → c = 0) ∧
-          ∀ u : Fin d → AE F E, dd.e (GlobalTheory.DblSiegelX.zs H u) =
+          ∀ u : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), dd.e (GlobalTheory.DblSiegelX.zs H u) =
             ∑ p, (Algebra.TensorProduct.basis (AF F) b).repr (u p.1) p.2 •
               ((fun i => algebraMap F (AF F) ((w p).1 i)), (fun i => algebraMap F (AF F) ((w p).2 i))) := by
   first | exact @GlobalTheory.DblSiegelLagr.exists_lagr | exact GlobalTheory.DblSiegelLagr.exists_lagr | (intros; apply GlobalTheory.DblSiegelLagr.exists_lagr <;> assumption)

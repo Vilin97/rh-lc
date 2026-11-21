@@ -47,20 +47,20 @@ theorem kInf_mul {n : ℕ} {X : Spc F E n} {τ : ∀ w : InfinitePlace F, EmbOve
 
 theorem kInf_one {n : ℕ} {X : Spc F E n} {τ : ∀ w : InfinitePlace F, EmbOver E w} : (1 : UA σ X.J) ∈ KInf σ X τ := by
   refine ⟨fun u _ => ?_, fun w => ?_⟩
-  · change u • ((1 : Matrix (Fin n) (Fin n) (AE F E)) - 1) = 0
+  · change u • ((1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) - 1) = 0
     rw [sub_self, smul_zero]
-  · change Commute ((1 : Matrix (Fin n) (Fin n) (AE F E)).map (piInf (τ w))) (X.θ w)
+  · change Commute ((1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (piInf (τ w))) (X.θ w)
     rw [Matrix.map_one _ (map_zero _) (map_one _)]
     exact Commute.one_left _
 
 theorem isLevi_one {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} (H' : Plane E d d₁) :
     IsLevi H' 1 (1 : UA σ W₁.J) (1 : UA σ W.J) := by
   refine ⟨?_, ?_, ?_⟩
-  · change (1 : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ _ = _
+  · change (1 : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) *ᵥ _ = _
     simp
-  · change (1 : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ _ = _
+  · change (1 : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) *ᵥ _ = _
     simp
-  · change (1 : Matrix (Fin d) (Fin d) (AE F E)) * _ = _ * (1 : Matrix (Fin d₁) (Fin d₁) (AE F E))
+  · change (1 : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * _ = _ * (1 : Matrix (Fin d₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     simp
 
 theorem isLevi_mul {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Plane E d d₁} {k₁ k₁' : UA σ W₁.J}

@@ -68,8 +68,8 @@ theorem cols_eigen {d R S : ℕ} (K θ : Matrix (Fin d) (Fin d) ℂ) (C : Matrix
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem map_eigen {w : InfinitePlace F} (τ : EmbOver E w) {d : ℕ} (M : Matrix (Fin d) (Fin d) (AE F E)) (v : Fin d → E)
-    (a : AE F E) (h : M *ᵥ incV F v = a • incV F v) :
+theorem map_eigen {w : InfinitePlace F} (τ : EmbOver E w) {d : ℕ} (M : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (v : Fin d → E)
+    (a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (h : M *ᵥ incV F v = a • incV F v) :
     M.map (piInf τ) *ᵥ (fun i => τ.1 (v i)) = piInf τ a • fun i => τ.1 (v i) := by
   have hinc : ∀ e : E, piInf τ (inclR (F := F) (AF F) e) = τ.1 e := fun e => by
     simp [piInf, inclR, compInf, infEmb_tmul]

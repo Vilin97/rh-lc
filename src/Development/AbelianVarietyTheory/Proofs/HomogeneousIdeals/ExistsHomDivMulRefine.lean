@@ -47,7 +47,7 @@ variable {τ : Y →+ Y →+ Additive A} {w : O} in
 private theorem apply_smul_add_apply_smul_eq_of_add_star_eq_one (hsymm : ∀ y y', τ y y' = τ y' y)
     (hadj : ∀ (a : O) y y', τ (a • y) y' = τ y (star a • y')) (hw : w + star w = 1) (y y' : Y) :
     τ y (w • y') + τ y' (w • y) = τ y y' := by
-  rw [hsymm y' (w • y), hadj, ← (τ y).map_add (f := _), ← add_smul, hw, one_smul]
+  rw [hsymm y' (w • y), hadj, ← map_add (τ y), ← add_smul, hw, one_smul]
 
 variable {O Y A : Type*} [CommRing O] [StarRing O] [AddCommGroup Y] [Module O Y] [CommGroup A] in
 variable {τ : Y →+ Y →+ Additive A} {w : O} in

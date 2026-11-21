@@ -18,8 +18,8 @@ namespace GlobalTheory.ThK.DecW
 
 theorem decompose : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} (B : Base F E)
     {n d d₁ : ℕ} (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (r' s' i₀ i₁ : ℕ),
-    W.IsSkew σ B r' s' → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ w : Matrix (Fin n) (Fin d) (AE F E), At (evI F) w →
-    ∃ (a b : Fin n → AE F E) (z : Matrix (Fin n) (Fin d₁) (AE F E)), At (evI F) a ∧ At (evI F) b ∧ At (evI F) z ∧
+    W.IsSkew σ B r' s' → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ w : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) w →
+    ∃ (a b : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), At (evI F) a ∧ At (evI F) b ∧ At (evI F) z ∧
       w = Matrix.vecMulVec a (incV F H'.x) + incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ +
         Matrix.vecMulVec b (incV F H'.y) := by
   intro F E _ _ _ _ _ σ B n d d₁ W W₁ H' r' s' i₀ i₁ hW hH w hw
@@ -56,7 +56,7 @@ theorem decompose : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Number
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
   have h0 : ∀ c : AF F, evI F c = 0 → ∀ i j, c • w i j = 0 := fun c hc i j => by
     simpa using congrFun (congrFun (hw c hc) i) j
-  have hAt : ∀ v : Fin d → AE F E, At (evI F) (w *ᵥ v) := by
+  have hAt : ∀ v : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), At (evI F) (w *ᵥ v) := by
     intro v c hc; funext i
     simp only [Pi.smul_apply, Matrix.mulVec, dotProduct, Finset.smul_sum, ← smul_mul_assoc, h0 c hc, zero_mul,
       Finset.sum_const_zero, Pi.zero_apply]
@@ -76,7 +76,7 @@ theorem decompose : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Number
     rw [e1, e2] at hI'
     rw [e1n, Matrix.one_mul]
     conv_lhs => rw [← Matrix.mul_one w, hI']
-    have hv : ∀ a b : Fin d → AE F E, w * Matrix.vecMulVec a b = Matrix.vecMulVec (w *ᵥ a) b := by
+    have hv : ∀ a b : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), w * Matrix.vecMulVec a b = Matrix.vecMulVec (w *ᵥ a) b := by
       intro a b; ext i l
       simp [Matrix.mul_apply, Matrix.vecMulVec_apply, Matrix.mulVec, dotProduct, Finset.sum_mul, mul_assoc]
     rw [Matrix.mul_add, Matrix.mul_add, hv, hv, Matrix.mul_assoc]

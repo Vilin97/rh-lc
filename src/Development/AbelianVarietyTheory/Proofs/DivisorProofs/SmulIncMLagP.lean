@@ -26,7 +26,7 @@ def vecOf (F : Type) [Field F] {E : Type} [Field E] [Algebra F E] [Module.Finite
   fun j => ∑ i, s (j, i) • Module.finBasis F E i
 
 def basisMap (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ)
-    (t : Fin n × Fin (Module.finrank F E) → AF F) : Fin n → AE F E :=
+    (t : Fin n × Fin (Module.finrank F E) → AF F) : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) :=
   fun j => ∑ i, t (j, i) • inclR (F := F) (AF F) (Module.finBasis F E i)
 
 def lagP {E : Type} [Field E] (n : ℕ) {d d₁ : ℕ} (ι : Matrix (Fin d) (Fin d₁) E) (x : Fin d → E) :
@@ -63,15 +63,15 @@ theorem ratDot {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (u 
 
 theorem map_diagCols {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ) :
     (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) E).map (inclR (F := F) (AF F)) =
-      (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E)) := by
+      (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) := by
   rw [diagCols, diagCols, Matrix.fromRows_map, Matrix.map_one _ (map_zero _) (map_one _)]
 
 theorem smul_incM_lagP {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d d₁ : ℕ}
     (ι : Matrix (Fin d) (Fin d₁) E) (x : Fin d → E) (t : AF F) (p : Matrix (Fin d₁) (Fin n) E × (Fin n ⊕ Fin n → E)) :
-    t • incM F (lagP n ι x p) = incM F ι * ((t • incM F p.1) * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ) +
+    t • incM F (lagP n ι x p) = incM F ι * ((t • incM F p.1) * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ) +
       Matrix.vecMulVec (incV F x) (fun i => t • inclR (F := F) (AF F) (p.2 i)) := by
   have hΔ : ∀ a b, inclR (F := F) (AF F) ((diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) E) a b) =
-      (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E)) a b := fun a b => by
+      (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) a b := fun a b => by
     rw [← map_diagCols (F := F) n]; rfl
   ext i j
   set_option synthInstance.maxHeartbeats 100000 in

@@ -58,7 +58,7 @@ theorem hTens_vecMulVec {R E : Type} [CommRing R] [CommRing E] [Algebra R E] (c 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem symp_iso {n d : ℕ} (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin d) (Fin d) E)
-    (x : Fin n → E) (hx : form σ J x x = 0) (p q : Fin d → AE F E) :
+    (x : Fin n → E) (hx : form σ J x x = 0) (p q : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     symp (R := AF F) (cA σ) (-1) (incM F J) (incM F JW) (Matrix.vecMulVec (incV F x) p)
       (Matrix.vecMulVec (incV F x) q) = 0 := by
   have h0 : (∑ i, ∑ k, incV F x i * incM F J i k * cA σ (incV F x k)) = 0 := by
@@ -93,17 +93,17 @@ theorem span_plane {B : Base F E} {d d₁ r' s' i₀ i₁ : ℕ} {W : Spc F E d}
   exact ⟨s, t, u, rfl⟩
 
 theorem decompA {B : Base F E} {d d₁ r' s' i₀ i₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Plane E d d₁}
-    (hS : W.IsSkew σ B r' s') (hA : H'.IsAdapted σ B W W₁ i₀ i₁) (v : Fin d → AE F E) :
-    ∃ (η : Fin d₁ → AE F E) (β α : AE F E), v = incM F H'.ι *ᵥ η + β • incV F H'.x + α • incV F H'.y := by
+    (hS : W.IsSkew σ B r' s') (hA : H'.IsAdapted σ B W W₁ i₀ i₁) (v : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
+    ∃ (η : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (β α : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), v = incM F H'.ι *ᵥ η + β • incV F H'.x + α • incV F H'.y := by
   choose s t u hu using fun i : Fin d => span_plane hS hA (Pi.single i 1)
-  have e : ∀ i, (Pi.single i 1 : Fin d → AE F E) = incM F H'.ι *ᵥ incV F (u i) +
+  have e : ∀ i, (Pi.single i 1 : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = incM F H'.ι *ᵥ incV F (u i) +
       inclR (F := F) (AF F) (s i) • incV F H'.x + inclR (F := F) (AF F) (t i) • incV F H'.y := by
     intro i
     funext k
     have h := congrArg (inclR (F := F) (AF F)) (congrFun (hu i) k)
     simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul] at h
     have h1 : inclR (F := F) (AF F) ((Pi.single i (1 : E) : Fin d → E) k) =
-        (Pi.single i (1 : AE F E) : Fin d → AE F E) k := by
+        (Pi.single i (1 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) k := by
       by_cases hk : k = i
       · subst hk; simp
       · simp [Pi.single_apply, hk]
@@ -115,7 +115,7 @@ theorem decompA {B : Base F E} {d d₁ r' s' i₀ i₁ : ℕ} {W : Spc F E d} {W
     simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, incV]
     ring
   refine ⟨∑ i, v i • incV F (u i), ∑ i, v i * inclR (F := F) (AF F) (s i), ∑ i, v i * inclR (F := F) (AF F) (t i), ?_⟩
-  have hv : v = ∑ i, v i • (Pi.single i 1 : Fin d → AE F E) := by
+  have hv : v = ∑ i, v i • (Pi.single i 1 : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := by
     conv_lhs => rw [← Finset.univ_sum_single v]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← Pi.single_smul, smul_eq_mul, mul_one]
@@ -123,7 +123,7 @@ theorem decompA {B : Base F E} {d d₁ r' s' i₀ i₁ : ℕ} {W : Spc F E d} {W
   simp_rw [e, smul_add, Matrix.mulVec_sum, Matrix.mulVec_smul, Finset.sum_add_distrib, Finset.sum_smul, smul_smul]
 
 theorem fA_incM_mulVec_incV_eq_zero {B : Base F E} {d d₁ i₀ i₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Plane E d d₁}
-    (hA : H'.IsAdapted σ B W W₁ i₀ i₁) (η : Fin d₁ → AE F E) :
+    (hA : H'.IsAdapted σ B W W₁ i₀ i₁) (η : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ W.J (incM F H'.ι *ᵥ η) (incV F H'.x) = 0 := by
   unfold fA
   rw [dotProduct_comm, Matrix.dotProduct_mulVec]
@@ -187,7 +187,7 @@ theorem iso_zero : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFie
   have ha' : mat u⁻¹ *ᵥ incV F H'.y = β • incV F H'.x + incM F H'.ι *ᵥ η + incV F H'.y := by
     rw [hv, hα, one_smul]; abel
 
-  have hrho : ∀ (p q : Fin d → AE F E) (φ : Fn F n d),
+  have hrho : ∀ (p q : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (φ : Fn F n d),
       M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) p) (M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) q) φ) =
         M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) (p + q)) φ := fun p q φ => by
     rw [rho_rho M.co B.ψ _ _ (symp_iso σ X.J W.J H.x hH.xx p q), vmv_add]
@@ -196,7 +196,7 @@ theorem iso_zero : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFie
     (Matrix.vecMulVec (incV F H.x) (mat u⁻¹ *ᵥ incV F H'.y)) Ψ hΨ
   have hact : actAB (cA σ) ((1 : UA σ X.J), u) (Matrix.vecMulVec (incV F H.x) (mat u⁻¹ *ᵥ incV F H'.y)) =
       Matrix.vecMulVec (incV F H.x) (incV F H'.y) := by
-    show (1 : Matrix (Fin n) (Fin n) (AE F E)) * _ * (mat u)ᵀ = _
+    show (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * _ * (mat u)ᵀ = _
     rw [Matrix.one_mul, vmv_mul_transpose, Matrix.mulVec_mulVec, ← GlobalTheory.ThK.UnipDom.Inverse.mat_mul, mul_inv_cancel,
       GlobalTheory.ThK.UnipDom.Inverse.mat_one, Matrix.one_mulVec]
   rw [hact] at himpl

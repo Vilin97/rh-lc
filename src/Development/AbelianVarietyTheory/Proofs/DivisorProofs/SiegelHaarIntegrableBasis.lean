@@ -19,7 +19,7 @@ open GlobalTheory.SiegelAvg
 
 variable (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ)
 
-def basisLEquiv : (Fin n × Fin (Module.finrank F E) → AF F) ≃ₗ[AF F] (Fin n → AE F E) :=
+def basisLEquiv : (Fin n × Fin (Module.finrank F E) → AF F) ≃ₗ[AF F] (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   (LinearEquiv.curry (AF F) (AF F) (Fin n) (Fin (Module.finrank F E))).trans
     (LinearEquiv.piCongrRight fun _ => (Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).equivFun.symm)
 
@@ -28,23 +28,23 @@ theorem basisLEquiv_apply (t : Fin n × Fin (Module.finrank F E) → AF F) :
   funext j
   simp [basisLEquiv, basisMap, Module.Basis.equivFun_symm_apply, Algebra.TensorProduct.basis_apply, inclR]
 
-local instance topRingAEBasis : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) _
+local instance topRingAEBasis : IsTopologicalRing (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := IsModuleTopology.isTopologicalRing (AF F) _
 
-def basisCLEquiv : (Fin n × Fin (Module.finrank F E) → AF F) ≃L[AF F] (Fin n → AE F E) where
+def basisCLEquiv : (Fin n × Fin (Module.finrank F E) → AF F) ≃L[AF F] (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) where
   toLinearEquiv := basisLEquiv F E n
   continuous_toFun := IsModuleTopology.continuous_of_linearMap (basisLEquiv F E n).toLinearMap
   continuous_invFun := IsModuleTopology.continuous_of_linearMap (basisLEquiv F E n).symm.toLinearMap
 
-theorem integrable_of_basisMap (f : (Fin n → AE F E) → ℂ) (μ : @Measure (Fin n → AE F E) (borel _))
+theorem integrable_of_basisMap (f : (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → ℂ) (μ : @Measure (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (borel _))
     (hμ : IsHaarB μ)
     (hf : ∀ ν : @Measure (Fin n × Fin (Module.finrank F E) → AF F) (borel _), IsHaarB ν →
       (letI : MeasurableSpace (Fin n × Fin (Module.finrank F E) → AF F) := borel _;
         Integrable (fun t => f (basisMap F E n t)) ν)) :
-    (letI : MeasurableSpace (Fin n → AE F E) := borel _; Integrable f μ) := by
+    (letI : MeasurableSpace (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := borel _; Integrable f μ) := by
   letI mX : MeasurableSpace (Fin n × Fin (Module.finrank F E) → AF F) := borel _
   haveI : BorelSpace (Fin n × Fin (Module.finrank F E) → AF F) := ⟨rfl⟩
-  letI mY : MeasurableSpace (Fin n → AE F E) := borel _
-  haveI : BorelSpace (Fin n → AE F E) := ⟨rfl⟩
+  letI mY : MeasurableSpace (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := borel _
+  haveI : BorelSpace (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := ⟨rfl⟩
   haveI : μ.IsAddHaarMeasure := hμ
   set T := basisCLEquiv F E n with hT
   have hTf : ∀ t, T t = basisMap F E n t := basisLEquiv_apply F E n

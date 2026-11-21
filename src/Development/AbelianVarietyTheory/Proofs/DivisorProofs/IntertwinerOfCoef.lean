@@ -80,9 +80,9 @@ theorem kInf_mul_mem {n : ℕ} {X : Spc F E n} {τ : ∀ w : InfinitePlace F, Em
 
 theorem one_mem_kInf {n : ℕ} {X : Spc F E n} {τ : ∀ w : InfinitePlace F, EmbOver E w} : (1 : UA σ X.J) ∈ KInf σ X τ := by
   refine ⟨fun u _ => ?_, fun w => ?_⟩
-  · change u • ((1 : Matrix (Fin n) (Fin n) (AE F E)) - 1) = 0
+  · change u • ((1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) - 1) = 0
     rw [sub_self, smul_zero]
-  · change Commute ((1 : Matrix (Fin n) (Fin n) (AE F E)).map (piInf (τ w))) (X.θ w)
+  · change Commute ((1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (piInf (τ w))) (X.θ w)
     rw [Matrix.map_one _ (map_zero _) (map_one _)]
     exact Commute.one_left _
 

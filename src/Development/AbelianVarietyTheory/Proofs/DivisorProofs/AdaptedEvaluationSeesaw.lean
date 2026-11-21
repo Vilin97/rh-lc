@@ -23,7 +23,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem incM_one (k : ℕ) : incM F (1 : Matrix (Fin k) (Fin k) E) = 1 :=
   Matrix.map_one _ (map_zero _) (map_one _)
 
-theorem vecMulVec_mulVec {m k l : ℕ} (a : Fin m → AE F E) (P : Matrix (Fin k) (Fin l) (AE F E)) (z : Fin l → AE F E) :
+theorem vecMulVec_mulVec {m k l : ℕ} (a : Fin m → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (P : Matrix (Fin k) (Fin l) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (z : Fin l → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     Matrix.vecMulVec a (P *ᵥ z) = Matrix.vecMulVec a z * Pᵀ := by
   ext i j
   simp [Matrix.vecMulVec_apply, Matrix.mulVec, dotProduct, Matrix.mul_apply, Finset.mul_sum]

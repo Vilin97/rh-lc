@@ -110,7 +110,7 @@ theorem main : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F
     have hsum : Matrix.vecMulVec ξ H'.y + x =
         Matrix.vecMulVec a H'.x + (U * H'.ιᵀ + Matrix.vecMulVec (ξ + t) H'.y) := by
       rw [hx, Matrix.add_vecMulVec]; abel
-    have hiso : incM F (Matrix.vecMulVec a H'.x) ∈ (iso0 n H' : Set (Matrix (Fin n) (Fin d) (AE F E))) :=
+    have hiso : incM F (Matrix.vecMulVec a H'.x) ∈ (iso0 n H' : Set (Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) :=
       ⟨incV F a, incM_vecMulVec a H'.x⟩
     rw [← incM_vecMulVec, rho_rat_rho_rat M hψ hM, hsum, ← rho_rat_rho_rat M hψ hM,
       he.inv _ hiso _ (GlobalTheory.HeisSchA.rho_mem_schA M B.ψ hψ _ Ψ hΨ), ← rho_rat_rho_rat M hψ hM,

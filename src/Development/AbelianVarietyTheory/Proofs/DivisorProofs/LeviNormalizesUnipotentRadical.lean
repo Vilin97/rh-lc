@@ -22,7 +22,7 @@ open GlobalTheory.ThK.UnipDom.Inverse
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem conj_mem_unipSet {σ : E →ₐ[F] E} {d d₁ : ℕ} {J : Matrix (Fin d) (Fin d) E} {H' : Plane E d d₁}
-    (g : UA σ J) (c c' : AE F E) (M M' : Matrix (Fin d₁) (Fin d₁) (AE F E))
+    (g : UA σ J) (c c' : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (M M' : Matrix (Fin d₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (hx : mat g *ᵥ incV F H'.x = c • incV F H'.x) (hx' : mat g⁻¹ *ᵥ incV F H'.x = c' • incV F H'.x) (hcc : c' * c = 1)
     (hι : mat g * incM F H'.ι = incM F H'.ι * M) (hι' : mat g⁻¹ * incM F H'.ι = incM F H'.ι * M') (hMM : M * M' = 1)
     (u : UA σ J) (hu : u ∈ unipSet σ J H') : g * u * g⁻¹ ∈ unipSet σ J H' := by
@@ -41,7 +41,7 @@ theorem conj_mem_unipSet {σ : E →ₐ[F] E} {d d₁ : ℕ} {J : Matrix (Fin d)
 
 theorem levi_conj_mem_unip : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → B.IsGood σ → G.IsGood B → G₁.IsGood B →
-    ∀ (l : (AE F E)ˣ) (g₀ : UA σ G₁.V.J) (h : UA σ G.V.J), IsLevi H l g₀ h →
+    ∀ (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (g₀ : UA σ G₁.V.J) (h : UA σ G.V.J), IsLevi H l g₀ h →
     ∀ n ∈ unip σ G.V H, h * n * h⁻¹ ∈ unip σ G.V H ∧ h⁻¹ * n * h ∈ unip σ G.V H := by
   intro F E _ _ _ _ _ σ B b a' G G₁ H H' _ _ _ _ l g₀ h hL n hn
   obtain ⟨hx, -, hι⟩ := hL

@@ -22,7 +22,7 @@ theorem _root_.GlobalTheory.T.linear_model_compact_equivariance : GlobalTheory.F
       IsDblCoord (cA σ) (-1) (incM F X.J) (incM F W.J) M.co dd →
       IsUSplitting (adeleClass F) B.ψ dd (actB (cA σ)) omd →
       (∀ (g : UA σ W.J) (gd : GlobalTheory.DblScal.UD σ W.J),
-        ((gd : GL (Fin d ⊕ Fin d) (AE F E)) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E)) =
+        ((gd : GL (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) =
           Matrix.fromBlocks (mat g) 0 0 1 →
         ∀ φ₁ ∈ schA F (Fin n × Fin d), ∀ φ₂ ∈ schA F (Fin n × Fin d), omd gd (boxFun φ₁ φ₂) = boxFun (om (1, g) φ₁) φ₂) →
       GlobalTheory.DblScal.LocOps omd v →
@@ -32,6 +32,6 @@ theorem _root_.GlobalTheory.T.linear_model_compact_equivariance : GlobalTheory.F
           starRingEnd ℂ (ι (fun x => starRingEnd ℂ (φ₂ x)) (Y.submatrix id Sum.inr))) →
       ∀ cd, GlobalTheory.DblScal.IsShapeD omd t c ιd cd →
       ∀ h ∈ UAt σ W (evFin F v), ∀ gd : GlobalTheory.DblScal.UD σ W.J,
-        ((gd : GL (Fin d ⊕ Fin d) (AE F E)) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E)) =
+        ((gd : GL (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) =
           Matrix.fromBlocks (mat h) 0 0 1 → κ h = cd gd := by
   first | exact @GlobalTheory.DblScalBox.scal_diag_one | exact GlobalTheory.DblScalBox.scal_diag_one | (intros; apply GlobalTheory.DblScalBox.scal_diag_one <;> assumption)

@@ -48,7 +48,7 @@ theorem main : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F
   obtain ⟨L, hLiso, hLrank, hL⟩ := GlobalTheory.T.config_a_triple_seesaw hKP F E σ B b a' G G₁ H H' hC X om om' om₁ om₁' hT hT₁
   have hinvL : ∀ l : Fn F (b + 2) (b + 2 + a') →ₗ[ℂ] ℂ, (∀ u ∈ isoA (F := F) H H',
       ∀ Φ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')), l (G.M.co.rho B.ψ u Φ) = l Φ) →
-      (∀ z : Matrix (Fin b) (Fin (b + a')) (AE F E), (G₁.M.co.e z).1 = 0 → ∀ Φ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')),
+      (∀ z : Matrix (Fin b) (Fin (b + a')) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), (G₁.M.co.e z).1 = 0 → ∀ Φ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')),
         l (G.M.co.rho B.ψ (incM F H.ι * z * (incM F H'.ι)ᵀ) Φ) = l Φ) →
       ∀ (t : AF F), ∀ w ∈ L, ∀ φ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')),
         l (schr B.ψ (t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i)))) φ) = l φ := by

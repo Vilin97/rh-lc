@@ -98,19 +98,19 @@ lemma app_res {P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P') {V W 
 
 variable {P} in
 lemma push_d {P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P') (n : ℕ) (σ : Cochain P U n) :
-    push P U φ (n + 1) (d P U n σ) = d P' U n (push P U φ n σ) := by
+    push U φ (n + 1) (d P U n σ) = d P' U n (push U φ n σ) := by
   funext i
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [push, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul, app_res]
 
 variable {P} in
 lemma push_comp {P' P'' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P') (ψ : P' ⟶ P'')
-    (n : ℕ) (σ : Cochain P U n) : push P' U ψ n (push P U φ n σ) = push P U (φ ≫ ψ) n σ := by
+    (n : ℕ) (σ : Cochain P U n) : push U ψ n (push U φ n σ) = push U (φ ≫ ψ) n σ := by
   funext i
   simp [push]
 
 variable {P} in
-lemma push_id (n : ℕ) (σ : Cochain P U n) : push P U (𝟙 P) n σ = σ := by
+lemma push_id (n : ℕ) (σ : Cochain P U n) : push U (𝟙 P) n σ = σ := by
   funext i
   simp [push]
 
@@ -119,14 +119,14 @@ def CechAcyclic : Prop :=
 
 variable {P} in
 lemma push_zero' {P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (n : ℕ) (σ : Cochain P U n) :
-    push P U (0 : P ⟶ P') n σ = 0 := by
+    push U (0 : P ⟶ P') n σ = 0 := by
   funext i
   simp [push]
 
 variable {P} in
 lemma push_injective {P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P') (n : ℕ)
     (h : ∀ i : Fin (n + 1) → ι, Function.Injective (φ.app (op (inter U i)))) :
-    Function.Injective (push P U φ n) := fun _ _ hστ =>
+    Function.Injective (push U φ n) := fun _ _ hστ =>
   funext fun i => h i (congrFun hστ i)
 
 
@@ -134,8 +134,8 @@ variable {P} in
 lemma CechAcyclic.of_retract {G : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (ι' : P ⟶ G) (r : G ⟶ P)
     (hr : ι' ≫ r = 𝟙 P) (hG : CechAcyclic G U) : CechAcyclic P U := by
   intro n σ hσ
-  obtain ⟨τ, hτ⟩ := hG n (push P U ι' (n + 1) σ) (by rw [← push_d, hσ, map_zero])
-  refine ⟨push G U r n τ, ?_⟩
+  obtain ⟨τ, hτ⟩ := hG n (push U ι' (n + 1) σ) (by rw [← push_d, hσ, map_zero])
+  refine ⟨push U r n τ, ?_⟩
   rw [← push_d, hτ, push_comp, hr, push_id]
 
 

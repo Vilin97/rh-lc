@@ -17,10 +17,10 @@ namespace GlobalTheory.DblSiegelX
 
 theorem continuous_admitted_schr_linear : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (ψ : AddChar (AF F) ℂ),
     IsStd ψ → ∀ (κ : Type) [Fintype κ], ∀ Λ ∈ (adeleClass F).adm κ, ∀ Φ ∈ schA F κ, ∀ (d : ℕ)
-    (L : (Fin d → AE F E) →ₗ[AF F] (κ → AF F) × (κ → AF F)), Continuous fun u => Λ (schr ψ (L u) Φ) := by
+    (L : (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) →ₗ[AF F] (κ → AF F) × (κ → AF F)), Continuous fun u => Λ (schr ψ (L u) Φ) := by
   intro F E _ _ _ _ _ ψ hψ κ _ Λ hΛ Φ hΦ d L
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
-  haveI : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) _
+  haveI : IsTopologicalRing (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := IsModuleTopology.isTopologicalRing (AF F) _
   have hL : Continuous L := IsModuleTopology.continuous_of_linearMap L
   exact (GlobalTheory.ConeMeasSmall.continuous_schr hψ hΛ hΦ).comp hL
 

@@ -83,7 +83,7 @@ theorem exists_int_gens {d : ℕ} (L : Submodule (𝓞 E) (Fin d → E)) (hL : L
     exact (Submodule.mem_span_range_iff_exists_fun ℤ).1 this
 
 theorem latHat_decomp {d r : ℕ} (W : Spc F E d) (g : Fin r → Fin d → E)
-    (hg : ∀ x ∈ W.L, ∃ c : Fin r → ℤ, ∑ j, c j • g j = x) {z : Fin d → AE F E} (hz : z ∈ latHat W) :
+    (hg : ∀ x ∈ W.L, ∃ c : Fin r → ℤ, ∑ j, c j • g j = x) {z : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : z ∈ latHat W) :
     ∃ a : Fin r → AF F, (∀ j, a j ∈ intAd F) ∧ z = ∑ j, a j • incV F (g j) := by
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>
@@ -143,7 +143,7 @@ theorem fin_reps (v : Pl (F := F)) (m : ℕ) (hm : m ≠ 0) :
 theorem smul_latHat_finite_mod : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d) (v : Pl (F := F))
     (u : AF F), W.L.IsLattice E → evI F u = 0 → (∀ w : Pl (F := F), w ≠ v → evFin F w u = 0) →
     evFin F v u ∈ v.adicCompletionIntegers F → ∀ m : ℕ, m ≠ 0 →
-    ∃ S : Finset (Fin d → AE F E), (∀ s ∈ S, s ∈ latHat W) ∧
+    ∃ S : Finset (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), (∀ s ∈ S, s ∈ latHat W) ∧
       ∀ z ∈ latHat W, ∃ s ∈ S, ∃ y ∈ latHat W, u • z - s = m • y := by
   intro F E _ _ _ _ _ d W v u hL hu hw hv m hm
   classical

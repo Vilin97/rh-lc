@@ -73,7 +73,7 @@ variable {E : Type} [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 def wv (M : Model σ X W)
     (v : (Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F)) :
-    Matrix (Fin n) (Fin d) (AE F E) :=
+    Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   M.co.e.symm (liftV v.1, liftV v.2)
 
 theorem at_wv (M : Model σ X W)
@@ -82,12 +82,12 @@ theorem at_wv (M : Model σ X W)
   intro u hu
   rw [wv, ← map_smul, Prod.smul_mk, at_liftV v.1 u hu, at_liftV v.2 u hu, Prod.mk_zero_zero, map_zero]
 
-theorem at_mul {w : Matrix (Fin n) (Fin d) (AE F E)} (hw : At (evI F) w) (m : Matrix (Fin d) (Fin d) (AE F E)) :
+theorem at_mul {w : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hw : At (evI F) w) (m : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     At (evI F) (w * m) := by
   intro u hu
   rw [← Matrix.smul_mul, hw u hu, Matrix.zero_mul]
 
-def amap (M : Model σ X W) (m : Matrix (Fin d) (Fin d) (AE F E)) :
+def amap (M : Model σ X W) (m : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     ((Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F)) →ₗ[ℝ]
       ((Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F)) where
   toFun v := Coord.coordI M (wv M v * m)

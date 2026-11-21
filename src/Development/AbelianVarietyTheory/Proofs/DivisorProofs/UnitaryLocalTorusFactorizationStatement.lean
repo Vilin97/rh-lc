@@ -17,6 +17,6 @@ set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.unitary_local_torus_factorization : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ),
     B.IsGood σ → W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    ∀ (v : Pl (F := F)) (t : (AE F E)ˣ), At (F := F) (evFin F v) (t.1 - 1) → ∀ h₁ : UA σ W₁.J, h₁ ∈ UAt σ W₁ (evFin F v) →
+    ∀ (v : Pl (F := F)) (t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ), At (F := F) (evFin F v) (t.1 - 1) → ∀ h₁ : UA σ W₁.J, h₁ ∈ UAt σ W₁ (evFin F v) →
       ∃ m : UA σ W.J, IsLevi H' t h₁ m ∧ m ∈ UAt σ W (evFin F v) := by
   first | exact @GlobalTheory.PlaneLeviAt.exists_isLevi_at | exact GlobalTheory.PlaneLeviAt.exists_isLevi_at | (intros; apply GlobalTheory.PlaneLeviAt.exists_isLevi_at <;> assumption)

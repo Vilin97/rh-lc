@@ -34,7 +34,7 @@ theorem evFin_invOf_two_mem (v : Pl (F := F)) (h : (2 : 𝓞 F) ∉ v.asIdeal) :
   exact GlobalTheory.LatVac.half_mem_adicCompletionIntegers F v h
 
 theorem invOf_two_smul_mem_latAt {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (h : (2 : 𝓞 F) ∉ v.asIdeal)
-    {z : Fin d → AE F E} (hz : z ∈ GlobalTheory.InertSph.latAt W v) : (⅟(2 : AF F)) • z ∈ GlobalTheory.InertSph.latAt W v := by
+    {z : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : z ∈ GlobalTheory.InertSph.latAt W v) : (⅟(2 : AF F)) • z ∈ GlobalTheory.InertSph.latAt W v := by
   induction hz using AddSubgroup.closure_induction with
   | mem x hx =>
     obtain ⟨a, ha, hai, y, hy, rfl⟩ := hx

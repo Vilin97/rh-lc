@@ -16,7 +16,7 @@ set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.levi_conjugation_haar : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → B.IsGood σ → G.IsGood B → G₁.IsGood B →
     ∀ (μN : Measure (unip σ G.V H)), μN.IsHaarMeasure →
-    ∀ (l : (AE F E)ˣ) (g₀ : UA σ G₁.V.J) (h : UA σ G.V.J), IsLevi H l g₀ h →
+    ∀ (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (g₀ : UA σ G₁.V.J) (h : UA σ G.V.J), IsLevi H l g₀ h →
     ∀ f : UA σ G.V.J → ℝ≥0∞, Measurable f →
       ∫⁻ n, f (h * n.1 * h⁻¹) ∂μN = ((absE F E l : ℝ≥0∞) ^ (b + 1))⁻¹ * ∫⁻ n, f n.1 ∂μN := by
   first | exact @GlobalTheory.UnipConj.lintegral_conj_levi | exact GlobalTheory.UnipConj.lintegral_conj_levi | (intros; apply GlobalTheory.UnipConj.lintegral_conj_levi <;> assumption)

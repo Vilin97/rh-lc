@@ -20,7 +20,7 @@ theorem decomp_ev : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFi
     H'.IsAdapted σ B W W₁ i₀ i₁ → M₁.IsGood B.ψ → ∀ (e₀ : Fn F n d →ₗ[ℂ] Fn F n d₁), IsEv B M M₁ 1 H'.ι (iso0 n H') e₀ →
     ∀ (n₁ : ℕ) (X₁ : Spc F E n₁) (H : Plane E n n₁) (j₀ j₁ : ℕ), H.IsAdapted σ B X X₁ j₀ j₁ →
     ∀ (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' → ∀ u ∈ unip σ W H',
-    ∃ (y : Fin d₁ → AE F E) (b : AE F E), incM F H'.ι *ᵥ y = mat u⁻¹ *ᵥ incV F H'.y - incV F H'.y - b • incV F H'.x ∧
+    ∃ (y : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (b : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), incM F H'.ι *ᵥ y = mat u⁻¹ *ᵥ incV F H'.y - incV F H'.y - b • incV F H'.x ∧
       ∀ Ψ ∈ schA F (Fin n × Fin d), e₀ (M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) (incV F H'.y)) (om (1, u) Ψ)) =
         M₁.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) y) (e₀ (M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) (incV F H'.y)) Ψ)) := by
   intro hKP F E _ _ _ _ _ σ B n d d₁ X W W₁ M M₁ H' i₀ i₁ hH' hM₁ e₀ he₀ n₁ X₁ H j₀ j₁ hH χX χW om r s r' s' hP u hu

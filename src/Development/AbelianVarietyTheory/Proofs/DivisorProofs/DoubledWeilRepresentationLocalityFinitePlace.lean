@@ -32,7 +32,7 @@ theorem comm_off {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
 
   have hw0 : dd.e.symm (u • p, u • q) = u • dd.e.symm (p, q) := by
     rw [← Prod.smul_mk, LinearEquiv.map_smul]
-  have hM : u • GlobalTheory.InertDbl.matD g = u • (1 : Matrix _ _ (AE F E)) := by
+  have hM : u • GlobalTheory.InertDbl.matD g = u • (1 : Matrix _ _ (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) := by
     rw [← sub_eq_zero, ← smul_sub]
     exact hg u hu
   have hact : actB (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) g (dd.e.symm (u • p, u • q)) = dd.e.symm (u • p, u • q) := by

@@ -391,9 +391,9 @@ theorem GlobalTheory.ArchWeil.weil_eq_at_real_places : ∀ (F E : Type) [Field F
     have h1 := GlobalTheory.ArchWeil.det_ne_zero_of_hasSig (ha.geo.hW.sig w)
     rw [Matrix.det_smul, h0, mul_zero] at h1
     exact h1 rfl
-  have eβ : ∀ z : (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)ˣ, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) ((z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E) - 1) →
+  have eβ : ∀ z : (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) ((z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) - 1) →
       Xb.β z = Xa.β z := fun z hz => Circle.ext (by rw [hb.chars.expβ z hz, ha.chars.expβ z hz])
-  have eα : ∀ z : (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)ˣ, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) ((z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E) - 1) →
+  have eα : ∀ z : (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) ((z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) - 1) →
       Xb.α z = Xa.α z := fun z hz => Circle.ext (by rw [hb.chars.expα z hz, ha.chars.expα z hz])
   refine ⟨GlobalTheory.ArchWeil.pair_eq_of_arch σ hσ Γ.V Γ.W Γ.M B.ψ hψ _ _ _ _ ha.geo.hV.herm hVd ha.geo.hW.skew hWd eβ
       (fun z hz => by rw [MonoidHom.div_apply, MonoidHom.div_apply, eβ z hz, eα z hz]) oa ob ha.weil hb.weil,

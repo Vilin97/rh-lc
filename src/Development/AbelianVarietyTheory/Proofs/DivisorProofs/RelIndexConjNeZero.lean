@@ -19,7 +19,7 @@ namespace GlobalTheory.SphLineComm
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem smul_mem_latHat {d : ℕ} (W : Spc F E d) (a : AF F) (ha : evI F a = 0)
-    (hv : ∀ w : Pl (F := F), evFin F w a ∈ w.adicCompletionIntegers F) {z : Fin d → AE F E} (hz : z ∈ latHat W) :
+    (hv : ∀ w : Pl (F := F), evFin F w a ∈ w.adicCompletionIntegers F) {z : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : z ∈ latHat W) :
     a • z ∈ latHat W := by
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>

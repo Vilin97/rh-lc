@@ -21,7 +21,7 @@ def paraSpan {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [A
     {n d d₁ : ℕ} {Y : Spc F E n} {W : Spc F E d} (B : Base F E) (M : Model σ Y W) (om : Rep σ Y W) (W₁ : Spc F E d₁)
     (H' : Plane E d d₁) {P : Type} [AddCommGroup P] [Module ℂ P] (p : SInf F (Fin n × Fin d) →ₗ[ℂ] P) : Submodule ℂ P :=
   sInf {S | lowPartInf B M p ≤ S ∧ ∀ γ ∈ Lines σ W, ((∀ s, γ s ∈ unip σ W H') ∨
-      ∃ γ₁ ∈ Lines σ W₁, ∃ t : Multiplicative ℝ →* (AE F E)ˣ, ∀ s, IsLevi H' (t s) (γ₁ s) (γ s)) →
+      ∃ γ₁ ∈ Lines σ W₁, ∃ t : Multiplicative ℝ →* (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, ∀ s, IsLevi H' (t s) (γ₁ s) (γ s)) →
     ∀ f ∈ M.Pol B.ψ B.emb, ∀ f₁ : SInf F (Fin n × Fin d),
       ActsD (evI F) (fun s => om (1, γ (Multiplicative.ofAdd s))) f f₁ → p f ∈ S → p f₁ ∈ S}
 

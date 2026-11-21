@@ -19,27 +19,27 @@ open scoped Classical
 
 variable (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def coord (x : AE F E) : Fin (Module.finrank F E) → AF F :=
+def coord (x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : Fin (Module.finrank F E) → AF F :=
   haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
   (Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).equivFun x
 
-def size (x : AE F E) : ℝ := ∑ i, ‖evI F (coord F E x i)‖
+def size (x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : ℝ := ∑ i, ‖evI F (coord F E x i)‖
 
-def decay (N m : ℕ) (l : (AE F E)ˣ) : ℝ :=
+def decay (N m : ℕ) (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : ℝ :=
   if ∀ i v, evFin F v ((m : AF F) * coord F E l.1 i) ∈ v.adicCompletionIntegers F then
     ((1 + size F E l.1) ^ N)⁻¹ else 0
 
 variable {F E}
 
-theorem size_nonneg (x : AE F E) : 0 ≤ size F E x := Finset.sum_nonneg fun _ _ => norm_nonneg _
+theorem size_nonneg (x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : 0 ≤ size F E x := Finset.sum_nonneg fun _ _ => norm_nonneg _
 
-theorem decay_nonneg (N m : ℕ) (l : (AE F E)ˣ) : 0 ≤ decay F E N m l := by
+theorem decay_nonneg (N m : ℕ) (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : 0 ≤ decay F E N m l := by
   unfold decay
   split_ifs
   · exact inv_nonneg.mpr (pow_nonneg (add_nonneg zero_le_one (size_nonneg _)) _)
   · exact le_rfl
 
-theorem decay_mono {N m m' : ℕ} (h : m ∣ m') (l : (AE F E)ˣ) : decay F E N m l ≤ decay F E N m' l := by
+theorem decay_mono {N m m' : ℕ} (h : m ∣ m') (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : decay F E N m l ≤ decay F E N m' l := by
   obtain ⟨c, rfl⟩ := h
   unfold decay
   split_ifs with h1 h2

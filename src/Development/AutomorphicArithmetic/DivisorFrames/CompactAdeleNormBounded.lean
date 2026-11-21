@@ -59,7 +59,7 @@ private theorem ideleModule_bdd {K : Type} [Field K] [NumberField K]
   exact mul_le_mul h1 h2 (finiteModule_pos x).le ((infiniteModule_pos x).le.trans h1)
 
 theorem UpperTheory.compact_adele_norm_bounded :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (C : Set (AE F E)), IsCompact C → ∃ c : ℝ, ∀ u : (AE F E)ˣ, (u : AE F E) ∈ C → (absE F E u : ℝ) ≤ c := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (C : Set (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), IsCompact C → ∃ c : ℝ, ∀ u : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, (u : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) ∈ C → (absE F E u : ℝ) ≤ c := by
   intro F E _ _ _ _ _ C hC
   obtain ⟨c, hc⟩ := ideleModule_bdd (hC.image (GlobalTheory.TateConv.continuous_tens F E))
   refine ⟨c, fun u hu => ?_⟩

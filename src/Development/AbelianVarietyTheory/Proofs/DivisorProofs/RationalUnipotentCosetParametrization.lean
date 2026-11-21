@@ -28,21 +28,21 @@ theorem incV_inj {x y : Fin n → E} (h : incV F x = incV F y) : x = y :=
   funext fun i => incl_inj (F := F) (congrFun h i)
 
 omit [NumberField E] in
-theorem mat_mul_vec (g h : UA σ J) (v : Fin n → AE F E) : mat (g * h) *ᵥ v = mat g *ᵥ (mat h *ᵥ v) := by
+theorem mat_mul_vec (g h : UA σ J) (v : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : mat (g * h) *ᵥ v = mat g *ᵥ (mat h *ᵥ v) := by
   rw [Matrix.mulVec_mulVec]; rfl
 
 omit [NumberField E] in
-theorem mat_one_vec (v : Fin n → AE F E) : mat (1 : UA σ J) *ᵥ v = v := by
+theorem mat_one_vec (v : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : mat (1 : UA σ J) *ᵥ v = v := by
   have : mat (1 : UA σ J) = 1 := rfl
   rw [this, Matrix.one_mulVec]
 
 omit [NumberField E] in
-theorem inv_vec {g : UA σ J} {v w : Fin n → AE F E} (h : mat g *ᵥ v = w) : mat g⁻¹ *ᵥ w = v := by
+theorem inv_vec {g : UA σ J} {v w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (h : mat g *ᵥ v = w) : mat g⁻¹ *ᵥ w = v := by
   rw [← h, ← mat_mul_vec, inv_mul_cancel, mat_one_vec]
 
 
 omit [NumberField E] in
-theorem mem_closure_iff (v : Fin n → AE F E) (g : UA σ J) :
+theorem mem_closure_iff (v : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (g : UA σ J) :
     g ∈ Subgroup.closure {g : UA σ J | mat g *ᵥ v = v} ↔ mat g *ᵥ v = v := by
   refine ⟨fun h => ?_, fun h => Subgroup.subset_closure h⟩
   induction h using Subgroup.closure_induction with

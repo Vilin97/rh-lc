@@ -31,7 +31,7 @@ theorem _root_.GlobalTheory.T.isotropic_orbit_orthogonal_at_place' : ∀ (F E : 
     ∀ w : (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v),
       (∀ u ∈ iso0 (F := F) n H', At (evFin F v) u →
         (GlobalTheory.LatVac.locCo M.co v u).1 ⬝ᵥ w.2 - w.1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u).2 = 0) →
-      ∃ u ∈ iso0 (F := F) n H', At (evFin F v) u ∧ ∃ z : Matrix (Fin n) (Fin d₁) (AE F E), At (evFin F v) z ∧
+      ∃ u ∈ iso0 (F := F) n H', At (evFin F v) u ∧ ∃ z : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evFin F v) z ∧
         w = GlobalTheory.LatVac.locCo M.co v u +
           GlobalTheory.LatVac.locCo M.co v (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ) := by
   first | exact @GlobalTheory.IsoOrthLoc.isotropic_orbit_orthogonal_at_place | exact GlobalTheory.IsoOrthLoc.isotropic_orbit_orthogonal_at_place | (intros; apply GlobalTheory.IsoOrthLoc.isotropic_orbit_orthogonal_at_place <;> assumption)

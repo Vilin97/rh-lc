@@ -33,7 +33,7 @@ theorem _root_.GlobalTheory.T.adapted_real_frame_twisted_coeffs : ∀ (F E : Typ
     W.IsSkew σ B r s → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ (A : Fin (R + 1)) (w : InfinitePlace F)
     (C : Matrix (Fin d₁) (Formalism.BasicNotions.TH.Ix R S) ℂ), GlobalTheory.ThK.RealK.IsAdapted B.emb w W₁ C →
     ∃ ε φ : Fin d → ℂ, GlobalTheory.ThK.RealK.IsAdapted B.emb w W (GlobalTheory.TwCoef.extFrame A (H'.ι.map (B.emb w).1 * C) ε φ) ∧
-      ∀ (t : (AE F E)ˣ) (h₁ : UA σ W₁.J) (k : UA σ W.J), k ∈ KInf σ W B.emb → IsLevi H' t h₁ k →
+      ∀ (t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (h₁ : UA σ W₁.J) (k : UA σ W.J), k ∈ KInf σ W B.emb → IsLevi H' t h₁ k →
         (mat k).map (piInf (B.emb w)) *ᵥ ε = piInf (B.emb w) t.1 • ε ∧
         (mat k).map (piInf (B.emb w)) *ᵥ φ = piInf (B.emb w) t.1 • φ := by
   first | exact @GlobalTheory.TwCoefFrame.exists_extFrame_adapted | exact GlobalTheory.TwCoefFrame.exists_extFrame_adapted | (intros; apply GlobalTheory.TwCoefFrame.exists_extFrame_adapted <;> assumption)

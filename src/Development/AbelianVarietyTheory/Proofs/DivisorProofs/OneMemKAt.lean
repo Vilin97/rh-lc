@@ -17,7 +17,7 @@ namespace GlobalTheory.InertSph
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def latAt {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) : AddSubgroup (Fin d → AE F E) :=
+def latAt {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) : AddSubgroup (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   AddSubgroup.closure {z | ∃ a : AF F, At (evFin F v) a ∧ evFin F v a ∈ v.adicCompletionIntegers F ∧
     ∃ y ∈ W.L, z = a • fun i => inclR (F := F) (AF F) (y i)}
 

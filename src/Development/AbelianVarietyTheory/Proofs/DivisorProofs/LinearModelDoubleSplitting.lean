@@ -125,7 +125,7 @@ theorem dblLin : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F]
       ιd (boxFun φ₁ φ₂) = fun Y => ι φ₁ (Y.submatrix id Sum.inl) * star (ι (star φ₂) (Y.submatrix id Sum.inr)) :=
     fun φ₁ h₁ φ₂ h₂ => hprod φ₁ h₁ φ₂ h₂
 
-  have hsplit : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E),
+  have hsplit : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
       GlobalTheory.LatVac.locCo dd v u = (Sum.elim (GlobalTheory.LatVac.locCo M.co v u.toCols₁).1 (GlobalTheory.LatVac.locCo M.co v u.toCols₂).1,
         Sum.elim (GlobalTheory.LatVac.locCo M.co v u.toCols₁).2 (-(GlobalTheory.LatVac.locCo M.co v u.toCols₂).2)) := by
     intro u
@@ -136,26 +136,26 @@ theorem dblLin : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F]
         simp [GlobalTheory.LatVac.locCo, e]
     · rcases k with k | k <;>
         simp [GlobalTheory.LatVac.locCo, e]
-  have hat1 : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E), At (evFin F v) u → At (evFin F v) u.toCols₁ :=
+  have hat1 : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evFin F v) u → At (evFin F v) u.toCols₁ :=
     fun u hu a ha => Matrix.ext fun i j => congrFun (congrFun (hu a ha) i) (Sum.inl j)
-  have hat2 : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E), At (evFin F v) u → At (evFin F v) u.toCols₂ :=
+  have hat2 : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evFin F v) u → At (evFin F v) u.toCols₂ :=
     fun u hu a ha => Matrix.ext fun i j => congrFun (congrFun (hu a ha) i) (Sum.inr j)
-  have hmap1 : ∀ (u : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E)) (π : AE F E →+* Fv F v), u.map π = 0 →
+  have hmap1 : ∀ (u : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (π : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →+* Fv F v), u.map π = 0 →
       u.toCols₁.map π = 0 := fun u π h => Matrix.ext fun i j => congrFun (congrFun h i) (Sum.inl j)
-  have hmap2 : ∀ (u : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E)) (π : AE F E →+* Fv F v), u.map π = 0 →
+  have hmap2 : ∀ (u : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (π : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →+* Fv F v), u.map π = 0 →
       u.toCols₂.map π = 0 := fun u π h => Matrix.ext fun i j => congrFun (congrFun h i) (Sum.inr j)
-  have hc1 : ∀ (u : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E)) (π : AE F E →+* Fv F v), (u.map π).toCols₁ = u.toCols₁.map π :=
+  have hc1 : ∀ (u : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (π : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →+* Fv F v), (u.map π).toCols₁ = u.toCols₁.map π :=
     fun u π => rfl
-  have hc2 : ∀ (u : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E)) (π : AE F E →+* Fv F v), (u.map π).toCols₂ = u.toCols₂.map π :=
+  have hc2 : ∀ (u : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (π : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →+* Fv F v), (u.map π).toCols₂ = u.toCols₂.map π :=
     fun u π => rfl
 
-  have hloc : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E), At (evFin F v) u →
+  have hloc : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evFin F v) u →
       ∀ φ ∈ SB (Fin n × Fin d ⊕ Fin n × Fin d → Fv F v), ∀ φ₁, Acts (evFin F v) (dd.rho B.ψ u) φ φ₁ →
         φ₁ = schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo dd v u) φ := fun u hu φ hφ φ₁ hA =>
     GlobalTheory.TensUniq.eq_of_tens_eq v φ _ _ hφ fun r hr =>
       (hA r hr).symm.trans (GlobalTheory.VacBridge.rho_acts_locCo dd B.ψ v u hu φ r hr)
 
-  have hschr : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E), ∀ a ∈ SB (Fin n × Fin d → Fv F v),
+  have hschr : ∀ u : Matrix (Fin n) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ a ∈ SB (Fin n × Fin d → Fv F v),
       ∀ b' ∈ SB (Fin n × Fin d → Fv F v),
       ιd (schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo dd v u) (boxFun a b')) = fun Y =>
         ι (schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M.co v u.toCols₁) a) (Y.submatrix id Sum.inl) *

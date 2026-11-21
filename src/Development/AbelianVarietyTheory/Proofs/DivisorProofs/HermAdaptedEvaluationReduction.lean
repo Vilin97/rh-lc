@@ -51,9 +51,9 @@ theorem thetaSum_smul {κ : Type} (c : ℂ) (Φ : (κ → AF F) → ℂ) : theta
 
 theorem symp_pair {σ : E →ₐ[F] E} {n n₁ d₁ : ℕ} (hσ : ∀ e, σ (σ e) = e) (J : Matrix (Fin n) (Fin n) E)
     (hJ : ∀ i j, σ (J j i) = J i j) (JW : Matrix (Fin d₁) (Fin d₁) E) (H : Plane E n n₁)
-    (hxy : form σ J H.x H.y = 1) (w : Fin d₁ → E) (z : Fin d₁ → AE F E) :
+    (hxy : form σ J H.x H.y = 1) (w : Fin d₁ → E) (z : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     symp (R := AF F) (cA σ) (-1) (incM F J) (incM F JW) (Matrix.vecMulVec (incV F H.y) (incV F w))
-      (Matrix.vecMulVec (incV F H.x) z) = -Algebra.trace (AF F) (AE F E) (GlobalTheory.UnipMass.hA σ JW (incV F w) z) := by
+      (Matrix.vecMulVec (incV F H.x) z) = -Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (GlobalTheory.UnipMass.hA σ JW (incV F w) z) := by
   have hyx : form σ J H.y H.x = 1 := by
     have h1 : σ (form σ J H.x H.y) = form σ J H.y H.x := by
       set_option synthInstance.maxHeartbeats 100000 in

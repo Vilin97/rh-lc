@@ -47,7 +47,7 @@ theorem hTens_embed {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c : A 
 
 theorem symp_embed_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} (B : Base F E)
     {n d d₁ : ℕ} (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ : ℕ) (JX : Matrix (Fin n) (Fin n) E),
-    H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ z z' : Matrix (Fin n) (Fin d₁) (AE F E),
+    H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ z z' : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
     symp (R := AF F) (cA σ) (-1) (incM F JX) (incM F W.J) (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ)
       (incM F (1 : Matrix (Fin n) (Fin n) E) * z' * (incM F H'.ι)ᵀ) =
     symp (R := AF F) (cA σ) (-1) (incM F JX) (incM F W₁.J) z z' := by

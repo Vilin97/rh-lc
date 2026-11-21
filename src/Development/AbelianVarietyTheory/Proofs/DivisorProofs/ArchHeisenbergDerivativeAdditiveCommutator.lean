@@ -75,9 +75,9 @@ lemma isSymm (f : SInf F κ) (x : κ → mixedEmbedding.mixedSpace F) : IsSymmSn
   ((f.smooth ⊤).contDiffAt).isSymmSndFDerivAt (by simp; exact WithTop.coe_le_coe.2 le_top)
 
 theorem heis_deriv_laws : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) {α β κ : Type}
-    [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] (JA : Matrix α α (AE F E))
-    (JB : Matrix β β (AE F E)) (d : Darboux (symp (R := AF F) (cA σ) (-1) JA JB) κ)
-    (D : Matrix α β (AE F E) → (SInf F κ →L[ℂ] SInf F κ)),
+    [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] (JA : Matrix α α (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
+    (JB : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (d : Darboux (symp (R := AF F) (cA σ) (-1) JA JB) κ)
+    (D : Matrix α β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → (SInf F κ →L[ℂ] SInf F κ)),
     (∀ u, At (evI F) u → ∀ (f : SInf F κ) x, D u f x =
         fderiv ℝ f x (fun i => evI F ((d.e u).1 i)) - 2 * Real.pi * Complex.I *
           (Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, x i * evI F ((d.e u).2 i)) : ℝ) * f x) →
@@ -87,9 +87,9 @@ theorem heis_deriv_laws : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
       ((-2 * Real.pi * Complex.I : ℂ) *
         ((Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (symp (R := AF F) (cA σ) (-1) JA JB u u')) : ℝ) : ℂ)) • f) := by
   intro F E _ _ _ _ _ σ α β κ _ _ _ _ _ JA JB d D hD
-  have at_add : ∀ u u' : Matrix α β (AE F E), At (evI F) u → At (evI F) u' → At (evI F) (u + u') :=
+  have at_add : ∀ u u' : Matrix α β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) u → At (evI F) u' → At (evI F) (u + u') :=
     fun u u' h h' a ha => by rw [smul_add, h a ha, h' a ha, add_zero]
-  have at_smul : ∀ (u : Matrix α β (AE F E)) (r : AF F), At (evI F) u → At (evI F) (r • u) :=
+  have at_smul : ∀ (u : Matrix α β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (r : AF F), At (evI F) u → At (evI F) (r • u) :=
     fun u r h a ha => by rw [smul_comm, h a ha, smul_zero]
   have hD' : ∀ u, At (evI F) u → ∀ (f : SInf F κ) x, D u f x =
       fderiv ℝ (⇑f) x (fun i => evI F ((d.e u).1 i)) - 2 * Real.pi * Complex.I *

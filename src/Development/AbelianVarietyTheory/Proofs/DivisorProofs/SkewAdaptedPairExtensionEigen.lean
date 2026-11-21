@@ -22,7 +22,7 @@ theorem ev_levi : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       H'.IsAdapted σ B W W₁ i₀ i₁ → IsPair B M₁ χX χW om₁ r s r₁ s₁ → ∀ e, IsEv B M M₁ 1 H'.ι (iso0 n H') e →
       ∀ t m, IsLevi (W₁ := W₁) H' t 1 m →
         (∀ Φ ∈ schA F (Fin n × Fin d), (e ∘ₗ om (1, m)) Φ ∈ schA F (Fin n × Fin d₁)) ∧
-        (∀ z : Matrix (Fin n) (Fin d₁) (AE F E), ∀ Φ ∈ schA F (Fin n × Fin d),
+        (∀ z : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ Φ ∈ schA F (Fin n × Fin d),
           (e ∘ₗ om (1, m)) (M.co.rho B.ψ (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ) Φ) =
             M₁.co.rho B.ψ z ((e ∘ₗ om (1, m)) Φ)) ∧
         (∀ u ∈ iso0 n H', ∀ Φ ∈ schA F (Fin n × Fin d), (e ∘ₗ om (1, m)) (M.co.rho B.ψ u Φ) = (e ∘ₗ om (1, m)) Φ) ∧
@@ -33,7 +33,7 @@ theorem ev_levi : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
   have hIm : incM F (1 : Matrix (Fin n) (Fin n) E) = 1 := by
     simp [incM]
   have hmat1 : mat (1 : UA σ W₁.J) = 1 := by simp [mat]
-  have vmv : ∀ (y : Fin n → AE F E) (v : Fin d → AE F E) (A : Matrix (Fin d) (Fin d) (AE F E)),
+  have vmv : ∀ (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (v : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (A : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))),
       Matrix.vecMulVec y v * Aᵀ = Matrix.vecMulVec y (A *ᵥ v) := by
     intro y v A
     ext i j
@@ -51,13 +51,13 @@ theorem ev_levi : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
   · obtain ⟨y, rfl⟩ := hu
     simp only [LinearMap.comp_apply]
     have h4 : actAB (cA σ) ((1 : UA σ X.J), m) (Matrix.vecMulVec y (incV F H'.x)) =
-        Matrix.vecMulVec ((t : AE F E) • y) (incV F H'.x) := by
+        Matrix.vecMulVec ((t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) • y) (incV F H'.x) := by
       simp only [actAB, OneMemClass.coe_one, Units.val_one, Matrix.one_mul]
       change Matrix.vecMulVec y (incV F H'.x) * (mat m)ᵀ = _
       rw [vmv, hL.1]
       ext i j
       simp [Matrix.vecMulVec_apply, mul_comm, mul_left_comm, mul_assoc]
-    rw [hs.impl _ _ _ hΦ, h4, he.inv _ ⟨(t : AE F E) • y, rfl⟩ _ (hm1 Φ hΦ)]
+    rw [hs.impl _ _ _ hΦ, h4, he.inv _ ⟨(t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) • y, rfl⟩ _ (hm1 Φ hΦ)]
   · have h1 := GlobalTheory.T.eigen_intertwiner_good_models F E σ B n d n d₁ X W X W₁ M M₁ 1 H'.ι (iso0 n H') e hP.good hP₁.good he l hl
     exact hs.adm (1, m) _ h1
 

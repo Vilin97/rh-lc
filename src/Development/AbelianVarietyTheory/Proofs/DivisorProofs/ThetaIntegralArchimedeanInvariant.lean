@@ -19,7 +19,7 @@ namespace GlobalTheory.ThetaRightTranslate
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem cA_eq_sigR (σ : E →ₐ[F] E) (z : AE F E) : cA σ z = sigR (AF F) σ z := by
+theorem cA_eq_sigR (σ : E →ₐ[F] E) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : cA σ z = sigR (AF F) σ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, sigR]
@@ -30,7 +30,7 @@ theorem ug_eq_uj (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) :
   ext g
   show (g : Matrix _ _ _)ᵀ * incM F J * (g : Matrix _ _ _).map (cA σ) = incM F J ↔
     Formalism.UG.cT (sigR (AF F) σ) (g : Matrix _ _ _) * JR (AF F) Jᵀ * (g : Matrix _ _ _) = JR (AF F) Jᵀ
-  have hc : (g : Matrix (Fin n) (Fin n) (AE F E)).map (cA σ) = (g : Matrix _ _ _).map (sigR (AF F) σ) := by
+  have hc : (g : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (cA σ) = (g : Matrix _ _ _).map (sigR (AF F) σ) := by
     ext i j; exact cA_eq_sigR σ _
   have hJ : JR (AF F) Jᵀ = (incM F J)ᵀ := rfl
   rw [hc, hJ, Formalism.UG.cT]
@@ -69,7 +69,7 @@ theorem isMulRightInvariant_of_equiv {G H : Type} [Group G] [Group H]
 theorem isMulRightInvariant (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (hJ : ∀ i j, σ (J j i) = J i j) (hd : IsUnit J.det) (μ : Measure (UA σ J)) [μ.IsHaarMeasure] :
     μ.IsMulRightInvariant := by
-  haveI : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) _
+  haveI : IsTopologicalRing (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := IsModuleTopology.isTopologicalRing (AF F) _
   haveI : BorelSpace (UA σ J) := ⟨rfl⟩
   haveI : IsTopologicalGroup (HA (AF F) σ Jᵀ) := inferInstanceAs (IsTopologicalGroup (HR (AF F) σ Jᵀ))
   haveI : BorelSpace (HA (AF F) σ Jᵀ) := ⟨rfl⟩

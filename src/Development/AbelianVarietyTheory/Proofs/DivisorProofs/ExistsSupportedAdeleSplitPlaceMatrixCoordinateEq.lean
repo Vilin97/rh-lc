@@ -16,9 +16,9 @@ namespace GlobalTheory.VacLift
 
 theorem exists_lift_scalar {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (v : Pl (F := F)) (t : E →ₐ[F] Fv F v) (a : Fv F v) :
-    ∃ z : AE F E, At (evFin F v) z ∧ piW (t.comp σ) z = 0 ∧ piW t z = a := by
-  have hp : ∀ (s : E →ₐ[F] Fv F v) (z : AE F E), piW s z = splitProj s (compFin F E v z) := fun s z => rfl
-  have hs : ∀ (s : E →ₐ[F] Fv F v) (u : AF F) (z : AE F E), piW s (u • z) = evFin F v u * piW s z := by
+    ∃ z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), At (evFin F v) z ∧ piW (t.comp σ) z = 0 ∧ piW t z = a := by
+  have hp : ∀ (s : E →ₐ[F] Fv F v) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), piW s z = splitProj s (compFin F E v z) := fun s z => rfl
+  have hs : ∀ (s : E →ₐ[F] Fv F v) (u : AF F) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), piW s (u • z) = evFin F v u * piW s z := by
     intro s u z
     rw [Algebra.smul_def, map_mul]
     congr 1
@@ -35,7 +35,7 @@ theorem exists_lift_scalar {F E : Type} [Field F] [NumberField F] [Field E] [Num
 
 theorem exists_lift : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ},
     IsCMExt F E σ → ∀ (v : Pl (F := F)) (t : E →ₐ[F] Fv F v) (b : GL (Fin n) (Fv F v)) (c : GL (Fin d) (Fv F v))
-    (Y : Matrix (Fin n) (Fin d) (Fv F v)), ∃ x : Matrix (Fin n) (Fin d) (AE F E), At (evFin F v) x ∧
+    (Y : Matrix (Fin n) (Fin d) (Fv F v)), ∃ x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evFin F v) x ∧
       x.map (piW (t.comp σ)) = 0 ∧ (b⁻¹).1 * x.map (piW t) * (c⁻¹).1ᵀ = Y := by
   intro F E _ _ _ _ _ σ n d h v t b c Y
   choose f hf using exists_lift_scalar h v t

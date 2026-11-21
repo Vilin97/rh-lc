@@ -124,7 +124,7 @@ theorem nuFin_gen {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
     change crd b (Fv F v) (Algebra.TensorProduct.map (evalV F v) (AlgHom.id F E) (Y x i)) k ∈ _
     rw [e]
     exact hv x i k _ ⟨Y, hY, rfl⟩
-  choose C hCo hCc hKC using fun v => exists_clopen_compact v (hKv v)
+  choose C hCo hCc hKC using fun v => exists_clopen_compact b v (hKv v)
   let Cv : ∀ v : HeightOneSpectrum (𝓞 F), Set (Fin a → Fin M → Fv F v ⊗[F] E) :=
     fun v => if Kv v ⊆ latV b v then latV b v else C v
   have hCvo : ∀ v, IsClopen (Cv v) := fun v => by

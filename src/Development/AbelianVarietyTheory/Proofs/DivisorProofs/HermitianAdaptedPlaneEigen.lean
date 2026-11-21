@@ -57,7 +57,7 @@ theorem twist_scalar_eq_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Ty
       have h2 : mat h'⁻¹ * mat h' = 1 := by
         show mat (h'⁻¹ * h') = 1
         rw [inv_mul_cancel]; rfl
-      show ((1 : Matrix (Fin n₁) (Fin n₁) (AE F E))) * (z * (mat h')ᵀ) * (mat h'⁻¹)ᵀ = z
+      show ((1 : Matrix (Fin n₁) (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) * (z * (mat h')ᵀ) * (mat h'⁻¹)ᵀ = z
       rw [Matrix.one_mul, Matrix.mul_assoc, ← Matrix.transpose_mul, h2, Matrix.transpose_one, Matrix.mul_one]
     have hinvI : ∀ u ∈ {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z}, ∀ Ψ ∈ schA F (Fin n × Fin d),
         e' (M.co.rho B.ψ u Ψ) = e' Ψ := by
@@ -66,7 +66,7 @@ theorem twist_scalar_eq_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Ty
       have h1 : actAB (cA σ) ((1 : UA σ X.J), h') (Matrix.vecMulVec (incV F H.x) z) =
           Matrix.vecMulVec (incV F H.x) (mat h' *ᵥ z) := by
         simp only [actAB]
-        show (1 : Matrix (Fin n) (Fin n) (AE F E)) * Matrix.vecMulVec (incV F H.x) z * (mat h')ᵀ = _
+        show (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * Matrix.vecMulVec (incV F H.x) z * (mat h')ᵀ = _
         rw [Matrix.one_mul, Matrix.vecMulVec_mul, Matrix.vecMul_transpose]
       rw [h1, he.inv _ ⟨_, rfl⟩ _ (hS.pres _ _ hΨ)]
     have hadm : ∀ l ∈ (adeleClass F).adm (Fin n₁ × Fin d), l ∘ₗ e' ∈ (adeleClass F).adm (Fin n × Fin d) := by

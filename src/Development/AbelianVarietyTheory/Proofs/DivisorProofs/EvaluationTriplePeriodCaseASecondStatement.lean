@@ -17,6 +17,6 @@ set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.evaluation_triple_period_case_a_second : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e →
     ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
-    ∀ Ψ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')), ∀ (w : Matrix (Fin (b + 2)) (Fin (b + 2 + a')) (AE F E)) (y : Fin b × Fin (b + a') → AF F),
+    ∀ Ψ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')), ∀ (w : Matrix (Fin (b + 2)) (Fin (b + 2 + a')) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (y : Fin b × Fin (b + a') → AF F),
       Continuous (fun g : UA σ G.V.J × UA σ G.W.J => e (G.M.co.rho B.ψ w (om g Ψ)) y) := by
   first | exact @GlobalTheory.ThKPointCont.continuous_ev_rho_weil | exact GlobalTheory.ThKPointCont.continuous_ev_rho_weil | (intros; apply GlobalTheory.ThKPointCont.continuous_ev_rho_weil <;> assumption)

@@ -85,7 +85,7 @@ theorem fockDeg_stable {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} {M : Model σ
     change (mat (k * k⁻¹))ᵀ = 1
     rw [mul_inv_cancel]
     exact Matrix.transpose_one
-  have hcan : ∀ u : Matrix (Fin n) (Fin d) (AE F E), u * (mat k⁻¹)ᵀ * (mat k)ᵀ = u := fun u => by
+  have hcan : ∀ u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), u * (mat k⁻¹)ᵀ * (mat k)ᵀ = u := fun u => by
     rw [Matrix.mul_assoc, hkk, Matrix.mul_one]
   induction j with
   | zero =>
@@ -126,7 +126,7 @@ theorem fockDeg_stable {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} {M : Model σ
     exact Submodule.mem_sup_right (Submodule.subset_span ⟨_, at_mul_right hu _, A φ, ih hφ, hint u hu φ⟩)
 
 theorem levi_comm {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Plane E d d₁} {B : Base F E} {i₀ i₁ : ℕ}
-    (hlat : W.L.IsLattice E) (hH : H'.IsAdapted σ B W W₁ i₀ i₁) {t : (AE F E)ˣ} {k₁ : UA σ W₁.J} {k z : UA σ W.J}
+    (hlat : W.L.IsLattice E) (hH : H'.IsAdapted σ B W W₁ i₀ i₁) {t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ} {k₁ : UA σ W₁.J} {k z : UA σ W.J}
     (hk : IsLevi H' 1 k₁ k) (hz : IsLevi (W₁ := W₁) H' t 1 z) : k * z = z * k := by
   obtain ⟨hkx, hky, hkι⟩ := hk
   obtain ⟨hzx, hzy, hzι⟩ := hz

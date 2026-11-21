@@ -207,11 +207,11 @@ theorem one_eq_decomp {B : Base F E} {n n₁ : ℕ} {X : Spc F E n} {X₁ : Spc 
   rw [this]; ring
 
 theorem exists_decomp {B : Base F E} {n n₁ d : ℕ} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁} {j₀ j₁ r s : ℕ}
-    (hX : X.IsHerm σ B r s) (hH : H.IsAdapted σ B X X₁ j₀ j₁) (u : Matrix (Fin n) (Fin d) (AE F E)) :
-    ∃ (a b : Fin d → AE F E) (z : Matrix (Fin n₁) (Fin d) (AE F E)),
+    (hX : X.IsHerm σ B r s) (hH : H.IsAdapted σ B X X₁ j₀ j₁) (u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
+    ∃ (a b : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))),
       u = Matrix.vecMulVec (incV F H.x) a + incM F H.ι * z + Matrix.vecMulVec (incV F H.y) b := by
   obtain ⟨a, b, P, h⟩ := one_eq_decomp hX hH
-  have h' : (1 : Matrix (Fin n) (Fin n) (AE F E)) =
+  have h' : (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) =
       Matrix.vecMulVec (incV F H.x) (incV F a) + incM F H.ι * incM F P + Matrix.vecMulVec (incV F H.y) (incV F b) := by
     rw [← incM_one, h]
     ext i j

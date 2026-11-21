@@ -87,7 +87,7 @@ def prL : V →ₗ[E] V :=
     ∑ a, (hL H (Fr.f a.castSucc)).smulRight (Fr.es a)
 
 lemma prL_apply (v : V) : prL Fr v = Fr.prF v := by
-  simp [prL, prF_eq]
+  simp [prL, prF_eq, hL]
 
 def Nl : V →ₗ[E] V :=
   ∑ a, (hL H (Fr.f a.castSucc)).smulRight (y a - Fr.es a) -
@@ -95,7 +95,7 @@ def Nl : V →ₗ[E] V :=
 
 lemma Nl_apply (v : V) : Nl Fr y v = ∑ a, H.h v (Fr.f a.castSucc) • (y a - Fr.es a) -
     ∑ j, H.h (Fr.prF v) (y j) • Fr.f j.castSucc := by
-  simp [Nl, prL_apply]
+  simp [Nl, prL_apply, hL]
 
 variable (hy1 : ∀ a b, H.h (y a) (Fr.f b) = if b = a.castSucc then 1 else 0)
   (hy2 : ∀ a b, H.h (y a) (y b) = 0)
@@ -223,8 +223,8 @@ lemma preserves_form_left (x : V) (hx : ∀ u, InW Fr u → H.h (nE Fr y hy1 u) 
     (hs : ∀ a, H.h (nE Fr y hy1 (Fr.es a)) (nE Fr y hy1 x) = H.h (Fr.es a) x) (u : V) :
     H.h (nE Fr y hy1 u) (nE Fr y hy1 x) = H.h u x := by
   have := ext_decomp Fr ((hL H (nE Fr y hy1 x)).comp (nE Fr y hy1).toLinearMap) (hL H x)
-    (by intro a; simpa using he a) (by intro a; simpa using hs a) (by intro w hw; simpa using hx w hw) u
-  simpa using this
+    (by intro a; simpa [hL] using he a) (by intro a; simpa [hL] using hs a) (by intro w hw; simpa [hL] using hx w hw) u
+  simpa [hL] using this
 
 include hy2 in
 lemma unitary : IsUnitary H (nE Fr y hy1) := by

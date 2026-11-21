@@ -25,8 +25,8 @@ theorem hTens_vecMulVec_gen {R E : Type} [CommRing R] [CommRing E] [Algebra R E]
   ring
 
 theorem symp_vecMulVec_self_eq_zero (F E : Type) [Field F] [NumberField F] [Field E] [Algebra F E]
-    (σ : E →ₐ[F] E) {n d : ℕ} (J : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin d) (Fin d) E) (ξ : AE F E)
-    (x : Fin n → E) (hx : form σ J x x = 0) (a b : Fin d → AE F E) :
+    (σ : E →ₐ[F] E) {n d : ℕ} (J : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin d) (Fin d) E) (ξ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
+    (x : Fin n → E) (hx : form σ J x x = 0) (a b : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     symp (R := AF F) (cA σ) ξ (incM F J) (incM F JW) (Matrix.vecMulVec (incV F x) a)
       (Matrix.vecMulVec (incV F x) b) = 0 := by
   have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun e => rfl

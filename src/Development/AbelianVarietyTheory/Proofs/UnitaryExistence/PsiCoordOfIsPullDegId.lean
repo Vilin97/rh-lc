@@ -162,7 +162,7 @@ theorem exists_equiv_psiCoord : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   have hR : AdmBase R (maximalIdeal R) := ⟨hN, inferInstance, hC, hA⟩
   obtain ⟨-, -, -, h4, h5, h6⟩ := GlobalTheory.allSixLaws
   obtain ⟨P, hD₁, xl₁⟩ := exists_move h4.unifBaseChange h5 hR m U
-  obtain ⟨wL, -, g₀, -, m₀, -, -⟩ := exists_iso_pair_of_eq (U'.bundle.trans P.bundle.symm)
+  obtain ⟨wL, g₀, m₀⟩ := exists_iso_of_eq (U'.bundle.trans P.bundle.symm)
   obtain ⟨hD₂, -, holin⟩ := h6.unifUniq R _ hR P.D U'.D P.A U'.A t'.G t'.semi P.U U'.U wL g₀ m₀
   obtain ⟨xl₂, -⟩ := holin (𝓞 E) P.oD U'.oD P.oA U'.oA t'.act.toRingAct P.lin U'.lin
   let e₁ : P.D.toPre.X ≃ₗ[𝓞 E] U.D.toPre.X := { hD₁.xe with map_smul' := xl₁ }

@@ -24,5 +24,5 @@ theorem _root_.GlobalTheory.T.adapted_real_line_third : ∀ (F E : Type) [Field 
     ∀ (u : InfinitePlace F → ℂ), (∀ w, ‖u w‖ = 1) → ∀ k ∈ UAt σ W (evI F), (∀ w, (∀ i, ((mat k).map (piInf (B.emb w)) * C w) i (.inl r₀) = u w * C w i (.inl r₀)) ∧
         (∀ i, ((mat k).map (piInf (B.emb w)) * C w) i (.inr s₀) = u w * C w i (.inr s₀)) ∧
         ∀ c, c ≠ .inl r₀ → c ≠ .inr s₀ → ∀ i, ((mat k).map (piInf (B.emb w)) * C w) i c = C w i c) →
-      ∃ t : (AE F E)ˣ, IsLevi H' t (1 : UA σ W₁.J) k ∧ ∀ w, piInf (B.emb w) (t : AE F E) = u w := by
+      ∃ t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, IsLevi H' t (1 : UA σ W₁.J) k ∧ ∀ w, piInf (B.emb w) (t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = u w := by
   first | exact @GlobalTheory.AdaptedFrameLevi.exists_isLevi_of_adaptedFrame | exact GlobalTheory.AdaptedFrameLevi.exists_isLevi_of_adaptedFrame | (intros; apply GlobalTheory.AdaptedFrameLevi.exists_isLevi_of_adaptedFrame <;> assumption)

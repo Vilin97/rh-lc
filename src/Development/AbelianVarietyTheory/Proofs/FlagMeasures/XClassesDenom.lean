@@ -23,9 +23,9 @@ theorem xClasses_index {K : Type} [Field K] [NumberField K] (I J : Ideal (𝓞 K
   have hNJ : Ideal.absNorm J ≠ 0 := fun h0 => hJ (Ideal.absNorm_eq_zero_iff.mp h0)
   have key := AddSubgroup.relIndex_mul_index
     (H := (Ideal.span {a}).toAddSubgroup) (K := J.toAddSubgroup) hle
-  have e1 : J.toAddSubgroup.index = Ideal.absNorm J := rfl
+  have e1 : J.toAddSubgroup.index = Ideal.absNorm J := (Ideal.absNorm_eq_index J).symm
   have e2 : (Ideal.span {a}).toAddSubgroup.index = Ideal.absNorm I * Ideal.absNorm J := by
-    rw [← map_mul, ← h]; rfl
+    rw [← map_mul, ← h, Ideal.absNorm_eq_index]
   rw [e1, e2] at key
   exact Nat.eq_of_mul_eq_mul_right (Nat.pos_of_ne_zero hNJ) key
 

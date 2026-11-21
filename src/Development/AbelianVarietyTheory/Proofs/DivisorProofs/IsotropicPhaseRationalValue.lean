@@ -21,7 +21,7 @@ namespace GlobalTheory.IsoPhaseRat
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem trace_inclR (e : E) :
-    Algebra.trace (AF F) (AE F E) (inclR (F := F) (AF F) e) = algebraMap F (AF F) (Algebra.trace F E e) := by
+    Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (inclR (F := F) (AF F) e) = algebraMap F (AF F) (Algebra.trace F E e) := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
   show Algebra.trace (AF F) (AF F ⊗[F] E) ((1 : AF F) ⊗ₜ[F] e) = _
   rw [Algebra.trace_apply, Algebra.trace_apply, ← Algebra.baseChange_lmul, LinearMap.trace_baseChange]
@@ -35,7 +35,7 @@ theorem phase_rat : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
   obtain ⟨g, hg⟩ := Subgroup.mem_subgroupOf.1 hγi
   have hm : mat γ⁻¹ = incM F (g : Matrix (Fin d) (Fin d) E) := by
     ext i j
-    show ((γ⁻¹ : UA σ W.J) : GL (Fin d) (AE F E)) i j = _
+    show ((γ⁻¹ : UA σ W.J) : GL (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) i j = _
     rw [← hg]
     rfl
   refine ⟨-Algebra.trace F E (form σ W.J (H'.ι *ᵥ w) ((g : Matrix (Fin d) (Fin d) E) *ᵥ H'.y)), ?_⟩

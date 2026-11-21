@@ -18,12 +18,12 @@ theorem symp_split_hyperbolic_plane : ∀ {F E : Type} [Field F] [NumberField F]
     (∀ t i, G (Fin.natAdd n₁ t) (Fin.castAdd 2 i) = 0) → G (Fin.natAdd n₁ 0) (Fin.natAdd n₁ 0) = 0 →
     G (Fin.natAdd n₁ 1) (Fin.natAdd n₁ 1) = 0 → G (Fin.natAdd n₁ 0) (Fin.natAdd n₁ 1) = 1 →
     G (Fin.natAdd n₁ 1) (Fin.natAdd n₁ 0) = 1 →
-    ∀ z z' : Matrix (Fin (n₁ + 2)) (Fin d) (AE F E),
+    ∀ z z' : Matrix (Fin (n₁ + 2)) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
       symp (R := AF F) (cA σ) (-1) (incM F G) (incM F K) z z' =
         symp (R := AF F) (cA σ) (-1) (incM F J₁) (incM F K) (Matrix.of fun i l => z (Fin.castAdd 2 i) l)
           (Matrix.of fun i l => z' (Fin.castAdd 2 i) l) +
-        Algebra.trace (AF F) (AE F E) (-∑ j, ∑ l, z (Fin.natAdd n₁ 0) j * incM F K j l * cA σ (z' (Fin.natAdd n₁ 1) l)) +
-        Algebra.trace (AF F) (AE F E) (-∑ j, ∑ l, z (Fin.natAdd n₁ 1) j * incM F K j l * cA σ (z' (Fin.natAdd n₁ 0) l)) := by
+        Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (-∑ j, ∑ l, z (Fin.natAdd n₁ 0) j * incM F K j l * cA σ (z' (Fin.natAdd n₁ 1) l)) +
+        Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (-∑ j, ∑ l, z (Fin.natAdd n₁ 1) j * incM F K j l * cA σ (z' (Fin.natAdd n₁ 0) l)) := by
   intro F E _ _ _ _ _ σ n₁ d G J₁ K hJ h1 h2 h00 h11 h01 h10 z z'
   simp only [symp, hTens, incM, Matrix.map_apply, Matrix.of_apply]
   rw [← map_add (f := _), ← map_add (f := _)]

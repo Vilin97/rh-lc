@@ -113,11 +113,10 @@ lemma sum_cycWord {A : Type} [Ring A] (E : Fin n → Fin n → A) (m : ℕ) :
   rw [← sum_paths_list_prod E m x x]
   refine Finset.sum_congr rfl fun b _ => ?_
   simp only [Fin.consEquiv_apply, cycWord, List.map_ofFn]
-  congr 2
-  congr 1
-  refine Fin.lastCases ?_ (fun j => ?_) i
-  · rw [finRotate_last, Fin.snoc_last, Fin.cons_zero]
-  · rw [finRotate_succ_apply, Fin.coeSucc_eq_succ, Fin.cons_succ, Fin.snoc_castSucc]
+  apply congrArg List.prod
+  apply congrArg List.ofFn
+  funext i
+  simp only [Function.comp_apply, Fin.snoc_eq_cons_rotate]
 
 section Linfty
 attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra

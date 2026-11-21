@@ -36,32 +36,32 @@ private theorem at_liftV_smul {M : Type} [AddCommGroup M] [Module (AF F) M] (v :
     At (evFin F v) (liftV v (1 : Fv F v) • z) := fun u hu => by
   rw [smul_smul, ← smul_eq_mul u, at_liftV v 1 u hu, zero_smul]
 
-private theorem at_entry {n d : ℕ} {v : HeightOneSpectrum (𝓞 F)} {x : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)}
+private theorem at_entry {n d : ℕ} {v : HeightOneSpectrum (𝓞 F)} {x : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hx : At (evFin F v) x) (i : Fin n) (j : Fin d) : At (evFin F v) (x i j) := fun u hu =>
   congrFun (congrFun (hx u hu) i) j
 
 private theorem exists_idem (hcm : IsCMExt F E σ) {v : HeightOneSpectrum (𝓞 F)} (t : E →ₐ[F] Fv F v) :
-    ∃ a : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E, At (evFin F v) a ∧ piW t a = 1 ∧ piW (t.comp σ) a = 0 := by
+    ∃ a : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), At (evFin F v) a ∧ piW t a = 1 ∧ piW (t.comp σ) a = 0 := by
   obtain ⟨h1, h0⟩ := GlobalTheory.LatSplit.piW_splitIdemAd hcm t
   refine ⟨liftV v (1 : Fv F v) • GlobalTheory.AdelicU.Supp.splitIdemAd hcm t, at_liftV_smul v _, ?_, ?_⟩
   · rw [GlobalTheory.LatFill.piW_smul, h1, evFin_liftV, mul_one]
   · rw [GlobalTheory.LatFill.piW_smul, h0, mul_zero]
 
-private theorem piW_of_at_ne {v w : HeightOneSpectrum (𝓞 F)} (h : w ≠ v) (t : E →ₐ[F] Fv F w) {z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E}
+private theorem piW_of_at_ne {v w : HeightOneSpectrum (𝓞 F)} (h : w ≠ v) (t : E →ₐ[F] Fv F w) {z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)}
     (hz : At (evFin F v) z) : piW t z = 0 := by
   have h1 := GlobalTheory.LatFill.piW_smul t (liftV w (1 : Fv F w)) z
   rw [hz _ (evFin_liftV_ne h.symm 1), map_zero, evFin_liftV, one_mul] at h1
   exact h1.symm
 
 private theorem halfEl_of_at {P : Finset (HeightOneSpectrum (𝓞 F))} (t : ∀ v : P, E →ₐ[F] Fv F v) (v : P)
-    {z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E} (hz : At (evFin F v.1) z) (h0 : piW (t v) z = 0) : HalfEl P t z := by
+    {z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : At (evFin F v.1) z) (h0 : piW (t v) z = 0) : HalfEl P t z := by
   refine ⟨fun u hu => hz u (hu v v.2), fun w => ?_⟩
   by_cases h : w = v
   · subst h; exact h0
   · exact piW_of_at_ne (fun e => h (Subtype.ext e)) _ hz
 
 private theorem eq_sum_of_halfEl {P : Finset (HeightOneSpectrum (𝓞 F))} {t : ∀ v : P, E →ₐ[F] Fv F v}
-    {z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E} (hz : HalfEl P t z) : z = ∑ v : P, liftV v.1 (1 : Fv F v) • z := by
+    {z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : HalfEl P t z) : z = ∑ v : P, liftV v.1 (1 : Fv F v) • z := by
   have h := hz.1 (1 - ∑ v : P, liftV v.1 (1 : Fv F v)) fun w hw => by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sub, map_one, map_sum, Finset.sum_eq_single (⟨w, hw⟩ : P) (fun v _ hv => evFin_liftV_ne
@@ -69,14 +69,14 @@ private theorem eq_sum_of_halfEl {P : Finset (HeightOneSpectrum (𝓞 F))} {t : 
   rw [sub_smul, one_smul, sub_eq_zero, Finset.sum_smul] at h
   exact h
 
-private theorem at_mul_smul {n d : ℕ} {v : HeightOneSpectrum (𝓞 F)} {a : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E} (ha : At (evFin F v) a)
-    (x : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)) : At (evFin F v) (a • x) := fun u hu => by
+private theorem at_mul_smul {n d : ℕ} {v : HeightOneSpectrum (𝓞 F)} {a : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (ha : At (evFin F v) a)
+    (x : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : At (evFin F v) (a • x) := fun u hu => by
   rw [← smul_assoc, ha u hu, zero_smul]
 
 private theorem symp_idem (hcm : IsCMExt F E σ) {v : HeightOneSpectrum (𝓞 F)} (t : E →ₐ[F] Fv F v)
-    {a : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E} (h1 : piW t a = 1) {n d : ℕ} (ξ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)
-    (JA : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)) (JB : Matrix (Fin d) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E))
-    (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)) {y : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)}
+    {a : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (h1 : piW t a = 1) {n d : ℕ} (ξ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
+    (JA : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (JB : Matrix (Fin d) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
+    (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) {y : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hy : At (evFin F v) y) (hy1 : y.map (piW t) = 0) :
     GlobalTheory.WeilM.symp (R := AF F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) ξ JA JB u y =
       GlobalTheory.WeilM.symp (R := AF F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) ξ JA JB (a • u) y := by

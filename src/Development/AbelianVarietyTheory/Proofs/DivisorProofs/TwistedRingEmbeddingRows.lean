@@ -43,8 +43,8 @@ theorem planeCoef_mul_ι_inr {n n₁ : ℕ} (H : Plane E n n₁) (t : Fin 2) (j 
   rw [Matrix.mul_apply] at this
   simpa [Matrix.mul_apply, planeMat] using this
 
-theorem coefLin_vecMulVec {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) (a : Fin n → AE F E)
-    (b : Fin d → AE F E) (k : Fin n₁ ⊕ Fin 2) (l : Fin d₁ ⊕ Fin 2) :
+theorem coefLin_vecMulVec {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) (a : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
+    (b : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (k : Fin n₁ ⊕ Fin 2) (l : Fin d₁ ⊕ Fin 2) :
     coefLin H H' (Matrix.vecMulVec a b) k l =
       (incM F (planeCoef H) *ᵥ a) k * (incM F (planeCoef H') *ᵥ b) l := by
   simp only [coefLin, LinearMap.coe_mk, AddHom.coe_mk, Matrix.mul_apply, Matrix.vecMulVec_apply,
@@ -58,7 +58,7 @@ theorem incM_mulVec_incV_x_ne {n n₁ : ℕ} (H : Plane E n n₁) {k : Fin n₁ 
   rw [h, map_zero] at this
   rw [this]; rfl
 
-theorem incM_mulVec_ι_inr {n n₁ : ℕ} (H : Plane E n n₁) (y : Fin n₁ → AE F E) (t : Fin 2) :
+theorem incM_mulVec_ι_inr {n n₁ : ℕ} (H : Plane E n n₁) (y : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (t : Fin 2) :
     (incM F (planeCoef H) *ᵥ (incM F H.ι *ᵥ y)) (.inr t) = 0 := by
   rw [Matrix.mulVec_mulVec]
   have hm : incM F (planeCoef H) * incM F H.ι = incM F (planeCoef H * H.ι) := by

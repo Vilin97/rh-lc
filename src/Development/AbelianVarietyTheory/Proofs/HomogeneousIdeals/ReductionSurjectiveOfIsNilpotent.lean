@@ -62,7 +62,8 @@ variable [Smooth G.hom]
 
 theorem expHom_bijective (hv : IsLieBasis v) {J : Ideal A} (hJ : J ^ 2 = ⊥) :
     Function.Bijective (expHom hv.1 hJ) := by
-  obtain ⟨hinj, hsurj⟩ := expBij A hv J hJ
+  have hexp : ExpBij A v := expBij A hv
+  obtain ⟨hinj, hsurj⟩ := hexp J hJ
   refine ⟨fun c c' h => ?_, fun y => ?_⟩
   · have h' : ((Additive.toMul (expHom hv.1 hJ c) : redKer (R := R) G J) : sp A ⟶ G) =
         ((Additive.toMul (expHom hv.1 hJ c') : redKer (R := R) G J) : sp A ⟶ G) := by rw [h]
@@ -271,7 +272,8 @@ theorem exists_isLiftAlong_of_isCoprime (hv : IsLieBasis v) (hJ : J ^ 2 = ⊥)
   have hy₂' : IsLiftAlong y₀ ((awayHom R (f * g)).comp φ) (spMap b ≫ y₂) := by
     have := hy₂.map b; rwa [← AlgHom.comp_assoc, hb] at this
   have hmem := hy₁'.mul_inv_mem hy₂'
-  obtain ⟨-, hsurj⟩ := expBij (Localization.Away (f * g)) hv (J.map ((awayHom R (f * g)).comp φ)) hK
+  have hexp : ExpBij (Localization.Away (f * g)) v := expBij _ hv
+  obtain ⟨-, hsurj⟩ := hexp (J.map ((awayHom R (f * g)).comp φ)) hK
   obtain ⟨c, hc, hcJ, hcy⟩ := hsurj _ hmem
   have hcJ' : ∀ i, c i ∈ (J.map φ).map (awayHom R (f * g)) := fun i => by
       have h0 : J.map ((awayHom R (f * g)).comp φ) ≤ (J.map φ).map (awayHom R (f * g)) :=

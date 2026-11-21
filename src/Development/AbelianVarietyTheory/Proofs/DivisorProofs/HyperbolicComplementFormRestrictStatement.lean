@@ -17,5 +17,5 @@ theorem _root_.GlobalTheory.T.hyperbolic_complement_form_restrict : ∀ (F E : T
     (J : Matrix (Fin n) (Fin n) E) (J₁ : Matrix (Fin n₁) (Fin n₁) E) (x y : Fin n → E) (ι : Matrix (Fin n) (Fin n₁) E),
     (∀ z, σ (σ z) = z) → (∀ i j, σ (J j i) = J i j) → form σ J x x = 0 → form σ J y y = 0 →
     form σ J x y = 1 → (∀ u, form σ J (ι *ᵥ u) x = 0 ∧ form σ J (ι *ᵥ u) y = 0) → ιᵀ * J * ι.map σ = J₁ → J₁.det ≠ 0 →
-    ∀ (a b : AE F E) (w : Fin n₁ → AE F E), a • incV F x + incM F ι *ᵥ w + b • incV F y = 0 → a = 0 ∧ w = 0 ∧ b = 0 := by
+    ∀ (a b : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (w : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), a • incV F x + incM F ι *ᵥ w + b • incV F y = 0 → a = 0 ∧ w = 0 ∧ b = 0 := by
   first | exact @GlobalTheory.LeviIndep.indep | exact GlobalTheory.LeviIndep.indep | (intros; apply GlobalTheory.LeviIndep.indep <;> assumption)

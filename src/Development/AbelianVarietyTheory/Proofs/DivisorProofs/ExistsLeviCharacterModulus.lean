@@ -19,7 +19,7 @@ namespace GlobalTheory.ThK.LawSep
 theorem lawSep : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →
     ∀ X om om', IsTriple B G X om om' →
-      ∃ (t : (AE F E)ˣ) (m : UA σ G.W.J), IsLevi (W₁ := G₁.W) H' t 1 m ∧
+      ∃ (t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (m : UA σ G.W.J), IsLevi (W₁ := G₁.W) H' t 1 m ∧
         (X.α t : ℂ) * (((absE F E t : ℝ) ^ ((a' : ℝ) / 2) : ℝ) : ℂ) ≠ (X.β t : ℂ) * (((absE F E t : ℝ) ^ (((b + 2 : ℕ) : ℝ) / 2) : ℝ) : ℂ) := by
   intro F E _ _ _ _ _ σ B b a' G G₁ H H' hC X om om' hT
   have hcm := hT.base.cm

@@ -168,6 +168,7 @@ theorem exists_psiV_ne_one : ∀ (F : Type) [Field F] [NumberField F], IsTotally
   rw [hinf, ← sum_places_eq_trace]
   refine congrArg (fun t : ℝ => Complex.exp (2 * Real.pi * Complex.I * (t : ℂ)))
     (Finset.sum_congr rfl fun w _ => congrArg Complex.re ?_)
-  exact InfinitePlace.Completion.extensionEmbedding_coe w _
+  rw [InfiniteAdeleRing.algebraMap_apply, InfinitePlace.Completion.extensionEmbedding_coe]
+  simp
 
 end GlobalTheory.StdCharTotReal

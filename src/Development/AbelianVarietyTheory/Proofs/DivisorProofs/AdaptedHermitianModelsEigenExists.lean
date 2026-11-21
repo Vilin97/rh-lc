@@ -89,8 +89,8 @@ theorem uniform_denominator_expansion_local (ψ : AddChar (AF F) ℂ) (hψ : Con
 theorem psi_eq_one {σ : E →ₐ[F] E} {B : Base F E} {n d d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc F E d₁}
     {M : Model σ X W} {M₁ : Model σ X W₁} {H' : Plane E d d₁} {e₀ : Fn F n d →ₗ[ℂ] Fn F n d₁}
     (he : IsEv B M M₁ 1 H'.ι (iso0 n H') e₀) (hψ : IsStd B.ψ) {Ψ : Fn F n d} (hΨ : Ψ ∈ schA F (Fin n × Fin d))
-    {u : Matrix (Fin n) (Fin d) (AE F E)} (hu : u ∈ iso0 n H') (hinv : M.co.rho B.ψ u Ψ = Ψ)
-    (w : Matrix (Fin n) (Fin d) (AE F E)) (hne : e₀ (M.co.rho B.ψ w Ψ) ≠ 0) :
+    {u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hu : u ∈ iso0 n H') (hinv : M.co.rho B.ψ u Ψ = Ψ)
+    (w : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (hne : e₀ (M.co.rho B.ψ w Ψ) ≠ 0) :
     B.ψ (symp (cA σ) (-1) (incM F X.J) (incM F W.J) w u) = 1 := by
   have h1 : M.co.rho B.ψ w (M.co.rho B.ψ u Ψ) =
       B.ψ (symp (cA σ) (-1) (incM F X.J) (incM F W.J) w u) • M.co.rho B.ψ u (M.co.rho B.ψ w Ψ) := by

@@ -24,7 +24,7 @@ open GlobalTheory.MixedLagrGram (hTens_eq_trace incM_map_cA)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem exists_ratCoord {α β κ : Type} (e : Matrix α β (AE F E) ≃ₗ[AF F] (κ → AF F) × (κ → AF F))
+theorem exists_ratCoord {α β κ : Type} (e : Matrix α β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) ≃ₗ[AF F] (κ → AF F) × (κ → AF F))
     (h : ∀ x : Matrix α β E, ∃ w : (κ → F) × (κ → F), e (incM F x) = hat w) :
     ∃ f : Matrix α β E →ₗ[F] (κ → F) × (κ → F), Function.Injective f ∧ ∀ x, hat (f x) = e (incM F x) := by
   choose w hw using h
@@ -42,10 +42,10 @@ theorem exists_ratCoord {α β κ : Type} (e : Matrix α β (AE F E) ≃ₗ[AF F
     intro c x
     ext i j
     simp only [incM, Matrix.map_apply, Matrix.smul_apply]
-    show (Algebra.TensorProduct.includeRight : E →ₐ[F] AE F E) (c • x i j) =
-      algebraMap F (AF F) c • (Algebra.TensorProduct.includeRight : E →ₐ[F] AE F E) (x i j)
+    show (Algebra.TensorProduct.includeRight : E →ₐ[F] _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (c • x i j) =
+      algebraMap F (AF F) c • (Algebra.TensorProduct.includeRight : E →ₐ[F] _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (x i j)
     rw [map_smul, algebraMap_smul]
-  have hI : Function.Injective (incM F : Matrix α β E → Matrix α β (AE F E)) :=
+  have hI : Function.Injective (incM F : Matrix α β E → Matrix α β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :=
     Matrix.map_injective (Algebra.TensorProduct.includeRight_injective hA)
   refine ⟨{ toFun := w, map_add' := ?_, map_smul' := ?_ }, ?_, hg⟩
   · intro x x'
@@ -61,7 +61,7 @@ theorem exists_ratCoord {α β κ : Type} (e : Matrix α β (AE F E) ≃ₗ[AF F
     exact congrArg hat hx
 
 theorem exists_first_zero {α β κ : Type} [Fintype α] [Fintype β] [Fintype κ]
-    (e : Matrix α β (AE F E) ≃ₗ[AF F] (κ → AF F) × (κ → AF F)) (hE : Module.finrank F E = 2)
+    (e : Matrix α β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) ≃ₗ[AF F] (κ → AF F) × (κ → AF F)) (hE : Module.finrank F E = 2)
     (hκ : Fintype.card κ = Fintype.card α * Fintype.card β)
     (h : ∀ x : Matrix α β E, ∃ w : (κ → F) × (κ → F), e (incM F x) = hat w) :
     ∃ K : Submodule F (Matrix α β E), Module.finrank F K = Fintype.card κ ∧ ∀ z ∈ K, (e (incM F z)).1 = 0 := by
@@ -93,7 +93,7 @@ theorem rat_dbl {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
     (hM : ∀ x : Matrix (Fin n) (Fin d) E, ∃ y z : Fin n × Fin d → F,
       M.co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i)))
     (d' : Darboux (symp (cA σ) (-1) (incM F W.J) (incM F X.J)) (Fin n × Fin d))
-    (hd' : ∀ x : Matrix (Fin n) (Fin d) (AE F E), d'.e xᵀ = M.co.e x)
+    (hd' : ∀ x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d'.e xᵀ = M.co.e x)
     (dd : Darboux (symp (cA σ) (-1) (incM F W.J) (dbl (incM F X.J))) ((Fin n × Fin d) ⊕ (Fin n × Fin d)))
     (hdd : IsDblCoord (cA σ) (-1) (incM F W.J) (incM F X.J) d' dd) (x : Matrix (Fin d) (Fin n ⊕ Fin n) E) :
     ∃ w, dd.e (incM F x) = hat w := by

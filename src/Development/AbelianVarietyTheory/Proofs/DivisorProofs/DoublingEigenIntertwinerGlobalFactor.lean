@@ -51,7 +51,7 @@ theorem unip_inv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFie
     have hV := hT.geo.hV
     have hV₁ := hT₁.geo.hV
     have gen : ∀ u : UA σ G.V.J, mat u *ᵥ incV F H.x = incV F H.x →
-        (∀ z : Fin b → AE F E, ∃ a : AE F E, mat u *ᵥ (incM F H.ι *ᵥ z) = incM F H.ι *ᵥ z + a • incV F H.x) →
+        (∀ z : Fin b → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∃ a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), mat u *ᵥ (incM F H.ι *ᵥ z) = incM F H.ι *ᵥ z + a • incV F H.x) →
         ∀ Ψ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')), e (om (u, 1) Ψ) = e Ψ := by
       intro u hu1 hu2
       by_cases h0 : ∀ Ψ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')), e Ψ = 0
@@ -103,8 +103,8 @@ theorem unip_inv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFie
         intro m c hm hmI hc Ψ hΨ
         have h1 := hmulS _ _ _ _ (hmulS _ _ _ _ hm hvS) hmI Ψ hΨ
         rwa [show c * cu⁻¹ * c⁻¹ = cu⁻¹ by field_simp] at h1
-      have hm2x' : mat m2 *ᵥ incV F H.x = (2 : AE F E) • incV F H.x := by rw [hm2x, Nat.cast_ofNat]
-      have hm2y' : (2 : AE F E) • (mat m2 *ᵥ incV F H.y) = incV F H.y := by
+      have hm2x' : mat m2 *ᵥ incV F H.x = (2 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) • incV F H.x := by rw [hm2x, Nat.cast_ofNat]
+      have hm2y' : (2 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) • (mat m2 *ᵥ incV F H.y) = incV F H.y := by
         have h1 := hm2y
         rwa [Nat.cast_ofNat] at h1
       have hcen2 := GlobalTheory.UnipLine.conj_commutator_eq_pow F E σ B (b + 2) b G.V G₁.V H 0 (b + 1) _ _ _ _ hC.hH hV hV₁

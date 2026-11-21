@@ -41,7 +41,7 @@ theorem symp_vecMulVec {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix 
       T * algebraMap F (AF F) (Algebra.trace F E (-(form σ JX ξ β * form σ JW y x))) := by
   have hT : hTens (cA σ) (incM F JX) (incM F JW) (Matrix.vecMulVec (incV F ξ) (incV F y))
       (Matrix.vecMulVec (T • incV F β) (incV F x)) =
-      algebraMap (AF F) (AE F E) T * inclR (F := F) (AF F) (form σ JX ξ β * form σ JW y x) := by
+      algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) T * inclR (F := F) (AF F) (form σ JX ξ β * form σ JW y x) := by
     simp only [hTens, Matrix.vecMulVec_apply, Pi.smul_apply, incM, incV, Matrix.map_apply]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [form, dotProduct, Matrix.mulVec, Algebra.smul_def, map_mul, cA_inclR, AlgHom.commutes, map_sum,
@@ -55,13 +55,13 @@ theorem symp_vecMulVec {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix 
     ring
   rw [symp, hT, show inclR (F := F) (AF F) (form σ JX ξ β * form σ JW y x) =
       (1 : AF F) ⊗ₜ[F] (form σ JX ξ β * form σ JW y x) from rfl, ← Algebra.smul_def, mul_smul_comm,
-    map_smul, smul_eq_mul, show (-1 : AE F E) * ((1 : AF F) ⊗ₜ[F] (form σ JX ξ β * form σ JW y x)) =
+    map_smul, smul_eq_mul, show (-1 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * ((1 : AF F) ⊗ₜ[F] (form σ JX ξ β * form σ JW y x)) =
       (1 : AF F) ⊗ₜ[F] (-(form σ JX ξ β * form σ JW y x)) by rw [neg_one_mul, TensorProduct.tmul_neg],
     trace_tmul, one_mul]
 
 theorem ev_rho_rho {n d d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc F E d₁} (B : Base F E)
     (M : Model σ X W) (M₁ : Model σ X W₁) (H' : Plane E d d₁) (e₀ : Fn F n d →ₗ[ℂ] Fn F n d₁)
-    (he : IsEv B M M₁ 1 H'.ι (iso0 n H') e₀) (hψ : IsStd B.ψ) (w u : Matrix (Fin n) (Fin d) (AE F E))
+    (he : IsEv B M M₁ 1 H'.ι (iso0 n H') e₀) (hψ : IsStd B.ψ) (w u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (hu : u ∈ iso0 (F := F) n H') (Ψ : Fn F n d) (hΨ : Ψ ∈ schA F (Fin n × Fin d)) :
     e₀ (M.co.rho B.ψ w (M.co.rho B.ψ u Ψ)) =
       B.ψ (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) w u) • e₀ (M.co.rho B.ψ w Ψ) := by

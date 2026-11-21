@@ -29,7 +29,7 @@ theorem polData_le_schA {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {B : Base F 
   rintro Φ ⟨f, -, φ, hSB, hv, rfl⟩
   exact GlobalTheory.TensUniq.pure_mem_schA f φ hSB (hv.and hM.std |>.mono fun v h => h.1.trans h.2)
 
-theorem fix_of_mem_closure {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (x : Fin n → AE F E) {q : UA σ J}
+theorem fix_of_mem_closure {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (x : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) {q : UA σ J}
     (hq : q ∈ Subgroup.closure {g : UA σ J | mat g *ᵥ x = x}) : mat q *ᵥ x = x := by
   have hmul : ∀ g g' : UA σ J, mat (g * g') = mat g * mat g' := fun g g' => by simp [mat]
   have hone : mat (1 : UA σ J) = 1 := by simp [mat]

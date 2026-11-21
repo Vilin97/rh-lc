@@ -20,6 +20,6 @@ theorem _root_.GlobalTheory.T.config_a_eigen_stabilizer_integral : ∀ (F E : Ty
     ∀ X om om' om₁ om₁', IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
     ∀ Ψ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')),
       ∃ C : Set (Fin b × Fin (b + a') → FiniteAdeleRing (𝓞 F) F), IsCompact C ∧
-        ∀ (k : K) (l : (AE F E)ˣ) (x : Fin b × Fin (b + a') → AF F), (fun i => (x i).2) ∉ C →
+        ∀ (k : K) (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (x : Fin b × Fin (b + a') → AF F), (fun i => (x i).2) ∉ C →
           e (G.M.co.rho B.ψ (shiftA H H' l) (om (k.1, 1) Ψ)) x = 0 := by
   first | exact @GlobalTheory.ConeSupp.supp | exact GlobalTheory.ConeSupp.supp | (intros; apply GlobalTheory.ConeSupp.supp <;> assumption)

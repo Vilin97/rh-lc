@@ -21,7 +21,7 @@ theorem map_mul_nu {R S : Type} [NonUnitalNonAssocSemiring R] [NonUnitalNonAssoc
     (A * B).map f = A.map f * B.map f := by
   ext i j; simp [Matrix.mul_apply, map_sum, map_mul]
 
-def blow {n : ℕ} (A : Matrix (Fin n) (Fin n) (w.adicCompletion E)) : Matrix (Fin n) (Fin n) (AE F E) :=
+def blow {n : ℕ} (A : Matrix (Fin n) (Fin n) (w.adicCompletion E)) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   1 + (A - 1).map (ptAt hw h)
 
 theorem blow_one {n : ℕ} : blow hw h (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) = 1 := by
@@ -33,7 +33,7 @@ theorem blow_mul {n : ℕ} (A B : Matrix (Fin n) (Fin n) (w.adicCompletion E)) :
   simp only [blow, e, Matrix.map_add _ (map_add (ptAt hw h)), map_mul_nu]
   noncomm_ring
 
-def blowHom (n : ℕ) : Matrix (Fin n) (Fin n) (w.adicCompletion E) →* Matrix (Fin n) (Fin n) (AE F E) where
+def blowHom (n : ℕ) : Matrix (Fin n) (Fin n) (w.adicCompletion E) →* Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) where
   toFun := blow hw h
   map_one' := blow_one hw h
   map_mul' := blow_mul hw h
@@ -210,11 +210,11 @@ theorem conj_form {K : Type} [CommRing K] {n : ℕ} (c : K →+* K) (Ja p q m : 
 variable {Γ : Type} [Group Γ]
 
 def embHom {n : ℕ} (P : GL (Fin n) (w.adicCompletion E)) (φ : Γ →* GL (Fin n) (w.adicCompletion E)) :
-    Γ →* GL (Fin n) (AE F E) :=
+    Γ →* GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   (Units.map (blowHom hw h n)).comp ((MulAut.conj P).toMonoidHom.comp φ)
 
 theorem embHom_val {n : ℕ} (P : GL (Fin n) (w.adicCompletion E)) (φ : Γ →* GL (Fin n) (w.adicCompletion E)) (g : Γ) :
-    ((embHom hw h P φ g : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) =
+    ((embHom hw h P φ g : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) =
       blow hw h ((P * φ g * P⁻¹ : GL (Fin n) (w.adicCompletion E)) : Matrix (Fin n) (Fin n) (w.adicCompletion E)) := rfl
 
 end GlobalTheory.InertPlace

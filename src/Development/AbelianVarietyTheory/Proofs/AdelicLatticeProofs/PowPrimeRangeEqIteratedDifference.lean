@@ -50,7 +50,8 @@ private lemma cyclotomic_comp_X_add_one_eq (p : ℕ) [Fact p.Prime] :
     have hpz : (p : ℤ) ≠ 0 := by exact_mod_cast hp.ne_zero
     exact (mul_right_eq_self₀.1 h.symm).resolve_right hpz
   obtain ⟨H, hH⟩ : X ∣ G - 1 := by
-    rw [X_dvd_iff, coeff_sub, coeff_one_zero, h0, sub_self]
+    rw [X_dvd_iff, coeff_sub]
+    simp [h0]
   refine ⟨H, ?_⟩
   rw [← hH, ← C_eq_natCast]
   linear_combination hG

@@ -68,8 +68,8 @@ theorem symp_dbl_fromCols {R E : Type} [CommRing R] [CommRing E] [Algebra R E] (
   rw [Finset.sum_add_distrib, Finset.sum_neg_distrib, sub_eq_add_neg]
 
 theorem at_symp_self {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (σ : E →ₐ[F] E) {n d : ℕ} (JA : Matrix (Fin n) (Fin n) (AE F E)) (JB : Matrix (Fin d) (Fin d) (AE F E))
-    (ξ : AE F E) (v : Pl (F := F)) {w : Matrix (Fin n) (Fin d) (AE F E)} (hw : At (evFin F v) w) :
+    (σ : E →ₐ[F] E) {n d : ℕ} (JA : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (JB : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
+    (ξ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (v : Pl (F := F)) {w : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hw : At (evFin F v) w) :
     At (evFin F v) (symp (R := AF F) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) ξ JA JB w w) := by
   intro u hu
   have h1 := GlobalTheory.LatVac.symp_smul_smul σ JA JB ξ u 1 w w

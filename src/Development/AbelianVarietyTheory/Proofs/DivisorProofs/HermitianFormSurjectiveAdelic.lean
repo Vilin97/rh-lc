@@ -33,7 +33,7 @@ theorem det_ne_zero_of_hasSig {n r s : ℕ} {M : Matrix (Fin n) (Fin n) ℂ} (h 
 
 theorem incM_mulVec_cA_surjective (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (B : Base F E) (n r s : ℕ) (X : Spc F E n) :
-    B.IsGood σ → X.IsHerm σ B r s → ∀ z : Fin n → AE F E, ∃ y : Fin n → AE F E,
+    B.IsGood σ → X.IsHerm σ B r s → ∀ z : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∃ y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E),
       (incM F X.J *ᵥ fun k => cA σ (y k)) = z := by
   intro hB hX z
 

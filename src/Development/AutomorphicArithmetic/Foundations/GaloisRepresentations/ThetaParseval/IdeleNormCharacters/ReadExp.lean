@@ -78,7 +78,7 @@ private theorem inf_formula {E ι : Type} [Field E] [NumberField E] [Fintype ι]
 
 private theorem piInf_read {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {w : InfinitePlace F} (τ : EmbOver E w) (ρ : (InfinitePlace.mk τ.1).Completion →+* ℂ) (hc : Continuous ρ)
-    (hρ : ∀ x, ρ (algebraMap E _ x) = τ.1 x) (z : AE F E) :
+    (hρ : ∀ x, ρ (algebraMap E _ x) = τ.1 x) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     piInf τ z = ρ ((GlobalTheory.UnitaryHeckeBaseChange.toAdele F E z).1 (InfinitePlace.mk τ.1)) := by
   have key : (fun b : InfiniteAdeleRing F => InfinitePlace.Completion.extensionEmbedding w (b w)) =
       fun b => ρ (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.infiniteAdeleMap F E b (InfinitePlace.mk τ.1)) := by

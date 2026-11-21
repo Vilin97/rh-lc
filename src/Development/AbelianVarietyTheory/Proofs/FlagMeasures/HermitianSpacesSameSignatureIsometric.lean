@@ -110,6 +110,18 @@ theorem sameKindIsometric : SameKindIsometric := by
     simp only [Matrix.mul_assoc]
   obtain ⟨Λ, hΛl, hΛm⟩ := hΛ
   obtain ⟨Λ', hΛl', hΛm'⟩ := hΛ'
+  have hspan : ∀ (M : Matrix (Fin n) (Fin n) E) (L : Submodule (𝓞 E) (Fin n → E)),
+      Submodule.IsLattice E L →
+      (∀ x, x ∈ L ↔ ∀ y ∈ L, star y ⬝ᵥ (M *ᵥ x) ∈ (algebraMap (𝓞 E) E).range) →
+      Submodule.span E (L : Set (Fin n → E)) = ⊤ := by
+    intro M L hl hm
+    have heq : Formalism.BasicNotions.dualSet (starRingEnd E) M L = (L : Set (Fin n → E)) := by
+      ext x
+      simp only [Formalism.BasicNotions.dualSet, Set.mem_setOf_eq, SetLike.mem_coe, hm]
+      simp [Formalism.UG.hform, dotProduct, Matrix.mulVec, Finset.mul_sum, Finset.sum_comm, mul_assoc]
+    have h := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.dual_span (starRingEnd E) M L hl
+    rw [heq, Submodule.span_eq] at h
+    exact h
   obtain ⟨P, hPd, hP⟩ := GlobalTheory.SelfDualGenus.congr_of_modular
     (GlobalTheory.LocalQuad.landherr_of_hasseNormSt GlobalTheory.QNorm.hasseNormSt) GlobalTheory.QNorm.hasseNormSt
     (by
@@ -119,7 +131,8 @@ theorem sameKindIsometric : SameKindIsometric := by
         exact ⟨1, map_one _⟩
       rw [h, FractionalIdeal.mem_zero_iff] at h1
       exact one_ne_zero h1) hc (hherm J hJ) (hherm J' hJ') (by rwa [Matrix.det_transpose])
-    (by rwa [Matrix.det_transpose]) ⟨hΛl.fg, hΛl.span_eq_top⟩ ⟨hΛl'.fg, hΛl'.span_eq_top⟩
+    (by rwa [Matrix.det_transpose]) ⟨hΛl.fg, hspan J Λ hΛl hΛm⟩
+    ⟨hΛl'.fg, hspan J' Λ' hΛl' hΛm'⟩
     (hmod J Λ hΛm) (hmod J' Λ' hΛm') hs
   refine ⟨Matrix.GeneralLinearGroup.mkOfDetNeZero P hPd, ?_⟩
   have hT := congrArg Matrix.transpose hP

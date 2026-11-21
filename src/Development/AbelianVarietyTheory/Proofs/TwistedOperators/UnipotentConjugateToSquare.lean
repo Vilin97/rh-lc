@@ -30,10 +30,10 @@ theorem conj_to_sq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
   obtain ⟨s, hs, hd, ha⟩ := GlobalTheory.T.exists_integralSiegelParabolic_of_conjugateIdempotent F E σ B hB d W v h2 Eid E1 E2 E3 E4
   refine ⟨s, hs, GlobalTheory.SplitConj.conj_eq_sq n hn s _ _ (GlobalTheory.LatVac.liftV v 1 - 1) ?_ ?_ hd ha⟩
   · rw [map_sub (evFin F v), GlobalTheory.LatVac.evFin_liftV, map_one (evFin F v), sub_self]
-  · have h2' : (2 : AE F E) * ((⅟2 : AF F) • Eid) = Eid := by
-      rw [Algebra.smul_def, ← mul_assoc, show (2 : AE F E) = algebraMap (AF F) (AE F E) 2 from (map_ofNat _ 2).symm,
+  · have h2' : (2 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * ((⅟2 : AF F) • Eid) = Eid := by
+      rw [Algebra.smul_def, ← mul_assoc, show (2 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) 2 from (map_ofNat _ 2).symm,
         ← map_mul, mul_invOf_self, map_one, one_mul]
-    rw [map_sub (algebraMap (AF F) (AE F E)), map_one (algebraMap (AF F) (AE F E)), ← E2]
+    rw [map_sub (algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), map_one (algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ← E2]
     linear_combination h2'
 
 end GlobalTheory.SplitConj

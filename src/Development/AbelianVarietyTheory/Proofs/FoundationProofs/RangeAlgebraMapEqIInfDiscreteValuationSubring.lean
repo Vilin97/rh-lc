@@ -712,7 +712,7 @@ theorem discreteValuationRing_dominating_noetherian_local (L : Type w) [Field L]
   have hinj : Function.Injective (algebraMap R L) := by
     rw [IsScalarTower.algebraMap_eq R K L]
     exact (algebraMap K L).injective.comp (IsFractionRing.injective R K)
-  exact ⟨inferInstance, inferInstance, fun _ => irreducible_algebraMap_adicCompletion_of_dvr V, h1,
+  exact ⟨inferInstance, inferInstance, fun _ => irreducible_algebraMap_adicCompletion_of_dvr, h1,
     injective_and_isLocalHom_adicCompletion_comp _
       fun a b hab => hinj (congrArg Subtype.val hab)⟩
 

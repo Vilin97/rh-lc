@@ -35,7 +35,7 @@ theorem gen_mem_latAtV {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {v : Pl (F :=
     (hx : x ∈ X.L) (hy : y ∈ W.L) : a • incM F (Matrix.vecMulVec x y) ∈ latAtV X W v :=
   AddSubgroup.subset_closure ⟨a, ha, hi, x, hx, y, hy, rfl⟩
 
-theorem spanA_add {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d₁} {p p' : Matrix (Fin n) (Fin d) (AE F E)}
+theorem spanA_add {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d₁} {p p' : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hp : p ∈ spanA (F := F) H H') (hp' : p' ∈ spanA (F := F) H H') : p + p' ∈ spanA (F := F) H H' := by
   obtain ⟨y, z, rfl⟩ := hp
   obtain ⟨y', z', rfl⟩ := hp'
@@ -43,14 +43,14 @@ theorem spanA_add {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d�
   simp only [Matrix.add_vecMulVec, Matrix.mulVec_add, Matrix.vecMulVec_add]
   abel
 
-theorem spanA_neg {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d₁} {p : Matrix (Fin n) (Fin d) (AE F E)}
+theorem spanA_neg {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d₁} {p : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hp : p ∈ spanA (F := F) H H') : -p ∈ spanA (F := F) H H' := by
   obtain ⟨y, z, rfl⟩ := hp
   refine ⟨-y, -z, ?_⟩
   simp only [Matrix.neg_vecMulVec, Matrix.mulVec_neg, Matrix.vecMulVec_neg]
   abel
 
-theorem spanAd_add {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d₁} {p p' : Matrix (Fin n) (Fin d) (AE F E)}
+theorem spanAd_add {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d₁} {p p' : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hp : p ∈ spanAd (F := F) H H') (hp' : p' ∈ spanAd (F := F) H H') : p + p' ∈ spanAd (F := F) H H' := by
   obtain ⟨y, z, rfl⟩ := hp
   obtain ⟨y', z', rfl⟩ := hp'
@@ -58,7 +58,7 @@ theorem spanAd_add {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d�
   simp only [Matrix.add_vecMulVec, Matrix.mulVec_add, Matrix.vecMulVec_add]
   abel
 
-theorem spanAd_neg {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d₁} {p : Matrix (Fin n) (Fin d) (AE F E)}
+theorem spanAd_neg {n d n₁ d₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d₁} {p : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hp : p ∈ spanAd (F := F) H H') : -p ∈ spanAd (F := F) H H' := by
   obtain ⟨y, z, rfl⟩ := hp
   refine ⟨-y, -z, ?_⟩

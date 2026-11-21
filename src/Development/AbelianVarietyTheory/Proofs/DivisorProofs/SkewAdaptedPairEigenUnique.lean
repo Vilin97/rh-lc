@@ -31,7 +31,7 @@ theorem schr_comp {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R �
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {n d d₁ : ℕ} {X : Spc F E n} {W : Spc F E d}
 
-theorem rho_add (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (w l : Matrix (Fin n) (Fin d) (AE F E))
+theorem rho_add (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (w l : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (h : symp (cA σ) (-1) (incM F X.J) (incM F W.J) w l = 0) (φ : Fn F n d) :
     M.co.rho ψ (w + l) φ = M.co.rho ψ w (M.co.rho ψ l φ) := by
   have h' := (M.co.form w l).symm.trans h
@@ -58,8 +58,8 @@ theorem iota_orth (H' : Plane E d d₁) (hH : ∀ u, form σ W.J (H'.ι *ᵥ u) 
   funext i
   simp
 
-theorem symp_eq_zero (H' : Plane E d d₁) (hH : ∀ u, form σ W.J (H'.ι *ᵥ u) H'.x = 0) (ξ : AE F E)
-    (JA : Matrix (Fin n) (Fin n) (AE F E)) (A : Matrix (Fin n) (Fin d₁) (AE F E)) (y : Fin n → AE F E) :
+theorem symp_eq_zero (H' : Plane E d d₁) (hH : ∀ u, form σ W.J (H'.ι *ᵥ u) H'.x = 0) (ξ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
+    (JA : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (A : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     symp (cA σ) ξ JA (incM F W.J) (A * (incM F H'.ι)ᵀ) (Matrix.vecMulVec y (incV F H'.x)) = 0 := by
   set x := A * (incM F H'.ι)ᵀ
   set v := incV F H'.x
@@ -100,7 +100,7 @@ theorem heis_stabP : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
   set A := incM F (1 : Matrix (Fin n) (Fin n) E) * z
   have hact : actAB (cA σ) ((1, g) : UA σ X.J × UA σ W.J) (A * (incM F H'.ι)ᵀ) =
       A * (incM F H'.ι)ᵀ + Matrix.vecMulVec (A *ᵥ a) (incV F H'.x) := by
-    show (1 : Matrix (Fin n) (Fin n) (AE F E)) * (A * (incM F H'.ι)ᵀ) * (mat g)ᵀ = _
+    show (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * (A * (incM F H'.ι)ᵀ) * (mat g)ᵀ = _
     rw [Matrix.one_mul, Matrix.mul_assoc, ← Matrix.transpose_mul, hmat, Matrix.transpose_add, Matrix.transpose_vecMulVec,
       Matrix.mul_add, Matrix.mul_vecMulVec]
   have hsymp := symp_eq_zero H' (fun u => (hH.orth u).1) (-1) (incM F X.J) A (A *ᵥ a)

@@ -36,7 +36,7 @@ theorem GlobalTheory.DblScal.scalW_main : GlobalTheory.FunPr.Hypotheses₂ → �
   obtain ⟨gd, hgd⟩ := exists_diag_one h
   have hgdAt : gd ∈ UDAt σ W.J (evFin F v) := by
     intro u hu
-    change u • (((gd : GL (Fin d ⊕ Fin d) (AE F E)) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E)) - 1) = 0
+    change u • (((gd : GL (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) - 1) = 0
     have h1 : u • (mat h - 1) = 0 := hh u hu
     rw [hgd, fromBlocks_sub_one, Matrix.fromBlocks_smul, h1]
     simp

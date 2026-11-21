@@ -56,12 +56,12 @@ private theorem formA_inc {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (x y : Fin n 
   simp [incV, incM, form, Matrix.mulVec, dotProduct, h]
 
 private theorem coef_eq {B : Base F E} {n n₁ r s i₀ i₁ : ℕ} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁}
-    (hB : B.IsGood σ) (hS : X.IsHerm σ B r s) (hA : H.IsAdapted σ B X X₁ i₀ i₁) (a t : AE F E) (u : Fin n₁ → AE F E) :
+    (hB : B.IsGood σ) (hS : X.IsHerm σ B r s) (hA : H.IsAdapted σ B X X₁ i₀ i₁) (a t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (u : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     cA σ (incV F H.x ⬝ᵥ (incM F X.J *ᵥ fun i => cA σ ((a • incV F H.x + incM F H.ι *ᵥ u + t • incV F H.y) i))) = t := by
   have hσ : ∀ z, σ (σ z) = z := fun z => by
     obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
     exact τ.injective (by rw [hB.cm.2.2.2, hB.cm.2.2.2, star_star])
-  have hc : ∀ z : AE F E, cA σ (cA σ z) = z := fun z => by
+  have hc : ∀ z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), cA σ (cA σ z) = z := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [cA, hσ]
@@ -86,13 +86,13 @@ private theorem coef_eq {B : Base F E} {n n₁ r s i₀ i₁ : ℕ} {X : Spc F E
     formA_inc, hA.xx, hA.xy, h0, map_zero, map_one, smul_zero, Finset.sum_const_zero, zero_add, smul_eq_mul, mul_one, mul_zero, hc]
 
 
-private theorem partFin_vec {n d : ℕ} (v : Pl (F := F)) (a : Fin n → AE F E) (w : Fin d → AE F E) :
+private theorem partFin_vec {n d : ℕ} (v : Pl (F := F)) (a : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (w : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     partFin v (Matrix.vecMulVec a w) = Matrix.vecMulVec (GlobalTheory.LatVac.liftV v 1 • a) w := by
   rw [partFin, Matrix.smul_vecMulVec]
 
 private theorem rho_add {B : Base F E} {n d d₁ j₀ j₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc F E d₁}
     (M : Model σ X W) {H' : Plane E d d₁} (hH' : H'.IsAdapted σ B W W₁ j₀ j₁) (hψ : IsStd B.ψ) (v : Pl (F := F))
-    (a b : Fin n → AE F E) {f : (Fin n × Fin d → Fv F v) → ℂ} (hf : f ∈ SB (Fin n × Fin d → Fv F v)) :
+    (a b : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) {f : (Fin n × Fin d → Fv F v) → ℂ} (hf : f ∈ SB (Fin n × Fin d → Fv F v)) :
     locOp v (M.co.rho B.ψ (partFin v (Matrix.vecMulVec a (incV F H'.x))))
       (locOp v (M.co.rho B.ψ (partFin v (Matrix.vecMulVec b (incV F H'.x)))) f) =
     locOp v (M.co.rho B.ψ (partFin v (Matrix.vecMulVec (a + b) (incV F H'.x)))) f := by

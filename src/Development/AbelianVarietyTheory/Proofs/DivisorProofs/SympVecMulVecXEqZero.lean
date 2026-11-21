@@ -33,7 +33,7 @@ theorem hTens_vecMulVec_eq_zero {R A : Type} [CommRing R] [CommRing A] [Algebra 
 
 theorem symp_vecMulVec_x_eq_zero : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} (B : Base F E)
     {n d d₁ : ℕ} (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ : ℕ) (JX : Matrix (Fin n) (Fin n) E),
-    H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ a c : Fin n → AE F E,
+    H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ a c : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E),
     symp (R := AF F) (cA σ) (-1) (incM F JX) (incM F W.J) (Matrix.vecMulVec a (incV F H'.x))
       (Matrix.vecMulVec c (incV F H'.x)) = 0 := by
   intro F E _ _ _ _ _ σ B n d d₁ W W₁ H' i₀ i₁ JX h a c

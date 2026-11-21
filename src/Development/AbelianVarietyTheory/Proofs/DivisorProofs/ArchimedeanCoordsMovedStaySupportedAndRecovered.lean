@@ -17,8 +17,8 @@ open GlobalTheory.ArchDecay
 namespace GlobalTheory.ArchDecay
 
 theorem at_mul_of_at {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    {n d : ℕ} (G : Matrix (Fin n) (Fin n) (AE F E)) (H : Matrix (Fin d) (Fin d) (AE F E))
-    (L : Matrix (Fin n) (Fin d) (AE F E)) (hL : At (evI F) L) : At (evI F) (G * L * Hᵀ) := by
+    {n d : ℕ} (G : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (H : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
+    (L : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (hL : At (evI F) L) : At (evI F) (G * L * Hᵀ) := by
   intro u hu
   rw [← Matrix.smul_mul, ← Matrix.mul_smul, hL u hu, Matrix.mul_zero, Matrix.zero_mul]
 

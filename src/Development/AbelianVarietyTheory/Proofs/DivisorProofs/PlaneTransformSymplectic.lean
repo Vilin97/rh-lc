@@ -23,12 +23,12 @@ theorem trace_bE_bE' (i j : Fin (Module.finrank F E)) :
   rw [mul_comm]
   exact h
 
-theorem sum_repr_mul (a b : AE F E) :
-    ∑ i, (bA F E).repr a i * (bA' F E).repr b i = Algebra.trace (AF F) (AE F E) (a * b) := by
+theorem sum_repr_mul (a b : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
+    ∑ i, (bA F E).repr a i * (bA' F E).repr b i = Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (a * b) := by
   conv_rhs => rw [← (bA F E).sum_repr a, ← (bA' F E).sum_repr b]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Finset.sum_mul_sum, map_sum]
-  have hb : ∀ i j, Algebra.trace (AF F) (AE F E) (bA F E i * bA' F E j) = if i = j then 1 else 0 := by
+  have hb : ∀ i j, Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (bA F E i * bA' F E j) = if i = j then 1 else 0 := by
     intro i j
     rw [bA, bA', Algebra.TensorProduct.basis_apply, Algebra.TensorProduct.basis_apply,
       Algebra.TensorProduct.tmul_mul_tmul, one_mul]
@@ -62,7 +62,7 @@ theorem planeMat_mul_planeCoef {σ : E →ₐ[F] E} {B : Base F E} {n n₁ i₀ 
 theorem sum_sI_mul_pairI (σ : E →ₐ[F] E) {n d n₁ d₁ : ℕ} (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Spc F E d₁)
     (H : Plane E n n₁) (H' : Plane E d d₁)
     (hGX : planeGram σ X.J H = Matrix.fromBlocks X₁.J 0 0 !![0, 1; 1, 0])
-    (hGW : planeGram σ W.J H' = Matrix.fromBlocks W₁.J 0 0 !![0, 1; -1, 0]) (w w' : Matrix (Fin n) (Fin d) (AE F E)) :
+    (hGW : planeGram σ W.J H' = Matrix.fromBlocks W₁.J 0 0 !![0, 1; -1, 0]) (w w' : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     ∑ k, sI H H' w k * pairI σ X W H H' w' k =
       -((∑ j, ∑ l, coefLin H H' w (.inr 1) j * incM F (planeGram σ W.J H') j l * cA σ (coefLin H H' w' (.inr 0) l)) -
         ∑ i, ∑ k, coefLin H H' w (.inl i) (.inr 1) * incM F X₁.J i k * cA σ (coefLin H H' w' (.inl k) (.inr 0))) := by
@@ -95,7 +95,7 @@ theorem incM_plane {α : Type} [Fintype α] (A : Matrix α α E) (η : E) :
 theorem form_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     {n d n₁ d₁ r s r' s' i₀ i₁ j₀ j₁ : ℕ} (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Spc F E d₁)
     (H : Plane E n n₁) (H' : Plane E d d₁), B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' →
-    H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ w w' : Matrix (Fin n) (Fin d) (AE F E),
+    H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ w w' : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
     symp (cA σ) (-1) (incM F X.J) (incM F W.J) w w' =
       (planeT σ X W H H' w).1.1 ⬝ᵥ (planeT σ X W H H' w').1.2 - (planeT σ X W H H' w').1.1 ⬝ᵥ (planeT σ X W H H' w).1.2 +
         symp (cA σ) (-1) (incM F X₁.J) (incM F W₁.J) (planeT σ X W H H' w).2 (planeT σ X W H H' w').2 := by
@@ -137,11 +137,11 @@ theorem form_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     rw [← planeGram] at this
     simp only [incM, Matrix.map_apply, GlobalTheory.VacIndic.cA_inclR, this, map_mul, map_neg, map_one]
   have hpq : ∀ z z', (planeT σ X W H H' z).1.1 ⬝ᵥ (planeT σ X W H H' z').1.2 =
-      Algebra.trace (AF F) (AE F E) (∑ k, sI H H' z k * pairI σ X W H H' z' k) := by
+      Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (∑ k, sI H H' z k * pairI σ X W H H' z' k) := by
     intro z z'
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [planeT, LinearMap.coe_mk, AddHom.coe_mk, dotProduct, Fintype.sum_prod_type, sum_repr_mul, map_sum]
-  have hR : ∀ z z' : Matrix (Fin n₁) (Fin d₁ ⊕ Fin 2) (AE F E),
+  have hR : ∀ z z' : Matrix (Fin n₁) (Fin d₁ ⊕ Fin 2) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
       hTens (cA σ) (incM F X₁.J) (incM F (planeGram σ W.J H')) z z' =
         -1 * ∑ i, ∑ k, z i (.inr 1) * incM F X₁.J i k * cA σ (z' k (.inr 0)) +
           ∑ i, ∑ k, z i (.inr 0) * incM F X₁.J i k * cA σ (z' k (.inr 1)) +
@@ -154,7 +154,7 @@ theorem form_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
         hTens (cA σ) (incM F X₁.J) (incM F (planeGram σ W.J H')) (z.submatrix .inl id) (z'.submatrix .inl id) := by
     intro z z'
     rw [hGX, incM_plane, GlobalTheory.ThK.Adapt.hTens_plane_left, map_one, one_mul]
-  have hkey : ∀ z z' : Matrix (Fin n₁ ⊕ Fin 2) (Fin d₁ ⊕ Fin 2) (AE F E),
+  have hkey : ∀ z z' : Matrix (Fin n₁ ⊕ Fin 2) (Fin d₁ ⊕ Fin 2) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
       cA σ (∑ j, ∑ l, z (.inr 0) j * incM F (planeGram σ W.J H') j l * cA σ (z' (.inr 1) l) +
         ∑ i, ∑ k, z (.inl i) (.inr 0) * incM F X₁.J i k * cA σ (z' (.inl k) (.inr 1))) =
       -((∑ j, ∑ l, z' (.inr 1) j * incM F (planeGram σ W.J H') j l * cA σ (z (.inr 0) l)) -
@@ -169,10 +169,10 @@ theorem form_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
   unfold symp
   rw [hT, hL, hR]
   rw [← map_sub, ← map_add (f := _)]
-  refine congrArg (Algebra.trace (AF F) (AE F E)) ?_
+  refine congrArg (Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) ?_
   show _ = _ + -1 * hTens (cA σ) (incM F X₁.J) (incM F W₁.J) ((coefLin H H' w).submatrix Sum.inl Sum.inl)
     ((coefLin H H' w').submatrix Sum.inl Sum.inl)
-  have hs : ∀ z : Matrix (Fin n₁ ⊕ Fin 2) (Fin d₁ ⊕ Fin 2) (AE F E),
+  have hs : ∀ z : Matrix (Fin n₁ ⊕ Fin 2) (Fin d₁ ⊕ Fin 2) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
       (z.submatrix Sum.inl id).submatrix id Sum.inl = z.submatrix Sum.inl Sum.inl := fun z => rfl
   simp only [hs, sI, Matrix.submatrix_apply, id_eq]
   ring

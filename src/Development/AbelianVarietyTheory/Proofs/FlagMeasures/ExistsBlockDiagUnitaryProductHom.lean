@@ -74,7 +74,7 @@ theorem blk_hs (h1 : ∀ s, (T s)ᴴ * T s = 1) (h0 : ∀ s t, s ≠ t → (T s)
 
 theorem continuous_blk : Continuous (blk T) := by
   unfold blk
-  refine continuous_finset_sum _ fun s _ => ?_
+  refine continuous_finsetSum _ fun s _ => ?_
   exact (continuous_const.matrix_mul (continuous_apply (π s))).matrix_mul continuous_const
 
 end

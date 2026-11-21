@@ -12,7 +12,7 @@ namespace GroundTheory.ProfCoh
 open CategoryTheory GroundTheory.LocalField ValuativeRel
 
 instance valuativeExtension_self (F : Type*) [Field F] [ValuativeRel F] : ValuativeExtension F F :=
-  ⟨fun _ _ => Iff.rfl⟩
+  ⟨fun {_ _} => Iff.rfl⟩
 
 section Tower
 
@@ -59,9 +59,11 @@ theorem ramificationIndex_right_eq :
   have : FiniteDimensional L L' := FiniteDimensional.right K L L'
   have h1 := ramificationIndex_tower K L L'
   have h2 := ramificationIndex_tower K K' L'
-  rw [IsUnramified.ramificationIndex_eq_one (K := K) (L := L), one_mul] at h1
-  rw [IsUnramified.ramificationIndex_eq_one (K := K') (L := L'), mul_one] at h2
-  rw [← h1, h2]
+  have hKL : ramificationIndex K L = 1 := IsUnramified.ramificationIndex_eq_one
+  have hK'L' : ramificationIndex K' L' = 1 := IsUnramified.ramificationIndex_eq_one
+  rw [hKL, one_mul] at h1
+  rw [hK'L', mul_one] at h2
+  exact h1.symm.trans h2
 
 theorem card_residueField_eq_pow : Nat.card 𝓀[K'] = Nat.card 𝓀[K] ^ ((IsLocalRing.maximalIdeal 𝒪[K']).inertiaDeg (𝒪[K])) := by
   let := Fintype.ofFinite 𝓀[K]

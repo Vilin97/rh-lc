@@ -55,7 +55,7 @@ theorem main : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F
         Matrix.vecMulVec H.x a + (H.ι * U + Matrix.vecMulVec H.y (w + t)) := by
       rw [hx, Matrix.vecMulVec_add]; abel
     have hiso : incM F (Matrix.vecMulVec H.x a) ∈
-        ({u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} : Set (Matrix (Fin n) (Fin d₁) (AE F E))) :=
+        ({u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} : Set (Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) :=
       ⟨incV F a, GlobalTheory.ThetaExpandInv.incM_vecMulVec H.x a⟩
     rw [← GlobalTheory.ThetaExpandInv.incM_vecMulVec, GlobalTheory.ThetaExpandInv.rho_rat_rho_rat M₁ hψ hM₁, hsum,
       ← GlobalTheory.ThetaExpandInv.rho_rat_rho_rat M₁ hψ hM₁,

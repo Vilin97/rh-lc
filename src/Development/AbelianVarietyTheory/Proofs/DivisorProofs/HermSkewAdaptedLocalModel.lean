@@ -39,7 +39,7 @@ theorem pair_zero_of_form (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fi
     simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, mul_assoc]
 
 theorem pair_iota_left (σ : E →ₐ[F] E) {n n₁ : ℕ} (J : Matrix (Fin n) (Fin n) E) (ι : Matrix (Fin n) (Fin n₁) E)
-    (x : Fin n → E) (h0 : ∀ u, form σ J (ι *ᵥ u) x = 0) (y : Fin n₁ → AE F E) :
+    (x : Fin n → E) (h0 : ∀ u, form σ J (ι *ᵥ u) x = 0) (y : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     ∑ i, ∑ k, (incM F ι *ᵥ y) i * incM F J i k * cA σ (incV F x k) = 0 := by
   classical
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
@@ -68,7 +68,7 @@ theorem pair_iota_left (σ : E →ₐ[F] E) {n n₁ : ℕ} (J : Matrix (Fin n) (
   rw [hq q, mul_zero]
 
 theorem pair_conj_skew (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
-    (hJ : ∀ i j, σ (J j i) = -J i j) (a b : Fin n → AE F E) :
+    (hJ : ∀ i j, σ (J j i) = -J i j) (a b : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     ∑ i, ∑ k, a i * incM F J i k * cA σ (b k) = -cA σ (∑ i, ∑ k, b i * incM F J i k * cA σ (a k)) := by
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
   set_option synthInstance.maxHeartbeats 100000 in

@@ -123,7 +123,7 @@ theorem ord_eq_one {x : kˣ} (hx : valuation k (x : k) = uniformizer k) : ord k 
 
 variable {k} in
 theorem ord_eq_zero_iff {x : kˣ} : ord k x = 0 ↔ valuation k (x : k) = 1 := by
-  refine ⟨fun h => ?_, ord_eq_zero k⟩
+  refine ⟨fun h => ?_, ord_eq_zero⟩
   set φ := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k
   have h0 : φ (valuation k (x : k)) ≠ 0 := by simp
   have h1 : WithZero.log (φ (valuation k (x : k))) = 0 := neg_eq_zero.1 h
@@ -132,17 +132,17 @@ theorem ord_eq_zero_iff {x : kˣ} : ord k x = 0 ↔ valuation k (x : k) = 1 := b
 
 def unrChar (α : ℂˣ) : kˣ →* ℂˣ where
   toFun x := α ^ ord k x
-  map_one' := by rw [ord_eq_zero k (x := 1) (by simp), zpow_zero]
+  map_one' := by rw [ord_eq_zero (k := k) (x := 1) (by simp), zpow_zero]
   map_mul' x y := by rw [ord_mul, _root_.zpow_add]
 
 theorem unrChar_apply (α : ℂˣ) (x : kˣ) : unrChar k α x = α ^ ord k x := rfl
 
 theorem isUnram_unrChar (α : ℂˣ) : IsUnram (unrChar k α) := fun x hx => by
-  rw [unrChar_apply, ord_eq_zero k hx, zpow_zero]
+  rw [unrChar_apply, ord_eq_zero hx, zpow_zero]
 
 theorem unrChar_uniformizer (α : ℂˣ) {x : kˣ} (hx : valuation k (x : k) = uniformizer k) :
     unrChar k α x = α := by
-  rw [unrChar_apply, ord_eq_one k hx, zpow_one]
+  rw [unrChar_apply, ord_eq_one hx, zpow_one]
 
 
 variable {k} in
@@ -152,10 +152,10 @@ theorem eq_unrChar {χ : kˣ →* ℂˣ} (h : IsUnram χ) {ϖ : kˣ}
     rw [ord_mul, ofAdd_add]
   refine MonoidHom.ext fun x => ?_
   have h1 : o (x / ϖ ^ ord k x) = 1 := by
-    rw [map_div, map_zpow, show o ϖ = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one k hϖ),
+    rw [map_div, map_zpow, show o ϖ = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one hϖ),
       ← ofAdd_zsmul, smul_eq_mul, mul_one]
     exact div_self' _
-  have h2 := h _ ((ord_eq_zero_iff k).1 (ofAdd_eq_one.1 h1))
+  have h2 := h _ (ord_eq_zero_iff.1 (ofAdd_eq_one.1 h1))
   rw [map_div, map_zpow, div_eq_one] at h2
   exact h2
 
@@ -225,7 +225,7 @@ theorem isSmoothChar_deltaHalf : IsSmoothChar (deltaHalf k m) := by
   unfold deltaHalf
   refine Finset.prod_induction _ IsSmoothChar (fun _ _ => IsSmoothChar.mul) ?_ fun a _ => ?_
   · unfold IsSmoothChar; simp
-  · exact (isSmoothChar_of_isUnram k (isUnram_absPow k _)).detChar.comp _ (continuous_apply a)
+  · exact (isSmoothChar_of_isUnram (isUnram_absPow k _)).detChar.comp _ (continuous_apply a)
 
 variable {k}
 
@@ -255,8 +255,11 @@ def parIndMap (e : (Σ a, m a) ≃ n) {ρ : Representation ℂ (Levi k m) V}
   smIndMap (compMap (twistMap f _) _)
 
 def jacU {R : Type} [CommRing R] (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n R) V) :
-    Representation ℂ (Levi R m) (Jacquet π (unipRad R e)) :=
-  jacquet π (unipRad R e) (leviEmb R e) (leviEmb_mem_normalizer R e)
+    Representation ℂ (Levi R m) (Jacquet π (unipRad R e)) := by
+  refine jacquet π (unipRad R e) (leviEmb R e) fun g => ?_
+  have hg : leviEmb R e g ∈ parab R e := (mem_parab_iff (R := R)).2 fun a b i j h => by
+    simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne']
+  exact parab_le_normalizer R e hg
 
 def jac (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n k) V) :
     Representation ℂ (Levi k m) (Jacquet π (unipRad k e)) :=
@@ -287,8 +290,11 @@ def parIndLower (e : (Σ a, m a) ≃ n) (ρ : Representation ℂ (Levi k m) W) :
   smInd (parabLower k e) ((twist ρ (deltaHalf k m)⁻¹).comp (leviProjLower k e))
 
 def jacLower (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n k) V) :
-    Representation ℂ (Levi k m) (Jacquet π (unipRadLower k e)) :=
-  twist (jacquet π (unipRadLower k e) (leviEmb k e) (leviEmb_mem_normalizer_lower k e)) (deltaHalf k m)
+    Representation ℂ (Levi k m) (Jacquet π (unipRadLower k e)) := by
+  refine twist (jacquet π (unipRadLower k e) (leviEmb k e) fun g => ?_) (deltaHalf k m)
+  have hg : leviEmb k e g ∈ parabLower k e := (mem_parabLower_iff (R := k)).2 fun a b i j h => by
+    simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne]
+  exact parab_le_normalizer k (opp e) hg
 
 def multiProd (e : (Σ a, m a) ≃ n) {X : α → Type} [∀ a, AddCommGroup (X a)] [∀ a, Module ℂ (X a)]
     (π : ∀ a, Representation ℂ (GL (m a) k) (X a)) :=
@@ -393,7 +399,13 @@ def jacB (π : Representation ℂ (GL n k) V) : Representation ℂ (n → kˣ) (
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem jacBU_mk (π : Representation ℂ (GL n k) V) (t : n → kˣ) (v : V) :
-    jacBU π t (Submodule.Quotient.mk v) = Submodule.Quotient.mk (π (diagT k n t) v) := rfl
+    jacBU π t (Submodule.Quotient.mk v) = Submodule.Quotient.mk (π (diagT k n t) v) := by
+  change jacU (points n) π (leviTorus k n t) (Submodule.Quotient.mk v) = _
+  rw [jacU, jacquet_mk]
+  apply congrArg (fun g : GL n k => Submodule.Quotient.mk (π g v))
+  simp only [diagT, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom]
+  congr
+  exact Subsingleton.elim _ _
 
 theorem isSmooth_jacBU {π : Representation ℂ (GL n k) V} (hπ : IsSmooth π) : IsSmooth (jacBU π) :=
   isSmooth_comp (isSmooth_jacU _ hπ) _ (continuous_leviTorus k n)
@@ -494,7 +506,15 @@ def detLevi (e : (Σ a, m a) ≃ n) (χ : kˣ →* ℂˣ) : Levi k m →* ℂˣ 
 
 theorem detLevi_apply (e : (Σ a, m a) ≃ n) (χ : kˣ →* ℂˣ) (g : Levi k m) :
     detLevi e χ g = ∏ a, (χ * absPow k (-(modExp m a : ℂ) / 2)) (GeneralLinearGroup.det (g a)) := by
-  simp [detLevi, det_leviEmb, deltaHalf_apply, neg_div, absPow_neg, Finset.prod_mul_distrib]
+  have hdet : GeneralLinearGroup.det (leviEmb k e g) = ∏ a, GeneralLinearGroup.det (g a) := by
+    let p : parab k e := ⟨leviEmb k e g, mem_parab_iff.2 fun a b i j h => by
+      simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne']⟩
+    have hproj : leviProj k e p = g := by
+      funext a
+      ext i j
+      simp [p, leviEmb, blockDiagonal'_apply_eq]
+    simpa only [hproj] using det_parab k e p
+  simp [detLevi, hdet, deltaHalf_apply, neg_div, absPow_neg, Finset.prod_mul_distrib]
 
 theorem isSubquotient_jac_detRep (e : (Σ a, m a) ≃ n) (χ : kˣ →* ℂˣ) :
     IsSubquotient (ofChar (detLevi e χ)) (jac e (detRep n χ)) := by
@@ -509,7 +529,15 @@ theorem isSubquotient_detRep_parInd (e : (Σ a, m a) ≃ n) {χ : kˣ →* ℂˣ
   let f : ℂ →ₗ[ℂ] IndSp e (ofChar (detLevi e χ)) :=
     { toFun := fun c => ⟨⟨fun g => (detChar n χ g : ℂ) * c, fun p g => by
           have : GeneralLinearGroup.det (leviEmb k e (leviProj k e p)) =
-              GeneralLinearGroup.det (p : GL n k) := by rw [det_leviEmb, det_parab]
+              GeneralLinearGroup.det (p : GL n k) := by
+            let q : parab k e := ⟨leviEmb k e (leviProj k e p), mem_parab_iff.2 fun a b i j h => by
+              simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne']⟩
+            have hproj : leviProj k e q = leviProj k e p := by
+              funext a
+              ext i j
+              simp [q, leviEmb, blockDiagonal'_apply_eq]
+            change GeneralLinearGroup.det (q : GL n k) = GeneralLinearGroup.det (p : GL n k)
+            rw [det_parab k e q, det_parab k e p, hproj]
           show _ = (deltaHalf k m _ : ℂ) • ofChar (detLevi e χ) (leviProj k e p) _
           simp [detLevi, this, mul_assoc, mul_left_comm (deltaHalf k m (leviProj k e p) : ℂ)]⟩,
         mem_smoothPart_of_nhds (Filter.mem_of_superset
@@ -577,11 +605,11 @@ theorem hasSatake_detRep {N : ℕ} {χ : kˣ →* ℂˣ} (h : IsUnram χ) {ϖ : 
     refine Finset.prod_congr rfl fun i _ => ?_
     have hu : IsUnram (χ * absPow k (((i : ℕ) : ℂ) - ((N : ℂ) - 1) / 2)) := fun x hx => by
       rw [MonoidHom.mul_apply, h x hx, isUnram_absPow k _ x hx, one_mul]
-    rw [← MonoidHom.mul_apply, ← eq_unrChar k hu hϖ, modExp_fin _ (fun _ => by simp)]
+    rw [← MonoidHom.mul_apply, ← eq_unrChar hu hϖ, modExp_fin _ (fun _ => by simp)]
     congr 3
     push_cast
     ring
-  have := isSubquotient_detRep_parInd (points (Fin N)) (isSmoothChar_of_isUnram k h)
+  have := isSubquotient_detRep_parInd (points (Fin N)) (isSmoothChar_of_isUnram h)
   rw [← key] at this
   exact this
 
@@ -592,7 +620,7 @@ theorem isCuspidal_detRep_one {χ : kˣ →* ℂˣ} (hχ : IsSmoothChar χ) :
   ext i j
   obtain rfl : i = j := Subsingleton.elim _ _
   obtain ⟨⟨a, i⟩, rfl⟩ := e.surjective i
-  simpa using ((mem_unipRad k).1 hu).2 a i i
+  simpa using (mem_unipRad.1 hu).2 a i i
 
 end Examples
 

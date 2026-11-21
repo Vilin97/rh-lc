@@ -68,7 +68,7 @@ theorem schr_fin_inv : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (A
 
 theorem symp_shift : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a') (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')),
-    CfgA B G G₁ H H' → ∀ (z : Matrix (Fin b) (Fin (b + a')) (AE F E)) (l : (AE F E)ˣ),
+    CfgA B G G₁ H H' → ∀ (z : Matrix (Fin b) (Fin (b + a')) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ),
       symp (R := AF F) (cA σ) (-1) (incM F G.V.J) (incM F G.W.J) (incM F H.ι * z * (incM F H'.ι)ᵀ) (shiftA H H' l) = 0 := GlobalTheory.T.symplectic_form_block_vanishing
 
 theorem unif_fin : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)

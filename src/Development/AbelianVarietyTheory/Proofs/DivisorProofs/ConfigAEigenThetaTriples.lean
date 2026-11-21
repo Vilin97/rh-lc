@@ -21,7 +21,7 @@ namespace GlobalTheory.ThK.Unfold
 
 theorem measurable_mul_left {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (g : UA σ J) : Measurable (fun x : UA σ J => g * x) := by
-  haveI : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) (AE F E)
+  haveI : IsTopologicalRing (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := IsModuleTopology.isTopologicalRing (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
   haveI : BorelSpace (UA σ J) := ⟨rfl⟩
   exact (continuous_const.mul continuous_id).measurable
 

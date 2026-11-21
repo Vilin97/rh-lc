@@ -52,7 +52,7 @@ theorem mul_eq_of_cols {R ι : Type} [CommRing R] [Fintype ι] {d d₁ : ℕ} (K
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem mat_eq_of_piInf {σ : E →ₐ[F] E} (hCM : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w) {m n : Type}
-    (A A' : Matrix m n (AE F E)) (hA : At (evI F) (A - A')) (h : ∀ w, A.map (piInf (τ w)) = A'.map (piInf (τ w))) :
+    (A A' : Matrix m n (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (hA : At (evI F) (A - A')) (h : ∀ w, A.map (piInf (τ w)) = A'.map (piInf (τ w))) :
     A = A' := by
   ext i j
   refine sub_eq_zero.1 (GlobalTheory.RealLift.KLineProof.eq_zero_of_piInf hCM τ _ (fun u hu => ?_) (fun w => ?_))
@@ -62,7 +62,7 @@ theorem mat_eq_of_piInf {σ : E →ₐ[F] E} (hCM : IsCMExt F E σ) (τ : ∀ w 
     exact congrFun (congrFun (h w) i) j
 
 theorem vec_eq_of_piInf {σ : E →ₐ[F] E} (hCM : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w) {m : Type}
-    (v v' : m → AE F E) (hA : At (evI F) (v - v')) (h : ∀ w i, piInf (τ w) (v i) = piInf (τ w) (v' i)) : v = v' := by
+    (v v' : m → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (hA : At (evI F) (v - v')) (h : ∀ w i, piInf (τ w) (v i) = piInf (τ w) (v' i)) : v = v' := by
   funext i
   refine sub_eq_zero.1 (GlobalTheory.RealLift.KLineProof.eq_zero_of_piInf hCM τ _ (fun u hu => ?_) (fun w => ?_))
   · have := congrFun (hA u hu) i

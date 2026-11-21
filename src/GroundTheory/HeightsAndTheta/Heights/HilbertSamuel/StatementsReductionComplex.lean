@@ -80,7 +80,8 @@ def redLoc (y : (Σ k, ι k) → Ω) (p : ℕ) (I : ∀ k, Finset (ι k)) :
   map_add' x x' := by
     induction x, x' using LocalizedModule.induction_on₂ with
     | h m m' s s' =>
-      rw [LocalizedModule.mk_add_mk, redLocFun_mk, redLocFun_mk, redLocFun_mk, LocalizedModule.mk_add_mk, map_add (f := _)]
+      rw [LocalizedModule.mk_add_mk, redLocFun_mk, redLocFun_mk, redLocFun_mk,
+        LocalizedModule.mk_add_mk, (redRing y p).map_add]
       simp only [Submonoid.smul_def, redRing_smul]
       congr 1
       exact Subtype.ext (map_mul _ _ _)

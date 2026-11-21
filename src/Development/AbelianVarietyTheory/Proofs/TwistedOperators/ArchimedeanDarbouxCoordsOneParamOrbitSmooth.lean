@@ -29,7 +29,7 @@ open scoped ContDiff
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
 
-theorem at_mul_left {x : Matrix (Fin n) (Fin d) (AE F E)} (hx : At (evI F) x) (A : Matrix (Fin n) (Fin n) (AE F E)) :
+theorem at_mul_left {x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hx : At (evI F) x) (A : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     At (evI F) (A * x) := by
   intro a ha
   rw [← Matrix.mul_smul, hx a ha, Matrix.mul_zero]
@@ -42,15 +42,15 @@ theorem mat_mul_left (g h : UA σ X.J) : mat (g * h) = mat g * mat h := rfl
 
 theorem mat_one_left : mat (1 : UA σ X.J) = 1 := rfl
 
-def opLl (M : Model σ X W) (g : Matrix (Fin n) (Fin n) (AE F E)) : (Vs (Fin n × Fin d)) →ₗ[ℝ] Vs (Fin n × Fin d) where
+def opLl (M : Model σ X W) (g : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : (Vs (Fin n × Fin d)) →ₗ[ℝ] Vs (Fin n × Fin d) where
   toFun w := GlobalTheory.HeisOrbit.archCo M.co (g * lift M.co w)
   map_add' w w' := by rw [lift_add, Matrix.mul_add, archCo_add]
   map_smul' c w := by rw [lift_smul, Matrix.mul_smul, archCo_smul]; rfl
 
-theorem opLl_apply (M : Model σ X W) (g : Matrix (Fin n) (Fin n) (AE F E)) (w) :
+theorem opLl_apply (M : Model σ X W) (g : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (w) :
     opLl M g w = GlobalTheory.HeisOrbit.archCo M.co (g * lift M.co w) := rfl
 
-theorem opLl_archCo (M : Model σ X W) (g : Matrix (Fin n) (Fin n) (AE F E)) {x : Matrix (Fin n) (Fin d) (AE F E)}
+theorem opLl_archCo (M : Model σ X W) (g : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) {x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hx : At (evI F) x) : opLl M g (GlobalTheory.HeisOrbit.archCo M.co x) = GlobalTheory.HeisOrbit.archCo M.co (g * x) := by
   rw [opLl_apply, lift_archCo M.co hx]
 
@@ -76,15 +76,15 @@ theorem opRl_add (M : Model σ X W) (γ : Multiplicative ℝ →* UA σ X.J) (s 
 
 theorem continuous_opRl (M : Model σ X W) (γ : Multiplicative ℝ →* UA σ X.J) (hγ : Continuous γ) :
     Continuous (opRl M γ) := by
-  haveI : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) (AE F E)
+  haveI : IsTopologicalRing (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := IsModuleTopology.isTopologicalRing (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
   refine continuous_clm_apply.2 fun w => ?_
   simp only [opRl_apply, opLl_apply]
   exact (continuous_archCo M).comp ((continuous_mat_line_left γ hγ).matrix_mul continuous_const)
 
 theorem archCo_orbit_smooth_left : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
-    {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W), ∀ γ ∈ Lines σ X, ∀ u : Matrix (Fin n) (Fin d) (AE F E), At (evI F) u →
+    {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W), ∀ γ ∈ Lines σ X, ∀ u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) u →
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun t : ℝ => GlobalTheory.HeisOrbit.archCo M.co (mat (γ (Multiplicative.ofAdd t)) * u)) ∧
-    ∃ u' : Matrix (Fin n) (Fin d) (AE F E), At (evI F) u' ∧
+    ∃ u' : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) u' ∧
       HasDerivAt (fun t : ℝ => GlobalTheory.HeisOrbit.archCo M.co (mat (γ (Multiplicative.ofAdd t)) * u)) (GlobalTheory.HeisOrbit.archCo M.co u') 0 := by
   intro F E _ _ _ _ _ σ n d X W M γ hγ u hu
   haveI : CompleteSpace ((Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F)) :=

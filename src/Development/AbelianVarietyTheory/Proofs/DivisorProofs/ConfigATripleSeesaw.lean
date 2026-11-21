@@ -26,15 +26,15 @@ open Matrix GlobalTheory.MixedLagrX
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 variable {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁} {W₁ : Spc F E d₁}
 
-def IsMixedA (M₁ : Model σ X₁ W₁) (H : Plane E n n₁) (H' : Plane E d d₁) (m : Matrix (Fin n) (Fin d) (AE F E)) : Prop :=
-  ∃ y : Fin n → AE F E, ∃ v : Fin d₁ → AE F E, ∃ z : Matrix (Fin n₁) (Fin d₁) (AE F E), (M₁.co.e z).1 = 0 ∧
+def IsMixedA (M₁ : Model σ X₁ W₁) (H : Plane E n n₁) (H' : Plane E d d₁) (m : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Prop :=
+  ∃ y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∃ v : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∃ z : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), (M₁.co.e z).1 = 0 ∧
     m = Matrix.vecMulVec y (incV F H'.x) + Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ v) +
       incM F H.ι * z * (incM F H'.ι)ᵀ
 
 theorem isMixedA_zero (M₁ : Model σ X₁ W₁) (H : Plane E n n₁) (H' : Plane E d d₁) : IsMixedA M₁ H H' 0 :=
   ⟨0, 0, 0, by simp, by ext i j; simp [Matrix.vecMulVec_apply]⟩
 
-theorem IsMixedA.add {M₁ : Model σ X₁ W₁} {H : Plane E n n₁} {H' : Plane E d d₁} {m m' : Matrix (Fin n) (Fin d) (AE F E)}
+theorem IsMixedA.add {M₁ : Model σ X₁ W₁} {H : Plane E n n₁} {H' : Plane E d d₁} {m m' : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (h : IsMixedA M₁ H H' m) (h' : IsMixedA M₁ H H' m') : IsMixedA M₁ H H' (m + m') := by
   obtain ⟨y, v, z, hz, rfl⟩ := h
   obtain ⟨y', v', z', hz', rfl⟩ := h'
@@ -42,7 +42,7 @@ theorem IsMixedA.add {M₁ : Model σ X₁ W₁} {H : Plane E n n₁} {H' : Plan
   rw [Matrix.add_vecMulVec, Matrix.mulVec_add, Matrix.vecMulVec_add, Matrix.mul_add, Matrix.add_mul]
   abel
 
-theorem IsMixedA.smul {M₁ : Model σ X₁ W₁} {H : Plane E n n₁} {H' : Plane E d d₁} {m : Matrix (Fin n) (Fin d) (AE F E)}
+theorem IsMixedA.smul {M₁ : Model σ X₁ W₁} {H : Plane E n n₁} {H' : Plane E d d₁} {m : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (h : IsMixedA M₁ H H' m) (t : AF F) : IsMixedA M₁ H H' (t • m) := by
   obtain ⟨y, v, z, hz, rfl⟩ := h
   refine ⟨t • y, t • v, t • z, by simp [hz], ?_⟩
@@ -58,7 +58,7 @@ def lagrA (M : Model σ X W) (M₁ : Model σ X₁ W₁) (H : Plane E n n₁) (H
     rw [GlobalTheory.MixedLagr.hat_smul, LinearEquiv.map_smul]
     exact ha.smul _
 
-theorem piece_b_eq (H : Plane E n n₁) (H' : Plane E d d₁) (v : Fin d₁ → AE F E) :
+theorem piece_b_eq (H : Plane E n n₁) (H' : Plane E d d₁) (v : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ v) =
       incM F (1 : Matrix (Fin n) (Fin n) E) * Matrix.vecMulVec (incV F H.x) v * (incM F H'.ι)ᵀ := by
   rw [incM_one, Matrix.one_mul]
@@ -66,24 +66,24 @@ theorem piece_b_eq (H : Plane E n n₁) (H' : Plane E d d₁) (v : Fin d₁ → 
   simp only [Matrix.vecMulVec_apply, Matrix.mul_apply, Matrix.mulVec, dotProduct, Matrix.transpose_apply, Finset.mul_sum]
   exact Finset.sum_congr rfl fun l _ => by ring
 
-theorem piece_c_left_identity (H : Plane E n n₁) (H' : Plane E d d₁) (z : Matrix (Fin n₁) (Fin d₁) (AE F E)) :
+theorem piece_c_left_identity (H : Plane E n n₁) (H' : Plane E d d₁) (z : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     incM F H.ι * z * (incM F H'.ι)ᵀ = incM F (1 : Matrix (Fin n) (Fin n) E) * (incM F H.ι * z) * (incM F H'.ι)ᵀ := by
   rw [incM_one, Matrix.one_mul]
 
-theorem piece_c_right_identity (H : Plane E n n₁) (H' : Plane E d d₁) (z : Matrix (Fin n₁) (Fin d₁) (AE F E)) :
+theorem piece_c_right_identity (H : Plane E n n₁) (H' : Plane E d d₁) (z : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     incM F H.ι * z * (incM F H'.ι)ᵀ = incM F H.ι * (z * (incM F H'.ι)ᵀ) * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ := by
   rw [incM_one, Matrix.transpose_one, Matrix.mul_one, Matrix.mul_assoc]
 
 theorem symp_mixedA {B : Base F E} {j₀ j₁ i₀ i₁ : ℕ} {H : Plane E n n₁} {H' : Plane E d d₁}
     (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (M : Model σ X W) (M₁ : Model σ X₁ W₁)
-    {m m' : Matrix (Fin n) (Fin d) (AE F E)} (h : IsMixedA M₁ H H' m) (h' : IsMixedA M₁ H H' m') :
+    {m m' : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (h : IsMixedA M₁ H H' m) (h' : IsMixedA M₁ H H' m') :
     (M.co.e m).1 ⬝ᵥ (M.co.e m').2 - (M.co.e m').1 ⬝ᵥ (M.co.e m).2 = 0 := by
   obtain ⟨y, v, z, hz, rfl⟩ := h
   obtain ⟨y', v', z', hz', rfl⟩ := h'
   have hQ : ∀ a b, (M.co.e a).1 ⬝ᵥ (M.co.e b).2 - (M.co.e b).1 ⬝ᵥ (M.co.e a).2 =
       symp (cA σ) (-1) (incM F X.J) (incM F W.J) a b := fun a b => (M.co.form a b).symm
-  have ha : Matrix.vecMulVec y (incV F H'.x) ∈ (iso0 n H' : Set (Matrix (Fin n) (Fin d) (AE F E))) := ⟨y, rfl⟩
-  have ha' : Matrix.vecMulVec y' (incV F H'.x) ∈ (iso0 n H' : Set (Matrix (Fin n) (Fin d) (AE F E))) := ⟨y', rfl⟩
+  have ha : Matrix.vecMulVec y (incV F H'.x) ∈ (iso0 n H' : Set (Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) := ⟨y, rfl⟩
+  have ha' : Matrix.vecMulVec y' (incV F H'.x) ∈ (iso0 n H' : Set (Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) := ⟨y', rfl⟩
   have hcross := GlobalTheory.T.symplectic_isotropic_embedded_vanishes_adelic F E σ n d d₁ X.J W.J H' (fun u => (hH'.orth u).1)
   have h_aa := GlobalTheory.T.symplectic_isotropic_plane_vanishes_adelic F E σ n d d₁ X.J W.J H' hH'.xx _ ha _ ha'
   have h_ba' := hcross _ ha' (Matrix.vecMulVec (incV F H.x) v)

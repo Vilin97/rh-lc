@@ -30,9 +30,9 @@ theorem _root_.GlobalTheory.T.herm_skew_adapted_local_model_two : ∀ (F E : Typ
     ∀ (v : Pl (F := F)) (w : (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v)),
       (∀ u ∈ isoA (F := F) H H', At (evFin F v) u →
         (GlobalTheory.LatVac.locCo M.co v u).1 ⬝ᵥ w.2 - w.1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u).2 = 0) →
-      ∃ z₀ : Fin n → AE F E, At (evFin F v) (Matrix.vecMulVec z₀ (incV F H'.x)) ∧
-      ∃ y₀ : Fin d₁ → AE F E, At (evFin F v) (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ y₀)) ∧
-      ∃ z : Matrix (Fin n₁) (Fin d₁) (AE F E), At (evFin F v) z ∧
+      ∃ z₀ : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), At (evFin F v) (Matrix.vecMulVec z₀ (incV F H'.x)) ∧
+      ∃ y₀ : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), At (evFin F v) (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ y₀)) ∧
+      ∃ z : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evFin F v) z ∧
         w = GlobalTheory.LatVac.locCo M.co v (Matrix.vecMulVec z₀ (incV F H'.x)) +
           GlobalTheory.LatVac.locCo M.co v (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ y₀)) +
           GlobalTheory.LatVac.locCo M.co v (incM F H.ι * z * (incM F H'.ι)ᵀ) := by

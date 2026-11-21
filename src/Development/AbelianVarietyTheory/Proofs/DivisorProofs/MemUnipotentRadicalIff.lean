@@ -19,7 +19,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 def unipSet (σ : E →ₐ[F] E) {n n₁ : ℕ} (X : Spc F E n) (H : Plane E n n₁) : Subgroup (UA σ X.J) where
   carrier := {u | mat u *ᵥ incV F H.x = incV F H.x ∧
-    ∀ z, ∃ a : AE F E, mat u *ᵥ (incM F H.ι *ᵥ z) = incM F H.ι *ᵥ z + a • incV F H.x}
+    ∀ z, ∃ a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), mat u *ᵥ (incM F H.ι *ᵥ z) = incM F H.ι *ᵥ z + a • incV F H.x}
   one_mem' := by
     refine ⟨by rw [GlobalTheory.StabHaar.mat_one, Matrix.one_mulVec], fun z => ⟨0, ?_⟩⟩
     rw [GlobalTheory.StabHaar.mat_one, Matrix.one_mulVec, zero_smul, add_zero]
@@ -47,7 +47,7 @@ def unipSet (σ : E →ₐ[F] E) {n n₁ : ℕ} (X : Spc F E n) (H : Plane E n n
 
 theorem mem_unip_iff (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (n n₁ : ℕ) (X : Spc F E n) (H : Plane E n n₁) (u : UA σ X.J) : u ∈ unip σ X H ↔
-      (mat u *ᵥ incV F H.x = incV F H.x ∧ ∀ z, ∃ a : AE F E, mat u *ᵥ (incM F H.ι *ᵥ z) = incM F H.ι *ᵥ z + a • incV F H.x) := by
+      (mat u *ᵥ incV F H.x = incV F H.x ∧ ∀ z, ∃ a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), mat u *ᵥ (incM F H.ι *ᵥ z) = incM F H.ι *ᵥ z + a • incV F H.x) := by
   have hc : unip σ X H = unipSet σ X H := by
     apply le_antisymm
     · exact (Subgroup.closure_le _).2 fun v hv => hv

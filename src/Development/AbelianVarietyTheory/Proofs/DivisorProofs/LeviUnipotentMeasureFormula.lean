@@ -24,7 +24,7 @@ namespace GlobalTheory.LeviConjHaar
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 theorem conj_mem_unip {d d₁ : ℕ} {W : Spc F E d} {H : Plane E d d₁} {k : UA σ W.J}
-    {M : Matrix (Fin d₁) (Fin d₁) (AE F E)} (hx : mat k *ᵥ incV F H.x = incV F H.x)
+    {M : Matrix (Fin d₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hx : mat k *ᵥ incV F H.x = incV F H.x)
     (hι : mat k * incM F H.ι = incM F H.ι * M) {u : UA σ W.J} (hu : u ∈ unip σ W H) :
     k⁻¹ * u * k ∈ unip σ W H := by
   have hinv : mat k⁻¹ * mat k = 1 := GlobalTheory.ThK.UnipClosed.mat_inv_mul k

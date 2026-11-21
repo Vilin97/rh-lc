@@ -43,7 +43,7 @@ theorem gram_apply {k : ℕ} {γ γ' : Type} (J : Matrix (Fin k) (Fin k) E) (P :
     Finset.sum_mul, Finset.mul_sum, mul_assoc]
   exact Finset.sum_comm
 
-theorem vecMulVec_incV {n d : ℕ} (x : Fin n → E) (a : Fin d → AE F E) :
+theorem vecMulVec_incV {n d : ℕ} (x : Fin n → E) (a : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     Matrix.vecMulVec (incV F x) a = incM F (Matrix.replicateCol Unit x) * Matrix.replicateRow Unit a :=
   Matrix.vecMulVec_eq Unit _ _
 
@@ -97,8 +97,8 @@ theorem exists_ratMap {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ 
     exact congrArg hat hab
 
 theorem isotropic {B : Base F E} {n n₁ d : ℕ} {X : Spc F E n} {X₁ : Spc F E n₁} {W : Spc F E d} {H : Plane E n n₁}
-    {j₀ j₁ : ℕ} (M : Model σ X W) (M₁ : Model σ X₁ W) (hH : H.IsAdapted σ B X X₁ j₀ j₁) (a a' : Fin d → AE F E)
-    (z z' : Matrix (Fin n₁) (Fin d) (AE F E)) (hz : (M₁.co.e z).1 = 0) (hz' : (M₁.co.e z').1 = 0) :
+    {j₀ j₁ : ℕ} (M : Model σ X W) (M₁ : Model σ X₁ W) (hH : H.IsAdapted σ B X X₁ j₀ j₁) (a a' : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
+    (z z' : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (hz : (M₁.co.e z).1 = 0) (hz' : (M₁.co.e z').1 = 0) :
     (M.co.e (Matrix.vecMulVec (incV F H.x) a + incM F H.ι * z)).1 ⬝ᵥ
         (M.co.e (Matrix.vecMulVec (incV F H.x) a' + incM F H.ι * z')).2 =
       (M.co.e (Matrix.vecMulVec (incV F H.x) a' + incM F H.ι * z')).1 ⬝ᵥ
@@ -119,7 +119,7 @@ theorem isotropic {B : Base F E} {n n₁ d : ℕ} {X : Spc F E n} {X₁ : Spc F 
       (Matrix.vecMulVec (incV F H.x) a') = 0 := by
     rw [symp, vecMulVec_incV, vecMulVec_incV, hTens_mul, incM_gram, gxx, incM_zero]
     simp
-  have hc : ∀ (z : Matrix (Fin n₁) (Fin d) (AE F E)) (a : Fin d → AE F E),
+  have hc : ∀ (z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (a : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
       symp (cA σ) (-1) (incM F X.J) (incM F W.J) (incM F H.ι * z) (Matrix.vecMulVec (incV F H.x) a) = 0 := by
     intro z a
     rw [symp, vecMulVec_incV, hTens_mul, incM_gram, gιx, incM_zero]
@@ -169,7 +169,7 @@ theorem exists_ratLagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
       H.IsAdapted σ B X X₁ j₀ j₁ → IsPair B M₁ χX χW om₁ r₁ s₁ r' s' →
       ∃ L : Submodule F ((Fin n × Fin d → F) × (Fin n × Fin d → F)), (∀ a ∈ L, ∀ b ∈ L, a.1 ⬝ᵥ b.2 = b.1 ⬝ᵥ a.2) ∧
         Module.finrank F L = Fintype.card (Fin n × Fin d) ∧
-        ∀ (t : AF F), ∀ w ∈ L, ∃ (a : Fin d → AE F E) (z : Matrix (Fin n₁) (Fin d) (AE F E)), (M₁.co.e z).1 = 0 ∧
+        ∀ (t : AF F), ∀ w ∈ L, ∃ (a : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), (M₁.co.e z).1 = 0 ∧
           M.co.e (Matrix.vecMulVec (incV F H.x) a + incM F H.ι * z) =
             t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i))) := by
   intro F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁

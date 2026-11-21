@@ -19,7 +19,10 @@ open scoped Classical
 
 theorem ext_algebraMap {K : Type} [Field K] [NumberField K] (v : InfinitePlace K) (x : K) :
     InfinitePlace.Completion.extensionEmbedding v (algebraMap K v.Completion x) = v.embedding x :=
-  InfinitePlace.Completion.extensionEmbedding_coe v ((WithAbs.equiv v.1).symm x)
+  by
+    rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+      Algebra.algebraMap_self_apply, InfinitePlace.Completion.extensionEmbedding_coe]
+    simp
 
 theorem tendsto_completion_iff {K : Type} [Field K] [NumberField K] (v : InfinitePlace K) {α : Type}
     {l : Filter α} (f : α → K) (c : v.Completion) :

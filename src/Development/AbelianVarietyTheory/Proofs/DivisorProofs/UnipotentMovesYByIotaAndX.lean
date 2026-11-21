@@ -33,8 +33,8 @@ theorem span_E {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n�
   exact hL (Submodule.mem_top (x := w))
 
 theorem span_A {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁} {j₀ j₁ : ℕ}
-    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hlat : X.L.IsLattice E) (w : Fin n → AE F E) :
-    ∃ (a b : AE F E) (z : Fin n₁ → AE F E), w = a • incV F H.x + incM F H.ι *ᵥ z + b • incV F H.y := by
+    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hlat : X.L.IsLattice E) (w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
+    ∃ (a b : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), w = a • incV F H.x + incM F H.ι *ᵥ z + b • incV F H.y := by
   suffices h : w ∈ GlobalTheory.UnipLine.spanSet (incV F H.x) (incV F H.y) (incM F H.ι) from h
   rw [pi_eq_sum_univ w]
   refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ ?_
@@ -64,7 +64,7 @@ theorem form_y_x {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n
 theorem mulVec_y {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁} {j₀ j₁ : ℕ}
     (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hlat : X.L.IsLattice E) (hyx : form σ X.J H.y H.x ≠ 0) (u : UA σ X.J)
     (hux : mat u *ᵥ incV F H.x = incV F H.x) :
-    ∃ (c : AE F E) (z₀ : Fin n₁ → AE F E), mat u *ᵥ incV F H.y = incV F H.y + c • incV F H.x + incM F H.ι *ᵥ z₀ := by
+    ∃ (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z₀ : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), mat u *ᵥ incV F H.y = incV F H.y + c • incV F H.x + incM F H.ι *ᵥ z₀ := by
   set q := X.J *ᵥ fun i => σ (H.x i) with hq
   set g := incV F q
   have hunit : (mat u)ᵀ * incM F X.J * (mat u).map (cA σ) = incM F X.J := u.2

@@ -27,7 +27,13 @@ theorem exists_isom_loc (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {h 
     rw [hx, map_zero] at this
     simp at this
   obtain ⟨e, -, hspan, rfl, he⟩ := hI
-  obtain ⟨g, hg, hge⟩ := WA.exists_isom_frame (WA.isHermSemilocal_locRing hK hp) hs hd
+  have hS : WA.IsHermSemilocal (WA.locRing p) :=
+    { star_mem := fun _ ha => WA.star_mem_locRing hp.isPrime ha
+      frac := WA.frac_locRing p
+      unram := WA.unram_locRing hK hp
+      principal := WA.principal_locRing hK hp
+      unit_or := fun a ha κ hκ μ hna hμ => WA.unit_or_locRing hp.isPrime a ha κ hκ μ hna hμ }
+  obtain ⟨g, hg, hge⟩ := WA.exists_isom_frame hS hs hd
     (WA.isSelfDualMod_loc hL hp.isPrime hu) e he
   exact ⟨g, hg, WA.gmap_loc_eq_of_frame hp.isPrime hu hspan he hg hge⟩
 

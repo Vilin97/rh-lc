@@ -26,7 +26,7 @@ theorem goodModel_coords_rat_symplectic : ∀ (F E : Type) [Field F] [NumberFiel
   have hA : ∀ u, A *ᵥ Φ₀ u = Φ₁ u := by
     intro u; simp [A, LinearMap.toMatrix'_mulVec]
 
-  have hspan : Submodule.span (AF F) (Set.range (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (AE F E))) = ⊤ := by
+  have hspan : Submodule.span (AF F) (Set.range (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) = ⊤ := by
     rw [eq_top_iff]; intro U _
     rw [Matrix.matrix_eq_sum_single U]
     refine Submodule.sum_mem _ fun i _ => Submodule.sum_mem _ fun j _ => ?_
@@ -34,7 +34,7 @@ theorem goodModel_coords_rat_symplectic : ∀ (F E : Type) [Field F] [NumberFiel
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul a e =>
-      have : Matrix.single i j (a ⊗ₜ[F] e : AE F E) = a • incM F (Matrix.single i j e) := by
+      have : Matrix.single i j (a ⊗ₜ[F] e : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = a • incM F (Matrix.single i j e) := by
         ext k l
         simp only [incM, Matrix.single_apply, Matrix.smul_apply, Matrix.map_apply, inclR]
         split_ifs
@@ -42,7 +42,7 @@ theorem goodModel_coords_rat_symplectic : ∀ (F E : Type) [Field F] [NumberFiel
         · simp
       rw [this]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
     | add x y hx hy => rw [Matrix.single_add]; exact Submodule.add_mem _ hx hy
-  have hspan' : Submodule.span (AF F) (Φ₀.toLinearMap '' Set.range (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (AE F E))) = ⊤ := by
+  have hspan' : Submodule.span (AF F) (Φ₀.toLinearMap '' Set.range (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) = ⊤ := by
     rw [Submodule.span_image, hspan, Submodule.map_top, LinearEquiv.range]
   have hrat0 : ∀ x : Matrix (Fin n) (Fin d) E, ∃ w : (Fin n × Fin d) ⊕ (Fin n × Fin d) → F, Φ₀ (incM F x) = fun i => ι (w i) := by
     intro x; obtain ⟨y, z, h⟩ := hM.rat x
@@ -57,7 +57,7 @@ theorem goodModel_coords_rat_symplectic : ∀ (F E : Type) [Field F] [NumberFiel
     let c : (Fin n × Fin d) ⊕ (Fin n × Fin d) → F := fun i => f (fun j => if i = j then 1 else 0)
     have hfc : ∀ w, f w = ∑ i, w i * c i := by
       intro w; rw [LinearMap.pi_apply_eq_sum_univ f w]; simp [c, smul_eq_mul]
-    have hP : ∀ V ∈ Submodule.span (AF F) (Φ₀.toLinearMap '' Set.range (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (AE F E))),
+    have hP : ∀ V ∈ Submodule.span (AF F) (Φ₀.toLinearMap '' Set.range (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))),
         ∑ i, V i * ι (c i) = 0 := by
       intro V hV
       induction hV using Submodule.span_induction with

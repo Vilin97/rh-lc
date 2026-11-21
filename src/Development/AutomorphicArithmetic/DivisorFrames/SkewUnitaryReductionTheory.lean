@@ -43,7 +43,7 @@ private theorem absE_rE (h : IsCMExt F E σ) {s : ℝ} (hs : 0 < s) (u : (AF F �
     Finset.prod_congr rfl fun w _ => hinf w, Finset.prod_const, Finset.card_univ, pow_mul]
 
 private theorem exists_unit (h : IsCMExt F E σ) {s : ℝ} (hs : 0 < s) :
-    ∃ u : (AE F E)ˣ, u.1 = algebraMap (AF F) (AE F E) (GlobalTheory.TorusTheta.infScale F s) ∧ s ≤ 1 + (absE F E u : ℝ) := by
+    ∃ u : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, u.1 = algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (GlobalTheory.TorusTheta.infScale F s) ∧ s ≤ 1 + (absE F E u : ℝ) := by
   let u : (AF F ⊗[F] E)ˣ := ⟨rE F E s, rE F E s⁻¹, by rw [← rE_mul, mul_inv_cancel₀ hs.ne', rE_one],
     by rw [← rE_mul, inv_mul_cancel₀ hs.ne', rE_one]⟩
   refine ⟨u, rfl, ?_⟩

@@ -160,8 +160,18 @@ theorem isLattice_fractionalIdeal_smul {a : FractionalIdeal (𝓞 E)⁰ E} (ha :
       by_contra h
       push Not at h
       exact ha (FractionalIdeal.eq_zero_iff.2 fun x hx => by_contra fun h0 => h x h0 hx)
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply Submodule.eq_top_iff'.2
+    intro x
+    have hx : x ∈ Submodule.span E (Λ : Set (Fin r → E)) := by rw [hΛ.2]; trivial
+    induction hx using Submodule.span_induction with
+    | mem y hy =>
+      have h : α • y ∈ (a : Submodule (𝓞 E) E) • Λ := Submodule.smul_mem_smul hα hy
+      have h' : α • y ∈ Submodule.span E (↑((a : Submodule (𝓞 E) E) • Λ)) := Submodule.subset_span h
+      have h'' := Submodule.smul_mem (Submodule.span E (((a : Submodule (𝓞 E) E) • Λ : Submodule (𝓞 E) (Fin r → E)) : Set (Fin r → E))) α⁻¹ h'
+      simpa [smul_smul, hα0] using h''
+    | zero => exact zero_mem _
+    | add x y _ _ hx hy => exact add_mem hx hy
+    | smul c x _ hx => exact Submodule.smul_mem _ c hx
 omit [NumberField E] [IsCMField E] in
 theorem smul_mem_of_isIntegral (Λ : Submodule (𝓞 E) (Fin r → E)) {a : E} (ha : IsIntegral ℤ a)
     {y : Fin r → E} (hy : y ∈ Λ) : a • y ∈ Λ :=
@@ -326,13 +336,41 @@ omit [IsCMField E] in
 theorem exists_rat_basis_of_isLattice (hΛ : ReciprocityTheory.MultiplicativeHeights.IsLattice Λ) :
     ∃ (n : ℕ) (b : Module.Basis (Fin n) ℚ (Fin r → E)),
       Submodule.span ℤ (Set.range b) = Λ.restrictScalars ℤ := by
-  have : (Λ.restrictScalars ℤ).IsLattice ℚ := by
+  haveI : (Λ.restrictScalars ℤ).IsLattice ℚ := by
     constructor
     · have : Module.Finite (𝓞 E) Λ := Module.Finite.iff_fg.2 hΛ.1
       have : Module.Finite ℤ Λ := Module.Finite.trans (𝓞 E) Λ
       exact Module.Finite.iff_fg.1 this
     · intro s hs hli
       exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  have hsmul (a : E) {x : Fin r → E}
+      (hx : x ∈ Submodule.span ℚ ((Λ.restrictScalars ℤ : Submodule ℤ (Fin r → E)) : Set (Fin r → E))) :
+      a • x ∈ Submodule.span ℚ ((Λ.restrictScalars ℤ : Submodule ℤ (Fin r → E)) : Set (Fin r → E)) := by
+    obtain ⟨m, s, hm, hms⟩ :=
+      (IsFractionRing.isAlgebraic_iff ℤ ℚ E |>.mpr (.of_finite ℚ a)).exists_nsmul_eq (𝓞 E)
+    induction hx using Submodule.span_induction with
+    | mem y hy =>
+      have hsy : s • y ∈ Λ := Λ.smul_mem s hy
+      have key : a • y = (m : ℚ)⁻¹ • (s • y) := by
+        rw [← algebraMap_smul E s y, ← hms, smul_assoc, ← Nat.cast_smul_eq_nsmul ℚ,
+          inv_smul_smul₀ (by exact_mod_cast hm)]
+      rw [key]
+      exact Submodule.smul_mem _ _ (Submodule.subset_span hsy)
+    | zero => simp
+    | add y z _ _ hy hz => rw [smul_add]; exact add_mem hy hz
+    | smul q y _ hy => rw [smul_comm]; exact Submodule.smul_mem _ _ hy
+  have hspan : Submodule.span ℚ ((Λ.restrictScalars ℤ : Submodule ℤ (Fin r → E)) : Set (Fin r → E)) = ⊤ := by
+    apply Submodule.eq_top_iff'.2
+    intro x
+    have hx : x ∈ Submodule.span E (Λ : Set (Fin r → E)) := by rw [hΛ.2]; trivial
+    induction hx using Submodule.span_induction with
+    | mem y hy => exact Submodule.subset_span hy
+    | zero => exact zero_mem _
+    | add y z _ _ hy hz => exact add_mem hy hz
+    | smul a y _ hy => exact hsmul a hy
+  haveI : (Λ.restrictScalars ℤ).IsFullLattice ℚ := ⟨hspan⟩
+  haveI : Module.Free ℤ (Λ.restrictScalars ℤ) := Submodule.IsLattice.free ℚ _
+  haveI : Module.Finite ℤ (Λ.restrictScalars ℤ) := Submodule.IsLattice.finite ℚ _
   let b := Module.finBasis ℤ (Λ.restrictScalars ℤ)
   refine ⟨_, b.extendOfIsLattice ℚ, ?_⟩
   have h1 : Set.range (b.extendOfIsLattice ℚ) = (Λ.restrictScalars ℤ).subtype '' Set.range b := by

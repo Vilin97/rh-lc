@@ -19,7 +19,7 @@ theorem _root_.GlobalTheory.T.config_a_stabilizer_evaluation_theta : GlobalTheor
     ∀ (K : Subgroup (UA σ G.V.J)), IsStab B K →
     ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
     ∀ Φ ∈ PolData B G.M, ∀ h, ∃ U : Set (Fin (Module.finrank F E) → Af F), IsCompact U ∧ ∀ N : ℕ, ∃ C : ENNReal, C ≠ ⊤ ∧
-      ∀ k ∈ K, ∀ l : (AE F E)ˣ,
+      ∀ k ∈ K, ∀ l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ,
         ∫⁻ g₀ in G₁.M.dom, ‖thetaSum F (om₁ (g₀, 1) (e (G.M.co.rho B.ψ (shiftA H H' l) (om (k, h) Φ))))‖ₑ ∂G₁.M.μ ≤
-          C * GlobalTheory.XTermMaj.maj F E N U (l : AE F E) := by
+          C * GlobalTheory.XTermMaj.maj F E N U (l : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := by
   first | exact @GlobalTheory.XTermBound.bound | exact GlobalTheory.XTermBound.bound | (intros; apply GlobalTheory.XTermBound.bound <;> assumption)

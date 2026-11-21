@@ -14,7 +14,7 @@ theorem kap_at_and_onto : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     (w : HeightOneSpectrum (𝓞 E)) (hw : Formalism.UG.IsInertAt F E v w) (h : w.under (𝓞 F) = v) {m n : ℕ}
     (A : GL (Fin m) (w.adicCompletion E)) (Bm : GL (Fin n) (w.adicCompletion E)),
     (∀ x, At (evFin F v) (kap hw h (A : Matrix (Fin m) (Fin m) (w.adicCompletion E)) (Bm : Matrix (Fin n) (Fin n) (w.adicCompletion E)) x)) ∧
-    ∀ γ : Matrix (Fin m) (Fin n) (AE F E), At (evFin F v) γ →
+    ∀ γ : Matrix (Fin m) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evFin F v) γ →
       ∃ x, kap hw h (A : Matrix (Fin m) (Fin m) (w.adicCompletion E)) (Bm : Matrix (Fin n) (Fin n) (w.adicCompletion E)) x = γ := by
   intro F E _ _ _ _ _ v w hw h m n A Bm
   refine ⟨fun x u hu => ?_, fun γ hγ => ?_⟩

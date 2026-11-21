@@ -211,7 +211,8 @@ theorem algebraicIndependent_of_quotient {ι o S T : Type*} [CommRing o] [IsDede
     have := RingHom.congr_fun h3 G'
     simpa [h1] using this)
   apply hm
-  rw [← Ideal.Quotient.eq_zero_iff_mem, ← coeff_map, h4, coeff_zero]
+  rw [← Ideal.Quotient.eq_zero_iff_mem, ← coeff_map, h4]
+  simp
 
 end Independence
 

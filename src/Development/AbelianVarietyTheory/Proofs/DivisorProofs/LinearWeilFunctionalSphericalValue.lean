@@ -35,7 +35,7 @@ theorem eq_liftU_of_UAt {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl (F := 
   have hv : g'.val = (mat g).map (piW t) := rfl
   set L := GlobalTheory.SplitUnitLift.liftU h t X.J 1 herm hJ g' with hL
   have hU : (mat g)ᵀ * incM F X.J * (mat g).map (cA σ) = incM F X.J := g.2
-  have tr : ∀ (A B C : Matrix (Fin n) (Fin n) (AE F E)),
+  have tr : ∀ (A B C : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))),
       (Aᵀ * B * C).map (piW t) = (A.map (piW t))ᵀ * B.map (piW t) * C.map (piW t) := fun A B C => by
     rw [Matrix.map_mul, Matrix.map_mul, Matrix.transpose_map]
   have hJm : (incM F X.J).map (piW t) = X.J.map t := by

@@ -19,7 +19,7 @@ theorem _root_.GlobalTheory.T.pair_descends_along_adapted_plane : ∀ (F E : Typ
       H.IsAdapted σ B X X₁ j₀ j₁ → IsPair B M₁ χX χW om₁ r₁ s₁ r' s' →
       ∃ L : Submodule F ((Fin n × Fin d → F) × (Fin n × Fin d → F)), (∀ a ∈ L, ∀ b ∈ L, a.1 ⬝ᵥ b.2 = b.1 ⬝ᵥ a.2) ∧
         Module.finrank F L = Fintype.card (Fin n × Fin d) ∧
-        ∀ (t : AF F), ∀ w ∈ L, ∃ (a : Fin d → AE F E) (z : Matrix (Fin n₁) (Fin d) (AE F E)), (M₁.co.e z).1 = 0 ∧
+        ∀ (t : AF F), ∀ w ∈ L, ∃ (a : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), (M₁.co.e z).1 = 0 ∧
           M.co.e (Matrix.vecMulVec (incV F H.x) a + incM F H.ι * z) =
             t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i))) := by
   first | exact @GlobalTheory.MixedLagrX.exists_ratLagr | exact GlobalTheory.MixedLagrX.exists_ratLagr | (intros; apply GlobalTheory.MixedLagrX.exists_ratLagr <;> assumption)

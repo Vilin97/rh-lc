@@ -252,6 +252,7 @@ theorem exists_nat_mem_nhds (W : Set (Af F)) (hW : W ∈ 𝓝 (0 : Af F)) : ∃ 
     exact ⟨a, ha, e.symm⟩
   obtain ⟨k, hk⟩ := exists_subset_nhds_of_isCompact' (V := T) hanti.directed_ge hT
     (fun k => (hT k).isClosed) (U := V) (by
+      apply mem_nhdsSet_iff_forall.2
       refine fun y hy => hV.mem_nhds ?_
       have := (GlobalTheory.AdLat.integral_finiteAdele_complete_separated F).1 y fun N hN =>
         hdvd N N (Nat.dvd_factorial hN le_rfl) y (Set.mem_iInter.1 hy N)

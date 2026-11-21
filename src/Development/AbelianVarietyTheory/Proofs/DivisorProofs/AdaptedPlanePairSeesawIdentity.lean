@@ -20,7 +20,7 @@ theorem evalZero_levi : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
     ∀ (n₁ : ℕ) (X₁ : Spc F E n₁) (H : Plane E n n₁) (j₀ j₁ : ℕ) (M₁ : Model σ X₁ W) (om₁ : Rep σ X₁ W) (r₁ s₁ : ℕ),
       H.IsAdapted σ B X X₁ j₀ j₁ → IsPair B M₁ χX χW om₁ r₁ s₁ r' s' →
       ∀ e, IsEv B M M₁ H.ι 1 {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} e →
-      ∀ (t : (AE F E)ˣ) (g₁ : UA σ X₁.J) (m : UA σ X.J), IsLevi H t g₁ m → ∀ Φ ∈ schA F (Fin n × Fin d),
+      ∀ (t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (g₁ : UA σ X₁.J) (m : UA σ X.J), IsLevi H t g₁ m → ∀ Φ ∈ schA F (Fin n × Fin d),
         e (om (m, 1) Φ) = ((χW t : ℂ) * (((absE F E t : ℝ) ^ ((d : ℝ) / 2) : ℝ) : ℂ)) • om₁ (g₁, 1) (e Φ) := by
   intro hPr F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he t g₁ m hm Φ hΦ
   obtain ⟨mt, hmt⟩ := GlobalTheory.T.hermitian_adapted_plane_restriction hPr F E σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ t
@@ -29,21 +29,21 @@ theorem evalZero_levi : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
     rw [← Units.val_mul, ← Subgroup.coe_mul, inv_mul_cancel]; rfl
   have hmul : mat (mt⁻¹ * m) = mat mt⁻¹ * mat m := rfl
   have hone : mat (1 : UA σ X₁.J) = 1 := rfl
-  have hcA : cA σ t.1 * cA σ (t⁻¹ : (AE F E)ˣ).1 = 1 := by
+  have hcA : cA σ t.1 * cA σ (t⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ).1 = 1 := by
     rw [← map_mul, Units.mul_inv, map_one]
   obtain ⟨hx, hy, hι⟩ := hm
   obtain ⟨hx', hy', hι'⟩ := hmt
   have key : IsLevi H 1 g₁ (mt⁻¹ * m) := by
-    have ex : mat mt⁻¹ *ᵥ incV F H.x = (t⁻¹ : (AE F E)ˣ).1 • incV F H.x := by
+    have ex : mat mt⁻¹ *ᵥ incV F H.x = (t⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ).1 • incV F H.x := by
       have h1 : t.1 • (mat mt⁻¹ *ᵥ incV F H.x) = incV F H.x := by
         rw [← Matrix.mulVec_smul, ← hx', Matrix.mulVec_mulVec, hinv, Matrix.one_mulVec]
-      calc mat mt⁻¹ *ᵥ incV F H.x = (t⁻¹ : (AE F E)ˣ).1 • (t.1 • (mat mt⁻¹ *ᵥ incV F H.x)) := by
+      calc mat mt⁻¹ *ᵥ incV F H.x = (t⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ).1 • (t.1 • (mat mt⁻¹ *ᵥ incV F H.x)) := by
             rw [smul_smul, Units.inv_mul, one_smul]
         _ = _ := by rw [h1]
     have ey : mat mt⁻¹ *ᵥ incV F H.y = cA σ t.1 • incV F H.y := by
-      have h1 : cA σ (t⁻¹ : (AE F E)ˣ).1 • (mat mt⁻¹ *ᵥ incV F H.y) = incV F H.y := by
+      have h1 : cA σ (t⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ).1 • (mat mt⁻¹ *ᵥ incV F H.y) = incV F H.y := by
         rw [← Matrix.mulVec_smul, ← hy', Matrix.mulVec_mulVec, hinv, Matrix.one_mulVec]
-      calc mat mt⁻¹ *ᵥ incV F H.y = cA σ t.1 • (cA σ (t⁻¹ : (AE F E)ˣ).1 • (mat mt⁻¹ *ᵥ incV F H.y)) := by
+      calc mat mt⁻¹ *ᵥ incV F H.y = cA σ t.1 • (cA σ (t⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ).1 • (mat mt⁻¹ *ᵥ incV F H.y)) := by
             rw [smul_smul, hcA, one_smul]
         _ = _ := by rw [h1]
     have eι : mat mt⁻¹ * incM F H.ι = incM F H.ι := by

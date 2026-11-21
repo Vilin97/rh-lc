@@ -15,7 +15,7 @@ open GlobalTheory.Doubling (absE)
 namespace GlobalTheory.IdeleSizeUnit
 
 theorem coord_inf (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (w : InfinitePlace F) (x : AE F E) (i : Fin (Module.finrank F E)) :
+    (w : InfinitePlace F) (x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (i : Fin (Module.finrank F E)) :
     haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
     GlobalTheory.AdelicU.evInf F w (GlobalTheory.IdeleDecay.coord F E x i) =
       (Algebra.TensorProduct.basis w.Completion (Module.finBasis F E)).repr (GlobalTheory.AdelicU.compInf F E w x) i := by

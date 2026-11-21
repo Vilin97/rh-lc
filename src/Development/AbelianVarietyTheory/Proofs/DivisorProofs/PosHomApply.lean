@@ -18,10 +18,10 @@ namespace GlobalTheory.ThK.AdaptEv.VacuumBlock
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def spanA {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) : Set (Matrix (Fin n) (Fin d) (AE F E)) :=
+def spanA {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) : Set (Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :=
   {u | ∃ y z, u = Matrix.vecMulVec y (incV F H'.x) + Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ z)}
 
-def spanAd {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) : Set (Matrix (Fin n) (Fin d) (AE F E)) :=
+def spanAd {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) : Set (Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :=
   {u | ∃ y z, u = Matrix.vecMulVec y (incV F H'.y) + Matrix.vecMulVec (incV F H.y) (incM F H'.ι *ᵥ z)}
 
 def posHom {R κ ι κ₁ : Type} [AddCommGroup R] (eq : κ ≃ ι ⊕ κ₁) : (κ → R) × (κ → R) →+ (ι → R) where
@@ -30,12 +30,12 @@ def posHom {R κ ι κ₁ : Type} [AddCommGroup R] (eq : κ ≃ ι ⊕ κ₁) : 
   map_add' _ _ := rfl
 
 def latPos {n d : ℕ} (X : Spc F E n) (W : Spc F E d)
-    {Bf : Matrix (Fin n) (Fin d) (AE F E) → Matrix (Fin n) (Fin d) (AE F E) → AF F} {ι κ₁ : Type}
+    {Bf : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → AF F} {ι κ₁ : Type}
     (co : Darboux Bf (Fin n × Fin d)) (eq : Fin n × Fin d ≃ ι ⊕ κ₁) (v : Pl (F := F)) : AddSubgroup (ι → Fv F v) :=
   ((latAtV X W v).map (GlobalTheory.LatVac.locCo co v)).map (posHom eq)
 
 theorem mem_latPos {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
-    {Bf : Matrix (Fin n) (Fin d) (AE F E) → Matrix (Fin n) (Fin d) (AE F E) → AF F} {ι κ₁ : Type}
+    {Bf : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → AF F} {ι κ₁ : Type}
     {co : Darboux Bf (Fin n × Fin d)} {eq : Fin n × Fin d ≃ ι ⊕ κ₁} {v : Pl (F := F)} {y : ι → Fv F v} :
     y ∈ latPos X W co eq v ↔ ∃ γ ∈ latAtV X W v, ∀ i, evFin F v ((co.e γ).1 (eq.symm (Sum.inl i))) = y i := by
   simp only [latPos, AddSubgroup.mem_map]

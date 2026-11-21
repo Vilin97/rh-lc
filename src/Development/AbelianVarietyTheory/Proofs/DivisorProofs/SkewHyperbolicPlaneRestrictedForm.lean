@@ -27,20 +27,20 @@ theorem incV_smul {n : ℕ} (s : E) (v : Fin n → E) :
     incV F (s • v) = inclR (F := F) (AF F) s • incV F v := by
   funext i; simp [incV]
 
-theorem fA_add_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v w w' : Fin n → AE F E) :
+theorem fA_add_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v w w' : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J v (w + w') = fA σ J v w + fA σ J v w' := by
   have : (fun i => cA σ ((w + w') i)) = (fun i => cA σ (w i)) + (fun i => cA σ (w' i)) := by
     funext i; simp
   simp only [fA, this, Matrix.mulVec_add, dotProduct_add]
 
-theorem fA_smul_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (c : AE F E)
-    (v w : Fin n → AE F E) : fA σ J v (c • w) = cA σ c * fA σ J v w := by
+theorem fA_smul_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
+    (v w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : fA σ J v (c • w) = cA σ c * fA σ J v w := by
   have : (fun i => cA σ ((c • w) i)) = cA σ c • (fun i => cA σ (w i)) := by
     funext i; simp
   simp only [fA, this, Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul]
 
 theorem fA_unitary {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (u : UA σ J)
-    (v w : Fin n → AE F E) : fA σ J (mat u *ᵥ v) (mat u *ᵥ w) = fA σ J v w := by
+    (v w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : fA σ J (mat u *ᵥ v) (mat u *ᵥ w) = fA σ J v w := by
   have hu : (mat u)ᵀ * incM F J * (mat u).map (cA σ) = incM F J := u.2
   have hc : (fun i => cA σ ((mat u *ᵥ w) i)) = (mat u).map (cA σ) *ᵥ fun i => cA σ (w i) := by
     funext i; exact RingHom.map_mulVec (cA σ).toRingHom (mat u) w i
@@ -49,7 +49,7 @@ theorem fA_unitary {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     Matrix.mulVec_mulVec, hu]
 
 theorem fA_mulVec_left (σ : E →ₐ[F] E) {m n : ℕ} (J : Matrix (Fin n) (Fin n) E)
-    (N : Matrix (Fin n) (Fin m) (AE F E)) (z : Fin m → AE F E) (w : Fin n → AE F E) :
+    (N : Matrix (Fin n) (Fin m) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (z : Fin m → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J (N *ᵥ z) w = z ⬝ᵥ fun j => fA σ J (N *ᵥ Pi.single j 1) w := by
   simp only [fA]
   rw [← Matrix.vecMul_transpose N z, ← Matrix.dotProduct_mulVec]

@@ -48,7 +48,7 @@ theorem om_le : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddComm
     have h := hT.1.1.1
     unfold IsLatMod at h
     obtain ⟨⟨M, hM, hE⟩, hsp⟩ := h
-    refine ⟨?_, hsp⟩
+    apply Submodule.IsLattice.of_fg K
     rw [hE, rs, Submodule.restrictScalars_bot, sup_bot_eq]
     exact hM
   have hR1 : N.R1 ≤ N.R := inf_le_left

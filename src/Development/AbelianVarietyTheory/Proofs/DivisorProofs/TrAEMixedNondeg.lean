@@ -85,10 +85,10 @@ theorem trAE_trace_dual {F E A ι : Type} [Field F] [Field E] [Algebra F E] [Fin
   simp only [smul_mul_assoc, map_smul, key, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
     Finset.mem_univ, if_true]
 
-theorem trAE_nondeg {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (β : AE F E)
+theorem trAE_nondeg {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (β : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
     (hβ : At (evI F) β)
-    (h : ∀ t : AE F E, At (evI F) t →
-      Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (Algebra.trace (AF F) (AE F E) (β * t))) = 0) : β = 0 := by
+    (h : ∀ t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), At (evI F) t →
+      Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (β * t))) = 0) : β = 0 := by
   classical
   let b := Module.finBasis F E
   apply (Algebra.TensorProduct.basis (AF F) b).repr.injective

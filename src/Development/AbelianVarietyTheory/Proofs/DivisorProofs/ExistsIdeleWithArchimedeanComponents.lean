@@ -19,7 +19,7 @@ open GlobalTheory.Doubling (absE)
 
 namespace GlobalTheory.ThK
 
-theorem exists_unit_at_evI_piInf_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (τ : ∀ w : InfinitePlace F, EmbOver E w) (β : InfinitePlace F → ℂ), IsCMExt F E σ → (∀ w, β w ≠ 0) → ∃ t : (AE F E)ˣ, At (evI F) (t.1 - 1) ∧ ∀ w, piInf (τ w) t.1 = β w := by
+theorem exists_unit_at_evI_piInf_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (τ : ∀ w : InfinitePlace F, EmbOver E w) (β : InfinitePlace F → ℂ), IsCMExt F E σ → (∀ w, β w ≠ 0) → ∃ t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, At (evI F) (t.1 - 1) ∧ ∀ w, piInf (τ w) t.1 = β w := by
   intro F E _ _ _ _ _ σ τ β hCM hβ
   obtain ⟨z, hz, hzw⟩ := exists_at_evI_piInf_eq F E σ hCM τ (fun w => β w - 1)
   obtain ⟨z', hz', hzw'⟩ := exists_at_evI_piInf_eq F E σ hCM τ (fun w => (β w)⁻¹ - 1)

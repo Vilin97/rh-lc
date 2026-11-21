@@ -14,7 +14,7 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 open GlobalTheory.Doubling (absE)
 
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.lintegral_idele_majorant_finite : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (μ : Measure (AE F E)ˣ), μ.IsHaarMeasure →
+theorem _root_.GlobalTheory.T.lintegral_idele_majorant_finite : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (μ : Measure (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ), μ.IsHaarMeasure →
     ∀ s : ℝ, 1 < s → ∀ U : Set (Fin (Module.finrank F E) → Af F), IsCompact U → ∃ N : ℕ,
-      ∫⁻ l, GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (AE F E)ˣ) : AE F E) * ENNReal.ofReal ((absE F E l : ℝ) ^ (-s)) ∂μ < ⊤ := by
+      ∫⁻ l, GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * ENNReal.ofReal ((absE F E l : ℝ) ^ (-s)) ∂μ < ⊤ := by
   first | exact @GlobalTheory.TateConv.majorant_inv_lintegral_lt_top | exact GlobalTheory.TateConv.majorant_inv_lintegral_lt_top | (intros; apply GlobalTheory.TateConv.majorant_inv_lintegral_lt_top <;> assumption)

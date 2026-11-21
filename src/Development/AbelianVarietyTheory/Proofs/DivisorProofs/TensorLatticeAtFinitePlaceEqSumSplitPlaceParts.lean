@@ -41,7 +41,7 @@ theorem tmul_smul_gen_mem {n d : ℕ} (X : Spc F E n) (W : Spc F E d) (v : Pl (F
     simp only [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul, mul_assoc]
 
 theorem singleTens_smul_mem {n d : ℕ} (X : Spc F E n) (W : Spc F E d) (v : Pl (F := F)) {y : Fv F v ⊗[F] E}
-    (hy : y ∈ intLoc F E v) {γ : Matrix (Fin n) (Fin d) (AE F E)} (hγ : γ ∈ latAtV X W v) :
+    (hy : y ∈ intLoc F E v) {γ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hγ : γ ∈ latAtV X W v) :
     singleTens E v y • γ ∈ latAtV X W v := by
   refine intLoc_induction (p := fun y => singleTens E v y • γ ∈ latAtV X W v) ?_ ?_ ?_ ?_ hy
   · intro a ha o

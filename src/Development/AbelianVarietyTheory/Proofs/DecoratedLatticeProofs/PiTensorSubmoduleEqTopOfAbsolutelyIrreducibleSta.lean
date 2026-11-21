@@ -31,6 +31,7 @@ theorem position_algebraMap (i : ι) (c : ℂ) :
   ext v
   simp only [LinearMap.compMultilinearMap_apply, position_tprod, LinearMap.smul_apply, LinearMap.id_apply]
   rw [Module.algebraMap_end_apply, MultilinearMap.map_update_smul, Function.update_eq_self]
+  rfl
 
 theorem stable_adjoin_position (i : ι) {G : Type} (a : G → Module.End ℂ (K i))
     (N : Submodule ℂ (⨂[ℂ] j, K j)) (hN : ∀ g, ∀ x ∈ N, intersection_update_fsHerm_neg_one i (a g) x ∈ N)

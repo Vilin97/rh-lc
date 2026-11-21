@@ -81,7 +81,7 @@ theorem tsum_norm_le_of_bdd_pairing : ∀ {ι K : Type} (x : K → ι → ℂ), 
     _ ≤ max C' 0 := by rw [mul_one]; exact (hC' u).trans (le_max_left _ _)
 
 theorem rho_lin {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
-    {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (γ : Matrix (Fin n) (Fin d) (AE F E)) (a : ℂ)
+    {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (γ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (a : ℂ)
     (Φ Φ' : Fn F n d) : M.co.rho ψ γ (a • Φ + Φ') = a • M.co.rho ψ γ Φ + M.co.rho ψ γ Φ' := by
   funext x
   simp [Darboux.rho, schr]

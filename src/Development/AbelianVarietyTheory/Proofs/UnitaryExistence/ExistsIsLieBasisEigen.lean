@@ -262,7 +262,7 @@ theorem exists_isLieBasis_eigen : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   obtain ⟨ρ, hρ⟩ := exists_action hv₀ o.t.act
   let k := AlgebraicClosure p.asIdeal.ResidueField
   let f : R →+* k := (algebraMap p.asIdeal.ResidueField k).comp (algebraMap R _)
-  have := (IsSemiAbelian.pullback (spMap f) o.t.G o.t.semi).comm
+  have : IsCommMonObj ((Over.pullback (spMap f)).obj o.t.G) := inferInstance
   have hk := isGrpPullback_pullback o.t.G (spMap f)
   obtain ⟨vk, hvk, hvk'⟩ := exists_isLieBasis_baseChange R k f _ _ _ hk o.t.semi.smooth n v₀ hv₀
   let actk := OAct.pullback (spMap f) o.t.G o.t.act

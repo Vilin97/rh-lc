@@ -18,6 +18,6 @@ set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.lattice_unit_quotient_finite_reps : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d) (v : Pl (F := F))
     (u : AF F), W.L.IsLattice E → evI F u = 0 → (∀ w : Pl (F := F), w ≠ v → evFin F w u = 0) →
     evFin F v u ∈ v.adicCompletionIntegers F → ∀ m : ℕ, m ≠ 0 →
-    ∃ S : Finset (Fin d → AE F E), (∀ s ∈ S, s ∈ latHat W) ∧
+    ∃ S : Finset (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), (∀ s ∈ S, s ∈ latHat W) ∧
       ∀ z ∈ latHat W, ∃ s ∈ S, ∃ y ∈ latHat W, u • z - s = m • y := by
   first | exact @GlobalTheory.SphLineComm.smul_latHat_finite_mod | exact GlobalTheory.SphLineComm.smul_latHat_finite_mod | (intros; apply GlobalTheory.SphLineComm.smul_latHat_finite_mod <;> assumption)

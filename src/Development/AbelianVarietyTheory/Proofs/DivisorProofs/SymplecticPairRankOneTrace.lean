@@ -39,9 +39,9 @@ theorem hTens_pure {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
     (J : Matrix (Fin n) (Fin n) E) (K : Matrix (Fin d) (Fin d) E) (ξ β : Fin n → E) (x y : Fin d → E) (t : AF F) :
     hTens (cA σ) (incM F J) (incM F K) (Matrix.vecMulVec (incV F ξ) (incV F y))
       (Matrix.vecMulVec (t • incV F β) (incV F x)) =
-      algebraMap (AF F) (AE F E) t * inclR (AF F) (form σ J ξ β * form σ K y x) := by
+      algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) t * inclR (AF F) (form σ J ξ β * form σ K y x) := by
   have hc : ∀ e : E, cA σ (inclR (AF F) e) = inclR (AF F) (σ e) := fun e => by simp [cA, inclR]
-  have hs : ∀ k, (t • incV F β) k = algebraMap (AF F) (AE F E) t * inclR (AF F) (β k) := fun k => by
+  have hs : ∀ k, (t • incV F β) k = algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) t * inclR (AF F) (β k) := fun k => by
     rw [Pi.smul_apply, Algebra.smul_def]; rfl
   rw [form_mul_form]
   set_option synthInstance.maxHeartbeats 100000 in

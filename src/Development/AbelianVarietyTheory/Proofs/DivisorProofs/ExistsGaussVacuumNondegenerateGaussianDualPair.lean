@@ -54,7 +54,7 @@ theorem exists_gauss_vacuum : ∀ (F E : Type) [Field F] [NumberField F] [Field 
     intro w
     rw [hrel w]
     simp
-  have key : ∀ v : Matrix (Fin n) (Fin d) (AE F E), At (evI F) v → ∀ h : SInf F (Fin n × Fin d),
+  have key : ∀ v : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) v → ∀ h : SInf F (Fin n × Fin d),
       ActsD (evI F) (M.heisLine B.ψ v) g h → ∀ x, h x = GlobalTheory.GaussLine.dHeis (GlobalTheory.GaussLine.pairInf F (Fin n × Fin d)) (Psi M v) g x := by
     intro v hv h hh x
     have h0 := actsD_Phi hψ M (Psi M v) g

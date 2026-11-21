@@ -53,7 +53,7 @@ def heckeFunI {W : Type} [AddCommGroup W] [Module ℂ W] (U : Subgroup (GAf L n)
     {v : HeightOneSpectrum (𝓞 L⁺)} {w : HeightOneSpectrum (𝓞 L)} (D : InertDatum L n v w)
     (h : Formalism.UG.GU D.σw n → ℂ) (f : GAf L n → W) : GAf L n → W :=
   fun g => ∑ᶠ c : GAf L n ⧸ U,
-    if hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = c ∧ TrivOutside L {v} x then
+    if hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = c ∧ TrivOutside (L := L) {v} x then
       D.hval h (D.loc hc.choose) • f (g * hc.choose) else 0
 
 

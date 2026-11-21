@@ -20,7 +20,7 @@ namespace GlobalTheory.IsoPhase
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 def phase (σ : E →ₐ[F] E) {d d₁ : ℕ} (W : Spc F E d) (H' : Plane E d d₁) (w : Fin d₁ → E) (u : UA σ W.J) : AF F :=
-  -Algebra.trace (AF F) (AE F E) (GlobalTheory.UnipMass.hA σ W.J (incV F (H'.ι *ᵥ w)) (mat u⁻¹ *ᵥ incV F H'.y))
+  -Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (GlobalTheory.UnipMass.hA σ W.J (incV F (H'.ι *ᵥ w)) (mat u⁻¹ *ᵥ incV F H'.y))
 
 
 set_option maxHeartbeats 400000 in

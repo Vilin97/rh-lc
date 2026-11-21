@@ -14,6 +14,6 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 open GlobalTheory.Doubling (absE)
 
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.adelic_modulus_norm_eq_abs : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (x : (AE F E)ˣ),
-    (((adeleClass F).modu (Units.map (Algebra.norm (AF F) : AE F E →* AF F) x) : ℝ≥0) : ℝ) = (absE F E x : ℝ) := by
+theorem _root_.GlobalTheory.T.adelic_modulus_norm_eq_abs : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (x : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ),
+    (((adeleClass F).modu (Units.map (Algebra.norm (AF F) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →* AF F) x) : ℝ≥0) : ℝ) = (absE F E x : ℝ) := by
   first | exact @GlobalTheory.ModuAdeleReal.modu_norm_eq_absE_real | exact GlobalTheory.ModuAdeleReal.modu_norm_eq_absE_real | (intros; apply GlobalTheory.ModuAdeleReal.modu_norm_eq_absE_real <;> assumption)

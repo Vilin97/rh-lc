@@ -73,7 +73,7 @@ theorem char_eq_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fie
         ⟨Φ₀, hΦ₀, hΦ₀ne⟩ dd dd₁ hdd hdd₁ omd omd₁ hws hws₁ ed hmaps hheis hinv hwc ⟨_, hboxs, hedne⟩ p t hpt
         (cd p) (hlaw p)))
   refine MonoidHom.ext fun h => Units.ext ?_
-  obtain ⟨gd, hgd⟩ := GlobalTheory.unitary_diag_one_mem_dbl (AF F) (AE F E) (cA σ) (Fin d) (incM F W.J) h
+  obtain ⟨gd, hgd⟩ := GlobalTheory.unitary_diag_one_mem_dbl (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (cA σ) (Fin d) (incM F W.J) h
   have h2 := hlaw gd (boxFun Φ₀ φ₂) hboxs
   rw [hcd1, hbox h gd hgd Φ₀ hΦ₀ φ₂ hφ₂, MonoidHom.one_apply, Units.val_one, one_smul, MonoidHom.comp_apply,
     MonoidHom.inr_apply, hbx _ (show om (1, h) Φ₀ ∈ schA F (Fin n × Fin d) from hspl.pres h Φ₀ hΦ₀) φ₂ hφ₂, hc h Φ₀ hΦ₀, hbx Φ₀ hΦ₀ φ₂ hφ₂,

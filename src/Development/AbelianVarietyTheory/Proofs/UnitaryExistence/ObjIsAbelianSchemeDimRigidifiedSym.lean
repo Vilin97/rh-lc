@@ -140,7 +140,8 @@ theorem dim_geometric_fibre (o : Obj D l b s) {k : Type} [Field k] [IsAlgClosed 
     have := CharP.charP_to_charZero k
     exact Nat.cast_injective e⟩
   obtain ⟨hdet, -⟩ := o.geom k x β hβ
-  have := (IsSemiAbelian.pullback x o.t.G o.t.semi).comm
+  have := o.t.semi.comm
+  have : IsCommMonObj ((Over.pullback x).obj o.t.G) := inferInstance
   obtain ⟨z, hz⟩ := exists_isUnivChart ((Over.pullback x).obj o.t.G) d hd
   let act := OAct.pullback x o.t.G o.t.act
   have := act.hom
@@ -172,7 +173,9 @@ theorem smoothOfRelativeDimension (o : Obj D l b s) :
   have hp := (isGrpPullback_pullback o.t.G x).1
   obtain ⟨y', hy', -⟩ := Scheme.exists_preimage_of_isPullback hp y (default : PrimeSpectrum k)
     (Scheme.fromSpecResidueField_apply _ _).symm
-  have := (IsSemiAbelian.pullback x o.t.G o.t.semi).smooth
+  have : Smooth ((Over.pullback x).obj o.t.G).hom := by
+    change Smooth (pullback.snd o.t.G.hom x)
+    infer_instance
   have : ConnectedSpace ((Over.pullback x).obj o.t.G).left :=
     GeometricallyConnected.geometrically_connectedSpace (f := o.t.G.hom) x _ _ hp
   obtain ⟨d, hd'⟩ := exists_dim_of_preconnected ((Over.pullback x).obj o.t.G).hom y'

@@ -175,7 +175,7 @@ theorem exists_weil {D : D7} (B : Base D.host.F D.host.E) (hB : B.IsGood D.sp.cm
   obtain ⟨g', h', a1, a2, a3⟩ := hr ((ofSgn ε M).symm g) h
   have key := (htr (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU M c eY g) (GlobalTheory.TripleRead.toUX X e eZ h) g' h' a1 a2 Φ hΦ).2
   funext x
-  let f : Matrix (Fin M.rank) (Fin k) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE D.host.F D.host.E) → ℂ := thetaTr D.host.F Mo.co B.ψ Φ
+  let f : Matrix (Fin M.rank) (Fin k) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := D.host.F) (E := D.host.E)) → ℂ := thetaTr D.host.F Mo.co B.ψ Φ
   exact (congrFun key _).trans (a3 f x)
 
 end GlobalTheory.TripleDarboux

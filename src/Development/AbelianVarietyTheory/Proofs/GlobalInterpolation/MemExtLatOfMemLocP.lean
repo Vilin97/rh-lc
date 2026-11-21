@@ -40,7 +40,9 @@ theorem _root_.GlobalTheory.ExtLatMatrix.mem_extLat_of_mem_locP (h : ∀ x : K, 
     Submodule.subset_span ⟨s • x, hsx, rfl⟩
   have hsm := Submodule.smul_mem _ (⟨σ ((s : K)⁻¹), hint⟩ : v.integer) hmem
   convert hsm using 1
-  rw [Algebra.smul_def, map_mul, ← mul_assoc, ← map_mul, inv_mul_cancel₀ hs0, map_one, one_mul]
+  funext i
+  change σ (x i) = σ ((s : K)⁻¹) * σ ((s : K) * x i)
+  rw [← map_mul, ← mul_assoc, inv_mul_cancel₀ hs0, one_mul]
 
 
 open NumberField IsDedekindDomain MvPolynomial in

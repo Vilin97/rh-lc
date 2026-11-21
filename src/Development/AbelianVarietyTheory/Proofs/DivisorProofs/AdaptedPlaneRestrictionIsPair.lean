@@ -64,20 +64,20 @@ theorem incl_form {m : ℕ} (J : Matrix (Fin m) (Fin m) E) (a b : Fin m → E) :
   rw [incV_map_cA, incM_mulVec, incV_dot]; rfl
 
 theorem symp_eq_zero {n d : ℕ} (JA : Matrix (Fin n) (Fin n) E) (JB : Matrix (Fin d) (Fin d) E)
-    (x y : Matrix (Fin n) (Fin d) (AE F E)) (h : xᵀ * incM F JA * y.map (cA σ) = 0) :
+    (x y : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (h : xᵀ * incM F JA * y.map (cA σ) = 0) :
     symp (cA σ) (-1) (incM F JA) (incM F JB) x y = 0 := by
   simp [symp, hTens_eq, h]
 
 variable {n d n₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁}
 
-def IsMixedX (M₁ : Model σ X₁ W) (H : Plane E n n₁) (m : Matrix (Fin n) (Fin d) (AE F E)) : Prop :=
-  ∃ y : Fin d → AE F E, ∃ z : Matrix (Fin n₁) (Fin d) (AE F E), (M₁.co.e z).1 = 0 ∧
+def IsMixedX (M₁ : Model σ X₁ W) (H : Plane E n n₁) (m : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Prop :=
+  ∃ y : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∃ z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), (M₁.co.e z).1 = 0 ∧
     m = Matrix.vecMulVec (incV F H.x) y + incM F H.ι * z * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ
 
 theorem isMixedX_zero (M₁ : Model σ X₁ W) (H : Plane E n n₁) : IsMixedX M₁ H 0 :=
   ⟨0, 0, by simp, by ext i j; simp [Matrix.vecMulVec_apply]⟩
 
-theorem IsMixedX.add {M₁ : Model σ X₁ W} {H : Plane E n n₁} {m m' : Matrix (Fin n) (Fin d) (AE F E)}
+theorem IsMixedX.add {M₁ : Model σ X₁ W} {H : Plane E n n₁} {m m' : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (h : IsMixedX M₁ H m) (h' : IsMixedX M₁ H m') : IsMixedX M₁ H (m + m') := by
   obtain ⟨y, z, hz, rfl⟩ := h
   obtain ⟨y', z', hz', rfl⟩ := h'
@@ -85,7 +85,7 @@ theorem IsMixedX.add {M₁ : Model σ X₁ W} {H : Plane E n n₁} {m m' : Matri
   rw [Matrix.vecMulVec_add, Matrix.mul_add, Matrix.add_mul]
   abel
 
-theorem IsMixedX.smul {M₁ : Model σ X₁ W} {H : Plane E n n₁} {m : Matrix (Fin n) (Fin d) (AE F E)}
+theorem IsMixedX.smul {M₁ : Model σ X₁ W} {H : Plane E n n₁} {m : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (h : IsMixedX M₁ H m) (t : AF F) : IsMixedX M₁ H (t • m) := by
   obtain ⟨y, z, hz, rfl⟩ := h
   refine ⟨t • y, t • z, by simp [hz], ?_⟩
@@ -104,7 +104,7 @@ def lagrX (M : Model σ X W) (M₁ : Model σ X₁ W) (H : Plane E n n₁) :
 section Symp
 variable {B : Base F E} {j₀ j₁ : ℕ} {H : Plane E n n₁}
 
-theorem piece_xx (hH : H.IsAdapted σ B X X₁ j₀ j₁) (y y' : Fin d → AE F E) :
+theorem piece_xx (hH : H.IsAdapted σ B X X₁ j₀ j₁) (y y' : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     (Matrix.vecMulVec (incV F H.x) y)ᵀ * incM F X.J * (Matrix.vecMulVec (incV F H.x) y').map (cA σ) = 0 := by
   have hm : (Matrix.vecMulVec (incV F H.x) y').map (cA σ) =
       Matrix.vecMulVec (fun i => cA σ (incV F H.x i)) (fun l => cA σ (y' l)) := by
@@ -112,7 +112,7 @@ theorem piece_xx (hH : H.IsAdapted σ B X X₁ j₀ j₁) (y y' : Fin d → AE F
   rw [hm, Matrix.transpose_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMulVec_mul_vecMulVec, ← Matrix.dotProduct_mulVec,
     incl_form, hH.xx, map_zero, zero_smul, Matrix.vecMulVec_zero]
 
-theorem piece_ix (hH : H.IsAdapted σ B X X₁ j₀ j₁) (z : Matrix (Fin n₁) (Fin d) (AE F E)) (y' : Fin d → AE F E) :
+theorem piece_ix (hH : H.IsAdapted σ B X X₁ j₀ j₁) (z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (y' : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     (incM F H.ι * z * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ)ᵀ * incM F X.J *
       (Matrix.vecMulVec (incV F H.x) y').map (cA σ) = 0 := by
   have hm : (Matrix.vecMulVec (incV F H.x) y').map (cA σ) =
@@ -128,7 +128,7 @@ theorem piece_ix (hH : H.IsAdapted σ B X X₁ j₀ j₁) (z : Matrix (Fin n₁)
   rw [incM_one, Matrix.transpose_one, Matrix.mul_one, Matrix.transpose_mul, hm, Matrix.mul_assoc, Matrix.mul_assoc,
     ← Matrix.mul_assoc (incM F H.ι)ᵀ, Matrix.mul_vecMulVec, hv, Matrix.zero_vecMulVec, Matrix.mul_zero]
 
-theorem piece_ii (hH : H.IsAdapted σ B X X₁ j₀ j₁) (z z' : Matrix (Fin n₁) (Fin d) (AE F E)) :
+theorem piece_ii (hH : H.IsAdapted σ B X X₁ j₀ j₁) (z z' : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     (incM F H.ι * z * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ)ᵀ * incM F X.J *
       (incM F H.ι * z' * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ).map (cA σ) = zᵀ * incM F X₁.J * z'.map (cA σ) := by
   rw [incM_one, Matrix.transpose_one, Matrix.mul_one, Matrix.mul_one, Matrix.transpose_mul, Matrix.map_mul, incM_map_cA,

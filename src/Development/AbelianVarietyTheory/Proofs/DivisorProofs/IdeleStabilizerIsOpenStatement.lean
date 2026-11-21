@@ -15,5 +15,5 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 open GlobalTheory.Doubling (absE)
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.idele_stabilizer_isOpen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E],
-    IsOpen ((GlobalTheory.IdeleTate.stab F E : Subgroup (AE F E)ˣ) : Set (AE F E)ˣ) := by
+    IsOpen ((GlobalTheory.IdeleTate.stab F E : Subgroup (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : Set (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) := by
   first | exact @GlobalTheory.IdeleTate.isOpen_stab | exact GlobalTheory.IdeleTate.isOpen_stab | (intros; apply GlobalTheory.IdeleTate.isOpen_stab <;> assumption)

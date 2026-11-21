@@ -20,6 +20,6 @@ theorem _root_.GlobalTheory.T.config_a_stabilizer_theta_finite : GlobalTheory.Th
     ∀ (K : Subgroup (UA σ G.V.J)), IsStab B K →
     ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
     ∀ Φ ∈ PolData B G.M, ∀ h, ∃ (m : ℕ) (c : Fin m → Fin b × Fin (b + a') → Af F) (φ : Fin m → (Fin b × Fin (b + a') → Af F) → ℂ),
-      (∀ j, φ j ∈ SB _) ∧ ∀ k ∈ K, ∀ (l : (AE F E)ˣ) (x : Fin b × Fin (b + a') → AF F),
+      (∀ j, φ j ∈ SB _) ∧ ∀ k ∈ K, ∀ (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (x : Fin b × Fin (b + a') → AF F),
         e (G.M.co.rho B.ψ (shiftA H H' l) (om (k, h) Φ)) x = ∑ j, e (G.M.co.rho B.ψ (shiftA H H' l) (om (k, h) Φ)) (fun q => ((x q).1, c j q)) * φ j (fun q => (x q).2) := by
   first | exact @GlobalTheory.XTermFinParts.finite_parts | exact GlobalTheory.XTermFinParts.finite_parts | (intros; apply GlobalTheory.XTermFinParts.finite_parts <;> assumption)

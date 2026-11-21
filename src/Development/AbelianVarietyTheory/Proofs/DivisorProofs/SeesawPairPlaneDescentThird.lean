@@ -74,14 +74,14 @@ private theorem split_vec {n d₂ : ℕ} (J : Matrix (Fin n) (Fin n) E) (hσ : �
   exact ⟨s, t, u, hp.symm⟩
 
 private theorem rho_om {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Model σ X W} {χX χW : Chr F E}
-    {om : Rep σ X W} {r s r' s' : ℕ} (hP : IsPair B M χX χW om r s r' s') (u : UA σ X.J) (y : Fin n → AE F E)
-    (w : Fin d → AE F E) (Ψ : Fn F n d) (hΨ : Ψ ∈ schA F (Fin n × Fin d)) :
+    {om : Rep σ X W} {r s r' s' : ℕ} (hP : IsPair B M χX χW om r s r' s') (u : UA σ X.J) (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
+    (w : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (Ψ : Fn F n d) (hΨ : Ψ ∈ schA F (Fin n × Fin d)) :
     M.co.rho B.ψ (Matrix.vecMulVec y w) (om (u, 1) Ψ) =
       om (u, 1) (M.co.rho B.ψ (Matrix.vecMulVec (mat u⁻¹ *ᵥ y) w) Ψ) := by
   have himpl := (IsUWeilPair.isUSplitting hP.weil).impl (u, (1 : UA σ W.J)) (Matrix.vecMulVec (mat u⁻¹ *ᵥ y) w) Ψ hΨ
   have h1 : mat u * mat u⁻¹ = 1 := Units.mul_inv u.1
   have hact : actAB (cA σ) (u, (1 : UA σ W.J)) (Matrix.vecMulVec (mat u⁻¹ *ᵥ y) w) = Matrix.vecMulVec y w := by
-    show mat u * _ * (1 : Matrix (Fin d) (Fin d) (AE F E))ᵀ = _
+    show mat u * _ * (1 : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ = _
     rw [Matrix.transpose_one, Matrix.mul_one, Matrix.mul_vecMulVec, Matrix.mulVec_mulVec, h1, Matrix.one_mulVec]
   rw [hact] at himpl
   exact himpl.symm

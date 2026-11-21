@@ -31,7 +31,7 @@ variable {n n₁ d d₁ : ℕ}
 
 variable {σ : E →ₐ[F] E} {X : Spc F E n} {W : Spc F E d}
 
-theorem locCo_smul (M : Model σ X W) (v : Pl (F := F)) (a : Fv F v) (u : Matrix (Fin n) (Fin d) (AE F E)) :
+theorem locCo_smul (M : Model σ X W) (v : Pl (F := F)) (a : Fv F v) (u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     GlobalTheory.LatVac.locCo M.co v (GlobalTheory.LatVac.liftV v a • u) = a • GlobalTheory.LatVac.locCo M.co v u := by
   simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_smul, Prod.smul_fst, Prod.smul_snd,
     Pi.smul_apply, smul_eq_mul, map_mul, GlobalTheory.LatVac.evFin_liftV]

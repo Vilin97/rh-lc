@@ -82,8 +82,7 @@ theorem continuous_rmul [TopologicalSpace (R ⊗[F] E)] [IsTopologicalRing (R �
     Continuous fun X : Fin n → Fin M → R ⊗[F] E => GlobalTheory.CompanionTheory.SW.rmul R X g := by
   refine continuous_pi fun a => continuous_pi fun i => ?_
   unfold GlobalTheory.CompanionTheory.SW.rmul
-  refine continuous_finset_sum _ fun c _ => ?_
-  exact (continuous_apply_apply c i).mul continuous_const
+  fun_prop
 
 theorem isOpen_tupIn [TopologicalSpace (R ⊗[F] E)] {M n : ℕ} {L : Set (R ⊗[F] E)} (hL : IsOpen L) :
     IsOpen (tupIn (M := M) (n := n) R L) := by

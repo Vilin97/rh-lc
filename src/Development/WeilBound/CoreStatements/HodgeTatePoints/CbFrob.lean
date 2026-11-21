@@ -16,6 +16,51 @@ section
 
 variable {R : Type} [CommRing R] {d m n : ℕ}
 
+open scoped MvPowerSeries.WithPiTopology in
+private theorem pderiv_ev_rows {b : Fin m → Pt R n d} (hb : ZZ b)
+    (f : PS R m d) (v : Fin n × Fin d) :
+    pderiv v (ev b f) = ∑ a, ∑ c, ev b (pderiv (a, c) f) * pderiv v (b a c) := by
+  classical
+  let : UniformSpace R := ⊥
+  have hR : DiscreteUniformity R := ⟨rfl⟩
+  let a : Fin m × Fin d → PS R n d := fun s => b s.1 s.2
+  have ha : HasSubst a := hasSubst_ev b hb
+  have hcont {σ : Type} (i : σ) :
+      Continuous (fun g : MvPowerSeries σ R => pderiv i g) := by
+    apply continuous_pi
+    intro e
+    change Continuous (fun g : MvPowerSeries σ R => coeff e (pderiv i g))
+    simp only [coeff_pderiv]
+    exact (MvPowerSeries.WithPiTopology.continuous_coeff R _).mul continuous_const
+  have hsub : Continuous (subst a : PS R m d → PS R n d) := continuous_subst ha
+  have hp : ∀ g : MvPolynomial (Fin m × Fin d) R,
+      pderiv v (MvPolynomial.aeval a g) =
+        ∑ s, MvPolynomial.aeval a (MvPolynomial.pderiv s g) * pderiv v (a s) := by
+    intro g
+    induction g using MvPolynomial.induction_on with
+    | C r => simp
+    | add g h hg hh => simp [hg, hh, add_mul, Finset.sum_add_distrib]
+    | mul_X g s hg =>
+      have hX (x : Fin m × Fin d) :
+          MvPolynomial.aeval a (MvPolynomial.pderiv x (MvPolynomial.X s)) =
+            if s = x then 1 else 0 := by
+        by_cases h : s = x <;> simp [MvPolynomial.pderiv_X, Pi.single_apply, h, Ne.symm]
+      rw [map_mul, MvPolynomial.aeval_X, Derivation.leibniz, hg, smul_eq_mul, smul_eq_mul,
+        Finset.mul_sum]
+      simp only [MvPolynomial.pderiv_mul, map_add, map_mul, MvPolynomial.aeval_X, hX, mul_ite,
+        ite_mul, mul_one, mul_zero, zero_mul, add_mul, Finset.sum_add_distrib,
+        Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+      congr 1
+      exact Finset.sum_congr rfl fun _ _ => by ac_rfl
+  rw [← Fintype.sum_prod_type (fun s : Fin m × Fin d =>
+    ev b (pderiv s f) * pderiv v (b s.1 s.2))]
+  change pderiv v (subst a f) = ∑ s, subst a (pderiv s f) * pderiv v (a s)
+  refine congrFun (MvPowerSeries.WithPiTopology.denseRange_toMvPowerSeries.equalizer
+    (hcont v |>.comp hsub)
+    (continuous_finsetSum _ fun s _ => (hsub.comp (hcont s)).mul continuous_const) ?_) f
+  funext g
+  simpa only [Function.comp_apply, pderiv_coe, subst_coe] using hp g
+
 theorem ev_at_zero (f : PS R 1 d) : ev ![(0 : Pt R n d)] f = C (constantCoeff f) := by
   ext e
   have ha : HasSubst (fun q : Fin 1 × Fin d => (![(0 : Pt R n d)] q.1 q.2)) :=
@@ -25,7 +70,7 @@ theorem ev_at_zero (f : PS R 1 d) : ev ![(0 : Pt R n d)] f = C (constantCoeff f)
   · intro d' hd'
     obtain ⟨s, hs⟩ : ∃ s, d' s ≠ 0 := by
       by_contra hcon
-      push_neg at hcon
+      push Not at hcon
       exact hd' (Finsupp.ext hcon)
     have hz : (![(0 : Pt R n d)] s.1 s.2) ^ d' s = 0 := by simp [zero_pow hs]
     rw [Finsupp.prod, Finset.prod_eq_zero (Finsupp.mem_support_iff.2 hs) hz]

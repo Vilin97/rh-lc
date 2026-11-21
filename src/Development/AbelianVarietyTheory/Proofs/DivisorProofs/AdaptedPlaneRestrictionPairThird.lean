@@ -37,9 +37,9 @@ theorem exists_dblEv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
       ∃ (Ed : ((Fin n × Fin d ⊕ Fin n × Fin d → AF F) → ℂ) →ₗ[ℂ] ((Fin n × Fin d₁ ⊕ Fin n × Fin d₁ → AF F) → ℂ))
         (e₂ : Fn F n d →ₗ[ℂ] Fn F n d₁),
         (∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), Ed Φ ∈ schA F (Fin n × Fin d₁ ⊕ Fin n × Fin d₁)) ∧
-        (∀ (z : Matrix (Fin n) (Fin d₁ ⊕ Fin d₁) (AE F E)), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d),
+        (∀ (z : Matrix (Fin n) (Fin d₁ ⊕ Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d),
           Ed (dd.rho B.ψ (z * (Matrix.fromBlocks (incM F H'.ι) 0 0 (incM F H'.ι))ᵀ) Φ) = dd₁.rho B.ψ z (Ed Φ)) ∧
-        (∀ (y : Fin n → AE F E), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d),
+        (∀ (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d),
           Ed (dd.rho B.ψ (Matrix.fromCols (Matrix.vecMulVec y (incV F H'.x)) 0) Φ) = Ed Φ ∧
           Ed (dd.rho B.ψ (Matrix.fromCols 0 (Matrix.vecMulVec y (incV F H'.x))) Φ) = Ed Φ) ∧
         (∀ l ∈ (adeleClass F).adm (Fin n × Fin d₁ ⊕ Fin n × Fin d₁), l ∘ₗ Ed ∈ (adeleClass F).adm (Fin n × Fin d ⊕ Fin n × Fin d)) ∧
@@ -53,11 +53,11 @@ theorem exists_dblEv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
   have hone : incM F (1 : Matrix (Fin n) (Fin n) E) = 1 := by
     rw [incM, Matrix.map_one _ (map_zero _) (map_one _)]
   set A := incM F H'.ι with hA
-  have Heisenberg₂ : ∀ (z : Matrix (Fin n) (Fin d₁) (AE F E)), ∀ φ ∈ schA F (Fin n × Fin d),
+  have Heisenberg₂ : ∀ (z : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ φ ∈ schA F (Fin n × Fin d),
       e (M.co.rho B.ψ (z * Aᵀ) φ) = M₁.co.rho B.ψ z (e φ) := fun z φ hφ => by
     have := he.Heisenberg₂ z φ hφ
     rwa [hone, Matrix.one_mul] at this
-  have heis₂ : ∀ (z : Matrix (Fin n) (Fin d₁) (AE F E)), ∀ φ ∈ schA F (Fin n × Fin d),
+  have heis₂ : ∀ (z : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ φ ∈ schA F (Fin n × Fin d),
       conjLin e (M.co.rho B.ψ⁻¹ (z * Aᵀ) φ) = M₁.co.rho B.ψ⁻¹ z (conjLin e φ) := fun z φ hφ => by
     funext y
     rw [conjLin_apply]
@@ -66,9 +66,9 @@ theorem exists_dblEv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
       funext fun x => conj_schr_inv B.ψ hψ _ _ _
     rw [h1, Heisenberg₂ z _ (GlobalTheory.T.adelic_schwartz_conj_mem φ hφ)]
     exact conj_schr B.ψ hψ _ _ _
-  have inv₁ : ∀ (y : Fin n → AE F E), ∀ φ ∈ schA F (Fin n × Fin d),
+  have inv₁ : ∀ (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ φ ∈ schA F (Fin n × Fin d),
       e (M.co.rho B.ψ (Matrix.vecMulVec y (incV F H'.x)) φ) = e φ := fun y φ hφ => he.inv _ ⟨y, rfl⟩ φ hφ
-  have inv₂ : ∀ (y : Fin n → AE F E), ∀ φ ∈ schA F (Fin n × Fin d),
+  have inv₂ : ∀ (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ φ ∈ schA F (Fin n × Fin d),
       conjLin e (M.co.rho B.ψ⁻¹ (Matrix.vecMulVec y (incV F H'.x)) φ) = conjLin e φ := fun y φ hφ => by
     funext x'
     rw [conjLin_apply, conjLin_apply]
@@ -76,7 +76,7 @@ theorem exists_dblEv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
         M.co.rho B.ψ (Matrix.vecMulVec y (incV F H'.x)) (fun x => starRingEnd ℂ (φ x)) :=
       funext fun x => conj_schr_inv B.ψ hψ _ _ _
     rw [h1, inv₁ y _ (GlobalTheory.T.adelic_schwartz_conj_mem φ hφ)]
-  have invB : ∀ (y₁ y₂ : Fin n → AE F E), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d),
+  have invB : ∀ (y₁ y₂ : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d),
       (partRₗ (conjLin e) ∘ₗ partLₗ e) (dd.rho B.ψ (Matrix.fromCols (Matrix.vecMulVec y₁ (incV F H'.x))
         (Matrix.vecMulVec y₂ (incV F H'.x))) Φ) = (partRₗ (conjLin e) ∘ₗ partLₗ e) Φ := fun y₁ y₂ Φ hΦ => by
     rw [rho_dbl _ _ _ _ _ _ hdd]
@@ -97,7 +97,7 @@ theorem exists_dblEv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
       partL_partR_rho, partR_partL_rho,
       partR_intertwine (conjLin e) (M.co.rho B.ψ⁻¹ (z.toCols₂ * Aᵀ)) (M₁.co.rho B.ψ⁻¹ z.toCols₂) (conjLin e) _
         (fun φ hφ => heis₂ _ φ hφ) (fun a => sliceR_mem (partL_mem e hL Φ hΦ) a)]
-  · have h0 : (0 : Matrix (Fin n) (Fin d) (AE F E)) = Matrix.vecMulVec 0 (incV F H'.x) := by
+  · have h0 : (0 : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = Matrix.vecMulVec 0 (incV F H'.x) := by
       ext i j; simp [Matrix.vecMulVec_apply]
     refine ⟨?_, ?_⟩
     · rw [h0]; exact invB y 0 Φ hΦ

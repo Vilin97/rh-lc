@@ -19,9 +19,9 @@ theorem _root_.GlobalTheory.T.hermitian_adapted_plane_factor : GlobalTheory.FunP
       H.IsAdapted σ B X X₁ j₀ j₁ → IsPair B M₁ χX χW om₁ r₁ s₁ r' s' →
       ∀ e, IsEv B M M₁ H.ι 1 {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} e →
       ∀ S : Fn F n d →ₗ[ℂ] Fn F n₁ d, (∀ Φ ∈ schA F (Fin n × Fin d), S Φ ∈ schA F (Fin n₁ × Fin d)) →
-        (∀ z : Matrix (Fin n₁) (Fin d) (AE F E), ∀ Φ ∈ schA F (Fin n × Fin d),
+        (∀ z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ Φ ∈ schA F (Fin n × Fin d),
           S (M.co.rho B.ψ (incM F H.ι * z * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ) Φ) = M₁.co.rho B.ψ z (S Φ)) →
-        (∀ u ∈ {u : Matrix (Fin n) (Fin d) (AE F E) | ∃ z, u = Matrix.vecMulVec (incV F H.x) z}, ∀ Φ ∈ schA F (Fin n × Fin d),
+        (∀ u ∈ {u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) | ∃ z, u = Matrix.vecMulVec (incV F H.x) z}, ∀ Φ ∈ schA F (Fin n × Fin d),
           S (M.co.rho B.ψ u Φ) = S Φ) →
         (∀ l ∈ (adeleClass F).adm (Fin n₁ × Fin d), l ∘ₗ S ∈ (adeleClass F).adm (Fin n × Fin d)) →
         ∃ c : ℂ, ∀ Φ ∈ schA F (Fin n × Fin d), S Φ = c • e Φ := by

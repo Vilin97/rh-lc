@@ -15,7 +15,7 @@ noncomputable section
 namespace GlobalTheory.LatFill
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem piW_smul {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (a : AF F) (z : AE F E) :
+theorem piW_smul {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (a : AF F) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     piW τ (a • z) = evFin F v a * piW τ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp

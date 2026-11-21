@@ -34,7 +34,7 @@ theorem incM_smul {d : ℕ} (δ : E) (J : Matrix (Fin d) (Fin d) E) :
   ext i j
   simp [incM, Matrix.map_apply, Matrix.smul_apply, map_mul]
 
-theorem dbl_smul {d : ℕ} (c : AE F E) (X : Matrix (Fin d) (Fin d) (AE F E)) : dbl (c • X) = c • dbl X := by
+theorem dbl_smul {d : ℕ} (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (X : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : dbl (c • X) = c • dbl X := by
   simp [dbl, Matrix.fromBlocks_smul, smul_neg]
 
 end GlobalTheory.SplitChooseHerm

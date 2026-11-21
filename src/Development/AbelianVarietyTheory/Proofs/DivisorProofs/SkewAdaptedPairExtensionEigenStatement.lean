@@ -19,7 +19,7 @@ theorem _root_.GlobalTheory.T.skew_adapted_pair_extension_eigen : ∀ (F E : Typ
       H'.IsAdapted σ B W W₁ i₀ i₁ → IsPair B M₁ χX χW om₁ r s r₁ s₁ → ∀ e, IsEv B M M₁ 1 H'.ι (iso0 n H') e →
       ∀ t m, IsLevi (W₁ := W₁) H' t 1 m →
         (∀ Φ ∈ schA F (Fin n × Fin d), (e ∘ₗ om (1, m)) Φ ∈ schA F (Fin n × Fin d₁)) ∧
-        (∀ z : Matrix (Fin n) (Fin d₁) (AE F E), ∀ Φ ∈ schA F (Fin n × Fin d),
+        (∀ z : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ Φ ∈ schA F (Fin n × Fin d),
           (e ∘ₗ om (1, m)) (M.co.rho B.ψ (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ) Φ) =
             M₁.co.rho B.ψ z ((e ∘ₗ om (1, m)) Φ)) ∧
         (∀ u ∈ iso0 n H', ∀ Φ ∈ schA F (Fin n × Fin d), (e ∘ₗ om (1, m)) (M.co.rho B.ψ u Φ) = (e ∘ₗ om (1, m)) Φ) ∧

@@ -34,11 +34,11 @@ theorem doubledEv_form : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
       ∀ e, IsEv B M M₁ H.ι 1 {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} e →
       (∃ Φ ∈ schA F (Fin n × Fin d), e Φ ≠ 0) →
       ∀ (d' : Darboux (symp (R := AF F) (cA σ) (-1) (incM F W.J) (incM F X.J)) (Fin n × Fin d)),
-      (∀ x : Matrix (Fin n) (Fin d) (AE F E), d'.e xᵀ = M.co.e x) →
+      (∀ x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d'.e xᵀ = M.co.e x) →
       ∀ (dd : Darboux (symp (R := AF F) (cA σ) (-1) (incM F W.J) (dbl (incM F X.J))) ((Fin n × Fin d) ⊕ (Fin n × Fin d))),
       IsDblCoord (cA σ) (-1) (incM F W.J) (incM F X.J) d' dd →
       ∃ l ∈ (adeleClass F).adm ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
-        (∀ (y₁ y₂ : Fin d → AE F E) (u : Matrix (Fin d) (Fin n₁) (AE F E)), ∀ φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+        (∀ (y₁ y₂ : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (u : Matrix (Fin d) (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
           l (dd.rho B.ψ (Matrix.fromCols (Matrix.vecMulVec y₁ (incV F H.x) + u * (incM F H.ι)ᵀ)
             (Matrix.vecMulVec y₂ (incV F H.x) + u * (incM F H.ι)ᵀ)) φ) = l φ) ∧
         (∀ φ₁ ∈ schA F (Fin n × Fin d), ∀ φ₁' ∈ schA F (Fin n × Fin d), ∀ φ₂ ∈ schA F (Fin n × Fin d), ∀ c : ℂ,
@@ -52,9 +52,9 @@ theorem doubledEv_form : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
   have hE : IsTame F (evDbl e) := hR.comp hL
   refine ⟨GlobalTheory.DiagForm.lDiag F _ ∘ₗ evDbl e, hE.comp_adm GlobalTheory.DiagForm.lDiag_adm, ?_, ?_, ?_⟩
   · intro y₁ y₂ u φ hφ
-    have hd'' : ∀ w : Matrix (Fin d) (Fin n) (AE F E), d'.e w = M.co.e wᵀ := fun w => by
+    have hd'' : ∀ w : Matrix (Fin d) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d'.e w = M.co.e wᵀ := fun w => by
       rw [← hd' wᵀ, Matrix.transpose_transpose]
-    have ht : ∀ y : Fin d → AE F E, (Matrix.vecMulVec y (incV F H.x) + u * (incM F H.ι)ᵀ)ᵀ =
+    have ht : ∀ y : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), (Matrix.vecMulVec y (incV F H.x) + u * (incM F H.ι)ᵀ)ᵀ =
         Matrix.vecMulVec (incV F H.x) y + incM F H.ι * uᵀ := fun y => by
       rw [Matrix.transpose_add, Matrix.transpose_mul, Matrix.transpose_transpose, Matrix.transpose_vecMulVec]
     have key : dd.rho B.ψ (Matrix.fromCols (Matrix.vecMulVec y₁ (incV F H.x) + u * (incM F H.ι)ᵀ)

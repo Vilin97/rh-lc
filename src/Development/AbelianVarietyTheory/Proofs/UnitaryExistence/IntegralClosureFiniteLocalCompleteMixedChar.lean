@@ -94,7 +94,7 @@ private theorem isLocalRing_of_finite_domain_over_complete (S C : Type) [CommRin
     intro M hM
     rw [hI, Ideal.map_le_iff_le_comap]
     exact (IsLocalRing.eq_maximalIdeal
-      (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := S) M)).ge
+      (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := S) M)).ge
   haveI : IsArtinianRing (C ⧸ I) := by
     letI := Ideal.Quotient.field (maximalIdeal S)
     haveI : Module.Finite (S ⧸ maximalIdeal S) (C ⧸ I) :=

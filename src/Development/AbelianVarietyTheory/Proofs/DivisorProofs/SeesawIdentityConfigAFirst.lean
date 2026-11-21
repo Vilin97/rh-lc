@@ -35,15 +35,15 @@ section Adelic
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {v : Pl (F := F)}
 
-theorem piW_eq (t : E →ₐ[F] Fv F v) (z : AE F E) : piW t z = splitProj t (compFin F E v z) := rfl
+theorem piW_eq (t : E →ₐ[F] Fv F v) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : piW t z = splitProj t (compFin F E v z) := rfl
 
-theorem adele_eq_zero (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {z : AE F E} (hz : At (evFin F v) z)
+theorem adele_eq_zero (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : At (evFin F v) z)
     (h1 : piW t z = 0) (h2 : piW (t.comp σ) z = 0) : z = 0 := by
   rw [eq_tensAt_of_at v z hz]
   have : compFin F E v z = 0 := split_ext hcm t (by rw [map_zero]; exact h1) (by rw [map_zero]; exact h2)
   rw [this, map_zero]
 
-theorem vec_eq (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {k : ℕ} {w w' : Fin k → AE F E}
+theorem vec_eq (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {k : ℕ} {w w' : Fin k → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)}
     (hw : At (evFin F v) (w - w')) (h1 : (fun i => piW t (w i)) = fun i => piW t (w' i))
     (h2 : (fun i => piW (t.comp σ) (w i)) = fun i => piW (t.comp σ) (w' i)) : w = w' := by
   funext i
@@ -54,7 +54,7 @@ theorem vec_eq (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {k : ℕ} {w w' :
   · rw [map_sub, sub_eq_zero]; exact congrFun h1 i
   · rw [map_sub, sub_eq_zero]; exact congrFun h2 i
 
-theorem mat_eq {k l : ℕ} (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {M M' : Matrix (Fin k) (Fin l) (AE F E)}
+theorem mat_eq {k l : ℕ} (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {M M' : Matrix (Fin k) (Fin l) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hM : At (evFin F v) (M - M')) (h1 : M.map (piW t) = M'.map (piW t))
     (h2 : M.map (piW (t.comp σ)) = M'.map (piW (t.comp σ))) : M = M' := by
   ext i j
@@ -68,21 +68,21 @@ theorem mat_eq {k l : ℕ} (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {M M'
 theorem at_tensAt (y : Fv F v ⊗[F] E) : At (evFin F v) (tensAt E v y) := by
   intro u hu
   rw [Algebra.smul_def, mul_comm, tensAt_mul_right]
-  have : compFin F E v (algebraMap (AF F) (AE F E) u) = 0 := by
+  have : compFin F E v (algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) u) = 0 := by
     change (evFin F v u) ⊗ₜ[F] (1 : E) = 0
     rw [hu, TensorProduct.zero_tmul]
   rw [this, mul_zero, map_zero]
 
-theorem at_mul_left {k l p : ℕ} {M : Matrix (Fin k) (Fin l) (AE F E)} (hM : At (evFin F v) M)
-    (A : Matrix (Fin l) (Fin p) (AE F E)) : At (evFin F v) (M * A) := fun u hu => by
+theorem at_mul_left {k l p : ℕ} {M : Matrix (Fin k) (Fin l) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hM : At (evFin F v) M)
+    (A : Matrix (Fin l) (Fin p) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : At (evFin F v) (M * A) := fun u hu => by
   rw [← Matrix.smul_mul, hM u hu, Matrix.zero_mul]
 
-theorem at_mul_right {k l p : ℕ} {M : Matrix (Fin l) (Fin p) (AE F E)} (hM : At (evFin F v) M)
-    (A : Matrix (Fin k) (Fin l) (AE F E)) : At (evFin F v) (A * M) := fun u hu => by
+theorem at_mul_right {k l p : ℕ} {M : Matrix (Fin l) (Fin p) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hM : At (evFin F v) M)
+    (A : Matrix (Fin k) (Fin l) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : At (evFin F v) (A * M) := fun u hu => by
   rw [← Matrix.mul_smul, hM u hu, Matrix.mul_zero]
 
-theorem at_mulVec {k l : ℕ} {M : Matrix (Fin k) (Fin l) (AE F E)} (hM : At (evFin F v) M)
-    (w : Fin l → AE F E) : At (evFin F v) (M *ᵥ w) := fun u hu => by
+theorem at_mulVec {k l : ℕ} {M : Matrix (Fin k) (Fin l) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hM : At (evFin F v) M)
+    (w : Fin l → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : At (evFin F v) (M *ᵥ w) := fun u hu => by
   have h0 := hM u hu
   funext i
   have := congrArg (fun N => (N *ᵥ w) i) h0
@@ -90,7 +90,7 @@ theorem at_mulVec {k l : ℕ} {M : Matrix (Fin k) (Fin l) (AE F E)} (hM : At (ev
     Matrix.zero_apply, zero_mul, Finset.sum_const_zero] at this ⊢
   exact this
 
-theorem at_smul {k : ℕ} {a : AE F E} (ha : At (evFin F v) a) (w : Fin k → AE F E) :
+theorem at_smul {k : ℕ} {a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (ha : At (evFin F v) a) (w : Fin k → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     At (evFin F v) (a • w) := fun u hu => by
   rw [← smul_assoc, ha u hu, zero_smul]
 
@@ -101,10 +101,10 @@ theorem at_sub {M : Type} [AddCommGroup M] [Module (AF F) M] {x y : M} (hx : At 
 theorem piW_incl (t : E →ₐ[F] Fv F v) (x : E) : piW t (inclR (F := F) (AF F) x) = t x := by
   rw [piW_eq, compFin_inclR, splitProj_inclR]
 
-theorem piW_cA (t : E →ₐ[F] Fv F v) (z : AE F E) : piW t (cA σ z) = piW (t.comp σ) z := by
+theorem piW_cA (t : E →ₐ[F] Fv F v) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : piW t (cA σ z) = piW (t.comp σ) z := by
   rw [piW_eq, piW_eq, GlobalTheory.UnitaryInjAtPlace.compFin_cA, splitProj_comp]
 
-theorem piW_comp_cA (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (z : AE F E) :
+theorem piW_comp_cA (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     piW (t.comp σ) (cA σ z) = piW t z := by
   rw [piW_eq, piW_eq, GlobalTheory.UnitaryInjAtPlace.compFin_cA, splitProj_comp_sigR hcm]
 

@@ -53,29 +53,29 @@ theorem evI_neg' (a : AF F) : evI F (-a) = -evI F a :=
   map_neg (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1
 
 theorem exists_neg_one_kInf (τ : ∀ w : InfinitePlace F, EmbOver E w) :
-    ∃ k ∈ KInf σ Y τ, ∀ u : Matrix (Fin n) (Fin d) (AE F E), At (evI F) u → mat k * u = -u := by
-  have hss : (sgnAd F • (1 : Matrix (Fin n) (Fin n) (AE F E))) * (sgnAd F • 1) = 1 := by
+    ∃ k ∈ KInf σ Y τ, ∀ u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) u → mat k * u = -u := by
+  have hss : (sgnAd F • (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) * (sgnAd F • 1) = 1 := by
     rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, sgnAd_mul_self, one_smul, Matrix.one_mul]
-  have hmap : (sgnAd F • (1 : Matrix (Fin n) (Fin n) (AE F E))).map (cA σ) = sgnAd F • 1 := by
+  have hmap : (sgnAd F • (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))).map (cA σ) = sgnAd F • 1 := by
     ext i j
     by_cases h : i = j <;> simp [Matrix.one_apply, h]
   refine ⟨⟨⟨sgnAd F • 1, sgnAd F • 1, hss, hss⟩, ?_⟩, ⟨?_, ?_⟩, ?_⟩
-  · show (sgnAd F • (1 : Matrix (Fin n) (Fin n) (AE F E)))ᵀ * incM F Y.J * (sgnAd F • (1 : Matrix (Fin n) (Fin n) (AE F E))).map (cA σ) = incM F Y.J
+  · show (sgnAd F • (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))))ᵀ * incM F Y.J * (sgnAd F • (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))).map (cA σ) = incM F Y.J
     rw [hmap, Matrix.transpose_smul, Matrix.transpose_one, Matrix.smul_mul, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
       sgnAd_mul_self, one_smul, Matrix.one_mul, Matrix.mul_one]
   · intro u hu
-    show u • (sgnAd F • (1 : Matrix (Fin n) (Fin n) (AE F E)) - 1) = 0
+    show u • (sgnAd F • (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) - 1) = 0
     rw [smul_sub, smul_smul, mul_sgnAd hu, sub_self]
   · intro w
-    have e : (sgnAd F • (1 : Matrix (Fin n) (Fin n) (AE F E))).map (piInf (τ w)) =
-        piInf (τ w) (sgnAd F • (1 : AE F E)) • (1 : Matrix (Fin n) (Fin n) ℂ) := by
+    have e : (sgnAd F • (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))).map (piInf (τ w)) =
+        piInf (τ w) (sgnAd F • (1 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) • (1 : Matrix (Fin n) (Fin n) ℂ) := by
       ext i j
       by_cases h : i = j <;> simp [Matrix.one_apply, h]
-    show Commute ((sgnAd F • (1 : Matrix (Fin n) (Fin n) (AE F E))).map (piInf (τ w))) (Y.θ w)
+    show Commute ((sgnAd F • (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))).map (piInf (τ w))) (Y.θ w)
     rw [e]
     exact (Commute.one_left _).smul_left _
   · intro u hu
-    show (sgnAd F • (1 : Matrix (Fin n) (Fin n) (AE F E))) * u = -u
+    show (sgnAd F • (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) * u = -u
     have h := hu _ evI_sgnAd_add_one
     rw [add_smul, one_smul] at h
     rw [Matrix.smul_mul, Matrix.one_mul]
@@ -83,7 +83,7 @@ theorem exists_neg_one_kInf (τ : ∀ w : InfinitePlace F, EmbOver E w) :
 
 theorem sd_intertwine_left {M : Model σ Y W} {ψ : AddChar (AF F) ℂ} {χ₁ χ₂ : Chr F E} {om : Rep σ Y W}
     (hw : M.IsWeil ψ χ₁ χ₂ om) (k : UA σ Y.J) {f f₁ g g₁ : SInf F (Fin n × Fin d)}
-    (hf : Acts (evI F) (om (k, 1)) f g) (hf₁ : Acts (evI F) (om (k, 1)) f₁ g₁) {u : Matrix (Fin n) (Fin d) (AE F E)}
+    (hf : Acts (evI F) (om (k, 1)) f g) (hf₁ : Acts (evI F) (om (k, 1)) f₁ g₁) {u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hD : SD (M.heisLine ψ u) f f₁) : SD (M.heisLine ψ (mat k * u)) g g₁ := by
   have hS := IsUWeilPair.isUSplitting hw
   intro r hr l hl
@@ -93,7 +93,7 @@ theorem sd_intertwine_left {M : Model σ Y W} {ψ : AddChar (AF F) ℂ} {χ₁ �
   refine h1.congr_of_eventuallyEq (.of_forall fun t => ?_)
   have h2 := hS.impl (k, 1) (realAd F t • u) (pureA F f r) (Submodule.subset_span ⟨f, r, hr, rfl⟩)
   have h3 : actAB (cA σ) ((k, 1) : UA σ Y.J × UA σ W.J) (realAd F t • u) = realAd F t • (mat k * u) := by
-    change mat k * (realAd F t • u) * (1 : Matrix (Fin d) (Fin d) (AE F E))ᵀ = _
+    change mat k * (realAd F t • u) * (1 : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ = _
     rw [Matrix.transpose_one, Matrix.mul_one, Matrix.mul_smul]
   rw [h3, sa_of_acts hf r hr] at h2
   exact congrArg l h2.symm
@@ -125,7 +125,7 @@ theorem exists_parity_op {M : Model σ Y W} {ψ : AddChar (AF F) ℂ} {χ₁ χ�
   have hSD : ∀ u, At (evI F) u → ∀ φ, SD (M.heisLine ψ u) φ (D u φ) := fun u hu φ => (hD u hu φ).1
   have hAD : ∀ u, At (evI F) u → ∀ φ : SInf F (Fin n × Fin d), ActsD (evI F) (M.heisLine ψ u) φ (D u φ) :=
     fun u hu φ => (hL φ _ φ).1 _ (heisLine_zero M ψ u) (hSD u hu φ)
-  have hneg : ∀ u : Matrix (Fin n) (Fin d) (AE F E), At (evI F) u → At (evI F) (-u) := fun u hu v hv => by
+  have hneg : ∀ u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) u → At (evI F) (-u) := fun u hu v hv => by
     rw [smul_neg, hu v hv, neg_zero]
   have hDneg : ∀ u, At (evI F) u → ∀ φ, D (-u) φ = -D u φ := by
     intro u hu φ

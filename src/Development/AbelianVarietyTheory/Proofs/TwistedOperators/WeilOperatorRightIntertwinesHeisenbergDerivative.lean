@@ -27,7 +27,7 @@ theorem weil_heisDeriv_intertw {F E : Type} [Field F] [NumberField F] [Field E] 
     {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ)
     (χX χW : Chr F E) (om : Rep σ X W) (hψ : IsStd ψ) (hW : M.IsWeil ψ χX χW om) (h : UA σ W.J)
     (Th : SInf F (Fin n × Fin d) → SInf F (Fin n × Fin d))
-    (hTh : ∀ f : SInf F (Fin n × Fin d), Acts (evI F) (om (1, h)) f (Th f)) (u : Matrix (Fin n) (Fin d) (AE F E))
+    (hTh : ∀ f : SInf F (Fin n × Fin d), Acts (evI F) (om (1, h)) f (Th f)) (u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (hu : At (evI F) u) (f f₁ : SInf F (Fin n × Fin d)) (hf : ActsD (evI F) (M.heisLine ψ u) f f₁) (y) :
     Th f₁ y = GlobalTheory.HeisOrbit.dOp (GlobalTheory.HeisOrbit.archCo M.co (u * (mat h)ᵀ)).1
       (GlobalTheory.HeisOrbit.archCo M.co (u * (mat h)ᵀ)).2 (Th f) y := by

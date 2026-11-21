@@ -17,7 +17,7 @@ namespace GlobalTheory.ThK.LeviChar
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 theorem at_eigen {d : ℕ} {W : Spc F E d} {k : UA σ W.J} (hk : k ∈ UAt σ W (evI F)) {x : Fin d → E} (hx : x ≠ 0)
-    {t : AE F E} (hkt : mat k *ᵥ incV F x = t • incV F x) : At (evI F) (t - 1) := by
+    {t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hkt : mat k *ᵥ incV F x = t • incV F x) : At (evI F) (t - 1) := by
   intro u hu
   obtain ⟨i, hi⟩ := Function.ne_iff.1 hx
   have h0 : u • (mat k - 1) = 0 := hk u hu
@@ -34,7 +34,7 @@ theorem at_eigen {d : ℕ} {W : Spc F E d} {k : UA σ W.J} (hk : k ∈ UAt σ W 
 
 theorem norm_eigen (hcm : IsCMExt F E σ) {B : Base F E} {d r s : ℕ} {W : Spc F E d} (hW : W.IsSkew σ B r s)
     {k : UA σ W.J} (hk : k ∈ KInf σ W B.emb) {x : Fin d → E} (hx0 : x ≠ 0)
-    {t : AE F E} (hkt : mat k *ᵥ incV F x = t • incV F x) (w : InfinitePlace F) : ‖piInf (B.emb w) t‖ = 1 := by
+    {t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hkt : mat k *ᵥ incV F x = t • incV F x) (w : InfinitePlace F) : ‖piInf (B.emb w) t‖ = 1 := by
   have hinc : ∀ e : E, piInf (B.emb w) (inclR (F := F) (AF F) e) = (B.emb w).1 e := fun e => by
     simp [piInf, inclR, compInf, infEmb_tmul]
   have hu : ((mat k).map (piInf (B.emb w)))ᵀ * W.J.map (B.emb w).1 * ((mat k).map (piInf (B.emb w))).map star =
@@ -70,7 +70,7 @@ theorem norm_eigen (hcm : IsCMExt F E σ) {B : Base F E} {d r s : ℕ} {W : Spc 
 theorem char_levi_KInf : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (d d₁ r s i₀ i₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁), IsCMExt F E σ →
     W.IsSkew σ B r s → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ (χ : Chr F E) (m : InfinitePlace F → ℤ), HasExp B.emb χ m →
-    ∀ (z : ℝ) (t : (AE F E)ˣ) (h₁ : UA σ W₁.J) (k : UA σ W.J), k ∈ KInf σ W B.emb → IsLevi H' t h₁ k →
+    ∀ (z : ℝ) (t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (h₁ : UA σ W₁.J) (k : UA σ W.J), k ∈ KInf σ W B.emb → IsLevi H' t h₁ k →
       (χ t : ℂ) * (((absE F E t : ℝ) ^ z : ℝ) : ℂ) = ∏ w, piInf (B.emb w) t.1 ^ m w := by
   intro F E _ _ _ _ _ σ B d d₁ r s i₀ i₁ W W₁ H' hcm hW hA χ m hχ z t h₁ k hk hL
   have hx0 : H'.x ≠ 0 := fun h => by

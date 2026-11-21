@@ -39,7 +39,7 @@ theorem gaussD_of_kInf : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     change (mat (k * k⁻¹))ᵀ = 1
     rw [mul_inv_cancel]
     exact Matrix.transpose_one
-  have hcan : ∀ u : Matrix (Fin n) (Fin d) (AE F E), u * (mat k⁻¹)ᵀ * (mat k)ᵀ = u := fun u => by
+  have hcan : ∀ u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), u * (mat k⁻¹)ᵀ * (mat k)ᵀ = u := fun u => by
     rw [Matrix.mul_assoc, hkk, Matrix.mul_one]
   obtain ⟨ε, hε⟩ := hf₀
   refine ⟨ε, fun u u' hu hu' huu g g' hg hg' => ?_⟩

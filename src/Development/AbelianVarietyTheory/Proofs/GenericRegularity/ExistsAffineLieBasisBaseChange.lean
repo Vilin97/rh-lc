@@ -31,7 +31,7 @@ theorem algChart_of_isStandardSmooth {R : Type} [CommRing R] (B : Type) [CommRin
   haveI : IsScalarTower R (MvPolynomial (Fin n) R) B := IsScalarTower.of_algebraMap_eq' hgC.symm
   haveI : Algebra.Etale (MvPolynomial (Fin n) R) B := hg
   have hπ : ∀ m : ℕ, ∃ π : B →ₐ[R] JetR R (Fin n) m, (jetAug R (Fin n) m).comp π = ε' ∧
-      ∀ j, π (sX R j) = algebraMap R _ (ε' (sX R j)) + zR m j := fun m =>
+      ∀ j, π (sX (R := R) j) = algebraMap R _ (ε' (sX (R := R) j)) + zR m j := fun m =>
     etale_exists (n := n) ε' (jetAug R (Fin n) m) (ker_jetAug_nil (Fin n) m) _ (fun j => by
       rw [map_add (f := _), AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply, jetAug_zR, add_zero])
   choose π hπaug hπX using hπ
@@ -55,13 +55,13 @@ theorem algChart_of_isStandardSmooth {R : Type} [CommRing R] (B : Type) [CommRin
       rfl
   · intro A _ _ aug m hJ φ' hφ'aug
     have hJn := nil_of_pow _ hJ
-    have hmem : ∀ j : Fin n, φ' (sX (S := B) R j) -
-        algebraMap R A (ε' (sX (S := B) R j)) ∈ RingHom.ker aug := by
+    have hmem : ∀ j : Fin n, φ' (sX (R := R) (S := B) j) -
+        algebraMap R A (ε' (sX (R := R) (S := B) j)) ∈ RingHom.ker aug := by
       intro j
       rw [RingHom.mem_ker, map_sub, AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply,
         ← AlgHom.comp_apply, hφ'aug, sub_self]
-    let ψ := jetLift R (RingHom.ker aug) hJ
-      (fun j : Fin n => φ' (sX (S := B) R j) - algebraMap R A (ε' (sX (S := B) R j))) hmem
+    let ψ := jetLift (R := R) (RingHom.ker aug) hJ
+      (fun j : Fin n => φ' (sX (R := R) (S := B) j) - algebraMap R A (ε' (sX (R := R) (S := B) j))) hmem
     have hψaug : aug.comp ψ = jetAug R (Fin n) m := jet_ext fun j => by
       rw [AlgHom.comp_apply, jetLift_zR, jetAug_zR]; exact hmem j
     have hψπ : ψ.comp (π m) = φ' := by
@@ -76,7 +76,7 @@ theorem algChart_of_isStandardSmooth {R : Type} [CommRing R] (B : Type) [CommRin
     apply jet_ext
     intro j
     rw [jetLift_zR]
-    have := AlgHom.congr_fun h4 (sX R j)
+    have := AlgHom.congr_fun h4 (sX (R := R) j)
     rw [AlgHom.comp_apply, hπX, map_add (f := _), AlgHom.commutes] at this
     rw [← this, add_sub_cancel_left]
 
@@ -159,7 +159,7 @@ theorem univChart_baseChange_of_chart {R R' : Type} [CommRing R] [CommRing R'] [
       (fun a ha => elt_nil _ (nil_of_pow _ hJ) a ha) _ _ hz)
     have hha : (aug.restrictScalars R).comp h = (Algebra.ofId R R').comp (eps C) :=
       pt_injective C (by rw [← spMap_pt, ← hh, hz])
-    obtain ⟨ψ, ⟨h1, h2⟩, hu⟩ := isUnivRing_bc (eps C) m (π m) (huniv m) (hπa m) A aug hJ h hha
+    obtain ⟨ψ, ⟨h1, h2⟩, hu⟩ := isUnivRing_bc (eps := eps C) m (π m) (huniv m) (hπa m) A aug hJ h hha
     have key : ∀ ψ' : JetR R' (Fin n) m →ₐ[R'] A,
         y = spMap ψ' ≫ pullR G (pt C ((jetMapA n m).comp (π m))) ↔
           h = (ψ'.restrictScalars R).comp ((jetMapA n m).comp (π m)) := by
@@ -176,16 +176,16 @@ theorem univChart_baseChange_of_chart {R R' : Type} [CommRing R] [CommRing R'] [
         pt C (((dualLift (algebraMap R R' ∘ c)).restrictScalars R).comp ((jetMapA n 1).comp (π 1))) := by
       show pushR G (spMap _ ≫ _) = _
       rw [pushR_spMap, pushR_pullR, spMap_pt]
-    have e2 : spMap (dualMapA R R') ≫ tvec (x := x) c = pt C ((dualMapA R R').comp ((dualLift c).comp (π 1))) := by
+    have e2 : spMap (dualMapA (R := R) (R' := R')) ≫ tvec (x := x) c = pt C ((dualMapA (R := R) (R' := R')).comp ((dualLift c).comp (π 1))) := by
       show spMap _ ≫ spMap _ ≫ x 1 = _
       rw [hπ 1, spMap_pt, spMap_pt]
-    have e3 : (dualMapA R R').comp ((dualLift c).comp (π 1)) =
+    have e3 : (dualMapA (R := R) (R' := R')).comp ((dualLift c).comp (π 1)) =
         ((dualLift (algebraMap R R' ∘ c)).restrictScalars R).comp ((jetMapA n 1).comp (π 1)) := by
       rw [← AlgHom.comp_assoc, ← AlgHom.comp_assoc]
       congr 1
       apply jet_ext
       intro j
-      show dualMapA R R' (dualLift c (zR 1 j)) = dualLift (algebraMap R R' ∘ c) (jetMapA n 1 (zR 1 j))
+      show dualMapA (R := R) (R' := R') (dualLift c (zR 1 j)) = dualLift (algebraMap R R' ∘ c) (jetMapA n 1 (zR 1 j))
       rw [jetMapA_zR, dualLift_zR, dualLift_zR, dualMapA_inr]
       rfl
     rw [← pushR_left, e1, ← e3, ← e2]

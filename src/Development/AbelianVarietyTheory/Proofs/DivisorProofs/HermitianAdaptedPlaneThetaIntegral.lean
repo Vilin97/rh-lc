@@ -21,7 +21,7 @@ theorem evalZero_torus : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [
     ∀ (n₁ : ℕ) (X₁ : Spc F E n₁) (H : Plane E n n₁) (j₀ j₁ : ℕ) (M₁ : Model σ X₁ W) (om₁ : Rep σ X₁ W) (r₁ s₁ : ℕ),
       H.IsAdapted σ B X X₁ j₀ j₁ → IsPair B M₁ χX χW om₁ r₁ s₁ r' s' →
       ∀ e, IsEv B M M₁ H.ι 1 {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} e →
-      ∀ (t : (AE F E)ˣ) (m : UA σ X.J), IsLevi (W₁ := X₁) H t 1 m → ∀ Φ ∈ schA F (Fin n × Fin d),
+      ∀ (t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (m : UA σ X.J), IsLevi (W₁ := X₁) H t 1 m → ∀ Φ ∈ schA F (Fin n × Fin d),
         e (om (m, 1) Φ) = ((χW t : ℂ) * (((absE F E t : ℝ) ^ ((d : ℝ) / 2) : ℝ) : ℂ)) • e Φ := by
   intro hPr F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he t m hL Φ hΦ
   have hs := IsUWeilPair.isUSplitting hP.weil
@@ -32,7 +32,7 @@ theorem evalZero_torus : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [
     intro z Φ hΦ
     simp only [LinearMap.comp_apply]
     rw [hs.impl _ _ _ hΦ]
-    have hm2 : ((m : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) * incM F H.ι = incM F H.ι := hm1
+    have hm2 : ((m : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * incM F H.ι = incM F H.ι := hm1
     have : actAB (cA σ) (m, (1 : UA σ W.J)) (incM F H.ι * z * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ) =
         incM F H.ι * z * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ := by
       simp only [actAB, OneMemClass.coe_one, Units.val_one, Matrix.transpose_one, Matrix.mul_one, ← Matrix.mul_assoc]
@@ -42,7 +42,7 @@ theorem evalZero_torus : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [
     rintro u ⟨z, rfl⟩ Φ hΦ
     simp only [LinearMap.comp_apply]
     rw [hs.impl _ _ _ hΦ]
-    have key : ∀ i, (∑ k, ((m : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) i k * incV F H.x k) = t.1 * incV F H.x i := by
+    have key : ∀ i, (∑ k, ((m : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) i k * incV F H.x k) = t.1 * incV F H.x i := by
       intro i
       have := congrFun hL.1 i
       simpa [mat, Matrix.mulVec, dotProduct] using this
@@ -50,8 +50,8 @@ theorem evalZero_torus : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [
       simp only [actAB, OneMemClass.coe_one, Units.val_one, Matrix.transpose_one, Matrix.mul_one]
       ext i j
       simp only [Matrix.mul_apply, Matrix.vecMulVec_apply, Pi.smul_apply, smul_eq_mul]
-      rw [show (∑ k, ((m : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) i k * (incV F H.x k * z j)) =
-          (∑ k, ((m : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) i k * incV F H.x k) * z j by
+      rw [show (∑ k, ((m : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) i k * (incV F H.x k * z j)) =
+          (∑ k, ((m : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) i k * incV F H.x k) * z j by
         rw [Finset.sum_mul]; exact Finset.sum_congr rfl fun k _ => by ring, key i]
       ring
     rw [hact]

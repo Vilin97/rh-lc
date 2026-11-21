@@ -75,7 +75,7 @@ theorem Jm_eq {ε : Fin n → Bool} (e : Fin p ⊕ Fin q ≃ Fin n) (h1 : ∀ i,
   obtain ⟨b, rfl⟩ := e.surjective j
   simp only [Jm, blk, submatrix_apply, diagonal_apply, Equiv.symm_apply_apply,
     EmbeddingLike.apply_eq_iff_eq]
-  rcases a with a | a <;> rcases b with b | b <;> simp [h1, h2, one_apply] <;> split_ifs <;> simp
+  rcases a with a | a <;> rcases b with b | b <;> simp [h1, h2, Matrix.neg_apply, Matrix.one_apply] <;> split_ifs <;> simp_all
 
 theorem unit_allPos {N : ℕ} (g : UJ (allPos N)) : (uMat g)ᴴ * uMat g = 1 := by
   have h : inUJ (allPos N) (uMat g) := g.2

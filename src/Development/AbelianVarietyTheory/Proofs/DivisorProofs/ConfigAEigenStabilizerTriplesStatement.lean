@@ -20,6 +20,6 @@ theorem _root_.GlobalTheory.T.config_a_eigen_stabilizer_triples : ∀ (F E : Typ
     ∀ X om om' om₁ om₁', IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
     ∀ Ψ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')),
       ∃ U : AddSubgroup (Fin b × Fin (b + a') → AF F), IsOpen (U : Set (Fin b × Fin (b + a') → AF F)) ∧
-        ∀ u ∈ U, (∀ i, (u i).1 = 0) → ∀ (k : K) (l : (AE F E)ˣ) (x : Fin b × Fin (b + a') → AF F),
+        ∀ u ∈ U, (∀ i, (u i).1 = 0) → ∀ (k : K) (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (x : Fin b × Fin (b + a') → AF F),
           e (G.M.co.rho B.ψ (shiftA H H' l) (om (k.1, 1) Ψ)) (x + u) = e (G.M.co.rho B.ψ (shiftA H H' l) (om (k.1, 1) Ψ)) x := by
   first | exact @GlobalTheory.ConeLevel.level | exact GlobalTheory.ConeLevel.level | (intros; apply GlobalTheory.ConeLevel.level <;> assumption)

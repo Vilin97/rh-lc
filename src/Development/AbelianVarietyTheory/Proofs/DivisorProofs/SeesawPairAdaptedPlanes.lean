@@ -93,14 +93,14 @@ theorem gram_ιx {k k₁ : ℕ} {Y : Spc F E k} {Y₁ : Spc F E k₁} {G : Plane
 theorem incM_one' {m : ℕ} : incM F (1 : Matrix (Fin m) (Fin m) E) = 1 := by
   simp only [incM]; exact Matrix.map_one _ (map_zero _) (map_one _)
 
-theorem repA (y : Fin n → AE F E) (w : Fin d → E) :
+theorem repA (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (w : Fin d → E) :
     Matrix.vecMulVec y (incV F w) =
       incM F (1 : Matrix (Fin n) (Fin n) E) * Matrix.replicateCol Unit y * (incM F (Matrix.replicateCol Unit w))ᵀ := by
   rw [incM_one', Matrix.one_mul]
   ext i j
   simp [Matrix.vecMulVec_apply, Matrix.mul_apply, incM, incV]
 
-theorem repB (x : Fin n → E) (ι' : Matrix (Fin d) (Fin d₁) E) (z₂ : Fin d₁ → AE F E) :
+theorem repB (x : Fin n → E) (ι' : Matrix (Fin d) (Fin d₁) E) (z₂ : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     Matrix.vecMulVec (incV F x) (incM F ι' *ᵥ z₂) =
       incM F (Matrix.replicateCol Unit x) * Matrix.replicateRow Unit z₂ * (incM F ι')ᵀ := by
   ext i j
@@ -111,40 +111,40 @@ theorem repB (x : Fin n → E) (ι' : Matrix (Fin d) (Fin d₁) E) (z₂ : Fin d
 
 
 variable (σ) in
-abbrev sy (X : Spc F E n) (W : Spc F E d) := symp (cA σ) (-1 : AE F E) (incM F X.J) (incM F W.J)
+abbrev sy (X : Spc F E n) (W : Spc F E d) := symp (cA σ) (-1 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (incM F X.J) (incM F W.J)
 
 open GlobalTheory.MixedLagrX in
-theorem sAA (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (y y' : Fin n → AE F E) :
+theorem sAA (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (y y' : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     sy σ X W (Matrix.vecMulVec y (incV F H'.x)) (Matrix.vecMulVec y' (incV F H'.x)) = 0 := by
   rw [sy, symp, repA, repA, hTens_sandwich, incM_gram, incM_gram, replicateCol_transpose_mul_J_mul_map_eq_zero_of_isAdapted hH', incM_zero]
   simp
 
 open GlobalTheory.MixedLagrX in
-theorem sBA (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (z₂ : Fin d₁ → AE F E) (y' : Fin n → AE F E) :
+theorem sBA (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (z₂ : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (y' : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     sy σ X W (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ z₂)) (Matrix.vecMulVec y' (incV F H'.x)) = 0 := by
   rw [sy, symp, repB, repA, hTens_sandwich, incM_gram, incM_gram, gram_ιx hH', incM_zero]
   simp
 
 open GlobalTheory.MixedLagrX in
-theorem sCA (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (z : Matrix (Fin n₁) (Fin d₁) (AE F E)) (y' : Fin n → AE F E) :
+theorem sCA (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (z : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (y' : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     sy σ X W (incM F H.ι * z * (incM F H'.ι)ᵀ) (Matrix.vecMulVec y' (incV F H'.x)) = 0 := by
   rw [sy, symp, repA, hTens_sandwich, incM_gram, incM_gram, gram_ιx hH', incM_zero]
   simp
 
 open GlobalTheory.MixedLagrX in
-theorem sBB (hH : H.IsAdapted σ B X X₁ j₀ j₁) (z₂ z₂' : Fin d₁ → AE F E) :
+theorem sBB (hH : H.IsAdapted σ B X X₁ j₀ j₁) (z₂ z₂' : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     sy σ X W (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ z₂)) (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ z₂')) = 0 := by
   rw [sy, symp, repB, repB, hTens_sandwich, incM_gram, incM_gram, replicateCol_transpose_mul_J_mul_map_eq_zero_of_isAdapted hH, incM_zero]
   simp
 
 open GlobalTheory.MixedLagrX in
-theorem sCB (hH : H.IsAdapted σ B X X₁ j₀ j₁) (z : Matrix (Fin n₁) (Fin d₁) (AE F E)) (z₂' : Fin d₁ → AE F E) :
+theorem sCB (hH : H.IsAdapted σ B X X₁ j₀ j₁) (z : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (z₂' : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     sy σ X W (incM F H.ι * z * (incM F H'.ι)ᵀ) (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ z₂')) = 0 := by
   rw [sy, symp, repB, hTens_sandwich, incM_gram, incM_gram, gram_ιx hH, incM_zero]
   simp
 
 open GlobalTheory.MixedLagrX in
-theorem sCC (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (z z' : Matrix (Fin n₁) (Fin d₁) (AE F E)) :
+theorem sCC (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (z z' : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     sy σ X W (incM F H.ι * z * (incM F H'.ι)ᵀ) (incM F H.ι * z' * (incM F H'.ι)ᵀ) = sy σ X₁ W₁ z z' := by
   rw [sy, sy, symp, symp, hTens_sandwich, incM_gram, incM_gram, hH.gram, hH'.gram, GlobalTheory.MixedLagrGram.hTens_eq_trace]
 

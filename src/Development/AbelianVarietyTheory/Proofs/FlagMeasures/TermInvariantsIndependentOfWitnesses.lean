@@ -179,8 +179,8 @@ theorem compare {d : S.Datum} {Λ : Submodule L.O S.V} {n n' m m' : S.GLV}
   obtain ⟨-, -, hm, hm', f, f', kt, -⟩ := K
   have hs := mul_mem (inv_mem hn) hm
   have hs' := mul_mem (inv_mem hn') hm'
-  obtain ⟨A, ⟨h0, h1⟩, hA⟩ := FrameOnto.exists_matrix S S.f S.T S.gram _ hs
-  obtain ⟨A', ⟨h0', h1'⟩, hA'⟩ := FrameOnto.exists_matrix S S.f' S.T' S.gram' _ hs'
+  obtain ⟨A, ⟨h0, h1⟩, hA⟩ := FrameOnto.exists_matrix S S.f _ hs
+  obtain ⟨A', ⟨h0', h1'⟩, hA'⟩ := FrameOnto.exists_matrix S S.f' _ hs'
   have a1 : ∀ j, m (S.f j) = ∑ i, A i j • n (S.f i) := fun j => by
     have := congrArg n (hA j)
     rw [show n ((n⁻¹ * m) (S.f j)) = m (S.f j) from n.apply_symm_apply _] at this

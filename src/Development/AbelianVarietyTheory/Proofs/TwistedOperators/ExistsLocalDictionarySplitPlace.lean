@@ -29,10 +29,10 @@ theorem nonempty_emb {σ : E →ₐ[F] E} (h : IsCMExt F E σ) [Algebra.Unramifi
   · exact (nonempty_split_iff h).2 hp
 
 omit [NumberField E] in
-theorem piW_apply {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (z : AE F E) : piW τ z = splitProj τ (evT E v z) := rfl
+theorem piW_apply {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : piW τ z = splitProj τ (evT E v z) := rfl
 
 omit [NumberField E] in
-theorem piW_cA {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) (z : AE F E) :
+theorem piW_cA {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     piW τ (cA σ z) = piW (τ.comp σ) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
@@ -41,7 +41,7 @@ theorem piW_cA {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) 
 
 omit [NumberField E] in
 theorem piW_algebraMap {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (a : AF F) :
-    piW τ (algebraMap (AF F) (AE F E) a) = evFin F v a := by
+    piW τ (algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) a) = evFin F v a := by
   show evFin F v a * τ 1 = _
   rw [map_one, mul_one]
 
@@ -50,7 +50,7 @@ theorem piW_inclR {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (e : E) : piW τ (
   show evFin F v 1 * τ e = _
   rw [map_one, one_mul]
 
-theorem mem_latAt_iff {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (z : Fin d → AE F E) :
+theorem mem_latAt_iff {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (z : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     z ∈ GlobalTheory.InertSph.latAt W v ↔ At (evFin F v) z ∧ (fun i => evT E v (z i)) ∈ latLoc F W.L v := by
   constructor
   · intro hz

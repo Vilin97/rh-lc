@@ -472,7 +472,9 @@ theorem kill_Th (N : NF H r) {Λ : Submodule (𝓞 K) V} (hU : IsUnimod H Λ) (h
       γ₁ • γ₂ • γ₃ • y ∈ latTh N.F N.F' Λ := by
     intro γ₁ h₁ γ₂ h₂ γ₃ h₃ y hy
     rw [mem_dual_iff] at hy
-    have hyW : y ∈ W := (Submodule.span_le.2 fun x hx => hx.2) hy.1
+    have hyW : y ∈ W :=
+      (show Submodule.span K (latTh N.F N.F' Λ : Set V) ≤ W from
+        Submodule.span_le.2 fun x hx => hx.2) hy.1
     have hx : ∀ x : ↥(Λ ⊓ rs (𝓞 K) W), IsIntegral ℤ (H.B x y) := by
       intro x
       rw [← mem_one_iff, ← H.herm]

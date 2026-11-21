@@ -59,7 +59,7 @@ section Uniq
 variable {σ : Type}
 
 theorem coeff_foldr (l : List σ) (m : σ →₀ ℕ) : ∃ c : ℂ, c ≠ 0 ∧ ∀ F : MvPowerSeries σ ℂ,
-    coeff m (l.foldr (fun q G => pderiv ℂ q G) F) = c * coeff (m + (l.map fun q => Finsupp.single q 1).sum) F := by
+    coeff m (l.foldr (fun q G => pderiv q G) F) = c * coeff (m + (l.map fun q => Finsupp.single q 1).sum) F := by
   induction l generalizing m with
   | nil => exact ⟨1, one_ne_zero, fun F => by simp⟩
   | cons q l ih =>
@@ -86,8 +86,8 @@ theorem sum_single_toList (k : σ →₀ ℕ) :
        rw [← h2, ← Multiset.sum_coe, ← Multiset.map_coe, Multiset.coe_toList])
 
 theorem eq_of_cc (F G : MvPowerSeries σ ℂ)
-    (h : ∀ l : List σ, constantCoeff (l.foldr (fun q H => pderiv ℂ q H) F) =
-      constantCoeff (l.foldr (fun q H => pderiv ℂ q H) G)) : F = G := by
+    (h : ∀ l : List σ, constantCoeff (l.foldr (fun q H => pderiv q H) F) =
+      constantCoeff (l.foldr (fun q H => pderiv q H) G)) : F = G := by
   ext m
   obtain ⟨c, hc, hcF⟩ := coeff_foldr (Finsupp.toMultiset m).toList m
   have h1 := h (Finsupp.toMultiset m).toList
@@ -99,15 +99,15 @@ theorem eq_of_cc (F G : MvPowerSeries σ ℂ)
 variable {W : Type} [NormedAddCommGroup W] [NormedSpace ℂ W]
 
 def IsTayF (Θ : W → ℂ) (w : σ → W) (F : MvPowerSeries σ ℂ) : Prop :=
-  ∀ l : List σ, constantCoeff (l.foldr (fun q H => pderiv ℂ q H) F) = mD Θ 0 ((l.map w : List W) : Multiset W)
+  ∀ l : List σ, constantCoeff (l.foldr (fun q H => pderiv q H) F) = mD Θ 0 ((l.map w : List W) : Multiset W)
 
 theorem IsTayF.eq {Θ : W → ℂ} {w : σ → W} {F G : MvPowerSeries σ ℂ} (hF : IsTayF Θ w F)
     (hG : IsTayF Θ w G) : F = G := eq_of_cc F G fun l => (hF l).trans (hG l).symm
 
 theorem isTayF_family (Θ : W → ℂ) (w : σ → W) (Φ : Multiset W → MvPowerSeries σ ℂ)
-    (hd : ∀ q s, pderiv ℂ q (Φ s) = Φ (w q ::ₘ s)) (hc : ∀ s, constantCoeff (Φ s) = mD Θ 0 s) :
+    (hd : ∀ q s, pderiv q (Φ s) = Φ (w q ::ₘ s)) (hc : ∀ s, constantCoeff (Φ s) = mD Θ 0 s) :
     IsTayF Θ w (Φ 0) := by
-  have key : ∀ l : List σ, l.foldr (fun q H => pderiv ℂ q H) (Φ 0) = Φ ((l.map w : List W) : Multiset W) := by
+  have key : ∀ l : List σ, l.foldr (fun q H => pderiv q H) (Φ 0) = Φ ((l.map w : List W) : Multiset W) := by
     intro l
     induction l with
     | nil => rfl
@@ -196,7 +196,7 @@ theorem cc_subst {σ τ : Type} [Fintype σ] {L : σ → MvPowerSeries τ ℂ} (
     rw [hz, smul_zero]
 
 private theorem pderiv_tay_eq_tay_cons_single (θ : (Fin g → ℂ) → ℂ) (s : Multiset (Fin g → ℂ)) (q : Fin 1 × Fin g) :
-    pderiv ℂ q (tay θ s) = tay θ ((Pi.single q.2 1 : Fin g → ℂ) ::ₘ s) := by
+    pderiv q (tay θ s) = tay θ ((Pi.single q.2 1 : Fin g → ℂ) ::ₘ s) := by
   have hc : ∀ (s : Multiset (Fin g → ℂ)) (k : Fin 1 × Fin g →₀ ℕ),
       coeff k (tay θ s) = mD θ 0 (dirs k + s) / fct k := fun _ _ => rfl
   have hd : ∀ (k : Fin 1 × Fin g →₀ ℕ) (q : Fin 1 × Fin g),
@@ -236,7 +236,7 @@ private theorem pderiv_tay_eq_tay_cons_single (θ : (Fin g → ℂ) → ℂ) (s 
 
 theorem isTayF_subst {τ : Type} [Fintype τ] (f : (Fin g → ℂ) → ℂ) (hf : ContDiffAt ℂ ω f 0)
     (L : Fin 1 × Fin g → MvPowerSeries τ ℂ) (a : Fin 1 × Fin g → τ → ℂ) (hL0 : ∀ p, constantCoeff (L p) = 0)
-    (hLd : ∀ p q, pderiv ℂ q (L p) = C (a p q)) :
+    (hLd : ∀ p q, pderiv q (L p) = C (a p q)) :
     IsTayF f (fun q => ∑ p, a p q • (Pi.single p.2 1 : Fin g → ℂ)) (subst L (tay f 0)) := by
   have hL : MvPowerSeries.HasSubst L := by
     first
@@ -260,8 +260,64 @@ theorem isTayF_subst {τ : Type} [Fintype τ] (f : (Fin g → ℂ) → ℂ) (hf 
       ext k
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [map_sum, map_smul, hcf, smul_eq_mul, Multiset.add_cons, lin, Finset.sum_div, mul_div_assoc]
-    rw [ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst hL0]
-    simp only [hLd]
+    classical
+    have hpoly (P : MvPolynomial (Fin 1 × Fin g) ℂ) :
+        pderiv q (MvPolynomial.aeval L P) =
+          ∑ p, MvPolynomial.aeval L (MvPolynomial.pderiv p P) * pderiv q (L p) := by
+      induction P using MvPolynomial.induction_on with
+      | C c => simp
+      | add P Q hP hQ =>
+        simp only [map_add (f := _), hP, hQ, add_mul, Finset.sum_add_distrib]
+      | mul_X P p hP =>
+        rw [map_mul, MvPolynomial.aeval_X, Derivation.leibniz, hP, smul_eq_mul, smul_eq_mul,
+          Finset.mul_sum]
+        simp only [Derivation.leibniz, MvPolynomial.pderiv_X, Pi.single_apply, smul_eq_mul,
+          map_add (f := _), map_mul, MvPolynomial.aeval_X, add_mul, Finset.sum_add_distrib,
+          mul_ite, mul_one, mul_zero]
+        simp only [apply_ite (MvPolynomial.aeval L), map_zero, ite_mul, zero_mul,
+          Finset.sum_ite_eq, Finset.mem_univ, ite_true, mul_assoc]
+    have hchain (G : MvPowerSeries (Fin 1 × Fin g) ℂ) :
+        pderiv q (subst L G) = ∑ p, subst L (pderiv p G) * C (a p q) := by
+      ext d
+      -- Differentiation requires keeping one extra degree in the polynomial truncation.
+      let N := d.degree + 1
+      let P := truncTotal (N + 1) G
+      have hd : d.degree < N := by dsimp [N]; omega
+      have hshift : (d + Finsupp.single q 1).degree < N + 1 := by
+        rw [map_add, Finsupp.degree_single]
+        omega
+      have hP : pderiv q (subst L (P : MvPowerSeries _ ℂ)) =
+          ∑ p, subst L (pderiv p (P : MvPowerSeries _ ℂ)) * C (a p q) := by
+        simpa only [MvPowerSeries.pderiv_coe, MvPowerSeries.subst_coe, hLd] using hpoly P
+      have hcoeff {k : ℕ} {e : τ →₀ ℕ} (he : e.degree < k)
+          (U V : MvPowerSeries (Fin 1 × Fin g) ℂ) (hUV : truncTotal k U = truncTotal k V) :
+          coeff e (subst L U) = coeff e (subst L V) := by
+        rw [← coeff_truncTotal (subst L U) he, ← coeff_truncTotal (subst L V) he]
+        rw [truncTotal_subst_eq_truncTotal_truncTotal_subst (f := U) hL0,
+          truncTotal_subst_eq_truncTotal_truncTotal_subst (f := V) hL0, hUV]
+      calc
+        coeff d (pderiv q (subst L G)) =
+            coeff d (pderiv q (subst L (P : MvPowerSeries _ ℂ))) := by
+          rw [coeff_pderiv, coeff_pderiv]
+          congr 1
+          rw [← coeff_truncTotal (subst L G) hshift,
+            truncTotal_subst_eq_truncTotal_truncTotal_subst hL0,
+            coeff_truncTotal _ hshift]
+        _ = coeff d (∑ p, subst L (pderiv p G) * C (a p q)) := by
+          rw [hP, map_sum, map_sum]
+          refine Finset.sum_congr rfl fun p _ => ?_
+          rw [coeff_mul_C, coeff_mul_C]
+          congr 1
+          apply hcoeff hd
+          ext e
+          by_cases he : e.degree < N
+          · rw [coeff_truncTotal _ he, coeff_truncTotal _ he, coeff_pderiv, coeff_pderiv,
+              MvPolynomial.coeff_coe, coeff_truncTotal]
+            rw [map_add, Finsupp.degree_single]
+            omega
+          · rw [coeff_truncTotal_eq_zero _ (Nat.le_of_not_lt he),
+              coeff_truncTotal_eq_zero _ (Nat.le_of_not_lt he)]
+    rw [hchain]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [htay, ← MvPowerSeries.coe_substAlgHom hL, map_sum]
     simp only [map_smul]

@@ -61,7 +61,7 @@ theorem sum_vv (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (u 
     simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum, mul_assoc]
 
 theorem sum_vm (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (u : Fin d → E)
-    (ι : Matrix (Fin d) (Fin d₁) E) (z : Fin d₁ → AE F E) :
+    (ι : Matrix (Fin d) (Fin d₁) E) (z : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     (∑ j, ∑ l, incV F u j * incM F J j l * cA σ ((incM F ι *ᵥ z) l)) =
       ∑ m, inclR (F := F) (AF F) (form σ J u (fun l => ι l m)) * cA σ (z m) := by
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
@@ -71,7 +71,7 @@ theorem sum_vm (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E
   exact (Finset.sum_congr rfl fun _ _ => Finset.sum_comm).trans Finset.sum_comm
 
 theorem sum_mv (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (v : Fin d → E)
-    (ι : Matrix (Fin d) (Fin d₁) E) (z : Fin d₁ → AE F E) :
+    (ι : Matrix (Fin d) (Fin d₁) E) (z : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     (∑ j, ∑ l, (incM F ι *ᵥ z) j * incM F J j l * cA σ (incV F v l)) =
       ∑ m, z m * inclR (F := F) (AF F) (form σ J (fun j => ι j m) v) := by
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
@@ -85,7 +85,7 @@ theorem sum_mv (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E
 theorem isotropic_key (σ : E →ₐ[F] E) (hσ : ∀ e, σ (σ e) = e) {n d d₁ : ℕ} (JX : Matrix (Fin n) (Fin n) E)
     (JW : Matrix (Fin d) (Fin d) E) (hJ : ∀ i j, σ (JW j i) = -JW i j) (x₀ : Fin n → E) (w₀ : Fin d → E)
     (ι : Matrix (Fin d) (Fin d₁) E) (hx : form σ JX x₀ x₀ = 0) (hw : form σ JW w₀ w₀ = 0)
-    (ho : ∀ u, form σ JW (ι *ᵥ u) w₀ = 0) (y : Fin n → AE F E) (z : Fin d₁ → AE F E) :
+    (ho : ∀ u, form σ JW (ι *ᵥ u) w₀ = 0) (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     hTens (cA σ) (incM F JX) (incM F JW)
       (Matrix.vecMulVec y (incV F w₀) + Matrix.vecMulVec (incV F x₀) (incM F ι *ᵥ z))
       (Matrix.vecMulVec y (incV F w₀) + Matrix.vecMulVec (incV F x₀) (incM F ι *ᵥ z)) = 0 := by

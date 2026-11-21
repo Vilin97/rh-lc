@@ -47,7 +47,7 @@ private theorem rho_rho' {R : Type} [CommRing R] [Invertible (2 : R)] {V : Type}
 private theorem om_rho {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Model σ X W} {ψ : AddChar (AF F) ℂ}
     (hψ : IsStd ψ) {χX χW : Chr F E} {om : Rep σ X W} (hW : M.IsWeil ψ χX χW om) {g : UA σ X.J}
     (hex : ∀ f : SInf F (Fin n × Fin d), ∃ f₁ : SInf F (Fin n × Fin d), Acts (evI F) (om (g, 1)) f f₁)
-    (u : Matrix (Fin n) (Fin d) (AE F E)) (f : SInf F (Fin n × Fin d)) :
+    (u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (f : SInf F (Fin n × Fin d)) :
     locOpInf (M.co.rho ψ (partInf F (mat g * u))) (locOpInf (om (g, 1)) f) =
       locOpInf (om (g, 1)) (locOpInf (M.co.rho ψ (partInf F u)) f) := by
   have hS := IsUWeilPair.isUSplitting hW
@@ -62,13 +62,13 @@ private theorem om_rho {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Model σ
     (locOpInf_rho M.co hψ _ _).1 r (hr _)] at h2
   exact h2.symm
 
-private theorem partInf_vec {n d : ℕ} (a : Fin n → AE F E) (w : Fin d → AE F E) :
+private theorem partInf_vec {n d : ℕ} (a : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (w : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     partInf F (Matrix.vecMulVec a w) = Matrix.vecMulVec (realAd F 1 • a) w := by
   rw [partInf, Matrix.smul_vecMulVec]
 
 private theorem rho_add {B : Base F E} {n d d₁ j₀ j₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc F E d₁}
     (M : Model σ X W) {H' : Plane E d d₁} (hH' : H'.IsAdapted σ B W W₁ j₀ j₁) (hψ : IsStd B.ψ)
-    (a b : Fin n → AE F E) (f : SInf F (Fin n × Fin d)) :
+    (a b : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (f : SInf F (Fin n × Fin d)) :
     locOpInf (M.co.rho B.ψ (partInf F (Matrix.vecMulVec a (incV F H'.x))))
       (locOpInf (M.co.rho B.ψ (partInf F (Matrix.vecMulVec b (incV F H'.x)))) f) =
     locOpInf (M.co.rho B.ψ (partInf F (Matrix.vecMulVec (a + b) (incV F H'.x)))) f := by
@@ -82,9 +82,9 @@ private theorem rho_add {B : Base F E} {n d d₁ j₀ j₁ : ℕ} {X : Spc F E n
 
 private theorem ei_inv {B : Base F E} {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁} {W₁ : Spc F E d₁}
     {M : Model σ X W} {M₁ : Model σ X₁ W₁} (hψ : IsStd B.ψ) (hM : M.IsGood B.ψ) (hM₁ : M₁.IsGood B.ψ)
-    {ι : Matrix (Fin n) (Fin n₁) E} {ι' : Matrix (Fin d) (Fin d₁) E} {I : Set (Matrix (Fin n) (Fin d) (AE F E))}
+    {ι : Matrix (Fin n) (Fin n₁) E} {ι' : Matrix (Fin d) (Fin d₁) E} {I : Set (Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))}
     {e : Fn F n d →ₗ[ℂ] Fn F n₁ d₁} (he : IsEv B M M₁ ι ι' I e) {ei} {ev} (hL : IsLocPart M M₁ e ei ev)
-    (u : Matrix (Fin n) (Fin d) (AE F E)) (hu : partInf F u ∈ I) (f : SInf F (Fin n × Fin d)) :
+    (u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (hu : partInf F u ∈ I) (f : SInf F (Fin n × Fin d)) :
     ei (locOpInf (M.co.rho B.ψ (partInf F u)) f) = ei f := by
   have hSB : ∀ v, M.vac v ∈ SB _ := fun v => (hM.vac v).1
   have hei : ∀ f, e (pure f M.vac) = pure (ei f) M₁.vac := fun f => by
@@ -104,12 +104,12 @@ private theorem formA_inc {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (x y : Fin n 
   simp [incV, incM, form, Matrix.mulVec, dotProduct, h]
 
 private theorem coef_eq {B : Base F E} {n n₁ r s i₀ i₁ : ℕ} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁}
-    (hB : B.IsGood σ) (hS : X.IsHerm σ B r s) (hA : H.IsAdapted σ B X X₁ i₀ i₁) (a t : AE F E) (u : Fin n₁ → AE F E) :
+    (hB : B.IsGood σ) (hS : X.IsHerm σ B r s) (hA : H.IsAdapted σ B X X₁ i₀ i₁) (a t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (u : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     cA σ (incV F H.x ⬝ᵥ (incM F X.J *ᵥ fun i => cA σ ((a • incV F H.x + incM F H.ι *ᵥ u + t • incV F H.y) i))) = t := by
   have hσ : ∀ z, σ (σ z) = z := fun z => by
     obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
     exact τ.injective (by rw [hB.cm.2.2.2, hB.cm.2.2.2, star_star])
-  have hc : ∀ z : AE F E, cA σ (cA σ z) = z := fun z => by
+  have hc : ∀ z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), cA σ (cA σ z) = z := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [cA, hσ]

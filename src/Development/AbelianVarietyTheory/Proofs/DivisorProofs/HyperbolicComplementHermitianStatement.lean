@@ -17,5 +17,5 @@ theorem _root_.GlobalTheory.T.hyperbolic_complement_hermitian : ∀ (F E : Type)
     (J : Matrix (Fin n) (Fin n) E) (J₁ : Matrix (Fin n₁) (Fin n₁) E) (x y : Fin n → E) (ι : Matrix (Fin n) (Fin n₁) E),
     (∀ z, σ (σ z) = z) → (∀ i j, σ (J j i) = J i j) → n = n₁ + 2 → form σ J x x = 0 → form σ J y y = 0 →
     form σ J x y = 1 → (∀ u, form σ J (ι *ᵥ u) x = 0 ∧ form σ J (ι *ᵥ u) y = 0) → ιᵀ * J * ι.map σ = J₁ → J₁.det ≠ 0 →
-    ∀ z : Fin n → AE F E, ∃ (a b : AE F E) (w : Fin n₁ → AE F E), z = a • incV F x + incM F ι *ᵥ w + b • incV F y := by
+    ∀ z : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∃ (a b : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (w : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), z = a • incV F x + incM F ι *ᵥ w + b • incV F y := by
   first | exact @GlobalTheory.LeviSpan.span_adelic | exact GlobalTheory.LeviSpan.span_adelic | (intros; apply GlobalTheory.LeviSpan.span_adelic <;> assumption)

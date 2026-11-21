@@ -119,7 +119,7 @@ theorem exists_formFrame (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin
 theorem cA_inclR (σ : E →ₐ[F] E) (e : E) : cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := rfl
 
 theorem trace_inclR (e : E) :
-    Algebra.trace (AF F) (AE F E) (inclR (F := F) (AF F) e) = algebraMap F (AF F) (Algebra.trace F E e) := by
+    Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (inclR (F := F) (AF F) e) = algebraMap F (AF F) (Algebra.trace F E e) := by
   show Algebra.trace (AF F) (AF F ⊗[F] E) ((1 : AF F) ⊗ₜ[F] e) = _
   rw [Algebra.trace_apply, Algebra.trace_apply, ← Algebra.baseChange_lmul, LinearMap.trace_baseChange]
 
@@ -130,8 +130,8 @@ theorem inclR_smul (t : F) (x : E) :
   rfl
 
 theorem trace_expand {k : ℕ} (s c : Fin k → 𝓞 E)
-    (hsc : ∀ e : E, ∑ i, Algebra.trace F E ((c i : E) * e) • (s i : E) = e) (u : AE F E) :
-    u = ∑ i, Algebra.trace (AF F) (AE F E) (inclR (F := F) (AF F) (c i : E) * u) • inclR (F := F) (AF F) (s i : E) := by
+    (hsc : ∀ e : E, ∑ i, Algebra.trace F E ((c i : E) * e) • (s i : E) = e) (u : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
+    u = ∑ i, Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (inclR (F := F) (AF F) (c i : E) * u) • inclR (F := F) (AF F) (s i : E) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul a e =>
@@ -156,7 +156,7 @@ theorem incM_one {n : ℕ} : incM F (1 : Matrix (Fin n) (Fin n) E) = 1 := Matrix
 
 theorem decomp {n d k k' : ℕ} (T : Matrix (Fin n) (Fin k) E) (P : Matrix (Fin k) (Fin n) E)
     (T' : Matrix (Fin d) (Fin k') E) (P' : Matrix (Fin k') (Fin d) E) (h : T * P = 1) (h' : T' * P' = 1)
-    (z : Matrix (Fin n) (Fin d) (AE F E)) :
+    (z : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     z = ∑ j, ∑ l, (incM F P * z * (incM F P')ᵀ) j l • incM F (Matrix.vecMulVec (fun i => T i j) (fun i => T' i l)) := by
   have key : incM F T * (incM F P * z * (incM F P')ᵀ) * (incM F T')ᵀ = z := by
     rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, ← incM_mul, h, incM_one, Matrix.one_mul, Matrix.mul_assoc,
@@ -173,7 +173,7 @@ theorem decomp {n d k k' : ℕ} (T : Matrix (Fin n) (Fin k) E) (P : Matrix (Fin 
   exact Finset.sum_congr rfl fun _ _ => by ring
 
 theorem hTens_frame (σ : E →ₐ[F] E) {n d k k' : ℕ} (JA : Matrix (Fin n) (Fin n) E) (JB : Matrix (Fin d) (Fin d) E)
-    (S : Matrix (Fin n) (Fin k) E) (S' : Matrix (Fin d) (Fin k') E) (z : Matrix (Fin n) (Fin d) (AE F E)) (e : E)
+    (S : Matrix (Fin n) (Fin k) E) (S' : Matrix (Fin d) (Fin k') E) (z : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (e : E)
     (j : Fin k) (l : Fin k') :
     hTens (cA σ) (incM F JA) (incM F JB) z (incM F (Matrix.vecMulVec (fun i => e * S i j) (fun i => S' i l))) =
       inclR (F := F) (AF F) (σ e) * (incM F (JA * S.map σ)ᵀ * z * (incM F (JB * S'.map σ)ᵀ)ᵀ) j l := by

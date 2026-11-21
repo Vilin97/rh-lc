@@ -43,7 +43,7 @@ theorem fockDeg_stable_left {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Mod
     change mat (k * k⁻¹) = 1
     rw [mul_inv_cancel]
     rfl
-  have hcan : ∀ u : Matrix (Fin n) (Fin d) (AE F E), mat k * (mat k⁻¹ * u) = u := fun u => by
+  have hcan : ∀ u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), mat k * (mat k⁻¹ * u) = u := fun u => by
     rw [← Matrix.mul_assoc, hkk, Matrix.one_mul]
   have hvac : ∀ f₀, M.IsGauss ψ τ f₀ → M.IsGauss ψ τ (A f₀) := by
     intro f₀ hf₀

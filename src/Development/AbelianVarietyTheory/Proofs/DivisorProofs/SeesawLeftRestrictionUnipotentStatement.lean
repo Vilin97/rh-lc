@@ -22,7 +22,7 @@ theorem _root_.GlobalTheory.T.seesaw_left_restriction_unipotent : ∀ (F E : Typ
       ∀ e, IsEv B M M₁ H.ι 1 {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} e →
       ∀ dd omd dd₁ omd₁, IsDblOf B.ψ M χW om dd omd → IsDblOf B.ψ M₁ χW om₁ dd₁ omd₁ →
       ∀ l ∈ (adeleClass F).adm ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)),
-        (∀ z : Matrix (Fin d) (Fin n₁) (AE F E), ∀ φ ∈ schA F ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)), l (dd₁.rho B.ψ (z * ((diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (AE F E)))ᵀ) φ) = l φ) →
+        (∀ z : Matrix (Fin d) (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ φ ∈ schA F ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)), l (dd₁.rho B.ψ (z * ((diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))))ᵀ) φ) = l φ) →
         (∃ φ ∈ schA F ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)), l φ ≠ 0) →
         ∃ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), l ((partRₗ (conjLin e) ∘ₗ partLₗ e) Φ) ≠ 0 := by
   first | exact @GlobalTheory.DblEvNonvan.doubled_eval_nonvanishing | exact GlobalTheory.DblEvNonvan.doubled_eval_nonvanishing | (intros; apply GlobalTheory.DblEvNonvan.doubled_eval_nonvanishing <;> assumption)

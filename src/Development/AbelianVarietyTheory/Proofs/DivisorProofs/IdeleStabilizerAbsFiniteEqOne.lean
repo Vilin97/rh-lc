@@ -19,8 +19,8 @@ open GlobalTheory.Doubling
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem evFin_norm_mem_of_mem_stab {u : (AE F E)ˣ} (hu : u ∈ stab F E) (v : HeightOneSpectrum (𝓞 F)) :
-    evFin F v (Algebra.norm (AF F) (u : AE F E)) ∈ v.adicCompletionIntegers F := by
+theorem evFin_norm_mem_of_mem_stab {u : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ} (hu : u ∈ stab F E) (v : HeightOneSpectrum (𝓞 F)) :
+    evFin F v (Algebra.norm (AF F) (u : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) ∈ v.adicCompletionIntegers F := by
   classical
   haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
   let b := Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)
@@ -31,7 +31,7 @@ theorem evFin_norm_mem_of_mem_stab {u : (AE F E)ˣ} (hu : u ∈ stab F E) (v : H
     split_ifs
     · rw [map_one]; exact one_mem _
     · rw [map_zero]; exact zero_mem _
-  have hent : ∀ i j, evFin F v (Algebra.leftMulMatrix b (u : AE F E) i j) ∈ v.adicCompletionIntegers F := by
+  have hent : ∀ i j, evFin F v (Algebra.leftMulMatrix b (u : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) i j) ∈ v.adicCompletionIntegers F := by
     intro i j
     have := ((hu (b j)).1 (hlat j)) i v
     rwa [hcoord, ← Algebra.leftMulMatrix_eq_repr_mul] at this

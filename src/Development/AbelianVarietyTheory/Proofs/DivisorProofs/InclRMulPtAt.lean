@@ -19,14 +19,14 @@ namespace GlobalTheory.InertCoord
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
 
-def ptAt (hw : Formalism.UG.IsInertAt F E v w) (h : w.under (𝓞 F) = v) : w.adicCompletion E →ₙ+* AE F E :=
+def ptAt (hw : Formalism.UG.IsInertAt F E v w) (h : w.under (𝓞 F) = v) : w.adicCompletion E →ₙ+* _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) :=
   (GlobalTheory.AdelicU.Supp.singleTens E v).comp (InertChart.complEquiv hw h).symm.toRingHom.toNonUnitalRingHom
 
-def locW (h : w.under (𝓞 F) = v) : AE F E →+* w.adicCompletion E := (toCompl h).comp (compFin F E v)
+def locW (h : w.under (𝓞 F) = v) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →+* w.adicCompletion E := (toCompl h).comp (compFin F E v)
 
 def kap (hw : Formalism.UG.IsInertAt F E v w) (h : w.under (𝓞 F) = v) {m n : ℕ}
     (A : Matrix (Fin m) (Fin m) (w.adicCompletion E)) (B : Matrix (Fin n) (Fin n) (w.adicCompletion E)) :
-    Matrix (Fin n) (Fin m) (w.adicCompletion E) →+ Matrix (Fin m) (Fin n) (AE F E) :=
+    Matrix (Fin n) (Fin m) (w.adicCompletion E) →+ Matrix (Fin m) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   (AddMonoidHom.mapMatrix (ptAt hw h).toAddMonoidHom).comp
     { toFun := fun x => A * xᵀ * Bᵀ
       map_zero' := by simp
@@ -49,7 +49,7 @@ theorem at_ptAt (z : w.adicCompletion E) : At (evFin F v) (ptAt hw h z) :=
   GlobalTheory.ThK.at_evFin_iff.2 ⟨fun u => GlobalTheory.AdelicU.Supp.compInf_singleTens u v _,
     fun u hu => GlobalTheory.AdelicU.Supp.compFin_singleTens_ne hu _⟩
 
-theorem ptAt_locW {z : AE F E} (hz : At (evFin F v) z) : ptAt hw h (locW h z) = z := by
+theorem ptAt_locW {z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : At (evFin F v) z) : ptAt hw h (locW h z) = z := by
   obtain ⟨h1, h2⟩ := GlobalTheory.ThK.at_evFin_iff.1 hz
   refine GlobalTheory.AdelicU.Supp.adTens_ext (fun u => ?_) fun u => ?_
   · rw [ptAt_apply, GlobalTheory.AdelicU.Supp.compInf_singleTens, h1 u]

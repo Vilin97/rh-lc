@@ -19,8 +19,8 @@ namespace GlobalTheory.MixVUnipPlane
 theorem twist_heis_inv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e →
     ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (k : UA σ G.V.J) (a : AE F E), mat k *ᵥ incV F H.x = a • incV F H.x →
-    (∀ z : Fin b → AE F E, ∃ c : AE F E, mat k *ᵥ (incM F H.ι *ᵥ z) = incM F H.ι *ᵥ z + c • incV F H.x) →
+    ∀ (k : UA σ G.V.J) (a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), mat k *ᵥ incV F H.x = a • incV F H.x →
+    (∀ z : Fin b → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∃ c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), mat k *ᵥ (incM F H.ι *ᵥ z) = incM F H.ι *ᵥ z + c • incV F H.x) →
     (∀ z, ∀ Φ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')),
       e (om (k, 1) (G.M.co.rho B.ψ (incM F H.ι * z * (incM F H'.ι)ᵀ) Φ)) = G₁.M.co.rho B.ψ z (e (om (k, 1) Φ))) ∧
     ∀ u ∈ isoA (F := F) H H', ∀ Φ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')), e (om (k, 1) (G.M.co.rho B.ψ u Φ)) = e (om (k, 1) Φ) := by
@@ -51,7 +51,7 @@ theorem twist_heis_inv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     have h := (hH.orth (Pi.single m 1)).1
     simp only [form, Matrix.mulVec_single_one, dotProduct, Matrix.mulVec] at h
     simpa [Finset.mul_sum, Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.sum_mul] using h
-  have hperp : ∀ (z : Matrix (Fin b) (Fin (b + 2 + a')) (AE F E)) (q : Fin (b + 2 + a') → AE F E),
+  have hperp : ∀ (z : Matrix (Fin b) (Fin (b + 2 + a')) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (q : Fin (b + 2 + a') → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
       symp (cA σ) (-1) (incM F G.V.J) (incM F G.W.J) (incM F H.ι * z) (Matrix.vecMulVec (incV F H.x) q) = 0 := by
     intro z q
     have hinner : ∀ j, ∑ i, ∑ l, (incM F H.ι * z) i j * incM F G.V.J i l * cA σ (incV F H.x l) = 0 := by

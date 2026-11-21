@@ -23,18 +23,18 @@ namespace GlobalTheory.ConeMem
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem rho_zero' {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {σ : E →ₐ[F] E} (M : Model σ X W) (ψ : AddChar (AF F) ℂ)
-    (w : Matrix (Fin n) (Fin d) (AE F E)) : M.co.rho ψ w (0 : (Fin n × Fin d → AF F) → ℂ) = 0 := by
+    (w : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : M.co.rho ψ w (0 : (Fin n × Fin d → AF F) → ℂ) = 0 := by
   funext x
   simp [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr]
 
 theorem rho_add' {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {σ : E →ₐ[F] E} (M : Model σ X W) (ψ : AddChar (AF F) ℂ)
-    (w : Matrix (Fin n) (Fin d) (AE F E)) (a b : (Fin n × Fin d → AF F) → ℂ) :
+    (w : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (a b : (Fin n × Fin d → AF F) → ℂ) :
     M.co.rho ψ w (a + b) = M.co.rho ψ w a + M.co.rho ψ w b := by
   funext x
   simp [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, mul_add]
 
 theorem rho_smul' {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {σ : E →ₐ[F] E} (M : Model σ X W) (ψ : AddChar (AF F) ℂ)
-    (w : Matrix (Fin n) (Fin d) (AE F E)) (c : ℂ) (a : (Fin n × Fin d → AF F) → ℂ) :
+    (w : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (c : ℂ) (a : (Fin n × Fin d → AF F) → ℂ) :
     M.co.rho ψ w (c • a) = c • M.co.rho ψ w a := by
   funext x
   simp only [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, Pi.smul_apply, smul_eq_mul]
@@ -58,7 +58,7 @@ theorem schA_le_of_pure' {κ : Type} [Fintype κ] {N : Submodule ℂ ((κ → AF
     exact h f φ hφ hs
 
 theorem cone_mem_schA : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
-    (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → ∀ (K : Subgroup (UA σ G.V.J)) (μK : Measure K) (μ : Measure (AE F E)ˣ), IsStab B K → μK.IsHaarMeasure → μ.IsHaarMeasure → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
+    (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → ∀ (K : Subgroup (UA σ G.V.J)) (μK : Measure K) (μ : Measure (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ), IsStab B K → μK.IsHaarMeasure → μ.IsHaarMeasure → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
     ∀ Ψ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')),
       cone B G.M om e K μK μ (shiftA H H') X.ν ((b + 2 - a') / 2) Ψ ∈ schA F (Fin b × Fin (b + a')) := by
   intro hKP F E _ _ _ _ _ σ B b a' G G₁ H H' hC K μK μ hK hμK hμ e hE X om om' om₁ om₁' hT hT₁

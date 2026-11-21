@@ -44,7 +44,7 @@ theorem one_sub_mul_idem (w₀ : InfinitePlace F) : (1 - idem w₀) * idem w₀ 
 theorem one_sub_mul_one_sub (w₀ : InfinitePlace F) : (1 - idem w₀) * (1 - idem w₀) = 1 - idem w₀ := by
   rw [mul_sub, mul_one, one_sub_mul_idem, sub_zero]
 
-def tv (w₀ : InfinitePlace F) (ξ : E) : AE F E :=
+def tv (w₀ : InfinitePlace F) (ξ : E) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) :=
   idem w₀ ⊗ₜ[F] ξ + (1 - idem w₀) ⊗ₜ[F] (1 : E)
 
 theorem tv_mul (w₀ : InfinitePlace F) (ξ η : E) : tv w₀ ξ * tv w₀ η = tv w₀ (ξ * η) := by
@@ -54,7 +54,7 @@ theorem tv_mul (w₀ : InfinitePlace F) (ξ η : E) : tv w₀ ξ * tv w₀ η = 
 theorem tv_one (w₀ : InfinitePlace F) : tv (E := E) w₀ 1 = 1 := by
   rw [tv, ← TensorProduct.add_tmul, add_sub_cancel, Algebra.TensorProduct.one_def]
 
-def tU (w₀ : InfinitePlace F) (ξ : E) (hξ : ξ ≠ 0) : (AE F E)ˣ where
+def tU (w₀ : InfinitePlace F) (ξ : E) (hξ : ξ ≠ 0) : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ where
   val := tv w₀ ξ
   inv := tv w₀ ξ⁻¹
   val_inv := by rw [tv_mul, mul_inv_cancel₀ hξ, tv_one]

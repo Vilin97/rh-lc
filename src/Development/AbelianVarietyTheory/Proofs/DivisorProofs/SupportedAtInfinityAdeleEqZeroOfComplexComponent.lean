@@ -15,7 +15,7 @@ noncomputable section
 namespace GlobalTheory.AdeleInfInj
 
 theorem eq_zero_of_piInf_eq_zero : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
-    IsCMExt F E σ → ∀ (emb : ∀ w : InfinitePlace F, EmbOver E w) (z : AE F E), At (evI F) z →
+    IsCMExt F E σ → ∀ (emb : ∀ w : InfinitePlace F, EmbOver E w) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) z →
     (∀ w, piInf (emb w) z = 0) → z = 0 := by
   intro F E _ _ _ _ _ σ cm emb z hz hinf
   have hx : ∃ x : E, x ∉ Set.range (algebraMap F E) := by

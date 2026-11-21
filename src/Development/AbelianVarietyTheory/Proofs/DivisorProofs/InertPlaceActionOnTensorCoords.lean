@@ -11,15 +11,15 @@ open scoped TensorProduct Matrix
 namespace GlobalTheory.InertCoordAct
 
 theorem at_mul_left {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {v : Pl (F := F)}
-    (a : AE F E) {z : AE F E} (hz : At (evFin F v) z) : At (evFin F v) (a * z) := fun u hu => by
+    (a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) {z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : At (evFin F v) z) : At (evFin F v) (a * z) := fun u hu => by
   rw [← mul_smul_comm, hz u hu, mul_zero]
 
 theorem at_mul_right {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {v : Pl (F := F)}
-    (a : AE F E) {z : AE F E} (hz : At (evFin F v) z) : At (evFin F v) (z * a) := fun u hu => by
+    (a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) {z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : At (evFin F v) z) : At (evFin F v) (z * a) := fun u hu => by
   rw [← smul_mul_assoc, hz u hu, zero_mul]
 
 theorem at_sum {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {v : Pl (F := F)}
-    {ι : Type} (s : Finset ι) (f : ι → AE F E) (hf : ∀ i, At (evFin F v) (f i)) :
+    {ι : Type} (s : Finset ι) (f : ι → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (hf : ∀ i, At (evFin F v) (f i)) :
     At (evFin F v) (∑ i ∈ s, f i) := fun u hu => by
   rw [Finset.smul_sum]; exact Finset.sum_eq_zero fun i _ => hf i u hu
 

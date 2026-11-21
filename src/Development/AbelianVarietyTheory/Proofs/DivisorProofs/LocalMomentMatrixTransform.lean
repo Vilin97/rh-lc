@@ -27,7 +27,7 @@ theorem piW_inclR {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
   exact splitProj_inclR t e
 
 theorem piW_cA {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (σ : E →ₐ[F] E) {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) (z : AE F E) :
+    (σ : E →ₐ[F] E) {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     piW t (cA σ z) = piW (t.comp σ) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp

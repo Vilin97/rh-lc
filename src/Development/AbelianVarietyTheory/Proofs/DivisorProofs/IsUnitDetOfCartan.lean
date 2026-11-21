@@ -68,7 +68,7 @@ theorem unitary_eps (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) (J : Matrix (
       Matrix.mul_one]
 
 def liftN (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) (J : Matrix (Fin n) (Fin n) E) (hJ : IsUnit (J.map τ).det) :
-    GL (Fin n) (Fv F v) →* Matrix (Fin n) (Fin n) (AE F E) :=
+    GL (Fin n) (Fv F v) →* Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   (oneAdd (liftMat h τ)).comp (pairHom (J.map τ) hJ)
 
 def liftU (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) (J : Matrix (Fin n) (Fin n) E) (ε : F)

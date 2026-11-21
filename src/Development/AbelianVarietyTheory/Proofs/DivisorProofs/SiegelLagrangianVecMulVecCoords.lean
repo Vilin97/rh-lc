@@ -30,7 +30,7 @@ theorem vecOf_single_basis (F : Type) [Field F] {E : Type} [Field E] [Algebra F 
     simp [Pi.single_apply, h]
 
 theorem De_vecMulVec_basisMap : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n d : ℕ) (κ : Type) [Fintype κ]
-    (De : Matrix (Fin d) (Fin n ⊕ Fin n) (AE F E) →ₗ[AF F] (κ → AF F) × (κ → AF F))
+    (De : Matrix (Fin d) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) →ₗ[AF F] (κ → AF F) × (κ → AF F))
     (D : Matrix (Fin d) (Fin n ⊕ Fin n) E →ₗ[F] (κ → F) × (κ → F)), (∀ u, De (incM F u) = GlobalTheory.SiegelConv.ratP (D u)) →
     ∀ (w : Fin d → E) (t : Fin n × Fin (Module.finrank F E) → AF F),
       De (Matrix.vecMulVec (incV F w) (Sum.elim (GlobalTheory.SiegelConv.basisMap F E n t) (GlobalTheory.SiegelConv.basisMap F E n t))) =

@@ -206,16 +206,16 @@ theorem metrizable_group (G : Type) [Group G] [TopologicalSpace G] (_ : IsTopolo
     (_ : SecondCountableTopology G) : TopologicalSpace.MetrizableSpace G :=
   TopologicalSpace.metrizableSpace_of_t3_secondCountable G
 
-theorem idele_top : SecondCountableTopology (AE F E)ˣ ∧ TopologicalSpace.MetrizableSpace (AE F E)ˣ := by
+theorem idele_top : SecondCountableTopology (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ ∧ TopologicalSpace.MetrizableSpace (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
-  haveI : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) _
+  haveI : IsTopologicalRing (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := IsModuleTopology.isTopologicalRing (AF F) _
   haveI := GlobalTheory.AdelicUnitaryTop.secondCountable_adele F
   haveI := GlobalTheory.AdelicUnitaryTop.t2Space_adeleRing_numberField F
   obtain ⟨e⟩ := GlobalTheory.AdelicUnitaryTop.nonempty_homeomorph (F := F) (E := E) (AF F)
-  haveI : SecondCountableTopology (AE F E) := e.secondCountableTopology
-  haveI : T2Space (AE F E) := e.isEmbedding.t2Space
-  haveI : SecondCountableTopology (AE F E)ᵐᵒᵖ := MulOpposite.opHomeomorph.symm.secondCountableTopology
-  haveI : SecondCountableTopology (AE F E)ˣ := Units.isEmbedding_embedProduct.secondCountableTopology
+  haveI : SecondCountableTopology (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := e.secondCountableTopology
+  haveI : T2Space (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := e.isEmbedding.t2Space
+  haveI : SecondCountableTopology (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ᵐᵒᵖ := MulOpposite.opHomeomorph.symm.secondCountableTopology
+  haveI : SecondCountableTopology (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ := Units.isEmbedding_embedProduct.secondCountableTopology
   exact ⟨inferInstance, TopologicalSpace.metrizableSpace_of_t3_secondCountable _⟩
 
 end GlobalTheory.ConeMeasSmall

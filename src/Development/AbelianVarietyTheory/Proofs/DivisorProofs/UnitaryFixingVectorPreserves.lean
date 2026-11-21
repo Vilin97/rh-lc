@@ -27,21 +27,21 @@ theorem mat_one : mat (1 : UA σ J) = 1 := rfl
 
 theorem mat_inv_mul (g : UA σ J) : mat g⁻¹ * mat g = 1 := by rw [← mat_mul, inv_mul_cancel, mat_one]
 
-theorem mulVec_mul (g h : UA σ J) (v : Fin n → AE F E) : mat (g * h) *ᵥ v = mat g *ᵥ (mat h *ᵥ v) := by
+theorem mulVec_mul (g h : UA σ J) (v : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : mat (g * h) *ᵥ v = mat g *ᵥ (mat h *ᵥ v) := by
   rw [mat_mul, Matrix.mulVec_mulVec]
 
-theorem inv_mulVec_of_mulVec {g : UA σ J} {v w : Fin n → AE F E} (h : mat g *ᵥ v = w) : mat g⁻¹ *ᵥ w = v := by
+theorem inv_mulVec_of_mulVec {g : UA σ J} {v w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (h : mat g *ᵥ v = w) : mat g⁻¹ *ᵥ w = v := by
   rw [← h, Matrix.mulVec_mulVec, mat_inv_mul, Matrix.one_mulVec]
 
 theorem ext_mat {g h : UA σ J} (e : mat g = mat h) : g = h := Subtype.ext (Units.ext e)
 
-theorem pow_mulVec_fix {g : UA σ J} {v : Fin n → AE F E} (h : mat g *ᵥ v = v) (k : ℕ) : mat (g ^ k) *ᵥ v = v := by
+theorem pow_mulVec_fix {g : UA σ J} {v : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (h : mat g *ᵥ v = v) (k : ℕ) : mat (g ^ k) *ᵥ v = v := by
   induction k with
   | zero => rw [pow_zero, mat_one, Matrix.one_mulVec]
   | succ k ih => rw [pow_succ, mulVec_mul, h, ih]
 
-theorem pow_mulVec_shear {g : UA σ J} {x y : Fin n → AE F E} {d : AE F E} (hx : mat g *ᵥ x = x)
-    (hy : mat g *ᵥ y = y + d • x) (k : ℕ) : mat (g ^ k) *ᵥ y = y + ((k : AE F E) * d) • x := by
+theorem pow_mulVec_shear {g : UA σ J} {x y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} {d : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hx : mat g *ᵥ x = x)
+    (hy : mat g *ᵥ y = y + d • x) (k : ℕ) : mat (g ^ k) *ᵥ y = y + ((k : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * d) • x := by
   induction k with
   | zero => simp [mat_one]
   | succ k ih =>

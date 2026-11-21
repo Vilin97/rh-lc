@@ -44,10 +44,10 @@ theorem form_decay {κ ι : Type} [Fintype κ] [Fintype ι] (ψ : AddChar (AF F)
   exact ⟨C, fun x hx => hC x (funext hx)⟩
 
 theorem symp_pair (hcm : IsCMExt F E σ) {n d : ℕ} {JX : Matrix (Fin n) (Fin n) E} {JW : Matrix (Fin d) (Fin d) E}
-    (hJ : ∀ i j, σ (JW j i) = -JW i j) (x y : Fin d → E) (hxy : form σ JW x y = 1) (a a' : Fin n → E) (l : AE F E) (c : E) :
+    (hJ : ∀ i j, σ (JW j i) = -JW i j) (x y : Fin d → E) (hxy : form σ JW x y = 1) (a a' : Fin n → E) (l : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (c : E) :
     symp (cA σ) (-1) (incM F JX) (incM F JW) (l • Matrix.vecMulVec (incV F a) (incV F y))
       (inclR (F := F) (AF F) (σ c) • Matrix.vecMulVec (incV F a') (incV F x)) =
-      Algebra.trace (AF F) (AE F E) (l * inclR (F := F) (AF F) c * inclR (F := F) (AF F) (form σ JX a a')) := by
+      Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (l * inclR (F := F) (AF F) c * inclR (F := F) (AF F) (form σ JX a a')) := by
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
   rw [symp, GlobalTheory.XTermSupp.hTens_vv, GlobalTheory.XTermSupp.form_inc, GlobalTheory.XTermSupp.form_inc,
     GlobalTheory.XTermSupp.form_skew hcm hJ, hxy, hc, GlobalTheory.XTermSupp.invol hcm]

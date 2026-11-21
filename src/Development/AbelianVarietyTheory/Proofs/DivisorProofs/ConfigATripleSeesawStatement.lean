@@ -17,8 +17,8 @@ theorem _root_.GlobalTheory.T.config_a_triple_seesaw : GlobalTheory.ThK.KP → �
     ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
     ∃ L : Submodule F ((Fin (b + 2) × Fin (b + 2 + a') → F) × (Fin (b + 2) × Fin (b + 2 + a') → F)), (∀ p ∈ L, ∀ q ∈ L, p.1 ⬝ᵥ q.2 = q.1 ⬝ᵥ p.2) ∧
       Module.finrank F L = Fintype.card (Fin (b + 2) × Fin (b + 2 + a')) ∧
-      ∀ (t : AF F), ∀ w ∈ L, ∃ u₁ ∈ iso0 (F := F) (b + 2) H', ∃ u₂ ∈ {u : Matrix (Fin (b + 2)) (Fin (b + 2 + a')) (AE F E) | ∃ y, u = Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ y)},
-        ∃ z : Matrix (Fin b) (Fin (b + a')) (AE F E), (G₁.M.co.e z).1 = 0 ∧ ∀ φ : Fn F (b + 2) (b + 2 + a'),
+      ∀ (t : AF F), ∀ w ∈ L, ∃ u₁ ∈ iso0 (F := F) (b + 2) H', ∃ u₂ ∈ {u : Matrix (Fin (b + 2)) (Fin (b + 2 + a')) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) | ∃ y, u = Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ y)},
+        ∃ z : Matrix (Fin b) (Fin (b + a')) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), (G₁.M.co.e z).1 = 0 ∧ ∀ φ : Fn F (b + 2) (b + 2 + a'),
           schr B.ψ (t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i)))) φ =
             G.M.co.rho B.ψ u₁ (G.M.co.rho B.ψ u₂ (G.M.co.rho B.ψ (incM F H.ι * z * (incM F H'.ι)ᵀ) φ)) := by
   first | exact @GlobalTheory.MixedLagrA.lagrangian_isoA | exact GlobalTheory.MixedLagrA.lagrangian_isoA | (intros; apply GlobalTheory.MixedLagrA.lagrangian_isoA <;> assumption)

@@ -281,7 +281,6 @@ theorem eigen_of_good (u : Module.End ℂ (ℍ → ℂ)) (α : ℂ) (G : ℍ →
   have hit : aeval u ((X - C α) ^ n) G = 0 := by
     rw [map_pow, hlin, Module.End.pow_apply]
     convert h using 2
-    funext F; simp
   have key : X - C α = s * ((X - C α) * (X - C α) ^ n) + t * ((X - C α) * g) := by
     linear_combination (-(X - C α)) * hst
   have h1 : aeval u (X - C α) G = 0 := by

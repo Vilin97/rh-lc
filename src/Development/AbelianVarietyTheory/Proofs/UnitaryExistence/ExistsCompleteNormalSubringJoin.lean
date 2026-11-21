@@ -84,8 +84,11 @@ theorem subring_of_finite {R : Type} [CommRing R] [IsLocalRing R] [IsNoetherianR
     exact hxy.not_ge (one_le_mul_of_one_le_of_one_le h.1 h.2)⟩
   have hc : maximalIdeal R = P.comap (algebraMap R S) :=
     (maximalIdeal.isMaximal R).eq_of_le (Ideal.comap_ne_top _ hP1) fun a ha => h2 a ha
-  have hm : P.IsMaximal :=
-    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := R) P (hc ▸ maximalIdeal.isMaximal R)
+  have hm : P.IsMaximal := by
+    apply Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := R) P
+    change (P.comap (algebraMap R S)).IsMaximal
+    rw [← hc]
+    exact maximalIdeal.isMaximal R
   rw [← eq_maximalIdeal hm] at hz
   exact hz
 
@@ -109,7 +112,7 @@ theorem exists_subring_finite {R V : Type} [CommRing R] [CommRing V] {p : ℕ} [
   induction ha using Submodule.span_induction with
   | mem x hx => exact Algebra.subset_adjoin ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [Algebra.smul_def, map_mul]
     refine mul_mem ?_ hx

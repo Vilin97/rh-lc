@@ -25,7 +25,7 @@ namespace GlobalTheory.IwLineInert
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem cA_eq_sigR (σ : E →ₐ[F] E) (z : AE F E) : cA σ z = sigR (AF F) σ z := by
+theorem cA_eq_sigR (σ : E →ₐ[F] E) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : cA σ z = sigR (AF F) σ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
@@ -46,16 +46,16 @@ theorem transpose_cond {A : Type} [CommRing A] {n : ℕ} (s : A → A) (c : A) (
   · intro h; rw [h]
 
 theorem mem_UG_iff (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) {δ : E} (hδ : δ ≠ 0)
-    (g : GL (Fin d) (AE F E)) : g ∈ UG (cA σ) (incM F J) ↔ g ∈ HR (AF F) σ (δ • Jᵀ) := by
+    (g : GL (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : g ∈ UG (cA σ) (incM F J) ↔ g ∈ HR (AF F) σ (δ • Jᵀ) := by
   have hu : IsUnit (inclR (F := F) (AF F) δ) := (isUnit_iff_ne_zero.2 hδ).map _
   have eJ : JR (AF F) (δ • Jᵀ) = inclR (F := F) (AF F) δ • (incM F J)ᵀ := by
     ext i j; simp [JR, incM, Matrix.smul_apply, smul_eq_mul, map_mul]
-  have es : (g : Matrix (Fin d) (Fin d) (AE F E)).map (sigR (AF F) σ) =
-      (g : Matrix (Fin d) (Fin d) (AE F E)).map (cA σ) := by
+  have es : (g : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (sigR (AF F) σ) =
+      (g : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (cA σ) := by
     ext i j; simp [cA_eq_sigR]
-  show (g : Matrix (Fin d) (Fin d) (AE F E))ᵀ * incM F J * (g : Matrix (Fin d) (Fin d) (AE F E)).map (cA σ) = incM F J ↔
-    Formalism.UG.cT (sigR (AF F) σ) (g : Matrix (Fin d) (Fin d) (AE F E)) * JR (AF F) (δ • Jᵀ) *
-      (g : Matrix (Fin d) (Fin d) (AE F E)) = JR (AF F) (δ • Jᵀ)
+  show (g : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ * incM F J * (g : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (cA σ) = incM F J ↔
+    Formalism.UG.cT (sigR (AF F) σ) (g : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * JR (AF F) (δ • Jᵀ) *
+      (g : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = JR (AF F) (δ • Jᵀ)
   rw [eJ, Formalism.UG.cT, es, transpose_cond _ _ hu]
 
 end GlobalTheory.IwLineInert

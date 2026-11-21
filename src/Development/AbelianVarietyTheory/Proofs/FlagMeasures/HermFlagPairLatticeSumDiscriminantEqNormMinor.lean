@@ -119,7 +119,7 @@ theorem idx_free {ι : Type} [Fintype ι] [DecidableEq ι] (x x' : ι → V) (hx
           rw [pu]
           exact Submodule.mem_one.2 ⟨_, rfl⟩
         | zero => rw [map_zero]; exact zero_mem _
-        | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+        | add a b _ _ ha hb => rw [map_add (f := _)]; exact add_mem ha hb
         | smul a b _ hb =>
           rw [← algebraMap_smul K a b, LinearMap.map_smulₛₗ]
           exact Submodule.smul_mem _ (sig K a) hb
@@ -255,7 +255,43 @@ omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem exists_unitri (F : FlagD H r) (y : Fin r → V) (he : ∀ a, F.e a.castSucc - y a ∈ F.Xa a.val) {l : ℕ}
     (hr : l ≤ r) (hl : l ≤ r + 1) : ∃ M : Matrix (Fin l) (Fin l) K, M.det = 1 ∧
       ∀ a, y (Fin.castLE hr a) = ∑ b, M a b • F.e (Fin.castLE hl b) := by
-  choose m h1 h2 using fun a : Fin l => exists_coord F hl a (he (Fin.castLE hr a))
+  have hc : ∀ a : Fin l, ∃ m : Fin l → K, (∀ b, a ≤ b → m b = 0) ∧
+      F.e (Fin.castLE hr a).castSucc - y (Fin.castLE hr a) =
+        ∑ b, m b • F.e (Fin.castLE hl b) := by
+    intro a
+    have hy := he (Fin.castLE hr a)
+    change F.e (Fin.castLE hr a).castSucc - y (Fin.castLE hr a) ∈ F.Xa a.val at hy
+    generalize hx : F.e (Fin.castLE hr a).castSucc - y (Fin.castLE hr a) = x at hy ⊢
+    clear hx
+    unfold FlagD.Xa at hy
+    induction hy using Submodule.span_induction with
+    | mem x hx =>
+      obtain ⟨c, hc, rfl⟩ := hx
+      have hc' : (c : ℕ) < a := hc
+      have hca : (c : ℕ) < l := lt_trans hc' a.isLt
+      refine ⟨fun b => if (b : ℕ) = c then 1 else 0, fun b hb => ?_, ?_⟩
+      · have : (a : ℕ) ≤ b := hb
+        simp only [ite_eq_right_iff]
+        intro h
+        omega
+      · rw [Finset.sum_eq_single ⟨c, hca⟩]
+        · simp only [if_true, one_smul]
+          congr 1
+        · intro b _ hb
+          dsimp only
+          rw [if_neg (fun h => hb (Fin.ext h)), zero_smul]
+        · intro h
+          exact absurd (Finset.mem_univ _) h
+    | zero => exact ⟨0, fun _ _ => rfl, by simp⟩
+    | add x y _ _ hx hy =>
+      obtain ⟨m, hm, rfl⟩ := hx
+      obtain ⟨n, hn, rfl⟩ := hy
+      exact ⟨m + n, fun b hb => by simp [hm b hb, hn b hb],
+        by simp [add_smul, Finset.sum_add_distrib]⟩
+    | smul c x _ hx =>
+      obtain ⟨m, hm, rfl⟩ := hx
+      exact ⟨c • m, fun b hb => by simp [hm b hb], by simp [Finset.smul_sum, smul_smul]⟩
+  choose m h1 h2 using hc
   refine ⟨1 - Matrix.of m, ?_, fun a => ?_⟩
   · rw [Matrix.det_of_lowerTriangular (1 - Matrix.of m) (fun a b hab => ?_)]
     · simp [fun a => h1 a a le_rfl]

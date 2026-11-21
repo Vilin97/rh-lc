@@ -43,7 +43,7 @@ theorem latAt_le_latHat {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) : GlobalTheo
   · subst hw; exact hai
   · rw [GlobalTheory.ThK.LocalOps.evFin_of_at hw ha]; exact zero_mem _
 
-theorem eAt_smul_mem {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {z : Fin d → AE F E} (hz : z ∈ latHat W) :
+theorem eAt_smul_mem {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {z : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : z ∈ latHat W) :
     eAt v • z ∈ GlobalTheory.InertSph.latAt W v := by
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>
@@ -55,7 +55,7 @@ theorem eAt_smul_mem {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {z : Fin d → 
   | add z z' _ _ h h' => rw [smul_add]; exact add_mem h h'
   | neg z _ h => rw [smul_neg]; exact neg_mem h
 
-theorem eAt_smul_of_mem {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {z : Fin d → AE F E}
+theorem eAt_smul_of_mem {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {z : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)}
     (hz : z ∈ GlobalTheory.InertSph.latAt W v) : eAt v • z = z := by
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>
@@ -65,13 +65,13 @@ theorem eAt_smul_of_mem {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {z : Fin d �
   | add z z' _ _ h h' => rw [smul_add, h, h']
   | neg z _ h => rw [smul_neg, h]
 
-theorem smul_mulVec' {d : ℕ} (u : AF F) (M : Matrix (Fin d) (Fin d) (AE F E)) (z : Fin d → AE F E) :
+theorem smul_mulVec' {d : ℕ} (u : AF F) (M : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (z : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     (u • M) *ᵥ z = u • (M *ᵥ z) := by
   funext i
   simp [Matrix.mulVec, dotProduct, Finset.smul_sum, smul_mul_assoc]
 
-theorem mulVec_mem_latAt {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (M : Matrix (Fin d) (Fin d) (AE F E))
-    (hM : At (evFin F v) (M - 1)) (hL : ∀ z ∈ latHat W, M *ᵥ z ∈ latHat W) {z : Fin d → AE F E}
+theorem mulVec_mem_latAt {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (M : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
+    (hM : At (evFin F v) (M - 1)) (hL : ∀ z ∈ latHat W, M *ᵥ z ∈ latHat W) {z : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)}
     (hz : z ∈ GlobalTheory.InertSph.latAt W v) : M *ᵥ z ∈ GlobalTheory.InertSph.latAt W v := by
   have h1 : evFin F v (1 - eAt v) = 0 := by
     rw [map_sub, map_one, GlobalTheory.LatVac.evFin_liftV, sub_self]

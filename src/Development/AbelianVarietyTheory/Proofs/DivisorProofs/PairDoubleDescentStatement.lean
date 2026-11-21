@@ -17,7 +17,7 @@ theorem _root_.GlobalTheory.T.pair_double_descent : GlobalTheory.FunPr.Hypothese
     IsPair B M χX χW om r s r' s' → ∀ (H : Plane E n n₁) (H' : Plane E d d₁) (j₀ j₁ i₀ i₁ : ℕ) (M₁ : Model σ X₁ W₁),
     H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → M₁.IsGood B.ψ →
     ∀ e, IsEv B M M₁ H.ι H'.ι (isoA H H') e → ∀ f : Fn F n d →ₗ[ℂ] Fn F n₁ d₁,
-    (∀ (z : Matrix (Fin n₁) (Fin d₁) (AE F E)), ∀ Φ ∈ schA F (Fin n × Fin d),
+    (∀ (z : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ Φ ∈ schA F (Fin n × Fin d),
       f (M.co.rho B.ψ (incM F H.ι * z * (incM F H'.ι)ᵀ) Φ) = M₁.co.rho B.ψ z (f Φ)) →
     (∀ u ∈ isoA H H', ∀ Φ ∈ schA F (Fin n × Fin d), f (M.co.rho B.ψ u Φ) = f Φ) →
     ∃ c : ℂ, ∀ Φ ∈ schA F (Fin n × Fin d), f Φ = c • e Φ := by

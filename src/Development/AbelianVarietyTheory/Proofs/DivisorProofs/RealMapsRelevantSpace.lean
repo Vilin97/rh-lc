@@ -37,19 +37,19 @@ theorem mat_inv_mul (a : UA σ X.J) : mat a⁻¹ * mat a = 1 := by
 theorem mat_mul_inv (a : UA σ X.J) : mat a * mat a⁻¹ = 1 := by
   rw [← mat_mul, mul_inv_cancel, mat_one]
 
-theorem at_add {m p : Type} {y z : Matrix m p (AE F E)} (hy : At (evI F) y) (hz : At (evI F) z) :
+theorem at_add {m p : Type} {y z : Matrix m p (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hy : At (evI F) y) (hz : At (evI F) z) :
     At (evI F) (y + z) := by
   intro u hu; rw [smul_add, hy u hu, hz u hu, add_zero]
 
-theorem at_neg {m p : Type} {z : Matrix m p (AE F E)} (hz : At (evI F) z) : At (evI F) (-z) := by
+theorem at_neg {m p : Type} {z : Matrix m p (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hz : At (evI F) z) : At (evI F) (-z) := by
   intro u hu; rw [smul_neg, hz u hu, neg_zero]
 
-theorem at_mul_left {m p q : Type} [Fintype p] (A : Matrix m p (AE F E)) {z : Matrix p q (AE F E)}
+theorem at_mul_left {m p q : Type} [Fintype p] (A : Matrix m p (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) {z : Matrix p q (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hz : At (evI F) z) : At (evI F) (A * z) := by
   intro u hu; rw [← Matrix.mul_smul, hz u hu, Matrix.mul_zero]
 
-theorem at_mul_right {m p q : Type} [Fintype p] {z : Matrix m p (AE F E)} (hz : At (evI F) z)
-    (A : Matrix p q (AE F E)) : At (evI F) (z * A) := by
+theorem at_mul_right {m p q : Type} [Fintype p] {z : Matrix m p (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hz : At (evI F) z)
+    (A : Matrix p q (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : At (evI F) (z * A) := by
   intro u hu; rw [← Matrix.smul_mul, hz u hu, Matrix.zero_mul]
 
 theorem uat_mul {a b : UA σ X.J} (ha : a ∈ UAt σ X (evI F)) (hb : b ∈ UAt σ X (evI F)) :
@@ -84,10 +84,10 @@ theorem lines_conj (hσ : ∀ x, σ (σ x) = x) {γ : Multiplicative ℝ →* UA
     exact (continuous_const.mul hγ.1).mul continuous_const
   · exact uat_conj ha (hγ.2 t)
 
-theorem map_mul_inv (π : AE F E →+* ℂ) (a : UA σ X.J) : (mat a).map π * (mat a⁻¹).map π = 1 := by
+theorem map_mul_inv (π : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →+* ℂ) (a : UA σ X.J) : (mat a).map π * (mat a⁻¹).map π = 1 := by
   rw [← Matrix.map_mul, mat_mul_inv, Matrix.map_one _ (map_zero π) (map_one π)]
 
-theorem map_inv_mul (π : AE F E →+* ℂ) (a : UA σ X.J) : (mat a⁻¹).map π * (mat a).map π = 1 := by
+theorem map_inv_mul (π : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →+* ℂ) (a : UA σ X.J) : (mat a⁻¹).map π * (mat a).map π = 1 := by
   rw [← Matrix.map_mul, mat_inv_mul, Matrix.map_one _ (map_zero π) (map_one π)]
 
 end Groups

@@ -26,7 +26,7 @@ theorem ev_step : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
     H'.IsAdapted σ B W W₁ i₀ i₁ → M₁.IsGood B.ψ → ∀ (e₀ : Fn F n d →ₗ[ℂ] Fn F n d₁), IsEv B M M₁ 1 H'.ι (iso0 n H') e₀ →
     ∀ (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' →
     ∀ (n₁ : ℕ) (X₁ : Spc F E n₁) (H : Plane E n n₁) (j₀ j₁ : ℕ), H.IsAdapted σ B X X₁ j₀ j₁ →
-    ∀ u ∈ unip σ W H', ∀ (z : Fin d₁ → AE F E) (β : AE F E),
+    ∀ u ∈ unip σ W H', ∀ (z : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (β : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
       mat u⁻¹ *ᵥ incV F H'.y = incV F H'.y + incM F H'.ι *ᵥ z + β • incV F H'.x → ∀ Ψ ∈ schA F (Fin n × Fin d),
       e₀ (M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) (incV F H'.y)) (om (1, u) Ψ)) =
         M₁.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) z) (e₀ (M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) (incV F H'.y)) Ψ)) := by
@@ -37,7 +37,7 @@ theorem ev_step : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
     fun γ Φ hΦ => GlobalTheory.HeisSchA.rho_mem_schA M B.ψ hstd γ Φ hΦ
   have ha' : mat u⁻¹ *ᵥ incV F H'.y = β • incV F H'.x + incM F H'.ι *ᵥ z + incV F H'.y := by
     rw [hv]; abel
-  have hrho : ∀ (p q : Fin d → AE F E) (φ : Fn F n d),
+  have hrho : ∀ (p q : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (φ : Fn F n d),
       M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) p) (M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) q) φ) =
         M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) (p + q)) φ := fun p q φ => by
     rw [rho_rho M.co B.ψ _ _ (symp_iso σ X.J W.J H.x hH.xx p q), vmv_add]
@@ -45,7 +45,7 @@ theorem ev_step : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
     (Matrix.vecMulVec (incV F H.x) (mat u⁻¹ *ᵥ incV F H'.y)) Ψ hΨ
   have hact : actAB (cA σ) ((1 : UA σ X.J), u) (Matrix.vecMulVec (incV F H.x) (mat u⁻¹ *ᵥ incV F H'.y)) =
       Matrix.vecMulVec (incV F H.x) (incV F H'.y) := by
-    show (1 : Matrix (Fin n) (Fin n) (AE F E)) * _ * (mat u)ᵀ = _
+    show (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * _ * (mat u)ᵀ = _
     rw [Matrix.one_mul, vmv_mul_transpose, Matrix.mulVec_mulVec, ← GlobalTheory.ThK.UnipDom.Inverse.mat_mul, mul_inv_cancel,
       GlobalTheory.ThK.UnipDom.Inverse.mat_one, Matrix.one_mulVec]
   rw [hact] at himpl

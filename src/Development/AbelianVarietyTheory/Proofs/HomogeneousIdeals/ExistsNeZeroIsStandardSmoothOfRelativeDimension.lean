@@ -132,7 +132,7 @@ theorem volume_coords_image_zeroSet [IsDomain A] (g : MvPolynomial (Fin d) ℂ �
 
 theorem isOpenMap_coords [IsDomain A] (g : MvPolynomial (Fin d) ℂ →ₐ[ℂ] A) (hg : g.Finite)
     (hinj : Function.Injective g) : IsOpenMap (coords g : (A →ₐ[ℂ] ℂ) → Fin d → ℂ) :=
-  (mvPolynomialHomeomorph ℂ ℂ (Fin d)).isOpenMap.comp (isOpenMap_comap g hg hinj)
+  (mvPolynomialHomeomorph (R := ℂ) (C := ℂ) (σ := Fin d)).isOpenMap.comp (isOpenMap_comap g hg hinj)
 
 theorem dense_compl_of_volume_coords_image [IsDomain A] (g : MvPolynomial (Fin d) ℂ →ₐ[ℂ] A)
     (hg : g.Finite) (hinj : Function.Injective g) {S : Set (A →ₐ[ℂ] ℂ)}

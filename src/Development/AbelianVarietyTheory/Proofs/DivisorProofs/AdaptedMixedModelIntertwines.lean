@@ -21,17 +21,17 @@ namespace GlobalTheory.ThKExpandXLin
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {n n₁ d : ℕ} {X : Spc F E n} {W : Spc F E d}
 
-theorem rho_add (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (AE F E)) (Φ Ψ : Fn F n d) :
+theorem rho_add (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (Φ Ψ : Fn F n d) :
     M.co.rho ψ u (Φ + Ψ) = M.co.rho ψ u Φ + M.co.rho ψ u Ψ := by
   funext x; simp [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, mul_add]
 
-theorem rho_smul (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (AE F E)) (c : ℂ) (Φ : Fn F n d) :
+theorem rho_smul (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (c : ℂ) (Φ : Fn F n d) :
     M.co.rho ψ u (c • Φ) = c • M.co.rho ψ u Φ := by
   funext x; simp [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr]; ring
 
 theorem lin_of_summable {ι : Type} (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ)
     (e : Fn F n d →ₗ[ℂ] Fn F n₁ d) (he : ∀ Φ ∈ schA F (Fin n × Fin d), e Φ ∈ schA F (Fin n₁ × Fin d))
-    (u : ι → Matrix (Fin n) (Fin d) (AE F E))
+    (u : ι → Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (hs : ∀ Ψ ∈ schA F (Fin n × Fin d), Summable fun ξ => thetaSum F (e (M.co.rho ψ (u ξ) Ψ))) :
     (∀ Ψ ∈ schA F (Fin n × Fin d), ∀ Ψ' ∈ schA F (Fin n × Fin d),
       (∑' ξ, thetaSum F (e (M.co.rho ψ (u ξ) (Ψ + Ψ')))) =

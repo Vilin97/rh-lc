@@ -207,21 +207,21 @@ theorem lin_cont (m : ((κ → AF F) × (κ → AF F)) →ₗ[AF F] Ten F E n d)
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_add (f := _), map_sum, map_smul]
   have hc : Continuous fun x : (κ → AF F) × (κ → AF F) =>
-      (∑ i, x.1 i • m (Pi.single i 1, 0) + ∑ i, x.2 i • m (0, Pi.single i 1) : Matrix (Fin n) (Fin d) (AE F E)) := by
+      (∑ i, x.1 i • m (Pi.single i 1, 0) + ∑ i, x.2 i • m (0, Pi.single i 1) : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) := by
     fun_prop
   have he : (⇑m : (κ → AF F) × (κ → AF F) → Ten F E n d) = fun x =>
-      (∑ i, x.1 i • m (Pi.single i 1, 0) + ∑ i, x.2 i • m (0, Pi.single i 1) : Matrix (Fin n) (Fin d) (AE F E)) :=
+      (∑ i, x.1 i • m (Pi.single i 1, 0) + ∑ i, x.2 i • m (0, Pi.single i 1) : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :=
     funext hm
   rw [he]
   exact hc
 
-theorem piInf_fi {w : InfinitePlace F} (τ : EmbOver E w) (z : AE F E) : piInf τ (fi F 1 • z) = 0 := by
+theorem piInf_fi {w : InfinitePlace F} (τ : EmbOver E w) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : piInf τ (fi F 1 • z) = 0 := by
   rw [Algebra.smul_def, map_mul]
   have h0 : GlobalTheory.AdelicU.evInf F w (fi F 1) = 0 := by
     show GlobalTheory.AutFunCompare.evW w (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.fstA F (fi F 1)) = 0
     have h : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.fstA F (fi F 1) = 0 := rfl
     rw [h, map_zero]
-  have h1 : piInf τ (algebraMap (AF F) (AE F E) (fi F 1)) = 0 := by
+  have h1 : piInf τ (algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (fi F 1)) = 0 := by
     show GlobalTheory.AdelicU.infEmb τ (GlobalTheory.AdelicU.compInf F E w (fi F 1 ⊗ₜ[F] (1 : E))) = 0
     have h2 : GlobalTheory.AdelicU.compInf F E w (fi F 1 ⊗ₜ[F] (1 : E)) = 0 := by
       show Algebra.TensorProduct.map (GlobalTheory.AdelicU.evInf F w) (AlgHom.id F E) (fi F 1 ⊗ₜ[F] (1 : E)) = 0

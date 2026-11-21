@@ -89,6 +89,7 @@ theorem _root_.GlobalTheory.T.freeSheafHomValueAt_cechNerveSimplex_bijective : ‚
       apply (e Z).1
       change ((cech f).obj (op (SimplexCategory.mk k))).map (c Z _).op (cechPt f k x y h) =
         ((cech f).obj (op (SimplexCategory.mk k))).map (ùüô Z).op (cechPt f k x y h)
-      rw [hc' Z, op_id, FunctorToTypes.map_id_apply]
+      rw [hc' Z, op_id, P.map_id]
+      exact (types_id_apply (P.obj (op Z)) (cechPt f k x y h)).symm
     rw [h2]
     simp [Sec.res]

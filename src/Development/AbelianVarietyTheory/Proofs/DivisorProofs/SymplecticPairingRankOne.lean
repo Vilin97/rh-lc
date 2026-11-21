@@ -34,7 +34,7 @@ theorem form_swap {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
 
-theorem symp_iso_term : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d d₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r' s' : ℕ), B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ (ξ : Fin n → E) (y : Fin n → AE F E), symp (cA σ) (-1) (incM F X.J) (incM F W.J) (Matrix.vecMulVec (incV F ξ) (incV F H'.y)) (Matrix.vecMulVec y (incV F H'.x)) = Algebra.trace (AF F) (AE F E) (∑ i, incV F ξ i * (incM F X.J *ᵥ fun k => cA σ (y k)) i) := by
+theorem symp_iso_term : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d d₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r' s' : ℕ), B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ (ξ : Fin n → E) (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), symp (cA σ) (-1) (incM F X.J) (incM F W.J) (Matrix.vecMulVec (incV F ξ) (incV F H'.y)) (Matrix.vecMulVec y (incV F H'.x)) = Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (∑ i, incV F ξ i * (incM F X.J *ᵥ fun k => cA σ (y k)) i) := by
   intro F E _ _ _ _ _ σ B n d d₁ X W W₁ H' i₀ i₁ r s r' s' hB hX hW hH ξ y
   have hσ : ∀ e, σ (σ e) = e := sigma_sigma hB.cm
   have hf : form σ W.J H'.y H'.x = -1 := by

@@ -112,9 +112,9 @@ theorem exists_kInf_isLevi_one : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     have hK : Commute ((mat h₁).map (piInf (B.emb w))) (W₁.θ w) := hk₁.2 w
     set K := (mat h₁).map (piInf (B.emb w))
     have hm : (1 + incM F H'.ι * (mat h₁ - 1) * incM F π).map (piInf (B.emb w)) = 1 + H'.ι.map f * (K - 1) * π.map f := by
-      have e : ∀ A : Matrix (Fin d) (Fin d) (AE F E), A.map (piInf (B.emb w)) = (piInf (B.emb w)).mapMatrix A :=
+      have e : ∀ A : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), A.map (piInf (B.emb w)) = (piInf (B.emb w)).mapMatrix A :=
         fun A => rfl
-      have e1 : ∀ A : Matrix (Fin d₁) (Fin d₁) (AE F E), A.map (piInf (B.emb w)) = (piInf (B.emb w)).mapMatrix A :=
+      have e1 : ∀ A : Matrix (Fin d₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), A.map (piInf (B.emb w)) = (piInf (B.emb w)).mapMatrix A :=
         fun A => rfl
       rw [e, map_add (f := _), map_one, RingHom.mapMatrix_apply, Matrix.map_mul, Matrix.map_mul, e1 (mat h₁ - 1), map_sub, map_one,
         RingHom.mapMatrix_apply, hinc, hinc]

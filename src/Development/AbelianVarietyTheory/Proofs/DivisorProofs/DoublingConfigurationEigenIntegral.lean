@@ -23,29 +23,29 @@ namespace GlobalTheory.XTermExch
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 theorem ideleTop' (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] :
-    IsTopologicalGroup (AE F E)ˣ ∧ LocallyCompactSpace (AE F E)ˣ ∧ SecondCountableTopology (AE F E)ˣ ∧
-    T2Space (AE F E)ˣ := by
+    IsTopologicalGroup (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ ∧ LocallyCompactSpace (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ ∧ SecondCountableTopology (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ ∧
+    T2Space (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
-  haveI : IsModuleTopology (AF F) (AE F E) := ⟨rfl⟩
-  haveI : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) _
+  haveI : IsModuleTopology (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := ⟨rfl⟩
+  haveI : IsTopologicalRing (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := IsModuleTopology.isTopologicalRing (AF F) _
   haveI := GlobalTheory.AdelicUnitaryTop.locallyCompact_adele F
   haveI := GlobalTheory.AdelicUnitaryTop.secondCountable_adele F
   haveI := GlobalTheory.AdelicUnitaryTop.t2Space_adeleRing_numberField F
   obtain ⟨e⟩ := GlobalTheory.AdelicUnitaryTop.nonempty_homeomorph (F := F) (E := E) (AF F)
-  haveI : LocallyCompactSpace (AE F E) := e.isClosedEmbedding.locallyCompactSpace
-  haveI : SecondCountableTopology (AE F E) := e.secondCountableTopology
-  haveI : T2Space (AE F E) := e.isEmbedding.t2Space
-  haveI : LocallyCompactSpace (AE F E)ᵐᵒᵖ := MulOpposite.opHomeomorph.symm.isClosedEmbedding.locallyCompactSpace
-  haveI : SecondCountableTopology (AE F E)ᵐᵒᵖ := MulOpposite.opHomeomorph.symm.secondCountableTopology
+  haveI : LocallyCompactSpace (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := e.isClosedEmbedding.locallyCompactSpace
+  haveI : SecondCountableTopology (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := e.secondCountableTopology
+  haveI : T2Space (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := e.isEmbedding.t2Space
+  haveI : LocallyCompactSpace (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ᵐᵒᵖ := MulOpposite.opHomeomorph.symm.isClosedEmbedding.locallyCompactSpace
+  haveI : SecondCountableTopology (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ᵐᵒᵖ := MulOpposite.opHomeomorph.symm.secondCountableTopology
   exact ⟨inferInstance, Units.isClosedEmbedding_embedProduct.locallyCompactSpace,
     Units.isEmbedding_embedProduct.secondCountableTopology, inferInstance⟩
 
 theorem integral_inv_idele (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (μ : Measure (AE F E)ˣ) [μ.IsHaarMeasure] (f : (AE F E)ˣ → ℂ) : ∫ l, f l⁻¹ ∂μ = ∫ l, f l ∂μ := by
+    (μ : Measure (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) [μ.IsHaarMeasure] (f : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ → ℂ) : ∫ l, f l⁻¹ ∂μ = ∫ l, f l ∂μ := by
   obtain ⟨v1, v2, v3, v4⟩ := ideleTop' F E
   haveI := v1; haveI := v2; haveI := v3; haveI := v4
-  haveI : BorelSpace (AE F E)ˣ := ⟨rfl⟩
-  obtain ⟨g, hg1, -, hgc, -⟩ := exists_continuous_one_zero_of_isCompact (isCompact_singleton (x := (1 : (AE F E)ˣ)))
+  haveI : BorelSpace (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ := ⟨rfl⟩
+  obtain ⟨g, hg1, -, hgc, -⟩ := exists_continuous_one_zero_of_isCompact (isCompact_singleton (x := (1 : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ)))
     isClosed_empty (Set.disjoint_empty _)
   have hcont : Continuous fun x => ((g x : ℝ) : ℂ) := Complex.continuous_ofReal.comp g.continuous
   have hint : Integrable (fun x => ((g x : ℝ) : ℂ)) μ :=
@@ -71,16 +71,16 @@ theorem weight_inv {b a' : ℕ} (hlt : a' < b) (hev : Even (b + a')) {t : ℝ} (
   rw [← Real.rpow_add ht, inv_pow, ← Real.rpow_natCast, hz, Real.rpow_neg ht.le, inv_inv]
 
 variable (F E) in
-theorem absE_inv (l : (AE F E)ˣ) : (absE F E l⁻¹ : ℝ) = (absE F E l : ℝ)⁻¹ := by
+theorem absE_inv (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : (absE F E l⁻¹ : ℝ) = (absE F E l : ℝ)⁻¹ := by
   rw [map_inv, NNReal.coe_inv]
 
 variable (F E) in
-theorem absE_pos (l : (AE F E)ˣ) : 0 < (absE F E l : ℝ) := by
+theorem absE_pos (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : 0 < (absE F E l : ℝ) := by
   have h1 : absE F E l * absE F E l⁻¹ = 1 := by rw [← map_mul, mul_inv_cancel, map_one]
   exact NNReal.coe_pos.2 (pos_iff_ne_zero.2 (left_ne_zero_of_mul_eq_one h1))
 
 theorem iterated_eq_cone : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
-    (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → ∀ (K : Subgroup (UA σ G.V.J)) (μK : Measure K) (μ : Measure (AE F E)ˣ), IsStab B K → μK.IsHaarMeasure → μ.IsHaarMeasure → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
+    (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → ∀ (K : Subgroup (UA σ G.V.J)) (μK : Measure K) (μ : Measure (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ), IsStab B K → μK.IsHaarMeasure → μ.IsHaarMeasure → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
     ∀ Φ ∈ PolData B G.M, ∀ h,
       ∫ k, ∫ l, ∫ g₀ in G₁.M.dom, (X.ν l : ℂ)⁻¹ * (((absE F E l : ℝ) ^ (((b + a' : ℕ) : ℝ) / 2) : ℝ) : ℂ) *
           thetaSum F (om₁ (g₀, 1) (e (G.M.co.rho B.ψ (shiftA H H' l⁻¹) (om (k.1, h) Φ)))) *

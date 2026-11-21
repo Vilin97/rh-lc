@@ -39,25 +39,25 @@ theorem avg_conv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
     ∀ (d₁ : ℕ) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ : ℕ) (M₁ : Model σ X W₁) (om₁ : Rep σ X W₁) (r₁ s₁ : ℕ),
       H'.IsAdapted σ B W W₁ i₀ i₁ → IsPair B M₁ χX χW om₁ r s r₁ s₁ →
       ∀ (d' : Darboux (symp (cA σ) (-1) (incM F W.J) (incM F X.J)) (Fin n × Fin d)),
-        (∀ x : Matrix (Fin n) (Fin d) (AE F E), d'.e xᵀ = M.co.e x) →
+        (∀ x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d'.e xᵀ = M.co.e x) →
       ∀ (d₁' : Darboux (symp (cA σ) (-1) (incM F W₁.J) (incM F X.J)) (Fin n × Fin d₁)),
-        (∀ x : Matrix (Fin n) (Fin d₁) (AE F E), d₁'.e xᵀ = M₁.co.e x) →
+        (∀ x : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d₁'.e xᵀ = M₁.co.e x) →
       ∀ (dd : Darboux (symp (cA σ) (-1) (incM F W.J) (dbl (incM F X.J))) ((Fin n × Fin d) ⊕ (Fin n × Fin d))),
         IsDblCoord (cA σ) (-1) (incM F W.J) (incM F X.J) d' dd →
       ∀ (dd₁ : Darboux (symp (cA σ) (-1) (incM F W₁.J) (dbl (incM F X.J))) ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁))),
         IsDblCoord (cA σ) (-1) (incM F W₁.J) (incM F X.J) d₁' dd₁ →
       ∀ ed : (((Fin n × Fin d) ⊕ (Fin n × Fin d) → AF F) → ℂ) →ₗ[ℂ] (((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁) → AF F) → ℂ),
         (∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), ed Φ ∈ schA F ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁))) →
-        (∀ (z : Matrix (Fin d₁) (Fin n ⊕ Fin n) (AE F E)), ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+        (∀ (z : Matrix (Fin d₁) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
           ed (dd.rho B.ψ (incM F H'.ι * z) Φ) = dd₁.rho B.ψ z (ed Φ)) →
-        (∀ (y : Fin n ⊕ Fin n → AE F E), ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+        (∀ (y : Fin n ⊕ Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
           ed (dd.rho B.ψ (Matrix.vecMulVec (incV F H'.x) y) Φ) = ed Φ) →
         (∀ l ∈ (adeleClass F).adm ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁)), l ∘ₗ ed ∈ (adeleClass F).adm ((Fin n × Fin d) ⊕ (Fin n × Fin d))) →
         (∃ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), ed Φ ≠ 0) →
       ∀ l₁ : (((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁) → AF F) → ℂ) →ₗ[ℂ] ℂ, l₁ ∈ (adeleClass F).adm ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁)) →
-        (∀ (z : Matrix (Fin d₁) (Fin n) (AE F E)), ∀ φ ∈ schA F ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁)),
+        (∀ (z : Matrix (Fin d₁) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ φ ∈ schA F ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁)),
           l₁ (dd₁.rho B.ψ (z * (diagCols (Fin n))ᵀ) φ) = l₁ φ) →
-      ∀ μ : @Measure (Fin n → AE F E) (borel _), GlobalTheory.SiegelAvg.IsHaarB μ →
+      ∀ μ : @Measure (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (borel _), GlobalTheory.SiegelAvg.IsHaarB μ →
         ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), GlobalTheory.SiegelAvg.Conv μ (l₁ ∘ₗ ed) (GlobalTheory.SiegelAvg.starFam dd B.ψ (incV F H'.y)) Φ := by
   intro hP F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hpair d₁ W₁ H' i₀ i₁ M₁ om₁ r₁ s₁ hH hpair₁
     d' hd' d₁' hd₁' dd hdd dd₁ hdd₁ ed hed_mem hed_heis hed_inv hed_adm hed_ne l₁ hl₁ hl₁_inv μ hμ Φ hΦ
@@ -73,23 +73,23 @@ theorem avg_conv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
   have hmem : ∀ w, ∀ φ ∈ schA F κ, dd.rho B.ψ w φ ∈ schA F κ := fun w φ hφ =>
     GlobalTheory.HeisSchA.schr_mem_schA B.ψ hψ (dd.e w) φ hφ
 
-  have hinvZ : ∀ (Z : Matrix (Fin d₁) (Fin n) (AE F E)) (Y : Fin n ⊕ Fin n → AE F E), ∀ φ ∈ schA F κ,
-      l (dd.rho B.ψ (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ) + Matrix.vecMulVec (incV F H'.x) Y) φ) = l φ := by
+  have hinvZ : ∀ (Z : Matrix (Fin d₁) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (Y : Fin n ⊕ Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ φ ∈ schA F κ,
+      l (dd.rho B.ψ (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ) + Matrix.vecMulVec (incV F H'.x) Y) φ) = l φ := by
     intro Z Y φ hφ
     have hiso := GlobalTheory.T.pair_adapted_matrix_phase_identity F E σ B n d X W M χX χW om r s r' s' hpair d₁ W₁ H' i₀ i₁ hH Z 0 0 Y
-    have h0 : Matrix.vecMulVec (incV F H'.x) (0 : Fin n ⊕ Fin n → AE F E) = 0 := by
+    have h0 : Matrix.vecMulVec (incV F H'.x) (0 : Fin n ⊕ Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = 0 := by
       ext i j; simp [Matrix.vecMulVec_apply]
-    have h0' : incM F H'.ι * ((0 : Matrix (Fin d₁) (Fin n) (AE F E)) * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ) = 0 := by
+    have h0' : incM F H'.ι * ((0 : Matrix (Fin d₁) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ) = 0 := by
       rw [Matrix.zero_mul, Matrix.mul_zero]
     rw [h0, h0', add_zero, zero_add] at hiso
-    have hform := dd.form (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ)) (Matrix.vecMulVec (incV F H'.x) Y)
+    have hform := dd.form (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ)) (Matrix.vecMulVec (incV F H'.x) Y)
     rw [hiso] at hform
-    have hss := schrSchr B.ψ (dd.e (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ))) (dd.e (Matrix.vecMulVec (incV F H'.x) Y)) φ
+    have hss := schrSchr B.ψ (dd.e (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ))) (dd.e (Matrix.vecMulVec (incV F H'.x) Y)) φ
     rw [← hform, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _)] at hss
     have hb' : dd.rho B.ψ (Matrix.vecMulVec (incV F H'.x) Y) φ ∈ schA F κ := hmem _ φ hφ
-    show l₁ (ed (schr B.ψ (dd.e (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ) + Matrix.vecMulVec (incV F H'.x) Y)) φ)) = l₁ (ed φ)
+    show l₁ (ed (schr B.ψ (dd.e (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ) + Matrix.vecMulVec (incV F H'.x) Y)) φ)) = l₁ (ed φ)
     rw [← hss]
-    show l₁ (ed (dd.rho B.ψ (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ)) (dd.rho B.ψ (Matrix.vecMulVec (incV F H'.x) Y) φ))) = l₁ (ed φ)
+    show l₁ (ed (dd.rho B.ψ (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ)) (dd.rho B.ψ (Matrix.vecMulVec (incV F H'.x) Y) φ))) = l₁ (ed φ)
     rw [hed_heis _ _ hb']
     exact (hl₁_inv Z _ (hed_mem _ hb')).trans (congrArg l₁ (hed_inv Y φ hφ))
 
@@ -135,7 +135,7 @@ theorem avg_conv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
     have h3 : ∑ i, s' (j, i) • Module.finBasis F E i = 0 := congrFun h2 j
     exact Fintype.linearIndependent_iff.mp (Module.finBasis F E).linearIndependent (fun i => s' (j, i)) h3 i
   have hl_adm : l ∈ (adeleClass F).adm κ := hed_adm l₁ hl₁
-  show (letI : MeasurableSpace (Fin n → AE F E) := borel _;
+  show (letI : MeasurableSpace (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := borel _;
     Integrable (fun y => l (GlobalTheory.SiegelAvg.starFam dd B.ψ (incV F H'.y) y Φ)) μ)
   refine GlobalTheory.T.siegel_haar_integrable_basis F E n _ μ hμ (fun ν hν => ?_)
   have key := GlobalTheory.T.lagrangian_invariant_functional F B.ψ hψ κ L hL_iso hL_dim l hl_adm hL_inv (Fin n × Fin (Module.finrank F E)) A hA ν hν Φ hΦ

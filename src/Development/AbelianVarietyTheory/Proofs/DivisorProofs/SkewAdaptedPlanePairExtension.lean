@@ -175,7 +175,7 @@ theorem evalZero_scalar_eq_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E :
     rw [hcv, Units.val_one]; exact hP3 p t hpt))
   refine MonoidHom.ext fun g => Units.ext ?_
   rw [MonoidHom.one_apply, Units.val_one]
-  obtain ⟨gd, hgd⟩ := GlobalTheory.T.exists_unitaryDoubled_blockDiag_one (AF F) (AE F E) (cA σ) (Fin n) (incM F X.J) g
+  obtain ⟨gd, hgd⟩ := GlobalTheory.T.exists_unitaryDoubled_blockDiag_one (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (cA σ) (Fin n) (incM F X.J) g
   have hcd : cf gd = 1 := by rw [← hcv, hc1]; rfl
   have hpres : om (g, 1) Φ₁ ∈ schA F (Fin n × Fin d) := (IsUWeilPair.isUSplitting hP.weil).pres (g, 1) Φ₁ hΦ₁
   have e1 := hres g gd hgd Φ₁ hΦ₁ Φ₂ hΦ₂

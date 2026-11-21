@@ -38,23 +38,23 @@ private theorem form_herm {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {d :
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
   ring
 
-private def fA (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a b : Fin d → AE F E) : AE F E :=
+private def fA (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a b : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) :=
   ∑ i, ∑ k, a i * incM F J i k * cA σ (b k)
 
-private theorem fA_add_left (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a a' b : Fin d → AE F E) :
+private theorem fA_add_left (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a a' b : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J (a + a') b = fA σ J a b + fA σ J a' b := by
   simp only [fA, Pi.add_apply, add_mul, Finset.sum_add_distrib]
 
-private theorem fA_add_right (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a b b' : Fin d → AE F E) :
+private theorem fA_add_right (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a b b' : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J a (b + b') = fA σ J a b + fA σ J a b' := by
   simp only [fA, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
-private theorem fA_smul_left (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (c : AE F E)
-    (a b : Fin d → AE F E) : fA σ J (c • a) b = c * fA σ J a b := by
+private theorem fA_smul_left (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
+    (a b : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : fA σ J (c • a) b = c * fA σ J a b := by
   simp only [fA, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
 
-private theorem fA_smul_right (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (c : AE F E)
-    (a b : Fin d → AE F E) : fA σ J a (c • b) = cA σ c * fA σ J a b := by
+private theorem fA_smul_right (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
+    (a b : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : fA σ J a (c • b) = cA σ c * fA σ J a b := by
   simp only [fA, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, map_mul]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
   ring
@@ -66,7 +66,7 @@ private theorem fA_inc (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d
     simp only [fA, form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul,
     mul_assoc]
 
-private theorem incM_mulVec {d d₁ : ℕ} (ι : Matrix (Fin d) (Fin d₁) E) (e : Fin d₁ → AE F E) :
+private theorem incM_mulVec {d d₁ : ℕ} (ι : Matrix (Fin d) (Fin d₁) E) (e : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     incM F ι *ᵥ e = ∑ p, e p • incV F (ι *ᵥ Pi.single p 1) := by
   funext i
   simp only [Matrix.mulVec_single_one, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, incV, incM, Matrix.mulVec,
@@ -74,7 +74,7 @@ private theorem incM_mulVec {d d₁ : ℕ} (ι : Matrix (Fin d) (Fin d₁) E) (e
   exact Finset.sum_congr rfl fun p _ => mul_comm _ _
 
 private theorem fA_left_zero (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (ι : Matrix (Fin d) (Fin d₁) E)
-    (x : Fin d → E) (h : ∀ u, form σ J (ι *ᵥ u) x = 0) (e : Fin d₁ → AE F E) :
+    (x : Fin d → E) (h : ∀ u, form σ J (ι *ᵥ u) x = 0) (e : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J (incM F ι *ᵥ e) (incV F x) = 0 := by
   rw [incM_mulVec]
   refine Finset.sum_induction _ (fun a => fA σ J a (incV F x) = 0) (fun a b ha hb => ?_) ?_ (fun p _ => ?_)
@@ -83,7 +83,7 @@ private theorem fA_left_zero (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fi
   · rw [fA_smul_left, fA_inc, h, map_zero, mul_zero]
 
 private theorem fA_right_zero (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (ι : Matrix (Fin d) (Fin d₁) E)
-    (x : Fin d → E) (h : ∀ u, form σ J x (ι *ᵥ u) = 0) (e : Fin d₁ → AE F E) :
+    (x : Fin d → E) (h : ∀ u, form σ J x (ι *ᵥ u) = 0) (e : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J (incV F x) (incM F ι *ᵥ e) = 0 := by
   rw [incM_mulVec]
   refine Finset.sum_induction _ (fun a => fA σ J (incV F x) a = 0) (fun a b ha hb => ?_) ?_ (fun p _ => ?_)
@@ -103,7 +103,7 @@ private theorem hTens_swap {R A : Type} [CommRing R] [CommRing A] [Algebra R A] 
 
 private theorem decompV {d d₁ : ℕ} (x y : Fin d → E) (ι : Matrix (Fin d) (Fin d₁) E) (s t : Fin d → E)
     (U : Matrix (Fin d₁) (Fin d) E)
-    (hE : ∀ j l, s j * x l + ∑ q, ι l q * U q j + t j * y l = if l = j then 1 else 0) (a : Fin d → AE F E) :
+    (hE : ∀ j l, s j * x l + ∑ q, ι l q * U q j + t j * y l = if l = j then 1 else 0) (a : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     a = (a ⬝ᵥ incV F s) • incV F x + incM F ι *ᵥ (incM F U *ᵥ a) + (a ⬝ᵥ incV F t) • incV F y := by
   have h := decomp (F := F) (n := 1) x y ι s t U hE (Matrix.of fun _ j => a j)
   funext l
@@ -121,7 +121,7 @@ private theorem decompV {d d₁ : ℕ} (x y : Fin d → E) (ι : Matrix (Fin d) 
 private theorem decompL {n n₁ k : ℕ} (x y : Fin n → E) (ι : Matrix (Fin n) (Fin n₁) E) (s t : Fin n → E)
     (U : Matrix (Fin n₁) (Fin n) E)
     (hE : ∀ j l, s j * x l + ∑ q, ι l q * U q j + t j * y l = if l = j then 1 else 0)
-    (z : Matrix (Fin n) (Fin k) (AE F E)) :
+    (z : Matrix (Fin n) (Fin k) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     z = Matrix.vecMulVec (incV F x) (zᵀ *ᵥ incV F s) + incM F ι * (incM F U * z) +
       Matrix.vecMulVec (incV F y) (zᵀ *ᵥ incV F t) := by
   have h := congrArg Matrix.transpose (decomp (F := F) x y ι s t U hE zᵀ)
@@ -130,22 +130,22 @@ private theorem decompL {n n₁ k : ℕ} (x y : Fin n → E) (ι : Matrix (Fin n
     Matrix.transpose_transpose, Matrix.transpose_transpose] at h
   exact h
 
-private theorem at_transpose {n d : ℕ} {v : Pl (F := F)} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m) :
+private theorem at_transpose {n d : ℕ} {v : Pl (F := F)} {m : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hm : At (evFin F v) m) :
     At (evFin F v) mᵀ := by
   intro u hu
   rw [← Matrix.transpose_smul, hm u hu, Matrix.transpose_zero]
 
-private theorem at_mul_left {n d k : ℕ} {v : Pl (F := F)} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m)
-    (N : Matrix (Fin k) (Fin n) (AE F E)) : At (evFin F v) (N * m) := by
+private theorem at_mul_left {n d k : ℕ} {v : Pl (F := F)} {m : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hm : At (evFin F v) m)
+    (N : Matrix (Fin k) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : At (evFin F v) (N * m) := by
   intro u hu
   rw [← Matrix.mul_smul, hm u hu, Matrix.mul_zero]
 
-private theorem at_mulVec_right {n d : ℕ} {v : Pl (F := F)} (m : Matrix (Fin n) (Fin d) (AE F E)) {e : Fin d → AE F E}
+private theorem at_mulVec_right {n d : ℕ} {v : Pl (F := F)} (m : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) {e : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)}
     (he : At (evFin F v) e) : At (evFin F v) (m *ᵥ e) := by
   intro u hu
   rw [← Matrix.mulVec_smul, he u hu, Matrix.mulVec_zero]
 
-private theorem at_vecMulVec_right {n d : ℕ} {v : Pl (F := F)} (x : Fin n → AE F E) {e : Fin d → AE F E}
+private theorem at_vecMulVec_right {n d : ℕ} {v : Pl (F := F)} (x : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) {e : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)}
     (he : At (evFin F v) e) : At (evFin F v) (Matrix.vecMulVec x e) := by
   rw [← Matrix.transpose_vecMulVec]
   exact at_transpose (at_vecMulVec he x)

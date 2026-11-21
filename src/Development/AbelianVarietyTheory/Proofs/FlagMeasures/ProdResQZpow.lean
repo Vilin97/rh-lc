@@ -29,7 +29,7 @@ theorem vE_eq_neg_log {F : Type} [Field F] [NumberField F] (p : HeightOneSpectru
   rw [hku, GlobalTheory.UnramVal.vE_zpow_mul_unit L hϖ k u]
 
   obtain ⟨g, hg⟩ := p.valuation_exists_uniformizer F
-  obtain ⟨q, hq, hqg⟩ := GlobalTheory.LocSplit.exists_irreducible p ι hd hv g hg
+  obtain ⟨q, hq, hqg⟩ := GlobalTheory.LocSplit.exists_irreducible p ι g hg
   obtain ⟨w, hw⟩ := IsDiscreteValuationRing.associated_of_irreducible 𝒪[K] hϖ hq
   have h0 : p.valuation F x ≠ 0 := (Valuation.ne_zero_iff _).mpr hx
   set n := WithZero.log (p.valuation F x) with hn
@@ -72,9 +72,6 @@ theorem place_eq_zpow {F : Type} [Field F] [NumberField F] (p : HeightOneSpectru
   rw [NumberField.FinitePlace.equivHeightOneSpectrum_symm_apply,
     NumberField.FinitePlace.norm_embedding', WithZeroMulInt.toNNReal_neg_apply _ h0,
     NNReal.coe_zpow, NNReal.coe_natCast]
-  congr 1
-  conv_rhs => rw [← WithZero.coe_unzero h0]
-  rfl
 
 theorem prod_resQ_zpow : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {sig : E →ₐ[F] E} (A : Places F E sig), ∀ ϖ : ∀ p, 𝒪[(A.loc p).Fp], (∀ p, Irreducible (ϖ p)) → ∀ x : F, x ≠ 0 → {p | vE (A.L p) (ϖ p) (algebraMap (A.loc p).Fp (A.loc p).Ep ((A.loc p).ιF x)) ≠ 0}.Finite ∧ ∏ᶠ p, (resQ (ϖ p) : ℝ) ^ vE (A.L p) (ϖ p) (algebraMap (A.loc p).Fp (A.loc p).Ep ((A.loc p).ιF x)) = |((Algebra.norm ℚ x : ℚ) : ℝ)| := by
   intro F E _ _ _ _ _ sig A ϖ hϖ x hx

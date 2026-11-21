@@ -76,7 +76,7 @@ theorem lagL_dar_add_right {κ : Type} [Fintype κ] {V : Type} [AddCommGroup V] 
 
 variable {E : Type} [Field E] [NumberField E] [Algebra F E]
 
-theorem lagL_at_vmv {n d : ℕ} {c : Fin n → AE F E} (hc : At (evI F) c) (x : Fin d → AE F E) :
+theorem lagL_at_vmv {n d : ℕ} {c : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hc : At (evI F) c) (x : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     At (evI F) (Matrix.vecMulVec c x) := by
   intro u hu
   ext i j
@@ -84,7 +84,7 @@ theorem lagL_at_vmv {n d : ℕ} {c : Fin n → AE F E} (hc : At (evI F) c) (x : 
   simp only [Pi.smul_apply, Pi.zero_apply] at this
   simp [Matrix.vecMulVec_apply, ← smul_mul_assoc, this]
 
-theorem lagL_smul_vmv {n d : ℕ} (a : AF F) (c : Fin n → AE F E) (x : Fin d → AE F E) :
+theorem lagL_smul_vmv {n d : ℕ} (a : AF F) (c : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (x : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     a • Matrix.vecMulVec c x = Matrix.vecMulVec (a • c) x := by
   ext i j; simp [Matrix.vecMulVec_apply, smul_mul_assoc]
 

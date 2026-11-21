@@ -40,6 +40,8 @@ theorem map_smul_of_algebraMap {A A' : Type} [CommRing A] [Algebra R A] [CommRin
 
 namespace SemiBialgHom
 
+instance : CoeFun (SemiBialgHom σ A A') fun _ => A → A' := ⟨fun f => f.toRingHom⟩
+
 variable (f : SemiBialgHom σ A A')
 
 def lin : A →ₛₗ[σ] A' := ⟨⟨f.toRingHom, f.toRingHom.map_add⟩, f.smul_map⟩
@@ -47,7 +49,8 @@ def lin : A →ₛₗ[σ] A' := ⟨⟨f.toRingHom, f.toRingHom.map_add⟩, f.smu
 @[simp] theorem lin_apply (a : A) : f.lin a = f a := rfl
 
 theorem map_algebraMap (r : R) : f (algebraMap R A r) = algebraMap R' A' (σ r) := by
-  rw [Algebra.algebraMap_eq_smul_one, f.smul_map, map_one, Algebra.algebraMap_eq_smul_one]
+  rw [Algebra.algebraMap_eq_smul_one, f.smul_map, map_one f.toRingHom,
+    Algebra.algebraMap_eq_smul_one]
 
 abbrev two : A ⊗[R] A →ₛₗ[σ] A' ⊗[R'] A' := TensorProduct.map f.lin f.lin
 
@@ -135,17 +138,17 @@ def ofPts (g : A →+* A') (hg : ∀ r, g (algebraMap R A r) = algebraMap R' A' 
 def cot : Cot R A →ₛₗ[σ] Cot R' A' :=
   letI : Module R (Cot R' A') := Module.compHom _ σ
   let D : A →ₗ[R] Cot R' A' :=
-    { toFun := fun a => dUnit R' (f a)
-      map_add' := fun a b => by rw [map_add (f := _), dUnit, map_add (f := _)]
+    { toFun := fun a => dUnit (f a)
+      map_add' := fun a b => by rw [map_add f.toRingHom, dUnit, map_add (f := _)]
       map_smul' := fun r a => by rw [f.smul_map, dUnit, LinearMap.map_smul]; rfl }
   { (AugCot.lift (counitAlgHom R A) D fun a b => by
-      change dUnit R' (f (a * b)) = σ (counit a) • dUnit R' (f b) + σ (counit b) • dUnit R' (f a)
-      rw [map_mul, dUnit, AugCot.d_mul, ← f.counit_map, ← f.counit_map]
+      change dUnit (R := R') (f (a * b)) = σ (counit a) • dUnit (f b) + σ (counit b) • dUnit (f a)
+      rw [map_mul f.toRingHom, dUnit, AugCot.d_mul, ← f.counit_map, ← f.counit_map]
       rfl) with }
 
-@[simp] theorem cot_d (a : A) : f.cot (dUnit R a) = dUnit R' (f a) := by
-  change dUnit R' (f (a - algebraMap R A (counit a))) = _
-  rw [map_sub, f.map_algebraMap, dUnit, map_sub, AugCot.d_algebraMap, sub_zero]
+@[simp] theorem cot_d (a : A) : f.cot (dUnit a) = dUnit (f a) := by
+  change dUnit (R := R') (f (a - algebraMap R A (counit a))) = _
+  rw [map_sub f.toRingHom, f.map_algebraMap, dUnit, map_sub, AugCot.d_algebraMap, sub_zero]
 
 theorem two_cobOne (b : A) : f.two (cobOne R A b) = cobOne R' A' (f b) := by
   simp [cobOne_apply, two_comul]
@@ -441,7 +444,8 @@ theorem baseChange_hom_ext {G' : PDivGroup p O'} {f g : G' ⟶ G.baseChange O'}
     (h : ∀ n a, f.app n (1 ⊗ₜ a) = g.app n (1 ⊗ₜ a)) : f = g :=
   hom_ext fun n => bc_hom_ext (h n)
 
-
+variable (p O) in
+@[simps] def baseChangeFunctor : PDivGroup p O ⥤ PDivGroup p O' where
   obj G := G.baseChange O'
   map := baseChangeMap O'
   map_id _ := baseChange_hom_ext fun _ _ => rfl

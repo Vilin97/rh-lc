@@ -23,16 +23,16 @@ theorem twist : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
       ∀ e, IsEv B M M₁ H.ι 1 {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} e →
       ∀ (g₁ : UA σ X₁.J) (m : UA σ X.J), IsLevi H 1 g₁ m →
         (∀ Φ ∈ schA F (Fin n × Fin d), (om₁ (g₁⁻¹, 1) ∘ₗ e ∘ₗ om (m, 1)) Φ ∈ schA F (Fin n₁ × Fin d)) ∧
-        (∀ z : Matrix (Fin n₁) (Fin d) (AE F E), ∀ Φ ∈ schA F (Fin n × Fin d),
+        (∀ z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ Φ ∈ schA F (Fin n × Fin d),
           (om₁ (g₁⁻¹, 1) ∘ₗ e ∘ₗ om (m, 1)) (M.co.rho B.ψ (incM F H.ι * z * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ) Φ) =
             M₁.co.rho B.ψ z ((om₁ (g₁⁻¹, 1) ∘ₗ e ∘ₗ om (m, 1)) Φ)) ∧
-        (∀ u ∈ {u : Matrix (Fin n) (Fin d) (AE F E) | ∃ z, u = Matrix.vecMulVec (incV F H.x) z}, ∀ Φ ∈ schA F (Fin n × Fin d),
+        (∀ u ∈ {u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) | ∃ z, u = Matrix.vecMulVec (incV F H.x) z}, ∀ Φ ∈ schA F (Fin n × Fin d),
           (om₁ (g₁⁻¹, 1) ∘ₗ e ∘ₗ om (m, 1)) (M.co.rho B.ψ u Φ) = (om₁ (g₁⁻¹, 1) ∘ₗ e ∘ₗ om (m, 1)) Φ) := by
   intro F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he g₁ m hL
   have hs := hP.weil.isUSplitting
   have hs₁ := hP₁.weil.isUSplitting
-  have hm1 : (((m, 1) : UA σ X.J × UA σ W.J).1 : GL (Fin n) (AE F E)).1 = mat m := rfl
-  have h1 : ((((1 : UA σ W.J)) : GL (Fin d) (AE F E)) : Matrix (Fin d) (Fin d) (AE F E)) = 1 := rfl
+  have hm1 : (((m, 1) : UA σ X.J × UA σ W.J).1 : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).1 = mat m := rfl
+  have h1 : ((((1 : UA σ W.J)) : GL (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = 1 := rfl
   refine ⟨fun Φ hΦ => ?_, fun z Φ hΦ => ?_, fun u hu Φ hΦ => ?_⟩
   · simp only [LinearMap.comp_apply]
     exact hs₁.pres _ _ (he.maps _ (hs.pres _ _ hΦ))
@@ -42,13 +42,13 @@ theorem twist : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
         incM F H.ι * (mat g₁ * z) * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ := by
       simp only [actAB]
       rw [h1, Matrix.transpose_one, Matrix.mul_one]
-      have hL3 : ((m : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) * incM F H.ι = incM F H.ι * mat g₁ := hL.2.2
+      have hL3 : ((m : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * incM F H.ι = incM F H.ι * mat g₁ := hL.2.2
       rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hL3, Matrix.mul_assoc (incM F H.ι)]
     rw [ea, he.Heisenberg₂ (mat g₁ * z) _ (hs.pres _ _ hΦ), hs₁.impl (g₁⁻¹, 1) _ _ (he.maps _ (hs.pres _ _ hΦ))]
     congr 1
     simp only [actAB]
     rw [h1, Matrix.transpose_one, Matrix.mul_one, ← Matrix.mul_assoc]
-    have hi : (((g₁⁻¹ : UA σ X₁.J) : GL (Fin n₁) (AE F E)) : Matrix (Fin n₁) (Fin n₁) (AE F E)) * mat g₁ = 1 := by
+    have hi : (((g₁⁻¹ : UA σ X₁.J) : GL (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n₁) (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * mat g₁ = 1 := by
       rw [Subgroup.coe_inv]; exact Units.inv_mul _
     rw [hi, Matrix.one_mul]
   · obtain ⟨z', rfl⟩ := hu
@@ -57,8 +57,8 @@ theorem twist : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     have ea : actAB (cA σ) ((m, 1) : UA σ X.J × UA σ W.J) (Matrix.vecMulVec (incV F H.x) z') = Matrix.vecMulVec (incV F H.x) z' := by
       simp only [actAB]
       rw [h1, Matrix.transpose_one, Matrix.mul_one]
-      have hx : ((m : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) *ᵥ incV F H.x = incV F H.x := by
-        rw [show ((m : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) = mat m from rfl, hL.1]; simp
+      have hx : ((m : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) *ᵥ incV F H.x = incV F H.x := by
+        rw [show ((m : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = mat m from rfl, hL.1]; simp
       conv_rhs => rw [← hx]
       ext i j
       simp [Matrix.mul_apply, Matrix.vecMulVec_apply, Matrix.mulVec, dotProduct, Finset.sum_mul, mul_assoc]

@@ -50,6 +50,7 @@ theorem sum_prime_pow_le_of_dvd (s : Finset ℕ) (e : ℕ → ℕ) (M : ℕ) (hM
 private theorem padicValNat_pow_sub_one_eq_add (g d l : ℕ) (hg : 2 ≤ g) (h4 : 4 ∣ g - 1) (hd : d ≠ 0)
     (hl : l.Prime) (hlg : l ∣ g - 1) :
     padicValNat l (g ^ d - 1) = padicValNat l (g - 1) + padicValNat l d := by
+  rw [Nat.padicValNat_def, Nat.padicValNat_def, Nat.padicValNat_def]
   have := Fact.mk hl
   have hlg' : ¬ l ∣ g := by
     intro h
@@ -97,7 +98,8 @@ theorem sum_primePowerPart_pow_sub_one_le :
     intro l hl
     obtain ⟨hlp, hlN, hN0⟩ := Nat.mem_primeFactors.mp hl
     have := Fact.mk hlp
-    exact Nat.one_le_iff_ne_zero.mp (one_le_padicValNat_of_dvd hN0 hlN)
+    rw [Nat.padicValNat_def]
+    exact Nat.one_le_iff_ne_zero.mp (one_le_multiplicity_of_dvd hN0 hlN)
   have hnat : ∑ l ∈ N.primeFactors, l ^ padicValNat l N ≤ d * (g - 1) + N / (g - 1) := by
     rw [← Finset.sum_filter_add_sum_filter_not N.primeFactors (fun l => l ∣ g - 1)]
     refine add_le_add ?_ ?_

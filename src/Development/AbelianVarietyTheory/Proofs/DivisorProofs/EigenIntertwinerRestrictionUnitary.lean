@@ -29,7 +29,7 @@ theorem integral_anisotropic_eq_zero : GlobalTheory.ThK.KP → ∀ (F E : Type) 
       ∫ u in 𝓕, thetaSum F (e₀ (M.co.rho B.ψ (Matrix.vecMulVec (incV F ξ) (incV F H'.y)) (om (1, u.1) Ψ))) ∂μ = 0 := by
   intro hKP F E _ _ _ _ _ σ B n d d₁ X W W₁ M M₁ H' i₀ i₁ hH hM₁ e₀ he₀ χX χW om r s r' s' hP μ 𝓕 hμ h𝓕 h1 Ψ hΨ ξ hξ
   haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
-  haveI : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) _
+  haveI : IsTopologicalRing (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := IsModuleTopology.isTopologicalRing (AF F) _
   haveI : IsTopologicalGroup (UA σ W.J) := inferInstance
   haveI : BorelSpace (UA σ W.J) := ⟨rfl⟩
   obtain ⟨κ, hκ, hph⟩ := GlobalTheory.T.eval_map_pair_compat hKP F E σ B n d d₁ X W W₁ M M₁ H' i₀ i₁ hH hM₁ e₀ he₀ χX χW om r s r' s' hP ξ hξ

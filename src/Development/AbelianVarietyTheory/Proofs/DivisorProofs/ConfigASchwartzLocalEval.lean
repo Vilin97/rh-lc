@@ -19,7 +19,7 @@ noncomputable section
 
 namespace GlobalTheory.PureBound
 
-theorem size_inf {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (x : AE F E) :
+theorem size_inf {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     GlobalTheory.IdeleDecay.size F E ((pairA F 1 0 : AF F) • x) = GlobalTheory.IdeleDecay.size F E x := by
   unfold GlobalTheory.IdeleDecay.size GlobalTheory.IdeleDecay.coord
   refine Finset.sum_congr rfl fun i _ => ?_
@@ -32,7 +32,7 @@ theorem norm_ev_shiftA_pure_le : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →
     ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ X om om' om₁ om₁', IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
     ∀ g ∈ SB (Fin (b + 2) × Fin (b + 2 + a') → FiniteAdeleRing (𝓞 F) F), ∀ S : Set (SInf F (Fin (b + 2) × Fin (b + 2 + a'))),
-      IsCompact S → ∃ m : ℕ, 0 < m ∧ ∀ N : ℕ, ∃ C : ℝ, ∀ f ∈ S, ∀ (l : (AE F E)ˣ) (y : Fin b × Fin (b + a') → AF F),
+      IsCompact S → ∃ m : ℕ, 0 < m ∧ ∀ N : ℕ, ∃ C : ℝ, ∀ f ∈ S, ∀ (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (y : Fin b × Fin (b + a') → AF F),
         ‖e (G.M.co.rho B.ψ (shiftA H H' l) (pureA F f g)) y‖ ≤ C * GlobalTheory.IdeleDecay.decay F E N m l := by
   intro hKP F E _ _ _ _ _ σ B b a' G G₁ H H' hC e he X om om' om₁ om₁' hT hT₁ g hg S hS
   obtain ⟨m, hm, hA⟩ := GlobalTheory.T.seesaw_type_a_schwartz_triple_identity hKP F E σ B b a' G G₁ H H' hC e he X om om' om₁ om₁' hT hT₁ g hg

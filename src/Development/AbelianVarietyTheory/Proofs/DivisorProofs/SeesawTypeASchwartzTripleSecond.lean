@@ -111,7 +111,7 @@ theorem rho_shiftA_pureA_finite : GlobalTheory.ThK.KP → ∀ (F E : Type) [Fiel
     ∀ g ∈ SB (Fin (b + 2) × Fin (b + 2 + a') → FiniteAdeleRing (𝓞 F) F), ∀ m : ℕ, 0 < m →
       ∃ (r : ℕ) (gs : Fin r → (Fin (b + 2) × Fin (b + 2 + a') → FiniteAdeleRing (𝓞 F) F) → ℂ),
         (∀ j, gs j ∈ SB (Fin (b + 2) × Fin (b + 2 + a') → FiniteAdeleRing (𝓞 F) F)) ∧
-        ∀ l : (AE F E)ˣ, (∀ i v, evFin F v ((m : AF F) * GlobalTheory.IdeleDecay.coord F E l.1 i) ∈ v.adicCompletionIntegers F) →
+        ∀ l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, (∀ i v, evFin F v ((m : AF F) * GlobalTheory.IdeleDecay.coord F E l.1 i) ∈ v.adicCompletionIntegers F) →
           ∃ j, ∀ f : SInf F (Fin (b + 2) × Fin (b + 2 + a')),
             G.M.co.rho B.ψ (shiftA H H' l) (pureA F f g) =
               G.M.co.rho B.ψ (((pairA F 1 0 : AF F) • l.1) • Matrix.vecMulVec (incV F H.x) (incV F H'.y)) (pureA F f (gs j)) := by

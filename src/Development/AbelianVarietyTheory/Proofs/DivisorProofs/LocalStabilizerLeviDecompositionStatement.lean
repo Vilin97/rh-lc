@@ -17,8 +17,8 @@ set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.local_stabilizer_levi_decomposition : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ), B.IsGood σ →
     W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl (F := F),
-    ∀ p ∈ UAt σ W (evFin F v), ∀ a : AE F E, mat p *ᵥ incV F H'.x = a • incV F H'.x →
-    ∃ (t : (AE F E)ˣ) (h₁ : UA σ W₁.J), (t : AE F E) = a ∧ At (evFin F v) ((t : AE F E) - 1) ∧
-      h₁ ∈ UAt σ W₁ (evFin F v) ∧ ∀ z : Fin d₁ → AE F E, ∃ c : AE F E,
+    ∀ p ∈ UAt σ W (evFin F v), ∀ a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), mat p *ᵥ incV F H'.x = a • incV F H'.x →
+    ∃ (t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (h₁ : UA σ W₁.J), (t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = a ∧ At (evFin F v) ((t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) - 1) ∧
+      h₁ ∈ UAt σ W₁ (evFin F v) ∧ ∀ z : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), ∃ c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E),
         mat p *ᵥ (incM F H'.ι *ᵥ z) = incM F H'.ι *ᵥ (mat h₁ *ᵥ z) + c • incV F H'.x := by
   first | exact @GlobalTheory.ParabExtract.extract | exact GlobalTheory.ParabExtract.extract | (intros; apply GlobalTheory.ParabExtract.extract <;> assumption)

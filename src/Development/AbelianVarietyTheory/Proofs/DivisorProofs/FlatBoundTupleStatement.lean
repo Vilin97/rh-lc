@@ -22,10 +22,10 @@ theorem _root_.GlobalTheory.T.seesaw_left_restriction_global : ∀ (F E : Type) 
         Continuous emb ∧ (∀ gd₁, IsDLevi H gd₁ (emb gd₁)) ∧
         (∀ (g₁ : UA σ X₁.J) (m : UA σ X.J), IsLevi H 1 g₁ m → ∀ gd₁ : UG (cA σ) (dbl (incM F X₁.J)),
           gd₁.1.1 = Matrix.fromBlocks (mat g₁) 0 0 1 → (emb gd₁).1.1 = Matrix.fromBlocks (mat m) 0 0 1) ∧
-        (∀ (p₁ : UG (cA σ) (dbl (incM F X₁.J))) (t₁ : GL (Fin n₁) (AE F E)),
-          p₁.1.1 * (diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (AE F E)) = (diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (AE F E)) * t₁.1 →
-          ∃ t : GL (Fin n) (AE F E), (emb p₁).1.1 * (g₀.1.1 * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))) = (g₀.1.1 * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))) * t.1 ∧
+        (∀ (p₁ : UG (cA σ) (dbl (incM F X₁.J))) (t₁ : GL (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))),
+          p₁.1.1 * (diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = (diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * t₁.1 →
+          ∃ t : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), (emb p₁).1.1 * (g₀.1.1 * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) = (g₀.1.1 * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) * t.1 ∧
             Matrix.GeneralLinearGroup.det t = Matrix.GeneralLinearGroup.det t₁) ∧
-        ∀ z : Matrix (Fin d) (Fin n) (AE F E), ∃ z₁ : Matrix (Fin d) (Fin n₁) (AE F E), ∃ u ∈ isoD d H,
-          z * (g₀.1.1 * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E)))ᵀ = z₁ * ((diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (AE F E)))ᵀ * (dblEmb H.ι)ᵀ + u := by
+        ∀ z : Matrix (Fin d) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∃ z₁ : Matrix (Fin d) (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∃ u ∈ isoD d H,
+          z * (g₀.1.1 * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))))ᵀ = z₁ * ((diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))))ᵀ * (dblEmb H.ι)ᵀ + u := by
   first | exact @GlobalTheory.DoubledPlaneEmb.exists_dbl_emb | exact GlobalTheory.DoubledPlaneEmb.exists_dbl_emb | (intros; apply GlobalTheory.DoubledPlaneEmb.exists_dbl_emb <;> assumption)

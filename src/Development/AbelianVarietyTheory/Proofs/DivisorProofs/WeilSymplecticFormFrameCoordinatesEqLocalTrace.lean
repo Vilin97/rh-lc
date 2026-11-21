@@ -37,8 +37,8 @@ theorem trace_coords {L : Type} [CommRing L] (σL : L →+* L) {n d : ℕ}
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem mul_inclR {L : Type} [Field L] (ι : L →+ AE F E) (v : Pl (F := F))
-    (hAt : ∀ z : AE F E, At (evFin F v) z ↔ ∃ x, ι x = z) (hmul : ∀ x y, ι (x * y) = ι x * ι y) (a : L) (e : E) :
+theorem mul_inclR {L : Type} [Field L] (ι : L →+ _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (v : Pl (F := F))
+    (hAt : ∀ z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), At (evFin F v) z ↔ ∃ x, ι x = z) (hmul : ∀ x y, ι (x * y) = ι x * ι y) (a : L) (e : E) :
     ι a * inclR (F := F) (AF F) e = ι (a * GlobalTheory.InertLocFrame.pre ι (ι 1 * inclR (F := F) (AF F) e)) := by
   have hat : ∃ z, ι z = ι 1 * inclR (F := F) (AF F) e := by
     refine (hAt _).1 fun u hu => ?_

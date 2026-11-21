@@ -198,10 +198,10 @@ theorem nsmul_id_galUnits_surjective [IsSepClosed L] (hn : (n : L) ≠ 0) :
   exact hz
 
 theorem kummerSequence_shortExact_of_ne_zero [IsSepClosed L] (hn : (n : L) ≠ 0) :
-    (kummerSequence K L n).ShortExact where
-  exact := kummerSequence_exact n
-  mono_f := (Rep.mono_iff_injective _).2 (rootsOfUnityToUnits_injective n)
-  epi_g := (Rep.epi_iff_surjective _).2 (nsmul_id_galUnits_surjective n hn)
+    (kummerSequence K L n).ShortExact :=
+  ShortComplex.ShortExact.mk' (kummerSequence_exact n)
+    ((Rep.mono_iff_injective (rootsOfUnityToUnits K L n)).2 (rootsOfUnityToUnits_injective n))
+    ((Rep.epi_iff_surjective (n • 𝟙 (galUnits.{u} K L))).2 (nsmul_id_galUnits_surjective n hn))
 
 theorem kummerSequence_shortExact [IsSepClosure K L] (hn : (n : K) ≠ 0) :
     (kummerSequence K L n).ShortExact := by

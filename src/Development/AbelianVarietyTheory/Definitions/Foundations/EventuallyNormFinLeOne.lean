@@ -213,7 +213,12 @@ def infEmb (τ : EmbOver E w) : w.Completion ⊗[F] E →+* ℂ :=
   letI : Algebra F ℂ := w.embedding.toAlgebra
   (Algebra.TensorProduct.productMap
     ({ InfinitePlace.Completion.extensionEmbedding w with
-        commutes' := fun a => InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm a) } :
+        commutes' := fun a => by
+          change InfinitePlace.Completion.extensionEmbedding w (algebraMap F w.Completion a) =
+            w.embedding a
+          rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+            Algebra.algebraMap_self_apply, ← WithAbs.equiv_symm_apply,
+            InfinitePlace.Completion.extensionEmbedding_coe, RingEquiv.apply_symm_apply] } :
       w.Completion →ₐ[F] ℂ)
     ({ τ.1 with commutes' := fun a => RingHom.congr_fun τ.2 a } : E →ₐ[F] ℂ)).toRingHom
 
@@ -466,7 +471,7 @@ theorem heightGL_mul_le (g h : GL n (AF F ⊗[F] E)) : heightGL F (g * h) ≤ he
   have e2 : (∏ᶠ v, htFin F v (bc (compFin F E v) (g * h))) ≤
       (∏ᶠ v, htFin F v (bc (compFin F E v) g)) * ∏ᶠ v, htFin F v (bc (compFin F E v) h) := by
     rw [← finprod_mul_distrib fg1 fh1]
-    exact finprod_le_finprod fg (fun _ => zero_le) ((fg1.union fh1).subset (Function.mulSupport_mul _ _)) hM
+    exact finprod_le_finprod₀ fg (fun _ => zero_le) ((fg1.union fh1).subset (Function.mulSupport_mul _ _)) hM
   unfold heightGL
   calc _ ≤ _ := mul_le_mul' e1 e2
     _ = _ := mul_mul_mul_comm _ _ _ _

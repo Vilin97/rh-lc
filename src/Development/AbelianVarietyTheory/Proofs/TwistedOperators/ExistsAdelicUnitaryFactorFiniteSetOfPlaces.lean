@@ -122,8 +122,8 @@ theorem exists_cut : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
   have hk3 : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat k⁻¹ = e • 1 + (1 - e) • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat g⁻¹ := by
     rw [inv_one] at hk'
     exact hk'
-  have hoff : ∀ (u : AF F) (M : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)), u * e = 0 →
-      u • (e • (1 : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)) + (1 - e) • M) = u • M := by
+  have hoff : ∀ (u : AF F) (M : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), u * e = 0 →
+      u • (e • (1 : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) + (1 - e) • M) = u • M := by
     intro u M hu
     rw [smul_add, smul_smul, smul_smul, mul_sub, hu, mul_one, sub_zero, zero_smul, zero_add]
   refine ⟨gS, k, ?_, ?_, ?_, ?_, ?_⟩
@@ -143,8 +143,8 @@ theorem exists_cut : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     have h1 : e * u = 0 := hu e heI
     rw [hk2, smul_sub, smul_sub, hoff u _ (by rw [mul_comm, h1])]
   · intro w hw z hz
-    have key : ∀ M : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E),
-        (e • (1 : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)) + (1 - e) • M) *ᵥ z = M *ᵥ z := by
+    have key : ∀ M : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
+        (e • (1 : Matrix (Fin n) (Fin n) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) + (1 - e) • M) *ᵥ z = M *ᵥ z := by
       intro M
       induction hz using AddSubgroup.closure_induction with
       | mem z hz =>

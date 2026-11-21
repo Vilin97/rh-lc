@@ -31,9 +31,9 @@ theorem unip_fix {σ : E →ₐ[F] E} {d d₁ : ℕ} {W : Spc F E d} {H' : Plane
     (hg : g ∈ unip σ W H') : mat g *ᵥ incV F H'.x = incV F H'.x := by
   induction hg using Subgroup.closure_induction with
   | mem g h => exact h.1
-  | one => show ((1 : GL (Fin d) (AE F E)) : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ _ = _; simp
+  | one => show ((1 : GL (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) *ᵥ _ = _; simp
   | mul a b _ _ ha hb =>
-    show ((a.1 * b.1 : GL (Fin d) (AE F E)) : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ _ = _
+    show ((a.1 * b.1 : GL (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) *ᵥ _ = _
     rw [Units.val_mul, ← Matrix.mulVec_mulVec]
     exact (congrArg _ hb).trans ha
   | inv a _ ha =>
@@ -74,7 +74,7 @@ theorem form_swap (σ : E →ₐ[F] E) (hσ : ∀ a, σ (σ a) = a) {d : ℕ} {J
   rw [hJ]
   ring
 
-theorem vecMulVec_mul_transpose {m k : ℕ} (a : Fin m → AE F E) (b : Fin k → AE F E) (N : Matrix (Fin k) (Fin k) (AE F E)) :
+theorem vecMulVec_mul_transpose {m k : ℕ} (a : Fin m → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (b : Fin k → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (N : Matrix (Fin k) (Fin k) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     Matrix.vecMulVec a b * Nᵀ = Matrix.vecMulVec a (N *ᵥ b) := by
   ext i j
   simp only [Matrix.mul_apply, Matrix.vecMulVec_apply, Matrix.transpose_apply, Matrix.mulVec, dotProduct, Finset.mul_sum]

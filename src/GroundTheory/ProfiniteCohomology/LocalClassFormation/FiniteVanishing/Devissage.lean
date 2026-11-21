@@ -50,16 +50,15 @@ def cokerShortComplex : ShortComplex (Rep.{u} k G) :=
     exact (Submodule.Quotient.mk_eq_zero _).2 ⟨a, rfl⟩)
 
 theorem cokerShortComplex_shortExact (hi : Function.Injective i.hom) :
-    (cokerShortComplex i).ShortExact where
-  exact := by
-    rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
+    (cokerShortComplex i).ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ((Rep.mono_iff_injective i).2 hi) ?_
+  · rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
       ShortComplex.moduleCat_exact_iff]
     intro b hb
     change Submodule.Quotient.mk (p := LinearMap.range i.hom.toLinearMap) b = 0 at hb
     obtain ⟨a, ha⟩ := (Submodule.Quotient.mk_eq_zero _).1 hb
     exact ⟨a, ha⟩
-  mono_f := (Rep.mono_iff_injective _).2 hi
-  epi_g := (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
+  · exact (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
 
 end Coker
 

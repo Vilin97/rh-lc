@@ -24,7 +24,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem one_mem_uAt {n : ℕ} (X : Spc F E n) (v : Pl (F := F)) : (1 : UA σ X.J) ∈ UAt σ X (evFin F v) := by
   intro u _
-  show u • ((1 : Matrix (Fin n) (Fin n) (AE F E)) - 1) = 0
+  show u • ((1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) - 1) = 0
   simp
 
 theorem mul_mem_uAt {n : ℕ} {X : Spc F E n} {v : Pl (F := F)} {g h : UA σ X.J} (hg : g ∈ UAt σ X (evFin F v))

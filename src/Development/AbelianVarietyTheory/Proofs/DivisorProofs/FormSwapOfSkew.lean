@@ -28,10 +28,10 @@ theorem form_swap_of_skew {F E : Type} [Field F] [Field E] [Algebra F E] {σ : E
 theorem symp_dual_iso : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
     (B : Base F E) {n d d₁ : ℕ} (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (r' s' i₀ i₁ : ℕ)
     (JX : Matrix (Fin n) (Fin n) E),
-    W.IsSkew σ B r' s' → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ (_hB : B.IsGood σ := by assumption) (b c : Fin n → AE F E),
+    W.IsSkew σ B r' s' → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ (_hB : B.IsGood σ := by assumption) (b c : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)),
     symp (R := AF F) (cA σ) (-1) (incM F JX) (incM F W.J) (Matrix.vecMulVec b (incV F H'.y))
       (Matrix.vecMulVec c (incV F H'.x)) =
-    Algebra.trace (AF F) (AE F E) (b ⬝ᵥ (incM F JX *ᵥ fun k => cA σ (c k))) := by
+    Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (b ⬝ᵥ (incM F JX *ᵥ fun k => cA σ (c k))) := by
   intro F E _ _ _ _ _ σ B n d d₁ W W₁ H' r' s' i₀ i₁ JX hW hH hB b c
   have hσ : ∀ x, σ (σ x) = x := fun x => by
     obtain ⟨-, -, -, h⟩ := hB.cm

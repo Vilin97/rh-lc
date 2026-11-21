@@ -90,7 +90,7 @@ private theorem atV_incV {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
 
 private theorem pair_eq {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
     {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (J : Matrix (Fin n) (Fin n) E) (v : Pl (F := F)) (x y : Fin n → E)
-    (hxy : form σ J x y = 1) (c : AE F E) (a : Fv F v ⊗[F] E) :
+    (hxy : form σ J x y = 1) (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (a : Fv F v ⊗[F] E) :
     pairV σ J v (atV v (c • incV F x)) (fun i => sigR (Fv F v) σ a * atV v (incV F y) i) = compFin F E v c * a := by
   have h1 : ∀ i, atV v (c • incV F x) i = compFin F E v c * inclR (F := F) (Fv F v) (x i) := fun i => by
     rw [← atV_incV]

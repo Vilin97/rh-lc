@@ -40,7 +40,7 @@ theorem ext_symm_real {w : InfinitePlace F} (hw : w.IsReal) (t : ℝ) :
     ← InfinitePlace.Completion.ringEquivRealOfIsReal_apply, RingEquiv.apply_symm_apply]
 
 theorem smul_adAt_tmul (u : AF F) (hu : evI F u = 0) (w : InfinitePlace F) (c : w.Completion) (x : E) :
-    u • (adAt w c ⊗ₜ[F] x : AE F E) = 0 := by
+    u • (adAt w c ⊗ₜ[F] x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = 0 := by
   have hu1 : u.1 = 0 := (InfiniteAdeleRing.ringEquiv_mixedSpace F).injective (hu.trans (map_zero _).symm)
   rw [TensorProduct.smul_tmul', smul_eq_mul]
   have : u * adAt w c = 0 := by
@@ -53,7 +53,7 @@ theorem smul_adAt_tmul (u : AF F) (hu : evI F u = 0) (w : InfinitePlace F) (c : 
 
 theorem exists_at_inf_values : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {σ : E →ₐ[F] E}, IsCMExt F E σ → ∀ (τ : ∀ w : InfinitePlace F, EmbOver E w) (z : InfinitePlace F → ℂ),
-    ∃ a : AE F E, At (evI F) a ∧ ∀ w, piInf (τ w) a = z w := by
+    ∃ a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), At (evI F) a ∧ ∀ w, piInf (τ w) a = z w := by
   intro F E _ _ _ _ _ σ h τ z
   haveI : IsTotallyReal F := h.1
   haveI : IsTotallyComplex E := h.2.1

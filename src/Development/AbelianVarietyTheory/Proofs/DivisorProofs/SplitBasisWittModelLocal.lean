@@ -24,9 +24,9 @@ namespace GlobalTheory.VacLinW
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
 
 theorem symp_eq_zero_of_comp (hcm : IsCMExt F E σ) {v : Pl (F := F)} (s : E →ₐ[F] Fv F v)
-    {x y : Matrix (Fin n) (Fin d) (AE F E)} (hx : At (evFin F v) x) (hx0 : x.map (piW (s.comp σ)) = 0)
-    (hy0 : y.map (piW (s.comp σ)) = 0) (ξ : AE F E) (JA : Matrix (Fin n) (Fin n) (AE F E))
-    (JB : Matrix (Fin d) (Fin d) (AE F E)) : symp (cA σ) ξ JA JB x y = 0 := by
+    {x y : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hx : At (evFin F v) x) (hx0 : x.map (piW (s.comp σ)) = 0)
+    (hy0 : y.map (piW (s.comp σ)) = 0) (ξ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (JA : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
+    (JB : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : symp (cA σ) ξ JA JB x y = 0 := by
   set z := hTens (cA σ) JA JB x y with hz
   have hat : At (evFin F v) z := by
     intro c hc
@@ -45,13 +45,13 @@ theorem symp_eq_zero_of_comp (hcm : IsCMExt F E σ) {v : Pl (F := F)} (s : E →
   have : z = 0 := GlobalTheory.VacIso.eq_zero_of_at_split hcm s hat h1 h2
   simp only [symp, ← hz, this, mul_zero, map_zero]
 
-theorem symp_add_right (ξ : AE F E) (JA : Matrix (Fin n) (Fin n) (AE F E)) (JB : Matrix (Fin d) (Fin d) (AE F E))
-    (x y y' : Matrix (Fin n) (Fin d) (AE F E)) :
+theorem symp_add_right (ξ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (JA : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (JB : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
+    (x y y' : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     symp (cA σ) ξ JA JB x (y + y') = symp (cA σ) ξ JA JB x y + symp (cA σ) ξ JA JB x y' := by
   simp only [symp, hTens, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem isLin_smul {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ) {v : Pl (F := F)}
-    {π₁ π₀ : AE F E →+* Fv F v} {co : Matrix (Fin n) (Fin d) (AE F E) → Matrix (Fin n) (Fin d) (Fv F v)}
+    {π₁ π₀ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →+* Fv F v} {co : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Matrix (Fin n) (Fin d) (Fv F v)}
     {ι : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Matrix (Fin n) (Fin d) (Fv F v) → ℂ)} (h : M.IsLin ψ π₁ π₀ co ι)
     {z : ℂ} (hz : z ≠ 0) : M.IsLin ψ π₁ π₀ co (z • ι) where
   bij := by

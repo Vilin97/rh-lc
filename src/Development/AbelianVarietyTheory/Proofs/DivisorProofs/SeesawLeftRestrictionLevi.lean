@@ -26,7 +26,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {n d n₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁}
 
 theorem rho_tr (M : Model σ X W) {d' : Darboux (symp (cA σ) (-1) (incM F W.J) (incM F X.J)) (Fin n × Fin d)}
-    (hd' : ∀ x, d'.e xᵀ = M.co.e x) (ψ : AddChar (AF F) ℂ) (w : Matrix (Fin d) (Fin n) (AE F E)) :
+    (hd' : ∀ x, d'.e xᵀ = M.co.e x) (ψ : AddChar (AF F) ℂ) (w : Matrix (Fin d) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     d'.rho ψ w = M.co.rho ψ wᵀ := by
   show schr ψ (d'.e w) = schr ψ (M.co.e wᵀ)
   rw [← hd', Matrix.transpose_transpose]
@@ -39,7 +39,7 @@ variable {B : Base F E} {M : Model σ X W} {M₁ : Model σ X₁ W} {χX χW : C
     (he : IsEv B M M₁ H.ι 1 {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} e)
 include hP hH he
 
-theorem law_one (z : Matrix (Fin n₁) (Fin d) (AE F E)) (y : Fin d → AE F E) :
+theorem law_one (z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (y : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     ∀ φ ∈ schA F (Fin n × Fin d),
       e (M.co.rho B.ψ (incM F H.ι * z + Matrix.vecMulVec (incV F H.x) y) φ) = M₁.co.rho B.ψ z (e φ) := by
   intro φ hφ
@@ -50,7 +50,7 @@ theorem law_one (z : Matrix (Fin n₁) (Fin d) (AE F E)) (y : Fin d → AE F E) 
   rw [GlobalTheory.UnipEvLaw.rho_add M B.ψ _ _ horth, hone,
     he.Heisenberg₂ z _ (GlobalTheory.HeisSchA.rho_mem_schA M B.ψ hP.base.std _ _ hφ), he.inv _ ⟨y, rfl⟩ φ hφ]
 
-theorem law_two (z : Matrix (Fin n₁) (Fin d) (AE F E)) (y : Fin d → AE F E) :
+theorem law_two (z : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (y : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     ∀ φ ∈ schA F (Fin n × Fin d),
       conjLin e (M.co.rho B.ψ⁻¹ (incM F H.ι * z + Matrix.vecMulVec (incV F H.x) y) φ) =
         M₁.co.rho B.ψ⁻¹ z (conjLin e φ) := by

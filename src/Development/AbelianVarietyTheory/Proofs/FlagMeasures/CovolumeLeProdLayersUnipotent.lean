@@ -28,8 +28,7 @@ theorem continuous_coord (E : Fin d → Matrix (Fin n) (Fin n) ℂ) :
 
 theorem continuous_hs_sub_one : Continuous fun g : UJ ε => hs (uMat g - 1) := by
   unfold hs
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
-  exact ((continuous_uMat_sub_one.matrix_elem i j).norm).pow 2
+  fun_prop
 
 theorem mul_sub_one (g h : UJ ε) :
     uMat (g * h) - 1 = (uMat g - 1) + (uMat h - 1) + (uMat g - 1) * (uMat h - 1) := by

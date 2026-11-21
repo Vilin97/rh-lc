@@ -21,8 +21,8 @@ namespace GlobalTheory.InertChars
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem eq_mul_of_at {v : Pl (F := F)} {y : AE F E} (hy : At (evFin F v) y) :
-    y = algebraMap (AF F) (AE F E) (GlobalTheory.EmbChart.atPlace v 1) * y := by
+theorem eq_mul_of_at {v : Pl (F := F)} {y : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hy : At (evFin F v) y) :
+    y = algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (GlobalTheory.EmbChart.atPlace v 1) * y := by
   have h0 : evFin F v (1 - GlobalTheory.EmbChart.atPlace v 1) = 0 := by
     rw [map_sub, map_one, GlobalTheory.EmbChart.evFin_atPlace, sub_self]
   have h1 : (1 - GlobalTheory.EmbChart.atPlace v 1) • y = 0 := hy _ h0
@@ -30,15 +30,15 @@ theorem eq_mul_of_at {v : Pl (F := F)} {y : AE F E} (hy : At (evFin F v) y) :
   exact h1
 
 private lemma tensorProduct_map_eq_zero_of_at_of_atPlace_eq_zero {R : Type} [CommRing R] [Algebra F R] {v : Pl (F := F)} (φ : AF F →ₐ[F] R)
-    (hφ : φ (GlobalTheory.EmbChart.atPlace v 1) = 0) {y : AE F E} (hy : At (evFin F v) y) :
+    (hφ : φ (GlobalTheory.EmbChart.atPlace v 1) = 0) {y : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hy : At (evFin F v) y) :
     Algebra.TensorProduct.map φ (AlgHom.id F E) y = 0 := by
   rw [eq_mul_of_at hy, map_mul, Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.map_tmul,
     Algebra.algebraMap_self_apply, hφ, TensorProduct.zero_tmul, zero_mul]
 
-theorem eq_ideleAt_of_at {v : Pl (F := F)} (z : (AE F E)ˣ) (hz : At (evFin F v) ((z : AE F E) - 1)) :
+theorem eq_ideleAt_of_at {v : Pl (F := F)} (z : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (hz : At (evFin F v) ((z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) - 1)) :
     z = GlobalTheory.Doubling.ideleAt F E v (GlobalTheory.Doubling.unitFin F E v z) := by
   have hev : ∀ {R : Type} [CommRing R] [Algebra F R] (φ : AF F →ₐ[F] R), φ (GlobalTheory.EmbChart.atPlace v 1) = 0 →
-      Algebra.TensorProduct.map φ (AlgHom.id F E) (z : AE F E) = 1 := by
+      Algebra.TensorProduct.map φ (AlgHom.id F E) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = 1 := by
     intro R _ _ φ hφ
     have h := tensorProduct_map_eq_zero_of_at_of_atPlace_eq_zero φ hφ hz
     rwa [map_sub, map_one, sub_eq_zero] at h

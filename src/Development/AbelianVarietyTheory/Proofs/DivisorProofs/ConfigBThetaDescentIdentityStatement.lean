@@ -37,7 +37,7 @@ theorem _root_.GlobalTheory.T.config_b_theta_descent_identity : GlobalTheory.ThK
             (∀ u ∈ unip σ G.W H', u ∈ UAt σ G.W (evFin F v) → ∀ ψ ∈ SB (Fin a × Fin (a + (b + 2)) → Fv F v),
               ∀ ψ₁ ∈ SB (Fin a × Fin (a + (b + 2)) → Fv F v), Acts (evFin F v) (om (1, u)) ψ ψ₁ →
                 φ (Rf.p v ψ₁) = φ (Rf.p v ψ)) →
-            (∀ (s : (AE F E)ˣ) (h₁ : UA σ G₁.W.J) (m : UA σ G.W.J), IsLevi H' s h₁ m → m ∈ UAt σ G.W (evFin F v) →
+            (∀ (s : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (h₁ : UA σ G₁.W.J) (m : UA σ G.W.J), IsLevi H' s h₁ m → m ∈ UAt σ G.W (evFin F v) →
               h₁ ∈ UAt σ G₁.W (evFin F v) → ∀ ψ ∈ SB (Fin a × Fin (a + (b + 2)) → Fv F v),
               ∀ ψ₁ ∈ SB (Fin a × Fin (a + (b + 2)) → Fv F v), Acts (evFin F v) (om (1, m)) ψ ψ₁ →
               ∀ θ ∈ SB (Fin a × Fin (a + b) → Fv F v), ∀ θ₁ ∈ SB (Fin a × Fin (a + b) → Fv F v),

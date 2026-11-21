@@ -46,21 +46,21 @@ theorem coef_ι {n n₁ : ℕ} (H : Plane E n n₁) (u : Fin n₁ → E) (t : Fi
 
 variable (σ : E →ₐ[F] E) {n d n₁ d₁ : ℕ} (X : Spc F E n) (W : Spc F E d) (H : Plane E n n₁) (H' : Plane E d d₁)
 
-theorem planeT_of_sI (u : Matrix (Fin n) (Fin d) (AE F E)) (hs : ∀ k, sI H H' u k = 0)
+theorem planeT_of_sI (u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (hs : ∀ k, sI H H' u k = 0)
     (hb : ∀ i j, coefLin H H' u (.inl i) (.inl j) = 0) :
     (planeT σ X W H H' u).1.1 = 0 ∧ (planeT σ X W H H' u).2 = 0 := by
   refine ⟨?_, ?_⟩
   · funext k; simp [planeT, hs]
   · ext i j; simp [planeT, hb]
 
-theorem planeT_of_tI (u : Matrix (Fin n) (Fin d) (AE F E)) (ht : ∀ k, tI H H' u k = 0)
+theorem planeT_of_tI (u : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (ht : ∀ k, tI H H' u k = 0)
     (hb : ∀ i j, coefLin H H' u (.inl i) (.inl j) = 0) :
     (planeT σ X W H H' u).1.2 = 0 ∧ (planeT σ X W H H' u).2 = 0 := by
   refine ⟨?_, ?_⟩
   · funext k; simp [planeT, pairI, ht]
   · ext i j; simp [planeT, hb]
 
-def Dec (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (v : Pl (F := F)) (γ : Matrix (Fin n) (Fin d) (AE F E)) : Prop :=
+def Dec (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (v : Pl (F := F)) (γ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Prop :=
   (∃ a ∈ latAtV X W v, planeT σ X W H H' a = ((0, (planeT σ X W H H' γ).1.2), 0)) ∧
     (∃ b ∈ latAtV X W v, planeT σ X W H H' b = (((planeT σ X W H H' γ).1.1, 0), 0)) ∧
     (planeT σ X W H H' γ).2 ∈ latAtV X₁ W₁ v
@@ -73,7 +73,7 @@ theorem Dec.zero : Dec σ X W H H' X₁ W₁ v 0 := by
   · rw [map_zero]; rfl
   · rw [map_zero]; exact zero_mem _
 
-theorem Dec.add {γ δ : Matrix (Fin n) (Fin d) (AE F E)} (h : Dec σ X W H H' X₁ W₁ v γ)
+theorem Dec.add {γ δ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (h : Dec σ X W H H' X₁ W₁ v γ)
     (h' : Dec σ X W H H' X₁ W₁ v δ) : Dec σ X W H H' X₁ W₁ v (γ + δ) := by
   obtain ⟨⟨a, ha, ea⟩, ⟨b, hb, eb⟩, hc⟩ := h
   obtain ⟨⟨a', ha', ea'⟩, ⟨b', hb', eb'⟩, hc'⟩ := h'
@@ -82,7 +82,7 @@ theorem Dec.add {γ δ : Matrix (Fin n) (Fin d) (AE F E)} (h : Dec σ X W H H' X
   · rw [map_add (f := _), map_add (f := _), eb, eb']; simp only [Prod.mk_add_mk, add_zero, Prod.fst_add]
   · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hc hc'
 
-theorem Dec.neg {γ : Matrix (Fin n) (Fin d) (AE F E)} (h : Dec σ X W H H' X₁ W₁ v γ) :
+theorem Dec.neg {γ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (h : Dec σ X W H H' X₁ W₁ v γ) :
     Dec σ X W H H' X₁ W₁ v (-γ) := by
   obtain ⟨⟨a, ha, ea⟩, ⟨b, hb, eb⟩, hc⟩ := h
   refine ⟨⟨-a, neg_mem ha, ?_⟩, ⟨-b, neg_mem hb, ?_⟩, ?_⟩
@@ -90,19 +90,19 @@ theorem Dec.neg {γ : Matrix (Fin n) (Fin d) (AE F E)} (h : Dec σ X W H H' X₁
   · rw [map_neg, map_neg, eb]; simp only [Prod.neg_mk, neg_zero, Prod.fst_neg]
   · rw [map_neg]; exact neg_mem hc
 
-theorem Dec.of_I {γ : Matrix (Fin n) (Fin d) (AE F E)} (hγ : γ ∈ latAtV X W v)
+theorem Dec.of_I {γ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hγ : γ ∈ latAtV X W v)
     (h : (planeT σ X W H H' γ).1.1 = 0 ∧ (planeT σ X W H H' γ).2 = 0) : Dec σ X W H H' X₁ W₁ v γ := by
   refine ⟨⟨γ, hγ, Prod.ext (Prod.ext h.1 rfl) h.2⟩, ⟨0, zero_mem _, ?_⟩, ?_⟩
   · rw [map_zero, h.1]; rfl
   · rw [h.2]; exact zero_mem _
 
-theorem Dec.of_S {γ : Matrix (Fin n) (Fin d) (AE F E)} (hγ : γ ∈ latAtV X W v)
+theorem Dec.of_S {γ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hγ : γ ∈ latAtV X W v)
     (h : (planeT σ X W H H' γ).1.2 = 0 ∧ (planeT σ X W H H' γ).2 = 0) : Dec σ X W H H' X₁ W₁ v γ := by
   refine ⟨⟨0, zero_mem _, ?_⟩, ⟨γ, hγ, Prod.ext (Prod.ext rfl h.1) h.2⟩, ?_⟩
   · rw [map_zero, h.1]; rfl
   · rw [h.2]; exact zero_mem _
 
-theorem Dec.of_block {γ : Matrix (Fin n) (Fin d) (AE F E)} {z : Matrix (Fin n₁) (Fin d₁) (AE F E)}
+theorem Dec.of_block {γ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} {z : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hz : z ∈ latAtV X₁ W₁ v) (h : planeT σ X W H H' γ = ((0, 0), z)) : Dec σ X W H H' X₁ W₁ v γ := by
   refine ⟨⟨0, zero_mem _, ?_⟩, ⟨0, zero_mem _, ?_⟩, ?_⟩
   · rw [map_zero, h]; rfl

@@ -28,7 +28,7 @@ private theorem conj_extensionEmbedding_of_isReal {w : InfinitePlace F} (hw : w.
     have h := RingHom.congr_fun (InfinitePlace.isReal_iff.mp hw) ((WithAbs.equiv _) a)
     simpa [NumberField.ComplexEmbedding.conjugate_coe_eq] using h
 
-theorem piInf_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) (x : AE F E) :
+theorem piInf_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) (x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     piInf τ (cA σ x) = (starRingEnd ℂ) (piInf τ x) := by
   obtain ⟨hF, -, -, hστ⟩ := h
   induction x using TensorProduct.induction_on with

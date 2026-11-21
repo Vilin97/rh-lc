@@ -51,7 +51,9 @@ theorem exists_ext_containing (T : CDVR) (hT : T.FinRes) {C : Type} [Field C] [C
   have : FaithfulSMul T.V (integralClosure T.V L) := (faithfulSMul_iff_algebraMap_injective _ _).2 hinj
   have hz : CharZero (integralClosure T.V L) := charZero_of_injective_ringHom hinj
   have hc := GlobalTheory.CompleteFiniteExtension.isAdicComplete_of_finite_local T.V (integralClosure T.V L)
-  have hr : Finite (ResidueField (integralClosure T.V L)) := Module.finite_of_finite (ResidueField T.V)
+  have hr : Finite (ResidueField (integralClosure T.V L)) := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact Module.finite_of_finite (ResidueField T.V)
   let q : FractionRing (integralClosure T.V L) ≃ₐ[integralClosure T.V L] L := FractionRing.algEquiv _ L
   refine ⟨{ V := integralClosure T.V L }, algebraMap _ _, (algebraMap L C).comp q.toRingEquiv.toRingHom,
     q.symm.toRingEquiv.toRingHom.comp (f.codRestrict L hmem), hinj, RingHom.finite_algebraMap.2 hB, hr,

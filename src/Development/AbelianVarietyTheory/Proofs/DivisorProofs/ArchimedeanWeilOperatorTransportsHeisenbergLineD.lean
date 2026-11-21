@@ -39,7 +39,7 @@ theorem actsD_heisLine_transport : ∀ (F E : Type) [Field F] [NumberField F] [F
   have hpure : ∀ (φ : SInf F (Fin n × Fin d)) (g' : (Fin n × Fin d → Af F) → ℂ), g' ∈ SB (Fin n × Fin d → Af F) →
       om p (pureA F φ g') = pureA F (T φ) g' := fun φ g' hg' => hT φ _ (hrest φ g' hg')
 
-  have h0 : ∀ v : Matrix (Fin n) (Fin d) (AE F E), ∀ t : ℝ, M.heisLine ψ v t 0 = 0 := by
+  have h0 : ∀ v : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ t : ℝ, M.heisLine ψ v t 0 = 0 := by
     intro v t
     funext x
     simp [Model.heisLine, Darboux.rho, schr]

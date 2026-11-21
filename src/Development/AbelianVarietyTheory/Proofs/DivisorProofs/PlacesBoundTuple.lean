@@ -21,7 +21,7 @@ noncomputable section
 namespace GlobalTheory.MixXDblInt
 
 theorem dbl_decomp {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n n₁ d : ℕ} (H : Plane E n n₁)
-    (a₁ a₂ : Fin d → AE F E) (z₁ z₂ : Matrix (Fin n₁) (Fin d) (AE F E)) : Matrix.fromCols z₁ᵀ z₂ᵀ * (dblEmb (F := F) H.ι)ᵀ +
+    (a₁ a₂ : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z₁ z₂ : Matrix (Fin n₁) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix.fromCols z₁ᵀ z₂ᵀ * (dblEmb (F := F) H.ι)ᵀ +
       (Matrix.vecMulVec a₁ (Sum.elim (incV F H.x) 0) + Matrix.vecMulVec a₂ (Sum.elim 0 (incV F H.x))) =
       Matrix.fromCols (Matrix.vecMulVec (incV F H.x) a₁ + incM F H.ι * z₁)ᵀ
         (Matrix.vecMulVec (incV F H.x) a₂ + incM F H.ι * z₂)ᵀ := by
@@ -61,7 +61,7 @@ theorem dblLagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       ∃ L : Submodule F (((Fin n × Fin d) ⊕ (Fin n × Fin d) → F) × ((Fin n × Fin d) ⊕ (Fin n × Fin d) → F)),
         (∀ a ∈ L, ∀ b ∈ L, a.1 ⬝ᵥ b.2 = b.1 ⬝ᵥ a.2) ∧
         Module.finrank F L = Fintype.card ((Fin n × Fin d) ⊕ (Fin n × Fin d)) ∧
-        ∀ (t : AF F), ∀ w ∈ L, ∃ u ∈ isoD d H, ∃ z : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (AE F E), (dd₁.e z).1 = 0 ∧
+        ∀ (t : AF F), ∀ w ∈ L, ∃ u ∈ isoD d H, ∃ z : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), (dd₁.e z).1 = 0 ∧
           dd.e (z * (dblEmb H.ι)ᵀ + u) =
             t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i))) := by
   intro F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ dd omd dd₁ omd₁ hD hD₁
@@ -96,13 +96,13 @@ theorem twist {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Mo
     {dd omd dd₁ omd₁} (hD : IsDblOf B.ψ M χW om dd omd) (hD₁ : IsDblOf B.ψ M₁ χW om₁ dd₁ omd₁)
     (et : ((((Fin n × Fin d) ⊕ (Fin n × Fin d)) → AF F) → ℂ) →ₗ[ℂ] ((((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)) → AF F) → ℂ))
     (hm : ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), et Φ ∈ schA F ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)))
-    (hl : ∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (AE F E), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+    (hl : ∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
       et (dd.rho B.ψ (w * (dblEmb H.ι)ᵀ + u) Φ) = dd₁.rho B.ψ w (et Φ))
     (ha : ∀ l ∈ (adeleClass F).adm ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)), l ∘ₗ et ∈ (adeleClass F).adm ((Fin n × Fin d) ⊕ (Fin n × Fin d)))
     (gd₁ md) (hL : IsDLevi H gd₁ md) :
     (∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
       (omd₁ gd₁⁻¹ ∘ₗ et ∘ₗ omd md) Φ ∈ schA F ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d))) ∧
-    (∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (AE F E), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+    (∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
       (omd₁ gd₁⁻¹ ∘ₗ et ∘ₗ omd md) (dd.rho B.ψ (w * (dblEmb H.ι)ᵀ + u) Φ) =
         dd₁.rho B.ψ w ((omd₁ gd₁⁻¹ ∘ₗ et ∘ₗ omd md) Φ)) ∧
     (∀ l ∈ (adeleClass F).adm ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)),
@@ -117,25 +117,25 @@ theorem twist {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Mo
   · simp only [LinearMap.comp_apply]
     rw [hs.impl md _ Φ hΦ]
     have ea : actB (cA σ) md (w * (dblEmb H.ι)ᵀ + u) =
-        (w * (gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (AE F E))ᵀ) * (dblEmb H.ι)ᵀ + u := by
+        (w * (gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ) * (dblEmb H.ι)ᵀ + u := by
       obtain ⟨z₁, z₂, rfl⟩ := hu
-      have h3 : (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E)) * dblEmb H.ι = dblEmb H.ι * gd₁.1.1 := hL.2.2
-      show (w * (dblEmb H.ι)ᵀ + _) * (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E))ᵀ = _
+      have h3 : (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * dblEmb H.ι = dblEmb H.ι * gd₁.1.1 := hL.2.2
+      show (w * (dblEmb H.ι)ᵀ + _) * (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ = _
       rw [Matrix.add_mul, Matrix.add_mul, vecMulVec_mul_transpose, vecMulVec_mul_transpose, hL.1, hL.2.1]
       congr 1
-      have h4 : (dblEmb H.ι)ᵀ * (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E))ᵀ =
-          (gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (AE F E))ᵀ * (dblEmb H.ι)ᵀ :=
+      have h4 : (dblEmb H.ι)ᵀ * (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ =
+          (gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ * (dblEmb H.ι)ᵀ :=
         (Matrix.transpose_mul _ _).symm.trans ((congrArg Matrix.transpose h3).trans (Matrix.transpose_mul _ _))
-      calc w * (dblEmb H.ι)ᵀ * (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E))ᵀ
-          = w * ((dblEmb H.ι)ᵀ * (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E))ᵀ) := Matrix.mul_assoc _ _ _
-        _ = w * ((gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (AE F E))ᵀ * (dblEmb H.ι)ᵀ) := congrArg _ h4
+      calc w * (dblEmb H.ι)ᵀ * (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ
+          = w * ((dblEmb H.ι)ᵀ * (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ) := Matrix.mul_assoc _ _ _
+        _ = w * ((gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ * (dblEmb H.ι)ᵀ) := congrArg _ h4
         _ = _ := (Matrix.mul_assoc _ _ _).symm
     rw [ea, hl _ u hu _ (hs.pres _ _ hΦ), hs₁.impl gd₁⁻¹ _ _ (hm _ (hs.pres _ _ hΦ))]
     congr 1
-    show w * (gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (AE F E))ᵀ *
-      (((gd₁⁻¹ : UG (cA σ) (dbl (incM F X₁.J))) : GL (Fin n₁ ⊕ Fin n₁) (AE F E)) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (AE F E))ᵀ = w
-    have hi : (((gd₁⁻¹ : UG (cA σ) (dbl (incM F X₁.J))) : GL (Fin n₁ ⊕ Fin n₁) (AE F E)) :
-        Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (AE F E)) * gd₁.1.1 = 1 := by
+    show w * (gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ *
+      (((gd₁⁻¹ : UG (cA σ) (dbl (incM F X₁.J))) : GL (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ = w
+    have hi : (((gd₁⁻¹ : UG (cA σ) (dbl (incM F X₁.J))) : GL (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
+        Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * gd₁.1.1 = 1 := by
       rw [Subgroup.coe_inv]; exact Units.inv_mul _
     rw [Matrix.mul_assoc, ← Matrix.transpose_mul, hi, Matrix.transpose_one, Matrix.mul_one]
   · exact hs.adm md _ (ha _ (hs₁.adm gd₁⁻¹ l hl'))
@@ -146,9 +146,9 @@ theorem uniq {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Mod
     (hP₁ : IsPair B M₁ χX χW om₁ r₁ s₁ r' s') {dd omd dd₁ omd₁} (hD : IsDblOf B.ψ M χW om dd omd)
     (hD₁ : IsDblOf B.ψ M₁ χW om₁ dd₁ omd₁)
     (S T : ((((Fin n × Fin d) ⊕ (Fin n × Fin d)) → AF F) → ℂ) →ₗ[ℂ] ((((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)) → AF F) → ℂ))
-    (hSl : ∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (AE F E), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+    (hSl : ∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
       S (dd.rho B.ψ (w * (dblEmb H.ι)ᵀ + u) Φ) = dd₁.rho B.ψ w (S Φ))
-    (hTl : ∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (AE F E), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+    (hTl : ∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
       T (dd.rho B.ψ (w * (dblEmb H.ι)ᵀ + u) Φ) = dd₁.rho B.ψ w (T Φ))
     (hSa : ∀ l ∈ (adeleClass F).adm ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)), l ∘ₗ S ∈ (adeleClass F).adm ((Fin n × Fin d) ⊕ (Fin n × Fin d)))
     (hTa : ∀ l ∈ (adeleClass F).adm ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)), l ∘ₗ T ∈ (adeleClass F).adm ((Fin n × Fin d) ⊕ (Fin n × Fin d)))
@@ -158,9 +158,9 @@ theorem uniq {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Mod
     dd omd dd₁ omd₁ hD hD₁
   have hψ := hP.base.std
   have hδ := GlobalTheory.LagrUniq.proj_zero_mem_adm (F := F) ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d))
-  have h0 : (0 : Matrix (Fin d) (Fin n ⊕ Fin n) (AE F E)) ∈ isoD d H := ⟨0, 0, by simp⟩
+  have h0 : (0 : Matrix (Fin d) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) ∈ isoD d H := ⟨0, 0, by simp⟩
   have key : ∀ R : ((((Fin n × Fin d) ⊕ (Fin n × Fin d)) → AF F) → ℂ) →ₗ[ℂ] ((((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)) → AF F) → ℂ),
-      (∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (AE F E), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+      (∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
         R (dd.rho B.ψ (w * (dblEmb H.ι)ᵀ + u) Φ) = dd₁.rho B.ψ w (R Φ)) →
       ∀ (t : AF F), ∀ w ∈ L, ∀ φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
         (LinearMap.proj 0 ∘ₗ R) (schr B.ψ (t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i)))) φ) =
@@ -173,7 +173,7 @@ theorem uniq {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Mod
     rw [e1, hR z u hu φ hφ]
     simp [Darboux.rho, schr, hz]
   have hval : ∀ R : ((((Fin n × Fin d) ⊕ (Fin n × Fin d)) → AF F) → ℂ) →ₗ[ℂ] ((((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)) → AF F) → ℂ),
-      (∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (AE F E), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+      (∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
         R (dd.rho B.ψ (w * (dblEmb H.ι)ᵀ + u) Φ) = dd₁.rho B.ψ w (R Φ)) →
       ∀ x, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
         R Φ x = R (dd.rho B.ψ (dd₁.e.symm (x, 0) * (dblEmb H.ι)ᵀ + 0) Φ) 0 := by
@@ -201,7 +201,7 @@ theorem intertwine : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
       ∀ dd omd dd₁ omd₁, IsDblOf B.ψ M χW om dd omd → IsDblOf B.ψ M₁ χW om₁ dd₁ omd₁ →
       ∀ et : ((((Fin n × Fin d) ⊕ (Fin n × Fin d)) → AF F) → ℂ) →ₗ[ℂ] ((((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)) → AF F) → ℂ),
         (∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), et Φ ∈ schA F ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d))) →
-        (∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (AE F E), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+        (∀ w : Matrix (Fin d) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ u ∈ isoD d H, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
           et (dd.rho B.ψ (w * (dblEmb H.ι)ᵀ + u) Φ) = dd₁.rho B.ψ w (et Φ)) →
         (∀ l ∈ (adeleClass F).adm ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)), l ∘ₗ et ∈ (adeleClass F).adm ((Fin n × Fin d) ⊕ (Fin n × Fin d))) →
         ∀ gd₁ md, IsDLevi H gd₁ md → ∃ c : ℂ, ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), et (omd md Φ) = c • omd₁ gd₁ (et Φ) := by

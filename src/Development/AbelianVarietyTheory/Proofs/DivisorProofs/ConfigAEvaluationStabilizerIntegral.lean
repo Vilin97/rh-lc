@@ -21,10 +21,10 @@ namespace GlobalTheory.ConeBound
 
 theorem coneIntegrand_bound : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →
-    ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (K : Subgroup (UA σ G.V.J)) (μK : Measure K) (μ : Measure (AE F E)ˣ), IsStab B K → μK.IsHaarMeasure → μ.IsHaarMeasure →
+    ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (K : Subgroup (UA σ G.V.J)) (μK : Measure K) (μ : Measure (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ), IsStab B K → μK.IsHaarMeasure → μ.IsHaarMeasure →
     ∀ X om om' om₁ om₁', IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
     ∀ Ψ ∈ schA F (Fin (b + 2) × Fin (b + 2 + a')),
-      ∃ A : (AE F E)ˣ → ℝ, Integrable A μ ∧ ∀ (k : K) (l : (AE F E)ˣ) (y : Fin b × Fin (b + a') → AF F),
+      ∃ A : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ → ℝ, Integrable A μ ∧ ∀ (k : K) (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) (y : Fin b × Fin (b + a') → AF F),
         ‖e (G.M.co.rho B.ψ (shiftA H H' l) (om (k.1, 1) Ψ)) y * (X.ν l : ℂ) * ((absE F E l : ℝ) : ℂ) ^ ((b + 2 - a') / 2)‖ ≤ A l := by
   intro hKP F E _ _ _ _ _ σ B b a' G G₁ H H' hC e he K μK μ hK hμK hμ X om om' om₁ om₁' hT hT₁ Ψ hΨ
   have hs : 2 ≤ (b + 2 - a') / 2 := by have := hT.geo.eBig; omega
@@ -36,7 +36,7 @@ theorem coneIntegrand_bound : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F]
   refine ⟨fun l => (∑ i, |C i|) * (GlobalTheory.IdeleDecay.decay F E N (∏ i, m i) l * (absE F E l : ℝ) ^ ((b + 2 - a') / 2)),
     (hN μ hμ).const_mul _, ?_⟩
   intro k l y
-  have hrho : ∀ (w : Matrix (Fin (b + 2)) (Fin (b + 2 + a')) (AE F E)) (φ : Fin n → (Fin (b + 2) × Fin (b + 2 + a') → AF F) → ℂ),
+  have hrho : ∀ (w : Matrix (Fin (b + 2)) (Fin (b + 2 + a')) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (φ : Fin n → (Fin (b + 2) × Fin (b + 2 + a') → AF F) → ℂ),
       G.M.co.rho B.ψ w (∑ i, φ i) = ∑ i, G.M.co.rho B.ψ w (φ i) := by
     intro w φ
     funext x

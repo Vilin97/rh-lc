@@ -25,9 +25,9 @@ theorem exists_dblEv0 : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
     ∀ (d₁ : ℕ) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ : ℕ) (M₁ : Model σ X W₁) (om₁ : Rep σ X W₁) (r₁ s₁ : ℕ),
       H'.IsAdapted σ B W W₁ i₀ i₁ → IsPair B M₁ χX χW om₁ r s r₁ s₁ →
       ∀ (d' : Darboux (symp (cA σ) (-1) (incM F W.J) (incM F X.J)) (Fin n × Fin d)),
-        (∀ x : Matrix (Fin n) (Fin d) (AE F E), d'.e xᵀ = M.co.e x) →
+        (∀ x : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d'.e xᵀ = M.co.e x) →
       ∀ (d₁' : Darboux (symp (cA σ) (-1) (incM F W₁.J) (incM F X.J)) (Fin n × Fin d₁)),
-        (∀ x : Matrix (Fin n) (Fin d₁) (AE F E), d₁'.e xᵀ = M₁.co.e x) →
+        (∀ x : Matrix (Fin n) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), d₁'.e xᵀ = M₁.co.e x) →
       ∀ (dd : Darboux (symp (cA σ) (-1) (incM F W.J) (dbl (incM F X.J))) ((Fin n × Fin d) ⊕ (Fin n × Fin d))),
         IsDblCoord (cA σ) (-1) (incM F W.J) (incM F X.J) d' dd →
       ∀ (dd₁ : Darboux (symp (cA σ) (-1) (incM F W₁.J) (dbl (incM F X.J))) ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁))),
@@ -35,9 +35,9 @@ theorem exists_dblEv0 : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
       ∀ e, IsEv B M M₁ 1 H'.ι (iso0 n H') e →
       ∃ ed : (((Fin n × Fin d) ⊕ (Fin n × Fin d) → AF F) → ℂ) →ₗ[ℂ] (((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁) → AF F) → ℂ),
         (∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), ed Φ ∈ schA F ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁))) ∧
-        (∀ (z : Matrix (Fin d₁) (Fin n ⊕ Fin n) (AE F E)), ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+        (∀ (z : Matrix (Fin d₁) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
           ed (dd.rho B.ψ (incM F H'.ι * z) Φ) = dd₁.rho B.ψ z (ed Φ)) ∧
-        (∀ (y : Fin n ⊕ Fin n → AE F E), ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+        (∀ (y : Fin n ⊕ Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ Φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
           ed (dd.rho B.ψ (Matrix.vecMulVec (incV F H'.x) y) Φ) = ed Φ) ∧
         (∀ l ∈ (adeleClass F).adm ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁)), l ∘ₗ ed ∈ (adeleClass F).adm ((Fin n × Fin d) ⊕ (Fin n × Fin d))) ∧
         ∃ Φ₂ ∈ schA F (Fin n × Fin d), ∃ Ψ₂ ∈ schA F (Fin n × Fin d₁), Ψ₂ ≠ 0 ∧
@@ -49,16 +49,16 @@ theorem exists_dblEv0 : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
   have hL₂ : IsLocOp (conjLin e) := GlobalTheory.DblEval.ConjLoc.isLocOp_conjLin e hL
   have hone : incM F (1 : Matrix (Fin n) (Fin n) E) = 1 := by
     rw [incM, Matrix.map_one _ (map_zero _) (map_one _)]
-  have r0 : ∀ (ψ : AddChar (AF F) ℂ) (w : Matrix (Fin d) (Fin n) (AE F E)), d'.rho ψ w = M.co.rho ψ wᵀ := fun ψ w => by
+  have r0 : ∀ (ψ : AddChar (AF F) ℂ) (w : Matrix (Fin d) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), d'.rho ψ w = M.co.rho ψ wᵀ := fun ψ w => by
     rw [Darboux.rho, Darboux.rho, ← hd', Matrix.transpose_transpose]
-  have r1 : ∀ (ψ : AddChar (AF F) ℂ) (w : Matrix (Fin d₁) (Fin n) (AE F E)), d₁'.rho ψ w = M₁.co.rho ψ wᵀ := fun ψ w => by
+  have r1 : ∀ (ψ : AddChar (AF F) ℂ) (w : Matrix (Fin d₁) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), d₁'.rho ψ w = M₁.co.rho ψ wᵀ := fun ψ w => by
     rw [Darboux.rho, Darboux.rho, ← hd₁', Matrix.transpose_transpose]
-  have Heisenberg₂ : ∀ (z : Matrix (Fin d₁) (Fin n) (AE F E)), ∀ φ ∈ schA F (Fin n × Fin d),
+  have Heisenberg₂ : ∀ (z : Matrix (Fin d₁) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ φ ∈ schA F (Fin n × Fin d),
       e (d'.rho B.ψ (incM F H'.ι * z) φ) = d₁'.rho B.ψ z (e φ) := fun z φ hφ => by
     have := he.Heisenberg₂ zᵀ φ hφ
     rw [hone, Matrix.one_mul] at this
     rw [r0, r1, Matrix.transpose_mul, this]
-  have heis₂ : ∀ (z : Matrix (Fin d₁) (Fin n) (AE F E)), ∀ φ ∈ schA F (Fin n × Fin d),
+  have heis₂ : ∀ (z : Matrix (Fin d₁) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), ∀ φ ∈ schA F (Fin n × Fin d),
       conjLin e (d'.rho B.ψ⁻¹ (incM F H'.ι * z) φ) = d₁'.rho B.ψ⁻¹ z (conjLin e φ) := fun z φ hφ => by
     funext y
     rw [conjLin_apply]
@@ -67,13 +67,13 @@ theorem exists_dblEv0 : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
       funext fun x => conj_schr_inv B.ψ hψ _ _ _
     rw [h1, Heisenberg₂ z _ (GlobalTheory.ConjSch.conj_mem_schA φ hφ)]
     exact conj_schr B.ψ hψ _ _ _
-  have inv₁ : ∀ (y : Fin n → AE F E), ∀ φ ∈ schA F (Fin n × Fin d),
+  have inv₁ : ∀ (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ φ ∈ schA F (Fin n × Fin d),
       e (d'.rho B.ψ (Matrix.vecMulVec (incV F H'.x) y) φ) = e φ := fun y φ hφ => by
     have ht : (Matrix.vecMulVec (incV F H'.x) y)ᵀ = Matrix.vecMulVec y (incV F H'.x) := by
       ext i j; simp [Matrix.vecMulVec_apply, mul_comm]
     rw [r0, ht]
     exact he.inv _ ⟨y, rfl⟩ φ hφ
-  have inv₂ : ∀ (y : Fin n → AE F E), ∀ φ ∈ schA F (Fin n × Fin d),
+  have inv₂ : ∀ (y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), ∀ φ ∈ schA F (Fin n × Fin d),
       conjLin e (d'.rho B.ψ⁻¹ (Matrix.vecMulVec (incV F H'.x) y) φ) = conjLin e φ := fun y φ hφ => by
     funext x'
     rw [conjLin_apply, conjLin_apply]

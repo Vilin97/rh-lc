@@ -109,7 +109,7 @@ theorem nearInst : ∀ I : AutInst, NearInst I := by
     hη₁0, (hKH.prod (S.finite_toSet.isCompact.prod hKqC)).image (by fun_prop), fun x => ?_⟩
   obtain ⟨γf, ⟨γE, hγE, hγEf⟩, s, hsS, k, hk, hx2⟩ := hS x.2
   set γ₀ : I.GA := (fun v => Formalism.L2.S.S7.DensRat.ratReal I γE hγE v, γf) with hγ₀def
-  have hγ₀ : γ₀ ∈ I.GFset := ⟨γE, hγE, fun _ => by simp [hγ₀def, Formalism.L2.S.S7.DensRat.ratReal, uMat], hγEf⟩
+  have hγ₀ : γ₀ ∈ I.GFset := ⟨γE, hγE, fun _ => rfl, hγEf⟩
   set y : I.Ginf := γ₀.1⁻¹ * x.1 with hy
   have hx : x = γ₀ * ((y, s * k) : I.GA) :=
     Prod.ext (by simp [hy]) (by simp [hγ₀def, hx2, mul_assoc])

@@ -170,6 +170,8 @@ theorem kills_insert_of_evalLaw : ∀ (k : Type) [Field k] [ValuativeRel k] [Top
     unfold red
     rw [← integral_const_mul]
     congr 1
+    funext y
+    simp [P, p, fillAt_apply_of_notMem β hE hI, mul_assoc]
   have hP : ∀ q, L (P q) = 0 := by
     intro q
     induction q using QuotientAddGroup.induction_on with | H a => ?_
@@ -197,6 +199,8 @@ theorem kills_insert_of_evalLaw : ∀ (k : Type) [Field k] [ValuativeRel k] [Top
           rw [← integral_const_mul, ← integral_sub (integrable_red hψ ν w β E I Φ'.2 x)
             ((integrable_red hψ ν w β E I (P a).2 x).const_mul z)]
           congr 1
+          funext y
+          change (Φ'.1 (fillAt β E I x y) - z * (P a).1 (fillAt β E I x y)) * _ = _
           ring
         rw [h4, h2, hred]
         split_ifs with hx

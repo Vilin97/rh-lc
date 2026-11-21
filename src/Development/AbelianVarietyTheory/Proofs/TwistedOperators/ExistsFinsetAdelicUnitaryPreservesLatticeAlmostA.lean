@@ -19,7 +19,7 @@ theorem eventually_integral (a : AF F) : ∀ᶠ v : Pl F in cofinite, evFin F v 
   a.2.2
 
 theorem smul_mem_latAt (X : Spc F E n) (w : Pl (F := F)) {b : AF F} (hb : evFin F w b ∈ w.adicCompletionIntegers F)
-    {z : Fin n → AE F E} (hz : z ∈ latAt X w) : b • z ∈ latAt X w := by
+    {z : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)} (hz : z ∈ latAt X w) : b • z ∈ latAt X w := by
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>
     obtain ⟨a, ha, hv, y, hy, rfl⟩ := hz
@@ -88,12 +88,12 @@ theorem eventually_incM (X : Spc F E n) (hL : X.L.IsLattice E) (N : Matrix (Fin 
   | add x y _ _ hx hy => rw [Matrix.mulVec_add]; exact add_mem hx hy
   | neg x _ hx => rw [Matrix.mulVec_neg]; exact neg_mem hx
 
-theorem eventually_single (X : Spc F E n) (hL : X.L.IsLattice E) (i j : Fin n) (t : AE F E) :
+theorem eventually_single (X : Spc F E n) (hL : X.L.IsLattice E) (i j : Fin n) (t : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     ∀ᶠ w : Pl F in cofinite, ∀ z ∈ latAt X w, Matrix.single i j t *ᵥ z ∈ latAt X w := by
   induction t using TensorProduct.induction_on with
   | zero => exact Eventually.of_forall fun w z _ => by simp [zero_mem]
   | tmul a e =>
-    have h : Matrix.single i j (a ⊗ₜ[F] e : AE F E) = a • incM F (Matrix.single i j e) := by
+    have h : Matrix.single i j (a ⊗ₜ[F] e : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = a • incM F (Matrix.single i j e) := by
       ext k l
       simp only [incM, Matrix.smul_apply, Matrix.map_apply, Matrix.single_apply]
       split_ifs
@@ -107,7 +107,7 @@ theorem eventually_single (X : Spc F E n) (hL : X.L.IsLattice E) (i j : Fin n) (
     rw [Matrix.single_add, Matrix.add_mulVec]
     exact add_mem (h1 z hz) (h2 z hz)
 
-theorem eventually_mulVec_mem (X : Spc F E n) (hL : X.L.IsLattice E) (M : Matrix (Fin n) (Fin n) (AE F E)) :
+theorem eventually_mulVec_mem (X : Spc F E n) (hL : X.L.IsLattice E) (M : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
     ∀ᶠ w : Pl F in cofinite, ∀ z ∈ latAt X w, M *ᵥ z ∈ latAt X w := by
   have h : ∀ᶠ w : Pl F in cofinite, ∀ i j, ∀ z ∈ latAt X w, Matrix.single i j (M i j) *ᵥ z ∈ latAt X w :=
     eventually_all.2 fun i => eventually_all.2 fun j => eventually_single X hL i j (M i j)

@@ -30,7 +30,7 @@ namespace GlobalTheory.ThK.AdaptEv.VacuumBlock
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem at_of_mem {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
-    {Bf : Matrix (Fin n) (Fin d) (AE F E) → Matrix (Fin n) (Fin d) (AE F E) → AF F} {κ : Type} [Fintype κ]
+    {Bf : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → AF F} {κ : Type} [Fintype κ]
     (co : Darboux Bf κ) (v : Pl (F := F)) :
     ∀ γ ∈ latAtV X W v, ∀ k, At (evFin F v) ((co.e γ).1 k) ∧ At (evFin F v) ((co.e γ).2 k) := by
   intro γ hγ

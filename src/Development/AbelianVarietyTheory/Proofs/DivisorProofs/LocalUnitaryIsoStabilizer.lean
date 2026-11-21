@@ -29,24 +29,24 @@ section Support
 
 variable {v : Pl (F := F)} {m k : Type} [Fintype m] [Fintype k]
 
-theorem at_sub {A B : Matrix m k (AE F E)} (hA : At (evFin F v) A) (hB : At (evFin F v) B) :
+theorem at_sub {A B : Matrix m k (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hA : At (evFin F v) A) (hB : At (evFin F v) B) :
     At (evFin F v) (A - B) := fun u hu => by rw [smul_sub, hA u hu, hB u hu, sub_zero]
 
-theorem at_add {A B : Matrix m k (AE F E)} (hA : At (evFin F v) A) (hB : At (evFin F v) B) :
+theorem at_add {A B : Matrix m k (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hA : At (evFin F v) A) (hB : At (evFin F v) B) :
     At (evFin F v) (A + B) := fun u hu => by rw [smul_add, hA u hu, hB u hu, add_zero]
 
-theorem at_mul_left {l : Type} [Fintype l] (C : Matrix l m (AE F E)) {A : Matrix m k (AE F E)}
+theorem at_mul_left {l : Type} [Fintype l] (C : Matrix l m (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) {A : Matrix m k (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))}
     (hA : At (evFin F v) A) : At (evFin F v) (C * A) := fun u hu => by
   rw [← Matrix.mul_smul, hA u hu, Matrix.mul_zero]
 
-theorem at_mul_right {l : Type} [Fintype l] {A : Matrix m k (AE F E)} (hA : At (evFin F v) A)
-    (C : Matrix k l (AE F E)) : At (evFin F v) (A * C) := fun u hu => by
+theorem at_mul_right {l : Type} [Fintype l] {A : Matrix m k (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hA : At (evFin F v) A)
+    (C : Matrix k l (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : At (evFin F v) (A * C) := fun u hu => by
   rw [← Matrix.smul_mul, hA u hu, Matrix.zero_mul]
 
-theorem at_transpose {A : Matrix m k (AE F E)} (hA : At (evFin F v) A) : At (evFin F v) Aᵀ := fun u hu => by
+theorem at_transpose {A : Matrix m k (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hA : At (evFin F v) A) : At (evFin F v) Aᵀ := fun u hu => by
   rw [← Matrix.transpose_smul, hA u hu, Matrix.transpose_zero]
 
-theorem at_map_cA (σ : E →ₐ[F] E) {A : Matrix m k (AE F E)} (hA : At (evFin F v) A) :
+theorem at_map_cA (σ : E →ₐ[F] E) {A : Matrix m k (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (hA : At (evFin F v) A) :
     At (evFin F v) (A.map (cA σ)) := fun u hu => by
   have : u • A.map (cA σ) = (u • A).map (cA σ) := by
     ext i j; simp [Matrix.smul_apply, map_smul]

@@ -52,13 +52,13 @@ theorem lagSetA_isotropic : ∀ {F E : Type} [Field F] [NumberField F] [Field E]
     rw [incM_gram, hH.gram]
   have hGW : (incM F H'.ι)ᵀ * incM F W.J * (incM F H'.ι).map (cA σ) = incM F W₁.J := by
     rw [incM_gram, hH'.gram]
-  have hA : ∀ y : Fin n → AE F E, Matrix.vecMulVec y (incV F H'.x) =
-      (1 : Matrix (Fin n) (Fin n) (AE F E)) * Matrix.replicateCol Unit y *
+  have hA : ∀ y : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), Matrix.vecMulVec y (incV F H'.x) =
+      (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * Matrix.replicateCol Unit y *
         (incM F (Matrix.replicateCol Unit H'.x))ᵀ := by
     intro y
     rw [Matrix.one_mul, Matrix.vecMulVec_eq Unit]
     congr 1
-  have hC : ∀ c : Fin d₁ → AE F E, Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ c) =
+  have hC : ∀ c : Fin d₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ c) =
       incM F (Matrix.replicateCol Unit H.x) * Matrix.replicateRow Unit c * (incM F H'.ι)ᵀ := by
     intro c
     ext i j

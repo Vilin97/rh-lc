@@ -22,9 +22,9 @@ theorem evInf_eInf (w : InfinitePlace F) : evInf F w (eInf F) = 1 := by
   show GlobalTheory.AutFunCompare.evW w ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (algebraMap ℝ _ 1)) = 1
   rw [map_one, map_one, map_one]
 
-theorem compInf_unitArch (w : InfinitePlace F) (l : (AE F E)ˣ) :
-    compInf F E w (unitArch F E l : AE F E) = compInf F E w l := by
-  change compInf F E w (eInf F • (l : AE F E) + (1 - eInf F) • 1) = _
+theorem compInf_unitArch (w : InfinitePlace F) (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) :
+    compInf F E w (unitArch F E l : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = compInf F E w l := by
+  change compInf F E w (eInf F • (l : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) + (1 - eInf F) • 1) = _
   rw [map_add (f := _), compInf_smul, compInf_smul, evInf_eInf, map_sub, map_one, evInf_eInf, sub_self, zero_smul, one_smul,
     add_zero]
 

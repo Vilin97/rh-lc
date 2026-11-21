@@ -80,6 +80,8 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω]
 
+local notation "𝔼" => maximalUnramifiedExtension K Ω
+
 theorem exists_valuation_eq_algebraMap {x : Ω} (hx : x ∈ 𝔼) (hx0 : x ≠ 0) :
     ∃ a : K, a ≠ 0 ∧ valuation Ω x = valuation Ω (algebraMap K Ω a) := by
   obtain ⟨L, hL, hxL⟩ := mem_maximalUnramifiedExtension_iff.mp hx
@@ -94,7 +96,8 @@ theorem exists_valuation_eq_algebraMap {x : Ω} (hx : x ∈ 𝔼) (hx0 : x ≠ 0
     hay]
   exact h1
 
-
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace Ω]
+  [IsValuativeTopology Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω] in
 @[simp]
 theorem coe_algebraMap_integer_intermediateField (E : IntermediateField K Ω) (a : 𝒪[K]) :
     (((algebraMap 𝒪[K] 𝒪[E] a : 𝒪[E]) : E) : Ω) = algebraMap K Ω (a : K) :=
@@ -220,6 +223,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω]
 
+local notation "𝔼" => maximalUnramifiedExtension K Ω
 
 omit [TopologicalSpace Ω] [IsValuativeTopology Ω] [Algebra.IsAlgebraic K Ω] in
 instance isAlgebraic_maximalUnramifiedExtension : Algebra.IsAlgebraic K 𝔼 :=
@@ -241,7 +245,7 @@ theorem exists_pow_card_pow_sub_mem_maximalIdeal (x : 𝒪[𝔼]) :
       Nat.card_eq_fintype_card, FiniteField.pow_card, sub_self]
   rw [mem_maximalIdeal_intermediateField_iff] at hz ⊢
   rw [← hxz]
-  simpa using hz
+  simpa using! hz
 
 theorem exists_isPrimitiveRoot_residue {n : ℕ} (hn : n ≠ 0) :
     ∃ ζ : ResidueField 𝒪[𝔼], IsPrimitiveRoot ζ (Nat.card 𝓀[K] ^ n - 1) := by
@@ -271,7 +275,7 @@ theorem exists_isPrimitiveRoot_residue {n : ℕ} (hn : n ≠ 0) :
     mem_maximalIdeal_intermediateField_iff]
   rw [← map_one (residue 𝒪[𝔼]), ← sub_eq_zero, ← map_sub, residue_eq_zero_iff,
     mem_maximalIdeal_intermediateField_iff] at hl
-  simpa using hl
+  simpa using! hl
 
 variable [IsGalois K Ω]
 
@@ -321,7 +325,7 @@ variable {k k' : Type*} [Field k] [Finite k] [Field k'] [Algebra k k']
 
 theorem isAlgebraic_of_pow_card_pow_eq_self {y : k'} {n : ℕ} (hn : n ≠ 0)
     (hy : y ^ (Nat.card k ^ n) = y) : IsAlgebraic k y :=
-  ⟨X ^ (Nat.card k ^ n) - X, FiniteField.X_pow_card_pow_sub_X_ne_zero k hn Finite.one_lt_card,
+  ⟨X ^ (Nat.card k ^ n) - X, X_pow_sub_X_ne_zero (Nat.one_lt_pow hn Finite.one_lt_card),
     by simp [hy]⟩
 
 
@@ -365,7 +369,7 @@ theorem isAlgClosed_of_isPrimitiveRoot [Algebra.IsAlgebraic k k']
     simp only [Polynomial.map_sub, Polynomial.map_pow, map_X, IsRoot.def, eval_sub, eval_pow,
       eval_X, hα, sub_self]
   obtain ⟨β, hβ⟩ := (splits_X_pow_card_pow_sub_X_of_isPrimitiveRoot hζ).mem_range_of_isRoot
-    (FiniteField.X_pow_card_pow_sub_X_ne_zero k' hm Finite.one_lt_card) hroot
+    (X_pow_sub_X_ne_zero (Nat.one_lt_pow hm Finite.one_lt_card)) hroot
   refine ⟨β, ?_⟩
   have h0 : aeval α p = 0 := by rw [AdjoinRoot.aeval_eq, AdjoinRoot.mk_self]
   rw [← hβ, aeval_algebraMap_apply_eq_algebraMap_eval] at h0
@@ -378,6 +382,8 @@ section Residue
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω]
+
+local notation "𝔼" => maximalUnramifiedExtension K Ω
 
 theorem exists_pow_card_pow_eq_self (y : 𝓀[𝔼]) :
     ∃ n : ℕ, n ≠ 0 ∧ y ^ (Nat.card 𝓀[K] ^ n) = y := by

@@ -14,7 +14,7 @@ namespace GlobalTheory.VanishLoc
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def liftT (v : Pl (F := F)) : Fv F v ⊗[F] E →ₗ[F] AE F E := (GlobalTheory.LatVac.liftV v).rTensor E
+def liftT (v : Pl (F := F)) : Fv F v ⊗[F] E →ₗ[F] _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) := (GlobalTheory.LatVac.liftV v).rTensor E
 
 variable {n n₁ d d₁ : ℕ}
 

@@ -255,8 +255,10 @@ theorem isOrbQuot_withDensity : ∀ (k r : ℕ) (L : LocBessel k r) (x : B.Mat k
     intro b hb
     have hc : Continuous (fun c : Mt k r => Matrix.of c) := continuous_id
     have hbc : Continuous (fun _ : Mt k r => b) := continuous_const
-    refine ⟨(continuous_pi fun i => continuous_pi fun j => (hbc.matrix_mul hc).matrix_elem i j).measurable, ?_⟩
-    rw [hμN, Measure.map_smul]
+    have hf : Measurable (fun c : Mt k r => (Matrix.of.symm (b * Matrix.of c) : Mt k r)) :=
+      (continuous_pi fun i => continuous_pi fun j => (hbc.matrix_mul hc).matrix_elem i j).measurable
+    refine ⟨hf, ?_⟩
+    rw [hμN, Measure.map_smul _ hf.aemeasurable]
     congr 1
     exact hH.left b hb
   have hinv : ∀ a ∈ C6.Rset x, MeasurePreserving (C6.actR x a) (pairMeas L) (pairMeas L) := by

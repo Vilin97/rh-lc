@@ -192,7 +192,7 @@ theorem measure_Kset_le : ∀ (I : AutInst) (μf : Measure I.Gf) [μf.IsHaarMeas
   have hS : ∀ s ∈ IntAf I.F I.E, ∃ o : 𝓞 I.E, ∃ w ∈ IntAf I.F I.E,
       s = algebraMap _ (I.E ⊗[I.F] Af I.F) o + (g : I.E ⊗[I.F] Af I.F) * w := by
     intro s hs
-    obtain ⟨x, hx, w, hw, e⟩ := Formalism.UG.P.csSpan_approx Formalism.UG.P.csGlob_intAdApprox (g : 𝓞 I.F)
+    obtain ⟨x, hx, w, hw, e⟩ := Formalism.UG.P.csSpan_approx (F := I.F) (E := I.E) Formalism.UG.P.csGlob_intAdApprox (g : 𝓞 I.F)
       (Nat.cast_ne_zero.2 (by omega)) hs
     refine ⟨⟨x, hx⟩, w, hw, ?_⟩
     rw [e, ← Formalism.UG.P.adelstab_incl_C, map_natCast, map_natCast]

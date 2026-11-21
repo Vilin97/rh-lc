@@ -81,8 +81,8 @@ theorem char_eq_one : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
   obtain ⟨hmx, hmy, hmι⟩ := hm
   have hmx' : mat m *ᵥ incV F H'.x = incV F H'.x := by rw [hmx, Units.val_one, one_smul]
   have hmy' : mat m *ᵥ incV F H'.y = incV F H'.y := by rw [hmy, inv_one, Units.val_one, map_one, one_smul]
-  have hmd' : (md.1.1 : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E)) = Matrix.fromBlocks (mat m) 0 0 1 := hmd
-  have hhd' : (hd.1.1 : Matrix (Fin d₁ ⊕ Fin d₁) (Fin d₁ ⊕ Fin d₁) (AE F E)) = Matrix.fromBlocks (mat h₁) 0 0 1 := hhd
+  have hmd' : (md.1.1 : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = Matrix.fromBlocks (mat m) 0 0 1 := hmd
+  have hhd' : (hd.1.1 : Matrix (Fin d₁ ⊕ Fin d₁) (Fin d₁ ⊕ Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = Matrix.fromBlocks (mat h₁) 0 0 1 := hhd
   have k := key hd md
     (by
       rw [hmd', hhd', Matrix.fromBlocks_multiply, Matrix.fromBlocks_multiply]

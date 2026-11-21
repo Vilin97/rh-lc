@@ -112,16 +112,16 @@ section Norm
 variable {k F : Type u} [CommRing k] [Group F] [TopologicalSpace F] [IsTopologicalGroup F]
 
 noncomputable def zeroCochain (B : Rep.{u} k F) [IsDiscreteRep B] : B →ₗ[k] (cochainsComplex B).X 0 where
-  toFun m := mkCochain B (fun _ => m) (IsLocallyConstant.const m)
+  toFun m := mkCochain (A := B) (fun _ => m) (IsLocallyConstant.const m)
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
 theorem cochainOf_zeroCochain (B : Rep.{u} k F) [IsDiscreteRep B] (m : B) (σ : Fin 0 → F) :
-    cochainOf B (zeroCochain B m) σ = m :=
+    cochainOf (A := B) (zeroCochain B m) σ = m :=
   rfl
 
 theorem cochainOf_d_zeroCochain (B : Rep.{u} k F) [IsDiscreteRep B] (m : B) (σ : Fin 1 → F) :
-    cochainOf B (((cochainsComplex B).d 0 1).hom (zeroCochain B m)) σ = B.ρ (σ 0) m - m := by
+    cochainOf (A := B) (((cochainsComplex B).d 0 1).hom (zeroCochain B m)) σ = B.ρ (σ 0) m - m := by
   rw [cochainOf_d]
   simp [inhomogeneousCochains.d_hom_apply, cochainOf_zeroCochain, sub_eq_add_neg]
 

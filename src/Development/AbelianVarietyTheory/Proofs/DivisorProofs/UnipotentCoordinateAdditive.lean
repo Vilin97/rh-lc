@@ -26,7 +26,7 @@ theorem incM_mulVec_incV {m n : ℕ} (A : Matrix (Fin m) (Fin n) E) (z : Fin n �
     simp [incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem single_eq_incV {n : ℕ} (j : Fin n) :
-    (Pi.single j (1 : AE F E) : Fin n → AE F E) = incV F (Pi.single j (1 : E)) := by
+    (Pi.single j (1 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = incV F (Pi.single j (1 : E)) := by
   funext i
   by_cases h : i = j
   · subst h; simp [incV]
@@ -37,11 +37,11 @@ theorem fA_incV (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v
   set_option synthInstance.maxHeartbeats 100000 in
     simp [fA, incV, form, incM, cA_inclR, dotProduct, Matrix.mulVec, map_sum, map_mul]
 
-theorem fA_add_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v v' w : Fin n → AE F E) :
+theorem fA_add_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v v' w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J (v + v') w = fA σ J v w + fA σ J v' w := by
   simp [fA, add_dotProduct]
 
-theorem fA_smul_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (c : AE F E) (v w : Fin n → AE F E) :
+theorem fA_smul_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (v w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     fA σ J (c • v) w = c * fA σ J v w := by
   simp [fA, smul_dotProduct]
 
@@ -52,12 +52,12 @@ theorem mat_mul' {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (u v : UA σ J) : mat 
 theorem mat_one' {n : ℕ} {J : Matrix (Fin n) (Fin n) E} : mat (1 : UA σ J) = 1 := rfl
 
 theorem mat_inv_mul' {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (u : UA σ J) : mat u⁻¹ * mat u = 1 := by
-  show ((u.1⁻¹ : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) * u.1.1 = 1
+  show ((u.1⁻¹ : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * u.1.1 = 1
   exact Units.inv_mul u.1
 
 theorem unip_spec {d d₁ : ℕ} {W : Spc F E d} {H' : Plane E d d₁} {u : UA σ W.J} (hu : u ∈ unip σ W H') :
     mat u *ᵥ incV F H'.x = incV F H'.x ∧
-      ∀ z, ∃ a : AE F E, mat u *ᵥ (incM F H'.ι *ᵥ z) = incM F H'.ι *ᵥ z + a • incV F H'.x := by
+      ∀ z, ∃ a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), mat u *ᵥ (incM F H'.ι *ᵥ z) = incM F H'.ι *ᵥ z + a • incV F H'.x := by
   induction hu using Subgroup.closure_induction with
   | mem x hx => exact hx
   | one => exact ⟨by simp [mat_one'], fun z => ⟨0, by simp [mat_one']⟩⟩

@@ -78,6 +78,6 @@ theorem isRadial_map_lev : ∀ (n n₀ a : ℕ) (j : Fin a → ℕ) (ε : Fin n 
   filter_upwards [hae] with z hz
   have e := hs_lev_sub_one n n₀ a j ε ε₀ B B₀ hF (fun i => Matrix.of (z.1 i)) (uMat z.2)
   rw [← hθe z hz] at e
-  exact congrArg (fun t => Real.sqrt t ≤ r) e.symm
+  exact Iff.of_eq (congrArg (fun t => Real.sqrt t ≤ r) e.symm)
 
 end GlobalTheory.LeviIso.MapRadial

@@ -85,7 +85,7 @@ theorem readC_injective (hCM : IsCMExt F E σ) (M : Model σ X W) : Function.Inj
   rw [← arch_e_liftI M ζ, h0, map_zero]
   refine Prod.ext ?_ ?_ <;> funext i <;> exact map_zero (InfiniteAdeleRing.ringEquiv_mixedSpace F)
 
-theorem norm_piInf_eq (hCM : IsCMExt F E σ) {w : InfinitePlace F} (τ₀ τ' : EmbOver E w) (z : AE F E) :
+theorem norm_piInf_eq (hCM : IsCMExt F E σ) {w : InfinitePlace F} (τ₀ τ' : EmbOver E w) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     ‖piInf τ' z‖ = ‖piInf τ₀ z‖ := by
   unfold piInf
   rcases infEmb_eq_or_conj hCM τ₀ τ' with e | e

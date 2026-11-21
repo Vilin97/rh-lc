@@ -34,17 +34,17 @@ theorem smul_liftI {κ : Type} (t : AF F) (ht : evI F t = 0) (x : κ → mixedEm
     exact mul_zero _
 
 theorem derivLines : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (α β κ : Type) [Fintype α]
-    [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] (ψ : AddChar (AF F) ℂ) (JA : Matrix α α (AE F E))
-    (JB : Matrix β β (AE F E)) (co : Darboux (symp (R := AF F) (cA σ) (-1) JA JB) κ), IsStd ψ → GlobalTheory.RealLift.DerEx →
+    [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] (ψ : AddChar (AF F) ℂ) (JA : Matrix α α (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
+    (JB : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (co : Darboux (symp (R := AF F) (cA σ) (-1) JA JB) κ), IsStd ψ → GlobalTheory.RealLift.DerEx →
     GlobalTheory.RealLift.ActsLaws → HasDH F κ ∧
-      (∀ u : Matrix α β (AE F E), At (evI F) u → ∀ f f₁ : SInf F κ,
+      (∀ u : Matrix α β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) u → ∀ f f₁ : SInf F κ,
         ActsD (evI F) (fun t => co.rho ψ (realAd F t • u)) f f₁ ↔ ⇑f₁ = dH (cw co u).1 (cw co u).2 ⇑f) ∧
-      ∀ a b : κ → mixedEmbedding.mixedSpace F, ∃ u : Matrix α β (AE F E), At (evI F) u ∧ cw co u = (a, b) := by
+      ∀ a b : κ → mixedEmbedding.mixedSpace F, ∃ u : Matrix α β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) u ∧ cw co u = (a, b) := by
   intro F E _ _ _ _ _ σ α β κ _ _ _ _ _ ψ JA JB co hψ hD hA
   obtain ⟨D, hDu⟩ := hD F E σ α β κ ψ JA JB co hψ
   have hDf : ∀ u, At (evI F) u → ∀ f : SInf F κ, ⇑(D u f) = dH (cw co u).1 (cw co u).2 ⇑f :=
     fun u hu f => funext fun x => (hDu u hu f).2 x
-  have real : ∀ a b : κ → mixedEmbedding.mixedSpace F, ∃ u : Matrix α β (AE F E), At (evI F) u ∧ cw co u = (a, b) := by
+  have real : ∀ a b : κ → mixedEmbedding.mixedSpace F, ∃ u : Matrix α β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), At (evI F) u ∧ cw co u = (a, b) := by
     intro a b
     refine ⟨co.e.symm (liftI a, liftI b), fun t ht => ?_, ?_⟩
     · rw [← map_smul, Prod.smul_mk, smul_liftI t ht, smul_liftI t ht, Prod.mk_zero_zero, map_zero]

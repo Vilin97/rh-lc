@@ -71,14 +71,14 @@ def schrL {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R ℂ) {κ 
   map_smul' c φ := funext fun x => by simp only [schr, Pi.smul_apply, smul_eq_mul, RingHom.id_apply]; ring
 
 def starFam {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {a b : ℕ}
-    {Bf : Matrix (Fin a) (Fin b ⊕ Fin b) (AE F E) → Matrix (Fin a) (Fin b ⊕ Fin b) (AE F E) → AF F} {κ : Type} [Fintype κ]
-    (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (u : Fin a → AE F E) (y : Fin b → AE F E) :
+    {Bf : Matrix (Fin a) (Fin b ⊕ Fin b) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Matrix (Fin a) (Fin b ⊕ Fin b) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → AF F} {κ : Type} [Fintype κ]
+    (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (u : Fin a → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (y : Fin b → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     Module.End ℂ ((κ → AF F) → ℂ) :=
   schrL ψ (dd.e (Matrix.vecMulVec u (Sum.elim y y)))
 
 theorem starFam_apply {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {a b : ℕ}
-    {Bf : Matrix (Fin a) (Fin b ⊕ Fin b) (AE F E) → Matrix (Fin a) (Fin b ⊕ Fin b) (AE F E) → AF F} {κ : Type} [Fintype κ]
-    (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (u : Fin a → AE F E) (y : Fin b → AE F E) (φ : (κ → AF F) → ℂ) :
+    {Bf : Matrix (Fin a) (Fin b ⊕ Fin b) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Matrix (Fin a) (Fin b ⊕ Fin b) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → AF F} {κ : Type} [Fintype κ]
+    (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ) (u : Fin a → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (y : Fin b → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (φ : (κ → AF F) → ℂ) :
     starFam dd ψ u y φ = dd.rho ψ (Matrix.vecMulVec u (Sum.elim y y)) φ := rfl
 
 end GlobalTheory.SiegelAvg

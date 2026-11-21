@@ -35,9 +35,9 @@ theorem uAt_inv' {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl (F := F)
   rw [e, smul_neg, ← Matrix.mul_smul, hg u hu, Matrix.mul_zero, neg_zero]
 
 theorem mul_inv_mem_unip {σ : E →ₐ[F] E} {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Plane E d d₁}
-    {t : (AE F E)ˣ} {h₁ : UA σ W₁.J} {m p : UA σ W.J} (hl : IsLevi H' t h₁ m)
+    {t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ} {h₁ : UA σ W₁.J} {m p : UA σ W.J} (hl : IsLevi H' t h₁ m)
     (hpx : mat p *ᵥ incV F H'.x = t.1 • incV F H'.x)
-    (hpι : ∀ z, ∃ a : AE F E, mat p *ᵥ (incM F H'.ι *ᵥ z) = incM F H'.ι *ᵥ (mat h₁ *ᵥ z) + a • incV F H'.x) :
+    (hpι : ∀ z, ∃ a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E), mat p *ᵥ (incM F H'.ι *ᵥ z) = incM F H'.ι *ᵥ (mat h₁ *ᵥ z) + a • incV F H'.x) :
     p * m⁻¹ ∈ unip σ W H' := by
   have hmi : mat m⁻¹ * mat m = 1 := Units.inv_mul m.1
   have hhi : mat h₁ * mat h₁⁻¹ = 1 := Units.mul_inv h₁.1
@@ -62,7 +62,7 @@ theorem mul_inv_mem_unip {σ : E →ₐ[F] E} {d d₁ : ℕ} {W : Spc F E d} {W�
 theorem levi_line_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ),
     B.IsGood σ → W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    ∀ (v : Pl (F := F)) (p : UA σ W.J), p ∈ UAt σ W (evFin F v) → ∀ t : (AE F E)ˣ, mat p *ᵥ incV F H'.x = t.1 • incV F H'.x →
+    ∀ (v : Pl (F := F)) (p : UA σ W.J), p ∈ UAt σ W (evFin F v) → ∀ t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ, mat p *ᵥ incV F H'.x = t.1 • incV F H'.x →
       ∃ u ∈ unip σ W H', u ∈ UAt σ W (evFin F v) ∧ ∃ (h₁ : UA σ W₁.J) (m : UA σ W.J),
         IsLevi H' t h₁ m ∧ m ∈ UAt σ W (evFin F v) ∧ h₁ ∈ UAt σ W₁ (evFin F v) ∧ p = u * m := by
   intro F E _ _ _ _ _ σ B d d₁ W W₁ H' i₀ i₁ r s r₁ s₁ hB hW hW₁ hA v p hp t hpx

@@ -30,14 +30,14 @@ theorem symp_freq_left (σ : E →ₐ[F] E) {n d : ℕ} (JX : Matrix (Fin n) (Fi
     (w : Fin d → E) (y x : Fin n → E) (hyx : form σ JX y x = 1) {N : ℕ} (q : Fin N → Fin d → E) (t : Fin N → ℝ) :
     symp (R := AF F) (cA σ) (-1) (incM F JX) (incM F JW) (vecMulVec (incV F y) (incV F w))
       (vecMulVec (incV F x) (∑ j, realAd F (t j) • incV F (q j))) =
-      ∑ j, realAd F (t j) * Algebra.trace (AF F) (AE F E) (inclR (F := F) (AF F) (-form σ JW w (q j))) := by
+      ∑ j, realAd F (t j) * Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (inclR (F := F) (AF F) (-form σ JW w (q j))) := by
   have hv : vecMulVec (incV F x) (∑ j, realAd F (t j) • incV F (q j)) =
       ∑ j, realAd F (t j) • vecMulVec (incV F x) (incV F (q j)) := by
     ext i l
     simp [vecMulVec_apply, Matrix.sum_apply, Finset.mul_sum, mul_smul_comm]
   unfold symp
   rw [hv]
-  change Algebra.trace (AF F) (AE F E) (-1 * hTensR σ (incM F JX) (incM F JW) _ (∑ j, _)) = _
+  change Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (-1 * hTensR σ (incM F JX) (incM F JW) _ (∑ j, _)) = _
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
   simp only [map_smul]
@@ -56,7 +56,7 @@ theorem form_swap_herm (σ : E →ₐ[F] E) (hσ : ∀ z, σ (σ z) = z) {d : �
 theorem injective_real_frequencies (σ : E →ₐ[F] E) (B : Base F E)
     {n n₁ d : ℕ} (X : Spc F E n) (X₁ : Spc F E n₁) (W : Spc F E d) (M : Model σ X W) (H : Plane E n n₁) (j₀ j₁ : ℕ)
     (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hB : B.IsGood σ) (hsig : ∃ r s r' s' : ℕ, X.IsHerm σ B r s ∧ W.IsSkew σ B r' s') :
-    ∃ (N : ℕ) (emb : (Fin N → ℝ) → (Fin d → AE F E)) (lam : (Fin d → E) → Fin N → ℝ), Function.Injective lam ∧
+    ∃ (N : ℕ) (emb : (Fin N → ℝ) → (Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (lam : (Fin d → E) → Fin N → ℝ), Function.Injective lam ∧
       ∀ (w : Fin d → E) (t : Fin N → ℝ),
         B.ψ ((M.co.e (Matrix.vecMulVec (incV F H.y) (incV F w))).1 ⬝ᵥ (M.co.e (Matrix.vecMulVec (incV F H.x) (emb t))).2 -
           (M.co.e (Matrix.vecMulVec (incV F H.x) (emb t))).1 ⬝ᵥ (M.co.e (Matrix.vecMulVec (incV F H.y) (incV F w))).2) =

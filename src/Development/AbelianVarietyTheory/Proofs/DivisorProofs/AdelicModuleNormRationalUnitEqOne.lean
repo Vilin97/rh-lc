@@ -15,8 +15,8 @@ open MeasureTheory
 namespace GlobalTheory.NormModule
 
 theorem norm_inclR (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (z : E) :
-    Algebra.norm (AF F) (inclR (F := F) (AF F) z : AE F E) = algebraMap F (AF F) (Algebra.norm F z) := by
-  have e : (inclR (F := F) (AF F) z : AE F E) = (1 : AF F) ⊗ₜ[F] z := rfl
+    Algebra.norm (AF F) (inclR (F := F) (AF F) z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = algebraMap F (AF F) (Algebra.norm F z) := by
+  have e : (inclR (F := F) (AF F) z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = (1 : AF F) ⊗ₜ[F] z := rfl
   rw [e, Algebra.norm_apply, Algebra.norm_apply, ← Algebra.baseChange_lmul, LinearMap.det_baseChange]
 
 theorem modu_rat (F : Type) [Field F] [NumberField F] (w : (AF F)ˣ) (t : F) (hw : (w : AF F) = algebraMap F (AF F) t) :

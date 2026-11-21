@@ -39,7 +39,7 @@ theorem psi_half_symp_theta_indep : ∀ (F E : Type) [Field F] [NumberField F] [
     GlobalTheory.VacCocycle.conj_hTens (cA σ) hc (fun i j => by simp only [incM, Matrix.map_apply, hi, hX.herm])
       (fun i j => by simp only [incM, Matrix.map_apply, hi, hW.skew, map_neg]) γ γ
   set t := hTens (cA σ) (incM F X.J) (incM F W.J) γ γ with htdef
-  have htr : ∀ z, Algebra.trace (AF F) (AE F E) (cA σ z) = Algebra.trace (AF F) (AE F E) z :=
+  have htr : ∀ z, Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (cA σ z) = Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) z :=
     GlobalTheory.VacCocycle.trace_conj (cA σ) hc
   set a := inclR (F := F) (AF F) (θ : E) with ha
   set a' := inclR (F := F) (AF F) (θ' : E) with ha'
@@ -50,8 +50,8 @@ theorem psi_half_symp_theta_indep : ∀ (F E : Type) [Field F] [NumberField F] [
   set z := (a - a') * t with hz
   have hcz : cA σ z = z := by
     rw [hz, map_mul, map_sub, hca, hca', ht]; ring
-  have h2 : Algebra.trace (AF F) (AE F E) z = 2 * Algebra.trace (AF F) (AE F E) (a * z) := by
-    have e1 : Algebra.trace (AF F) (AE F E) (cA σ (a * z)) = Algebra.trace (AF F) (AE F E) (a * z) := htr _
+  have h2 : Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) z = 2 * Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (a * z) := by
+    have e1 : Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (cA σ (a * z)) = Algebra.trace (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (a * z) := htr _
     rw [map_mul, hca, hcz, sub_mul, one_mul, map_sub] at e1
     linear_combination e1
   have hmul : inclR (F := F) (AF F) (((θ * (θ - θ') : 𝓞 E)) : E) = a * (a - a') := by

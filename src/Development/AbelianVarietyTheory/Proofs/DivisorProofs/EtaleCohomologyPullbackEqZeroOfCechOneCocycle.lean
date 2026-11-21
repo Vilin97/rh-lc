@@ -32,7 +32,7 @@ theorem cechDiag_aug {Y X : Scheme.{0}} (f : Y ⟶ X) : cechDiag f ≫ cechAug f
   rfl
 
 theorem isCls_zero_deg_one (R : Type) [CommRing R] (F : Shv R) (E : Spc) :
-    IsCls R (E := E) (n := 1) (0 : (free R).obj (E.obj (op ⦋1⦌)) ⟶ F)
+    IsCls (R := R) (E := E) (n := 1) (0 : (free R).obj (E.obj (op ⦋1⦌)) ⟶ F)
       (0 : H R E F ((1 : ℕ) : ℤ)) := by
   refine ⟨0, ?_, ?_⟩ <;> simp
 
@@ -42,9 +42,10 @@ theorem cechDiag_δ {Y X : Scheme.{0}} (f : Y ⟶ X) (i : Fin 3) :
   simp [sch, disc]
 
 theorem pull_sch_eq_zero (R : Type) [CommRing R] (F : Shv R) {Y X : Scheme.{0}} (f : Y ⟶ X)
-    (s : (free R).obj ((cech f).obj (op ⦋1⦌)) ⟶ F) (hs : cobd R (E := cech f) (n := 1) s = 0)
+    (s : (free R).obj ((cech f).obj (op ⦋1⦌)) ⟶ F)
+    (hs : cobd (R := R) (E := cech f) (n := 1) s = 0)
     (x : H R (sch.obj X) F ((1 : ℕ) : ℤ))
-    (hx : IsCls R (E := cech f) (n := 1) s (pull R (cechAug f) F ((1 : ℕ) : ℤ) x)) :
+    (hx : IsCls (R := R) (E := cech f) (n := 1) s (pull R (cechAug f) F ((1 : ℕ) : ℤ) x)) :
     pull R (sch.map f) F ((1 : ℕ) : ℤ) x = 0 := by
   have hc := congrArg (fun t => (free R).map ((cechDiag f).app (op ⦋2⦌)) ≫ t) hs
   simp only [cobd, Preadditive.comp_sum, Preadditive.comp_zsmul, ← Functor.map_comp_assoc, cechDiag_δ,

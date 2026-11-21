@@ -23,7 +23,7 @@ noncomputable section
 namespace GlobalTheory.XTermConv
 
 theorem conv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
-    (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → ∀ (K : Subgroup (UA σ G.V.J)) (μK : Measure K) (μ : Measure (AE F E)ˣ), IsStab B K → μK.IsHaarMeasure → μ.IsHaarMeasure → ∀ m : (AE F E)ˣ → UA σ G₁.V.J → UA σ G.V.J, (∀ l g₀, IsLevi H l g₀ (m l g₀)) → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
+    (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → ∀ (K : Subgroup (UA σ G.V.J)) (μK : Measure K) (μ : Measure (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ), IsStab B K → μK.IsHaarMeasure → μ.IsHaarMeasure → ∀ m : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ → UA σ G₁.V.J → UA σ G.V.J, (∀ l g₀, IsLevi H l g₀ (m l g₀)) → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W), IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →
     ∀ Φ ∈ PolData B G.M, ∀ h,
       ∫⁻ k, ∫⁻ l, ∫⁻ g₀ in G₁.M.dom, ‖thetaSum F (e (G.M.co.rho B.ψ (shiftA H H' 1) (om (m l g₀ * k.1, h) Φ)))‖ₑ *
         ENNReal.ofReal ((absE F E l : ℝ) ^ (1 - ((b + 2 : ℕ) : ℝ))) ∂G₁.M.μ ∂μ ∂μK < ⊤ := by
@@ -48,9 +48,9 @@ theorem conv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F
   obtain ⟨N, hN'⟩ := GlobalTheory.T.lintegral_idele_majorant_finite F E μ hμ s hs U hU
   obtain ⟨C, hCt, hCb⟩ := hN N
 
-  have key : ∀ (k : K) (l : (AE F E)ˣ), ∫⁻ g₀ in G₁.M.dom, ‖thetaSum F (e (G.M.co.rho B.ψ (shiftA H H' 1) (om (m l g₀ * k.1, h) Φ)))‖ₑ *
+  have key : ∀ (k : K) (l : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ), ∫⁻ g₀ in G₁.M.dom, ‖thetaSum F (e (G.M.co.rho B.ψ (shiftA H H' 1) (om (m l g₀ * k.1, h) Φ)))‖ₑ *
         ENNReal.ofReal ((absE F E l : ℝ) ^ (1 - ((b + 2 : ℕ) : ℝ))) ∂G₁.M.μ ≤
-      C * (GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (AE F E)ˣ) : AE F E) * ENNReal.ofReal ((absE F E l : ℝ) ^ (-s))) := by
+      C * (GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * ENNReal.ofReal ((absE F E l : ℝ) ^ (-s))) := by
     intro k l
     have hA : 0 < (absE F E l : ℝ) := by
       have h1 : absE F E l * absE F E l⁻¹ = 1 := by rw [← map_mul, mul_inv_cancel, map_one]
@@ -73,15 +73,15 @@ theorem conv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F
           ENNReal.ofReal ((absE F E l : ℝ) ^ (-s)) ∂G₁.M.μ := lintegral_congr fun g₀ => hpt g₀
       _ = (∫⁻ g₀ in G₁.M.dom, ‖thetaSum F (om₁ (g₀, 1) (e (G.M.co.rho B.ψ (shiftA H H' l⁻¹) (om (k.1, h) Φ))))‖ₑ ∂G₁.M.μ) *
           ENNReal.ofReal ((absE F E l : ℝ) ^ (-s)) := lintegral_mul_const' _ _ ENNReal.ofReal_ne_top
-      _ ≤ (C * GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (AE F E)ˣ) : AE F E)) * ENNReal.ofReal ((absE F E l : ℝ) ^ (-s)) := by
+      _ ≤ (C * GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * ENNReal.ofReal ((absE F E l : ℝ) ^ (-s)) := by
           gcongr; exact hCb k.1 k.2 l⁻¹
       _ = _ := mul_assoc _ _ _
-  calc _ ≤ ∫⁻ k : K, ∫⁻ l, C * (GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (AE F E)ˣ) : AE F E) *
+  calc _ ≤ ∫⁻ k : K, ∫⁻ l, C * (GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) *
           ENNReal.ofReal ((absE F E l : ℝ) ^ (-s))) ∂μ ∂μK := lintegral_mono fun k => lintegral_mono fun l => key k l
-    _ = ∫⁻ k : K, C * ∫⁻ l, GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (AE F E)ˣ) : AE F E) *
+    _ = ∫⁻ k : K, C * ∫⁻ l, GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) *
           ENNReal.ofReal ((absE F E l : ℝ) ^ (-s)) ∂μ ∂μK := by
         congr 1; funext k; exact lintegral_const_mul' C _ hCt
-    _ = (C * ∫⁻ l, GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (AE F E)ˣ) : AE F E) *
+    _ = (C * ∫⁻ l, GlobalTheory.XTermMaj.maj F E N U ((l⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) *
           ENNReal.ofReal ((absE F E l : ℝ) ^ (-s)) ∂μ) * μK Set.univ := lintegral_const _
     _ < ⊤ := ENNReal.mul_lt_top (ENNReal.mul_lt_top hCt.lt_top hN') hμKfin
 
