@@ -57,14 +57,15 @@ variable {R : Type} [CommRing R] {C : Type u} [Category.{v} C] {F : C ⥤ Module
 theorem cls_zero_of_null {Q : ObjectProperty C} : ∀ (n : ℕ) (z : Cn F n) (hz : d F n z = 0),
     RelNull F Q n z → (cx F).cls z hz = 0 := by
   intro n z hz h
-  refine ((CrystallineSemistableComparison.P.cls_surj (cx F) n).2.1 z hz).2 ?_
+  apply ((CrystallineSemistableComparison.P.cls_surj (cx F) n).2.1 z hz).2
   cases n with
   | zero =>
-    exact (Cx.mem_B_zero (C := cx F)).2 h
+    rw [show z = 0 from h]
+    exact zero_mem _
   | succ n =>
-    change ∃ b ∈ relS F Q n, d F n b = z at h
-    rcases h with ⟨b, _, hb⟩
-    exact (Cx.mem_B_succ (C := cx F) (n := n) (x := z)).2 ⟨b, hb⟩
+    change (∃ b ∈ relS F Q n, d F n b = z) at h
+    obtain ⟨b, _, hb⟩ := h
+    exact (Cx.mem_B_succ (C := cx F)).2 ⟨b, hb⟩
 
 theorem null_succ {Q : ObjectProperty C} {M K : ℕ} (e : M = K + 1) (x : Cn F M) (x' : Cn F (K + 1))
     (hx : HEq x x') (h : RelNull F Q M x) : ∃ b ∈ relS F Q K, d F K b = x' := by

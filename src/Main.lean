@@ -14,6 +14,4 @@ theorem LFunction_ne_zero_of_half_lt_re : DirichletLNonvanishingRightOfHalf := a
 theorem LFunction_eq_zero_re : DirichletLZerosOnLine :=
   Claim.strip LFunction_ne_zero_of_half_lt_re
 
-theorem LFunction_eq_zero_re_of_isPrimitive : PrimitiveDirichletLZerosOnLine := by
-  intro N _ χ _ s hs₀ hs₁ hz
-  exact LFunction_eq_zero_re N χ s hs₀ hs₁ hz
+theorem LFunction_eq_zero_re_of_isPrimitive : PrimitiveDirichletLZerosOnLine := critAll

@@ -32,7 +32,7 @@ theorem massBasic_mass_eq (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (Rin
   rw [dite_eq_left hs]
 
 theorem massBasic_self_mem_genus (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (RingOfIntegers K) V)
-    (hL : Submodule.IsLattice K L) : L ∈ genus h L := by
+    (hL : Submodule.IsFullLattice K L) : L ∈ genus h L := by
   rw [genus, Set.mem_setOf_eq]
   refine ⟨hL, ?_⟩
   intro p _
@@ -44,7 +44,7 @@ end MassBasicAux
 
 theorem massBasic : MassBasic := by
   intro K V _ _ _ _ _ _ _ _ h hh hpos L hL
-  obtain ⟨hex, hwt, -⟩ := Formalism.ThetaLiftIndependence.classRepsDefinite K V h hh hpos L hL
+  obtain ⟨hex, hwt, -⟩ := Formalism.ThetaLiftIndependence.classRepsDefinite K V h hh hpos L hL.toIsLattice
   refine ⟨hex, fun s hs => ?_, ?_⟩
   · rw [massBasic_mass_eq h L hex]
     have e := Formalism.ThetaLiftIndependence.latLiftIndep K V h L (fun _ => 1) (fun _ => 1)

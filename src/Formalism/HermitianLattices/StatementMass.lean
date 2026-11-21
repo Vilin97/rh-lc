@@ -62,7 +62,7 @@ def MassBasic : Prop :=
     [FiniteDimensional K V] [Module (RingOfIntegers K) V] [IsScalarTower (RingOfIntegers K) K V]
     (h : V →ₗ⋆[K] V →ₗ[K] K), h.IsSymm →
     (∀ x : V, x ≠ 0 → 0 < Algebra.trace ℚ K (h x x)) →
-    ∀ L : Submodule (RingOfIntegers K) V, Submodule.IsLattice K L →
+    ∀ L : Submodule (RingOfIntegers K) V, Submodule.IsFullLattice K L →
       (∃ s, Formalism.ThetaLiftIndependence.IsClassReps h L s) ∧
       (∀ s, Formalism.ThetaLiftIndependence.IsClassReps h L s →
         mass h L = ∑ M ∈ s, ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ)⁻¹) ∧

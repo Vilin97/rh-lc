@@ -1,5 +1,6 @@
 module
 
+public import Formalism.LocalToGlobal.Columns.HeckeSpCount
 public import Mathlib
 public import Formalism.LocalToGlobal.Columns.RowFormsLemmas
 public import Formalism.LocalToGlobal.Columns.CoefficientsModP
@@ -246,10 +247,10 @@ theorem mtVal_ratP (hX : X.Ok) (j : ℕ) (SG : Finset (HeightOneSpectrum (𝓞 X
   roundPk_ratP _ _ hX
 
 theorem rowVal_dualP (hX : X.Ok) (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : (rowVal W SG).DualP :=
-  squarePk_dualP _ _ hX (fun d => d.full_lattice) fun d => d.2.uni
+  squarePk_dualP _ _ hX (fun d => (let d := d; _root_.Formalism.L2.Col.hcnt_isFullLattice_of_unimodular d.2.lat d.2.uni)) fun d => d.2.uni
 
 theorem mtVal_dualP (hX : X.Ok) (j : ℕ) (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : (mtVal W j SG).DualP :=
-  roundPk_dualP _ _ hX (fun d => d.full_lattice) fun d => d.2.uni
+  roundPk_dualP _ _ hX (fun d => (let d := d; _root_.Formalism.L2.Col.hcnt_isFullLattice_of_unimodular d.2.lat d.2.uni)) fun d => d.2.uni
 
 theorem mtilde_good (hX : X.Ok) (P : LevFam X.E X.K R.r Pr.vGs) : (mtildeGSD W Ch sel mu P).Good 1 := by
   have hEqv : (rowVal W (rowSG Pr sel mu)).Eqv :=

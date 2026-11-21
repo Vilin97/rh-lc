@@ -97,7 +97,12 @@ theorem GlobalTheory.neg_rank_mul_log_le_lcv : ∀ (K : Type) [Field K] [NumberF
     exact this
   have hfg : L'.FG :=
     Submodule.fg_of_fg_map_injective (ψ.restrictScalars (𝓞 K)) hψ (by rw [hmap]; exact hL)
-  have hlat : Submodule.IsLattice K L' := Submodule.IsLattice.of_fg K hfg
+  have hlat : Submodule.IsFullLattice K L' := by
+    refine { toIsLattice := Submodule.IsLattice.of_fg K hfg, span_eq_top := ?_ }
+    apply LinearMap.map_injective (LinearMap.ker_eq_bot.mpr hψ)
+    have himage : ψ '' (L' : Set (Fin j → K)) = (L : Set (Fin d → K)) :=
+      congrArg (fun M : Submodule (𝓞 K) (Fin d → K) => (M : Set (Fin d → K))) hmap
+    rw [← Submodule.span_image, himage, Submodule.map_top, hrange]
   have hnorm : ∀ v x, Formalism.HermitianLatticesTheory.normAt (Pi.basisFun K (Fin d)) X v (ψ x) =
       Formalism.HermitianLatticesTheory.normAt (Pi.basisFun K (Fin j)) X' v x := by
     intro v x
@@ -115,7 +120,7 @@ theorem GlobalTheory.neg_rank_mul_log_le_lcv : ∀ (K : Type) [Field K] [NumberF
   have hlcv : lcv X L = lcv X' L' := by
     unfold lcv; rw [hht]
   rw [hlcv]
-  refine GlobalTheory.TestLat.neg_log_le_lcv_of_integral_form K j X' hX' (Matrix.of fun a c => star (e a) ⬝ᵥ H *ᵥ (e c)) s hs hne ?_ L' hlat ?_
+  refine GlobalTheory.TestLat.neg_log_le_lcv_of_integral_form K j X' hX' (Matrix.of fun a c => star (e a) ⬝ᵥ H *ᵥ (e c)) s hs hne ?_ L' (by first | exact hlat | exact hlat.toIsLattice) ?_
   · have h := GlobalTheory.GramMean.prod_norm_gramR_le K d j H X hH e
     simp only [gram_single, hX'g]
     exact h

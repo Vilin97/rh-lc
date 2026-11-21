@@ -47,11 +47,12 @@ theorem nondeg (h : V →ₗ⋆[K] V →ₗ[K] K) (hp : PD h) : h.Nondegenerate 
 
 omit [StarRing K] in
 theorem span_isLattice (h1 : Module.finrank K V = 1) {x : V} (hx : x ≠ 0) :
-    Submodule.IsFullLattice K (Submodule.span (𝓞 K) {x}) := {
-  toIsLattice := Submodule.IsLattice.of_fg K (Submodule.fg_span_singleton x)
-  span_eq_top := by
-    rw [Submodule.span_span_of_tower]
-    exact (finrank_eq_one_iff_of_ne_zero x hx).mp h1 }
+    Submodule.IsFullLattice K (Submodule.span (𝓞 K) {x}) := by
+  have : Submodule.IsLattice K (Submodule.span (𝓞 K) {x}) :=
+    Submodule.IsLattice.of_fg K (Submodule.fg_span_singleton x)
+  refine { span_eq_top := ?_ }
+  rw [Submodule.span_span_of_tower]
+  exact (finrank_eq_one_iff_of_ne_zero x hx).mp h1
 
 private theorem apply_self_ne_zero_and_span_of_finrank_one [FiniteDimensional K V] (h : V →ₗ⋆[K] V →ₗ[K] K)
     (hn : h.Nondegenerate) (h1 : Module.finrank K V = 1) {m : V} (hm : m ≠ 0) :

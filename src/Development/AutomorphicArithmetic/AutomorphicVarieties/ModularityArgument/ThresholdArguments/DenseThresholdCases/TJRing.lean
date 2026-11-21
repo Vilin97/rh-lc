@@ -185,9 +185,13 @@ theorem UpperTheory.V.Hi.ring_props_of_is_j_unitary_hecke_data :
   obtain ⟨hdom, hden⟩ := _root_.UpperTheory.V.Hi.isDomain_and_denseWt_of_isTheta hP.litN l L Ω s n hn V Q c R.m R.τ₀ r Λ R.θ R.theta
   obtain ⟨-, hfin, htf, -⟩ := hiAlg L Ω l n c (hset Q R.τ₀) hAx Λ.Λ R.θ R.isWt R.a K hne
   let lam : Wt L l n := fun _ => ⟨0, fun _ _ _ => le_rfl⟩
-  have hout := _root_.UpperTheory.V.Z.Ord.core_hecke_of_automorphic_hecke_dense_weight hP.litN L Ω l n c _ hAx Λ.Λ R.θ R.isWt ι _ (_root_.UpperTheory.V.Hi.automorphicHeckeSet_unitaryPointProperties_of_typeFor hP l L Ω s n hn V Q c r ι _ R.τ₀ R.type) lam trivial
+  have hAut := _root_.UpperTheory.V.Hi.automorphicHeckeSet_unitaryPointProperties_of_typeFor
+    hP l L Ω s n hn V Q c r ι R.m R.τ₀ R.type
+  have hLam : lam ∈ (hset Q R.τ₀).admitted := Set.mem_univ _
+  have hout := _root_.UpperTheory.V.Z.Ord.core_hecke_of_automorphic_hecke_dense_weight
+    hP.litN L Ω l n c (hset Q R.τ₀) hAx Λ.Λ R.θ R.isWt ι _ hAut lam hLam
     (hden lam) R.a K _ _ hmap
-  refine jr_surj B Λ f hsurj hlam (Qbar l) _ (hout.sep lam trivial (hden lam)) (fun x hx => ?_) (jr_isTeich c r) hfin (htf hdom)
-  obtain ⟨ρ, hc, -, hPU, hD, hfl⟩ := hout.pt lam trivial x hx.2.1
+  refine jr_surj B Λ f hsurj hlam (Qbar l) _ (hout.sep lam hLam (hden lam)) (fun x hx => ?_) (jr_isTeich c r) hfin (htf hdom)
+  obtain ⟨ρ, hc, -, hPU, hD, hfl⟩ := hout.pt lam hLam x hx.2.1
   exact ⟨ρ, hD, hPU.form, fun v => (hfl hx v).1, hPU.type, fun h h' => point_rep_unramified_at_auxiliary_place hn B h _ _ hc h'⟩
 end

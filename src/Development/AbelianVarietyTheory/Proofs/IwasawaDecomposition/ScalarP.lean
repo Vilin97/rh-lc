@@ -113,7 +113,13 @@ def exP (hu : GlobalTheory.UnivChar.IsUnivChar (DN x N₁).nexp) : ExportTie (ys
   univ := (hu)
 
 def expP : NExpTied (DN x (nP p)) :=
-  (keepExp (DN x N₁) p.Dat p.th p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth (PreTie.hU p) X)
+  let E := keepExp (DN x N₁) p.Dat p.th p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth p.hU X
+  -- Rebuild the dependent records at the stage produced by `nP`.
+  { E with
+    acgWt := E.acgWt
+    modWt := E.modWt
+    fdWt := E.fdWt
+    mtV := fun i j b k Q ψ hj hj' hA => { E.mtV i j b k Q ψ hj hj' hA with } }
 
 def pvP (PV : ∀ j : Fin (DN x (nP p)).R.m, principalLevelFrame.RowPsi (Vc (DN x (nP p)) j) (DN x (nP p)).R.nV) (j : Fin (DN x N₁).R.m) :
     principalLevelFrame.RowPsi (Vc (DN x N₁) j) (DN x N₁).R.nV :=
@@ -129,7 +135,12 @@ def serP (hu : GlobalTheory.UnivChar.IsUnivChar (DN x N₁).nexp) (ho : NoOff (D
   ex := exP p hu
   bad := (p.bad)
   ch := (p.ch)
-  join := (p.join (pvP p PV) fun j ↦ hPV j)
+  join := by
+    intro i j b k Q ψ hA hOK
+    obtain ⟨ω, hω, hval⟩ := p.join (pvP p PV) (fun j => hPV j) i j b k Q ψ hA hOK
+    refine ⟨ω, hω, ?_⟩
+    intro f' g
+    exact hval f' g
   sup := (hs)
   off := (ho)
   lam := Z

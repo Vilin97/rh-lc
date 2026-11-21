@@ -64,7 +64,9 @@ theorem UpperTheory.V.Z.J.D.modularity_n_of_num_j_printed_mult_comp :
   have hA := _root_.UpperTheory.V.Pa.has_automorphy_of_statement (locP_of P.litN) l L Ω s V c.O 3 r B J hS (_root_.UpperTheory.V.Hi.level_of_is_j_unitary_hecke_data P l L Ω s 3 hn V _ c r ι B Λ R K hS J hJ)
   obtain ⟨h1, h3⟩ := Pa.pFromAut (cohP_of P.litN) l L Ω s V c.O 3 r B J hn hS (W.locCFT P.litN.aut.art (cohP_of P.litN) l L Ω s)
     ((W.muL l L Ω s V).1 hμ) hA
-  exact ⟨J, ⟨⟨_root_.UpperTheory.V.Hi.ring_props_of_is_j_unitary_hecke_data P l L Ω s 3 hn V _ c r ι B Λ R K hS J hJ, hD,
+  have hRing : B.RingProps Λ J :=
+    _root_.UpperTheory.V.Hi.ring_props_of_is_j_unitary_hecke_data P l L Ω s 3 hn V _ c r ι B Λ R K hS J hJ
+  exact ⟨J, ⟨⟨hRing, hD,
     _root_.UpperTheory.V.Hi.hecke_ideal_point_properties P l L Ω s 3 hn V _ c r ι B Λ R K hS J hJ, hE.1, hE.2, _root_.UpperTheory.V.Z.Desc.W.twistOk_of_isJ P l L Ω s 3 hn V _ c r ι B Λ R K hS J hJ⟩, h1, h3⟩,
     hN P hM hC l L Ω s 3 hn V hS (by norm_num) _ c r ι B Λ R K J hv
       (_root_.UpperTheory.V.Hi.isDomain_and_denseWt_of_isTheta P.litN l L Ω s 3 hn V _ c R.m R.τ₀ r Λ R.θ R.theta).1 hJ (rad_of_dense B J hD)⟩

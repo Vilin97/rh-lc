@@ -1,5 +1,6 @@
 module
 
+public import Formalism.LocalToGlobal.Columns.HeckeSpCount
 public import Formalism.LocalToGlobal.Columns.TwQRec
 public import Formalism.LocalToGlobal.Columns.MemLocPOfSmul
 public import Formalism.LocalToGlobal.Columns.DecoFin
@@ -24,7 +25,7 @@ variable {hc : Formalism.BasicNotions.CMData F E} {n : ℕ} [NeZero n] {ST SG Q 
 theorem qdf_frExists : FrExists (n := n) ST SG Q := by
   intro d P
   first
-  | exact DetChrL.frame_exists P.1 (DecoSet.full_lattice d)
+  | exact DetChrL.frame_exists P.1 ((let d := d; _root_.Formalism.L2.Col.hcnt_isFullLattice_of_unimodular d.2.lat d.2.uni))
   | exact DetChrL.frame_exists P.1 d.2.lat
 
 abbrev qPi (q : QLoc hc n Q Θ) (P : Q) : E ⊗[F] Formalism.L2.Herm.Af F →+* (qv F P.1).adicCompletion F :=

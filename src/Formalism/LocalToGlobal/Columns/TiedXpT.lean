@@ -81,9 +81,7 @@ theorem xp_crd_frame (i : ℕ) (hi : i ≤ d.R.m) (b : Fin (d.sp.X i).rank) :
     d.crd i hi ((d.sp.X i).frame b) = Pi.single (finCongr (d.sp.X_rank i hi) b) (1 : d.host.E) := by
   funext j
   show (d.sp.X i).frame.equivFun ((d.sp.X i).frame b) ((finCongr (d.sp.X_rank i hi)).symm j) = _
-  rw [Basis.equivFun_self, Pi.single_apply]
-  congr 1
-  exact propext ⟨fun h => by rw [h, Equiv.apply_symm_apply], fun h => by rw [h, Equiv.symm_apply_apply]⟩
+  simp only [Basis.equivFun_self, Pi.single_apply, Equiv.eq_symm_apply, eq_comm]
 
 def ColDat.z0 (d : ColDat) (u : d.what₂.Word) : Fin (d.R.N d.R.m) → d.host.E :=
   Pi.single (lastIdx (d.R.N d.R.m)) (d.piT u : d.host.E)
@@ -157,9 +155,7 @@ theorem coordinates_frame_eq_single (b : Fin d.sp.X'.rank) :
     CF.crdP (d.colRec a) (d.sp.X'.frame b) = Pi.single (finCongr (CF.rankP (d.colRec a)) b) (1 : d.host.E) := by
   funext j
   show d.sp.X'.frame.equivFun (d.sp.X'.frame b) ((finCongr (CF.rankP (d.colRec a))).symm j) = _
-  rw [Basis.equivFun_self, Pi.single_apply]
-  congr 1
-  exact propext ⟨fun h => by rw [h, Equiv.apply_symm_apply], fun h => by rw [h, Equiv.symm_apply_apply]⟩
+  simp only [Basis.equivFun_self, Pi.single_apply, Equiv.eq_symm_apply, eq_comm]
 
 theorem iXc_eq (hS : SpStd d.toColBase) : CF.iXc (d.colRec a) = padL d.host.E (d.R.N d.R.m - 1) (d.R.N d.R.m) := by
   apply (Pi.basisFun d.host.E (Fin (d.R.N d.R.m - 1))).ext

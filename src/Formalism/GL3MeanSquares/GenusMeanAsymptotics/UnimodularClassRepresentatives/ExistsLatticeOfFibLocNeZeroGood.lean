@@ -142,10 +142,11 @@ theorem exists_unimod_through (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodul
   classical
   letI : P.IsPrime := hP
   have hfull : Submodule.IsFullLattice K L := by
-    refine ⟨hL, ?_⟩
+    letI : Submodule.IsLattice K L := hL
+    refine ⟨?_⟩
     by_contra hspan
     obtain ⟨φ, hφ₀, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
-    let b := FiniteDimensional.finBasis K V
+    let b := Module.finBasis K V
     obtain ⟨bs, hbs⟩ := Formalism.HermitianLatticesTheory.dualLattice_dualBasis h (nondegenerate hd) b
     let μ := ∑ j, star (φ (b j)) • bs j
     have hμ : ∀ v, h μ v = φ v := by

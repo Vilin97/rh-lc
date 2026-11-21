@@ -347,7 +347,7 @@ theorem series_theta_twist_exists : Nonempty (SerAt (_root_.GlobalTheory.HeightC
     (TC.cf w.I w.l (oTw x (thTw (Dof x) th)).Z) l.Pq) := by
   obtain ⟨Z, h1, h2, h3, h4, h5⟩ := lam_thTw th ⟨l.b.ser.lam, l.b.ser.lam_ok, l.b.ser.lam_teich, l.b.ser.lam_C, l.b.ser.lam_q,
     l.b.ser.lam_tie⟩
-  exact ⟨⟨_root_.GlobalTheory.HeightCounting.Up.SerCp.thetaTwistExportTie x l th, (by with_unfolding_all exact (l.b.ser.bad :)), (by with_unfolding_all exact (l.b.ser.ch :)), (by with_unfolding_all exact (l.b.ser.join :)), (by with_unfolding_all exact (l.b.ser.sup :)), (by with_unfolding_all exact (l.b.ser.off :)), (by with_unfolding_all exact (Z :)), (by with_unfolding_all exact (h1 :)), (by with_unfolding_all exact (h2 :)),
+  exact ⟨⟨_root_.GlobalTheory.HeightCounting.Up.SerCp.thetaTwistExportTie x l th, (by with_unfolding_all exact (l.b.ser.bad :)), (by with_unfolding_all exact (l.b.ser.ch :)), (by with_unfolding_all exact (l.b.ser.join :)), (by with_unfolding_all exact (l.b.ser.sup :)), (by with_unfolding_all exact (l.b.ser.off :)), (cast (congrArg _root_.GlobalTheory.LamTie.LamDat (dof_oTw x (thTw (Dof x) th)).symm) Z), (by with_unfolding_all exact (h1 :)), (by with_unfolding_all exact (h2 :)),
     (by with_unfolding_all exact (h3 :)), (by with_unfolding_all exact (h4 :)), (by with_unfolding_all exact (h5 :))⟩⟩
 end L4
 end GlobalTheory.HeightCounting.Up.SerCp

@@ -84,7 +84,7 @@ theorem finite_stab_proj (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
   have e : g • proj h p = (emb S (S.cut (Formalism.HermitianLatticesTheory.gmap g.1 p.1)), S.x₀) := by
     rw [← proj_smul, hg1]
     exact (pair_mem_of_fibG S hg2).2
-  have hlat : Submodule.IsLattice K (S.cut (Formalism.HermitianLatticesTheory.gmap g.1 p.1)) := isLattice_cut S hg2.1.1
+  have hlat : Submodule.IsFullLattice K (S.cut (Formalism.HermitianLatticesTheory.gmap g.1 p.1)) := isFullLattice_cut S hg2.1.1
   have f1 : Finite (Formalism.ThetaLiftIndependence.autL h' (S.cut (Formalism.HermitianLatticesTheory.gmap g.1 p.1))) :=
     (Formalism.HermitianLatticesTheory.autFinite K V' h' (S.isSymm hs) (trace_pos (S.isTotPosDef hd)) _ hlat).to_subtype
   have f2 : Finite (MulAction.stabilizer (Formalism.HermitianLatticesTheory.isom h) (g • proj h p)) := by

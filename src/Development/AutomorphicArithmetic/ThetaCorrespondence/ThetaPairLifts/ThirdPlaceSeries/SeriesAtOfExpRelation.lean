@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ClassSumEq
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistDataAgreeAcrossCoefficientsLocalized
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SetupLGood
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
@@ -64,19 +65,22 @@ open GlobalTheory.SeriesTie in
 private theorem sum_eq_pz (ρ : Setup (Dof x).ntw) :
     (setupL L ρ).sum = fun i j b k Q ψ => (by exact ρ.sum i j b k Q ψ) := by
   funext i j b k Q ψ
-  delta GlobalTheory.SeriesTie.Setup.sum GlobalTheory.ExportSeries.Base.classSum GlobalTheory.ExportSeries.Base.vecFlat
-  with_unfolding_all
-    rewrite [setupVecAtL_eq L ρ i j b]
-    rfl
+  let t := ρ.tw (kc% i) b k (kc% Q) (kc% ψ)
+  have h := SerCopy.classSum_eq (a := x.o.Z) (oL x L).Z (ρ.B (kc% i) (kc% j) b)
+    (ρ.om (kc% i) (kc% j) b t.chi) t (ρ.rep (kc% i) (kc% j) b t)
+  with_unfolding_all exact (h :)
 open GlobalTheory.SeriesTie in
 private theorem xi_eq_pz (ρ : Setup (Dof x).ntw) (i : (DL x L).ntw.Tw) (j : Fin (DL x L).R.m) (b : Bool) :
     (setupL L ρ).xi i j b (DL x L).nexp =
       fun Q M h P a => kc% (ρ.xi (kc% i) (kc% j) b (Dof x).nexp (kc% Q) M (kc% h) (kc% P) (kc% a)) := by
-  funext Q M h P a
-  delta GlobalTheory.SeriesTie.Setup.xi GlobalTheory.ExportSeries.Base.xiCoef GlobalTheory.ExportSeries.Base.xi GlobalTheory.ExportSeries.Base.vecFam
-  with_unfolding_all
-    rewrite [setupVecAtL_eq L ρ i j b]
-    rfl
+  funext Q M
+  let places := admissibleConjugatePairPlaces (Dof x).ntw (kc% i) (kc% Q) M
+  let u := univOf (Dof x).nexp (kc% i) places M ρ.rc
+  have h := SerCopy.xiCoef_eq (a := x.o.Z) (oL x L).Z (ρ.B (kc% i) (kc% j) b)
+    (ρ.om (kc% i) (kc% j) b 1) u
+  have hQ := congrFun h (kc% (half (ρ.ch (kc% i)) places))
+  with_unfolding_all exact
+    (congrFun hQ (kc% (GlobalTheory.ExportSeries.Base.univFam u (ρ.β (kc% j)))) :)
 open GlobalTheory.SeriesTie in
 private theorem isHeckeDatum_eq_pz (ρ : Setup (Dof x).ntw) :
     (setupL L ρ).IsHeckeDatum =
@@ -113,12 +117,12 @@ private def cellL_pz {hρ : ρ.Good} {rd : Rd ρ (Dof x).nexp ((i)) ((j)) c} (t 
   th_eq := by rewrite [theta_eq L ρ]; exact (by with_unfolding_all exact (t.th_eq :))
   thPsi_iff := by rewrite [gens_eq_pz L ρ]; exact (by with_unfolding_all exact (t.thPsi_iff :))
   thU_eq := by
-    rewrite [xi_eq_pz L ρ i j c]
     intro Q M d hQ coeffs hcoeffs
+    rewrite [xi_eq_pz L ρ i j c] at hcoeffs
     with_unfolding_all exact t.thU_eq Q M d hQ coeffs hcoeffs
   thU_off := by
-    rewrite [xi_eq_pz L ρ i j c]
     intro Q M d hOff
+    rewrite [xi_eq_pz L ρ i j c] at hOff
     with_unfolding_all exact t.thU_off Q M d hOff
   rdV_inj := (by with_unfolding_all exact (t.rdV_inj :))
   mtLat_iff := kc% t.mtLat_iff
@@ -126,13 +130,10 @@ private def cellL_pz {hρ : ρ.Good} {rd : Rd ρ (Dof x).nexp ((i)) ((j)) c} (t 
 private theorem isNormL_pz (ρ : Setup (Dof x).ntw) (i : (DL x L).ntw.Tw) (j : Fin (DL x L).R.m) (c : Bool) (ν : ℂ) :
     IsNorm (datL x L).R (datL x L).geo.v₀ ((setupL L ρ).B i j c) ν ↔
       IsNorm x.m.z.R x.m.z.geo.v₀ (ρ.B ((i)) ((j)) c) ν := by
-  refine ⟨fun h => ?_, fun h => ?_⟩
-  · obtain ⟨h0, e, ⟨g, c0R, c0L, hF, u, hu, hh⟩, hn⟩ := h
-    exact ⟨h0, e, ⟨(by with_unfolding_all exact (g :)), (by with_unfolding_all exact (c0R :)), (by with_unfolding_all exact (c0L :)),
-      kc% (famTie_imp (a := (oL x L).Z) x.o.Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ hF), (by with_unfolding_all exact (u :)), (by with_unfolding_all exact (hu :)), (by with_unfolding_all exact (hh :))⟩, (by with_unfolding_all exact (hn :))⟩
-  · obtain ⟨h0, e, ⟨g, c0R, c0L, hF, u, hu, hh⟩, hn⟩ := h
-    exact ⟨h0, e, ⟨(by with_unfolding_all exact (g :)), (by with_unfolding_all exact (c0R :)), (by with_unfolding_all exact (c0L :)),
-      kc% (famTie_imp (a := x.o.Z) (oL x L).Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ hF), (by with_unfolding_all exact (u :)), (by with_unfolding_all exact (hu :)), (by with_unfolding_all exact (hh :))⟩, (by with_unfolding_all exact (hn :))⟩
+  conv_lhs => delta IsNorm IsScale
+  with_unfolding_all
+    rewrite [famTie_eq x.o.Z (oL x L).Z]
+    rfl
 end Cell
 section Comparison₂
 open GlobalTheory.SeriesTie

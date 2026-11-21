@@ -112,9 +112,15 @@ theorem dual_gmap {s : V ≃ₗ[K] V} (hs : ∀ x y, H.B (s x) (s y) = H.B x y) 
 theorem isIntLat_gmap {s : V ≃ₗ[K] V} (hs : ∀ x y, H.B (s x) (s y) = H.B x y) {M : Submodule (𝓞 K) V}
     (hM : GlobalTheory.Mass.IsIntLat H.B.flip M) : GlobalTheory.Mass.IsIntLat H.B.flip (Formalism.HermitianLatticesTheory.gmap s M) := by
   obtain ⟨hL, hI⟩ := hM
-  refine ⟨Submodule.IsLattice.of_fg K ?_, ?_⟩
-  · rw [gmap_eq]
-    exact hL.fg.map _
+  have hfull : Submodule.IsFullLattice K (Formalism.HermitianLatticesTheory.gmap s M) := by
+    rw [gmap_eq]
+    haveI : Submodule.IsLattice K (M.map (lin s)) :=
+      Submodule.IsLattice.of_fg K (hL.fg.map _)
+    refine ⟨?_⟩
+    change Submodule.span K ((s : V →ₗ[K] V) '' (M : Set V)) = ⊤
+    rw [← Submodule.map_span, hL.span_eq_top, Submodule.map_top,
+      LinearMap.range_eq_top.2 s.surjective]
+  refine ⟨hfull, ?_⟩
   · intro x hx y hy
     rw [mem_gmap] at hx hy
     have := hI _ hx _ hy

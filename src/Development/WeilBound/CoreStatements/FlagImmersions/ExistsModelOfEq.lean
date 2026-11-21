@@ -97,7 +97,7 @@ theorem stalk_model [IsCommMonObj G] [Smooth G.hom] {Li : Type} [AddCommGroup Li
           rfl }
     exact ⟨hbc.lift ψl, fun t => hbc.lift_eq ψl t⟩
   · refine eq_top_iff.2 fun x _ => ?_
-    exact hbc.inductionOn x (· ∈ P) P.zero_mem hP (fun c n hn => P.smul_mem c hn) (fun _ _ => P.add_mem)
+    exact hbc.inductionOn x hP (fun c n hn => P.smul_mem c hn) (fun _ _ => P.add_mem)
 
 theorem exists_functional [IsCommMonObj G] [Smooth G.hom] {Li : Type} [AddCommGroup Li] [Module Ω Li] (M : LieModel G ξ Li)
     (hξ : IsCptGen ξ) {L : Type} [Field L] (z : Sp L ⟶ X) (h : genPt ξ ⤳ centre z) {V : Type} [AddCommGroup V]

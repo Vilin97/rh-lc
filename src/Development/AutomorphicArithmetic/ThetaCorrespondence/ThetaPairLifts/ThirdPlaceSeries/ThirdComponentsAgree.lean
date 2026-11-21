@@ -32,7 +32,7 @@ variable {B : Base} {C : Cols B} {a : Late B C} (b : Late B C) {px : PreX B.toPr
 end Copy
 section Main
 set_option maxHeartbeats 4000000 in
-theorem third_components_agree_alt : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → _root_.GlobalTheory.NRows.GeometricGaloisRepCompatibility → AllSt fun _ _ _ T w P x => ∀ (l : _root_.GlobalTheory.HeightCounting.Up.StrictHenselianAcyclicLevel hL x) (big : (Dof x).what₂.places.Pl → Finset ℂ) (L : LocAll (lay0 (Dof x))), _root_.GlobalTheory.CoefDuty.BuiltAlt l.a.A l.mt.M l.c.ch l.c.tp.tup big L → SumRepresentations.hypO (withLoc L) → ∀ (m : Moved (GlobalTheory.HeightCounting.Fin3.oL x L)), m.Copy → m.Coh → ∀ (s : Side0 (GlobalTheory.HeightCounting.Fin3.oL x L)) (r : ReadPk m s), r.Pin → ∀ (hC : m.z.R.C = cfL L (cfOf x)) (Xd : DivX (withLoc L)) (E : EigIdx (withLoc L) Xd) (labPi : E.Pi → (famR (w.st (GlobalTheory.HeightCounting.Fin3.oL x L).Z) w.I P.hX (usedOf w.I T P.Wt) m.z.Xg m.z.tr).A.fam.base.Ix) hb htup hg hf (rep : (withLoc L).what₂.FT → NG.FinTyp (withLoc L).host.E (withLoc L).R.r), HEq rep (repOf x.r.Y) → Nonempty (GlobalTheory.NJoin.Agree (GlobalTheory.HeightCounting.Up.RealOfReading.realOfRead m.z.R.toRealDat m.z.F.lv2 r.Y (tpL L l.c.tp) hC Xd E labPi hb htup hg hf) (mtL L l.mt.M) rep) := by
+theorem third_components_agree_alt : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → _root_.GlobalTheory.NRows.GeometricGaloisRepCompatibility → AllSt fun _ _ _ T w P x => ∀ (l : _root_.GlobalTheory.HeightCounting.Up.StrictHenselianAcyclicLevel hL x) (big : (Dof x).what₂.places.Pl → Finset ℂ) (L : LocAll (lay0 (Dof x))), _root_.GlobalTheory.CoefDuty.BuiltAlt l.a.A l.mt.M l.c.ch l.c.tp.tup big L → SumRepresentations.hypO (withLoc L) → ∀ (m : Moved (GlobalTheory.HeightCounting.Fin3.oL x L)), m.Copy → m.Coh → ∀ (s : Side0 (GlobalTheory.HeightCounting.Fin3.oL x L)) (r : ReadPk m s), r.Pin → ∀ (hC : m.z.R.C = Fin3.cfD x L) (Xd : DivX (withLoc L)) (E : EigIdx (withLoc L) Xd) (labPi : E.Pi → (famR (w.st (GlobalTheory.HeightCounting.Fin3.oL x L).Z) w.I P.hX (usedOf w.I T P.Wt) m.z.Xg m.z.tr).A.fam.base.Ix) hb htup hg hf (rep : (withLoc L).what₂.FT → NG.FinTyp (withLoc L).host.E (withLoc L).R.r), HEq rep (repOf x.r.Y) → Nonempty (GlobalTheory.NJoin.Agree (GlobalTheory.HeightCounting.Up.RealOfReading.realOfRead m.z.R.toRealDat m.z.F.lv2 r.Y (Fin3.tpD L l) hC Xd E labPi hb htup hg hf) (mtL L l.mt.M) rep) := by
   intro hL _ _
   refine StepW.of_all ?_
   intro K B f T w _ _ _ P x l big L _ _ m hcp hco s r hpin hC Xd E labPi hb htup hg hf rep hrep
@@ -61,8 +61,8 @@ theorem third_components_agree_alt : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTEx
       (cpV (GlobalTheory.HeightCounting.Fin3.oL x L).Z x.m.z.R.cV i).W :=
     fun μ h i y => (by with_unfolding_all exact ((x.r.Y.IL.jMt ((μ)) ((h)) ((i)) ((y))).1 : _))
   have hj : ∀ μ h i y, HEq (r.Y.IL.jMt μ h i y).1 (jm μ h i y) := fun μ h i y => (by with_unfolding_all exact (((hpin.jMt μ h i y).trans ((kJ μ i y).trans (x.pin.jMt μ h i y).symm)) :))
-  exact (by with_unfolding_all exact ((agree_of_data (D := DL) (R := m.z.R) (F := m.z.F) r.Y (cf := ((cfL L (cfOf x)))) (nch := ((chL L l.c.ch)))
-    (((tpL L l.c.tp))) ((hC)) ((Xd)) ((E)) ((labPi)) ((hb)) ((htup)) ((hg)) ((hf)) (((mtL L l.mt.M))) ((rep))
+  exact (by with_unfolding_all exact ((agree_of_data (D := DL) (R := m.z.R) (F := m.z.F) r.Y (cf := Fin3.cfD x L) (nch := Fin3.chD L l)
+    (Fin3.tpD L l) ((hC)) ((Xd)) ((E)) ((labPi)) ((hb)) ((htup)) ((hg)) ((hf)) (((mtL L l.mt.M))) ((rep))
     ((hrep')) _ ecV pv ((l.mt.ad.std)) ((l.mt.ad.eW)) jm hj ((l.mt.ad.read)) ((l.mt.ad.rat))
     ((l.mt.ad.wt))) : _))
 end Main

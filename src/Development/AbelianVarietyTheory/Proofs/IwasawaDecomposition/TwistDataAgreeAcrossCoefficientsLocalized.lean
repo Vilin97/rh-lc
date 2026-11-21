@@ -56,7 +56,8 @@ def oL (x : St P) (L : LocAll (lay0 (Dof x))) : P.q.Over :=
 
 abbrev DL (x : St P) (L : LocAll (lay0 (Dof x))) : D7 := (w.st (oL x L).Z).toD7
 
-theorem DL_eq (x : St P) (L : LocAll (lay0 (Dof x))) : DL x L = withLoc L := (Eq.refl (withLoc L))
+theorem DL_eq (x : St P) (L : LocAll (lay0 (Dof x))) : DL x L = withLoc L := by
+  simp only [DL, oL, Stages.toD7, assemble, nL, etaL, etaL_nonneg, withLoc, setN, setRaw]
 
 def sameL (x : St P) (L : LocAll (lay0 (Dof x))) : SameGrp (B := B) (C := w.C) x.o.Z (oL x L).Z where
   e k := (Equiv.refl ((Dof x).nd.PlG k))
@@ -136,11 +137,24 @@ def hkHL : NExpRealH (datL x L).R (datL x L).cG (SL L l.rat) (ysL L l) := by
 
 abbrev cfD (x : St P) (L : LocAll (lay0 (Dof x))) : CharFrame (DL x L) := TC.cf w.I w.l (oL x L).Z
 
-def chD : NChoice (DL x L) := (chL L l.c.ch)
+-- Keep the target indices on the constructors. Record updates can eta-reduce
+-- to the source with its original indices during elaboration.
+def chD : NChoice (DL x L) :=
+  let c := chL L l.c.ch
+  @NChoice.mk (DL x L) c.twI c.twI_l c.sd c.Q c.k' c.psi' c.Oe
+    c.crOe c.domOe c.dvrOe c.algOe c.algOOe c.towOe c.Oe_inj c.Oe_fin c.Oe_loc
+    c.embW c.embW_w c.eMt c.eMt_basis c.eMt_lat
 
-def tpD : TupTied (DL x L) (cfD x L) (chD L l) := (tpL L l.c.tp)
+def tpD : TupTied (DL x L) (cfD x L) (chD L l) :=
+  let tp := tpL L l.c.tp
+  @TupTied.mk (DL x L) (cfD x L) (chD L l) tp.xi tp.xi_inj tp.xi_fin tp.xi_triv tp.xi_tame
+    tp.psi tp.trueColumnChoices_heckeChar_reference_eq_one tp.xi_star tp.xi_star' tp.xi_tw
+    tp.psi_is tp.psi_un
 
-def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) := (X)
+def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) :=
+  @NExpTied.mk (DL x L) X.U_eq X.psiU_gen X.psiU_side X.psiU_xi X.delU_cont X.delU_ine
+    X.thU_empty X.sgnT X.sgnT_one X.Wt X.acgWt X.modWt X.fdWt X.rhoW X.rhoW_irr X.rhoW_alg
+    X.tauG X.sgnG X.sgnG_one X.tau_galois_first_character X.mtV X.rhoW_hw X.rhoW_wt
 
 theorem fitsL : (oL x L).Fits :=
   ⟨⟨x.fits.div.left, fun S N G => by

@@ -29,6 +29,7 @@ theorem locallyCompactSpace_GfC (V : HSp D) : LocallyCompactSpace (GfC V) :=
 theorem tensorFin_unitLoc (V : HSp D) (g : GFin D.sp.cm.sig V.gram) :
     tensorFin D.sp.cm.sig V.gram (unitLoc D.sp.cm.sig V.gram (frameLat V)) g =
       (levelOffFin D.sp.cm.sig V.gram (frameLat V) ∅ : Set (GFin D.sp.cm.sig V.gram)).indicator 1 g := by
+  letI : Submodule.IsFullLattice D.host.E (frameLat V) := SelfDual.isLattice_frameLat V
   by_cases hg : g ∈ levelOffFin D.sp.cm.sig V.gram (frameLat V) ∅
   · rw [Set.indicator_of_mem hg]
     have hv := (mem_levelOffFin.1 hg).2
@@ -48,6 +49,7 @@ theorem finMeas_eq : ∀ (D : D7) (V : HSp D) (μf : ∀ v, Measure (GLoc D.sp.c
     ∀ (ν : Measure (GfC V)), IsFinMeas V μf ν → ∀ s : Set (GfC V), IsCompact (closure s) →
       ν s = νF ((finPtsEquiv D.sp.cm.sig V.gram) ⁻¹' s) := by
   intro D V μf νF hF ν hν s hs
+  letI : Submodule.IsFullLattice D.host.E (frameLat V) := SelfDual.isLattice_frameLat V
   haveI := locallyCompactSpace_GfC V
   haveI : ν.IsHaarMeasure := hν.1
   set e := finPtsEquiv D.sp.cm.sig V.gram

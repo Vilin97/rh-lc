@@ -108,7 +108,9 @@ theorem UpperTheory.Gal.projectedFormsSystemPart.irrArithPointsAutomorphicAway_o
   obtain ⟨π, h1, h2, h3, h4⟩ := hP hi₀
   have h5 : Af.AttC ι ρ π := ⟨hss, h3.2.mono fun w ⟨b, hb, hf⟩ => ⟨b, hb, hf.of_iso e⟩⟩
   refine ⟨⟨π, h1, h2, h5⟩, fun hc => ?_⟩
-  have born := hB l L Ω s n hn V c r ι B Λ J (_root_.UpperTheory.V.Hi.ring_props_of_is_j_unitary_hecke_data H l L Ω s n hn V Q c r ι B Λ R K hS J hJ)
+  have hRing : B.RingProps Λ J := _root_.UpperTheory.V.Hi.ring_props_of_is_j_unitary_hecke_data
+    H l L Ω s n hn V Q c r ι B Λ R K hS J hJ
+  have born := hB l L Ω s n hn V c r ι B Λ J hRing
     (hE l L Ω s n hn V Q c r ι B Λ R K J hJ) x h ρ hx ha hρ hi hc
   refine ⟨fun v hv hu => (born v hv hu).1, fun π' _ p => ?_⟩
   obtain ⟨t, ht⟩ := ImaginaryQuadraticEtaCharacter.winOf L n hn π'

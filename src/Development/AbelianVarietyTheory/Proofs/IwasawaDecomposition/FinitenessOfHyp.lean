@@ -120,7 +120,28 @@ def natW : NAt hL (withLoc L) (cfL L (cfOf x)) (chL L l.c.ch) (tpL L l.c.tp) whe
   ratIn_θ := rfl
   depth := l.a.depth
 
-def natD : NAt hL (DL x L) (cfD x L) (chD L l) (tpD L l) := (by with_unfolding_all exact ((natW l Sp Au ss al hLg) :))
+private abbrev AtIndices := Σ (D : D7) (cf : CharFrame D) (c : NChoice D), TupTied D cf c
+
+private abbrev AtFromIndices (hL : GlobalTheory.Published.LocalLanglandsGL) (i : AtIndices) :=
+  NAt hL i.1 i.2.1 i.2.2.1 i.2.2.2
+
+private theorem localizedIndices_eq :
+    (⟨withLoc L, cfL L (cfOf x), chL L l.c.ch, tpL L l.c.tp⟩ : AtIndices) =
+      ⟨DL x L, cfD x L, chD L l, tpD L l⟩ := by
+  refine Sigma.ext (DL_eq x L).symm ?_
+  unfold cfL cfTr cfD TC.cf chD chL tpD tpL
+  congr! (postTransparency := .reducible) <;> first | exact (DL_eq x L).symm | rfl
+
+def natD : NAt hL (DL x L) (cfD x L) (chD L l) (tpD L l) :=
+  Eq.rec (motive := fun i _ => AtFromIndices hL i) (natW l Sp Au ss al hLg)
+    (localizedIndices_eq (L := L) l)
+
+private theorem atTransport_heq {i i' : AtIndices} (e : i = i') (a : AtFromIndices hL i) :
+    let b : AtFromIndices hL i' := Eq.rec (motive := fun j _ => AtFromIndices hL j) a e
+    HEq (ratL b.nt.L b.nt.S) (ratL a.nt.L a.nt.S) ∧
+      HEq b.nt.hL a.nt.hL ∧ HEq b.nt.rep a.nt.rep := by
+  cases e
+  exact ⟨HEq.refl _, HEq.refl _, HEq.refl _⟩
 
 
 include l in
@@ -134,42 +155,27 @@ variable {p0 : BaseLevelRowSide (w.D (oL x L).Z)} (Y : YT x L p0) (hY : YRel L Y
 
 def frameY : Formalism.L2.RowFrame (DL x L) := Formalism.L2.Col.rowFrameOf (DL x L) _ Y.eFT
 
-set_option maxHeartbeats 12000000 in
-def rowD : NRow (D := DL x L) (natD l Sp Au ss al hLg) (datL x L).R (datL x L).F (datL x L).cG Y := by
-  let S := ratL L l.rat.S
-  let series : NExpRealS (datL x L).R (datL x L).cG S := {
-    fi := by with_unfolding_all exact l.b.YS.fi
-    geq := by with_unfolding_all exact l.b.YS.geq
-    rho := by with_unfolding_all exact l.b.YS.rho
-    chi := by with_unfolding_all exact l.b.YS.chi
-    eF := by with_unfolding_all exact l.b.YS.eF
-    bsup := by
-      intro i j b h1 h2
-      with_unfolding_all exact l.b.YS.bsup i j b h1 h2
-    act := by
-      intro i j b h1 h2 g y
-      with_unfolding_all exact l.b.YS.act i j b h1 h2 g y }
-  let hecke : NExpRealH (datL x L).R (datL x L).cG S series := {
-    hL := by with_unfolding_all exact (hkH l).hL
-    hs := by with_unfolding_all exact (hkH l).hs
-    cHk := (hkH l).cHk
-    cHk_zero := (hkH l).cHk_zero
-    cHk_unit := (hkH l).cHk_unit
-    cHk_pow := (hkH l).cHk_pow
-    hkEq := by
-      intro i j b h1 h2 k Q y hQ hsplit hk
-      with_unfolding_all exact (hkH l).hkEq i j b h1 h2 k Q y hQ hsplit hk }
-  exact {
-    kKs := kKsL L l.rat
-    hk := hkL L l.rat
-    nexp := by with_unfolding_all exact series
-    hecke := by with_unfolding_all exact hecke
-    grp := grpD l L
-    rowLoc := by
-      with_unfolding_all exact al.loc (frameY Y) (eq_of_heq hY.rep)
-    S_eq := by with_unfolding_all exact (SL_heq L l.rat :)
-    hL_eq := by with_unfolding_all exact (HEq.refl l.rat.In.hL :)
-    rep_eq := by with_unfolding_all exact (hY.rep.symm :) }
+def rowD : NRow (D := DL x L) (natD l Sp Au ss al hLg) (datL x L).R (datL x L).F (datL x L).cG Y where
+  kKs := kKsL L l.rat
+  hk := hkL L l.rat
+  nexp := ysL L l
+  hecke := hkHL L l
+  grp := grpD l L
+  rowLoc := by
+    let F : Formalism.L2.RowFrame (withLoc L) :=
+      ⟨(frameY Y).rep, (frameY Y).inj⟩
+    have hF : F.rep = repOf x.r.Y := by
+      with_unfolding_all exact eq_of_heq hY.rep
+    exact ⟨by with_unfolding_all exact ((al.loc F hF).sat :)⟩
+  S_eq := by
+    have h := (atTransport_heq (localizedIndices_eq (L := L) l) (natW l Sp Au ss al hLg)).1
+    exact h.trans (SL_heq L l.rat)
+  hL_eq := by
+    have h := (atTransport_heq (localizedIndices_eq (L := L) l) (natW l Sp Au ss al hLg)).2.1
+    with_unfolding_all exact (h.trans (HEq.refl l.rat.In.hL) :)
+  rep_eq := by
+    have h := (atTransport_heq (localizedIndices_eq (L := L) l) (natW l Sp Au ss al hLg)).2.2
+    with_unfolding_all exact (h.trans hY.rep.symm :)
 
 
 

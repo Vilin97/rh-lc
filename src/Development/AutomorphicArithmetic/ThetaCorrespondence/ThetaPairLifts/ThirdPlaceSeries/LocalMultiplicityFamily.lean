@@ -31,7 +31,9 @@ def yStructureLocal : NExpRealS (datL x L).R (datL x L).cG (SL L l.rat) := by
     geq := by with_unfolding_all exact (l.b.YS.geq :)
     rho := by with_unfolding_all exact (l.b.YS.rho :)
     chi := by with_unfolding_all exact (l.b.YS.chi :)
-    eF := by with_unfolding_all exact (l.b.YS.eF :)
+    eF := by
+      intro i j b h1 h2
+      with_unfolding_all exact (l.b.YS.eF i j b h1 h2 :)
     bsup := by
       intro i j b h1 h2
       with_unfolding_all exact (l.b.YS.bsup i j b h1 h2 :)

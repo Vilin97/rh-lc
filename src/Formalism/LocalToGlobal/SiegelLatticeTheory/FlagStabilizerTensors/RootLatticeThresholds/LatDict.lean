@@ -539,6 +539,27 @@ theorem fg_of_nsmul_le {P L : Submodule (𝓞 D.host.E) (VS D).V} (hL : L.FG) (N
     exact inf_eq_right.2 hle
   exact Submodule.fg_of_fg_map_injective f hf (h2 ▸ h1.map _)
 
+theorem base_isFullLattice (X : HidaSetting D) : Submodule.IsFullLattice D.host.E (VS D).L0 := by
+  letI := (VS D).standardTuple_isLattice
+  refine ⟨?_⟩
+  apply top_unique
+  intro y _
+  have hy : X.crd y ∈ Submodule.span X.B.I.E (X.B.I.L : Set _) := by
+    rw [X.B.I.L_span]
+    trivial
+  have key : ∀ v ∈ Submodule.span X.B.I.E (X.B.I.L : Set _),
+      toV X v ∈ Submodule.span D.host.E ((VS D).L0 : Set _) := by
+    intro v hv
+    induction hv using Submodule.span_induction with
+    | mem v hv =>
+      apply Submodule.subset_span
+      apply (mem_hermitianStandardLattice_iff_pairing_integral X _).2
+      rwa [crd_toV]
+    | zero => simp [toV]
+    | add a b _ _ ha hb => rw [toV_add]; exact add_mem ha hb
+    | smul c v _ hv => rw [toV_smul]; exact Submodule.smul_mem _ _ hv
+  simpa only [toV_crd] using key _ hy
+
 theorem latOf_isLattice (h : Hfin X u) (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : (Λ : Set (VS D).V) = latOf X u h) :
     Submodule.IsLattice D.host.E Λ := by
   obtain ⟨N, hN, hNL⟩ := PIW.AdelClassFin.DictGen.exists_denominator_fmat X.B.I PIW.AdelClassFin.lattice_denominator ((h : X.B.I.Gf) * X.xu u)
@@ -558,6 +579,29 @@ theorem latOf_isLattice (h : Hfin X u) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
   refine ⟨fg_of_nsmul_le hL0.fg N hN h1, ?_⟩
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli
+theorem latOf_isFullLattice (h : Hfin X u) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
+    (hΛ : (Λ : Set (VS D).V) = latOf X u h) : Submodule.IsFullLattice D.host.E Λ := by
+  letI := latOf_isLattice X u h Λ hΛ
+  obtain ⟨N, hN, hNL⟩ := PIW.AdelClassFin.DictGen.exists_denominator_fmat X.B.I PIW.AdelClassFin.lattice_denominator ((h : X.B.I.Gf) * X.xu u)
+  have h2 : ∀ y ∈ (VS D).L0, N • y ∈ Λ := by
+    intro y hy
+    rw [show N • y ∈ Λ ↔ N • y ∈ latOf X u h from by rw [← SetLike.mem_coe, hΛ], mem_latOf, hmem_nsmul]
+    exact (hNL _ (adelic_mem_of_base_lattice X hy)).2
+  refine ⟨?_⟩
+  apply top_unique
+  intro y _
+  have hy : y ∈ Submodule.span D.host.E ((VS D).L0 : Set _) := by
+    rw [(base_isFullLattice X).span_eq_top]
+    trivial
+  have hle : Submodule.span D.host.E ((VS D).L0 : Set _) ≤ Submodule.span D.host.E (Λ : Set (VS D).V) := by
+    rw [Submodule.span_le]
+    intro v hv
+    have hh : N • v ∈ Submodule.span D.host.E (Λ : Set (VS D).V) := Submodule.subset_span (h2 v hv)
+    have hn : (N : D.host.E) ≠ 0 := Nat.cast_ne_zero.2 hN.ne'
+    have := Submodule.smul_mem (Submodule.span D.host.E (Λ : Set _)) (N : D.host.E)⁻¹ hh
+    simpa [← Nat.cast_smul_eq_nsmul D.host.E, smul_smul, hn] using this
+  exact hle hy
+
 theorem latOf_unimod (h : Hfin X u) (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : (Λ : Set (VS D).V) = latOf X u h) :
     Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ := by
   have hSD := PIW.AdelClassFin.lattice_m_dual X.B.I ((h : X.B.I.Gf) * X.xu u)
@@ -733,7 +777,7 @@ theorem isRowLat_of (h : Hfin X u) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
     (hΛ : (Λ : Set (VS D).V) = latOf X u h) (hG : Formalism.HermitianLatticesTheory.SameGenus (VS D).hT (VS D).L0 Λ) :
     IsRowLat D (X.Fu u) Λ := by
   have hmemΛ : ∀ y, y ∈ Λ ↔ y ∈ latOf X u h := fun y => by rw [← SetLike.mem_coe, hΛ]
-  refine ⟨⟨latOf_isLattice X u h Λ hΛ, hG⟩, ⟨latOf_isLattice X u h Λ hΛ, latOf_unimod X u h Λ hΛ,
+  refine ⟨⟨latOf_isFullLattice X u h Λ hΛ, hG⟩, ⟨latOf_isLattice X u h Λ hΛ, latOf_unimod X u h Λ hΛ,
     ⟨?_, rfl⟩, fixedConv_latOf X u h Λ hΛ⟩, ?_⟩
   · show (X.Fu u).z ∈ Λ
     rw [X.flagZVector, hmemΛ]
@@ -1013,12 +1057,12 @@ theorem prV_of_perp {w : (VS D).V} (he : ∀ a, (VS D).hT (X.eX a) w = 0) (hf : 
   simp [prV_apply, he, hf]
 
 theorem smulMem {K W : Type} [Field K] [NumberField K] [AddCommGroup W] [Module K W] [Module (𝓞 K) W]
-    [IsScalarTower (𝓞 K) K W] (Λ : Submodule (𝓞 K) W) [hΛ : Submodule.IsLattice K Λ] (v : W) :
+    [IsScalarTower (𝓞 K) K W] (Λ : Submodule (𝓞 K) W) [hΛ : Submodule.IsFullLattice K Λ] (v : W) :
     ∃ s : 𝓞 K, s ≠ 0 ∧ s • v ∈ Λ := by
   first | exact Bl.general_b_fact_third_ter_form.goal1 .. | (apply Bl.general_b_fact_third_ter_form.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_third_ter_form.goal1 <;> assumption)
 
 theorem uniform_mul {K W : Type} [Field K] [NumberField K] [AddCommGroup W] [Module K W] [Module (𝓞 K) W]
-    [IsScalarTower (𝓞 K) K W] {A B : Submodule (𝓞 K) W} (hA : A.FG) [hB : Submodule.IsLattice K B] :
+    [IsScalarTower (𝓞 K) K W] {A B : Submodule (𝓞 K) W} (hA : A.FG) [hB : Submodule.IsFullLattice K B] :
     ∃ c : 𝓞 K, c ≠ 0 ∧ ∀ a ∈ A, c • a ∈ B := by
   obtain ⟨S, rfl⟩ := hA
   choose cs hcs0 hcs using fun s : W => smulMem B s
@@ -1233,9 +1277,29 @@ theorem lattice_surjective_of_orbit (hZ : LatDictZ.ZOrbit) : LatSurj X u := by
     · intro H w' hw'
       have := H (δ.symm w') ((hmem2 _).2 (by rw [δ.apply_symm_apply]; exact hw'))
       rwa [← hδ.1 (δ.symm w') y, δ.apply_symm_apply] at this
-  haveI := (VS D).standardTuple_isLattice
+  have hfull2 : Submodule.IsFullLattice D.host.E Λ2 := by
+    letI := hlat
+    refine ⟨?_⟩
+    apply top_unique
+    intro y _
+    have hy : δ y ∈ Submodule.span D.host.E (Λ : Set _) := by
+      rw [hrow.1.1.span_eq_top]
+      trivial
+    have key : ∀ v ∈ Submodule.span D.host.E (Λ : Set _),
+        δ.symm v ∈ Submodule.span D.host.E (Λ2 : Set _) := by
+      intro v hv
+      induction hv using Submodule.span_induction with
+      | mem v hv =>
+        apply Submodule.subset_span
+        apply (hmem2 _).2
+        simpa using hv
+      | zero => simp
+      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+      | smul c v _ hv => rw [map_smul]; exact Submodule.smul_mem _ _ hv
+    simpa using key _ hy
+  haveI := base_isFullLattice X
   obtain ⟨c1, hc1, hc1m⟩ := uniform_mul (B := (VS D).L0) hlat.fg
-  haveI := hlat
+  haveI := hfull2
   obtain ⟨c2, hc2, hc2m⟩ := uniform_mul (B := Λ2) (VS D).standardTuple_isLattice.fg
   let M : Submodule (𝓞 X.B.I.E) (Fin X.B.I.n → X.B.I.E) :=
     { carrier := {v | toV X v ∈ Λ2}
