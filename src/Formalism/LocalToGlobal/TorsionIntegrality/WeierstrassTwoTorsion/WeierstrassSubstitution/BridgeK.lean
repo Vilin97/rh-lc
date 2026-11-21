@@ -131,7 +131,7 @@ theorem wpNumEq_of (hS : WpShape.{0}) (hR : WpRecursion.{0}) : WpNumEq := by
       · rfl
   · ext n
     unfold wpDen
-    rw [coeff_mk, map_sub, coeff_one, mul_assoc (C (1 / 2 : K)) (X ^ 3) (derivative K (wpReg W)),
+    rw [coeff_mk, map_sub, coeff_one, mul_assoc (C (1 / 2 : K)) (X ^ 3) (derivative (wpReg W)),
       coeff_C_mul, coeff_X_pow_mul']
     obtain ⟨j, rfl | rfl⟩ := Nat.even_or_odd' n
     · rcases Nat.lt_or_ge j 2 with hj | hj
@@ -177,7 +177,7 @@ theorem uSerEq_of (hS : WpShape.{0}) (hR : WpRecursion.{0}) : USerEq := by
     rw [← uPow_natCast, ← uPow_add, ← uPow_one]; norm_num
   have hC : (HahnSeries.C (((-2 : ℤ)) : K) : LaurentSeries K) = toL (C (-2 : K)) := by
     rw [toL_C]; norm_num
-  have hps : expSer W * (C (-2 : K) + X ^ 3 * derivative K (wpReg W)) =
+  have hps : expSer W * (C (-2 : K) + X ^ 3 * derivative (wpReg W)) =
       C (-2 : K) * (X + X ^ 3 * wpReg W) := by
     apply toL_injective
     have hm2 : (toL (C (-2 : K)) : LaurentSeries K) = -2 := by

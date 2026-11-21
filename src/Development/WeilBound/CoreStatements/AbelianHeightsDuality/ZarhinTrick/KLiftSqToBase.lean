@@ -53,10 +53,6 @@ theorem kToBase_one (G : Over S) [GrpObj G] {Y : Over (Sp Ω)} :
   apply Over.OverMorphism.ext
   simp only [toBase, Hom.one_def]
   simp
-  have hc : pullback.fst (𝟙 S) s = pullback.snd (𝟙 S) s ≫ s := by
-    simpa using (pullback.condition (f := 𝟙 S) (g := s))
-  erw [reassoc_of% hc]
-  simp
 
 theorem kLift_sqToBase (G : Over S) {Y : Over (Sp Ω)} (a u : Y ⟶ (Over.pullback s).obj G) :
     (lift a u).left ≫ sqToBase G s = (lift (toBase G s a) (toBase G s u)).left := by

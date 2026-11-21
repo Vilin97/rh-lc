@@ -38,7 +38,9 @@ theorem pow_mul_mem_chartLatQ (c : ∀ k, ι k) (b : K → ℤ) {s : Ω} (hs : s
   induction j with
   | zero =>
     rw [pow_zero, one_mul]
-    convert hs using 2
+    have h0 : (b + fun _ => ((0 : ℕ) : ℤ)) = b := by funext k; simp
+    rw [h0]
+    exact hs
   | succ j ih =>
     rw [← shift_succ_sub_one] at ih
     have h := mul_mem_chartLatQ (c := c) (b + fun _ => ((j + 1 : ℕ) : ℤ)) ih
@@ -46,14 +48,24 @@ theorem pow_mul_mem_chartLatQ (c : ∀ k, ι k) (b : K → ℤ) {s : Ω} (hs : s
 
 theorem finiteDimensional_chartLatQ (hfin : SectionLatticeFinite.Statement) (hy : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0)
     (b : K → ℤ) : FiniteDimensional ℚ (chartLatQ y b 1) := by
+  classical
   obtain ⟨S, hS⟩ := hfin K ι Ω y b 1 hy
-  refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℚ (S : Set Ω)) fun s hs => ?_
+  let T : Finset Ω := S.image Subtype.val
+  refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℚ (T : Set Ω)) fun s hs => ?_
   obtain ⟨N, hN, hNs⟩ := ChartDenominator.proof K ι Ω y b 1 s hs
-  rw [← hS] at hNs
-  have hZ : (N : Ω) * s ∈ Submodule.span ℤ (S : Set Ω) :=
-    (AddSubgroup.closure_le (K := (Submodule.span ℤ (S : Set Ω)).toAddSubgroup)).mpr
-      Submodule.subset_span hNs
-  have hQ : (N : Ω) * s ∈ Submodule.span ℚ (S : Set Ω) := Submodule.span_le_restrictScalars ℤ ℚ _ hZ
+  have ht : (⟨(N : Ω) * s, hNs⟩ : chartLat y b 1) ∈ AddSubsemigroup.closure (S : Set (chartLat y b 1)) := by
+    rw [hS]
+    trivial
+  have hQ : (N : Ω) * s ∈ Submodule.span ℚ (T : Set Ω) := by
+    have hall : ∀ x : chartLat y b 1, x ∈ AddSubsemigroup.closure (S : Set (chartLat y b 1)) → (x : Ω) ∈ Submodule.span ℚ (T : Set Ω) := by
+      intro x hx
+      induction hx using AddSubsemigroup.closure_induction with
+      | mem x hx =>
+        apply Submodule.subset_span
+        exact Finset.mem_coe.mpr (Finset.mem_image.mpr ⟨x, hx, rfl⟩)
+      | add x z hx hz ihx ihz =>
+        exact Submodule.add_mem _ ihx ihz
+    exact hall _ ht
   have hN0 : (N : Ω) ≠ 0 := by exact_mod_cast (show N ≠ 0 by omega)
   have hs' : s = ((N : ℚ)⁻¹) • ((N : Ω) * s) := by
     rw [Rat.smul_def]

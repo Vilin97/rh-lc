@@ -94,6 +94,8 @@ theorem exists_admissible_eq_lagrangian_integral : ∀ (F E : Type) [Field F] [N
     intro f
     rw [Seminorm.finset_sup_apply, Seminorm.finset_sup_apply]
     congr 2
+    funext i
+    simp [schwartzSeminormFamily, SchwartzMap.seminorm_apply]
   refine ⟨SchwartzMap.mkCLMtoNormedSpace (σ := RingHom.id ℂ) (fun f => L ⟨pureA F f g, hmem f⟩)
     (fun f f' => ?_) (fun a f => ?_) ⟨Finset.Iic (k, 0), c * ν.real 𝓕, mul_nonneg hc measureReal_nonneg, fun f => ?_⟩,
     fun f => ?_⟩

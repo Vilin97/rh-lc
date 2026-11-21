@@ -77,7 +77,7 @@ variable {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n)
 
 theorem mem_filAt_iff {p : ℕ} {m : ℤ} {a : Alt n} :
     a ∈ filAt n p m ↔ ∀ T, (bas n).repr a T ≠ 0 → (T.card : ℤ) = m ∧ p ≤ holCount T := by
-  simp only [filAt, Submodule.mem_iInf, LinearMap.mem_ker, Set.mem_setOf_eq, Module.Basis.coord_apply, holCount]
+  simp only [filAt, Submodule.mem_iInf, LinearMap.mem_ker, Set.mem_ofPred_eq, Module.Basis.coord_apply, holCount]
   exact forall_congr' fun T => not_imp_comm
 
 theorem mem_filAt_nat {p k : ℕ} {a : Alt n} : a ∈ filAt n p k ↔ HasDeg k a ∧ a ∈ holGe n p := by
@@ -148,9 +148,12 @@ section Inhab
 
 variable {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n)
 
-theorem FormOn.of_isForm {α : A.Fld} (h : A.IsForm α) (S : Set M) : FormOn A S α where
-  smooth i T := (h.smooth i T).mono Set.inter_subset_left
-  compat x x' _ hx := h.compat x x' hx
+theorem FormOn.of_isForm {α : A.Fld} (h : A.IsForm α) (S : Set M) : FormOn A S α := by
+  refine ⟨?_, ?_⟩
+  · intro i T
+    exact (h.smooth i T).mono Set.inter_subset_left
+  · intro x x' _ hx
+    exact h.compat x x' hx
 
 theorem FormOn.zero (S : Set M) : FormOn A S 0 := by
   have h := (HolAtlas.isForm_algebra M n A).1

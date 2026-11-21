@@ -186,6 +186,9 @@ theorem section_w1_siegel_invariant (h : Hyp L nb uM nb' w₁ cM δ) {s₁ : ℂ
 
 theorem sM_rat {b : Fin L.n → AE F E} (hb : b ∈ L.ratV) : sM R L b ∈ rat2 σ d.Y := by
   obtain ⟨x, rfl⟩ := mem_ratV L hb
+  have hc (a : E) : cA σ (inclR (F := F) (AF F) a) = inclR (F := F) (AF F) (σ a) := by
+    show Algebra.TensorProduct.map _ _ ((1 : AF F) ⊗ₜ[F] a) = (1 : AF F) ⊗ₜ[F] σ a
+    simp
   refine kunf.rat_of_inFrame (b := d.b) (M := Matrix.fromBlocks 1 (∑ j, (Matrix.single L.i₀ (L.em j) (x j) +
     Matrix.single (L.em j) L.i₀ (-(((R.ε : ℤ) : E) * σ (x j))))) 0 1) ?_
   rw [inFrame_sM']
@@ -193,7 +196,7 @@ theorem sM_rat {b : Fin L.n → AE F E} (hb : b ∈ L.ratV) : sM R L b ∈ rat2 
   rcases r with i | i <;> rcases c with j | j <;>
     set_option synthInstance.maxHeartbeats 100000 in
       simp [bMat, incM, Matrix.map_apply, sB, Matrix.sum_apply, Matrix.add_apply, Matrix.single_apply, Matrix.one_apply,
-      map_sum, apply_ite (inclR (F := F) (E := E) (AF F)), GlobalTheory.ThK.incV, GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR, eA, map_neg, map_mul,
+      map_sum, apply_ite (inclR (F := F) (E := E) (AF F)), GlobalTheory.ThK.incV, hc, eA, map_neg, map_mul,
       map_intCast]
 
 theorem cM_rat (h : Hyp L nb uM nb' w₁ cM δ) {c : (Fin L.n → AE F E) × AF F} (hu : c.1 ∈ L.ratV)
@@ -201,6 +204,9 @@ theorem cM_rat (h : Hyp L nb uM nb' w₁ cM δ) {c : (Fin L.n → AE F E) × AF 
   obtain ⟨c1, c2⟩ := c
   obtain ⟨x, rfl⟩ := mem_ratV L hu
   obtain ⟨t, rfl⟩ := ha
+  have hc (a : E) : cA σ (inclR (F := F) (AF F) a) = inclR (F := F) (AF F) (σ a) := by
+    show Algebra.TensorProduct.map _ _ ((1 : AF F) ⊗ₜ[F] a) = (1 : AF F) ⊗ₜ[F] σ a
+    simp
   refine kunf.rat_of_inFrame (b := d.b) (M := Matrix.fromBlocks (1 + ∑ j, Matrix.single L.i₀ (L.em j) (x j))
     (Matrix.single L.i₀ L.i₀ (t • δ)) 0 ((1 + ∑ j, Matrix.single L.i₀ (L.em j) (-(x j)))ᵀ.map σ)) ?_
   rw [inFrame_cM h]
@@ -209,7 +215,7 @@ theorem cM_rat (h : Hyp L nb uM nb' w₁ cM δ) {c : (Fin L.n → AE F E) × AF 
     set_option synthInstance.maxHeartbeats 100000 in
       simp [uA, aB, incM, Matrix.map_apply, Matrix.sum_apply, Matrix.add_apply, Matrix.single_apply, Matrix.one_apply,
       Matrix.transpose_apply, map_sum, apply_ite (inclR (F := F) (E := E) (AF F)), apply_ite (cA σ), apply_ite (⇑σ), GlobalTheory.ThK.incV,
-      GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR, map_neg, inclR_smul]
+      hc, map_neg, inclR_smul]
 
 theorem eisenstein_rational_invariant {s₁ : ℂ} {f : d.G → ℂ} (hf : IsSec d.K d.χ s₁ f) (z : ℂ) {r : d.G} (hr : r ∈ rat2 σ d.Y)
     (hx : ∀ k, inFrame d.b r k (Sum.inl L.i₀) = (1 : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F E)) k (Sum.inl L.i₀))

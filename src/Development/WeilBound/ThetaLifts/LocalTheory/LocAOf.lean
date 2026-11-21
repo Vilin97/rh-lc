@@ -162,7 +162,7 @@ theorem locA_of (H : Hyp) (J : Hyp2) (hC : ConeFacA) (hS : StdA) : LocA' := by
       rw [pure_smul, mul_smul, ← cfac T hT _ _ (a1 j).2.1 (a1 j).2.2, inv_smul_smul₀ pne]
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum, Finset.smul_sum]
-      exact Finset.sum_congr rfl fun i _ => by rw [h3' _ _ (a2 i).2.1 (ev_of_off (a2 i).2.2), pure_smul]
+        exact Finset.sum_congr rfl fun i _ => by rw [h3' _ _ (a2 i).2.1 (ev_of_off (a2 i).2.2), pure_smul]
     · have := tens_step li lf c (fun v => if v ∈ X.T then wT B X s (1 - (((b + 2 - a') / 2 : ℕ) : ℤ)) v else u v) _
         (fun j v => Rf.p' v (φ' j v)) _ (fun i v => Rf.p v (φ i v)) tm.symm ((∏ v ∈ T \ X.T, u v)⁻¹ * k₀)
       have ek : (∏ v ∈ T \ X.T, u v)⁻¹ * k₀ * c * ∏ v ∈ T, (if v ∈ X.T then wT B X s (1 - (((b + 2 - a') / 2 : ℕ) : ℤ)) v else u v) = K₀ := by

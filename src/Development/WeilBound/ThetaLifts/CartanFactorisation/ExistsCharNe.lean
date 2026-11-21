@@ -137,7 +137,7 @@ theorem apply_pure {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (S : Module.End �
     (by show _ = (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm _ + 0
         rw [add_zero]; exact (RingEquiv.symm_apply_apply _ _).symm) (zero_add (x i).2).symm
   have hg' : (fun u => g (u + z)) ∈ SB (κ → Af F) :=
-    ⟨hg.1.comp_continuous (continuous_add_right z), hg.2.comp_homeomorph (Homeomorph.addRight z)⟩
+    ⟨hg.1.comp_continuous (continuous_id.add continuous_const), hg.2.comp_homeomorph (Homeomorph.addRight z)⟩
   have e1 : schr ψ (finE2 F (z, 0)) (pureA F f g) = pureA F f fun u => g (u + z) := funext fun a => by
     rw [schr_tr]
     simp only [pureA]

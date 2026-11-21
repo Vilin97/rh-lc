@@ -192,7 +192,8 @@ theorem _root_.GlobalTheory.ThK.Dbl.badFactor_of (hD : DblX) (hS : StabEx) (hV :
     exact mem_of_superset (int_nhds P.herm.lat) fun g h v _ => h v
   · have := P.good.haar
     obtain ⟨K₁, -, -, k1, k2, -⟩ := hS F E σ B n X r s P.base P.herm
-    exact ((measure_mono fun g h => (stab_iff P.base P.herm h0 k1).2 (key g h.2 h.1).1).trans_lt k2.measure_lt_top).ne
+    exact ((measure_mono fun g (h : g ∈ {g | coef om ν Φ g ≠ 0} ∩ {g | ∀ v ∉ T, IntAt v g}) =>
+      (stab_iff P.base P.herm h0 k1).2 (key g h.2 h.1).1).trans_lt k2.measure_lt_top).ne
 
 end GlobalTheory.ThK.Dbl.Bad
 

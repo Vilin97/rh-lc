@@ -135,7 +135,7 @@ theorem ChartResidueDegreeAlgClosed.proof (h₁ : ChowFormBirationalAlgClosed.St
     exact IsLocalRing.maximalIdeal.isMaximal _
   have : Module.Finite (Localization.AtPrime p) (ChartLoc I t (k + 1) p) :=
     h₂ F n (k + 1) I f t p hI hf fun h => hqt (by rw [hp] at h; exact Ideal.mem_span_singleton.mp h)
-  have h𝔓max : 𝔓.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap 𝔓 hcomap
+  have h𝔓max : 𝔓.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under 𝔓 hcomap
   have h𝔓ker : 𝔓 ≤ RingHom.ker ψ := by
     rw [h𝔓def, chartIdeal, Ideal.map_le_iff_le_comap, Ideal.map_le_iff_le_comap]
     intro h hh

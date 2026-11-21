@@ -196,9 +196,9 @@ theorem UpperTheory.Kd.C7.pNormLev :
   have hrow : ∀ k (jx : Fin l), pv P (w k) * (w k - 1) ^ (jx : ℕ)
       = ∑ i, pv (G jx i) (ζ m) * (w k - 1) ^ (i : ℕ) := by
     intro k jx
-    have := congrArg (Polynomial.eval₂ (R0 A).subtype (w k)) (hG jx)
-    simp only [Polynomial.eval₂_mul, Polynomial.eval₂_pow, Polynomial.eval₂_sub, Polynomial.eval₂_X,
-      Polynomial.eval₂_one, Polynomial.eval₂_finset_sum] at this
+    have := congrArg (Polynomial.eval₂RingHom (R0 A).subtype (w k)) (hG jx)
+    simp only [map_mul, map_pow, map_sub, map_one, map_sum] at this
+    simp only [Polynomial.coe_eval₂RingHom, Polynomial.eval₂_X] at this
     rw [show pv P (w k) = Polynomial.eval₂ (R0 A).subtype (w k) P from rfl, this]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hwpow k, ← hev]

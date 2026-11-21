@@ -114,7 +114,11 @@ private theorem lev_rt (g : GA E n) (ψ : Sm E n) (h : IsOpen (stab ψ : Set (GL
     rw [← Module.End.mul_apply, ← map_mul, e, map_mul, Module.End.mul_apply, hk']
 
 private theorem umg_zero : Umg (0 : Sm E n) :=
-  ⟨fun _ _ => rfl, by simp, 0, fun u => ⟨0, fun g => by simp⟩⟩
+  ⟨fun _ _ => rfl, by
+    have : {k | finRep E n k (0 : Sm E n) = 0} = Set.univ :=
+      Set.eq_univ_of_forall (fun k => map_zero _)
+    rw [this]
+    exact isOpen_univ, 0, fun u => ⟨0, fun g => by simp⟩⟩
 
 private theorem umg_add {φ ψ : Sm E n} (h : Umg φ) (h' : Umg ψ) : Umg (φ + ψ) := by
   refine ⟨fun γ g => congrArg₂ (· + ·) (h.left γ g) (h'.left γ g), ?_, ?_⟩

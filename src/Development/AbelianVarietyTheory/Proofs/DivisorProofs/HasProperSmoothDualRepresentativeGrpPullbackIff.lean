@@ -169,10 +169,9 @@ variable {S S' : Scheme.{0}} {f : S' ⟶ S} {A : Over S} [GrpObj A] {A' : Over S
 theorem rep_down (hφ : IsGrpPullback A' A f φ) {T B' : Over S'} (b' : B' ⟶ T) {P' : LB (A' ⊗ B').left}
     (h : Rep A' b' P') :
     Rep A (Over.homMk b'.left (by show b'.left ≫ T.hom ≫ f = B'.hom ≫ f; rw [← Category.assoc, Over.w b']) :
-      Over.mk (B'.hom ≫ f) ⟶ Over.mk (T.hom ≫ f)) (P'.pull (ofBase hφ (s := B'.hom) rfl)) where
-  fam := fam_ofBase hφ rfl h.fam
-  univ := by
-    intro T₁ t N hN
+      Over.mk (B'.hom ≫ f) ⟶ Over.mk (T.hom ≫ f)) (P'.pull (ofBase hφ (s := B'.hom) rfl)) := by
+  refine ⟨fam_ofBase hφ rfl h.fam, ?_⟩
+  · intro T₁ t N hN
     have hs : (t.left ≫ T.hom) ≫ f = T₁.hom := by rw [Category.assoc]; exact Over.w t
     obtain ⟨x', ⟨hxb, hxN⟩, hu⟩ := h.univ (Over.mk (t.left ≫ T.hom)) (Over.homMk t.left rfl)
       (N.pull (toBase hφ hs)) (fam_toBase hφ hs hN)
@@ -202,10 +201,9 @@ theorem rep_down (hφ : IsGrpPullback A' A f φ) {T B' : Over S'} (b' : B' ⟶ T
 theorem rep_up (hφ : IsGrpPullback A' A f φ) {T : Over S'} {B : Over S} (b : B ⟶ Over.mk (T.hom ≫ f))
     {P : LB (A ⊗ B).left} (h : Rep A b P) :
     Rep A' (Over.homMk b.left rfl : Over.mk (b.left ≫ T.hom) ⟶ T)
-      (P.pull (toBase hφ (s := b.left ≫ T.hom) (s₀ := B.hom) (by rw [Category.assoc]; exact Over.w b))) where
-  fam := fam_toBase hφ _ h.fam
-  univ := by
-    intro T₁ t' N' hN'
+      (P.pull (toBase hφ (s := b.left ≫ T.hom) (s₀ := B.hom) (by rw [Category.assoc]; exact Over.w b))) := by
+  refine ⟨fam_toBase hφ _ h.fam, ?_⟩
+  · intro T₁ t' N' hN'
     have hsB : (b.left ≫ T.hom) ≫ f = B.hom := by rw [Category.assoc]; exact Over.w b
     let t : Over.mk (T₁.hom ≫ f) ⟶ Over.mk (T.hom ≫ f) := Over.homMk t'.left
       (by show t'.left ≫ T.hom ≫ f = T₁.hom ≫ f; rw [← Category.assoc, Over.w t'])

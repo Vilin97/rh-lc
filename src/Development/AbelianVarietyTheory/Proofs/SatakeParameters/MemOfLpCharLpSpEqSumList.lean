@@ -363,7 +363,7 @@ theorem exists_mem_of_sumList {α : Type} (F : α → WD h) (l : List α)
   induction l with
   | nil =>
     exfalso
-    change HasCopyW ρ k c (WD.lpZero h) at H
+    change HasCopyW ρ k c (WD.lpZero (h := h)) at H
     rw [WD.lpZero, hasCopyW_mk] at H
     exact not_hasCopy_zero H
   | cons p l ih =>

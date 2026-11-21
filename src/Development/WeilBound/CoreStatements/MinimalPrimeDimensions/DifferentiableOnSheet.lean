@@ -205,7 +205,7 @@ private theorem aemeasurable_ofReal_fsDens {e n : ℕ} {v : (Fin e → ℂ) → 
     refine Complex.continuous_re.comp (Continuous.matrix_det ?_)
     refine continuous_pi fun a => continuous_pi fun b => ?_
     simp only [Matrix.of_apply]
-    exact continuous_finset_sum _ fun i _ =>
+    exact continuous_finsetSum _ fun i _ =>
       ((continuous_apply i).comp (hw a)).star.mul ((continuous_apply i).comp (hw b))
   have hψ : Measurable fun q : (Fin n → ℂ) × (Fin e → Fin n → ℂ) =>
       ENNReal.ofReal ((e.factorial : ℝ) / Real.pi ^ e *

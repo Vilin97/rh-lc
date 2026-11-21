@@ -38,7 +38,7 @@ theorem UpperTheory.cuspDecay_tens_conv_real_smoothT :
       continuous_toFun := continuous_subtype_val
       continuous_invFun := continuous_id.subtype_mk _ }
   let m : archGroup K n ≃ᵐ ArchUnits K n := φ.toHomeomorph.toMeasurableEquiv
-  have hmφ : (m : archGroup K n → ArchUnits K n) = φ := rfl
+  have hmφ : (m : archGroup K n → ArchUnits K n) = φ.toFun := rfl
   haveI hH : (Measure.map m ν).IsHaarMeasure := by
     rw [hmφ]
     exact φ.isHaarMeasure_map ν

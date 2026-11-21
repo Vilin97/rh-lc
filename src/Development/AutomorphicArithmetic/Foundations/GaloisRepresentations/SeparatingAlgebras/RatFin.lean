@@ -16,6 +16,7 @@ theorem UpperTheory.Gal.Gen.ratFin_pf :
   refine ⟨?_, ?_⟩
   · intro Z hZ
     haveI : DiscreteTopology (ratGL E a).range := GroundTheory.Automorphic.AdelicGLn.discreteTopology_rationalGL E a
+    set_option synthInstance.maxHeartbeats 200000 in
     have hcl : IsClosed (((ratGL E a).range : Subgroup (GA E a)) : Set (GA E a)) := Subgroup.isClosed_of_discrete
     let K : Set (GA E a) := Subtype.val '' Z
     have hK : IsCompact K := hZ.image continuous_subtype_val

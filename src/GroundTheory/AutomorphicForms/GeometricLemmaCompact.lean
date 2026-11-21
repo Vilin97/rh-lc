@@ -70,7 +70,7 @@ theorem mem_unipotentCompactG {e : ℕ} {u : GL (Fin n) F} :
     u ∈ unipotentCompactG γ e ↔ u ∈ unipotentRadical F n γ ∧
       rankTorus F n γ e * u * (rankTorus F n γ e)⁻¹ ∈ integralGL F n := by
   have hmem (v : unipotentRadical F n γ) :
-      v ∈ unipotentCompact (β := γ) e ↔
+      v ∈ unipotentCompact (F := F) (n := n) (β := γ) e ↔
         rankTorus F n γ e * v * (rankTorus F n γ e)⁻¹ ∈ integralGL F n := Iff.rfl
   constructor
   · rintro ⟨v, hv, rfl⟩

@@ -29,8 +29,8 @@ theorem HermLine.zcomb_isConjInvariantH {A B : HermLine ι} (hA : IsConjInvarian
   rw [hA z, hB z]
 
 theorem fsH_isConjInvariantH (ι : K → Type) [∀ k, Fintype (ι k)] : IsConjInvariantH (fsH ι) := fun z => by
-  show ∏ k, (fsMetric (ι k)).ρ (fun i => (starRingEnd ℂ) (z ⟨k, i⟩)) ^ (1 : K → ℤ) k =
-    ∏ k, (fsMetric (ι k)).ρ (fun i => z ⟨k, i⟩) ^ (1 : K → ℤ) k
+  show ∏ k, (fsMetric (ι := ι k)).ρ (fun i => (starRingEnd ℂ) (z ⟨k, i⟩)) ^ (1 : K → ℤ) k =
+    ∏ k, (fsMetric (ι := ι k)).ρ (fun i => z ⟨k, i⟩) ^ (1 : K → ℤ) k
   exact Finset.prod_congr rfl fun k _ => by rw [ProjLine.isConjInvariant_fs (fun i => z ⟨k, i⟩)]
 
 theorem zcomb_metric_identity {a b : ℝ} (ha : a ≠ 0) (hb : b ≠ 0) (q k p n : ℕ) :

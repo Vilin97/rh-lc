@@ -19,8 +19,8 @@ def Lz (j : Fin d) (f : PS R 2 d) : PS R 1 d := ev (n := 1) ![pt R d 0, 0] (pder
 
 theorem coeff_Lz (f : PS R 2 d) (i j : Fin d) :
     coeff (Finsupp.single ((0 : Fin 1), i) 1) (Lz j f) = bil f 1 1 i j := by
-  rw [← cc_pderiv, Lz, d2 (by zz) (by zz)]
-  simp [dpt, ccev (show ZZ (![pt R d 0, 0] : Fin 2 → Pt R 1 d) by zz), cc_pderiv, coeff_pderiv, bil]
+  rw [← cc_pderiv, Lz, d2 (Z_pt 0) Z_zero]
+  simp [dpt, ccev (show ZZ (![pt R d 0, 0] : Fin 2 → Pt R 1 d) from ZZ_cons (Z_pt 0) (ZZ_cons Z_zero ZZ_nil)), cc_pderiv, coeff_pderiv, bil]
 
 theorem Lz_mul (j : Fin d) (f g : PS R 2 d) : Lz j (f * g) =
     Lz j f * ev (n := 1) ![pt R d 0, 0] g + ev (n := 1) ![pt R d 0, 0] f * Lz j g := by

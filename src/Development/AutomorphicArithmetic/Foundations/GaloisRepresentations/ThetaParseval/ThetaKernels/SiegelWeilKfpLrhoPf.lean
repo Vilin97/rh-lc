@@ -38,7 +38,10 @@ theorem T_rho_sum'_k (hH : _root_.PositivityTheory.SiegelWeilFormula.THeis_k) {�
   have h1 := Tpar.rho_rho (dd := d.dd) (ψ := d.B.ψ) a b Φ
   have h2 : d.dd.rho d.B.ψ (a + b) Φ =
       d.B.ψ (-(⅟(2 : AF F) * _root_.PositivityTheory.SiegelWeilFormula.KFP.spf_k d a b)) • d.dd.rho d.B.ψ a (d.dd.rho d.B.ψ b Φ) := by
-    rw [h1, smul_smul, ← AddChar.map_add_eq_mul, neg_add_cancel, AddChar.map_zero_eq_one, one_smul]
+    have h3 := congrArg (fun x : d.Fn => d.B.ψ (-(⅟(2 : AF F) * _root_.PositivityTheory.SiegelWeilFormula.KFP.spf_k d a b)) • x) h1
+    change d.B.ψ (-(⅟(2 : AF F) * _root_.PositivityTheory.SiegelWeilFormula.KFP.spf_k d a b)) • d.dd.rho d.B.ψ a (d.dd.rho d.B.ψ b Φ) = d.B.ψ (-(⅟(2 : AF F) * _root_.PositivityTheory.SiegelWeilFormula.KFP.spf_k d a b)) • (d.B.ψ (⅟(2 : AF F) * _root_.PositivityTheory.SiegelWeilFormula.KFP.spf_k d a b) • d.dd.rho d.B.ψ (a + b) Φ) at h3
+    rw [smul_smul, ← AddChar.map_add_eq_mul, neg_add_cancel, AddChar.map_zero_eq_one, one_smul] at h3
+    exact h3.symm
   rw [h2, _root_.PositivityTheory.SiegelWeilFormula.KFP.T_smul'_k, (hH F E σ d _ (hrho b Φ hΦ) Z X).1, (hH F E σ d Φ hΦ Z' (X + Z)).2]
 end PositivityTheory.SiegelWeilFormula.KFP
 end

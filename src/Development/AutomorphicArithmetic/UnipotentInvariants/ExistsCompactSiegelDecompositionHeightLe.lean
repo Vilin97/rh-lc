@@ -74,7 +74,7 @@ theorem UpperTheory.exists_compact_siegel_decomposition_height_le :
   intro E _ _ _ c hc
   obtain ⟨S, hS, hSm⟩ := exists_isCompact_mul_mem_of_ideleModule_mem_Icc (K := E) hc c
   have hcont : Continuous fun x : InfiniteAdeleRing E => ∑ w : InfinitePlace E, ‖x w‖ :=
-    continuous_finset_sum _ fun w _ => continuous_norm.comp (continuous_apply w)
+    continuous_finsetSum _ fun w _ => continuous_norm.comp (continuous_apply w)
   obtain ⟨M, hM⟩ := (isCompact_closure_fundamentalSetInfinite E).exists_bound_of_continuousOn hcont.continuousOn
   let L : Set (A E) := ((homeomorphMixedSpace E) ⁻¹' Metric.closedBall 0 M) ×ˢ
     (integralFiniteAdeles (𝓞 E) E : Set (FiniteAdeleRing (𝓞 E) E))

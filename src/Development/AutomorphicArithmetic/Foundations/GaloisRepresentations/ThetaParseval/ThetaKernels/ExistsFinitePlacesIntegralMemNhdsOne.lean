@@ -73,11 +73,10 @@ theorem UpperTheory.exists_finite_places_integral_mem_nhds_one :
     have e : c = 1 := eq_one_of_parts_pk (gOff_parts_pk (h ∅)).1
       fun v => (gOff_parts_pk (h {v})).2 v (Finset.mem_singleton_self v)
     exact hc.1.2 (e ▸ mem_interior_iff_mem_nhds.2 hN)
-  obtain ⟨S, hS⟩ := hs.elim_directed_family_closed _ hC hi hd
+  obtain ⟨S, hS⟩ := hs.elim_directed_family_closed _ hC (Set.disjoint_iff_inter_eq_empty.mpr hi) hd
   refine ⟨S, fun c hc hI => ?_⟩
   by_contra hn
   have hm : c ∈ ({g : UA σ X.J | IntAll g} ∩ (interior N)ᶜ) ∩ (gOff σ X S : Set (UA σ X.J)) :=
     ⟨⟨hI, fun h => hn (interior_subset h)⟩, hc⟩
-  rw [hS] at hm
-  exact hm
+  exact Set.disjoint_left.mp hS hm.1 hm.2
 end

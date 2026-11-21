@@ -51,15 +51,14 @@ theorem gsum_add (d : ℕ → S) (w w' : ℕ →₀ W) :
 theorem exists_gsum (p : ℕ) (d : ℕ → S)
     (hsurj : ∀ a : S, ∃ (s : Finset ℕ) (c : ℕ → R), a - ∑ k ∈ s, algebraMap R S (c k) * d k ∈ Ideal.span {(p : S)})
     (z : S ⊗[R] W) : ∃ w : ℕ →₀ W, z - gsum d w ∈ Ideal.span {(p : S ⊗[R] W)} := by
-  induction z using TensorProduct.induction_on with
-  | zero => exact ⟨0, by simp [gsum]⟩
+  induction z using TensorProduct.inductionOn with
   | tmul a x =>
     obtain ⟨s, c, hc⟩ := hsurj a
     obtain ⟨e, he⟩ := Ideal.mem_span_singleton'.1 hc
     refine ⟨∑ k ∈ s, Finsupp.single k (c k • x), ?_⟩
     have h1 : (gsum d (∑ k ∈ s, Finsupp.single k (c k • x)) : S ⊗[R] W) =
         (∑ k ∈ s, algebraMap R S (c k) * d k) ⊗ₜ[R] x := by
-      rw [gsum, ← Finsupp.sum_finset_sum_index (fun _ => TensorProduct.tmul_zero _ _)
+      rw [gsum, ← Finsupp.sum_finsetSum_index (fun _ => TensorProduct.tmul_zero _ _)
         (fun _ _ _ => TensorProduct.tmul_add _ _ _), TensorProduct.sum_tmul]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Finsupp.sum_single_index (h := fun k x => d k ⊗ₜ[R] x) (TensorProduct.tmul_zero _ _), ← Algebra.smul_def,

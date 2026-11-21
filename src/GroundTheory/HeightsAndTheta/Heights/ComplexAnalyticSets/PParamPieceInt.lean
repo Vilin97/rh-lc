@@ -38,6 +38,8 @@ theorem differentiable_mulVec (A : Matrix (Fin d) (Fin n) ℂ) :
     Differentiable ℂ (fun x : Fin n → ℂ => A *ᵥ x) := by
   have h := (Matrix.mulVecLin A).toContinuousLinearMap.differentiable
   convert h using 1
+  ext x
+  simp only [LinearMap.coe_toContinuousLinearMap', Matrix.mulVecLin_apply]
 
 theorem exists_sheet {W : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fin d) (Fin n) ℂ}
     {σ : (Fin d → ℂ) → Fin n → ℂ} {r r' : ℝ} {N : Set (Fin n → ℂ)}

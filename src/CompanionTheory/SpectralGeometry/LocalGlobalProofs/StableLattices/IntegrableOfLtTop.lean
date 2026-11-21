@@ -135,7 +135,7 @@ lemma energy_ge (hae : z.re + R = a) (hu : Continuous u) (hg : Continuous g)
 lemma iint_le {f : ℝ → ℝ} (hf : IntegrableOn f (Ioi 0)) (h0 : ∀ t, 0 ≤ f t) {T : ℝ} (hT : 0 ≤ T) :
     ∫ t in (0 : ℝ)..T, f t ≤ ∫ t in Ioi (0 : ℝ), f t := by
   rw [intervalIntegral.integral_of_le hT]
-  exact setIntegral_mono_set hf (ae_of_all _ h0) Ioc_subset_Ioi_self.eventuallyLE
+  exact setIntegral_mono_set hf (ae_of_all _ h0) Ioc_subset_Ioi_self.eventuallySubset
 
 lemma iint_mono {f : ℝ → ℝ} (hf : Continuous f) (h0 : ∀ t, 0 ≤ f t) {S T : ℝ} (hS : 0 ≤ S)
     (hST : S ≤ T) : ∫ t in (0 : ℝ)..S, f t ≤ ∫ t in (0 : ℝ)..T, f t :=

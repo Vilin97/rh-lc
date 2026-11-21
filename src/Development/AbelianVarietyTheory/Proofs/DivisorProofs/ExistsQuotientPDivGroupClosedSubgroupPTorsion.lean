@@ -44,10 +44,10 @@ theorem ker_succ {C : Type} [CommRing C] [Bialgebra O C] (π : G.A 1 →ₐc[O] 
   Ideal.ext fun _ => Iff.rfl
 
 theorem torsion_le {C : Type} [CommRing C] [Bialgebra O C] (π : G.A 1 →ₐc[O] C) (m : ℕ) :
-    torsionIdeal O (G.A (m + 1)) p ≤ RingHom.ker (π.comp (levelRes G m)) := by
+    torsionIdeal (R := O) (A := G.A (m + 1)) p ≤ RingHom.ker (π.comp (levelRes G m)) := by
   refine (kerIdeal_le_ker_iff _
     ((π.comp (levelRes G m) : G.A (m + 1) →ₐc[O] C) : G.A (m + 1) →ₐ[O] C)).2 fun c => ?_
-  change π (levelRes G m (mulBy O _ p c)) = _
+  change π (levelRes G m (mulBy (R := O) (A := G.A (m + 1)) p c)) = _
   have h := G.mulBy_pow_self 1 (levelRes G m c)
   rw [pow_one] at h
   rw [map_mulBy, h, AlgHomClass.commutes, CoalgHomClass.counit_comp_apply]
@@ -110,12 +110,12 @@ theorem GlobalTheory.HTPair.exists_quot_field : ∀ (p : ℕ) [Fact p.Prime] (k 
       tors_le := fun m => (hker m).symm ▸ torsion_le G π m }
   obtain ⟨H, q, hqs, hqk, hqc⟩ := GlobalTheory.HTPair.exists_quotPDivGroup p k G τ
   refine ⟨H, toQuot τ q hqs hqk hqc, fromQuot τ q hqc, ?_, ?_, ?_⟩
-  · refine hom_ext fun n => ?_
+  · refine PDivGroup.Hom.ext (funext fun n => ?_)
     rw [natCast_smul_id_app, comp_app]
     refine BialgHom.ext fun a => ?_
     change (toQuot τ q hqs hqk hqc).app n (q n (τ.s n a)) = _
     rw [toQuot_app_q, τ.j_s, G.res_mulP]
-  · refine hom_ext fun n => ?_
+  · refine PDivGroup.Hom.ext (funext fun n => ?_)
     rw [natCast_smul_id_app, comp_app]
     refine BialgHom.ext fun c => ?_
     obtain ⟨b, rfl⟩ := hqs n c

@@ -328,6 +328,7 @@ private lemma line_core {Y : Scheme.{0}} {I : Type} (U : I → Y.Opens) (s : ∀
     have hl2 : l ≫ pullback.snd _ _ = pullback.lift b c h' := pullback.lift_snd _ _ _
     have l1 : l ≫ q1 = a := by
       simp only [q1]
+      rw [← Category.assoc, hl1, pullback.lift_fst]
     have l2 : l ≫ q2 = b := by
       simp only [q2]
       rw [← Category.assoc, hl1, pullback.lift_snd]

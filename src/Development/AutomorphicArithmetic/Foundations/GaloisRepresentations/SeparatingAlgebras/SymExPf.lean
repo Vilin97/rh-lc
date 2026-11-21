@@ -10,7 +10,7 @@ open MeasureTheory GroundTheory.Automorphic GroundTheory.Automorphic.Spherical U
 theorem UpperTheory.Gal.Gen.symEx_pf :
     UpperTheory.Gal.Gen.SymEx := by
   intro n Φ
-  refine ⟨polyEmb n (∏ σ : Equiv.Perm (Fin n), MvPolynomial.rename σ Φ), ?_, ?_, ?_⟩
+  refine ⟨polyEmb (n := n) (∏ σ : Equiv.Perm (Fin n), MvPolynomial.rename σ Φ), ?_, ?_, ?_⟩
   · show ∀ τ : Equiv.Perm (Fin n), permAct τ _ = _
     intro τ
     rw [← polyEmb_rename]

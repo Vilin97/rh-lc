@@ -168,6 +168,13 @@ theorem UpperTheory.WildA.jetInt :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hop, hsum, map_sum, Finsupp.finsetSum_apply]
   simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, hz]
-  rw [← Finsupp.sum_finset_sum_index (by simp) (by intros; push_cast; ring)]
+  let f : ((Formalism.L2.Ker.DVar ι a b →₀ ℕ) →₀ ℤ) →+ ℂ :=
+    { toFun := fun c => c.sum fun m z => (z : ℂ) * J m
+      map_zero' := by simp
+      map_add' := by
+        intro x y
+        exact Finsupp.sum_add_index' (by simp) (by intros; push_cast; ring) }
+  change ∑ x ∈ S, J x * (z x : ℂ) = f (∑ k ∈ S, Finsupp.single k (z k))
+  rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [Finsupp.sum_single_index (by simp), mul_comm]
+  simp [f, Finsupp.sum_single_index, mul_comm]

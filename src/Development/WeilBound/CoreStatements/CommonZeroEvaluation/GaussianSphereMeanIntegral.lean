@@ -152,7 +152,7 @@ theorem aesm (h : HermNorm n) (G : (Fin e × Fin n → ℂ) → ℝ)
     have hq : Measure.QuasiMeasurePreserving (sc (n := n) (fun _ => (1 : ℝ) / (m + 1)))
         (volume.restrict (sc (n := n) (fun _ => (1 : ℝ) / (m + 1)) ⁻¹' ballProd h e))
         (volume.restrict (ballProd h e)) := by
-      refine ⟨measurable_sc _, ?_⟩
+      refine ⟨(measurable_sc _).aemeasurable, ?_⟩
       rw [← Measure.restrict_map (measurable_sc _) (isOpen_ballProd h e).measurableSet, hmap,
         Measure.restrict_smul]
       exact Measure.smul_absolutelyContinuous

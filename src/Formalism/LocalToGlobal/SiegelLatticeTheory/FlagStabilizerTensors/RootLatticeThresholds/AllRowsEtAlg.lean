@@ -118,7 +118,7 @@ theorem posType_of (I : AutInst) (μ : Measure I.Gf) [μ.IsMulLeftInvariant] [Is
   have key : ∫ z, ((Complex.normSq (∑ j, c j * f (z⁻¹ * x j)) : ℝ) : ℂ) ∂μ =
       ∑ i, ∑ j, star (c i) * c j * f ((x i)⁻¹ * x j) := by
     simp_rw [hF]
-    rw [integral_finsetSum _ (fun i _ => integrable_finset_sum _ (fun j _ => (hint i j).const_mul _))]
+    rw [integral_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => (hint i j).const_mul _))]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [integral_finsetSum _ (fun j _ => (hint i j).const_mul _)]
     refine Finset.sum_congr rfl fun j _ => ?_

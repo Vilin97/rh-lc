@@ -56,7 +56,7 @@ theorem aestronglyMeasurable_thS (V : HSp D) (ν : Measure (GA D V)) [ν.IsHaarM
   have hae : ∀ᵐ q ∂autMeasure V ν, descend (GQ V) (absTheta V f) q < ⊤ :=
     ae_lt_top (GlobalTheory.AbsThetaSemi.measurable_descend_absTheta V hf) hfin.ne
   have hae' : ∀ᵐ h ∂ν, absTheta V f h < ⊤ := by
-    have := (quasiMeasurePreserving_mk (Γ := GQ V) (μ := ν)).ae hae
+    have := MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Γ := GQ V) (μ := ν)) hae
     filter_upwards [this] with h hh
     rwa [(leftInv_absTheta V f).descend_mk] at hh
   have := GlobalTheory.ThetaTransformMeas.countable_field D.host.E

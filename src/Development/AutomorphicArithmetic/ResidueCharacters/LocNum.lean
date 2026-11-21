@@ -89,8 +89,12 @@ theorem cTB_le (l N h n t e vd g : ℕ) (hl : l.Prime) (U : Finset ℤ) (U' : Se
   push_cast at h3
   have hs : 1 ≤ sN l N := le_max_left _ _
   have hL : lamN l N h = sN l N + Nat.log l (2 * h) + Nat.log l N + 1 := rfl
-  have hv1 : padicValNat l e ≤ e := (padicValNat_le_nat_log e).trans (Nat.log_le_self _ _)
-  have hv2 : padicValNat l (e + 1) ≤ e + 1 := (padicValNat_le_nat_log _).trans (Nat.log_le_self _ _)
+  have hv1 : padicValNat l e ≤ e := by
+    rw [Nat.padicValNat_def]
+    exact (multiplicity_le_nat_log e).trans (Nat.log_le_self _ _)
+  have hv2 : padicValNat l (e + 1) ≤ e + 1 := by
+    rw [Nat.padicValNat_def]
+    exact (multiplicity_le_nat_log _).trans (Nat.log_le_self _ _)
   have hd : e / (l - 1) ≤ e := Nat.div_le_self _ _
   unfold LocalSituation.cTB cBL
   set L := lamN l N h

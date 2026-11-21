@@ -335,8 +335,8 @@ theorem stDiv : StDiv := by
     rw [h.ptIdeal_eq hB hz, h.ptIdeal_eq hB hη, qOf_generic]
     have hrel : pr (algX p (nonzeroLocus (s k))) t (qOf h.aff hz) ∈
         relComps (pr (algX p (nonzeroLocus (s k))) t ⊥ ⊔ Ideal.span {GroundTheory.Heights₂.Heights.linForm u}) ↔
-        qOf h.aff hz ∈ (Ideal.span {eval₂Hom (algX p (nonzeroLocus (s k))) t
-          (GroundTheory.Heights₂.Heights.linForm u)}).minimalPrimes := by
+        qOf h.aff hz ∈ (Ideal.span {(eval₂Hom (algX p (nonzeroLocus (s k))) t
+          (GroundTheory.Heights₂.Heights.linForm u))}).minimalPrimes := by
       rw [← ChowFormHeightComparison₂.CF.A.mem_minimalPrimes_iff h.surj h1 u (qOf h.aff hz)]
       exact ⟨fun H => H.1, fun H => ⟨H, k, ChowFormHeightComparison₂.CF.A.X_notMem_pr h1 _⟩⟩
     rw [hrel, ChowFormHeightComparison₂.CF.A.localMult_pr h.surj h1 u (qOf h.aff hz)]
@@ -355,28 +355,28 @@ theorem stDiv : StDiv := by
     have hg := h.germ_comb hsu hz hi
     have hunit := (isUnit_germ hi).mp hz
     have hspan : Ideal.span {(Z.presheaf.germ _ z hi).hom (su.f i)} =
-        Ideal.span {algebraMap _ (Z.presheaf.stalk z)
-          (eval₂Hom (algX p (nonzeroLocus (s k))) t (GroundTheory.Heights₂.Heights.linForm u))} := by
+        Ideal.span {(algebraMap _ (Z.presheaf.stalk z)
+          (eval₂Hom (algX p (nonzeroLocus (s k))) t (GroundTheory.Heights₂.Heights.linForm u)))} := by
       rw [hg]
       exact Ideal.span_singleton_mul_right_unit hunit _
-    have hlen : Module.length (Z.presheaf.stalk z) (Z.presheaf.stalk z ⧸ Ideal.span {algebraMap _
+    have hlen : Module.length (Z.presheaf.stalk z) (Z.presheaf.stalk z ⧸ Ideal.span {(algebraMap _
           (Z.presheaf.stalk z) (eval₂Hom (algX p (nonzeroLocus (s k))) t
-            (GroundTheory.Heights₂.Heights.linForm u))}) =
+            (GroundTheory.Heights₂.Heights.linForm u)))}) =
         Module.length (Localization.AtPrime (qOf h.aff hz))
           (Localization.AtPrime (qOf h.aff hz) ⧸ Ideal.map (algebraMap _ (Localization.AtPrime
-            (qOf h.aff hz))) (Ideal.span {eval₂Hom (algX p (nonzeroLocus (s k))) t
-              (GroundTheory.Heights₂.Heights.linForm u)})) := by
+            (qOf h.aff hz))) (Ideal.span {(eval₂Hom (algX p (nonzeroLocus (s k))) t
+              (GroundTheory.Heights₂.Heights.linForm u))})) := by
       have he := (IsLocalization.algEquiv (qOf h.aff hz).primeCompl
         (Localization.AtPrime (qOf h.aff hz)) (Z.presheaf.stalk z)).commutes
           (eval₂Hom (algX p (nonzeroLocus (s k))) t (GroundTheory.Heights₂.Heights.linForm u))
       rw [Ideal.map_span, Set.image_singleton, ← he]
       exact len_equiv (IsLocalization.algEquiv (qOf h.aff hz).primeCompl
         (Localization.AtPrime (qOf h.aff hz)) (Z.presheaf.stalk z)).toRingEquiv _
-    have hLM : localMult (Ideal.span {eval₂Hom (algX p (nonzeroLocus (s k))) t
-          (GroundTheory.Heights₂.Heights.linForm u)}) (qOf h.aff hz) =
-        (Module.length (Z.presheaf.stalk z) (Z.presheaf.stalk z ⧸ Ideal.span {algebraMap _
+    have hLM : localMult (Ideal.span {(eval₂Hom (algX p (nonzeroLocus (s k))) t
+          (GroundTheory.Heights₂.Heights.linForm u))}) (qOf h.aff hz) =
+        (Module.length (Z.presheaf.stalk z) (Z.presheaf.stalk z ⧸ Ideal.span {(algebraMap _
           (Z.presheaf.stalk z) (eval₂Hom (algX p (nonzeroLocus (s k))) t
-            (GroundTheory.Heights₂.Heights.linForm u))})).toNat := by
+            (GroundTheory.Heights₂.Heights.linForm u)))})).toNat := by
       rw [hlen]
       unfold localMult
       rw [dite_eq_left (show (qOf h.aff hz).IsPrime from inferInstance)]

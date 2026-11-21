@@ -45,11 +45,11 @@ theorem eq_of_equation_genX_genY {W' : WeierstrassCurve F}
       map_sub]
     linear_combination eW - eW'
   obtain ⟨hP0, hQ0⟩ := eq_zero_of_algebraMap_add_mul_genY W key
-  have c2 := congrArg (Polynomial.coeff · 2) hP0
-  have c1 := congrArg (Polynomial.coeff · 1) hP0
-  have c0 := congrArg (Polynomial.coeff · 0) hP0
-  have d1 := congrArg (Polynomial.coeff · 1) hQ0
-  have d0 := congrArg (Polynomial.coeff · 0) hQ0
+  have c2 := congrArg (AddMonoidAlgebra.coeff · 2) hP0
+  have c1 := congrArg (AddMonoidAlgebra.coeff · 1) hP0
+  have c0 := congrArg (AddMonoidAlgebra.coeff · 0) hP0
+  have d1 := congrArg (AddMonoidAlgebra.coeff · 1) hQ0
+  have d0 := congrArg (AddMonoidAlgebra.coeff · 0) hQ0
   simp [hP, hQ, coeff_X, coeff_C, coeff_X_pow, -map_sub] at c2 c1 c0 d1 d0
   ext
   · linear_combination -d1
@@ -206,7 +206,7 @@ theorem exists_variableChange_of_degree_eq_one_of_isAlgClosed (ψ : Isogeny A B)
       simp only [hP, hQ, map_add (f := _), map_mul, map_pow, algebraMap_C_functionField, ← genX_eq, map_sub,
         map_ofNat]
       linear_combination eB - ι γ ^ 2 * eA
-    have c3 := congrArg (Polynomial.coeff · 3) (eq_zero_of_algebraMap_add_mul_genY A key).1
+    have c3 := congrArg (AddMonoidAlgebra.coeff · 3) (eq_zero_of_algebraMap_add_mul_genY A key).1
     simp [hP, coeff_X_pow, -map_sub] at c3
     linear_combination c3
   have hu2 : (α / γ) ^ 2 * α = 1 := by

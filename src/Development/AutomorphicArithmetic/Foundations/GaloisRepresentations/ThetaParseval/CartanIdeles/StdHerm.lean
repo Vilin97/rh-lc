@@ -64,13 +64,8 @@ theorem stdHerm : StdHerm := by
   · refine ⟨Submodule.fg_pi fun _ => ?_, ?_⟩
     · rw [Submodule.one_eq_span]
       exact Submodule.fg_span_singleton 1
-    · rw [eq_top_iff]
-      intro z _
-      have hz : z = ∑ i, z i • (Pi.single i (1 : E) : Fin n → E) := by
-        ext j
-        simp [Pi.single_apply]
-      rw [hz]
-      exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span (hs i))
+    · intro s _ h
+      exact (LinearIndependent.iff_fractionRing (𝓞 E) E).mp h
   · intro y
     rw [hL]
     constructor

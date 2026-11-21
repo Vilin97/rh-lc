@@ -434,6 +434,7 @@ theorem separateBoundaryInvariant_appendLowerDimReduction (hstar : MaxContactCov
   have hbdC : (MaxContactCoverData.derivedTriple S s hft [] 0).boundary = s.boundary s.length := by
     rw [MaxContactCoverData.derivedTriple_boundary]
     simp
+    rfl
   have hjC' : j < (MaxContactCoverData.derivedTriple S s hft [] 0).boundary.length := by
     rw [hbdC]
     exact hbj

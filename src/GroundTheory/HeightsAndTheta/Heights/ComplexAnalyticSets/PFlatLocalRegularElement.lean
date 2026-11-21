@@ -135,7 +135,8 @@ theorem smul_regular_mod_ideal (y : B)
   set P : Submodule B M := I.map (algebraMap A B) • ⊤
   have hle : (maximalIdeal A).map (algebraMap A B) ≤ Ideal.jacobson ⊥ :=
     (IsLocalRing.map_maximalIdeal_le _).trans (IsLocalRing.maximalIdeal_le_jacobson _)
-  have hK := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⧸ P) _ hle
+  have hK := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⧸ P) _
+    (by simpa only [Ideal.jacobson_bot] using hle)
   rw [mem_smul_top_iff_mem_map_smul_top (B := B), ← Submodule.Quotient.mk_eq_zero P]
   have hmem : Submodule.Quotient.mk (p := P) z ∈
       (⨅ i : ℕ, ((maximalIdeal A).map (algebraMap A B)) ^ i • (⊤ : Submodule B (M ⧸ P))) := by

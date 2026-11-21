@@ -31,6 +31,7 @@ theorem schr_zero_fst {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (v : κ
 theorem siegelSmall_of (hF : SliceFacts) (hAC : AdaptedChar) : SiegelSmall := by
   intro F E _ _ _ _ _ σ d n h Y b j ε hn hs hb e1 e2 hj dd0 dd' had0 had' om1 hsp1 hsr1 φ₀ hφ₀ h0 om' hbox
   intro l hl hinv p t hpt φ hφ
+  change G2 σ Y at p
   have hψ : IsStd d.B.ψ := d.ok.good.std
 
   have hchar : ∀ (y : Fin d.m × Fin n × Fin 2 → AF F), ∀ φ ∈ schA F (Fin d.m × Fin n × Fin 2),
@@ -48,6 +49,9 @@ theorem siegelSmall_of (hF : SliceFacts) (hAC : AdaptedChar) : SiegelSmall := by
   have hmem : om' p φ ∈ schA F (Fin d.m × Fin n × Fin 2) := by
     have := (hF F _ _).1 _ hm1
     rwa [slice0_box_one _ h0] at this
+  change l (om' p φ) = (d.χ (Matrix.GeneralLinearGroup.det t) : ℂ) *
+    (((((adeleClass F).modu (Units.map (Algebra.norm (AF F) : AE F E →* AF F) (Matrix.GeneralLinearGroup.det t))) : ℝ) ^
+      ((Fintype.card (Fin d.m) : ℝ) / 2) : ℝ) : ℂ) * l φ
   rw [hc _ hmem, hc _ hφ]
 
   have hv : om' p φ 0 = ev0 (K1 d.m n) (om1 (j p) (boxFun φ φ₀)) := by
@@ -63,9 +67,14 @@ theorem siegelSmall_of (hF : SliceFacts) (hAC : AdaptedChar) : SiegelSmall := by
     rw [Darboux.rho, GlobalTheory.TowU.reindexD_e, h1]
     simp [ev0, schr]
   have key := hsr1 (ev0 (K1 d.m n)) (evalZero_mem_adelicSchwartzAdmittedForms _) hkill (j p) t' ht' (boxFun φ φ₀) hbm
-  rw [hv, key, hdet]
-  simp [ev0, boxFun, h0]
-  ring
+  rw [hdet] at key
+  change ev0 (K1 d.m n) (om1 (j p) (boxFun φ φ₀)) =
+    (d.χ (Matrix.GeneralLinearGroup.det t) : ℂ) *
+    (((((adeleClass F).modu (Units.map (Algebra.norm (AF F) : AE F E →* AF F) (Matrix.GeneralLinearGroup.det t))) : ℝ) ^
+      ((Fintype.card (Fin d.m) : ℝ) / 2) : ℝ) : ℂ) * ev0 (K1 d.m n) (boxFun φ φ₀) at key
+  simp [ev0, boxFun, h0] at key
+  rw [hv]
+  simpa [ev0, mul_assoc, mul_comm, mul_left_comm] using congrArg (fun z : ℂ => c * z) key
 
 end PositivityTheory.SiegelWeilFormula.Ald
 

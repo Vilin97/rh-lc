@@ -25,7 +25,15 @@ def retractPt (l : ℕ) [Fact l.Prime] (K : IntermediateField ℚ_[l] (PadicAlgC
 
 theorem retractPt_str (l : ℕ) [Fact l.Prime] (K : IntermediateField ℚ_[l] (PadicAlgCl l)) :
     retractPt l K ≫ PSpace.str (OK l K) 2 = 𝟙 _ := by
-  rw [retractPt, GlobalTheory.ProjSpace.pt_str]
+  have hstr : ∀ (v : Fin (2 + 1) → OK l K) (hv : Ideal.span (Set.range v) = ⊤),
+      GlobalTheory.ProjSpace.pt (RingHom.id (OK l K)) v hv ≫ PSpace.str (OK l K) 2 =
+        spMap (RingHom.id (OK l K)) := by
+    intro v hv
+    rw [GlobalTheory.ProjSpace.pt, PSpace.str, GlobalTheory.ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+    congr 1
+    ext1
+    exact RingHom.ext fun r => MvPolynomial.eval₂Hom_C _ v r
+  rw [retractPt, hstr]
   simp [spMap]
 
 theorem retract_pf : Retract := by

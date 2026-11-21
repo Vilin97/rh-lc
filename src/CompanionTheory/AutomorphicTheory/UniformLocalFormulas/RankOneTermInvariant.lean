@@ -160,7 +160,11 @@ theorem root_push (u u' : D.what₂.Word) (w : Point D.host.E (D.R.rS + 1)) (hw 
   refine ⟨1, hN1, 1, hN1, JointAmplitudePoints.gamP C u u' w τ, by simp, RelPtR.zhatO_gamP C u u' w hw τ, μR.map (cMr C γ τ), ?_, ?_,
     by rw [hid, Measure.map_id]⟩
   · rw [hemb.map_apply]
-    exact measure_mono_null (fun y hy hyS => hy ((stV_iff C γ τ u u' y).1 hyS)) hc
+    apply measure_mono_null _ hc
+    intro y hy
+    change y ∉ JointQuot.StV X u u' γ (vOf X τ)
+    intro hyS
+    exact hy ((stV_iff C γ τ u u' y).1 hyS)
   · have hcomp : rootCoords D.R.k D.R.rS (zB X (C.Qi τ) u' τ) (ptLoc D τ w) ∘ cMr C γ τ =
         (fun (y : FreeE w → ℂ) i => (1 : ℂ) * y (RootPatterns.idxF τ w i)) ∘ JointQuot.stCoordV X u' w γ (vOf X τ) := by
       funext y i

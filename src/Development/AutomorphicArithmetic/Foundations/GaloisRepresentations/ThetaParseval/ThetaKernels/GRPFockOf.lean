@@ -80,6 +80,7 @@ private theorem sumPl_tprod_pk {ι : Type} [Fintype ι] [DecidableEq ι] {V : ι
     · subst hj; simp [h]
     · simp [Function.update_of_ne hj]
   rw [e, MultilinearMap.map_update_smul, Function.update_eq_self]
+  rfl
 section Gen
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {n d P Q R S r s : ℕ} {β : Type} [Fintype β] [DecidableEq β]
@@ -161,16 +162,20 @@ private theorem acts_of_k_pk (hcm : IsCMExt (maximalRealSubfield E) E (UpperTheo
     simpa only [jm_zero_pk, Matrix.mul_one, Matrix.mul_assoc, hA'] using this
   obtain ⟨γ, hγ, Y, hgen, -, hγ1⟩ := Main.i_kline Main.i_lineex (maximalRealSubfield E) E (UpperTheory.TP.cj E) (Fin N) N 0 B.emb
     (incM _ W.J) b C W.θ hcm hC hθ (e k) hat fun w => by rw [hθ1 w]; exact Commute.one_right _
+  change Multiplicative ℝ →* UA (UpperTheory.TP.cj E) W.J at γ
   have hg : ∀ w, ∀ a b, (GlobalTheory.UnitaryBC.cEmb (B.emb w).1 k).1 a b = NormedSpace.exp (Y w) (Sum.inl a) (Sum.inl b) := fun w => by
     refine hlast w _ _ ?_
     have h1 := hgen 1 w
     rw [one_smul, hγ1] at h1
     rw [← he.emb w (B.emb w) k]
     exact h1
+  change γ (Multiplicative.ofAdd 1) = e k at hγ1
   obtain ⟨U, hU1, hU2⟩ := exp_gen_pk hact hadm hloc hγ hgen
   have e2 := isExp_unique_pk hU1 (UpperTheory.TP.RP.expSum _ _ (fun w => hloc _ _) fun w => hU w (Y w) _ (hg w))
   have := hU2 T
-  rwa [hγ1, e2] at this
+  change Acts (evI (maximalRealSubfield E)) (om' (γ (Multiplicative.ofAdd 1))) (Φ T) (Φ (U T)) at this
+  rw [hγ1, e2] at this
+  exact this
 private theorem parity_of_pk (hcm : IsCMExt (maximalRealSubfield E) E (UpperTheory.TP.cj E)) {B : Base (maximalRealSubfield E) E} {N : ℕ}
     {W : Spc (maximalRealSubfield E) E N} {b : ℂ} (hN : 1 ≤ N)
     {C : InfinitePlace (maximalRealSubfield E) → Matrix (Fin N) (Ix N 0) ℂ}
@@ -216,6 +221,7 @@ private theorem parity_of_pk (hcm : IsCMExt (maximalRealSubfield E) E (UpperTheo
       by_cases h : w' = w
       · subst h; simpa [Y] using hs
       · simp [Y, Pi.single_eq_of_ne h])
+  change Multiplicative ℝ →* UA (UpperTheory.TP.cj E) W.J at γ
   have h1 : γ (Multiplicative.ofAdd 1) = 1 := eq_one_of_frame_pk hcm hC (hγ.2 _) fun w' => by
     have := hgen 1 w'
     rw [hexp w', Matrix.mul_one] at this
@@ -225,7 +231,9 @@ private theorem parity_of_pk (hcm : IsCMExt (maximalRealSubfield E) E (UpperTheo
   have hT0 : T₀ ≠ 0 := UpperTheory.TP.RP.tprodNe _ fun _ => one_ne_zero
   have hfix : U T₀ = T₀ := by
     refine hΦ (GlobalTheory.FockBottom.acts_unique (hU2 T₀) ?_)
-    rw [h1, map_one]
+    have hh := congrArg (fun g => ⇑(om' g)) h1
+    set_option backward.isDefEq.respectTransparency false in
+      rw [hh, map_one]
     exact fun r _ => rfl
   set μ : ℂ := ((D : ℂ) + m w) / 2 * z
   have hL : (sumPl fun w' => act (Y w') + (((m w' : ℂ) / 2) * (Y w').trace) • 1) T₀ = μ • T₀ := by

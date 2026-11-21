@@ -122,17 +122,17 @@ section Facts
 variable (u : D.what₂.Word) (v : InfinitePlace X.B.I.F)
 
 theorem fX_ee : ∀ a b, hJ (X.B.I.ε v) (eV X v a) (eV X v b) = 0 := fun a b =>
-  (ProductExactness.hJ_X X v _ _).trans (by rw [X.ee]; simp)
+  (ProductExactness.hJ_X X v (X.eX a) (X.eX b)).trans (by rw [X.ee]; simp)
 theorem fX_ff : ∀ a b, hJ (X.B.I.ε v) (ProductExactness.pV X v a) (ProductExactness.pV X v b) = 0 := fun a b =>
-  (ProductExactness.hJ_X X v _ _).trans (by rw [X.ff]; simp)
+  (ProductExactness.hJ_X X v (X.fY a) (X.fY b)).trans (by rw [X.ff]; simp)
 theorem fX_ef : ∀ a b, hJ (X.B.I.ε v) (eV X v a) (ProductExactness.pV X v b) = if a = b then 1 else 0 := fun a b =>
-  (ProductExactness.hJ_X X v _ _).trans (by rw [X.ef]; split_ifs <;> simp)
+  (ProductExactness.hJ_X X v (X.eX a) (X.fY b)).trans (by rw [X.ef]; split_ifs <;> simp)
 theorem fX_ww : ∀ a b, hJ (X.B.I.ε v) (X.wfr u v a) (X.wfr u v b) = if a = b then 1 else 0 := X.wfr_on u v
 theorem fX_ew : ∀ c a, hJ (X.B.I.ε v) (eV X v c) (X.wfr u v a) = 0 := fun c a => ((X.wfr_perp u v a).1 c).1
 theorem fX_fw : ∀ c a, hJ (X.B.I.ε v) (ProductExactness.pV X v c) (X.wfr u v a) = 0 := fun c a => ((X.wfr_perp u v a).1 c).2
 theorem fX_ez : ∀ a, hJ (X.B.I.ε v) (eV X v a) (ProductExactness.zV X u v) = 0 := (ProductExactness.frameLoc_X X u u v).ez
 theorem fX_fz : ∀ a, hJ (X.B.I.ε v) (ProductExactness.pV X v a) (ProductExactness.zV X u v) = 0 := fun a =>
-  (ProductExactness.hJ_X X v _ _).trans (by rw [(X.zu_orth u a).2]; simp)
+  (ProductExactness.hJ_X X v (X.fY a) (X.zu u)).trans (by rw [(X.zu_orth u a).2]; simp)
 theorem frame_real_z_z_eq_neg : hJ (X.B.I.ε v) (ProductExactness.zV X u v) (ProductExactness.zV X u v) = -((Tw u : ℝ) : ℂ) :=
   (ProductExactness.frameLoc_X X u u v).zz
 theorem fX_zw : ∀ a, hJ (X.B.I.ε v) (ProductExactness.zV X u v) (X.wfr u v a) = 0 := fun a => (X.wfr_perp u v a).2

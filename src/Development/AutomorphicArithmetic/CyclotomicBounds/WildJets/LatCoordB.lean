@@ -99,23 +99,17 @@ private theorem lcb_isLattice (Λ : Submodule (𝓞 E) (Fin n → E)) (s : ℕ) 
     (h1 : ∀ x ∈ Λ, ∀ a, (s • x) a ∈ (1 : Submodule (𝓞 E) E))
     (h2 : ∀ j, s • (Pi.single j 1 : Fin n → E) ∈ Λ) : Submodule.IsLattice E Λ := by
   have hs' : (s : E) ≠ 0 := Nat.cast_ne_zero.2 hs
-  constructor
-  · let f : (Fin n → E) →ₗ[𝓞 E] (Fin n → E) := s • LinearMap.id
-    have hf : Function.Injective f := by
-      intro x y h
-      have h' : (s : E) • x = (s : E) • y := by
-        rw [Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul]; exact h
-      exact smul_right_injective _ hs' h'
-    refine Submodule.fg_of_fg_map_injective f hf ?_
-    refine Submodule.FG.of_le (M := Fin n → E) (T := colLat (1 : GL (Fin n) E)) (Submodule.fg_span (Set.finite_range _)) ?_
-    rintro _ ⟨x, hx, rfl⟩
-    exact (lcb_mem_colLat_one _).2 (h1 x hx)
-  · rw [eq_top_iff, ← (Pi.basisFun E (Fin n)).span_eq, Submodule.span_le]
-    rintro _ ⟨j, rfl⟩
-    have : (Pi.basisFun E (Fin n)) j = (s : E)⁻¹ • (s • (Pi.single j 1 : Fin n → E)) := by
-      rw [← Nat.cast_smul_eq_nsmul E, inv_smul_smul₀ hs', Pi.basisFun_apply]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (h2 j))
+  apply Submodule.IsLattice.of_fg
+  let f : (Fin n → E) →ₗ[𝓞 E] (Fin n → E) := s • LinearMap.id
+  have hf : Function.Injective f := by
+    intro x y h
+    have h' : (s : E) • x = (s : E) • y := by
+      rw [Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul]; exact h
+    exact smul_right_injective _ hs' h'
+  refine Submodule.fg_of_fg_map_injective f hf ?_
+  refine Submodule.FG.of_le (M := Fin n → E) (T := colLat (1 : GL (Fin n) E)) (Submodule.fg_span (Set.finite_range _)) ?_
+  rintro _ ⟨x, hx, rfl⟩
+  exact (lcb_mem_colLat_one _).2 (h1 x hx)
 
 private theorem lcb_desc (φ : K →+* ℂ) (lam : ι → DomWeight n) (i : VVIdx lam) :
     ∃ F : VV K lam, (F : Pol K ι n) ∈ nabStd K lam ∧ GlobalTheory.CoefModel.mapVV φ lam F = bVV ℂ lam i := by
@@ -223,7 +217,7 @@ theorem UpperTheory.WildA.latCoordB :
     exact hc (this ▸ w.asIdeal.zero_mem)
   refine ⟨∑ i, y i • F i, algebraMap _ D.what₂.LL c * s₀, ?_, mul_ne_zero hc0 hs₀, ?_, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · rw [map_sum]
     simp only [LinearMap.map_smulₛₗ, hy, hF']
     exact (bVV ℂ lam).sum_repr v
   · have e : vw w (algebraMap _ D.what₂.LL c * s₀) = vw w (algebraMap _ D.what₂.LL c) + vw w s₀ :=

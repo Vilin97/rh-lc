@@ -131,7 +131,8 @@ theorem proof : CechZerothCohomologySections.Statement.{u, v, w} := by
       (LinearMap.ker (Cech.d (fun I => F.sub I) F.res 0)).subtype = ⊥ := by
     rw [show Cech.bdry (fun I => F.sub I) F.res 0 = ⊥ from rfl, Submodule.comap_bot,
       Submodule.ker_subtype]
-  exact ⟨(Submodule.quotEquivOfEqBot _ hp).trans
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact ⟨(Submodule.quotEquivOfEqBot _ hp).trans
     (LinearEquiv.ofBijective (toKer F) (toKer_bijective F hx)).symm⟩
 
 end CechZerothCohomologySections

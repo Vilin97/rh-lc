@@ -55,7 +55,7 @@ theorem exists_darboux_cS : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : 
   have hs : (sgn ε S).gram = G := by
     rw [← hGdef]
     cases ε
-    · simp [sgn]
+    · ext i j; simp [sgn, HSpace.gram]
     · ext i j; simp [HSpace.gram]
   have hVJ : Vs.J = -G := by
     rw [hJ, ← hGdef]; cases ε <;> simp

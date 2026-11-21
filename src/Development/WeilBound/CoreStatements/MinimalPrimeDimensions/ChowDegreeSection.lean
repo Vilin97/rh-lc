@@ -36,7 +36,8 @@ theorem algX_strHom {κ : Type} [Field κ] {Z : Scheme.{0}} [Algebra κ Γ(Z, �
     algX (strHom κ Z) ⊤ = algebraMap κ Γ(Z, ⊤) := by
   ext r
   rw [algebraMap_eq_strHom]
-  simp [algX, Scheme.Hom.appLE, Scheme.Hom.appTop]
+  simp only [algX, RingHom.comp_apply, CommRingCat.hom_comp]
+  rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
   rfl
 
 section Base
@@ -53,7 +54,8 @@ private theorem eq_of_algX_top_eq {R : Type} [CommRing R] {Z : Scheme.{0}} {f g 
       algX φ ⊤ = ((Scheme.ΓSpecIso (CommRingCat.of R)).inv ≫ φ.appTop).hom := by
     intro φ
     ext r
-    simp [algX, Scheme.Hom.appLE, Scheme.Hom.appTop]
+    simp only [algX, RingHom.comp_apply, CommRingCat.hom_comp]
+    rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
     rfl
   rw [hf, hf] at h
   have e : f.appTop = g.appTop := by

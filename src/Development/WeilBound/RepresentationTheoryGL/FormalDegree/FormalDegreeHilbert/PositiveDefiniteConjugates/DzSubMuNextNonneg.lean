@@ -97,7 +97,7 @@ theorem phiLe : PhiLe := by
     refine Finset.prod_congr rfl fun i _ => ?_
     rw [Complex.ofReal_zpow, ← hreal (↑i + 1) i.isLt]
   rw [hprod, Complex.ofReal_re]
-  apply Finset.prod_le_one
+  apply Finset.prod_le_one₀
   · intro i _
     exact zpow_nonneg (le_trans zero_le_one (hge1 i)) _
   · intro i _

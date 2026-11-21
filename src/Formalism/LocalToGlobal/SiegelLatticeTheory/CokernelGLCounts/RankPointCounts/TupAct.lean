@@ -56,16 +56,21 @@ theorem lift_move {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS ((Tu D u : �
     rw [hf2 b]; exact zhat_lift (lf D F0) F₁ hiso hνF hmF' a b
   refine ⟨ν, hν, m, hm', hνF, hmF', F2, ⟨⟨pd2.1, pd2.2.1, ?_⟩, ?_, ?_, pd2.2.2, ?_⟩,
     ⟨pd2, (Quot.sound (show TermDef.Rel Λ (lf D F0) (PD D Λ (lf D F0) u') ⟨F₁, p₁⟩ ⟨F2, pd2⟩ from hdc)).symm.trans e₁⟩, hf2⟩
-  · rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hdc]; exact h₁.1.2.2
+  · change Gval (lf D F0) F2 ≠ 0
+    rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hdc]; exact h₁.1.2.2
   · refine ⟨fun a b hab => Matrix.one_apply_ne (ne_of_lt hab).symm, fun a => Matrix.one_apply_eq a, fun b => ?_⟩
-    rw [frameAct_one', hf2 b]
+    rw [frameAct_one']
+    change ModG (VS D) Λ (Lat.gS D) (frame F2 b - frame (lf D F0) b)
+    rw [hf2 b]
     exact modG_lift hT' p₁.1 p₁.2.2.1 hFΛ hν.1 hm' hνF hmF' htie
       (fun c => by have := h₁.2.1.2.2 c; rwa [frameAct_one'] at this) b
   · exact (hFun.2.2.2.1 ⟨F₁, p₁⟩ ⟨F2, pd2⟩ hdc).1 h₁.2.2.1
   · have hZZ : ZhatL (lf D F0) F2 = U.conjTranspose * ZhatL (lf D F0) F₁ * U' := by
       funext a b
       exact hent a b
-    rw [hZZ, h₁.2.2.2.2]
+    change ZhatL (lf D F0) F2 = U.conjTranspose * Z₁ * U'
+    have hz1 : ZhatL (lf D F0) F₁ = Z₁ := h₁.2.2.2.2
+    rw [hZZ, hz1]
 
 theorem integral_pair_of_shape (Zd : Formalism.L2.SG.TermLoc.LocDat D) {A B : PairVal.MatR D} (hA : Formalism.L2.SG.Pf.AtPt.IsLo A)
     (hB : Formalism.L2.SG.Pf.AtPt.IsUp B) (hES : Formalism.L2.SG.Pf.StabIntSh.EntryShape D A B) :
@@ -120,7 +125,8 @@ theorem ez_of_normRep {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS ((Tu D u
   have hdca := (hEq ⟨Fa, pa⟩ ⟨F', p₁⟩).1 (ea.trans e₁.symm)
   obtain ⟨Fg, ⟨pg, eg⟩, hgen⟩ := hel.1.1
   refine ⟨⟨p₁.1, p₁.2.1, ?_⟩, hadm₁, ?_, p₁.2.2, rfl⟩
-  · rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hdca]; exact hGa
+  · change Gval (lf D F0) F' ≠ 0
+    rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hdca]; exact hGa
   · exact (hFun.2.2.2.1 ⟨Fg, pg⟩ ⟨F', p₁⟩ ((hEq ⟨Fg, pg⟩ ⟨F', p₁⟩).1 (eg.trans e₁.symm))).1 hgen
 
 theorem moveCZ {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)}

@@ -124,6 +124,20 @@ theorem exists_places {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {
 
 section Args
 
+open Lean Elab Tactic Meta in
+local elab "exact_defeq " e:term : tactic =>
+  closeMainGoalUsing `exact_defeq fun target _ => do
+    let proof ← Term.elabTerm e none
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let proof ← instantiateMVars proof
+    let proofType ← instantiateMVars (← inferType proof)
+    let target ← instantiateMVars target
+    let localContext ← instantiateLCtxMVars (← getLCtx)
+    match Kernel.isDefEq (← getEnv) localContext proofType target with
+    | .ok true => return proof
+    | .ok false => throwError "term type does not match the goal"
+    | .error ex => throwError (ex.toMessageData (← getOptions))
+
 variable {K : Ctx} {B : GlobalTheory.Mem.Base} {f : Top.Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl}
   {L : SizeData₂ (w.st Z).toD7} {hT : GatTies (w.st Z).toD7} {Gi : Formalism.MainNotions.G.Inst (w.st Z).toD7 L} {Gl : Formalism.MainNotions.G.LatInst (w.st Z).toD7}
   {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (w.st Z).toD7} {cX : ExtraC} {ex : Extra (w.st Z).toD7 L hT Gi Gl Kc Yd cX}
@@ -164,7 +178,16 @@ theorem sp_pin (a : TwArgs ex t) (x : R3.TwIn ex) (hx : HEq a.x x) (X : Formalis
   cases x with
   | mk G Pl0 I0 T' A3 core R' F cG geo pins err' Y Z' C' sEE div JA amb0 JM mjH =>
   cases pack
-  kexactB heq_of_eq (hz.trans (spRead_congr X _ _ hK Gd pw wU bij eNu (kq% C'.wU) (kq% C'.bij) (kq% C'.eNu) (kq% hW) (kq% hN)))
+  let Dc := Dc' (zsOf t.r.z.R t.r.z.F)
+  let wU' : (w.st Z).toD7.what₂.Word → Dc.Mem := by exact_defeq C'.wU
+  have bij' : Function.Bijective wU' := by exact_defeq C'.bij
+  let eNu' : ∀ u, (Fin (Dc.a (wU' u)) → (w.st Z).toD7.what₂.LL) ≃ₗ[(w.st Z).toD7.what₂.LL] ((w.st Z).toD7.div.Nu u).V :=
+    by exact_defeq C'.eNu
+  have hw : HEq wU' wU := by exact_defeq hW
+  have hn : HEq eNu' eNu := by exact_defeq hN
+  have h := spRead_congr X (twAt (w.st Z).toD7.what₂.embLL (famT t).A.v0) Dc hK Gd pw
+    wU bij eNu wU' bij' eNu' hw hn
+  exact_defeq (heq_of_eq (hz.trans h))
 
 
 set_option maxHeartbeats 1000000 in
@@ -261,9 +284,6 @@ theorem selection_group_ambient_tie (hC : GlobalTheory.Published.DiscreteSeriesC
 
 end Args
 
-
-
 end GlobalTheory.Mem.R3.SelectionPairing
 
 end
-

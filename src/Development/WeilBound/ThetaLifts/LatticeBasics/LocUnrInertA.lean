@@ -135,7 +135,7 @@ theorem continuous_tensAt : Continuous (tensAt E v : Ev E v → AE F E) := by
       conv_lhs => rw [← b.sum_repr y, map_sum]
     exact Finset.sum_congr rfl fun i _ => smul_tensAt v _ _
   rw [e]
-  exact continuous_finset_sum _ fun i _ => ((GlobalTheory.VacAny.continuous_atPlace v).comp
+  exact continuous_finsetSum _ fun i _ => ((GlobalTheory.VacAny.continuous_atPlace v).comp
     (IsModuleTopology.continuous_of_linearMap (b.coord i))).smul continuous_const
 
 theorem continuous_up : Continuous (up hw h β) := by

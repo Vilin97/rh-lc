@@ -80,7 +80,8 @@ theorem tanVal_list_prod_eq_zero {A : Over (Sp R)} [GrpObj A] (f : Form (A.hom �
     refine ⟨?_, by rw [List.prod_nil]; exact tanVal_one f⟩
     rw [List.prod_nil, GrpTangent.isTangent_iff, MonObj.comp_one]
   | u :: l, h => by
-    obtain ⟨hu, hu0⟩ := h u List.mem_cons_self
+    have hu_mem : u ∈ u :: l := List.mem_cons_self
+    obtain ⟨hu, hu0⟩ := h u hu_mem
     obtain ⟨hl, hl0⟩ := tanVal_list_prod_eq_zero f l fun w hw => h w (List.mem_cons_of_mem _ hw)
     rw [List.prod_cons]
     refine ⟨?_, by rw [tanVal_mul hu hl, hu0, hl0, add_zero]⟩

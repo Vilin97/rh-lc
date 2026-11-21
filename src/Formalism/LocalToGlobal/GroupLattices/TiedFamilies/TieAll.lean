@@ -55,12 +55,12 @@ theorem CmpLeft.core (N : CmpLeft D sc Ce Lc I ψ hd H0 hL T B hBs hB)
           (if Even s.val then x else sigD (recC D sc Ce Lc I ψ hd) x)) =
         ((recC D sc Ce Lc I ψ hd).gat u w hg).P.ι v ((((recC D sc Ce Lc I ψ hd).gat u w hg).P.σ v ^ s.val)
           ((locAt (hermitianLevelZeroOfRecursion D sc Ce Lc I ψ hd H0 hL) u w hg B).iw v x))) :
-    CmpCore T (gatTiesC D sc Ce Lc I ψ hd) (cmpInC D sc Ce Lc I ψ hd H0 hL B hBs hB) where
-  same := N.same
-  ex := fun u w hg => ex_C D sc Ce Lc I ψ hd H0 hL T B hBs hB u (N.same u) w hg
-    (evRatRep_rec T (gatTiesC D sc Ce Lc I ψ hd) u w hg B (N.blk u w hg)) (N.psi0 u)
-  pos := pos
-  chi := N.chi
+    CmpCore T (gatTiesC D sc Ce Lc I ψ hd) (cmpInC D sc Ce Lc I ψ hd H0 hL B hBs hB) :=
+  { same := N.same
+    ex := fun u w hg => ex_C D sc Ce Lc I ψ hd H0 hL T B hBs hB u (N.same u) w hg
+      (evRatRep_rec T (gatTiesC D sc Ce Lc I ψ hd) u w hg B (N.blk u w hg)) (N.psi0 u)
+    pos := pos
+    chi := N.chi }
 
 
 set_option maxHeartbeats 8000000 in

@@ -51,7 +51,7 @@ theorem locQuad1_G_holds (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) : 
   have hfc : IsFiniteMeasureOnCompacts (μS w) := fin_of_weil _ (μS w) (ν w) hG0 hWe
   obtain ⟨c, hc0, hct, hceq⟩ := Formalism.L2.SG.RealObj.InfCut.JacobianCoordinates.JL.HC.unique_sf S hSc (μS w) (μSl (vOf X τ)) hne
     (by rw [hSset]; exact h0) (fun s hs => hli s hs) hfc hnel hsfl
-    (by rw [hSset]; exact measure_mono_null (fun x hx h' => hx (hNHsub x h')) hconcl)
+    (by rw [hSset]; exact measure_mono_null (show (Formalism.L2.SG.Pf.WuDec.Sloc X w (vOf X τ))ᶜ ⊆ (Formalism.L2.SG.Pf.WuDec.NHloc X w (vOf X τ))ᶜ from fun x hx h' => hx (hNHsub x h')) hconcl)
     (fun s hs => hlil s (sloc_sub_NH X w _ hs))
 
   have hsub : MeasurableEmbedding (Subtype.val : S → Formalism.REAL.UJ (X.B.I.ε (vOf X τ))) :=

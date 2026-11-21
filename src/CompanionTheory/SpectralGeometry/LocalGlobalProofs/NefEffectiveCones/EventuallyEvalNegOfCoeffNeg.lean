@@ -28,7 +28,7 @@ theorem eventually_eval_neg_of_coeff_neg (q : Polynomial ℝ) (D : ℕ) (hdeg : 
     have hdg : 0 < q.degree := by
       rw [Polynomial.degree_eq_natDegree (by rintro rfl; simp at hc), hnd]
       exact_mod_cast hD
-    have ht := (Polynomial.tendsto_atBot_of_leadingCoeff_nonpos q hdg hlc).comp
+    have ht := (Polynomial.tendsto_atBot_of_leadingCoeff_nonpos hdg hlc).comp
       tendsto_natCast_atTop_atTop
     exact ht.eventually (eventually_lt_atBot 0)
 

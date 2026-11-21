@@ -186,7 +186,7 @@ theorem exists_etaleChart_of_isPullback (hsq : IsPullback q f (Spec.map φ) p)
   have hymem : y ∈ (f ⁻¹ᵁ U : Y.Opens) := hy
   obtain ⟨V, hVaff, hyV, hVsub⟩ := AlgebraicGeometry.exists_isAffineOpen_mem_and_subset hymem
   have hV : V ≤ f ⁻¹ᵁ U := hVsub
-  refine ⟨V, hV, (c.baseChange hsq).restrict hV, hVaff, hyV, fun j => ?_⟩
+  refine ⟨V, hV, (c.baseChange hsq).restrictCompat hV, hVaff, hyV, fun j => ?_⟩
   have happ : f.appLE U V hV
       = f.appLE U (f ⁻¹ᵁ U) le_rfl ≫ Y.presheaf.map (homOfLE hV).op :=
     appLE_of_le_eq_appLE_comp_presheaf_map f U (f ⁻¹ᵁ U) V le_rfl hV hV

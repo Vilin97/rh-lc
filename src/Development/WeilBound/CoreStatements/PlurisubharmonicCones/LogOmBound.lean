@@ -25,8 +25,8 @@ theorem logOm_bound : ∃ C : ℝ, 0 ≤ C ∧ ∀ (E : Type) [Field E] [NumberF
     simp only [GlobalTheory.CM.logOm, Complex.sub_re, Complex.ofReal_re]
     rfl
   have hrd : rootDiscr E = hostRd E := by
-    unfold hostRd rootDiscr
-    rw [Int.cast_abs, one_div]
+    unfold hostRd
+    rw [NumberField.rootDiscr_def, Int.cast_abs, one_div]
   have h1 : 1 ≤ hostRd E := by
     unfold hostRd
     apply Real.one_le_rpow

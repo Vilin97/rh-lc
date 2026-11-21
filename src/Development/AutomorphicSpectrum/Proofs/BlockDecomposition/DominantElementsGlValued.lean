@@ -278,6 +278,7 @@ section Top
 
 open Filter Topology
 
+set_option maxHeartbeats 12000000 in
 theorem ev_ball (x : L) (A : Set L) (hA : A ∈ 𝓝 x) :
     ∀ᶠ m : ℕ in atTop, {y : L | Valued.v (y - x) ≤ cc ^ m} ⊆ A := by
   obtain ⟨γ, hγ⟩ := Valued.mem_nhds.1 hA

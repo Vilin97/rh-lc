@@ -141,12 +141,12 @@ theorem glue_one (D : D7) (f : ∀ v : Pl D, Fv D.host.F v ⊗[D.host.F] D.host.
     exact hv _ (hf v)
   let C : Fin (Module.finrank D.host.F D.host.E) → Af D.host.F := fun k => RestrictedProduct.mk (c k) (hc k)
   refine ⟨∑ k, pairA D.host.F 0 (C k) ⊗ₜ[D.host.F] (Module.finBasis D.host.F D.host.E) k, fun v => ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [← sum_crd (Fv D.host.F v) (f v)]
     rfl
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     show (0 : Ainf D.host.F) ⊗ₜ[D.host.F] _ = 0
     rw [TensorProduct.zero_tmul]

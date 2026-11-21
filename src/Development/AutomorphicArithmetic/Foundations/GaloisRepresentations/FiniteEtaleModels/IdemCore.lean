@@ -67,7 +67,7 @@ private theorem idem_core {A : Type} [CommRing A] (bar : A ≃+* A) (ω : A) (tr
   have hcop : ∀ f e, u ^ f ⊔ v ^ e = ⊤ := fun f e =>
     Ideal.isCoprime_iff_sup_eq.1 (IsCoprime.pow (Ideal.isCoprime_iff_sup_eq.2 hsup))
   have hinf : ∀ e, u ^ e ⊓ v ^ e ≤ Ideal.span {(q : A) ^ e} := fun e => by
-    rw [Ideal.inf_eq_mul_of_isCoprime (Ideal.isCoprime_iff_sup_eq.2 (hcop e e)), ← mul_pow,
+    rw [← Ideal.mul_eq_inf_of_isCoprime (Ideal.isCoprime_iff_sup_eq.2 (hcop e e)), ← mul_pow,
       ← Ideal.span_singleton_pow]
     exact Ideal.pow_right_mono hmul e
   have dv : ∀ e y, y ∈ u ^ e → y ∈ v ^ e → (q : A) ^ e ∣ y := fun e y hy1 hy2 =>

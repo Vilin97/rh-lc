@@ -17,7 +17,7 @@ theorem pDlogCmp : SDlogCmp := by
   have hkn : k ≤ n := by omega
   have hkj : k ≤ j := by omega
   have hkN : k ≤ N := by omega
-  set D := PowerSeries.derivative R with hD
+  set D := PowerSeries.derivative (R := R) with hD
   set W := w ^ p ^ n with hW
   let J : Ideal (PowerSeries R) := Ideal.span {(p : PowerSeries R) ^ k, cyc R p (j + 1)}
   have hpow : ∀ i, k ≤ i → ∀ y : PowerSeries R, (p : PowerSeries R) ^ i * y ∈ J := by
@@ -65,7 +65,7 @@ theorem pDlogCmp : SDlogCmp := by
   have hDcyc : D (cyc R p (j + 1)) ∈ J := by
     have hc : cyc R p (j + 1) = ∑ i ∈ Finset.range p, (1 + PowerSeries.X) ^ (p ^ j * i) := by
       unfold cyc
-      rw [Polynomial.cyclotomic_prime_pow_eq_geom_sum hp.out, Polynomial.eval₂_finset_sum]
+      rw [Polynomial.cyclotomic_prime_pow_eq_geom_sum hp.out, Polynomial.eval₂_finsetSum]
       simp only [Polynomial.eval₂_pow, Polynomial.eval₂_X, pow_mul]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hc, map_sum]

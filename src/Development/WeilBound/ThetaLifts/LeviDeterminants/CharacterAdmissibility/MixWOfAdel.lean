@@ -41,7 +41,7 @@ theorem lawW_unip (hA : PositivityTheory.Mix.AdelSt) (hP : IsPair B M χX χW om
         ext i k
         have := congrFun (ha (Pi.single k 1)) i
         rw [mulVec_mulVec] at this
-        simpa [mat, mul_comm, mul_apply (M := replicateCol _ _)] using this) (by
+        simpa [mat, mul_comm, Matrix.mul_apply] using this) (by
         ext i k
         exact (congrFun hu.1 i).trans (by simp))
     intro Φ hΦ

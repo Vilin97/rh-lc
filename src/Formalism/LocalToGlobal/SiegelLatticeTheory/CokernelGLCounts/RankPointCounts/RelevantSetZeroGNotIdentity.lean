@@ -44,14 +44,14 @@ theorem exists_nfFull_of_relevant_of_G_eq_zero (Y : Full X) {u : D.what₂.Word}
   refine Formalism.HermitianLatticeCounting.Final.S6.normalForm D.host.E (hS D).V σ (nfH (hS D)) D.R.rS _ _ (fun x => p_starConj D σ x)
     hpos hpos (nf_pos _ _ (p_posX D _ (tie_Tu_pos D u) _) σ) (nf_pos _ _ (p_posX D _ (tie_Tu_pos D u) _) σ)
     (nf_rel D.host.F (tie_trace D.sp.cm) _ _ _ _ hrel) ?_
-  rw [nf_G]
+  rw [nf_G (lf D (X.Fu u)).fl (frq X t.rep).fl (fixedFlag_level_ne_zero D u) (nf_T_ne D u)]
   exact hG0
 
 theorem index_eq_normalForm {Y : Full X} {u : D.what₂.Word} (t : GTu Y u) {j : ℕ} {hj : j ≤ D.R.rS} {c : D.host.E}
     (hN : Formalism.HermitianLatticeCounting.S6.NFFull (nfF (lf D (X.Fu u)).fl (fixedFlag_level_ne_zero D u)) (nfF (frq X t.rep).fl (nf_T_ne D u)) j hj c) :
     jT t = j := by
   have hfin := hN.1.2.1
-  rw [nf_II] at hfin
+  rw [nf_II (lf D (X.Fu u)).fl (frq X t.rep).fl (fixedFlag_level_ne_zero D u) (nf_T_ne D u)] at hfin
   unfold jT
   rw [hfin]
   omega

@@ -107,8 +107,10 @@ theorem int_lin {α Y : Type} [MeasurableSpace α] (μ : Measure α) (G : α →
       by_cases h : ∃ g', Φ g' = g
       · obtain ⟨g', rfl⟩ := h
         simpa only [inj.eq_iff] using hm g'
-      · convert MeasurableSet.empty
-        exact Set.eq_empty_of_forall_notMem fun a ha => h ⟨_, ha⟩) D
+      · have he : {a | Φ (G a) = g} = ∅ :=
+          Set.eq_empty_of_forall_notMem fun a ha => h ⟨G a, ha⟩
+        rw [he]
+        exact MeasurableSet.empty) D
     (fun a ha => by rw [hD a ha]; funext o; cases o <;> simp [Φ]) hw
     (LinearMap.ker (LinearMap.proj none - l ∘ₗ LinearMap.funLeft ℂ ℂ some)) fun a => by
       rw [LinearMap.mem_ker, LinearMap.sub_apply, sub_eq_zero]; rfl).2
@@ -182,7 +184,7 @@ theorem rv_add (B : Base F E) (M : Model σ X W) (v : Pl F) {x : Fin d → E} (h
 theorem span_soLoc (hL : LinEx) {B : Base F E} (hB : B.IsGood σ) {r s r' s'} (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s')
     (M : Model σ X W) {v : Pl F} (t : E →ₐ[F] Fv F v) {φ} (h : φ ∈ Submodule.span ℂ (M.SoLoc B.ψ t)) : φ ∈ M.SoLoc B.ψ t := by
   obtain ⟨⟨ι, hι⟩, -⟩ := hL F E σ B n d X W M r s r' s' hB hX hW v t
-  refine ⟨(Submodule.span_le.2 fun _ h => h.1 : _ ≤ SB _) h, ι, hι, fun Y hY => ?_⟩
+  refine ⟨(Submodule.span_le.2 fun χ (hχ : χ ∈ M.SoLoc B.ψ t) => hχ.1 : _ ≤ SB _) h, ι, hι, fun Y hY => ?_⟩
   have : Submodule.span ℂ (M.SoLoc B.ψ t) ≤ LinearMap.ker (LinearMap.proj Y ∘ₗ ι) := Submodule.span_le.2 fun χ hχ =>
     PositivityTheory.KCo.full_of_soLoc M hB.cm hB.std (Fr.det_ne (.inl hX)) (Fr.det_ne (.inr hW)) hι hχ Y hY
   exact this h

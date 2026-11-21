@@ -111,7 +111,9 @@ theorem pushPt_redU_some (V : WeierstrassCurve 𝒪) [V.IsElliptic]
     show ((V.map (liftJ W)).map (algebraMap _ (liftField K W))).toAffine.Nonsingular _ _
     rw [← map_baseChange_eq_map_of K V (liftJ W) (liftField K W) (liftJ_algebraMap K W)]
     exact h
-  have n := nonsingular_residue_of_isElliptic (liftField K W) (V.map (liftJ W)) h₁.1
+  have n : (curveRed (V.map (liftJ W))).Nonsingular (residue _ x) (residue _ y) :=
+    WeierstrassCurve.Affine.equation_iff_nonsingular.mp
+      (equation_residue (V.map (liftJ W)) (equation_of_map (liftField K W) _ h₁.1))
   obtain ⟨h', e⟩ := pointMapRing_some (pushField W) ((V.map (liftJ W)).map (residue _)) n
   refine ⟨by rw [← pushCurve_eq W V]; exact h', ?_⟩
   have e₁ : pointCongr (map_baseChange_eq_map_of K V (liftJ W) (liftField K W)

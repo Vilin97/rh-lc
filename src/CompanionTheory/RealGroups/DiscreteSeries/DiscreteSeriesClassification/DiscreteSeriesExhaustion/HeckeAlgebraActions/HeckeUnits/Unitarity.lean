@@ -36,6 +36,8 @@ theorem aeval_CH (K : ℕ) (γ : Fin (m + 1) → ℂ) (T : Module.End ℂ (Fin (
       ((List.ofFn fun t : Fin (m + 1) => T - γ t • (1 : Module.End ℂ _)).prod) ^ K := by
   rw [map_pow, map_list_prod, List.map_ofFn]
   congr 3
+  funext t
+  simp only [Function.comp_apply, map_sub, Polynomial.aeval_X, Polynomial.aeval_C,
     Algebra.algebraMap_eq_smul_one]
 
 theorem aeval_lin (k : ℕ) (β : ℂ) (T : Module.End ℂ (Fin (m + 1) → Fin (m + 1) → X.V)) :

@@ -108,7 +108,7 @@ theorem atPl_add (w : ι) (L L' : Module.End ℂ (V w)) : atPl w (L + L') = atPl
   simp only [atPl_eq, MultilinearMap.map_update_add]
 
 theorem atPl_smul (w : ι) (c : ℂ) (L : Module.End ℂ (V w)) : atPl w (c • L) = c • atPl w L := by
-  simp only [atPl_eq, MultilinearMap.map_update_smul]
+  simp only [atPl_eq, MultilinearMap.map_update_smul, RingHom.id_apply]
 
 theorem atPl_one (w : ι) : atPl w (1 : Module.End ℂ (V w)) = 1 := by
   rw [atPl_eq, show Function.update (fun i => (LinearMap.id : V i →ₗ[ℂ] V i)) w 1 = fun i => LinearMap.id by
@@ -232,7 +232,8 @@ theorem side_quot (x t : InfinitePlace F → ℚ) (hp : ∀ w, IsLift (x w) (t w
     obtain ⟨U, hU, hSA⟩ := i_expact F (Fin n × Fin d) _ Φ _ ((om.comp (MonoidHom.inl _ _)).comp γ) hloc
       (fun t l hl => hadm _ l hl) (fun T => hact γ hγ Yg hgen T)
     have h1 := (i_actslaws F _ (Φ T) (Φ (U T)) f₁).2.1 _ (map_zero _) (hSA T)
-    rw [MonoidHom.comp_apply, hγ1] at h1
+    change Acts _ (om (MonoidHom.inl _ _ (γ (Multiplicative.ofAdd 1)))) _ _ at h1
+    rw [hγ1] at h1
     have e := (i_actslaws F _ (Φ T) _ f₁).2.2.2.1 _ h1 hf₁
     rw [← e, hpΦ, hpΦ]
     have h0 : PiTensorProduct.map p ∘ₗ (0 : Module.End ℂ (Tens F P Q R S)) =
@@ -286,7 +287,7 @@ theorem side_wcpt (x t : InfinitePlace F → ℚ) (hp : ∀ w, IsLift (x w) (t w
   obtain ⟨U, hU, hSA⟩ := i_expact F (Fin n × Fin d) _ Φ _ ((om.comp (MonoidHom.inr _ _)).comp γ) hloc
     (fun t l hl => hadm _ l hl) (fun T => hact γ hγ Yg hY T)
   have h1 := (i_actslaws F _ (Φ T) (Φ (U T)) f₁).2.1 _ (map_zero _) (hSA T)
-  rw [MonoidHom.comp_apply, hγ1] at h1
+  simp only [MonoidHom.coe_comp, Function.comp_apply, hγ1] at h1
   have e := (i_actslaws F _ (Φ T) _ f₁).2.2.2.1 _ h1 hf₁
   exact ⟨T, _, U, hpΦ T, by rw [← e, hpΦ], hU, map_sumPl p _ _ fun w => isLift_fock2 (hp w) _ _ _ (hct w)⟩
 

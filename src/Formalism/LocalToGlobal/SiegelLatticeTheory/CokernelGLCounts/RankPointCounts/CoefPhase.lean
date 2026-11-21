@@ -98,7 +98,7 @@ theorem phaseProd_of (hrows : IsRowReps D F0 what₂) (hN : PairVal.NormRepExist
     unfold yT; rw [hz]
   simp only [hyT]
   refine ⟨hf, ?_⟩
-  rw [← hp]
+  refine Eq.trans ?_ hp
   have hex1 : ∃ x : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) × PairVal.MatR D × PairVal.MatR D,
       PairVal.NormRep γ w x.1 x.2.1 x.2.2 := ⟨(hex.choose.2.1, hex.choose.2.2.1, hex.choose.2.2.2), h0⟩
   unfold PairVal.phaseAt

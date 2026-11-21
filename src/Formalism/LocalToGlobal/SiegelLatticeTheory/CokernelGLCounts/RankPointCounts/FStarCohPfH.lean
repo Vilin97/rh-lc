@@ -133,7 +133,6 @@ theorem gflag_ne (γ : TermDef.Term D u u' F0 what₂) (Z : PairVal.MatR D)
   refine Eq.trans ?_ h0
   unfold Formalism.MainNotions.S.Gflag Formalism.MainNotions.S.Dl
   rw [show Formalism.MainNotions.S.Zhat (lf D F0).fl F'₂.fl = Z from hZ]
-  rfl
 
 end GramNePf
 

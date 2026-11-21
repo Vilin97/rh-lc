@@ -157,6 +157,9 @@ open LL
 
 theorem localLift_holds : LocalLift := by
   intro l _ _ X hX
+  letI : HasSummableGeomSeries (Eu l →L[ℝ] Eu l) := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      infer_instance
   let g : ℝ → Matrix (l ⊕ l) (l ⊕ l) ℝ := fun t => NormedSpace.exp (t • X)
   have g0 : g 0 = 1 := by simp [g]
   have hd := fun i j t => hasDerivAt_lin_exp (bl i j) X t

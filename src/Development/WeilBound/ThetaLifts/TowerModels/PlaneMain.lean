@@ -49,8 +49,46 @@ theorem exists_plane {B : Base F E} (hB : B.IsGood σ) {ε : E} (hε : ε = 1 �
   obtain ⟨θ₀, hθ₀⟩ : ∃ θ : 𝓞 E, (θ : E) + σ θ = 1 := by
     haveI : Algebra.Unramified (𝓞 F) (𝓞 E) := hB.unram
     exact GlobalTheory.exists_integer_add_conj_eq_one_of_formallyUnramified F E σ hB.cm inferInstance
+  have hFull : Y.L.IsFullLattice E := by
+    let := hY.lat
+    refine { span_eq_top := ?_ }
+    let W := Submodule.span E (Y.L : Set (Fin n → E))
+    change W = ⊤
+    by_contra hW
+    let g : (Fin n → E) →ₗ[E] Module.Dual E W :=
+      ((dotProductBilin E E).compl₂ (Matrix.mulVecLin Y.Jᵀ)).domRestrict₂ W
+    have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Fin n → E) := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt hW
+    obtain ⟨z, hz, hz₀⟩ :=
+      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    let y : Fin n → E := fun i => σ (z i)
+    have hy₀ : y ≠ 0 := by
+      intro hy
+      apply hz₀
+      exact funext fun i => σ.injective ((congrFun hy i).trans (map_zero σ).symm)
+    have horth (x : Fin n → E) (hx : x ∈ Y.L) : form σ Y.J y x = 0 := by
+      have hz' : z ⬝ᵥ Y.Jᵀ *ᵥ x = 0 :=
+        congrArg (fun f : Module.Dual E W => f ⟨x, Submodule.subset_span hx⟩)
+          (LinearMap.mem_ker.mp hz)
+      have hzero : form σ Y.J x y = 0 := by
+        rw [Matrix.dotProduct_transpose_mulVec] at hz'
+        simpa only [form, y, sigma_sigma hcm] using hz'
+      have hs := form_swap hcm hY.herm x y
+      rw [hzero, map_zero] at hs
+      exact (mul_eq_zero.mp hs.symm).resolve_left (left_ne_zero_of_mul_eq_one hεε)
+    have hline (a : E) : a • y ∈ Y.L := (hY.dual _).2 fun x hx => by
+      rw [form_smul_left, horth x hx, mul_zero]
+      exact D.zero_mem
+    let i : E →ₗ[𝓞 E] Y.L :=
+      ((LinearMap.toSpanSingleton E _ y).restrictScalars (𝓞 E)).codRestrict Y.L hline
+    let : Module.Finite (𝓞 E) Y.L := Module.Finite.iff_fg.mpr hY.lat.fg
+    let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective E hy₀ (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
   obtain ⟨x₀, hx₀, hx₀x₀⟩ := exists_isotropic hcm B.emb (by omega) hr hs hdet hε hY.herm hκ0 hκ hY.sig
-  obtain ⟨x, y, hxx, hyy, hxy, hL, hP⟩ := exists_adapted_pair hcm hdet hε hY.herm D hD1 Y.L hY.lat hY.dual θ₀ hθ₀ B.P B.τ
+  obtain ⟨x, y, hxx, hyy, hxy, hL, hP⟩ := exists_adapted_pair hcm hdet hε hY.herm D hD1 Y.L hFull hY.dual θ₀ hθ₀ B.P B.τ
     hDτ x₀ hx₀ hx₀x₀
   have hyx : form σ Y.J y x = ε := by
     have := form_swap hcm hY.herm x y
@@ -70,7 +108,12 @@ theorem exists_plane {B : Base F E} (hB : B.IsGood σ) {ε : E} (hε : ε = 1 �
     · rw [← hu]; exact Y.L.sub_mem (Y.L.sub_mem hz (hL z hz).2) ht
     · rw [← hu]; abel
   set L₁ := Y.L.comap ((Matrix.mulVecLin ι).restrictScalars (𝓞 E)) with hL₁def
-  have hlat₁ : L₁.IsLattice E := isLattice_comap n n₁ Y.L ι P hPι hY.lat
+  have hlat₁ : L₁.IsLattice E := by
+    apply Submodule.IsLattice.of_fg E
+    apply Submodule.fg_of_fg_map_injective _ _ (hY.lat.fg.of_le (Submodule.map_comap_le _ _))
+    intro u u' e
+    have he := congrArg (P *ᵥ ·) (show ι *ᵥ u = ι *ᵥ u' from e)
+    simpa [Matrix.mulVec_mulVec, hPι] using he
   have hx0 : x ≠ 0 := by rintro rfl; simp [form] at hxy
   obtain ⟨𝔟, h𝔟⟩ := exists_ideal n Y.L hY.lat x hx0
   set J₁ := ιᵀ * Y.J * ι.map σ with hJ₁
@@ -98,7 +141,7 @@ theorem exists_plane {B : Base F E} (hB : B.IsGood σ) {ε : E} (hε : ε = 1 �
   choose β₁ hβ₁ using hb₁
   let bas₁ : ∀ v : Pl F, GL (Fin n₁) (Fv F v) := fun v => if h : v ∈ B.P then β₁ ⟨v, h⟩ else 1
   have hbas₁ : ∀ v : B.P, bas₁ v = β₁ v := fun v => by simp only [bas₁, dif_pos v.2]
-  choose β hβ using fun v : B.P => exists_basis (B.τ v) n n₁ Y.L x y ι (β₁ v) i₀ i₁ hn h01 h1n hY.lat hsplit
+  choose β hβ using fun v : B.P => exists_basis (B.τ v) n n₁ Y.L x y ι (β₁ v) i₀ i₁ hn h01 h1n hFull hsplit
     (hP v).1 (hP v).2 (hβ₁ v)
   let bas : ∀ v : Pl F, GL (Fin n) (Fv F v) := fun v => if h : v ∈ B.P then β ⟨v, h⟩ else Y.bas v
   have hbas : ∀ v : B.P, bas v = β v := fun v => by simp only [bas, dif_pos v.2]

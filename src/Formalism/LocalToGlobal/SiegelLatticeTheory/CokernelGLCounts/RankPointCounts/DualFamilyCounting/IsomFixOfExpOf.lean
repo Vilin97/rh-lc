@@ -84,7 +84,8 @@ theorem isomFixOfExp_of (hJ : JordanIsom) : IsomFixOfExp := by
     rw [resF_apply]
     exact hpos x x.2 (by simpa using hx) φ
   obtain ⟨g, hg, hgL⟩ := hJ K F (orthK h U) hK hF (resF h (orthK h U)) hs' hd'
-    (latW (orthK h U) T) (latW (orthK h U) T') (isLattice_latW hT) (isLattice_latW hT') 𝔭 h𝔭 _ _ _ _
+    (latW (orthK h U) T) (latW (orthK h U) T') (isLattice_latW hT).toIsLattice
+    (isLattice_latW hT').toIsLattice 𝔭 h𝔭 _ _ _ _
     (isJordanIn_res hT hb) (isJordanIn_res hT' hb') (fun i => hv _)
   refine ⟨extU hUc g, extU_mem hs hUc hg, ?_⟩
   rw [← locF_latW hT 𝔭, gmap_extU, hgL, locF_latW hT' 𝔭]

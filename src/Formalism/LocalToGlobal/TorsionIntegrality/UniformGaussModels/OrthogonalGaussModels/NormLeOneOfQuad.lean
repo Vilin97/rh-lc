@@ -163,7 +163,7 @@ theorem CMDatum_proof : CMDatum := by
     simp
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [← map_sub, ← map_mul, ← map_mul, hs2C, map_sum, hb2]
-    simp
+      simp
 
 theorem ShapeCM_of (hD : CMDatum) : ShapeCM := by
   intro dK L hmod hCM p _ hpd ι hW

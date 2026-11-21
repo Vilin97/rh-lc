@@ -21,12 +21,12 @@ private theorem cc_prod {I : Type} (s : Finset I) (f : I → T → R[X]) (h : �
   | insert i s hi ih =>
     intro j
     simp only [Finset.prod_insert hi, coeff_mul]
-    exact continuous_finset_sum _ fun x _ => (h i _).mul (ih _)
+    exact continuous_finsetSum _ fun x _ => (h i _).mul (ih _)
 
 private theorem cc_charpoly {a : ℕ} (M : T → Matrix (Fin a) (Fin a) R) (hM : Continuous M) (j : ℕ) :
     Continuous fun t => (M t).charpoly.coeff j := by
-  simp only [Matrix.charpoly, Matrix.det_apply, finsetSum_coeff, coeff_smul]
-  refine continuous_finset_sum _ fun σ _ => ?_
+  simp only [Matrix.charpoly, Matrix.det_apply, finsetSum_coeff, Polynomial.coeff_smul]
+  refine continuous_finsetSum _ fun σ _ => ?_
   have h := cc_prod Finset.univ (fun i t => (M t).charmatrix (σ i) i) (fun i k => by
     simp only [Matrix.charmatrix_apply, coeff_sub, coeff_C]
     refine continuous_const.sub ?_
@@ -36,6 +36,7 @@ private theorem cc_charpoly {a : ℕ} (M : T → Matrix (Fin a) (Fin a) R) (hM :
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with e | e
   · simpa [e] using h
   · simpa [e] using continuous_neg.comp' h
+
 
 end Coeff
 

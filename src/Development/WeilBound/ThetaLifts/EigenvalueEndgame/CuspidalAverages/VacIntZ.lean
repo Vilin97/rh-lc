@@ -184,8 +184,8 @@ theorem vacBar : VacBar := by
       simp only [a, b, map_inv₀, map_sub]
       field_simp
       ring
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_add (f := _), locW_add, map_sum, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add (f := _), locW_add, map_sum, map_sum]
       simp only [map_smul]
       exact add_mem (vac_sum _ _ ha e8) (vac_sum _ _ hb e9)
   have hfix := vac_eq hu (Φ := (LinearMap.funLeft ℂ ℂ (ofH (Fv F v) (Fin n) (Fin d)).symm ∘ₗ ι) (M.vac v)) fun y hy => by

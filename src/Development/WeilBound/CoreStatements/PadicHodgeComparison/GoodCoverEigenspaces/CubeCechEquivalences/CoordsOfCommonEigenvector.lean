@@ -180,8 +180,10 @@ theorem occE {U : Type*} [AddCommGroup U] [Module k U]
     rw [this]
     funext p
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [A, mulVec, dotProduct, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.coe_smul,
-      Pi.smul_apply, smul_eq_mul]
+      simp only [A, mulVec, dotProduct, map_sum, map_smul]
+    change _ = (Finsupp.applyAddHom p) (∑ q, u q • b.repr ⟨E (e q), (e q).2⟩)
+    rw [map_sum]
+    simp only [Finsupp.applyAddHom_apply, Finsupp.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun q _ => mul_comm _ _
   have hinj : ∀ u u' : Fin (Module.finrank k W) → k, (∑ q, u q • e q : W) = ∑ q, u' q • e q → u = u' := fun u u' h => by
     have := congrArg (fun t => ⇑(e.repr t)) h

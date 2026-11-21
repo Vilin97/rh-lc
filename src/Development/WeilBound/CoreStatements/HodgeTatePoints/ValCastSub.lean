@@ -120,7 +120,7 @@ theorem cast_pair {p m : ℕ} (h : p ∣ m) (e : (Fin n → 𝓞 E) →+ (Fin n 
       ZMod.castHom h (ZMod p) (e x x') := by
   conv_rhs => rw [← sum_cz x, ← sum_cz x']
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_zsmul, AddMonoidHom.finset_sum_apply, AddMonoidHom.smul_apply,
+    simp only [map_sum, map_zsmul, AddMonoidHom.finsetSum_apply, AddMonoidHom.smul_apply,
     dotProduct, Matrix.mulVec, Matrix.of_apply, co_apply, Finset.mul_sum]
   simp only [Finset.smul_sum, zsmul_eq_mul]
   conv_rhs => rw [Finset.sum_comm]

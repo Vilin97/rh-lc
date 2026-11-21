@@ -46,6 +46,8 @@ theorem aR_add (r : ℕ) (s t : ℝ) : An.aR K n r (s + t) = An.aR K n r s * An.
   unfold An.aR
   rw [← tor_add]
   congr 1
+  funext i
+  simp only [Pi.add_apply]
   split_ifs <;> simp
 
 theorem continuous_aR (r : ℕ) : Continuous fun t : ℝ => An.aR K n r t := by

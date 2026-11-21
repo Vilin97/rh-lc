@@ -30,7 +30,7 @@ theorem UpperTheory.weilRep_mem_polynomialFock_of_archimedean :
   have kh : h ∈ KInf σ W B.emb := ⟨hh, fun w => by
     rw [GlobalTheory.ThK.Dbl.Prs.cartan_one (hp.skew.sig w) (hp.skew.cartan w)]; exact Commute.one_right _⟩
   refine Submodule.span_induction (p := fun Φ _ => om (g, h) Φ ∈ PolData B M) ?_ (by simp)
-    (fun x y _ _ a b => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b)
+    (fun x y _ _ a b => by rw [map_add]; exact add_mem a b)
     (fun c x _ a => by rw [map_smul]; exact Submodule.smul_mem _ c a) hΦ
   rintro _ ⟨f, f1, φ, f2, f3, rfl⟩
   obtain ⟨ξ, hξ, e⟩ := PositivityTheory.ThKG.pure_eq_pureA hp.good φ f2 f3

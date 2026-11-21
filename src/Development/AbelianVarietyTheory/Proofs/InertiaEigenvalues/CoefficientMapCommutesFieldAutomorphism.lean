@@ -101,7 +101,8 @@ theorem exists_stable (hj : ∀ σ x, j (embF c σ x) = embF c σ x) {Ix : Type}
   · have e1 : up 0 = 0 := Subtype.ext (map_zero (map j))
     show io (up 0) = _
     rw [e1, map_zero, map_zero]
-  · have e1 : up (s • v) = j s • up v := Subtype.ext (GlobalTheory.IoExtend.map_smul' j s _)
+  · set_option synthInstance.maxHeartbeats 200000 in
+    have e1 : up (s • v) = j s • up v := Subtype.ext (GlobalTheory.IoExtend.map_smul' j s _)
     show io (up (s • v)) = _
     rw [e1, map_smul, map_smul, GlobalTheory.IoExtend.map_smul', show io (up v) = _ from hv]
   · have e1 : up hw = hw := by

@@ -72,7 +72,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Cusp.NineEq
 
 open NumberField Filter Topology
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.ArakelovGeometry
-open GroundTheory.Heights₂.Heights.LowerBoundFree GlobalTheory.CompanionTheory.IndefiniteRowSideFullHecke.CuspMeanBound
+open GroundTheory.Heights₂.Heights.LowerBoundFree
 
 section Systems
 

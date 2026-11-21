@@ -51,7 +51,9 @@ theorem loc (hcm : IsCMExt F E σ) {M : ℕ} {J : Matrix (Fin M) (Fin M) E} (hJ 
   have hμ : (a • coordW R b lam 1 M).IsAddHaarMeasure := Measure.IsAddHaarMeasure.nnreal_smul _ ha
   have hν : (c • lam).IsAddHaarMeasure := Measure.IsAddHaarMeasure.nnreal_smul _ hc
   have hmap : (c • lam).map (hermScal R σ) = c • coordHerm R σ b lam 1 := by
+    haveI : BorelSpace (HermR R σ 1) := ⟨rfl⟩
     rw [Measure.map_smul, (hermScal_main F E σ hcm R d b).2.2 lam hlam]
+    exact (OneHerm.continuous_hermScal R σ).measurable.aemeasurable
   have G := Rescale.isGramFib_rescale F E σ hcm M J hJ R hR 1 _ _ m hW1 (hH 1) hm a c ha hc
   rw [← hmap] at G
   obtain ⟨n1, n2⟩ := hnull _ _ hμ hν

@@ -250,7 +250,8 @@ theorem exists_periodT_eq_mu_mul_unit {ε : 𝒪♭} (hε : PreTilt.untilt ε = 
     simp [U, V, h0]
   have hUJ : ∀ n : ℕ, 1 ≤ n → algebraMap (ACrisZero K p) (ACris K p) (U n) ∈ J := by
     intro n hn
-    simp only [U, V, map_mul, map_pow, map_neg, map_one]
+    set_option synthInstance.maxHeartbeats 200000 in
+      simp only [U, V, map_mul, map_pow, map_neg, map_one]
     rcases Nat.eq_zero_or_pos (n % (p - 1)) with hr | hr
     · have hq : 0 < n / (p - 1) := by
         have := Nat.mod_add_div n (p - 1)

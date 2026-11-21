@@ -29,6 +29,7 @@ theorem zeroEquiv_logTerm (u : Reformulated.AutPerF.Ainf l (NC l))
     zeroEquiv l (((-1) ^ n * (n.factorial : Reformulated.AutPerF.AcrisZero l (NC l))) *
         Reformulated.AutPerF.AcrisZero.gamma (n + 1) (u - 1) (by rw [map_sub, hu, map_one, sub_self])) =
       ACris.logTermZero hx n := by
+  set_option synthInstance.maxHeartbeats 100000 in
   rw [ACris.logTermZero, map_mul, map_mul, map_pow, map_neg, map_one, map_natCast]
   congr 1
   apply Subtype.ext

@@ -29,7 +29,7 @@ theorem pla_continuous (v : Pl F) (t : E →ₐ[F] Fv F v) : Continuous (piW t) 
 theorem pla_int (z : AE F E) : ∀ᶠ v : Pl F in cofinite, ∀ t : E →ₐ[F] Fv F v, piW t z ∈ v.adicCompletionIntegers F := by
   induction z using TensorProduct.induction_on with
   | zero => exact Eventually.of_forall fun v t => by rw [map_zero]; exact zero_mem _
-  | add y z hy hz => filter_upwards [hy, hz] with v h h' t using by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (h t) (h' t)
+  | add y z hy hz => filter_upwards [hy, hz] with v h h' t using by rw [map_add]; exact add_mem (h t) (h' t)
   | tmul a e =>
     have : Algebra.IsAlgebraic ℤ E := IsFractionRing.comap_isAlgebraic_iff.2 (inferInstance : Algebra.IsAlgebraic ℚ E)
     obtain ⟨d, hd, hi⟩ := (Algebra.IsAlgebraic.isAlgebraic (R := ℤ) e).exists_integral_multiple

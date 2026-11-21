@@ -152,9 +152,11 @@ theorem locMul_mem (hW : W ≤ Module.annihilator (MRingOver S ι) M) {𝓜 : (K
         ?_, rfl⟩
       have := act_mem hW h𝓜 ha hm
       convert this using 2
+      funext k
+      simp only [Pi.add_apply, Nat.cast_add]
       ring
     | zero => rw [map_zero]; exact zero_mem _
-    | add y₁ y₂ _ _ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
+    | add y₁ y₂ _ _ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
     | smul c y _ h => rw [(locMul_smulS T hW c x y).2]; exact Submodule.smul_mem _ c h
   | zero => rw [map_zero, LinearMap.zero_apply]; exact zero_mem _
   | add x₁ x₂ _ _ h₁ h₂ => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem h₁ h₂

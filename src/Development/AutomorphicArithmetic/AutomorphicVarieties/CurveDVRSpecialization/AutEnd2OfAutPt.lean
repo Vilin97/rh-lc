@@ -117,7 +117,7 @@ private theorem flag {Γ k : Type} [Group Γ] [Field k] (I : Subgroup Γ) (W : �
 section Red
 
 variable {O A Γ : Type} [CommRing O] [IsLocalRing O] [CommRing A] [IsLocalRing A] [Algebra O A] [Group Γ]
-  {η : Γ →* ℤˣ} {Ψ : Γ →* Oˣ} {r : Γ →* GG 3 A}
+  {η : Γ →* ℤˣ} {Ψ : Γ →* Oˣ} {r : Γ →* GG (m := 3) (R := A)}
 
 private theorem red_ent (h : UnitaryThreeInertia.Red η Ψ r) (g : Γ) :
     residue A ((r g).mat 0 0) = residue A (algebraMap O A (Ψ g)) ∧
@@ -262,7 +262,8 @@ private theorem det_star {R : Type} [CommRing R] (X : Matrix (Fin 3) (Fin 3) R) 
   rw [e, e]
   simp [Matrix.mul_apply, Fin.sum_univ_three, Jmat, Fin.rev, mul_comm]
 
-private theorem conj_mat {D C κ : Type} [Group D] [CommRing C] [CommRing κ] (f : C →+* κ) (r : D →* GG 3 C) (h : GL (Fin 3) C) (g : D)
+private theorem conj_mat {D C κ : Type} [Group D] [CommRing C] [CommRing κ] (f : C →+* κ)
+    (r : D →* GG (m := 3) (R := C)) (h : GL (Fin 3) C) (g : D)
     (hg : (r g).right = 1) (a b : Fin 3) :
     ((((GeneralLinearGroup.map f h)⁻¹ : GL (Fin 3) κ) : Matrix (Fin 3) (Fin 3) κ) * (r g).mat.map f *
       (GeneralLinearGroup.map f h : Matrix (Fin 3) (Fin 3) κ)) a b = f ((conjBy h⁻¹ r g).mat a b) := by

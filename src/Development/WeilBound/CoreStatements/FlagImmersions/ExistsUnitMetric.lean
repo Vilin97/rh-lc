@@ -109,7 +109,7 @@ theorem exists_finset {T : Type} (z : T → (Σ k, J k) → ℂ) (f : T → MRin
   classical
   have hc : IsCompactElement (⨆ t, Ideal.span {f t}) :=
     (Submodule.fg_iff_compact _).1 (IsNoetherian.noetherian _)
-  obtain ⟨s, hs⟩ := CompleteLattice.IsCompactElement.exists_finset_of_le_iSup _ hc
+  obtain ⟨s, hs⟩ := IsCompactElement.exists_finset_of_le_iSup hc
     (fun t => Ideal.span {f t}) le_rfl
   refine ⟨s, fun t => ?_⟩
   by_contra hno

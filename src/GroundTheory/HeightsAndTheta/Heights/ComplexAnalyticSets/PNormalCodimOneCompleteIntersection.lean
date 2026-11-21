@@ -43,7 +43,7 @@ theorem isRegularLocalRing_of_height_eq_one {A : Type*} [CommRing A] [IsDomain A
       ∀ p : Ideal (Localization.AtPrime q), p ≠ ⊥ → p.IsPrime → p = maximalIdeal (Localization.AtPrime q) :=
     ⟨inferInstance, fun p hp0 hpp => eq_maximalIdeal (hpp.isMaximal_of_ne_bot hp0)⟩
   have : IsDedekindDomain (Localization.AtPrime q) :=
-    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain (Localization.AtPrime q)).out 3 2).mp h3
+    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain (Localization.AtPrime q)).out 4 3).mp h3
   refine ⟨IsRegularLocalRing.of_ringEquiv eqv, ?_⟩
   rw [← ringKrullDim_eq_of_ringEquiv eqv,
     IsLocalization.AtPrime.ringKrullDim_eq_height (maximalIdeal (Localization.AtPrime q))

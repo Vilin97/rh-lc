@@ -58,7 +58,7 @@ theorem archM_mul (V : HSp D) (hr : V.rank = r) (θ : Ainf D.host.F ⊗[D.host.F
     unfold archM
     rw [map_mul, Units.val_mul, Matrix.map_mul]
   rw [e]
-  exact Matrix.submatrix_mul_equiv _ _ _ (finCongr hr).symm _
+  exact Matrix.submatrix_mul_equiv (archM V θ g) (archM V θ g') _ (finCongr hr).symm _
 
 theorem coset_of_comp_eq {V : HSp D} {X : Comp → Data E r} {dict : GA D V → Σ k, Frame (X k).Ψ r}
     {Kf : Subgroup (GA D V)} {th : ∀ c, (X c).Ψ → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)} {hr : V.rank = r}

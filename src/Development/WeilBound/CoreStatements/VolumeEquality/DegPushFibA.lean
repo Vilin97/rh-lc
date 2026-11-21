@@ -46,7 +46,7 @@ theorem ker_map {σ τ : Type} (k : Type) [Field k] [Algebra ℚ k] (g : σ → 
     have h1 : ∀ i ∈ T, aeval g (F i) = 0 := fun i hi => by
       ext m
       have := congrArg (AddMonoidAlgebra.coeff · m) h0
-      simp only [coeff_sum, coeff_C_mul, coeff_map, coeff_zero] at this
+      simp only [coeff_sum, coeff_C_mul, coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
       refine linearIndependent_iff'.1 b.linearIndependent T (fun i => AddMonoidAlgebra.coeff (aeval g (F i)) m) ?_ i hi
       rw [← this]
       exact Finset.sum_congr rfl fun i _ => by rw [Algebra.smul_def, mul_comm]

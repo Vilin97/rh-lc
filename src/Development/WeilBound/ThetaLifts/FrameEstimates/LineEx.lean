@@ -98,12 +98,12 @@ theorem exists_section (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOv
     rw [smul_add, smul_comm c, smul_comm c, hx w c hc, hy w c hc, smul_zero, smul_zero, add_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.sum_eq_single w]
-    · rw [map_add (f := _), GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul, GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul, hx', hy',
+      · rw [map_add (f := _), GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul, GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul, hx', hy',
         Pi.single_eq_same, Pi.single_eq_same, mul_one, Complex.re_add_im]
-    · intro v _ hv
-      rw [map_add (f := _), GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul, GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul, hx', hy',
+      · intro v _ hv
+        rw [map_add (f := _), GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul, GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul, hx', hy',
         Pi.single_eq_of_ne hv.symm, Pi.single_eq_of_ne hv.symm, mul_zero, mul_zero, add_zero]
-    · simp
+      · simp
 
 variable {d : ℕ}
 

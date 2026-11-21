@@ -79,8 +79,10 @@ theorem ext_map (W : InfinitePlace E) {w : InfinitePlace F} (h : W.embedding.com
   change InfinitePlace.Completion.extensionEmbedding W (GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap (L := E)
     (algebraMap F (InfiniteAdeleRing F) k) W) = _
   rw [GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap_algebraMap]
-  exact (InfinitePlace.Completion.extensionEmbedding_coe W ((WithAbs.equiv W.1).symm (algebraMap F E k))).trans
-    ((RingHom.congr_fun h k).trans (InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm k)).symm)
+  simpa only [InfiniteAdeleRing.algebraMap_apply, AbsoluteValue.Completion.algebraMap_def,
+    WithAbs.algebraMap_right_apply, Algebra.algebraMap_self_apply, RingEquiv.apply_symm_apply,
+    Function.comp_apply, WithAbs.equiv] using (InfinitePlace.Completion.extensionEmbedding_coe W (WithAbs.toAbs W.1 (algebraMap F E k))).trans
+    ((RingHom.congr_fun h k).trans (InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs w.1 k)).symm)
 
 theorem ext_Φ (W : InfinitePlace E) {w : InfinitePlace F} (h : W.embedding.comp (algebraMap F E) = w.embedding) (l : AE F E) :
     InfinitePlace.Completion.extensionEmbedding W ((Φ F E l).1 W) = piInf (⟨W.embedding, h⟩ : EmbOver E w) l := by
@@ -93,7 +95,9 @@ theorem ext_Φ (W : InfinitePlace E) {w : InfinitePlace F} (h : W.embedding.comp
       GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap (L := E) a.1 W) =
       InfinitePlace.Completion.extensionEmbedding w (a.1 w) * W.embedding x
     rw [map_mul, ext_map W h, mul_comm]
-    exact congrArg _ (InfinitePlace.Completion.extensionEmbedding_coe W ((WithAbs.equiv W.1).symm x))
+    simpa only [AdeleRing.algebraMap_fst_apply, AbsoluteValue.Completion.algebraMap_def,
+      WithAbs.algebraMap_right_apply, Algebra.algebraMap_self_apply, WithAbs.equiv_apply, WithAbs.ofAbs_toAbs] using
+      congrArg _ (InfinitePlace.Completion.extensionEmbedding_coe W (WithAbs.toAbs W.1 x))
 
 theorem norm_le (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w) (W : InfinitePlace E) (l : (AE F E)ˣ) :
     ‖(Φ F E l).1 W‖ ≤ ∑ w, ‖piInf (τ w) (l : AE F E)‖ := by

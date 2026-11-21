@@ -64,12 +64,7 @@ theorem rw_clm (L : E →L[ℂ] E) : ∀ (w : List (Mat k r)), (∀ X ∈ w, inL
       Rw w (fun x => L (f x)) g = L (Rw w f g)
   | [], _, _, _, _, _ => rfl
   | X :: w, hw, f, g, hg, hf => by
-    have hspread : ∃ U : Set (Mat k r), IsOpen U ∧ g ∈ U ∧
-        ∀ x ∈ U, Loc ((X :: w).length : ℕ∞) f x := by
-      unfold Loc at hf ⊢
-      obtain ⟨U, f', hU, hgU, hc, he⟩ := hf
-      exact ⟨U, hU, hgU, fun x hx => ⟨U, f', hU, hx, hc, he⟩⟩
-    obtain ⟨U, hU, hgU, hUloc⟩ := hspread
+    obtain ⟨U, hU, hgU, hUloc⟩ := CapelliWordSumExpansion.loc_spread hf
     have hw' : ∀ Y ∈ w, inLie k r Y := fun Y hY => hw Y (by simp [hY])
     have hagree : ∀ x ∈ U, x ∈ GV k r → Rw w (fun x => L (f x)) x = L (Rw w f x) := fun x hx hxG =>
       rw_clm L w hw' f x hxG (loc_mono (by simp) (hUloc x hx))

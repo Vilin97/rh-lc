@@ -40,8 +40,9 @@ private theorem one_le_of_mem {d : 𝓞 ℚ} (hd0 : d ≠ 0) {e : ℚ} (he : e �
   rwa [this] at h1
 
 private theorem norm_rt (w : InfinitePlace ℚ) (c : ℚ) : ‖(rt c : A ℚ).1 w‖ = |(c : ℝ)| := by
-  have h : InfinitePlace.Completion.extensionEmbedding w ((rt c : A ℚ).1 w) = w.embedding c :=
-    InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ c)
+  have h : InfinitePlace.Completion.extensionEmbedding w ((rt c : A ℚ).1 w) = w.embedding c := by
+    rw [AdeleRing.algebraMap_fst_apply, InfinitePlace.Completion.extensionEmbedding_coe]
+    rfl
   have h2 := (InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _) ((rt c : A ℚ).1 w)
   rw [← h2, h, InfinitePlace.norm_embedding_eq, Rat.infinitePlace_apply, Rat.cast_abs]
 

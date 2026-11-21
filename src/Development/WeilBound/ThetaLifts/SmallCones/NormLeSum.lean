@@ -63,7 +63,7 @@ theorem slice_core {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (e : ((κ → AF F
         (continuous_id.smul continuous_const)).eventually_eq 0
       simpa only [Function.comp_apply, zero_smul, fw_zero] using this
     obtain ⟨C₀, h₀, h₀'⟩ := annih hψ hU
-    refine ⟨Set.pi Set.univ fun _ => -C₀, isCompact_univ_pi fun _ => h₀.neg, fun b hb j _ => h₀' _ fun a ha => ?_⟩
+    refine ⟨Set.pi Set.univ fun _ => Set.image Neg.neg C₀, isCompact_univ_pi fun _ => h₀.image continuous_neg, fun b hb j _ => ⟨-b j, h₀' _ (fun a ha => ?_), neg_neg _⟩⟩
     obtain ⟨f₀, hf₀⟩ : ∃ f₀, ei f₀ ≠ 0 := by
       by_contra! h
       exact h0 (ContinuousLinearMap.ext h)

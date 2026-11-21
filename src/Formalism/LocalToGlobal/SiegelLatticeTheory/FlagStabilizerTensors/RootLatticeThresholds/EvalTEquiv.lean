@@ -65,6 +65,8 @@ theorem equiv_ginf {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E
         apply Formalism.IndefR.Eqv.matA_inj D V
         rw [Formalism.IndefR.Eqv.matA_famH, Formalism.IndefR.Eqv.matA_one]
         convert Formalism.IndefR.Eqv.famM_one D V using 2
+        funext τ
+        simp
       have e2 : translS M a ∅ v = v := by
         funext τ; simp [translS]
       rw [e, mul_one, e2]

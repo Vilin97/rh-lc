@@ -84,7 +84,9 @@ theorem hasDerivAt_mixS_extX {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D
   have hI : ∀ g : WO S T → ℂ, IsThetaFunO ψ S T g → IntegrableOn (fun a => ψ (symplOH S T (d.extY T a) (d.extX T x)) *
       g (d.extY T a + d.extX T x + d.ext0 T w)) 𝓕 μ := fun g hg => by
     simpa only [HypDec.integrandS_eq] using HypDec.integrableOn_mixS d hψ.1.1 hμ hg x w
-  simp only [_root_.I195MixedCoordinates_bf5641df9836f7a59c2c5fdd.source, HypDec.integrandS_eq]
+  change HasDerivAt (fun t : ℝ => d.mixS T ψ μ 𝓕 (heisO ψ S T (M t) f) x w)
+    (d.mixS T ψ μ 𝓕 (heisO ψ S T (M 0) (GlobalTheory.OrientedHeis.dLine ψ S T M f)) x w) 0
+  simp only [HypDec.mixS, HypDec.integrandS_eq]
   refine (hasDerivAt_integral_of_dominated_loc_of_deriv_le (μ := μ.restrict 𝓕) (x₀ := (0 : ℝ))
     (F' := fun t a => ψ (symplOH S T (d.extY T a) (d.extX T x)) *
       heisO ψ S T (M t) (GlobalTheory.OrientedHeis.dLine ψ S T M f) (d.extY T a + d.extX T x + d.ext0 T w))
@@ -121,9 +123,12 @@ theorem sch_dRho_diag : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar
     have h := congrFun ((GlobalTheory.HeisMixSource.heis_mixS D ψ hψ (dblSp A) (zeroSp D) B A.rank (dblDec A) v f hf).1 x
       (lineAt θ τ X t)) 0
     exact h.symm
-  rw [e1, (hasDerivAt_mixS_extX hψ hθ (dblDec A) (μ := ν) (𝓕 := 𝓨) hν hf M hM x 0).deriv]
+  rw [e1]
+  change _ = deriv (fun t : ℝ => _root_.I195MixedCoordinates_bf5641df9836f7a59c2c5fdd.source (dblDec A) B ψ ν 𝓨 (heisO ψ (dblSp A) B (M t) f) x 0) 0
+  rw [(hasDerivAt_mixS_extX hψ hθ (dblDec A) (μ := ν) (𝓕 := 𝓨) hν hf M hM x 0).deriv]
   show (dblDec A).mixS B ψ ν 𝓨 (Formalism.IndefR.Datum.dRho (heisO ψ (dblSp A) B) θ τ
       (X * (dblDec A).qX.map (tauE D τ)) f) x 0 = _
   rw [GlobalTheory.OrientedHeis.dRho_eq_dLine, lineAt_extX θ hθ A B τ X]
+  rfl
 
 end GlobalTheory.StdUnn.DiagDeriv

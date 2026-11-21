@@ -25,8 +25,8 @@ theorem PositivityTheory.Mix.darboux_model_rational_lattice_of (hA : PositivityT
         ∀ f φ, (∀ v, φ v ∈ SB _) → (∀ᶠ v in cofinite, φ v = M.vac v) → e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (ei f) fun v => ev v (φ v) := by
   intro F E _ _ _ _ _ σ B n d X W M r s r' s' hB _ _ hM co _
   obtain ⟨e, ei, ev, h1, h2, h3, h4, h5, h6⟩ := hA F B.ψ hB.std (Fin n × Fin d) (M.co.e.symm.trans co.e) fun w w' => by
-    rw [LinearEquiv.trans_apply, LinearEquiv.trans_apply, ← co.form, M.co.form, LinearEquiv.apply_symm_apply,
-      LinearEquiv.apply_symm_apply]
+    rw [LinearEquiv.trans_apply, LinearEquiv.trans_apply, ← co.form]
+    simpa only [cA, incM, LinearEquiv.apply_symm_apply] using M.co.form (M.co.e.symm w) (M.co.e.symm w')
   have hS : ∀ u, (M.co.e.symm.trans co.e) (M.co.e u) = co.e u := fun u => by simp
   refine ⟨e, ei, ev, ei.surjective, h1, fun u Φ hΦ => ?_, fun v => SetLike.coe_injective (h3 v).image_eq, fun v => ?_, ?_,
     fun f φ hφ hv => h6 f φ hφ ?_⟩

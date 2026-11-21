@@ -128,3 +128,4 @@ theorem unrAt_of_isoTwist (hA : AdmissibleReal) (F : Type) [Field F] [NumberFiel
   rw [hx, WithZero.log_one]
 
 end UpperTheory.Gal.SV
+

@@ -94,7 +94,9 @@ theorem iterPhi_derUnip (ψ : AddChar k Circle) (n₂ n' : ℕ) (hn : n₂ ≤ n
   | j + 1, τ => by
     refine Nonempty.elim (iterPhi_derUnip ψ n₂ n' hn j (MRep.phiM k ψ τ)) ?_
     intro e₁
-    obtain ⟨e₂⟩ := GlobalTheory.T.twisted_jacquet_phi_minus_equiv k ψ (n' + j) n₂ (by omega) τ.V τ.ρ
+    have hnj : n₂ ≤ n' + j := hn.trans (Nat.le_add_right n' j)
+    refine Nonempty.elim (GlobalTheory.T.twisted_jacquet_phi_minus_equiv k ψ (n' + j) n₂ hnj τ.V τ.ρ) ?_
+    intro e₂
     exact ⟨e₁.trans e₂⟩
 
 theorem phi_vanish (ψ : AddChar k Circle) (hc : Continuous ψ) (h1 : ψ ≠ 1) (n j : ℕ) {V : Type} [AddCommGroup V]

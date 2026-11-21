@@ -310,9 +310,7 @@ theorem lift_ext (U : X.affineOpens) {d : ℕ} (t : MvPolynomial (Fin d) R →�
     MvPolynomial.algHom_ext (fun k => h k)
   have key := fe_uniq t.toRingHom ht T.π (nil_ker T) (a.φ : Sec s U.1 →+* T.B) (b.φ : Sec s U.1 →+* T.B)
     (RingHom.ext fun p => AlgHom.congr_fun e1 p) (RingHom.ext fun c => π_eq U a b c)
-  apply Thick.hom_ext
-  intro c
-  exact RingHom.congr_fun key c
+  exact Thick.Hom.ext' (AlgHom.ext fun c => RingHom.congr_fun key c)
 
 theorem exists_coprod (U : Chart s) (S : Thick (dp0 R) s) (hS : InN κ S) (h : ⊤ ≤ S.x ⁻¹ᵁ U.1.1) (n : ℕ)
     (hn : 1 ≤ n) : ∃ (P : Thick (dp0 R) s) (i : S ⟶ P) (j : bas s U.1 ⟶ P), InN κ P ∧ IsLev P.δ n ∧

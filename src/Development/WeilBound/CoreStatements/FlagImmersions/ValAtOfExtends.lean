@@ -41,7 +41,7 @@ theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (g : B �
   rw [spec_comp]
   congr 2
   refine RingHom.ext fun a => ?_
-  ext <;> simp
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 variable {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat.of Ω) ⟶ X} {Em : Type} [AddCommGroup Em] [Module Ω Em]
 

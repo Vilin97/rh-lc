@@ -54,9 +54,9 @@ theorem root_of_nil {N : ℕ} {Z : Subalgebra k (Matrix (Fin N) (Fin N) k)} (hZ 
     · exact hxc
     · exact hxc.symm
     · rfl
-  letI : CommRing (Algebra.adjoin k ({x, c} : Set (Matrix (Fin N) (Fin N) k))) :=
-    Algebra.adjoinCommRingOfComm k hcomm
   let A := Algebra.adjoin k ({x, c} : Set (Matrix (Fin N) (Fin N) k))
+  haveI : IsMulCommutative A := Algebra.isMulCommutative_adjoin k (fun a ha b hb _ => hcomm a ha b hb)
+  letI : CommRing A := { (inferInstance : Ring A) with mul_comm := fun a b => mul_comm' a b }
   let xa : A := ⟨x, Algebra.subset_adjoin (by simp)⟩
   let ca : A := ⟨c, Algebra.subset_adjoin (by simp)⟩
   have hna : IsNilpotent (xa - ca) := (IsNilpotent.map_iff (f := A.val) Subtype.val_injective).1 hn

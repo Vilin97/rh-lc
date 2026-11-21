@@ -264,9 +264,27 @@ theorem upCharS_at_chartL {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io}
     {Orb : Type} {d : ℕ} [NeZero d] {lab : LabS E C Orb d} (ha : LabSArith V io ie lab) (hg : LabSGeo C3 ie Y lab)
     (hr : lab.RankOK Dw) (o : Orb) (Hc : ∀ g, (Y.rawSelf (selfOfLab ha hg o)).CartHyp V g) :
     UPCharSelfSt Y (selfOfLab ha hg o) Hc := by
-  obtain ⟨h1, h2, h3, h4⟩ := chart_ties hie hY
-  exact upCharS_of_upFLaw_RR hPlace Y (selfOfLab ha hg o) (rankHyp_ofLabS ha hg hr o) Hc T.V C3.FT C3.actT hL
-    (ie.comp (algebraMap T.V T.Fr)) h1 h2 h3 h4 hd
+  have h := chart_ties hie hY
+  have hrank : (Y.rawSelf (selfOfLab ha hg o)).RankHyp := by
+    refine { big_compl := (hr o).1, rk_big := ?_, rk_small := ?_ }
+    · refine Fin.forall_fin_two.mpr ⟨?_, ?_⟩
+      · intro a hb
+        simp only [FBChart.rawSelf, selfOfLab]
+        convert (card_sigma_fst (fun b => Dw.mult (lab.tau o b)) a).trans ((hr o).2.1 a hb) using 2
+        exact Finset.filter_congr (fun _ _ => Iff.rfl)
+      · intro a hb
+        simp only [FBChart.rawSelf, selfOfLab, ite_eq_right (by decide : (1 : Fin 2) ≠ 0)]
+        exact (card_sigma_shift (fun b => Dw.mult (lab.tau o b)) lab.hd a).trans ((hr o).2.2.2.1 a hb)
+    · refine Fin.forall_fin_two.mpr ⟨?_, ?_⟩
+      · intro a hb
+        simp only [FBChart.rawSelf, selfOfLab]
+        convert (card_sigma_fst (fun b => Dw.mult (lab.tau o b)) a).trans ((hr o).2.2.1 a hb) using 2
+        exact Finset.filter_congr (fun _ _ => Iff.rfl)
+      · intro a hb
+        simp only [FBChart.rawSelf, selfOfLab, ite_eq_right (by decide : (1 : Fin 2) ≠ 0)]
+        exact (card_sigma_shift (fun b => Dw.mult (lab.tau o b)) lab.hd a).trans ((hr o).2.2.2.2 a hb)
+  exact upCharS_of_upFLaw_RR hPlace Y (selfOfLab ha hg o) hrank Hc T.V C3.FT C3.actT hL
+    (ie.comp (algebraMap T.V T.Fr)) h.1 h.2.1 h.2.2.1 h.2.2.2 hd
 
 
 end Chart

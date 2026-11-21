@@ -166,7 +166,6 @@ theorem one_tmul_mem_center {z : UEnv E a} (hz : z ∈ (isExpLieAlgebra E a).cen
     (1 : ℂ) ⊗ₜ[ℝ] z ∈ Subalgebra.center ℂ (UC E a) := by
   refine Subalgebra.mem_center_iff.2 fun w => ?_
   induction w with
-  | zero => rw [zero_mul, mul_zero]
   | tmul c x => simp only [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul, Subalgebra.mem_center_iff.1 hz x]
   | add x y hx hy => rw [add_mul, mul_add, hx, hy]
 

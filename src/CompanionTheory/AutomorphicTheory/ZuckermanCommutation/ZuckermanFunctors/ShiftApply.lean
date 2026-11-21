@@ -292,7 +292,9 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
           add_le_add (ind_le p.1 a) (by split_ifs <;> simp), by simp [addSet, Pi.single_apply, add_assoc]⟩⟩
     let e : Sub (2 * r + k + 1) (m + 1) → P := fun I => ⟨addSet μ I.1, nr fun a => ⟨_, ind_le I a, by simp [addSet]⟩⟩
     have cs := fun ν : P => (S.casDS S.infChar k r ε _ (V ν) hk (hV ν) (triv k r)).2
-    obtain ⟨hd1, hd2⟩ := S.decTens k r (wedge k r m) (vr k r false) U (S.okWedge k r m) (S.okVr k r false)
+    have hDecTens := S.decTens
+    unfold DecTens at hDecTens
+    obtain ⟨hd1, hd2⟩ := hDecTens k r (wedge k r m) (vr k r false) U (S.okWedge k r m) (S.okVr k r false)
     obtain ⟨io₁, pr₁, D₁, e₁⟩ := hd1 _ _ (fun J => V (pJ J)) (fun p => V (par p)) (fun J => (casG (pJ J).1 : ℂ))
       (decW S Lb hk m hU hg (by linarith) (fun a c hac => by linarith [hD a c hac]) _ fun J => hV (pJ J))
       (fun J => decV S Lb hk false (hV (pJ J)) (near hU.1 hg hD m (by linarith) (hJ J)).2.1 (by linarith) _

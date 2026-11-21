@@ -85,7 +85,7 @@ private theorem proj_of_sum {G V : Type} [Group G] [AddCommGroup V] [Module ℂ 
     congrArg Subtype.val (Submodule.linearProjOfIsCompl_apply_left hc ⟨u, hu⟩)
   have hprC : ∀ c ∈ C, pr c = 0 := fun c hc' => by
     have h0 : Submodule.linearProjOfIsCompl U (C ⊔ D) hc c = 0 :=
-      Submodule.linearProjOfIsCompl_apply_right' hc (Submodule.mem_sup_left hc')
+      Submodule.projectionOnto_apply_of_mem_right hc (Submodule.mem_sup_left hc')
     simp [pr, h0]
   have hform : ∀ c ∈ C, ∀ u ∈ U, pr (c + u) = u := fun c hc' u hu => by
     rw [map_add (f := _), hprC c hc', hprU u hu, zero_add]

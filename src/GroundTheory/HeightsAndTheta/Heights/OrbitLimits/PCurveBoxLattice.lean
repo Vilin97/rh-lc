@@ -56,9 +56,8 @@ theorem genIndex_map_addEquiv {G : Type*} [AddCommGroup G] (m : G ≃+ G) (A B :
 
 theorem addSubgroup_fg_map {G H : Type*} [AddCommGroup G] [AddCommGroup H] {A : AddSubgroup G} (hA : A.FG)
     (f : G →+ H) : (A.map f).FG := by
-  classical
-  obtain ⟨S, hS⟩ := hA
-  exact ⟨S.image f, by rw [Finset.coe_image, ← AddMonoidHom.map_closure, hS]⟩
+  letI : A.FG := hA
+  infer_instance
 
 theorem CurveBoxLattice.proof (hF : CurveFieldNumber.Statement) (hE : CurveEmbedOrbit.Statement)
     (hL : ChartLatFull.Statement) (hN : NumberFieldBoxCount.Statement)

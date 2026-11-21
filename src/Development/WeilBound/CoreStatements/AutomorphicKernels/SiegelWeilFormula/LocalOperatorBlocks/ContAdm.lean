@@ -67,8 +67,11 @@ theorem phz_tg (p : (κ → AF F) × (κ → AF F)) : (phz F p).HasTemperateGrow
   have hg : Function.HasTemperateGrowth (fun s : ℝ => Complex.exp (-(2 * Real.pi * Complex.I) * (s : ℂ))) := by
     have h := tg_exp.comp (((-(2 * Real.pi)) • ContinuousLinearMap.id ℝ ℝ).hasTemperateGrowth)
     convert h using 1
+    funext s
+    simp only [Function.comp_apply, ContinuousLinearMap.coe_smul', ContinuousLinearMap.coe_id',
+      Pi.smul_apply, id_eq, smul_eq_mul]
     push_cast
-    ring_nf
+    congr 1 <;> ring
   exact hg.comp (hT.comp hlin)
 
 theorem schr_pureA (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (p : (κ → AF F) × (κ → AF F))

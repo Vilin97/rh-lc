@@ -25,14 +25,13 @@ variable {A B : Type} [CommRing A] [CommRing B] [Algebra A B]
 
 theorem dual_ext (hg : IsBaseChange B g) {y y' : Module.Dual B N} (h : ∀ m, y (g m) = y' (g m)) : y = y' := by
   refine LinearMap.ext fun n => ?_
-  refine hg.inductionOn n (fun n => y n = y' n) (by simp) h ?_ ?_
+  refine hg.inductionOn n h ?_ ?_
   · intro s n hn; simp [hn]
   · intro a b ha hb; simp [ha, hb]
 
 theorem span_range_eq_top (hg : IsBaseChange B g) : Submodule.span B (Set.range g) = ⊤ := by
   refine eq_top_iff.2 fun n _ => ?_
-  refine hg.inductionOn n (fun n => n ∈ Submodule.span B (Set.range g)) (Submodule.zero_mem _)
-    (fun m => Submodule.subset_span ⟨m, rfl⟩) ?_ ?_
+  refine hg.inductionOn n (fun m => Submodule.subset_span ⟨m, rfl⟩) ?_ ?_
   · intro s n hn; exact Submodule.smul_mem _ _ hn
   · intro a b ha hb; exact Submodule.add_mem _ ha hb
 
@@ -213,7 +212,6 @@ theorem reducesTo_of_isHTChartOf : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
   obtain ⟨β₀, hβ₀, hβs, -⟩ := PositivityTheory.HtPt.Htat.lie_bc S G R O x L L' M M'
   let β : L →ₗ[R] L' := { toFun := β₀, map_add' := β₀.map_add, map_smul' := fun a e => hβs a e }
   have hβ : IsBaseChange O β := PositivityTheory.HtPt.Htat.lie_bc_iso S G R O x L L' M M' β (fun e => by
-    unfold LieModel.Lifts
     rw [Category.comp_id]
     exact hβ₀ e)
   obtain ⟨hLf, hLp⟩ := PositivityTheory.HtPt.Htat.lie_fin S G R x L M

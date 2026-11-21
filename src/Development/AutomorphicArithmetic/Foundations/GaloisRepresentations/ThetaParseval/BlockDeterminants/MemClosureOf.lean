@@ -171,8 +171,9 @@ private theorem coord_adeleMap [IsCMField E] {w : InfinitePlace F} (τ : EmbOver
     (funext fun k => by
       have e : coord τ.1 (pInf E (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.adeleMap F E (algebraMap F _ k))) = τ.1 (algebraMap F E k) := by
         rw [GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.adeleMap_algebraMap, GlobalTheory.CuspRep.coord_algebraMap]
-      exact e.trans ((RingHom.congr_fun τ.2 k).trans
-        (InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm k)).symm))) a.1
+      apply e.trans ((RingHom.congr_fun τ.2 k).trans ?_)
+      simpa [InfiniteAdeleRing.algebraMap_apply, ← WithAbs.equiv_symm_apply] using
+        (InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm k)).symm)) a.1
 
 private theorem piInf_eq [IsCMField E] {w : InfinitePlace F} (τ : EmbOver E w) (z : AE F E) :
     piInf τ z = coord τ.1 (pInf E (toAdele F E z)) := by

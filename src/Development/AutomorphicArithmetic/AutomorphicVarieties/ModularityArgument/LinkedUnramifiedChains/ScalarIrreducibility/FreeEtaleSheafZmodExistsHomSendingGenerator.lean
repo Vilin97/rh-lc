@@ -379,6 +379,8 @@ private theorem z_ne {k : Type} [Field k] (h2 : (2 : k) ≠ 0) {n : ℕ} (hn : n
 
 end UpperTheory.V.J.TorusDerivation
 
+set_option synthInstance.maxHeartbeats 200000
+
 namespace UpperTheory.V.J.TorusDerivation
 
 open Matrix

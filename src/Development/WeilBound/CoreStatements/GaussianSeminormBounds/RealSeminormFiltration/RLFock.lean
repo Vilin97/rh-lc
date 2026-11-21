@@ -180,7 +180,7 @@ theorem eq_zero_of_stable (K : Submodule ℂ (MvPolynomial L ℂ)) (hK : ∀ l, 
       · rw [h0]
       · obtain ⟨l, hl⟩ := Finsupp.ne_iff.1 (Ne.symm h0)
         have h3 := congrArg (AddMonoidAlgebra.coeff · (α - Finsupp.single l 1)) (h1 l)
-        rw [coeff_pderiv, Finsupp.sub_add_single_one_cancel hl, coeff_zero] at h3
+        rw [coeff_pderiv, Finsupp.sub_add_single_one_cancel hl, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h3
         exact (mul_eq_zero.1 h3).resolve_right (Nat.cast_add_one_ne_zero _)
     rw [h2] at hP
     rw [h2, hC _ hP, map_zero]
@@ -192,7 +192,9 @@ theorem exists_fock [DecidableEq L] (Z d : L → Module.End ℂ S) (hZ : ∀ l l
   have hc : ∀ a ∈ Set.range Z, ∀ b ∈ Set.range Z, a * b = b * a := by
     rintro _ ⟨l, rfl⟩ _ ⟨l', rfl⟩
     exact hZ l l'
-  letI : CommRing (Algebra.adjoin ℂ (Set.range Z)) := Algebra.adjoinCommRingOfComm ℂ hc
+  letI : IsMulCommutative (Algebra.adjoin ℂ (Set.range Z)) :=
+    Algebra.isMulCommutative_adjoin ℂ (fun a ha b hb _ => hc a ha b hb)
+  open scoped IsMulCommutative in
   let e : MvPolynomial L ℂ →ₐ[ℂ] Module.End ℂ S := (Algebra.adjoin ℂ (Set.range Z)).val.comp
     (aeval fun l => (⟨Z l, Algebra.subset_adjoin ⟨l, rfl⟩⟩ : Algebra.adjoin ℂ (Set.range Z)))
   have he : ∀ l, e (X l) = Z l := fun l => by simp [e]

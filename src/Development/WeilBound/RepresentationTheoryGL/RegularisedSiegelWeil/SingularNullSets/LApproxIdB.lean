@@ -33,7 +33,7 @@ theorem oneD : OneD := by
   obtain ⟨ρ, U, hρ, hρt, hU, hUt, hinv, hint, -, hlim⟩ := hS₁ (S ∪ S₁) Finset.subset_union_right
   haveI : db.IsAddHaarMeasure := hdb.1
   have hεε := idF_mul hε
-  have hp : Continuous (AddMonoidHom.mulLeft ε) := continuous_mul_left ε
+  have hp : Continuous (AddMonoidHom.mulLeft ε) := continuous_const.mul continuous_id
   have hpp : ∀ x, AddMonoidHom.mulLeft ε (AddMonoidHom.mulLeft ε x) = AddMonoidHom.mulLeft ε x := fun x => by
     simp only [AddMonoidHom.coe_mulLeft, ← mul_assoc, hεε]
   have hcY : IsClosed (((AddMonoidHom.mulLeft ε).ker : Set (AF F))) := isClosed_eq hp continuous_const

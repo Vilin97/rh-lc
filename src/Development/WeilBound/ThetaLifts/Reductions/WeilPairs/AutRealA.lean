@@ -62,7 +62,7 @@ theorem fderiv_vacF (hc : IsCharAF F ψ) (ι : (InfinitePlace F → ℂ) →+ AE
   have h3 := hv w z
   rw [PositivityTheory.ThKW.jV_apply] at h3
   simp only [Submodule.coe_add, Submodule.coe_smul, BoundedContinuousFunction.coe_add,
-    BoundedContinuousFunction.coe_smul, Pi.add_apply, smul_eq_mul, Submodule.coe_zero,
+    BoundedContinuousFunction.coe_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Submodule.coe_zero,
     BoundedContinuousFunction.coe_zero, Pi.zero_apply]
   rw [h1, h2]
   exact h3

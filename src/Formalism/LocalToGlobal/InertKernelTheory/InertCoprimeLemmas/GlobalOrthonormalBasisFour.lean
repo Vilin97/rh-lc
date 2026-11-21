@@ -478,6 +478,7 @@ def Good (p : ℕ) {k : ℕ} (e : Fin k → D.host.E) : Prop :=
 theorem orth_symm {x y : D.host.E} (h : Algebra.trace D.host.K D.host.E (x * D.host.conj y) = 0) :
     Algebra.trace D.host.K D.host.E (y * D.host.conj x) = 0 := by
   have := (G0.herm D).symm x y
+  change G0.hK D y x = G0.cK D (G0.hK D x y) at this
   simp only [G0.hK] at this
   rw [this, h, map_zero]
 
@@ -525,7 +526,7 @@ theorem oneCopyOrth_of (hU : UnitVec) : OneCopyOrth := by
     have : ((u i : ℚ) : D.host.K) ≠ 0 := Rat.cast_ne_zero.2 (hu i).1.ne'
     exact this h.symm
   have hli : LinearIndependent D.host.K e :=
-    FS.Herm4.linInd (G0.herm D) e hne (fun i j hij => horth i j hij)
+    FS.Herm4.linInd (h := G0.hK D) (G0.herm D) e hne (fun i j hij => horth i j hij)
   have hsp : ⊤ ≤ Submodule.span D.host.K (Set.range e) :=
     le_of_eq (hli.span_eq_top_of_card_eq_finrank' (by rw [Fintype.card_fin])).symm
   let bs : Module.Basis (Fin f) D.host.K D.host.E := Module.Basis.mk hli hsp
@@ -879,6 +880,7 @@ theorem tE_swap (y z : D.host.E) :
     ((Algebra.trace D.host.K D.host.E (z * D.host.conj y) : D.host.K) : D.host.E) =
       D.host.conj ((Algebra.trace D.host.K D.host.E (y * D.host.conj z) : D.host.K) : D.host.E) := by
   have := (G0.herm D).symm y z
+  change G0.hK D z y = G0.cK D (G0.hK D y z) at this
   simp only [G0.hK] at this
   rw [this]
   rfl

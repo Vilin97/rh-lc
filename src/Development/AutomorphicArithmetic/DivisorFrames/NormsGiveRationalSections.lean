@@ -13,12 +13,43 @@ open GlobalTheory GlobalTheory.Cartier GlobalTheory.CechPic GlobalTheory.ProjVar
 open GlobalTheory.VertCmp GlobalTheory.Mean4O GlobalTheory.CoverNorm GlobalTheory.VertForm GlobalTheory.CovCmp
 open scoped Classical
 
-open private UpperTheory.VertGlob.exists_lift from Development.AutomorphicArithmetic.DivisorFrames.ArithmeticFunctionInducedBound
-
 theorem UpperTheory.norms_give_rational_sections :
     ∀ (F : Type) [Field F] [NumberField F] (Y : Var F) (C : CxSt F) (A : Adl C Y) (V : Mean4O.Cover Y) (L : HermLB V.p) (m : ℕ) (a : ∀ σ : F →+* ℂ, Pts Y σ → ℝ), Norms V L (fun x => genAt A.D x ^ m) a (fun v e y => (m : ℝ) * A.lg v e y) → ∃ s : L.B.ι → V.X.functionFieldˣ, ∀ v, CRead V v L.B s fun e y => (m : ℝ) * VertCmp.lam A v e y := by
   intro F _ _ Y C A V L m a h
-  obtain ⟨s, hs, hR, -⟩ := UpperTheory.VertGlob.exists_lift V L h
+  have hLift : ∃ (s : L.B.ι → V.X.functionFieldˣ) (_ : IsRatSec L.B s),
+      ∀ (v : HeightOneSpectrum (𝓞 F)) (e : TrueGeo.Ext v) (y : AlgPt Y)
+        (z : Sp (AlgebraicClosure F) ⟶ V.G) (yt : Sp e.O ⟶ V.X) (i : L.B.ι),
+        z ≫ V.π = y.1 → spMap e.O.subtype ≫ yt = z ≫ V.j → ⊤ ≤ yt ⁻¹ᵁ L.B.U i →
+        let g := V.φ (genAt A.D (below y.1) ^ m) *
+          SmallSec.fnMap V.j (Isom.j_gen_specializes V) (s i)
+        UnitAt (below z) g ∧ (m : ℝ) * A.lg v e y = Real.log (e.w (TrueGeo.valAt z g)) := by
+    obtain ⟨r, hr, hu, -, hf⟩ := h
+    have := CoverHt.isPreimmersion_j V
+    have hη := Isom.j_gen_specializes V
+    let ρ : V.X.functionField ≃+* V.G.functionField :=
+      RingEquiv.ofBijective (SmallSec.fnMap V.j hη)
+        ⟨(SmallSec.fnMap V.j hη).injective, SmallSec.fnMap_surjective V.j hη⟩
+    have hρ : ∀ (U : V.X.Opens) (hU : genericPoint V.X ∈ U)
+        (hU' : genericPoint V.G ∈ V.j ⁻¹ᵁ U) (t : Γ(V.X, U)),
+        ρ (fnOf U hU t) = fnOf (V.j ⁻¹ᵁ U) hU' (V.j.app U t) :=
+      fun U hU hU' t => SmallSec.fnMap_fnOf V.j hη hU hU' t
+    have hj : V.j (genericPoint V.G) = genericPoint V.X :=
+      (hη.antisymm (genericPoint_specializes _)).eq
+    refine ⟨_, InducedIsom.isRatSec_lift V.j ρ hρ hj L.B hr, fun v e y z yt i e₁ e₂ hU => ?_⟩
+    have eρ : SmallSec.fnMap V.j hη
+        ((Units.map ρ.symm.toMonoidHom (r fun _ => i) : V.X.functionFieldˣ) : V.X.functionField) =
+        (r fun _ => i : V.G.functionField) := ρ.apply_symm_apply _
+    dsimp only
+    rw [eρ]
+    have hpt : (z ≫ V.j) (IsLocalRing.closedPoint _) ∈ L.B.U i := by
+      rw [← e₂]
+      exact hU (Set.mem_univ _)
+    have hmem : below z ∈ (L.B.pull V.j).U (fun _ => i) := Set.mem_iInter.2 fun _ => hpt
+    have hw := hu _ _ hmem
+    have hb : V.π (below z) = below y.1 := by rw [← e₁]; rfl
+    rw [hb] at hw
+    exact ⟨hw, hf v e y z yt (fun _ => i) e₁ e₂ hU⟩
+  obtain ⟨s, hs, hR⟩ := hLift
   obtain ⟨W, hW, hE⟩ := (A.D.isEqn_genericPoint 1).exists_nhds
   have hu (x : Y.X) (hx : x ∈ W) : UnitAt x (eqn A.D x : Y.Fn) := by
     simpa using (hE x hx).iff_unitAt.1 (Base.isEqn_eqn A.D x)
@@ -29,7 +60,7 @@ theorem UpperTheory.norms_give_rational_sections :
     | zero => simpa using unitAt_one x
     | succ n ih => rw [pow_succ]; exact ih.mul (hu x hx).inv
   refine ⟨s, fun v => ⟨hs, W, hW, fun e y z yt i hy e₁ e₂ hU _ => ?_⟩⟩
-  haveI := CoverHt.isPreimmersion_j V
+  have := CoverHt.isPreimmersion_j V
   obtain ⟨hw, H⟩ := hR v e y z yt i e₁ e₂ hU
   obtain ⟨hπ, eφ⟩ := V.φ_eq_fnMap
   have hb : V.π (below z) = below y.1 := by rw [← e₁]; rfl

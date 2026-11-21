@@ -263,7 +263,7 @@ theorem PullFSExtension.proof (hBP : ProjFrameBasePtFree.Statement) : PullFSExte
       ⟨fun h0 => by obtain ⟨i, hi⟩ := hz.1 (); exact hi (congrFun h0 _), hz.2⟩
     have hpz := pr_ne_zero hBP hfr hzp
     have hev : (fun y => Real.log ((HermLine.ofCone (metric e δ)).h y)) =ᶠ[𝓝 z]
-        fun y => Real.log ((fsMetric (Fin (D + 1))).ρ (pr e y)) := by
+        fun y => Real.log ((fsMetric (ι := Fin (D + 1))).ρ (pr e y)) := by
       have hr : ∀ᶠ y in 𝓝 z, δ / 2 < ratio e y :=
         (contDiffAt_ratio e hzp.1 (n := 0)).continuousAt.eventually
           (lt_mem_nhds (by linarith [hlb z hzp]))
@@ -272,10 +272,10 @@ theorem PullFSExtension.proof (hBP : ProjFrameBasePtFree.Statement) : PullFSExte
       rw [metric_of_ge e hδ hy0 hy.le, congrFun log_fs_eq (pr e y),
         Real.log_sqrt (by rw [normSqE_eq]; positivity)]
       ring
-    have hφ : ContDiffAt ℝ 2 (fun u => Real.log ((fsMetric (Fin (D + 1))).ρ u)) (pr e z) := by
+    have hφ : ContDiffAt ℝ 2 (fun u => Real.log ((fsMetric (ι := Fin (D + 1))).ρ u)) (pr e z) := by
       rw [log_fs_eq]
       exact contDiffAt_const.mul (contDiff_normSqE.contDiffAt.log (normSqE_pos hpz).ne')
-    have key := leviForm_comp_clm (pr e) (fun u => Real.log ((fsMetric (Fin (D + 1))).ρ u)) z w hφ
+    have key := leviForm_comp_clm (pr e) (fun u => Real.log ((fsMetric (ι := Fin (D + 1))).ρ u)) z w hφ
     beta_reduce at key
     rw [leviForm_congr hev w, key]
     exact leviForm_log_fs_nonneg hpz (pr e w)

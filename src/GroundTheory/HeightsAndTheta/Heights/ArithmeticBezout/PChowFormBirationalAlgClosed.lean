@@ -63,7 +63,7 @@ theorem IsChowForm.exists_pderiv_ne_zero {F : Type} [Field F] [IsAlgClosed F] {p
     · simp [h0]
     have hle : Finsupp.single v 1 ≤ s := Finsupp.single_le_iff.2 (by omega)
     have h1 := congrArg (AddMonoidAlgebra.coeff · (s - Finsupp.single v 1)) (hall v)
-    rw [coeff_pderiv, coeff_zero, tsub_add_cancel_of_le hle] at h1
+    rw [coeff_pderiv, AddMonoidAlgebra.coeff_zero, tsub_add_cancel_of_le hle] at h1
     have h2 := (mul_eq_zero.1 h1).resolve_left (mem_support_iff.1 hs)
     rw [Finsupp.tsub_apply, Finsupp.single_eq_same] at h2
     have h3 : ((s v : ℕ) : F) = 0 := by
@@ -148,9 +148,9 @@ theorem ChowFormBirationalAlgClosed.proof : ChowFormBirationalAlgClosed.Statemen
     exact not_dvd_pderiv_of_pderiv_ne_zero hg.1 hl
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_mul, aeval_C, MvPolynomial.algebraMap_apply, hρ]
-    simp only [Finset.sum_mul, Finset.mul_sum]
-    refine Finset.sum_congr rfl fun l' _ => ?_
-    ring
+      simp only [Finset.sum_mul, Finset.mul_sum]
+      refine Finset.sum_congr rfl fun l' _ => ?_
+      ring
 
 end
 

@@ -41,8 +41,12 @@ theorem infLocalDecompHom_surjective : Function.Surjective (infLocalDecompHom ι
     (ψ.liftNormal (AlgebraicClosure v.Completion)) (algebraMap _ _
       (algebraMap F.1 (infPlaceOfEmbedding ι F : NumberField.InfinitePlace F.1).Completion x))
   rw [AlgEquiv.liftNormal_commutes, infiniteDecompositionToLocal_apply]
-  exact congrArg (algebraMap _ (AlgebraicClosure v.Completion))
-    (infiniteDecomposition_smul_coe τ (WithAbs.toAbs _ x)).symm
+  apply congrArg (algebraMap _ (AlgebraicClosure v.Completion))
+  rw [AbsoluteValue.Completion.algebraMap_def, AbsoluteValue.Completion.algebraMap_def,
+    WithAbs.algebraMap_right_apply, WithAbs.algebraMap_right_apply,
+    Algebra.algebraMap_self_apply, Algebra.algebraMap_self_apply,
+    infiniteDecomposition_smul_coe]
+  congr 1
 
 
 omit [F.1.fixingSubgroup.Normal] in

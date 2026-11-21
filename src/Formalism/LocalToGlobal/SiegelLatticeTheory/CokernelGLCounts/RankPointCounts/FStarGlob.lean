@@ -46,7 +46,9 @@ theorem starG_ne (γ : TermDef.Term D u u' F0 what₂) (w : Point D.host.E (D.R.
   have hrel2 := (Formalism.L2.SG.Pf.double_coset_equivalence γ.lam (lf D F0) (PD D γ.lam (lf D F0) u') (Quot.out γ.cls)
     ⟨repF γ, h2⟩).1 ((Quot.out_eq γ.cls).trans h2e.symm)
   have hGv : Gval (lf D F0) (repF γ) ≠ 0 := by
-    rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hrel2]; exact hG
+    have he := Formalism.L2.SG.Pf.gval_rel (lf D F0) hrel2
+    change Gval (lf D F0) (repF γ) = _ at he
+    rw [he]; exact hG
   rw [← FsLA.leadMinorE_full, star_frame_lead_minor, star_frame_lead_minor]
   exact hGv
 

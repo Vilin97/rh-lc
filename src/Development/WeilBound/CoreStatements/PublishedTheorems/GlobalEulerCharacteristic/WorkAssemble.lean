@@ -37,7 +37,9 @@ theorem ratio_eq_one_of_coprime_cyclic' (ℓ : ℕ) [Fact ℓ.Prime] (K : Finite
 theorem ratioOneKilled_of_lemmaX (ℓ : ℕ) [Fact ℓ.Prime] (hX : GlobalEulerCharCoprime) :
     RatioOneKilled ℓ (fun _ => True) := by
   intro K S hS hSℓ _ ιr M _ _ hℓ
-  obtain ⟨L, hKL, hL, hN, hζ, hc, htriv⟩ := W_split.exists_split ℓ K S hS hSℓ M
+  obtain ⟨L, hKL, hsplit⟩ := W_split.exists_split ℓ K S hS hSℓ M
+  letI := hKL
+  obtain ⟨hL, hN, hζ, hc, htriv⟩ := hsplit
   exact ratio_eq_one_of_coprime_cyclic' ℓ K S hS hSℓ ιr L hL hN M hℓ htriv
     (W_endx.ending_lemmaX hX ℓ K S hS hSℓ ιr L hL hN M hℓ htriv hζ hc)
 

@@ -62,6 +62,7 @@ theorem ModelLocalizationMaximalPoint.proof : ModelLocalizationMaximalPoint.Stat
     rintro _ ⟨f, hf, rfl⟩ hfQ
     apply hf
     have h : f ∈ Q'.comap (algebraMap A R') := hfQ
+    change f ∈ Ideal.under A Q' at h
     rw [hQ'm] at h
     exact h
   have hPQ' : P = Q'.map (algebraMap R' L) := by
@@ -73,7 +74,9 @@ theorem ModelLocalizationMaximalPoint.proof : ModelLocalizationMaximalPoint.Stat
   have hQeq : P.comap (algebraMap R' L) = Q' := by
     rw [hPQ']
     exact IsLocalization.under_map_of_isPrime_disjoint (normalModelSubmonoid M q) L hQ'prime hdisj
-  have hQ'max : Q'.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap Q' (hQ'm ▸ hm)
+  have hQ'max : Q'.IsMaximal := by
+    letI : Q'.IsPrime := hQ'prime
+    exact Ideal.isMaximal_of_isIntegral_of_isMaximal_under Q' (hQ'm ▸ hm)
 
   let N := P.comap ((algebraMap R' L).comp (Ideal.Quotient.mk M.ideal))
   have hNmax : N.IsMaximal := by

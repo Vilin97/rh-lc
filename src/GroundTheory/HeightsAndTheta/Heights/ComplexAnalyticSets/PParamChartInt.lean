@@ -35,6 +35,8 @@ theorem ParamChartInt.proof (hCA : ChartIntCountAdd.Statement) (hPI : ParamPiece
   have hmv : Differentiable ℂ (fun x : Fin n → ℂ => A *ᵥ x) := by
     have h := (Matrix.mulVecLin A).toContinuousLinearMap.differentiable
     convert h using 1
+    ext x i
+    rfl
   have hgd : DifferentiableOn ℂ g Ω := hmv.comp_differentiableOn (hσ.mono Set.inter_subset_left)
   set Reg : Set (Fin d → ℂ) := {w | w ∈ Metric.ball (0 : Fin d → ℂ) r ∧ σ w ∈ N ∧
       LinearMap.det (fderiv ℂ g w : (Fin d → ℂ) →ₗ[ℂ] Fin d → ℂ) ≠ 0} with hReg

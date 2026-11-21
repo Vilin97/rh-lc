@@ -59,11 +59,8 @@ theorem exp_conj_connection_integral {B : FB R d O} {h : PS k 2 d} (hc : B.IsCan
     obtain ⟨g, rfl⟩ := RingHom.mem_range.mp hf
     refine RingHom.mem_range.mpr ⟨pderiv (R := R) v g, ?_⟩
     ext n
-    show coeff n (MvPowerSeries.map (algebraMap R k) (pderivFun v g)) =
-      coeff n (pderivFun v (MvPowerSeries.map (algebraMap R k) g))
-    unfold pderivFun
-    show algebraMap R k (coeff (n + Finsupp.single v 1) g * ((n v : R) + 1)) =
-      algebraMap R k (coeff (n + Finsupp.single v 1) g) * ((n v : k) + 1)
+    rw [MvPowerSeries.coeff_map, MvPowerSeries.coeff_pderiv,
+      MvPowerSeries.coeff_pderiv, MvPowerSeries.coeff_map]
     rw [map_mul, map_add (f := _), map_one, map_natCast]
   let vf (c : (Fin d ⊕ Fin d) → AA k d) (G : AA k d) : AA k d :=
     ∑ t, c t * pderiv (R := k) t G

@@ -157,7 +157,7 @@ theorem stackedFormEval_bipart (b : Module.Basis T ℤ (dualLattice F))
   simp_rw [biEval_monomial] at h0
   have h1 := congrArg (fun q => AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff q (Finsupp.single () p.2)) (Finsupp.single () (p.1 + p.2))) h0
   simp only [coeff_sum, coeff_C_mul_X_pow_unit, apply_ite (AddMonoidAlgebra.coeff · (Finsupp.single () (p.1 + p.2))),
-    coeff_zero] at h1
+    AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h1
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← h1, bipart, map_sum, Finset.sum_filter]
   refine Finset.sum_congr rfl fun m _ => ?_

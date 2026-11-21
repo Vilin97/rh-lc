@@ -52,7 +52,7 @@ theorem adelic_cusp_of_infinite_cusp : CuspInf → CongK → CuspAdel := by
   have hjE : MeasurableEmbedding j :=
     (measurableEmbedding_mulRight γ₀⁻¹).comp ((measurableEmbedding_mulLeft γ₀).comp
       (measurableEmbedding_prod_mk_right 1))
-  refine ⟨ν.map j, Measure.isProbabilityMeasure_map hjE.measurable.aemeasurable, hjE.ae_map_iff.2 (hνU.mono fun m hm => ?_),
+  refine ⟨ν.map j, (Measure.isProbabilityMeasure_map_iff hjE.measurable.aemeasurable).2 hν, hjE.ae_map_iff.2 (hνU.mono fun m hm => ?_),
     fun h hh z hz => ?_⟩
   · have : x⁻¹ * j m * x = (y⁻¹ * m * y, 1) := by
       rw [hxe]

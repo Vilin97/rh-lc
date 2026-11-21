@@ -95,10 +95,11 @@ theorem io_eq_phase_smul_core : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (P
         a • PT t (toF O.c' lt (O.io v)) := fun lt hl => by
     have hsm : ∀ (a : O.c'.F) P, toF O.c' lt (a • P) = (a : ℂ) • toF O.c' lt P := fun a P => by
       rw [MvPolynomial.smul_eq_C_mul, map_mul, toF_C, MvPolynomial.smul_eq_C_mul]
-    obtain ⟨B₀, hB₀⟩ := exists_ext O.c0' n4
-      { toFun := fun v => toF O.c' lt (O.io v)
-        map_add' := fun v w => by rw [map_add (f := _), map_add (f := _)]
-        map_smul' := fun a v => by rw [map_smul, hsm]; rfl }
+    set_option synthInstance.maxHeartbeats 400000 in
+      obtain ⟨B₀, hB₀⟩ := exists_ext O.c0' n4
+        { toFun := fun v => toF O.c' lt (O.io v)
+          map_add' := fun v w => by rw [map_add (f := _), map_add (f := _)]
+          map_smul' := fun a v => by rw [map_smul, hsm]; rfl }
     replace hB₀ : ∀ v, B₀ (O.c0' v) = toF O.c' lt (O.io v) := hB₀
     have hpG : toF O.c' lt (O.io O.hw) = RealDat.Delta i := by
       rw [i4]

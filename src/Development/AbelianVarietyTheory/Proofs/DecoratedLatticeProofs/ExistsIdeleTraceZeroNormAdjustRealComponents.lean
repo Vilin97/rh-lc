@@ -134,7 +134,7 @@ private theorem scal_pos (D : D7) (μ : D.host.E) (hμ : μ ≠ 0) (w : Infinite
     IsCMField.complexEmbedding_complexConj D.host.E (φ : D.host.E →+* ℂ) μ
   rw [h2, map_mul, h3, Complex.mul_conj] at h1
   have h4 : ((InfinitePlace.Completion.ringEquivRealOfIsReal hw (algebraMap D.host.F w.Completion n) : ℝ) : ℂ) = w.embedding n := by
-    simp
+    simp [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]
   have h5 : 0 < Complex.normSq (φ μ) := Complex.normSq_pos.2 (by simpa using hμ)
   have h6 := h4.trans h1.symm
   have h7 : (InfinitePlace.Completion.ringEquivRealOfIsReal hw (algebraMap D.host.F w.Completion n) : ℝ) = Complex.normSq (φ μ) := by

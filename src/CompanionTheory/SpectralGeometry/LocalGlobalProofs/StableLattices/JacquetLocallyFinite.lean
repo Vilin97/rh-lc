@@ -38,7 +38,8 @@ theorem actM_intertwine {E : Fin n → Fin n → Module.End ℂ V} (hE : Formali
   have hs : actM E (c • Y) = c • actM E Y :=
     (GlobalTheory.CompanionTheory.PolyNilGrad.actL E).map_smul c Y
   rw [h, hs] at hb
-  rw [mul_add, ← sub_eq_iff_eq_add', hb, Algebra.algebraMap_eq_smul_one, mul_smul_comm, mul_one]
+  rw [mul_add, Algebra.algebraMap_eq_smul_one, mul_smul_comm, mul_one]
+  exact sub_eq_iff_eq_add'.mp hb
 
 theorem aeval_shift (T : Module.End ℂ V) (c d : ℂ) (h : c + d = 0) (f : ℂ[X]) :
     aeval (T + algebraMap ℂ _ c) (f.comp (X + C d)) = aeval T f := by

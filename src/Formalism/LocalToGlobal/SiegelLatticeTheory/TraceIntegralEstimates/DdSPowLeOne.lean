@@ -72,7 +72,7 @@ theorem levi_mem (Λ : Submodule (𝓞 E) S.V) (aa : Fin r → FractionalIdeal (
       exact Submodule.zero_mem _
     · obtain ⟨o, ho⟩ := (hU' c a).2
       refine Submodule.subset_span ⟨c, x * U' c a, ?_, rfl⟩
-      have hle : (aa a)⁻¹ ≤ (aa c)⁻¹ := FractionalIdeal.inv_anti_mono (haa0 c) (haa0 a) (haa c a h)
+      have hle : (aa a)⁻¹ ≤ (aa c)⁻¹ := FractionalIdeal.inv_anti_mono (haa0 c) (haa c a h)
       refine hle ?_
       rw [← ho, mul_comm, ← Algebra.smul_def]
       exact Submodule.smul_mem _ o hx
@@ -96,7 +96,7 @@ theorem ddS_pow_le_one (D : D7) (n : ℕ) : ddS D ^ n ≤ 1 := by
 
 theorem aaS_mono (D : D7) (a c : Fin D.R.rS) (h : c ≤ a) : aaS D a ≤ aaS D c := by
   rw [PI.TermsAtPtFiniteW.FrameW.aaS_eq, PI.TermsAtPtFiniteW.FrameW.aaS_eq]
-  refine FractionalIdeal.inv_anti_mono (pow_ne_zero _ (PI.SRW.ddS_ne D)) (pow_ne_zero _ (PI.SRW.ddS_ne D)) ?_
+  refine FractionalIdeal.inv_anti_mono (pow_ne_zero _ (PI.SRW.ddS_ne D)) ?_
   have e : ddS D ^ (D.R.rS - c.1) = ddS D ^ (D.R.rS - a.1) * ddS D ^ (a.1 - c.1) := by
     rw [← pow_add]
     congr 1

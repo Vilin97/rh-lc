@@ -18,6 +18,8 @@ section Tri
 
 variable {k : Type} [Field k]
 
+local notation "M2" => Matrix (Fin 2) (Fin 2) k
+
 private theorem tri_exists [IsAlgClosed k] (M : GL (Fin 2) k) :
     ∃ Q : GL (Fin 2) k, ((Q * M * Q⁻¹ : GL (Fin 2) k) : M2) 1 0 = 0 := by
   obtain ⟨μ, hμ⟩ := Module.End.exists_eigenvalue (Matrix.toLin' (M : M2))
@@ -62,11 +64,11 @@ private def triSub : Subgroup (GL (Fin 2) k) where
   one_mem' := by simp
   mul_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq] at ha hb ⊢
+    simp only [Set.mem_ofPred_eq] at ha hb ⊢
     simp [Matrix.mul_apply, Fin.sum_univ_two, ha, hb]
   inv_mem' := by
     intro a ha
-    simp only [Set.mem_setOf_eq] at ha ⊢
+    simp only [Set.mem_ofPred_eq] at ha ⊢
     simp [Matrix.coe_units_inv, Matrix.inv_def, Matrix.adjugate_fin_two, ha]
 
 end Tri

@@ -22,7 +22,7 @@ theorem BlowUpFibreDegree.proof (ha : HomLocRingLocal.Statement.{u}) (hb : DivCy
   intro O _ _ _ ϖ hϖ K _ _ ι _ J _ P n hP N u hu hu' c x hx hxP W hϖW hdiv
   have hsupp : W ∈ (P ⊔ Ideal.span {x}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
-    exact hdiv (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right h])
+    exact hdiv (by unfold divCycle; rw [dite_eq_right h])
   have hWp : W.IsPrime := hsupp.1.1.1
   have := hP.multiProj.isPrime
   obtain ⟨i, hi⟩ := powMonomial_not_mem hWp hsupp.2 c
@@ -53,10 +53,10 @@ theorem BlowUpFibreDegree.proof (ha : HomLocRingLocal.Statement.{u}) (hb : DivCy
   have := Fintype.ofFinite {𝔫 : Ideal B // 𝔫.IsMaximal}
 
   have hterm : ∀ 𝔫 : {𝔫 : Ideal B // 𝔫.IsMaximal},
-      (have := 𝔫.2.isPrime
+      (have := 𝔫.2.isPrime;
        Module.length (Localization.AtPrime 𝔫.1)
-         (Localization.AtPrime 𝔫.1 ⧸ Ideal.span {algebraMap B (Localization.AtPrime 𝔫.1)
-           (algebraMap (homLocRing P W) B ⟨_, hz⟩)})) * (𝔫.1.inertiaDeg (homLocRing P W) : ℕ∞) =
+         (Localization.AtPrime 𝔫.1 ⧸ Ideal.span {(algebraMap B (Localization.AtPrime 𝔫.1)
+           (algebraMap (homLocRing P W) B ⟨_, hz⟩))})) * (𝔫.1.inertiaDeg (homLocRing P W) : ℕ∞) =
         (((divCycle (blowUpOf P u) (liftForm x) (e 𝔫).1).toNat * specialRelDeg (e 𝔫).1 : ℕ) : ℕ∞) := by
     intro 𝔫
     rw [(he 𝔫).1, (he 𝔫).2, Nat.cast_mul]

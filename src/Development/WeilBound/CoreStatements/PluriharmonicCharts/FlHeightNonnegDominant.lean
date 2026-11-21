@@ -50,7 +50,7 @@ theorem fsHerm_levi (a : K → ℕ) {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ 
     0 ≤ leviForm (fun y => Real.log ((fsHerm ι fun k => (a k : ℤ)).h y)) z w := by
   classical
   set F : K → ((Σ k, ι k) → ℂ) → ℝ :=
-    fun k y => Real.log ((fsMetric (ι k)).ρ (fun i => y ⟨k, i⟩)) with hF
+    fun k y => Real.log ((fsMetric (ι := ι k)).ρ (fun i => y ⟨k, i⟩)) with hF
   have hev : (fun y => Real.log ((fsHerm ι fun k => (a k : ℤ)).h y)) =ᶠ[𝓝 z]
       fun y => ∑ k ∈ Finset.univ, (a k : ℝ) * F k y := by
     have hopen : ∀ k, ∀ᶠ y in 𝓝 z, ∃ i, y ⟨k, i⟩ ≠ 0 := fun k => by
@@ -67,7 +67,7 @@ theorem fsHerm_levi (a : K → ℕ) {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ 
     rw [Real.log_prod fun k _ => (Real.rpow_pos_of_pos (hS k) _).ne']
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Real.log_rpow (hS k)]
-    have hρ : (fsMetric (ι k)).ρ (fun i => y ⟨k, i⟩) = Real.sqrt (∑ i, ‖y ⟨k, i⟩‖ ^ 2) := by
+    have hρ : (fsMetric (ι := ι k)).ρ (fun i => y ⟨k, i⟩) = Real.sqrt (∑ i, ‖y ⟨k, i⟩‖ ^ 2) := by
       change ‖WithLp.toLp 2 (fun i => y ⟨k, i⟩)‖ = _
       rw [EuclideanSpace.norm_eq]
     simp only [hF]
@@ -81,7 +81,7 @@ theorem fsHerm_levi (a : K → ℕ) {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ 
       exact fun h0 => hi (congrFun h0 i)
     have hφ := ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.adens_contDiffAt_logρ_id
       (HilbertSamuel.ProjLine.isSmoothMetric_fs (J := ι k)) hk0
-    have hFk : F k = (fun u => Real.log ((fsMetric (ι k)).ρ u)) ∘ FubiniStudyLeviForm.blockProj ι k := rfl
+    have hFk : F k = (fun u => Real.log ((fsMetric (ι := ι k)).ρ u)) ∘ FubiniStudyLeviForm.blockProj ι k := rfl
     refine ⟨hFk ▸ hφ.comp z ((FubiniStudyLeviForm.blockProj ι k).restrictScalars ℝ).contDiff.contDiffAt,
       fun v => ?_⟩
     rw [hFk, levi_comp v ((FubiniStudyLeviForm.blockProj ι k).analyticAt z) hφ]

@@ -59,7 +59,8 @@ theorem ringKrullDim_quot :
     rw [Nat.card_eq_fintype_card, Fintype.card_sigma]
     simp
     omega
-  rw [hc, Fintype.card_fin]
+  rw [ENat.card_eq_coe_natCard, hc, Fintype.card_fin]
+  simp
 
 def coordEquiv : (Σ _ : Unit, Fin (n + 1)) ≃ (Σ _ : Fin 1, PlIdx 1 n) :=
   Equiv.ofBijective (GrassmannianLinesProjective.coordMap n)

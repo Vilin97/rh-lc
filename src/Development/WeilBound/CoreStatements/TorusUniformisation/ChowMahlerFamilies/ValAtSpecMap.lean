@@ -116,7 +116,7 @@ theorem exists_der_ext (h1 : Function.Injective (algebraMap R RC)) (h2 : Functio
     have h0 : algebraMap R RC d₀ • (t - t') = 0 := by
       rw [smul_sub, ← key, ← key, htt', sub_self]
     have hne : algebraMap R RC d₀ ≠ 0 := fun h' => hd₀ (h1 (h'.trans (map_zero _).symm))
-    exact sub_eq_zero.1 ((Module.IsTorsionFree.isSMulRegular (isRegular_of_ne_zero hne))
+    exact sub_eq_zero.1 ((Module.IsTorsionFree.isSMulRegular (IsRegular.of_ne_zero hne))
       (h0.trans (smul_zero _).symm))
   have hinj : Function.Injective Φ := by
     intro t t' h

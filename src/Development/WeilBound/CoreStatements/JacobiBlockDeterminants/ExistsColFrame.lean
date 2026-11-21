@@ -200,8 +200,8 @@ theorem gram_pull {A : HodgeCpt Y S x} {A' : HodgeCpt Y S x'} {pr : A'.X ⟶ A.X
     (ho : HodgeOver A' A pr i j) {z : Spec (CommRingCat.of ℂ) ⟶ A'.X} {r : ℕ} {b : Fin r → A.Li}
     {Γ : Matrix (Fin r) (Fin r) ℂ} (hG : A.M.GramAt A.t.PP.L (z ≫ pr) b Γ) :
     A'.M.GramAt A'.t.PP.L z (fun k => j (b k)) Γ := by
-  obtain ⟨m, hm⟩ := Chg.exists_sabMap A A' pr ho.2.1
-  have hpt : ∀ e, (A'.M.pt (j e)).left ≫ m.φ = Spec.map (CommRingCat.ofHom (dualMap i)) ≫ (A.M.pt e).left := by
+  obtain ⟨m, hm⟩ := GlobalTheory.CompanionTheory.Ar.Chg.exists_sabMap A A' pr ho.2.1
+  have hpt : ∀ e, (A'.M.pt (j e)).left ≫ m.φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap i)) ≫ (A.M.pt e).left := by
     intro e
     have h1 := ho.2.2.2.2 e
     rw [hm] at h1

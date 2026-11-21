@@ -76,7 +76,7 @@ private theorem algebraMap_mem_maximal_of_mem_maximalIdeal (V : Type) [CommRing 
     [Algebra V A] [Algebra.IsIntegral V A] (m' : Ideal A) [m'.IsMaximal] {v : V}
     (hv : v ∈ IsLocalRing.maximalIdeal V) : algebraMap V A v ∈ m' := by
   have hc : (m'.comap (algebraMap V A)).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal m'
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := V) m'
   rw [← IsLocalRing.eq_maximalIdeal hc] at hv
   exact hv
 

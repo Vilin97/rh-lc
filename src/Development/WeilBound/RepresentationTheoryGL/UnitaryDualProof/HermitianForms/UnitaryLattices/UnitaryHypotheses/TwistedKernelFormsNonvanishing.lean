@@ -115,7 +115,7 @@ theorem twisted_kernel_forms_nonvanishing (hUS : USplit k) (hB : IsInvForm π B)
     by_cases h0 : ∀ w, chain hUD hψc hψ1 π hs B (d + 1) w w = 0
     · have hA := atom_eq_self hUD hUA hψc hψ1 π hs B hUS hB d hd2 h0
       have hL := chain_lvl hUD hψc hψ1 π hs B hB d hd2
-      obtain ⟨-, -, -, hK, -⟩ := atom_spec hUD hUA hψc hψ1 π hs B d hd2 hL
+      have hK := (atom_spec hUD hUA hψc hψ1 π hs B d hd2 hL).2.2.2.1
       refine ⟨N - 2 - d + 1, by omega, fun htop => hv ?_⟩
       have hmem : v ∈ DerKer k ψ π (N - 2 - d) := by
         unfold DerKer

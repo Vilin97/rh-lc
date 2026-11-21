@@ -27,6 +27,8 @@ theorem exists_mul_conjTranspose_eq_of_posDef (Y : Mn n) (hY : Y.PosDef) : ∃ a
   have hdd : d * dᴴ = Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues) := by
     rw [hd, diagonal_conjTranspose, diagonal_mul_diagonal]
     congr 1
+    funext i
+    simp only [Pi.star_apply, Complex.star_def, Complex.conj_ofReal, Function.comp_apply]
     rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hY.eigenvalues_pos i).le]
     rfl
   have hprod : (U * d) * (U * d)ᴴ = Y := by

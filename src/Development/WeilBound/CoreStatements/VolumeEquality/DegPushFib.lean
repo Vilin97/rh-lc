@@ -241,6 +241,8 @@ theorem num_eq (hN : NumEq) [Fintype Ψ] (k : Type) [Field k] [CharZero k] (Ω :
     (RingHom.ker (MvPolynomial.aeval (genCone (rk Ψ p q)))) _ (fun j => g ((Finite.equivFin (PairIx Ψ p q)).symm j))
     (e.trans (Finite.equivFin (PairIx Ψ p q)))
   convert this using 2
+  funext j
+  simp
 
 variable {Ψ' : Type} {Ω : Type}
 

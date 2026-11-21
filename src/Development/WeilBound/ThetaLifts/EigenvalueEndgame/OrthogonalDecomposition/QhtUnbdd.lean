@@ -40,7 +40,7 @@ theorem qht_unbdd (hE : EpsOf) (hS : SiegelAll) (hH : PositivityTheory.ThKG.Tow.
   have ht' : (fun _ => |A|) ∈ Cone fr.r := ⟨antitone_const, fun _ => abs_nonneg _⟩
   have b0 : 0 ≤ b := (NNReal.coe_nonneg _).trans (hn 1)
   obtain ⟨γ, hγ⟩ := exists_lt_of_ciInf_lt (f := fun γ : ratU σ X.J => ht (γ.1 * fr.a fun _ => |A|))
-    (a := qht (fr.a fun _ => |A|) + 1) (lt_add_one _)
+    (b := qht (fr.a fun _ => |A|) + 1) (lt_add_one _)
   have e1 : (ht (γ.1 * fr.a fun _ => |A|) : ℝ) ≤ b + 1 := by
     have := hn (fr.a fun _ => |A|)
     have h' : (ht (γ.1 * fr.a fun _ => |A|) : ℝ) < qht (fr.a fun _ => |A|) + 1 := by exact_mod_cast hγ

@@ -60,9 +60,9 @@ theorem OrdFiniteNonZeroDivisor.proof : OrdFiniteNonZeroDivisor.Statement := by
   set Q' := Q.map (algebraMap (curveNormalisation I q) (Localization.AtPrime P)) with hQ'def
   have : Q'.IsPrime := IsLocalization.isPrime_of_isPrime_disjoint P.primeCompl _ Q hQ hd
   have hQ'u : Q'.under _ = Q := IsLocalization.under_map_of_isPrime_disjoint P.primeCompl _ hQ hd
-  have hle : Ideal.span {algebraMap (curveNormalisation I q) (Localization.AtPrime P)
+  have hle : Ideal.span {(algebraMap (curveNormalisation I q) (Localization.AtPrime P)
       (algebraMap (curveLocalRing I q) (curveNormalisation I q)
-        (algebraMap (MvPolynomial (Fin n) ℂ) (curveLocalRing I q) f))} ≤ Q' := by
+        (algebraMap (MvPolynomial (Fin n) ℂ) (curveLocalRing I q) f)))} ≤ Q' := by
     rw [Ideal.span_singleton_le_iff_mem]
     refine Ideal.mem_map_of_mem _ ?_
     rw [← hQp] at hxp
@@ -82,6 +82,6 @@ theorem OrdFiniteNonZeroDivisor.proof : OrdFiniteNonZeroDivisor.Statement := by
   apply hpmax
   rw [← hQp]
   have : Q.IsMaximal := hQeq ▸ hPm
-  exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal Q
+  exact Ideal.isMaximal_under_of_isIntegral_of_isMaximal Q
 
 end GroundTheory.Heights₂.Heights

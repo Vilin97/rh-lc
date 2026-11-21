@@ -29,7 +29,8 @@ namespace GlobalTheory.RunJoin
 theorem three_le_dimY_of_rank (D : D7) (j : ℕ) (hj : InR D j) (hr : 8 ≤ D.R.r) : 3 ≤ WeightFamilies.dimY D j := by
   have hf : 1 ≤ D.R.f := by
     unfold Ranks.f Ranks.n
-    exact Nat.succ_le_of_lt (by positivity)
+    have := D.R.ord_pos
+    omega
   have hs : (D.R.sigW j).1 + (D.R.sigW j).2 = D.R.r := Formalism.L2.Geo.sigW_sum D hj.1 hj.2
   unfold WeightFamilies.dimY
   generalize (D.R.sigW j).1 = a at hs ⊢
@@ -55,7 +56,8 @@ theorem lamConst_lamR_rows : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : Modul
   have hL : 1 ≤ large₂.sc.L := Real.one_le_rpow large₂.sc.one_lt_alt.le large₂.sc.eps_pos.le
   have hf : 1 ≤ D.R.f := by
     unfold Ranks.f Ranks.n
-    exact Nat.succ_le_of_lt (by positivity)
+    have := D.R.ord_pos
+    omega
   have hf' : (1 : ℝ) ≤ D.R.f := by exact_mod_cast hf
   have hPO : 1 ≤ PO D large₂ := by
     unfold PO

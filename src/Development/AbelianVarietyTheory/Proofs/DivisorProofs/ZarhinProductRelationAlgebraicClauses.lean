@@ -48,15 +48,18 @@ instance isMonHom_pb (j : Fin 4) : IsMonHom (pb A B j) := by
   infer_instance
 
 theorem isMonHom_of_coords {X : Over S} [MonObj X] (f : X ⟶ Zob A B)
-    (ha : ∀ i, IsMonHom (f ≫ pa A B i)) (hb : ∀ j, IsMonHom (f ≫ pb A B j)) : IsMonHom f where
-  one_hom := zob_ext A B (fun i => by
-      haveI := ha i
-      rw [Category.assoc, IsMonHom.one_hom (f := f ≫ pa A B i), IsMonHom.one_hom (f := pa A B i)])
-    (fun j => by
-      haveI := hb j
-      rw [Category.assoc, IsMonHom.one_hom (f := f ≫ pb A B j), IsMonHom.one_hom (f := pb A B j)])
-  mul_hom := by
-    apply zob_ext A B
+    (ha : ∀ i, IsMonHom (f ≫ pa A B i)) (hb : ∀ j, IsMonHom (f ≫ pb A B j)) : IsMonHom f := by
+  refine ⟨?_, ?_⟩
+  · apply zob_ext A B
+    · intro i
+      have := ha i
+      simp only [Category.assoc, IsMonHom.one_hom (f := f ≫ pa A B i),
+        IsMonHom.one_hom (f := pa A B i)]
+    · intro j
+      have := hb j
+      simp only [Category.assoc, IsMonHom.one_hom (f := f ≫ pb A B j),
+        IsMonHom.one_hom (f := pb A B j)]
+  · apply zob_ext A B
     · intro i
       have := ha i
       simp only [Category.assoc, IsMonHom.mul_hom (f := f ≫ pa A B i),

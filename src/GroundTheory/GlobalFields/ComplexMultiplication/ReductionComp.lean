@@ -33,8 +33,9 @@ theorem reduceFF_some (V : WeierstrassCurve 𝒪) [V.IsElliptic] {x y : gaussRin
     rw [gaussCurve_map_functionField]; exact h
   have e₁ : pointCongr (gaussCurve_map_functionField K W V).symm (Point.some _ _ h) =
       Point.some _ _ h₁ := pointCongr_some _ h
-  have n₁ := nonsingular_residue_of_isElliptic (W.baseChange K).toAffine.FunctionField
-    (gaussCurve W V) h₁.1
+  have n₁ := WeierstrassCurve.Affine.equation_iff_nonsingular.mp
+    (equation_residue (gaussCurve W V)
+      (equation_of_map (W.baseChange K).toAffine.FunctionField (gaussCurve W V) h₁.1))
   obtain ⟨h₂, e₂⟩ := pointMapRing_some (gaussResidue W) ((gaussCurve W V).map (residue _)) n₁
   refine ⟨by rw [← gaussCurve_map_residue W V]; exact h₂, ?_⟩
   simp only [reduceFF, AddMonoidHom.comp_apply, AddEquiv.coe_toAddMonoidHom, reductionHom_apply]
@@ -55,8 +56,9 @@ theorem reduceFF_genericPoint :
         (GroundTheory.Arith.Abelian.genericPoint (W.baseChange K)) = Point.some _ _ h₁ := by
     rw [GroundTheory.Arith.Abelian.genericPoint, pointCongr_some]
     exact exists_some_eq _ hx.symm hy.symm
-  have n₁ := nonsingular_residue_of_isElliptic (W.baseChange K).toAffine.FunctionField
-    (gaussCurve W W) h₁.1
+  have n₁ := WeierstrassCurve.Affine.equation_iff_nonsingular.mp
+    (equation_residue (gaussCurve W W)
+      (equation_of_map (W.baseChange K).toAffine.FunctionField (gaussCurve W W) h₁.1))
   obtain ⟨h₂, e₂⟩ := pointMapRing_some (gaussResidue W) ((gaussCurve W W).map (residue _)) n₁
   simp only [reduceFF, AddMonoidHom.comp_apply, AddEquiv.coe_toAddMonoidHom, reductionHom_apply]
   rw [e₁, reducePoint_some_integral _ _ h₁ n₁]

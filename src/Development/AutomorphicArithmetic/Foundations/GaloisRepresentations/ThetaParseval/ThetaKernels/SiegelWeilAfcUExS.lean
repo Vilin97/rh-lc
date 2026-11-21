@@ -53,7 +53,7 @@ def Qa_k (ε : ℤˣ) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F
   Matrix.fromBlocks 0 1 (inclR (F := F) (E := E) (AF F) ((ε : ℤ) : E) • 1) 0
 theorem uZ_unitary_k (ε : ℤˣ) (u : Fin L.n → AE F E) : (_root_.PositivityTheory.SiegelWeilFormula.Afc.uZ_k L u)ᵀ * _root_.PositivityTheory.SiegelWeilFormula.Afc.Qa_k (d := d) ε * (_root_.PositivityTheory.SiegelWeilFormula.Afc.uZ_k L u).map (cA σ) = _root_.PositivityTheory.SiegelWeilFormula.Afc.Qa_k ε := by
   have hσ := _root_.PositivityTheory.SiegelWeilFormula.kfour.sigma_sigma_of_good_k d.ok.good
-  have hcc := GlobalTheory.EisBL.DoubledUnipotentRadical.cA_cA σ hσ
+  have hcc := _root_.PositivityTheory.SiegelWeilFormula.kfour.cA_cA' σ hσ
   have hD : (_root_.PositivityTheory.SiegelWeilFormula.Afc.uD_k (σ := σ) L u).map (cA σ) = 1 - (_root_.PositivityTheory.SiegelWeilFormula.Afc.uN_k L u)ᵀ := by
     ext i j
     simp only [_root_.PositivityTheory.SiegelWeilFormula.Afc.uD_k, Matrix.map_apply, Matrix.sub_apply, Matrix.transpose_apply, map_sub, hcc, Matrix.one_apply]
@@ -153,7 +153,7 @@ theorem blockDiagonal_preserves_form_iff {ε : ℤˣ} (A D : Matrix (Fin d.n) (F
 theorem uM_eq_k {uM : (Fin L.n → AE F E) → d.G} {ν 𝓤} (h : L.UData uM ν 𝓤) : uM = _root_.PositivityTheory.SiegelWeilFormula.Afc.unipotentOfVector L := by
   obtain ⟨ε, hε⟩ := d.ok.frame.1
   have hσ := _root_.PositivityTheory.SiegelWeilFormula.kfour.sigma_sigma_of_good_k d.ok.good
-  have hcc := GlobalTheory.EisBL.DoubledUnipotentRadical.cA_cA σ hσ
+  have hcc := _root_.PositivityTheory.SiegelWeilFormula.kfour.cA_cA' σ hσ
   funext u
   obtain ⟨a', ha'⟩ := h.1 u
   refine kfour.inFrame_injective d.b ?_
@@ -227,8 +227,8 @@ def Sw_k (w : InfinitePlace F) : Set (AE F E) := {z | (∀ w', w' ≠ w → piIn
 theorem sum_mem_Sw_k (w : InfinitePlace F) (s : Fin (Module.finrank F E) → AF F) (hs : ∀ k, (s k).2 = 0 ∧ ∀ w', w' ≠ w → (s k).1 w' = 0) :
     ∑ k, s k • kfour.bsA F E k ∈ _root_.PositivityTheory.SiegelWeilFormula.Afc.Sw_k d w := by
   refine ⟨fun w' hw' => ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [St.piInf_smul, (hs k).2 w' hw', map_zero, zero_mul]
   · rw [Finset.smul_sum]

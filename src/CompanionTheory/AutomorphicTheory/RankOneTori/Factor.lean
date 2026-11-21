@@ -106,8 +106,8 @@ theorem cell_factor (L : LocBessel k r) {a : ℝ} {w0 : L.Hs} (hw1 : ⟪w0, w0�
       hp.2.2.2.1) hp.2.2.1.1
     simp only [besselIntg]
     rw [hF _ hx, coef_expand]
-    simp only [ContinuousLinearMap.finset_sum_comp, ContinuousLinearMap.comp_finset_sum, Finset.smul_sum]
-    rfl
+    ext x
+    simp [Finset.smul_sum, he, he']
   rw [h1, lamP, lamQ, Finset.sum_mul_sum, Finset.sum_smul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_smul]

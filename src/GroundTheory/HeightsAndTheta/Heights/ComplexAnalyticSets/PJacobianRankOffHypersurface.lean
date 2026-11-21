@@ -95,6 +95,8 @@ theorem JacobianRankOffHypersurface.exists_fin (hF : FrameJacobianGeneric.Statem
       funext k j
       set_option synthInstance.maxHeartbeats 100000 in
         simp [frameDeriv, M, Matrix.mulVec, dotProduct, map_sum]
+    change LinearIndependent ℂ (fun k ↦ ((eval w).mapMatrix
+      (Matrix.of fun k j : {j // j ∉ I₀} ↦ frameDeriv b j (f k))) k) at hli
     rw [hrows] at hli
     exact hli.of_comp _
 

@@ -189,7 +189,8 @@ theorem realInv_of (hA : PositivityTheory.ThKF.ArchOp) : RealInv := by
   have hn := Dense.lintegral_eq (S := om (k, 1)) (fun μ hμ => hs.unit μ hμ (k, 1)) (hT.1 f₀)
   have := hfix (T f₀) ⟨h2 k hk T hT.1 _ hf₀.1, hP' _ hf₀.2⟩ (hq.cpt k hk f₀ hf₀.2 _ (hT.2 f₀)) (by
     change ‖(T f₀).toLp 2 _‖ = ‖f₀.toLp 2 _‖
-    simp only [SchwartzMap.norm_toLp, eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top,
+    simp only [SchwartzMap.norm_toLp, eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top (T f₀).continuous.aestronglyMeasurable,
+      eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top f₀.continuous.aestronglyMeasurable,
       ENNReal.toReal_ofNat, ENNReal.rpow_two, hn])
   simpa only [this] using hT.2 f₀
 

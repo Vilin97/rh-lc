@@ -599,8 +599,8 @@ theorem nLamOnto_holds : TupLift.NLamOnto := by
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hfc, LinearEquiv.mul_apply, heX j, map_sum,
       (hU (Fin.last _) j.castSucc).1 (Fin.castSucc_lt_last j), zero_smul, add_zero]
-    refine Finset.sum_congr rfl fun c _ => ?_
-    rw [map_smul, hez]
+      refine Finset.sum_congr rfl fun c _ => ?_
+      rw [map_smul, hez]
 
 end D7
 

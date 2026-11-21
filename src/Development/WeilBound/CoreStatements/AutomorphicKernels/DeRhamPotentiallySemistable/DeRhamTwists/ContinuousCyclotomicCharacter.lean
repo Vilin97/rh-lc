@@ -24,8 +24,8 @@ theorem cycloChar_toBot (g : PadicAlgCl l ≃ₐ[ℚ_[l]] PadicAlgCl l) :
 
 theorem tQ_eq : tQ l = algebraMap (BdRp l) (BdR l) (tBdR l) := by
   show algebraMap (BdRp l) (BdR l) (ACris.iota ℂ_[l] l (tA l)) = _
-  rw [tA, ACris.iota_periodT]
-  rfl
+  exact congrArg (algebraMap (BdRp l) (BdR l))
+    (ACris.iota_periodT (untilt_epsilon (p := l)))
 
 theorem tQ_ne : tQ l ≠ 0 := by
   rw [tQ_eq]

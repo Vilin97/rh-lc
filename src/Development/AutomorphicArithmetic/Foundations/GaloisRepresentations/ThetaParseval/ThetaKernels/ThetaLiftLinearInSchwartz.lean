@@ -27,7 +27,8 @@ theorem integrand_int_k (T : _root_.UpperTheory.TP.Tools_k) {B : Base F E} {M : 
     (hP : _root_.GlobalTheory.ThK.IsPair_k B M χX χW om n 0 d 0) {Φ : Fn F n d} (hΦ : Φ ∈ schA F (Fin n × Fin d)) {φ : UA σ X.J → ℂ} (hφ : IsFn φ)
     (h : UA σ W.J) : IntegrableOn (fun g => theta om Φ g h * star (φ g)) M.dom M.μ := by
   have hc : Cpt σ X.J := T.cpt F E σ B n X n 0 hP.base (Or.inl hP.herm) (by simp)
-  obtain ⟨h1, h2, -⟩ := (T.basic F E σ B n d X W M χX χW om n 0 d 0 hP).1 Φ hΦ
+  have ht := (T.basic F E σ B n d X W M χX χW om n 0 d 0 hP).1 Φ hΦ
+  obtain ⟨h1, h2, -⟩ := ht
   have hcont : Continuous fun g => theta om Φ g h * star (φ g) :=
     (h1.comp (continuous_id.prodMk continuous_const)).mul (continuous_star.comp hφ.1)
   obtain ⟨C, hC⟩ := hc.bdd hcont fun γ hγ g => by

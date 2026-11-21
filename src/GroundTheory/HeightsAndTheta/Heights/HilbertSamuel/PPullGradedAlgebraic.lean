@@ -109,8 +109,8 @@ theorem PullGradedAlgebraic.proof : PullGradedAlgebraic.Statement := by
     | _ n ih =>
     intro g hg
     by_cases hn : n ≤ n₀
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [g.as_sum, map_sum, Finset.sum_div]
+    · set_option synthInstance.maxHeartbeats 100000 in
+      rw [g.as_sum, map_sum, Finset.sum_div]
       refine Submodule.sum_mem _ fun m hm => ?_
       have hmono : monomial m (AddMonoidAlgebra.coeff g m) = AddMonoidAlgebra.coeff g m • monomial m (1 : ℚ) := by
         rw [smul_monomial, smul_eq_mul, mul_one]

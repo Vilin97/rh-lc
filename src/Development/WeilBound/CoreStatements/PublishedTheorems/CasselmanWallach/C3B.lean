@@ -124,10 +124,9 @@ theorem c3b : HighestWeightIntegral := by
       simpa using this
     have := h1.smul (hderF t)
     convert this using 1
-    · rfl
-    · symm
-      rw [smul_smul, ← add_smul, show Complex.exp (-c * t) * c + Complex.exp (-c * t) * -c = 0 by ring,
-        zero_smul]
+    symm
+    rw [smul_smul, ← add_smul, show Complex.exp (-c * t) * c + Complex.exp (-c * t) * -c = 0 by ring,
+      zero_smul]
   have hGc := is_const_of_deriv_eq_zero (fun t => (hGd t).differentiableAt)
     (fun t => (hGd t).deriv) (2 * Real.pi) 0
   have hG0 : G 0 = (v : H) := by

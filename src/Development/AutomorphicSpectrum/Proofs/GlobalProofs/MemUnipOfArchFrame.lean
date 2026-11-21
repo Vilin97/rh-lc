@@ -167,7 +167,8 @@ theorem mem_unip_of_arch_frame : ∀ (F E : Type) [Field F] [NumberField F] [Fie
       exact hl (hQ l j h)
     · have e : M *ᵥ Cᵀ j = fun i => (M * C) i j := by
         funext i
-        simp [mulVec, dotProduct, mul_apply]
+        simp [mulVec, dotProduct]
+        rfl
       rw [e, hMat]
       funext i
       show (C *ᵥ fun i => N i j) i = (C + C * N) i j - C i j

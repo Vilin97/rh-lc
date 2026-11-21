@@ -43,16 +43,16 @@ theorem exists_maximal_compact_infinite :
               rw [mat_one', Matrix.map_one _ (map_zero _) (map_one _)]; exact Commute.one_left _⟩
             mul_mem' := fun {g h} hg hh => ⟨(atGrp σ X (evI F)).mul_mem hg.1 hh.1, fun w => by
               rw [mat_mul', Matrix.map_mul]; exact (hg.2 w).mul_left (hh.2 w)⟩
-            inv_mem' := fun {k} hk => ⟨(atGrp σ X (evI F)).inv_mem hk.1, fun w => ?_⟩ }, rfl⟩
-  have e0 : (mat k⁻¹).map (piInf (τ w)) * (mat k).map (piInf (τ w)) = 1 := by
-    rw [← Matrix.map_mul, ← mat_mul', inv_mul_cancel, mat_one', Matrix.map_one _ (map_zero _) (map_one _)]
-  have e1 : (mat k).map (piInf (τ w)) * (mat k⁻¹).map (piInf (τ w)) = 1 := mul_eq_one_comm.1 e0
-  have h := (hk.2 w).eq
-  calc _ = (mat k⁻¹).map (piInf (τ w)) * X.θ w * ((mat k).map (piInf (τ w)) * (mat k⁻¹).map (piInf (τ w))) := by
-        rw [e1, mul_one]
-    _ = (mat k⁻¹).map (piInf (τ w)) * (X.θ w * (mat k).map (piInf (τ w))) * (mat k⁻¹).map (piInf (τ w)) := by
-        simp only [mul_assoc]
-    _ = _ := by rw [← h, ← mul_assoc, e0, one_mul]
+            inv_mem' := fun {k} hk => ⟨(atGrp σ X (evI F)).inv_mem hk.1, fun w => by
+              have e0 : (mat k⁻¹).map (piInf (τ w)) * (mat k).map (piInf (τ w)) = 1 := by
+                rw [← Matrix.map_mul, ← mat_mul', inv_mul_cancel, mat_one', Matrix.map_one _ (map_zero _) (map_one _)]
+              have e1 : (mat k).map (piInf (τ w)) * (mat k⁻¹).map (piInf (τ w)) = 1 := mul_eq_one_comm.1 e0
+              have h := (hk.2 w).eq
+              calc _ = (mat k⁻¹).map (piInf (τ w)) * X.θ w * ((mat k).map (piInf (τ w)) * (mat k⁻¹).map (piInf (τ w))) := by
+                    rw [e1, mul_one]
+                _ = (mat k⁻¹).map (piInf (τ w)) * (X.θ w * (mat k).map (piInf (τ w))) * (mat k⁻¹).map (piInf (τ w)) := by
+                    simp only [mul_assoc]
+                _ = _ := by rw [← h, ← mul_assoc, e0, one_mul]⟩ }, rfl⟩
 
 
 variable (E) in
@@ -214,8 +214,8 @@ theorem local_compact_open_subgroups :
   let K : ℕ → Set (UA σ X.J) := fun m => kEps σ X v (e m) (e0 m).le (e1 m)
   have anti : Antitone K := fun a b hab g hg => ⟨hg.1, fun i j => by
     have hle : e b ≤ e a := Nat.one_div_le_one_div hab
-    exact ⟨Set.image_mono (fun x hx k => (hx k).trans hle) (hg.2 i j).1,
-      Set.image_mono (fun x hx k => (hx k).trans hle) (hg.2 i j).2⟩⟩
+    exact ⟨Set.image_mono (fun x hx => fun k => (hx k).trans hle) (hg.2 i j).1,
+      Set.image_mono (fun x hx => fun k => (hx k).trans hle) (hg.2 i j).2⟩⟩
   haveI : T2Space (UA σ X.J) := (Units.isEmbedding_embedProduct.comp Topology.IsEmbedding.subtypeVal).t2Space
   have hint : ∀ g ∈ ⋂ m, K m, g = 1 := fun g hg => by
     refine Subtype.ext (Units.ext ?_)
@@ -231,7 +231,7 @@ theorem local_compact_open_subgroups :
     have := tendsto_nhds_unique tendsto_const_nhds t1
     simpa [phi] using this
   obtain ⟨m, hm⟩ := exists_subset_nhds_of_isCompact' (V := K) anti.directed_ge (fun m => kEps_cpt X v _ _)
-    (fun m => (kEps_cpt X v _ _).isClosed) (U := U) (fun g hg => by rw [hint g hg]; exact hU)
+    (fun m => (kEps_cpt X v _ _).isClosed) (U := U) (mem_nhdsSet_iff_forall.2 (fun g hg => by rw [hint g hg]; exact hU))
   exact ⟨kEps σ X v (e m) (e0 m).le (e1 m), kEps_cpt X v _ _, fun g hg => ⟨hm hg, hg.1⟩, kEps_nhds X v (e0 m) (e1 m)⟩
 
 end PositivityTheory.ThKF

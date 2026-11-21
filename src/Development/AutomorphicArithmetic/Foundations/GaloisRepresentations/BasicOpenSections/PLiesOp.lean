@@ -60,7 +60,9 @@ private theorem card_fib {A B C D : Scheme.{0}} {a : A ⟶ C} {v : A ⟶ B} {u :
       have hz' : z ≫ v = x := hz
       change (z ≫ a) ≫ u = x ≫ b
       rw [Category.assoc, h.w, reassoc_of% hz']
-  rw [himg, Set.ncard_image_of_injOn]
+  rw [himg]
+  symm
+  apply Set.InjOn.ncard_image
   intro z hz z' hz' hzz
   have e1 : z ≫ v = x := hz
   have e2 : z' ≫ v = x := hz'

@@ -47,7 +47,6 @@ theorem jt_conj (V : HSp D) (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D
   have : IsTopologicalAddGroup (Mx D V.rank n) := k1
   have : BorelSpace (Mx D V.rank n) := ⟨rfl⟩
   have : BorelSpace (Fin n → Fin V.rank → AE D) := borel_tup
-  obtain ⟨j1, -⟩ := Formalism.IndefR.Eqv.ae_facts D
   unfold Jt
   rw [← GlobalTheory.RightMulJac.integral_mul_right D V.rank n μ 𝓕 hμ a]
   refine (integral_map_of tupInv tupOf tupOf_tupInv tupInv_tupOf tupInv_add continuous_tupInv continuous_tupOf μ

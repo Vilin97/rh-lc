@@ -130,8 +130,9 @@ variable {F E : FiniteSubfield} [hFE : Fact (F ≤ E)]
   [(E.1.fixingSubgroup.subgroupOf F.1.fixingSubgroup).Normal]
 
 theorem smul_of_of_normal (g : F.1.fixingSubgroup) (c : IdeleClassGroup E.1) :
-    (g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • of E c =
-      of E ((restrictHom g : E.1 ≃ₐ[F.1] E.1) • c) :=
+    letI action : MulDistribMulAction (E.1 ≃ₐ[F.1] E.1) (IdeleClassGroup E.1) := inferInstance
+    letI := action.toMulAction.toSemigroupAction.toSMul
+    (g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • of E c = of E (restrictHom (E := E) g • c) :=
   smul_of_eq_of_ideleClassEquiv _ ((restrictHom (E := E) g : E.1 ≃ₐ[F.1] E.1) : E.1 ≃+* E.1)
     (fun _ ↦ rfl) c
 
@@ -204,8 +205,8 @@ theorem map_augmentation :
   · rintro ⟨g, hg, a, ha, rfl⟩
     rw [fixedModule_fixingSubgroup] at ha
     obtain ⟨c, rfl⟩ := ha
-    exact ⟨restrictHom ⟨g, hg⟩ • c / c, ⟨_, c, rfl⟩, by
-      rw [map_div, ← smul_of_of_normal ⟨g, hg⟩ c]⟩
+    refine ⟨_, ⟨(restrictHom ⟨g, hg⟩ : E.1 ≃ₐ[F.1] E.1), c, rfl⟩, ?_⟩
+    rw [map_div, ← smul_of_of_normal ⟨g, hg⟩ c]
 
 theorem coe_invariantsEquiv_tateNorm (c : IdeleClassGroup E.1) :
     (invariantsEquiv ⟨tateNorm (E.1 ≃ₐ[F.1] E.1) (IdeleClassGroup E.1) c,

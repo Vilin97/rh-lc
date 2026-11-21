@@ -132,12 +132,13 @@ theorem mem_pow_ker_of_isBigO {k : ℕ} {q : MvPolynomial σ ℂ}
       refine (hq.comp_tendsto hT).trans (IsBigO.of_bound (‖v‖ ^ k) (Eventually.of_forall fun t => ?_))
       simp [norm_smul, mul_pow, mul_comm]
     have hc := coeff_eq_zero_of_isBigO hPO d hd
-    simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq', if_pos hdT] at hc
+    simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial,
+      Finsupp.single_apply, Finset.sum_ite_eq', if_pos hdT] at hc
     simpa using hc
   have hmem : q' ∈ idealOfVars σ ℂ ^ k := by
     refine (mem_pow_idealOfVars_iff' k q').mpr fun x hx => ?_
     have := congrArg (AddMonoidAlgebra.coeff · x) (hcomp _ hx)
-    rwa [coeff_homogeneousComponent, if_pos rfl, coeff_zero] at this
+    simpa [coeff_homogeneousComponent, AddMonoidAlgebra.coeff] using this
   have hback : bind₁ (fun i => X i - C (w i)) q' = q := by
     rw [hq'def, bind₁_bind₁]
     simp [bind₁_X_right]

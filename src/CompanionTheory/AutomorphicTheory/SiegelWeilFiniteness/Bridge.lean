@@ -103,8 +103,10 @@ theorem finVol_of (hC : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
   unfold AdelicCovolumeFinite.Statement at h
   rw [hr] at h
   have hg := gram_ofGram J hH hu
-  generalize gram (HermitianForm.ofGram J hH hu).toSesq (Pi.basisFun E (Fin M)) = J' at h hg
-  subst hg
-  exact finite_volume_unitary_adelic J' hu h _ (HR_eq J' _)
+  change ∀ (μ : Measure (unitaryPoints F E (gram (HermitianForm.ofGram J hH hu).toSesq (Pi.basisFun E (Fin M))) 𝔸[F])) [μ.IsHaarMeasure],
+    ∃ D : Set (unitaryPoints F E (gram (HermitianForm.ofGram J hH hu).toSesq (Pi.basisFun E (Fin M))) 𝔸[F]),
+      IsFundamentalDomain (unitaryDiagonal F (gram (HermitianForm.ofGram J hH hu).toSesq (Pi.basisFun E (Fin M)))).range D μ ∧ μ D < ⊤ at h
+  rw [hg] at h
+  exact finite_volume_unitary_adelic J hu h _ (HR_eq J _)
 
 end CompanionTheory.SWFin

@@ -59,7 +59,7 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FirstCoh
 
 namespace MainStatements.Hodge.Free
 
-theorem abelianHodgeDeRham' : Chapters where
+theorem abelianHodgeDeRham' : Chapters := {
   dict := GlobalTheory.CompanionTheory.Dict.dictSt
   cx := GlobalTheory.CompanionTheory.HodgeCx.cxSt
   low := GlobalTheory.CompanionTheory.HodgeLow.lowSt_of_dictSt
@@ -107,6 +107,7 @@ theorem abelianHodgeDeRham' : Chapters where
   stalkdim := MainStatements.Hodge.Pf.stalkdim
   h1ge := GlobalTheory.CompanionTheory.FirstCohomologyLowerBound.first_cohomology_dimension_lower_bound
   h1field := GlobalTheory.CompanionTheory.AbelianFirstCohomologyOverField.first_cohomology_rank_over_field
+}
 
 theorem abelianHodgeDeRham : GlobalTheory.Published.AbelianHodgeDeRham :=
   abelianHodgeDeRham'.print GlobalTheory.CompanionTheory.NoethApprox.schemeModels GlobalTheory.CompanionTheory.SmoothSpread.smooth_spreads GlobalTheory.CompanionTheory.SpreadingModels.properSpreads

@@ -74,7 +74,7 @@ theorem exists_frame (O : Subring A) {K : Type} [Field K] (V : ValuationSubring 
     rw [← hu.mul_val_inv, hY]; rfl
   ext i j
   have := congrFun (congrFun e i) j
-  simpa [Matrix.mul_apply, one_apply, apply_ite ((↑) : O → A)] using this
+  simpa [Matrix.mul_apply, Matrix.one_apply, id_eq, apply_ite ((↑) : O → A)] using this
 
 theorem isLocalRing_of_equiv (O : Subring A) {K : Type} [Field K] (V : ValuationSubring K) (φ : A ≃+* K)
     (hφ : ∀ y, y ∈ O ↔ φ y ∈ V) : IsLocalRing O :=

@@ -26,7 +26,7 @@ theorem evIHom_apply (a : AF F) : evIHom a = evI F a := rfl
 theorem evI_realAd_mul (t : ℝ) (c : AF F) : evI F (realAd F t * c) = t • evI F c := by
   rw [← evIHom_apply, map_mul, evIHom_apply, evIHom_apply, Algebra.smul_def]
   congr 1
-  simp [evI, realAd]
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 theorem realAd_mul_snd (t : ℝ) (c : AF F) : (realAd F t * c).2 = 0 := by
   show (realAd F t).2 * c.2 = 0
@@ -168,7 +168,7 @@ theorem GlobalTheory.VacFactor.mem_span_of_isGaussEq : ∀ {F E : Type} [Field F
     fun y z i => ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (y i), z i)
   have hmk1 : ∀ y z, (fun i => evI F (mk y z i)) = y := fun y z => by
     funext i
-    simp [mk, evI]
+    exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
   have hmk2 : ∀ y z, (fun i => (mk y z i).2) = z := fun y z => rfl
   have key : ∀ u u' : Matrix (Fin n) (Fin d) (AE F E), At (evI F) u → At (evI F) u' →
       (∀ w, u'.map (piInf (τ w)) = (((ε w : ℤ) : ℂ) * Complex.I) • (X.θ w * u.map (piInf (τ w)) * (W.θ w)ᵀ)) →

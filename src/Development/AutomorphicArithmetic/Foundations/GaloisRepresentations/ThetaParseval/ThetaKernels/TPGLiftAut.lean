@@ -98,7 +98,7 @@ theorem lift_left_k (T : _root_.UpperTheory.TP.Tools_k) (hp : _root_.GlobalTheor
 private theorem real_of_off_pk {τ : ∀ w : InfinitePlace F, EmbOver E w} {g : UA σ W.J} (hg : g ∈ gOff σ W ∅) (w : InfinitePlace F) :
     (mat g).map (piInf (τ w)) = 1 := by
   have h : ∀ w, (mat g).map (compInf F E w) = 1 := by
-    refine Subgroup.closure_induction (p := fun g _ => ∀ w, (mat g).map (compInf F E w) = 1) (fun x hx => hx.1) ?_ ?_ ?_ hg
+    refine Subgroup.closure_induction (k := {g : UA σ W.J | (∀ w : InfinitePlace F, (mat g).map (compInf F E w) = 1) ∧ ∀ v ∈ (∅ : Finset (Pl F)), OffAt v g}) (p := fun g _ => ∀ w, (mat g).map (compInf F E w) = 1) (fun x hx => hx.1) ?_ ?_ ?_ hg
     · intro w; exact Matrix.map_one _ (map_zero _) (map_one _)
     · intro x y _ _ hx hy w
       rw [show mat (x * y) = mat x * mat y from rfl, Matrix.map_mul, hx, hy, one_mul]

@@ -42,6 +42,7 @@ private theorem gen_out {R : Type} [CommRing R] {s : Set R} {P : Ideal R} (h : �
   push_neg at hc
   exact h (Ideal.span_le.2 hc)
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem UpperTheory.V.J.genPt :
     ∀ (l : ℕ) [Fact l.Prime] (c : Coef l) [Fr.IsCoef l c.O] (F : Fr.Frame l (ResidueField c.O)) (C₀ n : ℕ), F.Ok C₀ → (n = 2 ∨ n = 3) →
         ∀ (S : Fr.Space c.O F n), ∀ (P : Ideal S.A) (Gd : (S.B →ₐ[c.O] Qbar l) → Prop), P ∈ minimalPrimes S.A → S.u.TI P →

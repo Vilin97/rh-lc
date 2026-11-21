@@ -628,9 +628,14 @@ theorem joint_label {n : ℕ} [Nontrivial Z] (χ : Fin n → ℂ) (d : Fin 3 →
     rintro _ ⟨p, rfl⟩ _ ⟨q, rfl⟩
     exact (hcomm _ _ _ _).eq
   have hint : ∀ i k, k < d i + 1 → IsIntegral ℂ (a i k) := by
-    letI : CommRing (Algebra.adjoin ℂ s) := Algebra.adjoinCommRingOfComm ℂ hcs
+    letI : CommRing (Algebra.adjoin ℂ s) :=
+      { (inferInstance : Ring (Algebra.adjoin ℂ s)) with
+        mul_comm := fun x y => Subtype.ext <|
+          (Algebra.commute_of_mem_adjoin_of_forall_mem_commute y.2 fun b hb =>
+            (Algebra.commute_of_mem_adjoin_of_forall_mem_commute x.2 fun a ha =>
+              (hcs b hb a ha)).symm).eq }
     have hamem : ∀ i k, a i k ∈ Algebra.adjoin ℂ s := fun i k => Algebra.subset_adjoin ⟨(i, k), rfl⟩
-    let Pp : Fin 3 → (Algebra.adjoin ℂ s)[X] := fun i => sumPoly (fun k => ⟨a i k, hamem i k⟩) (d i)
+    let Pp : Fin 3 → (Algebra.adjoin ℂ s)[X] := fun i => sumPoly (fun k => (⟨a i k, hamem i k⟩ : Algebra.adjoin ℂ s)) (d i)
     have hPm : ∀ i, (Pp i).Monic := fun i => sumPoly_monic _ _ (Subtype.ext (ha1 i))
     have hprod : ∀ u : ℂ, IsIntegral ℂ (∏ i ∈ Finset.univ, (Pp i).eval (algebraMap ℂ (Algebra.adjoin ℂ s) (u + sh i))) := by
       intro u

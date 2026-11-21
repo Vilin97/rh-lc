@@ -45,5 +45,5 @@ theorem UpperTheory.WildA.depth :
     exact ⟨k, hk, hc, le_rfl, fun _ => hsplit⟩
   · obtain ⟨k', hk', hnd, hc'⟩ := UpperTheory.WildA.depthDrop d l hl (fun w hw hlw' => h ⟨w, hw, hlw'⟩) k hk hc
     refine ⟨k', hk', hc', ?_, fun hd => absurd hd hnd⟩
-    rw [padicValNat.eq_zero_of_not_dvd hnd]
+    rw [Nat.padicValNat_def, multiplicity_eq_zero_of_not_dvd hnd]
     exact Nat.zero_le _

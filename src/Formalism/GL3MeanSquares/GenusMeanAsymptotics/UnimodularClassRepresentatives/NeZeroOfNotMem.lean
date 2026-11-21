@@ -84,18 +84,24 @@ theorem exists_norm (hF : IsFixF K F) (u : 𝓞 K) : ∃ n₀ : 𝓞 F, ι n₀ 
 
 theorem isLocUnif (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) [hp : 𝔭.IsPrime] {π₀ s₀ : 𝓞 F} (hu : IsUnif0 𝔭 π₀ s₀) :
-    IsLocUnif (SP K 𝔭) (jK (ι π₀)) where
-  star_mem := fun a ha => InP.conj hF ha
-  mem := jK_mem_SP _
-  fix := star_ι hF _
-  ne := jι_ne_zero hu.ne_zero
-  tr := by
+    IsLocUnif (SP K 𝔭) (jK (ι π₀)) := by
+  refine
+    { star_mem := fun a ha => InP.conj hF ha
+      mem := jK_mem_SP _
+      fix := star_ι hF _
+      ne := jι_ne_zero hu.ne_zero
+      tr := ?tr
+      skew := ?skew
+      dv := ?dv
+      rad := ?rad
+      arch := ?arch }
+  case tr =>
     obtain ⟨z, hz⟩ := exists_add_conj_eq hK hF (1 : 𝓞 F)
     refine ⟨jK z, jK_mem_SP _, ?_⟩
     have := congrArg jK hz
     rw [map_add (f := _), map_one, map_one] at this
     exact this
-  skew := by
+  case skew =>
     obtain ⟨P, hP, -⟩ := exists_maximal_over hK hF h𝔭
     obtain ⟨θ, hθ⟩ := exists_sub_conjO_notMem hK hP
     refine ⟨jK (θ - conjO K θ), jK_mem_SP _, ?_, ?_⟩
@@ -107,7 +113,7 @@ theorem isLocUnif (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
       apply hθ
       rw [jK_inj (h.trans (map_zero _).symm)]
       exact zero_mem _
-  dv := by
+  case dv =>
     intro f hf hfix
     obtain ⟨t, ht, z, e⟩ := mem_SP.1 hf
     have hzfix : conjO K z = z := by
@@ -136,7 +142,7 @@ theorem isLocUnif (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
       refine mem_SP.2 ⟨z₀, hz, ι t, ?_⟩
       rw [e]
       field_simp
-  rad := by
+  case rad =>
     intro s hs
     obtain ⟨t, ht, z, e⟩ := mem_SP.1 hs
     have ht0 : jK (ι t) ≠ 0 := jι_ne_zero (ne_zero_of_notMem ht)
@@ -174,7 +180,7 @@ theorem isLocUnif (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     refine ⟨hne, mem_SP.2 ⟨n₀, hn, ι t * conjO K (ι t + ι π₀ * z), ?_⟩⟩
     rw [e2, ← e1, map_mul]
     field_simp
-  arch := by
+  case arch =>
     intro a
     obtain ⟨x, y, hy, rfl⟩ := IsFractionRing.div_surjective (A := 𝓞 K) a
     have hy0 : y ≠ 0 := nonZeroDivisors.ne_zero hy

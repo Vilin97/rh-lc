@@ -29,8 +29,12 @@ private theorem cLoc_cj_eq {w : Plc E} (hw : IsSplitAt w) (u : finU (E := E) (n 
 private theorem cj_cj (w : Plc E) : cj (cj w) = w := GlobalTheory.SplitPts.conjSrc_conjSrc_cm w
 
 private theorem exists_lt (α : Type) : ∃ lt : α → α → Prop, (∀ a b, a ≠ b → lt a b ∨ lt b a) ∧ ∀ a b, lt a b → ¬ lt b a := by
-  obtain ⟨_, _⟩ := exists_wellOrder α
-  exact ⟨(· < ·), fun a b h => lt_or_gt_of_ne h, fun a b h => lt_asymm h⟩
+  refine ⟨WellOrderingRel, ?_, fun _ _ h => asymm h⟩
+  intro a b h
+  rcases trichotomous_of (WellOrderingRel : α → α → Prop) a b with hab | heq | hba
+  · exact Or.inl hab
+  · exact (h heq).elim
+  · exact Or.inr hba
 
 private def Top (lt : Plc E → Plc E → Prop) (Up : Plc E → Prop) (w₀ w : Plc E) : Prop :=
   Up w ∧ (Up (cj w) → w = w₀ ∨ (cj w ≠ w₀ ∧ lt w (cj w)))

@@ -67,7 +67,9 @@ theorem H_eq (w : D.what₂.Word) (z y : X.B.I.Ginf) :
   rw [hσ, hσ, hi, Formalism.L2.SG.Pf.WuDec.enorm_Wu]
   have hprod : ‖∏ v, ⟪X.B.σ v (uMat (z v)) (X.B.w v), X.B.σ v (uMat (y v)) (X.B.w v)⟫_ℂ‖ₑ =
       ∏ v, ‖⟪X.B.σ v (uMat (z v)) (X.B.w v), X.B.σ v (uMat (y v)) (X.B.w v)⟫_ℂ‖ₑ := by
-    simp only [enorm_eq_nnnorm, nnnorm_prod, ENNReal.coe_finset_prod]
+    simp only [enorm_eq_nnnorm, nnnorm_prod]
+    push_cast
+    rfl
   rw [hprod, ← Finset.prod_mul_distrib]
   refine Finset.prod_congr rfl fun v _ => ?_
   unfold hv

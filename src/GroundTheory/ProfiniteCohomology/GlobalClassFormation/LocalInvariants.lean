@@ -27,7 +27,7 @@ variable (v : InfinitePlace K.1)
 
 theorem exists_infCompletion_algEquiv : ∃ (F : FiniteSubfield) (_ : Fact (K ≤ F)) (w : v.placesOver F.1),
     Nonempty ((w : InfinitePlace F.1).Completion ≃ₐ[v.Completion] AlgebraicClosure v.Completion) := by
-  obtain ⟨ι⟩ : Nonempty (ℚ̄ →ₐ[K.1] AlgebraicClosure v.Completion) := nonempty_algHom_of_isSepClosed
+  obtain ⟨ι⟩ : Nonempty (AlgebraicClosure ℚ →ₐ[K.1] AlgebraicClosure v.Completion) := nonempty_algHom_of_isSepClosed
   obtain ⟨p, hp⟩ := exists_level_infCompletionEmbedding_surjective ι
   exact ⟨p.1, inferInstance, infPlaceOfEmbedding ι p.1, ⟨AlgEquiv.ofBijective (infCompletionEmbedding ι p.1)
     ⟨(infCompletionEmbedding ι p.1).toRingHom.injective, hp p le_rfl⟩⟩⟩

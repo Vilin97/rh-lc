@@ -115,7 +115,7 @@ theorem soCut_of : SoCut := by
     exact this.symm
   have e1 : ∀ u : Matrix (Fin n) (Fin d) (AE F E), -((1 : GL (Fin n) (Fv F v)).1ᵀ * X.J.map t * u.map (piW (t.comp σ)) *
       (W.J.map t)ᵀ * (1 : GL (Fin d) (Fv F v)).1) = coB σ X W t u := fun u => by simp [coB]
-  have sy : ∀ (U : Matrix (Fin n) (Fin d) (Fv F v)) z, symp (R := AF F) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) z
+  have sy : ∀ (U : Matrix (Fin n) (Fin d) (Fv F v)) z, symp (cA σ) (-1) (incM F X.J) (incM F W.J) z
       (spM h t (-U) 0) = atPlace v (trace (coB σ X W t z * Uᵀ)) := fun U z => by
     have := ev_symp h t hP.herm.herm hP.skew.skew z (spM h t (-U) 0)
     rw [spM_fst, neg_neg, hco (spM h t (-U) 0), spM_snd] at this
@@ -126,7 +126,7 @@ theorem soCut_of : SoCut := by
   refine ⟨m, χ, hι.bij.injOn hφ (Submodule.sum_mem _ fun i _ => hχ i) ?_, fun i => ⟨⟨hχ i, ι, hι, fun Y hY => ?_⟩, ?_⟩⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, hsum]
-    exact Finset.sum_congr rfl fun i _ => (hχg i).symm
+      exact Finset.sum_congr rfl fun i _ => (hχg i).symm
   · rw [hχg]
     exact (hg i).2.1 Y (hz Y hY)
   intro r hr μ hμ z hzr

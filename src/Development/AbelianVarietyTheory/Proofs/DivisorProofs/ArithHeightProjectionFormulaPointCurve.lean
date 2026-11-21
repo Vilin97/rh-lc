@@ -30,10 +30,11 @@ variable {k : Type} [CommRing k] {X Y : Scheme.{0}} {p : X ⟶ Sp k}
 
 open GlobalTheory.TwistTop in
 theorem refines_trans {N L M : HermLB p} {π : N.B.ι → L.B.ι} {π' : L.B.ι → M.B.ι}
-    (h : Refines N L π 0) (h' : Refines L M π' 0) : Refines N M (fun c => π' (π c)) 0 where
-  le c := (h.le c).trans (h'.le _)
-  g Z r z c c' hc hc' := (h.g Z r z c c' hc hc').trans (h'.g Z r z _ _ (h.le _ hc) (h.le _ hc'))
-  φ σ c y hy := by
+    (h : Refines N L π 0) (h' : Refines L M π' 0) : Refines N M (fun c => π' (π c)) 0 := by
+  refine ⟨fun c => (h.le c).trans (h'.le _), ?_, ?_⟩
+  · intro Z r z c c' hc hc'
+    exact (h.g Z r z c c' hc hc').trans (h'.g Z r z _ _ (h.le _ hc) (h.le _ hc'))
+  · intro σ c y hy
     rw [h.φ σ c y hy, h'.φ σ _ y (ptsIn_mono (h.le _) hy)]
     simp
 

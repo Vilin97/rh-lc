@@ -200,10 +200,13 @@ theorem cM_rat' (h : Hyp L nb uM nb' w₁ cM δ) {c : (Fin L.n → AE F E) × AF
       rw [TensorProduct.tmul_smul, TensorProduct.smul_tmul', TensorProduct.smul_tmul', smul_eq_mul, mul_one,
         ← Algebra.algebraMap_eq_smul_one]
     · simp
-  · ext i k
-    simp [incM, uA, GlobalTheory.ThK.incV, Matrix.single_apply, Matrix.one_apply, Matrix.sum_apply, GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR]
+  · have hc (a : E) : cA σ (inclR (F := F) (AF F) a) = inclR (F := F) (AF F) (σ a) := by
+      show Algebra.TensorProduct.map _ _ ((1 : AF F) ⊗ₜ[F] a) = (1 : AF F) ⊗ₜ[F] σ a
+      simp
+    ext i k
+    simp [incM, uA, GlobalTheory.ThK.incV, Matrix.single_apply, Matrix.one_apply, Matrix.sum_apply, hc]
     refine Finset.sum_congr rfl fun j _ => ?_
-    split_ifs <;> simp [GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR]
+    split_ifs <;> simp [hc]
 
 theorem emS_cM (h : Hyp L nb uM nb' w₁ cM δ) (c : (Fin L.n → AE F E) × AF F) :
     (inFrame d.b (cM c)).submatrix (emS L) (emS L) = 1 := by

@@ -39,7 +39,8 @@ private theorem archExp_single (K : Type) [Field K] [NumberField K] (r s : ℕ) 
     have hh : ((Fin.castAdd s i : Fin (r + s)) : ℕ) < r ∧ r ≤ ((Fin.natAdd r j : Fin (r + s)) : ℕ) :=
       ⟨by simp, by simp⟩
     rw [dite_eq_left hh, if_pos ⟨rfl, rfl⟩]
-    simp [P, e]
+    simp only [P, if_pos rfl, Prod.fst]
+    exact (e.apply_symm_apply x).symm
   · rw [if_neg hab]
     split_ifs with hh
     · have hne : ¬ ((a, b) : Fin (r + s) × Fin (r + s)) = (Fin.castAdd s i, Fin.natAdd r j) := by

@@ -62,7 +62,7 @@ private theorem gd_tw (x : WD h) (t : ℝ) : Gd (x.lpTw t) ↔ Gd x := by
   unfold Gd
   rw [ht, WD.monomial_twist_iff]
 
-private theorem gd_zero : Gd (WD.lpZero h) := by
+private theorem gd_zero : Gd (WD.lpZero (h := h)) := by
   refine ⟨(tor_iff _).2 fun s t α hα => ?_, ?_⟩
   · rw [WD.eig, GlobalTheory.LocLanglands.CuspExt.charPol_lpZero] at hα
     simp at hα

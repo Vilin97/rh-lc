@@ -52,7 +52,7 @@ theorem uniqueFactorizationMonoid_holGerms_option (hN : AnalyticGermsNoetherian.
     show ((germPull (fun z : Option σ → ℂ => A z + 0) ((A.analyticAt 0).add analyticAt_const) (by simp) φ : holGerms (0 : Option σ → ℂ)) :
       Germ (𝓝 (0 : Option σ → ℂ)) ℂ) = ↑(f ∘ A)
     rw [germPull_coe _ _ _ φ f hfφ]
-    congr 1
+    simp only [add_zero]
   refine (MulEquiv.prime_iff (germAffineEquiv A (0 : Option σ → ℂ))).1 ?_
   rw [hT]
   have hirrA : Irreducible (mkGerm (f ∘ A) hfA) := by

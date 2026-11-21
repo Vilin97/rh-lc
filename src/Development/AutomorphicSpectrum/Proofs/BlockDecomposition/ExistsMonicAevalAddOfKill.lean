@@ -77,8 +77,10 @@ theorem exists_monic_aeval_add_of_kill {M : Type*} [AddCommGroup M] [Module ℂ 
     · exact hc'
     · exact hc'.symm
     · rfl
-  letI : CommRing (Algebra.adjoin ℂ ({A', B'} : Set (Module.End ℂ N))) :=
-    Algebra.adjoinCommRingOfComm ℂ hcomm
+  letI : IsMulCommutative (Algebra.adjoin ℂ ({A', B'} : Set (Module.End ℂ N))) :=
+    Algebra.isMulCommutative_adjoin ℂ (fun x hx y hy _ => hcomm x hx y hy)
+  open scoped IsMulCommutative in
+  letI : CommRing (Algebra.adjoin ℂ ({A', B'} : Set (Module.End ℂ N))) := inferInstance
   let a' : Algebra.adjoin ℂ ({A', B'} : Set (Module.End ℂ N)) :=
     ⟨A', Algebra.subset_adjoin (Set.mem_insert _ _)⟩
   let b' : Algebra.adjoin ℂ ({A', B'} : Set (Module.End ℂ N)) :=

@@ -38,6 +38,8 @@ theorem fam_eq_L_pf_k {d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ} (R
     apply Matrix.inv_eq_left_inv
     rw [diagonal_mul_diagonal, ← diagonal_one]
     congr 1
+    funext i
+    simp only [Pi.star_apply, Complex.star_def, Complex.conj_ofReal]
     rw [← Complex.ofReal_mul, ← Real.exp_add, neg_add_cancel, Real.exp_zero, Complex.ofReal_one]
   have hy : mR (a s) = mLoc A := by
     rw [show mR (a s) = _ from ha s, mLoc, hinv]

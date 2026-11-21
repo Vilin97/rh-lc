@@ -42,6 +42,7 @@ theorem uniq_k : _root_.PositivityTheory.SiegelWeilFormula.TW.Uniq_k := by
     have hm : d.dd.rho d.B.ψ w (S0' φ) ∈ schA F d.κ :=
       GlobalTheory.HeisSchA.schr_mem_schA d.B.ψ hψ _ _ (hop.pres' φ hφ)
     rw [← h1, hop.left _ hm]
+  letI : MeasurableSpace (d.κ → AF F) := borel _
   obtain ⟨hμ, hint⟩ := _root_.PositivityTheory.SiegelWeilFormula.KTunit.map_haar_k d τ ν hν
   obtain ⟨c, hc⟩ := translation_invariant_functional_haar d.B.ψ hψ d.κ (ν.map (_root_.PositivityTheory.SiegelWeilFormula.KTunit.cmap_k d τ)) hμ (Λ ∘ₗ S0') (hop.adm' Λ hΛ) (by
     intro a φ hφ

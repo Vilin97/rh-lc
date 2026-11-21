@@ -91,7 +91,7 @@ theorem slice_bound (hS : Slice) (hB : B.IsGood σ) (hM : M.IsGood B.ψ) (hM₁ 
   obtain ⟨N, hN⟩ := summable_wt hC
   choose T hT using fun i => hl (φ₁ i) (h1 i)
   choose p hp hq using fun i => h4 ((normSeminorm ℂ ℂ).comp (T i).toLinearMap) N (T i).continuous.norm
-  refine ⟨_, fun f => ∑ i, p i f, hN, continuous_finset_sum _ fun i _ => hp i, by simp, fun y f => ?_⟩
+  refine ⟨_, fun f => ∑ i, p i f, hN, continuous_finsetSum _ fun i _ => hp i, by simp, fun y f => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     rw [h2, map_sum]
   simp only [hT]

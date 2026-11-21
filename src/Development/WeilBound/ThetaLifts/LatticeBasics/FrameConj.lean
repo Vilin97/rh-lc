@@ -176,7 +176,7 @@ theorem mem_intHat (z : AE F E) : eF F • z ∈ intHat F E ↔ ∀ v, compFin F
       rw [smul_incl]
       exact tmul_mem_intLoc (ha v) o
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | neg y _ hy => rw [map_neg]; exact neg_mem hy
   · intro h
     let X : Spc F E 1 := ⟨1, stdLattice E 1, fun _ => 1, fun _ => 1⟩

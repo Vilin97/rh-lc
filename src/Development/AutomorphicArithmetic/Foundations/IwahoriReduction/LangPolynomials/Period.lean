@@ -121,8 +121,11 @@ theorem UpperTheory.Kd.C7.pPeriod :
     rw [Finset.not_nonempty_iff_eq_empty] at hE
     rw [hE, Finset.sum_empty] at hsum
     exact one_ne_zero hsum
-  obtain ⟨m0, -, hm0⟩ := IsUltrametricDist.exists_norm_finset_sum_le_of_nonempty hne
-    (fun m => Φ.jh (s m) * Φ.lam β (fun i => V i m))
+  obtain ⟨m0, -, hmax⟩ := Finset.exists_max_image Finset.univ
+    (fun m => ‖Φ.jh (s m) * Φ.lam β (fun i => V i m)‖) hne
+  have hm0 : ‖∑ m, Φ.jh (s m) * Φ.lam β (fun i => V i m)‖ ≤
+      ‖Φ.jh (s m0) * Φ.lam β (fun i => V i m0)‖ := by
+    exact IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _) hmax
   rw [← hsum, norm_one, norm_mul] at hm0
   set η : Fin β.d → Φ.R := fun i => V i m0 with hηdef
   set μ := Φ.lam β η with hμdef

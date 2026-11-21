@@ -170,6 +170,7 @@ theorem norm_eq {f g : SInf F κ} (h : ∫⁻ x, ‖f x‖ₑ ^ 2 = ∫⁻ x, �
     eLpNorm_eq_lintegral_rpow_enorm_toReal (by simp) (by simp)]
   simp only [ENNReal.toReal_ofNat, ENNReal.rpow_ofNat]
   rw [e, e, hm, lintegral_smul_measure, lintegral_smul_measure, h]
+  all_goals exact SchwartzMap.continuous _ |>.aestronglyMeasurable
 
 def D (v : (κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)) : SInf F κ →L[ℂ] SInf F κ :=
   (C.S.symm : _ →L[ℂ] _) ∘L dRho (C.P.symm v) ∘L (C.S : _ →L[ℂ] _)

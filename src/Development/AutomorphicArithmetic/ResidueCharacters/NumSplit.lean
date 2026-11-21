@@ -116,6 +116,7 @@ theorem vdel_le (i : D.nd.Loc) {Λ : ℝ} (h : (D.nd.s0 i : ℝ) + 1 ≤ Λ) : (
   have := D.nd.lPrime i
   have h1 := LargeLevelLemmas.vdel_le i
   have hv : (padicValNat (D.nd.l i) D.R.t.factorial : ℚ) ≤ D.R.t := by
+    rw [Nat.padicValNat_def]
     exact_mod_cast padicValNat_factorial_le (D.nd.l i) D.R.t
   have h2 : D.nd.vdel i ≤ (D.R.t : ℚ) * ((D.nd.s0 i : ℚ) + 1) := by linarith
   have h3 : (D.nd.vdel i : ℝ) ≤ (D.R.t : ℝ) * ((D.nd.s0 i : ℝ) + 1) := by exact_mod_cast h2

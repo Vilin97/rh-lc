@@ -256,7 +256,7 @@ theorem exists_sub_mem_isotypicKernel (u : U) :
     { toLinearMap := LinearMap.pi fun i => (Gs i).toLinearMap
       isIntertwining' := fun g => by
         ext x i
-        simp [Representation.IntertwiningMap.isIntertwining] }
+        simp [piRep, Representation.IntertwiningMap.isIntertwining] }
   have hΓ : ∀ x i, Γ x i = Gs i x := fun _ _ => rfl
 
   let W0 : Subrepresentation ρ :=

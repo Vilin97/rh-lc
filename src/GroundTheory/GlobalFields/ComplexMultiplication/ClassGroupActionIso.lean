@@ -207,8 +207,7 @@ theorem range_endConst_weierstrassCurve (L : PeriodPair) :
   constructor
   · rintro ⟨f, rfl⟩
     obtain ⟨α, rfl⟩ := (latticeEndEquiv L).surjective f
-    rw [endConst_latticeEndEquiv]
-    exact α.2
+    exact (endConst_latticeEndEquiv L α).symm ▸ α.2
   · intro hz
     exact ⟨latticeEndEquiv L ⟨z, hz⟩, endConst_latticeEndEquiv L ⟨z, hz⟩⟩
 

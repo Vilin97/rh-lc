@@ -73,6 +73,7 @@ theorem map_transport {X : Type*} [MeasurableSpace X] {ν : Measure X} {A : Set 
     conv_lhs => rw [← hA']
     rw [← Measure.restrict_map hφ hA, hν, Measure.restrict_smul]
   rw [Measure.map_map hψ hf, show ψ ∘ f = f ∘ φ from funext hc, ← Measure.map_map hf hφ, h1, Measure.map_smul]
+  exact hf.aemeasurable
 
 end PositivityTheory.Rg.Rsw.L.LToS
 

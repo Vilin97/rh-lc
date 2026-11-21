@@ -91,9 +91,10 @@ theorem cells'_k (B : Base F E) (hB : _root_.UpperTheory.TP.W.GoodK σ B) (hb : 
     set Λ : AE F E := algebraMap (AF F) (AE F E) l with hΛ
     have hcΛ : cA σ Λ = Λ := (cA σ).commutes l
     have hβA : (Λ • incM F β₁)ᵀ = -((((ε₀ : ℤ) : AE F E)) • (Λ • incM F β₁).map (cA σ)) := by
+      have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun _ => rfl
       rw [Matrix.transpose_smul, ← incM_transpose', hβh]
       ext i j
-      simp [incM, he_def, hcΛ, GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR]
+      simp [incM, he_def, hcΛ, hc]
       ring
     let β₀ : nA σ Y b := ⟨Λ • incM F β₁, (mem_nA_iff hε₀ _).2 hβA⟩
     refine ⟨β₀, ?_, ?_⟩

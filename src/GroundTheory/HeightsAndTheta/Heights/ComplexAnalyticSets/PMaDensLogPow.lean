@@ -117,6 +117,8 @@ theorem mdisc_update_eq {n : ℕ} (G A₀ H : Matrix (Fin (n + 1 + 1)) (Fin (n +
   rw [← mdisc_comp_perm (Fin.cons G (Fin.cons A₀ (fun _ : Fin n => H)) : Fin (n + 1 + 1) → _)
     ((Equiv.swap 1 i).trans (Equiv.swap 0 1))]
   congr 1
+  funext k
+  simp only [Function.comp_apply, cons_const_apply, cons_cons_const_apply, Function.update_apply,
     Equiv.trans_apply, Equiv.swap_apply_def]
   have h01 : (0 : Fin (n + 1 + 1)) ≠ 1 := by
     rw [← Fin.succ_zero_eq_one]; exact (Fin.succ_ne_zero 0).symm

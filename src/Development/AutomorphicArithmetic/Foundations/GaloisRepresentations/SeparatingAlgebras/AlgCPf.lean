@@ -18,10 +18,14 @@ theorem UpperTheory.Gal.Gen.algC_pf :
       zero_mem' := by
         show (fun h => ι ((0 : H → Qbar l) h)) ∈ P
         convert P.zero_mem using 1
+        funext h
+        simp
       add_mem' := by
         intro a b ha hb
         show (fun h => ι ((a + b) h)) ∈ P
         convert P.add_mem ha hb using 1
+        funext h
+        simp
       smul_mem' := by
         intro r a ha
         show (fun h => ι ((r • a) h)) ∈ P
@@ -49,7 +53,8 @@ theorem UpperTheory.Gal.Gen.algC_pf :
     refine rank_eq_of_equiv_equiv (fun z => ι.symm z) j ι.symm.bijective ?_
     intro r m
     ext h
-    simp [j, smul_eq_mul, map_mul]
+    change ι.symm (r * m.1 h) = ι.symm r * ι.symm (m.1 h)
+    exact map_mul ι.symm r (m.1 h)
   have hfin : Module.finrank ℂ P = Module.finrank (Qbar l) P' := by
     unfold Module.finrank
     rw [hrank]

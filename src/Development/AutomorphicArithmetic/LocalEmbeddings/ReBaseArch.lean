@@ -196,7 +196,8 @@ theorem member_arch_eq (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) {a b : ℕ} (
     exact prM_fromBlocks _ _ h0
   have hcf1 : cf gd = 1 := by
     have := congrArg (fun f => f gd) hc1
-    simp only [MonoidHom.comp_apply, hπ, MonoidHom.one_apply] at this
+    change c (π gd) = 1 at this
+    rw [hπ] at this
     rw [← hcv, this]; rfl
   obtain ⟨φ₂, hφ₂, hφ₂0⟩ := GlobalTheory.T.exists_adelicSchwartz_ne_zero_at_origin F κ
   have hb := GlobalTheory.T.productFunctionOnSumCoords_mem_adelicSchwartzSpace F κ κ Φ hΦ φ₂ hφ₂

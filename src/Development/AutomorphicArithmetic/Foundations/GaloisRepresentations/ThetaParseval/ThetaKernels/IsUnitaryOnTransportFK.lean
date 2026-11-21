@@ -54,7 +54,12 @@ theorem isUnitaryOn_transportF_k : ∀ (F E : Type) [Field F] [NumberField F] [F
      _root_.GlobalTheory.T.doubled_lagrangian_equivariant F E σ B hB hψ nS nT JS JT hS hT ξ₀ h0 hσ JA JB ξ hA hBm κ co hrat Φ hΦ,
      _root_.GlobalTheory.T.doubled_lagrangian_invariant_functional F E σ B hB hψ nS nT JS JT hS hT ξ₀ h0 hσ JA JB ξ hA hBm κ co hrat Φ hΦ⟩
   have ht := hom a b g h hh hg Φ hΦ
-  rw [hiso _ ht.1, hiso _ hΦ, ht.2, hω.om_unit ν 𝓕 hν h𝓕 _ _ hth]
+  calc
+    _ = c * ∫⁻ w in 𝓕, ‖GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ ((om (a, b)) Φ) w‖ₑ ^ 2 ∂ν := hiso _ ht.1
+    _ = c * ∫⁻ w in 𝓕, ‖GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ Φ w‖ₑ ^ 2 ∂ν := by
+      exact (congrArg (fun f => c * ∫⁻ w in 𝓕, ‖f w‖ₑ ^ 2 ∂ν) ht.2).trans
+        (congrArg (c * ·) (hω.om_unit ν 𝓕 hν h𝓕 _ _ hth))
+    _ = _ := (hiso _ hΦ).symm
 end GlobalTheory.WeilUnitaryTransportF
 end
 end

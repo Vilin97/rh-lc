@@ -13,9 +13,6 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Automorphic
 noncomputable section
 
 open NumberField IsDedekindDomain Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions.N Polynomial GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Base
-open private ss_conj from Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.GdMain
-open private isIrr_iso from Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.SymmetricCubeIrreducible
-open private charpoly_conj_gl from Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AdmissibleResidues.CharpolyConjugation.CharpolyConjGlAlt
 
 namespace UpperTheory.GalN.V
 
@@ -34,11 +31,35 @@ theorem Wit.iso' [IsCMField F] (e : RepIso r r') (hU : Wit ι r) : Wit ι r' := 
     group
   obtain ⟨s, j, hj, hF, h⟩ := hU w hw A hA hfin'
   refine ⟨s, j, hj, hF, fun α β hα hβ k hk => ?_⟩
-  rw [hg s, charpoly_conj_gl] at hα hβ
+  rw [hg s, Units.val_mul, Units.val_mul, Matrix.coe_units_inv, Matrix.charpoly_units_conj] at hα hβ
   exact h α β hα hβ k hk
 
-theorem attC_iso [_root_.NumberField.IsTotallyComplex F] {π : CuspSub F n} (h : RepIso r r') (H : AttC ι r π) : AttC ι r' π :=
-  ⟨ss_conj h.choose h.choose_spec H.1, H.2.mono fun _ ⟨B, hB, hB'⟩ => ⟨B, hB, hB'.of_iso h⟩⟩
+theorem attC_iso [_root_.NumberField.IsTotallyComplex F] {π : CuspSub F n} (h : RepIso r r') (H : AttC ι r π) : AttC ι r' π := by
+  refine ⟨?_, H.2.mono fun _ ⟨B, hB, hB'⟩ => ⟨B, hB, hB'.of_iso h⟩⟩
+  obtain ⟨g, hg⟩ := h
+  let e : (Fin n → Qbar l) ≃ₗ[Qbar l] (Fin n → Qbar l) :=
+    Matrix.toLin'OfInv (M := (g : Matrix (Fin n) (Fin n) (Qbar l)))
+      (M' := ((g⁻¹ : GL (Fin n) (Qbar l)) : Matrix (Fin n) (Fin n) (Qbar l)))
+      (Units.mul_inv g) (Units.inv_mul g)
+  have he (v : Fin n → Qbar l) :
+      e v = ((g⁻¹ : GL (Fin n) (Qbar l)) : Matrix (Fin n) (Fin n) (Qbar l)).mulVec v := rfl
+  have intertwine (s : G F Ω) (v : Fin n → Qbar l) :
+      e ((r' s : Matrix (Fin n) (Fin n) (Qbar l)).mulVec v) =
+        (r s : Matrix (Fin n) (Fin n) (Qbar l)).mulVec (e v) := by
+    rw [he, he, hg s, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, ← Units.val_mul, ← Units.val_mul]
+    congr 2
+    group
+  intro W hW
+  obtain ⟨W', hW', hc⟩ := H.1 (W.map e.toLinearMap) (by
+    rintro s _ ⟨v, hv, rfl⟩
+    exact ⟨_, hW s v hv, intertwine s v⟩)
+  refine ⟨W'.comap e.toLinearMap, fun s v hv => ?_, ?_⟩
+  · show e _ ∈ W'
+    rw [intertwine]
+    exact hW' s (e v) hv
+  · have hcompl : IsCompl ((W.map e.toLinearMap).comap e.toLinearMap) (W'.comap e.toLinearMap) :=
+      (Submodule.orderIsoMapComap e).symm.isCompl hc
+    rwa [Submodule.comap_map_eq_of_injective e.injective] at hcompl
 
 theorem autCsd_iso {F Ω : Type} [Field F] [NumberField F] [IsCMField F] [Field Ω] [Algebra F Ω] {l : ℕ}
     [Fact l.Prime] {n : ℕ} {ι : Qbar l ≃+* ℂ} {r r' : G F Ω →* GL (Fin n) (Qbar l)} (h : Af.RepIso r r')

@@ -33,7 +33,9 @@ theorem UpperTheory.Gal.CharacterCongruences.neatOfPlace_holds :
   have e : γ = g * (c * x) * g⁻¹ := by rw [← mul_assoc, ← h, mul_inv_cancel_right]
   have hfo : IsOfFinOrder (c * x) := GlobalTheory.T.isOfFinOrder_of_compact_conj_mem_unitaryRationalPoints E a _ hDc g (c * x) hd (e ▸ hγ)
   have hcx : cLoc u (c * x) = cLoc u c := by rw [map_mul, hxl, mul_one]
-  have h1 : cLoc u c = 1 := hT c hc (hcx ▸ (cLoc u).isOfFinOrder hfo)
+  have ht := MonoidHom.isOfFinOrder (cLoc u) (x := c * x) hfo
+  rw [hcx] at ht
+  have h1 : cLoc u c = 1 := hT c hc ht
   have hγ1 : cLoc u γ = 1 := by
     rw [e, map_mul, map_mul, map_inv, hcx, h1, mul_one, mul_inv_cancel]
   obtain ⟨γ₀, hγ₀⟩ : γ.1 ∈ (ratGL E a).range := Subgroup.mem_subgroupOf.1 hγ

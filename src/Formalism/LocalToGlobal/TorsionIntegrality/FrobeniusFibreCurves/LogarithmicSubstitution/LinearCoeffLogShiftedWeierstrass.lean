@@ -189,7 +189,7 @@ theorem theta_zero_isogeny_holds : Th0Isogeny := by
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_add (f := _), map_add (f := _), hR0, map_nsmul, map_nsmul, hZl, hL0, map_sum,
         Finset.sum_eq_zero fun Q _ => hZl _]
-      simp
+        simp
   rw [Sq.rescale_fExp al hL0]
   have e1' : wpShift P e1 ^ n = fExp (n • fLog (wpShift P e1)) := by
     rw [fExp_nsmul (hZl _), fExp_fLog (hZ1 _)]

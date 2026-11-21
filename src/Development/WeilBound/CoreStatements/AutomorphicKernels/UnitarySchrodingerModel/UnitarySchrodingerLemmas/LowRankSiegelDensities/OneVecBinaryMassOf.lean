@@ -59,6 +59,9 @@ theorem coreSharp (hSC : SharpCount) (lam : Measure (Fv F v)) (hlam : IsStdV v l
         (Measure.pi fun _ : ι => lam) {x | (∀ i, x i ∈ v.adicCompletionIntegers F) ∧
           (∃ i, Valued.v (x i) = 1) ∧ (2 : Fv F v)⁻¹ * (x ⬝ᵥ (B *ᵥ x)) ∈ A} = (D : ℝ≥0∞) * lam A := by
   classical
+  let 𝒪 := v.adicCompletionIntegers F
+  let 𝓴 := IsLocalRing.ResidueField 𝒪
+  let res := IsLocalRing.residue 𝒪
   have hLoc := GlobalTheory.T.completion_is_local_ring F v
   haveI : SecondCountableTopology (Fv F v) := hLoc.2.2.1
   haveI : BorelSpace (Fv F v) := ⟨rfl⟩

@@ -247,7 +247,7 @@ theorem nu_rest {ν : Chr F E} (hc : Continuous ν) {T : Finset (Pl F)} (hν : U
   obtain ⟨T₀, hT₀⟩ := exists_subset_nhds_of_isCompact'
     (V := fun A : Finset (Pl F) => ((part PI ⊤ (io (rest A)) : Subgroup (AE F E)ˣ) : Set (AE F E)ˣ) ∩ UI F E)
     (fun A A' => ⟨A ∪ A', mono Finset.subset_union_left, mono Finset.subset_union_right⟩) (fun A => cpt_I (hi A) (h0 A))
-    (fun A => (cpt_I (hi A) (h0 A)).isClosed) (U := {x | ‖(ν x : ℂ) - 1‖ < 1}) fun x hx => by
+    (fun A => (cpt_I (hi A) (h0 A)).isClosed) (U := {x | ‖(ν x : ℂ) - 1‖ < 1}) <| mem_nhdsSet_iff_forall.mpr fun x hx => by
       have hx' := Set.mem_iInter.1 hx
       obtain rfl : x = 1 := Units.ext (ae_ext (by rw [((mem_part_iff (hi ∅) (h0 ∅) x).1 (hx' ∅).1).1, Units.val_one, map_one])
         fun w => by

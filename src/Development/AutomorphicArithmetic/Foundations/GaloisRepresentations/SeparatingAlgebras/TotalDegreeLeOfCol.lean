@@ -26,7 +26,7 @@ theorem UpperTheory.Gal.Gen.degLe_pf :
   refine Submodule.span_induction (p := fun x _ => MvPolynomial.totalDegree x ≤ ∑ τ, ∑ i, (lam τ).natW i)
     ?_ ?_ ?_ ?_ hx
   · rintro P ⟨F, hF, rfl⟩
-    refine (MvPolynomial.totalDegree_finset_prod _ _).trans (Finset.sum_le_sum fun τ _ => ?_)
+    refine (MvPolynomial.totalDegree_finsetProd _ _).trans (Finset.sum_le_sum fun τ _ => ?_)
     refine (MvPolynomial.totalDegree_rename_le (fun v => (τ, v)) (F τ)).trans ?_
     have hm := (Submodule.mem_inf.mp (hF τ)).1
     exact totalDegree_le_of_col ((MvPolynomial.mem_weightedHomogeneousSubmodule _ _ _ _).mp hm)

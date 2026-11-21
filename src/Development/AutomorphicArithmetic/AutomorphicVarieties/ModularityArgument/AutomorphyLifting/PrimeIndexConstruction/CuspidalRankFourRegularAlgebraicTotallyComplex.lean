@@ -9,7 +9,6 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Automorphic
 
 @[expose] public section
 
-open private half_pow from Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimuraTheory.ResidueFlagPoints.HalfPow
 open UpperTheory.GalN.V UpperTheory.V.Ws.Pt UpperTheory.V.Z.Win
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.HC ReciprocityTheory.Gal IsLocalRing Polynomial UpperTheory.V UpperTheory.V.Base UpperTheory.V.Alg UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws GlobalTheory.CuspRep GlobalTheory.GalOfCusp Formalism.BasicNotions Formalism.MainNotions.N

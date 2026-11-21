@@ -144,9 +144,18 @@ theorem tateCompactDualityMap_cohomologyMap {A B : Rep.{u} k G} [IsDiscreteRep A
     (x : cohomology A r) (y : tateCompactCohomologyRes φ ψ (dualRep D B) s) :
     tateCompactDualityMap φ ψ D h t B ((cohomologyMap f r).hom x) y =
       tateCompactDualityMap φ ψ D h t A x ((tateCompactCohomologyResMap φ ψ (dualMap D f) s).hom y) := by
-  rw [tateCompactDualityMap_apply, tateCompactDualityMap_apply,
-    tateCompactCupRes_tateCompactCohomologyResMap φ ψ (dualEvalPairing D A) (dualEvalPairing D B)
-      (dualMap D f) f (tensorHom_dualEvalPairing D f)]
+  have tensorHom_dualEvalPairing : ∀ {A B : Rep.{u} _ G} (f : A ⟶ B),
+      (GlobalTheory.CompanionTheory.Ar.dualMap D f ⊗ₘ 𝟙 A) ≫ dualEvalPairing D A =
+        (𝟙 (dualRep D B) ⊗ₘ f) ≫ dualEvalPairing D B := by
+    intro A B f
+    refine Rep.Hom.ext (Representation.IntertwiningMap.ext (LinearMap.ext fun x => ?_))
+    induction x using TensorProduct.induction_on with
+    | zero => simp only [map_zero]
+    | tmul a b => rfl
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
+  rw [tateCompactDualityMap_apply, tateCompactDualityMap_apply]
+  exact congrArg t (tateCompactCupRes_tateCompactCohomologyResMap φ ψ (dualEvalPairing D A)
+    (dualEvalPairing D B) (dualMap D f) f (tensorHom_dualEvalPairing f) _ y x).symm
 
 theorem bijective_tateCompactDualityMap_of_sum {J : Type*} [Fintype J] (X : J → Rep.{u} k G)
     [∀ j, IsDiscreteRep (X j)] [∀ j, IsDiscreteRep (dualRep D (X j))] (P : Rep.{u} k G)
@@ -167,7 +176,32 @@ theorem bijective_tateCompactDualityMap_of_sum {J : Type*} [Fintype J] (X : J �
         ((tateCompactCohomologyResMap φ ψ (dualMap D (i j)) s).hom y) = y := by
     intro y
     have e := congrArg (fun F => (tateCompactCohomologyResMap φ ψ (dualMap D F) s).hom y) hsum
-    simp only [dualMap_finsetSum, dualMap_comp, tateCompactCohomologyResMap_finsetSum, dualMap_id,
+    have dzero : dualMap D (0 : P ⟶ P) = 0 := by
+      apply Rep.Hom.ext
+      apply Representation.IntertwiningMap.ext
+      apply LinearMap.ext
+      intro g
+      apply LinearMap.ext
+      intro a
+      show g ((0 : P ⟶ P).hom a) = 0
+      rw [Rep.zero_hom, Representation.IntertwiningMap.coe_zero, Pi.zero_apply, map_zero]
+    have dadd (f g : P ⟶ P) : dualMap D (f + g) = dualMap D f + dualMap D g := by
+      apply Rep.Hom.ext
+      apply Representation.IntertwiningMap.ext
+      apply LinearMap.ext
+      intro z
+      apply LinearMap.ext
+      intro a
+      show z ((f + g).hom a) = z (f.hom a) + z (g.hom a)
+      rw [Rep.add_hom, Representation.IntertwiningMap.coe_add, Pi.add_apply, map_add]
+    have dsum : dualMap D (∑ j, p j ≫ i j) = ∑ j, dualMap D (p j ≫ i j) := by
+      classical
+      generalize (Finset.univ : Finset J) = q
+      induction q using Finset.induction with
+      | empty => simp [dzero]
+      | insert a q ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, dadd, ih]
+    have did : dualMap D (𝟙 P) = 𝟙 (dualRep D P) := rfl
+    simp only [dsum, dualMap_comp, tateCompactCohomologyResMap_finsetSum, did,
       tateCompactCohomologyResMap_id, tateCompactCohomologyResMap_comp, ModuleCat.hom_sum,
       LinearMap.sum_apply, ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_id,
       LinearMap.id_apply] at e
@@ -222,6 +256,15 @@ theorem tateCompactDualityMap_δ {n : ℕ} (t : tateCompactCohomologyRes φ ψ D
     (y : tateCompactCohomologyRes φ ψ (dualRep D S.X₁) s) :
     tateCompactDualityMap φ ψ D h₁ t S.X₁ ((δ hS r (r + 1) rfl).hom q) y =
       (-(-1 : ℤ) ^ s) • tateCompactDualityMap φ ψ D h₀ t S.X₃ q ((tateCompactδRes φ ψ hT s).hom y) := by
+  have tensorHom_dualEvalPairing : ∀ {A B : Rep.{u} _ G} (f : A ⟶ B),
+      (GlobalTheory.CompanionTheory.Ar.dualMap D f ⊗ₘ 𝟙 A) ≫ dualEvalPairing D A =
+        (𝟙 (dualRep D B) ⊗ₘ f) ≫ dualEvalPairing D B := by
+    intro A B f
+    refine Rep.Hom.ext (Representation.IntertwiningMap.ext (LinearMap.ext fun x => ?_))
+    induction x using TensorProduct.induction_on with
+    | zero => simp only [map_zero]
+    | tmul a b => rfl
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have key := tateCompactCup_tateCompactδ_add_tateCompactCup_δ φ ψ
     (SAᵥ := fun v => (dualShortComplex D S).map (Rep.resFunctor (φ v).toMonoidHom))
     (fun _ => 𝟙 _)
@@ -241,13 +284,13 @@ theorem tateCompactDualityMap_δ {n : ℕ} (t : tateCompactCohomologyRes φ ψ D
     (fun w => resFunctor_map_comp_id (ψ w).toMonoidHom _)
     (fun w => resFunctor_map_comp_id (ψ w).toMonoidHom _)
     (fun w => resFunctor_map_comp_id (ψ w).toMonoidHom _)
-    (tensorHom_dualEvalPairing D S.g) (tensorHom_dualEvalPairing D S.f).symm
-    (fun v => resFunctor_map_naturality (φ v).toMonoidHom _ _ _ _ (tensorHom_dualEvalPairing D S.g))
+    (tensorHom_dualEvalPairing S.g) (tensorHom_dualEvalPairing S.f).symm
+    (fun v => resFunctor_map_naturality (φ v).toMonoidHom _ _ _ _ (tensorHom_dualEvalPairing S.g))
     (fun v => (resFunctor_map_naturality (φ v).toMonoidHom _ _ _ _
-      (tensorHom_dualEvalPairing D S.f)).symm)
-    (fun w => resFunctor_map_naturality (ψ w).toMonoidHom _ _ _ _ (tensorHom_dualEvalPairing D S.g))
+      (tensorHom_dualEvalPairing S.f)).symm)
+    (fun w => resFunctor_map_naturality (ψ w).toMonoidHom _ _ _ _ (tensorHom_dualEvalPairing S.g))
     (fun w => (resFunctor_map_naturality (ψ w).toMonoidHom _ _ _ _
-      (tensorHom_dualEvalPairing D S.f)).symm)
+      (tensorHom_dualEvalPairing S.f)).symm)
     hT (fun v => (Rep.shortExact_res (φ v).toMonoidHom).2 hT)
     (fun w => (Rep.shortExact_res (ψ w).toMonoidHom).2 hT) hS
     (show s + 1 + r = n + 1 by omega) (show s + (r + 1) = n + 1 by omega) y q

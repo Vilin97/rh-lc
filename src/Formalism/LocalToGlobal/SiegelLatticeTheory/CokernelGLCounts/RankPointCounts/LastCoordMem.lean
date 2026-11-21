@@ -298,7 +298,7 @@ theorem btOK_holds : BtOK Zd u u' F0 what₂ := by
   have hX : XLam Λ₂ (liftF F'₂) = XS D (liftF F'₂).fl := xlam_eq Zd (liftF F'₂) Λ₂ hlat hprim
   refine ⟨⟨fun P => ?_, z_prim Zd (liftF F'₂) Λ₂ hprim⟩, hX⟩
   obtain ⟨c, h1, h2, h3⟩ := PI.UnitaryGroupMassFormula.CntFormula.RowsMassW.local_genus_exists D u' (liftF F'₂).fl P
-  exact ⟨c, h1, h2, by rw [hX]; exact h3⟩
+  exact ⟨c, h1, h2, (congrArg (HermitianLatticesTheory.localization₂ P.asIdeal) hX).trans h3⟩
 
 end Main
 
