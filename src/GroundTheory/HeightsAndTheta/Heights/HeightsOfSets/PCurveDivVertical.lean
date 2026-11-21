@@ -82,7 +82,8 @@ theorem proj_univ (f : MRing ι) : proj Finset.univ f = C (constantCoeff f) := b
 theorem proj_X_of_mem {T : Finset K} {k : K} (hk : k ∈ T) (i : ι k) :
     proj T (X ⟨k, i⟩ : MRing ι) = 0 := by
   ext d
-  rw [coeff_proj, coeff_zero, coeff_X]
+  rw [coeff_proj, coeff_X]
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   split_ifs with h1 h2
   · subst h2
     exact absurd hk (h1 ⟨k, i⟩ (by simp))

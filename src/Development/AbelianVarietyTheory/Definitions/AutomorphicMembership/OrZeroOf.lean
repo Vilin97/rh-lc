@@ -40,26 +40,28 @@ def levCh (L : Formalism.IndefR.Links.LevCh D T) (f : T' → T) : Formalism.Inde
   βW := L.βW
 
 theorem levCh_is {L : Formalism.IndefR.Links.LevCh D T} {f : T' → T} (hf : Function.Injective f) {μ : T'} (h : L.Is (f μ)) :
-    (levCh L f).Is μ where
-  mu0 := h.mu0
-  eta := h.eta
-  xi t := h.xi (f t)
-  xi_inj := h.xi_inj.comp hf
-  xi_base := h.xi_base
-  xi_fin t := h.xi_fin (f t)
-  xi_triv t := h.xi_triv (f t)
-  xi_tame t := h.xi_tame (f t)
-  Pg := h.Pg
-  Q_pl t := h.Q_pl (f t)
-  Q_off t := h.Q_off (f t)
-  Q_de p hp := (h.Q_de p hp).imp fun _ h' t => h' (f t)
-  Q_ram t := h.Q_ram (f t)
-  chi := h.chi
-  xiR t := h.xiR (f t)
-  βY := h.βY
-  βX := h.βX
-  βV := h.βV
-  βW := h.βW
+    (levCh L f).Is μ := by
+  exact {
+    mu0 := h.mu0
+    eta := h.eta
+    xi := fun t => h.xi (f t)
+    xi_inj := h.xi_inj.comp hf
+    xi_base := h.xi_base
+    xi_fin := fun t => h.xi_fin (f t)
+    xi_triv := fun t => h.xi_triv (f t)
+    xi_tame := fun t => h.xi_tame (f t)
+    Pg := h.Pg
+    Q_pl := fun t => h.Q_pl (f t)
+    Q_off := fun t => h.Q_off (f t)
+    Q_de := fun p hp => (h.Q_de p hp).imp fun _ h' t => h' (f t)
+    Q_ram := fun t => h.Q_ram (f t)
+    chi := h.chi
+    xiR := fun t => h.xiR (f t)
+    βY := h.βY
+    βX := h.βX
+    βV := h.βV
+    βW := h.βW
+  }
 
 section Two
 

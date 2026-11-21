@@ -160,7 +160,6 @@ theorem aeval_pt_eq_zero {y : (Σ k, ι k) → Ω} (hP : IsArithVar (mCoordIdeal
       have := hz.2 f hf
       rw [eval_map] at this
       convert this using 2
-      exact RingHom.ext_int _ _
     exact hle hG
   rw [aeval_def, eval₂_homog _ d _ g hN _ hd] at hGz
   rw [aeval_def]

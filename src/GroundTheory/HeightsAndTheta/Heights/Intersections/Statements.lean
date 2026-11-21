@@ -33,7 +33,7 @@ theorem isArithVar_projLine : IsArithVar (⊥ : Ideal (MRing (PBlk 2))) 2 := by
     have hc : Nat.card ((_ : Unit) × PBlk 2 ()) = 2 := by
       rw [Nat.card_eq_fintype_card, Fintype.card_sigma]
       simp
-    rw [hc, Fintype.card_unit]
+    rw [ENat.card_eq_coe_natCard, hc, Fintype.card_unit]
     rfl
 
 theorem isSmoothHerm_fsLine (n : ℕ) : IsSmoothHerm (fsLine n) := by

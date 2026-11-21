@@ -83,7 +83,8 @@ theorem LocRingLocal.proof (hF : LocRingFrac.Statement) : LocRingLocal.Statement
   have hvv' : v * v' ∉ W := fun h => (hW.mem_or_mem h).elim hvW hv'W
   have hsum : ((x + y : locRing P W) : F) * algebraMap (MRing ι ⧸ P) F (Ideal.Quotient.mk P (v * v')) =
       algebraMap (MRing ι ⧸ P) F (Ideal.Quotient.mk P (u * v' + u' * v)) := by
-    simp only [Subring.coe_add, map_mul, map_add (f := _)]
+    simp only [Subring.coe_add, map_mul, (algebraMap (MRing ι ⧸ P) F).map_add,
+      (Ideal.Quotient.mk P).map_add]
     rw [← hxe, ← hye]
     ring
   have hnum : IsMultiHomog (u * v' + u' * v) (a + a') :=

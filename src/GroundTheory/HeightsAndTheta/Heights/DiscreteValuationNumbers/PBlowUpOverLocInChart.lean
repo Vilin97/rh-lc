@@ -208,7 +208,7 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
   have memQ : ∀ F, F ∈ Q ↔ ∀ e : Option K →₀ ℕ,
       eval₂ fC aC (weightedHomogeneousComponent (blockWeight (extIdx ι J)) ⇑e F) ∈ 𝔮 := by
     intro F
-    simp only [hQdef, hψ, RingHom.mem_ker, RingHom.comp_apply, MvPolynomial.ext_iff, coeff_map, coeff_zero,
+    simp only [hQdef, hψ, RingHom.mem_ker, RingHom.comp_apply, MvPolynomial.ext_iff, coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
       Ideal.Quotient.eq_zero_iff_mem, coe_eval₂Hom, coeff_eval₂_C_mul_X_fst]
 
   have hσ : ∀ F, eval₂ (ev.comp C) x F = algebraMap (MRing ι R ⧸ P) L (blowUpEval P u F) := by
@@ -258,7 +258,7 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
       rw [hQdef, RingHom.mem_ker, RingHom.comp_apply] at hmem
       simp only [hψ, coe_eval₂Hom, eval₂_X, map_mul, map_C, map_X] at hmem
       have h2 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single o 1)) hmem
-      simp only [coeff_C_mul, coeff_X, coeff_X', if_true, mul_one, coeff_zero] at h2
+      simp only [coeff_C_mul, coeff_X, coeff_X', if_true, mul_one, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h2
       rw [Ideal.Quotient.eq_zero_iff_mem] at h2
       have h1' : aC ⟨o, l⟩ = 1 := Subtype.ext (by rw [haC]; exact h1)
       rw [h1'] at h2

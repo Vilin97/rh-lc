@@ -173,7 +173,7 @@ theorem BlowUpVerticalFibre.proof (hmodel : BlowUpModel.Statement.{u})
       obtain ⟨hWmin', hWrel'⟩ :
           W' ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes ∧ IsRelevant W' := by
         by_contra hc
-        exact h0 (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right hc])
+        exact h0 (by unfold divCycle; rw [dite_eq_right hc])
       obtain ⟨hWp, hPW, hWrel, -⟩ := comap_liftForm_facts hWmin'.1.1
         (le_sup_left.trans hWmin'.1.2) hWrel'
       rw [h1] at hWp hPW hWrel

@@ -276,7 +276,8 @@ theorem intNum_map_eq_geoNum_hyps (p : ℕ) [Fact p.Prime] (D : ℕ) :
     have hc : Nat.card ((_ : Unit) × Fin (D + 1)) = D + 1 := by
       rw [Nat.card_eq_fintype_card, Fintype.card_sigma]
       simp
-    rw [hc, Fintype.card_unit]
+    rw [ENat.card_eq_coe_natCard, hc, Fintype.card_unit]
+    simp
 
 end
 

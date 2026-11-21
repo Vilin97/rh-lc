@@ -205,8 +205,9 @@ theorem chart_forms_uniform (y : (Σ k, ι k) → Ω) (e : Module.Basis (Fin N) 
   · have hle : n l ≤ ∑ j, n j := Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ l)
     have h : vdeg (K := K) (fun _ => ∑ j, n j) = vdeg (fun _ => n l) + vdeg (fun _ => ∑ j, n j - n l) := by
       rw [← vdeg_add]
-      congr 1
-      omega
+      apply congrArg vdeg
+      funext k
+      exact (Nat.add_sub_cancel' hle).symm
     rw [h]
     exact IsWeightedHomogeneous.mul (hU l) (chartMonoZ_homog c _)
   · have hle : n l ≤ ∑ j, n j := Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ l)
@@ -392,6 +393,7 @@ theorem proof (hexp : TwistedDualGensExpress.Statement) : GenericProjClosureDivi
     obtain ⟨⟨bf, bg, -, hg, -⟩, hv⟩ := hp₀
     exact hg₀ (mem_of_homog hg (by rw [← hv]; exact aeval_eq_zero_of_mem hm))
   refine ⟨f₀, g₀, IsVerticalDivisor.of_unit_off_special hp₀.1 hf₀ hg₀ ?_, hp₀.2⟩
+
   intro W hW hPW hWr hϖW
   obtain ⟨⟨f₁, g₁, hp₁, hg₁⟩, ⟨f₂, g₂, hp₂, hf₂⟩⟩ := pairs W hW hPW hWr hϖW
   have h12 := hPW (hp₁.cross hp₂)

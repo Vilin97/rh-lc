@@ -203,7 +203,7 @@ theorem aemeasurable_coneIntegrand {e n : ℕ} {U D : Set (Fin e → ℂ)}
     AEMeasurable (coneIntegrand v F) ((volume.restrict D).prod volume) := by
   have hvD : AEMeasurable v (volume.restrict D) := (hv.continuousOn.mono hDU).aemeasurable hD
   have hW : AEMeasurable (gramVecs v) (volume.restrict D) := by
-    refine aemeasurable_pi_lambda _ fun a => ?_
+    refine AEMeasurable.of_eval fun a => ?_
     refine Fin.cases ?_ (fun j => ?_) a
     · simpa [gramVecs] using hvD
     · simpa [gramVecs] using

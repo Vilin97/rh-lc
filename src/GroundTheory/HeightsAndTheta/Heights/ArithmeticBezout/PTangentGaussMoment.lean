@@ -109,7 +109,8 @@ theorem TangentGaussMoment.proof (hA : LeadPlaneJac.Statement) (hB : LeadBlockGa
     show matGauss π * _ * _ ≠ 0
     refine mul_ne_zero (mul_ne_zero ?_ ?_) ?_
     · exact (ENNReal.ofReal_pos.2 (Real.exp_pos _)).ne'
-    · rw [Set.indicator_of_mem hπU]
+    · change linProj π ((r : ℂ) • firstCoordVec (m + k)) ∈ Metric.ball 0 1 at hπU
+      rw [Set.indicator_of_mem hπU]
       exact one_ne_zero
     · exact (ENNReal.ofReal_pos.2 (by positivity)).ne'
   obtain ⟨C, hC⟩ := hB m k hm

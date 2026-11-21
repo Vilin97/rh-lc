@@ -67,7 +67,7 @@ theorem GenericFibreDrop.proof : GenericFibreDrop.Statement := by
   have _ : (I'.map (Ideal.Quotient.mk I)).IsPrime :=
     Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective (by rwa [Ideal.mk_ker])
 
-  have key := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient F
+  have key := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient (k := F)
     (I'.map (Ideal.Quotient.mk I))
   rw [hh, ringKrullDim_eq_of_ringEquiv (DoubleQuot.quotQuotEquivQuotOfLE hII')] at key
   show ringKrullDim (T ⧸ I) = ringKrullDim (T ⧸ I') + 1

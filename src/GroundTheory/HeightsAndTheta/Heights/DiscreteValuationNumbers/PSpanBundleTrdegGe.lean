@@ -166,7 +166,8 @@ theorem SpanBundleTrdegGe.proof : SpanBundleTrdegGe.Statement := by
       change qz (Ideal.Quotient.mk _ (rename σ' g)) = emb (qy (Ideal.Quotient.mk _ g))
       simp only [qz, qy]
       exact hE1 g
-    | add p q hp hq => simp only [map_add (f := _), hp, hq]
+    | add p q hp hq =>
+      rw [map_add Θ, map_add qz, (map qy.toRingHom : MvPolynomial (Fin i) Ay →+* _).map_add, map_add Ψ, hp, hq]
     | mul_X p r hp =>
       simp only [map_mul, hp, map_X, hΨX]
       congr 1

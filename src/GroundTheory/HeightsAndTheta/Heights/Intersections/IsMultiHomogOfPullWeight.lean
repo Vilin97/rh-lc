@@ -122,9 +122,8 @@ theorem exists_elim {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' :
         rw [Polynomial.finsetSum_coeff, Finset.sum_eq_single (Fin.last m)]
         · simp
         · intro j _ hj
-          rw [Polynomial.coeff_monomial, if_neg]
-          intro h
-          exact hj (Fin.ext (by simpa using h))
+          have h : (j : ℕ) ≠ m := fun h => hj (Fin.ext h)
+          simp [Polynomial.coeff_monomial, Finsupp.single_apply, h]
         · simp
       rw [h0, Polynomial.coeff_zero] at hcoeff
       exact hlead (Ideal.Quotient.eq_zero_iff_mem.mp hcoeff.symm)
@@ -156,7 +155,7 @@ theorem exists_elim {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' :
           simp
         rw [e]
         exact Subalgebra.algebraMap_mem _ _
-      | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+      | add p q hp hq => rw [map_add]; exact add_mem hp hq
       | mul_X p i hp => rw [map_mul, aeval_X]; exact mul_mem hp (hρ i)
     exact this g
   have hT := aeval_eq_coordProd_mul hg c y' hyc

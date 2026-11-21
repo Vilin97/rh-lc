@@ -30,6 +30,7 @@ theorem VocabDivCycle.proof : VocabDivCycle.Statement := by
   · have h' : ¬ (W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant W) := h
     rw [if_neg h, dite_eq_right h']
     rfl
+  all_goals rfl
 
 end
 

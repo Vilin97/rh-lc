@@ -47,8 +47,8 @@ theorem conj_diagonal_mem {n : ℕ} {V : Matrix (Fin n) (Fin n) ℂ} (hV : V ∈
     rw [mem_unitaryGroup_iff, star_eq_conjTranspose, diagonal_conjTranspose, diagonal_mul_diagonal,
       ← diagonal_one]
     congr 1
-      Complex.normSq_eq_norm_sq, hd k]
-    norm_num
+    funext k
+    simpa [Complex.mul_conj', hd k]
   exact Submonoid.mul_mem _ (Submonoid.mul_mem _ hV hD) (Unitary.star_mem hV)
 
 end UnitaryZariskiDense

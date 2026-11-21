@@ -141,6 +141,7 @@ theorem isMultiHomogIdeal_sup_span {P : Ideal (MRing ι F)} (hP : IsMultiHomogId
 omit [DecidableEq K] in
 theorem colon_eq_of_not_mem {P : Ideal (MRing ι F)} [hP : P.IsPrime] {s : MRing ι F}
     (hs : s ∉ P) : P.colon (Ideal.span {s}) = P := by
+  classical
   ext g
   rw [HilbExactDivide.mem_colon_span_iff]
   exact ⟨fun h => (hP.mem_or_mem h).resolve_right hs, fun h => P.mul_mem_right s h⟩
@@ -254,7 +255,7 @@ theorem ringKrullDim_minimalPrime [Fintype K] [∀ k, Fintype (ι k)] {P W : Ide
   have hht : W'.height ≤ 1 := Ideal.map_height_le_one_of_mem_minimalPrimes hW
   have hquot : ringKrullDim ((MRing ι F ⧸ P) ⧸ W') = ringKrullDim (MRing ι F ⧸ W) :=
     ringKrullDim_eq_of_ringEquiv (DoubleQuot.quotQuotEquivQuotOfLE hPW)
-  have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient W'
+  have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient F W'
   have hdrop := GroundTheory.Arith.Abelian.Jacobian.ringKrullDim_quotient_add_one_le W' hW'ne
   rw [hquot, hdim] at hform hdrop
   exact eq_of_add_one_le_of_le hdrop (le_of_height_add hht hform)

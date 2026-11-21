@@ -16,7 +16,7 @@ lemma div_le_padicValNat_factorial (N p : ℕ) (hp : p.Prime) :
   have := Fact.mk hp
   rcases lt_or_ge N p with h | h
   · rw [Nat.div_eq_of_lt h]; exact Nat.zero_le _
-  · rw [padicValNat_factorial (b := Nat.log p N + 1) (Nat.lt_succ_self _)]
+  · rw [Nat.padicValNat_def, multiplicity_factorial (b := Nat.log p N + 1) (Nat.lt_succ_self _)]
     have h1 : 1 ∈ Finset.Ico 1 (Nat.log p N + 1) := by
       have := Nat.log_pos hp.one_lt h
       simp only [Finset.mem_Ico]; omega

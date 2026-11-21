@@ -141,7 +141,7 @@ theorem setIntegral_locDens_le_mInt [CompactSpace X] [T2Space X] (A : FinHolAtla
           refine setIntegral_congr_fun hK.measurableSet fun y hy => ?_
           simp [hf1 ⟨y, hy, rfl⟩]
       _ ≤ _ := by
-          refine setIntegral_mono_set hT ?_ hKt.eventuallyLE
+          refine setIntegral_mono_set hT ?_ (Filter.Eventually.of_forall hKt)
           filter_upwards [ae_restrict_mem (A.chart j).open_target.measurableSet] with y hy
           exact mul_nonneg (hf01 _).1
             (ReciprocityTheory.AnForm.M.locDens_nonneg_of_psh A Ψ hΨ hpsh j hy)

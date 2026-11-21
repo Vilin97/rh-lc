@@ -142,8 +142,8 @@ theorem algebraicIndependent_forgotten {κ : K → K'} {v : (Σ k, ι k) → (Σ
     rw [← this, hP, map_zero]
   ext m
   have hc := coeff_eval₂_scale j y P m
-  rw [h0, coeff_zero] at hc
-  rw [coeff_zero]
+  simp only [h0, AddMonoidAlgebra.coeff_zero] at hc
+  simp only [AddMonoidAlgebra.coeff_zero]
   exact hjinj ((mul_eq_zero.mp hc.symm).resolve_right (hyprod m) |>.trans (map_zero j).symm)
 
 

@@ -62,7 +62,7 @@ theorem hausdorffMeasure_coneSet_ball_le (h : HermNorm n) (J : Ideal (MvPolynomi
   calc _ ≤ Measure.hausdorffMeasure ((2 * d : ℕ) : ℝ) (e.symm '' (zeroSetEuc J ∩
         Metric.ball 0 (‖(e : EuclideanSpace ℂ (Fin n) →L[ℂ] EuclideanSpace ℂ (Fin n))‖ * R + 1))) :=
         measure_mono hsub
-    _ ≤ _ := e.symm.lipschitz.hausdorffMeasure_image_le (by positivity) _
+    _ ≤ _ := e.symm.lipschitzWith.hausdorffMeasure_image_le (by positivity) _
 
 theorem ConeLocalMass.proof (hDim : ConeFiniteFibreDim.Statement) (hMass : MassFinite.Statement)
     (hNull : NullSmaller.Statement) : ConeLocalMass.Statement := by

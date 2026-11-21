@@ -29,10 +29,10 @@ private theorem withBot_eq_of_add_one_eq (a : WithBot ℕ∞) (m : ℕ)
     induction a using ENat.recTopCoe with
     | top =>
       exfalso
-      simp at h
-      have e : ((m : ℕ∞) : WithBot ℕ∞) = (m : WithBot ℕ∞) := rfl
-      rw [← e] at h
-      exact ENat.top_ne_natCast m (WithBot.coe_injective h)
+      have h' : (⊤ : ℕ∞) = (m + 1 : ℕ) := by
+        apply WithBot.coe_injective
+        simpa using h
+      exact ENat.top_ne_natCast (m + 1) h'
     | coe a =>
       have h' : ((a + 1 : ℕ) : WithBot ℕ∞) = ((m + 1 : ℕ) : WithBot ℕ∞) := by
         rw [← h]; push_cast; rfl

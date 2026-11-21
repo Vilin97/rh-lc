@@ -180,7 +180,7 @@ theorem regularityEmbedding_holds.proof : regularityEmbedding_holds.Statement :=
   have hne : ∀ t ∈ mcPts P, ∀ (v : MRing ι) (a : K → ℕ), IsMultiHomog v a → v ∉ P →
       eval t (map (Int.castRingHom ℂ) v) ≠ 0 := fun t ht v a hv hvP =>
     eval_ne_zero_of_dimOne arithVarZero hP
-      (A := HermLine.ofMetrics (fun k => fsMetric (ι k)) (fun k => (a k : ℤ))) ⟨a, fun _ => rfl, hv, hvP⟩ ht
+      (A := HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (fun k => (a k : ℤ))) ⟨a, fun _ => rfl, hv, hvP⟩ ht
   let σ : R → (funField P →+* ℂ) := fun t => sigmaAt P (t : (Σ k, ι k) → ℂ) (hR t t.2) (hne t (hR t t.2))
   have hσ : ∀ (t : R) (x : funField P) (u v : MRing ι),
       (x : FractionRing (MRing ι ⧸ P)) * toFrac P v = toFrac P u →

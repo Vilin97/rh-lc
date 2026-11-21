@@ -57,16 +57,17 @@ theorem twist_retract (i : ℕ) :
         LinearMap.mem_ker.mpr (hker' _ _ (LinearMap.mem_ker.mp (Submodule.mem_inf.mp y.2).1))⟩
       map_zero' := Subtype.ext (funext fun K => Subtype.ext (gm_zero η M₀ n c i K))
       map_add' := fun a b => Subtype.ext (funext fun K => Subtype.ext (gm_add η M₀ n c i a.1 b.1 K)) }
-  refine quot_retract _ _ f g ?_ ?_ ?_
-  · intro z hz
-    exact F_bdry η M₀ n c hG hB i z.1 hz
-  · intro y hy
-    exact G_bdry η M₀ n c hG hB i y.1 (Submodule.mem_inf.mp y.2).2 hy
-  · intro z
-    apply Subtype.ext
-    funext K
-    apply Subtype.ext
-    exact gm_Fmap η M₀ n c hG hB i z.1 K
+  set_option synthInstance.maxHeartbeats 200000 in
+    refine quot_retract _ _ f g ?_ ?_ ?_
+    · intro z hz
+      exact F_bdry η M₀ n c hG hB i z.1 hz
+    · intro y hy
+      exact G_bdry η M₀ n c hG hB i y.1 (Submodule.mem_inf.mp y.2).2 hy
+    · intro z
+      apply Subtype.ext
+      funext K
+      apply Subtype.ext
+      exact gm_Fmap η M₀ n c hG hB i z.1 K
 
 end Retract
 

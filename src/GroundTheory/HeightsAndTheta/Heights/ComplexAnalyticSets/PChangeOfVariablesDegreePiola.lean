@@ -132,7 +132,7 @@ theorem sum_fderiv_cofactorFn_eq_zero (H : (Fin n → ℝ) → Fin n → ℝ) (h
     ∑ j, fderiv ℝ (cofactorFn H i j) x (Pi.single j 1) = 0 := by
   set D2 := fderiv ℝ (fderiv ℝ H) x with hD2
   have hsym : ∀ v w, D2 v w = D2 w v :=
-    (hH.contDiffAt (x := x)).isSymmSndFDerivAt (by simp; exact ENat.LEInfty.out)
+    (hH.contDiffAt (x := x)).isSymmSndFDerivAt (by simp)
   simp_rw [(hasFDerivAt_cofactorFn H hH i _ x).fderiv, ContinuousLinearMap.comp_apply,
     ContinuousMultilinearMap.linearDeriv_apply]
   rw [Finset.sum_comm]

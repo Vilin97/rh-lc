@@ -76,7 +76,9 @@ theorem BlowUpOverLocPointMax.proof (hfin : BlowUpOverLocFinite.Statement.{u})
     rw [le_antisymm (IsLocalRing.le_maximalIdeal hne) hle]
     infer_instance
   obtain ⟨hfinite, -⟩ := hfin O K ι J P n hP N u hu hu' c x hx hxP W hWmin hWrel
-  have h𝔫 : 𝔫.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap 𝔫 hcomapA
+  have : 𝔫.IsPrime := Ideal.comap_isPrime (Subring.inclusion hBR) (IsLocalRing.maximalIdeal _)
+  have h𝔫 : 𝔫.IsMaximal :=
+    Ideal.isMaximal_of_isIntegral_of_isMaximal_under 𝔫 hcomapA
   refine ⟨hBR, 𝔫, h𝔫, ?_⟩
   letI := (Subring.inclusion hBR).toAlgebra
   have := h𝔫.isPrime

@@ -21,6 +21,7 @@ variable {n d : ℕ}
 
 theorem measurable_maDens {D : ℕ} (ψ : Fin D → (Fin D → ℂ) → ℝ) :
     Measurable (ReciprocityTheory.AnForm.maDens ψ) := by
+  set_option synthInstance.maxHeartbeats 200000 in
   set M : ((Fin D → ℂ) →L[ℝ] (Fin D → ℂ) →L[ℝ] ℝ) → Matrix (Fin D) (Fin D) ℂ := fun H i j =>
     ((H (Pi.single i 1) (Pi.single j 1) +
         H (Complex.I • Pi.single i 1) (Complex.I • Pi.single j 1) : ℝ) +
@@ -174,7 +175,7 @@ theorem measurable_sheetSum {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (
         rw [← hsx, hAx]
     · have hfy : f k y = 0 := by
         rw [hf]
-        refine Set.indicator_of_notMem (fun hmem => hy ⟨hmem.1, ?_⟩) _
+        refine Set.indicator_of_notMem (fun (hmem : y ∈ U (e k) ∩ σ' k ⁻¹' E k) => hy ⟨hmem.1, ?_⟩) _
         have hσ'y : σ' k y = σ (e k) y := by simp [hσ', Set.piecewise_eq_of_mem _ _ _ hmem.1]
         have := hmem.2
         simp only [Set.mem_preimage, hσ'y] at this

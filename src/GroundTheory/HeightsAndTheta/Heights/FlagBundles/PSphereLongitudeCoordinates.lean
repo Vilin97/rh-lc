@@ -329,6 +329,7 @@ theorem SphereLongitudeCoordinates.proof : SphereLongitudeCoordinates.Statement 
     ring
   unfold SphereLongitudeCoordinates.Statement sphereMeasure
   rw [Measure.map_smul, hM, huniv]
+  exact measurable_subtype_coe.aemeasurable
 
 end
 

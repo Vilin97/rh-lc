@@ -213,7 +213,7 @@ theorem CurveVertPointNagata.proof (hCh : CurveVertPointChart.Statement) : Curve
       by_contra hf
       obtain ⟨D, hD⟩ := Inter.LocRingPow.exists_component_not_mem hf
       have h1 := congrArg (fun q => AddMonoidAlgebra.coeff q (Finsupp.equivFunOnFinite.symm D)) h0
-      simp only [MvPolynomial.coeff_zero] at h1
+      simp only [MvPolynomial.coeff_zero, Finsupp.zero_apply] at h1
       rw [hψcoeff, Finsupp.coe_equivFunOnFinite_symm] at h1
       have h2 := congrArg φ h1
       rw [hφev _ _ (isMultiHomog_comp D f), map_zero, div_eq_zero_iff] at h2
@@ -221,7 +221,7 @@ theorem CurveVertPointNagata.proof (hCh : CurveVertPointChart.Statement) : Curve
         (h2.resolve_right (hycp D)))
     · intro hf
       ext n
-      rw [hψcoeff, MvPolynomial.coeff_zero]
+      rw [hψcoeff, MvPolynomial.coeff_zero, Finsupp.zero_apply]
       apply hφ
       rw [hφev _ _ (isMultiHomog_comp _ f),
         hformP _ _ (isMultiHomog_comp _ f) (Inter.LocRingPow.component_mem hPh hf _), zero_div, map_zero]

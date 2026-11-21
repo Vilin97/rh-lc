@@ -212,7 +212,7 @@ theorem isOpen_coe_of_forall (hC : ∀ i (M : Matrix m m (R i)), M ∈ C i ↔ �
   rw [coe_eq_setOf m hC i]
   simp only [Set.ofPred_forall]
   exact isOpen_iInter_of_finite fun a => isOpen_iInter_of_finite fun b =>
-    (hB i).preimage ((continuous_apply b).comp (continuous_apply a))
+    (hB i).preimage (continuous_apply_apply a b)
 
 def matrixUnitsEquiv (hC : ∀ i (M : Matrix m m (R i)), M ∈ C i ↔ ∀ a b, M a b ∈ B i)
     (hB : ∀ i, IsOpen (B i : Set (R i))) :

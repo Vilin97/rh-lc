@@ -38,15 +38,9 @@ theorem flagClosurePt_eq_aeval (y : (Σ k, ι k) → Ω) (w e : Module.Basis (Fi
     (p : Σ o, bundleIdx (bundleIdx ι M) M' o) :
     flagClosurePt y w e φ φ' t k p = aeval t (genPoly y w e φ φ' k p) := by
   rcases p with ⟨_ | _ | kk, i⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [genPoly, flagClosurePt, pairProjCoord, flagCoord, map_sum, map_mul, aeval_C]
-    refine Finset.sum_congr rfl fun j _ => ?_
-    split_ifs <;> simp [map_sum, aeval_X]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [genPoly, flagClosurePt, pairProjCoord, projCoord, flagCoord, map_sum, map_mul, aeval_C]
-    refine Finset.sum_congr rfl fun j _ => ?_
-    split_ifs <;> simp [map_sum, aeval_X]
-  · simp [genPoly, flagClosurePt, pairProjCoord, projCoord]
+  all_goals
+    simp only [genPoly, flagClosurePt, pairProjCoord, projCoord, flagCoord, map_sum, map_mul, aeval_C]
+    try (refine Finset.sum_congr rfl fun j _ => ?_; split_ifs <;> simp [map_sum, aeval_X])
 
 theorem aeval_flagProjPt_eq_zero {K' : Type} (j : K' ↪ Option (Option K)) (y : (Σ k, ι k) → Ω)
     (w e : Module.Basis (Fin N) Ω E) (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E)
@@ -242,7 +236,8 @@ theorem chart_data (y : (Σ k, ι k) → Ω) (B₁ : ChartBundle O (segreVec y) 
       ← FlagBundleSectionForms.chartPow_natCast, ← FlagBundleSectionForms.chartPow_natCast]
     simp only [← FlagBundleSectionForms.chartPow_add hY]
     congr 1
-    push_cast
+    funext j
+    simp only [δ, γ₁, ρ, Pi.add_apply, Nat.cast_add]
     omega
   have hψv : ∀ l, ∑ i, algebraMap Ω Φ (w.repr v₁ i) * algebraMap Ω Φ (ψ l (w i)) =
       algebraMap Ω Φ (ψ l v₁) := by

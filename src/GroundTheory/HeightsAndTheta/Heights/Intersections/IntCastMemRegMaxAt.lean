@@ -85,7 +85,8 @@ theorem regMaxAt_isMaximal (hO : RegularityOrder.Statement) (hL : LocRingLocal.S
   have hn : n ∈ (regMaxAt P W hW hPW hloc).comap (algebraMap ℤ (regRing P)) := by
     rw [Ideal.mem_comap, algebraMap_int_eq, eq_intCast]
     exact intCast_mem_regMaxAt hL hP.2.1.1 hW hPW hloc hnW
-  exact Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ) _
+  exact Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap ℤ (regRing P))
+    Algebra.IsIntegral.isIntegral _
     (_root_.IsPrime.to_maximal_ideal fun h => hn0 (by rw [h] at hn; exact hn))
 
 theorem RegularityMaximalSpectrum.proof (hO : RegularityOrder.Statement)

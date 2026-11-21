@@ -285,7 +285,7 @@ theorem component_mem_projIdeal (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin
     (weightedHomogeneousComponent_isWeightedHomogeneous _ _)]
   rw [projIdeal, RingHom.mem_ker, coe_eval₂Hom] at hq
   have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm d)) hq
-  rw [← q.support_sum_monomial_coeff, eval₂_sum, coeff_sum, coeff_zero] at hc
+  rw [← q.support_sum_monomial_coeff, eval₂_sum, coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at hc
   rw [weightedHomogeneousComponent_apply, eval₂_sum, Finset.sum_filter]
   refine (Finset.sum_congr rfl fun m _ => ?_).trans hc
   rw [ProjIdealFormValue.eval₂_monomial_cone, coeff_C_mul, coeff_monomial, mul_ite, mul_one, mul_zero]

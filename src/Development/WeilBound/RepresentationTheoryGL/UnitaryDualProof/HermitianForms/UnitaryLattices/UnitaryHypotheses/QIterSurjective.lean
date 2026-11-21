@@ -100,7 +100,8 @@ theorem ker_qIter (ψ : AddChar k Circle) {n : ℕ} :
         show K.mkQ _ ∈ T
         rw [hdec, map_add (f := K.mkQ), Submodule.mkQ_apply,
           (Submodule.Quotient.mk_eq_zero _).2 hz, zero_add, map_smul]
-        refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, Submodule.Quotient.mk v, ?_⟩)
+        refine Submodule.smul_mem T _ ?_
+        refine Submodule.subset_span ⟨a, K.mkQ v, ?_⟩
         rw [Submodule.mkQ_apply, Submodule.Quotient.mk_sub, Submodule.Quotient.mk_smul]
         rfl
     have ih := ker_qIter ψ j (MRep.phiM k ψ τ)

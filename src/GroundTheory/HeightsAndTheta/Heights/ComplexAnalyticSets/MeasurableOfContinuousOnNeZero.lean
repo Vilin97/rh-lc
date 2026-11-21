@@ -36,7 +36,7 @@ theorem le_ringKrullDim_slice {n e : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)}
   have hht := Ideal.map_height_le_one_of_mem_minimalPrimes hp
   have hpm : (p.map (Ideal.Quotient.mk J)).IsPrime :=
     Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective (by rwa [Ideal.mk_ker])
-  have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient ℂ
+  have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient (k := ℂ)
     (p.map (Ideal.Quotient.mk J))
   rw [hJ.dim, ringKrullDim_eq_of_ringEquiv (DoubleQuot.quotQuotEquivQuotOfLE hJp)] at hform
   have hle : ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ p) ≤

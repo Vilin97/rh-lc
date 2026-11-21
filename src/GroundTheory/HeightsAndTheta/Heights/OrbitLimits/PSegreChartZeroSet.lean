@@ -32,10 +32,11 @@ theorem scaleAll_mem (P : Ideal (MRing ι)) (hP : IsMultiHomogIdeal P) (c : K �
     | insert k s hk ih =>
       have h := scaleBlock_mem_zeroLocus P hP k (hc k) ih
       convert h using 1
-      by_cases hpk : p.1 = k
-      · subst hpk
-        simp [hk]
-      · simp [hpk]
+      funext ⟨j, a⟩
+      by_cases hpk : j = k
+      · subst j
+        simp [scaleBlock, hk]
+      · simp [scaleBlock, hpk]
   simpa using key Finset.univ
 
 def liftPoly {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (f : MRing ι) :

@@ -173,8 +173,10 @@ theorem SegreCoordGoodProj.proof : SegreCoordGoodProj.Statement := by
     have h1 : aeval u c0 = 0 := by
       have := congrArg (evQ P _ hzc) hp
       rw [Polynomial.hom_eval₂, SegreCoordGoodProj.evQ_segQ, SegreCoordGoodProj.segre_scaleBlock, hzi,
-        mul_zero, Polynomial.eval₂_at_zero, map_zero, RingHom.comp_apply] at this
-      rw [← this, AlgHom.coe_toRingHom, SegreCoordGoodProj.evQ_aeval]
+        mul_zero, Polynomial.eval₂_at_zero, RingHom.comp_apply] at this
+      rw [map_zero (evQ P _ hzc)] at this
+      change evQ P _ hzc (aeval (forms (segQ P) L) c0) = 0 at this
+      rw [← this, SegreCoordGoodProj.evQ_aeval]
       refine congrArg (fun v => aeval v c0) (funext fun j => ?_)
       rw [SegreCoordGoodProj.evQ_forms]
       simp only [SegreCoordGoodProj.segre_scaleBlock, hudef, hVdef, Finset.mul_sum]

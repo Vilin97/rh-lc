@@ -30,9 +30,8 @@ theorem algebraicIndependent_gen (m : ℕ) :
 theorem evalForm_ne_zero {m : ℕ} {φ : Fin m → K} (hφ : φ ≠ 0) : evalForm m φ ≠ 0 := by
   intro h0
   apply hφ
-  funext j
-  exact Fintype.linearIndependent_iff.mp (algebraicIndependent_gen m).linearIndependent φ
-    (by rw [← Fintype.linearCombination_apply]; exact h0) j
+  apply (algebraicIndependent_gen m).linearIndependent.fintypeLinearCombination_injective
+  simpa only [evalForm, map_zero] using h0
 
 theorem mem_of_gen_mem {m : ℕ} (E : IntermediateField K (ProjField K m))
     (h : ∀ j, algebraMap (MvPolynomial (Fin m) K) (ProjField K m) (X j) ∈ E) (z : ProjField K m) :
@@ -43,7 +42,7 @@ theorem mem_of_gen_mem {m : ℕ} (E : IntermediateField K (ProjField K m))
     | C c =>
       rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
       exact E.algebraMap_mem c
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p j hp => rw [map_mul]; exact mul_mem hp (h j)
   obtain ⟨p, q, -, rfl⟩ := IsFractionRing.div_surjective (A := MvPolynomial (Fin m) K) z
   exact div_mem (hp p) (hp q)
@@ -170,8 +169,9 @@ theorem DualArithVar.proof (h : CoordConeArithVar.Statement) : DualArithVar.Stat
     | add x y _ _ hx hy => rw [add_div]; exact hx.add hy
     | smul c x _ hx =>
       rw [Algebra.smul_def, mul_div_assoc]
-      exact ((Algebra.IsIntegral.isIntegral (R := ℚ) c).map
-        (IsScalarTower.toAlgHom ℚ K (ProjField K (n + 1)))).tower_top.mul hx
+      set_option synthInstance.maxHeartbeats 200000 in
+        exact ((Algebra.IsIntegral.isIntegral (R := ℚ) c).map
+          (IsScalarTower.toAlgHom ℚ K (ProjField K (n + 1)))).tower_top.mul hx
   refine h Unit (dualBlocks T) (ProjField K (n + 1)) (dualLatticeCoord b) (fun _ => u 0) n s ⟨()⟩
     (fun _ => by rw [hy]; exact hw0) hs (fun l => IntermediateField.subset_adjoin _ _ ⟨⟨(), u l.succ⟩, ?_⟩) ?_
   · show dualLatticeCoord b ⟨(), u l.succ⟩ / dualLatticeCoord b ⟨(), u 0⟩ = w l.succ / w 0

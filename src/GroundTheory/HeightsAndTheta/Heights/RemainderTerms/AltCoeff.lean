@@ -32,7 +32,7 @@ theorem ex_comp_symm (v : Fin m → ℕ) (σ : Perm (Fin m)) :
     Finsupp.mapDomain σ (ex v) = ex (v ∘ σ.symm) := by
   ext i
   conv_lhs => rw [← σ.apply_symm_apply i]
-  rw [Finsupp.mapDomain_apply σ.injective]
+  rw [Finsupp.mapDomain_apply_of_injective σ.injective]
   simp
 
 theorem cf_rename (v : Fin m → ℕ) (σ : Perm (Fin m)) (P : MvPolynomial (Fin m) ℚ) :
@@ -223,7 +223,7 @@ theorem exists_perm_strictAnti {u : Fin m → ℕ} (hu : Function.Injective u) :
 theorem IsAlt.eq_zero_of_cf {P : MvPolynomial (Fin m) ℚ} (hP : IsAlt P)
     (h : ∀ l : Fin m → ℕ, StrictAnti l → cf l P = 0) : P = 0 := by
   ext d
-  rw [coeff_zero]
+  simp only [AddMonoidAlgebra.coeff_zero, Pi.zero_apply]
   have hd : AddMonoidAlgebra.coeff P d = cf (⇑d) P := by unfold cf; simp
   rw [hd]
   by_cases hinj : Function.Injective (⇑d)

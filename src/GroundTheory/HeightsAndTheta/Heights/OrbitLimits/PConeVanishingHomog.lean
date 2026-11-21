@@ -33,8 +33,10 @@ theorem ConeVanishingHomog.proof : ConeVanishingHomog.Statement := by
     rw [GoodChartZeroSet.eval_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous i f)]
     rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X, mul_comm]
   have hinf : Set.Infinite {x | p.IsRoot x} := by
-    refine Set.Infinite.mono (fun x hx => hroot x hx) ?_
-    exact (Set.finite_singleton (0 : ℂ)).infinite_compl
+    refine Set.Infinite.mono (s := ({0} : Set ℂ)ᶜ) ?_
+      (Set.finite_singleton (0 : ℂ)).infinite_compl
+    intro x hx
+    exact hroot x (by simpa using hx)
   have hp0 : p = 0 := Polynomial.eq_zero_of_infinite_isRoot p hinf
   by_cases hd : d ≤ f.totalDegree
   · have hcoeff := congrArg (fun q : Polynomial ℂ => q.coeff d) hp0

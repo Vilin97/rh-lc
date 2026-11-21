@@ -89,7 +89,7 @@ theorem recS_isTwistedDual_of_isTwistedDual {w : HeightOneSpectrum (𝓞 D.host.
 
 theorem base_of {w : HeightOneSpectrum (𝓞 D.host.E)} {hw : w ∈ placesOver D.host.E (D.nd.l i)}
     {Cx : TruncatedSeriesCountingIdentities.CoefExt D i w hw} {hG : Good (D.nbr i w hw).Kw 1 Cx.LL} {Wd : NWord (RecS.nLet i w hw)}
-    (h : RecS.WordBase L HW i r ρ π w hw Cx hG Wd) : Formalism.MainNotions.N.WordBase L HW i r ρ π w hw Cx hG (toDat Wd) where
+    (h : RecS.WordBase L HW i r ρ π w hw Cx hG Wd) : Formalism.MainNotions.N.WordBase L HW i r ρ π w hw Cx hG (toDat Wd) := {
   unram := h.unram
   deg := h.deg
   split := h.split
@@ -101,7 +101,7 @@ theorem base_of {w : HeightOneSpectrum (𝓞 D.host.E)} {hw : w ∈ placesOver D
   w_le := h.num.w_le
   S_le := h.num.S_le
   η_le := h.num.η_le
-  m_eq := h.num.m_eq
+  m_eq := h.num.m_eq }
 
 theorem frozenB_of (C₂ : ℝ) (h : RecS.JointB L HW C₂) (h1 : InertUnr D (D.nd.l i)) (h2 : Rec.IsRowB L (D.nd.l i))
     (hP : RecS.PtIn i r ρ π) : LocalRepresentationBoundCondition L HW C₂ i r ρ π := by

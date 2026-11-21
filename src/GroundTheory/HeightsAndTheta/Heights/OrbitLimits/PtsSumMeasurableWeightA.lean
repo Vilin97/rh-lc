@@ -50,7 +50,7 @@ theorem PtsSumMeasurableWeight.aestronglyMeasurable_fibreSum_of_lifts
     intro m
     have : S m = B m ∩ ⋂ m' ∈ Finset.range m, (B m' ∩ {y | σ m' y = σ m y})ᶜ := by
       ext y
-      simp [hSdef]
+      simp [hSdef, imp_iff_not_or]
     rw [this]
     exact (hBo m).measurableSet.inter (Finset.measurableSet_biInter _ fun m' _ =>
       ((hBo m').measurableSet.inter (measurableSet_eq_fun (hσm m') (hσm m))).compl)

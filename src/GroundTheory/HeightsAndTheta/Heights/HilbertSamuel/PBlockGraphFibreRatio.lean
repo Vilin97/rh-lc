@@ -73,7 +73,10 @@ theorem graphMap_rename_inlV (P : Ideal (MRing ι)) (g : (Σ k, ι₂ k) → MRi
     graphMap P g (rename (inlV (ι₂ := ι₂)) f) = C (Ideal.Quotient.mk P f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [graphMap]
-  | add f f' hf hf' => rw [map_add (f := _), map_add (f := _), hf, hf', map_add (f := _), map_add (f := _)]
+  | add f f' hf hf' =>
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add (f := _), map_add (f := _), hf, hf', map_add (Ideal.Quotient.mk P),
+        map_add (C : (MRing ι ⧸ P) →+* MvPolynomial K₂ (MRing ι ⧸ P))]
   | mul_X f p hf =>
     rw [map_mul, map_mul, hf, rename_X, map_mul, map_mul]
     congr 1
@@ -183,7 +186,7 @@ theorem BlockGraphFibreRatio.proof : BlockGraphFibreRatio.Statement := by
     intro h0
     rw [hker, graphMap_nForm hI] at h0
     have h1 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single () 1)) h0
-    rw [coeff_C_mul, coeff_X, if_pos rfl, mul_one, coeff_zero, Ideal.Quotient.eq_zero_iff_mem] at h1
+    rw [coeff_C_mul, coeff_X, if_pos rfl, mul_one, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, Ideal.Quotient.eq_zero_iff_mem] at h1
     exact hl h1
   have hcross : ∀ a, aeval G.x' (nForm k₀ N a) * z ⟨k₀, l⟩ = z ⟨k₀, a⟩ * aeval G.x' (nForm k₀ N l) := by
     intro a
