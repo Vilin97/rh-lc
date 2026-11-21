@@ -199,7 +199,8 @@ theorem card_le_rank (G : Top.Given) {r : ℕ} {U : ∀ σ : c.F →+* ℂ, Unf 
     refine (Fintype.linearIndependent_iff.1 hli) a (hinj v _ fun i => ?_)
     have h1 : ∑ j, a j • g j i = 0 := by
       have := congrArg (fun w => ((w i : GlobalTheory.AllWt.cuspOn U Z (GlobalTheory.AllWt.wtOf Dw v 0)) : Rul Xo c)) ha
-      simpa [Gm] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Gm] using this
     have h2 : (∑ j, a j • f' j) * f i = ∑ j, a j • (f' j * f i) := by
       rw [Finset.sum_mul]
       exact Finset.sum_congr rfl fun j _ => smul_mul_assoc _ _ _

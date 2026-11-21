@@ -74,13 +74,6 @@ end GlobalTheory.CompanionTheory.Rodier.OpenCoinv
 
 namespace GlobalTheory.CompanionTheory.Rodier.OpenCoinv
 
-set_option pp.explicit true in
-#check @GlobalTheory.T.open_cell_jacquet_integral_volume
-set_option pp.explicit true in
-#check @GlobalTheory.T.open_cell_levi_unipotent_conjugation
-set_option pp.explicit true in
-#check @LeviPart.whit_eq
-
 set_option maxHeartbeats 2000000 in
 theorem openFns_whittaker : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ψ : AddChar k Circle), Continuous ψ → ∀ (h N : ℕ) (d : Fin h → ℕ) (hd : ∑ a, d a = N) {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Levi k fun a => Fin (d a)) W), IsSmooth ρ → ∃ J : openFns d hd ρ →ₗ[ℂ] W, Function.Surjective J ∧ ∀ f : openFns d hd ρ, J f ∈ twKer ρ (unipM k d) (whitM d ψ) ↔ (f : IndSp (stdBlocks d hd) ρ) ∈ twKer (parInd (stdBlocks d hd) ρ) (unipB k (Fin N)) (whitChar ψ N) := by
   intro k _ _ _ _ ψ hψ h N d hd W _ _ ρ hρ
@@ -214,8 +207,9 @@ theorem openFns_whittaker : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
       obtain ⟨g, rfl⟩ := surj v
       obtain ⟨a, ha, hm⟩ := hl2 m
       have hab := hLB ha
-      have hθ : whitChar ψ N ⟨a, hab⟩ = whitM d ψ m :=
-        LeviPart.whit_eq (m := m.val) ψ hab m.property hm
+      obtain ⟨m', hm', hθ⟩ := hl1 a ha hab
+      have hmm : m = m' := Subtype.ext (leviEmb_inj d hd (hm.symm.trans hm'))
+      rw [← hmm] at hθ
       let g1 : openFns d hd ρ := ⟨parInd (stdBlocks d hd) ρ a g.1, translate_mem d hd ρ hab g.2⟩
       refine ⟨g1 - ((whitChar ψ N ⟨a, hab⟩ : ℂˣ) : ℂ) • g, Submodule.subset_span ⟨⟨a, hab⟩, g.1, rfl⟩, ?_⟩
       rw [map_sub, map_smul, hL a ha m hm g g1 rfl, hθ]

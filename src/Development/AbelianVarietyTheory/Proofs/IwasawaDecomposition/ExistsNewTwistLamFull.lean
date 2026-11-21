@@ -109,17 +109,10 @@ variable {x : St P} {N₁ : TwNew (Dof x)}
 abbrev kwP (p : PreTie (ysOf Bs) (Up.datTw x N₁).geo.v₀ Bs.exp hF Pq) : TwNew (DN x N₁) :=
   keepTw (DN x N₁) p.Dat (PreTie.th (D := DN x N₁) p) p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth
 
-theorem kwP_toD7 (p : PreTie (ysOf Bs) (Up.datTw x N₁).geo.v₀ Bs.exp hF Pq) :
-    (kwP p).toD7 = DN x (SerCopy.nP p) := by
-  calc
-    (kwP p).toD7 = (SerCopy.nP p).toD7 := by rfl
-    _ = DN x (SerCopy.nP p) := (Up.dof_oTw x (SerCopy.nP p)).symm
-
 def bsP (p : PreTie (ysOf Bs) (Up.datTw x N₁).geo.v₀ Bs.exp hF Pq) :
-    SideB (DN x (SerCopy.nP p)) (kwP_toD7 p ▸ (kwP p).cf cf)
-      (kwP_toD7 p ▸ (kwP p).row Rw)
-      (lowAll (DN x (SerCopy.nP p))) Pq (SerCopy.sP p) hf eig θ := by
-  with_unfolding_all
+    SideB (kwP p).toD7 ((kwP p).cf cf) ((kwP p).row Rw)
+      (lowAll (DN x (SerCopy.nP p))) Pq
+      ((kwP p).rat (ratDatR (Up.datTw x N₁).R (Up.datTw x N₁).cG kKs hk)) hf eig θ := by
     exact keepSideB (DN x N₁) p.Dat (PreTie.th (D := DN x N₁) p) p.lev p.thPsi
       p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth p.hU cf Rw _ Pq _ hf eig θ Bs
 

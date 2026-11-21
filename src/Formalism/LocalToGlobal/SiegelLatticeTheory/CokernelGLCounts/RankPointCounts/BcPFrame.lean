@@ -73,7 +73,7 @@ theorem baseChangeAt_frame (p : PlF D) (j : Fin (nV D)) : baseChange₂ D p ((VS
 set_option maxHeartbeats 1000000 in
 theorem exists_isLattice_eq_localLattice (Zd : LocDat D) (p : PlF D) (M : Submodule (Zd.M p).L.O (Vp D p)) (hfg : M.FG)
     (hsp : Submodule.span (D.s.atP p).Ep (M : Set (Vp D p)) = ⊤) :
-    ∃ Λ' : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsLattice D.host.E Λ' ∧ M = lattice₂ D Zd.M p Λ' := by
+    ∃ Λ' : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsFullLattice D.host.E Λ' ∧ M = lattice₂ D Zd.M p Λ' := by
   let u : 𝓞 D.host.F → (D.s.atP p).Ep := fun d => algebraMap (D.s.atP p).Fp (D.s.atP p).Ep ((D.s.atP p).ιF (d : D.host.F))
   have u_mem : ∀ d, u d ∈ (D.s.atP p).O := fun d => by
     show algebraMap (D.s.atP p).Fp (D.s.atP p).Ep ((D.s.atP p).ιF (d : D.host.F)) ∈ (D.s.atP p).O
@@ -150,10 +150,22 @@ theorem exists_isLattice_eq_localLattice (Zd : LocDat D) (p : PlF D) (M : Submod
   have hbcf : ∀ i, baseChange₂ D p (algebraMap D.host.F D.host.E (c : D.host.F) • (VS D).frame i) = u c • (Pi.single i 1 : Vp D p) := by
     intro i
     rw [baseChange_smul₂, baseChangeAt_frame, iE_alg]
-  have hlat : Submodule.IsLattice D.host.E Λ' := by
-    refine ⟨by rw [hΛ']; exact Submodule.fg_span hGfin, ?_⟩
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  have hlat : Submodule.IsFullLattice D.host.E Λ' := by
+    have hfg' : Λ'.FG := hΛ'.symm ▸ Submodule.fg_span hGfin
+    letI := Submodule.IsLattice.of_fg D.host.E hfg'
+    refine ⟨?_⟩
+    have hcE : algebraMap D.host.F D.host.E (c : D.host.F) ≠ 0 := by
+      apply (algebraMap D.host.F D.host.E).injective.ne
+      exact_mod_cast hc0
+    apply top_unique
+    rw [← (VS D).frame.span_eq, Submodule.span_le]
+    rintro _ ⟨i, rfl⟩
+    have hi : algebraMap D.host.F D.host.E (c : D.host.F) • (VS D).frame i ∈ Λ' := by
+      rw [hΛ']
+      exact Submodule.subset_span (hGc i)
+    have hinv := (Submodule.span D.host.E (Λ' : Set (VS D).V)).smul_mem
+      (algebraMap D.host.F D.host.E (c : D.host.F))⁻¹ (Submodule.subset_span hi)
+    simpa only [smul_smul, inv_mul_cancel₀ hcE, one_smul] using hinv
   refine ⟨Λ', hlat, le_antisymm ?_ ?_⟩
   · rw [← hs, Submodule.span_le]
     intro m hm

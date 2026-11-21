@@ -162,7 +162,7 @@ theorem tensorInf_mem (h : ∀ w, fa w ∈ CcArch σ J w) : tensorInf σ J fa �
   by_contra hne
   exact hg fun w _ => subset_tsupport _ (Finset.prod_ne_zero_iff.1 hne w (Finset.mem_univ w))
 
-variable [Submodule.IsLattice E L]
+variable [Submodule.IsFullLattice E L]
 
 theorem unitLoc_mem (v : HeightOneSpectrum (𝓞 F)) : unitLoc σ J L v ∈ CcLoc σ J v :=
   indicator_mem_SB (isOpen_stabLoc σ J L v) (isCompact_stabLoc σ J L v)
@@ -265,7 +265,7 @@ theorem IsUnif.valuation_eq {v : HeightOneSpectrum (𝓞 F)} {ϖ : (Fv F v)ˣ} (
 
 namespace SplitAt
 
-omit [Submodule.IsLattice E L]
+omit [Submodule.IsFullLattice E L]
 
 variable {v : HeightOneSpectrum (𝓞 F)} (s : SplitAt σ J L v)
 
@@ -341,7 +341,7 @@ theorem cosetFn_mem (t : Fin n → (Fv F v)ˣ) : s.cosetFn t ∈ CcLoc σ J v :=
 variable {W : Type} [AddCommGroup W] [Module ℂ W] (μ : Measure (GLoc σ J v))
   (τ : Representation ℂ (GL (Fin n) (ResF v)) W)
 
-theorem idem_mem [Submodule.IsLattice E L] : s.idem μ τ ∈ CcLoc σ J v := by
+theorem idem_mem [Submodule.IsFullLattice E L] : s.idem μ τ ∈ CcLoc σ J v := by
   refine typeIdem_mem_SB μ _ τ (isOpen_stabLoc σ J L v) (isCompact_stabLoc σ J L v) ?_
   rw [show (s.red.ker : Set (stabLoc σ J L v)) = (↑) ⁻¹' (stabLocOne σ J s.emb L : Set (GLoc σ J v)) from
     Set.ext s.red_eq_one_iff]
@@ -419,7 +419,7 @@ def transfer {n' : ℕ} {J' : Matrix (Fin n') (Fin n') E} (j : ∀ v, GLoc σ J 
     (ff : ∀ v, GLoc σ J v → ℂ) : ∀ v, GLoc σ J' v → ℂ := fun v => ff v ∘ (j v).symm
 
 
-omit [Submodule.IsLattice E L] in
+omit [Submodule.IsFullLattice E L] in
 theorem IsFinFamily.transfer {n' : ℕ} {J' : Matrix (Fin n') (Fin n') E} {L' : Submodule (𝓞 E) (Fin n' → E)}
     (h : IsFinFamily σ J L ff) (j : ∀ v, GLoc σ J v ≃ₜ* GLoc σ J' v)
     (hj : ∀ᶠ v in cofinite, ∀ g, j v g ∈ stabLoc σ J' L' v ↔ g ∈ stabLoc σ J L v) :
@@ -429,7 +429,7 @@ theorem IsFinFamily.transfer {n' : ℕ} {J' : Matrix (Fin n') (Fin n') E} {L' : 
   by_cases hg : g ∈ stabLoc σ J L v <;> simp [Orb.transfer, hv.1, unitLoc, indicator, hv.2 g, hg]
 
 
-omit [Submodule.IsLattice E L] in
+omit [Submodule.IsFullLattice E L] in
 theorem exists_split_place_notMem (h : IsCMExt F E σ) (S : Finset (HeightOneSpectrum (𝓞 F))) :
     ∃ v ∉ S, Nonempty (E →ₐ[F] Fv F v) := by
   obtain ⟨a₀, ha₀, ha₁⟩ := exists_integer_conj_eq_neg h
@@ -561,7 +561,8 @@ variable {D : D7} (V : HSp D)
 theorem isHermND_gram : IsHermND D.sp.cm.sig V.gram :=
   ⟨fun i j => V.herm.eq (V.frame j) (V.frame i), (GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.gram_det_isUnit V).ne_zero⟩
 
-instance isLattice_frameLat : Submodule.IsLattice D.host.E (frameLat V) := SelfDual.isLattice_frameLat V
+instance isLattice_frameLat : Submodule.IsFullLattice D.host.E (frameLat V) :=
+  SelfDual.isLattice_frameLat V
 
 abbrev CcGA : Submodule ℂ (GA D V → ℂ) := CcAd D.sp.cm.sig V.gram
 

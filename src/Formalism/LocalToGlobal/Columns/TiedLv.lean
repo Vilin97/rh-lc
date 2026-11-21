@@ -304,10 +304,8 @@ section Rec
 variable {d : ColDat} (a : ColArgs d)
 
 theorem lv_Pv_eq (hH : HostHyp d) (u : d.what₂.Word) (v : d.Pr.vT u) : (atTTied a hH u).Pv v = v.1.asIdeal := by
-  first
-    | rfl
-    | exact Ideal.mk_ker
-    | (show RingHom.ker (Ideal.Quotient.mk v.1.asIdeal) = v.1.asIdeal; exact Ideal.mk_ker)
+  change RingHom.ker (Ideal.Quotient.mk v.1.asIdeal) = v.1.asIdeal
+  exact Ideal.mk_ker
 
 
 set_option maxHeartbeats 1000000 in

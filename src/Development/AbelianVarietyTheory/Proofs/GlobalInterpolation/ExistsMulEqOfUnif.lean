@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
 public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.BelowFiniteNonempty
 public import Development.AbelianVarietyTheory.PublishedTheorems.GlobalTheta.WeylDualWeylLatticesAgreeOfLowestAlcove
 public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.SubstitutionAdjoint
@@ -380,14 +381,41 @@ theorem pTerm_std : GlobalTheory.IndefiniteRowSideFullHecke.JetSumTable.JetMomen
   obtain ⟨s₀, s', hwt, -⟩ := GlobalTheory.ColPeriod.chainWeights Z.X Z.Pr Z.R Z.W u i hi
   have hloc : ∀ τ, localization₂ (pullW τ w).asIdeal d.1.Lsh = d.1.at (pullW τ w) := fun τ =>
     d.2.locP_Lsh (sepElt_of_ok hPr u) ⟨_, hP τ⟩
+  have hfullL : ∀ {n : ℕ} {SG : Finset (HeightOneSpectrum (𝓞 Z.X.E))}
+      (e : DecoSet (E := Z.X.E) (n := n) (ST := Z.Pr.vT u) (SG := SG)),
+      Submodule.IsFullLattice Z.X.E e.1.L := by
+    intro n SG e
+    have hex : ∀ P : Z.Pr.vT u, ∃ p ∈ P.1.asIdeal, p ≠ 0 := fun P =>
+      Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
+    choose g hg hg0 using hex
+    let p := ∏ P, g P
+    have hp : p ≠ 0 := Finset.prod_ne_zero_iff.mpr fun P _ => hg0 P
+    have hp' : algebraMap (𝓞 Z.X.E) Z.X.E p ≠ 0 :=
+      (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 Z.X.E) Z.X.E)).mpr hp
+    letI := e.2.L_lattice
+    refine { span_eq_top := top_unique ?_ }
+    rw [← (Formalism.L2.Ker.full_of_sd ⟨e.2.lat, e.2.uni⟩).span_eq_top]
+    refine Submodule.span_le.mpr fun x hx => ?_
+    rw [← inv_smul_smul₀ hp' x, algebraMap_smul]
+    apply Submodule.smul_mem _ _
+    apply Submodule.subset_span
+    apply e.2.smul_N_mem_L _ hx
+    intro P
+    change (∏ Q, g Q) ∈ P.1.asIdeal
+    rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ P)]
+    exact Ideal.mul_mem_right _ _ (hg P)
+  have hfullLsh : Submodule.IsFullLattice Z.X.E d.1.Lsh := by
+    letI := Formalism.L2.Ker.full_of_sd hsd
+    letI := d.2.Lsh_lattice
+    exact Submodule.IsFullLattice.of_le Z.X.E d.2.N_le_Lsh
   have hM : LatWithBasis w (fun τ => tauLat Z.X.emb τ d.1.Lsh) 1 := fun τ =>
-    ⟨(tauLatLattice _ _ _ _ Z.X.emb τ _ d.2.Lsh_lattice).fg, by
+    ⟨(tauLatLattice _ _ _ _ Z.X.emb τ _ hfullLsh).fg, by
       have h1 := isBasisAt_tauLat Z.X.emb w τ (pullW τ w) (fun _ h => h) (isBasisAt_one ((hloc τ).trans (hstd.1 ⟨_, hP τ⟩)))
       rwa [map_one] at h1⟩
   choose BE hBE hBE' using fun τ => exists_basis_ker d'.2 ⟨_, hP τ⟩ (hstd.2 ⟨_, hP τ⟩) (T_unif hZ.fields hPr u ⟨_, hP τ⟩).1
     (T_unif hZ.fields hPr u ⟨_, hP τ⟩).2
   have hMW : LatWithBasis w (fun τ => tauLat Z.X.emb τ d'.1.L) fun τ => Matrix.GeneralLinearGroup.map (Z.X.emb τ) (BE τ) := fun τ =>
-    ⟨(tauLatLattice _ _ _ _ Z.X.emb τ _ d'.2.L_lattice).fg, isBasisAt_tauLat Z.X.emb w τ (pullW τ w) (fun _ h => h) (hBE' τ)⟩
+    ⟨(tauLatLattice _ _ _ _ Z.X.emb τ _ (hfullL d')).fg, isBasisAt_tauLat Z.X.emb w τ (pullW τ w) (fun _ h => h) (hBE' τ)⟩
   have hfac : detFac s₀ s' (1 : Z.X.Tau → GL (Fin (Z.R.N i)) Z.X.K)
       (fun τ => Matrix.GeneralLinearGroup.map (Z.X.emb τ) (BE τ)) =
       (Z.Pr.T u : Z.X.K) ^ ∑ τ, (Z.W.lamTrue u (i + 1) τ).detShift := by

@@ -56,7 +56,8 @@ def oL (x : St P) (L : LocAll (lay0 (Dof x))) : P.q.Over :=
 
 abbrev DL (x : St P) (L : LocAll (lay0 (Dof x))) : D7 := (w.st (oL x L).Z).toD7
 
-theorem DL_eq (x : St P) (L : LocAll (lay0 (Dof x))) : DL x L = withLoc L := (Eq.refl (withLoc L))
+theorem DL_eq (x : St P) (L : LocAll (lay0 (Dof x))) : DL x L = withLoc L := by
+  simp only [DL, oL, Stages.toD7, assemble, nL, etaL, etaL_nonneg, withLoc, setN, setRaw]
 
 def sameL (x : St P) (L : LocAll (lay0 (Dof x))) : SameGrp (B := B) (C := w.C) x.o.Z (oL x L).Z where
   e k := (Equiv.refl ((Dof x).nd.PlG k))
@@ -87,6 +88,18 @@ theorem SL_heq (n : InRat x.r.Y x.m.z.cG) : HEq (ratL L n.S) (SL L n) := (HEq.re
 
 variable (l : LC hL x)
 
+-- Comparing the transported fields in the elaborator expands the localization data.
+open Lean Elab Tactic in
+local elab "exact_by_kernel " term:term : tactic =>
+  closeMainGoalUsing `exact_by_kernel fun target _ => do
+    let value ← elabTerm term none
+    let actual ← instantiateMVars (← Meta.inferType value)
+    let target ← instantiateMVars target
+    match Kernel.isDefEq (← getEnv) (← getLCtx) actual target with
+    | .ok true => pure value
+    | .ok false => throwError "expected{indentExpr target}\nbut the term has type{indentExpr actual}"
+    | .error error => throwError (error.toMessageData (← getOptions))
+
 set_option maxHeartbeats 8000000 in
 def ysL : NExpRealS (datL x L).R (datL x L).cG (SL L l.rat) := by
   let Y : NExpRealS (datL x L).R (datL x L).cG (ratL L l.rat.S) := {
@@ -94,13 +107,9 @@ def ysL : NExpRealS (datL x L).R (datL x L).cG (SL L l.rat) := by
     geq := by with_unfolding_all exact (l.b.YS.geq :)
     rho := by with_unfolding_all exact (l.b.YS.rho :)
     chi := by with_unfolding_all exact (l.b.YS.chi :)
-    eF := by with_unfolding_all exact (l.b.YS.eF :)
-    bsup := by
-      intro i j b h1 h2
-      with_unfolding_all exact (l.b.YS.bsup i j b h1 h2 :)
-    act := by
-      intro i j b h1 h2 g y
-      with_unfolding_all exact (l.b.YS.act i j b h1 h2 g y :) }
+    eF := by exact_by_kernel l.b.YS.eF
+    bsup := by exact_by_kernel l.b.YS.bsup
+    act := by exact_by_kernel l.b.YS.act }
   with_unfolding_all exact (Y :)
 
 def hkH : NExpRealH x.m.z.R x.m.z.cG l.rat.S l.b.YS where
@@ -123,18 +132,16 @@ def hkHL : NExpRealH (datL x L).R (datL x L).cG (SL L l.rat) (ysL L l) := by
     cHk_zero := ((hkH l).cHk_zero)
     cHk_unit := ((hkH l).cHk_unit)
     cHk_pow := ((hkH l).cHk_pow)
-    hkEq := by
-      intro i j b h1 h2 k Q y hQ hsplit hk
-      with_unfolding_all exact ((hkH l).hkEq i j b h1 h2 k Q y hQ hsplit hk :) }
+    hkEq := by exact_by_kernel (hkH l).hkEq }
   with_unfolding_all exact (H :)
 
 abbrev cfD (x : St P) (L : LocAll (lay0 (Dof x))) : CharFrame (DL x L) := TC.cf w.I w.l (oL x L).Z
 
-def chD : NChoice (DL x L) := (chL L l.c.ch)
+def chD : NChoice (DL x L) := { chL L l.c.ch with }
 
-def tpD : TupTied (DL x L) (cfD x L) (chD L l) := (tpL L l.c.tp)
+def tpD : TupTied (DL x L) (cfD x L) (chD L l) := { tpL L l.c.tp with }
 
-def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) := (X)
+def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) := { X with }
 
 theorem fitsL : (oL x L).Fits :=
   ⟨⟨x.fits.div.left, fun S N G => by

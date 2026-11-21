@@ -15,6 +15,7 @@ public import Formalism.LocalToGlobal.Columns.InputsLemmas
 public import Formalism.LocalToGlobal.Columns.CmUnramifiedOfFieldConditions
 public import Formalism.LocalToGlobal.Columns.DGamAut
 public import Formalism.LocalRingCardinality.MinkMEqMinkowskiNumber
+import Formalism.LocalToGlobal.Columns.HeckeSpCount
 
 @[expose] public section
 
@@ -437,6 +438,10 @@ section LevT
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
+private theorem rec_deco_full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
+    Submodule.IsFullLattice E d.1.N :=
+  hcnt_isFullLattice_of_unimodular d.2.lat d.2.uni
+
 namespace DecoSet
 
 abbrev lv (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Type := modP P.1 d.1.N
@@ -488,7 +493,7 @@ theorem kerAt_full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG))
       (algebraMap (𝓞 E) E p)⁻¹ hm'
     change x ∈ Submodule.span E (d.1.kerAt P : Set (Sp E n))
     simpa only [smul_smul, inv_mul_cancel₀ hpE, one_smul] using this
-  letI := d.full_lattice
+  letI := rec_deco_full_lattice d
   exact top_unique (Submodule.IsFullLattice.span_eq_top (A := E) (M := d.1.N) ▸ hle)
 
 def e1 (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Sp E n := d.2.exists_dualBasis.choose P
@@ -1124,7 +1129,7 @@ theorem rec_delAtr_lattice {n : ℕ} (lam : X.Tau → DomWeight n) {M : Submodul
 theorem stepH_good (hX : X.Ok) (u : Pr.Word) (j : ℕ) : (stepH (W := W) (Λ := Λ) hX u j).Good :=
   let h := stepOk W Λ hX u j
   have hL := rec_intDel_full (stepGSD W Λ u j) h fun d => by
-    let := DecoSet.full_lattice d
+    let := rec_deco_full_lattice d
     let := d.2.Lsh_lattice
     exact rec_delAtr_lattice (W.lamTrue u j) (Submodule.IsFullLattice.of_le X.E d.2.N_le_Lsh)
   ⟨((stepRat W Λ hX u j).posH h).frameOK _, hL.fg, hL.span_eq_top⟩
@@ -1135,7 +1140,7 @@ theorem rec_LshKer_lattice {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.
   refine {
     toIsLattice := Submodule.IsLattice.of_fg X.E (d.2.Lsh_lattice.fg.of_le hle)
     span_eq_top := top_unique ?_ }
-  rw [← d.full_lattice.span_eq_top, Submodule.span_le]
+  rw [← (rec_deco_full_lattice d).span_eq_top, Submodule.span_le]
   intro x hx
   obtain ⟨a, haP, ha⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
   apply rec_mem_span_of_smul_mem (d.1.LshKer P) ha
@@ -1204,7 +1209,9 @@ def recForms (hX : X.Ok) (hPr : Pr.Ok) (hf : X.f = R.f) (σ₀ : X.K →+* ℂ) 
   lv := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lv v
   lvAcg := fun _ _ _ => inferInstance
   lvMod := fun i v c => (inferInstance : Module (𝓞 X.E ⧸ v.1.asIdeal) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lv v))
-  lv_rank := fun i v c => finrank_modP v.1 (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).full_lattice
+  lv_rank := fun i v c => by
+    exact finrank_modP v.1
+      (rec_deco_full_lattice (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c))
   fv := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).fv v
   fv_ne := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).fv_ne v
   up := fun i v c x => clsD _ (Λ i) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).upL v (Pr.T u : 𝓞 X.E) x)
@@ -1294,7 +1301,7 @@ def ptEv (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEn
 
 theorem ptH_good (hX : X.Ok) : (ptH W ΛM hX).Good :=
   let h := ptOk W ΛM hX
-  have hL := rec_intDel_full (ptGSD W ΛM) h fun d => rec_delAtr_lattice W.sgTrue (DecoSet.full_lattice d)
+  have hL := rec_intDel_full (ptGSD W ΛM) h fun d => rec_delAtr_lattice W.sgTrue (rec_deco_full_lattice d)
   ⟨((ptRat W ΛM hX).posH h).frameOK _, hL.fg, hL.span_eq_top⟩
 
 variable {W ΛM}

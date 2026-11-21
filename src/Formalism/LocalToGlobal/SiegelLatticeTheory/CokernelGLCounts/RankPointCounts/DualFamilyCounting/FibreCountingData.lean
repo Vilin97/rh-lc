@@ -63,7 +63,7 @@ theorem unitary_discriminant_model : UDModel := by
       rw [algebraMap_smul]; exact Submodule.subset_span hsx
     exact (Submodule.smul_mem_iff _ hs0).1 hsx'
   have hFx : IsFixF K F := Fact.out
-  letI : Setoid (udPre K 𝔭 k a) := udSetoid K 𝔭 k a
+  let s := udSetoid K 𝔭 k a
   let J : JD h L 𝔭 b a := ⟨horth, hdiag, hne, hloc, hFx, h𝔭, ⟨hL.fg, hfull⟩⟩
   have := h𝔭.isPrime
   have hv : ∀ i, vF 𝔭 (a i) ≤ vJof 𝔭 a := fun i =>
@@ -83,12 +83,12 @@ theorem unitary_discriminant_model : UDModel := by
         Submodule.Quotient.mk y' = P (Submodule.Quotient.mk y) →
         h (x' : V) (y' : V) - h (x : V) (y : V) ∈ locF 𝔭 (1 : Submodule (𝓞 K) K)} :=
     fun Y => ⟨J.E (liftQ Y.1) (hA Y), J.E_isom (liftQ Y.1) (hA Y) (hW Y)⟩
-  have hresp : ∀ Y Y' : udPre K 𝔭 k a, Y ≈ Y' → f0 Y = f0 Y' := by
+  have hresp : ∀ Y Y' : udPre K 𝔭 k a, s.r Y Y' → f0 Y = f0 Y' := by
     rintro Y Y' ⟨Z, hZ⟩
     have hd := (condZ_iff hne hk1 (liftQ Y.1) (liftQ Y'.1)).mp
       ⟨Z, by simpa only [liftQ_map] using hZ⟩
     exact Subtype.ext (J.E_eq_of (liftQ Y.1) (liftQ Y'.1) (hA Y) (hA Y') hd)
-  let f : udQ K 𝔭 k a → _ := Quotient.lift (s := udSetoid K 𝔭 k a) f0 hresp
+  let f : udQ K 𝔭 k a → _ := Quotient.lift (s := s) f0 hresp
   have hinj : Function.Injective f := by
     intro q q'
     induction q using Quotient.inductionOn with | h Y => ?_

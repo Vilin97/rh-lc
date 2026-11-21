@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FrameGlobalPatching
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.LocEqOfLocFEq
 
 @[expose] public section
 
@@ -27,13 +28,6 @@ theorem card_pi_of_unique {ι : Type*} {α : ι → Type*} (T : Finset ι) (h : 
     haveI := (h i hT).some
     exact hi Nat.card_unique
 
-def LatPatch : Prop :=
-  ∀ (D : D7) (Zd : LocDat D) (Λ₀ : Submodule (𝓞 D.host.E) (VS D).V), Submodule.IsLattice D.host.E Λ₀ →
-    ∀ Mf : ∀ p : PlF D, Submodule (Zd.M p).L.O (Vp D p),
-      (∀ p, ∃ Λ' : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsLattice D.host.E Λ' ∧ Mf p = lattice₂ D Zd.M p Λ') →
-      {p | Mf p ≠ lattice₂ D Zd.M p Λ₀}.Finite →
-      ∃! Λ : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsLattice D.host.E Λ ∧ ∀ p, lattice₂ D Zd.M p Λ = Mf p
-
 variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) (u u' : D.what₂.Word) (F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u))
   (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V))
 
@@ -47,7 +41,7 @@ def LocFullC : Prop :=
     ZhatL (lf D F0) F'₂ = Z →
     (∀ p, LsDatumA.LocalCountHypotheses (locH Zd p) (tLoc Zd p γ) (tLoc Zd p γ).f (locF' Zd p F'₂) (φ p) (φ' p)) →
     ∀ p, ∀ M ∈ locSet Zd p (tLoc Zd p γ) (locF' Zd p F'₂) (φ p) (φ' p),
-      ∃ Λ' : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsLattice D.host.E Λ' ∧ M = lattice₂ D Zd.M p Λ'
+      ∃ Λ' : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsFullLattice D.host.E Λ' ∧ M = lattice₂ D Zd.M p Λ'
 
 variable {Zd u u' F0 what₂}
 
@@ -58,7 +52,7 @@ theorem patchC_of (hP : LatPatch) (hL : LocFullC Zd u u' F0 what₂) : PatchC Zd
   set S : ∀ p : PlF D, Set (Submodule (Zd.M p).L.O (Vp D p)) :=
     fun p => locSet Zd p (tLoc Zd p γ) (locF' Zd p F'₂) (φ p) (φ' p) with hS
   have hex : ∀ f : ∀ p, S p, ∃! Λ : Submodule (𝓞 D.host.E) (VS D).V,
-      Submodule.IsLattice D.host.E Λ ∧ ∀ p, lattice₂ D Zd.M p Λ = (f p).1 := fun f =>
+      Submodule.IsFullLattice D.host.E Λ ∧ ∀ p, lattice₂ D Zd.M p Λ = (f p).1 := fun f =>
     hP D Zd Λ₀ hΛ₀ (fun p => (f p).1) (fun p => hfull p _ (f p).2)
       (hfin.subset fun p hp hS' => hp (Set.mem_singleton_iff.1 ((Set.ext_iff.1 hS' (f p).1).1 (f p).2)))
   let e : GlobSet Zd γ F'₂ φ φ' ≃ ∀ p, S p :=

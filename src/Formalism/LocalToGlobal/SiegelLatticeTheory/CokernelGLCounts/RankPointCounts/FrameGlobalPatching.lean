@@ -22,7 +22,7 @@ def GlobSet (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (D.sp.Y 0) D.R.
     (φ : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (tLoc Zd p γ).f)
     (φ' : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f' ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (locF' Zd p F'₂)) :
     Set (Submodule (𝓞 D.host.E) (VS D).V) :=
-  {Λ₂ | Submodule.IsLattice D.host.E Λ₂ ∧
+  {Λ₂ | Submodule.IsFullLattice D.host.E Λ₂ ∧
     ∀ p, lattice₂ D Zd.M p Λ₂ ∈ locSet Zd p (tLoc Zd p γ) (locF' Zd p F'₂) (φ p) (φ' p)}
 
 variable (u u' F0 what₂)
@@ -36,7 +36,7 @@ def FStarC : Prop :=
     (φ' : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f' ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (locF' Zd p F'₂)),
     ZhatL (lf D F0) F'₂ = Z ∧ (∀ p, φ p = LinearEquiv.refl _ _) ∧
     (∀ p, LsDatumA.LocalCountHypotheses (locH Zd p) (tLoc Zd p γ) (tLoc Zd p γ).f (locF' Zd p F'₂) (φ p) (φ' p)) ∧
-    (∃ Λ₀ : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsLattice D.host.E Λ₀ ∧
+    (∃ Λ₀ : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsFullLattice D.host.E Λ₀ ∧
       {p | locSet Zd p (tLoc Zd p γ) (locF' Zd p F'₂) (φ p) (φ' p) ≠ {lattice₂ D Zd.M p Λ₀}}.Finite) ∧
     Nonempty (frPart γ Z ≃ GlobSet Zd γ F'₂ φ φ')
 
@@ -49,7 +49,7 @@ def PatchC : Prop :=
     (φ' : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f' ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (locF' Zd p F'₂)),
     ZhatL (lf D F0) F'₂ = Z →
     (∀ p, LsDatumA.LocalCountHypotheses (locH Zd p) (tLoc Zd p γ) (tLoc Zd p γ).f (locF' Zd p F'₂) (φ p) (φ' p)) →
-    (∃ Λ₀ : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsLattice D.host.E Λ₀ ∧
+    (∃ Λ₀ : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsFullLattice D.host.E Λ₀ ∧
       {p | locSet Zd p (tLoc Zd p γ) (locF' Zd p F'₂) (φ p) (φ' p) ≠ {lattice₂ D Zd.M p Λ₀}}.Finite) →
     Nat.card (GlobSet Zd γ F'₂ φ φ') = ∏ᶠ p, Nat.card (locSet Zd p (tLoc Zd p γ) (locF' Zd p F'₂) (φ p) (φ' p))
 

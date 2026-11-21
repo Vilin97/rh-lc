@@ -74,7 +74,7 @@ theorem mem_orthLattice_iff_image_mem_sup {x : (D.sp.X 0).V} :
     exact ⟨(mem_Lsub_iff_sup_and_orth F0 Λ).2 ⟨h, orth_embedding_mem_orth_isotropic F0 he hz x⟩, inner_z_orth_embedding_eq_zero F0 he hz x⟩
 
 include he hz in
-theorem exists_smul_mem_orthLattice (hΛ : Submodule.IsLattice D.host.E Λ) (x : (D.sp.X 0).V) :
+theorem exists_smul_mem_orthLattice (hΛ : Submodule.IsFullLattice D.host.E Λ) (x : (D.sp.X 0).V) :
     ∃ c : 𝓞 D.host.E, c ≠ 0 ∧ c • x ∈ L0X D Λ (lf D F0) := by
   obtain ⟨c, hc, hcx⟩ := a_exists_smul_mem Λ hΛ (D.sp.iXY 0 x)
   refine ⟨c, hc, (mem_orthLattice_iff_image_mem_sup F0 he hz Λ).2 ?_⟩
@@ -85,7 +85,7 @@ theorem exists_smul_mem_orthLattice (hΛ : Submodule.IsLattice D.host.E Λ) (x :
 include he hz in
 theorem orthLattice_isLattice (hΛ : Submodule.IsLattice D.host.E Λ) (hu : Formalism.HermitianLatticesTheory.IsUnimodular (hS D).hT Λ) :
     Submodule.IsLattice D.host.E (L0X D Λ (lf D F0)) := by
-  choose c hc hcM using fun i => exists_smul_mem_orthLattice F0 he hz Λ hΛ ((D.sp.X 0).frame i)
+  choose c hc hcM using fun i => exists_smul_mem_orthLattice F0 he hz Λ (a_full Λ hΛ hu) ((D.sp.X 0).frame i)
   set M₁ : Submodule (𝓞 D.host.E) (D.sp.X 0).V :=
     Submodule.span (𝓞 D.host.E) (Set.range fun i => c i • (D.sp.X 0).frame i) with hM₁def
   have hM₁ : M₁ ≤ L0X D Λ (lf D F0) := Submodule.span_le.2 (by rintro _ ⟨i, rfl⟩; exact hcM i)
@@ -159,8 +159,10 @@ theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.
     · have hn : idx a ≠ idx b := fun hh => h (hi.mp hh.symm)
       simp only [if_neg h, if_neg hn]
   have DL := Formalism.HermitianLatticesTheory.dualLattice (𝓞 D.host.E) D.host.E (hS D).V (hS D).hT (hS D).herm (hS D).nondeg i_star_int
-  have hlat : ∀ N : LatV D, N.FG → Submodule.IsLattice D.host.E (Λ ⊔ N) := fun N hN =>
-    ⟨hΛ.fg.sup hN, fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli⟩
+  have hlat : ∀ N : LatV D, N.FG → Submodule.IsFullLattice D.host.E (Λ ⊔ N) := by
+    letI := hΛ
+    intro N hN
+    exact Submodule.IsFullLattice.of_le_of_fg D.host.E le_sup_left (hΛ.fg.sup hN)
   have hΛ₂ := (DL _ (hlat (Submodule.span (𝓞 D.host.E) {y}) (Submodule.fg_span (Set.finite_singleton y)))).1
   choose c hc hcf using fun a => a_exists_smul_mem _ hΛ₂ (f a)
   set ε : 𝓞 D.host.E := ∏ a, c a with hε

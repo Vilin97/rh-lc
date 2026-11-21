@@ -51,9 +51,9 @@ theorem openCellPar (ψ : AddChar k Circle) (hψ : Continuous ψ)
   obtain ⟨v, hv⟩ := hv
   have hv0 : v ≠ 0 := fun h => hv (h ▸ Submodule.zero_mem _)
   have hJ := CellB.openJ k ψ hψ 2 (r + m) (dd r m) (hdd r m) ρ hρ
-  obtain ⟨J, vol, _, hJker, hJU, _, hJvol⟩ := hJ
+  rcases hJ with ⟨J, vol, -, hJker, hJU, -, hJvol⟩
   have hbump := exists_bump k ψ hψ 2 (r + m) (dd r m) (hdd r m) ρ hρ v
-  obtain ⟨n, _, hwhit, hcpt, hopen, f, hf, hfv, hf0⟩ := hbump
+  rcases hbump with ⟨n, -, hwhit, hcpt, hopen, f, hf, hfv, hf0⟩
   have hle : CellB.congrL k r m n ≤ unipU k (dd r m) (hdd r m) := inf_le_left
   have hwL : ∀ (u : GL (Fin (r + m)) k) (hb : u ∈ unipB k (Fin (r + m))),
       u ∈ CellB.congrL k r m n → whitChar ψ (r + m) ⟨u, hb⟩ = 1 :=

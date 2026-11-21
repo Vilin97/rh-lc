@@ -1,13 +1,3 @@
 module
 
 public import Supplements.Kernels.MainTheoremsCritical
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThreeGroups.KatoUse
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.HeightAndVanishing.SplittingFieldIsoQuadratic
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.HeightAndVanishing.KstarRam
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CharacterLevelBounds.PlacesQ
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.Places
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TopMainZj
-public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.DefiniteNHolds
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.RowSrc
-
-@[expose] public section

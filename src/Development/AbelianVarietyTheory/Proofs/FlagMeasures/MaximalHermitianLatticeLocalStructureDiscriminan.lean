@@ -117,7 +117,9 @@ omit [IsDedekindDomain R] in
 theorem mem_of_int (hσ : ∀ r, algebraMap R K (σ r) = star (algebraMap R K r)) (hs : h.IsSymm)
     (hM : IsMaxLat h M) {y : V} (hy : y ∈ dual h M) (hyy : h y y ∈ (1 : Submodule R K)) : y ∈ M := by
   have hN : IsIntLat h (M ⊔ Submodule.span R {y}) := by
-    refine ⟨Submodule.IsLattice.of_fg K (hM.1.1.fg.sup (Submodule.fg_span_singleton y)), ?_⟩
+    letI : Submodule.IsFullLattice K M := hM.1.1
+    refine ⟨Submodule.IsFullLattice.of_le_of_fg K le_sup_left
+      (hM.1.1.fg.sup (Submodule.fg_span_singleton y)), ?_⟩
     intro u hu v hv
     obtain ⟨m, hm, u', hu', rfl⟩ := Submodule.mem_sup.1 hu
     obtain ⟨n, hn, v', hv', rfl⟩ := Submodule.mem_sup.1 hv
@@ -560,8 +562,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   obtain ⟨σ, hσ⟩ := star_int (K := K)
   have hstar : ∀ r : 𝓞 K, star (algebraMap (𝓞 K) K r) ∈ Set.range (algebraMap (𝓞 K) K) :=
     fun r => ⟨σ r, hσ r⟩
-  have hfull : Submodule.IsFullLattice K M :=
-    { toIsLattice := hM.1.1, span_eq_top := max_span_eq_top hσ hs hM }
+  have hfull : Submodule.IsFullLattice K M := hM.1.1
   have hJ : M.colon (dual h M : Set V) ≠ ⊥ :=
     colon_ne_bot (K := K) (dualLattice (𝓞 K) K V h hs hnd hstar M hfull).1.fg (max_span_eq_top hσ hs hM)
   have hbad := bad_iff hσ hs hM hJ

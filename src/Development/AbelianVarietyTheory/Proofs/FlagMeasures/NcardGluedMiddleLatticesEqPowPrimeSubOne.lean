@@ -279,7 +279,7 @@ theorem glue_mem (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y) (hinj
 theorem ncard_glued [FiniteDimensional K W] (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y)
     (hn0 : h0.Nondegenerate) (hT : T ≠ 0)
     (hz : h z z = -(T : K)) (hzι : ∀ w, h z (ι w) = 0) (hB : ∀ v, v ∈ B ↔ ∃ w, ∃ c : K, v = ι w + c • z)
-    (hL : Submodule.IsLattice K L) (hI : IsIntegralLat h0 L)
+    (hL : Submodule.IsFullLattice K L) (hI : IsIntegralLat h0 L)
     (hc : GlobalTheory.Mass.CyclicGenus.Cyc (dual h0 L) L (Ideal.span {(T : 𝓞 K)})) (n : ℕ)
     (hcount : ∀ c : 𝓞 K, star (c : K) = (c : K) → IsCoprime c (T : 𝓞 K) →
       Nat.card {a : 𝓞 K ⧸ Ideal.span {(T : 𝓞 K)} // ∃ x y : 𝓞 K, Ideal.Quotient.mk _ x = a ∧
@@ -377,7 +377,7 @@ theorem ncard_glued [FiniteDimensional K W] (hs : h.IsSymm) (hι : ∀ x y, h (�
     · rintro _ ⟨a, a', rfl, e, ha⟩
       change glue ι z T L _ ∈ _
       rw [hg]
-      refine glue_mem hs hι hinj hT hz hzι hB hL hI (smul_mem_int a hx0) ?_ ((hnorm a a' e).2 ha) fun w hw => ?_
+      refine glue_mem hs hι hinj hT hz hzι hB hL.toIsLattice hI (smul_mem_int a hx0) ?_ ((hnorm a a' e).2 ha) fun w hw => ?_
       · rw [smul_comm]; exact smul_mem_int a hTx
       · obtain ⟨b, hb⟩ := hgen w hw
         obtain ⟨o, ho⟩ := Ideal.mem_span_singleton'.1 ha

@@ -419,7 +419,7 @@ theorem IsLatticeFrame.isSplitBasis (h : IsCMExt F E σ) {a : GL (Fin n) (AF F �
 
 
 variable (τ L) in
-theorem exists_isSplitBasis (h : IsCMExt F E σ) [Submodule.IsLattice E L] : ∃ β, IsSplitBasis τ L β :=
+theorem exists_isSplitBasis (h : IsCMExt F E σ) [Submodule.IsFullLattice E L] : ∃ β, IsSplitBasis τ L β :=
   (Frames.exists_isLatticeFrame (F := F) L).elim fun _ ha => ⟨_, ha.isSplitBasis τ h⟩
 
 theorem mem_GLint_iff_mulVec {x : GL (Fin n) (Fv F v)} :
@@ -636,7 +636,7 @@ theorem splitEquivIn_comp (τ : E →ₐ[F] Fv F v) (β : GL (Fin n) (Fv F v)) (
 
 include h in
 variable (J τ L) in
-theorem isOpen_stabLocOne [Submodule.IsLattice E L] : IsOpen (stabLocOne σ J τ L : Set (GLoc σ J v)) := by
+theorem isOpen_stabLocOne [Submodule.IsFullLattice E L] : IsOpen (stabLocOne σ J τ L : Set (GLoc σ J v)) := by
   obtain ⟨β, hβ⟩ := exists_isSplitBasis τ L h
   have hU : IsOpen {z : Fv F v | Valued.v z < 1} := by
     simpa using Valued.isOpen_ball (Fv F v) 1

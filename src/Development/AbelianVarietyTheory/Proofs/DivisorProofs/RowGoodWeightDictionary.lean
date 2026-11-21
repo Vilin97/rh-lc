@@ -27,17 +27,14 @@ theorem fullLat_congr {K Rg : Type} [Field K] [NumberField K] [CommRing Rg] [Alg
 
 set_option maxHeartbeats 8000000 in
 theorem goodW_core {D : D7} (T : CoreJ D) (hT : LawsJ T) (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j)
-    (hl : FullLat (T.cuspA j (wtA w) w.n) (valSet (T.Q.Xo j) T.Q.c (algCls (T.Q.Xo j) T.Q.c))
-      fun la => isVal_valSet la) :
+    (hl : Submodule.IsFullLattice T.Q.c.F (supLat (T.cuspA j (wtA w) w.n))) :
     GoodW (T.U j) (xiR D) (T.V j) (T.dict j) (wtZ (wtA w) w.n) := by
-  have hl' : FullLat (cuspW (T.Q.Xo j) T.Q.c (T.U j) (wtZ (wtA w) w.n))
-      (valSet (T.Q.Xo j) T.Q.c (algCls (T.Q.Xo j) T.Q.c)) fun la => isVal_valSet la :=
-    fullLat_congr (cuspW_wtZ _ _).symm hl
-  have hlat : Submodule.IsFullLattice T.Q.c.F (latW (T.U j) (wtZ (wtA w) w.n)) := by
-    simpa only [FullLat, latW, supLat] using hl'
+  have hlat : Submodule.IsFullLattice T.Q.c.F (AllWt.latW (T.U j) (wtZ (wtA w) w.n)) := by
+    rw [AllWt.latW, cuspW_wtZ]
+    exact hl
   have hspan := Submodule.IsFullLattice.span_eq_top (self := hlat)
   refine ⟨?_, hlat.fg, hspan⟩
-  haveI : FiniteDimensional T.Q.c.F (cuspW (T.Q.Xo j) T.Q.c (T.U j) (wtZ (wtA w) w.n)) := by
+  have : FiniteDimensional T.Q.c.F (cuspW (T.Q.Xo j) T.Q.c (T.U j) (wtZ (wtA w) w.n)) := by
     obtain ⟨s, hs⟩ := hlat.fg
     refine ⟨⟨s, ?_⟩⟩
     rw [← hspan, ← hs, Submodule.span_span_of_tower]
@@ -61,12 +58,12 @@ theorem goodW_core {D : D7} (T : CoreJ D) (hT : LawsJ T) (j : ℕ) (hj : InR D j
     · left
       intro a f
       have e' : σ a = v.embedding a := by
-        rw [hσdef]; unfold goodOf; rw [if_pos hg]
+        rw [hσdef]; unfold goodOf; rw [ite_eq_left hg]
       rw [hs, e']
     · right
       intro a f
       have e' : σ a = starRingEnd ℂ (v.embedding a) := by
-        rw [hσdef]; unfold goodOf; rw [if_neg hg]; rfl
+        rw [hσdef]; unfold goodOf; rw [ite_eq_right hg]; rfl
       rw [hs, e']
   · intro f
     have hf : (f : Rul (T.Q.Xo j) T.Q.c) ∈ cusp (T.Q.Xo j) T.Q.c (T.U j) (wtA w) w.n := (ι f).2

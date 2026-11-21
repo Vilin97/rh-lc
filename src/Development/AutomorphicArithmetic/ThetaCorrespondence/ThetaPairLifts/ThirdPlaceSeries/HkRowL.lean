@@ -36,8 +36,12 @@ theorem hecke_expansion_datL_of_levelC {x : St P} (L : LocAll (lay0 (Dof x)))
     (l : _root_.GlobalTheory.HeightCounting.Up.StrictHenselianAcyclicLevel hL x) :
     NExpHeckeRowX (datL x L).R (datL x L).cG (SL L l.rat)
       (_root_.GlobalTheory.HeightCounting.Fin3.yStructureLocal L l)
-      (_root_.GlobalTheory.HeightCounting.Fin3.localHeckeHeightData L l) fun _ => LinearMap.id :=
-  ⟨(by with_unfolding_all exact ((_root_.GlobalTheory.HeightCounting.Fin3.hecke_expansion_heightData_of_levelC l).tie :))⟩
+      (_root_.GlobalTheory.HeightCounting.Fin3.localHeckeHeightData L l) fun _ => LinearMap.id := by
+  constructor
+  intro i k Q hsplit hoff houtside htwo hk α R hα hR y hy
+  with_unfolding_all
+    exact (hecke_expansion_heightData_of_levelC l).tie
+      i k Q hsplit hoff houtside htwo hk α R hα hR y hy
 end GlobalTheory.HeightCounting.Fin3
 end
 end

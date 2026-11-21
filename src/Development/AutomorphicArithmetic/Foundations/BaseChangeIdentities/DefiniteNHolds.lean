@@ -2,7 +2,6 @@ module
 
 public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.FillPre
 public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.FrameMatching.HeckeEigenvalueFiniteness.FrameEx
-public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.NarrowSwap
 
 @[expose] public section
 

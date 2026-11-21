@@ -41,10 +41,12 @@ variable (u u' F0 what₂)
 set_option maxHeartbeats 1000000 in
 theorem bwdN_holds : BwdN Zd u u' F0 what₂ := by
   intro hC γ Z hZ F'₂ φ φ' hS Λ₂ hΛ₂
-  obtain ⟨hΛ₂lat, hloc₂⟩ := hΛ₂
+  obtain ⟨hΛ₂full, hloc₂⟩ := hΛ₂
   obtain ⟨-, hT2, hφ⟩ := hS
   have hrow := hC.2.1.1 γ.lam γ.mem
-  have hΛlat : Submodule.IsLattice D.host.E γ.lam := hrow.2.1.1
+  have hΛfull : Submodule.IsFullLattice D.host.E γ.lam := hrow.1.1
+  have hΛlat := hΛfull.toIsLattice
+  have hΛ₂lat := hΛ₂full.toIsLattice
   have ht1 := fun p => (hT2 p).1
   have hu : ∀ p a, IsUnit (TermLoc.sgnP D p a * frFac Zd.δ p a) := fun p a =>
     BwdNP.unit_of_frame Zd p γ (ht1 p).1.2.1 a
@@ -58,8 +60,8 @@ theorem bwdN_holds : BwdN Zd u u' F0 what₂ := by
     rw [hφ p] at h
     rw [← h]
     exact (Set.image_id _).symm
-  have hSD := BwdNP.sd_of_loc Zd hΛlat hSDl
-  have hSD₂ := BwdNP.sd_of_loc Zd hΛ₂lat hSDl₂
+  have hSD := BwdNP.sd_of_loc Zd hΛfull hSDl
+  have hSD₂ := BwdNP.sd_of_loc Zd hΛ₂full hSDl₂
   set X := Xsp (lf D F0) with hXdef
   have hXiso : ∀ x ∈ X, ∀ y ∈ X, (VS D).hT x y = 0 := fun x hx y hy => NMoveP.hT_X_X F0 hx hy
   have hXX : ∀ {w : (VS D).V}, w ∈ orth (VS D) (orth (VS D) X) → w ∈ X := fun {w} hw =>
@@ -81,7 +83,7 @@ theorem bwdN_holds : BwdN Zd u u' F0 what₂ := by
     rw [e]
     exact (orth (VS D) X).sub_mem hyo (hXo hX1)
   have hXm : ∀ x ∈ X, x ∈ Λ₂ ↔ x ∈ γ.lam := fun x hx =>
-    ⟨BwdNP.memX Zd γ hpr₂ hpr hΛlat hu hx, BwdNP.memX Zd γ hpr hpr₂ hΛ₂lat hu hx⟩
+    ⟨BwdNP.memX Zd γ hpr₂ hpr hΛfull hu hx, BwdNP.memX Zd γ hpr hpr₂ hΛ₂full hu hx⟩
   have hy := BwdNP.exists_y Zd γ hΛ₂lat hSD₂ hpr₂ hu bwdN_znotX
   have htr : ∃ c : D.host.E, IsIntegral ℤ c ∧ c + star c = 1 := by
     obtain ⟨c, hc⟩ := D.host.exists_trace_one
@@ -89,7 +91,7 @@ theorem bwdN_holds : BwdN Zd u u' F0 what₂ := by
     rw [Formalism.BasicNotions.Examples₂.star_eq_conj (H := D.host)]
     exact hc
   obtain ⟨n, hiso, hnX, hnz, hno, himg⟩ := BwdNA.main (VS D) X hXiso F0.z bwdN_zorth γ.lam Λ₂ hΛlat hΛ₂lat
-    hSD hSD₂ hXm (BwdNP.z_mem Zd γ hΛlat hpr) (BwdNP.z_mem Zd γ hΛ₂lat hpr₂) hL hL' hy htr
+    hSD hSD₂ hXm (BwdNP.z_mem Zd γ hΛfull hpr) (BwdNP.z_mem Zd γ hΛ₂full hpr₂) hL hL' hy htr
   refine ⟨n, ⟨hiso, fun j x hx => ?_, hno, fun a => hnX _ (Submodule.subset_span ⟨a, rfl⟩), hnz⟩, himg⟩
   have hxX : x ∈ X := Submodule.span_mono (Set.image_subset_range _ _) hx
   rw [hnX x hxX, sub_self]

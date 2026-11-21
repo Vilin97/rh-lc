@@ -203,7 +203,7 @@ theorem betaCore_of₂ (h : BetaCore₂ Zd u u' F0 what₂) : BetaCore Zd u u' F
     have hHp : Hp γ.lam (lf D F0) (mapL n hni (liftF F'₂)) =
         (Hp Λ₂ (lf D F0) (liftF F'₂)).map (n : (VS D).V →ₗ[D.host.E] (VS D).V) := by
       rw [← BwdBetaCut.Hp_mapL n hni, hF, hΛ]
-    have hw₂o := BwdBetaCut.Hp_le_orthX Λ₂ hΛ₂.1 (liftF F'₂) hL₂ hT.1.1 hw₂
+    have hw₂o := BwdBetaCut.Hp_le_orthX Λ₂ hΛ₂.1.toIsLattice (liftF F'₂) hL₂ hT.1.1 hw₂
     refine ⟨hw, ?_, ?_, ?_⟩
     · rw [hHp]; exact Submodule.mem_map_of_mem hw₂
     · have h3 := hn.2.2.1 w₂ hw₂o

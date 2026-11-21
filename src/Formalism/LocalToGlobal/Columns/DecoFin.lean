@@ -64,6 +64,49 @@ theorem hStd_pos (hE : PosStar E) (x : Sp E n) (hx : x ≠ 0) :
 
 theorem star_range (r : 𝓞 E) : star (algebraMap (𝓞 E) E r) ∈ Set.range (algebraMap (𝓞 E) E) := ⟨RingOfIntegers.mapRingHom (starRingEnd E) r, rfl⟩
 
+theorem hStd_mem_one_symm {x y : Sp E n} (h : hStd E n x y ∈ (1 : Submodule (𝓞 E) E)) :
+    hStd E n y x ∈ (1 : Submodule (𝓞 E) E) := by
+  have hs : hStd E n y x = star (hStd E n x y) := by
+    simp only [hStd, LinearMap.mk₂'ₛₗ_apply, star_sum, star_mul', star_star]
+    exact Finset.sum_congr rfl fun i _ => mul_comm _ _
+  obtain ⟨r, hr⟩ := Submodule.mem_one.mp h
+  rw [hs, ← hr]
+  exact Submodule.mem_one.mpr (star_range r)
+
+private theorem full_lattice_of_unimodular {L : Submodule (𝓞 E) (Sp E n)}
+    (hL : Submodule.IsLattice E L) (hu : IsUnimodular (hStd E n) L) :
+    Submodule.IsFullLattice E L := by
+  refine { toIsLattice := hL, span_eq_top := ?_ }
+  let W := Submodule.span E (L : Set (Sp E n))
+  change W = ⊤
+  by_contra h
+  let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+  let g : Sp E n →ₗ[E] Module.Dual E W :=
+    (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+  have hdim : finrank E (Module.Dual E W) < finrank E (Sp E n) := by
+    rw [Subspace.dual_finrank_eq]
+    exact Submodule.finrank_lt h
+  obtain ⟨x, hx, hx₀⟩ :=
+    Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+  have hsmul (a : E) : a • e x ∈ L := by
+    rw [← hu, mem_dual]
+    intro y hy
+    apply hStd_mem_one_symm
+    have hxy : hStd E n (e x) y = 0 :=
+      congrArg (fun k : Module.Dual E W => k ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+    simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+  let i : E →ₗ[𝓞 E] L :=
+    ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict L hsmul
+  let : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.mpr hL.fg
+  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+    smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+  exact RingOfIntegers.not_isField E
+    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+
+theorem DecoSet.full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
+    Submodule.IsFullLattice E d.1.N :=
+  full_lattice_of_unimodular d.2.lat d.2.uni
+
 theorem unimod_finite (hE : PosStar E) (n : ℕ) :
     ∃ s : Finset (Submodule (𝓞 E) (Sp E n)),
       (∀ N ∈ s, Submodule.IsLattice E N ∧ IsUnimodular (hStd E n) N) ∧
@@ -85,7 +128,7 @@ theorem unimod_finite (hE : PosStar E) (n : ℕ) :
       rw [Nat.cast_one, one_mul]
       rw [← hM] at hy
       exact (mem_dual M y).1 hy x hx)
-    (fun M hM => hlat M hM.1)
+    (fun M hM => hlat M (full_lattice_of_unimodular hM.1 hM.2))
     (by
       rintro M ⟨-, hM⟩ _ _
       apply genusCovolBound_covol_le h m ι hι M (e.natAbs ^ 2)
@@ -258,7 +301,7 @@ theorem DecoSet.stab_fst_injective (d : DecoSet (E := E) (n := n) (ST := ST) (SG
 
 theorem DecoSet.finite_stabilizer (hE : PosStar E) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     Finite (MulAction.stabilizer (UF E n × GLG (E := E) (n := n) (SG := SG)) d) := by
-  have hA := final_autFinite E (Sp E n) (hStd E n) hStd_isSymm (hStd_pos hE) d.1.N d.2.lat
+  have hA := final_autFinite E (Sp E n) (hStd E n) hStd_isSymm (hStd_pos hE) d.1.N d.full_lattice
   have : Finite {g : Sp E n ≃ₗ[E] Sp E n | g ∈ isom (hStd E n) ∧ gmap g d.1.N = d.1.N} := hA
   let Φ : MulAction.stabilizer (UF E n × GLG (E := E) (n := n) (SG := SG)) d →
       {g : Sp E n ≃ₗ[E] Sp E n | g ∈ isom (hStd E n) ∧ gmap g d.1.N = d.1.N} :=
@@ -323,48 +366,10 @@ theorem hStd_osmul_left (r : 𝓞 E) (x y : Sp E n) : hStd E n (r • x) y = hSt
   simp only [Pi.smul_apply, Algebra.smul_def, star_mul', algebraMap_cO]
   ring
 
-theorem hStd_mem_one_symm {x y : Sp E n} (h : hStd E n x y ∈ (1 : Submodule (𝓞 E) E)) :
-    hStd E n y x ∈ (1 : Submodule (𝓞 E) E) := by
-  have hs : hStd E n y x = star (hStd E n x y) := by
-    simp only [hStd, LinearMap.mk₂'ₛₗ_apply, star_sum, star_mul', star_star]
-    exact Finset.sum_congr rfl fun i _ => mul_comm _ _
-  obtain ⟨r, hr⟩ := Submodule.mem_one.mp h
-  exact Submodule.mem_one.mpr ⟨cO E r, by rw [hs, ← hr, algebraMap_cO]⟩
-
 private theorem mem_dual_lemma_2 (L : Submodule (𝓞 E) (Sp E n)) (y : Sp E n) :
     y ∈ dual (hStd E n) L ↔ ∀ x ∈ L, hStd E n x y ∈ (1 : Submodule (𝓞 E) E) := by
   simp only [dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
     LinearMap.restrictScalars_apply]
-
-theorem DecoSet.full_lattice {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
-    (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
-    Submodule.IsFullLattice E d.1.N := by
-  refine { toIsLattice := d.2.lat, span_eq_top := ?_ }
-  let W := Submodule.span E (d.1.N : Set (Sp E n))
-  change W = ⊤
-  by_contra h
-  let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
-  let g : Sp E n →ₗ[E] Module.Dual E W :=
-    (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
-  have hdim : finrank E (Module.Dual E W) < finrank E (Sp E n) := by
-    rw [Subspace.dual_finrank_eq]
-    exact Submodule.finrank_lt h
-  obtain ⟨x, hx, hx₀⟩ :=
-    Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
-  have hsmul (a : E) : a • e x ∈ d.1.N := by
-    rw [← d.2.uni, mem_dual_lemma_2]
-    intro y hy
-    apply hStd_mem_one_symm
-    have hxy : hStd E n (e x) y = 0 :=
-      congrArg (fun k : Module.Dual E W => k ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
-    simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
-  let i : E →ₗ[𝓞 E] d.1.N :=
-    ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict d.1.N hsmul
-  let : Module.Finite (𝓞 E) d.1.N := Module.Finite.iff_fg.mpr d.2.lat.fg
-  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
-    smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
-  exact RingOfIntegers.not_isField E
-    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
 
 theorem dual_anti {L M : Submodule (𝓞 E) (Sp E n)} (h : L ≤ M) :
     dual (hStd E n) M ≤ dual (hStd E n) L := by
@@ -383,12 +388,12 @@ private theorem hStd_symm_lemma_8 : (hStd E n).IsSymm := by
         simp only [hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, starRingEnd_apply, star_star]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _⟩
 
-theorem dual_dual {L : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsLattice E L) :
+theorem dual_dual {L : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsFullLattice E L) :
     dual (hStd E n) (dual (hStd E n) L) = L := by
   exact (dualLattice (𝓞 E) E (Sp E n) (hStd E n) hStd_symm_lemma_8 hStd_nondeg star_range L hL).2.1
 
-theorem dual_lattice {L : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsLattice E L) :
-    Submodule.IsLattice E (dual (hStd E n) L) := by
+theorem dual_lattice {L : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsFullLattice E L) :
+    Submodule.IsFullLattice E (dual (hStd E n) L) := by
   exact (dualLattice (𝓞 E) E (Sp E n) (hStd E n) hStd_symm_lemma_8 hStd_nondeg star_range L hL).1
 
 theorem mem_dual_sup (L M : Submodule (𝓞 E) (Sp E n)) (y : Sp E n) :
@@ -423,12 +428,40 @@ theorem mem_dual_smul (I : Ideal (𝓞 E)) (D : Submodule (𝓞 E) (Sp E n)) (y 
 theorem lattice_between {B M D : Submodule (𝓞 E) (Sp E n)} (hB : Submodule.IsLattice E B)
     (hD : Submodule.IsLattice E D) (h1 : B ≤ M) (h2 : M ≤ D) : Submodule.IsLattice E M :=
   Submodule.IsLattice.of_fg E (Submodule.FG.of_le hD.fg h2)
+
+private theorem full_lattice_of_smul {N B : Submodule (𝓞 E) (Sp E n)}
+    (hN : Submodule.IsFullLattice E N) (hB : Submodule.IsLattice E B) {p : 𝓞 E} (hp : p ≠ 0)
+    (h : ∀ x ∈ N, p • x ∈ B) : Submodule.IsFullLattice E B := by
+  refine { toIsLattice := hB, span_eq_top := top_unique ?_ }
+  rw [← hN.span_eq_top]
+  refine Submodule.span_le.mpr fun x hx => ?_
+  have hp' : algebraMap (𝓞 E) E p ≠ 0 :=
+    fun hzero => hp (IsFractionRing.injective (𝓞 E) E (hzero.trans (map_zero _).symm))
+  rw [← inv_smul_smul₀ hp' x, algebraMap_smul]
+  exact Submodule.smul_mem _ _ (Submodule.subset_span (h x hx))
+
 theorem glue_unimodular {I J : Ideal (𝓞 E)} (hIJ : ∀ p ∈ I, cO E p ∈ J) (hJI : ∀ p ∈ J, cO E p ∈ I)
     (hcop : ∃ e ∈ I, ∃ e' ∈ J, e + e' = 1) {N B : Submodule (𝓞 E) (Sp E n)}
     (hN : IsUnimodular (hStd E n) N) (hB : Submodule.IsLattice E B) (hBN : B ≤ N)
     (hIN : I • N ≤ B) :
     Submodule.IsLattice E (B ⊔ I • dual (hStd E n) B) ∧
       IsUnimodular (hStd E n) (B ⊔ I • dual (hStd E n) B) := by
+  have hI : I ≠ ⊥ := by
+    intro h
+    obtain ⟨e, he, e', he', hee⟩ := hcop
+    have he0 : e = 0 := Ideal.mem_bot.mp (h ▸ he)
+    have he'0 : cO E e' = 0 := Ideal.mem_bot.mp (h ▸ hJI e' he')
+    have he'0' : e' = 0 := by rw [← cO_cO e', he'0, map_zero]
+    exact zero_ne_one (by simpa only [he0, he'0', add_zero] using hee : (0 : 𝓞 E) = 1)
+  obtain ⟨p, hpI, hp⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hI
+  have hpN : ∀ x ∈ N, p • x ∈ B := fun x hx => hIN (Submodule.smul_mem_smul hpI hx)
+  let f : N →ₗ[𝓞 E] B := (LinearMap.lsmul (𝓞 E) (Sp E n) p).restrict hpN
+  let : Module.Finite (𝓞 E) B := Module.Finite.iff_fg.mpr hB.fg
+  let : Module.Finite (𝓞 E) N := Module.Finite.of_injective f fun x y hxy =>
+    Subtype.ext (smul_right_injective (Sp E n) hp (congrArg Subtype.val hxy))
+  have hNlat : Submodule.IsLattice E N :=
+    Submodule.IsLattice.of_fg E (Module.Finite.iff_fg.mp inferInstance)
+  have hBfull := full_lattice_of_smul (full_lattice_of_unimodular hNlat hN) hB hp hpN
   set D := dual (hStd E n) B with hD
   have hND : N ≤ D := by
     have := dual_anti hBN
@@ -441,9 +474,9 @@ theorem glue_unimodular {I J : Ideal (𝓞 E)} (hIJ : ∀ p ∈ I, cO E p ∈ J)
       rw [hStd_osmul_left, cO_cO]
     rw [e]
     exact (mem_dual B u).1 hu _ (hIN (Submodule.smul_mem_smul (hJI p hp) hy))
-  have hDD : dual (hStd E n) D = B := dual_dual hB
+  have hDD : dual (hStd E n) D = B := dual_dual hBfull
   have hID : I • D ≤ D := Submodule.smul_le.2 fun r _ u hu => D.smul_mem r hu
-  refine ⟨lattice_between hB (dual_lattice hB) le_sup_left (sup_le (hBN.trans hND) hID), ?_⟩
+  refine ⟨lattice_between hB (dual_lattice hBfull).toIsLattice le_sup_left (sup_le (hBN.trans hND) hID), ?_⟩
   change dual (hStd E n) (B ⊔ I • D) = B ⊔ I • D
   apply le_antisymm
   · intro y hy
@@ -770,16 +803,23 @@ theorem upN_spec {N : Submodule (𝓞 E) (Sp E n)} (hlat : Submodule.IsLattice E
   set A := upA P.asIdeal N x with hA
   have hNA : N ≤ A := le_sup_left
   have hdN : dual (hStd E n) N = N := huni
+  have hNfull := full_lattice_of_unimodular hlat huni
   obtain ⟨pb, hpb, hpb0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot (conjPrime₂ P).ne_bot
-  have hPN : Submodule.IsLattice E ((conjPrime₂ P).asIdeal • N) :=
-    lattice_of_smul hlat hlat (Submodule.smul_le.2 fun r _ y hy => N.smul_mem r hy) hpb0
-      fun y hy => Submodule.smul_mem_smul hpb hy
+  have hsmul : ∀ y ∈ N, pb • y ∈ (conjPrime₂ P).asIdeal • N :=
+    fun y hy => Submodule.smul_mem_smul hpb hy
+  have hPN : Submodule.IsFullLattice E ((conjPrime₂ P).asIdeal • N) :=
+    full_lattice_of_smul hNfull
+      (lattice_of_smul hlat hlat (Submodule.smul_le.2 fun r _ y hy => N.smul_mem r hy) hpb0 hsmul)
+      hpb0 hsmul
   have hAle : A ≤ dual (hStd E n) ((conjPrime₂ P).asIdeal • N) := by
     intro z hz
     rw [mem_dual_smul, hdN]
     intro p hp
     exact smul_upA_mem hx ((mem_conjP P p).1 hp) hz
-  have hAlat : Submodule.IsLattice E A := lattice_between hlat (dual_lattice hPN) hNA hAle
+  have hAlat : Submodule.IsFullLattice E A := by
+    let := hNfull
+    let := lattice_between hlat (dual_lattice hPN).toIsLattice hNA hAle
+    exact Submodule.IsFullLattice.of_le E hNA
   have hBN : dual (hStd E n) A ≤ N := by
     have := dual_anti hNA
     rwa [hdN] at this
@@ -789,7 +829,7 @@ theorem upN_spec {N : Submodule (𝓞 E) (Sp E n)} (hlat : Submodule.IsLattice E
   obtain ⟨e, he, e', he', hee⟩ := exists_coprime hne
   obtain ⟨h1, h2⟩ := glue_unimodular (I := (conjPrime₂ P).asIdeal) (J := P.asIdeal)
     (fun p hp => hp) (fun p hp => by rw [mem_conjP, cO_cO]; exact hp) ⟨e, he, e', he', hee⟩
-    huni (dual_lattice hAlat) hBN hIN
+    huni (dual_lattice hAlat).toIsLattice hBN hIN
   rw [dual_dual hAlat] at h1 h2
   have hN' : upN P.asIdeal N x = dual (hStd E n) A ⊔ (conjPrime₂ P).asIdeal • A := by
     rw [upN, conjIdeal_asIdeal]
@@ -1211,19 +1251,24 @@ theorem Deco.Ok.smul_Lsh_mem_L {d : Deco E n ST SG} (hd : d.Ok) {pi : 𝓞 E}
   refine hd.smul_N_mem_L ha ?_
   exact hd.smul_Lsh_mem_N (fun P => by rw [cO_cO]; exact ha P) hx
 
-theorem Deco.Ok.L_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsLattice E d.L := by
+private theorem Deco.Ok.L_full_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsFullLattice E d.L := by
   classical
   have hex : ∀ P : ST, ∃ p ∈ P.1.asIdeal, p ≠ 0 := fun P =>
     Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
   choose g hg hg0 using hex
-  refine lattice_of_smul hd.lat hd.lat hd.L_le_N (p := ∏ P, g P) ?_ ?_
+  refine full_lattice_of_smul (full_lattice_of_unimodular hd.lat hd.uni)
+    (Submodule.IsLattice.of_fg E (hd.lat.fg.of_le hd.L_le_N)) (p := ∏ P, g P) ?_ ?_
   · exact Finset.prod_ne_zero_iff.mpr fun P _ => hg0 P
   · intro x hx
     refine hd.smul_N_mem_L (fun P => ?_) hx
     rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ P)]
     exact Ideal.mul_mem_right _ _ (hg P)
 
-theorem Deco.Ok.Lsh_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsLattice E d.Lsh := dual_lattice hd.L_lattice
+theorem Deco.Ok.L_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsLattice E d.L :=
+  hd.L_full_lattice.toIsLattice
+
+theorem Deco.Ok.Lsh_lattice {d : Deco E n ST SG} (hd : d.Ok) : Submodule.IsLattice E d.Lsh :=
+  (dual_lattice hd.L_full_lattice).toIsLattice
 
 theorem Deco.Ok.mem_locP_L {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (x : Sp E n) :
     x ∈ localization₂ P.1.asIdeal d.L ↔ x ∈ d.at P.1 ∧ d.f P x = 0 := by
@@ -1515,6 +1560,13 @@ theorem Deco.Ok.smul_mem_kerAt {d : Deco E n ST SG} (hd : d.Ok) (P : ST) {p : �
     (hp : p ∈ P.1.asIdeal) {y : Sp E n} (hy : y ∈ d.N) : p • y ∈ d.kerAt P := by
   refine Submodule.subset_span ⟨Submodule.smul_mem _ p hy, ?_⟩
   rw [hd.f_smul P p y (mem_localized_of_mem P.1 d.N hy), Ideal.Quotient.eq_zero_iff_mem.mpr hp, zero_mul]
+
+private theorem Deco.Ok.kerAt_full_lattice {d : Deco E n ST SG} (hd : d.Ok) (P : ST) :
+    Submodule.IsFullLattice E (d.kerAt P) := by
+  obtain ⟨p, hp, hp0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
+  have hle : d.kerAt P ≤ d.N := fun x hx => ((hd.mem_kerAt P x).mp hx).1
+  exact full_lattice_of_smul (full_lattice_of_unimodular hd.lat hd.uni)
+    (Submodule.IsLattice.of_fg E (hd.lat.fg.of_le hle)) hp0 (fun x hx => hd.smul_mem_kerAt P hp hx)
 
 theorem Deco.Ok.conj_smul_dnN_mem {d : Deco E n ST SG} (hd : d.Ok) (P : ST) {a : 𝓞 E}
     (ha : a ∈ (conjPrime₂ P.1).asIdeal) {x : Sp E n} (hx : x ∈ d.dnN P) : a • x ∈ d.kerAt P := by
@@ -2281,14 +2333,10 @@ theorem Deco.Ok.Lsh_quot_L {d : Deco E n ST SG} (hd : d.Ok) (hc : ∀ P Q : ST, 
 
   have hψbasis : ∀ P : ST, ∃ y : d.Lsh, ψ y P = 1 ∧ ∀ Q, Q ≠ P → ψ y Q = 0 := by
     intro P
-    have hBlat : Submodule.IsLattice E (d.kerAt P) := by
-      obtain ⟨p, hp, hp0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
-      exact lattice_of_smul hd.lat hd.lat (fun x hx => ((hd.mem_kerAt P x).1 hx).1) hp0
-        fun x hx => hd.smul_mem_kerAt P hp hx
     have hnot : ¬ dual (hStd E n) (d.kerAt P) ≤ d.N := by
       intro hle'
       have := dual_anti hle'
-      rw [hdN, dual_dual hBlat] at this
+      rw [hdN, dual_dual (hd.kerAt_full_lattice P)] at this
       have h5 := ((hd.mem_kerAt P _).1 (this (h1 P))).2
       rw [h2] at h5
       exact one_ne_zero h5
@@ -2474,10 +2522,6 @@ theorem DecoSet.dnSet_nonempty (d : DecoSet (E := E) (n := n) (ST := ST) (SG := 
   have he1 : e1 ∈ d.1.N := Submodule.smul_mem _ t0 hx0
   have hfe1 : d.1.f P e1 = 1 := by
     rw [hd.f_smul P t0 x0 (le_locP _ _ hx0), mul_comm, hb]
-  have hBlat : Submodule.IsLattice E (d.1.kerAt P) := by
-    obtain ⟨p, hp, hp0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
-    exact lattice_of_smul hd.lat hd.lat (fun x hx => ((hd.mem_kerAt P x).1 hx).1) hp0
-      fun x hx => hd.smul_mem_kerAt P hp hx
   have hqe : q • e1 ∈ d.1.kerAt P := hd.smul_mem_kerAt P hq he1
   have hpair : ∀ w ∈ dual (hStd E n) (d.1.kerAt P), ∀ y ∈ d.1.kerAt P,
       hStd E n w y ∈ (1 : Submodule (𝓞 E) E) := fun w hw y hy =>
@@ -2489,7 +2533,7 @@ theorem DecoSet.dnSet_nonempty (d : DecoSet (E := E) (n := n) (ST := ST) (SG := 
     push Not at H
     have hkey : q • e1 ∈ P.1.asIdeal • d.1.kerAt P := by
       refine neighbourConstruct_key (K := E) P.1.asIdeal P.1.ne_bot _ _ fun a ha => ?_
-      rw [← dual_dual hBlat, mem_dual]
+      rw [← dual_dual (hd.kerAt_full_lattice P), mem_dual]
       intro w hw
       obtain ⟨r, hr⟩ := Submodule.mem_one.1 (hpair w hw _ hqe)
       have hrP : r ∈ P.1.asIdeal := by

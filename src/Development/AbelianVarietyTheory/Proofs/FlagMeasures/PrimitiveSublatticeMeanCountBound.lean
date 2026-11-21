@@ -113,9 +113,10 @@ theorem isIntLat_latIn (h : V →ₗ⋆[K] V →ₗ[K] K) {L : Submodule (𝓞 K
   refine ⟨{ span_eq_top := ?_ }, fun x hx y hy => hL.2 x hx y hy⟩
   · letI : Submodule.IsFullLattice K L := hL.1
     refine eq_top_iff.mpr fun x _ => ?_
-    obtain ⟨a, ha, hax⟩ := exists_ne_zero_smul_mem_of_mem_span_fractionField K
+    obtain ⟨a, hax⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 K)) K L (x : V)
       (show (x : V) ∈ Submodule.span K (L : Set V) by rw [Submodule.IsFullLattice.span_eq_top]; trivial)
-    have ha' : algebraMap (𝓞 K) K a ≠ 0 := by simpa using ha
+    rw [Submodule.span_eq] at hax
+    have ha' : algebraMap (𝓞 K) K a ≠ 0 := by simpa using nonZeroDivisors.coe_ne_zero a
     rw [← Submodule.smul_mem_iff _ ha', algebraMap_smul]
     exact Submodule.subset_span hax
 

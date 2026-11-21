@@ -386,7 +386,7 @@ theorem sameGenus [FiniteDimensional K V] {h : V →ₗ⋆[K] V →ₗ[K] K} (hK
       (GlobalTheory.T.maximalHermitianLattice_badPrimes_iff_gramDet K V h hK hs hn N hN _ (Module.finBasis K V) P hP).symm
   by_cases hb : P ∈ badP h M
   swap
-  · exact GlobalTheory.T.exists_isometry_of_unimodular_lattices_at_place K V h hK hs hn M N hM.1.1 hN.1.1 P hP (by_contra fun a => hb ⟨hP, a⟩)
+  · exact GlobalTheory.T.exists_isometry_of_unimodular_lattices_at_place K V h hK hs hn M N hM.1.1.toIsLattice hN.1.1.toIsLattice P hP (by_contra fun a => hb ⟨hP, a⟩)
       (by_contra fun a => hb (par.2 ⟨hP, a⟩))
   let p : HeightOneSpectrum (𝓞 K) := ⟨P, hP.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hP
     (RingOfIntegers.not_isField K)⟩

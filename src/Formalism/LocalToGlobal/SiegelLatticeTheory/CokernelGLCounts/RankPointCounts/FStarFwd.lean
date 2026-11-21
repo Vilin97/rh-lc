@@ -82,6 +82,11 @@ theorem fwdC_of (hrows : IsRowReps D F0 what₂) (h1 : NMove D) (h2 : OmPart Zd 
   obtain ⟨n, hn, hm⟩ := h1 F0 F'₂ F' (hS.1.trans hZ'.symm) hG (h2 hrows γ Z hC F'₂ φ φ' hS F' hP)
   refine ⟨Formalism.HermitianLatticesTheory.gmap n.symm γ.lam, ⟨?_, h3 hrows γ Z hC F'₂ φ φ' hS F' hP n hn hm⟩, n, hn, hm,
     fwdCut_image_gmap_symm n γ.lam⟩
-  exact Formalism.HermitianLatticesTheory.isomAct_lattice n.symm γ.lam (hrows.1 γ.lam γ.mem).1.1
+  have hlat : Submodule.IsFullLattice D.host.E γ.lam := (hrows.1 γ.lam γ.mem).1.1
+  letI := Formalism.HermitianLatticesTheory.isomAct_lattice n.symm γ.lam hlat.toIsLattice
+  refine ⟨?_⟩
+  rw [Formalism.HermitianLatticesTheory.gmap, Submodule.map_coe]
+  change Submodule.span D.host.E ((n.symm : (VS D).V →ₗ[D.host.E] (VS D).V) '' (γ.lam : Set _)) = ⊤
+  rw [← Submodule.map_span, hlat.span_eq_top, Submodule.map_top, LinearMap.range_eq_top.2 n.symm.surjective]
 
 end Formalism.L2.SG.Pf.FrameGlobalPatching.FStar

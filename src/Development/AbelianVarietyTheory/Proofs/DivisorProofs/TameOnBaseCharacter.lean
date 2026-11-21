@@ -53,7 +53,8 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-theorem exists_idemSum (P : Finset (Pl D.host.E)) (h : ∀ Q ∈ P, ∀ Q' ∈ P, ¬ IsConjPl Q Q') :
+theorem exists_idemSum (P : Finset (Pl D.host.E))
+    (h : ∀ Q ∈ P, ∀ Q' ∈ P, ¬ Formalism.IndefR.Lev.IsConjPl Q Q') :
     ∃ e : AE D, IsIdemSum e P :=
   GlobalTheory.GridIdem.exists_isIdemSum P (fun Q hQ => GlobalTheory.ParahoricLift.exists_isIdemAt (h Q hQ Q hQ))
     fun Q hQ Q' hQ' e => (GlobalTheory.IdemSupport.eq_or_eq_cP e).resolve_right fun e' =>

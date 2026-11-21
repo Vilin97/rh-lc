@@ -185,11 +185,11 @@ theorem iotaB_of (hP : PinB Zd u u' F0 what₂) : IotaB Zd u u' F0 what₂ := by
   intro γ Z F'₂ φ φ' Λ₂ hB β₀ hiso hfr hW hO v hv hvf hvX hgm
   have hB0 := hB
   obtain ⟨hC, hZ, hS, hΛ₂, -, hT, hPD, -⟩ := hB
-  obtain ⟨hΛ₂lat, hloc₂⟩ := hΛ₂
+  obtain ⟨hΛ₂full, hloc₂⟩ := hΛ₂
   obtain ⟨-, hT2, hφ⟩ := hS
   have hrow := hC.2.1.1 γ.lam γ.mem
   have hfix := hrow.2.1
-  have hΛlat : Submodule.IsLattice D.host.E γ.lam := hfix.1
+  have hΛfull : Submodule.IsFullLattice D.host.E γ.lam := hrow.1.1
   have hXS1 : XLam γ.lam (lf D F0) = XS D F0 := hrow.2.2
   have hXSx : XLam γ.lam (repF γ) = XS D (repF γ).fl := hPD.2.2.2
   have hXS2' : XLam Λ₂ (liftF F'₂) = XS D (liftF F'₂).fl := hT.2.2.2.2
@@ -207,8 +207,8 @@ theorem iotaB_of (hP : PinB Zd u u' F0 what₂) : IotaB Zd u u' F0 what₂ := by
     ext x
     simp only [XLam, Submodule.mem_inf]
     constructor
-    · rintro ⟨h1, h2⟩; exact ⟨memX Zd γ hpr2 hpr1 hΛlat hu h2 h1, h2⟩
-    · rintro ⟨h1, h2⟩; exact ⟨memX Zd γ hpr1 hpr2 hΛ₂lat hu h2 h1, h2⟩
+    · rintro ⟨h1, h2⟩; exact ⟨memX Zd γ hpr2 hpr1 hΛfull hu h2 h1, h2⟩
+    · rintro ⟨h1, h2⟩; exact ⟨memX Zd γ hpr1 hpr2 hΛ₂full hu h2 h1, h2⟩
 
   have hXmap : (Xsp (repF γ)).map (β₀ : (VS D).V →ₗ[D.host.E] (VS D).V) = Xsp (liftF F'₂) :=
     BwdBetaCut.Xsp_of_frame β₀ _ _ hfr
@@ -267,7 +267,7 @@ theorem iotaB_of (hP : PinB Zd u u' F0 what₂) : IotaB Zd u u' F0 what₂ := by
   constructor
   · intro hmem
     obtain ⟨μ, hμ, ξ, hξ, ξ', hξ', heq⟩ := NgX_dec hmem
-    refine mem_of_bcP Zd (IotaBP.isLattice_NgX hΛ₂lat _ _) fun p => ?_
+    refine mem_of_bcP Zd (IotaBP.isLattice_NgX hΛ₂full _ _) fun p => ?_
     rcases hsp : (Zd.M p).split with _ | g
     · exact untyped_mem Zd p hsp _ _ (BwdNP.baseChange_mem_localLattice Zd (sub_mem hl₂Λ (hβΛ _ hx'Λ)) p)
     · exact IotaBP.fwd_typed Zd p g hsp γ F'₂ Λ₂ (φ' p) (hRp p g hsp) β₀ (v * β₀)
@@ -275,7 +275,7 @@ theorem iotaB_of (hP : PinB Zd u u' F0 what₂) : IotaB Zd u u' F0 what₂ := by
         hx'Λ hx'o hlΛ hlo hl₂Λ hl₂o hll₂ hμ hξ hξ' heq
   · intro hmem
     obtain ⟨μ, hμ, ξ, hξ, ξ', hξ', heq⟩ := NgX_dec hmem
-    refine mem_of_bcP Zd (IotaBP.isLattice_NgX hΛlat _ _) fun p => ?_
+    refine mem_of_bcP Zd (IotaBP.isLattice_NgX hΛfull _ _) fun p => ?_
     rcases hsp : (Zd.M p).split with _ | g
     · exact untyped_mem Zd p hsp _ _ (BwdNP.baseChange_mem_localLattice Zd (sub_mem hlΛ hx'Λ) p)
     · exact IotaBP.bwd_typed Zd p g hsp γ F'₂ Λ₂ (φ' p) (hRp p g hsp) β₀ (v * β₀)

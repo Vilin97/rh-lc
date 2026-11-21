@@ -107,7 +107,7 @@ private theorem jr_abs {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommR
       have h1 : MonoidAlgebra.mapRingHom F.G₀ (f i : B.B ⧸ J →+* K) (F.oEl v (B.psiT J v) g) =
           F.oEl v (fun j => pushCh (f i : B.B ⧸ J →+* K) (B.psiT J v j)) g := by
         simp only [GFrame.oEl, map_list_prod, List.map_ofFn, Function.comp_def, map_sub,
-          MonoidAlgebra.mapRingHom_single, map_one]
+          MonoidAlgebra.mapRingHom_single, map_one, pushCh, MonoidHom.comp_apply, Units.coe_map]
         rfl
       rw [h1]
       exact UpperTheory.V.AlgebraTools.Det.oElRep F O K n (ρ i) v _ (hflag i v) g

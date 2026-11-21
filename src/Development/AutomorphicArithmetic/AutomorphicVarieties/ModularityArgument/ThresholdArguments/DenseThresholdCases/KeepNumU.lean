@@ -67,12 +67,13 @@ theorem numberU3U_of_adm2A_imp_adm2B :
   intro e he N hN p w hp hw h7 hpN hpd Orb _ z hz hc
   obtain ⟨h, hh1, hh2, hq⟩ := UpperTheory.exists_normV_eq_prime_pow_le_finrank K p w hp hw
   obtain ⟨D₁, hD₁, H₁⟩ := h₁ e he N hN p w hp hw hpN hpd
-  have hpM : ¬ p ∣ N * d := fun H => (hp.dvd_mul.1 H).elim hpN fun H' => hpd (Int.natCast_dvd.2 H')
+  have hpM : ¬ p ∣ N * d := hp.not_dvd_mul hpN fun hdvd => hpd (Int.natCast_dvd.2 hdvd)
   have H₂' := h₂ K e he (N * d) (Nat.mul_pos hN hd1) p h w hp hw hpM
   rw [← hq] at H₂'
   obtain ⟨D₂, hD₂, H₂⟩ := H₂'
   have hq7 : 7 ≤ normV w := by
-    rw [hq]; exact h7.trans (Nat.le_self_pow (by omega) p)
+    rw [hq]
+    exact h7.trans (Nat.le_self_pow (Nat.one_le_iff_ne_zero.mp hh1) p)
   obtain ⟨NN, h0, hb, H⟩ := frobenius_trace_norm_nonzero_log_bound (normV w) e hq7 he (D₁.sum D₂) Orb z hz hc
   refine ⟨NN, h0, hb.trans ?_, fun l _ hl2 hlp Ω _ _ _ _ _ ι B hB σ hσ X hX hX' => ?_⟩
   · set Y : ℕ := N * (e + 1) with hY

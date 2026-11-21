@@ -81,15 +81,17 @@ theorem betaInt_of (hLs : LsetB Zd u u' F0 what₂) (hIo : IotaB Zd u u' F0 what
   intro γ Z F'₂ φ φ' Λ₂ hB β₀ hiso hfr hW hO
   have hB0 := hB
   obtain ⟨hC, -, hS, hΛ₂, -, hT, hPD, -⟩ := hB
-  obtain ⟨hΛ₂lat, hloc₂⟩ := hΛ₂
+  obtain ⟨hΛ₂full, hloc₂⟩ := hΛ₂
   obtain ⟨-, hT2, -⟩ := hS
   have hrow := hC.2.1.1 γ.lam γ.mem
-  have hΛlat : Submodule.IsLattice D.host.E γ.lam := hrow.2.1.1
+  have hΛfull : Submodule.IsFullLattice D.host.E γ.lam := hrow.1.1
+  have hΛlat := hΛfull.toIsLattice
+  have hΛ₂lat := hΛ₂full.toIsLattice
   have hSDl : ∀ p, (locH Zd p).IsSelfDual (lattice₂ D Zd.M p γ.lam) := fun p => (hT2 p).1.1.1
   have hSDl₂ : ∀ p, (locH Zd p).IsSelfDual (lattice₂ D Zd.M p Λ₂) := fun p => (hloc₂ p).1.1.1
   have hpr₂ : ∀ p, (locH Zd p).Prim (lattice₂ D Zd.M p Λ₂) (locF' Zd p F'₂) := fun p => (hloc₂ p).1.1.2.2.1.1
-  have hSD := sd_of_loc Zd hΛlat hSDl
-  have hSD₂ := sd_of_loc Zd hΛ₂lat hSDl₂
+  have hSD := sd_of_loc Zd hΛfull hSDl
+  have hSD₂ := sd_of_loc Zd hΛ₂full hSDl₂
   have hXiso : ∀ x ∈ Xsp (liftF F'₂), ∀ y ∈ Xsp (liftF F'₂), (VS D).hT x y = 0 :=
     fun x hx y hy => NMoveP.hT_X_X F'₂.fl hx hy
   have hzX : F'₂.fl.z ∈ orth (VS D) (Xsp (liftF F'₂)) := (PI.UnitaryGroupMassFormula.BetaLUniq.mem_orth (VS D)).2 fun x hx => by

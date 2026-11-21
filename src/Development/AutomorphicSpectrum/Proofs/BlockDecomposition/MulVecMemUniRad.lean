@@ -207,7 +207,8 @@ theorem quotVanish : QuotVanish := by
     obtain ⟨u, m, e, hu, m₁, m₂, m₃, m₄⟩ := levi_decomp c₁ d₁ c₂ d₂ q.1 q.2.1 q.2.2
     exact ⟨⟨u, uniRad_le hW hu⟩, Subgroup.mem_subgroupOf.2 hu, ⟨m, m₁, m₂⟩,
       Subgroup.mem_subgroupOf.2 ⟨m₃, m₄⟩, Subtype.ext e⟩
-  · refine Subgroup.eq_bot_iff_forall.2 fun x hx => ?_
+  · rw [Subgroup.eq_bot_iff_forall]
+    intro x hx
     obtain ⟨hxN, hxM⟩ := Subgroup.mem_inf.1 hx
     have hN := Subgroup.mem_subgroupOf.1 hxN
     have hM := Subgroup.mem_subgroupOf.1 hxM

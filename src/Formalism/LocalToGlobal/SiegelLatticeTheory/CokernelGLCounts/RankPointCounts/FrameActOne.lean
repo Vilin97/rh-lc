@@ -103,7 +103,8 @@ theorem btAdm : BtAdm Zd u u' F0 what₂ := by
   have h3 : baseChange₂ D p ((((gS D : ℕ) : D.host.E))⁻¹ • x) ∈ lattice₂ D Zd.M p Λ₂ := by
     rw [Formalism.L2.SG.Pf.LocalDenominators.baseChange_smul₂]; exact h2
   haveI := p.isPrime
-  have h4 := (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p hlat _).1 h3
+  letI := hlat
+  have h4 := (Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p (by infer_instance) _).1 h3
   obtain ⟨t, ht, htx⟩ := (Formalism.HermitianLattices.Ext.L3.LocalSpans.mem_locF p.asIdeal Λ₂ _).1 h4
   refine ⟨algebraMap (𝓞 D.host.F) (𝓞 D.host.E) t, fun h => ht (by rw [← hPp]; exact h), ?_⟩
   have e : algebraMap (𝓞 D.host.F) (𝓞 D.host.E) t • x =

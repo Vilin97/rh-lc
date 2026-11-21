@@ -5,6 +5,8 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.Cry
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EvRFrMapOfIsReduced
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimeSpectrumDualNumberEq
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsKSRIffIsKS
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.IsAbelianSchemeOfIsGrpPullback
+import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.ExistsNormalFormArcDatumFramedPointRootOfUnity
 public import Development.AbelianVarietyTheory.Definitions.Divisors.P22
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRingActionOfIsGrpPullback
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsKodairaSpencerValueEndomorphismLiftStatement
@@ -30,6 +32,56 @@ set_option synthInstance.maxHeartbeats 400000
 
 noncomputable section
 
+namespace GlobalTheory.FlagTan
+
+open TensorProduct GlobalTheory.Frames GlobalTheory.Published
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
+  {Xo : Moduli Dw l} {c : Coeff l}
+
+theorem IsKSR.baseChangeForKSFamily (P : AbelianDeRham) {Φ : Finset (E →+* ℂ)} {S S' : Type} [CommRing S] [Algebra c.F S]
+    [CommRing S'] [Algebra c.F S'] {ψ : S →ₐ[c.F] S'} {y : FrPt Xo c S} {y' : FrPt Xo c S'} (h : FrMap ψ y y')
+    {x : Sp (DualNumber S) ⟶ Xo.X} {M : HIx Dw Φ → S}
+    (hM : IsKSR Φ y x M) : IsKSR Φ y' (spMap (dualMap ψ.toRingHom) ≫ x) (ψ ∘ M) := by
+  obtain ⟨A, _, A', _, π, π', i, hi, b, ub, hb, hπ, hπ', e, hpol, hu, hl, hM⟩ := hM
+  let : Algebra S S' := ψ.toRingHom.toAlgebra
+  obtain ⟨B, _, φ, hφ⟩ := exists_isGrpPullback A (spMap (algebraMap S S'))
+  obtain ⟨B', _, φ', hφ'⟩ := exists_isGrpPullback A' (spMap (dualMap (algebraMap S S')))
+  have e₀ : spMap (algebraMap S S') ≫ GlobalTheory.DeRham.epsRed S = GlobalTheory.DeRham.epsRed S' ≫ spMap (dualMap (algebraMap S S')) := by
+    rw [← Cris.spMap_comp, ← Cris.spMap_comp]
+    congr 1
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have w : (φ ≫ i) ≫ A'.hom = (B.hom ≫ GlobalTheory.DeRham.epsRed S') ≫ spMap (dualMap (algebraMap S S')) := by
+    rw [(hφ.comp hi).1.w, e₀, Category.assoc]
+  have sq : hφ'.1.lift _ _ w ≫ φ' = φ ≫ i := hφ'.1.lift_fst _ _ _
+  have hj : IsGrpPullback B B' (GlobalTheory.DeRham.epsRed S') (hφ'.1.lift _ _ w) :=
+    hφ'.cancel ((hφ.comp hi).congr e₀ sq.symm) (hφ'.1.lift_snd _ _ _)
+  have hU := ObjDim.isAbelianScheme Xo.univ
+  have hg := ObjDim.smoothOfRelativeDimension Xo.univ
+  have hA := PolPull.isAbelianScheme_of_isGrpPullback hU hπ
+  have gA := (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback hπ.1 hg
+  have hA' := PolPull.isAbelianScheme_of_isGrpPullback hU hπ'
+  have gA' := (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback hπ'.1 hg
+  obtain ⟨bc, hF⟩ := P.2.2.1 S A _ hA gA S' B φ hφ
+  have hL := (P.2.1 S' B _ (PolPull.isAbelianScheme_of_isGrpPullback hA hφ)
+    ((smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback hφ.1 gA)).1
+  obtain ⟨b', hpol', eb⟩ := hpol.pull_comp (AbelianDeRham.bcMor hφ) (UnivPol.pol Xo).isLB
+  choose tv htv using ArcQ.NormalForm.exists_baseChange hφ
+  choose th hth using bc.exists
+  refine ⟨B, _, B', _, φ ≫ π, φ' ≫ π', _, hj, b', fun σ k => tv (ub σ k), fun k => th (hb k),
+    (hφ.comp hπ).congr h.1.symm rfl, hφ'.comp hπ', by rw [← Category.assoc, sq, Category.assoc, e], hpol',
+    fun σ k => ?_, fun σ k => (hl σ k).baseChange (hφ := hφ) hF hL (hth _) (htv _), fun τ a => ?_⟩
+  · rw [← Category.assoc, htv, Category.assoc, hu, h.2.1] <;> rfl
+  · obtain ⟨w, hw, f, hf, hd, hv⟩ := hM τ a
+    refine ⟨tv w, ArcQ.NormalForm.isLieComb_baseChange hφ (fun _ => htv _) (htv w) hw, th f,
+      mem_Fil_of_corr (hφ := hφ) hF (hth f) hf, fun k => ?_,
+      hv.baseChange (hφ := hφ) P hA' gA' hj hφ' sq (hth f) (htv w)⟩
+    rw [eb _ _ _ _ (hth f) (hth _), hd]
+    split_ifs <;> simp
+
+
+end GlobalTheory.FlagTan
+
 namespace GlobalTheory.KSFam
 
 theorem conj_embK' {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {l : Level H} (c : Coeff l)
@@ -47,7 +99,7 @@ theorem ksFamily : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : H
   suffices hM : ∃ M, GlobalTheory.FlagTan.IsKSR (psiSet H) y x' M by
     obtain ⟨M, hM⟩ := hM
     refine ⟨M, fun K _ _ ψ y' hy => GlobalTheory.FlagTan.isKSR_iff_isKS.mp ?_⟩
-    exact GlobalTheory.FlagTan.IsKSR.baseChange hP hy hM
+    exact GlobalTheory.FlagTan.IsKSR.baseChangeForKSFamily hP hy hM
 
   let : GrpObj ((Over.pullback x').obj Xo.univ.t.G) := Functor.grpObjObj (F := Over.pullback x')
   let : GrpObj ((Over.pullback (GlobalTheory.DeRham.epsRed S)).obj ((Over.pullback x').obj Xo.univ.t.G)) :=

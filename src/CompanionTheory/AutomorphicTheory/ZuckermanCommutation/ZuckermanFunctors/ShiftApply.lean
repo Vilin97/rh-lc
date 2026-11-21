@@ -296,27 +296,36 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
     unfold DecTens at hDecTens
     have hTensor := hDecTens k r (wedge k r m) (vr k r false) U (S.okWedge k r m) (S.okVr k r false)
     rcases hTensor with ⟨hd1, hd2⟩
-    have hLeft := hd1 (Sub (2 * r + k + 1) m) (Fin (2 * r + k + 1))
-      (fun J => V (pJ J)) (fun p => V (par p)) (fun J => (casG (pJ J).1 : ℂ))
-      (decW S Lb hk m hU hg (by linarith) (fun a c hac => by linarith [hD a c hac]) _ fun J => hV (pJ J))
-      (fun J => decV S Lb hk false (hV (pJ J)) (near hU.1 hg hD m (by linarith) (hJ J)).2.1 (by linarith) _
-        fun s => hV (par (J, s)))
-      fun J => cs (pJ J)
+    let X : Obj k r := ((wedge k r m).tens (vr k r false), U)
+    have hLeft : ∃ io pr, IsDec (N := M) IsHom X (fun p => one (V (par p))) io pr ∧
+        ∀ p, cas1 (wedge k r m) (vr k r false) U ∘ₗ io p = (casG (pJ p.1).1 : ℂ) • io p := by
+      refine hd1 (Sub (2 * r + k + 1) m) (Fin (2 * r + k + 1))
+        (fun J => V (pJ J)) (fun p => V (par p)) (fun J => (casG (pJ J).1 : ℂ)) ?_ ?_ (fun J => cs (pJ J))
+      · exact decW S Lb hk m (μ := μ) (U := U) (h := h) hU hg (by linarith)
+          (fun a c hac => by linarith [hD a c hac]) _ (fun J => hV (pJ J))
+      · intro J
+        have hGap := (near hU.1 hg hD m (by linarith) (hJ J)).2.1
+        exact decV S Lb hk false (μ := (pJ J).1) (U := V (pJ J)) (h := h - m)
+          (hV (pJ J)) hGap (by linarith) _ (fun s => hV (par (J, s)))
     obtain ⟨io₁, pr₁, D₁, e₁⟩ := hLeft
-    have hRight := hd2 (Sub (2 * r + k + 1) m) (Fin (2 * r + k + 1))
-      (fun s => V (ps s)) (fun p => V (par p)) (fun s => (casG (ps s).1 : ℂ))
-      (decV S Lb hk false hU hg (by linarith) _ fun s => hV (ps s))
-      (fun s => decW S Lb hk m (hV (ps s)) (gap_shift hg false s) (by linarith)
-        (fun a c hac => by
+    have hRight : ∃ io pr, IsDec (N := M) IsHom X (fun p => one (V (par p))) io pr ∧
+        ∀ p, cas2 (wedge k r m) (vr k r false) U ∘ₗ io p = (casG (ps p.2).1 : ℂ) • io p := by
+      refine hd2 (Sub (2 * r + k + 1) m) (Fin (2 * r + k + 1))
+        (fun s => V (ps s)) (fun p => V (par p)) (fun s => (casG (ps s).1 : ℂ)) ?_ ?_ (fun s => cs (ps s))
+      · exact decV S Lb hk false (μ := μ) (U := U) (h := h) hU hg (by linarith) _ (fun s => hV (ps s))
+      · intro s
+        refine decW S Lb hk m (μ := (ps s).1) (U := V (ps s)) (h := h - 1)
+          (hV (ps s)) (gap_shift hg false s) (by linarith) ?_ _ ?_
+        · intro a c hac
           have := (near hU.1 hg hD 1 (by push_cast; linarith) (hs s)).2.2 a c hac
           push_cast at this
           show _ ≤ shift false μ s a - shift false μ s c
-          linarith) _
-        fun J => by
+          linarith
+        · intro J
           have e' : addSet (ps s).1 J.1 = (par (J, s)).1 := by
             funext a; simp [ps, par, addSet, shift]; ring
-          rw [e']; exact hV (par (J, s)))
-      fun s => cs (ps s)
+          rw [e']
+          exact hV (par (J, s))
     obtain ⟨io₂, pr₂, D₂, e₂⟩ := hRight
     obtain ⟨hint, hjj⟩ := S.wedgeInt (2 * r + k + 1) m
     have hm1 : ((m : ℂ) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero m
@@ -324,7 +333,7 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
     have okX := S.okTens k r _ _ (S.okWedge k r m) (S.okVr k r false)
     refine dec_iso C (S.decOfTrace _ _ _ C P (fun ν => one (V ν))
       (S.schur S.infChar k r ε P (fun ν => ν.1) V Subtype.val_injective hV) _ par
-      ((wedge k r m).tens (vr k r false), U) (wedge k r (m + 1), U) io₁ io₂ pr₁ pr₂ D₁ D₂
+      X (wedge k r (m + 1), U) io₁ io₂ pr₁ pr₂ D₁ D₂
       (cas _) (cas1 _ _ U) (cas2 _ _ U) _ _ (fun ν => (casG ν.1 : ℂ)) (2 - (casG μ : ℂ)) (2 * ((m : ℂ) + 1)) e₁ e₂
       (fun ν i hi => LinearMap.ext fun x => ?_)
       (mAct (jW _ m)) (mAct (((m : ℂ) + 1)⁻¹ • (jW _ m)ᵀ))

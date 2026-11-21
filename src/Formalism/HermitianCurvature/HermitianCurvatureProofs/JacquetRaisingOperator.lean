@@ -61,19 +61,23 @@ theorem aa_expand (u : ℂ) (f : Mat k r → E) (g : Mat k r) (hg : g ∈ GV k r
 
 theorem rw_clm (L : E →L[ℂ] E) : ∀ (w : List (Mat k r)), (∀ X ∈ w, inLie k r X) →
     ∀ (f : Mat k r → E) (g : Mat k r), g ∈ GV k r → Loc (w.length : ℕ∞) f g →
-      Rw w (fun x => L (f x)) g = L (Rw w f g)
-  | [], _, _, _, _, _ => rfl
-  | X :: w, hw, f, g, hg, hf => by
-    obtain ⟨U, hU, hgU, hUloc⟩ :=
-      CapelliWordSumExpansion.loc_spread (k := k) (r := r) (m := ((X :: w).length : ℕ∞))
-        (f := f) (g := g) hf
+      Rw w (fun x => L (f x)) g = L (Rw w f g) := by
+  intro w
+  induction w with
+  | nil => intros; rfl
+  | cons X w ih =>
+    intro hw f g hg hf
+    obtain ⟨U, f', hU, hgU, hdiff, heq⟩ := hf
+    have hUloc (x : Mat k r) (hx : x ∈ U) : Loc ((X :: w).length : ℕ∞) f x :=
+      ⟨U, f', hU, hx, hdiff, heq⟩
     have hw' : ∀ Y ∈ w, inLie k r Y := fun Y hY => hw Y (by simp [hY])
-    have hagree : ∀ x ∈ U, x ∈ GV k r → Rw w (fun x => L (f x)) x = L (Rw w f x) := fun x hx hxG =>
-      rw_clm L w hw' f x hxG (loc_mono (by simp) (hUloc x hx))
+    have hagree : ∀ x ∈ U, x ∈ GV k r → Rw w (fun x => L (f x)) x = L (Rw w f x) :=
+      fun x hx hxG => ih hw' f x hxG
+        (loc_mono (ENat.natCast_le_natCast.mpr (Nat.le_succ w.length)) (hUloc x hx))
     show RdV X (Rw w (fun x => L (f x))) g = L (RdV X (Rw w f) g)
     rw [rdV_congr hU hgU hg (hw X (by simp)) hagree]
     have hl : Loc (1 : ℕ∞) (Rw w f) g := by
-      have := loc_Rw (N := w.length + 1) (by simpa using hf) w hw' 1 (by omega)
+      have := loc_Rw (hUloc g hgU) w hw' 1 (by simp [Nat.add_comm])
       simpa using this
     have hd := loc_hasDerivAt le_rfl hl hg (hw X (by simp))
     exact ((L.restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (x := (0 : ℝ)) hd).deriv
