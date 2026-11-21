@@ -26,12 +26,12 @@ namespace GlobalTheory.MixModel
 
 variable {D : D7}
 
-def pairS (T : HSp D) {ρ : ℕ} (x x' : Mx D T.rank ρ) : AE D := (adj x' ⬝ (gA T ⬝ x)).trace
+def pairS (T : HSp D) {ρ : ℕ} (x x' : Mx D T.rank ρ) : AE D := (adj x' * (gA T * x)).trace
 
-def pairT (S : HSp D) {ρ : ℕ} (ξ η : Mx D ρ S.rank) : AE D := (giA S ⬝ (adj η ⬝ ξ)).trace
+def pairT (S : HSp D) {ρ : ℕ} (ξ η : Mx D ρ S.rank) : AE D := (giA S * (adj η * ξ)).trace
 
 theorem pairT_adj (S : HSp D) {ρ : ℕ} (c : AE D) (ξ : Mx D ρ S.rank) (y : Mx D S.rank ρ) :
-    pairT S ξ (c • (adj y ⬝ gA S)) = (cA D c • (y ⬝ ξ)).trace := by
+    pairT S ξ (c • (adj y * gA S)) = (cA D c • (y * ξ)).trace := by
   rw [pairT, adj_smul, adj_mul, adj_adj, adj_gA, Matrix.smul_mul, Matrix.mul_smul, Matrix.mul_assoc, giA_gA_cancel]
 
 namespace HypDec
@@ -41,28 +41,28 @@ section Source
 variable {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
 
 def extX : Mx D T.rank ρ →+ WO S T where
-  toFun x := x ⬝ d.pX
+  toFun x := x * d.pX
   map_zero' := Matrix.zero_mul _
   map_add' _ _ := Matrix.add_mul _ _ _
 
 def extY : Mx D T.rank ρ →+ WO S T where
-  toFun x := x ⬝ d.pY
+  toFun x := x * d.pY
   map_zero' := Matrix.zero_mul _
   map_add' _ _ := Matrix.add_mul _ _ _
 
 def ext0 : WO S₀ T →+ WO S T where
-  toFun w := w ⬝ d.p0
+  toFun w := w * d.p0
   map_zero' := Matrix.zero_mul _
   map_add' _ _ := Matrix.add_mul _ _ _
 
-theorem extX_apply (x : Mx D T.rank ρ) : d.extX T x = x ⬝ d.pX := rfl
+theorem extX_apply (x : Mx D T.rank ρ) : d.extX T x = x * d.pX := rfl
 
-theorem extY_apply (x : Mx D T.rank ρ) : d.extY T x = x ⬝ d.pY := rfl
+theorem extY_apply (x : Mx D T.rank ρ) : d.extY T x = x * d.pY := rfl
 
-theorem matrixExtendByZero_apply (w : WO S₀ T) : d.ext0 T w = w ⬝ d.p0 := rfl
+theorem matrixExtendByZero_apply (w : WO S₀ T) : d.ext0 T w = w * d.p0 := rfl
 
 def coordS : WO S T ≃+ Mx D T.rank ρ × WO S₀ T × Mx D T.rank ρ where
-  toFun w := (w ⬝ d.jX, w ⬝ d.j0, w ⬝ d.jY)
+  toFun w := (w * d.jX, w * d.j0, w * d.jY)
   invFun p := d.extX T p.1 + d.ext0 T p.2.1 + d.extY T p.2.2
   left_inv w := by
     simp only [extX_apply, extY_apply, matrixExtendByZero_apply, Matrix.mul_assoc]
@@ -73,7 +73,7 @@ def coordS : WO S T ≃+ Mx D T.rank ρ × WO S₀ T × Mx D T.rank ρ where
   map_add' x y := Prod.ext (Matrix.add_mul _ _ _) (Prod.ext (Matrix.add_mul _ _ _) (Matrix.add_mul _ _ _))
 
 theorem hO_coordS (w w' : WO S T) : hO S T w w' =
-    pairS T (w ⬝ d.jX) (w' ⬝ d.jY) + hO S₀ T (w ⬝ d.j0) (w' ⬝ d.j0) + pairS T (w ⬝ d.jY) (w' ⬝ d.jX) := by
+    pairS T (w * d.jX) (w' * d.jY) + hO S₀ T (w * d.j0) (w' * d.j0) + pairS T (w * d.jY) (w' * d.jX) := by
   simp only [hO_eq_trace, pairS, adj_mul]
   rw [d.giA_eq, Matrix.add_mul, Matrix.add_mul, trace_add, trace_add, Matrix.mul_assoc, trace_mul_comm,
     Matrix.mul_assoc d.j0, trace_mul_comm d.j0, Matrix.mul_assoc d.jY, trace_mul_comm d.jY]
@@ -118,18 +118,18 @@ theorem symplOH_extX_extY (x y : Mx D T.rank ρ) : symplOH S T (d.extX T x) (d.e
   simp only [map_zero, zero_add, add_zero, hO_eq_trace S₀, Matrix.mul_zero, trace_zero] at h
   rw [symplOH_eq, h, show pairS T (0 : Mx D T.rank ρ) 0 = 0 by simp [pairS], add_zero]
 
-def qS (c : skewA D ρ) (x : Mx D T.rank ρ) : AF D.host.F := symplOH S T (d.extX T x) (d.extY T (x ⬝ c.1))
+def qS (c : skewA D ρ) (x : Mx D T.rank ρ) : AF D.host.F := symplOH S T (d.extX T x) (d.extY T (x * c.1))
 
-theorem extX_levi (a : GL (Fin ρ) (AE D)) (x : Mx D T.rank ρ) : d.extX T x ⬝ mt S (d.levi a) = d.extX T (x ⬝ a.1) := by
+theorem extX_levi (a : GL (Fin ρ) (AE D)) (x : Mx D T.rank ρ) : d.extX T x * mt S (d.levi a) = d.extX T (x * a.1) := by
   rw [extX_apply, extX_apply, Matrix.mul_assoc, pX_levi, Matrix.mul_assoc]
 
 theorem extX_nC (c : skewA D ρ) (x : Mx D T.rank ρ) :
-    d.extX T x ⬝ mt S (d.nC c) = d.extX T x + d.extY T (x ⬝ c.1) := by
+    d.extX T x * mt S (d.nC c) = d.extX T x + d.extY T (x * c.1) := by
   rw [extX_apply, extY_apply, Matrix.mul_assoc, pX_nC, Matrix.mul_add, Matrix.mul_assoc]
 
 theorem extX_nB (b : Mx D ρ S₀.rank) (x : Mx D T.rank ρ) :
-    d.extX T x ⬝ mt S (d.nB b) =
-      d.extX T x + d.ext0 T (x ⬝ b) - d.extY T (x ⬝ (half D • (b ⬝ plus S₀ b))) := by
+    d.extX T x * mt S (d.nB b) =
+      d.extX T x + d.ext0 T (x * b) - d.extY T (x * (half D • (b * plus S₀ b))) := by
   rw [extX_apply, extY_apply, matrixExtendByZero_apply, Matrix.mul_assoc, pX_nB, Matrix.mul_sub, Matrix.mul_add, Matrix.mul_assoc,
     Matrix.mul_assoc]
 
@@ -185,40 +185,40 @@ section Target
 variable {T T₀ : HSp D} {ρ : ℕ} (d : HypDec T T₀ ρ) (S : HSp D)
 
 def incX : Mx D ρ S.rank →+ WO S T where
-  toFun ξ := d.jX ⬝ ξ
+  toFun ξ := d.jX * ξ
   map_zero' := Matrix.mul_zero _
   map_add' _ _ := Matrix.mul_add _ _ _
 
 def incY : Mx D ρ S.rank →+ WO S T where
-  toFun η := d.jY ⬝ η
+  toFun η := d.jY * η
   map_zero' := Matrix.mul_zero _
   map_add' _ _ := Matrix.mul_add _ _ _
 
 def inc0 : WO S T₀ →+ WO S T where
-  toFun w := d.j0 ⬝ w
+  toFun w := d.j0 * w
   map_zero' := Matrix.mul_zero _
   map_add' _ _ := Matrix.mul_add _ _ _
 
 def incAdj : Mx D S.rank ρ →+ WO S T where
-  toFun y := d.incY S (incA D (-D.host.xi0⁻¹) • (adj y ⬝ gA S))
+  toFun y := d.incY S (incA D (-D.host.xi0⁻¹) • (adj y * gA S))
   map_zero' := by rw [adj_zero, Matrix.zero_mul, smul_zero, map_zero]
   map_add' _ _ := by rw [adj_add, Matrix.add_mul, smul_add, map_add (f := _)]
 
-theorem incX_apply (ξ : Mx D ρ S.rank) : d.incX S ξ = d.jX ⬝ ξ := rfl
+theorem incX_apply (ξ : Mx D ρ S.rank) : d.incX S ξ = d.jX * ξ := rfl
 
-theorem incY_apply (η : Mx D ρ S.rank) : d.incY S η = d.jY ⬝ η := rfl
+theorem incY_apply (η : Mx D ρ S.rank) : d.incY S η = d.jY * η := rfl
 
-theorem wittDecomp_inclAnisotropicHom_apply (w : WO S T₀) : d.inc0 S w = d.j0 ⬝ w := rfl
+theorem wittDecomp_inclAnisotropicHom_apply (w : WO S T₀) : d.inc0 S w = d.j0 * w := rfl
 
 theorem incAdj_apply (y : Mx D S.rank ρ) :
-    d.incAdj S y = d.incY S (incA D (-D.host.xi0⁻¹) • (adj y ⬝ gA S)) := rfl
+    d.incAdj S y = d.incY S (incA D (-D.host.xi0⁻¹) • (adj y * gA S)) := rfl
 
 theorem wittDecomp_trace0Unit_mul_conj_neg_inv : incA D D.host.xi0 * cA D (incA D (-D.host.xi0⁻¹)) = 1 := by
   rw [GlobalTheory.DualPairCheck.cA_incA, ← map_mul, star_neg, star_inv₀, GlobalTheory.DualPairCheck.star_purely_imaginary_eq_neg, inv_neg, neg_neg,
     mul_inv_cancel₀ (GlobalTheory.DualPairCompare.embedding_xi_zero_ne_zero D), map_one]
 
 def coordT : WO S T ≃+ Mx D ρ S.rank × WO S T₀ × Mx D ρ S.rank where
-  toFun w := (d.pX ⬝ w, d.p0 ⬝ w, d.pY ⬝ w)
+  toFun w := (d.pX * w, d.p0 * w, d.pY * w)
   invFun p := d.incX S p.1 + d.inc0 S p.2.1 + d.incY S p.2.2
   left_inv w := by
     simp only [incX_apply, incY_apply, wittDecomp_inclAnisotropicHom_apply, ← Matrix.mul_assoc]
@@ -229,7 +229,7 @@ def coordT : WO S T ≃+ Mx D ρ S.rank × WO S T₀ × Mx D ρ S.rank where
   map_add' x y := Prod.ext (Matrix.mul_add _ _ _) (Prod.ext (Matrix.mul_add _ _ _) (Matrix.mul_add _ _ _))
 
 theorem hO_coordT (w w' : WO S T) : hO S T w w' =
-    pairT S (d.pX ⬝ w) (d.pY ⬝ w') + hO S T₀ (d.p0 ⬝ w) (d.p0 ⬝ w') + pairT S (d.pY ⬝ w) (d.pX ⬝ w') := by
+    pairT S (d.pX * w) (d.pY * w') + hO S T₀ (d.p0 * w) (d.p0 * w') + pairT S (d.pY * w) (d.pX * w') := by
   simp only [hO_eq_trace, pairT, adj_mul]
   rw [d.gA_eq]
   simp only [Matrix.add_mul, Matrix.mul_add, trace_add, Matrix.mul_assoc]
@@ -274,15 +274,15 @@ theorem hO_incX_incY (ξ η : Mx D ρ S.rank) : hO S T (d.incX S ξ) (d.incY S �
   rw [h, show pairT S (0 : Mx D ρ S.rank) 0 = 0 by simp [pairT], add_zero]
 
 theorem symplO_incX_incAdj (ξ : Mx D ρ S.rank) (y : Mx D S.rank ρ) :
-    symplO S T (d.incX S ξ) (d.incAdj S y) = Algebra.trace (AF D.host.F) (AE D) (y ⬝ ξ).trace := by
+    symplO S T (d.incX S ξ) (d.incAdj S y) = Algebra.trace (AF D.host.F) (AE D) (y * ξ).trace := by
   rw [symplO_eq, incAdj_apply, hO_incX_incY, pairT_adj]
   exact congrArg _ (mul_trace_smul wittDecomp_trace0Unit_mul_conj_neg_inv _)
 
 def qT (c : skewA D ρ) (y : Mx D S.rank ρ) : AF D.host.F :=
-  symplOH S T (d.incAdj S y) (mt T (d.nC c)⁻¹ ⬝ d.incAdj S y - d.incAdj S y)
+  symplOH S T (d.incAdj S y) (mt T (d.nC c)⁻¹ * d.incAdj S y - d.incAdj S y)
 
 theorem actO_incAdj (g : GA D S) (a : GL (Fin ρ) (AE D)) (y : Mx D S.rank ρ) :
-    actO S T g (d.levi a)⁻¹ (d.incAdj S y) = d.incAdj S (mt S g ⬝ y ⬝ a.1) := by
+    actO S T g (d.levi a)⁻¹ (d.incAdj S y) = d.incAdj S (mt S g * y * a.1) := by
   simp only [actO_eq, incAdj_apply, incY_apply, ← map_inv, cancel₂ (d.levi_jY _), inv_inv, adj_mul, mt_inv S g,
     Matrix.mul_assoc, Matrix.mul_smul, Matrix.smul_mul, gA_giA_cancel]
 
@@ -329,7 +329,7 @@ theorem diagSp_gram (N : ℕ) (neg : Fin N → Bool) (p q : ℕ) :
 theorem gram_check {N k l : ℕ} {neg : Fin N → Bool} {p q : ℕ} (a : Matrix (Fin N) (Fin k) D.host.E)
     (b : Matrix (Fin N) (Fin l) D.host.E) (c : Matrix (Fin k) (Fin l) D.host.E)
     (h : aᴴ * (Matrix.diagonal fun i => Examples₂.sgn (neg i) : Matrix (Fin N) (Fin N) D.host.E) * b = c) :
-    aᴴ ⬝ (show Matrix (Fin N) (Fin N) D.host.E from (diagSp D N neg p q).gram) ⬝ b = c := by
+    aᴴ * (show Matrix (Fin N) (Fin N) D.host.E from (diagSp D N neg p q).gram) * b = c := by
   rw [← h]; congr 2; exact diagSp_gram N neg p q
 
 section Field
@@ -371,7 +371,7 @@ def hypDecThree (D : D7) : HypDec (diagSp D 3 ![false, false, true] 2 1) (diagSp
   rank_add := rfl
 
 theorem pairS_plus (S₀ T : HSp D) {ρ : ℕ} (x : Mx D T.rank ρ) (b b' : Mx D ρ S₀.rank) :
-    pairS T x (x ⬝ (b' ⬝ plus S₀ b)) = hO S₀ T (x ⬝ b) (x ⬝ b') := by
+    pairS T x (x * (b' * plus S₀ b)) = hO S₀ T (x * b) (x * b') := by
   rw [pairS, hO_eq_trace, adj_mul, adj_mul_plus, plus, adj_mul, Matrix.mul_assoc, Matrix.mul_assoc, trace_mul_comm]
   simp only [Matrix.mul_assoc]
 
