@@ -87,7 +87,7 @@ theorem isStable_square_integrable_forms (hF : GlobalTheory.Published.Automorphi
   induction hφ using Submodule.span_induction with
   | mem ψ hψ => exact Submodule.subset_span ⟨PrAut.isAutForm_act hF o hψ.1, isSqInt_act hF o hψ.1 hψ.2⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 section Adj
@@ -101,7 +101,7 @@ theorem inner_rt {g : GA E N} (hg : ∀ φ ∈ W, rt E N g φ ∈ W) (hg' : ∀ 
     (hφ : φ ∈ W) (hψ : ψ ∈ W) :
     inner ℂ (cls h (rt E N g φ)) (cls h ψ) = inner ℂ (cls h φ) (cls h (rt E N g⁻¹ ψ)) := by
   have hrr : rt E N g (rt E N g⁻¹ ψ) = ψ := by
-    rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
+    rw [← mul_apply_eq_comp, ← map_mul, mul_inv_cancel, map_one, one_apply_eq_self]
   have e : toL2ₗ μ W h ⟨ψ, hψ⟩ = R (latticeGL E N) μ g (toL2ₗ μ W h ⟨rt E N g⁻¹ ψ, hg' ψ hψ⟩) := by
     rw [R_toL2ₗ h ⟨_, hg' ψ hψ⟩ (by rw [hrr]; exact hψ)]
     exact congrArg _ (Subtype.ext hrr.symm)

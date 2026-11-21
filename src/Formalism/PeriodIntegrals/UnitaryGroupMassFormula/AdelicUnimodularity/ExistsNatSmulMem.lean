@@ -33,7 +33,8 @@ variable {ι : Type} [Fintype ι] [DecidableEq ι]
 
 theorem exists_lower (b : Module.Basis ι F E) (L : Submodule (𝓞 E) (Fin n → E))
     (hL : Submodule.span E (L : Set (Fin n → E)) = ⊤) :
-    ∃ d : ℕ, 0 < d ∧ ∀ y : Fin n → E ⊗[F] Af F, (∀ j, IntC b (y j)) → d • y ∈ lamAf (F := F) L := by
+    ∃ d : ℕ, 0 < d ∧ ∀ y : Fin n → E ⊗[F] Af F,
+      (∀ j k, coord b (y j) k ∈ Ohat F) → d • y ∈ lamAf (F := F) L := by
   classical
   choose m hm hmL using fun p : Fin n × ι => exists_nat_smul_mem L hL (Pi.single p.1 (b p.2))
   refine ⟨∏ p, m p, Finset.prod_pos fun p _ => hm p, fun y hy => ?_⟩

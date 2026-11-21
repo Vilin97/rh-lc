@@ -10,6 +10,10 @@ public import Development.AutomorphicSpectrum.Statements.GeometryStatements.Nine
 public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.HeightComparisonGlobalModel
 public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.Rt0ConjNegNeZero
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FlatTheoremOfResolutionGagaStatement
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.GoodOrigin
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.SlopeBoundSt
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.FlatSat
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsSmulMemSpan
 
 @[expose] public section
 

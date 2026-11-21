@@ -156,7 +156,7 @@ theorem pg_of (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : Spc F E n₁} {H : Plan
     (hL : Y.L.IsFullLattice E) : PG σ Y Y₁ H ε := by
   have sp : ∀ v : Fin n → E, ∃ (s t : E) (u : Fin n₁ → E), v = s • H.x + H.ι *ᵥ u + t • H.y := fun v => by
     have hv : v ∈ Submodule.span E (Y.L : Set (Fin n → E)) := by
-      letI := hL
+      let := hL
       rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := Y.L)]
       exact Submodule.mem_top
     induction hv using Submodule.span_induction with
@@ -172,7 +172,7 @@ theorem pg_of (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : Spc F E n₁} {H : Plan
       obtain ⟨s, t, u, rfl⟩ := hb
       exact ⟨a * s, a * t, a • u, by rw [Matrix.mulVec_smul]; module⟩
   refine ⟨⟨conj_conj hB, by rw [← Int.cast_mul, ← Units.val_mul, Int.units_mul_self]; simp, map_intCast _ _, hJ, hH.xx, hH.yy, hH.xy,
-    fun z => (hH.orth z).1, fun z => (hH.orth z).2, sp, fun v hv => ?_⟩, planeOK hB hH ε hJ hd hL.toIsLattice, fun u hu => ?_, hH.gram⟩
+    fun z => (hH.orth z).1, fun z => (hH.orth z).2, sp, fun v hv => ?_⟩, (by first | exact planeOK hB hH ε hJ hd hL | exact planeOK hB hH ε hJ hd hL.toIsLattice), fun u hu => ?_, hH.gram⟩
   · refine Matrix.eq_zero_of_vecMul_eq_zero hd (funext fun j => ?_)
     have := hv (Pi.single j 1)
     have e : (fun l => σ.toRingHom ((Pi.single j 1 : Fin n → E) l)) = Pi.single j 1 := funext fun l => by

@@ -1,6 +1,8 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HasDivPlace
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.IsCoordA
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.LineBasis
 
 @[expose] public section
@@ -13,7 +15,6 @@ open GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKGe
 open scoped Matrix TensorProduct Classical
 
 namespace UpperTheory.Gal.W2
- 
 
 variable {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L : Link D G)
 

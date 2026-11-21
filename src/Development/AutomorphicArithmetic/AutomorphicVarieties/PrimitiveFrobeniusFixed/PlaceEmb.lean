@@ -95,7 +95,7 @@ private theorem tower {K K' Ω : Type} [Field K] [NumberField K] [Field K'] [Num
         (by rw [Set.mem_singleton_iff.1 hx, pow_mul, ← map_pow, hζ.pow_eq_one, map_one, one_pow])
       exact ⟨_, (map_pow ι' _ i).trans hi⟩
     | algebraMap x => exact ⟨(x : K'), by simp⟩
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   choose j hj using key
   exact ⟨{ toFun := j

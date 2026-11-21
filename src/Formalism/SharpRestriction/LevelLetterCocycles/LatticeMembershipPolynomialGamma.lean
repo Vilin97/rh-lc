@@ -99,7 +99,7 @@ theorem mem_filCris_of_jumps (τ₀ : K₀ →ₐ[Qp] LL) (τ : K →ₐ[Qp] LL)
   · exact filV_anti hua ha
   · have key : ∀ k : ℤ, a ≤ k → k ≤ u → ιV PD (LL := LL) (V := V) y ∈ FildR PD ρ τ k := by
       intro k hak
-      induction k, hak using Int.le_induction with
+      induction k, hak using Int.leInduction with
       | base => intro _; exact Submodule.mem_inf.mpr ⟨hD, ha⟩
       | succ k hak ih =>
         intro hk
@@ -471,6 +471,8 @@ theorem inNL_add {f g : Fin d → W.EE} (hf : InNL W T a e (abelian₂ W A a e) 
     have h2 := secIn_mulι W (Subalgebra.pow_mem _ (lA_mem W) κ₁) hg2
     have := secIn_add W h1 h2
     convert this using 1
+    funext k
+    simp only [Pi.add_apply, ι_lE, lE_add]
     ring
 
 theorem inNL_mulι {c : LetA O n} (hc : c ∈ W.AΔ) {f : Fin d → W.EE}
@@ -492,8 +494,9 @@ theorem inNL_smul (o : O) {f : Fin d → W.EE} (hf : InNL W T a e (abelian₂ W 
 
 theorem inNL_neg {f : Fin d → W.EE} (hf : InNL W T a e (abelian₂ W A a e) b f) :
     InNL W T a e (abelian₂ W A a e) b (-f) := by
-  have := inNL_smul W T A a e b (-1) hf
-  convert this using 1
+  convert inNL_smul W T A a e b (-1) hf using 1
+  funext k
+  simp only [Pi.neg_apply, neg_one_smul]
 
 theorem inNL_γ (hS : PsStable W) {f : Fin d → W.EE} (hf : InNL W T a e (abelian₂ W A a e) b f) :
     InNL W T a e (abelian₂ W A a e) b fun k => W.γE W.gam (f k) := by

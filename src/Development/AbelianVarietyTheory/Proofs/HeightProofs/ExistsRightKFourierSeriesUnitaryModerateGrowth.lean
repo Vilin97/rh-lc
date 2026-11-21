@@ -53,7 +53,7 @@ theorem toMK_expK_mul (ε : Fin n → Bool) (X : Mx n) (hK : inK ε X) (t : ℝ)
 theorem summable_listSum {ι : Type} (U : List ι) (b : ι → ℕ → ℝ) (hb : ∀ u ∈ U, Summable (b u)) :
     Summable fun i => (U.map fun u => b u i).sum := by
   induction U with
-  | nil => simpa using (summable_zero : Summable fun _ : ℕ => (0 : ℝ))
+  | nil => simp
   | cons u U ih =>
     simp only [List.map_cons, List.sum_cons]
     exact (hb u List.mem_cons_self).add (ih fun v hv => hb v (List.mem_cons_of_mem _ hv))
@@ -113,6 +113,8 @@ theorem exists_rightKFourier : ∀ (n : ℕ) (ε : Fin n → Bool), ∃ e : ℕ 
       funext t
       rw [one_mul, ← mul_one (expK ε X t), ← rder_left ε l _ (expK ε X t) 1]
       congr 1
+      funext x
+      unfold avgK
       rw [toMK_expK_mul ε X hK t x]
       simp only [Matrix.mul_assoc]
     show HasDerivAt (fun t : ℝ => rder ε l (avgK ε (kerE ε i) f (y * NormedSpace.exp (t • X))) 1)

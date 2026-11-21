@@ -52,7 +52,7 @@ theorem abs_le_coeff (d : ℕ) (Φ : RPA Ψ N →ₗ[ℝ] ℝ) (n k : ℕ) (hn :
     (Q : MvPolynomial (Option (Ψ × Fin N)) ℝ)
     (h : ∀ (lam : Wt Ψ N) (s : ℝ), (n : ℝ) * Φ (linA lam s ^ d) = eval (PB.gapS (fun x => lam x.1 x.2) (s / k)) Q)
     (m : Option (Ψ × Fin N) →₀ ℕ) (hm : m.degree = d) :
-    |Φ (monomial m 1)| ≤ |coeff m (PB.toWtS Q)| := by
+    |Φ (monomial m 1)| ≤ |(PB.toWtS Q).coeff m| := by
   obtain ⟨Pl, -, hev, -, hle⟩ := GlobalTheory.T.polarization_polynomial_coeff_bound (Option (Ψ × Fin N)) d Φ
   have hkR : (1 : ℝ) ≤ k := by exact_mod_cast hk
   have hnR : (1 : ℝ) ≤ n := by exact_mod_cast hn
@@ -66,11 +66,11 @@ theorem abs_le_coeff (d : ℕ) (Φ : RPA Ψ N →ₗ[ℝ] ℝ) (n k : ℕ) (hn :
   have hu1 : |u| ≤ 1 := by
     rw [hu, abs_neg, abs_of_pos (inv_pos.2 (by linarith))]
     exact inv_le_one_of_one_le₀ hkR
-  calc |Φ (monomial m 1)| ≤ |coeff m Pl| := hle m hm
-    _ ≤ (n : ℝ) * |coeff m Pl| := le_mul_of_one_le_left (abs_nonneg _) hnR
-    _ = |(n : ℝ) * coeff m Pl| := by rw [abs_mul, abs_of_nonneg (by linarith : (0 : ℝ) ≤ n)]
-    _ = |u| ^ m none * |coeff m (PB.toWtS Q)| := by rw [hco, abs_mul, abs_pow]
-    _ ≤ |coeff m (PB.toWtS Q)| := mul_le_of_le_one_left (abs_nonneg _) (pow_le_one₀ (abs_nonneg _) hu1)
+  calc |Φ (monomial m 1)| ≤ |Pl.coeff m| := hle m hm
+    _ ≤ (n : ℝ) * |Pl.coeff m| := le_mul_of_one_le_left (abs_nonneg _) hnR
+    _ = |(n : ℝ) * Pl.coeff m| := by rw [abs_mul, abs_of_nonneg (by linarith : (0 : ℝ) ≤ n)]
+    _ = |u| ^ m none * |(PB.toWtS Q).coeff m| := by rw [hco, abs_mul, abs_pow]
+    _ ≤ |(PB.toWtS Q).coeff m| := mul_le_of_le_one_left (abs_nonneg _) (pow_le_one₀ (abs_nonneg _) hu1)
 
 theorem PP_monomial_of_ne (II : IntersectionSystem) (M : RootModel Ψ N) (m : Option (Ψ × Fin N) →₀ ℕ)
     (hm : m.degree ≠ dimFl Ψ N + 1) : M.PP II (monomial m 1) = 0 := by
@@ -89,14 +89,14 @@ theorem tower_I1_of_reference_linked : PB.Coefficients → PB.AgreementPos → P
   obtain ⟨Cl, thH, Pfix, hth, hlink⟩ := hL
   have hpos : ∀ c, 0 < (R.Sys c).t₀ := fun c => ((R.Sys c).reg none).1
   choose C₂ hC₂ using fun c => hCo hI (dimFl Ψ N) N Ψ (R.Sys c) (thH c) (hth c)
-  set A : ℝ := ∑ c, ∑ m ∈ (Pfix c).support, |coeff m (Pfix c)| with hA
+  set A : ℝ := ∑ c, ∑ m ∈ (Pfix c).support, |(Pfix c).coeff m| with hA
   have hA0 : 0 ≤ A := Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => abs_nonneg _
-  have hAle : ∀ c m, |coeff m (Pfix c)| ≤ A := by
+  have hAle : ∀ c m, |(Pfix c).coeff m| ≤ A := by
     intro c m
     by_cases hm : m ∈ (Pfix c).support
-    · calc |coeff m (Pfix c)| ≤ ∑ m ∈ (Pfix c).support, |coeff m (Pfix c)| :=
-            Finset.single_le_sum (f := fun m => |coeff m (Pfix c)|) (fun _ _ => abs_nonneg _) hm
-        _ ≤ A := Finset.single_le_sum (f := fun c => ∑ m ∈ (Pfix c).support, |coeff m (Pfix c)|)
+    · calc |(Pfix c).coeff m| ≤ ∑ m ∈ (Pfix c).support, |(Pfix c).coeff m| :=
+            Finset.single_le_sum (f := fun m => |(Pfix c).coeff m|) (fun _ _ => abs_nonneg _) hm
+        _ ≤ A := Finset.single_le_sum (f := fun c => ∑ m ∈ (Pfix c).support, |(Pfix c).coeff m|)
             (fun _ _ => Finset.sum_nonneg fun _ _ => abs_nonneg _) (Finset.mem_univ c)
     · rw [notMem_support_iff.1 hm, abs_zero]
       exact hA0
@@ -117,13 +117,13 @@ theorem tower_I1_of_reference_linked : PB.Coefficients → PB.AgreementPos → P
     rw [h1, h2] at hd
     have hsum0 : 0 ≤ ∑ p ∈ Sf, α p * Real.log p :=
       Finset.sum_nonneg fun p hp => mul_nonneg (h4 p hp).2 (Real.log_natCast_nonneg p)
-    have hd2 : |AddMonoidAlgebra.coeff ((R.tie B c).Re.PBs II) m - coeff m (Pfix c)| ≤ |C₂ c| * |Cl| * Real.log B := by
+    have hd2 : |AddMonoidAlgebra.coeff ((R.tie B c).Re.PBs II) m - (Pfix c).coeff m| ≤ |C₂ c| * |Cl| * Real.log B := by
       calc _ ≤ C₂ c * ∑ p ∈ Sf, α p * Real.log p := hd
         _ ≤ |C₂ c| * ∑ p ∈ Sf, α p * Real.log p := mul_le_mul_of_nonneg_right (le_abs_self _) hsum0
         _ ≤ |C₂ c| * (|Cl| * Real.log B) := mul_le_mul_of_nonneg_left
             (h9.trans (mul_le_mul_of_nonneg_right (le_abs_self _) hlog0)) (abs_nonneg _)
         _ = _ := by ring
-    have hc1 : |coeff m ((R.tie B c).Re.PBs II)| ≤ A + |C₂ c| * |Cl| * Real.log B := by
+    have hc1 : |((R.tie B c).Re.PBs II).coeff m| ≤ A + |C₂ c| * |Cl| * Real.log B := by
       have := abs_sub_abs_le_abs_sub (AddMonoidAlgebra.coeff ((R.tie B c).Re.PBs II) m) (AddMonoidAlgebra.coeff (Pfix c) m)
       linarith [hAle c m]
     have hA2 : A ≤ A / Real.log 2 * Real.log B := by
@@ -132,7 +132,7 @@ theorem tower_I1_of_reference_linked : PB.Coefficients → PB.AgreementPos → P
     have hS : |C₂ c| * |Cl| ≤ ∑ c, |C₂ c| * |Cl| :=
       Finset.single_le_sum (f := fun c => |C₂ c| * |Cl|) (fun _ _ => by positivity) (Finset.mem_univ c)
     have hS2 := mul_le_mul_of_nonneg_right hS hlog0
-    calc _ ≤ |coeff m ((R.tie B c).Re.PBs II)| := hle
+    calc _ ≤ |((R.tie B c).Re.PBs II).coeff m| := hle
       _ ≤ A + |C₂ c| * |Cl| * Real.log B := hc1
       _ ≤ _ := by rw [add_mul]; linarith
   · rw [PP_monomial_of_ne II _ m hm, abs_zero]

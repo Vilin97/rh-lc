@@ -115,8 +115,8 @@ theorem smith_mat (hv : v.Integers R) : ∀ (d n : ℕ) (A : Matrix (Fin d) (Fin
   | d + 1, n + 1, A => by
     classical
     set g : Fin (n + 1) → Fin (d + 1) → R := fun j i => A i j with hg
-    have hp := exists_pivot (v := v) (b := d) (ι := Fin (n + 1)) hv g
-    obtain ⟨i0, a, u, s, hu, -, hs, hz, hnz⟩ := hp
+    obtain ⟨i0, a, u, s, hu, -, hs, hz, hnz⟩ :=
+      exists_pivot (v := v) (b := d) hv g
     by_cases ha : a = 0
     · have hA : A = 0 := by
         ext i j

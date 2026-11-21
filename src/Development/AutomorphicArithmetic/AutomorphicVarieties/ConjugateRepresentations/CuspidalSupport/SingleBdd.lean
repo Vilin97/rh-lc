@@ -24,10 +24,9 @@ private theorem exists_types {G H : Type} [Group G] [Group H] (i : H →* G) (W 
       (fun _ _ _ => by funext k; simp) (fun _ _ _ => by funext k; simp)
   refine ⟨LinearMap.range (TensorProduct.lift m), inferInstance, ?_, fun f hf g => ?_⟩
   · rintro _ ⟨t, rfl⟩ k'
-    induction t using TensorProduct.induction_on with
-    | zero => rw [map_zero]; exact zero_mem _
+    induction t using TensorProduct.inductionOn with
     | tmul l w => exact ⟨l ⊗ₜ ρ k' w, funext fun k => congrArg l (hρ k k' w).symm⟩
-    | add s t hs ht => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hs ht
+    | add s t hs ht => rw [map_add]; exact add_mem hs ht
   · exact ⟨((LinearMap.proj g).comp W.subtype) ⊗ₜ ⟨f, hf⟩, rfl⟩
 
 private theorem exists_types' {G H : Type} [Group G] [Group H] (i : H →* G) (C : Subgroup G) (hi : ∀ k, i k ∈ C) (f : G → ℂ)
@@ -54,7 +53,7 @@ private theorem exists_monic {M : Type} [AddCommGroup M] [Module ℂ M] (T : Mod
     induction q using Polynomial.induction_on' with
     | add q r hq hr => simp only [map_add (f := _), LinearMap.add_apply, hq, hr, Submodule.coe_add]
     | monomial n c =>
-      simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply, Submodule.coe_smul,
+      simp only [Polynomial.aeval_monomial, mul_apply_eq_comp, Module.algebraMap_end_apply, Submodule.coe_smul,
         Module.End.pow_restrict n hW, LinearMap.restrict_apply]
   rw [key, h]
   rfl
@@ -86,9 +85,9 @@ private theorem bdd_span {K : Type} [Field K] [NumberField K] {n : ℕ} (f : arc
     · induction hψ using Submodule.span_induction with
       | mem ψ hψ =>
         obtain ⟨y, hy, rfl⟩ := hψ
-        exact Submodule.subset_span ⟨z * y, mul_mem hz hy, by simp only [map_mul, Module.End.mul_apply]⟩
+        exact Submodule.subset_span ⟨z * y, mul_mem hz hy, by simp only [map_mul, mul_apply_eq_comp]⟩
       | zero => rw [map_zero]; exact zero_mem _
-      | add _ _ _ _ a b => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b
+      | add _ _ _ _ a b => rw [map_add]; exact add_mem a b
       | smul c _ _ a => rw [map_smul]; exact Submodule.smul_mem _ c a
     · rintro _ rfl
       exact ⟨1, one_mem _, by simp only [map_one, Module.End.one_apply]⟩

@@ -73,7 +73,7 @@ theorem rankOne_smul_mem_latO (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fi
     | add y z _ _ hy hz => rw [smul_add, map_add (f := _)]; exact add_mem hy hz
     | neg y _ hy => rw [smul_neg, map_neg]; exact neg_mem hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add (f := rankOneHom S T a), AddMonoidHom.add_apply]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 theorem actO_mem (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E))

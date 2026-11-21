@@ -79,16 +79,17 @@ noncomputable def GAe (p : ℕ) [Fact p.Prime] (LL : Letters N) (j : ℕ) (e : F
     rw [Finset.sum_ite_eq]
     split_ifs with h
     · rfl
-    · have := congrArg (AddMonoidAlgebra.coeff · d) (hS _ h)
-      rw [coeff_weightedHomogeneousComponent, if_pos rfl, MvPolynomial.coeff_zero] at this
-      exact this.symm
+    · simpa only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
+        coeff_weightedHomogeneousComponent, ite_true] using
+        congrArg (AddMonoidAlgebra.coeff · d) (hS _ h).symm
   idem := by
     classical
     intro μ ν x
     ext d
     by_cases h : μ = ν
-    · subst h; simp only [if_true, coeff_weightedHomogeneousComponent]; split_ifs <;> rfl
-    · simp only [if_neg h, MvPolynomial.coeff_zero, coeff_weightedHomogeneousComponent]
+    · subst h; simp only [ite_true, coeff_weightedHomogeneousComponent]; split_ifs <;> rfl
+    · simp only [ite_eq_right h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
+        coeff_weightedHomogeneousComponent]
       split_ifs with h1 h2 <;> first | rfl | (exfalso; exact h (h1.symm.trans h2))
   diag := by
     classical

@@ -221,6 +221,31 @@ theorem bd_prod (P Q : MvPolynomial σ ℂ) (u : σ → W) (hu : ∀ s, star (u 
   simp only [mul_comm (f _)]
   rw [polyDeriv_const_mul _ _ _ (hf 0), mul_comm]
 
+private noncomputable def quadMatrix {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
+    (X : Data E r) (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) : Matrix (Fin r) (Fin r) ℂ :=
+  KernSym.expM (τ.1 X.κ0) (X.Gm.map τ.1) (-sgnM X) (aLin X x₁ x₂ τ) (aAnti X x₁ x₂ τ)
+
+private theorem kZero_quad_expansion {E : Type} [Field E] [NumberField E] [IsCMField E]
+    {r g n : ℕ} (X : Data E r) (idx : Fin g ≃ X.Ψ × Fin r)
+    (x₁ x₂ : Frame X.Ψ r) (z w : Fin n → Fin g → ℂ) :
+    kZero X idx x₁ x₂ z w =
+      ∏ τ : X.Ψ, (((aLin X x₁ x₂ τ).det * (aAnti X x₁ x₂ τ).det) ^ (n / 2))⁻¹ *
+        cexp (Real.pi * ∑ k, KernSym.mixV X idx τ (w k) (z k) ⬝ᵥ
+          quadMatrix X x₁ x₂ τ *ᵥ KernSym.mixV X idx τ (z k) (w k)) := by
+  refine Finset.prod_congr rfl fun τ _ => ?_
+  congr 3
+  refine Finset.sum_congr rfl fun k _ => ?_
+  have h : dblZ X x₁ x₂ τ = KernSym.ptZ (τ.1 X.κ0) (X.Gm.map τ.1) (-sgnM X)
+      (aLin X x₁ x₂ τ) := by
+    rw [KernSym.ptZ, sgnM, diagonal_neg]
+    rfl
+  rw [h, quadMatrix, KernSym.expM]
+  change ((τ.1 X.κ0 / 2) • ((_ *ᵥ KernSym.mixV X idx τ (w k) (z k)) ᵥ* _)) ⬝ᵥ _ *ᵥ
+    ((-(τ.1 X.κ0 / 2)) • (_ *ᵥ _ *ᵥ KernSym.mixV X idx τ (z k) (w k))) = _
+  rw [smul_dotProduct, mulVec_smul, dotProduct_smul, smul_mulVec, dotProduct_smul, smul_smul,
+    mul_comm, ← vecMul_transpose, ← dotProduct_mulVec, ← dotProduct_mulVec]
+  simp only [mulVec_mulVec, Matrix.mul_assoc]
+
 theorem kZero_quad {E : Type} [Field E] [NumberField E] [IsCMField E] {r g n : ℕ} (X : Data E r)
     (idx : Fin g ≃ X.Ψ × Fin r) (x₁ x₂ : Frame X.Ψ r) :
     ∃ (A : ℂ) (B : ((Fin n → Fin g → ℂ) × (Fin n → Fin g → ℂ)) →ₗ[ℂ]
@@ -234,10 +259,10 @@ theorem kZero_quad {E : Type} [Field E] [NumberField E] [IsCMField E] {r g n : �
     funext a; simp only [KernSym.mixV, Pi.smul_apply]; split_ifs <;> rfl
   refine ⟨∏ τ : X.Ψ, (((aLin X x₁ x₂ τ).det * (aAnti X x₁ x₂ τ).det) ^ (n / 2))⁻¹,
     LinearMap.mk₂ ℂ (fun p q => ∑ τ : X.Ψ, Real.pi * ∑ k,
-    KernSym.mixV X idx τ (p.2 k) (p.1 k) ⬝ᵥ KernSym.kM X x₁ x₂ τ *ᵥ
+    KernSym.mixV X idx τ (p.2 k) (p.1 k) ⬝ᵥ quadMatrix X x₁ x₂ τ *ᵥ
       KernSym.mixV X idx τ (q.1 k) (q.2 k)) ?_ ?_ ?_ ?_, fun p => ?_⟩
   rotate_right
-  · rw [KernSym.kZero_eq, Finset.prod_mul_distrib, ← Complex.exp_sum]
+  · rw [kZero_quad_expansion, Finset.prod_mul_distrib, ← Complex.exp_sum]
     rfl
   · intro p p' q
     simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, ha, add_dotProduct,

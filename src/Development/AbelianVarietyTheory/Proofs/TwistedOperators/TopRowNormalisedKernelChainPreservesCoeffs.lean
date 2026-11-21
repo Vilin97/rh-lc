@@ -187,7 +187,8 @@ theorem colMap_coeff_mem : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0
       by_cases h : j < D.R.m
       · simp only [dif_pos h]
         exact coeff_map_mem K _ _ _ (fun a b => (memK _).2 (hrat ⟨j, h⟩ a b)) v hv
-      · simp only [dif_neg h, LinearMap.zero_apply, ZeroMemClass.coe_zero, coeff_zero]
+      · simp only [dif_neg h, LinearMap.zero_apply, ZeroMemClass.coe_zero,
+          AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
         exact fun _ => zero_mem K) D.R.m _ h0
   intro m
   exact (memK _).1 (hchain m)

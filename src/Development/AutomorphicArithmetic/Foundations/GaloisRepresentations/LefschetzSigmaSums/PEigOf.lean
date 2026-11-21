@@ -50,7 +50,7 @@ private lemma wop_restrict {M J : Type} [AddCommGroup M] [Module ℂ M] (U : Sub
     | nil => intro x; simp
     | cons j w ih =>
       intro x
-      simp only [List.map_cons, List.prod_cons, mul_apply_eq_comp, LinearMap.restrict_coe_apply, ih]
+      simp only [List.map_cons, List.prod_cons, mul_apply_eq_comp, LinearMap.coe_restrict_apply, ih]
   unfold wop
   simp only [Finsupp.sum, LinearMap.sum_apply, Submodule.coe_sum, LinearMap.smul_apply,
     Submodule.coe_smul, hw]

@@ -81,8 +81,11 @@ def affineSpacePresentedSelection (hemb : AffineEmbedsIntoAffineSpace.{u})
     PresentedSelection.{u} where
   sel := affineSpaceEmbeddingChoice hemb hsncE hsm
   pres := fun k _ _ Y p _ _ _ _ => affineSpaceChartPresentation hemb hsncE hsm k Y p
-  basePres := fun k _ _ Y p _ _ _ _ K _ _ _ hker hsncK =>
-    affineSpaceChartBaseChangePresentation hemb hsncE hsm k K Y p hker hsncK
+  basePres := fun k _ _ Y p _ _ _ _ K _ _ _ _ _ =>
+    let n := (hemb k Y p).choose
+    presentationOfAmbientIso hsm _ n
+      (baseChangeAffineSpaceIso k K (ULift.{u, 0} (Fin n)))
+      (baseChangeAffineSpaceIso_hom_comp_toSpec k K (ULift.{u, 0} (Fin n)))
 
 @[simp]
 theorem affineSpacePresentedSelection_selection (hemb : AffineEmbedsIntoAffineSpace.{u})

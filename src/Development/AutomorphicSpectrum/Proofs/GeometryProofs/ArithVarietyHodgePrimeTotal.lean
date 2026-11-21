@@ -652,7 +652,7 @@ theorem form_overlap (hp : p.Prime) (hpS : p ∈ S) (hs : mseg y s ≠ 0) (ht : 
   · have := congrArg Subtype.val (e1 a)
     simpa [algL_coe, algR_coe] using this
   · refine LinearMap.ext fun w => ?_
-    refine P₂.toLi_bc.inductionOn w (fun w => P₂.j u₂ w = ((mseg y s / mseg y t) ^ m • P₁.j u) w) (by simp) ?_ ?_ ?_
+    refine P₂.toLi_bc.inductionOn w ?_ ?_ ?_
     · intro e
       rw [P₂.j_apply]
       have := congrArg Subtype.val (e3 e)

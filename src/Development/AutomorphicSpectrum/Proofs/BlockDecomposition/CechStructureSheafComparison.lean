@@ -141,7 +141,7 @@ theorem sysVertex_bijective (t : Finset κ) (ht : t.Nonempty) : Function.Bijecti
 
 def sysCube : cubeOf e (toMod (MainStatements.Hodge.OSys s S)) ⟶
     GlobalTheory.cechCube R (GlobalTheory.structureModule X) ⊤ fun i ↦ (S.u (e i)).1 :=
-  GlobalTheory.Cube.homMk (sysVertex s S e hs) fun {t t'} h x ↦ by
+  GlobalTheory.Cube.homMk κ R (sysVertex s S e hs) fun {t t'} h x ↦ by
     by_cases ht : t.Nonempty
     · have ht' : t'.Nonempty := ht.mono h
       rw [sysVertex_apply s S e hs t' ht', sysVertex_apply s S e hs t ht]

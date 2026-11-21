@@ -35,12 +35,10 @@ theorem finPart_tmul (x : AF D.host.F) (e : D.host.E) :
     Formalism.L2.Theta.finPart D (x ⊗ₜ[D.host.F] e) = (sndA D.host.F x) ⊗ₜ[D.host.F] e := rfl
 
 theorem emb_mul (a : AE D) (x : AfE D) : emb D (Formalism.L2.Theta.finPart D a * x) = a * emb D x := by
-  induction a using TensorProduct.induction_on with
-  | zero => simp
+  induction a using TensorProduct.inductionOn with
   | add a b ha hb => simp only [map_add (f := _), add_mul, ha, hb]
   | tmul y e =>
-    induction x using TensorProduct.induction_on with
-    | zero => simp
+    induction x using TensorProduct.inductionOn with
     | add a b ha hb => simp only [map_add (f := _), mul_add, ha, hb]
     | tmul α f =>
       rw [finPart_tmul, Algebra.TensorProduct.tmul_mul_tmul, emb_tmul, emb_tmul,
@@ -87,10 +85,10 @@ theorem outer_mem (S T : HSp D) (Λ : Lt D.host.E S.rank) (L : Lt D.host.E T.ran
       exact ⟨β * α, intAf_mul hβ hα, vecMulVec x y, AddSubgroup.subset_closure ⟨x, hx, y, hy, rfl⟩,
         outer_pure S T x y α β⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | neg y _ hy => rw [map_neg]; exact neg_mem hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 theorem hatA_le (S T : HSp D) (Λ : Lt D.host.E S.rank) (L : Lt D.host.E T.rank) (K : AddSubgroup (WO S T))

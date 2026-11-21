@@ -66,7 +66,7 @@ theorem point_of_local_subring : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ
       have : θ (algebraMap ℤ Ω r) = (r : F) := by simp
       rw [this]
       exact intCast_mem A r
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   let θC : chartRing x c →+* A :=
     (θ.comp (chartRing x c).val.toRingHom).codRestrict A (fun s => hC s s.2)

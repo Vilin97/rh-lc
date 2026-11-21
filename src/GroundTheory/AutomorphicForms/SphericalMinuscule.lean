@@ -18,6 +18,8 @@ namespace Spherical
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ}
 
+local notation "π" => (GLnLocal.uniformizer F : F)
+
 theorem mem_integralGL_of_forall_mem {g : GL (Fin n) F} (h₁ : ∀ i j, g i j ∈ 𝒪[F])
     (h₂ : valuation F (g : Matrix (Fin n) (Fin n) F).det = 1) : g ∈ integralGL F n := by
   rw [mem_integralGL_iff]

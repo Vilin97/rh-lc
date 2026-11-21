@@ -141,7 +141,7 @@ theorem free_map_mono_of_loc (R : Type) [CommRing R] {P Q : PSh} (f : P ⟶ Q)
   have hd : Finsupp.mapDomain (f.app (op W)) (Finsupp.mapDomain (P.map k.op) c) = 0 := by
     rw [← Finsupp.mapDomain_comp]
     rw [show (f.app (op W) ∘ P.map k.op) = (Q.map k.op ∘ f.app (op V)) from
-      funext fun x => FunctorToTypes.naturality f k.op x]
+      funext fun x => NatTrans.naturality_apply f k.op x]
     rw [Finsupp.mapDomain_comp]; exact hk
   refine loc_mono (loc_kill f hi _ hd) ?_
   intro W' k' hk'

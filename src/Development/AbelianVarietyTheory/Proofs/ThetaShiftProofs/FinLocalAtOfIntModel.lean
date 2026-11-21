@@ -99,13 +99,13 @@ theorem gtTanR_of_letBC {K K' : Type} [Field K] [Field K'] {f : K →+* K'} {D :
     {p : IsPullDeg f D D'} {ν : GtPt D (epsR K)} {ν' : GtPt D' (epsR K')} (h : LetBC p ν ν') (ht : GtTanR ν') :
     GtTanR ν := by
   obtain ⟨h₁, h₂⟩ := (gtTanR_iff ν').1 ht
-  have h : ν'.b.left ≫ prj p = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ ν.b.left ∧ ∀ χ,
-      (∀ i, DegPre.gtφT D' (epsR K') ν'.b χ i ≫ prj p = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ DegPre.gtφT D (epsR K) ν.b (p.xe χ) i) ∧
-      PMaps p.w _ _ DegPre.gtε (ν'.s χ) (ν.s (p.xe χ)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f)) := ⟨h.1, fun χ => ⟨(h.2 χ).1, (maps_iff p.w _ _ _ (ν'.s χ) (ν.s (p.xe χ)) _ _
+  have h : ν'.b.left ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ ν.b.left ∧ ∀ χ,
+      (∀ i, DegPre.gtφT D' (epsR K') ν'.b χ i ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ DegPre.gtφT D (epsR K) ν.b (p.xe χ) i) ∧
+      PMaps p.w _ _ DegPre.gtε (ν'.s χ) (ν.s (p.xe χ)) (spMap (Formalism.L2.Pj.dualMap f)) := ⟨h.1, fun χ => ⟨(h.2 χ).1, (maps_iff p.w _ _ _ (ν'.s χ) (ν.s (p.xe χ)) _ _
     (GeneratorPullback.pullAlong_le _ _ _ _ _ (h.2 χ).1) (fun _ => rfl)).1 (h.2 χ).2⟩⟩
-  have sq : (origin K').left ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap f ≫ (origin K).left := by
+  have sq : (origin K').left ≫ spMap (Formalism.L2.Pj.dualMap f) = spMap f ≫ (origin K).left := by
     refine (spMap_comp _ _).symm.trans (Eq.trans (congrArg spMap ?_) (spMap_comp _ _))
-    exact RingHom.ext fun x => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    exact RingHom.ext fun x => by simp [Formalism.L2.Pj.dualMap]
   have : Flat (spMap f) := by
     refine (HasRingHomProperty.Spec_iff (P := @Flat)).2 ?_
     exact RingHom.Flat.of_isField (Field.toIsField K) _

@@ -48,8 +48,8 @@ private theorem oEl_dom {l : ℕ} [Fact l.Prime] {L : Loc} {G G' : Glob l L} (h 
   unfold GFrame.oEl
   rw [map_list_prod, List.map_ofFn]
   congr 2
-  congr 2
-  exact h.p₀_φ v (g i)
+  funext i
+  simp only [Function.comp_apply, map_sub, dom_single, map_one, h.p₀_φ]
 
 private theorem charpoly_element_eq_aeval_group_element {R G : Type} [CommRing R] [Group G] {n : ℕ} (g : G) (u : Fin n → R) :
     q1El g u = Polynomial.aeval (MonoidAlgebra.single g (1 : R)) (∏ i, (Polynomial.X - Polynomial.C (u i))) := by

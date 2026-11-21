@@ -15,6 +15,7 @@ namespace GlobalTheory.TorusTangent
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits NumberField MonoidalCategory CartesianMonoidalCategory MonObj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD Formalism.L2.Pj Formalism.L2.PjFree Formalism.L2.Pj.QAt GlobalTheory.ArcQ GlobalTheory.Frames
+open Formalism.L2.Pj (dualMap)
 open scoped LaurentSeries
 
 section Val
@@ -322,7 +323,7 @@ theorem b_zero_of_letBC (p : Out.IsPullDeg f D D₁) {ν : Out.GtPt D (epsR A)} 
   · rw [Over.comp_left, Over.comp_left, Category.assoc, Category.assoc, h.1, hb, zeroT_left, zeroT_left, Category.assoc,
       p.he, ← Category.assoc, ← Category.assoc]
     refine congrArg (· ≫ eSec D.P.A) ((spMap_comp _ _).trans ((congrArg spMap ?_).trans (spMap_comp _ _).symm))
-    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   · exact (Over.w (ν₁.b ≫ p.e.hom)).trans (Over.w (Out.DegPre.zeroT D₁ (epsR A') ≫ p.e.hom)).symm
 
 theorem dlog_of_letBC [IsLocalRing (DualNumber A)] [IsLocalRing (DualNumber A')] (p : Out.IsPullDeg f D D₁)

@@ -64,7 +64,7 @@ theorem repr_mem_of_coeff {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → Forma
       have : c b * AddMonoidAlgebra.coeff (bVVfun ℂ lam b) m = (⟨_, hK b m⟩ : K') • c b := by
         rw [Subfield.smul_def, smul_eq_mul, mul_comm]
       rw [this, map_smul, Subfield.smul_def, smul_eq_mul, mul_comm]
-    rw [coeff_sum, coeff_zero]
+    rw [coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     simp only [coeff_smul, smul_eq_mul, sub_mul, Finset.sum_sub_distrib]
     rw [← e1, ← e3, e2, sub_self]
   have hz := Fintype.linearIndependent_iff.1 (bVVfun_spec ℂ lam).1 _ key a
@@ -79,7 +79,8 @@ open Formalism.L2.DIV MvPolynomial
 
 theorem coeff_map_mem {ι : Type} [Fintype ι] {n n' : ℕ} {σ : ι → Formalism.BasicNotions.DomWeight n} {σ' : ι → Formalism.BasicNotions.DomWeight n'} {L : Type} [Field L] (κ : L →+* ℂ)
     (f : VV ℂ σ →ₗ[ℂ] VV ℂ σ') (hf : ∀ a b, (bVV ℂ σ').repr (f (bVV ℂ σ b)) a ∈ Set.range κ) (v : VV ℂ σ)
-    (hv : ∀ m, AddMonoidAlgebra.coeff v.1 m ∈ Set.range κ) (m : ι × Fin n' × Fin n' →₀ ℕ) : coeff m (f v).1 ∈ Set.range κ := by
+    (hv : ∀ m, AddMonoidAlgebra.coeff v.1 m ∈ Set.range κ) (m : ι × Fin n' × Fin n' →₀ ℕ) :
+    AddMonoidAlgebra.coeff (f v).1 m ∈ Set.range κ := by
   refine coeff_mem_of_repr σ' κ _ (fun a => ?_) m
   have e : f v = ∑ b, (bVV ℂ σ).repr v b • f (bVV ℂ σ b) := by
     conv_lhs => rw [← (bVV ℂ σ).sum_repr v]

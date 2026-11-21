@@ -50,7 +50,7 @@ theorem exists_finset_point {R : Type} [CommRing R] [IsDomain R] {F : Type} [Fie
     induction ha using Algebra.adjoin_induction with
     | mem x hx => exact hK (Finset.mem_image_of_mem _ hx)
     | algebraMap r => exact (hV r).symm ▸ K.algebraMap_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let f' : Γ(B.left, U) ⟶ CommRingCat.of K := CommRingCat.ofHom (f.hom.codRestrict K hr)
   refine ⟨Over.homMk (Spec.map f' ≫ hU.fromSpec) ?_, Over.OverMorphism.ext ?_⟩

@@ -36,8 +36,8 @@ theorem valR_of_corr {A : Type} [CommRing A] {X Y : Scheme.{0}} {L : LB X} (hL :
   · have hj' : ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ LB.wchart L (fun k => x ≫ ψ k) j := (le_wchart_iff L ψ x j).2 hj
     refine (valR_res (U := x ⁻¹ᵁ LB.wchart L ψ j) (𝟙 (Sp A)) _ _ hj').trans ?_
     exact (valR_comp (𝟙 (Sp A)) x (LB.wchart L ψ j) _).symm.trans (by rw [Category.id_comp])
-  · have h₀ : valR x (LB.wchart L ψ j) (t.s j).val = 0 := dif_neg hj
-    exact (dif_neg (fun h => hj ((le_wchart_iff L ψ x j).1 h))).trans h₀.symm
+  · have h₀ : valR x (LB.wchart L ψ j) (t.s j).val = 0 := dite_eq_right hj
+    exact (dite_eq_right (fun h => hj ((le_wchart_iff L ψ x j).1 h))).trans h₀.symm
 
 section Coord
 
@@ -98,7 +98,7 @@ theorem holAt_of_coord {x : V → (Sp ℂ ⟶ (thickObj R I e G).left)} {z : V}
   change _ ∈ S
   induction f using AddMonoidAlgebra.induction_linear with
   | zero => rw [map_zero]; exact zero_mem _
-  | add f f' h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
+  | add f f' h h' => rw [map_add (f := _)]; exact add_mem h h'
   | single χ r =>
     have hχ : ∀ χ : D.X, ((b.constr ℤ (fun k => Additive.ofMul (u k)) χ).toMul).val ∈ S := fun χ => by
       have : χ ∈ Submodule.span ℤ (Set.range b) := b.mem_span χ

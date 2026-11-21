@@ -1,5 +1,9 @@
 module
 
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineDescent.PatchOneAlt
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CsdScopeOfLift
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.PolarizedPairBaseChangePolarizedSameWeight
 
 @[expose] public section
 

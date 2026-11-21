@@ -51,7 +51,7 @@ theorem near_UA (h : PositivityTheory.KCo.IsSec σ t sec) {X : Spc F E n} (hu : 
     · rw [← sub_sub]
       exact hg.kd_sub (kd_at_matrix.2 fun i j => (at_sgl_smul _ _).kd_add (at_sgl_smul _ _))
     · ext i j
-      by_cases hij : i = j <;> simp [S, (h.smul _ _).1, h.fst, ev_sgl, one_apply, hij, map_sub]
+      by_cases hij : i = j <;> simp [S, (h.smul _ _).1, h.fst, ev_sgl, hij, map_sub]
     · have e1 := h.unit_rel g
       have e2 : ((mat g⁻¹).map (piW t))ᵀ * ((mat g).map (piW t))ᵀ = 1 := by
         rw [← transpose_mul, ← Matrix.map_mul, show mat g * mat g⁻¹ = 1 from g.1.mul_inv, Matrix.map_one _ (map_zero _) (map_one _),
@@ -64,7 +64,7 @@ theorem near_UA (h : PositivityTheory.KCo.IsSec σ t sec) {X : Spc F E n} (hu : 
         rfl
       rw [e3]
       ext i j
-      by_cases hij : i = j <;> simp [S, (h.smul _ _).2, h.snd, ev_sgl, one_apply, hij, map_sub]
+      by_cases hij : i = j <;> simp [S, (h.smul _ _).2, h.snd, ev_sgl, hij, map_sub]
   have c2 := cS.prodMk (cS.comp continuous_swap)
   filter_upwards [(c2.tendsto' (1, 1) (1, 1) (by simp [S1])).eventually (near_units h1)] with p hp g hg e1 e2
   have hg' : At (evFin F v) (mat g⁻¹ - 1) := by
@@ -120,7 +120,11 @@ theorem bump : Bump := by
   obtain ⟨⟨ι, hι⟩, -, -, k⟩ := dictX F E σ n d B X W M om χX χW hp.base ⟨_, _, hp.herm⟩ ⟨_, _, hp.skew⟩ hp.weil v t
   obtain ⟨⟨sec, h⟩, hsm⟩ := section_statement F E σ hp.base.cm v t
   have hG := grams h hp.herm hp.skew
-  have n1 := near_UA h hG.uA ((Euler.isOpen_int (σ := σ) (Euler.herm_full hp.herm) v).mem_nhds (one_mem _))
+  have hopen : IsOpen (Euler.intGrp σ X v : Set (UA σ X.J)) := by
+    first
+    | exact Euler.isOpen_int (Euler.herm_full hp.herm) v
+    | exact Euler.isOpen_int hp.herm.lat v
+  have n1 := near_UA h hG.uA (hopen.mem_nhds (one_mem _))
   have hv1 : ∀ᶠ y in 𝓝 (1 : Fv F v), ValuativeRel.valuation (Fv F v) y = 1 := by
     simpa [Filter.Eventually] using (ValuativeRel.valuation (Fv F v)).locally_const (x := 1) (by simp)
   have n2 := near_units (A := Matrix (Fin n) (Fin n) (Fv F v))

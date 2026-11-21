@@ -103,6 +103,8 @@ open Reduction AutomorphicForm CuspidalSpectrum RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => rationalGLOne (K := K) (n := n)
+
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem isHilbertSchmidt_cuspRep_of_bound (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)

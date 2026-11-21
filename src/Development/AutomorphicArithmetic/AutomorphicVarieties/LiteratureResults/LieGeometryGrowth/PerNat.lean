@@ -47,16 +47,14 @@ private def pb (ho : IsOpen (cone E a)) (U U' : Subgroup (GL (Fin a) (Af E))) (�
 
 private theorem ev_rT {d : ℕ} (x : GL (Fin a) (Af E)) (m : Sm E a ⊗[ℂ] (Fin d → ℂ)) (g : GA E a) :
     ev ((act (.fin x)).rTensor (Fin d → ℂ) m) g = ev m (g * finGL E a x) := by
-  induction m using TensorProduct.induction_on with
-  | zero => simp
+  induction m using TensorProduct.inductionOn with
   | tmul φ v => rfl
   | add m m' h h' => simp only [map_add (f := _), Pi.add_apply, h, h']
 
 private theorem rT_map' {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (T A : Module.End ℂ W)
     (B : Module.End ℂ (Fin d → ℂ)) (h : A * T = T * A) (m : W ⊗[ℂ] (Fin d → ℂ)) :
     T.rTensor _ (TensorProduct.map A B m) = TensorProduct.map A B (T.rTensor _ m) := by
-  induction m using TensorProduct.induction_on with
-  | zero => simp
+  induction m using TensorProduct.inductionOn with
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul φ v =>
     simp only [LinearMap.rTensor_tmul, TensorProduct.map_tmul]
@@ -112,7 +110,7 @@ theorem UpperTheory.V.Lit.Geo.perNat :
       obtain ⟨φ, v, hφ, rfl⟩ := hy
       exact Submodule.subset_span ⟨_, v, lev_fin hx Ξ hφ, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | smul s y _ hy => rw [map_smul]; exact Submodule.smul_mem _ s hy
   · refine AlternatingMap.ext fun X => ?_
     change _ = (act (.fin x)).rTensor (Fin Ξ.d → ℂ) (dCo (smLie Ξ) α X)

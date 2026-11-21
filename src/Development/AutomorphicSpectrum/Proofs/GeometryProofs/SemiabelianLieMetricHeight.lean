@@ -349,7 +349,7 @@ theorem torus_unif : GlobalTheory.Published.SemiAbelianHomExtension → ∀ (X :
   · intro F hF hFi
     obtain ⟨Z, hZ, i, hi, hr, hlift⟩ := GlobalTheory.T.irreducible_closed_integral_subscheme (XQ X) F hF hFi
     obtain ⟨U, C, hU, hC, hgood⟩ := stratum_good hFC X Ω K J y ξ hall hT G hG Li M h Z i hi
-    refine ⟨i '' (U : Set Z)ᶜ, hi.base_closed.isClosedMap _ U.isOpen.isClosed_compl, ?_, C, hC, fun t ht hnt => ?_⟩
+    refine ⟨i '' (U : Set Z)ᶜ, hi.isClosedEmbedding.isClosedMap _ U.isOpen.isClosed_compl, ?_, C, hC, fun t ht hnt => ?_⟩
     · have hsub : i '' (U : Set Z)ᶜ ⊆ F := by
         rintro _ ⟨p, -, rfl⟩
         exact hr ▸ Set.mem_range_self p
@@ -357,7 +357,7 @@ theorem torus_unif : GlobalTheory.Published.SemiAbelianHomExtension → ∀ (X :
       obtain ⟨p, hp⟩ := hU
       have hpF : i p ∈ F := hr ▸ Set.mem_range_self p
       obtain ⟨q, hq, hqp⟩ := hne hpF
-      exact hq (hi.base_closed.injective hqp ▸ hp)
+      exact hq (hi.isClosedEmbedding.injective hqp ▸ hp)
     · refine ⟨hC, fun L _ _ z GK _ φ τ hP ht' => ?_⟩
       obtain ⟨x', hx'⟩ := hlift L (toXQ (spMap (algebraMap (𝓞 L) L) ≫ z)) (ht' ▸ ht)
       refine hgood L z GK φ τ hP x' hx' ?_

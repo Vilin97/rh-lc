@@ -45,7 +45,7 @@ theorem dualMap_smul (a : Γ(X, ⊤)) (φ : F ⟶ G) : dualMap (a • φ) = a �
   rfl
 
 def dualQuotHom : dual (eigenQuot ρ σ) ⟶ eigen (dualAct ρ) σ :=
-  eigenLift (dualMap (eigenπ ρ σ)) fun a => by
+  eigenLift (ρ := dualAct ρ) (σ := σ) (dualMap (eigenπ ρ σ)) fun a => by
     rw [act_dualAct, ← dualMap_comp, act_eigenπ, dualMap_smul]
 
 instance isIso_dualQuotHom : IsIso (dualQuotHom ρ σ) := by
@@ -74,7 +74,7 @@ def dualQuotIso : dual (eigenQuot ρ σ) ≅ eigen (dualAct ρ) σ := asIso (dua
 
 theorem dualQuotIso_hom_ι :
     (dualQuotIso ρ σ).hom ≫ eigenι _ _ =
-      GlobalTheory.CompanionTheory.Ar.dualMap (eigenπ ρ σ) := by
+      dualMap (eigenπ ρ σ) := by
   simp only [dualQuotIso, asIso_hom, dualQuotHom, eigenLift_ι]
 
 def pullbackQuotIso (f : Y ⟶ X) : eigenQuot (pullAct ρ f) (f.appTop.hom.comp σ) ≅

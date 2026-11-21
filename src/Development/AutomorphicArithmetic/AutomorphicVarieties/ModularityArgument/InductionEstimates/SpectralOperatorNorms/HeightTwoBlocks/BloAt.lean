@@ -20,7 +20,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.bloAt :
       IsSummand (mu1 E r) V → ((cuspToL2 (mu1 E r) ⟨b.f.1, b.cusp⟩ : cuspidalL2 (mu1 E r)) : LL (mu1 E r)) ∈ V →
       At (mu1 E r) S V (fun τ => Finset.univ.val.map (b.Λ τ)) fun w => (b.sat w).map fun x : ℂˣ => (x : ℂ) := by
   intro E _ _ _ S r b V hV hf
-  obtain ⟨π, hπ, -⟩ := Dp.exCusp E r (mu1 E r) V hV
+  obtain ⟨π, hπ⟩ : ∃ π : GlobalTheory.CuspRep.CuspSub E r, Dp.Carries (mu1 E r) π V :=
+    (Dp.exCusp E r (mu1 E r) V hV).exists
   have hc : (⟨b.f.1, b.cusp⟩ : AutomorphicForm.cuspForms E r) ∈ AutomorphicForm.centralCuspForms E r := fun s x => by
     have := b.cen (Real.log s.1) x
     unfold zt at this

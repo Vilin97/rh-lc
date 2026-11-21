@@ -266,7 +266,9 @@ theorem main : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u :
       have k1' : (G ((ch u).triv V) : Hol (W u V.1)) - Charts.sh hle (G ((ch u).triv U)) =
         evc u f (Charts.ptHom ((ch u).triv V) hle) - (ch u).cst V (per l) := k1
       have k2' : Charts.sh hle (eva u f U) + evc u f (Charts.ptHom ((ch u).triv V) hle) =
-        valHom u V.1 ((cmpZZ (str A) f).1.1 _ _ a) + eva u f V := k2
+        valHom u V.1 ((cmpZZ (str A) f).1.1 _ _ a) + eva u f V := by
+          rw [cmpZZ_f (str A) f a]
+          exact k2
       simp only [H, map_sub]
       linear_combination k1' + k2'
     have k4 := congrArg (fun x : Hol (W u V.1) => x.fn (pt z)) k3
@@ -276,7 +278,8 @@ theorem main : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u :
   have hd : ∀ U : A.left.affineOpens, ∀ z ∈ pre u.ex U.1, HasFDerivAt (fun z => (H U).fn (pt z))
       ((fderiv ℂ (H U).fn (pt z)).comp (ContinuousLinearMap.inr ℂ _ _)) z := fun U z hz =>
     ((H U).analytic (pt z) hz).differentiableAt.hasFDerivAt.comp z (hasFDerivAt_prodMk_right 0 z)
-  refine ⟨cmpZZ (str A) f, fun U z => (H U).fn (pt z), rfl, ⟨fun U z hz => (hd U z hz).differentiableAt.differentiableWithinAt,
+  refine ⟨cmpZZ (str A) f, fun U z => (H U).fn (pt z), (comparison_mk (str A) f).symm,
+    ⟨fun U z hz => (hd U z hz).differentiableAt.differentiableWithinAt,
     fun U V a z hz => ?_, fun U z hz => ?_⟩, fun U l z hz => ?_⟩
   · have := key 0 U V a z hz
     simpa using this

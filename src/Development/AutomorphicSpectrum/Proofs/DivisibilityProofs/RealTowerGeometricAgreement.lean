@@ -57,7 +57,7 @@ theorem geoMono_word (hI : PB.Inputs) (M : RootModel Ψ N) {J : Ideal (MRing M.�
     rw [hms, dite_eq_left hk, hρ k hk]
     rfl
   unfold RootModel.geoMono
-  rw [if_pos hdeg, hML]
+  rw [ite_eq_left hdeg, hML]
   congr 1
   refine (ptsIntegral_one_eq_mInt hI.resExists resBridge R M.arith (L := (fun i => M.line 1 (w i)) ∘ ρ)
     (fun j => line_smooth M _)).trans ?_
@@ -98,9 +98,10 @@ theorem linA_eq (lam : Wt Ψ N) (s : ℝ) :
     Option.elim, neg_mul, Finset.sum_neg_distrib]
   rw [add_comm]
 
+omit [DecidableEq Ψ] in
 theorem xdeg_eq {M : RootModel Ψ N} {S : PB.AnSys (dimFl Ψ N) (Option (Ψ × Fin N))} {n : ℕ} (R : RealTie M S n)
     (r : Ψ × Fin N) (k : M.K) :
-    M.xdeg r k = (if h : 0 < (r.2 : ℕ) then
+    M.xdeg r k = (if _h : 0 < (r.2 : ℕ) then
       (R.Re.ref (some (r.1, ⟨(r.2 : ℕ) - 1, lt_of_le_of_lt (Nat.sub_le _ _) r.2.isLt⟩))).a k else 0) -
         (R.Re.ref (some r)).a k := by
   obtain ⟨τ, i⟩ := r
@@ -164,6 +165,94 @@ theorem sum_coef_lineCoef (M : RootModel Ψ N) (lam : Wt Ψ N) (s : ℝ) (a : Op
     simp only [lineCoef, RootModel.coef, PB.gapS, Option.elim, Int.cast_zero, mul_zero, zero_add]
     exact Cmp.sum_neg_mul_rootCoef (fun x : Ψ × Fin N => lam x.1 x.2) p
 
+open GlobalTheory.CompanionTheory.Ar.PB
+
+variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
+
+private theorem local_isSmoothHerm_combLine {σ : Type} [Fintype σ] {A : σ → HermLine ι} (hA : ∀ a, IsSmoothHerm (A a))
+    (n : σ → ℤ) : IsSmoothHerm (GlobalTheory.CompanionTheory.Ar.PB.combLine A n) := by
+  refine contDiffOn_prod fun a _ => ?_
+  intro z hz
+  have h0 : (A a).h z ≠ 0 := ((A a).pos z hz).ne'
+  have hf := hA a z hz
+  have key : ∀ m : ℤ, ContDiffWithinAt ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z => (A a).h z ^ m)
+      {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} z := by
+    intro m
+    cases m with
+    | ofNat k => simpa only [Int.ofNat_eq_natCast, zpow_natCast] using hf.pow k
+    | negSucc k =>
+      simp only [zpow_negSucc]
+      exact (hf.pow (k + 1)).inv (pow_ne_zero _ h0)
+  exact key _
+
+private theorem local_isC2At_of_isPotential {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X) {P : LocPot X}
+    (hP : IsPotential A P) (x : X) : IsTwiceDifferentiableAt A P x := by
+  intro j hj
+  have hm : A.chart j x ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' P.U x :=
+    ⟨(A.chart j).map_source hj, by
+      rw [Set.mem_preimage, (A.chart j).left_inv hj]; exact P.mem_U x⟩
+  exact (contDiffAt_of_isPotential A P hP x j hm).of_le (by
+    exact WithTop.coe_le_coe.mpr (le_top : (2 : ℕ∞) ≤ ⊤))
+
+private theorem local_mInt_potOf_eq_of_deg {P J : Ideal (MRing ι)} {e : ℕ} (R : AnLogRes P J e) {L L' : Fin e → HermLine ι}
+    (hL : ∀ j, IsSmoothHerm (L j)) (hL' : ∀ j, IsSmoothHerm (L' j)) (ha : ∀ j, (L j).a = (L' j).a) :
+    mInt R.A (fun j => potOf R (L j)) (fun _ => 1) = mInt R.A (fun j => potOf R (L' j)) (fun _ => 1) := by
+  let B : Fin e → HermLine ι := fun j => GlobalTheory.CompanionTheory.Ar.PB.combLine ![L j, L' j] ![1, -1]
+  have hB0 : ∀ j, (B j).a = 0 := fun j => by
+    rw [(combLine_div (L j) (L' j)).1, ha j, sub_self]
+  have hBs : ∀ j, IsSmoothHerm (B j) := fun j =>
+    RealGeo.local_isSmoothHerm_combLine (fun a => by
+      fin_cases a
+      · exact hL j
+      · exact hL' j) _
+  let u : Fin e → R.X → ℝ := fun j x => Real.log ((B j).h (R.lift x x))
+  have hu : ∀ j, R.A.Smooth (u j) := fun j => smooth_diag R (hBs j) (hB0 j)
+  have h1 : mInt R.A (fun j => potOf R (L j)) (fun _ => 1) =
+      mInt R.A (fun j => potOf R (L' j) + LocPot.ofFun (u j)) (fun _ => 1) := by
+    refine mInt_congr _ (locDens_congr_of_eqOn R fun i x y hy => ?_) fun _ => rfl
+    show Real.log ((L i).h (R.lift x y)) = Real.log ((L' i).h (R.lift x y)) + Real.log ((B i).h (R.lift y y))
+    have hm := (R.mem x y hy).1
+    rw [← h_eq_of_sameOrbit (hB0 i) (R.compat x y y ⟨hy, R.mem_U y⟩), (combLine_div (L i) (L' i)).2,
+      Real.log_div ((L i).pos _ hm).ne' ((L' i).pos _ hm).ne']
+    ring
+  rw [h1]
+  exact massIndep R.A _ u (fun i => isPotential_potOf R (hL' i)) hu
+
+
+private theorem local_mInt_ref_eq {D : ℕ} {σ : Type} {S : AnSys D σ} {P : Ideal (MRing ι)} (Re : Realis S P) (w : Fin D → σ) :
+    mInt Re.R.A (fun j => potOf Re.R (Re.ref (w j))) (fun _ => 1) = Re.deg * S.degNum w := by
+  have hth : ∀ a, IsPotential S.A (S.th a) := fun a => (S.sing a).1
+  have hpb : ∀ a, IsPotential Re.R.A ((S.th a).pullback Re.π Re.holo.1) := fun a =>
+    isPotentialPullback S.A Re.R.A Re.π Re.holo (S.th a) (hth a)
+  have h1 := (GlobalTheory.T.monge_ampere_integral_congr_potentials D Re.R.X Re.R.A Set.univ (fun j => potOf Re.R (Re.ref (w j)))
+    (fun j => (S.th (w j)).pullback Re.π Re.holo.1) (fun _ => 1) (fun _ => 1)
+    (fun j => by simp) (fun i => Re.ref_pot (w i)) (fun i x _ => local_isC2At_of_isPotential _ (hpb _) x)
+    (fun _ _ => rfl)).1
+  rw [h1]
+  exact (degreeFormulaInt S.A Re.R.A Re.π Re.holo Re.deg Re.br Re.degree (fun j => S.th (w j)) (fun i => hth _)
+    (fun _ => 1) (mIntegrableCont S.A _ (fun i => hth _) _ continuous_const)).2
+
+private theorem local_mInt_combLine_eq {D : ℕ} {σ : Type} [Fintype σ] {S : AnSys D σ} {P : Ideal (MRing ι)} (Re : Realis S P)
+    (n : Fin D → σ → ℤ) :
+    mInt Re.R.A (fun j => potOf Re.R (GlobalTheory.CompanionTheory.Ar.PB.combLine Re.ref (n j))) (fun _ => 1) =
+      ∑ w : Fin D → σ, (∏ i, (n i (w i) : ℝ)) * (Re.deg * S.degNum w) := by
+  have hP : ∀ a, IsPotential Re.R.A (potOf Re.R (Re.ref a)) := fun a => isPotential_potOf Re.R (Re.ref_smooth a)
+  have h1 : mInt Re.R.A (fun j => potOf Re.R (GlobalTheory.CompanionTheory.Ar.PB.combLine Re.ref (n j))) (fun _ => 1) =
+      mInt Re.R.A (fun j => sumPot (fun a => (n j a : ℝ)) fun a => potOf Re.R (Re.ref a)) (fun _ => 1) := by
+    refine mInt_congr _ (fun j y hy => ?_) fun _ => rfl
+    refine ReciprocityTheory.ChartRestriction.G.Geo.maDens_congr fun i => ?_
+    filter_upwards [((Re.R.A.chart j).isOpen_inter_preimage_symm (Re.R.isOpen_U ((Re.R.A.chart j).symm y))).mem_nhds
+      ⟨hy, Re.R.mem_U _⟩] with y' hy'
+    have hm := (Re.R.mem _ _ hy'.2).1
+    show Real.log (∏ a, (Re.ref a).h _ ^ n i a) = ∑ a, (n i a : ℝ) * Real.log ((Re.ref a).h _)
+    rw [Real.log_prod fun a _ => (zpow_pos ((Re.ref a).pos _ hm) _).ne']
+    exact Finset.sum_congr rfl fun a _ => Real.log_zpow _ _
+  rw [h1, (GlobalTheory.T.monge_ampere_integral_multilinear_expansion D Re.R.X Re.R.A σ Set.univ (fun a => potOf Re.R (Re.ref a)) (fun j a => (n j a : ℝ))
+    (fun _ => 1) (fun j => by simp) (fun a x _ => local_isC2At_of_isPotential _ (hP a) x)
+    (fun w => mIntegrableCont _ _ (fun i => hP _) _ continuous_const)).2]
+  exact Finset.sum_congr rfl fun w _ => by rw [local_mInt_ref_eq Re w]
+
+
 end RealGeo
 
 theorem geoFun_linA_pow_of_realTie : PB.Inputs → ∀ II : IntersectionSystem, IsFullIntersectionSystem II →
@@ -184,10 +273,10 @@ theorem geoFun_linA_pow_of_realTie : PB.Inputs → ∀ II : IntersectionSystem, 
           (∏ i, (RealGeo.lineCoef (w i) (v i) : ℝ)) * (R.Re.deg * S.degNum v)) /
           ((M.δ : ℝ) * (M.kA : ℝ) ^ (∑ j, Finsupp.single (w j) (1 : ℕ)) none) := by
     intro w
-    rw [RealGeo.geoMono_word hI M R.Re.R w, ← Cmp.mInt_combLine_eq R.Re fun j => RealGeo.lineCoef (w j)]
+    rw [RealGeo.geoMono_word hI M R.Re.R w, ← RealGeo.local_mInt_combLine_eq R.Re fun j => RealGeo.lineCoef (w j)]
     congr 1
-    exact Cmp.mInt_potOf_eq_of_deg R.Re.R (fun j => RealGeo.line_smooth M _)
-      (fun j => Cmp.isSmoothHerm_combLine R.Re.ref_smooth _) fun j => RealGeo.line_deg R _
+    exact RealGeo.local_mInt_potOf_eq_of_deg R.Re.R (fun j => RealGeo.line_smooth M _)
+      (fun j => RealGeo.local_isSmoothHerm_combLine R.Re.ref_smooth _) fun j => RealGeo.line_deg R _
   have heval : eval (PB.gapS (fun x => lam x.1 x.2) (s / M.kA)) S.degPoly =
       ∑ v, S.degNum v * ∏ j, PB.gapS (fun x => lam x.1 x.2) (s / M.kA) (v j) := by
     simp [PB.AnSys.degPoly, PB.formPoly]

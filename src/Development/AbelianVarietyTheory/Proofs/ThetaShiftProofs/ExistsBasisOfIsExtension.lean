@@ -40,7 +40,7 @@ theorem exists_basis_of_isExtension {K L : Type} [Field K] [Field L] [Algebra K 
   induction hx using Submodule.span_induction with
   | mem y hy => obtain ⟨i, rfl⟩ := hy; exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
   | smul d y _ hy => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
 
 theorem exists_basis_of_components {L : Type} [Field L] {M : Type} [AddCommGroup M] [Module L M] {C : Type}

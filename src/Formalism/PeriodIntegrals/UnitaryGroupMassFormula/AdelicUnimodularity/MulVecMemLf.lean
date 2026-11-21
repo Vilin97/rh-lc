@@ -64,7 +64,8 @@ theorem mulVec_mem_Lf (M : Matrix (Fin I.n) (Fin I.n) (I.E ⊗[I.F] Af I.F))
     exact Submodule.smul_mem _ a hx
 
 theorem isClosed_LfC (d : ℕ) (hd : 0 < d)
-    (hlow : ∀ y : Fin I.n → I.E ⊗[I.F] Af I.F, (∀ j, IntC (bs I) (y j)) → d • y ∈ I.Lf) :
+    (hlow : ∀ y : Fin I.n → I.E ⊗[I.F] Af I.F,
+      (∀ j k, coord (bs I) (y j) k ∈ Ohat I.F) → d • y ∈ I.Lf) :
     IsClosed {w : Fin I.n → ιb I → Af I.F | (fun j => emb (bs I) (w j)) ∈ I.Lf} := by
   let S : AddSubgroup (Fin I.n → ιb I → Af I.F) :=
     { carrier := {w | (fun j => emb (bs I) (w j)) ∈ I.Lf}

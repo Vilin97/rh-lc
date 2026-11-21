@@ -21,6 +21,8 @@ attribute [local instance 100] LieRing.ofAssociativeRing
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => Reduction.rationalGLOne (K := K) (n := n)
+
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 def cuspVecL : cuspForms K n →ₗ[ℂ] CuspL2 μ := cuspToL2 μ

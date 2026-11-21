@@ -21,10 +21,6 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 variable {n : ℕ}
 
--- Compatibility with dependency artifacts that refer to the old generated instance name.
-def instMeasurableSpaceSubtypeUnitsMatrixFinComplexMemSubgroupUJKG
-    (ε : Fin n → Bool) : MeasurableSpace (KG ε) := borel _
-
 abbrev Pt (ε : Fin n → Bool) := {a : Fin n // ε a = true}
 
 abbrev Qt (ε : Fin n → Bool) := {a : Fin n // ε a = false}

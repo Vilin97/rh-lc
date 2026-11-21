@@ -20,8 +20,7 @@ theorem conjIdem_sigR_tmul (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[
 
 theorem conjIdem_sigR_sigR (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E)
     (h : ∀ x, σ (σ x) = x) (y : R ⊗[F] E) : sigR R σ (sigR R σ y) = y := by
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul a x => rw [conjIdem_sigR_tmul, conjIdem_sigR_tmul, h]
   | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
@@ -38,8 +37,7 @@ variable [NumberField F] [NumberField E]
 omit [NumberField E] in
 theorem conjIdem_finPart_cA (σ : E →ₐ[F] E) (y : AE F E) :
     finPart F E (cA σ y) = sigR (Af F) σ (finPart F E y) := by
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul a x => rfl
   | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
@@ -53,7 +51,7 @@ theorem conjIdem_sigR_mem_intAE (σ : E →ₐ[F] E) (h : ∀ x : 𝓞 E, ∃ y 
     obtain ⟨z, hz⟩ := h x
     exact AddSubgroup.subset_closure ⟨a, ha, z, by rw [conjIdem_sigR_tmul, hz]⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
 
 end ConjIdem

@@ -77,7 +77,7 @@ theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
     (hc : ∀ x : X, ∃ U : 𝒰, x ∈ U.1)
     (T : 𝒰 → Scheme.{0}) (i : ∀ U, T U ⟶ X) [∀ U, IsOpenImmersion (i U)]
     (hr : ∀ U, (i U).opensRange = U.1) (haff : ∀ U : 𝒰, IsAffineOpen U.1)
-    (σ : ∀ U, G →* Aut (T U)) (hσ : ∀ U g, (σ U g).hom ≫ i U = i U ≫ (ρ g).asIso.hom)
+    (σ : ∀ U, G →* Aut (T U)) (hσ : ∀ U g, (σ U g).asIso.hom ≫ i U = i U ≫ (ρ g).asIso.hom)
     (Y : 𝒰 → Scheme.{0}) [∀ U, IsAffine (Y U)] (q : ∀ U, T U ⟶ Y U)
     (hq : ∀ U, IsAffineQuotient (σ U) (q U)) :
     ∃ (X' : Scheme.{0}) (π : X ⟶ X'), IsAffineQuotient ρ π := by
@@ -85,9 +85,9 @@ theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
   have hex (U : 𝒰) (x : X) (hx : x ∈ U.1) : ∃ y, i U y = x := by
     rw [← hr U] at hx; exact hx
   have hinj (U : 𝒰) : Function.Injective (i U) := (i U).isOpenEmbedding.injective
-  have hσ' (U : 𝒰) (g : G) (x : T U) : i U ((σ U g).hom x) = (ρ g).asIso.hom (i U x) :=
+  have hσ' (U : 𝒰) (g : G) (x : T U) : i U ((σ U g).asIso.hom x) = (ρ g).asIso.hom (i U x) :=
     congr($(hσ U g) x)
-  have hqσ (U : 𝒰) (g : G) (x : T U) : q U ((σ U g).hom x) = q U x :=
+  have hqσ (U : 𝒰) (g : G) (x : T U) : q U ((σ U g).asIso.hom x) = q U x :=
     congr($((hq U).comp_eq g) x)
   let m {U V : 𝒰} (h : U.1 ≤ V.1) : T U ⟶ T V := IsOpenImmersion.lift (i V) (i U) (by
     rintro _ ⟨x, rfl⟩
@@ -98,7 +98,8 @@ theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
   have hmo {U V : 𝒰} (h : U.1 ≤ V.1) : IsOpenImmersion (m h) := by
     have : IsOpenImmersion (m h ≫ i V) := by rw [hm]; infer_instance
     exact .of_comp _ (i V)
-  have hmσ {U V : 𝒰} (h : U.1 ≤ V.1) (g : G) : (σ U g).hom ≫ m h = m h ≫ (σ V g).hom := by
+  have hmσ {U V : 𝒰} (h : U.1 ≤ V.1) (g : G) :
+      (σ U g).asIso.hom ≫ m h = m h ≫ (σ V g).asIso.hom := by
     rw [← cancel_mono (i V), Category.assoc, Category.assoc, hm, hσ, hσ, reassoc_of% hm]
   let F : 𝒰 ⥤ Scheme.{0} :=
     { obj := Y
@@ -143,7 +144,7 @@ theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
     obtain ⟨k, hk⟩ := hfib _ _ _ h'
     rw [hm', hm', ← hσ'] at hk
     have := key _ _ hk
-    rwa [show e U ((σ U k).hom x) = e U x from hqσ U k x] at this
+    rwa [show e U ((σ U k).asIso.hom x) = e U x from hqσ U k x] at this
   have key2 {U V : 𝒰} (x : T U) (y : T V)
       (h : colimit.ι F U (e U x) = colimit.ι F V (e V y)) : i V y ∈ U.1 := by
     obtain ⟨W, f, g, z, -, h2⟩ := (Scheme.IsLocallyDirected.ι_eq_ι_iff F).mp h
@@ -196,7 +197,7 @@ theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
       exact ⟨_, (hj' U z).symm⟩
   refine ⟨colimit F, j, .of_cover (fun g ↦ 𝒱.hom_ext _ _ fun U ↦ ?_) fun y ↦ ?_⟩
   · change i U ≫ _ = i U ≫ _
-    have : (σ U g).hom ≫ e U = e U := (hq U).comp_eq g
+    have : (σ U g).asIso.hom ≫ e U = e U := (hq U).comp_eq g
     rw [← reassoc_of% hσ, hj, reassoc_of% this]
   · obtain ⟨U, x, rfl⟩ := Scheme.IsLocallyDirected.ι_jointly_surjective F y
     have : IsAffine (F.obj U) := inferInstanceAs (IsAffine (Y U))

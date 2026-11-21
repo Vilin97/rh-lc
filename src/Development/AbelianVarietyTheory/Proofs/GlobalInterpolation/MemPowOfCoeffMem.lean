@@ -44,7 +44,7 @@ theorem coeff_mem_of_mem_pow {σ : Type} (n : ℕ) :
       have hle : n + 1 - d.degree ≤ (n - p.1.degree) + (1 - p.2.degree) := by omega
       exact Ideal.pow_le_pow_right hle (by rw [pow_add]; exact Ideal.mul_mem_mul h1 h2)
     · intro x y hx hy d
-      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx d) (hy d)
+      rw [map_add (f := coeff d)]; exact add_mem (hx d) (hy d)
 
 theorem coeff_X_mul_add {σ : Type} [DecidableEq σ] (i : σ) (g : MvPowerSeries σ O) (d : σ →₀ ℕ) :
     coeff (d + Finsupp.single i 1) (X i * g) = coeff d g := by

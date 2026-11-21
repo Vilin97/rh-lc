@@ -65,4 +65,4 @@ theorem UpperTheory.isotypic_of_jointly_injective_into_isotypic :
       ⟨σ.asModuleEquiv v, rfl⟩
   · rw [map_zero]; exact zero_mem _
   · intro a b ha hb
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    rw [map_add]; exact add_mem ha hb

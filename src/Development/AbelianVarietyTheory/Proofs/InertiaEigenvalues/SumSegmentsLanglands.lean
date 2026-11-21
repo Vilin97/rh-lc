@@ -25,7 +25,7 @@ theorem lpChar_lpTw (x y : WD h) (s : ℝ) : (x.lpTw s).lpChar y = (x.lpChar y).
   · simp only [WDRep.tensor_ρ, WDRep.tw_ρ, LinearEquiv.refl_apply, TensorProduct.map_smul_left]
   · rfl
 
-theorem lpTw_lpZero (s : ℝ) : (WD.lpZero (h := h)).lpTw s = WD.lpZero := by
+theorem lpTw_lpZero (s : ℝ) : (WD.lpZero (h := h)).lpTw s = WD.lpZero (h := h) := by
   rw [WD.lpZero, WD.lpTw_mk]
   exact WD.sound ⟨.refl _ _, fun σ v => Subsingleton.elim _ _, fun v => Subsingleton.elim _ _⟩
 
@@ -50,8 +50,9 @@ theorem lpSum_segments_nu : ∀ (E Ω : Type) [Field E] [NumberField E] [Field �
     ∀ (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRec h rc →
     ∀ (l : List (Segment (w.adicCompletion E))) (c : ℝ),
       sumList ((l.map fun Γ => Γ.nu (c : ℂ)).map fun Δ =>
-          ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp Δ.len)) =
-        (sumList (l.map fun Δ => ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp Δ.len))).lpTw c := by
+          ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len)) =
+        (sumList (l.map fun Δ =>
+          ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len))).lpTw c := by
   intro E Ω _ _ _ _ _ A w
   letI := GlobalTheory.LocalData.complRel w
   haveI := GlobalTheory.LocalData.isLocalField w

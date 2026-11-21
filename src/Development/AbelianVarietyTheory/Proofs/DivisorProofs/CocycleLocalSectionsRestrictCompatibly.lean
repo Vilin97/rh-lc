@@ -27,13 +27,14 @@ def resThk (T : TT s) {p q : Pair (pt T)} (hpq : p ≤ q) : thk T q ⟶ thk T p 
 
 theorem bM_resThk (T : TT s) {p q : Pair (pt T)} (hpq : p ≤ q) :
     bM T q ≫ resThk T hpq = bM T p :=
-  ObjectProperty.hom_ext _ (Thick.hom_ext fun b ↦ res_toSec R T.obj.B (homOfLE (Pair.le_fst hpq)).op b)
+  ObjectProperty.hom_ext _ (Thick.Hom.ext' (AlgHom.ext fun b ↦
+    res_toSec R T.obj.B (homOfLE (Pair.le_fst hpq)).op b))
 
 theorem aM_resThk (T : TT s) {p q : Pair (pt T)} (hpq : p ≤ q) :
     aM T q ≫ resThk T hpq = (affF s).map (homOfLE (Pair.le_snd hpq)).op ≫ aM T p :=
-  ObjectProperty.hom_ext _ (Thick.hom_ext fun u ↦
+  ObjectProperty.hom_ext _ (Thick.Hom.ext' (AlgHom.ext fun u ↦
     (congrArg (fun t ↦ t.hom u) ((pt T).appLE_map q.2 (homOfLE (Pair.le_fst hpq)).op)).trans
-      (congrArg (fun t ↦ t.hom u) ((pt T).map_appLE p.2 (homOfLE (Pair.le_snd hpq)).op)).symm)
+      (congrArg (fun t ↦ t.hom u) ((pt T).map_appLE p.2 (homOfLE (Pair.le_snd hpq)).op)).symm))
 
 theorem hSec_res (f : Z1 ((IsTriv s).ι ⋙ O (dp0 R) s)) (g : C0 (OAff s))
     (hg : ∀ ⦃U V : AffOp X⦄ (a : U ⟶ V), g V - Sec.res s (leOfHom a.unop) (g U) = fv f ((affF s).map a))

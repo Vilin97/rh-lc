@@ -1,8 +1,10 @@
 module
 
 public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCut
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutTools
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreClosureNumber
+import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsVerticalDivOfIsVerticalDivisor
 
 @[expose] public section
 
@@ -195,7 +197,8 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
       have hc' : cls' ζi + cls' xi = fun o => (cs o : ℤ) - ch o := by
         rw [hdeg, hcls', hζi, hxi, closureDeg_zero, closureDeg_natAdd, hki, Fin.append_left]
       rw [hc']
-      exact pairNum_cut_section hC3 hϖ hM1' cls cls' F3 G3 hv3 hs hh hsP hhP hgen' (by omega) hBs₀ Q'
+      exact pairNum_cut_section hC3 hϖ hM1' cls cls' F3 G3 hv3 hs hh hsP hhP
+        (by simpa only [← FlagTypings.divCycle_eq] using hgen') (by omega) hBs₀ Q'
         (by rw [hQlen]; omega)
   rw [hT3]
 
@@ -301,13 +304,13 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
   have e1a : cycEval (fun W => classNum cls A Q' W) (ratDiv (pointIdeal O pt1) sT hT) =
       cycEval n' (ratDiv (pointIdeal O pt1) sT hT) := by
     refine cycEval_congr_support fun W hW => ?_
-    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W
+    by_cases hϖW : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W
     · simp only [hn', if_pos hϖW]
       exact hnA0 W hϖW hW
     · simp only [hn', if_neg hϖW]
   have e1b : cycEval n' (ratDiv (pointIdeal O pt1) sT hT) = cycEval n' (ratDiv (pointIdeal O pt1) s h) := by
     refine cycEval_congr_cycle fun W => ?_
-    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W
+    by_cases hϖW : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W
     · simp only [hn', if_pos hϖW, mul_zero]
     · have h3 : ratDiv (pointIdeal O pt1) f₃ g₃ W = 0 := by
         by_contra hne
@@ -325,7 +328,7 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
       else pairNum W cls cls' F3 G3 Bs₀ Q') (ratDiv (pointIdeal O pt1) s h) =
       cycEval G (ratDiv (pointIdeal O pt1) s h) := by
     refine cycEval_congr_support fun W hW => ?_
-    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W
+    by_cases hϖW : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W
     · rw [hn', hG]
       simp only [if_pos hϖW]
       have := hnA'0 W hϖW hW
@@ -376,7 +379,7 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
           exact h32
         · rw [hF3, hG3, closureForm_natAdd, closureForm_natAdd, closureForm_natAdd, closureForm_natAdd]
   · intro W hW
-    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∈ W
+    by_cases hϖW : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∈ W
     · rw [hG]
       simp only [if_pos hϖW, mul_zero]
     · rw [hdiv W hϖW, if_neg (fun h' => hW h'.2), zero_mul]

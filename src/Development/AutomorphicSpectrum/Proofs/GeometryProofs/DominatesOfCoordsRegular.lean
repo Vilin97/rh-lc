@@ -100,6 +100,7 @@ variable {j : W ⟶ Y} [IsOpenImmersion j] {ζ : Spec (CommRingCat.of Ω) ⟶ W}
 theorem specializes_comp_iff {w : W} : genPt (ζ ≫ j) ⤳ j w ↔ genPt ζ ⤳ w :=
   j.isOpenEmbedding.isInducing.specializes_iff
 
+omit [IsOpenImmersion j] in
 theorem dominates_open : Dominates ζ (ζ ≫ j) j (RingHom.id Ω) := by
   simp [Dominates]
 
@@ -308,7 +309,7 @@ theorem exists_chart_map (tie : CoordTie o ξ x) (hg' : IsCptGen ξ') (hall : �
       rw [map_div₀]
       exact (hV r hr).2 j
     | algebraMap s => exact ho s _
-    | add a b _ _ iha ihb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem iha ihb
+    | add a b _ _ iha ihb => rw [map_add]; exact add_mem iha ihb
     | mul a b _ _ iha ihb => rw [map_mul]; exact mul_mem iha ihb
   obtain ⟨w, hw⟩ := q
   subst hζ

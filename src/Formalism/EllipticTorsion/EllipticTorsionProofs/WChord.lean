@@ -370,6 +370,9 @@ lemma lam_mul (w : PowerSeries K) :
       | (rw [neg_inj]; apply key; omega)
       | (apply Eq.symm; apply key; omega)
 
+local notation "L" i => MvPowerSeries.coeff (Finsupp.single i 1)
+local notation "cc" => MvPowerSeries.constantCoeff
+
 lemma L_mul (φ ψ : MvPowerSeries (Fin 2) K) (i : Fin 2) :
     (L i) (φ * ψ) = cc φ * (L i) ψ + (L i) φ * cc ψ := by
   first

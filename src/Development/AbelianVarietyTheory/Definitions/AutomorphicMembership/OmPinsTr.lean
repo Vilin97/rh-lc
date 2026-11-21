@@ -166,7 +166,7 @@ theorem inGeo_tr {ph : Fin a.D.R.m → ℂ} {x : GeoHalf T R ph} (h : InGeo x) :
   case jEvBar => exact (by with_unfolding_all exact (h.jEvBar :))
   case evInj => exact (by with_unfolding_all exact (h.evInj :))
   case jUnif => exact (by with_unfolding_all exact (h.jUnif :))
-  case geoAct => kexactB h.geoAct
+  case geoAct => exact (by with_unfolding_all exact (h.geoAct :))
   case latFull => exact (by with_unfolding_all exact (h.latFull :))
   case dimMatch => exact (by with_unfolding_all exact (h.dimMatch :))
 

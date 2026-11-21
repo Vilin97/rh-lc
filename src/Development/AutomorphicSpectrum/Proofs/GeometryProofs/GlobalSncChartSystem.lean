@@ -334,7 +334,7 @@ theorem vb_shrink {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E
     · obtain ⟨p, hp, hf⟩ := hq
       rw [hon p hp q hf]
       exact Lat.patch_of_unique S₀ _ _ hp hf fun p' hp' h' => inFibre_unique (hS₀ p hp) (hS₀ p' hp') hf h'
-    · push_neg at hq
+    · push Not at hq
       rw [hoff q hq]
       exact Lat.patch_of_not S₀ _ _ hq
   show (Lat.patch S₀ (A.dR s) (fun p => A.HT p s)).IsVB (labelRk D s) (A.Vgen s)
@@ -497,10 +497,10 @@ theorem exists_geo : Top.Given → Out.WeilSt → ∀ (E : Type) [Field E] [Numb
   · intro p hp' s'
     exact ht_isVBOn A hβ (Finset.mem_union_right _ hp') s'
   · intro p hp'
-    simp only [dif_pos hp']
+    simp only [dite_eq_left hp']
     exact hvd ⟨p, hp'⟩
   · intro p hp' q hf ch hch b b' T hb hb' hT
-    simp only [dif_pos hp']
+    simp only [dite_eq_left hp']
     have h1 := hΔf ⟨p, hp'⟩ q hf b b' T hb hb' hT
     have h2 := (hde (some ⟨p, hp'⟩)).2 q trivial ch hch
     have he0 : e (some ⟨p, hp'⟩) ≠ 0 := (hde (some ⟨p, hp'⟩)).1

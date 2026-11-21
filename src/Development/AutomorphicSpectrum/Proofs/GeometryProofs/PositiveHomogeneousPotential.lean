@@ -102,7 +102,7 @@ theorem smooth_ratio {P Jd : Ideal (MRing J)} {D : ℕ} (R : AnLogRes P Jd D) {a
     rw [hγt]
     exact (hFφ _ ⟨hzV, hm₀⟩).1
   have hFa : AnalyticAt ℂ (fun t' => F (R.lift x₀ ((R.A.chart j).symm t'))) t :=
-    AnalyticAt.comp' (hF _ (by rw [hγt]; exact hzV)) hγ
+    AnalyticAt.fun_comp (hF _ (by rw [hγt]; exact hzV)) hγ
   have e1 : ContDiffAt ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun t' => F (R.lift x₀ ((R.A.chart j).symm t'))) t :=
     hFa.contDiffAt.restrict_scalars ℝ
   have e2 := (e1.norm ℝ hne).log (norm_ne_zero_iff.2 hne)
@@ -142,7 +142,7 @@ theorem isFlatOn_of_local {P Jd : Ideal (MRing J)} {D : ℕ} (R : AnLogRes P Jd 
   · intro j t ht
     have hγ := analyticAt_lift R x j ht.1 ht.2.1.1
     have hFa : AnalyticAt ℂ (fun t' => F (R.lift x ((R.A.chart j).symm t'))) t :=
-      AnalyticAt.comp' (hF _ ht.2.1.2) hγ
+      AnalyticAt.fun_comp (hF _ ht.2.1.2) hγ
     have hga : AnalyticAt ℂ (fun t' => F (R.lift x ((R.A.chart j).symm t')) / F (R.lift x x)) t :=
       hFa.div analyticAt_const hf0
     exact (hga.clog ht.2.2).add analyticAt_const

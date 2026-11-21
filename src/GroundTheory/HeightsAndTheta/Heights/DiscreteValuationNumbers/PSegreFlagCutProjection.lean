@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCutLiesOver
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCutProjection
 
 @[expose] public section
 
@@ -34,7 +35,6 @@ theorem specialIdeal_le_contractPrime {O : Type*} [CommRing O] [IsDomain O] [IsD
   exact Ideal.mem_map_of_mem _ (h hf)
 
 end SegreFlagCutProjection
-
 
 open SegreFlagCutProjection in
 theorem SegreFlagCutProjection.proof (hLies : SegreFlagCutLiesOver.Statement)

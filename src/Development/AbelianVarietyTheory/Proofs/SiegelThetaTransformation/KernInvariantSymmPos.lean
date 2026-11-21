@@ -19,6 +19,8 @@ section Matrices
 
 variable {r : ℕ}
 
+local notation "Mat" => Matrix (Fin r) (Fin r) ℂ
+
 def cj (M : Mat) : Mat := M.map conj
 
 theorem cj_mul (M N : Mat) : cj (M * N) = cj M * cj N := Matrix.map_mul
@@ -39,7 +41,7 @@ def mix (p : ℕ) (M N : Mat) : Mat := Matrix.of fun a c => if (a : ℕ) < p the
 
 theorem mix_mul (p : ℕ) (M N U : Mat) : mix p M N * U = mix p (M * U) (N * U) := by
   ext a c
-  simp only [mix, mul_apply, of_apply]
+  simp only [mix, Matrix.mul_apply, of_apply]
   split_ifs <;> rfl
 
 def ptZ (κ : ℂ) (G S A : Mat) : Mat := (κ / 4) • ((A⁻¹ * S * A)ᵀ * G)
@@ -264,7 +266,7 @@ theorem sgnM_mul_self : sgnM X * sgnM X = 1 := by
 
 theorem cj_sgnM : cj (-sgnM X) = -sgnM X := by
   ext a b
-  by_cases h : a = b <;> simp [cj, sgnM, diagonal_apply, h]
+  by_cases h : a = b <;> simp [cj, sgnM, h]
 
 
 variable {X} in
@@ -280,7 +282,7 @@ theorem aLin_aAnti_comm {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h₂
       (N * (aAnti X x₁ x₂ τ)ᵀ) a b = (aAnti X x₁ x₂ τ * Nᵀ) b a := by
     rw [← transpose_apply (aAnti X x₁ x₂ τ * Nᵀ), transpose_mul, transpose_transpose]
   ext a b
-  rw [Matrix.mul_neg, Matrix.neg_mul, neg_apply, neg_apply, sgnM, mul_diagonal, diagonal_mul,
+  rw [Matrix.mul_neg, Matrix.neg_mul, Matrix.neg_apply, Matrix.neg_apply, sgnM, mul_diagonal, diagonal_mul,
     aLin_eq, mix_mul, mix_mul, mul_nonsing_inv_cancel_right _ _ uG', mix, of_apply, e, e,
     aAnti_eq, mix_mul, mix_mul, transpose_transpose, nonsing_inv_mul _ u₂, transpose_mul,
     transpose_nonsing_inv, transpose_nonsing_inv, transpose_transpose, Matrix.mul_assoc _ (X.Gm.map τ.1) (_ * _),

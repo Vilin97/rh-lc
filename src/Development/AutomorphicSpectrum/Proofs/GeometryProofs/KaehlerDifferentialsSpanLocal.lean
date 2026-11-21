@@ -36,7 +36,7 @@ theorem derivation_mem_span {S B M : Type} [CommRing S] [Algebra ℚ S] [CommRin
       rw [hL]
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add y w _ _ hy hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hw
+    | add y w _ _ hy hw => rw [map_add]; exact add_mem hy hw
     | smul a y _ hy =>
       rw [map_smul, hsm]
       exact Submodule.smul_mem _ _ hy
@@ -102,7 +102,8 @@ theorem maximalIdeal_eq_span_of_span_D :
     rintro _ ⟨s, _, rfl⟩
     exact hfs s
   apply le_antisymm _ hJm
-  exact Submodule.le_of_le_smul_of_le_jacobson_bot (IsNoetherian.noetherian m)
-    (IsLocalRing.maximalIdeal_le_jacobson _) hle
+  exact Submodule.le_of_le_smul_of_le_jacobson (IsNoetherian.noetherian m)
+    (by simpa only [Ideal.jacobson_bot] using
+      (IsLocalRing.maximalIdeal_le_jacobson (⊥ : Ideal B))) hle
 
 end GlobalTheory.CompanionTheory.Kaehler

@@ -32,6 +32,7 @@ theorem sc_mul {S : Type} [CommRing S] (s t : S) : sc s ≫ sc t = sc (s * t) :=
 theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
     spMap (dualMap g) ≫ spMap (dualMap f) = spMap (dualMap (g.comp f)) := by
   refine (spMap_comp_spMap _ _).trans ?_
+  change spMap ((dualMap g).comp (dualMap f)) = spMap (dualMap (g.comp f))
   congr 1
   refine RingHom.ext fun x => ?_
   ext <;> simp [dualMap]

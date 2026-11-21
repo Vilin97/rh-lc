@@ -510,11 +510,14 @@ theorem kerAt_full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG))
     intro x hx
     have hm : p • x ∈ Submodule.span E (d.1.kerAt P : Set (Sp E n)) :=
       Submodule.subset_span (d.2.smul_mem_kerAt P hp hx)
-    rw [← algebraMap_smul E p x] at hm
+    have hm' : (algebraMap (𝓞 E) E p) • x ∈
+        Submodule.span E (d.1.kerAt P : Set (Sp E n)) := by
+      simpa only [algebraMap_smul] using hm
     have hpE : algebraMap (𝓞 E) E p ≠ 0 := (IsFractionRing.injective (𝓞 E) E).ne hp0
     have := Submodule.smul_mem (Submodule.span E (d.1.kerAt P : Set (Sp E n)))
-      (algebraMap (𝓞 E) E p)⁻¹ hm
-    simpa [smul_smul, hpE] using this
+      (algebraMap (𝓞 E) E p)⁻¹ hm'
+    change x ∈ Submodule.span E (d.1.kerAt P : Set (Sp E n))
+    simpa only [smul_smul, inv_mul_cancel₀ hpE, one_smul] using this
   letI := d.full_lattice
   exact top_unique (Submodule.IsFullLattice.span_eq_top (A := E) (M := d.1.N) ▸ hle)
 

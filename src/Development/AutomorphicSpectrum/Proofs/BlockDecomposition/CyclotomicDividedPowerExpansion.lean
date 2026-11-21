@@ -34,7 +34,7 @@ theorem exists_sub_one_pow {p : ℕ} (hp : p.Prime) {B : Type} [CommRing B] (x :
         simpa [Polynomial.map_sum] using hmod
     rw [Polynomial.C_dvd_iff_dvd_coeff]
     intro i
-    have h5 := congrArg (fun f ↦ coeff f i) hmap
+    have h5 := congrArg (fun f : (ZMod p)[X] ↦ f.coeff i) hmap
     simp only [coeff_map, coeff_zero] at h5
     exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ p).1 (by simpa using h5)
   obtain ⟨g, hg⟩ := hdvd

@@ -95,6 +95,7 @@ theorem hermForm_eq_of_orth {i : Fin W.F.n} {P : (W.F.Di i).La →+ (Fin W.g →
   rw [of_apply, ← key, ← UnitDet.hermForm_mulVec, hcol, hcol]
   have hi : ∀ j j' : Fin (Dw.mult τ), W.e.symm ⟨τ, j⟩ = W.e.symm ⟨τ, j'⟩ ↔ j = j' := fun j j' => by simp
   simp [hermForm, smul_mulVec, sum_dotProduct, dotProduct_sum, star_sum, Pi.single_apply, hi, mul_apply, mul_comm]
+  simp [Matrix.mul_apply, Matrix.conjTranspose_apply, mul_comm]
 
 end Riemann
 
@@ -119,7 +120,7 @@ variable (U : ∀ σ : c.F →+* ℂ, Formalism.L2.PjFree.Unf Xo c σ r)
 def IsHodgeFrame (y : CxPts (genStr Z) σ) (g : EigFrame Z σ (y.1 ≫ genι Z)) : Prop :=
   ∃ (ψ : ℂ →+* ℂ) (σ' : c.F →+* ℂ) (k : (U σ').Comp) (x : ((U σ').X k).dom),
     (ψ = RingHom.id ℂ ∨ ψ = starRingEnd ℂ) ∧ σ' = ψ.comp σ ∧ Formalism.L2.PjFree.GoodEmb c σ' ∧ IsOrth ((U σ').X k) x.1 ∧
-      (cxPt Z ((U σ').un k x)).1 = spMap ψ ≫ y.1 ∧ (_root_.GlobalTheory.ShFam.EigFrame.IsMap g) ψ (cxFrame Z ((U σ').un k x))
+      (cxPt Z ((U σ').un k x)).1 = spMap ψ ≫ y.1 ∧ g.IsMap ψ (cxFrame Z ((U σ').un k x))
 
 
 open Classical in
@@ -239,7 +240,8 @@ theorem IsHodgeFrame.unitary (hf : IsHodgeFrame U y f) (hg : IsHodgeFrame U y g)
   rw [h6.co τ hg' hx] at key
   have k2 : ((f.co g τ).map ψ)ᴴ * (f.co g τ).map ψ = 1 := smul_right_injective _ h7 (key.symm.trans (by
     ext b b'
-    simp [hermForm, smul_mulVec, Pi.single_apply, one_apply, eq_comm]))
+    simp [hermForm, smul_mulVec, Pi.single_apply, one_apply, eq_comm]
+    simp [Matrix.one_apply, eq_comm]))
   rcases h1 with rfl | rfl
   · exact k2
   · have := congrArg (fun M => M.map (starRingEnd ℂ)) k2

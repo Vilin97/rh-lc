@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HasDivPlace
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.DiagAct
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsGDatumOneOneOne
 public import Development.AbelianVarietyTheory.Definitions.Divisors.Uniformised

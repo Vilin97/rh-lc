@@ -265,7 +265,7 @@ theorem main : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X] (Ω : Type) [Field �
       obtain ⟨y', hy', hc⟩ := c2 y hy
       exact Submodule.subset_span ⟨y', hy', hpull q' hy hy' hc hxw⟩
     | zero => simp
-    | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
+    | add x z _ _ hx hz => rw [map_add]; exact add_mem hx hz
     | smul a x _ hx =>
       obtain ⟨a, ha⟩ := a
       have : jd ((⟨a, ha⟩ : regAt ξ ⟨f q'.1, hsp⟩) • x) = i a • jd x := hjs a x

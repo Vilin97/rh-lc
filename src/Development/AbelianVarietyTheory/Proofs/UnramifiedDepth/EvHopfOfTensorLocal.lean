@@ -345,7 +345,10 @@ theorem _root_.GlobalTheory.EvHopf.evHopf_of_tensorLocal :
       rw [hsum]
       exact Submodule.sum_mem _ fun jk _ => hG jk.1 jk.2
     | zero => rw [map_zero]; exact zero_mem _
-    | add f f' _ _ hf hf' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hf'
+    | add f f' _ _ hf hf' =>
+      rw [(_root_.ReciprocityTheory.PGsh.L2.addPull Tw.O.carrier
+        (_root_.ReciprocityTheory.PGsh.Up.Nb p g)).map_add]
+      exact add_mem hf hf'
     | smul r f _ hf => rw [map_smul]; exact Submodule.smul_mem _ r hf
   · unfold _root_.ReciprocityTheory.PGsh.Be2.Dat.evImg at hf ⊢
     induction hf using Submodule.span_induction with

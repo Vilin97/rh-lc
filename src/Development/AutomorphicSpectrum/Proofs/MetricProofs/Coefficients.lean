@@ -60,7 +60,7 @@ theorem coefficients : Coefficients := by
     constructor
     · have hhom := ((formPoly_isHomogeneous_and_eval (Option (Ψ × Fin N)) (D + 1) (Re.limNum II)).1).sub
         ((formPoly_isHomogeneous_and_eval (Option (Ψ × Fin N)) (D + 1) (Re'.limNum II)).1)
-      have hco : ∀ m, |coeff m (formPoly (D + 1) (Re.limNum II) - formPoly (D + 1) (Re'.limNum II))| ≤
+      have hco : ∀ m, |(formPoly (D + 1) (Re.limNum II) - formPoly (D + 1) (Re'.limNum II)).coeff m| ≤
           ((Fintype.card (Option (Ψ × Fin N)) : ℝ)) ^ (D + 1) * (C₂' * ∑ p ∈ T, α p * Real.log p) :=
         fun m => by
           rw [coeff_sub]
@@ -73,8 +73,8 @@ theorem coefficients : Coefficients := by
     · have hhom := ((formPoly_isHomogeneous_and_eval (Ψ × Fin N) (D + 1)
           (fun w => Re.limNum II (some ∘ w))).1).sub
         ((formPoly_isHomogeneous_and_eval (Ψ × Fin N) (D + 1) (fun w => Re'.limNum II (some ∘ w))).1)
-      have hco : ∀ m, |coeff m (formPoly (D + 1) (fun w => Re.limNum II (some ∘ w)) -
-          formPoly (D + 1) (fun w => Re'.limNum II (some ∘ w)))| ≤
+      have hco : ∀ m, |(formPoly (D + 1) (fun w => Re.limNum II (some ∘ w)) -
+          formPoly (D + 1) (fun w => Re'.limNum II (some ∘ w))).coeff m| ≤
           ((Fintype.card (Option (Ψ × Fin N)) : ℝ)) ^ (D + 1) * (C₂' * ∑ p ∈ T, α p * Real.log p) :=
         fun m => by
           rw [coeff_sub]

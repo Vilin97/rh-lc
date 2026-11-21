@@ -605,8 +605,8 @@ theorem hasLocalCoordsOnSmoothHypersurface_of_comap (p : P ⟶ Spec (CommRingCat
         = Ideal.span {(c.restrict hU'U).coord j} := by
       have h := (c.restrict hU'U).ideal_eq_span_coord hU'aff _ {j} (hNsome i hi j hij)
       simpa using h
-    have hmapeq : Ideal.span {(H.subschemeι.appLE U' (H.subschemeι ⁻¹ᵁ U') le_rfl).hom
-          ((c.restrict hU'U).coord j)}
+    have hmapeq : Ideal.span {((H.subschemeι.appLE U' (H.subschemeι ⁻¹ᵁ U') le_rfl).hom
+          ((c.restrict hU'U).coord j))}
         = Ideal.span {((c'.restrict hV₁V).restrict hW'V₁).coord b} := by
       rw [← hspanW, hcomapideal, hspanU, Ideal.map_span, Set.image_singleton]
     refine ⟨exists_unit_mul_coord_of_span_eq (H.subschemeι ≫ p) hW'aff

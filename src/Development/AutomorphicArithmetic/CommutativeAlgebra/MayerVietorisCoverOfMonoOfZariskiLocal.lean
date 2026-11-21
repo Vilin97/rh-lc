@@ -30,8 +30,8 @@ private def sumD {A B C : PSh} (a : A ⟶ C) (b : B ⟶ C) : sumP A B ⟶ C wher
   naturality S T h := by
     ext x
     cases x with
-    | inl x => exact FunctorToTypes.naturality a h x
-    | inr x => exact FunctorToTypes.naturality b h x
+    | inl x => exact NatTrans.naturality_apply a h x
+    | inr x => exact NatTrans.naturality_apply b h x
 
 private theorem map_comp_gen (R : Type) [CommRing R] {P C : PSh} (c : P ⟶ C) {M : Shv R}
     (p : (free R).obj C ⟶ M) (T : Scheme.{0}) (x : P.obj (op T)) :

@@ -22,6 +22,8 @@ open Reduction AutomorphicForm RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => rationalGLOne (K := K) (n := n)
+
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 def ccTranslate (g : normOneGL (K := K) (n := n)) (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) :
@@ -70,6 +72,7 @@ theorem enorm_sum_altSign_rconv_sq_le (f : CompactlySupportedContinuousMap (norm
     have : (archProj K n (C ε))⁻¹ * w ∉ tsupport (f : normOneGL (K := K) (n := n) → ℂ) := fun h' =>
       hw ⟨archProj K n (C ε), ⟨C ε, hC ε, rfl⟩, _, h', mul_inv_cancel_left _ _⟩
     rw [image_eq_zero_of_notMem_tsupport this, mul_zero]
+  let : R1Space (normOneGL (K := K) (n := n)) := T2Space.r1Space
   set Ψ : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ :=
     ⟨⟨fun w => ∑ ε, (altSign ε : ℂ) * f ((archProj K n (C ε))⁻¹ * w),
       continuous_finsetSum _ fun ε _ => continuous_const.mul

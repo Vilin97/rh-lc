@@ -28,13 +28,7 @@ theorem tensor_prod_eq_zero {F A B E : Type} [Field F] [CommRing A] [CommRing B]
     [Algebra F B] [Algebra F E] (z : (A × B) ⊗[F] E)
     (h1 : Algebra.TensorProduct.map (AlgHom.fst F A B) (AlgHom.id F E) z = 0)
     (h2 : Algebra.TensorProduct.map (AlgHom.snd F A B) (AlgHom.id F E) z = 0) : z = 0 := by
-  first
-  | exact @_root_.GlobalTheory.ProductLeftMaps.main
-  | exact _root_.GlobalTheory.ProductLeftMaps.main
-  | (apply _root_.GlobalTheory.ProductLeftMaps.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ProductLeftMaps.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ProductLeftMaps.main <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.ProductLeftMaps.main ..)
+  exact _root_.GlobalTheory.ProductLeftMaps.main z h1 h2
 
 theorem approx_tmul {F A E : Type} [Field F] [CommRing A] [CommRing E] [Algebra F A] [Algebra F E]
     (a : F) (N : ℕ) (β : A) (x : E) :
@@ -78,10 +72,10 @@ def kerChar {A : Type} [AddCommGroup A] (ψ : AddChar A ℂ) : AddSubgroup A whe
   carrier := {a | ψ a = 1}
   zero_mem' := ψ.map_zero_eq_one
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq] at *
+    simp only [Set.mem_ofPred_eq] at *
     rw [ψ.map_add_eq_mul, ha, hb, one_mul]
   neg_mem' := fun {a} ha => by
-    simp only [Set.mem_setOf_eq] at *
+    simp only [Set.mem_ofPred_eq] at *
     rw [ψ.map_neg_eq_inv, ha, inv_one]
 
 theorem hRat_smul (c : D.host.E) (M N : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
@@ -119,10 +113,16 @@ theorem char_sympl_eq_one {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ
       rw [← h1, ← smul_eq_mul, ← map_smul, Algebra.smul_def, mul_left_comm]
       rfl
     · rw [map_zero]; exact zero_mem _
-    · intro x y hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    · intro x y hx hy
+      change symplO S T (finTens α M) (x + y) ∈ kerChar ψ
+      rw [symplO_add_right]
+      exact add_mem hx hy
     · intro x hx; rw [map_neg]; exact neg_mem hx
   · rw [map_zero]; exact zero_mem _
-  · intro x y hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · intro x y hx hy
+    change symplO S T (x + y) u' ∈ kerChar ψ
+    rw [symplO_add_left]
+    exact add_mem hx hy
   · intro x hx; rw [map_neg]; exact neg_mem hx
 
 theorem approx (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) (γ : WO S T) :

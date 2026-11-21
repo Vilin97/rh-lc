@@ -27,13 +27,14 @@ abbrev UnrWDFam (N : NData R H what₂) (a : ℕ) : Type :=
     (∀ w, (p.1 w).unr ∧ (p.1 w).lpDim = a) ∧ ∀ τ, Multiset.card (p.2 τ) = a}
 
 theorem lpUnr_negOne_spec (N : NData R H what₂) (w : PlE H) :
-    (WD.lpUnr {-1} : WDAt N w).unr ∧ (WD.lpUnr {-1} : WDAt N w).frobEig = {-1} ∧
-      (WD.lpUnr {-1} : WDAt N w).lpDim = 1 := by
+    (WD.lpUnr (h := N.plOm.2 w) {-1}).unr ∧
+      (WD.lpUnr (h := N.plOm.2 w) {-1}).frobEig = {-1} ∧
+      (WD.lpUnr (h := N.plOm.2 w) {-1}).lpDim = 1 := by
   obtain ⟨hu, he, hd⟩ := WD.lpUnr_spec (h := N.plOm.2 w) ({-1} : Multiset ℂ) (by simp)
   exact ⟨hu, he, hd.trans (Multiset.card_singleton _)⟩
 
 def negOneWDFam (N : NData R H what₂) : UnrWDFam N 1 :=
-  ⟨(fun _ => WD.lpUnr {-1}, fun _ => {0}),
+  ⟨(fun w => WD.lpUnr (h := N.plOm.2 w) {-1}, fun _ => {0}),
     fun w => ⟨(lpUnr_negOne_spec N w).1, (lpUnr_negOne_spec N w).2.2⟩, fun _ => rfl⟩
 
 theorem UnrWDFam.exists_frobEig {N : NData R H what₂} (χ : UnrWDFam N 1) (w : PlE H) :
@@ -52,11 +53,11 @@ def nAutWD (N : NData R H what₂) (hE : IsEmpty N.Loc) (pl : ∀ k, N.PlG k →
     (τ : ∀ k, Fb (H.g k) (H.g_prime k) →* ℂ) (γ : Fin 2 → PlE H → G H.E N.Om) : NAut N where
   LP := WDAt N
   lpDim := WD.lpDim
-  lpZero := fun _ => WD.lpZero
+  lpZero := fun w => WD.lpZero (h := N.plOm.2 w)
   lpSum := WD.lpSum
   lpTw := WD.lpTw
   lpChar := WD.lpChar
-  lpUnr := fun _ => WD.lpUnr
+  lpUnr := fun w => WD.lpUnr (h := N.plOm.2 w)
   mono0 := WD.mono0
   unr := WD.unr
   frobEig := WD.frobEig
@@ -128,7 +129,8 @@ def nAutWD (N : NData R H what₂) (hE : IsEmpty N.Loc) (pl : ∀ k, N.PlG k →
   etaT_unr := fun w => (lpUnr_negOne_spec N w).1
   etaT_inert := fun w _ => (lpUnr_negOne_spec N w).2.1
   etaTinv_def := fun w => ⟨(lpUnr_negOne_spec N w).1, by
-    show (WD.lpUnr {-1} : WDAt N w).frobEig = (WD.lpUnr {-1} : WDAt N w).frobEig.map (·⁻¹)
+    show (WD.lpUnr (h := N.plOm.2 w) {-1}).frobEig =
+      (WD.lpUnr (h := N.plOm.2 w) {-1}).frobEig.map (·⁻¹)
     rw [(lpUnr_negOne_spec N w).2.1]
     simp⟩
   etaT_split := fun w w' _ _ a b ha hb => by

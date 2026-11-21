@@ -43,7 +43,7 @@ theorem pair_diffOp [CharZero C] (B : σ →₀ ℕ) (P Q : MvPolynomial σ C) :
       · rw [coeff_monomial, if_neg]
         intro hB
         exact ha (by rw [← hB, tsub_add_cancel_of_le hma])
-      · exact coeff_zero B
+      · simp
     · intro hQ
       rw [notMem_support_iff] at hQ
       rw [hQ, if_pos (le_add_self), coeff_monomial, add_tsub_cancel_right, if_pos rfl, mul_zero, zero_mul]

@@ -20,7 +20,7 @@ open scoped ENNReal
 
 namespace Formalism.MainNotions.LatticeIndexAndWeightTheory
 
-export Formalism.MainNotions.S.UnitaryVolumeMass (KTwoParameterConditions TermsPP Kpp hNC CloudNodeShape q0 minkM)
+export Formalism.MainNotions.S.UnitaryVolumeMass (KTwoParameterConditions Kpp)
 
 open Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.Lat Formalism.MainNotions.S.Cnt
 

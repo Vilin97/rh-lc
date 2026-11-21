@@ -34,7 +34,7 @@ private theorem rank_eq_of_scalar_extension_data {H H' : Type} [AddCommGroup H] 
     induction hh using Submodule.span_induction with
     | mem x hx => obtain ⟨j, rfl⟩ := hx; exact Submodule.subset_span ⟨j, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx => rw [hι]; exact Submodule.smul_mem _ _ hx
   rw [← (Module.Basis.mk hli hsp).mk_eq_rank'', ← e.mk_eq_rank'']
 
@@ -51,24 +51,21 @@ private theorem tensor_proj_smul_one_tmul (l : K →ₗ[k] k) (c : K) (x : W) : 
 
 private theorem tensor_proj_baseChange_map (l : K →ₗ[k] k) (f : W →ₗ[k] W) (x : K ⊗[k] W) :
     n4p l (f.baseChange K x) = f (n4p l x) := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | tmul c x => simp
   | add x y hx hy => simp [hx, hy]
 
 private theorem tensor_proj_mem_of_mem_baseChange (l : K →ₗ[k] k) (b : Submodule k W) (x : K ⊗[k] W) (hx : x ∈ b.baseChange K) :
     n4p l x ∈ b := by
   obtain ⟨y, rfl⟩ := hx
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul c x => simpa using b.smul_mem _ x.2
   | add x y hx hy => simpa using add_mem hx hy
 
 private theorem baseChange_eq_sum_coord_basis {I : Type} (e : Module.Basis I k K) (x : K ⊗[k] W) :
     ∃ s : Finset I, ∀ t : Finset I, s ⊆ t → x = ∑ i ∈ t, e i • ((1 : K) ⊗ₜ[k] n4p (e.coord i) x) := by
   classical
-  induction x using TensorProduct.induction_on with
-  | zero => exact ⟨∅, fun t _ => by simp⟩
+  induction x using TensorProduct.inductionOn with
   | tmul c x =>
     refine ⟨(e.repr c).support, fun t ht => ?_⟩
     have h1 : c = ∑ i ∈ t, e.repr c i • e i := by

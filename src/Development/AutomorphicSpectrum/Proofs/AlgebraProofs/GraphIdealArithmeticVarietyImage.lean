@@ -48,10 +48,10 @@ theorem mem_graphIdeal_iff (P : Ideal (MRing ι)) (g : (Σ k, ι₂ k) → MRing
   constructor
   · intro h b
     have := congrArg (AddMonoidAlgebra.coeff · b) h
-    rwa [coeff_map, coeff_zero, Ideal.Quotient.eq_zero_iff_mem] at this
+    rwa [coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, Ideal.Quotient.eq_zero_iff_mem] at this
   · intro h
     ext b
-    rw [coeff_map, coeff_zero, Ideal.Quotient.eq_zero_iff_mem]
+    rw [coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, Ideal.Quotient.eq_zero_iff_mem]
     exact h b
 
 def baseDeg (δ : K₂ → K → ℕ) (c : K ⊕ K₂ → ℕ) : K → ℕ :=
@@ -236,7 +236,7 @@ theorem coeff_graphLift_i2comp {g : (Σ k, ι₂ k) → MRing ι} {δ : K₂ →
       · subst hb
         simp only [↓reduceIte, i2comp_self hnh]
       · simp [hb, Ne.symm hb]
-    · rw [if_neg hd, map_zero, coeff_zero]
+    · rw [if_neg hd, map_zero, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
       by_cases hb : b = expDeg c
       · subst hb
         rw [if_pos rfl]
@@ -379,7 +379,7 @@ theorem graphPt_closure (hne : ∀ k₂, ∃ j, g ⟨k₂, j⟩ ∉ P) (z : L) :
         Subfield.closure (Set.range (graphPt P g L)) := fun b => by
     induction b using MvPolynomial.induction_on with
     | C a => exact hC a
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [(algebraMap (MvPolynomial K₂ (MRing ι ⧸ P)) L).map_add]; exact add_mem hp hq
     | mul_X p k hp => rw [map_mul]; exact mul_mem hp (hT k)
   obtain ⟨x, y, _, rfl⟩ := IsFractionRing.div_surjective (A := MvPolynomial K₂ (MRing ι ⧸ P)) z
   exact div_mem (hB x) (hB y)

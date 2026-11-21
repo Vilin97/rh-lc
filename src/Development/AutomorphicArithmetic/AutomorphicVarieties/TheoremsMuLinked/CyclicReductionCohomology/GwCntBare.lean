@@ -246,7 +246,8 @@ private theorem cup_inj {R Γ D M : Type} [CommRing R] [TopologicalSpace R] [Dis
     Function.Injective (cupH1H1TwistedDual χ ρ φ hρ) := by
   subst e
   have e1 : (twDual χ ρ).comp φ = (twDual (χ.comp φ) (ρ.comp φ)).comp (MonoidHom.id D) := by
-    refine MonoidHom.ext fun g => LinearMap.ext fun y => TDual.ext fun m => ?_
+    refine MonoidHom.ext fun g => LinearMap.ext fun y => DFunLike.ext _ _ fun m => ?_
+    simp only [MonoidHom.comp_apply, MonoidHom.id_apply, twDual_apply, map_inv φ]
   have gen : ∀ (σ σ' : Representation R D (TDual R M)) (_ : σ = σ') h1 h2,
       Function.Injective (cupProductH1H1 σ' (ρ.comp φ) ((charRep χ).comp φ) evalPair.flip
         continuous_of_discreteTopology h2 hρ) →
@@ -264,8 +265,8 @@ private theorem ex_dual (N : ℕ) [NeZero N] (M M' : Type) [AddCommGroup M] [Mod
     rw [map_nsmul, nsmul_eq_mul, ZMod.natCast_self, zero_mul]
   let f : M' →+ TDual (ZMod N) M :=
     { toFun := fun y => TDual.mk ((b.flip y).toZModLinearMap N)
-      map_zero' := TDual.ext fun x => map_zero (b x)
-      map_add' := fun y y' => TDual.ext fun x => map_add (b x) y y' }
+      map_zero' := DFunLike.ext _ _ fun x => map_zero (b x)
+      map_add' := fun y y' => DFunLike.ext _ _ fun x => map_add (b x) y y' }
   have hf : Function.Bijective f := (UpperTheory.V.Th.dualZ N M).2.2 M' b hl hr
   exact ⟨AddEquiv.ofBijective f hf, fun _ _ => rfl⟩
 
@@ -314,7 +315,9 @@ theorem UpperTheory.V.Th.gwCntBare :
   have heq : ∀ g φ, β.symm (twDual μ ρS g φ) = ρ' (e g) (β.symm φ) := fun g φ => by
     obtain ⟨y, rfl⟩ := β.surjective φ
     rw [β.symm_apply_apply, β.symm_apply_eq]
-    refine TDual.ext fun m => ?_
+    refine DFunLike.ext _ _ fun m => ?_
+    rw [twDual_apply, hβ', hβ', hμε, ← hb.equiv, hρS, map_inv e, ← Module.End.mul_apply, ← map_mul,
+      mul_inv_cancel, map_one, Module.End.one_apply]
   let σ : T ≃ W := pl.symm
   let Av : T → ValuationSubring Ω := fun v => A (σ v)
   have hAv : ∀ v, IsPlaceOver (Av v) v.1 := fun v => by

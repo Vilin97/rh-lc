@@ -69,7 +69,7 @@ theorem allSec_of {n : ℕ} {X : Scheme.{0}} (x : Sx (PB (bsumOf V W)) n X) (h :
 theorem pv_res {n : ℕ} {X Y : Scheme.{0}} (k : Y ⟶ X) (x : Sx (PB (bsumOf V W)) n X) (i : Fin (n + 1)) :
     ((pv V W (((PB (bsumOf V W)).obj (op (SimplexCategory.mk n))).map k.op x)).obj i).1 =
       Scheme.Γ.map k.op ∘ ((pv V W x).obj i).1 := by
-  have h := NatTrans.naturality_apply (D := Type)
+  have h := NatTrans.naturality_apply
     ((pullback.snd (bsumOf V W) (PGL.pr (a + b))).app (op (SimplexCategory.mk n))) k.op x
   unfold pv
   erw [h]
@@ -101,41 +101,29 @@ def U2obj (n : SimplexCategoryᵒᵖ) : PSh where
   obj X := {x : ((PB (bsumOf V W)).obj n).obj X // AllSec V W (n := n.unop.len) (X := X.unop) x}
   map k := TypeCat.ofHom fun x => ⟨((PB (bsumOf V W)).obj n).map k x.1, allSec_res V W k.unop x.1 x.2⟩
   map_id X := by
-    apply ConcreteCategory.ext_apply (C := Type)
-    intro x
-    apply Subtype.ext
-    exact Functor.map_id_apply ((PB (bsumOf V W)).obj n) X x.1
-  map_comp f g := by
-    apply ConcreteCategory.ext_apply (C := Type)
-    intro x
-    apply Subtype.ext
-    exact Functor.map_comp_apply ((PB (bsumOf V W)).obj n) f g x.1
+    ext x
+    exact ConcreteCategory.congr_hom (((PB (bsumOf V W)).obj n).map_id X) x.1
+  map_comp f g := by ext x; exact Functor.map_comp_apply _ _ _ _
 
 def U2 : Spc where
   obj := U2obj V W
   map θ :=
     { app := fun X => TypeCat.ofHom fun x => ⟨(((PB (bsumOf V W)).map θ).app X) x.1, allSec_simp V W θ.unop x.1 x.2⟩
       naturality := fun X Y k => by
-        apply ConcreteCategory.ext_apply (C := Type)
-        intro x
+        ext x
         apply Subtype.ext
-        exact NatTrans.naturality_apply (D := Type) ((PB (bsumOf V W)).map θ) k x.1 }
+        dsimp [U2obj]
+        exact NatTrans.naturality_apply ((PB (bsumOf V W)).map θ) k x.1 }
   map_id n := by
-    apply NatTrans.ext
-    funext X
-    apply ConcreteCategory.ext_apply (C := Type)
-    intro x
+    ext X x
     apply Subtype.ext
-    exact ConcreteCategory.congr_hom (C := Type)
-      (NatTrans.congr_app ((PB (bsumOf V W)).map_id n) X) x.1
+    dsimp [U2obj]
+    exact ConcreteCategory.congr_hom (NatTrans.congr_app ((PB (bsumOf V W)).map_id n) X) x.1
   map_comp f g := by
-    apply NatTrans.ext
-    funext X
-    apply ConcreteCategory.ext_apply (C := Type)
-    intro x
+    ext X x
     apply Subtype.ext
-    exact ConcreteCategory.congr_hom (C := Type)
-      (NatTrans.congr_app ((PB (bsumOf V W)).map_comp f g) X) x.1
+    dsimp [U2obj]
+    exact ConcreteCategory.congr_hom (NatTrans.congr_app ((PB (bsumOf V W)).map_comp f g) X) x.1
 
 def f2 : U2 V W ⟶ PB (bsumOf V W) where
   app n := { app := fun X => TypeCat.ofHom Subtype.val, naturality := fun _ _ _ => rfl }

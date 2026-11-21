@@ -19,6 +19,7 @@ namespace GlobalTheory.CompanionTheory.SatakeBound
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ}
 
+local notation "π" => (GLnLocal.uniformizer F : F)
 
 omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 theorem torusPow_central (t : GL (Fin n) F) (c : GL (Fin n) F)

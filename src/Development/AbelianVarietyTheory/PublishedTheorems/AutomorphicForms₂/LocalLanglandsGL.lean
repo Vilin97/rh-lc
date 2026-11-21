@@ -22,7 +22,7 @@ abbrev cls {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarch
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
-def sumList (l : List (WD h)) : WD h := l.foldr WD.lpSum WD.lpZero
+def sumList (l : List (WD h)) : WD h := l.foldr WD.lpSum (WD.lpZero (h := h))
 
 def IsIrrWD (x : WD h) : Prop := ∃ (n : ℕ) (a : WDRep h (Fin n → ℂ)), WD.mk a = x ∧ a.ρ.IsIrreducible
 
@@ -55,7 +55,8 @@ structure Laws (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) 
 
   langlands : ∀ (l : List (Segment (w.adicCompletion E))) (x : IrrGL (k := w.adicCompletion E)),
     IsL (l : Multiset (Segment (w.adicCompletion E))) x.rep →
-    rc x = sumList (l.map fun Δ => ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp Δ.len))
+    rc x = sumList (l.map fun Δ =>
+      ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len))
 
   det : ∀ (t : ℕ) χ hχ, rc (cls (IrrRep.det (Fin t) χ hχ)) =
     sumList ((List.range t).map fun j : ℕ => (rc (.ofChar χ hχ)).lpTw (((t : ℝ) - 1) / 2 - j))

@@ -196,7 +196,7 @@ theorem exists_descent {K L : IntermediateField ℚ ℂ} (hKL : K ≤ L) {X : Sc
     induction ha using Algebra.adjoin_induction with
     | mem a ha => exact hS _ (Finset.mem_image_of_mem _ ha)
     | algebraMap a => rw [hφ]; exact hK a.2
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   let ψ : R →+* F := (L.val.toRingHom.comp φ).codRestrict F.toSubfield.toSubring hmem
   refine ⟨spMap ψ ≫ i, (hcomp F ψ _).2 fun a => Subtype.ext ?_, ?_⟩

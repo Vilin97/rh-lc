@@ -1,7 +1,6 @@
 module
 
 public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.GoodTowerAntisymmetryOf
-public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.AntisymmetryFibreSquares
 public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.SmoothComb
 public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.IsMultiHomogRenameBaseInc
 public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.EmbImmersion

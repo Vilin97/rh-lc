@@ -298,10 +298,10 @@ namespace GlobalTheory.CompanionTheory.Ar.Plug
 theorem deepStR_of_use : ReciprocityTheory.ChartRestriction.G.Geo.ArithIntersectionSystemStatement → PositivityTheory.MbHsUse.HSUse → ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.MoriwakiBigStatement → ReciprocityTheory.ChartRestriction.G.Geo.ResK.ResKStatement → GlobalTheory.Published.SemiAbelianHomExtension → HT.FarguesHodgeTate → Flat.GagaSections → GR.QuotientByFiniteFlatStatement → GR.ZarhinStatement → Pub.NefRR → Plug.DeepStR := by
   intro hAIS hU hMB hResK hSA hFHT hGaga hQ hZ hNef
   have hLLD := GlobalTheory.CompanionTheory.Ar.Giv.lineOfLargeDegree_of_use hAIS hU hMB hResK
-  have hG : Top.Given := GlobalTheory.CompanionTheory.Ar.Link.given_of_use hAIS hU hMB hResK hSA hFHT hGaga hLLD
+  have hG : _root_.GlobalTheory.CompanionTheory.Ar.Top.Given := GlobalTheory.CompanionTheory.Ar.Link.given_of_use hAIS hU hMB hResK hSA hFHT hGaga hLLD
   have hTC := GlobalTheory.CompanionTheory.Ar.Link.good_tower_volume_theorem_bis hAIS hU hMB hResK hSA hFHT hGaga hLLD hQ hZ
   have hHS : Prov.HS := by
-    unfold Top.Given at hG
+    unfold _root_.GlobalTheory.CompanionTheory.Ar.Top.Given at hG
     exact hG.2.2.2.2.2.2.2.2.2.2.1
   have hG6 : ReciprocityTheory.ChartRestriction.G.Geo.BirationalPullbackPushforwardFormula := by
     unfold Prov.HS at hHS

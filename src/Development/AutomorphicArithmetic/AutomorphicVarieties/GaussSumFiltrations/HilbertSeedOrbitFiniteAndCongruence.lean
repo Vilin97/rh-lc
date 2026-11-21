@@ -17,7 +17,7 @@ open scoped Matrix
 namespace GlobalTheory.HilbertThetaSeries.GaussSumOrbitFiniteness
 
 theorem reAt_eq {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (v : InfinitePlace F) (x : F) : reAt v x = rhom x v := by
-  simp only [reAt, rhom, Pi.ringHom_apply]
+  simp only [reAt, rhom]
   rw [← InfinitePlace.embedding_of_isReal_apply (IsTotallyReal.isReal v) x, Complex.ofReal_re]
   rfl
 
@@ -64,7 +64,7 @@ theorem stab_mul (g : GL (Fin 2) (Af F)) (γ γ' : GL (Fin 2) F) (h : Stab g γ)
   obtain ⟨ht', z', u', hu', he'⟩ := h'
   refine ⟨?_, z' * z, u * u', (KLev F 2 1).mul_mem hu hu', ?_⟩
   · rw [Units.val_mul, Matrix.det_mul]; exact tp_mul ht ht'
-  · rw [map_mul, mul_assoc, he', ← mul_assoc, ← mul_assoc, ← scal_comm, mul_assoc (S z'), he, map_mul]
+  · rw [map_mul, mul_assoc, he', ← mul_assoc, ← mul_assoc, ← scal_comm, mul_assoc (Matrix.GeneralLinearGroup.scalar (Fin 2) z'), he, map_mul]
     simp only [mul_assoc]
 
 theorem stab_inv (g : GL (Fin 2) (Af F)) (γ : GL (Fin 2) F) (h : Stab g γ) : Stab g γ⁻¹ := by
@@ -78,7 +78,7 @@ theorem stab_inv (g : GL (Fin 2) (Af F)) (γ : GL (Fin 2) F) (h : Stab g γ) : S
     have hp := ht v
     rw [reAt_eq] at hp ⊢
     exact (pos_iff_pos_of_mul_pos (by rw [hv]; exact one_pos)).mp hp
-  · rw [map_inv, inv_mul_eq_iff_eq_mul, ← mul_assoc, ← mul_assoc, ← scal_comm, mul_assoc (S z⁻¹), he]
+  · rw [map_inv, inv_mul_eq_iff_eq_mul, ← mul_assoc, ← mul_assoc, ← scal_comm, mul_assoc (Matrix.GeneralLinearGroup.scalar (Fin 2) z⁻¹), he]
     simp only [map_inv]
     group
 

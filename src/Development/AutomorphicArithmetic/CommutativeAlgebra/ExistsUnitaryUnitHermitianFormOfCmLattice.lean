@@ -94,7 +94,7 @@ private theorem exists_rep {V : Type} [AddCommGroup V] [Module ℚ V] [FiniteDim
   ring
 
 theorem UpperTheory.exists_unitary_unit_hermitian_form_of_cm_lattice :
-    ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (Y : PLat D.O D.inv) (j : (ℚ ⊗[ℤ] Y.La) ≃ₗ[ℚ] VQ D), (∀ (c : D.O) (u : ℚ ⊗[ℤ] Y.La), j ((DistribMulAction.toLinearMap ℤ Y.La c).baseChange ℚ u) = actQ D c (j u)) → ∃ β : G.Cˣ, sh G β = β ∧ ∀ u w : ℚ ⊗[ℤ] Y.La, Y.EF.baseChange ℚ u w = 2 * D.EF.baseChange ℚ (L.rep ((β⁻¹ : G.Cˣ) : G.C) (j u)) (j w) := by
+    ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (Y : PLat D.O D.inv) (j : (ℚ ⊗[ℤ] Y.La) ≃ₗ[ℚ] VQ D), (∀ (c : D.O) (u : ℚ ⊗[ℤ] Y.La), j ((DistribSMul.toLinearMap ℤ Y.La c).baseChange ℚ u) = actQ D c (j u)) → ∃ β : G.Cˣ, sh G β = β ∧ ∀ u w : ℚ ⊗[ℤ] Y.La, Y.EF.baseChange ℚ u w = 2 * D.EF.baseChange ℚ (L.rep ((β⁻¹ : G.Cˣ) : G.C) (j u)) (j w) := by
   intro p _ D G L Y j hj
   haveI := D.finLa
   set E := D.EF.baseChange ℚ with hEdef
@@ -119,9 +119,9 @@ theorem UpperTheory.exists_unitary_unit_hermitian_form_of_cm_lattice :
   have comm : ∀ c : D.O, b * actQ D c = actQ D c * b := by
     intro c
     refine LinearMap.ext fun u => eqE _ _ fun w => ?_
-    have hc : j.symm (actQ D c u) = (DistribMulAction.toLinearMap ℤ Y.La c).baseChange ℚ (j.symm u) := by
+    have hc : j.symm (actQ D c u) = (DistribSMul.toLinearMap ℤ Y.La c).baseChange ℚ (j.symm u) := by
       rw [LinearEquiv.symm_apply_eq, hj, j.apply_symm_apply]
-    have hc' : ∀ w, j.symm (actQ D (D.inv c) w) = (DistribMulAction.toLinearMap ℤ Y.La (D.inv c)).baseChange ℚ (j.symm w) := fun w => by
+    have hc' : ∀ w, j.symm (actQ D (D.inv c) w) = (DistribSMul.toLinearMap ℤ Y.La (D.inv c)).baseChange ℚ (j.symm w) := fun w => by
       rw [LinearEquiv.symm_apply_eq, hj, j.apply_symm_apply]
     have h1 : F (actQ D c u) w = F u (actQ D (D.inv c) w) := by
       rw [hF, hF, hc, hc']

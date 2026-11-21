@@ -5,6 +5,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityA
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AutomorphicFormsFiniteGL
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WeightEx
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsSubquotientIff
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SpehShapeIffOfDiscreteSpectrum
 
 @[expose] public section
 
@@ -19,7 +20,7 @@ theorem UpperTheory.V.Z.Int.slopeCsd :
   choose lam hlam using GlobalTheory.CompanionTheory.WeightExist.weightEx E n U hU.aut
   obtain ⟨σ, hσ, -⟩ := GlobalTheory.CuspRep.LocEx.exists_isLocComp GlobalTheory.automorphicFormsFiniteGL E n π w
   have hS := UpperTheory.V.Z.Int.coreU l ι E n hn U hU.aut lam hlam w hw σ B (hU.split w hw σ hσ)
-    ((GlobalTheory.CompanionTheory.OnePart.hasSat_iff hσ B).1 hB)
+    ((GlobalTheory.BcSpehCompare.hasSat_iff hσ B).1 hB)
   have e : (CG.mk π).infChar = fun φ => infOfWeight (lam φ) := funext fun φ => hU.inf φ _ (hlam φ)
   rw [e]
   exact hS

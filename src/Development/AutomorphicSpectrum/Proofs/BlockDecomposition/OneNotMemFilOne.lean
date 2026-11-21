@@ -89,7 +89,8 @@ theorem mem_filV_coord (hOm : ∀ x : Om, algebraMap Om BdR x ∈ PD.Fil 0) (a :
   · rintro ⟨y, rfl⟩ σ
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy =>
+      simpa only [map_add] using Submodule.add_mem (PD.Fil a) hx hy
     | tmul v c =>
       have h1 : AlgebraTensorModule.map (LinearMap.id : (Fin 1 → LL) →ₗ[LL] _)
         ((PD.Fil a).restrictScalars Qp).subtype (v ⊗ₜ[Qp] c) = v ⊗ₜ[Qp] (c : BdR) := rfl

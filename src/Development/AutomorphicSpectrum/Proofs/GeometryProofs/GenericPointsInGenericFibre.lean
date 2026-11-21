@@ -8,13 +8,16 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeo
 
 @[expose] public section
 
-open AlgebraicGeometry CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField IsLocalRing
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open scoped CategoryTheory.Obj
+open NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor
 
 namespace GlobalTheory.CompanionTheory.Ar.M0
 
-theorem genericPoints_subset_range_j : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β), IsDomain O → (letI := β.toAlgebra; IsFractionRing O c.F) → genericPoints Y.X ⊆ Set.range Y.j :=
+theorem genericPoints_subset_range_j :
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H)
+      (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O]
+      (β : O →+* c.F) (Y : Model Xo c β),
+      IsDomain O → (letI := β.toAlgebra; IsFractionRing O c.F) →
+        genericPoints Y.X ⊆ Set.range Y.j :=
   @PositivityTheory.HtPt.Ml.generic_points_range
 
 end GlobalTheory.CompanionTheory.Ar.M0

@@ -75,7 +75,7 @@ theorem isPrecomplete : IsPrecomplete (IsLocalRing.maximalIdeal Ow) Ow := by
     rw [Valued.cauchy_iff]
     refine ⟨map_neBot, fun γ => ?_⟩
     obtain ⟨n, hn⟩ := exists_pow_lt₀ hπ1 (Units.map (MonoidWithZeroHom.ValueGroup₀.embedding
-      (f := (Valued.v : Valuation Lw ℤᵐ⁰).toMonoidWithZeroHom)) γ)
+      (f := ((Valued.v : Valuation Lw ℤᵐ⁰) : Lw →*₀ ℤᵐ⁰))).toMonoidHom γ)
     refine ⟨g '' Set.Ici n, image_mem_map (Ici_mem_atTop n), ?_⟩
     rintro _ ⟨a, ha, rfl⟩ _ ⟨b, hb, rfl⟩
     rw [Valuation.restrict_lt_iff_lt_embedding]
@@ -174,9 +174,11 @@ lemma exists_e : ∃ e : ℕ, 0 < e ∧ ∀ x : L, valV Ow (kMap w x) = w.valuat
     show _ ↔ algebraMap R Ow a ∈ IsLocalRing.maximalIdeal Ow
     rw [mem_max_iff, algebraMap_adicCompletionIntegers_apply,
       valuedAdicCompletion_eq_valuation', valuation_lt_one_iff_mem]⟩
-  exact ⟨m.asIdeal.ramificationIdx R,
-    Ideal.ramificationIdx_pos_of_isDedekindDomain' m.asIdeal w.ne_bot,
-    fun x => (valuation_liesOver (FractionRing Ow) w m x).symm⟩
+  exact ⟨w.asIdeal.ramificationIdx' m.asIdeal,
+    Nat.pos_of_ne_zero (Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver m.asIdeal w.ne_bot),
+    fun x => by
+      rw [Ideal.ramificationIdx'_eq_ramificationIdx w.asIdeal m.asIdeal w.ne_bot]
+      exact (valuation_liesOver (FractionRing Ow) w m x).symm⟩
 
 end Compl
 
@@ -198,13 +200,14 @@ theorem locFld : Formalism.L2.PjFree.LocFld := by
       (FaithfulSMul.algebraMap_injective (𝓞 L) (adicCompletionIntegers L w))
   obtain ⟨e1, he1, h1⟩ := exists_e (L := L) w
   let T : CDVR := { V := adicCompletionIntegers L w, cpl := isAdicComplete w }
-  have he2 : 0 < w.asIdeal.ramificationIdx (𝓞 K) :=
-    Ideal.ramificationIdx_pos_of_isDedekindDomain' w.asIdeal la.ne_bot
-  refine ⟨T, kMap w, w.asIdeal.ramificationIdx (𝓞 K) * e1,
-    ⟨Nat.mul_pos he2 he1, fun a => ?_⟩, finite_res w⟩
+  have he2 : la.asIdeal.ramificationIdx' w.asIdeal ≠ 0 :=
+    Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver w.asIdeal la.ne_bot
+  refine ⟨T, kMap w, la.asIdeal.ramificationIdx' w.asIdeal * e1,
+    ⟨Nat.mul_pos (Nat.pos_of_ne_zero he2) he1, fun a => ?_⟩, finite_res w⟩
   show vV (adicCompletionIntegers L w) (kMap w (j a)) = _
   simp only [vV, vLa]
-  rw [h1, show j a = algebraMap K L a from rfl, ← valuation_liesOver L la w a, ← pow_mul,
+  rw [h1, show j a = algebraMap K L a from rfl, ← valuation_liesOver L la w a,
+    ← Ideal.ramificationIdx'_eq_ramificationIdx la.asIdeal w.asIdeal la.ne_bot, ← pow_mul,
     WithZero.log_pow]
   push_cast
   simp

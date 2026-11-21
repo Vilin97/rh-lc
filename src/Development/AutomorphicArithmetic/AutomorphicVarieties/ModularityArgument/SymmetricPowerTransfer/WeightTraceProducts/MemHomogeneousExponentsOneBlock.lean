@@ -46,12 +46,12 @@ theorem trace_eq_sum_coeff {σ : Type} (V : Submodule ℂ (MvPolynomial σ ℂ))
         rw [MvPolynomial.notMem_support_iff.1 hm, map_zero]
       right_inv := fun c => by
         ext m
-        simp [coeff_sum, coeff_monomial] }
+        simp [coeff_monomial] }
   let b := Module.Basis.ofEquivFun e
   rw [LinearMap.trace_eq_matrix_trace ℂ b, Matrix.trace, ← Finset.sum_coe_sort S]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [Matrix.diag_apply, LinearMap.toMatrix_apply, Module.Basis.ofEquivFun_repr_apply]
-  show coeff (m : σ →₀ ℕ) (F (b m)).1 = _
+  show AddMonoidAlgebra.coeff (F (b m)).1 (m : σ →₀ ℕ) = _
   rw [hF]
   have hb : (b m).1 = monomial (m : σ →₀ ℕ) 1 := by
     rw [Module.Basis.coe_ofEquivFun]
@@ -89,7 +89,7 @@ private theorem glue_eq_sum_mapDomain_inB (ν : K → (Unit × Fin d →₀ ℕ)
       rw [h.2]
     exact (Finsupp.mapDomain_apply_of_injective hinj (ν k) ((), i)).symm
   · intro k' _ hk
-    apply Finsupp.mapDomain_notin_range
+    apply Finsupp.mapDomain_of_notMem_range
     rintro ⟨p, hp⟩
     simp only [inB, Prod.mk.injEq] at hp
     exact hk hp.1

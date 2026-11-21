@@ -18,7 +18,6 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DatumCurv
 noncomputable section
 
 open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Classical
-open GlobalTheory.IndefiniteRowSideFullHecke
 
 namespace GlobalTheory.CompareInert
 

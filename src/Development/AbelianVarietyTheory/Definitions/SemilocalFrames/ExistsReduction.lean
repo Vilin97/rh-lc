@@ -103,12 +103,12 @@ theorem map_inv {x : I.Gf} (hx : x ∈ I.Kset) : ρ.toFun x⁻¹ = (ρ.toFun x)�
 theorem lift_of_mem (μf : Measure I.Gf) (a : MonoidAlgebra ℂ Q) {x : I.Gf} (hx : x ∈ I.Kset) :
     ρ.lift μf a x = a.coeff (ρ.toFun x) / ((μf (I.Kg g)).toReal : ℂ) := by
   unfold Red.lift
-  exact if_pos hx
+  simp [hx]
 
 theorem lift_of_notMem (μf : Measure I.Gf) (a : MonoidAlgebra ℂ Q) {x : I.Gf} (hx : x ∉ I.Kset) :
     ρ.lift μf a x = 0 := by
   unfold Red.lift
-  exact if_neg hx
+  simp [hx]
 
 end Red
 
@@ -171,7 +171,7 @@ theorem exists_matrix {R k L : Type} [CommRing R] [CommRing k] [AddCommGroup L] 
     rw [hk] at hy ⊢
     refine Submodule.smul_induction_on hy (fun a ha z _ => ?_) (fun z z' hz hz' => ?_)
     · rw [map_smul]; exact Submodule.smul_mem_smul ha Submodule.mem_top
-    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hz hz'
+    · rw [map_add]; exact add_mem hz hz'
   choose b hb using fun j : Fin N => hc (Pi.single j 1)
   choose s hs using hr
   refine ⟨Matrix.of fun i j => c (T (b j)) i, fun y => ?_⟩

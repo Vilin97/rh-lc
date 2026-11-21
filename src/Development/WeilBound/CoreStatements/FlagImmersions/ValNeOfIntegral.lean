@@ -138,7 +138,7 @@ theorem exists_flat (y : (Σ k, ι k) → Ω) (hP : IsMultiHomogIdeal (mCoordIde
   have hψ : ∀ z ∈ mcPts (mCoordIdeal y), ∀ d, Rep y a ks d → NZ d z → ψ z = Real.log ‖rho d z‖ := by
     intro z hz d h1 h2
     have h : ∃ d, Rep y a ks d ∧ NZ d z := ⟨d, h1, h2⟩
-    simp only [ψ, dite_pos h]
+    simp only [ψ, dite_eq_left h]
     rw [rho_eq h.choose_spec.1 h1 hz h.choose_spec.2 h2]
   obtain ⟨B, hBa, hBs, hB⟩ := GlobalTheory.CompanionTheory.Ar.PB.exists_hermLine_of_local_smooth K ι (mCoordIdeal y)
     (fun z => ψ z - Real.log (F.h z)) hP (by
@@ -152,9 +152,9 @@ theorem exists_flat (y : (Σ k, ι k) → Ω) (hP : IsMultiHomogIdeal (mCoordIde
       intro z hz
       obtain ⟨d, h1, h2⟩ := hcov z hz
       have ho : IsOpen {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
-        rw [Set.setOf_forall]
+        rw [Set.ofPred_forall]
         refine isOpen_iInter_of_finite fun k => ?_
-        rw [Set.setOf_exists]
+        rw [Set.ofPred_exists]
         exact isOpen_iUnion fun i => isOpen_ne_fun (continuous_apply _) continuous_const
       refine ⟨{z | NZ d z} ∩ {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}, fun z => Real.log ‖rho d z‖ - Real.log (F.h z),
         (isOpen_NZ d).inter ho, ⟨h2, hz.1⟩, ?_, ?_⟩

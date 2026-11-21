@@ -18,6 +18,8 @@ section Loc
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+
 variable (v : HeightOneSpectrum (𝓞 F))
 
 abbrev lv (Λ : Submodule (𝓞 E) (n → E)) : Submodule (intV E v) (n → E ⊗[F] v.adicCompletion F) :=

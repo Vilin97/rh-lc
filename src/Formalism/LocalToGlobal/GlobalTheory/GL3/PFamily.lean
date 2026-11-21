@@ -38,7 +38,7 @@ def ThetaNormConjugateIndependent (D : D7) (T : Tor D) (e : FamE D) : Prop :=
 
 def EigenvectorPacketProperties {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Base D cc δ) (C : ℝ) (χ : IdE D → ℂ) : Prop :=
   TaylorCoeffsInNumberField D (B.eNat χ) ∧ ThetaMeanBound D (tor0 D cc δ) C (B.eNat χ) ∧ ThetaNormConjugateIndependent D (tor0 D cc δ) (B.eNat χ) ∧
-    B.EqP χ ∧ B.IntP χ ∧ B.MomP χ ∧ B.StrP χ
+    B.EqP χ ∧ (_root_.Formalism.MainNotions.TaylorLogMetric.int22 D B.tor (B.eNat χ)) ∧ B.MomP χ ∧ B.StrP χ
 
 def LinkBaseNe : Prop :=
   ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ), Base D cc δ → δ ≠ 0

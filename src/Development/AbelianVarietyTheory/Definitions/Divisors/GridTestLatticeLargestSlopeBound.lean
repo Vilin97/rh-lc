@@ -167,8 +167,8 @@ theorem isSelfDualE_latOf (g : UA D.sp.cm (Xp G).gram) :
     IsSelfDualE (D.sp.cm.sig : D.host.E →+* D.host.E) (Xp G).gram (latOf G g) := by
   obtain ⟨h1, h2⟩ := (isV_Xp G).sd
   have hf := Module.Finite.iff_fg.2 h1.fg
-  exact ⟨Formalism.UG.P.global_lattice_isLattice_holds _ _ _ _ hf h1.span_eq_top _,
-    GlobalTheory.PointLattice.globLat_selfDual D.sp.cm.sig _ _ h2 hf h1.span_eq_top g.1 g.2⟩
+  exact ⟨Formalism.UG.P.global_lattice_isLattice_holds _ _ _ _ hf (Submodule.IsLattice.span_eq_top (self := h1)) _,
+    GlobalTheory.PointLattice.globLat_selfDual D.sp.cm.sig _ _ h2 hf (Submodule.IsLattice.span_eq_top (self := h1)) g.1 g.2⟩
 
 theorem star_emb (τ : D.what₂.Tau) (x : D.host.E) :
     star (emb D τ x) = emb D τ ((D.sp.cm.sig : D.host.E →+* D.host.E) x) := by

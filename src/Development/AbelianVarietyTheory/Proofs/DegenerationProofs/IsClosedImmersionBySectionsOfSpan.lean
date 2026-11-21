@@ -28,7 +28,7 @@ theorem closure_eq_top_iff {A B J : Type} [CommRing A] [CommRing B] (c : A →+*
     | C a =>
       rw [MvPolynomial.eval₂Hom_C]
       exact Subring.subset_closure (Or.inl ⟨a, rfl⟩)
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul, MvPolynomial.eval₂Hom_X']
       exact mul_mem hp (Subring.subset_closure (Or.inr ⟨j, rfl⟩))

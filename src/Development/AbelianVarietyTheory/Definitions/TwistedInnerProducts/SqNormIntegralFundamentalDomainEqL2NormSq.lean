@@ -329,16 +329,16 @@ def thetaLevel (U : AddSubgroup (WO V W)) : Submodule ℂ (WO V W → ℂ) where
   smul_mem' c _ h := ⟨theta_smul c h.1, fun u hu h0 =>
     ((GlobalTheory.FinTranslate.heisL V W ψ u).map_smul _ _).trans (congrArg _ (h.2 u hu h0))⟩
 
-theorem l2O_sq_eq_lintegral (f : WO V W → ℂ) : l2O μ 𝓕 f ^ 2 = ∫⁻ w in 𝓕, ‖f w‖ₑ ^ 2 ∂μ := by
-  have := eLpNorm_nnreal_pow_eq_lintegral (f := f) (μ := μ.restrict 𝓕) (p := 2) two_ne_zero
+theorem l2O_sq_eq_lintegral (f : WO V W → ℂ) (hf : Continuous f) : l2O μ 𝓕 f ^ 2 = ∫⁻ w in 𝓕, ‖f w‖ₑ ^ 2 ∂μ := by
+  have : BorelSpace (WO V W) := ⟨rfl⟩
+  have := eLpNorm_nnreal_pow_eq_lintegral (f := f) (μ := μ.restrict 𝓕) (p := 2) two_ne_zero hf.measurable.aestronglyMeasurable
   simpa [l2O] using this
 
 theorem l2O_smul (c : ℂ) (f : WO V W → ℂ) : l2O μ 𝓕 (c • f) = ‖c‖ₑ * l2O μ 𝓕 f := eLpNorm_const_smul c f 2 _
 
 theorem l2O_add_le_of_continuous {f f' : WO V W → ℂ} (h : Continuous f) (h' : Continuous f') :
     l2O μ 𝓕 (f + f') ≤ l2O μ 𝓕 f + l2O μ 𝓕 f' :=
-  have : BorelSpace (WO V W) := ⟨rfl⟩
-  eLpNorm_add_le h.measurable.aestronglyMeasurable h'.measurable.aestronglyMeasurable one_le_two
+  eLpNorm_add_le one_le_two
 
 theorem ipO_conj (f f' : WO V W → ℂ) : conj (ipO μ 𝓕 f f') = ipO μ 𝓕 f' f := by
   simp only [ipO, ← integral_conj, map_mul, Complex.conj_conj, mul_comm]
@@ -355,7 +355,7 @@ theorem ipO_self (f : WO V W → ℂ) : ipO μ 𝓕 f f = nrm2 μ 𝓕 f := by
 
 theorem sqNormIntegralFundamentalDomain_eq_l2Norm_sq {f : WO V W → ℂ} (h : Continuous f) : nrm2 μ 𝓕 f = (l2O μ 𝓕 f).toReal ^ 2 := by
   have : BorelSpace (WO V W) := ⟨rfl⟩
-  rw [← ENNReal.toReal_pow, l2O_sq_eq_lintegral, nrm2, GlobalTheory.Ker.ScalarProduct.integral_normSq_eq _ h.measurable]
+  rw [← ENNReal.toReal_pow, l2O_sq_eq_lintegral μ 𝓕 f h, nrm2, GlobalTheory.Ker.ScalarProduct.integral_normSq_eq _ h.measurable]
 
 
 variable (V W) in
@@ -391,7 +391,7 @@ theorem memLp_theta (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure) (h�
   exact .of_bound h.cont.measurable.aestronglyMeasurable C (.of_forall hC)
 
 theorem l2NormOnFundamentalDomain_thetaFunction_ne_top (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure) (h𝓕 : IsAddFundamentalDomain (ratL W V) 𝓕 μ)
-    (h : IsThetaFunO ψ V W f) : l2O μ 𝓕 f ≠ ∞ := (memLp_theta hψ hμ h𝓕 h).2.ne
+    (h : IsThetaFunO ψ V W f) : l2O μ 𝓕 f ≠ ∞ := (memLp_theta hψ hμ h𝓕 h).ne
 
 theorem integrableOn_mul_conj (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure)
     (h𝓕 : IsAddFundamentalDomain (ratL W V) 𝓕 μ) (h : IsThetaFunO ψ V W f) (h' : IsThetaFunO ψ V W f') :
@@ -416,7 +416,7 @@ theorem l2O_eq_zero_iff_of_isThetaFunO (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsA
   have : Countable (ratL W V) := TopologicalSpace.separableSpace_iff_countable.1 inferInstance
   refine ⟨fun h0 => eq_zero_of_lintegral_eq_zero (G := WO V W) (ratL W V) μ 𝓕 h𝓕 f h.cont (theta_norm_periodic hψ h) ?_,
     fun h0 => by simp [h0, l2O]⟩
-  rw [← l2O_sq_eq_lintegral, h0, zero_pow two_ne_zero]
+  rw [← l2O_sq_eq_lintegral μ 𝓕 f h.cont, h0, zero_pow two_ne_zero]
 
 theorem ipO_self_eq_zero_iff (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure)
     (h𝓕 : IsAddFundamentalDomain (ratL W V) 𝓕 μ) (h : IsThetaFunO ψ V W f) : ipO μ 𝓕 f f = 0 ↔ f = 0 := by
@@ -440,7 +440,8 @@ theorem l2O_om_apply_eq_of_isThetaFunO {χS χT : (AE D)ˣ →* Circle} {om : GA
     (h : IsThetaFunO ψ V W f) (p : GA D V × GA D W) : l2O μ 𝓕 (om p f) = l2O μ 𝓕 f :=
   (ENNReal.pow_right_strictMono two_ne_zero).injective (by
     beta_reduce
-    rw [l2O_sq_eq_lintegral, l2O_sq_eq_lintegral, hom.om_unit μ 𝓕 hμ h𝓕 p f h])
+    rw [l2O_sq_eq_lintegral μ 𝓕 _ (hom.om_pres p f h).cont,
+      l2O_sq_eq_lintegral μ 𝓕 f h.cont, hom.om_unit μ 𝓕 hμ h𝓕 p f h])
 
 theorem ipO_om {χS χT : (AE D)ˣ →* Circle} {om : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)}
     (hom : IsWeilDatumO ψ V W χS χT om) (hμ : μ.IsAddHaarMeasure) (h𝓕 : IsAddFundamentalDomain (ratL W V) 𝓕 μ)

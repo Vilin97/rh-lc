@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ComapLiftFormConstChartPrimeExample
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LiftFormNotMemBlowUpOf
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PComponentDim
@@ -141,9 +142,9 @@ theorem ExceptionalContraction.proof (h₁ : BlowUpDecomposition.Statement.{u}) 
         let z' : Cy := ⟨y * algebraMap (MRing ι O ⧸ G) _ (Ideal.Quotient.mk G c),
           Cy.mul_mem (Algebra.subset_adjoin rfl) (Subalgebra.algebraMap_mem Cy _)⟩
         refine ⟨Polynomial.C a' * Polynomial.X - Polynomial.C z', fun h0 => hpi ?_, ?_⟩
-        · have h1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) h0
-          simp only [Polynomial.coeff_sub, Polynomial.coeff_C_mul_X, if_true, Polynomial.coeff_C,
-            one_ne_zero, if_false, sub_zero, Polynomial.coeff_zero] at h1
+        · have h1 := congrArg (fun p : Polynomial Cy => p.coeff 1) h0
+          simp only [Polynomial.coeff_sub, Polynomial.coeff_C_mul_X, ite_true,
+            Polynomial.coeff_C_of_ne_zero one_ne_zero, sub_zero, Polynomial.coeff_zero] at h1
           have h2 := congrArg Subtype.val h1
           simpa [a', hφ] using h2
         · simp only [map_sub, map_mul, Polynomial.aeval_C, Polynomial.aeval_X]

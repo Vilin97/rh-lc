@@ -12,7 +12,7 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Gen GlobalTheory.LKTrip GlobalTheory.LKGeo
-open UpperTheory.Gal.Int.Geo (Lv IsTrans Integ KS Mem FEt)
+open UpperTheory.Gal.Int.Geo (Lv Integ KS Mem FEt)
 open scoped TensorProduct
 
 universe u
@@ -41,7 +41,7 @@ def Rel {S : Scheme.{0}} {s : S ⟶ Sp R} {N N' : ℕ} {o' : GObj gb N' s} {o : 
 def Wit (h : G.GAf) {N N' : ℕ} (X' : GenModel gb N') (X : GenModel gb N) (π : X'.X ⟶ X.X)
     (Φ : X'.univ.A.left ⟶ X.univ.A.left) : Prop :=
   π ≫ X.s = X'.s ∧ ∃ (o : GObj gb N X'.s) (ψ : X'.univ.A ⟶ o.A) (φ : GObjMap o X.univ π),
-    IsTrans L h X'.univ o ψ ∧ Φ = ψ.left ≫ φ.φ
+    Int.Geo.IsTrans L h X'.univ o ψ ∧ Φ = ψ.left ≫ φ.φ
 
 theorem Wit.w {L : Link D G} {h : G.GAf} {N N' : ℕ} {X' : GenModel gb N'} {X : GenModel gb N} {π : X'.X ⟶ X.X}
     {Φ : X'.univ.A.left ⟶ X.univ.A.left} (H : Wit L h X' X π Φ) : Φ ≫ X.univ.A.hom = X'.univ.A.hom ≫ π := by
@@ -112,13 +112,13 @@ def RelArith : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p
 
 def TransSelf : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (S : Scheme.{0}) (s : S ⟶ Sp R) (N : Lv p),
-  (∀ (o : GObj gb N.1 s), ∀ (u : G.GAf), u ∈ L.KN N.1 → IsTrans L u o o (𝟙 _)) ∧
-  ∀ (c : ℕ) (hN : 0 < N.1) (hc : 0 < c) (o : GObj gb (N.1 * c) s), IsTrans L 1 o (o.forgetMul hN hc) (𝟙 o.A)
+  (∀ (o : GObj gb N.1 s), ∀ (u : G.GAf), u ∈ L.KN N.1 → Int.Geo.IsTrans L u o o (𝟙 _)) ∧
+  ∀ (c : ℕ) (hN : 0 < N.1) (hc : 0 < c) (o : GObj gb (N.1 * c) s), Int.Geo.IsTrans L 1 o (o.forgetMul hN hc) (𝟙 o.A)
 
 def TransComp : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (S : Scheme.{0}) (s : S ⟶ Sp R) (N₁ : ℕ) (N₂ N₃ : Lv p) (o₁ : GObj gb N₁ s) (o₂ : GObj gb N₂.1 s)
   (o₃ : GObj gb N₃.1 s) (ψ₁ : o₁.A ⟶ o₂.A) (ψ₂ : o₂.A ⟶ o₃.A) (h₁ h₂ : G.GAf), Integ L h₂ → AdmK L N₂.1 N₃.1 h₂ →
-  IsTrans L h₁ o₁ o₂ ψ₁ → IsTrans L h₂ o₂ o₃ ψ₂ → IsTrans L (h₂ * h₁) o₁ o₃ (ψ₁ ≫ ψ₂)
+  Int.Geo.IsTrans L h₁ o₁ o₂ ψ₁ → Int.Geo.IsTrans L h₂ o₂ o₃ ψ₂ → Int.Geo.IsTrans L (h₂ * h₁) o₁ o₃ (ψ₁ ≫ ψ₂)
 
 def HomPull : Prop := ∀ (G₀ : GDatum) (R : Type) [CommRing R] [Algebra ℚ R] (gb : GBase G₀ R) (S S' : Scheme.{0}) (s : S ⟶ Sp R)
   (s' : S' ⟶ Sp R) (f : S' ⟶ S) (N₁ N₂ : ℕ) (o₁ : GObj gb N₁ s) (o₂ : GObj gb N₂ s) (o₁' : GObj gb N₁ s') (o₂' : GObj gb N₂ s')
@@ -137,12 +137,12 @@ def TatePull : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [Co
 def TransPull : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (S S' : Scheme.{0}) (s : S ⟶ Sp R) (s' : S' ⟶ Sp R) (f : S' ⟶ S), f ≫ s = s' → ∀ (N₁ N₂ : ℕ)
   (o₁ : GObj gb N₁ s) (o₂ : GObj gb N₂ s) (o₁' : GObj gb N₁ s') (o₂' : GObj gb N₂ s') (m₁ : GObjMap o₁' o₁ f)
-  (m₂ : GObjMap o₂' o₂ f) (ψ : o₁.A ⟶ o₂.A) (h : G.GAf), IsTrans L h o₁ o₂ ψ →
-  ∃ ψ' : o₁'.A ⟶ o₂'.A, IsTrans L h o₁' o₂' ψ' ∧ ψ'.left ≫ m₂.φ = m₁.φ ≫ ψ.left
+  (m₂ : GObjMap o₂' o₂ f) (ψ : o₁.A ⟶ o₂.A) (h : G.GAf), Int.Geo.IsTrans L h o₁ o₂ ψ →
+  ∃ ψ' : o₁'.A ⟶ o₂'.A, Int.Geo.IsTrans L h o₁' o₂' ψ' ∧ ψ'.left ≫ m₂.φ = m₁.φ ≫ ψ.left
 
 def TransOfMap : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (S : Scheme.{0}) (s : S ⟶ Sp R) (N : Lv p) (o o' : GObj gb N.1 s) (m : GObjMap o o' (𝟙 S)),
-  ∃ θ : o.A ⟶ o'.A, θ.left = m.φ ∧ IsTrans L 1 o o' θ
+  ∃ θ : o.A ⟶ o'.A, θ.left = m.φ ∧ Int.Geo.IsTrans L 1 o o' θ
 
 def Rigid : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] [Algebra ℚ R] (gb : GBase D.toG R)
   (S S' : Scheme.{0}) (s : S ⟶ Sp R) (s' : S' ⟶ Sp R) (f : S' ⟶ S), f ≫ s = s' → ∀ (N : Lv p) (o : GObj gb N.1 s)
@@ -155,7 +155,7 @@ def IsogFEt : Prop := ∀ (R : Type) [CommRing R] [Algebra ℚ R] (S : Scheme.{0
 
 def TransKer : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (S : Scheme.{0}) (s : S ⟶ Sp R) (N' N : Lv p) (o : GObj gb N'.1 s) (o₁ o₂ : GObj gb N.1 s)
-  (ψ₁ : o.A ⟶ o₁.A) (ψ₂ : o.A ⟶ o₂.A) (h : G.GAf), Integ L h → AdmK L N'.1 N.1 h → IsTrans L h o o₁ ψ₁ → IsTrans L h o o₂ ψ₂ →
+  (ψ₁ : o.A ⟶ o₁.A) (ψ₂ : o.A ⟶ o₂.A) (h : G.GAf), Integ L h → AdmK L N'.1 N.1 h → Int.Geo.IsTrans L h o o₁ ψ₁ → Int.Geo.IsTrans L h o o₂ ψ₂ →
   ∀ (k : Type) [Field k] [IsAlgClosed k] (t : Sp k ⟶ S),
     (∀ a : Over.mk t ⟶ o.A, a ≫ ψ₁ = 1 ↔ a ≫ ψ₂ = 1) ∧
     ∀ (a : Over.mk t ⟶ o.A) (y : D.La), a ≫ ψ₁ = toUnit _ ≫ o₁.eta y ↔ a ≫ ψ₂ = toUnit _ ≫ o₂.eta y
@@ -181,24 +181,24 @@ def MapOfIso : Prop := ∀ (G₀ : GDatum) (R : Type) [CommRing R] [Algebra ℚ 
 def TransUniqPt : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (k : Type) [Field k] [IsAlgClosed k] (s : Sp k ⟶ Sp R) (N' N : Lv p) (o : GObj gb N'.1 s)
   (o₁ o₂ : GObj gb N.1 s) (ψ₁ : o.A ⟶ o₁.A) (ψ₂ : o.A ⟶ o₂.A) (h : G.GAf), Integ L h → AdmK L N'.1 N.1 h →
-  IsTrans L h o o₁ ψ₁ → IsTrans L h o o₂ ψ₂ → ∃ m : GObjMap o₁ o₂ (𝟙 _), ψ₁.left ≫ m.φ = ψ₂.left
+  Int.Geo.IsTrans L h o o₁ ψ₁ → Int.Geo.IsTrans L h o o₂ ψ₂ → ∃ m : GObjMap o₁ o₂ (𝟙 _), ψ₁.left ≫ m.φ = ψ₂.left
 
 def TransDeep : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (h : G.GAf), Integ L h → ∃ k : ℕ, k.Coprime p ∧ (∀ N, AdmK L (N * k) N h) ∧ ∀ (N : Lv p) (S : Scheme.{0}) [IsLocallyNoetherian S]
-  (s : S ⟶ Sp R) (o' : GObj gb (N.1 * k) s), ∃ (o : GObj gb N.1 s) (ψ : o'.A ⟶ o.A), IsTrans L h o' o ψ
+  (s : S ⟶ Sp R) (o' : GObj gb (N.1 * k) s), ∃ (o : GObj gb N.1 s) (ψ : o'.A ⟶ o.A), Int.Geo.IsTrans L h o' o ψ
 
 def TransIso : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (S : Scheme.{0}) (s : S ⟶ Sp R) (N' N : ℕ) (o' : GObj gb N' s) (o : GObj gb N s) (ψ : o'.A ⟶ o.A),
-  ∀ (u : G.GAf), u ∈ L.KN 1 → IsTrans L u o' o ψ → IsIso ψ
+  ∀ (u : G.GAf), u ∈ L.KN 1 → Int.Geo.IsTrans L u o' o ψ → IsIso ψ
 
 def TransOrbit : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (k : Type) [Field k] [IsAlgClosed k] (s : Sp k ⟶ Sp R) (N' N : Lv p) (o₁ o₂ : GObj gb N'.1 s)
-  (o : GObj gb N.1 s) (ψ₁ : o₁.A ⟶ o.A) (ψ₂ : o₂.A ⟶ o.A), IsTrans L 1 o₁ o ψ₁ → IsTrans L 1 o₂ o ψ₂ →
-  ∃ (u : G.GAf), u ∈ L.KN N.1 ∧ ∃ θ : o₁.A ⟶ o₂.A, IsTrans L u o₁ o₂ θ ∧ θ ≫ ψ₂ = ψ₁
+  (o : GObj gb N.1 s) (ψ₁ : o₁.A ⟶ o.A) (ψ₂ : o₂.A ⟶ o.A), Int.Geo.IsTrans L 1 o₁ o ψ₁ → Int.Geo.IsTrans L 1 o₂ o ψ₂ →
+  ∃ (u : G.GAf), u ∈ L.KN N.1 ∧ ∃ θ : o₁.A ⟶ o₂.A, Int.Geo.IsTrans L u o₁ o₂ θ ∧ θ ≫ ψ₂ = ψ₁
 
 def TransFree : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (k : Type) [Field k] [IsAlgClosed k] (s : Sp k ⟶ Sp R) (N : Lv p) (o : GObj gb N.1 s),
-  ∀ (u : G.GAf), u ∈ L.KN 1 → IsTrans L u o o (𝟙 _) → u ∈ L.KN N.1
+  ∀ (u : G.GAf), u ∈ L.KN 1 → Int.Geo.IsTrans L u o o (𝟙 _) → u ∈ L.KN N.1
 
 def GenSm : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [Field R] [Algebra ℚ R] (gb : GBase D.toG R) (N : Lv p)
   (X : GenModel gb N.1), Smooth X.s ∧ IsSeparated X.s ∧ QuasiCompact X.s ∧ (D.CompactB → IsProjOver X.s)
@@ -217,17 +217,17 @@ def PtEq : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L
   Wit L h₁ X₁ X π₁ Φ₁ → Wit L h₂ X₂ X π₂ Φ₂ → Integ L h₁ → Integ L h₂ → AdmK L N₁.1 N.1 h₁ → AdmK L N₂.1 N.1 h₂ →
   u ∈ L.KN N.1 → h₁ = u * (h₂ * g) → ∀ (k : Type) [Field k] [IsAlgClosed k] (s : Sp k ⟶ Sp R) (x : Sp k ⟶ X₁.X) (y : Sp k ⟶ X₂.X),
   x ≫ X₁.s = s → y ≫ X₂.s = s → ∀ (ox : GObj gb N₁.1 s) (oy : GObj gb N₂.1 s) (mx : GObjMap ox X₁.univ x) (my : GObjMap oy X₂.univ y)
-  (θ : ox.A ⟶ oy.A), IsTrans L g ox oy θ → x ≫ π₁ = y ≫ π₂ ∧ mx.φ ≫ Φ₁ = θ.left ≫ my.φ ≫ Φ₂
+  (θ : ox.A ⟶ oy.A), Int.Geo.IsTrans L g ox oy θ → x ≫ π₁ = y ≫ π₂ ∧ mx.φ ≫ Φ₁ = θ.left ≫ my.φ ≫ Φ₂
 
 def PtOrbit : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (N' N : Lv p) (X' : GenModel gb N'.1) (X : GenModel gb N.1) (π : X'.X ⟶ X.X)
   (Φ : X'.univ.A.left ⟶ X.univ.A.left), Wit L 1 X' X π Φ → ∀ (k : Type) [Field k] [IsAlgClosed k] (x y : Sp k ⟶ X'.X),
   x ≫ π = y ≫ π → ∃ (ox oy : GObj gb N'.1 (x ≫ X'.s)) (mx : GObjMap ox X'.univ x) (my : GObjMap oy X'.univ y),
-    y ≫ X'.s = x ≫ X'.s ∧ ∃ (u : G.GAf), u ∈ L.KN N.1 ∧ ∃ θ : ox.A ⟶ oy.A, IsTrans L u ox oy θ ∧ θ.left ≫ my.φ ≫ Φ = mx.φ ≫ Φ
+    y ≫ X'.s = x ≫ X'.s ∧ ∃ (u : G.GAf), u ∈ L.KN N.1 ∧ ∃ θ : ox.A ⟶ oy.A, Int.Geo.IsTrans L u ox oy θ ∧ θ.left ≫ my.φ ≫ Φ = mx.φ ≫ Φ
 
 def WitUniq : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [Field R] [Algebra ℚ R]
   (gb : GBase D.toG R) (N' N : Lv p) (X' : GenModel gb N'.1) (X : GenModel gb N.1) (h : G.GAf), Integ L h → AdmK L N'.1 N.1 h →
-  ∀ (π π' : X'.X ⟶ X.X) (Φ Φ' : X'.univ.A.left ⟶ X.univ.A.left), Wit L h X' X π Φ → Wit L h X' X π' Φ' → π = π' ∧ Φ = Φ'
+  ∀ (π : X'.X ⟶ X.X) (Φ : X'.univ.A.left ⟶ X.univ.A.left) (π' : X'.X ⟶ X.X) (Φ' : X'.univ.A.left ⟶ X.univ.A.left), Wit L h X' X π Φ → Wit L h X' X π' Φ' → π = π' ∧ Φ = Φ'
 
 def WitComp : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (N₁ N₂ N₃ : Lv p) (X₁ : GenModel gb N₁.1) (X₂ : GenModel gb N₂.1) (X₃ : GenModel gb N₃.1) (h h' : G.GAf),
@@ -269,12 +269,12 @@ def TransDesc : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup 
   (gb : GBase D.toG R) (S S' : Scheme.{0}) [IsReduced S'] (s : S ⟶ Sp R) (s' : S' ⟶ Sp R) (c : S' ⟶ S) [IsFinite c] [Etale c]
   [Surjective c], c ≫ s = s' → ∀ (N₁ N₂ : ℕ) (o₁ : GObj gb N₁ s) (o₂ : GObj gb N₂ s) (o₁' : GObj gb N₁ s') (o₂' : GObj gb N₂ s')
   (m₁ : GObjMap o₁' o₁ c) (m₂ : GObjMap o₂' o₂ c) (ψ : o₁.A ⟶ o₂.A) (ψ' : o₁'.A ⟶ o₂'.A) (h : G.GAf),
-  ψ'.left ≫ m₂.φ = m₁.φ ≫ ψ.left → IsTrans L h o₁' o₂' ψ' → IsTrans L h o₁ o₂ ψ
+  ψ'.left ≫ m₂.φ = m₁.φ ≫ ψ.left → Int.Geo.IsTrans L h o₁' o₂' ψ' → Int.Geo.IsTrans L h o₁ o₂ ψ
 
 def TransCancel : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [CommRing R] [Algebra ℚ R]
   (gb : GBase D.toG R) (S : Scheme.{0}) (s : S ⟶ Sp R) (M N' N : Lv p) (o : GObj gb M.1 s) (o₁ : GObj gb N'.1 s)
-  (o₂ : GObj gb N.1 s) (θ : o.A ⟶ o₁.A) (χ : o₁.A ⟶ o₂.A) (h : G.GAf), Integ L h → AdmK L M.1 N.1 h → IsTrans L 1 o o₁ θ →
-  IsTrans L h o o₂ (θ ≫ χ) → IsTrans L h o₁ o₂ χ
+  (o₂ : GObj gb N.1 s) (θ : o.A ⟶ o₁.A) (χ : o₁.A ⟶ o₂.A) (h : G.GAf), Integ L h → AdmK L M.1 N.1 h → Int.Geo.IsTrans L 1 o o₁ θ →
+  Int.Geo.IsTrans L h o o₂ (θ ≫ χ) → Int.Geo.IsTrans L h o₁ o₂ χ
 
 def WitEx : Prop := ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G) (R : Type) [Field R] [Algebra ℚ R]
   (gb : GBase D.toG R) (X : ∀ N : Lv p, GenModel gb N.1) (N' N : Lv p) (h : G.GAf), Integ L h → AdmK L N'.1 N.1 h →

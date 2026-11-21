@@ -6,7 +6,7 @@ public import Mathlib
 
 open MeasureTheory
 
-private theorem UpperTheory.Reformulated.B.MultiplicationNormBound.norm_mul_le {X : Type*} (c : X → ℝ) (hb : ∀ x, |c x| ≤ 1)
+theorem UpperTheory.Reformulated.B.MultiplicationNormBound.norm_mul_le {X : Type*} (c : X → ℝ) (hb : ∀ x, |c x| ≤ 1)
     (x : X) (z : ℂ) : ‖(c x : ℂ) * z‖ ≤ ‖z‖ := by
   rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
   exact mul_le_of_le_one_left (norm_nonneg _) (hb x)

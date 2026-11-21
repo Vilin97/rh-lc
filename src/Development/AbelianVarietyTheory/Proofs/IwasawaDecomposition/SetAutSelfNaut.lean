@@ -15,12 +15,12 @@ open GlobalTheory.WeilDeligne
 
 def RowWD.unram (D : D7) (m : D.what₂.FT → PlE D.host → Multiset ℂ) (h0 : ∀ σ w, (0:ℂ) ∉ m σ w)
     (hc : ∀ σ w, Multiset.card (m σ w) = D.R.r) : RowWD D where
-  par σ w := WD.lpUnr (m σ w)
+  par σ w := WD.lpUnr (D.nd.plOm.2 w) (m σ w)
   sat := m
-  dim σ w := by simpa [WD.lpUnr] using hc σ w
-  tame σ _ _ := by
-    apply WD.tame_of_unr
-    exact (WD.unr_mk _).mpr (WDRep.unr_diag _)
+  dim σ w := (WD.lpUnr_spec (h := D.nd.plOm.2 w) (m σ w) (h0 σ w)).2.2.trans (hc σ w)
+  tame σ k v :=
+    let w := D.naut.plGw k v
+    WD.tame_of_unr (WD.lpUnr_spec (h := D.nd.plOm.2 w) (m σ w) (h0 σ w)).1
 
 end GlobalTheory.HeightCounting
 end

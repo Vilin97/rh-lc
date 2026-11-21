@@ -19,7 +19,7 @@ theorem GlobalTheory.CompanionTheory.Ar.Num.divCycle_map_localisation :
   classical
   let φ : MRing ι R →+* MRing ι R' := MvPolynomial.map (algebraMap R R')
   let M : Submonoid (MRing ι R) := Mo.map (C (σ := (Σ k, ι k)) (R := R))
-  haveI : IsLocalization M (MRing ι R') := MvPolynomial.isLocalization Mo R'
+  have : IsLocalization M (MRing ι R') := MvPolynomial.isLocalization Mo R'
   have hφ : algebraMap (MRing ι R) (MRing ι R') = φ := rfl
   set J := P ⊔ Ideal.span {f} with hJdef
   have hJ : P.map φ ⊔ Ideal.span {φ f} = J.map (algebraMap (MRing ι R) (MRing ι R')) := by
@@ -28,7 +28,7 @@ theorem GlobalTheory.CompanionTheory.Ar.Num.divCycle_map_localisation :
     (IsLocalization.isPrime_iff_isPrime_disjoint M (MRing ι R') W').mp hW' |>.2
   have hWp : (W'.comap (algebraMap (MRing ι R) (MRing ι R'))).IsPrime := Ideal.comap_isPrime _ _
   have hmap : (W'.comap (algebraMap (MRing ι R) (MRing ι R'))).map
-      (algebraMap (MRing ι R) (MRing ι R')) = W' := IsLocalization.map_comap M _ W'
+      (algebraMap (MRing ι R) (MRing ι R')) = W' := IsLocalization.map_under M _ W'
   obtain ⟨Q, hQ⟩ : ∃ Q, Q = W'.comap (algebraMap (MRing ι R) (MRing ι R')) := ⟨_, rfl⟩
   rw [← hQ] at hdisj hWp hmap
   subst hmap

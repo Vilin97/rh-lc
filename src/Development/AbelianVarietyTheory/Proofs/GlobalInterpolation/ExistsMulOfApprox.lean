@@ -71,7 +71,7 @@ theorem ptEval_subD (hab : a ≤ b) (σ : K →+* L) (ap : ι → Matrix (Fin a)
     congr 1
     have h : v.2.2.1 < b := lt_of_lt_of_le v.2.2.2 hab
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [subD, substAdj, aeval_X, dif_pos h, map_sum, map_mul, ptEval, eval₂Hom_X', Sum.elim_inl, Sum.elim_inr]
+      simp only [subD, substAdj, aeval_X, dite_eq_left h, map_sum, map_mul, ptEval, eval₂Hom_X', Sum.elim_inl, Sum.elim_inr]
     exact Finset.sum_congr rfl fun β _ => mul_comm _ _
 
 theorem sum_ptTable (hab : a ≤ b) (σ : K →+* L) (ap : ι → Matrix (Fin a) (Fin b) L) (P : Pol K ι a) :
@@ -124,7 +124,7 @@ theorem coe_jetOp (lam : ι → DomWeight a) (lam' : ι → DomWeight b) (J : (D
 omit [Fintype ι] in
 theorem detShift_eq {hab : a < b} {lam : ι → DomWeight a} {lam' : ι → DomWeight b} {s s' : ι → ℤ} {n : ι → ℕ}
     (h : WtCompat hab lam lam' s s' n) (τ : ι) : (lam' τ).detShift = -s τ := by
-  rw [DomWeight.detShift, dif_pos (by omega)]
+  rw [DomWeight.detShift, dite_eq_left (by omega)]
   exact h.2.1 τ _ (by simp only; omega)
 
 omit [Fintype ι] in
@@ -363,7 +363,7 @@ theorem closureIntegral : ClosureIntegral := by
     have h0 : T (jetMap J n (F : Pol K ι a)) = 0 := by
       ext p
       obtain ⟨u, -, hu'⟩ := hu p
-      rw [hu', hκ, zero_mul, zero_mul, coeff_zero]
+      rw [hu', hκ, zero_mul, zero_mul, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     have h1 := congrArg (blockAct K (n := b) fun τ => (((BW τ)⁻¹ : GL (Fin b) K) : Matrix (Fin b) (Fin b) K)) h0
     rw [map_zero, hT, ← AlgHom.comp_apply, blockAct_comp] at h1
     simp only [Units.mul_inv, blockAct_one, AlgHom.id_apply] at h1

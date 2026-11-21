@@ -137,7 +137,7 @@ theorem deg_le_total' {N : ℕ} (LL : Letters N) (x : Fin N) : LL.deg x ≤ LL.t
 theorem theoremMV7Of : TheoremMV7Of := by
   unfold TheoremMV7Of
   intro p _ s r _ LL T a E Yl n₀ dd ρ hp2 hr hρ hadm hch hcond ha hE hY hS hsize hH
-  haveI : NeZero (2 * s + 1) := ⟨by omega⟩
+  have : NeZero (2 * s + 1) := ⟨by omega⟩
   have hr1 : 1 ≤ r := by omega
   have hrR : (2 : ℝ) ≤ r := by exact_mod_cast hr
   have hlg1 : 1 ≤ lgSeg p a r := one_le_lgSeg p a r (by linarith) hr1

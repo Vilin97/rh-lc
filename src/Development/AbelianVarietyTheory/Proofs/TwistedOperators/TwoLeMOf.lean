@@ -74,6 +74,7 @@ theorem firstCore (L : LevCh D T) (μ0 : T) (h : L.Is μ0) : ∃ Z : LSp D, Z.Is
 
 abbrev recOf (_L : LevCh D T) : D7 := D
 
+set_option maxHeartbeats 16000000 in
 theorem carryG : CarryG := by
   intro X X' T T' L L' μ₀ μ₀' ι hA sc G
   obtain ⟨B, Cc, Wr, Vd, Ss, Nn, Gj⟩ := X

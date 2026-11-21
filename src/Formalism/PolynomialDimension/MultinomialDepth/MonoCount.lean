@@ -1420,8 +1420,8 @@ theorem count_HW [NeZero r] (L : Letters N) (j0 : ℕ) {q : ℕ} (J : Fin q → 
       have h0 := congrArg ((GA p L j0).comp ν.1) hg
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_zero, Fintype.sum_sigma, map_sum, Finset.sum_eq_single ν] at h0
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sum] at h0
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum] at h0
         rw [← h0]
         refine Finset.sum_congr rfl fun y _ => ?_
         rw [map_smul]
@@ -1523,7 +1523,8 @@ theorem freeze_surj (LL : Letters K) (ρ : Fin r) (n : ℕ) (hS : LL.total ≤ n
     have hZ : ∀ c, c ≠ ρ → m (Fin.last K, c) = 0 := fun c hc =>
       Finset.sum_eq_zero_iff.mp hm c (Finset.mem_erase.mpr ⟨hc, Finset.mem_univ _⟩)
     apply hne
-    rw [FB.eq_ext_res n ρ m hZ hrow, ← FB.coeff_ev ρ n _ hGrow, hGev, coeff_zero]
+    rw [FB.eq_ext_res n ρ m hZ hrow, ← FB.coeff_ev ρ n _ hGrow, hGev,
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   exact (sub_eq_zero.mp (FB.vanish LL n ρ _ hGinv h0)).symm
 
 theorem wt_ext (LL : Letters K) (n : ℕ) (ρ c : Fin r) (m' : Fin K × Fin r →₀ ℕ) :

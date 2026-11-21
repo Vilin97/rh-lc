@@ -57,5 +57,6 @@ theorem UpperTheory.heckeChar_sign_fixed :
   refine ⟨χ * quadChar E ^ (m + n), μ * δ, ⟨hμc.mul hδc, art, a + 0, ha, isAlgPos_mul hχ hη, hL.mul hδ⟩, ?_, ?_, fun v => ?_⟩
   · rw [map_mul, map_pow, compNorm_quadChar, one_pow, mul_one]
   · rw [MonoidHom.mul_comp, hres, zpow_zero, mul_one]
-  · rw [HChar.locInf_mul, locInf_pow, hm, quadChar_locInf, ← pow_add, ← add_assoc, pow_add, ← two_mul, pow_mul]
+  · change χ.locInf v (-1) * (quadChar E ^ (m + n)).locInf v (-1) = (-1) ^ n
+    rw [locInf_pow, hm, quadChar_locInf, ← pow_add, ← add_assoc, pow_add, ← two_mul, pow_mul]
     simp

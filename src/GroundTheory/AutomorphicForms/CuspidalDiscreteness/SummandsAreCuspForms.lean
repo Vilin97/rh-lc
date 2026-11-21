@@ -21,6 +21,8 @@ open AutomorphicForm RightCosetSpace Reduction
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => Reduction.rationalGLOne (K := K) (n := n)
+
 theorem retractOne_mul (g h : AdelicGLn.AdelicGL K n) :
     retractOne (g * h) = retractOne g * retractOne h := by
   ext1

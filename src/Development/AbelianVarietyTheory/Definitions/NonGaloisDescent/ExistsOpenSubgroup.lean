@@ -5,6 +5,7 @@ public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.Coef
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsLabOfOrder
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LabelSettingTameGenerator
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BlocksUnique
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 
 @[expose] public section
 
@@ -107,7 +108,7 @@ theorem exists_isTm {g : ℕ} [Fact g.Prime] (h : IsPlaceOver A w) (hw : normV w
       simpa using this
   have hm1 : χ ⟨γ, hγ.1⟩ ^ m = 1 := (hker _ m).mpr (by rw [hx, AlgEquiv.commutes])
   have hord : orderOf (χ ⟨γ, hγ.1⟩) = m := by
-    refine orderOf_eq_of_pow_and_pow_div_prime hm hm1 fun p hp hpm e => ?_
+    refine orderOf_eq_of_pow_and_pow_div_prime hm1 fun p hp hpm e => ?_
     obtain ⟨σ, hσ, hσx⟩ := GlobalTheory.InertiaMovesRoot.exists_mem_Ine_apply_ne E Ω A w h p hp ϖ h1 h2 (x ^ (m / p))
       (by rw [← pow_mul, Nat.div_mul_cancel hpm, hx])
     have h5 : IsTm (χ ^ (m / p)) := hχ.of_le hχ fun σ e _ => by simp [e]
@@ -251,25 +252,18 @@ theorem tameLP_iff {w : PlE D.host} (L : D.naut.LP w) : TameLP D L ↔ (T.e w L)
 theorem labDepth_of_tie {γ} (hγ : GenFam D γ) (h : LabAll T γ) : LabDepth D := by
   intro k w hw L
   have : Fact (D.host.g k).Prime := ⟨D.host.g_prime k⟩
-  rw [h k w hw, tameLP_iff T, ← T.dim]
+  rw [h k w hw L, tameLP_iff T, ← T.dim]
   exact ⟨WD.lab_monic _ _ _, WD.natDegree_lab_eq_iff
     (TeichmullerInertiaLabelCondition.of_tameGenAt (normV_eq D hw) (hγ.2 k w hw) (D.ntypes.teichC_inj k)) _⟩
 
 theorem labGen_of_tie {γ} (hγ : GenFam D γ) (h : LabAll T γ) : LabGen D := by
   refine ⟨γ, hγ, fun k w hw L hL => ?_⟩
   have : Fact (D.host.g k).Prime := ⟨D.host.g_prime k⟩
-  rw [h k w hw, ← T.dim] at hL
-  rw [h k w hw, T.inePol w L _ (hγ.2 k w hw).1]
+  rw [h k w hw L, ← T.dim] at hL
+  rw [h k w hw L, T.inePol w L _ (hγ.2 k w hw).1]
   exact WD.inePol_eq_of_natDegree_lab _ _ _ hL
 
 end Ties
-
-section Rec
-
-open GlobalTheory.RowTie.Model GlobalTheory.HeightCounting
-
-
-end Rec
 
 section Forms
 

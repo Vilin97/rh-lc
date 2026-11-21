@@ -27,20 +27,20 @@ theorem finrank_tensor_eq_of_retract {A M N : Type} [CommRing A] [IsDomain A]
     Module.finrank K (K ⊗[A] N) =
       Module.finrank (FractionRing A) (FractionRing A ⊗[A] N) := by
   let p : Ideal A := RingHom.ker (algebraMap A K)
-  haveI : p.IsPrime := RingHom.ker_isPrime _
+  have : p.IsPrime := RingHom.ker_isPrime _
   let B := Localization.AtPrime p
-  haveI : Module.Free B (B ⊗[A] M) :=
+  have : Module.Free B (B ⊗[A] M) :=
     ha B (IsLocalization.map_units B (⟨a, hK⟩ : p.primeCompl))
-  haveI : Module.Flat B (B ⊗[A] N) :=
+  have : Module.Flat B (B ⊗[A] N) :=
     Module.Flat.of_retract (i.baseChange B) (r.baseChange B) (by
       rw [← LinearMap.baseChange_comp, hri, LinearMap.baseChange_id])
-  haveI : Module.Free B (B ⊗[A] N) := Module.free_of_flat_of_isLocalRing
+  have : Module.Free B (B ⊗[A] N) := Module.free_of_flat_of_isLocalRing
   have key : ∀ (L : Type) [Field L] [Algebra A L],
       (∀ y : p.primeCompl, IsUnit (algebraMap A L y)) →
       Module.finrank L (L ⊗[A] N) = Module.finrank B (B ⊗[A] N) := by
     intro L _ _ hL
-    letI : Algebra B L := (IsLocalization.lift (M := p.primeCompl) hL).toAlgebra
-    haveI : IsScalarTower A B L :=
+    let : Algebra B L := (IsLocalization.lift (M := p.primeCompl) hL).toAlgebra
+    have : IsScalarTower A B L :=
       .of_algebraMap_eq fun y => (IsLocalization.lift_eq (M := p.primeCompl) hL y).symm
     rw [← Module.finrank_baseChange (R := L) (S := B) (M' := B ⊗[A] N)]
     exact (TensorProduct.AlgebraTensorModule.cancelBaseChange A B L L N).finrank_eq.symm
@@ -71,7 +71,7 @@ theorem exists_retract {A σ : Type} [CommRing A] (I : Ideal (MvPolynomial σ A)
     (Submodule.Quotient.restrictScalarsEquiv A I).symm.toLinearMap, ?_⟩
   ext ⟨_, F, hF, rfl⟩
   change Ideal.Quotient.mk I (homogeneousComponent e F) = Ideal.Quotient.mk I F
-  rw [homogeneousComponent_of_mem hF, if_pos rfl]
+  simp [homogeneousComponent_of_mem hF]
 
 theorem dimDeg_add_finrank {A σ : Type} [CommRing A] [Finite σ] (I : Ideal (MvPolynomial σ A))
     (hI : ∀ F ∈ I, ∀ e, homogeneousComponent e F ∈ I) (e : ℕ)
@@ -128,14 +128,14 @@ theorem dimDeg_add_finrank {A σ : Type} [CommRing A] [Finite σ] (I : Ideal (Mv
         ⟨_, isHomogeneous_monomial 1 hd', rfl⟩)
     · rintro _ ⟨z, rfl⟩
       induction z with
-      | add z w hz hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hz hw
+      | add z w hz hw => simpa only [map_add] using add_mem hz hw
       | tmul c n =>
         obtain ⟨_, F, hF, rfl⟩ := n
         refine ⟨c • map (algebraMap A K) F,
           Submodule.smul_mem _ _ (IsHomogeneous.map hF _), ?_⟩
         rw [map_smul, hψ, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
         rfl
-  haveI : Module.Finite K (homogeneousSubmodule σ K e) :=
+  have : Module.Finite K (homogeneousSubmodule σ K e) :=
     Module.Finite.iff_fg.2 (homogeneousSubmodule_fg σ K e)
   have h := LinearMap.finrank_range_add_finrank_ker (ψ ∘ₗ (homogeneousSubmodule σ K e).subtype)
   rw [LinearMap.range_comp, Submodule.range_subtype, hrange, Submodule.baseChange,
@@ -156,7 +156,7 @@ theorem exists_const_of_isDomain {A σ : Type} [CommRing A] [IsDomain A] [IsNoet
   obtain ⟨a, ha0, ha⟩ := exists_free_tensor_of_isUnit.{0} A (MvPolynomial σ A)
     (MvPolynomial σ A ⧸ I)
   refine ⟨a, ha0, ZM.dimDeg (I.map (map (algebraMap A (FractionRing A)))), fun K _ x hx => ?_⟩
-  letI : Algebra A K := x.toAlgebra
+  let : Algebra A K := x.toAlgebra
   funext e
   obtain ⟨r, hr⟩ := exists_retract I hI e
   have h1 := finrank_tensor_eq_of_retract _ r hr a ha K hx

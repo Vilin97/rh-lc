@@ -26,7 +26,7 @@ theorem LeftSideAdditiveInDegree.proof
       cutIdentityLeftSide P f g c₁ L + cutIdentityLeftSide P f g c₂ L := by
   obtain ⟨bf, bg, hbf, hbg, -⟩ := hD.degrees
   have hPmh : IsMultiHomogIdeal P := hP.multiProj.multiHomog
-  haveI : P.IsPrime := hP.multiProj.isPrime
+  have : P.IsPrime := hP.multiProj.isPrime
   have hϖP : (C ϖ : MRing ι O) ∉ P := by
     intro h
     have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
@@ -52,7 +52,6 @@ theorem LeftSideAdditiveInDegree.proof
       by_cases hWf : divCycle P f W = 0
       · exact hmh g bg hbg W fun hWg => hW (by simp [ratDiv, hWf, hWg])
       · exact hmh f bf hbf W hWf
-    letI : W.IsPrime := hWp
     have hlt : P < W := lt_of_le_of_ne hPW (fun e => hϖP (e ▸ hϖW))
     have hdrop := DimStrictDrop.full (MRing ι O) P W hlt
     rw [hP.dim] at hdrop

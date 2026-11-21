@@ -77,6 +77,26 @@ private theorem UpperTheory.V.AlgebraTools.end_apply_mem_sup_of_apply_mem {A : T
   rw [map_add (f := _)]
   exact Submodule.add_mem_sup (hP p hp) (hQ q hq)
 
+private theorem UpperTheory.V.AlgebraTools.almost_selfdual_dual_full {A : Type} [CommRing A]
+    [IsDomain A] [IsDiscreteValuationRing A] {F V : Type} [Field F] [Algebra A F]
+    [IsFractionRing A F] [AddCommGroup V] [Module F V] [Module A V] [IsScalarTower A F V]
+    [Module.Finite F V] (Bf : LinearMap.BilinForm F V) (hnd : Bf.Nondegenerate)
+    (Y : Submodule A V) (hY : Submodule.IsFullLattice F Y) :
+    Submodule.IsFullLattice F (Bf.dualSubmodule Y) := by
+  classical
+  haveI : Module.Free A Y := Submodule.IsLattice.free F Y
+  haveI : Module.Finite A Y := Submodule.IsLattice.finite F Y
+  let b0 := Module.Free.chooseBasis A Y
+  let b := b0.extendOfIsFullLattice F
+  have hb : Submodule.span A (Set.range b) = Y := by
+    have : (b : _ → V) = Y.subtype ∘ b0 := by
+      funext i; simp [b]
+    rw [this, Set.range_comp, ← Submodule.map_span, b0.span_eq, Submodule.map_top,
+      Submodule.range_subtype]
+  rw [← hb, LinearMap.BilinForm.dualSubmodule_span_of_basis Bf hnd b]
+  exact { toIsLattice := Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
+          span_eq_top := by rw [Submodule.span_span_of_tower, Module.Basis.span_eq] }
+
 theorem UpperTheory.V.AlgebraTools.almost_selfdual :
     ∀ {A : Type} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] {F V G : Type} [Field F] [Algebra A F] [IsFractionRing A F] [AddCommGroup V] [Module F V] [Module A V] [IsScalarTower A F V] [Module.Finite F V] [Group G] (Bf : LinearMap.BilinForm F V) (r : G →* Module.End F V) (σ : G → G) (u : G → A), Bf.IsSymm → Bf.Nondegenerate → Function.Surjective σ → (∀ g y z, Bf (r g y) (r (σ g) z) = algebraMap A F (u g) * Bf y z) → ∀ Y₀ : Submodule A V, Submodule.IsFullLattice F Y₀ → (∀ g, ∀ y ∈ Y₀, r g y ∈ Y₀) → ∃ Y : Submodule A V, Submodule.IsFullLattice F Y ∧ (∀ g, ∀ y ∈ Y, r g y ∈ Y) ∧ (∀ g, ∀ y ∈ Bf.dualSubmodule Y, r g y ∈ Bf.dualSubmodule Y) ∧ Y ≤ Bf.dualSubmodule Y ∧ maximalIdeal A • Bf.dualSubmodule Y ≤ Y := by
   intro A _ _ _ F V G _ _ _ _ _ _ _ _ _ Bf r σ u hs hnd hσ hr Y₀ hY₀ hst₀
@@ -101,7 +121,7 @@ theorem UpperTheory.V.AlgebraTools.almost_selfdual :
       intro Y hY hst hle hn
       rcases n with _ | k
       · exact ⟨Y, hY, hst, dst Y hst, hle, by simpa using hn⟩
-      · have hDY := (UpperTheory.V.AlgebraTools.dual_lattice Bf hs hnd Y hY).1
+      · have hDY := UpperTheory.V.AlgebraTools.almost_selfdual_dual_full Bf hnd Y hY
         have hDDY : Y ≤ Bf.dualSubmodule (Bf.dualSubmodule Y) :=
           UpperTheory.V.AlgebraTools.almost_selfdual_swap Bf hs le_rfl
         have hsm : maximalIdeal A ^ (k + 1) • Bf.dualSubmodule Y ≤ Bf.dualSubmodule Y :=
@@ -139,7 +159,7 @@ theorem UpperTheory.V.AlgebraTools.almost_selfdual :
             Y ⊔ maximalIdeal A ^ (k + 1) • Bf.dualSubmodule Y :=
           le_trans (Submodule.smul_mono le_rfl (anti hYW)) le_sup_right
         exact ih _ hWl hWst hWW hWdual
-  have hD₀ := (UpperTheory.V.AlgebraTools.dual_lattice Bf hs hnd Y₀ hY₀).1
+  have hD₀ := UpperTheory.V.AlgebraTools.almost_selfdual_dual_full Bf hnd Y₀ hY₀
   haveI := hY₀
   haveI := hD₀
   have hY₁ : Submodule.IsFullLattice F (Y₀ ⊓ Bf.dualSubmodule Y₀) := inferInstance
@@ -148,6 +168,12 @@ theorem UpperTheory.V.AlgebraTools.almost_selfdual :
       ⟨hst₀ g y (Submodule.mem_inf.mp hy).1, dst Y₀ hst₀ g y (Submodule.mem_inf.mp hy).2⟩
   have hle₁ : Y₀ ⊓ Bf.dualSubmodule Y₀ ≤ Bf.dualSubmodule (Y₀ ⊓ Bf.dualSubmodule Y₀) :=
     le_trans inf_le_right (anti inf_le_left)
-  obtain ⟨s, hs'⟩ := (UpperTheory.V.AlgebraTools.dual_lattice Bf hs hnd _ hY₁).2.2 _
-    (UpperTheory.V.AlgebraTools.dual_lattice Bf hs hnd _ hY₁).1.toIsLattice
+  have hbound : ∀ Z : Submodule A V, Submodule.IsLattice F Z →
+      ∃ s : ℕ, maximalIdeal A ^ s • Z ≤ Y₀ ⊓ Bf.dualSubmodule Y₀ := by
+    first
+    | exact (UpperTheory.V.AlgebraTools.dual_lattice Bf hs hnd _ hY₁).2.2
+    | exact (UpperTheory.V.AlgebraTools.dual_lattice Bf hs hnd _ hY₁.toIsLattice).2.2
+  have hdual : Submodule.IsFullLattice F (Bf.dualSubmodule (Y₀ ⊓ Bf.dualSubmodule Y₀)) :=
+    UpperTheory.V.AlgebraTools.almost_selfdual_dual_full Bf hnd _ hY₁
+  obtain ⟨s, hs'⟩ := hbound _ hdual.toIsLattice
   exact key s _ hY₁ hst₁ hle₁ hs'

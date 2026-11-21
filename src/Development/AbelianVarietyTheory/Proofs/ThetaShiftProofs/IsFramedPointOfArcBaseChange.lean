@@ -89,13 +89,13 @@ theorem dual_alg {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) :
     spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
   rw [← spMap_comp', ← spMap_comp']
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  exact Formalism.L2.Pj.dualMap_alg φ
 
 theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (io : R →+* S) (φ : S →+* T) :
     spMap (dualMap (φ.comp io)) = spMap (dualMap φ) ≫ spMap (dualMap io) := by
   rw [← spMap_comp']
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [dualMap]
+  exact Formalism.L2.Pj.dualMap_comp io φ
 
 end GlobalTheory.ArcQ.FrBC
 

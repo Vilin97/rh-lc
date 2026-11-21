@@ -27,9 +27,9 @@ private theorem low_mem {R σ : Type} [CommRing R] [Finite σ] (m : Ideal (MvPow
     refine Submodule.smul_induction_on hy (fun p hp z _ => ?_) (fun a b ha hb => ?_)
     · rw [map_smul, Algebra.smul_def]
       exact Ideal.mul_mem_right _ _ (hIn hp)
-    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    · rw [map_add]; exact add_mem ha hb
   have h := key (e g) (by
-    rw [AdicCompletion.pow_smul_top_eq_ker_eval (MvPolynomial.idealOfVars_fg σ R), LinearMap.mem_ker,
+    rw [AdicCompletion.pow_smul_top_eq_ker_eval (MvPolynomial.fg_idealOfVars σ R), LinearMap.mem_ker,
       AdicCompletion.eval_apply, toAdicCompletionAlgEquiv_apply, toAdicCompletion_apply_eq_mk_truncTotal]
     rw [hg]
     rfl)
@@ -137,7 +137,7 @@ theorem UpperTheory.finrank_pointDerivations_vanishing_eq_of_isCompl :
       have hz := hker δ δ.2 ((k : O) • r - ∑ i, b i • a i) (fun j => by
         set_option synthInstance.maxHeartbeats 100000 in
           rw [map_sub, map_sum, map_smul]
-        simp only [map_smul, ha, smul_ite, smul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+        simp only [map_smul, ha, smul_ite, smul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
         rw [Algebra.smul_def, Algebra.smul_def, hb j (Finset.mem_univ _), Algebra.smul_def]
         have := hne _ (hc j)
         field_simp
@@ -152,7 +152,7 @@ theorem UpperTheory.finrank_pointDerivations_vanishing_eq_of_isCompl :
       ext i
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, Finset.sum_apply]
-      simp only [hev, Submodule.coe_smul, LinearMap.smul_apply, ha, smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      simp only [hev, Submodule.coe_smul, LinearMap.smul_apply, ha, smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
       rw [smul_eq_mul, div_mul_cancel₀ _ (hne _ (hc i))]
   rw [(LinearEquiv.ofBijective ev hbij).finrank_eq]
   simp

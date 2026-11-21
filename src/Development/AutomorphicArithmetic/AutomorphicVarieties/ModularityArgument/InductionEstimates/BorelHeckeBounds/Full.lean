@@ -45,7 +45,7 @@ abbrev qx (q : Cos K) (x : G1 K (2 + 2)) : G1 K (2 + 2) := (q.out : G1 K (2 + 2)
 def Om (T : ℝ) (x : G1 K (2 + 2)) : Prop := ∀ q : Cos K, HH (qx q x) ≤ T
 
 def ct {n : ℕ} (r : ℕ) (ψ : G1 K n → ℂ) (z : G1 K n) : ℂ :=
-  ∫ X in unipFundamentalDomain K n r, ψ (unipOne r X * z) ∂unipMeasure K n r
+  ∫ X in unipFundamentalDomain K n r, ψ (unipOne (K := K) (n := n) r X * z) ∂unipMeasure K n r
 
 def hi (T : ℝ) (F : G1 K (2 + 2) → ℂ) : G1 K (2 + 2) → ℂ := {z | T < HH z}.indicator F
 

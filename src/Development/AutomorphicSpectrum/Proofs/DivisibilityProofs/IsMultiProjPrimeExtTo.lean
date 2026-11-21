@@ -118,7 +118,7 @@ theorem dim_le (P : Ideal (MRing ι ℤ)) :
       rw [Ideal.comap_comap, Ideal.comap_comap, algebraMap_eq]
       congr 1
     rw [e]
-    have e2 := IsLocalization.map_comap (consts ι p) (MRing ι (ZP p))
+    have e2 := IsLocalization.map_under (consts ι p) (MRing ι (ZP p))
       (J.asIdeal.comap (Ideal.Quotient.mk (extTo (ZP p) P)))
     erw [e2]
     exact Ideal.map_comap_of_surjective _ Ideal.Quotient.mk_surjective _

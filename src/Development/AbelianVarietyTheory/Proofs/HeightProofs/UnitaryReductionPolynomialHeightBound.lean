@@ -231,7 +231,7 @@ theorem sig_mem {x : Af D.host.F ⊗[D.host.F] D.host.E}
     simp [sigR]
     rfl
   | zero => simp
-  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
   | neg x _ h => rw [map_neg]; exact neg_mem h
 
 theorem den_mul_mul {n : ℕ} {κ : Type} [Finite κ] (A B : κ → Matrix (Fin n) (Fin n) D.host.E) :

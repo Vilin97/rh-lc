@@ -239,7 +239,7 @@ theorem exists_factor {V O : Type} [CommRing V] [CommRing O] [IsLocalRing O] {X 
     induction ha using Algebra.adjoin_induction with
     | mem x hx => exact hs' _ (Finset.mem_image_of_mem _ hx)
     | algebraMap r => exact ⟨f r, (DFunLike.congr_fun hf r).trans (congrArg (fun q => q.hom r) hj).symm⟩
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let e : W ≃+* κ.range := RingEquiv.ofBijective κ.rangeRestrict
     ⟨fun a b h => hκ (congrArg Subtype.val h), κ.rangeRestrict_surjective⟩

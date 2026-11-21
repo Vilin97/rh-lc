@@ -16,6 +16,6 @@ theorem _root_.GlobalTheory.T.sum_segments_langlands : ∀ (E Ω : Type) [Field 
     ∀ (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRec h rc →
     ∀ (l : List (Segment (w.adicCompletion E))) (c : ℝ),
       sumList ((l.map fun Γ => Γ.nu (c : ℂ)).map fun Δ =>
-          ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp Δ.len)) =
-        (sumList (l.map fun Δ => ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp Δ.len))).lpTw c := by
+          ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len)) =
+        (sumList (l.map fun Δ => ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len))).lpTw c := by
   exact @GlobalTheory.lpSum_segments_nu

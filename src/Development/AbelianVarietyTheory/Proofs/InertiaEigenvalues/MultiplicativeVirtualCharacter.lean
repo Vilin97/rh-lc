@@ -51,10 +51,10 @@ theorem trace_listSum (σ : Weil h) (k : ℕ) (L : List (Σ n : ℕ, WDRep h (Fi
     rw [this, LinearMap.trace_prodMap']
 
 theorem map_lpZero {M : Type} [CommGroup M] (f : WD h → M)
-    (hf : ∀ x y, f (x.lpSum y) = f x * f y) : f WD.lpZero = 1 := by
-  have := hf WD.lpZero WD.lpZero
-  rw [WD.lpSum_zero] at this
-  simpa using this
+    (hf : ∀ x y, f (x.lpSum y) = f x * f y) : f (WD.lpZero (h := h)) = 1 := by
+  have hzero := hf (WD.lpZero (h := h)) (WD.lpZero (h := h))
+  rw [WD.lpSum_zero] at hzero
+  exact mul_left_cancel (hzero.symm.trans (mul_one _).symm)
 
 theorem map_listSum {M : Type} [CommGroup M] (f : WD h → M)
     (hf : ∀ x y, f (x.lpSum y) = f x * f y) (L : List (Σ n : ℕ, WDRep h (Fin n → ℂ))) :

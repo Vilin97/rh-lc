@@ -204,7 +204,6 @@ private theorem eig_pt {L Ω : Type} [Field L] [NumberField L] [Field Ω] [Algeb
   exact ⟨fun Γ _ f hf => eig_cont _ y.toRingHom b b1 b0 hb hf,
     fun v g => (y.commutes (algebraMap ℤ_[l] c.O (cycZ L Ω l (g : G L Ω) : ℤ_[l]))).trans rfl⟩
 
-attribute [-instance] UpperTheory.V.GradeZeroInterpolatingElement.instIsLocalRingSubtypePadicAlgClMemSubalgebraPadicIntO
 
 theorem UpperTheory.V.Hi.coreEig :
     GlobalTheory.Mem.LiteralAutomorphy.LitN → ∀ (L Ω : Type) [Field L] [NumberField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (l : ℕ) [Fact l.Prime] (n : ℕ) (c : Coef l) (H : HSet L Ω l n c), H.Ax →

@@ -15,6 +15,89 @@ open TensorProduct Coalgebra Bialgebra WithConv GlobalTheory GlobalTheory.PDivGr
 open GlobalTheory.GroupLikeDerivation (extProd extProd_tmul inlHom inrHom mulHom extendHom inlHom_mul_inrHom
   exists_isGroupLikeElem)
 
+namespace ReciprocityTheory.PGsh.Up.Smith
+
+open Matrix
+
+variable {C : Type} [Field C] {v : Valuation C NNReal} {R : Type} [CommRing R] [Algebra R C]
+
+private theorem smith_mat_local (hv : v.Integers R) : ∀ (d n : ℕ) (A : Matrix (Fin d) (Fin n) R),
+    ∃ (P : Matrix (Fin d) (Fin d) R) (Q : Matrix (Fin n) (Fin n) R) (a : Fin d → R),
+      IsUnit P.det ∧ IsUnit Q.det ∧ ∀ j k, (P * A * Q) j k = if (k : ℕ) = (j : ℕ) then a j else 0
+  | 0, n, A => ⟨1, 1, Fin.elim0, by simp, by simp, fun j => j.elim0⟩
+  | d + 1, 0, A => ⟨1, 1, 0, by simp, by simp, fun j k => k.elim0⟩
+  | d + 1, n + 1, A => by
+    classical
+    set g : Fin (n + 1) → Fin (d + 1) → R := fun j i => A i j with hg
+    have hp := exists_pivot (v := v) (b := d) (ι := Fin (n + 1)) hv g
+    obtain ⟨i0, a, u, s, hu, -, hs, hz, hnz⟩ := hp
+    by_cases ha : a = 0
+    · have hA : A = 0 := by
+        ext i j
+        have := congrFun (hz ha j) i
+        simpa [hg] using this
+      exact ⟨1, 1, 0, by simp, by simp, fun j k => by simp [hA]⟩
+    · obtain ⟨j0, hj0, hs0⟩ := hnz ha
+      have hAj0 : ∀ i, A i j0 = a * u i := fun i => by
+        have := congrFun hj0 i
+        simpa [hg] using this
+      have hAi0 : ∀ l, A i0 l = a * s l := fun l => by
+        have := hs l
+        simpa [hg] using this
+      set B := (Vm i0 u)ᵀ * A * Vm j0 s with hBdef
+      have hB : ∀ k l, B k l = if k = i0 then (if l = j0 then a else 0) else
+          (if l = j0 then 0 else A k l - s l * (a * u k)) := by
+        intro k l
+        rw [hBdef, Matrix.mul_assoc, VmT_mul, mul_Vm, mul_Vm]
+        by_cases hk : k = i0 <;> by_cases hl : l = j0
+        · subst hk; subst hl; simp [hAj0, hu]
+        · subst hk; simp [hl, hAi0, hs0]; ring
+        · subst hl; simp [hk, hAj0, hu]; ring
+        · simp [hk, hl, hAj0, hAi0, hu]; ring
+      set A'' : Matrix (Fin d) (Fin n) R := Matrix.of fun l k => B (i0.succAbove l) (j0.succAbove k)
+      obtain ⟨P'', Q'', a'', hP'', hQ'', hD''⟩ := smith_mat_local hv d n A''
+      set Cm := B.submatrix (piv i0) (piv j0) with hCm
+      have hCeq : ((piv i0).toPEquiv.toMatrix : Matrix (Fin (d + 1)) (Fin (d + 1)) R) * B * ((piv j0).symm.toPEquiv.toMatrix : Matrix (Fin (n + 1)) (Fin (n + 1)) R) = Cm := by
+        rw [PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv, Equiv.symm_symm]
+        rfl
+      have h0 : ∀ k : Fin n, Cm 0 k.succ = 0 := by
+        intro k
+        simp only [hCm, Matrix.submatrix_apply, piv_zero, piv_succ, hB, ite_true,
+          Fin.succAbove_ne, ite_false]
+      have h1 : ∀ l : Fin d, Cm l.succ 0 = 0 := by
+        intro l
+        simp only [hCm, Matrix.submatrix_apply, piv_zero, piv_succ, hB, Fin.succAbove_ne, ite_false,
+          ite_true]
+      have hsub : (Matrix.of fun (l : Fin d) (k : Fin n) => Cm l.succ k.succ) = A'' := by
+        ext l k
+        simp only [hCm, Matrix.of_apply, Matrix.submatrix_apply, piv_succ]
+        rfl
+      obtain ⟨e00, e0s, es0, ess⟩ := blockOne_mul_mul_blockOne P'' Cm Q'' h0 h1
+      refine ⟨bd1 P'' * ((piv i0).toPEquiv.toMatrix : Matrix (Fin (d + 1)) (Fin (d + 1)) R) * (Vm i0 u)ᵀ,
+        Vm j0 s * ((piv j0).symm.toPEquiv.toMatrix : Matrix (Fin (n + 1)) (Fin (n + 1)) R) * bd1 Q'', Fin.cons a a'', ?_, ?_, ?_⟩
+      · rw [Matrix.det_mul, Matrix.det_mul, det_blockOne_alt, Matrix.det_transpose, det_Vm, mul_one]
+        exact hP''.mul (isUnit_det_perm _)
+      · rw [Matrix.det_mul, Matrix.det_mul, det_blockOne_alt, det_Vm, one_mul]
+        exact (isUnit_det_perm _).mul hQ''
+      · have hfull : bd1 P'' * ((piv i0).toPEquiv.toMatrix : Matrix (Fin (d + 1)) (Fin (d + 1)) R) * (Vm i0 u)ᵀ * A *
+            (Vm j0 s * ((piv j0).symm.toPEquiv.toMatrix : Matrix (Fin (n + 1)) (Fin (n + 1)) R) * bd1 Q'') = bd1 P'' * Cm * bd1 Q'' := by
+          rw [← hCeq, hBdef]
+          simp only [Matrix.mul_assoc]
+        intro j k
+        rw [hfull]
+        refine Fin.cases ?_ (fun l => ?_) j <;> refine Fin.cases ?_ (fun k' => ?_) k
+        · rw [e00]
+          simp [hCm, piv_zero, hB]
+        · rw [e0s]
+          simp
+        · rw [es0]
+          simp
+        · rw [ess, hsub, hD'']
+          simp [Fin.val_succ]
+
+
+end ReciprocityTheory.PGsh.Up.Smith
+
 namespace GlobalTheory.CompanionTheory.Ar.HT.CokerSharp
 
 section Norm
@@ -199,7 +282,7 @@ theorem exists_diag {C : Type} [Field C] {v : Valuation C NNReal} {O : Type} [Co
       ∀ j, d j • e j ∈ Submodule.span O (Set.range g) := by
   classical
   let A : Matrix (Fin r) (Fin m) O := fun j k => b.equivFun (g k) j
-  obtain ⟨P, Q, a, hP, hQ, hD⟩ := ReciprocityTheory.PGsh.Up.Smith.smith_mat hv r m A
+  obtain ⟨P, Q, a, hP, hQ, hD⟩ := ReciprocityTheory.PGsh.Up.Smith.smith_mat_local (v := v) hv r m A
   have hPP : P * P⁻¹ = 1 := Matrix.mul_nonsing_inv P hP
   have hPP' : P⁻¹ * P = 1 := Matrix.nonsing_inv_mul P hP
   have hQQ : Q * Q⁻¹ = 1 := Matrix.mul_nonsing_inv Q hQ

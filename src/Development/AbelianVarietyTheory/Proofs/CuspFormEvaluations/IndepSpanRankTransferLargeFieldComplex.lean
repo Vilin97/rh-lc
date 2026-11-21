@@ -94,23 +94,31 @@ theorem eval_injective (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N 
     Function.Injective (MvPolynomial.eval₂Hom (kap X la N)
       (fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p))) := by
   classical
+  let f : Op X la N →+* Kp X la N :=
+    @algebraMap (Op X la N) (Kp X la N) _
+      (inferInstanceAs (Semiring (_root_.FractionRing _)))
+      (inferInstanceAs (Algebra _ (_root_.FractionRing _)))
   have key : ∀ Q : MvPolynomial (Idx D j N) (X.Ol la),
-      MvPolynomial.aeval (fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p)) Q =
-        @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N) Q) := by
+      MvPolynomial.aeval (f ∘ Tv X la N) Q =
+        f (algebraMap (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N) Q) := by
     intro Q
-    induction Q using MvPolynomial.induction_on with
-    | C a =>
-      rw [MvPolynomial.aeval_C, ← MvPolynomial.algebraMap_eq,
-        ← IsScalarTower.algebraMap_apply (X.Ol la) (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N)] <;> rfl
-    | add Q₁ Q₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
-    | mul_X Q p h => simp only [map_mul, h, MvPolynomial.aeval_X] <;> rfl
+    have heval : MvPolynomial.eval₂Hom (algebraMap (X.Ol la) (Kp X la N)) (f ∘ Tv X la N) =
+        f.comp (algebraMap (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N)) := by
+      apply MvPolynomial.ringHom_ext
+      · intro a
+        rw [MvPolynomial.eval₂Hom_C, RingHom.comp_apply, ← MvPolynomial.algebraMap_eq,
+          ← IsScalarTower.algebraMap_apply (X.Ol la)
+            (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N)] <;> rfl
+      · intro p
+        rw [MvPolynomial.eval₂Hom_X']
+        rfl
+    exact DFunLike.congr_fun heval Q
   have hinj : Function.Injective fun Q : Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N =>
-      @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N) Q) :=
+      f (algebraMap (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N) Q) :=
     (IsFractionRing.injective (Op X la N) (Kp X la N)).comp
       (IsLocalization.injective (M := (Formalism.MainNotions.Gaps.EtaleWeightGaps.gI X la N).primeCompl) (S := Op X la N)
         (Formalism.MainNotions.Gaps.EtaleWeightGaps.gI X la N).primeCompl_le_nonZeroDivisors)
-  have hOl : AlgebraicIndependent (X.Ol la)
-      (fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p)) :=
+  have hOl : AlgebraicIndependent (X.Ol la) (f ∘ Tv X la N) :=
     algebraicIndependent_iff_injective_aeval.2 fun Q₁ Q₂ h => hinj (by simpa only [key] using h)
   haveI : Algebra.IsAlgebraic (X.Ol la) (X.Kl la) :=
     IsLocalization.isAlgebraic (S := X.Kl la) (M := nonZeroDivisors (X.Ol la))

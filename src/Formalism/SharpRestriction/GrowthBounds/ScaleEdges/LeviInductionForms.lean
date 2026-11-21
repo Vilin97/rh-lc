@@ -82,9 +82,9 @@ theorem normDeg_eq_vsDeg {n' r K : ℕ} (m : Fin n' × Fin (r + K) →₀ ℕ) :
   refine Finset.sum_congr rfl (fun t _ => ?_)
   rw [Fin.sum_univ_add]
   by_cases ht : Even t.val
-  · simp only [IsNormal, ht, if_true]
+  · simp only [IsNormal, ht, ite_true]
     simp
-  · simp only [IsNormal, ht, if_false]
+  · simp only [IsNormal, ht, ite_false]
     simp
 
 end Formalism.MainNotions.Pf14

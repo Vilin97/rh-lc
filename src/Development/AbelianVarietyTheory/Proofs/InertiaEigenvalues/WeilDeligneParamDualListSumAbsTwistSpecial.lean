@@ -122,7 +122,7 @@ theorem iso_sp_dual (n : ℕ) : (WDRep.sp h n).dual.Iso (WDRep.sp h n) := by
 
 namespace WDClass
 
-theorem lpDual_lpZero : (WD.lpZero (h := h)).lpDual = WD.lpZero := by
+theorem lpDual_lpZero : (WD.lpZero (h := h)).lpDual = WD.lpZero (h := h) := by
   rw [WD.lpZero, WD.lpDual_mk]
   exact WD.sound ⟨LinearEquiv.ofFinrankEq _ _ (by simp [Subspace.dual_finrank_eq]),
     fun _ _ => Subsingleton.elim _ _, fun _ => Subsingleton.elim _ _⟩
@@ -149,7 +149,7 @@ theorem lpDual_lpTw (y : WD h) (s : ℝ) : (y.lpTw s).lpDual = y.lpDual.lpTw (-s
     exact WD.sound (iso_tw_dual a s)
 
 theorem lpDual_lpChar_lpSp (y : WD h) (n : ℕ) :
-    (y.lpChar (WD.lpSp n)).lpDual = y.lpDual.lpChar (WD.lpSp n) := by
+    (y.lpChar (WD.lpSp (h := h) n)).lpDual = y.lpDual.lpChar (WD.lpSp (h := h) n) := by
   induction y using WD.ind with
   | hP m a =>
     rw [WD.lpSp, WD.lpChar_mk, WD.lpDual_mk, WD.lpDual_mk, WD.lpChar_mk]
@@ -162,7 +162,7 @@ theorem lpDual_sum_tw_sp : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω
     [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w),
     (∀ l : List (WD h), (sumList l).lpDual = sumList (l.map WD.lpDual)) ∧
     (∀ (y : WD h) (s : ℝ), (y.lpTw s).lpDual = y.lpDual.lpTw (-s)) ∧
-    ∀ (y : WD h) (n : ℕ), (y.lpChar (WD.lpSp n)).lpDual = y.lpDual.lpChar (WD.lpSp n) :=
+    ∀ (y : WD h) (n : ℕ), (y.lpChar (WD.lpSp (h := h) n)).lpDual = y.lpDual.lpChar (WD.lpSp (h := h) n) :=
   fun _ _ _ _ _ _ _ _ _ _ =>
     ⟨WDClass.lpDual_sumList, WDClass.lpDual_lpTw, WDClass.lpDual_lpChar_lpSp⟩
 

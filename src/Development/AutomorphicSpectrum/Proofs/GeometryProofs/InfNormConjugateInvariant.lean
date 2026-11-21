@@ -20,7 +20,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.Ar.Flat.ConjPt
 
-open GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar (dualMap)
+open _root_.GlobalTheory.CompanionTheory.Ar (dualMap)
 
 variable {S : Scheme.{0}} {R : Type} [CommRing R]
 

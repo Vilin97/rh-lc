@@ -53,7 +53,7 @@ theorem exists_lift [IsAffine Y] [IsLocalRing A] (ht : EmbedsBy f t) (hj : Funct
     | C a =>
       rw [MvPolynomial.eval₂Hom_C, ← valR_eq, hb, valR_spMap_comp j b ⊤ (le_preimage_top _)]
       exact ⟨_, rfl⟩
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p l hp =>
       rw [map_mul, MvPolynomial.eval₂Hom_X']
       refine mul_mem hp ⟨c l * hm.unit⁻¹.val, (hm.map j).mul_right_cancel ?_⟩

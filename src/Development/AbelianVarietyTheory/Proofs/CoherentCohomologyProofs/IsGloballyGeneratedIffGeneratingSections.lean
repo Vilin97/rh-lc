@@ -34,7 +34,7 @@ theorem exists_finite_subset_le_of_basis {T : Type*} [TopologicalSpace T] [T0Spa
   | H S ih =>
     rcases S.eq_empty_or_nonempty with rfl | hne
     · exact ⟨⊥, h0, by simp, bot_le⟩
-    letI := specializationPreorder T
+    let := specializationPreorder T
     obtain ⟨x, hx, hmax⟩ := S.exists_maximal hne
     obtain ⟨A, hA, hSA, hAU⟩ := ih (S.erase x) (Finset.erase_ssubset hx)
       fun y hy => hU (Finset.mem_of_mem_erase hy)
@@ -211,7 +211,7 @@ theorem app_eq_smul (φ : structureModule X ⟶ F) (V : X.Opens) (a : Γ(structu
 
 @[simp] theorem sectionsHom_app_freeBasis (s : ι → Γ(F, ⊤)) (i : ι) :
     (sectionsHom s).app ⊤ (freeBasis X i) = s i := by
-  have e : freeι X i ≫ sectionsHom s = sectionHom (s i) := Sigma.ι_desc _ _
+  have e : freeι X i ≫ sectionsHom s = sectionHom (s i) := Sigma.ι_comp_desc _ _
   rw [freeBasis, app_app, e, sectionHom_app, LinearEquiv.apply_symm_apply, one_smul,
     Twist.resM_self]
 
@@ -220,7 +220,7 @@ theorem exists_sum_smul_freeBasis [Fintype ι] (V : X.Opens) (t : Γ(freeModule 
   classical
   let p : ι → (freeModule X ι ⟶ structureModule X) := fun i =>
     Sigma.desc (f := fun _ : ι => structureModule X) fun j => if j = i then 𝟙 _ else 0
-  have hp : ∀ i j, freeι X j ≫ p i = if j = i then 𝟙 _ else 0 := fun i j => Sigma.ι_desc _ _
+  have hp : ∀ i j, freeι X j ≫ p i = if j = i then 𝟙 _ else 0 := fun i j => Sigma.ι_comp_desc _ _
   have h : ∑ i, p i ≫ freeι X i = 𝟙 _ := by
     refine Sigma.hom_ext (f := fun _ : ι => structureModule X) _ _ fun j => ?_
     change freeι X j ≫ _ = freeι X j ≫ _
@@ -253,7 +253,7 @@ theorem germ_mem_span (s : ι → Γ(F, ⊤)) {V : X.Opens} {x : X} (hx : x ∈ 
     obtain ⟨i, rfl⟩ := h
     exact Submodule.subset_span ⟨i, (germ_resM le_top hx _).symm⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add _ _ _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
+  | add _ _ _ _ h h' => rw [map_add]; exact add_mem h h'
   | smul a _ _ h => rw [germ_smul]; exact Submodule.smul_mem _ _ h
 
 theorem epi_iff_spanStalks [Finite ι] (φ : freeModule X ι ⟶ F) :

@@ -27,7 +27,7 @@ open AlgebraicGeometry CategoryTheory NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.OrVert
 
 namespace GlobalTheory.CompanionTheory.Ar.OrVert
-open Top
+open _root_.GlobalTheory.CompanionTheory.Ar.Top
 
 section Flags
 
@@ -40,7 +40,7 @@ theorem mem_flagStep_map {i : Ω₀ →+* Ω} {ι : Li₀ →+ Li} (h : ∀ (a :
     obtain ⟨k, hk, rfl⟩ := hx
     exact Submodule.subset_span ⟨k, hk, rfl⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul a x _ hx => rw [h]; exact Submodule.smul_mem _ _ hx
 
 theorem flagStep_map_eq {i : Ω₀ →+* Ω} {ι : Li₀ →+ Li} (h : ∀ (a : Ω₀) (e : Li₀), ι (a • e) = i a • ι e) {r : ℕ}
@@ -82,7 +82,7 @@ end Flags
 end GlobalTheory.CompanionTheory.Ar.OrVert
 
 namespace GlobalTheory.CompanionTheory.Ar.OrVert
-open Top HodgeCpt
+open _root_.GlobalTheory.CompanionTheory.Ar.Top HodgeCpt
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
   {Xo : Moduli D l} {c : Coeff l} {Y : Model Xo c (algebraMap (𝓞 c.F) c.F)} {S : Finset ℕ} {Ω : Type} [Field Ω]
@@ -90,7 +90,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
 
 theorem flag_mem_eig (𝔐 : HodgeCpt Y S y) (Fl : 𝔐.Flag) (s : CMType H ⊕ CMType H) :
     flagStep Ω (Fl.b s) (labelRk D s) ≤ eigSp 𝔐.ρ (𝔐.emb s) := by
-  haveI := Sandwich.charZero_of_hodgeCpt 𝔐
+  have := Sandwich.charZero_of_hodgeCpt 𝔐
   have hgen : IsCptGen 𝔐.ξ := 𝔐.tie.gen
   let qg : Cpt 𝔐.ξ := ⟨genPt 𝔐.ξ, specializes_rfl⟩
   obtain ⟨U, hU, b, hbs, hbf⟩ := Fl.sub s qg (Set.mem_univ _)
@@ -121,7 +121,7 @@ theorem span_mono_ring {Li : Type} [AddCommGroup Li] [Module Ω Li] {A B : Subri
 end GlobalTheory.CompanionTheory.Ar.OrVert
 
 namespace GlobalTheory.CompanionTheory.Ar.OrVert
-open Top HodgeCpt
+open _root_.GlobalTheory.CompanionTheory.Ar.Top HodgeCpt
 
 theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (a : A →+* B) (b : B →+* C) :
     spMap (b.comp a) = spMap b ≫ spMap a := by
@@ -277,7 +277,7 @@ theorem core (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D 
 end GlobalTheory.CompanionTheory.Ar.OrVert
 
 namespace GlobalTheory.CompanionTheory.Ar.OrVert
-open Top HodgeCpt
+open _root_.GlobalTheory.CompanionTheory.Ar.Top HodgeCpt
 
 theorem or_vert : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (Sys : PB.AnSys (Top.dimFl (CMType H) (D.p + D.q)) (Option (RootIx D))) (Fx : FixedData Y Sys) (R : Top.RootModel (CMType H) (D.p + D.q)) (o₀ : RootOrigin Y ∅ R Fx), ∃ C₀ : ℝ, ∀ (S : Finset ℕ) (M : Top.RootModel (CMType H) (D.p + D.q)) (o : RootOrigin Y S M Fx) (i : R.Ω →+* M.Ω), i.comp o₀.g = o.g → (∀ p : ℕ, p.Prime → (p : ℤ) ∣ discr E → p ∈ S) → (∀ p ∈ S, ∃ κ, HT.IsCp p κ ∧ HT.Sandwich o.𝔐 p κ) → ∀ r, Ht.VertBound (Ht.joinOf M R i) (Ht.joinDeg M R (some r)) (i (o₀.e r) / o.e r) (C₀ + ∑ p ∈ S, ((if p = 2 then 2 else 1 / ((p : ℝ) - 1)) + 2 * padicValInt p (discr E)) * Real.log p) := by
   intro E _ _ _ H D l Xo c Y Sys Fx R o₀
@@ -285,7 +285,7 @@ theorem or_vert : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Ho
   refine ⟨Real.log m₀, ?_⟩
   intro S M o i hi _ hS r
   have hprime : ∀ p ∈ S, p.Prime := o.𝔐.S_prime
-  haveI : CharZero M.Ω := Sandwich.charZero_of_hodgeCpt o.𝔐
+  have : CharZero M.Ω := Sandwich.charZero_of_hodgeCpt o.𝔐
   have he₀ : o₀.e r ≠ 0 := (o₀.lines r).1
   have he : o.e r ≠ 0 := (o.lines r).1
   have hu : i (o₀.e r) / o.e r ≠ 0 := div_ne_zero ((map_ne_zero i).2 he₀) he

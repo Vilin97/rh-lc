@@ -23,7 +23,6 @@ open UpperTheory.V.HV (Coef)
 open scoped TensorProduct
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 set_option synthInstance.maxHeartbeats 200000
-attribute [-instance] UpperTheory.V.GradeZeroInterpolatingElement.instIsLocalRingSubtypePadicAlgClMemSubalgebraPadicIntO
 
 section Ball
 
@@ -316,7 +315,7 @@ private theorem du_alg (H : GlobalTheory.Published.GlobalArtinReciprocity) (ha :
       Units.map j.1.toMonoidHom y ^ hh (j.1.comp (algebraMap F _)) := funext fun y => by
         simp [α, MonoidHom.finsetProd_apply]
     rw [this]
-    exact continuous_finset_prod _ fun j _ => (continuous_zpow _).comp (Continuous.units_map _ j.2)
+    exact continuous_finsetProd _ fun j _ => (continuous_zpow _).comp (Continuous.units_map _ j.2)
   let β : (w.adicCompletion F)ˣ →* (Qbar l)ˣ := MonoidHom.mk' (fun y => α (a (frob h)) ^ ord _ y) fun x y => by
     rw [ord_mul, zpow_add]
   have hβ : Continuous β := by

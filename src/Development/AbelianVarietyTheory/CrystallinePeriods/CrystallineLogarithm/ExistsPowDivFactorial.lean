@@ -586,7 +586,7 @@ theorem geom_sum_frob (p : ℕ) [Fact p.Prime] (v : A) : ∃ g,
     intro i
     have : (expand ℤ p F - F ^ p).map (Int.castRingHom (ZMod p)) = 0 := by
       rw [Polynomial.map_sub, map_expand, ZMod.expand_card, Polynomial.map_pow, sub_self]
-    have h2 := congrArg (fun f => Polynomial.coeff f i) this
+    have h2 := congrArg (fun f => _root_.AddMonoidAlgebra.coeff (M := ℕ) f i) this
     simp only [coeff_map, coeff_zero, eq_intCast] at h2
     exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).1 h2
   obtain ⟨D, hD⟩ := h1

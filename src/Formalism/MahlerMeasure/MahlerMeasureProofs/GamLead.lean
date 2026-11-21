@@ -1095,11 +1095,11 @@ theorem kill_fSub (x : Fin (N + 1) × Fin r) :
   by_cases hvi : LL.vec i = true <;> by_cases hc : c = ρ
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [if_pos hvi, if_pos hc, map_sum]
-    simp only [map_mul, kill_X, hcs, if_false, he, ite_not]
-    rw [Finset.sum_eq_single ρ]
-    · subst hc; simp [mul_comm]
-    · intro b _ hb; simp [hb]
-    · simp
+      simp only [map_mul, kill_X, hcs, if_false, he, ite_not]
+      rw [Finset.sum_eq_single ρ]
+      · subst hc; simp [mul_comm]
+      · intro b _ hb; simp [hb]
+      · simp
   · rw [if_pos hvi, if_neg hc]; simp only [map_mul, kill_X, hcs, he, if_false]; simp
   · rw [if_neg hvi, if_pos hc]; simp only [map_mul, kill_X, hcs, he, if_false]; subst hc; simp
   · rw [if_neg hvi, if_neg hc]; simp only [map_sub, map_mul, kill_X, hcs, he, if_false]; simp [hc]
@@ -1230,12 +1230,12 @@ theorem coeff_of_tendsto (R : Polynomial ℝ) (D : ℕ) (L : ℝ)
   have hQl : Q.leadingCoeff = 1 := by simp [hQ]
   have hnat := tendsto_natCast_atTop_atTop (R := ℝ)
   rcases lt_trichotomy R.degree Q.degree with hlt | heq | hgt
-  · have h0 := (Polynomial.div_tendsto_atTop_zero_of_degree_lt R Q hlt).comp hnat
+  · have h0 := (Polynomial.div_tendsto_atTop_zero_of_degree_lt hlt).comp hnat
     simp only [Function.comp_def, hQe] at h0
     have hL := tendsto_nhds_unique h h0
     rw [hL]
     exact Polynomial.coeff_eq_zero_of_degree_lt (by rw [← hQd]; exact hlt)
-  · have h0 := (Polynomial.div_tendsto_atTop_leadingCoeff_div_of_degree_eq R Q heq).comp hnat
+  · have h0 := (Polynomial.div_tendsto_atTop_leadingCoeff_div_of_degree_eq heq).comp hnat
     simp only [Function.comp_def, hQe, hQl, div_one] at h0
     have hL := tendsto_nhds_unique h h0
     rw [hL, Polynomial.leadingCoeff, Polynomial.natDegree_eq_of_degree_eq_some (heq.trans hQd)]
@@ -1243,10 +1243,10 @@ theorem coeff_of_tendsto (R : Polynomial ℝ) (D : ℕ) (L : ℝ)
     have hR0 : R ≠ 0 := fun h0 => by rw [h0, Polynomial.degree_zero] at hgt; exact absurd hgt (by simp)
     have hlc : R.leadingCoeff ≠ 0 := Polynomial.leadingCoeff_ne_zero.mpr hR0
     rcases lt_or_gt_of_ne hlc with hneg | hpos
-    · have h0 := (Polynomial.div_tendsto_atBot_of_degree_gt' R Q hgt (by rw [hQl, div_one]; exact hneg)).comp hnat
+    · have h0 := (Polynomial.div_tendsto_atBot_of_degree_gt' hgt (by rw [hQl, div_one]; exact hneg)).comp hnat
       simp only [Function.comp_def, hQe] at h0
       exact not_tendsto_nhds_of_tendsto_atBot h0 L h
-    · have h0 := (Polynomial.div_tendsto_atTop_of_degree_gt' R Q hgt (by rw [hQl, div_one]; exact hpos)).comp hnat
+    · have h0 := (Polynomial.div_tendsto_atTop_of_degree_gt' hgt (by rw [hQl, div_one]; exact hpos)).comp hnat
       simp only [Function.comp_def, hQe] at h0
       exact not_tendsto_nhds_of_tendsto_atTop h0 L h
 

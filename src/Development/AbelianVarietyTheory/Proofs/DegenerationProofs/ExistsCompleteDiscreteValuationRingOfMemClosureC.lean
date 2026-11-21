@@ -76,7 +76,7 @@ theorem exists_complete_discreteValuationRing_of_mem_closure_cone :
       obtain ⟨j, hj⟩ := Function.ne_iff.mp hv
       refine ⟨_, ⟨j, rfl⟩, fun h => hj ?_⟩
       rw [ht, map_eq_zero_iff _ hinj] at h
-      simpa using congrArg (Polynomial.coeff · 0) h)
+      simpa using congrArg (fun p : Polynomial A => p.coeff 0) h)
   let W := AdicCompletion (maximalIdeal V) V
   let κ : K →+* V := (algebraMap K L).codRestrict V hKV
   let ι : V →+* W := algebraMap V W

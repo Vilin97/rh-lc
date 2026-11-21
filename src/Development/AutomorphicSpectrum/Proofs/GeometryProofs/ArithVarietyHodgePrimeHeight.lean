@@ -137,7 +137,7 @@ theorem chartPack_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have hform : ∀ (b : 𝓞 E) (w : Module.Dual (CR O y c') L), j (w ∘ₗ ρ b) = j w ∘ₗ 𝔐.ρ b := by
     intro b w
     ext e
-    refine hbc.inductionOn e (fun e => j (w ∘ₗ ρ b) e = (j w ∘ₗ 𝔐.ρ b) e) (by simp) ?_ ?_ ?_
+    refine hbc.inductionOn e ?_ ?_ ?_
     · intro v
       simp only [LinearMap.comp_apply]
       rw [hj, ← hρ, hj]
@@ -148,7 +148,7 @@ theorem chartPack_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       simp only [map_add (f := _), h₁, h₂]
   have hact' : ∀ (a : 𝓞 E) (u : Module.Dual Ω 𝔐.Li), Dh.ρΩ a u = u ∘ₗ 𝔐.ρ (H.bar a) := by
     intro a u
-    refine hjbc.inductionOn u (fun u => Dh.ρΩ a u = u ∘ₗ 𝔐.ρ (H.bar a)) (by simp) ?_ ?_ ?_
+    refine hjbc.inductionOn u ?_ ?_ ?_
     · intro w
       rw [hHT.2.1, hbar, hform]
     · intro s n hn

@@ -26,7 +26,7 @@ theorem map_adjoin_mem (i : Ω →+* Ω') (R : Subring Ω') {S : Set Ω} (h : �
   induction ha using Algebra.adjoin_induction with
   | mem y hy => exact h y hy
   | algebraMap n => simp
-  | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
   | mul _ _ _ _ h1 h2 => rw [map_mul]; exact mul_mem h1 h2
 
 theorem exists_isCtrOf {ξ : Spec (CommRingCat.of Ω) ⟶ X} {ξ' : Spec (CommRingCat.of Ω') ⟶ Y} {f : Y ⟶ X} {i : Ω →+* Ω'}

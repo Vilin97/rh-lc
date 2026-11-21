@@ -205,6 +205,8 @@ theorem exists_bound_GL_inv (hn0 : 0 < n) {Φ : Matrix (Fin n) (Fin n) 𝔸[K] �
           rw [hti, inv_inv, max_eq_right h1]
           exact mul_le_mul_of_nonneg_left (rpow_le_of_one_lt h1) hC₂0
 
+local notation "Γ₁" => rationalGLOne (K := K) (n := n)
+
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem norm_thetaPairing_le {φ₁ φ₂ Ξ : AdelicGLn.AdelicGL K n → ℂ} (t : {r : ℝ // 0 < r}) {b : ℝ}

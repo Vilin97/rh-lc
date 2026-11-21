@@ -25,7 +25,7 @@ lemma log_sup_support {ι : Type} [Fintype ι] (x : ι → L) (hx : ∃ i, x i �
   have hS : (⋃ i ∈ Finset.univ.filter (fun i => x i ≠ 0),
       Function.mulSupport fun v : FinitePlace L => v (x i)).Finite := by
     refine Set.Finite.biUnion (Finset.finite_toSet _) fun i hi => ?_
-    exact FinitePlace.mulSupport_finite (by simpa using hi)
+    exact FinitePlace.hasFiniteMulSupport (by simpa using hi)
   refine hS.subset fun v hv => ?_
   by_contra hn
   apply hv

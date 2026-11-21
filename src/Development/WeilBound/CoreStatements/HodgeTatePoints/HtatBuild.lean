@@ -56,7 +56,10 @@ theorem chart_build : ∀ (A K : Type) [CommRing A] [IsDomain A] [Field K] [Alge
   have hproj : Module.Projective A (LinearMap.range j) :=
     Module.Projective.of_equiv (LinearEquiv.ofInjective j hinjj)
   refine ⟨{ om := LinearMap.range j
-            om_lat := { toIsLattice := Submodule.IsLattice.of_fg K hfg, span_eq_top := hspan }
+            om_lat := by
+              have hfull : Submodule.IsFullLattice K (LinearMap.range j) :=
+                { toIsLattice := Submodule.IsLattice.of_fg K hfg, span_eq_top := hspan }
+              first | exact hfull | exact hfull.toIsLattice
             om_proj := hproj
             ρΩ := ρΩ
             om_stable := ?_

@@ -28,10 +28,10 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace UpperTheory.Gal.Spc
 
-variable {E : Type} [Field E] [NumberField E] [IsCMField E] {A : Arith E} {n p : ℕ} [Fact p.Prime] {S : Setup A n p}
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {A : Arith E} {n p : ℕ} [Fact p.Prime] {S : UpperTheory.Gal.W2.Seed.Setup A n p}
 variable {x : E} {U : Submodule ℂ (UA E n → ℂ)} {w₀ : Plc E} {Up : Plc E → Prop}
 
-private theorem th_eq (F : Frame S) (g : GUf E n) : F.th g = CertificateRingHomMap.th g :=
+private theorem th_eq (F : UpperTheory.Gal.Int.Geo.Pl.Frame S) (g : GUf E n) : F.th g = CertificateRingHomMap.th g :=
   Subtype.ext (Prod.ext (Units.ext (F.th_mat g)) (F.th_sim g))
 
 private theorem continuous_th : Continuous (CertificateRingHomMap.th : GUf E n → GUf E n) := by
@@ -46,7 +46,7 @@ private theorem relIndex_ne_zero_of_open {X : Type*} [Group X] [TopologicalSpace
   haveI := Subgroup.quotient_finite_of_isOpen _ ho
   exact Nat.card_pos.ne'
 
-private theorem isCompact_comap_th (F : Frame S) {K : Subgroup (GUf E n)} (hK : IsCompact (K : Set (GUf E n))) :
+private theorem isCompact_comap_th (F : UpperTheory.Gal.Int.Geo.Pl.Frame S) {K : Subgroup (GUf E n)} (hK : IsCompact (K : Set (GUf E n))) :
     IsCompact ((K.comap F.th : Subgroup (GUf E n)) : Set (GUf E n)) := by
   convert hK.image continuous_th using 1
   ext g
@@ -59,14 +59,14 @@ private theorem isCompact_comap_th (F : Frame S) {K : Subgroup (GUf E n)} (hK : 
     rw [th_eq, UpperTheory.Gal.CertificateRingHomMap.th_th]
     exact hy
 
-private theorem relIdx (F : Frame S) {K : Subgroup (GUf E n)} (hK : IsCompact (K : Set (GUf E n))) (N : ℕ) (hN : 0 < N) :
+private theorem relIdx (F : UpperTheory.Gal.Int.Geo.Pl.Frame S) {K : Subgroup (GUf E n)} (hK : IsCompact (K : Set (GUf E n))) (N : ℕ) (hN : 0 < N) :
     (S.L.KN N).relIndex ((K.comap F.th).map F.j) ≠ 0 := by
   rw [← Subgroup.relIndex_comap]
   have hO := pKNOpen (pKNIff (pLatCoord pRepLaws)) E A n p S F.tr N hN
   rw [← F.j_tr] at hO
   exact relIndex_ne_zero_of_open (isCompact_comap_th F hK) hO
 
-private theorem cong_at (F : Frame S) (k : GUf E n) (N : ℕ) (hN : 0 < N) (hk : S.L.CongOne N (F.j k)) (w : Plc E)
+private theorem cong_at (F : UpperTheory.Gal.Int.Geo.Pl.Frame S) (k : GUf E n) (N : ℕ) (hN : 0 < N) (hk : S.L.CongOne N (F.j k)) (w : Plc E)
     (hp : (p : 𝓞 E) ∉ w.asIdeal) : Cong1 N w (F.a w * comp w k * (F.a w)⁻¹) := by
   have h := ((pKNIff (pLatCoord pRepLaws)) E A n p S F.tr k).2 N hN
   rw [← F.j_tr] at h

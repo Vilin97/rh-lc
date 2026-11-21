@@ -168,7 +168,8 @@ theorem coeff_colAct_diagonal (t : Fin N → R) (f : Pol N R) (m : Fin N × Fin 
     split_ifs with h
     · subst h; simp
     · simp
-  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, mul_add]
+  | add p q hp hq =>
+    simp only [map_add (f := _), AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hp, hq, mul_add]
 
 theorem mem_nabla_iff [IsDomain R] [Infinite R] {la : Fin N → ℕ} {f : Pol N R} :
     f ∈ nabla la R ↔ ∀ b : Matrix (Fin N) (Fin N) R, b.BlockTriangular id → (∀ i, b i i ≠ 0) →
@@ -483,7 +484,7 @@ theorem normSq_pos {f : Pol N ℂ} (hf : f ∈ nabla la ℂ) (h0 : f ≠ 0) : 0 
     by_contra h
     push Not at h
     exact h0 (eq_zero_of_evalAt_unitary hf h)
-  exact Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero (x := g)
+  exact Continuous.integral_pos_of_hasCompactSupport_nonneg_ne_zero (x := g)
     ((continuous_evalAt_coe f).norm.pow 2) (HasCompactSupport.of_compactSpace _) (fun k => by positivity)
     (by simpa using hg)
 
@@ -660,10 +661,10 @@ theorem stdLat_eq_span : stdLat la K = Submodule.span (𝓞 K) (Set.range (basis
             obtain ⟨i, rfl⟩ := hx
             exact ⟨basis la K i, Submodule.subset_span ⟨i, rfl⟩, coe_basis la K i⟩
           | zero => simp
-          | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+          | add x y _ _ hx hy => rw [map_add (f := _)]; exact add_mem hx hy
           | smul c x _ hx => rw [map_zsmul]; exact zsmul_mem hx c
         | zero => simp
-        | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+        | add x y _ _ hx hy => rw [map_add (f := _)]; exact add_mem hx hy
         | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
       rintro f hf
       obtain ⟨f', hf', h⟩ := key

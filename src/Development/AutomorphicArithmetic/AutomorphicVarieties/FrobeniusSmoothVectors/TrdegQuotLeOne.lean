@@ -65,7 +65,7 @@ private theorem trdeg_quot_le_one {R A ι : Type} [CommRing R] [CommRing A] [Alg
     induction hy using Algebra.adjoin_induction with
     | mem y hy => obtain ⟨i, rfl⟩ := hy; exact Algebra.subset_adjoin ⟨i, rfl⟩
     | algebraMap r => exact Subalgebra.algebraMap_mem _ (Ideal.Quotient.mk (η.comap (algebraMap R A)) r)
-    | add y z _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+    | add y z _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
     | mul y z _ _ h1 h2 => rw [map_mul]; exact mul_mem h1 h2
   · intro i j p q h
     obtain ⟨r, hr⟩ := h0 i j p q h

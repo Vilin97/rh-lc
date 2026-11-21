@@ -139,6 +139,8 @@ theorem eq_zero_of_petersson_inner_self_eq_zero {φ : cuspForms K n} (hφ : φ �
   have h0 : cuspToL2 μ φ = 0 := inner_self_eq_zero.1 h
   exact injOn_cuspToL2 μ (hφ : _) (fun s x => rfl) (h0.trans (map_zero (cuspToL2 μ)).symm)
 
+local notation "Γ₁" => Reduction.rationalGLOne (K := K) (n := n)
+
 theorem petersson_inner_eq_integral_quotient (φ ψ : cuspForms K n) :
     inner ℂ (cuspToL2 μ φ) (cuspToL2 μ ψ) =
       ∫ q, starRingEnd ℂ (cuspQuot φ.2.1.isLeftInvariant q) * cuspQuot ψ.2.1.isLeftInvariant q

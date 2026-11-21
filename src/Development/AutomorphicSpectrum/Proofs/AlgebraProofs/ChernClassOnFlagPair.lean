@@ -44,7 +44,7 @@ theorem rootPolyNum : RootPolynomialNumber.Statement := by
     simp [FlagTypings.divCycle_eq]
   have hfin : (Function.support (divCycle P (C a))).Finite := by
     rw [← hZ]
-    exact Finsupp.finite_support _
+    exact Finsupp.hasFiniteSupport _
   have hcast : Fin.append x L ∘ Fin.castAdd q = x := by
     funext i
     simp [Fin.append_left]

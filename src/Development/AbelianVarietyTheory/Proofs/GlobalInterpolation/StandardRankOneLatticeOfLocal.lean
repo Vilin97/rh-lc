@@ -52,9 +52,48 @@ theorem val_star_eq_one {P : HeightOneSpectrum (𝓞 E)} {a : E} (h : P.valuatio
 def IsFr (P : HeightOneSpectrum (𝓞 E)) (N : Submodule (𝓞 E) (Sp E n)) (f : Sp E n ≃ₗ[E] Sp E n) : Prop :=
   ∀ x, f x ∈ localization₂ P.asIdeal N ↔ x ∈ stdAt E n P
 
+theorem span_eq_top_of_isSdLat {N : Submodule (𝓞 E) (Sp E n)} (hN : IsSdLat N) :
+    Submodule.span E (N : Set (Sp E n)) = ⊤ := by
+  classical
+  apply Submodule.dualAnnihilator_eq_bot_iff.mp
+  apply le_antisymm ?_ bot_le
+  intro f hf
+  let v : Sp E n := fun i => star (f (Pi.single i 1))
+  have hpair : hStd E n v = f := by
+    apply (Pi.basisFun E (Fin n)).ext
+    intro i
+    rw [Pi.basisFun_apply, hStd_apply, Finset.sum_eq_single i]
+    · simp [v]
+    · intro j _ hj
+      simp [hj]
+    · simp
+  have hline (r : E) : r • v ∈ N := by
+    rw [← show dual (hStd E n) N = N from hN.2, dualBasic_mem_dual]
+    intro y hy
+    have hy0 : hStd E n v y = 0 := by
+      rw [hpair]
+      exact (Submodule.mem_dualAnnihilator f).mp hf y (Submodule.subset_span hy)
+    have hz : hStd E n y v = 0 := by
+      simpa [hy0] using ((hStd_isSymm (E := E) (n := n)).eq v y).symm
+    simp [hz]
+  have hv : v = 0 := by
+    funext i
+    change v i = 0
+    by_contra hi
+    let coord := (LinearMap.proj i : Sp E n →ₗ[E] E).restrictScalars (𝓞 E)
+    have htop : N.map coord = ⊤ := by
+      rw [eq_top_iff]
+      intro x _
+      exact ⟨(x / v i) • v, hline _, div_mul_cancel₀ _ hi⟩
+    have : Module.Finite (𝓞 E) E := Module.finite_def.mpr (htop ▸ hN.1.fg.map coord)
+    exact RingOfIntegers.not_isField E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+  rw [Submodule.mem_bot]
+  simpa [hv] using hpair.symm
+
 theorem exists_isFr (P : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E) (Sp E n)}
-    (hN : Submodule.IsLattice E N) : ∃ f, IsFr P N f := by
-  obtain ⟨b, hb⟩ := Formalism.BasicNotions.SkeletonIndexLemmas.exists_basis_locP P hN.fg hN.span_eq_top (n := n) (by simp)
+    (hN : IsSdLat N) : ∃ f, IsFr P N f := by
+  obtain ⟨b, hb⟩ := Formalism.BasicNotions.SkeletonIndexLemmas.exists_basis_locP P hN.1.fg (span_eq_top_of_isSdLat hN) (n := n) (by simp)
   let f : Sp E n ≃ₗ[E] Sp E n := b.equivFun
   have h1 : gmap f (Submodule.span (𝓞 E) (Set.range b)) = stdLat E n := by
     rw [stdLat_eq_span]
@@ -232,7 +271,7 @@ def barI (I : Submodule (𝓞 E) E) : Submodule (𝓞 E) E where
 
 theorem normOne_detI {N : Submodule (𝓞 E) (Sp E n)} (hN : IsSdLat N) : NormOne (detI N) := by
   refine ⟨barI (detI N), fun _ => Iff.rfl, ?_⟩
-  choose f hf using fun P => exists_isFr P hN.1
+  choose f hf using fun P => exists_isFr P hN
   have hg := fun P => gen_detI (hf P)
   have hd : ∀ P : HeightOneSpectrum (𝓞 E), P.valuation E (star (dt (f (conjPrime₂ P))) * dt (f P)) = 1 := fun P => by
     have := val_dual hN (hf (conjPrime₂ P)) (f' := f P) (by rw [conjP_conjP]; exact hf P)

@@ -48,7 +48,7 @@ theorem alg_split (L : Type) [Field L] [NumberField L] (R : Type) [CommRing R] [
     induction hr using Submodule.span_induction with
     | mem x hx => exact IntermediateField.subset_adjoin L S (Set.mem_iUnion.2 ⟨φ, x, hx, rfl⟩)
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx =>
       have : φ.1 (a • x) = algebraMap L Ω a * φ.1 x := by
         rw [Algebra.smul_def, map_mul]

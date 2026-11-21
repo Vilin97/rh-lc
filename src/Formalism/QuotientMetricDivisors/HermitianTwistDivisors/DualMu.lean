@@ -15,10 +15,18 @@ noncomputable section
 
 namespace Formalism.DivisionValues
 
-theorem dual_lattice_measure : DualMu := by
+theorem dual_lattice_measure :
+    ∀ (K : Type) [Field K] [NumberField K] [StarRing K]
+      [_root_.NumberField.IsTotallyComplex K] (D : ℕ), 0 < D →
+      ∀ X : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ, (∀ v, IsUnit (X v).det) →
+      ∀ R : Submodule (𝓞 K) (Fin D → K), Submodule.IsFullLattice K R →
+        Formalism.HN.muDef (Pi.basisFun K (Fin D)).dualBasis
+          (Formalism.HN.dualFrame X) (Formalism.HN.dualLat R) = lcv X R / D := by
   intro K _ _ _ _ D hD X hX R hR
   have hFG : R.FG := hR.toIsLattice.fg
-  have hsp : Submodule.span K (R : Set (Fin D → K)) = ⊤ := hR.span_eq_top
+  have hsp : Submodule.span K (R : Set (Fin D → K)) = ⊤ := by
+    letI : Submodule.IsFullLattice K R := hR
+    exact Submodule.IsFullLattice.span_eq_top
   obtain ⟨hdFG, hdsp, -, hsize, -⟩ :=
     Formalism.HN.dual_polygon_identity K (Fin D → K) (Fin D) (Pi.basisFun K (Fin D)) X hX R hFG hsp
   have hdX : ∀ v, IsUnit (Formalism.HN.dualFrame X v).det := by

@@ -230,14 +230,13 @@ theorem sg_mem_intHat (c : E ≃ₐ[F] E) (z : RA F E) (hz : z ∈ intHat F E) :
     obtain ⟨a, ha, _, ⟨s, rfl⟩, rfl⟩ := hx
     exact tmul_mem F E a ha (RingOfIntegers.mapRingEquiv (c : E ≃+* E) s)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
   | neg x _ h => rw [map_neg]; exact neg_mem h
 
 omit [NumberField E] in
 theorem sg_sg (c : E ≃ₐ[F] E) (hc : ∀ x, c (c x) = x) (z : RA F E) :
     sg (FiniteAdeleRing (𝓞 F) F) c (sg (FiniteAdeleRing (𝓞 F) F) c z) = z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a x => simp [sg, hc]
   | add x y h1 h2 => simp only [map_add (f := _), h1, h2]
 

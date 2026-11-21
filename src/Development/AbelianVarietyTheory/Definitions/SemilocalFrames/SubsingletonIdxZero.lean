@@ -33,10 +33,6 @@ open scoped ContDiff
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
-attribute [local instance] subsingleton_idx_top
-
-attribute [local instance] subsingleton_idx_zero
-
 end Ex
 
 end GlobalTheory.Mom

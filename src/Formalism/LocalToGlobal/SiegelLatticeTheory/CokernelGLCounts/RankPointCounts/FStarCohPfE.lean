@@ -106,7 +106,9 @@ theorem cohInt_holds : CohInt Zd u u' F0 what₂ := by
         induction hy using Submodule.span_induction with
         | mem y hy => exact Submodule.subset_span hy
         | zero => simp
-        | add x y _ _ hx hy => exact add_mem hx hy
+        | add x y _ _ hx hy =>
+            rw [map_add]
+            exact add_mem hx hy
         | smul a x _ hx => simpa using Submodule.smul_mem _ a hx
       simpa using hh _ hx
     obtain ⟨p, hp⟩ := Ideal.exists_maximal (α := 𝓞 D.host.E)
@@ -123,10 +125,12 @@ theorem cohInt_holds : CohInt Zd u u' F0 what₂ := by
         have : s = 0 := (IsFractionRing.injective (𝓞 D.host.E) D.host.E) (by simpa using hz)
         subst s
         exact (Formalism.HermitianLatticesTheory.locBasic_hcompl_not_mem p 0 hs) (Ideal.zero_mem p)
-      have hmem := Submodule.subset_span hsx
-      have := Submodule.smul_mem (Submodule.span D.host.E (γ.lam : Set _))
-        (algebraMap (𝓞 D.host.E) D.host.E s)⁻¹ hmem
-      simpa [Algebra.smul_def, ← smul_assoc, hs0] using this
+      have hmem : s • g x ∈ Submodule.span D.host.E (γ.lam : Set _) := Submodule.subset_span hsx
+      have hmem' := (Submodule.span D.host.E (γ.lam : Set (VS D).V)).smul_mem
+        ((algebraMap (𝓞 D.host.E) D.host.E s)⁻¹) hmem
+      rw [show s • g x = (algebraMap (𝓞 D.host.E) D.host.E s) • g x from (IsScalarTower.algebraMap_smul D.host.E s (g x)).symm] at hmem'
+      rw [← smul_assoc, smul_eq_mul, inv_mul_cancel₀ hs0, one_smul] at hmem'
+      exact hmem'
     refine ⟨?_⟩
     apply top_unique
     intro x _

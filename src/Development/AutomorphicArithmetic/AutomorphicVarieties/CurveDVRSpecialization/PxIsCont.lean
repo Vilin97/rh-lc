@@ -53,6 +53,8 @@ private theorem px_isCont [TopologicalSpace G] (I : Ideal A) (ρ : G →* Matrix
     exact (Filter.eventually_all.2 this).mono fun y hy => Matrix.ext fun a b => hy (a, b)
   have h2 := h1.comp fun M : Matrix (Fin n) (Fin n) (A ⧸ I ^ N) => (-1) ^ i * M.charpoly.coeff (n - i)
   convert h2 using 1
+  funext g
+  simp only [Function.comp_apply, W.GDet.lam, px_chi, MonoidAlgebra.lift_single, one_smul, Matrix.charpoly_map,
     Polynomial.coeff_map, map_mul, map_pow, map_neg, map_one]
 
 private theorem px_prod {M : Type} [Ring M] [Algebra A M] : ∀ {m : ℕ} (c : Fin m → A) (a : Fin m → M),
@@ -148,7 +150,11 @@ private theorem px_ord (ρ : NRep F n A) (v : G.Vl) (g : Fin n → G.Gv v) :
   rw [h, smul_zero] at h1
   rw [W.GFrame.oEl, map_list_prod, List.map_ofFn, ← h1]
   congr 2
-  rw [mul_comm]
+  funext i
+  simp only [Function.comp_apply, map_sub, MonoidAlgebra.lift_single, one_smul, map_one, smul_sub, smul_smul,
+    K.lam_loc]
+  change _ - ((ρ.ψ (K.e v) i (K.lam v (g i)) : A) * (K.κA A (G.φ v (g i)) : A)) • _ = _
+  rw [mul_comm (ρ.ψ (K.e v) i (K.lam v (g i)) : A)]
   rfl
 
 variable [IsCO O A]

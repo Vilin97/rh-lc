@@ -62,6 +62,9 @@ instance : Category.{0} (AffPt s) where
   comp_id _ := Subtype.ext (Category.comp_id _)
   assoc _ _ _ := Subtype.ext (Category.assoc _ _ _)
 
+theorem hom_ext {T T' : AffPt s} {φ ψ : T ⟶ T'} (h : φ.1 = ψ.1) : φ = ψ :=
+  Subtype.ext h
+
 end AffPt
 
 def OPt (s : X ⟶ Sp k) : AffPt s ⥤ CommAlgCat.{0} k where
@@ -134,7 +137,7 @@ theorem toPt_comp ⦃T T' : AffPt (algStr k B)⦄ (φ : T ⟶ T') (b : B) :
 
 def idPt_isInitial : Limits.IsInitial (idPt k B) :=
   Limits.IsInitial.ofUniqueHom (fun T ↦ ⟨CommAlgCat.ofHom (toPt T), (Category.comp_id _).trans (spMap_toPt T)⟩)
-    fun T φ ↦ AffPt.hom_ext (CommAlgCat.hom_ext (AlgHom.coe_ringHom_injective (eq_of_spMap_eq
+    fun T φ ↦ AffPt.hom_ext (CommAlgCat.hom_ext (AlgHom.toRingHom_injective (eq_of_spMap_eq
       (((Category.comp_id _).symm.trans φ.2).trans (spMap_toPt T).symm))))
 
 theorem toPt_idPt (b : B) : toPt (idPt k B) b = b := by
@@ -195,11 +198,9 @@ theorem HdR.ofForm_tdt_ne_zero [Nontrivial k] (h2 : (2 : k) = 0) : HdR.ofForm 1 
   rw [coe_dOm, coe_eq_algebraMap_zeroEquiv η, dDR_algebraMap] at e1
   have e2 := ExteriorAlgebra.ι_inj k[X] _ _ |>.1 e1
   have f3 := congrArg (polynomialEquiv k) e2
-  simp only [Derivation.coeFn_coe, map_smul, polynomialEquiv_D, derivative_X, smul_eq_mul,
-    mul_one] at f3
-  have := congrArg (coeff · 1) f3
-  simp only [coeff_derivative, coeff_X_one] at this
-  have hc := this
+  simp only [map_smul, polynomialEquiv_D, derivative_X, smul_eq_mul, mul_one] at f3
+  have hc := congrArg (fun p : k[X] ↦ p.coeff 1) f3
+  simp only [coeff_derivative, coeff_X_one] at hc
   rw [show ((1 : ℕ) : k) + 1 = 2 by norm_num, h2, mul_zero] at hc
   exact zero_ne_one hc
 

@@ -178,14 +178,15 @@ def SwapAt : Prop := ForSwap fun F E _ _ _ _ _ _ _ _ σ τ₁ τ₂ _ =>
 def RigidE : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (τ₁ τ₂ : Submodule ℂ (L2 (BW.mu1 E 2))), Pair (BW.mu1 E 2) τ₁ τ₂ →
     ∀ (S : Set (Pl E)), S.Finite → ∀ m₁ m₂ B₁ B₂, At (BW.mu1 E 2) S τ₁ m₁ B₁ → At (BW.mu1 E 2) S τ₂ m₂ B₂ →
-    (∀ b : Datum E (2 + 2), b.Pt S (fun τ => m₁ τ + m₂ τ) (fun w => B₁ w + B₂ w) →
+    (∀ b : UpperTheory.ConvolutionTheory.Datum E (2 + 2), b.Pt S (fun τ => m₁ τ + m₂ τ) (fun w => B₁ w + B₂ w) →
       b.r = 2 ∧ (∀ i, b.d i = 2) ∧ ∃ i j, i ≠ j ∧ At (b.μ i) S (b.V i) m₁ B₁ ∧ At (b.μ j) S (b.V j) m₂ B₂) ∧
-    ∀ (μ : Measure (G1 E (2 + 2))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V →
+    ∀ (μ : Measure (G1 E (2 + 2))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
+      UpperTheory.ConvolutionTheory.C.IsSummand μ V →
       ¬ At μ S V (fun τ => m₁ τ + m₂ τ) fun w => B₁ w + B₂ w
 
 def RigidF : Prop := ForSwap fun F E _ _ _ _ _ _ _ _ _ τ₁ τ₂ _ =>
   ∀ (SE : Set (Pl E)) (SF : Set (Pl F)), SE.Finite → SF.Finite → ∀ m₁ m₂ B₁ B₂, At (BW.mu1 E 2) SE τ₁ m₁ B₁ → At (BW.mu1 E 2) SE τ₂ m₂ B₂ →
-    ∀ (b : Datum F (2 + 2)) Λ' t', b.Pt SF Λ' t' → ¬ ∀ w ∉ SE, B₁ w + B₂ w = bcSat t' w
+    ∀ (b : UpperTheory.ConvolutionTheory.Datum F (2 + 2)) Λ' t', b.Pt SF Λ' t' → ¬ ∀ w ∉ SE, B₁ w + B₂ w = bcSat t' w
 
 def LocSm : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
@@ -212,7 +213,8 @@ def GalLoc : Prop :=
 def FamNe : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
     [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) →
-    ∀ (μ : Measure (G1 E (2 + 2))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ → ∀ (𝔢 : Side θ 2) (𝔵 : Fam 𝔢) κ e κ₂ p₁ p₂ k₀,
+    ∀ (μ : Measure (G1 E (2 + 2))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ → ∀ (𝔢 : Side θ 2)
+      (𝔵 : UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.Fam 𝔢) κ e κ₂ p₁ p₂ k₀,
       ArchLine 𝔵.τ₁ 𝔵.τ₂ κ e κ₂ p₁ p₂ k₀ → ∀ (S : Finset (Pl E)) (U : ∀ w : Pl E, Subgroup (Gw (2 + 2) w)), Lev U →
       (∀ w ∈ S, GM.Split E (w.under (𝓞 F)) ∧ ∀ w' : Pl E, w'.under (𝓞 F) = w.under (𝓞 F) → w' ∈ S) →
       𝔢.U = levOn S U → IsTy 𝔵.D κ e (levOn S U) → (∀ u ∈ levOn S U, ∃ u' ∈ levOn S U, θ.e (fin1 u) = fin1 u') →
@@ -226,7 +228,8 @@ def CoreInd : Prop := ForSwap fun F E _ _ _ _ _ _ _ _ _ τ₁ τ₂ _ =>
   ∀ S : Finset (Pl F), (∀ v ∈ S, GM.Split E v) → (∀ v ∉ S, GM.Unr E v) → ∀ m₁ m₂ B₁ B₂,
     At (BW.mu1 E 2) {w | w.under (𝓞 F) ∈ S} τ₁ m₁ B₁ → At (BW.mu1 E 2) {w | w.under (𝓞 F) ∈ S} τ₂ m₂ B₂ →
     ∀ (μF : Measure (G1 F (2 + 2))) [μF.IsHaarMeasure], ∃ (V : Submodule ℂ (LL μF)) (Λ : (F →+* ℂ) → Multiset ℂ) (t : Pl F → Multiset ℂ),
-      IsSummand μF V ∧ T.AtAE μF V Λ t ∧ (fun τ => m₁ τ + m₂ τ) = bcInf Λ ∧ ∀ᶠ w in cofinite, B₁ w + B₂ w = bcSat t w
+      UpperTheory.ConvolutionTheory.C.IsSummand μF V ∧ T.AtAE μF V Λ t ∧
+        (fun τ => m₁ τ + m₂ τ) = bcInf Λ ∧ ∀ᶠ w in cofinite, B₁ w + B₂ w = bcSat t w
 
 def SignMs : Prop :=
   ∀ (A B : Multiset ℂˣ), A.card = 4 → B.card = 2 → A.map (fun x => -x) = A → A.map (· ^ 2) = B + B →

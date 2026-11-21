@@ -28,7 +28,7 @@ variable {X Y : Scheme.{0}} {F G H : X.Modules} {O : Type} [CommRing O]
 
 instance mono_toBidual_dual : Mono (cartierDualToBidual (dual F)) := by
   have h : cartierDualToBidual (dual F) ≫
-      GlobalTheory.CompanionTheory.Ar.dualMap (cartierDualToBidual F) = 𝟙 _ := by
+      dualMap (cartierDualToBidual F) = 𝟙 _ := by
     ext V l : 3
     exact dual_ext fun W h s => congrArg (dualApp l h) (resM_self _ s)
   exact mono_of_mono_fac h
@@ -73,7 +73,9 @@ def eigenEval : F ⟶ dual (eigen (dualAct ρ) σ) := cartierDualToBidual F ≫ 
 
 theorem eigenEval_eq : eigenEval ρ σ =
     eigenπ ρ σ ≫ cartierDualToBidual _ ≫ dualMap (dualQuotIso ρ σ).inv := by
-  rw [toBidual_naturality_dualSheafTranspose_assoc, ← dualMap_comp, ← dualQuotIso_hom_ι, Iso.inv_hom_id_assoc,
+  have hι : (dualQuotIso ρ σ).hom ≫ eigenι _ _ = dualMap (eigenπ ρ σ) := by
+    simp only [dualQuotIso, asIso_hom, dualQuotHom, eigenLift_ι]
+  rw [toBidual_naturality_dualSheafTranspose_assoc, ← dualMap_comp, ← hι, Iso.inv_hom_id_assoc,
     eigenEval]
 
 def eigenIm : X.Modules := image (eigenEval ρ σ)
@@ -170,7 +172,7 @@ theorem isEquivariant : IsEquivariant ρ ρ ε := fun a => by
 
 theorem comp_act (a : O) : ε ≫ act ρ a = σ a • ε := (h.isEquivariant a).symm.trans (h.act_comp a)
 
-theorem dual : IsEigenProj (dualAct ρ) σ (GlobalTheory.CompanionTheory.Ar.dualMap ε) D := by
+theorem dual : IsEigenProj (dualAct ρ) σ (dualMap ε) D := by
   constructor
   · intro a
     rw [act_dualAct, ← dualMap_comp, h.comp_act, dualMap_smul]

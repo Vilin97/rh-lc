@@ -284,7 +284,7 @@ theorem exists_decomp_mem (hcl : IsIntegrallyClosedIn O Ω)
   change pointConeMap O y (g i) = 0
   ext n
   have hn := congrArg (AddMonoidAlgebra.coeff · n) hz
-  simp only [coeff_sum, coeff_C_mul, coeff_map, coeff_zero] at hn
+  simp only [coeff_sum, coeff_C_mul, coeff_map, AddMonoidAlgebra.coeff_zero] at hn
   have := Fintype.linearIndependent_iff.1 hLI (fun i => AddMonoidAlgebra.coeff (pointConeMap O y (g i)) n)
     (by simpa [Algebra.smul_def, mul_comm] using hn) i
   simpa using this

@@ -14,12 +14,7 @@ open UpperTheory.Gal.W2 (rts)
 
 namespace UpperTheory.Gal.LocalSmoothExtension
 
-theorem markRoots_of :
-    ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p)
-      (L : GlobalTheory.LKGeo.Link D G), D.a = 1 → ∀ (i₀ : Fin D.a)
-      (v : InfinitePlace G.F), sigPosH (G.gram_herm v) = 1 → InvRoots →
-      ∀ P : G.F[X], P.coeff 0 ≠ 0 →
-        ((P.map v.embedding).roots).map (markOf L v) = rts (endPol L P) (D.tau i₀) := by
+theorem markRoots_of : MarkRoots := by
   intro p _ D G L ha i₀ v hv hinv P hP
   obtain ⟨i, rfl⟩ := (L.sig v).1 hv
   have hi : i = i₀ := by
