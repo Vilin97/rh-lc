@@ -1,10 +1,5 @@
-module
-
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RembApply
-public import Formalism.LatticeTheta.Statement
-
-@[expose] public section
-
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RembApply
+import Formalism.LatticeTheta.Statement
 open NumberField nonZeroDivisors MeasureTheory GlobalTheory.LipschitzTR GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent
 open scoped FourierTransform RealInnerProductSpace
 
@@ -128,12 +123,13 @@ theorem summable_prod_wt (ι : Type) [Fintype ι] [DecidableEq ι] :
           exact Finset.prod_nonneg fun i _ => wt_nonneg _
     _ = ∏ i, ∑ m ∈ u.image (fun n : ι → ℤ => n i), wt m := (Finset.prod_univ_sum _ _).symm
     _ ≤ ∏ _i : ι, ∑' m, wt m := by
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro i _; exact Finset.sum_nonneg fun m _ => wt_nonneg m
         · intro i _; exact summable_wt.sum_le_tsum _ (fun m _ => wt_nonneg m)
 
 end GlobalTheory.LipschitzTR.LhsSum
 
+open GlobalTheory.LipschitzTR.LhsSum in
 
 theorem GlobalTheory.LipschitzTR.summable_lhsTerm_ideal :
     ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (M : FractionalIdeal (𝓞 F)⁰ F), M ≠ 0 →

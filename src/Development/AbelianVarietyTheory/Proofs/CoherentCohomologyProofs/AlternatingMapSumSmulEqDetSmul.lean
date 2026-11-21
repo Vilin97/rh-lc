@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 namespace GlobalTheory
 
@@ -171,7 +175,7 @@ def altRestrictScalars (ω : M [⋀^Fin D]→ₗ[B] N) : M [⋀^Fin D]→ₗ[A] 
 
 variable {A} {L : Type*} [AddCommGroup L] [Module A L]
 
-
+variable (B D) in
 noncomputable def exteriorPowerMapOver (φ : L →ₗ[A] M) : (⋀[A]^D L) →ₗ[A] (⋀[B]^D M) :=
   exteriorPower.alternatingMapLinearEquiv
     ((altRestrictScalars A (exteriorPower.ιMulti B D (M := M))).compLinearMap φ)

@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable section
 
@@ -47,6 +43,7 @@ theorem res_eq_zero_iff (x : R) : res O R x = 0 ↔ x ∈ maximalIdeal R := by
   show (RingEquiv.ofBijective _ (resMap_bijective O R)).symm (residue R x) = 0 ↔ _
   rw [map_eq_zero_iff _ (RingEquiv.injective _), residue_eq_zero_iff]
 
+variable {O R} in
 
 theorem res_map {R' : Type} [CommRing R'] [Algebra O R'] [IsCO O R'] (f : R →ₐ[O] R') (x : R) :
     res O R' (f x) = res O R x := by
@@ -87,6 +84,7 @@ def wtPart (j : X) : Submodule O (MvPowerSeries σ O) where
   zero_mem' n _ := map_zero _
   smul_mem' c f hf n hn := by rw [map_smul, hf n hn, smul_zero]
 
+open Classical in
 
 def wcomp (j : X) : MvPowerSeries σ O →ₗ[O] MvPowerSeries σ O where
   toFun f := fun n => if Finsupp.weight wt n = j then coeff n f else 0
@@ -302,6 +300,7 @@ def Lift.comap {H : Type} [Group H] [TopologicalSpace H] (φ : H →* Γ) (hφ :
   cont a b N := (r.cont a b N).comp_continuous hφ
   red g a b := r.red (φ g) a b
 
+variable (O rbar) in
 
 def Cond : Type 1 := ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R], Lift O rbar R → Prop
 
@@ -314,14 +313,18 @@ def Lift.Generates (r : Lift O rbar R) : Prop :=
 
 variable {X : Type} [AddCommGroup X] (w : ι → X)
 
+variable (rbar) in
 
 def IsTorusConj (t : Multiplicative X →* Rˣ) (r r' : Lift O rbar R) : Prop :=
   ∀ g a b, r'.hom g a b = t (Multiplicative.ofAdd (w a - w b)) * r.hom g a b
 
 def Lift.TStable (r : Lift O rbar R) : Prop :=
   ∀ (R' : Type) [CommRing R'] [Algebra O R'] [IsCO O R'] (f : R →ₐ[O] R') (t : Multiplicative X →* R'ˣ),
-    (∀ j, res O R' (t j) = 1) → ∃ f' : R →ₐ[O] R', IsTorusConj w t (r.map f) (r.map f')
+    (∀ j, res O R' (t j) = 1) → ∃ f' : R →ₐ[O] R',
+      IsTorusConj rbar w t (Lift.map (O := O) (rbar := rbar) (R := R) (R' := R') f r)
+        (Lift.map (O := O) (rbar := rbar) (R := R) (R' := R') f' r)
 
+variable (Γ) in
 
 def PhiCond (l : ℕ) : Prop :=
   ∀ H : Subgroup Γ, IsOpen (H : Set Γ) →

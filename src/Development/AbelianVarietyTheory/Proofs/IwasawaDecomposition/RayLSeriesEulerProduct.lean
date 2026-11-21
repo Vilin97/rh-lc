@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NonemptyRayDataOfNeZero
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NonemptyRayDataOfNeZero
 
 open NumberField IsDedekindDomain GlobalTheory.Mem Complex Filter Topology
 open scoped ComplexOrder
@@ -131,6 +127,5 @@ theorem summable_norm_absNorm_cpow (K : Type) [Field K] [NumberField K] {s : ℂ
   · simp [hs0]
   · rw [LSeries.term_of_ne_zero hn, div_eq_mul_inv, ← cpow_neg, norm_mul]
     simp
-
 
 end GlobalTheory.Mem

@@ -71,9 +71,9 @@ lemma smulHom_comp {F G : X.Modules} (r : Γ(X, ⊤)) (φ : F ⟶ G) :
 
 def smulEnd (F : X.Modules) : Γ(X, ⊤) →+* End F where
   toFun r := ⟨smulHom F r⟩
-  map_one' := by apply End.ext; simpa using smulHom_one F
+  map_one' := by apply End.ext; simp
   map_mul' r s := by apply End.ext; simpa using smulHom_mul F r s
-  map_zero' := by apply End.ext; simpa using smulHom_zero F
+  map_zero' := by apply End.ext; simp
   map_add' r s := by apply End.ext; simpa using smulHom_add F r s
 
 instance linearModules : Linear Γ(X, ⊤) X.Modules where
@@ -204,7 +204,11 @@ lemma map_comp_apply (f : F ⟶ G) (g : G ⟶ H) (x : F.H' n U) :
 
 lemma map_add_apply (f g : F ⟶ G) (x : F.H' n U) :
     map (f + g) n U x = map f n U x + map g n U x := by
-  simp [map, Sheaf.cohomologyPresheafFunctor, Functor.flip]
+  change ((Abelian.Ext.mk₀ (f + g)).postcomp _ (add_zero n)) x =
+    ((Abelian.Ext.mk₀ f).postcomp _ (add_zero n)) x +
+      ((Abelian.Ext.mk₀ g).postcomp _ (add_zero n)) x
+  simp [Abelian.Ext.mk₀_add, Abelian.Ext.postcomp]
+  rfl
 
 lemma map_zero_apply (x : F.H' n U) : map (0 : F ⟶ G) n U x = 0 := by
   simp only [map, Functor.map_zero]; rfl

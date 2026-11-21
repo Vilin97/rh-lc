@@ -121,14 +121,14 @@ lemma isInvariant_range {T : H →L[ℂ] K} (hT : T ∈ π.intertwiners σ) :
   exact ⟨π g v, hT g v⟩
 
 
-structure Equiv where
+structure Equiv (π : UnitaryRep G H) (σ : UnitaryRep G K) where
 
   toLinearIsometryEquiv : H ≃ₗᵢ[ℂ] K
 
   map_apply' : ∀ (g : G) (v : H), toLinearIsometryEquiv (π g v) = σ g (toLinearIsometryEquiv v)
 
 
-def IsEquivalent : Prop := Nonempty (π.Equiv σ)
+def IsEquivalent (π : UnitaryRep G H) (σ : UnitaryRep G K) : Prop := Nonempty (Equiv π σ)
 
 namespace Equiv
 

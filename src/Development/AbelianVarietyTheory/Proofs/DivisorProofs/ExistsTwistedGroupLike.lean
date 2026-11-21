@@ -182,7 +182,8 @@ end TwistedGroupLike
 
 open TwistedGroupLike
 
-theorem exists_twisted_groupLike : ∀ (K H : Type) [Field K] [IsAlgClosed K] [CommRing H]
+set_option synthInstance.maxHeartbeats 100000 in
+ theorem exists_twisted_groupLike : ∀ (K H : Type) [Field K] [IsAlgClosed K] [CommRing H]
     [Bialgebra K H] [Coalgebra.IsCocomm K H] [Module.Finite K H] (c : H ⊗[K] H), IsUnit c →
     c ⊗ₜ[K] (1 : H) * Algebra.TensorProduct.map (Bialgebra.comulAlgHom K H) (AlgHom.id K H) c =
       (Algebra.TensorProduct.assoc K K K H H H).symm

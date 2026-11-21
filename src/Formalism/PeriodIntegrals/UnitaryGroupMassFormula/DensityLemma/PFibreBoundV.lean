@@ -1,8 +1,4 @@
-module
-
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DensityLemma.PFibreBoundVDefs
-
-@[expose] public section
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DensityLemma.PFibreBoundVDefs
 
 open MeasureTheory Matrix Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.C6
 
@@ -177,24 +173,36 @@ lemma wI_back (j : Fin (k + 1)) (h) : (⟨(wI k r j).val - r, h⟩ : Fin (k + 1)
 lemma esI_back (b : Fin r) (h) : (⟨2 * r + k - (esI k r b).val, h⟩ : Fin r) = b := Fin.ext (by simp only [Fin.val_mk, esI_val]; have := b.isLt; omega)
 
 lemma nb_ee (a b : Fin r) : unipotentBlockMatrix k r Bm S (eI k r a) (eI k r b) = if a = b then 1 else 0 := by
-  nbt
+  simp (disch := (simp only [eI_val]; omega)) only
+    [unipotentBlockMatrix, Matrix.of_apply, eI_inj, dite_eq_right, add_zero]
 lemma nb_we (j : Fin (k + 1)) (b : Fin r) : unipotentBlockMatrix k r Bm S (wI k r j) (eI k r b) = 0 := by
-  nbt
+  simp (disch := (simp only [wI_val, eI_val]; omega)) only
+    [unipotentBlockMatrix, Matrix.of_apply, ite_eq_right (eI_ne_wI b j).symm, dite_eq_right, add_zero]
 lemma nb_se (a b : Fin r) : unipotentBlockMatrix k r Bm S (esI k r a) (eI k r b) = 0 := by
-  nbt
+  simp (disch := (simp only [esI_val, eI_val]; omega)) only
+    [unipotentBlockMatrix, Matrix.of_apply, ite_eq_right (eI_ne_esI b a).symm, dite_eq_right, add_zero]
 lemma nb_ew (a : Fin r) (j : Fin (k + 1)) : unipotentBlockMatrix k r Bm S (eI k r a) (wI k r j) = Bm a j := by
-  nbt
+  simp (disch := (simp only [eI_val, wI_val]; omega)) only
+    [unipotentBlockMatrix, Matrix.of_apply, ite_eq_right (eI_ne_wI a j), dite_eq_left, dite_eq_right,
+      eI_back, wI_back, zero_add, add_zero]
 lemma nb_ww (i j : Fin (k + 1)) : unipotentBlockMatrix k r Bm S (wI k r i) (wI k r j) = if i = j then 1 else 0 := by
-  nbt
+  simp (disch := (simp only [wI_val]; omega)) only
+    [unipotentBlockMatrix, Matrix.of_apply, wI_inj, dite_eq_right, add_zero]
 lemma nb_sw (a : Fin r) (j : Fin (k + 1)) : unipotentBlockMatrix k r Bm S (esI k r a) (wI k r j) = 0 := by
-  nbt
+  simp (disch := (simp only [esI_val, wI_val]; omega)) only
+    [unipotentBlockMatrix, Matrix.of_apply, ite_eq_right (wI_ne_esI j a).symm, dite_eq_right, add_zero]
 lemma nb_es (a b : Fin r) : unipotentBlockMatrix k r Bm S (eI k r a) (esI k r b) = cmOf k r Bm S a b := by
-  nbt
+  simp (disch := (simp only [eI_val, esI_val]; omega)) only
+    [unipotentBlockMatrix, Matrix.of_apply, ite_eq_right (eI_ne_esI a b), dite_eq_left, dite_eq_right,
+      eI_back, esI_back, zero_add, add_zero]
 lemma nb_ws (j : Fin (k + 1)) (b : Fin r) :
     unipotentBlockMatrix k r Bm S (wI k r j) (esI k r b) = -(hW k j) * star (Bm b j) := by
-  nbt
+  simp (disch := (simp only [wI_val, esI_val]; omega)) only
+    [unipotentBlockMatrix, Matrix.of_apply, ite_eq_right (wI_ne_esI j b), dite_eq_left, dite_eq_right,
+      wI_back, esI_back, zero_add]
 lemma nb_ss (a b : Fin r) : unipotentBlockMatrix k r Bm S (esI k r a) (esI k r b) = if a = b then 1 else 0 := by
-  nbt
+  simp (disch := (simp only [esI_val]; omega)) only
+    [unipotentBlockMatrix, Matrix.of_apply, esI_inj, dite_eq_right, add_zero]
 
 lemma X_apply (a b : Fin r) :
     (Bm * Matrix.diagonal (hW k) * Bmᴴ) a b = ∑ j, Bm a j * hW k j * star (Bm b j) := by

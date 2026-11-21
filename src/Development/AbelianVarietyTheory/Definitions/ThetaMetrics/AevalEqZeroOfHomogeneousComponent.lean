@@ -170,7 +170,7 @@ theorem aeval_smul_eq_zero {G : Type*} [CommRing G] [Algebra K G]
 theorem forall_aeval_eq_zero_iff [Fintype σ] {Ω : Type*} [Field Ω] [IsAlgClosed Ω] [Algebra K Ω]
     {p : Ideal (MvPolynomial σ K)} (hp : p.IsHomogeneous (homogeneousSubmodule σ K))
     (t : β × σ → Ω) :
-    (∀ f ∈ elimIdeal β p, aeval t f = 0) ↔
+    (∀ f ∈ elimIdeal (β := β) p, aeval t f = 0) ↔
       ∃ x : σ → Ω, x ≠ 0 ∧ (∀ g ∈ p, aeval x g = 0) ∧ ∀ i, ∑ j, t (i, j) * x j = 0 := by
   refine ⟨fun h => ?_, fun ⟨x, hx, hp, ht⟩ f hf => aeval_eq_zero_of_mem_elimIdeal hp hx ht hf⟩
   by_contra hc
@@ -198,7 +198,7 @@ theorem forall_aeval_eq_zero_iff [Fintype σ] {Ω : Type*} [Field Ω] [IsAlgClos
     eval₂Hom (map C) fun j => C (X j)
   have hs : s.comp (map C) = C := by
     ext1 <;> [ext1; skip] <;> simp [s, R]
-  have hle : I ≤ (incidenceIdeal β p).comap s := by
+  have hle : I ≤ (incidenceIdeal (β := β) p).comap s := by
     rw [Ideal.span_le]
     rintro _ (⟨g, hg, n, rfl⟩ | ⟨i, rfl⟩)
     · rw [SetLike.mem_coe, Ideal.mem_comap, ← RingHom.comp_apply, hs]

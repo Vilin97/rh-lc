@@ -198,7 +198,7 @@ theorem finite_and_ncard_minpoly_height_le : ∀ (F E : Type) [Field F] [NumberF
   intro F E _ _ _ _ _
   classical
   have : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
-  obtain ⟨C₁, k₁, h₁⟩ := exists_ncard_mulHeight₁_le F
+  obtain ⟨C₁, k₁, h₁⟩ := exists_ncard_mulHeight₁_le (K := F)
   set m := Module.finrank F E with hm
   refine ⟨m * C₁ ^ (m + 1), k₁ * (m + 1), fun B hB => ?_⟩
   obtain ⟨hSfin, hScard⟩ := h₁ B hB

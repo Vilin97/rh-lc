@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ChartGen
-public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.MaxMass
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ChartGen
+import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.MaxMass
 open NumberField Matrix GlobalTheory.Mass Formalism.HermitianLatticesTheory
 open scoped ENNReal Classical
 
@@ -295,7 +290,6 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     ⟨P, hP.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hP (RingOfIntegers.not_isField K)⟩
   obtain ⟨θ, t, ht, hθ⟩ := hK.2.2 P hP
   obtain ⟨S, hS⟩ := hM.fg
-  have hsp := hM.span_eq_top
   let Λ : Submodule (biInt (w.valuation K)) V := Submodule.span _ (S : Set V)
   have hΛ : ∀ x, x ∈ loc (K := K) P M ↔ x ∈ Λ := fun x => by
     rw [← hS]; exact mem_loc_span_iff w _ x

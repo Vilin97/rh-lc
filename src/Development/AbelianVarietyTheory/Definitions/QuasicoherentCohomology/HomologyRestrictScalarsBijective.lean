@@ -2,11 +2,10 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.IsIsoTermComparisonRestrictScalars
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.CubeComplexAcyclicIffQuasiIsoCechAug
 
 @[expose] public section
 
-open CategoryTheory Limits
+open CategoryTheory Limits HomologicalComplex
 
 universe v v' u u'
 
@@ -96,6 +95,25 @@ theorem _root_.GlobalTheory.cechClass_zero_eq_zero_iff (A : _root_.GlobalTheory.
 theorem _root_.GlobalTheory.cechClass_zero_bijective (A : _root_.GlobalTheory.Cube.{v} ι R) :
     Function.Bijective (_root_.GlobalTheory.cechClass A 0) :=
   cechClass_zero_bijective' A
+
+
+noncomputable def _root_.GlobalTheory.cechAugHomology (A : _root_.GlobalTheory.Cube.{v} ι R) :
+    A.obj ∅ ⟶ (_root_.GlobalTheory.cechComplex A).homology 0 :=
+  (_root_.GlobalTheory.cechComplex A).liftCycles
+      (ModuleCat.ofHom (_root_.GlobalTheory.Cube.aug A)) 1 (by simp) (by
+        rw [_root_.GlobalTheory.cechComplex_d A 0]
+        exact ModuleCat.hom_ext (LinearMap.ext (_root_.GlobalTheory.Cube.d_aug A))) ≫
+    (_root_.GlobalTheory.cechComplex A).homologyπ 0
+
+
+theorem _root_.GlobalTheory.cechAugHomology_comp (A : _root_.GlobalTheory.Cube.{v} ι R) :
+    _root_.GlobalTheory.cechAugHomology A ≫ (_root_.GlobalTheory.cechHomologyZeroIso A).hom ≫
+      ModuleCat.ofHom (LinearMap.ker (_root_.GlobalTheory.Cube.d A 1)).subtype =
+        ModuleCat.ofHom (_root_.GlobalTheory.Cube.aug A) := by
+  rw [_root_.GlobalTheory.cechAugHomology, Category.assoc,
+    _root_.GlobalTheory.homologyπ_cechHomologyZeroIso_hom_assoc]
+  exact (congrArg (_ ≫ ·) (_root_.GlobalTheory.cechCyclesIso_hom_subtype A 0)).trans
+    (liftCycles_i _ _ _ _ _)
 
 
 theorem _root_.GlobalTheory.homologyMap_cechClass {A B : _root_.GlobalTheory.Cube.{v} ι R} (φ : A ⟶ B) (p : ℕ)

@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import GroundTheory.AutomorphicForms.DefiniteClassNumber.HermTraceSelfOfHermValue
-
-@[expose] public section
+import Mathlib
+import GroundTheory.AutomorphicForms.DefiniteClassNumber.HermTraceSelfOfHermValue
 
 noncomputable section
 
@@ -17,7 +13,6 @@ section TotallyReal
 
 abbrev realEmb (hreal : ∀ w : InfinitePlace K, w.IsReal) (w : InfinitePlace K) : K →+* ℝ :=
   embedding_of_isReal (hreal w)
-
 
 end TotallyReal
 
@@ -41,18 +36,14 @@ theorem vecCoords_vecOfCoords (c : ι × κ → R) : vecCoords R b (vecOfCoords 
   simp only [vecCoords, vecOfCoords]
   rw [← Basis.equivFun_apply, LinearEquiv.apply_symm_apply]
 
-
 variable {H b}
 
+omit [NumberField K] in
 
 theorem hermTrace_eq_sum_traceGram (x y : ι → R ⊗[K] E) :
     hermTrace K H R x y = ∑ a : ι × κ, ∑ c : ι × κ, vecCoords R b x a * vecCoords R b y c *
       algebraMap K R (traceGram H b a c) :=
   hermTrace_eq_sum H b x y
-
-
-
-
 
 end Form
 

@@ -250,10 +250,10 @@ theorem cubeComplex_acyclic_of_subsingleton (A : Cube.{v} ι R)
 
 theorem isIso_cubeLowerProj_of_subsingleton (e : κ ↪o ι) (A : Cube.{v} ι R)
     (h : ∀ u : Finset ι, (∃ j ∈ u, j ∉ Set.range e) → Subsingleton (A.obj u)) :
-    IsIso (cubeLowerProj e A) := by
-  have : ∀ p, IsIso ((cubeLowerProj e A).f p) := fun p => by
+    IsIso (cubeLowerProj (e := e) A) := by
+  have : ∀ p, IsIso ((cubeLowerProj (e := e) A).f p) := fun p => by
     rw [ConcreteCategory.isIso_iff_bijective]
-    change Function.Bijective (Cube.termLower e A p)
+    change Function.Bijective (Cube.termLower (e := e) A p)
     constructor
     · intro x y hxy
       funext ⟨t, ht⟩
@@ -320,10 +320,12 @@ theorem cubeTotalComplex_acyclic_of_slices_induction_on_card (n : ℕ) :
     intro μ _ f I hI hn A hA
     obtain rfl := Finset.card_eq_zero.1 hn
     have hf : Function.Surjective f := fun j => by simpa using hI j
-    have := isIso_cubeLowerProj hf A
+    have := isIso_cubeLowerProj_of_subsingleton f A (by
+      rintro _ ⟨j, _, hj⟩
+      exact (hj (hf j)).elim)
     have h := hA ∅ (subset_refl _)
     rw [Cube.slice_empty] at h
-    exact fun p => (h p).of_iso (asIso (cubeLowerProj f A)).symm
+    exact fun p => (h p).of_iso (asIso (cubeLowerProj (e := f) A)).symm
   | succ n ih =>
     intro μ _ f I hI hn A hA
     obtain ⟨i, hi⟩ : I.Nonempty := Finset.card_pos.1 (by omega)
@@ -534,7 +536,7 @@ noncomputable def suppEmptyHomologyIso (h : IsCompl (Set.range e) (Set.range f))
     (cubeComplex (supp A (partsIn e f Q {∅})
       (ordConnected_partsIn e f hQ Set.ordConnected_singleton))).homology n ≅
       (cubeComplex (supp (lowerFace e A) Q hQ)).homology n :=
-  homologyMapIso (@asIso _ _ _ _ (cubeLowerProj e _) (isIso_cubeLowerProj_of_subsingleton e _ (by
+  homologyMapIso (@asIso _ _ _ _ (cubeLowerProj (e := e) _) (isIso_cubeLowerProj_of_subsingleton e _ (by
     rintro u ⟨j, hj, hje⟩
     obtain ⟨k, rfl⟩ := mem_range_of_notMem_range h hje
     refine subsingleton_supp A _ fun hu => ?_
@@ -556,12 +558,13 @@ noncomputable def suppSingletonHomologyIso (h : IsCompl (Set.range e) (Set.range
   have hne : ∀ i, e i ≠ f k := fun i hi => Set.disjoint_left.1 h.disjoint ⟨i, rfl⟩ ⟨k, hi.symm⟩
   let e' : ι ↪o {j : μ // j ≠ f k} :=
     OrderEmbedding.ofMapLEIff (fun i => ⟨e i, hne i⟩) fun _ _ => e.le_iff_le
+  let U := upperFace (otherDirections (f k)) (f k) D
   (homologyMapIso (@asIso _ _ _ _ (cubeUpperIncl (range_otherDirections (f k)) D)
     (isIso_cubeUpperIncl_of_subsingleton _ D fun u hu => subsingleton_supp A _ fun hu' => by
       have hk : k ∈ part f u := by rw [Set.mem_singleton_iff.1 hu'.2]; simp
       exact hu ((mem_part f u k).1 hk))) (n + 1)).symm ≪≫
   shiftSuccHomologyIso _ n ≪≫
-  homologyMapIso (@asIso _ _ _ _ (cubeLowerProj e' _) (isIso_cubeLowerProj_of_subsingleton e' _ (by
+  homologyMapIso (@asIso _ _ _ _ (cubeLowerProj (e := e') U) (isIso_cubeLowerProj_of_subsingleton e' U (by
     rintro u ⟨j, hj, hje⟩
     obtain ⟨k', hk'⟩ := mem_range_of_notMem_range h (j := j.1)
       fun ⟨i, hi⟩ => hje ⟨i, Subtype.ext hi⟩

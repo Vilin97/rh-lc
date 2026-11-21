@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HsCodiscreteNeBot
-
-@[expose] public section
-
-open scoped MatrixGroups TensorProduct
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HsCodiscreteNeBot
+open scoped MatrixGroups TensorProduct Pointwise
 open Matrix GlobalTheory.KZ GlobalTheory.KZ.BettiB
 
 namespace GlobalTheory.KZ.BettiB

@@ -79,8 +79,8 @@ def glLat (g : GL (Fin r) K) (L : Lat O K r) : Lat O K r := ⟨glMap g L.1, glMa
 
 instance instMulActionLat : MulAction (GL (Fin r) K) (Lat O K r) where
   smul := glLat
-  one_smul L := Lat.ext (glMap_one L.1)
-  mul_smul g h L := Lat.ext (glMap_mul g h L.1)
+  one_smul L := Subtype.ext (glMap_one L.1)
+  mul_smul g h L := Subtype.ext (glMap_mul g h L.1)
 
 theorem smul_def (g : GL (Fin r) K) (L : Lat O K r) : g • L = glLat g L := rfl
 

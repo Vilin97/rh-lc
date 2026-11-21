@@ -10,12 +10,12 @@ section Site
 
 variable (X : Scheme.{0})
 
-
+set_option backward.isDefEq.respectTransparency.types false in
 theorem locallyCoverDense_forget :
     (MorphismProperty.Over.forget @Etale ⊤ X).LocallyCoverDense (Scheme.overGrothendieckTopology @Etale X) :=
   Scheme.locallyCoverDense_of_le (P := @Etale) (Q := @Etale) X le_rfl
 
-
+set_option backward.isDefEq.respectTransparency.types false in
 theorem mem_small_iff {U : X.Etale} (S : Sieve U) :
     S ∈ X.smallEtaleTopology U ↔
       S.functorPushforward (Scheme.Etale.forget X) ∈ Scheme.etaleTopology.over X ((Scheme.Etale.forget X).obj U) :=
@@ -35,7 +35,7 @@ instance isContinuous_forget_forget :
 
 variable {X} {Y : Scheme.{0}} (f : Y ⟶ X)
 
-
+set_option backward.isDefEq.respectTransparency.types false in
 def bc : X.Etale ⥤ Y.Etale := MorphismProperty.Over.pullback @Etale ⊤ f
 
 
@@ -80,10 +80,10 @@ def cst (X : Scheme.{0}) : ShvS R X := (res R X).obj (coef R)
 
 variable {R} {X Y : Scheme.{0}} (f : Y ⟶ X)
 
-
+variable (R) in
 def push : ShvS R Y ⥤ ShvS R X := (bc f).sheafPushforwardContinuous _ _ _
 
-
+variable (R) in
 def pull : ShvS R X ⥤ ShvS R Y := (bc f).sheafPullback _ _ _
 
 
@@ -92,25 +92,25 @@ def adj : pull R f ⊣ push R f := (bc f).sheafAdjunctionContinuous _ _ _
 instance : (push R f).Additive where
   map_add := rfl
 
-instance : (pull R f).Additive := (adj R f).left_adjoint_additive
+instance : (pull R f).Additive := (adj f).left_adjoint_additive
 
 
 def resInj (F : ShvS R Y) : CochainComplex (ShvS R Y) ℤ := (injectiveResolution F).cochainComplex
 
 def RpushC (F : ShvS R Y) : CochainComplex (ShvS R X) ℤ :=
-  ((push R f).mapHomologicalComplex _).obj (resInj R F)
+  ((push R f).mapHomologicalComplex _).obj (resInj F)
 
-
+variable (R) in
 def unitD (X : Scheme.{0}) : DerivedCategory (ShvS R X) :=
   (DerivedCategory.singleFunctor (ShvS R X) 0).obj (cst R X)
 
-
+variable (R) in
 abbrev HX (X : Scheme.{0}) (L : DerivedCategory (ShvS R X)) (n : ℤ) : Type _ := unitD R X ⟶ L⟦n⟧
 
-
+variable (R) in
 abbrev HXC (X : Scheme.{0}) (K : CochainComplex (ShvS R X) ℤ) (n : ℤ) : Type _ := HX R X (DerivedCategory.Q.obj K) n
 
-
+variable (R) in
 def HX.one (X : Scheme.{0}) : HX R X (unitD R X) 0 :=
   (shiftFunctorZero (DerivedCategory (ShvS R X)) ℤ).inv.app _
 

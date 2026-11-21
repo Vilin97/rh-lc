@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open NumberField
 
@@ -16,7 +12,7 @@ theorem injective_of_charZero {F : Type} [Field F] [CharZero F] (f : 𝓞 E →+
     Function.Injective f := by
   rw [RingHom.injective_iff_ker_eq_bot]
   apply Ideal.eq_bot_of_comap_eq_bot (R := ℤ)
-  rw [RingHom.comap_ker]
+  rw [Ideal.under_def, RingHom.comap_ker]
   rw [RingHom.ker_eq_bot_iff_eq_zero]
   intro n hn
   have : f.comp (algebraMap ℤ (𝓞 E)) = Int.castRingHom F := RingHom.ext_int _ _

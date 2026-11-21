@@ -1,8 +1,4 @@
-module
-
-public import Formalism.MahlerMeasure.IsFrozenInv
-
-@[expose] public section
+import Formalism.MahlerMeasure.IsFrozenInv
 
 namespace Formalism.GM.M.FB
 
@@ -115,7 +111,7 @@ lemma coeff_ev (ρ : Fin r) (n : ℕ) (F : MvPolynomial (Fin (N + 1) × Fin r) �
           · rw [ext_last, if_neg hc, hcond c hc]
         · rw [ext_castSucc, res_apply]
       rw [heq, hres]
-    · exact MvPolynomial.coeff_zero _
+    · simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   · intro hnot
     have h0 : AddMonoidAlgebra.coeff F (ext n ρ m') = 0 := by simpa using hnot
     rw [h0]
@@ -293,7 +289,7 @@ open MvPolynomial Finset
 
 variable {p : ℕ} [Fact p.Prime] {N r : ℕ}
 
-def kk (ρ : Fin r) (m : Fin (N + 1) × Fin r →₀ ℕ) : ℕ :=
+noncomputable def kk (ρ : Fin r) (m : Fin (N + 1) × Fin r →₀ ℕ) : ℕ :=
   ∑ c ∈ Finset.univ.erase ρ, m (Fin.last N, c)
 
 lemma coeff_X_pderiv_castSucc (ρ : Fin r) (G : MvPolynomial (Fin (N + 1) × Fin r) ℚ_[p])
@@ -341,7 +337,8 @@ theorem vanish (LL : Letters N) (n : ℕ) (ρ : Fin r) (G : MvPolynomial (Fin (N
       omega
   have hG' : ∀ ν, kk ρ ν = kk ρ m' → AddMonoidAlgebra.coeff G ν = 0 := fun ν hν => hmin ν (hν ▸ hmk ▸ hlt)
   have hc0 := congrArg (AddMonoidAlgebra.coeff · m') (hinv c hcρ)
-  simp only [glAct, LinearMap.sum_apply, MvPolynomial.coeff_sum, coeff_zero] at hc0
+  simp only [glAct, LinearMap.sum_apply, MvPolynomial.coeff_sum, AddMonoidAlgebra.coeff_zero,
+    Finsupp.zero_apply] at hc0
   rw [Fin.sum_univ_castSucc, Finset.sum_eq_zero (fun i _ => ?_), zero_add] at hc0
   · have hl : ((Fin.last N : Fin (N + 1)) : ℕ) < N + 1 := (Fin.last N).isLt
     rw [if_pos hl] at hc0

@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.ExistsPthRootOfDerivationZeroStatement
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.ExistsPthRootOfDerivationZeroStatement
 open scoped BigOperators
 
 namespace GlobalTheory.CubeFib
@@ -57,7 +52,8 @@ theorem derivation_mem_pow_smul_top {R A M : Type} [CommRing R] [CommRing A] [Al
       rw [pow_succ', ← smul_eq_mul, Submodule.smul_assoc]
       exact Submodule.smul_mem_smul hy (ih x hx)
     · intro x y hx hy
-      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      rw [map_add]
+      exact add_mem hx hy
 
 theorem derivation_algebraMap_perfect {k K : Type} [Field k] [PerfectField k] (p : ℕ)
     [Fact p.Prime] [CharP k p] [Field K] [Algebra k K] (D : Derivation ℤ K K) (c : k) :

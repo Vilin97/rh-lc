@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsInterpolation
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsInterpolation
 
 namespace GlobalTheory
 
@@ -39,7 +35,7 @@ theorem finsupp_sum_multilinear_eq_of_prod_eq {ι : Type} [Fintype ι] [Decidabl
     conv_lhs => rw [hw']
     rw [MultilinearMap.map_sum_finset]
     refine Finset.sum_congr rfl fun z _ => ?_
-    rw [MultilinearMap.map_smul_univ]
+    simp only [MultilinearMap.map_smul_univ, RingHom.id_apply]
   have expand : ∀ (σ : A →₀ ℂ) (ψ : A → ∀ k, ↥(V k)), σ.support ⊆ T →
       (∀ a ∈ T, ∀ k, ψ a k ∈ F k) →
       (σ.sum fun a c => c • M (ψ a)) = ∑ z ∈ Fintype.piFinset S,

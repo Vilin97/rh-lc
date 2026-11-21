@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
 
 noncomputable section
 open CategoryTheory Limits CochainComplex CochainComplex.HomComplex
@@ -74,7 +70,7 @@ theorem coneAcyclic_of_graded (hA : IsFilt dA gA FA rA) (hB : IsFilt dB gB FB rB
   have main : ∀ p, min (min N N') 0 ≤ p → p ≤ 0 → ∀ x ∈ FA p n₂, ∀ y ∈ FB p n₁,
       dA n₂ n₃ x = 0 → Φ n₂ x = dB n₁ n₂ y → ∃ (v : A n₁) (w : B n₀), x = dA n₁ n₂ v ∧ y = Φ n₁ v + dB n₀ n₁ w := by
     intro p hp
-    induction p, hp using Int.le_induction with
+    induction p, hp using Int.leInduction with
     | base =>
       intro _ x hx y hy _ _
       refine ⟨0, 0, ?_, ?_⟩
@@ -358,7 +354,7 @@ theorem isColumns_total (D : HomologicalComplex₂ C (ComplexShape.up ℤ) (Comp
           omega
         rw [hc]) ≫ g else 0, ?_, fun c l h' hc => ?_⟩
     · rw [HomologicalComplex₂.ι_totalDesc]; simp
-    · rw [HomologicalComplex₂.ι_totalDesc, dif_neg hc]
+    · rw [HomologicalComplex₂.ι_totalDesc, dite_eq_right hc]
   diff p k t k' t' h h' hk Y f hf := by
     rw [HomologicalComplex₂.total_d, Preadditive.add_comp, Preadditive.comp_add, HomologicalComplex₂.ι_D₁_assoc,
       HomologicalComplex₂.ι_D₂_assoc,
@@ -387,7 +383,7 @@ theorem eq_zero_of_ιTerm {L : CochainComplex C ℤ} {p : ℤ} {h : p + 0 = p} {
     (congrArg (fun g => (HomologicalComplex.singleObjXSelf (ComplexShape.up ℤ) 0 (L.X p)).inv ≫ g) hf)).trans comp_zero
 
 theorem ιTerm_ne (L : CochainComplex C ℤ) (p k t : ℤ) (h : p + k = t) (hk : k ≠ 0) : ιTerm L p k t h = 0 :=
-  dif_neg hk
+  dite_eq_right hk
 
 theorem isColumns_terms (L : CochainComplex C ℤ) [L.IsStrictlyLE 0] :
     IsColumns L (fun p => (CochainComplex.singleFunctor C 0).obj (L.X p)) (ιTerm L) where

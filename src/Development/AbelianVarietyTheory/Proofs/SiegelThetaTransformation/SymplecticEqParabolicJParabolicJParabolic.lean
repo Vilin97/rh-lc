@@ -3,6 +3,8 @@ module
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IMemSiegel
 
+import all Mathlib.LinearAlgebra.SymplecticGroup
+
 @[expose] public section
 
 open Matrix Complex GlobalTheory.SW

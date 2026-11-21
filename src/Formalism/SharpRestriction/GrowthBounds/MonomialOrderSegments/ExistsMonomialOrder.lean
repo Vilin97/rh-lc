@@ -1,8 +1,4 @@
-module
-
-public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.MemPolKIff
-
-@[expose] public section
+import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.MemPolKIff
 
 noncomputable section
 
@@ -75,7 +71,7 @@ theorem vG_add_vG_le_vG_mul (F G : MvPolynomial σ K) : vG v F + vG v G ≤ vG v
 theorem exists_monomialOrder (σ : Type) : Nonempty (MonomialOrder.{0, 0} σ) := by
   obtain ⟨lo, wf⟩ := exists_wellFoundedLT σ
   let _ : LinearOrder σ := @OrderDual.instLinearOrder σ lo
-  have : WellFoundedGT σ := ⟨wf.wf⟩
+  have : WellFoundedGT σ := wf
   exact ⟨MonomialOrder.lex⟩
 
 theorem vG_mul (F G : MvPolynomial σ K) : vG v (F * G) = vG v F + vG v G := by

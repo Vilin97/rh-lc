@@ -93,7 +93,8 @@ theorem GlobalTheory.ClassFin.exists_energy_min : ∀ (ι : Type) [Fintype ι] [
   obtain ⟨C', hC'⟩ := GlobalTheory.T.entries_bounded_of_conj_spanning_bounded' ι σ g hspan C
   have hK : IsCompact ({x : Matrix ι ι ℂ | ∀ i j, ‖x i j‖ ≤ C'} ×ˢ
       (Set.pi Set.univ fun _ : σ => {x : Matrix ι ι ℂ | ∀ i j, ‖x i j‖ ≤ C})) :=
-    (isCompact_box C').prod (isCompact_univ_pi fun _ => isCompact_box C)
+    (GlobalTheory.ClassFin.EnergyMin.isCompact_box C').prod
+      (isCompact_univ_pi fun _ => GlobalTheory.ClassFin.EnergyMin.isCompact_box C)
   have hZ : IsCompact Z := by
     refine hK.of_isClosed_subset hZc ?_
     rintro ⟨P, H⟩ ⟨hd, hl, hE⟩
@@ -101,22 +102,24 @@ theorem GlobalTheory.ClassFin.exists_energy_min : ∀ (ι : Type) [Fintype ι] [
       intro s
       refine hC _ _ (hl s) (le_trans ?_ hE)
       exact Finset.single_le_sum (f := fun s => (Matrix.trace (H s * H s)).re)
-        (fun t _ => energy_nonneg (hl t)) (Finset.mem_univ s)
+        (fun t _ => GlobalTheory.ClassFin.EnergyMin.energy_nonneg (hl t)) (Finset.mem_univ s)
     refine ⟨hC' P hd fun s i j => ?_, fun s _ i j => (hb s i j).2⟩
-    rw [inv_eq_adj hd]
+    rw [GlobalTheory.ClassFin.EnergyMin.inv_eq_adj hd]
     exact (hb s i j).1
   have h0 : ((1, H₀) : Matrix ι ι ℂ × (σ → Matrix ι ι ℂ)) ∈ Z := by
     refine ⟨Matrix.det_one, fun s => ?_, le_rfl⟩
     simpa using hH₀ s
   obtain ⟨⟨P, H⟩, ⟨hd, hl, hE⟩, hmin⟩ := hZ.exists_isMinOn ⟨_, h0⟩ hEn.continuousOn
   have hd' : P.det = 1 := hd
-  refine ⟨P, H, by rw [hd']; exact isUnit_one, fun s => by rw [inv_eq_adj hd']; exact hl s, ?_⟩
-  intro P' H' hP' hl'
-  obtain ⟨Q, hQ, hQx⟩ := exists_det_one P' hP'
-  change En (P, H) ≤ En (Q, H')
-  by_cases hle : En (Q, H') ≤ E₀
-  · refine hmin (a := (Q, H')) ⟨hQ, fun s => ?_, hle⟩
-    have := hl' s
-    rw [← hQx, inv_eq_adj hQ] at this
-    exact this
-  · exact hE.trans (not_le.mp hle).le
+  have hP : IsUnit P.det := hd'.symm ▸ isUnit_one
+  refine ⟨P, H, hP, ?_, ?_⟩
+  · intro s
+    rw [GlobalTheory.ClassFin.EnergyMin.inv_eq_adj hd']
+    exact hl s
+  · intro P' H' hP' hl'
+    obtain ⟨Q, hQ, hQx⟩ := GlobalTheory.ClassFin.EnergyMin.exists_det_one P' hP'
+    change En (P, H) ≤ En (Q, H')
+    by_cases hle : En (Q, H') ≤ E₀
+    · refine hmin (a := (Q, H')) ⟨hQ, fun s => ?_, hle⟩
+      simpa only [← hQx (g s), GlobalTheory.ClassFin.EnergyMin.inv_eq_adj hQ] using hl' s
+    · exact hE.trans (not_le.mp hle).le

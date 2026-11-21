@@ -60,6 +60,7 @@ theorem mem_polyGrading_natCast {p : MvPolynomial ι R} {d : ℕ} :
   rfl
 
 
+variable (ι R) in
 theorem polyGrading_of_neg {n : ℤ} (hn : n < 0) : polyGrading ι R n = ⊥ := by
   rw [eq_bot_iff]
   intro p hp
@@ -85,6 +86,7 @@ variable {ι : Type*} {R : Type*} [CommRing R]
   {P : Type*} [AddCommGroup P] [Module R P] [Module (MvPolynomial ι R) P]
 
 
+variable (ι) in
 abbrev PolyGradedSMul (ℳ : ℤ → Submodule R M) : Prop :=
   SetLike.GradedSMul (polyGrading ι R) ℳ
 
@@ -398,6 +400,7 @@ theorem IsGradedMap.pi {𝒩 : ℤ → Submodule R N} {ℳ : ∀ k, ℤ → Subm
     IsGradedMap 𝒩 (grPi ℳ) (LinearMap.pi f) := fun _ _ h => mem_grPi.2 fun k => hf k h
 
 
+variable (ι R) in
 abbrev grFree (d : κ → ℤ) : ℤ → Submodule R (κ → MvPolynomial ι R) :=
   grPi fun k => grShift (polyGrading ι R) (-d k)
 

@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Divisors.IotaScalarOne
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Divisors.IotaScalarOne
 
 noncomputable section
 
@@ -26,6 +22,5 @@ theorem phiInv_ofPadic (c : ℤ_[p]) : phiInv p O (ofPadic p O c) = ofPadic p O 
 end GlobalTheory.DetInv.PsiPhi
 
 namespace GlobalTheory.DetInv
-
 
 end GlobalTheory.DetInv

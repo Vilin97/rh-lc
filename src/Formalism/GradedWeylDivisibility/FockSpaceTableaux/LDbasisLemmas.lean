@@ -1,8 +1,4 @@
-module
-
-public import Formalism.GradedWeylDivisibility.StatementD
-
-@[expose] public section
+import Formalism.GradedWeylDivisibility.StatementD
 
 open MvPolynomial
 
@@ -21,7 +17,8 @@ theorem ldbasis_linearIndependent {σ R ι : Type*} [CommRing R] (o : MonomialOr
   obtain ⟨j, hj, hjmax⟩ :=
     (s.filter fun j => g j ≠ 0).exists_max_image (fun j => o.toSyn (o.degree (v j))) htne
   have hcoeff := congrArg (AddMonoidAlgebra.coeff · (o.degree (v j))) hsum
-  rw [coeff_zero, coeff_sum, Finset.sum_eq_single j] at hcoeff
+  rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, MvPolynomial.coeff_sum,
+    Finset.sum_eq_single j] at hcoeff
   · rw [coeff_smul, smul_eq_mul] at hcoeff
     have hone : (v j).coeff (o.degree (v j)) = 1 := hlc j
     rw [hone, mul_one] at hcoeff

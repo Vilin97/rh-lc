@@ -89,14 +89,34 @@ theorem _root_.GlobalTheory.AnPer.Charts.tsze_expand {O : Type} [CommRing O] (h 
   · simp [TrivSqZeroExt.fst_sum]
   · simp [TrivSqZeroExt.snd_sum, Finset.sum_apply, Pi.single_apply]
 
-def jet0 (k : K.K) : K.triv k ⟶ K.jet k := ptHom (K.jet k) (K.le_refl k)
+def jet0 (k : K.K) : K.Hom (K.triv k) (K.jet k) := by
+  letI := (K.triv k).ring
+  letI := (K.triv k).alg
+  letI := (K.jet k).ring
+  letI := (K.jet k).alg
+  exact {
+    φ := letI := (K.triv k).alg
+      { ((K.jet k).ρ.comp (K.sh (K.le_refl k))) with
+        commutes' := fun f ↦ (congrArg (K.jet k).ρ (K.sh_cst (K.le_refl k) f)).trans ((K.jet k).ρ_cst f) }
+    deg := 0
+    le := K.le_refl k
+    mem c hc := by rw [Ideal.mem_bot.1 hc, map_zero]; exact (K.jet k).J.zero_mem
+    close := Relation.ReflTransGen.refl }
 
-def jet1 (k : K.K) : K.triv k ⟶ K.jet k :=
-  fromTriv (K.jet k) (K.le_refl k) (jetSec k)
-    (fun f ↦ TrivSqZeroExt.ext (fst_tszeSec _ _) (funext fun a ↦ (snd_tszeSec _ _ a).trans (dw_cst k a f)))
-    (Relation.ReflTransGen.single ⟨fun a ↦ TrivSqZeroExt.inr (Pi.single a 1), fun _ ↦ rfl,
+def jet1 (k : K.K) : K.Hom (K.triv k) (K.jet k) :=
+  letI := (K.triv k).ring
+  letI := (K.triv k).alg
+  letI := (K.jet k).ring
+  letI := (K.jet k).alg
+  { φ := letI := (K.triv k).alg
+      { jetSec k with
+        commutes' := fun f ↦ TrivSqZeroExt.ext (fst_tszeSec _ _) (funext fun a ↦ (snd_tszeSec _ _ a).trans (dw_cst k a f)) }
+    deg := 0
+    le := K.le_refl k
+    mem c hc := by rw [Ideal.mem_bot.1 hc, map_zero]; exact (K.jet k).J.zero_mem
+    close := Relation.ReflTransGen.single ⟨fun a ↦ TrivSqZeroExt.inr (Pi.single a 1), fun _ ↦ rfl,
       fun a b ↦ TrivSqZeroExt.inr_mul_inr _ _ _, fun h ↦ by
         simp only [RingHom.comp_apply, sh_refl]
-        exact tsze_expand h fun a ↦ dw a h⟩)
+        exact tsze_expand h fun a ↦ dw a h⟩ }
 
 end GlobalTheory.AnPer.Charts

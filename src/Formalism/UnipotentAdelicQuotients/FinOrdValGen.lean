@@ -19,11 +19,13 @@ def diagUnits : Lˣ →* Ideles L :=
 
 
 def finiteSingle (v : HeightOneSpectrum (𝓞 L)) :
-    v.adicCompletion L →* FiniteAdeleRing (𝓞 L) L where
-  toFun x := RestrictedProduct.mulSingle
-    (fun w : HeightOneSpectrum (𝓞 L) => w.adicCompletionIntegers L) v x
-  map_one' := RestrictedProduct.mulSingle_one _ _
-  map_mul' x y := RestrictedProduct.mulSingle_mul _ _ x y
+    v.adicCompletion L →* FiniteAdeleRing (𝓞 L) L := by
+  classical
+  exact
+    { toFun x := RestrictedProduct.mulSingle
+        (fun w : HeightOneSpectrum (𝓞 L) => w.adicCompletionIntegers L) v x
+      map_one' := RestrictedProduct.mulSingle_one _ _
+      map_mul' x y := RestrictedProduct.mulSingle_mul _ _ x y }
 
 def localIdele (v : HeightOneSpectrum (𝓞 L)) : (v.adicCompletion L)ˣ →* Ideles L :=
   Units.map

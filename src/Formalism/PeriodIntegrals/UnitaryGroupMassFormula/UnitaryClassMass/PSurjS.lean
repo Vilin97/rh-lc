@@ -1,8 +1,4 @@
-module
-
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryClassMass.PSurjF
-
-@[expose] public section
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryClassMass.PSurjF
 
 open NumberField PI.UJClassFin PI.UJClassMass Formalism.HermitianLatticesTheory IsDedekindDomain
 
@@ -72,8 +68,10 @@ theorem hermToF (hst : ∀ a : F, star (algebraMap F E a) = algebraMap F E a)
     by_contra hav
     exact hno ⟨a, hav, ha⟩
   obtain ⟨Q, hIQ, hQp, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral v.asIdeal I hle
-  have hQm : Q.IsMaximal :=
-    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := 𝓞 F) Q (by rw [hQc]; exact v.isMaximal)
+  have hQm : Q.IsMaximal := by
+    apply Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := 𝓞 F) Q
+    rw [hQc]
+    exact v.isMaximal
   have hsQ : algebraMap (𝓞 F) (𝓞 E) s ∉ Q := fun hq => hs (by rw [← hQc]; exact hq)
   have hs' : algebraMap (𝓞 F) (𝓞 E) s ∈ hcompl (K := E) Q := by
     apply Submonoid.subset_closure

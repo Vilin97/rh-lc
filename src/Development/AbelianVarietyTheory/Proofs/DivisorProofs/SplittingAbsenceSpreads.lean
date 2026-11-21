@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NoCommonZeroSpreadsConstructibleNbhdStatement
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NoCommonZeroSpreadsConstructibleNbhdStatement
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj TopologicalSpace TensorProduct
 open scoped CategoryTheory.Obj
 
@@ -96,7 +91,7 @@ theorem eval_eqs_point {k : Type} [CommRing k] (ψ : A →+* k) (z : Var σ D �
   rw [← coe_eval₂Hom]
   simp only [eqs]
   rw [hom_eval, map_gen]
-  congr 2
+  congr 2 <;> (ext i; simp)
 
 theorem eval_eqs_inv {k : Type} [CommRing k] (ψ : A →+* k) (z : Var σ D → k)
     (f g : MvPolynomial σ A) (b : Bool) :
@@ -105,7 +100,7 @@ theorem eval_eqs_inv {k : Type} [CommRing k] (ψ : A →+* k) (z : Var σ D → 
         MvPolynomial.eval (fun i => z (Sum.inr (Sum.inl (b, i)))) (MvPolynomial.map ψ g) - 1 := by
   simp only [eqs, eval₂_sub, eval₂_mul, eval₂_X, eval₂_one]
   rw [← coe_eval₂Hom, hom_eval, MvPolynomial.map_map, eval₂Hom_comp_C]
-  congr 4
+  congr 4 <;> (ext i; simp)
 end GlobalTheory.SplitSpread
 
 namespace GlobalTheory.SplitSpread

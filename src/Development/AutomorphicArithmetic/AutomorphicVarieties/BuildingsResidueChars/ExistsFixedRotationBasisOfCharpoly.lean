@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open Matrix
 
@@ -173,8 +169,7 @@ theorem UpperTheory.exists_fixed_rotation_basis_of_charpoly :
     have hEMv : E *ᵥ (M *ᵥ v) = 0 := by rw [Matrix.mulVec_mulVec, hEM, hEv]
     have hli : LinearIndependent K ![e, v, M *ᵥ v] := by
       change LinearIndependent K (Fin.cons e ![v, M *ᵥ v])
-      rw [linearIndependent_fin_cons]
-      refine ⟨hv, fun hmem => ?_⟩
+      refine linearIndependent_finCons.mpr ⟨hv, fun hmem => ?_⟩
       have hle : Submodule.span K (Set.range ![v, M *ᵥ v]) ≤ LinearMap.ker (Matrix.toLin' E) := by
         rw [Submodule.span_le]
         rintro _ ⟨i, rfl⟩

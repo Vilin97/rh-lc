@@ -1,15 +1,11 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Foundations.NotCoboundaryConstantOne
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CompletedLaurentIsDVRStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsGaloisInvariantValuationIntegersEqIntegral
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsFinitePidSubalgebraDivPadicIntStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsGeneratorValuationPrimeDvdPowSubOfFinitePaStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsFieldAndPthRootsOfLocalAlgFrobeniusFixedStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DivMemSubalgebraOfValuationLeOneOfUniformizerStatement
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Foundations.NotCoboundaryConstantOne
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CompletedLaurentIsDVRStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsGaloisInvariantValuationIntegersEqIntegral
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsFinitePidSubalgebraDivPadicIntStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsGeneratorValuationPrimeDvdPowSubOfFinitePaStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsFieldAndPthRootsOfLocalAlgFrobeniusFixedStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DivMemSubalgebraOfValuationLeOneOfUniformizerStatement
 
 open GlobalTheory.K5
 open scoped NNReal
@@ -197,8 +193,16 @@ theorem residue_core : ∀ (p : ℕ) [Fact p.Prime] (O Ω : Type) [CommRing O] [
 theorem q_not_pow_mod (p : ℕ) [hp : Fact p.Prime] (a : O0 p) : ¬ (p : O0 p) ∣ a ^ p - qO p := by
   intro h
   obtain ⟨e, he⟩ := exists_completedLaurent_quot_prime_equiv_laurentFp p
-  have h1 := (Ideal.Quotient.eq_zero_iff_dvd _ _).mpr h
-  rw [map_sub, map_pow, sub_eq_zero] at h1
+  rcases h with ⟨c, hc⟩
+  have hmem : a ^ p - qO p ∈ Ideal.span {(p : O0 p)} :=
+    Ideal.mem_span_singleton'.2 ⟨c, by simpa [mul_comm] using hc.symm⟩
+  have h1 := (Ideal.Quotient.eq_zero_iff_mem).2 hmem
+  have h2 : Ideal.Quotient.mk (Ideal.span {(p : O0 p)}) (a ^ p) -
+      Ideal.Quotient.mk (Ideal.span {(p : O0 p)}) (qO p) = 0 := by
+    simpa only [RingHom.map_sub] using h1
+  have h1 : (Ideal.Quotient.mk (Ideal.span {(p : O0 p)}) a) ^ p =
+      Ideal.Quotient.mk (Ideal.span {(p : O0 p)}) (qO p) := by
+    simpa only [RingHom.map_pow] using sub_eq_zero.mp h2
   have h2 := congrArg e h1
   rw [map_pow, he] at h2
   have h3 := congrArg HahnSeries.order h2

@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MonicFactorCoefficientsIntegralStatement
-
-@[expose] public section
+import Mathlib
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MonicFactorCoefficientsIntegralStatement
 
 open Polynomial
 
@@ -96,13 +92,14 @@ theorem monic_relations_to_blocks : ∀ (V : Type) [AddCommGroup V] [Module ℂ 
   intro V _ _ D R S Wn I W₀ c₁ c₂ n₁ n₂ a b hRR hRS hSS hD hRI hSI hDβ ha1 haspan hRform hb1
     hbspan hSform hW0 hp
   let s : Set (Module.End ℂ V) := Set.range R ∪ Set.range S
-  have hcomm : ∀ x ∈ s, ∀ y ∈ s, x * y = y * x := by
-    rintro x (⟨u, rfl⟩ | ⟨u, rfl⟩) y (⟨v, rfl⟩ | ⟨v, rfl⟩)
-    · exact (hRR u v).eq
-    · exact (hRS u v).eq
-    · exact (hRS v u).eq.symm
-    · exact (hSS u v).eq
-  letI : CommRing (Algebra.adjoin ℂ s) := Algebra.isMulCommutative_adjoin ℂ hcomm
+  have hcomm : s.Pairwise Commute := by
+    rintro x (⟨u, rfl⟩ | ⟨u, rfl⟩) y (⟨v, rfl⟩ | ⟨v, rfl⟩) _
+    · exact hRR u v
+    · exact hRS u v
+    · exact (hRS v u).symm
+    · exact hSS u v
+  letI : IsMulCommutative (Algebra.adjoin ℂ s) := Algebra.isMulCommutative_adjoin ℂ hcomm
+  letI : CommRing (Algebra.adjoin ℂ s) := open scoped IsMulCommutative in inferInstance
   have hpres : Algebra.adjoin ℂ s ≤ preserving I := by
     rw [Algebra.adjoin_le_iff]
     rintro x (⟨u, rfl⟩ | ⟨u, rfl⟩)
@@ -130,10 +127,12 @@ theorem monic_relations_to_blocks : ∀ (V : Type) [AddCommGroup V] [Module ℂ 
   let Q : (Algebra.adjoin ℂ s ⧸ Y)[X] := sumPoly (fun k => π ⟨b k, hbmem k⟩) n₂
   have hPm : P.Monic := sumPoly_monic _ _ (by
     have : (⟨a n₁, hamem n₁⟩ : Algebra.adjoin ℂ s) = 1 := Subtype.ext ha1
-    simp only [this, map_one])
+    change π ⟨a n₁, hamem n₁⟩ = 1
+    rw [this, map_one])
   have hQm : Q.Monic := sumPoly_monic _ _ (by
     have : (⟨b n₂, hbmem n₂⟩ : Algebra.adjoin ℂ s) = 1 := Subtype.ext hb1
-    simp only [this, map_one])
+    change π ⟨b n₂, hbmem n₂⟩ = 1
+    rw [this, map_one])
   have hPev : ∀ t : ℂ, P.eval (algebraMap ℂ _ t) = π ⟨R t, hRmem t⟩ := by
     intro t
     have : (⟨R t, hRmem t⟩ : Algebra.adjoin ℂ s)

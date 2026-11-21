@@ -1,9 +1,5 @@
-module
-
-public import Formalism.PieriBlockIdeals.IntegralQuotient
-public import Mathlib
-
-@[expose] public section
+import Formalism.PieriBlockIdeals.IntegralQuotient
+import Mathlib
 
 open Polynomial
 
@@ -187,7 +183,8 @@ theorem exists_mvPolynomial_algHom_commuting {O M : Type*} [CommRing O] [AddComm
     ∃ φ : MvPolynomial (Fin n) O →ₐ[O] Module.End O M,
       (∀ a, φ (MvPolynomial.X a) = c a) ∧ ∀ p, φ p ∈ Algebra.adjoin O (Set.range c) := by
   have : IsMulCommutative (Algebra.adjoin O (Set.range c)) := Algebra.isMulCommutative_adjoin O (by
-    rintro _ ⟨a, rfl⟩ _ ⟨b, rfl⟩; exact (hc a b).eq)
+    rintro _ ⟨a, rfl⟩ _ ⟨b, rfl⟩ _
+    exact hc a b)
   let ψ := MvPolynomial.aeval (R := O) (S₁ := Algebra.adjoin O (Set.range c))
     fun a : Fin n => (⟨c a, Algebra.subset_adjoin ⟨a, rfl⟩⟩ : Algebra.adjoin O (Set.range c))
   refine ⟨(Algebra.adjoin O (Set.range c)).val.comp ψ, ?_, ?_⟩
@@ -1382,10 +1379,8 @@ theorem Iteration_of (h1 : OneStepInv) (h2 : AAComm) (h3 : MuEquivariant) : Iter
       exact Fin.snoc_init_self h
     rw [hmuY, hAY, map_nsmul] at hIH
     have hc : S.Ew h' (S.mu n Rr) = n.factorial • ((X h : S.W) : V) := by
-      apply nsmul_right_injective (Nat.factorial_ne_zero n)
-      simp only
-      rw [hIH, Pi.smul_apply, hval]
-      simp
+      apply eq_of_nsmul_eq_nsmul_of_addCommute (Nat.factorial_ne_zero n) (AddCommute.all _ _)
+      simpa only [Pi.smul_apply, hval, Submodule.coe_smul_of_tower] using hIH
     rw [hEw, Module.End.mul_apply, h1 k V P R S n v z hz, map_nsmul, hc, Nat.factorial_succ, mul_smul]
 
 end Formalism.CohomologicalDescent.Symmetrization
@@ -1540,7 +1535,7 @@ variable {k V P R : Type} [Field k] [CharZero k] [AddCommGroup V] [Module k V] [
   [Fintype P] [Fintype R]
 
 theorem isAddTorsionFree_of_charZero_module (k : Type) {V : Type} [Field k] [CharZero k] [AddCommGroup V] [Module k V] : IsAddTorsionFree V :=
-  ⟨fun n hn a b hab => by
+  ⟨fun n hn a b _ hab => by
     simp only [← Nat.cast_smul_eq_nsmul k] at hab
     exact smul_right_injective V (Nat.cast_ne_zero.2 hn : (n : k) ≠ 0) hab⟩
 
@@ -1591,7 +1586,7 @@ theorem IotaMu_of (h2 : AAComm) (h3 : MuEquivariant) (h4 : WordSpec) (h5 : Itera
     intro σ; rw [norm_toSym_eq_sum_perm]; exact perm_sum_over_perms_eq z σ
   have h6 := h5 k V P R S n h (NmS k (toSym k z)) hinv
   rw [symMap_norm_toSym_eq_factorial_smul h3, map_nsmul, jucysMurphyProduct_norm_toSym_comm h2, norm_apply_eq_mfact_smul] at h6
-  have h7 := nsmul_right_injective (Nat.factorial_ne_zero n) h6
+  have h7 := eq_of_nsmul_eq_nsmul_of_addCommute (Nat.factorial_ne_zero n) (AddCommute.all _ _) h6
   rw [h7, Submodule.coe_smul_of_tower, ← Nat.cast_smul_eq_nsmul k, smul_smul, inv_mul_cancel₀, one_smul]
   unfold mfact
   exact Nat.cast_ne_zero.2 (Finset.prod_ne_zero_iff.2 fun v _ => Nat.factorial_ne_zero _)

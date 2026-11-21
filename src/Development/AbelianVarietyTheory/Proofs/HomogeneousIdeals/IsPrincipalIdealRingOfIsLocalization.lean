@@ -316,7 +316,7 @@ theorem powerSeries_completeDVR (O : Type*) [CommRing O] [IsDomain O] [IsDiscret
         IsDiscreteValuationRing.addVal (Localization.AtPrime (Ideal.span {X} : Ideal O⟦X⟧))
           (algebraMap O⟦X⟧ _ f) = f.order) :=
   ⟨⟨inferInstance, inferInstance, inferInstance, inferInstance, inferInstance,
-      ringKrullDim_eq_two O, maximalIdeal_eq_span hπ, maximalIdeal_eq_span_X_sub_C hπ⟩,
+      ringKrullDim_eq_two, maximalIdeal_eq_span hπ, maximalIdeal_eq_span_X_sub_C hπ⟩,
     ⟨isAdicComplete_span_C_X hπ, inferInstance⟩,
     ⟨X_prime, prime_C hπ, not_associated_X_C hπ⟩,
     ⟨ev_X hπ, continuous_ev hπ, eq_ev hπ, ev_surjective hπ, ker_ev hπ, inferInstance,

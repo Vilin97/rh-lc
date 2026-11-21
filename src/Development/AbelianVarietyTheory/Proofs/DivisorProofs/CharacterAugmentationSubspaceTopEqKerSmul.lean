@@ -17,7 +17,7 @@ theorem mSub_top_eq_ker_smul : ∀ (k : Type) [Field k] (C : Type) [CommRing C] 
     ∀ x : H, x ∈ GlobalTheory.HTRho.mSub σ χ ⊤ ↔ x ∈ (RingHom.ker (Algebra.TensorProduct.lift (Algebra.ofId k k)
       χ.toIntAlgHom (fun _ _ => Commute.all _ _) : k ⊗[ℤ] C →ₐ[k] k) • ⊤ : Submodule (k ⊗[ℤ] C) H) := by
   intro k _ C _ H _ _ σ χ x
-  letI : Module (k ⊗[ℤ] C) H := Module.compHom H (Algebra.TensorProduct.lift (Algebra.ofId k (Module.End k H))
+  let : Module (k ⊗[ℤ] C) H := Module.compHom H (Algebra.TensorProduct.lift (Algebra.ofId k (Module.End k H))
       σ.toIntAlgHom (fun _ _ => Algebra.commutes _ _)).toRingHom
   set L := Algebra.TensorProduct.lift (Algebra.ofId k (Module.End k H)) σ.toIntAlgHom
     (fun _ _ => Algebra.commutes _ _) with hLdef
@@ -30,15 +30,14 @@ theorem mSub_top_eq_ker_smul : ∀ (k : Type) [Field k] (C : Type) [CommRing C] 
       σ.toIntAlgHom (fun _ _ => Algebra.commutes _ _) l c) y
     rw [hLdef]
     refine h1.trans ?_
-    rw [Module.End.mul_apply, Algebra.ofId_apply, Module.algebraMap_end_apply]
+    rw [mul_apply_eq_comp, Algebra.ofId_apply, Module.algebraMap_end_apply]
     rfl
   have hφt : ∀ (l : k) (c : C), φ (l ⊗ₜ c) = l * χ c := by
     intro l c
     simp [hφdef, Algebra.TensorProduct.lift_tmul]
   have key : ∀ (a : k ⊗[ℤ] C) (y : H), L a y - φ a • y ∈ mSub σ χ ⊤ := by
     intro a y
-    induction a using TensorProduct.induction_on with
-    | zero => simp
+    induction a using TensorProduct.inductionOn with
     | tmul l c =>
       rw [hLt, hφt, mul_smul, ← smul_sub]
       refine Submodule.smul_mem _ l (Submodule.subset_span ⟨c, y, trivial, ?_⟩)

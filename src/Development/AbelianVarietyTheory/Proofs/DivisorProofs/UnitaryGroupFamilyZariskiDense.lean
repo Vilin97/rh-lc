@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetGNeZero
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetGNeZero
 open Classical MvPolynomial
 open scoped Matrix ComplexOrder
 
@@ -60,6 +55,8 @@ theorem eq_zero_of_eval_skew (R : MvPolynomial (ι × Fin a × Fin a) ℂ)
     intro y
     rw [eval_bind₁_subst]
     congr 2
+    funext v
+    simp only [eval_add, eval_mul, eval_C, eval_X]
   have hS0 : bind₁ (fun v => C cα * X v + C cβ * X (tr v)) R = 0 := by
     apply eq_zero_of_eval_real
     intro u
@@ -73,7 +70,9 @@ theorem eq_zero_of_eval_skew (R : MvPolynomial (ι × Fin a × Fin a) ℂ)
   have := hev (fun v => cγ * x v + cδ * x (tr v))
   rw [hS0, map_zero] at this
   rw [map_zero, this]
-  congr 2
+  apply congrArg (fun y => eval y R)
+  funext v
+  simp only [tr_tr]
   linear_combination (-(x v)) * c_one - x (tr v) * c_zero
 
 theorem det_one_add_ne_zero {n : Type} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) (hA : Aᴴ = -A) :

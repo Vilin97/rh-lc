@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open TensorProduct
 
@@ -18,21 +14,16 @@ section
 variable {X X' : Type} [AddCommGroup X] [Module B X] [Module Q X] [AddCommGroup X'] [Module E X'] [Module Q X']
   {p : X →ₗ[Q] X'} {Λ : (B →ₗ[E] E) → X →ₗ[Q] X'}
 
-
-
-
 variable [IsScalarTower Q B X] [IsScalarTower Q E X']
 
-
-
 end
-
 
 section Sm
 
 variable {A V : Type} [CommRing A] [Algebra Q A] [AddCommGroup V] [Module A V] [Module Q V] [IsScalarTower Q A V]
   {F P : Type} [Field F] [Algebra Q F] [CommRing P] [Algebra Q P] [Algebra F P] [IsScalarTower Q F P]
 
+variable (V P) in
 
 noncomputable def sm : A ⊗[Q] F →ₗ[Q] Module.End Q (V ⊗[Q] P) :=
   (TensorProduct.homTensorHomMap (RingHom.id Q) V P V P).comp
@@ -41,7 +32,6 @@ noncomputable def sm : A ⊗[Q] F →ₗ[Q] Module.End Q (V ⊗[Q] P) :=
 
 variable {A' V' : Type} [CommRing A'] [Algebra Q A'] [AddCommGroup V'] [Module A' V'] [Module Q V']
   [IsScalarTower Q A' V']
-
 
 end Sm
 

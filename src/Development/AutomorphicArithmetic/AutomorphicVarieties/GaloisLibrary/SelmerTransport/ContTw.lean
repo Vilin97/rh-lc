@@ -1,10 +1,6 @@
-module
-
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.ConjStableShaFam
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.ContScal
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocallyConstantFunctions
-
-@[expose] public section
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.ConjStableShaFam
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.GaloisCohomologyLength.ContScal
+import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocallyConstantFunctions
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.GaloisCohomology UpperTheory.V UpperTheory.V.Base
 
@@ -12,8 +8,7 @@ private theorem cont_smul (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [Alge
     [TopologicalSpace Γ] (χ : Γ →* ℤ_[l]ˣ) (hχ : Continuous fun g => ((χ g : ℤ_[l]ˣ) : ℤ_[l])) (m : QO l O) :
     Continuous fun g => ((χ g : ℤ_[l]ˣ) : ℤ_[l]) • m := by
   refine (QO.isBaseChange l O).inductionOn m
-    (motive := fun m => Continuous fun g => ((χ g : ℤ_[l]ˣ) : ℤ_[l]) • m) ?_ ?_ ?_ ?_
-  · simpa using continuous_const
+    (motive := fun m => Continuous fun g => ((χ g : ℤ_[l]ˣ) : ℤ_[l]) • m) ?_ ?_ ?_
   · intro x
     have h1 : Continuous fun g => ((χ g : ℤ_[l]ˣ) : ℤ_[l]) • x :=
       Continuous.comp (LDataCardLeFinrank.contScal l Γ χ hχ) (Continuous.prodMk_left x)
@@ -30,16 +25,24 @@ private theorem locConst {Γ A : Type} [Group Γ] [TopologicalSpace Γ] [IsTopol
     (h : IsOpen (ψ.ker : Set Γ)) : IsLocallyConstant ψ :=
   _root_.UpperTheory.Reformulated.B.LocallyConstantFunctions.locConst ψ h
 
+private noncomputable abbrev UpperTheory.V.LDataCardLeFinrank.qzG
+    (k Ω : Type) [Field k] [Field Ω] [Algebra k Ω] (l : ℕ) [Fact l.Prime] (e : ℤ) :
+    Representation ℤ_[l] (G k Ω) (QZ l) := scalRep (QZ l) (ReciprocityTheory.Gal.cycZ k Ω l ^ (-e))
+
 theorem UpperTheory.V.Base.contTw :
     ∀ (k Ω : Type) [Field k] [NumberField k] [Field Ω] [Algebra k Ω] [IsAlgClosure k Ω] (l : ℕ) [Fact l.Prime],
       Continuous (cycZ k Ω l) ∧ (∀ e : ℤ, ContAction (LDataCardLeFinrank.qzG k Ω l e)) ∧
       ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] (ψ : G k Ω →* Oˣ) (n : ℤ), IsOpen (ψ.ker : Set (G k Ω)) →
         ContAction (twist₂ l (ψ * chiO k Ω l O ^ n)) := by
   intro k Ω _ _ _ _ _ l _
-  have hc := continuous_cycZ k Ω l
-  refine ⟨hc, fun e => LDataCardLeFinrank.contScal l _ _ (Units.continuous_val.comp (hc.zpow (-e))), fun O _ _ ψ n hψ => ?_⟩
+  have hc := ReciprocityTheory.Gal.continuous_cycZ k Ω l
+  have hcPow (n : ℤ) : Continuous fun g : G k Ω => (((cycZ k Ω l ^ n) g : ℤ_[l]ˣ) : ℤ_[l]) :=
+    Units.continuous_val.comp
+      (show Continuous fun g : G k Ω => cycZ k Ω l g ^ n from hc.zpow n)
+  refine ⟨hc, fun e => LDataCardLeFinrank.contScal l _ (cycZ k Ω l ^ (-e)) (hcPow (-e)),
+    fun O _ _ ψ n hψ => ?_⟩
   refine continuous_prod_of_discrete_right.2 fun m => ?_
-  have h1 := cont_smul l O _ (cycZ k Ω l ^ n) (Units.continuous_val.comp (hc.zpow n)) m
+  have h1 := cont_smul l O _ (cycZ k Ω l ^ n) (hcPow n) m
   have h2 := ((locConst ψ hψ).prodMk ((IsLocallyConstant.iff_continuous _).2 h1)).comp
     fun p : Oˣ × QO l O => (p.1 : O) • p.2
   refine h2.continuous.congr fun g => ?_

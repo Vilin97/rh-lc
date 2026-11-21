@@ -42,11 +42,11 @@ def CycloDistStatement : Prop :=
 
 def CycloSimpleStatement : Prop :=
   ∀ (LL S : Type) [Field LL] [CharZero LL] [CommRing S] [Algebra LL S] (m : ℕ), 0 < m → ∀ (ζ : S) (E : PowerSeries S),
-    Polynomial.aeval ζ (Polynomial.cyclotomic m LL) = 0 → constantCoeff E = 1 → derivative S E = E →
+    Polynomial.aeval ζ (Polynomial.cyclotomic m LL) = 0 → constantCoeff E = 1 → derivative E = E →
     ∃ w : (PowerSeries S)ˣ, Polynomial.aeval (C ζ * E) (Polynomial.cyclotomic m LL) = (w : PowerSeries S) * X
 
 def ExpRescaleStatement : Prop :=
-  ∀ (S : Type) [CommRing S] [Algebra ℚ S] (E : PowerSeries S), constantCoeff E = 1 → derivative S E = E →
+  ∀ (S : Type) [CommRing S] [Algebra ℚ S] (E : PowerSeries S), constantCoeff E = 1 → derivative E = E →
     E = PowerSeries.exp S ∧ ∀ a : ℕ, E ^ a = rescale (a : S) E
 
 def DescendDvdStatement : Prop :=

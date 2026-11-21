@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import GroundTheory.PAdicHodge.BdRAlg
-public import GroundTheory.PAdicHodge.BdRGalois
-
-@[expose] public section
-
+import Mathlib
+import GroundTheory.PAdicHodge.BdRAlg
+import GroundTheory.PAdicHodge.BdRGalois
 set_option maxSynthPendingDepth 1
 
 noncomputable section

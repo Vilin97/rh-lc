@@ -1,16 +1,12 @@
-module
-
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.InvMemLocROfUnimod
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsSmulMem
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.AlgebraMapIntCastSmul
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.LamGEqOneOfOrtho
-public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.NkCountLocF
-public import Formalism.HermitianLattices.HermitianLatticesProofs.DualLattice
-public import Formalism.HermitianLattices.HermitianLatticesProofs.LocDual
-public import Formalism.HermitianLattices.HermitianLatticesProofs.DualBasic
-public import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
-
-@[expose] public section
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.InvMemLocROfUnimod
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsSmulMem
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.AlgebraMapIntCastSmul
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.LamGEqOneOfOrtho
+import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.NkCountLocF
+import Formalism.HermitianLattices.HermitianLatticesProofs.DualLattice
+import Formalism.HermitianLattices.HermitianLatticesProofs.LocDual
+import Formalism.HermitianLattices.HermitianLatticesProofs.DualBasic
+import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
 
 open NumberField Module Formalism.HermitianLattices.Ext.L3.SplitA
 
@@ -251,7 +247,7 @@ theorem exists_lattice_of_fibLoc_ne_zero (S : VecSplit h h') {L : Submodule (�
     ∃ C : Submodule (𝓞 K) V', Submodule.IsLattice K C ∧ Formalism.HermitianLatticesTheory.IsIntegralLat h' C ∧
       locF 𝔭 C = locF 𝔭 T := by
   obtain ⟨g, hg, -, e⟩ := exists_of_fibLoc_ne_zero S hT
-  exact ⟨_, StabilizerLattices.isLattice_cut S (LocalizedFibreSets.isLattice_gmap g hL),
+  exact ⟨_, StabilizerLattices.isLattice_cut S (Formalism.HermitianLatticesTheory.isomAct_lattice g L hL),
     isIntegralLat_cut S (isIntegralLat_gmap hg hLi), e⟩
 
 theorem exists_lattice_of_fibLoc_ne_zero_good (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
@@ -263,9 +259,10 @@ theorem exists_lattice_of_fibLoc_ne_zero_good (hK : Formalism.HermitianLatticesT
     ∃ C : Submodule (𝓞 K) V', Submodule.IsLattice K C ∧ Formalism.HermitianLatticesTheory.IsIntegralLat h' C ∧
       vd h' C 𝔭 = 0 ∧ locF 𝔭 C = locF 𝔭 T := by
   obtain ⟨g, hg, hx, e⟩ := exists_of_fibLoc_ne_zero S hT
-  exact ⟨_, StabilizerLattices.isLattice_cut S (LocalizedFibreSets.isLattice_gmap g hL),
+  have hLg := Formalism.HermitianLatticesTheory.isomAct_lattice g L hL
+  exact ⟨_, StabilizerLattices.isLattice_cut S hLg,
     isIntegralLat_cut S (isIntegralLat_gmap hg hLi),
-    vd_cut_eq_zero hK hF hs hd S (LocalizedFibreSets.isLattice_gmap g hL) (isIntegralLat_gmap hg hLi) h𝔭 hn
+    vd_cut_eq_zero hK hF hs hd S hLg (isIntegralLat_gmap hg hLi) h𝔭 hn
       (by rw [vd_gmap hg, hvL]) hvn hx, e⟩
 
 theorem exists_unimod_lattice_good (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)

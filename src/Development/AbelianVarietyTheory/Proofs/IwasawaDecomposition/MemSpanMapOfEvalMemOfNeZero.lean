@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open MvPolynomial
 
 namespace GlobalTheory
@@ -24,7 +19,7 @@ theorem mem_span_map_of_eval_mem (k : Type) [Field k] [Infinite k] (σ τ : Type
     rw [Finset.sum_ite_eq']
     split_ifs with h
     · rfl
-    · rw [notMem_support_iff.mp h, coeff_zero]
+    · simp only [notMem_support_iff.mp h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   have hdec : P = ∑ γ ∈ Γ, (monomial γ (1 : k) : MvPolynomial τ k) • map (algebraMap k (MvPolynomial τ k)) (Q γ) := by
     ext m : 1
     rw [coeff_sum]
@@ -38,7 +33,8 @@ theorem mem_span_map_of_eval_mem (k : Type) [Field k] [Infinite k] (σ τ : Type
       · intro γ hγ; exact Finset.mem_biUnion.mpr ⟨m, hm, hγ⟩
       · intro γ _ hγ; rw [notMem_support_iff.mp hγ, monomial_zero]
     · rw [notMem_support_iff.mp hm]
-      simp only [coeff_zero, monomial_zero, Finset.sum_const_zero]
+      simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, monomial_zero,
+        Finset.sum_const_zero]
   have hevid : ∀ y : τ → k, (eval y).comp (algebraMap k (MvPolynomial τ k)) = RingHom.id k := by
     intro y; ext c; simp only [RingHom.comp_apply, MvPolynomial.algebraMap_eq, eval_C, RingHom.id_apply]
   have hevP : ∀ y : τ → k, map (eval y) P =
@@ -70,8 +66,8 @@ theorem mem_span_map_of_eval_mem (k : Type) [Field k] [Infinite k] (σ τ : Type
     have hR0 : R = 0 := (mul_eq_zero.mp hRD).resolve_right hD
     have hcoef : AddMonoidAlgebra.coeff R β = L (Q β) := by
       simp only [R, coeff_sum, coeff_monomial]
-      rw [Finset.sum_ite_eq', if_pos hβ]
-    exact hLβ (by rw [← hcoef, hR0, coeff_zero])
+      rw [Finset.sum_ite_eq', ite_eq_left hβ]
+    exact hLβ (by simp only [← hcoef, hR0, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply])
   suffices h : (∑ γ ∈ Γ, (monomial γ (1 : k) : MvPolynomial τ k) • map (algebraMap k (MvPolynomial τ k)) (Q γ)) ∈
       Submodule.span (MvPolynomial τ k)
         (MvPolynomial.map (algebraMap k (MvPolynomial τ k)) '' (M : Set (MvPolynomial σ k))) by

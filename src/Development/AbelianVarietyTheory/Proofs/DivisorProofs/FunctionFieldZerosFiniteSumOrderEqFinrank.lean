@@ -1,13 +1,9 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Divisors.IsAdmissibleIntegralBasisChangeOne
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FunctionFieldOneVariableTranscendentalFiniteAndEStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FunctionFieldPlaceSumOrderEqFinrankStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUniquePlaceOrdEqOneStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FunctionFieldPlaceRestrictionExistsPowStatement
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsAdmissibleIntegralBasisChangeOne
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FunctionFieldOneVariableTranscendentalFiniteAndEStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FunctionFieldPlaceSumOrderEqFinrankStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUniquePlaceOrdEqOneStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FunctionFieldPlaceRestrictionExistsPowStatement
 
 open scoped IntermediateField Polynomial RatFunc
 open GlobalTheory.Nef
@@ -53,7 +49,9 @@ theorem zeros_finite_sum_eq_degree : ∀ (k F : Type) [Field k] [IsAlgClosed k] 
   have hL : IsFF k k⟮x⟯ := by
     refine ⟨t, htr, ?_⟩
     rw [htop]
-    exact Module.finite_of_finrank_eq_succ (IntermediateField.finrank_top)
+    have : Module.Free (⊤ : IntermediateField k k⟮x⟯) k⟮x⟯ :=
+      Module.Free.of_divisionRing _ _
+    exact Module.finite_of_finrank_eq_succ IntermediateField.finrank_top
   obtain ⟨v0, hv0, huniq⟩ := GlobalTheory.T.existsUnique_place_ord_eq_one_of_transcendental_generator k k⟮x⟯ t htr htop
   obtain ⟨ρ, hρ⟩ := (GlobalTheory.T.functionFieldPlace_restriction_exists_pow k k⟮x⟯ F).1
   have ht0 : t ≠ 0 := by

@@ -15,7 +15,8 @@ namespace GlobalTheory.AnPer
 
 theorem Step.tensor_comp {I I₀ : Type} [Fintype I] [Fintype I₀] {g : ℕ} {D C : Type} [CommRing D] [Algebra ℂ D]
     [CommRing C] [Algebra ℂ C] {W : Opens (Tot I g)} {W₀ : Opens (Tot I₀ g)} (Ta : Hol W →ₐ[ℂ] D ⊗[ℂ] Hol W₀)
-    (hT : ∀ a h, Ta (dw a h) = LinearMap.lTensor D (dw a).toLinearMap (Ta h)) (J : Ideal C) (J' : Ideal (D ⊗[ℂ] C))
+    (hT : ∀ a h, Ta (dw (W := W) a h) = LinearMap.lTensor D (dw (W := W₀) a).toLinearMap (Ta h))
+    (J : Ideal C) (J' : Ideal (D ⊗[ℂ] C))
     (hJ : ∀ c ∈ J, (1 : D) ⊗ₜ[ℂ] c ∈ J') (ρ₁ ρ₂ : Hol W₀ →ₐ[ℂ] C)
     (s : Step J (ρ₁ : Hol W₀ →+* C) (ρ₂ : Hol W₀ →+* C)) :
     Step J' ((Algebra.TensorProduct.map (AlgHom.id ℂ D) ρ₁).comp Ta).toRingHom
@@ -24,11 +25,10 @@ theorem Step.tensor_comp {I I₀ : Type} [Fintype I] [Fintype I₀] {g : ℕ} {D
   refine ⟨fun a ↦ (1 : D) ⊗ₜ[ℂ] n a, fun a ↦ hJ _ (h1 a), fun a b ↦ by simp [h2], fun f ↦ ?_⟩
   have key : ∀ x : D ⊗[ℂ] Hol W₀, Algebra.TensorProduct.map (AlgHom.id ℂ D) ρ₂ x =
       Algebra.TensorProduct.map (AlgHom.id ℂ D) ρ₁ x +
-        ∑ a, Algebra.TensorProduct.map (AlgHom.id ℂ D) ρ₁ (LinearMap.lTensor D (dw a).toLinearMap x) *
+        ∑ a, Algebra.TensorProduct.map (AlgHom.id ℂ D) ρ₁ (LinearMap.lTensor D (dw (W := W₀) a).toLinearMap x) *
           (1 : D) ⊗ₜ[ℂ] n a := by
     intro x
-    induction x using TensorProduct.induction_on with
-    | zero => simp
+    induction x using TensorProduct.inductionOn with
     | tmul d h =>
       have := h3 h
       simp only [RingHom.coe_coe] at this
@@ -40,7 +40,8 @@ theorem Step.tensor_comp {I I₀ : Type} [Fintype I] [Fintype I₀] {g : ℕ} {D
 
 theorem Close.tensor_comp {I I₀ : Type} [Fintype I] [Fintype I₀] {g : ℕ} {D C : Type} [CommRing D] [Algebra ℂ D]
     [CommRing C] [Algebra ℂ C] {W : Opens (Tot I g)} {W₀ : Opens (Tot I₀ g)} (Ta : Hol W →ₐ[ℂ] D ⊗[ℂ] Hol W₀)
-    (hT : ∀ a h, Ta (dw a h) = LinearMap.lTensor D (dw a).toLinearMap (Ta h)) (J : Ideal C) (J' : Ideal (D ⊗[ℂ] C))
+    (hT : ∀ a h, Ta (dw (W := W) a h) = LinearMap.lTensor D (dw (W := W₀) a).toLinearMap (Ta h))
+    (J : Ideal C) (J' : Ideal (D ⊗[ℂ] C))
     (hJ : ∀ c ∈ J, (1 : D) ⊗ₜ[ℂ] c ∈ J') (ρ₁ ρ₂ : Hol W₀ →ₐ[ℂ] C)
     (h : Close J (ρ₁ : Hol W₀ →+* C) (ρ₂ : Hol W₀ →+* C)) :
     Close J' ((Algebra.TensorProduct.map (AlgHom.id ℂ D) ρ₁).comp Ta).toRingHom
@@ -61,7 +62,7 @@ theorem Close.tensor_comp {I I₀ : Type} [Fintype I] [Fintype I₀] {g : ℕ} {
       exact ⟨{ c with commutes' := hc }, rfl,
         Relation.ReflTransGen.tail ih (Step.tensor_comp Ta hT J J' hJ σ { c with commutes' := hc } s)⟩
   obtain ⟨σ, hσ, h'⟩ := key _ h
-  obtain rfl : σ = ρ₂ := AlgHom.coe_ringHom_injective hσ
+  obtain rfl : σ = ρ₂ := AlgHom.toRingHom_injective hσ
   exact h'
 
 end GlobalTheory.AnPer

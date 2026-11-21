@@ -80,6 +80,7 @@ section Local
 variable {O : Type*} [CommRing O] [IsLocalRing O]
 
 
+variable (O) in
 def oneUnits : Subgroup Oˣ where
   carrier := {u | (u : O) - 1 ∈ maximalIdeal O}
   one_mem' := by simp

@@ -1,8 +1,4 @@
-module
-
-public import Formalism.HermitianCurvature.StatementG
-
-@[expose] public section
+import Formalism.HermitianCurvature.StatementG
 
 open Formalism.FourierDecayAlt.G Matrix MeasureTheory Finset
 
@@ -200,7 +196,10 @@ instance (β : ℂ) : SigmaFinite (mu β) := by unfold mu; infer_instance
 theorem map_mul_mu (β α : ℂ) (hα : α ≠ 0) :
     Measure.map (fun ρ : ℂ => α * ρ) (mu β) = Real.toNNReal ((‖α‖ ^ 2)⁻¹) • mu β := by
   unfold mu
-  rw [Measure.map_smul, map_mul_vol α hα]
+  have hmeas : AEMeasurable (fun ρ : ℂ => α * ρ) (volume : Measure ℂ) :=
+    (measurable_const_mul α).aemeasurable
+  rw [Measure.map_smul (c := (‖β‖ / (2 * Real.pi)).toNNReal)
+    (f := fun ρ : ℂ => α * ρ) hmeas, map_mul_vol α hα]
   rw [smul_comm]
   congr 1
 

@@ -22,10 +22,9 @@ theorem companionMatrixOfCoeffs_pow_mulVec_firstBasisVector (p : Fin r → k) : 
     ext i; simp [e1, Pi.single_apply, Fin.ext_iff]
   | j + 1, hj => by
     rw [pow_succ', ← mulVec_mulVec, companionMatrixOfCoeffs_pow_mulVec_firstBasisVector p j (by omega), Matrix.mulVec_single_one]
-    ext i
-    have : j + 1 ≠ r := by omega
-    rw [Matrix.col_apply]
-    simp [companion, Pi.single_apply, Fin.ext_iff, this]
+    funext i
+    have hj' : j + 1 ≠ r := Nat.ne_of_lt hj
+    simp [Matrix.col_apply, companion, Pi.single_apply, Fin.ext_iff, hj']
 
 theorem mom_sec_add (a : Inv r k) (n : ℕ) (j : Fin r) :
     mom (sec a) (n + j) = (a.2.1 ᵥ* (companion a.1 ^ n)) j := by

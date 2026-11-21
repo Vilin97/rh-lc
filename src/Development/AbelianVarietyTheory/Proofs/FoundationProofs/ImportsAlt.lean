@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace GlobalTheory.IntegralNormLeOne
 
@@ -18,7 +14,7 @@ theorem norm_le_one_of_isIntegral {l : ℕ} [inst : Fact (Nat.Prime l)] (x : Pad
   by_contra h
   push_neg at h
   have h0 : (0 : ℝ) < ‖x‖ := lt_trans one_pos h
-  rw [hm.as_sum, eval₂_add, eval₂_pow, eval₂_X, eval₂_finset_sum] at hp
+  rw [hm.as_sum, eval₂_add, eval₂_pow, eval₂_X, eval₂_finsetSum] at hp
   have he : x ^ p.natDegree = -∑ i ∈ Finset.range p.natDegree,
       eval₂ (algebraMap ℤ_[l] (PadicAlgCl l)) x (C (p.coeff i) * X ^ i) :=
     eq_neg_of_add_eq_zero_left hp

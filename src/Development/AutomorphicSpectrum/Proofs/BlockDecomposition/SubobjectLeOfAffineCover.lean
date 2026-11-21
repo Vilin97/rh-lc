@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PowIdeal
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsQuasicoherentOfForallExistsAffine
-
-@[expose] public section
+import Mathlib
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PowIdeal
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsQuasicoherentOfForallExistsAffine
 
 set_option autoImplicit false
 

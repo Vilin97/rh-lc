@@ -12,8 +12,8 @@ theorem isLocalizationAway_subring {A A' : Type} [CommRing A] [CommRing A'] (ρ 
     (S : Subring A) (S' : Subring A') (hρ : ∀ a ∈ S, ρ a ∈ S') (s : A) (hs : s ∈ S)
     (hloc : letI := ρ.toAlgebra; IsLocalization.Away s A')
     (hu : ∃ v ∈ S', ρ s * v = 1) (hd : ∀ a : A, ρ a ∈ S' → ∃ m : ℕ, s ^ m * a ∈ S) :
-    letI := (ρ.restrict S S' hρ).toAlgebra;
-    IsLocalization.Away (⟨s, hs⟩ : S) S' := by
+    (letI := (ρ.restrict S S' hρ).toAlgebra
+     IsLocalization.Away (⟨s, hs⟩ : S) S') := by
   let := ρ.toAlgebra
   let := (ρ.restrict S S' hρ).toAlgebra
   refine .mk _ ?_ (fun z ↦ ?_) fun a b hab ↦ ?_

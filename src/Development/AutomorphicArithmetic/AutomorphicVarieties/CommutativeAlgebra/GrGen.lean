@@ -1,8 +1,4 @@
-module
-
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
-
-@[expose] public section
+import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
 
 open IsLocalRing MvPowerSeries UpperTheory.V.Alg
 
@@ -103,7 +99,7 @@ theorem UpperTheory.V.Alg.gr_gen :
       · exact Algebra.subset_adjoin (Set.mem_union_left _ (he m))
     convert hmem using 1
     apply Subtype.ext
-    simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, SubmonoidClass.coe_finset_prod,
+    simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, SubmonoidClass.coe_finsetProd,
       SubmonoidClass.coe_pow, e, WPres.zA, WPres.z]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [AlgHom.toLinearMap_apply, hfe, map_sum]

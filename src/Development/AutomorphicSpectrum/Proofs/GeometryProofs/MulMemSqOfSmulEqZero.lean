@@ -1,12 +1,7 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TranslateMemIndOrder
-public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LieLatticeData
-public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.LocallyFreeOfFiniteProjective
-
-@[expose] public section
-
+import Mathlib
+import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TranslateMemIndOrder
+import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LieLatticeData
+import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.LocallyFreeOfFiniteProjective
 open GlobalTheory.CompanionTheory.Ar.Num GlobalTheory.CompanionTheory.Ar.BT
 
 noncomputable section
@@ -76,7 +71,7 @@ theorem det_trick {B : Type} [CommRing B] (J : Ideal B) (hfg : J.FG) (c : B) (h 
     have : y = fJ x := Subtype.ext hxy
     exact this ▸ hy
   obtain ⟨q, hmon, -, hcoef, hq⟩ :=
-    LinearMap.exists_monic_and_coeff_mem_pow_and_aeval_eq_zero_of_range_le_smul B fJ J hrange
+    LinearMap.exists_monic_and_natDegree_eq_and_coeff_mem_pow_and_aeval_eq_zero B fJ J hrange
   refine ⟨q.eval c, q.natDegree, fun x hx => ?_, ?_⟩
   · have h2 : Polynomial.aeval fJ q = algebraMap B (Module.End B J) (q.eval c) := by
       change Polynomial.aeval (algebraMap B (Module.End B J) c) q = _
@@ -89,6 +84,8 @@ theorem det_trick {B : Type} [CommRing B] (J : Ideal B) (hfg : J.FG) (c : B) (h 
     have hi' : i < q.natDegree := Finset.mem_range.1 hi
     exact Ideal.pow_le_self (by omega) (hcoef i)
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 
 theorem mul_mem_sq_of_smul_eq_zero {A : Subalgebra R (T → R)} (n : R) (hn : ∀ x : omega A, n • x = 0) (x : A)
     (hx : x ∈ augIdeal A) : algebraMap R A n * x ∈ augIdeal A ^ 2 := by

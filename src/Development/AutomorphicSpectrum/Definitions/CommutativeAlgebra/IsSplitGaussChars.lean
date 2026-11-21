@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable section
 
@@ -35,6 +31,7 @@ def IsBun (L : C.I → AddSubgroup V) : Prop :=
   (∀ i, ∃ b : Module.Basis (Fin (Module.finrank K V)) K V, IsLatOf C i b (L i)) ∧
     ∃ b : Module.Basis (Fin (Module.finrank K V)) K V, {i | ¬ IsLatOf C i b (L i)}.Finite
 
+open Classical in
 
 def locBasis [FiniteDimensional K V] (i : C.I) (L : AddSubgroup V) :
     Module.Basis (Fin (Module.finrank K V)) K V :=
@@ -141,8 +138,6 @@ open Polynomial IsDedekindDomain
 
 variable (k : Type) [Field k]
 
-
-
 end Line
 
 section Const
@@ -220,7 +215,6 @@ section Twist
 
 variable (k : Type) [Field k] (V : Type) [AddCommGroup V] [Module (RatFunc k) V]
   [FiniteDimensional (RatFunc k) V]
-
 
 end Twist
 

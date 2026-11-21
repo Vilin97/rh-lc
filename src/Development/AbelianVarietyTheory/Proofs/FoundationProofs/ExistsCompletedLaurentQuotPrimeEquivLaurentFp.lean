@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Foundations.IntegralLocallyConstCochainModPow
+public import Development.AbelianVarietyTheory.Definitions.Foundations.NotCoboundaryConstantOne
 
 @[expose] public section
 

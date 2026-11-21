@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.TwistingSheaf
-public import GroundTheory.HeightsAndTheta.Heights.ComplexProjective
-
-@[expose] public section
-
+import Mathlib
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.TwistingSheaf
+import GroundTheory.HeightsAndTheta.Heights.ComplexProjective
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

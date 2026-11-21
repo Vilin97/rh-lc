@@ -232,7 +232,7 @@ theorem isDVR (hC : IsAdicComplete (maximalIdeal A) A) : IsDiscreteValuationRing
     (dedekind A K L)
 
 theorem complete (hC : IsAdicComplete (maximalIdeal A) A) :
-    haveI := isDVR A K L hC;
+    letI := isDVR A K L hC;
     IsAdicComplete (maximalIdeal (integralClosure A L)) (integralClosure A L) := by
   have := isDVR A K L hC
   have := dedekind A K L

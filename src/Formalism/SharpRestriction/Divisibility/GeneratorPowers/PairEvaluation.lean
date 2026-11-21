@@ -92,6 +92,7 @@ lemma aeval_sub_mem_pow (g g' : σ → MvPolynomial τ S) (hg : ∀ i, g i ∈ I
     rw [pow_succ] at hp
     refine Submodule.mul_induction_on (C := fun p => aeval g p - aeval g' p ∈ Io S τ ^ (k + 1 + 1)) hp ?_ ?_
     · intro a ha b hb
+      change aeval g (a * b) - aeval g' (a * b) ∈ Io S τ ^ (k + 1 + 1)
       have e : aeval g (a * b) - aeval g' (a * b) =
           (aeval g a - aeval g' a) * aeval g b + aeval g' a * (aeval g b - aeval g' b) := by
         simp only [map_mul]; ring
@@ -105,6 +106,7 @@ lemma aeval_sub_mem_pow (g g' : σ → MvPolynomial τ S) (hg : ∀ i, g i ∈ I
         rw [e2]
         exact Ideal.mul_mem_mul (aeval_mem_pow g' hg' k ha) (aeval_sub_mem_sq g g' hg hg' hgg hb)
     · intro x y hx hy
+      change aeval g (x + y) - aeval g' (x + y) ∈ Io S τ ^ (k + 1 + 1)
       have e : aeval g (x + y) - aeval g' (x + y) = (aeval g x - aeval g' x) + (aeval g y - aeval g' y) := by
         simp only [map_add (f := _)]; ring
       rw [e]; exact add_mem hx hy

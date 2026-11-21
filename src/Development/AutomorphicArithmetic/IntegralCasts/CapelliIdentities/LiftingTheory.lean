@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MapMulVolumeOfSubgroup
-
-@[expose] public section
+import Mathlib
+import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MapMulVolumeOfSubgroup
 
 open Matrix in
 private theorem hpk_sq (k r : ℕ) : Formalism.QuantumDeterminants.Hpk k r * Formalism.QuantumDeterminants.Hpk k r = 1 := by
@@ -28,4 +24,3 @@ private theorem hpk_sq (k r : ℕ) : Formalism.QuantumDeterminants.Hpk k r * For
     rw [this, zero_mul]
   · intro h
     exact absurd (Finset.mem_univ s) h
-

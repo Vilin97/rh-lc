@@ -1,9 +1,5 @@
-module
-
-public import Formalism.FormalGroupLog.Statement
-public import Formalism.TorsionNormIteration.InvIntegralOfClass
-
-@[expose] public section
+import Formalism.FormalGroupLog.Statement
+import Formalism.TorsionNormIteration.InvIntegralOfClass
 
 noncomputable section
 
@@ -48,8 +44,8 @@ lemma norm_natCast_eq {p n : ℕ} (hp : p.Prime) (hp1 : ‖(p : K)‖ < 1) (hn :
   have hm0 : m ≠ 0 := by
     rintro rfl
     exact hm (dvd_zero p)
-  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
-    padicValNat.eq_zero_of_not_dvd hm, add_zero]
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, _root_.Nat.padicValNat_def, _root_.Nat.multiplicity_prime_pow, _root_.Nat.padicValNat_def,
+    _root_.multiplicity_eq_zero_of_not_dvd hm, add_zero]
   push_cast
   rw [norm_mul, norm_pow, norm_natCast_of_not_dvd hp hp1 hm, mul_one]
 

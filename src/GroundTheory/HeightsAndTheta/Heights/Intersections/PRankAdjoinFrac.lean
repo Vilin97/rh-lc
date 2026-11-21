@@ -69,7 +69,7 @@ theorem exists_mul_mem_of_mem {F Ω : Type*} [Field F] [Field Ω] [Algebra F Ω]
 
 theorem finrank_eq_finrank_algebraAdjoin {F Ω : Type*} [Field F] [Field Ω] [Algebra F Ω] {S T : Set Ω}
     (h : S ⊆ T) :
-    letI := adjoinInclAlgebra F h;
+    letI := adjoinInclAlgebra F h
     finrank (Algebra.adjoin F S) (Algebra.adjoin F T) =
       finrank (IntermediateField.adjoin F S) (Algebra.adjoin (IntermediateField.adjoin F S) T) := by
   let _ := adjoinInclAlgebra F h

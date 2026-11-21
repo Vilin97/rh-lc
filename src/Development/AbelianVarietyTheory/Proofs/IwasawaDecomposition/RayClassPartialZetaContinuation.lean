@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NonemptyRayDataOfNeZero
-public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.SummableLatticeExpNegPiMulNormSqDiv
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NonemptyRayDataOfNeZero
+import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.SummableLatticeExpNegPiMulNormSqDiv
 
 open NumberField IsDedekindDomain GlobalTheory.Mem Complex
 open scoped ComplexOrder
@@ -102,7 +98,7 @@ theorem lattice_bij (N B : Ideal (𝓞 K)) (hB : IsCoprime B N) (e : Module.Basi
     { toFun := fun y => ⟨x₀ + y, B.add_mem h0 (hmemNB y).1, by
         rw [add_sub_right_comm]; exact N.add_mem h1 (hmemNB y).2⟩
       invFun := fun x => ⟨x.1 - x₀, by
-        rw [← Ideal.mul_eq_inf_of_isCoprime hB.symm]
+        rw [Ideal.mul_eq_inf_of_isCoprime hB.symm]
         refine ⟨?_, ?_⟩
         · have : x.1 - x₀ = (x.1 - 1) - (x₀ - 1) := by ring
           rw [this]; exact N.sub_mem x.2.2 h1

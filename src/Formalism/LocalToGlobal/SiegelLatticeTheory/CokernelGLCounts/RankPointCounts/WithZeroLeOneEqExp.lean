@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Formalism.SharpRestriction.CuspSpanNormBounds.PsiEDef
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SimpLemmas
-
-@[expose] public section
+import Mathlib
+import Formalism.SharpRestriction.CuspSpanNormBounds.PsiEDef
+import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SimpLemmas
 
 noncomputable section
 
@@ -86,7 +82,7 @@ theorem approxE (S : Finset (HeightOneSpectrum (𝓞 F))) (c : 𝓞 F) (hc : c �
         obtain ⟨j, rfl⟩ := hy
         exact Submodule.subset_span ⟨j, rfl⟩
       | zero => rw [map_zero]; exact zero_mem _
-      | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+      | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
       | smul t y _ hy =>
         rw [Algebra.smul_def, map_mul, (A p).compat, ← Algebra.smul_def]
         exact Submodule.smul_mem _ _ hy
@@ -108,8 +104,7 @@ theorem approxE (S : Finset (HeightOneSpectrum (𝓞 F))) (c : 𝓞 F) (hc : c �
     · refine Subring.sum_mem _ fun j _ => Subring.mul_mem _ (alg_mem_O A p ?_) (iotaE_mem_O A p (e j))
       rw [Valuation.mem_integer_iff, map_div₀, div_le_one₀ (zero_lt_iff.2 hv0)]
       exact hfS j p hp
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [← hl p, map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
+    · rw [← hl p, map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, (A p).compat, Algebra.smul_def, ← mul_assoc, ← map_mul, mul_div_cancel₀ _ hcF, ← sub_mul,
         map_sub]

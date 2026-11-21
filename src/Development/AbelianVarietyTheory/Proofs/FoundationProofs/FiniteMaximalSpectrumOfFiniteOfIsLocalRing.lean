@@ -22,7 +22,7 @@ theorem idempotent_eq_of_sub_mem_jacobson {S : Type*} [CommRing S] {a b : S}
 
 theorem isUnit_of_isUnit_mk_of_le_jacobson {S : Type*} [CommRing S] {J : Ideal S}
     (hJ : J ≤ (⊥ : Ideal S).jacobson) {x : S} (hx : IsUnit (Ideal.Quotient.mk J x)) : IsUnit x :=
-  have := isLocalHom_of_le_jacobson_bot J hJ
+  have := isLocalHom_of_le_jacobson (Ideal.jacobson_bot (R := S) ▸ hJ)
   IsUnit.of_map (Ideal.Quotient.mk J) x hx
 
 theorem algHom_ext_of_sub_mem_jacobson {R A B : Type*} [CommRing R] [CommRing A] [CommRing B]
@@ -226,7 +226,7 @@ theorem existsUnique_idempotent_lift_of_henselian (R : Type*) {S C : Type*} [Com
 theorem henselianRing_of_finite (R : Type*) {S : Type*} [CommRing R]
     [HenselianLocalRing R] [CommRing S] [Algebra R S] [Module.Finite R S] (J : Ideal S)
     (hJ : J ≤ (⊥ : Ideal S).jacobson) : HenselianRing S J where
-  jac := by simpa [Ideal.jacobson_bot] using hJ
+  jac := Ideal.jacobson_bot (R := S) ▸ hJ
   is_henselian f hf a₀ h₁ h₂ := by
     nontriviality S using Subsingleton.elim _ (0 : S)
     obtain ⟨u, hu⟩ := (isUnit_of_isUnit_mk_of_le_jacobson hJ h₂).exists_left_inv

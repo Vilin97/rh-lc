@@ -24,7 +24,15 @@ theorem relLen_map_lsmul : ∀ (C : Type) [Field C] (v : AddValuation C (WithTop
       simp only [Submodule.coe_smul] at this
       rw [this, sub_self]
     exact sub_eq_zero.1 (htf s _ hs0 h1)⟩
-  have : ValuationRing (Int0 v) := inferInstance
+  have : ValuationRing (Int0 v) := by
+    have hInt : Int0 v = v.toValuation.integer := by
+      ext x
+      rw [mem_addValuationIntegerRing_iff]
+      change 0 ≤ v x ↔ Multiplicative.ofAdd (OrderDual.toDual (v x)) ≤
+        Multiplicative.ofAdd (OrderDual.toDual 0)
+      rw [Multiplicative.ofAdd_le, OrderDual.toDual_le_toDual]
+    rw [hInt]
+    infer_instance
   have : Module.Free (Int0 v) X :=
     GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (R := Int0 v) (M := ↥X)
   set n := finrank (Int0 v) X with hn
@@ -42,7 +50,7 @@ theorem relLen_map_lsmul : ∀ (C : Type) [Field C] (v : AddValuation C (WithTop
     simp only [g, LinearMap.range_comp, Submodule.range_subtype]
   let e : X ≃ₗ[Int0 v] X.map (LinearMap.lsmul (Int0 v) M c) :=
     (LinearEquiv.ofInjective g hg).trans (LinearEquiv.ofEq _ _ hrange)
-  unfold RelLen
+  unfold GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.RelLen
   refine ⟨n, b, b.map e, Matrix.diagonal (fun _ => c), fun k => ?_, ?_⟩
   · simp only [Basis.map_apply, Matrix.diagonal_apply, ite_smul, zero_smul,
       Finset.sum_ite_eq', Finset.mem_univ, if_true]

@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open Matrix
 
@@ -54,7 +50,10 @@ theorem matrix_stableRange_one (κ : Type) [Field κ] (n : ℕ) (c d p q : Matri
     have := congrArg π hv
     rwa [map_add, hπD, add_zero, hp, map_zero] at this
   have hk : projK v = 0 := (LinearEquiv.map_eq_zero_iff e).mp h3
-  have hY : Y v = 0 := by simp [Y, hk]
+  have hY : Y v = 0 := by
+    change g (e.toLinearMap (projK v)) = 0
+    rw [hk, map_zero]
+    exact map_zero g
   have hDv : D v = 0 := by rw [hY, map_zero, zero_add] at hv; exact hv
   have hvK : v ∈ LinearMap.ker D := hDv
   have h4 := Submodule.linearProjOfIsCompl_apply_left hK ⟨v, hvK⟩

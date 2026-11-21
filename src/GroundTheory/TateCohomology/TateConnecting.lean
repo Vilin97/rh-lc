@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import GroundTheory.TateCohomology.CupConnecting
-
-@[expose] public section
-
+import Mathlib
+import GroundTheory.TateCohomology.CupConnecting
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory groupCohomology
@@ -26,6 +21,7 @@ theorem tate_d_iCycles (A : Rep k G) (n : ℕ) (z : (tateComplex A).cycles n) :
     inhomogeneousCochains.d_def] at h
   exact h
 
+set_option backward.isDefEq.respectTransparency false in
 
 theorem tateIsoH_homology_class_eq (A : Rep k G) (n : ℕ) [NeZero n] :
     ∃ C : (tateComplex A).cycles n ⟶ cocycles A n,
@@ -81,6 +77,7 @@ noncomputable abbrev tδ {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (i j :
     tateCohomology S.X₃ i ⟶ tateCohomology S.X₁ j :=
   (TateCohomology.map_tateComplexFunctor_shortExact hS).δ i j hij
 
+set_option backward.isDefEq.respectTransparency false in
 
 theorem tδ_apply {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (i : ℤ)
     (x₃ : (tateComplex S.X₃).X i) (hx₃ : ((tateComplex S.X₃).d i (i + 1)).hom x₃ = 0)
@@ -93,6 +90,7 @@ theorem tδ_apply {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (i : ℤ)
   (TateCohomology.map_tateComplexFunctor_shortExact hS).δ_apply i (i + 1) rfl x₃ hx₃ x₂ hx₂ x₁ hx₁
     (i + 1 + 1) (by simp)
 
+set_option backward.isDefEq.respectTransparency false in
 
 theorem tδ_comp_tateIsoH {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (n : ℕ) [NeZero n] :
     tδ hS n (n + 1) rfl ≫ (tateIsoH S.X₁ (n + 1) (n + 1) (Nat.cast_succ n).symm).hom =
@@ -101,7 +99,7 @@ theorem tδ_comp_tateIsoH {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (n : 
   ext z
   simp only [ModuleCat.hom_comp, LinearMap.comp_apply]
   have hz := tate_d_iCycles_int _ _ z
-  obtain ⟨y, x, hy, hx⟩ := exists_lift_of_cocycle hS
+  obtain ⟨y, x, hy, hx⟩ := exists_lift_of_cocycle
     (cocyclesMk (((tateComplex S.X₃).iCycles n).hom z) (tate_d_iCycles _ n z))
   have hd : ((tateComplex S.X₁).d (↑n + 1) (↑n + 1 + 1)).hom (iCocycles S.X₁ (n + 1) x) = 0 := by
     have := d_iCocycles x
@@ -199,6 +197,9 @@ variable (Q : ShortComplex (ShortComplex (Rep k G)))
   (hC₁ : (Q.map ShortComplex.π₁).ShortExact) (hC₂ : (Q.map ShortComplex.π₂).ShortExact)
   (hC₃ : (Q.map ShortComplex.π₃).ShortExact)
 
+include hR₂ hC₂ in
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 800000 in
 
 theorem tδ_comp_tδ (p : ℤ) :
     tδ hC₃ p (p + 1) rfl ≫ tδ hR₁ (p + 1) (p + 1 + 1) rfl =

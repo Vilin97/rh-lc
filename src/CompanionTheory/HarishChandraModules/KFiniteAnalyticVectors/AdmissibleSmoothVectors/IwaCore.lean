@@ -1,6 +1,6 @@
 module
 
-public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.AdmissibleSmoothVectors.IwaChol
+public import Mathlib
 
 @[expose] public section
 
@@ -12,6 +12,83 @@ open Matrix
 open scoped ComplexOrder MatrixOrder
 
 variable {n : ℕ}
+
+private theorem isUpperTriangular_conjTranspose_iff {A : Matrix (Fin n) (Fin n) ℂ} :
+    Aᴴ.IsUpperTriangular ↔ A.IsLowerTriangular := by
+  constructor
+  · intro h i j hij
+    have := h (i := j) (j := i) (OrderDual.toDual_lt_toDual.1 hij)
+    simpa [conjTranspose_apply] using this
+  · intro h i j hij
+    have := h (show OrderDual.toDual i < OrderDual.toDual j from hij)
+    simp [conjTranspose_apply, this]
+
+private theorem exists_isUpperTriangular_conjTranspose_mul_self
+    {S : Matrix (Fin n) (Fin n) ℂ} (hS : S.PosDef) :
+    ∃ R : Matrix (Fin n) (Fin n) ℂ, R.IsUpperTriangular ∧ Rᴴ * R = S := by
+  have hL : (LDL.lower hS).IsLowerTriangular := LDL.isLowerTriangular_lower hS
+  have hD : (LDL.diag hS).PosDef := by
+    rw [LDL.diag_eq_lowerInv_conj]
+    exact hS.mul_mul_conjTranspose_same
+      (vecMul_injective_iff_isUnit.2 (isUnit_of_invertible (LDL.lowerInv hS)))
+  have hpos : ∀ i, 0 < LDL.diagEntries hS i := fun i => by
+    simpa [LDL.diag] using hD.diag_pos (i := i)
+  set d : Fin n → ℝ := fun i => RCLike.re (LDL.diagEntries hS i)
+  have hd : ∀ i, LDL.diagEntries hS i = (d i : ℂ) := fun i => by
+    obtain ⟨_, him⟩ := RCLike.pos_iff.1 (hpos i)
+    rw [← RCLike.re_add_im (LDL.diagEntries hS i), him]
+    simp [d]
+  have hd0 : ∀ i, 0 ≤ d i := fun i => (RCLike.pos_iff.1 (hpos i)).1.le
+  refine ⟨diagonal (fun i => (Real.sqrt (d i) : ℂ)) * (LDL.lower hS)ᴴ,
+    (blockTriangular_diagonal _).mul (isUpperTriangular_conjTranspose_iff.2 hL), ?_⟩
+  have hsq : (diagonal (fun i => (Real.sqrt (d i) : ℂ)))ᴴ * diagonal (fun i => (Real.sqrt (d i) : ℂ))
+      = LDL.diag hS := by
+    rw [diagonal_conjTranspose, diagonal_mul_diagonal, LDL.diag]
+    congr 1
+    funext i
+    rw [hd i]
+    change star ((Real.sqrt (d i) : ℂ)) * (Real.sqrt (d i) : ℂ) = (d i : ℂ)
+    rw [show star ((Real.sqrt (d i) : ℂ)) = (Real.sqrt (d i) : ℂ) by simp]
+    exact_mod_cast Real.mul_self_sqrt (hd0 i)
+  rw [conjTranspose_mul, conjTranspose_conjTranspose]
+  calc LDL.lower hS * (diagonal fun i => (Real.sqrt (d i) : ℂ))ᴴ *
+        (diagonal (fun i => (Real.sqrt (d i) : ℂ)) * (LDL.lower hS)ᴴ)
+      = LDL.lower hS * ((diagonal fun i => (Real.sqrt (d i) : ℂ))ᴴ *
+        diagonal (fun i => (Real.sqrt (d i) : ℂ))) * (LDL.lower hS)ᴴ := by
+          simp only [Matrix.mul_assoc]
+    _ = S := by rw [hsq, LDL.lower_conj_diag]
+
+private theorem star_mul_self_norm_div {x : ℂ} (hx : x ≠ 0) :
+    star ((‖x‖ : ℂ) / x) * ((‖x‖ : ℂ) / x) = 1 := by
+  rw [star_div₀, div_mul_div_comm]
+  change (star (‖x‖ : ℂ) * (‖x‖ : ℂ)) / (star x * x) = 1
+  rw [show star (‖x‖ : ℂ) = (‖x‖ : ℂ) by simp, show star x * x = (‖x‖ : ℂ) ^ 2 by
+    simpa [RCLike.star_def] using Complex.conj_mul' x]
+  have hn : (‖x‖ : ℂ) ≠ 0 := by exact_mod_cast (norm_ne_zero_iff.2 hx)
+  simp [pow_two, hn]
+
+private theorem exists_cholesky {S : Matrix (Fin n) (Fin n) ℂ} (hS : S.PosDef) :
+    ∃ B : Matrix (Fin n) (Fin n) ℂ, ∃ a : Fin n → ℝ, B.IsUpperTriangular ∧
+      (∀ i, 0 < a i) ∧ (∀ i, B i i = a i) ∧ Bᴴ * B = S := by
+  obtain ⟨R, hR, hRS⟩ := exists_isUpperTriangular_conjTranspose_mul_self hS
+  have hdet : S.det ≠ 0 := (isUnit_iff_isUnit_det S).1 hS.isUnit |>.ne_zero
+  have hRi : ∀ i, R i i ≠ 0 := by
+    have : R.det ≠ 0 := by
+      intro h
+      apply hdet
+      rw [← hRS, det_mul, h, mul_zero]
+    rw [det_of_isUpperTriangular hR] at this
+    exact fun i => Finset.prod_ne_zero_iff.1 this i (Finset.mem_univ i)
+  refine ⟨diagonal (fun i => (‖R i i‖ : ℂ) / R i i) * R, fun i => ‖R i i‖,
+    (blockTriangular_diagonal _).mul hR, fun i => norm_pos_iff.2 (hRi i), fun i => ?_, ?_⟩
+  · rw [diagonal_mul, div_mul_cancel₀ _ (hRi i)]
+  · rw [conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc (diagonal _)ᴴ,
+      diagonal_conjTranspose, diagonal_mul_diagonal]
+    have hdiag : (fun i => star ((‖R i i‖ : ℂ) / R i i) * ((‖R i i‖ : ℂ) / R i i)) =
+        fun _ => 1 := funext fun i => star_mul_self_norm_div (hRi i)
+    change Rᴴ * (diagonal (fun i => star ((‖R i i‖ : ℂ) / R i i) *
+      ((‖R i i‖ : ℂ) / R i i)) * R) = S
+    rw [hdiag, diagonal_one, Matrix.one_mul, hRS]
 
 def dp (p : Fin n → Fin n) (α β : Fin n → ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   Matrix.of fun i j => (if j = i then α i else 0) + (if j = p i then β i else 0)

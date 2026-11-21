@@ -237,7 +237,7 @@ instance : Category K.Obj where
   comp {T T' T''} f f' := ⟨f'.φ.comp f.φ, f.deg + f'.deg, K.le_trans f.le f'.le, fun c h ↦ f'.mem _ (f.mem c h), by
     rw [show T''.ρ.comp (K.sh (K.le_trans f.le f'.le)) = (T''.ρ.comp (K.sh f'.le)).comp (K.sh f.le) from
       RingHom.ext fun h ↦ congrArg T''.ρ (sh_sh f.le f'.le _ h).symm]
-    exact Relation.ReflTransGen.trans (f'.close.comap (sh f.le) (dw_sh f.le)) (f.close.map (f'.φ : T'.C →+* T''.C) f'.mem)⟩
+    exact Relation.ReflTransGen.trans (f'.close.comap (K.sh f.le) (dw_sh f.le)) (f.close.map (f'.φ : T'.C →+* T''.C) f'.mem)⟩
   id_comp f := Hom.ext' (fun _ ↦ rfl) (zero_add _)
   comp_id f := Hom.ext' (fun _ ↦ rfl) (add_zero _)
   assoc f f' f'' := Hom.ext' (fun _ ↦ rfl) (add_assoc _ _ _)
@@ -264,7 +264,7 @@ theorem mp_Oc {T T' : K.Obj} (f : T ⟶ T') : mp K.Oc f = f.φ := rfl
 def perZ (per : Λ →+ Hol F.V) : Z1 K.Oc :=
   ⟨fun _ T' f ↦ algebraMap (Hol F.V) T'.C (per f.deg), fun T T' T'' f f' ↦ by
     change algebraMap _ T''.C (per (f.deg + f'.deg)) = f'.φ (algebraMap _ _ _) + algebraMap _ T''.C _
-    rw [AlgHom.commutes, map_add (f := _), map_add (f := _)]⟩
+    rw [AlgHom.commutes, per.map_add, (algebraMap (Hol F.V) T''.C).map_add]⟩
 
 
 def perCl (per : Λ →+ Hol F.V) : H1 K.Oc := H1.mk _ (K.perZ per)
@@ -280,7 +280,7 @@ def perCl (per : Λ →+ Hol F.V) : H1 K.Oc := H1.mk _ (K.perZ per)
   ρ_cst _ := rfl
 
 def fromTriv {l : Λ} {k : K.K} (T : K.Obj) (h : K.le l T.k k) (ρ : Hol (K.W k) →+* T.C)
-    (hc : ∀ f, ρ (K.cst k f) = algebraMap (Hol F.V) T.C f) (hρ : Close T.J (T.ρ.comp (sh h)) ρ) : K.triv k ⟶ T where
+    (hc : ∀ f, ρ (K.cst k f) = algebraMap (Hol F.V) T.C f) (hρ : Close T.J (T.ρ.comp (K.sh h)) ρ) : K.triv k ⟶ T where
   φ := letI := (K.triv k).alg; { ρ with commutes' := hc }
   deg := l
   le := h
@@ -288,7 +288,7 @@ def fromTriv {l : Λ} {k : K.K} (T : K.Obj) (h : K.le l T.k k) (ρ : Hol (K.W k)
   close := hρ
 
 def ptHom {l : Λ} {k : K.K} (T : K.Obj) (h : K.le l T.k k) : K.triv k ⟶ T :=
-  fromTriv T h (T.ρ.comp (sh h)) (fun f ↦ (congrArg T.ρ (sh_cst h f)).trans (T.ρ_cst f)) Relation.ReflTransGen.refl
+  fromTriv T h (T.ρ.comp (K.sh h)) (fun f ↦ (congrArg T.ρ (sh_cst h f)).trans (T.ρ_cst f)) Relation.ReflTransGen.refl
 
 end Charts
 
@@ -355,7 +355,7 @@ def Charts.tangentHom {F : Fam I g Λ} (K : Charts F) (k : K.K) (a : Fin g) (p :
         DualNumber ℂ) = TrivSqZeroExt.inl (Hol.ev p hp (K.cst k f))
       rw [Charts.dw_cst]; simp)
     (by
-      rw [show (K.dualAt k p hp).ρ.comp (Charts.sh (K.le_refl k)) = (K.dualAt k p hp).ρ from
+      rw [show (K.dualAt k p hp).ρ.comp (K.sh (K.le_refl k)) = (K.dualAt k p hp).ρ from
         RingHom.ext fun f ↦ congrArg (K.dualAt k p hp).ρ (Charts.sh_refl _ f)]
       exact Relation.ReflTransGen.single (step_tangentAt a p hp))
 

@@ -1,8 +1,4 @@
-module
-
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.CoeffSmulX
-
-@[expose] public section
+import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.CoeffSmulX
 
 noncomputable section
 
@@ -52,15 +48,16 @@ theorem pderiv_mem_supported (S : Set (Fin m × Fin n × Bool)) (k) {p : PX m n}
   | mem x hx =>
     obtain ⟨j, _, rfl⟩ := hx
     rw [pderiv_X]
-    by_cases h : k = j
-    · subst h; simp [Subalgebra.one_mem]
-    · simp [Pi.single_apply, Ne.symm h, h]
-  | algebraMap r => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    rcases eq_or_ne j k with rfl | h
+    · simp only [Pi.single_eq_same]; exact Subalgebra.one_mem _
+    · rw [Pi.single_eq_of_ne h]; exact Subalgebra.zero_mem _
+  | algebraMap r => simp [Subalgebra.zero_mem]
+  | add x y _ _ hx hy => rw [map_add (f := pderiv k)]; exact Subalgebra.add_mem _ hx hy
   | mul x y hx' hy' hx hy =>
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
-    exact add_mem (mul_mem (Algebra.adjoin_le (fun z hz => Algebra.subset_adjoin hz) hx') hy)
-      (mul_mem (Algebra.adjoin_le (fun z hz => Algebra.subset_adjoin hz) hy') hx)
+    have hx'' : x ∈ supported ℂ S := by rw [supported_eq_adjoin_X]; exact hx'
+    have hy'' : y ∈ supported ℂ S := by rw [supported_eq_adjoin_X]; exact hy'
+    exact Subalgebra.add_mem _ (Subalgebra.mul_mem _ hx'' hy) (Subalgebra.mul_mem _ hy'' hx)
 
 theorem partial_deriv_mem_first_family (ε : Fin m → Bool) (k) {p : PX m n} (hp : p ∈ F1 ε) : pderiv k p ∈ F1 ε :=
   pderiv_mem_supported _ k hp

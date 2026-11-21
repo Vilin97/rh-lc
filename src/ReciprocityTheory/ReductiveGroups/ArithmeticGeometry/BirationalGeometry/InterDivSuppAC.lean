@@ -22,17 +22,21 @@ theorem height_polynomial_of_isMaximal {R : Type*} [CommRing R] [IsNoetherianRin
 
 theorem height_mvPolynomial_fin_of_isMaximal {k : Type*} [Field k] :
     ∀ (n : ℕ) (M : Ideal (MvPolynomial (Fin n) k)), M.IsMaximal → M.height = n
-  | 0, M, hM => by
-    have h := Ideal.height_le_ringKrullDim_of_ne_top hM.ne_top
-    rw [ringKrullDim_mvPolynomial_of_isEmpty, ringKrullDim_eq_zero_of_field] at h
-    rw [Nat.cast_zero]
-    exact le_antisymm (WithBot.coe_le_coe.mp h) zero_le
-  | n + 1, M, hM => by
-    let e := (MvPolynomial.finSuccEquiv k n).toRingEquiv
-    have hM' : (M.map e).IsMaximal := Ideal.map_isMaximal_of_equiv e
-    rw [← e.height_map M, height_polynomial_of_isMaximal
-      (height_mvPolynomial_fin_of_isMaximal n) _ hM']
-    simp
+  := by
+    intro n
+    induction n with
+    | zero =>
+      intro M hM
+      have h := Ideal.height_le_ringKrullDim_of_ne_top hM.ne_top
+      rw [ringKrullDim_mvPolynomial_of_isEmpty, ringKrullDim_eq_zero_of_field] at h
+      rw [Nat.cast_zero]
+      exact le_antisymm (WithBot.coe_le_coe.mp h) zero_le
+    | succ n ih =>
+      intro M hM
+      let e := (MvPolynomial.finSuccEquiv k n).toRingEquiv
+      have hM' : (M.map e).IsMaximal := Ideal.map_isMaximal_of_equiv e
+      rw [← e.height_map M, height_polynomial_of_isMaximal ih _ hM']
+      simp
 
 theorem height_map_under_eq_zero {R B : Type*} [CommRing R] [CommRing B] [Algebra R B]
     [Algebra.IsIntegral R B] (M : Ideal B) [M.IsPrime] :

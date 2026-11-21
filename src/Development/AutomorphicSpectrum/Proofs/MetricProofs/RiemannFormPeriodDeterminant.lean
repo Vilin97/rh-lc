@@ -1,15 +1,10 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.DifferentiableOnOfTendstoLocallyUniformlyOn
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IterDifferentiableOn
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.AnalyticGroupLawBoundedCommutatorStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.AnalyticDoublingMapLocalInverseStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.DoublingLimitLocalLogarithmStatement
-public import Development.AutomorphicSpectrum.Proofs.MetricProofs.LocalLogarithmHomomorphismStatement
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.DifferentiableOnOfTendstoLocallyUniformlyOn
+import Development.AutomorphicSpectrum.Proofs.MetricProofs.IterDifferentiableOn
+import Development.AutomorphicSpectrum.Proofs.MetricProofs.AnalyticGroupLawBoundedCommutatorStatement
+import Development.AutomorphicSpectrum.Proofs.MetricProofs.AnalyticDoublingMapLocalInverseStatement
+import Development.AutomorphicSpectrum.Proofs.MetricProofs.DoublingLimitLocalLogarithmStatement
+import Development.AutomorphicSpectrum.Proofs.MetricProofs.LocalLogarithmHomomorphismStatement
 open Set Filter Topology Metric
 
 namespace GlobalTheory.CompanionTheory.Ar.Flat
@@ -177,7 +172,8 @@ theorem exists_local_log_of_commutative_law : ∀ (n g : ℕ) (b₀ : Fin n → 
         show DifferentiableOn ℂ ((2 : ℂ) ^ k • GlobalTheory.CompanionTheory.Ar.Flat.LocalLog.iter h k) _
         exact (hit k).const_smul _)
   have hLan : AnalyticAt ℂ L (b₀, 0) :=
-    GlobalTheory.SCV.analyticOnNhd_of_differentiableOn hDopen hLd _ ⟨mem_ball_self hρ, by exact Set.mem_preimage.mpr (mem_ball_self hρ)⟩
+    GlobalTheory.SCV.analyticOnNhd_of_differentiableOn hDopen hLd (b₀, 0)
+      (Set.mk_mem_prod (mem_ball_self hρ) (mem_ball_self (x := (0 : Fin g → ℂ)) hρ))
   refine ⟨L, hLan, ?_, ?_⟩
   · filter_upwards [ball_mem_nhds b₀ hρ] with b hb
     have hL0 : L (b, 0) = 0 := by

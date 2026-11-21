@@ -1,14 +1,10 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.LocalDualIndex
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsSubConjNotMem
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.IsFieldAdicCompletionTensorOfInert
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NotIsFieldAdicCompletionTensorOfSplit
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.QuadraticUnramifiedIffInertOrSplit
-public import Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.LocalDualIndex
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsSubConjNotMem
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.IsFieldAdicCompletionTensorOfInert
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NotIsFieldAdicCompletionTensorOfSplit
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.QuadraticUnramifiedIffInertOrSplit
+import Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
 
 noncomputable section
 
@@ -212,6 +208,7 @@ def below (F : Type) [Field F] [NumberField F] [Algebra F E] (P : {P : Ideal (�
   HeightOneSpectrum.under (𝓞 F) (⟨P.1, P.2.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField P.2
     (RingOfIntegers.not_isField E)⟩ : HeightOneSpectrum (𝓞 E))
 
+omit [StarRing E] in
 
 def fibreEquiv (v : HeightOneSpectrum (𝓞 F)) :
     {P : {P : Ideal (𝓞 E) // P.IsMaximal} // below F P = v} ≃ v.asIdeal.primesOver (𝓞 E) where
@@ -229,7 +226,8 @@ open scoped TensorProduct Pointwise in
 open NumberField IsDedekindDomain in
 private theorem absNorm_under_int_prime (K : Type) [Field K] [NumberField K] (P : Ideal (𝓞 K))
     [P.IsMaximal] : (Ideal.absNorm (P.under ℤ)).Prime := by
-  haveI : (P.under ℤ).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+  haveI : (P.under ℤ).IsMaximal :=
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := ℤ) (S := 𝓞 K) P
   have hne : P.under ℤ ≠ ⊥ := Ideal.IsMaximal.ne_bot_of_isIntegral_int (Ideal.under ℤ P)
   have hspan := Int.ideal_span_absNorm_eq_self (P.under ℤ)
   have hprime : (Ideal.span {((Ideal.absNorm (P.under ℤ) : ℕ) : ℤ)}).IsPrime := by
@@ -376,7 +374,8 @@ private theorem summable_absNorm_maximal_rpow_neg (K : Type) [Field K] [NumberFi
     rcases t.eq_empty_or_nonempty with rfl | ⟨P₀, hP₀⟩
     · simp
     haveI := P₀.2
-    haveI : (P₀.1.under ℤ).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P₀.1
+    haveI : (P₀.1.under ℤ).IsMaximal :=
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := ℤ) (S := 𝓞 K) P₀.1
     have hne : P₀.1.under ℤ ≠ ⊥ := Ideal.IsMaximal.ne_bot_of_isIntegral_int (Ideal.under ℤ P₀.1)
     calc t.card = (t.map (Function.Embedding.subtype _)).card := (Finset.card_map _).symm
       _ ≤ (IsDedekindDomain.primesOverFinset (P₀.1.under ℤ) (𝓞 K)).card := by
@@ -499,7 +498,10 @@ theorem _root_.GlobalTheory.EtaEulerProduct.hasProd_eulerInv_inv : ∀ (F E : Ty
   have hval : _root_.Formalism.HermitianLatticesTheory.lValEta E M = Real.exp S := by
     unfold _root_.Formalism.HermitianLatticesTheory.lValEta
     exact hprod.tprod_eq
-  refine ⟨by rw [hval]; exact Real.exp_pos S, ?_⟩
+  refine ⟨show 0 < _root_.Formalism.HermitianLatticesTheory.lValEta E M from ?_, ?_⟩
+  · rw [hval]
+    exact Real.exp_pos S
+  ·
   rw [hval]
   have hsig : HasProd (g ∘ e) (Real.exp S) := (e.hasProd_iff).mpr hprod
   refine hsig.sigma (fun v => ?_)

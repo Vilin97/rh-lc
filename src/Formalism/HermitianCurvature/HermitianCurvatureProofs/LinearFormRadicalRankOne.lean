@@ -1,8 +1,4 @@
-module
-
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadicalUnipotentFirstBasisEqOne
-
-@[expose] public section
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadicalUnipotentFirstBasisEqOne
 
 open Matrix Formalism.QuantumDeterminants Formalism.FourierDecayAlt
 open scoped ComplexConjugate
@@ -44,14 +40,14 @@ private theorem blk3_unipotent_apply_superdiag_eq_zero {n ρ' : ℕ} (A12 : Matr
   by_cases hqn : q.val < n
   · have hp : p.val < n := by omega
     rw [← eX q hqn, ← eX p hp, Ux3.block3_apply]
-    blks
+    simp only [Matrix.fromBlocks_apply₁₁]
     exact Matrix.one_apply_ne (by simp only [ne_eq, Fin.mk.injEq]; omega)
   · have hp1 : n ≤ p.val := by omega
     have hp2 : p.val < n + (2 * ρ' + k + 1) := by omega
     have hq1 : n ≤ q.val := by omega
     have hq2 : q.val < n + (2 * ρ' + k + 1) := by omega
     rw [← eV q hq1 hq2, ← eV p hp1 hp2, Ux3.block3_apply]
-    blks
+    simp only [Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂]
     exact Matrix.one_apply_ne (by simp only [ne_eq, Fin.mk.injEq]; omega)
 
 private theorem blk3_mulVec_eB_inr_eq_zero_of_inWb {n ρ' : ℕ} (A12 : Matrix (Fin n) (Fin (2 * ρ' + k + 1)) ℂ) (A13 : Matrix (Fin n) (Fin n) ℂ)
@@ -105,7 +101,7 @@ theorem ell_uni {n ρ' : ℕ} (z : Fin (2 * (n + ρ') + k + 1) → ℂ) (hz : in
           ← eV (Formalism.QuantumDeterminants.eI k (n + ρ') ⟨(⟨n - 1, by omega⟩ : Fin (n + ρ')).val + 1, hlt⟩)
             (by show n ≤ n - 1 + 1; omega) (by show n - 1 + 1 < n + (2 * ρ' + k + 1); omega),
           Ux3.block3_apply]
-        blks
+        simp only [Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂]
         congr <;> simp [Formalism.QuantumDeterminants.eI] <;> omega
       · have hlt : ¬ ((⟨n - 1, by omega⟩ : Fin (n + ρ')).val + 1 < n + ρ') := by
           show ¬ (n - 1 + 1 < n + ρ')

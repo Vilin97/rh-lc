@@ -1,7 +1,6 @@
 module
 
 public import Mathlib
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CapelliComplements.FirstLemmaA
 
 @[expose] public section
 
@@ -42,7 +41,7 @@ theorem coeff_cone (a : ι → E) (f : MvPolynomial ι R) (n : ℕ) :
   conv_lhs => rw [← sum_homogeneousComponent f]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Polynomial.finsetSum_coeff]
-  simp_rw [cone_homog a (homogeneousComponent_isHomogeneous _ f), Polynomial.coeff_monomial]
+  simp_rw [cone_homog a (homogeneousComponent_isHomogeneous _ f), Polynomial.coeff_monomial_apply]
   rw [Finset.sum_ite_eq']
   split_ifs with h
   · rfl
@@ -102,7 +101,18 @@ theorem prod_pow_natDegree_coeff' {B : Type*} [CommRing B] {ι : Type*} (s : Fin
     (v : ι → B[X]) (d : ι → ℕ) (hv : ∀ i, (v i).natDegree ≤ 1) :
     (∏ i ∈ s, v i ^ d i).natDegree ≤ ∑ i ∈ s, d i ∧
       (∏ i ∈ s, v i ^ d i).coeff (∑ i ∈ s, d i) = ∏ i ∈ s, (v i).coeff 1 ^ d i := by
-  first | exact Bl.FirstLemmaA.goal1 .. | (apply Bl.FirstLemmaA.goal1 <;> assumption) | (intros; apply Bl.FirstLemmaA.goal1 <;> assumption) | (apply @Bl.FirstLemmaA.goal1 <;> assumption) | (intros; apply @Bl.FirstLemmaA.goal1 <;> assumption) | (apply @Bl.FirstLemmaA.goal1 <;> first | assumption | infer_instance)
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert a s ha ih =>
+    obtain ⟨hDegree, hCoeff⟩ := ih
+    have haDegree : (v a ^ d a).natDegree ≤ d a := by
+      simpa using natDegree_pow_le_of_le (d a) (hv a)
+    have haCoeff : (v a ^ d a).coeff (d a) = (v a).coeff 1 ^ d a := by
+      simpa using coeff_pow_of_natDegree_le (m := d a) (hv a)
+    rw [Finset.prod_insert ha, Finset.sum_insert ha, Finset.prod_insert ha]
+    refine ⟨natDegree_mul_le.trans (add_le_add haDegree hDegree), ?_⟩
+    rw [coeff_mul_add_eq_of_natDegree_le haDegree hDegree, haCoeff, hCoeff]
 
 end Homog
 

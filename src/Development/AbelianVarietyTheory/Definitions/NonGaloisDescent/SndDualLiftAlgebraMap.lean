@@ -1,10 +1,8 @@
-module
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NormPowLeNormFactorial
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DerivationMemPow
 
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NormPowLeNormFactorial
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DerivationMemPow
-
-@[expose] public section
+section
 
 noncomputable section
 

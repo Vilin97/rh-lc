@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechNaturality.CechFunctor
-
-@[expose] public section
-
+import Mathlib
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechNaturality.CechFunctor
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh
@@ -86,7 +81,8 @@ def ofHom (f : P ⟶ P') : CechFamily U P P' where
 lemma ofHom_cechH (f : P ⟶ P') (n : ℕ) (x : GroundTheory.Arith.SchemeCoh.cechH P U n) :
     (ofHom (U := U) f).cechH n x = cechHMap U f n x := by
   obtain ⟨σ, hσ, rfl⟩ := exists_cls x
-  rfl
+  rw [cechH_cls, cechHMap_cls]
+  exact cls_congr U (by funext i; rfl) _ _
 
 def comp (Φ : CechFamily U P P') (Ψ : CechFamily U P' P'') : CechFamily U P P'' where
   φ i := (Ψ.φ i).comp (Φ.φ i)

@@ -45,7 +45,9 @@ section Apply
 variable {X Z : Type} [TopologicalSpace X] [TopologicalSpace Z] {V : Type} [AddCommGroup V] [Module ℂ V]
 
 
-def app (l : SB X →ₗ[ℂ] V) (f : X → ℂ) : V := if h : f ∈ SB X then l ⟨f, h⟩ else 0
+def app (l : SB X →ₗ[ℂ] V) (f : X → ℂ) : V := by
+  classical
+  exact if h : f ∈ SB X then l ⟨f, h⟩ else 0
 
 theorem app_coe (l : SB X →ₗ[ℂ] V) (f : SB X) : app l (f : X → ℂ) = l f := by
   classical

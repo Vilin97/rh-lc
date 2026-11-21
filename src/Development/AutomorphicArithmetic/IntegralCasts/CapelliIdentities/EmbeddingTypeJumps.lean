@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Formalism.LocalRingCardinality.DataSpaces
-
-@[expose] public section
+import Mathlib
+import Formalism.LocalRingCardinality.DataSpaces
 
 noncomputable def UpperTheory.Reformulated.B.EmbeddingTypeJumps.crd :
     {E : Type} →
@@ -23,7 +19,8 @@ private theorem UpperTheory.Reformulated.B.EmbeddingTypeJumps.integral_smul_mem 
 private theorem UpperTheory.Reformulated.B.EmbeddingTypeJumps.exists_int_smul_mem {E : Type} [Field E] [NumberField E] [StarRing E]
     (W : Formalism.BasicNotions.HSpace E) (v : W.V) : ∃ n : ℤ, n ≠ 0 ∧ (n : E) • v ∈ W.L0 := by
   have hv : v ∈ Submodule.span E (W.L0 : Set W.V) := by
-    rw [W.standardTuple_isLattice.span_eq_top]; exact Submodule.mem_top
+    rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := W.L0)]
+    exact Submodule.mem_top
   induction hv using Submodule.span_induction with
   | mem x hx => exact ⟨1, one_ne_zero, by simpa using hx⟩
   | zero => exact ⟨1, one_ne_zero, by simp⟩

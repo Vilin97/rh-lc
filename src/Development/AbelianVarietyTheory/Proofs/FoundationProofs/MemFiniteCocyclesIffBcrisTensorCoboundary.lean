@@ -75,7 +75,7 @@ theorem tensCoord_map {C D : Type} [AddCommGroup C] [Module Qp C] [AddCommGroup 
       AlgebraTensorModule.map φ ψ (tensCoord E C x i) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | tmul v c => simp [h]
+  | tmul v c => simp [tensCoord, h]
   | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
 
 end Tensor

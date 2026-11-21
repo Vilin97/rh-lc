@@ -1,15 +1,11 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.ThetaValues.ExistsMemRowHighestTotalDegreeEqTwo
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.CommuteRowOpRightMixedOp
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.Sl2NonnegWeightOfHighestWeightVector
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.EqZeroOfPartialSumsNonneg
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.RowAddGenericRowAddTerm
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ColumnDegreeLe
-public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ProdLeadMinorDiagonal
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.ThetaValues.ExistsMemRowHighestTotalDegreeEqTwo
+import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.CommuteRowOpRightMixedOp
+import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.Sl2NonnegWeightOfHighestWeightVector
+import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.EqZeroOfPartialSumsNonneg
+import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.RowAddGenericRowAddTerm
+import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ColumnDegreeLe
+import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ProdLeadMinorDiagonal
 
 open MvPolynomial Matrix GlobalTheory.Capelli
 
@@ -78,6 +74,7 @@ theorem weight_of_mem_support (z : Fin p × Fin n → σ) (y : Fin q × Fin n �
   have h2 := mul_right_cancel₀ (mem_support_iff.1 hm) this
   exact_mod_cast h2
 
+omit [CharZero K] in
 
 theorem rowOp_self (z : Fin p × Fin n → σ) {P : MvPolynomial σ K} {a : Fin p} {d : ℕ}
     (h : ∀ m ∈ P.support, ∑ k, m (z (a, k)) = d) : rowOp K z a a P = ((d : ℤ) : K) • P := by
@@ -105,7 +102,7 @@ theorem casimir_rows [DecidableEq σ] (z : Fin p × Fin n → σ) (hz : Function
     rw [rowOp_apply]
     exact ((rowAdd_invariant_iff (fun k => z (a, k)) (fun k => z (b, k))
       (fun k l e => by simpa using hz e)
-      (fun k l e => hab.ne (congrArg Prod.fst (hz e))) P).out 1 2).1 (hinv a b hab)
+      (fun k l e => hab.ne (congrArg Prod.fst (hz e))) P).out 2 3).1 (hinv a b hab)
 
 theorem sum_filter_pad (hp : p ≤ n) (a : Fin p → ℕ) (i : ℕ) :
     ∑ k ∈ Finset.univ.filter (fun k : Fin n => (k : ℕ) < i),
@@ -270,23 +267,24 @@ theorem exists_eq_mul_prod_minors [DecidableEq σ] (z : Fin p × Fin n → σ)
     exact hv i k hk ((mem_vars_iff_mem_support _).2 ⟨m, hm, Finsupp.mem_support_iff.2 h0⟩)
   · have h₁ := ((rowAdd_invariant_iff (fun k => z (i, k)) (fun k => z (j, k))
       (fun k l e => by simpa using hz e)
-      (fun k l e => hij.ne (congrArg Prod.fst (hz e))) P).out 1 2).1 (hinv i j hij)
+      (fun k l e => hij.ne (congrArg Prod.fst (hz e))) P).out 2 3).1 (hinv i j hij)
     refine ((rowAdd_invariant_iff (fun k => z (i, e k)) (fun k => z (j, e k))
       (fun k l e => he (by simpa using hz e))
-      (fun k l e => hij.ne (congrArg Prod.fst (hz e))) P).out 2 1).1 (Eq.trans ?_ h₁)
+      (fun k l e => hij.ne (congrArg Prod.fst (hz e))) P).out 3 2).1 (Eq.trans ?_ h₁)
     refine Fintype.sum_of_injective e he _ _ (fun k hk => ?_) fun _ => rfl
     rw [pderiv_eq_zero_of_notMem_vars (hv j k hk), mul_zero]
   · exact ((rowAdd_invariant_iff (fun i => z (i, e k)) (fun i => z (i, e l))
       (fun k l e => by simpa using hz e)
-      (fun i j e => hkl.ne (he (congrArg Prod.snd (hz e)))) P).out 2 1).1
+      (fun i j e => hkl.ne (he (congrArg Prod.snd (hz e)))) P).out 3 2).1
       ((colOp_apply _ _ _ _).symm.trans (hcol k l hkl))
 
 end HighestUnique
 
+open HighestUnique in
 
 theorem exists_eq_smul_basePoly {K T : Type*} [Field K] [CharZero K] [Fintype T] {p q n : ℕ}
     (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) {P : Poly K T p q (Fin n)}
-    (hP : P ∈ rowHighest K c c') (κ : T → Fin n → ℤ) (hκ : ∀ t, Antitone (κ t))
+    (hP : P ∈ rowHighest c c') (κ : T → Fin n → ℤ) (hκ : ∀ t, Antitone (κ t))
     (hup : ∀ t (k l : Fin n), k < l →
       ∑ a, X (xVar t a k) * pderiv (xVar t a l) P - ∑ b, X (yVar t b l) * pderiv (yVar t b k) P = 0)
     (hwt : ∀ t (k : Fin n),

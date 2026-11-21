@@ -1,8 +1,4 @@
-module
-
-public import Formalism.ConjugateSelfDual.Statement
-
-@[expose] public section
+import Formalism.ConjugateSelfDual.Statement
 
 noncomputable section
 
@@ -71,11 +67,13 @@ def Ine (A : ValuationSubring (Ω)) : Subgroup (G F Ω) where
     rw [e, Valuation.map_neg]
     exact hσ' _ hy
 
+variable (F Ω) in
 
 def cycZ (l : ℕ) [Fact l.Prime] : G F Ω →* ℤ_[l]ˣ :=
   (cyclotomicCharacter (Ω) l).comp
     (MulSemiringAction.toRingAut (G F Ω) (Ω))
 
+variable (F Ω) in
 
 def cycMod (l : ℕ) [Fact l.Prime] (r : ℕ) : G F Ω →* (ZMod (l ^ r))ˣ :=
   (Units.map (PadicInt.toZModPow r : ℤ_[l] →+* ZMod (l ^ r)).toMonoidHom).comp (cycZ F Ω l)
@@ -94,9 +92,6 @@ def IsPlaceAbove (F : Type*) [Field F] [NumberField F] {Ω : Type*} [Field Ω] [
 section unram
 
 variable (S : Set (HeightOneSpectrum (𝓞 F)))
-
-
-
 
 end unram
 

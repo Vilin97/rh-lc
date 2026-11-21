@@ -110,8 +110,9 @@ def IsQuotNormaliser (H : Subgroup G) (μH : Measure H) (ρ : G → ℝ≥0∞) 
   Measurable ρ ∧ ∀ g : G, ∫⁻ h, ρ ((h : G) * g) ∂μH = 1
 
 
-def quotLIntegral (μG : Measure G) (H : Subgroup G) (μH : Measure H) (F : G → ℝ≥0∞) : ℝ≥0∞ :=
-  if hρ : ∃ ρ, IsQuotNormaliser H μH ρ then ∫⁻ g, F g * hρ.choose g ∂μG else 0
+def quotLIntegral (μG : Measure G) (H : Subgroup G) (μH : Measure H) (F : G → ℝ≥0∞) : ℝ≥0∞ := by
+  classical
+  exact if hρ : ∃ ρ, IsQuotNormaliser H μH ρ then ∫⁻ g, F g * hρ.choose g ∂μG else 0
 
 theorem lintegral_normaliser_eq [MeasurableMul₂ G] [MeasurableInv G]
     {μG : Measure G} [μG.IsMulLeftInvariant] [SFinite μG]
@@ -316,8 +317,9 @@ section ComplexValued
 variable {G : Type*} [Group G] [MeasurableSpace G]
 
 
-def quotIntegral (μG : Measure G) (H : Subgroup G) (μH : Measure H) (F : G → ℂ) : ℂ :=
-  if hρ : ∃ ρ, IsQuotNormaliser H μH ρ then ∫ g, F g * ((hρ.choose g).toReal : ℂ) ∂μG else 0
+def quotIntegral (μG : Measure G) (H : Subgroup G) (μH : Measure H) (F : G → ℂ) : ℂ := by
+  classical
+  exact if hρ : ∃ ρ, IsQuotNormaliser H μH ρ then ∫ g, F g * ((hρ.choose g).toReal : ℂ) ∂μG else 0
 
 def twOrbIntegralC (θ : Monoid.End G) (μG : Measure G) (δ : G) (μδ : Measure (twCent θ δ))
     (f : G → ℂ) : ℂ :=

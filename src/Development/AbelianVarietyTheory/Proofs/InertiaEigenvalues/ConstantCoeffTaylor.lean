@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.SndDualLiftAlgebraMap
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.SndDualLiftAlgebraMap
 open GlobalTheory.BK PowerSeries Filter Topology
 
 noncomputable section
@@ -145,11 +140,11 @@ theorem constantCoeff_taylor (g : Polynomial K) :
     simp [taylor, PowerSeries.algebraMap_apply]
 
 theorem derivative_taylor (g : Polynomial K) :
-    PowerSeries.derivative _ (taylor P g) = taylor P (Polynomial.derivative g) := by
-  have := ((PowerSeries.derivative (AdjoinRoot P)).restrictScalars K).map_aeval g
+    PowerSeries.derivative (taylor P g) = taylor P (Polynomial.derivative g) := by
+  have := ((PowerSeries.derivative (R := AdjoinRoot P)).restrictScalars K).map_aeval g
     (C (AdjoinRoot.root P) + X)
-  rw [Derivation.restrictScalars_apply, Derivation.restrictScalars_apply, map_add (f := _),
-    derivative_C, derivative_X, zero_add, smul_eq_mul, mul_one] at this
+  rw [Derivation.restrictScalars_apply, Derivation.restrictScalars_apply,
+    map_add (f := _), derivative_C, derivative_X, zero_add, smul_eq_mul, mul_one] at this
   exact this
 
 variable {P}
@@ -204,6 +199,7 @@ theorem coe_incl (g : Polynomial K) : (incl O K l g : K⟦X⟧) = g := by
   | monomial n a =>
     rw [← Polynomial.C_mul_X_pow_eq_monomial]
     simp [incl]
+    rfl
 
 theorem incl_E : (incl O K l).toRingHom (Polynomial.X ^ e + Polynomial.C (l : K)) = EIn l e _ := by
   refine Subtype.ext ((coe_incl O K l _).trans ?_)
@@ -279,7 +275,7 @@ theorem toAhat_derivative (x : (AdjoinRoot (Polynomial.X ^ e + Polynomial.C (l :
   refine Eq.trans ?_ h2.symm
   have h3 := pow_dvd_derivative ((hX.pow_pow (n := m + 1)).symm.dvd.trans h1)
   rw [map_sub] at h3
-  have h4 := evalₐ_theta (incl_E O K l e) H (m := m) (x := PowerSeries.derivative _ x)
+  have h4 := evalₐ_theta (incl_E O K l e) H (m := m) (x := PowerSeries.derivative x)
     (g := Polynomial.derivative g) ((hX.pow_pow (n := m)).dvd.trans
       (by convert h3 using 2; exact (derivative_taylor _ g).symm))
   exact h4.trans (congrArg _ (derAl_incl O K l g).symm)

@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.IsWeightedHomogeneousOfMemOrbitSpan
-public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IsHarmonicProdOfDisjointColumns
 
 @[expose] public section
 
@@ -11,6 +10,140 @@ open MvPolynomial Matrix
 namespace GlobalTheory.Harm
 
 variable {R S : Type*} [CommRing R] [CommRing S] {T : Type*} {p q n : ℕ} {κ κ' : Type*}
+
+section HarmonicSubstitution
+
+variable [Fintype κ] [Fintype κ']
+
+private theorem pderiv_rowForm [DecidableEq T] (t t' : T) (r r' : Fin p ⊕ Fin q) (k : κ) (v : κ → R) :
+    pderiv (t, r, k) (rowForm t' r' v : Poly R T p q κ) =
+      if t' = t ∧ r' = r then C (v k) else 0 := by
+  classical
+  split_ifs with h
+  · obtain ⟨rfl, rfl⟩ := h
+    simp [rowForm_apply, pderiv_X, Pi.single_apply]
+  · rw [rowForm_apply, map_sum]
+    refine Finset.sum_eq_zero fun l _ => ?_
+    rw [pderiv_C_mul, pderiv_X_of_ne, mul_zero]
+    intro e
+    simp only [Prod.mk.injEq] at e
+    exact h ⟨e.1, e.2.1⟩
+
+private theorem pderiv_xVar_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (t : T) (a : Fin p)
+    (l : κ') (P : Poly R T p q κ) :
+    pderiv (xVar t a l) (colSubst A B P) =
+      ∑ k : κ, A t k l • colSubst A B (pderiv (xVar t a k) P) := by
+  classical
+  induction P using MvPolynomial.induction_on with
+  | C r => simp [algHom_C]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, smul_add, Finset.sum_add_distrib]
+  | mul_X P v hP =>
+    have : pderiv (xVar t a l) (colSubst A B (X v : Poly R T p q κ)) =
+        ∑ k : κ, A t k l • colSubst A B (pderiv (xVar t a k) (X v : Poly R T p q κ)) := by
+      obtain ⟨t', a' | b', k'⟩ := v
+      · rw [colSubst_X_xVar, xForm, pderiv_rowForm]
+        split_ifs with e
+        · obtain ⟨rfl, e⟩ := e
+          obtain rfl := Sum.inl_injective e
+          rw [Finset.sum_eq_single k']
+          · simp [smul_eq_C_mul]
+          · intro k _ hk
+            rw [pderiv_X_of_ne (by simp [hk.symm]), map_zero, smul_zero]
+          · simp
+        · refine (Finset.sum_eq_zero fun k _ => ?_).symm
+          rw [pderiv_X_of_ne, map_zero, smul_zero]
+          intro e'; simp only [Prod.mk.injEq] at e'; exact e ⟨e'.1, e'.2.1⟩
+      · rw [colSubst_X_yVar, yForm, pderiv_rowForm, ite_eq_right (by simp)]
+        refine (Finset.sum_eq_zero fun k _ => ?_).symm
+        rw [pderiv_X_of_ne (by simp), map_zero, smul_zero]
+    simp only [map_mul, pderiv_mul, map_add (f := _), hP, this, smul_add, Finset.sum_add_distrib,
+      Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
+
+private theorem pderiv_yVar_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (t : T) (b : Fin q)
+    (l : κ') (P : Poly R T p q κ) :
+    pderiv (yVar t b l) (colSubst A B P) =
+      ∑ k : κ, B t l k • colSubst A B (pderiv (yVar t b k) P) := by
+  classical
+  induction P using MvPolynomial.induction_on with
+  | C r => simp [algHom_C]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, smul_add, Finset.sum_add_distrib]
+  | mul_X P v hP =>
+    have : pderiv (yVar t b l) (colSubst A B (X v : Poly R T p q κ)) =
+        ∑ k : κ, B t l k • colSubst A B (pderiv (yVar t b k) (X v : Poly R T p q κ)) := by
+      obtain ⟨t', a' | b', k'⟩ := v
+      · rw [colSubst_X_xVar, xForm, pderiv_rowForm, ite_eq_right (by simp)]
+        refine (Finset.sum_eq_zero fun k _ => ?_).symm
+        rw [pderiv_X_of_ne (by simp), map_zero, smul_zero]
+      · rw [colSubst_X_yVar, yForm, pderiv_rowForm]
+        split_ifs with e
+        · obtain ⟨rfl, e⟩ := e
+          obtain rfl := Sum.inr_injective e
+          rw [Finset.sum_eq_single k']
+          · simp [smul_eq_C_mul]
+          · intro k _ hk
+            rw [pderiv_X_of_ne (by simp [hk.symm]), map_zero, smul_zero]
+          · simp
+        · refine (Finset.sum_eq_zero fun k _ => ?_).symm
+          rw [pderiv_X_of_ne, map_zero, smul_zero]
+          intro e'; simp only [Prod.mk.injEq] at e'; exact e ⟨e'.1, e'.2.1⟩
+    simp only [map_mul, pderiv_mul, map_add (f := _), hP, this, smul_add, Finset.sum_add_distrib,
+      Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
+
+private theorem laplacian_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (t : T) (a : Fin p)
+    (b : Fin q) (P : Poly R T p q κ) :
+    laplacian t a b (colSubst A B P) = ∑ k : κ, ∑ k' : κ, (A t * B t) k k' •
+      colSubst A B (pderiv (xVar t a k) (pderiv (yVar t b k') P)) := by
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [laplacian_apply, pderiv_yVar_colSubst, map_sum, Derivation.map_smul,
+    pderiv_xVar_colSubst, Matrix.mul_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
+  rw [Finset.sum_comm]
+  conv_rhs => rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl fun k' _ => ?_
+  rw [Finset.sum_comm]
+  exact Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => by rw [mul_comm]
+
+private theorem laplacian_colSubst_of_mul_eq_one [DecidableEq κ] (A : T → Matrix κ κ' R)
+    (B : T → Matrix κ' κ R) {t : T} (h : A t * B t = 1) (a : Fin p) (b : Fin q)
+    (P : Poly R T p q κ) :
+    laplacian t a b (colSubst A B P) = colSubst A B (laplacian t a b P) := by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [laplacian_colSubst, h, laplacian_apply, map_sum]
+  simp [Matrix.one_apply]
+
+private theorem isHarmonic_colSubst [DecidableEq κ] {A : T → Matrix κ κ' R} {B : T → Matrix κ' κ R}
+    (h : ∀ t, A t * B t = 1) {P : Poly R T p q κ} (hP : IsHarmonic P) :
+    IsHarmonic (colSubst A B P) := fun t a b => by
+  rw [laplacian_colSubst_of_mul_eq_one A B (h t), hP, map_zero]
+
+private theorem isHarmonic_minorProd [Fintype T] (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ)
+    {ε : T → Fin p → κ → R} {φ : T → Fin q → κ → R} (h : IsPerp ε φ) :
+    IsHarmonic (minorProd c c' ε φ) := by
+  classical
+  -- The two sets of columns start in separate summands. Their images are orthogonal by h.
+  let A : T → Matrix (Fin p ⊕ Fin q) κ R :=
+    fun t => Matrix.of fun i k => Sum.elim (fun a => ε t a k) (fun _ => 0) i
+  let B : T → Matrix κ (Fin p ⊕ Fin q) R :=
+    fun t => Matrix.of fun k j => Sum.elim (fun _ => 0) (fun b => φ t b k) j
+  have hmul (t : T) : A t * B t = 0 := by
+    ext1 i j
+    rcases i with a | b <;> rcases j with a' | b'
+    · simp [A, B, Matrix.mul_apply]
+    · simpa [A, B, Matrix.mul_apply, dotProduct] using h t a b'
+    · simp [A, B, Matrix.mul_apply]
+    · simp [A, B, Matrix.mul_apply]
+  let e : T → Fin p → (Fin p ⊕ Fin q) → R := fun _ a => Pi.single (Sum.inl a) 1
+  let f : T → Fin q → (Fin p ⊕ Fin q) → R := fun _ b => Pi.single (Sum.inr b) 1
+  have he (t : T) (a : Fin p) : e t a ᵥ* A t = ε t a :=
+    Matrix.single_one_vecMul (Sum.inl a) (A t)
+  have hf (t : T) (b : Fin q) : B t *ᵥ f t b = φ t b :=
+    Matrix.mulVec_single_one (B t) (Sum.inr b)
+  have hsubst : colSubst A B (minorProd c c' e f) = minorProd c c' ε φ := by
+    simp only [colSubst_minorProd, he, hf]
+  intro t a b
+  rw [← hsubst, laplacian_colSubst, hmul]
+  simp
+
+end HarmonicSubstitution
 
 section RowAdd
 
@@ -54,7 +187,7 @@ theorem rowAdd_X_of_ne {t t' : T} (r : Fin p ⊕ Fin q) {r' r'' : Fin p ⊕ Fin 
   classical
   rw [rowAdd_eq_bind₁, bind₁_X_right, Finset.sum_eq_zero, add_zero]
   intro l _
-  rw [if_neg]
+  rw [ite_eq_right]
   intro e; simp only [Prod.mk.injEq] at e; exact h ⟨e.1, e.2.1⟩
 
 theorem rowAdd_X [DecidableEq T] (t t' : T) (r r' r'' : Fin p ⊕ Fin q) (s : R) (k : κ) :
@@ -226,7 +359,7 @@ theorem rowAdd_eq_self_of_forall_int [IsDomain R] [CharZero R] {t : T} {r r' : F
     refine Polynomial.eq_of_infinite_eval_eq _ _ (Set.infinite_of_injective_forall_mem
       (f := fun s : ℤ => (C (s : R) : Poly R T p q κ))
       ((C_injective _ _).comp Int.cast_injective) fun s => ?_)
-    rw [Set.mem_setOf_eq, hΦ, h, Polynomial.eval_C]
+    rw [Set.mem_ofPred_eq, hΦ, h, Polynomial.eval_C]
   rw [← hΦ, this, Polynomial.eval_C]
 
 end RowAdd
@@ -390,7 +523,7 @@ theorem colSubst_mem_rowHighest [Fintype κ'] [DecidableEq κ] {A : T → Matrix
     {B : T → Matrix κ' κ R} (h : ∀ t, A t * B t = 1) (hP : P ∈ rowHighest c c') :
     colSubst A B P ∈ rowHighest c c' := by
   obtain ⟨h₁, h₂, h₃⟩ := mem_rowHighest_iff_rowAdd.1 hP
-  exact mem_rowHighest_iff_rowAdd.2 ⟨h₁.colSubst h,
+  exact mem_rowHighest_iff_rowAdd.2 ⟨isHarmonic_colSubst h h₁,
     fun t r => colSubst_isWeightedHomogeneous _ A B (h₂ t r),
     fun t r r' hr s => by rw [rowAdd_colSubst A B t hr.isLeft_eq, h₃ t r r' hr]⟩
 

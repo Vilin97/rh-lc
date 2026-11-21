@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocHomAlgebraMap
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbhyankarRootMemMaximalIdealNonZeroDivisors
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UniformizerEqPowRamificationIdxMulUnitIntegralClStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbhyankarExistsLocalKummerElement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbhyankarExistsFractionLocalisationNormalisation
@@ -14,6 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsArtinianRi
 @[expose] public section
 
 open IsLocalRing
+open scoped TensorProduct
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 1000000
 
@@ -91,37 +91,64 @@ theorem _root_.GlobalTheory.abhyankar_ramificationIdx_eq_one : ∀ (S K L : Type
     · subst h
       simp at he
     · exact h
-  obtain ⟨ht, htnz⟩ := _root_.GlobalTheory.AbhyankarRootUnit.root_mem_maximalIdeal_and_mem_nonZeroDivisors S K L π e D ψ hπ he0 Q
-  have hte : (ψ.symm (AdjoinRoot.root (Polynomial.X ^ e - Polynomial.C π))) ^ e = algebraMap S D π := by
+  let t := ψ.symm (AdjoinRoot.root (Polynomial.X ^ e - Polynomial.C π))
+  have hte : t ^ e = algebraMap S D π := by
+    dsimp only [t]
     apply ψ.injective
     rw [map_pow, AlgEquiv.apply_symm_apply, AlgEquiv.commutes]
     have h := AdjoinRoot.eval₂_root (Polynomial.X ^ e - Polynomial.C π)
     simp only [Polynomial.eval₂_sub, Polynomial.eval₂_X_pow, Polynomial.eval₂_C] at h
     rw [sub_eq_zero.1 h]
     rfl
-  have htQ : algebraMap D (integralClosure D (TensorProduct S D L))
-      (ψ.symm (AdjoinRoot.root (Polynomial.X ^ e - Polynomial.C π))) ∈ Q := by
-    rw [IsScalarTower.algebraMap_apply D (integralClosure D (TensorProduct S D L)) (Localization.AtPrime Q)] at ht
-    exact (IsLocalization.AtPrime.to_map_mem_maximal_iff (Localization.AtPrime Q) Q _).1 ht
+  have hunder : Q.under D = maximalIdeal D :=
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal Q)
+  have htQ : algebraMap D (integralClosure D (TensorProduct S D L)) t ∈ Q := by
+    change t ∈ Q.under D
+    rw [hunder]
+    apply (IsLocalRing.mem_maximalIdeal t).2
+    intro h
+    have hev : (Polynomial.X ^ e - Polynomial.C π : Polynomial S).eval₂
+        (algebraMap S (ResidueField S)) 0 = 0 := by
+      simp [Polynomial.eval₂_sub, zero_pow he0.ne']
+      exact hπ.not_isUnit
+    have hroot : IsUnit (AdjoinRoot.root (Polynomial.X ^ e - Polynomial.C π)) := by
+      simpa [t] using h.map ψ
+    have hunit := hroot.map (AdjoinRoot.lift (algebraMap S (ResidueField S)) 0 hev)
+    rw [AdjoinRoot.lift_root] at hunit
+    exact not_isUnit_zero hunit
+  have ht : algebraMap D (Localization.AtPrime Q) t ∈ maximalIdeal (Localization.AtPrime Q) := by
+    rw [IsScalarTower.algebraMap_apply D (integralClosure D (TensorProduct S D L)) (Localization.AtPrime Q)]
+    exact (IsLocalization.AtPrime.to_map_mem_maximal_iff (Localization.AtPrime Q) Q _).2 htQ
+  have hπL : algebraMap S L π ≠ 0 := by
+    rw [IsScalarTower.algebraMap_apply S K L]
+    intro h
+    rw [map_eq_zero_iff _ (algebraMap K L).injective, IsFractionRing.to_map_eq_zero_iff] at h
+    exact hπ.ne_zero h
+  have hπTensor : algebraMap D (D ⊗[S] L) (algebraMap S D π) =
+      Algebra.TensorProduct.includeRight (algebraMap S L π) :=
+    DFunLike.congr_fun Algebra.TensorProduct.includeLeftRingHom_comp_algebraMap π
+  have htnz : algebraMap D (Localization.AtPrime Q) t ∈ nonZeroDivisors (Localization.AtPrime Q) := by
+    rw [IsScalarTower.algebraMap_apply D (integralClosure D (TensorProduct S D L)) (Localization.AtPrime Q)]
+    apply IsLocalization.nonZeroDivisors_le_comap Q.primeCompl (Localization.AtPrime Q)
+    apply mem_nonZeroDivisors_of_injective (f := (integralClosure D (D ⊗[S] L)).val)
+      Subtype.val_injective
+    change algebraMap D (D ⊗[S] L) t ∈ nonZeroDivisors (D ⊗[S] L)
+    apply IsUnit.mem_nonZeroDivisors
+    rw [← isUnit_pow_iff he0.ne', ← map_pow, hte, hπTensor]
+    exact (Ne.isUnit hπL).map _
   have hπO : algebraMap S (integralClosure S L) π ≠ 0 := by
     intro h
-    have h1 : algebraMap S L π = 0 := by
-      rw [IsScalarTower.algebraMap_apply S (integralClosure S L) L, h, map_zero]
-    rw [IsScalarTower.algebraMap_apply S K L, map_eq_zero_iff _ (algebraMap K L).injective,
-      IsFractionRing.to_map_eq_zero_iff] at h1
-    exact hπ.ne_zero h1
+    apply hπL
+    rw [IsScalarTower.algebraMap_apply S (integralClosure S L) L, h, map_zero]
   have hπP : algebraMap S (integralClosure S L) π ∈
       Ideal.comap (_root_.GlobalTheory.AbhyankarLocal.toNorm S L D) Q := by
     rw [Ideal.mem_comap]
     have hpow : _root_.GlobalTheory.AbhyankarLocal.toNorm S L D (algebraMap S (integralClosure S L) π) =
-        (algebraMap D (integralClosure D (TensorProduct S D L))
-          (ψ.symm (AdjoinRoot.root (Polynomial.X ^ e - Polynomial.C π)))) ^ e := by
+        (algebraMap D (integralClosure D (TensorProduct S D L)) t) ^ e := by
       apply Subtype.ext
       rw [_root_.GlobalTheory.AbhyankarLocal.toNorm_coe, ← map_pow, hte]
       change (1 : D) ⊗ₜ[S] (algebraMap S L π) = algebraMap D (TensorProduct S D L) (algebraMap S D π)
-      rw [Algebra.TensorProduct.algebraMap_apply, Algebra.algebraMap_eq_smul_one π,
-        Algebra.algebraMap_eq_smul_one π, TensorProduct.tmul_smul, TensorProduct.smul_tmul',
-        Algebra.algebraMap_self, RingHom.id_apply]
+      exact hπTensor.symm
     rw [hpow]
     exact Ideal.pow_mem_of_mem Q htQ e he0
   haveI hPmax : (Ideal.comap (_root_.GlobalTheory.AbhyankarLocal.toNorm S L D) Q).IsMaximal := by
@@ -154,13 +181,6 @@ theorem _root_.GlobalTheory.abhyankar_ramificationIdx_eq_one : ∀ (S K L : Type
   have hmax := maximalIdeal_eq_span_of_kummer_tower _ (Localization.AtPrime Q)
     (_root_.GlobalTheory.AbhyankarLocal.locHom Q) ϖ u _ k hϖ hmu hk0 y _ hym hyk ht htnz
     (_root_.GlobalTheory.AbhyankarLocal.exists_frac_closure S K L π e D ψ hπ he0 Q)
-  have hunder : Ideal.under D Q = maximalIdeal D := by
-    refine IsLocalRing.eq_maximalIdeal (Ideal.IsPrime.isMaximal inferInstance ?_)
-    intro h
-    have h1 : ψ.symm (AdjoinRoot.root (Polynomial.X ^ e - Polynomial.C π)) ∈ Ideal.under D Q := htQ
-    rw [h, Ideal.mem_bot] at h1
-    rw [h1, map_zero] at htnz
-    exact zero_notMem_nonZeroDivisors htnz
   have hmapmax : Ideal.map (algebraMap D (Localization.AtPrime Q)) (Ideal.under D Q) =
       maximalIdeal (Localization.AtPrime Q) := by
     refine le_antisymm ?_ ?_

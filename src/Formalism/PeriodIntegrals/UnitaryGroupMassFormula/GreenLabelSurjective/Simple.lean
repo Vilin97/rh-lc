@@ -1,9 +1,33 @@
 module
 
 public import Mathlib
-public import Formalism.PadicSubsetSums.CentralIdempotents.IsConstituent
 
 @[expose] public section
+
+namespace Formalism.IrreducibleCountingLemmas.TYPES
+
+section Reps
+variable {Γ : Type} [Group Γ]
+
+def Intw {V V' : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup V'] [Module ℂ V']
+    (ρ : Representation ℂ Γ V) (ρ' : Representation ℂ Γ V') : Submodule ℂ (V →ₗ[ℂ] V') where
+  carrier := {φ | ∀ g, φ ∘ₗ ρ g = ρ' g ∘ₗ φ}
+  add_mem' := by
+    intro φ ψ hφ hψ g
+    rw [LinearMap.add_comp, LinearMap.comp_add, hφ g, hψ g]
+  zero_mem' := by
+    intro g
+    simp
+  smul_mem' := by
+    intro a φ hφ g
+    rw [LinearMap.smul_comp, LinearMap.comp_smul, hφ g]
+
+def IsConstituent {V : Type} [AddCommGroup V] [Module ℂ V] (τ : FDRep ℂ Γ)
+    (ρ : Representation ℂ Γ V) : Prop :=
+  ∃ φ ∈ Intw τ.ρ ρ, φ ≠ 0
+end Reps
+
+end Formalism.IrreducibleCountingLemmas.TYPES
 
 open CategoryTheory Formalism.IrreducibleCountingLemmas.TYPES
 

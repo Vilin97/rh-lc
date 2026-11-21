@@ -12,6 +12,12 @@ open GlobalTheory.MvPoly
 
 namespace GlobalTheory.Harm
 
+-- Retain the explicit coefficient-ring argument in the statements below.
+local macro:max "rowHighest" R:term:arg : term =>
+  `(GlobalTheory.Harm.rowHighest (R := $R))
+local macro:max "rowHighest" "(" name:ident " := " value:term ")" R:term:arg : term =>
+  `(GlobalTheory.Harm.rowHighest (R := $R) ($name := $value))
+
 section CoeffForm
 
 variable {F K σ : Type*} [Field F] [CommRing K] [Algebra F K]
@@ -35,7 +41,8 @@ theorem coeff_coeffForm (φ : K →ₗ[F] F) (m : σ →₀ ℕ) (P : MvPolynomi
   classical
   induction P using MvPolynomial.induction_on' with
   | monomial d r => rw [coeffForm_monomial, coeff_monomial, coeff_monomial]; split_ifs <;> simp
-  | add P Q hP hQ => simp only [map_add (f := _), MvPolynomial.coeff_add, hP, hQ]
+  | add P Q hP hQ =>
+    simp only [map_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hP, hQ]
 
 theorem coeffForm_comm (φ : K →ₗ[F] F) (L : MvPolynomial σ F →ₗ[F] MvPolynomial σ F)
     (L' : MvPolynomial σ K →ₗ[K] MvPolynomial σ K)
@@ -133,6 +140,7 @@ theorem fockInner_colLie (t : T) (k l : κ) (P Q : Poly ℂ T p q κ) :
 
 variable [Fintype T] (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ)
 
+variable (R) in
 
 noncomputable def colWord (w : List (T × Fin n × Fin n)) : Poly R T p q (Fin n) :=
   w.foldr (fun i P => colLie R p q i.1 i.2.1 i.2.2 P) (basePoly R h c c')
@@ -230,7 +238,7 @@ theorem rowHighest_eq_span_colWord [CommRing K] [Algebra ℚ K] :
     rw [map_colWord]
     exact Submodule.subset_span ⟨w, rfl⟩
   | zero => simp
-  | add P Q _ _ hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
+  | add P Q _ _ hP hQ => rw [map_add]; exact add_mem hP hQ
   | smul r P _ hP =>
     rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hP
@@ -242,6 +250,7 @@ theorem rowHighest_eq_orbitSpan [Field K] [CharZero K] :
   rintro _ ⟨w, rfl⟩
   exact colWord_mem_orbitSpan h c c' w
 
+include h in
 
 theorem span_map_rowHighest_int [CommRing K] [Algebra ℚ K] :
     Submodule.span K (MvPolynomial.map (Int.castRingHom K) ''

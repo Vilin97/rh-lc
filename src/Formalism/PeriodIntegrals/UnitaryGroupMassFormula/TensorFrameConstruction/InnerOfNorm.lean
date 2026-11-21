@@ -1,12 +1,8 @@
-module
-
-public import Mathlib
-public import Formalism.PeriodIntegrals.ScPiExists
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.TensorFrameConstruction.LocalFramePreservesOrthogonal
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.TensorFrameConstruction.LocFrame
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.TensorFrameConstruction.ContinuousOnTensOp
-
-@[expose] public section
+import Mathlib
+import Formalism.PeriodIntegrals.ScPiExists
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.TensorFrameConstruction.LocalFramePreservesOrthogonal
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.TensorFrameConstruction.LocFrame
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.TensorFrameConstruction.ContinuousOnTensOp
 
 noncomputable section
 
@@ -69,6 +65,8 @@ theorem build : Build := by
     show Tens.tensOp (A (s * t)) = Tens.tensOp (A s) * Tens.tensOp (A t)
     rw [← Tens.tensOp_mul]
     congr 1
+    funext v
+    simp only [A]
     rw [uMat_mul, (L v).M_mul (inUJ_uMat I s v) (hs v) (inUJ_uMat I t v) (ht v)]
     exact (hπ v).2.2.1.1.2 _ ((L v).M_inUJ (inUJ_uMat I s v) (hs v)) _
       ((L v).M_inUJ (inUJ_uMat I t v) (ht v))

@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ChartGen
-public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.MaxMass
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ChartGen
+import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.MaxMass
 open NumberField Matrix GlobalTheory.Mass Formalism.HermitianLatticesTheory
 open scoped ENNReal Classical
 
@@ -59,7 +54,7 @@ theorem _root_.GlobalTheory.Mass.OrbFib.key (π : α → β)
   have e4 : (MulAction.stabilizer G (k • π x) ⧸
       MulAction.stabilizer (MulAction.stabilizer G (k • π x)) (k • x)) ≃
       (MulAction.orbit G x ∩ π ⁻¹' {k • π x} : Set α) :=
-    (MulAction.orbitEquivQuotientStabilizer _ (k • x)).symm.trans (Equiv.setCongr e3)
+    (MulAction.orbitEquivQuotientStabilizer _ (k • x)).symm.trans (Set.equivOfEq e3)
   have hcard : ENat.card (MulAction.stabilizer G (k • π x)) =
       (MulAction.orbit G x ∩ π ⁻¹' {k • π x}).encard *
         ENat.card (MulAction.stabilizer G x) := by
@@ -186,6 +181,8 @@ private theorem tsum_inv_card_stabilizer_mul_encard_orbit_fibre (π : α → β)
     rw [hempty]
     simp
 
+open NumberField Matrix in
+open scoped ENNReal Classical in
 
 theorem _root_.GlobalTheory.Mass.orbMass_eq_orbSum_fibre : ∀ (G α β : Type) [Group G] [MulAction G α]
     [MulAction G β] (X : Set α) (Y : Set β) (π : α → β), (∀ (g : G) x, π (g • x) = g • π x) →

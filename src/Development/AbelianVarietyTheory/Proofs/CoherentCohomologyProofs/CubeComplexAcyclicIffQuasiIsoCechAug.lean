@@ -154,7 +154,7 @@ def termLower (A : Cube.{v} ι R) (p : ℕ) : Term A p →ₗ[R] Term (lowerFace
 
 theorem termLower_apply (A : Cube.{v} ι R) (p : ℕ) (x : Term A p)
     (s : {s : Finset κ // s.card = p}) :
-    termLower e A p x s = x ⟨s.1.map e.toEmbedding, (Finset.card_map _).trans s.2⟩ := rfl
+    termLower (e := e) A p x s = x ⟨s.1.map e.toEmbedding, (Finset.card_map _).trans s.2⟩ := rfl
 
 def termUpper (he : Set.range e = {i}ᶜ) (A : Cube.{v} ι R) (p : ℕ) :
     Term A (p + 1) →ₗ[R] Term (upperFace e i A) p :=
@@ -194,12 +194,12 @@ noncomputable def termSec (A : Cube.{v} ι R) (p : ℕ) :
 variable (he : Set.range e = {i}ᶜ) (A : Cube.{v} ι R)
 
 theorem termIncl_apply_of_notMem {p : ℕ} (y : Term (upperFace e i A) p)
-    (t : {t : Finset ι // t.card = p + 1}) (ht : i ∉ t.1) : termIncl e i A p y t = 0 := by
+    (t : {t : Finset ι // t.card = p + 1}) (ht : i ∉ t.1) : termIncl (e := e) (i := i) A p y t = 0 := by
   rw [termIncl, LinearMap.pi_apply, dite_eq_right ht]; rfl
 
 theorem termIncl_apply_insert {p : ℕ} (y : Term (upperFace e i A) p)
     (s : {s : Finset κ // s.card = p}) :
-    termIncl e i A p y ⟨insert i (s.1.map e.toEmbedding), by rw [card_insert_map he, s.2]⟩ =
+    termIncl (e := e) (i := i) A p y ⟨insert i (s.1.map e.toEmbedding), by rw [card_insert_map he, s.2]⟩ =
       upperSign e i s.1 • y s := by
   rw [termIncl, LinearMap.pi_apply, dite_eq_left (Finset.mem_insert_self _ _)]
   have key : ∀ (s' : Finset κ) (_ : s' = s.1) (h : insert i (s'.map e.toEmbedding) ⊆
@@ -211,14 +211,15 @@ theorem termIncl_apply_insert {p : ℕ} (y : Term (upperFace e i A) p)
   exact key _ (preimage_insert_map he s.1) _
 
 theorem termSec_apply_of_mem {p : ℕ} (y : Term (lowerFace e A) p)
-    (t : {t : Finset ι // t.card = p}) (ht : i ∈ t.1) : termSec e i A p y t = 0 := by
-  rw [termSec, LinearMap.pi_apply, if_pos ht]; rfl
+    (t : {t : Finset ι // t.card = p}) (ht : i ∈ t.1) : termSec (e := e) (i := i) A p y t = 0 := by
+  rw [termSec, LinearMap.pi_apply, ite_eq_left ht]; rfl
 
 
+include he in
 theorem termSec_apply_map {p : ℕ} (y : Term (lowerFace e A) p)
     (s : {s : Finset κ // s.card = p}) :
-    termSec e i A p y ⟨s.1.map e.toEmbedding, (Finset.card_map _).trans s.2⟩ = y s := by
-  rw [termSec, LinearMap.pi_apply, if_neg (notMem_map_of_range_eq he s.1)]
+    termSec (e := e) (i := i) A p y ⟨s.1.map e.toEmbedding, (Finset.card_map _).trans s.2⟩ = y s := by
+  rw [termSec, LinearMap.pi_apply, ite_eq_right (notMem_map_of_range_eq he s.1)]
   have key : ∀ (s' : Finset κ) (_ : s' = s.1) (h : s'.map e.toEmbedding ⊆
       s.1.map e.toEmbedding), res A h (extend (lowerFace e A) p y s') = y s := by
     rintro _ rfl h
@@ -228,31 +229,33 @@ theorem termSec_apply_map {p : ℕ} (y : Term (lowerFace e A) p)
 
 @[simp]
 theorem termUpper_termIncl {p : ℕ} (y : Term (upperFace e i A) p) :
-    termUpper he A p (termIncl e i A p y) = y := by
+    termUpper he A p (termIncl (e := e) (i := i) A p y) = y := by
   funext s
   rw [termUpper_apply, termIncl_apply_insert he]
   exact upperSign_smul_smul e i s.1 (y s)
 
 
+include he in
 theorem termLower_termIncl {p : ℕ} (y : Term (upperFace e i A) p) :
-    termLower e A (p + 1) (termIncl e i A p y) = 0 :=
+    termLower (e := e) A (p + 1) (termIncl (e := e) (i := i) A p y) = 0 :=
   funext fun s => termIncl_apply_of_notMem A y _ (notMem_map_of_range_eq he s.1)
 
 
+include he in
 theorem termLower_termSec {p : ℕ} (y : Term (lowerFace e A) p) :
-    termLower e A p (termSec e i A p y) = y :=
+    termLower (e := e) A p (termSec (e := e) (i := i) A p y) = y :=
   funext fun s => termSec_apply_map he A y s
 
 @[simp]
 theorem termUpper_termSec {p : ℕ} (y : Term (lowerFace e A) (p + 1)) :
-    termUpper he A p (termSec e i A (p + 1) y) = 0 := by
+    termUpper he A p (termSec (e := e) (i := i) A (p + 1) y) = 0 := by
   funext s
   rw [termUpper_apply, termSec_apply_of_mem A y _ (Finset.mem_insert_self _ _), smul_zero]
   rfl
 
 theorem term_ext_faces {p : ℕ} {x y : Term A (p + 1)}
     (h₁ : termUpper he A p x = termUpper he A p y)
-    (h₂ : termLower e A (p + 1) x = termLower e A (p + 1) y) : x = y := by
+    (h₂ : termLower (e := e) A (p + 1) x = termLower (e := e) A (p + 1) y) : x = y := by
   funext ⟨t, ht⟩
   rcases exists_eq_map_or_eq_insert he t with ⟨s, rfl⟩ | ⟨s, rfl⟩
   · exact congrFun h₂ ⟨s, (Finset.card_map _).symm.trans ht⟩
@@ -261,7 +264,8 @@ theorem term_ext_faces {p : ℕ} {x y : Term A (p + 1)}
     exact (upperSign_smul_smul e i s _).symm.trans (h.trans (upperSign_smul_smul e i s _))
 
 
-theorem termLower_zero_injective : Function.Injective (termLower e A 0) := by
+include he in
+theorem termLower_zero_injective : Function.Injective (termLower (e := e) A 0) := by
   intro x y h
   funext ⟨t, ht⟩
   rcases exists_eq_map_or_eq_insert he t with ⟨s, rfl⟩ | ⟨s, rfl⟩
@@ -269,25 +273,26 @@ theorem termLower_zero_injective : Function.Injective (termLower e A 0) := by
   · rw [card_insert_map he] at ht; omega
 
 theorem termIncl_add_termSec {p : ℕ} (x : Term A (p + 1)) :
-    termIncl e i A p (termUpper he A p x) + termSec e i A (p + 1) (termLower e A (p + 1) x) = x :=
+    termIncl (e := e) (i := i) A p (termUpper he A p x) + termSec (e := e) (i := i) A (p + 1) (termLower (e := e) A (p + 1) x) = x :=
   term_ext_faces he A (by simp) (by simp [termLower_termSec he, termLower_termIncl he])
 
 
-theorem termSec_termLower_zero (x : Term A 0) : termSec e i A 0 (termLower e A 0 x) = x :=
+include he in
+theorem termSec_termLower_zero (x : Term A 0) : termSec (e := e) (i := i) A 0 (termLower (e := e) A 0 x) = x :=
   termLower_zero_injective he A (termLower_termSec he A _)
 
 theorem termLower_d {p : ℕ} (x : Term A p) :
-    termLower e A (p + 1) (d A p x) = d (lowerFace e A) p (termLower e A p x) := by
+    termLower (e := e) A (p + 1) (d A p x) = d (lowerFace e A) p (termLower (e := e) A p x) := by
   funext s
   rw [termLower_apply, d_apply_eq_totalD A x _ (fun s => (extend_apply_of_eq A x s.2).symm),
     totalD_map]
-  exact (d_apply_eq_totalD (lowerFace e A) (termLower e A p x)
+  exact (d_apply_eq_totalD (lowerFace e A) (termLower (e := e) A p x)
     (fun s => extend A p x (s.map e.toEmbedding))
     (fun s => (extend_apply_of_eq A x ((Finset.card_map _).trans s.2)).symm) s).symm
 
 theorem termUpper_d {p : ℕ} (x : Term A (p + 1)) :
     termUpper he A (p + 1) (d A (p + 1) x) = d (upperFace e i A) p (termUpper he A p x) +
-      (-1 : ℤ) ^ (p + 1) • termMap (faceMap e i A) (p + 1) (termLower e A (p + 1) x) := by
+      (-1 : ℤ) ^ (p + 1) • termMap (faceMap e i A) (p + 1) (termLower (e := e) A (p + 1) x) := by
   funext s
   rw [termUpper_apply, d_apply_eq_totalD A x _ (fun s => (extend_apply_of_eq A x s.2).symm),
     totalD_insert_map he]
@@ -297,7 +302,7 @@ theorem termUpper_d {p : ℕ} (x : Term A (p + 1)) :
     rfl
 
 theorem termUpper_d_zero (x : Term A 0) :
-    termUpper he A 0 (d A 0 x) = termMap (faceMap e i A) 0 (termLower e A 0 x) := by
+    termUpper he A 0 (d A 0 x) = termMap (faceMap e i A) 0 (termLower (e := e) A 0 x) := by
   funext ⟨s, hs⟩
   rw [termUpper_apply, d_apply_eq_totalD A x _ (fun s => (extend_apply_of_eq A x s.2).symm),
     totalD_insert_map he]
@@ -308,15 +313,17 @@ theorem termUpper_d_zero (x : Term A 0) :
   rfl
 
 
+include he in
 theorem d_termIncl {p : ℕ} (y : Term (upperFace e i A) p) :
-    d A (p + 1) (termIncl e i A p y) = termIncl e i A (p + 1) (d (upperFace e i A) p y) :=
+    d A (p + 1) (termIncl (e := e) (i := i) A p y) = termIncl (e := e) (i := i) A (p + 1) (d (upperFace e i A) p y) :=
   term_ext_faces he A (by simp [termUpper_d, termLower_termIncl he])
     (by simp [termLower_d, termLower_termIncl he])
 
 
+include he in
 theorem d_termSec {p : ℕ} (y : Term (lowerFace e A) p) :
-    d A p (termSec e i A p y) = termSec e i A (p + 1) (d (lowerFace e A) p y) +
-      termIncl e i A p ((-1 : ℤ) ^ p • termMap (faceMap e i A) p y) := by
+    d A p (termSec (e := e) (i := i) A p y) = termSec (e := e) (i := i) A (p + 1) (d (lowerFace e A) p y) +
+      termIncl (e := e) (i := i) A p ((-1 : ℤ) ^ p • termMap (faceMap e i A) p y) := by
   refine term_ext_faces he A ?_
     (by simp [termLower_d, termLower_termSec he, termLower_termIncl he])
   cases p with
@@ -371,15 +378,15 @@ variable {ι κ : Type} [LinearOrder ι] [LinearOrder κ] {R : Type u} [Ring R]
 
 
 def cubeLowerProj (A : Cube.{v} ι R) : cubeComplex A ⟶ cubeComplex (Cube.lowerFace e A) :=
-  CochainComplex.ofHom (fun p => ModuleCat.ofHom (Cube.termLower e A p)) fun p => by
+  CochainComplex.ofHom (fun p => ModuleCat.ofHom (Cube.termLower (e := e) A p)) fun p => by
     rw [cubeComplex_d, cubeComplex_d]
     exact ModuleCat.hom_ext (LinearMap.ext fun x => (Cube.termLower_d A x).symm)
 
 theorem isIso_cubeLowerProj (he : Function.Surjective e) (A : Cube.{v} ι R) :
-    IsIso (cubeLowerProj e A) := by
-  have : ∀ p, IsIso ((cubeLowerProj e A).f p) := fun p => by
+    IsIso (cubeLowerProj (e := e) A) := by
+  have : ∀ p, IsIso ((cubeLowerProj (e := e) A).f p) := fun p => by
     rw [ConcreteCategory.isIso_iff_bijective]
-    change Function.Bijective (Cube.termLower e A p)
+    change Function.Bijective (Cube.termLower (e := e) A p)
     have hb : Function.Bijective (fun s : {s : Finset κ // s.card = p} =>
         (⟨s.1.map e.toEmbedding, (Finset.card_map _).trans s.2⟩ : {t : Finset ι // t.card = p})) := by
       refine ⟨fun s s' h => Subtype.ext (Finset.map_injective _ (congrArg Subtype.val h)), ?_⟩
@@ -397,46 +404,46 @@ theorem isIso_cubeLowerProj (he : Function.Surjective e) (A : Cube.{v} ι R) :
 
 noncomputable def cubeInclX (A : Cube.{v} ι R) (p : ℕ) :
     (cubeComplex (Cube.upperFace e i A)).X p ⟶ (cubeComplex A).X (p + 1) :=
-  ModuleCat.ofHom (Cube.termIncl e i A p)
+  ModuleCat.ofHom (Cube.termIncl (e := e) (i := i) A p)
 
 
 noncomputable def cubeSecX (A : Cube.{v} ι R) (p : ℕ) :
     (cubeComplex (Cube.lowerFace e A)).X p ⟶ (cubeComplex A).X p :=
-  ModuleCat.ofHom (Cube.termSec e i A p)
+  ModuleCat.ofHom (Cube.termSec (e := e) (i := i) A p)
 
 
 noncomputable def cubeUpperInclF (A : Cube.{v} ι R) : ∀ p : ℕ,
     (shiftSucc (cubeComplex (Cube.upperFace e i A))).X p ⟶ (cubeComplex A).X p
   | 0 => 0
-  | p + 1 => (shiftSuccXIso _ p).hom ≫ cubeInclX e i A p
+  | p + 1 => (shiftSuccXIso _ p).hom ≫ cubeInclX (e := e) (i := i) A p
 
 variable (he : Set.range e = {i}ᶜ)
 
-noncomputable def cubeUpperIncl (A : Cube.{v} ι R) :
+noncomputable def cubeUpperIncl (he : Set.range e = {i}ᶜ) (A : Cube.{v} ι R) :
     shiftSucc (cubeComplex (Cube.upperFace e i A)) ⟶ cubeComplex A :=
-  CochainComplex.ofHom (cubeUpperInclF e i A) fun p => by
+  CochainComplex.ofHom (cubeUpperInclF (e := e) (i := i) A) fun p => by
     cases p with
     | zero => exact (isZero_shiftSucc_X_zero _).eq_of_src _ _
     | succ p =>
-      change ((shiftSuccXIso _ p).hom ≫ cubeInclX e i A p) ≫ _ =
-        _ ≫ (shiftSuccXIso _ (p + 1)).hom ≫ cubeInclX e i A (p + 1)
+      change ((shiftSuccXIso _ p).hom ≫ cubeInclX (e := e) (i := i) A p) ≫ _ =
+        _ ≫ (shiftSuccXIso _ (p + 1)).hom ≫ cubeInclX (e := e) (i := i) A (p + 1)
       rw [shiftSucc_d, Category.assoc, Category.assoc,
         Category.assoc, Iso.inv_hom_id_assoc, cubeComplex_d, cubeComplex_d]
       congr 1
       exact ModuleCat.hom_ext (LinearMap.ext fun x => Cube.d_termIncl he A x)
 
 theorem cubeUpperIncl_f_succ (A : Cube.{v} ι R) (p : ℕ) :
-    (cubeUpperIncl he A).f (p + 1) = (shiftSuccXIso _ p).hom ≫ cubeInclX e i A p := rfl
+    (cubeUpperIncl he A).f (p + 1) = (shiftSuccXIso _ p).hom ≫ cubeInclX (e := e) (i := i) A p := rfl
 
-noncomputable abbrev cubeFaceSequence (A : Cube.{v} ι R) :
+noncomputable abbrev cubeFaceSequence (he : Set.range e = {i}ᶜ) (A : Cube.{v} ι R) :
     ShortComplex (CochainComplex (ModuleCat.{v} R) ℕ) :=
-  ShortComplex.mk (cubeUpperIncl he A) (cubeLowerProj e A) (by
+  ShortComplex.mk (cubeUpperIncl he A) (cubeLowerProj (e := e) A) (by
     refine HomologicalComplex.hom_ext _ _ fun p => ?_
     cases p with
     | zero => exact (isZero_shiftSucc_X_zero _).eq_of_src _ _
     | succ p =>
       rw [comp_f, cubeUpperIncl_f_succ, Category.assoc, zero_f]
-      have h : cubeInclX e i A p ≫ (cubeLowerProj e A).f (p + 1) = 0 :=
+      have h : cubeInclX (e := e) (i := i) A p ≫ (cubeLowerProj (e := e) A).f (p + 1) = 0 :=
         ModuleCat.hom_ext (LinearMap.ext fun x => Cube.termLower_termIncl he A x)
       rw [h, comp_zero])
 
@@ -444,7 +451,7 @@ noncomputable def cubeFaceSplitting (A : Cube.{v} ι R) : ∀ p : ℕ,
     ((cubeFaceSequence he A).map (eval _ _ p)).Splitting
   | 0 =>
     { r := 0
-      s := cubeSecX e i A 0
+      s := cubeSecX (e := e) (i := i) A 0
       f_r := (isZero_shiftSucc_X_zero _).eq_of_src _ _
       s_g := ModuleCat.hom_ext (LinearMap.ext fun x => Cube.termLower_termSec he A x)
       id := by
@@ -453,9 +460,9 @@ noncomputable def cubeFaceSplitting (A : Cube.{v} ι R) : ∀ p : ℕ,
   | p + 1 =>
     { r := ModuleCat.ofHom (Cube.termUpper he A p) ≫
         (shiftSuccXIso (cubeComplex (Cube.upperFace e i A)) p).inv
-      s := cubeSecX e i A (p + 1)
+      s := cubeSecX (e := e) (i := i) A (p + 1)
       f_r := by
-        have h : ModuleCat.ofHom (Cube.termIncl e i A p) ≫
+        have h : ModuleCat.ofHom (Cube.termIncl (e := e) (i := i) A p) ≫
             ModuleCat.ofHom (Cube.termUpper he A p) =
             𝟙 ((cubeComplex (Cube.upperFace e i A)).X p) :=
           ModuleCat.hom_ext (LinearMap.ext fun x => Cube.termUpper_termIncl he A x)
@@ -470,8 +477,8 @@ noncomputable def cubeFaceSplitting (A : Cube.{v} ι R) : ∀ p : ℕ,
         let j := shiftSuccXIso (cubeComplex (Cube.upperFace e i A)) p
         have h : j.hom.hom (j.inv.hom (Cube.termUpper he A p x)) = Cube.termUpper he A p x :=
           congr(($(j.inv_hom_id)).hom (Cube.termUpper he A p x))
-        exact congrArg (fun y => Cube.termIncl e i A p y +
-          Cube.termSec e i A (p + 1) (Cube.termLower e A (p + 1) x)) h }
+        exact congrArg (fun y => Cube.termIncl (e := e) (i := i) A p y +
+          Cube.termSec (e := e) (i := i) A (p + 1) (Cube.termLower (e := e) A (p + 1) x)) h }
 
 theorem cubeFaceSequence_shortExact (A : Cube.{v} ι R) : (cubeFaceSequence he A).ShortExact :=
   HomologicalComplex.shortExact_of_degreewise_shortExact _ fun p =>
@@ -484,12 +491,12 @@ theorem cubeFaceSequence_δ (A : Cube.{v} ι R) (p : ℕ) :
   let L := cubeComplex (Cube.lowerFace e A)
   let U := cubeComplex (Cube.upperFace e i A)
   let φ : L ⟶ U := cubeComplexMap (Cube.faceMap e i A)
-  let σ : L.X p ⟶ (cubeComplex A).X p := cubeSecX e i A p
-  have hσ : σ ≫ (cubeLowerProj e A).f p = 𝟙 _ :=
+  let σ : L.X p ⟶ (cubeComplex A).X p := cubeSecX (e := e) (i := i) A p
+  have hσ : σ ≫ (cubeLowerProj (e := e) A).f p = 𝟙 _ :=
     ModuleCat.hom_ext (LinearMap.ext fun x => Cube.termLower_termSec he A x)
   have hd : σ ≫ (cubeComplex A).d p (p + 1) =
-      L.d p (p + 1) ≫ cubeSecX e i A (p + 1) +
-        ((-1 : ℤ) ^ p • φ.f p) ≫ cubeInclX e i A p := by
+      L.d p (p + 1) ≫ cubeSecX (e := e) (i := i) A (p + 1) +
+        ((-1 : ℤ) ^ p • φ.f p) ≫ cubeInclX (e := e) (i := i) A p := by
     rw [cubeComplex_d, cubeComplex_d]
     exact ModuleCat.hom_ext (LinearMap.ext fun x => Cube.d_termSec he A x)
   have key := (cubeFaceSequence_shortExact he A).δ_eq p (p + 1) rfl (L.iCycles p)

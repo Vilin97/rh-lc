@@ -169,6 +169,7 @@ def balTensorRel : AddSubgroup (X ⊗[ℤ] X) :=
       {z | ∃ y x : X, z = y ⊗ₜ x - x ⊗ₜ y})
 
 
+variable (O) in
 def balTensorMk : Bil X ((X ⊗[ℤ] X) ⧸ balTensorRel (O := O) (X := X)) :=
   LinearMap.mk₂ ℤ (fun y x => QuotientAddGroup.mk'
     (balTensorRel (O := O) (X := X)) (y ⊗ₜ x))

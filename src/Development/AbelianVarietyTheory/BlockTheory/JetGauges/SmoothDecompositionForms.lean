@@ -1,12 +1,8 @@
-module
-
-public import Mathlib
-public import Formalism.PeriodIntegrals.UpqRep
-public import Formalism.PeriodIntegrals.IsLowUnitH
-public import Formalism.PeriodIntegrals.BesselMapUniq
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightUniqueness.HpkMulMulHpkApply
-
-@[expose] public section
+import Mathlib
+import Formalism.PeriodIntegrals.UpqRep
+import Formalism.PeriodIntegrals.IsLowUnitH
+import Formalism.PeriodIntegrals.BesselMapUniq
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightUniqueness.HpkMulMulHpkApply
 
 open Matrix Finset
 open scoped InnerProductSpace
@@ -114,7 +110,9 @@ section Checks
 
 variable {ι : Type} [Fintype ι]
 
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 end Checks
 

@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open MvPolynomial
 
@@ -170,7 +166,7 @@ theorem column_degree_le {K σ : Type*} [Field K] [CharZero K] [DecidableEq σ] 
   have hQcoeff : ∀ y : σ → K, (Q y).coeff j = ∑ m ∈ P.support,
       if ∑ a, ∑ k ∈ S, m (z (a, k)) = j then AddMonoidAlgebra.coeff P m * ∏ s ∈ m.support, y s ^ m s else 0 := by
     intro y
-    simp only [Q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, he]
+    simp only [Q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply, he]
   have key : ∀ x : σ → K, eval x D ≠ 0 → eval x R = 0 := by
     intro x hdet
     let M : Matrix (Fin S.card) (Fin S.card) K := Matrix.of fun a b => x (z (top a, ee b))
@@ -269,6 +265,6 @@ theorem column_degree_le {K σ : Type*} [Field K] [CharZero K] [DecidableEq σ] 
     · rw [hdet, mul_zero]
     · rw [key x hdet, zero_mul]
   have hR : R = 0 := (mul_eq_zero.1 hRD).resolve_right hD
-  exact hR0 (by rw [hR, coeff_zero])
+  exact hR0 (by simp only [hR, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply])
 
 end GlobalTheory

@@ -1,8 +1,4 @@
-module
-
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerFlagSplitting.MulVecColOfMul
-
-@[expose] public section
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerFlagSplitting.MulVecColOfMul
 
 open Matrix Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.C2
 
@@ -163,7 +159,20 @@ theorem stabilizer_splitting_of_parts (hFS : FixSub) (hSF : SubFlag) (hUN : Unip
       have e : s - 1 = γ⁻¹ * (g - 1) * γ := by
         calc s - 1 = γ⁻¹ * g * γ - γ⁻¹ * γ := by rw [hγ1, ← hsg]
           _ = γ⁻¹ * (g - 1) * γ := by noncomm_ring
-      rw [e, conj_pow (g - 1) γ γ⁻¹ hγ1 hγ2, hn]; simp
+      rw [e]
+      have hp : ∀ n : ℕ, (γ⁻¹ * (g - 1) * γ) ^ n = γ⁻¹ * (g - 1) ^ n * γ := by
+        intro n
+        induction n with
+        | zero => simp [hγ1]
+        | succ n ih =>
+          rw [pow_succ, ih, pow_succ]
+          calc
+            γ⁻¹ * (g - 1) ^ n * γ * (γ⁻¹ * (g - 1) * γ) =
+                γ⁻¹ * ((g - 1) ^ n * (γ * γ⁻¹)) * (g - 1) * γ := by noncomm_ring
+            _ = γ⁻¹ * ((g - 1) ^ n * (g - 1)) * γ := by rw [hγ2]; noncomm_ring
+            _ = γ⁻¹ * (g - 1) ^ (n + 1) * γ := by rw [pow_succ]
+      rw [hp (r + 2), hn]
+      simp
     · rintro ⟨hgN, n, hnN, hgn⟩
       refine ⟨⟨NS z g hgN, n, NS z' n hnN, hgn⟩, fun v hv => ?_⟩
       have hL : ∀ j, herm (Hpk k r) v (gramVec k r z z' γ j) = 0 := fun j => by

@@ -1,8 +1,4 @@
-module
-
-public import Formalism.PieriBlockIdeals.LatticeInclusionRealSettingAlt
-
-@[expose] public section
+import Formalism.PieriBlockIdeals.LatticeInclusionRealSettingAlt
 
 noncomputable section
 
@@ -33,8 +29,6 @@ section SF07
 
 open TensorProduct MvPolynomial CategoryTheory CategoryTheory.Limits
 open Formalism.UG Formalism.RankGapBounds.FormsTensorLocalization Formalism.GradedWeylDivisibility Formalism.CohomologicalDescent.LD Formalism.CohomologicalDescent.UnitNormBounds Formalism.CohomologicalDescent.DepthNonnegative
-
-
 
 end SF07
 

@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable section
 
@@ -22,7 +18,8 @@ def Ge (w : σ → ℕ) (d : ℕ) : Submodule K (MvPolynomial σ K) where
   zero_mem' := by
     rw [Set.mem_setOf_eq]
     intro m _
-    rw [coeff_zero]
+    rw [AddMonoidAlgebra.coeff_zero]
+    rfl
   smul_mem' := by
     intro c F hF
     rw [Set.mem_setOf_eq] at hF ⊢

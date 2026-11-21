@@ -115,11 +115,24 @@ theorem integral_of_alg (b : WW p) (hb : IsAlgebraic ℚ_[p] (algebraMap (WW p) 
 
 theorem norm_le_one_of_root {K : Type*} [NormedField K] [IsUltrametricDist K] (P : K[X]) (hm : P.Monic)
     (hc : ∀ i, ‖P.coeff i‖ ≤ 1) (x : K) (hx : P.eval x = 0) : ‖x‖ ≤ 1 := by
-  first | exact Bl.general_b_fact_third.goal1 .. | (apply Bl.general_b_fact_third.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_third.goal1 <;> assumption) | (apply @Bl.general_b_fact_third.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_third.goal1 <;> assumption) | (apply @Bl.general_b_fact_third.goal1 <;> first | assumption | infer_instance) | exact @Bl.general_b_fact_third.goal1 K ‹_› ‹_› P hm hc x hx | exact @Bl.general_b_fact_third.goal1 K ‹_› ‹_› P hm hc x | exact @Bl.general_b_fact_third.goal1 K ‹_› ‹_› P hm hc | exact @Bl.general_b_fact_third.goal1 K ‹_› ‹_› P hm | exact @Bl.general_b_fact_third.goal1 K ‹_› ‹_› P | exact @Bl.general_b_fact_third.goal1 K ‹_› ‹_› | exact @Bl.general_b_fact_third.goal1 K ‹_› | exact @Bl.general_b_fact_third.goal1 K
+  by_contra! h
+  have hx0 : 0 < ‖x‖ := zero_lt_one.trans h
+  rw [Polynomial.eval_eq_sum_range, Finset.sum_range_succ, hm.coeff_natDegree, one_mul] at hx
+  have hsum : ‖∑ i ∈ Finset.range P.natDegree, P.coeff i * x ^ i‖ ≤ ‖x‖ ^ P.natDegree / ‖x‖ := by
+    refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) fun i hi => ?_
+    rw [norm_mul, norm_pow, le_div_iff₀ hx0]
+    calc
+      ‖P.coeff i‖ * ‖x‖ ^ i * ‖x‖ ≤ 1 * ‖x‖ ^ i * ‖x‖ := by gcongr; exact hc i
+      _ = ‖x‖ ^ (i + 1) := by rw [one_mul, pow_succ]
+      _ ≤ ‖x‖ ^ P.natDegree := pow_le_pow_right₀ h.le (Finset.mem_range.1 hi)
+  rw [eq_neg_of_add_eq_zero_left hx, norm_neg, norm_pow] at hsum
+  exact (not_lt_of_ge hsum) (div_lt_self (pow_pos hx0 _) h)
 
 abbrev Kalg : IntermediateField ℚ_[p] (K0 p) := algebraicClosure ℚ_[p] (K0 p)
 
-def phi : Kalg p →ₐ[ℚ_[p]] ℂ_[p] := IsAlgClosed.lift
+def phi : Kalg p →ₐ[ℚ_[p]] ℂ_[p] := by
+  letI : Module.IsTorsionFree ℚ_[p] (Kalg p) := DivisionSemiring.to_moduleIsTorsionFree
+  exact IsAlgClosed.lift
 
 theorem norm_p_C : ‖(p : ℂ_[p])‖ = (p : ℝ)⁻¹ := by
   have h := PadicComplex.norm_extends' p (p : ℚ_[p])
@@ -208,7 +221,7 @@ theorem exists_pow_eq (y : kb p) : ∃ q : ℕ, 1 < q ∧ y ^ q = y := by
 theorem teich_mem (y : kb p) : algebraMap (WW p) (K0 p) (WittVector.teichmuller p y) ∈ Kalg p := by
   obtain ⟨q, hq, hy⟩ := exists_pow_eq p y
   rw [mem_algebraicClosure_iff]
-  refine ⟨X ^ q - X, FiniteField.X_pow_card_sub_X_ne_zero _ hq, ?_⟩
+  refine ⟨X ^ q - X, Polynomial.X_pow_sub_X_ne_zero hq, ?_⟩
   rw [map_sub, map_pow, aeval_X, ← map_pow, ← map_pow, hy, sub_self]
 
 theorem exists_approx (x : WW p) (N : ℕ) : ∃ z, Approx p N x z := by

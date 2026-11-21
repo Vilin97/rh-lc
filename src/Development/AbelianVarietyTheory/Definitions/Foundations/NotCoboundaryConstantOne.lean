@@ -231,8 +231,10 @@ theorem isClo_algebraicClosure : IsClo p (AlgebraicClosure (FractionRing (O0 p))
   inj := by
     rw [IsScalarTower.algebraMap_eq (O0 p) (FractionRing (O0 p))]
     exact (algebraMap (FractionRing (O0 p)) _).injective.comp (IsFractionRing.injective _ _)
-  alg := (IsFractionRing.comap_isAlgebraic_iff (A := O0 p) (K := FractionRing (O0 p))).2
-    inferInstance
+  alg := by
+    exact IsFractionRing.comap_isAlgebraic_iff.mpr
+      (inferInstance : Algebra.IsAlgebraic (FractionRing (O0 p))
+        (AlgebraicClosure (FractionRing (O0 p))))
   clo := inferInstance
 
 end Ring

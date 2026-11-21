@@ -12,29 +12,29 @@ section Shape
 
 variable {G : Type*} [Group G] {R : Type*} [CommRing R]
 
-def HasMult {m : ℕ} (η : G →* ℤˣ) (r : G →* GG m R) : Prop := ∀ g, (r g).right = η g
+def HasMult {m : ℕ} (η : G →* ℤˣ) (r : G →* GG (m := m) (R := R)) : Prop := ∀ g, (r g).right = η g
 
-def zeta (c g₁ : G) (r : G →* GG 3 R) : R := zmat c g₁ r 0 0
+def zeta (c g₁ : G) (r : G →* GG (m := 3) (R := R)) : R := zmat c g₁ r 0 0
 
 def MatIrr {m : ℕ} (H : Subgroup G) (a : G → Matrix (Fin m) (Fin m) R) : Prop :=
   ∀ W : Submodule R (Fin m → R), (∀ g ∈ H, ∀ v ∈ W, a g *ᵥ v ∈ W) → W = ⊥ ∨ W = ⊤
 
-def mats {m : ℕ} (r : G →* GG m R) (g : G) : Matrix (Fin m) (Fin m) R := (r g).mat
+def mats {m : ℕ} (r : G →* GG (m := m) (R := R)) (g : G) : Matrix (Fin m) (Fin m) R := (r g).mat
 
-def TypeI (η : G →* ℤˣ) (r : G →* GG 3 R) : Prop := MatIrr η.ker (mats r)
+def TypeI (η : G →* ℤˣ) (r : G →* GG (m := 3) (R := R)) : Prop := MatIrr η.ker (mats r)
 
-def Upper (η : G →* ℤˣ) (r : G →* GG 3 R) : Prop := ∀ g ∈ η.ker, ∀ a b, wt a b < 0 → (r g).mat a b = 0
+def Upper (η : G →* ℤˣ) (r : G →* GG (m := 3) (R := R)) : Prop := ∀ g ∈ η.ker, ∀ a b, wt a b < 0 → (r g).mat a b = 0
 
-def Lower (η : G →* ℤˣ) (r : G →* GG 3 R) : Prop := ∀ g ∈ η.ker, ∀ a b, 0 < wt a b → (r g).mat a b = 0
+def Lower (η : G →* ℤˣ) (r : G →* GG (m := 3) (R := R)) : Prop := ∀ g ∈ η.ker, ∀ a b, 0 < wt a b → (r g).mat a b = 0
 
-def Block (η : G →* ℤˣ) (r : G →* GG 3 R) : Prop := ∀ g ∈ η.ker, ∀ a b, Odd (wt a b) → (r g).mat a b = 0
+def Block (η : G →* ℤˣ) (r : G →* GG (m := 3) (R := R)) : Prop := ∀ g ∈ η.ker, ∀ a b, Odd (wt a b) → (r g).mat a b = 0
 
 def corner (X : Matrix (Fin 3) (Fin 3) R) : Matrix (Fin 2) (Fin 2) R := X.submatrix ![0, 2] ![0, 2]
 
-def TypeII (η : G →* ℤˣ) (r : G →* GG 3 R) : Prop :=
+def TypeII (η : G →* ℤˣ) (r : G →* GG (m := 3) (R := R)) : Prop :=
   Block η r ∧ MatIrr η.ker fun g => corner (r g).mat
 
-def Wfun (r : G →* GG 3 R) (g : G) : Matrix (Fin 2) (Fin 2) R :=
+def Wfun (r : G →* GG (m := 3) (R := R)) (g : G) : Matrix (Fin 2) (Fin 2) R :=
   if (r g).right = 1 then corner (r g).mat else corner (r g).mat * Matrix.diagonal ![-1, 1]
 
 def MatIso {m : ℕ} (H : Subgroup G) (a a' : G → Matrix (Fin m) (Fin m) R) : Prop :=
@@ -46,23 +46,23 @@ section Deform
 
 variable {G : Type*} [Group G] {C : Type*} [CommRing C] {m : ℕ}
 
-def IsCoc (r : G →* GG m C) (γ : G → Matrix (Fin m) (Fin m) C) : Prop :=
+def IsCoc (r : G →* GG (m := m) (R := C)) (γ : G → Matrix (Fin m) (Fin m) C) : Prop :=
   ∀ g h, γ (g * h) = γ g + adRep r g (γ h)
 
 def EntIn (I : Ideal C) (X : Matrix (Fin m) (Fin m) C) : Prop := ∀ a b, X a b ∈ I
 
-def IsDeform (r : G →* GG m C) (γ : G → Matrix (Fin m) (Fin m) C) (r' : G →* GG m C) : Prop :=
+def IsDeform (r : G →* GG (m := m) (R := C)) (γ : G → Matrix (Fin m) (Fin m) C) (r' : G →* GG (m := m) (R := C)) : Prop :=
   ∀ g, (r' g).right = (r g).right ∧ (r' g).mat = (1 + γ g) * (r g).mat
 
-def zvar (c g₁ : G) (r : G →* GG 3 C) (γ : G → Matrix (Fin 3) (Fin 3) C) : Matrix (Fin 3) (Fin 3) C :=
+def zvar (c g₁ : G) (r : G →* GG (m := 3) (R := C)) (γ : G → Matrix (Fin 3) (Fin 3) C) : Matrix (Fin 3) (Fin 3) C :=
   γ g₁ * (r g₁).mat - γ (gstar c g₁) * (r (gstar c g₁)).mat
 
-structure NormCoc (c g₁ : G) (r : G →* GG 3 C) (γ : G → Matrix (Fin 3) (Fin 3) C) : Prop where
+structure NormCoc (c g₁ : G) (r : G →* GG (m := 3) (R := C)) (γ : G → Matrix (Fin 3) (Fin 3) C) : Prop where
   atc : γ c = 0
   z12 : zvar c g₁ r γ 0 1 = 0
   z21 : zvar c g₁ r γ 1 0 = 0
 
-def cob (r : G →* GG m C) (X : Matrix (Fin m) (Fin m) C) (g : G) : Matrix (Fin m) (Fin m) C :=
+def cob (r : G →* GG (m := m) (R := C)) (X : Matrix (Fin m) (Fin m) C) (g : G) : Matrix (Fin m) (Fin m) C :=
   X - adRep r g X
 
 def CongOne (I : Ideal C) (h : GL (Fin m) C) : Prop := EntIn I ((h : Matrix (Fin m) (Fin m) C) - 1)

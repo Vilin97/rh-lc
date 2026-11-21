@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open Matrix
 
@@ -40,8 +36,10 @@ lemma Jm_mul_self {n : ℕ} (ε : Fin n → Bool) : Jm ε * Jm ε = 1 := by
 lemma Jm_conjTranspose {n : ℕ} (ε : Fin n → Bool) : (Jm ε)ᴴ = Jm ε := by
   unfold Jm
   rw [Matrix.diagonal_conjTranspose]
-  congr 1
-  cases ε a <;> simp
+  apply congrArg Matrix.diagonal
+  funext a
+  change star (if ε a then (1 : ℂ) else -1) = _
+  cases h : ε a <;> simp [h, star_neg, star_one]
 
 def UJ {n : ℕ} (ε : Fin n → Bool) : Subgroup (Matrix (Fin n) (Fin n) ℂ)ˣ where
   carrier := {g | inUJ ε (g : Matrix (Fin n) (Fin n) ℂ)}

@@ -57,7 +57,7 @@ theorem smulHom_pushforward (g : Y ⟶ X) (G : Y.Modules) (r : Γ(X, ⊤)) :
   refine Scheme.Modules.hom_ext _ _ fun W => ?_
   ext x
   have h : g.app W (restrictGlobal X W r) = restrictGlobal Y (g ⁻¹ᵁ W) (g.appTop r) :=
-    ConcreteCategory.congr_hom (g.naturality (homOfLE le_top : W ⟶ ⊤).op) _
+    ConcreteCategory.congr_hom (g.naturality (homOfLE le_top : W ⟶ ⊤).op) r
   exact congrArg (fun a : Γ(Y, g ⁻¹ᵁ W) => (a • (show Γ(G, g ⁻¹ᵁ W) from x) : Γ(G, g ⁻¹ᵁ W))) h
 
 section Pull
@@ -143,9 +143,11 @@ theorem higherDirectImagesVanish_of_isAffineHom (g : Y ⟶ X) [IsAffineHom g] (G
     SheafPull.HigherDirectImagesVanish.{u} g.base ((toAbSheaf Y).obj G) :=
   SheafPull.higherDirectImagesVanish_of_basis _ _ fun V x hx => by
     obtain ⟨_, ⟨W, hW, rfl⟩, hxW, hWV⟩ := X.isBasis_affineOpens.exists_subset_of_mem_open hx V.2
-    exact ⟨W, hWV, hxW, fun n hn =>
-      cohOn.subsingleton_of_isAffineOpen G (IsAffineOpen.preimage hW g) hn⟩
+    refine ⟨W, hWV, hxW, fun n hn => ?_⟩
+    have := cohOn.subsingleton_of_isAffineOpen G (IsAffineOpen.preimage hW g) hn
+    exact (cohOn.toH' G (g ⁻¹ᵁ W) n).symm.injective.subsingleton
 
+variable (G V n) in
 
 theorem cohOn.pull_id_bijective [IsAffineHom g] [G.IsQuasicoherent] :
     Function.Bijective (cohOn.pull hσ (𝟙 ((Scheme.Modules.pushforward g).obj G))
@@ -153,6 +155,7 @@ theorem cohOn.pull_id_bijective [IsAffineHom g] [G.IsQuasicoherent] :
   cohOn.pull_bijective_of_toAbSheaf hσ _ _
     (SheafPull.pushComparison_bijective.{u, u} (higherDirectImagesVanish_of_isAffineHom g G) n V)
 
+variable (F n) in
 
 theorem cohOn.pull_restrict_bijective [IsOpenImmersion g] (h : W ≤ g ⁻¹ᵁ V) (h' : V ≤ g ''ᵁ W) :
     Function.Bijective
@@ -181,6 +184,7 @@ theorem cohOn.pushforwardEquiv_apply (V : X.Opens) (n : ℕ)
     cohOn.pushforwardEquiv R hg G V n x =
       cohOn.pull (σ := RingHom.id R) hg (𝟙 _) (le_refl (g ⁻¹ᵁ V)) n x := rfl
 
+variable {G} in
 
 theorem cohOn.pushforwardEquiv_map {G' : Y.Modules} [G'.IsQuasicoherent] (s : G ⟶ G')
     (V : X.Opens) (n : ℕ) (x : cohOn ((Scheme.Modules.pushforward g).obj G) V n) :
@@ -201,6 +205,7 @@ def coh.pushforwardEquiv (n : ℕ) :
     coh ((Scheme.Modules.pushforward g).obj G) n ≃ₗ[R] coh G n :=
   cohOn.pushforwardEquiv R hg G ⊤ n
 
+variable {G} in
 
 theorem coh.pushforwardEquiv_map {G' : Y.Modules} [G'.IsQuasicoherent] (s : G ⟶ G')
     (n : ℕ) (x : coh ((Scheme.Modules.pushforward g).obj G) n) :
@@ -235,7 +240,7 @@ theorem appTop_algebraΓOfHom {R : Type u} [CommRing R] (g : Y ⟶ X) (p : X ⟶
     letI := algebraΓOfHom q
     g.appTop (algebraMap R Γ(X, ⊤) r) = algebraMap R Γ(Y, ⊤) r := by
   subst w
-  rfl
+  simp only [algebraΓOfHom_algebraMap, Scheme.Hom.comp_appTop, ConcreteCategory.comp_apply]
 
 end Morphism
 

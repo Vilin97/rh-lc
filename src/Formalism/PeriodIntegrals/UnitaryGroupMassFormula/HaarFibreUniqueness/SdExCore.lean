@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerOrbitVolume.SdUniq
-
-@[expose] public section
+import Mathlib
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerOrbitVolume.SdUniq
 
 noncomputable section
 
@@ -80,6 +76,7 @@ theorem isClosed_ann : IsClosed (ann χ (M : Set V)) := by
   exact isClosed_biInter fun x _ =>
     isClosed_eq (hχc.comp (continuous_const.prodMk continuous_id)) continuous_const
 
+include hχc hχ hsym hn hMc hMo in
 
 theorem key (Φ : V → ℂ) (hc : Continuous Φ) (hs : HasCompactSupport Φ) (z : V) :
     ∫ y in (M : Set V), (∫ x, Φ x * χ x y ∂μ) * χ y z ∂μ =
@@ -111,7 +108,7 @@ theorem key (Φ : V → ℂ) (hc : Continuous Φ) (hs : HasCompactSupport Φ) (z
   have h2 : ∀ x, ∫ y in (M : Set V), Φ x * χ (x + z) y ∂μ =
       (ann χ M).indicator (fun _ => (μ.real (M : Set V) : ℂ)) (x + z) * Φ x := by
     intro x
-    rw [integral_const_mul, ← transform_indicator μ χ hχ M hMo (x + z), ← integral_indicator hm,
+    rw [integral_const_mul, ← transform_indicator μ χ M hMo (x + z), ← integral_indicator hm,
       mul_comm]
     congr 1
     refine integral_congr_ae (ae_of_all _ fun y => ?_)

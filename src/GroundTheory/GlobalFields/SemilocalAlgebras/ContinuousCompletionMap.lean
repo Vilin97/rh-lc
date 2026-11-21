@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace GroundTheory.Global
 
@@ -14,16 +10,16 @@ namespace SemiLocal
 
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-
 variable (L) in
+
 abbrev PlacesOver (v : HeightOneSpectrum (𝓞 K)) : Type _ :=
   {w : HeightOneSpectrum (𝓞 L) // w.asIdeal.LiesOver v.asIdeal}
 
 instance (v : HeightOneSpectrum (𝓞 K)) (w : PlacesOver L v) : w.1.asIdeal.LiesOver v.asIdeal :=
   w.2
 
-
 variable (L) in
+
 def placesOverEquiv (v : HeightOneSpectrum (𝓞 K)) :
     PlacesOver L v ≃ v.asIdeal.primesOver (𝓞 L) where
   toFun w := ⟨w.1.asIdeal, w.1.isPrime, w.2⟩
@@ -73,8 +69,8 @@ theorem valued_completionMap (x : v.adicCompletion K) :
     intro k
     rw [completionMap_algebraMap, IsScalarTower.algebraMap_apply K L (w.adicCompletion L),
       HeightOneSpectrum.algebraMap_adicCompletion, HeightOneSpectrum.algebraMap_adicCompletion]
-    simp only [Function.comp_apply, HeightOneSpectrum.valuedAdicCompletion_eq_valuation']
-    simpa only [he, Algebra.algebraMap_self, RingHom.id_apply] using
+    simpa only [Function.comp_apply, HeightOneSpectrum.valuedAdicCompletion_eq_valuation',
+      Algebra.algebraMap_self, RingHom.id_apply, he] using
       (HeightOneSpectrum.valuation_liesOver L v w k).symm
   have hclosed : IsClosed
       {x : v.adicCompletion K | Valued.v (completionMap v w x) = Valued.v x ^ e} := by

@@ -34,15 +34,14 @@ variable {k : Type*} [Field k] {V : Type*} [AddCommGroup V] [Module k V]
 
 theorem linearIndependent_of_notMem_span (v : ℕ → V) : ∀ m : ℕ,
     (∀ j < m, v j ∉ Submodule.span k (Set.range (fun i : Fin j => v i))) →
-      LinearIndependent k (fun i : Fin m => v i)
-  | 0, _ => linearIndependent_empty_type
-  | m + 1, h => by
-    have ih := linearIndependent_of_notMem_span v m (fun j hj => h j (by omega))
-    have : (fun i : Fin (m + 1) => v i) = Fin.snoc (fun i : Fin m => v i) (v m) := by
-      funext i
-      refine Fin.lastCases ?_ (fun i => ?_) i <;> simp
-    rw [this]
-    exact linearIndependent_finSnoc.mpr ⟨ih, h m (by omega)⟩
+      LinearIndependent k (fun i : Fin m => v i) := by
+  intro m
+  induction m with
+  | zero => exact fun _ => linearIndependent_empty_type
+  | succ m ih =>
+    intro h
+    exact linearIndependent_finSucc'.mpr
+      ⟨ih (fun j hj => h j (Nat.lt_succ_of_lt hj)), h m (Nat.lt_succ_self m)⟩
 
 
 theorem exists_rel [FiniteDimensional k V] (v : ℕ → V) :

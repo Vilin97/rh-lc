@@ -1,11 +1,7 @@
-module
-
-public import Formalism.GradedWeylDivisibility.StatementE
-public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LHwlineLemmas
-public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LHwrowLemmas
-public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.DualWeylDominanceOf
-
-@[expose] public section
+import Formalism.GradedWeylDivisibility.StatementE
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LHwlineLemmas
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LHwrowLemmas
+import Formalism.GradedWeylDivisibility.FockSpaceTableaux.DualWeylDominanceOf
 
 open MvPolynomial
 
@@ -82,7 +78,7 @@ theorem lehwShift_one {R : Type*} [CommRing R] {r n : ℕ} (w : Fin r × Fin n �
     · exact (hd rfl).elim
   · rw [Polynomial.coeff_one, if_neg (by omega)]
     intro d hd
-    exact (hd (MvPolynomial.coeff_zero d)).elim
+    exact (hd (by simp)).elim
 
 theorem lehwShift_pow {R : Type*} [CommRing R] {r n : ℕ} {w : Fin r × Fin n → ℤ}
     {P : Polynomial (MvPolynomial (Fin r × Fin n) R)} {μ δ : ℤ}
@@ -141,13 +137,13 @@ theorem lehwShift_gen {R : Type*} [CommRing R] {r n : ℕ} (w : Fin r × Fin n �
         simp [Polynomial.coeff_C]
       rw [e]
       intro d hd
-      exact (hd (MvPolynomial.coeff_zero d)).elim
+      exact (hd (by simp)).elim
   · rw [if_neg (show ¬ (c, s).1 = b from hc), add_zero, Polynomial.coeff_C]
     split_ifs with hk
     · subst hk
       simpa using isWeightedHomogeneous_X R w (c, s)
     · intro d hd
-      exact (hd (MvPolynomial.coeff_zero d)).elim
+      exact (hd (by simp)).elim
 
 theorem lehwShift_rowGen_monomial (R : Type*) [CommRing R] {r n : ℕ} (w : Fin r × Fin n → ℤ) (δ : ℤ)
     (a b : Fin r) (hstep : ∀ s : Fin n, w (a, s) = w (b, s) + δ) (d : Fin r × Fin n →₀ ℕ) (c : R) :

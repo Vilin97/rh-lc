@@ -1,6 +1,6 @@
 module
 
-public import Formalism.LatticeTheta.LatticeSummableDecay
+public import Mathlib
 
 @[expose] public section
 

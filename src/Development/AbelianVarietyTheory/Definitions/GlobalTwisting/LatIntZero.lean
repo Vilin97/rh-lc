@@ -34,7 +34,7 @@ def mahler {κ : Type} [Fintype κ] (v : κ → V) (G : V → ℂ) (n : κ → �
 def Per (d : ℕ) (ι : ℂ ≃+* ℂ_[q]) (δ₀ : ℂ) (θ : ℂ → ℂ) (Ω : ℂ_[q]) : Prop :=
   IsTh d θ ∧ δ₀ ^ 12 = discr d ∧ δ₀ ≠ 0 ∧
   (∀ ι' : ℂ ≃+* ℂ_[q], ∃ Ω' : ℂ_[q], ‖Ω'‖ = 1 ∧ ThetaLaws ι' d (Ω' / ι' δ₀) θ) ∧
-  ‖Ω‖ = 1 ∧ ThetaLaws ι d (Ω / ι δ₀) θ ∧ ∃ M : Mdl q, M.ι = ι ∧ IsOK d M.L ∧ M.Chart (C (Ω / ι δ₀) * logS)
+  ‖Ω‖ = 1 ∧ ThetaLaws ι d (Ω / ι δ₀) θ ∧ ∃ M : Mdl q, M.ι = ι ∧ IsOK d M.L ∧ M.MChart (Ω / ι δ₀)
 
 theorem latInt_zero (ι : ℂ ≃+* ℂ_[q]) (ω : ℂ_[q]) (Λ : AddSubgroup V) : LatInt ι ω Λ (fun _ => 0) := by
   intro κ _ v _

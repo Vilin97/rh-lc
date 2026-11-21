@@ -154,8 +154,9 @@ theorem exists_isHilbertPoly_quotPiece [Fintype ι] {I : Ideal (MvPolynomial ι 
     ring
 
 
-noncomputable def idealHilbertPoly (I : Ideal (MvPolynomial ι k)) : ℚ[X] :=
-  if h : ∃ P, IsHilbertPoly (quotPiece I) P then h.choose else 0
+noncomputable def idealHilbertPoly (I : Ideal (MvPolynomial ι k)) : ℚ[X] := by
+  classical
+  exact if h : ∃ P, IsHilbertPoly (quotPiece I) P then h.choose else 0
 
 theorem isHilbertPoly_idealHilbertPoly [Finite ι] {I : Ideal (MvPolynomial ι k)}
     (hI : I.IsHomogeneous (homogeneousSubmodule ι k)) :

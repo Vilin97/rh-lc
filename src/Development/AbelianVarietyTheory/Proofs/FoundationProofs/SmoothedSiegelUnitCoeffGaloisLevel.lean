@@ -1,18 +1,15 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Foundations.Imports
-public import Development.AbelianVarietyTheory.Definitions.Divisors.HasQIff
-public import Development.AbelianVarietyTheory.Definitions.Foundations.MultipliableAndSgNeZero
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SiegelFunctionHolomorphic
-public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.HasQExpansionModularForm
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Foundations.Imports
+import Development.AbelianVarietyTheory.Definitions.Divisors.HasQIff
+import Development.AbelianVarietyTheory.Definitions.Foundations.MultipliableAndSgNeZero
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SiegelFunctionHolomorphic
+import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.HasQExpansionModularForm
 
 noncomputable section
 
 open scoped UpperHalfPlane MatrixGroups Manifold
 open GlobalTheory.Sieg GlobalTheory.QFam GlobalTheory.Sieg.Model GlobalTheory.Sieg.Hol PowerSeries
+local notation "𝕢" => Function.Periodic.qParam
 
 namespace GlobalTheory.Sieg.Gal
 

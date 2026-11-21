@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import ReciprocityTheory.DualLattices.PSerFrobStatement
-
-@[expose] public section
-
+import Mathlib
+import ReciprocityTheory.DualLattices.PSerFrobStatement
 open TensorProduct IsLocalRing Matrix ReciprocityTheory.PGsh ReciprocityTheory.PGsh.Up ReciprocityTheory.PGsh.L2 ReciprocityTheory.PGsh.Be2
 
 namespace GlobalTheory
@@ -15,7 +10,7 @@ private def btPolySub (p : ℕ) (g : ℕ) (W : Type) [CommRing W] :
     AddMonoidAlgebra.coeff q m ∈ Ideal.span {(p : W)}}
   add_mem' := by
     intro a b ha hb m hm
-    rw [MvPolynomial.coeff_add]
+    rw [AddMonoidAlgebra.coeff_add, Finsupp.add_apply]
     exact Ideal.add_mem _ (ha m hm) (hb m hm)
   mul_mem' := by
     intro a b ha hb m hm
@@ -31,7 +26,7 @@ private def btPolySub (p : ℕ) (g : ℕ) (W : Type) [CommRing W] :
   algebraMap_mem' := by
     intro r m hm
     obtain ⟨i, hi⟩ := hm
-    rw [MvPolynomial.algebraMap_eq, MvPolynomial.coeff_C, if_neg]
+    rw [MvPolynomial.algebraMap_eq, MvPolynomial.coeff_C, ite_eq_right]
     · exact Ideal.zero_mem _
     · rintro rfl
       exact hi (by simp)
@@ -146,7 +141,7 @@ theorem fAdd_nsmulF_eq_eval_poly_frob :
     rw [hGe W y hy]
     change nEval _ _ = _
     rw [(H1 (ch.F k) W _).1 (max M₁ M₂), ← e1]
-    · simp [MvPolynomial.coe_aeval_eq_eval]
+    · simp
     · rintro (i | i)
       · exact hM₂ _ (le_max_right _ _) i
       · have := hM₁ _ (le_max_left M₁ M₂) i

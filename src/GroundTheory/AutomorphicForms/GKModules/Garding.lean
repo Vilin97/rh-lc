@@ -1,11 +1,7 @@
-module
-
-public import Mathlib
-public import GroundTheory.AutomorphicForms.GKModules.SmoothVectors
-public import GroundTheory.AutomorphicForms.GKModules.ParametricIntegral
-public import GroundTheory.AutomorphicForms.DixmierMalliavinBasic
-
-@[expose] public section
+import Mathlib
+import GroundTheory.AutomorphicForms.GKModules.SmoothVectors
+import GroundTheory.AutomorphicForms.GKModules.ParametricIntegral
+import GroundTheory.AutomorphicForms.DixmierMalliavinBasic
 
 namespace GroundTheory.Automorphic
 
@@ -109,7 +105,8 @@ theorem isSmoothVector_integrated {f : G → ℂ} (hf : h.IsTestFunction f) (v :
       ← (π (h.expG Y)).integral_comp_comm (h.integrable_smul_orbit π μ hf v)]
     rw [← integral_mul_left_eq_self (F Y) (h.expG Y)]
     congr 1
-      ← BanachRep.map_mul_apply, expG_neg, inv_mul_cancel_left]
+    funext x
+    simp [hFdef, BanachRep.map_mul_apply, expG_neg]
   rw [hexp]
 
   set ψ : 𝔤 → G → ℂ := fun Y g => f (h.expG (-Y) * g) with hψdef
@@ -152,7 +149,6 @@ theorem isSmoothVector_integrated {f : G → ℂ} (hf : h.IsTestFunction f) (v :
       refine ⟨(Y, h.expG (-Y) * g), ⟨hY, subset_tsupport f ?_⟩, ?_⟩
       · intro h0; apply hne; simp [h0]
       · simp [expG_neg]
-
 
 end IsExpLieAlgebra
 

@@ -88,9 +88,14 @@ theorem exists_clear_col {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) F) (h
 
 theorem iwasawa : ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) F), A.det ≠ 0 →
     ∃ (k : Matrix (Fin n) (Fin n) V) (U : Matrix (Fin n) (Fin n) F), IsUnit k.det ∧ U.BlockTriangular id ∧
-      (∀ i, U i i ≠ 0) ∧ A = k.map (algebraMap V F) * U
-  | 0, A, _ => ⟨1, A, by simp, fun i => i.elim0, fun i => i.elim0, by ext i; exact i.elim0⟩
-  | n + 1, A, hA => by
+      (∀ i, U i i ≠ 0) ∧ A = k.map (algebraMap V F) * U := by
+  intro n
+  induction n with
+  | zero =>
+    intro A _
+    exact ⟨1, A, by simp, fun i => i.elim0, fun i => i.elim0, by ext i; exact i.elim0⟩
+  | succ n ih =>
+    intro A hA
     obtain ⟨Q, hQ, hQA⟩ := exists_clear_col (V := V) (n := n) A hA
     set B := Q.map (algebraMap V F) * A with hB
     have hdetB : B.det = B 0 0 * (B.submatrix Fin.succ Fin.succ).det := by
@@ -102,7 +107,7 @@ theorem iwasawa : ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) F), A.det ≠ 0 →
       rw [hB, Matrix.det_mul, hQF]
       exact mul_ne_zero (hQ.map (algebraMap V F)).ne_zero hA
     have hB00 : B 0 0 ≠ 0 := by intro h; apply hBne; rw [hdetB, h, zero_mul]
-    obtain ⟨k', U', hk', hU', hd', hA'⟩ := iwasawa (B.submatrix Fin.succ Fin.succ) (by
+    obtain ⟨k', U', hk', hU', hd', hA'⟩ := ih (B.submatrix Fin.succ Fin.succ) (by
       intro h; apply hBne; rw [hdetB, h, mul_zero])
     let K : Matrix (Fin (n + 1)) (Fin (n + 1)) V := Matrix.of fun i j =>
       Fin.cases (Fin.cases 1 (fun _ => 0) j) (fun i' => Fin.cases 0 (fun j' => k' i' j') j) i

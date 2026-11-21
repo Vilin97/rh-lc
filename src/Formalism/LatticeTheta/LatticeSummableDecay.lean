@@ -1,8 +1,4 @@
-module
-
-public import Formalism.LatticeTheta.Statement
-
-@[expose] public section
+import Formalism.LatticeTheta.Statement
 
 open MeasureTheory Filter Asymptotics Complex
 open scoped FourierTransform RealInnerProductSpace SchwartzMap

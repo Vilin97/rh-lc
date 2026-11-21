@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityHom
-public import GroundTheory.GlobalFields.ComplexMultiplication.AutCFixed
-
-@[expose] public section
+import Mathlib
+import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityHom
+import GroundTheory.GlobalFields.ComplexMultiplication.AutCFixed
 
 open NumberField Module WeierstrassCurve GroundTheory.Arith.Abelian IntermediateField
 open scoped nonZeroDivisors
@@ -98,6 +94,7 @@ theorem ELL.isAlgebraic_j (x : ELL K) : IsAlgebraic ℚ (ELL.j x) :=
 
 end Quadratic
 
+omit [NumberField K] in
 
 end Elliptic
 end GroundTheory.Global

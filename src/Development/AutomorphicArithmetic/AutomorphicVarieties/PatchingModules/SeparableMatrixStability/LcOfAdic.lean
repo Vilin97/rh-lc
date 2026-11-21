@@ -1,13 +1,9 @@
-module
-
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.MapEta
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.CocFin
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.EventuallyFactorThroughTowerIffLimit
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.EventuallyFactorizationCompatibleWithLocalMaps
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.EventuallyLocallyConstantCompTowerEq
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SubgroupQuot
-
-@[expose] public section
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.MapEta
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.CocFin
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.EventuallyFactorThroughTowerIffLimit
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.EventuallyFactorizationCompatibleWithLocalMaps
+import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SeparableMatrixStability.EventuallyLocallyConstantCompTowerEq
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SubgroupQuot
 
 open IsLocalRing Matrix Filter UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.AlgebraTools UpperTheory.V.Pa
 
@@ -34,11 +30,9 @@ private theorem topFG_subgroup_of_finiteIndex_of_isOpen {G : Type} [Group G] [To
     (H : Subgroup G) [H.FiniteIndex] (hH : IsOpen (H : Set G)) (hG : TopFG G) : TopFG H := by
   obtain ⟨s, hsf, hsd⟩ := hG
   set K := Subgroup.closure s with hK
-  haveI : Finite s := hsf.to_subtype
-  haveI : Group.FG K := Group.closure_finite_fg s
-  haveI : (H.subgroupOf K).FiniteIndex := inferInstance
-  haveI : Group.FG (H.subgroupOf K) := Subgroup.fg_of_index_ne_zero _
-  obtain ⟨S, hS, hSf⟩ := Group.fg_iff.1 this
+  have hfgK : Group.FG K := (Subgroup.fg_iff K).2 ⟨s, hK.symm, hsf⟩
+  have hfg : Group.FG (H.subgroupOf K) := inferInstance
+  obtain ⟨S, hS, hSf⟩ := Group.fg_iff.1 hfg
   let ι : H.subgroupOf K →* H :=
     { toFun := fun x => ⟨((x : K) : G), x.2⟩
       map_one' := rfl

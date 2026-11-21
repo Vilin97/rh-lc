@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsStrictlySemistableAlt
-public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsMatrixForm
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsStrictlySemistableAlt
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsMatrixForm
 
 noncomputable section
 
@@ -23,8 +19,8 @@ section Semistable
 variable (O : Type) [CommRing O] (ϖ : O) (m r : ℕ)
 
 abbrev ssModel : Type :=
-  MvPolynomial (Fin m) O ⧸ Ideal.span {(∏ i ∈ Finset.univ.filter (fun i : Fin m => (i : ℕ) < r), MvPolynomial.X i) -
-      MvPolynomial.C ϖ}
+  MvPolynomial (Fin m) O ⧸ Ideal.span (Set.singleton ((∏ i ∈ Finset.univ.filter (fun i : Fin m => (i : ℕ) < r), MvPolynomial.X i) -
+      MvPolynomial.C ϖ))
 
 theorem isStrictlySemistable_model (h1 : 1 ≤ r) (h2 : r ≤ m) :
     IsStrictlySemistable ϖ (Spec.map (CommRingCat.ofHom (algebraMap O (ssModel O ϖ m r)))) := by

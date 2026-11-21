@@ -1,10 +1,6 @@
-module
-
-public import Formalism.MahlerMeasure.HasOrder
-public import Formalism.MahlerMeasure.FinalM
-public import Formalism.MahlerMeasure.MahlerMeasureProofs.FreezeInto
-
-@[expose] public section
+import Formalism.MahlerMeasure.HasOrder
+import Formalism.MahlerMeasure.FinalM
+import Formalism.MahlerMeasure.MahlerMeasureProofs.FreezeInto
 
 namespace Formalism.GM.GammaExpansion
 
@@ -398,7 +394,7 @@ theorem eq_zero_of_EW (a b : ℕ) (hab : a < b) (g : MvPolynomial σ k) (h : EW 
     have h2 : ((∑ c, s (w c) + b : ℕ) : k) = ((a : ℕ) : k) := by rw [Nat.cast_add, heq]; ring
     have h3 := Nat.cast_injective h2
     omega
-  rw [coeff_zero]
+  rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   by_contra hc
   exact hne (mul_right_cancel₀ hc hs)
 
@@ -855,7 +851,7 @@ theorem exists_X_pow_mul (v : σ) (e : ℕ) (f : MvPolynomial σ R) (hf : ∀ m 
   refine ⟨f.divMonomial (Finsupp.single v e), ?_, fun m hm => ?_⟩
   · have hmod : f.modMonomial (Finsupp.single v e) = 0 := by
       ext m
-      rw [coeff_zero]
+      rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
       by_cases h : Finsupp.single v e ≤ m
       · exact coeff_modMonomial_of_le f h
       · rw [coeff_modMonomial_of_not_le f h]

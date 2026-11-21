@@ -16,7 +16,9 @@ section Induced
 variable {G : Type*} [Group G] {K : Type*} [Field K] (H : Subgroup G) (ψ : H →* Kˣ)
 
 
-noncomputable def dot (x : G) : K := if hx : x ∈ H then ((ψ ⟨x, hx⟩ : Kˣ) : K) else 0
+noncomputable def dot (x : G) : K := by
+  classical
+  exact if hx : x ∈ H then ((ψ ⟨x, hx⟩ : Kˣ) : K) else 0
 
 theorem dot_mul_of_mem {a b : G} (hb : b ∈ H) : dot H ψ a * dot H ψ b = dot H ψ (a * b) := by
   classical

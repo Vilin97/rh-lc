@@ -101,7 +101,7 @@ theorem exists_key (h : IsUnrExt K K' d φ) :
   rw [hsum, Valuation.map_mul, (adicVal_eq_one_iff K' s).2 hsu, mul_one, adicVal_map h]
 
 theorem intBasis : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E), IsUnrExt K K' d φ → 0 < d →
-    letI : Algebra K.E K'.E := φ.toAlgebra;
+    letI : Algebra K.E K'.E := φ.toAlgebra
     ∃ w : Module.Basis (Fin d) K.E K'.E, ∀ z : K'.E,
       (∃ y : K'.O, algebraMap K'.O K'.E y = z) ↔ ∀ k, ∃ a : K.O, algebraMap K.O K.E a = w.repr z k := by
   intro K K' d φ h hd

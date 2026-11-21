@@ -40,7 +40,7 @@ theorem exists_linear_injOn (T : Finset (Fin n → ℂ)) :
     · simpa [sub_eq_zero] using hc
     · intro b _ hb
       have hbj : (b : ℕ) ≠ (j : ℕ) := fun h => hb (Fin.ext h)
-      simp [Finsupp.single_apply, hbj]
+      simp [hbj]
     · simp
   have hev : ∀ x x' (t : ℂ), (p x x').eval t = ∑ j : Fin n, (x j - x' j) * t ^ (j : ℕ) := by
     intro x x' t
@@ -61,10 +61,10 @@ theorem exists_linear_injOn (T : Finset (Fin n → ℂ)) :
 
 theorem exists_monic_aeval_eq_zero (J : Ideal (MvPolynomial (Fin n) ℂ)) [J.IsPrime]
     (A : Matrix (Fin d) (Fin n) ℂ) (hA : IsFiniteProjection J A) (s : MvPolynomial (Fin n) ℂ ⧸ J) :
-    letI : Algebra (MvPolynomial (Fin d) ℂ) (MvPolynomial (Fin n) ℂ ⧸ J) :=
-      (projHom J A).toRingHom.toAlgebra
-    ∃ g : Polynomial (MvPolynomial (Fin d) ℂ),
-      g.Monic ∧ g.natDegree ≤ projDegree J A ∧ Polynomial.aeval s g = 0 := by
+    (letI : Algebra (MvPolynomial (Fin d) ℂ) (MvPolynomial (Fin n) ℂ ⧸ J) :=
+       (projHom J A).toRingHom.toAlgebra
+     ∃ g : Polynomial (MvPolynomial (Fin d) ℂ),
+       g.Monic ∧ g.natDegree ≤ projDegree J A ∧ Polynomial.aeval s g = 0) := by
   let _ : Algebra (MvPolynomial (Fin d) ℂ) (MvPolynomial (Fin n) ℂ ⧸ J) :=
     (projHom J A).toRingHom.toAlgebra
   let _ : Module (MvPolynomial (Fin d) ℂ) (MvPolynomial (Fin n) ℂ ⧸ J) := Algebra.toModule
@@ -103,7 +103,7 @@ theorem exists_monic_aeval_eq_zero (J : Ideal (MvPolynomial (Fin n) ℂ)) [J.IsP
       exact minpoly.aeval _ t
     obtain ⟨c, hc⟩ := (IsLocalizedModule.eq_zero_iff (nonZeroDivisors (MvPolynomial (Fin d) ℂ))
       (TensorProduct.mk _ (FractionRing (MvPolynomial (Fin d) ℂ)) _ 1)).mp h1
-    rw [Submonoid.smul_def, Algebra.smul_def] at hc
+    change projHom J A (c : MvPolynomial (Fin d) ℂ) * Polynomial.aeval s g = 0 at hc
     refine (mul_eq_zero.mp hc).resolve_left ?_
     intro h0
     apply nonZeroDivisors.coe_ne_zero c

@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ThetaCellCovers.KernelL2RowsColumns
-
-@[expose] public section
+import Mathlib
+import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ThetaCellCovers.KernelL2RowsColumns
 
 open MeasureTheory
 open scoped ENNReal Pointwise
@@ -66,7 +62,7 @@ theorem cellSum_holds : CellSum := by
       exact hc i o ho
     calc w x * cnt X.Γ Ω x ≤ c i * hits X (a i • (Ω₀ * Ω)) x :=
           mul_le_mul' hwx (cnt_le_hits X hδ ho hx)
-      _ ≤ _ := ENNReal.le_tsum i
+      _ ≤ _ := le_tsum (fun j => c j * hits X (a j • (Ω₀ * Ω)) x) i
   calc ∫⁻ x, w x * cnt X.Γ Ω x ∂X.ν
       ≤ ∫⁻ x, ∑' i, c i * hits X (a i • (Ω₀ * Ω)) x ∂X.ν := lintegral_mono hpt
     _ = ∑' i, ∫⁻ x, c i * hits X (a i • (Ω₀ * Ω)) x ∂X.ν :=

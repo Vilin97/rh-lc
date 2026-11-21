@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable section
 
@@ -474,16 +470,16 @@ theorem decomp {V : Type} [AddCommGroup V] [Module ℂ V] {ι : Type} [Fintype �
     refine ⟨h1, h2, fun u => ⟨?_, ?_⟩⟩
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum, Finset.smul_sum]
-      refine Finset.sum_congr rfl fun χ hχ => ?_
-      obtain ⟨hχF, hχe⟩ := Finset.mem_filter.1 hχ
-      rw [← hχe]
-      exact ((hsig χ (Finset.mem_filter.1 hχF).2 i).2.2 u).1
+        refine Finset.sum_congr rfl fun χ hχ => ?_
+        obtain ⟨hχF, hχe⟩ := Finset.mem_filter.1 hχ
+        rw [← hχe]
+        exact ((hsig χ (Finset.mem_filter.1 hχF).2 i).2.2 u).1
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum, Finset.smul_sum]
-      refine Finset.sum_congr rfl fun χ hχ => ?_
-      obtain ⟨hχF, hχe⟩ := Finset.mem_filter.1 hχ
-      rw [← hχe]
-      exact ((hsig χ (Finset.mem_filter.1 hχF).2 i).2.2 u).2
+        refine Finset.sum_congr rfl fun χ hχ => ?_
+        obtain ⟨hχF, hχe⟩ := Finset.mem_filter.1 hχ
+        rw [← hχe]
+        exact ((hsig χ (Finset.mem_filter.1 hχF).2 i).2.2 u).2
 
 end Main
 

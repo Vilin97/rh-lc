@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.UniversalOrdinaryDeterminantRing
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
-
-@[expose] public section
+import Mathlib
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.UniversalOrdinaryDeterminantRing
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
 
 noncomputable def UpperTheory.Reformulated.B.CayleyHamiltonSymmetric.Full :
     {H K : Type} → [inst : Group H] → [inst_1 : CommRing K] → {n : ℕ} → (H →* GL (Fin n) K) → Prop :=
@@ -201,9 +197,10 @@ private lemma homog_of_scale (P : MvPolynomial σ B) (d : ℕ)
     (h : aeval (fun s => (Polynomial.X * Polynomial.C (X s) : Polynomial (MvPolynomial σ B))) P =
       Polynomial.X ^ d * Polynomial.C P) : P.IsHomogeneous d := by
   classical
-  have key : ∀ (Q : MvPolynomial σ B) (α : σ →₀ ℕ), coeff α (_root_.AddMonoidAlgebra.coeff (M := ℕ)
-      (aeval (fun s => (Polynomial.X * Polynomial.C (X s) : Polynomial (MvPolynomial σ B))) Q) α.degree) =
-      coeff α Q := by
+  have key : ∀ (Q : MvPolynomial σ B) (α : σ →₀ ℕ),
+      ((_root_.AddMonoidAlgebra.coeff (M := ℕ)
+        (aeval (fun s => (Polynomial.X * Polynomial.C (X s) : Polynomial (MvPolynomial σ B))) Q) α.degree)).coeff α =
+      Q.coeff α := by
     intro Q α
     induction Q using MvPolynomial.induction_on' with
     | add p q hp hq => simp only [map_add (f := _), Polynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
@@ -217,20 +214,23 @@ private lemma homog_of_scale (P : MvPolynomial σ B) (d : ℕ)
       rw [e, Polynomial.coeff_C_mul_X_pow]
       split_ifs with hd
       · rfl
-      · rw [MvPolynomial.coeff_zero, coeff_monomial, if_neg]
-        rintro rfl
-        exact hd rfl
+      · by_cases hβα : β = α
+        · subst α
+          exact (hd rfl).elim
+        · simp [hβα]
   intro α hα
   rw [← key, h, mul_comm, Polynomial.coeff_C_mul_X_pow] at hα
   change Finsupp.weight (fun _ => 1) α = d
   rw [← Finsupp.degree_eq_weight_one]
   by_contra hne
-  exact hα (by rw [if_neg hne, MvPolynomial.coeff_zero])
+  apply hα
+  rw [if_neg hne]
+  simp
 
 open MvPolynomial in
 private lemma coeff_kill [DecidableEq σ] (T : Finset σ) (P : MvPolynomial σ B) (α : σ →₀ ℕ) :
-    coeff α (aeval (fun s => if s ∈ T then (X s : MvPolynomial σ B) else 0) P) =
-      if α.support ⊆ T then coeff α P else 0 := by
+    (aeval (fun s => if s ∈ T then (X s : MvPolynomial σ B) else 0) P).coeff α =
+      if α.support ⊆ T then P.coeff α else 0 := by
   induction P using MvPolynomial.induction_on' with
   | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq]; split_ifs <;> simp
   | monomial β a =>
@@ -294,13 +294,15 @@ private lemma exists_phi (D : GDet n A G) : ∃ c : (Fin n → G) → A,
   have kill : ∀ (S T : Finset G) (α : G →₀ ℕ), T ⊆ S → AddMonoidAlgebra.coeff (D.D _ (gam A T)) α =
       if α.support ⊆ T then AddMonoidAlgebra.coeff (D.D _ (gam A S)) α else 0 := by
     intro S T α hTS
-    rw [← coeff_kill, ← D.nat]
-    congr 2
-    ext g : 2
-    rw [coeff_mapRingHom, coeff_gam, coeff_gam]
-    by_cases hg : g ∈ T
-    · simp [hg, hTS hg]
-    · by_cases hs : g ∈ S <;> simp [hg, hs]
+    have hgam : mapRingHom G
+        (MvPolynomial.aeval (fun g => if g ∈ T then MvPolynomial.X g else 0) :
+          MvPolynomial G A →ₐ[A] MvPolynomial G A) (gam A S) = gam A T := by
+      ext g
+      rw [coeff_mapRingHom, coeff_gam, coeff_gam]
+      by_cases hg : g ∈ T
+      · simp [hg, hTS hg]
+      · by_cases hs : g ∈ S <;> simp [hg, hs]
+    rw [← coeff_kill T, ← D.nat, hgam]
   have hom : ∀ S : Finset G, (D.D _ (gam A S)).IsHomogeneous n := by
     intro S
     apply homog_of_scale
@@ -449,9 +451,13 @@ private lemma theta_mul_ext (η : B' →ₐ[B] MonoidAlgebra B H) (v : MonoidAlg
 
 private lemma exists_aeval_of_commute {σ W : Type} [Ring W] [Algebra B W] (p : σ → W)
     (h : ∀ i j, Commute (p i) (p j)) : ∃ η : MvPolynomial σ B →ₐ[B] W, ∀ j, η (MvPolynomial.X j) = p j := by
-  letI : CommRing (Algebra.adjoin B (Set.range p)) := Algebra.adjoinCommRingOfComm B (by
-    rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩; exact h i j)
-  exact ⟨(Subalgebra.val _).comp (MvPolynomial.aeval fun j =>
+  letI : IsMulCommutative (Algebra.adjoin B (Set.range p)) :=
+    Algebra.isMulCommutative_adjoin (R := B) (s := Set.range p) (by
+      rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩ _; exact h i j)
+  open scoped IsMulCommutative in
+    letI : CommRing (Algebra.adjoin B (Set.range p)) := inferInstance
+  exact ⟨(Subalgebra.val (Algebra.adjoin B (Set.range p))).comp
+    (MvPolynomial.aeval (R := B) fun j =>
     (⟨p j, Algebra.subset_adjoin ⟨j, rfl⟩⟩ : Algebra.adjoin B (Set.range p))), fun j => by simp⟩
 
 end Theta
@@ -671,7 +677,7 @@ private theorem cayley_hamilton (D : GDet n A G) (x m r : MonoidAlgebra B G) :
       · by_contra h0
         refine h (Finset.mem_biUnion.2 ⟨g, Finsupp.mem_support_iff.2 fun h1 => h0 ?_,
           MvPolynomial.mem_support_iff.2 h0⟩)
-        rw [h1, MvPolynomial.coeff_zero]
+        simp [h1]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [e, map_sum, map_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
@@ -881,8 +887,8 @@ private lemma matrix_units [IsLocalHom (algebraMap A k)] (π : S →ₐ[A] Matri
     intro j
     have : ∀ l, algebraMap A k (N l j) = (1 : Matrix (Fin n) (Fin n) k) l j := fun l => by rw [← hN']; rfl
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, map_mul, hb, hπ, Matrix.single_mul_single_same, mul_one, ← algebraMap_smul k (N _ j),
-      this, one_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      simp [map_sum, map_smul, map_mul, hb, hπ, Matrix.single_mul_single_same, ← algebraMap_smul k (N _ j),
+        this, Matrix.one_apply, Matrix.single_apply]
   have p3 : ∀ i, π (e * c i) = Matrix.single o i 1 := fun i => by
     rw [map_mul, hπ, hc', Matrix.single_mul_single_same, mul_one]
   have p4 : ∀ i, e * (e * c i) = e * c i := fun i => by rw [← mul_assoc, he]
@@ -892,7 +898,7 @@ private lemma matrix_units [IsLocalHom (algebraMap A k)] (π : S →ₐ[A] Matri
   have p6 : ∀ i j, (∑ l, N l i • (b l * e)) * (e * c i) * ((∑ l, N l j • (b l * e)) * (e * c j)) =
       if i = j then (∑ l, N l i • (b l * e)) * (e * c i) else 0 := by
     intro i j
-    rw [mul_assoc, ← mul_assoc (e * c i), p1, one_apply, smul_mul_assoc, p4]
+    rw [mul_assoc, ← mul_assoc (e * c i), p1, Matrix.one_apply, smul_mul_assoc, p4]
     split_ifs with h
     · rw [one_smul, h]
     · rw [zero_smul, mul_zero]
@@ -951,7 +957,7 @@ private lemma exists_iso [IsLocalHom (algebraMap A k)] (hf : Function.Surjective
   · refine Matrix.ext fun p q => inj _ _ ?_
     rw [hρ]
     have : ∀ i j, c p * (b i * c j) * b q = (c p * b i) * (c j * b q) := fun i j => by simp only [mul_assoc]
-    simp [Finset.sum_mul, Finset.mul_sum, this, h3, he, one_apply]
+    simp [Finset.sum_mul, Finset.mul_sum, this, h3, he, Matrix.one_apply]
   · change algebraMap A k (τ (c i * s * b j)) = _
     rw [hτ', map_mul, map_mul, h5, h6, single_mul_mul_single]
     simp
@@ -996,7 +1002,7 @@ private lemma kerB_mul (D : GDet n A G) {B : Type} [CommRing B] [Algebra A B] {w
 private def ker (D : GDet n A G) : Ideal (MonoidAlgebra A G) where
   carrier := {y | ∀ (B : Type) [CommRing B] [Algebra A B], mapRingHom G (algebraMap A B) y ∈ kerB D B}
   zero_mem' := fun B _ _ => by rw [map_zero]; exact zero_mem _
-  add_mem' := fun ha hb B _ _ => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha B) (hb B)
+  add_mem' := fun ha hb B _ _ => by rw [map_add]; exact add_mem (ha B) (hb B)
   smul_mem' := fun c x hx B _ _ => by rw [smul_eq_mul, map_mul]; exact Ideal.mul_mem_left _ _ (hx B)
 
 private instance (D : GDet n A G) : (ker D).IsTwoSided :=
@@ -1233,9 +1239,15 @@ private theorem main [IsLocalRing A] [IsAdicComplete (IsLocalRing.maximalIdeal A
           congr 1
           ext g : 2
           simp [coeff_single_one_mul]
-        rw [← Polynomial.coeff_map, ← nat_poly, e, hD, map_add (f := _), map_one, map_smul, hC, ← hπ, ← hmk, h,
-          Matrix.coeff_det_one_add_X_smul_one]
-        simp
+        rw [← Polynomial.coeff_map, ← nat_poly, e, hD]
+        have eC : (GDet.repAlg ρ (Polynomial k))
+            (1 + (Polynomial.X : Polynomial k) • mapRingHom G Polynomial.C
+              (mapRingHom G (algebraMap A k) x)) =
+            1 + (Polynomial.X : Polynomial k) •
+              ((GDet.repAlg ρ k) (mapRingHom G (algebraMap A k) x)).map Polynomial.C := by
+          simp only [map_add, map_one, map_smul, hC]
+        rw [eC, ← hπ, ← hmk, h, Matrix.coeff_det_one_add_X_smul_one]
+        simpa using (isUnit_one : IsUnit (1 : k))
       exact h5.mul_right_eq_zero.1 h4.symm)
   let ρ₀ := ρ₁.comp (Ideal.Quotient.mkₐ A (ker D))
   let ρ' : G →* Matrix (Fin n) (Fin n) A := (ρ₀ : MonoidAlgebra A G →* _).comp (MonoidAlgebra.of A G)
@@ -1269,7 +1281,7 @@ private lemma full_iff {K : Type} [CommRing K] (ρ : G →* GL (Fin n) K) :
     · rintro _ ⟨y, rfl⟩
       induction y using MonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      | add a b ha hb => rw [map_add]; exact add_mem ha hb
       | single g a =>
         rw [AlgHom.toLinearMap_apply, rep_single]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨g, by simp⟩)

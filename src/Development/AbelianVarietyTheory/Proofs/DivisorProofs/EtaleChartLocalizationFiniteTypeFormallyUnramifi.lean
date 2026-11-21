@@ -38,7 +38,8 @@ theorem locQuot_finiteType_formallyUnramified (R : Type) [CommRing R] (A : Type)
   have hu : IsUnit (f h) := by rw [hf]; exact IsLocalization.Away.algebraMap_isUnit _
   let ψ0 : Localization.Away h →+* Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)) :=
     IsLocalization.Away.lift h hu
-  have hψ0 : ∀ a, ψ0 (algebraMap A (Localization.Away h) a) = f a := fun a => IsLocalization.lift_eq _ _
+  have hψ0 : ∀ a, ψ0 (algebraMap A (Localization.Away h) a) = f a :=
+    IsLocalization.Away.lift_eq h hu
   have hΩ : ∀ w : Ω, algebraMap Ω (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h))) w =
       algebraMap (TensorProduct R Ω A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))
         (Ideal.Quotient.mk I (w ⊗ₜ[R] 1)) := by

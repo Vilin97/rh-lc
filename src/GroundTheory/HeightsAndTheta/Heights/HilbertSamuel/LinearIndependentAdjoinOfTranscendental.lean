@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -42,6 +37,7 @@ theorem transcendental_of_subfield {E : Type*} [Field E] {S : Type*} [CommRing S
   rw [aeval_def, eval₂_map]
   exact hp
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 
 theorem linearIndependent_adjoin_of_transcendental {K E : Type*} [Field K] [Field E] [Algebra K E]
     (A : IntermediateField K E) {t : E} (ht : Transcendental A t) {κ : Type*} {b : κ → A}
@@ -98,10 +94,11 @@ theorem finrank_adjoin_eq_of_transcendental {K E : Type*} [Field K] [Field E] [A
     have hr := H.adjoin_rank_eq_rank_left_of_isAlgebraic_left
     exact congrArg Cardinal.toNat hr
   · rw [Module.finrank_of_not_finite hfin]
-    apply Module.finrank_of_not_finite
+    set M := IntermediateField.adjoin L (A : Set E)
+    letI : Module.Free L M := Module.Free.of_divisionRing L M
+    refine Module.finrank_of_not_finite (M := M) ?_
     intro hfin'
     apply hfin
-    set M := IntermediateField.adjoin L (A : Set E)
     let f : Module.Free.ChooseBasisIndex K A → M :=
       fun k => ⟨A.val (a k), IntermediateField.subset_adjoin L _ (a k).2⟩
     have hf : LinearIndependent L f := LinearIndependent.of_comp M.val.toLinearMap hind

@@ -1,8 +1,4 @@
-module
-
-public import Formalism.LatticeTheta.LatticeSummableDecay
-
-@[expose] public section
+import Formalism.LatticeTheta.LatticeSummableDecay
 
 open MeasureTheory Filter Asymptotics Complex Metric
 open scoped RealInnerProductSpace

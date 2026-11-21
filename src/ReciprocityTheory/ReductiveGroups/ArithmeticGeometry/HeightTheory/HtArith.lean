@@ -28,12 +28,12 @@ theorem heights_arith
 
     (hdi : 2 * SI ≤ δlogδ + 2 * Ssum + 2 * D * aF * lr + 2 * HF)
     (hdn : SN / i ≤ g0 * (Hde + D * ade * lr) + δ * Pet) :
-    let PH := PP0' + PN + tableLineDegreeFive + tableLineDegreeTwo + PI4 + Prw;
     2 * SI ≤ δlogδ + 2 * Ssum + 8 / 3 * D * (D + 4) * δ * Prw * L +
-        2 * (D + 4) * (D + 1) * δ * (2 * G + 6 * (2 * PH + G)) * L ∧
-      SN / i ≤ g0 * ((D + 1) * δ * (2 * G + 6 * (2 * PH + G)) * L + 4 / 3 * D * δ * Prw * L) +
-        δ * Pet := by
-  dsimp only
+        2 * (D + 4) * (D + 1) * δ *
+          (2 * G + 6 * (2 * (PP0' + PN + tableLineDegreeFive + tableLineDegreeTwo + PI4 + Prw) + G)) * L ∧
+      SN / i ≤ g0 * ((D + 1) * δ *
+        (2 * G + 6 * (2 * (PP0' + PN + tableLineDegreeFive + tableLineDegreeTwo + PI4 + Prw) + G)) * L +
+        4 / 3 * D * δ * Prw * L) + δ * Pet := by
   obtain ⟨hP1, hP2, hP3, hP4, hP5, hP6, hP7, hP8⟩ := hP
   have hD0 : 0 ≤ D := by linarith
   have hD4 : 0 ≤ D + 4 := by linarith

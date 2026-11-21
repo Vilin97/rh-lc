@@ -1,6 +1,6 @@
 module
 
-public import Formalism.LatticeTheta.LatticeSummableDecay
+public import Mathlib
 
 @[expose] public section
 
@@ -40,11 +40,13 @@ theorem inner_dualVec_basis (e : Module.Basis ι ℝ V) (m : ι → ℤ) (j : ι
   simp
 
 theorem dual_span_eq (e : Module.Basis ι ℝ V) :
-    dual (Submodule.span ℤ (Set.range e)) = Submodule.span ℤ (Set.range (dualB e)) := by
+    LinearMap.BilinForm.dualSubmodule (innerₗ V) (Submodule.span ℤ (Set.range e)) =
+      Submodule.span ℤ (Set.range (dualB e)) := by
   exact LinearMap.BilinForm.dualSubmodule_span_of_basis (innerₗ V) innerₗ_nondegenerate e
 
 theorem dualVec_mem (e : Module.Basis ι ℝ V) (m : ι → ℤ) :
-    dualVec e m ∈ dual (Submodule.span ℤ (Set.range e)) := by
+    dualVec e m ∈
+      LinearMap.BilinForm.dualSubmodule (innerₗ V) (Submodule.span ℤ (Set.range e)) := by
   rw [dual_span_eq]
   exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
 
@@ -56,12 +58,14 @@ theorem dualVec_injective (e : Module.Basis ι ℝ V) : Function.Injective (dual
   exact_mod_cast h1
 
 theorem dualVec_surjective (e : Module.Basis ι ℝ V) (μ : V)
-    (hμ : μ ∈ dual (Submodule.span ℤ (Set.range e))) : ∃ m, dualVec e m = μ := by
+    (hμ : μ ∈ LinearMap.BilinForm.dualSubmodule (innerₗ V) (Submodule.span ℤ (Set.range e))) :
+    ∃ m, dualVec e m = μ := by
   rw [dual_span_eq] at hμ
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).mp hμ
   exact ⟨c, hc⟩
 
-def dualEquiv (e : Module.Basis ι ℝ V) : (ι → ℤ) ≃ dual (Submodule.span ℤ (Set.range e)) :=
+def dualEquiv (e : Module.Basis ι ℝ V) :
+    (ι → ℤ) ≃ LinearMap.BilinForm.dualSubmodule (innerₗ V) (Submodule.span ℤ (Set.range e)) :=
   Equiv.ofBijective (fun m => ⟨dualVec e m, dualVec_mem e m⟩)
     ⟨fun m n h => dualVec_injective e (congrArg Subtype.val h),
      fun μ => by

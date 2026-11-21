@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.HybridLargeSieve
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.EnormSqLeLintegralDisc
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.HybridLargeSieve
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.EnormSqLeLintegralDisc
 open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology
 
 namespace GlobalTheory.SpacedDetected
@@ -62,7 +57,7 @@ private theorem exists_card_divisors_le_mul_rpow (ε : ℝ) (hε : 0 < ε) :
     exact_mod_cast (Nat.prod_primeFactors_pow_factorization hn)
   rw [Nat.card_divisors hn]
   push_cast
-  rw [hn', ← Real.finset_prod_rpow _ _ (fun p _ => by positivity)]
+  rw [hn', ← Real.finsetProd_rpow _ _ (fun p _ => by positivity)]
   set f : ℕ → ℝ := fun p => if (p : ℝ) < (2 : ℝ) ^ (1 / ε) then M else 1
   have hf : ∏ p ∈ n.primeFactors, f p ≤ M ^ B := by
     have hM1 : 1 ≤ M := le_max_left _ _
@@ -225,6 +220,7 @@ private theorem sum_weighted_moebius_coeff_sq_le (K : ℝ) (hK : 0 < K)
     norm_num
     positivity
 
+open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
 
 theorem _root_.GlobalTheory.SpacedDetected.card_spaced_detected_le : ∃ C : ℝ, 0 < C ∧ ∀ Q : ℕ, 2 ≤ Q → ∀ T : Finset (Σ N : ℕ, DirichletCharacter ℂ (N + 1) × ℂ), (∀ p ∈ T, p.1 + 1 ≤ Q ∧ p.2.1.IsPrimitive ∧ 1 - 1 / 400 ≤ p.2.2.re ∧ p.2.2.re ≤ 1 ∧ |p.2.2.im| ≤ Q ∧ (1 / 2 : ℝ) ≤ ‖∑ n ∈ Finset.Ioc (Q ^ 3) (Q ^ 6), ((∑ d ∈ n.divisors.filter (fun d => d ≤ Q ^ 3), (moebius d : ℤ) : ℤ) : ℂ) * p.2.1 (n : ZMod (p.1 + 1)) * (n : ℂ) ^ (-p.2.2)‖) → (∀ (N : ℕ) (χ : DirichletCharacter ℂ (N + 1)) (ρ ρ' : ℂ), (⟨N, χ, ρ⟩ : (Σ N : ℕ, DirichletCharacter ℂ (N + 1) × ℂ)) ∈ T → (⟨N, χ, ρ'⟩ : (Σ N : ℕ, DirichletCharacter ℂ (N + 1) × ℂ)) ∈ T → ρ ≠ ρ' → 1 ≤ |ρ.im - ρ'.im|) → (T.card : ℝ) ≤ C * (Q : ℝ) ^ ((1 : ℝ) / 8) := by
   classical
@@ -297,7 +293,7 @@ theorem _root_.GlobalTheory.SpacedDetected.card_spaced_detected_le : ∃ C : ℝ
     intro x _
     rw [← intervalIntegral.integral_finsetSum (fun p _ => (hW _ _).intervalIntegrable _ _)]
     apply intervalIntegral.integral_mono_on hle
-    · exact (continuous_finset_sum _ (fun p _ => hW _ _)).intervalIntegrable _ _
+    · exact (continuous_finsetSum _ (fun p _ => hW _ _)).intervalIntegrable _ _
     · exact (hGcont x).intervalIntegrable _ _
     intro σ _
     set fib := T.filter (fun p => (⟨p.1, p.2.1⟩ : Σ N : ℕ, DirichletCharacter ℂ (N + 1)) = x) with hfib
@@ -409,7 +405,7 @@ theorem _root_.GlobalTheory.SpacedDetected.card_spaced_detected_le : ∃ C : ℝ
     have hle : σ₀ ≤ σ₁ := by rw [hσ₀, hσ₁, hr]; norm_num
     calc ∫ σ in σ₀..σ₁, ∑ x ∈ P, G x σ ≤ ∫ σ in σ₀..σ₁, C₂ * (3 * K ^ 2 * 80) * (Q : ℝ) ^ ((1 : ℝ) / 8) := by
           apply intervalIntegral.integral_mono_on hle
-          · exact (continuous_finset_sum _ (fun x _ => hGcont x)).intervalIntegrable _ _
+          · exact (continuous_finsetSum _ (fun x _ => hGcont x)).intervalIntegrable _ _
           · exact intervalIntegrable_const
           · exact hsieve
       _ = (1 / 200) * (C₂ * (3 * K ^ 2 * 80) * (Q : ℝ) ^ ((1 : ℝ) / 8)) := by

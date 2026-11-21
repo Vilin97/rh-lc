@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsStableGauss
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.QuadraticStarStructure
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsStableGauss
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.QuadraticStarStructure
 open GlobalTheory.JR GlobalTheory.JR.WeilQuad Matrix MeasureTheory Filter Topology
 
 namespace GlobalTheory.JR.WeilQuad
@@ -54,13 +49,16 @@ theorem gaussInt_stable_of_dual : ∀ (F E : Type) [NontriviallyNormedField F] [
     have c2 : Continuous (fun m : A.L => Algebra.trace F A.K (t * x * Algebra.trace A.K A.L (star y * m))) :=
       (IsModuleTopology.continuous_of_linearMap (Algebra.trace F A.K)).comp (continuous_const.mul c1)
     have hU0 : {m : A.L | m ∈ M ∧ ‖Algebra.trace F A.K (t * x * Algebra.trace A.K A.L (star y * m))‖ ≤ 1} ∈ 𝓝 (0 : A.L) := by
-      refine Filter.inter_mem (hMo.mem_nhds M.zero_mem) ?_
+      have hM : (M : Set A.L) ∈ 𝓝 (0 : A.L) := hMo.mem_nhds M.zero_mem
       have h0 : Metric.closedBall (0 : F) 1 ∈ 𝓝 (Algebra.trace F A.K (t * x * Algebra.trace A.K A.L (star y * (0 : A.L)))) := by
         simp only [mul_zero, map_zero]
         exact Metric.closedBall_mem_nhds 0 one_pos
-      exact Filter.mem_of_superset ((c2.continuousAt (x := (0 : A.L))).preimage_mem_nhds h0)
+      have hbound : {m : A.L | ‖Algebra.trace F A.K (t * x * Algebra.trace A.K A.L (star y * m))‖ ≤ 1} ∈ 𝓝 (0 : A.L) :=
+        Filter.mem_of_superset ((c2.continuousAt (x := (0 : A.L))).preimage_mem_nhds h0)
         (fun m hm => (show ‖Algebra.trace F A.K (t * x * Algebra.trace A.K A.L (star y * m))‖ ≤ 1 by
           simpa [Metric.mem_closedBall, dist_zero_right] using hm))
+      filter_upwards [hM, hbound] with m hmM hmBound
+      exact ⟨hmM, hmBound⟩
     have hU1 := (continuous_sub_right y).continuousAt.preimage_mem_nhds (by rw [sub_self]; exact hU0)
     refine ContinuousAt.congr (f := fun _ => g y) continuousAt_const ?_
     filter_upwards [hU1] with z hz

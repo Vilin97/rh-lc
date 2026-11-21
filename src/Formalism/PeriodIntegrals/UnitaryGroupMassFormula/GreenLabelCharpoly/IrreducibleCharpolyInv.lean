@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Formalism.PadicSubsetSums.CentralIdempotents.GaloisConjCentralIdempotent
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GreenLabelCharpoly.RootPowCard
-
-@[expose] public section
+import Mathlib
+import Formalism.PadicSubsetSums.CentralIdempotents.GaloisConjCentralIdempotent
+import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GreenLabelCharpoly.RootPowCard
 
 open Polynomial CategoryTheory Formalism.IrreducibleCountingLemmas.TYPES
 

@@ -1,13 +1,8 @@
-module
-
-public import Mathlib
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.Support
-public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.ImmersionPush
-public import GroundTheory.ArithmeticGeometry.EtaleCompletion.PullbackAffine
-public import GroundTheory.ArithmeticGeometry.EtaleCompletion.QcohZariski
-
-@[expose] public section
-
+import Mathlib
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.Support
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.ImmersionPush
+import GroundTheory.ArithmeticGeometry.EtaleCompletion.PullbackAffine
+import GroundTheory.ArithmeticGeometry.EtaleCompletion.QcohZariski
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh
@@ -27,12 +22,15 @@ lemma isIso_of_bijective_app_affine {M N : X.Modules} (f : M ⟶ N)
   have hB : Opens.IsBasis (Set.range fun U : X.affineOpens => (U : X.Opens)) := by
     rw [Subtype.range_coe]
     exact X.isBasis_affineOpens
-  have : IsIso (modulesAbMap f) := TopCat.Sheaf.isIso_iff_isIso_basis hB
-    fun U => (ConcreteCategory.isIso_iff_bijective _).2 (h U.1 U.2)
-  refine isIso_of_bijective_app f fun U => ?_
-  have h1 : IsIso ((sheafToPresheaf _ _).map (modulesAbMap f)) := inferInstance
-  have h2 := NatIso.isIso_app_of_isIso ((sheafToPresheaf _ _).map (modulesAbMap f)) (op U)
-  exact (ConcreteCategory.isIso_iff_bijective _).1 h2
+  let φ : modulesAb M ⟶ modulesAb N := ⟨f.mapPresheaf⟩
+  have : IsIso φ := TopCat.Sheaf.isIso_iff_isIso_basis hB fun U => by
+    change IsIso (f.mapPresheaf.app (op U.1))
+    rw [Scheme.Modules.mapPresheaf_app]
+    exact (ConcreteCategory.isIso_iff_bijective _).2 (h U.1 U.2)
+  have : IsIso ((Scheme.Modules.toPresheaf X).map f) := by
+    rw [Scheme.Modules.toPresheaf_map]
+    exact Functor.map_isIso (sheafToPresheaf _ _) φ
+  exact isIso_of_reflects_iso f (Scheme.Modules.toPresheaf X)
 
 lemma bijective_app_of_bijective_app_affine {M N : X.Modules} (f : M ⟶ N) (W : X.Opens)
     (h : ∀ V : X.Opens, IsAffineOpen V → V ≤ W → Function.Bijective (f.app V)) :

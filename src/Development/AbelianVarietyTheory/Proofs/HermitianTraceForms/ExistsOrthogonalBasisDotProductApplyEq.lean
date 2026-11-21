@@ -11,6 +11,8 @@ open Module Matrix
 
 section Abstract
 
+universe u
+
 variable {E : Type*} [Field E] {c : E →+* E}
 
 theorem eq_zero_of_apply_self_eq_zero {V : Type*} [AddCommGroup V] [Module E V]

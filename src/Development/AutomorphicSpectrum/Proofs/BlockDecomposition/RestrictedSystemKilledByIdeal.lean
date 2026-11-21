@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PowSubSuccLe
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SubobjectPullbackSectionsStatement
-
-@[expose] public section
-
+import Mathlib
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PowSubSuccLe
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SubobjectPullbackSectionsStatement
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry GroundTheory.Arith.SchemeCoh GlobalTheory.CompanionTheory.GE
 
 namespace GlobalTheory.CompanionTheory.GE

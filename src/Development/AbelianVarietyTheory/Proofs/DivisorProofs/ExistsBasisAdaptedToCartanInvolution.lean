@@ -1,6 +1,6 @@
 import Mathlib
 open Matrix
-open scoped ComplexOrder
+open scoped ComplexOrder MatrixOrder
 
 namespace GlobalTheory
 

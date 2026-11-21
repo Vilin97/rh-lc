@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 theorem UpperTheory.Reformulated.B.SingleMemOfDiagonal.single_mem_of_diag :
     ∀ {κ : Type} [inst : Field κ] {m : ℕ} (d : Fin m → κ),
@@ -18,6 +14,8 @@ theorem UpperTheory.Reformulated.B.SingleMemOfDiagonal.single_mem_of_diag :
     | insert a s ha ih =>
       have h := W.sub_mem (hW _ ih) (W.smul_mem (d a) ih)
       convert h using 1
+      funext k
+      simp only [Finset.prod_insert ha, Pi.sub_apply, Matrix.mulVec_diagonal, Pi.smul_apply,
         smul_eq_mul]
       ring
   have hc : (∏ j ∈ Finset.univ.erase i, (d i - d j)) * v i ≠ 0 := by

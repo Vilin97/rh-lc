@@ -1,13 +1,8 @@
-module
-
-public import Mathlib
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StProperSheetedFibreEsymm
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StUnbranchedProperCountConstant
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StRiemannExtensionAnalytic
-public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StParametricCircleIntegralAnalytic
-
-@[expose] public section
-
+import Mathlib
+import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StProperSheetedFibreEsymm
+import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StUnbranchedProperCountConstant
+import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StRiemannExtensionAnalytic
+import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StParametricCircleIntegralAnalytic
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.ComplexSets
@@ -18,6 +13,7 @@ open scoped Real
 
 namespace ProperSheetedFibreEsymm
 
+open Classical in
 
 noncomputable def fibreEsymm {σ : Type} {d : ℕ} (Y : Set (σ → ℂ)) (A : (σ → ℂ) →L[ℂ] (Fin d → ℂ))
     (l : (σ → ℂ) →L[ℂ] ℂ) (j : ℕ) (t : Fin d → ℂ) : ℂ :=
@@ -190,8 +186,8 @@ theorem analyticOnNhd_of_differentiableOn (hcirc : ParametricCircleIntegralAnaly
     AnalyticOnNhd ℂ F U := by
   have h := hcirc (Fin k) (fun p => F p.1 * p.2⁻¹) (U ×ˢ {s | s ≠ 0}) U 0 1 zero_le_one
     (hU.prod isOpen_ne) hU
-    ((hF.comp differentiable_fst.differentiableOn fun p hp => hp.1).mul
-      (differentiable_snd.differentiableOn.inv fun p hp => hp.2))
+    ((hF.fun_comp differentiable_fst.differentiableOn mapsTo_fst_prod).mul
+      (differentiable_snd.differentiableOn.inv fun _ hp => (mem_prod.1 hp).2))
     (fun x hx s hs => ⟨hx, by rintro rfl; simp at hs⟩)
   have hinv : (∮ z in C(0, 1), z⁻¹) = 2 * π * I := by
     simpa using circleIntegral.integral_sub_inv_of_mem_ball (c := 0) (w := 0) (R := 1) (by simp)
@@ -203,6 +199,7 @@ theorem analyticOnNhd_of_differentiableOn (hcirc : ParametricCircleIntegralAnaly
 
 end ProperSheetedFibreEsymm
 
+open ProperSheetedFibreEsymm in
 
 theorem ProperSheetedFibreEsymm.proof (hcount : UnbranchedProperCountConstant.Statement)
     (hriem : RiemannExtensionAnalytic.Statement) (hcirc : ParametricCircleIntegralAnalytic.Statement) :

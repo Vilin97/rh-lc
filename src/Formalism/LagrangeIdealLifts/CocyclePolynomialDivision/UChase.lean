@@ -1,7 +1,6 @@
 module
 
 public import Formalism.LagrangeIdealLifts.Statement
-public import Formalism.WindowSums.AnnihilatorPolynomials.ValProd
 public import Formalism.WindowSums.AnnihilatorPolynomials.ZpowVal
 
 @[expose] public section
@@ -258,35 +257,44 @@ lemma uc_val_factor (ℓ : ℕ) [Fact ℓ.Prime] (u : ℤ_[ℓ]ˣ) (M s : ℕ) (
     ∃ ν : ℤ_[ℓ], (ℓ : ℤ_[ℓ]) ^ eU ℓ M s J =
       ((∏ j ∈ J, (1 - ((u ^ (-j) : ℤ_[ℓ]ˣ) : ℤ_[ℓ]))) *
         ∏ i ∈ Finset.Icc 1 M, ((u : ℤ_[ℓ]) ^ i - 1)) * ν := by
-  obtain ⟨hM, hJJ⟩ := Formalism.WindowSums.valProd_of Formalism.WindowSums.valuation_zpow_sub_one ℓ u s hs h2 hv
-  obtain ⟨h2ne, h2v⟩ := hM M
-  obtain ⟨h1ne, h1v⟩ := hJJ J hJ
-  set P1 := ∏ j ∈ J, (1 - ((u ^ (-j) : ℤ_[ℓ]ˣ) : ℤ_[ℓ])) with hP1
-  set P2 := ∏ i ∈ Finset.Icc 1 M, (1 - (u : ℤ_[ℓ]) ^ i) with hP2
-  have hcard : (Finset.Icc 1 M).card = M := by simp
-  have hneg : ∏ i ∈ Finset.Icc 1 M, ((u : ℤ_[ℓ]) ^ i - 1) = (-1) ^ M * P2 := by
-    have := Finset.prod_neg (s := Finset.Icc 1 M) (fun i => 1 - (u : ℤ_[ℓ]) ^ i)
-    rw [hcard] at this
-    rw [hP2, ← this]
-    exact Finset.prod_congr rfl (fun i _ => by ring)
-  have e1 := PadicInt.unitCoeff_spec h1ne
-  have e2 := PadicInt.unitCoeff_spec h2ne
-  set μ1 := PadicInt.unitCoeff h1ne
-  set μ2 := PadicInt.unitCoeff h2ne
-  have heU : eU ℓ M s J = P1.valuation + P2.valuation := by
-    rw [h1v, h2v, eU, Finset.sum_add_distrib, Finset.sum_const, smul_eq_mul]; ring
-  refine ⟨((μ1⁻¹ : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) * ((μ2⁻¹ : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) * (-1) ^ M, ?_⟩
-  rw [heU, hneg, pow_add]
-  have hm1 : ((-1 : ℤ_[ℓ]) ^ M) * (-1) ^ M = 1 := by rw [← mul_pow]; simp
-  calc (ℓ : ℤ_[ℓ]) ^ P1.valuation * (ℓ : ℤ_[ℓ]) ^ P2.valuation
-      = (ℓ : ℤ_[ℓ]) ^ P1.valuation * (ℓ : ℤ_[ℓ]) ^ P2.valuation *
-          (((μ1 : ℤ_[ℓ]) * ((μ1⁻¹ : ℤ_[ℓ]ˣ) : ℤ_[ℓ])) * ((μ2 : ℤ_[ℓ]) * ((μ2⁻¹ : ℤ_[ℓ]ˣ) : ℤ_[ℓ])) *
-            (((-1 : ℤ_[ℓ]) ^ M) * (-1) ^ M)) := by rw [Units.mul_inv, Units.mul_inv, hm1]; ring
-    _ = ((μ1 : ℤ_[ℓ]) * (ℓ : ℤ_[ℓ]) ^ P1.valuation) *
-          ((-1) ^ M * ((μ2 : ℤ_[ℓ]) * (ℓ : ℤ_[ℓ]) ^ P2.valuation)) *
-          (((μ1⁻¹ : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) * ((μ2⁻¹ : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) * (-1) ^ M) := by ring
-    _ = P1 * ((-1) ^ M * P2) * (((μ1⁻¹ : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) * ((μ2⁻¹ : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) * (-1) ^ M) := by
-          rw [← e1, ← e2]
+  change ((∏ j ∈ J, (1 - ((u ^ (-j) : ℤ_[ℓ]ˣ) : ℤ_[ℓ]))) *
+    ∏ i ∈ Finset.Icc 1 M, ((u : ℤ_[ℓ]) ^ i - 1)) ∣ (ℓ : ℤ_[ℓ]) ^ eU ℓ M s J
+  have pow_dvd_of_valuation {x : ℤ_[ℓ]} {n : ℕ} (hx : x ≠ 0) (hn : x.valuation = n) :
+      x ∣ (ℓ : ℤ_[ℓ]) ^ n := by
+    have he := PadicInt.unitCoeff_spec hx
+    rw [hn] at he
+    rw [he, Units.mul_left_dvd]
+  have hz := Formalism.WindowSums.valuation_zpow_sub_one ℓ u s hs h2 hv
+  have hJprod : (∏ j ∈ J, (1 - ((u ^ (-j) : ℤ_[ℓ]ˣ) : ℤ_[ℓ]))) ∣
+      (ℓ : ℤ_[ℓ]) ^ (∑ j ∈ J, (s + padicValInt ℓ j)) := by
+    rw [← Finset.prod_pow_eq_pow_sum]
+    apply Finset.prod_dvd_prod_of_dvd
+    intro j hj
+    obtain ⟨hne, hval⟩ := hz (-j) (neg_ne_zero.mpr (fun h => hJ (h ▸ hj)))
+    rw [← neg_sub, neg_dvd]
+    exact pow_dvd_of_valuation hne (by simpa [padicValInt] using hval)
+  have hMprod : (∏ i ∈ Finset.Icc 1 M, ((u : ℤ_[ℓ]) ^ i - 1)) ∣
+      (ℓ : ℤ_[ℓ]) ^ (∑ i ∈ Finset.Icc 1 M, (s + padicValNat ℓ i)) := by
+    rw [← Finset.prod_pow_eq_pow_sum]
+    apply Finset.prod_dvd_prod_of_dvd
+    intro i hi
+    have hi0 : (i : ℤ) ≠ 0 := by
+      have := (Finset.mem_Icc.mp hi).1
+      omega
+    have h := hz i hi0
+    rw [zpow_natCast, Units.val_pow_eq_pow_val, padicValInt.of_nat, ← Nat.padicValNat_def] at h
+    exact pow_dvd_of_valuation h.1 h.2
+  have hfactorial (m : ℕ) : ∑ i ∈ Finset.Icc 1 m, padicValNat ℓ i = padicValNat ℓ m.factorial := by
+    induction m with
+    | zero => simp [Nat.padicValNat_def]
+    | succ n ih =>
+      rw [Finset.sum_Icc_succ_top (by omega), ih, Nat.factorial_succ]
+      simp only [Nat.padicValNat_def, Nat.multiplicity_mul (Nat.succ_ne_zero n) (Nat.factorial_ne_zero n)]
+      exact Nat.add_comm _ _
+  have hM : ∑ i ∈ Finset.Icc 1 M, (s + padicValNat ℓ i) = M * s + padicValNat ℓ M.factorial := by
+    rw [Finset.sum_add_distrib, Finset.sum_const, Nat.card_Icc, smul_eq_mul, Nat.add_sub_cancel, hfactorial]
+  rw [eU, add_assoc, ← hM, pow_add]
+  exact mul_dvd_mul hJprod hMprod
 
 theorem lemmaU_of (hC : UClaim) (hS : UChase) : LemmaU := by
   intro ℓ _ A _ _ B M D₀ D₁ D₂ _ _ _ _ _ _ _ _ _ _ _ _ W₀ W₁ W₂ S e s J hs h2 hv hJ h1 h3 h4 h5 hK hR

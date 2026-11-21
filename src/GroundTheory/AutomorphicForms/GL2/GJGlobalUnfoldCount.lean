@@ -62,7 +62,7 @@ theorem map_zero (h : Hyp ν u L D Λ E S) : u 0 = 1 := by
   exact mul_eq_left.1 h0.symm
 
 theorem map_neg (h : Hyp ν u L D Λ E S) (X : V) : u (-X) = (u X)⁻¹ :=
-  eq_inv_of_mul_eq_one_left (by rw [← h.map_add (f := _), neg_add_cancel, h.map_zero])
+  eq_inv_of_mul_eq_one_left (by rw [← h.map_add, neg_add_cancel, h.map_zero])
 
 theorem S_S_inv (h : Hyp ν u L D Λ E S) {q : G} (hq : q ∈ Λ) (Z : V) : S q (S q⁻¹ Z) = Z := by
   apply h.injective
@@ -74,7 +74,7 @@ def unipSubgroup (h : Hyp ν u L D Λ E S) : Subgroup Λ where
   one_mem' := ⟨0, L.zero_mem, h.map_zero⟩
   mul_mem' := by
     rintro _ _ ⟨ξ, hξ, hξe⟩ ⟨η, hη, hηe⟩
-    exact ⟨ξ + η, L.add_mem hξ hη, by rw [h.map_add (f := _), hξe, hηe]; rfl⟩
+    exact ⟨ξ + η, L.add_mem hξ hη, by rw [h.map_add, hξe, hηe]; rfl⟩
   inv_mem' := by
     rintro _ ⟨ξ, hξ, hξe⟩
     exact ⟨-ξ, L.neg_mem hξ, by rw [h.map_neg, hξe]; rfl⟩
@@ -122,7 +122,7 @@ theorem tsum_setLIntegral_right (h : Hyp ν u L D Λ E S) (q g : G) :
       ∫⁻ Z, E.indicator 1 (q * u Z * g) ∂ν := by
   rw [h.isAddFundamentalDomain.lintegral_eq_tsum'' (fun Z => E.indicator 1 (q * u Z * g))]
   refine tsum_congr fun ξ => setLIntegral_congr_fun h.measurableSet_D (fun Y _ => ?_)
-  rw [AddSubgroup.vadd_def, vadd_eq_add, h.map_add (f := _), ← mul_assoc]
+  rw [AddSubgroup.vadd_def, vadd_eq_add, h.map_add, ← mul_assoc]
 
 theorem tsum_setLIntegral_left (h : Hyp ν u L D Λ E S) {q : G} (hq : q ∈ Λ) (g : G) :
     ∑' ξ : L, ∫⁻ X in D, E.indicator 1 (u (-X) * (q * u ξ) * g) ∂ν =
@@ -132,8 +132,8 @@ theorem tsum_setLIntegral_left (h : Hyp ν u L D Λ E S) {q : G} (hq : q ∈ Λ)
     intro X η
     have e1 : ((h.latticeEquiv hq η : L) : V) = S q (-(η : V)) := rfl
     have e2 : S q (-((η : V) + X)) = S q (-X) + S q (-(η : V)) := by
-      rw [neg_add, (S q).map_add (f := _), add_comm]
-    rw [e1, e2, h.map_add (f := _), ← h.conj q hq (-X)]
+      rw [neg_add, _root_.map_add (S q), add_comm]
+    rw [e1, e2, h.map_add, ← h.conj q hq (-X)]
     simp only [mul_assoc, mul_inv_cancel_left]
   rw [← (h.latticeEquiv hq).tsum_eq]
   simp_rw [key]
@@ -214,7 +214,7 @@ theorem setLIntegral_comp_mul (h : Hyp ν u L D Λ E S) (X : V) (H : G → ℝ�
     ← lintegral_mul_left_eq_self (fun g => E.indicator 1 (u (-X) * g) * H g) (u X)]
   refine lintegral_congr fun g => ?_
   simp only [← mul_assoc]
-  rw [← h.map_add (f := _), neg_add_cancel, h.map_zero, one_mul]
+  rw [← h.map_add, neg_add_cancel, h.map_zero, one_mul]
   by_cases hg : g ∈ E <;> simp [hg]
 
 theorem lintegral_weight_mul (h : Hyp ν u L D Λ E S) {H : G → ℝ≥0∞} (hH : Measurable H)
@@ -289,7 +289,7 @@ theorem integral_setIntegral_eq (h : Hyp ν u L D Λ E S) {Ψ : G → ℂ} (hΨ 
       ← integral_mul_left_eq_self (fun g => ind X g * Ψ g) (u X)]
     refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
     simp only [hind, ← mul_assoc]
-    rw [← h.map_add (f := _), neg_add_cancel, h.map_zero, one_mul]
+    rw [← h.map_add, neg_add_cancel, h.map_zero, one_mul]
     by_cases hg : g ∈ E <;> simp [hg]
   simp_rw [ha]
 

@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.LineDerivListEqIteratedFDeriv
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.LineDerivListEqIteratedFDeriv
 
 open Filter Topology
 
@@ -28,7 +24,7 @@ theorem pderivList_append (l₁ l₂ : List ι) (F : (ι → 𝕜) → V) :
   simp only [pderivList, List.map_append, lineDerivList_append]
 
 @[simp] theorem pderivIter_zero (F : (ι → 𝕜) → V) : pderivIter 0 F = F := by
-  simp [pderivIter]
+  simp [pderivIter, pderivList, lineDerivList]
 
 theorem update_eq_add_smul_single (z : ι → 𝕜) (k : ι) (t : 𝕜) :
     Function.update z k t = z + (t - z k) • (Pi.single k 1 : ι → 𝕜) := by

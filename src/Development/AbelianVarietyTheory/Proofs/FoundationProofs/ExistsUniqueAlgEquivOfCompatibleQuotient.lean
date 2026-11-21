@@ -31,7 +31,7 @@ theorem isAdicComplete_of_finite {R : Type*} [CommRing R] [IsNoetherianRing R] (
     [IsAdicComplete I R] (M : Type*) [AddCommGroup M] [Module R M] [Module.Finite R M] :
     IsAdicComplete I M where
   toIsHausdorff := IsHausdorff.of_le_jacobson I M (IsAdicComplete.le_jacobson I)
-  prec' f hf := (isPrecomplete_of_finite I M).prec (f := f) hf
+  toIsPrecomplete := ⟨fun f hf => (isPrecomplete_of_finite I M).prec (f := f) hf⟩
 
 theorem isAdicComplete_map_of_finite {R : Type*} [CommRing R] [IsNoetherianRing R] (I : Ideal R)
     [IsAdicComplete I R] (S : Type*) [CommRing S] [Algebra R S] [Module.Finite R S] :

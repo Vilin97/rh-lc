@@ -1,9 +1,4 @@
-module
-
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FourierMatch
-
-@[expose] public section
-
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FourierMatch
 open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 
 namespace GlobalTheory.JR.OrbitProper
@@ -33,7 +28,8 @@ theorem conj_pow_GL (g : GL (Fin r) k) (A : Matrix (Fin r) (Fin r) k) (j : ℕ) 
 theorem Bm_sec (a : Inv r k) : Bm (sec a) = 1 := by
   ext i j
   simp only [Bm, sec, of_apply]
-  rw [companionMatrixOfCoeffs_pow_mulVec_first_basis a.1 j j.2, one_apply, Pi.single_apply]
+  rw [companionMatrixOfCoeffs_pow_mulVec_first_basis a.1 j j.2]
+  simp [Pi.single_apply, Matrix.one_apply]
 
 theorem Bm_act (g : GL (Fin r) k) (Y : Gl r k) :
     Bm (act g Y) = (g : Matrix (Fin r) (Fin r) k) * Bm Y := by

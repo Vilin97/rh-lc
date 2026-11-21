@@ -1,11 +1,7 @@
-module
-
-public import Mathlib
-public import GroundTheory.GlobalFields.IdeleClassGroup.IdeleClassMapIdeleClassMap
-public import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles
-public import GroundTheory.LocalFields.AbstractLocalReciprocity.ExistsOpenSubgroupMemFixedModule
-
-@[expose] public section
+import Mathlib
+import GroundTheory.GlobalFields.IdeleClassGroup.IdeleClassMapIdeleClassMap
+import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles
+import GroundTheory.LocalFields.AbstractLocalReciprocity.ExistsOpenSubgroupMemFixedModule
 
 namespace GroundTheory.Global
 

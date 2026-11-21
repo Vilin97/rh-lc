@@ -1,9 +1,5 @@
-module
-
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.NullSecKAlg
-public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.PolyExpBound
-
-@[expose] public section
+import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.NullSecKAlg
+import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.PolyExpBound
 
 noncomputable section
 
@@ -21,8 +17,14 @@ theorem momLin : MomLin := by
   · unfold mom
     rw [← integral_add hP hQ]
     congr 1
+    funext x
+    simp [evX]
+    ring
   · unfold mom
     rw [← integral_const_mul]
     congr 1
+    funext x
+    simp [evX]
+    ring
 
 end PositivityTheory.Rg.Sw.LC

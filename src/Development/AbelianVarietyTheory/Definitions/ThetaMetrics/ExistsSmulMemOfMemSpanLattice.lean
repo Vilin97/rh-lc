@@ -112,7 +112,7 @@ theorem diag_form {ι : Type*} [Fintype ι] (d : (K →+* ℂ) → ι → ℝ) (
     (σ : K →+* ℂ) (x y : ι → K) :
     (diag d hd).form σ x y = ∑ i, (d σ i : ℂ) * (σ (x i) * conj (σ (y i))) := rfl
 
-
+variable (K) in
 noncomputable def std (ι : Type*) [Fintype ι] : ArchMetric K (ι → K) :=
   diag (fun _ _ => 1) fun _ _ => one_pos
 
@@ -120,7 +120,7 @@ theorem std_form {ι : Type*} [Fintype ι] (σ : K →+* ℂ) (x y : ι → K) :
     (std K ι).form σ x y = ∑ i, σ (x i) * conj (σ (y i)) := by
   simp [std, diag_form]
 
-
+variable (K) in
 noncomputable def stdField : ArchMetric K K :=
   ofFun (Basis.singleton Unit K) (fun σ x y => σ x * conj (σ y))
     (fun σ x x' y => by simp [add_mul]) (fun σ a x y => by simp [mul_assoc])
@@ -529,8 +529,9 @@ theorem frameDeg_eq_frameDeg (hA : A.FG) {e : ι → V} {f : κ → V} (he : IsL
 end FrameDeg
 
 
-noncomputable def arDeg (A : Submodule (𝓞 K) V) : ℝ :=
-  if hA : A.FG then h.frameDeg A (exists_isLatticeFrame hA).choose else 0
+noncomputable def arDeg (A : Submodule (𝓞 K) V) : ℝ := by
+  classical
+  exact if hA : A.FG then h.frameDeg A (exists_isLatticeFrame hA).choose else 0
 
 section ArDeg
 

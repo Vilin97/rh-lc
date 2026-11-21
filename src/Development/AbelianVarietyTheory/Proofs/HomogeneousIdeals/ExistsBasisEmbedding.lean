@@ -1,7 +1,6 @@
 module
 
 public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsIsKroneckerCharOfDiscr
 public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsVariableChangeEqLatticeCurve
 
 @[expose] public section
@@ -10,6 +9,75 @@ open NumberField Module FractionalIdeal
 open scoped nonZeroDivisors UpperHalfPlane ComplexConjugate
 
 namespace GlobalTheory.QuadraticZeta
+
+section Ring
+
+variable {R : Type*} [CommRing R]
+
+theorem eq_coord (b : Basis (Fin 2) ℤ R) (h0 : b 0 = 1) (x : R) :
+    x = (b.repr x 0 : R) + (b.repr x 1 : R) * b 1 := by
+  conv_lhs => rw [← b.sum_repr x]
+  simp [h0]
+
+theorem repr_coord (b : Basis (Fin 2) ℤ R) (h0 : b 0 = 1) (x y : ℤ) :
+    b.repr (x + y * b 1) 0 = x ∧ b.repr (x + y * b 1) 1 = y := by
+  have : (x + y * b 1 : R) = x • b 0 + y • b 1 := by simp [h0]
+  rw [this]
+  simp [-zsmul_eq_mul]
+
+theorem discr_eq (b : Basis (Fin 2) ℤ R) (h0 : b 0 = 1) {t n : ℤ}
+    (hw : b 1 ^ 2 = t * b 1 - n) : Algebra.discr ℤ b = t ^ 2 - 4 * n := by
+  have tr : ∀ x y : ℤ, Algebra.trace ℤ R (x + y * b 1) = 2 * x + y * t := by
+    intro x y
+    rw [Algebra.trace_eq_matrix_trace b, Matrix.trace_fin_two, Algebra.leftMulMatrix_eq_repr_mul,
+      Algebra.leftMulMatrix_eq_repr_mul, h0, mul_one, (repr_coord b h0 x y).1,
+      show (x + y * b 1 : R) * b 1 = (-(y * n) : ℤ) + (x + y * t : ℤ) * b 1 by
+        push_cast; linear_combination (y : R) * hw, (repr_coord b h0 _ _).2]
+    ring
+  have t1 := tr 1 0
+  have t2 := tr 0 1
+  have t3 := tr (-n) t
+  rw [Algebra.discr_def, Matrix.det_fin_two]
+  simp only [Algebra.traceMatrix_apply, Algebra.traceForm_apply, h0, mul_one, one_mul]
+  rw [show b 1 * b 1 = (-n : ℤ) + t * b 1 by push_cast; linear_combination hw, t3]
+  simp only [Int.cast_one, Int.cast_zero, zero_mul, add_zero, one_mul, zero_add] at t1 t2
+  rw [t1, t2]
+  ring
+
+end Ring
+
+theorem exists_basis {K : Type*} [Field K] [NumberField K] (h2 : finrank ℚ K = 2) :
+    ∃ (b : Basis (Fin 2) ℤ (𝓞 K)) (t n : ℤ), b 0 = 1 ∧
+      b 1 ^ 2 = t * b 1 - n ∧ discr K = t ^ 2 - 4 * n := by
+  let e : Basis (Fin 2) ℤ (𝓞 K) := finBasisOfFinrankEq ℤ _ ((RingOfIntegers.rank K).trans h2)
+  have h1 : (1 : 𝓞 K) = e.repr 1 0 • e 0 + e.repr 1 1 • e 1 := by
+    conv_lhs => rw [← e.sum_repr 1]
+    simp
+  generalize e.repr 1 0 = x, e.repr 1 1 = y at h1
+  have hc : IsCoprime x y := by
+    refine isCoprime_of_dvd x y (fun h => by simp [h.1, h.2] at h1) ?_
+    rintro z hz - ⟨x', rfl⟩ ⟨y', rfl⟩
+    apply hz
+    have hu : IsUnit (algebraMap ℤ (𝓞 K) z) :=
+      IsUnit.of_mul_eq_one (x' • e 0 + y' • e 1) (by rw [h1]; simp; ring)
+    have := hu.map (Algebra.norm ℤ)
+    rw [Algebra.norm_algebraMap_of_basis e] at this
+    exact (isUnit_pow_iff (by simp)).1 this
+  obtain ⟨u, v, huv⟩ := hc
+  have hd : IsUnit (e.det ![x • e 0 + y • e 1, -v • e 0 + u • e 1]) := by
+    rw [Basis.det_apply, Matrix.det_fin_two]
+    simp only [Basis.toMatrix_apply]
+    simp [-zsmul_eq_mul]
+    convert isUnit_one using 1
+    linarith
+  obtain ⟨hi, hs⟩ := (e.is_basis_iff_det).2 hd
+  let b : Basis (Fin 2) ℤ (𝓞 K) := Basis.mk hi hs.ge
+  have h0 : b 0 = 1 := by simp [b, h1.symm, -zsmul_eq_mul]
+  have hw : b 1 ^ 2 = (b.repr (b 1 ^ 2) 1 : ℤ) * b 1 - (-b.repr (b 1 ^ 2) 0 : ℤ) := by
+    conv_lhs => rw [eq_coord b h0 (b 1 ^ 2)]
+    push_cast
+    ring
+  exact ⟨b, _, _, h0, hw, by rw [← discr_eq_discr K b, discr_eq b h0 hw]⟩
 
 variable {K : Type*} [Field K] [NumberField K] {d : ℕ}
 

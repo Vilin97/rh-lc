@@ -51,7 +51,7 @@ theorem sigmaι_base_ne {i j : ι} (hij : i ≠ j) (x : ↥(X i)) (y : ↥(X j))
   intro h
   exact hij (congrArg Sigma.fst ((sigmaι_eq_iff X i j x y).mp h))
 
-private def iSupOpensRangeSigmaι {κ : Type u} (Y : κ → Scheme.{u}) [HasCoproduct Y] : (∐ Y).Opens :=
+private noncomputable def iSupOpensRangeSigmaι {κ : Type u} (Y : κ → Scheme.{u}) [HasCoproduct Y] : (∐ Y).Opens :=
   ⟨⋃ i, Set.range ⇑(Sigma.ι Y i).base,
     isOpen_iUnion fun i => (Sigma.ι Y i).isOpenEmbedding.isOpen_range⟩
 

@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.StarInvMulVecDotProductMulVecInvMulVec
-public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.MulConjTransposeEqOneOfOrthonormal
 
 @[expose] public section
 
@@ -10,6 +9,106 @@ open Matrix Set Filter
 open scoped ComplexOrder MatrixOrder Kronecker Topology
 
 namespace GlobalTheory
+
+section Ring
+
+variable {R : Type*} [CommRing R]
+
+abbrev subsetEnum {n : Type*} [LinearOrder n] {i : ℕ} (S : Set.powersetCard n i) : Fin i → n :=
+  S.1.orderEmbOfFin S.2
+
+theorem range_subsetEnum {n : Type*} [LinearOrder n] {i : ℕ} (S : Set.powersetCard n i) :
+    Set.range (subsetEnum S) = (S.1 : Set n) :=
+  Finset.range_orderEmbOfFin _ _
+
+theorem subsetEnum_injective {n : Type*} [LinearOrder n] {i : ℕ} (S : Set.powersetCard n i) :
+    Function.Injective (subsetEnum S) :=
+  (S.1.orderEmbOfFin S.2).injective
+
+theorem alternatingMap_apply_eq_sum_minors {n : Type*} [Fintype n] [LinearOrder n] {i : ℕ}
+    {M : Type*} [AddCommGroup M] [Module R M] (f : (n → R) [⋀^Fin i]→ₗ[R] M)
+    (A : Fin i → n → R) :
+    f A = ∑ S : Set.powersetCard n i,
+      ((Matrix.of A).submatrix id (subsetEnum S)).det • f (fun a => Pi.single (subsetEnum S a) 1) := by
+  classical
+  let b := Pi.basisFun R n
+  have h := (b.exteriorPower i).sum_repr (exteriorPower.ιMulti R i A)
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← exteriorPower.alternatingMapLinearEquiv_apply_ιMulti f A, ← h, map_sum]
+  refine Finset.sum_congr rfl fun S _ => ?_
+  rw [map_smul, exteriorPower.basis_repr_apply, exteriorPower.ιMultiDual_apply_ιMulti,
+    exteriorPower.basis_apply, exteriorPower.ιMulti_family,
+    exteriorPower.alternatingMapLinearEquiv_apply_ιMulti]
+  congr 2
+  ext a
+  simp [b, subsetEnum, Set.powersetCard.ofFinEmbEquiv_symm_apply, Pi.basisFun_apply]
+
+theorem det_mul_eq_sum_minors {n : Type*} [Fintype n] [LinearOrder n] {i : ℕ}
+    (A : Matrix (Fin i) n R) (B : Matrix n (Fin i) R) :
+    (A * B).det = ∑ S : Set.powersetCard n i,
+      (A.submatrix id (subsetEnum S)).det * (B.submatrix (subsetEnum S) id).det := by
+  classical
+  have h := alternatingMap_apply_eq_sum_minors
+    ((Matrix.detRowAlternating (n := Fin i) (R := R)).compLinearMap B.vecMulLinear) A
+  have h0 : (A * B).det =
+      ((Matrix.detRowAlternating (n := Fin i) (R := R)).compLinearMap B.vecMulLinear) A := rfl
+  rw [h0, h]
+  refine Finset.sum_congr rfl fun S _ => ?_
+  rw [smul_eq_mul]
+  congr 1
+  rw [AlternatingMap.compLinearMap_apply]
+  change Matrix.det _ = _
+  congr 1
+  ext a c
+  simp [Matrix.vecMulLinear_apply, Matrix.single_one_vecMul]
+
+theorem det_mul_det_eq_of_range_eq {m k n : Type*} [Fintype m] [DecidableEq m] [Fintype k]
+    [DecidableEq k] (A : Matrix m n R) (B : Matrix n m R) (φ : k ≃ m) (e : m → n) (g : k → n)
+    (hg : Function.Injective g) (h : Set.range e = Set.range g) :
+    (A.submatrix id e).det * (B.submatrix e id).det =
+      (A.submatrix φ g).det * (B.submatrix g φ).det := by
+  have h1 : ∀ a : k, ∃ c : m, e c = g a := fun a => by
+    have : g a ∈ Set.range e := h ▸ Set.mem_range_self a
+    exact this
+  choose s hs using h1
+  have hinj : Function.Injective (φ.symm ∘ s) := by
+    intro a a' haa
+    have : s a = s a' := φ.symm.injective haa
+    exact hg (by rw [← hs a, ← hs a', this])
+  let σ : Equiv.Perm k := Equiv.ofBijective _ (Finite.injective_iff_bijective.mp hinj)
+  have hσ : ∀ a, e (φ (σ a)) = g a := fun a => by simp [σ, hs]
+  have hA : A.submatrix φ g = ((A.submatrix id e).submatrix φ φ).submatrix id σ := by
+    ext a c; simp [hσ]
+  have hB : B.submatrix g φ = ((B.submatrix e id).submatrix φ φ).submatrix σ id := by
+    ext a c; simp [hσ]
+  rw [hA, hB, det_permute, det_permute', det_submatrix_equiv_self, det_submatrix_equiv_self]
+  have : ((Equiv.Perm.sign σ : ℤ) : R) * ((Equiv.Perm.sign σ : ℤ) : R) = 1 := by
+    rw [← Int.cast_mul, ← Units.val_mul, Int.units_mul_self]; simp
+  linear_combination (-(A.submatrix id e).det * (B.submatrix e id).det) * this
+
+theorem det_mul_eq_sum_minors_of_enum {m n : Type*} [Fintype m] [DecidableEq m] [Fintype n]
+    (e : Set.powersetCard n (Fintype.card m) → m → n)
+    (he : ∀ S, Set.range (e S) = (S.1 : Set n)) (A : Matrix m n R) (B : Matrix n m R) :
+    (A * B).det = ∑ S : Set.powersetCard n (Fintype.card m),
+      (A.submatrix id (e S)).det * (B.submatrix (e S) id).det := by
+  classical
+  letI : LinearOrder n := linearOrderOfSTO WellOrderingRel
+  let φ : Fin (Fintype.card m) ≃ m := (Fintype.equivFin m).symm
+  rw [← det_submatrix_equiv_self φ (A * B), submatrix_mul A B φ id φ Function.bijective_id,
+    det_mul_eq_sum_minors]
+  refine Finset.sum_congr rfl fun S _ => ?_
+  rw [det_mul_det_eq_of_range_eq A B φ (e S) (subsetEnum S) (subsetEnum_injective S)
+    ((he S).trans (range_subsetEnum S).symm)]
+  rfl
+
+theorem det_submatrix_mul_eq_sum_minors {l n o : Type*} [Fintype n] [LinearOrder n] {i : ℕ}
+    (A : Matrix l n R) (B : Matrix n o R) (r : Fin i → l) (c : Fin i → o) :
+    ((A * B).submatrix r c).det = ∑ S : Set.powersetCard n i,
+      (A.submatrix r (subsetEnum S)).det * (B.submatrix (subsetEnum S) c).det := by
+  rw [submatrix_mul A B r id c Function.bijective_id, det_mul_eq_sum_minors]
+  rfl
+
+end Ring
 
 section Weight
 

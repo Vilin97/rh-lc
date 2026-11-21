@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.AevalEqZeroOfHomogeneousComponent
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.AevalEqZeroOfHomogeneousComponent
 
 open MvPolynomial
 
@@ -47,6 +43,7 @@ end Dimension
 
 section Principal
 
+attribute [local instance] Polynomial.algebra Polynomial.isLocalization in
 
 theorem isPrincipal_of_forall_C_mem {R : Type*} [CommRing R] [IsDomain R]
     [UniqueFactorizationMonoid R] (E : Ideal (Polynomial R)) [hE : E.IsPrime]
@@ -116,7 +113,7 @@ theorem injective_of_constantCoeff {R S V : Type*} [CommRing R] [CommRing S]
       rw [hmon, coeff_mul_monomial', if_neg]
       exact fun hle => hba (le_antisymm hle (hmin hb hle))
     · exact fun h => absurd ha h
-  rw [hP, coeff_zero] at this
+  simp only [hP, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
   exact mem_support_iff.1 ha (h _ this.symm)
 
 theorem injective_of_eval {R S V : Type*} [CommRing R] [CommRing S]
@@ -233,6 +230,8 @@ theorem elimIdeal_ne_bot {p : Ideal (MvPolynomial σ K)} [hP : p.IsPrime]
     rw [this]
     exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨i, rfl⟩)
   have h5 := trdeg_le_of_injective χ hχ
+  have : FaithfulSMul K B :=
+    (faithfulSMul_iff_algebraMap_injective K B).2 (algebraMap K B).injective
   rw [← trdeg_add_eq K B (A := MvPolynomial {v : β × σ // v ∉ elimIndices Set.univ j₀} B), hs',
     MvPolynomial.trdeg_of_isDomain, MvPolynomial.trdeg_of_isDomain, Cardinal.mk_fintype,
     Cardinal.mk_fintype, Cardinal.lift_natCast, Cardinal.lift_natCast] at h5
@@ -245,6 +244,7 @@ theorem elimIdeal_ne_bot {p : Ideal (MvPolynomial σ K)} [hP : p.IsPrime]
   have h9 := Fintype.card_subtype_le fun v : β × σ => v ∈ elimIndices Set.univ j₀
   omega
 
+omit [Fintype σ] in
 
 theorem exists_algebraicIndependent_genericPoint [Finite σ] {p : Ideal (MvPolynomial σ K)}
     [p.IsPrime] (hdim : ringKrullDim (MvPolynomial σ K ⧸ p) = (Fintype.card β : ℕ)) :
@@ -262,6 +262,8 @@ theorem exists_algebraicIndependent_genericPoint [Finite σ] {p : Ideal (MvPolyn
     exact Ideal.Quotient.mk_surjective
   have : Algebra.IsAlgebraic (Algebra.adjoin K (Set.range x)) A :=
     ⟨fun a => isAlgebraic_algebraMap (⟨a, htop ▸ trivial⟩ : Algebra.adjoin K (Set.range x))⟩
+  have : FaithfulSMul K A :=
+    (faithfulSMul_iff_algebraMap_injective K A).2 (algebraMap K A).injective
   obtain ⟨t, ht, hb⟩ := exists_isTranscendenceBasis_subset (R := K) (Set.range x)
   have hc := hb.cardinalMk_eq_trdeg
   rw [hs', hsβ] at hc
@@ -286,7 +288,7 @@ theorem isPrincipal_elimIdeal [Nonempty β] {p : Ideal (MvPolynomial σ K)} [p.I
   let j₀ := κ i₀
   have h0 : ξ j₀ ≠ 0 := hκ.ne_zero i₀
   have hκ0 (i : β) (hi : i ≠ i₀) : κ i ≠ j₀ := fun h => hi (hκ.injective (congrArg ξ h))
-  have : (elimIdeal β p).IsPrime := isPrime_elimIdeal ⟨j₀, fun h =>
+  have : (elimIdeal (β := β) p).IsPrime := isPrime_elimIdeal ⟨j₀, fun h =>
     h0 (by rw [← aeval_genericPoint_eq_zero_iff, aeval_X] at h; exact h)⟩
   let V := β × {j : σ // j ≠ j₀}
   let W := {i : β // i ≠ i₀}

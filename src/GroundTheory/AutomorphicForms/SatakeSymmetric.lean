@@ -15,16 +15,6 @@ namespace Spherical
 
 variable {n : ℕ}
 
-def monomial (l : Fin n → ℤ) : LaurentRing (n := n) := single l 1
-
-def evalAt (w : Fin n → ℂˣ) : LaurentRing (n := n) →ₐ[ℂ] ℂ :=
-  AddMonoidAlgebra.lift ℂ ℂ (Fin n → ℤ) (pointHom w)
-
-theorem evalAt_single (w : Fin n → ℂˣ) (l : Fin n → ℤ) (c : ℂ) :
-    evalAt w (single l c) = c * monomialChar l w := by
-  rw [evalAt, AddMonoidAlgebra.lift_single, smul_eq_mul]
-  rfl
-
 def permCoord (σ : Equiv.Perm (Fin n)) : (Fin n → ℤ) →+ (Fin n → ℤ) where
   toFun l := l ∘ σ.symm
   map_zero' := rfl
@@ -147,7 +137,7 @@ theorem mem_range_polyEmb {q : LaurentRing (n := n)} (hq : ∀ l ∈ q.coeff.sup
   funext i
   simp [natToInt_apply, Int.toNat_of_nonneg (hq l hl i)]
 
-theorem symmetricLaurent_le {A : Subalgebra ℂ LaurentRing}
+theorem symmetricLaurent_le {A : Subalgebra ℂ (LaurentRing n)}
     (he : ∀ k, polyEmb (n := n) (esymm (Fin n) ℂ k) ∈ A) (hinv : monomial (fun _ => (-1 : ℤ)) ∈ A) :
     symmetricLaurent (n := n) ≤ A := by
   classical
@@ -193,32 +183,13 @@ theorem symmetricLaurent_le {A : Subalgebra ℂ LaurentRing}
     rw [aeval_range] at this
     exact Algebra.adjoin_le (Set.range_subset_iff.2 fun i => he _) this
   have hp' : p = monomial (fun _ => (-1 : ℤ)) ^ N * q := by
-    change p = single (fun _ : Fin n => (-1 : ℤ)) 1 ^ N *
+    have hz : (N • fun _ : Fin n => (-1 : ℤ)) + (fun _ => (N : ℤ)) = 0 := by
+      funext i
+      simp
+    change p = single (fun _ : Fin n => (-1 : ℤ)) (1 : ℂ) ^ N *
       (single (fun _ : Fin n => (N : ℤ)) 1 * p)
-    have hpow : single (fun _ : Fin n => (-1 : ℤ)) 1 ^ N =
-        single (N • fun _ : Fin n => (-1 : ℤ)) 1 := by
-      simp [AddMonoidAlgebra.single_pow]
-    have hprod : single (N • fun _ : Fin n => (-1 : ℤ)) 1 *
-        single (fun _ : Fin n => (N : ℤ)) 1 = 1 := by
-      rw [AddMonoidAlgebra.single_mul_single]
-      have hz : (N • fun _ : Fin n => (-1 : ℤ)) + (fun _ => (N : ℤ)) = 0 := by
-        funext i
-        simp
-        ring_nf
-      rw [hz]
-      ext l
-      simp [AddMonoidAlgebra.single, Finsupp.single_apply]
-    calc
-      p = (single (N • fun _ : Fin n => (-1 : ℤ)) 1 *
-          single (fun _ : Fin n => (N : ℤ)) 1) * p := by
-        simpa using congrArg (fun x : LaurentRing (n := n) => x * p) hprod.symm
-      _ = single (fun _ : Fin n => (-1 : ℤ)) 1 ^ N *
-          (single (fun _ : Fin n => (N : ℤ)) 1 * p) := by
-        calc
-          _ = (single (fun _ : Fin n => (-1 : ℤ)) 1 ^ N *
-              single (fun _ : Fin n => (N : ℤ)) 1) * p :=
-            congrArg (fun x => (x * single (fun _ : Fin n => (N : ℤ)) 1) * p) hpow.symm
-          _ = _ := by rw [mul_assoc]
+    rw [← mul_assoc, AddMonoidAlgebra.single_pow, one_pow, AddMonoidAlgebra.single_mul_single,
+      hz, mul_one, ← AddMonoidAlgebra.one_def, one_mul]
   rw [hp']
   exact Subalgebra.mul_mem _ (Subalgebra.pow_mem _ hinv _) hqA
 

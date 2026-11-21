@@ -1,8 +1,4 @@
-module
-
-public import Formalism.GradedWeylDivisibility.StatementA
-
-@[expose] public section
+import Formalism.GradedWeylDivisibility.StatementA
 
 open MvPolynomial
 
@@ -52,7 +48,8 @@ private theorem weightedHomogeneousComponent_eq_zero_of_isWH_ne {w : σ → M} {
     (hne : m ≠ μ) (hp : IsWeightedHomogeneous w p m) : weightedHomogeneousComponent w μ p = 0 := by
   classical
   ext d
-  rw [coeff_weightedHomogeneousComponent, coeff_zero]
+  rw [coeff_weightedHomogeneousComponent]
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   split_ifs with h
   · by_contra hd
     exact hne ((hp hd).symm.trans h)

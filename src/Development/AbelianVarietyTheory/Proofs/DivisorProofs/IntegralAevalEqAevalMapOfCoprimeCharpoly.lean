@@ -1,11 +1,7 @@
-module
-
-public import Mathlib
-public import Formalism.SatakeDualWeyl.Statement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemMatLat
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharpolyEqPowOfIrreducible
-
-@[expose] public section
+import Mathlib
+import Formalism.SatakeDualWeyl.Statement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemMatLat
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharpolyEqPowOfIrreducible
 
 noncomputable section
 
@@ -98,11 +94,11 @@ theorem isIntegral_aeval_eq_aeval_map : ∀ {O K : Type} [CommRing O] [IsDomain 
       have h1 : π • (π ^ k • aeval γ p) = π • aeval γ h := by rw [smul_smul, ← pow_succ', ← hf, hh]
       rw [← algebraMap_smul K π (π ^ k • aeval γ p), ← algebraMap_smul K π (aeval γ h)] at h1
       exact (smul_right_injective _ hπK h1).symm
-  obtain ⟨b, hb⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors O) p
-  obtain ⟨k, v, hv⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible (nonZeroDivisors.ne_zero b.2) hπ
+  obtain ⟨b, hb, hbmap⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors O) p
+  obtain ⟨k, v, hv⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible (nonZeroDivisors.ne_zero hb) hπ
   refine key k (C (↑v⁻¹ : O) * IsLocalization.integerNormalization (nonZeroDivisors O) p) ?_
-  rw [map_mul, aeval_C, ← aeval_map_algebraMap K γ (IsLocalization.integerNormalization _ p), hb,
-    ← algebraMap_smul K (b : O) p, map_smul, algebraMap_smul, ← Algebra.smul_def, smul_smul, hv,
+  rw [map_mul, aeval_C, ← aeval_map_algebraMap K γ (IsLocalization.integerNormalization _ p), hbmap,
+    ← algebraMap_smul K b p, map_smul, algebraMap_smul, ← Algebra.smul_def, smul_smul, hv,
     ← mul_assoc, Units.inv_mul, one_mul]
 
 end GlobalTheory.MaxOrder

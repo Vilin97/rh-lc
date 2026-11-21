@@ -1,9 +1,5 @@
-module
-
-public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.LetterShift
-public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartA
-
-@[expose] public section
+import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.LetterShift
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartA
 
 noncomputable section
 open scoped BigOperators
@@ -237,8 +233,8 @@ lemma combo [IsUltrametricDist K] {l d : ℕ} [NeZero d] (hl : l ≠ 0) (σ : K 
     · simp
   rw [hsum]
   refine ⟨?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun s _ => ?_
     rw [map_mul, (hL s).1, mul_zero]
   · have key : (∑ s, C (a s) * L s) - C ((l : K)⁻¹) *

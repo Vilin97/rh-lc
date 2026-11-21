@@ -1,8 +1,4 @@
-module
-
-public import Formalism.HermitianCurvature.StatementU
-
-@[expose] public section
+import Formalism.HermitianCurvature.StatementU
 
 open Matrix MeasureTheory
 open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.U Formalism.REAL Formalism.QuantumDeterminants

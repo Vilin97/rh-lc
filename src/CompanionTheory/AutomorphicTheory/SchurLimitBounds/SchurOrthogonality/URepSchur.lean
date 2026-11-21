@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import CompanionTheory.AutomorphicTheory.SchurLimitBounds.SchurOrthogonality.URepBasic
-
-@[expose] public section
+import Mathlib
+import CompanionTheory.AutomorphicTheory.SchurLimitBounds.SchurOrthogonality.URepBasic
 
 namespace CompanionTheory.LimBd.URep
 

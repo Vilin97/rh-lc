@@ -320,7 +320,7 @@ theorem bijective_succ (hq : IsUnit ((n + 1 : ℕ) : B))
 end
 
 theorem bijective : ∀ (B : Type) [CommRing B] (L : Type) [AddCommGroup L] [Module B L]
-    [Module.Invertible B L] (q : ℕ) [NeZero q] (φ : MultilinearMap B (fun _ : Fin q => L) B),
+    [Module.Invertible B L] (q : ℕ) [NeZero q] (φ : (Π _ : Fin q, L) →ₘₗ[B] B),
     IsUnit (q : B) → (∀ p : Ideal B, p.IsPrime → ∃ e : L, φ (fun _ => e) ∉ p) →
     ∀ (ζ : B) (hζ : ζ ^ q = 1), (∀ k : ℕ, 0 < k → k < q → IsUnit (1 - ζ ^ k)) →
     Function.Bijective (Algebra.TensorProduct.productMap

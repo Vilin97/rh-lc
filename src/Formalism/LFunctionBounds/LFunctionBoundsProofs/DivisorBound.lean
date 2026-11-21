@@ -1,8 +1,4 @@
-module
-
-public import Formalism.LFunctionBounds.PositivityBound
-
-@[expose] public section
+import Formalism.LFunctionBounds.PositivityBound
 
 namespace Formalism.FX
 
@@ -48,7 +44,7 @@ theorem succ_le_pow_of_two_le (e : ℝ) (p k : ℕ) (hp : 2 ≤ (p : ℝ) ^ e) :
 
 theorem rpow_eq_prod_primeFactors (e : ℝ) {n : ℕ} (hn0 : n ≠ 0) :
     (n : ℝ) ^ e = ∏ p ∈ n.primeFactors, ((p : ℝ) ^ e) ^ (n.factorization p) := by
-  conv_lhs => rw [← Nat.factorization_prod_pow_eq_self hn0]
+  conv_lhs => rw [← Nat.prod_factorization_pow_eq_self hn0]
   rw [Finsupp.prod, Nat.support_factorization]
   push_cast
   rw [← Real.finsetProd_rpow _ _ (fun p _ => by positivity)]
