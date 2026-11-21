@@ -286,7 +286,7 @@ theorem tangentHaar_realSU_of_det [NumberField E] [NumberField.IsCMField E] (hG 
     rw [hν ε hε]
   have hlim : limsup (fun ε : ℝ => (lam.map Subtype.val) (tanBall Ψ r ε) /
       (Measure.haar : Measure (realSU Ψ G)) (grpBall (realSU Ψ G) ε)) (𝓝[>] 0) = c⁻¹ := by
-    refine Tendsto.limsup_eq ((ENNReal.tendsto_inv_iff.2 hA).congr' ?_)
+    refine Tendsto.limsup_eq ((tendsto_inv_iff.2 hA).congr' ?_)
     filter_upwards [self_mem_nhdsWithin] with ε hε
     have hε : (0 : ℝ) < ε := hε
     rw [hν ε hε]

@@ -45,8 +45,9 @@ theorem potGood_of_divisionAlgebra_action : ∀ (V K : Type) [CommRing V] [IsDom
     isGrpPullback_pullback G _
   obtain ⟨act₃, ⟨h3a, h3b, h3c, h3d⟩, -⟩ :=
     GlobalTheory.T.exists_ring_action_pullback_cartesian_group_schemes _ _ (spMap (IsLocalRing.residue W)) G (GlobalTheory.SS.spFibre G) _ hres O act₂ h2a h2b h2c h2d
-  have hsa₀ : IsSemiAbelian (GlobalTheory.SS.spFibre G) := IsSemiAbelian.pullback _ G hsa
-  haveI := hsa₀.comm
+  haveI : IsCommMonObj (GlobalTheory.SS.spFibre G) := by
+    haveI := hsa.comm
+    infer_instance
   obtain ⟨ρ, -⟩ := GlobalTheory.T.ringHom_characterEnd_of_torusExtension_action _ (GlobalTheory.SS.spFibre G) E O act₃ h3a h3b h3c h3d
 
   obtain ⟨e, -⟩ := hmod

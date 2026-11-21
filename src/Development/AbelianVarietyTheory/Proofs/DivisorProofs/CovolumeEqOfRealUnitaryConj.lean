@@ -59,7 +59,7 @@ theorem mass_le (X : Data E r) {x0 x1 : Frame X.Ψ r} (h0 : IsOrth X x0) (h1 : I
   have hz0 : ∀ᵐ z ∂muF X x0, cpt X x0 z ∈ S := hI.trans hz1
   refine measure_congr ?_
   filter_upwards [hz0] with z hz
-  exact propext ⟨fun h => ⟨h, (hSiff _).1 hz⟩, fun h => h.1⟩
+  exact ⟨fun h => ⟨h, (hSiff _).1 hz⟩, fun h => h.1⟩
 
 theorem mass_eq (X : Data E r) {x0 x1 : Frame X.Ψ r} (h0 : IsOrth X x0) (h1 : IsOrth X x1)
     {F0 F1 : Set (V (nd X))} (hF0 : IsFundSet X x0 F0) (hF1 : IsFundSet X x1 F1) :

@@ -26,7 +26,9 @@ theorem functionFieldMap_comp_constFn (p : W ⟶ Sp k) (f : M ⟶ W) [IsDominant
   rw [← h1, ← h2, functionFieldMap_algebraMap]
   congr 1
   have e : f.app ⊤ (algX p ⊤ a) = algX (f ≫ p) ⊤ a := by
-    simp [algX, Scheme.Hom.appLE]
+    simp only [algX, RingHom.comp_apply, Scheme.Hom.appLE,
+      ← CommRingCat.comp_apply, Scheme.Hom.comp_app, Category.assoc]
+    rw [f.naturality]
     rfl
   rw [← e]
   exact Scheme.Hom.germ_stalkMap_apply f ⊤ _ trivial _

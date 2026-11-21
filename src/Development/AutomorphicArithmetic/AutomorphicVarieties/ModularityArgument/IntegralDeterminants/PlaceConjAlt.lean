@@ -67,7 +67,7 @@ def CharVal : Prop :=
 def VecForm : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ), 1 ≤ n → ∀ σ : Submodule ℂ (UA E n → ℂ), IsAutRepU σ → ∀ (φ : InfinitePlace E → (E →+* ℂ)),
     (∀ v, InfinitePlace.mk (φ v) = v) → ∀ lam : InfinitePlace E → DomWeight n, (∀ v, HasWeightAt σ (φ v) (lam v)) →
-    ∀ w : HeightOneSpectrum (𝓞 E), IsUnramU σ w → ∃ (f : MultilinearMap ℂ (fun v => nablaSq ℂ n (lam v)) (UA E n → ℂ)) (K : Subgroup (finU (E := E) (n := n))),
+    ∀ w : HeightOneSpectrum (𝓞 E), IsUnramU σ w → ∃ (f : MultilinearMap (RingHom.id ℂ) (fun v => nablaSq ℂ n (lam v)) (UA E n → ℂ)) (K : Subgroup (finU (E := E) (n := n))),
       f ≠ 0 ∧ (∀ x, f x ∈ σ) ∧ (∀ g ∈ infU E n, ∀ x, f (fun v => GlobalTheory.Branching.sqRep ℂ n (lam v) (cEmb (φ v) g) (x v)) = RU E n g (f x)) ∧
       IsOpen (K : Set (finU (E := E) (n := n))) ∧ (∀ k ∈ K, ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := n)) ∧ (∀ k ∈ K, ∀ x, RU E n k.1 (f x) = f x) ∧
       ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) → ∀ x, RU E n y (f x) = f x

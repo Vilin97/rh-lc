@@ -119,21 +119,21 @@ theorem mem_unramified_of_frobenius_iterate_fixed_fil_alt :
     apply (P.PD K).fund
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [P.PD_φ, map_sum]
-      have e1 : ∀ j, P.φB ((⇑P.φB)^[j] (algebraMap ↥(K0 K) P.R.B b * c)) =
-          (⇑P.φB)^[j + 1] (algebraMap ↥(K0 K) P.R.B b * c) :=
-        fun j => (Function.iterate_succ_apply' _ _ _).symm
-      simp_rw [e1]
-      have hfn : (⇑P.φB)^[n] (algebraMap ↥(K0 K) P.R.B b * c) =
-          (⇑P.φB)^[0] (algebraMap ↥(K0 K) P.R.B b * c) := by
-        rw [iterate_φB_mul, hn, ← hord, pow_orderOf_eq_one, AlgEquiv.one_apply, Function.iterate_zero, id]
-      have h := Finset.sum_range_succ' (fun j => (⇑P.φB)^[j] (algebraMap ↥(K0 K) P.R.B b * c)) n
-      rw [Finset.sum_range_succ, hfn] at h
-      exact (add_right_cancel h).symm
+        have e1 : ∀ j, P.φB ((⇑P.φB)^[j] (algebraMap ↥(K0 K) P.R.B b * c)) =
+            (⇑P.φB)^[j + 1] (algebraMap ↥(K0 K) P.R.B b * c) :=
+          fun j => (Function.iterate_succ_apply' _ _ _).symm
+        simp_rw [e1]
+        have hfn : (⇑P.φB)^[n] (algebraMap ↥(K0 K) P.R.B b * c) =
+            (⇑P.φB)^[0] (algebraMap ↥(K0 K) P.R.B b * c) := by
+          rw [iterate_φB_mul, hn, ← hord, pow_orderOf_eq_one, AlgEquiv.one_apply, Function.iterate_zero, id]
+        have h := Finset.sum_range_succ' (fun j => (⇑P.φB)^[j] (algebraMap ↥(K0 K) P.R.B b * c)) n
+        rw [Finset.sum_range_succ, hfn] at h
+        exact (add_right_cancel h).symm
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [P.PD_ι, map_sum]
-      refine Submodule.sum_mem _ fun j _ => ?_
-      rw [iterate_φB_mul, map_mul, ιB_algebraMap, ← Algebra.smul_def]
-      exact Submodule.smul_of_tower_mem _ _ (hF j)
+        refine Submodule.sum_mem _ fun j _ => ?_
+        rw [iterate_φB_mul, map_mul, ιB_algebraMap, ← Algebra.smul_def]
+        exact Submodule.smul_of_tower_mem _ _ (hF j)
   choose q hq using fun i => hs (bas i)
   let v : Fin n → P.R.B := fun j => (⇑P.φB)^[(j : ℕ)] c
   have hAv : Matrix.mulVec (A.map (algebraMap ↥(K0 K) P.R.B)) v =

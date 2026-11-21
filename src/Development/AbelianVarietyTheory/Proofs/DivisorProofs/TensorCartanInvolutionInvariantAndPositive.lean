@@ -23,7 +23,8 @@ theorem map_star_mul {a b c : Type} [Fintype b] (A : Matrix a b ℂ) (B : Matrix
 theorem cartan_comm {M θ : Matrix (Fin n) (Fin n) ℂ} (h : IsCartan M θ) : M * θ.map star = θᵀ * M := by
   obtain ⟨h1, h2, -⟩ := h
   have h1' : θ.map star * θ.map star = 1 := by
-    rw [← map_star_mul, h1]; ext i j; simp [one_apply]
+    rw [← map_star_mul, h1]
+    exact Matrix.map_one star (star_zero _) (star_one _)
   calc M * θ.map star = θᵀ * M * θ.map star * θ.map star := by rw [h2]
     _ = θᵀ * M := by rw [Matrix.mul_assoc (θᵀ * M), h1', Matrix.mul_one]
 

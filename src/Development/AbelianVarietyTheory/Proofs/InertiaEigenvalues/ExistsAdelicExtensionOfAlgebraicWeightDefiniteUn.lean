@@ -114,7 +114,7 @@ theorem mul_of_dense {G M : Type} [Mul G] [TopologicalSpace G] [ContinuousMul G]
   have hcl : IsClosed {z : G × G | f (z.1 * z.2) = f z.1 * f z.2} :=
     isClosed_eq (hf.comp (continuous_fst.mul continuous_snd))
       ((hf.comp continuous_fst).mul (hf.comp continuous_snd))
-  exact hcl.closure_subset_iff.2 (fun z hz => h z.1 hz.1 z.2 hz.2) ((hD.prod hD) (x, y))
+  exact hcl.closure_subset_iff.2 (fun z (hz : z ∈ D ×ˢ D) => h z.1 hz.1 z.2 hz.2) ((hD.prod hD) (x, y))
 
 theorem mul_of_rat {M : Type} [Mul M] [TopologicalSpace M] [ContinuousMul M] [T2Space M] (f : UA E n → M)
     (hf : Continuous f) (hi : ∀ g h, cInf g = cInf h → f g = f h)
@@ -137,7 +137,7 @@ theorem exists_extension : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L
       polyMat P γ = LinearMap.toMatrix b b (a.ρ γQ) := fun γ γQ γ₀ h1 h2 =>
     (polyMat_rat P γ γ₀ h1).trans (hP γQ γ₀ h2).symm
   have hrat' : ∀ (γ : UA L n) (γ₀ : GQ0 L n), γ.1 = ratGL L n γ₀.1 →
-      polyMat P γ = LinearMap.toMatrix b b (a.ρ (ratPt γ₀)) := fun γ γ₀ h => hrat γ _ γ₀.1 h rfl
+      polyMat P γ = LinearMap.toMatrix b b (a.ρ (ratPt (E := L) (n := n) γ₀)) := fun γ γ₀ h => hrat γ _ γ₀.1 h rfl
   have hone : polyMat P 1 = 1 := by
     rw [hrat' 1 1 (map_one (ratGL L n)).symm, map_one, map_one, LinearMap.toMatrix_one]
   have hmul : ∀ g h : UA L n, polyMat P (g * h) = polyMat P g * polyMat P h := by
@@ -163,7 +163,7 @@ theorem exists_extension : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L
     have hc := continuous_polyMat P
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Matrix.toLin_apply, map_sum, map_smul, smul_eq_mul]
-    refine continuous_finset_sum _ fun j _ => Continuous.mul ?_ continuous_const
+    refine continuous_finsetSum _ fun j _ => Continuous.mul ?_ continuous_const
     exact (continuous_apply j).comp (hc.matrix_mulVec continuous_const)
 
 end GlobalTheory.WeightRealExt

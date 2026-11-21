@@ -61,7 +61,7 @@ theorem extCoc_rat_cont_cocycle : ∀ (l : ℕ) [Fact l.Prime] (a b : Type) [Fin
       push_cast
       rfl
     rw [this]
-    refine continuous_finset_sum _ fun k _ => ?_
+    refine continuous_finsetSum _ fun k _ => ?_
     exact ((hrat.cont _ _).comp hcι).mul ((hrat.cont _ _).comp (continuous_inv.comp hcι))
   · intro g h
     exact matrixHomRepresentationCocycleCoords_cocycle (ρ.comp ι) (ρ₁.comp ι) (ρ₂.comp ι) (fun g => c (ι g)) (fun g => hρ (ι g)) g h

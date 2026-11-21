@@ -118,7 +118,7 @@ theorem form_self_eq_zero (P : MvPolynomial σ ℂ) (h : form P P = 0) : P = 0 :
   rw [form_self, Complex.ofReal_eq_zero,
     Finset.sum_eq_zero_iff_of_nonneg (fun α _ => mul_nonneg (Nat.cast_nonneg _) (Complex.normSq_nonneg _))] at h
   ext α
-  rw [coeff_zero]
+  change P.coeff α = 0
   by_contra hne
   have := h α (mem_support_iff.mpr hne)
   rcases mul_eq_zero.mp this with h1 | h1

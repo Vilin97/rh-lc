@@ -108,12 +108,12 @@ theorem finrank_eq_one_of_jump {L M : Type} [Field L] [AddCommGroup M] [Module L
     Submodule.eq_of_le_of_finrank_eq (anti a) (by have := h a; rw [if_neg ha] at this; omega)
   have hlo : ∀ a ≤ a₀, F a = F a₀ := by
     intro a ha
-    induction a, ha using Int.le_induction_down with
+    induction a, ha using Int.leInductionDown with
     | base => rfl
     | pred a ha ih => rw [← ih, ← hs (a - 1) (by omega), sub_add_cancel]
   have hhi : ∀ a, a₀ + 1 ≤ a → F a = F (a₀ + 1) := by
     intro a ha
-    induction a, ha using Int.le_induction with
+    induction a, ha using Int.leInduction with
     | base => rfl
     | succ a ha ih => rw [← ih, hs a (by omega)]
   have h1 : U = F a₀ := le_antisymm (fun x hx => by

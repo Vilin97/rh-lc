@@ -202,6 +202,8 @@ theorem hasFDerivAt_chart_kernel : ∀ (E : Type) [Field E] [NumberField E] [IsT
     intro u
     rw [chart_val]
     congr 1
+    funext x
+    dsimp only [F]
     rw [hrm, hcG, chart_val, map_mul, mul_assoc]
   have heq : chart (fun g : GA E a => ∫ x, k x * G (g * infGL E a (γ x)) ∂ν) g =ᶠ[nhds (toL y.val)]
       fun w => ∫ x, F w x ∂ν := by
@@ -286,6 +288,7 @@ theorem hasFDerivAt_chart_kernel : ∀ (E : Type) [Field E] [NumberField E] [IsT
   refine ⟨∫ x, F' (toL y.val) x ∂ν, key.congr_of_eventuallyEq heq, fun Z => ?_⟩
   rw [ContinuousLinearMap.integral_apply hF'int]
   congr 1
+  funext x
   rw [ContinuousLinearMap.smul_apply, ContinuousLinearMap.comp_apply, hrm, hcG, fderiv_chart_apply hsm g, smul_eq_mul]
   congr 3
   change ((y * γ x)⁻¹).val * (Matrix.of Z * (γ x).val) = ((γ x)⁻¹).val * ((y⁻¹).val * Matrix.of Z) * (γ x).val

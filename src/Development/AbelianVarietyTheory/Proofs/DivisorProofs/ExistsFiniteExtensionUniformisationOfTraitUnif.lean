@@ -35,9 +35,8 @@ namespace GlobalTheory.Mum.Ident
 theorem finExt_isLocalHom {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R'] [IsDomain R'] [IsLocalRing R']
     {ρ : R →+* R'} (h : FinExt ρ) : IsLocalHom ρ := by
   letI := ρ.toAlgebra
-  have hi : Algebra.IsIntegral R R' := ⟨fun x => h.2.2.to_isIntegral x⟩
   have hm : (maximalIdeal R').comap ρ = maximalIdeal R :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R'))
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (algebraMap _ _) h.2.2.to_isIntegral (maximalIdeal R'))
   exact ((IsLocalRing.local_hom_tfae ρ).out 1 5).2 hm
 
 theorem finExt_comp {R R₁ R₂ : Type} [CommRing R] [CommRing R₁] [IsDomain R₁] [IsLocalRing R₁] [CommRing R₂]
@@ -100,7 +99,7 @@ theorem exists_finExt_unif : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRi
     rw [← Spec.map_comp]; rfl
   · rw [hU₂] at hL₃
     have hPP : LBIso P₁.L.L (P.L.L.pull β₁) := ⟨w₁, hP₁.gen⟩
-    exact LBIso.trans U₃.LG.isLB (pull_isLB P₁.L.isLB _) (pull_isLB P.L.isLB _) hL₃
+    exact LBIso.trans U₃.LG.isLB (LB.isLB_pull P₁.L.isLB _) (LB.isLB_pull P.L.isLB _) hL₃
       (GlobalTheory.Ex.GenericFibre.lbIso_pull hPP β₃ rfl)
 
 end GlobalTheory.Mum.Ident

@@ -23,7 +23,7 @@ theorem setIntegral_comp_aut {G : Type} [AddCommGroup G] [TopologicalSpace G] [I
     have hmeas : Measurable U := U.continuous.measurable
     haveI : (μ.map U).IsAddHaarMeasure := U.isAddHaarMeasure_map μ
     have hc := Measure.isAddLeftInvariant_eq_smul (μ.map U) μ
-    have hq : Measure.QuasiMeasurePreserving U μ μ := ⟨hmeas, by rw [hc]; exact Measure.smul_absolutelyContinuous⟩
+    have hq : Measure.QuasiMeasurePreserving U μ μ := ⟨hmeas.aemeasurable, by rw [hc]; exact Measure.smul_absolutelyContinuous⟩
     have hS : IsAddFundamentalDomain Γ (U ⁻¹' 𝓕) μ := by
       refine h𝓕.preimage_of_equiv (e := fun γ : Γ => (⟨U.symm γ, hU' _ γ.2⟩ : Γ)) hq ?_ ?_
       · refine ⟨fun x y hxy => Subtype.ext (U.symm.injective (congrArg Subtype.val hxy)), fun y => ⟨⟨U y, hU _ y.2⟩, ?_⟩⟩

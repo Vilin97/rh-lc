@@ -29,7 +29,7 @@ theorem maxLam_le (i : X.Tw) (M : ℕ) (ι : Type) [Fintype ι] (m : Ideal (abel
   have h0 : (IsLocalRing.maximalIdeal (X.O0 i)).map (algebraMap (X.O0 i) (abelian₂ X i M ι)) ≤ m := by
     rw [Ideal.map_le_iff_le_comap]
     have : (m.comap (algebraMap (X.O0 i) (abelian₂ X i M ι))).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal m
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := X.O0 i) m
     exact (IsLocalRing.eq_maximalIdeal this).ge
   refine sup_le h0 ?_
   rw [Ideal.span_le]

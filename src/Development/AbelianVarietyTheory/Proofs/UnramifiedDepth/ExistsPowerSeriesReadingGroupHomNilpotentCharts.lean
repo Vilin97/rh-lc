@@ -100,6 +100,10 @@ theorem exists_reads : ∀ (R : Type) [CommRing R] (G : Over (Spec (CommRingCat.
     have : (algebraMap R S).toAlgebra = inst := Algebra.algebra_ext _ _ fun _ => rfl
     rw [this]
     congr 1
+    funext q
+    obtain ⟨i, k⟩ := q
+    fin_cases i
+    rfl
   refine ⟨φ, fun j => ?_, fun S _ _ a ha => by rw [hX S a ha, key]⟩
   have h0 : ∀ i : Fin d, IsNilpotent ((0 : Fin d → R) i) := fun _ => IsNilpotent.zero
   have h1 : b R 0 h0 = 0 := h'.inj R _ _ (hb R 0 h0) (fun _ => IsNilpotent.zero) (by

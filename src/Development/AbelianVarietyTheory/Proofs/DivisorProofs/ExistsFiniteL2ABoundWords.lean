@@ -256,12 +256,14 @@ theorem l2A_sumPure_le {m : ℕ} (μ : @Measure (κ → FiniteAdeleRing (𝓞 F)
     _ = ∫⁻ y, (m : ENNReal) * ∑ i, (∫⁻ x, ‖f i x‖ₑ ^ 2) * ‖g i y‖ₑ ^ 2 ∂μ := by
         congr 1
         funext y
-        rw [lintegral_const_mul _ (Finset.measurable_sum _ fun i _ => (hfm i).mul_const _),
-          lintegral_finset_sum _ fun i _ => (hfm i).mul_const _]
+        rw [lintegral_const_mul _ (Finset.measurable_sum _ fun i _ => (hfm i).mul_const _)]
+        congr 1
+        rw [lintegral_finsetSum _ fun i _ => (hfm i).mul_const _]
         simp_rw [lintegral_mul_const _ (hfm _)]
     _ = _ := by
-        rw [lintegral_const_mul _ (Finset.measurable_sum _ fun i _ => (hgm i).const_mul _),
-          lintegral_finset_sum _ fun i _ => (hgm i).const_mul _]
+        rw [lintegral_const_mul _ (Finset.measurable_sum _ fun i _ => (hgm i).const_mul _)]
+        congr 1
+        rw [lintegral_finsetSum _ fun i _ => (hgm i).const_mul _]
         simp_rw [lintegral_const_mul _ (hgm _)]
 
 end GlobalTheory.FoldrBoundLinearForms
@@ -286,8 +288,10 @@ theorem GlobalTheory.WeilL2Words.l2A_word_le : ∀ (F : Type) [Field F] [NumberF
   haveI := hμ
   have hG : ∀ i, ∫⁻ y, ‖g i y‖ₑ ^ 2 ∂μ ≠ ⊤ := by
     intro i
-    have h := ((hgc i).memLp_of_hasCompactSupport (p := 2) (μ := μ) (hg i).2).2
-    rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (by norm_num) (by norm_num)] at h
+    have h := (hgc i).memLp_of_hasCompactSupport (p := 2) (μ := μ) (hg i).2
+    have ha := h.aestronglyMeasurable
+    change eLpNorm (g i) 2 μ < ⊤ at h
+    rw [eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top (by norm_num) (by norm_num) ha] at h
     simpa using h.ne
   let T : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ →ₗ[ℝ]
       Lp ℂ 2 (volume : Measure (κ → mixedEmbedding.mixedSpace F)) :=
@@ -310,11 +314,11 @@ theorem GlobalTheory.WeilL2Words.l2A_word_le : ∀ (F : Type) [Field F] [NumberF
   have hm := f'.memLp 2 (volume : Measure (κ → mixedEmbedding.mixedSpace F))
   have h2 : eLpNorm f' 2 volume ≤ ENNReal.ofReal (B i) := by
     have h3 : ‖T f'‖ = (eLpNorm f' 2 volume).toReal := Lp.norm_toLp _ hm
-    rw [← ENNReal.ofReal_toReal hm.2.ne, ← h3]
+    rw [← ENNReal.ofReal_toReal hm.ne, ← h3]
     exact ENNReal.ofReal_le_ofReal h1
   have h4 : ∫⁻ x, ‖f' x‖ₑ ^ 2 = eLpNorm f' 2 volume ^ 2 := by
     have := eLpNorm_nnreal_pow_eq_lintegral (f := (f' : (κ → mixedEmbedding.mixedSpace F) → ℂ))
-      (μ := volume) (p := 2) (by norm_num)
+      (μ := volume) (p := 2) (by norm_num) hm.aestronglyMeasurable
     simpa using this.symm
   rw [h4]
   exact pow_le_pow_left' h2 2

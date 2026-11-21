@@ -173,16 +173,20 @@ lemma toRel_app_preimage (H : QCohSub f F) (U : Y.affineOpens) :
     (toRel H).app (fromRel H ⁻¹ᵁ ↑U) =
       (relObjIso H U.2).hom ≫
       CommRingCat.ofHom (F U.1).subtype ≫
-      X.presheaf.map (eqToHom (by simp [← Scheme.Hom.comp_preimage])).op := by
+      X.presheaf.map (eqToHom (by
+        rw [← Scheme.Hom.comp_preimage (toRel H) (fromRel H), toRel_fromRel])).op := by
   dsimp [relObjIso]
   change _ = (relSpec H).presheaf.map (eqToHom (by simp [fromRel_preimage])).op ≫
       (((relCover H).f U).appIso _).hom ≫
       (Scheme.ΓSpecIso _).hom ≫
       CommRingCat.ofHom (F U.1).subtype ≫
-      X.presheaf.map (eqToHom (by simp [← Scheme.Hom.comp_preimage])).op
+      X.presheaf.map (eqToHom (by
+        rw [← Scheme.Hom.comp_preimage (toRel H) (fromRel H), toRel_fromRel])).op
   have H' : toRel H ⁻¹ᵁ fromRel H ⁻¹ᵁ U =
       (f ⁻¹ᵁ U).ι ''ᵁ (((f ⁻¹ᵁ U).ι ≫ toRel H) ⁻¹ᵁ fromRel H ⁻¹ᵁ U) := by
-    simp [← Scheme.Hom.comp_preimage]
+    rw [Scheme.Hom.comp_preimage, Scheme.Hom.image_preimage_eq_opensRange_inf,
+      Scheme.Opens.opensRange_ι, ← Scheme.Hom.comp_preimage (toRel H) (fromRel H),
+      toRel_fromRel, inf_idem]
   convert! congr($(Scheme.Hom.congr_app (ι_toRel H U) (fromRel H ⁻¹ᵁ U)) ≫
     X.presheaf.map (eqToHom H').op) using 1
   · simp [Hom.app_eq_appLE]
@@ -197,7 +201,8 @@ lemma toRel_app_preimage (H : QCohSub f F) (U : Y.affineOpens) :
 
 lemma relObjIso_hom_subtype (H : QCohSub f F) {U : Y.Opens} (hU : IsAffineOpen U) :
     (relObjIso H hU).hom ≫ CommRingCat.ofHom (F U).subtype =
-    (toRel H).appLE _ _ (by simp [← Scheme.Hom.comp_preimage]) := by
+    (toRel H).appLE _ _ (by
+      rw [← Scheme.Hom.comp_preimage (toRel H) (fromRel H), toRel_fromRel]) := by
   rw [Hom.appLE, toRel_app_preimage H ⟨U, hU⟩, Category.assoc]
   simp [← Functor.map_comp]
   rfl

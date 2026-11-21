@@ -32,6 +32,13 @@ theorem idlAlong_comap_principal : ∀ {S Z : Scheme.{0}} (π : S ⟶ Z) (J : Z.
   refine ⟨((ξ ≫ ν).appLE U.1 ⊤ hle ≫ (Scheme.ΓSpecIso (.of R)).hom).hom f, ?_⟩
   have e : idlAlong (J.comap π) ξ = idlAlong (J.comap π₀) (ξ ≫ ν) := by
     rw [GlobalTheory.PullAlong.idlAlong_comap_eq, GlobalTheory.PullAlong.idlAlong_comap_eq, ← hc, Category.assoc]
-  rw [e, GlobalTheory.TraitOrder.idlAlong_eq_map _ _ U hle, hU, Ideal.map_span, Set.image_singleton]
+  have hmap : idlAlong (J.comap π₀) (ξ ≫ ν) =
+      ((J.comap π₀).ideal U).map
+        ((ξ ≫ ν).appLE U.1 ⊤ hle ≫ (Scheme.ΓSpecIso (.of R)).hom).hom := by
+    unfold idlAlong
+    rw [ds_stalkId_eq_map (J.comap π₀) U _ hx, Ideal.map_map,
+      ← CommRingCat.hom_comp, Scheme.germ_stalkClosedPointTo]
+    congr 2
+  rw [e, hmap, hU, Ideal.map_span, Set.image_singleton]
 
 end GlobalTheory.NormBlPrincipal

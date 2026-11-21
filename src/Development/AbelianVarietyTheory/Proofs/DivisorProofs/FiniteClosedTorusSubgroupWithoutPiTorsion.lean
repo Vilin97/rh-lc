@@ -174,7 +174,7 @@ theorem finite_of_isClosed_of_no_pi_torsion :
       map_add' := hadd }
   letI : Module (𝓞 E) X := Module.compHom X ρ
   have hsmul : ∀ (a : 𝓞 E) (x : X), a • x = φ a x := fun a x => rfl
-  let e := splitTorusPointEquiv k X
+  let e := splitTorusPointEquiv (k := k) (X := X)
   have hpt : ∀ (s : Multiplicative X →* kˣ) (a : 𝓞 E), e s ≫ act.act a =
       e (s.comp (AddMonoidHom.toMultiplicative (DistribSMul.toAddMonoidHom X a))) := by
     intro s a

@@ -65,6 +65,14 @@ theorem frame_unique {R : Type} [CommRing R] [IsDomain R] [CharZero R] {I : Idea
   rw [h1, CoefBasic.cst_eq, map_one, _root_.one_mul] at this
   exact Units.ext this.symm
 
+#check GlobalTheory.TorusExt.gtGroup
+#check GlobalTheory.TorusExt.gtExt
+#check GlobalTheory.TorusExt.iota
+#check GlobalTheory.TorusExt.isNsmul_iff_eq
+#check GlobalTheory.TorusExt.isIota_iff_eq
+#check GlobalTheory.TorusExt.gtExt_iota
+#check GlobalTheory.TorusExt.eq_gtExt_iff
+#check GlobalTheory.TorusExt.equiv_iff
 theorem eq_of_liesOver : ∀ (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V], IsCN V → ∀ (D : DegData V (maximalIdeal V)) (A : PolAV (Sp (FractionRing V))) (G : Over (Sp V)) [GrpObj G] [IsCommMonObj G], IsSemiAbelian G → ∀ (U : Unif (maximalIdeal V) D A G) (w₀ : W0 U.toUnifPre), w₀.IsGen → ∀ N : ℕ, 1 ≤ N → ∀ (g g' : GtPtF D.toPre (FractionRing V)) (w : Frm D.toPre (FractionRing V) 1 g.b) (w' : Frm D.toPre (FractionRing V) 1 g'.b) (x : TFK (R := V) (FractionRing V) ⟶ A.A) (fr : FrAt x), (∃ o, GtPtF.IsNsmul N g o ∧ o.IsZero) → (∃ o, GtPtF.IsNsmul N g' o ∧ o.IsZero) → w.IsGen → w'.IsGen → fr.IsGen → LiesOver U.toUnifPre w₀ g w x fr → LiesOver U.toUnifPre w₀ g' w' x fr → g = g' ∧ ∀ z J, Good D.toPre.P.L z J → val w (𝟙 _) z J = val w' (𝟙 _) z J := by
   intro V _ _ _ hCN D A G _ _ hG U w₀ hw₀ N hN g g' w w' x fr hg hg' hw hw' hfr h h'
   haveI : CharZero V := hCN.2.2.2
@@ -75,10 +83,10 @@ theorem eq_of_liesOver : ∀ (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V
   obtain ⟨p', hy', rfl, hp'⟩ := GlobalTheory.T.exists_torus_pair_of_torsion_point_over V hCN D A G hG U w₀ hw₀ N hN g' w' x fr hg' hw' hfr h'
   have hf : (algebraMap (FractionRing V) (AlgebraicClosure (FractionRing V))).comp
       (algebraMap (FractionRing V) (FractionRing V)) = algebraMap _ _ := RingHom.comp_id _
-  have hq := (GlobalTheory.TorsionExt.qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow U hN
-    ((GlobalTheory.TorusExt.qkExt_iff hB _ hf p _).2 rfl) x).1 hp
-  have hq' := (GlobalTheory.TorsionExt.qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow U hN
-    ((GlobalTheory.TorusExt.qkExt_iff hB _ hf p' _).2 rfl) x).1 hp'
+  obtain ⟨q, hqext⟩ := GlobalTheory.QkClosure.exists_qkExt _ hf p
+  obtain ⟨q', hqext'⟩ := GlobalTheory.QkClosure.exists_qkExt _ hf p'
+  have hq := (GlobalTheory.TorsionExt.qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow U hN hqext x).1 hp
+  have hq' := (GlobalTheory.TorsionExt.qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow U hN hqext' x).1 hp'
   have he := GlobalTheory.TorsionMapInj.qkToAk_injective hL.1 hL.2.1 V _ hA D A G hG U _ N hN _ _ _ hq hq'
   obtain ⟨z, hz, hz'⟩ := (GlobalTheory.TorusExt.equiv_iff hB _ _).1 he
   have e : p.g = p'.g := by

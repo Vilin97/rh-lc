@@ -59,15 +59,16 @@ theorem isSqIntCoeff_of_isSquareIntegrable {δ : IrrGL (k := k)} (h : UnitaryDua
   have hs := δ.2.rep.smooth
   have hF := norm_coeff_out hs δ.2.rep.irr hu v l
   have hl' : l ∈ smoothPart δ.rep.dual := hl.preimage continuous_inv
-  refine ⟨fun q => ‖l (δ.rep q.out v)‖, hF, ?_, ?_⟩
-  · refine Continuous.aestronglyMeasurable ((QuotientGroup.isQuotientMap_mk _).continuous_iff.2 ?_)
+  have hf : AEStronglyMeasurable (fun q : AdGL k δ.1 => ‖l (δ.rep q.out v)‖) μ := by
+    refine Continuous.aestronglyMeasurable ((QuotientGroup.isQuotientMap_mk _).continuous_iff.2 ?_)
     rw [show (fun q : AdGL k δ.1 => ‖l (δ.rep q.out v)‖) ∘ QuotientGroup.mk = fun g => ‖l (δ.rep g v)‖ from funext hF]
     exact ((isLocallyConstant_orbit hs v).comp fun w => ‖l w‖).continuous
-  · rw [show ENNReal.ofReal 2 = 2 by simp, eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top,
-      Measure.isMulLeftInvariant_eq_smul μ ν, lintegral_smul_measure]
-    have h1 := H v l hl'
-    simp only [enorm_norm, ENNReal.toReal_ofNat, ENNReal.rpow_two]
-    exact ENNReal.mul_lt_top ENNReal.coe_lt_top h1
+  refine ⟨fun q => ‖l (δ.rep q.out v)‖, hF, ?_⟩
+  rw [memLp_iff, show ENNReal.ofReal 2 = 2 by simp, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero ENNReal.ofNat_ne_top hf,
+    Measure.isMulLeftInvariant_eq_smul μ ν, lintegral_smul_measure]
+  have h1 := H v l hl'
+  simp only [enorm_norm, ENNReal.toReal_ofNat, ENNReal.rpow_two]
+  exact ENNReal.mul_lt_top ENNReal.coe_lt_top h1
 
 end GlobalTheory.LocGL.SqIntBridge
 

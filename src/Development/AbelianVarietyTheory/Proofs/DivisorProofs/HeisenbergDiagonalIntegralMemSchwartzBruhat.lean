@@ -38,8 +38,8 @@ theorem diagW_eq (ψ : AddChar (Fv F v) ℂ) (μ : @Measure (κ → Fv F v) (bor
   unfold diagW diagG
   rw [← integral_const_mul]
   congr 1
-  rw [AddChar.map_add_eq_mul]
-  ring
+  funext x
+  simp [schr, elim_add_elim, AddChar.map_add_eq_mul, mul_comm, mul_left_comm, mul_assoc]
 
 omit [Fintype κ] in
 theorem continuous_elim_add (a : κ → Fv F v) : Continuous fun x : κ → Fv F v => Sum.elim (x + a) x :=
@@ -92,6 +92,8 @@ theorem diagG_schr (ψ : AddChar (Fv F v) ℂ) (μ : @Measure (κ → Fv F v) (b
   unfold diagG
   rw [← integral_sub_right_eq_self _ p₂, ← integral_const_mul]
   congr 1
+  funext x
+  simp only [schr, elim_dot_elim, elim_add_elim, Prod.fst_add, Prod.snd_add, Prod.fst, Prod.snd]
   have e : Sum.elim (x - p₂ + w.1 + p₁) (x - p₂ + p₂) = Sum.elim (x + (w.1 + (p₁ - p₂))) x := by
     congr 1 <;> abel
   rw [e, ← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]
@@ -105,7 +107,7 @@ theorem sb_mul {X : Type} [TopologicalSpace X] {f g : X → ℂ} (hf : IsLocally
 
 theorem sb_mul_translate {X : Type} [TopologicalSpace X] [AddGroup X] [ContinuousAdd X] {f g : X → ℂ}
     (hf : IsLocallyConstant f) (hg : g ∈ SB X) (t : X) : (fun w => f w * g (w + t)) ∈ SB X :=
-  ⟨hf.mul (hg.1.comp_continuous (continuous_add_right t)), (hg.2.comp_homeomorph (Homeomorph.addRight t)).mul_left⟩
+  ⟨hf.mul (hg.1.comp_continuous (continuous_id.add continuous_const)), (hg.2.comp_homeomorph (Homeomorph.addRight t)).mul_left⟩
 
 omit [Fintype κ] in
 theorem isLocallyConstant_indicator {X : Type} [TopologicalSpace X] {S : Set X} (hS : IsClopen S) (c : ℂ) :

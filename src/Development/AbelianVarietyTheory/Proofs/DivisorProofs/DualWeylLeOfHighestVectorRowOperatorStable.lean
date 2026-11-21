@@ -58,7 +58,7 @@ theorem rowDiv_succ_rec (R : Type) [CommRing R] {r m : ℕ} (a b : Fin r) (f : M
       push_cast
       ring
     | succ k =>
-      rw [hs, hs, map_add (f := _), rowE_mul, rowE_mul, hx, hy', ← hp, ← hp]
+      rw [hs (k + 1), hs k, map_add (f := rowE R r m a b), rowE_mul, rowE_mul, hx, hy', ← hp, ← hp]
       push_cast
       ring
 

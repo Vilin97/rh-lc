@@ -31,6 +31,7 @@ theorem natCast_eq_pow {Ω : Type} [Field Ω] (N p k : ℕ) (h : N = p ^ (k + 1)
 
 
 set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem exists_levDer : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω → ∀ (T : Tower p Ω) (m : ℕ), 1 ≤ m →
     ∃ dz dq : Ω → Ω, IsDer (Lev T m) dz ∧ IsDer (Lev T m) dq ∧ Vals T m dz dq := by
   intro p _ Ω _ _ hC T m hm
@@ -67,13 +68,13 @@ theorem exists_levDer : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Alg
     · have e : g (x + y) = g x + g y :=
         hgm _ (add_mem hx hy) _ (by rw [map_add (f := _), hg x hx, hg y hy])
       refine int_congr (hdiv (lift (D (g (x + y))) - lift (D (g x)) - lift (D (g y))) ?_) ?_
-      · rw [map_sub, map_sub, hlift, hlift, hlift, e, map_add (f := _)]; ring
+      · rw [map_sub (Ideal.Quotient.mk I), map_sub (Ideal.Quotient.mk I), hlift, hlift, hlift, e, map_add (f := _)]; ring
       · push_cast; ring
     · have e : g (x * y) = g x * g y :=
         hgm _ (mul_mem hx hy) _ (by rw [map_mul, hg x hx, hg y hy])
       refine int_congr (hdiv (lift (D (g (x * y))) - ιA (g x) * lift (D (g y))
         - ιA (g y) * lift (D (g x))) ?_) ?_
-      · rw [map_sub, map_sub, map_mul, map_mul, hlift, hlift, hlift, e, Derivation.leibniz,
+      · rw [map_sub (Ideal.Quotient.mk I), map_sub (Ideal.Quotient.mk I), map_mul (Ideal.Quotient.mk I), map_mul (Ideal.Quotient.mk I), hlift, hlift, hlift, e, Derivation.leibniz,
           Algebra.smul_def, Algebra.smul_def, halg, halg]; ring
       · push_cast; rw [hιAv, hιAv, hg x hx, hg y hy]; ring
     · have e : g (algebraMap (O0 p) Ω c) = algebraMap (O0 p) (On p m) c :=
@@ -128,13 +129,13 @@ theorem exists_levDer : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Alg
     fun x => ((lift (Dq (g x)) : integralClosure (O0 p) Ω) : Ω) / (p : Ω) ^ (k + 1),
     hF Dz, hF Dq, ?_, ?_, ?_, ?_⟩
   · refine int_congr (hdiv (lift (Dz (xn p (k + 1))) - ιA ((p : On p (k + 1)) * xn p (k + 1))) ?_) ?_
-    · rw [map_sub, hlift, hzx, halg, sub_self]
+    · rw [map_sub (Ideal.Quotient.mk I), hlift, hzx, halg, sub_self]
     · simp only [hgz, MulMemClass.coe_mul, AddSubgroupClass.coe_sub, SubringClass.coe_natCast, hιAv, map_mul, map_natCast, hι.1]
       ring
   · exact int_congr (hdiv (lift (Dz (yn p (k + 1)))) (by rw [hlift, hzy])) (by simp only [hgq])
   · exact int_congr (hdiv (lift (Dq (xn p (k + 1)))) (by rw [hlift, hqx])) (by simp only [hgz])
   · refine int_congr (hdiv (lift (Dq (yn p (k + 1))) - ιA ((p : On p (k + 1)) * yn p (k + 1))) ?_) ?_
-    · rw [map_sub, hlift, hqy, halg, sub_self]
+    · rw [map_sub (Ideal.Quotient.mk I), hlift, hqy, halg, sub_self]
     · simp only [hgq, MulMemClass.coe_mul, AddSubgroupClass.coe_sub, SubringClass.coe_natCast, hιAv, map_mul, map_natCast, hι.2]
       ring
 

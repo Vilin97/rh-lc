@@ -18,8 +18,7 @@ noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonObj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.CxForm (IsRelAcyclic)
-open GlobalTheory GlobalTheory.AbLaw GlobalTheory.RelAcyclicAmple
+open GlobalTheory GlobalTheory.AbLaw
 open scoped CategoryTheory.Obj
 
 attribute [local instance] Over.cartesianMonoidalCategory
@@ -28,10 +27,11 @@ namespace GlobalTheory.AmpleSymModel
 
 def polPull {S : Scheme.{0}} (P : Out.PolAV S) {R : Type} [CommRing R] (f : Sp R ⟶ S) : Out.PolAV (Sp R) :=
   have h := isGrpPullback_pullback P.A f
-  have hL' := pull_isLB P.isLB (pullback.fst P.A.hom f)
+  have hL' := LB.isLB_pull P.isLB (pullback.fst P.A.hom f)
+  have hAb := Out.TLinPf.isAb_pullback f P.A P.isAb
   have := P.isAb.proper
   { A := (Over.pullback f).obj P.A
-    isAb := isAbelianScheme_pullback_obj f P.A P.isAb
+    isAb := hAb
     g := P.g
     smoothDim := (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback h.1 P.smoothDim
     L := P.L.pull (pullback.fst P.A.hom f)

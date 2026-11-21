@@ -15,12 +15,12 @@ variable (l : ℕ) [Fact l.Prime] (c : Coef l)
 
 def dualModule : Module c.O (c.O →ₗ[ℤ_[l]] ℤ_[l]) where
   smul a f := f ∘ₗ LinearMap.mulLeft ℤ_[l] a
-  one_smul f := by ext x; show f (1 * x) = f x; rw [one_mul]
-  mul_smul a b f := by ext x; show f (a * b * x) = f (b * (a * x)); rw [mul_comm a b, mul_assoc]
-  smul_zero a := by ext x; show (0 : c.O →ₗ[ℤ_[l]] ℤ_[l]) (a * x) = 0; rfl
-  smul_add a f g := by ext x; show (f + g) (a * x) = f (a * x) + g (a * x); rfl
-  add_smul a b f := by ext x; show f ((a + b) * x) = f (a * x) + f (b * x); rw [add_mul, map_add (f := _)]
-  zero_smul f := by ext x; show f (0 * x) = 0; rw [zero_mul, map_zero]
+  one_smul f := by apply LinearMap.ext; intro x; show f (1 * x) = f x; rw [one_mul]
+  mul_smul a b f := by apply LinearMap.ext; intro x; show f (a * b * x) = f (b * (a * x)); rw [mul_comm a b, mul_assoc]
+  smul_zero a := by apply LinearMap.ext; intro x; show (0 : c.O →ₗ[ℤ_[l]] ℤ_[l]) (a * x) = 0; rfl
+  smul_add a f g := by apply LinearMap.ext; intro x; show (f + g) (a * x) = f (a * x) + g (a * x); rfl
+  add_smul a b f := by apply LinearMap.ext; intro x; show f ((a + b) * x) = f (a * x) + f (b * x); rw [add_mul, map_add (f := _)]
+  zero_smul f := by apply LinearMap.ext; intro x; show f (0 * x) = 0; rw [zero_mul, map_zero]
 
 theorem dualModule_apply (a : c.O) (f : c.O →ₗ[ℤ_[l]] ℤ_[l]) (x : c.O) :
     (letI := dualModule l c; a • f) x = f (a * x) := rfl

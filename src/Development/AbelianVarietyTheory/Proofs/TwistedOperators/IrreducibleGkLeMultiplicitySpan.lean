@@ -59,7 +59,7 @@ abbrev Tup : Type := ∀ τ : D.what₂.Tau, GlobalTheory.IndefiniteRowSideFullH
 
 
 variable (M) in
-abbrev MMK : Type := MultilinearMap ℂ (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ)) (GA D V → ℂ)
+abbrev MMK : Type := Tup M →ₘₗ[ℂ] (GA D V → ℂ)
 
 
 variable (θ M) in
@@ -89,20 +89,20 @@ def partSub (A : Submodule ℂ (GA D V → ℂ)) (hsm : ∀ f ∈ A, IsAutFunSm 
     intro F G hF hG
     refine ⟨fun u => A.add_mem (hF.mem u) (hG.mem u), fun τ hτ g hg hk u w hw => ?_,
       fun τ hτ X hX u w hw => ?_, fun τ hτ u w => ?_⟩
-    · simp only [MultilinearMap.add_apply, hF.equivK τ hτ g hg hk u w hw, hG.equivK τ hτ g hg hk u w hw]
+    · simp only [add_apply, hF.equivK τ hτ g hg hk u w hw, hG.equivK τ hτ g hg hk u w hw]
       rfl
-    · simp only [MultilinearMap.add_apply, hF.equivLie τ hτ X hX u w hw, hG.equivLie τ hτ X hX u w hw]
+    · simp only [add_apply, hF.equivLie τ hτ X hX u w hw, hG.equivLie τ hτ X hX u w hw]
       exact (GlobalTheory.Mem.AutSpace.Rder_add (hsm _ (hF.mem u)).smooth (hsm _ (hG.mem u)).smooth hX).symm
-    · simp only [MultilinearMap.add_apply, hF.other τ hτ u w, hG.other τ hτ u w, smul_add]
+    · simp only [add_apply, hF.other τ hτ u w, hG.other τ hτ u w, smul_add]
   smul_mem' := by
     intro c F hF
     refine ⟨fun u => A.smul_mem c (hF.mem u), fun τ hτ g hg hk u w hw => ?_,
       fun τ hτ X hX u w hw => ?_, fun τ hτ u w => ?_⟩
-    · simp only [MultilinearMap.smul_apply, hF.equivK τ hτ g hg hk u w hw]
+    · simp only [smul_apply, hF.equivK τ hτ g hg hk u w hw]
       rfl
-    · simp only [MultilinearMap.smul_apply, hF.equivLie τ hτ X hX u w hw]
+    · simp only [smul_apply, hF.equivLie τ hτ X hX u w hw]
       exact (GlobalTheory.Mem.AutSpace.Rder_smul c _ τ X).symm
-    · simp only [MultilinearMap.smul_apply, hF.other τ hτ u w]
+    · simp only [smul_apply, hF.other τ hτ u w]
       exact smul_comm _ _ _
 
 def evAt (p0 : Tup M) : MMK M →ₗ[ℂ] (GA D V → ℂ) where
@@ -242,11 +242,11 @@ theorem IsPartMult.rTr_comp (hθ : IsInfFam (D := D) θ) {A : Submodule ℂ (GA 
   refine ⟨fun u => hA.k τ g hg _ (hF.mem u), fun τ' hτ' h hh hk u w hw => ?_, fun τ' hτ' Y hY u w hw => ?_,
     fun τ' hτ' u w => ?_⟩
   · have hne : τ ≠ τ' := fun e => hτ (e ▸ hτ')
-    simp only [LinearMap.compMultilinearMap_apply, rTrL, LinearMap.coe_mk, AddHom.coe_mk]
+    simp only [LinearMap.compMultilinearMap_apply, rTrL]
     rw [hF.equivK τ' hτ' h hh hk u w hw]
     exact (place_comm θ V hθ τ τ' hne).1 g hg.1 h hh _
   · have hne : τ ≠ τ' := fun e => hτ (e ▸ hτ')
-    simp only [LinearMap.compMultilinearMap_apply, rTrL, LinearMap.coe_mk, AddHom.coe_mk]
+    simp only [LinearMap.compMultilinearMap_apply, rTrL]
     rw [hF.equivLie τ' hτ' Y hY u w hw]
     exact ((place_comm θ V hθ τ τ' hne).2.1 g hg.1 Y hY _).symm
   · simp only [LinearMap.compMultilinearMap_apply, hF.other τ' hτ' u w, map_smul]
@@ -295,7 +295,7 @@ def glue (τ : D.what₂.Tau) (T : GlobalTheory.IndefiniteRowSideFullHecke.Finit
     obtain rfl : inst = (fun a b => Classical.propDecidable (a = b)) := Subsingleton.elim _ _
     by_cases h : i = τ
     · subst h
-      simp only [Function.update_self, Function.update_idem, map_add (f := _), MultilinearMap.add_apply]
+      simp only [Function.update_self, Function.update_idem, map_add (f := _), add_apply]
     · simp only [Function.update_of_ne (Ne.symm h), Function.update_comm h]
       exact (T (u τ)).map_update_add _ i a b
   map_update_smul' := by
@@ -303,7 +303,7 @@ def glue (τ : D.what₂.Tau) (T : GlobalTheory.IndefiniteRowSideFullHecke.Finit
     obtain rfl : inst = (fun a b => Classical.propDecidable (a = b)) := Subsingleton.elim _ _
     by_cases h : i = τ
     · subst h
-      simp only [Function.update_self, Function.update_idem, map_smul, MultilinearMap.smul_apply]
+      simp only [Function.update_self, Function.update_idem, map_smul, smul_apply, RingHom.id_apply]
     · simp only [Function.update_of_ne (Ne.symm h), Function.update_comm h]
       exact (T (u τ)).map_update_smul _ i c a
 

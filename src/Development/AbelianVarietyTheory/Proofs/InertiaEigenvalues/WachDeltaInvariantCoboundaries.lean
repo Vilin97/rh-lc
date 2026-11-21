@@ -346,9 +346,64 @@ theorem exists_attached {l : ℕ} [Fact l.Prime] {P : LocPrime l} (H : LocHW l P
     ∃ R j jE, j X = ξ ∧ R.e = Module.finrank ↥(K0 K) ↥K.1 ∧ Attached (H.W K 1 LL h) R j jE := by
   have hs := H.W_s K 1 LL h
   obtain ⟨_, _, hu⟩ := GlobalTheory.FinExtIntegers.dvr_complete LL
-  obtain ⟨χ, hχ, hχ1⟩ := GlobalTheory.exists_cyclotomicChar_padicInt_units P K LL (H.W K 1 LL h)
+  have hex : ∀ g, ∃ y : ℤ_[l], algebraMap ℤ_[l] ↥(OL LL) y = ((H.W K 1 LL h).χΓ g : ↥(OL LL)) := by
+    intro g
+    obtain ⟨a, rfl⟩ := (H.W K 1 LL h).resΓ_onto g
+    have hm : IsIntegral ℤ_[l] (algebraMap ℚ_[l] ↥LL.1 ((P.PD K).χ a : ℚ_[l])) := by
+      rw [← (H.W K 1 LL h).χΓ_res a]
+      exact ((H.W K 1 LL h).χΓ ((H.W K 1 LL h).resΓ a) : ↥(OL LL)).2
+    have hm' : IsIntegral ℤ_[l] ((P.PD K).χ a : ℚ_[l]) :=
+      (isIntegral_algHom_iff (IsScalarTower.toAlgHom ℤ_[l] ℚ_[l] ↥LL.1)
+        (algebraMap ℚ_[l] ↥LL.1).injective).mp hm
+    obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp hm'
+    refine ⟨y, Subtype.ext ?_⟩
+    show algebraMap ℤ_[l] ↥LL.1 y = _
+    rw [IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] ↥LL.1, hy, ← (H.W K 1 LL h).χΓ_res a]
+    rfl
+  have hinj : Function.Injective (algebraMap ℤ_[l] ↥(OL LL)) := by
+    intro a b hab
+    apply IsFractionRing.injective ℤ_[l] ℚ_[l]
+    apply (algebraMap ℚ_[l] ↥LL.1).injective
+    rw [← IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] ↥LL.1, ← IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] ↥LL.1]
+    exact congrArg Subtype.val hab
+  choose y hy using hex
+  have hi : ∀ g, y g * y g⁻¹ = 1 := fun g => hinj (by
+    rw [map_mul, hy, hy, map_one, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one])
+  have hi' : ∀ g, y g⁻¹ * y g = 1 := fun g => by simpa using hi g⁻¹
+  let u : (H.W K 1 LL h).Gam → ℤ_[l]ˣ := fun g => ⟨y g, y g⁻¹, hi g, hi' g⟩
+  let χ : (H.W K 1 LL h).Gam →* ℤ_[l]ˣ :=
+    { toFun := u
+      map_one' := by apply Units.ext; apply hinj; simp [u, hy]
+      map_mul' := by intro a b; apply Units.ext; apply hinj; simp [u, hy] }
+  have hχ : ∀ g, algebraMap ℤ_[l] ↥(OL LL) (χ g : ℤ_[l]) = ((H.W K 1 LL h).χΓ g : ↥(OL LL)) := hy
+  have hχ1 : Associated ((χ (H.W K 1 LL h).gam : ℤ_[l]) - 1) (l : ℤ_[l]) := by
+    have hv : P.v LL (algebraMap ℤ_[l] ↥LL.1 ((χ (H.W K 1 LL h).gam : ℤ_[l]) - 1)) = 1 := by
+      rw [map_sub, map_one, IsScalarTower.algebraMap_apply ℤ_[l] ↥(OL LL) ↥LL.1, hχ]
+      have hg := (H.W K 1 LL h).gam_gen
+      rw [hs, Nat.cast_one] at hg
+      exact hg
+    have hc0 : ((χ (H.W K 1 LL h).gam : ℤ_[l]) - 1) ≠ 0 := by
+      intro hc
+      rw [hc, map_zero, AddValuation.map_zero] at hv
+      exact WithTop.top_ne_one hv
+    have hspec := PadicInt.unitCoeff_spec hc0
+    set v := PadicInt.unitCoeff hc0
+    have hnn : ∀ w : ℤ_[l], 0 ≤ P.v LL (algebraMap ℤ_[l] ↥LL.1 w) := fun w =>
+      (P.v_O LL _).mpr (Subalgebra.algebraMap_mem _ w)
+    have hv0 : P.v LL (algebraMap ℤ_[l] ↥LL.1 (v : ℤ_[l])) = 0 := by
+      have h1 : P.v LL (algebraMap ℤ_[l] ↥LL.1 (v : ℤ_[l])) +
+          P.v LL (algebraMap ℤ_[l] ↥LL.1 ((v⁻¹ : ℤ_[l]ˣ) : ℤ_[l])) = 0 := by
+        rw [← AddValuation.map_mul, ← map_mul, Units.mul_inv, map_one, AddValuation.map_one]
+      exact ((add_eq_zero_iff_of_nonneg (hnn _) (hnn _)).mp h1).1
+    have hval : ((χ (H.W K 1 LL h).gam : ℤ_[l]) - 1).valuation = 1 := by
+      rw [hspec, map_mul, AddValuation.map_mul, hv0, zero_add, map_pow, AddValuation.map_pow,
+        map_natCast, P.v_l LL, nsmul_one] at hv
+      exact_mod_cast hv
+    refine ⟨v⁻¹, ?_⟩
+    conv_lhs => rw [hspec]
+    rw [hval, pow_one, mul_comm, ← mul_assoc, Units.inv_mul, one_mul]
   obtain ⟨R, j, rfl, h2, h4, h5⟩ := exists_frTie (H.W K 1 LL h) (P.PD_p K) χ hχ hl hu
-    (GlobalTheory.exists_primitiveRoot_coeffRing_of_good K LL h) (hχ1 hs) ξ hξ hinv
+    (GlobalTheory.exists_primitiveRoot_coeffRing_of_good K LL h) hχ1 ξ hξ hinv
   have h3 : R.e = Module.finrank ↥(K0 K) ↥K.1 := by
     have hes := R.es
     have hc := GlobalTheory.TorsionCard.card_torsion_mul_finrank P K LL (H.W K 1 LL h) hl h.2.2.1

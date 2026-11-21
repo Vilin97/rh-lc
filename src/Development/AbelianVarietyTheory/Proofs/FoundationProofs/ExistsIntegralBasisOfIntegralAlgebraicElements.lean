@@ -243,7 +243,8 @@ theorem exists_residue_basis (hφ : ∀ z, v (fromInt p L z) ≤ 1) (h1 : v (p :
     have hj0 : 0 < ‖g j‖ := (norm_pos_iff.2 hgi).trans_le (hmax i (Finset.mem_univ i))
     have hgj : g j ≠ 0 := norm_pos_iff.1 hj0
     let μ : Fin _ → ℤ_[p] := fun k => ⟨g k / g j, by
-      rw [norm_div]; exact (div_le_one hj0).2 (hmax k (Finset.mem_univ k))⟩
+      rw [PadicInt.mem_subring_iff, norm_div]
+      exact (div_le_one hj0).2 (hmax k (Finset.mem_univ k))⟩
     have h2 := hu μ ⟨j, by
       have : μ j = 1 := Subtype.ext (div_self hgj)
       rw [this, ← isUnit_iff_dvd_one]

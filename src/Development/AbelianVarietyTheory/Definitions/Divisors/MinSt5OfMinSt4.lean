@@ -16,7 +16,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.SiegJoin
 
-open GlobalTheory.SiegMin GlobalTheory.Poinc GlobalTheory.PolDeg
+open GlobalTheory.Poinc GlobalTheory.PolDeg
 
 variable {g n : ℕ}
 

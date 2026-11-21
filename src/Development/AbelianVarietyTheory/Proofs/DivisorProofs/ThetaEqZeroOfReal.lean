@@ -72,7 +72,7 @@ theorem exists_fin_add_real (w : WO S T) : ∃ u v, IsFinPt u ∧ IsRealPt v ∧
 theorem isTheta_heisO (hψ : IsStdChar D ψ (-1)) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (w : WO S T) :
     IsThetaFunO ψ S T (heisO ψ S T w f) := by
   obtain ⟨u, v, hu, hv, rfl⟩ := exists_fin_add_real w
-  have h := GlobalTheory.FinTranslate.isTheta_heisO_fin hψ.1 hu (WeilVacMove.isTheta_heisO_real hψ hv hf)
+  have h := GlobalTheory.FinTranslate.isThetaFunO_heisO hψ.1.1 hψ.1.2.1 (WeilVacMove.isTheta_heisO_real hψ hv hf) hu
   rwa [WeilVacMove.heisO_heisO, (WeilVacMove.symplOH_fin_real S T u v hu hv).1, AddChar.map_zero_eq_one,
     one_smul] at h
 

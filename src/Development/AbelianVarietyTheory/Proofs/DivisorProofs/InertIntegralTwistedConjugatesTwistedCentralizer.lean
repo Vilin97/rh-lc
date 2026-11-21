@@ -123,9 +123,23 @@ theorem eq_twCent_mul_KGL : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   have hnr : (nrmL n w y).val = GlobalTheory.Tw.nrm y.val := by
     rw [nrmL, if_neg hs, Units.val_mul, hcs, thetaGL_val]; rfl
 
+  have hmem (O : Subring (w.adicCompletion E)) (h : GLw n w) :
+      h ∈ GLint (Fin n) O ↔
+        (∀ i j, h.val i j ∈ O) ∧ ∀ i j, (h⁻¹).val i j ∈ O := by
+    have hi : Function.Injective fun A : Matrix (Fin n) (Fin n) O => A.map O.subtype :=
+      Matrix.map_injective Subtype.val_injective
+    constructor
+    · rintro ⟨y, rfl⟩
+      exact ⟨fun i j => (y.1 i j).2, fun i j => ((y⁻¹).1 i j).2⟩
+    · rintro ⟨h1, h2⟩
+      refine ⟨⟨Matrix.of fun i j => ⟨_, h1 i j⟩, Matrix.of fun i j => ⟨_, h2 i j⟩, hi ?_, hi ?_⟩, Units.ext rfl⟩
+      · simp only [Matrix.map_mul, Matrix.map_one _ (map_zero _) (map_one _)]
+        exact h.mul_inv
+      · simp only [Matrix.map_mul, Matrix.map_one _ (map_zero _) (map_one _)]
+        exact h.inv_mul
   have hint : ∀ h : GLw n w, h ∈ GlobalTheory.LFun.KGL w (n := n) → (∀ i j, ‖h.val i j‖ ≤ 1) ∧ ‖h.val.det‖ = 1 := by
     intro h hh
-    obtain ⟨h1, h2⟩ := (GlobalTheory.GKFactor.UnitaryInt.mem_GLint_iff_entries (Ov E w) h).1 hh
+    obtain ⟨h1, h2⟩ := (hmem (Ov E w) h).1 hh
     have hdet : ∀ M : Matrix (Fin n) (Fin n) (w.adicCompletion E), (∀ i j, M i j ∈ Ov E w) → M.det ∈ Ov E w := by
       intro M hM
       let M₀ : Matrix (Fin n) (Fin n) (Ov E w) := fun i j => ⟨M i j, hM i j⟩
@@ -140,7 +154,7 @@ theorem eq_twCent_mul_KGL : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     nlinarith [norm_nonneg h.val.det, norm_nonneg (h⁻¹).val.det]
   have hintR : ∀ h : GLw n w, (∀ i j, ‖h.val i j‖ ≤ 1) → ‖h.val.det‖ = 1 → h ∈ GlobalTheory.LFun.KGL w (n := n) := by
     intro h h1 h2
-    refine (GlobalTheory.GKFactor.UnitaryInt.mem_GLint_iff_entries (Ov E w) h).2 ⟨fun i j => (hle1 _).1 (h1 i j), fun i j => ?_⟩
+    refine (hmem (Ov E w) h).2 ⟨fun i j => (hle1 _).1 (h1 i j), fun i j => ?_⟩
     rw [Matrix.coe_units_inv]
     exact (hle1 _).1 (GlobalTheory.TwIntegral.intg_inv h1 h2 i j)
   obtain ⟨hy1, hy2⟩ := hint y hy

@@ -38,12 +38,15 @@ private theorem model_ordAt {l : ℕ} [Fact l.Prime] {n : ℕ} {F : GFrame l} {K
 private theorem model_coc {l : ℕ} [Fact l.Prime] {n : ℕ} {F : GFrame l} {ρ : F.G₀ →* GL (Fin n) (Qbar l)}
     {P : GL (Fin n) (Qbar l)} {I : F.St → Subgroup F.G₀} {ψ : ∀ v, Fin n → F.Gv v →* (Qbar l)ˣ}
     {z : F.G₀ → Matrix (Fin n) (Fin n) (Qbar l)} (h : IsOrdCoc F ρ P I ψ z) (a : Qbar l) :
-    IsOrdCoc F ρ P I ψ fun g => a • z g where
-  cont := h.cont.const_smul a
-  coc g g' := by rw [h.coc, smul_add, Matrix.mul_smul, Matrix.smul_mul]
-  pol g := by rw [Matrix.mul_smul, h.pol, Matrix.transpose_smul, Matrix.smul_mul, smul_neg]
-  ine u g hg := by rw [h.ine u g hg, smul_zero]
-  ord v := by
+    IsOrdCoc F ρ P I ψ (fun g => a • z g) := by
+  refine ⟨h.cont.const_smul a, ?_, ?_, ?_, ?_⟩
+  · intro g g'
+    rw [h.coc, smul_add, Matrix.mul_smul, Matrix.smul_mul]
+  · intro g
+    rw [Matrix.mul_smul, h.pol, Matrix.transpose_smul, Matrix.smul_mul, smul_neg]
+  · intro u g hg
+    rw [h.ine u g hg, smul_zero]
+  · intro v
     obtain ⟨w, Y, hw⟩ := h.ord v
     exact ⟨w, a • Y, model_ordAt (F := F) (ψ := ψ v) hw a⟩
 

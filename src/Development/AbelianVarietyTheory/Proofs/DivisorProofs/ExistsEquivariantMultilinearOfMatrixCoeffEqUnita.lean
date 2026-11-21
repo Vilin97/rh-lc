@@ -109,13 +109,13 @@ theorem exists_continuousMultilinearMap_of_inner_eq_prod {ι : Type} [Fintype ι
     ∃ Φ : ContinuousMultilinearMap ℂ H K, ∀ y, Φ y ∈ closure (Submodule.span ℂ (Set.range f) : Set K) ∧
       ∀ a, ⟪f a, Φ y⟫_ℂ = (c : ℂ) * ∏ τ, ⟪e τ (a τ), y τ⟫_ℂ := by
   choose F hF1 hF2 hF3 using exists_vector_of_inner_eq_prod e f c hd hf
-  let L : (∀ τ, A τ) → MultilinearMap ℂ H ℂ := fun a =>
+  let L : (∀ τ, A τ) → MultilinearMap (RingHom.id ℂ) H ℂ := fun a =>
     (c : ℂ) • (MultilinearMap.mkPiAlgebra ℂ ι ℂ).compLinearMap fun τ => innerₛₗ ℂ (e τ (a τ))
   have hL : ∀ a y, ⟪f a, F y⟫_ℂ = L a y := by
     intro a y
     rw [hF2]; simp [L]
   have hmem : ∀ y, F y ∈ (Submodule.span ℂ (Set.range f)).topologicalClosure := hF1
-  let M : MultilinearMap ℂ H K :=
+  let M : MultilinearMap (RingHom.id ℂ) H K :=
     { toFun := F
       map_update_add' := by
         intro _ m i p q

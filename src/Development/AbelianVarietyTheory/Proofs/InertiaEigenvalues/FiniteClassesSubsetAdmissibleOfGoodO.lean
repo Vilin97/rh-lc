@@ -264,6 +264,9 @@ theorem isCrysChar_chi (hinj : Function.Injective (algebraMap O LL)) (htw : Twis
         twistRep (charRep (chiLL LL (Γ.chi (s + 1)))) (chiLL LL Γ.ε⁻¹) := by
       ext g
       simp [charRep, twistRep, mul_comm, Algebra.smul_def]
+      have h (f : LL →ₗ[LL] LL) (x : LL) : f x = x * f 1 := by
+        simpa [smul_eq_mul] using f.map_smul x (1 : LL)
+      exact (h _ _).symm
     have h5 : (fun i => ({w i + ((s + 1 : ℕ) : ℤ)} : Multiset ℤ)) =
         fun i => ({w i + (s : ℤ)} : Multiset ℤ).map (· + - -1) := by
       funext i

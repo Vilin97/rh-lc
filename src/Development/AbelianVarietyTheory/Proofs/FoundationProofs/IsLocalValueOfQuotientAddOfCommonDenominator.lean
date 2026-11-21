@@ -107,7 +107,7 @@ theorem exists_ev {p : ℕ} [hp : Fact p.Prime] {K : Type} [Field K] [Algebra �
     induction hx using IntermediateField.adjoin_induction with
     | mem x hx => exact IntermediateField.subset_adjoin _ _ ⟨x, hx, rfl⟩
     | algebraMap q => rw [eq_ratCast, map_ratCast]; exact SubfieldClass.ratCast_mem L q
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let w : Valuation L ℝ≥0 := v.comap (algebraMap L Ω)
@@ -179,6 +179,8 @@ theorem val_add (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) {φ χ : HahnSeries �
   have h := (R.1 C D x x' y y' (hC ▸ hx) (hD ▸ hy)).2.1
   refine ⟨x' + y', ?_⟩
   convert h using 1
+  funext r
+  simp only [HahnSeries.coeff_add, map_add, hC, hD, Pi.add_apply]
 
 theorem val_mul (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) {φ χ : HahnSeries ℚ Ω} {x y : Ωl}
     (hφ : Supp p n φ) (hχ : Supp p n χ)

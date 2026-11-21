@@ -33,9 +33,11 @@ variable (σ X) in
 def gInf : Subgroup (UA σ X.J) := Subgroup.closure (UAt σ X (evI F))
 
 
+variable (σ X) in
 def gAt (S : Finset (Pl (F := F))) : Subgroup (UA σ X.J) := ⨆ v ∈ S, locGrp σ X v
 
 
+variable (σ X) in
 def gOff (S : Finset (Pl (F := F))) : Subgroup (UA σ X.J) :=
   Subgroup.closure {g | (∀ w : InfinitePlace F, (mat g).map (compInf F E w) = 1) ∧ ∀ v ∈ S, OffAt v g}
 

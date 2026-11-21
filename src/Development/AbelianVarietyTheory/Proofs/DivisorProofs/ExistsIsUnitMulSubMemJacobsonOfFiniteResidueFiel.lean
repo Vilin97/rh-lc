@@ -19,7 +19,7 @@ theorem finite_quotient_jacobson_of_finite_residueField (O : Type) [CommRing O] 
     intro m hm
     rw [hJ, Ideal.jacobson, Ideal.mem_sInf]
     rintro M ⟨-, hM⟩
-    have : (M.comap (algebraMap O A)).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M
+    have : (M.comap (algebraMap O A)).IsMaximal := Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := O) M
     have h := IsLocalRing.eq_maximalIdeal this
     have : m ∈ M.comap (algebraMap O A) := h ▸ hm
     exact this

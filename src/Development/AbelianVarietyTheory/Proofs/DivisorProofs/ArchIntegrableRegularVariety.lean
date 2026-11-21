@@ -44,7 +44,7 @@ theorem integrableOn_of_chart {M : Type} [TopologicalSpace M] [MeasurableSpace M
   refine ⟨hf.aestronglyMeasurable hA, ?_⟩
   refine (lintegral_mono' hle le_rfl).trans_lt ?_
   rw [lintegral_smul_measure, smul_eq_mul]
-  exact ENNReal.mul_lt_top hC.lt_top ((lintegral_map_le _ _).trans_lt hi.2)
+  exact ENNReal.mul_lt_top hC.lt_top ((lintegral_map_le _ hs).trans_lt hi.2)
 
 variable {k : Type} [CommRing k] {X : Scheme.{0}} [IsIntegral X] {p : X ⟶ Sp k} {σ : k →+* ℂ} {D : ℕ}
 

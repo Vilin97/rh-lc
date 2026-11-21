@@ -291,5 +291,6 @@ theorem riemLie_eq_smul_map (E : Type) [Field E] [NumberField E] [IsCMField E] (
   congr 2
   funext w
   exact hfv (D w)
+  exact hf.aemeasurable
 
 end GlobalTheory.RiemConst.Jac

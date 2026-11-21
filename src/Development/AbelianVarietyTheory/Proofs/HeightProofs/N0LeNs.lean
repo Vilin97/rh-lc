@@ -11,7 +11,6 @@ set_option autoImplicit false
 noncomputable section
 namespace GlobalTheory.RunJoin.InhAll
 open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.MainNotions.Gaps Formalism.MainNotions.Gaps.EtaleWeightGaps Formalism.MainNotions.Gaps.EtaleWeightGaps.Num GlobalTheory.RunJoin GlobalTheory.RunJoin.Inh
-open GlobalTheory.Survey.NumericBoundConstants
 
 def prog (p l g : ℕ) (i : Fin p) : ℕ := l + (p - 1 - i.1) * g
 

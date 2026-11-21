@@ -75,7 +75,7 @@ theorem exists_canonical_equiv : ∀ (L : Type) [Field L] [NumberField L] [IsCMF
     exact Iff.rfl
   · intro z
     induction z using TensorProduct.induction_on with
-    | zero => simp
+    | zero => simp; rfl
     | add x y hx hy => simp only [map_add (f := _), hx, hy]; rfl
     | tmul x a =>
       have hk : F.κ (x ⊗ₜ a) = F.κ (x ⊗ₜ 1) * F.κ (1 ⊗ₜ a) := by

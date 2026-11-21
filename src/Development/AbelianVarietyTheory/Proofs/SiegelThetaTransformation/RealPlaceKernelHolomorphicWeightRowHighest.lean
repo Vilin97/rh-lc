@@ -210,14 +210,14 @@ theorem anti_frames {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h₂ : x
       split_ifs <;> simp
     · ext a c
       simp only [P, diagonal_mul, aAnti, of_apply]
-      split_ifs <;> simp [mul_apply, mat]
+      split_ifs <;> simp [mat, Matrix.mul_apply]
     · rw [inv_eq_right_inv hy]
       ext a c
       simp only [Q, diagonal_mul, aAnti, of_apply]
       split_ifs <;> simp
     · ext a c
       simp only [P, diagonal_mul, aLin, of_apply]
-      split_ifs <;> simp [mul_apply, mat, mul_comm]
+      split_ifs <;> simp [mat, Matrix.mul_apply, mul_comm]
   · have h := emb_neg_half X τ
     rw [map_neg, map_div₀, map_ofNat] at h
     have h' : τ.1 X.κ0 / 4 = -(I * (X.c τ / 4 : ℝ)) := by
@@ -431,6 +431,7 @@ theorem aAnti_rmul (x₁ x₂ : Frame X.Ψ r) :
   simp only [aAnti, of_apply]
   split_ifs
   · simp only [rmul, mul_apply, mat, of_apply, Finset.sum_mul, Finset.mul_sum]
+    simp only [Matrix.mul_apply, of_apply, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   · rfl

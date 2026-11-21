@@ -25,7 +25,7 @@ section General
 variable {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V]
 
 theorem sb_translate {f : V → ℂ} (hf : f ∈ SB V) (Z : V) : (fun Y => f (Y + Z)) ∈ SB V :=
-  ⟨hf.1.comp_continuous (continuous_add_right Z), hf.2.comp_homeomorph (Homeomorph.addRight Z)⟩
+  ⟨hf.1.comp_continuous (Homeomorph.addRight Z).continuous, hf.2.comp_homeomorph (Homeomorph.addRight Z)⟩
 
 theorem sb_indicator (U : AddSubgroup V) (ho : IsOpen (U : Set V)) (hc : IsCompact (U : Set V)) :
     (U : Set V).indicator (1 : V → ℂ) ∈ SB V := by

@@ -50,7 +50,8 @@ theorem maxIdeal_pow_dvd_natCast_of_integers :
     have hQc : Q.comap (algebraMap O A) = J :=
       ((inferInstance : J.IsMaximal).eq_of_le (Ideal.IsPrime.comap (algebraMap O A)).ne_top hle).symm
     haveI : (Q.comap (algebraMap O A)).IsMaximal := by rw [hQc]; infer_instance
-    haveI : Q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap Q this
+    haveI : Q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap
+      (algebraMap O A) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) Q this
     rw [IsLocalRing.eq_maximalIdeal this]
     exact ha
   have h2 : a ∈ (Ideal.span {(p : A)}).radical := by

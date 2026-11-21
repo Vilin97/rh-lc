@@ -36,13 +36,14 @@ theorem GlobalTheory.ThK.PlaneCo.isVac_vacGlue : ∀ {F E : Type} [Field F] [Num
   have hco : ∀ z, Ma.co.e z = (GlobalTheory.ThK.Adapt.glue eq (T z).1.1 (M₁.co.e (T z).2).1,
       GlobalTheory.ThK.Adapt.glue eq (T z).1.2 (M₁.co.e (T z).2).2) := fun z => by
     show (glueDarboux M₁.co eq T hf).e z = _
-    rw [glueDarboux_e]; rfl
+    exact glueDarboux_e M₁.co eq T hf z
   have hrat : ∀ x : Matrix (Fin n) (Fin d) E, ∃ y z : Fin n × Fin d → F,
       Ma.co.e ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i)) := by
     intro x
     obtain ⟨⟨y, z, hyz⟩, x₁, hx₁⟩ := GlobalTheory.T.plane_transform_rational_points σ X W H H' x
     obtain ⟨y₁, z₁, h₁⟩ := hM₁.rat x₁
     refine ⟨glue eq y y₁, glue eq z z₁, ?_⟩
+    simp only [incM] at hyz hx₁ h₁
     rw [hco, hT, hyz, hx₁, h₁]
     refine Prod.ext (funext fun i => ?_) (funext fun i => ?_) <;>
       simp only [GlobalTheory.ThK.Adapt.glue, glue] <;> cases eq i <;> rfl
@@ -55,7 +56,9 @@ theorem GlobalTheory.ThK.PlaneCo.isVac_vacGlue : ∀ {F E : Type} [Field F] [Num
     have h2 := hf b γ
     rw [hT b, hbT] at h2
     have hm : inclR (F := F) (AF F) (((-1 : 𝓞 E) : E)) = -1 := by simp
-    rw [one_mul, hm, h2] at h1
+    rw [one_mul, hm] at h1
+    simp only [cA, incM] at h1
+    rw [h2] at h1
     have h0 : symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W₁.J) (0 : Matrix (Fin n₁) (Fin d₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) (T γ).2 = 0 := by
       simp [symp, hTens]
     rw [h0] at h1
@@ -70,6 +73,7 @@ theorem GlobalTheory.ThK.PlaneCo.isVac_vacGlue : ∀ {F E : Type} [Field F] [Num
     have h1 := GlobalTheory.LatVacArith.psi_symp_latAtV σ B X W r s r' s' hB hX hW v θ 1
       (by rw [map_one]; exact one_mem _) b hb a ha
     rw [one_mul] at h1
+    simp only [cA, incM] at h1
     simp only [hT]
     rw [e, ← AddChar.map_add_eq_mul]
     have h3 : (⅟(2 : AF F)) * 2 = 1 := invOf_mul_self _

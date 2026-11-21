@@ -24,7 +24,7 @@ theorem phiB_moore_det {l : ℕ} [Fact l.Prime] (P : LocPrime l) (n : ℕ) (a : 
   have h2 : M.map P.φB = Matrix.diagonal (fun i : Fin (n + 1) => if i = Fin.last n then (l : P.R.B) else 1) *
       M.submatrix (finRotate (n + 1)) id := by
     ext i j
-    rw [Matrix.diagonal_mul, Matrix.map_apply, Matrix.submatrix_apply, finRotate_succ_apply, id]
+    rw [Matrix.diagonal_mul, Matrix.map_apply, Matrix.submatrix_apply, finRotate_apply, id]
     simp only [hM, Matrix.of_apply]
     rw [← Function.iterate_succ_apply' (f := P.φB)]
     by_cases hi : i = Fin.last n

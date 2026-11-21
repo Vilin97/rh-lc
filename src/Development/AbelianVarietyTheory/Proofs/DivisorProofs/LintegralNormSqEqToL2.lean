@@ -164,7 +164,7 @@ def trB (b : X → ℂ) (w : X) (hb : Continuous b) (hn : ∀ x, ‖b x‖ = 1)
     (hq : ∀ f : X → ℂ, (∀ γ x, f (r γ + x) = q γ x * f x) →
       ∀ γ x, b (r γ + x) * f (r γ + x + w) = q γ x * (b x * f (x + w))) : QB r q →L[ℂ] QB r q :=
   LinearMap.mkContinuous
-    { toFun := fun f => mkB (fun x => b x * f.1 (x + w)) (hb.mul (f.1.continuous.comp (continuous_add_right w)))
+    { toFun := fun f => mkB (fun x => b x * f.1 (x + w)) (hb.mul (f.1.continuous.comp (continuous_add_const w)))
         ⟨‖f‖, fun x => by rw [norm_mul, hn, one_mul]; exact norm_ev_le _ f⟩ (hq f.1 f.2)
       map_add' := fun f g => QB_ext fun x => mul_add _ _ _
       map_smul' := fun a f => QB_ext fun x => mul_left_comm _ _ _ }
@@ -185,9 +185,9 @@ omit [ContinuousAdd X] in
 theorem lintegral_norm_sq_eq_toL2 [MeasurableSpace X] [BorelSpace X] [SecondCountableTopology X] (ν : Measure X)
     [IsFiniteMeasure ν] (f : QB r q) : ∫⁻ w, ‖f.1 w‖ₑ ^ 2 ∂ν = ‖toL2 r q ν f‖ₑ ^ 2 := by
   have h := eLpNorm_congr_ae (p := 2) (BoundedContinuousFunction.coeFn_toLp 2 ν ℂ f.1)
-  have e : ‖toL2 r q ν f‖ₑ = eLpNorm f.1 2 ν := by rw [← h]; exact Lp.enorm_def _
-  rw [e, eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top, ENNReal.toReal_ofNat, ← ENNReal.rpow_two,
-    ← ENNReal.rpow_mul]
+  have e : ‖toL2 r q ν f‖ₑ = eLpNorm f.1 2 ν := by rw [← h]; exact Lp.eNorm_def _
+  rw [e, eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top
+    f.1.continuous.aestronglyMeasurable, ENNReal.toReal_ofNat, ← ENNReal.rpow_two, ← ENNReal.rpow_mul]
   simp
 
 end Quasi

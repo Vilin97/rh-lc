@@ -65,10 +65,10 @@ theorem level_eq {I' : Ideal R'} {D' : DegPre R'} {e : ℕ} {G' : Over (Sp R')} 
     (ht' : ∀ x : D'.X, ∃ hψ : ∀ k : Fin 4, D'.Oφ g.pG x k ≫ F = f' ≫ D'.Oφ g.pG x k,
       LB.Gen.Maps (LB.linCombIso w _ Oinvε) (g.t x)
         (GeneratorPullback.pullAlong D'.P.L F f' _ Oinvε _ hψ (g.t x))) : f = f' := by
-  refine GlobalTheory.T.thickenedUniformisedGroup_point_ext g f f' hb (hp.symm.trans hp') fun z J hJ χ => ?_
-  obtain ⟨hψ, hm⟩ := ht χ
-  obtain ⟨hψ', hm'⟩ := ht' χ
-  exact GlobalTheory.T.torusCoordinate_value_eq_of_maps g F w f f' χ hψ hψ' hm hm' z J hJ
+  exact GlobalTheory.T.thickenedUniformisedGroup_point_ext g f f' hb (hp.symm.trans hp') fun z J hJ χ => by
+    obtain ⟨hψ, hm⟩ := ht χ
+    obtain ⟨hψ', hm'⟩ := ht' χ
+    exact GlobalTheory.T.torusCoordinate_value_eq_of_maps g F w f f' χ hψ hψ' hm hm' z J hJ
 
 end GlobalTheory.Mum.GalUniq
 

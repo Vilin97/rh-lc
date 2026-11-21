@@ -41,8 +41,10 @@ theorem closure_ratio (N : ℕ) (i : Fin (N + 1)) : Subring.closure (Set.range (
   induction p using MvPolynomial.induction_on with
   | C r =>
     rw [aeval_C]
-    simpa using intCast_mem (Subring.closure (Set.range (ratio ℤ N i))) r
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hp trivial) (hq trivial)
+    simp
+  | add p q hp hq =>
+    rw [map_add]
+    exact add_mem (hp trivial) (hq trivial)
   | mul_X p j hp =>
     rw [map_mul, aeval_X]
     exact mul_mem (hp trivial) (Subring.subset_closure ⟨j, rfl⟩)
@@ -83,6 +85,7 @@ theorem add_one_pow_eq_ringHom_image_add_prime_mul_zero : ∀ (m : ℕ) (n : Fin
       refine TopologicalSpace.Opens.ext (Set.ext fun x => ⟨fun hx => Set.mem_iInter.1 hx 0, fun hx => ?_⟩)
       refine Set.mem_iInter.2 fun k => ?_
       obtain rfl : k = 0 := Subsingleton.elim (α := Fin 1) _ _
+      rw [show blockChart n 0 (c 0) = chart ℤ (n 0) (c 0) from rfl]
       exact hx
     subst e
     refine ⟨isAffineOpen_chart ℤ (n 0) (c 0), ?_⟩
@@ -93,7 +96,8 @@ theorem add_one_pow_eq_ringHom_image_add_prime_mul_zero : ∀ (m : ℕ) (n : Fin
       trivial
     refine Subring.closure_mono ?_ hx
     rintro _ ⟨j, rfl⟩
-    exact ⟨⟨0, j⟩, (resG_self _ _)⟩
+    refine ⟨⟨0, j⟩, ?_⟩
+    exact (Conormal.id_appLE _ _).trans (resG_self _ _)
   | m + 1, n, c, W, hW, h => by
     obtain ⟨ha, hc⟩ := add_one_pow_eq_ringHom_image_add_prime_mul_zero m (Fin.tail n) (fun k => c k.succ) _ rfl (mchart_le _)
     have H := IsPullback.of_hasPullback (toSpecBase ℤ (n 0)) (mpStr ℤ m (Fin.tail n))

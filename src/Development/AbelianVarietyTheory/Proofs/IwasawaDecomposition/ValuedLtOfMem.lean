@@ -17,6 +17,8 @@ namespace GlobalTheory.Mem.Col2.PtExist
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
+local notation "ι" => Formalism.UG.inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
+
 theorem ad_ext {a b : AfE F E} (h : ∀ P, adAt F P a = adAt F P b) : a = b :=
   (afIso F E).injective (FiniteAdeleRing.ext _ h)
 
@@ -63,6 +65,8 @@ theorem hasRes_redA [StarRing E] (P : HeightOneSpectrum (𝓞 E)) {a : AfE F E} 
   exact h1
 
 variable [StarRing E] (hc : CMData F E)
+
+local notation "σ" => Formalism.UG.sigR hc.sig (FiniteAdeleRing (𝓞 F) F)
 
 theorem sig_sig (z : AfE F E) : σ (σ z) = z := DetClass.sigR_sigR (fun x => star_star x) z
 

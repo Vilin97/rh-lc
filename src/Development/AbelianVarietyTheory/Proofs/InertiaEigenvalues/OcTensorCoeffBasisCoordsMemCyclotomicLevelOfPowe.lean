@@ -95,8 +95,9 @@ theorem coord (l : ℕ) [Fact l.Prime] (K LL : FinExt l) (m n f : ℕ) [NeZero n
       · have e : φ a = ∑ i, φ (letE i) * ((1 : OC l) ⊗ₜ[ℤ_[l]] (PowerSeries.constantCoeff (a i)))
             + (c ⊗ₜ[ℤ_[l]] (1 : ↥(OL LL))) * φ a' := by
           refine (congrArg φ ha).trans ((φ.map_add _ _).trans ?_)
-          refine congrArg₂ (· + ·) ((map_sum φ _ _).trans (Finset.sum_congr rfl fun i _ => ?_)) ?_
-          · exact (φ.map_mul _ _).trans (congrArg (φ (letE i) * ·) (hO _))
+          congr 1
+          · refine (map_sum φ _ _).trans (Finset.sum_congr rfl fun i _ => ?_)
+            exact (φ.map_mul _ _).trans (congrArg (φ (letE i) * ·) (hO _))
           · exact (φ.map_mul _ _).trans (congrArg (· * φ a') hπ)
         rw [e, kap_add, kap_sum, kap_tmul_one_mul, h, pow_succ', mul_add, mul_assoc, add_assoc]
   intro a k

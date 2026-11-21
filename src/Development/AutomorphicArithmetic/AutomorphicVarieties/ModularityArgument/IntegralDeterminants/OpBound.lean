@@ -201,7 +201,7 @@ private theorem mv_apply {u : HeightOneSpectrum (𝓞 E)} (ψ : u.adicCompletion
     mv ψ lam e g = LinearMap.toMatrix e e (GlobalTheory.Branching.sqRep ℂ n lam (GeneralLinearGroup.map ψ (cLoc u g.1))) := rfl
 
 private theorem expand {V : Type} [Fintype V] {W : V → Type} [∀ v, AddCommGroup (W v)] [∀ v, Module ℂ (W v)]
-    {N : Type} [AddCommGroup N] [Module ℂ N] {d : V → ℕ} (f : MultilinearMap ℂ W N)
+    {N : Type} [AddCommGroup N] [Module ℂ N] {d : V → ℕ} (f : (∀ v, W v) →ₘₗ[ℂ] N)
     (e : ∀ v, Module.Basis (Fin (d v)) ℂ (W v)) (T : ∀ v, W v →ₗ[ℂ] W v) (i : ∀ v, Fin (d v)) :
     f (fun v => T v (e v (i v))) =
       ∑ j : ∀ v, Fin (d v), (∏ v, LinearMap.toMatrix (e v) (e v) (T v) (j v) (i v)) • f (fun v => e v (j v)) := by
@@ -250,7 +250,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 private theorem F_ne {V : Type} [Fintype V] {lamv : V → DomWeight n} {φ : V → (E →+* ℂ)} {d : V → ℕ}
     (e : ∀ v, Module.Basis (Fin (d v)) ℂ (nablaSq ℂ n (lamv v)))
-    (f : MultilinearMap ℂ (fun v => nablaSq ℂ n (lamv v)) (UA E n → ℂ)) (hf0 : f ≠ 0)
+    (f : (∀ v, nablaSq ℂ n (lamv v)) →ₘₗ[ℂ] (UA E n → ℂ)) (hf0 : f ≠ 0)
     (hinf : ∀ g ∈ infU E n, ∀ x, f (fun v => GlobalTheory.Branching.sqRep ℂ n (lamv v) (cEmb (φ v) g) (x v)) = RU E n g (f x)) :
     (fun (g : finU (E := E) (n := n)) (i : ∀ v, Fin (d v)) => f (fun v => e v (i v)) g.1) ≠ 0 := by
   intro h
@@ -272,7 +272,7 @@ private theorem F_aut {V : Type} [Fintype V] {lamv : V → DomWeight n} {φ : V 
     {u : V → HeightOneSpectrum (𝓞 E)} (ψ : ∀ v, (u v).adicCompletion E →+* ℂ)
     (hψ : ∀ v x, ψ v (algebraMap E _ x) = φ v x) {d : V → ℕ} [DecidableEq (∀ v, Fin (d v))]
     (e : ∀ v, Module.Basis (Fin (d v)) ℂ (nablaSq ℂ n (lamv v)))
-    (f : MultilinearMap ℂ (fun v => nablaSq ℂ n (lamv v)) (UA E n → ℂ))
+    (f : (∀ v, nablaSq ℂ n (lamv v)) →ₘₗ[ℂ] (UA E n → ℂ))
     (hleft : ∀ x, ∀ γ ∈ ratU E n, ∀ g, f x (γ * g) = f x g)
     (hinf : ∀ g ∈ infU E n, ∀ x, f (fun v => GlobalTheory.Branching.sqRep ℂ n (lamv v) (cEmb (φ v) g) (x v)) = RU E n g (f x))
     (γ : finU (E := E) (n := n)) (hγ : γ ∈ GlobalTheory.BCT.ratFinU E n) (g : finU (E := E) (n := n)) :

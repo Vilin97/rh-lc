@@ -141,6 +141,8 @@ theorem polyDeriv_thA_sum (hs : IsSympl X bas) {x : Frame X.Ψ r} (hx : x ∈ X.
   rw [← Jet.polyDeriv_sum_fun P D _ w _ fun i _ => ThetaHol.differentiable_thA idx hs (hf i) hx,
     thA_sum idx hs hx _ _ fun i => isSB_smul _ (hf i)]
   congr 1
+  ext z
+  simp only [Finset.sum_apply, UnAct.thA_smul, Pi.smul_apply, smul_eq_mul]
 
 theorem sum_polyDeriv (hs : IsSympl X bas) (hn : Even n) {x : Frame X.Ψ r} (hx : x ∈ X.dom) {σ Q J : Type}
     [Fintype Q] [Fintype J] {P : MvPolynomial σ ℂ} {d : ℕ} (hP : P.IsHomogeneous d) (D : σ → Fin n → Fin g → ℂ)

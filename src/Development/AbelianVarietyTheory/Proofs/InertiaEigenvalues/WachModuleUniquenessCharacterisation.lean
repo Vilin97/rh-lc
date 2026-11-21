@@ -260,7 +260,8 @@ theorem main : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf 
   haveI : Nontrivial ((HW l).W K s LL h).EE := ((HW l).W K s LL h).EE_inj.nontrivial
   have hr : r₁ = Module.finrank ↥(OL LL) ↥T.L.T := by
     have e := (hbc.basis b₁).indexEquiv ((((HW l).W K s LL h).N_base T hT).basis nb)
-    simpa using Fintype.card_congr e
+    set_option synthInstance.maxHeartbeats 200000 in
+      simpa using Fintype.card_congr e
   subst hr
   have hmat := fun r a m m' B G G₁ Pm P₁ P₁' =>
     GlobalTheory.NL.WachMat.X_pow_dvd_entry D HW l K s LL h r a m m' B G G₁ Pm P₁ P₁'

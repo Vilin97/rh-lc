@@ -46,37 +46,37 @@ theorem coord_comm_φ_γ : ∀ {G : Type} [Group G] [TopologicalSpace G] {Qp K�
   refine ⟨fun x => ?_, fun x => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [coord_apply, coord_apply, map_sum]
-    refine (sum_mulVec_smul jE (fun k => (b k : W.DD T))
-      (fun i => Ring.inverse (R.ι R.E) ^ S.M • (S.Φ i).map R.ι)
-      (fun i k => R.φE (x (i - 1) k))).trans ?_
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [W.φD_smul, ← hφE]
-    congr 1
-    have h1 : ∀ m, jE (fun i => (Ring.inverse (R.ι R.E) ^ S.M • (S.Φ i).map R.ι) m k) =
-        jE (fun _ => Ring.inverse (R.ι R.E)) ^ S.M *
-          algebraMap (LetA O n) W.EE (fun i => j (S.Φ i m k)) := by
-      intro m
-      rw [← hext, ← map_pow, ← map_mul]
-      rfl
-    have h2 : jE (fun _ => Ring.inverse (R.ι R.E)) *
-        algebraMap (LetA O n) W.EE (fun _ => j R.E) = 1 := by
-      rw [← hext (fun _ => R.E), ← map_mul, ← map_one jE]
+      refine (sum_mulVec_smul jE (fun k => (b k : W.DD T))
+        (fun i => Ring.inverse (R.ι R.E) ^ S.M • (S.Φ i).map R.ι)
+        (fun i k => R.φE (x (i - 1) k))).trans ?_
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [W.φD_smul, ← hφE]
       congr 1
-      funext i
-      exact Ring.inverse_mul_cancel _ (isUnit_ι_E R)
-    simp only [h1, mul_smul, algebraMap_smul]
-    rw [← Finset.smul_sum, ← hφ, ← algebraMap_smul W.EE ((fun _ => j R.E : LetA O n) ^ S.M),
-      smul_smul, map_pow, ← mul_pow, h2, one_pow,
-      one_smul]
+      have h1 : ∀ m, jE (fun i => (Ring.inverse (R.ι R.E) ^ S.M • (S.Φ i).map R.ι) m k) =
+          jE (fun _ => Ring.inverse (R.ι R.E)) ^ S.M *
+            algebraMap (LetA O n) W.EE (fun i => j (S.Φ i m k)) := by
+        intro m
+        rw [← hext, ← map_pow, ← map_mul]
+        rfl
+      have h2 : jE (fun _ => Ring.inverse (R.ι R.E)) *
+          algebraMap (LetA O n) W.EE (fun _ => j R.E) = 1 := by
+        rw [← hext (fun _ => R.E), ← map_mul, ← map_one jE]
+        congr 1
+        funext i
+        exact Ring.inverse_mul_cancel _ (isUnit_ι_E R)
+      simp only [h1, mul_smul, algebraMap_smul]
+      rw [← Finset.smul_sum, ← hφ, ← algebraMap_smul W.EE ((fun _ => j R.E : LetA O n) ^ S.M),
+        smul_smul, map_pow, ← mul_pow, h2, one_pow,
+        one_smul]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [coord_apply, coord_apply, map_sum]
-    refine (sum_mulVec_smul jE (fun k => (b k : W.DD T))
-      (fun i => (S.G i).map R.ι) (fun i k => R.γE (x i k))).trans ?_
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [W.γD_smul, ← hγE, hγ]
-    congr 1
-    refine Finset.sum_congr rfl fun m _ => ?_
-    rw [← algebraMap_smul W.EE (fun i => j (S.G i m k) : LetA O n), ← hext]
-    rfl
+      refine (sum_mulVec_smul jE (fun k => (b k : W.DD T))
+        (fun i => (S.G i).map R.ι) (fun i k => R.γE (x i k))).trans ?_
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [W.γD_smul, ← hγE, hγ]
+      congr 1
+      refine Finset.sum_congr rfl fun m _ => ?_
+      rw [← algebraMap_smul W.EE (fun i => j (S.G i m k) : LetA O n), ← hext]
+      rfl
 
 end GlobalTheory.WachTie

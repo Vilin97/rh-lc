@@ -117,7 +117,7 @@ theorem finite_case (h1 : LocalFiniteness) (h2 : LocalTateDuality) (h3 : LocalEu
     rw [LinearMap.sub_apply, sub_eq_zero, LinearMap.smul_apply, Nat.cast_smul_eq_nsmul] at hm
     exact hm
   have hd : Subsingleton (H0 ((twDual ((cycMod F Ω l r).comp (Dec (F := F) A).subtype) rho).comp (MonoidHom.id _))) := by
-    refine subsingleton_of_forall_eq 0 fun f => Subtype.ext (TDual.ext fun m => ?_)
+    refine subsingleton_of_forall_eq 0 fun f => Subtype.ext (LinearMap.ext fun m => ?_)
     obtain ⟨y, rfl⟩ := hsurj m
     have e := DFunLike.congr_fun (f.2 φ) (rho φ y)
     change ((cycMod F Ω l r φ : (ZMod (l ^ r))ˣ) : ZMod (l ^ r)) * f.1 (rho φ⁻¹ (rho φ y)) = f.1 (rho φ y) at e

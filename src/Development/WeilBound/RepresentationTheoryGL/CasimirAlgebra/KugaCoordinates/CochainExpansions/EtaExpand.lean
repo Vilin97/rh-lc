@@ -31,7 +31,7 @@ def vec (η : TV a M (Fin q ⊕ (Fin N ⊕ Fin N))) (I' I'' : Fin N → Fin a) :
   fun I => η (Sum.elim I (Sum.elim I' I''))
 
 def mm (tl : Fin N → (E →+* ℂ)) (η : TV a M (Fin q ⊕ (Fin N ⊕ Fin N))) :
-    MultilinearMap ℝ (fun _ : Fin N => Herm E a) (TV a M (Fin q)) :=
+    (Fin N → Herm E a) →ₘₗ[ℝ] TV a M (Fin q) :=
   ∑ I' : Fin N → Fin a, ∑ I'' : Fin N → Fin a,
     ((LinearMap.toSpanSingleton ℂ _ (vec η I' I'')).restrictScalars ℝ).compMultilinearMap
       ((MultilinearMap.mkPiAlgebra ℝ (Fin N) ℂ).compLinearMap fun k => ent (tl k) (I'' k) (I' k))

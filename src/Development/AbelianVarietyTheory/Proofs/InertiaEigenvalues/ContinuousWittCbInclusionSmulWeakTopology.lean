@@ -91,6 +91,9 @@ theorem continuous_inclR_io_smul : ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l}
   haveI : NeZero (Module.finrank ℚ_[l] ↥(K0 K)) := ⟨(finrank_maxUnramifiedSubfield_pos K).ne'⟩
   have hlin : ∀ f : (ZMod (Module.finrank ℚ_[l] ↥(K0 K)) → ↥(OL LL)) →ₗ[↥(OL LL)] TW (RW LL) T,
       Continuous f := fun f => GlobalTheory.T.continuous_linearMap_pi_of_continuous_coord bO (GlobalTheory.T.continuous_padicInt_smul_latB T b) f
+  haveI : IsScalarTower ↥(OL LL) (RW LL) (TW (RW LL) T) :=
+    TensorProduct.isScalarTower_left (R := ↥(OL LL)) (M := RW LL) (N := ↥T.L.T)
+      (R' := RW LL) (R'₂ := ↥(OL LL))
   exact continuous_io_smul_of E.tie.io (inclR LL) y _ E.tie.io_π (GlobalTheory.T.exists_pow_inclR_smul_mem' AI s T b y) hlin
 
 end GlobalTheory.WeakClosed

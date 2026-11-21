@@ -21,7 +21,10 @@ theorem map_mk_mem {n : ℕ} (f : On p n →ₐ[O0 p] Ω) (S : Subalgebra (O0 p)
   have hC : ∀ Q : Polynomial (O0 p), f (Ideal.Quotient.mk (towerIdeal p n) (C Q)) ∈ S := by
     intro Q
     induction Q using Polynomial.induction_on' with
-    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _)]; exact S.add_mem ha hb
+    | add a b ha hb =>
+      rw [(C : Polynomial (O0 p) →+* Polynomial (Polynomial (O0 p))).map_add,
+        (Ideal.Quotient.mk (towerIdeal p n)).map_add, map_add (f := f)]
+      exact S.add_mem ha hb
     | monomial j b =>
       rw [← C_mul_X_pow_eq_monomial, map_mul, map_mul, map_mul, map_pow, map_pow, map_pow]
       refine S.mul_mem ?_ (S.pow_mem hx j)
@@ -29,7 +32,9 @@ theorem map_mk_mem {n : ℕ} (f : On p n →ₐ[O0 p] Ω) (S : Subalgebra (O0 p)
       rw [e, f.commutes]
       exact S.algebraMap_mem b
   induction P using Polynomial.induction_on' with
-  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact S.add_mem ha hb
+  | add a b ha hb =>
+    rw [(Ideal.Quotient.mk (towerIdeal p n)).map_add, map_add (f := f)]
+    exact S.add_mem ha hb
   | monomial j Q =>
     rw [← C_mul_X_pow_eq_monomial, map_mul, map_mul, map_pow, map_pow]
     exact S.mul_mem (hC Q) (S.pow_mem hy j)

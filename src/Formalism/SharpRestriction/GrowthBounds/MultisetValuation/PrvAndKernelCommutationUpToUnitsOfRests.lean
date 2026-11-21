@@ -27,18 +27,13 @@ attribute [local instance] Formalism.MainNotions.G.GAtP.ringO Formalism.MainNoti
 
 variable {p : ℕ} [Fact p.Prime]
 
-theorem linD (X : Sys p) : LinD X where
-  Tt_add v i j F F' := by
-    have := (TtLin X v i j).map_add F F'
-    simp only [TtLin_apply] at this
-    exact this
-  Tt_smul v i j a F := by
-    have := (TtLin X v i j).map_smul a F
-    simp only [TtLin_apply] at this
-    exact this
-  yv_add v F F' := (yvLin X v).map_add F F'
-  yv_smul v a F := (yvLin X v).map_smul a F
-  yv_comm v v' F := funext fun i => Formalism.MainNotions.G.LatticeSystems.ef_yv_comm X.G.P v v' (F i)
+theorem linD (X : Sys p) : LinD X :=
+  { Tt_add := Tt_add X
+    Tt_smul := Tt_smul X
+    yv_add := fun v F F' => (yvLin X v).map_add F F'
+    yv_smul := fun v a F => (yvLin X v).map_smul a F
+    yv_comm := fun v v' F =>
+      funext fun i => Formalism.MainNotions.G.LatticeSystems.ef_yv_comm X.G.P v v' (F i) }
 
 variable {X : Sys p}
 
@@ -98,12 +93,12 @@ theorem prv_and_kernel_commutation_up_to_units_of_rests (D : Formalism.BasicNoti
   exact ⟨⟨form_valuation_of_bound D hF h3, R.S1, R.allPlacesExpansion, slopeEstimate_of_lemmaB_slopeLine D hF R.Ent R.U2, theorem_A_entries_of_corollary D R.Ent (restRat X) R.U2, R.U2, p2b, p3, p4,
     ramifiedLattice_of_chain_estimates D R.U2 p5D, p5D⟩, pAlt⟩
 
-theorem rests (D : Formalism.BasicNotions.D7) (Y : Pend X) (hA : admitted D X Y) : Rests D X Y where
-  S1 := theta_kernel_expansion D X Y hA
-  allPlacesExpansion := expansions_multiply D X Y hA
-  U2 := auxU_of_firstTheoremPlaceBound D (first_theorem_place_bound X Y D (restGc p) (eb_brJet X)) hA
-  Ent := restEnt_of X Y D (second_lemma_place_bound X Y D (restGc p) (eb_brJet X))
-    (hecke_place_bound X Y D (restGc p) (eb_brJet X)) hA
+theorem rests (D : Formalism.BasicNotions.D7) (Y : Pend X) (hA : admitted D X Y) : Rests D X Y :=
+  { S1 := theta_kernel_expansion D X Y hA
+    allPlacesExpansion := expansions_multiply D X Y hA
+    U2 := auxU_of_firstTheoremPlaceBound D (first_theorem_place_bound X Y D (restGc p) (eb_brJet X)) hA
+    Ent := restEnt_of X Y D (second_lemma_place_bound X Y D (restGc p) (eb_brJet X))
+      (hecke_place_bound X Y D (restGc p) (eb_brJet X)) hA }
 
 theorem packet_statements_hold (D : Formalism.BasicNotions.D7) (Y : Pend X) (hA : admitted D X Y) : Conclusion₂ D X Y :=
   (prv_and_kernel_commutation_up_to_units_of_rests D Y hA (rests D Y hA)).1

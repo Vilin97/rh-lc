@@ -35,8 +35,9 @@ def diagDec (d : HypDec S S₀ ρ) (l : Fin ρ → D.host.E) (hl : ∀ a, l a �
   e'e' := by rw [sandwich, d.e'e', Matrix.mul_zero, Matrix.zero_mul]
   e'e := by
     rw [sandwich, d.e'e, Matrix.mul_one, diagonal_conjTranspose, diagonal_mul_diagonal, ← diagonal_one]
-    congr 1
-    exact inv_mul_cancel₀ (hl a)
+    apply Matrix.diagonal_injective
+    funext a
+    simpa only [Pi.star_apply, star_inv₀, star_star] using inv_mul_cancel₀ (hl a)
   iso := d.iso
   i₀e := by rw [← Matrix.mul_assoc, d.i₀e, Matrix.zero_mul]
   i₀e' := by rw [← Matrix.mul_assoc, d.i₀e', Matrix.zero_mul]
@@ -153,7 +154,9 @@ theorem getD_all {S : Arrow T → Type} (P : ∀ a, S a → Prop) (t : T) (i : �
     unfold getD
     split_ifs with hj
     · exact getD_all P t i n _ hs.2 j hj
-    · obtain rfl : n = j := by omega
+    · have hnj : n = j := by omega
+      subst j
+      change P (.down t i n) (splitFam (downPath t i n) d).1.2
       exact hs.1.2
 
 end GlobalTheory.RowChain

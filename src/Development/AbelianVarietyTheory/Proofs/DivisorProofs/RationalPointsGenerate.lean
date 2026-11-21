@@ -239,7 +239,7 @@ theorem rational_points_generate : ∀ (D : D7) (V : HSp D) (c : CoefA V), V.IsP
     have htr : Continuous fun h : GA D V => LinearMap.trace ℂ c.W (c.ρ h) := by
       let b := Module.finBasis ℂ c.W
       simp only [LinearMap.trace_eq_matrix_trace ℂ b, Matrix.trace, Matrix.diag, LinearMap.toMatrix_apply]
-      exact continuous_finset_sum _ fun i _ => (b.coord i).continuous_of_finiteDimensional.comp (hcont (b i))
+      exact continuous_finsetSum _ fun i _ => (b.coord i).continuous_of_finiteDimensional.comp (hcont (b i))
     have hc : Continuous fun x : HA (Ainf D.host.F) D.sp.cm.sig V.gram => e.symm (x, 1) :=
       e.symm.continuous.comp (continuous_id.prodMk continuous_const)
     have key := closure_preimage_eq_top φ hd {x | LinearMap.trace ℂ c.W (c.ρ (e.symm (x, 1))) ≠ 0}

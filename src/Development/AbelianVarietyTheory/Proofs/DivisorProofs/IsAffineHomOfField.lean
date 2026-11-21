@@ -49,7 +49,11 @@ theorem le_preimage_of_red {Y : Scheme.{0}} {B : Type} [CommRing B] {x : Sp B �
 
 theorem valR_resG {Z : Scheme.{0}} {S : Type} [CommRing S] (z : Sp S ⟶ Z) {U V : Z.Opens} (e : V ≤ U)
     (h : ⊤ ≤ z ⁻¹ᵁ V) (a : Γ(Z, U)) : valR z V (resG Z e a) = valR z U a := by
-  rw [valR_eq_ev _ _ h, valR_eq_ev _ _ (GlobalTheory.FlagMod.le_preimage_mono e h), GlobalTheory.FlagMod.ev_res]
+  calc
+    valR z V (resG Z e a) = GlobalTheory.FlagMod.ev z V h (resG Z e a) := valR_eq_ev z V h _
+    _ = GlobalTheory.FlagMod.ev z U (GlobalTheory.FlagMod.le_preimage_mono e h) a :=
+      GlobalTheory.FlagMod.ev_res z e h _ a
+    _ = valR z U a := (valR_eq_ev z U _ a).symm
 
 theorem isAffineHom_of_field {K : Type} [Field K] {X : Scheme.{0}} (x0 : Sp K ⟶ X) : IsAffineHom x0 := by
   refine ⟨fun U _ => ?_⟩

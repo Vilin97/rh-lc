@@ -62,9 +62,9 @@ theorem holFn_integral : ∀ (n : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι]
     rfl
 
   have hcc : ContinuousOn cc (frDoms Hm q) := by
-    apply continuousOn_finset_prod
+    apply continuousOn_finsetProd _
     intro τ _
-    apply continuousOn_finset_prod
+    apply continuousOn_finsetProd _
     intro a _
     have h1 : ContinuousOn (fun y : ι → Fin n → Fin n → ℂ => β τ (y τ)) (frDoms Hm q) :=
       (hβc τ).continuousOn.comp (continuous_apply τ).continuousOn (fun y hy => hy τ)

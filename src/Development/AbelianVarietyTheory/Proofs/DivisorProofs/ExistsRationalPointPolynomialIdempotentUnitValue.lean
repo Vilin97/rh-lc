@@ -66,13 +66,13 @@ theorem eps_eq_sum (S : Finset (HeightOneSpectrum (𝓞 F))) :
   refine hext _ _ ?_ (fin_ext fun u => ?_)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_add (f := _), map_sum]
-    change (1 : Ainf F) = 1 + ∑ v ∈ S, (0 : Ainf F)
-    rw [Finset.sum_const_zero, add_zero]
+      change (1 : Ainf F) = 1 + ∑ v ∈ S, (0 : Ainf F)
+      rw [Finset.sum_const_zero, add_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_add (f := _), map_sum, map_add (f := _), map_sum]
-    change evalV F u (ind S) = evalV F u 0 + ∑ v ∈ S, evalV F u (ind {v})
-    simp_rw [ev_ind, Finset.mem_singleton, map_zero, zero_add]
-    rw [Finset.sum_ite_eq]
+      change evalV F u (ind S) = evalV F u 0 + ∑ v ∈ S, evalV F u (ind {v})
+      simp_rw [ev_ind, Finset.mem_singleton, map_zero, zero_add]
+      rw [Finset.sum_ite_eq]
 
 variable {E : Type} [Field E] [Algebra F E] [FiniteDimensional F E]
 

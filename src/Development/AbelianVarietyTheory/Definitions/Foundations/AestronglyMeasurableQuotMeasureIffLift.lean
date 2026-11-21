@@ -231,7 +231,7 @@ theorem hasCompactSupport_starFn {f : G → ℂ} (hf : HasCompactSupport f) : Ha
 
 theorem finite_mem_compact [T2Space G] [DiscreteTopology Γ] {C : Set G} (hC : IsCompact C) :
     {γ : Γ | (γ : G) ∈ C}.Finite :=
-  ((Subgroup.isClosed_of_discrete (H := Γ)).isClosedEmbedding_subtypeVal.isCompact_preimage hC).finite_of_discrete
+  (Γ.isClosed_of_discreteTopology.isClosedEmbedding_subtypeVal.isCompact_preimage hC).finite_of_discrete
 
 theorem finite_support_kernel [T2Space G] [DiscreteTopology Γ] {f : G → ℂ} (hf : HasCompactSupport f) (x y : G) :
     (Function.support fun γ : Γ => f (x⁻¹ * γ * y)).Finite :=
@@ -285,9 +285,9 @@ theorem sec_eq {q : Quot Γ} {x : G} (hx : x ∈ stdDom Γ) (e : mk Γ x = q) : 
 omit [TopologicalSpace G] [IsTopologicalGroup G] [SecondCountableTopology G] [BorelSpace G] [DiscreteTopology Γ] in
 theorem measurable_mk : Measurable (mk Γ) := measurable_quotient_mk''
 
-theorem measurableEmbedding_sec : MeasurableEmbedding (sec Γ) where
-  injective := Function.LeftInverse.injective mk_sec
-  measurable := fun s hs => by
+theorem measurableEmbedding_sec : MeasurableEmbedding (sec Γ) := by
+  refine ⟨Function.LeftInverse.injective mk_sec, ?_, ?_⟩
+  · intro s hs
     have : mk Γ ⁻¹' (sec Γ ⁻¹' s) = ⋃ γ : Γ, (fun x => (γ : G) * x) ⁻¹' (s ∩ stdDom Γ) := by
       ext x
       simp only [mem_preimage, mem_iUnion, mem_inter_iff]
@@ -297,7 +297,7 @@ theorem measurableEmbedding_sec : MeasurableEmbedding (sec Γ) where
     change MeasurableSet (mk Γ ⁻¹' (sec Γ ⁻¹' s))
     rw [this]
     exact .iUnion fun γ => measurable_const_mul _ (hs.inter (measurableSet_stdDom Γ))
-  measurableSet_image' := fun s hs => by
+  · intro s hs
     have : sec Γ '' s = mk Γ ⁻¹' s ∩ stdDom Γ := by
       ext x
       exact ⟨by rintro ⟨q, h, rfl⟩; exact ⟨by simpa using h, sec_mem q⟩, fun h => ⟨_, h.1, sec_eq h.2 rfl⟩⟩
@@ -324,7 +324,7 @@ instance [SigmaFinite μ] : SigmaFinite (quotMeasure Γ μ) :=
     (by rw [measurePreserving_sec.map_eq]; infer_instance)
 
 theorem quotMeasure_smul (c : ℝ≥0∞) : quotMeasure Γ (c • μ) = c • quotMeasure Γ μ := by
-  rw [quotMeasure, Measure.restrict_smul, Measure.map_smul, quotMeasure]
+  rw [quotMeasure, Measure.restrict_smul, Measure.map_smul c measurable_mk.aemeasurable, quotMeasure]
 
 variable [μ.IsMulLeftInvariant]
 
@@ -357,8 +357,8 @@ theorem ae_quotMeasure_iff {p : Quot Γ → Prop} : (∀ᵐ q ∂quotMeasure Γ 
     exact iff_of_eq (congrArg (¬ p ·) (mk_mul γ⁻¹ x))
   · rwa [← Measure.restrict_apply' (measurableSet_stdDom Γ)]
 
-theorem quasiMeasurePreserving_mk : Measure.QuasiMeasurePreserving (mk Γ) μ (quotMeasure Γ μ) :=
-  ⟨measurable_mk, .mk fun s hs h => by
+theorem quasiMeasurePreserving_mk : QuasiMeasurePreserving (mk Γ) μ (quotMeasure Γ μ) :=
+  ⟨measurable_mk.aemeasurable, .mk fun s hs h => by
     rw [Measure.map_apply measurable_mk hs]
     exact measure_eq_zero_iff_ae_notMem.2 (ae_quotMeasure_iff.1 (measure_eq_zero_iff_ae_notMem.1 h))⟩
 
@@ -388,8 +388,8 @@ theorem aestronglyMeasurable_quotMeasure_iff_lift {F : Quot Γ → ℂ} :
 theorem memLp_quotMeasure_iff (h : IsFundamentalDomain Γ 𝓕 μ) {F : Quot Γ → ℂ} {p : ℝ≥0∞} :
     MemLp F p (quotMeasure Γ μ) ↔ MemLp (lift Γ F) p (μ.restrict 𝓕) :=
   ⟨fun h' => h'.comp_measurePreserving (measurePreserving_mk h), fun h' => by
-    have hm := (aestronglyMeasurable_quotMeasure_iff h).2 h'.1
-    exact ⟨hm, (eLpNorm_comp_measurePreserving hm (measurePreserving_mk h)).symm.trans_lt h'.2⟩⟩
+    have hm := (aestronglyMeasurable_quotMeasure_iff h).2 h'.aestronglyMeasurable
+    exact memLp_iff.2 <| (eLpNorm_comp_measurePreserving hm (measurePreserving_mk h)).symm.trans_lt (memLp_iff.1 h')⟩
 
 theorem lintegral_eq_lintegral_tsum {f : G → ℝ≥0∞} (hf : AEMeasurable f μ) :
     ∫⁻ g, f g ∂μ = ∫⁻ q, ∑' γ : Γ, f (γ * q.out) ∂quotMeasure Γ μ := by

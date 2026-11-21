@@ -50,7 +50,8 @@ theorem IsSncChart.neg_one_lt_formOrd_sub_sum : ∀ (k : Type) [Field k] [CharZe
   have hle : (∀ j ∈ J, a j ≤ 1) → ∀ j ∈ J, a j * (E.ord (u j) : ℚ) ≤ E.ord (u j) :=
     fun ha j hj => by nlinarith [ha j hj, hnq j hj]
   refine ⟨fun ha => ?_, fun ha => ?_⟩
-  · by_cases hz : ∀ j ∈ J, (E.ord (u j) : ℚ) = 0
+  · change -1 < (F : ℚ) - ∑ j ∈ J, a j * E.ord (u j)
+    by_cases hz : ∀ j ∈ J, (E.ord (u j) : ℚ) = 0
     · rw [Finset.sum_eq_zero fun j hj => by rw [hz j hj, mul_zero]]
       linarith
     · push Not at hz
@@ -59,7 +60,8 @@ theorem IsSncChart.neg_one_lt_formOrd_sub_sum : ∀ (k : Type) [Field k] [CharZe
       have := Finset.sum_lt_sum (hle fun j hj => (ha j hj).le)
         ⟨j, hj, by nlinarith [ha j hj]⟩
       linarith
-  · have := Finset.sum_le_sum (hle ha)
+  · change -1 ≤ (F : ℚ) - ∑ j ∈ J, a j * E.ord (u j)
+    have := Finset.sum_le_sum (hle ha)
     linarith
 
 end GlobalTheory.Discrepancy

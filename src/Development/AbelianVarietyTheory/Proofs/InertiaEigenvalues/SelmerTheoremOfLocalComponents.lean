@@ -31,11 +31,11 @@ theorem exists_pow_le_map (R S : Type) [CommRing R] [IsLocalRing R] [IsNoetheria
     have h2 : maximalIdeal R = p.comap (algebraMap R S) :=
       (maximalIdeal.isMaximal R).eq_of_le (Ideal.IsPrime.ne_top inferInstance) (Ideal.map_le_iff_le_comap.1 hp)
     rw [← h2]; infer_instance
-  exact (eq_maximalIdeal (Ideal.isMaximal_of_isIntegral_of_isMaximal_comap p h1)).ge
+  exact (eq_maximalIdeal (Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := R) p h1)).ge
 
 theorem map_le_maximalIdeal (R S : Type) [CommRing R] [IsLocalRing R] [CommRing S] [IsLocalRing S]
     [Algebra R S] [Module.Finite R S] : (maximalIdeal R).map (algebraMap R S) ≤ maximalIdeal S :=
-  Ideal.map_le_iff_le_comap.2 (eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _)).ge
+  Ideal.map_le_iff_le_comap.2 (eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := R) (maximalIdeal S))).ge
 
 theorem complete_of_finite (R S : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing R]
     [IsAdicComplete (maximalIdeal R) R] [CommRing S] [IsLocalRing S]

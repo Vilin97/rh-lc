@@ -81,7 +81,7 @@ theorem Cj.det (hf : Function.Injective f) (h : Cj f P a a') : a'.det = a.det :=
 
 theorem Cj.add (h : Cj f P a a') (h' : Cj f P b b') : Cj f P (a + b) (a' + b') := by
   unfold Cj at *
-  rw [Matrix.map_add _ f.map_add (f := _), Matrix.map_add _ f.map_add (f := _), mul_add, add_mul, h, h']
+  rw [Matrix.map_add f f.map_add, Matrix.map_add f f.map_add, mul_add, add_mul, h, h']
 
 theorem Cj.toPoly (h : Cj f P a a') :
     Cj (Polynomial.mapRingHom f) (Matrix.GeneralLinearGroup.map (Polynomial.C (R := K)) P)
@@ -181,7 +181,7 @@ theorem Act.sum {ι : Type} (s : Finset ι) (c : ι → A) (M : ι → Matrix (F
   | empty => ext <;> simp
   | insert k s hk ih =>
     simp only [Finset.sum_insert hk]
-    rw [Matrix.map_add _ f.map_add (f := _), Matrix.map_add _ f.map_add (f := _), Matrix.add_mulVec, Matrix.add_mulVec, map_add (f := _), ih,
+    rw [Matrix.map_add f f.map_add, Matrix.map_add f f.map_add, Matrix.add_mulVec, Matrix.add_mulVec, map_add (f := _), ih,
       map_smul_eq, map_smul_eq, Matrix.smul_mulVec, Matrix.smul_mulVec, map_smul, h k u]
     refine Prod.ext rfl ?_
     funext j

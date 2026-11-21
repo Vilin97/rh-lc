@@ -42,8 +42,9 @@ theorem weight_on_datum : ∀ (D : D7) (T : Core D), T.Q.Pins → ∀ (j : ℕ),
     rw [hp, hq]
     simp only [Ranks.sigW, Ranks.r]; omega
   have hf : 1 ≤ D.R.f := by
+    have := D.R.m_le_f
     unfold Ranks.f Ranks.n
-    exact Nat.succ_le_of_lt (by positivity)
+    omega
   have hp0 : 0 < (D.R.sigW j).1 := by
     simp only [Ranks.sigW]; omega
   have hlast : w.LastPos → ∀ t, 1 ≤ w.aP t ⟨(D.R.sigW j).1 - 1, by omega⟩ := fun hw t =>

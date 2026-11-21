@@ -636,7 +636,7 @@ def ActRatOf (S : StepIn M i hi G) (e : D.what₂.LL →+* G.Kf) : Prop :=
 theorem actRat_of_core {S : StepIn M i hi G} {e : D.what₂.LL →+* G.Kf} {β : S.Ch} (H : S.Core e β) (hS : BlockRationalityField)
     (a : S.cmpt β) (L : (Hc S β).P.Tup) : ActRat (Hc S β) e a L := by
   intro γ _ Q hQ
-  obtain ⟨κ, hκ⟩ := (H.toHyp hS).away a γ
+  obtain ⟨κ, hκ⟩ := awayEx_of H.good (S.K β).lev H.gam a γ
   obtain ⟨r, -, hr⟩ := H.chi a γ κ hκ
   have hχ : algebraMap G.O G.Kf (((Hc S β).lev a).χ γ : G.O) = e r⁻¹ := by
     rw [map_inv₀]
@@ -1134,6 +1134,8 @@ theorem gen_mem (G : Tau → Matrix (Fin (P.m + 1)) (Fin (P.m + 1)) ℂ) (M : Ta
   have h1 := GlobalTheory.HP.foValC_tr lam (fun τ => (M τ : Matrix (Fin (P.m + 1)) (Fin (P.m + 1)) ℂ)) hu h0
   rw [hX, hM, key, hK]
   convert h1 using 1
+  funext y
+  simp only [fnOf, LinearMap.coe_mk, AddHom.coe_mk, foTr, Pi.one_apply, Matrix.one_mul]
 
 end Gen
 
@@ -1154,7 +1156,7 @@ theorem evC_le (h : P.m + 1 = n) (pos : (Σ v : Fin P.nV, Fin (P.n' v)) ≃ Tau)
     obtain ⟨f, hf, rfl⟩ := hX
     exact gen_mem P pos G M lam hw f hf
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 end Main
@@ -1655,7 +1657,7 @@ structure LatTies (w : D.what₂.places.Pl) (Fo : FormsIn M (j + 1) hj) (β : Fo
 set_option maxHeartbeats 8000000 in
 theorem latIn_of {Fo : FormsIn M (j + 1) hj} {Lc : LocIn X u w hg Lv j Fo.Ch}
     {pos : (Σ v : Fin (Fl.Pj (j + 1)).nV, Fin ((Fl.Pj (j + 1)).n' v)) ≃ D.what₂.Tau} {β : Fo.Ch}
-    (hfr : FrRatJ (Lc.t β) Lc.B) (H : LatTies hj w Fo β (Lc.Lb β)) : LatIn (stepInOf hj Fo Lc pos) w β where
+    (hfr : FrRatJ (Lc.t β) Lc.B) (H : LatTies hj w Fo β (Lc.Lb β)) : LatIn (stepInOf hj Fo Lc pos) w β := {
   prime := hg.1
   resChar := rfl
   siteGood_prime_torsion := H.siteGood_prime_torsion
@@ -1664,6 +1666,7 @@ theorem latIn_of {Fo : FormsIn M (j + 1) hj} {Lc : LocIn X u w hg Lv j Fo.Ch}
     Lc.B ((Lc.t β).fr _ ((X.g u w hg).pl v).2) (hfr _ _) ((Lc.t β).fr_lat _ ((X.g u w hg).pl v).2) (Fo.K β).lev.Lb H.Lb_eq t
   lat := H.lat
   chi := H.chi
+}
 
 
 set_option maxHeartbeats 8000000 in
@@ -1671,8 +1674,39 @@ theorem valIntN_rec {Fo : FormsIn M (j + 1) hj} {Lc : LocIn X u w hg Lv j Fo.Ch}
     {pos : (Σ v : Fin (Fl.Pj (j + 1)).nV, Fin ((Fl.Pj (j + 1)).n' v)) ≃ D.what₂.Tau} (e : D.what₂.LL →+* (D.gat u w hg).Kf)
     (HT : ∀ β, LocTies hj Fo Lc pos e β) (hS : BlockRationalityField) (hfrac : IsFractionRing (D.gat u w hg).O (D.gat u w hg).Kf)
     (hR0 : ∀ x, x ∈ intW D.what₂.places w ↔ e x ∈ Set.range (algebraMap (D.gat u w hg).O (D.gat u w hg).Kf))
-    (HL : ∀ β, LatTies hj w Fo β (Lc.Lb β)) : (stepInOf hj Fo Lc pos).ValIntN e w :=
-  valIntN_of (stepInOf hj Fo Lc pos) e w (fun β => core_of hj (HT β)) hS hfrac hR0
+    (HL : ∀ β, LatTies hj w Fo β (Lc.Lb β)) : (stepInOf hj Fo Lc pos).ValIntN e w := by
+  have core (β : Fo.Ch) : (stepInOf hj Fo Lc pos).Core e β := by
+    let ties := HT β
+    have good : LocGood (sigD D) (gramN D (j + 1) hj) (locJ hj (Lc.t β) Lc.B) := {
+      herm := isHerm_re (rankN D (j + 1) hj) _ (D.sp.X (j + 1)).gram _
+        (gramN_apply D (j + 1) hj) (gram_herm D.sp.cm (D.sp.X (j + 1)))
+      det := det_re (rankN D (j + 1) hj) (D.sp.X (j + 1)).gram _
+        (gramN_apply D (j + 1) hj) (gram_det_unit D.sp.cm (D.sp.X (j + 1)))
+      sig := fun v x => (X.g u w hg).spl_sig _ ((X.g u w hg).pl v).2 x
+      yG_mem := fun a => reGL_mem_UPts (rankN D (j + 1) hj) D.sp.cm.sig (D.sp.X (j + 1)).gram _
+        (gramN_apply D (j + 1) hj) _ _ ((Lc.t β).yG a).2
+      yG_p := fun a v => by
+        have hy := (Lc.t β).yG_p a _ ((X.g u w hg).pl v).2
+        have hbc := bc_reGL (rankN D (j + 1) hj) (prV (E := D.host.E) ((X.g u w hg).pl v).1)
+          ((Lc.t β).yG a).1
+        rw [hy, map_one] at hbc
+        exact hbc }
+    exact {
+      good := good
+      int := locInt_locJ hj (Lc.t β) Lc.B
+      hypP := locHyp_locJ hj (Lc.t β) Lc.B (Fo.K β).lev ties.sameU ties.frRat ties.hypT
+      bad_p := ties.bad_p
+      comp := comp_locJ hj (Lc.t β) Lc.B (Fo.K β).lev ties.sameU
+      gam := gam_locJ hj (Lc.t β) Lc.B (Fo.K β).lev ties.sameU
+      gamU := locJ_UJ hj (Lc.t β) Lc.B
+      std := ties.std
+      actB := locJ_actB hj (Lc.t β) Lc.B ties.frRat
+      pos_emb := ties.pos_emb
+      wt := ties.wt
+      chi := chi_locJ hj (Lc.t β) Lc.B (Fo.K β).lev e rfl ties.psi
+      chiRat := ties.chiRat
+      chRat := ties.chRat }
+  exact valIntN_of (stepInOf hj Fo Lc pos) e w core hS hfrac hR0
     (fun β => latIn_of hj (HT β).frRat (HL β))
 
 end GlobalTheory.HP
@@ -2019,7 +2053,7 @@ theorem StepTies.chi (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) (κ : (Fo.K β).l
 
 
 set_option maxHeartbeats 4000000 in
-theorem StepTies.ties (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LocTiesR hj Fo Lc (c.embW u w h) β where
+theorem StepTies.ties (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LocTiesR hj Fo Lc (c.embW u w h) β := {
   frRat := S.frRat β
   sameU := S.sameU β
   hypT := S.hypT β
@@ -2028,28 +2062,47 @@ theorem StepTies.ties (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LocTiesR hj Fo
   psi := S.psi β
   chiRat := fun κ => let ⟨r, _, _, hr⟩ := S.chi β κ; ⟨r, hr⟩
   chRat := S.chRat β
+}
 
-theorem StepTies.lat (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LatTies hj w Fo β (Lc.Lb β) where
+theorem StepTies.lat (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LatTies hj w Fo β (Lc.Lb β) := {
   siteGood_prime_torsion := S.siteGood_prime_torsion
   Lb_eq := S.Lb_eq β
   lat := fun cl => isLattice_chart (Fo.K β) cl
   chi := S.chi β
+}
 
 theorem StepTies.core (S : StepTies hj Fo Lc Gt c) (K : CmpTied D X0 T Gt c) (ht : Fl.t = D.R.t) (hF : FillTie Gt u w h Fl) (β : Fo.Ch) :
     (stepInOf hj Fo Lc (Gt.gat_pos u w h)).Core (c.embW u w h) β :=
   core_of_R hj K ht hF (S.ties β)
 
 theorem StepTies.valIntN (S : StepTies hj Fo Lc Gt c) (K : CmpTied D X0 T Gt c) (ht : Fl.t = D.R.t) (hF : FillTie Gt u w h Fl) :
-    (stepInOf hj Fo Lc (Gt.gat_pos u w h)).ValIntN (c.embW u w h) w :=
-  valIntN_rec hj (c.embW u w h) (fun β => locTies_of hj K ht hF (S.ties β)) Formalism.L2.G.RelativeIndexFlags.blockRationality_holds
+    (stepInOf hj Fo Lc (Gt.gat_pos u w h)).ValIntN (c.embW u w h) w := by
+  have ties (β : Fo.Ch) : LocTies hj Fo Lc (Gt.gat_pos u w h) (c.embW u w h) β := by
+    exact {
+      frRat := S.frRat β
+      sameU := S.sameU β
+      hypT := S.hypT β
+      bad_p := S.bad_p
+      std := S.std
+      pos_emb := fun v s x => locJ_pos_emb hj (Lc.t β) Lc.B K v s x
+      wt := StepIn.wt_of (M := M) Gt w h Lv ht hF j hj
+        (stepInOf hj Fo Lc (Gt.gat_pos u w h)) rfl β
+      psi := S.psi β
+      chiRat := (S.ties β).chiRat
+      chRat := S.chRat β }
+  exact valIntN_rec hj (c.embW u w h) ties Formalism.L2.G.RelativeIndexFlags.blockRationality_holds
     ((D.gat u w h).P.setting (plc Gt u w h)).frac_O (fun x => c.embW_int u w h x) S.lat
 
 theorem StepTies.twUnit (S : StepTies hj Fo Lc Gt c) (K : CmpTied D X0 T Gt c) (ht : Fl.t = D.R.t) (hF : FillTie Gt u w h Fl) (β : Fo.Ch) :
     (stepInOf hj Fo Lc (Gt.gat_pos u w h)).TwUnit w β :=
   twUnit_of (stepInOf hj Fo Lc (Gt.gat_pos u w h)) (c.embW u w h) w β (S.core K ht hF β) (fun x => c.embW_int u w h x) (latIn_of hj (S.ties β).frRat (S.lat β))
 
-theorem StepTies.chX (S : StepTies hj Fo Lc Gt c) : ChX (stepInOf hj Fo Lc (Gt.gat_pos u w h)) :=
-  chX_stepInOf hj Fo Lc (Gt.gat_pos u w h) (fun β => (S.ties β).sameU) (fun β => (S.ties β).frRat) S.hypC
+theorem StepTies.chX (S : StepTies hj Fo Lc Gt c) : ChX (stepInOf hj Fo Lc (Gt.gat_pos u w h)) := {
+  hypC := fun (β : Fo.Ch) => locHypC_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) (S.frRat β) (S.hypC β)
+  inj := fun (β : Fo.Ch) a => gamI_inj_locJ hj (Lc.t β) Lc.B a
+  onto := fun (β : Fo.Ch) a => gamOnto_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) a
+  cinj := fun (β : Fo.Ch) => compInj_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β)
+}
 
 end Step
 

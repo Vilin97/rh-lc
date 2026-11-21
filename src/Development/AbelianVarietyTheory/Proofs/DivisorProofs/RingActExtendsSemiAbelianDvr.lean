@@ -44,11 +44,11 @@ theorem ringAct_extends_semiAbelian_dvr : ∀ (W L : Type) [CommRing W] [IsDomai
   refine ⟨f, ⟨fun x => ?_, ?_, fun x y => ?_, fun x y => ?_⟩, hf⟩
   · have := hh x
     exact isMonHom_of_isGrpPullback hφ hφ (act x) (f x) (hf x)
-  · refine over_hom_ext_of_isPullback hφ.1 ?_
+  · refine GlobalTheory.ExtUnique.over_hom_ext_of_isPullback hφ.1 ?_
     rw [← hf, h1, Over.id_left, Over.id_left, Category.id_comp, Category.comp_id]
-  · refine over_hom_ext_of_isPullback hφ.1 ?_
+  · refine GlobalTheory.ExtUnique.over_hom_ext_of_isPullback hφ.1 ?_
     rw [← hf, hmul, Over.comp_left, Over.comp_left, Category.assoc, hf, ← Category.assoc, hf, Category.assoc]
-  · refine over_hom_ext_of_isPullback hφ.1 ?_
+  · refine GlobalTheory.ExtUnique.over_hom_ext_of_isPullback hφ.1 ?_
     let φ₀ : Over.mk (A.hom ≫ spMap (algebraMap W L)) ⟶ G := Over.homMk φ hφ.1.w
     have h := hφ.2 A (act x) (act y) (φ₀ ≫ f x) (φ₀ ≫ f y) (hf x).symm (hf y).symm
     rw [← MonObj.comp_mul] at h

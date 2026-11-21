@@ -185,7 +185,7 @@ theorem energy_glue_le : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] [T2Space 
         refine Finset.sum_le_sum fun b _ => ?_
         refine (setLIntegral_mono' measurableSet_ball (hpt b)).trans ?_
         rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top,
-          lintegral_finset_sum' _ (fun a _ => hfm b a)]
+          lintegral_finsetSum' _ (fun a _ => hfm b a)]
         refine mul_le_mul_right (Finset.sum_le_sum fun a _ => ?_) _
         refine le_trans (setLIntegral_le_lintegral _ _) ?_
         rw [lintegral_indicator (hWo b a).measurableSet]

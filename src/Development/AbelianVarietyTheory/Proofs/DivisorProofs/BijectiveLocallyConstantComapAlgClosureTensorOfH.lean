@@ -61,7 +61,7 @@ theorem map_maximalIdeal_le_of_isIntegral (A B : Type*) [CommRing A] [IsLocalRin
     (maximalIdeal A).map (algebraMap A B) ≤ M := by
   rw [Ideal.map_le_iff_le_comap]
   have : (M.comap (algebraMap A B)).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal M
   exact (IsLocalRing.eq_maximalIdeal this).ge
 
 theorem exists_isIdempotentElem_lift_quotient_of_isIntegral (A B : Type) [CommRing A]

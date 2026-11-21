@@ -99,7 +99,7 @@ theorem greenbergWiles_pair : PoitouTateTotallyComplex → LocalFiniteness → G
   have hfin : Finite (TDual (ZMod (l ^ n)) W) := GlobalTheory.DualSide.finite_TDual
   have hfin' : Finite (TDual (ZMod (l ^ n)) W') := GlobalTheory.DualSide.finite_TDual
   let f : W' →+ TDual (ZMod (l ^ n)) W := AddMonoidHom.mk'
-    (fun y => TDual.mk ((P.flip y).toZModLinearMap (l ^ n))) (fun y y' => by ext x; simp)
+    (fun y => TDual.mk ((P.flip y).toZModLinearMap (l ^ n))) (fun y y' => by refine DFunLike.ext _ _ fun x => ?_; simp)
   have hf : ∀ y x, f y x = P x y := fun _ _ => rfl
   have inj : Function.Injective f := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -120,7 +120,7 @@ theorem greenbergWiles_pair : PoitouTateTotallyComplex → LocalFiniteness → G
     AddEquiv.ofBijective f (inj.bijective_of_nat_card_le (c1 ▸ c3))
   have he : ∀ y x, e y x = P x y := fun _ _ => rfl
   have hee : ∀ g y, e (ρ' g y) = twDual μ ρS (toGS Ω _ g) (e y) := fun g y => by
-    ext x
+    refine DFunLike.ext _ _ fun x => ?_
     rw [twDual_apply, he, he, ← map_inv, ← hd, ← hμ', ← hP, ← Module.End.mul_apply, ← map_mul,
       mul_inv_cancel, map_one, Module.End.one_apply]
   have hex := fun v : S => exists_transport_cond (ρ.comp (Dec (F := F) (A.1 v.1)).subtype)

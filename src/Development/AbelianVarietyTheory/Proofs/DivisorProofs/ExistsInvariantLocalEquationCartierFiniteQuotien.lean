@@ -16,7 +16,7 @@ open GlobalTheory.FlagMod (FlagCover)
 open GlobalTheory.CompHt (hodgeWt)
 open GlobalTheory.LevDesc (TypeFrame grpHR grpGHR levDet secRing move)
 open GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms (LevelAut)
-open GlobalTheory.OrbitSep
+open GlobalTheory.OrbitSep (fnAct fromSpecResidueField_comp_eq_of_fixes)
 
 set_option autoImplicit false
 
@@ -68,7 +68,7 @@ theorem UnitAt.add_zeroAt {x : X} {f f' : X.functionField} (h : UnitAt x f) (h' 
 variable {Γ : Type} [Group Γ]
 
 def sig (ρ : Γ →* Aut X) (γ : Γ) : X.functionField →+* X.functionField :=
-  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ)
+  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ).asIso
   GlobalTheory.functionFieldMap (ρ γ).asIso.hom
 
 theorem fnAct_val (ρ : Γ →* Aut X) (γ : Γ) (g : X.functionFieldˣ) :
@@ -76,19 +76,19 @@ theorem fnAct_val (ρ : Γ →* Aut X) (γ : Γ) (g : X.functionFieldˣ) :
 
 theorem regAt_sig (ρ : Γ →* Aut X) (γ : Γ) {x : X} {f : X.functionField}
     (h : RegAt ((ρ γ).asIso.hom x) f) : RegAt x (sig ρ γ f) :=
-  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ)
+  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ).asIso
   regAt_map _ h
 
 theorem zeroAt_sig (ρ : Γ →* Aut X) (γ : Γ) {x : X} {f : X.functionField}
     (h : ZeroAt ((ρ γ).asIso.hom x) f) : ZeroAt x (sig ρ γ f) :=
-  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ)
+  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ).asIso
   zeroAt_map _ h
 
 theorem sig_sig (ρ : Γ →* Aut X) (γ δ : Γ) (f : X.functionField) :
     sig ρ γ (sig ρ δ f) = sig ρ (δ * γ) f := by
-  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ)
-  haveI : IsIso (ρ δ).asIso.hom := Iso.isIso_hom (ρ δ)
-  haveI : IsIso (ρ (δ * γ)).asIso.hom := Iso.isIso_hom (ρ (δ * γ))
+  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ).asIso
+  haveI : IsIso (ρ δ).asIso.hom := Iso.isIso_hom (ρ δ).asIso
+  haveI : IsIso (ρ (δ * γ)).asIso.hom := Iso.isIso_hom (ρ (δ * γ)).asIso
   have e : (ρ (δ * γ)).asIso.hom = (ρ γ).asIso.hom ≫ (ρ δ).asIso.hom := by rw [map_mul]; rfl
   have key : ∀ (φ : X ⟶ X) (h : φ = (ρ γ).asIso.hom ≫ (ρ δ).asIso.hom) [IsDominant φ],
       GlobalTheory.functionFieldMap φ f = GlobalTheory.functionFieldMap (ρ γ).asIso.hom (GlobalTheory.functionFieldMap (ρ δ).asIso.hom f) := by

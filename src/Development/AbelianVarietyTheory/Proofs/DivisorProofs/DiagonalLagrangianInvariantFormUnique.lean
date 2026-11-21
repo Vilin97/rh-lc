@@ -139,6 +139,6 @@ theorem lagr_invariant_unique : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
       rw [he _ (hmem _ φ hφ), he φ hφ]
       exact GlobalTheory.LagrThetaInv.lagrInt_rho_inv F E σ B hB nS nT JT JB ξ κ co hco ν 𝓕 hν h𝓕 u φ hφ))
     ⟨φ₀, hφ₀, by rw [he φ₀ hφ₀]; exact hne⟩
-  exact ⟨c, fun Φ hΦ => by rw [hc Φ hΦ, he Φ hΦ]⟩
+  exact ⟨c, fun Φ hΦ => by rw [hc Φ hΦ, he Φ hΦ]; rfl⟩
 
 end GlobalTheory.LagrUniq

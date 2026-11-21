@@ -12,7 +12,7 @@ noncomputable section
 
 open CategoryTheory AlgebraicGeometry Limits
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.VB GlobalTheory.LieVB GlobalTheory.IndefiniteRowSideFullHecke.FrobeniusTwistEigen GlobalTheory.CurveRootGeometry
+open GlobalTheory.VB GlobalTheory.LieVB GlobalTheory.CurveRootGeometry
 
 attribute [local instance] Over.cartesianMonoidalCategory
 

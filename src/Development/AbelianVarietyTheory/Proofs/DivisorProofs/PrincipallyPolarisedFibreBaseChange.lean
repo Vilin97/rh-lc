@@ -29,7 +29,18 @@ namespace GlobalTheory.Poinc.Sep.E8Fibration
 theorem isPPFib_baseChange : ∀ {S S' : Scheme.{0}} (f : S' ⟶ S) (G : Over S) [GrpObj G] (g : ℕ) (M : RigLB G), E8Fibration.IsPPFib G g M → ∃ M' : RigLB ((Over.pullback f).obj G), M'.L = M.L.pull (pullback.fst G.hom f) ∧ E8Fibration.IsPPFib ((Over.pullback f).obj G) g M' := by
   intro S S' f G _ g M hM
   obtain ⟨hA, hg, ⟨c⟩, ha, hK⟩ := hM
-  have hA' := GlobalTheory.isAbelianScheme_pullback_obj f G hA
+  have hA' : IsAbelianScheme ((Over.pullback f).obj G) := by
+    have := hA.comm
+    have := hA.smooth
+    have := hA.proper
+    have := hA.geomConnected
+    refine ⟨inferInstance, ?_, ?_, ?_⟩
+    · change Smooth (pullback.snd G.hom f)
+      infer_instance
+    · change IsProper (pullback.snd G.hom f)
+      infer_instance
+    · change GeometricallyConnected (pullback.snd G.hom f)
+      infer_instance
   have := hA.comm
   have := hA'.comm
   have := hA.proper

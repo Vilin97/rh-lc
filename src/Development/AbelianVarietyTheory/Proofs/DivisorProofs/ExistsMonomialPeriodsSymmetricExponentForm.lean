@@ -31,7 +31,7 @@ theorem exists_isMonomial_symm : ∀ (W : Type) [CommRing W] [IsDomain W] [IsLoc
   haveI := hdvr
   haveI := hcomp
   haveI := hchar
-  choose Q hQ using QForm.exists_QVal hϖ D
+  choose Q hQ using QForm.exists_QVal (ϖ := ϖ) hϖ D
   have hQ' : QForm.IsQ D.toPre ϖ Q := hQ
   have hex : ∀ χ, ∃ r, PsiCoord D.toPre χ r := fun χ =>
     ((GlobalTheory.PsiCoordLocal.main W D inferInstance χ).1).imp fun _ h => h.1
@@ -39,10 +39,10 @@ theorem exists_isMonomial_symm : ∀ (W : Type) [CommRing W] [IsDomain W] [IsLoc
     GlobalTheory.ValForm.hasVal_coord (hQ χ) (hex χ).choose_spec
   have h0 : ∀ a, 0 ≤ Q a := fun a => by
     by_cases ha : a = 0
-    · rw [ha, QForm.Q_zero hϖ D hQ']
-    · exact zero_le_one.trans (QForm.Q_pos hϖ D hQ' ha)
+    · rw [ha, QForm.Q_zero (ϖ := ϖ) hϖ D hQ']
+    · exact zero_le_one.trans (QForm.Q_pos (ϖ := ϖ) hϖ D hQ' ha)
   let be : LinearMap.BilinForm ℤ D.toPre.X :=
-    LinearMap.mk₂ ℤ (fun a b => QForm.bHom hϖ D hQ' a b)
+    LinearMap.mk₂ ℤ (fun a b => QForm.bHom (ϖ := ϖ) hϖ D hQ' a b)
       (fun a a' b => by simp only [map_add (f := _), AddMonoidHom.add_apply])
       (fun c a b => by simp only [map_zsmul, AddMonoidHom.smul_apply, smul_eq_mul])
       (fun a b b' => by simp only [map_add (f := _)])
@@ -59,7 +59,7 @@ theorem exists_isMonomial_symm : ∀ (W : Type) [CommRing W] [IsDomain W] [IsLoc
     refine ⟨u, fun _ => (Q y).toNat, fun i => ?_, ?_⟩
     · fin_cases i
       simp only [Fin.zero_eta, Fin.isValue, Matrix.cons_val_zero]
-      rw [hbe, ← QForm.two_Q_eq hϖ D hQ', hn]
+      rw [hbe, ← QForm.two_Q_eq (ϖ := ϖ) hϖ D hQ', hn]
     · have hc : PsiCoord D.toPre y r := (hex y).choose_spec
       rw [e] at hc
       simpa using hc

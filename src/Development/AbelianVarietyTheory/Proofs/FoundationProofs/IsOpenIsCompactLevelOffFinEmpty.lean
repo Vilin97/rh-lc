@@ -44,7 +44,7 @@ variable [Submodule.IsLattice E L]
 
 theorem isOpen_isCompact_levelOffFin_empty :
     IsOpen (levelOffFin σ J L ∅ : Set (GFin σ J)) ∧ IsCompact (levelOffFin σ J L ∅ : Set (GFin σ J)) := by
-  have hfg : L.FG := Submodule.IsLattice.fg (A := E)
+  have hfg : L.FG := Submodule.IsLattice.fg (A := E) L
   obtain ⟨K, hK, ho, hc⟩ := GlobalTheory.Mem.Vol.StabGroup.exists_compact_open_stab F E σ n J L hfg
     Submodule.IsLattice.span_eq_top
   have e : levelOffFin σ J L ∅ = K := by

@@ -37,7 +37,7 @@ theorem exists_equiv_piTensor_two {X : Fin 2 → Type} [∀ a, AddCommGroup (X a
   classical
   let b : ∀ a, X a := Pi.single 1 (f.symm 1)
   have hb : b 1 = f.symm 1 := Pi.single_eq_same _ _
-  let μ : MultilinearMap ℂ X (X 0) :=
+  let μ : MultilinearMap (RingHom.id ℂ) X (X 0) :=
     { toFun := fun x => f (x 1) • x 0
       map_update_add' := by
         intro _ x i p q
@@ -50,9 +50,9 @@ theorem exists_equiv_piTensor_two {X : Fin 2 → Type} [∀ a, AddCommGroup (X a
         intro _ x i c p
         fin_cases i
         · simp only [Fin.zero_eta, Function.update_self, ne_eq, one_ne_zero, not_false_eq_true,
-            Function.update_of_ne, smul_comm (f (x 1)) c]
+            Function.update_of_ne, RingHom.id_apply, smul_comm (f (x 1)) c]
         · simp only [Fin.mk_one, Function.update_self, ne_eq, zero_ne_one, not_false_eq_true,
-            Function.update_of_ne, map_smul, smul_eq_mul, mul_smul] }
+            Function.update_of_ne, map_smul, smul_eq_mul, mul_smul, RingHom.id_apply] }
   have hμ : ∀ x, μ x = f (x 1) • x 0 := fun _ => rfl
   let φ : X 0 →ₗ[ℂ] PiTensorProduct ℂ X := (PiTensorProduct.tprod ℂ).toLinearMap b 0
   have hφ : ∀ v, φ v = PiTensorProduct.tprod ℂ (Function.update b 0 v) := fun _ => rfl

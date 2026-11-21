@@ -175,9 +175,15 @@ theorem eq_zero_of_apply_one {f : IndSp e ρ} (hf : f ∈ fixed (parInd e ρ) (K
 
 theorem apply_one_fixed {f : IndSp e ρ} (hf : f ∈ fixed (parInd e ρ) (KO k n)) (g : Levi k m)
     (hg : ∀ a, g a ∈ KO k (m a)) : ρ g (f.1.1 1) = f.1.1 1 := by
-  have h1 := parInd_law e ρ f ⟨_, leviEmb_mem_parab k e g⟩ 1
+  have hm : leviEmb k e g ∈ parab k e := mem_parab_iff.2 fun _ _ i j hab => by
+    simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+  have hp : leviProj k e ⟨leviEmb k e g, hm⟩ = g := by
+    funext a
+    ext i j
+    simp [leviProj_apply, leviEmb, Matrix.blockDiagonal'_apply_eq]
+  have h1 := parInd_law e ρ f ⟨_, hm⟩ 1
   have h2 := ((LeviInt.levi_integral_facts k α n m e).1 g 1 (one_mem _)).2 ⟨hg, one_mem _⟩
-  rw [leviProj_leviEmb, deltaHalf_eq_one hg, Units.val_one, one_smul] at h1
+  rw [hp, deltaHalf_eq_one hg, Units.val_one, one_smul] at h1
   rw [← h1, ← apply_mul_of_fixed e hf 1 h2, one_mul]
 
 theorem exists_fixed_apply_one {x : W} (hx : ∀ g : Levi k m, (∀ a, g a ∈ KO k (m a)) → ρ g x = x) :
@@ -245,6 +251,7 @@ theorem heckeVec_multiProd (hK : IsCommensurated (KO k n)) {h : GL n k → ℂ} 
     rw [mul_one] at this
     rw [one_mul, this, h1, map_smul, map_smul, map_smul, piTensor_tprod, PiTensorProduct.map_tprod,
       funext (hω c (hfin.mem_toFinset.1 hc)), MultilinearMap.map_smul_univ, mul_smul, smul_comm r]
+    simp only [RingHom.id_apply]
   · exact fun c hc => hfin.mem_toFinset.2 fun h0 => hc (by simp [show h (p c) = 0 from h0])
   · exact fun c hc => hfin.mem_toFinset.2 fun h0 => hc (by simp [show h (p c) = 0 from h0])
 
@@ -472,7 +479,8 @@ theorem exists_sat_multiProd {X : Fin c → Type} [∀ a, AddCommGroup (X a)] [�
       choose t ht using fun a => exists_idem_eq_smul (hs a) (hi a) GlobalTheory.SplitFlip.isCompact_KO
         (hKO _ ▸ Final.GLintComm E w (N a)) (hKO _ ▸ exists_scalar_GL (hs a) (hi a)) (hKO _ ▸ (hx a).2.1) (hx a).1 (y a)
       exact ⟨r * ∏ a, t a, by
-        rw [map_smul, PiTensorProduct.map_tprod, funext ht, MultilinearMap.map_smul_univ, mul_smul]⟩
+        rw [map_smul, PiTensorProduct.map_tprod, funext ht, MultilinearMap.map_smul_univ, mul_smul]
+        simp only [RingHom.id_apply]⟩
     | add y z hy hz =>
       obtain ⟨r, hr⟩ := hy
       obtain ⟨t, ht⟩ := hz

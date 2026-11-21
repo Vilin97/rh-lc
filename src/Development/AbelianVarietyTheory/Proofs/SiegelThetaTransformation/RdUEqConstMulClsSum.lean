@@ -73,6 +73,9 @@ theorem comp_eq_of_marked {Xo : Moduli Dw l₂} {c : Coeff l₂} [inst : Algebra
     have h1 : fnAt (basePt z) g₀ = fnAt (basePt z ≫ pullback.fst _ _ ≫ t) (toΓ (KA l) u) := rfl
     have h2 : fnAt (𝟙 (Sp (KA l))) (toΓ (KA l) u) = u := by
       simp [fnAt, toΓ]
+    rw [evR_fnRule, h1, ← Category.assoc]
+    rw [basePt, pullback.lift_fst]
+    rw [hβ, ← Category.comp_id (Geo.Tor.spMap β), fnAt_comp, h2]
     simp [u]
   have h1 : ∀ z : FrPt Xo c (CAt σ), ‖Formalism.L2.PjFree.toC (evR Xo c (fnRule g₀) z)‖ = 1 := fun z => by
     obtain ⟨β, hβ⟩ := LevelFibre.exists_spMap (A := KA l) (B := ℂ) (z.x ≫ t)

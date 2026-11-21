@@ -435,9 +435,12 @@ include hs in
 theorem finPart_eq (k : GL (Fin a) (Af M)) : finPart s k = GeneralLinearGroup.map (GlobalTheory.CuspRep.conjFin σ) k := by
   rw [finPart, sA, map_map_comm (pFin M) s.toRingHom (GlobalTheory.CuspRep.conjFin σ) hs.2.2, pFin_finGL]
 
-theorem isAutForm_pull {φ : Sm M a} (h : IsAutForm φ) : IsAutForm (pullE a hs hp φ) where
-  left γ g := by rw [pullE_apply, map_mul, sA_ratGL hs, h.left, pullE_apply]
-  level := by
+theorem isAutForm_pull {φ : Sm M a} (h : IsAutForm φ) : IsAutForm (pullE a hs hp φ) := by
+  constructor
+  case left =>
+    intro γ g
+    rw [pullE_apply, map_mul, sA_ratGL hs, h.left, pullE_apply]
+  case level =>
     have hc : Continuous fun k : GL (Fin a) (Af M) => finPart s k := by
       have e : (fun k : GL (Fin a) (Af M) => finPart s k) =
           fun k => GeneralLinearGroup.map (n := Fin a) (GlobalTheory.CuspRep.conjFin σ) k :=
@@ -447,20 +450,21 @@ theorem isAutForm_pull {φ : Sm M a} (h : IsAutForm φ) : IsAutForm (pullE a hs 
     convert h.level.preimage hc using 1
     ext k
     exact (Eq.congr_left (act_pullE hs hp (.fin k) φ)).trans (pullE a hs hp).injective.eq_iff
-  kfin := by
+  case kfin =>
     have := h.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (Set.range fun k => cptRep M a k φ)).map
       (pullE a hs hp).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     exact ⟨_, Submodule.subset_span ⟨_, rfl⟩, (act_pullE hs hp (.cpt k) φ).symm⟩
-  zfin := by
+  case zfin =>
     have := h.zfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ ((fun z : Module.End ℂ (Sm M a) => z φ) ''
       Zalg M a)).map (pullE a hs hp).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     obtain ⟨z', h1, h2⟩ := Zalg_pull hs hp hz
     exact ⟨_, Submodule.subset_span ⟨z', h1, rfl⟩, (h2 φ).symm⟩
-  growth g := by
+  case growth =>
+    intro g
     obtain ⟨C, N, h1⟩ := h.growth (sA M a s g)
     refine ⟨C, N, fun y => ?_⟩
     rw [pullE_apply, map_mul, sA_infGL (good_alt hs hp), ← height_perm (p := p)]

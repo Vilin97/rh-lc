@@ -69,7 +69,7 @@ theorem GlobalTheory.LBObs.isObL_pull_zero : ∀ (R R₀ : Type) [CommRing R] [C
   have hw : IsFrame L _ _ w := GlobalTheory.LBObs.Model.isFrame_ch hL
   have hfr := isFrame_pull X _ _ _ L w X₀ i (PCh P L) (opOf (pG P L)) (opOf_le (pG P L)) (pH P L) hH hw
   have hcoc := GlobalTheory.LBObs.Model.isCoc_of_isFrame hL hw
-  choose σ hσ using fun T ↦ GlobalTheory.Obs.Model.exists_isSig hI hπ α (((ofSys S).restrict (pG P L)).p T)
+  choose σ hσ using fun (T : PCh P L) ↦ GlobalTheory.Obs.Model.exists_isSig hI hπ α (((ofSys S).restrict (pG P L)).p T)
     (Pre.semi _ T) (Pre.surj _ T) (Pre.ker _ T)
   refine ⟨PCh P L, inferInstance, inferInstance, pG P L, isBas_pG hI P hL, _, hfr, ?_⟩
   rw [map_zero]
@@ -91,3 +91,4 @@ theorem GlobalTheory.LBObs.isObL_pull_zero : ∀ (R R₀ : Type) [CommRing R] [C
     erw [map_mul]
     congr 1
     exact e2.symm
+

@@ -110,6 +110,7 @@ theorem transfer : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
       intro u hu g
       show W (x * Φ (u * g)) = ψ (GlobalTheory.Whittaker.superDiag u) * W (x * Φ g)
       rw [map_mul, ← mul_assoc, hcomm u, mul_assoc, hΦ u, hN _ (finGL_locGL_mem_NA' w hu), psiN_finGL_locGL, hψ]
+      rfl
     have hf2 : ∀ u ∈ (U : Set (GL (Fin (m + 1)) (w.adicCompletion E))), ∀ g, f (g * u) = f g := by
       intro u hu g
       show W (x * Φ (g * u)) = W (x * Φ g)

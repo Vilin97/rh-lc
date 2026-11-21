@@ -60,8 +60,8 @@ theorem wcomp_le {I : Type} {c : I → ℂ} {B : ℝ} (hB : ∀ i, ‖c i‖ ≤
 def wcomp {I : Type} (c : I → ℂ) (B : ℝ) (hB0 : 0 ≤ B) (hB : ∀ i, ‖c i‖ ≤ B) (φ : I → I) : Bd I →L[ℂ] Bd I :=
   LinearMap.mkContinuous
     { toFun := fun F => mkBd (fun i => c i * F (φ i)) ⟨_, wcomp_le hB φ F⟩
-      map_add' := fun F G => by ext i; simp [mul_add]
-      map_smul' := fun a F => by ext i; simp; ring } B
+      map_add' := fun F G => by ext i; simp [mkBd, mul_add]
+      map_smul' := fun a F => by ext i; simp [mkBd]; ring } B
     fun F => lp.norm_le_of_forall_le (by positivity) (wcomp_le hB φ F)
 
 theorem wcomp_apply {I : Type} (c : I → ℂ) (B : ℝ) (hB0 : 0 ≤ B) (hB : ∀ i, ‖c i‖ ≤ B) (φ : I → I) (F : Bd I) (i : I) :

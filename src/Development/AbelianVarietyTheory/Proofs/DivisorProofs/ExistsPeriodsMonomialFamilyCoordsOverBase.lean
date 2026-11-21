@@ -23,7 +23,16 @@ theorem inv_eq_unit_mul {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] (D 
     (g : D.X → (FractionRing R)ˣ) {y : D.X} {r : R} (hr : Formalism.L2.Pj.PsiCoord D y r)
     (hU : PsiUnitOn (GlobalTheory.PolDeg.rescale D g) y Set.univ) :
     ∃ u : Rˣ, (((g y)⁻¹ : (FractionRing R)ˣ) : FractionRing R) = algebraMap R _ u * algebraMap R _ r := by
-  obtain ⟨v, hv⟩ := GlobalTheory.LocM.FJ.MultiData.exists_unit_psiCoord (GlobalTheory.TauTwist.rescale D g) y hU
+  have hex : ∃ v : Rˣ, Formalism.L2.Pj.PsiCoord (GlobalTheory.TauTwist.rescale D g) y v := by
+    let D' := GlobalTheory.TauTwist.rescale D g
+    obtain ⟨j, hj⟩ := GlobalTheory.PsiCoordLocal.exists_chart_top D' y
+    have hh := GlobalTheory.PsiCoordLocal.generic_le D' y j hj
+    obtain ⟨s, hs, e⟩ := hU j ⊤ (isAffineOpen_top _) (Set.subset_univ _) hj hh
+    obtain ⟨r, rfl⟩ := GlobalTheory.PsiCoordLocal.toOpen_top_bijective.2 s
+    have hu : IsUnit r := (MulEquiv.isUnit_map
+      (RingEquiv.ofBijective (Out.DegPre.toOpen (R := R) ⊤) GlobalTheory.PsiCoordLocal.toOpen_top_bijective).toMulEquiv).1 hs
+    exact ⟨hu.unit, j, hj, hh, e⟩
+  obtain ⟨v, hv⟩ := hex
   obtain ⟨x, ⟨j, h, hj, rfl⟩, e⟩ := (GlobalTheory.PeriodFormCompare.psiCoord_iff D y r).1 hr
   obtain ⟨x', hx', e'⟩ := (GlobalTheory.PeriodFormCompare.psiCoord_iff (GlobalTheory.TauTwist.rescale D g) y _).1 hv
   have h₁ : GlobalTheory.IndefiniteRowSideFullHecke.GeneratorValues.IsPsiCoord (GlobalTheory.TauTwist.rescale D g) y (g y * GlobalTheory.IndefiniteRowSideFullHecke.GeneratorValues.genVal (D.psi y) j h) := by

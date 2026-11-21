@@ -40,7 +40,7 @@ theorem eq_comp_of_genMap {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {
     rw [← Over.comp_left, ← Over.comp_left, h']
   have hf : ((Over.pullback (jK R)).map p).left ≫ pullback.fst G.hom (jK R) =
       pullback.fst G'.hom (jK R) ≫ p.left := by
-    simp only [Over.pullback_map_left]
+    simp only [Over.pullback_map_left, pullback.lift_fst]
   apply Over.OverMorphism.ext
   refine hU.1.hom_ext ?_ ?_
   · rw [e, Over.comp_left, genMap, genMap]
@@ -66,7 +66,7 @@ theorem commutatorPairing_eighthPower_bundle : ∀ (S : Scheme.{0}) [IsLocallyNo
       rw [comp_lift, comp_lift]
       exact GlobalTheory.T.weilPairing_mumfordLambda_square S P n T _ _ _ _ (ht hx _) (ht hx _) (ht hy _) (ht hy _) _ _ (hc ab.1 ab.2) (hc ab.2 ab.1))
   refine GlobalTheory.PELFamily.weilIs_of_lbIso hG P'.isAb P'.isLB hM ?_ key
-  refine LBIso.trans P'.isLB hM (pull_isLB hM _) hL ?_
+  refine LBIso.trans P'.isLB hM (LB.isLB_pull hM _) hL ?_
   have := GlobalTheory.DescendedPrincipal.lbIso_pull_id hM
   simpa using this.symm
 

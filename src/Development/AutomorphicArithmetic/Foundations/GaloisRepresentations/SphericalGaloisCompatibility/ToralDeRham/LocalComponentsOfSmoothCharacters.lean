@@ -109,8 +109,9 @@ theorem equiv_prodIrr_untwist {N h : ℕ} {V : Type} [AddCommGroup V] [Module �
   exact (twistEquiv φ _).trans (prodIrrTwistEquiv x hd χ⁻¹ hχ.inv)
 
 
-noncomputable def valAt (ϖ : kˣ) (y : IrrGL (k := k)) : ℂˣ :=
-  if h : ∃ (μ : kˣ →* ℂˣ) (hμ : IsSmoothChar μ), y = IrrGL.ofChar μ hμ then h.choose ϖ else 1
+noncomputable def valAt (ϖ : kˣ) (y : IrrGL (k := k)) : ℂˣ := by
+  classical
+  exact if h : ∃ (μ : kˣ →* ℂˣ) (hμ : IsSmoothChar μ), y = IrrGL.ofChar μ hμ then h.choose ϖ else 1
 
 theorem valAt_ofChar (ϖ : kˣ) (μ : kˣ →* ℂˣ) (hμ : IsSmoothChar μ) : valAt ϖ (IrrGL.ofChar μ hμ) = μ ϖ := by
   have h : ∃ (μ' : kˣ →* ℂˣ) (hμ' : IsSmoothChar μ'), IrrGL.ofChar μ hμ = IrrGL.ofChar μ' hμ' := ⟨μ, hμ, rfl⟩

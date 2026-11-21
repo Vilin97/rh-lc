@@ -145,9 +145,11 @@ theorem GlobalTheory.ResidueNorm.exists_norm_mod_small : ∀ (v : HeightOneSpect
     (IsUnit.of_mul_eq_one (Ideal.Quotient.mk I eiP) (by rw [← map_mul, heP, map_one]))
   obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective a'
   obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective b'
+  set_option synthInstance.maxHeartbeats 200000 in
   have hmem : a ^ 2 - dP * b ^ 2 - eP ∈ I := by
     refine Ideal.Quotient.eq.1 ?_
-    simpa only [map_sub, map_mul, map_pow] using hab
+    simpa only [map_sub (Ideal.Quotient.mk I), map_mul (Ideal.Quotient.mk I),
+      map_pow (Ideal.Quotient.mk I)] using hab
   rw [hmemI] at hmem
   refine ⟨(a : v.adicCompletion ℚ ⊗[ℚ] L) + (b : v.adicCompletion ℚ ⊗[ℚ] L) * (θ : v.adicCompletion ℚ ⊗[ℚ] L), isIntB_add v bL (hPi a) (hmul _ _ (hPi b) hθ), ?_⟩
   have hσz : σ ((a : v.adicCompletion ℚ ⊗[ℚ] L) + (b : v.adicCompletion ℚ ⊗[ℚ] L) * (θ : v.adicCompletion ℚ ⊗[ℚ] L)) = (a : v.adicCompletion ℚ ⊗[ℚ] L) - (b : v.adicCompletion ℚ ⊗[ℚ] L) * (θ : v.adicCompletion ℚ ⊗[ℚ] L) := by

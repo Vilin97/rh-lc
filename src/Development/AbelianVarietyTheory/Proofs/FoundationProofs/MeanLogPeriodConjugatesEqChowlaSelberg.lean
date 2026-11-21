@@ -180,6 +180,8 @@ theorem mean_log_area {d : ℕ} [NeZero d] (h2 : Module.finrank ℚ K = 2) (hD :
     rw [latticeNormDisc, latticeNormDisc, e4, norm_one, mul_one, Real.log_mul (pow_pos (latticeArea_pos _) _).ne'
       (norm_ne_zero_iff.2 (g₂_cube_sub_g₃_sq_ne_zero _)), Real.log_pow, Real.log_pow, ← (hL' _).2] at this
     exact_mod_cast this.symm
+  let _ : Module.Free M N := Module.Free.of_divisionRing M N
+  have : Module.Finite M N := Module.Finite.of_restrictScalars_finite ℚ M N
   have e5 := Finset.sum_congr (rfl : Finset.univ = Finset.univ) fun s _ => e3 s
   rw [Finset.sum_add_distrib, sum_log_norm_unit, ← Finset.mul_sum, ← Finset.mul_sum, add_zero,
     ReciprocityTheory.ChartRestriction.G.FreeQuotientRank.sum_embeddings_restrict fun s => Real.log (latticeArea (L s))] at e5
@@ -189,7 +191,6 @@ theorem mean_log_area {d : ℕ} [NeZero d] (h2 : Module.finrank ℚ K = 2) (hD :
   rw [Complex.ofReal_re, Complex.sub_re, Complex.ofReal_re] at e7
   rw [← key, Finset.sum_neg_distrib, neg_div, e7, ← Module.finrank_mul_finrank ℚ M N] at e6
   have hM : (Module.finrank ℚ M : ℝ) ≠ 0 := by exact_mod_cast Module.finrank_pos.ne'
-  have : Module.Finite M N := Module.Finite.of_restrictScalars_finite ℚ M N
   have hN : (Module.finrank M N : ℝ) ≠ 0 := by exact_mod_cast Module.finrank_pos.ne'
   rw [← mul_left_cancel₀ (by norm_num) e5, Nat.cast_mul, mul_comm (Module.finrank ℚ M : ℝ),
     mul_div_mul_left _ _ hN] at e6

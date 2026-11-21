@@ -17,7 +17,7 @@ theorem det_dbar_eq_sum_dbar : ∀ {n : ℕ} (f : Fin n → V n → ℂ) (j : Fi
   have hP := GlobalTheory.T.piola_identity_wirtingerAntiholomorphic f j v (fun i _ => hf i)
   have hd : ∀ w : Equiv.Perm (Fin n), DifferentiableAt ℝ
       (fun x => ∏ i ∈ Finset.univ.erase j, dbar (f i) x (coordVec (w i))) v := fun w =>
-    (HasFDerivAt.finset_prod (u := Finset.univ.erase j) (g := fun i x => dbar (f i) x (coordVec (w i)))
+    (HasFDerivAt.finsetProd (u := Finset.univ.erase j) (g := fun i x => dbar (f i) x (coordVec (w i)))
       (fun i _ => (differentiableAt_dbar_apply (hf i) _).hasFDerivAt)).differentiableAt
   have hj : DifferentiableAt ℝ (f j) v := (hf j).differentiableAt (by norm_num)
   have key : ∀ w : Equiv.Perm (Fin n), ((Equiv.Perm.sign w : ℤ) : ℂ) *

@@ -37,7 +37,7 @@ theorem cont_act {V : Type} [AddCommGroup V] [Module LL V] [FiniteDimensional LL
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul]
   rw [h]
-  refine continuous_finset_sum _ fun i _ => ?_
+  refine continuous_finsetSum _ fun i _ => ?_
   exact ((cont_form ((Finsupp.lapply i).comp b.repr.toLinearMap)).comp continuous_snd).smul
     ((hρ (b i)).comp continuous_fst)
 
@@ -53,7 +53,7 @@ theorem cont_bil {V V' : Type} [AddCommGroup V] [Module LL V] [FiniteDimensional
       simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
       smul_eq_mul]
   rw [h]
-  refine continuous_finset_sum _ fun i _ => ?_
+  refine continuous_finsetSum _ fun i _ => ?_
   exact ((cont_form ((Finsupp.lapply i).comp b.repr.toLinearMap)).comp continuous_fst).mul
     ((cont_form (m (b i))).comp continuous_snd)
 

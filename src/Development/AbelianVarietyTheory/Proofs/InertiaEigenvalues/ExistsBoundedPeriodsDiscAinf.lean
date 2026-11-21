@@ -88,7 +88,6 @@ theorem exists_bounded_periods : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk
     · convert hrec i₁ a b using 1
       · funext i
         simp [c, Vκ, V]
-      · rfl
   obtain ⟨k, v, hv1, hv2⟩ := GlobalTheory.T.exists_bounded_of_phi_equation_disc l K bk (Ainf l) bk.ev ι TB WittVector.frobenius (frobenius_ev_X_eq bk)
     Φ hΦ _ c hcfin (2 * s.N) Vκ hV hrecκ
   refine ⟨ι, TB, k, fun i => Matrix.of fun a b => v (i, (a, b)),

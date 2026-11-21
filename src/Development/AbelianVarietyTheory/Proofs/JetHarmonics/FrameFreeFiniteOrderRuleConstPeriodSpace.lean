@@ -58,8 +58,10 @@ theorem const_on_period_space : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
       fun a => ⟨0, by simp⟩, hh⟩
   have hex : ∀ t, ∃ z : FrPt Xo c ℂ, t ∈ B → z.x = F.u i (Q t) := fun t => by
     by_cases ht : t ∈ B
-    · obtain ⟨z, hz⟩ := GlobalTheory.NonIntegralFrameExample.exists_framed (c := c) (S := ℂ) (F.u i (Q t)) (F.over_σ i _ (hQ.1 t ht))
-      exact ⟨z, fun _ => hz⟩
+    · have hx := F.over_σ i _ (hQ.1 t ht)
+      choose u hu using fun τ => GlobalTheory.IntFramesCompare.exists_eigenBasisAt (c := c) hx τ
+      obtain ⟨s, hs⟩ := gfp_gen GlobalTheory.abelianSchemeLaws_all.2.secTwist (F.u i (Q t))
+      exact ⟨⟨F.u i (Q t), hx, u, fun τ => (hu τ).1, fun τ => (hu τ).2.1, fun τ => (hu τ).2.2, s, hs⟩, fun _ => rfl⟩
     · exact ⟨y, fun h => absurd h ht⟩
   choose z hz using hex
   have hhol : IsHolTo B fun t => basePt (z t) :=

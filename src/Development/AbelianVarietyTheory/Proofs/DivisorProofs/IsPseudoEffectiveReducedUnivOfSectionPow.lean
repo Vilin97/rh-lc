@@ -37,6 +37,7 @@ theorem isPsEff_pull_redι_univ_of_hasNonzeroSec_pow :
   have hM' := LB.isLB_pull hM (redι Z)
   refine isPsEff_of_hasNonzeroSec_pow (hH.pull_of_isClosedImmersion (redι Z)) hM' hr
     (h1.of_cls_eq (isLB_lbPow hM' r) (LB.isLB_pull (isLB_lbPow hM r) _) ?_)
-  rw [cls_lbPow hM', cls_pull hM, cls_pull (isLB_lbPow hM r), cls_lbPow hM, map_nsmul]
+  exact (cls_eq_iff (isLB_lbPow hM' r) (LB.isLB_pull (isLB_lbPow hM r) _)).2
+    (lbIso_lbPow_pull hM (redι Z) r)
 
 end GlobalTheory

@@ -26,7 +26,7 @@ theorem mem_range_zmod_of_pow_eq_self (p : ℕ) [Fact p.Prime] {k : Type} [Field
   have hmem : c ∈ ((X ^ p - X : (ZMod p)[X]).map ((ZMod.castHom (dvd_refl p) k))).roots := by
     rw [Polynomial.mem_roots]
     · simp [hc]
-    · simpa using FiniteField.X_pow_card_sub_X_ne_zero k hp
+    · simpa using (Polynomial.X_pow_sub_X_ne_zero hp : (X ^ p - X : k[X]) ≠ 0)
   rw [← hmap, hroots, Multiset.mem_map] at hmem
   obtain ⟨a, -, ha⟩ := hmem
   exact ⟨a, ha⟩
@@ -80,8 +80,8 @@ theorem charpoly_map_eq_of_commute_semilinear {R : Type} [CommRing R] [IsDomain 
     intro x i
     conv_lhs => rw [← b.sum_repr x]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, LinearMap.map_smulₛₗ, Finsupp.coe_finset_sum, Finset.sum_apply,
-      map_smul, Finsupp.coe_smul, Pi.smul_apply, smul_eq_mul]
+      simp only [map_sum, LinearMap.map_smulₛₗ, Finset.sum_apply',
+      map_smul, Finsupp.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hurepr : ∀ y i, b.repr (u y) i = ∑ l, U i l * b.repr y l := by
     intro y i

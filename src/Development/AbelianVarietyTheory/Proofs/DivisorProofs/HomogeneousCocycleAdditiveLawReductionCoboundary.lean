@@ -61,10 +61,10 @@ theorem homogCoc_red_cob : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [Ch
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [hhom γ hγ, map_add (f := _), map_sum, (GlobalTheory.T.additive_formal_group_coboundary_homogeneous k d N).1 bN (fun α hα => by
         rw [hbNc, if_neg hα]) γ hγ, zero_add]
-      refine (Finset.sum_eq_zero fun m _ => ?_).symm
-      simp only [cm]
-      rw [GlobalTheory.T.coeff_powerSeriesEvalTwoGroups_single_pair]
-      split_ifs <;> simp [hhom γ hγ]
+        refine (Finset.sum_eq_zero fun m _ => ?_).symm
+        simp only [cm]
+        rw [GlobalTheory.T.coeff_powerSeriesEvalTwoGroups_single_pair]
+        split_ifs <;> simp [hhom γ hγ]
 
   set a : Fin d → ℕ → k := fun m n => coeff (Finsupp.single (Sum.inl m) n + Finsupp.single (Sum.inr m) (N - n)) c with ha
   have hsym : ∀ m n, n ≤ N → a m n = a m (N - n) := by

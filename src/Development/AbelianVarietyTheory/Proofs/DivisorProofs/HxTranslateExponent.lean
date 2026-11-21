@@ -58,16 +58,22 @@ theorem reads_heisO_finOf : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : 
       | exact GlobalTheory.AdThSympl.psi_symplOH_eq D ψ θ V W r g hr X bas idx hψ hθ hV he hM hs x hd
       | exact GlobalTheory.AdThSympl.psi_symplOH_eq D ψ θ V W r g hr X bas idx hψ hθ hV he hM hs x hx0
   obtain ⟨v, hv⟩ : ∃ v : WO V W, ratW W V γ = v + u := ⟨ratW W V γ - u, (sub_add_cancel _ _).symm⟩
+  have hfadd (a b : WO V W) : (a + b).map (finPart D) = a.map (finPart D) + b.map (finPart D) := by
+    ext i j
+    exact (finPart D).map_add _ _
+  have hiadd (a b : WO V W) : (a + b).map (infPart D) = a.map (infPart D) + b.map (infPart D) := by
+    ext i j
+    exact (infPart D).map_add _ _
   have hvf : v.map (finPart D) = 0 := by
     have h := hu.2
-    rw [hv, Matrix.map_add _ (finPart D).map_add (f := _)] at h
+    rw [hv, hfadd] at h
     exact left_eq_add.1 (h.trans (add_comm _ _))
   have hvi : v.map (infPart D) = (ratW W V γ).map (infPart D) := by
-    rw [hv, Matrix.map_add _ (infPart D).map_add (f := _), hu.1, add_zero]
+    rw [hv, hiadd, hu.1, add_zero]
   obtain ⟨w', hw'⟩ : ∃ w' : WO V W, w = w' + v := ⟨w - v, (sub_add_cancel _ _).symm⟩
   have hw'f : w'.map (finPart D) = 0 := by
     have h := hw
-    rwa [hw', Matrix.map_add _ (finPart D).map_add, hvf, add_zero] at h
+    rwa [hw', hfadd, hvf, add_zero] at h
   have hzv := hrat γ v hvi
   have hneg : ∀ b, pv X idx x ((-(colsR hr γ)) b) = -pv X idx x (colsR hr γ b) := by
     intro b

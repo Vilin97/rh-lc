@@ -39,7 +39,7 @@ theorem linearMap_pi_continuous_coord : ∀ {l : ℕ} [Fact l.Prime] {O M ι : T
     rw [Algebra.smul_def, mul_smul]
   have hf : (f : (ι → O) → M) = fun c => ∑ i, ∑ α, algebraMap ℤ_[l] O (bO.equivFun (c i) α) • (bO α • f (Pi.single i 1)) := funext key
   rw [hf]
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun α _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun α _ => ?_
   exact (hcont _).comp ((continuous_apply α).comp (continuous_induced_dom.comp (continuous_apply i)))
 
 end GlobalTheory

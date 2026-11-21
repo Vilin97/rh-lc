@@ -112,11 +112,11 @@ lemma pairing_ptOf (D : Dat p g B Tw Dt Oe σ cp) (s t : TT p g) :
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [pair, dotProduct, mulVec, map_sum, map_mul, Nat.cast_sum, Nat.cast_mul,
       ZMod.natCast_zmod_val, red]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    rw [mul_comm]
-    congr 1
-    refine Finset.sum_congr rfl fun j _ => ?_
-    rw [toZMod_eq_of_q _ _ (hk i j)]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [mul_comm]
+      congr 1
+      refine Finset.sum_congr rfl fun j _ => ?_
+      rw [toZMod_eq_of_q _ _ (hk i j)]
   · rw [← Finset.prod_pow_eq_pow_sum]
     refine pairing_sum_left B _ p _ _ _ (D.pt_p _) fun i => ?_
     rw [pow_mul]

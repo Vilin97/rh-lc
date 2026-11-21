@@ -89,9 +89,9 @@ theorem approx_step {ι : A →+* R} {p : ℕ} {t : R} {τ : A} (hτ : ι τ = t
       refine ih (fun i => ∑ j, M i j * φ (u j) + c i) (fun i => ?_) (fun i => ?_)
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [map_add (f := _), map_sum]
-        refine add_mem (sum_mem fun j _ => ?_) (pow_mem_of_le hD (Nat.zero_le N) (hc i))
-        rw [map_mul]
-        exact mul_mem (pow_mem_of_le hD (Nat.zero_le N) (hM i j)) (h1 j)
+          refine add_mem (sum_mem fun j _ => ?_) (pow_mem_of_le hD (Nat.zero_le N) (hc i))
+          rw [map_mul]
+          exact mul_mem (pow_mem_of_le hD (Nat.zero_le N) (hM i j)) (h1 j)
       · have e : w i - (∑ j, M i j * φ (u j) + c i) = ∑ j, M i j * φ (w j - u j) := by
           rw [hw i]
           simp only [map_sub, mul_sub, Finset.sum_sub_distrib]

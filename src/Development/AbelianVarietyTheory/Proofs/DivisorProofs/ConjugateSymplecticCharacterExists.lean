@@ -106,8 +106,38 @@ theorem exists_hchar_norm {F E : Type} [Field F] [NumberField F] [Field E] [Numb
     rw [hΦ] at e1
     have e2 : infTens F E (u x : AF F ⊗[F] E) = (1 : Ainf F) ⊗ₜ[F] k :=
       j.injective ((congrArg Prod.fst e1).trans (h1.trans (hj k).symm))
+    have had : ∀ a : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F,
+        conjFin c (GlobalTheory.AdeleBaseChange.adMap F E a) = GlobalTheory.AdeleBaseChange.adMap F E a := by
+      intro a
+      have hc' : ∀ x : F, c (algebraMap F E x) = algebraMap F E x := fun x => by rw [← hc]; exact σ.commutes x
+      refine FiniteAdeleRing.ext _ fun w => ?_
+      have hu := GlobalTheory.DefU.ClassFin.under_conjSrc c hc' w
+      have hadmap : ∀ {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)}
+          (h : w.under (𝓞 F) = v), (GlobalTheory.AdeleBaseChange.adMap F E a) w = complMap h (a v) := by
+        intro v w h
+        subst h
+        rfl
+      have e1 : pLoc E w (conjFin c (GlobalTheory.AdeleBaseChange.adMap F E a)) = conjLoc c w (complMap hu (a (w.under (𝓞 F)))) := by
+        rw [pLoc_conjFin]
+        exact congrArg _ (hadmap hu)
+      have e2 : (GlobalTheory.AdeleBaseChange.adMap F E a) w = complMap (rfl : w.under (𝓞 F) = _) (a (w.under (𝓞 F))) := rfl
+      have e3 := congrFun ((HeightOneSpectrum.denseRange_algebraMap F (w.under (𝓞 F))).equalizer
+        ((conjLoc_spec c w).1.comp (InertChart.continuous_complMap hu)) (InertChart.continuous_complMap (rfl : w.under (𝓞 F) = _))
+        (funext fun k => by
+          change conjLoc c w (complMap hu (algebraMap F _ k)) = complMap rfl (algebraMap F _ k)
+          rw [complMap_algebraMap, complMap_algebraMap, (conjLoc_spec c w).2.1, hc'])) (a (w.under (𝓞 F)))
+      exact e1.trans (e3.trans e2.symm)
+    have hsig : ∀ y : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E,
+        finAdEquiv F E (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ y) = conjFin c (finAdEquiv F E y) := by
+      intro y
+      induction y using TensorProduct.induction_on with
+      | zero => simp only [map_zero]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
+      | tmul a z =>
+        change toFinAd F E (a ⊗ₜ[F] σ z) = conjFin c (toFinAd F E (a ⊗ₜ[F] z))
+        rw [toFinAd_tmul, toFinAd_tmul, map_mul, had, conjFin_algebraMap, hc]
     have e3 : (u x' : AF F ⊗[F] E) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AF F) σ (u x : AF F ⊗[F] E) := Φ.symm_apply_eq.2 (by
-      rw [hΦ, hsi, hsf, e2, GlobalTheory.DefU.ClassFin.finAdEquiv_sigR σ c hc]
+      rw [hΦ, hsi, hsf, e2, hsig]
       refine Prod.ext (h2.trans ?_) (h3.trans (congrArg (conjFin c) (congrArg Prod.snd e1).symm))
       rw [← hc]
       exact (hj (σ k)).symm)

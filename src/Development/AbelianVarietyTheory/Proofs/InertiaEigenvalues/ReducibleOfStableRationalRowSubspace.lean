@@ -17,7 +17,7 @@ theorem vecMul_repr_rows {E : Type} [Field E] {n : Type} [Fintype n] [DecidableE
   ext j
   conv_rhs => rw [← Finset.univ_sum_single v]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Matrix.vecMul, dotProduct, Matrix.of_apply, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+    simp only [Matrix.vecMul, dotProduct, Matrix.of_apply, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [show (Pi.single k (v k) : n → E) = v k • Pi.single k 1 by
     ext i; by_cases h : i = k <;> simp [h]]
