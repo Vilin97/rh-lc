@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.SgC
-import Development.AbelianVarietyTheory.Definitions.Foundations.MultipliableAndSgNeZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.SgC
+public import Development.AbelianVarietyTheory.Definitions.Foundations.MultipliableAndSgNeZero
+
+@[expose] public section
 
 noncomputable section
 

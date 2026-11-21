@@ -165,7 +165,8 @@ structure IsDiscMap {A' : Type} [CommRing A'] {u' : A'} {ρ' : ℝ≥0} (f : A �
 
 
 theorem _root_.GlobalTheory.BSP.isDiscMap_id :
-    _root_.GlobalTheory.BSP.IsDiscMap (RingHom.id A) (RingHom.id (_root_.GlobalTheory.BSP.Disc l u ρ)) :=
+    _root_.GlobalTheory.BSP.IsDiscMap (l := l) (u := u) (ρ := ρ)
+      (RingHom.id A) (RingHom.id (_root_.GlobalTheory.BSP.Disc l u ρ)) :=
   ⟨fun _ => rfl, fun _ => le_rfl⟩
 
 section Map
@@ -198,14 +199,17 @@ def preMap (f : A →+* A') : PreDisc l u ρ →+* PreDisc l u' ρ' :=
 
 
 theorem _root_.GlobalTheory.BSP.preMap_alg (f : A →+* A') (a : A) :
-    _root_.GlobalTheory.BSP.preMap l u ρ u' ρ' f (algebraMap A _ a) = algebraMap A' _ (f a) :=
+    _root_.GlobalTheory.BSP.preMap (l := l) (u := u) (ρ := ρ) (u' := u') (ρ' := ρ') f
+      (algebraMap A _ a) = algebraMap A' _ (f a) :=
   IsLocalization.Away.lift_eq _ _ a
 
 
 theorem _root_.GlobalTheory.BSP.preMap_inv (f : A →+* A') :
-    _root_.GlobalTheory.BSP.preMap l u ρ u' ρ' f (IsLocalization.Away.invSelf (l : A)) =
+    _root_.GlobalTheory.BSP.preMap (l := l) (u := u) (ρ := ρ) (u' := u') (ρ' := ρ') f
+      (IsLocalization.Away.invSelf (l : A)) =
       IsLocalization.Away.invSelf (l : A') := by
-  have h := congrArg (_root_.GlobalTheory.BSP.preMap l u ρ u' ρ' f)
+  have h := congrArg (_root_.GlobalTheory.BSP.preMap
+    (l := l) (u := u) (ρ := ρ) (u' := u') (ρ' := ρ') f)
     (IsLocalization.Away.mul_invSelf (S := _root_.GlobalTheory.BSP.PreDisc l u ρ) (l : A))
   rw [map_mul, map_one, _root_.GlobalTheory.BSP.preMap_alg, map_natCast] at h
   exact (IsLocalization.Away.algebraMap_isUnit (S := _root_.GlobalTheory.BSP.PreDisc l u' ρ') (l : A')).mul_left_cancel
@@ -225,14 +229,16 @@ private lemma preDisc_norm_pow_le_norm_pow (x : _root_.GlobalTheory.BSP.PreDisc 
 
 theorem _root_.GlobalTheory.BSP.norm_preMap_le [hl : Fact l.Prime] (f : A →+* A')
     (h : ‖_root_.GlobalTheory.BSP.toDisc l u' ρ' (f u)‖ ≤ ρ) (y : _root_.GlobalTheory.BSP.PreDisc l u ρ) :
-    ‖_root_.GlobalTheory.BSP.preMap l u ρ u' ρ' f y‖ ≤ ‖y‖ := by
+    ‖_root_.GlobalTheory.BSP.preMap (l := l) (u := u) (ρ := ρ)
+      (u' := u') (ρ' := ρ') f y‖ ≤ ‖y‖ := by
   have hl0 : (0 : ℝ) < l := Nat.cast_pos.mpr hl.out.pos
   have hfu : ‖algebraMap A' (_root_.GlobalTheory.BSP.PreDisc l u' ρ') (f u)‖ ≤ ρ := by
     have h' := h
     change ‖_root_.GlobalTheory.BSP.ofPre l u' ρ' (algebraMap A' _ (f u))‖ ≤ _ at h'
     rwa [_root_.GlobalTheory.BSP.norm_ofPre] at h'
   have key : ∀ r : ℝ, 0 ≤ r → ∀ z ∈ _root_.GlobalTheory.BSP.ball l u ρ r,
-      ‖_root_.GlobalTheory.BSP.preMap l u ρ u' ρ' f z‖ ≤ r := by
+      ‖_root_.GlobalTheory.BSP.preMap (l := l) (u := u) (ρ := ρ)
+        (u' := u') (ρ' := ρ') f z‖ ≤ r := by
     intro r hr z hz
     induction hz using Submodule.span_induction with
     | mem z hz =>
@@ -244,7 +250,8 @@ theorem _root_.GlobalTheory.BSP.norm_preMap_le [hl : Fact l.Prime] (f : A →+* 
         rw [pow_zero, mul_one, div_mul_cancel₀ _ (by positivity)]
       have hpow : ‖algebraMap A' (_root_.GlobalTheory.BSP.PreDisc l u' ρ') (f u) ^ b‖ ≤ (ρ : ℝ) ^ b :=
         (preDisc_norm_pow_le_norm_pow _ b).trans (pow_le_pow_left₀ (norm_nonneg _) hfu b)
-      have himg : _root_.GlobalTheory.BSP.preMap l u ρ u' ρ' f
+      have himg : _root_.GlobalTheory.BSP.preMap (l := l) (u := u) (ρ := ρ)
+          (u' := u') (ρ' := ρ') f
           (algebraMap A _ ((l : A) ^ a * u ^ b) * IsLocalization.Away.invSelf (l : A) ^ c) =
           (algebraMap A' (_root_.GlobalTheory.BSP.PreDisc l u' ρ') ((l : A') ^ a) *
             IsLocalization.Away.invSelf (l : A') ^ c) *
@@ -270,13 +277,16 @@ theorem _root_.GlobalTheory.BSP.norm_preMap_le [hl : Fact l.Prime] (f : A →+* 
   exact key t ((norm_nonneg y).trans ht.le) y (_root_.GlobalTheory.BSP.mem_ball_of_gauge_lt l u ρ ht)
 
 def Disc.map [Fact l.Prime] (f : A →+* A') (h : ‖toDisc l u' ρ' (f u)‖ ≤ ρ) : Disc l u ρ →+* Disc l u' ρ' :=
-  UniformSpace.Completion.mapRingHom (preMap l u ρ u' ρ' f)
-    (AddMonoidHomClass.continuous_of_bound _ 1 fun y => (norm_preMap_le f h y).trans (one_mul _).ge)
+  UniformSpace.Completion.mapRingHom (preMap (l := l) (u := u) (ρ := ρ)
+    (u' := u') (ρ' := ρ') f)
+    (AddMonoidHomClass.continuous_of_bound _ 1 fun y =>
+      (norm_preMap_le (l := l) (u := u) (ρ := ρ) f h y).trans (one_mul _).ge)
 
 
 theorem _root_.GlobalTheory.BSP.isDiscMap_map [Fact l.Prime] (f : A →+* A')
     (h : ‖_root_.GlobalTheory.BSP.toDisc l u' ρ' (f u)‖ ≤ ρ) :
-    _root_.GlobalTheory.BSP.IsDiscMap f (_root_.GlobalTheory.BSP.Disc.map f h) := by
+    _root_.GlobalTheory.BSP.IsDiscMap (l := l) (u := u) (ρ := ρ)
+      f (_root_.GlobalTheory.BSP.Disc.map f h) := by
   refine ⟨fun a => ?_, fun x => ?_⟩
   · change UniformSpace.Completion.mapRingHom _ _
         ((algebraMap A (_root_.GlobalTheory.BSP.PreDisc l u ρ) a :
@@ -297,20 +307,20 @@ theorem _root_.GlobalTheory.BSP.isDiscMap_map [Fact l.Prime] (f : A →+* A')
         ‖(y : UniformSpace.Completion (_root_.GlobalTheory.BSP.PreDisc l u ρ))‖
       rw [UniformSpace.Completion.mapRingHom_coe]
       exact (_root_.GlobalTheory.BSP.norm_ofPre l u' ρ' _).trans_le
-        ((_root_.GlobalTheory.BSP.norm_preMap_le f h y).trans
+        ((_root_.GlobalTheory.BSP.norm_preMap_le (l := l) (u := u) (ρ := ρ) f h y).trans
           (_root_.GlobalTheory.BSP.norm_ofPre l u ρ y).ge)
 
 
 theorem _root_.GlobalTheory.BSP.IsDiscMap.unique {f : A →+* A'}
     {F G : _root_.GlobalTheory.BSP.Disc l u ρ →+* _root_.GlobalTheory.BSP.Disc l u' ρ'}
-    (hF : _root_.GlobalTheory.BSP.IsDiscMap f F)
-    (hG : _root_.GlobalTheory.BSP.IsDiscMap f G) : F = G := by
+    (hF : _root_.GlobalTheory.BSP.IsDiscMap (l := l) (u := u) (ρ := ρ) f F)
+    (hG : _root_.GlobalTheory.BSP.IsDiscMap (l := l) (u := u) (ρ := ρ) f G) : F = G := by
   have hFc : Continuous F := AddMonoidHomClass.continuous_of_bound F 1 fun x => by
     simpa using hF.norm_le x
   have hGc : Continuous G := AddMonoidHomClass.continuous_of_bound G 1 fun x => by
     simpa using hG.norm_le x
   have hinv : ∀ H : _root_.GlobalTheory.BSP.Disc l u ρ →+* _root_.GlobalTheory.BSP.Disc l u' ρ',
-      _root_.GlobalTheory.BSP.IsDiscMap f H →
+      _root_.GlobalTheory.BSP.IsDiscMap (l := l) (u := u) (ρ := ρ) f H →
       H (_root_.GlobalTheory.BSP.ofPre l u ρ (IsLocalization.Away.invSelf (l : A))) *
         _root_.GlobalTheory.BSP.toDisc l u' ρ' (l : A') = 1 := by
     intro H hH

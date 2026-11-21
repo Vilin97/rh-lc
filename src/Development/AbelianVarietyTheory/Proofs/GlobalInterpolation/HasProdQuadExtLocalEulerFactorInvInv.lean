@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.LocalDualIndex
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsSubConjNotMem
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.IsFieldAdicCompletionTensorOfInert
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NotIsFieldAdicCompletionTensorOfSplit
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.QuadraticUnramifiedIffInertOrSplit
-import Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.LocalDualIndex
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsSubConjNotMem
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.IsFieldAdicCompletionTensorOfInert
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NotIsFieldAdicCompletionTensorOfSplit
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.QuadraticUnramifiedIffInertOrSplit
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
+
+@[expose] public section
 
 noncomputable section
 
@@ -208,7 +212,6 @@ def below (F : Type) [Field F] [NumberField F] [Algebra F E] (P : {P : Ideal (�
   HeightOneSpectrum.under (𝓞 F) (⟨P.1, P.2.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField P.2
     (RingOfIntegers.not_isField E)⟩ : HeightOneSpectrum (𝓞 E))
 
-omit [StarRing E] in
 
 def fibreEquiv (v : HeightOneSpectrum (𝓞 F)) :
     {P : {P : Ideal (𝓞 E) // P.IsMaximal} // below F P = v} ≃ v.asIdeal.primesOver (𝓞 E) where

@@ -56,7 +56,7 @@ variable {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValu
 variable {π : 𝒪[K]} (hπ : Irreducible π) {f : PowerSeries 𝒪[K]}
 
 theorem ordRat_primitive (hf : IsLubinTateSeries π f) {n : ℕ}
-    {l : IdealPoint Ω (lubinTateFormalGroup hπ hf)} (hl : l ∈ lubinTateTorsion Ω hf n)
+    {l : IdealPoint (Ω := Ω) (lubinTateFormalGroup hπ hf)} (hl : l ∈ lubinTateTorsion Ω hf n)
     (hl' : l ∉ lubinTateTorsion Ω hf (n - 1)) :
     ordRat K l.val = 1 / ((_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (lubinTateField Ω hπ hf n)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) : ℚ) := by
   obtain ⟨y, hy⟩ := exists_integer_eq (val_mem_lubinTateField hπ hf hl) l.valuation_lt_one
@@ -67,7 +67,7 @@ theorem ordRat_primitive (hf : IsLubinTateSeries π f) {n : ℕ}
   simpa using h
 
 theorem smul_primitive (hf : IsLubinTateSeries π f) {n k : ℕ} (hk : k < n)
-    {l : IdealPoint Ω (lubinTateFormalGroup hπ hf)} (hl : l ∈ lubinTateTorsion Ω hf n)
+    {l : IdealPoint (Ω := Ω) (lubinTateFormalGroup hπ hf)} (hl : l ∈ lubinTateTorsion Ω hf n)
     (hl' : l ∉ lubinTateTorsion Ω hf (n - 1)) {w : 𝒪[K]} (hw : ¬ π ∣ w) :
     (π ^ k * w) • l ∈ lubinTateTorsion Ω hf (n - k) ∧
       (π ^ k * w) • l ∉ lubinTateTorsion Ω hf (n - k - 1) := by
@@ -89,7 +89,7 @@ theorem adjoin_eq_top_of_irreducible_of_residueDegree_eq_one {L : Type*} [Field 
     [TopologicalSpace L] [IsNonarchimedeanLocalField L] [Algebra K L] [ValuativeExtension K L]
     [FiniteDimensional K L] (h : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1) {x : 𝒪[L]} (hx : Irreducible x) :
     Algebra.adjoin 𝒪[K] {x} = ⊤ := by
-  refine adjoin_eq_top_of_residue_of_addVal_eq_one K ?_ (Algebra.self_mem_adjoin_singleton _ _)
+  refine adjoin_eq_top_of_residue_of_addVal_eq_one (K := K) ?_ (Algebra.self_mem_adjoin_singleton _ _)
     (addVal_uniformizer hx)
   have h1 : Module.finrank 𝓀[K] 𝓀[L] = 1 := by rw [← residueDegree_eq_finrank K L]; exact h
   rw [eq_top_iff, ← Subalgebra.bot_eq_top_of_finrank_eq_one h1]

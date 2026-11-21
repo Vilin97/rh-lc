@@ -42,7 +42,7 @@ def ptMap {H X : Type} [Group H] [MulAction G X] (φ : H →* G) (x : X) (hx : �
 
 
 def ptH {H X : Type} [Group H] [MulAction G X] (φ : H →* G) (x : X) (hx : ∀ h, φ h • x = x) (n : ℕ) :
-    groupHomology (Rep.trivial k H k) n ⟶ groupHomology (perm k G X) n :=
+    groupHomology (Rep.trivial k H k) n ⟶ groupHomology (perm (k := k) (G := G) X) n :=
   groupHomology.map (A := Rep.trivial k H k) φ (ptMap φ x hx (Rep.trivial k G k)) n
 
 abbrev hMap {A B : Rep k G} (f : A ⟶ B) (n : ℕ) : groupHomology A n ⟶ groupHomology B n :=

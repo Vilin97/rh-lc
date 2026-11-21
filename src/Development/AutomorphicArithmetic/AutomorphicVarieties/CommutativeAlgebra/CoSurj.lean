@@ -1,11 +1,71 @@
 module
 
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+public import Mathlib
 public import Mathlib.RingTheory.AdicCompletion.Functoriality
 
 @[expose] public section
 
-open IsLocalRing MvPowerSeries UpperTheory.V.Alg
+open IsLocalRing MvPowerSeries
+
+namespace UpperTheory.V.Alg
+
+class IsCO (O R : Type) [CommRing O] [IsLocalRing O] [CommRing R] [Algebra O R] : Prop
+    extends IsLocalRing R, IsNoetherianRing R where
+  complete : IsAdicComplete (maximalIdeal R) R
+  isLocalHom : IsLocalHom (algebraMap O R)
+  res_surj : ∀ x : R, ∃ a : O, x - algebraMap O R a ∈ maximalIdeal R
+
+attribute [instance] IsCO.complete IsCO.isLocalHom
+
+theorem resMap_bijective (O R : Type) [CommRing O] [IsLocalRing O] [CommRing R]
+    [Algebra O R] [IsCO O R] : Function.Bijective (ResidueField.map (algebraMap O R)) := by
+  refine ⟨(ResidueField.map (algebraMap O R)).injective, fun y => ?_⟩
+  obtain ⟨x, rfl⟩ := residue_surjective y
+  obtain ⟨a, ha⟩ := IsCO.res_surj (O := O) x
+  refine ⟨residue O a, ?_⟩
+  rw [ResidueField.map_residue]
+  exact ((Ideal.Quotient.eq).2 ha).symm
+
+noncomputable def res (O R : Type) [CommRing O] [IsLocalRing O] [CommRing R]
+    [Algebra O R] [IsCO O R] : R →ₐ[O] ResidueField O :=
+  { ((RingEquiv.ofBijective _ (resMap_bijective O R)).symm.toRingHom.comp (residue R)) with
+    commutes' := fun a => by
+      show (RingEquiv.ofBijective _ (resMap_bijective O R)).symm
+        (residue R (algebraMap O R a)) = residue O a
+      rw [RingEquiv.symm_apply_eq]
+      exact (ResidueField.map_residue _ _).symm }
+
+theorem res_eq_zero_iff (O R : Type) [CommRing O] [IsLocalRing O] [CommRing R]
+    [Algebra O R] [IsCO O R] (x : R) : res O R x = 0 ↔ x ∈ maximalIdeal R := by
+  show (RingEquiv.ofBijective _ (resMap_bijective O R)).symm (residue R x) = 0 ↔ _
+  rw [map_eq_zero_iff _ (RingEquiv.injective _), residue_eq_zero_iff]
+
+theorem res_map {O R : Type} [CommRing O] [IsLocalRing O] [CommRing R]
+    [Algebra O R] [IsCO O R] {R' : Type} [CommRing R'] [Algebra O R'] [IsCO O R']
+    (f : R →ₐ[O] R') (x : R) : res O R' (f x) = res O R x := by
+  obtain ⟨a, ha⟩ := IsCO.res_surj (O := O) x
+  have h1 : res O R x = algebraMap O _ a := by
+    have := (res_eq_zero_iff O R _).2 ha
+    rwa [map_sub, AlgHom.commutes, sub_eq_zero] at this
+  have hm : ∀ y ∈ maximalIdeal R, f y ∈ maximalIdeal R' := fun y hy => by
+    obtain ⟨b, hb⟩ := IsCO.res_surj (O := O) (f y)
+    by_cases hu : IsUnit b
+    · exfalso
+      have h2 : IsUnit (y - algebraMap O R b) := by
+        by_contra hn
+        have h3 : y - algebraMap O R b ∈ maximalIdeal R := hn
+        have h4 : algebraMap O R b ∈ maximalIdeal R := by simpa using Ideal.sub_mem _ hy h3
+        exact h4 (hu.map _)
+      have h5 := h2.map f
+      rw [map_sub, AlgHom.commutes] at h5
+      exact hb h5
+    · have h6 : algebraMap O R' b ∈ maximalIdeal R' := fun h => hu (IsLocalHom.map_nonunit b h)
+      simpa using Ideal.add_mem _ hb h6
+  have h2 := (res_eq_zero_iff O R' _).2 (hm _ ha)
+  rw [map_sub, map_sub, AlgHom.commutes, AlgHom.commutes, sub_eq_zero] at h2
+  rw [h2, h1]
+
+end UpperTheory.V.Alg
 
 theorem UpperTheory.V.Alg.co_surj :
     ∀ (O : Type) [CommRing O] [IsLocalRing O] (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (R' : Type) [CommRing R'] [Algebra O R'] [IsCO O R'] (f : R →ₐ[O] R'), maximalIdeal R' ≤ (maximalIdeal R).map f ⊔ maximalIdeal R' ^ 2 → Function.Surjective f := by

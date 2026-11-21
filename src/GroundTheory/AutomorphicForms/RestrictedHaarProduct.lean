@@ -90,7 +90,9 @@ def proj (T : Finset ι) : (Πʳ i, [G i, (C i : Set (G i))]) →* ((i : T) → 
 theorem proj_apply (T : Finset ι) (x : Πʳ i, [G i, (C i : Set (G i))]) (i : T) : proj C T x i = x i := rfl
 
 
-def secFun (T : Finset ι) (a : (i : T) → G i) (i : ι) : G i := if h : i ∈ T then a ⟨i, h⟩ else 1
+def secFun (T : Finset ι) (a : (i : T) → G i) (i : ι) : G i := by
+  classical
+  exact if h : i ∈ T then a ⟨i, h⟩ else 1
 
 theorem secFun_of_mem {T : Finset ι} (a : (i : T) → G i) {i : ι} (h : i ∈ T) :
     secFun T a i = a ⟨i, h⟩ := by
@@ -178,7 +180,12 @@ theorem isCompact_box_inter_preimage [∀ i, IsTopologicalGroup (G i)] [∀ i, T
   have hZc : IsCompact Z := by
     rw [(RestrictedProduct.isEmbedding_coe_of_principal (R := G) (A := fun i ↦ (C i : Set (G i)))
       (S := S)).isCompact_iff, hZ, image_preimage_eq_inter_range, RestrictedProduct.range_coe_principal]
-    rw [inter_eq_left.2 fun x hx ↦ hx.2]
+    have hsubset : W ⊆ S.pi (fun i ↦ (C i : Set (G i))) := by
+      intro x hx
+      rw [hW] at hx
+      change ∀ i ∈ S, x i ∈ C i
+      exact hx.2
+    rw [inter_eq_left.2 hsubset]
     exact hWc
   have heq : (box C T : Set (Πʳ i, [G i, (C i : Set (G i))])) ∩ proj C T ⁻¹' E =
       RestrictedProduct.inclusion G (fun i ↦ (C i : Set (G i))) hS '' Z := by

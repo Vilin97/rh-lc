@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 
@@ -31,7 +35,6 @@ def IsBun (L : C.I → AddSubgroup V) : Prop :=
   (∀ i, ∃ b : Module.Basis (Fin (Module.finrank K V)) K V, IsLatOf C i b (L i)) ∧
     ∃ b : Module.Basis (Fin (Module.finrank K V)) K V, {i | ¬ IsLatOf C i b (L i)}.Finite
 
-open Classical in
 
 def locBasis [FiniteDimensional K V] (i : C.I) (L : AddSubgroup V) :
     Module.Basis (Fin (Module.finrank K V)) K V :=

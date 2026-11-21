@@ -43,7 +43,9 @@ def Zs (j₀ : Fin m) (p : Fin (D + 1) × Fin m) : Prop := p.1 ≠ 0 ∧ p.2 = j
 instance (j₀ : Fin m) : DecidablePred (Zs (D := D) j₀) := fun p => by unfold Zs; infer_instance
 
 
-abbrev CT (j₀ : Fin m) : Type := MvPolynomial {p : Fin (D + 1) × Fin m // ¬ Zs j₀ p} Ω
+variable (Ω D) in
+abbrev CT (j₀ : Fin m) : Type :=
+  MvPolynomial {p : Fin (D + 1) × Fin m // ¬ Zs j₀ p} Ω
 
 def xv (j₀ : Fin m) (p : Fin (D + 1) × Fin m) : CT Ω D j₀ :=
   if h : Zs j₀ p then 0 else X ⟨p, h⟩

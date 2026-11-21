@@ -41,15 +41,14 @@ def weightedDerivCLM (k m : ℕ) :
   SchwartzMap.mkCLMtoNormedSpace (σ := RingHom.id ℂ) (weightedDeriv k m)
     (fun f g => by
       ext x : 1
-      simp only [weightedDeriv_apply, BoundedContinuousFunction.coe_add, Pi.add_apply, SchwartzMap.add_apply]
-      rw [show ⇑(f + g) = ⇑f + ⇑g from rfl, iteratedFDeriv_add_apply ((f.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt
+      simp only [weightedDeriv_apply, add_apply, FunLike.coe_add]
+      rw [iteratedFDeriv_add_apply ((f.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt
         ((g.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt, smul_add])
     (fun a f => by
       ext x : 1
-      simp only [weightedDeriv_apply, BoundedContinuousFunction.coe_smul, Pi.smul_apply,
-        RingHom.id_apply]
-      rw [show ⇑(a • f) = a • ⇑f from rfl,
-        iteratedFDeriv_const_smul_apply ((f.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt, smul_comm])
+      simp only [weightedDeriv_apply, FunLike.coe_smul, Pi.smul_apply, RingHom.id_apply]
+      rw [iteratedFDeriv_const_smul_apply ((f.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt,
+        smul_comm])
     ⟨{(k, m)}, 1, zero_le_one, fun f => by
       simpa [Finset.sup_singleton, SchwartzMap.schwartzSeminormFamily_apply] using norm_weightedDeriv_le k m f⟩
 

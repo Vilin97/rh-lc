@@ -40,8 +40,8 @@ theorem toNNReal_exp {e : ℝ≥0} (he : e ≠ 0) (n : ℤ) :
     WithZeroMulInt.toNNReal he (WithZero.exp n) = e ^ n := by
   have h : WithZero.exp n = ((Multiplicative.ofAdd n : Multiplicative ℤ) :
       WithZero (Multiplicative ℤ)) := rfl
-  rw [h, WithZeroMulInt.toNNReal_neg_apply he WithZero.coe_ne_zero, WithZero.unzero_coe]
-  rfl
+  rw [h, WithZeroMulInt.toNNReal_neg_apply he (by simp)]
+  rw [← h, WithZero.log_exp]
 
 theorem abv_p : abv p (p : KK p) = (p : ℝ)⁻¹ := by
   have h : (p : KK p) = algebraMap (WW p) (KK p) (p : WW p) := by simp
@@ -199,5 +199,6 @@ theorem complete : CompleteSpace (KK p) := by
 
 end WModel
 
+open WModel
 
 end Formalism.InvariantFactorPaths.G7

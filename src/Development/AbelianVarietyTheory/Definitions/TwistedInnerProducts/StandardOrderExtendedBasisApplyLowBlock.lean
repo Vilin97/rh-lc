@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.SimpleSum
-import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ValuationDetOfMemKO
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.SimpleSum
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ValuationDetOfMemKO
+
+@[expose] public section
 
 open MeasureTheory ValuativeRel Matrix
 

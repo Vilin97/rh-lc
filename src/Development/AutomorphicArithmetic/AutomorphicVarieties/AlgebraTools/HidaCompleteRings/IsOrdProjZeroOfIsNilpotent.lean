@@ -49,7 +49,9 @@ def IsFactLim (I : Ideal R) (U e : Module.End R M) : Prop :=
 
 
 noncomputable def ordProj (I : Ideal R) (U : Module.End R M) : Module.End R M :=
-  if h : ∃ e, IsOrdProj I U e then h.choose else 0
+  by
+    classical
+    exact if h : ∃ e, IsOrdProj I U e then h.choose else 0
 
 theorem isOrdProj_ordProj {I : Ideal R} {U : Module.End R M} (h : ∃ e, IsOrdProj I U e) :
     IsOrdProj I U (ordProj I U) := by

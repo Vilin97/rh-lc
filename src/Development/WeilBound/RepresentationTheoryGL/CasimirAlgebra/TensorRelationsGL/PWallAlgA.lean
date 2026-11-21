@@ -88,7 +88,16 @@ theorem contr (E₁ E₂ : Fin n → Fin n → Module.End ℂ M) {m : ℕ} (c : 
     rw [Finset.sum_ite_eq]
     simp only [Finset.mem_univ, if_true]
     congr 1
-    split_ifs <;> subst_vars <;> simp_all
+    funext x
+    by_cases hxp : x = p
+    · subst x
+      simp [hpj]
+    · by_cases hxj : x = j
+      · subst x
+        simp [hxp, hpj]
+      · simp only [Function.update_of_ne hxp, Function.update_of_ne hxj]
+        change I x = I (Equiv.swap j p x)
+        rw [Equiv.swap_apply_of_ne_of_ne hxj hxp]
   rw [h1, Finset.sum_congr rfl h2, hR] at key
   simp only [Pi.add_apply, Pi.smul_apply, Om_apply, Finset.sum_apply, pm_apply, Finset.filter_ne']
   rw [← key]

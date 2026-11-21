@@ -84,18 +84,20 @@ theorem _root_.GlobalTheory.QuotLocInt.integrableOn_compact : ∀ (G : Type) [Gr
   have hL2 : eLpNorm (fun x => F (Quotient.mk (QuotientGroup.rightRel Γ) x)) 2 (μ.restrict C) ≤
       ENNReal.ofReal n ^ (1/2 : ℝ) *
         eLpNorm F 2 ((μ.restrict 𝓕).map (Quotient.mk (QuotientGroup.rightRel Γ))) := by
-    rw [MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top,
-      MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top]
+    rw [eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top
+        hf.aestronglyMeasurable,
+      eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top
+        (Lp.aestronglyMeasurable F)]
     simp only [ENNReal.toReal_ofNat]
     rw [← ENNReal.mul_rpow_of_nonneg _ _ (by norm_num : (0 : ℝ) ≤ 1 / 2)]
     refine ENNReal.rpow_le_rpow ?_ (by norm_num)
     calc ∫⁻ x in C, ‖F (Quotient.mk (QuotientGroup.rightRel Γ) x)‖ₑ ^ (2 : ℝ) ∂μ
         ≤ ENNReal.ofReal n * ∫⁻ x in 𝓕, ‖F (Quotient.mk (QuotientGroup.rightRel Γ) x)‖ₑ ^ (2 : ℝ) ∂μ :=
           lintegral_compact_le_mul_lintegral_fundamentalDomain G μ Γ 𝓕 h𝓕 C hC n hn _
-            ((hF.measurable.enorm.pow_const _).comp hπ) fun γ x => by
+            ((hF.measurable.eNorm.pow_const _).comp hπ) fun γ x => by
               rw [show Quotient.mk (QuotientGroup.rightRel Γ) (γ • x) = Quotient.mk _ x from
                 Quotient.sound (QuotientGroup.rightRel_apply.2 (by simp [Subgroup.smul_def, mul_inv_rev]))]
-      _ = _ := by rw [lintegral_map (hF.measurable.enorm.pow_const _) hπ]
+      _ = _ := by rw [lintegral_map (hF.measurable.eNorm.pow_const _) hπ]
   have hL1 : eLpNorm (fun x => F (Quotient.mk (QuotientGroup.rightRel Γ) x)) 1 (μ.restrict C) ≤
       ENNReal.ofReal n ^ (1/2 : ℝ) * μ C ^ (1/2 : ℝ) *
         eLpNorm F 2 ((μ.restrict 𝓕).map (Quotient.mk (QuotientGroup.rightRel Γ))) := by
@@ -112,9 +114,9 @@ theorem _root_.GlobalTheory.QuotLocInt.integrableOn_compact : ∀ (G : Type) [Gr
     refine ENNReal.mul_lt_top (ENNReal.mul_lt_top ?_ ?_) (Lp.eLpNorm_lt_top F)
     · exact ENNReal.rpow_lt_top_of_nonneg (by norm_num) ENNReal.ofReal_ne_top
     · exact ENNReal.rpow_lt_top_of_nonneg (by norm_num) hC.measure_lt_top.ne
-  refine ⟨memLp_one_iff_integrable.1 ⟨hf.aestronglyMeasurable, hL1.trans_lt hfin⟩, ?_⟩
-  rw [integral_norm_eq_lintegral_enorm hf.aestronglyMeasurable, ← eLpNorm_one_eq_lintegral_enorm,
-    Lp.norm_def, ← ENNReal.toReal_mul]
+  refine ⟨memLp_one_iff_integrable.1 (hL1.trans_lt hfin), ?_⟩
+  rw [integral_norm_eq_lintegral_eNorm hf.aestronglyMeasurable,
+    ← eLpNorm_one_eq_lintegral_eNorm hf.aestronglyMeasurable, Lp.norm_def, ← ENNReal.toReal_mul]
   exact ENNReal.toReal_mono hfin.ne hL1
 
 end GlobalTheory.QuotLocInt

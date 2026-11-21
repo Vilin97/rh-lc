@@ -1,14 +1,18 @@
-import Formalism.PieriBlockIdeals.BlockIdealBound5Derived
-import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
-import Formalism.PieriBlockIdeals.PieriColumnMinors.UnitNormBounds
-import Mathlib
-import Formalism.PieriBlockIdeals.Statement
-import Formalism.RankGapBounds.LargePrimeFactor
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LabelSumNeedsLeFalse
-import Formalism.GradedWeylDivisibility.FinalC
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDbasisLemmas
-import Formalism.RankGapBounds.RankGapProofs.FormsTensorLocalization
-import Formalism.PieriBlockIdeals.PieriColumnMinors.RegularCuspidalTrace
+module
+
+public import Formalism.PieriBlockIdeals.BlockIdealBound5Derived
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.UnitNormBounds
+public import Mathlib
+public import Formalism.PieriBlockIdeals.Statement
+public import Formalism.RankGapBounds.LargePrimeFactor
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LabelSumNeedsLeFalse
+public import Formalism.GradedWeylDivisibility.FinalC
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDbasisLemmas
+public import Formalism.RankGapBounds.RankGapProofs.FormsTensorLocalization
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.RegularCuspidalTrace
+
+@[expose] public section
 
 noncomputable section
 
@@ -567,7 +571,6 @@ theorem theorem_w_top_of_simple_quotients (hSS : SimpleSubquotOfPower) (hIso : S
     hclass hhw hIN1 hexO hIN2
   exact ⟨hmain, Nat.sInf_le hmain⟩
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
 theorem weight_theorem_top : TheoremWTop := theorem_w_top_of_simple_quotients simple_subquotient_of_power_holds subquotient_iso_holds
 
@@ -594,7 +597,6 @@ theorem top_inclusion_monotone_holds : TopInclMono := by
     exact Submodule.smul_mem _ _ hx
   · rw [← LocalizedModule.smul'_mk, hxs, smul_smul, ← pow_add, add_comm]
 
-open Formalism.RankGapBounds.ChebyshevFactorialBounds in
 
 theorem depth_as_weight_sum_holds : DepthAsU := by
   intro N c lam w

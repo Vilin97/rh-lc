@@ -121,6 +121,7 @@ theorem S_U {p q p' q' : R} {w : Rˣ} (hp : w.val * p' = p * w.val) (hq : w.val 
   S_conj (fun _ => conj_mem hp hq) (fun _ => conj_mem (inv_rel hp) (inv_rel hq)) v
 
 
+variable (π) in
 def OppInj (p q : R) : Prop := ∀ v : V, (∀ u ∈ U p q, π u v = v) → S π (U q p) v = 0 → v = 0
 
 theorem step {a b c d : R} (aa : a * a = a) (bb : b * b = b) (cc : c * c = c) (dd : d * d = d)

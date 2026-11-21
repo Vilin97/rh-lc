@@ -111,11 +111,11 @@ theorem finite_eigenvalues_norm_ge (hT : IsCompactOperator T) (hT' : IsSelfAdjoi
     intro h
     have := f.injective (Subtype.ext h)
     exact (hψ (Nat.lt_succ_self N)).ne this.symm
-  have horth : ⟪v a, v b⟫ = 0 := by
+  have horth : ⟪v a, v b⟫_𝕜 = 0 := by
     have := hS.orthogonalFamily_eigenspaces hne ⟨v a, mem_eigenspace_iff.2 (hvT a)⟩
       ⟨v b, mem_eigenspace_iff.2 (hvT b)⟩
     simpa using this
-  have hx : ⟪T (v a), T (v b)⟫ = 0 := by
+  have hx : ⟪T (v a), T (v b)⟫_𝕜 = 0 := by
     rw [hvT, hvT, inner_smul_left, inner_smul_right, horth, mul_zero, mul_zero]
   have hnx : ε ≤ ‖T (v a)‖ := by
     rw [hvT, norm_smul, hvn, mul_one]
@@ -155,14 +155,14 @@ theorem exists_hilbertBasis_eigenvectors_hasSum {T : E →L[𝕜] E} (hT : IsCom
     (hT' : IsSelfAdjoint T) :
     ∃ (s : Set E) (b : HilbertBasis s 𝕜 E) (l : s → ℝ), ⇑b = ((↑) : s → E) ∧
       (∀ i, T (b i) = (l i : 𝕜) • b i) ∧
-      (∀ x, HasSum (fun i => ((l i : 𝕜) * ⟪b i, x⟫) • b i) (T x)) ∧
+      (∀ x, HasSum (fun i => ((l i : 𝕜) * ⟪b i, x⟫_𝕜) • b i) (T x)) ∧
       ∀ ε > 0, {i | ε ≤ |l i|}.Finite := by
   obtain ⟨s, b, hb, hs⟩ := exists_hilbertBasis_eigenvectors hT hT'
   choose l hl using fun i : s => hs i i.2
   have hTb : ∀ i, T (b i) = (l i : 𝕜) • b i := fun i => by rw [hb]; exact hl i
   refine ⟨s, b, l, hb, hTb, fun x => ?_, fun ε hε => ?_⟩
-  · have h := T.hasSum (b.hasSum_repr x)
-    convert h using 1
+  · simpa only [map_smul, hTb, smul_smul, b.repr_apply_apply, mul_comm] using
+      T.hasSum (b.hasSum_repr x)
   · have hF := finite_eigenvalues_norm_ge hT hT' hε
     have hsub : {i | ε ≤ |l i|} ⊆ ⋃ μ ∈ {μ : 𝕜 | HasEigenvalue (T : E →ₗ[𝕜] E) μ ∧ ε ≤ ‖μ‖},
         {i | b i ∈ eigenspace (T : E →ₗ[𝕜] E) μ} := by

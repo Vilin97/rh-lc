@@ -88,11 +88,11 @@ namespace FullFlag
 
 variable {n : ℕ}
 
-abbrev Step (F : FullFlag R M n) (i : Fin n) : Type _ := SubQuot (F.sub i.castSucc) (F.sub i.succ)
+abbrev Step (F : FullFlag (R := R) (M := M) n) (i : Fin n) : Type _ := SubQuot (F.sub i.castSucc) (F.sub i.succ)
 
-instance (F : FullFlag R M n) (i : Fin n) : Module.Invertible R (F.Step i) := F.invertible_step i
+instance (F : FullFlag (R := R) (M := M) n) (i : Fin n) : Module.Invertible R (F.Step i) := F.invertible_step i
 
-theorem monotone (F : FullFlag R M n) : Monotone F.sub :=
+theorem monotone (F : FullFlag (R := R) (M := M) n) : Monotone F.sub :=
   Fin.monotone_iff_le_succ.2 F.castSucc_le_succ
 
 def basisStepEquiv (b : Basis (Fin n) R M) (i : Fin n) :
@@ -107,19 +107,19 @@ def basisStepEquiv (b : Basis (Fin n) R M) (i : Fin n) :
       · simp
       · simp [hx j (Fin.succ_le_castSucc_iff.mpr h), Finsupp.single_apply, h.ne])
 
-def ofBasis (b : Basis (Fin n) R M) : FullFlag R M n where
+def ofBasis (b : Basis (Fin n) R M) : FullFlag (R := R) (M := M) n where
   sub := b.flag
   sub_zero := b.flag_zero
   sub_last := b.flag_last
   castSucc_le_succ _ := b.flag_mono Fin.castSucc_lt_succ.le
   invertible_step i := Module.Invertible.congr (basisStepEquiv b i).symm
 
-def IsAdapted (F : FullFlag R M n) (b : Basis (Fin n) R M) : Prop := b.flag = F.sub
+def IsAdapted (F : FullFlag (R := R) (M := M) n) (b : Basis (Fin n) R M) : Prop := b.flag = F.sub
 
-theorem isAdapted_iff {F : FullFlag R M n} {b : Basis (Fin n) R M} :
+theorem isAdapted_iff {F : FullFlag (R := R) (M := M) n} {b : Basis (Fin n) R M} :
     F.IsAdapted b ↔ ofBasis b = F := ⟨fun h => FullFlag.ext h, fun h => h ▸ rfl⟩
 
-theorem exists_retraction (F : FullFlag R M n) (k : Fin (n + 1)) :
+theorem exists_retraction (F : FullFlag (R := R) (M := M) n) (k : Fin (n + 1)) :
     ∃ r : M →ₗ[R] M, (∀ x, r x ∈ F.sub k) ∧ ∀ x ∈ F.sub k, r x = x := by
   induction k using Fin.reverseInduction with
   | last => exact ⟨LinearMap.id, fun x => by simp [F.sub_last], fun _ _ => rfl⟩
@@ -142,7 +142,7 @@ theorem exists_retraction (F : FullFlag R M n) (k : Fin (n + 1)) :
       simp only [LinearMap.sub_apply, LinearMap.comp_apply, this, map_zero, hr₂ x hx']
       exact _root_.sub_zero x
 
-theorem exists_splitting (F : FullFlag R M n) (i : Fin n) :
+theorem exists_splitting (F : FullFlag (R := R) (M := M) n) (i : Fin n) :
     ∃ (π : M →ₗ[R] F.Step i) (σ : F.Step i →ₗ[R] M), (∀ l, π (σ l) = l) ∧
       (∀ x ∈ F.sub i.castSucc, π x = 0) ∧ (∀ l, σ l ∈ F.sub i.succ) ∧
       (∀ x ∈ F.sub i.succ, x - σ (π x) ∈ F.sub i.castSucc) := by
@@ -166,7 +166,7 @@ theorem exists_splitting (F : FullFlag R M n) (i : Fin n) :
     simp only [LinearMap.comp_apply, hr' ⟨x, hx⟩]
     exact this
 
-theorem exists_isAdapted_of_free (F : FullFlag R M n) (h : ∀ i, Module.Free R (F.Step i)) :
+theorem exists_isAdapted_of_free (F : FullFlag (R := R) (M := M) n) (h : ∀ i, Module.Free R (F.Step i)) :
     ∃ b : Basis (Fin n) R M, F.IsAdapted b := by
   choose π σ h₁ h₂ h₃ h₄ using F.exists_splitting
   have e : ∀ i, F.Step i ≃ₗ[R] R := fun i => (Module.Invertible.free_iff_linearEquiv.mp (h i)).some
@@ -216,7 +216,7 @@ theorem exists_isAdapted_of_free (F : FullFlag R M n) (h : ∀ i, Module.Free R 
   · rw [Basis.flag, Basis.coe_mk]
     exact hspan k
 
-theorem exists_isAdapted_of_isLocalRing [IsLocalRing R] (F : FullFlag R M n) :
+theorem exists_isAdapted_of_isLocalRing [IsLocalRing R] (F : FullFlag (R := R) (M := M) n) :
     ∃ b : Basis (Fin n) R M, F.IsAdapted b :=
   F.exists_isAdapted_of_free fun _ => Module.free_of_flat_of_isLocalRing
 

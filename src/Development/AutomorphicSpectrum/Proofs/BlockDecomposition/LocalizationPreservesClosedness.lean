@@ -63,7 +63,8 @@ theorem local_away_of_val {S : Type} [CommRing S] (π : S) (hV : Val π) (f : Lo
   exact Ideal.mem_span_singleton.2 d1
 
 
-theorem aic_away {S : Type} [CommRing S] (π : S) (hA : Aic S) : Aic (Localization.Away π) := by
+theorem aic_away {S : Type} [CommRing S] (π : S) (hA : Aic (S := S)) :
+    Aic (S := Localization.Away π) := by
   have hA' : ∀ P : Polynomial S, P.Monic → 0 < P.natDegree → ∃ x, P.IsRoot x := hA
   unfold Aic
   intro P hP hdeg
@@ -90,7 +91,8 @@ theorem aic_away {S : Type} [CommRing S] (π : S) (hA : Aic S) : Aic (Localizati
   exact (hs.pow _).mul_right_eq_zero.1 h1.symm
 
 theorem main : ∀ {S : Type} [CommRing S] (ϖ : S),
-    (Val ϖ → Loc S ∧ Loc (Localization.Away ϖ)) ∧ (Aic S → Aic (Localization.Away ϖ)) := by
+    (Val ϖ → Loc (S := S) ∧ Loc (S := Localization.Away ϖ)) ∧
+      (Aic (S := S) → Aic (S := Localization.Away ϖ)) := by
   intro S _ ϖ
   refine ⟨fun hV => ⟨?_, ?_⟩, fun hA => aic_away ϖ hA⟩
   · unfold Loc

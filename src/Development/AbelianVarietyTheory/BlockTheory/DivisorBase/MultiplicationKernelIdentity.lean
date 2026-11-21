@@ -35,7 +35,7 @@ def cofac (a : S → O) (τ : S) : RS a := ∏ s ∈ Finset.univ.erase τ, lin a
 
 def ev (a : S → O) (s : S) : RS a →ₐ[O] O :=
   AdjoinRoot.liftAlgHom _ (AlgHom.id O O) (a s) (by
-    rw [Polynomial.eval₂_finset_prod]
+    rw [Polynomial.eval₂_finsetProd]
     exact Finset.prod_eq_zero (Finset.mem_univ s) (by simp))
 
 def comp (a : S → O) (N : ℕ) (s : S) : (Fin N → RS a) →ₗ[O] (Fin N → O) :=

@@ -17,7 +17,6 @@ variable {C : Type} [NontriviallyNormedField C] [CompleteSpace C]
 def AbsSumAt (u : C) (f : PowerSeries C) (c : C) : Prop :=
   (Summable fun n => ‖PowerSeries.coeff n f * u ^ n‖) ∧ ∑' n, PowerSeries.coeff n f * u ^ n = c
 
-
 theorem AbsSumAt.add {u : C} {f g : PowerSeries C} {a b : C} (hf : AbsSumAt u f a) (hg : AbsSumAt u g b) :
     AbsSumAt u (f + g) (a + b) := by
   constructor

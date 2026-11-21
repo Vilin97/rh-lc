@@ -182,7 +182,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordFinLen :
   · rw [LinearMap.mem_ker.1 (he4 x)]; exact zero_mem _
 
 theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordLimProj :
-    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm M I → ∀ (U : Module.End R M), ∃ e : Module.End R M, ∀ k : ℕ, ∃ (Uk ek : Module.End R (M ⧸ (I ^ k • ⊤ : Submodule R M))) (n : ℕ), (∀ x, Uk (Submodule.Quotient.mk x) = Submodule.Quotient.mk (U x)) ∧ IsOrdProj ⊥ Uk ek ∧ (∀ y, (Uk ^ n) (y - ek y) = 0) ∧ ∀ x, ek (Submodule.Quotient.mk x) = Submodule.Quotient.mk (e x) := by
+    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm (M := M) I → ∀ (U : Module.End R M), ∃ e : Module.End R M, ∀ k : ℕ, ∃ (Uk ek : Module.End R (M ⧸ (I ^ k • ⊤ : Submodule R M))) (n : ℕ), (∀ x, Uk (Submodule.Quotient.mk x) = Submodule.Quotient.mk (U x)) ∧ IsOrdProj ⊥ Uk ek ∧ (∀ y, (Uk ^ n) (y - ek y) = 0) ∧ ∀ x, ek (Submodule.Quotient.mk x) = Submodule.Quotient.mk (e x) := by
   intro R _ M _ _ I h U
   haveI := h.complete
   let Uk : ∀ k : ℕ, Module.End R (M ⧸ (I ^ k • ⊤ : Submodule R M)) := fun k =>
@@ -235,7 +235,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordLimBij :
     exact hn k _
 
 theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordExists :
-    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm M I → ∀ (U : Module.End R M), IsOrdProj I U (ordProj I U) ∧ LinearMap.range (ordProj I U) = ordPart U ∧ IsCompl (ordPart U) (nilPart I U) ∧ Set.BijOn U (ordPart U) (ordPart U) := by
+    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm (M := M) I → ∀ (U : Module.End R M), IsOrdProj I U (ordProj I U) ∧ LinearMap.range (ordProj I U) = ordPart U ∧ IsCompl (ordPart U) (nilPart I U) ∧ Set.BijOn U (ordPart U) (ordPart U) := by
   intro R _ M _ _ I h U
   haveI := h.complete
   obtain ⟨e, he⟩ := UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordLimProj h U
@@ -269,7 +269,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordFactFin :
   rw [map_sub, hi, sub_self]; exact zero_mem _
 
 theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordFactLim :
-    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm M I → (∀ k : ℕ, Finite (M ⧸ (I ^ k • ⊤ : Submodule R M))) → ∀ (U e : Module.End R M), IsFactLim I U e ↔ e = ordProj I U := by
+    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm (M := M) I → (∀ k : ℕ, Finite (M ⧸ (I ^ k • ⊤ : Submodule R M))) → ∀ (U e : Module.End R M), IsFactLim I U e ↔ e = ordProj I U := by
   intro R _ M _ _ I h hf U e
   haveI := h.complete
   have h1 : IsFactLim I U (ordProj I U) := by
@@ -299,7 +299,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordFactLim :
   rwa [sub_sub_sub_cancel_left] at this
 
 theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordProjective :
-    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm M I → ∀ (U : Module.End R M), (Module.Finite R M → Module.Finite R (ordPart U)) ∧ (Module.Projective R M → Module.Projective R (ordPart U)) := by
+    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm (M := M) I → ∀ (U : Module.End R M), (Module.Finite R M → Module.Finite R (ordPart U)) ∧ (Module.Projective R M → Module.Projective R (ordPart U)) := by
   intro R _ M _ _ I hM U
   obtain ⟨a1, a2, -, -⟩ := UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordExists hM U
   let p : M →ₗ[R] ordPart U := LinearMap.codRestrict _ (ordProj I U) fun x => a2.le ⟨x, rfl⟩
@@ -313,7 +313,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordProjective :
   exact Module.Projective.of_split (ordPart U).subtype p (LinearMap.ext h2)
 
 theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordPer :
-    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm M I → (∀ k : ℕ, Finite (M ⧸ (I ^ k • ⊤ : Submodule R M))) → ∀ (U : Module.End R M) (x : M), x ∈ ordPart U ↔ ∀ k : ℕ, ∃ n : ℕ, (U ^ (n + 1)) x - x ∈ (I ^ k • ⊤ : Submodule R M) := by
+    ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] {I : Ideal R}, OrdAdm (M := M) I → (∀ k : ℕ, Finite (M ⧸ (I ^ k • ⊤ : Submodule R M))) → ∀ (U : Module.End R M) (x : M), x ∈ ordPart U ↔ ∀ k : ℕ, ∃ n : ℕ, (U ^ (n + 1)) x - x ∈ (I ^ k • ⊤ : Submodule R M) := by
   intro R _ M _ _ I h hf U x
   haveI := h.complete
   have h1 := (UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordFactLim h hf U _).2 rfl

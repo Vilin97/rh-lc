@@ -7,7 +7,7 @@ public import Mathlib
 noncomputable section
 
 open Polynomial Matrix
-open scoped MatrixGroups
+open scoped MatrixGroups ModularForm
 
 namespace GlobalTheory.HeckeFamilyMatrices
 
@@ -44,10 +44,12 @@ def IsDCReps (Γ : Subgroup SL(2, ℤ)) (α : Matrix (Fin 2) (Fin 2) ℤ) {ι : 
 
 def hk (Γ : Subgroup SL(2, ℤ)) (w : ℕ) {ι : Type} [Fintype ι] (δ : ι → Matrix (Fin 2) (Fin 2) ℤ) :
     (Γ → ℂ[X]) →ₗ[ℂ] (Γ → ℂ[X]) :=
-  LinearMap.pi fun γ : Γ =>
-    if h : ∃ π : Equiv.Perm ι, ∀ i, ∃ γ' : Γ, δ i * mat γ = mat γ' * δ (π i) then
-      ∑ i, (slP w (δ (h.choose i))).comp (LinearMap.proj (h.choose_spec i).choose)
-    else 0
+  by
+    classical
+    exact LinearMap.pi fun γ : Γ =>
+      if h : ∃ π : Equiv.Perm ι, ∀ i, ∃ γ' : Γ, δ i * mat γ = mat γ' * δ (π i) then
+        ∑ i, (slP w (δ (h.choose i))).comp (LinearMap.proj (h.choose_spec i).choose)
+      else 0
 
 def dg (a b : ℤ) : Matrix (Fin 2) (Fin 2) ℤ := !![a, 0; 0, b]
 

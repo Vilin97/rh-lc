@@ -1,5 +1,9 @@
-import Formalism.CharacterColumnKernels.Statement
-import Formalism.CharacterColumnKernels.CharacterColumnKernelLengthBound
+module
+
+public import Formalism.CharacterColumnKernels.Statement
+public import Formalism.CharacterColumnKernels.CharacterColumnKernelLengthBound
+
+@[expose] public section
 
 open Finset
 

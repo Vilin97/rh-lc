@@ -45,8 +45,9 @@ def rowSubst (g : Matrix (Fin ν) (Fin ν) ℂ) :
   aeval fun p => ∑ l, C (g l p.1) * X (l, p.2)
 
 
-def fischer (P Q : MvPolynomial (Fin ν × ι) ℂ) : ℂ :=
-  ∑ A ∈ P.support ∪ Q.support,
+def fischer (P Q : MvPolynomial (Fin ν × ι) ℂ) : ℂ := by
+  classical
+  exact ∑ A ∈ P.support ∪ Q.support,
     AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * ((A.prod fun _ e => e.factorial : ℕ) : ℂ)
 
 def IsUpperUnitri (g : Matrix (Fin ν) (Fin ν) ℂ) : Prop :=

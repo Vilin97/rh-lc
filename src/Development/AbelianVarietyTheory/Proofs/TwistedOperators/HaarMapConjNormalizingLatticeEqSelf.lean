@@ -1,7 +1,6 @@
 module
 
 public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NullMeasurableSetShearImage
 
 @[expose] public section
 
@@ -46,8 +45,8 @@ theorem map_conj_eq_self (H : Type) [Group H] [TopologicalSpace H] [IsTopologica
     Measure.isMulLeftInvariant_eq_smul (κ.map e) κ
   set c := Measure.haarScalarFactor (κ.map e) κ
 
-  have hqmp : Measure.QuasiMeasurePreserving e κ κ :=
-    ⟨e.continuous.measurable, by rw [hsm]; exact Measure.smul_absolutelyContinuous⟩
+  have hqmp : QuasiMeasurePreserving e κ κ :=
+    ⟨e.continuous.measurable.aemeasurable, by rw [hsm]; exact Measure.smul_absolutelyContinuous⟩
   have hpre : IsFundamentalDomain (Γ.subgroupOf N) (e ⁻¹' 𝓝) κ := by
     refine h𝓝.preimage_of_equiv hqmp (e := fun g : Γ.subgroupOf N =>
       (⟨⟨γ⁻¹ * (g : H) * γ⁻¹⁻¹, hN γ⁻¹ (Γ.inv_mem hγ) _ (g : N).2⟩,
@@ -76,7 +75,7 @@ theorem map_conj_eq_self (H : Type) [Group H] [TopologicalSpace H] [IsTopologica
     have h' : (c • κ) 𝓝 = κ 𝓝 := by rw [← hsm, hmap, hmeq]
     rw [one_mul]
     conv_rhs => rw [← h']
-    rw [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul]
+    rw [smul_apply, ENNReal.smul_def, smul_eq_mul]
   have hc1 : (c : ENNReal) = 1 := (ENNReal.mul_left_inj hne hfin).1 hc
   have : c = 1 := by exact_mod_cast hc1
   rw [hsm, this, one_smul]

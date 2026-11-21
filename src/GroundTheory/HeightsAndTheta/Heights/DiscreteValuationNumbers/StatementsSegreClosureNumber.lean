@@ -56,9 +56,10 @@ theorem mem_of_divCycle_ne_zero {K : Type*} {ι : K → Type*} {R : Type*} [Comm
     {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0) :
     f ∈ W ∧ W.IsPrime ∧ IsRelevant W := by
   unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
-  split_ifs at h with hW
-  · exact ⟨hW.1.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl)), hW.1.1.1, hW.2⟩
-  · exact absurd rfl h
+  have hW : W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P f := by
+    by_contra hW
+    simp [hW] at h
+  exact ⟨hW.1.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl)), hW.1.1.1, hW.2⟩
 
 end Examples
 

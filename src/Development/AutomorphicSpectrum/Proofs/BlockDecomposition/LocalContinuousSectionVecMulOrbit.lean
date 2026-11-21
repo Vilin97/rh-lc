@@ -47,6 +47,7 @@ theorem shear_self (j : Fin n) (c : k) (ζ : Fin n → k) : shear j c ζ ζ = 1 
   simp [shear]
 
 
+open scoped Classical in
 noncomputable def orbitSection (j : Fin n) (ζ ξ : Fin n → k) : GL (Fin n) k :=
   if h : ζ j ≠ 0 ∧ ξ j ≠ 0 then
     ⟨shear j (ζ j)⁻¹ ζ ξ, shear j (-(ξ j)⁻¹) ζ ξ, shear_mul_shear j ζ ξ h.1 h.2,

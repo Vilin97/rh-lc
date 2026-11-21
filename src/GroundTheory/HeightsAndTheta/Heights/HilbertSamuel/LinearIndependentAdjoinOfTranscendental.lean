@@ -1,4 +1,9 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
@@ -37,7 +42,6 @@ theorem transcendental_of_subfield {E : Type*} [Field E] {S : Type*} [CommRing S
   rw [aeval_def, eval₂_map]
   exact hp
 
-open scoped IntermediateField.algebraAdjoinAdjoin in
 
 theorem linearIndependent_adjoin_of_transcendental {K E : Type*} [Field K] [Field E] [Algebra K E]
     (A : IntermediateField K E) {t : E} (ht : Transcendental A t) {κ : Type*} {b : κ → A}

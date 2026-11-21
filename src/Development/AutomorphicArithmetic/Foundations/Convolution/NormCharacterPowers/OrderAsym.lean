@@ -25,8 +25,10 @@ def OrderAsym : Prop := ∀ (F : ℂ → ℂ) (S : ℝ → ℂ) (δ : ℕ), Anal
 
 
 
-def LogAsym : Prop := ForSys fun q X _ A => ∀ x y : X, ∃ M : ℝ, ∀ σ : ℝ, 1 < σ → σ ≤ 2 →
-  |dre q (A x) (A y) σ - (if x = y then -Real.log (σ - 1) else 0)| ≤ M
+def LogAsym : Prop := ForSys fun q X _ A =>
+  letI : DecidableEq X := Classical.decEq X
+  ∀ x y : X, ∃ M : ℝ, ∀ σ : ℝ, 1 < σ → σ ≤ 2 →
+    |dre q (A x) (A y) σ - (if x = y then -Real.log (σ - 1) else 0)| ≤ M
 
 def ZeroExp : Prop := ForSys fun {W} q X d A => ∀ (ι : Type) [Fintype ι] (x : ι → X × ℝ),
   ∑ i, (d (x i).1 : ℝ) * (x i).2 = 0 →
@@ -50,6 +52,8 @@ def AbsCount : Prop := ∀ (l : ℕ) (W W' : Type) (q : W → ℕ) (q' : W' → 
       Finset.univ.val.map fun a => (A x (u w) a * (q (u w) : ℂ) ^ (-(t : ℂ))) ^ f w) →
     (∀ w, ∑ i, Finset.univ.val.map (fun a => A' (z i).1 w a * (q' w : ℂ) ^ (-((z i).2 : ℂ))) =
       Finset.univ.val.map fun a => (A (y 0) (u w) a * (q (u w) : ℂ) ^ (-(t' : ℂ))) ^ f w) →
+    letI : DecidableEq X := Classical.decEq X
+    letI : DecidableEq X' := Classical.decEq X'
     t = t' ∧ (∀ i, (z i).2 = t) ∧
       ((Finset.range l).filter fun j => x = y j).card = (Finset.univ.filter fun p : ι × ι => (z p.1).1 = (z p.2).1).card
 

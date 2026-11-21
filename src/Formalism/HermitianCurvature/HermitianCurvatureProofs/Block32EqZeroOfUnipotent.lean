@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
-import Formalism.HermitianCurvature.Statement
+module
+
+public import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
+public import Formalism.HermitianCurvature.Statement
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.S3x9
 

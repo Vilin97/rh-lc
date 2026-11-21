@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.FiniteDimensionalSpanMultilinearValues
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.FiniteDimensionalSpanMultilinearValues
+
+@[expose] public section
 
 -- Interpret the original scalar argument as the identity ring homomorphism.
 local notation:max "MultilinearMap" R:max M:max N:max =>

@@ -70,7 +70,9 @@ variable {q : ℕ} [Fact q.Prime]
 
 
 def lamA (lam : Qbar →+* ℂ_[q]) (x : ℂ) : ℂ_[q] :=
-  if h : x ∈ Qbar then lam ⟨x, h⟩ else 0
+  by
+    classical
+    exact if h : x ∈ Qbar then lam ⟨x, h⟩ else 0
 
 def Setup.NNBasis (S : Setup g) (q : ℕ) {r : ℕ} (b : Fin r → Fin g → ℂ) : Prop :=
   (∀ i, b i ∈ S.La) ∧

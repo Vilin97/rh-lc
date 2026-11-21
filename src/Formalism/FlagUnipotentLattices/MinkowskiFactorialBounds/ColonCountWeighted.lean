@@ -1,6 +1,10 @@
-import Formalism.FlagUnipotentLattices.IdealCountLeW
-import Formalism.HyperbolicPlaceProducts.SecondLevelArithmeticNorm
-import Lemmata.GeneralBFactSecondMore.Imports
+module
+
+public import Formalism.FlagUnipotentLattices.IdealCountLeW
+public import Formalism.HyperbolicPlaceProducts.SecondLevelArithmeticNorm
+public import Lemmata.GeneralBFactSecondMore.Imports
+
+@[expose] public section
 
 open Formalism.HermitianLatticeCounting.S6
 open scoped BigOperators
@@ -231,7 +235,6 @@ end DualLatticeIndexBis
 
 namespace DualLatticeIndexBis
 
-open scoped Pointwise in
 
 lemma exists_codiff (E : Type) [Field E] [NumberField E] [StarRing E] :
     ∃ (δ : 𝓞 E) (K : Ideal (𝓞 E)), δ ≠ 0 ∧ K ≠ ⊥ ∧ ∀ z : E,

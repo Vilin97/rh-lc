@@ -5,11 +5,12 @@ public import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
 
 @[expose] public section
 
+
 noncomputable section
 
-open Matrix IsLocalRing ReciprocityTheory.Gal UpperTheory.V.U3.UpperTheory.V.U3
+open Matrix IsLocalRing ReciprocityTheory.Gal UpperTheory.V.U3
 
-namespace UpperTheory.V.U3.UpperTheory.V.UnitaryThreeInertia
+namespace UpperTheory.V.UnitaryThreeInertia
 
 section Local
 
@@ -20,32 +21,32 @@ def psi (Ψ : D →* Oˣ) (a : Fin 3) (g : D) : O := ((Ψ g ^ wt1 a : Oˣ) : O)
 
 abbrev InHat (h : GL (Fin 3) R) : Prop := CongOne (maximalIdeal R) h
 
-structure UpperTheory.V.U3.Red (η : D →* ℤˣ) (Ψ : D →* Oˣ) (r : D →* UpperTheory.V.U3.GG 3 R) : Prop where
-  mult : UpperTheory.V.U3.HasMult η r
-  red : ∀ g, EntIn (maximalIdeal R) ((r g).mat - ((UpperTheory.V.U3.r0 η Ψ g).mat).map (algebraMap O R))
+structure Red (η : D →* ℤˣ) (Ψ : D →* Oˣ) (r : D →* GG 3 R) : Prop where
+  mult : HasMult η r
+  red : ∀ g, EntIn (maximalIdeal R) ((r g).mat - ((r0 η Ψ g).mat).map (algebraMap O R))
 
 def kerBar (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) : Subgroup D :=
   I ⊓ η.ker ⊓ ((Units.map (residue O).toMonoidHom).comp Ψ).ker
 
-def CondU (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* UpperTheory.V.U3.GG 3 R) : Prop :=
+def CondU (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG 3 R) : Prop :=
   ∀ s ∈ kerBar η Ψ I, r s = 1
 
-structure UpperTheory.V.U3.TriIn (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) {A : Type} [CommRing A] [Algebra O A]
-    (r : D →* UpperTheory.V.U3.GG 3 A) (h : GL (Fin 3) A) : Prop where
-  tri : UpperTheory.V.U3.Upper η (UpperTheory.V.U3.conjBy h⁻¹ r)
-  ine : ∀ s ∈ I, η s = 1 → ∀ a, (UpperTheory.V.U3.conjBy h⁻¹ r s).mat a a = algebraMap O A (psi Ψ a s)
+structure TriIn (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) {A : Type} [CommRing A] [Algebra O A]
+    (r : D →* GG 3 A) (h : GL (Fin 3) A) : Prop where
+  tri : Upper η (conjBy h⁻¹ r)
+  ine : ∀ s ∈ I, η s = 1 → ∀ a, (conjBy h⁻¹ r s).mat a a = algebraMap O A (psi Ψ a s)
 
-structure UpperTheory.V.U3.DiagIn (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) {A : Type} [CommRing A] [Algebra O A]
-    (r : D →* UpperTheory.V.U3.GG 3 A) (h : GL (Fin 3) A) : Prop extends UpperTheory.V.U3.TriIn η Ψ I r h where
-  low : Lower η (UpperTheory.V.U3.conjBy h⁻¹ r)
+structure DiagIn (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) {A : Type} [CommRing A] [Algebra O A]
+    (r : D →* GG 3 A) (h : GL (Fin 3) A) : Prop extends TriIn η Ψ I r h where
+  low : Lower η (conjBy h⁻¹ r)
 
-def CondT (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* UpperTheory.V.U3.GG 3 R) : Prop :=
-  ∃ h : GL (Fin 3) R, InHat h ∧ UpperTheory.V.U3.TriIn η Ψ I r h
+def CondT (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG 3 R) : Prop :=
+  ∃ h : GL (Fin 3) R, InHat h ∧ TriIn η Ψ I r h
 
-def CondD (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* UpperTheory.V.U3.GG 3 R) : Prop :=
-  ∃ h : GL (Fin 3) R, InHat h ∧ UpperTheory.V.U3.DiagIn η Ψ I r h
+def CondD (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG 3 R) : Prop :=
+  ∃ h : GL (Fin 3) R, InHat h ∧ DiagIn η Ψ I r h
 
-def AdicCont [TopologicalSpace D] {A : Type} [CommRing A] (J : Ideal A) (r : D →* UpperTheory.V.U3.GG 3 A) : Prop :=
+def AdicCont [TopologicalSpace D] {A : Type} [CommRing A] (J : Ideal A) (r : D →* GG 3 A) : Prop :=
   ∀ n : ℕ, IsLocallyConstant fun g => (r g).mat.map (Ideal.Quotient.mk (J ^ n))
 
 def GrMat {A : Type} [CommRing A] [Algebra O A] (𝒜 : ℤ → Submodule O A) (X : Matrix (Fin 3) (Fin 3) A) : Prop :=
@@ -69,15 +70,15 @@ instance (j : ℤ) : ContinuousConstSMul k (Gb (k := k) j) := ⟨fun _ => contin
 def Gb.val {j : ℤ} (X : Gb (k := k) j) : Matrix (Fin 3) (Fin 3) k := Subtype.val (p := fun X => X ∈ gw (R := k) j) X
 
 theorem adjoint_diagonal_rep_preserves_weight_piece (η : D →* ℤˣ) (Ψ : D →* kˣ) (j : ℤ) (g : D) :
-    gw (R := k) j ≤ (gw (R := k) j).comap (UpperTheory.V.U3.adRep (UpperTheory.V.U3.r0 η Ψ) g) := by
+    gw (R := k) j ≤ (gw (R := k) j).comap (adRep (r0 η Ψ) g) := by
   intro X hX a b hab
   have hJ : ∀ i j : Fin 3, (Jmat k 3 * Xᵀ * Jmat k 3) i j = X j.rev i.rev := by
     intro i j
     fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_three, Jmat, Fin.rev]
   have hw : wt b.rev a.rev = wt a b := by
     fin_cases a <;> fin_cases b <;> simp [wt, wt1, Fin.rev]
-  change ((UpperTheory.V.U3.r0 η Ψ g).mat * (if (UpperTheory.V.U3.r0 η Ψ g).right = 1 then X else thetaLie X) * (((UpperTheory.V.U3.r0 η Ψ g).left⁻¹ : GL (Fin 3) k) : Matrix (Fin 3) (Fin 3) k)) a b = 0
-  rw [UpperTheory.V.U3.GG.mat, unitaryThreeReflection_left, ← map_inv, tor_val, tor_val]
+  change ((r0 η Ψ g).mat * (if (r0 η Ψ g).right = 1 then X else thetaLie X) * (((r0 η Ψ g).left⁻¹ : GL (Fin 3) k) : Matrix (Fin 3) (Fin 3) k)) a b = 0
+  rw [GG.mat, unitaryThreeReflection_left, ← map_inv, tor_val, tor_val]
   simp only [Matrix.mul_diagonal, Matrix.diagonal_mul]
   split_ifs
   · rw [hX a b hab]
@@ -87,10 +88,10 @@ theorem adjoint_diagonal_rep_preserves_weight_piece (η : D →* ℤˣ) (Ψ : D 
     simp
 
 def gRep (η : D →* ℤˣ) (Ψ : D →* kˣ) (j : ℤ) : Representation k D (Gb (k := k) j) :=
-  (UpperTheory.V.U3.adRep (UpperTheory.V.U3.r0 η Ψ)).subrepresentation (gw (R := k) j) (adjoint_diagonal_rep_preserves_weight_piece η Ψ j)
+  (adRep (r0 η Ψ)).subrepresentation (gw (R := k) j) (adjoint_diagonal_rep_preserves_weight_piece η Ψ j)
 
 theorem gRep_val (η : D →* ℤˣ) (Ψ : D →* kˣ) (j : ℤ) (g : D) (X : Gb (k := k) j) :
-    (gRep η Ψ j g X).val = UpperTheory.V.U3.adRep (UpperTheory.V.U3.r0 η Ψ) g X.val := rfl
+    (gRep η Ψ j g X).val = adRep (r0 η Ψ) g X.val := rfl
 
 end Residual
 
@@ -122,23 +123,23 @@ def Tb : Set ι := insert F.vl F.Sb
 
 def Ψbar : Γ →* (ResidueField O)ˣ := (Units.map (residue O).toMonoidHom).comp F.Ψ
 
-def rz (A : Type) [CommRing A] [Algebra O A] : Γ →* UpperTheory.V.U3.GG 3 A := (UpperTheory.V.U3.GG.map (algebraMap O A)).comp (UpperTheory.V.U3.r0 F.η F.Ψ)
+def rz (A : Type) [CommRing A] [Algebra O A] : Γ →* GG 3 A := (GG.map (algebraMap O A)).comp (r0 F.η F.Ψ)
 
 section Cond
 
 variable {R : Type} [CommRing R] [IsLocalRing R] [Algebra O R]
 
-def LocAt (v : ι) (r : F.D v →* UpperTheory.V.U3.GG 3 R) : Prop :=
+def LocAt (v : ι) (r : F.D v →* GG 3 R) : Prop :=
   (v = F.vl → CondT (F.ηv v) (F.Ψv v) (F.Iv v) r) ∧ (v ∈ F.Sb → CondD (F.ηv v) (F.Ψv v) (F.Iv v) r) ∧
     (v ∉ F.Tb → CondU (F.ηv v) (F.Ψv v) (F.Iv v) r)
 
-structure Cond (r : Γ →* UpperTheory.V.U3.GG 3 R) : Prop extends UpperTheory.V.U3.Red F.η F.Ψ r where
+structure Cond (r : Γ →* GG 3 R) : Prop extends Red F.η F.Ψ r where
   loc : ∀ v, F.LocAt v (r.comp (F.loc v))
 
-structure CondN (g₁ : Γ) (r : Γ →* UpperTheory.V.U3.GG 3 R) : Prop extends F.Cond r where
+structure CondN (g₁ : Γ) (r : Γ →* GG 3 R) : Prop extends F.Cond r where
   norm : Normalised F.c g₁ r
 
-structure IsPt [TopologicalSpace Γ] (g₁ : Γ) (r : Γ →* UpperTheory.V.U3.GG 3 R) : Prop extends F.CondN g₁ r where
+structure IsPt [TopologicalSpace Γ] (g₁ : Γ) (r : Γ →* GG 3 R) : Prop extends F.CondN g₁ r where
   cont : AdicCont (maximalIdeal R) r
 
 end Cond
@@ -221,6 +222,6 @@ def Xpp : Prop := Subsingleton (F.selmerCohomologyQuotient (-2))
 
 end Frame
 
-end UpperTheory.V.U3.UpperTheory.V.UnitaryThreeInertia
+end UpperTheory.V.UnitaryThreeInertia
 
 end

@@ -4,6 +4,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 
 @[expose] public section
 
+noncomputable section
+
 open IsLocalRing MvPowerSeries UpperTheory.V.Alg
 
 private theorem mem_smul_top_pi {R : Type} [CommRing R] (J : Ideal R) {r : ℕ} (x : Fin r → R) :
@@ -122,7 +124,8 @@ theorem UpperTheory.V.Alg.co_finite :
       have : P.comap (algebraMap R R') = maximalIdeal R :=
         le_antisymm (IsLocalRing.le_maximalIdeal hne) hle
       rw [this]; infer_instance
-    haveI := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := R) P hcm
+    haveI := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap R R')
+      (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) P hcm
     exact IsLocalRing.eq_maximalIdeal this
   have hcm' : (maximalIdeal R').comap (algebraMap R R') = maximalIdeal R :=
     IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R'))

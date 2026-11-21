@@ -48,13 +48,14 @@ def gw (j : X) : Submodule R (Matrix ι ι R) :=
       zero_mem' := fun _ _ _ => rfl
       smul_mem' := fun c Y h a b e => by simp [h a b e] }
 
+variable {R}
 
 def Normalises {Γ : Type} [Group Γ] (ρ : Γ →* Matrix ι ι R) : Prop :=
   (∀ g, ∃ ν : R, (ρ g)ᵀ * Φ.JR R * ρ g = ν • Φ.JR R) ∧
   (∃ π : Γ →* Equiv.Perm Φ.κ, ∀ g a b, ρ g a b ≠ 0 → Φ.blk a = π g (Φ.blk b)) ∧
   ∀ g a b, w a ≠ w b → ρ g a b = 0
 
-variable {Φ R} in
+variable {Φ} in
 theorem ad_mem {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Normalises ρ) (j : X) (s : Γ) {Y : Matrix ι ι R}
     (hY : Y ∈ Φ.gw R j) : ρ s * Y * ρ s⁻¹ ∈ Φ.gw R j := by
   obtain ⟨h1, ⟨π, h2⟩, h3⟩ := h
@@ -89,7 +90,7 @@ theorem ad_mem {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Norm
     have k6 : w d = w b := by_contra fun n => k3 (h3 s⁻¹ d b n)
     exact e (by rw [k5, ← k6, k4])
 
-
+variable {Φ} in
 def adRep {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Normalises ρ) (j : X) :
     Representation R Γ (Φ.gw R j) where
   toFun s :=
@@ -116,7 +117,7 @@ structure IsLocCond (r0 : Γ →* Matrix ι ι O) (N : Subgroup Γ) (L : Cond O 
   conj : ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (r r' : Lift O rbar R) (h : Matrix ι ι R),
     Φ.InH r0 R r → Φ.HH h → (∀ s, r'.hom s * h = h * r.hom s) → L R r → L R r'
   torus : ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (r r' : Lift O rbar R) (t : Multiplicative X →* Rˣ),
-    Φ.InH r0 R r → (∀ j, res O R (t j) = 1) → IsTorusConj w t r r' → L R r → L R r'
+    Φ.InH r0 R r → (∀ j, res O R (t j) = 1) → IsTorusConj rbar w t r r' → L R r → L R r'
   lift : ∀ (R R' : Type) [CommRing R] [Algebra O R] [IsCO O R] [CommRing R'] [Algebra O R'] [IsCO O R']
     (p : R →ₐ[O] R'), Function.Surjective p → maximalIdeal R * RingHom.ker p = ⊥ →
     ∀ r' : Lift O rbar R', Φ.InH r0 R' r' → L R' r' → ∃ r : Lift O rbar R, Φ.InH r0 R r ∧ L R r ∧ r.map p = r'

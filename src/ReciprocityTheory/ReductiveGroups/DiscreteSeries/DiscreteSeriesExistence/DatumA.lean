@@ -50,6 +50,8 @@ private theorem Jm_conjTranspose_eq_self' (ε : Fin n → Bool) : (Jm ε)ᴴ = J
   unfold Jm
   rw [Matrix.diagonal_conjTranspose]
   congr 1
+  funext a
+  rw [Pi.star_apply]
   split_ifs <;> simp
 
 private theorem inUJ_exp_of_inG' {ε : Fin n → Bool} {A : Matrix (Fin n) (Fin n) ℂ} (hA : inG ε A) :
@@ -307,7 +309,7 @@ theorem toL2_finset_sum_of_memLp {ε : Fin n → Bool} {ι : Type*} (s : Finset 
     · rfl
   | @insert j s hj ih =>
     have hG : MemLp (fun g : Formalism.REAL.UJ ε => (fun x => ∑ i ∈ s, F i x) (Formalism.MainNotions.S.umat g)) 2
-        (Formalism.REAL.muG ε) := memLp_finset_sum s (fun i _ => hF i)
+        (Formalism.REAL.muG ε) := memLp_finsetSum s (fun i _ => hF i)
     rw [Finset.sum_insert hj, ← ih]
     have e : (fun x => ∑ i ∈ insert j s, F i x) = fun x => F j x + ∑ i ∈ s, F i x := by
       funext x

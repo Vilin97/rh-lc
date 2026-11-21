@@ -197,7 +197,8 @@ theorem log_mul (u v : Ainf p R) (hu : Ainf.theta p R u = 1) (hv : Ainf.theta p 
   refine ext_eval fun n => ?_
   obtain ⟨a, ha, ha'⟩ := exists_quot u hu n
   obtain ⟨b, hb, hb'⟩ := exists_quot v hv n
-  rw [map_add (f := _), ha', hb', eval_log_of_mul_eq _ huv n (a + b + p ^ n * a * b), ← map_add (f := _),
+  rw [map_add (f := eval p R n), ha', hb', eval_log_of_mul_eq _ huv n (a + b + p ^ n * a * b),
+    ← (Ideal.Quotient.mk (span {(p : AcrisZero p R)} ^ n)).map_add,
     Ideal.Quotient.eq, AcrisZero.mem_span_pow_iff]
   · exact ⟨a * b, by ring⟩
   · rw [map_mul, mul_pow, eq_add_of_sub_eq ha.symm, eq_add_of_sub_eq hb.symm]

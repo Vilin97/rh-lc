@@ -1,5 +1,10 @@
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RembApply
-import Formalism.LatticeTheta.Statement
+module
+
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RembApply
+public import Formalism.LatticeTheta.Statement
+
+@[expose] public section
+
 open NumberField nonZeroDivisors MeasureTheory GlobalTheory.LipschitzTR GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent
 open scoped FourierTransform RealInnerProductSpace
 
@@ -129,7 +134,6 @@ theorem summable_prod_wt (ι : Type) [Fintype ι] [DecidableEq ι] :
 
 end GlobalTheory.LipschitzTR.LhsSum
 
-open GlobalTheory.LipschitzTR.LhsSum in
 
 theorem GlobalTheory.LipschitzTR.summable_lhsTerm_ideal :
     ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (M : FractionalIdeal (𝓞 F)⁰ F), M ≠ 0 →

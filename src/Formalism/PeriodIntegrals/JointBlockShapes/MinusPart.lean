@@ -79,8 +79,11 @@ abbrev homog (σ : Type*) (d : ℕ) : Submodule ℂ (MvPolynomial σ ℂ) :=
 
 
 def fockInner (P Q : MvPolynomial σ ℂ) : ℂ :=
-  ∑ α ∈ P.support, ∑ β ∈ Q.support, (starRingEnd ℂ) (AddMonoidAlgebra.coeff P α) * AddMonoidAlgebra.coeff Q β *
-    (if α = β then α.prod (fun _ k => (k.factorial : ℂ)) else 0)
+  by
+    classical
+    exact ∑ α ∈ P.support, ∑ β ∈ Q.support,
+      (starRingEnd ℂ) (AddMonoidAlgebra.coeff P α) * AddMonoidAlgebra.coeff Q β *
+        (if α = β then α.prod (fun _ k => (k.factorial : ℂ)) else 0)
 
 end Grading
 

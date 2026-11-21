@@ -40,11 +40,13 @@ lemma eq_sum_crd (p : MvPolynomial σ E) : p = ∑ i, crd b p i • (C (b i) : M
 lemma linearIndependent_C : LinearIndependent (MvPolynomial σ L) (fun i => (C (b i) : MvPolynomial σ E)) := by
   rw [Fintype.linearIndependent_iff]
   intro g hg i
-  ext m
-  have h := congrArg (AddMonoidAlgebra.coeff · m) hg
-  rw [coeff_sum, coeff_zero] at h
-  simp only [coeff_smul_C, ← Algebra.smul_def] at h
-  have := (Fintype.linearIndependent_iff.1 b.linearIndependent) (fun i => AddMonoidAlgebra.coeff (g i) m) h i
-  rw [this, coeff_zero]
+  apply MvPolynomial.ext
+  intro m
+  have h : ∑ j, AddMonoidAlgebra.coeff (g j) m • b j = 0 := by
+    simpa only [coeff_sum, coeff_smul_C, ← Algebra.smul_def,
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] using
+      congrArg (AddMonoidAlgebra.coeff · m) hg
+  rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
+  exact (Fintype.linearIndependent_iff.1 b.linearIndependent) (fun j => AddMonoidAlgebra.coeff (g j) m) h i
 
 end ReciprocityTheory.ChartRestriction.G.T0.PolynomialCoordinateBasis

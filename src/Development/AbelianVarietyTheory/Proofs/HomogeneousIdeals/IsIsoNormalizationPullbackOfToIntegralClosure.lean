@@ -856,7 +856,7 @@ theorem normalizationActionOver_normalizationMap (hπ : ∀ g, (ρ g).asIso.hom 
     (normalizationActionOver f ρ hρ g).asIso.hom ≫ normalizationMap f f' π (𝟙 Y) hf =
       normalizationMap f f' π (𝟙 Y) hf :=
   normalization_hom_ext f f'.fromNormalization (by simp [reassoc_of% hπ])
-    (normalizationActionOver_fromNormalization f ρ hρ g)
+    (by simp [reassoc_of% hπ, normalizationActionOver_fromNormalization])
 
 
 theorem mem_range_normalizationMap_app [QuasiCompact π] [IsSchemeTheoreticallyDominant π]
@@ -902,13 +902,12 @@ variable (G : Type v) [Group G] (A B : Type u) [CommRing A] [CommRing B] [MulSem
 
 noncomputable def specAction : G →* Aut (Spec (.of B)) :=
   MonoidHom.mk' (fun g ↦
-    Aut.of ({ hom := Spec.map (CommRingCat.ofHom (MulSemiringAction.toRingHom G B g⁻¹))
-      inv := Spec.map (CommRingCat.ofHom (MulSemiringAction.toRingHom G B g))
-      hom_inv_id := by
-        rw [← Spec.map_comp, ← Spec.map_id]; congr 1; ext b; simp
-      inv_hom_id := by
-        rw [← Spec.map_comp, ← Spec.map_id]; congr 1; ext b; simp } :
-      Spec (.of B) ≅ Spec (.of B)) fun g h ↦ by
+    let i : Spec (.of B) ≅ Spec (.of B) := {
+      hom := Spec.map (CommRingCat.ofHom (MulSemiringAction.toRingHom G B g⁻¹)),
+      inv := Spec.map (CommRingCat.ofHom (MulSemiringAction.toRingHom G B g)),
+      hom_inv_id := by rw [← Spec.map_comp, ← Spec.map_id]; congr 1; ext b; simp,
+      inv_hom_id := by rw [← Spec.map_comp, ← Spec.map_id]; congr 1; ext b; simp }
+    Aut.of i) fun g h ↦ by
     apply Aut.ext
     refine Iso.ext ?_
     change Spec.map _ = Spec.map _ ≫ Spec.map _
@@ -918,7 +917,8 @@ noncomputable def specAction : G →* Aut (Spec (.of B)) :=
     simp [mul_smul]
 
 theorem specAction_hom (g : G) : (specAction G B g).asIso.hom =
-    Spec.map (CommRingCat.ofHom (MulSemiringAction.toRingHom G B g⁻¹)) := rfl
+    Spec.map (CommRingCat.ofHom (MulSemiringAction.toRingHom G B g⁻¹)) := by
+  simp [specAction]
 
 variable [Algebra A B]
 

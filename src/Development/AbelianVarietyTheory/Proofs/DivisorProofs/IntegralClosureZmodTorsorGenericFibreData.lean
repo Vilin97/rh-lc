@@ -1,11 +1,16 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsorsTrivial
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OriginIdeal
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClosureFiniteEtale
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsionFreeOver
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InjectiveTraceGaloisData
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralClosureOverGenericFibreHartogsStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMulMemIntegralClosureOverGenericFibreStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsorsTrivial
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OriginIdeal
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClosureFiniteEtale
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsionFreeOver
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InjectiveTraceGaloisData
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralClosureOverGenericFibreHartogsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMulMemIntegralClosureOverGenericFibreStatement
+
+@[expose] public section
+
 open IsLocalRing Polynomial
 open scoped TensorProduct
 

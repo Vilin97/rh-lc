@@ -371,6 +371,8 @@ theorem coeff_partialCoeff_eq_mul (L : Submodule ℤ W) [DiscreteTopology L] [Is
         simp only [coeff, setAverage_eq, one_mul, smul_mul_assoc]
 
 
+open scoped Classical
+
 theorem coeff_partialCoeff (L : Submodule ℤ W) [DiscreteTopology L] [IsZLattice ℝ L]
     {D : Set W} (hD : IsAddFundamentalDomain L D μ) {L₁ : AddSubgroup W₁} {D₁ : Set W₁}
     (hD₁ : IsAddFundamentalDomain L₁ D₁ μ₁) (h0 : μ₁ D₁ ≠ 0) (h1 : μ₁ D₁ ≠ ⊤)

@@ -27,8 +27,8 @@ theorem CoinvIdealComponent.proof (h1 : CoinvIdealRepresentation.Statement)
     split_ifs
     · exact homogeneousComponent_isHomogeneous _ _
     · exact isHomogeneous_zero _ _ _
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]

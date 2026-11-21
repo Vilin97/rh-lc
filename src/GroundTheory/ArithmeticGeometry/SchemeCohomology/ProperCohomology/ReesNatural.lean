@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ReesSheaf
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ReesSheaf
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh
@@ -18,7 +23,6 @@ lemma algV_res (a : A) : resO hle (algV X V a) = algV X V' a := by
   exact congrArg (fun f : Γ(Spec (.of A), ⊤) ⟶ Γ(X, V') => f.hom ((Scheme.ΓSpecIso (.of A)).inv a))
     this
 
-variable (I) in
 
 abbrev resS : Γ(reesScheme I X, reesPr I X ⁻¹ᵁ V) →+* Γ(reesScheme I X, reesPr I X ⁻¹ᵁ V') :=
   resO (Scheme.Hom.preimage_mono _ hle)
@@ -55,7 +59,6 @@ lemma reesRingHom_res (hV : IsAffineOpen V) (hV' : IsAffineOpen V')
   exact congrArg (fun f : Γ(reesScheme I X, reesPr I X ⁻¹ᵁ V) ⟶
     CommRingCat.of (Polynomial Γ(X, V')) => f.hom s) h
 
-variable (F) in
 
 def resFA : Γ(F, V) →ₗ[A] Γ(F, V') where
   toFun := resF F hle

@@ -4,7 +4,7 @@ public import Mathlib
 
 @[expose] public section
 
-open GlobalTheory.BorelCoh CategoryTheory
+open CategoryTheory
 open scoped ContDiff Matrix
 
 namespace GlobalTheory.BorelCoh

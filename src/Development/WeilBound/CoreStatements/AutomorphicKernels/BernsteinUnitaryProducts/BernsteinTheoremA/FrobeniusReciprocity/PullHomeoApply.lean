@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurableSpace
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurableSpace
+
+@[expose] public section
 
 noncomputable section
 
@@ -54,7 +58,7 @@ def eqv (χ : G →* ℂˣ) : Submodule ℂ (Distr X) where
     ring
 
 theorem mem_eqv {χ : G →* ℂˣ} {D : Distr X} :
-    D ∈ eqv X χ ↔ ∀ (g : G) (f : SB X), D (transl g f) = (χ g : ℂ) * D f :=
+    D ∈ eqv χ ↔ ∀ (g : G) (f : SB X), D (transl g f) = (χ g : ℂ) * D f :=
   Iff.rfl
 
 end Transl

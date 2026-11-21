@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MultilinearZeroOfKillsTranslatesTensor
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MultilinearZeroOfKillsTranslatesTensor
+
+@[expose] public section
+
 open scoped InnerProductSpace
 -- `MultilinearMap` now takes the scalar ring hom explicitly.  Preserve the
 -- older `MultilinearMap R M N` spelling used by the statement in this file.

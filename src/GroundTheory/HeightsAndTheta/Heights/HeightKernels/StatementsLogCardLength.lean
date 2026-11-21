@@ -12,6 +12,7 @@ noncomputable section
 
 
 def locLen {R : Type*} [CommRing R] (m : Ideal R) (N : Type*) [AddCommGroup N] [Module R N] : ℕ :=
+  letI : Decidable m.IsPrime := Classical.propDecidable _
   if h : m.IsPrime then
     haveI := h
     (Module.length (Localization.AtPrime m) (LocalizedModule m.primeCompl N)).toNat

@@ -23,7 +23,7 @@ def regFns : Subalgebra k (Frames k V → k) :=
 
 instance instTopFrames : TopologicalSpace (Frames k V) := .generateFrom {s | ∃ f ∈ regFns k V, s = {b | f b ≠ 0}}
 
-def Flags : Type := ∀ i, FullFlag k (V i) (finrank k (V i))
+def Flags : Type := ∀ i, FullFlag (R := k) (M := V i) (finrank k (V i))
 
 variable {k V}
 

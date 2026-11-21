@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open NumberField IsDedekindDomain IntermediateField
 open scoped Pointwise
@@ -74,7 +78,7 @@ theorem coe_smul (g : Ω ≃ₐ[E] Ω) (b : 𝓞 Ω) : ((g • b : 𝓞 Ω) : Ω
 
 theorem map_mem [Algebra.IsAlgebraic E Ω] (A : ValuationSubring Ω) (g : Ω ≃ₐ[E] Ω)
     (hg : ∀ b : 𝓞 Ω, g • b ∈ cen A → b ∈ cen A) {x : Ω} (hx : x ∈ A) : g x ∈ A := by
-  obtain ⟨b, s, hs, e⟩ := frac E A hx
+  obtain ⟨b, s, hs, e⟩ := frac (E := E) A hx
   have h1 := val_eq_one fun h => hs (hg s h)
   have h2 := int_le A (g • b)
   rw [coe_smul, ← e, map_mul, map_mul, ← coe_smul g s, h1, mul_one] at h2
@@ -93,7 +97,7 @@ theorem of_cong [Algebra.IsAlgebraic E Ω] (A : ValuationSubring Ω) (g : Ω ≃
     refine ⟨fun h => ?_, fun h => map_mem A g⁻¹ (fun b hb => ?_) h⟩
     · simpa using map_mem A g (fun b => (hiff b).1) h
     · simpa using (hiff _).2 hb
-  · obtain ⟨b, s, hs, e⟩ := frac E A hx
+  · obtain ⟨b, s, hs, e⟩ := frac (E := E) A hx
     have h1 := val_eq_one fun h => hs ((hiff s).1 h)
     have h2 := val_eq_one hs
     have key : (g x - x ^ q) * (((g • s : 𝓞 Ω) : Ω) * (s : Ω) ^ q) =

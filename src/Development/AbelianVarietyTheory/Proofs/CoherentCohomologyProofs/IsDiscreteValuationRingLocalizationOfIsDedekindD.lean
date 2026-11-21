@@ -100,7 +100,8 @@ variable (R : Type*) {S : Type*} [CommRing R] [IsLocalRing R] [CommRing S] [Alge
   [Module.Finite R S]
 
 lemma liesOver_maximalIdeal (n : Ideal S) [n.IsMaximal] : n.LiesOver (maximalIdeal R) :=
-  ⟨(eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal n)).symm⟩
+  ⟨(eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+    (algebraMap R S) (algebraMap_isIntegral_iff.mpr inferInstance) n)).symm⟩
 
 lemma length_quot_maximal (n : Ideal S) [n.IsMaximal] :
     Module.length R (S ⧸ n) = n.inertiaDeg R := by
@@ -157,7 +158,7 @@ lemma length_eq_sum_tensor {X : Type*} [AddCommGroup X] [Module S X] (hX : IsFin
         (Module.Flat.lTensor_preserves_injective_linearMap f hf)
         (LinearMap.lTensor_surjective (A n) hg) (Module.Flat.lTensor_exact (A n) hfg),
         ← (Algebra.TensorProduct.quotIdealMapEquivTensorQuot (A n) m).toLinearEquiv.length_eq,
-        ← length_localization_quot_maximal ⟨m, hm⟩ n (A n)]
+        ← length_localization_quot_maximal R ⟨m, hm⟩ n (A n)]
     simp_rw [key, add_mul, Finset.sum_add_distrib]
     simp
 

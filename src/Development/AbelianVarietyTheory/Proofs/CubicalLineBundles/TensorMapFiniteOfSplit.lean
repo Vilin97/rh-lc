@@ -27,6 +27,6 @@ variable {S : Scheme.{0}}
 theorem _root_.GlobalTheory.TensorFinite.isFinite_tensorHom {X Y X' Y' : Over S} (f : X ⟶ Y) (g : X' ⟶ Y') (hf : IsFinite f.left)
     (hg : IsFinite g.left) : IsFinite (f ⊗ₘ g).left := by
   rw [Over.tensorHom_left]
-  exact MorphismProperty.pullback_map (P := @IsFinite) hf hg (Over.w f).symm (Over.w g).symm
+  exact MorphismProperty.pullbackMap (P := @IsFinite) hf hg (Over.w f).symm (Over.w g).symm
 
 end GlobalTheory.TensorFinite

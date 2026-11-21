@@ -81,7 +81,10 @@ def towerLimitMap : towerLimit τP →ₗ[A] towerLimit τE where
     exact map_smul (ι n) _ _
 
 
-theorem bijective_towerLimitMap {c : ℕ} (hc : ∀ n, towerComp τQ n c = 0) :
+theorem bijective_towerLimitMap (hinj : ∀ n, Function.Injective (ι n))
+    (hex : ∀ n, LinearMap.range (ι n) = LinearMap.ker (π n))
+    (hπ : ∀ n, (τQ n).comp (π (n + 1)) = (π n).comp (τE n))
+    {c : ℕ} (hc : ∀ n, towerComp τQ n c = 0) :
     Function.Bijective (towerLimitMap τP τE ι hι) := by
   constructor
   · intro x y hxy
@@ -108,10 +111,6 @@ theorem bijective_towerLimitMap {c : ℕ} (hc : ∀ n, towerComp τQ n c = 0) :
       rw [← this, hp, hp, e.2 n]
     · ext n
       exact hp n
-
-omit [∀ n, AddCommGroup (E n)] [∀ n, Module A (E n)] [∀ n, AddCommGroup (Q n)]
-  [∀ n, Module A (Q n)] in
-
 
 end Exact
 

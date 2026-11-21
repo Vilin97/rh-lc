@@ -9,7 +9,7 @@ open CategoryTheory AlgebraicGeometry CrystallineSemistableComparison Crystallin
 
 namespace GlobalTheory.CompanionTheory.ValQuot
 
-theorem valuation_comparable_quotient : ∀ {S : Type} [CommRing S] (π : S), Val π → Val0 (S ⧸ Ideal.span {π}) := by
+theorem valuation_comparable_quotient : ∀ {S : Type} [CommRing S] (π : S), Val π → Val0 (S := S ⧸ Ideal.span {π}) := by
   intro S _ π hV f' g'
   obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective f'
   obtain ⟨g, rfl⟩ := Ideal.Quotient.mk_surjective g'

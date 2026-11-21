@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NonemptyRayDataOfNeZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NonemptyRayDataOfNeZero
+
+@[expose] public section
 
 open NumberField IsDedekindDomain GlobalTheory.Mem Complex Filter Topology
 open scoped ComplexOrder

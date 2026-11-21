@@ -36,8 +36,8 @@ theorem eq_zero_of_monomial_mul (e : (Σ k, ι k) →₀ ℕ) {p : MRingOver S �
     (h : monomial e (1 : S) * p = 0) : p = 0 := by
   ext d
   have := congrArg (AddMonoidAlgebra.coeff · (e + d)) h
-  rw [coeff_monomial_mul, one_mul, coeff_zero] at this
-  rw [this, coeff_zero]
+  rw [coeff_monomial_mul, one_mul] at this
+  simpa using this
 
 
 theorem eq_zero_of_mk_eq_zero {I : ∀ k, Finset (ι k)} {p : MRingOver S ι}
@@ -104,13 +104,14 @@ theorem eq_zero_of_sum_smul_monoFrac (I : ∀ k, Finset (ι k)) (A : Finset ((Σ
   intro a ha
   by_cases hI : ∀ k, negSet a k ⊆ I k
   · have hk := congrArg (AddMonoidAlgebra.coeff · (c a)) key
-    rw [coeff_sum, Finset.sum_eq_single a, coeff_monomial, if_pos rfl, coeff_zero] at hk
+    rw [coeff_sum, Finset.sum_eq_single a, coeff_monomial, if_pos rfl,
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at hk
     · exact hk
     · intro b hb hba
       by_cases hbI : ∀ k, negSet b k ⊆ I k
       · rw [coeff_monomial, if_neg]
         exact fun hcb => hba (shift_injective u (hle b hb hbI) (hle a ha hI) hcb)
-      · rw [hg b hb hbI, monomial_zero, coeff_zero]
+      · simp [hg b hb hbI]
     · exact fun hna => absurd ha hna
   · exact hg a ha hI
 

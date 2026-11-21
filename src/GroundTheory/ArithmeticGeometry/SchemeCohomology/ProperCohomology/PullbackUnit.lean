@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.Support
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.ImmersionPush
-import GroundTheory.ArithmeticGeometry.EtaleCompletion.PullbackAffine
-import GroundTheory.ArithmeticGeometry.EtaleCompletion.QcohZariski
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.Support
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.ImmersionPush
+public import GroundTheory.ArithmeticGeometry.EtaleCompletion.PullbackAffine
+public import GroundTheory.ArithmeticGeometry.EtaleCompletion.QcohZariski
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

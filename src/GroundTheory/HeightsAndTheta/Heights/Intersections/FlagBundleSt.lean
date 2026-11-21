@@ -37,8 +37,6 @@ theorem ker_algebraMap_comp_mk (P : Ideal (MRing ι)) :
     RingHom.ker ((algebraMap (MRing ι ⧸ P) (FnField P)).comp (Ideal.Quotient.mk P)) = P := by
   rw [RingHom.ker_comp_of_injective _ (IsFractionRing.injective (MRing ι ⧸ P) (FnField P)), Ideal.mk_ker]
 
-
-
 end Gen
 
 end GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter

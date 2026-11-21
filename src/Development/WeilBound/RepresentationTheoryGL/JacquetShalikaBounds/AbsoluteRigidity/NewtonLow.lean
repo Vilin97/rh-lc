@@ -29,7 +29,8 @@ structure Sys (q : W → ℕ) (X : Type) (d : X → ℕ) (A : ∀ x, W → Fin (
   pos : ∀ x, 1 ≤ d x
   bd : ∀ x w a, ‖A x w a‖ ≤ Real.sqrt (q w)
   det : ∀ x w, ‖∏ a, A x w a‖ = 1
-  rs : ∀ x y, ∃ (F : ℂ → ℂ) (σ₀ : ℝ), (∀ σ : ℝ, 0 < σ → AnalyticAt ℂ F σ) ∧
+  rs : ∀ x y, letI : DecidableEq X := Classical.decEq X
+    ∃ (F : ℂ → ℂ) (σ₀ : ℝ), (∀ σ : ℝ, 0 < σ → AnalyticAt ℂ F σ) ∧
     ∀ σ : ℝ, σ₀ < σ → F σ = (if x = y then (σ : ℂ) - 1 else 1) * eul q (A x) (A y) σ
 
 def LandauL : Prop := ∀ (I : Type) (c l : I → ℝ) (σ₀ σ₁ : ℝ) (F : ℂ → ℂ), (∀ i, 0 ≤ c i) → (∀ i, 0 ≤ l i) →

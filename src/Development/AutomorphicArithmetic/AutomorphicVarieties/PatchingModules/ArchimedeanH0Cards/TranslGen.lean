@@ -64,7 +64,7 @@ theorem translGen {P : Pl Γ} (D : Dat A P) (M : FRep A Γ) (ι : D.M.X →ₗ[A
     refine ⟨⟨(continuous_of_discreteTopology (f := r)).comp (continuous_differential_one M (hx i)), fun g h k => hi ?_⟩,
       fun w => ⟨?_, fun g h => ?_⟩⟩
     · simp only [map_add (f := _), map_sub, map_zero, he, hr']
-      simp only [d1_apply, map_add (f := _), map_sub, map_mul, Module.End.mul_apply, mul_assoc]
+      simp only [d1_apply, map_add (f := _), map_sub, map_mul, mul_apply_eq_comp, mul_assoc]
       abel
     · exact (continuous_of_discreteTopology (f := fun s => D.π w (σ w s))).comp
         (((hx i).comp (P.cont w)).sub (hb i w))
@@ -80,7 +80,7 @@ theorem translGen {P : Pl Γ} (D : Dat A P) (M : FRep A Γ) (ι : D.M.X →ₗ[A
     rw [← e1]
     simp [Prod.fst_sum, Finset.sum_apply, hr']
   have hΨ : (fun γ => ∑ i, c i • x i γ - ι (x0 γ)) ∈ Z1 M.ρ := by
-    refine ⟨(continuous_finset_sum _ fun i _ => (hx i).const_smul _).sub
+    refine ⟨(continuous_finsetSum _ fun i _ => (hx i).const_smul _).sub
       ((continuous_of_discreteTopology (f := ι)).comp c1), fun g h => ?_⟩
     have := e1' (g, h)
     simp only [d1_apply, map_add (f := _), map_sub, he, smul_add, smul_sub, Finset.sum_add_distrib,
@@ -95,14 +95,14 @@ theorem translGen {P : Pl Γ} (D : Dat A P) (M : FRep A Γ) (ι : D.M.X →ₗ[A
   have hneg : M.ρ c0 (ι m0) = -ι m0 := by
     have a1 := hΨ.2 1 1
     have a2 := hΨ.2 c0 c0
-    simp only [mul_one, map_one, Module.End.one_apply, left_eq_add] at a1
+    simp only [mul_one, map_one, one_apply_eq_self, left_eq_add] at a1
     simp only [hc, a1, ← hm0] at a2
     exact eq_neg_of_add_eq_zero_right a2.symm
   obtain ⟨t, ht⟩ := h2.exists_left_inv
   refine ⟨(fun γ => ∑ i, c i • x i γ - ι (x0 γ)) + d0 M.ρ (ι (t • m0)), add_mem hΨ ⟨?_, fun g h => ?_⟩, ?_,
     fun γ => ?_, fun w => ?_⟩
   · exact (M.cont.comp (continuous_id.prodMk continuous_const)).sub continuous_const
-  · simp only [amitsur_d0_apply, map_mul, map_sub, Module.End.mul_apply]; abel
+  · simp only [amitsur_d0_apply, map_mul, map_sub, mul_apply_eq_comp]; abel
   · simp only [Pi.add_apply, amitsur_d0_apply, ← hm0]
     rw [map_smul, map_smul, hneg, ← smul_sub, ← neg_add', ← two_smul A, smul_neg, smul_smul, ht, one_smul, add_neg_cancel]
   · refine ⟨D.M.ρ γ (t • m0) - t • m0 - x0 γ, ?_⟩

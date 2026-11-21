@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DefiniteClassNumber.HermTraceSelfOfHermValue
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DefiniteClassNumber.HermTraceSelfOfHermValue
+
+@[expose] public section
 
 noncomputable section
 
@@ -38,7 +42,6 @@ theorem vecCoords_vecOfCoords (c : ι × κ → R) : vecCoords R b (vecOfCoords 
 
 variable {H b}
 
-omit [NumberField K] in
 
 theorem hermTrace_eq_sum_traceGram (x y : ι → R ⊗[K] E) :
     hermTrace K H R x y = ∑ a : ι × κ, ∑ c : ι × κ, vecCoords R b x a * vecCoords R b y c *

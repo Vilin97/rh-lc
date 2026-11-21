@@ -56,10 +56,21 @@ variable (ρ g)
 def coordEquiv : Lat ρ g ≃ₗ[ℤ] (Fin r × (Fin g ⊕ Fin g) → ℤ) where
   toFun x := fun p => Sum.elim (x p.1).1 (x p.1).2 p.2
   invFun c := fun i => (fun k => c (i, Sum.inl k), fun k => c (i, Sum.inr k))
-  left_inv x := by ext i <;> rfl
-  right_inv c := by ext ⟨i, k | k⟩ <;> rfl
-  map_add' x y := by ext ⟨i, k | k⟩ <;> rfl
-  map_smul' n x := by ext ⟨i, k | k⟩ <;> rfl
+  left_inv x := by
+    funext i
+    apply Prod.ext <;> funext k <;> rfl
+  right_inv c := by
+    funext p
+    rcases p with ⟨i, k⟩
+    cases k <;> rfl
+  map_add' x y := by
+    funext p
+    rcases p with ⟨i, k⟩
+    cases k <;> rfl
+  map_smul' n x := by
+    funext p
+    rcases p with ⟨i, k⟩
+    cases k <;> rfl
 
 def basis : Module.Basis (Fin r × (Fin g ⊕ Fin g)) ℤ (Lat ρ g) := Module.Basis.ofEquivFun (coordEquiv ρ g)
 

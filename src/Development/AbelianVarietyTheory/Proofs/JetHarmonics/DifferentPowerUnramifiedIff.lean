@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.SplitUnramifiedPlaces
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.SplitUnramifiedPlaces
+
+@[expose] public section
 
 noncomputable section
 

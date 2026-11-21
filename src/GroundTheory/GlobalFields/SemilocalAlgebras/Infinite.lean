@@ -9,7 +9,7 @@ noncomputable section
 namespace GroundTheory.Global
 
 open NumberField NumberField.InfinitePlace NumberField.InfinitePlace.Completion
-open scoped NumberField.LiesOver TensorProduct Classical
+open scoped NumberField.LiesOver TensorProduct
 
 namespace Matrix
 
@@ -95,8 +95,7 @@ def tensorPiHom : v.Completion ⊗[K] L →ₐ[v.Completion] PiPlacesOver (L := 
 theorem tensorPiHom_tmul (x : v.Completion) (l : L) (w : v.placesOver L) :
     tensorPiHom v (x ⊗ₜ l) w =
       algebraMap v.Completion _ x * (l : (w : InfinitePlace L).Completion) := by
-  simp [tensorPiHom, AbsoluteValue.Completion.algebraMap_def,
-    WithAbs.algebraMap_right_apply]
+  simp [tensorPiHom, AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]
 
 
 theorem finrank_completion_pos (w : InfinitePlace L) [w.LiesOver v] :
@@ -107,7 +106,7 @@ theorem finrank_completion_pos (w : InfinitePlace L) [w.LiesOver v] :
 
 instance finiteDimensional_completion (w : InfinitePlace L) [w.LiesOver v] :
     FiniteDimensional v.Completion w.Completion :=
-  Module.finite_of_finrank_pos (finrank_completion_pos v w)
+  Module.finite_of_finrank_pos (finrank_completion_pos w)
 
 variable [NumberField K] [NumberField L]
 
@@ -146,8 +145,9 @@ theorem tensorPiHom_surjective : Function.Surjective (tensorPiHom (L := L) v) :=
     (LinearMap.range f).closed_of_finiteDimensional
   have hsub : Set.range (algebraMap L (PiPlacesOver (L := L) v)) ⊆ LinearMap.range f := by
     rintro _ ⟨l, rfl⟩
-    exact ⟨1 ⊗ₜ l, by ext w; simp [f, AbsoluteValue.Completion.algebraMap_def,
-      WithAbs.algebraMap_right_apply]⟩
+    refine ⟨1 ⊗ₜ l, ?_⟩
+    ext w
+    simp [f, AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]
   have huniv : (LinearMap.range f : Set (PiPlacesOver (L := L) v)) = Set.univ := by
     refine Set.eq_univ_of_univ_subset ?_
     rw [← (denseRange_algebraMap_piPlacesOver v).closure_range]
@@ -177,18 +177,16 @@ def tensorPiEquivLeft : L ⊗[K] v.Completion ≃ₐ[L] PiPlacesOver (L := L) v 
   AlgEquiv.ofRingEquiv
     (f := ((Algebra.TensorProduct.comm K L v.Completion).trans
       ((tensorPiEquiv (L := L) v).restrictScalars K)).toRingEquiv)
-    (fun l => by ext w; simp [Algebra.TensorProduct.algebraMap_apply,
-      AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply])
+    (fun l => by
+      ext w
+      simp [Algebra.TensorProduct.algebraMap_apply, AbsoluteValue.Completion.algebraMap_def,
+        WithAbs.algebraMap_right_apply])
 
 @[simp]
 theorem tensorPiEquivLeft_tmul (l : L) (x : v.Completion) (w : v.placesOver L) :
     tensorPiEquivLeft (L := L) v (l ⊗ₜ x) w =
       (l : (w : InfinitePlace L).Completion) * algebraMap v.Completion _ x := by
   simp [tensorPiEquivLeft, mul_comm]
-
-
-
-
 
 end InfinitePlace
 

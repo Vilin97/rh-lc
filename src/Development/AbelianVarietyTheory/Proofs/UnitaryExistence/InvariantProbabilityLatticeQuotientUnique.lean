@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.RightInvariantOfCovolume
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.RightInvariantOfCovolume
+
+@[expose] public section
 
 noncomputable section
 open MeasureTheory

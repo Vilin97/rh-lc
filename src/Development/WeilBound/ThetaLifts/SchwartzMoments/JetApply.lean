@@ -8,10 +8,12 @@ noncomputable section
 
 namespace PositivityTheory.ThKOwn
 
+open MeasureTheory
+
 namespace SchI
 
 open scoped ContDiff NNReal BoundedContinuousFunction
-open MeasureTheory Filter Topology
+open Filter Topology
 
 variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
 
@@ -102,13 +104,13 @@ theorem deriv_D (j : ℕ) (x : V) : HasFDerivAt (fun y => ∫ a, iteratedFDeriv 
       (bd_D (G a) (j + 1) y)
   · exact Filter.Eventually.of_forall fun a y _ => hcurry (G a) y
 
-theorem taylor : HasFTaylorSeriesUpTo ∞ (fun x => ∫ a, G a x ∂μ) fun x j => ∫ a, iteratedFDeriv ℝ j (G a) x ∂μ where
-  zero_eq x := by
+theorem taylor : HasFTaylorSeriesUpTo ∞ (fun x => ∫ a, G a x ∂μ) fun x j => ∫ a, iteratedFDeriv ℝ j (G a) x ∂μ := by
+  refine ⟨?_, fun m _ x => deriv_D hG hI m x, fun m _ => ?_⟩
+  · intro x
     show (∫ a, iteratedFDeriv ℝ 0 (G a) x ∂μ) 0 = ∫ a, G a x ∂μ
     rw [ContinuousMultilinearMap.integral_apply (int_D hG hI 0 x)]
     simp only [iteratedFDeriv_zero_apply]
-  fderiv m _ x := deriv_D hG hI m x
-  cont m _ := continuous_iff_continuousAt.2 fun x => (deriv_D hG hI m x).continuousAt
+  · exact continuous_iff_continuousAt.2 fun x => (deriv_D hG hI m x).continuousAt
 
 theorem eval_int (k j : ℕ) (x : V) :
     (∫ a, J k j (G a) ∂μ) x = ‖x‖ ^ k • iteratedFDeriv ℝ j (fun x => ∫ a, G a x ∂μ) x := by

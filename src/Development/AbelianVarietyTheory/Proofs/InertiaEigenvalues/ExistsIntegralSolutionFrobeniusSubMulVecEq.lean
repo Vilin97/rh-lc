@@ -37,7 +37,7 @@ theorem backPoly_natDegree {k : Type*} [Field k] {q : ℕ} (hq : 2 ≤ q) (n : �
 theorem exists_sub_eq_inv {k : Type*} [Field k] [IsAlgClosed k] {V : Type*} [AddCommGroup V] [Module k V]
     [FiniteDimensional k V] {q : ℕ} (hq : 2 ≤ q) (ψ : V →+ V)
     (hψ : ∀ (c : k) (x : V), ψ (c ^ q • x) = c • ψ x) (z : V) : ∃ y, y - ψ y = z := by
-  obtain ⟨m, ⟨c, hrel⟩, -⟩ := GroundTheory.PAdicHodge.SemilinearResidue.exists_rel k (fun i => (⇑ψ)^[i] z)
+  obtain ⟨m, ⟨c, hrel⟩, -⟩ := GroundTheory.PAdicHodge.SemilinearResidue.exists_rel (k := k) (fun i => (⇑ψ)^[i] z)
   cases m with
   | zero => exact ⟨0, by simpa using hrel.symm⟩
   | succ n =>
@@ -97,6 +97,8 @@ theorem exists_sol {F : Type*} [Field F] [IsAlgClosed F] (p : ℕ) [hp : Fact p.
     change A.mulVec _ = c • A.mulVec _
     rw [← Matrix.mulVec_smul]
     congr 1
+    funext i
+    simp only [Pi.smul_apply, smul_eq_mul, map_mul, hr']
   obtain ⟨y, hy⟩ := exists_sub_eq_inv hq ψ hψ b
   refine ⟨fun i => r (y i), fun i => ?_⟩
   rw [hr, ← hy]

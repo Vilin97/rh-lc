@@ -32,8 +32,11 @@ def evalW {G : Type*} [Monoid G] (w : FreeMonoid G) : G := FreeMonoid.lift id w
 
 structure Det (n : ℕ) (A E B : Type*) [CommRing A] [Ring E] [Algebra A E] [CommRing B] [Algebra A B] where
   D : ∀ k : ℕ, (Fin k → E) → MvPolynomial (Fin k) B
+  lin : ∀ (k k' : ℕ) (y : Fin k' → E) (c : Fin k → Fin k' → A), D k (fun j => ∑ l, c j l • y l) =
     bind₁ (fun l => ∑ j, C (algebraMap A B (c j l)) * X j) (D k' y)
-    coeff α (D k fun j => evalW (w j)) = Θ (invCoef n w α)
+  Θ : Inv n E →+* B
+  inv : ∀ (k : ℕ) (w : Fin k → FreeMonoid E) (α : Fin k →₀ ℕ),
+    AddMonoidAlgebra.coeff (D k fun j => evalW (w j)) α = Θ (invCoef n w α)
 
 namespace Det
 variable {n : ℕ} {A E B : Type*} [CommRing A] [Ring E] [Algebra A E] [CommRing B] [Algebra A B] (D : Det n A E B)

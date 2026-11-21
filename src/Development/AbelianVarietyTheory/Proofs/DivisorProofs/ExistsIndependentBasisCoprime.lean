@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemLocDIffSpan
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemLocDIffSpan
+
+@[expose] public section
+
 open NumberField
 
 namespace GlobalTheory.CoprimeBasis
@@ -42,8 +47,17 @@ theorem exists_coprime_basis : ∀ (F : Type) [Field F] [NumberField F] (M : Typ
   haveI : IsDomain (Localization S) := IsLocalization.isDomain_localization hSle
   haveI : IsPrincipalIdealRing (Localization S) := by
     haveI := GlobalTheory.Mass.SemiBasis.isPID (K := F) hN
+    have hA : GlobalTheory.Mass.SemiBasis.A F hN =
+        Localization.subalgebra.ofField F (GlobalTheory.Mass.primeTo (N : 𝓞 F))
+          (GlobalTheory.Mass.SemiBasis.primeTo_le hN) := by
+      apply Subalgebra.ext
+      intro x
+      rfl
     haveI : IsLocalization S (GlobalTheory.Mass.SemiBasis.A F hN) := by
-        exact Localization.subalgebra.isLocalization_ofField (A := 𝓞 F) (K := F) (S := S) (hS := hSle)
+      rw [hA]
+      exact Localization.subalgebra.isLocalization_ofField (A := 𝓞 F) (K := F)
+        (S := GlobalTheory.Mass.primeTo (N : 𝓞 F))
+        (hS := GlobalTheory.Mass.SemiBasis.primeTo_le hN)
     exact IsPrincipalIdealRing.of_surjective
       (IsLocalization.algEquiv S (GlobalTheory.Mass.SemiBasis.A F hN) (Localization S)).toRingHom
       (IsLocalization.algEquiv S (GlobalTheory.Mass.SemiBasis.A F hN) (Localization S)).surjective

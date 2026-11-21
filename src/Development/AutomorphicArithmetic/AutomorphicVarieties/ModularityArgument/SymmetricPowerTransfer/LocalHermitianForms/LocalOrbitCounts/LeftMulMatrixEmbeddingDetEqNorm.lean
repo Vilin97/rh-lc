@@ -199,7 +199,11 @@ private theorem isLat_lat [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRi
     (hS : IsLat O τ S) : ∃ g, S = LL O τ g := by
   obtain ⟨⟨s, rfl⟩, hsp⟩ := hS
   set M : Submodule O (Etau K τ) := Submodule.span O (s : Set (Etau K τ)) with hM
-  haveI : Submodule.IsLattice K M := ⟨⟨s, rfl⟩, hsp⟩
+  have hfg : M.FG := by
+    rw [hM]
+    exact Submodule.fg_span s.finite_toSet
+  letI : Submodule.IsLattice K M := Submodule.IsLattice.of_fg K hfg
+  haveI : Submodule.IsFullLattice K M := ⟨hsp⟩
   have hr : Module.finrank O M = 2 := by
     apply Module.finrank_eq_of_rank_eq
     rw [Submodule.IsLattice.rank' K M, ← Module.finrank_eq_rank, QuadraticAlgebra.finrank_eq_two]
@@ -211,7 +215,8 @@ private theorem isLat_lat [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRi
     rw [← Set.range_comp]
     congr 1
     funext i
-    simp [B]
+    change (b.extendOfIsFullLattice K) i = (b i : Etau K τ)
+    exact Module.Basis.extendOfIsFullLattice_apply K b i
   rw [this, ← Submodule.map_span, b.span_eq, Submodule.map_subtype_top]
 
 private theorem cls_self (S : Set (Etau K τ)) : S ∈ cls τ S := ⟨1, by simp⟩

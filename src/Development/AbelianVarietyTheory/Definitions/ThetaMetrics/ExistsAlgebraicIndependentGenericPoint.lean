@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.AevalEqZeroOfHomogeneousComponent
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.AevalEqZeroOfHomogeneousComponent
+
+@[expose] public section
 
 open MvPolynomial
 
@@ -43,7 +47,6 @@ end Dimension
 
 section Principal
 
-attribute [local instance] Polynomial.algebra Polynomial.isLocalization in
 
 theorem isPrincipal_of_forall_C_mem {R : Type*} [CommRing R] [IsDomain R]
     [UniqueFactorizationMonoid R] (E : Ideal (Polynomial R)) [hE : E.IsPrime]
@@ -244,7 +247,6 @@ theorem elimIdeal_ne_bot {p : Ideal (MvPolynomial σ K)} [hP : p.IsPrime]
   have h9 := Fintype.card_subtype_le fun v : β × σ => v ∈ elimIndices Set.univ j₀
   omega
 
-omit [Fintype σ] in
 
 theorem exists_algebraicIndependent_genericPoint [Finite σ] {p : Ideal (MvPolynomial σ K)}
     [p.IsPrime] (hdim : ringKrullDim (MvPolynomial σ K ⧸ p) = (Fintype.card β : ℕ)) :

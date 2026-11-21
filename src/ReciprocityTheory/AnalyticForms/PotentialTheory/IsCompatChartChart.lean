@@ -1,8 +1,12 @@
-import ReciprocityTheory.AnalyticForms.PotentialTheory.ContDiffMulOfTsupport
-import ReciprocityTheory.AnalyticForms.PotentialTheory.Stokes
-import ReciprocityTheory.AnalyticForms.PotentialTheory.LogInt
-import ReciprocityTheory.AnalyticForms.PotentialTheory.AtlasIndep
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.ProjectiveLineZeroFormHolds
+module
+
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.ContDiffMulOfTsupport
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.Stokes
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.LogInt
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.AtlasIndep
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.ProjectiveLineZeroFormHolds
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.M.PLAux
 

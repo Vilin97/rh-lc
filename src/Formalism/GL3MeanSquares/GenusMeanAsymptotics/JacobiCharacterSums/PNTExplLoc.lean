@@ -1,5 +1,9 @@
-import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTExplDefs
-import Formalism.LandauZeroFreeBounds.SiegelWalfiszAPOfSiegelLower
+module
+
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTExplDefs
+public import Formalism.LandauZeroFreeBounds.SiegelWalfiszAPOfSiegelLower
+
+@[expose] public section
 
 open Complex Classical
 
@@ -110,7 +114,6 @@ private theorem exists_factor_zeros_differentiableOn_nonvanishing (f : ℂ → �
     rw [(hgk ρ hρ).self_of_nhds]
     exact hkne ρ hρ
 
-open Filter Topology Metric in
 
 theorem ex_landau_ord_core (f : ℂ → ℂ) (z₀ : ℂ) (r B : ℝ) (hr : 0 < r) (hB : 1 ≤ B)
     (hf : DifferentiableOn ℂ f (Metric.closedBall z₀ r)) (hfz₀ : f z₀ ≠ 0)

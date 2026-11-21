@@ -18,7 +18,7 @@ theorem isFundamentalDomain_of_ae_eq {Γ X : Type} [Group Γ] [Countable Γ] [Me
     have hall : ∀ᵐ x ∂μ, ∀ g : Γ, (g • x ∈ t) = (g • x ∈ s) := by
       rw [ae_all_iff]
       intro g
-      exact (measurePreserving_smul g μ).quasiMeasurePreserving.ae_eq hst
+      exact ((measurePreserving_smul g μ).quasiMeasurePreserving.ae hst).mono fun _ hx => propext hx
     filter_upwards [h.ae_covers, hall] with x ⟨g, hg⟩ hx
     exact ⟨g, by rw [hx g]; exact hg⟩
   aedisjoint a b hab := by

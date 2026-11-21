@@ -32,7 +32,9 @@ variable {n l : ℕ}
 
 def gen (j : Fin n) : Q k d n := ⟨pt k d j, cc_pt j⟩
 
-theorem czQ (b : Fin n → Q k d l) : CZ (fun j => (b j).1) := fun j i => (b j).2 i
+theorem czQ (b : Fin n → Q k d l) : CZ (fun j => (b j).1) := by
+  change ∀ j i, constantCoeff ((b j).1 i) = 0
+  exact fun j i => (b j).2 i
 
 def sb (b : Fin n → Q k d l) : PS k n d →+* PS k l d := evHom (czQ b)
 
@@ -139,7 +141,8 @@ theorem exists_pj (z : ∀ m, JetR R σ m) (hz : ∀ m, jetTruncR R σ m (z (m +
   exact (coeff_add_degree_eq_coeff_degree_of_stable q hc e j).symm
 
 def jS {κ : Type} (m : ℕ) (a : κ → MvPowerSeries τ R) (ha : ∀ s, constantCoeff (a s) = 0) : JetR R κ m →ₐ[R] JetR R τ m :=
-  jetLift R (RingHom.ker (jetAug R τ m)) (ker_jetAug_pow τ m) (fun s => pj m (a s)) fun s => (aug_pj m _).trans (ha s)
+  jetLift (R := R) (RingHom.ker (jetAug R τ m)) (ker_jetAug_pow (R := R) τ m)
+    (fun s => pj m (a s)) fun s => (aug_pj m _).trans (ha s)
 
 theorem jS_zR {κ : Type} (m : ℕ) (a : κ → MvPowerSeries τ R) (ha) (s : κ) : jS m a ha (zR m s) = pj m (a s) := by
   show (MvPolynomial.aeval fun s => pj m (a s)) (MvPolynomial.X s) = pj m (a s)
@@ -178,9 +181,16 @@ theorem jS_pj (m : ℕ) (a : σ → MvPowerSeries τ R) (ha) (f : MvPowerSeries 
   have h1 : pj m (subst a f) = pj m (subst a (truncTotal (m + 1) f : MvPowerSeries σ R)) := by
     show Ideal.Quotient.mk _ (truncTotal (m + 1) (subst a f)) =
       Ideal.Quotient.mk _ (truncTotal (m + 1) (subst a (truncTotal (m + 1) f : MvPowerSeries σ R)))
-    rw [MvPowerSeries.truncTotal_subst_eq_truncTotal_subst_sum ha' ha, ← MvPowerSeries.truncTotal_eq_sum]
+    rw [MvPowerSeries.truncTotal_subst_eq_truncTotal_subst_sum ha' ha,
+      ← MvPowerSeries.truncTotal_eq_sum]
   rw [h1, MvPowerSeries.subst_coe, pj_aeval]
-  rfl
+  have h : (jS m a ha).comp (Ideal.Quotient.mkₐ R _) =
+      MvPolynomial.aeval (fun s => pj m (a s)) := by
+    apply MvPolynomial.algHom_ext
+    intro s
+    change jS m a ha (zR m s) = _
+    rw [jS_zR, MvPolynomial.aeval_X]
+  exact AlgHom.congr_fun h _
 
 variable {G : Over (Spec (CommRingCat.of R))} [GrpObj G] {d : ℕ} (x : ∀ m : ℕ, sp (R₀ := R) (JetR R (Fin d) m) ⟶ G) {n l : ℕ}
 

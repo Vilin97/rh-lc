@@ -54,7 +54,8 @@ theorem cup_congruence : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∀ (Ω : Typ
   (∀ g ∈ H, ∀ h ∈ H, a (g * h) = a g + a h) → (∀ g ∈ H, ∀ h ∈ H, b (g * h) = b g + b h) →
   (∀ g ∈ H, ∀ h ∈ H, lz (g * h) = lz g + lz h) → (∀ g ∈ H, ∀ h ∈ H, lq (g * h) = lq g + lq h) →
   (∀ g ∈ H, g A = A ∧ g B = B ∧ g A' = A' ∧ g B' = B') →
-  IsInt p ((p : Ω) ^ c * A) → IsInt p ((p : Ω) ^ c * B) → IsInt p ((p : Ω) ^ c * A') → IsInt p ((p : Ω) ^ c * B') →
+  IsInt (p := p) ((p : Ω) ^ c * A) → IsInt (p := p) ((p : Ω) ^ c * B) →
+  IsInt (p := p) ((p : Ω) ^ c * A') → IsInt (p := p) ((p : Ω) ^ c * B') →
   (∀ g, ∃ S : Finset Ω, ∀ h : Gal p Ω, (∀ x ∈ S, h x = g x) → a h = a g ∧ b h = b g ∧ lz h = lz g ∧ lq h = lq g) →
   Cob1 n H (fun g => (p : Ω) ^ c * ((a g).val : Ω) - (p : Ω) ^ c * A * ((lq g).val : Ω) - (p : Ω) ^ c * B * ((lz g).val : Ω)) →
   Cob1 n H (fun g => (p : Ω) ^ c * ((b g).val : Ω) - (p : Ω) ^ c * A' * ((lq g).val : Ω) - (p : Ω) ^ c * B' * ((lz g).val : Ω)) →
@@ -66,7 +67,7 @@ theorem cup_congruence : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∀ (Ω : Typ
   obtain ⟨i, m, him⟩ := exists_half p n hp.out h2
   have him' : 2 * (i : Ω) = 1 + (p : Ω) ^ n * (m : Ω) := by exact_mod_cast congrArg (Int.cast : ℤ → Ω) him
   let R := integralClosure (O0 p) Ω
-  have key : ∀ v : Ω, IsInt p v ↔ v ∈ R := fun v => Iff.rfl
+  have key : ∀ v : Ω, IsInt (p := p) v ↔ v ∈ R := fun v => Iff.rfl
   have hmap : ∀ (g : Gal p Ω) (v : Ω), v ∈ R → g v ∈ R := fun g v hv =>
     IsIntegral.map g.toAlgHom hv
   rw [key] at iA iB iA' iB' ix iy

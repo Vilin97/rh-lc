@@ -30,7 +30,14 @@ theorem tay_coord {N : ℕ} (k : Fin N) : tay (fun v : Fin N → ℂ => v k) 0 =
   refine MvPowerSeries.pderiv.ext (fun q => ?_) ?_
   · obtain ⟨a, j⟩ := q
     obtain rfl : a = 0 := Subsingleton.elim _ _
-    rw [TM.pderiv_tay hc]
+    have hd : MvPowerSeries.pderiv ((0 : Fin 1), j) (tay (fun v : Fin N → ℂ => v k) 0) =
+        tay (fun y : Fin N → ℂ => fderiv ℂ (fun v : Fin N → ℂ => v k) y (Pi.single j 1)) 0 := by
+      ext n
+      rw [MvPowerSeries.coeff_pderiv, coeff_tay, coeff_tay, dirs_add_single, fct_add_single,
+        add_zero, add_zero, TM.mD_cons_deriv hc]
+      push_cast
+      rw [← div_div, div_mul_cancel₀ _ (Nat.cast_add_one_ne_zero _)]
+    rw [hd]
     have : (fun y : Fin N → ℂ => fderiv ℂ (fun v : Fin N → ℂ => v k) y (Pi.single j 1)) =
         fun _ => (Pi.single j (1 : ℂ) : Fin N → ℂ) k := by
       funext y
@@ -40,12 +47,13 @@ theorem tay_coord {N : ℕ} (k : Fin N) : tay (fun v : Fin N → ℂ => v k) 0 =
     rw [this, TM.tay_const, MvPowerSeries.pderiv_X]
     by_cases h : k = j
     · subst h; simp
-    · simp [h, Prod.ext_iff, Ne.symm h]
+    · simp [h, Prod.ext_iff]
   · rw [constantCoeff_tay, TM.mD_zero]; simp
 
 theorem jetOf_coord {N : ℕ} (m : ℕ) (k : Fin N) :
     jetOf m (fun v : Fin N → ℂ => v k) = Ideal.Quotient.mk _ (MvPolynomial.X ((0 : Fin 1), k)) := by
-  rw [jetOf, tay_coord, ← MvPolynomial.coe_X, psJet, FBIdJet.psTrunc_eq, FBIdJet.mk_trunc_coe]
+  simpa only [jetOf, tay_coord, psJet, FBIdJet.psTrunc_eq, MvPolynomial.coe_X] using
+    FBIdJet.mk_trunc_coe m (MvPolynomial.X ((0 : Fin 1), k) : MvPolynomial (Fin 1 × Fin N) ℂ)
 
 theorem jetOf_sum_coord {N : ℕ} (m : ℕ) {T : Type} (I : Finset T) (k : T → Fin N) :
     jetOf m (fun v : Fin N → ℂ => ∑ i ∈ I, v (k i)) =

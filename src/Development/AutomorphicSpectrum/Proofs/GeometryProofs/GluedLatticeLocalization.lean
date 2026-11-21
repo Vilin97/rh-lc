@@ -1,4 +1,9 @@
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.PlaceEqOneOfNotMem
+module
+
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.PlaceEqOneOfNotMem
+
+@[expose] public section
+
 open NumberField Matrix IsDedekindDomain
 
 namespace GlobalTheory.CompanionTheory.Ar.Cusp.LocFrame

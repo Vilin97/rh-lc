@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 
@@ -341,7 +345,6 @@ theorem quasiPeriod_congr {L L' : PeriodPair} (h : L'.lattice = L.lattice) :
     quasiPeriod L' = quasiPeriod L :=
   LinearMap.ext fun z => by simpa using (isHomothetic_one_iff.2 h).quasiPeriod_mul z
 
-open EisensteinSeries SummationFilter in
 
 theorem quasiPeriod_ω₁_eq_eisenstein (τ : UpperHalfPlane) (hτ : (τ : ℂ) * L.ω₁ = L.ω₂) :
     quasiPeriod L L.ω₁ = L.ω₁⁻¹ * G2 τ := by
@@ -719,7 +722,6 @@ theorem IsHomothetic.weierstrassSigma_mul {L L' : PeriodPair} {c : ℂ} (h : IsH
     (z : ℂ) : weierstrassSigma L' (c * z) = c * weierstrassSigma L z := by
   rw [weierstrassSigma, h.sigmaProd_mul, weierstrassSigma, mul_assoc]
 
-open Classical in
 
 def sigmaSign (w : ℂ) : ℂ := if w / 2 ∈ L.lattice then 1 else -1
 

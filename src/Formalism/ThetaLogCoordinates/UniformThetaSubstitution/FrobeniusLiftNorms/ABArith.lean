@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementAB
-import Formalism.GrowthSums.FactorialBaseGrowth.PathBasisOfCount
-import Formalism.GrowthSums.FactorialBaseGrowth.QuadraticExponentIdentity
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementAB
+public import Formalism.GrowthSums.FactorialBaseGrowth.PathBasisOfCount
+public import Formalism.GrowthSums.FactorialBaseGrowth.QuadraticExponentIdentity
+
+@[expose] public section
 
 noncomputable section
 

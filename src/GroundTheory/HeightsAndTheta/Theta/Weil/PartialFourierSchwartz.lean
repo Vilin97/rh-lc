@@ -144,15 +144,15 @@ def sndInnerCLM : V₁ × (EuclideanSpace ℝ ι) →L[ℝ] (V₁ × (EuclideanS
     ((innerSL ℝ).comp (ContinuousLinearMap.snd ℝ V₁ (EuclideanSpace ℝ ι)))
 
 theorem sndInnerCLM_apply (p q : V₁ × (EuclideanSpace ℝ ι)) :
-    sndInnerCLM V₁ ι p q = inner ℝ p.2 q.2 := by
+    sndInnerCLM p q = inner ℝ p.2 q.2 := by
   simp [sndInnerCLM]
 
 def partialFourierDeriv (F : 𝓢(V₁ × (EuclideanSpace ℝ ι), E)) : 𝓢(V₁ × (EuclideanSpace ℝ ι), V₁ × (EuclideanSpace ℝ ι) →L[ℝ] E) :=
   SchwartzMap.postcompCLM ((ContinuousLinearMap.compL ℝ (V₁ × (EuclideanSpace ℝ ι)) (V₁ × (EuclideanSpace ℝ ι)) E).flip
-      (fstIncl V₁ ι)) (SchwartzMap.fderivCLM ℝ (V₁ × (EuclideanSpace ℝ ι)) E F) +
+      (fstIncl (V₁ := V₁) (ι := ι))) (SchwartzMap.fderivCLM ℝ (V₁ × (EuclideanSpace ℝ ι)) E F) +
     (-(2 * π * I) : ℂ) • SchwartzMap.bilinLeftCLM
       (ContinuousLinearMap.smulRightL ℝ (V₁ × (EuclideanSpace ℝ ι)) E).flip
-      (sndInnerCLM V₁ ι).hasTemperateGrowth F
+      sndInnerCLM.hasTemperateGrowth F
 
 theorem partialFourierDeriv_apply (F : 𝓢(V₁ × (EuclideanSpace ℝ ι), E)) (p q : V₁ × (EuclideanSpace ℝ ι)) :
     partialFourierDeriv F p q =
@@ -167,18 +167,20 @@ theorem hasFDerivAt_partialFourierSnd_integrand (F : 𝓢(V₁ × (EuclideanSpac
       (((-2 * π * I * 𝐞 (-(innerSL ℝ) v q.2)) • (ofRealCLM ∘L ((innerSL ℝ) v))).comp
         (ContinuousLinearMap.snd ℝ V₁ (EuclideanSpace ℝ ι))) q :=
     (hasFDerivAt_fourierChar_neg_bilinear_right (innerSL ℝ) v q.2).comp q hasFDerivAt_snd
-  have hpair : HasFDerivAt (fun q' : V₁ × (EuclideanSpace ℝ ι) ↦ (q'.1, v)) (fstIncl V₁ ι) q := by
+  have hpair : HasFDerivAt (fun q' : V₁ × (EuclideanSpace ℝ ι) ↦ (q'.1, v))
+      (fstIncl (V₁ := V₁) (ι := ι)) q := by
     have h : (fun q' : V₁ × (EuclideanSpace ℝ ι) ↦ (q'.1, v)) =
-        fun q' ↦ fstIncl V₁ ι q' + ((0 : V₁), v) := by
+        fun q' ↦ fstIncl (V₁ := V₁) (ι := ι) q' + ((0 : V₁), v) := by
       funext q'
       simp
     rw [h]
-    exact (fstIncl V₁ ι).hasFDerivAt.add_const _
+    exact (ContinuousLinearMap.hasFDerivAt (𝕜 := ℝ) (fstIncl (V₁ := V₁) (ι := ι))).add_const _
   have hF : HasFDerivAt (fun q' : V₁ × (EuclideanSpace ℝ ι) ↦ F (q'.1, v))
-      ((fderiv ℝ F (q.1, v)).comp (fstIncl V₁ ι)) q :=
+      ((fderiv ℝ F (q.1, v)).comp (fstIncl (V₁ := V₁) (ι := ι))) q :=
     (F.differentiableAt.hasFDerivAt).comp q hpair
   have hs : HasFDerivAt (fun q' : V₁ × (EuclideanSpace ℝ ι) ↦ ((𝐞 (-inner ℝ v q'.2) : ℂ)) • F (q'.1, v))
-      ((((𝐞 (-inner ℝ v q.2) : Circle) : ℂ)) • (fderiv ℝ F (q.1, v)).comp (fstIncl V₁ ι) +
+      ((((𝐞 (-inner ℝ v q.2) : Circle) : ℂ)) • (fderiv ℝ F (q.1, v)).comp
+        (fstIncl (V₁ := V₁) (ι := ι)) +
         (((-2 * π * I * 𝐞 (-(innerSL ℝ) v q.2)) • (ofRealCLM ∘L ((innerSL ℝ) v))).comp
           (ContinuousLinearMap.snd ℝ V₁ (EuclideanSpace ℝ ι))).smulRight (F (q.1, v))) q := he.smul hF
   refine hs.congr_fderiv (ContinuousLinearMap.ext fun r ↦ ?_)

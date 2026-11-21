@@ -30,7 +30,8 @@ theorem isProper_fan_pt {T : Scheme.{0}} : ∀ (n : ℕ) (f : Fin n → Over T),
       have h0 : IsLimit (Fan.mk (Over.mk (𝟙 T)) (fun i => i.elim0 : ∀ i, Over.mk (𝟙 T) ⟶ f i)) :=
         Fan.IsLimit.mk _ (fun _ => Over.mkIdTerminal.from _) (fun _ k => k.elim0)
           (fun _ _ _ => Over.mkIdTerminal.hom_ext _ _)
-      exact isProper_hom_of_iso (hc.conePointUniqueUpToIso h0) (by dsimp; infer_instance)
+      have hId : IsProper (𝟙 T) := inferInstance
+      exact isProper_hom_of_iso (hc.conePointUniqueUpToIso h0) hId
   | n + 1, f, hf, c, hc => by
       let c₁ : Fan (fun i : Fin n => f i.succ) := limit.cone (Discrete.functor fun i : Fin n => f i.succ)
       have h1 : IsProper c₁.pt.hom :=

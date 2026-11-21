@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.SndDualLiftAlgebraMap
-open GlobalTheory.BK PowerSeries Filter Topology
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.SndDualLiftAlgebraMap
+
+@[expose] public section
+
+open _root_.GlobalTheory.BK PowerSeries Filter Topology
 
 noncomputable section
 

@@ -87,6 +87,9 @@ theorem walk_bound (g : (K → ℕ) → ℝ) (a₀ : ℕ) (B : ℝ) (hB : 0 ≤ 
 
 end Walk
 
+-- Mathlib represents ℤ-multilinear maps using the identity ring homomorphism.
+local notation:max "MultilinearMap" " ℤ" => _root_.MultilinearMap (RingHom.id ℤ)
+
 section Multilinear
 
 variable {K : Type*} [Fintype K] [DecidableEq K]
@@ -104,7 +107,7 @@ theorem multilinear_abs_le {n : ℕ} (f : MultilinearMap ℤ (fun _ : Fin n => K
     set_option synthInstance.maxHeartbeats 100000 in
       rw [MultilinearMap.map_sum]
     refine Finset.sum_congr rfl (fun r _ => ?_)
-    rw [MultilinearMap.map_smul_univ, smul_eq_mul]
+    simp only [MultilinearMap.map_smul_univ, RingHom.id_apply, smul_eq_mul]
   rw [hexp, Finset.sum_mul]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum (fun r _ => ?_))
   rw [abs_mul, Finset.abs_prod]

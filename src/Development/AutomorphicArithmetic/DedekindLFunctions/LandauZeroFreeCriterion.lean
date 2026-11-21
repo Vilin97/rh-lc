@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.DedekindLFunctions.CharFamily
+module
+
+public import Development.AutomorphicArithmetic.DedekindLFunctions.CharFamily
+
+@[expose] public section
 
 open Complex MeasureTheory Set Filter Topology
 

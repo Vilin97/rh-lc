@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 namespace GroundTheory.Global
 
@@ -10,7 +14,6 @@ namespace SemiLocal
 
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
-variable (L) in
 
 abbrev PlacesOver (v : HeightOneSpectrum (𝓞 K)) : Type _ :=
   {w : HeightOneSpectrum (𝓞 L) // w.asIdeal.LiesOver v.asIdeal}
@@ -18,7 +21,6 @@ abbrev PlacesOver (v : HeightOneSpectrum (𝓞 K)) : Type _ :=
 instance (v : HeightOneSpectrum (𝓞 K)) (w : PlacesOver L v) : w.1.asIdeal.LiesOver v.asIdeal :=
   w.2
 
-variable (L) in
 
 def placesOverEquiv (v : HeightOneSpectrum (𝓞 K)) :
     PlacesOver L v ≃ v.asIdeal.primesOver (𝓞 L) where

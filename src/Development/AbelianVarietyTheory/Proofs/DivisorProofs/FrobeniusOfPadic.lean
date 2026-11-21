@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.IotaScalarOne
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IotaScalarOne
+
+@[expose] public section
 
 noncomputable section
 

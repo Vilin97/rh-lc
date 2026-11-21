@@ -1,5 +1,9 @@
-import Formalism.UnipotentAdelicQuotients.EllRegStep
-import Formalism.UnipotentAdelicQuotients.EllipticRegularity.KernDecay
+module
+
+public import Formalism.UnipotentAdelicQuotients.EllRegStep
+public import Formalism.UnipotentAdelicQuotients.EllipticRegularity.KernDecay
+
+@[expose] public section
 
 namespace ZetaZeros.D.EllReg
 

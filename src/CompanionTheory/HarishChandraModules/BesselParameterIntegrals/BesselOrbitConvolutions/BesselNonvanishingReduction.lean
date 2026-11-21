@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.BesselNonvanishingReduction
+module
+
+public import Formalism.HermitianCurvature.BesselNonvanishingReduction
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset
 open scoped InnerProductSpace ENNReal NNReal

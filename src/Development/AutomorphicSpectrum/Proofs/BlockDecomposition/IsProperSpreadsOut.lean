@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.CubeTheorem.SchemeModels
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFiniteAffineCover
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.CubeTheorem.SchemeModels
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFiniteAffineCover
+
+@[expose] public section
 
 set_option autoImplicit false
 

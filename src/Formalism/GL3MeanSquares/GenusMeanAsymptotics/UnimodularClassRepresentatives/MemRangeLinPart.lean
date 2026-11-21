@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.CardFiberMulCardRange
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.CardFiberMulCardRange
+
+@[expose] public section
 
 namespace Formalism.HermitianLattices.Ext.L3.SecondPropositionFree
 

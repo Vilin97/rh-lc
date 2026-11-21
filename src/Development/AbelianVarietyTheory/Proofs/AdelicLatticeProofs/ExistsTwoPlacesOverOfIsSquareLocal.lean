@@ -95,8 +95,7 @@ theorem exists_val_sub_mul_lt_one {F L Γ : Type} [Field L] [LinearOrderedCommGr
     [Valued L Γ] (φ : F → L) (hφ : DenseRange φ) (r c : L) :
     ∃ ρ : F, Valued.v ((r - φ ρ) * c) < (1 : Γ) := by
   have hopen : IsOpen {x : L | Valued.v x < (1 : Γ)} := by
-    simpa using Valued.isOpen_ball L (1 : (MonoidWithZeroHom.ofClass
-      (Valued.v : Valuation L Γ)).ValueGroup₀)
+    simpa only [Valuation.restrict_lt_one_iff] using (Valued.isOpen_ball L 1)
   have hcont : Continuous fun x : L => (r - x) * c := by fun_prop
   exact hφ.exists_mem_open (hopen.preimage hcont) ⟨r, by simp⟩
 

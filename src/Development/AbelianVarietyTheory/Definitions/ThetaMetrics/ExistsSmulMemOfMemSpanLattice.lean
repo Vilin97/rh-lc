@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.MemSaturatedOrderIsoSubspaceSpanSymmApply
-import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.FinrankMulDiscrRpowLeSumSqOfMemTraceDual
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.MemSaturatedOrderIsoSubspaceSpanSymmApply
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.FinrankMulDiscrRpowLeSumSqOfMemTraceDual
+
+@[expose] public section
 
 open NumberField Module Matrix
 open scoped ComplexOrder ComplexConjugate
@@ -407,13 +411,12 @@ theorem of_le {B : Submodule (𝓞 K) V} (he : IsLatticeFrame A e) (hAB : A ≤ 
 
 
 theorem map (he : IsLatticeFrame A e) (f : V →ₗ[K] V') (hf : Function.Injective f) :
-    IsLatticeFrame (A.map (f.restrictScalars (𝓞 K))) (f ∘ e) where
-  mem i := ⟨e i, he.mem i, rfl⟩
-  linearIndependent := he.linearIndependent.map' f (LinearMap.ker_eq_bot.2 hf)
-  mem_span := by
-    rintro _ ⟨x, hx, rfl⟩
-    rw [Set.range_comp, ← Submodule.map_span]
-    exact ⟨x, he.mem_span x hx, rfl⟩
+    IsLatticeFrame (A.map (f.restrictScalars (𝓞 K))) (f ∘ e) := by
+  refine ⟨fun i => ⟨e i, he.mem i, rfl⟩,
+    he.linearIndependent.map' f (LinearMap.ker_eq_bot.2 hf), ?_⟩
+  rintro _ ⟨x, hx, rfl⟩
+  rw [Set.range_comp, ← Submodule.map_span]
+  exact ⟨x, he.mem_span x hx, rfl⟩
 
 
 theorem smul (he : IsLatticeFrame A e) {d : ι → 𝓞 K} (hd : ∀ i, d i ≠ 0) :

@@ -11,12 +11,12 @@ namespace GlobalTheory
 
 noncomputable def coeffDerivFun {B τ : Type} [CommRing B] (D : Derivation ℤ B B)
     (p : MvPolynomial τ B) : MvPolynomial τ B :=
-  ∑ s ∈ p.support, monomial s (D (coeff s p))
+  ∑ s ∈ p.support, MvPolynomial.monomial s (D (p.coeff s))
 
 open MvPolynomial in
 theorem coeff_coeffDerivFun {B τ : Type} [CommRing B] (D : Derivation ℤ B B)
     (p : MvPolynomial τ B) (m : τ →₀ ℕ) :
-    coeff m (coeffDerivFun D p) = D (coeff m p) := by
+    (coeffDerivFun D p).coeff m = D (p.coeff m) := by
   classical
   rw [coeffDerivFun, coeff_sum]
   simp only [coeff_monomial]
@@ -47,7 +47,7 @@ theorem coeffDerivAddHom_mul {B τ : Type} [CommRing B] (D : Derivation ℤ B B)
   | monomial u a =>
     induction q using MvPolynomial.induction_on' with
     | monomial v b =>
-      simp only [MvPolynomial.monomial_mul, coeffDerivAddHom_monomial, Derivation.leibniz,
+      simp only [MvPolynomial.monomial_mul_monomial, coeffDerivAddHom_monomial, Derivation.leibniz,
         smul_eq_mul, map_add, add_comm v u]
     | add q₁ q₂ h₁ h₂ =>
       rw [mul_add, map_add (f := _), h₁, h₂, map_add (f := _)]; ring

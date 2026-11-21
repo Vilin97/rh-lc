@@ -48,7 +48,7 @@ theorem IsCsr.map {P : B[X]} (hP : IsCsr s P) (φ : B →+* B') (hφ : ∀ b, φ
   rw [hP.1.natDegree_map, Polynomial.map_map, e, ← Polynomial.map_map, reflect_map, ← hP.2, Polynomial.map_mul, map_C, coeff_map, hφ]
 
 
-abbrev Csr : Type := {P : B[X] // IsCsr s P}
+abbrev Csr (s : B →+* B) : Type := {P : B[X] // IsCsr s P}
 
 def Csr.mul (P Q : Csr s) : Csr s := ⟨P.1 * Q.1, P.2.mul Q.2⟩
 
@@ -188,7 +188,9 @@ end Map
 
 
 
-def normSign (d : B) : ℤˣ := if ∃ u : Bˣ, d = u * s u then 1 else -1
+def normSign (d : B) : ℤˣ := by
+  classical
+  exact if ∃ u : Bˣ, d = u * s u then 1 else -1
 
 variable {n : Type} [Fintype n] [DecidableEq n]
 

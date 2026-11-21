@@ -9,6 +9,7 @@ open NumberField
 namespace GlobalTheory
 
 
+open scoped Classical in
 theorem mixedSpace_trace_eq (F : Type) [Field F] [NumberField F]
     (x : mixedEmbedding.mixedSpace F) :
     Algebra.trace ℝ (mixedEmbedding.mixedSpace F) x =
@@ -31,6 +32,7 @@ theorem mixedSpace_traceForm_nondegenerate :
     ∀ (F : Type) [Field F] [NumberField F] (ξ : mixedEmbedding.mixedSpace F),
     (∀ η : mixedEmbedding.mixedSpace F,
       Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (ξ * η) = 0) → ξ = 0 := by
+  classical
   intro F _ _ ξ h
   have h0 := h (ξ.1, fun w => (starRingEnd ℂ) (ξ.2 w))
   rw [mixedSpace_trace_eq] at h0

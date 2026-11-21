@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DiagMemCongruencePairs
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DiagMemCongruencePairs
+
+@[expose] public section
 
 noncomputable section
 

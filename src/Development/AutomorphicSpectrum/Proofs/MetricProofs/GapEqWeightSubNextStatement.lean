@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.GapEqWeightSubNext
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.PairRelationOfScaledRatio
-import GroundTheory.HeightsAndTheta.Heights.Antisymmetric.Statements
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.GapEqWeightSubNext
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.PairRelationOfScaledRatio
+public import GroundTheory.HeightsAndTheta.Heights.Antisymmetric.Statements
+
+@[expose] public section
+
 open MvPolynomial GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights
 
 local notation "coeff" m:arg P:arg => AddMonoidAlgebra.coeff P m
