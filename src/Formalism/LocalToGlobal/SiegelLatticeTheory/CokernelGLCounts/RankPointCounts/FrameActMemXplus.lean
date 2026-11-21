@@ -21,7 +21,7 @@ open BwdCut BwdBetaCut BwdNP BetaI
 variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u)}
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
-theorem frameAct_mem_Xplus {T' : D.host.E} (G : LFlag (VS D) D.R.rS T')
+theorem frameAct_mem_Xplus {T' : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T')
     (ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E)) (b : Fin (D.R.rS + 1)) :
     frameAct (frame G) ξ b ∈ G.fl.Xplus := by
   rw [SpanOmPf.Xplus_eq]

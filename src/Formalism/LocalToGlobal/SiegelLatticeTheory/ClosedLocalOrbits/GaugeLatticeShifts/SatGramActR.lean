@@ -28,7 +28,7 @@ def LiftAut : Prop :=
       β ∈ Formalism.L2.SG.Saturated.AutF Λ (lf D (X.Fu w))
 
 def AutFConjN : Prop :=
-  ∀ (D : D7) (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFlag (VS D) D.R.rS T)
+  ∀ (D : D7) (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
     (β : (VS D).V ≃ₗ[D.host.E] (VS D).V), β ∈ Formalism.L2.SG.Saturated.AutF Λ F →
     ∀ n ∈ NLam Λ F, β * n * β⁻¹ ∈ NLam Λ F
 
@@ -53,19 +53,19 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
   {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)} {F0' : FlagG (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)}
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
-theorem isom_of_autF {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {F : LFlag (VS D) D.R.rS T}
+theorem isom_of_autF {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {F : LFlag (D.sp.Y 0) D.R.rS T}
     {β : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hβ : β ∈ Formalism.L2.SG.Saturated.AutF Λ F) :
     β ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := by
   obtain ⟨⟨h1, -⟩, -, -⟩ := hβ
   exact h1
 
-theorem gmap_of_autF {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {F : LFlag (VS D) D.R.rS T}
+theorem gmap_of_autF {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {F : LFlag (D.sp.Y 0) D.R.rS T}
     {β : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hβ : β ∈ Formalism.L2.SG.Saturated.AutF Λ F) :
     Formalism.HermitianLatticesTheory.gmap β Λ = Λ := by
   obtain ⟨⟨-, h2⟩, -, -⟩ := hβ
   exact h2
 
-theorem mapLF_mul_aut {Λ' : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {F : LFlag (VS D) D.R.rS T}
+theorem mapLF_mul_aut {Λ' : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {F : LFlag (D.sp.Y 0) D.R.rS T}
     {β : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hβ : β ∈ Formalism.L2.SG.Saturated.AutF Λ' F)
     (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) :
     mapLF (γ * β⁻¹) F = mapLF γ F := by
@@ -189,7 +189,7 @@ theorem toTerm_tmap (hN : AutFConjN) (hx : RatLink X x β) (t : GTerm X u u' F0 
     (tmap x β hN hx t).toTerm = t.toTerm := by
   by_cases hβ : β ∈ Formalism.L2.SG.Saturated.AutF t.lam' (lf D F0')
   · have hTR := Formalism.L2.SG.Pf.toTermRel_holds X u u' F0 F0'
-    have mk_congr : ∀ (A B : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    have mk_congr : ∀ (A B : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
         (hA : TermDef.PD D t.lam (lf D F0) u' A) (hB : TermDef.PD D t.lam (lf D F0) u' B), A = B →
         TermDef.mk t.lam (lf D F0) (TermDef.PD D t.lam (lf D F0) u') ⟨A, hA⟩ =
           TermDef.mk t.lam (lf D F0) (TermDef.PD D t.lam (lf D F0) u') ⟨B, hB⟩ := by

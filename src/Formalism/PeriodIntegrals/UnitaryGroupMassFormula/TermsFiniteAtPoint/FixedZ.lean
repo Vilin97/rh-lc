@@ -71,12 +71,12 @@ section D7
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-theorem zhat_cs (D : D7) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T')
+theorem zhat_cs (D : D7) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (c : Fin D.R.rS) (b : Fin (D.R.rS + 1)) :
     ZhatL (lf D F0) F' (Fin.castSucc c) b = (VS D).hT (F0.e c) (frame F' b) := by
   simp [ZhatL, Zhat, brS, frame, FlagG.fvec, lf]
 
-theorem zhat_last (D : D7) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T')
+theorem zhat_last (D : D7) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (b : Fin (D.R.rS + 1)) :
     ZhatL (lf D F0) F' (Fin.last D.R.rS) b = (VS D).hT F0.z (frame F' b) := by
   simp [ZhatL, Zhat, brS, frame, FlagG.fvec, lf]
@@ -131,11 +131,11 @@ theorem fixedZhat_of (hH : HeisOp) (hSk : SkewSolve) (hS : ShortFin) (hRD : Rows
     have := (D.mem u).A.T_prime.pos
     exact_mod_cast this.ne'
 
-  let yv : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) → (VS D).V := fun y => ∑ b, v b • frame y b
-  let ι2 : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) → (VS D).V :=
+  let yv : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) → (VS D).V := fun y => ∑ b, v b • frame y b
+  let ι2 : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) → (VS D).V :=
     fun y => ((nd * nv : ℕ) : D.host.E) • piL F0.e f (yv y)
-  let hz : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) → D.host.E := fun y => (VS D).hT F0.z (ι2 y)
-  let xf : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) → (VS D).V :=
+  let hz : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) → D.host.E := fun y => (VS D).hT F0.z (ι2 y)
+  let xf : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) → (VS D).V :=
     fun y => ((Tu D u : ℕ) : D.host.E) • ι2 y + hz y • F0.z
 
   have hβy : ∀ y ∈ Y, ∀ c b, (VS D).hT (F0.e c) (frame y.1 b) = β c b := by
@@ -186,7 +186,7 @@ theorem fixedZhat_of (hH : HeisOp) (hSk : SkewSolve) (hS : ShortFin) (hRD : Rows
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [hz, ι2, map_smul, smul_eq_mul, hpiz, yv, map_sum, hzy y hy]
 
-  have hyvn : ∀ y : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E),
+  have hyvn : ∀ y : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E),
       (VS D).hT (yv y) (yv y) = (VS D).hT (yv y0.1) (yv y0.1) := by
     intro y
     set_option synthInstance.maxHeartbeats 100000 in

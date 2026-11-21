@@ -417,7 +417,7 @@ theorem mapLF_eq {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formali
   unfold mapLF
   rw [dite_eq_left hγ]
   have hfl : Formalism.L2.SG.TermOp.mapFlag γ hγ F = F' := flagG_ext (funext he) hz
-  show (⟨Formalism.L2.SG.TermOp.mapFlag γ hγ F, γ F.z⟩ : LFlag (VS D) D.R.rS T) = ⟨F', F'.z⟩
+  show (⟨Formalism.L2.SG.TermOp.mapFlag γ hγ F, γ F.z⟩ : LFlag (D.sp.Y 0) D.R.rS T) = ⟨F', F'.z⟩
   rw [hfl, hz]
 
 theorem rowLat_map' (hLI : ∀ (β : (VS D).V ≃ₗ[D.host.E] (VS D).V), β ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT →

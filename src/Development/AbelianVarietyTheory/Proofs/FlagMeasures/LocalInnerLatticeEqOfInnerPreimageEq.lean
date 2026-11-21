@@ -20,13 +20,13 @@ namespace GlobalTheory.Unfold.InnerLoc
 
 variable {D : D7}
 
-def phiG {T : D.host.E} (G : LFlag (VS D) D.R.rS T) : (VS D).V →ₗ[D.host.E] (Fin D.R.rS → D.host.E) :=
+def phiG {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) : (VS D).V →ₗ[D.host.E] (Fin D.R.rS → D.host.E) :=
   LinearMap.pi fun a => (VS D).hT (G.fl.e a)
 
-theorem phiG_apply {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (x : (VS D).V) (a : Fin D.R.rS) :
+theorem phiG_apply {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (x : (VS D).V) (a : Fin D.R.rS) :
     phiG G x a = (VS D).hT (G.fl.e a) x := rfl
 
-theorem phiG_surj {T : D.host.E} (G : LFlag (VS D) D.R.rS T) : LinearMap.range (phiG G) = ⊤ := by
+theorem phiG_surj {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) : LinearMap.range (phiG G) = ⊤ := by
   by_contra hne
   obtain ⟨μ, hμ0, hμ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.2 hne)
   set m : Fin D.R.rS → D.host.E := fun a => μ (fun j => if a = j then 1 else 0) with hm
@@ -51,7 +51,7 @@ theorem phiG_surj {T : D.host.E} (G : LFlag (VS D) D.R.rS T) : LinearMap.range (
   simp only at this
   rw [this, smul_zero]
 
-theorem mem_orth_of_phiG {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (x : (VS D).V) (h : phiG G x = 0) :
+theorem mem_orth_of_phiG {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (x : (VS D).V) (h : phiG G x = 0) :
     x ∈ orth (VS D) (Xsp G) := by
   simp only [orth, Submodule.mem_iInf, LinearMap.mem_ker]
   intro u hu
@@ -63,7 +63,7 @@ theorem mem_orth_of_phiG {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (x : (VS D).
   have := hle hu
   simpa using this
 
-theorem exists_split {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Λ : LV D)
+theorem exists_split {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (Λ : LV D)
     (hΛ : Submodule.IsLattice D.host.E Λ) :
     ∃ (m : ℕ) (l : Fin m → (VS D).V) (c : Fin m → Fin D.R.rS → D.host.E),
       (∀ i, l i ∈ Λ) ∧
@@ -111,20 +111,20 @@ theorem hP_add_right (v w w' : Vp D p) :
 theorem hP_zero_right (v : Vp D p) : (locH Z p).h v 0 = 0 := by
   rw [(locH Z p).h_herm 0 v, (locH Z p).h_zero_left, map_zero]
 
-theorem frame_castSucc {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (k : Fin D.R.rS) :
+theorem frame_castSucc {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (k : Fin D.R.rS) :
     frame G k.castSucc = G.fl.e k := by
   simp [frame, FlagG.fvec]
 
-def sigP {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {m : ℕ} (l : Fin m → (VS D).V)
+def sigP {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) {m : ℕ} (l : Fin m → (VS D).V)
     (c : Fin m → Fin D.R.rS → D.host.E) : Vp D p →ₗ[(D.s.atP p).Ep] Vp D p :=
   ∑ i, (∑ k, (D.s.atP p).ιE (c i k) • GlobalTheory.FrameProj.hR Z p (baseChange₂ D p (G.fl.e k))).smulRight (baseChange₂ D p (l i))
 
-theorem sigP_apply {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {m : ℕ} (l : Fin m → (VS D).V)
+theorem sigP_apply {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) {m : ℕ} (l : Fin m → (VS D).V)
     (c : Fin m → Fin D.R.rS → D.host.E) (z : Vp D p) :
     sigP Z p G l c z = ∑ i, (∑ k, (D.s.atP p).ιE (c i k) * (locH Z p).h z (baseChange₂ D p (G.fl.e k))) • baseChange₂ D p (l i) := by
   simp [sigP, GlobalTheory.FrameProj.hR]
 
-theorem sigP_bcP {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {m : ℕ} (l : Fin m → (VS D).V)
+theorem sigP_bcP {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) {m : ℕ} (l : Fin m → (VS D).V)
     (c : Fin m → Fin D.R.rS → D.host.E) (x : (VS D).V) :
     sigP Z p G l c (baseChange₂ D p x) = baseChange₂ D p (∑ i, (∑ k, c i k * phiG G x k) • l i) := by
   rw [sigP_apply, Formalism.L2.SG.Pf.ScalarFramePf.baseChangeAt_sum]
@@ -137,7 +137,7 @@ theorem sigP_bcP {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {m : ℕ} (l : Fin m
   congr 1
   exact baseChangeAt_form Z.M p (Z.hcj p) x (G.fl.e k)
 
-theorem sub_sigP_mem {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Λ : LV D) {m : ℕ} (l : Fin m → (VS D).V)
+theorem sub_sigP_mem {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (Λ : LV D) {m : ℕ} (l : Fin m → (VS D).V)
     (c : Fin m → Fin D.R.rS → D.host.E) (hl : ∀ i, l i ∈ Λ)
     (hint : ∀ y ∈ Λ, ∀ i, ∃ o : 𝓞 D.host.E, (o : D.host.E) = ∑ k, c i k * phiG G y k)
     (hphi : ∀ y ∈ Λ, phiG G (∑ i, (∑ k, c i k * phiG G y k) • l i) = phiG G y) :
@@ -159,7 +159,7 @@ theorem sub_sigP_mem {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Λ : LV D) {m :
       rw [map_sub, hphi y hy, sub_self]
   exact hle hz
 
-theorem sigP_perp {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {m : ℕ} (l : Fin m → (VS D).V)
+theorem sigP_perp {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) {m : ℕ} (l : Fin m → (VS D).V)
     (c : Fin m → Fin D.R.rS → D.host.E) (Fr : LocNG.FrameD (locH Z p) D.R.rS)
     (hf : Fr.f = fun a => frFac Z.δ p a • baseChange₂ D p (frame G a)) (z : Vp D p)
     (hz : z ∈ (locH Z p).perp ((locH Z p).X Fr.f)) : sigP Z p G l c z = 0 := by
@@ -174,7 +174,7 @@ theorem sigP_perp {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {m : ℕ} (l : Fin 
   rw [sigP_apply]
   simp [h0]
 
-theorem mem_localLattice_lrep {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Λ : LV D)
+theorem mem_localLattice_lrep {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (Λ : LV D)
     (hΛ : Submodule.IsLattice D.host.E Λ) (Fr : LocNG.FrameD (locH Z p) D.R.rS)
     (hf : Fr.f = fun a => frFac Z.δ p a • baseChange₂ D p (frame G a)) (z : Vp D p) (hzΛ : z ∈ lattice₂ D Z.M p Λ)
     (hz : z ∈ (locH Z p).perp ((locH Z p).X Fr.f)) : z ∈ lattice₂ D Z.M p (Lrep Λ G) := by
@@ -182,7 +182,7 @@ theorem mem_localLattice_lrep {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Λ : L
   have h := sub_sigP_mem Z p G Λ l c hl hint hphi z hzΛ
   rwa [sigP_perp Z p G l c Fr hf z hz, sub_zero] at h
 
-theorem bcP_mem_X {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Fr : LocNG.FrameD (locH Z p) D.R.rS)
+theorem bcP_mem_X {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (Fr : LocNG.FrameD (locH Z p) D.R.rS)
     (hf : Fr.f = fun a => frFac Z.δ p a • baseChange₂ D p (frame G a)) (u : (VS D).V) (hu : u ∈ Xsp G) :
     baseChange₂ D p u ∈ (locH Z p).X Fr.f := by
   induction hu using Submodule.span_induction with
@@ -213,11 +213,11 @@ theorem X_le_perp (Fr : LocNG.FrameD (locH Z p) D.R.rS) :
   | add y y' _ _ h1 h2 => rw [hP_add_right, h1, h2, add_zero]
   | smul c y _ h1 => rw [hP_smul_right, h1, mul_zero]
 
-theorem lrep_le_lsub {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Λ : LV D) : Lrep Λ G ≤ Lsub Λ G := by
+theorem lrep_le_lsub {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (Λ : LV D) : Lrep Λ G ≤ Lsub Λ G := by
   unfold Lsub Lrep
   exact le_inf le_sup_left inf_le_right
 
-theorem lset_eq_lsub {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Fr : LocNG.FrameD (locH Z p) D.R.rS)
+theorem lset_eq_lsub {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (Fr : LocNG.FrameD (locH Z p) D.R.rS)
     (hf : Fr.f = fun a => frFac Z.δ p a • baseChange₂ D p (frame G a)) (Λ : LV D)
     (hΛ : Submodule.IsLattice D.host.E Λ) :
     (locH Z p).Lset (lattice₂ D Z.M p Λ) Fr.f = (locH Z p).Lset (lattice₂ D Z.M p (Lsub Λ G)) Fr.f := by
@@ -253,7 +253,7 @@ theorem lset_eq_lsub {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Fr : LocNG.Fram
 
 end Loc
 
-theorem lset_eq_of_lsub_eq : ∀ (D : D7) (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T)
+theorem lset_eq_of_lsub_eq : ∀ (D : D7) (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T)
     (Fr : LocNG.FrameD (locH Z p) D.R.rS), Fr.f = (fun a => frFac Z.δ p a • baseChange₂ D p (frame G a)) →
     ∀ Λ₁ Λ₂ : LV D, Submodule.IsLattice D.host.E Λ₁ → Submodule.IsLattice D.host.E Λ₂ → Lsub Λ₁ G = Lsub Λ₂ G →
       (locH Z p).Lset (lattice₂ D Z.M p Λ₁) Fr.f = (locH Z p).Lset (lattice₂ D Z.M p Λ₂) Fr.f := by

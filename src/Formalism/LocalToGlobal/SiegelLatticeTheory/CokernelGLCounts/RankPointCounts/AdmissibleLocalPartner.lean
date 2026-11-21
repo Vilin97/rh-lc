@@ -59,7 +59,7 @@ theorem Cm_one : Cm Zd p 1 = 1 := by
   · subst h; simp [uFi_mul, mul_uFi]
   · simp [Matrix.one_apply_ne h]
 
-theorem comb_Cm {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T')
+theorem comb_Cm {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E)) (b : Fin (D.R.rS + 1)) :
     comb (Cm Zd p ξ) (locF' Zd p F') b = uF Zd p b • baseChange₂ D p (frameAct (frame F') ξ b) := by
   simp only [comb, Cm_apply, locF'_eq, frameAct]
@@ -117,7 +117,7 @@ theorem typed_data (g : Loc.SplitG (Zd.M p).L) (hg : (Zd.M p).split = some g) :
   · rw [hg, hs] at hagree; exact ⟨sg, rfl, hagree.2, hagree.1⟩
 
 theorem admissible_local_term {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (hR : IsRowLat D F0 Λ) (hA : IsAdmissible Λ (gS D) (lf D F0) F') (g : Loc.SplitG (Zd.M p).L)
     (hg : (Zd.M p).split = some g) :
     (locH Zd p).Admissible g (locTerm Zd p Λ (lf D F0) F' (Tu D u) (Tu D u')) := by
@@ -153,7 +153,7 @@ theorem admissible_local_term {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS 
 
 set_option maxHeartbeats 1000000 in
 theorem admissible_local_partner {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (hR : IsRowLat D F0 Λ) (hA1 : AdmWit Λ (gS D) (lf D F0) F' 1) (g : Loc.SplitG (Zd.M p).L)
     (hg : (Zd.M p).split = some g) :
     (locH Zd p).Admissible g ⟨lattice₂ D Zd.M p Λ, (locTerm Zd p Λ (lf D F0) F' (Tu D u) (Tu D u')).f, locF' Zd p F',
@@ -216,7 +216,7 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word}
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 theorem locTerm_f'_eq (p : PlF D) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) :
     (locTerm Zd p Λ (lf D F0) F' (Tu D u) (Tu D u')).f' =
       comb (Cm Zd p (admXi D Λ (lf D F0) F')⁻¹) (locF' Zd p F') := by
   funext b

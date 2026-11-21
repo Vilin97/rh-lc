@@ -124,12 +124,12 @@ theorem finite_of_fix (hT : V →ₗ⋆[E] V →ₗ[E] E) (U : Submodule E V)
 
 end Core
 
-theorem stab_finite : ∀ (D : D7) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T'), (∀ x ∈ orth (VS D) (Xplus F ⊔ Xplus F'), x ≠ 0 → 0 < Algebra.trace ℚ D.host.E ((VS D).hT x x)) → ∀ Λ₀ : LV D, Submodule.IsLattice D.host.E Λ₀ → {h | h ∈ H0 F F' ∧ Formalism.HermitianLatticesTheory.gmap h Λ₀ = Λ₀}.Finite := by
+theorem stab_finite : ∀ (D : D7) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T'), (∀ x ∈ orth (VS D) (Xplus F ⊔ Xplus F'), x ≠ 0 → 0 < Algebra.trace ℚ D.host.E ((VS D).hT x x)) → ∀ Λ₀ : LV D, Submodule.IsLattice D.host.E Λ₀ → {h | h ∈ H0 F F' ∧ Formalism.HermitianLatticesTheory.gmap h Λ₀ = Λ₀}.Finite := by
   intro D T T' F F' hpos Λ₀ hΛ
   refine (finite_of_fix (VS D).hT (Xplus F ⊔ Xplus F') hpos Λ₀ hΛ).subset ?_
   rintro h ⟨⟨hiso, hF, hF'⟩, hlat⟩
   refine ⟨hiso, ?_, hlat⟩
-  have key : ∀ {T0 : D.host.E} (G : LFlag (VS D) D.R.rS T0), (∀ a, h (frame G a) = frame G a) →
+  have key : ∀ {T0 : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T0), (∀ a, h (frame G a) = frame G a) →
       Xplus G ≤ LinearMap.ker ((h : (VS D).V →ₗ[D.host.E] (VS D).V) - LinearMap.id) := by
     intro T0 G hG
     have he : ∀ i, h (G.fl.e i) = G.fl.e i := fun i => by

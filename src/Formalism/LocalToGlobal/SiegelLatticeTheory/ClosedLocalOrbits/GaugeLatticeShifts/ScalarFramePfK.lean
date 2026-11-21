@@ -28,7 +28,7 @@ theorem hT_om_X (u v : Fin (D.R.rS + 1) → (VS D).V) {w : (VS D).V} (hw : w ∈
   refine Finset.sum_eq_zero fun b _ => ?_
   rw [map_smul, om_pair, if_neg (Fin.castSucc_ne_last b), smul_zero]
 
-theorem scal_om (F : LFlag (VS D) D.R.rS T) (F' F'' : LFlag (VS D) D.R.rS T') (β : (VS D).V ≃ₗ[D.host.E] (VS D).V)
+theorem scal_om (F : LFlag (D.sp.Y 0) D.R.rS T) (F' F'' : LFlag (D.sp.Y 0) D.R.rS T') (β : (VS D).V ≃ₗ[D.host.E] (VS D).V)
     (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hz'' : F''.zt = F''.fl.z) (hT0' : T' ≠ 0)
     (hiso : ∀ x y, (VS D).hT (β x) (β y) = (VS D).hT x y)
     (hXm' : ∀ x ∈ Xsp F'', β.symm x ∈ Xsp F') (hβz : β F'.fl.z = F''.fl.z)

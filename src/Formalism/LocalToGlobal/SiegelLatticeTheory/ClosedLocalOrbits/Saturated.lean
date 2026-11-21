@@ -273,15 +273,15 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable (D : D7)
 
-def BBneF (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (p : HeightOneSpectrum (𝓞 D.host.F)) : Prop :=
+def BBneF (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (p : HeightOneSpectrum (𝓞 D.host.F)) : Prop :=
   ∃ P : HeightOneSpectrum (𝓞 D.host.E),
     P.asIdeal.comap (algebraMap (𝓞 D.host.F) (𝓞 D.host.E)) = p.asIdeal ∧ BBneP Λ (gS D) F F' P
 
 def PDIso : Prop :=
   ∀ (u' : D.what₂.Word) (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hβ : β ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT)
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)),
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)),
     PD D (Formalism.HermitianLatticesTheory.gmap β Λ) (mapL β hβ F) u' (mapL β hβ F') ↔ PD D Λ F u' F'
 
 def BBFun (u u' : D.what₂.Word) : Prop :=
@@ -310,7 +310,7 @@ def termBBne (t : Term D u u' F0 what₂) (p : HeightOneSpectrum (𝓞 D.host.F)
   ∃ F', Rep _ _ _ t.cls F' ∧ BBneF D t.lam (lf D F0) F' p
 
 theorem pd_act (hPD : PDIso D) {Λ : Submodule (𝓞 D.host.E) (VS D).V} (β : AutF Λ (lf D F0))
-    {F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)} (h : PD D Λ (lf D F0) u' F') :
+    {F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)} (h : PD D Λ (lf D F0) u' F') :
     PD D Λ (lf D F0) u' (act β F') := by
   have e := hPD u' β.1 (AutF.isom β) Λ (lf D F0) F'
   rw [AutF.lam β, mapL_eq_self β.1 (AutF.isom β) _ (mem_AutF.mp β.2).2.1 (mem_AutF.mp β.2).2.2] at e

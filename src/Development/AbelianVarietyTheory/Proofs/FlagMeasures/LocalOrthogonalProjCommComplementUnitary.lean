@@ -170,7 +170,7 @@ end GlobalTheory.FrameProj
 namespace GlobalTheory.FrameProj
 variable {D : D7} (Z : LocDat D) (p : PlF D)
 
-theorem Xplus_le_span {T : D.host.E} (F : LFlag (VS D) D.R.rS T) :
+theorem Xplus_le_span {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) :
     Xplus F ≤ Submodule.span D.host.E (Set.range (frame F)) := by
   have hf : ∀ a, frame F a ∈ Submodule.span D.host.E (Set.range (frame F)) :=
     fun a => Submodule.subset_span ⟨a, rfl⟩
@@ -211,7 +211,7 @@ def commSub (P : Vp D p →ₗ[(D.s.atP p).Ep] Vp D p) : Subgroup (Vp D p ≃ₗ
     rw [← ha]
     simp
 
-theorem localOrthogonalProj_comm_complementUnitary {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T')
+theorem localOrthogonalProj_comm_complementUnitary {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (FP : LocNG.FPair (locH Z p) D.R.rS)
     (hA : FP.A.f = fun a => frFac Z.δ p a • baseChange₂ D p (frame F a))
     (hB : FP.B.f = fun a => frFac Z.δ p a • baseChange₂ D p (frame F' a))

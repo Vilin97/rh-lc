@@ -77,13 +77,13 @@ section Main
 variable {D : D7}
 
 theorem frame_ok_transport {T' : D.host.E} {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V}
-    {x F₂ : LFlag (VS D) D.R.rS T'} (Λ₂ Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : PI.TCS.Tr γ Λ₂ Λ)
+    {x F₂ : LFlag (D.sp.Y 0) D.R.rS T'} (Λ₂ Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : PI.TCS.Tr γ Λ₂ Λ)
     (he : ∀ k, F₂.fl.e k = γ (x.fl.e k)) (hz : F₂.fl.z = γ x.fl.z)
     (hiso : ∀ a b, (VS D).hT (γ a) (γ b) = (VS D).hT a b) (hx : FrameOK D Λ x) : FrameOK D Λ₂ F₂ :=
   ⟨fixed_conv_transport Λ₂ Λ (gS D) hΛ he hz hiso hx.1, PI.TCS.Tr.eq (transport_x_lattice Λ₂ Λ hΛ he) (PI.TCS.tr_XS D he) hx.2⟩
 
 theorem pd_of_tr {T : D.host.E} (u' : D.what₂.Word) (Λ Λ' : Submodule (𝓞 D.host.E) (VS D).V)
-    (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (σ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hiso : σ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) (hTr : PI.TCS.Tr σ Λ Λ')
     (hL : IsLift Λ' F') (hOK : FrameOK D Λ' F')
     (hA : ∃ ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E),

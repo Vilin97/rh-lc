@@ -295,10 +295,10 @@ theorem tri_of_unip (F F₁ : FlagG S r T) (n : S.V ≃ₗ[E] S.V)
 
 end Gen
 
-theorem flag_change : ∀ (D : D7) {T : D.host.E} (F : LFlag (VS D) D.R.rS T), T ≠ 0 →
+theorem flag_change : ∀ (D : D7) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T), T ≠ 0 →
     (∀ A : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E, Uni A →
-      ∃ F₁ : LFlag (VS D) D.R.rS T, Chg (frame F) A (frame F₁)) ∧
-    (∀ F₁ : LFlag (VS D) D.R.rS T, Tri D.host.E (frame F) (frame F₁) ↔
+      ∃ F₁ : LFlag (D.sp.Y 0) D.R.rS T, Chg (frame F) A (frame F₁)) ∧
+    (∀ F₁ : LFlag (D.sp.Y 0) D.R.rS T, Tri D.host.E (frame F) (frame F₁) ↔
       ∃ n ∈ Formalism.L2.SG.NGData.NRat F, ∀ a, frame F₁ a = n (frame F a)) := by
   intro D T F hT
   refine ⟨fun A hA => ?_, fun F₁ => ⟨?_, ?_⟩⟩

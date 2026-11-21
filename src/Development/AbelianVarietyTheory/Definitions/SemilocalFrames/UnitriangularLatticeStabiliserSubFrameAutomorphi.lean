@@ -23,10 +23,10 @@ theorem gmap_one (Λ : LV D) : Formalism.HermitianLatticesTheory.gmap (1 : GV D)
 theorem gmap_mul (a b : GV D) (Λ : LV D) : Formalism.HermitianLatticesTheory.gmap (a * b) Λ = Formalism.HermitianLatticesTheory.gmap a (Formalism.HermitianLatticesTheory.gmap b Λ) := by
   ext x; simp [Formalism.HermitianLatticesTheory.gmap]
 
-theorem adapt_one {T : D.host.E} (F : LFlag (VS D) D.R.rS T) : Adapt (1 : GV D) F F :=
+theorem adapt_one {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) : Adapt (1 : GV D) F F :=
   ⟨Subgroup.one_mem _, fun a => by simp⟩
 
-theorem unitriangular_lattice_stabiliser_sub_frame_automorphisms {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (Λ : LV D) : NLam Λ F ⊆ Aut0 F Λ := by
+theorem unitriangular_lattice_stabiliser_sub_frame_automorphisms {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (Λ : LV D) : NLam Λ F ⊆ Aut0 F Λ := by
   rintro n ⟨⟨h1, h2⟩, h3, h4⟩
   refine ⟨⟨h1, fun a => ?_⟩, h2⟩
   refine Fin.lastCases ?_ (fun i => ?_) a
@@ -48,7 +48,7 @@ theorem unitriangular_lattice_stabiliser_sub_frame_automorphisms {T : D.host.E} 
     exact ⟨i, by simp, by simp [frame, FlagG.fvec]⟩
 
 section
-variable {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T')
+variable {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
 
 theorem mem_gmap (h : GV D) (Λ : LV D) (x) : x ∈ Formalism.HermitianLatticesTheory.gmap h Λ ↔ h.symm x ∈ Λ := by
   simp only [Formalism.HermitianLatticesTheory.gmap, Submodule.mem_map]
@@ -102,7 +102,7 @@ end
 
 section
 variable {Z : LocDat D} {FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS} {Tn T'n : ℕ}
-  {F : LFlag (VS D) D.R.rS (Tn : D.host.E)} {F' : LFlag (VS D) D.R.rS (T'n : D.host.E)}
+  {F : LFlag (D.sp.Y 0) D.R.rS (Tn : D.host.E)} {F' : LFlag (D.sp.Y 0) D.R.rS (T'n : D.host.E)}
 
 end
 

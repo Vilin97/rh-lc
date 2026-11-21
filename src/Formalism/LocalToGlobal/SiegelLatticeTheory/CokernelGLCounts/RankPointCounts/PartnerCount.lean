@@ -416,7 +416,7 @@ section FrCut
 variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u)}
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
-def repF (γ : TermDef.Term D u u' F0 what₂) : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) :=
+def repF (γ : TermDef.Term D u u' F0 what₂) : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) :=
   match nrep γ with
   | some x => x.2.1
   | none => (Quot.out γ.cls).1
@@ -424,7 +424,7 @@ def repF (γ : TermDef.Term D u u' F0 what₂) : LFlag (VS D) D.R.rS ((Tu D u' :
 def tLoc (p : PlF D) (γ : TermDef.Term D u u' F0 what₂) : Loc.Term (Vp D p) (Zd.M p) D.R.rS :=
   locTerm Zd p γ.lam (lf D F0) (repF γ) (Tu D u) (Tu D u')
 
-def locF' (p : PlF D) {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') : Fin (D.R.rS + 1) → Vp D p :=
+def locF' (p : PlF D) {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') : Fin (D.R.rS + 1) → Vp D p :=
   fun b => (TermLoc.sgnP' D p b * frFac Zd.δ p b) • baseChange₂ D p (frame F' b)
 
 def locSet (p : PlF D) (t₁ : Loc.Term (Vp D p) (Zd.M p) D.R.rS) (f₂' : Fin (D.R.rS + 1) → Vp D p)
@@ -439,7 +439,7 @@ def FrGlob : Prop :=
   ∀ (γ : TermDef.Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1)), EligAt γ w →
   ∀ w' : Point D.host.E (D.R.rS + 1), Gpt (D.mem u).A.T (D.mem u').A.T w' ≠ 0 → kind w' = kind w →
   ∀ Z : PairVal.MatR D, AtMat w' Z →
-  ∃ (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+  ∃ (F'₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (φ : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (tLoc Zd p γ).f)
     (φ' : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f' ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (locF' Zd p F'₂)),
     ZhatL (lf D F0) F'₂ = Z ∧
@@ -450,7 +450,7 @@ def FrLoc : Prop :=
   ∀ (γ : TermDef.Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1)), EligAt γ w →
   ∀ w' : Point D.host.E (D.R.rS + 1), Gpt (D.mem u).A.T (D.mem u').A.T w' ≠ 0 → kind w' = kind w →
   ∀ Z : PairVal.MatR D, AtMat w' Z →
-  ∀ (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (p : PlF D)
+  ∀ (F'₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (p : PlF D)
     (φ : (locH Zd p).Wb (tLoc Zd p γ).f ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (tLoc Zd p γ).f)
     (φ' : (locH Zd p).Wb (tLoc Zd p γ).f' ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (locF' Zd p F'₂)),
     ZhatL (lf D F0) F'₂ = Z →
@@ -501,7 +501,7 @@ section SgnLoc
 variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D)
 
 theorem zhat_locF' (p : PlF D) (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' T'' : D.host.E}
-    (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (F'₂ : LFlag (VS D) D.R.rS T'') (Tn T'n : ℕ)
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (F'₂ : LFlag (D.sp.Y 0) D.R.rS T'') (Tn T'n : ℕ)
     (a b : Fin (D.R.rS + 1)) :
     (locH Zd p).Zhat (locTerm Zd p Λ F F' Tn T'n).f (locF' Zd p F'₂) a b =
       (TermLoc.sgnP' D p b * frFac Zd.δ p b) * (D.s.atP p).cj (TermLoc.sgnP D p a * frFac Zd.δ p a) *
@@ -511,7 +511,7 @@ theorem zhat_locF' (p : PlF D) (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' T
   rfl
 
 theorem zzplus_locF' (u u' : D.what₂.Word) (p : PlF D) (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' T'' : D.host.E}
-    (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (F'₂ : LFlag (VS D) D.R.rS T'')
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (F'₂ : LFlag (D.sp.Y 0) D.R.rS T'')
     (Λ₂ : Submodule (Zd.M p).L.O (Vp D p)) :
     (locH Zd p).ZZplus ⟨Λ₂, (locTerm Zd p Λ F F' (Tu D u) (Tu D u')).f, locF' Zd p F'₂,
         ((Tu D u : ℕ) : (D.s.atP p).Fp), ((Tu D u' : ℕ) : (D.s.atP p).Fp)⟩ =

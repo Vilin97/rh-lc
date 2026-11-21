@@ -45,7 +45,7 @@ theorem one_le_ddS_zpow (D : D7) (k : ℕ) :
   simpa using this
 
 theorem e_mem_of_XS (D : D7) {T : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V)
-    (F : LFlag (VS D) D.R.rS T) (hX : XLam Λ F = XS D F.fl) (a : Fin D.R.rS) : F.fl.e a ∈ Λ := by
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (hX : XLam Λ F = XS D F.fl) (a : Fin D.R.rS) : F.fl.e a ∈ Λ := by
   have hmem : F.fl.e a ∈ XS D F.fl := by
     refine Submodule.subset_span ⟨a, 1, ?_, by simp⟩
     have h := one_le_ddS_zpow D (D.R.rS - a)
@@ -58,7 +58,7 @@ theorem e_mem_of_XS (D : D7) {T : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS 
   exact hmem.1
 
 theorem frame_mem (D : D7) {T : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V)
-    (F : LFlag (VS D) D.R.rS T) (hX : XLam Λ F = XS D F.fl) (hz : F.fl.z ∈ Λ) (a : Fin (D.R.rS + 1)) :
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (hX : XLam Λ F = XS D F.fl) (hz : F.fl.z ∈ Λ) (a : Fin (D.R.rS + 1)) :
     frame F a ∈ Λ := by
   refine Fin.lastCases ?_ (fun i => ?_) a
   · simpa [frame, FlagG.fvec] using hz

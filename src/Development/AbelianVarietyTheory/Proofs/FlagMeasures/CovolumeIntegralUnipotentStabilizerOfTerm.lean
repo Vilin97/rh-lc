@@ -452,7 +452,7 @@ theorem sign_stab {Z a : Matrix (Fin (r + 1)) (Fin (r + 1)) K} (ha : a ∈ stabU
 
 end Sign
 
-theorem frame_mem (D : D7) {T : D.host.E} (Λ : LatV D) (F : LFlag (hS D) D.R.rS T) (h1 : IsLift Λ F)
+theorem frame_mem (D : D7) {T : D.host.E} (Λ : LatV D) (F : LFlag (D.sp.Y 0) D.R.rS T) (h1 : IsLift Λ F)
     (h2 : XLam Λ F = XS D F.fl) (b : Fin (D.R.rS + 1)) : frame F b ∈ Λ := by
   refine Fin.lastCases ?_ (fun a => ?_) b
   · simpa [frame, FlagG.fvec] using h1.1
@@ -481,8 +481,8 @@ theorem frame_mem (D : D7) {T : D.host.E} (Λ : LatV D) (F : LFlag (hS D) D.R.rS
     rw [← h2] at this
     simpa [frame, FlagG.fvec] using this.1
 
-theorem zhat_int (D : D7) {T T' : D.host.E} (Λ : LatV D) (F : LFlag (hS D) D.R.rS T)
-    (F' : LFlag (hS D) D.R.rS T') (hu : Formalism.HermitianLatticesTheory.IsUnimodular (hS D).hT Λ)
+theorem zhat_int (D : D7) {T T' : D.host.E} (Λ : LatV D) (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (hu : Formalism.HermitianLatticesTheory.IsUnimodular (hS D).hT Λ)
     (h : ∀ b, frame F b ∈ Λ) (h' : ∀ b, frame F' b ∈ Λ) :
     GlobalTheory.LoopV.EntIn ⊤ (ZhatOM (ZhatL F F')) := by
   intro a b
@@ -530,8 +530,8 @@ theorem PiZ_le (D : D7) (b : ℝ) (n : ℕ) (hb : 1 ≤ b) (hrd : D.host.rdE ≤
           b ^ (4 * n * (D.R.rS + 1) ^ 2)) := by field_simp
     _ ≤ _ := by gcongr
 
-theorem ideal_bound (D : D7) {T T' : ℕ} (F : LFlag (hS D) D.R.rS (T : D.host.E))
-    (F' : LFlag (hS D) D.R.rS (T' : D.host.E)) (hr : 1 ≤ D.R.rS) (Y : ℝ) (hY : 1 + (T : ℝ) * T' ≤ Y) :
+theorem ideal_bound (D : D7) {T T' : ℕ} (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E))
+    (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E)) (hr : 1 ≤ D.R.rS) (Y : ℝ) (hY : 1 + (T : ℝ) * T' ≤ Y) :
     (∏ τ, ‖embS D τ (Gval F F')‖) ^ 4 * ∏ τ, ‖embS D τ (Dr1 F F')‖ ^ 2 ≤
       Y ^ (4 * D.R.f) * PiZ (embS D) (ZhatL F F') ^ 10 := by
   obtain ⟨hc, -, -, -, -, hs, -⟩ := GlobalTheory.real_places_facts D

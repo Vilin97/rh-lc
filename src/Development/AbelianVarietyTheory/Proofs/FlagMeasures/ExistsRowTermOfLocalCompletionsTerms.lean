@@ -29,11 +29,11 @@ theorem gmap_mul' (a b : GV D) (L : LV D) :
     Formalism.HermitianLatticesTheory.gmap (a * b) L = Formalism.HermitianLatticesTheory.gmap a (Formalism.HermitianLatticesTheory.gmap b L) := by
   ext x; simp [Formalism.HermitianLatticesTheory.gmap]
 
-theorem xflag_mono {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {i j : ℕ} (h : i ≤ j) :
+theorem xflag_mono {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) {i j : ℕ} (h : i ≤ j) :
     Xflag F i ≤ Xflag F j :=
   Submodule.span_mono (Set.image_mono fun a (ha : a.1 < i) => show a.1 < j by omega)
 
-theorem adapt_map_xflag {T : D.host.E} {g : GV D} {A B : LFlag (VS D) D.R.rS T} (hg : Adapt g A B)
+theorem adapt_map_xflag {T : D.host.E} {g : GV D} {A B : LFlag (D.sp.Y 0) D.R.rS T} (hg : Adapt g A B)
     (j : ℕ) {x : (VS D).V} (hx : x ∈ Xflag A j) : g x ∈ Xflag B j := by
   change x ∈ Submodule.span D.host.E (A.fl.e '' {i | i.1 < j}) at hx
   induction hx using Submodule.span_induction with
@@ -51,7 +51,7 @@ theorem adapt_map_xflag {T : D.host.E} {g : GV D} {A B : LFlag (VS D) D.R.rS T} 
   | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
-theorem adapt_mul {T : D.host.E} {g h : GV D} {A B C : LFlag (VS D) D.R.rS T} (hg : Adapt g B C)
+theorem adapt_mul {T : D.host.E} {g h : GV D} {A B C : LFlag (D.sp.Y 0) D.R.rS T} (hg : Adapt g B C)
     (hh : Adapt h A B) : Adapt (g * h) A C := by
   refine ⟨mul_mem hg.1 hh.1, fun a => ?_⟩
   have e : (g * h) (frame A a) - frame C a =
@@ -60,7 +60,7 @@ theorem adapt_mul {T : D.host.E} {g h : GV D} {A B C : LFlag (VS D) D.R.rS T} (h
   rw [e]
   exact add_mem (adapt_map_xflag hg _ (hh.2 a)) (hg.2 a)
 
-theorem adapt_of_nlam {T : D.host.E} {Λ : LV D} {F : LFlag (VS D) D.R.rS T} {n : GV D}
+theorem adapt_of_nlam {T : D.host.E} {Λ : LV D} {F : LFlag (D.sp.Y 0) D.R.rS T} {n : GV D}
     (hn : n ∈ NLam Λ F) : Adapt n F F := by
   refine ⟨hn.1.1, fun a => ?_⟩
   refine Fin.lastCases ?_ (fun i => ?_) a
@@ -82,7 +82,7 @@ theorem adapt_of_nlam {T : D.host.E} {Λ : LV D} {F : LFlag (VS D) D.R.rS T} {n 
     rw [hi, Fin.coe_castSucc]
     exact hn.2.1 i.1 _ (Submodule.subset_span ⟨i, by simp, rfl⟩)
 
-theorem frame_mapLF' {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {g : GV D}
+theorem frame_mapLF' {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) {g : GV D}
     (hg : g ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) (a : Fin (D.R.rS + 1)) : frame (mapLF g F) a = g (frame F a) := by
   simp only [mapLF, dif_pos hg, frame, FlagG.fvec, mapFlag]
   refine Fin.lastCases ?_ (fun i => ?_) a <;> simp
@@ -91,8 +91,8 @@ end GlobalTheory.RowTermReal
 
 namespace GlobalTheory.RowTermReal
 
-theorem rowLat_first {D : D7} (X : HidaSetting D) {u u' : D.what₂.Word} (F : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (Z : LocDat D)
+theorem rowLat_first {D : D7} (X : HidaSetting D) {u u' : D.what₂.Word} (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E))
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (Z : LocDat D)
     (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (hB : Based Z FP (Tu D u) (Tu D u') F F')
     (Λ : LV D) (y : Dat Z FP) (hL : LocOver Λ y) :
     ∃ g, Adapt g (lf D (X.Fu u)) F ∧ IsRowLat D (X.Fu u) (Formalism.HermitianLatticesTheory.gmap g⁻¹ Λ) :=
@@ -102,8 +102,8 @@ theorem rowLat_first {D : D7} (X : HidaSetting D) {u u' : D.what₂.Word} (F : L
       have h4 := hτ.2.2.1
       exact h4.elim fun n hn => ⟨n, hn.1, (y p).L, (y p).hL, hlat.symm.trans hn.2.2⟩)
 
-theorem rowLat_second {D : D7} (X : HidaSetting D) {u u' : D.what₂.Word} (F : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (Z : LocDat D)
+theorem rowLat_second {D : D7} (X : HidaSetting D) {u u' : D.what₂.Word} (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E))
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (Z : LocDat D)
     (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (hB : Based Z FP (Tu D u) (Tu D u') F F')
     (Λ : LV D) (y : Dat Z FP) (hL : LocOver Λ y) :
     ∃ g, Adapt g (lf D (X.Fu u')) F' ∧ IsRowLat D (X.Fu u') (Formalism.HermitianLatticesTheory.gmap g⁻¹ Λ) :=
@@ -113,7 +113,7 @@ theorem rowLat_second {D : D7} (X : HidaSetting D) {u u' : D.what₂.Word} (F : 
       have h4 := hτ.2.2.2.1
       exact h4.elim fun n hn => ⟨n, hn.1, (y p).L', (y p).hL', hlat.symm.trans hn.2.2⟩)
 
-theorem exists_term_of_locOver : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), ∀ (F : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (w : Point D.host.E (D.R.rS + 1)), ZhatOM (ZhatL F F') = ptMat w → Gval F F' ≠ 0 → ∀ (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS), Based Z FP (Tu D u) (Tu D u') F F' → (∀ p, (FP p).RelG (LocNG.theta (Z.M p))) → ∀ (Λ : LV D) (y : Dat Z FP), LocOver Λ y → ∃ t : TauC Y u u', TG F F' t Λ := by
+theorem exists_term_of_locOver : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), ∀ (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (w : Point D.host.E (D.R.rS + 1)), ZhatOM (ZhatL F F') = ptMat w → Gval F F' ≠ 0 → ∀ (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS), Based Z FP (Tu D u) (Tu D u') F F' → (∀ p, (FP p).RelG (LocNG.theta (Z.M p))) → ∀ (Λ : LV D) (y : Dat Z FP), LocOver Λ y → ∃ t : TauC Y u u', TG F F' t Λ := by
   intro D X Y u u' F F' w hw hG Z FP hB hR Λ y hL
   obtain ⟨g0, hg0, hrow0⟩ := rowLat_first X F F' Z FP hB Λ y hL
   obtain ⟨g0', hg0', hrow0'⟩ := rowLat_second X F F' Z FP hB Λ y hL

@@ -686,15 +686,15 @@ theorem rows_chRatio_eq (hrd : 0 < D.host.rdE) (t : D.s.Term u u') (τ : D.what�
   · rw [if_pos (h.2 h0), if_pos h0]
   · rw [if_neg (fun h1 => h0 (h.1 h1)), if_neg h0, rows_ch_eq Y hrd t τ, rows_sh_eq Y hrd t τ]
 
-theorem rows_ch_conj (T T' : ℕ) (F : LFlag (hS D) D.R.rS (T : D.host.E)) (F' : LFlag (hS D) D.R.rS (T' : D.host.E))
+theorem rows_ch_conj (T T' : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (φ : D.host.E →+* ℂ) : Lat.ch T T' F F' (ComplexEmbedding.conjugate φ) = Lat.ch T T' F F' φ := by
   simp [Lat.ch, NumberField.ComplexEmbedding.conjugate_coe_eq]
 
-theorem onePlusChSh_conjugate (T T' : ℕ) (F : LFlag (hS D) D.R.rS (T : D.host.E)) (F' : LFlag (hS D) D.R.rS (T' : D.host.E))
+theorem onePlusChSh_conjugate (T T' : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (φ : D.host.E →+* ℂ) : onePlusChSh T T' F F' (ComplexEmbedding.conjugate φ) = onePlusChSh T T' F F' φ := by
   simp only [onePlusChSh, Lat.sh, rows_ch_conj]
 
-theorem onePlusChSh_nonneg (T T' : ℕ) (F : LFlag (hS D) D.R.rS (T : D.host.E)) (F' : LFlag (hS D) D.R.rS (T' : D.host.E))
+theorem onePlusChSh_nonneg (T T' : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (φ : D.host.E →+* ℂ) : 0 ≤ onePlusChSh T T' F F' φ := by
   unfold onePlusChSh Lat.sh Lat.ch
   split_ifs <;> positivity
@@ -817,25 +817,25 @@ open NumberField
 
 variable {D : D7}
 
-theorem rowsT_chSh_conj (T T' : ℕ) (F : LFlag (hS D) D.R.rS (T : D.host.E)) (F' : LFlag (hS D) D.R.rS (T' : D.host.E))
+theorem rowsT_chSh_conj (T T' : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (φ : D.host.E →+* ℂ) : chSh T T' F F' (ComplexEmbedding.conjugate φ) = chSh T T' F F' φ := by
   simp only [chSh, Lat.sh, rows_ch_conj]
 
-theorem rowsT_invSh_conj (T T' : ℕ) (F : LFlag (hS D) D.R.rS (T : D.host.E)) (F' : LFlag (hS D) D.R.rS (T' : D.host.E))
+theorem rowsT_invSh_conj (T T' : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (φ : D.host.E →+* ℂ) : invSh T T' F F' (ComplexEmbedding.conjugate φ) = invSh T T' F F' φ := by
   simp only [invSh, Lat.sh, rows_ch_conj]
 
-theorem rowsT_ch_nonneg (T T' : ℕ) (F : LFlag (hS D) D.R.rS (T : D.host.E)) (F' : LFlag (hS D) D.R.rS (T' : D.host.E))
+theorem rowsT_ch_nonneg (T T' : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (φ : D.host.E →+* ℂ) : 0 ≤ Lat.ch T T' F F' φ := by
   unfold Lat.ch
   positivity
 
-theorem rowsT_chSh_nonneg (T T' : ℕ) (F : LFlag (hS D) D.R.rS (T : D.host.E)) (F' : LFlag (hS D) D.R.rS (T' : D.host.E))
+theorem rowsT_chSh_nonneg (T T' : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (φ : D.host.E →+* ℂ) : 0 ≤ chSh T T' F F' φ := by
   unfold chSh Lat.sh Lat.ch
   split_ifs <;> positivity
 
-theorem rowsT_invSh_nonneg (T T' : ℕ) (F : LFlag (hS D) D.R.rS (T : D.host.E)) (F' : LFlag (hS D) D.R.rS (T' : D.host.E))
+theorem rowsT_invSh_nonneg (T T' : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (φ : D.host.E →+* ℂ) : 0 ≤ invSh T T' F F' φ := by
   unfold invSh Lat.sh Lat.ch
   split_ifs <;> first | positivity | exact le_rfl

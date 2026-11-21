@@ -27,8 +27,8 @@ theorem GlobalTheory.RowsOrb.exists_row_of_unimod : ∀ (D : D7) (large₂ : Siz
     refine Submodule.mem_sup_left (Submodule.mem_sup_right ?_)
     exact ⟨GlobalTheory.RowsOrb.zb X u, hzL, rfl⟩
   have hfix0 := (X.Fu_fixed u).2.2.2.1
-  have hlf : (lf D (X.Fu u)) = (⟨X.Fu u, X.zu u⟩ : Formalism.MainNotions.S.Lat.LFlag (VS D) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) := by
-    show (⟨X.Fu u, (X.Fu u).z⟩ : Formalism.MainNotions.S.Lat.LFlag (VS D) D.R.rS _) = _
+  have hlf : (lf D (X.Fu u)) = (⟨X.Fu u, X.zu u⟩ : Formalism.MainNotions.S.Lat.LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) := by
+    show (⟨X.Fu u, (X.Fu u).z⟩ : Formalism.MainNotions.S.Lat.LFlag (D.sp.Y 0) D.R.rS _) = _
     rw [X.flagZVector u]
   have hfix : FixedHyp D (latSpanS (fun a => aaD D a) X.eX ⊔ L.map ((GlobalTheory.RowsOrb.Wb X).subtype.restrictScalars (𝓞 D.host.E)) ⊔ latSpanS (fun a => (aaD D a)⁻¹) X.fY) (lf D (X.Fu u)) := by
     refine ⟨hlat, hun, ⟨?_, rfl⟩, ?_, ?_⟩

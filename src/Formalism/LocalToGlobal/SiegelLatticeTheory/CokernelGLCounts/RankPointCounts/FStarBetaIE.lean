@@ -36,7 +36,7 @@ theorem sub_smul_eq {R W : Type*} [Ring R] [AddCommGroup W] [Module R W] {P : Su
 
 section Place
 
-variable (p : PlF D) (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+variable (p : PlF D) (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
   (ψ : (locH Zd p).Wb (tLoc Zd p γ).f' ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (locF' Zd p F'₂))
   (β₀ : (VS D).V ≃ₗ[D.host.E] (VS D).V)
 
@@ -133,18 +133,18 @@ end Place
 
 section Place2
 
-variable (p : PlF D) (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+variable (p : PlF D) (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
   (ψ : (locH Zd p).Wb (tLoc Zd p γ).f' ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (locF' Zd p F'₂))
   (β₀ : (VS D).V ≃ₗ[D.host.E] (VS D).V)
 
-theorem z_orthG {T' : D.host.E} (G : LFlag (VS D) D.R.rS T') : G.fl.z ∈ orth (VS D) (Xsp G) :=
+theorem z_orthG {T' : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T') : G.fl.z ∈ orth (VS D) (Xsp G) :=
   (PI.UnitaryGroupMassFormula.BetaLUniq.mem_orth (VS D)).2 fun x hx => by
     rw [BwdNA.hsw (VS D) G.fl.z x]
     have h := NMoveP.hT_f_X G.fl (Fin.last D.R.rS) hx
     rw [NMoveP.fvecL] at h
     rw [h, star_zero]
 
-theorem X_le_orthG {T' : D.host.E} (G : LFlag (VS D) D.R.rS T') : Xsp G ≤ orth (VS D) (Xsp G) :=
+theorem X_le_orthG {T' : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T') : Xsp G ≤ orth (VS D) (Xsp G) :=
   BwdNA.X_le_orth (VS D) (Xsp G) fun _ hx _ hy => NMoveP.hT_X_X G.fl hx hy
 
 theorem starLast_sub_mem :

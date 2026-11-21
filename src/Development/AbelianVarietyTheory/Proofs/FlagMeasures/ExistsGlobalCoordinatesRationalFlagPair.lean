@@ -441,7 +441,7 @@ theorem cval_unit_fin (Z : LocDat D) :
   rw [cval, ← hu, ← hv, Units.val_mul, MulMemClass.coe_mul]
 
 theorem exists_gen (D : D7) (Z : LocDat D) (N N' : ℕ) (hN : 0 < N) (hN' : 0 < N')
-    (F00 : LFlag (VS D) D.R.rS (N : D.host.E)) (F'0 : LFlag (VS D) D.R.rS (N' : D.host.E))
+    (F00 : LFlag (D.sp.Y 0) D.R.rS (N : D.host.E)) (F'0 : LFlag (D.sp.Y 0) D.R.rS (N' : D.host.E))
     (FP : ∀ p : PlF D, Formalism.MainNotions.S.LocNG.FPair (locH Z p) D.R.rS)
     (hFP : ∀ p, AtBase Z p F00 F'0 N N' (FP p) ∧ (FP p).RelG (Formalism.MainNotions.S.LocNG.theta (Z.M p))) :
     ∃ G : GFrames (placesOf Z) D.R.rS D.R.k, Nonempty (GCoord Z F00 F'0 FP G) := by
@@ -522,7 +522,7 @@ theorem exists_gen (D : D7) (Z : LocDat D) (N N' : ℕ) (hN : 0 < N) (hN' : 0 < 
     show algebraMap _ _ (cval Z p) = _
     rw [cval_E]
 
-theorem exists_global_coords : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), Formalism.MainNotions.S.Cnt.Stand D u u' → ∀ (w : Point D.host.E (D.R.rS + 1)) (F00 : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (F'0 : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (FP : ∀ p : PlF D, LocNG.FPair (locH (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) p) D.R.rS), ZhatOM (ZhatL F00 F'0) = ptMat w → Gval F00 F'0 ≠ 0 → (∀ p, AtBase (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) p F00 F'0 (Tu D u) (Tu D u') (FP p) ∧ (FP p).RelG (LocNG.theta (Y.M p))) → ∃ G : GFrames (placesOf (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D)) D.R.rS D.R.k, Nonempty (GCoord (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) F00 F'0 FP G) := by
+theorem exists_global_coords : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), Formalism.MainNotions.S.Cnt.Stand D u u' → ∀ (w : Point D.host.E (D.R.rS + 1)) (F00 : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F'0 : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (FP : ∀ p : PlF D, LocNG.FPair (locH (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) p) D.R.rS), ZhatOM (ZhatL F00 F'0) = ptMat w → Gval F00 F'0 ≠ 0 → (∀ p, AtBase (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) p F00 F'0 (Tu D u) (Tu D u') (FP p) ∧ (FP p).RelG (LocNG.theta (Y.M p))) → ∃ G : GFrames (placesOf (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D)) D.R.rS D.R.k, Nonempty (GCoord (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) F00 F'0 FP G) := by
   intro D X Y u u' hst w F00 F'0 FP _ _ hFP
   have hN : 0 < Tu D u := by have := hst.2.2.2.1; omega
   have hN' : 0 < Tu D u' := by have := hst.2.2.2.2.1; omega

@@ -70,11 +70,11 @@ section D
 
 variable {D : D7}
 
-theorem nlam_top_of_nrat {T : D.host.E} {F : LFlag (VS D) D.R.rS T} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
+theorem nlam_top_of_nrat {T : D.host.E} {F : LFlag (D.sp.Y 0) D.R.rS T} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
     (hn : n ∈ NRat F) : n ∈ NLam (⊤ : Submodule (𝓞 D.host.E) (VS D).V) F :=
   ⟨⟨hn.1, gmap_top n⟩, hn.2.1, hn.2.2⟩
 
-theorem conj_nlam_top {T : D.host.E} {G : LFlag (VS D) D.R.rS T} {γ m : (VS D).V ≃ₗ[D.host.E] (VS D).V}
+theorem conj_nlam_top {T : D.host.E} {G : LFlag (D.sp.Y 0) D.R.rS T} {γ m : (VS D).V ≃ₗ[D.host.E] (VS D).V}
     (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) (hm : m ∈ NRat G) :
     γ * m * γ⁻¹ ∈ NLam (⊤ : Submodule (𝓞 D.host.E) (VS D).V) (mapLF γ G) := by
   obtain ⟨hi, hf, hp⟩ := hm

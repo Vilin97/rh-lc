@@ -23,7 +23,7 @@ namespace GlobalTheory.SnFam
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem setQ_locClosed {D : D7} {X : HidaSetting D} (Y : Full X) (u u' : D.what₂.Word) (S : Prop → Prop)
-    (F : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (w : Point D.host.E (D.R.rS + 1)) (hw : ZhatOM (ZhatL F F') = ptMat w) (hG : Gval F F' ≠ 0)
     (FP : ∀ p : PlF D, LocNG.FPair (locH (zOf Y) p) D.R.rS)
     (hB : GlobalTheory.Unfold.Based (zOf Y) FP (Tu D u) (Tu D u') F F') :

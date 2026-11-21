@@ -394,7 +394,7 @@ theorem beta_aut (s₁ s₂ : TT Y u u') (hl : s₁.lam = s₂.lam) (hl' : s₁.
   refine ⟨(Formalism.HermitianLatticesTheory.isom (VS D).hT).mul_mem (lin_isom s₂) ((Formalism.HermitianLatticesTheory.isom (VS D).hT).inv_mem (lin_isom s₁)), ?_⟩
   rw [gmap_mul, gmap_inv (lin_lam s₁), hl', lin_lam s₂, hl]
 
-theorem xflag_map_of_frame {T₀ T₁ : D.host.E} {K : LFlag (VS D) D.R.rS T₀} {K' : LFlag (VS D) D.R.rS T₁}
+theorem xflag_map_of_frame {T₀ T₁ : D.host.E} {K : LFlag (D.sp.Y 0) D.R.rS T₀} {K' : LFlag (D.sp.Y 0) D.R.rS T₁}
     {φ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (h : ∀ a, φ (frame K a) = frame K' a) (j : ℕ) :
     (Xflag K j).map (φ : (VS D).V →ₗ[D.host.E] (VS D).V) = Xflag K' j := by
 

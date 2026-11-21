@@ -56,7 +56,7 @@ variable {D : D7} (X : HidaSetting D) (Y : Formalism.L2.SG.Full.Full X) (u u' : 
   (νq : X.B.I.Ginf → Measure X.B.I.Ginf) (κ : TermDef.Term D u u' (X.Fu u) (Y.what₂ u) → ℕ)
 
 theorem normRep_atPt (t : TermDef.Term D u u' (X.Fu u) (Y.what₂ u)) (w' : Formalism.MainNotions.S.Point D.host.E (D.R.rS + 1))
-    (F' : Formalism.MainNotions.S.Lat.LFlag (VS D) D.R.rS ((Formalism.MainNotions.S.Lat.Tu D u' : ℕ) : D.host.E)) (L U : Formalism.L2.SG.PairVal.MatR D)
+    (F' : Formalism.MainNotions.S.Lat.LFlag (D.sp.Y 0) D.R.rS ((Formalism.MainNotions.S.Lat.Tu D u' : ℕ) : D.host.E)) (L U : Formalism.L2.SG.PairVal.MatR D)
     (hN : Formalism.L2.SG.PairVal.NormRep t w' F' L U) (hG : t.G ≠ 0) : t.atPt w' := by
   obtain ⟨⟨h, hmk⟩, -, hL, hU, hZ⟩ := hN
   have hGF := (Formalism.L2.SG.Closed.TermFun_holds D u u' (X.Fu u) t.lam ((Y.rowsOK u).1 t.lam t.mem)).1

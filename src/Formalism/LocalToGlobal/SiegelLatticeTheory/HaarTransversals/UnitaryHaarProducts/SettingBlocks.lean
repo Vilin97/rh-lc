@@ -52,7 +52,7 @@ structure UnitaryLatticeData where
   Fu_e : ∀ u, (Fu u).e = eX
   flagZVector : ∀ u, (Fu u).z = zu u
   Fu_fixed : ∀ u, Formalism.MainNotions.S.Lat.FixedHyp D (VS D).L0
-    (⟨Fu u, zu u⟩ : Formalism.MainNotions.S.Lat.LFlag (VS D) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E))
+    (⟨Fu u, zu u⟩ : Formalism.MainNotions.S.Lat.LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E))
 
 variable {D}
 

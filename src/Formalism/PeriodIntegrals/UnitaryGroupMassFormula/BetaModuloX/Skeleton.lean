@@ -97,7 +97,7 @@ def XLamSub : Prop :=
       XLam Λ (lf D F0) ≤ Ideal.span {(gS D : 𝓞 D.host.E)} • Λ ⊔ XLam Λ y.1
 
 def PosW : Prop :=
-  ∀ (D : D7) (T' : ℕ) (F' : LFlag (hS D) D.R.rS ((T' : ℕ) : D.host.E)) (τ : D.host.E →+* ℂ) (w : (hS D).V),
+  ∀ (D : D7) (T' : ℕ) (F' : LFlag (D.sp.Y 0) D.R.rS ((T' : ℕ) : D.host.E)) (τ : D.host.E →+* ℂ) (w : (hS D).V),
     0 < T' → w ∈ orth (hS D) (Xplus F') → w ∉ Xsp F' → 0 < (τ ((hS D).hT w w)).re
 
 theorem gS_ge_three (D : D7) (hg : ∀ i, 3 ≤ D.host.g i ∧ PI.ScalPairs.Unram D.host.E (D.host.g i)) :

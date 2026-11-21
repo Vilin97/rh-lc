@@ -30,8 +30,8 @@ private theorem hs_lemma (Z : LocDat D) (p : PlF D) (a b : (D.s.atP p).Ep) (x y 
     (Z.M p).L.cj_cj, e1]
   ring
 
-theorem zhat_scaled (Z : LocDat D) (p : PlF D) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') :
+theorem zhat_scaled (Z : LocDat D) (p : PlF D) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     (locH Z p).Zhat (scaled Z p (frame F)) (scaled Z p (frame F')) =
       Matrix.diagonal (fun a => (Z.M p).L.cj (frFac Z.δ p a)) *
         (Formalism.MainNotions.S.Zhat F.fl F'.fl).map (D.s.atP p).ιE * Matrix.diagonal (fun b => frFac Z.δ p b) := by
@@ -42,8 +42,8 @@ theorem zhat_scaled (Z : LocDat D) (p : PlF D) {T T' : D.host.E} (F : LFlag (VS 
   simp only [Formalism.MainNotions.S.Zhat]
   ring
 
-theorem dl_scaled (Z : LocDat D) (p : PlF D) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (l : ℕ) (hl : l ≤ D.R.rS + 1) :
+theorem dl_scaled (Z : LocDat D) (p : PlF D) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (l : ℕ) (hl : l ≤ D.R.rS + 1) :
     (locH Z p).Dl (scaled Z p (frame F)) (scaled Z p (frame F')) l =
       (∏ i : Fin l, (Z.M p).L.cj (frFac Z.δ p (Fin.castLE hl i)) * frFac Z.δ p (Fin.castLE hl i)) *
         (D.s.atP p).ιE (Formalism.MainNotions.S.Dl F.fl F'.fl l) := by
@@ -62,8 +62,8 @@ theorem dl_scaled (Z : LocDat D) (p : PlF D) {T T' : D.host.E} (F : LFlag (VS D)
   simp only [Formalism.MainNotions.S.Dl, Formalism.MainNotions.S.leadMinorE, dif_pos hl]
   ring
 
-theorem gv_ne_of (Z : LocDat D) (p : PlF D) (n n' : ℕ) (F : LFlag (VS D) D.R.rS ((n : ℕ) : D.host.E))
-    (F' : LFlag (VS D) D.R.rS ((n' : ℕ) : D.host.E)) (P : Formalism.MainNotions.S.LocNG.FPair (locH Z p) D.R.rS) :
+theorem gv_ne_of (Z : LocDat D) (p : PlF D) (n n' : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS ((n : ℕ) : D.host.E))
+    (F' : LFlag (D.sp.Y 0) D.R.rS ((n' : ℕ) : D.host.E)) (P : Formalism.MainNotions.S.LocNG.FPair (locH Z p) D.R.rS) :
     P.A.f = scaled Z p (frame F) → P.B.f = scaled Z p (frame F') → P.A.T = (n : (D.s.atP p).Fp) →
       P.B.T = (n' : (D.s.atP p).Fp) → Gval F F' ≠ 0 → P.Gv ≠ 0 := by
   intro hA hB hT hT' hG
@@ -279,7 +279,7 @@ private theorem exists_dual_family_of_flag {r : ℕ} {T : D.host.E} (F : FlagG (
   rw [brS, ← h2, h1, starRingEnd_apply]
   split_ifs <;> simp
 
-theorem frame_ex (Z : LocDat D) (p : PlF D) (n : ℕ) (_hn : n ≠ 0) (F : LFlag (VS D) D.R.rS ((n : ℕ) : D.host.E)) :
+theorem frame_ex (Z : LocDat D) (p : PlF D) (n : ℕ) (_hn : n ≠ 0) (F : LFlag (D.sp.Y 0) D.R.rS ((n : ℕ) : D.host.E)) :
     ∃ Fr : Formalism.MainNotions.S.LocNG.FrameD (locH Z p) D.R.rS, Fr.f = scaled Z p (frame F) ∧ Fr.T = (n : (D.s.atP p).Fp) := by
   have hU : ∀ a, IsUnit (frFac Z.δ p a) := by
     intro a
@@ -324,7 +324,7 @@ theorem frame_ex (Z : LocDat D) (p : PlF D) (n : ℕ) (_hn : n ≠ 0) (F : LFlag
     · rw [map_zero, mul_zero]
 
 theorem atBase_relG : ∀ (D : D7) (Z : LocDat D), ∀ (u u' : D.what₂.Word) (w : Point D.host.E (D.R.rS + 1))
-    (F00 : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (F'0 : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)),
+    (F00 : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F'0 : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)),
     ZhatOM (ZhatL F00 F'0) = ptMat w → Gval F00 F'0 ≠ 0 → ∀ p : PlF D,
       (∃ P, AtBase Z p F00 F'0 (Tu D u) (Tu D u') P) ∧
         ∀ P, AtBase Z p F00 F'0 (Tu D u) (Tu D u') P → P.RelG (LocNG.theta (Z.M p)) := by

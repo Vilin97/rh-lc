@@ -66,7 +66,7 @@ section NR
 
 variable {D : D7}
 
-theorem nrat_fvec_sub {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
+theorem nrat_fvec_sub {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
     (hn : n ∈ NRat F) (i : Fin (D.R.rS + 1)) : n (F.fl.fvec i) - F.fl.fvec i ∈ Xsp F := by
   induction i using Fin.lastCases with
   | last =>
@@ -78,7 +78,7 @@ theorem nrat_fvec_sub {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {n : (VS D).V �
       Submodule.subset_span ⟨a, by show a.1 < a.1 + 1; omega, rfl⟩
     exact Submodule.span_mono (Set.image_subset_range _ _) (hn.2.1 a.1 _ h1)
 
-theorem nrat_map_Xsp {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
+theorem nrat_map_Xsp {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
     (hn : n ∈ NRat F) (y : (VS D).V) (hy : y ∈ Xsp F) : n y ∈ Xsp F := by
   induction hy using Submodule.span_induction with
   | mem y hy =>
@@ -91,7 +91,7 @@ theorem nrat_map_Xsp {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {n : (VS D).V �
   | add y y' _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
   | smul c y _ h => rw [map_smul]; exact Submodule.smul_mem _ c h
 
-theorem one_mem_NRat {T : D.host.E} (F : LFlag (VS D) D.R.rS T) : (1 : (VS D).V ≃ₗ[D.host.E] (VS D).V) ∈ NRat F :=
+theorem one_mem_NRat {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) : (1 : (VS D).V ≃ₗ[D.host.E] (VS D).V) ∈ NRat F :=
   ⟨one_mem _, fun j x _ => by simp, fun x _ => by simp⟩
 
 end NR

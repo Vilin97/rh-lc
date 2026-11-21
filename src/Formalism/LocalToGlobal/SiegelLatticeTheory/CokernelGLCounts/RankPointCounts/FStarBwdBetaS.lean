@@ -230,8 +230,8 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word}
 
 namespace BwdBetaS
 
-theorem UUE_le_span (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) :
+theorem UUE_le_span (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) :
     UUE Λ F F' ≤ Submodule.span D.host.E (Set.range (Sum.elim F.fl.fvec F'.fl.fvec)) := by
   set W := Submodule.span D.host.E (Set.range (Sum.elim F.fl.fvec F'.fl.fvec))
   have hz1 : F.zt ∈ W := by
@@ -247,8 +247,8 @@ theorem UUE_le_span (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} 
     · rw [Submodule.span_le]; rintro _ rfl; exact hz2
   exact Submodule.span_le.2 fun v hv => hUU hv
 
-theorem ylift_dec (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hdet : (Zhat F.fl F'.fl).det ≠ 0)
+theorem ylift_dec (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hdet : (Zhat F.fl F'.fl).det ≠ 0)
     {Ω : (VS D).V} (hΩ : OmV F.fl F'.fl Ω) {y : (VS D).V} (hy : y ∈ Ylift Λ F F') :
     ∃ x ∈ F.fl.X, ∃ c : D.host.E, y = x + c • (F.fl.z + T • Ω) := by
   obtain ⟨hy1, hy2⟩ := Submodule.mem_inf.1 hy
@@ -256,8 +256,8 @@ theorem ylift_dec (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F
   rw [Formalism.L2.SG.Pf.mem_orth_iff_sat 1 (Subgroup.one_mem _)] at hy2
   exact hy2 _ (fvec_mem_Xplus F.fl a)
 
-theorem ylift'_dec (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hdet : (Zhat F'.fl F.fl).det ≠ 0)
+theorem ylift'_dec (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hdet : (Zhat F'.fl F.fl).det ≠ 0)
     {Ω : (VS D).V} (hΩ : OmV F'.fl F.fl Ω) {y : (VS D).V} (hy : y ∈ Ylift' Λ F F') :
     ∃ x ∈ F'.fl.X, ∃ c : D.host.E, y = x + c • (F'.fl.z + T' • Ω) := by
   obtain ⟨hy1, hy2⟩ := Submodule.mem_inf.1 hy
@@ -271,7 +271,7 @@ end BwdBetaS
 
 namespace BwdBetaS
 
-theorem om'_eq {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T')
+theorem om'_eq {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (hdet : (Zhat F0 F'.fl).det ≠ 0) {Ω' : (VS D).V} (hΩ' : OmV F'.fl F0 Ω') :
     Ω' = (star (GDl (frame (lf D F0)) (frame F') (D.R.rS + 1)))⁻¹ • Gom (frame (lf D F0)) (frame F') := by
   have hD : GDl (frame (lf D F0)) (frame F') (D.R.rS + 1) = (Zhat F0 F'.fl).det := by

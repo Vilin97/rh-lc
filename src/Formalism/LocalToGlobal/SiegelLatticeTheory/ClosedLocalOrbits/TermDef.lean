@@ -143,8 +143,8 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable (D : D7)
 
-def PD (Λ : Submodule (𝓞 D.host.E) (hS D).V) {T : D.host.E} (F : LFlag (hS D) D.R.rS T) (u' : D.what₂.Word)
-    (F' : LFlag (hS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) : Prop :=
+def PD (Λ : Submodule (𝓞 D.host.E) (hS D).V) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (u' : D.what₂.Word)
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) : Prop :=
   IsLift Λ F' ∧ IsAdmissible Λ (gS D) F F' ∧ FrameOK D Λ F'
 
 abbrev TermsOf (u' : D.what₂.Word) {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T)

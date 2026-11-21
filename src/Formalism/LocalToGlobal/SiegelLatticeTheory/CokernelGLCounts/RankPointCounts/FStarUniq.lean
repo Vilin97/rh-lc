@@ -279,7 +279,7 @@ theorem fix_fvec {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} (he : ∀ a, n (F0.e a
   | last => simp only [FlagG.fvec, Fin.snoc_last]; exact hz
   | cast j => simp only [FlagG.fvec, Fin.snoc_castSucc]; exact he j
 
-theorem moves_fvec {T' : D.host.E} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} {A B : LFlag (VS D) D.R.rS T'}
+theorem moves_fvec {T' : D.host.E} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} {A B : LFlag (D.sp.Y 0) D.R.rS T'}
     (h : Moves n A B) (i : Fin (D.R.rS + 1)) : n (A.fl.fvec i) = B.fl.fvec i := by
   induction i using Fin.lastCases with
   | last => simp only [FlagG.fvec, Fin.snoc_last]; exact h.2
@@ -348,16 +348,16 @@ theorem unipotent_fixer_refl (Λ : Submodule (𝓞 D.host.E) (VS D).V) : LinearE
   mem_unipotent_fixer_of (fun _ _ => rfl) (by rw [show ⇑(LinearEquiv.refl D.host.E (VS D).V) = id from rfl, Set.image_id])
     (fun w _ => by rw [LinearEquiv.refl_apply, sub_self]; exact Submodule.zero_mem _) (fun _ => rfl) rfl
 
-theorem nilradical_relation_refl {T' : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V) (A : LFlag (VS D) D.R.rS T') :
+theorem nilradical_relation_refl {T' : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V) (A : LFlag (D.sp.Y 0) D.R.rS T') :
     NilradicalFlagMoved F0 Λ A A := ⟨_, unipotent_fixer_refl Λ, fun _ => rfl, rfl⟩
 
-theorem lattice_flag_relation_symm {T' : D.host.E} {Λ : Submodule (𝓞 D.host.E) (VS D).V} {A B : LFlag (VS D) D.R.rS T'}
+theorem lattice_flag_relation_symm {T' : D.host.E} {Λ : Submodule (𝓞 D.host.E) (VS D).V} {A B : LFlag (D.sp.Y 0) D.R.rS T'}
     (h : NilradicalFlagMoved F0 Λ A B) : NilradicalFlagMoved F0 Λ B A := by
   obtain ⟨k, hk, he, hz⟩ := h
   exact ⟨k.symm, unipotent_fixer_symm hk, fun a => (LinearEquiv.symm_apply_eq _).2 (he a).symm,
     (LinearEquiv.symm_apply_eq _).2 hz.symm⟩
 
-theorem lattice_flag_relation_trans {T' : D.host.E} {Λ : Submodule (𝓞 D.host.E) (VS D).V} {A B C : LFlag (VS D) D.R.rS T'}
+theorem lattice_flag_relation_trans {T' : D.host.E} {Λ : Submodule (𝓞 D.host.E) (VS D).V} {A B C : LFlag (D.sp.Y 0) D.R.rS T'}
     (h1 : NilradicalFlagMoved F0 Λ A B) (h2 : NilradicalFlagMoved F0 Λ B C) : NilradicalFlagMoved F0 Λ A C := by
   obtain ⟨k, hk, he, hz⟩ := h1
   obtain ⟨l, hl, he', hz'⟩ := h2

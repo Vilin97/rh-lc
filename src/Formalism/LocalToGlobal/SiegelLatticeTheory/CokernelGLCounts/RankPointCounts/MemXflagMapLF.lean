@@ -41,7 +41,7 @@ theorem mem_Xflag_mapLF {E : Type} [Field E] [NumberField E] [StarRing E] {S : H
 
 variable {D : D7} {X : HidaSetting D} (Y : Full X) {u u' : D.what₂.Word}
 
-theorem NLam_SRat {T : D.host.E} {Λ : Submodule (𝓞 D.host.E) (VS D).V} {F : LFlag (VS D) D.R.rS T}
+theorem NLam_SRat {T : D.host.E} {Λ : Submodule (𝓞 D.host.E) (VS D).V} {F : LFlag (D.sp.Y 0) D.R.rS T}
     {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hn : n ∈ NLam Λ F) : n ∈ SRat F := by
   obtain ⟨hA, hf, hp⟩ := hn
   refine ⟨hA.1, hf, hp _ ?_⟩

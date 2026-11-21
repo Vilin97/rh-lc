@@ -113,7 +113,7 @@ end Gen
 
 variable {D : D7}
 
-theorem exists_add_mem : ∀ (D : D7) (T : D.host.E) (G : LFlag (VS D) D.R.rS T) (Z : LocDat D)
+theorem exists_add_mem : ∀ (D : D7) (T : D.host.E) (G : LFlag (D.sp.Y 0) D.R.rS T) (Z : LocDat D)
     (A : ∀ p : PlF D, LocNG.FrameD (locH Z p) D.R.rS),
     (∀ p, (A p).f = fun a => frFac Z.δ p a • baseChange₂ D p (frame G a)) → ∀ Λ : LV D,
     Submodule.IsLattice D.host.E Λ →

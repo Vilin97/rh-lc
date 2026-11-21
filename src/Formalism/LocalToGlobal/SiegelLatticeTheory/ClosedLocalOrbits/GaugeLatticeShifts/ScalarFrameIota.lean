@@ -62,7 +62,7 @@ theorem betaL_proj {r : ℕ} (e u : Fin r → (VS D).V) (v : Vp D p) :
   exact LinearMap.congr_fun hφ v
 
 theorem loc_gen (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hL : Submodule.IsLattice D.host.E Λ)
-    (hU : Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ) {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T')
+    (hU : Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ) {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (X₁ : Submodule (D.s.atP p).Ep (Vp D p)) (hX : ∀ a, baseChange₂ D p (F'.fl.e a) ∈ X₁) {x : Vp D p}
     (hx : x ∈ lattice₂ D Z.M p Λ) (hxo : x ∈ (locH Z p).perp X₁) :
     x ∈ Submodule.span (Z.M p).L.O (baseChange₂ D p '' (Lrep Λ F' : Set (VS D).V)) := by
@@ -117,7 +117,7 @@ theorem g_loc (Λ : Submodule (𝓞 D.host.E) (VS D).V) (gg : Loc.SplitG (Z.M p)
     rw [e]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨baseChange₂ D p l, Submodule.subset_span ⟨l, hl, rfl⟩, rfl⟩)
 
-theorem bcP_N (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFlag (VS D) D.R.rS T)
+theorem bcP_N (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
     (gg : Loc.SplitG (Z.M p).L) (hgg : (Z.M p).split = some gg) {v : (VS D).V}
     (hv : v ∈ Ideal.span {((gS D : ℕ) : 𝓞 D.host.E)} • Λ ⊔ XLam Λ F) :
     baseChange₂ D p v ∈ (locH Z p).smulLat (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (gg.q : (D.s.atP p).Fp))
@@ -132,8 +132,8 @@ theorem bcP_N (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFla
     rw [Xsp_eq_Xs] at h
     exact bcP_mem_X Z p (frame F) (sF Z p) (isUnit_sF Z p) h
 
-theorem loc_beta (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (β : (VS D).V ≃ₗ[D.host.E] (VS D).V)
+theorem loc_beta (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (β : (VS D).V ≃ₗ[D.host.E] (VS D).V)
     (gg : Loc.SplitG (Z.M p).L) (hgg : (Z.M p).split = some gg)
     (hglob : ∀ w ∈ Lrep Λ F', β w - w ∈ Ideal.span {((gS D : ℕ) : 𝓞 D.host.E)} • Λ ⊔ XLam Λ F)
     {x : Vp D p} (hx : x ∈ Submodule.span (Z.M p).L.O (baseChange₂ D p '' (Lrep Λ F' : Set (VS D).V))) :
@@ -161,7 +161,7 @@ theorem loc_beta (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F 
     exact Submodule.smul_mem _ c ha
 
 theorem iotaG_main (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E}
-    (F : LFlag (VS D) D.R.rS T) (F' F'' : LFlag (VS D) D.R.rS T') (β : (VS D).V ≃ₗ[D.host.E] (VS D).V)
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (F' F'' : LFlag (D.sp.Y 0) D.R.rS T') (β : (VS D).V ≃ₗ[D.host.E] (VS D).V)
     (hF : FixedHyp D Λ F) (hc' : IsFixedConv Λ (gS D) F') (hc'' : IsFixedConv Λ (gS D) F'')
     (ha' : IsAdmissible Λ (gS D) F F') (ha'' : IsAdmissible Λ (gS D) F F'')
     (hP : IsPair Λ F F' F'' β (gS D))

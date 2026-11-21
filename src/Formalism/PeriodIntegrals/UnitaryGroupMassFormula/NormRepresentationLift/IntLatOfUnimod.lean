@@ -69,7 +69,7 @@ theorem normRepStep_of (D : D7) (u u' : D.what₂.Word) (hS : TermStable D u u')
   obtain ⟨n, hn, M, hM, Q, hQ⟩ := exists_undo Λ hint (lf D F0) (gS D : 𝓞 D.host.E)
     (hV hP F0 Λ hΛ) hfe ξ ⟨hAdm.1, hAdm.2.1⟩
   have hiso : ∀ x y, (VS D).hT (n x) (n y) = (VS D).hT x y := hn.1.1
-  let F2 : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) := ⟨mapFlag n hiso F1.fl, n F1.zt⟩
+  let F2 : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) := ⟨mapFlag n hiso F1.fl, n F1.zt⟩
   have hDC : DCRel Λ (lf D F0) F1 F2 :=
     ⟨n, hn, 1, one_mem_NLam Λ F1, fun a => by simp [F2, frame_mapFlag], by simp [F2]⟩
   have hP2 : PD D Λ (lf D F0) u' F2 := hS F0 Λ hΛ ⟨F1, hF1⟩ F2 hDC

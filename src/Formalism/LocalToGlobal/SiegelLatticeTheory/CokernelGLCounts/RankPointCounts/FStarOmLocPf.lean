@@ -235,7 +235,7 @@ theorem sp_frameAct {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpac
   exact Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
 
 theorem admissibility_witness_inv_mul {D : Formalism.BasicNotions.D7} (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E}
-    (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') : (admXi D Λ F F')⁻¹ * admXi D Λ F F' = 1 := by
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') : (admXi D Λ F F')⁻¹ * admXi D Λ F F' = 1 := by
   obtain ⟨h1, h2⟩ := admissibility_witness_unitriangular Λ F F'
   have hbt : (admXi D Λ F F').BlockTriangular id := fun i j hij => h1 i j hij
   have hdet : (admXi D Λ F F').det = 1 := by

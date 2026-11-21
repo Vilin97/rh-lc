@@ -85,11 +85,11 @@ theorem flag_hT {T : D.host.E} (F : FlagG (VS D) D.R.rS T) (a b : Fin (D.R.rS + 
     | last => simp only [Fin.snoc_last]; exact F.z_orth a
     | cast b => simp only [Fin.snoc_castSucc]; exact F.e_iso a b
 
-def vfam {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+def vfam {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Fin (D.R.rS + 1) ⊕ Fin (D.R.rS + 1) → (VS D).V :=
   Sum.elim F0.fvec F'.fl.fvec
 
-theorem ga_eq {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+theorem ga_eq {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Ga T T' (ZhatL (lf D F0) F') = Matrix.of fun a b => brS (VS D) (vfam F0 F' b) (vfam F0 F' a) := by
   ext a b
   rcases a with a | a <;> rcases b with b | b
@@ -106,11 +106,11 @@ theorem ga_eq {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) 
 variable {M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep}
 
 def g0 (L : LocSp D M) (δ : ∀ p : PlF D, (D.s.atP p).Fp) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') : Fin (D.R.rS + 1) ⊕ Fin (D.R.rS + 1) → L.V p :=
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') : Fin (D.R.rS + 1) ⊕ Fin (D.R.rS + 1) → L.V p :=
   fun a => phi δ p a • L.bc p (vfam F0 F' a)
 
 theorem gaLoc_eq (L : LocSp D M) (δ : ∀ p : PlF D, (D.s.atP p).Fp) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     GaLoc M δ p T T' (ZhatL (lf D F0) F') = Matrix.of fun a b => (L.H p).h (g0 L δ p F0 F' b) (g0 L δ p F0 F' a) := by
   ext a b
   simp only [GaLoc, Matrix.of_apply, g0, (L.H p).h_smul_left, h_smul_right, L.bc_form, ga_eq]
@@ -124,13 +124,13 @@ def amat (p : PlF D) (g : Loc.SplitG (M p).L) :
       (1 : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (D.s.atP p).Ep))
 
 def locFam (L : LocSp D M) (δ : ∀ p : PlF D, (D.s.atP p).Fp) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') : Fin (D.R.rS + 1) ⊕ Fin (D.R.rS + 1) → L.V p :=
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') : Fin (D.R.rS + 1) ⊕ Fin (D.R.rS + 1) → L.V p :=
   match (M p).split with
   | none => g0 L δ p F0 F'
   | some g => fun b => ∑ d, amat p g d b • g0 L δ p F0 F' d
 
 theorem gaPlus_eq_gram (L : LocSp D M) (δ : ∀ p : PlF D, (D.s.atP p).Fp) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     GaPlus M δ p T T' (ZhatL (lf D F0) F') =
       Matrix.of fun a b => (L.H p).h (locFam L δ p F0 F' b) (locFam L δ p F0 F' a) := by
   unfold GaPlus locFam
@@ -151,7 +151,7 @@ def FrameBasisL : Prop :=
     (∀ p, Agree δ M p) → ∀ (L : LocSp D M) (u u' : D.what₂.Word),
     (D.mem u).A.T ≡ (D.mem u').A.T [MOD (Lat.gS D) ^ 2] →
     ∀ (F0 : FlagG (VS D) D.R.rS (Tn u)) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)),
-      IsRowReps D F0 what₂ → ∀ F' : LFlag (VS D) D.R.rS (Tn u'), F'.zt = F'.fl.z →
+      IsRowReps D F0 what₂ → ∀ F' : LFlag (D.sp.Y 0) D.R.rS (Tn u'), F'.zt = F'.fl.z →
         Formalism.MainNotions.S.LocalSplitGroups.TotPos (GZ (Tn u) (Tn u') (ZhatL (lf D F0) F')) → ∀ p : PlF D,
         LinearIndependent (M p).L.O (locFam L δ p F0 F') ∧
           Submodule.span (M p).L.O (Set.range (locFam L δ p F0 F')) = lattice₂ L p (MMof D F0 F')
@@ -162,7 +162,7 @@ def JordanL : Prop :=
     (∀ p, Agree δ M p) → ∀ (L : LocSp D M) (u u' : D.what₂.Word),
     (D.mem u).A.T ≡ (D.mem u').A.T [MOD (Lat.gS D) ^ 2] →
     ∀ (F0 : FlagG (VS D) D.R.rS (Tn u)) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)),
-      IsRowReps D F0 what₂ → ∀ F' : LFlag (VS D) D.R.rS (Tn u'), F'.zt = F'.fl.z →
+      IsRowReps D F0 what₂ → ∀ F' : LFlag (D.sp.Y 0) D.R.rS (Tn u'), F'.zt = F'.fl.z →
         Formalism.MainNotions.S.LocalSplitGroups.TotPos (GZ (Tn u) (Tn u') (ZhatL (lf D F0) F')) →
         Formalism.HermitianLatticesTheory.IsIntegralLat (VS D).hT (MMof D F0 F') →
         ∀ (p : PlF D) (ϖ : 𝒪[(D.s.atP p).Fp]), Irreducible ϖ →

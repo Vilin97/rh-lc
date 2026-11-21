@@ -83,7 +83,7 @@ theorem herm_span_right {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpac
   · intro c a _ ha
     rw [herm_smul_right, ha, mul_zero]
 
-theorem X_iso {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {x : (VS D).V} (hx : x ∈ Xsp G) :
+theorem X_iso {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) {x : (VS D).V} (hx : x ∈ Xsp G) :
     x ∈ orth (VS D) (Xsp G) := by
   simp only [orth, Submodule.mem_iInf, LinearMap.mem_ker]
   intro y hy
@@ -101,7 +101,7 @@ theorem X_iso {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {x : (VS D).V} (hx : x 
   · intro c a _ ha; simp [ha]
 
 set_option maxHeartbeats 1000000 in
-theorem lsub_le (Z : LocDat D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T)
+theorem lsub_le (Z : LocDat D) {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T)
     (f : ∀ p : PlF D, Fin (D.R.rS + 1) → Vp D p)
     (hf : ∀ p, f p = fun a => frFac Z.δ p a • baseChange₂ D p (frame G a)) (Λ₁ Λ₂ : LV D)
     (h₂ : Submodule.IsLattice D.host.E Λ₂)
@@ -172,7 +172,7 @@ theorem lsub_le (Z : LocDat D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T)
     exact Submodule.sub_mem _ hvo (X_iso G hc)
   refine ⟨Submodule.mem_sup.2 ⟨a + b, ⟨Submodule.add_mem _ ha hb, hco⟩, l + x - (a + b), hc, by abel⟩, hvo⟩
 
-theorem lsub_eq_of_local : ∀ (D : D7) (Z : LocDat D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Fr : ∀ p : PlF D, LocNG.FrameD (locH Z p) D.R.rS), (∀ p, (Fr p).f = (fun a => frFac Z.δ p a • baseChange₂ D p (frame G a))) → ∀ Λ₁ Λ₂ : LV D, Submodule.IsLattice D.host.E Λ₁ → Submodule.IsLattice D.host.E Λ₂ → (∀ p, (locH Z p).Lset (lattice₂ D Z.M p Λ₁) (Fr p).f = (locH Z p).Lset (lattice₂ D Z.M p Λ₂) (Fr p).f) → Lsub Λ₁ G = Lsub Λ₂ G := by
+theorem lsub_eq_of_local : ∀ (D : D7) (Z : LocDat D) {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (Fr : ∀ p : PlF D, LocNG.FrameD (locH Z p) D.R.rS), (∀ p, (Fr p).f = (fun a => frFac Z.δ p a • baseChange₂ D p (frame G a))) → ∀ Λ₁ Λ₂ : LV D, Submodule.IsLattice D.host.E Λ₁ → Submodule.IsLattice D.host.E Λ₂ → (∀ p, (locH Z p).Lset (lattice₂ D Z.M p Λ₁) (Fr p).f = (locH Z p).Lset (lattice₂ D Z.M p Λ₂) (Fr p).f) → Lsub Λ₁ G = Lsub Λ₂ G := by
   intro D Z T G Fr hFr Λ₁ Λ₂ h₁ h₂ hL
   exact le_antisymm
     (lsub_le Z G (fun p => (Fr p).f) hFr Λ₁ Λ₂ h₂ fun p => (hL p).le)

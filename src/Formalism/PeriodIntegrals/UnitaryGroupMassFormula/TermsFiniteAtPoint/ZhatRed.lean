@@ -22,7 +22,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 def ZhatIntegral : Prop :=
   ∀ (D : D7) (u u' : D.what₂.Word) (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
     (Λ : Submodule (𝓞 D.host.E) (VS D).V), IsRowLat D F0 Λ →
-    ∀ F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E), PD D Λ (lf D F0) u' F' →
+    ∀ F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E), PD D Λ (lf D F0) u' F' →
       ∀ a b, ∃ o : 𝓞 D.host.E, (o : D.host.E) = ZhatL (lf D F0) F' a b
 
 theorem star_int (D : D7) (o : 𝓞 D.host.E) : ∃ o' : 𝓞 D.host.E, (o' : D.host.E) = star (o : D.host.E) := by
@@ -109,7 +109,7 @@ theorem zhatReduce_of (hC : CellReduce) (hF : FrameOp) (hR : CarrierRow) (hI : Z
   obtain ⟨n0, hn0, hn0act⟩ := hF1 F0 Λ hΛ st hAo
   have hn := PI.DCRelEquiv.UnitaryGroupMassFormula.nlam_inv hn0
   have hiso : n0⁻¹ * m ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := mul_mem hn.1.1 hm.1.1
-  let y : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) := Formalism.L2.SG.Saturated.mapL (n0⁻¹ * m) hiso x.1
+  let y : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) := Formalism.L2.SG.Saturated.mapL (n0⁻¹ * m) hiso x.1
   have hdc : DCRel Λ (lf D F0) x.1 y :=
     ⟨n0⁻¹, hn, m, hm, fun a => by simp [y, Formalism.L2.SG.Saturated.frame_mapL],
       by simp [y, Formalism.L2.SG.Saturated.mapL]⟩
@@ -117,7 +117,7 @@ theorem zhatReduce_of (hC : CellReduce) (hF : FrameOp) (hR : CarrierRow) (hI : Z
   have hGy : Gval (lf D F0) x.1 = Gval (lf D F0) y :=
     (term_function_const D u u' F0 Λ hΛ).1 x ⟨y, hy⟩ hdc
   refine ⟨⟨y, hy⟩, Quot.sound hdc, hGy ▸ hG, ?_⟩
-  have key : ∀ {T1 T2 : D.host.E} (F1 : LFlag (VS D) D.R.rS T1) (F2 : LFlag (VS D) D.R.rS T2) a b,
+  have key : ∀ {T1 T2 : D.host.E} (F1 : LFlag (D.sp.Y 0) D.R.rS T1) (F2 : LFlag (D.sp.Y 0) D.R.rS T2) a b,
       ZhatL F1 F2 a b = (VS D).hT (frame F1 a) (frame F2 b) := fun _ _ _ _ => rfl
   have hfy : ∀ b, frame y b = n0⁻¹ (m (frame x.1 b)) := fun b => by
     simp [y, Formalism.L2.SG.Saturated.frame_mapL]

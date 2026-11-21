@@ -21,7 +21,7 @@ section GF
 
 variable {D : D7} (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E}
 
-theorem span_sum_elim_frameAct (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T')
+theorem span_sum_elim_frameAct (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E))
     (h1 : ∀ a b, b < a → ξ a b = 0) (h2 : ∀ a, ξ a a = 1) :
     Submodule.span D.host.E (Set.range (Sum.elim F.fl.fvec (frameAct F'.fl.fvec ξ⁻¹))) =
@@ -29,23 +29,23 @@ theorem span_sum_elim_frameAct (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.
   rw [Set.Sum.elim_range, Set.Sum.elim_range, Submodule.span_union, Submodule.span_union,
     span_frameAct_inv _ ξ h1 h2]
 
-theorem Dl_eq_GDl_top (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+theorem Dl_eq_GDl_top (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Dl F.fl F'.fl (D.R.rS + 1) = GDl F.fl.fvec F'.fl.fvec (D.R.rS + 1) := by
   rw [PI.PairCorankPos.W.Dl_top, GDl_top']
   rfl
 
-theorem Dl_eq_GDl_r (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+theorem Dl_eq_GDl_r (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Dl F.fl F'.fl D.R.rS = GDl F.fl.fvec F'.fl.fvec D.R.rS := by
   rw [PI.PairCorankPos.W.Dl_r, GDl_r']
   rfl
 
-theorem Gval_eq (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+theorem Gval_eq (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Gval F F' = GDl F.fl.fvec F'.fl.fvec (D.R.rS + 1) * star (GDl F.fl.fvec F'.fl.fvec (D.R.rS + 1)) -
       T * T' * (GDl F.fl.fvec F'.fl.fvec D.R.rS * star (GDl F.fl.fvec F'.fl.fvec D.R.rS)) := by
   show Gflag F.fl F'.fl = _
   rw [Gflag, Dl_eq_GDl_top, Dl_eq_GDl_r]
 
-theorem gfacts_of (F : LFlag (VS D) D.R.rS T) (F' F'' : LFlag (VS D) D.R.rS T')
+theorem gfacts_of (F : LFlag (D.sp.Y 0) D.R.rS T) (F' F'' : LFlag (D.sp.Y 0) D.R.rS T')
     (β : (VS D).V ≃ₗ[D.host.E] (VS D).V)
     (hF : FixedHyp D Λ F) (hl' : IsLift Λ F') (hl'' : IsLift Λ F'') (hc' : IsFixedConv Λ (gS D) F')
     (hc'' : IsFixedConv Λ (gS D) F'') (hP : IsPair Λ F F' F'' β (gS D))

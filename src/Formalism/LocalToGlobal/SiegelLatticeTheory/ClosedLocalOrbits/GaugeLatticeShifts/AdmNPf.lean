@@ -126,7 +126,7 @@ def ModGAt : Prop :=
     ∀ v, ModG (VS D) Λ (gS D) v → InAt X.B.I X.B.g X.B.g (X.B.I.fmat g1⁻¹ *ᵥ incl X.B.I (X.crd v))
 
 theorem frame_mapLF {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
-    (F : LFlag (VS D) D.R.rS T) (c : Fin (D.R.rS + 1)) : frame (mapLF γ F) c = γ (frame F c) := by
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (c : Fin (D.R.rS + 1)) : frame (mapLF γ F) c = γ (frame F c) := by
   unfold frame mapLF
   rw [dite_eq_left hγ]
   show (mapFlag γ hγ F.fl).fvec c = γ (F.fl.fvec c)

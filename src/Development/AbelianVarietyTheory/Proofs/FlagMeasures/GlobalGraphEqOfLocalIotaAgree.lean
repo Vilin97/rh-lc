@@ -95,7 +95,7 @@ theorem gsmul_mem (Z : LocDat D) (p : PlF D) (Λ : LV D) {w : Vp D p} (hw : w �
     rw [Subring.smul_def, smul_comm]
     exact smul_mem_latP Z p _ a.2 hx
 
-theorem bcP_mem_X (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T)
+theorem bcP_mem_X (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T)
     {f : Fin (D.R.rS + 1) → Vp D p} (hf : f = fun a => frFac Z.δ p a • baseChange₂ D p (frame G a))
     {ξ : (VS D).V} (hξ : ξ ∈ Xsp G) : baseChange₂ D p ξ ∈ (locH Z p).X f := by
   subst hf
@@ -115,7 +115,7 @@ theorem bcP_mem_X (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (VS D) D.
   | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [baseChange_smul₂]; exact Submodule.smul_mem _ _ hx
 
-theorem X_le_span (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T)
+theorem X_le_span (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T)
     {f : Fin (D.R.rS + 1) → Vp D p} (hf : f = fun a => frFac Z.δ p a • baseChange₂ D p (frame G a)) :
     (locH Z p).X f ≤ Submodule.span (D.s.atP p).Ep (baseChange₂ D p '' (Xsp G : Set (VS D).V)) := by
   subst hf
@@ -124,7 +124,7 @@ theorem X_le_span (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (VS D) D.
   refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨G.fl.e a, Submodule.subset_span ⟨a, rfl⟩, ?_⟩)
   simp [frame, FlagG.fvec]
 
-theorem baseChange_mem_perp (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T)
+theorem baseChange_mem_perp (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T)
     {f : Fin (D.R.rS + 1) → Vp D p} (hf : f = fun a => frFac Z.δ p a • baseChange₂ D p (frame G a))
     {l : (VS D).V} (hl : l ∈ orth (VS D) (Xsp G)) : baseChange₂ D p l ∈ (locH Z p).perp ((locH Z p).X f) := by
   intro x hx
@@ -146,7 +146,7 @@ theorem baseChange_mem_perp (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag
     | smul c x _ hx => rw [(locH Z p).h_smul_left, hx, mul_zero]
   rw [(locH Z p).h_herm, key, map_zero]
 
-theorem X_le_orth {T : D.host.E} (G : LFlag (VS D) D.R.rS T) : Xsp G ≤ orth (VS D) (Xsp G) := by
+theorem X_le_orth {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) : Xsp G ≤ orth (VS D) (Xsp G) := by
   intro y hy
   rw [GlobalTheory.FrameProj.mem_orth_iff]
   intro u hu
@@ -171,13 +171,13 @@ theorem gS_ne : ((gS D : ℕ) : D.host.E) ≠ 0 := by
   have : 0 < gS D := Nat.mul_pos h0 h1
   exact_mod_cast this.ne'
 
-theorem ngx_lattice {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (Λ : LV D)
+theorem ngx_lattice {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (Λ : LV D)
     (h : Submodule.IsLattice D.host.E Λ) : Submodule.IsLattice D.host.E (NgX Λ (gS D) F F') := by
   have hle : NgX Λ (gS D) F F' ≤ Λ := sup_le (sup_le Submodule.smul_le_right inf_le_left) inf_le_left
   refine ⟨h.fg.of_le hle, ?_⟩
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli
-theorem lrep_mem_lsub {T : D.host.E} {Λ : LV D} {G : LFlag (VS D) D.R.rS T} {l : (VS D).V}
+theorem lrep_mem_lsub {T : D.host.E} {Λ : LV D} {G : LFlag (D.sp.Y 0) D.R.rS T} {l : (VS D).V}
     (hl : l ∈ Lrep Λ G) : l ∈ Lsub Λ G :=
   Submodule.mem_inf.2 ⟨Submodule.mem_sup_left hl, (Submodule.mem_inf.1 hl).2⟩
 
@@ -271,7 +271,7 @@ variable {D : D7}
 
 set_option maxHeartbeats 1000000 in
 theorem graph_sub (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (Tn T'n : ℕ)
-    (F : LFlag (VS D) D.R.rS (Tn : D.host.E)) (F' : LFlag (VS D) D.R.rS (T'n : D.host.E))
+    (F : LFlag (D.sp.Y 0) D.R.rS (Tn : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T'n : D.host.E))
     (hB : Based Z FP Tn T'n F F') (Λ₁ Λ₂ : LV D)
     (h₂ : Submodule.IsLattice D.host.E Λ₂) (hL : Lsub Λ₁ F = Lsub Λ₂ F) (hL' : Lsub Λ₁ F' = Lsub Λ₂ F')
     (hI : ∀ (p : PlF D) (g : Loc.SplitG (Z.M p).L), (Z.M p).split = some g →
@@ -343,7 +343,7 @@ theorem graph_sub (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R
       exact baseChangeAtPlace_sub_mem_of_three_mem Z p l₂ l'₂ y y' _ (GlobalTheory.FrameProj.localLattice_mono Z p (le_sup_right.trans le_sup_left) hd)
         (GlobalTheory.FrameProj.localLattice_mono Z p le_sup_right hd') (hgle (smulLat_le_g Z p _ u v hv hg huv Λ₂ _ hyy))
 
-theorem graph_eq_of_local_iota : ∀ (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (Tn T'n : ℕ) (F : LFlag (VS D) D.R.rS (Tn : D.host.E)) (F' : LFlag (VS D) D.R.rS (T'n : D.host.E)), Based Z FP Tn T'n F F' → ∀ Λ₁ Λ₂ : LV D, Submodule.IsLattice D.host.E Λ₁ → Submodule.IsLattice D.host.E Λ₂ → Lsub Λ₁ F = Lsub Λ₂ F → Lsub Λ₁ F' = Lsub Λ₂ F' → (∀ (p : PlF D) (g : Loc.SplitG (Z.M p).L), (Z.M p).split = some g → (locH Z p).iotaGraph g ⟨lattice₂ D Z.M p Λ₁, (FP p).A.f, (FP p).B.f, (FP p).A.T, (FP p).B.T⟩ = (locH Z p).iotaGraph g ⟨lattice₂ D Z.M p Λ₂, (FP p).A.f, (FP p).B.f, (FP p).A.T, (FP p).B.T⟩) → (gdat F F' Λ₁).2.2 = (gdat F F' Λ₂).2.2 := by
+theorem graph_eq_of_local_iota : ∀ (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (Tn T'n : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS (Tn : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T'n : D.host.E)), Based Z FP Tn T'n F F' → ∀ Λ₁ Λ₂ : LV D, Submodule.IsLattice D.host.E Λ₁ → Submodule.IsLattice D.host.E Λ₂ → Lsub Λ₁ F = Lsub Λ₂ F → Lsub Λ₁ F' = Lsub Λ₂ F' → (∀ (p : PlF D) (g : Loc.SplitG (Z.M p).L), (Z.M p).split = some g → (locH Z p).iotaGraph g ⟨lattice₂ D Z.M p Λ₁, (FP p).A.f, (FP p).B.f, (FP p).A.T, (FP p).B.T⟩ = (locH Z p).iotaGraph g ⟨lattice₂ D Z.M p Λ₂, (FP p).A.f, (FP p).B.f, (FP p).A.T, (FP p).B.T⟩) → (gdat F F' Λ₁).2.2 = (gdat F F' Λ₂).2.2 := by
   intro D Z FP Tn T'n F F' hB Λ₁ Λ₂ h₁ h₂ hL hL' hI
   exact Set.Subset.antisymm (graph_sub Z FP Tn T'n F F' hB Λ₁ Λ₂ h₂ hL hL' hI)
     (graph_sub Z FP Tn T'n F F' hB Λ₂ Λ₁ h₁ hL.symm hL'.symm fun p g hs => (hI p g hs).symm)

@@ -75,7 +75,7 @@ end Basic
 
 section Lat
 
-variable {D : D7} {T : D.host.E} (Λ : LatV D) (F : LFlag (hS D) D.R.rS T)
+variable {D : D7} {T : D.host.E} (Λ : LatV D) (F : LFlag (D.sp.Y 0) D.R.rS T)
 
 theorem mem_orthLattice_iff_mem_sub {x : (D.sp.X 0).V} : x ∈ L0X D Λ F ↔ D.sp.iXY 0 x ∈ L0sub Λ F := Iff.rfl
 

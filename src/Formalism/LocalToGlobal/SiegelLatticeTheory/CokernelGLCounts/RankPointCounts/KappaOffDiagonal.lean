@@ -19,7 +19,7 @@ section Defs
 
 variable {D : D7} (X : HidaSetting D) {u u' : D.what₂.Word} {Λ Λ' : Submodule (𝓞 D.host.E) (VS D).V}
 
-def frq (q : GCar X u u' (X.Fu u) (X.Fu u') Λ Λ') : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) :=
+def frq (q : GCar X u u' (X.Fu u) (X.Fu u') Λ Λ') : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) :=
   mapLF q.1.2 (lf D (X.Fu u'))
 
 def fixedSubspaceOfRepresentative (q : GCar X u u' (X.Fu u) (X.Fu u') Λ Λ') : Submodule D.host.E (VS D).V :=

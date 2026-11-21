@@ -28,7 +28,7 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) (p : PlF D)
 
 def uF (b : Fin (D.R.rS + 1)) : (D.s.atP p).Ep := sgnP' D p b * frFac Zd.δ p b
 
-theorem locF'_eq {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') (b : Fin (D.R.rS + 1)) :
+theorem locF'_eq {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') (b : Fin (D.R.rS + 1)) :
     locF' Zd p F' b = uF Zd p b • baseChange₂ D p (frame F' b) := rfl
 
 theorem sgnP'_mem (b : Fin (D.R.rS + 1)) : sgnP' D p b ∈ (D.s.atP p).O := by
@@ -53,17 +53,17 @@ section LocalXS2
 
 variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) (p : PlF D)
 
-theorem frame_cs {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') (a : Fin D.R.rS) :
+theorem frame_cs {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') (a : Fin D.R.rS) :
     frame F' a.castSucc = F'.fl.e a := by
   simp [frame, FlagG.fvec]
 
-theorem exists_baseChange_flagVector_eq_smul {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') (a : Fin D.R.rS) :
+theorem exists_baseChange_flagVector_eq_smul {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') (a : Fin D.R.rS) :
     ∃ w : (D.s.atP p).Ep, baseChange₂ D p (F'.fl.e a) = w • locF' Zd p F' a.castSucc := by
   obtain ⟨U, hU⟩ := uF_unit Zd p a.castSucc
   refine ⟨((U⁻¹ : (D.s.atP p).Epˣ) : (D.s.atP p).Ep), ?_⟩
   rw [locF'_eq, ← hU, smul_smul, Units.inv_mul, one_smul, frame_cs]
 
-theorem span_bcP_X {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') :
+theorem span_bcP_X {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Submodule.span (D.s.atP p).Ep (baseChange₂ D p '' (Xsp F' : Set (VS D).V)) =
       Submodule.span (D.s.atP p).Ep (Set.range fun a : Fin D.R.rS => locF' Zd p F' a.castSucc) := by
   apply le_antisymm
@@ -97,7 +97,7 @@ theorem smul_mem_O {N : Submodule (Zd.M p).L.O (Vp D p)} {c : (D.s.atP p).Ep} (h
 
 
 set_option maxHeartbeats 1000000 in
-theorem latP_XS {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') :
+theorem latP_XS {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     lattice₂ D Zd.M p (XS D F'.fl) =
       Submodule.span (Zd.M p).L.O (Set.range fun a : Fin D.R.rS => locF' Zd p F' a.castSucc) := by
   have hdiff := Formalism.L2.SG.Pf.locDiffC_holds D Zd p
@@ -247,7 +247,7 @@ theorem int_of_loc (c : D.host.E) (h : ∀ p : PlF D, (D.s.atP p).ιE c ∈ (D.s
   have h2 : IsIntegral ℤ (algebraMap D.host.F D.host.E ((1 : 𝓞 D.host.F) : D.host.F) * c) := h1
   simpa using h2
 
-theorem xlam_eq {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') (Λ₂ : Submodule (𝓞 D.host.E) (VS D).V)
+theorem xlam_eq {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') (Λ₂ : Submodule (𝓞 D.host.E) (VS D).V)
     (hlat : Submodule.IsLattice D.host.E Λ₂)
     (hprim : ∀ p, (locH Zd p).Prim (lattice₂ D Zd.M p Λ₂) (locF' Zd p F')) :
     XLam Λ₂ F' = XS D F'.fl := by
@@ -265,7 +265,7 @@ theorem xlam_eq {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') (Λ₂ : Submodule
   exact ((Formalism.L2.SG.Pf.locEqC_holds D Zd (Formalism.L2.SG.Pf.LocalDenominators.plOf (D := D) P.asIdeal P.isMaximal) _ _ hfg1 hfg2).1
     (hloc _)) P rfl
 
-theorem z_prim {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') (Λ₂ : Submodule (𝓞 D.host.E) (VS D).V)
+theorem z_prim {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') (Λ₂ : Submodule (𝓞 D.host.E) (VS D).V)
     (hprim : ∀ p, (locH Zd p).Prim (lattice₂ D Zd.M p Λ₂) (locF' Zd p F')) :
     ∀ c : D.host.E, c • F'.fl.z ∈ Lsub Λ₂ F' → ∃ o : 𝓞 D.host.E, (o : D.host.E) = c := by
   intro c hc

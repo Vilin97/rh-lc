@@ -82,7 +82,7 @@ theorem one_mem_dd (n : ℕ) (a : Fin n) :
   rw [this]
   exact FractionalIdeal.one_mem_inv_coe_ideal (pow_ne_zero _ hI)
 
-theorem fvec_mem {T : D.host.E} (Λ : LatV D) (F : LFlag (hS D) D.R.rS T) (hz : IsLift Λ F)
+theorem fvec_mem {T : D.host.E} (Λ : LatV D) (F : LFlag (D.sp.Y 0) D.R.rS T) (hz : IsLift Λ F)
     (hX : XLam Λ F = XS D F.fl) (a : Fin (D.R.rS + 1)) : F.fl.fvec a ∈ Λ := by
   refine Fin.lastCases ?_ (fun i => ?_) a
   · simp only [FlagG.fvec, Fin.snoc_last]
@@ -94,7 +94,7 @@ theorem fvec_mem {T : D.host.E} (Λ : LatV D) (F : LFlag (hS D) D.R.rS T) (hz : 
     exact (Submodule.mem_inf.mp hmem).1
 
 theorem zhat_integral {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (Λ : LatV D) (hΛ : IsRowLat D F0 Λ)
-    (F' : LFlag (hS D) D.R.rS T') (hF : IsTermF D Λ (lf D F0) F') (a b : Fin (D.R.rS + 1)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (hF : IsTermF D Λ (lf D F0) F') (a b : Fin (D.R.rS + 1)) :
     IsIntegral ℤ (ZhatL (lf D F0) F' a b) := by
   have hu : Formalism.HermitianLatticesTheory.IsUnimodular (hS D).hT Λ := hΛ.2.1.2.1
   have hx : F'.fl.fvec b ∈ Λ := fvec_mem D Λ F' hF.1.1 hF.2.2 b

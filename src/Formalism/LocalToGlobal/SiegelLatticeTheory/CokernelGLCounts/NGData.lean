@@ -19,7 +19,7 @@ section Def
 
 variable {D : D7}
 
-def NRat {T : D.host.E} (F : LFlag (VS D) D.R.rS T) : Set ((VS D).V ≃ₗ[D.host.E] (VS D).V) :=
+def NRat {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) : Set ((VS D).V ≃ₗ[D.host.E] (VS D).V) :=
   {n | n ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT ∧ (∀ j, ∀ x ∈ Xflag F (j + 1), n x - x ∈ Xflag F j) ∧
     (∀ x ∈ orth (VS D) (Xsp F), n x - x ∈ Xsp F)}
 

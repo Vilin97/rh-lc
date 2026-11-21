@@ -37,7 +37,7 @@ theorem hu_all (p : PlF D) (a : Fin (D.R.rS + 1)) : IsUnit (TermLoc.sgnP D p a *
     (Formalism.L2.SG.Pf.StabShape.frFac_unit Zd.δ Zd.M (Zd.agree p) a)
 
 theorem frame_mem_UUE {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Submodule.IsLattice D.host.E Λ) {T T' : D.host.E}
-    (F : LFlag (VS D) D.R.rS T) (G : LFlag (VS D) D.R.rS T') (b : Fin (D.R.rS + 1)) :
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (G : LFlag (D.sp.Y 0) D.R.rS T') (b : Fin (D.R.rS + 1)) :
     frame G b ∈ UUE Λ F (liftF G) := by
   induction b using Fin.lastCases with
   | last =>

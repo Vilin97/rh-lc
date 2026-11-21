@@ -20,8 +20,8 @@ namespace GlobalTheory.StabYFin
 
 open Formalism.L2.SG.Pf Formalism.L2.SG.Pf.Cnt
 
-theorem pos_compl (D : D7) (u u' : D.what₂.Word) (F : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (hTP : TotPos (Gval F F')) :
+theorem pos_compl (D : D7) (u u' : D.what₂.Word) (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E))
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (hTP : TotPos (Gval F F')) :
     ∀ x ∈ orth (VS D) (Xplus F ⊔ Xplus F'), x ≠ 0 → 0 < Algebra.trace ℚ D.host.E ((VS D).hT x x) := by
   intro x hx hx0
   have hdet0 : (ZhatL F F').det ≠ 0 := Formalism.L2.SG.Pf.Cnt.R1.det_ne_of_totPos D (ZhatL F F') hTP
@@ -38,7 +38,7 @@ theorem pos_compl (D : D7) (u u' : D.what₂.Word) (F : LFlag (VS D) D.R.rS ((Tu
     exact GlobalTheory.LoopC.PerpPos.trace_pos_perp D (Tu D u) F hT x (GlobalTheory.ComplPos.mem_orth_left hx) hxX
 
 theorem baseChange_mem_perp_sup (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (Tn T'n : ℕ)
-    (F : LFlag (VS D) D.R.rS (Tn : D.host.E)) (F' : LFlag (VS D) D.R.rS (T'n : D.host.E))
+    (F : LFlag (D.sp.Y 0) D.R.rS (Tn : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T'n : D.host.E))
     (hB : Based Z FP Tn T'n F F') (p : PlF D) (w : (VS D).V) (hw : w ∈ orth (VS D) (Xplus F ⊔ Xplus F')) :
     baseChange₂ D p w ∈ (locH Z p).perp ((locH Z p).X (FP p).A.f) := by
   intro x hx
@@ -118,7 +118,7 @@ theorem fg_of_int {E V : Type} [Field E] [NumberField E] [StarRing E] [AddCommGr
 
 
 set_option maxHeartbeats 1000000 in
-theorem stabY_finite : ∀ (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (u u' : D.what₂.Word) (F G : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (F' G' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (P : Finset (PlF D)) (d0 : Dat Z FP), 4 * D.R.rS + 7 ≤ D.R.k → BaseOK (Tu D u) (Tu D u') F F' P d0 → StdOff Z P F G F' G' → TotPos (Gval F F') → ∀ (Λ : LV D) (y : Dat Z FP), Λ ∈ Formalism.L2.SG.Pf.Cnt.GlueSet (VS D).hT (Formalism.L2.SG.Pf.Cnt.UPair D G.fl G') (Formalism.L2.SG.Pf.Cnt.MMof D G.fl G') → Λ ∈ globSet G G' y → (stabY F F' y).Finite := by
+theorem stabY_finite : ∀ (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (u u' : D.what₂.Word) (F G : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' G' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (P : Finset (PlF D)) (d0 : Dat Z FP), 4 * D.R.rS + 7 ≤ D.R.k → BaseOK (Tu D u) (Tu D u') F F' P d0 → StdOff Z P F G F' G' → TotPos (Gval F F') → ∀ (Λ : LV D) (y : Dat Z FP), Λ ∈ Formalism.L2.SG.Pf.Cnt.GlueSet (VS D).hT (Formalism.L2.SG.Pf.Cnt.UPair D G.fl G') (Formalism.L2.SG.Pf.Cnt.MMof D G.fl G') → Λ ∈ globSet G G' y → (stabY F F' y).Finite := by
   intro D Z FP u u' F G F' G' P d0 _hk hB _hS hTP Λ y _hGl hΛ
   have hBased : Based Z FP (Tu D u) (Tu D u') F F' := hB.1
   set U : Submodule D.host.E (VS D).V := Xplus F ⊔ Xplus F' with hUdef
@@ -235,7 +235,7 @@ theorem stabY_finite : ∀ (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FP
   rintro h ⟨hh, hm⟩
 
   have hfixU : ∀ x ∈ U, h x = x := by
-    have key : ∀ {T0 : D.host.E} (G0 : LFlag (VS D) D.R.rS T0), (∀ a, h (frame G0 a) = frame G0 a) →
+    have key : ∀ {T0 : D.host.E} (G0 : LFlag (D.sp.Y 0) D.R.rS T0), (∀ a, h (frame G0 a) = frame G0 a) →
         Xplus G0 ≤ LinearMap.ker ((h : (VS D).V →ₗ[D.host.E] (VS D).V) - LinearMap.id) := by
       intro T0 G0 hG
       have he : ∀ i, h (G0.fl.e i) = G0.fl.e i := fun i => by

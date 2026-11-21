@@ -697,7 +697,7 @@ theorem lattice_of_base_eq_flag : XLam (VS D).L0 (lf D (X.Fu u)) = XS D (X.Fu u)
 
 theorem base_lattice_fixed_convex : IsFixedConv (VS D).L0 (gS D) (lf D (X.Fu u)) := by
   have hlf : lf D (X.Fu u) = ⟨X.Fu u, X.zu u⟩ := by
-    show (⟨X.Fu u, (X.Fu u).z⟩ : LFlag (VS D) D.R.rS _) = _
+    show (⟨X.Fu u, (X.Fu u).z⟩ : LFlag (D.sp.Y 0) D.R.rS _) = _
     rw [X.flagZVector]
   rw [hlf]
   exact (X.Fu_fixed u).2.2.2

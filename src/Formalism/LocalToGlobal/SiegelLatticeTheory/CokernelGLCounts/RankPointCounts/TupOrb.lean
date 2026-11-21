@@ -188,7 +188,7 @@ theorem flagStabilizer_mul_mem {T : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ :
     rw [hz', hz]
 
 theorem n0rel_iff {T T' : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ : Submodule (𝓞 D.host.E) (VS D).V}
-    {F' F'' : LFlag (VS D) D.R.rS T'} :
+    {F' F'' : LFlag (D.sp.Y 0) D.R.rS T'} :
     CntLocal.NilradicalFlagMoved F0 Λ F' F'' ↔ ∃ n ∈ CntLocal.N0 F0 Λ, ∀ c, n (frame F' c) = frame F'' c := by
   constructor
   · rintro ⟨n, hn, he, hz⟩
@@ -201,7 +201,7 @@ theorem n0rel_iff {T T' : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ : Submodule
       by simpa [frame, Formalism.MainNotions.S.FlagG.fvec] using h (Fin.last _)⟩
 
 theorem n0rel_symm {T T' : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ : Submodule (𝓞 D.host.E) (VS D).V}
-    {F' F'' : LFlag (VS D) D.R.rS T'} (h : CntLocal.NilradicalFlagMoved F0 Λ F' F'') : CntLocal.NilradicalFlagMoved F0 Λ F'' F' := by
+    {F' F'' : LFlag (D.sp.Y 0) D.R.rS T'} (h : CntLocal.NilradicalFlagMoved F0 Λ F' F'') : CntLocal.NilradicalFlagMoved F0 Λ F'' F' := by
   obtain ⟨n, hn, he, hz⟩ := h
   refine ⟨n⁻¹, flagStabilizer_inv_mem hn, fun a => ?_, ?_⟩
   · show n.symm _ = _
@@ -212,7 +212,7 @@ theorem n0rel_symm {T T' : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ : Submodul
     exact hz.symm
 
 theorem n0rel_trans {T T' : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ : Submodule (𝓞 D.host.E) (VS D).V}
-    {F₁ F₂ F₃ : LFlag (VS D) D.R.rS T'} (h : CntLocal.NilradicalFlagMoved F0 Λ F₁ F₂) (h' : CntLocal.NilradicalFlagMoved F0 Λ F₂ F₃) :
+    {F₁ F₂ F₃ : LFlag (D.sp.Y 0) D.R.rS T'} (h : CntLocal.NilradicalFlagMoved F0 Λ F₁ F₂) (h' : CntLocal.NilradicalFlagMoved F0 Λ F₂ F₃) :
     CntLocal.NilradicalFlagMoved F0 Λ F₁ F₃ := by
   obtain ⟨n, hn, he, hz⟩ := h
   obtain ⟨k, hk, he', hz'⟩ := h'
@@ -249,7 +249,7 @@ theorem flagStabilizer_conj_mem {T : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ 
 theorem n0rel_pull {T T' : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ : Submodule (𝓞 D.host.E) (VS D).V}
     {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hn : n ∈ NLam Λ (lf D F0))
     {β : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E} (h0 : ∀ a c, a < c → β a c = 0)
-    (h1 : ∀ a, β a a = 1) {a b a' b' : LFlag (VS D) D.R.rS T'}
+    (h1 : ∀ a, β a a = 1) {a b a' b' : LFlag (D.sp.Y 0) D.R.rS T'}
     (ha : ∀ c, frame a' c = n (rAct β (frame a) c)) (hb : ∀ c, frame b' c = n (rAct β (frame b) c))
     (h : CntLocal.NilradicalFlagMoved F0 Λ a' b') : CntLocal.NilradicalFlagMoved F0 Λ a b := by
   rw [n0rel_iff] at h ⊢
@@ -265,7 +265,7 @@ theorem n0rel_pull {T T' : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ : Submodul
   exact congrFun (rAct_inj h0 h1 h2) c
 
 theorem n0rel_refl' {T T' : D.host.E} {F0 : FlagG (VS D) D.R.rS T} (Λ : Submodule (𝓞 D.host.E) (VS D).V)
-    (F' : LFlag (VS D) D.R.rS T') : CntLocal.NilradicalFlagMoved F0 Λ F' F' :=
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') : CntLocal.NilradicalFlagMoved F0 Λ F' F' :=
   ⟨1, ⟨TermDef.one_mem_NLam (Λ := Λ) _, fun _ => rfl, rfl⟩, fun _ => rfl, rfl⟩
 
 section Move
@@ -282,7 +282,7 @@ def orbS (t : TermsOf D u' F0 Λ) (Z : PairVal.MatR D) :
 variable {u u' F0 Λ}
 
 theorem move_exists (hΛ : IsRowLat D F0 Λ) {t : TermsOf D u' F0 Λ} {Z₁ Z₂ : PairVal.MatR D}
-    {F₁ F₂ F'' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)}
+    {F₁ F₂ F'' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)}
     (h₁ : F₁ ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₁)
     (h₂ : F₂ ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₂)
     (r₁ : TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F₁)
@@ -355,7 +355,7 @@ theorem move_exists (hΛ : IsRowLat D F0 Λ) {t : TermsOf D u' F0 Λ} {Z₁ Z₂
     exact hZZ
 
 theorem orb_le (hΛ : IsRowLat D F0 Λ) {t : TermsOf D u' F0 Λ} {Z₁ Z₂ : PairVal.MatR D}
-    {F₁ F₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)}
+    {F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)}
     (h₁ : F₁ ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₁)
     (h₂ : F₂ ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₂)
     (r₁ : TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F₁)
@@ -366,14 +366,14 @@ theorem orb_le (hΛ : IsRowLat D F0 Λ) {t : TermsOf D u' F0 Λ} {Z₁ Z₂ : Pa
   obtain ⟨n, hn, m, hm, hfr, -⟩ :=
     (Formalism.L2.SG.Closed.TermEqIff_holds D u u' F0 Λ hΛ ⟨F₁, p₁⟩ ⟨F₂, p₂⟩).1 (e₁.trans e₂.symm)
   obtain ⟨β, hβ0, hβ1, hβ⟩ := Formalism.L2.SG.Pf.nlam_coef hm
-  have mv : ∀ F'' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E),
+  have mv : ∀ F'' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E),
       F'' ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₁ ∧
         TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F'' →
       ∃ F3, F3 ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₂ ∧
         TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F3 ∧ ∀ a, frame F3 a = n (rAct β (frame F'') a) :=
     fun F'' h => move_exists hΛ h₁ h₂ ⟨p₁, e₁⟩ hn hm hfr hβ h.1 h.2
   choose G hG using mv
-  have rp : ∀ O, O ∈ orbS u u' F0 Λ t Z₁ → ∃ F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E),
+  have rp : ∀ O, O ∈ orbS u u' F0 Λ t Z₁ → ∃ F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E),
       F' ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₁ ∧
       TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F' ∧
       O = {F'' | F'' ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₁ ∧ CntLocal.NilradicalFlagMoved F0 Λ F' F''} :=
@@ -403,7 +403,7 @@ theorem orb_le (hΛ : IsRowLat D F0 Λ) {t : TermsOf D u' F0 Λ} {Z₁ Z₂ : Pa
       exact ⟨hx, n0rel_trans hab hbx⟩
 
 theorem orb_eq (hΛ : IsRowLat D F0 Λ) {t : TermsOf D u' F0 Λ} {Z₁ Z₂ : PairVal.MatR D}
-    {F₁ F₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)}
+    {F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)}
     (h₁ : F₁ ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₁)
     (h₂ : F₂ ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₂)
     (r₁ : TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F₁)

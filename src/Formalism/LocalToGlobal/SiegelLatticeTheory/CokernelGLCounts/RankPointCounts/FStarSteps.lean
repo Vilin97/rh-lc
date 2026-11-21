@@ -28,7 +28,7 @@ def starZh (f f' : Fin (D.R.rS + 1) → (VS D).V) : Matrix (Fin (D.R.rS + 1)) (F
 def starOm (f f' : Fin (D.R.rS + 1) → (VS D).V) : (VS D).V :=
   ∑ b, (starZh f f').adjugate b (Fin.last D.R.rS) • f' b
 
-def starCompat (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) : Prop :=
+def starCompat (γ : TermDef.Term D u u' F0 what₂) (F'₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) : Prop :=
   leadMinorE (starZh (frame (lf D F0)) (starFrame γ)) D.R.rS *
       leadMinorE (starZh (frame (lf D F0)) (frame F'₂)) (D.R.rS + 1) =
     leadMinorE (starZh (frame (lf D F0)) (frame F'₂)) D.R.rS *

@@ -46,7 +46,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace Formalism.MainNotions.S.Lem.Comparison₂
 
-theorem one_mem_NLam {D : D7} (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFlag (VS D) D.R.rS T) :
+theorem one_mem_NLam {D : D7} (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) :
     (1 : (VS D).V ≃ₗ[D.host.E] (VS D).V) ∈ NLam Λ F := by
   simp only [NLam, IsAutLam, Set.mem_setOf_eq]
   refine ⟨⟨?_, ?_⟩, fun j x _ => by simp, fun x _ => by simp⟩
@@ -64,9 +64,9 @@ open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.MainNo
 open scoped ENNReal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-theorem cntSW_eq (D : D7) {T : D.host.E} (T' : D.host.E) (F : LFlag (VS D) D.R.rS T) (Λ : LatV D) (Z : GramM D) :
+theorem cntSW_eq (D : D7) {T : D.host.E} (T' : D.host.E) (F : LFlag (D.sp.Y 0) D.R.rS T) (Λ : LatV D) (Z : GramM D) :
     cntSW D T' F Λ Z =
-      cntCl {F' : LFlag (VS D) D.R.rS T' | IsTerm Λ (gS D) F F' ∧ FrameOK D Λ F' ∧ IsGeneric Λ (gS D) F F' ∧ ZEquiv (ZhatL F F') Z}
+      cntCl {F' : LFlag (D.sp.Y 0) D.R.rS T' | IsTerm Λ (gS D) F F' ∧ FrameOK D Λ F' ∧ IsGeneric Λ (gS D) F F' ∧ ZEquiv (ZhatL F F') Z}
         (TEqv D Λ F) := rfl
 
 theorem card_le_cntCl {α ι : Type} (X : Set α) (R : α → α → Prop) (hR : ∀ a ∈ X, R a a) (f : ι → α) (hf : ∀ i, f i ∈ X)
@@ -84,7 +84,7 @@ theorem card_le_cntCl {α ι : Type} (X : Set α) (R : α → α → Prop) (hR :
     | exact ENat.card_le_card_of_injective hg
     | (rw [← ENat.card_coe_set_eq]; exact ENat.card_le_card_of_injective hg)
 
-theorem one_mem_NLam (D : D7) (Λ : LatV D) {T : D.host.E} (F : LFlag (hS D) D.R.rS T) :
+theorem one_mem_NLam (D : D7) (Λ : LatV D) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) :
     (LinearEquiv.refl D.host.E (hS D).V) ∈ NLam Λ F := by
   simp only [NLam, IsAutLam, Set.mem_setOf_eq]
   refine ⟨⟨?_, ?_⟩, fun j x _ => by simp, fun x _ => by simp⟩
@@ -94,7 +94,7 @@ theorem one_mem_NLam (D : D7) (Λ : LatV D) {T : D.host.E} (F : LFlag (hS D) D.R
   · ext x
     simp [Formalism.HermitianLatticesTheory.gmap]
 
-theorem frameEqv_refl (D : D7) {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') :
+theorem frameEqv_refl (D : D7) {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     FrameEqv D (LinearEquiv.refl D.host.E (VS D).V) F' F' := by
   unfold FrameEqv
   refine ⟨1, fun a b hab => Matrix.one_apply_ne (ne_of_lt hab).symm, fun a => Matrix.one_apply_eq a, ?_⟩
@@ -108,12 +108,12 @@ theorem frameEqv_refl (D : D7) {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') :
   · intro hb
     exact absurd (Finset.mem_univ b) hb
 
-theorem TEqv_refl (D : D7) (Λ : LatV D) {T T' : D.host.E} (F : LFlag (hS D) D.R.rS T) (F' : LFlag (hS D) D.R.rS T') :
+theorem TEqv_refl (D : D7) (Λ : LatV D) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     TEqv D Λ F F' F' := by
   unfold TEqv
   exact ⟨LinearEquiv.refl _ _, one_mem_NLam D Λ F, frameEqv_refl D F'⟩
 
-theorem PEqv_refl (D : D7) (Λ : LatV D) {T T' : D.host.E} (F : LFlag (hS D) D.R.rS T) (p : Trip D T') :
+theorem PEqv_refl (D : D7) (Λ : LatV D) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (p : Trip D T') :
     PEqv D Λ F p p := by
   unfold PEqv
   exact ⟨LinearEquiv.refl _ _, one_mem_NLam D Λ F, LinearEquiv.refl _ _, one_mem_NLam D Λ F,

@@ -65,7 +65,7 @@ theorem tie_trace {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
   rw [huniv, Finset.sum_pair (Ne.symm hs1)]
   try rfl
 
-theorem tie_aniso (D : D7) (T : ℕ) (hT : 0 < T) (F : LFlag (hS D) D.R.rS (T : D.host.E)) (y : (hS D).V)
+theorem tie_aniso (D : D7) (T : ℕ) (hT : 0 < T) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (y : (hS D).V)
     (h1 : ∀ a, (hS D).hT (F.fl.fvec a) y = 0) (h2 : (hS D).hT y y = 0) : y ∈ F.fl.X := by
   by_contra hy
   obtain ⟨τ⟩ : Nonempty (D.host.E →+* ℂ) := inferInstance

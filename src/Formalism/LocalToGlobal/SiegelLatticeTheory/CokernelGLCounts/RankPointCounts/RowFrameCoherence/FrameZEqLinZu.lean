@@ -272,8 +272,8 @@ theorem det_of_lker {d : (VS D).V} (hd : d ∈ (X.Fu u).Xplus) (hdO : ∀ b, (VS
     simp [Formalism.L2.SG.Pf.Level.toV]
   exact Matrix.exists_vecMul_eq_zero_iff.1 ⟨k, hk0, hZ⟩
 
-theorem uue_le {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) :
+theorem uue_le {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) :
     UUE Λ F F' ≤ F.fl.Xplus ⊔ F'.fl.Xplus := by
   unfold UUE spanE
   rw [Submodule.span_le]

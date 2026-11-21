@@ -46,7 +46,7 @@ private theorem toO_map_eq_toO_map (D : D7) (φ : GV D) (U : Submodule D.host.E 
     LinearMap.coe_restrictScalars]
 
 theorem lsub_gmap_of_map_Xsp_eq :
-    ∀ (D : D7) (T : D.host.E) (F₁ F₂ : LFlag (VS D) D.R.rS T) (φ : GV D) (M : LV D),
+    ∀ (D : D7) (T : D.host.E) (F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS T) (φ : GV D) (M : LV D),
       φ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT →
       (Xsp F₁).map (φ : (VS D).V →ₗ[D.host.E] (VS D).V) = Xsp F₂ →
       Lsub (Formalism.HermitianLatticesTheory.gmap φ M) F₂ = Formalism.HermitianLatticesTheory.gmap φ (Lsub M F₁) := by

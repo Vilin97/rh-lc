@@ -25,7 +25,7 @@ variable {D : Formalism.BasicNotions.D7} {u u' : D.what₂.Word} {F0 : FlagG (VS
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 theorem scal_rep (hrows : IsRowReps D F0 what₂) (γ : TermDef.Term D u u' F0 what₂) (Z : PairVal.MatR D)
-    (F'' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (hP : IsPartner γ Z F'')
+    (F'' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (hP : IsPartner γ Z F'')
     (hGr : Gval (lf D F0) (repF γ) ≠ 0) :
     ∃ β, IsPair γ.lam (lf D F0) (repF γ) F'' β (gS D) ∧ s0 γ.lam (lf D F0) (repF γ) F'' β D.R.k = 1 ∧
       IsScalar γ.lam (lf D F0) (repF γ) F'' β := by

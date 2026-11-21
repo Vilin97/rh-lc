@@ -30,11 +30,11 @@ theorem totPos_ne_zero {x : D.host.E} (hx : TotPos x) : x ≠ 0 := by
   rw [h, map_zero, Complex.zero_re] at this
   exact lt_irrefl _ this
 
-def fam {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+def fam {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Fin (D.R.rS + 1) ⊕ Fin (D.R.rS + 1) → (VS D).V :=
   Sum.elim F0.fvec F'.fl.fvec
 
-variable {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T')
+variable {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
 
 theorem upair_eq : UPair D F0 F' = Submodule.span D.host.E (Set.range (fam F0 F')) := by
   unfold UPair fam

@@ -513,7 +513,7 @@ theorem leadMinor_r (Z : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E) 
 set_option maxHeartbeats 1600000 in
 theorem detG (hA : ∀ p, Agree δ M p) (u u' : D.what₂.Word) (p : PlF D) (g : Loc.SplitG (M p).L)
     (hsM : (M p).split = some g) {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)}
-    {F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)} (w : Point D.host.E (D.R.rS + 1))
+    {F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)} (w : Point D.host.E (D.R.rS + 1))
     (hc : IsInCell (ZhatOM (ZhatL (lf D F0) F')) w) :
     IsUnit (Formalism.L2.SG.CntLocal.ZZP (M := M) δ u u' p (ZhatL (lf D F0) F') +
       cornerM p (cornerSh δ (D.mem u).A.T (D.mem u').A.T p w)).det := by

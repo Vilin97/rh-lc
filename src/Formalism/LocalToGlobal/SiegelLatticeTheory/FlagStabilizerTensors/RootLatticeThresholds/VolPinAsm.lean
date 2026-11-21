@@ -37,7 +37,7 @@ def phiV (X : HidaSetting D) (v : InfinitePlace X.B.I.F) : D.host.E →+* ℂ :=
   (X.B.I.φ v).comp (X.ιE.symm : D.host.E →+* X.B.I.E)
 
 def DictProps (t : TT Y u u') (w : Point D.host.E (D.R.rS + 1))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L : Formalism.L2.SG.PairVal.MatR D)
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L : Formalism.L2.SG.PairVal.MatR D)
     (γw s c : X.B.I.Ginf) (Φ : StG w →* X.B.I.Ginf) : Prop :=
   Function.Injective Φ ∧ (∀ β, c⁻¹ * Φ β * c ∈ Formalism.L2.SG.TermOp.Vanish.Rset t) ∧
   (∀ y, (∃ β : StG w, (β : Formalism.L2.SG.PairVal.GLR D) ∈
@@ -53,7 +53,7 @@ def DictProps (t : TT Y u u') (w : Point D.host.E (D.R.rS + 1))
 
 def DictC : Prop :=
   ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word) (t : TT Y u u'), t.relevant → t.G ≠ 0 →
-    ∀ w, t.toTerm.atPt w → ∀ (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L U : Formalism.L2.SG.PairVal.MatR D),
+    ∀ w, t.toTerm.atPt w → ∀ (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L U : Formalism.L2.SG.PairVal.MatR D),
       Formalism.L2.SG.PairVal.NormRep t.toTerm w F' L U → ∀ (γw s s' : X.B.I.Ginf),
       Formalism.L2.SG.RealObj.IsPtRep X u u' w γw → s ∈ X.SinfU u → s' ∈ X.SinfU u' → t.pt.1 = s * γw * s'⁻¹ →
       ∃ (c : X.B.I.Ginf) (Φ : StG w →* X.B.I.Ginf), DictProps t w F' L γw s c Φ
@@ -61,7 +61,7 @@ def DictC : Prop :=
 def CovolOne3C : Prop :=
   ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), (∀ i, 3 ≤ D.host.g i) → PrimeHyp D u (Tu D u') →
     ∀ (t : TT Y u u'), t.relevant → t.G ≠ 0 →
-    ∀ w, t.toTerm.atPt w → ∀ (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L U : Formalism.L2.SG.PairVal.MatR D),
+    ∀ w, t.toTerm.atPt w → ∀ (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L U : Formalism.L2.SG.PairVal.MatR D),
       Formalism.L2.SG.PairVal.NormRep t.toTerm w F' L U → ∀ (γw s s' : X.B.I.Ginf) (μw : Measure X.B.I.Ginf),
       Formalism.L2.SG.RealObj.IsPtRep X u u' w γw → s ∈ X.SinfU u → s' ∈ X.SinfU u' → t.pt.1 = s * γw * s'⁻¹ →
       IsHaarOnSet X.B.I (Formalism.L2.SG.RealObj.StInf X u u' γw) μw →
@@ -137,7 +137,7 @@ theorem rset_mul (t : TT Y u u') {a b : X.B.I.Ginf} (ha : a ∈ Formalism.L2.SG.
   exact Formalism.L2.SG.Pf.FormTranspose.ninf_mul (X := X) u' ha2 hb2
 
 theorem gval_of_normRep (t : TT Y u u') (w : Point D.host.E (D.R.rS + 1))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L U : Formalism.L2.SG.PairVal.MatR D)
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L U : Formalism.L2.SG.PairVal.MatR D)
     (hN : Formalism.L2.SG.PairVal.NormRep t.toTerm w F' L U) (hG : t.G ≠ 0) : Gval (lf D (X.Fu u)) F' ≠ 0 := by
   obtain ⟨⟨h, hmk⟩, -⟩ := hN
   have hGF := PI.TermAttrConst.UnitaryGroupMassFormula.termGFun_holds D u u' (X.Fu u) t.toTerm.lam ((Y.rowsOK u).1 t.lam t.mem)
@@ -160,7 +160,7 @@ private theorem relIndex_map_of_injective' {G G' : Type*} [Group G] [Group G'] (
   | exact Subgroup.relindex_map_map_of_injective f hf
 
 private theorem H_affine_combination_eq_of_quadratic_relation (t : TT Y u u') (w : Point D.host.E (D.R.rS + 1))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L : Formalism.L2.SG.PairVal.MatR D)
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L : Formalism.L2.SG.PairVal.MatR D)
     (γw s c : X.B.I.Ginf) (Φ : StG w →* X.B.I.Ginf) (hDict : DictProps t w F' L γw s c Φ)
     (μR : Measure X.B.I.Ginf) (hH : IsHaarOnSet X.B.I (Formalism.L2.SG.TermOp.Vanish.Rset t) μR)
     (KA : Set X.B.I.Ginf) (hKA : MeasurableSet KA)
@@ -249,7 +249,7 @@ private theorem H_affine_combination_eq_of_quadratic_relation (t : TT Y u u') (w
 
 theorem volume_generic_odd_of (hD : DictC) (hC : CovolOne3C)
     (hBin : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), PrimeHyp D u (Tu D u') →
-      ∀ (t : TT Y u u') (w : Point D.host.E (D.R.rS + 1)) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+      ∀ (t : TT Y u u') (w : Point D.host.E (D.R.rS + 1)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
         (L U : Formalism.L2.SG.PairVal.MatR D), t.relevant → t.toTerm.generic →
         Formalism.L2.SG.PairVal.NormRep t.toTerm w F' L U → Gval (lf D (X.Fu u)) F' ≠ 0 →
         (Formalism.L2.SG.PairVal.stabAut D u u' (X.Fu u) (Y.what₂ u) t.toTerm F' L : Set (Formalism.L2.SG.PairVal.GLR D)) ⊆

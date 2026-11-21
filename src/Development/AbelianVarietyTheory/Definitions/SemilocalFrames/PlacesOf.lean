@@ -71,7 +71,7 @@ def placesOf (Z : LocDat D) : Places D.host.F D.host.E D.conjF where
   L := fun p => (Z.M p).L
   L_cj := Z.hcj
 
-structure GCoord (Z : LocDat D) {T T' : D.host.E} (F0 : LFlag (VS D) D.R.rS T) (F0' : LFlag (VS D) D.R.rS T')
+structure GCoord (Z : LocDat D) {T T' : D.host.E} (F0 : LFlag (D.sp.Y 0) D.R.rS T) (F0' : LFlag (D.sp.Y 0) D.R.rS T')
     (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (G : GFrames (placesOf Z) D.R.rS D.R.k) where
   e : (VS D).V ≃ₗ[D.host.E] G.V
   h_eq : ∀ x y, (∑ i, ∑ j, e x i * G.Hm i j * star (e y j)) = brS (VS D) x y
@@ -84,7 +84,7 @@ structure GCoord (Z : LocDat D) {T T' : D.host.E} (F0 : LFlag (VS D) D.R.rS T) (
 
 namespace GCoord
 
-variable {Z : LocDat D} {T T' : D.host.E} {F0 : LFlag (VS D) D.R.rS T} {F0' : LFlag (VS D) D.R.rS T'}
+variable {Z : LocDat D} {T T' : D.host.E} {F0 : LFlag (D.sp.Y 0) D.R.rS T} {F0' : LFlag (D.sp.Y 0) D.R.rS T'}
   {FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS} {G : GFrames (placesOf Z) D.R.rS D.R.k}
   (c : GCoord Z F0 F0' FP G)
 
@@ -100,8 +100,8 @@ def GFrames.datOf {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
     {A : Places F E sig} {r k : ℕ} (G : GFrames A r k) (Γ : G.Lt) : G.Dat :=
   fun p => (G.S p).datOf (A.lat p Γ)
 
-def MovesTo {T T' : D.host.E} (F0 : LFlag (VS D) D.R.rS T) (F0' : LFlag (VS D) D.R.rS T')
-    (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (ρ : (VS D).V ≃ₗ[D.host.E] (VS D).V)
+def MovesTo {T T' : D.host.E} (F0 : LFlag (D.sp.Y 0) D.R.rS T) (F0' : LFlag (D.sp.Y 0) D.R.rS T')
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (ρ : (VS D).V ≃ₗ[D.host.E] (VS D).V)
     (U U' : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E) : Prop :=
   ρ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT ∧ IsUpUni U ∧ IsUpUni U' ∧
     (∀ b, ρ (frame F b) = ∑ a, U a b • frame F0 a) ∧ ∀ b, ρ (frame F' b) = ∑ a, U' a b • frame F0' a

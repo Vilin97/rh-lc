@@ -141,7 +141,7 @@ section Fib
 variable {D : D7} {X : HidaSetting D} {Y : Full X} {u u' : D.what₂.Word}
 
 theorem nlam_congr {Λ₁ Λ₂ : Submodule (𝓞 D.host.E) (VS D).V} (h : Λ₁ = Λ₂) {T : D.host.E}
-    {F : LFlag (VS D) D.R.rS T} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hn : n ∈ NLam Λ₁ F) : n ∈ NLam Λ₂ F := h ▸ hn
+    {F : LFlag (D.sp.Y 0) D.R.rS T} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hn : n ∈ NLam Λ₁ F) : n ∈ NLam Λ₂ F := h ▸ hn
 
 theorem gmap_congr {Λ₁ Λ₂ Λ₃ : Submodule (𝓞 D.host.E) (VS D).V} {c : (VS D).V ≃ₗ[D.host.E] (VS D).V}
     (h : Formalism.HermitianLatticesTheory.gmap c Λ₁ = Λ₃) (e : Λ₁ = Λ₂) : Formalism.HermitianLatticesTheory.gmap c Λ₂ = Λ₃ := e ▸ h

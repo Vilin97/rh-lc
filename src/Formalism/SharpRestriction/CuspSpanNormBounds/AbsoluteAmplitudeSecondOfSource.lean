@@ -127,7 +127,7 @@ theorem finrank_hS (D : D7) : finrank D.host.E (hS D).V = 2 * D.R.rS + D.R.k + 1
   simp [Ranks.rankY]
 
 theorem WHyp_Wsp (D : D7) (u : D.what₂.Word) {T : ℕ} (hT : T ≠ 0)
-    (F : LFlag (hS D) D.R.rS (T : D.host.E)) (he : F.fl.e = D.sp.hypE) (hz : F.fl.z = D.zmOf u) :
+    (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (he : F.fl.e = D.sp.hypE) (hz : F.fl.z = D.zmOf u) :
     WHyp D F (Wsp D) := by
   have hm : 0 < D.R.m := lt_of_lt_of_le (by norm_num) D.R.two_le_m
   have hiso := D.sp.iXY_isom 0 hm

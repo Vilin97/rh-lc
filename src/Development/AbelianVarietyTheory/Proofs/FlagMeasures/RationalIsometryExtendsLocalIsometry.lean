@@ -160,11 +160,11 @@ namespace GlobalTheory.LocExt
 
 variable {D : D7}
 
-theorem frame_castSucc {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (a : Fin D.R.rS) :
+theorem frame_castSucc {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (a : Fin D.R.rS) :
     frame F a.castSucc = F.fl.e a := by
   simp [frame, FlagG.fvec]
 
-theorem baseChange_flagVector_mem_span (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (S : Set (Fin D.R.rS))
+theorem baseChange_flagVector_mem_span (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (S : Set (Fin D.R.rS))
     (b : Fin D.R.rS) (hb : b ∈ S) :
     baseChange₂ D p (F.fl.e b) ∈ Submodule.span (D.s.atP p).Ep ((fun b : Fin D.R.rS => scaled Z p (frame F) b.castSucc) '' S) := by
   obtain ⟨u, hu⟩ := Formalism.L2.SG.Pf.BBTie.bt_frFac_unit Z p b.castSucc
@@ -173,7 +173,7 @@ theorem baseChange_flagVector_mem_span (Z : LocDat D) (p : PlF D) {T : D.host.E}
   rw [e]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨b, hb, rfl⟩)
 
-theorem bcP_Xsp_mem (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {x : (VS D).V}
+theorem bcP_Xsp_mem (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) {x : (VS D).V}
     (hx : x ∈ Xsp F) : baseChange₂ D p x ∈ (locH Z p).X (scaled Z p (frame F)) := by
   have h := baseChange_mem_span p (s := Set.range F.fl.e) hx
   refine Submodule.span_le.2 ?_ h
@@ -182,7 +182,7 @@ theorem bcP_Xsp_mem (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (VS D) 
   rw [Set.image_univ] at this
   exact this
 
-theorem perp_le (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {v : Vp D p}
+theorem perp_le (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) {v : Vp D p}
     (hv : v ∈ (locH Z p).perp ((locH Z p).X (scaled Z p (frame F)))) :
     v ∈ Submodule.span (D.s.atP p).Ep (baseChange₂ D p '' (orth (VS D) (Xsp F) : Set (VS D).V)) := by
   obtain ⟨es, hes⟩ := exists_dual F.fl.e F.fl.e_indep
@@ -232,7 +232,7 @@ theorem perp_le (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (VS D) D.R.
   simpa [h0] using this
 
 theorem locEquiv_NU (Z : LocDat D) (p : PlF D) (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V)
-    {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (hN : γ ∈ Formalism.L2.SG.NGData.NRat F) :
+    {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (hN : γ ∈ Formalism.L2.SG.NGData.NRat F) :
     locEquiv p γ ∈ NU (locH Z p) (scaled Z p (frame F)) := by
   obtain ⟨hiso, hfl, hperp⟩ := hN
   have hg : ∀ x, locEquiv p γ (baseChange₂ D p x) = baseChange₂ D p (γ x) := locEquiv_ext p γ
@@ -269,7 +269,7 @@ end GlobalTheory.LocExt
 
 namespace GlobalTheory.LocExt
 
-theorem ext_isometry : ∀ (D : D7) (Z : LocDat D), ∀ (p : PlF D), ∀ γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT, ∃ g, Ext p γ g ∧ LocNG.IsUnitary (locH Z p) g ∧ (∀ g', Ext p γ g' → g' = g) ∧ (∀ Λ : Submodule (𝓞 D.host.E) (VS D).V, LocNG.img (M := Z.M p) g (lattice₂ D Z.M p Λ) = lattice₂ D Z.M p (Formalism.HermitianLatticesTheory.gmap γ Λ)) ∧ ∀ {T : D.host.E} (F : LFlag (VS D) D.R.rS T), γ ∈ Formalism.L2.SG.NGData.NRat F → g ∈ NU (locH Z p) (scaled Z p (frame F)) := by
+theorem ext_isometry : ∀ (D : D7) (Z : LocDat D), ∀ (p : PlF D), ∀ γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT, ∃ g, Ext p γ g ∧ LocNG.IsUnitary (locH Z p) g ∧ (∀ g', Ext p γ g' → g' = g) ∧ (∀ Λ : Submodule (𝓞 D.host.E) (VS D).V, LocNG.img (M := Z.M p) g (lattice₂ D Z.M p Λ) = lattice₂ D Z.M p (Formalism.HermitianLatticesTheory.gmap γ Λ)) ∧ ∀ {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T), γ ∈ Formalism.L2.SG.NGData.NRat F → g ∈ NU (locH Z p) (scaled Z p (frame F)) := by
   intro D Z p γ hγ
   exact ⟨locEquiv p γ, locEquiv_ext p γ, locEquiv_unitary Z p γ hγ, fun g' h => locEquiv_unique p γ g' h,
     fun Λ => locEquiv_img Z p γ Λ, fun F hN => locEquiv_NU Z p γ F hN⟩

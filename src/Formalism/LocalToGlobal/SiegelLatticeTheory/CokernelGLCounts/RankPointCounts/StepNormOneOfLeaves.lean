@@ -111,7 +111,7 @@ theorem leadingMinor_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) 
   rw [RingHom.map_det]
   rfl
 
-theorem frame_smul_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} (F : LFlag (VS D) D.R.rS T)
+theorem frame_smul_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
     (hz : F.fl.z ∈ Λ) (hX : XLam Λ F = XS D F.fl) (a : Fin (D.R.rS + 1)) :
     ∀ x ∈ (((dI D ^ (D.R.rS - (a : ℕ)) : Ideal (𝓞 D.host.E)) : FI))⁻¹, x • frame F a ∈ Λ := by
   induction a using Fin.lastCases with
@@ -137,7 +137,7 @@ theorem frame_smul_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} 
     exact h.1
 
 theorem zhatOM_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hun : Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ)
-    {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T')
+    {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (hz : F.fl.z ∈ Λ) (hX : XLam Λ F = XS D F.fl) (hz' : F'.fl.z ∈ Λ) (hX' : XLam Λ F' = XS D F'.fl)
     (a b : Fin (D.R.rS + 1)) :
     ∃ o ∈ dI D ^ ((D.R.rS - (a : ℕ)) + (D.R.rS - (b : ℕ))), (o : D.host.E) = ZhatOM (ZhatL F F') a b := by
@@ -171,7 +171,7 @@ private theorem e4_cast_lemma_6 {R : Type*} [CommRing R] {N : ℕ} (A : Matrix (
   rfl
 
 theorem lead_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hun : Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ)
-    {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T')
+    {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (hz : F.fl.z ∈ Λ) (hX : XLam Λ F = XS D F.fl) (hz' : F'.fl.z ∈ Λ) (hX' : XLam Λ F' = XS D F'.fl)
     (q : ℕ) (hq : q ≤ D.R.rS + 1) :
     ∃ o ∈ dI D ^ (q * (2 * D.R.rS + 1 - q)), (o : D.host.E) = leadingPrincipalMinor (ZhatOM (ZhatL F F')) q := by
@@ -224,7 +224,7 @@ theorem sign_mul_star {r q : ℕ} :
   rw [star_prod, ← Finset.prod_mul_distrib]
   exact Finset.prod_eq_one (fun b _ => by rw [star_pow, star_neg, star_one, ← mul_pow, neg_one_mul, neg_neg, one_pow])
 
-theorem gpt_eq {T T' : ℕ} (F : LFlag (VS D) D.R.rS (T : D.host.E)) (F' : LFlag (VS D) D.R.rS (T' : D.host.E))
+theorem gpt_eq {T T' : ℕ} (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (w : Point D.host.E (D.R.rS + 1)) (h : IsInCell (ZhatOM (ZhatL F F')) w) :
     GPt (T * T') (toPts w) = Gval F F' := by
   have h1 : DlastPt (toPts w) =

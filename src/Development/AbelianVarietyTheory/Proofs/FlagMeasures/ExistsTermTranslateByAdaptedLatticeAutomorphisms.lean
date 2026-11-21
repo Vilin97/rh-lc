@@ -269,7 +269,7 @@ theorem trans_main : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.wha
     have hg : Formalism.MainNotions.S.Lat.gS D ≠ 0 := by
       unfold Formalism.MainNotions.S.Lat.gS; exact Nat.mul_ne_zero (D.host.g_prime 0).ne_zero (D.host.g_prime 1).ne_zero
     have emap : ∀ (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hβ : β ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
-        (F : LFlag (VS D) D.R.rS T), mapLF β F = Formalism.L2.SG.Saturated.mapL β hβ F := by
+        (F : LFlag (D.sp.Y 0) D.R.rS T), mapLF β F = Formalism.L2.SG.Saturated.mapL β hβ F := by
       intro β hβ T F; unfold mapLF; rw [dite_eq_left hβ]; rfl
     refine ⟨?_, ?_, GlobalTheory.FrameIsom.frameOK_mapLF D _ hβ t.lam' t.lam hβΛ _ _ hFO'⟩
     · rw [emap _ hβ, ← hβΛ]; exact (Formalism.L2.SG.Pf.IsLift_mapL _ hβ _ _).2 hRow'.2.1.2.2.1

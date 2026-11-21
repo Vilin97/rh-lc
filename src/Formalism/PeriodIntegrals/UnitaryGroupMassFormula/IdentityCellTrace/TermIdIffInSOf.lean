@@ -116,7 +116,7 @@ theorem smul_e_mem_XS {D : D7} {T : D.host.E} (G : FlagG (VS D) D.R.rS T) (a : F
 
 theorem isIdF_of (D : D7) (hθ : TraceOne D) {u u' : D.what₂.Word}
     (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
-    (hΛ : IsRowLat D F0 Λ) (F' : LFlag (hS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (hΛ : IsRowLat D F0 Λ) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (hP : PD D Λ (lf D F0) u' F') (hin : InSF (lf D F0) F') : IsIdF Λ (lf D F0) F' := by
   obtain ⟨θ, hθ⟩ := hθ
   obtain ⟨_, ⟨hlat, hU, _, _⟩, hXS⟩ := hΛ

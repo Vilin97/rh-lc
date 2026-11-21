@@ -163,10 +163,10 @@ section Glob
 
 variable {D : D7}
 
-theorem one_flag (Z : LocDat D) {T : D.host.E} (hT : T ≠ 0) (F : LFlag (VS D) D.R.rS T)
+theorem one_flag (Z : LocDat D) {T : D.host.E} (hT : T ≠ 0) (F : LFlag (D.sp.Y 0) D.R.rS T)
     (P : Finset (PlF D)) (f : ∀ p : PlF D, Fin (D.R.rS + 1) → Vp D p)
     (hf : ∀ p ∈ P, Tri (D.s.atP p).Ep (scaled Z p (frame F)) (f p)) :
-    ∃ G : LFlag (VS D) D.R.rS T, Tri D.host.E (frame F) (frame G) ∧ G.zt = G.fl.z ∧
+    ∃ G : LFlag (D.sp.Y 0) D.R.rS T, Tri D.host.E (frame F) (frame G) ∧ G.zt = G.fl.z ∧
       (∀ p, p ∉ P → ∃ A : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (D.s.atP p).Ep, Uni A ∧
         (∀ a b, A a b ∈ (Z.M p).L.O) ∧ Chg (scaled Z p (frame F)) A (scaled Z p (frame G))) ∧
       ∀ p ∈ P, ∃ A : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (D.s.atP p).Ep, Uni A ∧
@@ -290,11 +290,11 @@ theorem one_flag (Z : LocDat D) {T : D.host.E} (hT : T ≠ 0) (F : LFlag (VS D) 
       rw [← mul_assoc, Matrix.mul_nonsing_inv _ (hdet p), one_mul]
       exact hsc p
 
-theorem choose_frames : ∀ (D : D7) (Z : LocDat D) (u u' : D.what₂.Word) (F : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (P : Finset (PlF D))
+theorem choose_frames : ∀ (D : D7) (Z : LocDat D) (u u' : D.what₂.Word) (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E))
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (P : Finset (PlF D))
     (f f' : ∀ p : PlF D, Fin (D.R.rS + 1) → Vp D p),
     (∀ p ∈ P, Tri (D.s.atP p).Ep (scaled Z p (frame F)) (f p) ∧ Tri (D.s.atP p).Ep (scaled Z p (frame F')) (f' p)) →
-    ∃ (G : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (G' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)),
+    ∃ (G : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (G' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)),
       StdOff Z P F G F' G' ∧ ∀ p ∈ P, ∃ A A' : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (D.s.atP p).Ep,
         Uni A ∧ Uni A' ∧ (∀ a b, A a b ∈ (Z.M p).L.O ∧ A' a b ∈ (Z.M p).L.O ∧
           A a b - A' a b ∈ Submodule.span (Z.M p).L.O

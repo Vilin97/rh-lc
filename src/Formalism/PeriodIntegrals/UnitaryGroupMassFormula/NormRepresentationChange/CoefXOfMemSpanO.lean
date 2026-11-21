@@ -119,7 +119,7 @@ theorem mem_gLam {Λ : Submodule (𝓞 D.host.E) (VS D).V} {g : ℕ} {x : (VS D)
   · rintro ⟨l, hl, rfl⟩; exact ⟨l, hl, by rw [smul_eq_E, hc]⟩
   · rintro ⟨l, hl, rfl⟩; exact ⟨l, hl, by rw [smul_eq_E, hc]⟩
 
-theorem nlam_gLam {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (VS D) D.R.rS T}
+theorem nlam_gLam {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (D.sp.Y 0) D.R.rS T}
     {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hn : n ∈ NLam Λ G) (g : ℕ) :
     ∀ v ∈ Ideal.span {((g : ℕ) : 𝓞 D.host.E)} • Λ, (n : (VS D).V →ₗ[D.host.E] (VS D).V) v ∈
       Ideal.span {((g : ℕ) : 𝓞 D.host.E)} • Λ := by
@@ -158,7 +158,7 @@ section FixedConv
 
 variable {D : D7} (P : HeightOneSpectrum (𝓞 D.host.E))
 
-theorem fixedConv_at {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (VS D) D.R.rS T}
+theorem fixedConv_at {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (D.sp.Y 0) D.R.rS T}
     (hC : IsFixedConv Λ (gS D) G) (hP : ((gS D : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal) :
     LP P (XLam Λ G) = LP P (Submodule.span (𝓞 D.host.E) (Set.range G.fl.e)) := by
   obtain ⟨c, _, hc1, hloc⟩ := hC.1 P
@@ -166,7 +166,7 @@ theorem fixedConv_at {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G
   rw [hc] at hloc
   exact hloc
 
-theorem e_mem_LP {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (VS D) D.R.rS T}
+theorem e_mem_LP {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (D.sp.Y 0) D.R.rS T}
     (hC : IsFixedConv Λ (gS D) G) (hP : ((gS D : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal) (a : Fin D.R.rS) :
     G.fl.e a ∈ LP P Λ := by
   have h : G.fl.e a ∈ LP P (Submodule.span (𝓞 D.host.E) (Set.range G.fl.e)) :=
@@ -174,7 +174,7 @@ theorem e_mem_LP {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : L
   rw [← fixedConv_at P hC hP] at h
   exact localization_mono₃ P (fun v hv => by rw [XLam, Submodule.mem_inf] at hv; exact hv.1) h
 
-theorem coef_intP {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (VS D) D.R.rS T}
+theorem coef_intP {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (D.sp.Y 0) D.R.rS T}
     (hC : IsFixedConv Λ (gS D) G) (hP : ((gS D : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal) {w : (VS D).V}
     (hw : w ∈ LP P Λ) (hwX : w ∈ G.fl.X) (a : Fin D.R.rS) : IntP P (G.fl.coefX w a) := by
   obtain ⟨s, hs, hsw⟩ := (mem_LP P).mp hw
@@ -191,7 +191,7 @@ theorem coef_intP {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : 
   push_cast
   ring
 
-theorem coef_intP_g {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (VS D) D.R.rS T}
+theorem coef_intP_g {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {G : LFlag (D.sp.Y 0) D.R.rS T}
     (hC : IsFixedConv Λ (gS D) G) (hP : ((gS D : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal)
     (hg : ((gS D : ℕ) : D.host.E) ≠ 0) {Y : (VS D).V}
     (hY : Y ∈ LP P (Ideal.span {((gS D : ℕ) : 𝓞 D.host.E)} • Λ)) (hYX : Y ∈ G.fl.X) (a : Fin D.R.rS) :

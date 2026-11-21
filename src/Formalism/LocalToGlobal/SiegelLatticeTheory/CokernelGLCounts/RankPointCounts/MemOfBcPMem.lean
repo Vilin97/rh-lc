@@ -20,7 +20,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u)}
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
-def BtSit (γ : TermDef.Term D u u' F0 what₂) (Z : PairVal.MatR D) (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+def BtSit (γ : TermDef.Term D u u' F0 what₂) (Z : PairVal.MatR D) (F'₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (φ : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (tLoc Zd p γ).f)
     (φ' : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f' ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (locF' Zd p F'₂))
     (Λ₂ : Submodule (𝓞 D.host.E) (VS D).V) : Prop :=
@@ -31,7 +31,7 @@ variable (u u' F0 what₂)
 
 def BtStep (P : Submodule (𝓞 D.host.E) (VS D).V → LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) → Prop) : Prop :=
   CtxP u u' F0 what₂ → ∀ (γ : TermDef.Term D u u' F0 what₂) (Z : PairVal.MatR D)
-    (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (F'₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (φ : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (tLoc Zd p γ).f)
     (φ' : ∀ p, (locH Zd p).Wb (tLoc Zd p γ).f' ≃ₗ[(D.s.atP p).Ep] (locH Zd p).Wb (locF' Zd p F'₂))
     (Λ₂ : Submodule (𝓞 D.host.E) (VS D).V), BtSit Zd γ Z F'₂ φ φ' Λ₂ → P Λ₂ (liftF F'₂)
@@ -75,7 +75,7 @@ theorem sgnP'_last (p : PlF D) : sgnP' D p (Fin.last D.R.rS) = 1 := by
 theorem frFac_last (p : PlF D) : frFac Zd.δ p (Fin.last D.R.rS) = 1 := by
   unfold frFac; simp
 
-theorem locF'_last (p : PlF D) {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') :
+theorem locF'_last (p : PlF D) {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     locF' Zd p F' (Fin.last D.R.rS) = baseChange₂ D p F'.fl.z := by
   unfold locF'
   rw [sgnP'_last, frFac_last, one_mul, one_smul]

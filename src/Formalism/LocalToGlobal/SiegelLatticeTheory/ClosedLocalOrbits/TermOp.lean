@@ -102,7 +102,7 @@ def GTerm.pt (t : GTerm X u u' F0 F0' what₂ rows') : X.B.I.GA := t.rep.1.1
 
 def GTerm.lin (t : GTerm X u u' F0 F0' what₂ rows') : (VS D).V ≃ₗ[D.host.E] (VS D).V := t.rep.1.2
 
-def GTerm.frame (t : GTerm X u u' F0 F0' what₂ rows') : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) :=
+def GTerm.frame (t : GTerm X u u' F0 F0' what₂ rows') : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) :=
   mapLF t.lin (lf D F0')
 
 def GTerm.toTerm (t : GTerm X u u' F0 F0' what₂ rows') : TermDef.Term D u u' F0 what₂ :=

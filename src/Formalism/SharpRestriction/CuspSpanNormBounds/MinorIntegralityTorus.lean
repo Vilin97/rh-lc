@@ -123,7 +123,7 @@ theorem e_mem_XS {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (a : Fin D.R.rS) : 
   have := a.isLt
   omega
 
-theorem e_mem_lam {T : D.host.E} (Λ : Submodule (𝓞 D.host.E) (hS D).V) (F : LFlag (hS D) D.R.rS T)
+theorem e_mem_lam {T : D.host.E} (Λ : Submodule (𝓞 D.host.E) (hS D).V) (F : LFlag (D.sp.Y 0) D.R.rS T)
     (hX : XLam Λ F = XS D F.fl) (a : Fin D.R.rS) : F.fl.e a ∈ Λ := by
   unfold XLam at hX
   have h := e_mem_XS D F.fl a

@@ -162,7 +162,7 @@ variable {D : D7}
 
 theorem isRowLat_of_pd {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)}
     {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : IsRowLat D F0 Λ)
-    {F₁ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)} (hp : PD D Λ (lf D F0) u' F₁) :
+    {F₁ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)} (hp : PD D Λ (lf D F0) u' F₁) :
     IsRowLat D F₁.fl Λ :=
   ⟨hΛ.1, ⟨hΛ.2.1.1, hΛ.2.1.2.1, ⟨hp.1.1, rfl⟩, hp.2.2.1⟩, hp.2.2.2⟩
 

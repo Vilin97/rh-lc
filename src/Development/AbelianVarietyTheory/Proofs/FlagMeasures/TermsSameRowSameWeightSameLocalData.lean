@@ -25,7 +25,7 @@ theorem same : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.W
   refine ⟨by simp only [Formalism.L2.SG.TermOp.wt, hl, hl'], fun hnml p P hP d hO => ?_⟩
   have hΛ : IsRowLat D (X.Fu u) t.lam := (Y.rowsOK u).1 t.lam t.mem
   have hΛ' : IsRowLat D (X.Fu u) t'.lam := (Y.rowsOK u).1 t'.lam t'.mem
-  have one_nrat : ∀ {T : D.host.E} (F : LFlag (VS D) D.R.rS T), (1 : (VS D).V ≃ₗ[D.host.E] (VS D).V) ∈ NRat F := by
+  have one_nrat : ∀ {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T), (1 : (VS D).V ≃ₗ[D.host.E] (VS D).V) ∈ NRat F := by
     intro T F
     have h := one_mem_NLam (⊤ : Submodule (𝓞 D.host.E) (VS D).V) F
     exact ⟨h.1.1, h.2.1, h.2.2⟩

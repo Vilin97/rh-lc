@@ -162,7 +162,7 @@ theorem cf_mul_cfi (Zd : LocDat D) (p : PlF D) (a b : Fin (D.R.rS + 1)) (h : a.v
   rw [hb, pow_succ, inv_pow, ← mul_assoc, inv_mul_cancel₀ (pow_ne_zero _ (yP_ne Zd p)), one_mul]
 
 theorem phaseLoc_L (hA : ∀ p, Agree δ M p) {γ : TermDef.Term D u u' F0 what₂} {w : Point D.host.E (D.R.rS + 1)}
-    {F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)} {L U : PairVal.MatR D} (hN : PairVal.NormRep γ w F' L U)
+    {F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)} {L U : PairVal.MatR D} (hN : PairVal.NormRep γ w F' L U)
     (p : PlF D) (hM : (M p).split = none) :
     phL M δ (D.mem u).A.T (D.mem u').A.T p w (CntLocal.ZZP (M := M) δ u u' p (ZhatL (lf D F0) F') * sgnP p) =
       (D.s.atP p).psiE ((D.s.atP p).ιE (-((PairVal.sgLo L + PairVal.sgUp U) / ((gS D : ℕ) : D.host.E)))) := by
@@ -261,7 +261,7 @@ section Steps
 variable (M δ u u' F0 what₂) in
 def PhaseLocG : Prop :=
   ∀ (γ : TermDef.Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L U : PairVal.MatR D),
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L U : PairVal.MatR D),
     γ.relevant → γ.generic → PairVal.NormRep γ w F' L U → ∀ p : PlF D, (M p).split ≠ none →
     phL M δ (D.mem u).A.T (D.mem u').A.T p w (CntLocal.ZZP (M := M) δ u u' p (ZhatL (lf D F0) F') * sgnP p) =
       (D.s.atP p).psiE ((D.s.atP p).ιE (-((PairVal.sgLo L + PairVal.sgUp U) / ((gS D : ℕ) : D.host.E))))

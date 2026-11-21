@@ -142,7 +142,7 @@ theorem fvec_fix {T : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {n : (VS D).V ≃�
   | last => simpa [FlagG.fvec] using hz
   | cast b => simpa [FlagG.fvec] using he b
 
-theorem frame_moves {T' : D.host.E} {F' F'' : LFlag (VS D) D.R.rS T'} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
+theorem frame_moves {T' : D.host.E} {F' F'' : LFlag (D.sp.Y 0) D.R.rS T'} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
     (hm : Moves n F' F'') (b : Fin (D.R.rS + 1)) : n (frame F' b) = frame F'' b := by
   obtain ⟨he, hz⟩ := hm
   induction b using Fin.lastCases with
@@ -216,7 +216,7 @@ def LprPart : Prop :=
             ⟨lattice₂ D Zd.M p γ.lam, (tLoc Zd p γ).f, locF' Zd p F', (tLoc Zd p γ).T, (tLoc Zd p γ).T'⟩
 
 def GenXi : Prop :=
-  IsRowReps D F0 what₂ → ∀ (γ : TermDef.Term D u u' F0 what₂) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+  IsRowReps D F0 what₂ → ∀ (γ : TermDef.Term D u u' F0 what₂) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (p : PlF D), AdmWit γ.lam (gS D) (lf D F0) F' 1 → IsLift γ.lam F' →
     (locH Zd p).IsGeneric (locTerm Zd p γ.lam (lf D F0) F' (Tu D u) (Tu D u')) →
     (locH Zd p).IsGeneric ⟨lattice₂ D Zd.M p γ.lam, (tLoc Zd p γ).f, locF' Zd p F', (tLoc Zd p γ).T, (tLoc Zd p γ).T'⟩

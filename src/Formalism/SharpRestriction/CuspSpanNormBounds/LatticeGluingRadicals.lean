@@ -280,7 +280,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem p_starConj (D : D7) : StarConj D.host.E := D.sp.cm.cmUnram.2.1
 
-theorem p_posX (D : D7) (T : ℕ) (hT : 0 < T) (F : LFlag (hS D) D.R.rS (T : D.host.E)) : PosX F :=
+theorem p_posX (D : D7) (T : ℕ) (hT : 0 < T) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) : PosX F :=
   p_posX_gen (hS D) (p_starConj D) (D.sp.Y_sig 0)
     (fun τ => by rw [D.sp.baseSpace_signature_eq τ]; rfl) hT F
 
@@ -5861,7 +5861,7 @@ def g_GlueDet (D : D7) : Prop :=
 
 theorem lattice_det_eq_index_quotient (D : D7) (h1 : g_GlueDet D) (hDI : g_DetIndex D)
     (Λ : Submodule (𝓞 D.host.E) (hS D).V) {T T' : ℕ}
-    (F : LFlag (hS D) D.R.rS ((T : ℕ) : D.host.E)) (F' : LFlag (hS D) D.R.rS ((T' : ℕ) : D.host.E))
+    (F : LFlag (D.sp.Y 0) D.R.rS ((T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS ((T' : ℕ) : D.host.E))
     (hF : FixedHyp D Λ F) (hg : 0 < gS D) (hT : IsTerm Λ (gS D) F F') :
     latDet (hS D) (La Λ (gS D) F F') =
       NG Λ F F' / ((Nat.card (BQ Λ F F') : ℝ) * (iIdx Λ (gS D) F F' : ℝ)) := by
@@ -5955,7 +5955,7 @@ theorem g_gS_pos (D : D7) : 0 < gS D :=
   Nat.mul_pos (D.host.g_prime 0).pos (D.host.g_prime 1).pos
 
 theorem lemma_one_det_eq_index_quotient (D : D7) (Λ : Submodule (𝓞 D.host.E) (hS D).V) {T T' : ℕ}
-    (F : LFlag (hS D) D.R.rS ((T : ℕ) : D.host.E)) (F' : LFlag (hS D) D.R.rS ((T' : ℕ) : D.host.E))
+    (F : LFlag (D.sp.Y 0) D.R.rS ((T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS ((T' : ℕ) : D.host.E))
     (hF : FixedHyp D Λ F) (hT : IsTerm Λ (gS D) F F') :
     latDet (hS D) (La Λ (gS D) F F') =
       NG Λ F F' / ((Nat.card (BQ Λ F F') : ℝ) * (iIdx Λ (gS D) F F' : ℝ)) :=
@@ -6565,7 +6565,7 @@ section D7
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem h_a2det (D : D7) (u : D.what₂.Word) (T' : ℕ) (Λ : Submodule (𝓞 D.host.E) (hS D).V)
-    (F : LFlag (hS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (F' F'' : LFlag (hS D) D.R.rS ((T' : ℕ) : D.host.E))
+    (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' F'' : LFlag (D.sp.Y 0) D.R.rS ((T' : ℕ) : D.host.E))
     (β : (hS D).V ≃ₗ[D.host.E] (hS D).V)
     (hF : FixedHyp D Λ F) (hPr : PrimeHyp D u T') (hT' : IsTerm Λ (gS D) F F')
     (hT'' : IsTerm Λ (gS D) F F'') (hP : IsPair Λ F F' F'' β (gS D))
@@ -6623,7 +6623,7 @@ section D7
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-theorem h_existsW (D : D7) (T : ℕ) (F : LFlag (hS D) D.R.rS ((T : ℕ) : D.host.E)) (hT : 0 < T) :
+theorem h_existsW (D : D7) (T : ℕ) (F : LFlag (D.sp.Y 0) D.R.rS ((T : ℕ) : D.host.E)) (hT : 0 < T) :
     ∃ W : Submodule D.host.E (hS D).V, WHyp D F W :=
   h_existsW_gen F (by exact_mod_cast hT.ne') D.R.k (p_rankV D)
 

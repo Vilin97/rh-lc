@@ -28,11 +28,11 @@ variable {D : D7} {X : HidaSetting D} {u u' : D.what₂.Word}
 
 theorem mapLF_mul_act {Λ : Submodule (𝓞 D.host.E) (VS D).V} {β γ : (VS D).V ≃ₗ[D.host.E] (VS D).V}
     (hβ : β ∈ Saturated.AutF Λ (lf D F0)) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) {T : D.host.E}
-    (F : LFlag (VS D) D.R.rS T) :
+    (F : LFlag (D.sp.Y 0) D.R.rS T) :
     mapLF (β * γ) F = Saturated.act (⟨β, hβ⟩ : Saturated.AutF Λ (lf D F0)) (mapLF γ F) := by
   have hβi : β ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := (Saturated.mem_AutF.1 hβ).1.1
   have hβγ : β * γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := (Formalism.HermitianLatticesTheory.isom (VS D).hT).mul_mem hβi hγ
-  have ext : ∀ {G H : LFlag (VS D) D.R.rS T}, G.fl.e = H.fl.e → G.fl.z = H.fl.z → G.zt = H.zt → G = H := by
+  have ext : ∀ {G H : LFlag (D.sp.Y 0) D.R.rS T}, G.fl.e = H.fl.e → G.fl.z = H.fl.z → G.zt = H.zt → G = H := by
     rintro ⟨⟨e, z, _, _, _, _⟩, zt⟩ ⟨⟨e', z', _, _, _, _⟩, zt'⟩ he hz hzt
     dsimp only at he hz hzt
     subst he hz hzt

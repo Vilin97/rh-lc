@@ -14,7 +14,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.HL.NmlCoset
 
-variable {D : D7} {T : D.host.E} (F : LFlag (VS D) D.R.rS T)
+variable {D : D7} {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
 
 theorem mem_orth_iff (U : Submodule D.host.E (VS D).V) (y : (VS D).V) :
     y ∈ orth (VS D) U ↔ ∀ x ∈ U, (VS D).hT x y = 0 := by

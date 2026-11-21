@@ -671,8 +671,8 @@ theorem bt_fg_le {Λ N : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Λ.FG) (h : 
   have := isNoetherian_of_fg_of_noetherian Λ hΛ
   exact Submodule.FG.of_le_of_isNoetherian h
 
-theorem bt_Mplus_fg {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T T' : D.host.E} {F : LFlag (VS D) D.R.rS T}
-    {F' : LFlag (VS D) D.R.rS T'} (ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E))
+theorem bt_Mplus_fg {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T T' : D.host.E} {F : LFlag (D.sp.Y 0) D.R.rS T}
+    {F' : LFlag (D.sp.Y 0) D.R.rS T'} (ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E))
     (hX : (XLam Λ F).FG) : (Mplus Λ (gS D) F F' ξ).FG := by
   rw [Mplus, Submodule.span_union, Submodule.span_union, Submodule.span_eq]
   exact (hX.sup (Submodule.fg_span (Set.finite_singleton _))).sup (Submodule.fg_span (Set.finite_range _))
@@ -711,7 +711,7 @@ theorem bt_kappa (p : PlF D) (sg : Loc.SplitAt (D.s.atP p).Fp (D.s.atP p).Ep (D.
     exact bt_nat_unit Z p _ (hnd _ _ (D.host.g_prime 1) (D.host.g_prime 0) hne.symm h1)
 
 theorem bt_spanO_ff (hD : LocDiffC D Z) (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS (T' : D.host.E))
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (hXL : XLam Λ (lf D F0) = XS D F0) (hXL' : XLam Λ F' = XS D F'.fl) (hz' : F'.zt = F'.fl.z) (Tn T'n : ℕ) :
     Submodule.span (Z.M p).L.O (Set.range (locTerm Z p Λ (lf D F0) F' Tn T'n).f ∪
       Set.range (locTerm Z p Λ (lf D F0) F' Tn T'n).f') = lattice₂ D Z.M p (UU Λ (lf D F0) F') := by
@@ -759,7 +759,7 @@ theorem bt_typed_frFac (hE : LocEqC D Z) (hD : LocDiffC D Z) (p : PlF D) {T : �
   · rw [bt_frFac_last]; exact ⟨Subring.one_mem _, 1, Subring.one_mem _, one_mul 1⟩
 
 theorem bt_typed_sec (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
     (sg : Loc.SplitAt (D.s.atP p).Fp (D.s.atP p).Ep (D.s.atP p).cj (Loc.resChar p))
     (hs : (D.s.atP p).split = some sg) (a : Fin (D.R.rS + 1)) :
     algebraMap (D.s.atP p).Fp (D.s.atP p).Ep ((sg.q : (D.s.atP p).Fp)⁻¹) •
@@ -788,7 +788,7 @@ theorem bt_typed_sec (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.h
 
 set_option maxHeartbeats 1600000 in
 theorem bt_typed_O (hD : LocDiffC D Z) (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
     (hXL : XLam Λ (lf D F0) = XS D F0)
     (sg : Loc.SplitAt (D.s.atP p).Fp (D.s.atP p).Ep (D.s.atP p).cj (Loc.resChar p))
     (hs : (D.s.atP p).split = some sg)
@@ -854,7 +854,7 @@ theorem bt_typed_O (hD : LocDiffC D Z) (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS 
   rw [h1, h2, h5]
 
 theorem bt_typed_Ep (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
     (q : (D.s.atP p).Fp) (hq0 : q ≠ 0) :
     Submodule.span (D.s.atP p).Ep (Set.range (locTerm Z p Λ (lf D F0) F' Tn T'n).f ∪
       Set.range fun a => algebraMap (D.s.atP p).Fp (D.s.atP p).Ep q⁻¹ •
@@ -1240,7 +1240,7 @@ theorem bt_brS_frameAct {n : ℕ} (v : Fin n → (VS D).V) (m : Matrix (Fin n) (
   ring
 
 theorem bt_Dl_loc (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
     (l : ℕ) (hl : l ≤ D.R.rS + 1) :
     (locH Z p).Dl (locTerm Z p Λ (lf D F0) F' Tn T'n).f (locTerm Z p Λ (lf D F0) F' Tn T'n).f' l =
       (∏ i : Fin l, (Z.M p).L.cj (sgnP D p (Fin.castLE hl i) * frFac Z.δ p (Fin.castLE hl i)) *
@@ -1298,7 +1298,7 @@ theorem bt_loc_scal_unit (p : PlF D) (a : Fin (D.R.rS + 1)) :
   exact (h1.map (Z.M p).L.cj).mul h2
 
 theorem local_discriminant_is_unit (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
     (hD1 : Formalism.MainNotions.S.Dl F0 F'.fl (D.R.rS + 1) ≠ 0) :
     IsUnit ((locH Z p).Dl (locTerm Z p Λ (lf D F0) F' Tn T'n).f (locTerm Z p Λ (lf D F0) F' Tn T'n).f'
       (D.R.rS + 1)) := by
@@ -1308,7 +1308,7 @@ theorem local_discriminant_is_unit (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D
     (fun i _ => bt_loc_scal_unit Z p _)
 
 theorem bt_Gdet_ne (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS (T' : D.host.E))
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E))
     (hG : Gflag F0 F'.fl ≠ 0) :
     (locH Z p).Gdet (locTerm Z p Λ (lf D F0) F' T T').f (locTerm Z p Λ (lf D F0) F' T T').f'
       (T : (D.s.atP p).Fp) (T' : (D.s.atP p).Fp) ≠ 0 := by
@@ -1393,7 +1393,7 @@ theorem bt_isFrame (hS : LocSatC D Z) (hD : LocDiffC D Z) (p : PlF D) {T : ℕ}
     refine sup_le ?_ ?_
     · rw [← hXL]; exact inf_le_left
     · rw [Submodule.span_le, Set.singleton_subset_iff]; exact hz
-  have hsat := bt_sat_Xplus Λ (⟨F, F.z⟩ : LFlag (VS D) D.R.rS (T : D.host.E)) hz hprim
+  have hsat := bt_sat_Xplus Λ (⟨F, F.z⟩ : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E)) hz hprim
   rw [hXL] at hsat
   have hliW : LinearIndependent D.host.E W :=
     bt_frameAct_linIndep _ hli0 _ (bt_unitri_det _ hinv.1 hinv.2)
@@ -1461,7 +1461,7 @@ theorem bt_li_shear {ι R M : Type*} [Fintype ι] [CommRing R] [AddCommGroup M] 
   · exact hr b
 
 theorem bt_typed_Mle (hE : LocEqC D Z) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS T') (hΛfg : Λ.FG)
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS T') (hΛfg : Λ.FG)
     (hLift : IsLift Λ (lf D F0)) (hξ : AdmWit Λ (gS D) (lf D F0) F' (admXi D Λ (lf D F0) F'))
     (hgP : ∀ P : HeightOneSpectrum (𝓞 D.host.E),
       P.asIdeal.comap (algebraMap (𝓞 D.host.F) (𝓞 D.host.E)) = p.asIdeal → (gS D : 𝓞 D.host.E) ∈ P.asIdeal) :
@@ -1529,7 +1529,7 @@ section GenMain
 variable (Z : LocDat D)
 
 theorem bt_pair_li {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
-    (F' : LFlag (VS D) D.R.rS (T' : D.host.E)) (hG : Gflag F0 F'.fl ≠ 0) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E)) (hG : Gflag F0 F'.fl ≠ 0) :
     LinearIndependent D.host.E F0.fvec ∧ LinearIndependent D.host.E F'.fl.fvec ∧
       Disjoint (Submodule.span D.host.E (Set.range F0.fvec)) (Submodule.span D.host.E (Set.range F'.fl.fvec)) := by
   have h := (Formalism.L2.SG.GramJoint.gramIndep D.host.E (VS D) D.R.rS _ _ F0 F'.fl hG).1
@@ -1537,7 +1537,7 @@ theorem bt_pair_li {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
   simpa using h
 
 theorem bt_ff_li (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
     (hG : Gflag F0 F'.fl ≠ 0) :
     LinearIndependent (D.s.atP p).Ep (Sum.elim (locTerm Z p Λ (lf D F0) F' Tn T'n).f
       (locTerm Z p Λ (lf D F0) F' Tn T'n).f') := by
@@ -1568,7 +1568,7 @@ theorem bt_ff_li (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.
 
 theorem bt_typed_second (hE : LocEqC D Z) (hD : LocDiffC D Z) (p : PlF D) {u u' : D.what₂.Word}
     (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (hR : IsRowLat D F0 Λ) (hPD : PD D Λ (lf D F0) u' F')
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (hR : IsRowLat D F0 Λ) (hPD : PD D Λ (lf D F0) u' F')
     (g : Loc.SplitG (Z.M p).L) (hg : (Z.M p).split = some g) (b : Fin (D.R.rS + 1)) :
     algebraMap (D.s.atP p).Fp (D.s.atP p).Ep ((g.q : (D.s.atP p).Fp)⁻¹) •
       ((locTerm Z p Λ (lf D F0) F' (Tu D u) (Tu D u')).f' b - (locTerm Z p Λ (lf D F0) F' (Tu D u) (Tu D u')).f b)
@@ -1598,7 +1598,7 @@ theorem bt_q_ne (p : PlF D) (g : Loc.SplitG (Z.M p).L) : (g.q : (D.s.atP p).Fp) 
 
 theorem bt_isTerm (hE : LocEqC D Z) (hS : LocSatC D Z) (hD : LocDiffC D Z) (hDu : LocUnimodC D Z) (p : PlF D)
     {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (hR : IsRowLat D F0 Λ) (hPD : PD D Λ (lf D F0) u' F') (hG : Gflag F0 F'.fl ≠ 0)
     (hD1 : Formalism.MainNotions.S.Dl F0 F'.fl (D.R.rS + 1) ≠ 0) :
     (locH Z p).IsTerm (locTerm Z p Λ (lf D F0) F' (Tu D u) (Tu D u')) := by
@@ -1653,7 +1653,7 @@ theorem bt_isTerm (hE : LocEqC D Z) (hS : LocSatC D Z) (hD : LocDiffC D Z) (hDu 
 set_option maxHeartbeats 800000 in
 theorem frameGenLoc_core (hE : LocEqC D Z) (hS : LocSatC D Z) (hD : LocDiffC D Z) (hDu : LocUnimodC D Z)
     {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (hR : IsRowLat D F0 Λ) (hPD : PD D Λ (lf D F0) u' F') (hMI : MplusIndep Λ (lf D F0) (gS D) F')
     (hG : Gval (lf D F0) F' ≠ 0) (hD1 : Dr1 (lf D F0) F' ≠ 0) :
     IsGeneric Λ (gS D) (lf D F0) F' ↔
@@ -1729,7 +1729,7 @@ theorem bbTie_of (Z : LocDat D) (hE : LocEqC D Z) (hS : LocSatC D Z) (hD : LocDi
 
 theorem frameGenLoc_of (Z : LocDat D) (hE : LocEqC D Z) (hS : LocSatC D Z) (hD : LocDiffC D Z)
     (hDu : LocUnimodC D Z) {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (hR : IsRowLat D F0 Λ) (hPD : PD D Λ (lf D F0) u' F') (hMI : MplusIndep Λ (lf D F0) (gS D) F')
     (hG : Gval (lf D F0) F' ≠ 0) (hD1 : Dr1 (lf D F0) F' ≠ 0) :
     IsGeneric Λ (gS D) (lf D F0) F' ↔
@@ -1749,7 +1749,7 @@ def LocTied : Prop := ∀ p : PlF D, Nonempty (Formalism.L2.S.LocIso (D.s.atP p)
 theorem frameGenLoc_of' (hDN : Formalism.L2.SG.GramJoint.DNeZeroAt) (Z : LocDat D) (hE : LocEqC D Z)
     (hS : LocSatC D Z) (hD : LocDiffC D Z) (hDu : LocUnimodC D Z)
     {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (hR : IsRowLat D F0 Λ) (hPD : PD D Λ (lf D F0) u' F') (hMI : MplusIndep Λ (lf D F0) (gS D) F')
     (hG : Gval (lf D F0) F' ≠ 0) :
     IsGeneric Λ (gS D) (lf D F0) F' ↔

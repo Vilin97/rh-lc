@@ -42,7 +42,7 @@ def ExistsPrimeAbove : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (p : ℕ), p.Prime → ∃ P : HeightOneSpectrum (𝓞 E), (p : 𝓞 E) ∈ P.asIdeal
 
 def UnitriangularFrameLift (D : D7) : Prop :=
-  ∀ (T : D.host.E) (Λ : Submodule (𝓞 D.host.E) (hS D).V) (F F' : LFlag (hS D) D.R.rS T),
+  ∀ (T : D.host.E) (Λ : Submodule (𝓞 D.host.E) (hS D).V) (F F' : LFlag (D.sp.Y 0) D.R.rS T),
     FixedHyp D Λ F → IsLift Λ F' → IsFixedConv Λ (gS D) F' →
     (∀ a, F'.fl.e a - F.fl.e a ∈ Xflag F a.val) → F'.fl.z - F.fl.z ∈ Xsp F →
     ∃ n ∈ NLam Λ F, ∀ a, n (F.fl.e a) = F'.fl.e a

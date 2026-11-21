@@ -21,7 +21,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : D7} {X : HidaSetting D} (Y : Full X) {u u' : D.what₂.Word}
 
 theorem rep_at_pt (t : TauC Y u u') (hG : 1 ≤ NGPt D.host.rdE ((Tu D u : ℕ) * (Tu D u' : ℕ)) (ptPN t)) :
-    ∃ F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E), Gval (lf D (X.Fu u)) F' ≠ 0 ∧
+    ∃ F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E), Gval (lf D (X.Fu u)) F' ≠ 0 ∧
       IsInCell (ZhatOM (Zhat (X.Fu u) F'.fl)) (Formalism.L2.SG.PairVal.ptOf t.toTerm) ∧
       ∃ n ∈ SRat (lf D (X.Fu u)), ∃ m ∈ SRat (lf D (X.Fu u')),
         ∀ a, F'.fl.fvec a = (n * t.lin * m) ((X.Fu u').fvec a) := by

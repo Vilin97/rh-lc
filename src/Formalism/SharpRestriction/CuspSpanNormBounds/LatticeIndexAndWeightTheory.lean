@@ -75,7 +75,7 @@ section Datum
 
 variable {D : D7} (X : TermTie D) {u u' : D.what₂.Word}
 
-def SameDC {T T' : D.host.E} (F : LFlag (hS D) D.R.rS T) (F₁ F₂ : LFlag (hS D) D.R.rS T') : Prop :=
+def SameDC {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS T') : Prop :=
   ∃ σ ∈ Formalism.HermitianLatticesTheory.isom (hS D).hT,
     (∀ a : Fin D.R.rS, σ (F.fl.e a) - F.fl.e a ∈ Xflag F a.val) ∧ σ F.fl.z - F.fl.z ∈ Xsp F ∧
     (∀ a : Fin D.R.rS, σ (F₁.fl.e a) - F₂.fl.e a ∈ Xflag F₂ a.val) ∧ σ F₁.fl.z - F₂.fl.z ∈ Xsp F₂

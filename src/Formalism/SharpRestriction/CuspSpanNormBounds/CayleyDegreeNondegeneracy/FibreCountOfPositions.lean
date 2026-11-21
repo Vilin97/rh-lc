@@ -186,7 +186,7 @@ section D7
 
 variable (D : D7)
 
-variable (Λ : LatV D) {T T' : D.host.E} (F : LFlag (hS D) D.R.rS T)
+variable (Λ : LatV D) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
 
 end D7
 

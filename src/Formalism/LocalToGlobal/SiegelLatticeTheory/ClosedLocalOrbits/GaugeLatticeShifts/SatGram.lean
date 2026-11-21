@@ -414,8 +414,8 @@ open Formalism.L2.SG.Full Formalism.MainNotions.S.Lat Formalism.L2.SG.TermDef
 variable {D : D7} {X : HidaSetting D} (Y : Full X)
 
 theorem gt_mk {u' : D.what₂.Word}
-    {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {F0 : LFlag (VS D) D.R.rS T}
-    {P : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) → Prop} (hG : GFun Λ F0 P) (x : Carrier P) :
+    {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} {F0 : LFlag (D.sp.Y 0) D.R.rS T}
+    {P : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) → Prop} (hG : GFun Λ F0 P) (x : Carrier P) :
     TermDef.Gt Λ F0 P (TermDef.mk Λ F0 P x) = Gval F0 x.1 := by
   unfold TermDef.Gt TermDef.mk
   have h : Quot.mk (Rel Λ F0 P) (Quot.out (Quot.mk (Rel Λ F0 P) x)) = Quot.mk (Rel Λ F0 P) x := Quot.out_eq _

@@ -192,12 +192,12 @@ def lattice₂ (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep) (p :
 
 
 variable (D) in
-def admXi (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E) :=
+def admXi (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E) :=
   if h : IsAdmissible Λ (gS D) F F' then h.choose else 1
 
-theorem admissibility_witness_unitriangular (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') :
+theorem admissibility_witness_unitriangular (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     (∀ a b, b < a → admXi D Λ F F' a b = 0) ∧ (∀ a, admXi D Λ F F' a a = 1) := by
   unfold admXi
   split_ifs with h
@@ -224,7 +224,7 @@ theorem inv_unitri {n : ℕ} {R : Type*} [CommRing R] (ξ : Matrix (Fin n) (Fin 
   · intro h; exact absurd (Finset.mem_univ a) h
 
 def locTerm (Z : LocDat D) (p : PlF D) (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E}
-    (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (Tn T'n : ℕ) :
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (Tn T'n : ℕ) :
     Loc.Term (Vp D p) (Z.M p) D.R.rS where
   abelian₂ := lattice₂ D Z.M p Λ
   f a := (sgnP D p a * frFac Z.δ p a) • baseChange₂ D p (frame F a)
@@ -233,14 +233,14 @@ def locTerm (Z : LocDat D) (p : PlF D) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
   T' := (T'n : (D.s.atP p).Fp)
 
 def locBBne (Z : LocDat D) (p : PlF D) (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E}
-    (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (Tn T'n : ℕ) : Prop :=
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (Tn T'n : ℕ) : Prop :=
   LocNG.BBne (H := locH Z p) (locTerm Z p Λ F F' Tn T'n)
 
 
 variable (D) in
 def BBTie (Z : LocDat D) : Prop :=
   ∀ (u u' : D.what₂.Word) (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)),
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)),
     IsRowLat D F0 Λ → PD D Λ (lf D F0) u' F' → MplusIndep Λ (lf D F0) (gS D) F' →
       ∀ p : PlF D, BBneF D Λ (lf D F0) F' p ↔ locBBne Z p Λ (lf D F0) F' (Tu D u) (Tu D u')
 
@@ -251,7 +251,7 @@ def locBBneT (Z : LocDat D) {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS ((
 theorem termBBne_iff_loc (Z : LocDat D) (hT : BBTie D Z) {u u' : D.what₂.Word}
     {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)} {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
     (hrows : IsRowReps D F0 what₂) (hBF : BBFun D u u')
-    (hMI : ∀ (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)),
+    (hMI : ∀ (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)),
       MplusIndep Λ (lf D F0) (gS D) F')
     (t : Term D u u' F0 what₂) (p : PlF D) : termBBne t p ↔ locBBneT Z t p := by
   have hL := hrows.1 t.lam t.mem
@@ -281,7 +281,7 @@ def GenIffLocBB (Z : LocDat D) (u u' : D.what₂.Word) : Prop :=
 
 theorem genIffLocBB_of (Z : LocDat D) (hT : BBTie D Z) (u u' : D.what₂.Word) (hBF : BBFun D u u')
     (hMI : ∀ (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
-      (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)), MplusIndep Λ (lf D F0) (gS D) F') :
+      (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)), MplusIndep Λ (lf D F0) (gS D) F') :
     GenIffLocBB D Z u u' := by
   intro F0 what₂ hrows t
   have hloc := fun p => termBBne_iff_loc Z hT hrows hBF (hMI F0) t p

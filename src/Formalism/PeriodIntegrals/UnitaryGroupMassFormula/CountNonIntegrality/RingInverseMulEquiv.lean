@@ -51,7 +51,7 @@ theorem cj_frFac (D : Formalism.BasicNotions.D7) (δ : ∀ p : PlF D, (D.s.atP p
   rw [map_pow, map_mul, AlgEquiv.commutes, (D.s.atP p).cj_ιE, map_ratCast]
 
 theorem frame_mem {D : Formalism.BasicNotions.D7} {T : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V)
-    (F : LFlag (VS D) D.R.rS T) (hX : XLam Λ F = XS D F.fl) (hz : F.fl.z ∈ Λ) (a : Fin (D.R.rS + 1))
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (hX : XLam Λ F = XS D F.fl) (hz : F.fl.z ∈ Λ) (a : Fin (D.R.rS + 1))
     (x : D.host.E)
     (hx : x ∈ ((ddS D) ^ (-((D.R.rS - a.val : ℕ) : ℤ)) : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E)) :
     x • F.fl.fvec a ∈ Λ := by

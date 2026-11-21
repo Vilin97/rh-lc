@@ -121,7 +121,7 @@ section Terms
 variable {D : D7} {X : HidaSetting D} {Y : Formalism.L2.SG.Full.Full X} {hF : FinX Y}
 
 theorem ex_rep_iff {u u' : D.what₂.Word} (t : RT Y u u')
-    (Q : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) → Prop)
+    (Q : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) → Prop)
     (hQ : ∀ x y : TermDef.Carrier (TermDef.PD D t.lam (lf D (X.Fu u)) u'),
       TermDef.Rel t.lam (lf D (X.Fu u)) (TermDef.PD D t.lam (lf D (X.Fu u)) u') x y → (Q x.1 ↔ Q y.1)) :
     (∃ F', TermDef.Rep t.lam (lf D (X.Fu u)) (TermDef.PD D t.lam (lf D (X.Fu u)) u') t.cls F' ∧ Q F') ↔
@@ -139,13 +139,13 @@ variable (W : WittDat X) (hI : SIso D.s (sOf hF))
 
 def tc {u u' : D.what₂.Word} (t : D.s.Term u u') : RT Y u u' := hI.eT u u' t
 
-def repF {u u' : D.what₂.Word} (t : RT Y u u') : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) :=
+def repF {u u' : D.what₂.Word} (t : RT Y u u') : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) :=
   (Quot.out t.cls).1
 
 def lamOf {u u' : D.what₂.Word} (t : D.s.Term u u') : Submodule (𝓞 D.host.E) (VS D).V :=
   Formalism.HermitianLatticesTheory.gmap (W.δ u) (tc hI t).lam
 
-def fl'Of {u u' : D.what₂.Word} (t : D.s.Term u u') : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) :=
+def fl'Of {u u' : D.what₂.Word} (t : D.s.Term u u') : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) :=
   mapL (W.δ u) (W.isom u) (repF (tc hI t))
 
 
@@ -319,8 +319,8 @@ section Pairs
 variable {D : D7} {X : HidaSetting D} {Y : Formalism.L2.SG.Full.Full X} {hF : FinX Y} (W : WittDat X)
   (hI : SIso D.s (sOf hF))
 
-def mvOf {T T' : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F : LFlag (VS D) D.R.rS T)
-    (F₁ F₂ : LFlag (VS D) D.R.rS T') : (VS D).V ≃ₗ[D.host.E] (VS D).V :=
+def mvOf {T T' : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS T') : (VS D).V ≃ₗ[D.host.E] (VS D).V :=
   if h : TermDef.DCRel Λ F F₁ F₂ then h.choose * h.choose_spec.2.choose else 1
 
 def betaOf {u u' : D.what₂.Word} (p : D.s.Pair u u') : (VS D).V ≃ₗ[D.host.E] (VS D).V :=

@@ -17,12 +17,12 @@ namespace GlobalTheory.Unfold.KeyIff
 
 variable {D : D7}
 
-theorem one_mem {T : D.host.E} (F : LFlag (VS D) D.R.rS T) : (1 : GV D) ∈ NRat F := by
+theorem one_mem {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) : (1 : GV D) ∈ NRat F := by
   refine ⟨(Formalism.HermitianLatticesTheory.isom (VS D).hT).one_mem, fun j x _ => ?_, fun x _ => ?_⟩
   · simp
   · simp
 
-theorem dcoset_eq_iff {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (γ₁ γ₂ : GV D) :
+theorem dcoset_eq_iff {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (γ₁ γ₂ : GV D) :
     ({δ | ∃ n ∈ NRat F, ∃ n' ∈ NRat F', δ = n * γ₁ * n'} : Set (GV D)) =
         {δ | ∃ n ∈ NRat F, ∃ n' ∈ NRat F', δ = n * γ₂ * n'} ↔
       ∃ n ∈ NRat F, ∃ n' ∈ NRat F', γ₂ = n * γ₁ * n' := by

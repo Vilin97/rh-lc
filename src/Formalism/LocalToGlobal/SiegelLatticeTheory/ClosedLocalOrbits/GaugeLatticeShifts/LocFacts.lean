@@ -576,7 +576,7 @@ theorem bbTie_holds (D : D7) (Z : LocDat D) : BBTie D Z :=
 
 theorem frameGenLoc_holds (D : D7) (Z : LocDat D) {u u' : D.what₂.Word}
     (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
     (hR : IsRowLat D F0 Λ) (hPD : PD D Λ (lf D F0) u' F') (hMI : MplusIndep Λ (lf D F0) (gS D) F')
     (hG : Gval (lf D F0) F' ≠ 0) :
     IsGeneric Λ (gS D) (lf D F0) F' ↔

@@ -22,7 +22,7 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D)
 
 section Frame
 
-variable (p : PlF D) {T' : D.host.E} (G : LFlag (VS D) D.R.rS T')
+variable (p : PlF D) {T' : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T')
 
 theorem locF'_eq (b : Fin (D.R.rS + 1)) : locF' Zd p G b = sF' Zd p b • baseChange₂ D p (frame G b) := rfl
 
@@ -75,7 +75,7 @@ theorem baseChangeAt_perp' {m : (VS D).V} (hm : m ∈ orth (VS D) (Xsp G)) :
 
 end Frame
 
-theorem coef_intG {T' : D.host.E} (G : LFlag (VS D) D.R.rS T') {Λ : Submodule (𝓞 D.host.E) (VS D).V}
+theorem coef_intG {T' : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T') {Λ : Submodule (𝓞 D.host.E) (VS D).V}
     (hprim : ∀ p, (locH Zd p).Prim (lattice₂ D Zd.M p Λ) (locF' Zd p G)) (c : Fin (D.R.rS + 1) → D.host.E)
     (hc : ∑ a, c a • frame G a ∈ Λ) : IsIntegral ℤ (c (Fin.last D.R.rS)) := by
   refine int_of_loc Zd fun p => ?_
@@ -111,7 +111,7 @@ theorem coef_intG {T' : D.host.E} (G : LFlag (VS D) D.R.rS T') {Λ : Submodule (
   rw [← h3]
   exact (o (Fin.last D.R.rS)).2
 
-theorem exists_yG {T' : D.host.E} (G : LFlag (VS D) D.R.rS T') {Λ : Submodule (𝓞 D.host.E) (VS D).V}
+theorem exists_yG {T' : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T') {Λ : Submodule (𝓞 D.host.E) (VS D).V}
     (hΛ : Submodule.IsLattice D.host.E Λ) (hSD : BwdNA.SD (VS D) Λ)
     (hprim : ∀ p, (locH Zd p).Prim (lattice₂ D Zd.M p Λ) (locF' Zd p G)) (hzX : G.fl.z ∉ Xsp G) :
     ∃ y ∈ Λ, y ∈ orth (VS D) (Xsp G) ∧ (VS D).hT y G.fl.z = 1 := by

@@ -311,7 +311,7 @@ theorem sgnL_succ : sgnL (D := D) (D.R.rS + 1) = sgnL (D := D) D.R.rS := by
   rw [Fin.prod_univ_castSucc]
   simp
 
-theorem dmin_eq {u u' : D.what₂.Word} {F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)} {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)}
+theorem dmin_eq {u u' : D.what₂.Word} {F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)} {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)}
     {w : Point D.host.E (D.R.rS + 1)} (hc : IsInCell (ZhatOM (ZhatL (lf D F0) F')) w) (l : ℕ) (h : l ≤ D.R.rS + 1) :
     Dmin w l = sgnL l * leadMinorE (ZhatL (lf D F0) F') l := by
   obtain ⟨L, U, hL, hU, hZ⟩ := hc
@@ -330,7 +330,7 @@ theorem dmin_eq {u u' : D.what₂.Word} {F' : LFlag (VS D) D.R.rS ((Tu D u' : �
   rw [hD, hM, e1]
   rfl
 
-theorem kind_eq {u u' : D.what₂.Word} {F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)} {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)}
+theorem kind_eq {u u' : D.what₂.Word} {F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)} {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)}
     {w : Point D.host.E (D.R.rS + 1)} (hc : IsInCell (ZhatOM (ZhatL (lf D F0) F')) w) :
     kind w = if Dr (lf D F0) F' = 0 then none else some (Dr1 (lf D F0) F' / Dr (lf D F0) F') := by
   have h1 := dmin_eq hc D.R.rS (Nat.le_succ _)

@@ -15,8 +15,8 @@ namespace Formalism.L2.SG.LeadingMinorsNonvanishing
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-theorem leading_minor_ne_zero {D : D7} {T T' : ℕ} (hT : 0 < T) (F : LFlag (hS D) D.R.rS (T : D.host.E))
-    (F' : LFlag (hS D) D.R.rS (T' : D.host.E)) (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hG : Gval F F' ≠ 0) :
+theorem leading_minor_ne_zero {D : D7} {T T' : ℕ} (hT : 0 < T) (F : LFlag (D.sp.Y 0) D.R.rS (T : D.host.E))
+    (F' : LFlag (D.sp.Y 0) D.R.rS (T' : D.host.E)) (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hG : Gval F F' ≠ 0) :
     Dr1 F F' ≠ 0 := by
   intro h0
   obtain ⟨τ⟩ : Nonempty (D.host.E →+* ℂ) := inferInstance

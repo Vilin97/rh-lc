@@ -325,9 +325,9 @@ instance instActL (T' : D.host.E) : MulAction (G0 F0) (LFlag (VS D) D.R.rS T') w
   one_smul F := mapL_eq_self _ _ F (fun _ => rfl) rfl
   mul_smul _ _ _ := rfl
 
-theorem smul_def {T' : D.host.E} (g : G0 F0) (F : LFlag (VS D) D.R.rS T') : g • F = mapL g.1 (G0.isom g) F := rfl
+theorem smul_def {T' : D.host.E} (g : G0 F0) (F : LFlag (D.sp.Y 0) D.R.rS T') : g • F = mapL g.1 (G0.isom g) F := rfl
 
-theorem frame_smul {T' : D.host.E} (g : G0 F0) (F : LFlag (VS D) D.R.rS T') (a : Fin (D.R.rS + 1)) :
+theorem frame_smul {T' : D.host.E} (g : G0 F0) (F : LFlag (D.sp.Y 0) D.R.rS T') (a : Fin (D.R.rS + 1)) :
     (g • F).fl.fvec a = (g : (VS D).V ≃ₗ[D.host.E] (VS D).V) (F.fl.fvec a) := by
   induction a using Fin.lastCases with
   | last => simp [smul_def, Formalism.L2.SG.Saturated.mapL, Formalism.L2.SG.Saturated.mapFlag, Formalism.MainNotions.S.FlagG.fvec]
@@ -397,7 +397,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : Formalism.BasicNotions.D7} {T : D.host.E} {F0 : FlagG (VS D) D.R.rS T}
 
 theorem ez_smul {T' : D.host.E} (g : G0 F0) {Λ : Submodule (𝓞 D.host.E) (VS D).V} {Z : MatZ D}
-    {F' : LFlag (VS D) D.R.rS T'} (h : F' ∈ EZ T' F0 Λ Z) :
+    {F' : LFlag (D.sp.Y 0) D.R.rS T'} (h : F' ∈ EZ T' F0 Λ Z) :
     g • F' ∈ EZ T' F0 (Formalism.HermitianLatticesTheory.gmap (g : (VS D).V ≃ₗ[D.host.E] (VS D).V) Λ) Z := by
   obtain ⟨h1, h2, h3, h4, h5⟩ := h
   have hβ := G0.isom g
@@ -436,7 +436,7 @@ theorem rowLat_gmap (g : G0 F0) {Λ : Submodule (𝓞 D.host.E) (VS D).V} (h : I
     conv_rhs => rw [← G0.mapFlag g]
     rw [XS_mapFlag]
 
-theorem fixes_upair {T' : D.host.E} (g : G0 F0) (F' : LFlag (VS D) D.R.rS T') (hF : g • F' = F') :
+theorem fixes_upair {T' : D.host.E} (g : G0 F0) (F' : LFlag (D.sp.Y 0) D.R.rS T') (hF : g • F' = F') :
     ∀ x ∈ UPair D F0 F', (g : (VS D).V ≃ₗ[D.host.E] (VS D).V) x = x := by
   intro x hx
   have h1 : Set.EqOn ((g : (VS D).V ≃ₗ[D.host.E] (VS D).V) : (VS D).V →ₗ[D.host.E] (VS D).V) (LinearMap.id : (VS D).V →ₗ[D.host.E] (VS D).V)
@@ -450,7 +450,7 @@ theorem fixes_upair {T' : D.host.E} (g : G0 F0) (F' : LFlag (VS D) D.R.rS T') (h
 
 theorem eq_one_of_fix (g : G0 F0) {Λ : Submodule (𝓞 D.host.E) (VS D).V}
     (hn : (g : (VS D).V ≃ₗ[D.host.E] (VS D).V) ∈ NLam Λ (lf D F0)) {T' : D.host.E}
-    (F' : LFlag (VS D) D.R.rS T') (hG : GZ T T' (ZhatL (lf D F0) F') ≠ 0) (hF : g • F' = F') : g = 1 := by
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (hG : GZ T T' (ZhatL (lf D F0) F') ≠ 0) (hF : g • F' = F') : g = 1 := by
   have hU := fixes_upair g F' hF
   have hC := PairSpanDimension.isCompl F0 F' hG
   obtain ⟨-, -, hno⟩ := hn
@@ -630,7 +630,7 @@ theorem flagStabilizer_fixes_frame {Λ : Submodule (𝓞 D.host.E) (VS D).V} {n 
   | cast b => simpa [Formalism.MainNotions.S.FlagG.fvec] using he b
 
 theorem orbit_set_eq {T' : D.host.E} {Λ : Submodule (𝓞 D.host.E) (VS D).V} {Z : MatZ D}
-    {F' : LFlag (VS D) D.R.rS T'} (hF' : F' ∈ EZ T' F0 Λ Z) :
+    {F' : LFlag (D.sp.Y 0) D.R.rS T'} (hF' : F' ∈ EZ T' F0 Λ Z) :
     {F'' | F'' ∈ EZ T' F0 Λ Z ∧ NilradicalFlagMoved F0 Λ F' F''} = nOrb (Nsub (F0 := F0) Λ) (EZ T' F0 Λ Z) F' := by
   ext F''
   constructor
@@ -691,7 +691,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : Formalism.BasicNotions.D7} {T : D.host.E} {F0 : FlagG (VS D) D.R.rS T}
 
-theorem witt_trans {T' : D.host.E} (F' F'' : LFlag (VS D) D.R.rS T') (hzt' : F'.zt = F'.fl.z)
+theorem witt_trans {T' : D.host.E} (F' F'' : LFlag (D.sp.Y 0) D.R.rS T') (hzt' : F'.zt = F'.fl.z)
     (hzt'' : F''.zt = F''.fl.z) (hZ : ZhatL (lf D F0) F'' = ZhatL (lf D F0) F')
     (hG : GZ T T' (ZhatL (lf D F0) F') ≠ 0) : ∃ g : G0 F0, g • F'' = F' := by
   have hG'' : GZ T T' (ZhatL (lf D F0) F'') ≠ 0 := by rw [hZ]; exact hG
@@ -760,12 +760,12 @@ theorem witt_trans {T' : D.host.E} (F' F'' : LFlag (VS D) D.R.rS T') (hzt' : F'.
     simp only [hv, hw, PairSpanDimension.fam, Sum.elim_inr, FlagG.fvec, Fin.snoc_last] at this
     rw [hzt'', hzt', this]
 
-theorem mem_stabilizer_of_isometry_fix {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') {g : (VS D).V ≃ₗ[D.host.E] (VS D).V}
+theorem mem_stabilizer_of_isometry_fix {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') {g : (VS D).V ≃ₗ[D.host.E] (VS D).V}
     (hg : g ∈ isomFix (VS D).hT (UPair D F0 F')) : g ∈ G0 F0 := by
   obtain ⟨hi, hu⟩ := hg
   exact ⟨hi, fun a => hu _ (Submodule.subset_span (Or.inl ⟨a, rfl⟩))⟩
 
-theorem isomFix_iff {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') (hzt : F'.zt = F'.fl.z) (g : G0 F0) :
+theorem isomFix_iff {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') (hzt : F'.zt = F'.fl.z) (g : G0 F0) :
     (g : (VS D).V ≃ₗ[D.host.E] (VS D).V) ∈ isomFix (VS D).hT (UPair D F0 F') ↔ g • F' = F' := by
   constructor
   · rintro ⟨-, hu⟩
@@ -1010,7 +1010,7 @@ theorem rowsGroupoid_of (hM : MMChar) : RowsGroupoid := by
   have hG : GZ (Tn u) (Tn u') (ZhatL (lf D F0) F') ≠ 0 := by
     rw [hZ]
     exact PairSpanDimension.totPos_ne_zero hP
-  have hMF : ∀ F'' : LFlag (VS D) D.R.rS (Tn u'), F''.zt = F''.fl.z → ZhatL (lf D F0) F'' = Z →
+  have hMF : ∀ F'' : LFlag (D.sp.Y 0) D.R.rS (Tn u'), F''.zt = F''.fl.z → ZhatL (lf D F0) F'' = Z →
       ∀ Λ, (IsRowLat D F0 Λ ∧ F'' ∈ EZ (Tn u') F0 Λ Z) ↔
         Λ ∈ GlueSet (VS D).hT (UPair D F0 F'') (MMof D F0 F'') :=
     fun F'' h1 h2 => (hM D u u' hT F0 what₂ hrows Z F'' h1 h2 hP).2

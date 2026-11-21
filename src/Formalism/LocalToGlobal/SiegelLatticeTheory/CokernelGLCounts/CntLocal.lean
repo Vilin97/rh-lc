@@ -110,7 +110,7 @@ def EZ {T : D.host.E} (T' : D.host.E) (F0 : FlagG (VS D) D.R.rS T) (Λ : Submodu
     FrameOK D Λ F' ∧ ZhatL (lf D F0) F' = Z}
 
 def NilradicalFlagMoved {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
-    (F' F'' : LFlag (VS D) D.R.rS T') : Prop :=
+    (F' F'' : LFlag (D.sp.Y 0) D.R.rS T') : Prop :=
   ∃ n ∈ N0 F0 Λ, (∀ a, n (F'.fl.e a) = F''.fl.e a) ∧ n F'.fl.z = F''.fl.z
 
 def cntE {T : D.host.E} (T' : D.host.E) (F0 : FlagG (VS D) D.R.rS T) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
@@ -171,7 +171,7 @@ theorem gram_comb {ι : Type} [Fintype ι] [DecidableEq ι] (v : ι → V) (A : 
   ring
 end
 
-theorem gz_eq (D : Formalism.BasicNotions.D7) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+theorem gz_eq (D : Formalism.BasicNotions.D7) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Gval F F' = GZ T T' (ZhatL F F') := rfl
 
 theorem ga_gram (D : Formalism.BasicNotions.D7) {T T' : D.host.E} (F : FlagG (VS D) D.R.rS T) (F' : FlagG (VS D) D.R.rS T')

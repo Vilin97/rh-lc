@@ -263,7 +263,7 @@ section Glob
 
 variable {D : D7}
 
-theorem scaled_iso (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (VS D) D.R.rS T) :
+theorem scaled_iso (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) :
     (locH Z p).X (scaled Z p (frame F)) ≤ (locH Z p).perp ((locH Z p).X (scaled Z p (frame F))) := by
   refine X_le_perp_of _ fun a b => ?_
   simp only [scaled, GlobalTheory.LocExt.frame_castSucc]
@@ -283,7 +283,7 @@ theorem ext_symm {p : PlF D} {a : (VS D).V ≃ₗ[D.host.E] (VS D).V} {g : Vp D 
   show baseChange₂ D p x = baseChange₂ D p (a (a.symm x))
   rw [LinearEquiv.apply_symm_apply]
 
-theorem nu_of_ext (Z : LocDat D) (p : PlF D) {T : D.host.E} {F : LFlag (VS D) D.R.rS T}
+theorem nu_of_ext (Z : LocDat D) (p : PlF D) {T : D.host.E} {F : LFlag (D.sp.Y 0) D.R.rS T}
     {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} {g : Vp D p ≃ₗ[(D.s.atP p).Ep] Vp D p} (hN : γ ∈ NRat F) (h : Ext p γ g) :
     g ∈ NU (locH Z p) (scaled Z p (frame F)) := by
   rw [GlobalTheory.LocExt.locEquiv_unique p γ g h]

@@ -15,11 +15,11 @@ namespace GlobalTheory.Sloc.AdaptExpand
 
 variable {D : D7}
 
-theorem frame_castSucc {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (i : Fin D.R.rS) :
+theorem frame_castSucc {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (i : Fin D.R.rS) :
     frame F (Fin.castSucc i) = F.fl.e i := by
   simp [frame, Formalism.MainNotions.S.FlagG.fvec]
 
-theorem exists_coeff {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (b : Fin (D.R.rS + 1)) (x : (VS D).V)
+theorem exists_coeff {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (b : Fin (D.R.rS + 1)) (x : (VS D).V)
     (hx : x ∈ Xflag F b.val) :
     ∃ l : Fin D.R.rS → D.host.E, (∀ i, b.val ≤ i.val → l i = 0) ∧ x = ∑ i, l i • F.fl.e i := by
   have hx' : x ∈ Submodule.span D.host.E (F.fl.e '' {i | i.1 < b.val}) := hx
@@ -33,7 +33,7 @@ theorem exists_coeff {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (b : Fin (D.R.rS
   · rw [Finsupp.linearCombination_apply, Finsupp.sum_fintype]
     intro i; simp
 
-theorem exists_coeff_frame {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (b : Fin (D.R.rS + 1)) (x : (VS D).V)
+theorem exists_coeff_frame {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (b : Fin (D.R.rS + 1)) (x : (VS D).V)
     (hx : x ∈ Xflag F b.val) :
     ∃ u : Fin (D.R.rS + 1) → D.host.E, (∀ c, b ≤ c → u c = 0) ∧ x = ∑ c, u c • frame F c := by
   obtain ⟨l, hl, rfl⟩ := exists_coeff F b x hx
@@ -46,7 +46,7 @@ theorem exists_coeff_frame {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (b : Fin (
   · rw [Fin.sum_univ_castSucc]
     simp [frame_castSucc]
 
-theorem adapt_expand : ∀ (D : D7) {T : D.host.E} (F0 F : LFlag (VS D) D.R.rS T) (g : GV D), Adapt g F0 F → ∀ (Z : LocDat D) (p : PlF D) (Af : Fin (D.R.rS + 1) → Vp D p), Af = (fun a => frFac Z.δ p a • baseChange₂ D p (frame F a)) → ∃ B : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (D.s.atP p).Ep, (∀ a b, b < a → B a b = 0) ∧ (∀ a, B a a = Ring.inverse (frFac Z.δ p a)) ∧ ∀ b, baseChange₂ D p (g (frame F0 b)) = ∑ a, B a b • Af a := by
+theorem adapt_expand : ∀ (D : D7) {T : D.host.E} (F0 F : LFlag (D.sp.Y 0) D.R.rS T) (g : GV D), Adapt g F0 F → ∀ (Z : LocDat D) (p : PlF D) (Af : Fin (D.R.rS + 1) → Vp D p), Af = (fun a => frFac Z.δ p a • baseChange₂ D p (frame F a)) → ∃ B : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (D.s.atP p).Ep, (∀ a b, b < a → B a b = 0) ∧ (∀ a, B a a = Ring.inverse (frFac Z.δ p a)) ∧ ∀ b, baseChange₂ D p (g (frame F0 b)) = ∑ a, B a b • Af a := by
   intro D T F0 F g hg Z p Af hAf
   subst hAf
   have hu := fun c => Formalism.L2.SG.Pf.ScalarFramePf.isUnit_frFac Z p c

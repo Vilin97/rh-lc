@@ -288,15 +288,15 @@ end Scal
 section Span
 
 theorem frame_g_zero_inl (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (a : Fin (D.R.rS + 1)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (a : Fin (D.R.rS + 1)) :
     g0 L δ p F0 F' (Sum.inl a) = frFac δ p a • L.bc p (F0.fvec a) := rfl
 
 theorem frame_g_zero_inr (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (a : Fin (D.R.rS + 1)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (a : Fin (D.R.rS + 1)) :
     g0 L δ p F0 F' (Sum.inr a) = frFac δ p a • L.bc p (F'.fl.fvec a) := rfl
 
 theorem locFam_none (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (hs : (M p).split = none) : locFam L δ p F0 F' = g0 L δ p F0 F' := by
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (hs : (M p).split = none) : locFam L δ p F0 F' = g0 L δ p F0 F' := by
   simp only [locFam, hs]
 
 theorem amat_inl (p : PlF D) (g : Loc.SplitG (M p).L) {V : Type} [AddCommGroup V] [Module (D.s.atP p).Ep V]
@@ -333,13 +333,13 @@ theorem amat_inr (p : PlF D) (g : Loc.SplitG (M p).L) {V : Type} [AddCommGroup V
   abel
 
 theorem locFam_some_inl (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) (a : Fin (D.R.rS + 1)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) (a : Fin (D.R.rS + 1)) :
     locFam L δ p F0 F' (Sum.inl a) = g0 L δ p F0 F' (Sum.inl a) := by
   simp only [locFam, hs]
   exact amat_inl p g _ a
 
 theorem locFam_some_inr (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) (a : Fin (D.R.rS + 1)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) (a : Fin (D.R.rS + 1)) :
     locFam L δ p F0 F' (Sum.inr a) = algebraMap (D.s.atP p).Fp (D.s.atP p).Ep ((g.q : (D.s.atP p).Fp)⁻¹) •
       (g0 L δ p F0 F' (Sum.inr a) - g0 L δ p F0 F' (Sum.inl a)) := by
   simp only [locFam, hs]
@@ -352,7 +352,7 @@ section SpanMain
 theorem fvec_cast {T : D.host.E} (F : FlagG (VS D) D.R.rS T) (a : Fin D.R.rS) : F.fvec a.castSucc = F.e a := by
   simp [FlagG.fvec]
 
-def NG (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+def NG (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Submodule (M p).L.O (L.V p) :=
   Submodule.span (M p).L.O (L.bc p '' (Set.range F0.fvec ∪
     Set.range fun b => (((Lat.gS D : ℕ) : D.host.E))⁻¹ • (F'.fl.fvec b - F0.fvec b)))
@@ -363,7 +363,7 @@ def NX (δ : ∀ p : PlF D, (D.s.atP p).Fp) (L : LocSp D M) (p : PlF D) {T : D.h
 
 set_option maxHeartbeats 1000000 in
 theorem latP_MMof (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     lattice₂ L p (MMof D F0 F') = NG L p F0 F' ⊔ NX δ L p F0 ⊔ NX δ L p F'.fl := by
   have e1 : lattice₂ L p (MMg D F0 F') = NG L p F0 F' := by
     unfold MMg NG; exact localLattice_span₂ hA L p _
@@ -373,13 +373,13 @@ theorem latP_MMof (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' :
   exact congrArg₂ (· ⊔ ·) (congrArg₂ (· ⊔ ·) e1 e2) e3
 
 theorem hf'_eq (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (b : Fin (D.R.rS + 1)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (b : Fin (D.R.rS + 1)) :
     L.bc p (F'.fl.fvec b) - L.bc p (F0.fvec b) = (D.s.atP p).ιE ((Lat.gS D : ℕ) : D.host.E) •
       L.bc p ((((Lat.gS D : ℕ) : D.host.E))⁻¹ • (F'.fl.fvec b - F0.fvec b)) := by
   rw [L.bc_smul, smul_smul, ← map_mul, mul_inv_cancel₀ gS_ne, map_one, one_smul, map_sub]
 
 theorem hd_eq (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (b : Fin (D.R.rS + 1)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (b : Fin (D.R.rS + 1)) :
     L.bc p ((((Lat.gS D : ℕ) : D.host.E))⁻¹ • (F'.fl.fvec b - F0.fvec b)) =
       (D.s.atP p).ιE (((Lat.gS D : ℕ) : D.host.E))⁻¹ • (L.bc p (F'.fl.fvec b) - L.bc p (F0.fvec b)) := by
   rw [L.bc_smul, map_sub]
@@ -389,14 +389,14 @@ theorem gS_mem_O (p : PlF D) : (D.s.atP p).ιE ((Lat.gS D : ℕ) : D.host.E) ∈
   exact natCast_mem _ _
 
 theorem mem_NG_f (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (a : Fin (D.R.rS + 1)) : L.bc p (F0.fvec a) ∈ NG L p F0 F' := Submodule.subset_span ⟨F0.fvec a, Or.inl ⟨a, rfl⟩, rfl⟩
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (a : Fin (D.R.rS + 1)) : L.bc p (F0.fvec a) ∈ NG L p F0 F' := Submodule.subset_span ⟨F0.fvec a, Or.inl ⟨a, rfl⟩, rfl⟩
 
 theorem mem_NG_d (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (b : Fin (D.R.rS + 1)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (b : Fin (D.R.rS + 1)) :
     L.bc p ((((Lat.gS D : ℕ) : D.host.E))⁻¹ • (F'.fl.fvec b - F0.fvec b)) ∈ NG L p F0 F' := Submodule.subset_span ⟨_, Or.inr ⟨b, rfl⟩, rfl⟩
 
 theorem mem_NG_f' (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (b : Fin (D.R.rS + 1)) : L.bc p (F'.fl.fvec b) ∈ NG L p F0 F' := by
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (b : Fin (D.R.rS + 1)) : L.bc p (F'.fl.fvec b) ∈ NG L p F0 F' := by
   have h := hf'_eq L p F0 F' b
   have e : L.bc p (F'.fl.fvec b) = L.bc p (F0.fvec b) + (D.s.atP p).ιE ((Lat.gS D : ℕ) : D.host.E) •
       L.bc p ((((Lat.gS D : ℕ) : D.host.E))⁻¹ • (F'.fl.fvec b - F0.fvec b)) := by
@@ -409,7 +409,7 @@ theorem mem_NX (L : LocSp D M) (p : PlF D) {T : D.host.E} (F : FlagG (VS D) D.R.
     frFac δ p a.castSucc • L.bc p (F.e a) ∈ NX δ L p F := Submodule.subset_span ⟨a, rfl⟩
 
 theorem locFam_inl (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T)
-    (F' : LFlag (VS D) D.R.rS T') (a : Fin (D.R.rS + 1)) :
+    (F' : LFlag (D.sp.Y 0) D.R.rS T') (a : Fin (D.R.rS + 1)) :
     locFam L δ p F0 F' (Sum.inl a) = frFac δ p a • L.bc p (F0.fvec a) := by
   rcases h : (M p).split with _ | g
   · rw [locFam_none L p F0 F' h]
@@ -418,7 +418,7 @@ theorem locFam_inl (L : LocSp D M) (p : PlF D) {T T' : D.host.E} (F0 : FlagG (VS
     exact frame_g_zero_inl L p F0 F' a
 
 theorem bc_f_eq (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (a : Fin (D.R.rS + 1)) :
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (a : Fin (D.R.rS + 1)) :
     ∃ w ∈ (M p).L.O, L.bc p (F0.fvec a) = w • locFam L δ p F0 F' (Sum.inl a) := by
   obtain ⟨w, hw, hw1⟩ := phi_inv_mem hA p a
   exact ⟨w, hw, by rw [locFam_inl, smul_smul, hw1, one_smul]⟩
@@ -426,7 +426,7 @@ theorem bc_f_eq (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D
 
 set_option maxHeartbeats 1000000 in
 theorem span_le_none (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (hs : (M p).split = none) :
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (hs : (M p).split = none) :
     Submodule.span (M p).L.O (Set.range (locFam L δ p F0 F')) ≤ NG L p F0 F' ⊔ NX δ L p F0 ⊔ NX δ L p F'.fl := by
   have hlast : frFac δ p (Fin.last D.R.rS) = 1 := by simp [frFac]
   rw [Submodule.span_le]
@@ -453,7 +453,7 @@ theorem span_le_none (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T
 
 set_option maxHeartbeats 1000000 in
 theorem le_span_none (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') (hs : (M p).split = none) :
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') (hs : (M p).split = none) :
     NG L p F0 F' ⊔ NX δ L p F0 ⊔ NX δ L p F'.fl ≤ Submodule.span (M p).L.O (Set.range (locFam L δ p F0 F')) := by
   have hF0 : ∀ b, L.bc p (F0.fvec b) ∈ Submodule.span (M p).L.O (Set.range (locFam L δ p F0 F')) := by
     intro b
@@ -497,7 +497,7 @@ section SpanG
 
 set_option maxHeartbeats 1000000 in
 theorem span_le_some (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) :
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) :
     Submodule.span (M p).L.O (Set.range (locFam L δ p F0 F')) ≤ NG L p F0 F' ⊔ NX δ L p F0 ⊔ NX δ L p F'.fl := by
   have hlast : frFac δ p (Fin.last D.R.rS) = 1 := by simp [frFac]
   rw [Submodule.span_le]
@@ -521,7 +521,7 @@ theorem span_le_some (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T
 
 set_option maxHeartbeats 1000000 in
 theorem le_span_some (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) :
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') {g : Loc.SplitG (M p).L} (hs : (M p).split = some g) :
     NG L p F0 F' ⊔ NX δ L p F0 ⊔ NX δ L p F'.fl ≤ Submodule.span (M p).L.O (Set.range (locFam L δ p F0 F')) := by
   have hq0 : (g.q : (D.s.atP p).Fp) ≠ 0 := by
     intro h
@@ -574,7 +574,7 @@ theorem le_span_some (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T
       (Submodule.subset_span ⟨_, rfl⟩)
 
 theorem span_locFam (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF D) {T T' : D.host.E}
-    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+    (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Submodule.span (M p).L.O (Set.range (locFam L δ p F0 F')) = lattice₂ L p (MMof D F0 F') := by
   rw [latP_MMof hA]
   rcases h : (M p).split with _ | g
@@ -681,7 +681,7 @@ end Indep
 
 section Final
 
-theorem ga_det_ne {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T')
+theorem ga_det_ne {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (hG : Gflag F0 F'.fl ≠ 0) (hC : IsCompl (UPair D F0 F') (orthK (VS D).hT (UPair D F0 F'))) :
     (Ga T T' (ZhatL (lf D F0) F')).det ≠ 0 := by
   intro h0

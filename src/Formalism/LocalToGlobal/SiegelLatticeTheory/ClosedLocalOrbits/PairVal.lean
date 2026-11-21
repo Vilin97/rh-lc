@@ -96,12 +96,12 @@ variable {D : D7} {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS ((Tu D u : �
 abbrev MatR (D : D7) : Type := Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E
 
 def NormRep (t : Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L U : MatR D) : Prop :=
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L U : MatR D) : Prop :=
   Rep t.lam (lf D F0) (PD D t.lam (lf D F0) u') t.cls F' ∧ AdmWit t.lam (gS D) (lf D F0) F' 1 ∧
     IsLoUni L ∧ IsUpUni U ∧ ZhatOM (ZhatL (lf D F0) F') = L * ptMat w * U
 
 def phaseAt (t : Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1)) : ℂ :=
-  if h : ∃ x : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) × MatR D × MatR D, NormRep t w x.1 x.2.1 x.2.2 then
+  if h : ∃ x : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) × MatR D × MatR D, NormRep t w x.1 x.2.1 x.2.2 then
     phasePair (gS D) h.choose.2.1 h.choose.2.2
   else 0
 
@@ -112,11 +112,11 @@ variable (D u u' F0 what₂)
 
 def NormRepExists : Prop :=
   ∀ (t : Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1)), t.atPt w → t.relevant → t.generic →
-    ∃ x : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) × MatR D × MatR D, NormRep t w x.1 x.2.1 x.2.2
+    ∃ x : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E) × MatR D × MatR D, NormRep t w x.1 x.2.1 x.2.2
 
 def PhaseWellDef : Prop :=
   ∀ (t : Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1)), t.relevant →
-    ∀ (F₁ F₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L₁ U₁ L₂ U₂ : MatR D),
+    ∀ (F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L₁ U₁ L₂ U₂ : MatR D),
       NormRep t w F₁ L₁ U₁ → NormRep t w F₂ L₂ U₂ → phasePair (gS D) L₁ U₁ = phasePair (gS D) L₂ U₂
 
 def orbT (t : Term D u u' F0 what₂) (Z : MatR D) : Set (Set (LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))) :=
@@ -146,19 +146,19 @@ def stabInt (δ : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D, (D.s.a
     (w : Point D.host.E (D.R.rS + 1)) : Subgroup (GLR D) :=
   Subgroup.closure (stabIntSet D u u' δ M w)
 
-def stabAutSet (t : Term D u u' F0 what₂) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L : MatR D) :
+def stabAutSet (t : Term D u u' F0 what₂) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L : MatR D) :
     Set (GLR D) :=
   {a | ∃ s ∈ NLam t.lam (lf D F0) ∩ NLam t.lam F', ∃ uu : MatR D,
     (∀ b, s (frame (lf D F0) b) = ∑ c, uu c b • frame (lf D F0) c) ∧ (a : MatR D) = L⁻¹ * uu.conjTranspose * L}
 
-def stabAut (t : Term D u u' F0 what₂) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L : MatR D) :
+def stabAut (t : Term D u u' F0 what₂) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L : MatR D) :
     Subgroup (GLR D) :=
   Subgroup.closure (stabAutSet D u u' F0 what₂ t F' L)
 
 def volIdx (δ : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D, (D.s.atP p).Fp)
     (M : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D, Formalism.MainNotions.S.Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep)
     (t : Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1))
-    (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L : MatR D) : ℝ :=
+    (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L : MatR D) : ℝ :=
   ((stabAut D u u' F0 what₂ t F' L).relIndex (stabInt D u u' δ M w) : ℝ) /
     ((stabInt D u u' δ M w).relIndex (stabAut D u u' F0 what₂ t F' L) : ℝ)
 

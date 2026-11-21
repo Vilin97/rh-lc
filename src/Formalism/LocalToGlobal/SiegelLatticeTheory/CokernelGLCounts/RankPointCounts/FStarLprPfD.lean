@@ -70,7 +70,7 @@ theorem gramW_det_ne {r : ℕ} {U : Submodule D.host.E (VS D).V} (hdim : Module.
   exact Fintype.linearIndependent_iff.1 hli c (hx ▸ hx0) k
 
 theorem gram_pair_ne {T T' : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : Submodule.IsLattice D.host.E Λ)
-    (F : LFlag (VS D) D.R.rS T) (F'' : LFlag (VS D) D.R.rS T') (hzF : F.zt = F.fl.z) (hG : Gflag F.fl F''.fl ≠ 0)
+    (F : LFlag (D.sp.Y 0) D.R.rS T) (F'' : LFlag (D.sp.Y 0) D.R.rS T') (hzF : F.zt = F.fl.z) (hG : Gflag F.fl F''.fl ≠ 0)
     (w : Fin (D.R.rS + 1) ⊕ Fin (D.R.rS + 1) → (VS D).V)
     (hw : Submodule.span D.host.E (Set.range w) =
       Submodule.span D.host.E (Set.range (Sum.elim F.fl.fvec F''.fl.fvec))) : (gramW w).det ≠ 0 := by
@@ -81,8 +81,8 @@ theorem gram_pair_ne {T T' : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V)
   have hL' : Submodule.IsLattice D.host.E Λ' :=
     Submodule.IsLattice.of_le_of_isLattice_of_fg (A := D.host.E) le_sup_left hfg
   have hmem : ∀ k, v k ∈ Λ' := fun k => Submodule.mem_sup_right (Submodule.subset_span ⟨k, rfl⟩)
-  let F1 : LFlag (VS D) D.R.rS T := ⟨F.fl, F.fl.z⟩
-  let F2 : LFlag (VS D) D.R.rS T' := ⟨F''.fl, F''.fl.z⟩
+  let F1 : LFlag (D.sp.Y 0) D.R.rS T := ⟨F.fl, F.fl.z⟩
+  let F2 : LFlag (D.sp.Y 0) D.R.rS T' := ⟨F''.fl, F''.fl.z⟩
   have hz1 : F1.fl.z ∈ Λ' := by
     have h := hmem (Sum.inl (Fin.last D.R.rS))
     simpa [hv, PI.UnitaryGroupMassFormula.BetaLUniq.GN.fvec_last] using h
@@ -209,7 +209,7 @@ theorem gval_repF (γ : TermDef.Term D u u' F0 what₂) (w : Point D.host.E (D.R
     ⟨repF γ, h2⟩).1 ((Quot.out_eq γ.cls).trans h2e.symm)
   rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hrel2]; exact hG
 
-theorem iso_locF' (p : PlF D) {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') :
+theorem iso_locF' (p : PlF D) {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Iso' (locH Zd p) (locF' Zd p F') := by
   intro a b hab
   show (locH Zd p).h ((TermLoc.sgnP' D p a * frFac Zd.δ p a) • baseChange₂ D p (frame F' a))

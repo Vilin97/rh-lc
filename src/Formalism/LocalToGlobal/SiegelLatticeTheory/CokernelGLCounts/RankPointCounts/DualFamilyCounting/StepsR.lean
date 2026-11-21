@@ -24,20 +24,20 @@ section DefsR
 
 variable (D : Formalism.BasicNotions.D7)
 
-def UPair {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+def UPair {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Submodule D.host.E (VS D).V :=
   Submodule.span D.host.E (Set.range F0.fvec ∪ Set.range F'.fl.fvec)
 
-def UUS {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+def UUS {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Submodule (𝓞 D.host.E) (VS D).V :=
   XS D F0 ⊔ Submodule.span (𝓞 D.host.E) {F0.z} ⊔ XS D F'.fl ⊔ Submodule.span (𝓞 D.host.E) {F'.fl.z}
 
-def MMg {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+def MMg {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Submodule (𝓞 D.host.E) (VS D).V :=
   Submodule.span (𝓞 D.host.E)
     (Set.range F0.fvec ∪ Set.range fun b => ((gS D : D.host.E))⁻¹ • (F'.fl.fvec b - F0.fvec b))
 
-def MMof {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
+def MMof {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Submodule (𝓞 D.host.E) (VS D).V :=
   ⨅ P : IsDedekindDomain.HeightOneSpectrum (𝓞 D.host.E),
     haveI := P.isPrime
@@ -73,13 +73,13 @@ def RatPair : Prop :=
     (D.mem u).A.T ≡ (D.mem u').A.T [MOD (Lat.gS D) ^ 2] →
     ∀ (F0 : FlagG (VS D) D.R.rS (Tn u)) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)),
       IsRowReps D F0 what₂ → ∀ Z : MatZ D, Formalism.MainNotions.S.LocalSplitGroups.TotPos (GZ (Tn u) (Tn u') Z) →
-        ∃ F' : LFlag (VS D) D.R.rS (Tn u'), F'.zt = F'.fl.z ∧ ZhatL (lf D F0) F' = Z
+        ∃ F' : LFlag (D.sp.Y 0) D.R.rS (Tn u'), F'.zt = F'.fl.z ∧ ZhatL (lf D F0) F' = Z
 
 def PerpDef : Prop :=
   ∀ (D : Formalism.BasicNotions.D7) (u u' : D.what₂.Word),
     (D.mem u).A.T ≡ (D.mem u').A.T [MOD (Lat.gS D) ^ 2] →
     ∀ (F0 : FlagG (VS D) D.R.rS (Tn u)) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)),
-      IsRowReps D F0 what₂ → ∀ (Z : MatZ D) (F' : LFlag (VS D) D.R.rS (Tn u')), F'.zt = F'.fl.z → ZhatL (lf D F0) F' = Z →
+      IsRowReps D F0 what₂ → ∀ (Z : MatZ D) (F' : LFlag (D.sp.Y 0) D.R.rS (Tn u')), F'.zt = F'.fl.z → ZhatL (lf D F0) F' = Z →
         Formalism.MainNotions.S.LocalSplitGroups.TotPos (GZ (Tn u) (Tn u') Z) →
         IsCompl (UPair D F0 F') (orthK (VS D).hT (UPair D F0 F')) ∧
         PosDefOn (VS D).hT (orthK (VS D).hT (UPair D F0 F')) ∧
@@ -90,7 +90,7 @@ def MMChar : Prop :=
   ∀ (D : Formalism.BasicNotions.D7) (u u' : D.what₂.Word),
     (D.mem u).A.T ≡ (D.mem u').A.T [MOD (Lat.gS D) ^ 2] →
     ∀ (F0 : FlagG (VS D) D.R.rS (Tn u)) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)),
-      IsRowReps D F0 what₂ → ∀ (Z : MatZ D) (F' : LFlag (VS D) D.R.rS (Tn u')), F'.zt = F'.fl.z → ZhatL (lf D F0) F' = Z →
+      IsRowReps D F0 what₂ → ∀ (Z : MatZ D) (F' : LFlag (D.sp.Y 0) D.R.rS (Tn u')), F'.zt = F'.fl.z → ZhatL (lf D F0) F' = Z →
         Formalism.MainNotions.S.LocalSplitGroups.TotPos (GZ (Tn u) (Tn u') Z) →
         IsLatIn (UPair D F0 F') (MMof D F0 F') ∧
         ∀ Λ : Submodule (𝓞 D.host.E) (VS D).V,
@@ -100,7 +100,7 @@ def RowsGroupoid : Prop :=
   ∀ (D : Formalism.BasicNotions.D7) (u u' : D.what₂.Word),
     (D.mem u).A.T ≡ (D.mem u').A.T [MOD (Lat.gS D) ^ 2] →
     ∀ (F0 : FlagG (VS D) D.R.rS (Tn u)) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)),
-      IsRowReps D F0 what₂ → ∀ (Z : MatZ D) (F' : LFlag (VS D) D.R.rS (Tn u')), F'.zt = F'.fl.z → ZhatL (lf D F0) F' = Z →
+      IsRowReps D F0 what₂ → ∀ (Z : MatZ D) (F' : LFlag (D.sp.Y 0) D.R.rS (Tn u')), F'.zt = F'.fl.z → ZhatL (lf D F0) F' = Z →
         Formalism.MainNotions.S.LocalSplitGroups.TotPos (GZ (Tn u) (Tn u') Z) →
         ∀ s : Finset (Submodule (𝓞 D.host.E) (VS D).V),
           IsGlueReps (VS D).hT (UPair D F0 F') (MMof D F0 F') s →
@@ -111,7 +111,7 @@ def NormMM : Prop :=
   ∀ (D : Formalism.BasicNotions.D7) (u u' : D.what₂.Word),
     (D.mem u).A.T ≡ (D.mem u').A.T [MOD (Lat.gS D) ^ 2] →
     ∀ (F0 : FlagG (VS D) D.R.rS (Tn u)) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)),
-      IsRowReps D F0 what₂ → ∀ (Z : MatZ D) (F' : LFlag (VS D) D.R.rS (Tn u')), F'.zt = F'.fl.z → ZhatL (lf D F0) F' = Z →
+      IsRowReps D F0 what₂ → ∀ (Z : MatZ D) (F' : LFlag (D.sp.Y 0) D.R.rS (Tn u')), F'.zt = F'.fl.z → ZhatL (lf D F0) F' = Z →
         Formalism.MainNotions.S.LocalSplitGroups.TotPos (GZ (Tn u) (Tn u') Z) →
         Formalism.HermitianLatticesTheory.IsIntegralLat (VS D).hT (MMof D F0 F') →
         nM D.host.F (VS D).hT (UPair D F0 F') (MMof D F0 F') =

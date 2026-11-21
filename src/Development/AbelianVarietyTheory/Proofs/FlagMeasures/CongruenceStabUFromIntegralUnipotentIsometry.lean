@@ -666,7 +666,7 @@ end Det
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-theorem frame_mem_of_XS (D : D7) (Λ : LatV D) {T : D.host.E} (F : LFlag (hS D) D.R.rS T) (hz : F.fl.z ∈ Λ)
+theorem frame_mem_of_XS (D : D7) (Λ : LatV D) {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (hz : F.fl.z ∈ Λ)
     (hX : XLam Λ F = XS D F.fl) (b : Fin (D.R.rS + 1)) : frame F b ∈ Λ := by
   refine Fin.lastCases ?_ (fun i => ?_) b
   · rw [frame_last]; exact hz

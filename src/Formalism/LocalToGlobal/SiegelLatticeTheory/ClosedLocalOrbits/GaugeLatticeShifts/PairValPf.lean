@@ -583,13 +583,13 @@ def NormRepStep : Prop :=
   ∀ (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (Λ : Submodule (𝓞 D.host.E) (VS D).V),
     IsRowLat D F0 Λ → ∀ t : TermsOf D u' F0 Λ,
       IsRel Λ (lf D F0) (PD D Λ (lf D F0) u') D.host.F t → IsGen Λ (lf D F0) (PD D Λ (lf D F0) u') (gS D) t →
-        ∃ F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E),
+        ∃ F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E),
           TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F' ∧ AdmWit Λ (gS D) (lf D F0) F' 1
 
 def NormRepMove : Prop :=
   ∀ (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (Λ : Submodule (𝓞 D.host.E) (VS D).V),
     IsRowLat D F0 Λ → ∀ t : TermsOf D u' F0 Λ, IsRel Λ (lf D F0) (PD D Λ (lf D F0) u') D.host.F t →
-      ∀ F₁ F₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E),
+      ∀ F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E),
         TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F₁ → AdmWit Λ (gS D) (lf D F0) F₁ 1 →
         TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F₂ → AdmWit Λ (gS D) (lf D F0) F₂ 1 →
         ∀ w : Point D.host.E (D.R.rS + 1), IsInCell (ZhatOM (ZhatL (lf D F0) F₁)) w →
@@ -610,7 +610,7 @@ variable {D : D7} {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS ((Tu D u : �
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 theorem pt_eq_of_cells (hCP : CellPointUniq) (hTF : TermFun D u u') (hrows : IsRowReps D F0 what₂)
-    (t : Term D u u' F0 what₂) {F₁ F₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)}
+    (t : Term D u u' F0 what₂) {F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)}
     (h₁ : TermDef.Rep t.lam (lf D F0) (PD D t.lam (lf D F0) u') t.cls F₁)
     (h₂ : TermDef.Rep t.lam (lf D F0) (PD D t.lam (lf D F0) u') t.cls F₂) {w w' : Point D.host.E (D.R.rS + 1)}
     (c₁ : IsInCell (ZhatOM (ZhatL (lf D F0) F₁)) w) (c₂ : IsInCell (ZhatOM (ZhatL (lf D F0) F₂)) w') : w = w' := by
