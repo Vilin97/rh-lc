@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Formalism.LocalToGlobal.ProjectiveLattices.ThShort
 public import Formalism.LocalToGlobal.ProjectiveLattices.IsLevMove
@@ -67,14 +66,14 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
 
 theorem sv_pull {S T : Type} [CommRing S] [CommRing T] {x : Sp S ⟶ Xo.X} {x' : Sp T ⟶ Xo.X}
     (pm : Gx x' ⟶ Gx x)
-    (hs : pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')))
+    (hs : pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left)
     {s : LB.Sec (PPx x)} {s' : LB.Sec (PPx x')}
     (ha : ∀ (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx x').U i ≤ pm ⁻¹ᵁ (PPx x).U i),
       (pm.appLE _ _ h).hom (s.f i) = s'.f i)
     {Z : Scheme.{0}} (r : Z ⟶ Gx x') (z : Z) {J} (hJ : Good Xo.univ.t.PP.L z J) :
     sv Xo.univ.t.G s (r ≫ pm) z J = sv Xo.univ.t.G s' r z J := by
-  have hm := hJ.mem (fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x'))) r
-  refine (sval_of s (r ≫ pm) z J (fun _ => J (r ≫ (Formalism.L2.PjFree.gxFst (x'))))
+  have hm := hJ.mem (fun _ : Fin 1 => (snd (Over.mk x') Xo.univ.t.G).left) r
+  refine (sval_of s (r ≫ pm) z J (fun _ => J (r ≫ (snd (Over.mk x') Xo.univ.t.G).left))
     (fun _ => by rw [Category.assoc, hs])).trans ?_
   refine (TranslMove.gs_appLE r pm z _ _ (FramedBaseChange.chart_le pm hs _) hm _).symm.trans ?_
   exact congrArg (gs r z _) (ha _ _)

@@ -57,6 +57,6 @@ theorem exists_piTensor_equiv : ∀ (ι σ : Type) [Fintype ι],
       MvPolynomial.rename_monomial, expEquiv, Equiv.ofBijective_apply]
     exact MvPolynomial.monomial_sum_one _ _
   refine ⟨e, fun f => ?_⟩
-  simpa using congrArg (fun F : MultilinearMap ℂ (fun _ : ι => MvPolynomial σ ℂ) _ => F f) key
+  simpa using MultilinearMap.congr_fun key f
 
 end GlobalTheory.PolyTensor

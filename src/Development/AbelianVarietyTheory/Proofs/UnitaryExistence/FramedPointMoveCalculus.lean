@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Formalism.LocalToGlobal.ProjectiveLattices.NormsFree
 public import Formalism.LocalToGlobal.ProjectiveLattices.RegPFree
@@ -221,17 +220,17 @@ theorem frMove_iff_carry {S : Type} [CommRing S] [Algebra c.F S] {ρ : Xo.X ⟶ 
 
 theorem exists_section {S : Type} [CommRing S] {ρ : Xo.X ⟶ Xo.X} (ν : SABMap Xo.univ.t Xo.univ.t ρ)
     {x x' : Sp S ⟶ Xo.X} (hx : x' = x ≫ ρ) {pm : Gx x ⟶ Gx x'}
-    (hf : pm ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x)))
-    (hs : pm ≫ (Formalism.L2.PjFree.gxFst (x')) = (Formalism.L2.PjFree.gxFst (x)) ≫ ν.φ) :
+    (hf : pm ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left)
+    (hs : pm ≫ (snd (Over.mk x') Xo.univ.t.G).left = (snd (Over.mk x) Xo.univ.t.G).left ≫ ν.φ) :
     ∃ σ : Gx x' ⟶ Gx x, σ ≫ pm = 𝟙 _ := by
-  have cond : (Formalism.L2.PjFree.gxSnd (x')) ≫ x' =
-      (Formalism.L2.PjFree.gxFst (x')) ≫ Xo.univ.t.G.hom := pullback.condition
-  have sq : (Formalism.L2.PjFree.gxFst (x')) ≫ Xo.univ.t.G.hom =
-      ((Formalism.L2.PjFree.gxSnd (x')) ≫ x) ≫ ρ :=
+  have cond : (fst (Over.mk x') Xo.univ.t.G).left ≫ x' =
+      (snd (Over.mk x') Xo.univ.t.G).left ≫ Xo.univ.t.G.hom := pullback.condition
+  have sq : (snd (Over.mk x') Xo.univ.t.G).left ≫ Xo.univ.t.G.hom =
+      ((fst (Over.mk x') Xo.univ.t.G).left ≫ x) ≫ ρ :=
     cond.symm.trans ((congrArg _ hx).trans (Category.assoc _ _ _).symm)
   obtain ⟨σ, s₁, s₂⟩ : ∃ σ : Gx x' ⟶ Gx x,
-      σ ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x')) ∧
-      σ ≫ (Formalism.L2.PjFree.gxFst (x)) = ν.cart.1.lift _ _ sq :=
+      σ ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left ∧
+      σ ≫ (snd (Over.mk x) Xo.univ.t.G).left = ν.cart.1.lift _ _ sq :=
     ⟨pullback.lift (f := x) (g := Xo.univ.t.G.hom) _ _ (ν.cart.1.lift_snd _ _ sq).symm,
       pullback.lift_fst _ _ _, pullback.lift_snd _ _ _⟩
   refine ⟨σ, ?_⟩

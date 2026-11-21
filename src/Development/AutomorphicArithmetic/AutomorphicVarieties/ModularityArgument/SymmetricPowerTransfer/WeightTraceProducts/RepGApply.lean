@@ -152,7 +152,7 @@ theorem thG_apply (j : ℕ) (P : VG I j) (S : I → Bool) : thG I j P S = sg S �
 end Bi
 
 def infG {R I : Type} [CommRing R] (em : I → R →+* ℂ) (n : ℕ) : GL (Fin n) R →* (I → GL (Fin n) ℂ) :=
-  Pi.monoidHom fun w => Matrix.GeneralLinearGroup.map (em w)
+  MonoidHom.pi fun w => Matrix.GeneralLinearGroup.map (em w)
 
 def WG {R I : Type} [CommRing R] [Fintype I] (em : I → R →+* ℂ) (j : ℕ) : Representation ℂ (GL (Fin 3) R) (VG I j) :=
   (repG I j).comp (infG em 3)

@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Formalism.LocalToGlobal.ProjectiveLattices.ThShort
 public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ThExprUniqOfChartIndep2
@@ -221,10 +220,10 @@ theorem levPt_push (hd : d.IsLev) {S : Type} [CommRing S] {x₂ : Sp S ⟶ d.Xo�
 theorem exists_column (hd : d.IsLev) {S : Type} [CommRing S] {x₂ : Sp S ⟶ d.Xo₂.X} {x₀ : Sp S ⟶ Xo.X}
     (h0 : x₂ ≫ d.r = x₀) {w : LB.Iso d.Xo₂.univ.t.PP.L (Xo.univ.t.PP.L.pull d.m.φ)} (hw : FrameLift.IsRig d w)
     {p : Gx x₂ ⟶ Gx x₀}
-    (p₂ : p ≫ (Formalism.L2.PjFree.gxFst (x₀)) = (snd (Over.mk x₂) d.Xo₂.univ.t.G).left ≫ d.m.φ)
-    (p₁ : p ≫ (Formalism.L2.PjFree.gxSnd (x₀)) = (fst (Over.mk x₂) d.Xo₂.univ.t.G).left)
+    (p₂ : p ≫ (snd (Over.mk x₀) Xo.univ.t.G).left = (snd (Over.mk x₂) d.Xo₂.univ.t.G).left ≫ d.m.φ)
+    (p₁ : p ≫ (fst (Over.mk x₀) Xo.univ.t.G).left = (fst (Over.mk x₂) d.Xo₂.univ.t.G).left)
     {s₂ : LB.Sec (PPx x₂)} {s : LB.Sec (PPx x₀)}
-    (hs : FrameLift.Rel (q₂ := (snd (Over.mk x₂) d.Xo₂.univ.t.G).left) (q := (Formalism.L2.PjFree.gxFst (x₀)))
+    (hs : FrameLift.Rel (q₂ := (snd (Over.mk x₂) d.Xo₂.univ.t.G).left) (q := (snd (Over.mk x₀) Xo.univ.t.G).left)
       w p s₂ s) {q x : Dw.La} (hq : q ∈ (d.I • ⊤ : Submodule (𝓞 E) Dw.La))
     (hx : q - (d.pd : 𝓞 E) • x ∈ (l.Mb • ⊤ : Submodule (𝓞 E) Dw.La)) {κ : ℕ} (hN : Odd (l.M * κ))
     {t : ptO d.Xo₂ x₂ ⟶ d.Xo₂.univ.t.G} (ht : t ^ (l.M * κ) = levPt d.Xo₂ x₂ q) {j : ℕ}

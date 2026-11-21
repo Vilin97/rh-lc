@@ -25,7 +25,7 @@ lemma Hf_add_left {ι : Type} [Fintype ι] (v v' w : EuclideanSpace ℂ ι) :
 lemma Hf_zero_left {ι : Type} [Fintype ι] (v : EuclideanSpace ℂ ι) : Hf 0 v = 0 := by
   simp [Hf]
 
-
+open Classical in
 def prj {dim : (E →+* ℂ) → ℕ} (σ : E →+* ℂ) : Vsp dim →ₗ[ℂ] Vsp dim where
   toFun v := WithLp.toLp 2 fun i => if i.1 = σ then v i else 0
   map_add' v w := by ext i; simp only [PiLp.add_apply]; split_ifs <;> simp
@@ -65,7 +65,7 @@ lemma ne_conj [IsCMField E] (σ : E →+* ℂ) : ComplexEmbedding.conjugate σ �
   rw [NumberField.InfinitePlace.isComplex_mk_iff] at hc
   exact hc (ComplexEmbedding.isReal_iff.mpr h)
 
-
+open Classical in
 def Mc {dim : (E →+* ℂ) → ℕ} (σ : E →+* ℂ) (c : ℂ) : Vsp dim →ₗ[ℂ] Vsp dim where
   toFun v := WithLp.toLp 2 fun i => if i.1 = σ then c * v i else
     if i.1 = ComplexEmbedding.conjugate σ then (starRingEnd ℂ) c * v i else 0

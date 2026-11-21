@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsUniqueSubMemInitSpan
 public import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
@@ -324,7 +323,7 @@ theorem thRel_cast {x₀ : Sp S ⟶ Xo.X} {x x' : Sp S ⟶ Y.X} (e : x = x') {t'
 theorem thRel_change (M M' : GChart Y) {x : Sp S ⟶ Y.X} (hh : ⊤ ≤ x ⁻¹ᵁ (M.U ⊓ M'.U)) {x₀ : Sp S ⟶ Xo.X}
     {t' : SAB H (Sp S)} (m1 : SABMap t' Xo.univ.t x₀) (m2 : SABMap t' Y.t x) {s : LB.Sec (PPx x₀)}
     (hs : ThRel m1 m2 M.U M.θ s) : ThRel m1 m2 M'.U M'.θ
-      (secMul ((Formalism.L2.PjFree.gxSnd (x₀)).appTop.hom (toΓ S (ev x _ hh (thRat M M')))) s) := by
+      (secMul ((fst (Over.mk x₀) Xo.univ.t.G).left.appTop.hom (toΓ S (ev x _ hh (thRat M M')))) s) := by
   have hw : m2.φ ≫ Y.t.G.hom = t'.G.hom ≫ x := m2.cart.1.w
   obtain ⟨w1, w2, σ, s1, r1, r2, i1, a, d⟩ := hs
   refine ⟨w1, w2, secMul (t'.G.hom.appTop.hom (toΓ S (ev x _ hh (thRat M M')))) σ, secMul _ s1, r1, r2,

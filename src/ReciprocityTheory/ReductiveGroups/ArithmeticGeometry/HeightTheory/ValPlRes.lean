@@ -149,7 +149,7 @@ theorem resDeg_addv (v : HeightOneSpectrum (integralClosure O L)) :
   let jO : (O ⧸ maximalIdeal O) ≃+* ResidueField ((vRing w).comap (algebraMap F L)) :=
     (Ideal.quotEquivOfEq hkerO.symm).trans (RingHom.quotientKerEquivOfSurjective hsurjO)
   have hmax : (v.asIdeal.comap (algebraMap O (integralClosure O L))).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal v.asIdeal
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := O) v.asIdeal
   haveI : v.asIdeal.LiesOver (maximalIdeal O) := ⟨(IsLocalRing.eq_maximalIdeal hmax).symm⟩
   have hc : (algebraMap (ResidueField ((vRing w).comap (algebraMap F L)))
       (ResidueField (vRing w))).comp jO.toRingHom =

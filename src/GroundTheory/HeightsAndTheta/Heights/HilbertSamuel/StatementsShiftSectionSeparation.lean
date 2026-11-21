@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -19,9 +18,9 @@ def ShiftSectionSeparation.Statement : Prop :=
     (y : (Σ k, ι k) → Ω) (D : ℕ) (A : HermLine ι),
     IsArithVar (mCoordIdeal y) (D + 1) → Birational y → IsSmoothHerm A →
     ∃ C : ℝ, 0 ≤ C ∧ ∀ q : ℕ, 1 ≤ q → ∀ (n : ℕ) (s : Ω),
-      s ∈ chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n → s ≠ 0 →
+      s ∈ chartLat y (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a n → s ≠ 0 →
       ∀ c : ℝ, c < Real.exp (-(C * n * ((q : ℝ) + 1))) →
-        ¬ IsBoundedH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) n c s
+        ¬ IsBoundedH (mCoordIdeal y) y (HermLine.zcomb A (fsH ι) (q : ℤ) 1) n c s
 
 end
 

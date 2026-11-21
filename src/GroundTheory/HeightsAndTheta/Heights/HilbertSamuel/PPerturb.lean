@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPerturb
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 

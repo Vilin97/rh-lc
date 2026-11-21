@@ -37,6 +37,8 @@ theorem weakSSmooth (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
         - ∫ x, db n z k (fun y => f y j) x * φ x ∂vol n z := by
     rw [← integral_sub (hI2 k j) (hI2 j k)]
     congr 1
+    funext x
+    simp only [sbar, sub_mul]
   rw [hL, hR, h1, h2]
   ring
 

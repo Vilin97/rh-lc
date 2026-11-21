@@ -8,7 +8,6 @@ public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPerturbSemipos
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBirationalModelExists
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotIsHorizontalOfDimOne
 public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.PConeTrdeg
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -263,11 +262,11 @@ theorem divCycle_le_of_chartLat {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω}
   omega
 
 theorem isSemipositiveRel_zcomb {P0 P : Ideal (MRing ι)} {M H : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} (hM : IsSemipositiveRel P0 P M)
-    (hH : IsSemipositiveRel P0 P H) (m n : ℕ) : IsSemipositiveRel P0 P ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H n)) := by
+    (hH : IsSemipositiveRel P0 P H) (m n : ℕ) : IsSemipositiveRel P0 P (HermLine.zcomb M H m n) := by
   open PerturbedSemipositivity in
-  have hfun : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H n)).h = fun y => M.h y ^ m * H.h y ^ n := by
+  have hfun : (HermLine.zcomb M H m n).h = fun y => M.h y ^ m * H.h y ^ n := by
     funext y
-    simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow]
+    simp [HermLine.zcomb]
   refine ⟨?_, fun z hz w hw => ?_⟩
   · have hMs : IsSmoothHerm M := hM.1
     have hHs : IsSmoothHerm H := hH.1
@@ -275,7 +274,7 @@ theorem isSemipositiveRel_zcomb {P0 P : Ideal (MRing ι)} {M H : ReciprocityTheo
     rw [hfun]
     exact (hMs.pow m).mul (hHs.pow n)
   · have hz' := hz.1
-    have hev : (fun y => Real.log (((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H n)).h y)) =ᶠ[𝓝 z]
+    have hev : (fun y => Real.log ((HermLine.zcomb M H m n).h y)) =ᶠ[𝓝 z]
         fun y => (m : ℝ) * Real.log (M.h y) + (n : ℝ) * Real.log (H.h y) := by
       filter_upwards [PerturbedSemipositivity.blocks_mem_nhds hz'] with y hy
       rw [hfun, Real.log_mul (pow_ne_zero _ (M.pos y hy).ne') (pow_ne_zero _ (H.pos y hy).ne'),
@@ -297,9 +296,9 @@ theorem isNefBigDatum_zcomb (hD : GroundTheory.Heights₂.Heights.Inter.DegreeGe
     (hP0 : P0 ≤ mCoordIdeal y) (hMs : IsSemipositiveRel P0 (mCoordIdeal y) M)
     (hMn : NefOnFibres (mCoordIdeal y) M.a) (hMc : IsConjInvariantH M) (hHa : H.a = fun _ => (1 : ℤ))
     (hHs : IsSemipositiveRel P0 (mCoordIdeal y) H) (hHc : IsConjInvariantH H) (hp : 1 ≤ p) :
-    IsNefBigDatum P0 y D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H p)) := by
+    IsNefBigDatum P0 y D (HermLine.zcomb M H q p) := by
   refine ⟨hP0, isSemipositiveRel_zcomb hMs hHs q p, HermLine.zcomb_isConjInvariantH hMc hHc _ _, ?_, ?_⟩
-  · have ha : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H p)).a = (q : ℤ) • M.a + (p : ℤ) • H.a := rfl
+  · have ha : (HermLine.zcomb M H q p).a = (q : ℤ) • M.a + (p : ℤ) • H.a := rfl
     intro W hW hPW hch hdim
     rw [ha, ShiftedNefBig.geoNum_one_add]
     refine add_nonneg (mul_nonneg (Nat.cast_nonneg q) (hMn W hW hPW hch hdim)) ?_
@@ -329,7 +328,7 @@ theorem SmallSectionMixed.proof (hG4 : G4.Statement) (hG41 : ArithmeticVolumeDim
     rw [show (mCoordIdeal y).comap (C : ℤ →+* MRing ι) = ⊥ from hP.2.2.1] at h2
     exact (Ideal.mem_bot).1 h2
   have : CharZero Ω := charZero_of_injective_algebraMap hinj
-  set N := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H (p : ℤ))) with hNdef
+  set N := HermLine.zcomb M H (q : ℤ) (p : ℤ) with hNdef
   obtain ⟨n, s, hn, hsL, hs0, c, hc, hbd⟩ : ∃ (n : ℕ) (s : Ω), 1 ≤ n ∧ s ∈ chartLat y N.a n ∧ s ≠ 0 ∧
       ∃ c : ℝ, c < 1 ∧ IsBoundedH (mCoordIdeal y) y N n c s := by
     obtain ⟨D, rfl⟩ : ∃ D, d = D + 1 := ⟨d - 1, by omega⟩
@@ -353,13 +352,13 @@ theorem SmallSectionMixed.proof (hG4 : G4.Statement) (hG41 : ArithmeticVolumeDim
   · exact fun h => hg0 (aeval_eq_zero_of_mem y h)
   · intro k
     rw [hδ0 k]
-    simp only [hNdef, _root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [hNdef, HermLine.zcomb, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     push_cast
     ring
   · intro z hz
     have h1 := hbd δ0 d0 e0 _ z he0 (isMultiHomog_coordProd c0 d0) hdeg hfg hz
-    have hh : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((n * q : ℕ) : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H ((n * p : ℕ) : ℤ))).h z = N.h z ^ n := by
-      simp only [hNdef, _root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, zpow_natCast]
+    have hh : (HermLine.zcomb M H ((n * q : ℕ) : ℤ) ((n * p : ℕ) : ℤ)).h z = N.h z ^ n := by
+      simp only [hNdef, HermLine.zcomb, zpow_natCast]
       rw [mul_pow, ← pow_mul, ← pow_mul, mul_comm q n, mul_comm p n]
     rw [hh]
     have hX : 0 ≤ ‖eval z (map (Int.castRingHom ℂ) (∏ k, (X ⟨k, c0 k⟩ : MRing ι) ^ d0 k))‖ * N.h z ^ n :=

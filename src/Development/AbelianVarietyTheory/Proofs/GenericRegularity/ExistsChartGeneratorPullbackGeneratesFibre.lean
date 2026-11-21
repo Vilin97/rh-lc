@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.RegularCharts.MatrixTwoByTwoCongr
 public import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
@@ -223,7 +222,7 @@ theorem secGen_of_secNZ (hT : SecTwistSt) {E : Type} [Field E] [NumberField E] [
     {l : Level H} {Xo : Moduli Dw l} {T : Type} [CommRing T] (x : Sp T ⟶ Xo.X) (θ : LB.Sec (PPx x)) (h : SecNZ x θ) :
     SecGen x θ := by
   intro s
-  have hw : LBIso (PPx x) (Xo.univ.t.PP.L.pull (Formalism.L2.PjFree.gxFst (x))) :=
+  have hw : LBIso (PPx x) (Xo.univ.t.PP.L.pull (snd (Over.mk x) Xo.univ.t.G).left) :=
     exists_iso_linComb Xo.univ.t.PP.isLB _ _ fun _ _ _ => by simp
   refine generates hT (Obj.toPolAV Xo.univ) (IsPullback.of_hasPullback _ _).flip
     (DVR.linComb_isLB _ Xo.univ.t.PP.isLB _ _) hw θ (fun y => ?_) s

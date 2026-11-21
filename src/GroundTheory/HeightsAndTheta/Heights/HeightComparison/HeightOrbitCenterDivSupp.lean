@@ -28,8 +28,9 @@ theorem exists_finitePlace_two_lt_one (K : Type) [Field K] [NumberField K] :
         map_eq_zero_iff _ (algebraMap ℤ (𝓞 K)).injective_int] at ha
       simp [ha])
   have h2 : (2 : 𝓞 K) ∈ Q := by
-    have : (2 : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := hQc ▸ Ideal.mem_span_singleton_self 2
-    simpa using this
+    have h2Z : (2 : ℤ) ∈ Ideal.under ℤ Q :=
+      hQc.symm ▸ Ideal.mem_span_singleton_self 2
+    simpa using (Ideal.mem_under (A := ℤ) (P := Q)).mp h2Z
   have hne : Q ≠ ⊥ := by
     rintro rfl
     rw [Ideal.mem_bot] at h2

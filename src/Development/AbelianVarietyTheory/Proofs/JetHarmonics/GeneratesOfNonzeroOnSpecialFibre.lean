@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Formalism.LocalToGlobal.ProjectiveLattices.ChartDirectionsIntegral
 public import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
@@ -321,8 +320,8 @@ variable {V : Type} [CommRing V] {x : Sp V ⟶ Xo.X} {G : SAB H (Sp V)} {B : Sch
 theorem tie_iff : (∃ (w1 : LB.Iso G.PP.L (Xo.univ.t.PP.L.pull m1.φ)) (w2 : LB.Iso G.PP.L (t.PP.L.pull m2.φ))
       (σ' : LB.Sec G.PP.L) (s1 : LB.Sec (Xo.univ.t.PP.L.pull m1.φ)) (θ2 : LB.Sec (t.PP.L.pull m2.φ)),
       RigIso m1 w1 ∧ RigIso m2 w2 ∧ IsoMaps w1 σ' s1 ∧ IsoMaps w2 σ' θ2 ∧ PullSec m2.φ θ θ2 ∧
-      ∀ g : G.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ →
-        g ≫ (Formalism.L2.PjFree.gxSnd (x)) = G.G.hom →
+      ∀ g : G.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ →
+        g ≫ (fst (Over.mk x) Xo.univ.t.G).left = G.G.hom →
         ∀ j (h : (Xo.univ.t.PP.L.pull m1.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit)),
           s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))) ↔ Comparison₂ m1 m2 θ s := by
   constructor
@@ -357,8 +356,8 @@ theorem tie_pull {V' : Type} [CommRing V'] {x' : Sp V' ⟶ Xo.X} {G' : SAB H (Sp
     {g : Sp V' ⟶ Sp V} (n : SABMap G' G g) (m1' : SABMap G' Xo.univ.t x') (m2' : SABMap G' t f')
     (hx : x' = g ≫ x) (hf : f' = g ≫ f) (e₁ : m1'.φ = n.φ ≫ m1.φ) (e₂ : m2'.φ = n.φ ≫ m2.φ)
     (s' : LB.Sec (PPx x')) (pm : Gx x' ⟶ Gx x)
-    (hs : pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst (x')))
-    (hb : pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd (x')) ≫ g)
+    (hs : pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x') Xo.univ.t.G).left)
+    (hb : pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x') Xo.univ.t.G).left ≫ g)
     (ha : ∀ (Z : Scheme.{0}) (r : Z ⟶ Gx x') (z : Z) (j : Xo.univ.t.PP.L.ι), r z ∈ (PPx x').U (fun _ => j) →
       gs r z _ (s'.f (fun _ => j)) = gs (r ≫ pm) z _ (s.f (fun _ => j)))
     (h : Comparison₂ m1 m2 θ s) : Comparison₂ m1' m2' θ s' := by

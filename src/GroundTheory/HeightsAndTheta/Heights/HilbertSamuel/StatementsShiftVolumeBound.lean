@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.IsSemipositiveRelTrivLine
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -22,9 +21,9 @@ def ShiftVolumeBound.Statement : Prop :=
     P0 ≤ mCoordIdeal y → IsSemipositiveRel P0 (mCoordIdeal y) A → NefOnFibres (mCoordIdeal y) A.a →
     IsConjInvariantH A →
     ∃ C : ℝ, 0 ≤ C ∧ ∀ q : ℕ, 1 ≤ q →
-      arVolP (IsSmallH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)))
-          (chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a) 1 D ≤
-        C * ((q : ℝ) + 1) * (genDeg (mCoordIdeal y) D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a : ℝ)
+      arVolP (IsSmallH (mCoordIdeal y) y (HermLine.zcomb A (fsH ι) (q : ℤ) 1))
+          (chartLat y (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a) 1 D ≤
+        C * ((q : ℝ) + 1) * (genDeg (mCoordIdeal y) D (HermLine.zcomb A (fsH ι) (q : ℤ) 1).a : ℝ)
 
 end
 

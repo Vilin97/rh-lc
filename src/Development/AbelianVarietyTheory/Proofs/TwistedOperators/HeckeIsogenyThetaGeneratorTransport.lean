@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeckePointLawsOfTransport
 public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsThetaTraceMulTIff
@@ -234,16 +233,16 @@ theorem exists_isoGen {Ω : Type} [Field Ω] [IsAlgClosed Ω] {p : ℕ} (hp : p.
   rw [(cls_eq_iff hA (pull_isLB hU _)).2 ⟨w, hw⟩, (cls_eq_iff hM (pull_isLB hU _)).2 ⟨w₂, hw₂⟩, cls_pull hU,
     cls_pull hU] at h₄
   have h₅ := congrArg (pull ((swap x).hom ≫ e.inv)) h₄
-  have a₁ : ((swap x).hom ≫ e.inv) ≫ m.cm.F = (Formalism.L2.PjFree.gxFst (x)) := by
+  have a₁ : ((swap x).hom ≫ e.inv) ≫ m.cm.F = (snd (Over.mk x) Xo.univ.t.G).left := by
     rw [← show _ = m.cm.F from e₀, Category.assoc, Iso.inv_hom_id_assoc, swap_hom_fst]
-  have a₂ : (((swap x).hom ≫ e.inv) ≫ ψ₂.left) ≫ m₂.cm.F = conj x x' ψ ≫ (Formalism.L2.PjFree.gxFst (x')) := by
+  have a₂ : (((swap x).hom ≫ e.inv) ≫ ψ₂.left) ≫ m₂.cm.F = conj x x' ψ ≫ (snd (Over.mk x') Xo.univ.t.G).left := by
     rw [← show _ = m₂.cm.F from r₀, conj_apply]
     show (_ ≫ e.hom ≫ ψ ≫ r.inv) ≫ _ = _
     simp only [Category.assoc, Iso.inv_hom_id_assoc, swap_inv_snd]
   rw [map_nsmul, ← pull_comp, ← pull_comp, ← pull_comp, a₁, a₂] at h₅
   refine (cls_eq_zero_iff (LB.isLB_linComb hU _ _)).1 ?_
   rw [cls_linComb hU, Fin.sum_univ_two]
-  show ((p : ℤ) ^ 2) • pull (Formalism.L2.PjFree.gxFst (x)) _ + (-1 : ℤ) • pull (conj x x' ψ ≫ _) _ = 0
+  show ((p : ℤ) ^ 2) • pull (snd (Over.mk x) Xo.univ.t.G).left _ + (-1 : ℤ) • pull (conj x x' ψ ≫ _) _ = 0
   rw [← h₅, ← Nat.cast_pow, natCast_zsmul, neg_one_zsmul, add_neg_cancel]
 
 section Points
@@ -256,7 +255,7 @@ def ptMap (h : IsLinHom Ψ) (σ : Z ⟶ Sp Ω) :
     Over.OverMorphism.ext (h.2.1 _ _ a b _ _ rfl rfl).symm
 
 theorem toFib_comp (h : IsLinHom Ψ) (σ : Z ⟶ Sp Ω) (a : Over.mk (σ ≫ x) ⟶ Xo.univ.t.G) :
-    toFib x σ a ≫ Ψ ≫ (Formalism.L2.PjFree.gxFst (x')) = (ptMap h σ a).left := rfl
+    toFib x σ a ≫ Ψ ≫ (snd (Over.mk x') Xo.univ.t.G).left = (ptMap h σ a).left := rfl
 
 theorem ptMap_act (h : IsLinHom Ψ) (σ : Z ⟶ Sp Ω) (r : 𝓞 E) (a : Over.mk (σ ≫ x) ⟶ Xo.univ.t.G) :
     ptMap h σ (a ≫ Xo.univ.t.act.act r) = ptMap h σ a ≫ Xo.univ.t.act.act r := by
@@ -273,8 +272,8 @@ theorem toFib_transl (σ : Z ⟶ Sp Ω) (a : Over.mk (σ ≫ x) ⟶ Xo.univ.t.G)
     toFib x σ a ≫ (translT Xo.univ.t.G c).left = toFib x σ (toPt x σ ≫ c * a) := by
   rw [toFib, toFib, ← Over.comp_left, lift_transl]
 
-abbrev taut (x : Sp Ω ⟶ Xo.X) : Over.mk ((Formalism.L2.PjFree.gxSnd (x)) ≫ x) ⟶ Xo.univ.t.G :=
-  Over.homMk (Formalism.L2.PjFree.gxFst (x)) (snd_hom x)
+abbrev taut (x : Sp Ω ⟶ Xo.X) : Over.mk ((fst (Over.mk x) Xo.univ.t.G).left ≫ x) ⟶ Xo.univ.t.G :=
+  Over.homMk (snd (Over.mk x) Xo.univ.t.G).left (snd_hom x)
 
 theorem toFib_taut (x : Sp Ω ⟶ Xo.X) : toFib x _ (taut x) = 𝟙 _ :=
   gx_ext (by rw [toFib_fst, Category.id_comp]) (by rw [toFib_snd, Category.id_comp]; rfl)
@@ -320,11 +319,11 @@ variable {x₁ x₂ : Sp Ω ⟶ Xo.X} {Ψ₁ : Gx x ⟶ Gx x₁} {Ψ₂ : Gx x �
   {β₁ : LB.Gen (isoLB Xo.univ.t.G Xo.univ.t.PP Ψ₁ k)} {β₂ : LB.Gen (isoLB Xo.univ.t.G Xo.univ.t.PP Ψ₂ k)}
 
 theorem exists_quotGen (h₁ : β₁.IsGen) (h₂ : β₂.IsGen) :
-    ∃ g : LB.Gen (LB.LinComb Xo.univ.t.PP.L (K := Fin 2) ![Ψ₂ ≫ (Formalism.L2.PjFree.gxFst (x₂)),
-      Ψ₁ ≫ (Formalism.L2.PjFree.gxFst (x₁))] ![1, -1]), g.IsGen ∧
+    ∃ g : LB.Gen (LB.LinComb Xo.univ.t.PP.L (K := Fin 2) ![Ψ₂ ≫ (snd (Over.mk x₂) Xo.univ.t.G).left,
+      Ψ₁ ≫ (snd (Over.mk x₁) Xo.univ.t.G).left] ![1, -1]), g.IsGen ∧
       ∀ (Z : Scheme.{0}) (r : Z ⟶ Gx x) z J, Good Xo.univ.t.PP.L z J → val g r z J = val β₁ r z J * (val β₂ r z J)⁻¹ := by
-  obtain ⟨g, hg, hv⟩ := exists_gen Xo.univ.t.PP.isLB (φ' := ![Ψ₂ ≫ (Formalism.L2.PjFree.gxFst (x₂)),
-      Ψ₁ ≫ (Formalism.L2.PjFree.gxFst (x₁))]) (ε' := ![1, -1]) (fun V _ h => by
+  obtain ⟨g, hg, hv⟩ := exists_gen Xo.univ.t.PP.isLB (φ' := ![Ψ₂ ≫ (snd (Over.mk x₂) Xo.univ.t.G).left,
+      Ψ₁ ≫ (snd (Over.mk x₁) Xo.univ.t.G).left]) (ε' := ![1, -1]) (fun V _ h => by
       refine (prod_sum₂ (K := Fin 2) (K' := Fin 2) (U := V) _ (prod_iso' h) (prod_neg _ _ (prod_iso' h))).trans ?_
       rw [Fin.prod_univ_two]
       simp only [Matrix.cons_val, zpow_neg, zpow_one, mul_inv, inv_inv]
@@ -332,7 +331,7 @@ theorem exists_quotGen (h₁ : β₁.IsGen) (h₂ : β₂.IsGen) :
     (LB.mulGen _ _ _ _ _ β₁ (LB.invGen _ _ _ β₂)) (mulGen_isGen _ _ _ _ _ _ _ h₁ (invGen_isGen _ _ _ _ h₂))
   exact ⟨g, hg, fun Z r z J hJ => by rw [hv Z r z J hJ, val_mul hJ, val_inv]⟩
 
-theorem surj_gx (x : Sp Ω ⟶ Xo.X) : Function.Surjective (Formalism.L2.PjFree.gxSnd (x)).appTop.hom :=
+theorem surj_gx (x : Sp Ω ⟶ Xo.X) : Function.Surjective (fst (Over.mk x) Xo.univ.t.G).left.appTop.hom :=
   surj_fst abelianSchemeLaws_all.1.globalFns (isAbelianScheme_of_proper Xo.univ.t Xo.univ.proper) _
 
 theorem exists_transl_const {φ : Fin 2 → (Gx x ⟶ Xo.univ.t.G.left)} {ε : Fin 2 → ℤ}
@@ -340,8 +339,8 @@ theorem exists_transl_const {φ : Fin 2 → (Gx x ⟶ Xo.univ.t.G.left)} {ε : F
     (hc : ∀ i, (translT Xo.univ.t.G c).left ≫ φ i = φ i) :
     ∃ a : Γ(Sp Ω, ⊤), ∀ (Z : Scheme.{0}) (r : Z ⟶ Gx x) z J, Good Xo.univ.t.PP.L z J →
       (val g (r ≫ (translT Xo.univ.t.G c).left) z J * (val g r z J)⁻¹).val =
-        gs (r ≫ (Formalism.L2.PjFree.gxSnd (x))) z ⊤ a := by
-  obtain ⟨a, ha⟩ := exists_const Xo.univ.t.PP.isLB (Formalism.L2.PjFree.gxSnd (x)) (surj_gx x) (fun V _ h => by
+        gs (r ≫ (fst (Over.mk x) Xo.univ.t.G).left) z ⊤ a := by
+  obtain ⟨a, ha⟩ := exists_const Xo.univ.t.PP.isLB (fst (Over.mk x) Xo.univ.t.G).left (surj_gx x) (fun V _ h => by
       refine (prod_sum₂ (K := Fin 2) (K' := Fin 2) (U := V) _ (Finset.prod_congr rfl fun i _ =>
         congrArg (fun q => h q ^ ε i) (hc i)) (prod_neg _ _ rfl)).trans (mul_inv_cancel _))
     (mulGen_isGen _ _ _ _ _ _ _ (pullGen_isGen _ _ _ _ hg (translT Xo.univ.t.G c).left) (invGen_isGen _ _ _ _ hg))
@@ -360,10 +359,10 @@ theorem quot_transl (l₁ : IsLinHom Ψ₁) (l₂ : IsLinHom Ψ₂) (h₁ : β�
   obtain ⟨σ, y, rfl⟩ := exists_toFib r
   have := Xo.univ.t.act.hom H.w0
   let w := Xo.univ.t.act.act H.w0
-  let t₀ := (Formalism.L2.PjFree.gxSnd (x))
+  let t₀ := (fst (Over.mk x) Xo.univ.t.G).left
   have F : ∀ (a : Over.mk (t₀ ≫ x) ⟶ Xo.univ.t.G) (V : Type) [CommGroup V] (h : (Gx x ⟶ Xo.univ.t.G.left) → V),
-      ∏ i, h (toFib x t₀ a ≫ (![Ψ₂ ≫ (Formalism.L2.PjFree.gxFst (x₂)),
-        Ψ₁ ≫ (Formalism.L2.PjFree.gxFst (x₁))] : Fin 2 → _) i) ^ (![1, -1] : Fin 2 → ℤ) i =
+      ∏ i, h (toFib x t₀ a ≫ (![Ψ₂ ≫ (snd (Over.mk x₂) Xo.univ.t.G).left,
+        Ψ₁ ≫ (snd (Over.mk x₁) Xo.univ.t.G).left] : Fin 2 → _) i) ^ (![1, -1] : Fin 2 → ℤ) i =
         h (ptMap l₂ t₀ a).left * (h (ptMap l₁ t₀ a).left)⁻¹ := fun a V _ h => by
     rw [Fin.prod_univ_two, ← zpow_neg_one, ← zpow_one (h (ptMap l₂ t₀ a).left)]; rfl
   let P := fun a : Over.mk (t₀ ≫ x) ⟶ Xo.univ.t.G => LB.pullGen _ _ _ g (toFib x t₀ a)
@@ -388,10 +387,10 @@ theorem quot_transl (l₁ : IsLinHom Ψ₁) (l₂ : IsLinHom Ψ₂) (h₁ : β�
   have vP : ∀ a b, val (P b) (toFib x σ a) z J = v (HeckeFrCompare.res x (toFib x σ a) (toFib_fst x σ a) ≫ b) :=
     fun a b => (val_pull hJ _ _ _).trans (by rw [← toFib_res x _ (toFib_fst x σ a)])
   have tm : ∀ {x' : Sp Ω ⟶ Xo.X} {Ψ : Gx x ⟶ Gx x'} (l : IsLinHom Ψ) a,
-      toFib x σ a ≫ (ptMap l t₀ (taut x)).left = toFib x σ a ≫ Ψ ≫ (Formalism.L2.PjFree.gxFst (x')) :=
+      toFib x σ a ≫ (ptMap l t₀ (taut x)).left = toFib x σ a ≫ Ψ ≫ (snd (Over.mk x') Xo.univ.t.G).left :=
     fun l a => by rw [← toFib_comp, toFib_taut, Category.id_comp]
-  have E₁ : ∀ a, (v (a * a ≫ w) * v 1 * val π (toFib x σ a ≫ Ψ₁ ≫ (Formalism.L2.PjFree.gxFst (x₁))) z J *
-      (v a * v a * v (a ≫ w) * val π (toFib x σ a ≫ Ψ₂ ≫ (Formalism.L2.PjFree.gxFst (x₂))) z J)⁻¹).val =
+  have E₁ : ∀ a, (v (a * a ≫ w) * v 1 * val π (toFib x σ a ≫ Ψ₁ ≫ (snd (Over.mk x₁) Xo.univ.t.G).left) z J *
+      (v a * v a * v (a ≫ w) * val π (toFib x σ a ≫ Ψ₂ ≫ (snd (Over.mk x₂) Xo.univ.t.G).left) z J)⁻¹).val =
       gs σ z ⊤ κ := fun a => by
     have := hκ _ (toFib x σ a) z J hJ
     rw [toFib_fst, val_mul hJ, val_inv, val_mul hJ, val_mul hJ, val_mul hJ, val_mul hJ, val_mul hJ, vP, vP, vP, vP,
@@ -432,14 +431,14 @@ theorem descends_ker (h : IsLinHom Ψ) [Etale Ψ] [QuasiCompact Ψ] [Surjective 
       (e : Ψ ⁻¹ᵁ U ≤ (translT Xo.univ.t.G c.1).left ⁻¹ᵁ (Ψ ⁻¹ᵁ U)),
       ((translT Xo.univ.t.G c.1).left.appLE _ _ e).hom f = f) : ∃! g : Γ(Gx x', U), (Ψ.app U).hom g = f := by
   have := Xo.univ.t.semi.smooth
-  have : Smooth (Formalism.L2.PjFree.gxSnd (x')) := by
+  have : Smooth (fst (Over.mk x') Xo.univ.t.G).left := by
     show Smooth (pullback.fst x' Xo.univ.t.G.hom)
     infer_instance
-  refine descends_of_points (Ω := Ω) (Formalism.L2.PjFree.gxSnd (x')) Ψ
+  refine descends_of_points (Ω := Ω) (fst (Over.mk x') Xo.univ.t.G).left Ψ
     (fun c : transKer Xo.univ.t.G Ψ => (translT Xo.univ.t.G c.1).left) (fun c => c.2) (fun y y' e e' => ?_) U f hf
   obtain ⟨σ, a, rfl⟩ := exists_toFib y
   obtain ⟨σ', a', rfl⟩ := exists_toFib y'
-  have e₁ := congrArg (· ≫ (Formalism.L2.PjFree.gxSnd (x'))) e'
+  have e₁ := congrArg (· ≫ (fst (Over.mk x') Xo.univ.t.G).left) e'
   simp only [Category.assoc] at e₁
   rw [h.1, toFib_fst] at e e₁
   rw [toFib_fst] at e₁
@@ -448,8 +447,8 @@ theorem descends_ker (h : IsLinHom Ψ) [Etale Ψ] [QuasiCompact Ψ] [Surjective 
     rw [← toFib_comp, ← toFib_comp, reassoc_of% e'])
   let j : Over.mk x ⟶ (Over.mk (𝟙 _ ≫ x) : Over Xo.X) := Over.homMk (𝟙 _) (by simp)
   refine ⟨⟨j ≫ (a' * a⁻¹), ?_⟩, ?_⟩
-  · have e₃ : ptMap h _ (toPt x (Formalism.L2.PjFree.gxSnd (x)) ≫ j ≫ (a' * a⁻¹)) = 1 := by
-      have e₄ : toPt x (Formalism.L2.PjFree.gxSnd (x)) ≫ j = HeckeFrCompare.res x _ (Category.comp_id _) :=
+  · have e₃ : ptMap h _ (toPt x (fst (Over.mk x) Xo.univ.t.G).left ≫ j ≫ (a' * a⁻¹)) = 1 := by
+      have e₄ : toPt x (fst (Over.mk x) Xo.univ.t.G).left ≫ j = HeckeFrCompare.res x _ (Category.comp_id _) :=
         Over.OverMorphism.ext (Category.comp_id _)
       refine Over.OverMorphism.ext ?_
       rw [← Category.assoc, e₄, ← MonObj.comp_one (HeckeFrCompare.res x' _ (Category.comp_id _))]
@@ -481,13 +480,13 @@ theorem mulT_props (x : Sp Ω ⟶ Xo.X) (hp : 1 ≤ p) : Etale (mulT Xo.univ.t.G
     · ext1
       · simp [← h₂, mulT]
       · simp [← h₁]
-  have : IsProper (Formalism.L2.PjFree.gxSnd (x)) := by
+  have : IsProper (fst (Over.mk x) Xo.univ.t.G).left := by
     show IsProper (pullback.fst x Xo.univ.t.G.hom)
     infer_instance
-  have : QuasiCompact ((mulT Xo.univ.t.G (Over.mk x) p).left ≫ (Formalism.L2.PjFree.gxSnd (x))) := by
+  have : QuasiCompact ((mulT Xo.univ.t.G (Over.mk x) p).left ≫ (fst (Over.mk x) Xo.univ.t.G).left) := by
     rw [(isPointed_mulT p).1]; infer_instance
   exact ⟨MorphismProperty.of_isPullback (P := @Etale) (pb.map (Over.forget _)) he,
-    QuasiCompact.of_comp _ (Formalism.L2.PjFree.gxSnd (x)),
+    QuasiCompact.of_comp _ (fst (Over.mk x) Xo.univ.t.G).left,
     (EmbSpan.pt_pow_and_surjective abelianSchemeLaws_all.1 (GlobalTheory.UnivPol.pol Xo) x p hp).2⟩
 
 
@@ -497,17 +496,17 @@ theorem isIntegral_gx (x : Sp Ω ⟶ Xo.X) : IsIntegral (Gx x) := by
   exact pullback_of_geometrically' GeometricallyIntegral.geometrically_isIntegral Ω x
 
 theorem transl_quot (hp : 1 ≤ p)
-    {g : LB.Gen (LB.LinComb Xo.univ.t.PP.L (K := Fin 2) ![Ψ ≫ (Formalism.L2.PjFree.gxFst (x')),
-      (mulT Xo.univ.t.G (Over.mk x) p).left ≫ (Formalism.L2.PjFree.gxFst (x))] ![1, -1])} (hg : g.IsGen)
+    {g : LB.Gen (LB.LinComb Xo.univ.t.PP.L (K := Fin 2) ![Ψ ≫ (snd (Over.mk x') Xo.univ.t.G).left,
+      (mulT Xo.univ.t.G (Over.mk x) p).left ≫ (snd (Over.mk x) Xo.univ.t.G).left] ![1, -1])} (hg : g.IsGen)
     {c : Over.mk x ⟶ Xo.univ.t.G} (hc : c ∈ transKer _ Ψ) (z : Gx x) {J} (hJ : Good Xo.univ.t.PP.L z J)
     (v : (Over.mk x ⟶ Xo.univ.t.G) → ((Gx x).presheaf.stalk z)ˣ)
     (hv : ∀ b, v b = val g (translT Xo.univ.t.G b).left z J) :
     (∀ a, a ^ p = 1 → ∃ u, ∀ b, v (a * b * c) * (v (a * b))⁻¹ = u * (v (b * c) * (v b)⁻¹)) ∧
     ∀ b, (∀ a, a ^ p = 1 → v (a * b * c) * (v (a * b))⁻¹ = v (b * c) * (v b)⁻¹) → c ^ p = 1 := by
   have hU := Xo.univ.t.PP.isLB
-  let φ : Fin 2 → (Gx x ⟶ Xo.univ.t.G.left) := ![(translPt _ (c ^ p)).left, (Formalism.L2.PjFree.gxFst (x))]
+  let φ : Fin 2 → (Gx x ⟶ Xo.univ.t.G.left) := ![(translPt _ (c ^ p)).left, (snd (Over.mk x) Xo.univ.t.G).left]
   let m : Gx x ⟶ Gx x := (mulT Xo.univ.t.G (Over.mk x) p).left
-  have e : (translT _ c).left ≫ m ≫ (Formalism.L2.PjFree.gxFst (x)) = m ≫ (translPt _ (c ^ p)).left := by
+  have e : (translT _ c).left ≫ m ≫ (snd (Over.mk x) Xo.univ.t.G).left = m ≫ (translPt _ (c ^ p)).left := by
     rw [← Over.comp_left, ← Over.comp_left, ← Over.comp_left, mulT, lift_snd, MonObj.comp_pow, translT, lift_snd,
       translPt_eq, translPt_eq, MonObj.comp_mul, lift_fst_assoc, lift_snd, mul_pow, MonObj.comp_pow]
   obtain ⟨D, hD, vD⟩ := exists_gen hU (φ' := fun k => m ≫ φ k) (ε' := fun k => -(![1, -1] : Fin 2 → ℤ) k)
@@ -528,7 +527,7 @@ theorem transl_quot (hp : 1 ≤ p)
     (Category.assoc _ _ _).symm.trans (congrArg (· ≫ _) a.2)
   choose κ hκ using fun a => exists_transl_const hD (hk a)
   have hκ' : ∀ (a : transKer Xo.univ.t.G m) b, (v (a * b * c) * (v (a * b))⁻¹ * (v (b * c) * (v b)⁻¹)⁻¹).val =
-      gs (Formalism.L2.PjFree.gxSnd (x)) z ⊤ (κ a) := fun a b => by
+      gs (fst (Over.mk x) Xo.univ.t.G).left z ⊤ (κ a) := fun a b => by
     have := hκ a _ (translT _ b).left z J hJ
     rwa [tt, vD', vD', ← Over.comp_left, translT, lift_fst] at this
   refine ⟨fun a ha => ⟨_, fun b => mul_inv_eq_iff_eq_mul.1 (Units.ext
@@ -537,7 +536,7 @@ theorem transl_quot (hp : 1 ≤ p)
     have := hκ' a b
     rw [hb _ ((mem_transKer_mulT p _).1 a.2), mul_inv_cancel, gs_eq _ _ ⊤ trivial] at this
     obtain ⟨t, ht⟩ := (Scheme.ΓSpecIso (CommRingCat.of Ω)).commRingCatIsoToRingEquiv.symm.surjective (κ a)
-    let ρ := (((Gx x).presheaf.germ ⊤ z trivial).hom.comp (Formalism.L2.PjFree.gxSnd (x)).appTop.hom).comp
+    let ρ := (((Gx x).presheaf.germ ⊤ z trivial).hom.comp (fst (Over.mk x) Xo.univ.t.G).left.appTop.hom).comp
       (Scheme.ΓSpecIso (CommRingCat.of Ω)).commRingCatIsoToRingEquiv.symm.toRingHom
     have h₁ : t = 1 := ρ.injective (by rw [map_one]; rw [← ht] at this; exact this.symm)
     rw [← ht, h₁, map_one]
@@ -614,7 +613,7 @@ theorem eq_zero_of_trace (hp : 1 ≤ p) (hβ : β.IsGen) (hs : IsMulPull _ Xo.un
       rw [tt, hc'.val _ z hJ, e₁]
       simp only [v, hv _ _ z J hJ, Units.val_mul]
       ring
-    · exact ((gs_eq _ _ _ (hJ.mem (fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x))) _) _).trans
+    · exact ((gs_eq _ _ _ (hJ.mem (fun _ : Fin 1 => (snd (Over.mk x) Xo.univ.t.G).left) _) _).trans
         ((congrArg _ (map_zero _)).trans (map_zero _))).symm
   rw [key]; rfl
 
@@ -632,13 +631,13 @@ theorem exists_trace (h : IsLinHom Ψ) [Etale Ψ] [QuasiCompact Ψ] [Surjective 
   have ht : ∀ j, t.f j = ∑ i, (F i).f j := fun j => by
     show (∑ i, SecM.ofSec _ (F i) : SecM _ Xo.univ.t.PP.L _ _).1 j = _
     rw [Submodule.coe_sum, Finset.sum_apply]; rfl
-  obtain ⟨u, hu⟩ := exists_sec Xo.univ.t.PP.isLB (φ' := fun _ : Fin 1 => Ψ ≫ (Formalism.L2.PjFree.gxFst (x')))
+  obtain ⟨u, hu⟩ := exists_sec Xo.univ.t.PP.isLB (φ' := fun _ : Fin 1 => Ψ ≫ (snd (Over.mk x') Xo.univ.t.G).left)
     (ε' := fun _ => 1) (fun V _ h => by
       refine (prod_sum₂ (K := Fin 1) (K' := Fin 2) (U := V) _ (Fin.prod_univ_one _)
         (prod_neg _ _ (prod_iso' h))).trans ?_
       rw [Fin.prod_univ_one]
       simp only [Sum.elim_inl, zpow_one, Category.id_comp, mul_inv, inv_inv, mul_inv_cancel_left])
-    (pullMulSec (L := Xo.univ.t.PP.L) (φ := fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x)))
+    (pullMulSec (L := Xo.univ.t.PP.L) (φ := fun _ : Fin 1 => (snd (Over.mk x) Xo.univ.t.G).left)
       (ε := fun _ => (p : ℤ) ^ 2) t (𝟙 _) (LB.invGen _ _ _ β) (invGen_isGen _ _ _ _ hβ))
   have hu' : ∀ (Z : Scheme.{0}) (r : Z ⟶ Gx x) (z : Z) (J), Good Xo.univ.t.PP.L z J →
       sval u r z J = ∑ i, ((val β (r ≫ (translT _ (U i).pt).left) z J)⁻¹).val *
@@ -651,7 +650,7 @@ theorem exists_trace (h : IsLinHom Ψ) [Etale Ψ] [QuasiCompact Ψ] [Surjective 
     rw [act_val (hF i) r z hJ, (hU i).val r z hJ, mul_right_comm, ← Units.val_mul, mul_right_comm, mul_inv_cancel,
       _root_.one_mul]
   obtain ⟨s', hs'⟩ := exists_sec_of_invariant Xo.univ.t.PP.isLB
-    (fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x'))) (fun _ => 1) Ψ
+    (fun _ : Fin 1 => (snd (Over.mk x') Xo.univ.t.G).left) (fun _ => 1) Ψ
     (fun a : transKer Xo.univ.t.G Ψ => (translT _ a.1).left) (fun a => a.2) (descends_ker h) u fun a y J hJ => by
       rw [hu' _ _ y J hJ, hu' _ _ y J hJ]
       have e := sum_reps_eq (reps_mul hc a.2) hc (fun b => ((val β (𝟙 _ ≫ (translT _ b).left) y J)⁻¹).val *
@@ -702,7 +701,7 @@ theorem existsUnique_trace (h : IsSplitOff l P p) (hC : Xo.univ.t.HeckeKer (Over
   · obtain ⟨β, s₁, n, r, hβ, hs, hr, hv⟩ := isThetaTrace_iff.1 hs'
     refine eq_zero_of_trace h.2.2.1.pos hβ.2.1 hs hr fun q z J hJ => (hv _ q z J hJ).symm.trans ?_
     exact (congrArg (gs _ z _) (h0 _)).trans ((gs_eq _ _ _
-      (hJ.mem (fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x'))) _) _).trans
+      (hJ.mem (fun _ : Fin 1 => (snd (Over.mk x') Xo.univ.t.G).left) _) _).trans
         ((congrArg _ (map_zero _)).trans (map_zero _)))
 
 

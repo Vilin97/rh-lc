@@ -8,7 +8,6 @@ public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPertu
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsNefAmpleGeneric
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsNefAmpleFibre
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsZCombLimit
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -25,7 +24,7 @@ set_option linter.unusedSectionVars false
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem HermLine.zcomb_isConjInvariantH {A B : HermLine ι} (hA : IsConjInvariantH A) (hB : IsConjInvariantH B)
-    (p q : ℤ) : IsConjInvariantH ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A p).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B q)) := fun z => by
+    (p q : ℤ) : IsConjInvariantH (HermLine.zcomb A B p q) := fun z => by
   show A.h _ ^ p * B.h _ ^ q = A.h z ^ p * B.h z ^ q
   rw [hA z, hB z]
 
@@ -49,18 +48,18 @@ theorem G2.proof (hK : KodairaSection.Statement) (hS : SectionProduct.Statement)
   obtain ⟨k, e, C, hk, hC, he0, he, heb⟩ := hK K ι Ω y D M P0 hD har hb hM
   have hHs : IsSmoothHerm (fsH ι) := by
     have h := (hP K ι P0 (mCoordIdeal y) M 0 1 hM.semipos le_rfl zero_le_one).1
-    have h' : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M 0).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).h = (fsH ι).h := by
+    have h' : (HermLine.zcomb M (fsH ι) 0 1).h = (fsH ι).h := by
       funext z
-      simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow]
+      simp [HermLine.zcomb]
     unfold IsSmoothHerm at h ⊢
     rwa [h'] at h
   refine ⟨k, e, C, hk, hC, he0, he, heb, fun p q hp hpq => ?_,
     hL K ι Ω y D M (fsH ι) II k hII har hM.semipos.1 hHs⟩
   have hkq : k * p ≤ q := hpq.le
-  have ha : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((q : ℤ) - k * p)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)).a =
+  have ha : (HermLine.zcomb M (fsH ι) ((q : ℤ) - k * p) p).a =
       ((q - k * p : ℕ) : ℤ) • M.a + fun _ => ((p : ℕ) : ℤ) := by
     funext i
-    simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, fsH, HermLine.ofMetrics, Nat.cast_sub hkq]
+    simp [HermLine.zcomb, fsH, HermLine.ofMetrics, Nat.cast_sub hkq]
   have hb0 : (0 : ℤ) ≤ (q : ℤ) - k * p := by
     have : ((k * p : ℕ) : ℤ) ≤ q := by exact_mod_cast hkq
     push_cast at this
@@ -72,24 +71,24 @@ theorem G2.proof (hK : KodairaSection.Statement) (hS : SectionProduct.Statement)
   · rw [ha]
     exact hF K ι Ω y D M.a (q - k * p) p ℓ har hM.nef (by omega) hp hℓ
   intro n s hs
-  have hB : e ∈ chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M k).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) (-1))).a 1 := by
-    have h' : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M k).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) (-1))).a = (k : ℤ) • M.a - 1 := by
+  have hB : e ∈ chartLat y (HermLine.zcomb M (fsH ι) k (-1)).a 1 := by
+    have h' : (HermLine.zcomb M (fsH ι) k (-1)).a = (k : ℤ) • M.a - 1 := by
       funext i
-      simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, fsH, HermLine.ofMetrics]
+      simp [HermLine.zcomb, fsH, HermLine.ofMetrics]
       ring
     rw [h']
     exact he
-  have hdeg : ((q * n : ℕ) : ℤ) • M.a = (n : ℤ) • ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((q : ℤ) - k * p)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)).a +
-      ((p * n : ℕ) : ℤ) • ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M k).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) (-1))).a := by
+  have hdeg : ((q * n : ℕ) : ℤ) • M.a = (n : ℤ) • (HermLine.zcomb M (fsH ι) ((q : ℤ) - k * p) p).a +
+      ((p * n : ℕ) : ℤ) • (HermLine.zcomb M (fsH ι) k (-1)).a := by
     funext i
-    simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, fsH, HermLine.ofMetrics]
+    simp [HermLine.zcomb, fsH, HermLine.ofMetrics]
     ring
   have hmet : ∀ z ∈ mcPts (mCoordIdeal y), M.h z ^ (q * n) =
-      ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((q : ℤ) - k * p)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)).h z ^ n *
-        ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M k).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) (-1))).h z ^ (p * n) := fun z hz =>
+      (HermLine.zcomb M (fsH ι) ((q : ℤ) - k * p) p).h z ^ n *
+        (HermLine.zcomb M (fsH ι) k (-1)).h z ^ (p * n) := fun z hz =>
     zcomb_metric_identity (M.pos z hz.1).ne' ((fsH ι).pos z hz.1).ne' q k p n
-  obtain ⟨hmem, hbd⟩ := hS K ι Ω y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((q : ℤ) - k * p)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p))
-    ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M k).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) (-1))) M n (p * n) (q * n) s e hdeg hmet hs hB
+  obtain ⟨hmem, hbd⟩ := hS K ι Ω y (HermLine.zcomb M (fsH ι) ((q : ℤ) - k * p) p)
+    (HermLine.zcomb M (fsH ι) k (-1)) M n (p * n) (q * n) s e hdeg hmet hs hB
   refine ⟨hmem, fun c hc => ?_⟩
   have h := hbd c (Real.exp C) hc heb
   rwa [← Real.exp_nat_mul] at h

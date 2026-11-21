@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.RegularCharts.ModelAt
 public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.FramedPointBaseChangeLaws
@@ -159,17 +158,17 @@ def toGx : G.G.left ⟶ Gx x :=
   (lift (Over.homMk G.G.hom rfl : Over.mk (G.G.hom ≫ x) ⟶ Over.mk x)
     (Over.homMk m.φ m.cart.1.w : Over.mk (G.G.hom ≫ x) ⟶ Xo.univ.t.G)).left
 
-theorem toGx_fst : toGx m ≫ (Formalism.L2.PjFree.gxSnd (x)) = G.G.hom :=
+theorem toGx_fst : toGx m ≫ (fst (Over.mk x) Xo.univ.t.G).left = G.G.hom :=
   congrArg (fun q => q.left) (lift_fst (Over.homMk G.G.hom rfl : Over.mk (G.G.hom ≫ x) ⟶ Over.mk x)
     (Over.homMk m.φ m.cart.1.w : Over.mk (G.G.hom ≫ x) ⟶ Xo.univ.t.G))
 
-theorem toGx_snd : toGx m ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ :=
+theorem toGx_snd : toGx m ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ :=
   congrArg (fun q => q.left) (lift_snd (Over.homMk G.G.hom rfl : Over.mk (G.G.hom ≫ x) ⟶ Over.mk x)
     (Over.homMk m.φ m.cart.1.w : Over.mk (G.G.hom ≫ x) ⟶ Xo.univ.t.G))
 
-theorem exists_inv : ∃ h : Gx x ⟶ G.G.left, h ≫ m.φ = (Formalism.L2.PjFree.gxFst (x)) ∧
-    h ≫ G.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ∧ toGx m ≫ h = 𝟙 _ ∧ h ≫ toGx m = 𝟙 _ := by
-  have cond : (Formalism.L2.PjFree.gxFst (x)) ≫ Xo.univ.t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ x :=
+theorem exists_inv : ∃ h : Gx x ⟶ G.G.left, h ≫ m.φ = (snd (Over.mk x) Xo.univ.t.G).left ∧
+    h ≫ G.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ∧ toGx m ≫ h = 𝟙 _ ∧ h ≫ toGx m = 𝟙 _ := by
+  have cond : (snd (Over.mk x) Xo.univ.t.G).left ≫ Xo.univ.t.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ x :=
     (Over.w (snd (Over.mk x) Xo.univ.t.G)).trans (Over.w (fst (Over.mk x) Xo.univ.t.G)).symm
   have hφ := m.cart.1.lift_fst _ _ cond
   have hh := m.cart.1.lift_snd _ _ cond
@@ -199,7 +198,7 @@ theorem exists_down (hw : PGen w) (s : LB.Sec (PPx x)) : ∃ τ, SecRel m w s τ
     have m₂ : (𝟙 _ ≫ toGx m) y ∈ (PPx x).U (fun _ => j') := le_toGx m j' h₂
     have gg : gm (𝟙 _ ≫ toGx m) y _ ((PPx x).g (fun _ => j) (fun _ => j')) =
         gm m.φ y (Xo.univ.t.PP.L.U j ⊓ Xo.univ.t.PP.L.U j') (Xo.univ.t.PP.L.g j j') :=
-      (gm_linComb Xo.univ.t.PP.L (K := Fin 1) (fun _ => (Formalism.L2.PjFree.gxFst (x))) (fun _ => 1)
+      (gm_linComb Xo.univ.t.PP.L (K := Fin 1) (fun _ => (snd (Over.mk x) Xo.univ.t.G).left) (fun _ => 1)
         (𝟙 _ ≫ toGx m) y _ _ m₁ m₂).trans
         (by rw [Fin.prod_univ_one, zpow_one, Category.assoc, toGx_snd, Category.id_comp])
     exact (gP _ (𝟙 _) y j h₁).trans ((gs_compat s (𝟙 _ ≫ toGx m) y m₁ m₂).trans
@@ -228,7 +227,7 @@ theorem multiple_iff {s s' : LB.Sec (PPx x)} {τ τ' : LB.Sec G.PP.L} (h₁ : Se
         cst (𝟙 _ ≫ G.G.hom) y a * ((gw w (𝟙 _) y j k).val * gs (𝟙 _) y _ (τ.f k)) := by
       rw [ha (fun _ => j), gs_mul _ y _ mg]
       refine congrArg₂ (· * ·) ?_ (h₁ _ (𝟙 _) y j k hj hy)
-      exact (gs_constFn (Formalism.L2.PjFree.gxSnd (x)) _ _ y mg a).trans (by rw [Category.assoc, toGx_fst])
+      exact (gs_constFn (fst (Over.mk x) Xo.univ.t.G).left _ _ y mg a).trans (by rw [Category.assoc, toGx_fst])
     rw [gs_mul _ y _ hy, gs_constFn _ _ _ y hy]
     rw [e1, mul_left_comm] at e2
     exact (Units.mul_right_inj _).1 e2
@@ -237,7 +236,7 @@ theorem multiple_iff {s s' : LB.Sec (PPx x)} {τ τ' : LB.Sec G.PP.L} (h₁ : Se
     refine fn_ext fun y hy => ?_
     have mφ : m.φ ((𝟙 _ ≫ h) y) ∈ Xo.univ.t.PP.L.U j :=
       (congrArg (fun q => q y ∈ Xo.univ.t.PP.L.U j)
-        (by rw [Category.id_comp, hφ] : (𝟙 _ ≫ h) ≫ m.φ = (Formalism.L2.PjFree.gxFst (x)))).mpr
+        (by rw [Category.id_comp, hφ] : (𝟙 _ ≫ h) ≫ m.φ = (snd (Over.mk x) Xo.univ.t.G).left)).mpr
         (Set.mem_iInter.1 hy 0)
     obtain ⟨k, hk⟩ := exists_chart G.PP.isLB ((𝟙 _ ≫ h) y)
     have c1 : (𝟙 _ ≫ h) ≫ toGx m = 𝟙 _ := by rw [Category.id_comp, h0g]
@@ -249,8 +248,8 @@ theorem multiple_iff {s s' : LB.Sec (PPx x)} {τ τ' : LB.Sec G.PP.L} (h₁ : Se
     have e2 : gs (𝟙 _) y _ (s.f (fun _ => j)) = (gw w (𝟙 _ ≫ h) y j k).val * gs (𝟙 _ ≫ h) y _ (τ.f k) :=
       (congrArg (fun q => gs q y _ (s.f (fun _ => j))) c1).symm.trans (h₁ _ (𝟙 _ ≫ h) y j k mφ hk)
     have e3 : gs (𝟙 _) y _ (scal x a (fun _ => j)) = cst ((𝟙 _ ≫ h) ≫ G.G.hom) y a := by
-      rw [show (𝟙 _ ≫ h) ≫ G.G.hom = 𝟙 _ ≫ (Formalism.L2.PjFree.gxSnd (x)) by rw [Category.assoc, hh]]
-      exact gs_constFn (Formalism.L2.PjFree.gxSnd (x)) _ (𝟙 _) y hy a
+      rw [show (𝟙 _ ≫ h) ≫ G.G.hom = 𝟙 _ ≫ (fst (Over.mk x) Xo.univ.t.G).left by rw [Category.assoc, hh]]
+      exact gs_constFn (fst (Over.mk x) Xo.univ.t.G).left _ (𝟙 _) y hy a
     exact e1.trans ((mul_left_comm _ _ _).trans (Eq.symm ((gs_mul _ y _ hy _ _).trans (congrArg₂ (· * ·) e3 e2))))
 
 end Theta

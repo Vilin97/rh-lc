@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Formalism.LocalToGlobal.ProjectiveLattices.ReadLeaves
 public import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
 
@@ -34,12 +33,12 @@ def bcPm {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ X
     (by rw [Category.assoc]; exact pullback.condition)
 
 theorem bcPm_snd {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X) :
-    bcPm ψ x ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst ((spMap ψ ≫ x))) := by
+    bcPm ψ x ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk (spMap ψ ≫ x)) Xo.univ.t.G).left := by
   rw [Over.snd_left, Over.snd_left]
   exact pullback.lift_snd _ _ _
 
 theorem bcPm_fst {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X) :
-    bcPm ψ x ≫ (Formalism.L2.PjFree.gxSnd (x)) = (Formalism.L2.PjFree.gxSnd ((spMap ψ ≫ x))) ≫ spMap ψ := by
+    bcPm ψ x ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk (spMap ψ ≫ x)) Xo.univ.t.G).left ≫ spMap ψ := by
   rw [Over.fst_left, Over.fst_left]
   exact pullback.lift_fst _ _ _
 

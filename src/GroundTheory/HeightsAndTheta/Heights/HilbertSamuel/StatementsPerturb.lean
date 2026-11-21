@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -16,7 +15,7 @@ noncomputable section
 
 def SemiposTwist.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P0 P : Ideal (MRing ι)) (L : HermLine ι)
-    (p q : ℕ), IsSemipositiveRel P0 P L → IsSemipositiveRel P0 P ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p))
+    (p q : ℕ), IsSemipositiveRel P0 P L → IsSemipositiveRel P0 P (HermLine.zcomb L (fsH ι) q p)
 
 def GenOnFibres.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [LinearOrder K] (ι : K → Type) [∀ k, Fintype (ι k)] [∀ k, LinearOrder (ι k)]

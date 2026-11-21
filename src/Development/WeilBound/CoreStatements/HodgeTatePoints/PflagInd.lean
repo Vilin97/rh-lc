@@ -13,7 +13,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSym
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.NumericalSegreClosed
 public import Development.WeilBound.CoreStatements.IdealCycleValues.ProjIdealIndependentOfBasis
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.PflagZ
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
 

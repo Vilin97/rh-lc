@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsCan
 
 @[expose] public section
@@ -23,11 +22,11 @@ theorem appLE_eq_mul_of_sv : ∀ {E : Type} [Field E] [NumberField E] [IsCMField
   apply fn_ext
   intro z _
   have hw : w z ∈ (LPow Xo.univ.t.G Xo.univ.t.PP.L k (Over.mk x)).U i := hi trivial
-  have hc : ∀ a b, (fun q => w ≫ (Formalism.L2.PjFree.gxFst (x))) a =
-      (fun q => w ≫ (Formalism.L2.PjFree.gxFst (x))) b → i a = i b := fun a b _ =>
+  have hc : ∀ a b, (fun q => w ≫ (snd (Over.mk x) Xo.univ.t.G).left) a =
+      (fun q => w ≫ (snd (Over.mk x) Xo.univ.t.G).left) b → i a = i b := fun a b _ =>
     congrArg i (Subsingleton.elim a b)
   obtain ⟨J, hJ, hJi⟩ := exists_good Xo.univ.t.PP.L Xo.univ.t.PP.isLB z
-    (fun q => w ≫ (Formalism.L2.PjFree.gxFst (x))) i hc (fun q => Set.mem_iInter.1 hw q)
+    (fun q => w ≫ (snd (Over.mk x) Xo.univ.t.G).left) i hc (fun q => Set.mem_iInter.1 hw q)
   have e := h z J hJ
   unfold sv at e
   rw [sval_of t w z J i hJi, sval_of t₀ w z J i hJi] at e

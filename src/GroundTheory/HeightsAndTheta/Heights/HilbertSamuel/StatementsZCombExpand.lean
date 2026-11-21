@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -17,10 +16,10 @@ def ZCombExpand.Statement : Prop :=
     (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ), IsIntersectionFamily I →
     ∀ (P : Ideal (MRing ι)) (d : ℕ) (M H : HermLine ι) (q p : ℕ),
       IsArithVar P d → IsSmoothHerm M → IsSmoothHerm H →
-      I P d (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H (p : ℤ)))) =
+      I P d (fun _ => HermLine.zcomb M H (q : ℤ) (p : ℤ)) =
           ∑ i ∈ Finset.range (d + 1), (d.choose i : ℝ) * (q : ℝ) ^ (d - i) * (p : ℝ) ^ i *
             I P d (fun j : Fin d => if (j : ℕ) < d - i then M else H) ∧
-        (1 ≤ d → I P d (fun j : Fin d => if (j : ℕ) = 0 then M else ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H (p : ℤ)))) =
+        (1 ≤ d → I P d (fun j : Fin d => if (j : ℕ) = 0 then M else HermLine.zcomb M H (q : ℤ) (p : ℤ)) =
           ∑ i ∈ Finset.range d, ((d - 1).choose i : ℝ) * (q : ℝ) ^ (d - 1 - i) * (p : ℝ) ^ i *
             I P d (fun j : Fin d => if (j : ℕ) < d - i then M else H))
 

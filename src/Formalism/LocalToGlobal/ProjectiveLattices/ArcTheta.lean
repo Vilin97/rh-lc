@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Formalism.LocalToGlobal.ProjectiveLattices.ThetaFramePf
 
 @[expose] public section
@@ -22,8 +21,8 @@ theorem frame_of_gen (Xo : Moduli Dw l) {S : Type} [CommRing S] (x : Sp S ⟶ Xo
     (hgen : ∀ s' : LB.Sec t'.PP.L, ∃! a : S, ∀ i, s'.f i = constFn t'.G.hom _ a * σ'.f i) :
     ∃ (s : LB.Sec (PPx x)) (w1 : LB.Iso t'.PP.L (Xo.univ.t.PP.L.pull m1.φ)) (s1 : LB.Sec (Xo.univ.t.PP.L.pull m1.φ)),
       RigIso m1 w1 ∧ IsoMaps w1 σ' s1 ∧
-      (∀ g : t'.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ →
-        g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom →
+      (∀ g : t'.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ →
+        g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom →
         ∀ j (h : (Xo.univ.t.PP.L.pull m1.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit)),
           s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))) ∧
       ∀ s'' : LB.Sec (PPx x), ∃! a : S, ∀ i, s''.f i = scal x a i * s.f i := by
@@ -31,13 +30,13 @@ theorem frame_of_gen (Xo : Moduli Dw l) {S : Type} [CommRing S] (x : Sp S ⟶ Xo
   have hPG := (ReciprocityTheory.ChartRestriction.G.Geo.Tor.isGen_iff w1).1 hw1
   obtain ⟨s1, hs1⟩ := thf_secUp hPG Xo.univ.t.PP.isLB t'.PP.isLB σ'
   have pb := m1.cart.1
-  have hcond : (Formalism.L2.PjFree.gxFst (x)) ≫ Xo.univ.t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ x :=
+  have hcond : (snd (Over.mk x) Xo.univ.t.G).left ≫ Xo.univ.t.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ x :=
     (Over.w (snd (Over.mk x) Xo.univ.t.G)).trans (Over.w (fst (Over.mk x) Xo.univ.t.G)).symm
-  obtain ⟨h, hF, hS⟩ : ∃ h : Gx x ⟶ t'.G.left, h ≫ m1.φ = (Formalism.L2.PjFree.gxFst (x)) ∧
-      h ≫ t'.G.hom = (Formalism.L2.PjFree.gxSnd (x)) :=
+  obtain ⟨h, hF, hS⟩ : ∃ h : Gx x ⟶ t'.G.left, h ≫ m1.φ = (snd (Over.mk x) Xo.univ.t.G).left ∧
+      h ≫ t'.G.hom = (fst (Over.mk x) Xo.univ.t.G).left :=
     ⟨pb.lift _ _ hcond, pb.lift_fst _ _ hcond, pb.lift_snd _ _ hcond⟩
-  obtain ⟨g0, g0F, g0S, hhg⟩ : ∃ g0 : t'.G.left ⟶ Gx x, g0 ≫ (Formalism.L2.PjFree.gxFst (x)) = m1.φ ∧
-      g0 ≫ (Formalism.L2.PjFree.gxSnd (x)) = t'.G.hom ∧ h ≫ g0 = 𝟙 _ := by
+  obtain ⟨g0, g0F, g0S, hhg⟩ : ∃ g0 : t'.G.left ⟶ Gx x, g0 ≫ (snd (Over.mk x) Xo.univ.t.G).left = m1.φ ∧
+      g0 ≫ (fst (Over.mk x) Xo.univ.t.G).left = t'.G.hom ∧ h ≫ g0 = 𝟙 _ := by
     let P : Over Xo.X := Over.mk (m1.φ ≫ Xo.univ.t.G.hom)
     let a : P ⟶ Over.mk x := Over.homMk t'.G.hom pb.w.symm
     let b : P ⟶ Xo.univ.t.G := Over.homMk m1.φ rfl
@@ -80,10 +79,10 @@ theorem frame_of_gen (Xo : Moduli Dw l) {S : Type} [CommRing S] (x : Sp S ⟶ Xo
   · intro s''
     have hle : ∀ j, m1.φ ⁻¹ᵁ Xo.univ.t.PP.L.U j ≤ g0 ⁻¹ᵁ (PPx x).U (fun _ => j) := by
       intro j y hy
-      have e : (g0 ≫ (Formalism.L2.PjFree.gxFst (x))) y ∈ Xo.univ.t.PP.L.U j := by
+      have e : (g0 ≫ (snd (Over.mk x) Xo.univ.t.G).left) y ∈ Xo.univ.t.PP.L.U j := by
         rw [g0F]
         exact hy
-      show g0.base y ∈ (⋂ k : Fin 1, ((Formalism.L2.PjFree.gxFst (x)).base ⁻¹' (Xo.univ.t.PP.L.U j : Set _)))
+      show g0.base y ∈ (⋂ k : Fin 1, ((snd (Over.mk x) Xo.univ.t.G).left.base ⁻¹' (Xo.univ.t.PP.L.U j : Set _)))
       exact Set.mem_iInter.2 fun _ => e
     have mm : ∀ (y : t'.G.left) j, m1.φ y ∈ Xo.univ.t.PP.L.U j → g0 y ∈ (PPx x).U (fun _ => j) :=
       fun y j hj => hle j hj
@@ -97,7 +96,7 @@ theorem frame_of_gen (Xo : Moduli Dw l) {S : Type} [CommRing S] (x : Sp S ⟶ Xo
       have e2 := gs_appLE g0 _ _ (hle j') (𝟙 _) y (show y ∈ m1.φ ⁻¹ᵁ Xo.univ.t.PP.L.U j' from hj')
         (s''.f (fun _ => j'))
       have e3 := gs_compat s'' g0 y (mm y j hj) (mm y j' hj')
-      have e4 := gm_linComb Xo.univ.t.PP.L (fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x))) (fun _ => (1 : ℤ))
+      have e4 := gm_linComb Xo.univ.t.PP.L (fun _ : Fin 1 => (snd (Over.mk x) Xo.univ.t.G).left) (fun _ => (1 : ℤ))
         g0 y (fun _ => j) (fun _ => j') (mm y j hj) (mm y j' hj')
       simp only [Fin.prod_univ_one, zpow_one, g0F] at e4
       rw [e1, e2, Category.id_comp, e3]
@@ -116,10 +115,10 @@ theorem frame_of_gen (Xo : Moduli Dw l) {S : Type} [CommRing S] (x : Sp S ⟶ Xo
       have hF' : m1.φ (h y) ∈ Xo.univ.t.PP.L.U j := by
         have e : (h ≫ m1.φ) y ∈ Xo.univ.t.PP.L.U j := by
           rw [hF]
-          exact LB.wchart_le Xo.univ.t.PP.L (fun _ : Fin 1 => (Formalism.L2.PjFree.gxFst (x))) (fun _ => j) 0 hy
+          exact LB.wchart_le Xo.univ.t.PP.L (fun _ : Fin 1 => (snd (Over.mk x) Xo.univ.t.G).left) (fun _ => j) 0 hy
         exact e
-      have eR1 : gs (𝟙 _) y _ (scal x a (fun _ => j)) = cst (Formalism.L2.PjFree.gxSnd (x)) y a := by
-        have := gs_constFn (Formalism.L2.PjFree.gxSnd (x)) ((PPx x).U (fun _ => j)) (𝟙 _) y hy a
+      have eR1 : gs (𝟙 _) y _ (scal x a (fun _ => j)) = cst (fst (Over.mk x) Xo.univ.t.G).left y a := by
+        have := gs_constFn (fst (Over.mk x) Xo.univ.t.G).left ((PPx x).U (fun _ => j)) (𝟙 _) y hy a
         rw [Category.id_comp] at this
         exact this
       have eR2 : gs (𝟙 _) y ((PPx x).U (fun _ => j)) ((thfPull1 Xo.univ.t.PP.L h hF s1).f (fun _ => j)) =
@@ -128,7 +127,7 @@ theorem frame_of_gen (Xo : Moduli Dw l) {S : Type} [CommRing S] (x : Sp S ⟶ Xo
         rw [Category.id_comp] at this
         exact this.trans (hs1 _ h y (fun _ => j) k (mem_pull.2 hF') hk)
       have eL : gs (𝟙 _) y _ (s''.f (fun _ => j)) =
-          (gw w1 h y j k).val * (cst (Formalism.L2.PjFree.gxSnd (x)) y a * gs h y _ (σ'.f k)) := by
+          (gw w1 h y j k).val * (cst (fst (Over.mk x) Xo.univ.t.G).left y a * gs h y _ (σ'.f k)) := by
         have e5 := gs_appLE g0 _ _ (hle j) h y (show h y ∈ m1.φ ⁻¹ᵁ Xo.univ.t.PP.L.U j from hF') (s''.f (fun _ => j))
         rw [hhg] at e5
         rw [← e5, hσ'' _ h y j k hF' hk, ha k, gs_mul h y _ hk, gs_constFn t'.G.hom _ h y hk a, hS]
@@ -142,7 +141,7 @@ theorem frame_of_gen (Xo : Moduli Dw l) {S : Type} [CommRing S] (x : Sp S ⟶ Xo
         exact TopologicalSpace.Opens.mem_iSup.1 this
       have e1 := hσ'' _ (𝟙 _) y j k hj hy
       have c1 : gs g0 y _ (scal x b (fun _ => j)) = cst t'.G.hom y b := by
-        have := gs_constFn (Formalism.L2.PjFree.gxSnd (x)) ((PPx x).U (fun _ => j)) g0 y (mm y j hj) b
+        have := gs_constFn (fst (Over.mk x) Xo.univ.t.G).left ((PPx x).U (fun _ => j)) g0 y (mm y j hj) b
         rw [g0S] at this
         exact this
       have c2 : gs g0 y ((PPx x).U (fun _ => j)) ((thfPull1 Xo.univ.t.PP.L h hF s1).f (fun _ => j)) =

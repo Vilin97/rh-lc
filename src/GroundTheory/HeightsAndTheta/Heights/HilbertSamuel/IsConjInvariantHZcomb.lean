@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsMonom
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPerturbMonomial
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsUpperNormalisation
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.PThmAExpand
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -28,16 +27,16 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem zcomb_eq_tensor (A X : HermLine ι) (q : ℕ) :
     HermLine.zcomb A X q 1 = (hermZpow A q).tensor X :=
-  hermLine_eq_of (by funext k; simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, HermLine.tensor, hermZpow])
-    (by funext z; simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, HermLine.tensor, hermZpow])
+  hermLine_eq_of (by funext k; simp [HermLine.zcomb, HermLine.tensor, hermZpow])
+    (by funext z; simp [HermLine.zcomb, HermLine.tensor, hermZpow])
 
 theorem isSmoothHerm_zcomb {A X : HermLine ι} (hA : IsSmoothHerm A) (hX : IsSmoothHerm X) (q : ℕ) :
-    IsSmoothHerm ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) := by
+    IsSmoothHerm (HermLine.zcomb A X q 1) := by
   rw [zcomb_eq_tensor]
   exact isSmoothHerm_tensor (isSmoothHerm_hermZpow hA q) hX
 
 theorem isConjInvariantH_zcomb {A B : HermLine ι} (hA : IsConjInvariantH A) (hB : IsConjInvariantH B) (p q : ℤ) :
-    IsConjInvariantH ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A p).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B q)) := by
+    IsConjInvariantH (HermLine.zcomb A B p q) := by
   intro z
   show A.h _ ^ p * B.h _ ^ q = A.h z ^ p * B.h z ^ q
   rw [hA z, hB z]
@@ -51,7 +50,7 @@ variable {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ
 theorem fam_update_zcomb (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1))
     (L : Fin (n + 1) → HermLine ι) (hL : ∀ j, IsSmoothHerm (L j)) (a : Fin (n + 1)) {A X : HermLine ι}
     (hA : IsSmoothHerm A) (hX : IsSmoothHerm X) (q : ℕ) :
-    I P (n + 1) (Function.update L a ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1))) =
+    I P (n + 1) (Function.update L a (HermLine.zcomb A X q 1)) =
       q * I P (n + 1) (Function.update L a A) + I P (n + 1) (Function.update L a X) := by
   rw [zcomb_eq_tensor]
   have hAq := isSmoothHerm_hermZpow hA (q : ℤ)
@@ -64,7 +63,7 @@ theorem fam_update_zcomb (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1
 
 theorem fam_eq_famExt_zcomb (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1)) {A X : HermLine ι}
     (hA : IsSmoothHerm A) (hX : IsSmoothHerm X) (q : ℕ) (T : Finset (Fin (n + 1))) (t : Fin (n + 1) → Fin 2) :
-    I P (n + 1) (fun j => if j ∈ T then ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) else ![X, A] (t j)) =
+    I P (n + 1) (fun j => if j ∈ T then HermLine.zcomb A X q 1 else ![X, A] (t j)) =
       famExt I P (n + 1) ![X, A] (fun j => if j ∈ T then ![1, (q : ℝ)] else Pi.single (t j) 1) := by
   have hsm : ∀ i, IsSmoothHerm (![X, A] i) := Fin.forall_fin_two.mpr ⟨hX, hA⟩
   induction T using Finset.induction_on generalizing t with
@@ -88,25 +87,25 @@ theorem fam_eq_famExt_zcomb (hI : IsIntersectionFamily I) (hP : IsArithVar P (n 
       rcases eq_or_ne j a with rfl | h
       · simp [ha]
       · simp [Function.update_of_ne h]
-    have hL : ∀ j, IsSmoothHerm ((fun j => if j ∈ T then ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) else ![X, A] (t j)) j) := by
+    have hL : ∀ j, IsSmoothHerm ((fun j => if j ∈ T then HermLine.zcomb A X q 1 else ![X, A] (t j)) j) := by
       intro j
       dsimp only
       split_ifs
       · exact isSmoothHerm_zcomb hA hX q
       · exact hsm (t j)
-    have eL : (fun j => if j ∈ insert a T then ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) else ![X, A] (t j)) =
-        Function.update (fun j => if j ∈ T then ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) else ![X, A] (t j)) a
-          ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) :=
+    have eL : (fun j => if j ∈ insert a T then HermLine.zcomb A X q 1 else ![X, A] (t j)) =
+        Function.update (fun j => if j ∈ T then HermLine.zcomb A X q 1 else ![X, A] (t j)) a
+          (HermLine.zcomb A X q 1) :=
       hins _ _
     have eV : (fun j => if j ∈ insert a T then (![1, (q : ℝ)] : Fin 2 → ℝ) else Pi.single (t j) 1) =
         Function.update (fun j => if j ∈ T then (![1, (q : ℝ)] : Fin 2 → ℝ) else Pi.single (t j) 1) a
           ![1, (q : ℝ)] :=
       hins (![1, (q : ℝ)] : Fin 2 → ℝ) fun i => Pi.single i 1
-    have hA1 : Function.update (fun j => if j ∈ T then ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) else ![X, A] (t j)) a A =
-        fun j => if j ∈ T then ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) else ![X, A] (Function.update t a 1 j) :=
+    have hA1 : Function.update (fun j => if j ∈ T then HermLine.zcomb A X q 1 else ![X, A] (t j)) a A =
+        fun j => if j ∈ T then HermLine.zcomb A X q 1 else ![X, A] (Function.update t a 1 j) :=
       hupd _ ![X, A] 1
-    have hX0 : Function.update (fun j => if j ∈ T then ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) else ![X, A] (t j)) a X =
-        fun j => if j ∈ T then ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1)) else ![X, A] (Function.update t a 0 j) :=
+    have hX0 : Function.update (fun j => if j ∈ T then HermLine.zcomb A X q 1 else ![X, A] (t j)) a X =
+        fun j => if j ∈ T then HermLine.zcomb A X q 1 else ![X, A] (Function.update t a 0 j) :=
       hupd _ ![X, A] 0
     have hV1 : Function.update (fun j => if j ∈ T then (![1, (q : ℝ)] : Fin 2 → ℝ) else Pi.single (t j) 1) a
         (Pi.single 1 1) = fun j => if j ∈ T then ![1, (q : ℝ)] else Pi.single (Function.update t a 1 j) 1 :=
@@ -125,9 +124,9 @@ theorem fam_eq_famExt_zcomb (hI : IsIntersectionFamily I) (hP : IsArithVar P (n 
 
 theorem tendsto_fam_zcomb (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1)) {A X : HermLine ι}
     (hA : IsSmoothHerm A) (hX : IsSmoothHerm X) :
-    Tendsto (fun q : ℕ => I P (n + 1) (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1))) / (q : ℝ) ^ (n + 1)) atTop
+    Tendsto (fun q : ℕ => I P (n + 1) (fun _ => HermLine.zcomb A X q 1) / (q : ℝ) ^ (n + 1)) atTop
       (𝓝 (I P (n + 1) (fun _ => A))) := by
-  have hfull : ∀ q : ℕ, I P (n + 1) (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow X 1))) =
+  have hfull : ∀ q : ℕ, I P (n + 1) (fun _ => HermLine.zcomb A X q 1) =
       famExt I P (n + 1) ![X, A] (fun _ => ![1, (q : ℝ)]) := by
     intro q
     simpa using fam_eq_famExt_zcomb hI hP hA hX q Finset.univ (fun _ => 0)
@@ -177,15 +176,15 @@ theorem ArithmeticVolumeNef.proof (hS : MonomialShift.Statement) (hPM : PerturbM
   have hf0 : ∀ τ, 0 ≤ f τ := fun τ => div_nonneg (hcnt _ _ _) (div_nonneg (by positivity) hFpos.le)
 
   have key : ∀ q : ℕ, 1 ≤ q → ∀ ε : ℝ, 0 < ε → limsup f atTop ≤
-      (II K ι (mCoordIdeal y) (D + 1) (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1))) + ε) / (q : ℝ) ^ (D + 1) := by
+      (II K ι (mCoordIdeal y) (D + 1) (fun _ => HermLine.zcomb A (fsH ι) q 1) + ε) / (q : ℝ) ^ (D + 1) := by
     intro q hq ε hε
-    set B := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) with hBdef
+    set B := HermLine.zcomb A (fsH ι) q 1 with hBdef
     set c := II K ι (mCoordIdeal y) (D + 1) (fun _ => B) + ε with hc
     have hsg : IsSmallGeneratedDatum P0 y D B := hPM K ι Ω y D a A P0 q hD hY hbir ha hP0 hsemi hmon hq
     have hBconj : IsConjInvariantH B := isConjInvariantH_zcomb hconj isConjInvariantH_fsH _ _
     have hBa : ∀ k, 1 ≤ B.a k := by
       intro k
-      simp only [hBdef, _root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, fsH, HermLine.ofMetrics, ha, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
+      simp only [hBdef, HermLine.zcomb, fsH, HermLine.ofMetrics, ha, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
         Pi.one_apply, mul_one]
       nlinarith [show (0 : ℤ) ≤ (q : ℤ) * (a k : ℤ) by positivity]
     obtain ⟨N, hN⟩ := eventually_atTop.mp (hU K ι Ω y D B P0 II hD hII hY hbir hsg hBconj hBa ε hε)
@@ -232,7 +231,7 @@ theorem ArithmeticVolumeNef.proof (hS : MonomialShift.Statement) (hPM : PerturbM
   have hT := tendsto_fam_zcomb (hII K ι) hY hsemi.1 (show IsSmoothHerm (fsH ι) from isSmoothHerm_ofMetrics_fs 1)
   refine le_of_forall_pos_le_add fun ε hε => ?_
   have hev : ∀ᶠ q : ℕ in atTop, limsup f atTop - ε ≤
-      II K ι (mCoordIdeal y) (D + 1) (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1))) / (q : ℝ) ^ (D + 1) := by
+      II K ι (mCoordIdeal y) (D + 1) (fun _ => HermLine.zcomb A (fsH ι) q 1) / (q : ℝ) ^ (D + 1) := by
     filter_upwards [eventually_ge_atTop 1] with q hq
     have hk := key q hq ε hε
     have hq1 : (1 : ℝ) ≤ (q : ℝ) ^ (D + 1) := one_le_pow₀ (by exact_mod_cast hq)

@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.UnivFrame
 public import Formalism.LocalToGlobal.ProjectiveLattices.AllTest
@@ -254,7 +253,7 @@ theorem existsUnique_glue : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     MorphismProperty.of_isPullback (P := @IsOpenImmersion) (hp.isPullback rfl).flip (away_open r)
   have hra : ∀ (r : S) {pm}, Can Xo.univ.t.G (spMap (algebraMap S (Localization.Away r))) x
       (spMap (algebraMap S (Localization.Away r)) ≫ x) pm → ∀ p : Gx x,
-      (∃ y, pm y = p) ↔ r ∉ PrimeSpectrum.asIdeal ((Formalism.L2.PjFree.gxSnd (x)) p) := by
+      (∃ y, pm y = p) ↔ r ∉ PrimeSpectrum.asIdeal ((fst (Over.mk x) Xo.univ.t.G).left p) := by
     intro r pm hp p
     refine Iff.trans ⟨?_, ?_⟩ (away_range r _)
     · rintro ⟨y, rfl⟩
@@ -266,7 +265,7 @@ theorem existsUnique_glue : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   simp only [fun i => secBC_iff (ha i)]
   refine glue_rel a (fun p => ?_) _ _ (fun i => (ha i).1) s fun i j y y' hy => ?_
   · by_contra hp
-    let P : PrimeSpectrum S := (Formalism.L2.PjFree.gxSnd (x)) p
+    let P : PrimeSpectrum S := (fst (Over.mk x) Xo.univ.t.G).left p
     refine P.isPrime.ne_top (top_le_iff.1 (hspan ▸ Ideal.span_le.2 ?_))
     rintro _ ⟨i, rfl⟩
     by_contra hi

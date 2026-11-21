@@ -11,7 +11,6 @@ public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartBundleBa
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.MemSpanOfTwistedDualGens
 public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.X_join_model
 public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XPluckerFrame
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
 

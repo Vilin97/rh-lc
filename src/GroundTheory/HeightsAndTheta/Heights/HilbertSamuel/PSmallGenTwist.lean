@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPerturb
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionBoundedMul
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -217,27 +216,27 @@ theorem smallGen_fsH (y : (Σ k, ι k) → Ω) : SmallGen y (fsH ι) := by
     rwa [PiLp.toLp_apply] at this
 
 theorem smallGen_zcomb (y : (Σ k, ι k) → Ω) (L : HermLine ι) (hL : SmallGen y L) (q p : ℕ) :
-    SmallGen y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow L q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) p)) := by
+    SmallGen y (HermLine.zcomb L (fsH ι) q p) := by
   induction q with
   | zero =>
     induction p with
     | zero =>
-      exact smallGen_of_trivial y _ (by funext k; simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow]) (fun z => by simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow])
+      exact smallGen_of_trivial y _ (by funext k; simp [HermLine.zcomb]) (fun z => by simp [HermLine.zcomb])
     | succ p ih =>
       refine smallGen_mul y _ (fsH ι) _ ?_ (fun z => ?_) ih (smallGen_fsH y)
       · funext k
-        simp only [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+        simp only [HermLine.zcomb, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
         push_cast
         ring
-      · simp only [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, zpow_natCast, pow_succ]
+      · simp only [HermLine.zcomb, zpow_natCast, pow_succ]
         ring
   | succ q ih =>
     refine smallGen_mul y _ L _ ?_ (fun z => ?_) ih hL
     · funext k
-      simp only [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+      simp only [HermLine.zcomb, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
       push_cast
       ring
-    · simp only [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, zpow_natCast, pow_succ]
+    · simp only [HermLine.zcomb, zpow_natCast, pow_succ]
       ring
 
 end SmallGenTwist

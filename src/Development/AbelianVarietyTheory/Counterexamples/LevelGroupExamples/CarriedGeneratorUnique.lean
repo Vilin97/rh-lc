@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Formalism.LocalToGlobal.ProjectiveLattices.IsLevMove
 public import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.LevelGroupEqTopOfCoprime
@@ -22,12 +21,12 @@ attribute [local instance] Over.cartesianMonoidalCategory CategoryTheory.Hom.gro
 
 theorem pinned_isIso {S : Type} [CommRing S] {ρ : Xo.X ⟶ Xo.X} (ν : SABMap Xo.univ.t Xo.univ.t ρ)
     (x : Sp S ⟶ Xo.X) (pm : Gx x ⟶ Gx (x ≫ ρ))
-    (hf : pm ≫ (Formalism.L2.PjFree.gxSnd ((x ≫ ρ))) = (Formalism.L2.PjFree.gxSnd (x)))
-    (hs : pm ≫ (Formalism.L2.PjFree.gxFst ((x ≫ ρ))) = (Formalism.L2.PjFree.gxFst (x)) ≫ ν.φ) :
+    (hf : pm ≫ (fst (Over.mk (x ≫ ρ)) Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left)
+    (hs : pm ≫ (snd (Over.mk (x ≫ ρ)) Xo.univ.t.G).left = (snd (Over.mk x) Xo.univ.t.G).left ≫ ν.φ) :
     IsIso pm := by
-  have p1 : IsPullback (Formalism.L2.PjFree.gxFst (x)) (Formalism.L2.PjFree.gxSnd (x)) Xo.univ.t.G.hom x :=
+  have p1 : IsPullback (snd (Over.mk x) Xo.univ.t.G).left (fst (Over.mk x) Xo.univ.t.G).left Xo.univ.t.G.hom x :=
     (IsPullback.of_hasPullback x Xo.univ.t.G.hom).flip
-  have p2 : IsPullback (Formalism.L2.PjFree.gxFst ((x ≫ ρ))) (Formalism.L2.PjFree.gxSnd ((x ≫ ρ)))
+  have p2 : IsPullback (snd (Over.mk (x ≫ ρ)) Xo.univ.t.G).left (fst (Over.mk (x ≫ ρ)) Xo.univ.t.G).left
       Xo.univ.t.G.hom (x ≫ ρ) := (IsPullback.of_hasPullback (x ≫ ρ) Xo.univ.t.G.hom).flip
   have p3 := p1.paste_horiz ν.cart.1
   have : pm = (p3.isoIsPullback _ _ p2).hom := by
@@ -38,11 +37,11 @@ theorem pinned_isIso {S : Type} [CommRing S] {ρ : Xo.X ⟶ Xo.X} (ν : SABMap X
 
 theorem carried_generator_unique {S : Type} [CommRing S] {ρ : Xo.X ⟶ Xo.X} (ν : SABMap Xo.univ.t Xo.univ.t ρ)
     (x : Sp S ⟶ Xo.X) (pm : Gx x ⟶ Gx (x ≫ ρ))
-    (hf : pm ≫ (Formalism.L2.PjFree.gxSnd ((x ≫ ρ))) = (Formalism.L2.PjFree.gxSnd (x)))
-    (hs : pm ≫ (Formalism.L2.PjFree.gxFst ((x ≫ ρ))) = (Formalism.L2.PjFree.gxFst (x)) ≫ ν.φ)
+    (hf : pm ≫ (fst (Over.mk (x ≫ ρ)) Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left)
+    (hs : pm ≫ (snd (Over.mk (x ≫ ρ)) Xo.univ.t.G).left = (snd (Over.mk x) Xo.univ.t.G).left ≫ ν.φ)
     (s' s'' : LB.Sec (PPx (x ≫ ρ)))
     (h : ∀ (i j : Xo.univ.t.PP.L.ι) (W : (Gx x).Opens),
-        W = (Formalism.L2.PjFree.gxFst (x)) ⁻¹ᵁ
+        W = (snd (Over.mk x) Xo.univ.t.G).left ⁻¹ᵁ
           ((LB.div (Xo.univ.t.PP.L.pull ν.cm.F) Xo.univ.t.PP.L).U ((fun _ => i), j)) →
         ∀ (h₁ : W ≤ pm ⁻¹ᵁ (PPx (x ≫ ρ)).U (fun _ => i)),
         (pm.appLE ((PPx (x ≫ ρ)).U (fun _ => i)) W h₁).hom (s'.f (fun _ => i)) =
@@ -52,18 +51,18 @@ theorem carried_generator_unique {S : Type} [CommRing S] {ρ : Xo.X ⟶ Xo.X} (�
   have inj : Function.Injective (pm.app ((PPx (x ≫ ρ)).U (fun _ => i))).hom :=
     (ConcreteCategory.bijective_of_isIso (pm.app ((PPx (x ≫ ρ)).U (fun _ => i)))).1
   apply inj
-  let W : Xo.univ.t.PP.L.ι → (Gx x).Opens := fun j => (Formalism.L2.PjFree.gxFst (x)) ⁻¹ᵁ
+  let W : Xo.univ.t.PP.L.ι → (Gx x).Opens := fun j => (snd (Over.mk x) Xo.univ.t.G).left ⁻¹ᵁ
           ((LB.div (Xo.univ.t.PP.L.pull ν.cm.F) Xo.univ.t.PP.L).U ((fun _ => i), j))
   have hW : ∀ j, W j ≤ pm ⁻¹ᵁ (PPx (x ≫ ρ)).U (fun _ => i) := fun j =>
     GlobalTheory.LevActCompare.overlap_le_tgt ν.cm.F pm hs i j
   refine (Gx x).sheaf.eq_of_locally_eq' W _ (fun j => homOfLE (hW j)) ?_ _ _ ?_
   · intro z hz
-    have hc : (Formalism.L2.PjFree.gxFst (x)).base z ∈ (⨆ j, Xo.univ.t.PP.L.U j) := by
+    have hc : (snd (Over.mk x) Xo.univ.t.G).left.base z ∈ (⨆ j, Xo.univ.t.PP.L.U j) := by
       rw [Xo.univ.t.PP.isLB.cover]; trivial
     obtain ⟨j, hj⟩ := TopologicalSpace.Opens.mem_iSup.1 hc
     refine TopologicalSpace.Opens.mem_iSup.2 ⟨j, ?_, hj⟩
     refine Set.mem_iInter.2 fun _ => ?_
-    have h1 : (pm ≫ (Formalism.L2.PjFree.gxFst ((x ≫ ρ)))).base z ∈ (Xo.univ.t.PP.L.U i : Set _) :=
+    have h1 : (pm ≫ (snd (Over.mk (x ≫ ρ)) Xo.univ.t.G).left).base z ∈ (Xo.univ.t.PP.L.U i : Set _) :=
       Set.mem_iInter.1 hz 0
     rw [hs] at h1
     exact h1
@@ -80,7 +79,7 @@ theorem frMove_unique {S : Type} [CommRing S] [Algebra c.F S] {ρ : Xo.X ⟶ Xo.
   dsimp only at hx hu hf hs h hx2 hu2 hf2 hs2 h2 pm pm2
   subst hx hx2
   obtain rfl := hw w w2 hc hc2
-  have p2 : IsPullback (Formalism.L2.PjFree.gxFst ((y.x ≫ ρ))) (Formalism.L2.PjFree.gxSnd ((y.x ≫ ρ)))
+  have p2 : IsPullback (snd (Over.mk (y.x ≫ ρ)) Xo.univ.t.G).left (fst (Over.mk (y.x ≫ ρ)) Xo.univ.t.G).left
       Xo.univ.t.G.hom (y.x ≫ ρ) := (IsPullback.of_hasPullback (y.x ≫ ρ) Xo.univ.t.G.hom).flip
   obtain rfl : pm = pm2 := p2.hom_ext (hs.trans hs2.symm) (hf.trans hf2.symm)
   obtain rfl : u' = u'' := by funext τ i; rw [hu, hu2]

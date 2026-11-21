@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Formalism.LocalToGlobal.ProjectiveLattices.ReadProofs
 
 @[expose] public section
@@ -24,12 +23,12 @@ def bcPm {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ X
   ((Over.homMk (spMap ψ) rfl : Over.mk (spMap ψ ≫ x) ⟶ Over.mk x) ▷ Xo.univ.t.G).left
 
 theorem bcPm_snd {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X) :
-    bcPm ψ x ≫ (Formalism.L2.PjFree.gxFst (x)) = (Formalism.L2.PjFree.gxFst ((spMap ψ ≫ x))) := by
+    bcPm ψ x ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk (spMap ψ ≫ x)) Xo.univ.t.G).left := by
   rw [bcPm, ← Over.comp_left, whiskerRight_snd]
 
 theorem bcPm_fst {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp S ⟶ Xo.X) :
-    bcPm ψ x ≫ (Formalism.L2.PjFree.gxSnd (x)) =
-      (Formalism.L2.PjFree.gxSnd ((spMap ψ ≫ x))) ≫ spMap ψ := by
+    bcPm ψ x ≫ (fst (Over.mk x) Xo.univ.t.G).left =
+      (fst (Over.mk (spMap ψ ≫ x)) Xo.univ.t.G).left ≫ spMap ψ := by
   rw [bcPm, ← Over.comp_left, whiskerRight_fst, Over.comp_left]
   rfl
 

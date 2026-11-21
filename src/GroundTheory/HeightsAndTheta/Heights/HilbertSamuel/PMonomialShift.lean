@@ -62,9 +62,9 @@ theorem norm_prod_le {P : Ideal (MRing ι)} {A : HermLine ι} {a : K → ℕ} (h
   exact pow_nonneg (A.pos z hz.1).le _
 
 theorem isSmoothHerm_zcomb_fsH {A : HermLine ι} (hA : IsSmoothHerm A) (q : ℕ) :
-    IsSmoothHerm ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) := by
+    IsSmoothHerm (HermLine.zcomb A (fsH ι) q 1) := by
   have hH : IsSmoothHerm (fsH ι) := GroundTheory.Heights₂.Heights.Inter.isSmoothHerm_ofMetrics_fs 1
-  have hfun : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).h = fun z => A.h z ^ q * (fsH ι).h z := by
+  have hfun : (HermLine.zcomb A (fsH ι) q 1).h = fun z => A.h z ^ q * (fsH ι).h z := by
     funext z
     change A.h z ^ ((q : ℕ) : ℤ) * (fsH ι).h z ^ (1 : ℤ) = _
     rw [zpow_natCast, zpow_one]
@@ -78,10 +78,10 @@ theorem proof (hPack : PackingStatement) : MonomialShift.Statement := by
   obtain ⟨c, hc⟩ := exists_chart hY
 
   obtain ⟨e, he⟩ : ∃ e : K → ℕ, e = fun k => (q * n - τ) * a k + n := ⟨_, rfl⟩
-  have hBa : ∀ k, ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a k = (q : ℤ) * a k + 1 := by
+  have hBa : ∀ k, (HermLine.zcomb A (fsH ι) q 1).a k = (q : ℤ) * a k + 1 := by
     intro k
-    simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, fsH, HermLine.ofMetrics, ha]
-  have hdeg : ∀ k, (n : ℤ) * ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a k = τ * A.a k + e k := by
+    simp [HermLine.zcomb, fsH, HermLine.ofMetrics, ha]
+  have hdeg : ∀ k, (n : ℤ) * (HermLine.zcomb A (fsH ι) q 1).a k = τ * A.a k + e k := by
     intro k
     rw [hBa, he]
     simp only [ha]
@@ -95,7 +95,7 @@ theorem proof (hPack : PackingStatement) : MonomialShift.Statement := by
   have hmvx : aeval y (xpow c e) = mv := by
     simp [hmv, xpow]
 
-  have hlat : ∀ s ∈ chartLatNm y A.a τ, mv * s ∈ chartLatNm y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n := by
+  have hlat : ∀ s ∈ chartLatNm y A.a τ, mv * s ∈ chartLatNm y (HermLine.zcomb A (fsH ι) q 1).a n := by
     intro s hs c' hc'
     have h1 := hs c' hc'
     have h2 : ∏ k, (y ⟨k, c k⟩ / y ⟨k, c' k⟩) ^ e k ∈ integralClosure (chartRingZ y c') Ω := by
@@ -104,11 +104,11 @@ theorem proof (hPack : PackingStatement) : MonomialShift.Statement := by
           pow_mem (Algebra.subset_adjoin
             (Set.mem_range_self (f := fun p : Σ k, ι k => y p / y ⟨p.1, c' p.1⟩) ⟨k, c k⟩)) _
       exact (integralClosure (chartRingZ y c') Ω).algebraMap_mem ⟨_, hmem⟩
-    have hsplit : ∀ k, y ⟨k, c' k⟩ ^ (-((n : ℤ) * ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a k)) =
+    have hsplit : ∀ k, y ⟨k, c' k⟩ ^ (-((n : ℤ) * (HermLine.zcomb A (fsH ι) q 1).a k)) =
         y ⟨k, c' k⟩ ^ (-((τ : ℤ) * A.a k)) * (y ⟨k, c' k⟩ ^ e k)⁻¹ := by
       intro k
       rw [hdeg k, neg_add, zpow_add₀ (hc' k), zpow_neg (y _) ((e k : ℕ) : ℤ), zpow_natCast]
-    have key : mv * s * ∏ k, y ⟨k, c' k⟩ ^ (-((n : ℤ) * ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a k)) =
+    have key : mv * s * ∏ k, y ⟨k, c' k⟩ ^ (-((n : ℤ) * (HermLine.zcomb A (fsH ι) q 1).a k)) =
         (s * ∏ k, y ⟨k, c' k⟩ ^ (-((τ : ℤ) * A.a k))) * ∏ k, (y ⟨k, c k⟩ / y ⟨k, c' k⟩) ^ e k := by
       simp only [hsplit, div_eq_mul_inv, mul_pow, inv_pow, Finset.prod_mul_distrib, Finset.prod_inv_distrib, hmv]
       ring
@@ -116,7 +116,7 @@ theorem proof (hPack : PackingStatement) : MonomialShift.Statement := by
     exact mul_mem h1 h2
 
   have hsmall : ∀ s, IsSmallH (mCoordIdeal y) y A τ s →
-      IsSmallH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) n (mv * s) := by
+      IsSmallH (mCoordIdeal y) y (HermLine.zcomb A (fsH ι) q 1) n (mv * s) := by
     intro s hs dg dh g h z hg hh hd hgh hz
     have hmh := ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_mul (isMultiHomog_xpow c e) hh
     have hb := hs dg (e + dh) g (xpow c e * h) z hg hmh
@@ -125,7 +125,7 @@ theorem proof (hPack : PackingStatement) : MonomialShift.Statement := by
     have hApos : 0 < A.h z := A.pos z hz.1
     have hxz : eval z (map (Int.castRingHom ℂ) (xpow c e)) = ∏ k, z ⟨k, c k⟩ ^ ((q * n - τ) * a k + n) := by
       simp [xpow, he]
-    have hBh : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).h z = A.h z ^ ((q : ℕ) : ℤ) * (fsH ι).h z ^ (1 : ℤ) := rfl
+    have hBh : (HermLine.zcomb A (fsH ι) q 1).h z = A.h z ^ ((q : ℕ) : ℤ) * (fsH ι).h z ^ (1 : ℤ) := rfl
     calc ‖eval z (map (Int.castRingHom ℂ) g)‖
         ≤ ‖eval z (map (Int.castRingHom ℂ) (xpow c e * h))‖ * A.h z ^ τ := hb
       _ = ‖∏ k, z ⟨k, c k⟩ ^ ((q * n - τ) * a k + n)‖ * ‖eval z (map (Int.castRingHom ℂ) h)‖ * A.h z ^ τ := by
@@ -133,24 +133,24 @@ theorem proof (hPack : PackingStatement) : MonomialShift.Statement := by
       _ ≤ (A.h z ^ (q * n - τ) * (fsH ι).h z ^ n) * ‖eval z (map (Int.castRingHom ℂ) h)‖ * A.h z ^ τ := by
           gcongr
           exact norm_prod_le hM c (q * n - τ) n hz
-      _ = ‖eval z (map (Int.castRingHom ℂ) h)‖ * ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).h z ^ n := by
+      _ = ‖eval z (map (Int.castRingHom ℂ) h)‖ * (HermLine.zcomb A (fsH ι) q 1).h z ^ n := by
           rw [hBh, zpow_natCast, zpow_one, mul_pow, ← pow_mul,
             show A.h z ^ (q * n) = A.h z ^ (q * n - τ) * A.h z ^ τ by rw [← pow_add, Nat.sub_add_cancel hτ]]
           ring
 
   let f : {s : chartLatNm y A.a τ // IsSmallH (mCoordIdeal y) y A τ (s : Ω)} →
-      {t : chartLatNm y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n //
-        IsSmallH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) n (t : Ω)} :=
+      {t : chartLatNm y (HermLine.zcomb A (fsH ι) q 1).a n //
+        IsSmallH (mCoordIdeal y) y (HermLine.zcomb A (fsH ι) q 1) n (t : Ω)} :=
     fun s => ⟨⟨mv * s.1, hlat s.1 s.1.2⟩, hsmall s.1 s.2⟩
   have hinj : Function.Injective f := by
     intro s t hst
-    have h := congrArg (fun u => ((u.1 : chartLatNm y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n) : Ω)) hst
+    have h := congrArg (fun u => ((u.1 : chartLatNm y (HermLine.zcomb A (fsH ι) q 1).a n) : Ω)) hst
     exact Subtype.ext (Subtype.ext (mul_left_cancel₀ hmv0 h))
-  have hfin := (hPack K ι Ω y D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1))
-    (chartLatNm y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a) hY hBir (isSmoothHerm_zcomb_fsH hsemi.1 q)
+  have hfin := (hPack K ι Ω y D (HermLine.zcomb A (fsH ι) q 1)
+    (chartLatNm y (HermLine.zcomb A (fsH ι) q 1).a) hY hBir (isSmoothHerm_zcomb_fsH hsemi.1 q)
     (fun _ => le_rfl)).1 n
-  have : Finite {t : chartLatNm y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n //
-      IsSmallH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A q).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) n (t : Ω)} := hfin.to_subtype
+  have : Finite {t : chartLatNm y (HermLine.zcomb A (fsH ι) q 1).a n //
+      IsSmallH (mCoordIdeal y) y (HermLine.zcomb A (fsH ι) q 1) n (t : Ω)} := hfin.to_subtype
   have hcard := Nat.card_le_card_of_injective f hinj
   unfold smallSectionCount
   rcases Nat.eq_zero_or_pos (Nat.card {s : chartLatNm y A.a τ // IsSmallH (mCoordIdeal y) y A τ (s : Ω)})

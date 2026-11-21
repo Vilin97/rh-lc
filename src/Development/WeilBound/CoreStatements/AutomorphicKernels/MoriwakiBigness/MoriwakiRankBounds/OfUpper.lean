@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import Development.WeilBound.CoreStatements.AutomorphicKernels.MoriwakiBigness.MoriwakiRankBounds.Development
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -21,12 +20,12 @@ theorem ShiftVolumeBound.of_upper (hSep : ShiftSectionSeparation.Statement)
   refine ⟨2 * (C + 1) * ((D : ℝ) + 1), by positivity, ?_⟩
   intro q hq
   have hcount : ∀ n : ℕ,
-      smallSectionCount (IsSmallH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)))
-          (chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a) n ≤
-        (Module.finrank ℤ ↥(chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n) : ℝ) *
+      smallSectionCount (IsSmallH (mCoordIdeal y) y (HermLine.zcomb A (fsH ι) (↑q) 1))
+          (chartLat y (HermLine.zcomb A (fsH ι) (↑q) 1).a) n ≤
+        (Module.finrank ℤ ↥(chartLat y (HermLine.zcomb A (fsH ι) (↑q) 1).a n) : ℝ) *
           ((C + 1) * n * ((q : ℝ) + 1) + Real.log 3) := by
     intro n
-    refine hCount K ι Ω y D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)) n ((C + 1) * n * ((q : ℝ) + 1))
+    refine hCount K ι Ω y D (HermLine.zcomb A (fsH ι) (↑q) 1) n ((C + 1) * n * ((q : ℝ) + 1))
       hV hB (by positivity) ?_
     intro s hs hs0 c hc
     refine hsep q hq n s hs hs0 c (lt_of_lt_of_le hc (Real.exp_le_exp.mpr ?_))
@@ -49,24 +48,24 @@ theorem ShiftVolumeBound.of_upper (hSep : ShiftSectionSeparation.Statement)
       have h1 : Real.log 3 ≤ 3 - 1 := Real.log_le_sub_one_of_pos (by norm_num)
       have h2 : (0 : ℝ) ≤ C * n * ((q : ℝ) + 1) := by positivity
       nlinarith
-    have hR0 : (0 : ℝ) ≤ (Module.finrank ℤ ↥(chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n) : ℝ) :=
+    have hR0 : (0 : ℝ) ≤ (Module.finrank ℤ ↥(chartLat y (HermLine.zcomb A (fsH ι) (↑q) 1).a n) : ℝ) :=
       Nat.cast_nonneg _
     have hpos : (0 : ℝ) < (n : ℝ) ^ (D + 1) / ((D + 1).factorial : ℝ) := by positivity
     rw [div_le_iff₀ hpos]
     have hmul : (0 : ℝ) ≤ 2 * (C + 1) * n * ((q : ℝ) + 1) := by positivity
-    calc smallSectionCount (IsSmallH (mCoordIdeal y) y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)))
-          (chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a) n
-        ≤ (Module.finrank ℤ ↥(chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n) : ℝ) *
+    calc smallSectionCount (IsSmallH (mCoordIdeal y) y (HermLine.zcomb A (fsH ι) (↑q) 1))
+          (chartLat y (HermLine.zcomb A (fsH ι) (↑q) 1).a) n
+        ≤ (Module.finrank ℤ ↥(chartLat y (HermLine.zcomb A (fsH ι) (↑q) 1).a n) : ℝ) *
           ((C + 1) * n * ((q : ℝ) + 1) + Real.log 3) := hcount n
       _ ≤ 2 * (C + 1) * n * ((q : ℝ) + 1) *
-          (Module.finrank ℤ ↥(chartLat y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a n) : ℝ) := by
+          (Module.finrank ℤ ↥(chartLat y (HermLine.zcomb A (fsH ι) (↑q) 1).a n) : ℝ) := by
           nlinarith
       _ ≤ 2 * (C + 1) * n * ((q : ℝ) + 1) *
-          (((genDeg (mCoordIdeal y) D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a : ℝ) +
+          (((genDeg (mCoordIdeal y) D (HermLine.zcomb A (fsH ι) (↑q) 1).a : ℝ) +
             δ / (2 * (C + 1) * ((D : ℝ) + 1) * ((q : ℝ) + 1))) * ((n : ℝ) ^ D / (D.factorial : ℝ))) :=
           mul_le_mul_of_nonneg_left hn hmul
       _ = (2 * (C + 1) * ((D : ℝ) + 1) * ((q : ℝ) + 1) *
-            (genDeg (mCoordIdeal y) D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A (↑q)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) 1)).a : ℝ) + δ) *
+            (genDeg (mCoordIdeal y) D (HermLine.zcomb A (fsH ι) (↑q) 1).a : ℝ) + δ) *
           ((n : ℝ) ^ (D + 1) / ((D + 1).factorial : ℝ)) := by
           rw [Nat.factorial_succ, Nat.cast_mul, pow_succ]
           have hf : (0 : ℝ) < (D.factorial : ℝ) := by positivity

@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.LevelIndexFourierCharacter
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsHolPeriods
@@ -130,8 +129,8 @@ def incl : c.F →+* C.c₂.F := (IntermediateField.inclusion C.field_eq.le).toR
 
 def IsGroupMap {S S' : Type} [CommRing S] [CommRing S'] (φ : S →+* S') (x₂ : Sp S' ⟶ C.Xo₂.X) (x : Sp S ⟶ Xo.X)
     (pm : Gx x₂ ⟶ Gx x) : Prop :=
-  pm ≫ (Formalism.L2.PjFree.gxFst (x)) = (snd (Over.mk x₂) C.Xo₂.univ.t.G).left ≫ C.m.φ ∧
-    pm ≫ (Formalism.L2.PjFree.gxSnd (x)) = (fst (Over.mk x₂) C.Xo₂.univ.t.G).left ≫ spMap φ
+  pm ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x₂) C.Xo₂.univ.t.G).left ≫ C.m.φ ∧
+    pm ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x₂) C.Xo₂.univ.t.G).left ≫ spMap φ
 
 def SecOver {S S' : Type} [CommRing S] [CommRing S'] {x₂ : Sp S' ⟶ C.Xo₂.X} {x : Sp S ⟶ Xo.X} (pm : Gx x₂ ⟶ Gx x)
     (k : ℤ) (F₂ : LB.Sec (Out.LPow C.Xo₂.univ.t.G C.Xo₂.univ.t.PP.L k (Over.mk x₂)))

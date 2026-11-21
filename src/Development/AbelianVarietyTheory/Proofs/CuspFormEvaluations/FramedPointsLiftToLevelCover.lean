@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Formalism.LocalToGlobal.ProjectiveLattices.ThShort
 public import Formalism.LocalToGlobal.ProjectiveLattices.IsLevMove
@@ -379,16 +378,16 @@ theorem exists_lift (e : x₂ ≫ r = x) {v : Sp (DualNumber S) ⟶ Xo.univ.t.G.
   ⟨m.cart.1.lift v _ (by rw [hv, Category.assoc, e]), m.cart.1.lift_fst _ _ _, m.cart.1.lift_snd _ _ _⟩
 
 theorem exists_pm_iso (e : x₂ ≫ r = x) : ∃ (p : Gx x₂ ⟶ Gx x) (n : Gx x ⟶ Gx x₂),
-    p ≫ (Formalism.L2.PjFree.gxFst (x)) = (snd (Over.mk x₂) Xo₂.univ.t.G).left ≫ m.φ ∧
-    p ≫ (Formalism.L2.PjFree.gxSnd (x)) = (fst (Over.mk x₂) Xo₂.univ.t.G).left ∧ n ≫ p = 𝟙 _ ∧ p ≫ n = 𝟙 _ := by
+    p ≫ (snd (Over.mk x) Xo.univ.t.G).left = (snd (Over.mk x₂) Xo₂.univ.t.G).left ≫ m.φ ∧
+    p ≫ (fst (Over.mk x) Xo.univ.t.G).left = (fst (Over.mk x₂) Xo₂.univ.t.G).left ∧ n ≫ p = 𝟙 _ ∧ p ≫ n = 𝟙 _ := by
   obtain ⟨p, p₁, p₂⟩ := exists_pm (G := Xo.univ.t.G) (x := x) (fst (Over.mk x₂) Xo₂.univ.t.G).left
     ((snd (Over.mk x₂) Xo₂.univ.t.G).left ≫ m.φ) (by
       rw [Category.assoc, m.cart.1.w, ← Category.assoc, ← pm_cond, Category.assoc, ← e])
-  obtain ⟨g, g₁, g₂⟩ : ∃ g : Gx x ⟶ Xo₂.univ.t.G.left, g ≫ m.φ = (Formalism.L2.PjFree.gxFst (x)) ∧
-      g ≫ Xo₂.univ.t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ x₂ :=
+  obtain ⟨g, g₁, g₂⟩ : ∃ g : Gx x ⟶ Xo₂.univ.t.G.left, g ≫ m.φ = (snd (Over.mk x) Xo.univ.t.G).left ∧
+      g ≫ Xo₂.univ.t.G.hom = (fst (Over.mk x) Xo.univ.t.G).left ≫ x₂ :=
     ⟨m.cart.1.lift _ _ ((pm_cond x).symm.trans ((congrArg (_ ≫ ·) e.symm).trans (Category.assoc _ _ _).symm)),
       m.cart.1.lift_fst _ _ _, m.cart.1.lift_snd _ _ _⟩
-  obtain ⟨n, n₁, n₂⟩ := exists_pm (G := Xo₂.univ.t.G) (x := x₂) (Formalism.L2.PjFree.gxSnd (x)) g g₂.symm
+  obtain ⟨n, n₁, n₂⟩ := exists_pm (G := Xo₂.univ.t.G) (x := x₂) (fst (Over.mk x) Xo.univ.t.G).left g g₂.symm
   refine ⟨p, n, p₁, p₂, pm_ext ?_ ?_, pm_ext (m.cart.1.hom_ext ?_ ?_) ?_⟩
   · rw [Category.assoc, p₁, ← Category.assoc, n₁, g₁, Category.id_comp]
   · rw [Category.assoc, p₂, n₂, Category.id_comp]

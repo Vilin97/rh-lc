@@ -34,7 +34,7 @@ theorem nefOnGenericDeg_of_semipos (hN : NefOnGenericOfSemipos.Statement)
   exact_mod_cast h3 ▸ h1
 
 theorem continuousOn_zcomb_fsH {M : HermLine ι} (hM : IsSmoothHerm M) (k : ℤ) :
-    ContinuousOn ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M k).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) (-1))).h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
+    ContinuousOn (HermLine.zcomb M (fsH ι) k (-1)).h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   have hH : ContinuousOn (fsH ι).h {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} :=
     (GroundTheory.Heights₂.Heights.Inter.isSmoothHerm_ofMetrics_fs (ι := ι) 1).continuousOn
   exact (hM.continuousOn.zpow₀ k fun z hz => Or.inl (M.pos z hz).ne').mul
@@ -47,11 +47,11 @@ theorem KodairaSection.proof (hN : NefOnGenericOfSemipos.Statement)
   obtain ⟨k, e, hk, he0, heQ⟩ :=
     hK K ι Ω y D M.a hD1 har hb (nefOnGenericDeg_of_semipos hN hD hM.normalForm_baseLattice_le_dualSpan_sup_line hM.semipos) hM.big
   obtain ⟨n, hn, hne⟩ := hC K ι Ω y _ 1 e heQ
-  have ha : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M k).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) (-1))).a = (k : ℤ) • M.a - 1 := by
+  have ha : (HermLine.zcomb M (fsH ι) k (-1)).a = (k : ℤ) • M.a - 1 := by
     funext i
-    simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, fsH, HermLine.ofMetrics]
+    simp [HermLine.zcomb, fsH, HermLine.ofMetrics]
     ring
-  obtain ⟨C, hC0, hB⟩ := hS K ι Ω y ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M k).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (fsH ι) (-1))) 1 ((n : Ω) * e)
+  obtain ⟨C, hC0, hB⟩ := hS K ι Ω y (HermLine.zcomb M (fsH ι) k (-1)) 1 ((n : Ω) * e)
     (continuousOn_zcomb_fsH hM.semipos.1 k) (by rw [ha]; exact hne)
   exact ⟨k, (n : Ω) * e, C, hk, hC0, mul_ne_zero (Nat.cast_ne_zero.mpr (by omega)) he0, hne, hB⟩
 

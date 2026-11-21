@@ -42,6 +42,5 @@ theorem relAmple_of_cover : ∀ (S : Scheme.{0}) (I : Type) (U : I → S.Opens) 
     (hV.preimage_of_isOpenImmersion _ (by simpa using hle')) (fun y => ?_) (hamp i)
   show (U i).ι (S.homOfLE hle' y) ∈ V
   rw [← Scheme.Hom.comp_apply, hf]
-  exact y.2
 
 end GlobalTheory.CoverGlue

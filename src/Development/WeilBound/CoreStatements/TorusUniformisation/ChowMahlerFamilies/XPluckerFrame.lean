@@ -10,7 +10,6 @@ public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.LocallyFreeFi
 public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XMinorGraded
 public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XBundleOfFamily
 public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XPullLine
-public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
 

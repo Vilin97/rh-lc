@@ -28,7 +28,7 @@ theorem iter_step_bound {N : ℕ} (F : (Fin N → ℂ) → ℂ) (hF : Differenti
     ‖iteratedFDeriv ℂ k F x (fun j => Pi.single (l j) 1)‖ ≤ M / ρ ^ k
   | 0, l, x, hM => by
     have := hM x (by simp)
-    simpa using this
+    simpa only [iteratedFDeriv_zero_apply, pow_zero, div_one] using this
   | k + 1, l, x, hM => by
     set e : Fin N → ℂ := Pi.single (l 0) 1 with he
     set v : Fin k → (Fin N → ℂ) := fun j => Pi.single (l (Fin.succ j)) 1 with hv

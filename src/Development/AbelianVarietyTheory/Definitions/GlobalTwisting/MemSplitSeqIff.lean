@@ -70,7 +70,8 @@ theorem face_smul (p : ℕ) (i : Fin (p + 1)) (g : GL (Fin n) R) (l : SplitSet R
   rw [smul_val, List.eraseIdx_map]
   rfl
 
-abbrev splitRep (p : ℕ) : Rep ℤ (GL (Fin n) R) := perm ℤ (GL (Fin n) R) (SplitSet R n p)
+abbrev splitRep (p : ℕ) : Rep ℤ (GL (Fin n) R) :=
+  perm (k := ℤ) (G := GL (Fin n) R) (SplitSet R n p)
 
 def splitD (p : ℕ) : splitRep R n (p + 1) ⟶ splitRep R n p :=
   ∑ i : Fin (p + 1), (-1 : ℤ) ^ (i : ℕ) • permMap (face R n p i) (face_smul R n p i) (Rep.trivial ℤ _ ℤ)

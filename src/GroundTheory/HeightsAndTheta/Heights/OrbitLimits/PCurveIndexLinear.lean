@@ -258,20 +258,26 @@ theorem CurveIndexLinear.add (hF : CurveRingFinite.Statement) (hC : CurveClosedP
     (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) (a a' : K → ℤ) :
     chartIndexLog y c (a + a') 1 = chartIndexLog y c a 1 + chartIndexLog y c a' 1 := by
   classical
-  rw [chartIndexLog_eq hc, chartIndexLog_eq hc, chartIndexLog_eq hc]
+  rw [CurveIndexLinearAlt.chartIndexLog_eq hc, CurveIndexLinearAlt.chartIndexLog_eq hc,
+    CurveIndexLinearAlt.chartIndexLog_eq hc]
   obtain ⟨m0, hm0⟩ := Ideal.exists_maximal (curveRing y)
   obtain ⟨c0, hc0, hr0⟩ := hC K ι Ω y hP m0 hm0
   have hfrac : ∀ (b : K → ℤ) (i : {c' : ∀ k, ι k // ∀ k, y ⟨k, c' k⟩ ≠ 0}),
-      ∃ d ∈ curveRing y, d ≠ 0 ∧ d * gen y c b i.1 ∈ curveRing y :=
-    fun b i => gen_frac hc hc0 hr0 i.1 i.2 b
-  obtain ⟨h1, h2, h3⟩ := hI Ω (curveRing y) (secIdeal y c a) (secIdeal y c a') (secIdeal y c (a + a'))
-    {c' : ∀ k, ι k // ∀ k, y ⟨k, c' k⟩ ≠ 0} (fun i => gen y c a i.1) (fun i => gen y c a' i.1)
-    (hF K ι Ω y hP) (mul_mem_secIdeal hc) (mul_mem_secIdeal hc) (mul_mem_secIdeal hc)
-    (fun i => gen_ne_zero hc i.2 a) (fun i => gen_ne_zero hc i.2 a') (hfrac a) (hfrac a') (fun m hm => by
+      ∃ d ∈ curveRing y, d ≠ 0 ∧ d * CurveIndexLinearAlt.gen y c b i.1 ∈ curveRing y :=
+    fun b i => CurveIndexLinearAlt.gen_frac hc hc0 hr0 i.1 i.2 b
+  obtain ⟨h1, h2, h3⟩ := hI Ω (curveRing y) (CurveIndexLinearAlt.secIdeal y c a)
+    (CurveIndexLinearAlt.secIdeal y c a') (CurveIndexLinearAlt.secIdeal y c (a + a'))
+    {c' : ∀ k, ι k // ∀ k, y ⟨k, c' k⟩ ≠ 0} (fun i => CurveIndexLinearAlt.gen y c a i.1)
+    (fun i => CurveIndexLinearAlt.gen y c a' i.1)
+    (hF K ι Ω y hP) (CurveIndexLinearAlt.mul_mem_secIdeal hc)
+    (CurveIndexLinearAlt.mul_mem_secIdeal hc) (CurveIndexLinearAlt.mul_mem_secIdeal hc)
+    (fun i => CurveIndexLinearAlt.gen_ne_zero hc i.2 a)
+    (fun i => CurveIndexLinearAlt.gen_ne_zero hc i.2 a') (hfrac a) (hfrac a') (fun m hm => by
       obtain ⟨c', hc', hr⟩ := hC K ι Ω y hP m hm
-      refine ⟨⟨c', hc'⟩, local_gen hc hm.isPrime hc' hr a, local_gen hc hm.isPrime hc' hr a', ?_⟩
-      simp only [← gen_add hc hc']
-      exact local_gen hc hm.isPrime hc' hr (a + a'))
+      refine ⟨⟨c', hc'⟩, CurveIndexLinearAlt.local_gen hc hm.isPrime hc' hr a,
+        CurveIndexLinearAlt.local_gen hc hm.isPrime hc' hr a', ?_⟩
+      simp only [← CurveIndexLinearAlt.gen_add hc hc']
+      exact CurveIndexLinearAlt.local_gen hc hm.isPrime hc' hr (a + a'))
   rw [h3, Real.log_mul h1.ne' h2.ne']
 
 theorem CurveIndexLinear.proof (hF : CurveRingFinite.Statement) (hC : CurveClosedPointChart.Statement)

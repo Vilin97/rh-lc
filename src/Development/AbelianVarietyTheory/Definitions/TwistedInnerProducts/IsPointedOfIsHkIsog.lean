@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Formalism.LocalToGlobal.ProjectiveLattices.LiftLaSpec
 public import Formalism.LocalToGlobal.ProjectiveLattices.IsThRule
@@ -460,23 +459,23 @@ variable {Ω : Type} [Field Ω] [IsAlgClosed Ω] {p : ℕ} {x x' : Sp Ω ⟶ Xo.
   {ψp : (Over.mk x ⟶ Xo.univ.t.G) →* (Over.mk x' ⟶ Xo.univ.t.G)}
 
 theorem gx_hom_ext {f g : Gx x ⟶ Gx x'}
-    (hf : f ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x)))
-    (hg : g ≫ (Formalism.L2.PjFree.gxSnd (x')) = (Formalism.L2.PjFree.gxSnd (x)))
+    (hf : f ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left)
+    (hg : g ≫ (fst (Over.mk x') Xo.univ.t.G).left = (fst (Over.mk x) Xo.univ.t.G).left)
     (h : ∀ a : Over.mk x ⟶ Xo.univ.t.G, (lift (𝟙 (Over.mk x)) a).left ≫ f = (lift (𝟙 (Over.mk x)) a).left ≫ g) :
     f = g := by
   have := Xo.univ.t.semi.smooth
   have := Xo.univ.t.semi.separated
-  have : Smooth (Formalism.L2.PjFree.gxSnd (x)) := by
+  have : Smooth (fst (Over.mk x) Xo.univ.t.G).left := by
     show Smooth (pullback.fst x Xo.univ.t.G.hom)
     infer_instance
-  have : IsSeparated (Formalism.L2.PjFree.gxSnd (x')) := by
+  have : IsSeparated (fst (Over.mk x') Xo.univ.t.G).left := by
     show IsSeparated (pullback.fst x' Xo.univ.t.G.hom)
     infer_instance
   have : IsReduced (Over.mk x).left := inferInstanceAs (IsReduced (Sp Ω))
-  have : IsReduced (Gx x) := GlobalTheory.isReduced_of_smooth_of_isReduced (Formalism.L2.PjFree.gxSnd (x))
-  refine ext_of_points (Formalism.L2.PjFree.gxSnd (x)) (Formalism.L2.PjFree.gxSnd (x'))
+  have : IsReduced (Gx x) := GlobalTheory.isReduced_of_smooth_of_isReduced (fst (Over.mk x) Xo.univ.t.G).left
+  refine ext_of_points (fst (Over.mk x) Xo.univ.t.G).left (fst (Over.mk x') Xo.univ.t.G).left
     (hf.trans hg.symm) fun q hq => ?_
-  let a : Over.mk x ⟶ Xo.univ.t.G := Over.homMk (q ≫ (Formalism.L2.PjFree.gxFst (x))) (by
+  let a : Over.mk x ⟶ Xo.univ.t.G := Over.homMk (q ≫ (snd (Over.mk x) Xo.univ.t.G).left) (by
     rw [Category.assoc, snd_hom, reassoc_of% hq]; rfl)
   have e : q = (lift (𝟙 (Over.mk x)) a).left := by
     refine gx_ext ?_ ?_

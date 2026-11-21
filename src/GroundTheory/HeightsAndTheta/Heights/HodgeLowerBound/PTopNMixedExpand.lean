@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsTopNMixed
 public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PTopNPoly
 public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PVertFactorPos
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -81,7 +80,7 @@ theorem TopNMixedExpand.proof (hIso : HilbertSamuel.IsomInvariance.Statement) (h
   have hA : IsSmoothHerm D.A' := D.A'_pos.1
   filter_upwards [hS II Ψ K ι Ω E D O Lt X B] with t ht
   have hq0 : (q : ℝ) ≠ 0 := Nat.cast_ne_zero.2 (by omega)
-  set Z := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow (muReg X.H X.S B t) (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow D.A' (p : ℤ))) with hZdef
+  set Z := HilbertSamuel.HermLine.zcomb (muReg X.H X.S B t) D.A' (q : ℤ) (p : ℤ) with hZdef
   have hZ : IsSmoothHerm Z := HilbertSamuel.ZCombLimit.isSmoothHerm_zcomb_int ht hA _ _
   have hagree : ∀ z ∈ mcPts (mCoordIdeal D.y), Z.h z = (X.NbarQ B p q t).h z := by
     intro z hz

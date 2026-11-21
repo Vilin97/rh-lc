@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.CMLattices.LamLetters
 public import Development.AbelianVarietyTheory.Definitions.CMLattices.ExistsIsThetaDegOfIsLocalModel
@@ -26,8 +25,8 @@ def SecTie {Xo : Moduli Dw l} {S : Type} [CommRing S] {t' : SAB H (Sp S)} {x x' 
     (m : SABMap t' Xo.univ.t x) (th : LB.Sec t'.PP.L) (s : LB.Sec (PPx x')) : Prop :=
   ∃ (w : LB.Iso t'.PP.L (Xo.univ.t.PP.L.pull m.φ)) (s1 : LB.Sec (Xo.univ.t.PP.L.pull m.φ)),
     RigIso m w ∧ IsoMaps w th s1 ∧
-    ∀ g : t'.G.left ⟶ Gx x', g ≫ (Formalism.L2.PjFree.gxFst (x')) = m.φ →
-      g ≫ (Formalism.L2.PjFree.gxSnd (x')) = t'.G.hom →
+    ∀ g : t'.G.left ⟶ Gx x', g ≫ (snd (Over.mk x') Xo.univ.t.G).left = m.φ →
+      g ≫ (fst (Over.mk x') Xo.univ.t.G).left = t'.G.hom →
       ∀ j (h : (Xo.univ.t.PP.L.pull m.φ).U j ≤ g ⁻¹ᵁ (PPx x').U (fun _ => j PUnit.unit)),
         s1.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))
 

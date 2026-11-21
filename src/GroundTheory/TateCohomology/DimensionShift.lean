@@ -42,7 +42,8 @@ theorem toCoind_hom_apply (A : Rep.{u} k G) (a : A) (x : G) :
 theorem toCoind_injective (A : Rep.{u} k G) : Function.Injective (toCoind A).hom := by
   intro a b hab
   have h : ((toCoind A).hom a).1 1 = ((toCoind A).hom b).1 1 := by rw [hab]
-  simpa only [toCoind_hom_apply, map_one, one_apply_eq_self] using h
+  rwa [toCoind_hom_apply, toCoind_hom_apply, map_one, one_apply_eq_self,
+    one_apply_eq_self] at h
 
 instance (A : Rep.{u} k G) : Mono (toCoind A) :=
   (Rep.mono_iff_injective _).2 (toCoind_injective A)

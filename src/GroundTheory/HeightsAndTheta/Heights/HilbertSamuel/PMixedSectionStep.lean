@@ -12,7 +12,6 @@ public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsArith
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotLtLtOfMemMinimalPrimes
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.KleimanNefness.KleimanSt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -57,8 +56,8 @@ theorem MixedSectionStep.proof (hS : SmallSectionMixed.Statement) (hR : GroundTh
     hS K ι P P0 (n + 1) M H p q II hII (by omega) hP hP0 hMs hMn hMc hHa hHs hHb hHc hp hpos
   have hMsm : IsSmoothHerm M := hMs.1
   have hHsm : IsSmoothHerm H := hHs.1
-  let L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun j => if (j : ℕ) = 0 then M else ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H (p : ℤ)))
-  let F : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun j => if (j : ℕ) = 0 then M else ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H (p : ℤ)))
+  let L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun j => if (j : ℕ) = 0 then M else HermLine.zcomb M H (q : ℤ) (p : ℤ)
+  let F : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι := fun j => if (j : ℕ) = 0 then M else HermLine.zcomb M H (q : ℤ) (p : ℤ)
   have hLsp : ∀ j, IsSemipositiveRel P0 P (L j) := fun j => by
     simp only [L]
     split_ifs
@@ -76,7 +75,7 @@ theorem MixedSectionStep.proof (hS : SmallSectionMixed.Statement) (hR : GroundTh
     · rw [Fin.snoc_last, Function.update_self]
     · rw [Fin.snoc_castSucc, Function.update_of_ne (Fin.castSucc_lt_last i).ne]
       rfl
-  have hFN : Function.update F (Fin.last n) ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M (q : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H (p : ℤ))) = F := by
+  have hFN : Function.update F (Fin.last n) (HermLine.zcomb M H (q : ℤ) (p : ℤ)) = F := by
     funext j
     by_cases hj : j = Fin.last n
     · subst hj
@@ -85,7 +84,7 @@ theorem MixedSectionStep.proof (hS : SmallSectionMixed.Statement) (hR : GroundTh
       rw [if_neg (by omega)]
     · rw [Function.update_of_ne hj]
 
-  have hscale : II K ι P (n + 1) (Fin.snoc L ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((m * q : ℕ) : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H ((m * p : ℕ) : ℤ)))) =
+  have hscale : II K ι P (n + 1) (Fin.snoc L (HermLine.zcomb M H ((m * q : ℕ) : ℤ) ((m * p : ℕ) : ℤ))) =
       (m : ℝ) * II K ι P (n + 1) F := by
     have e1 := ZCombLimit.fam_update_zcomb_int (hII K ι) hP F hFs (Fin.last n) hMsm hHsm
       ((m * q : ℕ) : ℤ) ((m * p : ℕ) : ℤ)
@@ -151,9 +150,9 @@ theorem MixedSectionStep.proof (hS : SmallSectionMixed.Statement) (hR : GroundTh
         rw [Nat.le_zero.mp hle]
 
   have hint : ptsIntegral P (pot L)
-      (logNormRat ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((m * q : ℕ) : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H ((m * p : ℕ) : ℤ))) f g) ≤ 0 := by
+      (logNormRat (HermLine.zcomb M H ((m * q : ℕ) : ℤ) ((m * p : ℕ) : ℤ)) f g) ≤ 0 := by
     refine hI K ι P P0 n L _ hP0 hLsp fun z hz => ?_
-    have hpos := ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((m * q : ℕ) : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H ((m * p : ℕ) : ℤ))).pos z hz.1
+    have hpos := (HermLine.zcomb M H ((m * q : ℕ) : ℤ) ((m * p : ℕ) : ℤ)).pos z hz.1
     unfold logNormRat
     refine Real.log_nonpos (by positivity) ((div_le_one hpos).mpr ?_)
     by_cases hg0 : ‖eval z (map (Int.castRingHom ℂ) g)‖ = 0
@@ -161,7 +160,7 @@ theorem MixedSectionStep.proof (hS : SmallSectionMixed.Statement) (hR : GroundTh
       exact hpos.le
     · rw [div_le_iff₀ (lt_of_le_of_ne (norm_nonneg _) (Ne.symm hg0))]
       linarith [hbd z hz]
-  have hNm : IsSmoothHerm ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow M ((m * q : ℕ) : ℤ)).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow H ((m * p : ℕ) : ℤ))) :=
+  have hNm : IsSmoothHerm (HermLine.zcomb M H ((m * q : ℕ) : ℤ) ((m * p : ℕ) : ℤ)) :=
     ZCombLimit.isSmoothHerm_zcomb_int hMsm hHsm _ _
   have hrec := hR K ι (II K ι) (hII K ι) P n L _ f g hP (fun j => (hLsp j).1) hNm
     ⟨α, β, hfα, hgβ, hfP, hgP, hαβ⟩

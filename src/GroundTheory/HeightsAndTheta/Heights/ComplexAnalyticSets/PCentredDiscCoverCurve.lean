@@ -80,9 +80,11 @@ theorem centredDiscCover_punctured_branch (hPCC : PuncturedCoverCycles.Statement
           (hV₀.preimage (continuous_const.add Φ.continuous)).inter
             (isOpen_ne_fun (p.continuous.comp Φ.continuous) continuous_const),
           ⟨hxV₀, hx.2⟩, ?_, by rw [hA]; simp [hgx], fun y hy => ?_, ?_⟩
-        · exact Φ.symm.differentiable.comp_differentiableOn
+        · refine Φ.symm.differentiable.comp_differentiableOn
             ((hg₀.comp ((differentiableOn_const _).add (differentiable_apply 0).differentiableOn)
-              fun y hy => hy.1).sub_const w)
+              ?_).sub_const w)
+          intro y hy
+          exact hy.1
         · rw [hA]
           refine hone y _ ?_
           simp [hpg₀ _ hy.1]

@@ -46,7 +46,19 @@ theorem transcendental_of_subfield {E : Type*} [Field E] {S : Type*} [CommRing S
 theorem linearIndependent_adjoin_of_transcendental {K E : Type*} [Field K] [Field E] [Algebra K E]
     (A : IntermediateField K E) {t : E} (ht : Transcendental A t) {κ : Type*} {b : κ → A}
     (hb : LinearIndependent K b) :
-    LinearIndependent (IntermediateField.adjoin K {t}) (A.val ∘ b) := by
+    LinearIndependent (IntermediateField.adjoin K {t}) (A.val ∘ b) :=
+  open scoped IntermediateField.algebraAdjoinAdjoin in by
+  letI : Algebra (Algebra.adjoin K {t}) (IntermediateField.adjoin K {t}) :=
+    (Subalgebra.inclusion (IntermediateField.algebra_adjoin_le_adjoin K {t})).toAlgebra
+  letI : FaithfulSMul (Algebra.adjoin K {t}) (IntermediateField.adjoin K {t}) :=
+    (faithfulSMul_iff_algebraMap_injective _ _).2 fun a b h =>
+      Subtype.ext (by simpa using congrArg (fun x : IntermediateField.adjoin K {t} => (x : E)) h)
+  letI : IsFractionRing (Algebra.adjoin K {t}) (IntermediateField.adjoin K {t}) :=
+    IsFractionRing.of_field _ _ fun ⟨_, h⟩ =>
+      have ⟨x, hx, y, hy, eq⟩ := IntermediateField.mem_adjoin_iff_div.mp h
+      ⟨⟨x, hx⟩, ⟨y, hy⟩, Subtype.ext eq⟩
+  letI : IsScalarTower (Algebra.adjoin K {t}) (IntermediateField.adjoin K {t}) E :=
+    IsScalarTower.of_algebraMap_eq fun _ => rfl
   refine (LinearIndependent.iff_fractionRing (Algebra.adjoin K {t})
     (IntermediateField.adjoin K {t})).1 ?_
   rw [linearIndependent_iff']

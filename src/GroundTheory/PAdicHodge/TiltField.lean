@@ -49,7 +49,8 @@ theorem exists_mul_algebraMap_eq (x : K♭) :
     IsLocalization.sec_spec (nonZeroDivisors 𝒪♭) x⟩
 
 
-def tiltSharpFun (x : K♭) : K :=
+def tiltSharpFun (K : Type*) [NontriviallyNormedField K] [IsUltrametricDist K]
+    (p : ℕ) [Fact p.Prime] [IsPerfectoidField K p] (x : K♭) : K :=
   ♮(IsLocalization.sec (nonZeroDivisors 𝒪♭) x).1 /
     ♮((IsLocalization.sec (nonZeroDivisors 𝒪♭) x).2 : 𝒪♭)
 
@@ -69,7 +70,8 @@ theorem tiltSharpFun_eq {x : K♭} {a b : 𝒪♭} (hb : b ≠ 0)
   rw [div_eq_div_iff (untiltK_ne_zero hb') (untiltK_ne_zero hb), key']
 
 
-def tiltSharp : K♭ →*₀ K where
+def tiltSharp (K : Type*) [NontriviallyNormedField K] [IsUltrametricDist K]
+    (p : ℕ) [Fact p.Prime] [IsPerfectoidField K p] : K♭ →*₀ K where
   toFun := tiltSharpFun K p
   map_zero' := by
     rw [tiltSharpFun_eq (a := 0) (b := 1) one_ne_zero (by simp)]

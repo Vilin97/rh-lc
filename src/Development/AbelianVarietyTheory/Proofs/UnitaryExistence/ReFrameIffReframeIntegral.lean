@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Formalism.LocalToGlobal.ProjectiveLattices.IntAllProofFree
 public import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames

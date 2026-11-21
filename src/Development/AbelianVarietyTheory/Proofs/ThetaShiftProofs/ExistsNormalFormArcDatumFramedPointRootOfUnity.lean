@@ -1,6 +1,5 @@
 module
 
-public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.IsFramedPointChangedByLetters
 public import Development.AbelianVarietyTheory.Definitions.RegularCharts.ModelAt
@@ -283,18 +282,18 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
   {Xo : Moduli Dw l} {S : Type} [CommRing S] {x : Sp S ⟶ Xo.X} {t : SAB H (Sp S)} (m : SABMap t Xo.univ.t x)
 
 def Reads (s : LB.Sec (PPx x)) (s₁ : LB.Sec (Xo.univ.t.PP.L.pull m.φ)) : Prop :=
-  ∀ g : t.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ →
-    g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t.G.hom →
+  ∀ g : t.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ →
+    g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t.G.hom →
     ∀ j (h : (Xo.univ.t.PP.L.pull m.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit)),
       s₁.f j = (g.appLE _ _ h).hom (s.f (fun _ => j PUnit.unit))
 
-theorem exists_canon : ∃ g : t.G.left ⟶ Gx x, g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ ∧
-    g ≫ (Formalism.L2.PjFree.gxSnd (x)) = t.G.hom := by
+theorem exists_canon : ∃ g : t.G.left ⟶ Gx x, g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ ∧
+    g ≫ (fst (Over.mk x) Xo.univ.t.G).left = t.G.hom := by
   let a₀ : Over.mk (t.G.hom ≫ x) ⟶ Over.mk x := Over.homMk t.G.hom rfl
   let b₀ : Over.mk (t.G.hom ≫ x) ⟶ Xo.univ.t.G := Over.homMk m.φ m.cart.1.w
   exact ⟨(lift a₀ b₀).left, congrArg (fun q => q.left) (lift_snd a₀ b₀), congrArg (fun q => q.left) (lift_fst a₀ b₀)⟩
 
-theorem canon_le {g : t.G.left ⟶ Gx x} (hg : g ≫ (Formalism.L2.PjFree.gxFst (x)) = m.φ)
+theorem canon_le {g : t.G.left ⟶ Gx x} (hg : g ≫ (snd (Over.mk x) Xo.univ.t.G).left = m.φ)
     (j : PUnit → Xo.univ.t.PP.L.ι) : (Xo.univ.t.PP.L.pull m.φ).U j ≤ g ⁻¹ᵁ (PPx x).U (fun _ => j PUnit.unit) :=
   fun y hy => Set.mem_iInter.2 fun _ => (congrArg (fun q => q y ∈ Xo.univ.t.PP.L.U (j PUnit.unit)) hg).mpr
     (mem_pull.1 hy)
@@ -308,7 +307,7 @@ theorem exists_reads (s : LB.Sec (PPx x)) : ∃ s₁, Reads m s s₁ := by
     have gg : gm (𝟙 _ ≫ g) y _ ((PPx x).g (fun _ => j PUnit.unit) (fun _ => j' PUnit.unit)) =
         gm (𝟙 _ ≫ m.φ) y (Xo.univ.t.PP.L.U (j PUnit.unit) ⊓ Xo.univ.t.PP.L.U (j' PUnit.unit))
           (Xo.univ.t.PP.L.g (j PUnit.unit) (j' PUnit.unit)) :=
-      (gm_linComb Xo.univ.t.PP.L (K := Fin 1) (fun _ => (Formalism.L2.PjFree.gxFst (x))) (fun _ => 1)
+      (gm_linComb Xo.univ.t.PP.L (K := Fin 1) (fun _ => (snd (Over.mk x) Xo.univ.t.G).left) (fun _ => 1)
         (𝟙 _ ≫ g) y _ _ a a').trans (by rw [Fin.prod_univ_one, zpow_one, Category.assoc, hs])
     exact (gs_res _ y _ hy _).trans ((gs_appLE g _ _ _ (𝟙 _) y hy.1 _).trans ((gs_compat s (𝟙 _ ≫ g) y a a').trans
       (Eq.symm ((gs_mul _ y _ hy _ _).trans (congrArg₂ (· * ·)
@@ -354,7 +353,7 @@ theorem isoMaps_scale {w : LB.Iso t.PP.L (Xo.univ.t.PP.L.pull m.φ)} {s s' : LB.
   rw [h' g gs' gf j (canon_le m gs' j), gs_appLE g _ _ _ (𝟙 _) y h₁, hσ, gs_mul _ y _ h₂,
     gs_constFn _ _ _ y h₂, mul_left_comm]
   refine (congrArg (gs _ y _) (hs _)).trans ((gs_mul _ y _ a₁ _ _).trans (congrArg₂ (· * ·) ?_ e))
-  exact (gs_constFn (Formalism.L2.PjFree.gxSnd (x)) _ _ y a₁ a).trans (by rw [Category.assoc, gf])
+  exact (gs_constFn (fst (Over.mk x) Xo.univ.t.G).left _ _ y a₁ a).trans (by rw [Category.assoc, gf])
 
 theorem eq_of_isCombAt {n : ℕ} {u u' U : Fin n → (Sp (DualNumber S) ⟶ Xo.univ.t.G.left)}
     {X : Matrix (Fin n) (Fin n) S} (hX : IsUnit X.det) (hu : ∀ k, IsTanAt x (u k)) (hu' : ∀ k, IsTanAt x (u' k))

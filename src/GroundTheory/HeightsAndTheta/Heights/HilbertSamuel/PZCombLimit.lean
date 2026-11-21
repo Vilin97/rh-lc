@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.Intersections.PThmAExpand
 public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PGenericFibreDim
 public import ReciprocityTheory.AnalyticForms.RegularLocalRings.IntToRat
-public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
 
 @[expose] public section
 
@@ -29,11 +28,11 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem zcomb_eq_tensor_zpow (A B : HermLine ι) (m p : ℤ) :
     HermLine.zcomb A B m p = (hermZpow A m).tensor (hermZpow B p) :=
-  hermLine_eq_of (by funext k; simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, HermLine.tensor, hermZpow])
-    (by funext z; simp [_root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.tensor, _root_.GroundTheory.Heights₂.Heights.Inter.hermZpow, HermLine.tensor, hermZpow])
+  hermLine_eq_of (by funext k; simp [HermLine.zcomb, HermLine.tensor, hermZpow])
+    (by funext z; simp [HermLine.zcomb, HermLine.tensor, hermZpow])
 
 theorem isSmoothHerm_zcomb_int {A B : HermLine ι} (hA : IsSmoothHerm A) (hB : IsSmoothHerm B) (m p : ℤ) :
-    IsSmoothHerm ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B p)) := by
+    IsSmoothHerm (HermLine.zcomb A B m p) := by
   rw [zcomb_eq_tensor_zpow]
   exact isSmoothHerm_tensor (isSmoothHerm_hermZpow hA m) (isSmoothHerm_hermZpow hB p)
 
@@ -41,7 +40,7 @@ theorem fam_update_zcomb_int {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → 
     {n : ℕ} (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1))
     (L : Fin (n + 1) → HermLine ι) (hL : ∀ j, IsSmoothHerm (L j)) (a : Fin (n + 1)) {A B : HermLine ι}
     (hA : IsSmoothHerm A) (hB : IsSmoothHerm B) (m p : ℤ) :
-    I P (n + 1) (Function.update L a ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B p))) =
+    I P (n + 1) (Function.update L a (HermLine.zcomb A B m p)) =
       m * I P (n + 1) (Function.update L a A) + p * I P (n + 1) (Function.update L a B) := by
   rw [zcomb_eq_tensor_zpow]
   have hAm := isSmoothHerm_hermZpow hA m
@@ -203,11 +202,11 @@ theorem ZCombLimit.proof (hM : MixedNumberPolynomial.Statement.{0}) : ZCombLimit
   set P := mCoordIdeal y with hPdef
   have hI := hII K ι
 
-  have hfullA : ∀ m p : ℤ, II K ι P (D + 1) (fun _ => ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B p))) =
+  have hfullA : ∀ m p : ℤ, II K ι P (D + 1) (fun _ => HermLine.zcomb A B m p) =
       famExt (II K ι) P (D + 1) ![A, B] (fun _ => ![(m : ℝ), (p : ℝ)]) := by
     intro m p
     have h := ZCombLimit.eq_famExt_of_position (J := II K ι) (P := P) IsSmoothHerm ![A, B]
-      ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B p)) ![(m : ℝ), (p : ℝ)] (Fin.forall_fin_two.mpr ⟨hA, hB⟩)
+      (HermLine.zcomb A B m p) ![(m : ℝ), (p : ℝ)] (Fin.forall_fin_two.mpr ⟨hA, hB⟩)
       (ZCombLimit.isSmoothHerm_zcomb_int hA hB m p)
       (fun L a hL => by simpa using ZCombLimit.fam_update_zcomb_int hI hY L hL a hA hB m p)
       Finset.univ (fun _ => 0)
@@ -227,11 +226,11 @@ theorem ZCombLimit.proof (hM : MixedNumberPolynomial.Statement.{0}) : ZCombLimit
     let φ : (K → ℤ) →+ ℤ := AddMonoidHom.mk' (fun x => GroundTheory.Heights₂.Heights.NumbersDVR.intNum ℚ
       (P.map (MvPolynomial.map (Int.castRingHom ℚ))) (Function.update bs j x)) (fun x y => hadd bs j x y)
     exact (map_zsmul φ c x).trans (smul_eq_mul _ _)
-  have hfullG : ∀ m p : ℤ, (genDeg P D ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B p)).a : ℝ) =
+  have hfullG : ∀ m p : ℤ, (genDeg P D (HermLine.zcomb A B m p).a : ℝ) =
       famExt Jg P D ![A, B] (fun _ => ![(m : ℝ), (p : ℝ)]) := by
     intro m p
     have hposition : ∀ (L : Fin D → HermLine ι) (a : Fin D), (∀ _ : Fin D, True) →
-        Jg P D (Function.update L a ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B p))) =
+        Jg P D (Function.update L a (HermLine.zcomb A B m p)) =
           (![(m : ℝ), (p : ℝ)] : Fin 2 → ℝ) 0 * Jg P D (Function.update L a (![A, B] 0)) +
             (![(m : ℝ), (p : ℝ)] : Fin 2 → ℝ) 1 * Jg P D (Function.update L a (![A, B] 1)) := by
       intro L a _
@@ -243,12 +242,12 @@ theorem ZCombLimit.proof (hM : MixedNumberPolynomial.Statement.{0}) : ZCombLimit
         · simp
         · simp [Function.update_of_ne h]
       simp only [Jg, hcomp, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one]
-      have ha : ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B p)).a = m • A.a + p • B.a := rfl
+      have ha : (HermLine.zcomb A B m p).a = m • A.a + p • B.a := rfl
       rw [ha, hadd, hzs, hzs]
       push_cast
       ring
     have h := ZCombLimit.eq_famExt_of_position (J := Jg) (P := P) (fun _ => True) ![A, B]
-      ((_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow A m).tensor (_root_.GroundTheory.Heights₂.Heights.Inter.hermZpow B p)) ![(m : ℝ), (p : ℝ)] (fun _ => trivial) trivial hposition Finset.univ (fun _ => 0)
+      (HermLine.zcomb A B m p) ![(m : ℝ), (p : ℝ)] (fun _ => trivial) trivial hposition Finset.univ (fun _ => 0)
     simpa [Jg, genDeg] using h
   obtain ⟨δ₁, hδ₁, h₁⟩ := ZCombLimit.exists_delta (J := II K ι) (P := P) (n := D + 1) ![A, B] k ε hε
   obtain ⟨δ₂, hδ₂, h₂⟩ := ZCombLimit.exists_delta (J := Jg) (P := P) (n := D) ![A, B] k ε hε
