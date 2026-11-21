@@ -102,8 +102,39 @@ theorem schr_zero_pureA (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (u : ι → (
         (fun k => algebraMap F (AF F) ((u j).2 k)))) (pureA F f g) 0) = pureA F (T f) g' := by
   obtain ⟨N, hN⟩ := exists_left_inv _ hu
   obtain ⟨g₁, hg₁, T₁, h₁⟩ := comp_pureA _ N hN hg
-  obtain ⟨g₂, hg₂, T₂, h₂⟩ := GlobalTheory.AdelicSvNQuad.mulQ_pureA ψ hψ (⅟2)
-    (Matrix.of fun i j => algebraMap F (AF F) ((u i).1 ⬝ᵥ (u j).2)) hg₁
+  let A : Matrix ι ι (AF F) := Matrix.of fun i j => algebraMap F (AF F) ((u i).1 ⬝ᵥ (u j).2)
+  have hmul : ∃ g' ∈ SB (ι → FiniteAdeleRing (𝓞 F) F), ∃ M : SInf F ι →L[ℂ] SInf F ι,
+      ∀ f : SInf F ι, GlobalTheory.AdelicSvNQuad.mulQ ψ (⅟2) A (pureA F f g₁) = pureA F (M f) g' := by
+    open GlobalTheory.AdelicSvNQuad GlobalTheory.HeisSchA GlobalTheory.Published.Metaplectic in
+    let h : AF F := ⅟2
+    let g := g₁
+    have hg := hg₁
+    let e := InfiniteAdeleRing.ringEquiv_mixedSpace F
+    let q : AdeleRing (𝓞 F) F →+* mixedEmbedding.mixedSpace F := e.toRingHom.comp p1
+    refine ⟨fun z => finChar ψ (quad (p2 h) (A.map p2) z) * g z,
+      ⟨((finChar_isLocallyConstant ψ hψ.1).comp_continuous (continuous_quad _ _)).mul hg.1, hg.2.mul_left⟩,
+      SchwartzMap.smulLeftCLM ℂ (archMul (q h) (A.map q)), fun f => funext fun x => ?_⟩
+    let y : ι → mixedEmbedding.mixedSpace F := fun i => q (x i)
+    let z : ι → FiniteAdeleRing (𝓞 F) F := fun i => p2 (x i)
+    have hat (b : InfiniteAdeleRing F) : At (evI F) (mk b 0) := by
+      intro u hu
+      have hu1 : p1 u = 0 := (InfiniteAdeleRing.ringEquiv_mixedSpace F).injective (by rw [map_zero]; exact hu)
+      rw [smul_eq_mul]
+      exact Prod.ext (show p1 u * b = 0 by rw [hu1, zero_mul]) (show p2 u * 0 = 0 from mul_zero _)
+    have h3 : ψ (quad h A x) = archMul (q h) (A.map q) y * finChar ψ (quad (p2 h) (A.map p2) z) := by
+      rw [map_eq_mul ψ, hψ.2.2 _ (hat _)]
+      congr 1
+      · have e1 : evI F (mk (p1 (quad h A x)) 0) = quad (q h) (A.map q) y := map_quad q h A x
+        rw [e1, archMul, eChar_apply]
+        congr 1
+        push_cast
+        ring
+      · exact congrArg _ (map_quad p2 h A x)
+    change ψ (quad h A x) * (f y * g z) =
+      SchwartzMap.smulLeftCLM ℂ (archMul (q h) (A.map q)) f y * (finChar ψ (quad (p2 h) (A.map p2) z) * g z)
+    rw [h3, SchwartzMap.smulLeftCLM_apply_apply (archMul_temperate _ _), smul_eq_mul]
+    ring
+  obtain ⟨g₂, hg₂, T₂, h₂⟩ := hmul
   refine ⟨g₂, hg₂, T₂.comp T₁, fun f => ?_⟩
   rw [schr_zero_eq, h₁, h₂]
   rfl

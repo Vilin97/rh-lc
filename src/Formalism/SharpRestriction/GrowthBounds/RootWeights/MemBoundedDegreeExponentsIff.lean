@@ -221,7 +221,7 @@ theorem asm_bin_deg {σ : Type*} (k : σ) (j : ℕ) : (asm_bin σ k j).totalDegr
   unfold asm_bin
   refine (MvPolynomial.totalDegree_mul _ _).trans ?_
   rw [MvPolynomial.totalDegree_C, zero_add]
-  refine (MvPolynomial.totalDegree_finset_prod _ _).trans ?_
+  refine (MvPolynomial.totalDegree_finsetProd _ _).trans ?_
   calc ∑ i ∈ range j, (MvPolynomial.X k - MvPolynomial.C (i : ℚ)).totalDegree
       ≤ ∑ i ∈ range j, 1 := by
         apply Finset.sum_le_sum
@@ -333,10 +333,10 @@ theorem unit_function_mahler_decay_of (D : Formalism.BasicNotions.D7) (h1 : ∀ 
     have hm := asm_multi (asm_f p t rho inv) hf c
     refine ⟨∑ j ∈ boundedDegreeExponents σ c, MvPolynomial.C (∏ k, mah (asm_f p t rho inv k) (j k)) *
       ∏ k, asm_bin σ k (j k), ?_, fun e' => ?_⟩
-    · refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun j hj => ?_)
+    · refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun j hj => ?_)
       refine (MvPolynomial.totalDegree_mul _ _).trans ?_
       rw [MvPolynomial.totalDegree_C, zero_add]
-      refine (MvPolynomial.totalDegree_finset_prod _ _).trans ?_
+      refine (MvPolynomial.totalDegree_finsetProd _ _).trans ?_
       refine (Finset.sum_le_sum fun k _ => asm_bin_deg k (j k)).trans ?_
       exact mem_bounded_degree_exponents_iff.mp hj
     · rw [asm_prod_eq]

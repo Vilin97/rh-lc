@@ -104,7 +104,8 @@ theorem finite_quot_of_le {L' : IntermediateField ℚ_[p] (PadicAlgCl p)} (hL' :
 
 theorem tower_bijective {L' : IntermediateField ℚ_[p] (PadicAlgCl p)} (h : K ≤ L) (h' : L ≤ L') :
     Bijective (fun x : (GK p K ⧸ subG p K L) × (GK p L ⧸ subG p L L') =>
-      (QuotientGroup.mk (x.1.out * resGK h x.2.out) : GK p K ⧸ subG p K L')) := by
+      (QuotientGroup.mk (x.1.out * resGK (p := p) (K := K) (L := L) h x.2.out) :
+        GK p K ⧸ subG p K L')) := by
   have hres : ∀ τ : GK p L, resGK h τ ∈ subG p K L := fun τ => by
     rw [← range_resGK h]; exact ⟨τ, rfl⟩
   constructor

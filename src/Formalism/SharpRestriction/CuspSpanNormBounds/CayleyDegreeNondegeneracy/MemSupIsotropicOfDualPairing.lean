@@ -91,8 +91,16 @@ theorem orthLattice_isLattice (hΛ : Submodule.IsLattice D.host.E Λ) (hu : Form
   have hM₁ : M₁ ≤ L0X D Λ (lf D F0) := Submodule.span_le.2 (by rintro _ ⟨i, rfl⟩; exact hcM i)
   have hfg : M₁.FG := Submodule.fg_span (Set.finite_range _)
   have hs : spanE (D.sp.X 0) M₁ = ⊤ := by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply top_unique
+    rw [← (D.sp.X 0).frame.span_eq]
+    apply Submodule.span_le.2
+    rintro _ ⟨i, rfl⟩
+    have hm : c i • (D.sp.X 0).frame i ∈ spanE (D.sp.X 0) M₁ :=
+      Submodule.subset_span (Submodule.subset_span ⟨i, rfl⟩)
+    have hn : algebraMap (𝓞 D.host.E) D.host.E (c i) ≠ 0 := by simpa using hc i
+    have := (spanE (D.sp.X 0) M₁).smul_mem (algebraMap (𝓞 D.host.E) D.host.E (c i))⁻¹ hm
+    rw [← algebraMap_smul D.host.E (c i), smul_smul, inv_mul_cancel₀ hn, one_smul] at this
+    exact this
   have hU : (⊤ : Submodule D.host.E (D.sp.X 0).V) ⊓ orth (D.sp.X 0) ⊤ = ⊥ := by
     rw [top_inf_eq, eq_bot_iff]
     intro y hy
@@ -105,37 +113,58 @@ theorem orthLattice_isLattice (hΛ : Submodule.IsLattice D.host.E Λ) (hu : Form
     exact ⟨o, ho⟩
   refine ⟨?_, ?_⟩
   · exact isNoetherian_submodule.1 (isNoetherian_of_fg_of_noetherian _ hdfg) _ hle
-  · exact eq_top_iff.2 (hs ▸ Submodule.span_mono hM₁)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
 
 theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.E Λ) (hu : Formalism.HermitianLatticesTheory.IsUnimodular (hS D).hT Λ)
     (y : (hS D).V)
     (hy : ∀ m ∈ Λ ⊓ toO (hS D) (orth (hS D) (Xsp (lf D F0))), (hS D).hT m y ∈ (1 : Submodule (𝓞 D.host.E) D.host.E)) :
     y ∈ Λ ⊔ toO (hS D) (Xsp (lf D F0)) := by
+  let ℓ : Fin D.R.rS → Module.Dual D.host.E (hS D).V := fun a => (hS D).hT (F0.e a)
+  have hℓ : LinearIndependent D.host.E ℓ := by
+    rw [Fintype.linearIndependent_iff]
+    intro c hc a
+    have h1 : (hS D).hT (∑ a, star (c a) • F0.e a) = 0 := by
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← hc]
+      refine Finset.sum_congr rfl (fun a _ => ?_)
+      rw [map_smulₛₗ, starRingEnd_apply, star_star]
+    have h2 : ∑ a, star (c a) • F0.e a = 0 := (hS D).nondeg.1 _ (fun y => by rw [h1]; rfl)
+    have h3 := Fintype.linearIndependent_iff.1 F0.e_indep _ h2 a
+    simpa using h3
+  let bb := Basis.sumExtend hℓ
+  let f : Fin D.R.rS → (hS D).V := fun a =>
+    (Module.evalEquiv D.host.E (hS D).V).symm (bb.coord (Sum.inl a))
+  have hf : ∀ a b, (hS D).hT (F0.e a) (f b) = if a = b then 1 else 0 := by
+    intro a b
+    change ℓ a ((Module.evalEquiv D.host.E (hS D).V).symm (bb.coord (Sum.inl b))) = _
+    rw [Module.apply_evalEquiv_symm_apply]
+    simp [bb, Basis.sumExtend, Basis.coord_apply]
   have DL := Formalism.HermitianLatticesTheory.dualLattice (𝓞 D.host.E) D.host.E (hS D).V (hS D).hT (hS D).herm (hS D).nondeg i_star_int
   have hlat : ∀ N : LatV D, N.FG → Submodule.IsLattice D.host.E (Λ ⊔ N) := fun N hN =>
-    ⟨hΛ.fg.sup hN, eq_top_iff.2 (hΛ.span_eq_top ▸ Submodule.span_mono (le_sup_left : Λ ≤ Λ ⊔ N))⟩
+    ⟨hΛ.fg.sup hN, fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli⟩
   have hΛ₂ := (DL _ (hlat (Submodule.span (𝓞 D.host.E) {y}) (Submodule.fg_span (Set.finite_singleton y)))).1
-  choose c hc hcf using fun a => a_exists_smul_mem _ hΛ₂ (D.sp.hypF a)
+  choose c hc hcf using fun a => a_exists_smul_mem _ hΛ₂ (f a)
   set ε : 𝓞 D.host.E := ∏ a, c a with hε
   have hε0 : ε ≠ 0 := Finset.prod_ne_zero_iff.2 fun a _ => hc a
   have hε1 : algebraMap (𝓞 D.host.E) D.host.E ε ≠ 0 := by simpa using hε0
-  have hg : ∀ a, ε • D.sp.hypF a ∈
+  have hg : ∀ a, ε • f a ∈
       Formalism.HermitianLatticesTheory.dual (hS D).hT (Λ ⊔ Submodule.span (𝓞 D.host.E) {y}) := by
     intro a
     rw [hε, ← Finset.prod_erase_mul _ _ (Finset.mem_univ a), mul_smul]
     exact Submodule.smul_mem _ _ (hcf a)
-  have hgΛ : ∀ a, ε • D.sp.hypF a ∈ Λ := by
+  have hgΛ : ∀ a, ε • f a ∈ Λ := by
     intro a
     rw [← hu]
     exact (i_mem_dual _ _).2 fun l hl => (i_mem_dual _ _).1 (hg a) l (Submodule.mem_sup_left hl)
-  have hgy : ∀ a, (hS D).hT (ε • D.sp.hypF a) y ∈ (1 : Submodule (𝓞 D.host.E) D.host.E) := by
+  have hgy : ∀ a, (hS D).hT (ε • f a) y ∈ (1 : Submodule (𝓞 D.host.E) D.host.E) := by
     intro a
     rw [← c_herm]
     exact star_mem_one_submodule ((i_mem_dual _ _).1 (hg a) y
       (Submodule.mem_sup_right (Submodule.mem_span_singleton_self y)))
   set δ : D.host.E := (star (algebraMap (𝓞 D.host.E) D.host.E ε))⁻¹ with hδ
-  set N : LatV D := Submodule.span (𝓞 D.host.E) (Set.range fun a => δ • D.sp.hypE a) with hN
+  set N : LatV D := Submodule.span (𝓞 D.host.E) (Set.range fun a => δ • F0.e a) with hN
   have hB := (DL _ (hlat N (Submodule.fg_span (Set.finite_range _)))).2.1
   have hyB : y ∈ Λ ⊔ N := by
     rw [← hB]
@@ -144,26 +173,25 @@ theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.
       rw [← hu]
       exact (i_mem_dual _ _).2 fun l' hl' => (i_mem_dual _ _).1 hl l' (Submodule.mem_sup_left hl')
     have ho : ∀ a, ∃ o : 𝓞 D.host.E, algebraMap (𝓞 D.host.E) D.host.E o =
-        (algebraMap (𝓞 D.host.E) D.host.E ε)⁻¹ * (hS D).hT (D.sp.hypE a) l := by
+        (algebraMap (𝓞 D.host.E) D.host.E ε)⁻¹ * (hS D).hT (F0.e a) l := by
       intro a
-      have h1 := (i_mem_dual _ _).1 hl (δ • D.sp.hypE a)
+      have h1 := (i_mem_dual _ _).1 hl (δ • F0.e a)
         (Submodule.mem_sup_right (Submodule.subset_span ⟨a, rfl⟩))
       rw [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, hδ, star_inv₀, star_star] at h1
       exact Submodule.mem_one.1 h1
     choose o ho using ho
-    set l' : (hS D).V := ∑ a, o a • (ε • D.sp.hypF a) with hl'
+    set l' : (hS D).V := ∑ a, o a • (ε • f a) with hl'
     have hl'Λ : l' ∈ Λ := Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ (hgΛ a)
     have hm : l - l' ∈ Λ ⊓ toO (hS D) (orth (hS D) (Xsp (lf D F0))) := by
       refine ⟨Λ.sub_mem hlΛ hl'Λ, ?_⟩
       show l - l' ∈ orth (hS D) (Submodule.span D.host.E (Set.range F0.e))
-      rw [he]
       refine a_orth_of_frame _ _ fun b => ?_
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sub, hl', map_sum, sub_eq_zero]
-      have : ∀ a, (hS D).hT (D.sp.hypE b) (o a • (ε • D.sp.hypF a)) =
+      have : ∀ a, (hS D).hT (F0.e b) (o a • (ε • f a)) =
           if b = a then algebraMap (𝓞 D.host.E) D.host.E (o a) * algebraMap (𝓞 D.host.E) D.host.E ε else 0 := by
         intro a
-        rw [← algebraMap_smul D.host.E (o a), ← algebraMap_smul D.host.E ε, map_smul, map_smul, D.sp.hyp_ef]
+        rw [← algebraMap_smul D.host.E (o a), ← algebraMap_smul D.host.E ε, map_smul, map_smul, hf]
         split_ifs <;> simp
       simp only [this, Finset.sum_ite_eq, Finset.mem_univ, if_true]
       rw [ho b]
@@ -180,8 +208,7 @@ theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.
   · exact (sup_le_sup_left hNX Λ) hyB
   refine Submodule.span_le.2 ?_
   rintro _ ⟨a, rfl⟩
-  show δ • D.sp.hypE a ∈ Submodule.span D.host.E (Set.range F0.e)
-  rw [he]
+  show δ • F0.e a ∈ Submodule.span D.host.E (Set.range F0.e)
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
 
 end Lat

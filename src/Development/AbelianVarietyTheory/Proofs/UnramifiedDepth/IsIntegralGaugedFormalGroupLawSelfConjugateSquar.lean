@@ -205,7 +205,7 @@ theorem subst_hCol {a : Fin 2 × (Fin 2 × Fin dd) → MvPowerSeries τ C} (ha :
 
 theorem map_self (f : MvPowerSeries σ C) : MvPowerSeries.map (algebraMap C C) f = f := by
   ext n
-  simp [coeff_map]
+  simp
 
 end Series
 
@@ -353,7 +353,7 @@ theorem hAt_eq {a b : Fin 2 × Fin dd → MvPowerSeries τ C} (ha : Zc a) (hb : 
   unfold hAt
   show subst _ (∑ col, hCol col Y.h) = _
   rw [Fin.sum_univ_two, subst_add (hasSubst_of_constantCoeff_zero hz), subst_hCol hz, subst_hCol hz]
-  simp only [if_true, one_ne_zero, if_false]
+  simp only [ite_true, one_ne_zero, ite_false]
   rfl
 
 omit [CharZero C] in
@@ -436,7 +436,7 @@ theorem rlaw_rawSelf (C : Type) [Field C] [CharZero C] (V : VF C) (O : Type) [Co
     refine Van.subst (T := {s : Fin 2 × (Fin 2 × Fin dd) | s.1 = g}) {s : Fin 2 × Fin dd | s.1 = g}
       (fun _ => constantCoeff_X _) ?_ (h_axes Y g) e he
     intro s hs ν hν
-    rw [coeff_X, if_neg]
+    rw [coeff_X, ite_eq_right]
     rintro rfl
     exact hν (s.1, (col, s.2)) (by simp) hs
   addInt := by
@@ -500,7 +500,7 @@ theorem rlaw_rawSelf (C : Type) [Field C] [CharZero C] (V : VF C) (O : Type) [Co
     refine ⟨fun h => ?_, fun h => ?_⟩
     · subst h
       have hg : 1 - g ≠ g := by fin_cases g <;> decide
-      rw [key, hew, p.gm_hyp, if_neg hg, if_pos rfl, one_mul]
-    · rw [key, hew, if_neg h, mul_zero]
+      rw [key, hew, p.gm_hyp, ite_eq_right hg, ite_eq_left rfl, one_mul]
+    · rw [key, hew, ite_eq_right h, mul_zero]
 
 end GlobalTheory.RowLawSquare

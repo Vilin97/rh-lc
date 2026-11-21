@@ -35,7 +35,8 @@ open Formalism.MainNotions.G Formalism.MainNotions.CovariantDegrees
 theorem exponent_condition_holds (D : Formalism.BasicNotions.D7) : adm3 D := by
   intro p hp m k b hkm hb
   haveI : Fact p.Prime := ⟨hp⟩
-  exact padicValNat_choose hkm hb
+  rw [Nat.padicValNat_def]
+  exact multiplicity_choose hkm hb
 
 theorem key_positivity_condition (D : Formalism.BasicNotions.D7) : ArchimedeanSignatureMatching D := by
   intro A _ _ _ σ w hw F G h
@@ -46,8 +47,9 @@ theorem key_positivity_condition (D : Formalism.BasicNotions.D7) : ArchimedeanSi
       C w ∣ H ↔ MvPolynomial.map (Ideal.Quotient.mk (Ideal.span {w})) H = 0 := by
     intro H
     rw [MvPolynomial.C_dvd_iff_dvd_coeff, MvPolynomial.ext_iff]
-    simp only [MvPolynomial.coeff_map, MvPolynomial.coeff_zero, Ideal.Quotient.eq_zero_iff_mem,
-      Ideal.mem_span_singleton]
+    simp only [MvPolynomial.coeff_map]
+    change (∀ i, w ∣ H.coeff i) ↔ ∀ m, (Ideal.Quotient.mk (Ideal.span {w})) (H.coeff m) = 0
+    simp only [Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton]
   rw [key] at h
   rw [map_mul] at h
   rcases mul_eq_zero.mp h with h1 | h1

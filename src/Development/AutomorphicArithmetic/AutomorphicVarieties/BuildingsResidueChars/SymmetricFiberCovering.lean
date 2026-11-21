@@ -99,9 +99,11 @@ theorem UpperTheory.symmetric_fiber_covering : UpperTheory.V.Z.Sym.Glob.Fib.Cove
       rw [e0]
       set z : G ⧸ U' := (((s₀ : G) * x : G) : G ⧸ U') with hzdef
       have step : (∑ᶠ (y : S ⧸ Ux) (_ : q y = z), k y) = ∑ᶠ y ∈ {y | q y = z}, Φ z.out :=
-        finsum_mem_congr rfl fun y hy => by
-          have hy' : q y = z := hy
-          rw [hkq, hy']
+        by
+          change (∑ᶠ y ∈ {y | q y = z}, k y) = ∑ᶠ y ∈ {y | q y = z}, Φ z.out
+          exact finsum_mem_congr rfl fun y hy => by
+            have hy' : q y = z := hy
+            rw [hkq, hy']
       rw [step, finsum_mem_eq_finite_toFinset_sum _ (hfinF s₀), Finset.sum_const, nsmul_eq_mul,
         ← Set.ncard_eq_toFinset_card _ (hfinF s₀), hcard]
     · rw [Set.indicator_of_notMem hz, mul_zero]

@@ -130,6 +130,51 @@ variable {π : 𝒪[K]} (hπ : Irreducible π) {f g : PowerSeries 𝒪[K]}
 
 variable [IsSepClosed Ω]
 
+open Polynomial in
+local instance normal_lubinTateField (hf : IsLubinTateSeries π f) (n : ℕ) :
+    Normal K (lubinTateField Ω hπ hf n) := by
+  have hq := one_lt_card_residueField' K
+  have hlt : IsLubinTateSeries π (ltPoly π : PowerSeries 𝒪[K]) := {
+    constantCoeff_eq_zero := by
+      rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, Polynomial.coeff_coe, ltPoly]
+      simp [coeff_X_pow, show 0 ≠ Nat.card 𝓀[K] by omega]
+    coeff_one := by
+      rw [Polynomial.coeff_coe, ltPoly]
+      simp [coeff_X_pow, hq.ne]
+    dvd_coeff_sub := fun k => by
+      rw [coeff_ltPoly_sub, coeff_C_mul_X]
+      split_ifs
+      · exact dvd_rfl
+      · exact dvd_zero π }
+  have hpow (x : IdealPoint Ω (lubinTateFormalGroup hπ hlt)) :
+      (π ^ n • x).val = aeval x.val ((ltPolyIter π n).map (algebraMap 𝒪[K] K)) := by
+    have := t2Space_of_isValuativeTopology Ω
+    induction n with
+    | zero => simp [ltPolyIter_zero]
+    | succ n ih =>
+      rw [pow_succ', mul_smul, lubinTate_uniformizer_smul_val hlt, psEval_polynomial, ih,
+        ltPolyIter_succ, Polynomial.map_comp, aeval_comp]
+  let p := (ltPolyIter π n).map (algebraMap 𝒪[K] K)
+  have hsep : p.Separable := separable_ltPolyIter hπ n
+  have htorsion (x : IdealPoint Ω (lubinTateFormalGroup hπ hlt)) :
+      x ∈ lubinTateTorsion Ω hlt n ↔ aeval x.val ((ltPolyIter π n).map (algebraMap 𝒪[K] K)) = 0 := by
+    rw [mem_lubinTateTorsion, ← hpow]
+    exact ⟨fun h => by rw [h]; rfl, fun h => IdealPoint.ext h⟩
+  have hroots : IdealPoint.val '' (lubinTateTorsion Ω (hπ := hπ) hlt n :
+      Set (IdealPoint Ω (lubinTateFormalGroup hπ hlt))) = p.rootSet Ω := by
+    ext z
+    rw [mem_rootSet_of_ne hsep.ne_zero]
+    constructor
+    · rintro ⟨x, hx, rfl⟩
+      exact (htorsion x).mp hx
+    · intro hz
+      let x : IdealPoint Ω (lubinTateFormalGroup hπ hlt) :=
+        IdealPoint.mk z (valuation_lt_one_of_aeval_ltPolyIter_eq_zero hπ n hz)
+      exact ⟨x, (htorsion x).mpr hz, rfl⟩
+  rw [lubinTateField_eq hπ hf hlt, lubinTateField, hroots]
+  have := adjoin_rootSet_isSplittingField (IsSepClosed.splits_codomain p hsep) (L := Ω)
+  exact Normal.of_isSplittingField p
+
 def lubinTateChar (hf : IsLubinTateSeries π f) (n : ℕ) {E : IntermediateField K Ω}
     (hE : lubinTateField Ω hπ hf n ≤ E) : (E ≃ₐ[K] E) →* (𝒪[K] ⧸ Ideal.span {π ^ n})ˣ :=
   (lubinTateGalEquiv hπ hf n).toMonoidHom.comp (restrictAut hE)

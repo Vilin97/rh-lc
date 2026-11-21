@@ -83,7 +83,7 @@ theorem exists_frac [W.IsPrime] (hPW : P ≤ W) {a : FractionRing (MRing ι R �
     ring
   | neg x _ hx =>
     obtain ⟨b, f, g, hf, hg, hgW, rfl⟩ := hx
-    exact ⟨b, -f, g, isMultiHomog_neg hf, hg, hgW, by simp [neg_div]⟩
+    exact ⟨b, -f, g, isMultiHomog_neg hf, hg, hgW, by rw [(fr P).map_neg f, neg_div]⟩
   | mul x y _ _ hx hy =>
     obtain ⟨b, f, g, hf, hg, hgW, rfl⟩ := hx
     obtain ⟨b', f', g', hf', hg', hgW', rfl⟩ := hy
@@ -274,7 +274,7 @@ theorem isLocalization_lau (hPh : IsMultiHomogIdeal P) :
     letI := (psiQ T hPW hT hPh).toAlgebra
     IsLocalization (homSub (K := K) P W) (Lau P W) := by
   let := (psiQ T hPW hT hPh).toAlgebra
-  have hne : ∀ {g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}, g ∉ W → fr P g ≠ 0 := fun hg => fr_ne_zero fun h => hg (hPW h)
+  have hne : ∀ {g : MRing ι R}, g ∉ W → fr P g ≠ 0 := fun hg => fr_ne_zero fun h => hg (hPW h)
   rw [isLocalization_iff]
   refine ⟨?_, ?_, ?_⟩
   · rintro ⟨_, b, f, hf, hfW, rfl⟩
@@ -330,7 +330,7 @@ end Localization
 
 section Local
 
-variable [Fintype K] {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} [P.IsPrime] [W.IsPrime]
+variable [Fintype K] {P W : Ideal (MRing ι R)} [P.IsPrime] [W.IsPrime]
 
 theorem wbar_isPrime (hPW : P ≤ W) : (W.map (Ideal.Quotient.mk P)).IsPrime :=
   Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective (by rw [Ideal.mk_ker]; exact hPW)
@@ -397,7 +397,9 @@ variable (T : ∀ k, ι k) (hPW : P ≤ W) (hT : ∀ k, (X ⟨k, T k⟩ : MRing 
 theorem ev_mem_locC (p : Lau P W) : ev T hPW hT p ∈ locC hPW := by
   induction p using AddMonoidAlgebra.induction_linear with
   | zero => rw [map_zero]; exact zero_mem _
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq =>
+    rw [(ev T hPW hT).map_add p q]
+    exact add_mem hp hq
   | single d a =>
     rw [ev_single, chi_apply]
     refine mul_mem (homLocRing_le_locC hPW a.2) (prod_mem fun k _ => zpow_mem_locC hPW ?_ ?_ _)
@@ -414,7 +416,7 @@ theorem incAC_isLocalHom : IsLocalHom (incAC hPW) := by
   haveI := locC_isLocalization hPW
   refine ⟨fun a ha => ?_⟩
   obtain ⟨b, f, g, hf, hg, hgW, hag⟩ := exists_frac hPW a.2
-  have hne : ∀ {g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}, g ∉ W → fr P g ≠ 0 := fun hg => fr_ne_zero fun h => hg (hPW h)
+  have hne : ∀ {g : MRing ι R}, g ∉ W → fr P g ≠ 0 := fun hg => fr_ne_zero fun h => hg (hPW h)
   have hgu : IsUnit (algQC hPW (Ideal.Quotient.mk P g)) :=
     (IsLocalization.AtPrime.isUnit_to_map_iff (locC hPW) (W.map (Ideal.Quotient.mk P)) _).mpr
       fun h => hgW ((Ideal.mem_quotient_iff_mem hPW).mp h)

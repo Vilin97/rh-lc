@@ -59,7 +59,7 @@ theorem li_mono_words {R σ ι α : Type} [CommRing R] [IsDomain R] (Tset : Set 
         (M q + n).filter (· ∉ Tset) = n := by
       intro n hn
       have hnv : ∀ v, n v ≠ 0 → v ∉ Tset := fun v hv =>
-        hwsup ((mem_vars v).2 ⟨n, hn, Finsupp.mem_support_iff.2 hv⟩)
+        hwsup ((mem_vars_iff_mem_support v).2 ⟨n, hn, Finsupp.mem_support_iff.2 hv⟩)
       constructor
       · ext v
         rw [Finsupp.filter_apply, Finsupp.add_apply]

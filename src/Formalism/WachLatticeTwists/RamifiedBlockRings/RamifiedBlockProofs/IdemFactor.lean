@@ -17,9 +17,9 @@ theorem eCore {K : Type} [Field K] {S : Type} [Fintype S] [DecidableEq S] (A : M
     (α : ℕ → K) (ht : 1 ≤ t)
     (hA : A.charpoly = ∏ i ∈ Finset.range t, (Polynomial.X - Polynomial.C (α i)))
     (hα : ∀ i j, i < t → j < t → α i = α j → i = j) :
-    let EA := ((List.range t).tail.map fun i => A - α i • (1 : Matrix S S K)).prod
-    let δ := ∏ i ∈ Finset.Ioo 0 t, (α 0 - α i)
-    EA * EA = δ • EA ∧ EA.rank = 1 ∧ A * EA = α 0 • EA ∧ δ ≠ 0 := by
+    (let EA := ((List.range t).tail.map fun i => A - α i • (1 : Matrix S S K)).prod
+     let δ := ∏ i ∈ Finset.Ioo 0 t, (α 0 - α i)
+     EA * EA = δ • EA ∧ EA.rank = 1 ∧ A * EA = α 0 • EA ∧ δ ≠ 0) := by
   intro EA δ
   let q : Polynomial K := ∏ i ∈ Finset.Ioo 0 t, (Polynomial.X - Polynomial.C (α i))
   have hEA : EA = Polynomial.aeval A q := by

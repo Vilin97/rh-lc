@@ -14,18 +14,18 @@ namespace Formalism.L2.Th1.A
 
 def LogSpec : Prop :=
   ∀ (K : Type u) [Field K] [CharZero K] (W : WeierstrassCurve K),
-    constantCoeff (logSer W) = 0 ∧ coeff 1 (logSer W) = 1 ∧ derivative K (logSer W) = om W ∧
+    constantCoeff (logSer W) = 0 ∧ coeff 1 (logSer W) = 1 ∧ derivative (logSer W) = om W ∧
     D W (logSer W) = 1
 
 def ExpSpec : Prop :=
   ∀ (K : Type u) [Field K] [CharZero K] (W : WeierstrassCurve K),
     constantCoeff (expSer W) = 0 ∧ coeff 1 (expSer W) = 1 ∧
     (logSer W).subst (expSer W) = X ∧ (expSer W).subst (logSer W) = X ∧
-    derivative K (expSer W) = (fw W).subst (expSer W)
+    derivative (expSer W) = (fw W).subst (expSer W)
 
 def ChainZ : Prop :=
   ∀ (K : Type u) [Field K] [CharZero K] (W : WeierstrassCurve K) (f : K⟦X⟧),
-    derivative K (f.subst (expSer W)) = (D W f).subst (expSer W)
+    derivative (f.subst (expSer W)) = (D W f).subst (expSer W)
 
 def LogNeg : Prop :=
   ∀ (K : Type u) [Field K] [CharZero K] (W : WeierstrassCurve K),

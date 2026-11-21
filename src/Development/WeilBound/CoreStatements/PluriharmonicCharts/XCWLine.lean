@@ -16,6 +16,7 @@ theorem PositivityTheory.Xgp.t_c_w_line : ∀ (K : Type) [Fintype K] (ι : K →
   intro K _ ι _ Φ _ y Ψ _ _ N j M τ a b k₀ ca cb hb hab hk hca hcb
   have hne : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0 := PositivityTheory.Xgp.W.blocks_of_model M
   choose c hc using hne
-  obtain ⟨Fr⟩ := PositivityTheory.Xgp.W.exists_penFrame M hb hab hk hca hcb (PositivityTheory.Xgp.W.isPt_self fun k => ⟨c k, hc k⟩) c hc
+  have hpt : PositivityTheory.Xgp.W.IsPt y y := PositivityTheory.Xgp.W.isPt_self hne
+  obtain ⟨Fr⟩ := PositivityTheory.Xgp.W.exists_penFrame M hb hab hk hca hcb hpt c hc
   rw [PositivityTheory.Xgp.W.wCo_eq M hb hab hk hca hcb]
   exact fun G => PositivityTheory.Xgp.W.line_pen Fr G

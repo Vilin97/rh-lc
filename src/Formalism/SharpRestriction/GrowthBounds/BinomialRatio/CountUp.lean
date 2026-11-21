@@ -339,7 +339,7 @@ theorem countUp_of {C0 CYb Cde Ck CD Cb CE1 CE2 Cc H : ℝ} (hCD : ChainDimAt) (
     rw [if_neg hn]
   have hmain := finsum_le_of_inj (Fs C0 CE1 CE2 X j m rz ry)
     (Gt (r := X.m) (mmLetters C0 CE1 CE2 X j rz ry) (X.seg C0 CE1 CE2 j).bPlus) Φ
-    (Gt_nonneg _ _) (Gt_support_finite hCD _ _) (hinj.mono hsupp) (by
+    (Gt_nonneg _ _) (Gt_support_finite hCD _ _) (hinj.mono (fun _ hz => hsupp _ hz)) (by
       intro z hz
       have hz' := hsupp z hz
       obtain ⟨h1, h2, h3, h4⟩ := hΦ z hz'

@@ -14,7 +14,7 @@ namespace GlobalTheory.UPel.HT
 
 theorem Datum.finrank_La_ringOfIntegers :
     ∀ {p : ℕ} [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p),
-      letI : Module (𝓞 D.F) D.La := Module.compHom D.La (algebraMap (𝓞 D.F) D.O);
+      letI : Module (𝓞 D.F) D.La := Module.compHom D.La (algebraMap (𝓞 D.F) D.O)
       Module.finrank (𝓞 D.F) D.La = D.m * D.n := by
   intro p _ D
   letI iL : Module (𝓞 D.F) D.La := Module.compHom D.La (algebraMap (𝓞 D.F) D.O)

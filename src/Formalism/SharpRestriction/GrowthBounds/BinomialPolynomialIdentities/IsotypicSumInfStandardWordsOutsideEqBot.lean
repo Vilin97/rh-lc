@@ -31,7 +31,7 @@ theorem coeff_multidegreeProj_of_multidegree_eq (d : ι → ℕ) (H : MvPolynomi
   · intro b _ hbm
     split_ifs
     · erw [MvPolynomial.coeff_monomial, if_neg hbm]
-    · exact MvPolynomial.coeff_zero m
+    · simp
   · intro hm
     rw [MvPolynomial.mem_support_iff, not_not] at hm
     rw [if_pos h, hm]
@@ -39,12 +39,12 @@ theorem coeff_multidegreeProj_of_multidegree_eq (d : ι → ℕ) (H : MvPolynomi
 
 theorem eq_zero_of_multidegreeProj_eq_zero (H : MvPolynomial (ι × Fin r) K) (h : ∀ d, polProj K d H = 0) : H = 0 := by
   ext m
-  rw [← coeff_multidegreeProj_of_multidegree_eq (fun i => multideg m i) H m (fun i => rfl), h, coeff_zero]
+  rw [← coeff_multidegreeProj_of_multidegree_eq (fun i => multideg m i) H m (fun i => rfl), h]
 
 theorem multidegreeProj_eq_zero_of_ne (d d' : ι → ℕ) (hne : d' ≠ d) (H : MvPolynomial (ι × Fin r) K) (hH : H ∈ Pol K r d') :
     polProj K d H = 0 := by
   ext m
-  rw [coeff_zero]
+  change AddMonoidAlgebra.coeff (polProj K d H) m = 0
   by_cases hm : ∀ i, multideg m i = d i
   · rw [coeff_multidegreeProj_of_multidegree_eq d H m hm]
     by_contra hc

@@ -43,7 +43,7 @@ def unitCocycle : cocycles (𝟙_ (Rep.{u} k G)) 0 :=
 @[simp]
 theorem cochainOf_cocycleι_unitCocycle :
     cochainOf (A := 𝟙_ (Rep.{u} k G))
-      (cocycleι (p := 0) (unitCocycle (k := k) (G := G))) = oneCochain :=
+      (cocycleι (A := 𝟙_ (Rep.{u} k G)) (p := 0) unitCocycle) = oneCochain :=
   congrArg (cochainOf (A := 𝟙_ (Rep.{u} k G)))
     ((cochainsComplex (𝟙_ (Rep.{u} k G))).i_cyclesMk _ _ _ _)
 

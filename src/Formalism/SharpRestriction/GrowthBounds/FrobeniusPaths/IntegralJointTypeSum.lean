@@ -223,7 +223,9 @@ lemma hwv_mem [CharZero F] (lam : Fin m → ℤ) (v : MvPolynomial (Fin N × Fin
   simp only [weightSp, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.smul_apply,
     Module.End.one_apply] at hv
   have h1 := congrArg (AddMonoidAlgebra.coeff · mm) (hv a)
-  rw [coeff_sub, coeff_Eaa, coeff_smul, coeff_zero, smul_eq_mul, ← sub_mul] at h1
+  rw [coeff_sub, coeff_Eaa, coeff_smul, smul_eq_mul, ← sub_mul] at h1
+  have hz : (AddMonoidAlgebra.coeff (0 : MvPolynomial (Fin N × Fin k) F)) mm = 0 := by simp
+  rw [hz] at h1
   rcases mul_eq_zero.1 h1 with h | h
   · exact_mod_cast sub_eq_zero.1 h
   · exact absurd h hmm

@@ -141,9 +141,9 @@ lemma theta_smulLDeg {p : ℕ} (i : Fin (p + 1) → Fin (n + 1)) (k : ℤ) (a : 
 lemma lval_push_smul {k : ℤ} {p : ℕ} (a : A) (σ : Cochain (twistAb A n k) (cover A n) p)
     (i : Fin (p + 1) → Fin (n + 1)) :
     lval (push (cover A n) (smulAbRingHom (twistingSheaf (grading A n) k)
-      (algebraMap A Γ(projectiveSpace A n, ⊤) a)).hom p σ) i = a • lval σ i := by
+      (algebraMap A Γ(projectiveSpace A n, ⊤) a)).asHom.hom p σ) i = a • lval σ i := by
   have h : push (cover A n) (smulAbRingHom (twistingSheaf (grading A n) k)
-      (algebraMap A Γ(projectiveSpace A n, ⊤) a)).hom p σ i =
+      (algebraMap A Γ(projectiveSpace A n, ⊤) a)).asHom.hom p σ i =
       theta i k (smulLDeg a ⟨lval σ i, lval_mem σ i⟩) := by
     rw [theta_smulLDeg, theta_lval]
     rfl
@@ -163,14 +163,15 @@ def cechHLinearEquivTwist (k : ℤ) (p : ℕ) :
       rw [cechH.smul_def, H.smul_def]
       exact cechHEquiv_naturality _ (cover A n) iSup_stdOpen
         (fun {_} i => ⟨isAffineOpen_inter i, i 0, inter_le _ i 0⟩) p _ _
-        (smulAbRingHom (twistingSheaf (grading A n) k) (algebraMap A Γ(projectiveSpace A n, ⊤) a)) x
+        (smulAbRingHom (twistingSheaf (grading A n) k)
+          (algebraMap A Γ(projectiveSpace A n, ⊤) a)).asHom x
 
 end Leray
 
 lemma smul_cls {k : ℤ} {p : ℕ} (a : A) (σ : Cochain (twistAb A n k) (cover A n) p)
     (hσ : d _ _ p σ = 0) :
     a • cls σ hσ = cls (push (cover A n) (smulAbRingHom (twistingSheaf (grading A n) k)
-      (algebraMap A Γ(projectiveSpace A n, ⊤) a)).hom p σ)
+      (algebraMap A Γ(projectiveSpace A n, ⊤) a)).asHom.hom p σ)
         (by rw [← push_d, hσ, map_zero]) :=
   cechHMap_cls (cover A n) _ σ hσ
 

@@ -90,7 +90,7 @@ theorem sec_eq_of_cover {R : Type} [CommRing R] {F : Shv R} {U : Scheme.{0}} {ι
     rintro W f ⟨i⟩
     exact h i
   have hsh : Presieve.IsSheaf Scheme.etaleTopology (F.obj ⋙ forget _) :=
-    (isSheaf_iff_isSheaf_of_type _ _).1 (Presheaf.isSheaf_comp_of_isSheaf _ _ (forget _) F.cond)
+    (isSheaf_iff_isSheaf_of_type _ _).1 (Presheaf.isSheaf_comp_of_isSheaf _ _ (forget _) F.property)
   exact (hsh S hS).isSeparatedFor.ext fun W f hf => hf
 
 theorem twGen_zero_indep {q : ℕ} [NeZero q] {U : Scheme.{0}} (ζ ξ : Prim q Γ(U, ⊤)) :

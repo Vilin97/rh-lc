@@ -19,13 +19,13 @@ namespace TaylorSigmaUniqueness
 
 
 open PowerSeries in
-lemma formal_unique (P U V : PowerSeries ℂ) (hV : X * derivative ℂ V = -(X * P))
-    (hV0 : constantCoeff V = 0) (hU : X * derivative ℂ U = X * (V * U))
+lemma formal_unique (P U V : PowerSeries ℂ) (hV : X * derivative V = -(X * P))
+    (hV0 : constantCoeff V = 0) (hU : X * derivative U = X * (V * U))
     (hU0 : constantCoeff U = 1) : U = B.fExp (B.sigS P) := by
-  have hV' : derivative ℂ V = -P := by
+  have hV' : derivative V = -P := by
     apply mul_left_cancel₀ (X_ne_zero (R := ℂ))
     rw [hV, mul_neg]
-  have hU' : derivative ℂ U = V * U := mul_left_cancel₀ (X_ne_zero (R := ℂ)) hU
+  have hU' : derivative U = V * U := mul_left_cancel₀ (X_ne_zero (R := ℂ)) hU
   have hVp : V = -B.prim P := by
     refine derivative.ext ?_ ?_
     · rw [hV', map_neg]
@@ -34,7 +34,7 @@ lemma formal_unique (P U V : PowerSeries ℂ) (hV : X * derivative ℂ V = -(X *
   have hS0 : constantCoeff (B.sigS P) = 0 := by
     rw [B.sigS, map_neg, B.constantCoeff_prim, neg_zero]
   have hS0' : constantCoeff (-B.sigS P) = 0 := by rw [map_neg, hS0, neg_zero]
-  have hSd : derivative ℂ (B.sigS P) = V := by
+  have hSd : derivative (B.sigS P) = V := by
     rw [B.sigS, map_neg, hVp]
     exact congrArg Neg.neg (B.dz_prim _)
   have key : U * (C.mvExp (-B.sigS P) : PowerSeries ℂ) = 1 := by

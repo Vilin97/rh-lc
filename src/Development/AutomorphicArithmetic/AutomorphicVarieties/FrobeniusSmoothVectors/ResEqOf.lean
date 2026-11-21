@@ -100,7 +100,7 @@ private theorem cpl_univ (O D R : Type) [CommRing O] [IsLocalRing O] [CommRing D
       exact (h3 _).trans (f.commutes a)
     · have := hu g.toRingHom ⟨RingHom.ext hg, fun z hz => by
         rw [Ideal.mem_comap, ← res_eq_zero_iff O]
-        exact (res_map g z).trans ((res_eq_zero_iff O R z).2 hz)⟩
+        exact (UpperTheory.V.Alg.res_map g z).trans ((res_eq_zero_iff O R z).2 hz)⟩
       exact AlgHom.ext fun z => DFunLike.congr_fun this z
 
 private theorem cpl_ex (O D : Type) [CommRing O] [IsLocalRing O] [CommRing D] [Algebra O D] [IsNoetherianRing D]
@@ -138,7 +138,7 @@ theorem UpperTheory.V.Fr.loc_ex :
   intro l _ O _ _ _ _ F C₀ n hF hn S x hx hB
   have hA : IsNoetherianRing S.A := (gr_A hF hn S).2.2.2.2.2.1
   have hT : Algebra.FiniteType S.B S.A := (gr_A hF hn S).2.2.2.2.1
-  obtain ⟨hco, hm⟩ := co_B hF hn S
+  obtain ⟨hco, hm⟩ := UpperTheory.V.Fr.co_B hF hn S
   rw [← hm] at hB
   haveI : Finite (S.A ⧸ x) := res_fin O S.B S.A x hB
   letI := Ideal.Quotient.field x

@@ -1371,7 +1371,7 @@ theorem logVal_clause1 (p : ℕ) (hp : p.Prime) (t s : ℕ) :
     padicValRat.pow, padicValRat.pow, padicValRat.of_nat, padicValRat.of_nat,
     padicValNat.prime_pow]
   have hv : ((padicValRat p (y : ℚ) : ℤ) : ℝ) ≤ t := by
-    rw [padicValRat.of_nat]
+    rw [padicValRat.of_nat, ← Nat.padicValNat_def]
     exact_mod_cast padicValNat_lt_of_lt_pow hy.1 hy.2
   push_cast
   nlinarith [(Nat.cast_nonneg s : (0 : ℝ) ≤ s)]
@@ -1393,7 +1393,8 @@ theorem logVal_holds : Formalism.MainNotions.ColumnSystems.logVal := by
   have hs0 : (s : ℚ) ≠ 0 := by exact_mod_cast (show s ≠ 0 by omega)
   rw [padicValRat.div hx hs0]
   have hps : ((padicValRat p (s : ℚ) : ℤ) : ℝ) = (padicValNat p s : ℝ) := by
-    have e : padicValRat p (s : ℚ) = ((padicValNat p s : ℕ) : ℤ) := padicValRat.of_nat
+    have e : padicValRat p (s : ℚ) = ((padicValNat p s : ℕ) : ℤ) := by
+      simpa only [Nat.padicValNat_def] using (padicValRat.of_nat (p := p) (n := s))
     simp [e]
   have hvs : 4 * (padicValNat p s : ℝ) + 1 ≤ s := by
     have hb : (1 : ℝ) + (padicValNat p s : ℝ) * 4 ≤ (1 + 4) ^ padicValNat p s :=

@@ -112,7 +112,7 @@ private theorem bm_whcNe_lemma_2 {R σ B : Type*} [CommRing R] [AddCommMonoid B]
     weightedHomogeneousComponent w k φ = 0 := by
   classical
   ext d
-  rw [coeff_weightedHomogeneousComponent, coeff_zero]
+  rw [coeff_weightedHomogeneousComponent, AddMonoidAlgebra.coeff_zero]
   split_ifs with hd
   · by_contra hc
     exact hk (hd.symm.trans (h hc))
@@ -529,20 +529,25 @@ theorem bmA_prod_update_succ {n : ℕ} (g : Fin (n + 1) → A) (k : Fin n) (w : 
 
 theorem bmA_comm_prod (x : A) : ∀ {n : ℕ} (g : Fin n → A),
     x * (List.ofFn g).prod - (List.ofFn g).prod * x =
-      ∑ k, (List.ofFn (Function.update g k (x * g k - g k * x))).prod
-  | 0, g => by simp
-  | n + 1, g => by
-    have ih := bmA_comm_prod x (fun i : Fin n => g i.succ)
+      ∑ k, (List.ofFn (Function.update g k (x * g k - g k * x))).prod := by
+  intro n
+  induction n with
+  | zero => intro g; simp
+  | succ n ih =>
+    intro g
     rw [Fin.sum_univ_succ, bmA_prod_update_zero]
     simp only [bmA_prod_update_succ]
-    rw [← Finset.mul_sum, ← ih, List.ofFn_succ, List.prod_cons]
+    rw [← Finset.mul_sum, ← ih (fun i => g i.succ), List.ofFn_succ, List.prod_cons]
     noncomm_ring
 
 theorem bmA_adj : ∀ {n : ℕ} (g : Fin n → A) (p p' : Fin n), p'.val = p.val + 1 →
     ∃ L Rr : A, ∀ a b : A,
-      (List.ofFn (Function.update (Function.update g p a) p' b)).prod = L * (a * b) * Rr
-  | 0, _, p, _, _ => p.elim0
-  | n + 1, g, p, p', h => by
+      (List.ofFn (Function.update (Function.update g p a) p' b)).prod = L * (a * b) * Rr := by
+  intro n
+  induction n with
+  | zero => intro _ p; exact p.elim0
+  | succ n ih =>
+    intro g p p' h
     obtain ⟨q', rfl⟩ : ∃ q' : Fin n, p' = q'.succ := by
       refine ⟨⟨p'.val - 1, by omega⟩, ?_⟩
       ext; simp; omega
@@ -561,7 +566,7 @@ theorem bmA_adj : ∀ {n : ℕ} (g : Fin n → A) (p p' : Fin n), p'.val = p.val
       noncomm_ring
     | succ q =>
       have hq : q'.val = q.val + 1 := by simpa using h
-      obtain ⟨L, Rr, hL⟩ := bmA_adj (fun i : Fin n => g i.succ) q q' hq
+      obtain ⟨L, Rr, hL⟩ := ih (fun i => g i.succ) q q' hq
       refine ⟨g 0 * L, Rr, fun a b => ?_⟩
       rw [bmA_prod_update_succ, Function.update_of_ne (Fin.succ_ne_zero q).symm]
       have : (fun i : Fin n => Function.update g q.succ a i.succ) =
@@ -863,11 +868,15 @@ theorem capDet_central {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M] 
 
 theorem bmA_tri (v : M) : ∀ {m : ℕ} (g : Fin m → Module.End R M) (c : Fin m → R) (F : Fin m → Prop),
     (∀ k, F k → g k v = c k • v) → (∀ k, ¬ F k → (∀ j, k < j → F j) → g k v = 0) →
-    ((∀ k, F k) → (List.ofFn g).prod v = (∏ k, c k) • v) ∧ ((¬ ∀ k, F k) → (List.ofFn g).prod v = 0)
-  | 0, g, c, F, _, _ => by
+    ((∀ k, F k) → (List.ofFn g).prod v = (∏ k, c k) • v) ∧ ((¬ ∀ k, F k) → (List.ofFn g).prod v = 0) := by
+  intro m
+  induction m with
+  | zero =>
+    intro g c F _ _
     refine ⟨fun _ => by simp, fun h => absurd (fun k : Fin 0 => k.elim0) h⟩
-  | m + 1, g, c, F, h1, h2 => by
-    obtain ⟨ih1, ih2⟩ := bmA_tri v (fun i : Fin m => g i.succ) (fun i => c i.succ) (fun i => F i.succ)
+  | succ m ih =>
+    intro g c F h1 h2
+    obtain ⟨ih1, ih2⟩ := ih (fun i => g i.succ) (fun i => c i.succ) (fun i => F i.succ)
       (fun k hk => h1 _ hk)
       (fun k hk hj => h2 _ hk (fun j hkj => by
         obtain ⟨j', rfl⟩ : ∃ j' : Fin m, j = j'.succ :=
@@ -954,7 +963,7 @@ theorem bmC_eq_rename_of_pderiv {R : Type*} [CommRing R] [IsDomain R] [CharZero 
       rw [Finsupp.single_le_iff]; exact Nat.one_le_iff_ne_zero.2 hne
     have hm' : m = (m - Finsupp.single none 1) + Finsupp.single none 1 := (tsub_add_cancel_of_le hle).symm
     have h1 := congrArg (AddMonoidAlgebra.coeff · (m - Finsupp.single none 1)) h
-    rw [coeff_pderiv, ← hm', coeff_zero] at h1
+    rw [coeff_pderiv, ← hm', AddMonoidAlgebra.coeff_zero] at h1
     rcases mul_eq_zero.1 h1 with h2 | h2
     · exact (mem_support_iff.1 hm) h2
     · exact absurd h2 (Nat.cast_add_one_ne_zero _)
@@ -1083,8 +1092,8 @@ theorem bmE_eq_zero_of_comp {R σ B : Type*} [CommRing R] [AddCommMonoid B] (w :
   classical
   ext d
   have := congrArg (AddMonoidAlgebra.coeff · d) (h (Finsupp.weight w d))
-  rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
-  rw [this, coeff_zero]
+  rw [coeff_weightedHomogeneousComponent, if_pos rfl, AddMonoidAlgebra.coeff_zero] at this
+  rw [this, AddMonoidAlgebra.coeff_zero]
 
 theorem bmE_comp_ne_iff {R σ B : Type*} [CommRing R] [AddCommMonoid B] [DecidableEq B] (w : σ → B)
     (G : MvPolynomial σ R) (β : B) :
@@ -1101,7 +1110,7 @@ theorem bmE_comp_ne_iff {R σ B : Type*} [CommRing R] [AddCommMonoid B] [Decidab
     obtain ⟨d, hd, hw⟩ := Finset.mem_image.mp h
     intro h0
     have := congrArg (AddMonoidAlgebra.coeff · d) h0
-    rw [coeff_weightedHomogeneousComponent, if_pos hw, coeff_zero] at this
+    rw [coeff_weightedHomogeneousComponent, if_pos hw, AddMonoidAlgebra.coeff_zero] at this
     exact mem_support_iff.mp hd this
 
 theorem bmE_sep_op {R σ B : Type*} [CommRing R] [AddCommMonoid B] (w : σ → B) (ω : B → ℤ)
@@ -1523,7 +1532,7 @@ theorem bm_eig {R : Type} [CommRing R] [IsDomain R] [CharZero R] {n : ℕ} (lam 
     obtain ⟨m, hm⟩ : ∃ m, AddMonoidAlgebra.coeff (zcomp R n β G) m ≠ 0 := by
       by_contra hcon
       refine hβ (MvPolynomial.ext _ _ fun m => ?_)
-      rw [coeff_zero]
+      rw [AddMonoidAlgebra.coeff_zero]
       by_contra hm0
       exact hcon ⟨m, hm0⟩
     have hm' : Finsupp.weight (zW n) m = β ∧ AddMonoidAlgebra.coeff G m ≠ 0 := by
@@ -1596,7 +1605,7 @@ theorem bm_isLow_iff {R : Type*} [CommRing R] {n : ℕ} (D : ℤ) (L : BP R n) :
   constructor
   · intro h β hβ
     ext m
-    rw [zcomp, coeff_weightedHomogeneousComponent, coeff_zero]
+    rw [zcomp, coeff_weightedHomogeneousComponent, AddMonoidAlgebra.coeff_zero]
     split_ifs with hm
     · by_contra hc
       have := h m (mem_support_iff.mpr hc)
@@ -1607,7 +1616,7 @@ theorem bm_isLow_iff {R : Type*} [CommRing R] {n : ℕ} (D : ℤ) (L : BP R n) :
     by_contra hc
     have h0 := h _ (not_lt.mp hc)
     have := congrArg (AddMonoidAlgebra.coeff · m) h0
-    rw [zcomp, coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
+    rw [zcomp, coeff_weightedHomogeneousComponent, if_pos rfl, AddMonoidAlgebra.coeff_zero] at this
     exact mem_support_iff.mp hm this
 
 theorem bmF_low_zero {R : Type*} [CommRing R] {n : ℕ} (D : ℤ) : IsLow D (0 : BP R n) := by
@@ -2358,6 +2367,8 @@ theorem bm_xi_row {R : Type} [CommRing R] {n : ℕ} (lam sg : Fin n → ℕ) (hI
     · rw [← bmG_sumA]; exact bmG_initMinor_rowHom R _ _
     · rw [← bmG_sumB]; exact bmG_initMinor_rowHom R _ _
   convert h1 using 1
+  funext a
+  simp only [bmRho, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul, initW, Pi.single_apply]
   by_cases ha : a.val < n
   · rw [dite_eq_left ha]
     have hne : a ≠ Fin.last n := fun h => by rw [h] at ha; simp at ha

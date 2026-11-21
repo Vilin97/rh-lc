@@ -262,7 +262,14 @@ def l (v : A.La) : A.abelian₂ := (Prod.snd v).2
 
 @[simp] theorem mk_l (y : A.X) (n : A.X →+ ℤ) (l : A.abelian₂) : (mk y n l).l = l := rfl
 
+@[ext] theorem ext {v v' : A.La} (hy : v.y = v'.y) (hn : v.n = v'.n) (hl : v.l = v'.l) : v = v' :=
   Prod.ext hy (Prod.ext hn hl)
+
+@[simp] theorem zero_y : (0 : A.La).y = 0 := rfl
+
+@[simp] theorem zero_n : (0 : A.La).n = 0 := rfl
+
+@[simp] theorem zero_l : (0 : A.La).l = 0 := rfl
 
 @[simp] theorem add_y (v v' : A.La) : (v + v').y = v.y + v'.y := rfl
 
@@ -366,20 +373,24 @@ theorem Pw_apply (w : ℂ) (v : A.La) : A.Pw w v = A.P0 v + w • A.N v := rfl
     (A.Pw w v).1 x = A.T v.y x + v.n x - A.H (A.ct x) v.l / (2 * Complex.I) + w * A.be v.y x := rfl
 
 @[simp] theorem Pw_snd (w : ℂ) (v : A.La) : (A.Pw w v).2 = A.ct v.y + v.l := by
-  simp [Pw_apply]
+  have h : (A.N v).2 = 0 := rfl
+  simp [Pw_apply, h]
 
 theorem degeneratingTori_periodMap_eq_base_of_y_eq_zero (w : ℂ) {v : A.La} (hv : v.y = 0) : A.Pw w v = A.P0 v := by
   ext <;> simp [hv]
 
 theorem degeneratingTori_basePeriodMap_smul (a : O) (v : A.La) : A.P0 (a • v) = A.actV a (A.P0 v) := by
   refine Prod.ext (AddMonoidHom.ext fun x => ?_) ?_
-  · simp [A.T_adj, A.ct_smul, H_F]
+  · have h : (A.actV a (A.P0 v)).1 x = (A.P0 v).1 (star a • x) := rfl
+    simp [h, A.T_adj, A.ct_smul, H_F]
   · simp [A.ct_smul]
 
 theorem N_smul (a : O) (v : A.La) : A.N (a • v) = A.actV a (A.N v) := by
   refine Prod.ext (AddMonoidHom.ext fun x => ?_) ?_
-  · simp [A.be_adj]
-  · simp
+  · have h : (A.actV a (A.N v)).1 x = (A.N v).1 (star a • x) := rfl
+    simp [h, A.be_adj]
+  · change 0 = A.F a 0
+    simp
 
 theorem Pw_smul (w : ℂ) (a : O) (v : A.La) : A.Pw w (a • v) = A.actV a (A.Pw w v) := by
   rw [Pw_apply, Pw_apply, degeneratingTori_basePeriodMap_smul, N_smul, map_add (f := _), map_smul]
@@ -391,12 +402,17 @@ def nn : A.La →ₗ[O] A.La where
 
 theorem nn_apply (v : A.La) : A.nn v = La.mk 0 (A.be v.y).toAddMonoidHom 0 := rfl
 
-theorem degeneratingTori_basePeriodMap_nilpotentMap (v : A.La) : A.P0 (A.nn v) = A.N v := by ext <;> simp [nn_apply]
+theorem degeneratingTori_basePeriodMap_nilpotentMap (v : A.La) : A.P0 (A.nn v) = A.N v := by
+  have h : (A.N v).2 = 0 := rfl
+  ext <;> simp [nn_apply, h]
 
-def EF : LinearMap.BilinForm ℤ A.La :=
-  LinearMap.mk₂ ℤ (fun v v' => v'.n v.y - v.n v'.y + A.Ef v.l v'.l)
-    (fun _ _ _ => by simp; ring) (fun _ _ _ => by simp; ring) (fun _ _ _ => by simp; ring)
-    (fun _ _ _ => by simp; ring)
+def EF : LinearMap.BilinForm ℤ A.La := by
+  have hy (k : ℤ) (v : A.La) : (k • v).y = k • v.y := rfl
+  have hn (k : ℤ) (v : A.La) : (k • v).n = k • v.n := rfl
+  have hl (k : ℤ) (v : A.La) : (k • v).l = k • v.l := rfl
+  exact LinearMap.mk₂ ℤ (fun v v' => v'.n v.y - v.n v'.y + A.Ef v.l v'.l)
+    (fun _ _ _ => by simp; ring) (fun _ _ _ => by simp [hy, hn, hl]; ring) (fun _ _ _ => by simp; ring)
+    (fun _ _ _ => by simp [hy, hn, hl]; ring)
 
 theorem EF_apply (v v' : A.La) : A.EF v v' = v'.n v.y - v.n v'.y + A.Ef v.l v'.l := rfl
 
@@ -695,12 +711,13 @@ def gaussForm : LinearMap.BilinForm ℤ GaussianInt :=
 def gaussEf : LinearMap.BilinForm ℤ gaussLam := LinearMap.BilinForm.congr gaussEquiv gaussForm
 
 @[simp] theorem gaussEf_apply (a b : GaussianInt) :
-    gaussEf (gaussEquiv a) (gaussEquiv b) = a.im * b.re - a.re * b.im := by simp [gaussEf]
+    gaussEf (gaussEquiv a) (gaussEquiv b) = a.im * b.re - a.re * b.im := by simp [gaussEf, gaussForm]
 
 theorem gaussEf_eq (l m : gaussLam) : (gaussEf l m : ℝ) = (hermForm 1 (l : Fin 1 → ℂ) m).im := by
   obtain ⟨a, rfl⟩ := gaussEquiv.surjective l
   obtain ⟨b, rfl⟩ := gaussEquiv.surjective m
   rw [gaussEf_apply, hermForm_one]
+  change (↑(a.im * b.re - a.re * b.im) : ℝ) = ((a : ℂ) * starRingEnd ℂ (b : ℂ)).im
   simp; ring
 
 theorem gaussEf_bij : Function.Bijective gaussEf := by
@@ -738,6 +755,7 @@ theorem gaussLam_full : Submodule.span ℝ (gaussLam : Set (Fin 1 → ℂ)) = �
   have hz : z = (z 0).re • gaussEmb 1 + (z 0).im • gaussEmb ⟨0, 1⟩ := by
     funext i
     rw [Subsingleton.elim i 0]
+    change z 0 = (z 0).re • ((1 : GaussianInt) : ℂ) + (z 0).im • ((⟨0, 1⟩ : GaussianInt) : ℂ)
     simp [GaussianInt.toComplex_def']
   rw [hz]
   exact add_mem (Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩))
@@ -758,7 +776,8 @@ theorem gaussChi_add (l m : gaussLam) : gaussChi (l + m) =
   rw [gaussEf_apply, gaussChi, gaussChi, gaussChi, ← Complex.exp_add, ← Complex.exp_add,
     Complex.exp_eq_exp_iff_exists_int]
   refine ⟨a.re * b.im, ?_⟩
-  simp [← GaussianInt.intCast_re, ← GaussianInt.intCast_im]; ring
+  have h (x : GaussianInt) (i : Fin 1) : (gaussEquiv x : Fin 1 → ℂ) i = (x : ℂ) := rfl
+  simp [h, ← GaussianInt.intCast_re, ← GaussianInt.intCast_im]; ring
 
 theorem gaussChi_neg (l : gaussLam) : gaussChi (-l) = gaussChi l := by simp [gaussChi]
 
@@ -832,7 +851,7 @@ def gaussCM (c τ₀ : ℂ) : AnArc GaussianInt where
   F := (algebraMap ℂ _).comp GaussianInt.toComplex
   F_mem := by
     rintro a _ ⟨b, rfl⟩
-    exact ⟨a * b, by ext; simp⟩
+    exact ⟨a * b, funext fun _ => map_mul GaussianInt.toComplex a b⟩
   F_adj a z w := by simp [hermForm_one]; ring
   X := GaussianInt
   free := Module.Free.of_equiv gaussProd

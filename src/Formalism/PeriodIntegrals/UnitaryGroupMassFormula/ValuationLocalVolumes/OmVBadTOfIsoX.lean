@@ -18,7 +18,7 @@ theorem a_succ_le_n : D.R.rS + 1 + D.R.rS + 1 ≤ X.B.I.n := by
   have h1 := X.n_eq
   have h2 := D.R.rS_two
   have h3 := D.R.m_add_three_le_k
-  unfold Ranks.r at h1
+  have h4 := D.R.r_eq
   omega
 
 theorem omVBadT_of_iso (hStd : OmVStd X ψ) (hLat : OmVLat X) (hGram : OmVGram X u')

@@ -91,16 +91,16 @@ def toPerfection : L →+* Perfection (Γ ⧸ T.I) p :=
 
 def teich : L →*₀ Γ :=
   haveI := T.isAdicComplete
-  (Perfection.teichmuller₀ p T.I).comp T.toPerfection.toMonoidWithZeroHom
+  (Perfection.teichmuller₀ p T.I).comp (T.toPerfection p).toMonoidWithZeroHom
 
 theorem coeff_toPerfection (a : L) (n : ℕ) :
-    Perfection.coeff (Γ ⧸ T.I) p n (T.toPerfection a) =
+    Perfection.coeff (Γ ⧸ T.I) p n (T.toPerfection p a) =
       T.quotEquiv.symm ((((frobeniusEquiv L p).symm : L →+* L))^[n] a) := rfl
 
 theorem red_teich (a : L) : T.red (T.teich a) = a := by
   haveI := T.isAdicComplete
   rw [← quotEquiv_mk]
-  show T.quotEquiv (Ideal.Quotient.mk T.I (Perfection.teichmuller₀ p T.I (T.toPerfection a))) = a
+  show T.quotEquiv (Ideal.Quotient.mk T.I (Perfection.teichmuller₀ p T.I (T.toPerfection p a))) = a
   rw [Perfection.mk_teichmuller₀, coeff_toPerfection]
   simp
 
@@ -114,7 +114,7 @@ theorem teich_sub_pow_mem (a : L) (n : ℕ) (z : Γ)
     (hz : T.red z = (((frobeniusEquiv L p).symm : L →+* L))^[n] a) :
     T.teich a - z ^ p ^ n ∈ Ideal.span {T.π ^ (n + 1)} := by
   haveI := T.isAdicComplete
-  have h : Ideal.Quotient.mk T.I z = Perfection.coeff (Γ ⧸ T.I) p n (T.toPerfection a) := by
+  have h : Ideal.Quotient.mk T.I z = Perfection.coeff (Γ ⧸ T.I) p n (T.toPerfection p a) := by
     rw [coeff_toPerfection]
     exact (T.quotEquiv_symm _ z hz).symm
   have := Perfection.teichmuller₀_sModEq (p := p) (I := T.I) h

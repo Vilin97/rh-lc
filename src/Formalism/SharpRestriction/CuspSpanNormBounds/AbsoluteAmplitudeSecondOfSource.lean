@@ -165,6 +165,7 @@ theorem WHyp_Wsp (D : D7) (u : D.what₂.Word) {T : ℕ} (hT : T ≠ 0)
     finrank_orth_Xplus F.fl (Nat.cast_ne_zero.2 hT : (T : D.host.E) ≠ 0)
   have h5 : finrank D.host.E (Xsp F) = D.R.rS := finrank_X F.fl
   have h6 := finrank_hS D
+  rw [hrk, h5] at h3
   omega
 
 theorem rootOfUnity_eq_one_of_modT {K : Type} [Field K] [NumberField K] (T : ℕ) (hT : 3 ≤ T) (ζ : 𝓞 K)

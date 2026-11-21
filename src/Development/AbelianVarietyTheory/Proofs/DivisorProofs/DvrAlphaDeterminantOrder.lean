@@ -24,7 +24,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemFiltratio
 
 @[expose] public section
 
-open GlobalTheory.Sandwich GlobalTheory.IndefiniteRowSideFullHecke.SandwichMaps GlobalTheory.DetInv GlobalTheory.FrameModel Matrix TensorProduct
+open GlobalTheory.Sandwich GlobalTheory.IndefiniteRowSideFullHecke.SandwichMaps GlobalTheory.DetInv Matrix TensorProduct
 
 namespace GlobalTheory.FrameModel
 
@@ -46,7 +46,7 @@ theorem det_append_eq_mul_det : ∀ (C : Type) [Field C] (w : Valuation C NNReal
   obtain ⟨A, hA, hAdet⟩ := GlobalTheory.DetRelCompare.transition _ _ _ hu' hu
   obtain ⟨B, hB, hBdet⟩ := GlobalTheory.DetRelCompare.transition m' m _ hm' hm
   have hx'0 : (Matrix.of x').det ≠ 0 :=
-    ((Matrix.isUnit_iff_isUnit_det _).mp (Matrix.linearIndependent_rows_iff_isUnit.mp hx'.1)).ne_zero
+    ((Matrix.isUnit_iff_isUnit_det _).mp (Matrix.linearIndependent_row_iff_isUnit.mp hx'.1)).ne_zero
   have happ0 : (Matrix.of (Fin.append u' m')).det ≠ 0 := by
     intro h0
     exact hx'0 (by rw [hdet, h0, mul_zero])

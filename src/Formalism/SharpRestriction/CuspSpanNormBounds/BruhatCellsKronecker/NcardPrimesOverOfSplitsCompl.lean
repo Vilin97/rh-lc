@@ -139,7 +139,7 @@ theorem finite_plOver {g : ℕ} (hg : g.Prime) : (plOver K g).Finite := by
   exact Set.Finite.of_finite_image (h ▸ Finset.finite_toSet _) (injOn_asIdeal K _)
 
 theorem ncard_plOver {g : ℕ} (hg : g.Prime) (h : SplitsCompl K g) : (plOver K g).ncard = Module.finrank ℚ K := by
-  rw [← Set.ncard_image_of_injOn (injOn_asIdeal K _), image_plOver K hg, Set.ncard_coe_finset,
+  rw [← (injOn_asIdeal K _).ncard_image, image_plOver K hg, Set.ncard_coe_finset,
     card_primesOver K hg h]
 
 theorem finprod_plOver {g : ℕ} (hg : g.Prime) (h : SplitsCompl K g) (φ : ℝ → ℝ) :

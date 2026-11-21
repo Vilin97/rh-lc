@@ -287,7 +287,7 @@ theorem contragredient_span_highestWeight_eq_top (D : Formalism.BasicNotions.D7)
     have := hx _ (hG'st a b φ hφ)
     rw [dualOperators_apply, neg_eq_zero] at this
     exact this
-  obtain ⟨Z', hc, hZ'st⟩ := weight_condition_from_integral_form D (KK O) V n E hI.1 Z hZst
+  obtain ⟨Z', hc, hZ'st⟩ := cr_compl E hI.1.1 hI.1.2.2 Z hZst
   have hvtop : v ∈ Z ⊔ Z' := hc.sup_eq_top ▸ Submodule.mem_top
   obtain ⟨z, hz, z', hz', hsum⟩ := Submodule.mem_sup.1 hvtop
   have hzw : z ∈ weightSp E mu := by

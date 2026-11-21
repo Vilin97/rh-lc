@@ -111,7 +111,15 @@ theorem redS_surjective {n : ℕ} (S : Finset (Fin n)) : Function.Surjective (re
     ext
     simp [hi]
 
-theorem glMap_diag_mem_subElem : ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ) (ϖ : w.adicCompletion E), IsUnifV E w ϖ → ∀ (S : Finset (Fin n)) (d : GL (Fin n) (w.adicCompletion E)), (d : Matrix (Fin n) (Fin n) (w.adicCompletion E)) = Matrix.diagonal (fun i => if i ∈ S then ϖ else 1) → haveI := GlobalTheory.RowSatakeBound.finite_residue w; glMap d (std (w.adicCompletionIntegers E) (w.adicCompletion E) n).1 ∈ Subtype.val '' subElem S.card (std (w.adicCompletionIntegers E) (w.adicCompletion E) n) := by
+theorem glMap_diag_mem_subElem :
+    ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E))
+      (n : ℕ) (ϖ : w.adicCompletion E), IsUnifV E w ϖ →
+      ∀ (S : Finset (Fin n)) (d : GL (Fin n) (w.adicCompletion E)),
+        (d : Matrix (Fin n) (Fin n) (w.adicCompletion E)) =
+          Matrix.diagonal (fun i => if i ∈ S then ϖ else 1) →
+        (haveI := GlobalTheory.RowSatakeBound.finite_residue w
+         glMap d (std (w.adicCompletionIntegers E) (w.adicCompletion E) n).1 ∈
+           Subtype.val '' subElem S.card (std (w.adicCompletionIntegers E) (w.adicCompletion E) n)) := by
   intro E _ _ w n ϖ hϖ S d hd
   have hd' : (d : Matrix (Fin n) (Fin n) (w.adicCompletion E)) = Matrix.diagonal (dEnt w ϖ S) := hd
   have hϖle : Valued.v ϖ ≤ WithZero.exp (-1 : ℤ) := hϖ.le

@@ -49,6 +49,8 @@ theorem latCrd_of (hL : LatBasis X p θ (reindex₂ X p Q)) (x : Fin X.B.I.n →
     intro w
     rw [Matrix.transpose_reindex, Matrix.reindex_apply, Matrix.submatrix_mulVec_equiv]
     congr 2
+    funext i
+    simp
   rw [hL x]
   unfold IntVec crd1 crd2
   rw [hPi, frA_int_reindex, ← Matrix.mulVec_mulVec, hP, Matrix.transpose_reindex, frA_int_reindex, hJ, ← hv]

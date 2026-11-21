@@ -254,10 +254,10 @@ def tor : Rˣ →* GL (Fin 3) R where
     apply Units.ext
     simp [torGL, mul_zpow, Matrix.diagonal_mul_diagonal]
 
-theorem tor_val (t : Rˣ) : (tor t : Matrix (Fin 3) (Fin 3) R) =
+theorem tor_val (t : Rˣ) : (tor R t : Matrix (Fin 3) (Fin 3) R) =
     Matrix.diagonal fun i => ((t ^ wt1 i : Rˣ) : R) := rfl
 
-theorem theta_tor (t : Rˣ) : theta (tor t) = tor t := by
+theorem theta_tor (t : Rˣ) : theta (tor R t) = tor R t := by
   apply Units.ext
   rw [theta_val, ← map_inv, tor_val, tor_val]
   ext i j
@@ -290,7 +290,7 @@ structure Normalised (c g₁ : G) (r : G →* GG (m := 3) (R := R)) : Prop where
   z21 : zmat c g₁ r 1 0 = 0
 
 def r0 (η : G →* ℤˣ) (Ψ : G →* Rˣ) : G →* GG (m := 3) (R := R) where
-  toFun g := ⟨tor (Ψ g), η g⟩
+  toFun g := ⟨tor R (Ψ g), η g⟩
   map_one' := by ext1 <;> simp
   map_mul' g h := by
     ext1
@@ -299,7 +299,7 @@ def r0 (η : G →* ℤˣ) (Ψ : G →* Rˣ) : G →* GG (m := 3) (R := R) where
 
 @[simp] theorem unitaryThreeReflection_right (η : G →* ℤˣ) (Ψ : G →* Rˣ) (g : G) : (r0 η Ψ g).right = η g := rfl
 
-@[simp] theorem unitaryThreeReflection_left (η : G →* ℤˣ) (Ψ : G →* Rˣ) (g : G) : (r0 η Ψ g).left = tor (Ψ g) := rfl
+@[simp] theorem unitaryThreeReflection_left (η : G →* ℤˣ) (Ψ : G →* Rˣ) (g : G) : (r0 η Ψ g).left = tor R (Ψ g) := rfl
 
 end Three
 

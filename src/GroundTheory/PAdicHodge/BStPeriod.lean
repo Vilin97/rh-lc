@@ -19,6 +19,11 @@ section Cp
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
+local notation "𝒪" => normInteger ℂ_[p]
+local notation "𝒪♭" => PreTilt 𝒪 p
+local notation "𝔹" => BDeRhamPlus 𝒪 p
+local notation "𝔪" => maximalIdeal 𝔹
+
 
 variable (p) in
 def pRootSeq : ℕ → ℂ_[p]

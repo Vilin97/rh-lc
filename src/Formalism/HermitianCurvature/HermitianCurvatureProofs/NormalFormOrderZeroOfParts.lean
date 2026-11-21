@@ -1121,9 +1121,8 @@ theorem kap_Pj (h : M.Ty P → ℂ) (ρ : M.Ty P) : d.κ h * Pj d ρ = h ρ • 
   unfold Pj
   rw [← map_mul, ← map_smul]
   congr 1
-  split_ifs with hτ
-  · subst hτ; ring
-  · ring
+  ext τ
+  by_cases hτ : τ = ρ <;> simp [hτ]
 
 theorem kap_comm (h h' : M.Ty P → ℂ) : d.κ h * d.κ h' = d.κ h' * d.κ h := by
   rw [← map_mul, ← map_mul, mul_comm]
@@ -1145,8 +1144,8 @@ theorem sum_Pj : ∑ ρ, Pj d ρ = 1 := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← map_sum, ← map_one d.κ]
   congr 1
-  rw [Finset.sum_ite_eq]
-  simp
+  ext τ
+  simp [Finset.sum_apply]
 
 theorem decomp (a : A) : a = ∑ ρ', ∑ ρ, Pj d ρ' * a * Pj d ρ := by
   calc a = (∑ ρ', Pj d ρ') * a * (∑ ρ, Pj d ρ) := by rw [sum_Pj, one_mul, mul_one]

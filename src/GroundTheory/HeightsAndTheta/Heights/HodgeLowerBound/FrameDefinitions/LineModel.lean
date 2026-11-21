@@ -17,7 +17,6 @@ namespace GroundTheory.Heights₂.Heights.LowerBoundFree.Line
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Metric
 open GroundTheory.Heights₂.Heights (CP)
 open GroundTheory.Heights₂.Heights.Regular (RegChartData BoundedPshData)
-open GroundTheory.Heights₂.Heights.Regular.ProjectiveLine
 
 def refOne : HermLine (PBlk 2) := HermLine.ofWeight (fun _ => 0) fun _ _ _ => rfl
 

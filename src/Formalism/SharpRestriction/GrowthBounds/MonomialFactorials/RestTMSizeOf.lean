@@ -72,7 +72,9 @@ theorem restTMSize_of (hS : SegFacts C0 CE1 CE2 X) (hFree : RestFree C0 CE1 CE2 
   have hx' : x ∈ idx C0 CE1 CE2 X dl (aTopPt C0 CE1 CE2 X dl a) := by
     rw [← hFree dl hdl a ha _ ha']; exact hx
   obtain ⟨hK', -, -⟩ := digits_of_idx hx'
-  have hT' := (mem_cbox' ha').1
+  classical
+  have hT' : aTopPt C0 CE1 CE2 X dl a ∈ Fintype.piFinset (fun _ : Fin X.s => X.winA) := by
+    exact (Finset.mem_filter.mp ha').1
   have e := setTies_top ha hx
   refine ⟨hSI dl hdl a ha x hx, ?_, ?_, ?_, ?_⟩
   · intro y

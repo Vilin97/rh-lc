@@ -101,7 +101,7 @@ theorem sigR_Oh {z : Af F ⊗[F] E} (hz : z ∈ Oh F E) : sigR (Af F) σ z ∈ O
     rw [e1]
     exact tmul_mem_Oh ha (by simpa using int_sigma (σ : E →+* E) he)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [map_add (f := _)]; exact add_mem h1 h2
   | neg x _ h1 => rw [map_neg]; exact neg_mem h1
 
 def hermA (X Y : Fin M → Af F ⊗[F] E) : Af F ⊗[F] E :=

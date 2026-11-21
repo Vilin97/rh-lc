@@ -178,8 +178,8 @@ lemma algebraMap_eq_appTop (a : A) :
 
 lemma smulHom_pushforward_app (F : X.Modules) (a : A) (W : Y.Opens)
     (x : (modulesAb ((Scheme.Modules.pushforward i).obj F)).obj.obj (op W)) :
-    (smulAbRingHom ((Scheme.Modules.pushforward i).obj F) (algebraMap A Γ(Y, ⊤) a)).hom.app (op W)
-      x = (smulAbRingHom F (algebraMap A Γ(X, ⊤) a)).hom.app (op (i ⁻¹ᵁ W)) x := by
+    (smulAbRingHom ((Scheme.Modules.pushforward i).obj F) (algebraMap A Γ(Y, ⊤) a)).asHom.hom.app
+      (op W) x = (smulAbRingHom F (algebraMap A Γ(X, ⊤) a)).asHom.hom.app (op (i ⁻¹ᵁ W)) x := by
   change i.app W (restrictTop W (algebraMap A Γ(Y, ⊤) a)) • (show Γ(F, i ⁻¹ᵁ W) from x) =
     restrictTop (i ⁻¹ᵁ W) (algebraMap A Γ(X, ⊤) a) • (show Γ(F, i ⁻¹ᵁ W) from x)
   rw [algebraMap_eq_appTop i A a, restrictTop, restrictTop, app_resO]

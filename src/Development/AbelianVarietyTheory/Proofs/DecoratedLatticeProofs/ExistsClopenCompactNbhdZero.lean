@@ -43,20 +43,20 @@ section Tens
 
 variable (F : Type) [Field F] [NumberField F] (E : Type) [Field E] [Algebra F E] [FiniteDimensional F E]
 
-noncomputable def coordEquiv : (A ⊗[F] E) ≃ₗ[A] (Module.Free.ChooseBasisIndex F E → A) :=
-  (Algebra.TensorProduct.basis A (Module.Free.chooseBasis F E)).equivFun
+noncomputable def coordEquiv : ((Af F) ⊗[F] E) ≃ₗ[(Af F)] (Module.Free.ChooseBasisIndex F E → (Af F)) :=
+  (Algebra.TensorProduct.basis (Af F) (Module.Free.chooseBasis F E)).equivFun
 
-local instance : IsModuleTopology A (A ⊗[F] E) := ⟨rfl⟩
+local instance : IsModuleTopology (Af F) ((Af F) ⊗[F] E) := ⟨rfl⟩
 
 theorem continuous_coordEquiv : Continuous (coordEquiv F E) :=
   IsModuleTopology.continuous_of_linearMap (coordEquiv F E).toLinearMap
 
 theorem continuous_coordEquiv_symm : Continuous (coordEquiv F E).symm := by
-  haveI : ContinuousAdd (A ⊗[F] E) := IsModuleTopology.toContinuousAdd A _
-  haveI : ContinuousSMul A (A ⊗[F] E) := IsModuleTopology.toContinuousSMul A _
+  haveI : ContinuousAdd ((Af F) ⊗[F] E) := IsModuleTopology.toContinuousAdd (Af F) _
+  haveI : ContinuousSMul (Af F) ((Af F) ⊗[F] E) := IsModuleTopology.toContinuousSMul (Af F) _
   exact IsModuleTopology.continuous_of_linearMap (coordEquiv F E).symm.toLinearMap
 
-def intTens : Set (A ⊗[F] E) := coordEquiv F E ⁻¹' Set.univ.pi (fun _ => intAf F)
+noncomputable def intTens : Set ((Af F) ⊗[F] E) := coordEquiv F E ⁻¹' Set.univ.pi (fun _ => intAf F)
 
 theorem isClopen_intTens : IsClopen (intTens F E) :=
   ⟨(isClosed_set_pi fun _ _ => isClosed_intAf F).preimage (continuous_coordEquiv F E),
@@ -74,7 +74,7 @@ theorem isCompact_intTens : IsCompact (intTens F E) := by
     rw [LinearEquiv.apply_symm_apply]
     exact hy
 
-theorem zero_mem_intTens : (0 : A ⊗[F] E) ∈ intTens F E := by
+theorem zero_mem_intTens : (0 : (Af F) ⊗[F] E) ∈ intTens F E := by
   intro i _
   rw [map_zero]
   exact zero_mem_intAf F

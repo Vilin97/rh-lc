@@ -271,6 +271,7 @@ theorem map_haarLie_N (hκ : 0 < κ) (hτ : 0 < τ) (κN : ENNReal) :
       ((scE k r κ τ).restrict (scE_mem hκ hτ)).continuous_of_finiteDimensional.measurable,
     Measure.map_linearMap_addHaar_eq_smul_addHaar volume hA, Measure.map_smul, smul_smul, deltaN,
     dite_eq_left (scE_mem hκ hτ)]
+  all_goals first | exact (continuous_expL _).measurable.aemeasurable | exact measurable_cjT.aemeasurable
 
 theorem pairMeas_trD (hκ : 0 < κ) (hτ : 0 < τ) (L : LocBessel k r)
     (hz : inWb k r ((τ : ℂ) • L.z) ∧ 0 < Tz k r ((τ : ℂ) • L.z))

@@ -169,9 +169,9 @@ theorem testEx_of_trivial (hχ : ∀ x y, χ x y = 1) (L : AddSubgroup V)
   · push_neg at hL
     obtain ⟨t, ht⟩ := hL
     set g : V → ℂ := (L : Set V).indicator (fun _ => (1 : ℂ)) with hg
-    have hcg : Continuous fun x => g (-t + x) := hind.comp' (continuous_add_left (-t))
+    have hcg : Continuous fun x => g (-t + x) := hind.comp' (continuous_const.add continuous_id)
     refine ⟨fun x => g x - g (-t + x), hind.sub hcg, ?_, ?_, ⟨0, ?_⟩⟩
-    · refine HasCompactSupport.intro (hLc.union (hLc.image (continuous_add_left t))) ?_
+    · refine HasCompactSupport.intro (hLc.union (hLc.image (show Continuous (fun x : V => t + x) from continuous_const.add continuous_id))) ?_
       intro x hx
       have h1 : x ∉ L := fun h => hx (Or.inl h)
       have h2 : -t + x ∉ L := fun h => hx (Or.inr ⟨-t + x, h, by abel⟩)
@@ -343,10 +343,10 @@ theorem continuous_pairHerm_right (σ : E →ₐ[F] E) (n : ℕ) (S : HermR R σ
     Continuous (pairHerm R σ n S) := by
   have ht := continuous_trace_tens (F := F) (E := E) R
   unfold pairHerm
-  first
-  | exact continuous_const.mul (ht.comp (continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ =>
-      continuous_const.mul ((continuous_apply a).comp ((continuous_apply b).comp continuous_subtype_val))))
-  | fun_prop
+  apply continuous_const.mul
+  apply ht.comp
+  exact continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ =>
+    continuous_const.mul ((continuous_apply a).comp ((continuous_apply b).comp continuous_subtype_val))
 
 end ContY
 

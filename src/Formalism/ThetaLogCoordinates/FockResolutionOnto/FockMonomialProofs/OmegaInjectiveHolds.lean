@@ -59,7 +59,7 @@ theorem compL_of_not (Pr : (σ →₀ ℕ) → Prop) (x : MvPolynomial σ k) (hx
   classical
   rw [mem_restrictSupport_iff] at hx
   ext m
-  rw [coeff_compL, coeff_zero]
+  rw [coeff_compL, AddMonoidAlgebra.coeff_zero]
   split_ifs with h
   · by_contra hc
     exact hx (Finset.mem_coe.mpr (mem_support_iff.mpr hc)) h
@@ -182,11 +182,11 @@ theorem exists_top (x : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p]) (hx : x ≠
   refine ⟨wp K m, ?_, ?_, m, hm, rfl⟩
   · intro h0
     have := congrArg (AddMonoidAlgebra.coeff · m) h0
-    rw [cw, coeff_compL, if_pos rfl, coeff_zero] at this
+    rw [cw, coeff_compL, if_pos rfl, AddMonoidAlgebra.coeff_zero] at this
     exact (mem_support_iff.mp hm) this
   · intro γ hγ
     ext m'
-    rw [cw, coeff_compL, coeff_zero]
+    rw [cw, coeff_compL, AddMonoidAlgebra.coeff_zero]
     split_ifs with h
     · by_contra hc
       have := hmax γ (Finset.mem_image.mpr ⟨m', mem_support_iff.mpr hc, h⟩)
@@ -439,12 +439,13 @@ theorem pderiv_free {σ : Type} (v : σ) (x : MvPolynomial σ ℚ_[p]) (hx : x �
   classical
   rw [FreeOf, mem_restrictSupport_iff] at hx
   ext m
-  rw [coeff_pderiv, coeff_zero]
+  rw [coeff_pderiv, AddMonoidAlgebra.coeff_zero]
   have : AddMonoidAlgebra.coeff x (m + Finsupp.single v 1) = 0 := by
     by_contra hc
     have := hx (Finset.mem_coe.mpr (mem_support_iff.mpr hc))
     simp at this
   rw [this, zero_mul]
+  rfl
 
 theorem eul_pderiv (LL : Letters (K + 1)) (o : ℕ) (a : Fin r) (x : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p])
     (hP : x ∈ Pol p r (setLast LL (o + 1))) :

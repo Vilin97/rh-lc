@@ -602,7 +602,7 @@ theorem twist_le (𝔟 : Ideal (𝓞 K)) (h𝔟 : 𝔟 ≠ ⊥) : ∀ (X : Submo
 
 omit [FiniteDimensional K W] in
 include K in
-theorem twist_torsionFree : IsAddTorsionFree W := ⟨fun n hn a c h => by
+theorem twist_torsionFree : IsAddTorsionFree W := ⟨fun n hn a c _ h => by
   have h' : (n : K) • a = (n : K) • c := by simpa [Nat.cast_smul_eq_nsmul] using h
   exact smul_right_injective W (Nat.cast_ne_zero.2 hn) h'⟩
 
@@ -633,7 +633,9 @@ theorem twist_finrank_int [StarRing K] (X : Submodule (𝓞 K) W) (hX : X.FG) :
 theorem twist_int (X : Submodule (𝓞 K) W) (hX : X.FG) (m : ℕ) (hm : m ≠ 0) :
     ((Ideal.span {(m : 𝓞 K)}) • X).toAddSubgroup.relIndex X.toAddSubgroup =
       m ^ finrank ℤ X := by
-  have htf := twist_torsionFree (K := K) (W := W)
+  letI : HasUniqueDiv W := ⟨fun n hn a c h => by
+    apply smul_right_injective W (Nat.cast_ne_zero.2 hn : (n : K) ≠ 0)
+    simpa [Nat.cast_smul_eq_nsmul] using h⟩
   have : Module.Finite (𝓞 K) X := Module.Finite.iff_fg.mpr hX
   have : Module.Finite ℤ X := Module.Finite.trans (𝓞 K) X
   rw [Submodule.ideal_span_singleton_smul]
@@ -657,7 +659,7 @@ theorem twist_int (X : Submodule (𝓞 K) W) (hX : X.FG) (m : ℕ) (hm : m ≠ 0
         have := congrArg (fun z : H.toIntSubmodule => ((z : X) : W)) hxy
         simpa [f] using this
       rw [Submodule.coe_smul_of_tower, Submodule.coe_smul_of_tower] at h1
-      exact Subtype.ext (htf.nsmul_right_injective hm h1)
+      exact Subtype.ext (nsmul_right_injective hm h1)
     · rintro ⟨z, hz⟩
       have hz' : (z : W) ∈ (m : 𝓞 K) • X := by
         have : z ∈ H := hz
@@ -670,10 +672,12 @@ theorem twist_int (X : Submodule (𝓞 K) W) (hX : X.FG) (m : ℕ) (hm : m ≠ 0
       exact hxz
   let e := AddEquiv.ofBijective f hf
   have key := Submodule.natAbs_det_equiv H.toIntSubmodule e
-  have hlin : H.toIntSubmodule.subtype ∘ₗ AddMonoidHom.toIntLinearMap (e : X →+ H.toIntSubmodule) =
+  have hlin : H.toIntSubmodule.subtype ∘ₗ AddMonoidHom.toIntLinearMap e.toAddMonoidHom =
       (m : ℤ) • LinearMap.id := by
     ext x
     simp [e, f]
+  change Int.natAbs (LinearMap.det (H.toIntSubmodule.subtype ∘ₗ
+    AddMonoidHom.toIntLinearMap e.toAddMonoidHom)) = _ at key
   rw [hlin, LinearMap.det_smul, LinearMap.det_id, mul_one] at key
   change H.index = _
   rw [Int.natAbs_pow, Int.natAbs_natCast] at key
@@ -1548,15 +1552,15 @@ theorem dual_polygon_identity : DualPl := by
       have h1 : leastSize b.dualBasis (dualFrame X) (dualLat A) = 0 := by
         unfold leastSize
         convert Real.sInf_empty
-        ext t
-        simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+        change _ ↔ False
+        simp only [iff_false]
         rintro ⟨R, -, hR0, -⟩
         exact hR0 (eq_bot_iff.2 fun f _ => (Submodule.mem_bot _).2 (hdual f))
       have h2 : largestSize b X A = 0 := by
         unfold largestSize
         convert Real.sSup_empty
-        ext t
-        simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+        change _ ↔ False
+        simp only [iff_false]
         rintro ⟨S, hS, hSA, -⟩
         exact hSA (le_antisymm hS.1 (by rw [hA0]; exact bot_le))
       rw [h1, h2, inv_zero]
@@ -1577,15 +1581,15 @@ theorem dual_polygon_identity : DualPl := by
       have h1 : largestSize b.dualBasis (dualFrame X) (dualLat A) = 0 := by
         unfold largestSize
         convert Real.sSup_empty
-        ext t
-        simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+        change _ ↔ False
+        simp only [iff_false]
         rintro ⟨S, -, hSA, -⟩
         exact hSA (by rw [hbot S, hbot (dualLat A)])
       have h2 : leastSize b X A = 0 := by
         unfold leastSize
         convert Real.sInf_empty
-        ext t
-        simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+        change _ ↔ False
+        simp only [iff_false]
         rintro ⟨R, hR, hR0, -⟩
         exact hR0 (le_antisymm (by rw [← hA0]; exact hR) bot_le)
       rw [h1, h2, inv_zero]

@@ -15,7 +15,14 @@ set_option maxHeartbeats 1600000
 
 namespace GlobalTheory
 
-theorem linearMap_pi_continuous_coord : ∀ {l : ℕ} [Fact l.Prime] {O M ι : Type} [CommRing O] [Algebra ℤ_[l] O] [Fintype ι] [AddCommGroup M] [Module O M] [TopologicalSpace M] [IsTopologicalAddGroup M] {e : ℕ} (bO : Module.Basis (Fin e) ℤ_[l] O), (∀ m : M, Continuous fun c : ℤ_[l] => algebraMap ℤ_[l] O c • m) → ∀ f : (ι → O) →ₗ[O] M, letI := TopologicalSpace.induced bO.equivFun inferInstance; Continuous f := by
+theorem linearMap_pi_continuous_coord : ∀ {l : ℕ} [Fact l.Prime] {O M ι : Type}
+    [CommRing O] [Algebra ℤ_[l] O] [Fintype ι] [AddCommGroup M] [Module O M]
+    [TopologicalSpace M] [IsTopologicalAddGroup M] {e : ℕ} (bO : Module.Basis (Fin e) ℤ_[l] O),
+    (∀ m : M, Continuous fun c : ℤ_[l] => algebraMap ℤ_[l] O c • m) →
+    ∀ f : (ι → O) →ₗ[O] M,
+      @Continuous (ι → O) M
+        (Pi.topologicalSpace (t₂ := fun _ => TopologicalSpace.induced bO.equivFun inferInstance))
+        inferInstance f := by
   intro l _ O M ι _ _ _ _ _ _ _ e bO hcont f
   classical
   letI : TopologicalSpace O := TopologicalSpace.induced bO.equivFun inferInstance

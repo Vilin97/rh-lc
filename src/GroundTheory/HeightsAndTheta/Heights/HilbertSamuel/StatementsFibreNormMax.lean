@@ -32,7 +32,7 @@ def FibreNormMax.Statement : Prop :=
               (∀ k, (dg k : ℤ) = dh k + τ * a k) ∧ aeval y g = u * aeval y h ∧
               eval z (map (Int.castRingHom ℂ) h) ≠ 0 ∧
               ‖eval z (map (Int.castRingHom ℂ) g)‖ ≤
-                M * (HermLine.ofMetrics (fun k => maxMetric ℂ (ι k)) a).h z ^ τ *
+                M * (HermLine.ofMetrics (fun k => maxMetric (C := ℂ) (ι := ι k)) a).h z ^ τ *
                   ‖eval z (map (Int.castRingHom ℂ) h)‖) →
             ‖eval ζ (map (Int.castRingHom ℂ) F)‖ ≤ B ^ (τ + 1) * M ^ n
 

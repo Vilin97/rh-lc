@@ -88,7 +88,7 @@ def intAfF : Set (Af F) := {a | ∀ v : HeightOneSpectrum (𝓞 F), evalV F v a 
 
 variable (F E) in
 def intAEF : AddSubgroup (Af F ⊗[F] E) :=
-  AddSubgroup.closure {y | ∃ a ∈ intAfF, ∃ x : 𝓞 E, y = a ⊗ₜ[F] (x : E)}
+  AddSubgroup.closure {y | ∃ a ∈ intAfF F, ∃ x : 𝓞 E, y = a ⊗ₜ[F] (x : E)}
 
 end Kernels
 

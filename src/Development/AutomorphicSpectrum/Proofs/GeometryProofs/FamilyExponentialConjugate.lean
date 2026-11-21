@@ -15,6 +15,9 @@ namespace GlobalTheory.CompanionTheory.Ar.Flat.ConjExp
 
 open Filter Topology GlobalTheory.CompanionTheory.Ar.Flat.Conj
 
+local notation "κ" => spMap (starRingEnd ℂ)
+local notation "δ" => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ))
+
 section Points
 
 variable {A B C : Type} [CommRing A] [CommRing B] [CommRing C]
@@ -187,7 +190,7 @@ theorem exOf_hol : IsHolTo (Metric.ball (0 : Fin n → ℂ) ρ ×ˢ (Set.univ : 
       star ⁻¹' {bz ∈ Metric.ball (0 : Fin n → ℂ) ρ ×ˢ (Set.univ : Set (Fin g → ℂ)) |
         ⊤ ≤ (e'.ex bz.1 bz.2).left ⁻¹ᵁ U} := by
     ext bz
-    simp only [Set.mem_setOf_eq, Set.mem_preimage, Set.mem_prod, Set.mem_univ, and_true, exOf_left,
+    simp only [Set.mem_ofPred_eq, Set.mem_preimage, Set.mem_prod, Set.mem_univ, and_true, exOf_left,
       Prod.fst_star, Prod.snd_star, star_mem_ball]
     exact and_congr_right fun _ => top_le_conj_iff _ _
   rw [hS]

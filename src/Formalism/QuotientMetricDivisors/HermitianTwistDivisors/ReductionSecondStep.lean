@@ -175,16 +175,7 @@ theorem matLat_eq_map {d : ℕ} (φ : Matrix (Fin d) (Fin d) K) (hφ : IsUnit φ
 theorem matLat_lattice {d : ℕ} (φ : Matrix (Fin d) (Fin d) K) (hφ : IsUnit φ.det)
     (L : Submodule (𝓞 K) (Fin d → K)) (hL : Submodule.IsLattice K L) :
     Submodule.IsLattice K (matLat φ L) := by
-  have hsurj : Function.Surjective φ.mulVec :=
-    Matrix.mulVec_surjective_iff_isUnit.mpr ((Matrix.isUnit_iff_isUnit_det φ).mpr hφ)
-  refine ⟨(Submodule.IsLattice.fg (self := hL)).map _, ?_⟩
-  have : ((matLat φ L : Submodule (𝓞 K) (Fin d → K)) : Set (Fin d → K)) =
-      (Matrix.mulVecLin φ) '' (L : Set (Fin d → K)) := by
-    rw [matLat, Submodule.map_coe]
-    rfl
-  rw [this, Submodule.span_image, Submodule.IsLattice.span_eq_top (self := hL), Submodule.map_top,
-    LinearMap.range_eq_top]
-  exact hsurj
+  exact Submodule.IsLattice.of_fg K ((Submodule.IsLattice.fg (self := hL)).map _)
 
 theorem locS_map {R W : Type*} [CommRing R] [AddCommGroup W] [Module R W] (S : Submonoid R)
     (f : W ≃ₗ[R] W) (A : Submodule R W) :

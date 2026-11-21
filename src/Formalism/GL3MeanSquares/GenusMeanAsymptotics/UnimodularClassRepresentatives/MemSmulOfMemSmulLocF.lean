@@ -23,8 +23,9 @@ theorem le_locF (𝔭 : Ideal (𝓞 F)) [𝔭.IsPrime] (L : Submodule (𝓞 K) V
     by simpa using hx⟩
 
 theorem ι_mem_pow {𝔭 : Ideal (𝓞 F)} {k : ℕ} {a : 𝓞 F} (ha : a ∈ 𝔭 ^ k) : ι a ∈ extP K 𝔭 ^ k := by
+  have ha' := Ideal.mem_map_of_mem ι ha
   rw [extP, ← Ideal.map_pow]
-  exact Ideal.mem_map_of_mem _ ha
+  exact ha'
 
 theorem exists_approx {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (L : Submodule (𝓞 K) V) (k : ℕ) {w : V}
     (hw : w ∈ locF 𝔭 L) : ∃ c : 𝓞 F, c - 1 ∈ 𝔭 ^ k ∧ ι c • w ∈ L := by
@@ -239,6 +240,7 @@ theorem vd_locF (hF : IsFixF K F) (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submod
       Ideal.mul_mem_left _ _ (hle h1)
     have hsub : ι (u * (t * t) ^ finrank K V - 1) * z ∈ extP K 𝔭 ^ e :=
       Ideal.mul_mem_right _ _ (ι_mem_pow hu)
+    change z ∈ extP K 𝔭 ^ e
     simpa only [map_sub, map_mul, map_one, sub_mul, one_mul, mul_assoc, sub_sub_cancel]
       using sub_mem hmul hsub
 

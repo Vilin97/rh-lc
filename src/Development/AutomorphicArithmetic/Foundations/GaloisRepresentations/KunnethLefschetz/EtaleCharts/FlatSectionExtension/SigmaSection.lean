@@ -17,7 +17,7 @@ theorem UpperTheory.Gal.KunnethLefschetz.G.PX.sigmaSection :
     fun s p => Types.isLimitEquivSections_apply L (Opposite.op ⟨p⟩) s
   let sec : ((Discrete.functor X).op ⋙ Scheme.Γ ⋙ forget CommRingCat).sections :=
     ⟨fun j => f j.unop.as, by
-      rintro ⟨⟨i⟩⟩ ⟨⟨j⟩⟩ ⟨⟨⟨h⟩⟩⟩
+      rintro ⟨⟨i⟩⟩ ⟨⟨j⟩⟩ ⟨⟨h⟩⟩
       cases h
       rfl⟩
   refine ⟨e.symm sec, fun p => ?_, fun s' hs' => e.injective ?_⟩

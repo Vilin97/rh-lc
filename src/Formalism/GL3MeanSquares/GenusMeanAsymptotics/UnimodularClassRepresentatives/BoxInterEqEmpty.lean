@@ -29,7 +29,7 @@ theorem box_inter_eq_empty (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) 
     {T : ℝ} (hbT : T ^ Formalism.HermitianLatticesTheory.fDeg K < (Ideal.absNorm b : ℝ)) :
     {n : 𝓞 F | n ∈ boxSet K F T ∧ n ∈ b} = ∅ := by
   ext n
-  simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+  simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
   intro hn hb
   have := BoxCube.absNorm_le_pow hK hF hn hb
   linarith

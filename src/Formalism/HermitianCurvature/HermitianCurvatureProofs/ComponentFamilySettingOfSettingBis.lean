@@ -11,24 +11,29 @@ open scoped Matrix
 
 section pts
 
-theorem toStd_size' (r : ℕ) (g : ℝ) : ∀ (p : C.LPt) (b : ℕ), D.ptSize (D.toStd r g b p) = D.ptSize p
-  | [], _ => rfl
-  | (s, t) :: rest, b => by
-    have ih := toStd_size' r g rest (b + s)
-    simp only [D.ptSize, D.toStd, List.map_cons, List.sum_cons] at ih ⊢
+theorem toStd_size' (r : ℕ) (g : ℝ) : ∀ (p : C.LPt) (b : ℕ), D.ptSize (D.toStd r g b p) = D.ptSize p := by
+  intro p
+  induction p with
+  | nil => intro b; rfl
+  | cons head rest ih =>
+    rcases head with ⟨s, t⟩
+    intro b
+    change s + D.ptSize (D.toStd r g (b + s) rest) = s + D.ptSize rest
     rw [ih]
 
 theorem toStd_ok_iff (r : ℕ) (g : ℝ) (hg : 0 < g) : ∀ (p : C.LPt) (b : ℕ),
-    (∀ x ∈ D.toStd r g b p, 1 ≤ x.1 ∧ x.2 ≠ 0) ↔ ∀ x ∈ p, 1 ≤ x.1 ∧ x.2 ≠ 0
-  | [], _ => by simp [D.toStd]
-  | (s, t) :: rest, b => by
-    have ih := toStd_ok_iff r g hg rest (b + s)
+    (∀ x ∈ D.toStd r g b p, 1 ≤ x.1 ∧ x.2 ≠ 0) ↔ ∀ x ∈ p, 1 ≤ x.1 ∧ x.2 ≠ 0 := by
+  intro p
+  induction p with
+  | nil => intro b; simp [D.toStd]
+  | cons head rest ih =>
+    rcases head with ⟨s, t⟩
+    intro b
     have hne : ((((g / (2 * Real.pi)) ^ S6.nuBlock r b s : ℝ) : ℂ) * Complex.I ^ (s - 1)) ≠ 0 := by
       refine mul_ne_zero ?_ (pow_ne_zero _ Complex.I_ne_zero)
       have : 0 < (g / (2 * Real.pi)) ^ S6.nuBlock r b s := zpow_pos (by positivity) _
       exact_mod_cast this.ne'
-    simp only [D.toStd, List.mem_cons, forall_eq_or_imp]
-    rw [ih]
+    simp only [D.toStd, List.forall_mem_cons, ih]
     constructor
     · rintro ⟨⟨h1, h2⟩, h3⟩
       exact ⟨⟨h1, fun ht => h2 (by rw [ht, mul_zero])⟩, h3⟩
@@ -59,25 +64,31 @@ end pts
 section weights
 
 theorem weight_product_append (k r : ℕ) (GG : ℝ) (fr : ℕ → ℕ → ℝ) (x : ℕ × ℂ) : ∀ (h : C.LPt) (b : ℕ),
-    C.nAux k r GG fr b (h ++ [x]) = C.nAux k r GG fr b h * C.nAux k r GG fr (b + D.ptSize h) [x]
-  | [], b => by simp [C.nAux, D.ptSize]
-  | (s, t) :: rest, b => by
-    have ih := weight_product_append k r GG fr x rest (b + s)
+    C.nAux k r GG fr b (h ++ [x]) = C.nAux k r GG fr b h * C.nAux k r GG fr (b + D.ptSize h) [x] := by
+  intro h
+  induction h with
+  | nil => intro b; simp [C.nAux, D.ptSize]
+  | cons head rest ih =>
+    rcases head with ⟨s, t⟩
+    intro b
     simp only [List.cons_append, C.nAux, ih, D.ptSize, List.map_cons, List.sum_cons, add_assoc, mul_assoc]
 
 theorem weight_product_indep_of_real_parameter (k r : ℕ) (GG GG' : ℝ) (fr : ℕ → ℕ → ℝ) : ∀ (h : C.LPt) (b : ℕ), 1 ≤ b →
-    b + D.ptSize h ≤ r + 1 → C.nAux k r GG fr b h = C.nAux k r GG' fr b h
-  | [], _, _, _ => by simp [C.nAux]
-  | (s, t) :: rest, b, hb, hs => by
-    simp only [D.ptSize, List.map_cons, List.sum_cons] at hs
-    have ih := weight_product_indep_of_real_parameter k r GG GG' fr rest (b + s) (by omega) (by simp only [D.ptSize] at *; omega)
-    simp only [C.nAux, ih]
+    b + D.ptSize h ≤ r + 1 → C.nAux k r GG fr b h = C.nAux k r GG' fr b h := by
+  intro h
+  induction h with
+  | nil => intro b hb hs; simp [C.nAux]
+  | cons head rest ih =>
+    rcases head with ⟨s, t⟩
+    intro b hb hs
+    change b + (s + D.ptSize rest) ≤ r + 1 at hs
+    have hrest := ih (b + s) (by omega) (by omega)
+    simp only [C.nAux, hrest]
     congr 1
     have : ¬ (b + s - 1 = r + 1 ∧ s = 1) := by
       rintro ⟨h1, h2⟩
-      have : 0 ≤ (rest.map Prod.fst).sum := Nat.zero_le _
       omega
-    rw [if_neg this, if_neg this]
+    simp only [ite_eq_right this]
 
 end weights
 
@@ -97,36 +108,32 @@ theorem ptEntry_app_lt (c : ℂ) : ∀ (H : C.LPt) (a b : ℕ), a < D.ptSize H �
         exact ptEntry_app_lt c rest (a - s) (b - s) (by simp only [D.ptSize]; omega) (by simp only [D.ptSize]; omega)
       · rw [if_neg h2, if_neg h2]
 
-theorem ptEntry_app_last (c : ℂ) : ∀ (H : C.LPt), D.ptEntry (H ++ [(1, c)]) (D.ptSize H) (D.ptSize H) = c
-  | [] => by simp [D.ptSize, D.ptEntry]
-  | (s, t) :: rest => by
-    simp only [List.cons_append, D.ptEntry, D.ptSize, List.map_cons, List.sum_cons]
-    have h0 : 0 ≤ (rest.map Prod.fst).sum := Nat.zero_le _
-    by_cases hs : s = 0
-    · subst hs
-      simp only [lt_self_iff_false, false_and, if_false, zero_le, and_self, if_true, zero_add, Nat.sub_zero]
-      have := ptEntry_app_last c rest
-      simpa [D.ptSize] using this
-    · rw [if_neg (by omega), if_pos (by omega)]
-      have := ptEntry_app_last c rest
-      simp only [D.ptSize] at this
-      rwa [show s + (rest.map Prod.fst).sum - s = (rest.map Prod.fst).sum by omega]
+theorem ptEntry_app_last (c : ℂ) : ∀ (H : C.LPt), D.ptEntry (H ++ [(1, c)]) (D.ptSize H) (D.ptSize H) = c := by
+  intro H
+  induction H with
+  | nil => simp [D.ptSize, D.ptEntry]
+  | cons head rest ih =>
+    rcases head with ⟨s, t⟩
+    have hle := Nat.le_add_right s (rest.map Prod.fst).sum
+    simpa only [List.cons_append, D.ptEntry, D.ptSize, List.map_cons, List.sum_cons,
+      not_lt_of_ge hle, false_and, ite_false, hle, and_self, ite_true, Nat.add_sub_cancel_left] using ih
 
 theorem ptEntry_app_row (c : ℂ) : ∀ (H : C.LPt) (b : ℕ), b < D.ptSize H →
-    D.ptEntry (H ++ [(1, c)]) (D.ptSize H) b = 0
-  | [], b, hb => by simp [D.ptSize] at hb
-  | (s, t) :: rest, b, hb => by
-    simp only [D.ptSize, List.map_cons, List.sum_cons] at hb
-    simp only [List.cons_append, D.ptEntry, D.ptSize, List.map_cons, List.sum_cons]
-    by_cases h1 : s + (rest.map Prod.fst).sum < s ∧ b < s
-    · omega
-    · rw [if_neg h1]
-      by_cases h2 : s ≤ s + (rest.map Prod.fst).sum ∧ s ≤ b
-      · rw [if_pos h2]
-        have := ptEntry_app_row c rest (b - s) (by simp only [D.ptSize]; omega)
-        simp only [D.ptSize] at this
-        rwa [show s + (rest.map Prod.fst).sum - s = (rest.map Prod.fst).sum by omega]
-      · rw [if_neg h2]
+    D.ptEntry (H ++ [(1, c)]) (D.ptSize H) b = 0 := by
+  intro H
+  induction H with
+  | nil => intro b hb; simp [D.ptSize] at hb
+  | cons head rest ih =>
+    rcases head with ⟨s, t⟩
+    intro b hb
+    change b < s + D.ptSize rest at hb
+    have hle := Nat.le_add_right s (rest.map Prod.fst).sum
+    simp only [List.cons_append, D.ptEntry, D.ptSize, List.map_cons, List.sum_cons,
+      not_lt_of_ge hle, false_and, ite_false, hle, true_and, Nat.add_sub_cancel_left]
+    by_cases hsb : s ≤ b
+    · rw [ite_eq_left hsb]
+      exact ih (b - s) (by omega)
+    · rw [ite_eq_right hsb]
 
 theorem det_ptMatN_app (c : ℂ) (H : C.LPt) (n : ℕ) (hn : D.ptSize H = n) :
     (D.ptMatN (H ++ [(1, c)]) (n + 1)).det = c * (D.ptMatN H n).det ∧
@@ -170,18 +177,20 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {Wp Wq : InfinitePla
   [∀ x, InnerProductSpace ℂ (Wq x)] [∀ x, FiniteDimensional ℂ (Wp x)] [∀ x, FiniteDimensional ℂ (Wq x)]
 
 theorem lpt_value_nonneg_of_pos_of_size_le (k r : ℕ) (GG : ℝ) (fr : ℕ → ℕ → ℝ) (hfr : ∀ b s, 0 < fr b s) :
-    ∀ (p : C.LPt) (b : ℕ), 1 ≤ b → b + D.ptSize p ≤ r + 1 → 0 ≤ C.nAux k r GG fr b p
-  | [], _, _, _ => by simp [C.nAux]
-  | (s, t) :: rest, b, hb, hs => by
-    simp only [D.ptSize, List.map_cons, List.sum_cons] at hs
-    have ih := lpt_value_nonneg_of_pos_of_size_le k r GG fr hfr rest (b + s) (by omega) (by simp only [D.ptSize]; omega)
+    ∀ (p : C.LPt) (b : ℕ), 1 ≤ b → b + D.ptSize p ≤ r + 1 → 0 ≤ C.nAux k r GG fr b p := by
+  intro p
+  induction p with
+  | nil => intro b hb hs; simp [C.nAux]
+  | cons head rest ih =>
+    rcases head with ⟨s, t⟩
+    intro b hb hs
+    change b + (s + D.ptSize rest) ≤ r + 1 at hs
     simp only [C.nAux]
-    refine mul_nonneg ?_ ih
+    refine mul_nonneg ?_ (ih (b + s) (by omega) (by omega))
     have : ¬ (b + s - 1 = r + 1 ∧ s = 1) := by
       rintro ⟨h1, h2⟩
-      have : 0 ≤ (rest.map Prod.fst).sum := Nat.zero_le _
       omega
-    rw [if_neg this]
+    rw [ite_eq_right this]
     exact zpow_nonneg (mul_nonneg (hfr b s).le (norm_nonneg _)) _
 
 theorem cutWord_of_adm (S : C.HidaSetting E Wp Wq) (hG : C.GridsOK S) (hC : KB.CutInside S) (w : S.W) (v : Fin S.f) :

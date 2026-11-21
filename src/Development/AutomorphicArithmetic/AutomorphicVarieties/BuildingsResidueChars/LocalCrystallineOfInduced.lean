@@ -33,6 +33,6 @@ theorem UpperTheory.local_crystalline_of_induced :
     congr 1
     have h1 := (Submodule.mem_iInf _).mp hx (weilToGK Bw h σ)
     simpa [sub_eq_zero] using h1
-  have ha : -alpha l σ = ((resDeg l w : ℕ) : ℤ) := by simp [alpha, hσ]
+  have ha : -GlobalTheory.Pst.alpha l σ = ((resDeg l w : ℕ) : ℤ) := by simp [GlobalTheory.Pst.alpha, hσ]
   rw [weilD_apply, (commute_actD_phiU P ρ _ _).eq, End.mul_apply, hfix, ha, zpow_natCast,
     Units.val_pow_eq_pow_val, coe_phiU, hpow]

@@ -77,19 +77,27 @@ theorem group_law_zero_right {n : ℕ} (P : Pt C n d) (hP : ∀ j, constantCoeff
     (fun i => ev_X (z0_p0 P hP) 1 i) (fun i => ev_X (z0_p0 P hP) 0 i)]
   exact F_0P G P hP a
 
-def Mm (j k : Fin d) : PS C 1 d := ev (n := 1) ![pt C d 0, 0] (pderiv C ((1 : Fin 2), k) (G.F j))
+def Mm (j k : Fin d) : PS C 1 d :=
+  ev (n := 1) ![pt C d 0, 0] (pderiv (R := C) ((1 : Fin 2), k) (G.F j))
 
 theorem constant_zero_first_zero : Z0 (![pt C d 0, 0] : Fin 2 → Pt C 1 d) := z0_p0 _ (coordinate_point_constantCoeff 0)
 
 theorem cc_Mm (j k : Fin d) : constantCoeff (Mm G j k) = if j = k then 1 else 0 := by
   rw [Mm, constantCoeff_ev constant_zero_first_zero]
-  have h := congrArg (pderiv C ((0 : Fin 1), k)) (G.unit j)
-  rw [pderiv_eval_pair (constant_zero_zero_point (pt C d 0) (coordinate_point_constantCoeff 0))] at h
+  have h := congrArg (pderiv (R := C) ((0 : Fin 1), k)) (G.unit j)
+  have hchain := Formalism.G.LogCR.pderiv_subst
+    (a := fun p : Fin 2 × Fin d => (![0, pt C d 0] : Fin 2 → Pt C 1 d) p.1 p.2)
+    (fun p => constant_zero_zero_point (pt C d 0) (coordinate_point_constantCoeff 0) p.1 p.2)
+    (G.F j) ((0 : Fin 1), k)
+  rw [Fintype.sum_prod_type, Fin.sum_univ_two] at hchain
+  unfold ev at h
+  rw [hchain] at h
   rw [Finset.sum_eq_zero (fun c _ => by
       rw [show ((![0, pt C d 0] : Fin 2 → Pt C 1 d) 0 c) = 0 from rfl, map_zero, mul_zero]), zero_add,
     Finset.sum_eq_single k] at h
   · rw [show ((![0, pt C d 0] : Fin 2 → Pt C 1 d) 1 k) = X ((0 : Fin 1), k) from rfl, pderiv_X_self,
       mul_one] at h
+    change ev ![0, pt C d 0] (pderiv (R := C) ((1 : Fin 2), k) (G.F j)) = _ at h
     have h2 := congrArg constantCoeff h
     rw [constantCoeff_ev (constant_zero_zero_point (pt C d 0) (coordinate_point_constantCoeff 0))] at h2
     rw [h2]
@@ -116,26 +124,27 @@ def NN : Matrix (Fin d) (Fin d) (PS C 1 d) := (MM G)⁻¹
 theorem MM_NN : MM G * NN G = 1 := Matrix.mul_nonsing_inv _ (MM_det G)
 
 theorem pderiv_eval_single {n : ℕ} (P : Pt C n d) (hP : ∀ j, constantCoeff (P j) = 0) (g : PS C 1 d) (q : Fin n × Fin d) :
-    pderiv C q (ev ![P] g) = ∑ b, ev ![P] (pderiv C ((0 : Fin 1), b) g) * pderiv C q (P b) := by
+    pderiv (R := C) q (ev ![P] g) =
+      ∑ b, ev ![P] (pderiv (R := C) ((0 : Fin 1), b) g) * pderiv (R := C) q (P b) := by
   unfold ev
   rw [Formalism.G.LogCR.pderiv_subst (a := fun p : Fin 1 × Fin d => (![P] : Fin 1 → Pt C n d) p.1 p.2)
     (fun p => z0_1 P hP p.1 p.2) g q, Fintype.sum_prod_type, Fin.sum_univ_one]
   rfl
 
 theorem sum_d_pt_self {n : ℕ} (k : Fin n) (f : Fin d → PS C n d) (q : Fin d) :
-    ∑ b, f b * pderiv C (k, q) (pt C d k b) = f q := by
+    ∑ b, f b * pderiv (R := C) (k, q) (pt C d k b) = f q := by
   rw [Finset.sum_eq_single q]
-  · show f q * pderiv C _ (X (k, q)) = _
+  · show f q * pderiv (R := C) _ (X (k, q)) = _
     rw [pderiv_X_self, mul_one]
   · intro b _ hb
-    show f b * pderiv C _ (X (k, b)) = 0
+    show f b * pderiv (R := C) _ (X (k, b)) = 0
     rw [pderiv_X_of_ne (by simp [hb]), mul_zero]
   · intro h; exact absurd (Finset.mem_univ q) h
 
 theorem sum_d_pt_other {n : ℕ} (k k' : Fin n) (hk : k ≠ k') (f : Fin d → PS C n d) (q : Fin d) :
-    ∑ b, f b * pderiv C (k', q) (pt C d k b) = 0 :=
+    ∑ b, f b * pderiv (R := C) (k', q) (pt C d k b) = 0 :=
   Finset.sum_eq_zero fun b _ => by
-    show f b * pderiv C _ (X (k, b)) = 0
+    show f b * pderiv (R := C) _ (X (k, b)) = 0
     rw [pderiv_X_of_ne (by simp [hk]), mul_zero]
 
 theorem eval_group_law_at_zero (h : PS C 1 d) : ev (n := 1) ![pt C d 0, 0] (ev (n := 2) ![G.F] h) = h := by

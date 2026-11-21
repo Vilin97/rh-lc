@@ -24,7 +24,7 @@ def serLine (u : ℤ) (d : M) (c : F⟦X⟧) : ℤ → M :=
 
 theorem serAct_one (y : ℤ → M) : serAct (1 : F⟦X⟧) y = y := by
   funext m
-  rw [serAct, finsum_eq_single _ 0 (fun j hj => by rw [coeff_one, if_neg hj, zero_smul])]
+  rw [serAct, finsum_eq_single _ 0 (fun j hj => by rw [coeff_one, ite_eq_right hj, zero_smul])]
   simp
 
 def SpanIsLines {N : Type} (L : N → ℤ → M) {r : ℕ} (u : Fin r → ℤ) (d : Fin r → M) (F : Type) [Field F]

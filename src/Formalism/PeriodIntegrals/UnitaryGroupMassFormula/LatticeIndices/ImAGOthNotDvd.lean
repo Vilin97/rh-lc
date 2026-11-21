@@ -51,12 +51,26 @@ private theorem exp_add_one_le_of_exp_lt (y : WithZero (Multiplicative ℤ)) (k 
 theorem imA_span_g_max (p : TypX X) :
     Ideal.span {((gOf p : ℕ) : p.1.adicCompletionIntegers X.B.I.F)} =
       IsLocalRing.maximalIdeal (p.1.adicCompletionIntegers X.B.I.F) := by
-  obtain ⟨-, hmem, hnot⟩ := resArith_holds X p
+  have hmem : ((gOf p : ℕ) : 𝓞 X.B.I.F) ∈ p.1.asIdeal := by
+    have hty := (mem_typSet X.B.I.F (D.host.g 0) (D.host.g 1) (D.host.g_prime 0).ne_zero
+      (D.host.g_prime 1).ne_zero p.1).1 p.2
+    unfold gOf
+    split_ifs with h
+    · exact h
+    · exact hty.resolve_left h
+  have hgp : Fact (gOf p).Prime := ⟨gOf_prime X p⟩
+  have hsplit : {w : IsDedekindDomain.HeightOneSpectrum (𝓞 X.B.I.E) |
+      ((gOf p : ℕ) : 𝓞 X.B.I.E) ∈ w.asIdeal}.ncard = Module.finrank ℚ X.B.I.E := by
+    unfold gOf
+    split_ifs
+    · exact MassDataIdxRes.split_transport X.ιE _ (D.nd.g_split 0)
+    · exact MassDataIdxRes.split_transport X.ιE _ (D.nd.g_split 1)
+  obtain ⟨he, hf⟩ := MassDataIdxRes.locDeg_one_below (F := X.B.I.F) (E := X.B.I.E) (gOf p) hsplit p.1 hmem
+  obtain ⟨_, hnot⟩ := MassDataIdxRes.arith_of_loc (gOf p) p.1 hmem he hf
   have hvg : Valued.v (((gOf p : ℕ) : p.1.adicCompletionIntegers X.B.I.F) : p.1.adicCompletion X.B.I.F) =
       p.1.intValuation ((gOf p : ℕ) : 𝓞 X.B.I.F) := by
     have e : (((gOf p : ℕ) : p.1.adicCompletionIntegers X.B.I.F) : p.1.adicCompletion X.B.I.F) =
         (((gOf p : ℕ) : X.B.I.F) : p.1.adicCompletion X.B.I.F) := by
-      simp only [map_natCast]
       first
         | rfl
         | exact (map_natCast (algebraMap X.B.I.F (p.1.adicCompletion X.B.I.F)) (gOf p)).symm

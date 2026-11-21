@@ -389,8 +389,14 @@ theorem quot_len_ne_top (la : HeightOneSpectrum (𝓞 B.KO)) (ka : WeightFamilie
   obtain ⟨d, hd, h⟩ := Formalism.LatticeIndexTer.LatticeIndexLength.exists_smul_le (K := B.KO) (B.Mlat j ka)
     (Submodule.span (𝓞 B.KO) (Set.range fun i => ((th i : B.Mlat j ka) : B.Cusp j ka)) ⊔
       (WeightFamilies.MggK B CRm T c j ka).restrictScalars (𝓞 B.KO)) hM.1 (by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply top_unique
+    rw [← hsp]
+    apply sup_le
+    · apply Submodule.span_le.mpr
+      rintro _ ⟨i, rfl⟩
+      exact Submodule.subset_span (Submodule.mem_sup_left (Submodule.subset_span ⟨i, rfl⟩))
+    · intro x hx
+      exact Submodule.subset_span (Submodule.mem_sup_right hx))
   unfold WeightFamilies.lenAt
   refine length_localized_ne_top la d hd ?_
   intro x

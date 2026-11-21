@@ -155,7 +155,8 @@ theorem subst_killCompl {τ : Type} {γ : κ → MvPowerSeries τ C} (hγ : ∀ 
   rw [hz, rename_eq_subst, subst_comp_subst_apply (HasSubst.X_comp _) hS]
   congr 1
   funext s
-  simp [Function.comp_apply, subst_X hS, fstEmb]
+  change γ s = subst _ (X ((0 : Fin 2), s))
+  simp [subst_X hS]
 
 theorem sg_eq (X : RawChart C d I κ) (v : κ → C) :
     X.sg v = -∑ i, v i • killCompl (fstEmb κ) (pderiv (R := C) ((1 : Fin 2), i) X.h) := by

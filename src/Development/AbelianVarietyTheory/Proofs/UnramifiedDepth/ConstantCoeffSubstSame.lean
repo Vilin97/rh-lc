@@ -36,7 +36,7 @@ theorem ordGE_mul {σ : Type} {a b : ℕ} {f g : MvPowerSeries σ k} (hf : OrdGE
     rw [hg _ h2, mul_zero]
 
 theorem ordGE_pderiv {σ : Type} {r : ℕ} (i : σ) {g : MvPowerSeries σ k} (h : OrdGE (r + 1) g) :
-    OrdGE r (pderiv k i g) := by
+    OrdGE r (pderiv i g) := by
   intro e he
   rw [coeff_pderiv, h _ (by rw [map_add (f := _), Finsupp.degree_single]; omega), zero_mul]
 
@@ -77,8 +77,8 @@ theorem ordGE_subst {σ τ : Type} [Finite σ] (a : σ → MvPowerSeries τ k) (
   simp only [hz, finsum_zero]
 
 theorem pderiv_aeval {σ τ : Type} [Fintype σ] (a : σ → MvPowerSeries τ k) (p : MvPolynomial σ k) (t : τ) :
-    pderiv k t (MvPolynomial.aeval a p) =
-      ∑ s, MvPolynomial.aeval a (MvPolynomial.pderiv s p) * pderiv k t (a s) := by
+    pderiv t (MvPolynomial.aeval a p) =
+      ∑ s, MvPolynomial.aeval a (MvPolynomial.pderiv s p) * pderiv t (a s) := by
   classical
   induction p using MvPolynomial.induction_on with
   | C c => simp
@@ -94,18 +94,18 @@ theorem pderiv_aeval {σ τ : Type} [Fintype σ] (a : σ → MvPowerSeries τ k)
 
 theorem pderiv_subst {σ τ : Type} [Fintype σ] {a : σ → MvPowerSeries τ k} (ha : ∀ s, constantCoeff (a s) = 0)
     (f : MvPowerSeries σ k) (t : τ) :
-    pderiv k t (subst a f) = ∑ s, subst a (pderiv k s f) * pderiv k t (a s) := by
+    pderiv t (subst a f) = ∑ s, subst a (pderiv s f) * pderiv t (a s) := by
   classical
   have hs : HasSubst a := hasSubst_of_constantCoeff_zero ha
   ext e
   have key : ∀ g : MvPowerSeries σ k, OrdGE (e.degree + 1 + 1) g →
-      coeff e (pderiv k t (subst a g)) = 0 ∧ coeff e (∑ s, subst a (pderiv k s g) * pderiv k t (a s)) = 0 := by
+      coeff e (pderiv t (subst a g)) = 0 ∧ coeff e (∑ s, subst a (pderiv s g) * pderiv t (a s)) = 0 := by
     intro g hg
     refine ⟨ordGE_pderiv t (ordGE_subst a ha hg) e (by omega), ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]
     refine Finset.sum_eq_zero fun s _ => ?_
-    exact ordGE_mul (ordGE_subst a ha (ordGE_pderiv s hg)) (ordGE_zero_left (pderiv k t (a s))) e (by omega)
+    exact ordGE_mul (ordGE_subst a ha (ordGE_pderiv s hg)) (ordGE_zero_left (pderiv t (a s))) e (by omega)
   set p := truncTotal (e.degree + 1 + 1) f
   have hr : OrdGE (e.degree + 1 + 1) (f - (p : MvPowerSeries σ k)) := by
     intro d hd
@@ -213,7 +213,7 @@ theorem mfact_add_single {σ : Type} (m : σ →₀ ℕ) (s : σ) :
   simp [Nat.factorial_succ]; ring
 
 theorem jetAt0_mul_X {σ : Type} (P : MvPolynomial σ K) (s : σ) (G : MvPowerSeries σ K) :
-    jetAt0 (P * MvPolynomial.X s) G = jetAt0 P (pderiv K s G) := by
+    jetAt0 (P * MvPolynomial.X s) G = jetAt0 P (pderiv s G) := by
   induction P using MvPolynomial.induction_on' with
   | monomial m c =>
     rw [MvPolynomial.X, MvPolynomial.monomial_mul, jetAt0_monomial, jetAt0_monomial, coeff_pderiv,
@@ -237,7 +237,7 @@ theorem jetAt0_subst_linear {σ τ : Type} [Fintype σ] [Fintype τ] (M : σ →
   | add p q hp hq => rw [map_add (f := _), jetAt0_add_left, jetAt0_add_left, hp, hq]
   | mul_X p t hp =>
     rw [jetAt0_mul_X, pderiv_subst ha, map_mul, MvPolynomial.aeval_X, Finset.mul_sum, jetAt0_sum_left]
-    have : ∀ s, pderiv K t (∑ t, M s t • (X t : MvPowerSeries τ K)) = C (M s t) := by
+    have : ∀ s, pderiv t (∑ t, M s t • (X t : MvPowerSeries τ K)) = C (M s t) := by
       intro s
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, Finset.sum_eq_single t]

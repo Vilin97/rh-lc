@@ -22,6 +22,8 @@ namespace DegZeroLocResidue
 
 variable {F : Type u} [Field F] {K : Type} [DecidableEq K] {ι : K → Type}
 
+local notation "fr" Q:max h:max =>
+  algebraMap (_ ⧸ Q) (FractionRing (_ ⧸ Q)) (Ideal.Quotient.mk Q h)
 
 omit [DecidableEq K] in
 theorem fr_ne_zero (Q : Ideal (MRing ι F)) [Q.IsPrime] {h : MRing ι F} (hh : h ∉ Q) :
@@ -40,6 +42,7 @@ theorem residue_eq (hPW : P ≤ W) {f g f' g' : MRing ι F} (hg : g ∉ W) (hg' 
     ← map_mul, Ideal.Quotient.eq.mpr (hPW (Ideal.Quotient.eq.mp (IsFractionRing.injective _ _ h)))]
 
 
+variable (P W) in
 open Classical in
 def res (x : FractionRing (MRing ι F ⧸ P)) : FractionRing (MRing ι F ⧸ W) :=
   if h : ∃ fg : MRing ι F × MRing ι F, fg.2 ∉ W ∧ x = fr P fg.1 / fr P fg.2 then

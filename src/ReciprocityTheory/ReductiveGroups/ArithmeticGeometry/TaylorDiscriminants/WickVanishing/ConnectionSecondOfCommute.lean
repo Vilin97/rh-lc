@@ -16,7 +16,8 @@ variable {R : Type} [CommRing R] {d : ℕ} {O : Type} [CommRing O] [StarRing O]
 variable (k : Type) [CommRing k] [Algebra ℚ k] [Algebra R k]
 
 theorem Dof_X (F : Fin d → PS k 2 d) (u : Fin d → k) (j : Fin d) :
-    Dof F u (X ((0 : Fin 1), j)) = ∑ i : Fin d, C (u i) * ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), i) (F j)) := by
+    Dof F u (X ((0 : Fin 1), j)) = ∑ i : Fin d, C (u i) * ev (n := 1) ![pt k d 0, 0]
+      (pderiv (R := k) ((1 : Fin 2), i) (F j)) := by
   unfold Dof
   simp only [MvPowerSeries.pderiv_X]
   rw [Finset.sum_eq_single j]

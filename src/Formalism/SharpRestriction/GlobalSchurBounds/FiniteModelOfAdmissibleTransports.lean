@@ -629,7 +629,11 @@ theorem muMax_line' (hS : HidaSetting D u) (W : FreeT D u) : (D.fm u).ramLat.muM
     rw [e]; exact le_rfl
   · refine muMax_line (ramL_ne_bot ?_)
     have h := rank_nat W
-    have hf : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+    have hf : 0 < D.R.f := by
+      unfold Ranks.f Ranks.n
+      have := D.R.two_le_m
+      have := D.R.m_le_f
+      omega
     have hN := D.R.N_pos D.R.m
     have h2 : 0 < 2 * D.R.f * D.R.N D.R.m := Nat.mul_pos (Nat.mul_pos two_pos hf) hN
     have hT : 0 < (D.mem u).A.T - 1 - 1 := by have := hS.1; omega

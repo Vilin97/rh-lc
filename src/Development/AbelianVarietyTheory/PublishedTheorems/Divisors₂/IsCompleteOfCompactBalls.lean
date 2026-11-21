@@ -81,12 +81,6 @@ def formNsq (A : WeightedAtlas n Y ι La) (H : ι → Y → Matrix (Fin n) (Fin 
 
 end Atlas
 
-section Flat
-
-open ReciprocityTheory.L2DbarEstimates.Y.ExponentialProfileBounds
-
-end Flat
-
 end
 
 end GlobalTheory.L2Kaehler

@@ -27,7 +27,7 @@ theorem linAct_eq (φ : Pt C 1 dd) (v : Fin dd → C) : linAct φ v = Matrix.mul
   rfl
 
 theorem coeff_single_cc {σ : Type} (s : σ) (f : MvPowerSeries σ C) :
-    coeff (Finsupp.single s 1) f = constantCoeff (pderiv C s f) := by
+    coeff (Finsupp.single s 1) f = constantCoeff (MvPowerSeries.pderiv (R := C) s f) := by
   rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_pderiv]
   simp
 
@@ -48,7 +48,7 @@ theorem lin_comp1 {φ ψ : Pt C 1 dd} (hψ : ∀ k, constantCoeff (ψ k) = 0) :
     linM (comp1 φ ψ) = linM φ * linM ψ := by
   ext i j
   simp only [linM, Matrix.of_apply, Matrix.mul_apply, coeff_single_cc]
-  show constantCoeff (pderiv C ((0 : Fin 1), j)
+  show constantCoeff (MvPowerSeries.pderiv (R := C) ((0 : Fin 1), j)
     (MvPowerSeries.subst (fun p : Fin 1 × Fin dd => (![ψ] : Fin 1 → Pt C 1 dd) p.1 p.2) (φ i))) = _
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Formalism.G.LogCR.pderiv_subst (a := fun p : Fin 1 × Fin dd => (![ψ] : Fin 1 → Pt C 1 dd) p.1 p.2)
@@ -70,7 +70,7 @@ theorem lin_pt : linM (pt C (n := 1) dd 0) = 1 := by
     have h3 := (Finsupp.single_left_inj (one_ne_zero : (1 : ℕ) ≠ 0)).mp h2
     exact (Prod.mk.inj h3).2.symm
 
-theorem cc_pderiv_X {σ : Type} [DecidableEq σ] (s t : σ) : constantCoeff (pderiv C s (X t : MvPowerSeries σ C)) = if t = s then 1 else 0 := by
+theorem cc_pderiv_X {σ : Type} [DecidableEq σ] (s t : σ) : constantCoeff (MvPowerSeries.pderiv (R := C) s (X t : MvPowerSeries σ C)) = if t = s then 1 else 0 := by
   rw [MvPowerSeries.pderiv_X]
   by_cases h : t = s
   · subst h
@@ -78,9 +78,9 @@ theorem cc_pderiv_X {σ : Type} [DecidableEq σ] (s t : σ) : constantCoeff (pde
   · simp [Pi.single_apply, h]
 
 theorem formal_group_coeff_first_linear {V : VF C} {O : Type} [CommRing O] [StarRing O] (Y : FBChart C V O dd) (i j : Fin dd) :
-    constantCoeff (pderiv C ((0 : Fin 2), j) (Y.B.G.F i)) = if i = j then 1 else 0 := by
+    constantCoeff (MvPowerSeries.pderiv (R := C) ((0 : Fin 2), j) (Y.B.G.F i)) = if i = j then 1 else 0 := by
   have hA : Z0 (![pt C (n := 1) dd 0, 0] : Fin 2 → Pt C 1 dd) := z0_p0 _ (z0_pt 0)
-  have h := congrArg (fun f => constantCoeff (pderiv C ((0 : Fin 1), j) f)) (formalGroupLaw_ev_x_zero Y (pt C (n := 1) dd 0) (z0_pt 0) i)
+  have h := congrArg (fun f => constantCoeff (MvPowerSeries.pderiv (R := C) ((0 : Fin 1), j) f)) (formalGroupLaw_ev_x_zero Y (pt C (n := 1) dd 0) (z0_pt 0) i)
   unfold ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ.ev at h
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Formalism.G.LogCR.pderiv_subst (a := fun p : Fin 2 × Fin dd => (![pt C (n := 1) dd 0, 0] : Fin 2 → Pt C 1 dd) p.1 p.2)
@@ -92,12 +92,12 @@ theorem formal_group_coeff_first_linear {V : VF C} {O : Type} [CommRing O] [Star
   rw [h]
 
 theorem formal_group_coeff_second_linear {V : VF C} {O : Type} [CommRing O] [StarRing O] (Y : FBChart C V O dd) (i j : Fin dd) :
-    constantCoeff (pderiv C ((1 : Fin 2), j) (Y.B.G.F i)) = if i = j then 1 else 0 := by
+    constantCoeff (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) (Y.B.G.F i)) = if i = j then 1 else 0 := by
   have hA : Z0 (![0, pt C (n := 1) dd 0] : Fin 2 → Pt C 1 dd) := by
     intro k j'; fin_cases k
     · simp
     · exact z0_pt 0 j'
-  have h := congrArg (fun f => constantCoeff (pderiv C ((0 : Fin 1), j) f)) (Y.B.G.unit i)
+  have h := congrArg (fun f => constantCoeff (MvPowerSeries.pderiv (R := C) ((0 : Fin 1), j) f)) (Y.B.G.unit i)
   unfold ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ.ev at h
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Formalism.G.LogCR.pderiv_subst (a := fun p : Fin 2 × Fin dd => (![0, pt C (n := 1) dd 0] : Fin 2 → Pt C 1 dd) p.1 p.2)
@@ -114,7 +114,7 @@ theorem lin_addOf {V : VF C} {O : Type} [CommRing O] [StarRing O] (Y : FBChart C
   have hZ : Z0 (![A, B] : Fin 2 → Pt C 1 dd) := constant_zero_two_points A B hA hB
   ext i j
   simp only [linM, Matrix.of_apply, Matrix.add_apply, coeff_single_cc]
-  show constantCoeff (pderiv C ((0 : Fin 1), j)
+  show constantCoeff (MvPowerSeries.pderiv (R := C) ((0 : Fin 1), j)
     (MvPowerSeries.subst (fun p : Fin 2 × Fin dd => (![A, B] : Fin 2 → Pt C 1 dd) p.1 p.2) (Y.B.G.F i))) = _
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Formalism.G.LogCR.pderiv_subst (a := fun p : Fin 2 × Fin dd => (![A, B] : Fin 2 → Pt C 1 dd) p.1 p.2)

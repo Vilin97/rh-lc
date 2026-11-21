@@ -43,7 +43,7 @@ theorem jetIndep_dvd {n p : ℕ} [CharP k p] (F : MvPolynomial (Fin n) k) (h : �
   rcases Nat.eq_zero_or_pos (α i) with h0 | hpos
   · simp [h0]
   have hc := congrArg (AddMonoidAlgebra.coeff · (α - Finsupp.single i 1)) (h i)
-  rw [coeff_pderiv, coeff_zero] at hc
+  rw [coeff_pderiv, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at hc
   have hα' : α - Finsupp.single i 1 + Finsupp.single i 1 = α := by
     ext l
     by_cases hl : i = l
@@ -103,7 +103,7 @@ theorem JetIndep_of : JetIndep := by
     have hG0 := ih (m / p) (Nat.div_lt_self hm hpp.one_lt) G hG (pow_eq_zero_iff hpp.ne_zero |>.1 h0)
     rw [hG0, zero_pow hpp.ne_zero]
   · ext α
-    rw [coeff_zero]
+    rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     by_contra hc
     have hα0 : α = 0 := by
       ext i; simpa using jetIndep_dvd (p := 0) F hpd α (mem_support_iff.2 hc) i

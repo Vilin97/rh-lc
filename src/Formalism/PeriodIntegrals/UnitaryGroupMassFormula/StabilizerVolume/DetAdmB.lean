@@ -189,7 +189,7 @@ private theorem exists_restricted_box_subset_of_isOpen {x : Af F} {U : Set (Af F
     obtain ⟨hT1, -, hT3, -⟩ := preimage_sub_integers_mem_and_eq_of_mem v (x v)
     obtain ⟨W, hWt, hWo, hxW⟩ := mem_nhds_iff.1 (ht v)
     obtain ⟨V, hV, hxV, hVW⟩ :=
-      (loc_compact_Haus_tot_disc_of_zero_dim (H := Fv F v)).exists_subset_of_mem_open
+      (loc_compact_Haus_tot_disc_of_zero_dim (X := Fv F v)).exists_subset_of_mem_open
         (show x v ∈ W ∩ _ from ⟨hxW, hT3⟩) (hWo.inter hT1.isOpen)
     exact ⟨V, hV, hxV, hVW.trans (inter_subset_inter_left _ hWt)⟩
   choose V hVc hxV hVsub using key

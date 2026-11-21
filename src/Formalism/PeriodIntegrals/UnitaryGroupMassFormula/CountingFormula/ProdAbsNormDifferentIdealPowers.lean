@@ -26,8 +26,10 @@ theorem gZ_ne_zero (D : Formalism.BasicNotions.D7) (T T' : D.host.E) (Z : MatZ D
   intro h0
   have hc : 0 < Fintype.card D.what₂.Tau := by
     rw [D.what₂.card_Tau]
+    have := D.R.m_le_f
+    have := D.R.two_le_m
     unfold Formalism.BasicNotions.Ranks.f Formalism.BasicNotions.Ranks.n
-    positivity
+    omega
   obtain ⟨τ⟩ := Fintype.card_pos_iff.mp hc
   have := hpos τ
   rw [h0, map_zero, Complex.zero_re] at this

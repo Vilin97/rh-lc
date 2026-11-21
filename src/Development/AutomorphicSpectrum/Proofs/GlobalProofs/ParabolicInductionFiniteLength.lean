@@ -15,8 +15,8 @@ open GlobalTheory.PRep GlobalTheory.SmGL Matrix
 
 namespace GlobalTheory.CompanionTheory.BZInd
 
-open GroundTheory.Automorphic.Parabolic (levi levi_le_blockUpper mem_levi sqrtModular invSqrtModular leviIncl
-  parabolicInd parabolicIndSpace)
+open GroundTheory.Automorphic.Parabolic (levi levi_le_blockUpper mem_levi sqrtModular invSqrtModular leviIncl)
+open GroundTheory.Automorphic.Parabolic (parabolicInd parabolicIndSpace)
 open GroundTheory.Automorphic.Iwasawa (blockUpper)
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]

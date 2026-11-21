@@ -90,8 +90,9 @@ theorem dense_atInf : DenseRange fun (k : Eˣ) (w : InfinitePlace E) => atInf w 
   have hk : k ≠ 0 := fun h => hy w₀ (by rw [h, map_zero]; rfl)
   exact ⟨_, ⟨Units.mk0 k hk, rfl⟩, rfl⟩
 
-theorem ext_alg (w : InfinitePlace E) (k : E) : extensionEmbedding w (algebraMap E w.Completion k) = w.embedding k :=
-  extensionEmbedding_coe w (WithAbs.toAbs w.1 k)
+theorem ext_alg (w : InfinitePlace E) (k : E) : extensionEmbedding w (algebraMap E w.Completion k) = w.embedding k := by
+  rw [InfinitePlace.Completion.algebraMap_apply, extensionEmbedding_coe]
+  rfl
 
 theorem norm_ext (w : InfinitePlace E) (a : w.Completion) : ‖extensionEmbedding w a‖ = ‖a‖ :=
   (isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _) a

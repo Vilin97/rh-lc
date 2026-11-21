@@ -226,17 +226,17 @@ variable {D A3} {P0 : Subgroup G} {ψ0 : P0 →* D.what₂.LLˣ} {Ps : Subgroup 
   {NuC : ∀ u, Submodule (𝓞 D.what₂.LL) (Fin (Dc.a u) → D.what₂.LL)} {I : DivisionCompatibilityDataThreeSided D A3 P0 ψ0 Ps ψs Zs S0 S1 X0 Dc}
 
 theorem DivTied3.ofSplit (hD : DivDef3 D A3 P0 ψ0 Ps ψs Zs S0 S1 X0 C NuC I) (hR : DivRows3 D A3 P0 ψ0 Ps ψs Zs S0 S1 X0 C NuC I) :
-    DivTied3 D A3 P0 ψ0 Ps ψs Zs S0 S1 X0 C NuC I where
-  ranks := hD.ranks
-  grp := hD.grp
-  tup := hD.tup
-  mu1 := hD.mu1
-  sharp := ⟨hR.sharpRR, hD.sharp.forms, hD.sharp.Mtilde, hD.sharp.iota⟩
-  base := ⟨hR.baseRR, hD.base.forms, hD.base.Mtilde, hD.base.iota⟩
-  mt := ⟨hD.mt.forms, hD.mt.lat, hR.divisionRows_rationalLift⟩
-  th := ⟨hD.th.li, hD.th.span, hD.th.lat, hR.thTheta⟩
-  num := hR.num
-  cols := ⟨hD.cols.wU_bij, hD.cols.Nu, hR.colsBk⟩
+    DivTied3 D A3 P0 ψ0 Ps ψs Zs S0 S1 X0 C NuC I :=
+  { ranks := hD.ranks
+    grp := hD.grp
+    tup := hD.tup
+    mu1 := hD.mu1
+    sharp := ⟨hR.sharpRR, hD.sharp.forms, hD.sharp.Mtilde, hD.sharp.iota⟩
+    base := ⟨hR.baseRR, hD.base.forms, hD.base.Mtilde, hD.base.iota⟩
+    mt := ⟨hD.mt.forms, hD.mt.lat, hR.divisionRows_rationalLift⟩
+    th := ⟨hD.th.li, hD.th.span, hD.th.lat, hR.thTheta⟩
+    num := hR.num
+    cols := ⟨hD.cols.wU_bij, hD.cols.Nu, hR.colsBk⟩ }
 
 end Split
 

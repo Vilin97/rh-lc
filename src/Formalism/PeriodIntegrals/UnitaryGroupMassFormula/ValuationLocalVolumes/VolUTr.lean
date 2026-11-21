@@ -78,7 +78,6 @@ theorem one_mem : (1 : Fv F v ⊗[F] E) ∈ OEv (E := E) v := by
 theorem int_mem (r : 𝓞 F) : algebraMap F (Fv F v) (r : F) ∈ v.adicCompletionIntegers F := by
   have h := v.coe_mem_adicCompletionIntegers (K := F) r
   convert h using 1
-  exact (IsScalarTower.algebraMap_apply (𝓞 F) F (Fv F v) r).symm
 
 theorem inclR_alg (a : F) : inclR (F := F) (Fv F v) (algebraMap F E a) =
     algebraMap (Fv F v) (Fv F v ⊗[F] E) (algebraMap F (Fv F v) a) := by

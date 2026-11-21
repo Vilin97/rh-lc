@@ -267,7 +267,7 @@ theorem orbital_integral_indep_choice : Formalism.FourierDecayAlt.D.OrbJIndep :=
   intro k r Wp Wq _ _ _ _ D γ μR hrel hR F θ θ' hθ hθ' hi hi'
   by_cases hE : CompleteSpace (Wq →L[ℂ] Wp)
   swap
-  · simp only [integral, dif_neg hE]
+  · simp only [integral_of_not_completeSpace hE]
   have : SigmaFinite μR := sigmaF hR
   have := sfSS D
   have hγ := isUnit_of_G hrel.1
@@ -277,10 +277,7 @@ theorem orbital_integral_indep_choice : Formalism.FourierDecayAlt.D.OrbJIndep :=
   have hinv : μR.map Formalism.FourierDecayAlt.B2.invM = μR :=
     Formalism.FourierDecayAlt.P.haar_measure_inversion k r _ μR (closedR hγ) hR
   have haem : AEMeasurable Formalism.FourierDecayAlt.B2.invM μR := by
-    by_contra h
-    have h0 := Measure.map_of_not_aemeasurable h
-    rw [hinv] at h0
-    exact hR.ne_zero h0
+    exact Formalism.FourierDecayAlt.P.B2x1.invM_meas.aemeasurable
   have H'm : AEStronglyMeasurable (fun x : Mt k r => ∫ q, θ (Formalism.FourierDecayAlt.C6.actR γ (Matrix.of x) q) •
       (θ' q • Formalism.FourierDecayAlt.D.orbIntegrand D γ F q) ∂D.μSS) μR :=
     I2.integral_prod_right.aestronglyMeasurable
@@ -840,8 +837,12 @@ theorem haar_norm {a : ℕ} {U : Set (B.Mat k a)} {μ : Measure (Mt k a)} (hμ :
     rw [Measure.smul_apply, smul_eq_mul, ENNReal.inv_mul_cancel h0 hfin.ne]
   refine ⟨⟨?_, ?_, ?_, ?_, ?_⟩, hn⟩
   · simp [hμ.conc]
-  · intro a ha; rw [Measure.map_smul, hμ.left a ha]
-  · intro a ha; rw [Measure.map_smul, hμ.right a ha]
+  · intro a ha
+    rw [Measure.map_smul, hμ.left a ha]
+    exact (show Continuous (lmulM a) from continuous_const.matrix_mul continuous_id).measurable.aemeasurable
+  · intro a ha
+    rw [Measure.map_smul, hμ.right a ha]
+    exact (show Continuous (B.rmulF a) from continuous_id.matrix_mul continuous_const).measurable.aemeasurable
   · intro K hK
     rw [Measure.smul_apply, smul_eq_mul]
     exact ENNReal.mul_lt_top hct.lt_top (hμ.finite_compact K hK)
@@ -3580,7 +3581,8 @@ theorem rhoF_meas : Measurable fun x : C2.Lstidx w → ℂ => (Matrix.of.symm (r
       exact Matrix.of.injective (hG.inj ha hb key))
   let f : (C2.Lstidx w → ℂ) → S := fun x => ⟨Matrix.of.symm (rhoF D γ w x), by
     show Matrix.of (Matrix.of.symm (rhoF D γ w x)) ∈ C6.Rset γ
-    simpa using (rhoF_spec D hγ hd hG x).1⟩
+    rw [Equiv.apply_symm_apply]
+    exact (rhoF_spec D hγ hd hG x).1⟩
   have hcomp : S.domRestrict (phi0 D w) ∘ f = id := by
     funext x; exact coordMap_hermRep_leftInverse D hγ hd hG x
   have hf : Measurable f := by
@@ -6566,6 +6568,7 @@ theorem utSplit_mp : MeasurePreserving (utSplit (ph := ph) (n := n)) volume
   have h2 := measurePreserving_sumPiEquivProdPi
     (fun _ : (G.UT ph ⊕ (Fin ph × Fin (n + 1))) ⊕ G.UT (n + 1) => (volume : Measure ℂ))
   have h3 := measurePreserving_sumPiEquivProdPi (fun _ : G.UT ph ⊕ (Fin ph × Fin (n + 1)) => (volume : Measure ℂ))
+  set_option synthInstance.maxHeartbeats 200000 in
   have h4 : MeasurePreserving (MeasurableEquiv.prodCongr ((MeasurableEquiv.sumPiEquivProdPi (fun _ => ℂ)).trans
       (MeasurableEquiv.prodCongr (MeasurableEquiv.refl _) (MeasurableEquiv.curry (Fin ph) (Fin (n + 1)) ℂ)))
       (MeasurableEquiv.refl (G.UT (n + 1) → ℂ)))

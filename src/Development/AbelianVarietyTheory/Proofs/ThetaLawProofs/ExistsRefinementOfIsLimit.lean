@@ -41,13 +41,17 @@ theorem lbIso_of_refinement {X : Scheme.{0}} (L N : LB X) (hL : L.IsLB) (e : N.�
 
 theorem isLB_of_germs {X : Scheme.{0}} (L : LB X) (hc : ∀ y : X, ∃ a, y ∈ L.U a)
     (hg : ∀ a b c (y : X), y ∈ L.U a → y ∈ L.U b → y ∈ L.U c →
-      gm (𝟙 X) y _ (L.g a b) * gm (𝟙 X) y _ (L.g b c) = gm (𝟙 X) y _ (L.g a c)) : L.IsLB where
-  cover := top_le_iff.1 fun y _ => Opens.mem_iSup.2 (hc y)
-  g_self a := unit_ext fun y hy => by
+      gm (𝟙 X) y _ (L.g a b) * gm (𝟙 X) y _ (L.g b c) = gm (𝟙 X) y _ (L.g a c)) : L.IsLB := by
+  refine ⟨top_le_iff.1 (fun y _ => Opens.mem_iSup.2 (hc y)), ?_, ?_⟩
+  · intro a
+    apply unit_ext
+    intro y hy
     refine (gm_res (𝟙 X) y _ hy _).trans ?_
     rw [map_one]
     exact mul_eq_left.1 (hg a a a y hy hy hy)
-  cocycle a b c := unit_ext fun y hy => by
+  · intro a b c
+    apply unit_ext
+    intro y hy
     refine ((map_mul _ _ _).trans (congrArg₂ (· * ·) (gm_res (𝟙 X) y _ hy _)
       (gm_res (𝟙 X) y _ hy _))).trans (Eq.trans ?_ (gm_res (𝟙 X) y _ hy _).symm)
     exact hg a b c y hy.1.1 hy.1.2 hy.2
@@ -248,7 +252,18 @@ theorem lb_descends_to_fg_subring : ∀ (R : Type) [CommRing R] (R₀ : Subring 
     pullback.lift π₁ (f₁ ≫ spMap φ) (by
       rw [H₁.w, Category.assoc, spMap_comp_ring]
       rfl)
-  refine ⟨M.pull q, pull_isLB hM _, h X₁ j q ?_⟩
+  have hMq : (M.pull q).IsLB := by
+    apply isLB_of_germs
+    · intro y
+      obtain ⟨a, ha⟩ := exists_chart hM (q y)
+      exact ⟨fun _ => a, mem_pull.2 ha⟩
+    · intro a b c y ha hb hc
+      change PUnit → M.ι at a b c
+      rw [gm_pull_g M q (𝟙 X₁) y a b ha hb, gm_pull_g M q (𝟙 X₁) y b c hb hc,
+        gm_pull_g M q (𝟙 X₁) y a c ha hc]
+      erw [Category.id_comp]
+      exact gm_cocycle hM q y (mem_pull.1 ha) (mem_pull.1 hb) (mem_pull.1 hc)
+  refine ⟨M.pull q, hMq, h X₁ j q ?_⟩
   show j ≫ q = H'.isoPullback.hom ≫ Spread.bcMap f₀ (Algebra.adjoin R₀ (s.unop : Set R)).val
   apply pullback.hom_ext
   · rw [Category.assoc, pullback.lift_fst, hj₁, Category.assoc, Spread.bcMap_fst,

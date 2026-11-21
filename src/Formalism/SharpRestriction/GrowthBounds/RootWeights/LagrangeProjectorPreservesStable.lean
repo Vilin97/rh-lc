@@ -272,7 +272,7 @@ theorem isotypic_subspaces_span_top (D : Formalism.BasicNotions.D7) (h2 : adm2 D
     · intro y z hy hz
       rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   obtain ⟨W', hc, hW'⟩ := h2 K V n E ⟨hrel, ‹_›, hw⟩ _ hst
-  obtain ⟨t, ht⟩ := CompleteLattice.IsCompactElement.exists_finset_of_le_iSup (Submodule K V)
+  obtain ⟨t, ht⟩ := IsCompactElement.exists_finset_of_le_iSup
     ((Submodule.fg_iff_compact (⊤ : Submodule K V)).1 Module.Finite.fg_top)
     (fun mu => weightSp E mu) (le_of_eq hw.symm)
   have hbot : W' = ⊥ := by

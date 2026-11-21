@@ -43,7 +43,7 @@ private theorem ker_comap_subschemeι_le_ker_subschemeι_comp_inv {X Y : Scheme.
   rw [h] at h2
   exact h2
 
-private theorem exists_iso_subscheme_comap_comm {X Y : Scheme.{u}} (f : X ≅ Y) (I : Y.IdealSheafData) :
+theorem exists_iso_subscheme_comap_comm {X Y : Scheme.{u}} (f : X ≅ Y) (I : Y.IdealSheafData) :
     ∃ g : (I.comap f.hom).subscheme ≅ I.subscheme,
       g.hom ≫ I.subschemeι = (I.comap f.hom).subschemeι ≫ f.hom := by
   have hc := IsClosedImmersion.lift_fac I.subschemeι

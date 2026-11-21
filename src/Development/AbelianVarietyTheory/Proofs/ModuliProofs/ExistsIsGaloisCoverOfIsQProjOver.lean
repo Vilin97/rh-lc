@@ -21,15 +21,16 @@ namespace GlobalTheory.ZM
 def autOfRightAction {X : Scheme.{0}} {Ga : Type} [Group Ga] (ρ : Ga → (X ⟶ X)) (h1 : ρ 1 = 𝟙 X)
     (hm : ∀ a c, ρ (a * c) = ρ a ≫ ρ c) : Ga →* Aut X :=
   MonoidHom.mk' (fun a ↦
-    { hom := ρ a⁻¹
-      inv := ρ a
-      hom_inv_id := by rw [← hm, inv_mul_cancel, h1]
-      inv_hom_id := by rw [← hm, mul_inv_cancel, h1] }) fun a c ↦
-    Iso.ext (show ρ (a * c)⁻¹ = ρ c⁻¹ ≫ ρ a⁻¹ by rw [mul_inv_rev, hm])
+    Aut.of
+      { hom := ρ a⁻¹
+        inv := ρ a
+        hom_inv_id := by rw [← hm, inv_mul_cancel, h1]
+        inv_hom_id := by rw [← hm, mul_inv_cancel, h1] }) fun a c ↦
+    Aut.ext (Iso.ext (show ρ (a * c)⁻¹ = ρ c⁻¹ ≫ ρ a⁻¹ by rw [mul_inv_rev, hm]))
 
 theorem autOfRightAction_hom {X : Scheme.{0}} {Ga : Type} [Group Ga] (ρ : Ga → (X ⟶ X))
     (h1 : ρ 1 = 𝟙 X) (hm : ∀ a c, ρ (a * c) = ρ a ≫ ρ c) (a : Ga) :
-    (autOfRightAction ρ h1 hm a).hom = ρ a⁻¹ := rfl
+    (autOfRightAction ρ h1 hm a).asIso.hom = ρ a⁻¹ := rfl
 
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
@@ -49,8 +50,8 @@ theorem _root_.GlobalTheory.ZM.exists_isGaloisCover_of_isQProjOver :
   intro K _ X s Ga _ _ ρ hq h1 hm hs hfree
   set τ := _root_.GlobalTheory.ZM.autOfRightAction ρ h1 hm with hτ
   haveI : _root_.GlobalTheory.OrbitsInAffineOpens τ := _root_.GlobalTheory.OrbitsInAffineOpens.of_isQProjOver hq τ
-  have hτg : ∀ g : Ga, (τ g).hom = ρ g⁻¹ := fun _ ↦ rfl
-  have hτs : ∀ g : Ga, (τ g).hom ≫ s = s := fun g ↦ hs g⁻¹
+  have hτg : ∀ g : Ga, (τ g).asIso.hom = ρ g⁻¹ := fun _ ↦ rfl
+  have hτs : ∀ g : Ga, (τ g).asIso.hom ≫ s = s := fun g ↦ hs g⁻¹
   have hfreeτ : _root_.GlobalTheory.IsFreeAction τ := by
     refine _root_.GlobalTheory.IsFreeAction.of_isAlgClosed.{0} (fun k _ _ x g hx ↦ ?_)
     exact inv_eq_one.mp (hfree k x g⁻¹ hx)

@@ -47,6 +47,7 @@ theorem UpperTheory.Gal.TranscendenceTraces.splitCover_of :
       RingHom.ker (φ.comp (algebraMap A C)) = ⊥ → RingHom.ker φ = ⊥ := by
     intro Ω _ φ h
     apply Ideal.eq_bot_of_comap_eq_bot (R := A)
+    change Ideal.comap (algebraMap A C) (RingHom.ker φ) = ⊥
     rw [RingHom.comap_ker]
     exact h
   refine ⟨Spec (CommRingCat.of C), Spec.map (CommRingCat.ofHom (algebraMap A C)), (B →ₐ[A] C),

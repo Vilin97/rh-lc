@@ -107,10 +107,6 @@ theorem log_norm_eq_neg_valuation (la : HeightOneSpectrum (𝓞 K)) {a : K} (ha 
     Real.log ‖NumberField.FinitePlace.embedding la a‖ = -((vAdd la a : ℝ) * lnN la) := by
   have h0 : la.valuation K a ≠ 0 := (map_ne_zero _).2 ha
   rw [NumberField.FinitePlace.norm_embedding', WithZeroMulInt.toNNReal_neg_apply _ h0]
-  have h1 : (WithZero.unzero h0).toAdd = WithZero.log (la.valuation K a) := by
-    conv_rhs => rw [← WithZero.coe_unzero h0]
-    rfl
-  rw [h1]
   push_cast
   rw [Real.log_zpow]
   unfold vAdd lnN

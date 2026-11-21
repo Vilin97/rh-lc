@@ -78,7 +78,7 @@ lemma obj_PP_apply (k r : ℕ) (i j : Fin (2 * r + k + 1)) :
   unfold obj_PU
   simp only [add_mul, mul_add, Finset.sum_add_distrib, ite_mul, mul_ite,
     zero_mul, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
-  rw [one_apply]
+  rw [Matrix.one_apply]
   have hi := i.isLt
   have hs' := sig_val k r i
   by_cases hji : j = i

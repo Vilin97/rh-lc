@@ -41,7 +41,7 @@ theorem hom_C (n : ℤ) : IsMultiHomog (MvPolynomial.C n : MRing ι) 0 := by
   intro m hm k
   have : m = 0 := by
     by_contra h
-    rw [MvPolynomial.mem_support_iff, MvPolynomial.coeff_C, if_neg (Ne.symm h)] at hm
+    rw [MvPolynomial.mem_support_iff, MvPolynomial.coeff_C, ite_eq_right (Ne.symm h)] at hm
     exact hm rfl
   simp [this]
 
@@ -97,7 +97,9 @@ theorem aeval_mem [CharZero Ω] (F : IntermediateField ℚ Ω) {σ : Type} (r : 
     (g : MvPolynomial σ ℤ) : aeval r g ∈ F := by
   induction g using MvPolynomial.induction_on with
   | C n => simp
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq =>
+    rw [map_add (f := aeval r)]
+    exact add_mem hp hq
   | mul_X p i hp => rw [map_mul, aeval_X]; exact mul_mem hp (hr i)
 
 theorem aeval_map (i : Ω →+* Ω') {σ : Type} (r : σ → Ω) (g : MvPolynomial σ ℤ) :
@@ -156,7 +158,7 @@ theorem mCoordIdeal_map (i : Ω →+* Ω') (y : (Σ k, ι k) → Ω) :
   exact map_eq_zero_iff _ (MvPolynomial.map_injective i i.injective)
 
 theorem finite_of (i : Ω →+* Ω') (h : FiniteDimensional i.fieldRange Ω') :
-    letI := i.toAlgebra; Module.Finite Ω Ω' := by
+    (letI := i.toAlgebra; Module.Finite Ω Ω') := by
   have h1 : (algebraMap i.fieldRange Ω').Finite := RingHom.finite_algebraMap.2 h
   have h2 : i.rangeRestrictField.Finite := RingHom.Finite.of_surjective _ i.rangeRestrictField_bijective.2
   exact RingHom.Finite.comp h1 h2

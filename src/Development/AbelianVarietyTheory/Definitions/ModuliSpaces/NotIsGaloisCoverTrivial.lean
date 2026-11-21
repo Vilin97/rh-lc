@@ -26,33 +26,38 @@ private lemma spMap_inj_lemma_3 {A B : Type} [CommRing A] [CommRing B] {f g : A 
   exact congrArg CommRingCat.Hom.hom h'
 
 theorem isGaloisCover_field (K L : Type) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] [IsGalois K L] :
-    IsGaloisCover (L ≃ₐ[K] L) (fun σ => spMap (σ : L →+* L)) (spMap (algebraMap K L)) where
-  finite := inferInstance
-  one := by
-    show Spec.map _ = _
+    IsGaloisCover (L ≃ₐ[K] L) (fun σ => spMap (σ : L →+* L)) (spMap (algebraMap K L)) := by
+  refine
+    { finite := inferInstance
+      one := ?_
+      mul := ?_
+      inv := ?_
+      fin := ?_
+      etale := ?_
+      onto := ?_
+      fibre := ?_ }
+  · show Spec.map _ = _
     convert Spec.map_id (CommRingCat.of L)
     rfl
-  mul a c := by
+  · intro a c
     show spMap (((a * c : L ≃ₐ[K] L) : L →+* L)) = _
     rw [← spMap_comp_moduli_spaces]
     rfl
-  inv a := by
+  · intro a
     rw [← spMap_comp_moduli_spaces]
     congr 1
     ext r
     exact a.commutes r
-  fin := by
-    show IsFinite (Spec.map _)
+  · show IsFinite (Spec.map _)
     rw [IsFinite.SpecMap_iff]
     exact RingHom.finite_algebraMap.mpr inferInstance
-  etale := by
-    show Etale (Spec.map _)
+  · show Etale (Spec.map _)
     rw [HasRingHomProperty.Spec_iff (P := @Etale)]
     show (algebraMap K L).Etale
     rw [RingHom.etale_algebraMap]
     exact ⟨Algebra.FormallyEtale.of_isSeparable K L, Algebra.FinitePresentation.of_finiteType.mp inferInstance⟩
-  onto := ⟨fun x => ⟨default, Subsingleton.elim _ _⟩⟩
-  fibre K' _ _ y y' h := by
+  · exact ⟨fun x => ⟨default, Subsingleton.elim _ _⟩⟩
+  · intro K' _ _ y y' h
     obtain ⟨f, rfl⟩ := spMap_surjective' y
     obtain ⟨f', rfl⟩ := spMap_surjective' y'
     rw [← spMap_comp_moduli_spaces, ← spMap_comp_moduli_spaces] at h

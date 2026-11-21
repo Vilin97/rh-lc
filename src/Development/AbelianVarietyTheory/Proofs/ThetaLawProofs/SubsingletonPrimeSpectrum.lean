@@ -152,14 +152,19 @@ theorem isDiff_one : u.IsDiff 0 (1 : epsR ℂ ⟶ A) := by
 
 theorem isDiff_prod : ∀ {n : ℕ} (W : Fin n → Fin g → ℂ) (v : Fin n → (epsR ℂ ⟶ A)),
     (∀ i, IsTan (v i)) → (∀ i, u.IsDiff (W i) (v i)) →
-      IsTan (List.ofFn v).prod ∧ u.IsDiff (∑ i, W i) (List.ofFn v).prod
-  | 0, W, v, _, _ => by
-    rw [List.ofFn_zero, List.prod_nil, Finset.univ_eq_empty, Finset.sum_empty]
-    exact ⟨isTan_one, isDiff_one u⟩
-  | n + 1, W, v, hv, h => by
-    obtain ⟨h₁, h₂⟩ := isDiff_prod (fun i => W i.succ) (fun i => v i.succ) (fun i => hv _) (fun i => h _)
-    rw [List.ofFn_succ, List.prod_cons, Fin.sum_univ_succ]
-    exact ⟨isTan_mul (hv 0) h₁, isDiff_mul u (hv 0) h₁ (h 0) h₂⟩
+      IsTan (List.ofFn v).prod ∧ u.IsDiff (∑ i, W i) (List.ofFn v).prod := by
+  intro n
+  induction n with
+  | zero =>
+      intro W v _ _
+      rw [List.ofFn_zero, List.prod_nil, Finset.univ_eq_empty, Finset.sum_empty]
+      exact ⟨isTan_one, isDiff_one u⟩
+  | succ n ih =>
+      intro W v hv h
+      obtain ⟨h₁, h₂⟩ := ih (fun i => W i.succ) (fun i => v i.succ)
+        (fun i => hv i.succ) (fun i => h i.succ)
+      rw [List.ofFn_succ, List.prod_cons, Fin.sum_univ_succ]
+      exact ⟨isTan_mul (hv 0) h₁, isDiff_mul u (hv 0) h₁ (h 0) h₂⟩
 
 end Unif
 

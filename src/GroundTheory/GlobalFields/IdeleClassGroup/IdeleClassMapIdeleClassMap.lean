@@ -12,7 +12,8 @@ open NumberField IntermediateField
 
 noncomputable section
 
-abbrev FiniteSubfield : Type := {F : IntermediateField ℚ ℚ̄ // FiniteDimensional ℚ F}
+abbrev FiniteSubfield : Type :=
+  {F : IntermediateField ℚ (AlgebraicClosure ℚ) // FiniteDimensional ℚ F}
 
 namespace FiniteSubfield
 

@@ -449,7 +449,7 @@ theorem polOActPull : PolOActPullSt := by
   · rw [← Category.id_comp (act 1), pa, o.map_one, Category.comp_id]
   · rw [← Category.id_comp (act (a * b)), pa, pa, ← Category.id_comp (act b), pa, o.map_mul, Category.assoc]
   · refine Eq.trans ?_ (pm (act a) (act b)).symm
-    rw [← Category.id_comp (act (a + b)), ← Category.id_comp (act a), ← Category.id_comp (act b), pa, pa, pa, o.map_add (f := _)]
+    rw [← Category.id_comp (act (a + b)), ← Category.id_comp (act a), ← Category.id_comp (act b), pa, pa, pa, o.map_add]
     exact MonObj.comp_mul _ _ _
   · obtain ⟨U, hU, t, ht⟩ := o.rosati a (f s)
     let V : (P'.A ⊗ P'.A).left.Opens := (P'.A ⊗ P'.A).hom ⁻¹ᵁ (f ⁻¹ᵁ U)
@@ -505,11 +505,16 @@ theorem cub_pull (hG : GlobalFnsSt) (hD : IsPullDeg φ D D') {T' : Over (Sp R')}
     (fun V _ k => Finset.prod_congr rfl fun I _ => congrArg (fun q => k q ^ thε I) ((cubeMapOf (pull_grp hD)).psum_comm I.down))
     _ e.left he sj (pullGen_isGen _ _ _ _ D.cub.isGen (cubeMapOf (pull_grp hD)).F3) ht (fun y I hI => by
       choose I' hI' using fun χ : (𝟙_ (Over (Sp R'))).left ⟶ D'.P.A.left => exists_chart D'.P.isLB (χ y)
-      have C' : IsCub (cubV D'.cub y I') := isCub_cubV D'.cub hI'
+      have face' : cubV D'.cub y I' 1 1 1 = 1 := by
+        have h := val_corr hI' (D'.cub.face 0) (lift (1 : 𝟙_ (Over (Sp R')) ⟶ D'.P.A) 1).left
+        rw [val_one] at h
+        refine Eq.trans ?_ h
+        refine Eq.trans ?_ (val_cub D'.cub (lift (1 : 𝟙_ (Over (Sp R')) ⟶ D'.P.A) 1) hI' (pzero D'.P.A _) (x2 D'.P.A 0) (x2 D'.P.A 1)).symm
+        congr 1 <;> simp [x2, pzero, Hom.one_def]
       have p := prod_cub (1 : 𝟙_ (Over (Sp R')) ⟶ D'.P.A) 1 1
         (fun q => gw hD.w q y (I (q ≫ (cubeMapOf (pull_grp hD)).F)) (I' q))
       rw [_root_.mul_one, _root_.mul_one] at p
-      refine Eq.trans ?_ ((hv' _ e.left y I I' hI hI').trans (congrArg₂ (· * ·) p (C'.face 1 1))).symm
+      refine Eq.trans ?_ ((hv' _ e.left y I I' hI hI').trans (congrArg₂ (· * ·) p face')).symm
       have o : pushPt (pull_grp hD).1.w (1 : 𝟙_ (Over (Sp R')) ⟶ D'.P.A) = 1 := map_one (pushHom (pull_grp hD) _)
       have q : e.left ≫ (cubeMapOf (pull_grp hD)).F3 =
           (lift (pushPt (pull_grp hD).1.w (1 : 𝟙_ (Over (Sp R')) ⟶ D'.P.A)) (lift (pushPt (pull_grp hD).1.w 1)
@@ -518,7 +523,14 @@ theorem cub_pull (hG : GlobalFnsSt) (hD : IsPullDeg φ D D') {T' : Over (Sp R')}
         fin_cases i <;> simp [e, x3, pushPt, cubeMapOf]
       refine (val_pull hI _ _ _).trans ?_
       rw [q, o]
-      refine ((isCub_cubV D.cub (T := Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap φ)) hI).face 1 1).trans ?_
+      have face' : cubV D.cub (T := Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap φ)) y I 1 1 1 = 1 := by
+        have h := val_corr hI (D.cub.face 0) (lift (1 : Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap φ) ⟶ D.P.A) 1).left
+        rw [val_one] at h
+        refine Eq.trans ?_ h
+        refine Eq.trans ?_ (val_cub D.cub (lift (1 : Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap φ) ⟶ D.P.A) 1) hI (pzero D.P.A _) (x2 D.P.A 0) (x2 D.P.A 1)).symm
+        congr 1 <;> simp [x2, pzero, Hom.one_def]
+      change cubV D.cub (T := Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap φ)) y I 1 1 1 = _
+      rw [face']
       simp) _ (lift x (lift x' y)).left z J hJ
   exact (val_pull hJ _ _ _).symm.trans (key.trans (hv' _ _ z J J' hJ hJ'))
 

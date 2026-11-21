@@ -111,33 +111,33 @@ theorem partModel (hF : FinalLevels L c ell H S R ϖ u j M g G₀ Sz η kind b e
     (hH : ∀ s < ell, H s = Formalism.ExponentWindows.G.HK g G₀ Sz η (kind s) (b s))
     (hne : algebraMap O LL (B.ℓ : O) ≠ 0)
     (hnum : G.HeightNumerics ell j B.ℓ M g G₀ Sz η hh kind b) :
-    G.PrimPartModel L c ell (fun s => hJ G₀ Sz η (kind s) (b s)) H S R ϖ j M g G₀ Sz hh e lam where
-  invX := hX
-  invP := fun s _ => hP s
-  p9 := h9
-  p5h := h5
-  hh_le := fun s hs => by rw [hH s hs, HK_eq]; omega
-  span := hF.span
-  mem := hF.mem
-  pa1b := hF.pa1b
-  locReg := hF.locReg
-  k1b := hF.k1b
-  unitsAt := hF.unitsAt
-  compl := hF.compl
-  flDef := hF.flDef
-  locLIs := hF.locLIs
-  lamInd := hF.lamInd
-  ell_ne := hne
-  num := by
-    obtain ⟨a1, a2, a3, a4, a5, a6⟩ := hnum
-    refine ⟨a1, a2, a3, by rw [hF.η_eq]; exact a4, a5, fun s hs hk => ?_⟩
-    rw [hF.kind_eq s hs] at hk
-    rw [hF.b_eq s hs]
-    exact a6 s hs hk
-  H_eq := fun s hs => by rw [hF.kind_eq s hs, hF.b_eq s hs, hF.η_eq]; exact hH s hs
-  filt := fun s hs => by
-    rw [hF.kind_eq s hs, hF.b_eq s hs, hF.η_eq]
-    exact ⟨hF.filt s hs, hF.jumps s hs⟩
+    G.PrimPartModel L c ell (fun s => hJ G₀ Sz η (kind s) (b s)) H S R ϖ j M g G₀ Sz hh e lam :=
+  { invX := hX
+    invP := fun s _ => hP s
+    p9 := h9
+    p5h := h5
+    hh_le := fun s hs => by rw [hH s hs, HK_eq]; omega
+    span := hF.span
+    mem := hF.mem
+    pa1b := hF.pa1b
+    locReg := hF.locReg
+    k1b := hF.k1b
+    unitsAt := hF.unitsAt
+    compl := hF.compl
+    flDef := hF.flDef
+    locLIs := hF.locLIs
+    lamInd := hF.lamInd
+    ell_ne := hne
+    num := by
+      obtain ⟨a1, a2, a3, a4, a5, a6⟩ := hnum
+      refine ⟨a1, a2, a3, by rw [hF.η_eq]; exact a4, a5, fun s hs hk => ?_⟩
+      rw [hF.kind_eq s hs] at hk
+      rw [hF.b_eq s hs]
+      exact a6 s hs hk
+    H_eq := fun s hs => by rw [hF.kind_eq s hs, hF.b_eq s hs, hF.η_eq]; exact hH s hs
+    filt := fun s hs => by
+      rw [hF.kind_eq s hs, hF.b_eq s hs, hF.η_eq]
+      exact ⟨hF.filt s hs, hF.jumps s hs⟩ }
 
 theorem rd (hF : FinalLevels L c ell H S R ϖ u j M g G₀ Sz η kind b e lam U) (hG : G₀ ≤ g)
     (hS : Sz ≤ g) (hη : η ≤ g) (hb : ∀ s < ell, kind s ≠ Kind.thin → g < b s) : S.RD g :=
@@ -164,18 +164,18 @@ theorem sat (hF : FinalLevels L c ell H S R ϖ u j M g G₀ Sz η kind b e lam U
   exact (Submodule.smul_mem_iff _ hϖ).1 hv
 
 theorem bridgeItems (hF : FinalLevels L c ell H S R ϖ u j M g G₀ Sz η kind b e lam U)
-    (hfr : IsFractionRing O LL) : G.BridgeItems R ϖ η kind b lam U where
-  frac := hfr
-  kind_eq := hF.kind_eq
-  b_eq := hF.b_eq
-  η_eq := hF.η_eq
-  k1b := hF.k1b
-  unitsAt := hF.unitsAt
-  compl := hF.compl
-  locLIs := hF.locLIs
-  lamInd := hF.lamInd
-  lamSpan := hF.lamSpan
-  uIs := hF.uIs
+    (hfr : IsFractionRing O LL) : G.BridgeItems R ϖ η kind b lam U :=
+  { frac := hfr
+    kind_eq := hF.kind_eq
+    b_eq := hF.b_eq
+    η_eq := hF.η_eq
+    k1b := hF.k1b
+    unitsAt := hF.unitsAt
+    compl := hF.compl
+    locLIs := hF.locLIs
+    lamInd := hF.lamInd
+    lamSpan := hF.lamSpan
+    uIs := hF.uIs }
 
 theorem bridge (hϖ : Irreducible ϖ)
     (hF : FinalLevels L c ell H S R ϖ u j M g G₀ Sz η kind b e lam U)

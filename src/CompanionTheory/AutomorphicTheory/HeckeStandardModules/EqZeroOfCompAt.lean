@@ -61,7 +61,7 @@ theorem eq_zero_of_compAt (z : AL L) (hz : ∀ v, compAt L v z = 0) : z = 0 := b
 variable (s : SplitPlace L)
 
 theorem exists_ne : ∃ e : L, s.i (IsCMField.complexConj L e) ≠ s.i e := by
-  obtain ⟨e, h1, h2⟩ := GlobalTheory.SplitSep.exists_sep s
+  obtain ⟨e, h1, h2⟩ := GlobalTheory.SplitSep.exists_sep L s
   exact ⟨e, fun h => by rw [h, h1] at h2; exact lt_irrefl _ h2⟩
 
 theorem eq_zero_of_proj {z : AL L} (hz : ∀ w, w ≠ s.v → compAt L w z = 0) (h1 : s.proj (L := L) z = 0)
@@ -114,14 +114,14 @@ theorem loc_apply (x : GA L n) (i j : Fin n) :
 def Gv (n : ℕ) (T : Set (HeightOneSpectrum (𝓞 L⁺))) : Subgroup (GA L n) :=
   ⨅ w, ⨅ _ : w ∉ T, ((Matrix.GeneralLinearGroup.map (compAt L w)).comp (GA L n).subtype).ker
 
-theorem mem_Gv {T : Set (HeightOneSpectrum (𝓞 L⁺))} {x : GA L n} : x ∈ Gv n T ↔ TrivOutside L T x := by
+theorem mem_Gv {T : Set (HeightOneSpectrum (𝓞 L⁺))} {x : GA L n} : x ∈ Gv n T ↔ TrivOutside (L := L) T x := by
   simp only [Gv, Subgroup.mem_iInf, MonoidHom.mem_ker, TrivOutside, Units.ext_iff]
   rfl
 
 instance Gv_normal (T : Set (HeightOneSpectrum (𝓞 L⁺))) : (Gv (L := L) n T).Normal :=
   Subgroup.normal_iInf_normal fun _ => Subgroup.normal_iInf_normal fun _ => inferInstance
 
-theorem sub_one_supp {v : HeightOneSpectrum (𝓞 L⁺)} {x : GA L n} (hx : TrivOutside L {v} x) (i j : Fin n) {w}
+theorem sub_one_supp {v : HeightOneSpectrum (𝓞 L⁺)} {x : GA L n} (hx : TrivOutside (L := L) {v} x) (i j : Fin n) {w}
     (hw : w ≠ v) : compAt L w (ent x i j - (1 : Matrix (Fin n) (Fin n) (AL L)) i j) = 0 := by
   rw [map_sub, show compAt L w (ent x i j) = _ from congrFun (congrFun (hx w hw) i) j]
   by_cases h : i = j <;> simp [Matrix.one_apply, h]
@@ -134,7 +134,7 @@ theorem one_apply_symm {R : Type*} [CommRing R] (i j : Fin n) :
     (1 : Matrix (Fin n) (Fin n) R) i j = (1 : Matrix (Fin n) (Fin n) R) j i := by
   simp [Matrix.one_apply, eq_comm]
 
-theorem eq_one_of_loc {x : GA L n} (hx : TrivOutside L {s.v} x) (h : s.loc (L := L) n x = 1) : x = 1 := by
+theorem eq_one_of_loc {x : GA L n} (hx : TrivOutside (L := L) {s.v} x) (h : s.loc (L := L) n x = 1) : x = 1 := by
   have h' : s.loc (L := L) n x⁻¹ = 1 := by rw [map_inv, h, inv_one]
   refine Subtype.ext (Units.ext (Matrix.ext fun i j => sub_eq_zero.1 (eq_zero_of_proj s (fun w => sub_one_supp hx i j) ?_ ?_)))
   · show s.proj (L := L) (ent x i j - (1 : Matrix (Fin n) (Fin n) (AL L)) i j) = 0
@@ -144,7 +144,7 @@ theorem eq_one_of_loc {x : GA L n} (hx : TrivOutside L {s.v} x) (h : s.loc (L :=
     rw [map_sub, map_sub, ← ent_inv, ← loc_apply, h', map_one_apply, map_one_apply, one_apply_symm]
     exact sub_self _
 
-theorem exists_loc (g : GL (Fin n) (s.v.adicCompletion L⁺)) : ∃ x : GA L n, TrivOutside L {s.v} x ∧ s.loc (L := L) n x = g := by
+theorem exists_loc (g : GL (Fin n) (s.v.adicCompletion L⁺)) : ∃ x : GA L n, TrivOutside (L := L) {s.v} x ∧ s.loc (L := L) n x = g := by
   choose Z h0 h1 h2 using fun i j : Fin n => exists_pair s
     ((g : Matrix (Fin n) (Fin n) _) i j - (1 : Matrix (Fin n) (Fin n) _) i j)
     (((g⁻¹ : GL (Fin n) _) : Matrix (Fin n) (Fin n) _) j i - (1 : Matrix (Fin n) (Fin n) _) i j)
@@ -204,10 +204,10 @@ theorem loc_mem_KL {x : GA L n} (hx : x ∈ Umax L n) : s.loc (L := L) n x ∈ K
     rw [← map_inv]
     exact proj_le s ((Umax L n).inv_mem hx i j)⟩
 
-theorem mem_Umax_iff {x : GA L n} (hx : TrivOutside L {s.v} x) : x ∈ Umax L n ↔ s.loc (L := L) n x ∈ KL s n := by
+theorem mem_Umax_iff {x : GA L n} (hx : TrivOutside (L := L) {s.v} x) : x ∈ Umax L n ↔ s.loc (L := L) n x ∈ KL s n := by
   refine ⟨loc_mem_KL s, fun h i j => ?_⟩
   obtain ⟨h1, h2⟩ := (mem_KL s).1 h
-  obtain ⟨e, he, he'⟩ := GlobalTheory.SplitSep.exists_sep s
+  obtain ⟨e, he, he'⟩ := GlobalTheory.SplitSep.exists_sep L s
   have hone : ∀ i j, Valued.v ((1 : Matrix (Fin n) (Fin n) (s.v.adicCompletion L⁺)) i j) ≤ 1 := fun i j => by
     by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
   have mem_ALint_of_support (z : AL L) (hz : ∀ w, w ≠ s.v → compAt L w z = 0)
@@ -276,20 +276,20 @@ def locEquiv (n : ℕ) : Gv (L := L) n {s.v} ≃* GL (Fin n) (s.v.adicCompletion
 def emb (n : ℕ) : GL (Fin n) (s.v.adicCompletion L⁺) →* GA L n :=
   (Gv n {s.v}).subtype.comp (locEquiv s n).symm.toMonoidHom
 
-theorem emb_triv (g : GL (Fin n) (s.v.adicCompletion L⁺)) : TrivOutside L {s.v} (emb s n g) :=
+theorem emb_triv (g : GL (Fin n) (s.v.adicCompletion L⁺)) : TrivOutside (L := L) {s.v} (emb s n g) :=
   mem_Gv.1 ((locEquiv s n).symm g).2
 
 theorem loc_emb (g : GL (Fin n) (s.v.adicCompletion L⁺)) : s.loc (L := L) n (emb s n g) = g := (locEquiv s n).apply_symm_apply g
 
-theorem emb_loc {x : GA L n} (hx : TrivOutside L {s.v} x) : emb s n (s.loc (L := L) n x) = x :=
+theorem emb_loc {x : GA L n} (hx : TrivOutside (L := L) {s.v} x) : emb s n (s.loc (L := L) n x) = x :=
   congrArg Subtype.val ((locEquiv s n).symm_apply_apply ⟨x, mem_Gv.2 hx⟩)
 
 theorem conj_emb (x : GA L n) (g : GL (Fin n) (s.v.adicCompletion L⁺)) :
     x * emb s n g * x⁻¹ = emb s n (s.loc (L := L) n x * g * (s.loc (L := L) n x)⁻¹) := by
   rw [← emb_loc s (mem_Gv.1 ((Gv_normal _).conj_mem _ (mem_Gv.2 (emb_triv s g)) x)), map_mul (s.loc (L := L) n), map_mul (s.loc (L := L) n), map_inv (s.loc (L := L) n), loc_emb]
 
-theorem commute_of_ne {v v' : HeightOneSpectrum (𝓞 L⁺)} (h : v ≠ v') {x y : GA L n} (hx : TrivOutside L {v} x)
-    (hy : TrivOutside L {v'} y) : x * y = y * x := by
+theorem commute_of_ne {v v' : HeightOneSpectrum (𝓞 L⁺)} (h : v ≠ v') {x y : GA L n} (hx : TrivOutside (L := L) {v} x)
+    (hy : TrivOutside (L := L) {v'} y) : x * y = y * x := by
   refine Subtype.ext (Units.ext (Matrix.ext fun i j => sub_eq_zero.1 (eq_zero_of_compAt _ fun w => ?_)))
   have : (ent x * ent y).map (compAt L w) = (ent y * ent x).map (compAt L w) := by
     rw [Matrix.map_mul, Matrix.map_mul]

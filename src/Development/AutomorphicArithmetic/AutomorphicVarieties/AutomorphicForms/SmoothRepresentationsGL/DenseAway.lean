@@ -114,7 +114,7 @@ private def sS : RS S →ₙ+* Ad E where
 
 private theorem cont_sS : Continuous (sS S) :=
   Continuous.prodMk (continuous_pi fun w => (continuous_apply _).comp continuous_snd)
-    (continuous_finset_sum _ fun v _ => (cont_sLoc v.1).comp ((continuous_apply v).comp continuous_fst))
+    (continuous_finsetSum _ fun v _ => (cont_sLoc v.1).comp ((continuous_apply v).comp continuous_fst))
 
 private theorem pS_sS (x : RS S) : pS S (sS S x) = x :=
   Prod.ext (funext fun v => sum_mem S x.1 v) rfl

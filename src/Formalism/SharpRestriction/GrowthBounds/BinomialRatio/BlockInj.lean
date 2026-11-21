@@ -182,7 +182,7 @@ theorem ltot_inj : Function.Injective (Ltot (O := O) (r := r) D) := by
   simp only [ppi_base] at h1
   funext i0
   have h2 := congrArg (AddMonoidAlgebra.coeff · (eExp D i0.1.1 i0.1.2)) h1
-  rw [coeff_sum, coeff_zero, Finset.sum_eq_single i0] at h2
+  rw [coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, Finset.sum_eq_single i0] at h2
   · rw [coeff_monomial, if_pos rfl] at h2
     exact Subtype.ext h2
   · intro b _ hb

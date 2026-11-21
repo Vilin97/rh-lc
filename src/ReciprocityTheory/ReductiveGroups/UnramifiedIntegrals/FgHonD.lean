@@ -114,7 +114,7 @@ theorem divBy_C_mul' {x c : K} (hc : ‖c‖ ≤ ‖x‖) {f : PowerSeries K} (h
     _ = ‖x‖ := mul_one _
 
 theorem derivative_C_mul' (c : K) (f : PowerSeries K) :
-    derivative K (C c * f) = C c * derivative K f := by
+    PowerSeries.derivative (C c * f) = C c * PowerSeries.derivative f := by
   rw [← smul_eq_C_mul, ← smul_eq_C_mul, Derivation.map_smul]
 
 theorem QCls.norm_coeff_one {b : K} {D : PowerSeries K} (hD : QCls l Φ A b D) :
@@ -149,7 +149,7 @@ theorem HD.qcls_sub (h : HD σ lam Φ A a) {D : PowerSeries K} (hD : QCls l Φ A
     rw [map_sub, derivative_C_mul', map_sub, coeff_C_mul, sub_eq_add_neg]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hd n) ?_)
     rw [norm_neg, norm_mul]
-    calc ‖c‖ * ‖coeff n (derivative K lam)‖ ≤ 1 * 1 :=
+    calc ‖c‖ * ‖coeff n (PowerSeries.derivative lam)‖ ≤ 1 * 1 :=
           mul_le_mul hc1 (hl n) (norm_nonneg _) zero_le_one
       _ = 1 := one_mul 1
   · have e : (D - C c * lam).subst Φ - atX (D - C c * lam) - atY (D - C c * lam) =
@@ -175,7 +175,7 @@ theorem lemmaQ (hF : FrobField K l σ) (h : HD σ lam Φ A a) {D : PowerSeries K
   have hl0 : l ≠ 0 := hF.prime.ne_zero
   set E : PowerSeries K := D - C (coeff 1 D) * lam with hE
   have hEq : QCls l Φ A a E := h.qcls_sub hD
-  have hE' : DivBy (l : K) (derivative K E) := by
+  have hE' : DivBy (l : K) (PowerSeries.derivative E) := by
     have := hon_deriv h.toLawD (l : K) D hD.add
     rwa [hE, map_sub, derivative_C_mul']
   have h1 : QCls l (MvPowerSeries.map σ Φ) (PowerSeries.map σ A) a (desc l E) :=
@@ -184,7 +184,7 @@ theorem lemmaQ (hF : FrobField K l σ) (h : HD σ lam Φ A a) {D : PowerSeries K
   have hσ := h.map hF
   have hs : ‖coeff 1 (desc l E)‖ ≤ ‖(l : K)‖ :=
     eigen_trick hσ.A0 _ h1.D0 h1.eig (by rw [hσ.coeff_one_A]; exact h.a_ne)
-  have h1' : DivBy (l : K) (derivative K (desc l E)) := by
+  have h1' : DivBy (l : K) (PowerSeries.derivative (desc l E)) := by
     have h2 := hon_deriv hσ.toLawD (l : K) _ h1.add
     have h3 := divBy_add h2 (divBy_C_mul' hs hσ.toLawD.deriv_integral)
     rwa [sub_add_cancel] at h3
