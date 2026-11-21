@@ -27,6 +27,7 @@ theorem continuous_whit : ∀ (E : Type) [Field E] [NumberField E] (a : ℕ) (F 
     (hF.comp ((continuous_uGL.comp continuous_snd).mul continuous_fst)).mul (hψ.comp continuous_snd)
   have e : GlobalTheory.JSW.whit F = fun g => ∫ X, F (uGL X * g) * (GroundTheory.Global.adelicChar E (-supSum 0 X) : ℂ) ∂μ := rfl
   rw [e]
+  set_option synthInstance.maxHeartbeats 200000 in
   refine continuous_of_dominated (bound := fun _ => C) (fun g => ?_) (fun g => ?_) (integrable_const C) ?_
   · have h1 : Continuous fun X : Pos a → Ad E => (g, X) := continuous_const.prodMk continuous_id
     exact (hj.comp h1).aestronglyMeasurable

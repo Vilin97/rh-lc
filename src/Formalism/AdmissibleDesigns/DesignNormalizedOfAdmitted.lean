@@ -334,7 +334,6 @@ theorem design_normalized (S : IdempotentChoiceData D.nd i) (hG : GoodCongruence
   rw [← blockPoly_map, blockPoly_eq, ← hroots x', prod_Icc_fin D.nd D.R.t, Polynomial.map_prod]
   refine Finset.prod_congr rfl (fun c _ => ?_)
   simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
-  try rfl
 
 theorem design_normalized_of_admitted (hA : LargeLevelLemmas.adm51 i r ρ π) (hZ : π ∈ D.nd.Z i) : InertiaElementIdempotentChoice D.nd (rN i r ρ π) π := by
   obtain ⟨S, hG⟩ := hA hZ

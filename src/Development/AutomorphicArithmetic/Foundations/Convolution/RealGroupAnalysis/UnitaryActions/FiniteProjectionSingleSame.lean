@@ -20,7 +20,7 @@ def Cell : Set (G1 F) := {g | IsUnit (g 1 0)}
 theorem nmwn_val (b₁ b₂ : A F) (a : (A F)ˣ) : (nU b₁ * mD a * wW F * nU b₂).1 =
     !![-(b₁ * ((a⁻¹ : (A F)ˣ) : A F)), a - b₁ * ((a⁻¹ : (A F)ˣ) : A F) * b₂;
       -((a⁻¹ : (A F)ˣ) : A F), -(((a⁻¹ : (A F)ˣ) : A F) * b₂)] := by
-  ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]; ring
+  ext i j <;> fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two] <;> simp [nU] <;> ring
 theorem nmwn_mem_cell (b₁ b₂ : A F) (a : (A F)ˣ) : nU b₁ * mD a * wW F * nU b₂ ∈ Cell F := by
   change IsUnit ((nU b₁ * mD a * wW F * nU b₂).1 1 0)
   rw [nmwn_val]; exact (a⁻¹).isUnit.neg

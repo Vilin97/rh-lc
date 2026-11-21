@@ -345,7 +345,7 @@ def IsWDOf (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL n (Qbar l)) (x : WD h) : 
   ∃ t : Ine (F := E) A →* Multiplicative ℤ_[l], IsTameChar t ∧
     ∃ (φ : Weil h) (hφ : deg φ = 1), IsWDOfWith t hφ ι r x
 
-
+variable (h) in
 open Classical in
 def wdOf (_hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL n (Qbar l)) :
     WD h :=
@@ -411,7 +411,7 @@ theorem IsMonodromy.wdOf_spec (ht : IsTameChar t) (hN : IsMonodromy t r N) (hφ 
   exact ⟨a, ha, IsWDOf.wdOf_eq hl ⟨t, ht, φ, hφ, N, a, hN, ha, rfl⟩⟩
 
 theorem wdOf_of_not (H : ¬ ∃ x : WD h, IsWDOf ι r x) :
-    wdOf h hl ι r = WD.mk (WDRep.diag h fun _ : n => 1) := dif_neg H
+    wdOf h hl ι r = WD.mk (WDRep.diag h fun _ : n => 1) := dite_eq_right H
 
 theorem lpDim_wdOf (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL n (Qbar l)) :
     (wdOf h hl ι r).lpDim = Fintype.card n := by

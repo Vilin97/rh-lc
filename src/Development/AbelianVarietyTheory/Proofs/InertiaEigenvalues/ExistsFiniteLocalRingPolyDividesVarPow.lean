@@ -89,6 +89,7 @@ theorem exists_point {ι L : Type} [Fintype ι] [Field L] [Infinite L] (K : Set 
     · intro h0
       apply hm
       rw [← hHm, h0, MvPolynomial.coeff_zero]
+      rfl
     · exact Finset.prod_ne_zero_iff.2 fun q _ => MvPolynomial.X_ne_zero q
   obtain ⟨x, hx⟩ : ∃ x, MvPolynomial.eval x P ≠ 0 := by
     by_contra hcon

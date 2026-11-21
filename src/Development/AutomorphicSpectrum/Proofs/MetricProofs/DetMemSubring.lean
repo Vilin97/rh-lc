@@ -39,7 +39,7 @@ variable (p q) in
 def fullT (s : Ψ ⊕ Ψ) (h : 0 < rk Ψ p q s) : StepIx Ψ p q := ⟨s, ⟨rk Ψ p q s - 1, by omega⟩⟩
 
 theorem fullT_base (K₀ : Type) (s : Ψ ⊕ Ψ) (h : 0 < rk Ψ p q s) (r : Ψ × Fin (p + q)) :
-    blkF Ψ p q K₀ r ≠ some (.inr (fullT p q s h)) := by
+    blkF (Ψ := Ψ) (p := p) (q := q) K₀ r ≠ some (.inr (fullT p q s h)) := by
   intro hr
   unfold blkF at hr
   split_ifs at hr with hp
@@ -61,10 +61,11 @@ theorem fullT_base (K₀ : Type) (s : Ψ ⊕ Ψ) (h : 0 < rk Ψ p q s) (r : Ψ �
     simp [rk] at hx' h
     omega
 
-def baseFull (K₀ : Type) (s : Ψ ⊕ Ψ) (h : 0 < rk Ψ p q s) : NonPluckerBlocks (blkF Ψ p q K₀) :=
+def baseFull (K₀ : Type) (s : Ψ ⊕ Ψ) (h : 0 < rk Ψ p q s) :
+    NonPluckerBlocks (blkF (Ψ := Ψ) (p := p) (q := q) K₀) :=
   ⟨.inr (fullT p q s h), fullT_base K₀ s h⟩
 
-def baseInl {K₀ : Type} (k : K₀) : NonPluckerBlocks (blkF Ψ p q K₀) :=
+def baseInl {K₀ : Type} (k : K₀) : NonPluckerBlocks (blkF (Ψ := Ψ) (p := p) (q := q) K₀) :=
   ⟨.inl k, fun r => by
     classical
     unfold blkF
@@ -73,15 +74,18 @@ def baseInl {K₀ : Type} (k : K₀) : NonPluckerBlocks (blkF Ψ p q K₀) :=
 variable {K₀ : Type} {J₀ : K₀ → Type}
 
 def xcOf [Fintype K₀] (x₀ : (Σ k, J₀ k) → Ω)
-    (c : ∀ k : NonPluckerBlocks (blkF Ψ p q K₀), baseIdx (idx (p := p) (q := q) J₀ n) (blkF Ψ p q K₀) k) : Ω :=
+    (c : ∀ k : NonPluckerBlocks (blkF (Ψ := Ψ) (p := p) (q := q) K₀),
+      baseIdx (idx (p := p) (q := q) J₀ n) (blkF (Ψ := Ψ) (p := p) (q := q) K₀) k) : Ω :=
   ∏ k, x₀ ⟨k, c (baseInl k)⟩
 
-def rowsOf (c : ∀ k : NonPluckerBlocks (blkF Ψ p q K₀), baseIdx (idx (p := p) (q := q) J₀ n) (blkF Ψ p q K₀) k)
+def rowsOf (c : ∀ k : NonPluckerBlocks (blkF (Ψ := Ψ) (p := p) (q := q) K₀),
+      baseIdx (idx (p := p) (q := q) J₀ n) (blkF (Ψ := Ψ) (p := p) (q := q) K₀) k)
     (s : Ψ ⊕ Ψ) : Fin (rk Ψ p q s) → Fin (n s) :=
   fun a => c (baseFull K₀ s (by have := a.2; omega)) (Fin.cast (by have := a.2; show _ = rk Ψ p q s - 1 + 1; omega) a)
 
 def zOf (A : ∀ s, Matrix (Fin (n s)) (Fin (rk Ψ p q s)) Ω)
-    (c : ∀ k : NonPluckerBlocks (blkF Ψ p q K₀), baseIdx (idx (p := p) (q := q) J₀ n) (blkF Ψ p q K₀) k)
+    (c : ∀ k : NonPluckerBlocks (blkF (Ψ := Ψ) (p := p) (q := q) K₀),
+      baseIdx (idx (p := p) (q := q) J₀ n) (blkF (Ψ := Ψ) (p := p) (q := q) K₀) k)
     (s : Ψ ⊕ Ψ) : Ω :=
   ((A s).submatrix (rowsOf c s) id).det
 
@@ -96,7 +100,8 @@ theorem xb_full [Fintype Ψ] [Fintype K₀] [∀ k, Fintype (J₀ k)] (A : ∀ s
 
 theorem xb_rowsOf [Fintype Ψ] [Fintype K₀] [∀ k, Fintype (J₀ k)] (A : ∀ s, Matrix (Fin (n s)) (Fin (rk Ψ p q s)) Ω)
     (x₀ : (Σ k, J₀ k) → Ω)
-    (c : ∀ k : NonPluckerBlocks (blkF Ψ p q K₀), baseIdx (idx (p := p) (q := q) J₀ n) (blkF Ψ p q K₀) k)
+    (c : ∀ k : NonPluckerBlocks (blkF (Ψ := Ψ) (p := p) (q := q) K₀),
+      baseIdx (idx (p := p) (q := q) J₀ n) (blkF (Ψ := Ψ) (p := p) (q := q) K₀) k)
     (s : Ψ ⊕ Ψ) (h : 0 < rk Ψ p q s) :
     xb A x₀ ⟨baseFull K₀ s h, c (baseFull K₀ s h)⟩ = zOf A c s :=
   xb_full A x₀ s h (rowsOf c s)

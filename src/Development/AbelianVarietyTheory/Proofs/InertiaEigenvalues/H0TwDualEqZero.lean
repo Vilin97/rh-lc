@@ -33,7 +33,7 @@ theorem H0_twDual_eq_zero {R Γ M : Type} [CommRing R] [Group Γ] [AddCommGroup 
       simp only [LinearMap.toAddMonoidHom_coe, hmul]
       ring
   apply Subtype.ext
-  apply TDual.ext
+  apply DFunLike.ext
   intro m
   have hm := congrArg (fun k : M →+ R => k m) hzero
   simp only [LinearMap.toAddMonoidHom_coe, AddMonoidHom.zero_apply] at hm

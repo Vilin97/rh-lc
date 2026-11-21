@@ -227,8 +227,9 @@ structure QLocVal (Z : DivX D) : Prop where
   quotientLocalValueFirst : ∀ μ v, Z.quotientLocalValueFirst μ v = (zVal1 (Z.qv μ v) D.R.r D.R.t : ℂ)
 
 theorem isDel_delQ (Tp : TupTied D C nch) (μ : D.what₂.Tup) {P : HeightOneSpectrum (𝓞 D.host.E)}
-    (h : ¬ (Tp.xi μ).UnrAt P) : IsDel P (delQ Tp μ P) where
-  unitary x := by
+    (h : ¬ (Tp.xi μ).UnrAt P) : IsDel P (delQ Tp μ P) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro x
     obtain ⟨n, hn, he⟩ := Tp.xi_fin μ
     have h1 : ((Tp.xi μ).loc P x) ^ n = 1 := by
       have : ((Tp.xi μ) ^ n).loc P x = 1 := by rw [show (Tp.xi μ) ^ n = 1 from he]; rfl
@@ -238,11 +239,13 @@ theorem isDel_delQ (Tp : TupTied D C nch) (μ : D.what₂.Tup) {P : HeightOneSpe
       rw [← norm_pow, ← Units.val_pow_eq_pow_val, h1]; simp
     have h3 : ‖(((Tp.xi μ).loc P x : ℂˣ) : ℂ)‖ = 1 :=
       (pow_eq_one_iff_of_nonneg (norm_nonneg _) hn.ne').mp h2
-    simp [delQ, h3]
-  tame x hx hx1 := by
-    have := Tp.xi_tame μ P x hx (by simpa using hx1)
-    simp [delQ, this]
-  ram h' := h fun x hx => by simpa [delQ] using h' x hx
+    change ‖((((Tp.xi μ).loc P x)⁻¹ : ℂˣ) : ℂ)‖ = 1
+    rw [Units.val_inv_eq_inv_val, norm_inv, h3, inv_one]
+  · intro x hx hx1
+    change ((Tp.xi μ).loc P x)⁻¹ = 1
+    exact inv_eq_one.mpr (Tp.xi_tame μ P x hx (by simpa using hx1))
+  · intro h'
+    exact h fun x hx => inv_eq_one.mp (h' x hx)
 
 theorem isNu_nuP (C : CharFrame D) {P : HeightOneSpectrum (𝓞 D.host.E)} (h : ∀ k, ¬ OverP D.host (D.host.g k) P) (i : ℕ) :
     IsNu P (nuP C P i) := by

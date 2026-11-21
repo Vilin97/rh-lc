@@ -90,12 +90,10 @@ theorem pow_subset_nhds (I : Ideal R) (hI : (⨅ n : ℕ, I ^ n) = ⊥) (V : Set
     · exact SetLike.coe_subset_coe.mpr (Ideal.pow_le_pow_right (le_max_left a b))
     · exact SetLike.coe_subset_coe.mpr (Ideal.pow_le_pow_right (le_max_right a b))
   obtain ⟨n, hn⟩ := hK.elim_directed_family_closed (fun n : ℕ => ((I ^ n : Ideal R) : Set R))
-    (fun n => hcl _) hst hdir
+    (fun n => hcl _) (Set.disjoint_iff_inter_eq_empty.mpr hst) hdir
   refine ⟨n, fun x hx => hWV ?_⟩
   by_contra hxW
-  have hm : x ∈ Wᶜ ∩ ((I ^ n : Ideal R) : Set R) := ⟨hxW, hx⟩
-  rw [hn] at hm
-  exact hm
+  exact Set.disjoint_left.mp hn hxW hx
 
 theorem tendsto_of_mem_pow (I : Ideal R) (hI : (⨅ n : ℕ, I ^ n) = ⊥) (x : ℕ → R) (c : R)
     (hx : ∀ m, x m - c ∈ I ^ (m + 1)) : Tendsto x atTop (𝓝 c) := by

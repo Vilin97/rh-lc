@@ -13,7 +13,7 @@ theorem et_equiv_continuous (F E : Type) [NontriviallyNormedField F] [Nontrivial
     [StarRing E] [Unram F E] (A : Et F E) (r : ℕ) (j : A.L ≃ₗ[E] (Fin r → E)) :
     Continuous j ∧ Continuous j.symm := by
   haveI : LocallyCompactSpace F := Unram.lcF E
-  haveI : CompleteSpace F := IsRightUniformAddGroup.completeSpace_of_weaklyLocallyCompactSpace
+  haveI : CompleteSpace F := IsRightUniformAddGroup.completeSpace_of_weaklyLocallyCompactSpace F
   haveI : Module.Finite F E := Module.finite_of_finrank_eq_succ (Unram.finrank_eq (F := F) (E := E))
   haveI : FiniteDimensional F (Fin r → E) := inferInstance
   haveI : IsTopologicalAddGroup A.L := IsModuleTopology.topologicalAddGroup F A.L

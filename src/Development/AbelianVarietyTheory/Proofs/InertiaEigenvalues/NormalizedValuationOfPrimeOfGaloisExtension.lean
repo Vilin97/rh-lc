@@ -22,7 +22,7 @@ theorem ordIs_of_ordIs_ext : ∀ (F L : Type) [Field F] [ValuativeRel F] [Topolo
     rw [ht, ENat.mul_top (by exact_mod_cast (ramificationIndex_pos F L).ne')] at h
     exact ENat.coe_ne_top E h.symm
   obtain ⟨e, he⟩ := ENat.ne_top_iff_exists.mp hne
-  refine ⟨e, he.symm, ?_, (card_lowerRamificationGroup_zero F L).symm⟩
+  refine ⟨e, he.symm, ?_, (card_lowerRamificationGroup_zero (K := F) (L := L)).symm⟩
   rw [← he] at h
   exact_mod_cast h.symm
 

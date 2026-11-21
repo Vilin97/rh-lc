@@ -125,7 +125,7 @@ theorem isSolvable_of_abelian_tower {M : IntermediateField ℚ_[p] (PadicAlgCl p
     Group.IsSolvable (GalLK p K L) := by
   have h2 : derivedSeries (GK p K) 2 ≤ subG p K L := by
     have h1 : derivedSeries (GK p K) 1 ≤ subG p K M := hM.comm
-    rw [derivedSeries_succ]
+    change ⁅derivedSeries (GK p K) 1, derivedSeries (GK p K) 1⁆ ≤ subG p K L
     refine (Subgroup.commutator_mono h1 h1).trans ?_
     rw [Subgroup.commutator_le]
     intro g₁ hg₁ g₂ hg₂

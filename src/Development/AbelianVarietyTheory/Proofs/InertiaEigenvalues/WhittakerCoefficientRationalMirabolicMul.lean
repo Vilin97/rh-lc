@@ -156,7 +156,7 @@ theorem colAct_rat (γ : GL (Fin a) E) (c : UnipotentBlockColumnIndex a k k → 
 
 theorem continuous_colAct (M : Matrix (Fin a) (Fin a) (Ad E)) :
     Continuous (colAct M : (UnipotentBlockColumnIndex a k k → Ad E) → UnipotentBlockColumnIndex a k k → Ad E) :=
-  continuous_pi fun _ => continuous_finset_sum _ fun s _ => continuous_const.mul (continuous_apply s)
+  continuous_pi fun _ => continuous_finsetSum _ fun s _ => continuous_const.mul (continuous_apply s)
 
 def colEquiv (γ : GL (Fin a) E)
     (hγ : ∀ i l : Fin a, k ≤ (i : ℕ) → γ.val i l = (1 : Matrix (Fin a) (Fin a) E) i l) :

@@ -20,6 +20,8 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.Ar.Flat.ConjPt
 
+open GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar (dualMap)
+
 variable {S : Scheme.{0}} {R : Type} [CommRing R]
 
 theorem spMap_spMap {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (a : B →+* C) (b : A →+* B) :

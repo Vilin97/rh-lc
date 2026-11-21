@@ -129,7 +129,7 @@ theorem total_surjective (Γ K U : Subgroup G) (rep : DoubleCoset.Quotient (Γ :
   refine ⟨⟨DoubleCoset.mk Γ K (Quotient.out q), Quotient.mk'' ((⟨k, hk⟩ : K) : K ⧸ U.subgroupOf K)⟩, ?_⟩
   show orbToCls Γ K U _ (Quotient.mk'' _) = q
   rw [orbToCls_mk, toCls_mk]
-  conv_rhs => rw [← DoubleCoset.out_eq' Γ U q]
+  conv_rhs => rw [← DoubleCoset.out_eq' (H := Γ) (K := U) q]
   refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨h, hh, 1, U.one_mem, ?_⟩
   rw [mul_one, ← mul_assoc]
   exact hx
@@ -187,7 +187,7 @@ def fib {Γ K U : Subgroup G} (hUK : U ≤ K) :
     DoubleCoset.Quotient (Γ : Set G) U ≃
       Σ c : DoubleCoset.Quotient (Γ : Set G) K,
         orbitRel.Quotient (Gam Γ K (Quotient.out c)) (K ⧸ U.subgroupOf K) :=
-  fibRep hUK Quotient.out (DoubleCoset.out_eq' Γ K)
+  fibRep hUK Quotient.out (DoubleCoset.out_eq' (H := Γ) (K := K))
 
 
 end Formalism.MainNotions.Gaps.CC.Fib

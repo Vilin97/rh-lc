@@ -124,15 +124,11 @@ end Cech
 
 section Clauses
 
-open GlobalTheory.IndefiniteRowSideFullHecke.PrimitiveExponentPullback
-
 variable {S : Scheme.{0}} (G : Over S) [GrpObj G] [IsCommMonObj G]
 
 end Clauses
 
 section Triples
-
-open GlobalTheory.IndefiniteRowSideFullHecke.PrimitiveExponentPullback GlobalTheory.HostCompare
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Geo.Tor.Host E}
   {S S' : Scheme.{0}}

@@ -52,7 +52,7 @@ theorem UpperTheory.ConvolutionTheory.R2.M.volD :
     have hone : u (ratS F (σ r) * g) = 1 := by
       rw [← huinv (rt ξ), hu, Set.indicator_of_mem hin]; rfl
     calc (1 : ℝ≥0∞) = u (ratS F (σ r) * g) := hone.symm
-      _ ≤ ∑' r, u (ratS F (σ r) * g) := ENNReal.le_tsum r
+      _ ≤ ∑' r, u (ratS F (σ r) * g) := le_tsum (fun r => u (ratS F (σ r) * g)) r
   have hfs : ∀ g, ∫⁻ b in fundamentalSet F, u (nU b * g) ∂(adeleMeasure F) = u g := by
     intro g
     simp only [huinv]

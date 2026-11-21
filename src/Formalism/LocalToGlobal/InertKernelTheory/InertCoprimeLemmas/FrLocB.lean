@@ -54,6 +54,21 @@ theorem exists_loc_basis {V : Type*} [AddCommGroup V] [Module K V] (p : ℕ) [hp
       ∀ y ∈ A, ∃ s : ℕ, Nat.Coprime s p ∧ ∃ c : Fin n → 𝓞 K, (s : K) • y = ∑ i, ((c i : K)) • b i := by
   classical
   obtain ⟨T, hT⟩ := hfg
+  let U : Finset V := T.image Subtype.val
+  have hU : AddSubgroup.closure (U : Set V) = A := by
+    apply le_antisymm
+    · apply (AddSubgroup.closure_le A).2
+      intro y hy
+      obtain ⟨z, hz, rfl⟩ := Finset.mem_image.mp hy
+      exact z.property
+    · intro y hy
+      have hz : (⟨y, hy⟩ : A) ∈ AddSubsemigroup.closure (T : Set A) := by rw [hT]; trivial
+      have hall : ∀ z : A, z ∈ AddSubsemigroup.closure (T : Set A) → (z : V) ∈ AddSubgroup.closure (U : Set V) := by
+        intro z hz
+        induction hz using AddSubsemigroup.closure_induction with
+        | mem z hz => exact AddSubgroup.subset_closure (Finset.mem_image.mpr ⟨z, hz, rfl⟩)
+        | add x y _ _ hx hy => exact AddSubgroup.add_mem _ hx hy
+      exact hall ⟨y, hy⟩ hz
   have hS := Sp_le (K := K) p
   let R := Localization.subalgebra.ofField K (Sp K p) hS
   haveI : IsDedekindDomain R := IsLocalization.isDedekindDomain (𝓞 K) hS R
@@ -61,8 +76,8 @@ theorem exists_loc_basis {V : Type*} [AddCommGroup V] [Module K V] (p : ℕ) [hp
   haveI : IsPrincipalIdealRing R :=
     IsDedekindDomain.isPrincipalIdealRing_localization_over_prime (𝓞 K) (Ideal.span {(p : ℤ)}) hp0 (Sₚ := R)
   haveI : IsScalarTower R K V := IsScalarTower.of_algebraMap_smul (fun r v => rfl)
-  let M : Submodule R V := Submodule.span R (T : Set V)
-  haveI : Module.Finite R M := Module.Finite.span_of_finite R T.finite_toSet
+  let M : Submodule R V := Submodule.span R (U : Set V)
+  haveI : Module.Finite R M := Module.Finite.span_of_finite R U.finite_toSet
   haveI : Module.IsTorsionFree R V := ⟨fun r hr x y h => by
     have hr0 : (r : K) ≠ 0 := fun h0 => hr.ne_zero (Subtype.ext h0)
     exact smul_right_injective V hr0 h⟩
@@ -74,7 +89,7 @@ theorem exists_loc_basis {V : Type*} [AddCommGroup V] [Module K V] (p : ℕ) [hp
   have key : ∀ x ∈ M, ∃ s : ℕ, Nat.Coprime s p ∧ (s : K) • x ∈ A := by
     intro x hx
     induction hx using Submodule.span_induction with
-    | mem y hy => exact ⟨1, Nat.coprime_one_left p, by rw [Nat.cast_one, one_smul, ← hT]; exact AddSubgroup.subset_closure hy⟩
+    | mem y hy => exact ⟨1, Nat.coprime_one_left p, by rw [Nat.cast_one, one_smul, ← hU]; exact AddSubgroup.subset_closure hy⟩
     | zero => exact ⟨1, Nat.coprime_one_left p, by rw [smul_zero]; exact A.zero_mem⟩
     | add x y _ _ h1 h2 =>
       obtain ⟨s1, hs1, m1⟩ := h1
@@ -105,7 +120,7 @@ theorem exists_loc_basis {V : Type*} [AddCommGroup V] [Module K V] (p : ℕ) [hp
     exact (LinearIndependent.iff_fractionRing (R := R) (K := K)).1 h1
   · intro y hy
     have hyM : y ∈ M := by
-      rw [← hT] at hy
+      rw [← hU] at hy
       exact (AddSubgroup.closure_le M.toAddSubgroup).2 (fun z hz => Submodule.subset_span hz) hy
     have hsum := congrArg Subtype.val (bas.sum_repr ⟨y, hyM⟩)
     simp only [Submodule.coe_sum, Submodule.coe_smul] at hsum
@@ -166,10 +181,26 @@ theorem exists_loc_basis_unif {V : Type*} [AddCommGroup V] [Module K V] (p : ℕ
     ∃ (n : ℕ) (b : Fin n → V), LinearIndependent K b ∧
       (∀ i, ∃ s : ℕ, Nat.Coprime s p ∧ (s : K) • b i ∈ A) ∧
       ∃ S : ℕ, Nat.Coprime S p ∧ ∀ y ∈ A, ∃ c : Fin n → 𝓞 K, (S : K) • y = ∑ i, ((c i : K)) • b i := by
+  classical
   obtain ⟨n, b, hli, hmem, hsp⟩ := exists_loc_basis p A hfg hO
   obtain ⟨T, hT⟩ := hfg
-  obtain ⟨S, hS, hSp⟩ := uniform_den p b T (fun y hy => hsp y (hT ▸ AddSubgroup.subset_closure hy))
-  exact ⟨n, b, hli, hmem, S, hS, fun y hy => hSp y (hT ▸ hy)⟩
+  let U : Finset V := T.image Subtype.val
+  have hU : AddSubgroup.closure (U : Set V) = A := by
+    apply le_antisymm
+    · apply (AddSubgroup.closure_le A).2
+      intro y hy
+      obtain ⟨z, hz, rfl⟩ := Finset.mem_image.mp hy
+      exact z.property
+    · intro y hy
+      have hz : (⟨y, hy⟩ : A) ∈ AddSubsemigroup.closure (T : Set A) := by rw [hT]; trivial
+      have hall : ∀ z : A, z ∈ AddSubsemigroup.closure (T : Set A) → (z : V) ∈ AddSubgroup.closure (U : Set V) := by
+        intro z hz
+        induction hz using AddSubsemigroup.closure_induction with
+        | mem z hz => exact AddSubgroup.subset_closure (Finset.mem_image.mpr ⟨z, hz, rfl⟩)
+        | add x y _ _ hx hy => exact AddSubgroup.add_mem _ hx hy
+      exact hall ⟨y, hy⟩ hz
+  obtain ⟨S, hS, hSp⟩ := uniform_den p b U (fun y hy => hsp y (hU ▸ AddSubgroup.subset_closure hy))
+  exact ⟨n, b, hli, hmem, S, hS, fun y hy => hSp y (hU ▸ hy)⟩
 
 end Gen
 
@@ -247,8 +278,8 @@ theorem norm_le_one_of_int {k : Type*} [NormedField k] [IsUltrametricDist k] {y 
   have hsum : y ^ P.natDegree = -∑ i ∈ Finset.range P.natDegree, (P.coeff i : k) * y ^ i := by
     have h := hP
     rw [hPm.as_sum] at h
-    simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum,
-      Polynomial.eval₂_mul, Polynomial.eval₂_C, Polynomial.eval₂_X_pow, algebraMap_int_eq, eq_intCast] at h
+    simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum,
+      Polynomial.eval₂_mul, Polynomial.eval₂_C, Polynomial.eval₂_X_pow, algebraMap_int_eq, eq_intCast, map_sum] at h
     refine eq_neg_of_add_eq_zero_left ?_
     rw [← h]
     congr 1
@@ -457,7 +488,15 @@ section Form
 
 variable (D : D7)
 
-theorem hK_symm (x y : D.host.E) : G0.hK D x y = G0.cK D (G0.hK D y x) := (G0.herm D).symm y x
+theorem hK_symm (x y : D.host.E) : G0.hK D x y = G0.cK D (G0.hK D y x) := by
+  apply Subtype.ext
+  apply D.host.φ₀.injective
+  show D.host.φ₀ ((Algebra.trace D.host.K D.host.E (x * D.host.conj y) : D.host.K) : D.host.E)
+    = D.host.φ₀ (D.host.conj ((Algebra.trace D.host.K D.host.E (y * D.host.conj x) : D.host.K) : D.host.E))
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [CU.emb_conj, ← FL.sum_tau_trace, ← FL.sum_tau_trace, map_sum]
+  refine Finset.sum_congr rfl fun τ _ => ?_
+  rw [map_mul, map_mul, map_mul, CU.emb_conj, CU.emb_conj, Complex.conj_conj, mul_comm]
 
 theorem hK_smul_left (k : D.host.K) (x y : D.host.E) : G0.hK D (k • x) y = k * G0.hK D x y := by
   simp only [G0.hK, smul_mul_assoc, map_smul, smul_eq_mul]

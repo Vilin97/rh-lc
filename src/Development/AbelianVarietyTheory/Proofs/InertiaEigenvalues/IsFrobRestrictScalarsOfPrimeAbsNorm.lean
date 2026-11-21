@@ -35,7 +35,8 @@ theorem isFrob_restrictScalars_of_prime_absNorm :
     rw [ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem,
       ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem]
     rfl
-  · have e : normV v = normV w := hn
+  · have e : normV v = normV w := by
+      simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using hn
     rw [e]
     exact hσ.2 x hx
 

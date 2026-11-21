@@ -220,7 +220,7 @@ theorem hasFDerivAt_coef (hω : ω.IsUnitary) (h' : ψ ∈ bddForms E a ω) {φ 
     (F' := fun y q => ∑ i, (crd i y).smulRight (chart (lie E a (bas E a i) φ).1 (q.out * x) y * conj (ψ q.out)))
     (bound := fun _ => ∑ i, (‖crd i z‖ + 1) * (C i * D)) hs
     (.of_forall fun y => (integrable_chart μ hω h' h x y).1) (integrable_chart μ hω h' h x z)
-    (integrable_finset_sum _ fun i _ => hi i).1
+    (integrable_finsetSum _ fun i _ => hi i).1
     (.of_forall fun q y hy => (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => by
       rw [ContinuousLinearMap.norm_smulRight_apply, norm_mul, Complex.norm_conj]
       exact mul_le_mul (hy.2 i) (mul_le_mul (GlobalTheory.CuspQuot.norm_chart_le (hC i) _ _) (hD _) (norm_nonneg _)

@@ -425,8 +425,8 @@ theorem uniqC_holds : UniqC Zd u u' F0 what₂ := by
     have hGa : (Matrix.of fun j i => (VS D).hT (v j) (v i)) =
         Ga (CntLocal.Tn u) ((Tu D u' : ℕ) : D.host.E) (Formalism.MainNotions.S.Zhat F0 F'₂.fl) := by
       ext j i
-      rw [ga_gram]
-      rfl
+      change (VS D).hT (v j) (v i) = _
+      exact (ga_gram D F0 F'₂.fl j i).symm
     have hGZ : GZ (CntLocal.Tn u) ((Tu D u' : ℕ) : D.host.E) Z ≠ 0 := by
       have := gz_atMat hZ (D.mem u).A.T (D.mem u').A.T
       intro h0

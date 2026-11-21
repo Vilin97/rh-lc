@@ -81,8 +81,8 @@ theorem optionEquivLeft_rename_some {σ : Type} [Finite σ] (f : MvPowerSeries �
     exact h1
 
 theorem pderiv_coeff_optionEquivLeft {σ : Type} (f : MvPowerSeries (Option σ) C) (n : ℕ) (s : σ) :
-    pderiv C s (PowerSeries.coeff n (optionEquivLeft σ C f)) =
-      PowerSeries.coeff n (optionEquivLeft σ C (pderiv C (some s) f)) := by
+    pderiv s (PowerSeries.coeff n (optionEquivLeft σ C f)) =
+      PowerSeries.coeff n (optionEquivLeft σ C (pderiv (some s) f)) := by
   classical
   ext μ
   rw [coeff_pderiv, coeff_coeff_optionEquivLeft, coeff_coeff_optionEquivLeft, coeff_pderiv]

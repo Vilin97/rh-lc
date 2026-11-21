@@ -153,8 +153,11 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.vfDer :
     exact coord_der (hs _) _ a _ _ (hHm _) (hQ _) i
   choose d hd using hex
   have hact1 : D.act 1 v = v := by
+    have hc (u : A F) : D.co (am E u) 0 = u := by
+      rw [← D.mkE_base, D.co_mkE]
+      rfl
     funext i
-    fin_cases i <;> simp [Dat.act, Dat.unherm, Dat.herm, D.co_mkE]
+    fin_cases i <;> simp [Dat.act, Dat.unherm, Dat.herm, D.co_mkE, hc]
   refine ⟨fun t i => a t i - a0 i, fun i w => d w i, ?_, ?_, ?_, ?_⟩
   · funext i
     simp only [a, a0, hex0, map_one, inv_one, hact1, sub_self]

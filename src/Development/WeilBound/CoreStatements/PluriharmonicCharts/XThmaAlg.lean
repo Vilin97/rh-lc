@@ -14,7 +14,7 @@ open MvPolynomial MeasureTheory Filter Topology ReciprocityTheory.AnForm Recipro
 namespace PositivityTheory.Xgp.thma_alg
 
 noncomputable def pml {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n → σ) → ℝ) :
-    MultilinearMap ℝ (fun _ : Fin n => σ → ℝ) ℝ :=
+    (Fin n → σ → ℝ) →ₘₗ[ℝ] ℝ :=
   ∑ w : Fin n → σ, a w • (MultilinearMap.mkPiAlgebra ℝ (Fin n) ℝ).compLinearMap
     (fun r => LinearMap.proj (w r))
 

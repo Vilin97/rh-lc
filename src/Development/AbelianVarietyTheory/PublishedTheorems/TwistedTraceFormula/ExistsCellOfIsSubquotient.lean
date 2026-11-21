@@ -68,7 +68,7 @@ def relInd (f : ∀ i, (Σ j, c i j) ≃ m i) (ρ : Representation ℂ (∀ i, L
   smInd (relParab k f) ((twist ρ (relDeltaHalf k c)).comp (relProj k f))
 
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] [LinearOrder β] in
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] in
 theorem relEmb_apply (f : ∀ i, (Σ j, c i j) ≃ m i) (g : ∀ i, Levi k (c i)) (i : α) :
     relEmb k f g i = leviEmb k (f i) (g i) := rfl
 

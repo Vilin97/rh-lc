@@ -11,7 +11,6 @@ noncomputable section
 namespace GlobalTheory.ParamRepCompare
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal Polynomial NumberField IsDedekindDomain
-open GlobalTheory.IndefiniteRowSideFullHecke.FrobeniusTwistedRepresentations
 open scoped Pointwise
 
 section Inertia

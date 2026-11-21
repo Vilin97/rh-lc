@@ -209,7 +209,8 @@ theorem _root_.GlobalTheory.ExpImage.solve_mod_pow : ∀ (l : ℕ) [Fact l.Prime
       ring
   let E : PowerSeries ℤ_[l] := mk fun j => (hcoef j).choose
   have hE : T (mk c) - v ^ k * (X * F) = C ((l : ℤ_[l]) ^ s) * E := by
-    ext j
+    apply PowerSeries.ext
+    intro j
     rw [coeff_C_mul, coeff_mk]
     exact (hcoef j).choose_spec
   obtain ⟨u, hu⟩ := hunitv.pow k

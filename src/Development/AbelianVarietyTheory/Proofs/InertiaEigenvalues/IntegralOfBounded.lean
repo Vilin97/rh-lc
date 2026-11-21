@@ -160,7 +160,7 @@ lemma bounded [IsDomain O] [IsDiscreteValuationRing O] [IsModuleTopology ℚ_[l]
     show (l : LL) ^ i * algebraMap O LL ((l : O) ^ (j - i) * p) = (l : LL) ^ j * algebraMap O LL p
     rw [map_mul, map_pow, map_natCast, ← mul_assoc, ← pow_add, Nat.add_sub_cancel' hij]
   obtain ⟨J, hJ⟩ := hK.elim_directed_family_closed (fun j => powImage l LL O j)
-    (fun j => isClosed_powImage ho j) hempty hanti.directed_ge
+    (fun j => isClosed_powImage ho j) (Set.disjoint_iff_inter_eq_empty.mpr hempty) hanti.directed_ge
   refine ⟨J, ?_⟩
   rintro x ⟨p, rfl⟩
   by_cases hx1 : ‖e (algebraMap O LL p)‖ ≤ 1
@@ -205,9 +205,7 @@ lemma bounded [IsDomain O] [IsDiscreteValuationRing O] [IsModuleTopology ℚ_[l]
         nlinarith
     have hyJ : (l : LL) ^ j * algebraMap O LL p ∈ powImage l LL O J :=
       hanti hJj (show _ ∈ powImage l LL O j from ⟨_, ⟨p, rfl⟩, rfl⟩)
-    have hmem : (l : LL) ^ j * algebraMap O LL p ∈ K ∩ powImage l LL O J := ⟨hyK, hyJ⟩
-    rw [hJ] at hmem
-    exact hmem
+    exact Set.disjoint_left.mp hJ hyK hyJ
 
 lemma integral_of_bounded [IsModuleTopology ℚ_[l] LL] [IsTopologicalRing LL]
     (ho : IsOpen (Set.range (algebraMap O LL)))

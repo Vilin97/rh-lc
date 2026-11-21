@@ -63,14 +63,15 @@ theorem isFlagPair_self {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuatio
     {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsPrime] {N : ℕ} {E : Type} [AddCommGroup E] [Module Ω E]
     {B : ChartBundle O (segreVec y) N E} {w : Module.Basis (Fin N) Ω E} {x : Fin N → K → ℤ}
     (h : IsFlagFrame y B w x) :
-    IsFlagPair ϖ y B B w w x x (fun _ => 1) (fun _ => 1) where
-  flag := h
-  flag' := h
-  sameFlag i j hij := by rw [Module.Basis.repr_self, Finsupp.single_apply, if_neg hij.ne]
-  vertical i := by
+    IsFlagPair ϖ y B B w w x x (fun _ => 1) (fun _ => 1) := by
+  refine ⟨h, h, ?_, ?_, ?_⟩
+  · intro i j hij
+    rw [Module.Basis.repr_self, Finsupp.single_apply, ite_eq_right hij.ne]
+  · intro i
     rw [sub_self]
     exact isVerticalDivisor_one ϖ _
-  generic i := by simp [Module.Basis.repr_self]
+  · intro i
+    simp [Module.Basis.repr_self]
 
 end ChernClassOnFlagPair
 

@@ -50,7 +50,7 @@ theorem continuous_compGL (w : InfinitePlace E) : Continuous (compGL (n := n) w)
 
 theorem continuous_htInf : Continuous (htInf : GL (Fin n) (Cinf E) → ℝ) := by
   unfold htInf
-  exact continuous_finset_prod _ fun w _ => continuous_htGL.comp (continuous_compGL w)
+  exact continuous_finsetProd _ fun w _ => continuous_htGL.comp (continuous_compGL w)
 
 theorem htInf_pos' (g : GL (Fin n) (Cinf E)) : 0 < htInf g := by
   unfold htInf

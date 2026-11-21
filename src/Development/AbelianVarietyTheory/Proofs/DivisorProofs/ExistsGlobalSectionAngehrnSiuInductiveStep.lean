@@ -175,6 +175,9 @@ theorem not_kltAt_of_local : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoeth
     · obtain ⟨E', rfl⟩ := (placeEquiv p).surjective E
       have h1 := hKlt.lt_disc hE
       rw [disc_placeEquiv, hdisc₂ E'] at h1
+      change -1 < (E'.formOrd ω : ℚ) + E'.ord (Units.mk0 F0 hF0ne) -
+        E'.ord gG / m - (1 - δ) * (E'.ord fD / mD) -
+        h / l * E'.ord (g * aX ^ l) at h1
       rw [hdψs, hdψ, ← hF0, (placeEquiv p E').formOrd_smul hxi hω0 hF0ne]
       have e1 : (placeEquiv p E').ord ((g : X.functionField) * (aX : X.functionField) ^ l) =
           E'.ord (g * aX ^ l) := by rw [← ord_placeEquiv]; push_cast; rfl

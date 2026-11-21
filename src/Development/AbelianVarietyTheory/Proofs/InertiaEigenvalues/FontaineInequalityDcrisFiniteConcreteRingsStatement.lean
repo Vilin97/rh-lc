@@ -18,7 +18,7 @@ theorem _root_.GlobalTheory.T.fontaine_inequality_dcris_finite_concrete_rings : 
       Module.Finite ↥LL.1 (Dcris (P.PD K) ρ) ∧
         Module.finrank ↥LL.1 (Dcris (P.PD K) ρ) ≤ Module.finrank ℚ_[l] ↥(K0 K) * Module.finrank ↥LL.1 V := by
     intro V _ _ _ _ _ ρ
-    have := GlobalTheory.Per.FontaineBound.isDomain_cris (P.PD K) (GlobalTheory.Per.FontaineBound.isField_of_tied T)
+    have := GlobalTheory.Per.FontaineBound.isDomain_cris (PD := P.PD K) (GlobalTheory.Per.FontaineBound.isField_of_tied T)
     have := (P.PD K).finK₀
     have := LL.2
     refine GlobalTheory.Per.FontaineBound.finite_finrank_le (P.PD K).actB (fun b b' hb h => GlobalTheory.Per.FracInv.tied_frac_invariant l P AI T K b' b hb fun g hg => ?_) ρ

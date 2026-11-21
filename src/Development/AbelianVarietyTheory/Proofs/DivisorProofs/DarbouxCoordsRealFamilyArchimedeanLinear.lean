@@ -30,13 +30,13 @@ theorem eps_smul_gen {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F
     (pairA F 0 1) • z = LinearMap.rTensor E (LinearMap.inr F (Ainf F) (Af F))
       (Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) z) := by
   induction z using TensorProduct.induction_on with
-  | zero => simp; rfl
+  | zero => simp
   | tmul a x =>
     rw [TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul, LinearMap.rTensor_tmul]
     congr 1
     show ((0 : Ainf F) * a.1, (1 : Af F) * a.2) = ((0 : Ainf F), a.2)
     simp
-  | add a b ha hb => rw [smul_add, ha, hb, map_add (f := _), map_add (f := _)]; rfl
+  | add a b ha hb => rw [smul_add, ha, hb, map_add (f := _), map_add (f := _)]
 
 theorem eps_smul_eq (D : D7) (z : AE D) :
     (pairA D.host.F 0 1) • z =
@@ -83,7 +83,7 @@ theorem darboux_real_coords : ∀ (D : D7) (S T : HSp D) (κ : Type) [Fintype κ
         map_add' := by
           intro a b
           funext i
-          rw [map_add (f := _), LinearEquiv.map_add (f := _), hadd]
+          rw [map_add (f := _), LinearEquiv.map_add (e := _), hadd]
           exact map_add (InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F) _ _ }
     have hf : Continuous f := by
       refine continuous_pi fun i => ?_

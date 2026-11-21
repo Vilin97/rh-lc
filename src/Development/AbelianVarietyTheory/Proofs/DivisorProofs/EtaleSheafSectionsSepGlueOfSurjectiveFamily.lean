@@ -19,7 +19,7 @@ theorem sec_sep_glue_of_points : ∀ (R : Type) [CommRing R] (F : Shv R) (U : Sc
     exact ⟨i, v, hv⟩
   have hF : Presieve.IsSheaf Scheme.etaleTopology (F.obj ⋙ forget (ModuleCat.{1} (ULift.{1} R))) := by
     rw [← isSheaf_iff_isSheaf_of_type]
-    exact (Presheaf.isSheaf_iff_isSheaf_forget _ _ (forget _)).1 F.cond
+    exact (Presheaf.isSheaf_iff_isSheaf_forget _ _ (forget _)).1 F.property
   have hfor := (Presieve.isSheafFor_iff_generate _).2 (hF _ hcov)
   rw [Presieve.isSheafFor_arrows_iff_pullbacks] at hfor
   refine ⟨fun x hx => ?_, fun y hy => ?_⟩

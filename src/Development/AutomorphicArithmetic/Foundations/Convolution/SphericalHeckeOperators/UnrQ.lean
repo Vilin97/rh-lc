@@ -33,7 +33,8 @@ theorem UpperTheory.ConvolutionTheory.H.unrQ :
       exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ ((hmem p).2 hπk))
     rw [GroundTheory.LocalField.map_maximalIdeal] at hle
     have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation k))) = 1 := by
-      have hpos := GroundTheory.LocalField.ramificationIndex_pos k E
+      have hpos : 0 < (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation k))) :=
+        GroundTheory.LocalField.ramificationIndex_pos k E
       by_contra hne
       have h2 : 2 ≤ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation k))) := by omega
       have h3 := hle.trans (Ideal.pow_le_pow_right h2)

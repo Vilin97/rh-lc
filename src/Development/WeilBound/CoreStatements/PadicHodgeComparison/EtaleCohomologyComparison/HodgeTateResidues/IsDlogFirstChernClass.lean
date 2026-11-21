@@ -103,8 +103,12 @@ variable {b : Base} (L : b.Fun)
 
 theorem grOk {a a' c : ℕ} (h : a + a' = c) :
     MulOk (thFil L a) (thFil L ((a : ℤ) + 1)) (thFil L a') (thFil L ((a' : ℤ) + 1)) (thFil L c) (thFil L ((c : ℤ) + 1)) where
-  aa T _ _ hx hy := h ▸ dividedPowerFiltration_mul T.δ a a' hx hy
-  ab T _ _ hx hy := h ▸ dividedPowerFiltration_mul T.δ a (a' + 1) hx hy
+  aa T _ _ hx hy := by
+    subst c
+    exact dividedPowerFiltration_mul T.δ a a' hx hy
+  ab T _ _ hx hy := by
+    subst c
+    exact dividedPowerFiltration_mul T.δ a (a' + 1) hx hy
   ba T x y hx hy := by
     have := dividedPowerFiltration_mul T.δ (a + 1) a' hx hy
     rw [show a + 1 + a' = c + 1 by omega] at this

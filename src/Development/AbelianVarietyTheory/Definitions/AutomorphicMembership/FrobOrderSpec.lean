@@ -63,8 +63,33 @@ def pack : LocPack D u Lc (D.what₂.places.resChar w) where
     (jO (D.what₂.places.resChar w) (frobOrder D (D.what₂.places.resChar w)))
   w := (extRec D w (frobOrder D (D.what₂.places.resChar w))).φ
     (wU (D.what₂.places.resChar w) (frobOrder D (D.what₂.places.resChar w)))
-  hS := setting_ext (settingStd (D.what₂.places.resChar w) (frobOrder D (D.what₂.places.resChar w)) h5 h2 he)
-    (extRec D w (frobOrder D (D.what₂.places.resChar w)))
+  hS := by
+    let p := D.what₂.places.resChar w
+    let n := frobOrder D p
+    have h := (settingStd p n h5 h2 he).1
+    let X := extRec D w n
+    exact
+      { prime := h.prime
+        five_le := h.five_le
+        two_le := h.two_le
+        even := h.even
+        frac_alt := h.frac_alt
+        frac_O := X.frac
+        p_unif := h.p_unif
+        res_card := h.res_card
+        eq_sum_herm_smul_frame_of_inW := h.eq_sum_herm_smul_frame_of_inW
+        frob := h.frob
+        period := h.period
+        ι_comp := by
+          intro x
+          change X.φK (iota p n (algebraMap (WQ p n) (QQ p n) x)) = _
+          rw [h.ι_comp, X.comm]
+          rfl
+        finite := X.fin.comp h.finite
+        complete_O := X.complete
+        w_sq := by
+          change X.φ (wU p n) ^ 2 = (p : ORec D w n)
+          rw [← map_pow, h.w_sq, map_natCast] }
   I := I
   ψ := ψ
 

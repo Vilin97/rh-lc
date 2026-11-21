@@ -91,7 +91,7 @@ theorem selfDualMod_loc {J : Matrix (Fin n) (Fin n) E} (hJh : Formalism.UG.IsHer
     IsSelfDualMod (locRing p) (hJ J) (Formalism.HermitianLatticesTheory.loc (K := E) p L).toAddSubgroup := by
   have hu := (Formalism.HermitianLatticesTheory.locDual (𝓞 E) E (Fin n → E) (hJ J) (hJ_symm hJh) star_int L hfg).2.1
     (unimod_of_selfDual hL) p hp
-  exact isSelfDualMod_loc ⟨hfg, hsp⟩ hp.isPrime hu
+  exact isSelfDualMod_loc (Submodule.IsLattice.of_fg E hfg) hp.isPrime hu
 
 theorem gl_of_isom {J : Matrix (Fin n) (Fin n) E} (g : (Fin n → E) ≃ₗ[E] (Fin n → E))
     (hg : ∀ x y, hJ J (g x) (g y) = hJ J x y) :

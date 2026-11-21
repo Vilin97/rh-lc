@@ -112,6 +112,7 @@ theorem btAdm : BtAdm Zd u u' F0 what₂ := by
     congr 1
     push_cast
     field_simp
+  change algebraMap (𝓞 D.host.F) (𝓞 D.host.E) t • x ∈ Ideal.span {((gS D : ℕ) : 𝓞 D.host.E)} • Λ₂
   rw [e]
   exact Submodule.smul_mem_smul (Ideal.mem_span_singleton_self _) htx
 

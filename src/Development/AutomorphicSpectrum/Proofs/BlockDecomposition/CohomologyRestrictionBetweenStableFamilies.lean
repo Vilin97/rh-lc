@@ -316,7 +316,7 @@ theorem bij_of_upTo {M N : Type*} [AddCommGroup M] [AddCommGroup N] [Module R M]
     exact ⟨x, by simpa using hx⟩⟩
 
 theorem onto {Q₁ : ObjectProperty (Thick (nlFun γ p X q κ))} (h : Q₁ ≤ Q') :
-    B.Onto (ObjectProperty.ιOfLE h) fun T : Q'.FullSubcategory => Q₁ T.obj where
+    B.Onto (ObjectProperty.ιOfLE h) (fun T : Q'.FullSubcategory => Q₁ T.obj) where
   full := inferInstance
   faithful := inferInstance
   mem T := T.property

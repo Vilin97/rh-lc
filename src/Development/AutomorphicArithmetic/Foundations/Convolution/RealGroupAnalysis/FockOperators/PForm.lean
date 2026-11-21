@@ -24,7 +24,9 @@ private lemma p_comm {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (O :
     O.p δ w i * O.p δ w' j = O.p δ w' j * O.p δ w i := by
   obtain ⟨c, k, h⟩ := p_form O δ w i
   obtain ⟨c', k', h'⟩ := p_form O δ w' j
-  rw [h, h', smul_mul_smul_comm, smul_mul_smul_comm, (weyl F O w w' k k').1, mul_comm c c']
+  rw [h, h']
+  simp only [smul_mul_assoc, mul_smul_comm, smul_smul]
+  rw [(UpperTheory.ConvolutionTheory.R2.Fo.weyl F O w w' k k').1, mul_comm c c']
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.dComm :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (O : Ops F) w w' i j, O.d w i * O.d w' j = O.d w' j * O.d w i := by
@@ -34,15 +36,15 @@ theorem UpperTheory.ConvolutionTheory.R2.Fo.dComm :
   have key : O.d w i * O.d w' j * W.Om (wW F) = O.d w' j * O.d w i * W.Om (wW F) := by
     calc O.d w i * O.d w' j * W.Om (wW F)
         = O.d w i * (O.d w' j * W.Om (wW F)) := mul_assoc _ _ _
-      _ = O.d w i * (W.Om (wW F) * O.p D.δ w' j) := by rw [dW F E D W O w' j]
+      _ = O.d w i * (W.Om (wW F) * O.p D.δ w' j) := by exact congrArg (fun x => O.d w i * x) (UpperTheory.ConvolutionTheory.R2.Fo.dW F E D W O w' j)
       _ = (O.d w i * W.Om (wW F)) * O.p D.δ w' j := (mul_assoc _ _ _).symm
-      _ = (W.Om (wW F) * O.p D.δ w i) * O.p D.δ w' j := by rw [dW F E D W O w i]
+      _ = (W.Om (wW F) * O.p D.δ w i) * O.p D.δ w' j := by exact congrArg (fun x => x * O.p D.δ w' j) (UpperTheory.ConvolutionTheory.R2.Fo.dW F E D W O w i)
       _ = W.Om (wW F) * (O.p D.δ w i * O.p D.δ w' j) := mul_assoc _ _ _
       _ = W.Om (wW F) * (O.p D.δ w' j * O.p D.δ w i) := by rw [p_comm O D.δ w w' i j]
       _ = (W.Om (wW F) * O.p D.δ w' j) * O.p D.δ w i := (mul_assoc _ _ _).symm
-      _ = (O.d w' j * W.Om (wW F)) * O.p D.δ w i := by rw [dW F E D W O w' j]
+      _ = (O.d w' j * W.Om (wW F)) * O.p D.δ w i := by exact congrArg (fun x => x * O.p D.δ w i) (UpperTheory.ConvolutionTheory.R2.Fo.dW F E D W O w' j).symm
       _ = O.d w' j * (W.Om (wW F) * O.p D.δ w i) := mul_assoc _ _ _
-      _ = O.d w' j * (O.d w i * W.Om (wW F)) := by rw [dW F E D W O w i]
+      _ = O.d w' j * (O.d w i * W.Om (wW F)) := by exact congrArg (fun x => O.d w' j * x) (UpperTheory.ConvolutionTheory.R2.Fo.dW F E D W O w i).symm
       _ = O.d w' j * O.d w i * W.Om (wW F) := (mul_assoc _ _ _).symm
   calc O.d w i * O.d w' j
       = O.d w i * O.d w' j * (W.Om (wW F) * W.Om (wW F)⁻¹) := by rw [hinv, mul_one]

@@ -34,7 +34,7 @@ theorem coeff_mul_disc (l : ℕ) {R : Type} [CommRing R] (ρ : ℝ≥0)
       ∑ p ∈ Finset.HasAntidiagonal.antidiagonal n, toDisc l (0 : R) 1 (coeff p.1 s) * a p.2 y := by
   refine (denseRange_ofPre l (X : R⟦X⟧) ρ).induction_on y
     (isClosed_eq ((hc n).comp (continuous_const.mul continuous_id))
-      (continuous_finset_sum _ fun p _ => continuous_const.mul (hc p.2))) fun z => ?_
+      (continuous_finsetSum _ fun p _ => continuous_const.mul (hc p.2))) fun z => ?_
   obtain ⟨k, b, h⟩ := IsLocalization.Away.surj (l : R⟦X⟧) z
   have h' : (l ^ k : ℕ) • ofPre l (X : R⟦X⟧) ρ z = toDisc l (X : R⟦X⟧) ρ b := by
     have := congrArg (ofPre l (X : R⟦X⟧) ρ) h
@@ -122,7 +122,8 @@ theorem eq_zero_of_dvd : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K)
           simpa using hneg
     rw [eq_neg_of_add_eq_zero_right key.symm, norm_neg] at hsum
     exact hsum.not_ge hm
-  ext1 n
+  apply Polynomial.ext
+  intro n
   apply hinj
   have := ha1 n (r : bk.S)
   rw [hy, hy0, mul_zero, map_zero, Polynomial.coeff_coe] at this

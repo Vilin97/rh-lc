@@ -18,7 +18,7 @@ namespace GlobalTheory
 theorem exists_perm_of_range_eq {t : ℕ} {β : Type} (a a₂ : Fin t → β)
     (ha : Function.Injective a) (ha₂ : Function.Injective a₂) (h : Set.range a = Set.range a₂) :
     ∃ τ : Equiv.Perm (Fin t), a = a₂ ∘ τ := by
-  refine ⟨(Equiv.ofInjective a ha).trans ((Equiv.setCongr h).trans (Equiv.ofInjective a₂ ha₂).symm), ?_⟩
+  refine ⟨(Equiv.ofInjective a ha).trans ((Set.equivOfEq h).trans (Equiv.ofInjective a₂ ha₂).symm), ?_⟩
   funext i
   simp [Equiv.apply_ofInjective_symm]
 

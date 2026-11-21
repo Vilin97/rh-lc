@@ -193,13 +193,27 @@ theorem line_of_single_jump (ν : Representation LL G V) (τ : K →ₐ[Qp] LL) 
     rw [if_neg ha, multV] at this
     exact Submodule.eq_of_le_of_finrank_eq (anti (by omega)) (by omega)
   have up : ∀ a, b + 1 ≤ a → FildR PD ν τ a = FildR PD ν τ (b + 1) := fun a ha => by
-    induction a, ha using Int.le_induction with
-    | base => rfl
-    | succ a ha ih => rw [st a (by omega), ih]
+    obtain ⟨n, rfl⟩ : ∃ n : ℕ, a = b + 1 + n := by
+      refine ⟨(a - (b + 1)).toNat, ?_⟩
+      have := Int.toNat_of_nonneg (show 0 ≤ a - (b + 1) by omega)
+      omega
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      have heq : b + 1 + (↑(n + 1) : ℤ) = (b + 1 + n) + 1 := by omega
+      rw [heq, st _ (by omega), ih]
+      omega
   have down : ∀ a ≤ b, FildR PD ν τ a = FildR PD ν τ b := fun a ha => by
-    induction a, ha using Int.le_induction_down with
-    | base => rfl
-    | pred a ha ih => rw [← st (a - 1) (by omega), sub_add_cancel, ih]
+    obtain ⟨n, rfl⟩ : ∃ n : ℕ, a = b - n := by
+      refine ⟨(b - a).toNat, ?_⟩
+      have := Int.toNat_of_nonneg (show 0 ≤ b - a by omega)
+      omega
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      have heq : b - (↑(n + 1) : ℤ) + 1 = b - n := by omega
+      rw [← st (b - (↑(n + 1) : ℤ)) (by omega), heq, ih]
+      omega
   have bot : FildR PD ν τ (b + 1) = ⊥ := by
     rw [eq_bot_iff]
     intro x hx

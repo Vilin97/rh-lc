@@ -176,8 +176,9 @@ private theorem co_iota (τ : E →+* ℂ) (y : InfiniteAdeleRing F) :
     rfl
   have hv : mk (τ.comp (algebraMap F E)) = (mk τ).comap (algebraMap F E) := (comap_mk _ _).symm
   rw [key _ hv, GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap_apply]
-  have hcont : Continuous (algebraMap ((mk τ).comap (algebraMap F E)).Completion (mk τ).Completion) :=
-    NumberField.LiesOver.continuous_completionMap (v := (mk τ).comap (algebraMap F E)) (w := mk τ)
+  have hcont : Continuous (algebraMap ((mk τ).comap (algebraMap F E)).Completion (mk τ).Completion) := by
+    rw [AbsoluteValue.Completion.algebraMap_eq_of_liesOver]
+    exact AbsoluteValue.Completion.continuous_map ((mk τ).comap (algebraMap F E)).1 (mk τ).1
   have h : (cc (mk τ) τ).comp (algebraMap ((mk τ).comap (algebraMap F E)).Completion (mk τ).Completion) =
       cc ((mk τ).comap (algebraMap F E)) (τ.comp (algebraMap F E)) := by
     refine cc_unique _ _ _ ((continuous_cc _ _).comp hcont) (continuous_cc _ _) fun x => ?_

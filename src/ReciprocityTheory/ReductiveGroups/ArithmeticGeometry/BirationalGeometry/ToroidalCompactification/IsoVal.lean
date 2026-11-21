@@ -74,11 +74,18 @@ theorem cub_w₀ {T' : Over S'} {z : T'.left} {J J'} (hJ : Good L.L z J) (hJ' : 
         ⟨fun ψ => Classical.choose (hcov (ψ q)), fun ψ => Classical.choose_spec (hcov (ψ q))⟩
       obtain ⟨hh, hhd⟩ : ∃ hh : ((A' ⊗ A').left ⟶ A'.left) → ((A' ⊗ A').left.presheaf.stalk q)ˣ,
           ∀ ψ, hh ψ = gw w ψ q (Jq (ψ ≫ Φ)) (J'q ψ) := ⟨_, fun _ => rfl⟩
-      have f1 := (isCub_cubV c (T := Over.mk ((A' ⊗ A').hom ≫ f)) hJq).face
-        (pushPt gp.1.w (fst A' A')) (pushPt gp.1.w (snd A' A'))
+      have f1 : cubV c (T := Over.mk ((A' ⊗ A').hom ≫ f)) q Jq 1
+          (pushPt gp.1.w (fst A' A')) (pushPt gp.1.w (snd A' A')) = 1 := by
+        have e := val_corr hJq (c.face 0) (lift (pushPt gp.1.w (fst A' A')) (pushPt gp.1.w (snd A' A'))).left
+        rw [val_one] at e
+        refine (Eq.trans ?_ (val_cub c (lift (pushPt gp.1.w (fst A' A')) (pushPt gp.1.w (snd A' A'))) hJq (pzero A _) (x2 A 0) (x2 A 1)).symm).trans e
+        congr 1 <;> simp [x2, pzero, Hom.one_def]
       have f2 : val (L := L'.L) (φ := thφ A' (x3 A')) (ε := thε) c'.t
-          (lift (1 : A' ⊗ A' ⟶ A') (lift (fst A' A') (snd A' A'))).left q J'q = 1 :=
-        (isCub_cubV c' (T := A' ⊗ A') hJ'q).face (fst A' A') (snd A' A')
+          (lift (1 : A' ⊗ A' ⟶ A') (lift (fst A' A') (snd A' A'))).left q J'q = 1 := by
+        have e := val_corr hJ'q (c'.face 0) (lift (fst A' A') (snd A' A')).left
+        rw [val_one] at e
+        refine (Eq.trans ?_ (val_cub c' (lift (fst A' A') (snd A' A')) hJ'q (pzero A' _) (x2 A' 0) (x2 A' 1)).symm).trans e
+        congr 1 <;> simp [x2, pzero, Hom.one_def]
       have f3 := prod_cub (T := A' ⊗ A') (1 : A' ⊗ A' ⟶ A') (fst A' A') (snd A' A') hh
       erw [val_pull]
       rw [hE]

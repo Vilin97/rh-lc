@@ -19,12 +19,7 @@ theorem isLattice_map_equiv {E : Type} [Field E] [NumberField E] {V W : Type} [A
     [Module (𝓞 E) W] [IsScalarTower (𝓞 E) E W]
     (e : V ≃ₗ[E] W) (Λ : Submodule (𝓞 E) V) (hΛ : Submodule.IsLattice E Λ) :
     Submodule.IsLattice E (Λ.map (((e : V →ₗ[E] W)).restrictScalars (𝓞 E))) := by
-  refine ⟨hΛ.fg.map _, ?_⟩
-  have h1 : ((Λ.map (((e : V →ₗ[E] W)).restrictScalars (𝓞 E)) : Submodule (𝓞 E) W) : Set W) =
-      (e : V →ₗ[E] W) '' (Λ : Set V) := by
-    simp [Submodule.map_coe]
-  rw [h1, Submodule.span_image, hΛ.span_eq_top, Submodule.map_top]
-  exact LinearMap.range_eq_top.mpr e.surjective
+  exact Submodule.IsLattice.of_fg E (hΛ.fg.map _)
 
 theorem term_lat_isLattice : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word) (Z : LocDat D) {T T' : D.host.E} (F0 : LFlag (D.sp.Y 0) D.R.rS T) (F0' : LFlag (D.sp.Y 0) D.R.rS T') (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (G : GFrames (placesOf Z) D.R.rS D.R.k) (c : GCoord Z F0 F0' FP G) (t : TauC Y u u') (ρ : (VS D).V ≃ₗ[D.host.E] (VS D).V), Submodule.IsLattice D.host.E (c.lat ρ t.lam) := by
   intro D X Y u u' Z T T' F0 F0' FP G c t ρ

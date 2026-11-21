@@ -57,7 +57,7 @@ theorem GlobalTheory.MemLoc.seed_fil : ∀ (l : ℕ) [Fact l.Prime] (C : Core l)
       Units.mul_left_dvd]
   have hanti : ∀ (a b : ℤ), a ≤ b → Per.FilD l b ≤ Per.FilD l a := by
     intro a b hab
-    induction b, hab using Int.le_induction with
+    induction b, hab using Int.leInduction with
     | base => exact le_rfl
     | succ b _ ih => exact (hstep b).trans ih
   refine ⟨h1, hmul, hanti, hlast, ?_, ?_, ?_⟩

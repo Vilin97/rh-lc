@@ -134,7 +134,7 @@ theorem Bm_sec (a : Inv r K) : Bm (sec a) = 1 := by
   ext i j
   simp only [Bm, of_apply, sec_snd]
   rw [show (sec a).1 = companion a.1 from rfl, comp_pow_ev a.1 j j.2]
-  simp [ev, one_apply, Fin.ext_iff, eq_comm]
+  simp [ev, Matrix.one_apply, Fin.ext_iff, eq_comm]
 
 theorem sec_rec (a : Inv r K) (k : ℕ) :
     mom (sec a) (k + r) = -((fun j : Fin r => mom (sec a) (k + j)) ⬝ᵥ a.1) :=
@@ -394,8 +394,8 @@ theorem HC_apply {K : Type} [CommRing K] (a : Inv r K) (i j : Fin r) :
     (hankel a * companion a.1) i j = mom (sec a) ((i : ℕ) + j + 1) := by
   by_cases hj : (j : ℕ) + 1 = r
   · rw [add_assoc, hj, sec_rec]
-    simp [mul_apply, companion, hj, hankel, dotProduct]
-  · rw [mul_apply, Finset.sum_eq_single ⟨(j : ℕ) + 1, by omega⟩]
+    simp [Matrix.mul_apply, companion, hj, hankel, dotProduct]
+  · rw [Matrix.mul_apply, Finset.sum_eq_single ⟨(j : ℕ) + 1, by omega⟩]
     · simp [companion, hj, hankel, add_assoc]
     · intro l _ hl
       have : ¬ ((l : ℕ) = (j : ℕ) + 1) := fun h => hl (Fin.ext h)

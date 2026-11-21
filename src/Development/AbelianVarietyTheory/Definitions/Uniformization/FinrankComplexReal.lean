@@ -13,7 +13,8 @@ namespace GlobalTheory.UU
 namespace SecMod
 variable {F : Type} [CommRing F] {Y : Scheme.{0}} {p : Y ⟶ Spec (CommRingCat.of F)} {N : LB Y}
 
-  DVR.SecOps.sec_ext h
+@[ext] theorem ext {s t : SecMod p N} (h : ∀ j, s.sec.f j = t.sec.f j) : s = t :=
+  DVR.SecOps.sec_ext (s := s.sec) (t := t.sec) h
 
 theorem eq_zero_iff (s : SecMod p N) : s = 0 ↔ ∀ j, s.sec.f j = 0 :=
   ⟨fun h _ => h ▸ rfl, fun h => ext h⟩

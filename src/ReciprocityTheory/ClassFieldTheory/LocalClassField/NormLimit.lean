@@ -32,7 +32,7 @@ variable {G : Type*} [Group G] (H : Subgroup G) [H.Normal] (hH : ∀ a ∈ H, �
 
 include hH in
 theorem exists_twist_subgroup_nl : ∃ I : Subgroup G, ∀ x, x ∈ I ↔ ∃ h ∈ H, x = s * h * s⁻¹ * h⁻¹ := by
-  have hc : ∀ a ∈ H, s * a * s⁻¹ ∈ H := fun a ha => Subgroup.Normal.conj_mem inferInstance a ha s
+  have hc : ∀ a ∈ H, s * a * s⁻¹ ∈ H := fun a ha => (inferInstance : H.Normal).conj_mem a ha s
   refine ⟨{ carrier := {x | ∃ h ∈ H, x = s * h * s⁻¹ * h⁻¹}
             one_mem' := ⟨1, H.one_mem, by group⟩
             mul_mem' := ?_
@@ -56,7 +56,7 @@ theorem exists_of_mem_commutator {G : Type*} [Group G] (H : Subgroup G) [H.Norma
     ∃ h ∈ H, x = s * h * s⁻¹ * h⁻¹ := by
   obtain ⟨I, hI⟩ := exists_twist_subgroup_nl H hH s
   rw [← hI]
-  have hc : ∀ (g : G), ∀ a ∈ H, g * a * g⁻¹ ∈ H := fun g a ha => Subgroup.Normal.conj_mem inferInstance a ha g
+  have hc : ∀ (g : G), ∀ a ∈ H, g * a * g⁻¹ ∈ H := fun g a ha => (inferInstance : H.Normal).conj_mem a ha g
   have key : ∀ (i : ℤ), ∀ h ∈ H, s ^ i * h * (s ^ i)⁻¹ * h⁻¹ ∈ I := by
     intro i
     induction i using Int.induction_on with
@@ -214,7 +214,7 @@ theorem normGrp_eq_of_cyclic_of_ab (hK : FiniteDimensional ℚ_[p] K) {M E : Int
   obtain ⟨g', hg'⟩ : ∃ g' : GK p M, resGK hKM g' = σ * resGK hKM h' * σ⁻¹ := by
     have : σ * resGK hKM h' * σ⁻¹ ∈ (resGK hKM).range := by
       rw [range_resGK]
-      exact Subgroup.Normal.conj_mem inferInstance _ (by rw [← range_resGK hKM]; exact ⟨_, rfl⟩) σ
+      exact (inferInstance : (subG p K M).Normal).conj_mem _ (by rw [← range_resGK hKM]; exact ⟨_, rfl⟩) σ
     exact this
   have hc'' : IsRecip p M L c' g' := IsRecip.conj hK hM hKM σ (stM σ) (stL σ) (stL σ⁻¹) (b := c) (b' := c')
     (congrArg (fun z : KbarMult p => ((Additive.toMul z : (PadicAlgCl p)ˣ) : PadicAlgCl p)) hc') hg' hc

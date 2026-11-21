@@ -29,8 +29,8 @@ def IsPsi {C : Type} [CommRing C] [Algebra O C] [IsCO O C] (χ : ∀ v, Fin n �
 variable (O) in
 structure Integral (C : Type) [CommRing C] [Algebra O C] [IsCO O C] {K : Type} [CommRing K] [Algebra C K]
     (ρ : NRep F n K) : Prop where
-  tr : ∃ t : F.G0 → C, IsTr t ∧ ∀ g, algebraMap C K (t g) = (ρ.r g).trace
-  psi : ∃ χ : ∀ v, Fin n → F.Gv v → C, IsPsi χ ∧ ∀ v i g, algebraMap C K (χ v i g) = ρ.ψ v i g
+  tr : ∃ t : F.G0 → C, IsTr O F n t ∧ ∀ g, algebraMap C K (t g) = (ρ.r g).trace
+  psi : ∃ χ : ∀ v, Fin n → F.Gv v → C, IsPsi O F n χ ∧ ∀ v i g, algebraMap C K (χ v i g) = ρ.ψ v i g
   ze : ∃ ζ : C, res O C ζ = (F.Ψ F.g0 : ResidueField O) - ((F.Ψ F.g0)⁻¹ : (ResidueField O)ˣ) ∧
     ∀ i, (ρ.r F.g0 - ρ.r (F.star F.g0)) i i = (w n i : K) * algebraMap C K ζ
 
@@ -45,7 +45,7 @@ structure Cone (C : Type) [CommRing C] [Algebra O C] [IsCO O C] {K : Type} [Comm
   fg : ∀ i j, (Submodule.span C (Set.range fun g => ρ.r g i j)).FG
   cont : ∀ i j (N : ℕ), IsLocallyConstant fun g =>
     (maximalIdeal C ^ N • Submodule.span C (Set.range fun g => ρ.r g i j)).mkQ (ρ.r g i j)
-  psi : ∃ χ : ∀ v, Fin n → F.Gv v → C, IsPsi χ ∧ ∀ v i g, algebraMap C K (χ v i g) = ρ.ψ v i g
+  psi : ∃ χ : ∀ v, Fin n → F.Gv v → C, IsPsi O F n χ ∧ ∀ v i g, algebraMap C K (χ v i g) = ρ.ψ v i g
 
 
 variable (O) in

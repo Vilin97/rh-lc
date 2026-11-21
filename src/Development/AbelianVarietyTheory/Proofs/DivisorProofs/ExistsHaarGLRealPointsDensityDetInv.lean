@@ -62,7 +62,8 @@ theorem jG_one : jG (1 : glG E a) = toL 1 := rfl
 
 theorem isOpenEmbedding_jG : Topology.IsOpenEmbedding (jG (E := E) (a := a)) := by
   have hO : IsOpen ((glG E a : Subgroup (Matrix (Fin a) (Fin a) (Cinf E))ˣ) : Set (Matrix (Fin a) (Fin a) (Cinf E))ˣ) := by
-    simp
+    change IsOpen (Set.univ : Set (Matrix (Fin a) (Fin a) (Cinf E))ˣ)
+    exact isOpen_univ
   exact GlobalTheory.CuspQuot.isOpenEmbedding_val.comp hO.isOpenEmbedding_subtypeVal
 
 theorem range_jG : Set.range (jG (E := E) (a := a)) = invSet E a := by

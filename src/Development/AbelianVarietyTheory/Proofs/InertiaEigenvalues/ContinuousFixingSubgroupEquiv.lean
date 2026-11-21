@@ -205,7 +205,7 @@ theorem step_of_duality (χ ψ : G →* ℤ_[l]ˣ) (N : ℕ)
       rw [← PadicInt.norm_def, hg]; exact zpow_pos (by exact_mod_cast hl.pos) _
     have ha : (a : ℚ_[l]) ≠ 0 := norm_pos_iff.1 hpos
     refine ⟨⟨(l : ℚ_[l]) ^ N / a, ?_⟩, Subtype.ext ?_⟩
-    · rw [norm_div, div_le_one hpos, ← PadicInt.norm_def, hg, Padic.norm_p_pow]
+    · rw [PadicInt.mem_subring_iff, norm_div, div_le_one hpos, ← PadicInt.norm_def, hg, Padic.norm_p_pow]
     · change (((l : ℤ_[l]) ^ N : ℤ_[l]) : ℚ_[l]) = (a : ℚ_[l]) * ((l : ℚ_[l]) ^ N / a)
       push_cast
       field_simp
@@ -213,7 +213,7 @@ theorem step_of_duality (χ ψ : G →* ℤ_[l]ˣ) (N : ℕ)
       (MonoidHom.id G)), (π ((l : ℤ_[l]) ^ N)) • φ = 0 := by
     intro φ
     apply Subtype.ext
-    apply TDual.ext
+    apply LinearMap.ext
     intro m
     have h1 := congrArg (fun f : TDual (ZMod (l ^ (N + 1))) (ZMod (l ^ (N + 1))) => f m) (φ.2 g₀)
     have h2 : ∀ a : ZMod (l ^ (N + 1)), φ.1 (a * m) = a * φ.1 m := fun a =>
@@ -349,6 +349,9 @@ theorem lift_cocycle_of_duality (hT : Formalism.GaloisCohomology.LocalTateDualit
     push_cast
     rw [hχZ, hψ, hN]
     push_cast at h1 ⊢
+    have hv : padicValRat l ((e : ℚ) + 1) = (padicValNat l (e + 1) : ℤ) := by
+      simpa only [Nat.cast_add, Nat.cast_one, Nat.padicValNat_def] using (padicValRat.of_nat (p := l) (n := e + 1))
+    rw [hv] at h1
     rw [← h1]
     congr 2
     simp only [map_inv, MulEquiv.symm_apply_apply, Subgroup.coe_inv, Units.val_inv_eq_inv_val,

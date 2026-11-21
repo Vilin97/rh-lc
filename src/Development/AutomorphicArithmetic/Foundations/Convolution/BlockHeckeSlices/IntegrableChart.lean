@@ -73,7 +73,7 @@ private theorem Cls.hasFDerivAt (h : Cls ν p w Gd) {F : Sm E a} (hF : Gd F) (g 
     (F' := fun x y => ∑ i, (chart (GlobalTheory.CuspRep.lie E a (Module.finBasis ℝ (Lie E a) i) F).1 (p y * g) x * w y) • coef i x)
     (bound := fun _ => ∑ i, C i * D i) hSy
     (Filter.eventually_of_mem (isOpen_invSet.mem_nhds hx) fun z hz => (h.integrable_chart hF g hz).1)
-    (h.integrable_chart hF g hx) (integrable_finset_sum _ fun i _ => hi i).1
+    (h.integrable_chart hF g hx) (integrable_finsetSum _ fun i _ => hi i).1
     (.of_forall fun y z hz => (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => by
       rw [norm_smul]
       exact mul_le_mul (hC i y z hz) (hD i z hz) (norm_nonneg _) ((norm_nonneg _).trans (hC i y z hz))))

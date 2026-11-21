@@ -14,7 +14,7 @@ theorem GlobalTheory.onto_OC_additive_poly : ∀ (l : ℕ) [Fact l.Prime] (E N :
   have hinj : Function.Injective (fun k : ℕ => l ^ k) := Nat.pow_right_injective hl.out.two_le
   have hcoeff : ∀ j, f.coeff j = (∑ k ∈ Finset.range (E + 1), if l ^ k = j then a k else 0) - (if j = 0 then b else 0) := by
     intro j
-    simp only [hf, coeff_sub, finsetSum_coeff, coeff_monomial, coeff_C]
+    simp only [hf, coeff_sub, finsetSum_coeff, coeff_monomial, coeff_C, Finsupp.single_apply]
   have hcN : f.coeff (l ^ N) = a N := by
     rw [hcoeff]
     have h0 : l ^ N ≠ 0 := pow_ne_zero _ (by omega)

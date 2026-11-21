@@ -78,8 +78,9 @@ theorem exists_lift {l : ℕ} [hl : Fact l.Prime] (Δ : Subgroup ℤ_[l]ˣ) [Fin
         nsmul_eq_mul, mul_one, map_zero] at this
       rw [Nat.cast_pred hl.out.pos] at this
       simp at this
-    · ext
-      simpa using sub_eq_zero.1 h
+    · apply Subtype.ext
+      apply Units.ext
+      exact sub_eq_zero.1 h
   have hbij : Function.Bijective f := by
     refine hinj.bijective_of_nat_card_le ?_
     rw [hΔ, Nat.card_eq_fintype_card, ZMod.card_units]

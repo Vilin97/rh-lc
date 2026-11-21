@@ -309,7 +309,11 @@ theorem RiemLat.EqvBy.trans {R R' R'' : RiemLat E g Λ} {γ γ' : Λ ≃ₗ[𝓞
 
 end Main
 
-theorem exists_isFundSet : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Type) [Fintype Ψ] (j j' n g : ℕ) (Λ : Type) [AddCommGroup Λ] [Module (𝓞 E) Λ] (F : UnivFam E Ψ j j' n g Λ) (Δ : GroupDict F) (Γ : Subgroup (Λ ≃ₗ[𝓞 E] Λ)), F.IsArith Γ → ∃ FF, F.IsFundSet Γ FF := by
+theorem exists_isFundSet : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
+    (Ψ : Type) [Fintype Ψ] (j j' n g : ℕ) (Λ : Type) [AddCommGroup Λ] [Module (𝓞 E) Λ]
+    (F : UnivFam (E := E) Ψ j j' n g Λ)
+    (Δ : _root_.GlobalTheory.CompanionTheory.Ar.Cusp.GroupDict F)
+    (Γ : Subgroup (Λ ≃ₗ[𝓞 E] Λ)), F.IsArith Γ → ∃ FF, F.IsFundSet Γ FF := by
   intro E _ _ _ Ψ _ j j' n g Λ _ _ F Δ Γ hΓ
   classical
   have hXo : IsOpen (ballDom F.q) := isOpen_ballDom F.q

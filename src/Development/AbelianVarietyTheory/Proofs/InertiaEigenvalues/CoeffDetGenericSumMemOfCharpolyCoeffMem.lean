@@ -195,8 +195,11 @@ theorem coeff_det_generic_sum_mem_of_charpoly_coeff_mem :
   funext x
   change _ = Pi.evalRingHom (fun _ : X => O) x (AddMonoidAlgebra.coeff _ d)
   rw [← MvPolynomial.coeff_map, RingHom.map_det]
-  congr 2
-  ext1 i j
-  simp [Matrix.sum_apply, ρ]
+  have heq : (∑ k, (MvPolynomial.X k : MvPolynomial (Fin m) O) • (r x (g k)).map (MvPolynomial.C (σ := Fin m))) =
+      (MvPolynomial.map (Pi.evalRingHom (fun _ : X => O) x)).mapMatrix
+        (∑ k, (MvPolynomial.X k : MvPolynomial (Fin m) (X → O)) • (ρ (g k)).map (MvPolynomial.C (σ := Fin m))) := by
+    ext i j
+    simp [Matrix.sum_apply, ρ]
+  rw [heq]
 
 end GlobalTheory

@@ -50,7 +50,7 @@ theorem exists_common_denom {ι : Type} [Fintype ι] (x : ι → AL L) :
 
 theorem exists_rat (γ : GQ L n) : ∃ g : GL (Fin n) L, g ∈ GQ0 L n ∧
     ∀ i j, (((γ : GAf L n) : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) i j =
-      ((g : Matrix (Fin n) (Fin n) L) i j) ⊗ₜ[L⁺] (1 : AFplus L) := by
+      ((g : Matrix (Fin n) (Fin n) L) i j) ⊗ₜ[NumberField.maximalRealSubfield L] (1 : AFplus L) := by
   have h : ((γ : GAf L n) : GL (Fin n) (AL L)) ∈ (GQ0 L n).map (Matrix.GeneralLinearGroup.map
       (Algebra.TensorProduct.includeLeftRingHom : L →+* AL L)) := Subgroup.mem_subgroupOf.1 γ.2
   obtain ⟨g, hg, he⟩ := Subgroup.mem_map.1 h
@@ -58,8 +58,14 @@ theorem exists_rat (γ : GQ L n) : ∃ g : GL (Fin n) L, g ∈ GQ0 L n ∧
   rw [← he]
   rfl
 
-theorem isIntegral_of_mem (z : L) (hz : z ⊗ₜ[L⁺] (1 : AFplus L) ∈ ALint L) : IsIntegral ℤ z :=
-  Formalism.UG.P.csGlob_int (F := L⁺) z (GlobalTheory.AlgFormsFin.ALint_le L hz)
+theorem isIntegral_of_mem (z : L) (hz : z ⊗ₜ[NumberField.maximalRealSubfield L] (1 : AFplus L) ∈ ALint L) :
+    IsIntegral ℤ z := by
+  have hle : ALint L ≤ Formalism.MainNotions.S.IntAf (NumberField.maximalRealSubfield L) L := by
+    rw [ReciprocityTheory.Aut.ALint, Subring.closure_le]
+    rintro x (⟨y, rfl⟩ | ⟨a, ha, rfl⟩)
+    · exact Subring.subset_closure (Or.inl ⟨⟨(y : L), y, rfl⟩, rfl⟩)
+    · exact Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩)
+  exact Formalism.UG.P.csGlob_int (F := NumberField.maximalRealSubfield L) z (hle hz)
 
 end GlobalTheory.StabFin
 

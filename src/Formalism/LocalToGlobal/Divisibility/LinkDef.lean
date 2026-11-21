@@ -64,7 +64,7 @@ theorem vw_nat_le_of_dvd (w : HeightOneSpectrum (𝓞 K)) {a b : ℕ} (hb : 0 < 
       (FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 K)) (c : K)) := by
     have e : FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 K)) (c : K) =
         ((Ideal.span {(c : 𝓞 K)} : Ideal (𝓞 K)) : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) := by
-      rw [FractionalIdeal.coeIdeal_span_singleton, map_natCast]
+      rw [FractionalIdeal.coeIdeal_span_singleton, map_natCast (algebraMap (𝓞 K) K)]
     rw [e]
     exact FractionalIdeal.count_coe_nonneg K w _
   unfold vw

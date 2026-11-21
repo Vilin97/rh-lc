@@ -205,6 +205,17 @@ theorem listDuality_cpt (hRMF : Formalism.FourierDecayAlt.JC.RadialModuleForm) :
     rw [Lw_dual]
     exact cast_map_pred (len_pm ys w) (fun k u => WordOK (JC.parLev P jF) (p.T.bs jF).z (p.T.bs jF).z'
       (p.T.bs jF).π (p.T.bs jF).π' st p.l0 u) _ hW2
+  have Lw_plus : ∀ (ys : List ℝ) (w : List C.Letter), ∀ l ∈ Lw ys w, l.plus = true := by
+    intro ys w
+    induction ys with
+    | nil => simp [Lw_nil]
+    | cons y ys ih =>
+      intro l hl
+      rw [Lw_cons] at hl
+      rcases List.mem_cons.1 hl with rfl | hl
+      · rfl
+      · obtain ⟨l', hl', rfl⟩ := List.mem_map.1 hl
+        exact ih l' hl'
   have hDK : FormPairingAction.DKHyp (M.qC (JC.parLev P jF)) (Ww ys w) (Lw ys w) := by
     refine ⟨Lw_plus ys w, good_of_adm st _ hOK1.1, good_of_adm st _ hOK2.1, Lw_pairwise w ys hys, ?_⟩
     intro l hl
@@ -228,6 +239,24 @@ theorem listDuality_cpt (hRMF : Formalism.FourierDecayAlt.JC.RadialModuleForm) :
   have hmn : w.length ≤ (KB.plusW ys w).length := by rw [len_plusW]; omega
   have ePlus := hform (KB.plusW ys w) x x Φ Φ ε hε hx hx hΦ hΦ
   have eMinus := hform (KB.minusW ys w) x' x' Φ' Φ' ε hε hx' hx' hΦ' hΦ'
+  have pairJ_rel {X Y : Type} {w : List C.Letter} (R : X → Y → Prop) (c : ℂ)
+      (Ξ1 : (Ix (Fin w.length) → X) → (Ix (Fin w.length) → X) → ℂ)
+      (Ξ2 : (Ix (Fin w.length) → Y) → (Ix (Fin w.length) → Y) → ℂ)
+      (h : ∀ x x' y y', (∀ e, R (x e) (y e)) → (∀ e, R (x' e) (y' e)) → Ξ1 x x' = c * Ξ2 y y') :
+      ∀ (ys : List ℝ) (x : Ix (Fin (KB.plusW ys w).length) → X) (x' : Ix (Fin (KB.minusW ys w).length) → X)
+        (y : Ix (Fin (KB.plusW ys w).length) → Y) (y' : Ix (Fin (KB.minusW ys w).length) → Y),
+        (∀ e, R (x e) (y e)) → (∀ e, R (x' e) (y' e)) → KB.pairJ Ξ1 ys x x' = c * KB.pairJ Ξ2 ys y y' := by
+    intro ys
+    induction ys with
+    | nil => exact h
+    | cons a ys ih =>
+      intro x x' y y' hx hx'
+      show KB.pairJ Ξ1 ys _ _ - KB.pairJ Ξ1 ys _ _ = c * (KB.pairJ Ξ2 ys _ _ - KB.pairJ Ξ2 ys _ _)
+      have a1 := ih (fun e => x (Fin.cons 1 e)) (fun e => x' (Fin.cons 0 e))
+        (fun e => y (Fin.cons 1 e)) (fun e => y' (Fin.cons 0 e)) (fun e => hx _) (fun e => hx' _)
+      have a2 := ih (fun e => x (Fin.cons 0 e)) (fun e => x' (Fin.cons 1 e))
+        (fun e => y (Fin.cons 0 e)) (fun e => y' (Fin.cons 1 e)) (fun e => hx _) (fun e => hx' _)
+      exact (congrArg₂ (· - ·) a1 a2).trans (mul_sub _ _ _).symm
   have ePJ := pairJ_rel (w := w) (fun F Ψ => JC.NiceCoef (p.T.bs jF) ε F ∧ IsPic p.T jF Ψ F) (Cst : ℂ)
     (p.form j hj w) (fun u u' => form μ 0 (P5.act (RRi L st 0 (D.positionted w)) u) u' 0)
     (fun u u' v v' hu hu' => hform w u u' v v' ε hε (fun e => (hu e).1) (fun e => (hu' e).1) (fun e => (hu e).2)

@@ -57,7 +57,7 @@ theorem main : ∀ (H V W : Type) [Group H] [AddCommGroup V] [Module ℂ V] [Add
         · refine le_sSup (a := e f.range) ?_ ?_
           · exact isSimpleModule_iff_isAtom.2 ((e.isAtom_iff _).2 (hatom f hf))
           · exact hy)
-      (by simp) (fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb)
+      (by simp) (fun a b ha hb => by simpa only [map_add] using add_mem ha hb)
     simpa using key
 
   let K : Submodule (MonoidAlgebra ℂ H) ρ.asModule := Submodule.span _ {ρ.asModuleEquiv.symm v}

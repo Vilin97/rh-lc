@@ -102,7 +102,8 @@ theorem archOp_apply_continuous : ∀ {F E : Type} [Field F] [NumberField F] [Fi
   rw [ha]
   have h1 : r₀ (liftV x) = 1 := hr₀1 _ fun i => rfl
   have h2 : (fun i => evI F (liftV x i)) = x := by
-    funext i; simp [evI, liftV]
+    funext i
+    exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
   simp only [tens, h1, h2, mul_one]
 
 end GlobalTheory.ArchLine

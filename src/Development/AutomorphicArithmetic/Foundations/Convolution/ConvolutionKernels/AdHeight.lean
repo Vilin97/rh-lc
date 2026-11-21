@@ -36,18 +36,14 @@ private theorem finAt_adMap {K : Type} [Field K] [NumberField K] {n : ℕ} (σ :
 
 private theorem infDense {K : Type} [Field K] (u : InfinitePlace K) :
     DenseRange (algebraMap K u.Completion) := by
-  have h1 : DenseRange (fun x : WithAbs u.1 => (x : UniformSpace.Completion (WithAbs u.1))) :=
-    UniformSpace.Completion.denseRange_coe
-  have h2 : DenseRange (InfinitePlace.Completion.ofCompletion : _ → u.Completion) :=
-    (InfinitePlace.Completion.equiv u).symm.surjective.denseRange
-  have h3 := h2.comp h1 (InfinitePlace.Completion.continuous_ofCompletion u)
-  refine h3.mono ?_
+  refine (AbsoluteValue.Completion.denseRange_coe u.1).mono ?_
   rintro _ ⟨x, rfl⟩
-  exact ⟨x.ofAbs, rfl⟩
+  exact ⟨x.ofAbs, by rw [InfinitePlace.Completion.algebraMap_apply]⟩
 
 private theorem norm_algebraMap_inf {K : Type} [Field K] (u : InfinitePlace K) (x : K) :
-    ‖algebraMap K u.Completion x‖ = u x :=
-  InfinitePlace.Completion.norm_coe u (WithAbs.toAbs u.1 x)
+    ‖algebraMap K u.Completion x‖ = u x := by
+  rw [InfinitePlace.Completion.algebraMap_apply]
+  exact InfinitePlace.Completion.norm_coe u (WithAbs.toAbs u.1 x)
 
 private theorem norm_infEquiv {K : Type} [Field K] [NumberField K] (σ : K ≃+* K) (u : InfinitePlace K)
     (y : (u.comap σ.toRingHom).Completion) : ‖CT.infEquiv σ u y‖ = ‖y‖ := by

@@ -361,7 +361,7 @@ theorem conv_Kg (x : X.B.I.Gf) :
   have hK : IsCompact X.B.I.Kset := Formalism.L2.SG.Closed.AutKCompact_holds X.B.I
   have hne : X.B.μf (X.B.I.Kg X.B.g) ≠ 0 := hopen.measure_ne_zero X.B.μf ⟨1, one_mem_Kg X⟩
   have hfin : X.B.μf (X.B.I.Kg X.B.g) ≠ ⊤ :=
-    (lt_of_le_of_lt (measure_mono fun z hz => hz.1) hK.measure_lt_top).ne
+    (lt_of_le_of_lt (measure_mono (show X.B.I.Kg X.B.g ⊆ X.B.I.Kset from fun z hz => hz.1)) hK.measure_lt_top).ne
   have hV0 : (V : ℂ) ≠ 0 := by
     rw [hV]; exact_mod_cast (ENNReal.toReal_pos hne hfin).ne'
   set T : Set X.B.I.Gf := (fun y => x⁻¹ * y) ⁻¹' X.B.I.Kg X.B.g with hT

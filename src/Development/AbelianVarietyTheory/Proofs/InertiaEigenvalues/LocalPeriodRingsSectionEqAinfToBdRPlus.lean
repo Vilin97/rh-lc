@@ -46,8 +46,8 @@ theorem exists_om_of_pow_eq_self (l : ℕ) [Fact l.Prime] {n : ℕ} (hn : 2 ≤ 
     ∃ x : Om l, algebraMap (Om l) ℂ_[l] x = c := by
   have hs : (Polynomial.X ^ n - Polynomial.X : Polynomial (Om l)).Splits := IsAlgClosed.splits _
   have h0 : (Polynomial.X ^ n - Polynomial.X : Polynomial (Om l)) ≠ 0 := fun h => by
-    have := congrArg (Polynomial.coeff · 1) h
-    simp [Polynomial.coeff_X_pow, show (1 : ℕ) ≠ n by omega] at this
+    have := congrArg (fun p : Polynomial (Om l) => p.coeff n) h
+    simp [Polynomial.coeff_X_pow, Polynomial.coeff_X, show (1 : ℕ) ≠ n by omega] at this
   obtain ⟨x, hx⟩ := hs.mem_range_of_isRoot h0 (i := algebraMap (Om l) ℂ_[l]) (x := c) (by simp [hc])
   exact ⟨x, hx⟩
 

@@ -157,7 +157,9 @@ theorem hxPrk_smul (i : ℕ) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) (r : �
     congr 1
     exact Subtype.ext (((CF.crdN D i hi : (D.sp.X i).V →ₗ[D.host.E] (Fin (D.R.N i) → D.host.E)).restrictScalars
       (𝓞 D.host.E)).map_smul r z.1)
-  · unfold hxPrk; rw [dite_eq_right hi]; simp
+  · unfold hxPrk; rw [dite_eq_right hi]
+    change (0 : (D.fm u).lk i v c) = A.res v r • 0
+    exact (smul_zero _).symm
 
 theorem hxPrk_ker (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) (z : ↥(CH.Lk D u (A.Pv v) i c)) :
     hxPrk A P i v c z = 0 ↔ z.1 ∈ A.Pv v • CH.Lk D u (A.Pv v) i c := by

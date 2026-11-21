@@ -54,8 +54,7 @@ theorem isIntB_of_trace_mem :
       algebraMap (v.adicCompletionIntegers ℚ) Q (u j) := by
     have h1 := congrArg (fun x => B.repr x j) hu
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finsupp.coe_finset_sum,
-      Finset.sum_apply, Module.Basis.repr_self, Finsupp.single_apply, hdet] at h1
+      simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finset.sum_apply', Module.Basis.repr_self, Finsupp.single_apply, hdet] at h1
     rw [Finset.sum_eq_single j (fun k _ hk => by simp [hk]) (by simp)] at h1
     simp only [if_true, mul_one] at h1
     have hne : algebraMap ℚ Q (Algebra.discr ℚ bL) ≠ 0 := (map_ne_zero _).2 hd

@@ -87,6 +87,8 @@ theorem ginf_mem_closure {θ : Datum.InfFam D} (hθ : IsInfFam θ) {a : GA D V} 
         apply Eqv.matA_inj D V
         rw [Eqv.matA_famH, Eqv.matA_one]
         convert Eqv.famM_one D V using 2
+        funext τ
+        simp
       rw [e]
       exact Submonoid.one_mem _
     | insert τ0 s hτ0 ih =>

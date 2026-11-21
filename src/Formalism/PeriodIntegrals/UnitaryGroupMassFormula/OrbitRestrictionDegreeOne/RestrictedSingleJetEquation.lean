@@ -76,8 +76,8 @@ theorem restricted_single_jet_equation (p : ℕ) [Fact p.Prime] (hn : nP D p = 1
         else C (ep z) * X ((0 : ZMod 1), a, b)) (be z) := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hSdef, map_sum, Finset.sum_eq_single z]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_smul, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_smul, map_sum]
       congr 1
       refine Finset.sum_congr rfl (fun a _ => ?_)
       set_option synthInstance.maxHeartbeats 100000 in

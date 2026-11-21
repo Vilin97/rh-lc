@@ -26,7 +26,8 @@ theorem _root_.GlobalTheory.LenUnitPow.natCast_ne_zero : (l : O) ≠ 0 := by
     rw [hbot, Ideal.mem_bot] at hl
     exact (Nat.cast_ne_zero.2 (Fact.out : l.Prime).ne_zero) hl
   have hbot : (⊥ : Ideal O).IsMaximal := by
-    refine Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ_[l]) _ ?_
+    refine Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := ℤ_[l]) (⊥ : Ideal O) ?_
+    change (Ideal.comap (algebraMap ℤ_[l] O) ⊥).IsMaximal
     rwa [← RingHom.ker_eq_comap_bot]
   exact IsDiscreteValuationRing.not_a_field O (IsLocalRing.eq_maximalIdeal hbot).symm
 
@@ -36,7 +37,7 @@ variable (l : ℕ) [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscre
 theorem _root_.GlobalTheory.LenUnitPow.natCast_not_isUnit : ¬ IsUnit (l : O) := by
   intro h
   have hm : (Ideal.comap (algebraMap ℤ_[l] O) (IsLocalRing.maximalIdeal O)).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := ℤ_[l]) (IsLocalRing.maximalIdeal O)
   have hl : (l : ℤ_[l]) ∈ Ideal.comap (algebraMap ℤ_[l] O) (IsLocalRing.maximalIdeal O) := by
     rw [IsLocalRing.eq_maximalIdeal hm, PadicInt.maximalIdeal_eq_span_p]
     exact Ideal.subset_span rfl

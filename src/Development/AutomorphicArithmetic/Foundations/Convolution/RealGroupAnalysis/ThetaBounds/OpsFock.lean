@@ -33,7 +33,9 @@ private lemma finPart_shift (w : InfinitePlace F) (i : Fin 4) (v : V4 F) (t : �
   funext j
   by_cases h : j = i
   · subst h
-    simp [finPartPi, placeEmbedReal_finitePart]
+    simp only [finPartPi, Pi.add_apply, Pi.single_eq_same]
+    change (v j).2 + (Fo.at1 w t).2 = (v j).2
+    rw [placeEmbedReal_finitePart, add_zero]
   · simp [finPartPi, Pi.single_eq_of_ne h]
 
 private lemma coord_shift (w w' : InfinitePlace F) (i j : Fin 4) (v : V4 F) (t : ℝ) :

@@ -343,7 +343,7 @@ theorem hilbertPoly_ne_zero {P : Ideal T} [hP : P.IsPrime] (hI : P.IsHomogeneous
   have := (isHilbertPoly hx hfin hI).finite n
   have hbot : gradedQuotPiece 𝒜 P n = ⊥ := by simpa [h0] using hn
   have hmem : Ideal.Quotient.mk P (x i ^ n) ∈ gradedQuotPiece 𝒜 P n :=
-    ⟨x i ^ n, by simpa using SetLike.pow_mem_graded n (hx i), rfl⟩
+    ⟨x i ^ n, by simpa [extendGradingByZero] using SetLike.pow_mem_graded n (hx i), rfl⟩
   rw [hbot, Submodule.mem_bot, Ideal.Quotient.eq_zero_iff_mem] at hmem
   exact h (hP.mem_of_pow_mem _ hmem)
 

@@ -42,8 +42,11 @@ private theorem resMap_refl (K : Type) [Field K] [NumberField K] (n : ℕ) (g : 
 
 private theorem resMap_cont (K : Type) [Field K] [NumberField K] (n : ℕ) (σ : K ≃+* K) :
     Continuous (resMap K n σ) := by
-  refine Continuous.subtype_mk (Continuous.comp ?_ continuous_subtype_val) _
-  exact Continuous.units_map _ (continuous_id.matrix_map (Formalism.L2.Host.CT.continuous_adMap σ))
+  apply Continuous.subtype_mk _ _
+  exact (show Continuous (Matrix.GeneralLinearGroup.map (Formalism.L2.Host.CT.adMap σ) :
+      AdelicGLn.AdelicGL K n → AdelicGLn.AdelicGL K n) from
+    (continuous_id.matrix_map (Formalism.L2.Host.CT.continuous_adMap σ)).units_map _).comp
+      continuous_subtype_val
 
 private theorem resMap_iter (K : Type) [Field K] [NumberField K] (n : ℕ) (σ : K ≃+* K) (m : ℕ) (g : G1 K n) :
     (resMap K n σ)^[m] g = resMap K n (σ ^ m) g := by

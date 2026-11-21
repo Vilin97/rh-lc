@@ -27,7 +27,9 @@ theorem kappa_one_tmul (F : FinIso L n) (a : AFplus L) :
     F.κ (1 ⊗ₜ a) = GlobalTheory.AdeleBaseChange.adMap (maximalRealSubfield L) L a := by
   refine FiniteAdeleRing.ext _ fun w ↦ ?_
   obtain ⟨i, hi, hia⟩ := F.right w (w.under (𝓞 (maximalRealSubfield L))) rfl
-  rw [hia, GlobalTheory.DefU.ClassFin.adMap_eq_complMap rfl]
+  rw [hia]
+  change i (a (w.under (𝓞 (maximalRealSubfield L)))) =
+    GlobalTheory.LFun.complMap rfl (a (w.under (𝓞 (maximalRealSubfield L))))
   refine congrFun ((HeightOneSpectrum.denseRange_algebraMap (maximalRealSubfield L)
     (w.under (𝓞 (maximalRealSubfield L)))).equalizer hi
     (GlobalTheory.LFun.InertChart.continuous_complMap rfl) (funext fun k ↦ ?_)) _

@@ -117,7 +117,12 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
 theorem _root_.GlobalTheory.TrivCrys.isCrys_of_trivial {V : Type} [AddCommGroup V] [Module Qp V] [Module LL V]
     [IsScalarTower Qp LL V] [FiniteDimensional Qp V] (ρ : Representation LL G V)
     (hρ : ∀ g x, ρ g x = x) : _root_.Formalism.WeaklyAdmissibleFiltrations.IsCrys PD ρ := by
-  haveI := _root_.GlobalTheory.Survey.CrystallineCyclotomic.nontrivial_B PD
+  haveI : Nontrivial B := by
+    by_contra h
+    rw [not_nontrivial_iff_subsingleton] at h
+    apply PD.not_mem_filtration_two
+    rw [Subsingleton.elim PD.t 0, map_zero]
+    exact zero_mem _
   have key : ⇑(AlgebraTensorModule.map (LinearMap.id : V →ₗ[LL] V)
       (IsScalarTower.toAlgHom Qp K₀ B).toLinearMap) =
       ⇑(LinearMap.lTensor V (IsScalarTower.toAlgHom Qp K₀ B).toLinearMap) := by

@@ -84,6 +84,7 @@ private theorem galAd_adeleMap (σ : E ≃ₐ[F] E) (a : 𝔸[F]) : galAd σ (ad
   change adeleTensorEquiv F E (Algebra.TensorProduct.map (σ : E →ₐ[F] E) (AlgHom.id F 𝔸[F])
     ((adeleTensorEquiv F E).symm (adeleMap F E a))) = _
   rw [adeleTensorEquiv_symm_adeleMap, Algebra.TensorProduct.map_tmul, adeleTensorEquiv_tmul, map_one, map_one, one_mul]
+  rfl
 
 private theorem fixed_mat [IsGalois F E] (σ : E ≃ₐ[F] E) (hσ : ∀ τ : E ≃ₐ[F] E, τ ∈ Subgroup.zpowers σ) {n : ℕ}
     (y : AdelicGLn.AdelicGL E n) (hy : mapGL n (galAd σ) y = y) :

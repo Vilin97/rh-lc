@@ -83,7 +83,38 @@ theorem fibres (laws : Laws) (hU : USt) (R : Type) [CommRing R] [IsDomain R] [Is
     (N := (T.l 0).Pe) (N' := P₀) sq (isGrpPullback_pullback G (spMap φ))
     (isGrpPullback_pullback G (thick R I 0)) (isGrpPullback_pullback _ (thick V (IsLocalRing.maximalIdeal V) 0)) H hl H₀
   obtain ⟨Q₀, D₀, β, pβ, hβ⟩ := ClosedPol.exists_desc_pull pF (T.l 0).Q (T.l 0).D k₃
-  have hG' := IsSemiAbelian.pullback (spMap φ) G hG
+  have hG' : IsSemiAbelian ((Over.pullback (spMap φ)).obj G) := by
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · have := hG.comm; infer_instance
+    · have := hG.smooth; change Smooth (pullback.snd G.hom (spMap φ)); infer_instance
+    · have := hG.separated; change IsSeparated (pullback.snd G.hom (spMap φ)); infer_instance
+    · have := hG.quasiCompact; change QuasiCompact (pullback.snd G.hom (spMap φ)); infer_instance
+    · have := hG.geomConnected; change GeometricallyConnected (pullback.snd G.hom (spMap φ)); infer_instance
+    · intro Ω _ _ q
+      obtain ⟨E⟩ := hG.fibres Ω (q ≫ spMap φ)
+      let em := (Functor.mapMonNatIso (Over.pullbackComp q (spMap φ)) ≪≫ Functor.mapMonCompIso).app (Mon.mk G)
+      let e : (Over.pullback (q ≫ spMap φ)).obj G ≅ (Over.pullback q).obj ((Over.pullback (spMap φ)).obj G) := (Mon.forget _).mapIso em
+      haveI : IsMonHom e.hom := by
+        show IsMonHom em.hom.hom
+        infer_instance
+      letI := E.grpB
+      haveI := E.q_hom
+      haveI := E.i_hom
+      exact ⟨{ X := E.X
+               addCommGroup := E.addCommGroup
+               free := E.free
+               finite := E.finite
+               B := E.B
+               grpB := E.grpB
+               isAbelian := E.isAbelian
+               q := e.inv ≫ E.q
+               q_hom := inferInstance
+               q_flat := by rw [Over.comp_left]; have := E.q_flat; have : IsIso e.inv.left := Functor.map_isIso (Over.forget _) e.inv; infer_instance
+               q_surjective := by rw [Over.comp_left]; have := E.q_surjective; have : IsIso e.inv.left := Functor.map_isIso (Over.forget _) e.inv; infer_instance
+               q_quasiCompact := by rw [Over.comp_left]; have := E.q_quasiCompact; have : IsIso e.inv.left := Functor.map_isIso (Over.forget _) e.inv; infer_instance
+               i := E.i ≫ e.hom
+               i_hom := inferInstance
+               isKernel := by refine IsPullback.of_iso E.isKernel (Iso.refl _) e (Iso.refl _) (Iso.refl _) ?_ ?_ ?_ ?_ <;> simp }⟩
   have ev := UniformizationSetting.exists_even_of_desc D₀
   obtain ⟨wA, hwA⟩ := hA'
   have pol := ClosedPol.pol_dvr laws hU

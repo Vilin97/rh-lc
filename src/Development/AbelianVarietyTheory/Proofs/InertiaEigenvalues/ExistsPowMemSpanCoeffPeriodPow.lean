@@ -38,7 +38,7 @@ theorem c_frob_mem {S A : Type} [CommRing S] [IsNoetherianRing S] [CommRing A] {
     {ι : Type} (TB : TopBasis s I ι) (hI : I ≤ Ideal.jacobson ⊥) (φ : S →+* S) (Φ : A →+* A)
     (hφ : ∀ a, s (φ a) = Φ (s a)) (hφI : I.map φ ≤ I) (x : A) (N : Ideal S) (hN : ∀ i, φ (TB.c i x) ∈ N)
     (j : ι) : TB.c j (Φ x) ∈ N := by
-  have hH : IsHausdorff I (S ⧸ N) := IsHausdorff.of_le_jacobson _ _ hI
+  have hH : IsHausdorff I (S ⧸ N) := IsHausdorff.of_le_jacobson _ _ (by simpa only [Ideal.jacobson_bot] using hI)
   refine Ideal.Quotient.eq_zero_iff_mem.1 (hH.haus _ fun n => ?_)
   have hF : ∀ i, i ∉ (TB.fin x n).toFinset → TB.c i x ∈ I ^ n := fun i hi => by simpa using hi
   have h1 := Ideal.mem_map_of_mem Φ (TB.approx x n _ hF)

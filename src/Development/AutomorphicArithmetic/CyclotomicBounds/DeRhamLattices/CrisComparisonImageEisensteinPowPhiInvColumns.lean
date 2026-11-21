@@ -47,6 +47,8 @@ private theorem tame_lattice_inclusion (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZ
     have h2 : inclL t ϖ P (fun j => u * y j) = inclO l O u • inclL t ϖ P y := by
       rw [inclL_apply, inclL_apply, ← Matrix.mulVec_smul]
       congr 1
+      funext j
+      simp
     rw [h2, hI]
     funext j
     change inclO l O u * _ = inclO l O s * inclO l O ((Pi.single i u : ι → OA l O) j)

@@ -111,14 +111,14 @@ theorem IsDual.eq_one {P : LB (A ⊗ B).left} (h : IsDual A B P) (x : T ⟶ B)
   · rw [cls_ev h.isLB, cls_ev h.isLB, e, MonObj.comp_one, evc_one_right h.isLB h.zero]
 
 theorem IsDual.isPerfect {P : LB (A ⊗ B).left} (h : IsDual A B P) (h' : IsDual B A (swap P)) :
-    IsPerfect A B P where
+    IsPerfect A B P := {
   isLB := h.isLB
   zero_left := (triv_ev_iff h.isLB _ _).2 (h.additive.evc_one h.isLB _)
   zero_right := h.zero
   ker_left T x hx := h'.eq_one x <| (triv_ev_iff h'.isLB _ _).2 <| by
     have e := congrArg (CechPic.pull (lift (snd B T) (fst B T)).left) ((triv_ev_iff h.isLB _ _).1 hx)
     rwa [pull_evc, map_zero, lift_fst_assoc, lift_snd, ← evc_swap h.isLB h'.isLB] at e
-  ker_right _ := h.eq_one
+  ker_right _ := h.eq_one }
 
 theorem IsPerfect.swap {P : LB (A ⊗ B).left} (h : IsPerfect A B P) : IsPerfect B A (swap P) := by
   have hs : (AbDual.swap P).IsLB := pull_isLB h.isLB _

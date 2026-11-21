@@ -165,9 +165,12 @@ theorem chain_core [Algebra (Formalism.L2.G.Pend.K0 p) Kc] (V : X.ZA j → X.ZA 
     pairD X Kc j (polDel X Kc j ((X.Pj j).natAct A Gm))
         (linSub (fun z y => ∑ x, V z x * LkB X Kc j (glAt X j A) x y) g) =
       cA X Kc j (glAt X j A) • τ (pairD X Kc j (polDel X Kc j Gm) g) := by
+  have heq : delF X Kc j ((X.Pj j).natAct A Gm) (SA X Kc j (glAt X j A) (linSub V g)) =
+      cA X Kc j (glAt X j A) • delF X Kc j Gm (linSub V g) :=
+    delEquivOn_GdC X Kc j A Gm (linSub V g) ⟨hG, hO⟩
   rw [chain_linear p X Kc j _ (blockDiag_mul X Kc j hV (blockDiag_LkB X Kc j _)), ← trSub_mul,
     ← chain_linear p X Kc j V hV, ← chain_linear p X Kc j _ (blockDiag_LkB X Kc j _), linSub_LkB,
-    ← delF_apply, (delEquivH X Kc j A Gm _ hG hO).2, delF_apply, chain_linear p X Kc j V hV, pairD_lin X Kc j τ _ _ hτ]
+    ← delF_apply, heq, delF_apply, chain_linear p X Kc j V hV, pairD_lin X Kc j τ _ _ hτ]
 
 end Alg
 

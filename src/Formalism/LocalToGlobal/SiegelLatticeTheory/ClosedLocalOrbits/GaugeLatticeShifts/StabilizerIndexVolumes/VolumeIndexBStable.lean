@@ -33,7 +33,7 @@ theorem hT_span_zero {T : E} (F : FlagG S r T) (y : S.V) (hy : y ∈ Submodule.s
   | smul c x _ hx => simp [hx]
 
 theorem frame_indep {T : E} (F : FlagG S r T) (hT : T ≠ 0) : LinearIndependent E F.fvec := by
-  rw [FlagG.fvec, linearIndependent_fin_snoc]
+  rw [FlagG.fvec, linearIndependent_finSnoc]
   refine ⟨F.e_indep, fun hz => hT ?_⟩
   have h := hT_span_zero F F.z hz
   rw [F.z_norm] at h

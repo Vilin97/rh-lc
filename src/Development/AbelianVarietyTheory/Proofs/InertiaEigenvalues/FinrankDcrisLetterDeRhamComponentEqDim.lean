@@ -124,7 +124,7 @@ theorem letter_eq [IsDomain B] (ρ : Representation LL G V)
     | succ n ih =>
       intro τ τ' h
       exact (ih (τ.comp PD.σ) τ' fun c => by rw [h, Function.iterate_succ_apply']; rfl).trans
-        (letter_le PD ρ τ _ fun _ => rfl)
+        (letter_le PD (LL := LL) ρ τ _ fun _ => rfl)
   have heq : ∀ τ', finrank LL ↥(DcrisL PD ρ τ') = finrank LL ↥(DcrisL PD ρ τ) := fun τ' => by
     obtain ⟨n, hn⟩ := exists_pow_sigma PD LL hc τ τ'
     obtain ⟨n', hn'⟩ := exists_pow_sigma PD LL hc τ' τ

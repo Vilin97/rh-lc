@@ -92,7 +92,9 @@ theorem pick_many (lo hi : ℝ) (B : Finset ℝ) : ∀ (m : ℕ) (Q : Finset ℝ
   | m + 1, Q, h => by
     classical
     push_cast at h
-    obtain ⟨y, h1, h2, h3, h4, h5⟩ := pick_one lo hi Q B (by linarith)
+    have hm : 0 ≤ (m : ℝ) := Nat.cast_nonneg m
+    have hpick : 9 * ((Q.card : ℝ) + B.card) + 1 ≤ hi - lo := by linarith
+    obtain ⟨y, h1, h2, h3, h4, h5⟩ := pick_one lo hi Q B hpick
     have hc : ((insert y Q).card : ℝ) ≤ Q.card + 1 := by exact_mod_cast Finset.card_insert_le y Q
     obtain ⟨ys, hl, hys, hp⟩ := pick_many lo hi B m (insert y Q) (by linarith)
     refine ⟨y :: ys, by simp [hl], ?_, ?_⟩

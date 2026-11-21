@@ -107,5 +107,6 @@ theorem fib_near (hR : RmulFacts) (hF : FibAllT) (hC : MassDataMassesW.HinfCompa
   have e2 : (fun g => g • rmulT X a (Y0 X u')) = rmulT X a ∘ orbM X u' :=
     funext fun g => hsmul g a (Y0 X u')
   rw [e1, hc, Measure.map_smul, e2, Measure.map_map (hmr a) (measurable_orbM X u')]
+  exact (hmr a).aemeasurable
 
 end PI.AprimeInfW

@@ -55,7 +55,7 @@ theorem exists_isPrimitiveRoot_sub_isUnit_of_dvd_sub_one {l : ℕ} {O : Type} [C
       simp [hζk.pow_eq_one])
     (by
       have h : IsUnit ((e : O) * ω₀ ^ (e - 1)) := heu.mul (hω₀u.pow _)
-      simpa [derivative_X_pow] using h.map (Ideal.Quotient.mk (maximalIdeal O)))
+      simpa [Polynomial.derivative_X_pow] using h.map (Ideal.Quotient.mk (maximalIdeal O)))
   have hres : residue O ω = residue O ω₀ := by
     rw [← sub_eq_zero, ← map_sub, residue_eq_zero_iff]; exact hsub
   have hωe : ω ^ e = 1 := by

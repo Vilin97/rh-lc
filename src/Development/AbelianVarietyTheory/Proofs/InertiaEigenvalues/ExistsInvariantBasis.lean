@@ -225,9 +225,10 @@ theorem bound_le (l : ℕ) [hl : Fact l.Prime] (s n : ℕ) :
   have h0 : (n.factorial : ℚ_[l]) ≠ 0 := by exact_mod_cast n.factorial_ne_zero
   have hn : ‖(n.factorial : ℤ_[l])‖ = (l : ℝ) ^ (-(padicValNat l n.factorial : ℤ)) := by
     rw [PadicInt.norm_def, PadicInt.coe_natCast, Padic.norm_eq_zpow_neg_valuation h0,
-      Padic.valuation_natCast]
+      Padic.valuation_natCast, Nat.padicValNat_def]
   have hv : ((l : ℝ) - 1) * (padicValNat l n.factorial : ℝ) ≤ n := by
-    have h := sub_one_mul_padicValNat_factorial (p := l) n
+    have h := Nat.Prime.sub_one_mul_multiplicity_factorial (n := n) hl.out
+    rw [← Nat.padicValNat_def] at h
     have h' : (l - 1) * padicValNat l n.factorial ≤ n := h ▸ Nat.sub_le _ _
     have h'' : (((l - 1) * padicValNat l n.factorial : ℕ) : ℝ) ≤ n := by exact_mod_cast h'
     rwa [Nat.cast_mul, Nat.cast_sub hl.out.one_lt.le, Nat.cast_one] at h''

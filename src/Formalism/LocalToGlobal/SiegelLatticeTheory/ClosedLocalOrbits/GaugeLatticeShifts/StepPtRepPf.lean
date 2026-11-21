@@ -108,7 +108,7 @@ theorem real_point_representative_diagonal : StepPtRepDiag := by
     have hm1 : Formalism.L2.SG.HidaSetting.matW X.B.I (X.wfr u v) v 1 = 1 := by
       ext a b
       show hJ (X.B.I.ε v) (X.wfr u v a) (uMat (1 : Formalism.REAL.UJ (X.B.I.ε v)) *ᵥ X.wfr u v b) = _
-      simp [uMat, X.wfr_on, one_apply]
+      simp [uMat, X.wfr_on, Matrix.one_apply]
     have hm2 : Formalism.L2.SG.HidaSetting.matW X.B.I (X.wfr u' v) v
         (fun v => rotU (X.B.I.ε v) (X.wfr u' v (i0 v)) (hω v) (φ v) (hφ v)) =
         Matrix.diagonal fun i => if i = i0 v then φ v else 1 := by

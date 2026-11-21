@@ -279,17 +279,10 @@ theorem rhs_le_record (Nd : NumDatum) {J : Type} [Fintype J] (eJ : J ≃ Fin Nd.
 
 theorem numRecTie_ofRecord {D : D7} (L : SizeData₂ D) (Del h0 : ℕ) (u : D.what₂.Word)
     (hrd : (ofRecord D L Del h0).rd = D.host.rdE) (hM : (ofRecord D L Del h0).mainT ((D.mem u).A.T) = L.MAIN u) :
-    NumRecTie (ofRecord D L Del h0) L u ((D.mem u).A.T) L.Nc where
-  mainT := hM
-  card := rfl
-  a := rfl
-  La := by simp only [NumDatum.La, SizeData₂.La, hrd]
-  B0 := by
-    simp only [NumDatum.B0, SizeData₂.B0, sizeBudget, bSize, Scale.b, Scale.L]
-  Nc := rfl
-  m := rfl
-  x := rfl
-  eps := rfl
+    NumRecTie (ofRecord D L Del h0) L u ((D.mem u).A.T) L.Nc := by
+  refine ⟨hM, rfl, rfl, ?_, ?_, rfl, rfl, rfl, rfl⟩
+  · simp only [NumDatum.La, SizeData₂.La, hrd]
+  · simp only [NumDatum.B0, SizeData₂.B0, sizeBudget, bSize, Scale.b, Scale.L]
 
 end PartB
 
@@ -431,13 +424,11 @@ def DivisionPackage.colBr {D : D7} {L : SizeData₂ D} {Rw : DivisionRows L} {C 
   Dc := Rw.Dc P.Pk.Zs
   I := P.I
 
-theorem DivisionPackage.colBr_tied {D : D7} {L : SizeData₂ D} {Rw : DivisionRows L} {C Cabs : ℝ} (P : DivisionPackage Rw C Cabs) : P.colBr.Tied where
-  ok := ⟨Rw.s, Rw.hOk⟩
-  mu := fun w => by
-    show D.what₂.muAt w = P.I.tup (P.Pk.core.cols.toIndefData.μ (D.plEq w))
-    rw [P.tied.tup.muAt w, P.tied.mu1]
-  sharp := P.tied.sharp
-  dcPt := P.dcPt
+theorem DivisionPackage.colBr_tied {D : D7} {L : SizeData₂ D} {Rw : DivisionRows L} {C Cabs : ℝ} (P : DivisionPackage Rw C Cabs) : P.colBr.Tied := by
+  refine ⟨⟨Rw.s, Rw.hOk⟩, ?_, P.tied.sharp, P.dcPt⟩
+  intro w
+  show D.what₂.muAt w = P.I.tup (P.Pk.core.cols.toIndefData.μ (D.plEq w))
+  rw [P.tied.tup.muAt w, P.tied.mu1]
 
 theorem DivisionPackage.val2 {D : D7} {L : SizeData₂ D} {Rw : DivisionRows L} {C Cabs : ℝ} (P : DivisionPackage Rw C Cabs) (h2 : Formalism.MainNotions.LocalQuadraticParts.adm2 D L)
     (hcut : ∀ μ, Formalism.BasicNotions.DV.Used D μ → Formalism.L2.G.ServJoint.CutUp D μ) (hN : Formalism.BasicNotions.DV.NprimeDef D L) (u : D.what₂.Word) (w : HeightOneSpectrum (𝓞 D.what₂.LL)) :

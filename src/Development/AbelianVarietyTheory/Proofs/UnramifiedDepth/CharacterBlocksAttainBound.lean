@@ -19,7 +19,7 @@ open Formalism.L2.FormalSeriesBounds Formalism.IncomingBounds MvPowerSeries
 variable {C : Type} [Field C]
 
 def IsExp {σ : Type} (y : σ → C) (F : MvPowerSeries σ C) : Prop :=
-  constantCoeff F = 1 ∧ ∀ w, pderiv C w F = y w • F
+  constantCoeff F = 1 ∧ ∀ w, pderiv w F = y w • F
 
 theorem IsExp.one {σ : Type} : IsExp (fun _ : σ => (0 : C)) 1 := ⟨by simp, fun w => by simp⟩
 
@@ -113,7 +113,7 @@ theorem isExp_mvExp [CharZero C] {σ : Type} [Fintype σ] (y : σ → C) :
   · rw [← coeff_zero_eq_constantCoeff_apply, coeff_mvExp]; simp
   · intro w
     ext m
-    have hL : pderiv C w (∑ x, y x • (X x : MvPowerSeries σ C)) = MvPowerSeries.C (y w) := by
+    have hL : pderiv w (∑ x, y x • (X x : MvPowerSeries σ C)) = MvPowerSeries.C (y w) := by
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, Finset.sum_eq_single w]
       · simp [smul_eq_C_mul]

@@ -55,14 +55,12 @@ variable {A M}
 
 theorem Milnor.of_isPullback {R R₁ R₂ R₀ : CommRingCat.{0}} {a : R ⟶ R₁} {b : R ⟶ R₂} {c : R₁ ⟶ R₀} {d : R₂ ⟶ R₀}
     (h : IsPullback a b c d) (hd : Function.Surjective d) :
-    Milnor (Spec.map a) (Spec.map b) (Spec.map c) (Spec.map d) where
-  aff := inferInstance
-  aff₁ := inferInstance
-  aff₂ := inferInstance
-  closed := IsClosedImmersion.spec_of_surjective d hd
-  w := by rw [← Spec.map_comp, ← Spec.map_comp, h.w]
-  cart := h.of_iso (Scheme.ΓSpecIso R).symm (Scheme.ΓSpecIso R₁).symm (Scheme.ΓSpecIso R₂).symm
-    (Scheme.ΓSpecIso R₀).symm (by simp) (by simp) (by simp) (by simp)
+    Milnor (Spec.map a) (Spec.map b) (Spec.map c) (Spec.map d) := by
+  refine ⟨inferInstance, inferInstance, inferInstance, IsClosedImmersion.spec_of_surjective d hd, ?_, ?_⟩
+  · rw [← Spec.map_comp, ← Spec.map_comp, h.w]
+  · exact h.of_iso (Scheme.ΓSpecIso R).symm (Scheme.ΓSpecIso R₁).symm (Scheme.ΓSpecIso R₂).symm
+      (Scheme.ΓSpecIso R₀).symm (Scheme.ΓSpecIso_inv_naturality a) (Scheme.ΓSpecIso_inv_naturality b)
+      (Scheme.ΓSpecIso_inv_naturality c) (Scheme.ΓSpecIso_inv_naturality d)
 
 
 end GlobalTheory.DualOpen

@@ -66,7 +66,8 @@ theorem inv_galQuot_congr (σ : Gal(PadicAlgCl p/K)) (τ : Gal(PadicAlgCl p/L)) 
     simp only [RingHom.comp_apply, galQuot_mk, inv_galAway_congr σ τ h])
 
 theorem inv_galBdRHom_congr (σ : Gal(PadicAlgCl p/K)) (τ : Gal(PadicAlgCl p/L))
-    (h : ∀ x, σ x = τ x) (x : 𝔹) : galBdRHom σ x = galBdRHom τ x :=
+    (h : ∀ x, σ x = τ x) (x : BDeRhamPlus (normInteger ℂ_[p]) p) :
+    galBdRHom σ x = galBdRHom τ x :=
   IsPerfectoidField.evalB_ext fun n => by
     rw [evalB_galBdRHom, evalB_galBdRHom, inv_galQuot_congr σ τ h]
 

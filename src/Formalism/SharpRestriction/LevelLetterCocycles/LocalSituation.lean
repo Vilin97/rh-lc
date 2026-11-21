@@ -101,6 +101,8 @@ def sit (LT : LocTheory) (HW : HWOf LT) (l : ℕ) [Fact l.Prime] (AI : LocAinf l
   W := (HW l).W K s LL h
   RA := RA LL
   RW := RW LL
+  aRA := Algebra.TensorProduct.leftAlgebra (R := ℤ_[l]) (A := ↥(OL LL)) (B := Ainf l)
+  aRW := Algebra.TensorProduct.leftAlgebra (R := ℤ_[l]) (A := ↥(OL LL)) (B := WCb l)
   inclR := inclR LL
   φR := φRW LL
   gR g := AI.gRW LL (g : GQ l)

@@ -18,7 +18,7 @@ theorem mem_range_of_pow_eq_self {g : ℕ} [Fact (Nat.Prime g)] {K : Type*} [Fie
   simp only [not_exists] at hne
   have hg : 1 < g := (Fact.out : Nat.Prime g).one_lt
   set P : K[X] := X ^ g - X with hPeq
-  have hP0 : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero K hg
+  have hP0 : P ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hg
   have hdeg : P.natDegree = g := Polynomial.natDegree_X_pow_sub_X (R := K) hg
 
   have hroot : ∀ x : K, x ^ g = x → x ∈ P.roots.toFinset := by

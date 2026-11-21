@@ -90,7 +90,6 @@ theorem exists_powIso {X Y Z₁ Z₂ : Scheme.{0}} (L : LB Z₁) (M : LB Z₂) (
   · exact (res_pull_comp h m (W := M.U (p.1 0) ⊓ M.U (p'.1 0))
       (V1 := LB.wchart M (fun _ : PUnit.{1} => m) (fun _ => p.1 0) ⊓ LB.wchart M (fun _ : PUnit.{1} => m) (fun _ => p'.1 0))
       (M.g (p.1 0) (p'.1 0)) _ _ _ _ _).symm
-  · rfl
   · exact res_res' (U := f ⁻¹ᵁ (L.U (p.2 0) ⊓ L.U (p'.2 0))) (pullU f _ (L.g (p.2 0) (p'.2 0))) _ _ _ _
 
 end GlobalTheory.PowIsoRe

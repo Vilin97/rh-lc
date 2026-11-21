@@ -178,7 +178,8 @@ theorem finPhaseC_of (hNR : Formalism.L2.SG.PairVal.NormRepExists D u u' (X.Fu u
       frameAct (frame (lf D (X.Fu u))) 1 c) := by
     intro c
     have e : (n * γ * (γ⁻¹ * m * γ)) (frame (lf D (X.Fu u')) c) = frame hex.choose.1 c := by
-      rw [hfr, hframe]
+      have hh : frame hex.choose.1 c = n (m (frame s.1.frame c)) := hfr c
+      rw [hh, hframe]
       simp only [LinearEquiv.mul_apply, hgi]
     rw [e]
     exact hAdm''.2.2 c

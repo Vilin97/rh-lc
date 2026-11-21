@@ -39,7 +39,7 @@ instance {K₀ : Type} (J₀ : K₀ → Type) [∀ k, Fintype (J₀ k)] (n : Ψ 
 
 
 open Classical in
-def blkF (K₀ : Type) (r : Ψ × Fin (p + q)) : Option (K₀ ⊕ StepIx Ψ p q) :=
+def blkF (Ψ : Type) (p q : ℕ) (K₀ : Type) (r : Ψ × Fin (p + q)) : Option (K₀ ⊕ StepIx Ψ p q) :=
   if IsProperStep (p + q) p r.2 then some (.inr (stepOf Ψ p q r)) else none
 
 variable (Ω : Type) [Field Ω]

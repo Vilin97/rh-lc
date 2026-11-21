@@ -134,7 +134,7 @@ theorem integrand_aesm {k r : ℕ} {ε : Fin (2 * r + k + 1) → Bool} {lam : Fi
   have hψc : Continuous (Formalism.MainNotions.S.psiGen k r z c) := by
     unfold Formalism.MainNotions.S.psiGen
     refine Complex.continuous_exp.comp (continuous_const.mul (Complex.continuous_ofReal.comp
-      (Complex.continuous_re.comp (continuous_finset_sum _ fun a _ => continuous_const.mul ?_))))
+      (Complex.continuous_re.comp (continuous_finsetSum _ fun a _ => continuous_const.mul ?_))))
     by_cases hcond : a.val + 1 < r
     · simp only [Formalism.MainNotions.S.ellA, dif_pos hcond]
       exact (continuous_apply _).comp (continuous_apply _)

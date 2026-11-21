@@ -150,6 +150,10 @@ def gsSUnitsIso : Rep.res (gsSubtype S hL) (galSUnitsMax F Ω S) ≅
     Rep.res (gsBaseChange S hL).toMulEquiv.toMonoidHom (galSUnitsMax L Ω (placesOver S)) :=
   galSUnitsResIso (restrictScalars_maxUnramifiedOutside_eq S hL) S
 
+instance isDiscreteRep_res_gsSubtype_galUnits :
+    IsDiscreteRep (Rep.res (gsSubtype S hL) (galUnits.{u} F (maxUnramifiedOutside F Ω S))) :=
+  IsDiscreteRep.res continuous_subtype_val (galUnits.{u} F (maxUnramifiedOutside F Ω S))
+
 instance isDiscreteRep_res_gsSubtype_galRootsOfUnity (m : ℕ) :
     IsDiscreteRep (Rep.res (gsSubtype S hL) (galRootsOfUnity.{u} F (maxUnramifiedOutside F Ω S) m)) :=
   IsDiscreteRep.res continuous_subtype_val _

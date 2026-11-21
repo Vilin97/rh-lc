@@ -42,7 +42,7 @@ theorem UpperTheory.ConvolutionTheory.R2.G.coefBd :
   let c : Fin (Module.finrank ℂ U) → G1 F → ℂ := fun i k => ∑ v ∈ (a i).support, a i v * (W.Om k φ).1 v
   have hc : ∀ i, Continuous (c i) := by
     intro i
-    refine continuous_finset_sum _ fun v _ => continuous_const.mul ?_
+    refine continuous_finsetSum _ fun v _ => continuous_const.mul ?_
     exact (W.cont φ).comp (continuous_id.prodMk continuous_const)
   have hB : ∀ i, ∃ B : ℝ, ∀ k ∈ C, ‖c i k‖ ≤ B := fun i =>
     hC.exists_bound_of_continuousOn (hc i).continuousOn

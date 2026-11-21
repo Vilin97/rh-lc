@@ -136,7 +136,7 @@ theorem det_sMat (hk : m + 1 < a) (ξ : UnipotentBlockColumnIndex a (m + 1) (m +
 open Classical in
 def sM (hk : m + 1 < a) (ξ : UnipotentBlockColumnIndex a (m + 1) (m + 1) → F) : GL (Fin a) F :=
   if hξ : ξ (t0 hk) ≠ 0 then
-    ((Matrix.isUnit_iff_isUnit_det _).2 (by rw [det_sMat]; exact isUnit_iff_ne_zero.2 hξ)).unit
+    ((Matrix.isUnit_iff_isUnit_det (sMat hk ξ)).2 (by rw [det_sMat]; exact isUnit_iff_ne_zero.2 hξ)).unit
   else 1
 
 theorem sM_val (hk : m + 1 < a) (ξ : UnipotentBlockColumnIndex a (m + 1) (m + 1) → F) (hξ : ξ (t0 hk) ≠ 0) :
@@ -393,6 +393,8 @@ theorem lattice_open_last_entry : MirabolicColumnBlock → S9 := by
   have he0 : e (t0 hk) ≠ 0 := by simp [he]
   have hW0 : {y : UnipotentBlockColumnIndex a (m + 1) (m + 1) → F | blkU y ∈ U ∧ ‖χ (y (t0 hk)) - 1‖ < 1 / 2} ∈
       𝓝 (0 : UnipotentBlockColumnIndex a (m + 1) (m + 1) → F) := by
+    change blkU ⁻¹' U ∩ {y | ‖χ (y (t0 hk)) - 1‖ < 1 / 2} ∈
+      𝓝 (0 : UnipotentBlockColumnIndex a (m + 1) (m + 1) → F)
     refine Filter.inter_mem ?_ ?_
     · have hc : Continuous (blkU : (UnipotentBlockColumnIndex a (m + 1) (m + 1) → F) → GL (Fin a) F) := continuous_posU (isNil_blk a (m + 1) (m + 1))
       refine hc.continuousAt.preimage_mem_nhds ?_
@@ -485,8 +487,8 @@ theorem lattice_open_last_entry : MirabolicColumnBlock → S9 := by
         (∑ q : L ⧸ L0.addSubgroupOf L,
           χ (dotp (rowOf hk h - e) ((Quotient.out q : L) : UnipotentBlockColumnIndex a (m + 1) (m + 1) → F))) * Λ (ρ h v) := by
       rw [Finset.sum_image]
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sum, map_sum, Finset.sum_mul]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum, Finset.sum_mul]
         refine Finset.sum_congr rfl fun q _ => ?_
         rw [map_smul, map_smul, smul_eq_mul, key hS hk χ ρ Y hY Λ hΛ h hh v hvY, hc1, dotp_sub_left, hdot,
           sub_eq_neg_add, AddChar.map_add_eq_mul, mul_assoc]

@@ -81,4 +81,3 @@ theorem UpperTheory.ConvolutionTheory.H.thMatch :
   convert h2 using 2
   · rw [← measureReal_def, ← measureReal_def, Complex.ofReal_div]
     field_simp
-  · rfl

@@ -37,8 +37,8 @@ theorem bezout_Ep_derivative : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk :
     (bk.monic.irreducible_iff_irreducible_map_fraction_map).1 hirrE
   obtain ⟨a, b, hab⟩ := hirrF.separable
   rw [Polynomial.derivative_map] at hab
-  obtain ⟨⟨d₁, hd₁⟩, hA⟩ := IsLocalization.integerNormalization_map_to_map (nonZeroDivisors (Wq l bk.a)) a
-  obtain ⟨⟨d₂, hd₂⟩, hB⟩ := IsLocalization.integerNormalization_map_to_map (nonZeroDivisors (Wq l bk.a)) b
+  obtain ⟨d₁, hd₁, hA⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors (Wq l bk.a)) a
+  obtain ⟨d₂, hd₂, hB⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors (Wq l bk.a)) b
   set A := IsLocalization.integerNormalization (nonZeroDivisors (Wq l bk.a)) a
   set B := IsLocalization.integerNormalization (nonZeroDivisors (Wq l bk.a)) b
   have hd : d₁ * d₂ ≠ 0 := mul_ne_zero (nonZeroDivisors.ne_zero hd₁) (nonZeroDivisors.ne_zero hd₂)

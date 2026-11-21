@@ -62,26 +62,28 @@ theorem gm_pushLB (f : Z' ⟶ Z) [IsOpenImmersion f] (A : LB Z') (i j : A.ι) (y
   exact (gs_unit f y _ (image_inf_le f _ _ hm) _).symm.trans ((gs_push f y hm' _).trans (gs_unit _ y _ hm' _))
 
 theorem part_left (f : Z' ⟶ Z) [IsOpenImmersion f] (A : LB Z') (B : LB Z) (hB : ∀ p y, f y ∉ B.U p) :
-    Part f A (sumLB (pushLB f A) B) Sum.inl where
-  inj := Sum.inl_injective
-  mem := fun i y => f.apply_mem_image_iff
-  sub := fun i x ⟨y, _, hy⟩ => ⟨y, hy⟩
-  surj := fun p y hp => by
+    Part f A (sumLB (pushLB f A) B) Sum.inl := by
+  refine ⟨Sum.inl_injective, ?_, ?_, ?_, gm_pushLB f A⟩
+  · intro i y
+    exact f.apply_mem_image_iff
+  · rintro i x ⟨y, _, hy⟩
+    exact ⟨y, hy⟩
+  · intro p y hp
     rcases p with i | p
     · exact ⟨i, rfl⟩
     · exact (hB p y hp).elim
-  g := gm_pushLB f A
 
 theorem part_right (f : Z' ⟶ Z) [IsOpenImmersion f] (A : LB Z') (B : LB Z) (hB : ∀ p y, f y ∉ B.U p) :
-    Part f A (sumLB B (pushLB f A)) Sum.inr where
-  inj := Sum.inr_injective
-  mem := fun i y => f.apply_mem_image_iff
-  sub := fun i x ⟨y, _, hy⟩ => ⟨y, hy⟩
-  surj := fun p y hp => by
+    Part f A (sumLB B (pushLB f A)) Sum.inr := by
+  refine ⟨Sum.inr_injective, ?_, ?_, ?_, gm_pushLB f A⟩
+  · intro i y
+    exact f.apply_mem_image_iff
+  · rintro i x ⟨y, _, hy⟩
+    exact ⟨y, hy⟩
+  · intro p y hp
     rcases p with p | i
     · exact (hB p y hp).elim
     · exact ⟨i, rfl⟩
-  g := gm_pushLB f A
 
 variable {f : Z' ⟶ Z} {A : LB Z'} {C : LB Z} {e : A.ι → C.ι}
 

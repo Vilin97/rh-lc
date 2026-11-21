@@ -245,9 +245,12 @@ def isotypic (σ : Representation ℂ G V) (τ : Representation ℂ G W) : Subre
   toSubmodule := ⨆ f : τ.IntertwiningMap σ, LinearMap.range f.toLinearMap
   apply_mem_toSubmodule g v hv := by
     refine Submodule.iSup_induction _ (motive := fun v => σ g v ∈ ⨆ f : τ.IntertwiningMap σ, LinearMap.range f.toLinearMap)
-      hv ?_ (by simp) fun x y hx hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
-    rintro f _ ⟨w, rfl⟩
-    exact Submodule.mem_iSup_of_mem f ⟨τ g w, f.isIntertwining _ _ g w⟩
+      hv ?_ (by simp) ?_
+    · rintro f _ ⟨w, rfl⟩
+      exact Submodule.mem_iSup_of_mem f ⟨τ g w, f.isIntertwining _ _ g w⟩
+    · intro x y hx hy
+      rw [(σ g).map_add]
+      exact add_mem hx hy
 
 theorem apply_mem_isotypic {σ : Representation ℂ G V} {τ : Representation ℂ G W} (f : τ.IntertwiningMap σ) (w : W) :
     f w ∈ isotypic σ τ := Submodule.mem_iSup_of_mem f ⟨w, rfl⟩

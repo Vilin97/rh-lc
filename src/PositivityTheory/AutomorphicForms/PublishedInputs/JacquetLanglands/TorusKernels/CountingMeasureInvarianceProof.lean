@@ -42,20 +42,18 @@ def cut (R : Set Ω) (β : Ω → X → ℝ) (p : Ω × X) : ℝ := by
   exact if p.1 ∈ R then β p.1 p.2 else 0
 
 theorem cut_isCut (R : Set Ω) (hR : ∀ ω, ∃! r, r ∈ R ∧ r ∈ MulAction.orbit G ω) (β : Ω → X → ℝ)
-    (hβ : ∀ r ∈ R, IsCut (MulAction.stabilizer G r) (β r)) : IsCut G (cut R β) where
-  meas := by
-    refine meas_of_left fun ω => ?_
+    (hβ : ∀ r ∈ R, IsCut (MulAction.stabilizer G r) (β r)) : IsCut G (cut R β) := by
+  refine ⟨?_, ?_, ?_⟩
+  · refine meas_of_left fun ω => ?_
     by_cases h : ω ∈ R
     · simpa [cut, h] using (hβ ω h).meas
     · simp [cut, h]
-  nonneg := by
-    rintro ⟨ω, x⟩
+  · rintro ⟨ω, x⟩
     unfold cut
     split_ifs with h
     · exact (hβ _ h).nonneg x
     · exact le_rfl
-  sum := by
-    rintro ⟨ω, x⟩
+  · rintro ⟨ω, x⟩
     obtain ⟨r, ⟨hrR, g₀, hg₀'⟩, hu⟩ := hR ω
     have hg₀ : g₀ • ω = r := hg₀'
     have key : ∀ g : G, g • ω ∈ R → g • ω = r := fun g hg => hu _ ⟨hg, MulAction.mem_orbit ω g⟩

@@ -84,10 +84,10 @@ variable {ψ : AddChar (AF D.host.F) ℂ} (S T : HSp D)
 theorem cont_heis (hψ : IsStdChar D ψ (-1)) {f : MO S T → ℂ} (hf : IsThetaFunO ψ S T f) (v : MO S T) :
     Continuous (heisO ψ S T v f) := by
   delta heisO
-  exact ((psi_cont hψ).comp (cont_symplOH_left S T v)).mul (hf.3.comp (continuous_add_right v))
+  exact ((psi_cont hψ).comp (cont_symplOH_left S T v)).mul (hf.3.comp (continuous_add_const v))
 
 theorem theta_zero : IsThetaFunO ψ S T 0 := by
-  exact ⟨fun γ w => by simp, ⟨⊤, by simp, fun u _ _ => by funext z; simp [heisO]⟩, continuous_zero,
+  exact ⟨fun γ w => by simp, ⟨⊤, by rw [AddSubgroup.coe_top]; exact isOpen_univ, fun u _ _ => by funext z; simp [heisO]⟩, continuous_zero,
     fun k L _ _ _ => contDiff_const⟩
 
 theorem theta_add {f g : MO S T → ℂ} (hf : IsThetaFunO ψ S T f) (hg : IsThetaFunO ψ S T g) :

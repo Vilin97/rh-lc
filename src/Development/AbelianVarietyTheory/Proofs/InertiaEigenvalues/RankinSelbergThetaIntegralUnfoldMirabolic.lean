@@ -120,6 +120,7 @@ theorem measurable_integrand {φ φ' : GA E (m + 1) → ℂ} (hφ : Measurable �
 
 end GlobalTheory.ZUnfTheta
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem GlobalTheory.ZUnfTheta.zint_eq_mirabolic : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ)
     (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] (𝓕 𝓕P : Set (GA E (m + 1))),
     IsFundamentalDomain (ratGL E (m + 1)).range 𝓕 μ → IsFundamentalDomain (ratMirU E (m + 1) m) 𝓕P μ →

@@ -18,7 +18,7 @@ theorem avg_add_right (G : Type) [AddCommGroup G] [TopologicalSpace G] [IsTopolo
   haveI : BorelSpace G := ⟨rfl⟩
   obtain ⟨μ, 𝓕, hμ, h𝓕, h1⟩ := GlobalTheory.T.exists_fundamentalDomain_mass_one_cocompactLattice G Γ hΓ
   have hΨ : Per Γ (fun x => Φ (x + y)) :=
-    ⟨hΦ.1.comp (continuous_add_right y), fun γ hγ x => by simp only [add_assoc, hΦ.2 γ hγ]⟩
+    ⟨hΦ.1.comp (continuous_add_const y), fun γ hγ x => by simp only [add_assoc, hΦ.2 γ hγ]⟩
 
   have hpres : MeasurePreserving (fun x : G => x - y) μ μ := by
     simpa [sub_eq_add_neg] using measurePreserving_add_right μ (-y)

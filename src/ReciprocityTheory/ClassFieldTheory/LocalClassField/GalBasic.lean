@@ -103,7 +103,8 @@ theorem degLK_eq_finrank (h : K ≤ L) :
 theorem finrank_eq_degLK_mul (h : K ≤ L) (hL : FiniteDimensional ℚ_[p] L) :
     Module.finrank ℚ_[p] L = degLK p K L * Module.finrank ℚ_[p] K := by
   rw [degLK_eq_finrank h, mul_comm]
-  exact (Module.finrank_mul_finrank ℚ_[p] K (IntermediateField.extendScalars h)).symm
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact (Module.finrank_mul_finrank ℚ_[p] K (IntermediateField.extendScalars h)).symm
 
 theorem degLK_pos (hL : FiniteDimensional ℚ_[p] L) : 0 < degLK p K L :=
   Nat.pos_of_ne_zero (finiteIndex_subG hL).index_ne_zero

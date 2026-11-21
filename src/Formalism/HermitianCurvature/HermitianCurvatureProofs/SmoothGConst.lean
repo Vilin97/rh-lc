@@ -76,7 +76,7 @@ theorem parFam_smulG {Par : Type} [NormedAddCommGroup Par] [NormedSpace ℝ Par]
   obtain ⟨U', A, hU', hqU', hA, haA⟩ := ha q₀.2 hG
   refine ⟨U ∩ Prod.snd ⁻¹' U', fun q => A q.2 • F q, hU.inter (hU'.preimage continuous_snd), ⟨hqU, hqU'⟩, ?_,
     fun q hq' hG' => ?_⟩
-  · exact (hA.comp contDiff_snd.contDiffOn (fun q hq => hq.2)).smul (hF.mono Set.inter_subset_left)
+  · exact (hA.comp contDiff_snd.contDiffOn (fun q (hq : q ∈ U ∩ Prod.snd ⁻¹' U') => hq.2)).smul (hF.mono Set.inter_subset_left)
   · show a (Matrix.of q.2) • f q = A q.2 • F q
     rw [haA q.2 hq'.2 hG', hfF q hq'.1 hG']
 

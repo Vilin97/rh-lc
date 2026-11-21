@@ -68,7 +68,7 @@ theorem gap_X {large₂ : SizeData₂ D} {C' Cl Cg cb Cu cT CT : ℝ} (hS0 : Sta
       linarith
     have hf : (2 : ℝ) ≤ (D.R.f : ℝ) := by
       have : 2 ≤ D.R.f := by
-        unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+        unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos; omega
       exact_mod_cast this
     have hf5 : (32 : ℝ) ≤ (D.R.f : ℝ) ^ 5 := by
       have : (2 : ℝ) ^ 5 ≤ (D.R.f : ℝ) ^ 5 := pow_le_pow_left₀ (by norm_num) hf 5

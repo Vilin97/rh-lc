@@ -36,6 +36,8 @@ theorem approx {S A : Type} [CommRing S] [CommRing A] (l : ℕ) (ev : S →+* A)
     refine ⟨c, ⟨y', hsat _ ?_⟩, fun i => by simp only; linear_combination hy' i⟩
     have := hadd _ _ hy (hsm (-1) _ (hY c))
     convert this using 1
+    ext i
+    simp only [Pi.add_apply, map_neg, map_one, neg_mul, one_mul]
     linear_combination - hy' i
   choose c nx hnx using step
   let ys : ℕ → {y // mem y} := fun k => nx^[k] ⟨y, hy⟩

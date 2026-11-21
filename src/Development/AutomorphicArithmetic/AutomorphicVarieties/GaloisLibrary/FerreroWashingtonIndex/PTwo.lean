@@ -9,7 +9,7 @@ open UpperTheory.V.FW
 theorem UpperTheory.V.FW.pTwo :
     ∀ (C : Type) [CommGroup C] [Finite C] (J : C →* C), (∀ x, J (J x) = x) →
       (powR (C := C) 2).index ≤
-        ((difR J).relIndex (minK J) * Nat.card (difR J ⊓ torK 2 : Subgroup C)) ^ 2 := by
+        ((difR J).relIndex (minK J) * Nat.card (difR J ⊓ torK (C := C) 2 : Subgroup C)) ^ 2 := by
   intro C _ _ J hJ
   classical
   have hcard : ∀ {G H : Type} [Group G] [Group H] (f : G →* H),

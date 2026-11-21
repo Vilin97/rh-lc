@@ -140,7 +140,7 @@ theorem gval_of_normRep (t : TT Y u u') (w : Point D.host.E (D.R.rS + 1))
     (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (L U : Formalism.L2.SG.PairVal.MatR D)
     (hN : Formalism.L2.SG.PairVal.NormRep t.toTerm w F' L U) (hG : t.G ≠ 0) : Gval (lf D (X.Fu u)) F' ≠ 0 := by
   obtain ⟨⟨h, hmk⟩, -⟩ := hN
-  have hGF := PI.TermAttrConst.UnitaryGroupMassFormula.termGFun_holds D u u' (X.Fu u) t.toTerm.lam ((Y.rowsOK u).1 t.lam t.mem)
+  have hGF := Formalism.L2.SG.Pf.g_value_function t.toTerm.lam (lf D (X.Fu u)) (Formalism.L2.SG.TermDef.PD D t.toTerm.lam (lf D (X.Fu u)) u')
   have e : t.G = Gval (lf D (X.Fu u)) F' := by
     show Formalism.L2.SG.TermDef.Gt _ _ _ t.toTerm.cls = _
     rw [← hmk]

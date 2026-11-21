@@ -119,7 +119,12 @@ theorem exists_unit_norm {p : Ideal (𝓞 K)} (hK : Formalism.HermitianLatticesT
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hnd : ∀ x, (∀ y, h x y = 0) → x = 0)
     {M : AddSubgroup V} (hM : IsSelfDualMod (locRing p) h M) (x₀ : V) (hx₀ : x₀ ≠ 0) :
     ∃ e ∈ M, IsUnitIn (locRing p) (h e e) := by
-  have hS := isHermSemilocal_locRing hK hp
+  have hS : IsHermSemilocal (locRing p) :=
+    { star_mem := fun _ ha => star_mem_locRing hp.isPrime ha
+      frac := frac_locRing p
+      unram := unram_locRing hK hp
+      principal := principal_locRing hK hp
+      unit_or := unit_or_locRing hp.isPrime }
   set S := locRing p with hSdef
   have hsym : ∀ u v, star (h u v) = h v u := fun u v => hs.eq u v
   obtain ⟨m, htM, hm0⟩ : ∃ m ∈ M, m ≠ 0 := by
@@ -175,7 +180,12 @@ theorem exists_norm_eq {p : Ideal (𝓞 K)} (hK : Formalism.HermitianLatticesThe
     {M : AddSubgroup V} (hM : IsSelfDualMod (locRing p) h M) (e : V)
     (he : IsUnitIn (locRing p) (h e e)) :
     ∃ X ∈ M, h X X = h e e := by
-  have hS := isHermSemilocal_locRing hK hp
+  have hS : IsHermSemilocal (locRing p) :=
+    { star_mem := fun _ ha => star_mem_locRing hp.isPrime ha
+      frac := frac_locRing p
+      unram := unram_locRing hK hp
+      principal := principal_locRing hK hp
+      unit_or := unit_or_locRing hp.isPrime }
   set S := locRing p with hSdef
   have hsym : ∀ u v, star (h u v) = h v u := fun u v => hs.eq u v
   set a := h e e with ha

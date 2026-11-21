@@ -305,8 +305,7 @@ theorem VertPointResidue.proof (hC : CurveCharts.Statement) : VertPointResidue.S
       have hval : (b : K') * aeval y (X ⟨(), c⟩ ^ n : MRing (fun _ : Unit => T)) = aeval y G := by
         rw [h1, map_pow, aeval_X, mul_assoc, inv_mul_cancel₀ (pow_ne_zero _ hyc), mul_one]
       have hmemS : ∃ (d : Unit → ℕ) (g h : MRing (fun _ : Unit => T)), IsMultiHomog g d ∧
-          IsMultiHomog h d ∧ g ∈ W ∧ h ∉ W ∧ (b : K') * aeval y h = aeval y g :=
-by
+          IsMultiHomog h d ∧ g ∈ W ∧ h ∉ W ∧ (b : K') * aeval y h = aeval y g := by
         refine ⟨fun _ => n, G, X ⟨(), c⟩ ^ n, ?_, ?_, ?_, ?_, ?_⟩
         · exact hG
         · exact hXn

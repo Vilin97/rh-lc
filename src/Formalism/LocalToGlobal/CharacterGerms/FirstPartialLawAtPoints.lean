@@ -196,7 +196,7 @@ theorem biadd_left {c : Fin dd → MvPowerSeries τ C} (hc : GoodPt V c) :
       show mvExp (hAt Y (fun _ => 0) c) * 1 = 1
       rw [hAt_zero_left Y hc.1, rtj_mvExp_zero, one_mul]⟩
   | a :: l, h => by
-      have ha := h a List.mem_cons_self
+      have ha : GoodPt V a := h a (List.mem_cons_self (a := a) (l := l))
       have hl := good_sumL Y l fun b hb => h b (List.mem_cons_of_mem _ hb)
       obtain ⟨U, hU, e⟩ := biadd_left hc l fun b hb => h b (List.mem_cons_of_mem _ hb)
       have hp := first_partial_law_at_points Y ha.1 hl.1 hc.1
@@ -221,7 +221,7 @@ theorem biadd_right {c : Fin dd → MvPowerSeries τ C} (hc : GoodPt V c) :
       show mvExp (hAt Y c (fun _ => 0)) * 1 = 1
       rw [hAt_zero_right Y hc.1, rtj_mvExp_zero, one_mul]⟩
   | a :: l, h => by
-      have ha := h a List.mem_cons_self
+      have ha : GoodPt V a := h a (List.mem_cons_self (a := a) (l := l))
       have hl := good_sumL Y l fun b hb => h b (List.mem_cons_of_mem _ hb)
       obtain ⟨U, hU, e⟩ := biadd_right hc l fun b hb => h b (List.mem_cons_of_mem _ hb)
       have hp := second_partial_law_at_points Y hc.1 ha.1 hl.1

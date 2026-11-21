@@ -180,7 +180,7 @@ theorem coordHaar_of (hU : HaarUnique) (hL : LebHaar) : CoordHaar := by
   have hbox : lam (boxN X u) = 1 := by
     rw [boxN_eq, Set.inter_comm, measure_inter_eq_of_compl_null lam hlam.2.2.1,
       ← Measure.map_apply hkm hbm, hmap, hvol]
-  rw [Measure.map_smul, hmap, Measure.smul_apply, hbox, smul_eq_mul, mul_one]
+  rw [Measure.map_smul c hkm.aemeasurable, hmap, Measure.smul_apply, hbox, smul_eq_mul, mul_one]
 
 theorem covolN_of_four (hInj : KapInj) (hU : HaarUnique) (hL : LebHaar) (hC : CoordCovol) : CovolN := by
   intro D X u μ FdN hμ hF

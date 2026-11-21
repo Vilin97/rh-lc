@@ -28,11 +28,15 @@ theorem fam_rv (u : D.what₂.Word) (v : InfinitePlace X.B.I.F) (a : Fin (D.R.rS
 
 theorem rv_sum (v : InfinitePlace X.B.I.F) {ι : Type} (t : Finset ι) (c : ι → X.B.I.E) (y : ι → Fin X.B.I.n → X.B.I.E) :
     rv X.B.I v (∑ i ∈ t, c i • y i) = ∑ i ∈ t, X.B.I.φ v (c i) • rv X.B.I v (y i) := by
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [← Formalism.L2.SG.Pf.Vanish2.rvHom_apply, map_sum]
-  refine Finset.sum_congr rfl fun i _ => ?_
-  rw [Formalism.L2.SG.Pf.Vanish2.rv_smul']
-  rfl
+  unfold rv
+  have h : (fun j => X.B.I.φ v ((∑ i ∈ t, c i • y i) j)) =
+      ∑ i ∈ t, X.B.I.φ v (c i) • (fun j => X.B.I.φ v (y i j)) := by
+    funext j
+    simp only [Finset.sum_apply, Pi.smul_apply, map_sum, smul_eq_mul, map_mul]
+  rw [h, Matrix.mulVec_sum]
+  congr 1
+  funext i
+  rw [Matrix.mulVec_smul]
 
 theorem real_frame (u : D.what₂.Word) {x : X.B.I.GA} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
     (hRL : Formalism.L2.SG.TermOp.RatLink X x n) (un : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E)

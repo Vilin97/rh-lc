@@ -105,7 +105,10 @@ theorem prime_of_not_two (𝔭 : Ideal (𝓞 D.host.F)) [h𝔭 : 𝔭.IsMaximal]
       rw [Ideal.mem_comap, Ideal.mem_map_of_equiv]
       constructor
       · intro hx
-        exact ⟨algebraMap (𝓞 D.host.F) (𝓞 D.host.E) x, by rw [← Ideal.mem_comap, hP0c]; exact hx, sigO_alg x⟩
+        exact ⟨algebraMap (𝓞 D.host.F) (𝓞 D.host.E) x, by
+          change x ∈ Ideal.under (𝓞 D.host.F) P0
+          rw [hP0c]
+          exact hx, sigO_alg x⟩
       · rintro ⟨y, hy, hyx⟩
         have : y = algebraMap (𝓞 D.host.F) (𝓞 D.host.E) x := by
           rw [← sigO_alg x] at hyx; exact sigO.injective hyx
@@ -231,7 +234,7 @@ theorem t_factor_product_of_eta (hη : EtaF X) (u : D.what₂.Word) : Formalism.
       1 - Formalism.HermitianLattices.Ext.L3.etaF D.host.E D.host.F 𝔭.1 ^ D.R.k * (Ideal.absNorm 𝔭.1 : ℝ) ^ (-(D.R.k : ℤ)) else 1
     with hhdef
   have hfin : Multipliable f := by
-    apply multipliable_of_finite_mulSupport
+    apply multipliable_of_hasFiniteMulSupport
     refine (Formalism.L2.SG.TypedSets.finite_over X.B.I.F ((D.mem u).A.T) (D.mem u).A.T_prime.ne_zero).subset ?_
     intro v hv
     by_contra hc

@@ -113,9 +113,42 @@ theorem exists_uAct {R R' Ω : Type} [CommRing R] [IsDomain R] [IsNoetherianRing
   have e' : spMap τ ≫ spMap σ = spMap (algebraMap R Ω) := by rw [← Spec.map_comp, ← e]; rfl
   have hG := isGrpPullback_pullback G (spMap τ)
   have hGP := (hG.comp hα).congr e' rfl
-  have hs := GlobalTheory.isSemiAbelian_of_isAbelianScheme _ P.isAb
+  have hs : IsSemiAbelian P.A := by
+    have := P.isAb.proper
+    refine ⟨P.isAb.comm, P.isAb.smooth, inferInstance, inferInstance, P.isAb.geomConnected, ?_⟩
+    intro K _ _ p
+    have hab : IsAbelianScheme ((Over.pullback p).obj P.A) := by
+      have := P.isAb.comm
+      have := P.isAb.smooth
+      have := P.isAb.proper
+      have := P.isAb.geomConnected
+      refine ⟨inferInstance, ?_, ?_, ?_⟩
+      · change Smooth (pullback.snd P.A.hom p); infer_instance
+      · change IsProper (pullback.snd P.A.hom p); infer_instance
+      · change GeometricallyConnected (pullback.snd P.A.hom p); infer_instance
+    refine ⟨{ X := PUnit
+              B := _
+              isAbelian := hab
+              q := 𝟙 _
+              q_hom := inferInstance
+              q_flat := ?_
+              q_surjective := ?_
+              q_quasiCompact := ?_
+              i := toUnit _ ≫ η
+              i_hom := ?_
+              isKernel := ?_ }⟩
+    · rw [Over.id_left]; infer_instance
+    · rw [Over.id_left]; infer_instance
+    · rw [Over.id_left]; infer_instance
+    · have := hab.comm; infer_instance
+    · have : IsIso (toUnit (splitTorus (Sp K) PUnit)) := by
+        have h : 𝟙 (splitTorus (Sp K) PUnit) = 1 := by
+          rw [← Diag.diagMap_id, ← Diag.diagMap_zero]
+          congr 1
+        exact ⟨η, h.symm, toUnit_unique _ _⟩
+      exact IsPullback.of_vert_isIso ⟨Category.comp_id _⟩
   haveI := P.isAb.proper
-  haveI := (PolPull.isAbelianScheme_of_isGrpPullback P.isAb hα).smooth
+  haveI : Smooth G.hom := MorphismProperty.of_isPullback (P := @Smooth) hα.1 P.isAb.smooth
   haveI : IsSchemeTheoreticallyDominant (spMap τ) := ExtUnique.isSchemeTheoreticallyDominant_spec_of_injective _ hτ
   haveI : IsSchemeTheoreticallyDominant (pullback.fst G.hom (spMap τ)) := .of_isPullback hG.1.flip
   have key : ∀ a : 𝓞 E, ∃ F : P.A ⟶ P.A, IsMonHom F ∧ ∃ f : G ⟶ G, f.left ≫ α = α ≫ F.left ∧

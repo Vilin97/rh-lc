@@ -104,10 +104,10 @@ private theorem lam_res (l : ℕ) [Fact l.Prime] {O R ι : Type} [CommRing O] [I
 private theorem lam_push {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommRing O] [IsLocalRing O]
     [Algebra ℤ_[l] O] {n : ℕ} {r : Resid F O n} {R R' : Type} [CommRing R] [Algebra O R] [IsCO O R]
     [CommRing R'] [Algebra O R'] [IsCO O R'] (f : R →ₐ[O] R') {v : F.Vl} {i : Fin n} {ψ : F.Gv v →* Rˣ}
-    (h : r.IsPsi v i ψ) : r.IsPsi v i (pushCh (f : R →+* R') ψ) where
-  cont := lam_cont f _ h.cont
-  red g := (res_map f _).trans (h.red g)
-  mu g := (congrArg f (h.mu g)).trans (f.commutes _)
+    (h : r.IsPsi v i ψ) : r.IsPsi v i (pushCh (f : R →+* R') ψ) := by
+  refine ⟨lam_cont f _ h.cont, fun g => ?_, fun g => ?_⟩
+  · exact (res_map f _).trans (h.red g)
+  · exact (congrArg f (h.mu g)).trans (f.commutes _)
 
 private def lam_fst (l : ℕ) [Fact l.Prime] (d : ℕ) :
     Multiplicative ((Fin d → ℤ_[l]) × ℤ_[l]) →* Multiplicative (Fin d → ℤ_[l]) where

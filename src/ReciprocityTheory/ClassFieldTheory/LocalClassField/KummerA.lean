@@ -99,7 +99,7 @@ theorem muMap_equiv (ζ : (PadicAlgCl p)ˣ) (hζ : ζ ^ n = 1) (g : GK p K) (k :
   refine congrArg Additive.ofMul (Units.ext ?_)
   have h1 : ((ζ ^ k.val : (PadicAlgCl p)ˣ) : PadicAlgCl p) ^ n = 1 := by
     rw [← Units.val_pow_eq_pow_val, ← pow_mul, mul_comm, pow_mul, hζ, one_pow, Units.val_one]
-  have h2 := cycN_spec K (PadicAlgCl p) n g _ h1
+  have h2 := cycN_spec (K := K) (L := PadicAlgCl p) (n := n) g _ h1
   show _ = g ((ζ ^ k.val : (PadicAlgCl p)ˣ) : PadicAlgCl p)
   rw [h2, ← Units.val_pow_eq_pow_val, ZMod.val_mul, ← pow_eq_pow_mod _ hζ, ← pow_mul, mul_comm]
 

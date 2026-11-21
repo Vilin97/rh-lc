@@ -68,7 +68,7 @@ private theorem exists_pos_eig {H : Type} [NormedAddCommGroup H] [InnerProductSp
     exact V.smul_mem _ (hPV _)
   have hAw : A (b i) = ((l i : ℝ) : ℂ) • b i := by rw [← hBv _ hwV, hTb i]
   have hpos : 0 < l i := by
-    have h1 := ((ContinuousLinearMap.nonneg_iff_isPositive A).1 hA).re_inner_nonneg_right (b i)
+    have h1 := ((ContinuousLinearMap.nonneg_iff_isPositive).1 hA).re_inner_nonneg_right (b i)
     have hn : ⟪b i, b i⟫_ℂ = 1 := by
       rw [inner_self_eq_norm_sq_to_K, b.orthonormal.1 i]
       simp

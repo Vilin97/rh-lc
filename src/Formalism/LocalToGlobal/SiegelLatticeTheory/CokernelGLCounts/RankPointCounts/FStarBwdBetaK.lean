@@ -111,6 +111,22 @@ theorem Xsp_of_frame (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (F F₂ : LFlag (
 
 theorem Gom_orth (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Gom (frame F) (frame F') ∈ orth (VS D) (Xsp F') := by
+  have om_pair (u v : Fin (D.R.rS + 1) → (VS D).V) (b : Fin (D.R.rS + 1)) :
+      (VS D).hT (Gom u v) (v b) = if b = Fin.last _ then GDl u v (D.R.rS + 1) else 0 := by
+    have key := congrFun (congrFun (Matrix.adjugate_mul (GZ u v)) (Fin.last _)) b
+    rw [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply] at key
+    unfold GDl
+    rw [dite_eq_left le_rfl]
+    unfold Gom
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
+    simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star]
+    change (∑ a, (GZ u v).adjugate (Fin.last _) a * GZ u v a b) = _
+    rw [key]
+    rcases eq_or_ne b (Fin.last _) with hb | hb
+    · subst hb
+      simp
+    · rw [if_neg (Ne.symm hb), if_neg hb, smul_zero]
   unfold orth Xsp
   simp only [Submodule.mem_iInf, LinearMap.mem_ker]
   intro x hx
@@ -118,7 +134,7 @@ theorem Gom_orth (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T
   induction hx using Submodule.span_induction with
   | mem y hy =>
     obtain ⟨i, rfl⟩ := hy
-    rw [← fvec_cs' F' i, PI.NRL.herm_eq, Formalism.L2.SG.Pf.ScalarFramePf.om_pair,
+    rw [← fvec_cs' F' i, PI.NRL.herm_eq, om_pair,
       if_neg (Fin.castSucc_lt_last i).ne, star_zero]
   | zero => simp
   | add y z _ _ hy hz => simp [map_add (f := _), hy, hz]
@@ -141,29 +157,8 @@ theorem comb_mem {V : Type*} [AddCommGroup V] [Module D.host.E V] {X : Submodule
 private theorem Hp_le_orth_Xsp (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : Submodule.IsLattice D.host.E Λ)
     {T₁ T₂ : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T₁) (F' : LFlag (D.sp.Y 0) D.R.rS T₂) :
     Hp Λ F F' ≤ orth (VS D) (Xsp F') := by
-  have hle : XLam Λ F' ≤ UU Λ F F' := by
-    unfold UU
-    exact le_sup_right.trans le_sup_left
-  have hX : Xsp F' ≤ spanE (VS D) (UU Λ F F') := by
-    refine le_trans ?_ (Submodule.span_mono (SetLike.coe_subset_coe.mpr hle))
-    intro x hx
-    have hxs : x ∈ Submodule.span D.host.E (Λ : Set (VS D).V) := by
-      rw [hΛ.span_eq_top]
-      exact Submodule.mem_top
-    obtain ⟨d, hd0, hd⟩ := Formalism.MainNotions.LatticeGluingRadicals.m_exists_smul_mem Λ hxs
-    have hdx : (algebraMap (𝓞 D.host.E) D.host.E d) • x ∈ Xsp F' := (Xsp F').smul_mem _ hx
-    rw [algebraMap_smul] at hdx
-    have hdX : d • x ∈ XLam Λ F' := by
-      unfold XLam
-      exact Submodule.mem_inf.mpr ⟨hd, by unfold toO; first | exact hdx | simpa using hdx⟩
-    have hd' : algebraMap (𝓞 D.host.E) D.host.E d ≠ 0 := by
-      first
-      | exact (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 D.host.E) D.host.E)).mpr hd0
-      | simpa using hd0
-    have hx' : x = (algebraMap (𝓞 D.host.E) D.host.E d)⁻¹ • (d • x) := by
-      rw [← algebraMap_smul D.host.E d x, smul_smul, inv_mul_cancel₀ hd', one_smul]
-    rw [hx']
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hdX)
+  have hX : Xsp F' ≤ UUE Λ F F' :=
+    PI.UnitaryGroupMassFormula.BetaLUniq.Xsp_le_UUE' (VS D) Λ hΛ F F'
   unfold Hp UUE
   intro y hy
   simp only [orth, Submodule.mem_iInf, LinearMap.mem_ker] at hy ⊢

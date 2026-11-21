@@ -239,14 +239,15 @@ theorem th_mul (h𝔞 : ∀ p, p ∈ 𝔞 ↔ ε p = 0) (n : ℕ) (c x : P) (hx 
     _ = _ := by rw [th_mul_dpow h𝔞 _ _ _ hx, hp]; ring
 
 theorem isPreDividedPowers_th (h𝔞 : ∀ p, p ∈ 𝔞 ↔ ε p = 0) :
-    IsPreDP (J.map (algebraMap B P) ⊔ 𝔞) (th δ ε η) where
-  null n x hx := th_null h𝔞 n x hx
-  zero x hx := th_zero h𝔞 x hx
-  one x hx := th_one h𝔞 x hx
-  mem n hn x hx := th_mem h𝔞 n hn x hx
-  add n x hx y hy := th_add h𝔞 n x hx y hy
-  mul n c x hx := th_mul h𝔞 n c x hx
-  mul_dpow m n x hx := th_mul_dpow h𝔞 m n x hx
+    IsPreDP (J.map (algebraMap B P) ⊔ 𝔞) (th δ ε η) := by
+  exact
+    { null := th_null h𝔞
+      zero := th_zero h𝔞
+      one := th_one h𝔞
+      mem := th_mem h𝔞
+      add := th_add h𝔞
+      mul := th_mul h𝔞
+      mul_dpow := th_mul_dpow h𝔞 }
 
 theorem ext_eq_span : J.map (algebraMap B P) ⊔ 𝔞 = Ideal.span (algebraMap B P '' (J : Set B) ∪ (𝔞 : Set P)) := by
   rw [Ideal.span_union, Ideal.span_eq]

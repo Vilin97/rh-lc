@@ -19,7 +19,7 @@ namespace FsInvPow
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem fsHerm_h_eq (a : K → ℤ) (z : (Σ k, ι k) → ℂ) :
-    (fsHerm ι a).h z = (HermLine.ofMetrics (fun k => fsMetric (ι k)) a).h z := by
+    (fsHerm ι a).h z = (HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) a).h z := by
   rw [fsHerm_h, Inter.ofMetrics_fs_h]
   unfold refNorm
   refine Finset.prod_congr rfl fun k _ => ?_
@@ -27,7 +27,8 @@ theorem fsHerm_h_eq (a : K → ℤ) (z : (Σ k, ι k) → ℂ) :
     Real.sq_sqrt (Finset.sum_nonneg fun _ _ => sq_nonneg _)]
 
 theorem isSmoothHerm_fsHerm (a : K → ℤ) : IsSmoothHerm (fsHerm ι a) := by
-  have h : (fsHerm ι a).h = (HermLine.ofMetrics (fun k => fsMetric (ι k)) a).h := funext (fsHerm_h_eq a)
+  have h : (fsHerm ι a).h = (HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) a).h :=
+    funext (fsHerm_h_eq a)
   unfold IsSmoothHerm
   rw [h]
   exact Inter.isSmoothHerm_ofMetrics_fs a

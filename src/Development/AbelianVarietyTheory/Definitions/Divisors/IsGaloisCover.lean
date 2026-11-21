@@ -38,19 +38,15 @@ variable {Z W : Scheme.{0}} {s : Z ⟶ Sp ℂ} {sW : W ⟶ Sp ℂ} {π : W ⟶ Z
 theorem mk' (hG : Finite G) (hfin : IsFinite π) (het : Etale π) (hon : Surjective π) (hinv : ∀ g, act g ≫ π = π)
     (hmul : ∀ g h, act (g * h) = act h ≫ act g) (hone : act 1 = 𝟙 W)
     (hfib : ∀ (K : Type) [Field K] [IsAlgClosed K] (a b : Sp K ⟶ W), a ≫ π = b ≫ π → ∃! g : G, b = a ≫ act g) :
-    IsGal π hπ G act where
-  finite := hG
-  one := by simp [hone]
-  mul a c := by simp only [mul_inv_rev]; exact hmul c⁻¹ a⁻¹
-  inv a := hinv a⁻¹
-  fin := hfin
-  etale := het
-  onto := hon
-  fibre K _ _ y y' e := by
+    IsGal π hπ G act := by
+  refine GlobalTheory.ZM.IsGaloisCover.mk hG ?_ ?_ (fun a => hinv a⁻¹) hfin het hon ?_
+  · simpa only [inv_one] using hone
+  · intro a c
+    simpa only [mul_inv_rev] using hmul c⁻¹ a⁻¹
+  · intro K _ _ y y' e
     obtain ⟨g, hg, hu⟩ := hfib K y y' e
-    refine ⟨g⁻¹, by simp [hg], fun a ha => ?_⟩
-    have := hu a⁻¹ (by simpa using ha.symm)
-    simp [← this]
+    refine ⟨g⁻¹, by simpa only [inv_inv] using hg.symm, fun a ha => ?_⟩
+    simpa only [inv_inv] using congrArg Inv.inv (hu a⁻¹ ha.symm)
 
 theorem finite (h : IsGal π hπ G act) : Finite G := GlobalTheory.ZM.IsGaloisCover.finite h
 theorem etale (h : IsGal π hπ G act) : Etale π := GlobalTheory.ZM.IsGaloisCover.etale h

@@ -21,7 +21,7 @@ namespace GlobalTheory.CompanionTheory.LocCmp
 variable {R : Type} [CommRing R] {C C' : Type 1} [Category.{0} C] [Category.{0} C']
   {Φ : PDF R C} {Φ' : PDF R C'} {c : IdF Φ'.A}
 
-def Gpt (m : QMor Φ Φ' c) {d : ℕ} (E : Frame Φ d) (E' : Frame Φ' d) (e : E.D ⟶ m.G.obj E'.D) : Pt E' ⥤ Pt E where
+def Gpt (m : QMor Φ Φ' c) {d : ℕ} (E : Frame (Φ := Φ) d) (E' : Frame (Φ := Φ') d) (e : E.D ⟶ m.G.obj E'.D) : Pt E' ⥤ Pt E where
   obj X := ⟨m.G.obj X.T, e ≫ m.G.map X.s⟩
   map {X Y} f := m.G.map (show X.T ⟶ Y.T from f)
   map_id X := m.G.map_id X.T
@@ -29,7 +29,7 @@ def Gpt (m : QMor Φ Φ' c) {d : ℕ} (E : Frame Φ d) (E' : Frame Φ' d) (e : E
 
 section Cut
 
-variable (m : QMor Φ Φ' c) {d : ℕ} {E : Frame Φ (d + 1)} {E' : Frame Φ' (d + 1)} {e : E.D ⟶ m.G.obj E'.D}
+variable (m : QMor Φ Φ' c) {d : ℕ} {E : Frame (Φ := Φ) (d + 1)} {E' : Frame (Φ := Φ') (d + 1)} {e : E.D ⟶ m.G.obj E'.D}
 
 theorem τ_zero (he : m.Fr E E' e) {T : C'} (s s' : E'.D ⟶ T) (h : E'.τ 0 s s' = 0) :
     E.τ 0 (e ≫ m.G.map s) (e ≫ m.G.map s') = 0 := by
@@ -148,18 +148,18 @@ end Tr
 variable {R : Type} [CommRing R] {C C' : Type 1} [Category.{0} C] [Category.{0} C']
   {Φ : PDF R C} {Φ' : PDF R C'} {c : IdF Φ'.A}
 
-def etaU (m : QMor Φ Φ' c) {d : ℕ} (E : Frame Φ d) (E' : Frame Φ' d) (e : E.D ⟶ m.G.obj E'.D) :
+def etaU (m : QMor Φ Φ' c) {d : ℕ} (E : Frame (Φ := Φ) d) (E' : Frame (Φ := Φ') d) (e : E.D ⟶ m.G.obj E'.D) :
     Gpt m E E' e ⋙ Pt.U E ⟶ Pt.U E' ⋙ m.G where
   app X := 𝟙 (m.G.obj X.T)
   naturality {X Y} φ := (Category.comp_id _).trans (Category.id_comp _).symm
 
-def low (m : QMor Φ Φ' c) (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) {d : ℕ} (E : Frame Φ d) (E' : Frame Φ' d)
+def low (m : QMor Φ Φ' c) (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) {d : ℕ} (E : Frame (Φ := Φ) d) (E' : Frame (Φ := Φ') d)
     (e : E.D ⟶ m.G.obj E'.D) : CH.Mor (Pt.U E ⋙ CH.modF Φ.A) (Pt.U E' ⋙ sq (IdF.top Φ'.A) B) (RingHom.id R) :=
   tr (m.o B hB) (Pt.U E) (Pt.U E') (Gpt m E E' e) (etaU m E E' e)
 
 section Cut
 
-variable (m : QMor Φ Φ' c) (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) {d : ℕ} {E : Frame Φ (d + 1)} {E' : Frame Φ' (d + 1)}
+variable (m : QMor Φ Φ' c) (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) {d : ℕ} {E : Frame (Φ := Φ) (d + 1)} {E' : Frame (Φ := Φ') (d + 1)}
   {e : E.D ⟶ m.G.obj E'.D} (he : m.Fr E E' e) (Q : Poly Φ) (Q' : Poly Φ')
 
 def cutO : CH.Mor (Cut.U E ⋙ CH.modF Φ.A) (Cut.U E' ⋙ sq (IdF.top Φ'.A) B) (RingHom.id R) where
@@ -175,7 +175,7 @@ theorem mid_bij (n : ℕ) : Function.Bijective ((cutO m B hB he).pull n) ↔ Fun
 
 end Cut
 
-theorem low_bij (m : QMor Φ Φ' c) (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) {d : ℕ} (E : Frame Φ d) (E' : Frame Φ' d)
+theorem low_bij (m : QMor Φ Φ' c) (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) {d : ℕ} (E : Frame (Φ := Φ) d) (E' : Frame (Φ := Φ') d)
     (e : E.D ⟶ m.G.obj E'.D) (n : ℕ) :
     Function.Bijective ((m.o B hB).pull n) ↔ Function.Bijective ((low m B hB E E' e).pull n) :=
   tr_bij _ _ _ (Pt.adj E) (Pt.adj E') n
@@ -237,7 +237,7 @@ end Base
 variable {R : Type} [CommRing R] {C C' : Type 1} [Category.{0} C] [Category.{0} C']
   {Φ : PDF R C} {Φ' : PDF R C'} {c : IdF Φ'.A}
 
-theorem base (m : QMor Φ Φ' c) (E : Frame Φ 0) (E' : Frame Φ' 0) (e : E.D ⟶ m.G.obj E'.D) (B : IdF Φ'.A)
+theorem base (m : QMor Φ Φ' c) (E : Frame (Φ := Φ) 0) (E' : Frame (Φ := Φ') 0) (e : E.D ⟶ m.G.obj E'.D) (B : IdF Φ'.A)
     (hB : ∀ T, c.S T ≤ B.S T)
     (hb : Function.Bijective fun x : Φ.A.obj E.D => (m.o B hB).τ E'.D ((Φ.A.map e).hom x)) (j : ℕ) :
     Function.Bijective ((m.o B hB).pull j) := by
@@ -272,10 +272,10 @@ def qE (A : C ⥤ CommAlgCat.{0} R) (T : C) : A.obj T ≃ₗ[R] sqM (IdF.top A) 
       obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective z
       exact ⟨y, rfl⟩⟩
 
-def jW {d : ℕ} {E : Frame Φ (d + 1)} (Q : Poly Φ) (F : C ⥤ ModuleCat.{0} R) : Pt.U E ⋙ F ⟶ Cut.P0 Q ⋙ Cut.U E ⋙ F :=
+def jW {d : ℕ} {E : Frame (Φ := Φ) (d + 1)} (Q : Poly Φ) (F : C ⥤ ModuleCat.{0} R) : Pt.U E ⋙ F ⟶ Cut.P0 Q ⋙ Cut.U E ⋙ F :=
   Functor.whiskerRight (Cut.jNat Q) F
 
-theorem ses0 {d : ℕ} (Q : Poly Φ) (E : Frame Φ (d + 1)) (hQ : Q.Crit (fun _ => IdF.bot _) 0) :
+theorem ses0 {d : ℕ} (Q : Poly Φ) (E : Frame (Φ := Φ) (d + 1)) (hQ : Q.Crit (fun _ => IdF.bot _) 0) :
     ∃ β : Cut.P0 Q ⋙ Cut.U E ⋙ CH.modF Φ.A ⟶ Cut.P0 Q ⋙ Cut.U E ⋙ CH.modF Φ.A,
       (∀ X, Function.Injective ((jW (E := E) Q (CH.modF Φ.A)).app X).hom) ∧
       (∀ X, Function.Exact ((jW (E := E) Q (CH.modF Φ.A)).app X).hom (β.app X).hom) ∧
@@ -337,14 +337,14 @@ theorem o_mk (m : QMor Φ Φ' c) (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) (
   rw [h]
   rfl
 
-theorem low_τ (m : QMor Φ Φ' c) (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) {d : ℕ} (E : Frame Φ d) (E' : Frame Φ' d)
+theorem low_τ (m : QMor Φ Φ' c) (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) {d : ℕ} (E : Frame (Φ := Φ) d) (E' : Frame (Φ := Φ') d)
     (e : E.D ⟶ m.G.obj E'.D) (X : Pt E') (x : Φ.A.obj (m.G.obj X.T)) :
     (low m B hB E E' e).τ X x = (m.o B hB).τ X.T x := by
   exact congrArg (fun f => (m.o B hB).τ X.T (f.hom x)) ((CH.modF Φ.A).map_id (m.G.obj X.T))
 
 section Comm
 
-variable (m : QMor Φ Φ' c) {d : ℕ} {E : Frame Φ (d + 1)} {E' : Frame Φ' (d + 1)}
+variable (m : QMor Φ Φ' c) {d : ℕ} {E : Frame (Φ := Φ) (d + 1)} {E' : Frame (Φ := Φ') (d + 1)}
   {e : E.D ⟶ m.G.obj E'.D} (he : m.Fr E E' e) (Q : Poly Φ) (Q' : Poly Φ')
 
 theorem mid_τ (B : IdF Φ'.A) (hB : ∀ T, c.S T ≤ B.S T) (X : Pt E') (x : Φ.A.obj (Q.P (m.G.obj X.T))) :
@@ -439,7 +439,7 @@ theorem step (b : ℤ → IdF Φ'.A) (h : ∀ r T, c.S T ≤ (b r).S T) (r : ℤ
 end Comm
 
 theorem main : ∀ (d : ℕ) {C C' : Type 1} [Category.{0} C] [Category.{0} C'] {Φ : PDF R C} {Φ' : PDF R C'}
-    {c : IdF Φ'.A} (m : QMor Φ Φ' c) (Q : Poly Φ) (Q' : Poly Φ') (E : Frame Φ d) (E' : Frame Φ' d)
+    {c : IdF Φ'.A} (m : QMor Φ Φ' c) (Q : Poly Φ) (Q' : Poly Φ') (E : Frame (Φ := Φ) d) (E' : Frame (Φ := Φ') d)
     (e : E.D ⟶ m.G.obj E'.D) (he : m.Fr E E' e) (b : ℤ → IdF Φ'.A) (h : ∀ r T, c.S T ≤ (b r).S T) (r : ℤ)
     (hQ : Q.Crit (fun _ => IdF.bot _) 0) (hQ' : ∀ r' ≤ r, Q'.Crit b r'),
     (∀ r', r - d ≤ r' → r' ≤ r → Function.Bijective fun x : Φ.A.obj E.D => (m.o (b r') (h r')).τ E'.D ((Φ.A.map e).hom x)) →
@@ -469,7 +469,7 @@ section Final
 open CategoryTheory AlgebraicGeometry TensorProduct GlobalTheory.LogCris DividedPowers CrystallineSemistableComparison CrystallineSemistableComparison.Pb
 
 theorem GlobalTheory.CompanionTheory.LocCmp.localComparison : ∀ {R : Type} [CommRing R] {C C' : Type 1} [Category.{0} C] [Category.{0} C'] {Φ : PDF R C} {Φ' : PDF R C'}
-    {c : IdF Φ'.A} (m : QMor Φ Φ' c) (Q : Poly Φ) (Q' : Poly Φ') {d : ℕ} (E : Frame Φ d) (E' : Frame Φ' d)
+    {c : IdF Φ'.A} (m : QMor Φ Φ' c) (Q : Poly Φ) (Q' : Poly Φ') {d : ℕ} (E : Frame (Φ := Φ) d) (E' : Frame (Φ := Φ') d)
     (e : E.D ⟶ m.G.obj E'.D) (he : m.Fr E E' e) (b : ℤ → IdF Φ'.A) (h : ∀ r T, c.S T ≤ (b r).S T) (r : ℤ)
     (hQ : Q.Crit (fun _ => IdF.bot _) 0) (hQ' : ∀ r' ≤ r, Q'.Crit b r'),
     (∀ r', r - d ≤ r' → r' ≤ r → Function.Bijective fun x : Φ.A.obj E.D => (m.o (b r') (h r')).τ E'.D ((Φ.A.map e).hom x)) →

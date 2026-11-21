@@ -33,30 +33,30 @@ theorem specialLinear_inv_val (g : G1 F) : (g⁻¹).1 = !![g 1 1, -g 0 1; -g 1 0
     (cD t g).1 = !![g 0 0, g 0 1 * ((t⁻¹ : (A F)ˣ) : A F); (t : A F) * g 1 0, g 1 1] := rfl
 @[simp] theorem gl_val (g : G1 F) : (gl g).val = g.1 := rfl
 
-@[simp] theorem nU_zero : nU (0 : A F) = 1 := by sl2
-theorem nU_add (b c : A F) : nU (b + c) = nU b * nU c := by sl2; ring
+@[simp] theorem nU_zero : nU (0 : A F) = 1 := by (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val])
+theorem nU_add (b c : A F) : nU (b + c) = nU b * nU c := by (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val]); ring
 theorem nU_neg (b : A F) : nU (-b) = (nU b)⁻¹ := eq_inv_of_mul_eq_one_left (by rw [← nU_add]; simp)
-@[simp] theorem mD_one : mD (1 : (A F)ˣ) = 1 := by sl2
-theorem mD_mul (a b : (A F)ˣ) : mD (a * b) = mD a * mD b := by sl2; ring
+@[simp] theorem mD_one : mD (1 : (A F)ˣ) = 1 := by (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val])
+theorem mD_mul (a b : (A F)ˣ) : mD (a * b) = mD a * mD b := by (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val]); ring
 theorem mD_inv (a : (A F)ˣ) : mD a⁻¹ = (mD a)⁻¹ := eq_inv_of_mul_eq_one_left (by rw [← mD_mul]; simp)
 theorem mD_mul_nU (a : (A F)ˣ) (b : A F) : mD a * nU b = nU ((a : A F) ^ 2 * b) * mD a := by
-  sl2; linear_combination (-(a : A F) * b) * a.mul_inv
-theorem wW_mul_wW : wW F * wW F = mD (-1) := by sl2
+  (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val]); linear_combination (-(a : A F) * b) * a.mul_inv
+theorem wW_mul_wW : wW F * wW F = mD (-1) := by (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val])
 theorem wW_inv : (wW F)⁻¹ = mD (-1) * wW F := by
-  refine inv_eq_of_mul_eq_one_right ?_; sl2
-theorem wW_mul_nU (b : A F) : wW F * nU b = nL (-b) * wW F := by sl2
+  refine inv_eq_of_mul_eq_one_right ?_; (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val])
+theorem wW_mul_nU (b : A F) : wW F * nU b = nL (-b) * wW F := by (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val])
 theorem wW_nU_wW_inv (b : A F) : wW F * nU b * (wW F)⁻¹ = nL (-b) := by rw [wW_mul_nU, mul_inv_cancel_right]
 theorem nL_eq (c : A F) : nL c = wW F * nU (-c) * (wW F)⁻¹ := by rw [wW_nU_wW_inv, neg_neg]
 
-theorem mD_mul_wW (a : (A F)ˣ) : mD a * wW F = nU (a : A F) * nL (-((a⁻¹ : (A F)ˣ) : A F)) * nU (a : A F) := by sl2
+theorem mD_mul_wW (a : (A F)ˣ) : mD a * wW F = nU (a : A F) * nL (-((a⁻¹ : (A F)ˣ) : A F)) * nU (a : A F) := by (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val])
 
-@[simp] theorem dM_one : dM (1 : (A F)ˣ) = 1 := by gl2
-theorem dM_mul (s t : (A F)ˣ) : dM (s * t) = dM s * dM t := by gl2
+@[simp] theorem dM_one : dM (1 : (A F)ˣ) = 1 := by (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar])
+theorem dM_mul (s t : (A F)ˣ) : dM (s * t) = dM s * dM t := by (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar])
 theorem dM_inv (t : (A F)ˣ) : dM t⁻¹ = (dM t)⁻¹ := eq_inv_of_mul_eq_one_left (by rw [← dM_mul]; simp)
 @[simp] theorem det_dM (t : (A F)ˣ) : Matrix.GeneralLinearGroup.det (dM t) = t := by
   refine Units.ext ?_; simp [Matrix.det_fin_two]
-@[simp] theorem aE_one : aE (1 : (A F)ˣ) = 1 := by gl2
-theorem aE_mul (s t : (A F)ˣ) : aE (s * t) = aE s * aE t := by gl2
+@[simp] theorem aE_one : aE (1 : (A F)ˣ) = 1 := by (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar])
+theorem aE_mul (s t : (A F)ˣ) : aE (s * t) = aE s * aE t := by (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar])
 theorem aE_inv (t : (A F)ˣ) : aE t⁻¹ = (aE t)⁻¹ := eq_inv_of_mul_eq_one_left (by rw [← aE_mul]; simp)
 @[simp] theorem det_aE (t : (A F)ˣ) : Matrix.GeneralLinearGroup.det (aE t) = t := by
   refine Units.ext ?_; simp [Matrix.det_fin_two]
@@ -69,14 +69,14 @@ theorem gl_inv (g : G1 F) : gl g⁻¹ = (gl g)⁻¹ := map_inv _ _
 theorem gl_injective : Function.Injective (gl (F := F)) := fun _ _ h => Subtype.ext (congrArg Units.val h)
 theorem scalar_comm (s : (A F)ˣ) (g : GL (Fin 2) (A F)) :
     Matrix.GeneralLinearGroup.scalar (Fin 2) s * g = g * Matrix.GeneralLinearGroup.scalar (Fin 2) s := by
-  gl2 <;> ring
-theorem dM_mul_aE (s t : (A F)ˣ) : dM s * aE t = aE t * dM s := by gl2
-theorem gl_mD (a : (A F)ˣ) : gl (mD a) = aE a * dM a⁻¹ := by gl2
+  (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar]) <;> ring
+theorem dM_mul_aE (s t : (A F)ˣ) : dM s * aE t = aE t * dM s := by (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar])
+theorem gl_mD (a : (A F)ˣ) : gl (mD a) = aE a * dM a⁻¹ := by (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar])
 theorem gl_mD_mul_dM_sq (s : (A F)ˣ) : gl (mD s) * dM (s ^ 2) = Matrix.GeneralLinearGroup.scalar (Fin 2) s := by
-  gl2; rw [pow_two, ← mul_assoc, Units.inv_mul, one_mul]
-theorem aE_mul_nU (t : (A F)ˣ) (b : A F) : aE t * gl (nU b) = gl (nU ((t : A F) * b)) * aE t := by gl2
+  (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar]); rw [pow_two, ← mul_assoc, Units.inv_mul, one_mul]
+theorem aE_mul_nU (t : (A F)ˣ) (b : A F) : aE t * gl (nU b) = gl (nU ((t : A F) * b)) * aE t := by (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar])
 theorem dM_mul_gl (t : (A F)ˣ) (g : G1 F) : dM t * gl g = gl (cD t g) * dM t := by
-  gl2 <;> first | rw [mul_assoc, Units.inv_mul, mul_one] | ring
+  (apply Units.ext; simp only [Units.val_mul, gl_val, aE_val, dM_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [gl, nU, nL, Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar]) <;> first | rw [mul_assoc, Units.inv_mul, mul_one] | ring
 theorem gl_cD (t : (A F)ˣ) (g : G1 F) : gl (cD t g) = dM t * gl g * (dM t)⁻¹ := by rw [dM_mul_gl, mul_inv_cancel_right]
 theorem exists_gl_of_det_eq_one (h : GL (Fin 2) (A F)) (hd : Matrix.GeneralLinearGroup.det h = 1) : ∃ g, gl g = h :=
   ⟨⟨h.val, congrArg Units.val hd⟩, Units.ext rfl⟩
@@ -94,7 +94,7 @@ theorem cD_mul (t : (A F)ˣ) (g h : G1 F) : cD t (g * h) = cD t g * cD t h :=
   gl_injective (by simp only [gl_cD, gl_mul]; group)
 @[simp] theorem cD_one (t : (A F)ˣ) : cD t (1 : G1 F) = 1 := gl_injective (by rw [gl_cD, gl_one]; simp)
 
-theorem cD_nU (t : (A F)ˣ) (b : A F) : cD t (nU b) = nU (b * ((t⁻¹ : (A F)ˣ) : A F)) := by sl2
+theorem cD_nU (t : (A F)ˣ) (b : A F) : cD t (nU b) = nU (b * ((t⁻¹ : (A F)ˣ) : A F)) := by (apply Subtype.ext; simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, mD_val, wW_val, cD_val]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one, Matrix.mul_apply, Fin.sum_univ_two, nU, nL, cD_val])
 theorem cD_sq (t : (A F)ˣ) (g : G1 F) : cD (t ^ 2) g = (mD t)⁻¹ * g * mD t := by
   apply gl_injective
   have h : dM (t ^ 2) = (gl (mD t))⁻¹ * Matrix.GeneralLinearGroup.scalar (Fin 2) t := by
@@ -109,7 +109,7 @@ theorem continuous_adelicGL2_of_continuous_entries {X : Type*} [TopologicalSpace
     (h' : ∀ i j, Continuous fun x => ((f x)⁻¹).val i j) : Continuous f :=
   Units.continuous_iff.2 ⟨continuous_matrix h, continuous_matrix h'⟩
 theorem continuous_nU : Continuous (nU (F := F)) :=
-  continuous_adelicSL2_of_continuous_entries fun i j => by fin_cases i <;> fin_cases j <;> simp <;> fun_prop
+  continuous_adelicSL2_of_continuous_entries fun i j => by fin_cases i <;> fin_cases j <;> simp [nU] <;> fun_prop
 theorem continuous_mD : Continuous (mD (F := F)) :=
   continuous_adelicSL2_of_continuous_entries fun i j => by
     fin_cases i <;> fin_cases j <;> simp <;> first | exact continuous_const | exact Units.continuous_val | exact Units.continuous_coe_inv
@@ -162,7 +162,7 @@ theorem det_ratGL (γ : GL (Fin 2) F) :
   refine Units.ext ?_
   simp [Matrix.det_fin_two, ratGL_apply, coe_diagonal]
 theorem nU_rt_mem (b : F) : nU (rt b) ∈ Gam F := ⟨⟨!![1, b; 0, 1], by simp [Matrix.det_fin_two]⟩, by
-  apply specialLinear_ext_entries <;> refine (ratS_apply _ _ _).trans ?_ <;> simp⟩
+  apply specialLinear_ext_entries <;> refine (ratS_apply _ _ _).trans ?_ <;> simp [nU]⟩
 theorem wW_mem : wW F ∈ Gam F := ⟨⟨!![0, 1; -1, 0], by simp [Matrix.det_fin_two]⟩, by
   apply specialLinear_ext_entries <;> refine (ratS_apply _ _ _).trans ?_ <;> simp⟩
 theorem mem_Gam_iff (g : G1 F) : g ∈ Gam F ↔ ∀ i j, ∃ c : F, g i j = rt c := by

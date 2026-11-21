@@ -52,7 +52,7 @@ theorem inUJ_pol {ε : Fin n → Bool} (s : GCo ε) :
   exact inUJ_mul (exp_inUJ (inG_gMat _)) (exp_inUJ (inG_gMat _))
 
 def Lm {ε : Fin n → Bool} (s : GCo ε) : GCo ε :=
-  cLin ε (logM (NormedSpace.exp (kMat s.1) * NormedSpace.exp (pmat s.2)))
+  cLin ε (logM n (NormedSpace.exp (kMat s.1) * NormedSpace.exp (pmat s.2)))
 
 section An
 
@@ -90,7 +90,7 @@ theorem Lm_strict (ε : Fin n → Bool) :
     HasStrictFDerivAt (Lm (ε := ε)) (ContinuousLinearMap.id ℝ (GCo ε)) 0 := by
   have h0 : (fun s : GCo ε => NormedSpace.exp (kMat s.1) * NormedSpace.exp (pmat s.2)) 0 = 1 := by
     simp [kMat_zero', pmat_zero']
-  have hl : HasStrictFDerivAt (logM (n := n)) (ContinuousLinearMap.id ℝ _)
+  have hl : HasStrictFDerivAt (logM n) (ContinuousLinearMap.id ℝ _)
       ((fun s : GCo ε => NormedSpace.exp (kMat s.1) * NormedSpace.exp (pmat s.2)) 0) := by
     have h := (exp_strict (n := n)).to_localInverse
     rw [NormedSpace.exp_zero] at h
@@ -117,7 +117,7 @@ theorem Lm_exp (ε : Fin n → Bool) : ∀ᶠ s in 𝓝 (0 : GCo ε),
     have := (prod_strict ε).continuousAt.tendsto
     rwa [hP0] at this
   have hlog := exp_strict (n := n)
-  have hl : Tendsto (logM (n := n)) (𝓝 1) (𝓝 0) := by
+  have hl : Tendsto (logM n) (𝓝 1) (𝓝 0) := by
     have h := hlog.to_localInverse.continuousAt.tendsto
     rw [hlog.localInverse_apply_image, NormedSpace.exp_zero] at h
     exact h
@@ -125,22 +125,22 @@ theorem Lm_exp (ε : Fin n → Bool) : ∀ᶠ s in 𝓝 (0 : GCo ε),
   have hc : Continuous fun Y : Matrix (Fin n) (Fin n) ℂ => Jm ε * (-Yᴴ) * Jm ε :=
     (continuous_const.matrix_mul continuous_id.matrix_conjTranspose.neg).matrix_mul continuous_const
   have hJ : Tendsto (fun s : GCo ε =>
-      Jm ε * (-(logM (NormedSpace.exp (kMat s.1) * NormedSpace.exp (pmat s.2)))ᴴ) * Jm ε)
+      Jm ε * (-(logM n (NormedSpace.exp (kMat s.1) * NormedSpace.exp (pmat s.2)))ᴴ) * Jm ε)
       (𝓝 0) (𝓝 0) := by
     have := (hc.tendsto 0).comp hΦ
     simp only [Matrix.conjTranspose_zero, neg_zero, Matrix.mul_zero, Matrix.zero_mul] at this
     exact this
-  have hleft : ∀ᶠ X in 𝓝 (0 : Matrix (Fin n) (Fin n) ℂ), logM (NormedSpace.exp X) = X :=
+  have hleft : ∀ᶠ X in 𝓝 (0 : Matrix (Fin n) (Fin n) ℂ), logM n (NormedSpace.exp X) = X :=
     hlog.eventually_left_inverse
-  have hright : ∀ᶠ Y in 𝓝 (1 : Matrix (Fin n) (Fin n) ℂ), NormedSpace.exp (logM Y) = Y := by
+  have hright : ∀ᶠ Y in 𝓝 (1 : Matrix (Fin n) (Fin n) ℂ), NormedSpace.exp (logM n Y) = Y := by
     have h := hlog.eventually_right_inverse
     rw [NormedSpace.exp_zero] at h
     exact h
   filter_upwards [hP.eventually hright, hΦ.eventually hleft, hJ.eventually hleft]
     with s h1 h2 h3
-  have hU : inUJ ε (NormedSpace.exp (logM (NormedSpace.exp (kMat s.1) * NormedSpace.exp (pmat s.2)))) := by
+  have hU : inUJ ε (NormedSpace.exp (logM n (NormedSpace.exp (kMat s.1) * NormedSpace.exp (pmat s.2)))) := by
     rw [h1]; exact inUJ_pol s
-  have hG := inG_of_exp logM hU h2 h3
+  have hG := inG_of_exp (logM n) hU h2 h3
   show NormedSpace.exp (gMat (cLin ε _)) = _
   rw [gMat_cLin hG, h1]
 
@@ -163,7 +163,7 @@ attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebr
 theorem Lm_zero (ε : Fin n → Bool) : Lm (0 : GCo ε) = 0 := by
   have h := (exp_strict (n := n)).localInverse_apply_image
   rw [NormedSpace.exp_zero] at h
-  have hzero : logM (n := n) 1 = 0 := h
+  have hzero : logM n 1 = 0 := h
   simp [Lm, kMat_zero', pmat_zero', hzero]
 
 instance borel_gco (ε : Fin n → Bool) : BorelSpace (GCo ε) := Prod.borelSpace

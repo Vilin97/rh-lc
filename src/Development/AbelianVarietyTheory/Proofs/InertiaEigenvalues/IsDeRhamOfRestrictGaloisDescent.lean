@@ -88,8 +88,8 @@ theorem finrank_fixed {R G M K L : Type} [Field R] [Group G] [AddCommGroup M] [M
       exact D'.sum_mem fun i _ => hm _ _ (hDD (x i).2)
     · intro x hx
       refine ⟨fun i => ⟨∑ σ, A (s σ) (m (μ i) x), (hD _).2 fun g => ?_⟩, ?_⟩
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sum, ← Equiv.sum_comp (Equiv.mulLeft (ε g))
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, ← Equiv.sum_comp (Equiv.mulLeft (ε g))
           (fun σ => A (s σ) (m (μ i) x))]
         refine Finset.sum_congr rfl fun σ _ => ?_
         rw [← Module.End.mul_apply, ← map_mul]

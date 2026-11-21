@@ -61,6 +61,8 @@ lemma smoothVec_rep_exp {X : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ Lie) (s : �
     · simpa using (contDiff_pi.1 contDiff_id j : ContDiff ℝ ∞ fun t : Fin k → ℝ => t j)
   have h := (hw (k + 1) (Fin.snoc Xs X) hX').comp hsn
   convert h using 1
+  funext t
+  simp only [Function.comp_apply]
   rw [List.ofFn_succ', List.concat_eq_append, List.prod_append, List.prod_singleton]
   simp only [Fin.snoc_castSucc, Fin.snoc_last]
   have hP : (List.ofFn fun i => NormedSpace.exp (t i • Xs i)).prod ∈ U := by
@@ -108,6 +110,8 @@ lemma contDiff_orb {N : ℕ} (Z : Fin N → Matrix (Fin n) (Fin n) ℂ) (hZ : �
     (hu : SmoothVec Lie ρ u) (j : ℕ) : ContDiff ℝ ∞ (orb ρ Z u j) := by
   have h := (hu N Z hZ).comp (contDiff_mask (N := N) j)
   convert h using 1
+  funext r
+  simp only [Function.comp_apply, orb, prod_mask]
 
 include hU1 hUm hρ hexp in
 lemma orb_update {N : ℕ} (Z : Fin N → Matrix (Fin n) (Fin n) ℂ) (hZ : ∀ i, Z i ∈ Lie) (u : E) (j : ℕ)

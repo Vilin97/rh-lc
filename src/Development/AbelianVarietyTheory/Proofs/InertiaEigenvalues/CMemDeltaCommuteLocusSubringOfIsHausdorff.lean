@@ -56,7 +56,7 @@ theorem teich_eq_pow (n : ℕ) (x : Fq l a) :
     obtain ⟨y, hy⟩ := ih
     refine ⟨y ^ (l ^ (a - 1)), ?_⟩
     have h1 : (y ^ (l ^ (a - 1))) ^ l = y := by
-      rw [← pow_mul, ← pow_succ, Nat.sub_add_cancel (NeZero.pos a)]; exact Fq.pow_card y
+      rw [← pow_mul, ← pow_succ, Nat.sub_add_cancel (NeZero.pos a)]; exact Fq.pow_card (l := l) (a := a) y
     rw [hy, pow_succ' l n, pow_mul, ← map_pow (WittVector.teichmuller l) (y ^ l ^ (a - 1)) l, h1]
 
 theorem deltaS_C_teich (x : Fq l a) :

@@ -17,7 +17,7 @@ theorem exists_dual_equiv {n : ℕ} [NeZero n] {M : Type} [AddCommGroup M] [Modu
     (h1 : ∀ x, (∀ y, P x y = 0) → x = 0) (h2 : ∀ y, (∀ x, P x y = 0) → y = 0) :
     ∃ e : M' ≃+ TDual (ZMod n) M, ∀ y x, e y x = P x y := by
   let f : M' →+ TDual (ZMod n) M := AddMonoidHom.mk'
-    (fun y => TDual.mk ((P.flip y).toZModLinearMap n)) (fun y y' => by ext x; simp)
+    (fun y => TDual.mk ((P.flip y).toZModLinearMap n)) (fun y y' => by refine DFunLike.ext _ _ fun x => ?_; simp)
   have hf : ∀ y x, f y x = P x y := fun _ _ => rfl
   have inj : Function.Injective f := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -44,7 +44,7 @@ theorem dual_equivariant {n : ℕ} {Λ D : Type} [CommRing Λ] [Group D]
     (ρ : Representation Λ D M) (ρ' : Representation Λ D M') (P : M →+ M' →+ ZMod n) (χ : D →* (ZMod n)ˣ)
     (hP : ∀ g x y, P (ρ g x) (ρ' g y) = (χ g : ZMod n) * P x y) (e : M' ≃+ TDual (ZMod n) M)
     (he : ∀ y x, e y x = P x y) (g : D) (y : M') : e (ρ' g y) = twDual χ (zmodRep n ρ) g (e y) := by
-  ext x
+  refine DFunLike.ext _ _ fun x => ?_
   rw [twDual_apply, he, he]
   change _ = _ * P (ρ g⁻¹ x) y
   rw [← hP, ← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]

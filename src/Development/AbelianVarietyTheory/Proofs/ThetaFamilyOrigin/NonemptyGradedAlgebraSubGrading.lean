@@ -66,8 +66,8 @@ theorem aeval_eq_zero_iff_components {R : Type} [CommRing R] [Algebra K R] (𝒜
   constructor
   · intro h n
     by_cases hn : n ∈ Finset.range (G.totalDegree + 1)
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [← sum_homogeneousComponent G, map_sum] at h
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [← sum_homogeneousComponent G, map_sum] at h
       have h2 := congrArg (GradedRing.proj 𝒜 n) h
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, map_zero, Finset.sum_eq_single n] at h2
@@ -93,8 +93,8 @@ theorem aeval_cone_eq_zero_iff {C : Type} [CommRing C] [Algebra K C] (r : σ →
   constructor
   · intro h n
     by_cases hn : n ∈ Finset.range (G.totalDegree + 1)
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [← sum_homogeneousComponent G, map_sum] at h
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [← sum_homogeneousComponent G, map_sum] at h
       have h2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p n) h
       simp only [Polynomial.finsetSum_coeff, hm, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at h2
       rw [Finset.sum_eq_single n] at h2

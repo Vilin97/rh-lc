@@ -22,7 +22,9 @@ theorem GlobalTheory.FormalAlg.alg_of_isProjBy : ∀ (R : Type) [CommRing R] [Is
   let j : ∀ e, (Y e).left ⟶ W := fun e => (t e).subschemeι
   obtain ⟨H, hH, n, s, hs⟩ := hP
   have hL : ∀ e, (H.pull (j e)).IsLB := fun e => LB.isLB_pull hH _
-  choose t' ht' using fun e => GlobalTheory.MorAlg.exists_isPull (j e) hH s
+  let t' := fun e => Classical.choose (GlobalTheory.MorAlg.exists_isPull (j e) hH s)
+  have ht' : ∀ e, GlobalTheory.MorAlg.IsPull (j e) s (t' e) :=
+    fun e => Classical.choose_spec (GlobalTheory.MorAlg.exists_isPull (j e) hH s)
   have hv : ∀ e, GlobalTheory.MorAlg.IsPull (β e) (t' (e + 1)) (t' e) := fun e =>
     GlobalTheory.MorAlg.IsPull.cancel hH (hL _) (hL _) (ht' (e + 1)) (by
       have h1 : β e ≫ j (e + 1) = j e := hβ e

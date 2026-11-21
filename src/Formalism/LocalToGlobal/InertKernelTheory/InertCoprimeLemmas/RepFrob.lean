@@ -82,7 +82,26 @@ theorem eq_one_of_root {u : ℂ_[p]} {N : ℕ} (hc : Nat.Coprime N p) (hu : u ^ 
   exact zero_ne_one h4
 
 theorem wToC_mem_kur (x : WW p) : Formalism.L2.G.Pend.wToC p x ∈ MaximalUnramifiedExtension p := by
-  have hx := Formalism.L2.G.Pend.wToC_mem_Wp p x
+  have hx : Formalism.L2.G.Pend.wToC p x ∈ closure ((Subring.closure
+      {ζ : ℂ_[p] | ∃ n : ℕ, 0 < n ∧ Nat.Coprime n p ∧ ζ ^ n = 1} : Subring ℂ_[p]) : Set ℂ_[p]) := by
+    rw [Metric.mem_closure_iff]
+    intro ε hε
+    obtain ⟨N, hN⟩ := exists_pow_lt_of_lt_one hε (Formalism.L2.G.Pend.r_lt_one p)
+    obtain ⟨c, hc⟩ := WittVector.dvd_sub_sum_teichmuller_iterateFrobeniusEquiv_coeff x N
+    refine ⟨Formalism.L2.G.Pend.wToC p (∑ i ∈ Finset.Iic N, (WittVector.teichmuller p
+      (((_root_.frobeniusEquiv (kb p) p).symm ^ i) (x.coeff i)) * (p : WW p) ^ i)), ?_, ?_⟩
+    · rw [map_sum]
+      refine Subring.sum_mem _ fun i _ => ?_
+      rw [map_mul, map_pow, map_natCast]
+      refine Subring.mul_mem _ ?_ (Subring.pow_mem _ (natCast_mem _ p) i)
+      by_cases hy : (((_root_.frobeniusEquiv (kb p) p).symm ^ i) (x.coeff i)) = 0
+      · rw [hy, WittVector.teichmuller_zero, map_zero]
+        exact Subring.zero_mem _
+      · obtain ⟨m, hm, hcop, hpow⟩ := Formalism.L2.G.Pend.exists_coprime_pow_eq_one p hy
+        exact Subring.subset_closure ⟨m, hm, hcop, by rw [← map_pow, ← map_pow, hpow, map_one, map_one]⟩
+    · rw [dist_eq_norm, ← map_sub, hc]
+      refine lt_of_le_of_lt (Formalism.L2.G.Pend.norm_wToC_pow_mul p (N + 1) c) (lt_of_le_of_lt ?_ hN)
+      exact pow_le_pow_of_le_one (Formalism.L2.G.Pend.r_nonneg p) (Formalism.L2.G.Pend.r_lt_one p).le (Nat.le_succ N)
   have hpp : p.Prime := Fact.out
   have hle : Subring.closure {ζ : ℂ_[p] | ∃ n : ℕ, 0 < n ∧ Nat.Coprime n p ∧ ζ ^ n = 1} ≤
       (Subfield.closure {ζ : ℂ_[p] | ∃ n : ℕ, 0 < n ∧ ¬ p ∣ n ∧ ζ ^ n = 1}).toSubring := by

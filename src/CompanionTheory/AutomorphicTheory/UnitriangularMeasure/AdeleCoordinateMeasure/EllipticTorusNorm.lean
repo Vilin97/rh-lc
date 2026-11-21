@@ -93,6 +93,7 @@ theorem map_smul_coordMeasure (x : IdeleGroup L) :
     ← Measure.map_map measurable_adeleCoordEquiv_symm
       (GJGlobal.Modulus.measurable_vecMul' (mulMatrixGL (K := K) x)),
     GJGlobal.Modulus.map_vecMul_adeleMeasurePi, Measure.map_smul, hdet]
+  exact measurable_adeleCoordEquiv_symm.aemeasurable
 
 theorem ideleModule_ideleNorm (x : IdeleGroup L) :
     IdeleGroup.ideleModule K (ideleNorm K L x) = IdeleGroup.ideleModule L x := by
@@ -107,6 +108,7 @@ theorem ideleModule_ideleNorm (x : IdeleGroup L) :
   have htop : adeleMeasure L S ≠ ⊤ := hS.measure_lt_top.ne
   have h1 := map_smul_coordMeasure (K := K) x
   rw [hc, Measure.map_smul, map_smul_adeleMeasure] at h1
+  case hf => exact (continuous_const_smul x).measurable.aemeasurable
   have h2 := congrArg (fun μ : Measure 𝔸[L] ↦ μ S) h1
   simp only [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul] at h2
   rw [mul_left_comm] at h2

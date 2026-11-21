@@ -281,7 +281,7 @@ theorem rep {T : GlobalTheory.K5.Tower p Ω} {L : ℕ} {ψ : O0 p →+* Ω} (hψ
     ring
 
 theorem cong_sum {L : ℕ} (S : Finset ℤ) (v : ℤ → ℤ) (e : ℤ → Ω) (he : ∀ k, IsInt (p := p) (e k)) (hv : ∀ k, (p : ℤ) ^ L ∣ v k) :
-    Cong p L (∑ k ∈ S, (v k : Ω) * e k) 0 := by
+    Cong (p := p) L (∑ k ∈ S, (v k : Ω) * e k) 0 := by
   choose c hc using hv
   refine ⟨∑ k ∈ S, (c k : Ω) * e k, IsIntegral.sum _ fun k _ => IsIntegral.mul (Basic.isInt_intCast _) (he k), ?_⟩
   rw [sub_zero, Finset.mul_sum]
@@ -296,7 +296,7 @@ theorem cong_val (hc : IsClo p Ω) {T : GlobalTheory.K5.Tower p Ω} {L : ℕ} {�
     (hE : ∀ r, ∑ k ∈ S r, ((k * θ k r : ℤ) : Ω) * T.ζ L ^ (g * k) = -∑ᶠ i : ℤ, cE i * cU (r - i))
     (hx : Ev ψ cU x x') (hz : Ev ψ cE z z')
     (hy : Ev ψ (fun r => ∑ k ∈ S r, (v k r : Ω) * (θ k r : Ω) * T.ζ L ^ (g * k)) y y') :
-    Cong p L (y + A * (z * x)) 0 := by
+    Cong (p := p) L (y + A * (z * x)) 0 := by
   have hN : 0 < p ^ L := pow_pos hp.out.pos L
   have hζ : T.ζ L ^ p ^ L = 1 := (T.prim L).pow_eq_one
   obtain ⟨R1, R2⟩ := EvRing.ev_ring p Ω hc T L ψ hψ
@@ -333,7 +333,7 @@ theorem local_coords : ∀ (p : ℕ) [Fact p.Prime] (Ωl : Type) [Field Ωl] [Al
   (∀ r : ℤ, r < 0 → cE r = 0) → (∀ r : ℤ, cE r ∈ Subring.closure {T.ζ L}) →
   Ev ψ cU x x' → x ≠ 0 → IsInt (p := p) x⁻¹ →
   ∃ (w : (On p L)ˣ) (α β : On p L) (z z' : Ωl), IsDlog p L (w : On p L) α β ∧ ι w = x ∧ Ev ψ cE z z' ∧
-    Cong p L (ι α) (-(A₁ : Ωl) * z) ∧ Cong p L ((p : Ωl) * ι β) (-(p : Ωl) * (g : Ωl) * z) := by
+    Cong (p := p) L (ι α) (-(A₁ : Ωl) * z) ∧ Cong (p := p) L ((p : Ωl) * ι β) (-(p : Ωl) * (g : Ωl) * z) := by
   intro p hp Ω _ _ hc T L ψ ι hL hψ hι A₁ g θ cU cE x x' hB ⟨r0, h0⟩ hdiv hU hE hE0 hEm hx hx0 hxi
   obtain ⟨m, rfl⟩ : ∃ m, L = m + 1 := ⟨L - 1, by omega⟩
   choose B hB using hB

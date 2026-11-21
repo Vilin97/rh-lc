@@ -88,12 +88,14 @@ theorem UpperTheory.ConvolutionTheory.T.normCharSplit :
   · rintro ⟨f, h0, hf⟩
     refine ⟨(π.toTwist η).symm.toLinearMap ∘ₗ f, fun h => h0 (LinearMap.ext fun x => (π.toTwist η).symm.injective ?_),
       fun g x => (π.toTwist η).injective ?_⟩
-    · rw [LinearMap.zero_apply, map_zero]; exact LinearMap.congr_fun h x
+    · simpa only [LinearMap.comp_apply, LinearMap.zero_apply, LinearEquiv.coe_coe,
+        LinearEquiv.map_zero] using LinearMap.congr_fun h x
     · simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply]
       rw [← twist_inter π η v hl, LinearEquiv.apply_symm_apply, hf]
   · rintro ⟨f, h0, hf⟩
     refine ⟨(π.toTwist η).toLinearMap ∘ₗ f, fun h => h0 (LinearMap.ext fun x => (π.toTwist η).injective ?_),
       fun g x => ?_⟩
-    · rw [LinearMap.zero_apply, map_zero]; exact LinearMap.congr_fun h x
+    · simpa only [LinearMap.comp_apply, LinearMap.zero_apply, LinearEquiv.coe_coe,
+        LinearEquiv.map_zero] using LinearMap.congr_fun h x
     · simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
       rw [twist_inter π η v hl, hf]

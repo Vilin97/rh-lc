@@ -67,13 +67,13 @@ private theorem liesOver_of_mem {K : Type*} [Field K] [NumberField K] (P : Ideal
   simpa using h
 
 private theorem finiteDimensional_complField (j : E →+* PadicAlgCl l) :
-    FiniteDimensional ℚ_[l] (complField l j) := by
+    FiniteDimensional ℚ_[l] (complField j) := by
   obtain ⟨α, hα⟩ := Field.exists_primitive_element ℚ E
   have hα' : Algebra.adjoin ℚ {α} = ⊤ := by
     rw [← IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic
       (Algebra.IsAlgebraic.isAlgebraic α), hα]
     rfl
-  have h : complField l j = IntermediateField.adjoin ℚ_[l] {j α} := by
+  have h : complField j = IntermediateField.adjoin ℚ_[l] {j α} := by
     apply le_antisymm
     · rw [complField, IntermediateField.adjoin_le_iff]
       rintro _ ⟨x, rfl⟩
@@ -152,7 +152,7 @@ private theorem eps_delta_of_place {A B : Type*}
 theorem exists_completion_map (v : HeightOneSpectrum (𝓞 E)) (j : E →+* PadicAlgCl l)
     (hj : ∀ x : 𝓞 E, ‖j (x : E)‖ < 1 ↔ x ∈ v.asIdeal) :
     ∃ J : v.adicCompletion E →+* PadicAlgCl l, Continuous J ∧
-      (∀ x : E, J (algebraMap E _ x) = j x) ∧ J.fieldRange = (complField l j).toSubfield := by
+      (∀ x : E, J (algebraMap E _ x) = j x) ∧ J.fieldRange = (complField j).toSubfield := by
   let i : E →+* v.adicCompletion E := algebraMap E _
   have hi1 : ∀ x : 𝓞 E, ‖i (x : E)‖ ≤ 1 := fun x => FinitePlace.norm_le_one E v x
   have hi : ∀ x : 𝓞 E, ‖i (x : E)‖ < 1 ↔ x ∈ v.asIdeal :=
@@ -160,9 +160,9 @@ theorem exists_completion_map (v : HeightOneSpectrum (𝓞 E)) (j : E →+* Padi
   obtain ⟨p, hpv, hp0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot v.ne_bot
   have hp0' : (p : E) ≠ 0 := by exact_mod_cast hp0
   have := finiteDimensional_complField j
-  have : CompleteSpace (complField l j) := FiniteDimensional.complete ℚ_[l] _
-  let f : E →+* complField l j :=
-    j.codRestrict (complField l j) fun x => IntermediateField.subset_adjoin _ _ ⟨x, rfl⟩
+  have : CompleteSpace (complField j) := FiniteDimensional.complete ℚ_[l] _
+  let f : E →+* complField j :=
+    j.codRestrict (complField j) fun x => IntermediateField.subset_adjoin _ _ ⟨x, rfl⟩
   let : NormedField E := NormedField.induced E _ i i.injective
   have hiso : Isometry i := fun _ _ => rfl
   have hf : IsUniformInducing f := by
@@ -177,13 +177,13 @@ theorem exists_completion_map (v : HeightOneSpectrum (𝓞 E)) (j : E →+* Padi
         (lt_one_iff_of_place v j i (norm_int_le_one j) hi1 hj hi) p hp0' ((hi p).mpr hpv) ε hε
       exact ⟨δ, hδ, fun {a b} hab => h a b hab⟩
   have hd : DenseRange i := v.denseRange_algebraMap E
-  let J' : v.adicCompletion E →+* complField l j :=
+  let J' : v.adicCompletion E →+* complField j :=
     IsDenseInducing.extendRingHom hiso.isUniformInducing hd hf.uniformContinuous
   have hJ' : IsUniformInducing J' :=
     (hiso.isUniformInducing.isDenseInducing hd).isUniformInducing_extend hiso.isUniformInducing hf
   have hJi : ∀ x, J' (i x) = f x := fun x =>
     (hiso.isUniformInducing.isDenseInducing hd).extend_eq hf.uniformContinuous.continuous x
-  let J : v.adicCompletion E →+* PadicAlgCl l := (complField l j).subtype.comp J'
+  let J : v.adicCompletion E →+* PadicAlgCl l := (complField j).subtype.comp J'
   have hJ : IsUniformInducing J := isUniformEmbedding_subtype_val.isUniformInducing.comp hJ'
   have hJj : ∀ x : E, J (algebraMap E _ x) = j x := fun x => congrArg Subtype.val (hJi x)
   refine ⟨J, hJ.uniformContinuous.continuous, hJj, le_antisymm ?_ ?_⟩

@@ -71,7 +71,9 @@ theorem atZero_prodX (G : VCx ι a b → ℂ) (hG : ContDiff ℂ ⊤ G) {k : ℕ
   refine iter_eq_derivAt0 G hG _ k ?_ r ?_
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    simp [Finsupp.toMultiset_single, Multiset.card_sum]
+      change k = Multiset.cardHom (∑ x, Finsupp.toMultiset (Finsupp.single (r x) 1))
+      rw [map_sum]
+      simp [Finsupp.toMultiset_single, Multiset.cardHom]
   · intro i
     rw [Finsupp.finsetSum_apply, Finset.card_filter]
     simp only [Finsupp.single_apply]

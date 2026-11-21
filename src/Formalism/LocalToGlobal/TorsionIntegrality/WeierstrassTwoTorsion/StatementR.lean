@@ -15,7 +15,7 @@ namespace Formalism.L2.Th1.A
 
 def WpPrimeInU : Prop :=
   ∀ (K : Type u) [Field K] [CharZero K] (W : WeierstrassCurve K),
-    X ^ 3 * (-2 + logSer W ^ 3 * (derivative K (wpReg W)).subst (logSer W)) =
+    X ^ 3 * (-2 + logSer W ^ 3 * (derivative (wpReg W)).subst (logSer W)) =
       logSer W ^ 3 * (-2 * xS W + C W.a₁ * X * xS W + C W.a₃ * X ^ 3)
 
 def BridgeCurve3 : Prop :=

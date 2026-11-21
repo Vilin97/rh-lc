@@ -124,7 +124,7 @@ theorem dualityClauses_of_mulEquiv : ∀ (R : Type) [CommRing R] [TopologicalSpa
   have hB : ∀ g φ, ((twDual (χ.comp e.toMonoidHom) (ρ.comp e.toMonoidHom)).comp
       (MonoidHom.id Γ')) g φ = ((twDual χ ρ).comp (MonoidHom.id Γ)) (e g) φ := by
     intro g φ
-    refine TDual.ext fun m => ?_
+    refine DFunLike.ext _ _ fun m => ?_
     simp [twDual_apply, map_inv]
   have hC : ∀ g x, ((charRep (χ.comp e.toMonoidHom)).comp (MonoidHom.id Γ')) g x =
       ((charRep χ).comp (MonoidHom.id Γ)) (e g) x := fun _ _ => rfl

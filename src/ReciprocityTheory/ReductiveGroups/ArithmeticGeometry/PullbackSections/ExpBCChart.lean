@@ -14,6 +14,7 @@ namespace ReciprocityTheory.ChartRestriction.G.PullbackSections
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj Formalism.MainNotions.ModuliIntegralCharts.H1
+open Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar (dualMap)
 open MvPolynomial (X C)
 
 attribute [local instance] Over.cartesianMonoidalCategory
@@ -31,7 +32,11 @@ def bcD : overAt x0' (DualNumber S') ⟶ overAt x0 (DualNumber S) :=
     subst hx
     show spMap (dualMap ψ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x0 =
       spMap (algebraMap S' (DualNumber S')) ≫ spMap ψ ≫ x0
-    rw [← Category.assoc, ← Category.assoc, spMap_comp_spMap, spMap_comp_spMap, dualMap_comp_alg])
+    have hcomp : (dualMap ψ).comp (algebraMap S (DualNumber S)) =
+        (algebraMap S' (DualNumber S')).comp ψ := by
+      refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;>
+        simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    rw [← Category.assoc, ← Category.assoc, spMap_comp_spMap, spMap_comp_spMap, hcomp])
 
 theorem list_prod_comp {T T' : Over Xo.X} (f : T' ⟶ T) (L : List (T ⟶ Xo.univ.t.G)) :
     (L.map (f ≫ ·)).prod = f ≫ L.prod := by
@@ -46,7 +51,10 @@ theorem isCombAt_bc {k : ℕ} {v : Fin k → (Sp (DualNumber S) ⟶ Xo.univ.t.G.
   obtain ⟨u, hu, hp⟩ := h
   refine ⟨fun i => bcD ψ hx ≫ u i, fun i => ?_, ?_⟩
   · show spMap (dualMap ψ) ≫ (u i).left = _
-    rw [hu i, ← Category.assoc, spMap_comp_spMap, dualMap_comp_epsMul, ← spMap_comp_spMap, Category.assoc]
+    have hcomp : (dualMap ψ).comp (epsMul (cf i)) = (epsMul (ψ (cf i))).comp (dualMap ψ) := by
+      refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;>
+        simp [dualMap, epsMul, smul_eq_mul, mul_comm]
+    rw [hu i, ← Category.assoc, spMap_comp_spMap, hcomp, ← spMap_comp_spMap, Category.assoc]
   · have e : List.ofFn (fun i => bcD ψ hx ≫ u i) = (List.ofFn u).map (bcD ψ hx ≫ ·) := by
       rw [List.map_ofFn]
       rfl

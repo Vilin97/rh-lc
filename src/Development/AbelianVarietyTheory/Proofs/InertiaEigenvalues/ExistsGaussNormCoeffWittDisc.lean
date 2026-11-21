@@ -136,10 +136,10 @@ theorem norm_le_of_aPre [Fact l.Prime] (hρ0 : 0 < ρ) (hρ : ρ < 1) (y : PreDi
       fun m _ => ?_
     have e : algebraMap _ (PreDisc l (X : W⟦X⟧) ρ) (C (coeff m s) * X ^ m) *
         IsLocalization.Away.invSelf (S := PreDisc l (X : W⟦X⟧) ρ) (l : W⟦X⟧) ^ c =
-        preMap l (0 : W) 1 (X : W⟦X⟧) ρ C (algebraMap W _ (coeff m s) *
+        preMap (l := l) (u := (0 : W)) (ρ := 1) (u' := (X : W⟦X⟧)) (ρ' := ρ) C (algebraMap W _ (coeff m s) *
           IsLocalization.Away.invSelf (S := PreDisc l (0 : W) 1) (l : W) ^ c) *
           algebraMap W⟦X⟧ (PreDisc l (X : W⟦X⟧) ρ) (X ^ m) := by
-      rw [map_mul (preMap l (0 : W) 1 (X : W⟦X⟧) ρ C), map_pow (preMap l (0 : W) 1 (X : W⟦X⟧) ρ C), preMap_alg, preMap_inv,
+      rw [map_mul (preMap (l := l) (u := (0 : W)) (ρ := 1) (u' := (X : W⟦X⟧)) (ρ' := ρ) C), map_pow (preMap (l := l) (u := (0 : W)) (ρ := 1) (u' := (X : W⟦X⟧)) (ρ' := ρ) C), preMap_alg, preMap_inv,
         map_mul (algebraMap W⟦X⟧ (PreDisc l (X : W⟦X⟧) ρ))]; ring
     rw [e]
     have hpm := norm_preMap_le (l := l) (u := (0 : W)) (ρ := 1) (u' := (X : W⟦X⟧)) (ρ' := ρ) C (by simp)

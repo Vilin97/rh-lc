@@ -86,7 +86,7 @@ private theorem mixed_le {S : Set (IdeleGroup F)} (hS : IsCompact S) :
       ‖mixedEmbedding F η‖ ≤ B * ‖homeomorphMixedSpace F
         ((((posIdele s hs * u : IdeleGroup F) : A F) * rt η).1)‖ := by
   have hc : Continuous fun u : IdeleGroup F => ∑ w : InfinitePlace F, ‖(((u⁻¹ : IdeleGroup F) : A F)).1 w‖ :=
-    continuous_finset_sum _ fun w _ => continuous_norm.comp
+    continuous_finsetSum _ fun w _ => continuous_norm.comp
       ((continuous_apply w).comp (continuous_fst.comp Units.continuous_coe_inv))
   obtain ⟨M, hM⟩ := hS.exists_bound_of_continuousOn hc.continuousOn
   set b := max M 1

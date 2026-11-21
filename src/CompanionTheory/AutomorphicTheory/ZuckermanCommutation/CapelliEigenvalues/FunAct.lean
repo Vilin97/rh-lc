@@ -56,21 +56,25 @@ theorem eab_vec (hm : ∀ a b, inUJ ε a → inUJ ε b → σ (a * b) = (σ a).c
   rw [rd_vec hm hv h1 hg, rd_vec hm hv h2 hg, map_add (f := _), map_smul]
   simp only [cpart1, cpart2, thetaJ, unitM, sub_neg_eq_add, ← sub_eq_add_neg]
 
-theorem word_rep (hm : ∀ a b, inUJ ε a → inUJ ε b → σ (a * b) = (σ a).comp (σ b)) {v : Hs} {x : ioS ε Hs}
+theorem word_rep (hm : ∀ a b, inUJ ε a → inUJ ε b → σ (a * b) = (σ a).comp (σ b)) {v : Hs}
+    {x : _root_.Formalism.QuantumDeterminants.ioS ε Hs}
     (hx : IORep (fun y => σ y v) x.1) : ∀ w : List (Fin n × Fin n),
-    IORep (fun y => σ y (dsigCW ε σ (w.map unitM) v)) ((w.map fun ab => ioE ε Hs ab.1 ab.2).prod x).1
+    IORep (fun y => σ y (dsigCW ε σ (w.map unitM) v))
+      ((w.map fun ab => _root_.Formalism.QuantumDeterminants.ioE ε Hs ab.1 ab.2).prod x).1
   | [] => by simpa [dsigCW] using hx
   | ab :: w => by
     have ih := word_rep hm hx w
     have hs : SmoothOnGV ε fun y => σ y (dsigCW ε σ (w.map unitM) v) :=
       io_smooth_congr (fun g hg => (io_rep_ext _ g hg).trans (ih g hg).symm) (io_mem_smooth _)
     intro g hg
-    simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, dsigCW]
+    simp only [List.map_cons, List.prod_cons, mul_apply_eq_comp, dsigCW]
     rw [← ioE_rep ih ab.1 ab.2 g hg, eab_vec hm hs ab.1 ab.2 hg]
 
-theorem actU_rep (hm : ∀ a b, inUJ ε a → inUJ ε b → σ (a * b) = (σ a).comp (σ b)) {v : Hs} {x : ioS ε Hs}
+theorem actU_rep (hm : ∀ a b, inUJ ε a → inUJ ε b → σ (a * b) = (σ a).comp (σ b)) {v : Hs}
+    {x : _root_.Formalism.QuantumDeterminants.ioS ε Hs}
     (hx : IORep (fun y => σ y v) x.1) (p : FreeAlgebra ℂ (Fin n × Fin n)) :
-    IORep (fun y => σ y (actU ε σ p v)) (FreeAlgebra.lift ℂ (fun ab : Fin n × Fin n => ioE ε Hs ab.1 ab.2) p x).1 := by
+    IORep (fun y => σ y (actU ε σ p v))
+      (FreeAlgebra.lift ℂ (fun ab : Fin n × Fin n => _root_.Formalism.QuantumDeterminants.ioE ε Hs ab.1 ab.2) p x).1 := by
   intro g hg
   rw [lift_eq_sum]
   unfold actU Finsupp.sum

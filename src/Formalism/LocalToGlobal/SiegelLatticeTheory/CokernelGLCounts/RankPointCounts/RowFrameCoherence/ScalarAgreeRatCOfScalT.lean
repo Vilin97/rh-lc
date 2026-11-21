@@ -33,8 +33,9 @@ theorem gval_ne (s : Formalism.L2.SG.TermOp.GTerm X u u' (X.Fu u) (X.Fu u') (Y.w
       (Formalism.L2.SG.TermDef.mk _ _ _ x) = Gval (lf D (X.Fu u)) x.1 :=
     hGF _ _ ((hEq _ _).1 (Quot.out_eq (Formalism.L2.SG.TermDef.mk s.lam (lf D (X.Fu u))
       (Formalism.L2.SG.TermDef.PD D s.lam (lf D (X.Fu u)) u') x)))
-  rw [← gv]
-  exact hG'
+  intro hz
+  apply hG'
+  exact gv.trans (by with_unfolding_all exact hz)
 
 variable (s : Formalism.L2.SG.TermOp.GTerm X u u' (X.Fu u) (X.Fu u') (Y.what₂ u) (Y.what₂ u'))
 

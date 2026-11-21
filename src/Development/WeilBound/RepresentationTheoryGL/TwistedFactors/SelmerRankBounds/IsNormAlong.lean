@@ -90,7 +90,8 @@ def unitSet (v : HeightOneSpectrum (𝓞 F)) : Set (GL (Fin n) (CompletionsOver 
   {g | ∀ w : PlacesOver E v, mapGL n (Pi.evalRingHom (fun w : PlacesOver E v => w.1.adicCompletion E) w) g ∈
     GLnLocal.integralGL (w.1.adicCompletion E) n}
 
-def IsGalTwist (σ : E ≃ₐ[F] E) {μ : Measure (G1 E n)} [μ.IsHaarMeasure] (θ : Twist μ) : Prop :=
+def IsGalTwist (σ : E ≃ₐ[F] E) {μ : Measure (G1 E n)} [μ.IsHaarMeasure]
+    (θ : PositivityTheory.Rg.Tf.Core.Twist μ) : Prop :=
   ∀ g : G1 E n, ((θ.e g : G1 E n) : AdelicGLn.AdelicGL E n) = mapGL n (galAd σ) (g : AdelicGLn.AdelicGL E n)
 
 def EllElt (σ : E ≃ₐ[F] E) (δ : GL (Fin n) E) : Prop :=
@@ -102,6 +103,7 @@ def Ell (σ : E ≃ₐ[F] E) (f : G1 E n → ℂ) : Prop :=
     f y ≠ 0 → EllElt σ δ
 
 
+open Classical in
 def ext0 (f : G1 E n → ℂ) (g : AdelicGLn.AdelicGL E n) : ℂ := if h : g ∈ normOneGL (K := E) (n := n) then f ⟨g, h⟩ else 0
 
 def GMatch (σ : E ≃ₐ[F] E) (μE : Measure (G1 E n)) (μF : Measure (G1 F n)) (c : ℂ) (fE : G1 E n → ℂ) (fF : G1 F n → ℂ) : Prop :=

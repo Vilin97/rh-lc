@@ -152,6 +152,7 @@ private lemma mulVec_adjugate_single_last_apply_eq_zero_of_lt (z' : Fin (2 * r +
     have hF : (_root_.GlobalTheory.LeadingMinorInv.flagMat k r z')ᴴ (Fin.castSucc b) (_root_.Formalism.QuantumDeterminants.eI k r b) = 1 := by
       simp [conjTranspose_apply, _root_.GlobalTheory.LeadingMinorInv.flagMat, _root_.Formalism.QuantumDeterminants.fvec, _root_.Formalism.QuantumDeterminants.bvec]
     rw [hF, one_mul] at h1
+    simp only [Matrix.one_apply, if_neg (Fin.castSucc_lt_last b).ne', smul_zero, star_zero] at h1
     rw [mulVec_mulVec]
     simp only [mulVec, dotProduct, Pi.single_apply, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]

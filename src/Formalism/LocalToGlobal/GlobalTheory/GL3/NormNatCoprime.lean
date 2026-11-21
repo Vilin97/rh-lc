@@ -21,7 +21,7 @@ theorem norm_le_one_of_int {k : Type} [NormedField k] [IsUltrametricDist k] {y :
   push_neg at hlt
   obtain ⟨P, hPm, hPy⟩ := hy
   rw [hPm.as_sum] at hPy
-  simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum, Polynomial.eval₂_mul,
+  simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum, Polynomial.eval₂_mul,
     Polynomial.eval₂_C] at hPy
   have h1 := eq_neg_of_add_eq_zero_left hPy
   have hn0 : P.natDegree ≠ 0 := by
@@ -44,7 +44,9 @@ theorem norm_le_one_of_int {k : Type} [NormedField k] [IsUltrametricDist k] {y :
       _ = ‖y‖ ^ (P.natDegree - 1) := one_mul _
   have h2 : ‖y‖ ^ P.natDegree ≤ ‖y‖ ^ (P.natDegree - 1) := by
     rw [← norm_pow, h1, norm_neg]
-    exact hbound
+    have he : algebraMap ℤ k = Int.castRingHom k := RingHom.ext_int _ _
+    simpa only [Polynomial.eval₂_finsetSum, Polynomial.eval₂_mul, Polynomial.eval₂_C,
+      Polynomial.eval₂_X_pow, he] using hbound
   have h3 : ‖y‖ ^ (P.natDegree - 1) < ‖y‖ ^ P.natDegree := pow_lt_pow_right₀ hlt (by omega)
   linarith
 

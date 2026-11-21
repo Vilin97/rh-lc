@@ -64,7 +64,7 @@ theorem algebraMap_injective_of_charZero (K : Type) [Field K] [NumberField K] (k
   have hne := Ideal.comap_ne_bot_of_integral_mem (R := ℤ) (I := RingHom.ker (algebraMap (𝓞 K) k)) h0
     (RingHom.mem_ker.2 hc) (Algebra.IsIntegral.isIntegral c)
   apply hne
-  rw [RingHom.comap_ker]
+  rw [Ideal.under_def, RingHom.comap_ker]
   exact (RingHom.injective_iff_ker_eq_bot _).1 (RingHom.injective_int _)
 
 end GlobalTheory.UPel.HT.MoritaChar0

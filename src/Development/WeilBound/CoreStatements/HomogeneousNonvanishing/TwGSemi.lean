@@ -14,11 +14,12 @@ open IsLocalRing Polynomial
 theorem semi_complete {A : Type} [CommRing A] [IsNoetherianRing A] [IsLocalRing A]
     [IsAdicComplete (maximalIdeal A) A] (M : Type) [AddCommGroup M] [Module A M] [Module.Finite A M] :
     IsAdicComplete (maximalIdeal A) M := by
-  refine ⟨inferInstance, AdicCompletion.of_surjective_iff.mp ?_⟩
+  refine
+    { toIsHausdorff := inferInstance
+      toIsPrecomplete := AdicCompletion.of_surjective_iff.mp ?_ }
   intro y
   obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite (maximalIdeal A) M y
-  induction t using TensorProduct.induction_on with
-  | zero => exact ⟨0, by simp⟩
+  induction t using TensorProduct.inductionOn with
   | tmul r x =>
     obtain ⟨r, rfl⟩ := AdicCompletion.of_surjective (maximalIdeal A) A r
     refine ⟨r • x, ?_⟩

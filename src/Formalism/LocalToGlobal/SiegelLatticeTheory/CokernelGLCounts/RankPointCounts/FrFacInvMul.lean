@@ -26,7 +26,14 @@ variable {D : D7} (Z : LocDat D) (p : PlF D)
 
 theorem cj_iota (x : D.host.E) :
     (Z.M p).L.cj ((D.s.atP p).ιE x) = (D.s.atP p).ιE (star x) := by
-  rw [Z.hcj p, PI.UnitaryGroupMassFormula.CntFormula.star_eq_conjF, ← (D.s.atP p).cj_ιE]
+  have hstar : star x = D.conjF x := by
+    rw [D.conjF_eq]
+    have := D.host.isCMField_hostE
+    apply D.host.φ₀.injective
+    change D.host.φ₀ (NumberField.IsCMField.complexConj D.host.E x) = D.host.φ₀ (D.host.conj x)
+    rw [NumberField.IsCMField.complexEmbedding_complexConj]
+    exact (D.host.toHostAx.conjE_apply D.host.φ₀ x).symm
+  rw [Z.hcj p, (D.s.atP p).cj_ιE, hstar]
 
 theorem frFac_inv_mul (a : Fin (D.R.rS + 1)) : Ring.inverse (frFac Z.δ p a) * frFac Z.δ p a = 1 :=
   Ring.inverse_mul_cancel _ (Formalism.L2.SG.Pf.BBTie.bt_frFac_unit Z p a)

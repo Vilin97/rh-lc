@@ -24,7 +24,7 @@ def cmpZero : ((Tw.fm u (D.what₂.muAt w)).lat 0).V →ₛₗ[c.embW u w h] (D.
   (cmpSl c u w h).comp (Tw.e0 u (D.what₂.muAt w)).symm.toLinearMap
 
 theorem comparison_zero_embedding (x : ((D.fm u).lat 0).V) : cmpZero c Tw u w h (Tw.e0 u (D.what₂.muAt w) x) = c.cmp u w h x := by
-  simp [cmpZero]
+  simp [cmpZero, cmpSl]
 
 private theorem semilinear_apply_mem_span_image_basis {K L V W κ : Type*} [Field K] [Field L] {σ : K →+* L} [AddCommGroup V]
     [Module K V] [AddCommGroup W] [Module L W] (B : Module.Basis κ K V) (φ : V →ₛₗ[σ] W) (x : V) :
@@ -37,7 +37,7 @@ private theorem semilinear_apply_mem_span_image_basis {K L V W κ : Type*} [Fiel
     exact Submodule.subset_span ⟨i, rfl⟩
   | zero => simp
   | add y z _ _ hy hz =>
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    rw [map_add]; exact add_mem hy hz
   | smul r y _ hy =>
     rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
 
@@ -74,7 +74,7 @@ theorem cmpZero_image : cmpZero c Tw u w h '' (((Tw.fm u (D.what₂.muAt w)).lat
   · rintro ⟨x', hx', rfl⟩
     refine ⟨(Tw.e0 u (D.what₂.muAt w)).symm x', ?_, ?_⟩
     · exact (Tw.5 u (D.what₂.muAt w) _).2 (by simpa using hx')
-    · simp [cmpZero]
+    · simp [cmpZero, cmpSl]
   · rintro ⟨x, hx, rfl⟩
     exact ⟨Tw.e0 u (D.what₂.muAt w) x, (Tw.5 u (D.what₂.muAt w) x).1 hx, comparison_zero_embedding c Tw u w h x⟩
 

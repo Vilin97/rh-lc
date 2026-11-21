@@ -27,6 +27,8 @@ private theorem Jm_conjTransposeDiscreteSeriesExistence (ε : Fin n → Bool) : 
   unfold Jm
   rw [Matrix.diagonal_conjTranspose]
   congr 1
+  funext a
+  change star (if ε a = true then (1 : ℂ) else -1) = _
   split_ifs <;> simp
 
 private theorem Jm_mul_Jm_mul_eq (ε : Fin n → Bool) (Y : Matrix (Fin n) (Fin n) ℂ) :

@@ -83,7 +83,7 @@ theorem scale_at_model : ∀ (o' Ω : Type) [CommRing o'] [Field Ω] [Algebra o'
         ((∃ z, pk.y = (S.r * S.N) • z) → ∃ b : S.Gam, ρ.n • b = 0 ∧ IsUnit (v (a + b)))) := by
   intro o' Ω _ _ _ S ρ V _ _ _ _ hc hu σ A φ cart lb G _ _ semi D U hne
   obtain ⟨hL, hL₂, -⟩ := GlobalTheory.allSixLaws
-  obtain ⟨H, h₁, h₂, h₃, h₄⟩ := hyps hL hL₂
+  obtain ⟨H, h₁, h₂, h₃, h₄⟩ := GlobalTheory.ZH.TestVal.hyps hL hL₂
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible V
   obtain ⟨v, hv, -⟩ := GlobalTheory.ValClosure.exists_valuation_closure V ϖ hϖ
   have hm := odd_level' ρ

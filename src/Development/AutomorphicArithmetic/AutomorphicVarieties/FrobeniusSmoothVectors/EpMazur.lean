@@ -38,7 +38,7 @@ private theorem sg_unit {O : Type} [CommRing O] (h2 : IsUnit (2 : O)) {i j : ZMo
 
 private theorem small {O : Type} [CommRing O] [IsLocalRing O] (h2 : IsUnit (2 : O)) {R : Type} [CommRing R]
     [Algebra O R] [IsCO O R] (σ : R →ₐ[O] R) (j : ZMod 2) (H : Type) [AddCommGroup H] [Module (ResidueField O) H]
-    [Module.Finite (ResidueField O) H] (hobs : HasObsG σ j H) (C : Type) [CommRing C] [Algebra O C] [IsCO O C]
+    [Module.Finite (ResidueField O) H] (hobs : HasObsG O σ j H) (C : Type) [CommRing C] [Algebra O C] [IsCO O C]
     (p : C →ₐ[O] R) (τ : C →ₐ[O] C) (hp : Function.Surjective p) (hm : maximalIdeal C * RingHom.ker p = ⊥)
     (hτ : ∀ y, τ (τ y) = y) (hpτ : ∀ y, p (τ y) = σ (p y)) (κ : Type) [Fintype κ] (ε : κ → C) (wf : κ → ZMod 2)
     (hε : ∀ u, ε u ∈ evp τ (wf u)) (hk : RingHom.ker p = Ideal.span (Set.range ε))
@@ -157,7 +157,7 @@ private theorem small {O : Type} [CommRing O] [IsLocalRing O] (h2 : IsUnit (2 : 
   exact hli2.fintype_card_le_finrank
 
 theorem UpperTheory.V.Fr.ep_mazur :
-    ∀ (O : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O], IsUnit (2 : O) → ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (σ : R →ₐ[O] R), (∀ y, σ (σ y) = y) → ∀ (P : GPres O σ) (j : ZMod 2) (H : Type) [AddCommGroup H] [Module (ResidueField O) H] [Module.Finite (ResidueField O) H], HasObsG σ j H → Nat.card {u // P.wf u = j} ≤ Module.finrank (ResidueField O) H := by
+    ∀ (O : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O], IsUnit (2 : O) → ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (σ : R →ₐ[O] R), (∀ y, σ (σ y) = y) → ∀ (P : GPres O σ) (j : ZMod 2) (H : Type) [AddCommGroup H] [Module (ResidueField O) H] [Module.Finite (ResidueField O) H], HasObsG O σ j H → Nat.card {u // P.wf u = j} ≤ Module.finrank (ResidueField O) H := by
   intro O _ _ _ _ h2 R _ _ _ σ hσ P j H _ _ _ hobs
   classical
   haveI hA : IsCO O (MvPowerSeries (Fin P.a ⊕ Fin P.g) O) := co_mvps O O (Fin P.a ⊕ Fin P.g)

@@ -130,8 +130,45 @@ theorem Seam.sd_lat (hok : s.Ok) {n : ℕ} {N : Submodule (𝓞 X.E) (Sp X.E n)}
     exact Submodule.fg_span (S.finite_toSet.image _)
   · rw [eq_top_iff]
     intro y _
+    have hspan : Submodule.span X.E (N : Set (Sp X.E n)) = ⊤ := by
+      apply Submodule.dualAnnihilator_eq_bot_iff.mp
+      apply le_antisymm ?_ bot_le
+      intro f hf
+      let v : Sp X.E n := fun i => star (f (Pi.single i 1))
+      have hpair : hStd X.E n v = f := by
+        apply (Pi.basisFun X.E (Fin n)).ext
+        intro i
+        rw [Pi.basisFun_apply, hStd_apply, Finset.sum_eq_single i]
+        · simp [v]
+        · intro j _ hj
+          simp [hj]
+        · simp
+      have hline (r : X.E) : r • v ∈ N := by
+        rw [← show dual (hStd X.E n) N = N from hN.2, dualBasic_mem_dual]
+        intro y hy
+        have hy0 : hStd X.E n v y = 0 := by
+          rw [hpair]
+          exact (Submodule.mem_dualAnnihilator f).mp hf y (Submodule.subset_span hy)
+        have hz : hStd X.E n y v = 0 := by
+          simpa [hy0] using ((hStd_isSymm (E := X.E) (n := n)).eq v y).symm
+        simp [hz]
+      have hv : v = 0 := by
+        funext i
+        change v i = 0
+        by_contra hi
+        -- A nonzero coordinate on this line would make the field finite over its ring of integers.
+        let coord := (LinearMap.proj i : Sp X.E n →ₗ[X.E] X.E).restrictScalars (𝓞 X.E)
+        have htop : N.map coord = ⊤ := by
+          rw [eq_top_iff]
+          intro x _
+          exact ⟨(x / v i) • v, hline _, div_mul_cancel₀ _ hi⟩
+        have : Module.Finite (𝓞 X.E) X.E := Module.finite_def.mpr (htop ▸ hN.1.fg.map coord)
+        exact RingOfIntegers.not_isField X.E
+          (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 X.E) X.E) (Field.toIsField X.E))
+      rw [Submodule.mem_bot]
+      simpa [hv] using hpair.symm
     have h1 : (fun i => s.iE.symm (y i) : Sp X.E n) ∈ Submodule.span X.E (N : Set (Sp X.E n)) := by
-      rw [hN.1.span_eq_top]; trivial
+      rw [hspan]; trivial
     have h2 := s.vec_spanE _ h1
     rw [s.vec_surj] at h2
     exact Submodule.span_mono (fun z hz => Submodule.subset_span hz) h2

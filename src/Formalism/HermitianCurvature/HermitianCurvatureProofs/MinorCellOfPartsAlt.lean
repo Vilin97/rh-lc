@@ -49,7 +49,27 @@ theorem minor_cell_of_parts : PBN.MinorCellOfParts := by
   have eR : Q.crd (Q.vAB r y r).1 (Q.resG k r (Fin.last r) (B.JF Bs F)) x.1 x.2 =
       (Q.vAB r y r).1 (fun c' => Q.resG k r (Fin.last r)
         (((1 : SA (E := Wq →L[ℂ] Wp) hD) : Module.End ℂ (VS k r 0 D (Wq →L[ℂ] Wp))) v₀ : Mx k r → (Wq →L[ℂ] Wp)) c' x.2) x.1 := by
-    refine (vAB_loc y r _ _ (fun c' hc' => ?_) x.1 hx.1).1
+    have hloc : ∀ (i : ℕ) (f₁ f₂ : (Fin r → ℂ) → (Wq →L[ℂ] Wp)),
+        (∀ c ∈ OmX r, f₁ c = f₂ c) → ∀ c ∈ OmX r,
+        (Q.vAB r y i).1 f₁ c = (Q.vAB r y i).1 f₂ c ∧
+        (Q.vAB r y i).2 f₁ c = (Q.vAB r y i).2 f₂ c := by
+      intro i
+      induction i with
+      | zero => intro f₁ f₂ h c hc; exact ⟨h c hc, rfl⟩
+      | succ i ih =>
+        intro f₁ f₂ h c hc
+        have hih := ih f₁ f₂ h
+        by_cases hi : i < r
+        · simp only [Q.vAB, dif_pos hi]
+          refine ⟨?_, ?_⟩
+          · simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, cOp]
+            have hev : (Q.vAB r y i).1 f₁ =ᶠ[nhds c] (Q.vAB r y i).1 f₂ := by
+              filter_upwards [(Formalism.FourierDecayAlt.P.Qx3.isOpen_OmX r).mem_nhds hc] with c' hc' using (hih c' hc').1
+            simp only [pOp, wirt, if_pos hc, hev.fderiv_eq, (hih c hc).1, (hih c hc).2]
+          · simp only [ciOp, (hih c hc).1]
+        · simp only [Q.vAB, dif_neg hi]
+          exact hih c hc
+    refine (hloc r _ _ (fun c' hc' => ?_) x.1 hx.1).1
     rw [resG_last, resG_last]
     congr 1
     exact (cut_of_mem _ (hcell c' hc')).symm

@@ -148,6 +148,8 @@ private theorem diag_fac (hs : Function.Surjective (completionMap v w)) (ν : Fi
     change (Cartan.diagPow (v.adicCompletion F) n ν : Matrix (Fin n) (Fin n) (v.adicCompletion F)).map (completionMap v w) = _
     rw [Cartan.coe_diagPow, Matrix.diagonal_map (map_zero _)]
     congr 1
+    funext i
+    exact map_zpow₀ (completionMap v w) _ _
   rw [Units.val_mul, hxm, hm, Cartan.coe_diagPow, Matrix.diagonal_mul_diagonal]
   congr 1
   funext i

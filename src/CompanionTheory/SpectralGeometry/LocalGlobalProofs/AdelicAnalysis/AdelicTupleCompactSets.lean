@@ -189,8 +189,8 @@ theorem continuous_coord {d n M : ℕ} (a : Fin n) (i : Fin M) (k : Fin d) :
 theorem continuous_sizeA {d n M : ℕ} :
     Continuous (sizeA : (Fin n → Fin M → Fin d → AF F) → ℝ) := by
   unfold sizeA
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun i _ =>
-    continuous_finset_sum _ fun k _ => continuous_finset_sum _ fun v _ => ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun i _ =>
+    continuous_finsetSum _ fun k _ => continuous_finsetSum _ fun v _ => ?_
   exact (((continuous_apply v).comp (continuous_fstA.comp
     (continuous_coord a i k)))).norm
 

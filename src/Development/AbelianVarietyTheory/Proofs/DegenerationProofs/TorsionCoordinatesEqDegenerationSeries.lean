@@ -105,7 +105,13 @@ theorem grep_mulq (x : Y ⟶ D.P.A) (n : ℕ) :
 
 theorem dbl_one {z : Y.left} {J} (hJ : Good D.P.L z J) :
     dbl (cubV D.cub z J) (fun a : Y ⟶ D.P.A => val D.sym a.left z J) 1 = 1 := by
-  rw [dbl, (isCub_cubV D.cub hJ).face, normd_one (u := D.sym) ⟨D.sym_gen, D.sym_rig⟩ hJ, div_one]
+  have hc : cubV D.cub z J (1 : Y ⟶ D.P.A) 1 1 = 1 := by
+    have h := val_corr hJ (D.cub.face 0) (lift (1 : Y ⟶ D.P.A) 1).left
+    rw [val_one] at h
+    refine Eq.trans ?_ h
+    refine Eq.trans ?_ (val_cub D.cub (lift (1 : Y ⟶ D.P.A) 1) hJ (pzero D.P.A _) (x2 D.P.A 0) (x2 D.P.A 1)).symm
+    congr 1 <;> simp [x2, pzero, Hom.one_def]
+  rw [dbl, inv_one, hc, normd_one (u := D.sym) ⟨D.sym_gen, D.sym_rig⟩ hJ, div_one]
 
 theorem val_kap (hG : GlobalFnsSt) {n : ℕ} {κ : LB.Gen (kapLB D (𝟙 D.P.A ^ n) (n ^ 2) 1)} (hκ : Normd κ)
     (b : Y ⟶ D.P.A) {z : Y.left} {J} (hJ : Good D.P.L z J) :
@@ -117,7 +123,14 @@ theorem val_kap (hG : GlobalFnsSt) {n : ℕ} {κ : LB.Gen (kapLB D (𝟙 D.P.A ^
     (fun y J hJ => by
       beta_reduce
       rw [Category.comp_id, normd_one hκ hJ, _root_.one_mul, mulq]
-      exact Finset.prod_eq_one fun i _ => by rw [(isCub_cubV D.cub hJ).N_one, dbl_one hJ, one_pow, div_one]) Y b z J hJ
+      exact Finset.prod_eq_one fun i _ => by
+        have hc : cubV D.cub y J (1 : (𝟙_ _) ⟶ D.P.A) 1 1 = 1 := by
+          have h := val_corr hJ (D.cub.face 0) (lift (1 : (𝟙_ _) ⟶ D.P.A) 1).left
+          rw [val_one] at h
+          refine Eq.trans ?_ h
+          refine Eq.trans ?_ (val_cub D.cub (lift (1 : (𝟙_ _) ⟶ D.P.A) 1) hJ (pzero D.P.A _) (x2 D.P.A 0) (x2 D.P.A 1)).symm
+          congr 1 <;> simp [x2, pzero, Hom.one_def]
+        simp [cubN, hc, dbl_one hJ]) Y b z J hJ
   beta_reduce at key
   rw [Category.comp_id] at key
   exact eq_inv_of_mul_eq_one_left key
@@ -132,8 +145,14 @@ theorem val_nu (hG : GlobalFnsSt) {n : ℕ} {ν : LB.Gen (nuLB D n)} (hν : Norm
       module)
     (fun y J hJ => by
       beta_reduce
-      rw [Category.comp_id, normd_one hν hJ, (isCub_cubV D.cub hJ).N_one, dbl_one hJ]
-      simp) Y b z J hJ
+      have hc : cubV D.cub y J (1 : (𝟙_ _) ⟶ D.P.A) 1 1 = 1 := by
+        have h := val_corr hJ (D.cub.face 0) (lift (1 : (𝟙_ _) ⟶ D.P.A) 1).left
+        rw [val_one] at h
+        refine Eq.trans ?_ h
+        refine Eq.trans ?_ (val_cub D.cub (lift (1 : (𝟙_ _) ⟶ D.P.A) 1) hJ (pzero D.P.A _) (x2 D.P.A 0) (x2 D.P.A 1)).symm
+        congr 1 <;> simp [x2, pzero, Hom.one_def]
+      rw [Category.comp_id, normd_one hν hJ, dbl_one hJ]
+      simp [cubN, hc]) Y b z J hJ
   beta_reduce at key
   rw [Category.comp_id] at key
   exact eq_div_iff_mul_eq'.2 (mul_inv_eq_one.1 key)
@@ -405,8 +424,12 @@ theorem value_at_torsion (hL : LL) (hB : AdmBase R I) (hG : IsSemiAbelian G) (U 
       rw [h'' _ _ z J hJ, ht z J hJ, ht' z J hJ, pf, pf, pf, cm, Nat.cast_add, zpow_add, Units.val_mul]
       ring)
     (by
-      let q : QkPt D.toPre C (n * k) := TorusExt.qkMk D.tau_bimult (k • p.y) p.g (by
-        rw [mul_nsmul, TorusExt.qk_nsmul D.tau_bimult p, map_nsmul])
+      have hp : n • p.g = TorusExt.iota D.tau_bimult C p.y := by
+        obtain ⟨h, h₁, h₂⟩ := p.eq
+        exact ((TorusExt.isNsmul_iff_eq _ _ _).1 h₁).symm.trans ((TorusExt.isIota_iff_eq D.tau_bimult _ _).1 h₂)
+      let q : QkPt D.toPre C (n * k) :=
+        ⟨k • p.y, p.g, (n * k) • p.g, (TorusExt.isNsmul_iff_eq _ _ _).2 rfl,
+          (TorusExt.isIota_iff_eq D.tau_bimult _ _).2 (by rw [mul_nsmul, hp, map_nsmul])⟩
       have hq : QkToAkU U.toUnifPre C (n * k) q x :=
         ((GlobalTheory.T.uniformisation_torsion_maps_compatible_in_level hL R _ hB D A G hG U C n k _ hn hk rfl p q x).1 rfl rfl).1 hx
       obtain ⟨κ, hκ, Hκ⟩ := value_at_level hL hB hG U hC hN (Nat.mul_pos hn hk) q x hq e he (Ω _) (hΩ _)

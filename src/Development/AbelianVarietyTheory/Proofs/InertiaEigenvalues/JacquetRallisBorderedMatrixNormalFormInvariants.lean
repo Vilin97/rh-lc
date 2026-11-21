@@ -219,7 +219,7 @@ theorem unique_conj (Y Y₁ : Gl r k) (hΔ : Delta (inv Y) ≠ 0) (hI : inv Y₁
       · subst hr; funext i; exact i.elim0
       have e0 : ∀ (B : Matrix (Fin r) (Fin r) k) (Z : Gl r k), B = Bm Z →
           B *ᵥ Pi.single (⟨0, hr⟩ : Fin r) 1 = Z.2.1 := by
-        intro B Z hBZ; subst hBZ; funext i; simp [mulVec_single, Bm]
+        intro B Z hBZ; subst hBZ; funext i; simp [mulVec_single, Bm, Function.swap]
       have hb : (u : Matrix (Fin r) (Fin r) k) *ᵥ Pi.single (⟨0, hr⟩ : Fin r) 1 = b :=
         e0 _ (A, b, c, l) eu
       have hb₁ : (u₁ : Matrix (Fin r) (Fin r) k) *ᵥ Pi.single (⟨0, hr⟩ : Fin r) 1 = b₁ :=

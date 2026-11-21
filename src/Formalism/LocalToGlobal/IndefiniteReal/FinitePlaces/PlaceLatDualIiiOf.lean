@@ -57,10 +57,10 @@ theorem idemSum_int {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} (he :
   refine ⟨?_, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    exact AddSubgroup.sum_mem _ fun PP hPP => splitIdem_int (hes PP hPP).1
+      exact AddSubgroup.sum_mem _ fun PP hPP => splitIdem_int (hes PP hPP).1
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, map_sum]
-    exact AddSubgroup.sum_mem _ fun PP hPP => splitIdem_int (splitIdem_cA (hes PP hPP).1)
+      exact AddSubgroup.sum_mem _ fun PP hPP => splitIdem_int (splitIdem_cA (hes PP hPP).1)
 
 theorem infPart_fI : infPart D (fI D) = 0 := by
   show infPart D (algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 1)) = 0

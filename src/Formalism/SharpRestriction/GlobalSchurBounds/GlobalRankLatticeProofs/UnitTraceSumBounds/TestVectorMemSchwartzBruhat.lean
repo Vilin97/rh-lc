@@ -24,9 +24,9 @@ theorem exists_conj_OK (a : 𝓞 D.host.K) : ∃ a' : 𝓞 D.host.K, (((a' : D.h
   have hK : D.host.conj ((a : D.host.K) : D.host.E) ∈ D.host.K :=
     hmap ((IntermediateField.mem_map _).2 ⟨_, hx, rfl⟩)
   have hint : IsIntegral ℤ (⟨_, hK⟩ : D.host.K) := by
-    rw [← isIntegral_algebraMap_iff ]
+    rw [← isIntegral_algebraMap_iff (B := D.host.E)]
     have ha : IsIntegral ℤ ((a : D.host.K) : D.host.E) :=
-      (isIntegral_algebraMap_iff ).2 a.isIntegral_coe
+      a.isIntegral_coe.algebraMap
     exact ha.map D.host.conj.toAlgHom.toRingHom.toIntAlgHom
   let b : integralClosure ℤ D.host.K := ⟨⟨_, hK⟩, hint⟩
   exact ⟨b, rfl⟩

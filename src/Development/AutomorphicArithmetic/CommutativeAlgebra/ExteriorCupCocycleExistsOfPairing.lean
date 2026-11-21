@@ -24,14 +24,14 @@ private theorem sub_self_all {E : Spc} {N : ℕ} {U : Scheme.{0}} (x : Sx E N U)
 private theorem aw_conc {Q P I : Cx R} (μ : Pair Q P I) {X : Spc} {m n : ℤ} (h : m + 1 = n)
     (A : Cochain ((chains R).obj X) Q m) (B : Cochain ((chains R).obj X) P 1)
     (γ : Cochain ((chains R).obj X) I n) (hγ : μ.IsAW h A B γ)
-    (hB : ∀ (p : ℕ) s hs U x, ev R B (p + 1) s hs U x = 0)
+    (hB : ∀ (p : ℕ) s hs U x, ev (R := R) B (p + 1) s hs U x = 0)
     (N : ℕ) (w : ℤ) (hw : -(N : ℤ) + n = w) (U : Scheme.{0}) (x : Sx X N U) :
-    ev R γ N w hw U x = (N : ℤ).negOnePow • μ.mul U (w + -1) 1 w (by omega) (ev R A N (w + -1) (by omega) U x)
-      (ev R B 0 1 (by simp) U (x.sub N 0 (by omega))) := by
+    ev (R := R) γ N w hw U x = (N : ℤ).negOnePow • μ.mul U (w + -1) 1 w (by omega) (ev (R := R) A N (w + -1) (by omega) U x)
+      (ev (R := R) B 0 1 (by simp) U (x.sub N 0 (by omega))) := by
   have term : ∀ (r l : ℕ) (hrl : r + l = N) (t u : ℤ) (ht : -(r : ℤ) + m = t) (hu : -(l : ℤ) + 1 = u) (hw' : t + u = w),
-      μ.mul U t u w hw' (ev R A r t ht U (x.sub 0 r (by omega))) (ev R B l u hu U (x.sub r l (by omega))) =
-        if l = 0 then μ.mul U (w + -1) 1 w (by omega) (ev R A N (w + -1) (by omega) U x)
-          (ev R B 0 1 (by simp) U (x.sub N 0 (by omega))) else 0 := by
+      μ.mul U t u w hw' (ev (R := R) A r t ht U (x.sub 0 r (by omega))) (ev (R := R) B l u hu U (x.sub r l (by omega))) =
+        if l = 0 then μ.mul U (w + -1) 1 w (by omega) (ev (R := R) A N (w + -1) (by omega) U x)
+          (ev (R := R) B 0 1 (by simp) U (x.sub N 0 (by omega))) else 0 := by
     intro r l hrl t u ht hu hw'
     rcases l with _ | l
     · obtain rfl : r = N := by omega
@@ -55,7 +55,7 @@ variable {R : Type} [CommRing R]
 
 private theorem ev_rightShift {E : Spc} {Q : Cx R} {m n : ℤ} (h : m + 1 = n)
     (α : Cocycle ((chains R).obj E) Q m) (p : ℕ) (s : ℤ) (hs : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
-    (ev R (α.rightShift (-1) n (by omega)).1 p s hs U x : Sec ((sh Q).X s) U) = (ev R α.1 p (s + -1) (by omega) U x : Sec (Q.X (s + -1)) U) := by
+    (ev (R := R) (α.rightShift (-1) n (by omega)).1 p s hs U x : Sec ((sh Q).X s) U) = (ev (R := R) α.1 p (s + -1) (by omega) U x : Sec (Q.X (s + -1)) U) := by
   have e : (α.rightShift (-1) n (by omega)).1.v (-(p : ℤ)) s hs =
       (show _ ⟶ (sh Q).X s from α.1.v (-(p : ℤ)) (s + -1) (by omega)) := by
     refine (Cochain.rightShift_v α.1 (-1) n (by omega) (-(p : ℤ)) s hs (s + -1) (by omega)).trans ?_
@@ -67,8 +67,8 @@ private theorem ev_rightShift {E : Spc} {Q : Cx R} {m n : ℤ} (h : m + 1 = n)
 
 private theorem ev_inL {E : Spc} {I Q : Cx R} {m n : ℤ} (h : m + 1 = n) (α₁ : Cocycle ((chains R).obj E) I n)
     (α₂ : Cocycle ((chains R).obj E) Q m) (p : ℕ) (s : ℤ) (hs : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
-    ev R (inL h α₁ α₂).1 p s hs U x =
-      cc (ev R α₁.1 p s hs U x) (n.negOnePow • ev R α₂.1 p (s + -1) (by omega) U x) := by
+    ev (R := R) (inL h α₁ α₂).1 p s hs U x =
+      cc (ev (R := R) α₁.1 p s hs U x) (n.negOnePow • ev (R := R) α₂.1 p (s + -1) (by omega) U x) := by
   have b := GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R (E := E) (I := LL I Q) (n := n)
   have e₁ : (inL h α₁ α₂).1 = α₁.1.comp (Cochain.ofHom (biprod.inl : I ⟶ LL I Q)) (add_zero n) +
       ((n.negOnePow : ℤˣ) : ℤ) • (α₂.rightShift (-1) n (by omega)).1.comp (Cochain.ofHom (biprod.inr : sh Q ⟶ LL I Q)) (add_zero n) := rfl
@@ -82,12 +82,12 @@ private theorem ev_inL {E : Spc} {I Q : Cx R} {m n : ℤ} (h : m + 1 = n) (α₁
 
 private theorem c₁_ev_inL {E : Spc} {I Q : Cx R} {m n : ℤ} (h : m + 1 = n) (α₁ : Cocycle ((chains R).obj E) I n)
     (α₂ : Cocycle ((chains R).obj E) Q m) (p : ℕ) (s : ℤ) (hs : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
-    c₁ (ev R (inL h α₁ α₂).1 p s hs U x) = ev R α₁.1 p s hs U x := by
+    c₁ (ev (R := R) (inL h α₁ α₂).1 p s hs U x) = ev (R := R) α₁.1 p s hs U x := by
   rw [ev_inL, c₁_cc]
 
 private theorem c₂_ev_inL {E : Spc} {I Q : Cx R} {m n : ℤ} (h : m + 1 = n) (α₁ : Cocycle ((chains R).obj E) I n)
     (α₂ : Cocycle ((chains R).obj E) Q m) (p : ℕ) (s : ℤ) (hs : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
-    c₂ (ev R (inL h α₁ α₂).1 p s hs U x) = n.negOnePow • ev R α₂.1 p (s + -1) (by omega) U x := by
+    c₂ (ev (R := R) (inL h α₁ α₂).1 p s hs U x) = n.negOnePow • ev (R := R) α₂.1 p (s + -1) (by omega) U x := by
   rw [ev_inL, c₂_cc]
 
 private theorem sub_map_sch {W : Scheme.{0}} {X : Spc} (f : X ⟶ sch.obj W) {p : ℕ} {T : Scheme.{0}} (y : Sx X p T)
@@ -109,8 +109,8 @@ theorem UpperTheory.exteriorCup_cocycle_exists_of_pairing :
         (h : m + 1 = n) (α₁ : Cocycle ((chains R).obj E) I n) (α₂ : Cocycle ((chains R).obj E) Q m)
         (β : Cocycle ((chains R).obj (sch.obj W ⨯ E)) I n),
         (∀ (p : ℕ) (s : ℤ) (hs : -(p : ℤ) + n = s) (T : Scheme.{0}) (y : Sx (sch.obj W ⨯ E) p T),
-          ev R β.1 p s hs T y = Sec.res (prod.lift (show T ⟶ W from y.map prod.fst) (𝟙 T))
-            (psi W μ (sg κ) T s (ev R (inL h α₁ α₂).1 p s hs T (y.map prod.snd)))) →
+          ev (R := R) β.1 p s hs T y = Sec.res (prod.lift (show T ⟶ W from y.map prod.fst) (𝟙 T))
+            (psi W μ (sg κ) T s (ev (R := R) (inL h α₁ α₂).1 p s hs T (y.map prod.snd)))) →
         CohomologyClass.mk β = cpull ((chains R).map (prod.snd : sch.obj W ⨯ E ⟶ E)) I n (CohomologyClass.mk α₁) +
           μ.cup (sch.obj W ⨯ E) h (cpull ((chains R).map (prod.snd : sch.obj W ⨯ E ⟶ E)) Q m (CohomologyClass.mk α₂))
             (cpull ((chains R).map (prod.fst : sch.obj W ⨯ E ⟶ _)) P 1 (CohomologyClass.mk κ)) := by
@@ -134,9 +134,9 @@ theorem UpperTheory.exteriorCup_cocycle_exists_of_pairing :
     zcomp (Cocycle.ofHom ((chains R).map (prod.fst : sch.obj W ⨯ E ⟶ _))) z' (zero_add 1)
   obtain ⟨γ, hγ⟩ := (GlobalTheory.T.cup_eq_class_of_isAW R μ h).1 A B
   have hc := (GlobalTheory.T.cup_eq_class_of_isAW R μ h).2 A B γ hγ
-  have evA : ∀ (p : ℕ) s hs (T : Scheme.{0}) (y : Sx (sch.obj W ⨯ E) p T), ev R A.1 p s hs T y = ev R α₂.1 p s hs T (y.map prod.snd) :=
+  have evA : ∀ (p : ℕ) s hs (T : Scheme.{0}) (y : Sx (sch.obj W ⨯ E) p T), ev (R := R) A.1 p s hs T y = ev (R := R) α₂.1 p s hs T (y.map prod.snd) :=
     fun p s hs T y => (GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R (E := E) (I := Q) (n := m)).2.2.2.1 prod.snd α₂.1 p s hs T y
-  have evB : ∀ (p : ℕ) s hs (T : Scheme.{0}) (y : Sx (sch.obj W ⨯ E) p T), ev R B.1 p s hs T y = ev R z'.1 p s hs T (y.map prod.fst) :=
+  have evB : ∀ (p : ℕ) s hs (T : Scheme.{0}) (y : Sx (sch.obj W ⨯ E) p T), ev (R := R) B.1 p s hs T y = ev (R := R) z'.1 p s hs T (y.map prod.fst) :=
     fun p s hs T y => (GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R (E := sch.obj W) (I := P) (n := 1)).2.2.2.1 prod.fst z'.1 p s hs T y
   have hβ' : β = zcomp (Cocycle.ofHom ((chains R).map (prod.snd : sch.obj W ⨯ E ⟶ E))) α₁ (zero_add n) + γ := by
     apply Cocycle.ext
@@ -149,7 +149,7 @@ theorem UpperTheory.exteriorCup_cocycle_exists_of_pairing :
       aw_conc μ h A.1 B.1 γ.1 hγ (fun p s hs U x => by rw [evB]; exact hz1 p s hs U _) p s hs T y,
       evA, evB]
     congr 1
-    have e₂ : ev R z'.1 0 1 (by simp) T ((y.sub p 0 (by omega)).map prod.fst) = Sec.res (show T ⟶ W from y.map prod.fst) (sg κ) := by
+    have e₂ : ev (R := R) z'.1 0 1 (by simp) T ((y.sub p 0 (by omega)).map prod.fst) = Sec.res (show T ⟶ W from y.map prod.fst) (sg κ) := by
       rw [← sub_map_sch prod.fst y (by omega)]
       exact hz0 T _
     rw [e₂]

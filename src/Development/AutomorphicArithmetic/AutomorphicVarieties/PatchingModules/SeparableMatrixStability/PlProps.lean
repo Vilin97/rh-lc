@@ -40,7 +40,7 @@ theorem UpperTheory.V.Pa.pl_props :
       (H : Subgroup Γ) [H.Normal], IsOpen (H : Set Γ) →
       (PL (l := l) H).Normal ∧ IsClosed (PL (l := l) H : Set Γ) ∧ PL (l := l) H ≤ H ∧
       (∀ U : OpenNormalSubgroup Γ, PL (l := l) H ≤ U.toSubgroup ↔ ∀ h ∈ H, ∃ e : ℕ, h ^ l ^ e ∈ U) ∧
-      (PL (l := l) H = ⊥ ↔ IsProL l H) ∧ PL (l := l) H = proLResOf l Γ H := by
+      (PL (l := l) H = ⊥ ↔ IsProL l H) ∧ PL (l := l) H = proLResOf l H := by
   intro l _ Γ _ _ _ _ _ H _ hHo
   have hHc : IsClosed (H : Set Γ) := OpenSubgroup.isClosed ⟨H, hHo⟩
   have cond_le : ∀ U : OpenNormalSubgroup Γ, (∀ h ∈ H, ∃ e : ℕ, h ^ l ^ e ∈ U) →
@@ -59,7 +59,7 @@ theorem UpperTheory.V.Pa.pl_props :
       rw [pow_zero, pow_one]
       exact hh
     exact cond_le HU hc
-  have hPn : (proLResOf l Γ H).Normal := by
+  have hPn : (proLResOf l H).Normal := by
     constructor
     intro x hx g
     obtain ⟨y, hy, rfl⟩ := Subgroup.mem_map.mp hx
@@ -80,11 +80,11 @@ theorem UpperTheory.V.Pa.pl_props :
         exact ⟨k, by simpa [M, map_pow] using hk⟩
       exact mem_proLRes.mp hy M hM
     · simp [c, MulAut.conjNormal_apply]
-  have hPc : IsClosed (proLResOf l Γ H : Set Γ) := by
+  have hPc : IsClosed (proLResOf l H : Set Γ) := by
     unfold proLResOf
     rw [Subgroup.coe_map, Subgroup.coe_subtype]
     exact hHc.isClosedEmbedding_subtypeVal.isClosedMap _ (isClosed_proLRes l H)
-  have hPcond (U : OpenNormalSubgroup Γ) (hU : proLResOf l Γ H ≤ U.toSubgroup)
+  have hPcond (U : OpenNormalSubgroup Γ) (hU : proLResOf l H ≤ U.toSubgroup)
       (h : Γ) (hh : h ∈ H) : ∃ e : ℕ, h ^ l ^ e ∈ U.toSubgroup := by
     classical
     have : CompactSpace H := isCompact_iff_compactSpace.mp hHc.isCompact
@@ -115,18 +115,18 @@ theorem UpperTheory.V.Pa.pl_props :
     change g ^ l ^ (∑ j ∈ s, k j) ∈ i.1.toSubgroup
     rw [hpow, pow_mul]
     exact Subgroup.pow_mem _ (hk i) _
-  have heq : PL (l := l) H = proLResOf l Γ H := by
+  have heq : PL (l := l) H = proLResOf l H := by
     have := hPn
     apply le_antisymm
     · intro x hx
       by_contra hxP
       have hsI := ProfiniteGrp.closedSubgroup_eq_sInf_open
-        (⟨proLResOf l Γ H, hPc⟩ : ClosedSubgroup Γ)
-      have h2 : x ∉ ((⟨proLResOf l Γ H, hPc⟩ : ClosedSubgroup Γ) : Subgroup Γ) := hxP
+        (⟨proLResOf l H, hPc⟩ : ClosedSubgroup Γ)
+      have h2 : x ∉ ((⟨proLResOf l H, hPc⟩ : ClosedSubgroup Γ) : Subgroup Γ) := hxP
       rw [hsI, Subgroup.mem_sInf] at h2
       push Not at h2
       obtain ⟨K, ⟨hKo, hPK⟩, hxK⟩ := h2
-      obtain ⟨U, hPU, hUK⟩ := exists_core K (proLResOf l Γ H) hKo hPK
+      obtain ⟨U, hPU, hUK⟩ := exists_core K (proLResOf l H) hKo hPK
       exact hxK (hUK (mem_PL.mp hx U (hPcond U hPU)))
     · rintro _ ⟨y, hy, rfl⟩
       rw [mem_PL]

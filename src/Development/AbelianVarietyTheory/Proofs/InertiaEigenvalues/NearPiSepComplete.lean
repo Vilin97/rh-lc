@@ -149,7 +149,7 @@ private theorem cc_inclR_lemma_11 {l : ℕ} [Fact l.Prime] (LL : FinExt l)
     obtain ⟨c2, h2⟩ := hb
     refine ⟨c1 + c2, ?_⟩
     have e : (inclR LL) (a + b) = (inclR LL) a + (inclR LL) b := (inclR LL).toRingHom.map_add a b
-    rw [e, LinearMap.map_add (f := _), (algebraMap (OCb l) (Cb l)).map_add (f := _), ← h1, ← h2]
+    rw [e, LinearMap.map_add (f := _), map_add (algebraMap (OCb l) (Cb l)), ← h1, ← h2]
     exact WittVector.add_coeff_zero _ _
 
 private theorem coord_of_near_lemma_12 {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)

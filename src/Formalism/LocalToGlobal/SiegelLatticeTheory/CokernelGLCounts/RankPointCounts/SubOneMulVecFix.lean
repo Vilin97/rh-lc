@@ -101,12 +101,16 @@ theorem rvc_add (v : InfinitePlace X.B.I.F) (p p' : (VS D).V) : rvc X v (p + p')
   simp only [rvc, crd_add, Formalism.L2.SG.HidaSetting.rv]
   rw [← mulVec_add]
   congr 1
+  funext i
+  simp
 
 theorem rvc_smul (v : InfinitePlace X.B.I.F) (c : D.host.E) (p : (VS D).V) :
     rvc X v (c • p) = X.B.I.φ v (X.ιE.symm c) • rvc X v p := by
   simp only [rvc, crd_smul, Formalism.L2.SG.HidaSetting.rv]
   rw [← mulVec_smul]
   congr 1
+  funext i
+  simp
 
 theorem rvc_zero (v : InfinitePlace X.B.I.F) : rvc X v 0 = 0 := by
   simpa using rvc_smul X v (0 : D.host.E) 0
@@ -219,7 +223,6 @@ theorem geomB_of (hL : LeviTens) (hW : WfrSpan) (hN : CplxNF) : GeomB := by
   have hfrq : (frq X q).fl = mapFlag q.1.2 hiso (lf D (X.Fu u')).fl := by
     unfold frq mapLF
     rw [dite_eq_left hiso]
-    rfl
   have he' : ∀ a, q.1.2 (X.eX a) ∈ (frq X q).fl.X := by
     intro a
     rw [hfrq]

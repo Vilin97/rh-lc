@@ -98,6 +98,7 @@ end GlobalTheory.DefU.Petersson
 namespace GlobalTheory.DefU.Petersson
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 set_option maxHeartbeats 1600000 in
 theorem exists_invariant_pos_form : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ),
     ∃ B : GlobalTheory.DefU.autU E n →ₗ⋆[ℂ] GlobalTheory.DefU.autU E n →ₗ[ℂ] ℂ, (∀ u v, star (B u v) = B v u) ∧ (∀ v, 0 ≤ (B v v).re) ∧
@@ -150,19 +151,31 @@ theorem exists_invariant_pos_form : ∀ (E : Type) [Field E] [NumberField E] [Is
       simp only [F]
       rw [← integral_add (hI x y) (hI x' y)]
       congr 1
+      funext g
+      change star (x.1 g + x'.1 g) * y.1 g = _
+      simp only [star_add]
+      ring)
     (fun c x y => by
       simp only [F, smul_eq_mul]
       rw [← integral_const_mul]
       congr 1
+      funext g
+      change star (c * x.1 g) * y.1 g = _
+      simp only [star_mul, starRingEnd_apply]
       ring)
     (fun x y y' => by
       simp only [F]
       rw [← integral_add (hI x y) (hI x y')]
       congr 1
+      funext g
+      change star (x.1 g) * (y.1 g + y'.1 g) = _
+      ring)
     (fun c x y => by
       simp only [F, smul_eq_mul, RingHom.id_apply]
       rw [← integral_const_mul]
       congr 1
+      funext g
+      change star (x.1 g) * (c * y.1 g) = _
       ring)
   have hB : ∀ u v, B u v = ∫ g in 𝓕, star (u.1 g) * v.1 g ∂μ := fun _ _ => rfl
   have hre : ∀ v, B v v = ((∫ g in 𝓕, ‖v.1 g‖ ^ 2 ∂μ : ℝ) : ℂ) := by
@@ -176,6 +189,8 @@ theorem exists_invariant_pos_form : ∀ (E : Type) [Field E] [NumberField E] [Is
   refine ⟨B, fun u v => ?_, fun v => ?_, fun v h0 => ?_, fun k u v => ?_⟩
   · rw [hB, hB, Complex.star_def, ← integral_conj]
     congr 1
+    funext g
+    simp only [map_mul, map_star, starRingEnd_apply, star_star]
     ring
   · rw [hre, Complex.ofReal_re]
     exact integral_nonneg fun g => by positivity

@@ -11,7 +11,7 @@ namespace LateralTheory.EtaleFoundations.TwLocPf
 
 theorem ofRings_sec_res {R : Type} [CommRing R] (M : CommRingCat.{0} ⥤ ModuleCat.{1} (ULift.{1} R)) {V U : Scheme.{0}}
     (g : V ⟶ U) (x : M.obj Γ(U, ⊤)) :
-    Sec.res g (ofRings.sec R M U x) = ofRings.sec R M V ((M.map g.appTop).hom x) := by
+    Sec.res g (ofRings.sec M U x) = ofRings.sec M V ((M.map g.appTop).hom x) := by
   have h := congrArg (fun f => f.hom x)
     ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)).naturality g.op)
   simp only [ModuleCat.hom_comp] at h

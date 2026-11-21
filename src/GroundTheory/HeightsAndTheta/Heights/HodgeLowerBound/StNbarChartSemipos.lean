@@ -36,8 +36,6 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 namespace Line
 
-open GroundTheory.Heights₂.Heights.Regular.ProjectiveLine
-
 end Line
 
 end Inhabitants

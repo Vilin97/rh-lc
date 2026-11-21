@@ -39,8 +39,7 @@ theorem normGrp_maxExp (hK : FiniteDimensional ℚ_[p] K) {n : ℕ} (hn : 0 < n)
     normGrp p K L = (powMonoidHom n : Kˣ →* Kˣ).range := by
   have hle : (powMonoidHom n : Kˣ →* Kˣ).range ≤ normGrp p K L := by
     rintro _ ⟨a, rfl⟩
-    have h1 : ∀ χ : charGrp (GK p K), TrivOn p K L χ →
-        χ.1 (Additive.ofMul (1 : GK p K)) = pairK p K (a ^ n) χ := by
+    have h1 : IsRecip p K L (a ^ n) 1 := by
       intro χ hχ
       rw [pairK_pow, ← pairK_nsmul, (hL' χ).1 hχ, pairK_zero]
       exact map_zero χ.1

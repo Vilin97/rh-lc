@@ -19,6 +19,7 @@ theorem indepToC_comp {K : Type*} [Field K] {σ : K →+* ℂ} {C C' : Type*} [A
 
 variable {D : D7} {T : Top D}
 
+set_option synthInstance.maxHeartbeats 400000 in
 def jRec (j : ℕ) (ka : WeightFamilies.Wt D j) :
     cutR T.C j ka →ₛₗ[T.σ₀] FDSec (T.U j T.σ₀).X :=
   (rdC (T.U j) T.σ₀ (wtA ka) ka.n).comp (Submodule.inclusion (cutR_le T.C j ka))

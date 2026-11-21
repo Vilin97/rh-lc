@@ -76,7 +76,7 @@ theorem map_H2_sum {ι : Type*} (s : Finset ι) (u : ι → M →ₗ[R] M') (hu 
     exact map_H2_zero rho rho' _ _
   | insert a s ha ih =>
     have hc : Continuous ((∑ j ∈ s, u j : M →ₗ[R] M') : M → M') := by
-      have := continuous_finset_sum s (fun j _ => hu j)
+      have := continuous_finsetSum s (fun j _ => hu j)
       convert this using 1; ext x; simp
     have he : ∀ g m, (∑ j ∈ s, u j) (rho g m) = rho' g ((∑ j ∈ s, u j) m) := by
       intro g m; simp only [LinearMap.sum_apply, map_sum, hue]
@@ -165,8 +165,8 @@ theorem cont_sum {ι M M' : Type} [AddCommGroup M] [Module O M] [TopologicalSpac
     [AddCommGroup M'] [Module O M'] [TopologicalSpace M'] [IsTopologicalAddGroup M']
     (s : Finset ι) (u : ι → M →ₗ[O] M') (hu : ∀ j, Continuous (u j)) :
     Continuous ((∑ j ∈ s, u j : M →ₗ[O] M') : M → M') := by
-  have := continuous_finset_sum s (fun j _ => hu j)
-  convert this using 1; ext x; simp
+  have h := continuous_finsetSum s (fun j _ => hu j)
+  convert h using 1 <;> ext x <;> simp only [LinearMap.sum_apply, Finset.sum_apply]
 
 theorem bijective_of_retract (M : Type) [AddCommGroup M] [Module O M] [TopologicalSpace M]
     [IsTopologicalAddGroup M] [ContinuousConstSMul O M] [ContinuousSMul O M]

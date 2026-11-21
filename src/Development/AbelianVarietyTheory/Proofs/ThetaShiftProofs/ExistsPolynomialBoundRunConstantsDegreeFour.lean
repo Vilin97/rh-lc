@@ -146,8 +146,9 @@ theorem room_four : ∃ C₀ : ℝ → ℝ → ℝ → ℝ, (∀ a b c, 0 ≤ C�
   have hK : 20 ≤ K := by rw [hKdef]; linarith
   have hL1 : 1 ≤ large₂.sc.L := Real.one_le_rpow large₂.sc.one_lt_alt.le large₂.sc.eps_pos.le
   have hfN : 1 ≤ D.R.f := by
-    unfold Ranks.f Ranks.n
-    have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity)
+    have hn : 1 ≤ D.R.n := D.R.ord_pos
+    unfold Ranks.f
+    have := Nat.one_le_two_pow (n := D.R.e)
     omega
   have hf1 : (1 : ℝ) ≤ D.R.f := by exact_mod_cast hfN
   have hr1 : (1 : ℝ) ≤ D.R.r := by exact_mod_cast (by omega : 1 ≤ D.R.r)
