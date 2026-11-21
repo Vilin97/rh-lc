@@ -25,7 +25,7 @@ def vecs (B : Subalgebra O K⟦X⟧) : Submodule B (ι → K⟦X⟧) where
   zero_mem' _ := B.zero_mem
   smul_mem' c _ hv i := B.mul_mem c.2 (hv i)
 
-theorem mem_vecs {B : Subalgebra O K⟦X⟧} {v : ι → K⟦X⟧} : v ∈ vecs B ↔ ∀ i, v i ∈ B := Iff.rfl
+theorem mem_vecs {B : Subalgebra O K⟦X⟧} {v : ι → K⟦X⟧} : v ∈ vecs ι B ↔ ∀ i, v i ∈ B := Iff.rfl
 
 def tot {B : Subalgebra O K⟦X⟧} (P : ZMod a → Submodule B (ι → K⟦X⟧)) :
     Submodule B (Vec K a ι) := Submodule.pi Set.univ P
@@ -77,7 +77,7 @@ structure PhiMod where
 
   mat : ZMod a → GL ι (invE l e (A O K))
 
-abbrev Mc : Submodule (A O K) (ι → K⟦X⟧) := vecs (A O K)
+abbrev Mc : Submodule (A O K) (ι → K⟦X⟧) := vecs ι (A O K)
 
 namespace PhiMod
 
@@ -124,7 +124,7 @@ def ofMatrix (Y Y' : ZMod a → Matrix ι ι K⟦X⟧) (hY : ∀ τ i j, Y τ i 
 def M (_ : PhiMod O K l e a ι) : Submodule (A O K) (Vec K a ι) := tot fun _ => Mc O K ι
 
 def Mext (_ : PhiMod O K l e a ι) (B : Subalgebra O K⟦X⟧) : Submodule B (Vec K a ι) :=
-  tot fun _ => vecs B
+  tot fun _ => vecs ι B
 
 def extc (B : Subalgebra O K⟦X⟧) (τ : ZMod a) : Submodule B (ι → K⟦X⟧) :=
   Submodule.span B (Set.range (P.mx τ).col)
@@ -144,7 +144,7 @@ abbrev Lk (k : ℝ) : Submodule (R O K l k) (Vec K a ι) := P.ext (R O K l k)
 def FilMM (j : ℕ) : Submodule (S O K e) (Vec K a ι) := Fil O K l e j • P.MM
 
 theorem mem_extc {B : Subalgebra O K⟦X⟧} {τ : ZMod a} {v : ι → K⟦X⟧} :
-    v ∈ P.extc B τ ↔ ∃ m ∈ vecs B, v = P.mx τ *ᵥ m := by
+    v ∈ P.extc B τ ↔ ∃ m ∈ vecs ι B, v = P.mx τ *ᵥ m := by
   rw [extc, Submodule.mem_span_range_iff_exists_fun]
   have key (c : ι → B) : ∑ i, c i • (P.mx τ).col i = P.mx τ *ᵥ fun i => (c i : K⟦X⟧) := by
     ext1 j
@@ -156,7 +156,7 @@ theorem mem_extc {B : Subalgebra O K⟦X⟧} {τ : ZMod a} {v : ι → K⟦X⟧}
     exact ⟨fun i => ⟨m i, hm i⟩, key _⟩
 
 theorem mem_extc_iff {B : Subalgebra O K⟦X⟧} {τ : ZMod a} {v : ι → K⟦X⟧} :
-    v ∈ P.extc B τ ↔ P.mxInv τ *ᵥ v ∈ vecs B := by
+    v ∈ P.extc B τ ↔ P.mxInv τ *ᵥ v ∈ vecs ι B := by
   rw [mem_extc]
   constructor
   · rintro ⟨m, hm, rfl⟩
@@ -167,7 +167,7 @@ theorem mem_extc_iff {B : Subalgebra O K⟦X⟧} {τ : ZMod a} {v : ι → K⟦X
 theorem exists_exponents [NeZero a] : ∃ α β : ℕ, (∀ v ∈ P.L, E K l e ^ α • v ∈ P.M) ∧
     ∀ v ∈ P.M, E K l e ^ β • v ∈ P.L := by
   have key (Y : ZMod a → Matrix ι ι K⟦X⟧) (hY : ∀ τ i j, Y τ i j ∈ invE l e (A O K)) :
-      ∃ n : ℕ, ∀ τ, ∀ m ∈ vecs (A O K), E K l e ^ n • (Y τ *ᵥ m) ∈ vecs (A O K) := by
+      ∃ n : ℕ, ∀ τ, ∀ m ∈ vecs ι (A O K), E K l e ^ n • (Y τ *ᵥ m) ∈ vecs ι (A O K) := by
     choose n hn using fun p : ZMod a × ι × ι => hY p.1 p.2.1 p.2.2
     refine ⟨Finset.univ.sup n, fun τ m hm i => ?_⟩
     simp only [Pi.smul_apply, Matrix.mulVec, dotProduct, smul_eq_mul, Finset.mul_sum]
@@ -432,7 +432,7 @@ def hatV (v : ι → K⟦X⟧) : ι → AhatE O K l e := fun i => hat O l e (v i
 
 variable (O) in
 def hatSpan (N : Set (ι → K⟦X⟧)) : Submodule (Ahat O K l e) (ι → AhatE O K l e) :=
-  Submodule.span _ (hatV O l e '' (N ∩ vecs (RpiE O K l e)))
+  Submodule.span _ (hatV O l e '' (N ∩ vecs ι (RpiE O K l e)))
 
 
 variable (O K ι) in
