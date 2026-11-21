@@ -89,7 +89,7 @@ theorem holTan_dualMap {A : Type} [CommRing A] (hB : IsOpen B) (v : Sp (DualNumb
       (fun s => by obtain ⟨a, rfl⟩ := hs s; simp only [hv]; simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using hd a.fst)
       (fun s => by obtain ⟨a, rfl⟩ := hs s; simp only [hv]; simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using hd a.snd)
   intro U f
-  refine ((h0 (v ⁻¹ᵁ U) ((v.app U).hom f)).mono fun b hb => ⟨hb.1, ?_⟩).congr fun b hb => ?_
+  refine ((h0 (v ⁻¹ᵁ U) ((v.app U).hom f)).mono (s := {b ∈ B | ⊤ ≤ w b ⁻¹ᵁ U}) fun b hb => ⟨hb.1, ?_⟩).congr fun b hb => ?_
   · have := hb.2
     rw [hw b hb.1, ← e b hb.1] at this
     exact this

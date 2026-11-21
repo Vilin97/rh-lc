@@ -18,12 +18,13 @@ theorem C_dvd_of_C_dvd_pow {A σ : Type} [CommRing A] {g : A} (hg : ∀ (x : A) 
   rw [MvPolynomial.C_dvd_iff_map_hom_eq_zero _ g hq] at h ⊢
   rw [map_pow] at h
   have hn := (MvPolynomial.isNilpotent_iff).1 ⟨n, h⟩
-  ext i
+  apply MvPolynomial.ext
+  intro i
   obtain ⟨k, hk⟩ := hn i
   rw [MvPolynomial.coeff_map] at hk ⊢
   rw [← map_pow, hq] at hk
-  rw [MvPolynomial.coeff_zero, hq]
-  exact hg _ _ hk
+  change Ideal.Quotient.mk (Ideal.span {g}) (P.coeff i) = 0
+  exact (hq _).2 (hg _ _ hk)
 
 theorem exists_div_of_mem_O {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {M : RatModel o Ω}
     {V : M.Z.Opens} (hV : IsAffineOpen V) {z : M.Z} (hz : z ∈ V) {x : Ω} (hx : x ∈ M.O z) :
@@ -63,7 +64,7 @@ theorem keepsRad_of_affCover (F Ω Ω' : Type) [Field F] [Field Ω] [Algebra F �
   have hO : ∀ P, ψ P ∈ M'.O z' := fun P => by
     induction P using MvPolynomial.induction_on with
     | C a => rw [MvPolynomial.eval₂Hom_C]; exact hf.map_mem_O a.2
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul, MvPolynomial.eval₂Hom_X']
       exact mul_mem hp (RatModel.ringOn_le_O hz (hR ▸ Algebra.subset_adjoin (Or.inr ⟨i, rfl⟩)))

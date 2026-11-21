@@ -53,7 +53,7 @@ theorem coeff_deriv_expPS : ∀ (σ : Type) [DecidableEq σ] (q : MvPolynomial �
     ring
   simp only [h1]
   rw [Finset.sum_range_succ']
-  simp only [pow_zero, Derivation.map_one_eq_zero, MvPolynomial.coeff_zero, zero_div, add_zero]
+  simp only [pow_zero, Derivation.map_one_eq_zero, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, zero_div, add_zero]
   have h2 : ∀ n : ℕ, AddMonoidAlgebra.coeff (MvPolynomial.pderiv l (q ^ (n + 1))) α /
       (((n + 1).factorial : ℕ) : ℂ) =
       ∑ x ∈ Finset.HasAntidiagonal.antidiagonal α, AddMonoidAlgebra.coeff (MvPolynomial.pderiv l q) x.1 *

@@ -94,17 +94,17 @@ theorem homK (B : FB R d O) (a : O) (c : Fin d) :
   exact h
 
 theorem hom_rel (B : FB R d O) (a : O) (c b : Fin d) :
-    ∑ j, pderiv k ((0 : Fin 1), j) (B.actK k a c) * Jac (lawK k B) j b =
+    ∑ j, pderiv (R := k) ((0 : Fin 1), j) (B.actK k a c) * Jac (lawK k B) j b =
       ∑ j, ev (n := 1) ![B.actK k a] (Jac (lawK k B) c j) * C (dAct k B a j b) := by
   have cP : CZ (![comp1 (B.actK k a) (pt k (n := 2) d 0), comp1 (B.actK k a) (pt k (n := 2) d 1)] : Fin 2 → Pt k 2 d) :=
     CZ.cons (fun l => constantCoeff_ev zero_constant_first_point (const_actK' B a l)) (CZ.cons (fun l => constantCoeff_ev czY (const_actK' B a l)) CZ.nil)
   have cAk : CZ (![B.actK k a] : Fin 1 → Pt k 1 d) := CZ.cons (const_actK' B a) CZ.nil
-  have h := congrArg (fun g => ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), b) g)) (homK B a c)
+  have h := congrArg (fun g => ev (n := 1) ![pt k d 0, 0] (pderiv (R := k) ((1 : Fin 2), b) g)) (homK B a c)
   beta_reduce at h
-  have z0 : ∀ j, pderiv k ((1 : Fin 2), b) (comp1 (B.actK k a) (pt k (n := 2) d 0) j) = 0 := fun j =>
+  have z0 : ∀ j, pderiv (R := k) ((1 : Fin 2), b) (comp1 (B.actK k a) (pt k (n := 2) d 0) j) = 0 := fun j =>
     pderiv_ev_zero zero_constant_first_point _ _ (fun j l => by fin_cases j; simp [pderiv_pt])
-  have zA : ∀ j, pderiv k ((1 : Fin 2), b) (comp1 (B.actK k a) (pt k (n := 2) d 1) j) =
-      ev (n := 2) ![pt k d 1] (pderiv k ((0 : Fin 1), b) (B.actK k a j)) := fun j => d_y _ b
+  have zA : ∀ j, pderiv (R := k) ((1 : Fin 2), b) (comp1 (B.actK k a) (pt k (n := 2) d 1) j) =
+      ev (n := 2) ![pt k d 1] (pderiv (R := k) ((0 : Fin 1), b) (B.actK k a j)) := fun j => d_y _ b
   have e1 : ∀ g : PS k 2 d, ev (n := 1) ![pt k d 0, 0]
       (ev (n := 2) ![comp1 (B.actK k a) (pt k (n := 2) d 0), comp1 (B.actK k a) (pt k (n := 2) d 1)] g) =
       ev (n := 1) ![B.actK k a] (ev (n := 1) ![pt k d 0, 0] g) := by

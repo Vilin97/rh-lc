@@ -72,8 +72,7 @@ theorem spMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (
   rfl
 
 theorem exists_pull {S S' : Scheme.{0}} (f : S' ⟶ S) (t : SAB H S) : ∃ t' : SAB H S', Nonempty (SABMap t' t f) := by
-  obtain ⟨PP', cub, sym, adj, prim, m, -⟩ := sabPull Out.CubePf.cubePull f t
-  exact ⟨_, ⟨m⟩⟩
+  exact exists_sab f t
 
 theorem isProper_of_map {S S' : Scheme.{0}} {t : SAB H S} {t' : SAB H S'} {f : S' ⟶ S} (m : SABMap t' t f)
     (hp : IsProper t.G.hom) : IsProper t'.G.hom :=

@@ -194,7 +194,7 @@ theorem exists_cover {O : Type} [CommRing O] {X : Scheme.{0}} {s : X ⟶ Sp O} (
   obtain ⟨m, d, F, σ, hd, hF, hle, hcov⟩ := exists_forms e U hU
   refine ⟨m, fun i => e ⁻¹ᵁ Proj.basicOpen (grading O N) (F i), σ,
     fun i i' => Units.map (e.app (Proj.basicOpen (grading O N) (F i) ⊓ Proj.basicOpen (grading O N) (F i'))).hom.toMonoidHom
-      (fracUnit (grading O N) (Proj.basicOpen (grading O N) (F i) ⊓ Proj.basicOpen (grading O N) (F i')) (F i') (F i)
+      (fracUnit (𝒜 := grading O N) (Proj.basicOpen (grading O N) (F i) ⊓ Proj.basicOpen (grading O N) (F i')) (F i') (F i)
         (hF i') (hF i) inf_le_right inf_le_left),
     fun i i' => (e.app (Proj.basicOpen (grading O N) (F i))).hom
       (frac (grading O N) (Proj.basicOpen (grading O N) (F i)) (F i') (F i) (hF i') (hF i) le_rfl),

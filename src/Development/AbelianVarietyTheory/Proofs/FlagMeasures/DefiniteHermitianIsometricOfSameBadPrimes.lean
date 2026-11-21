@@ -234,7 +234,8 @@ theorem exists_intLat [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower
   have hb' : ∀ i, b' i = algebraMap (𝓞 K) K N • b i := fun i => by
     simp [b', Module.Basis.unitsSMul_apply, Units.smul_def]
   refine ⟨Submodule.span (𝓞 K) (Set.range b'), ⟨Submodule.fg_span (Set.finite_range _), ?_⟩, ?_⟩
-  · rw [Submodule.span_span_of_tower, b'.span_eq]
+  · intro s _ hs
+    exact (LinearIndependent.iff_fractionRing (𝓞 K) K).mp hs
   · intro x hx y hy
     induction hx using Submodule.span_induction with
     | zero => simp

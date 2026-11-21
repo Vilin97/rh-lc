@@ -46,7 +46,7 @@ theorem tc_rename_equiv {β : Type} [Fintype β] [DecidableEq β] (e : α ≃ β
   refine Finset.sum_congr rfl fun v _ => ?_
   have hg : graph (e.permCongr v) = Finsupp.mapDomain (Prod.map e e) (graph v) := by
     unfold graph
-    rw [Finsupp.mapDomain_finset_sum]
+    rw [Finsupp.mapDomain_finsetSum]
     simp only [Finsupp.mapDomain_single]
     rw [← e.sum_comp]
     simp [Equiv.permCongr_apply]
@@ -105,9 +105,9 @@ theorem glue_injective : Function.Injective (glue (ι := ι) (γ := γ)) := by
 theorem graph_prodCongrRight (σ : ι → Equiv.Perm γ) :
     graph (Equiv.prodCongrRight σ) = glue fun τ => graph (σ τ) := by
   unfold glue graph
-  simp only [Finsupp.mapDomain_finset_sum, Finsupp.mapDomain_single]
+  simp only [Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single]
   rw [Fintype.sum_prod_type]
-  rfl
+  simp only [Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single, emb, Equiv.prodCongrRight_apply]
 
 theorem exists_prodCongrRight (w : Equiv.Perm (ι × γ)) (hw : ∀ a, (w a).1 = a.1) :
     ∃ σ : ι → Equiv.Perm γ, Equiv.prodCongrRight σ = w := by

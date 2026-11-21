@@ -107,7 +107,7 @@ theorem _root_.GlobalTheory.Member.LatData.exists_data_lattice : ∀ (E : Type) 
   obtain ⟨d, hd, hdint⟩ := exists_int_mul_isIntegral_of_fg Λ hfg
   obtain ⟨c, hc, hcmem⟩ := exists_int_smul_single_mem_of_span_eq_univ Λ hspan
   have hdc : ((d * c : ℤ) : E) ≠ 0 := by exact_mod_cast mul_ne_zero hd hc
-  refine ⟨{ _root_.GlobalTheory.Up.Definite.data E r with
+  refine ⟨{ _root_.GlobalTheory.Up.Definite.data (E := E) (r := r) with
     Λ := Λ
     Λ_fg := hfg
     Λ_span := hspan

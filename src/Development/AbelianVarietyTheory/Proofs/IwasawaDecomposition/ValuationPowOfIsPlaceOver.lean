@@ -23,6 +23,7 @@ theorem valuation_pow_of_isPlaceOver : ∀ (K L Ω : Type) [Field Ω] [Field K] 
   refine ⟨v.asIdeal.ramificationIdx' v'.asIdeal,
     Nat.pos_of_ne_zero (Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver v'.asIdeal v.ne_bot), ?_⟩
   intro x
+  rw [Ideal.ramificationIdx'_eq_ramificationIdx v.asIdeal v'.asIdeal v.ne_bot]
   exact (IsDedekindDomain.HeightOneSpectrum.valuation_liesOver L v v' x).symm
 
 end GlobalTheory.LyingOver

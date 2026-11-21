@@ -88,7 +88,7 @@ open ValuativeRel Matrix in
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {n : Type} [Fintype n] [DecidableEq n] in
 private lemma ord_one_twisted_operators : _root_.GlobalTheory.SmGL.ord k 1 = 0 :=
-  (_root_.GlobalTheory.SmGL.ord_eq_zero_iff k).mpr (by simp)
+  _root_.GlobalTheory.SmGL.ord_eq_zero_iff.mpr (by simp)
 
 open ValuativeRel Matrix in
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
@@ -105,7 +105,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 private lemma ord_zpow_uniformizer' {ϖ : kˣ}
     (hϖ : valuation k (ϖ : k) = uniformizer k) (m : ℤ) :
     _root_.GlobalTheory.SmGL.ord k (ϖ ^ m) = m := by
-  have h1 := _root_.GlobalTheory.SmGL.ord_eq_one k hϖ
+  have h1 := _root_.GlobalTheory.SmGL.ord_eq_one hϖ
   induction m using Int.induction_on with
   | zero => simpa using ord_one_twisted_operators
   | succ i ih => rw [_root_.zpow_add_one, _root_.GlobalTheory.SmGL.ord_mul, ih, h1]
@@ -120,7 +120,7 @@ private lemma exists_unit_mul_zpow_uniformizer {ϖ : kˣ}
     (hϖ : valuation k (ϖ : k) = uniformizer k) (x : kˣ) :
     ∃ u : kˣ, ∃ m : ℤ, valuation k (u : k) = 1 ∧ x = u * ϖ ^ m := by
   refine ⟨x * (ϖ ^ _root_.GlobalTheory.SmGL.ord k x)⁻¹, _root_.GlobalTheory.SmGL.ord k x, ?_, by simp⟩
-  apply (_root_.GlobalTheory.SmGL.ord_eq_zero_iff k).mp
+  apply _root_.GlobalTheory.SmGL.ord_eq_zero_iff.mp
   rw [_root_.GlobalTheory.SmGL.ord_mul, ord_inv_twisted_operators,
     ord_zpow_uniformizer' hϖ]
   ring

@@ -56,7 +56,7 @@ theorem exists_bound {P Q : ℕ} {A : Matrix (Fin P) (Fin Q) ℂ} (h : (1 - Aᴴ
     · exact ⟨1, one_pos, by rw [Subsingleton.elim (_ - _) 0]; exact PosSemidef.zero⟩
     haveI : Nonempty (Fin Q) := ⟨⟨0, hN⟩⟩
     obtain ⟨r, hr, hle⟩ := (CFC.exists_pos_algebraMap_le_iff (A := Matrix (Fin Q) (Fin Q) ℂ)
-      h.isStrictlyPositive.isSelfAdjoint).2 fun x hx => h.isStrictlyPositive.spectrum_pos hx
+      (1 - Aᴴ * A) h.isStrictlyPositive.isSelfAdjoint).2 fun x hx => h.isStrictlyPositive.spectrum_pos hx
     refine ⟨r, hr, ?_⟩
     have := Matrix.le_iff.mp hle
     rwa [Algebra.algebraMap_eq_smul_one, ← Complex.coe_smul] at this

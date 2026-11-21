@@ -26,7 +26,7 @@ def CompInvMap : Prop :=
 
 def IntegSpec : Prop :=
   ∀ (K : Type u) [Field K] [CharZero K] (f : K⟦X⟧),
-    constantCoeff (integ f) = 0 ∧ derivative K (integ f) = f ∧
-    ∀ g : K⟦X⟧, constantCoeff g = 0 → derivative K g = f → g = integ f
+    constantCoeff (integ f) = 0 ∧ derivative (integ f) = f ∧
+    ∀ g : K⟦X⟧, constantCoeff g = 0 → derivative g = f → g = integ f
 
 end Formalism.L2.Th1.A

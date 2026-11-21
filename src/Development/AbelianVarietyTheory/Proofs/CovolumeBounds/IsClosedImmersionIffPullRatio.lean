@@ -225,11 +225,13 @@ structure IsCoordFamily (U : Fin (N + 1) → Y.Opens) (r : ∀ i, Fin (N + 1) �
   basicOpen_le : ∀ i j, Y.basicOpen (r i j) ≤ U j
 
 theorem isCoordFamily_pullRatio (φ : Y ⟶ PSpace R N) :
-    IsCoordFamily (fun i => φ ⁻¹ᵁ chart R N i) (fun i => pullRatio φ _ i le_rfl) where
-  cover := by rw [← Scheme.Hom.preimage_iSup, iSup_chart]; rfl
-  self _ := pullRatio_self
-  mul i j k := by rw [resG_pullRatio, resG_pullRatio, resG_pullRatio, pullRatio_mul_pullRatio]
-  basicOpen_le _ _ := basicOpen_pullRatio.le.trans inf_le_right
+    IsCoordFamily (fun i => φ ⁻¹ᵁ chart R N i) (fun i => pullRatio φ _ i le_rfl) := by
+  refine { cover := φ.iSup_preimage_eq_top (iSup_chart R N)
+           self := fun _ => pullRatio_self
+           mul := ?_
+           basicOpen_le := fun _ _ => basicOpen_pullRatio.le.trans inf_le_right }
+  intro i j k
+  rw [resG_pullRatio, resG_pullRatio, resG_pullRatio, pullRatio_mul_pullRatio]
 
 namespace IsCoordFamily
 

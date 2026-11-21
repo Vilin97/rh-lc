@@ -167,11 +167,8 @@ theorem unit_or_locRing {p : Ideal (𝓞 K)} (hp : p.IsPrime) (a : K) (ha : a �
     · exact Or.inr h.symm
 
 theorem isHermSemilocal_locRing (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {p : Ideal (𝓞 K)}
-    (hp : p.IsMaximal) : IsHermSemilocal (locRing p) where
-  star_mem := fun _ ha => star_mem_locRing hp.isPrime ha
-  frac := frac_locRing p
-  unram := unram_locRing hK hp
-  principal := principal_locRing hK hp
-  unit_or := fun a ha κ hκ μ hna hμ => unit_or_locRing hp.isPrime a ha κ hκ μ hna hμ
+    (hp : p.IsMaximal) : IsHermSemilocal (locRing p) :=
+  ⟨fun _ ha => star_mem_locRing hp.isPrime ha, frac_locRing p, unram_locRing hK hp,
+    principal_locRing hK hp, unit_or_locRing hp.isPrime⟩
 
 end ReciprocityTheory.ChartRestriction.L3.WA

@@ -91,8 +91,9 @@ theorem integrableOn_rep (hD : IsFundamentalDomain Γ D μ) (hDm : MeasurableSet
   have hCr : μ C ^ (1 / 2 : ℝ) ≠ ∞ := ENNReal.rpow_ne_top_of_nonneg (by norm_num) hCf
   have h2 : eLpNorm (fun y => F (r y)) 2 (μ.restrict C) ≤
       (S.card : ℝ≥0∞) ^ (1 / 2 : ℝ) * eLpNorm F 2 (μ.restrict D) := by
-    rw [eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num),
-      eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num)]
+    rw [eLpNorm_eq_lintegral_rpow_eNorm_toReal (by norm_num) (by norm_num) hgm,
+      eLpNorm_eq_lintegral_rpow_eNorm_toReal (by norm_num) (by norm_num)
+        (Lp.stronglyMeasurable F).aestronglyMeasurable]
     simp only [ENNReal.toReal_ofNat]
     rw [← ENNReal.mul_rpow_of_nonneg _ _ (by norm_num : (0 : ℝ) ≤ 1 / 2)]
     gcongr
@@ -104,10 +105,10 @@ theorem integrableOn_rep (hD : IsFundamentalDomain Γ D μ) (hDm : MeasurableSet
     convert h using 3
     norm_num
   have hL2 : MemLp (fun y => F (r y)) 2 (μ.restrict C) :=
-    ⟨hgm, h2.trans_lt (ENNReal.mul_lt_top hcard.lt_top (Lp.eLpNorm_lt_top F))⟩
+    h2.trans_lt (ENNReal.mul_lt_top hcard.lt_top (Lp.eLpNorm_lt_top F))
   refine ⟨hL2.integrable (by norm_num), ?_⟩
   calc ∫ y in C, ‖F (r y)‖ ∂μ = (eLpNorm (fun y => F (r y)) 1 (μ.restrict C)).toReal := by
-        rw [integral_norm_eq_lintegral_enorm hgm, eLpNorm_one_eq_lintegral_enorm]
+        rw [integral_norm_eq_lintegral_enorm hgm, eLpNorm_one_eq_lintegral_enorm hgm]
     _ ≤ ((S.card : ℝ≥0∞) ^ (1 / 2 : ℝ) * eLpNorm F 2 (μ.restrict D) * μ C ^ (1 / 2 : ℝ)).toReal :=
         ENNReal.toReal_mono (ENNReal.mul_ne_top (ENNReal.mul_ne_top hcard (Lp.eLpNorm_ne_top F)) hCr)
           (h1.trans (by gcongr))

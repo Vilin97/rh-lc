@@ -21,7 +21,8 @@ theorem cellMult_pos {O : Type} [CommRing O] [Module.Finite ℤ O] (bar : O → 
   haveI : IsNoetherian ℤ (LinearMap.BilinForm ℤ X) := inferInstance
   haveI : Module.Finite ℤ M := inferInstance
   haveI : IsNoetherian ℤ M := inferInstance
-  haveI : Module.Finite ℤ T := inferInstance
+  haveI : IsNoetherian ℤ T := isNoetherian_of_submodule_of_noetherian ℤ M T inferInstance
+  haveI : Module.Finite ℤ T := ⟨IsNoetherian.noetherian ⊤⟩
   haveI : AddGroup.FG T := by
     rw [← Module.Finite.iff_addGroup_fg]; infer_instance
   haveI : Finite T := by

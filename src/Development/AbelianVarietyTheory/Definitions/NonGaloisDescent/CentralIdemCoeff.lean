@@ -67,6 +67,7 @@ def PcrisTensorL (LT : LocTheory) : Prop :=
 
 variable {D : D7}
 
+set_option synthInstance.maxHeartbeats 400000 in
 def TieInePoly (D : D7) : Prop :=
   ∀ (i : D.nd.Loc) (w : HeightOneSpectrum (𝓞 D.host.E)) (hw : w ∈ placesOver D.host.E (D.nd.l i))
     (K' : FinExt (D.nd.l i)) (h : (D.nbr i w hw).Kw.1 ≤ K'.1) (hN : (GKin h).Normal)

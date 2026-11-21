@@ -57,7 +57,7 @@ theorem exists_cocycle_charH1 (χ : Additive G →ₜ+ QZ) :
     ∃ z : cocycles (Rep.trivial ℤ G (AddCircle (1 : ℚ))) 1,
       cohomologyπ _ 1 z = (cohomologyOneRatModIntIso G).inv.hom χ ∧
       ∀ v : Fin 1 → G, cochainOf (A := Rep.trivial ℤ G (AddCircle (1 : ℚ)))
-        (cocycleι (p := 1) z) v = charAdd χ (Additive.ofMul (v 0)) := by
+        (cocycleι (Rep.trivial ℤ G (AddCircle (1 : ℚ))) 1 z) v = charAdd χ (Additive.ofMul (v 0)) := by
   obtain ⟨z, hz⟩ := cohomologyπ_surjective _ 1 ((cohomologyOneRatModIntIso G).inv.hom χ)
   refine ⟨z, hz, fun v => ?_⟩
   have h1 : (cohomologyOneRatModIntIso G).hom.hom (cohomologyπ _ 1 z) = χ := by
@@ -79,7 +79,7 @@ theorem exists_cocycle_charH1 (χ : Additive G →ₜ+ QZ) :
 
 theorem exists_cocycle_charClassProf (χ : Additive G →ₜ+ QZ) :
     ∃ x : cocycles (Rep.trivial ℤ G ℤ) 2, cohomologyπ _ 2 x = charClassProf χ ∧
-      ∀ v : Fin 2 → G, cochainOf (A := Rep.trivial ℤ G ℤ) (cocycleι (p := 2) x) v =
+      ∀ v : Fin 2 → G, cochainOf (A := Rep.trivial ℤ G ℤ) (cocycleι (Rep.trivial ℤ G ℤ) 2 x) v =
         charCocycle (charAdd χ) (v 0, v 1) := by
   obtain ⟨z, hz, hzv⟩ := exists_cocycle_charH1 χ
   let y : (Fin 1 → G) → ℚ := fun v => reprIco (charAdd χ (Additive.ofMul (v 0)))
@@ -125,7 +125,7 @@ theorem exists_cocycle_cupCharClassProf (A : Rep ℤ G) [IsDiscreteRep A] (χ : 
     change cochainOf (A := A) (((cochainsComplex A).iCycles 2).hom _) v = _
     rw [e, cochainOf_cochainsMap_f]
     change φ.hom (cochainOf (A := A ⊗ Rep.trivial ℤ G ℤ)
-      (cocycleι (p := 2) (cupCocycles (zero_add 2) z0 x)) v) = _
+      (cocycleι (A ⊗ Rep.trivial ℤ G ℤ) 2 (cupCocycles (zero_add 2) z0 x)) v) = _
     rw [cocycleι_cupCocycles, cochainOf_cupLocallyConstant, cupCochain_apply, hz0c]
     erw [hxc, rightUnitor_hom_tmul]
     exact int_smul_eq_zsmul _ _ _

@@ -20,8 +20,9 @@ theorem isPrimitiveRoot_map_of_natCast_ne_zero {R K : Type} [CommRing R] [IsDoma
     (hk : 0 < k) {z : R} (hz : IsPrimitiveRoot z k) (β : R →+* K) (hβ : (k : K) ≠ 0) : IsPrimitiveRoot (β z) k := by
   have : NeZero (k : K) := ⟨hβ⟩
   have h : (Polynomial.cyclotomic k R).IsRoot z := hz.isRoot_cyclotomic hk
-  rw [← Polynomial.isRoot_cyclotomic_iff, ← Polynomial.map_cyclotomic k β]
-  exact h.map
+  apply (Polynomial.isRoot_cyclotomic_iff (n := k) (R := K)).mp
+  rw [← Polynomial.map_cyclotomic k β]
+  exact h.map β
 
 theorem exists_tBase_of_numberField {F : Type} [Field F] [NumberField F] (φ : F →+* ℂ) {k : ℕ} (hk : 0 < k)
     {z r : F} (hz : IsPrimitiveRoot z k) (hr : IsIntegral ℤ r) :

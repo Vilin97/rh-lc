@@ -20,8 +20,9 @@ theorem exists_unit_pow_normV_sub_one (E : Type) [Field E] [NumberField E] (v : 
     ∃ z : (v.adicCompletion E)ˣ, Valued.v (z : v.adicCompletion E) = 1 ∧ z ^ (normV v - 1) = y := by
   have hc := GlobalTheory.SelfDualGenus.isAdicComplete_adicCompletionIntegers v
   set n := normV v - 1 with hn
-  have hcard : Nat.card (ResidueField (v.adicCompletionIntegers E)) = normV v :=
-    Formalism.UG.P.tjcosets_card_residue v
+  have hcard : Nat.card (ResidueField (v.adicCompletionIntegers E)) = normV v := by
+    simpa [Formalism.UG.qV, normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+      Formalism.UG.P.tjcosets_card_residue v
   haveI : Finite (ResidueField (v.adicCompletionIntegers E)) :=
     GlobalTheory.SelfDualGenus.finite_residueField_adicCompletionIntegers v
   haveI := Fintype.ofFinite (ResidueField (v.adicCompletionIntegers E))

@@ -24,6 +24,7 @@ omit [DecidableEq σ] in
 theorem prod_factorial_add_single (α : σ →₀ ℕ) (l : σ) :
     (α + Finsupp.single l 1).prod (fun _ k => (k.factorial : ℂ)) =
       ((α l : ℂ) + 1) * α.prod (fun _ k => (k.factorial : ℂ)) := by
+  classical
   rw [← FockSeq.mfact_cast, ← FockSeq.mfact_cast, Oscillator.mfact_add_single]
   push_cast
   ring

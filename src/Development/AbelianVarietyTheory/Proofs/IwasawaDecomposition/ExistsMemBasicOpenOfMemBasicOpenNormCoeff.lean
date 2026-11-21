@@ -189,9 +189,13 @@ theorem mem_of_forall_mem_prime (φ : A →+* B) (hφ : φ.Finite) (b : B) (p : 
       rw [Polynomial.aeval_subalgebra_coe]
       simpa using e2
     have hw := mem_of_aeval_eq_zero P g hgm
-      (fun i hi => by rw [← Ideal.mem_comap, hPp]; exact hgc i hi) _ e3
+      (fun i hi => by
+        change g.coeff i ∈ Ideal.under A P
+        rw [hPp]
+        exact hgc i hi) _ e3
     rcases hP.mem_or_mem hw with h1 | h1
     · have h2 : s ∈ P.comap (algebraMap A (integralClosure A (AlgebraicClosure K))) := h1
+      change s ∈ Ideal.under A P at h2
       rw [hPp] at h2
       exact (hs h2).elim
     · exact hP.mem_of_pow_mem n h1
@@ -232,6 +236,7 @@ theorem mem_of_forall_mem_prime (φ : A →+* B) (hφ : φ.Finite) (b : B) (p : 
   have hmemA : a ∈ P.comap (algebraMap A (integralClosure A (AlgebraicClosure K))) := by
     rw [Ideal.mem_comap, hAR]
     exact hc
+  change a ∈ Ideal.under A P at hmemA
   rwa [hPp] at hmemA
 
 end Main

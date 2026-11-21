@@ -159,10 +159,10 @@ theorem span_MK_good (hK : A.IsKsForm) (hρ : ∀ g, ∀ f ∈ A.WK, A.ρ g f �
     have h0 : Wg.mkQ (∑ j, l.coord k (a j : LL) • m j) = 0 := (Submodule.Quotient.mk_eq_zero Wg).2 hc
     have h1 := congrArg (fun u => v.repr u t) h0
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
+      simp only [map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply, smul_eq_mul,
       map_zero, Finsupp.coe_zero, Pi.zero_apply] at h1
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
+      simp only [map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply, smul_eq_mul,
       map_zero, Finsupp.coe_zero, Pi.zero_apply, Basis.coord_apply] at h1 ⊢
     rw [← h1]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
@@ -238,7 +238,7 @@ theorem span_MK_good (hK : A.IsKsForm) (hρ : ∀ g, ∀ f ∈ A.WK, A.ρ g f �
     have h1 := congrArg (fun u => algebraMap (𝓞 Ks) Ks (u κ)) (LinearMap.congr_fun hAF (Finsupp.single t 1))
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [LinearMap.comp_apply, LinearMap.zero_apply, F, Finsupp.linearCombination_single, one_smul, map_sum,
-      map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, Finsupp.coe_zero,
+      map_smul, Finset.sum_apply', Finsupp.smul_apply, smul_eq_mul, Finsupp.coe_zero,
       Pi.zero_apply, map_zero, map_mul, hr] at h1
     have h2 : algebraMap (𝓞 Ks) Ks d * ∑ j, algebraMap (𝓞 Ks) Ks (Aj j κ) * q j t = 0 := by
       rw [Finset.mul_sum, ← h1]
@@ -252,7 +252,7 @@ theorem span_MK_good (hK : A.IsKsForm) (hρ : ∀ g, ∀ f ∈ A.WK, A.ρ g f �
     have h0 : Wg.mkQ (w κ) = 0 := by
       refine v.repr.injective (Finsupp.ext fun t => ?_)
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [w, map_sum, sKs, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
+        simp only [w, map_sum, sKs, map_smul, Finset.sum_apply', Finsupp.smul_apply, smul_eq_mul,
         map_zero, Finsupp.coe_zero, Pi.zero_apply]
       exact hA t κ
     exact (Submodule.Quotient.mk_eq_zero Wg).1 h0

@@ -93,7 +93,7 @@ theorem isIso_of_isProper_of_existsUnique_field_point (S T : Scheme.{0}) (f : S 
     (h : ∀ (k : Type) [Field k] (w : Sp k ⟶ T), ∃! z : Sp k ⟶ S, z ≫ f = w) : IsIso f := by
   have := GlobalTheory.IsNormalScheme.of_pred hT
   refine (IsZariskiLocalAtTarget.iff_of_iSup_eq_top (P := .isomorphisms _)
-    GlobalTheory.IsNormalScheme.component (GlobalTheory.IsNormalScheme.iSup_component T)).mpr fun Z ↦ ?_
+    GlobalTheory.IsNormalScheme.component (@GlobalTheory.IsNormalScheme.iSup_component T _ _)).mpr fun Z ↦ ?_
   exact isIso_of_isProper_of_existsUnique_field_point_of_isIntegral
     (f ∣_ GlobalTheory.IsNormalScheme.component Z) (existsUnique_field_point_morphismRestrict f h _)
 

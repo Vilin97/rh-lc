@@ -101,6 +101,8 @@ theorem sharp_pull : ∀ (h g k : ℕ) (W : Matrix (Fin 8) (Fin 8) ℤ) (J : Typ
     refine (map_list_prod (preHom (pushHom hφ t'.A (𝟙 _))) _).trans (Eq.trans ?_ (map_list_prod _ _).symm)
     rw [List.map_ofFn, List.map_ofFn]
     congr 2
+    funext v
+    simp only [Function.comp_apply, map_zpow, e]
   · apply hψ.1.hom_ext
     · rw [hlv, ← hlev i u, Over.comp_left, Over.comp_left, Category.assoc, hpr, ← Category.assoc, hpt, Category.assoc]
     · rw [Over.w, Over.w]; rfl

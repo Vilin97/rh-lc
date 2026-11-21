@@ -118,7 +118,9 @@ theorem exists_vol_poly : Out.Laws → Out.Laws2 → ∀ (K : Type) [Field K] [I
   let b : Polynomial ℤ →+ CechPic.Pic P.A.left := AddMonoidHom.mk' (fun F => CechPic.cls _ (hB F)) fun F G => by
     have := (CechPic.cls_eq_iff (LB.isLB_div (hB _) (hB _)) (hB _)).2 (hdiv F G)
     rw [CechPic.cls_div (hB _) (hB _)] at this
-    exact (sub_eq_iff_eq_add'.1 this)
+    calc
+      _ = (_ - _) + _ := by abel
+      _ = _ := by rw [this]; abel
   have hb : ∀ F, b F = CechPic.cls _ (hB F) := fun _ => rfl
   have hp : ∀ n, (lbPow P.L n).IsLB := fun n => LB.isLB_linComb P.isLB _ _
   have b₁ : b 1 = 2 • CechPic.cls _ P.isLB :=

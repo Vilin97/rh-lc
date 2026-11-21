@@ -5,7 +5,7 @@ public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomol
 
 @[expose] public section
 
-set_option maxSynthPendingDepth 1
+set_option maxSynthPendingDepth 3
 
 namespace GroundTheory.Arith.SchemeCoh
 
@@ -47,7 +47,9 @@ variable {A}
 theorem FiniteH.of_iso {F G : X.Modules} (e : F ≅ G) (hF : FiniteH.{w'} A F) :
     FiniteH.{w'} A G := fun p =>
   have := hF p
-  Module.Finite.equiv (H.linearEquivOfIso.{w'} A e p)
+  have eH : Sheaf.H.{w'} (modulesAb F) p ≃ₗ[A] Sheaf.H.{w'} (modulesAb G) p :=
+    ((H.moduleFunctor.{w'} A p).mapIso e).toLinearEquiv
+  Module.Finite.equiv eH
 
 lemma H.map_zero_injective {C : Type*} [Category C] {J : GrothendieckTopology C}
     [HasSheafify J AddCommGrpCat.{u}] [HasExt.{w'} (Sheaf J AddCommGrpCat.{u})]
@@ -83,7 +85,20 @@ theorem FiniteH.of_shortExact₁ {S : ShortComplex X.Modules} (hS : S.ShortExact
     exact (H.map_zero_injective.{w'} (abSC S).f (hy.trans (map_zero _).symm)).symm
   | succ p =>
     have := h₃ p
-    exact finite_of_exact_noetherian (H.δLinear A hS' p) (H.linearMapV436 A S.f (p + 1))
+    have δ : Sheaf.H.{w'} (modulesAb S.X₃) p →ₗ[A]
+        Sheaf.H.{w'} (modulesAb S.X₁) (p + 1) :=
+      { toFun := H.δ hS' p (p + 1) rfl
+        map_add' := map_add _
+        map_smul' := fun a x => by
+          let r := algebraMap A Γ(X, ⊤) a
+          let α : abSC S ⟶ abSC S :=
+            { τ₁ := modulesAbMap (smulHom S.X₁ r)
+              τ₂ := modulesAbMap (smulHom S.X₂ r)
+              τ₃ := modulesAbMap (smulHom S.X₃ r)
+              comm₁₂ := smulAbRingHom_comp S.f r
+              comm₂₃ := smulAbRingHom_comp S.g r }
+          exact H.δ_naturality hS' hS' α p (p + 1) rfl x }
+    exact finite_of_exact_noetherian δ (H.linearMapV436 A S.f (p + 1))
       fun x hx => H.exact₁ hS' rfl x hx
 
 end

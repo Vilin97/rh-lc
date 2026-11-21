@@ -215,7 +215,13 @@ theorem exists_osc_bound_deriv : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (
     calc _ = (u.1 * (u⁻¹).1)ᴴ * X * (u.1 * (u⁻¹).1) := by simp only [mul_assoc, conjTranspose_mul]
       _ = X := by simp
   let E₀ : (ι → ℂ) ≃L[ℝ] (ι → ℂ) := ContinuousLinearEquiv.equivOfInverse (mvL (u⁻¹).1) (mvL u.1)
-    (fun v => by simp) fun v => by simp
+    (fun v => by
+      change u.1 *ᵥ ((u⁻¹).1 *ᵥ v) = v
+      rw [mulVec_mulVec]
+      simp) fun v => by
+      change (u⁻¹).1 *ᵥ (u.1 *ᵥ v) = v
+      rw [mulVec_mulVec]
+      simp
   let E : EuclideanSpace ℂ ι ≃L[ℝ] (ι → ℂ) := (crd ι).trans E₀
   have hE : ∀ v, E v = (u⁻¹).1 *ᵥ crd ι v := fun _ => rfl
   have hJ := cplx_cplx s hs1 hs2

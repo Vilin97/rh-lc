@@ -78,7 +78,7 @@ lemma val_app_apply {V : (projectiveSpace A n).Opens} (t : Γ(projectiveSpace A 
 lemma twistPushSec_smul {V : (projectiveSpace A n).Opens} (t : Γ(projectiveSpace A n, V))
     (s : Γ(twistingSheaf (grading A n) k, V)) :
     twistPushSec (B := B) k (t • s) = (baseChangeMap A B n).app V t • twistPushSec (B := B) k s := by
-  apply ProjTwist.ext
+  apply Subtype.ext
   funext y
   show locMap y.1 ((t.1 ⟨pt A y.1, y.2⟩).val * ProjTwist.val s ⟨pt A y.1, y.2⟩) =
     (((baseChangeMap A B n).app V t).1 y).val * locMap y.1 (ProjTwist.val s ⟨pt A y.1, y.2⟩)
@@ -87,7 +87,7 @@ lemma twistPushSec_smul {V : (projectiveSpace A n).Opens} (t : Γ(projectiveSpac
 lemma twistPushSec_add {V : (projectiveSpace A n).Opens}
     (s s' : Γ(twistingSheaf (grading A n) k, V)) :
     twistPushSec (B := B) k (s + s') = twistPushSec k s + twistPushSec k s' := by
-  apply ProjTwist.ext
+  apply Subtype.ext
   funext y
   show locMap y.1 (ProjTwist.val s ⟨pt A y.1, y.2⟩ + ProjTwist.val s' ⟨pt A y.1, y.2⟩) =
     locMap y.1 (ProjTwist.val s ⟨pt A y.1, y.2⟩) + locMap y.1 (ProjTwist.val s' ⟨pt A y.1, y.2⟩)
@@ -104,7 +104,7 @@ def twistToPushforward :
         map_smul' := fun t s => twistPushSec_smul k t s }
      naturality := fun {V V'} i => by
       ext s
-      exact ProjTwist.ext (funext fun y => rfl) }⟩
+      exact Subtype.ext (funext fun y => rfl) }⟩
 
 def pullbackTwistingSheafMap :
     (Scheme.Modules.pullback (baseChangeMap A B n)).obj (twistingSheaf (grading A n) k) ⟶
@@ -127,9 +127,10 @@ lemma pullbackTwistingSheafMap_unit {V : (projectiveSpace A n).Opens}
 lemma twistPushSec_upow {u : MvPolynomial (Fin (n + 1)) A} (hu : u ∈ grading A n 1) :
     twistPushSec (B := B) k (ProjTwist.upow (grading A n) hu k) =
       ProjTwist.upow (grading B n) ((gradedMap A B n).2 hu) k := by
-  apply ProjTwist.ext
+  apply Subtype.ext
   funext y
-  change locMap y.1 (ProjTwist.val (ProjTwist.upow (grading A n) hu k) ⟨pt A y.1, y.2⟩) = _
+  change locMap y.1 (ProjTwist.val (ProjTwist.upow (grading A n) hu k) ⟨pt A y.1, y.2⟩) =
+    ProjTwist.val (ProjTwist.upow (grading B n) ((gradedMap A B n).2 hu) k) ⟨y.1, y.2⟩
   erw [ProjTwist.val_upow, ProjTwist.val_upow]
   unfold ProjTwist.twistFrac
   refine (locMap_mk _ _ _).trans ?_

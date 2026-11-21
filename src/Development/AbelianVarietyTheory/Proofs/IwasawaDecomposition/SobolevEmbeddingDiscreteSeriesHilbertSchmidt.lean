@@ -35,10 +35,10 @@ theorem integral_sq_sum {ε : Fin n → Bool} {σ : Mx n → (H →L[ℂ] H)} {�
     rw [← Finset.sum_mul_sum, ← star_sum, Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]
     rfl
   have i1 : ∀ p, Integrable (fun g : UJ ε => ∑ q, coefOn σ (y p) (h p) g * star (coefOn σ (y q) (h q) g)) μ :=
-    fun p => integrable_finset_sum _ fun q _ => (hd.2 _ _ _ _).1
+    fun p => integrable_finsetSum _ fun q _ => (hd.2 _ _ _ _).1
   have i2 : Integrable (fun g : UJ ε => ((‖∑ p, ⟪h p, σ (umat g) (y p)⟫_ℂ‖ ^ 2 : ℝ) : ℂ)) μ := by
     simp only [e]
-    exact integrable_finset_sum _ fun p _ => i1 p
+    exact integrable_finsetSum _ fun p _ => i1 p
   refine ⟨by simpa only [RCLike.re_to_complex, Complex.ofReal_re] using i2.re, ?_⟩
   apply Complex.ofReal_injective
   rw [← integral_complex_ofReal]

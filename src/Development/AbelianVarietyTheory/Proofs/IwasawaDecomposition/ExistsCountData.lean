@@ -42,7 +42,8 @@ theorem integral_inflate [Fintype Q] (μf : Measure I.Gf) [μf.IsHaarMeasure] (h
       ∫ x, (if x ∈ I.Kset then F (ρ.toFun x) else 0) ∂μf = ((μf (I.Kg g)).toReal : ℂ) * ∑ q, F q := by
   have hU : IsOpen (I.Kg g) := I.topf_open g hg
   have hfin : μf (I.Kg g) ≠ ⊤ :=
-    ((measure_mono fun x hx => hx.1).trans_lt (GlobalTheory.adelicStab_isCompact_isOpen I).1.measure_lt_top).ne
+    ((measure_mono (show I.Kg g ⊆ I.Kset from fun x hx => hx.1)).trans_lt
+      (GlobalTheory.adelicStab_isCompact_isOpen I).1.measure_lt_top).ne
   have hm : ∀ q, MeasurableSet {x | x ∈ I.Kset ∧ ρ.toFun x = q} ∧
       μf {x | x ∈ I.Kset ∧ ρ.toFun x = q} = μf (I.Kg g) := fun q => by
     obtain ⟨t, ht⟩ := fibre_eq ρ q
@@ -62,7 +63,7 @@ theorem integral_inflate [Fintype Q] (μf : Measure I.Gf) [μf.IsHaarMeasure] (h
   have hi : ∀ q, Integrable ({x | x ∈ I.Kset ∧ ρ.toFun x = q}.indicator (fun _ => F q)) μf := fun q =>
     (integrable_indicator_iff (hm q).1).2 (integrableOn_const ((hm q).2 ▸ hfin))
   rw [e]
-  refine ⟨integrable_finset_sum _ fun q _ => hi q, ?_⟩
+  refine ⟨integrable_finsetSum _ fun q _ => hi q, ?_⟩
   rw [integral_finsetSum _ fun q _ => hi q, Finset.mul_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [integral_indicator_const _ (hm q).1, Measure.real, (hm q).2, Complex.real_smul]

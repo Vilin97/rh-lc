@@ -42,8 +42,10 @@ theorem isSubrep_map (e : W ≃ₗ[ℂ] W') {ρ : Representation ℂ (GQ L n) W}
   · rintro _ ⟨f, hf, rfl⟩
     obtain ⟨h1, N, hN, h2⟩ := hS.le hf
     refine ⟨fun γ g => ?_, N, hN, fun κ hκ g => ?_⟩
-    · simp [h1 γ g, he]
-    · simp [h2 κ hκ g]
+    · change e (f (γ * g)) = ρ' γ (e (f g))
+      rw [h1 γ g, he]
+    · change e (f (g * κ)) = e (f g)
+      rw [h2 κ hκ g]
   · rintro h _ ⟨f, hf, rfl⟩
     exact ⟨NG.rt L n h f, hS.stable h f hf, rfl⟩
 

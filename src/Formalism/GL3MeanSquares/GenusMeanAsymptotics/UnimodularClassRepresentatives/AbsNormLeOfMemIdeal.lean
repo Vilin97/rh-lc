@@ -43,7 +43,7 @@ theorem eq_of_close (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
     exact ⟨⟨w, IsTotallyReal.isReal w⟩, Finset.mem_univ _⟩
   have h2 : ∏ w : {w : InfinitePlace F // w.IsReal}, |rEmb w (n - n')| <
       ∏ _w : {w : InfinitePlace F // w.IsReal}, δ := by
-    refine Finset.prod_lt_prod_of_nonempty (fun w _ => ?_) (fun w _ => ?_) hne'
+    refine Finset.prod_lt_prod_of_nonempty₀ (fun w _ => ?_) (fun w _ => ?_) hne'
     · rw [abs_pos]
       intro h3
       apply h0

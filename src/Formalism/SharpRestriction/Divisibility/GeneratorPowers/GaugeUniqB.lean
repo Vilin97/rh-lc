@@ -93,7 +93,8 @@ theorem jetMap_mk {ι' : Type} (m : ℕ) (φ : ι → MvPolynomial ι' R) (hφ :
     jetMap φ hφ (Ideal.Quotient.mk (orig R ι ^ (m + 1)) p) = Ideal.Quotient.mk _ (aeval φ p) := rfl
 
 theorem jetSubstP_scale (m : ℕ) (s : ι → R) (f : MvPowerSeries ι R) :
-    jetSubstP m (fun i => C (s i) * X i) (psJet m f) = psJet m (MvPowerSeries.rescale s f) := by
+    Formalism.L2.Pj.jetSubstP m (fun i => C (s i) * X i) (psJet m f) =
+      psJet m (MvPowerSeries.rescale s f) := by
   unfold jetSubstP psJet
   rw [jetMap_mk]
   simp only [map_mul, constantCoeff_C, constantCoeff_X, mul_zero, map_zero, sub_zero]
@@ -104,8 +105,7 @@ theorem jetSubstP_scale (m : ℕ) (s : ι → R) (f : MvPowerSeries ι R) :
 theorem jetAug_psJet (m : ℕ) (f : MvPowerSeries ι R) :
     jetAug (psJet m f) = MvPowerSeries.constantCoeff f := by
   show (MvPolynomial.aeval fun _ => (0 : R)) (psTrunc m f) = _
-  rw [show (fun _ : ι => (0 : R)) = 0 from rfl, MvPolynomial.aeval_zero, Algebra.algebraMap_self_apply,
-]
+  rw [MvPolynomial.aeval_zero', Algebra.algebraMap_self_apply]
   show AddMonoidAlgebra.coeff (psTrunc m f) 0 = _
   rw [GermFun.coeff_psTrunc m f 0 (by simp)]
   rfl

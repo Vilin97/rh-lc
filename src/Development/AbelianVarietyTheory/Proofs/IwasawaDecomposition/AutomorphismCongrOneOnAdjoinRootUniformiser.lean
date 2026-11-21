@@ -139,7 +139,7 @@ theorem cong_on_adjoin : ∀ (W : Type) [CommRing W] [IsDomain W] [IsDiscreteVal
       exact h0 (by simpa using he))
     exact hmod i j m n (Finset.mem_range.mp hi) (Finset.mem_range.mp hj) (by rw [← hm, ← hn, he])) hb1
   have hgx : O.valuation (g x) = t := by
-    refine pow_left_injective hl0 ?_
+    refine (pow_left_injective hl0 : Function.Injective (fun a : O.ValueGroup => a ^ l)) ?_
     show _ ^ l = t ^ l
     rw [← map_pow, ← map_pow, hx', g.commutes, htl]
   set_option synthInstance.maxHeartbeats 100000 in

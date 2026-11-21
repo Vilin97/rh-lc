@@ -127,20 +127,20 @@ theorem twistRes_mem {x : Fin (N + 1) → Ω} {y : Fin (N + 1) → K'} (hxy : �
 
 theorem restrictData_twistSys {x : Fin (N + 1) → Ω} {y : Fin (N + 1) → K'}
     (hxy : ∀ i, y i ≠ 0 → x i ≠ 0) (hle : primeOf (S := S) x ≤ primeOf (S := S) y) (c : ℤ) :
-    RestrictData (twistSys S x c) hxy (twistSys S y c) (twistRes S x y c) where
-  mem I q hq := twistRes_mem hxy hle c I hq
-  add I q hq q' hq' := by
+    RestrictData (twistSys S x c) hxy (twistSys S y c) (twistRes S x y c) := by
+  refine ⟨twistRes_mem hxy hle c, ?_, ?_, ?_⟩
+  · intro I q hq q' hq'
     obtain ⟨t, ht⟩ := exists_isFrac hq
     obtain ⟨t', ht'⟩ := exists_isFrac hq'
     have hsum := isFrac_add (fun s hs => eval_ne_zero_of_mem_monos (liftChart hxy I) hs) ht ht'
     rw [twistRes_eq hxy hle I hsum, twistRes_eq hxy hle I ht, twistRes_eq hxy hle I ht']
     simp only [map_add (f := _), map_mul]
     rw [div_add_div _ _ (eval_ne_zero_of_mem_monos I ht.1) (eval_ne_zero_of_mem_monos I ht'.1)]
-  smul I q hq f s e hs hf hse := by
+  · intro I q hq f s e hs hf hse
     obtain ⟨t, ht⟩ := exists_isFrac hq
     rw [twistRes_eq hxy hle I (isFrac_mul hs hf hse ht), twistRes_eq hxy hle I ht]
     simp only [map_mul, div_mul_div_comm]
-  span I := by
+  · intro I
     apply le_antisymm
     · refine Submodule.span_le.mpr ?_
       rintro _ ⟨q, hq, rfl⟩

@@ -19,7 +19,7 @@ open MvPolynomial
 variable {ι σ : Type} [Fintype ι]
 
 def prodRename [DecidableEq ι] :
-    MultilinearMap ℂ (fun _ : ι => MvPolynomial σ ℂ) (MvPolynomial (ι × σ) ℂ) :=
+    (ι → MvPolynomial σ ℂ) →ₘₗ[ℂ] MvPolynomial (ι × σ) ℂ :=
   (MultilinearMap.mkPiAlgebra ℂ ι (MvPolynomial (ι × σ) ℂ)).compLinearMap
     fun i => (rename (Prod.mk i) : MvPolynomial σ ℂ →ₐ[ℂ] _).toLinearMap
 

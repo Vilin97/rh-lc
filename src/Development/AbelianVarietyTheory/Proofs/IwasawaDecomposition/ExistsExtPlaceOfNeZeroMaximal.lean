@@ -22,6 +22,7 @@ theorem exists_embed (B : Type) [CommRing B] [IsDomain B] [Algebra (𝓞 F) B] [
   have hinj : Function.Injective (algebraMap (𝓞 F) B) := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_
+    change Ideal.comap (algebraMap ℤ (𝓞 F)) (RingHom.ker (algebraMap (𝓞 F) B)) = ⊥
     rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
     exact RingHom.injective_int _
   haveI : Algebra.IsAlgebraic (𝓞 F) B :=
@@ -41,6 +42,7 @@ theorem exists_embed (B : Type) [CommRing B] [IsDomain B] [Algebra (𝓞 F) B] [
   by_contra h0
   refine Ideal.comap_ne_bot_of_algebraic_mem (R := ℤ) (I := RingHom.ker ψ.toRingHom) h0 hx
     (Algebra.IsAlgebraic.isAlgebraic x) ?_
+  change Ideal.comap (algebraMap ℤ B) (RingHom.ker ψ.toRingHom) = ⊥
   rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
   exact RingHom.injective_int _
 

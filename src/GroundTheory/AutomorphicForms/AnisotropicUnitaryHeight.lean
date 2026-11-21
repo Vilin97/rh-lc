@@ -27,8 +27,10 @@ section Algebraic
 
 variable (R : Type*) [CommRing R] [Algebra K R] {R' : Type*} [CommRing R'] [Algebra K R']
 
+local notation "𝒩" => Fintype.card (ι × κ)
+
 theorem baseMap_eq_tensorMap (f : R →ₐ[K] R') :
-    (baseMap f : R ⊗[K] E →ₐ[K] R' ⊗[K] E) = tensorMap E f := rfl
+    (baseMap f : R ⊗[K] E →ₐ[K] R' ⊗[K] E) = tensorMap (E := E) f := rfl
 
 variable {R}
 
@@ -36,7 +38,7 @@ theorem hermValue_baseMap (f : R →ₐ[K] R') (x : ι → R ⊗[K] E) :
     baseMap f (hermValue K H R x) = hermValue K H R' (fun i => baseMap f (x i)) := by
   rw [baseMap_eq_tensorMap]
   unfold hermValue
-  change (tensorMap E f : R ⊗[K] E →+* R' ⊗[K] E) (_ ⬝ᵥ _) = _
+  change (tensorMap (E := E) f : R ⊗[K] E →+* R' ⊗[K] E) (_ ⬝ᵥ _) = _
   rw [RingHom.map_dotProduct]
   congr 1
   · funext i
@@ -114,6 +116,8 @@ end Algebraic
 section Heights
 
 variable [NumberField K] {d : ℕ} (b : Basis (Fin d) K E)
+
+local notation "𝒩'" => Fintype.card (ι × Fin d)
 
 theorem hermCoords_vecMul_trHom (x : Fin 𝒩' → K) (u : unitaryPoints K E H 𝔸[K]) :
     hermCoords H b 𝔸[K] (Reduction.ratVec x ᵥ* (trHom b 𝔸[K] (u : GL ι (𝔸[K] ⊗[K] E)) :

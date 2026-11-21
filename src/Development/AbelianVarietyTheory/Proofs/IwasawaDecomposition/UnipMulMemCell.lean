@@ -38,6 +38,8 @@ variable [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 theorem tD_zero (ϖ : kˣ) : tD ϖ (0 : Fin m → ℤ) = 1 := by
   rw [tD, ← map_one (diagT k (Fin m))]
   congr 1
+  funext i
+  simp
 
 theorem tD_neg (ϖ : kˣ) (a : Fin m → ℤ) : tD ϖ (-a) = (tD ϖ a)⁻¹ :=
   eq_inv_of_mul_eq_one_left (by rw [← tD_add, neg_add_cancel, tD_zero])
@@ -83,7 +85,7 @@ theorem eq_of_mem_cell {ϖ : kˣ} (hϖ : ord k ϖ = 1) {a b : Fin m → ℤ} {g 
     rw [Units.val_inv_eq_inv_val, map_inv₀] at v2
     have hpos : 0 < valuation k (y : k) := zero_lt_iff.2 (by simp)
     exact le_antisymm v1 ((inv_le_one₀ hpos).1 v2)
-  have h3 := ord_eq_zero hv
+  have h3 : ord k y = 0 := by simp [ord, hv]
   rw [ord_zpow, hϖ, mul_one] at h3
   omega
 

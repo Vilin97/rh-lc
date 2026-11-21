@@ -118,7 +118,7 @@ theorem isReduced_of_dim_le : ∀ (n : ℕ) (D : Type) [CommRing D] [IsDomain D]
     exact Algebra.EssFiniteType.comp ℤ D N
   have hIjac : J.map (algebraMap D N) ≤ Ideal.jacobson (⊥ : Ideal N) :=
     map_le_jacobson_of_comap_isMaximal _
-      (fun M hM => Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M) J hJ
+      (fun M hM => Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := D) M) J hJ
   obtain ⟨f, hf⟩ := GlobalTheory.T.exists_injective_adicCompletion_map_of_finite D N hinj J
   haveI := isReduced_of_normal n ih N hdimN _ hIjac
   exact isReduced_of_injective f hf

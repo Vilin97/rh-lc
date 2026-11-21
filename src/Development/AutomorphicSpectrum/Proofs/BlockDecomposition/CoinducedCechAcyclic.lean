@@ -68,7 +68,7 @@ theorem prj_empty (e : κ → P) (M : P → ModuleCat.{0} R) (b : P) {s : Finset
   funext fun _ ↦ dif_neg hs
 
 def prjHom (e : κ → P) (M : P → ModuleCat.{0} R) (b : P) : cubeOf e (coind M) ⟶ cubeB e M b :=
-  Cube.homMk (prj e M b) fun {s t} h x ↦ by
+  Cube.homMk κ R (prj e M b) fun {s t} h x ↦ by
     by_cases hs : s.Nonempty
     · refine funext fun ht ↦ ?_
       have hs' : t.Nonempty := hs.mono h

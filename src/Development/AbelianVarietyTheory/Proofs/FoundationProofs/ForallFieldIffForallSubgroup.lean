@@ -14,7 +14,6 @@ noncomputable section
 namespace GlobalTheory.PointIrredCompare
 
 open Formalism.BasicNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain Polynomial
-open GlobalTheory.IndefiniteRowSideFullHecke.ReductionClauses
 open scoped Pointwise
 
 section Galois

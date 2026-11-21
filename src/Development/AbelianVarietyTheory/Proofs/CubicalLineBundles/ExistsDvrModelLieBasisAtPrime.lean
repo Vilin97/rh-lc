@@ -46,8 +46,8 @@ theorem exists_isModelAt : Out.SecTwistSt → ∀ (K : Type) [Field K] [NumberFi
     exact Chart.isLieBasis_baseChange (algebraMap R K) h y.basis hv'
   have e : y.P.g = x.P.g := hg₀.trans hg.symm
   obtain ⟨a, M, -, hM⟩ := KeyPow.exists_scalar_matrix hT x.P x.th x.th x.th_ne x.basis (hb e.symm)
-  have hd : Formalism.L2.Pj.dualMap (algebraMap R K) = Chart.dualMapR (algebraMap R K) := by
-    ext a <;> simp [Chart.dualMapR, Formalism.L2.Pj.dualMap]
+  have hd : Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R K) = Chart.dualMapR (algebraMap R K) := by
+    ext a <;> simp [Chart.dualMapR, Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap]
   refine ⟨M, R, inferInstance, inferInstance, inferInstance, inferInstance,
     inferInstanceAs (IsFractionRing (p.valuation K).valuationSubring K), f, y, ψ, e, rfl,
     fun z => ⟨fun ⟨r, hr⟩ => hr ▸ r.2, fun hz => ⟨⟨z, hz⟩, rfl⟩⟩, ⟨hψ, w₀, (isGen_iff _).2 hw₀⟩,

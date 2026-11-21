@@ -328,9 +328,18 @@ theorem existsUnique_selfDual_finite : ∀ (F E : Type) [Field F] [NumberField F
   have hc : Continuous χ :=
     hψ.1.comp (Continuous.prodMk continuous_const (GlobalTheory.AdelicU.continuous_singleFin v))
   have hu : ∀ t, ‖χ t‖ = 1 := fun t => hψ.2.1 _
-  have hne : ∃ t, χ t ≠ 1 := (GlobalTheory.T.localComponents_nontrivial_adelic_character F ψ hψ).1 v
-  refine ⟨existsUnique_of_bilin v χ hc hu hne (Fv F v) (LinearMap.mul _ _) (fun x y => mul_comm x y)
-    (fun x hx => by simpa using hx 1), fun M J hJ => ?_⟩
-  exact existsUnique_of_bilin v χ hc hu hne _ (bilin (Fv F v) σ J 1) (BR_symm _ h hJ) (eq_zero_of_BR _ h hJ)
+  have hχ : (χ : Fv F v → ℂ) = psiV F ψ v := by
+    funext t
+    rfl
+  have hne : ∃ t, χ t ≠ 1 := by
+    rw [hχ]
+    exact (GlobalTheory.T.localComponents_nontrivial_adelic_character F ψ hψ).1 v
+  constructor
+  · simpa only [SdR, ← hχ, LinearMap.mul_apply_apply] using
+      (existsUnique_of_bilin v χ hc hu hne (Fv F v) (LinearMap.mul _ _) (fun x y => mul_comm x y)
+        (fun x hx => by simpa using hx 1))
+  · intro M J hJ
+    simpa only [SdW, ← hχ, bilin, LinearMap.mk₂_apply] using
+      (existsUnique_of_bilin v χ hc hu hne _ (bilin (Fv F v) σ J 1) (BR_symm _ h hJ) (eq_zero_of_BR _ h hJ))
 
 end GlobalTheory.SelfDualFinite

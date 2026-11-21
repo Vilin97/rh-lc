@@ -116,6 +116,8 @@ theorem posDef_iff {N p : ℕ} (hp : p ≤ N) (U : Matrix (Fin N) (Fin p) ℂ) :
     refine isHermitian_conjTranspose_mul_mul _ ?_
     rw [Jm, IsHermitian, diagonal_conjTranspose]
     congr 1
+    funext a
+    simp [Pi.star_apply]
   have key : ∀ v, star v ⬝ᵥ (Uᴴ * Jm N p * U) *ᵥ v =
       ((2 * nsq (U.submatrix (Fin.castLE hp) id *ᵥ v) - nsq (U *ᵥ v) : ℝ) : ℂ) := fun v => by
     rw [← mulVec_mulVec, ← mulVec_mulVec, dotProduct_mulVec, ← star_mulVec, form_eq hp]
@@ -194,7 +196,14 @@ theorem det_extend {N p : ℕ} {hp : p ≤ N} {Y : Matrix (Fin N) (Fin p) ℂ} (
     split_ifs with hb
     · have ha : (a : ℕ) < p := lt_of_le_of_lt hab hb
       have := congrFun (congrFun h.1 ⟨a, ha⟩) ⟨b, hb⟩
-      simpa [one_apply, Fin.ext_iff] using this
+      by_cases hab : a = b
+      · subst b
+        simpa [one_apply] using this
+      · have hab' : (⟨a, ha⟩ : Fin p) ≠ ⟨b, hb⟩ := by
+          intro heq
+          apply hab
+          exact Fin.ext (congrArg (fun x : Fin p => x.val) heq)
+        simpa [one_apply, hab, hab'] using this
     · rfl
   rw [det_of_isLowerTriangular _ fun a b hab => by
     have hab' : a < b := hab

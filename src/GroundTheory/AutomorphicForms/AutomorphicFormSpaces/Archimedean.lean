@@ -31,7 +31,7 @@ instance : NormedAlgebra ℝ (ArchMatrix K n) := Matrix.linftyOpNormedAlgebra
 instance : FiniteDimensional ℝ (ArchMatrix K n) := by
   change FiniteDimensional ℝ (Matrix (Fin n) (Fin n) (mixedSpace K)); infer_instance
 
-instance : CompleteSpace (ArchMatrix K n) := FiniteDimensional.complete ℝ _
+instance : CompleteSpace (ArchMatrix K n) := FiniteDimensional.completeSpace ℝ _
 
 abbrev archGroup : Subgroup (ArchMatrix K n)ˣ := ⊤
 

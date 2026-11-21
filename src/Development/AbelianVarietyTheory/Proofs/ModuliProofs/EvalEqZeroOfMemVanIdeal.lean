@@ -86,7 +86,7 @@ theorem map_cmp_formsIn (B : Type) [CommRing B] [Algebra R B] (I : Ideal (MvPoly
         Submodule.tmul_mem_baseChange_of_mem _ (hI y hy e), ?_⟩
       rw [cmp_tmul, one_smul, map_homogeneousComponent]
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem range_cmp (B : Type) [CommRing B] [Algebra R B] (e : ℕ) :
@@ -296,7 +296,6 @@ theorem map_vanIdeal_of_const_away [IsReduced R] [Finite σ] [Finite Hh] (d : �
   rw [← hx']
   convert h1 using 2
   · exact RingHom.ext fun F => (map_map _ _ F).symm
-  · rfl
 
 theorem dimDeg_eq_of_cutBy {K : Type} [Field K] {I : Ideal (MvPolynomial σ K)} {Q : Polynomial ℚ} {d : ℕ}
     {p : Hh → σ → K} (h : CutBy I Q d p) {e : ℕ} (he : e ≥ d) :

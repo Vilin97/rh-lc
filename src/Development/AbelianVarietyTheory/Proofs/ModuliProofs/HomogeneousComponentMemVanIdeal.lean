@@ -85,11 +85,16 @@ theorem mem_span_of_mem_map {σ R K : Type} [CommRing R] [CommRing K] (x : R →
 attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem homogeneousComponent_mem_vanIdeal {σ R Hh : Type} [CommRing R] (d : ℕ) (p : Hh → σ → R)
     {F : MvPolynomial σ R} (hF : F ∈ vanIdeal d p) (e : ℕ) : homogeneousComponent e F ∈ vanIdeal d p :=
-  homogeneousComponent_mem_of_mem (Ideal.homogeneous_span _ _ fun _ hG => ⟨d, hG.1⟩) hF e
+  homogeneousComponent_mem_of_mem (Ideal.homogeneous_span _ _ fun G
+    (hG : G.IsHomogeneous d ∧ ∀ h, eval (p h) G = 0) => ⟨d, hG.1⟩) hF e
 
 theorem eval_eq_zero_of_mem_vanIdeal {σ R Hh : Type} [CommRing R] (d : ℕ) (p : Hh → σ → R)
-    {F : MvPolynomial σ R} (hF : F ∈ vanIdeal d p) (h : Hh) : eval (p h) F = 0 :=
-  (Ideal.span_le (I := RingHom.ker (eval (p h)))).2 (fun _ hG => hG.2 h) hF
+    {F : MvPolynomial σ R} (hF : F ∈ vanIdeal d p) (h : Hh) : eval (p h) F = 0 := by
+  have hle : vanIdeal d p ≤ RingHom.ker (eval (p h)) := by
+    apply Ideal.span_le.mpr
+    intro G hG
+    exact hG.2 h
+  exact hle hF
 
 noncomputable abbrev part {σ R : Type} [CommRing R] (J : Ideal (MvPolynomial σ R)) (e : ℕ) :
     Submodule R (homogeneousSubmodule σ R e) :=

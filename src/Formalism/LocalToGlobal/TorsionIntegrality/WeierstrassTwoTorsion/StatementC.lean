@@ -46,7 +46,7 @@ def FlowU : Prop :=
   ∀ (R : Type u) [CommRing R] (W : WeierstrassCurve R),
     IsDer (D W) ∧ ConstCurve (D W) (curveS W) ∧ IsFlowUW (curveS W) (D W) X (wSer W) ∧
     fwAt (curveS W) X (wSer W) = fw W ∧ fuAt (curveS W) X (wSer W) = fu W ∧
-    ∀ f : R⟦X⟧, om W * D W f = derivative R f
+    ∀ f : R⟦X⟧, om W * D W f = derivative f
 
 def DLSpec : Prop :=
   ∀ (R : Type u) [CommRing R] (W : WeierstrassCurve R),
@@ -66,6 +66,6 @@ def ISerSpec : Prop :=
     (yS W).subst (iSer W) = invOfUnit (iDen W) (-1) ^ 3 *
       (-yS W - C W.a₁ * X * xS W - C W.a₃ * X ^ 3) ∧
     D W (iSer W) = -(fw W).subst (iSer W) ∧
-    (om W).subst (iSer W) * derivative R (iSer W) = -om W
+    (om W).subst (iSer W) * derivative (iSer W) = -om W
 
 end Formalism.L2.Th1.A

@@ -33,6 +33,7 @@ variable {K W : Type} [Field K] [NumberField K] [AddCommGroup W] [Module K W]
 theorem exists_gen (h1 : Module.finrank K W = 1) {B C : Submodule (𝓞 K) W}
     (hB : Submodule.IsLattice K B) (hBC : B ≤ C) (hC : C.FG) :
     ∃ y, C = B ⊔ Submodule.span (𝓞 K) {y} := by
+  letI : StarRing K := starRingOfComm
   obtain ⟨t, ht, e⟩ := (LatticeGens.gens_and_count K W B C hBC
     (DiscOrder.idxN_ne_zero hB hC)).1 hC
   rw [h1] at ht
@@ -85,7 +86,8 @@ theorem encard_between (h1 : Module.finrank K W = 1) {B : Submodule (𝓞 K) W}
     exact sub_mem (B.smul_mem k hyD) ha
   have hn : Ideal.absNorm (Ideal.span {T}) ≠ 0 := by
     rw [Ne, Ideal.absNorm_eq_zero_iff, Ideal.span_singleton_eq_bot]; exact hT
-  have hcard : Nat.card (𝓞 K ⧸ Ideal.span {T}) = Ideal.absNorm (Ideal.span {T}) := rfl
+  have hcard : Nat.card (𝓞 K ⧸ Ideal.span {T}) = Ideal.absNorm (Ideal.span {T}) :=
+    (Ideal.absNorm_eq_natCard _).symm
   have : Finite (𝓞 K ⧸ Ideal.span {T}) := Nat.finite_of_card_ne_zero (by rwa [hcard])
   calc _ ≤ (Φ '' Set.univ).encard := Set.encard_le_encard hsub
     _ ≤ (Set.univ : Set (𝓞 K ⧸ Ideal.span {T})).encard := Set.encard_image_le _ _
@@ -156,9 +158,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
         exact ⟨_, hu, hπ u w⟩
     have hBB' : B ≤ B' := fun w hw => (mB' w).2 ⟨0, by simpa using (mB w).1 hw⟩
     have hB'fg : B'.FG := hL.1.fg.map π
-    have hB'l : Submodule.IsLattice K B' :=
-      haveI := hB.1
-      Submodule.IsLattice.of_le_of_isLattice_of_fg K hBB' hB'fg
+    have hB'l : Submodule.IsLattice K B' := Submodule.IsLattice.of_fg K hB'fg
     have mC : ∀ x : perp h U, x ∈ dual (hRes h (perp h U)) B' ↔ (x : V) ∈ dual h L := by
       intro x
       rw [dualBasic_mem_dual, dualBasic_mem_dual]

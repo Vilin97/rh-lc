@@ -61,7 +61,7 @@ theorem lattice_locally_finite : LocFinite := by
   by_contra hNp
   apply hne
   have hp' := hp.isPrime
-  simp only [Set.mem_setOf_eq, Nat.cast_mul] at hNp
+  simp only [Set.mem_ofPred_eq, Nat.cast_mul] at hNp
   have n1 : (N₁ : 𝓞 E) ∉ p := fun h => hNp (p.mul_mem_right _ h)
   have n2 : (N₂ : 𝓞 E) ∉ p := fun h => hNp (p.mul_mem_left _ h)
   exact le_antisymm (loc_le_of_denom h2 hp' n2) (loc_le_of_denom h1 hp' n1)

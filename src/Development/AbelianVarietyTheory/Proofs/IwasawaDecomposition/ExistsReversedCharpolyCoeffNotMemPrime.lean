@@ -87,6 +87,7 @@ theorem exists_normCoeff_not_mem {A B : Type} [CommRing A] [IsDomain A] [IsInteg
     rw [map_mul, aeval_C, aeval_X_pow]
     refine Q.mul_mem_right _ ?_
     have : P.coeff j ∈ Q.comap (algebraMap A B) := by
+      change P.coeff j ∈ Ideal.under A Q
       rw [hQc]; exact hcoeff j (Finset.mem_range.1 hj)
     exact this
   exact hb Q hQp hQc (hQp.mem_of_pow_mem _ hbd)

@@ -80,7 +80,7 @@ theorem GlobalTheory.exists_sabMap_id_of_common_generic : (∀ (T K : Type) [Com
     have sm := t.semi.smooth
     have gc := t.semi.geomConnected
     exact GlobalTheory.T.exists_lineBundleGenerator_extending_densePart X U j hX.1 hj₁ hj₂ hj₃ hj₄ t.G (eSec t.G) (LB.div (t'.PP.L.pull F.left) t.PP.L) (Over.w η[t.G])
-      sm (grpObj_geometricallyIntegral_of_smooth X t.G) (LB.isLB_div (pull_isLB t'.PP.isLB _) t.PP.isLB) ⟨ρ, hρ⟩ ⟨r, hr⟩
+      sm (grpObj_geometricallyIntegral_of_smooth X t.G) (LB.isLB_div (LB.isLB_pull t'.PP.isLB _) t.PP.isLB) ⟨ρ, hρ⟩ ⟨r, hr⟩
   obtain ⟨b, hb⟩ := exists_sabMap_of_lbIso E H X X t' t (𝟙 X) F.left
     ⟨hred, hgen.trans (range_subset_abLocus_of_isProper t.semi a.cart.1)⟩ gp hact hlb
   exact ⟨b, by rw [hb]; exact hφ⟩

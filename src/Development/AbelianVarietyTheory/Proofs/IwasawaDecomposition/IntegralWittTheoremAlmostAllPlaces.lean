@@ -303,7 +303,7 @@ theorem witt_integral : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     O.sum_mem fun i _ => O.sum_mem fun j _ => O.mul_mem (O.mul_mem (hsig _ (hyO i)) (hJO' i j)) (hxO' j)
   obtain ⟨i, hi⟩ := exists_isUnit_sub s (fun z => Subtype.ext (hss z)) (φ ⟨_, hb⟩) ⟨_, htO⟩
     ((hunit β hβ hb hb').map φ) (fun i => s ⟨_, huO i⟩) (fun i j hij => by
-      rw [← map_sub]
+      rw [← s.map_sub]
       refine IsUnit.map s (IsUnit.of_mul_eq_one ⟨_, hdO i j⟩ (Subtype.ext ?_))
       change (inclR (F := F) (Fv F v) (u i) - inclR (F := F) (Fv F v) (u j)) *
         inclR (F := F) (Fv F v) (u i - u j)⁻¹ = 1

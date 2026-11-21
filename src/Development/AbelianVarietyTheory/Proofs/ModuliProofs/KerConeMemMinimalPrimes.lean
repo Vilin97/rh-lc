@@ -60,9 +60,9 @@ theorem mem_ker_cone {o σ K : Type} [CommRing o] [Field K] (β : o →+* K) (u 
   constructor
   · intro h0 e
     by_cases he : e ∈ Finset.range (F.totalDegree + 1)
-    · have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p e) h0
-      simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero,
-        Finset.sum_ite_eq', he, if_true] at this
+    · have := congrArg (fun p : Polynomial K => p.coeff e) h0
+      simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply, Polynomial.coeff_zero,
+        Finset.sum_ite_eq', he, ite_true] at this
       exact this
     · rw [homogeneousComponent_eq_zero, map_zero]
       rw [Finset.mem_range] at he
@@ -109,8 +109,8 @@ theorem ker_cone_mem_minimalPrimes : ∀ (o σ K : Type) [CommRing o] [Field K] 
     exact this
   have h1 : I ⊔ Ideal.span {MvPolynomial.X i - 1} ≤ RingHom.ker χ := by
     refine sup_le (fun F hF => ?_) ?_
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [RingHom.mem_ker, ← MvPolynomial.sum_homogeneousComponent F, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [RingHom.mem_ker, ← MvPolynomial.sum_homogeneousComponent F, map_sum]
       refine Finset.sum_eq_zero fun e _ => ?_
       rw [hχ, (hπ _).2 (hIQ (hI F hF e)), mul_zero]
     · rw [Ideal.span_singleton_le_iff_mem, RingHom.mem_ker, map_sub, map_one]

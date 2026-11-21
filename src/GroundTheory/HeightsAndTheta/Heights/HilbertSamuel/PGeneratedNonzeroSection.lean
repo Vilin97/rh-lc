@@ -257,7 +257,7 @@ theorem evHom_smul (I : ∀ k, Finset (ι k)) (hI : NonzeroOn y I) (q : ℚ)
 def evLin (I : ∀ k, Finset (ι k)) (hI : NonzeroOn y I) :
     LocalizedModule (KH.cellMon ℚ I) (MRingOver ℚ ι ⧸ KH.genIdeal y) →ₗ[ℚ] Ω where
   toFun := evHom y I hI
-  map_add' := map_add _
+  map_add' := (evHom y I hI).map_add
   map_smul' := evHom_smul y I hI
 
 theorem evHom_cellRes {J I : ∀ k, Finset (ι k)} (hJI : ∀ k, J k ⊆ I k) (hI : NonzeroOn y I)

@@ -63,8 +63,6 @@ theorem modu_finite (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum 
   rw [modu, dite_eq_left hu, h2, FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv]
   push_cast
   congr 1
-  conv_lhs => rw [← WithZero.coe_unzero hv]
-  rfl
 
 theorem distribHaarChar_pi_real (ι : Type) [Fintype ι] (u : (ι → ℝ)ˣ) :
     (distribHaarChar (ι → ℝ) u : ℝ) = ∏ i, |(u : ι → ℝ) i| := by
@@ -134,6 +132,7 @@ theorem prod_modu_eq_one : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyRe
   congr 1
   refine Finset.prod_congr rfl fun w _ => ?_
   rw [(IsTotallyReal.isReal w).mult_eq_one, pow_one]
+  rw [InfiniteAdeleRing.algebraMap_apply]
   exact InfinitePlace.Completion.norm_coe w (WithAbs.toAbs w.1 e)
 
 end GlobalTheory.GaugeProdFormula

@@ -22,11 +22,11 @@ theorem diag_mul_transvection {n : ℕ} {i j : Fin n} (h : i ≠ j) (d : Fin n �
     diagonal_mul, mul_diagonal, single_apply, one_apply]
   by_cases ha : i = a <;> by_cases hb : j = b
   · subst ha hb; simp [h]; field_simp [hd j]
-  · by_cases hab : a = b <;> simp [ha, hb, hab]
+  · by_cases hab : a = b <;> simp [ha, hb, hab, mul_comm]
   · subst hb; by_cases hab : a = j
     · subst hab; simp [h]
     · simp [ha, hab]
-  · by_cases hab : a = b <;> simp [ha, hb, hab]
+  · by_cases hab : a = b <;> simp [ha, hb, hab, mul_comm]
 
 theorem poly_coeff_eq (K : ℕ) (x y : ℕ → ℂ) (hxy : ∀ s : ℂ, ∑ k ∈ Finset.range (K + 1), s ^ k * x k =
     ∑ k ∈ Finset.range (K + 1), s ^ k * y k) (k : ℕ) (hk : k ≤ K) : x k = y k := by

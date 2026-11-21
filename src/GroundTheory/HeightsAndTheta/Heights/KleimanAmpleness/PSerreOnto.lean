@@ -148,7 +148,7 @@ def freeGraded {r : ℕ} (deg : Fin r → ℤ) : GradedPMod S N (Fin r → Poly 
     exact this
 
 theorem single_one_mem_freeGraded {r : ℕ} (deg : Fin r → ℤ) (j : Fin r) :
-    (Pi.single j 1 : Fin r → Poly S N) ∈ (freeGraded deg).piece (deg j) := by
+    (Pi.single j 1 : Fin r → Poly S N) ∈ (freeGraded S N deg).piece (deg j) := by
   classical
   change _ ∈ Submodule.pi _ _
   rw [Submodule.mem_pi]
@@ -196,7 +196,7 @@ theorem GradedPMod.exists_gens (𝓜 : GradedPMod S N M) (hM : Module.Finite (Po
 omit [IsScalarTower S (Poly S N) M] in
 theorem freeMap_mem {r : ℕ} (𝓜 : GradedPMod S N M) {g : Fin r → M} {deg : Fin r → ℤ}
     (hg : ∀ j, g j ∈ 𝓜.piece (deg j)) (c : ℤ) {f : Fin r → Poly S N}
-    (hf : f ∈ (freeGraded deg).piece c) : freeMap (S := S) (N := N) g f ∈ 𝓜.piece c := by
+    (hf : f ∈ (freeGraded S N deg).piece c) : freeMap (S := S) (N := N) g f ∈ 𝓜.piece c := by
   rw [freeMap_apply]
   refine Submodule.sum_mem _ fun j _ => ?_
   have hj : f j ∈ (polyGraded S N).piece (c - deg j) := (Submodule.mem_pi.mp hf) j (Set.mem_univ _)
@@ -341,7 +341,7 @@ theorem SerreOnto.proof (hC : CechExact.Statement.{u, max u v})
   let eM : M ≃ₗ[Poly S N] ULift.{u} M := ULift.moduleEquiv.symm
   let eF : (Fin r → Poly S N) ≃ₗ[Poly S N] ULift.{v} (Fin r → Poly S N) := ULift.moduleEquiv.symm
   let 𝓜L := 𝓜.transport eM
-  let 𝓕 := (freeGraded deg).transport eF
+  let 𝓕 := (freeGraded S N deg).transport eF
   let φ : GradedHom 𝓕 𝓜L :=
     { toLin := eM.toLinearMap ∘ₗ freeMap (S := S) (N := N) g ∘ₗ eF.symm.toLinearMap
       map_piece := by

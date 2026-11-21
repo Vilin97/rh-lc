@@ -16,7 +16,7 @@ noncomputable section
 
 namespace PointHeightFSAux
 
-abbrev fsOne : HermLine (GlobalTheory (Fin 1)) := HermLine.ofCone (fsMetric (Ix (Fin 1)))
+abbrev fsOne : HermLine (GlobalTheory (Fin 1)) := HermLine.ofCone (fsMetric (ι := Ix (Fin 1)))
 
 abbrev x0 : MRing (GlobalTheory (Fin 1)) := X ⟨(), 0⟩
 

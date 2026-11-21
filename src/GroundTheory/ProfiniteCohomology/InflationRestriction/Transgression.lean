@@ -134,12 +134,13 @@ theorem cocycleOneApply_smul (r : k) (z : cocycles (Rep.res N.subtype A) 1) :
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep A] in
 theorem IsTgLift.add {x x' : N → A} {y y' : G → A} (hy : IsTgLift A N x y)
-    (hy' : IsTgLift A N x' y') : IsTgLift A N (x + x') (y + y') where
-  map_one := by simp [hy.map_one, hy'.map_one]
-  mul_right g n := by
+    (hy' : IsTgLift A N x' y') : IsTgLift A N (x + x') (y + y') := by
+  refine ⟨?_, ?_, ?_⟩
+  · simp [hy.map_one, hy'.map_one]
+  · intro g n
     simp only [Pi.add_apply, hy.mul_right, hy'.mul_right, map_add (f := _)]
     abel
-  conj h n := by
+  · intro h n
     simp only [Pi.add_apply, map_add (f := _)]
     rw [show A.ρ h (x _) + A.ρ h (x' _) - (x n + x' n) =
       (A.ρ h (x (GroundTheory.GroupCoh.conjHom N h n)) - x n) +
@@ -148,11 +149,12 @@ theorem IsTgLift.add {x x' : N → A} {y y' : G → A} (hy : IsTgLift A N x y)
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep A] in
 theorem IsTgLift.smul (r : k) {x : N → A} {y : G → A} (hy : IsTgLift A N x y) :
-    IsTgLift A N (r • x) (r • y) where
-  map_one := by simp [hy.map_one]
-  mul_right g n := by
+    IsTgLift A N (r • x) (r • y) := by
+  refine ⟨?_, ?_, ?_⟩
+  · simp [hy.map_one]
+  · intro g n
     simp only [Pi.smul_apply, hy.mul_right, map_smul, smul_add]
-  conj h n := by
+  · intro h n
     simp only [Pi.smul_apply, map_smul]
     rw [← smul_sub, hy.conj, smul_sub]
 

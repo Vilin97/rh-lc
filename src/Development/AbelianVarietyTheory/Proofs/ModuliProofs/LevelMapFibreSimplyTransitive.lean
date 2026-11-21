@@ -183,7 +183,7 @@ theorem exists_tate_push
   refine ⟨tateTransport I e (fun c p => Over.OverMorphism.ext ?_) (fun n p q c h => ?_), rfl, fun _ _ => rfl⟩
   · rw [he, Over.comp_left, Over.comp_left, he, Category.assoc, Category.assoc]
     exact congrArg _ (m.act c)
-  · obtain ⟨w, hw, -⟩ := (isPullCubical_iff m.cm t.cub t'.cub).1 m.lin
+  · obtain ⟨w, hw, -, -⟩ := (isPullCubical_iff m.cm t.cub t'.cub).1 m.lin
     exact (weilIs_grpPullback_of_comm _ _ _ _ f m.φ _ _ t.PP.isLB t'.PP.isLB m.cart ⟨w, (isGen_iff w).2 hw⟩ (Over.mk x) n p q (e p) (e q) _
       (he p) (he q)).1 h
 

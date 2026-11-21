@@ -145,7 +145,7 @@ lemma sectionL2NormSq_pos [CompactSpace X] (W : Weight L) (dV : SmoothVolume A) 
     rw [h, Complex.mul_conj, Complex.normSq_eq_norm_sq, ← Complex.ofReal_mul, Complex.ofReal_re]
   have hpos : ptNormSq W n s x ≠ 0 := by
     rw [hval]; positivity
-  exact (continuous_ptNormSq W hs).integral_pos_of_hasCompactSupport_nonneg_nonzero
+  exact (continuous_ptNormSq W hs).integral_pos_of_hasCompactSupport_nonneg_ne_zero
     (isClosed_tsupport _).isCompact (fun y => by unfold ptNormSq; positivity) hpos
 
 variable [CompactSpace X]
@@ -162,7 +162,9 @@ def l2InnerCore (W : Weight L) (dV : SmoothVolume A) (n : ℕ) (V : Submodule �
   conj_inner_symm s t := by
     rw [← integral_conj]
     congr 1
-    ring
+    funext x
+    simp only [ptInner, map_mul, starRingEnd_self_apply, Complex.conj_ofReal]
+    ac_rfl
   re_inner_nonneg s := by
     have h : 0 ≤ ∫ x, ptNormSq W n (s : Fin A.n → X → ℂ) x ∂dV.μ :=
       integral_nonneg fun x => by unfold ptNormSq; positivity
@@ -173,10 +175,13 @@ def l2InnerCore (W : Weight L) (dV : SmoothVolume A) (n : ℕ) (V : Submodule �
     rw [← integral_add (integrable_ptInner W dV (hV t.2) (hV s.2))
       (integrable_ptInner W dV (hV t.2) (hV s'.2))]
     congr 1
-    ring
+    funext x
+    simp only [ptInner, Submodule.coe_add, Pi.add_apply, map_add, mul_add, add_mul]
   smul_left s t r := by
     rw [← integral_const_mul]
     congr 1
+    funext x
+    simp only [ptInner, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul]
     ring
   definite s h := by
     simp_rw [ptInner_self] at h

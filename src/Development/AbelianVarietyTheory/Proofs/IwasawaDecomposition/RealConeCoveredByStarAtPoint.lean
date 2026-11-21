@@ -180,7 +180,7 @@ theorem star_cover : ∀ (X : Type) [AddCommGroup X] (m : ℕ) (γ : Fin m → L
   let h := linW w
   have hh : ∀ β : LinearMap.BilinForm ℤ X, h β = ∑ k, z k * β (p k).1 (p k).2 := fun β => by
     simp only [h, linW_apply, w]
-    rw [← Finsupp.sum_finset_sum_index (fun _ => by simp) (fun _ _ _ => by ring)]
+    rw [← Finsupp.sum_finsetSum_index (fun _ => by simp) (fun _ _ _ => by ring)]
     simp [Finsupp.sum_single_index]
   have hzk : ∀ k, (z k : ℝ) = (N : ℝ) * (a k : ℝ) := fun k => by
     have := congrFun hz k

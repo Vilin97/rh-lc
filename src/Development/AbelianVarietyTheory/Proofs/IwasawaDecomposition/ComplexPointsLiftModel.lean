@@ -13,7 +13,7 @@ theorem ringOfIntegers_hom_complex_injective (F : Type) [Field F] [NumberField F
     Function.Injective τ := by
   rw [RingHom.injective_iff_ker_eq_bot]
   apply Ideal.eq_bot_of_comap_eq_bot (R := ℤ)
-  rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
+  rw [Ideal.under_def, RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
   exact RingHom.injective_int _
 
 end GlobalTheory

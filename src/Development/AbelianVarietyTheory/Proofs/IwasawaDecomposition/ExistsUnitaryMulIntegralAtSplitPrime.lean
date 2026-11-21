@@ -104,7 +104,7 @@ theorem exists_unitary_mul_integral :
       (s : K) * M i j ∈ (algebraMap (𝓞 K) K).range := by
     rintro M i j ⟨b, hb⟩
     refine ⟨b + if i = j then s else 0, ?_⟩
-    rw [Matrix.sub_apply, one_apply, mul_sub] at hb
+    simp only [Matrix.sub_apply, Matrix.one_apply, mul_sub] at hb
     rw [map_add (f := _)]
     split_ifs at hb ⊢
     · show (b : K) + s = _

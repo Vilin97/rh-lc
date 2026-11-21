@@ -104,7 +104,6 @@ theorem exists_away_bijective [IsNoetherianRing A] (R K : Type) [CommRing R] [Co
     refine subsingleton_of_forall_eq 0 fun z => hinj (h ?_)
     rw [map_zero, map_zero]
     induction z with
-    | zero => rw [map_zero, map_zero]
     | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, add_zero]
     | tmul x c =>
       have e : (x : A) ⊗ₜ[R] c = (x : A) • ((1 : A) ⊗ₜ[R] c) := by

@@ -103,7 +103,7 @@ theorem inner_kAvg (hσ : IsURepOn (UJset ε) σ) {e : KG ε → ℂ} (he : Cont
 theorem inner_kAvg_ne_zero (hσ : IsURepOn (UJset ε) σ) {y : H} (hy : y ≠ 0) :
     ⟪y, kAvg ε σ (fun k => star ⟪y, σ (toMK k) y⟫_ℂ) y⟫_ℂ ≠ 0 := by
   have hc : Continuous fun k : KG ε => ⟪y, σ (toMK k) y⟫_ℂ := continuous_const.inner (continuous_orbit hσ y)
-  rw [inner_kAvg hσ hc.star]
+  rw [inner_kAvg hσ (e := fun k => star ⟪y, σ (toMK k) y⟫_ℂ) (continuous_star.comp hc)]
   have e : ∀ z : ℂ, star z * z = ((‖z‖ ^ 2 : ℝ) : ℂ) := fun z => by
     rw [Complex.star_def, Complex.conj_mul']; push_cast; rfl
   simp only [e]
