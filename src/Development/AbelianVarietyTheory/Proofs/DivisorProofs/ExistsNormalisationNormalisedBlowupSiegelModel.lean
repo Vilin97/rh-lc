@@ -185,7 +185,7 @@ theorem exists_normalisation_cover : ∀ g : ℕ, 1 ≤ g → ∀ n : ℕ, 3 ≤
       · rw [Category.assoc, pullback.lift_snd, hs']
     haveI : IsIso s' := ⟨f0, e2, e1⟩
     haveI : IsIso f0 := ⟨s', e1, e2⟩
-    have H := GlobalTheory.isPullback_toNormalization_of_mono f0 O.ι j hf0.symm
+    have H := GlobalTheory.isPullback_toNormalization_of_mono f0 O.ι j (H := hf0.symm)
     have e := IsPullback.isoIsPullback_hom_fst _ _ (isPullback_morphismRestrict j.fromNormalization O) H.flip
     haveI : IsIso (j.fromNormalization ∣_ O) := by rw [← e]; infer_instance
     show IsIso ((j.fromNormalization ≫ pullback.snd π X₁.π) ∣_ U)

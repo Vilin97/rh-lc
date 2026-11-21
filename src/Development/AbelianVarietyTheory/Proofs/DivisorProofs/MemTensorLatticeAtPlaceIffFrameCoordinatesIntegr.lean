@@ -113,12 +113,12 @@ theorem mem_latAtV_iff_xm : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     induction hz using AddSubgroup.closure_induction with
     | mem z hz =>
       obtain ⟨a, ha, hai, x, hx, y, hy, rfl⟩ := hz
-      have h1 : ι 1 ∈ intAt (E := E) v := (hint 1).1 (one_mem _)
+      have h1 : ι 1 ∈ Lat.intAt (E := E) v := (hint 1).1 (one_mem _)
       have h1s : At (evFin F v) (ι 1) := (hsupp _).2 ⟨1, rfl⟩
       let X' : Fin n → AE F E := a • fun i => inclR (F := F) (AF F) (x i)
       let Y' : Fin d → AE F E := ι 1 • fun k => inclR (F := F) (AF F) (y k)
       have hX'm : X' ∈ GlobalTheory.InertSph.latAt X v := AddSubgroup.subset_closure ⟨a, ha, hai, x, hx, rfl⟩
-      have hY'm : Y' ∈ GlobalTheory.InertSph.latAt W v := smul_incl_mem_latAt W h1 hy
+      have hY'm : Y' ∈ GlobalTheory.InertSph.latAt W v := Lat.smul_incl_mem_latAt W h1 hy
       have hX's : ∀ i, ∃ t, ι t = X' i := fun i => (hsupp _).1 fun u hu => by
         show u • (a • inclR (F := F) (AF F) (x i)) = 0
         rw [smul_smul, ← smul_eq_mul, ha u hu, zero_smul]
@@ -180,7 +180,7 @@ theorem mem_latAtV_iff_xm : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
     rw [e]
-    refine sum_mem fun j _ => sum_mem fun l _ => vecMulVec_mem X W (smul_mem_latAt X ((hint _).1 (hu l j)) ?_) ?_
+    refine sum_mem fun j _ => sum_mem fun l _ => Lat.vecMulVec_mem X W (Lat.smul_mem_latAt X ((hint _).1 (hu l j)) ?_) ?_
     · have h := (hPV (Pi.single j 1)).1 (hsing j)
       simpa [Matrix.mulVec_single_one] using h
     · have h := (hPW (Pi.single l 1)).1 (hsing l)

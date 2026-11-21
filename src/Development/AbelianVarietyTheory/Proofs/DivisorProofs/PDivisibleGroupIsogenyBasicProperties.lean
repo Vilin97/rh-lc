@@ -45,7 +45,7 @@ theorem hasLogDeg_pow_smul_id (G : PDivGroup p k) (m : ℕ) :
   have e : Hom.app ((p : ℤ_[p]) ^ m • 𝟙 G) n = mulBy k _ (p ^ m) := by
     rw [← Nat.cast_pow, natCast_smul_id_app]
   rw [e]
-  change Module.finrank k (G.A n ⧸ torsionIdeal k (G.A n) (p ^ m)) = _
+  change Module.finrank k (G.A n ⧸ torsionIdeal (R := k) (A := G.A n) (p ^ m)) = _
   rw [← hk]
   exact ((Ideal.quotientKerAlgEquivOfSurjective (f := (f : G.A n →ₐ[k] G.A m)) hf).toLinearEquiv.finrank_eq).trans
     (finrank_A G m)

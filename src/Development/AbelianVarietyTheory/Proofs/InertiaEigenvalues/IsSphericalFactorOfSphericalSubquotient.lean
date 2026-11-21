@@ -217,7 +217,7 @@ private theorem exists_fixed_ne_zero_of_piTensor_fixed {Γ X : α → Type} [∀
   let S : Finset α := Finset.univ.erase a
   have hSne : ∀ b ∈ S, b ≠ a := fun b hb => Finset.ne_of_mem_erase hb
   have hSmem : ∀ b, b ≠ a → b ∈ S := fun b hb => Finset.mem_erase.2 ⟨hb, Finset.mem_univ _⟩
-  let C : MultilinearMap ℂ X (X a) :=
+  let C : (∀ i, X i) →ₘₗ[ℂ] X a :=
     { toFun := fun x => (∏ b ∈ S, (B b).repr (x b) (t b)) • x a
       map_update_add' := by
         intro _ x i y z
@@ -246,7 +246,7 @@ private theorem exists_fixed_ne_zero_of_piTensor_fixed {Γ X : α → Type} [∀
               (∏ b ∈ S, (B b).repr (Function.update x i u b) (t b)) =
               ∏ b ∈ S, (B b).repr (x b) (t b) := fun u =>
             Finset.prod_congr rfl fun b hb => by rw [Function.update_of_ne (hSne b hb)]
-          rw [hp, hp, Function.update_self, Function.update_self, smul_comm]
+          rw [hp, hp, Function.update_self, Function.update_self, smul_comm, RingHom.id_apply]
         · have hia : i ∈ S := hSmem i hi
           have hp : ∀ [DecidableEq α] (u : X i),
               (∏ b ∈ S, (B b).repr (Function.update x i u b) (t b)) =
@@ -256,7 +256,7 @@ private theorem exists_fixed_ne_zero_of_piTensor_fixed {Γ X : α → Type} [∀
             congr 1
             exact Finset.prod_congr rfl fun b hb => by rw [Function.update_of_ne (Finset.ne_of_mem_erase hb)]
           rw [hp, hp, Function.update_of_ne (Ne.symm hi), Function.update_of_ne (Ne.symm hi), map_smul,
-            Finsupp.smul_apply, smul_eq_mul, mul_assoc, mul_smul] }
+            Finsupp.smul_apply, smul_eq_mul, mul_assoc, mul_smul, RingHom.id_apply] }
   let C' := PiTensorProduct.lift C
   have hC : ∀ y, C' y = 0 → (Bt.repr y) t = 0 := by
     intro y hy
@@ -350,7 +350,7 @@ private theorem exists_parInd_fixed_ne_zero_of_subquotient (e : (Σ a, m a) ≃ 
       refine Submodule.subset_span ⟨κ, f x, ?_⟩
       rw [map_sub, map_smul, f.isIntertwining]
     · simp
-    · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
     · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ _ hx
   have h1 : u - u' ∈ twKer S.toRepresentation (KO k n) 1 := by
     rw [← GlobalTheory.LocGL.idem_eq_zero_iff hS hK, map_sub, GlobalTheory.LocGL.idem_of_mem hS hK hu'fix, ← hu', sub_self]

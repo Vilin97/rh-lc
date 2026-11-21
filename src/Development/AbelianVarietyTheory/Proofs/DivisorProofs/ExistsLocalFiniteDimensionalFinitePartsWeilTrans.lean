@@ -23,8 +23,7 @@ namespace GlobalTheory.WeilContF
 theorem adeleJoin_zero_zero (F : Type) [Field F] [NumberField F] (κ : Type) :
     GlobalTheory.WeilCont.adeleJoin F (0 : κ → mixedEmbedding.mixedSpace F) 0 = 0 := by
   funext i
-  simp [GlobalTheory.WeilCont.adeleJoin]
-  rfl
+  simp only [GlobalTheory.WeilCont.adeleJoin, Pi.zero_apply, map_zero, Prod.mk_zero_zero]
 
 theorem sum_mul_zero_prod {κ : Type} [Fintype κ] {A B : Type} [CommRing A] [CommRing B] (z : κ → A × B)
     (y : κ → B) : (∑ i, z i * ((0 : A), y i)) = ((0 : A), ∑ i, (z i).2 * y i) := by
@@ -71,7 +70,10 @@ theorem exists_local_finite_parts_F : ∀ (F E : Type) [Field F] [NumberField F]
     intro x hx y₁ hy₁
     obtain ⟨x', hx', y', hy', he⟩ := hNL p hp x hx y₁ hy₁
     have := impl p (co.e.symm (GlobalTheory.WeilCont.adeleJoin F 0 x', GlobalTheory.WeilCont.adeleJoin F 0 y')) Φ hΦ
-    simp only [Darboux.rho, LinearEquiv.apply_symm_apply, hinv x' hx' y' hy', he] at this
+    simp only [Darboux.rho, LinearEquiv.apply_symm_apply, hinv x' hx' y' hy'] at this
+    change co.e (actAB (cA σ) p (co.e.symm (GlobalTheory.WeilCont.adeleJoin F 0 x', GlobalTheory.WeilCont.adeleJoin F 0 y'))) =
+      (GlobalTheory.WeilCont.adeleJoin F 0 x, GlobalTheory.WeilCont.adeleJoin F 0 y₁) at he
+    rw [he] at this
     exact this.symm
   refine hrep (om p Φ) (pres p Φ hΦ) ?_ ?_
   · intro x hx z

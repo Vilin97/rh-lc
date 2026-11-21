@@ -16,7 +16,7 @@ open GlobalTheory.FlagMod (FlagCover)
 open GlobalTheory.CompHt (hodgeWt)
 open GlobalTheory.LevDesc (TypeFrame grpHR grpGHR levDet secRing move)
 open GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms (LevelAut)
-open GlobalTheory.OrbitSep (fnAct fromSpecResidueField_comp_eq_of_fixes)
+open GlobalTheory.OrbitSep
 
 set_option autoImplicit false
 

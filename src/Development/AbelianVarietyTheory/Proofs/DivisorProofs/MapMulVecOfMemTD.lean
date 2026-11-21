@@ -69,6 +69,7 @@ private lemma exists_map_mulVec_eq_smul_of_invertible {R : Type} [CommRing R] [T
   refine ⟨c, fun μ hμ => ?_⟩
   obtain ⟨k, hk⟩ : ∃ k : ℝ≥0, μ = k • μ₀ := ⟨_, Measure.isAddLeftInvariant_eq_smul _ _⟩
   rw [hk, Measure.map_smul, hc, smul_comm]
+  exact he.measurable.aemeasurable
 
 private lemma map_transvection_mulVec_addHaar_eq_self {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R]
     [LocallyCompactSpace R] [SecondCountableTopology R] {κ : Type} [Fintype κ] [DecidableEq κ]
@@ -101,15 +102,18 @@ private lemma map_transvection_mulVec_addHaar_eq_self {R : Type} [CommRing R] [T
   have haa : a * a = 1 := by
     have h := map_mul_lemma_2 D D μ
     rw [hD, hone, ha μ inferInstance, Measure.map_smul, ha μ inferInstance, smul_smul] at h
+    all_goals try exact (Continuous.matrix_mulVec continuous_const continuous_id).measurable.aemeasurable
     exact nnreal_eq_of_smul_addHaar_eq μ (by rw [one_smul]; exact h.symm)
   have htt : t' * t = 1 := by
     have h := map_mul_lemma_2 (transvection i j c) (transvection i j (-c)) μ
     rw [hT, hone, ht' μ inferInstance, Measure.map_smul, ht μ inferInstance, smul_smul] at h
+    all_goals try exact (Continuous.matrix_mulVec continuous_const continuous_id).measurable.aemeasurable
     exact nnreal_eq_of_smul_addHaar_eq μ (by rw [one_smul]; exact h.symm)
   have hcj : t' = a * t * a := by
     have h := map_mul_lemma_2 (D * transvection i j c) D μ
     rw [hconj, ht' μ inferInstance, ha μ inferInstance, Measure.map_smul, map_mul_lemma_2,
       ht μ inferInstance, Measure.map_smul, ha μ inferInstance, smul_smul, smul_smul] at h
+    all_goals try exact (Continuous.matrix_mulVec continuous_const continuous_id).measurable.aemeasurable
     exact nnreal_eq_of_smul_addHaar_eq μ h
   have h2 : t * t = 1 := by
     rw [hcj] at htt
@@ -158,9 +162,11 @@ private lemma map_diagonal_mulVec_eq_inv_prod_smul {R : Type} [CommRing R] [Topo
     refine Measure.pi_eq (fun s hs => ?_)
     rw [Measure.smul_apply, Measure.nnreal_smul_coe_apply, Measure.pi_pi]
     simp only [Measure.smul_apply, Measure.nnreal_smul_coe_apply, ← Finset.prod_inv_distrib,
-      Finset.prod_mul_distrib, ENNReal.coe_finset_prod]
+      Finset.prod_mul_distrib]
+    norm_cast
   obtain ⟨k, hk⟩ : ∃ k : ℝ≥0, μ = k • ν := ⟨_, Measure.isAddLeftInvariant_eq_smul _ _⟩
   rw [hk, Measure.map_smul, hν, smul_comm]
+  exact (Continuous.matrix_mulVec continuous_const continuous_id).measurable.aemeasurable
 
 private lemma exists_unit_det_map_mulVec_haar_eq_inv_smul {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R]
     [LocallyCompactSpace R] [SecondCountableTopology R] {κ : Type} [Fintype κ] [DecidableEq κ]
@@ -183,6 +189,7 @@ private lemma exists_unit_det_map_mulVec_haar_eq_inv_smul {R : Type} [CommRing R
     obtain ⟨w, hw, hwμ⟩ := hN
     refine ⟨v * w, by simp [hv, hw, det_mul], fun μ hμ => ?_⟩
     rw [map_mul_lemma_2, hwμ μ hμ, Measure.map_smul, hvμ μ hμ, smul_smul, map_mul, mul_inv, mul_comm]
+    exact (Continuous.matrix_mulVec continuous_const continuous_id).measurable.aemeasurable
 
 theorem map_mulVec_of_mem_TD : ∀ (R : Type) [CommRing R] [TopologicalSpace R] [IsTopologicalRing R]
     [LocallyCompactSpace R] [SecondCountableTopology R] [T2Space R] (κ : Type) [Fintype κ] [DecidableEq κ]

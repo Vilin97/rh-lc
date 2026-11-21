@@ -50,7 +50,7 @@ theorem stab_compact_open (W : HSp D) (β : GL (Fin W.rank) (Lev.EAf D)) :
   ext k
   exact ⟨fun hk => hk.2, fun hk => ⟨k.2, hk⟩⟩
 
-theorem isHalf_mul {k l m : ℕ} {e : AE D} (p : Mx D k l) {u : Mx D l m} (hu : IsHalf e u) : IsHalf e (p ⬝ u) := by
+theorem isHalf_mul {k l m : ℕ} {e : AE D} (p : Mx D k l) {u : Mx D l m} (hu : IsHalf e u) : IsHalf e (p * u) := by
   intro i j
   show e * ∑ r, p i r * u r j = ∑ r, p i r * u r j
   rw [Finset.mul_sum]

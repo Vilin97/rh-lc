@@ -17,8 +17,8 @@ theorem csr_transpose_aeval {K : Type} [Field K] {n : ℕ} (A : Matrix (Fin n) (
 theorem csr_map_aeval {K : Type} [Field K] (σ : K →+* K) {n : ℕ} (A : Matrix (Fin n) (Fin n) K) (p : K[X]) :
     (aeval A p).map σ = aeval (A.map σ) (p.map σ) := by
   rw [aeval_eq_sum_range, aeval_eq_sum_range' (n := p.natDegree + 1)]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [← RingHom.mapMatrix_apply, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [← RingHom.mapMatrix_apply, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have hpow : (A ^ i).map σ = (A.map σ) ^ i := by
       rw [← RingHom.mapMatrix_apply, map_pow]; rfl

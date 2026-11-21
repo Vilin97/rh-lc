@@ -29,13 +29,13 @@ theorem isCommMonObj_of_isGrpPullback [GrpObj G] [GrpObj G'] [IsCommMonObj G]
     ← h.2 T y x (pushPt h.1.w y) (pushPt h.1.w x) rfl rfl, _root_.mul_comm]
 
 theorem isAbelianScheme_of_isGrpPullback [GrpObj G] [GrpObj G'] (hG : IsAbelianScheme G)
-    (h : IsGrpPullback G' G f φ) : IsAbelianScheme G' where
-  comm := by
-    have := hG.comm
-    exact isCommMonObj_of_isGrpPullback h
-  smooth := MorphismProperty.of_isPullback (P := @Smooth) h.1 hG.smooth
-  proper := MorphismProperty.of_isPullback (P := @IsProper) h.1 hG.proper
-  geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) h.1 hG.geomConnected
+    (h : IsGrpPullback G' G f φ) : IsAbelianScheme G' := by
+  have := hG.comm
+  exact
+    { comm := isCommMonObj_of_isGrpPullback h
+      smooth := MorphismProperty.of_isPullback (P := @Smooth) h.1 hG.smooth
+      proper := MorphismProperty.of_isPullback (P := @IsProper) h.1 hG.proper
+      geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) h.1 hG.geomConnected }
 
 theorem relAmple_restrict (h : IsPullback φ G'.hom G.hom f) (hL : L.IsLB) (hL' : L'.IsLB)
     (e : LBIso L' (L.pull φ)) (hA : Out.RelAmple G L) (V : S.Opens) (hV : IsAffineOpen V) :

@@ -61,8 +61,43 @@ theorem idx_split : ∀ (D : D7) (T : HSp D) (v : HeightOneSpectrum (𝓞 D.host
   have hE := isCMExt_host D
   have hJ := (GlobalTheory.Mem.Vol.cmData_isCMExt_and_gram_isHermND _ _ D.sp.cm).2 T
   have hL := SelfDual.isSelfDualAt_frameLat D T v
+  have hspan : Submodule.span D.host.E (frameLat T : Set (Fin T.rank → D.host.E)) = ⊤ := by
+    have hfull : Submodule.span D.host.E (T.L0 : Set T.V) = ⊤ := by
+      let W := Submodule.span D.host.E (T.L0 : Set T.V)
+      change W = ⊤
+      by_contra h
+      let e : T.V ≃ₗ⋆[D.host.E] T.V :=
+        (T.frame.equivFun.trans (starLinearEquiv D.host.E)).trans T.frame.equivFun.symm
+      let g : T.V →ₗ[D.host.E] Module.Dual D.host.E W :=
+        (LinearMap.domRestrict' W).comp (T.hT.comp e.toLinearMap)
+      have hdim : Module.finrank D.host.E (Module.Dual D.host.E W) < Module.finrank D.host.E T.V := by
+        rw [Subspace.dual_finrank_eq]
+        exact Submodule.finrank_lt h
+      obtain ⟨x, hx, hx₀⟩ :=
+        Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+      have hsmul (a : D.host.E) : a • e x ∈ T.L0 := by
+        rw [← T.baseLattice_isUnimodular]
+        rw [Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
+        intro y hy
+        have hxy : T.hT (e x) y = 0 :=
+          congrArg (fun f : Module.Dual D.host.E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+        have hyx : T.hT y (e x) = 0 := by
+          rw [(T.herm.eq (e x) y).symm, hxy, map_zero]
+        simp [hyx]
+      let i : D.host.E →ₗ[𝓞 D.host.E] T.L0 :=
+        ((LinearMap.toSpanSingleton D.host.E _ (e x)).restrictScalars (𝓞 D.host.E)).codRestrict T.L0 hsmul
+      let : Module.Finite (𝓞 D.host.E) T.L0 := Module.Finite.iff_fg.mpr T.standardTuple_isLattice.fg
+      let : Module.Finite (𝓞 D.host.E) D.host.E := Module.Finite.of_injective i fun a b hab =>
+        smul_left_injective D.host.E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+      exact RingOfIntegers.not_isField D.host.E
+        (isField_of_isIntegral_of_isField (R := 𝓞 D.host.E) (S := D.host.E)
+          (FaithfulSMul.algebraMap_injective _ _) (Field.toIsField _))
+    have heq : (frameLat T : Set (Fin T.rank → D.host.E)) =
+        T.frame.equivFun.toLinearMap '' (T.L0 : Set T.V) :=
+      (T.frame.equivFun.toEquiv.image_eq_preimage_symm _).symm
+    rw [heq, ← Submodule.map_span, hfull, Submodule.map_top, LinearEquiv.range]
   obtain ⟨-, w', hne, hu, -, -, -⟩ := GlobalTheory.LFun.SplitChart.split_chart_and_places hE hJ (frameLat_fg T)
-    (SelfDual.isLattice_frameLat T).span_eq_top h hv hL
+    hspan h hv hL
   have h' : w'.under (𝓞 D.host.F) = v := (hu w').2 (Or.inr rfl)
   obtain ⟨c, hc, hqc, -, he'⟩ := exists_conj_chart hE hJ hL hne h h' he
   have hϖ0 : ϖ ≠ 0 := by
@@ -122,7 +157,7 @@ theorem exists_over {D : D7} (v : HeightOneSpectrum (𝓞 D.host.F)) :
     rw [(RingHom.injective_iff_ker_eq_bot (algebraMap (𝓞 D.host.F) (𝓞 D.host.E))).1
       (FaithfulSMul.algebraMap_injective _ _)]; exact bot_le)
   exact ⟨⟨Q, hQ.isPrime, fun h0 => v.ne_bot (by
-    rw [← e, h0, Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ _)])⟩,
+    rw [← e, h0, Ideal.under_bot])⟩,
     HeightOneSpectrum.ext e⟩
 
 theorem norm_split (q : ℕ) (hq : 0 < q) (z : ℂ) (hz : ‖z‖ = 1) (N : ℕ) (m s : ℤ) (hs : 0 ≤ s) :

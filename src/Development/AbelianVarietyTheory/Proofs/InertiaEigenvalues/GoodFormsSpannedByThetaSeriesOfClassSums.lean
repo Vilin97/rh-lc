@@ -109,7 +109,7 @@ theorem term_mem_span {ρ : Setup D.ntw} (hρ : ρ.Good) (i : D.ntw.Tw) (j : Fin
   obtain ⟨hg, ha, -⟩ := GlobalTheory.TwistGood.tw_good D _ D.ntw ρ hρ i j b 0 ∅ 1 (twOK_one i 0)
   have hB := hρ.base i j b
   have hω := hρ.weil i j b _ hg
-  obtain ⟨γ, s, h', k, hs, hoff, hh', hsupp, e⟩ := GlobalTheory.T.exists_split_supported_rep_finite_unitary_class D ρ hρ i j b h hh
+  obtain ⟨γ, s, h', k, hs, hoff, hh', hsupp, e⟩ := GlobalTheory.RankReps.exists_rep_split_levJ D ρ hρ i j b h hh
   have hlaw := ((ρ.B i j b).mem_formsC.1 hF).2 γ (finPt _ h') k
   have hval : F (finPt _ h') ∈ (ρ.B i j b).valSpace := ((ρ.B i j b).mem_formsC.1 hF).1 _
   have hinv : ((ρ.B i j b).act ((γ⁻¹ : GQ (Vc D j)) : GA D (Vc D j))) ((ρ.B i j b).act (γ : GA D (Vc D j)) (F (finPt _ h'))) =
@@ -125,8 +125,16 @@ theorem term_mem_span {ρ : Setup D.ntw} (hρ : ρ.Good) (i : D.ntw.Tw) (j : Fin
       rw [← h1] at h2
       exact h2.le
     have hlat : Submodule.IsLattice D.host.E ((ρ.B i j b).latAt (finPt _ h')) :=
-      Formalism.UG.P.csGlob_lattice _ (Module.Finite.iff_fg.2 hB.frame.sdS.1.fg) hB.frame.sdS.1.span_eq_top _
-    have h2 := (GlobalTheory.T.fockHarmonicLattice_fg_and_spans_value_space D (Wc D j).rank (Vc D j).rank (ρ.B i j b).w (ρ.B i j b).F.BS _ (Formalism.L2.Host.embLL0 D) (labLL0 D)
+      by
+        have hfin := Module.Finite.iff_fg.2 hB.frame.sdS.1.fg
+        obtain ⟨c₂, hc₂, h₂⟩ := Formalism.UG.P.adelstabL_upper (F := D.host.F) (ρ.B i j b).F.ΛS hfin
+        obtain ⟨d, hd, c, hc, hcg, hcgi⟩ := Formalism.UG.P.levelaf_exists_denom (E := D.host.E) (Formalism.UG.bc (Lev.swapAE D) (finPt _ h').1)
+        have hG := Formalism.UG.P.adelstab_entries (Formalism.UG.bc (Lev.swapAE D) (finPt _ h').1) d c hc hcg
+        have hf := Formalism.UG.P.adelstab_finite (Formalism.UG.bc (Lev.swapAE D) (finPt _ h').1) _ c₂ d hc₂ hd h₂ hG
+        change Submodule.IsLattice D.host.E (Formalism.UG.CS.globLat (Formalism.UG.bc (Lev.swapAE D) (finPt _ h').1) (ρ.B i j b).F.ΛS)
+        rw [Formalism.UG.P.csGlob_eq]
+        exact Submodule.IsLattice.of_fg _ (Module.Finite.iff_fg.mp hf)
+    have h2 := (GlobalTheory.ExportSeries.HarmLattice.harmLat_fg_span D (Wc D j).rank (Vc D j).rank (ρ.B i j b).w (ρ.B i j b).F.BS _ (Formalism.L2.Host.embLL0 D) (labLL0 D)
       (ρ.eO i b).range ((ρ.B i j b).latAt (finPt _ h')) hB.wt hm (hρ.isCoefRing i b) hlat).2
     have h3 : (ρ.lat i j b (ρ.eO i b).range h' : Set (PolF D (Wc D j).rank (Vc D j).rank)) =
         (harmLat (Formalism.L2.Host.embLL0 D) (labLL0 D) (ρ.eO i b).range (Wc D j).rank (ρ.B i j b).w (ρ.B i j b).F.BS

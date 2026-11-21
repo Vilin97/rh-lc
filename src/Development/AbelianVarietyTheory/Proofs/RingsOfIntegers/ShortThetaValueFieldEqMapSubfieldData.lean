@@ -71,9 +71,9 @@ theorem exists_pull [StarRing (𝓞 E)] (nab : NabV Xo c) (hnab : IsNab Xo c nab
       (GlobalTheory.FramedBaseChange.isPullSec ψ hm h rfl) (F q i b) (F' q i b) (hF' q i b)).2 _ _ (hF q i b)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    exact Finset.sum_congr rfl fun i _ =>
-      GlobalTheory.harmonicValue_baseChange_field E H Dw l Xo c nab hnab S T ψ y w hm h rfl a n P hP N (F q i) (F' q i)
-        (hF' q i)
+      exact Finset.sum_congr rfl fun i _ =>
+        GlobalTheory.harmonicValue_baseChange_field E H Dw l Xo c nab hnab S T ψ y w hm h rfl a n P hP N (F q i) (F' q i)
+          (hF' q i)
 
 theorem finite_levQ (Dw : Datum H) (l : Geo.Tor.Level H) : Finite (LevQ Dw l) := by
   have hne : l.Mb ≠ ⊥ := by

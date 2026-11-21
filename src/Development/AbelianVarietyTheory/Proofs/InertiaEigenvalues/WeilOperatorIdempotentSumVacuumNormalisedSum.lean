@@ -184,13 +184,13 @@ theorem exists_invariant_form_iso {Λ : AddSubgroup (WO S T)} {e : AE D} (he : I
         | mul_right B _ g hg ih =>
           obtain ⟨y', N, hy', rfl⟩ := hg
           refine ⟨fun y hy => ?_, ?_⟩
-          set_option synthInstance.maxHeartbeats 100000 in
-            · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
+          · set_option synthInstance.maxHeartbeats 100000 in
+              rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
             refine Finset.sum_nonneg fun k _ => ?_
             rw [heisL_apply, ← heisO_add_of_orth ψ S T (half_orth_iso he (isHalf_nsmul hy' k) hy)]
             exact ih.1 _ (isHalf_add (isHalf_nsmul hy' k) hy)
-          set_option synthInstance.maxHeartbeats 100000 in
-            · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
+          · set_option synthInstance.maxHeartbeats 100000 in
+              rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
             refine Finset.sum_pos' (fun k _ => ih.1 _ (isHalf_nsmul hy' k)) ⟨0, Finset.mem_range.2 N.succ_pos, ?_⟩
             rw [heisL_apply, zero_smul, heisO_zero]
             exact ih.2
@@ -314,7 +314,18 @@ theorem om_eq_sum_iso {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D T �
       rintro _ ⟨γ, rfl⟩ w
       exact (congrArg norm (hf.quasi γ w)).trans (by rw [norm_mul, hψ.2.1, one_mul]))
   have hn : nrm2 μ 𝓕 (c • f) = 1 := hc μ 𝓕 hμ.1 hμ.2.1 hμ.2.2
-  have hcf := GlobalTheory.WeilVacMove.isTheta_smul c hf
+  have hcf : IsThetaFunO ψ S T (c • f) := {
+    quasi γ w := by
+      rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
+    level := by
+      obtain ⟨U, hU, h1⟩ := hf.level
+      refine ⟨U, hU, fun u hu h0 => ?_⟩
+      funext w
+      have e1 := congrFun (h1 u hu h0) w
+      unfold heisO at e1 ⊢
+      rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
+    cont := hf.cont.const_smul c
+    smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w) }
   have hfix' : ∀ u ∈ Λ, IsHalf e u ∨ IsHalf (cA D e) u → heisO ψ S T u (c • f) = c • f := fun u hu hh => by
     rw [heisO_smul, hfix u hu hh]
   have h1 := hom _ hcf (fun u hu hh => hfix' u hu (Or.inl hh)) fun u hu hh => hfix' u hu (Or.inr hh)

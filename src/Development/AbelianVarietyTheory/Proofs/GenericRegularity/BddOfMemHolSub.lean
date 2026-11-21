@@ -160,7 +160,9 @@ theorem _root_.GlobalTheory.IntegralCusp.evHom_aeval {σ : c.F →+* ℂ} (y : _
     show _root_.Formalism.L2.PjFree.toC (_root_.Formalism.L2.Pj.evalAt _ _ (a • (1 : _root_.Formalism.L2.Pj.Rul Xo c)) y) = σ a
     rw [_root_.Formalism.L2.Pj.evalAt_smul, _root_.Formalism.L2.Pj.evalAt_one _ _ y hy, _root_.mul_one]
     rfl
-  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
+  | add p q hp hq =>
+    rw [map_add (MvPolynomial.aeval w), (evHom y hy).map_add,
+      map_add (MvPolynomial.map σ), map_add (MvPolynomial.eval _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp, MvPolynomial.map_X, MvPolynomial.aeval_X, MvPolynomial.eval_X]
 

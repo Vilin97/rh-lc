@@ -74,7 +74,7 @@ theorem exists_unitary_of_selfDual [Algebra.Unramified (𝓞 (maximalRealSubfiel
   have hinv : ∀ v, ((h v)⁻¹).1 = ((h v).1.map (locConj v))ᵀ := fun v =>
     Units.inv_eq_of_mul_eq_one_left (hh' v)
   obtain ⟨γ, hγ, hγ'⟩ := exists_unitary_near hm (fun v => (h v).1) hh'
-  have hmap : ∀ v (M : Matrix (Fin n) (Fin n) E) (x : Fin n → E),
+  have hmap : ∀ (v : HeightOneSpectrum (𝓞 (maximalRealSubfield E))) (M : Matrix (Fin n) (Fin n) E) (x : Fin n → E),
       (fun i => locEmb v ((M *ᵥ x) i)) = M.map (locEmb v) *ᵥ fun i => locEmb v (x i) :=
     fun v M x => funext fun i => RingHom.map_mulVec (locEmb v) M x i
   refine ⟨γ, hγ, fun x hx => exists_coprime_nsmul_mem m _ _ fun v hv => ?_,

@@ -33,7 +33,7 @@ theorem exists_residue (C : Subalgebra O ↥(As O A)) (ζ : Pts O A) (b c d : �
   haveI : Algebra.IsIntegral ↥C ↥(As O A) := Algebra.IsIntegral.tower_top O
   haveI := ζ.isMaximal
   have hmax : (ζ.asIdeal.comap (algebraMap ↥C ↥(As O A))).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal ζ.asIdeal
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal ζ.asIdeal
   obtain ⟨y, z, hz, hyz⟩ := hmax.exists_inv (x := ⟨d, hd⟩) (by simpa [Ideal.mem_comap] using hd0)
   have hz' : (z : ↥(As O A)) ∈ ζ.asIdeal := hz
   have hyz' : (y : ↥(As O A)) * d + z = 1 := congrArg Subtype.val hyz

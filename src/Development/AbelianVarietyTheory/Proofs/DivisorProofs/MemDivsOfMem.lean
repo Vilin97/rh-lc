@@ -56,7 +56,8 @@ theorem valuation_up (Q : HeightOneSpectrum (𝓞 E))
   have he : Ideal.ramificationIdx' (Q.under (𝓞 F)).asIdeal Q.asIdeal = 1 := by
     by_contra hne
     exact h ((Ideal.ramificationIdx'_ne_one_iff Ideal.map_comap_le).1 hne)
-  rw [← HeightOneSpectrum.valuation_liesOver E (Q.under (𝓞 F)) Q, he, pow_one]
+  rw [← HeightOneSpectrum.valuation_liesOver E (Q.under (𝓞 F)) Q,
+    ← Ideal.ramificationIdx'_eq_ramificationIdx _ _ (Q.under (𝓞 F)).ne_bot, he, pow_one]
 
 end General
 

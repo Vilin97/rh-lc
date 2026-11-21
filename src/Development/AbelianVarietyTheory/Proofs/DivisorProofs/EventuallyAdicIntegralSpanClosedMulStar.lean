@@ -66,8 +66,8 @@ theorem isIntB_mul_star_eventually : ∀ (C : Type) [Ring C] [Algebra ℚ C] [Fi
   rw [Set.Finite.mem_toFinset, Set.mem_setOf_eq, not_not] at hv
   obtain ⟨hcv, hsv⟩ := hv
   refine ⟨fun y z hy hz k => ?_, fun y hy k => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [eq_sum_tmul b v y, eq_sum_tmul b v z, Finset.sum_mul_sum, map_sum, Finsupp.finsetSum_apply]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [eq_sum_tmul b v y, eq_sum_tmul b v z, Finset.sum_mul_sum, map_sum, Finsupp.finsetSum_apply]
     refine sum_mem fun i _ => ?_
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum, Finsupp.finsetSum_apply]

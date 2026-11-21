@@ -49,7 +49,7 @@ theorem continuous_orbit_twTop :
       (f := fun g : ↥(GK K) => ((g : GQ l), w)) ha (continuous_subtype_val.prodMk continuous_const)
   have hs : ∀ i, Continuous fun g : ↥(GK K) => ∑ j, algebraMap ℤ_[l] (WCb l) (b.repr (T.actT g (b j)) i) *
       (AI.actWCbHom (g : GQ l)).toAlgHom (GlobalTheory.WeakTop.coords (WCb l) ↥(OL LL) b y j) := fun i =>
-    continuous_finset_sum _ fun j _ => (hW.comp (hρ i j)).mul (h2 _)
+    continuous_finsetSum _ fun j _ => (hW.comp (hρ i j)).mul (h2 _)
   refine continuous_induced_rng.2 (continuous_pi fun i => ?_)
   refine (hs i).congr fun g => ?_
   exact (GlobalTheory.WeakTop.coords_map b _ _ y i).symm

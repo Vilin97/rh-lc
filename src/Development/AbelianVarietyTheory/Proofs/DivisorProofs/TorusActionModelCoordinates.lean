@@ -131,7 +131,8 @@ theorem main : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
   have hIt : ∫⁻ x, ‖Φ x‖ₑ ^ 2 ∂μ ≠ ⊤ := by
     have h2 := (memLp_of_mem_schA μ hμ hΦ).eLpNorm_lt_top
     rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (by norm_num) (by norm_num)] at h2
-    simpa using h2.ne
+    · simpa using h2.ne
+    · exact (memLp_of_mem_schA μ hμ hΦ).aestronglyMeasurable
   have hU := hS.unit μ hμ (g, 1) Φ hΦ
   have hsc := GlobalTheory.T.lintegral_infinite_scaling F (Fin n × Fin d) u hu μ hμ (fun y => ‖Φ y‖ₑ ^ 2)
   simp only [hval Φ hΦ, enorm_mul, mul_pow] at hU

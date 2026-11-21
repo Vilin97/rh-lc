@@ -40,7 +40,7 @@ theorem dvd_of_forall_complete_dvr : ∀ (R : Type) [CommRing R] [IsDomain R] [I
       (∀ r ∈ maximalIdeal R, algebraMap R K r ∈ V.nonunits) →
       algebraMap R K f / algebraMap R K g ∈ V := by
     intro hall
-    obtain ⟨r, hr⟩ := GlobalTheory.exists_algebraMap_eq_of_forall_discreteValuationSubring hall
+    obtain ⟨r, hr⟩ := GlobalTheory.exists_algebraMap_eq_of_forall_discreteValuationSubring (R := R) (K := K) hall
     apply hnd
     refine ⟨r, hinj ?_⟩
     rw [map_mul, hr, mul_div_cancel₀ _ hg']

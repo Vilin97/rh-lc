@@ -34,7 +34,7 @@ theorem card_le_of_gen_fixed {L : Type} [Field L] [Algebra (ZMod g) L] [Fintype 
     (hgen : ∀ y : L, ∃ Q : (ZMod g)[X], aeval x Q = y) (hx : x ^ g ^ k = x) : Fintype.card L ≤ g ^ k := by
   have hq : 1 < g ^ k := Nat.one_lt_pow hk.ne' hg.out.one_lt
   set f : L[X] := X ^ (g ^ k) - X with hf
-  have hf0 : f ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero L hq
+  have hf0 : f ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero hq
   have hfix : ∀ y : L, y ^ g ^ k = y := by
     intro y
     obtain ⟨Q, rfl⟩ := hgen y

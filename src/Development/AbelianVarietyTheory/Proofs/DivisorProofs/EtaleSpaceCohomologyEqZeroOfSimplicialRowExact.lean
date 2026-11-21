@@ -112,8 +112,7 @@ theorem rowD_dcl (E : Spc) (s : ℤ) (p : ℕ) (t : (free R).obj (E.obj (op ⦋p
     rw [Category.assoc, ht, comp_zero]
   calc rowD R E F s p (dcl _ s t ht)
       = ∑ i : Fin (p + 2), ((-1 : ℤ) ^ (i : ℕ)) • dcl _ s ((free R).map (E.δ i) ≫ t) (hi i) := by
-        change (∑ i : Fin (p + 2), ((-1 : ℤ) ^ (i : ℕ)) •
-          pull R (disc.map (E.δ i)) F s (dcl (E.obj (op ⦋p⦌)) s t ht)) = _
+        simp only [rowD, AddMonoidHom.finsetSum_apply, AddMonoidHom.smul_apply]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [pull_dcl]
     _ = dcl _ s (∑ i : Fin (p + 2), ((-1 : ℤ) ^ (i : ℕ)) • ((free R).map (E.δ i) ≫ t))
@@ -255,7 +254,7 @@ theorem GlobalTheory.EtC.vanish_of_rowExact : ∀ (R : Type) [CommRing R] (F : S
           rw [dcl_congr _ S hb hD1 (by rw [← hb]; exact hD1)]
           exact dcl_bd _ S _ _
         obtain ⟨w, hw⟩ := hrowp _ hc0
-        obtain ⟨s, hs, hsw⟩ := dcl_surj (P := E.obj (op ⦋p + 1⦌)) (m := S) w
+        obtain ⟨s, hs, hsw⟩ := dcl_surj (E.obj (op ⦋p⦌)) S w
         subst w
         let D0 : (free R).obj (E.obj (op ⦋p + 1⦌)) ⟶ (free R).obj (E.obj (op ⦋p⦌)) :=
           ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) • (free R).map (E.δ i)

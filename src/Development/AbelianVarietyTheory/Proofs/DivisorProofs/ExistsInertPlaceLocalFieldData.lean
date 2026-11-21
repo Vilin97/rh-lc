@@ -45,7 +45,7 @@ theorem trace_mem {v : HeightOneSpectrum (𝓞 F)} {y : Fv F v ⊗[F] E} (hy : y
     Algebra.trace (Fv F v) (Fv F v ⊗[F] E) y ∈ v.adicCompletionIntegers F := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
   refine intLoc_induction (p := fun y => Algebra.trace (Fv F v) (Fv F v ⊗[F] E) y ∈ v.adicCompletionIntegers F)
-    (fun a ha x => ?_) (by simp) (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
+    (fun a ha x => ?_) (by simp) (fun y z hy hz => by rw [map_add]; exact add_mem hy hz)
     (fun y hy => by rw [map_neg]; exact neg_mem hy) hy
   rw [trace_tmul]
   refine mul_mem ha ?_

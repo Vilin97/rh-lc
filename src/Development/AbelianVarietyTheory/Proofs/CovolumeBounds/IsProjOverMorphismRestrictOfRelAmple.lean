@@ -111,11 +111,11 @@ theorem basicOpen_secRatio (a b : L.Sec) :
   exact ⟨fun h => ⟨Y.basicOpen_le _ h, (key y (Y.basicOpen_le _ h)).1 h⟩, fun h => (key y h.1).2 h.2⟩
 
 theorem isCoordFamily_secRatio {s : Fin (M + 1) → L.Sec} (hs : ⨆ i, nonzeroLocus (s i) = ⊤) :
-    IsCoordFamily (fun i => nonzeroLocus (s i)) (fun i j => secRatio (s i) (s j)) where
-  cover := hs
-  self i := secRatio_self (s i)
-  mul i j k := secRatio_mul_secRatio (s i) (s j) (s k) inf_le_left inf_le_right
-  basicOpen_le i j := (basicOpen_secRatio (s i) (s j)).le.trans inf_le_right
+    IsCoordFamily (fun i => nonzeroLocus (s i)) (fun i j => secRatio (s i) (s j)) :=
+  { cover := hs
+    self := fun i => secRatio_self (s i)
+    mul := fun i j k => secRatio_mul_secRatio (s i) (s j) (s k) inf_le_left inf_le_right
+    basicOpen_le := fun i j => (basicOpen_secRatio (s i) (s j)).le.trans inf_le_right }
 
 def toProj (f : Y ⟶ Sp R) (s : Fin (M + 1) → L.Sec) (hs : ⨆ i, nonzeroLocus (s i) = ⊤) : Y ⟶ PSpace R M :=
   (isCoordFamily_secRatio hs).toHom f

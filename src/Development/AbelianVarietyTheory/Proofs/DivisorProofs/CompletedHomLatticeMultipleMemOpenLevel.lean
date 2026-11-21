@@ -56,7 +56,7 @@ def actHom (S T : HSp D) (g : GA D S) (h : GA D T) : WO S T →+ WO S T :=
 theorem continuous_actO (S T : HSp D) (g : GA D S) (h : GA D T) : Continuous (actO S T g h) := by
   refine continuous_pi fun i => continuous_pi fun j => ?_
   simp only [actO, Matrix.mul_apply]
-  refine continuous_finset_sum _ fun k _ => Continuous.mul (continuous_finset_sum _ fun l _ =>
+  refine continuous_finsetSum _ fun k _ => Continuous.mul (continuous_finsetSum _ fun l _ =>
     continuous_const.mul ?_) continuous_const
   exact (continuous_apply k).comp (continuous_apply l)
 

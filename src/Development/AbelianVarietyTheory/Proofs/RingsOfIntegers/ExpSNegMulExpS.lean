@@ -29,7 +29,7 @@ variable (k : Type) [CommRing k] [Algebra ℚ k] [Algebra R k]
 
 theorem Dof_expS (F : Fin d → PS k 2 d) (u : Fin d → k) {g : PS k 1 d}
     (hg : constantCoeff g = 0) : Dof F u (FB.expS k g) = FB.expS k g * Dof F u g := by
-  have e : ∀ i, pderiv k i (FB.expS k g) = FB.expS k g * pderiv k i g :=
+  have e : ∀ i, pderiv (R := k) i (FB.expS k g) = FB.expS k g * pderiv (R := k) i g :=
     FormalCalc.pderiv_formalExp hg
   unfold Dof
   rw [Finset.mul_sum]

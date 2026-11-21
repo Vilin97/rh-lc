@@ -34,7 +34,7 @@ theorem det_notMem_span (k : Type) [Field k] (σ : Type) [Fintype σ] [Decidable
     ((ρ.toAlgHom.mapMatrix a).submatrix e.symm e.symm) (fun i => ?_) (fun i => ?_) ?_
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hf, map_sum, ← e.symm.sum_comp]
-    simp [hX]
+      simp [hX]
   · have := hmap _ (hN (e.symm i))
     rwa [map_pow, hX, e.apply_symm_apply] at this
   · rw [Matrix.det_submatrix_equiv_self, ← AlgHom.map_det]
@@ -176,9 +176,9 @@ theorem exists_trace_eq {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetheri
       simp [t, hη, P, S]
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [← Ideal.Quotient.eq_zero_iff_mem, ← h1, ← Ideal.Quotient.eq_zero_iff_mem.2 hmem, map_sum]
-      refine Finset.sum_congr rfl fun p _ => ?_
-      rw [Algebra.smul_def, map_mul, ← hκ, hlift]
-      rfl
+        refine Finset.sum_congr rfl fun p _ => ?_
+        rw [Algebra.smul_def, map_mul, ← hκ, hlift]
+        rfl
 
 theorem dvd_trace_of_ringHom {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     [CommRing B] [Fintype σ] [DecidableEq σ] (θ : MvPowerSeries σ A →+* B) (ι : A →+* B)
@@ -280,7 +280,7 @@ theorem C_dvd_trace_of_jacobian : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDi
   · rw [RingHom.coe_coe, hιC, ← hJ, RingHom.map_det]
     congr 1
     ext i j : 2
-    have : pderiv _ j (MvPowerSeries.map (C : V →+* MvPowerSeries σ V) (φ i) - C (X i))
+    have : pderiv j (MvPowerSeries.map (C : V →+* MvPowerSeries σ V) (φ i) - C (X i))
         = MvPowerSeries.map C (pderiv (R := V) j (φ i)) := by
       ext m : 1
       simp [coeff_pderiv, coeff_C]

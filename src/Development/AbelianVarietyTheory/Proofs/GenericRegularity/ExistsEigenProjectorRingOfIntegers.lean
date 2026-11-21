@@ -57,7 +57,7 @@ theorem _root_.GlobalTheory.exists_eigen_projector_ringOfIntegers : ∀ (E K : T
     obtain ⟨p, hp⟩ := hb
     obtain ⟨c, hc⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ)
       (p.comp (C ((y : ℚ)⁻¹) * X))
-    refine ⟨c, nonZeroDivisors.ne_zero c.2, IsLocalization.integerNormalization (nonZeroDivisors ℤ)
+    refine ⟨c, nonZeroDivisors.ne_zero hc.1, IsLocalization.integerNormalization (nonZeroDivisors ℤ)
       (p.comp (C ((y : ℚ)⁻¹) * X)), ?_⟩
     have hy' : (y : E) ≠ 0 := by exact_mod_cast hy0
     have hθα : aeval (θ : E) (C ((y : ℚ)⁻¹) * X) = α0 := by
@@ -67,7 +67,7 @@ theorem _root_.GlobalTheory.exists_eigen_projector_ringOfIntegers : ∀ (E K : T
     apply FaithfulSMul.algebraMap_injective (𝓞 E) E
     rw [← aeval_algebraMap_apply]
     have hθc : algebraMap (𝓞 E) E θ = (θ : E) := rfl
-    rw [hθc, ← aeval_map_algebraMap ℚ, hc, map_zsmul, aeval_comp, hθα]
+    rw [hθc, ← aeval_map_algebraMap ℚ, hc.2, map_zsmul, aeval_comp, hθα]
     have hp' : aeval α0 p = (b : E) := hp
     rw [hp', zsmul_eq_mul, map_mul, map_intCast]
   have hθint : IsIntegral ℤ (θ : E) := hyint

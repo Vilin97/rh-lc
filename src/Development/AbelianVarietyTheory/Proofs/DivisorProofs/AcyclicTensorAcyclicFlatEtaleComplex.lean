@@ -379,6 +379,5 @@ theorem acyclic_of_isTensor : ∀ (R : Type) [CommRing R] {C J T : Cx R} (a b : 
   change Sec.map (T.d w (w + 1)) (τ.lift W' w y) = _
   rw [← Pair.lift_tensD, hy, Pair.lift_tensRes, Pair.lift_tensRes, hx]
   simp [Sec.res, op_comp, Functor.map_comp]
-  rfl
 
 end GlobalTheory.EtC

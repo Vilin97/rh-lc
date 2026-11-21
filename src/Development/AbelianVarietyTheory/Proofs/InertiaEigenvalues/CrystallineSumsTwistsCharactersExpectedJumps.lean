@@ -44,11 +44,11 @@ theorem multV_of_only_zero {V : Type} [AddCommGroup V] [Module LL V] [Module Qp 
   split_ifs with ha
   · subst ha
     have h0 : ∀ b ≤ (0 : ℤ), FildR PD ρ τ b = FildR PD ρ τ 0 := fun b hb => by
-      induction b, hb using Int.le_induction_down with
+      induction b, hb using Int.leInductionDown with
       | base => rfl
       | pred n hn ih => rw [← hs (n - 1) (by omega), sub_add_cancel, ih]
     have h1 : ∀ b ≥ (1 : ℤ), FildR PD ρ τ b = FildR PD ρ τ 1 := fun b hb => by
-      induction b, hb using Int.le_induction with
+      induction b, hb using Int.leInduction with
       | base => rfl
       | succ n hn ih => rw [hs n (by omega), ih]
     have e0 : FildR PD ρ τ 0 = DdRE PD ρ τ := by
@@ -184,6 +184,7 @@ theorem multV_char_zero (hc : Nat.card (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) = finran
   haveI := (GlobalTheory.T.concretePeriod_deRham_module_finrank_le l P AI T K LL ↥LL.1 (charRep θ)).1
   obtain ⟨m, k, β, d, hd, h1⟩ := GlobalTheory.T.deRham_comparison_isFiltered l P AI T K LL ↥LL.1 (charRep θ) hdr 0 1
     ⟨1 ⊗ₜ ⟨1, (P.PD K).one_mem⟩, rfl⟩
+  set_option synthInstance.maxHeartbeats 200000 in
   have hpos : ∀ τ', 1 ≤ finrank ↥LL.1 (DdRE (P.PD K) (charRep θ) τ') := fun τ' => by
     haveI : FiniteDimensional ↥LL.1 (DdRE (P.PD K) (charRep θ) τ') :=
       Submodule.finiteDimensional_of_le (S₂ := DdR (P.PD K) (charRep θ)) inf_le_left

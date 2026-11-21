@@ -51,7 +51,7 @@ theorem ellC_apply (a : ∀ i, E i) (w : ⨂[ℂ] i, E i) : ellC a w = conj (ell
 theorem ellC_tprod (a b : ∀ i, E i) : ellC a (PiTensorProduct.tprod ℂ b) = ∏ i, ⟪b i, a i⟫_ℂ := by
   rw [ellC_apply, ellA_tprod, map_prod]; simp
 
-def ellM : MultilinearMap ℂ E ((⨂[ℂ] i, E i) →ₗ⋆[ℂ] ℂ) where
+def ellM : (∀ i, E i) →ₘₗ[ℂ] ((⨂[ℂ] i, E i) →ₗ⋆[ℂ] ℂ) where
   toFun := ellC
   map_update_add' a i x y := by
     ext w; simp [ellC_apply, ellA_update_add]

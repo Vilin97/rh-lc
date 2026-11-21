@@ -28,7 +28,7 @@ theorem etale_isLocalHomeomorph : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] 
     contDiffOn_piLp' 2 (fun k => contDiffOn_of_differentiableOn n _ S hS
       ((differentiableOn_piLp 2).1 hd k))
   have hca : ContDiffAt ℂ ∞ (z ∘ e.symm) (e y) := hcd.contDiffAt (hS.mem_nhds hxS)
-  have hst := hca.hasStrictFDerivAt (by simp)
+  have hst := hca.hasStrictFDerivAt_fderiv (by simp)
   have hdet : (fderiv ℂ (z ∘ e.symm) (e y)).det ≠ 0 := hE.det_ne i y hyU hys
   let L : V n ≃L[ℂ] V n :=
     (LinearMap.equivOfDetNeZero ((fderiv ℂ (z ∘ e.symm) (e y)) : V n →ₗ[ℂ] V n) hdet).toContinuousLinearEquiv

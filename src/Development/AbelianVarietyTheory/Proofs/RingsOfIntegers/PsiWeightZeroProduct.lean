@@ -55,6 +55,9 @@ theorem psi_weight_zero_product (pD : IsPowDeg D' D j) {O : Type} [CommRing O] [
   have := oa'.onB.hom w0
   have : ∀ i, IsMonHom (pD.pw.pr i) := pD.pw.hom
   obtain ⟨u', hu', hval⟩ := exists_boxPull_gen pD.w pD.w_gen D.P.isLB D'.P.isLB
+    (φ' := ![(padd D'.P.A (𝟙 _) (oa'.onB.act w0)).left, 𝟙 D'.P.A.left, (oa'.onB.act w0).left, (toUnit D'.P.A ≫ η[D'.P.A]).left])
+    (φ := fun _ => ![(padd D.P.A (𝟙 _) (oa.onB.act w0)).left, 𝟙 D.P.A.left, (oa.onB.act w0).left, (toUnit D.P.A ≫ η[D.P.A]).left])
+    (ε := ![1, -2, -1, 2])
     (fun i => (pD.pw.pr i).left) (fun i k => four_comm (pD.pw.pr i) _ _ (hact w0 i) k) (fun _ => u) (fun _ => hu)
   have hη : (1 : 𝟙_ (Over (Spec (CommRingCat.of R))) ⟶ D'.P.A) = η := by
     rw [Hom.one_def, toUnit_unique (toUnit _) (𝟙 _), Category.id_comp]

@@ -41,20 +41,20 @@ theorem char_pow (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (u : (𝓞 E ⧸ P.asI
     rfl
   rw [← h, ← Units.val_pow_eq_pow_val, ← map_pow, pow_card_eq_one', map_one, Units.val_one]
 
-theorem unitV_mem (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : LocE.unitV χ a ∈ Zmu K (qOf P) := by
+theorem unitV_mem (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : LocE.unitV P χ a ∈ Zmu K (qOf P) := by
   unfold LocE.unitV
   split_ifs
   · exact mem_Zmu_of_pow_pred (char_pow χ _)
   · exact zero_mem _
 
-theorem unitV_inv_mem (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : (LocE.unitV χ a)⁻¹ ∈ Zmu K (qOf P) := by
+theorem unitV_inv_mem (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : (LocE.unitV P χ a)⁻¹ ∈ Zmu K (qOf P) := by
   unfold LocE.unitV
   split_ifs
   · exact mem_Zmu_of_pow_pred (by rw [inv_pow, char_pow, inv_one])
   · rw [inv_zero]; exact zero_mem _
 
 theorem unitV_congr (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a b : E} (h : redP P a = redP P b) :
-    LocE.unitV χ a = LocE.unitV χ b := by
+    LocE.unitV P χ a = LocE.unitV P χ b := by
   unfold LocE.unitV
   rw [h]
 
@@ -113,7 +113,7 @@ theorem vP_unit {a : E} (h : IsUnit (redP P a)) : LocE.vP P (qOf P) a = 0 := by
     exact absurd h this
 
 theorem locChar_unit {K : Type} [Field K] (cq : K) (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a : E} (h : IsUnit (redP P a)) :
-    LocE.locChar (qOf P) cq χ a = LocE.unitV χ a := by
+    LocE.locChar (qOf P) cq χ a = LocE.unitV P χ a := by
   unfold LocE.locChar
   rw [vP_unit h]
   simp
@@ -317,9 +317,9 @@ variable {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {P : Heig
 omit [StarRing E] in
 theorem blocks_congr {r t j : ℕ} {M Z : ℕ → ℕ → E} (hM : ∀ p p', p < r + j * t → p' < r + j * t → IntAt P (M p p'))
     (hZ : ∀ p p', IntAt P (Z p p')) :
-    ∏ i ∈ Finset.range j, LocE.unitV (χ i) (Matrix.det (Matrix.of fun s s' : Fin t =>
+    ∏ i ∈ Finset.range j, LocE.unitV P (χ i) (Matrix.det (Matrix.of fun s s' : Fin t =>
         M (r + i * t + s.1) (r + i * t + s'.1) + (qOf P : E) * Z (r + i * t + s.1) (r + i * t + s'.1))) =
-      ∏ i ∈ Finset.range j, LocE.unitV (χ i) (Matrix.det (Matrix.of fun s s' : Fin t => M (r + i * t + s.1) (r + i * t + s'.1))) := by
+      ∏ i ∈ Finset.range j, LocE.unitV P (χ i) (Matrix.det (Matrix.of fun s s' : Fin t => M (r + i * t + s.1) (r + i * t + s'.1))) := by
   refine Finset.prod_congr rfl fun i hi => unitV_congr _ (redP_det_add_q (fun s s' => ?_) fun _ _ => hZ _ _)
   have h1 : ∀ s : Fin t, r + i * t + s.1 < r + j * t := fun s => by
     have := Finset.mem_range.1 hi

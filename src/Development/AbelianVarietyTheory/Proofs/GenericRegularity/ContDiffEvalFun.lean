@@ -61,15 +61,20 @@ theorem main : ∀ {d : ℕ} (p : Polynomial (MvPolynomial (Fin d) ℂ)) (x₀ :
   let φ := hFs.implicitFunctionDataOfProdDomain hinv
   refine ⟨fun x => (φ.toOpenPartialHomeomorph.symm (evalFun p (x₀, a), x)).2, ?_, ?_, ?_⟩
   · have := (hFs.eventually_apply_eq_iff_implicitFunctionOfProdDomain hinv).self_of_nhds
-    exact this.mp rfl
+    simpa only [HasStrictFDerivAt.implicitFunctionOfProdDomain_def,
+      ImplicitFunctionData.implicitFunction_apply] using this.mp rfl
   · refine ⟨{x | (evalFun p (x₀, a), x) ∈ φ.toOpenPartialHomeomorph.target}, ?_, ?_⟩
     · apply IsOpen.mem_nhds
       · exact φ.toOpenPartialHomeomorph.open_target.preimage (by fun_prop)
-      · exact φ.map_pt_mem_toOpenPartialHomeomorph_target
+      · simpa only [Set.mem_setOf_eq, φ, HasStrictFDerivAt.pt_implicitFunctionDataOfProdDomain,
+          HasStrictFDerivAt.leftFun_implicitFunctionDataOfProdDomain,
+          HasStrictFDerivAt.rightFun_implicitFunctionDataOfProdDomain, Prod.fst] using
+          φ.map_pt_mem_toOpenPartialHomeomorph_target
     · exact continuous_snd.comp_continuousOn
         (φ.toOpenPartialHomeomorph.continuousOn_symm.comp (by fun_prop) (fun x hx => hx))
   · have := hFs.eventually_apply_implicitFunctionOfProdDomain hinv
     filter_upwards [this] with x hx
-    exact hx.trans h0
+    simpa only [HasStrictFDerivAt.implicitFunctionOfProdDomain_def,
+      ImplicitFunctionData.implicitFunction_apply, evalFun] using hx.trans h0
 
 end GlobalTheory.SmoothPolynomialEvaluation

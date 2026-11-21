@@ -15,7 +15,7 @@ namespace GlobalTheory.FunObj
 
 theorem exists_primeFactor_mem_of_natCast_mem {D : D7} (w : Pl D.host.E) {M : ℕ} (hM : M ≠ 0)
     (h : (M : 𝓞 D.host.E) ∈ w.asIdeal) : ∃ p ∈ M.primeFactors, (p : 𝓞 D.host.E) ∈ w.asIdeal := by
-  have e := Nat.factorization_prod_pow_eq_self hM
+  have e := Nat.prod_factorization_pow_eq_self hM
   rw [← e, Finsupp.prod, Nat.cast_prod] at h
   obtain ⟨p, hp, hmem⟩ := (Ideal.IsPrime.prod_mem_iff (hp := w.isPrime)).1 h
   refine ⟨p, by simpa [Nat.support_factorization] using hp, ?_⟩

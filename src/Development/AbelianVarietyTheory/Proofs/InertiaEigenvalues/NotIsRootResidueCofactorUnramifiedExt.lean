@@ -116,7 +116,7 @@ theorem not_isRoot_cofactor : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E), I
     have hcard : Fintype.card k' ≤ Q ^ m := by
       have h1 := card_le_degree_of_subset_roots (p := (X ^ (Q ^ m) - X : k'[X])) (Z := Finset.univ) (by
         intro y _
-        rw [mem_roots (FiniteField.X_pow_card_sub_X_ne_zero (K' := k') hQm)]
+        rw [mem_roots (Polynomial.X_pow_sub_X_ne_zero (R := k') hQm)]
         simp [IsRoot, hall y])
       rwa [Polynomial.natDegree_X_pow_sub_X (R := k') hQm, Finset.card_univ] at h1
     rw [hQ'] at hcard

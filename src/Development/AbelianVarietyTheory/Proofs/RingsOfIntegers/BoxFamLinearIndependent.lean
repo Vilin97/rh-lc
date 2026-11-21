@@ -53,7 +53,6 @@ theorem exists_tensor_pow (F O : Type) [Field F] [CommRing O] [Algebra F O] {A :
       simp only [Fin.consEquiv_apply, Fin.prod_univ_succ, Fin.cons_zero, Fin.cons_succ, AlgHom.comp_apply]
       rw [← map_prod, Algebra.TensorProduct.includeLeft_apply, Algebra.TensorProduct.includeRight_apply,
         Algebra.TensorProduct.tmul_mul_tmul, _root_.mul_one, _root_.one_mul, TensorProduct.tmul_smul]
-      rfl
     have key2 : ∀ l, (fun a : Fin j → Fin m => c (Fin.cons l a)) = 0 := fun l => h _ fun α => by
       refine (Module.forall_dual_apply_eq_zero_iff F _).1 fun φ => ?_
       refine congrFun (hβ (fun l => φ (∑ a : Fin j → Fin m, c (Fin.cons l a) • ∏ i, em i (β (α i) (a i))))

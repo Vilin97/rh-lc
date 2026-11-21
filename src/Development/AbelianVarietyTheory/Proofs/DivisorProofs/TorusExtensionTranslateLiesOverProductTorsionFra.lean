@@ -284,9 +284,9 @@ theorem exists_liesOver (hB : AdmBase R I) (hG : IsSemiAbelian G) (U : Unif I D 
       obtain ⟨s, hs, -⟩ := (hbij k (by omega) w₀ hw₀).1 t
       exact ⟨_, c, ⟨t, s, hs, ht, rfl⟩, hc⟩)
     (fun m hm => by
-      let q : QkPt D.toPre (FractionRing R) (n * m) := GlobalTheory.TorusExt.qkMk D.tau_bimult (m • p.y) p.g (by
-        rw [mul_nsmul, TorusExt.qk_nsmul D.tau_bimult p, map_nsmul])
-      have hq := qkToAkU_level_field hL R _ hB D A G hG U _ n m _ hn hm rfl p q x rfl (by simp [q]) hx
+      let q : QkPt D.toPre (FractionRing R) (n * m) :=
+        ⟨m • p.y, p.g, GlobalTheory.InducingAut.exists_qk_mul D.tau_bimult p m⟩
+      have hq := qkToAkU_level_field hL R _ hB D A G hG U _ n m _ hn hm rfl p q x rfl rfl hx
       obtain ⟨κ, hκ, Hκ⟩ := value_at_level hB hG U hw₀ hw₁ he₁ H₁ (Nat.mul_pos hn hm) q x hq hadd hx₂ e he (Ω _) (hΩ _)
       refine ⟨κ, hκ, ?_⟩
       rintro _ c ⟨t, s, hs, ht, rfl⟩

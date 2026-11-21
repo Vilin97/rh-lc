@@ -83,7 +83,7 @@ theorem orth_periodic (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T)} {𝓕 
       rw [this, mul_zero]
     have hPint : Integrable (fun x => star (h x) * ((∑ a ∈ s, c a * ψ (symplO S T x a)) * k x)) (μ.restrict 𝓕) := by
       simp_rw [hsum]
-      exact integrable_finset_sum s hint_a
+      exact integrable_finsetSum s hint_a
     have hdiff : I = ∫ x in 𝓕, (star (h x) * (q x * k x) -
         star (h x) * ((∑ a ∈ s, c a * ψ (symplO S T x a)) * k x)) ∂μ := by
       rw [integral_sub hint hPint, hP, sub_zero]
@@ -140,7 +140,27 @@ theorem pointwise (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T)} {𝓕 : Se
     simpa using this
   have hae : ∀ᵐ x ∂(μ.restrict 𝓕), F x = 0 :=
     (integral_eq_zero_iff_of_nonneg (fun x => by positivity) hFi).1 hz
-  have hf := GlobalTheory.ThetaSchurBdd.isTheta_star_mul_mul hψ hk hk hh
+  have hf : IsThetaFunO ψ S T (fun x => star (k x) * k x * h x) := {
+    quasi γ w := by
+      rw [hk.quasi, hh.quasi, star_mul']
+      linear_combination (star (k w) * k w * h w * ψ (-(symplOH S T (ratW T S γ) w))) *
+        GlobalTheory.ThetaSchur.mul_star_psi hψ (-(symplOH S T (ratW T S γ) w))
+    level := by
+      obtain ⟨U1, o1, h1⟩ := hk.level
+      obtain ⟨U2, o2, h2⟩ := hh.level
+      refine ⟨U1 ⊓ U2, o1.inter o2, fun u hu hfin => ?_⟩
+      funext x
+      have e1 := congrFun (h1 u hu.1 hfin) x
+      have e2 := congrFun (h2 u hu.2 hfin) x
+      simp only [heisO] at e1 e2 ⊢
+      have hs := GlobalTheory.ThetaSchur.mul_star_psi hψ (symplOH S T x u)
+      rw [← e1, ← e2, star_mul']
+      linear_combination (-(ψ (symplOH S T x u) * (star (k (x + u)) * k (x + u) * h (x + u)))) * hs
+    cont := (hk.cont.star.mul hk.cont).mul hh.cont
+    smooth n L hL hL0 w := by
+      have hs : ContDiff ℝ (⊤ : ℕ∞) (fun t => star (k (w + L t))) :=
+        Complex.conjCLE.contDiff.comp (hk.smooth n L hL hL0 w)
+      exact ContDiff.mul (ContDiff.mul hs (hk.smooth n L hL hL0 w)) (hh.smooth n L hL hL0 w) }
   have h0 : nrm2 μ 𝓕 (fun x => star (k x) * k x * h x) = 0 := by
     unfold nrm2
     refine integral_eq_zero_of_ae ?_

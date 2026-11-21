@@ -89,7 +89,7 @@ theorem main_induction [IsDomain R'] [IsDiscreteValuationRing R'] (D : Set (R' �
     have hLact : ∀ (σ : R' ≃ₐ[R] R') (w : Fin n → R'),
         (fun i => σ (L w i)) = L (fun i => σ (w i)) := by
       intro σ w; funext i
-      refine Fin.cases ?_ ?_ i <;> simp [L]
+      refine Fin.cases ?_ ?_ i <;> simp [L, consZero]
     let K := N.comap L
     have hKlat : ∀ w : Fin n → R', π ^ r • w ∈ K := fun w => by
       show L (π ^ r • w) ∈ N
@@ -122,20 +122,20 @@ theorem main_induction [IsDomain R'] [IsDiscreteValuationRing R'] (D : Set (R' �
       have e : L ((fun i => σ (Fin.tail vs i)) - Fin.tail vs) = (fun i => σ (vs i)) - vs := by
         funext i
         refine Fin.cases ?_ ?_ i
-        · simp [L, hvs0, hfix σ _ hpa]
-        · intro j; simp [L, Fin.tail]
+        · simp [L, consZero, hvs0, hfix σ _ hpa]
+        · intro j; simp [L, consZero, Fin.tail]
       show L _ ∈ N
       rw [e]; exact N.sub_mem (hstab σ hσ _ hvsN) hvsN
     obtain ⟨a0, ha0, ha0K⟩ := hQK (Fin.tail vs) hvsK
     obtain ⟨vo, hvo⟩ : ∃ vo, vo = vs - L (Fin.tail vs - a0) := ⟨_, rfl⟩
     have hvoN : vo ∈ N := hvo ▸ N.sub_mem hvsN ha0K
-    have hvo0 : vo 0 = π ^ a := by rw [hvo]; simp [L, hvs0]
+    have hvo0 : vo 0 = π ^ a := by rw [hvo]; simp [L, consZero, hvs0]
     have hvorat : ∀ i, vo i ∈ Set.range (algebraMap R R') := by
       intro i
       refine Fin.cases ?_ ?_ i
       · rw [hvo0]; exact hpa
       · intro j
-        have : vo j.succ = a0 j := by rw [hvo]; simp [L, Fin.tail]
+        have : vo j.succ = a0 j := by rw [hvo]; simp [L, consZero, Fin.tail]
         rw [this]; exact ha0 j
     have hrat_add : ∀ x y : R', x ∈ Set.range (algebraMap R R') → y ∈ Set.range (algebraMap R R') →
         x + y ∈ Set.range (algebraMap R R') := by
@@ -145,8 +145,8 @@ theorem main_induction [IsDomain R'] [IsDiscreteValuationRing R'] (D : Set (R' �
         ∀ i, L w i ∈ Set.range (algebraMap R R') := by
       intro w hw i
       refine Fin.cases ?_ ?_ i
-      · simpa [L] using hrat0
-      · intro j; simpa [L] using hw j
+      · simpa [L, consZero] using hrat0
+      · intro j; simpa [L, consZero] using hw j
     refine ⟨?_, ?_⟩
     ·
       intro v hv
@@ -155,8 +155,8 @@ theorem main_induction [IsDomain R'] [IsDiscreteValuationRing R'] (D : Set (R' �
       have hLw : L w = v - t • vo := by
         funext i
         refine Fin.cases ?_ ?_ i
-        · simp [L, ht, hvo0]; ring
-        · intro j; simp [L, hw, Fin.tail]
+        · simp [L, consZero, ht, hvo0]; ring
+        · intro j; simp [L, consZero, hw, Fin.tail]
       have hwK : w ∈ K := by
         show L w ∈ N
         rw [hLw]; exact N.sub_mem hv (N.smul_mem t hvoN)
@@ -188,8 +188,8 @@ theorem main_induction [IsDomain R'] [IsDiscreteValuationRing R'] (D : Set (R' �
       have hLw : L w = u' := by
         funext i
         refine Fin.cases ?_ ?_ i
-        · simp [L, hu', he, hvo0]; rw [ht, hπdef]; ring
-        · intro j; simp [L, hw, Fin.tail]
+        · simp [L, consZero, hu', he, hvo0]; rw [ht, hπdef]; ring
+        · intro j; simp [L, consZero, hw, Fin.tail]
       have hwinv : ∀ σ ∈ D, (fun i => σ (w i)) - w ∈ K := by
         intro σ hσ
         have key : L ((fun i => σ (w i)) - w) = ((fun i => σ (u i)) - u) - (σ t - t) • vo := by

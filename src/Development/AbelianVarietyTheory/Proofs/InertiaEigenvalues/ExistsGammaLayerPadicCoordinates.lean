@@ -135,7 +135,7 @@ theorem mem_of_norm_Lg_lt {j : ℕ} (h1 : 1 ≤ j) (h2 : l = 2 → 2 ≤ j)
     (hlt : ‖large₂ c‖ < ‖large₂ b‖) : c ∈ S := by
   have hb0 : large₂ b ≠ 0 := norm_pos_iff.1 ((norm_nonneg _).trans_lt hlt)
   let t : ℤ_[l] := ⟨large₂ c / large₂ b, by
-    rw [norm_div]; exact div_le_one_of_le₀ hlt.le (norm_nonneg _)⟩
+    rw [PadicInt.mem_subring_iff, norm_div]; exact div_le_one_of_le₀ hlt.le (norm_nonneg _)⟩
   have ht := (PadicInt.norm_le_pow_iff_mem_span_pow _ s).2 (PadicInt.appr_spec s t)
   set n := t.appr s
   have hj : (l : ℤ_[l]) ^ j ∣ ((c * (b ^ n)⁻¹ : ℤ_[l]ˣ) : ℤ_[l]) - 1 := by
@@ -227,7 +227,7 @@ theorem exists_coord {G : Type} [Group G] [TopologicalSpace G] (χ : G →* ℤ_
     ∃ lam : G →* Multiplicative ℤ_[l], Continuous lam ∧ (∀ g, lam g = 1 ↔ large₂ (χ g) = 0) ∧
       ∀ g, lam g = Multiplicative.ofAdd 1 ↔ large₂ (χ g) = large₂ (χ g₀) := by
   let f : G → ℤ_[l] := fun g => ⟨large₂ (χ g) / large₂ (χ g₀), by
-    rw [norm_div]; exact div_le_one_of_le₀ (hle g) (norm_nonneg _)⟩
+    rw [PadicInt.mem_subring_iff, norm_div]; exact div_le_one_of_le₀ (hle g) (norm_nonneg _)⟩
   have hf : Continuous f := ((continuous_Lg.comp hχ).div_const _).subtype_mk _
   refine ⟨MonoidHom.mk' (fun g => Multiplicative.ofAdd (f g)) fun a b => ?_,
     continuous_ofAdd.comp hf, fun g => ?_, fun g => ?_⟩

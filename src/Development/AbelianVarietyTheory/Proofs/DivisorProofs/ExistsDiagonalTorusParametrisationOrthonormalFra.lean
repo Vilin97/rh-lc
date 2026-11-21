@@ -25,7 +25,7 @@ theorem gram_mul_of_preserves {E : Type} [Field E] [NumberField E] [IsCMField E]
     (hM : ∀ u w, hermC τ G (M *ᵥ u) (M *ᵥ w) = hermC τ G u w) :
     ReciprocityTheory.ChartRestriction.G.FD.gram τ G (M * x) = ReciprocityTheory.ChartRestriction.G.FD.gram τ G x := by
   have hc (a : Fin r) : ReciprocityTheory.ChartRestriction.G.FD.col (M * x) a = M *ᵥ ReciprocityTheory.ChartRestriction.G.FD.col x a := by
-    ext k; simp [ReciprocityTheory.ChartRestriction.G.FD.col, mul_apply, mulVec, dotProduct]
+    ext k; simp [ReciprocityTheory.ChartRestriction.G.FD.col, Matrix.mul_apply, mulVec, dotProduct]
   ext a b
   simp only [ReciprocityTheory.ChartRestriction.G.FD.gram, of_apply, hc, hM]
 

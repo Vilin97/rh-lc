@@ -49,15 +49,11 @@ theorem base_cont {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 
 theorem path_sep : ∀ (ss : List (Fin n)) (X : GMod n) (χ : Fin n → ℂ)
     (C : Set (X.V →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ → ℂ))), (∀ x : X.V, x ≠ 0 → ∃ c ∈ C, c x 1 ≠ 0) →
-    ∀ u : (path X χ ss).V, u ≠ 0 → ∃ c ∈ C, ∃ js, pathCoef X c χ ss js u 1 ≠ 0 := by
-  intro ss
-  induction ss with
-  | nil =>
-      intro X χ C h u hu
+    ∀ u : (path X χ ss).V, u ≠ 0 → ∃ c ∈ C, ∃ js, pathCoef X c χ ss js u 1 ≠ 0
+  | [], X, χ, C, h, u, hu => by
       obtain ⟨c, hc, h1⟩ := h u hu
       exact ⟨c, hc, [], h1⟩
-  | cons s ss ih =>
-      intro X χ C h u hu
+  | s :: ss, X, χ, C, h, u, hu => by
       have hC : ∀ x : (step X (χ s)).V, x ≠ 0 → ∃ c' ∈ {c' | ∃ c ∈ C, ∃ j, c' = stepCoef X (χ s) c j}, c' x 1 ≠ 0 := by
         intro x hx
         let S : (step X (χ s)).V →ₗ[ℂ] (Fin n → X.V) := (stepSub X (χ s)).subtype
@@ -71,7 +67,7 @@ theorem path_sep : ∀ (ss : List (Fin n)) (X : GMod n) (χ : Fin n → ℂ)
         refine ⟨stepCoef X (χ s) c j, ⟨c, hc, j, rfl⟩, ?_⟩
         show ∑ i, (1 : Matrix (Fin n) (Fin n) ℂ) j i * c (S x i) 1 ≠ 0
         simpa [Matrix.one_apply] using h1
-      obtain ⟨c', ⟨c, hc, j, rfl⟩, js, h1⟩ := ih (step X (χ s)) (χ + Pi.single s 1) _ hC u hu
+      obtain ⟨c', ⟨c, hc, j, rfl⟩, js, h1⟩ := path_sep ss (step X (χ s)) (χ + Pi.single s 1) _ hC u hu
       exact ⟨c, hc, j :: js, h1⟩
 
 theorem eab_of_rightOK {X : GMod n} {c : X.V →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ → ℂ)} (hR : RightOK ε X c)
@@ -394,12 +390,10 @@ theorem smooth_of_rightOK {X : GMod n} {c : X.V →ₗ[ℂ] (Matrix (Fin n) (Fin
 end Smooth
 
 theorem word_of_rightOK {X : GMod n} {c : X.V →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ → ℂ)} (hR : RightOK ε X c) :
-    ∀ (w : List (Fin n × Fin n)) (u : X.V), ∃ v : X.V, ∀ g, Formalism.REAL.inUJ ε g → Formalism.REAL.Eword ε w (c u) g = c v g := by
-  intro w u
-  induction w with
-  | nil => exact ⟨u, fun _ _ => rfl⟩
-  | cons p w ih =>
-      obtain ⟨v, hv⟩ := ih
+    ∀ (w : List (Fin n × Fin n)) (u : X.V), ∃ v : X.V, ∀ g, Formalism.REAL.inUJ ε g → Formalism.REAL.Eword ε w (c u) g = c v g
+  | [], u => ⟨u, fun _ _ => rfl⟩
+  | p :: w, u => by
+      obtain ⟨v, hv⟩ := word_of_rightOK hR w u
       refine ⟨X.E p.1 p.2 v, fun g hg => ?_⟩
       simp only [Formalism.REAL.Eword]
       rw [icx_eab_eq, icx_eabV_congr hv p.1 p.2 hg, ← icx_eab_eq]

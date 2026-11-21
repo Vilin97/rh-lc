@@ -39,7 +39,7 @@ theorem normV_under_eq : ∀ (K L : Type) [Field K] [NumberField K] [Field L] [N
   rw [h, pow_one] at e1
   rw [hQ1, pow_one] at e2
   change Nat.card (𝓞 K ⧸ Q) = Nat.card (𝓞 L ⧸ P)
-  change Ideal.absNorm Q = Ideal.absNorm P
+  rw [← Ideal.absNorm_eq_natCard Q, ← Ideal.absNorm_eq_natCard P]
   rw [← e1, ← e2]
 
 end GlobalTheory.NormDegOne

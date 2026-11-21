@@ -17,9 +17,9 @@ theorem card_primary (C : Type) [AddCommGroup C] [Finite C] (ℓ : ℕ) (hℓ : 
   haveI := Fact.mk hℓ
   let P : Sylow ℓ (Multiplicative C) :=
     ⟨CommGroup.primaryComponent (Multiplicative C) ℓ, CommGroup.primaryComponent.isPGroup, fun {Q} hQ hle =>
-      le_antisymm (fun x hx => by
+      fun x hx => by
         obtain ⟨k, hk⟩ := hQ ⟨x, hx⟩
-        exact CommGroup.mem_primaryComponent.2 ⟨k, congrArg Subtype.val hk⟩) hle⟩
+        exact CommGroup.mem_primaryComponent.2 ⟨k, congrArg Subtype.val hk⟩⟩
   have h := Sylow.card_eq_multiplicity P
   rw [Nat.card_congr (Multiplicative.toAdd (α := C))] at h
   rw [← h]

@@ -66,13 +66,14 @@ structure Anti (F : GFrame l) {Q : Type} [CommGroup Q] (γ : F.G₀ →* Q) : Pr
   mu : ∀ v (g : F.Gv v), g ∈ F.mu v → γ (F.φ v g) = 1
 
 theorem Anti.mono {F : GFrame l} {Q Q' : Type} [CommGroup Q] [CommGroup Q'] {γ : F.G₀ →* Q} {γ' : F.G₀ →* Q'}
-    (h : Anti F γ) (hk : γ.ker ≤ γ'.ker) : Anti F γ' where
-  conj g := by
-    rw [← map_mul]
-    exact hk (show γ _ = 1 by rw [map_mul]; exact h.conj g)
-  iu u := (h.iu u).trans hk
-  i0 := h.i0.trans hk
-  mu v g hg := hk (h.mu v g hg)
+    (h : Anti F γ) (hk : γ.ker ≤ γ'.ker) : Anti F γ' := by
+  refine { conj := ?_
+           iu := fun u => (h.iu u).trans hk
+           i0 := h.i0.trans hk
+           mu := fun v g hg => hk (h.mu v g hg) }
+  intro g
+  rw [← map_mul]
+  exact hk (show γ _ = 1 by rw [map_mul]; exact h.conj g)
 
 structure TwCh (F : GFrame l) {R : Type} [CommRing R] [IsLocalRing R] (γ : F.G₀ →* Rˣ) : Prop extends Anti F γ where
   cont : AdicCont (maximalIdeal R) fun g => (γ g : R)

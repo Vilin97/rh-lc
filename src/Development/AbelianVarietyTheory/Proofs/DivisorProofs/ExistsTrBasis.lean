@@ -125,7 +125,7 @@ theorem exists_trBasis {K κ' L : Type} [Field K] [Field κ'] [Field L] [Algebra
         intro a
         induction a using TensorProduct.induction_on with
         | zero => rw [map_zero]; exact zero_mem _
-        | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+        | add a b ha hb => rw [map_add]; exact add_mem ha hb
         | tmul l f =>
           have : l ⊗ₜ[ℂ] f = l • ((1 : K) ⊗ₜ[ℂ] f) := by simp [TensorProduct.smul_tmul']
           rw [this, map_smul]
@@ -190,7 +190,9 @@ theorem exists_place : ∀ {K κ κ' L : Type} [Field K] [Field κ] [Field κ'] 
       by_cases h0 : dForm (algebraMap ℂ L) (fun i => (y i : L)) = 0
       · rw [h0, smul_zero]
       · rw [V.formOrd_smul hw h0 (hne q hq), hunit q hq, zero_add]
-    rw [hform, hs]
+    rw [hform]
+    change V.formOrd ((q : L) • dForm (algebraMap ℂ L) (fun i => (y i : L))) + 1 ≤ _
+    rw [hs]
     simpa using h
 
 end GlobalTheory.FieldPair.GraphPlace

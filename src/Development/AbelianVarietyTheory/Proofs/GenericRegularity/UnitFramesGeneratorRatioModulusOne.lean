@@ -108,7 +108,7 @@ theorem mean_comp_eq {g : ℕ} (Λ Λ' : AddSubgroup (Fin g → ℂ)) [Countable
   have hc : 0 < |(LinearMap.det (L : (Fin g → ℂ) →ₗ[ℝ] (Fin g → ℂ)))⁻¹| := abs_pos.2 (inv_ne_zero hd)
   generalize |(LinearMap.det (L : (Fin g → ℂ) →ₗ[ℝ] (Fin g → ℂ)))⁻¹| = c at hmap hc
   have hq : Measure.QuasiMeasurePreserving e volume volume :=
-    ⟨e.measurable, by rw [hmap]; exact Measure.smul_absolutelyContinuous⟩
+    ⟨e.measurable.aemeasurable, by rw [hmap]; exact Measure.smul_absolutelyContinuous⟩
   let ε : Λ' → Λ := fun a => ⟨L.symm a, (hΛ _).1 (by rw [← hL, L.apply_symm_apply]; exact a.2)⟩
   have hε : Function.Bijective ε :=
     ⟨fun a b hab => Subtype.ext (L.symm.injective (congrArg Subtype.val hab)),
