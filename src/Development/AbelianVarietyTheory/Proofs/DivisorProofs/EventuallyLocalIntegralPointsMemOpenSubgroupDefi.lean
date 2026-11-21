@@ -24,7 +24,7 @@ theorem map_one_entry {R : Type} [Ring R] (f : Ad E →+* R) (i j : Fin n) :
   rw [Matrix.one_apply, Matrix.one_apply]
   split_ifs <;> simp
 
-theorem sub_one_entry_mem {w : Pl E} {g : GLw n w} (hg : g ∈ GlobalTheory.LFun.KGL w n) (i j : Fin n) :
+theorem sub_one_entry_mem {w : Pl E} {g : GLw n w} (hg : g ∈ GlobalTheory.LFun.KGL w (n := n)) (i j : Fin n) :
     g.val i j - (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) i j ∈ w.adicCompletionIntegers E := by
   rw [mem_KGL_iff_val] at hg
   refine sub_mem ((HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).2 (hg.1 i j)) ?_
@@ -50,7 +50,7 @@ theorem entry_eq_one_add {w : Pl E} {N N' : Set (Af E)} (h0 : (0 : Af E) ∈ N')
     (hw : ∀ y ∈ w.adicCompletionIntegers E, GlobalTheory.GLTwoHecke.singleNU w y ∈ N')
     (hc : ∀ y ∈ (conjSrc (conjE E) w).adicCompletionIntegers E,
       GlobalTheory.GLTwoHecke.singleNU (conjSrc (conjE E) w) y ∈ N')
-    (z : UA E n) (hz : z ∈ locU n w) (hK : cLoc w z ∈ GlobalTheory.LFun.KGL w n) (i j : Fin n) :
+    (z : UA E n) (hz : z ∈ locU n w) (hK : cLoc w z ∈ GlobalTheory.LFun.KGL w (n := n)) (i j : Fin n) :
     ∃ a ∈ N, ((z : GA E n) : Matrix (Fin n) (Fin n) (Ad E)) i j =
       (1 : Matrix (Fin n) (Fin n) (Ad E)) i j + (show Ad E from ((0 : InfiniteAdeleRing E), a)) := by
   have hKc := integral_conjSrc z w hK
@@ -101,7 +101,7 @@ theorem entry_eq_one_add {w : Pl E} {N N' : Set (Af E)} (h0 : (0 : Af E) ∈ N')
         · rw [pLoc_singleNU_ne huc]; simp
 
 theorem eventually_locU_mem : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (L : Subgroup (finU E n)),
-    IsOpen (L : Set (finU E n)) → ∀ᶠ w in cofinite, ∀ x : UA E n, x ∈ locU n w → cLoc w x ∈ GlobalTheory.LFun.KGL w n →
+    IsOpen (L : Set (finU E n)) → ∀ᶠ w in cofinite, ∀ x : UA E n, x ∈ locU n w → cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) →
       ∀ h : x ∈ finU E n, (⟨x, h⟩ : finU E n) ∈ L := by
   intro E _ _ _ n L hL
   have h1 : (L : Set (finU E n)) ∈ 𝓝 (1 : finU E n) := hL.mem_nhds L.one_mem
@@ -137,7 +137,7 @@ theorem eventually_locU_mem : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   have hev2 := (conjSrc_injective (conjE E)).tendsto_cofinite.eventually hev
   filter_upwards [hev, hev2] with w hw hw2 x hxw hxK hx
   have hxw' : x⁻¹ ∈ locU n w := inv_mem hxw
-  have hxK' : cLoc w x⁻¹ ∈ GlobalTheory.LFun.KGL w n := by rw [map_inv]; exact inv_mem hxK
+  have hxK' : cLoc w x⁻¹ ∈ GlobalTheory.LFun.KGL w (n := n) := by rw [map_inv]; exact inv_mem hxK
   choose a ha hxa using entry_eq_one_add h0 hadd hw hw2 x hxw hxK
   choose b hb hxb using entry_eq_one_add h0 hadd hw hw2 x⁻¹ hxw' hxK'
   let y : Bool × Fin n × Fin n → Af E := fun p => if p.1 then b p.2.1 p.2.2 else a p.2.1 p.2.2

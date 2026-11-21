@@ -25,7 +25,7 @@ attribute [local instance] borelG borelF borelA borelH
 
 theorem locAlg : LocAlg := by
   intro E _ _ _ a b Z L w
-  have hK2 : K2 a b w = (KGL w a).prod (KGL w b) := rfl
+  have hK2 : K2 a b w = (KGL w (n := a)).prod (KGL w (n := b)) := rfl
   have hop : IsOpen (((L.L₁ w).prod (L.L₂ w) : Subgroup _) : Set (GLw a w × GLw b w)) := by
     rw [Subgroup.coe_prod]
     exact (L.open₁ w).prod (L.open₂ w)

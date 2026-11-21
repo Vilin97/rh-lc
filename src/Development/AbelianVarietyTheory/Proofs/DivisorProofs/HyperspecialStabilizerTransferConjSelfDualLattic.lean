@@ -100,7 +100,7 @@ theorem stab_finComp_iff (F : Type) {E : Type} [Field F] [NumberField F] [Field 
   simp only [hκ]
 
 theorem mem_KGL_iff {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {P : HeightOneSpectrum (𝓞 E)}
-    {x : UA E n} (hx : x ∈ locU n P) : cLoc P x ∈ GlobalTheory.LFun.KGL P n ↔
+    {x : UA E n} (hx : x ∈ locU n P) : cLoc P x ∈ GlobalTheory.LFun.KGL P (n := n) ↔
     (∀ a b u, (cLoc u x).1 a b ∈ u.adicCompletionIntegers E) ∧
       ∀ a b u, (cLoc u x⁻¹).1 a b ∈ u.adicCompletionIntegers E := by
   constructor

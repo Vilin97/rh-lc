@@ -15,9 +15,9 @@ namespace UpperTheory.Gal.CertificateRingHomMap.PNbhd2
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 private theorem exists_open_avoid (w : Plc E) (x : GLw n w) (hx : x ≠ 1) :
-    ∃ V : Subgroup (GLw n w), IsOpen (V : Set (GLw n w)) ∧ V ≤ GlobalTheory.LFun.KGL w n ∧ x ∉ V := by
+    ∃ V : Subgroup (GLw n w), IsOpen (V : Set (GLw n w)) ∧ V ≤ GlobalTheory.LFun.KGL w (n := n) ∧ x ∉ V := by
   obtain ⟨hKo, hKc⟩ := GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL (E := E) w n
-  by_cases hxK : x ∈ GlobalTheory.LFun.KGL w n
+  by_cases hxK : x ∈ GlobalTheory.LFun.KGL w (n := n)
   swap
   · exact ⟨_, hKo, le_rfl, hxK⟩
   have hne : ∃ i j, x.val i j ≠ (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) i j := by
@@ -25,8 +25,8 @@ private theorem exists_open_avoid (w : Plc E) (x : GLw n w) (hx : x ≠ 1) :
     push_neg at h
     exact hx (Units.ext (Matrix.ext h))
   obtain ⟨i, j, hij⟩ := hne
-  haveI : CompactSpace ↥(GlobalTheory.LFun.KGL w n) := isCompact_iff_compactSpace.1 hKc
-  let f : ↥(GlobalTheory.LFun.KGL w n) → w.adicCompletion E :=
+  haveI : CompactSpace ↥(GlobalTheory.LFun.KGL w (n := n)) := isCompact_iff_compactSpace.1 hKc
+  let f : ↥(GlobalTheory.LFun.KGL w (n := n)) → w.adicCompletion E :=
     fun g => g.1.val i j - (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) i j
   have hf : Continuous f :=
     Continuous.sub (Continuous.matrix_elem (Units.continuous_val.comp continuous_subtype_val) i j) continuous_const
@@ -34,21 +34,21 @@ private theorem exists_open_avoid (w : Plc E) (x : GLw n w) (hx : x ≠ 1) :
     ({x.val i j - (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) i j}ᶜ : Set (w.adicCompletion E))
     (isOpen_compl_singleton.mem_nhds (by simpa using (sub_ne_zero.2 hij).symm))
   have hW : IsClopen (f ⁻¹' (A : Set (w.adicCompletion E))) := A.isClopen.preimage hf
-  have h1 : (1 : ↥(GlobalTheory.LFun.KGL w n)) ∈ f ⁻¹' (A : Set (w.adicCompletion E)) := by
+  have h1 : (1 : ↥(GlobalTheory.LFun.KGL w (n := n))) ∈ f ⁻¹' (A : Set (w.adicCompletion E)) := by
     simp [f, A.zero_mem]
   obtain ⟨H, hH⟩ := IsTopologicalGroup.exist_openSubgroup_sub_clopen_nhds_of_one hW h1
-  refine ⟨(H : Subgroup _).map (GlobalTheory.LFun.KGL w n).subtype, ?_, Subgroup.map_subtype_le _, ?_⟩
+  refine ⟨(H : Subgroup _).map (GlobalTheory.LFun.KGL w (n := n)).subtype, ?_, Subgroup.map_subtype_le _, ?_⟩
   · exact hKo.isOpenEmbedding_subtypeVal.isOpenMap _ H.isOpen
   · rintro ⟨h, hh, rfl⟩
     exact hA (hH hh) rfl
 
 private theorem exists_Kw
-    (F : Finset (Σ w : Plc E, {V : Subgroup (GLw n w) // IsOpen (V : Set (GLw n w)) ∧ V ≤ GlobalTheory.LFun.KGL w n})) :
-    ∃ Kw : ∀ w : Plc E, Subgroup (GLw n w), (∀ w, IsOpen (Kw w : Set (GLw n w)) ∧ Kw w ≤ GlobalTheory.LFun.KGL w n) ∧
+    (F : Finset (Σ w : Plc E, {V : Subgroup (GLw n w) // IsOpen (V : Set (GLw n w)) ∧ V ≤ GlobalTheory.LFun.KGL w (n := n)})) :
+    ∃ Kw : ∀ w : Plc E, Subgroup (GLw n w), (∀ w, IsOpen (Kw w : Set (GLw n w)) ∧ Kw w ≤ GlobalTheory.LFun.KGL w (n := n)) ∧
       ∀ i ∈ F, Kw i.1 ≤ i.2.1 := by
   induction F using Finset.induction_on with
   | empty =>
-    exact ⟨fun w => GlobalTheory.LFun.KGL w n,
+    exact ⟨fun w => GlobalTheory.LFun.KGL w (n := n),
       fun w => ⟨(GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL (E := E) w n).1, le_rfl⟩, by simp⟩
   | insert i F _ ih =>
     obtain ⟨Kw, h1, h2⟩ := ih
@@ -111,7 +111,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pNbhd2_of :
         (show Continuous (pLoc E w) from RestrictedProduct.continuous_eval
           (R := fun w : Plc E => w.adicCompletion E)
           (A := fun w : Plc E => (w.adicCompletionIntegers E : Set (w.adicCompletion E))) w))).comp hp
-  let D : (Σ w : Plc E, {V : Subgroup (GLw n w) // IsOpen (V : Set (GLw n w)) ∧ V ≤ GlobalTheory.LFun.KGL w n}) →
+  let D : (Σ w : Plc E, {V : Subgroup (GLw n w) // IsOpen (V : Set (GLw n w)) ∧ V ≤ GlobalTheory.LFun.KGL w (n := n)}) →
       Set (finU E n) := fun i => {u | cLoc i.1 u.1 ∈ i.2.1}
   have hD : ∀ i, IsClosed (D i) := fun i => (Subgroup.isClosed_of_isOpen _ i.2.2.1).preimage (hL i.1)
   have hone : ∀ u : finU E n, (∀ i, u ∈ D i) → u = 1 := by

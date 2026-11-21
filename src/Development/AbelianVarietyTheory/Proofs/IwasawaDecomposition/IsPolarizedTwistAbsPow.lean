@@ -31,7 +31,7 @@ theorem isSatVecGL_of_mem_iSup {V W I : Type} [AddCommGroup V] [Module ℂ V] [A
     {σ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V} {ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) W}
     (hσ : σ.IsIrreducible) {B : Multiset ℂˣ} (h : HasSatGL w σ B) (f : I → V →ₗ[ℂ] W)
     (hf : ∀ i g v, f i (σ g v) = ρ g (f i v)) {x : W} (hx : x ∈ ⨆ i, LinearMap.range (f i))
-    (hK : x ∈ fixed ρ (KGL w n)) (h0 : x ≠ 0) : IsSatVecGL w ρ x B := by
+    (hK : x ∈ fixed ρ (KGL w (n := n))) (h0 : x ≠ 0) : IsSatVecGL w ρ x B := by
   classical
   have hc := Final.GLintComm E w n
   let τ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) (I →₀ V) :=
@@ -48,13 +48,13 @@ theorem isSatVecGL_of_mem_iSup {V W I : Type} [AddCommGroup V] [Module ℂ V] [A
     | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single i v => rw [hτ, hp, hp, hf]
   obtain ⟨x₀, hx₀⟩ := h.exists_vec
-  have hfin : ∀ m, m ∈ HeckeScalar.finOrbit τ (KGL w n) := fun m => by
+  have hfin : ∀ m, m ∈ HeckeScalar.finOrbit τ (KGL w (n := n)) := fun m => by
     induction m using Finsupp.induction_linear with
     | zero => exact zero_mem _
     | add a b ha hb => exact add_mem ha hb
     | single i v =>
       obtain ⟨φ, rfl⟩ := HeckeScalar.orbitMap_surjective hσ hx₀.2.1 hx₀.1 v
-      refine (Set.Finite.image (fun ψ => Finsupp.single i (HeckeScalar.orbitMap σ (KGL w n) x₀ ψ))
+      refine (Set.Finite.image (fun ψ => Finsupp.single i (HeckeScalar.orbitMap σ (KGL w (n := n)) x₀ ψ))
         (HeckeScalar.mem_finOrbit hc φ)).subset ?_
       rintro _ ⟨k, rfl⟩
       exact ⟨_, ⟨k, rfl⟩, by simp only [hτ, HeckeScalar.orbitMap_permRep hx₀.2.1]⟩
@@ -65,7 +65,7 @@ theorem isSatVecGL_of_mem_iSup {V W I : Type} [AddCommGroup V] [Module ℂ V] [A
   rw [← e, ← map_heckeVec hc (Tj_mem_hecke hϖ j) p hpe, ← map_smul]
   congr 1
   ext i
-  have h1 : m' i ∈ fixed σ (KGL w n) := GlobalTheory.LGrp.mem_fixed.2 fun k hk =>
+  have h1 : m' i ∈ fixed σ (KGL w (n := n)) := GlobalTheory.LGrp.mem_fixed.2 fun k hk =>
     DFunLike.congr_fun (GlobalTheory.LGrp.mem_fixed.1 hm' k hk) i
   refine (map_heckeVec hc (Tj_mem_hecke hϖ j) (ρ := τ) (ρ' := σ) (Finsupp.lapply i) (fun _ _ => rfl) m').trans ?_
   change heckeVec σ _ _ (m' i) = satEig (qV E w) n B j • m' i

@@ -259,23 +259,23 @@ open GlobalTheory.WeylGL
 variable {E : Type} [Field E] [NumberField E] {w : HeightOneSpectrum (𝓞 E)} {n : ℕ}
   {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
-theorem isCompact_KGL : IsCompact (KGL w n : Set (GL (Fin n) (w.adicCompletion E))) := by
+theorem isCompact_KGL : IsCompact (KGL w (n := n) : Set (GL (Fin n) (w.adicCompletion E))) := by
   rw [KGL, ← SphCompletion.KO_completion w n]
   exact GlobalTheory.SplitFlip.isCompact_KO
 
 theorem exists_scalar_GL {π : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V} (hs : IsSmooth π)
     (hi : π.IsIrreducible) :
-    ∀ h ∈ Hecke ℂ (KGL w n), ∃ c : ℂ, ∀ x ∈ fixed π (KGL w n), heckeVec π (KGL w n) h x = c • x :=
+    ∀ h ∈ Hecke ℂ (KGL w (n := n)), ∃ c : ℂ, ∀ x ∈ fixed π (KGL w (n := n)), heckeVec π (KGL w (n := n)) h x = c • x :=
   haveI := secondCountableTopology_GL (w.adicCompletion E) (Fin n)
   exists_scalar hs hi isCompact_KGL (Final.GLintComm E w n) (Final.HeckeCommGL E w n ℂ)
 
 theorem exists_hasSatGL_of_isIrreducible {π : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V} (hs : IsSmooth π)
-    (hi : π.IsIrreducible) (h : GlobalTheory.LGrp.IsSpherical π (KGL w n)) : ∃ B, HasSatGL w π B :=
+    (hi : π.IsIrreducible) (h : GlobalTheory.LGrp.IsSpherical π (KGL w (n := n))) : ∃ B, HasSatGL w π B :=
   ExSatGL.exists_hasSatGL E w n V π h (exists_scalar_GL hs hi)
 
 theorem dosetInd_eq_Tj {ϖ : w.adicCompletion E} (h0 : ϖ ≠ 0) (hu : IsUnifV E w ϖ) {g : GL (Fin n) (w.adicCompletion E)}
     (h1 : IntM g) (h2 : IntM (tor h0 (fun _ => 1) * g⁻¹)) :
-    ∃ j ≤ n, dosetInd ℂ (KGL w n) g = Tj ℂ n (Ov E w) ϖ j := by
+    ∃ j ≤ n, dosetInd ℂ (KGL w (n := n)) g = Tj ℂ n (Ov E w) ϖ j := by
   obtain ⟨a, ha, c, hc, d, hd, rfl⟩ := cartan h0 hu g
   have a0 : ∀ i, 0 ≤ a i := (intM_tor h0 hu a).1 (intM_doset h1 ⟨c⁻¹, inv_mem hc, d⁻¹, inv_mem hd, by group⟩)
   have a1 : ∀ i, 0 ≤ 1 - a i := (intM_tor h0 hu (fun _ => 1 - a _)).1 (intM_doset h2 ⟨d, hd, c, hc, by
@@ -308,7 +308,7 @@ theorem intM_of_Tj {ϖ : w.adicCompletion E} (h0 : ϖ ≠ 0) (hu : IsUnifV E w �
 
 theorem idem_of_isSatVecGL {π : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V} (hs : IsSmooth π) {x : V}
     {B : Multiset ℂˣ} (hx : IsSatVecGL w π x B) {ϖ : w.adicCompletion E} (hu : IsUnifV E w ϖ) {j : ℕ} (hj : j ≤ n)
-    {g : GL (Fin n) (w.adicCompletion E)} (hg : dosetInd ℂ (KGL w n) g = Tj ℂ n (Ov E w) ϖ j) :
+    {g : GL (Fin n) (w.adicCompletion E)} (hg : dosetInd ℂ (KGL w (n := n)) g = Tj ℂ n (Ov E w) ϖ j) :
     idem hs (H := KO _ (Fin n)) GlobalTheory.SplitFlip.isCompact_KO (π g x) =
       ((((P.finite_cosets_in_doset (Final.GLintComm E w n) g).toFinset.card : ℂ))⁻¹ * satEig (qV E w) n B j) • x := by
   have h := GlobalTheory.LGrp.Zonal.heckeVec_dosetInd hs isCompact_KGL (Final.GLintComm E w n) hx.2.1 g
@@ -445,14 +445,14 @@ theorem exists_map_isSatVecGL {X : Fin c → Type} [∀ a, AddCommGroup (X a)] [
 theorem exists_sat_multiProd {X : Fin c → Type} [∀ a, AddCommGroup (X a)] [∀ a, Module ℂ (X a)]
     {π : ∀ a, Representation ℂ (GL (Fin (N a)) (w.adicCompletion E)) (X a)} (hs : ∀ a, IsSmooth (π a))
     (hi : ∀ a, (π a).IsIrreducible) {f : IndSp (stdBlocks N h) (piTensor π)}
-    (hf : f ∈ fixed (multiProd (stdBlocks N h) π) (KGL w n)) (h0 : f ≠ 0) :
+    (hf : f ∈ fixed (multiProd (stdBlocks N h) π) (KGL w (n := n))) (h0 : f ≠ 0) :
     ∃ S : Fin c → Multiset ℂˣ, (∀ a, HasSatGL w (π a) (S a)) ∧
       IsSatVecGL w (multiProd (stdBlocks N h) π) f (∑ a, S a) := by
-  have hKO : ∀ m, KGL w m = KO (w.adicCompletion E) (Fin m) := fun m => (SphCompletion.KO_completion w m).symm
+  have hKO : ∀ m, KGL w (n := m) = KO (w.adicCompletion E) (Fin m) := fun m => (SphCompletion.KO_completion w m).symm
   have hf' := hf
   rw [hKO] at hf'
   have hv := map_idem_of_fixed hs (fun _ => GlobalTheory.SplitFlip.isCompact_KO) (apply_one_fixed _ hf')
-  have hsph : ∀ a, GlobalTheory.LGrp.IsSpherical (π a) (KGL w (N a)) := fun a e => by
+  have hsph : ∀ a, GlobalTheory.LGrp.IsSpherical (π a) (KGL w (n := (N a))) := fun a e => by
     rw [hKO] at e
     refine h0 (eq_zero_of_apply_one _ hf' (hv.symm.trans ?_))
     generalize f.1.1 1 = u
@@ -490,7 +490,7 @@ theorem exists_sat_multiProd {X : Fin c → Type} [∀ a, AddCommGroup (X a)] [�
   refine ⟨S, hS, h0, hf, hY.2.2.1, fun ϖ hϖ j hj => ?_⟩
   have hϖ0 : ϖ ≠ 0 := fun e => by simp [IsUnifV, e] at hϖ
   have hT := Tj_mem_hecke (n := n) hϖ j
-  have hK : IsCommensurated (KGL w n) := Final.GLintComm E w n
+  have hK : IsCommensurated (KGL w (n := n)) := Final.GLintComm E w n
   have e1 := (map_heckeVec (ρ := multiProd (stdBlocks N h) R) hK hT Y hYe F).trans (hY.2.2.2 ϖ hϖ j hj)
   rw [hKO] at hT hK e1 ⊢
   have hp : ∀ q : GL (Fin n) (w.adicCompletion E) ⧸ KO (w.adicCompletion E) (Fin n),
@@ -521,14 +521,14 @@ section Twist
 variable {ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V}
   {ρ' : Representation ℂ (GL (Fin n) (w.adicCompletion E)) W} {s : ℂ}
 
-theorem absPow_det_of_mem (s : ℂ) {g : GL (Fin n) (w.adicCompletion E)} (hg : g ∈ KGL w n) :
+theorem absPow_det_of_mem (s : ℂ) {g : GL (Fin n) (w.adicCompletion E)} (hg : g ∈ KGL w (n := n)) :
     absPow (w.adicCompletion E) s (Matrix.GeneralLinearGroup.det g) = 1 :=
   Units.ext (by
     rw [KGL, ← SphCompletion.KO_completion w n] at hg
     simp [val_absPow, LeviInt.nabs_det_eq_one hg])
 
 theorem mem_fixed_twist (T : (twist ρ (detChar (Fin n) (absPow _ s))).Equiv ρ') (x : V) :
-    T x ∈ fixed ρ' (KGL w n) ↔ x ∈ fixed ρ (KGL w n) := by
+    T x ∈ fixed ρ' (KGL w (n := n)) ↔ x ∈ fixed ρ (KGL w (n := n)) := by
   simp only [GlobalTheory.LGrp.mem_fixed]
   refine forall₂_congr fun g hg => ?_
   have := T.toIntertwiningMap.isIntertwining _ _ g x
@@ -547,7 +547,7 @@ theorem hasSatGL_of_twist (T : (twist ρ (detChar (Fin n) (absPow _ s))).Equiv �
     refine ⟨h0, hy, by rw [Multiset.card_map, hx.2.2.1], fun ϖ hϖ j hj => ?_⟩
     rw [GlobalTheory.SphGal.satEig_map_mul, mul_smul, ← map_smul T.toLinearEquiv, ← hx.2.2.2 ϖ hϖ j hj, heckeVec, heckeVec]
     have e := T.toLinearEquiv.toAddEquiv.map_finsum
-      (fun c : _ ⧸ KGL w n => Tj ℂ n (Ov E w) ϖ j c.out • ρ c.out x)
+      (fun c : _ ⧸ KGL w (n := n) => Tj ℂ n (Ov E w) ϖ j c.out • ρ c.out x)
     rw [show T.toLinearEquiv _ = _ from e, smul_finsum]
     refine finsum_congr fun c => ?_
     by_cases hc : Tj ℂ n (Ov E w) ϖ j c.out = 0

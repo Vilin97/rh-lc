@@ -23,7 +23,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pSphType_of :
     obtain ⟨v, hv, hv0⟩ := (Submodule.ne_bot_iff _).1 hB.1
     have hfix := GlobalTheory.LGrp.mem_fixed.1 hv
     have hφ0 : f v ≠ 0 := fun h => hv0 (LinearMap.ker_eq_bot.1 hker (h.trans (map_zero f).symm))
-    have key : ∀ x ∈ locU n w, cLoc w x ∈ GlobalTheory.LFun.KGL w n → RU E n x (f v) = f v := by
+    have key : ∀ x ∈ locU n w, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n x (f v) = f v := by
       intro x hx hk
       have h1 := hf ⟨x, hx⟩ v
       simp only [MonoidHom.comp_apply, Subgroup.subtype_apply] at h1

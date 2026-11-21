@@ -21,7 +21,7 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 
 theorem eventually_spherical {a : ℕ} (π : CuspSub E a) :
     ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite,
-      GlobalTheory.LGrp.IsSpherical (π.locRep w) (GlobalTheory.LFun.KGL w a) := by
+      GlobalTheory.LGrp.IsSpherical (π.locRep w) (GlobalTheory.LFun.KGL w (n := a)) := by
   obtain ⟨φ, hφ, h0⟩ := (Submodule.ne_bot_iff _).1 π.ne_bot
   filter_upwards [LocSph.eventually_mem ((π.cusp φ hφ).1.level.mem_nhds (by simp))] with w hw
   refine (Submodule.ne_bot_iff _).2 ⟨⟨φ, hφ⟩, GlobalTheory.LGrp.mem_fixed.2 fun k hk => ?_, fun e => h0 (congrArg Subtype.val e)⟩
@@ -87,7 +87,7 @@ theorem satAsc_holds : SatAsc := by
   obtain ⟨φ, hφV, hφ⟩ := hB.1
   have hF := hfP φ hφV
   have hF0 : f φ ≠ 0 := fun e => hφ.1 (hfi φ hφV e)
-  have hFK : ∀ k ∈ GlobalTheory.LFun.KGL w N, finRep E N (locGL E N w k) (f φ) = f φ := fun k hk => by
+  have hFK : ∀ k ∈ GlobalTheory.LFun.KGL w (n := N), finRep E N (locGL E N w k) (f φ) = f φ := fun k hk => by
     have e := hfe (.fin (locGL E N w k)) φ hφV
     have e2 : finRep E N (locGL E N w k) φ = φ := GlobalTheory.LGrp.mem_fixed.1 hφ.2.1 k hk
     exact e.symm.trans (congrArg f e2)

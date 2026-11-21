@@ -71,7 +71,7 @@ theorem map_pLoc_pFin_finGL {a : ℕ} (v : HeightOneSpectrum (𝓞 E)) (k : GL (
 theorem exists_mul_supS_finGL : ∀ (E : Type) [Field E] [NumberField E] (a : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E))) (g : GA E a),
     g ∈ GlobalTheory.CellDec.C0 E a S →
     ∃ u ∈ GlobalTheory.CellDec.NA E a, ∃ h ∈ GlobalTheory.JSW.supS E a S, ∃ k : GL (Fin a) (Af E),
-      (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v a) ∧ (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) ∧
+      (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := a)) ∧ (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) ∧
       g = u * h * finGL E a k := by
   intro E _ _ a S g hg
   obtain ⟨u, hu, k₁, hk₁, rfl⟩ := hg
@@ -83,7 +83,7 @@ theorem exists_mul_supS_finGL : ∀ (E : Type) [Field E] [NumberField E] (a : �
     exact Units.ext (Matrix.ext fun i j => rfl)
   have hkS : ∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1 := fun v hv =>
     map_cornerGL_of_zero _ _ (fun x => by rw [pLoc_cutS, if_pos hv, zero_mul]) _
-  have hK : ∀ v, v ∉ S → Matrix.GeneralLinearGroup.map ((pLoc E v).comp (pFin E)) k₁ ∈ KGL v a := by
+  have hK : ∀ v, v ∉ S → Matrix.GeneralLinearGroup.map ((pLoc E v).comp (pFin E)) k₁ ∈ KGL v (n := a) := by
     intro v hv
     exact Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 hk₁ v) hv
   refine ⟨u, hu, k₁ * (finGL E a k)⁻¹, ?_, k, fun v => ?_, hkS, ?_⟩

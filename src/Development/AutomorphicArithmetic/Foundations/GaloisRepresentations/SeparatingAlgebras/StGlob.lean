@@ -30,10 +30,10 @@ def AlgC : Prop :=
 
 def LocOp : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (a : ℕ), ∃ C : ℝ, ∀ p ∈ symmetricLaurent a,
-    ∃ h : GL (Fin a) (w.adicCompletion E) →₀ ℂ, (∀ g ∈ h.support, ∀ g' ∈ h.support, g⁻¹ * g' ∈ GlobalTheory.LFun.KGL w a → g = g') ∧
+    ∃ h : GL (Fin a) (w.adicCompletion E) →₀ ℂ, (∀ g ∈ h.support, ∀ g' ∈ h.support, g⁻¹ * g' ∈ GlobalTheory.LFun.KGL w (n := a) → g = g') ∧
       ∑ g ∈ h.support, ‖h g‖ ^ 2 ≤ C * ∫ θ : Fin a → UnitAddCircle, ‖evalAt (pt θ) p‖ ^ 2 ∧
       ∀ (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (z : Fin a → ℂˣ), GlobalTheory.LFun.HasSatGL w σ.ρ (Finset.univ.val.map z) →
-        ∀ v ∈ GlobalTheory.PRep.fixed σ.ρ (GlobalTheory.LFun.KGL w a), opOf σ.ρ h v = evalAt z p • v
+        ∀ v ∈ GlobalTheory.PRep.fixed σ.ρ (GlobalTheory.LFun.KGL w (n := a)), opOf σ.ρ h v = evalAt z p • v
 
 def GlobOp : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ) (K : Subgroup (UA E a)) (w : HeightOneSpectrum (𝓞 E)),

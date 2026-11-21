@@ -35,7 +35,7 @@ theorem toFun_intertwines {n : ℕ} (χ : Fin n → (w.adicCompletion E)ˣ →* 
 
 theorem hasSatGL_prinSeries {n : ℕ} (α : Fin n → ℂˣ) :
     HasSatGL w (prinSeries fun i => unrChar (w.adicCompletion E) (α i)) (Finset.univ.val.map α) := by
-  have hK : KO (w.adicCompletion E) (Fin n) = KGL w n := SphCompletion.KO_completion w n
+  have hK : KO (w.adicCompletion E) (Fin n) = KGL w (n := n) := SphCompletion.KO_completion w n
   constructor
   · obtain ⟨φ, h, h1, -⟩ := Formalism.UG.Final.SphericalExists E w n (fun i => (α i : ℂ)) fun i => (α i).ne_zero
     obtain ⟨f, hf, rfl⟩ := (SphCompletion.isSpherical_iff E w n α _).1 h
@@ -120,7 +120,7 @@ theorem hasSatGL_of_equiv {E : Type} [Field E] [NumberField E] {w : HeightOneSpe
     have hs : IsSatVecGL w ρ (e.toLinearEquiv.symm y) B := IsSatVecGL.of_map f hi inj (by rw [hfy]; exact hy)
     exact (Submodule.ne_bot_iff _).2 ⟨_, hs.2.1, hs.1⟩
   · intro x hx h0
-    have hfx : f x ∈ fixed σ (KGL w n) :=
+    have hfx : f x ∈ fixed σ (KGL w (n := n)) :=
       GlobalTheory.LGrp.mem_fixed.2 fun g hg => by rw [← hi, GlobalTheory.LGrp.mem_fixed.1 hx g hg]
     exact IsSatVecGL.of_map f hi inj (h.2 _ hfx fun h1 => h0 (inj (h1.trans (map_zero f).symm)))
 

@@ -77,7 +77,7 @@ private theorem sat_eq_of_pair {E : Type} [Field E] [NumberField E] {n : ℕ} {w
     (hi : ∀ g x y, β (σ (GlobalTheory.LFun.ConjPlace.invT (RingEquiv.refl _) n g) x) (ρ g y) = β x y)
     {x : V} {B C : Multiset ℂˣ} (hx : IsSatVecGL w σ x B) (hC : HasSatGL w ρ C) : B = C := by
   classical
-  have hKc : IsCompact (KGL w n : Set (GL (Fin n) (w.adicCompletion E))) :=
+  have hKc : IsCompact (KGL w (n := n) : Set (GL (Fin n) (w.adicCompletion E))) :=
     GlobalTheory.LFun.IntPtsUnitary.isCompact_GLint _ (PI.AdicCompletionValuation.isCompact_adicCompletionIntegers E w)
   obtain ⟨y₀, hy₀⟩ : ∃ y, β x y ≠ 0 := by
     by_contra hn

@@ -76,10 +76,10 @@ variable {E : Type} [Field E] [NumberField E]
 
 theorem exists_conj_mem {a : ℕ} (ha : 1 ≤ a) (v : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (v.adicCompletion E))
     (u : (v.adicCompletion E)ˣ) (hu : IsUnitAt v u) :
-    ∃ h ∈ GlobalTheory.LFun.KGL v a, g⁻¹ * h * g ∈ GlobalTheory.LFun.KGL v a ∧ GeneralLinearGroup.det h = u := by
+    ∃ h ∈ GlobalTheory.LFun.KGL v (n := a), g⁻¹ * h * g ∈ GlobalTheory.LFun.KGL v (n := a) ∧ GeneralLinearGroup.det h = u := by
   letI := GlobalTheory.LocalData.complRel v
   haveI := GlobalTheory.LocalData.isLocalField v
-  have hK : GlobalTheory.SplitWeil.KO (v.adicCompletion E) (Fin a) = GlobalTheory.LFun.KGL v a :=
+  have hK : GlobalTheory.SplitWeil.KO (v.adicCompletion E) (Fin a) = GlobalTheory.LFun.KGL v (n := a) :=
     GlobalTheory.SmGL.SphCompletion.KO_completion v a
   obtain ⟨x, hx, y, hy, t, rfl⟩ := GlobalTheory.LocalCartan.exists_diagT (n := Fin a) g
   rw [hK] at hx hy
@@ -90,7 +90,7 @@ theorem exists_conj_mem {a : ℕ} (ha : 1 ≤ a) (v : HeightOneSpectrum (𝓞 E)
     Subtype.ext (Units.mul_inv u), Subtype.ext (Units.inv_mul u)⟩
   let i₀ : Fin a := ⟨0, ha⟩
   let d := GlobalTheory.SmGL.diagT (v.adicCompletion E) (Fin a) (Pi.mulSingle i₀ u)
-  have hd : d ∈ GlobalTheory.LFun.KGL v a := by
+  have hd : d ∈ GlobalTheory.LFun.KGL v (n := a) := by
     refine ⟨GlobalTheory.SmGL.diagT (Formalism.UG.Ov E v) (Fin a) (Pi.mulSingle i₀ u'), Units.ext ?_⟩
     change ((Formalism.UG.Ov E v).subtype.mapMatrix (GlobalTheory.SmGL.diagT (Formalism.UG.Ov E v) (Fin a) (Pi.mulSingle i₀ u')).val :
       Matrix (Fin a) (Fin a) (v.adicCompletion E)) = (d : Matrix (Fin a) (Fin a) (v.adicCompletion E))
@@ -143,8 +143,8 @@ namespace GlobalTheory.TwistRamified
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 theorem no_eigvec (p : CuspSub E a) (ha : 1 ≤ a) (η : HChar E) (v : HeightOneSpectrum (𝓞 E)) (hη : ¬ η.UnrAt v)
-    {x : p.V} (hx : x ∈ GlobalTheory.PRep.fixed (p.locRep v) (GlobalTheory.LFun.KGL v a)) (hx0 : x ≠ 0) (y : p.V)
-    (hy : ∀ k ∈ GlobalTheory.LFun.KGL v a, p.locRep v k y = ((CuspSub.locDet a η v k : ℂˣ) : ℂ) • y) : y = 0 := by
+    {x : p.V} (hx : x ∈ GlobalTheory.PRep.fixed (p.locRep v) (GlobalTheory.LFun.KGL v (n := a))) (hx0 : x ≠ 0) (y : p.V)
+    (hy : ∀ k ∈ GlobalTheory.LFun.KGL v (n := a), p.locRep v k y = ((CuspSub.locDet a η v k : ℂˣ) : ℂ) • y) : y = 0 := by
   set χ := CuspSub.locDet a η v with hχdef
   have hχs : GlobalTheory.SmGL.IsSmoothChar χ⁻¹ := GlobalTheory.SmGL.IsSmoothChar.inv (CuspSub.isOpen_ker_locDet (a := a) η v)
   have hρ := p.isSmooth_locRep v
@@ -154,14 +154,14 @@ theorem no_eigvec (p : CuspSub E a) (ha : 1 ≤ a) (η : HChar E) (v : HeightOne
   have hρ'app : ∀ g z, GlobalTheory.SmGL.twist (p.locRep v) χ⁻¹ g z = ((χ g : ℂˣ) : ℂ)⁻¹ • p.locRep v g z := fun g z => by
     simp
 
-  have hPeq : ∀ k ∈ GlobalTheory.LFun.KGL v a, ∀ z, P (p.locRep v k z) = ((χ k : ℂˣ) : ℂ) • P z := fun k hk z => by
+  have hPeq : ∀ k ∈ GlobalTheory.LFun.KGL v (n := a), ∀ z, P (p.locRep v k z) = ((χ k : ℂˣ) : ℂ) • P z := fun k hk z => by
     have h1 := GlobalTheory.LocGL.idem_apply_mem hρ' hK hk z
     rw [hρ'app, map_smul] at h1
     rw [← h1, smul_smul, mul_inv_cancel₀ (Units.ne_zero _), one_smul]
   have hPfix : P y = y := by
     refine GlobalTheory.LocGL.idem_of_mem hρ' hK (GlobalTheory.LGrp.mem_fixed.2 fun k hk => ?_)
     rw [hρ'app, hy k hk, smul_smul, inv_mul_cancel₀ (Units.ne_zero _), one_smul]
-  have hPzero : ∀ z, ∀ h ∈ GlobalTheory.LFun.KGL v a, χ h ≠ 1 → p.locRep v h z = z → P z = 0 := fun z h hh hc hz => by
+  have hPzero : ∀ z, ∀ h ∈ GlobalTheory.LFun.KGL v (n := a), χ h ≠ 1 → p.locRep v h z = z → P z = 0 := fun z h hh hc hz => by
     have h1 := hPeq h hh z
     rw [hz] at h1
     have h2 : (((χ h : ℂˣ) : ℂ) - 1) • P z = 0 := by rw [sub_smul, ← h1, one_smul, sub_self]
@@ -228,7 +228,7 @@ theorem GlobalTheory.TwistRamified.twist_ne : ∀ (E : Type) [Field E] [NumberFi
   obtain ⟨T, hT⟩ : CuspSub.Iso (p.twist η) p := Quotient.exact e
   have hB' : GlobalTheory.LFun.HasSatGL v (p.locRep v) B := hB
   obtain ⟨x, hx, hx0⟩ := (Submodule.ne_bot_iff _).1 hB'.1
-  have hy : ∀ k ∈ GlobalTheory.LFun.KGL v a, p.locRep v k (T (p.toTwist η x)) =
+  have hy : ∀ k ∈ GlobalTheory.LFun.KGL v (n := a), p.locRep v k (T (p.toTwist η x)) =
       ((CuspSub.locDet a η v k : ℂˣ) : ℂ) • T (p.toTwist η x) := fun k hk => by
     rw [CuspSub.locRep_eq, ← hT, CuspSub.op_toTwist, ← CuspSub.locRep_eq, GlobalTheory.LGrp.mem_fixed.1 hx k hk]
     simp only [opAdd, zero_smul, add_zero, map_smul]

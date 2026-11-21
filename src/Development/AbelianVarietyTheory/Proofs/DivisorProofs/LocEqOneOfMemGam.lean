@@ -32,12 +32,12 @@ theorem gl_ext {g h : GL (Fin n) (FiniteAdeleRing (𝓞 E) E)}
   Units.ext (Matrix.ext fun i j => Subtype.ext (funext fun w =>
     congrArg (fun x : GLw n w => x.1 i j) (H w)))
 
-theorem mem_KGL_iff {w : Pl E} {x : GLw n w} : x ∈ GlobalTheory.LFun.KGL w n ↔
+theorem mem_KGL_iff {w : Pl E} {x : GLw n w} : x ∈ GlobalTheory.LFun.KGL w (n := n) ↔
     (∀ i j, x.1 i j ∈ w.adicCompletionIntegers E) ∧ ∀ i j, (x⁻¹).1 i j ∈ w.adicCompletionIntegers E :=
   GlobalTheory.AdelicU.mem_GLint_iff
 
 theorem mem_Kglob {g : GL (Fin n) (FiniteAdeleRing (𝓞 E) E)} :
-    g ∈ Kglob E n ↔ ∀ w : Pl E, Matrix.GeneralLinearGroup.map (pLoc E w) g ∈ GlobalTheory.LFun.KGL w n := by
+    g ∈ Kglob E n ↔ ∀ w : Pl E, Matrix.GeneralLinearGroup.map (pLoc E w) g ∈ GlobalTheory.LFun.KGL w (n := n) := by
   simp only [Kglob, Subgroup.mem_iInf, Subgroup.mem_comap]
 
 theorem coe_Kglob : (Kglob E n : Set (GL (Fin n) (FiniteAdeleRing (𝓞 E) E))) =

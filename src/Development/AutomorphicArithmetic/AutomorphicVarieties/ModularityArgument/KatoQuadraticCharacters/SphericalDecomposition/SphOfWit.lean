@@ -33,7 +33,7 @@ def RecSph : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
     (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRecT h rc →
     ∀ (n : ℕ) (σ : SmIrr (GL (Fin n) (w.adicCompletion E))), GlobalTheory.RoadU.PlainTor (IrrGL.of σ.ρ σ.smooth σ.irred) →
-      IsLevelWD 1 n (rc (algNorm σ)) → HasFixed σ.ρ (GlobalTheory.LFun.KGL w n)
+      IsLevelWD 1 n (rc (algNorm σ)) → HasFixed σ.ρ (GlobalTheory.LFun.KGL w (n := n))
 
 def RecFrob : Prop :=
   ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)

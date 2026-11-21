@@ -17,15 +17,15 @@ namespace UpperTheory.ConvolutionTheory.BW
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
 
 private theorem tj_mem (w : Pl E) (j : ℕ) :
-    Tj ℂ n (Ov E w) (exists_isUnifV w).choose j ∈ Hecke ℂ (KGL w n) := Tj_mem_hecke (exists_isUnifV w).choose_spec j
+    Tj ℂ n (Ov E w) (exists_isUnifV w).choose j ∈ Hecke ℂ (KGL w (n := n)) := Tj_mem_hecke (exists_isUnifV w).choose_spec j
 
 private theorem hk_apply (w : Pl E) (j : ℕ) (φ : Sm E n) :
     hk n w j φ = (qc w ^ (((j : ℂ) * ((n : ℂ) - j)) / 2))⁻¹ •
-      heckeVec (rw n w) (KGL w n) (Tj ℂ n (Ov E w) (exists_isUnifV w).choose j) φ := by
+      heckeVec (rw n w) (KGL w (n := n)) (Tj ℂ n (Ov E w) (exists_isUnifV w).choose j) φ := by
   unfold hk
   rw [LinearMap.smul_apply]
   congr 1
-  have hf : (Function.support fun c : GL (Fin n) (w.adicCompletion E) ⧸ KGL w n =>
+  have hf : (Function.support fun c : GL (Fin n) (w.adicCompletion E) ⧸ KGL w (n := n) =>
       Tj ℂ n (Ov E w) (exists_isUnifV w).choose j c.out • rw n w c.out).Finite :=
     (Formalism.UG.P.finite_support_cosets (Final.GLintComm E w n) (tj_mem w j).2).subset fun c hc h0 => hc (by simp [h0])
   exact (LinearMap.applyₗ (R := ℂ) φ).toAddMonoidHom.map_finsum hf
@@ -51,7 +51,7 @@ private theorem uC_fin (u : UC E n) (k : GL (Fin n) (Af E)) : Commute (uC E n u)
   exact (hu _ rfl).symm
 
 omit [IsTotallyComplex E] in
-private theorem kgl_eq (w : Pl E) : GLnLocal.integralGL (w.adicCompletion E) n = KGL w n := by
+private theorem kgl_eq (w : Pl E) : GLnLocal.integralGL (w.adicCompletion E) n = KGL w (n := n) := by
   have h : ∀ O : Subring (w.adicCompletion E), O = (ValuativeRel.valuation (w.adicCompletion E)).integer →
       GLnLocal.integralGL (w.adicCompletion E) n = GLint (Fin n) O := by
     rintro _ rfl
@@ -59,10 +59,10 @@ private theorem kgl_eq (w : Pl E) : GLnLocal.integralGL (w.adicCompletion E) n =
   exact h _ (Subring.ext fun x => (GroundTheory.Global.mem_valuationInteger_iff w x).symm)
 
 private theorem split_k (w : Pl E) (k : KA E n) : ∃ k' : GA E n, (∀ g, Commute (rt E n k') (rw n w g)) ∧
-    ∃ kw ∈ KGL w n, rt E n k = rt E n k' * rw n w kw := by
+    ∃ kw ∈ KGL w (n := n), rt E n k = rt E n k' * rw n w kw := by
   set kf := GeneralLinearGroup.map (pFin E) (k : GA E n) with hkf
   set kw := GeneralLinearGroup.map (pLoc E w) kf with hkw
-  have hmem : kw ∈ KGL w n := by
+  have hmem : kw ∈ KGL w (n := n) := by
     rw [← kgl_eq]
     have e : kw = Reduction.finAt w (k : GA E n) := by
       ext i j : 2
@@ -82,13 +82,13 @@ private theorem rw_comm {w w' : Pl E} (e : w ≠ w') (g : GL (Fin n) (w'.adicCom
     (k : GL (Fin n) (w.adicCompletion E)) : Commute (rw n w' g) (rw n w k) :=
   Commute.map (LocUniq.comm_locGL w (pLoc_locGL_of_ne e g) k) (finRep E n)
 
-private theorem hk_fixed (w : Pl E) (j : ℕ) {φ : Sm E n} (h : ∀ k ∈ KGL w n, rw n w k φ = φ) :
-    ∀ k ∈ KGL w n, rw n w k (hk n w j φ) = hk n w j φ := fun k hk' => by
+private theorem hk_fixed (w : Pl E) (j : ℕ) {φ : Sm E n} (h : ∀ k ∈ KGL w (n := n), rw n w k φ = φ) :
+    ∀ k ∈ KGL w (n := n), rw n w k (hk n w j φ) = hk n w j φ := fun k hk' => by
   rw [hk_apply, map_smul, GlobalTheory.LGrp.mem_fixed.1
     (SatCompare.heckeVec_mem_fixed (Final.GLintComm E w n) (tj_mem w j) (GlobalTheory.LGrp.mem_fixed.2 h)) k hk']
 
-private theorem hk_zero (w : Pl E) {φ : Sm E n} (h : ∀ k ∈ KGL w n, rw n w k φ = φ) : hk n w 0 φ = φ := by
-  have e : Tj ℂ n (Ov E w) (exists_isUnifV w).choose 0 = dosetInd ℂ (KGL w n) 1 := by
+private theorem hk_zero (w : Pl E) {φ : Sm E n} (h : ∀ k ∈ KGL w (n := n), rw n w k φ = φ) : hk n w 0 φ = φ := by
+  have e : Tj ℂ n (Ov E w) (exists_isUnifV w).choose 0 = dosetInd ℂ (KGL w (n := n)) 1 := by
     have d : diagJ n (exists_isUnifV w).choose 0 = 1 := by simp [diagJ]
     unfold Tj dosetInd
     congr 1

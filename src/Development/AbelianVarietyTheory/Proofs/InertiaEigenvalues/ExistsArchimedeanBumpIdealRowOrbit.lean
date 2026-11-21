@@ -99,10 +99,10 @@ theorem exists_nat_rowGL_mem {a : ℕ} (ℓ : Fin a) {U : Subgroup (GL (Fin a) (
     (hU : IsOpen (U : Set (GL (Fin a) (Af E)))) (w : HeightOneSpectrum (𝓞 E)) :
     ∃ N : ℕ, ∀ y : Fin a → w.adicCompletion E,
       (∀ j, Valued.v (y j - (Pi.single ℓ 1 : Fin a → w.adicCompletion E) j) ≤ WithZero.exp (-(N:ℤ))) →
-      locGL E a w (rowGL ℓ y) ∈ U ∧ rowGL ℓ y ∈ KGL w a := by
+      locGL E a w (rowGL ℓ y) ∈ U ∧ rowGL ℓ y ∈ KGL w (n := a) := by
   apply exists_nat_of_mem_nhds
   have ho : IsOpen ((locGL E a w) ⁻¹' (U : Set (GL (Fin a) (Af E))) ∩
-      (KGL w a : Set (GL (Fin a) (w.adicCompletion E)))) :=
+      (KGL w (n := a) : Set (GL (Fin a) (w.adicCompletion E)))) :=
     (hU.preimage (GlobalTheory.CuspRep.CuspSub.continuous_locGL w)).inter
       (GlobalTheory.LFun.IntPtsUnitary.isOpen_GLint _ (Valued.isOpen_integer (w.adicCompletion E)))
   exact (continuousAt_rowGL ℓ).preimage_mem_nhds
@@ -126,7 +126,7 @@ theorem exists_bump_ideal_rowGL : ∀ (E : Type) [Field E] [NumberField E] [IsTo
       (∀ u, 0 ≤ (Φ u).re ∧ (Φ u).im = 0) ∧ 0 < (Φ (Pi.single ℓ 1)).re ∧
       (∀ w ∉ T, FractionalIdeal.count E w (J : FractionalIdeal (𝓞 E)⁰ E) = 0) ∧
       ∀ y : Fin a → Af E, y - Pi.single ℓ 1 ∈ GlobalTheory.ThetaPoisson.latt a J →
-        ∃ κ ∈ U, (∀ w, GeneralLinearGroup.map (pLoc E w) κ ∈ KGL w a) ∧
+        ∃ κ ∈ U, (∀ w, GeneralLinearGroup.map (pLoc E w) κ ∈ KGL w (n := a)) ∧
           (∀ w ∉ T, GeneralLinearGroup.map (pLoc E w) κ = 1) ∧
           ∀ w ∈ T, ∀ j, (GeneralLinearGroup.map (pLoc E w) κ : Matrix (Fin a) (Fin a) (w.adicCompletion E)) ℓ j = pLoc E w (y j) := by
   intro E _ _ _ a ℓ T U hU
@@ -160,7 +160,7 @@ theorem exists_bump_ideal_rowGL : ∀ (E : Type) [Field E] [NumberField E] [IsTo
       rw [hJ, hn] at h1
       simpa only [hw, if_true] using h1
     have hmem : ∀ w ∈ T, locGL E a w (rowGL ℓ (fun j => pLoc E w (y j))) ∈ U ∧
-        rowGL ℓ (fun j => pLoc E w (y j)) ∈ KGL w a := by
+        rowGL ℓ (fun j => pLoc E w (y j)) ∈ KGL w (n := a) := by
       intro w hw
       refine hNw w _ fun j => (hloc w hw j).trans ?_
       rw [WithZero.exp_le_exp, neg_le_neg_iff, Nat.cast_le, hN]

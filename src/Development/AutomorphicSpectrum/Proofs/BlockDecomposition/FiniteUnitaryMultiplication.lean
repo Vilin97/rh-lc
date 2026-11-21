@@ -517,10 +517,10 @@ theorem fuMul : FUMul := by
     intro x hx
     refine Subgroup.mem_subgroupOf.2 ?_
     have h1 := (GlobalTheory.CompanionTheory.IwEntries.iwGL_KGL_entries E w n _).1.1 ((hiw x).1 hx)
-    have h2 : b⁻¹ * x.1 * b ∈ GlobalTheory.LFun.KGL w n :=
+    have h2 : b⁻¹ * x.1 * b ∈ GlobalTheory.LFun.KGL w (n := n) :=
       (GlobalTheory.CompanionTheory.IwEntries.iwGL_KGL_entries E w n _).2.2 ⟨h1.1, h1.2.1⟩
     have h3 : (x.1 : GLw n w) = b * (b⁻¹ * x.1 * b) * b⁻¹ := by group
-    show (x.1 : GLw n w) ∈ GlobalTheory.LFun.KGL w n
+    show (x.1 : GLw n w) ∈ GlobalTheory.LFun.KGL w (n := n)
     rw [h3]
     exact mul_mem (mul_mem hb.1 h2) (inv_mem hb.1)
   have hf : ∀ (l : Fin (n / 2) → ℤ) (s : UL n w), s.1 = b * tdiag ϖ (wexp n l) * b⁻¹ →

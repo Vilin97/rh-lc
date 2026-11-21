@@ -76,7 +76,7 @@ theorem UpperTheory.exists_nonzero_form_fixed_by_level_of_unramified :
         fun v => by rw [map_inv, ha.2.2.2.1 v, inv_one],
         fun v => by rw [map_inv, ha.2.2.2.2.1 v, inv_one],
         fun v => by rw [map_inv, ha.2.2.2.2.2 v, inv_one]⟩ }
-  have hKO : ∀ u : Plc L, KO (u.adicCompletion L) (Fin n) = GlobalTheory.LFun.KGL u n :=
+  have hKO : ∀ u : Plc L, KO (u.adicCompletion L) (Fin n) = GlobalTheory.LFun.KGL u (n := n) :=
     fun u => GlobalTheory.SmGL.SphCompletion.KO_completion u n
   have hT : ((fun w : Plc L => w.under (𝓞 (Lp L))) ⁻¹' V.S').Finite := by
     refine V.fin.preimage' fun v _ => ?_

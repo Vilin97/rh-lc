@@ -17,7 +17,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 open scoped Matrix
 namespace GlobalTheory.NewLevel
 open UpperTheory.V.Af.Nf CongruenceSubgroup GlobalTheory.CuspRep Neutral.B1 Formalism.L2.Host
-private theorem level_zero_eq_maximal_compact (w : HeightOneSpectrum (𝓞 ℚ)) : UpperTheory.V.Sd.K1 w 0 = GlobalTheory.LFun.KGL w 2 := by
+private theorem level_zero_eq_maximal_compact (w : HeightOneSpectrum (𝓞 ℚ)) : UpperTheory.V.Sd.K1 w 0 = GlobalTheory.LFun.KGL w (n := 2) := by
   ext g
   refine ⟨fun ⟨k, _, e⟩ => ⟨k, e⟩, fun ⟨k, e⟩ => ⟨k, ?_, e⟩⟩
   haveI : Subsingleton (w.adicCompletionIntegers ℚ ⧸ IsLocalRing.maximalIdeal (w.adicCompletionIntegers ℚ) ^ 0) :=
@@ -88,7 +88,7 @@ theorem not_dvd_level_of_satake_hecke_poly_cofinite : _root_.UpperTheory.V.Af.Hy
     exact hψ0 (congrArg Subtype.val hm)
   obtain ⟨σ, hσ⟩ := (_root_.UpperTheory.V.Af.local_comp_real_of_printed_results P ℚ 2 π₀ w).1
   have hiso := (_root_.UpperTheory.V.Af.local_comp_real_of_printed_results P ℚ 2 π₀ w).2 σ hσ
-  have hσf : HasFixed σ.ρ (GlobalTheory.LFun.KGL w 2) := by
+  have hσf : HasFixed σ.ρ (GlobalTheory.LFun.KGL w (n := 2)) := by
     refine hiso.hasFixed (GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL w 2).2 ?_
     obtain ⟨y, hy, hy0⟩ := (Submodule.ne_bot_iff _).1 hB.1
     exact ⟨y, hy0, fun u hu => GlobalTheory.LGrp.mem_fixed.1 hy u hu⟩

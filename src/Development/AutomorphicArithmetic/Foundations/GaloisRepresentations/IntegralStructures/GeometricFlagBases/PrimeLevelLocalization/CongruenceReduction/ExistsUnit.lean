@@ -25,7 +25,7 @@ private theorem sameK_nat {x : E} {u w : Plc E} (h : SameK x u w) (q : ℕ) :
     (q : 𝓞 E) ∈ u.asIdeal ↔ (q : 𝓞 E) ∈ w.asIdeal :=
   h _ (by simpa using natCast_mem (IntermediateField.adjoin ℚ {x}) q)
 
-private theorem intM_conj {u : Plc E} {a : GLw n u} (ha : a ∈ KGL u n)
+private theorem intM_conj {u : Plc E} {a : GLw n u} (ha : a ∈ KGL u (n := n))
     {M : Matrix (Fin n) (Fin n) (u.adicCompletion E)} (hM : IntM u M) : IntM u (a.val * M * (a⁻¹).val) := by
   obtain ⟨h1, h2⟩ := GlobalTheory.EulerTwRestr.mem_KGL_iff.1 ha
   intro i k

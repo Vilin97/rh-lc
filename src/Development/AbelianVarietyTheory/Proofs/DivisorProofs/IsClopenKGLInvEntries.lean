@@ -17,7 +17,7 @@ namespace GlobalTheory.HenQ.Basic
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
 theorem mem_KGL_iff (w : HeightOneSpectrum (𝓞 K)) (y : GL (Fin n) (w.adicCompletion K)) :
-    y ∈ GlobalTheory.LFun.KGL w n ↔ (∀ i j, y.val i j ∈ Formalism.UG.Ov K w) ∧ ∀ i j, (y⁻¹).val i j ∈ Formalism.UG.Ov K w := by
+    y ∈ GlobalTheory.LFun.KGL w (n := n) ↔ (∀ i j, y.val i j ∈ Formalism.UG.Ov K w) ∧ ∀ i j, (y⁻¹).val i j ∈ Formalism.UG.Ov K w := by
   rw [GlobalTheory.LFun.KGL, Formalism.UG.GLint, MonoidHom.mem_range]
   constructor
   · rintro ⟨z, rfl⟩

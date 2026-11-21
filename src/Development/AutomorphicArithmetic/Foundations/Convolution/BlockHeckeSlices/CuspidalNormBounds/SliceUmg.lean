@@ -58,8 +58,8 @@ private theorem lev_loc (w : Pl E) (k : GL (Fin s) (w.adicCompletion E)) :
     exact map_one _
 
 omit [IsTotallyComplex E] in
-private theorem lev_KGL (w : Pl E) {k : GL (Fin s) (w.adicCompletion E)} (hk : k ∈ GlobalTheory.LFun.KGL w s) :
-    lev (w.adicCompletion E) r s (1, k) ∈ GlobalTheory.LFun.KGL w (r + s) := by
+private theorem lev_KGL (w : Pl E) {k : GL (Fin s) (w.adicCompletion E)} (hk : k ∈ GlobalTheory.LFun.KGL w (n := s)) :
+    lev (w.adicCompletion E) r s (1, k) ∈ GlobalTheory.LFun.KGL w (n := (r + s)) := by
   obtain ⟨k, rfl⟩ := hk
   refine ⟨lev _ r s (1, k), ?_⟩
   refine (Slice2.map_lev _ _).trans ?_

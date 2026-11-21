@@ -71,7 +71,7 @@ private theorem satVec_of_mem {σ : Submodule ℂ (UA E n → ℂ)} (hσ : IsAut
     (he : ∀ x : locU n w, e x = cLoc w (x : UA E n))
     (τ : SmIrr (GL (Fin n) (w.adicCompletion E))) {B : Multiset ℂˣ}
     (hc : IsCompAlong σ (locU n w) ((cLoc w).comp (locU n w).subtype) τ.ρ) (hB : HasSatGL w τ.ρ B)
-    {φ : UA E n → ℂ} (hφ : φ ∈ σ) (hK : ∀ y ∈ locU n w, cLoc w y ∈ KGL w n → RU E n y φ = φ) (h0 : φ ≠ 0) :
+    {φ : UA E n → ℂ} (hφ : φ ∈ σ) (hK : ∀ y ∈ locU n w, cLoc w y ∈ KGL w (n := n) → RU E n y φ = φ) (h0 : φ ≠ 0) :
     IsSatVecGL w (repG e) φ B := by
   obtain ⟨hirr, f, hf0, hfσ, hfe⟩ := hc
   have hpe : ∀ g, cLoc w ((e.symm g : locU n w) : UA E n) = g := fun g => by
@@ -124,7 +124,7 @@ private theorem satVec_of_mem {σ : Submodule ℂ (UA E n → ℂ)} (hσ : IsAut
   have hφS : φ ∈ S := hS.symm ▸ hφ
   refine GlobalTheory.HeightCounting.Blocks.isSatVecGL_of_mem_iSup hirr hB F hFe hφS
     (GlobalTheory.LGrp.mem_fixed.2 fun k hk => hK _ (e.symm k).2 ?_) h0
-  show cLoc w ((e.symm k : locU n w) : UA E n) ∈ KGL w n
+  show cLoc w ((e.symm k : locU n w) : UA E n) ∈ KGL w (n := n)
   rw [hpe]
   exact hk
 
@@ -218,16 +218,16 @@ theorem UpperTheory.V.Z.Int.eigAll :
   · obtain ⟨ϖ, hϖ⟩ := unif_exists w
     have hcm := Formalism.UG.Final.GLintComm E w n
     have hT := GlobalTheory.LFun.Tj_mem_hecke (n := n) hϖ j
-    obtain ⟨R, hR, hRe⟩ := hecke_eq_sum (GlobalTheory.LFun.KGL w n) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) tj_one
+    obtain ⟨R, hR, hRe⟩ := hecke_eq_sum (GlobalTheory.LFun.KGL w (n := n)) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) tj_one
       (Formalism.UG.P.finite_support_cosets hcm hT.2)
-    have hT' : Formalism.UG.FinDosetSupp (GlobalTheory.LFun.KGL w n) (fun g => Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j g⁻¹) := by
+    have hT' : Formalism.UG.FinDosetSupp (GlobalTheory.LFun.KGL w (n := n)) (fun g => Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j g⁻¹) := by
       obtain ⟨S, hS⟩ := hT.2
       refine ⟨S.image (·⁻¹), fun g hg => ?_⟩
       obtain ⟨s, hs, a, b, h⟩ := hS _ hg
       refine ⟨s⁻¹, Finset.mem_image_of_mem _ hs, b⁻¹, a⁻¹, ?_⟩
       rw [← inv_inv g, h]
       simp [mul_assoc]
-    obtain ⟨R', hR', hRe'⟩ := hecke_eq_sum (GlobalTheory.LFun.KGL w n) (fun g => Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j g⁻¹)
+    obtain ⟨R', hR', hRe'⟩ := hecke_eq_sum (GlobalTheory.LFun.KGL w (n := n)) (fun g => Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j g⁻¹)
       (fun g => tj_one _) (Formalism.UG.P.finite_support_cosets hcm hT')
     let lift : GL (Fin n) (w.adicCompletion E) → UA E n := fun g => ((e.symm g : locU n w) : UA E n)
     have hinj : Function.Injective lift := fun a b h => e.symm.injective (Subtype.ext h)

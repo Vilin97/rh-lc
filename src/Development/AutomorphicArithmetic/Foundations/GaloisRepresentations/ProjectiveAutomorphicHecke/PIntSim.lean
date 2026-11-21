@@ -26,7 +26,7 @@ private theorem rel {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 open GroundTheory.Global.AdeleBaseChange in
 private theorem val_le {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (hn : 0 < n) (k : GUf E n)
-    (hk : ∀ w, comp w k ∈ GlobalTheory.LFun.KGL w n) (u : Plc E) :
+    (hk : ∀ w, comp w k ∈ GlobalTheory.LFun.KGL w (n := n)) (u : Plc E) :
     Valued.v (pLoc E u (finiteAdeleMap ℚ E (sim k : AfQˣ))) ≤ 1 := by
   have h := congrFun (congrFun (rel k u) ⟨0, hn⟩) ⟨0, hn⟩
   rw [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply_eq, smul_eq_mul, mul_one] at h

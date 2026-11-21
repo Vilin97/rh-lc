@@ -32,7 +32,7 @@ def ExpToSat : Prop :=
     IsSubquotient P.ρ (locProd h w σ) → PositivityTheory.Rg.BcB.N3.Mono ξ →
     (∃ y : Jacquet P.ρ (unipB (w.adicCompletion E) (Fin n)), y ≠ 0 ∧
       ∀ t, jacB P.ρ t y = (torusChar (fun i => unrChar (w.adicCompletion E) (ξ i)) t : ℂ) • y) →
-    (∀ i, GlobalTheory.LGrp.IsSpherical (σ i).ρ (GlobalTheory.LFun.KGL w (N i))) ∧
+    (∀ i, GlobalTheory.LGrp.IsSpherical (σ i).ρ (GlobalTheory.LFun.KGL w (n := (N i)))) ∧
       ∃ b : Fin c → Multiset ℂˣ, (∀ i, GlobalTheory.LFun.HasSatGL w (σ i).ρ (b i)) ∧ ∑ i, b i = Finset.univ.val.map ξ
 
 end PositivityTheory.Rg.BcB.F.Tail.PExp

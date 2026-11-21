@@ -31,7 +31,7 @@ private theorem isCompact_intPts : IsCompact (intPts L n : Set (finU L n)) := by
   have h1 : Matrix.GeneralLinearGroup.map (pInf L) ((x : UA L n) : GA L n) = 1 := x.2
   exact ga_ext (by rw [pInf_finGL, h1]) (by rw [pFin_finGL]; rfl)
 
-private theorem mem_intPts {k : finU L n} (h : ∀ u, cLoc u (k : UA L n) ∈ GlobalTheory.LFun.KGL u n) : k ∈ intPts L n := by
+private theorem mem_intPts {k : finU L n} (h : ∀ u, cLoc u (k : UA L n) ∈ GlobalTheory.LFun.KGL u (n := n)) : k ∈ intPts L n := by
   rw [intPts, Subgroup.mem_comap, GroundTheory.Automorphic.AdelicGLn.mem_integralFiniteGL_iff, ← map_inv]
   simp only [GlobalTheory.BCT.GlobLev.mem_KGL_iff_val, ← map_inv, GroundTheory.Global.mem_integralFiniteAdeles] at h ⊢
   exact ⟨fun i j u => (h u).1 i j, fun i j u => (h u).2 i j⟩
@@ -55,7 +55,7 @@ private theorem finite_quot (w : Plc L) (U : Subgroup (UA L n))
   have hfin : ∀ k : (locU n w ⊓ Kall L n : Subgroup (UA L n)), (k : UA L n) ∈ finU L n := fun k =>
     (Subgroup.mem_inf.1 (Subgroup.mem_inf.1 k.2).2).1
   have hint : ∀ (k : (locU n w ⊓ Kall L n : Subgroup (UA L n))) (u : Plc L),
-      cLoc u (k : UA L n) ∈ GlobalTheory.LFun.KGL u n := fun k u =>
+      cLoc u (k : UA L n) ∈ GlobalTheory.LFun.KGL u (n := n) := fun k u =>
     Subgroup.mem_comap.1 (Subgroup.mem_iInf.1 (Subgroup.mem_inf.1 (Subgroup.mem_inf.1 k.2).2).2 u)
   let f : (locU n w ⊓ Kall L n : Subgroup (UA L n)) →* intPts L n :=
     { toFun := fun k => ⟨⟨k.1, hfin k⟩, mem_intPts (hint k)⟩

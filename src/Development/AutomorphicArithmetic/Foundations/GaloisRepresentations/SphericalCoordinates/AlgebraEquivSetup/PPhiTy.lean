@@ -16,7 +16,7 @@ theorem UpperTheory.Gal.W2.Seed.pPhiTy :
   intro hP hL hF hc E _ _ _ A n p _ S F x U w₀ Up V _ _ _ hOff _ r W hAux N hN hStab L hw Ty hTy
   have hj : F.j = F.tr.j := F.j_tr
   have h4 : ∀ k : GUf E n, (∀ w : Plc E, (p : 𝓞 E) ∉ w.asIdeal → comp w k = 1) →
-      (∀ w : Plc E, (p : 𝓞 E) ∈ w.asIdeal → comp w k ∈ GlobalTheory.LFun.KGL w n) →
+      (∀ w : Plc E, (p : 𝓞 E) ∈ w.asIdeal → comp w k ∈ GlobalTheory.LFun.KGL w (n := n)) →
       ∀ g, V.Φ (CertificateRingHomMap.th (g * k)) = V.Φ (CertificateRingHomMap.th g) := by
     intro k h1 h2 g
     have hk : CertificateRingHomMap.th k ∈ lev V.S V.Kw :=
@@ -31,7 +31,7 @@ theorem UpperTheory.Gal.W2.Seed.pPhiTy :
       rw [this, map_one]
     rw [map_mul, V.form.right _ hk hJ, hχ]
     simp
-  have h3 : ∀ g : GUf E n, (∀ w : Plc E, (p : 𝓞 E) ∈ w.asIdeal → comp w g ∈ GlobalTheory.LFun.KGL w n) →
+  have h3 : ∀ g : GUf E n, (∀ w : Plc E, (p : 𝓞 E) ∈ w.asIdeal → comp w g ∈ GlobalTheory.LFun.KGL w (n := n)) →
       V.Φ (CertificateRingHomMap.th (F.tr.sec (F.j g))) = V.Φ (CertificateRingHomMap.th g) := by
     intro g hg
     obtain ⟨k, e, k1, k2, -⟩ := hP E A n p S F.tr g

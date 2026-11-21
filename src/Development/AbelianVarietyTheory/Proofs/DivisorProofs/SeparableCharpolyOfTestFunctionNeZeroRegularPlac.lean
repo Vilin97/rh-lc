@@ -34,7 +34,7 @@ theorem eventually_toSub_mem (x : finU E n) :
   have h2 : ∀ᶠ w in cofinite, ∀ i j, pLoc E w (pFin E ((((x : UA E n) : GA E n))⁻¹.val i j)) ∈ Formalism.UG.Ov E w := by
     simp only [Filter.eventually_all]; exact fun i j => h _
   filter_upwards [h1, h2] with w a b
-  have hK : cLoc w (x : UA E n) ∈ GlobalTheory.LFun.KGL w n := by
+  have hK : cLoc w (x : UA E n) ∈ GlobalTheory.LFun.KGL w (n := n) := by
     refine mem_GLint_of_entries _ _ (fun i j => a i j) (fun i j => ?_)
     rw [← map_inv]
     exact b i j

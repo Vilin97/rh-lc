@@ -20,8 +20,8 @@ open GlobalTheory.EulerTw GlobalTheory.EulerTwU
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 theorem theta_mem {v w : Pl E} (f : v.adicCompletion E →+* w.adicCompletion E) (hf : ∀ x, Valued.v (f x) = Valued.v x)
-    {g : GLw n v} (hg : g ∈ GlobalTheory.LFun.KGL v n) :
-    thetaGL n (RingHom.id _) (GeneralLinearGroup.map f g) ∈ GlobalTheory.LFun.KGL w n := by
+    {g : GLw n v} (hg : g ∈ GlobalTheory.LFun.KGL v (n := n)) :
+    thetaGL n (RingHom.id _) (GeneralLinearGroup.map f g) ∈ GlobalTheory.LFun.KGL w (n := n) := by
   have hid : GeneralLinearGroup.map (RingHom.id (w.adicCompletion E)) (GeneralLinearGroup.map f g) =
       GeneralLinearGroup.map f g := Units.ext (Matrix.ext fun _ _ => rfl)
   change PhiU n _ * invT n _ (GeneralLinearGroup.map (RingHom.id _) (GeneralLinearGroup.map f g)) * (PhiU n _)⁻¹ ∈ _

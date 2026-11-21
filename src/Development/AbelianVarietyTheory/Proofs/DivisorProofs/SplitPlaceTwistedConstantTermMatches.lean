@@ -295,7 +295,7 @@ theorem match_ctMu_of_isSplitAt : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   have hnr : ∀ k (y : GLw k w), nrmL k w y = y := fun k y => by simp only [nrmL, if_pos hw]
   have hUL : UL n w = ⊤ := by simp only [UL, if_pos hw]
   have hks : ∀ γ, kapSign n w Q₁ γ = 1 := fun γ => by simp only [kapSign, if_pos hw]
-  have hKL : (KL n w).map (UL n w).subtype = GlobalTheory.LFun.KGL w n := by
+  have hKL : (KL n w).map (UL n w).subtype = GlobalTheory.LFun.KGL w (n := n) := by
     rw [KL, Subgroup.subgroupOf_map_subtype, hUL, inf_top_eq]
   have hmem : ∀ g : GLw n w, g ∈ UL n w := fun g => by rw [hUL]; trivial
   unfold stTw2 kapOrb
@@ -330,10 +330,10 @@ theorem match_ctMu_of_isSplitAt : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     obtain ⟨x₂, hx₂⟩ := existsOfCharpoly _ (n - a) Q₂ hm₂ hd₂ h0.2
     have hs₁ : Q₁.Separable := hsep.of_mul_left
     have hs₂ : Q₂.Separable := hsep.of_mul_right
-    have hLHS : clSum (MonoidHom.id _) ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w (n - a)))
+    have hLHS : clSum (MonoidHom.id _) ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := (n - a))))
         {y : GLw a w × GLw (n - a) w | y.1.val.charpoly = Q₁ ∧ y.2.val.charpoly = Q₂} 1
         (ctMu (Nat.add_sub_cancel' ha) w μ f) = twOrb (MonoidHom.id _)
-        ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w (n - a))) (x₁, x₂) (ctMu (Nat.add_sub_cancel' ha) w μ f) := by
+        ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := (n - a)))) (x₁, x₂) (ctMu (Nat.add_sub_cancel' ha) w μ f) := by
       rw [clSum_oneClass _ _ _ _ _ (x₁, x₂) ?_ ?_ ?_ ?_ (fun g => twOrb_twConj _ _ _ _ _)]
       · simp
       · exact ⟨hx₁, hx₂⟩
@@ -349,7 +349,7 @@ theorem match_ctMu_of_isSplitAt : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     have hcp : (γ₀ : GLw n w).val.charpoly = Q₁ * Q₂ := by
       rw [hv, blk_zero_charpoly, hx₁, hx₂]
     have hRHS : clSum (MonoidHom.id (UL n w)) (KL n w) {γ : UL n w | γ.1.val.charpoly = Q₁ * Q₂} (fun _ => 1) f =
-        twOrb (MonoidHom.id _) (GlobalTheory.LFun.KGL w n) (blk (Nat.add_sub_cancel' ha) w (x₁, x₂) 0)
+        twOrb (MonoidHom.id _) (GlobalTheory.LFun.KGL w (n := n)) (blk (Nat.add_sub_cancel' ha) w (x₁, x₂) 0)
           (fun y => f (toSub (UL n w) y)) := by
       rw [clSum_oneClass _ _ _ _ _ γ₀ hcp ?_ ?_ ?_ (fun g => twOrb_twConj _ _ _ _ _), one_mul, twOrb_top _ hUL, hKL, hv]
       · intro γ hγ

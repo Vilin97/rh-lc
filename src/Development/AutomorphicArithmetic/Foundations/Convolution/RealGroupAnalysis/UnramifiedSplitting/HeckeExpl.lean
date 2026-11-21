@@ -64,7 +64,7 @@ private theorem dL_mul {v : P K} (a a' d d' : (Kv v)ˣ) : dL a d * dL a' d' = dL
   Units.ext (by ext i j; fin_cases i <;> fin_cases j <;> simp [dL])
 
 private theorem dL_mem {v : P K} {a d : (Kv v)ˣ} (ha : Valued.v (a : Kv v) = 1) (hd : Valued.v (d : Kv v) = 1) :
-    dL a d ∈ GlobalTheory.LFun.KGL v 2 := by
+    dL a d ∈ GlobalTheory.LFun.KGL v (n := 2) := by
   obtain ⟨hK, -, -, -⟩ := UpperTheory.V.Af.Smo.sphDict K 2 v
   have e : ∀ x : Kv v, Valued.v x ≤ 1 → x ∈ (ValuativeRel.valuation (Kv v)).integer :=
     fun x hx => (GroundTheory.Global.mem_valuationInteger_iff v x).2 hx

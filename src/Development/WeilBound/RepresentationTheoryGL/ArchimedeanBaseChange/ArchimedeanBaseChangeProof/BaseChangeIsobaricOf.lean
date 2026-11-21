@@ -37,7 +37,7 @@ def SplitAt (π : Submodule ℂ (UA E n → ℂ)) (D : Datum E n) (w : HeightOne
     IsCompAlong π (locU n w) ((cLoc w).comp (locU n w).subtype) P.ρ
 
 def SatAt (D : Datum E n) (w : HeightOneSpectrum (𝓞 E)) (B : Fin D.c → Multiset ℂˣ) : Prop :=
-  ∀ i, GlobalTheory.LGrp.IsSpherical (D.σ i w).ρ (GlobalTheory.LFun.KGL w (D.N i)) ∧ GlobalTheory.LFun.HasSatGL w (D.σ i w).ρ (B i)
+  ∀ i, GlobalTheory.LGrp.IsSpherical (D.σ i w).ρ (GlobalTheory.LFun.KGL w (n := (D.N i))) ∧ GlobalTheory.LFun.HasSatGL w (D.σ i w).ρ (B i)
 
 def Weak (π : Submodule ℂ (UA E n → ℂ)) (D : Datum E n) : Prop :=
   (∀ τ lam, HasWeightAt π τ lam → ∑ i, D.m i τ = infOfWeight lam) ∧

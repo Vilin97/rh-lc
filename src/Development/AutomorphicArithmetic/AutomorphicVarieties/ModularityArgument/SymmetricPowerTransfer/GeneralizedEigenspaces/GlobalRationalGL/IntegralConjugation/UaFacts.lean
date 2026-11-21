@@ -93,8 +93,8 @@ private theorem cut (w : Plc L) (x : UA L n) (hx : x ∈ finU L n) :
   · rw [hc, if_neg (fun h => hu ((memT u).1 h))]
   · rw [hc, if_pos ((memT u).2 hu)]
 
-private theorem K_conj (x : UA L n) (u : Plc L) (h : cLoc (conjSrc (conjE L) u) x ∈ GlobalTheory.LFun.KGL (conjSrc (conjE L) u) n) :
-    cLoc u x ∈ GlobalTheory.LFun.KGL u n := by
+private theorem K_conj (x : UA L n) (u : Plc L) (h : cLoc (conjSrc (conjE L) u) x ∈ GlobalTheory.LFun.KGL (conjSrc (conjE L) u) (n := n)) :
+    cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n) := by
   have hv := (GlobalTheory.EulerTwKU.mem_KGL_iff_val _).1 h
   set g := cLoc (conjSrc (conjE L) u) x with hg
   set c := conjLoc (conjE L) u with hc

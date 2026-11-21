@@ -47,7 +47,7 @@ theorem isSatVecGL_of_ind {c N : ℕ} {n : Fin c → ℕ} (h : ∑ i, n i = N) {
     (hst : ∀ i (g : GL (Fin (n i)) (Af E)), ∀ ψ ∈ U i, finRep E (n i) g ψ ∈ U i)
     (hsm : ∀ i, ∀ ψ ∈ U i, IsOpen {g : GL (Fin (n i)) (w.adicCompletion E) | finRep E (n i) (locGL E (n i) w g) ψ = ψ})
     (S : Fin c → Multiset ℂˣ) (hS : ∀ i, SatLike (U i) w (S i))
-    {F : Sm E N} (h0 : F ≠ 0) (hK : ∀ k ∈ GlobalTheory.LFun.KGL w N, finRep E N (locGL E N w k) F = F)
+    {F : Sm E N} (h0 : F ≠ 0) (hK : ∀ k ∈ GlobalTheory.LFun.KGL w (n := N), finRep E N (locGL E N w k) F = F)
     (hu : ∀ u ∈ unipRad (Ad E) (stdBlocks n h), ∀ g, F.1 (u * g) = F.1 g)
     (ht : ∀ (k : Kinf E N) (g : GL (Fin N) (Af E)),
       (fun m => F.1 (leviEmb (Ad E) (stdBlocks n h) m * (infGL E N (Unitary.toUnits k) * finGL E N g))) ∈
@@ -72,7 +72,7 @@ theorem isSatVecGL_of_ind {c N : ℕ} {n : Fin c → ℕ} (h : ∑ i, n i = N) {
           {g | finRep E (n i) (locGL E (n i) w g) ψ.1 = ψ.1} := by
         ext g; exact Subtype.ext_iff
       rw [e]; exact hsm i ψ.1 ψ.2
-    have hS' : ∀ i, ∀ x ∈ GlobalTheory.PRep.fixed (locRepU w (U i) (hst i)) (GlobalTheory.LFun.KGL w (n i)), x ≠ 0 →
+    have hS' : ∀ i, ∀ x ∈ GlobalTheory.PRep.fixed (locRepU w (U i) (hst i)) (GlobalTheory.LFun.KGL w (n := (n i))), x ≠ 0 →
         GlobalTheory.LFun.IsSatVecGL w (locRepU w (U i) (hst i)) x (S i) := fun i x hx hx0 =>
       GlobalTheory.LFun.IsSatVecGL.of_map (U i).subtype (fun _ _ => rfl) Subtype.val_injective
         (hS i x.1 x.2 (fun k' hk' => congrArg Subtype.val (GlobalTheory.LGrp.mem_fixed.1 hx k' hk'))

@@ -21,7 +21,7 @@ theorem mem_intL_iff {E : Type} [Field E] [NumberField E] (w : Pl E) (x : w.adic
   exact Valuation.mem_integer_iff _ _
 
 theorem mem_KGL_iff {E : Type} [Field E] [NumberField E] (w : Pl E) {n : ℕ} (g : GL (Fin n) (w.adicCompletion E)) :
-    g ∈ GlobalTheory.LFun.KGL w n ↔ (∀ i j, g.val i j ∈ intL (w.adicCompletion E)) ∧
+    g ∈ GlobalTheory.LFun.KGL w (n := n) ↔ (∀ i j, g.val i j ∈ intL (w.adicCompletion E)) ∧
       (∀ i j, (g⁻¹ : GL (Fin n) (w.adicCompletion E)).val i j ∈ intL (w.adicCompletion E)) := by
   constructor
   · rintro ⟨g0, rfl⟩
@@ -105,8 +105,8 @@ theorem local_good (E : Type) [Field E] [NumberField E] [IsCMField E] (hU : Unr 
     (hHw : IsHerm (cj w) Hw ∧ Hw.det ≠ 0 ∧ cT (cj w) (γ₀.val.map (algebraMap E (w.adicCompletion E))) * Hw *
       γ₀.val.map (algebraMap E (w.adicCompletion E)) = Hw)
     (k m : GL (Fin n) (w.adicCompletion E))
-    (hk : k⁻¹ * GeneralLinearGroup.map (algebraMap E (w.adicCompletion E)) γ₀ * k ∈ GlobalTheory.LFun.KGL w n)
-    (hm : m ∈ GlobalTheory.LFun.KGL w n) (hkm : m.val = cT (cj w) k.val * Hw * k.val) :
+    (hk : k⁻¹ * GeneralLinearGroup.map (algebraMap E (w.adicCompletion E)) γ₀ * k ∈ GlobalTheory.LFun.KGL w (n := n))
+    (hm : m ∈ GlobalTheory.LFun.KGL w (n := n)) (hkm : m.val = cT (cj w) k.val * Hw * k.val) :
     ∃ c : GL (Fin n) (w.adicCompletion E), c.val * γ₀.val.map (algebraMap E (w.adicCompletion E)) =
       γ₀.val.map (algebraMap E (w.adicCompletion E)) * c.val ∧
       Hw = cT (cj w) c.val * H₀.map (algebraMap E (w.adicCompletion E)) * c.val := by
@@ -215,7 +215,7 @@ theorem eventually_int_mat {E : Type} [Field E] [NumberField E] {n : ℕ} (M : M
 
 end GlobalTheory.UsideLeaf.hermitian_local_global_existence
 
-theorem GlobalTheory.UsideLeaf.hermitian_local_global_existence.main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (n : ℕ) (γ₀ : GL (Fin n) E), γ₀.val.charpoly ∈ Ell E n → ∀ H₀ : Matrix (Fin n) (Fin n) E, IsHerm (IsCMField.complexConj E).toRingEquiv.toRingHom H₀ → H₀.det ≠ 0 → cT (IsCMField.complexConj E).toRingEquiv.toRingHom γ₀.val * H₀ * γ₀.val = H₀ → ∀ H : ∀ w : Pl E, Matrix (Fin n) (Fin n) (w.adicCompletion E), (∀ w, ¬ IsSplitAt w → IsHerm (cj w) (H w) ∧ (H w).det ≠ 0 ∧ cT (cj w) (γ₀.val.map (algebraMap E (w.adicCompletion E))) * H w * γ₀.val.map (algebraMap E (w.adicCompletion E)) = H w) → (∀ᶠ w in cofinite, ¬ IsSplitAt w → ∃ k m : GL (Fin n) (w.adicCompletion E), k⁻¹ * GeneralLinearGroup.map (algebraMap E (w.adicCompletion E)) γ₀ * k ∈ GlobalTheory.LFun.KGL w n ∧ m ∈ GlobalTheory.LFun.KGL w n ∧ m.val = cT (cj w) k.val * H w * k.val) → (∀ᶠ w in cofinite, ¬ IsSplitAt w → ∃ c : GL (Fin n) (w.adicCompletion E), c.val * γ₀.val.map (algebraMap E (w.adicCompletion E)) = γ₀.val.map (algebraMap E (w.adicCompletion E)) * c.val ∧ H w = cT (cj w) c.val * H₀.map (algebraMap E (w.adicCompletion E)) * c.val) := by
+theorem GlobalTheory.UsideLeaf.hermitian_local_global_existence.main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (n : ℕ) (γ₀ : GL (Fin n) E), γ₀.val.charpoly ∈ Ell E n → ∀ H₀ : Matrix (Fin n) (Fin n) E, IsHerm (IsCMField.complexConj E).toRingEquiv.toRingHom H₀ → H₀.det ≠ 0 → cT (IsCMField.complexConj E).toRingEquiv.toRingHom γ₀.val * H₀ * γ₀.val = H₀ → ∀ H : ∀ w : Pl E, Matrix (Fin n) (Fin n) (w.adicCompletion E), (∀ w, ¬ IsSplitAt w → IsHerm (cj w) (H w) ∧ (H w).det ≠ 0 ∧ cT (cj w) (γ₀.val.map (algebraMap E (w.adicCompletion E))) * H w * γ₀.val.map (algebraMap E (w.adicCompletion E)) = H w) → (∀ᶠ w in cofinite, ¬ IsSplitAt w → ∃ k m : GL (Fin n) (w.adicCompletion E), k⁻¹ * GeneralLinearGroup.map (algebraMap E (w.adicCompletion E)) γ₀ * k ∈ GlobalTheory.LFun.KGL w (n := n) ∧ m ∈ GlobalTheory.LFun.KGL w (n := n) ∧ m.val = cT (cj w) k.val * H w * k.val) → (∀ᶠ w in cofinite, ¬ IsSplitAt w → ∃ c : GL (Fin n) (w.adicCompletion E), c.val * γ₀.val.map (algebraMap E (w.adicCompletion E)) = γ₀.val.map (algebraMap E (w.adicCompletion E)) * c.val ∧ H w = cT (cj w) c.val * H₀.map (algebraMap E (w.adicCompletion E)) * c.val) := by
   intro E _ _ _ hU n γ₀ hEll H₀ hH₀ hd hγH H hH hlat
   obtain ⟨A, B, hAB⟩ := hEll.2.2.1
   filter_upwards [hlat, GlobalTheory.UsideLeaf.hermitian_local_global_existence.eventually_int_mat γ₀.val,

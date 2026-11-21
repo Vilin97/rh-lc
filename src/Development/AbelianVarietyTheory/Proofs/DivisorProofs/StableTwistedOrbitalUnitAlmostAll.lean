@@ -245,7 +245,7 @@ theorem mem_int {L : Type} [Field L] {n : ℕ} (O : Subring L) (g : GL (Fin n) L
     exact g.inv_mul
 
 theorem eventually_mem_KGL {n : ℕ} (g : GL (Fin n) E) : ∀ᶠ w : Pl E in cofinite,
-    GeneralLinearGroup.map (algebraMap E (w.adicCompletion E)) g ∈ GlobalTheory.LFun.KGL w n := by
+    GeneralLinearGroup.map (algebraMap E (w.adicCompletion E)) g ∈ GlobalTheory.LFun.KGL w (n := n) := by
   have h : ∀ g : GL (Fin n) E, ∀ᶠ w : Pl E in cofinite, ∀ i j,
       algebraMap E (w.adicCompletion E) (g.val i j) ∈ w.adicCompletionIntegers E := fun g => by
     simp only [Filter.eventually_all]; exact fun i j => eventually_int _
@@ -257,7 +257,7 @@ variable [IsCMField E]
 theorem twConj_of_mem (hU : Unr E) (n : ℕ) (w : Pl E) (Q : (w.adicCompletion E)[X])
     (hQ : ∀ q : (w.adicCompletionIntegers E)[X], q.map (algebraMap _ (w.adicCompletion E)) = Q → q.Separable)
     (y z : GLw n w) (hy : (nrmL n w y).val.charpoly = Q) (hz : (nrmL n w z).val.charpoly = Q)
-    (hyK : y ∈ GlobalTheory.LFun.KGL w n) (hzK : z ∈ GlobalTheory.LFun.KGL w n) : ∃ g, z = g⁻¹ * y * thL n w g := by
+    (hyK : y ∈ GlobalTheory.LFun.KGL w (n := n)) (hzK : z ∈ GlobalTheory.LFun.KGL w (n := n)) : ∃ g, z = g⁻¹ * y * thL n w g := by
   let ι := algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E)
   have hι : Function.Injective ι := Subtype.val_injective
   obtain ⟨y', rfl⟩ : ∃ y' : GL (Fin n) (w.adicCompletionIntegers E), GeneralLinearGroup.map ι y' = y := hyK

@@ -39,7 +39,7 @@ def parP (a n : ℕ) (w : Pl E) : Subgroup (GLw n w) where
     exact Matrix.blockTriangular_inv_of_blockTriangular hg
 
 def orbN {n a b : ℕ} (h : a + b = n) (w : Pl E) (f : GLw n w → ℂ) (m : GLw a w × GLw b w) : ℂ :=
-  hint (intMat a b w) fun X => cavg (GlobalTheory.LFun.KGL w n) f
+  hint (intMat a b w) fun X => cavg (GlobalTheory.LFun.KGL w (n := n)) f
     ((blk h w 1 (Multiplicative.toAdd X))⁻¹ * blk h w m 0 * blk h w 1 (Multiplicative.toAdd X))
 
 end GlobalTheory.LeviDesc

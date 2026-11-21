@@ -29,7 +29,7 @@ theorem UpperTheory.Gal.Gen.globOp_pf :
   obtain ⟨h, hdist, hsum, hact⟩ := hC p hp
   let zf : SmIrr (GL (Fin a) (w.adicCompletion E)) → ℂ := fun σ =>
     if hz : ∃ z : Fin a → ℂˣ, GlobalTheory.LFun.HasSatGL w σ.ρ (Finset.univ.val.map z) then evalAt hz.choose p else 0
-  have hop : ∀ (σ : SmIrr (GL (Fin a) (w.adicCompletion E))), ∀ v ∈ GlobalTheory.PRep.fixed σ.ρ (GlobalTheory.LFun.KGL w a),
+  have hop : ∀ (σ : SmIrr (GL (Fin a) (w.adicCompletion E))), ∀ v ∈ GlobalTheory.PRep.fixed σ.ρ (GlobalTheory.LFun.KGL w (n := a)),
       opOf σ.ρ h v = zf σ • v := by
     intro σ v hv
     by_cases hv0 : v = 0
@@ -43,7 +43,7 @@ theorem UpperTheory.Gal.Gen.globOp_pf :
       rw [hzf]
       exact hact σ _ hz.choose_spec v hv
   obtain ⟨hKo, hKc⟩ := GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL (E := E) w a
-  obtain ⟨h', hsup, hU⟩ := GlobalTheory.T.localOperator_acts_by_localComponentScalar E a w hw (GlobalTheory.LFun.KGL w a) hKc hKo h zf hop
+  obtain ⟨h', hsup, hU⟩ := GlobalTheory.T.localOperator_acts_by_localComponentScalar E a w hw (GlobalTheory.LFun.KGL w (n := a)) hKc hKo h zf hop
   obtain ⟨e, he⟩ := GlobalTheory.locU_equiv_GL E a w hw
   have hinj : ∀ g ∈ locU a w, ∀ g' ∈ locU a w, cLoc w g = cLoc w g' → g = g' := by
     intro g hg g' hg' hgg

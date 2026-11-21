@@ -140,7 +140,7 @@ private theorem eD_congr {K : Type} [Field K] {Δ s s' : K} (a : s * s = Δ) (b 
   subst h; rfl
 
 private theorem iw_KGL (R : RingBr L) (w : Plc L) (Sp : R.Split w) (a : GL (Fin 2) (Kw w)) (ha : a ∈ (iw w).J 2) :
-    a ∈ GlobalTheory.LFun.KGL w 2 := by
+    a ∈ GlobalTheory.LFun.KGL w (n := 2) := by
   let g₀ : GL (Fin 2) (Kv (un w)) := Matrix.GeneralLinearGroup.map (Sp.i.symm : Kw w →+* Kv (un w)) a
   have e : Matrix.GeneralLinearGroup.map (Sp.i : Kv (un w) →+* Kw w) g₀ = a := by
     ext i j
@@ -155,7 +155,7 @@ private theorem sec_lev (R : RingBr L) (w : Plc L) (h : IsSplitAt w) (Sp : R.Spl
   have hc : cLoc w (secW 2 w a) = a := ((uaFacts L 2).1 w h).2.1 a
   have hK : secW 2 w a ∈ Kall L 2 := by
     refine Subgroup.mem_inf.2 ⟨(Subgroup.mem_inf.1 hl).1, Subgroup.mem_iInf.2 fun u => ?_⟩
-    show cLoc u (secW 2 w a) ∈ GlobalTheory.LFun.KGL u 2
+    show cLoc u (secW 2 w a) ∈ GlobalTheory.LFun.KGL u (n := 2)
     by_cases hu : un u = un w
     · exact (uaFacts L 2).2.2.2.2.2.2.2 w h _ (by rw [hc]; exact iw_KGL R w Sp a ha) u hu
     · rw [loc_off w _ hl u hu]

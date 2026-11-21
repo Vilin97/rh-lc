@@ -29,8 +29,8 @@ theorem finite_image_mk_of_isCompact {G : Type} [Group G] [TopologicalSpace G] [
 
 theorem dcos_finite_support_iwGL : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (w : Pl E) (a : ℕ) (t : GLw a w),
     (Function.support fun q : GLw a w ⧸ iwGL a w => dcos a w t q.out).Finite ∧ IsOpen (iwGL a w : Set (GLw a w)) ∧
-      IsCompact (iwGL a w : Set (GLw a w)) ∧ iwGL a w ≤ GlobalTheory.LFun.KGL w a ∧
-      (iwGL a w).relIndex (GlobalTheory.LFun.KGL w a) ≠ 0 := by
+      IsCompact (iwGL a w : Set (GLw a w)) ∧ iwGL a w ≤ GlobalTheory.LFun.KGL w (n := a) ∧
+      (iwGL a w).relIndex (GlobalTheory.LFun.KGL w (n := a)) ≠ 0 := by
   intro E _ _ _ w a t
   have hIo : IsOpen (iwGL a w : Set (GLw a w)) :=
     GlobalTheory.SmGL.IwahoriOnto.isOpen_iwahori (w.adicCompletion E) (Fin a)

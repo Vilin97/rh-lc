@@ -20,11 +20,11 @@ section Loc
 variable {E : Type} [Field E] [NumberField E]
 
 private theorem card_heckeT1_cosets (w : HeightOneSpectrum (𝓞 E)) (ϖ : w.adicCompletion E) (hϖ : Formalism.UG.IsUnifV E w ϖ) :
-    Nat.card {q : GL (Fin 2) (w.adicCompletion E) ⧸ KGL w 2 // Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ 1 q.out ≠ 0} =
+    Nat.card {q : GL (Fin 2) (w.adicCompletion E) ⧸ KGL w (n := 2) // Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ 1 q.out ≠ 0} =
       Formalism.UG.qV E w + 1 := by
   have h := Formalism.UG.P.Tj_double_coset_decomposition E w 2 ϖ (mem_Ov_of_isUnifV hϖ) hϖ 1 (by norm_num)
   have hq : 2 ≤ Formalism.UG.qV E w := one_lt_absNorm w
-  have hcard : Nat.card {q : GL (Fin 2) (w.adicCompletion E) ⧸ KGL w 2 //
+  have hcard : Nat.card {q : GL (Fin 2) (w.adicCompletion E) ⧸ KGL w (n := 2) //
       Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ 1 q.out ≠ 0} =
       Nat.card {x : GL (Fin 2) (w.adicCompletion E) ⧸ Formalism.UG.GLint (Fin 2) (Formalism.UG.Ov E w) |
         Formalism.UG.Tj ℤ 2 (Formalism.UG.Ov E w) ϖ 1 x.out ≠ 0} :=
@@ -34,7 +34,7 @@ private theorem card_heckeT1_cosets (w : HeightOneSpectrum (𝓞 E)) (ϖ : w.adi
   have hq' : ((Formalism.UG.qV E w : ℤ) - 1) ≠ 0 := by
     have : (2 : ℤ) ≤ Formalism.UG.qV E w := by exact_mod_cast hq
     omega
-  have e : (Nat.card {q : GL (Fin 2) (w.adicCompletion E) ⧸ KGL w 2 //
+  have e : (Nat.card {q : GL (Fin 2) (w.adicCompletion E) ⧸ KGL w (n := 2) //
       Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ 1 q.out ≠ 0} : ℤ) = (Formalism.UG.qV E w : ℤ) + 1 :=
     mul_right_cancel₀ hq' (h.trans (by ring))
   exact_mod_cast e
@@ -69,7 +69,7 @@ private theorem loc_sat (w : HeightOneSpectrum (𝓞 E)) {V : Type} [AddCommGrou
   have hs := GlobalTheory.T.satakeParameterGL_star_eq_inv_of_unitarisable E w 2 V ρ x _ hU hx
   obtain ⟨ϖ, hϖ⟩ := exists_isUnifV w
   obtain ⟨B0, h1, h2, h3⟩ := hU
-  have k1 := GlobalTheory.T.norm_heckeEigenvalue_le_card_cosets _ (KGL w 2) V ρ B0.flip (fun u v => h1 v u) (fun u hu => h2 u hu) (fun g u v => h3 g v u) _ x _
+  have k1 := GlobalTheory.T.norm_heckeEigenvalue_le_card_cosets _ (KGL w (n := 2)) V ρ B0.flip (fun u v => h1 v u) (fun u hu => h2 u hu) (fun g u v => h3 g v u) _ x _
     (fun g => by
       unfold Formalism.UG.Tj
       exact (norm_indicator_le_norm_self _ _).trans (by simp))

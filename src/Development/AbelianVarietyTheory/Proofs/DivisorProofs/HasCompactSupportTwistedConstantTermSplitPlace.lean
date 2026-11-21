@@ -81,7 +81,7 @@ theorem hasCompactSupport_ctMu_split : ∀ (E : Type) [Field E] [NumberField E] 
   set S : Set (GLw n w) := Subtype.val '' tsupport f with hSdef
   have hS : IsCompact S := hf.image continuous_subtype_val
   have hK := (GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL w n).2
-  set C : Set (GLw n w) := (GlobalTheory.LFun.KGL w n : Set (GLw n w)) * S * (GlobalTheory.LFun.KGL w n : Set (GLw n w)) with hCdef
+  set C : Set (GLw n w) := (GlobalTheory.LFun.KGL w (n := n) : Set (GLw n w)) * S * (GlobalTheory.LFun.KGL w (n := n) : Set (GLw n w)) with hCdef
   have hC : IsCompact C := (hK.mul hS).mul hK
   have hmem : ∀ m, ctMu h w μ f m ≠ 0 → ∃ X, blk h w m X ∈ C := by
     intro m hm

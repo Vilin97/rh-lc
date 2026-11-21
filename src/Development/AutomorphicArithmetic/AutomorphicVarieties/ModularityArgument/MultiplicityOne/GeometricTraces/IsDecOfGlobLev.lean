@@ -127,8 +127,8 @@ theorem UpperTheory.V.Z.Mult.rMult :
       obtain ⟨eq⟩ := GlobalTheory.CuspRep.LocUniq.isLocComp_unique π w t (τ w) ht (hτ w hw)
       rw [hK₁Z w hw]
       exact fixed_equiv eq _ _ hne
-    have hg : ∀ w : Pl E, ∃ g : GLw n w → ℂ, w ∈ Z → Lc (KGL w n) g ∧
-        (∀ K ≤ K₁ w, IsHecke K fun x : UL n w => g x.1) ∧ trc (τ w).ρ (KGL w n) g ≠ 0 := fun w => by
+    have hg : ∀ w : Pl E, ∃ g : GLw n w → ℂ, w ∈ Z → Lc (KGL w (n := n)) g ∧
+        (∀ K ≤ K₁ w, IsHecke K fun x : UL n w => g x.1) ∧ trc (τ w).ρ (KGL w (n := n)) g ≠ 0 := fun w => by
       by_cases hw : w ∈ Z
       · obtain ⟨g, h1, h2, h3⟩ := hLI E n w (hZ w hw).2 (K₁ w) (hK₁.1 w).1 (hK₁.1 w).2.1
         exact ⟨g, fun _ => ⟨h1, h2, h3 _ (hfx w hw)⟩⟩
@@ -163,7 +163,7 @@ theorem UpperTheory.V.Z.Mult.rMult :
     obtain ⟨-, r₂⟩ := hF' g hh₂ T hT hd e₁ e₂ h1 (fun j => h0 (Sum.inr j)) 1
     have hlt := hLT E hU n hn S hS lam K₁ K₂ hK₁ hK₂L hle _ t₁
     have hd0 := (hGT E hU n hn S hS lam K₁ hK₁).1
-    have hP : ∏ w ∈ Z, trc (τ w).ρ (KGL w n) (g w) ≠ 0 := Finset.prod_ne_zero_iff.2 fun w hw => (hg w hw).2.2
+    have hP : ∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) (g w) ≠ 0 := Finset.prod_ne_zero_iff.2 fun w hw => (hg w hw).2.2
     have heq := (r₂ le_rfl).symm.trans (hlt.trans (r₁ le_rfl))
     have hcc := mul_right_cancel₀ hP (mul_left_cancel₀ hd0 heq)
     have hc : Nat.card {i // At π (σ i)} = Nat.card {i // At π (σ₂ i)} := by exact_mod_cast hcc.symm

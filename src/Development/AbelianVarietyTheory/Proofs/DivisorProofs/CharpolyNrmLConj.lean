@@ -161,10 +161,10 @@ theorem charpoly_nrmL_conj {E : Type} [Field E] [NumberField E] [IsCMField E] (h
   rw [GlobalTheory.BCT.ThBasic.nrmL_twist hE, Units.val_mul, Units.val_mul, Matrix.coe_units_inv]
   exact Matrix.charpoly_units_conj' _ _
 
-theorem stTw2_unit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (a b : ℕ) (w : Pl E), ¬ IsSplitAt w → ∀ Q₁ Q₂ : (w.adicCompletion E)[X], Q₁.Separable → Q₂.Separable → stTw2 a b w Q₁ Q₂ ((((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b) : Subgroup _) : Set _).indicator 1) = stTw a w Q₁ ((GlobalTheory.LFun.KGL w a : Set (GLw a w)).indicator 1) * stTw b w Q₂ ((GlobalTheory.LFun.KGL w b : Set (GLw b w)).indicator 1) := by
+theorem stTw2_unit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (a b : ℕ) (w : Pl E), ¬ IsSplitAt w → ∀ Q₁ Q₂ : (w.adicCompletion E)[X], Q₁.Separable → Q₂.Separable → stTw2 a b w Q₁ Q₂ ((((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)) : Subgroup _) : Set _).indicator 1) = stTw a w Q₁ ((GlobalTheory.LFun.KGL w (n := a) : Set (GLw a w)).indicator 1) * stTw b w Q₂ ((GlobalTheory.LFun.KGL w (n := b) : Set (GLw b w)).indicator 1) := by
   intro E _ _ _ hE a b w hw Q₁ Q₂ h₁ h₂
   unfold stTw2 stTw
-  have hL : ∀ m : ℕ, IsLevel (thL m w) (GlobalTheory.LFun.KGL w m) (GlobalTheory.LFun.KGL w m) := by
+  have hL : ∀ m : ℕ, IsLevel (thL m w) (GlobalTheory.LFun.KGL w (n := m)) (GlobalTheory.LFun.KGL w (n := m)) := by
     intro m
     unfold IsLevel
     exact ⟨(GlobalTheory.BCT.ThBasic.twist_basic E hE m w).2.2.2.2.1, le_rfl,
@@ -177,8 +177,8 @@ theorem stTw2_unit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr
     rw [charpoly_nrmL_conj hE]
   have hd : ∀ (m : ℕ) (Q : (w.adicCompletion E)[X]), Q.Separable →
       ∀ y ∈ {y : GLw m w | (nrmL m w y).val.charpoly = Q},
-        {q : DoubleCoset.Quotient (twCent (thL m w) y : Set (GLw m w)) (GlobalTheory.LFun.KGL w m : Set (GLw m w)) |
-          (Quotient.out q)⁻¹ * y * thL m w (Quotient.out q) ∈ GlobalTheory.LFun.KGL w m}.Finite := by
+        {q : DoubleCoset.Quotient (twCent (thL m w) y : Set (GLw m w)) (GlobalTheory.LFun.KGL w (n := m) : Set (GLw m w)) |
+          (Quotient.out q)⁻¹ * y * thL m w (Quotient.out q) ∈ GlobalTheory.LFun.KGL w (n := m)}.Finite := by
     intro m Q hQ y hy
     have hy' : (nrmL m w y).val.charpoly = Q := hy
     exact (GlobalTheory.T.regularTwistedOrbit_local_finiteness E hE m w y (hy' ▸ hQ) _ (hL m)).2 _ (GlobalTheory.BCT.ThBasic.twist_basic E hE m w).2.2.2.2.2.1

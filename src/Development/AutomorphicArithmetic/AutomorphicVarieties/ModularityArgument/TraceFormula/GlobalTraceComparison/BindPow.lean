@@ -70,7 +70,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n a b : ℕ}
 def unif (w : Pl E) : w.adicCompletion E := Classical.epsilon (IsUnifV E w)
 
 def fn1 (n : ℕ) (w : Pl E) (e : Ex (Fin (n + 1))) : GLw n w → ℂ :=
-  e.fn (KGL w n) fun j : Fin (n + 1) => Tj ℂ n (Ov E w) (unif w) j
+  e.fn (KGL w (n := n)) fun j : Fin (n + 1) => Tj ℂ n (Ov E w) (unif w) j
 
 def ev1 (n : ℕ) (w : Pl E) (e : Ex (Fin (n + 1))) (B : Multiset ℂˣ) : ℂ := e.ev fun j : Fin (n + 1) => satEig (qV E w) n B j
 

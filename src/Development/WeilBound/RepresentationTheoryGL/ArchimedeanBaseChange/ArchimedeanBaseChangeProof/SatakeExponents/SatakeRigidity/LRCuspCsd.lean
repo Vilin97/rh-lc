@@ -113,14 +113,14 @@ theorem rCuspCsd : RCuspCsd := by
   choose A Dd PP hA hDd hU hN hE hI using hx
   have hW : ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∀ j, ∃ b : Fin (Dd j) → Multiset ℂˣ,
       (∀ k, (CG.mk ((PP j).twist (nuT E (spehExp (Dd j) k)))).HasSat w (b k)) ∧
-      GlobalTheory.LGrp.IsSpherical (D.σ j w).ρ (GlobalTheory.LFun.KGL w (D.N j)) ∧ GlobalTheory.LFun.HasSatGL w (D.σ j w).ρ (∑ k, b k) :=
+      GlobalTheory.LGrp.IsSpherical (D.σ j w).ρ (GlobalTheory.LFun.KGL w (n := (D.N j))) ∧ GlobalTheory.LFun.HasSatGL w (D.σ j w).ρ (∑ k, b k) :=
     Filter.eventually_all.2 fun j => hSS E (D.N j) (A j) (Dd j) (D.V j) (PP j) (D.σ j) (D.pos j) (D.discrete j)
       (hU j) (hN j) (hE j) (D.loc j) (fun k => nuT E (spehExp (Dd j) k)) (fun k => isAbsPow_nuT _)
   have hinj : Function.Injective (GlobalTheory.ThetaSatake.cw (E := E)) :=
     Function.LeftInverse.injective (g := GlobalTheory.ThetaSatake.cw) fun v => GlobalTheory.ThetaPull.conjSrc_conjSrc v
   have hC : ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∀ j, ∃ c : Fin (Dd j) → Multiset ℂˣ,
       (∀ k, (CG.mk ((PP j).twist (muT E (Dd j) k))).HasSat (GlobalTheory.ThetaSatake.cw w) (c k)) ∧
-      GlobalTheory.LGrp.IsSpherical (D.σ j (GlobalTheory.ThetaSatake.cw w)).ρ (GlobalTheory.LFun.KGL (GlobalTheory.ThetaSatake.cw w) (D.N j)) ∧
+      GlobalTheory.LGrp.IsSpherical (D.σ j (GlobalTheory.ThetaSatake.cw w)).ρ (GlobalTheory.LFun.KGL (GlobalTheory.ThetaSatake.cw w) (n := (D.N j))) ∧
       GlobalTheory.LFun.HasSatGL (GlobalTheory.ThetaSatake.cw w) (D.σ j (GlobalTheory.ThetaSatake.cw w)).ρ (∑ k, c k) :=
     hinj.tendsto_cofinite.eventually (Filter.eventually_all.2 fun j => hSS E (D.N j) (A j) (Dd j) (D.V j) (PP j)
       (D.σ j) (D.pos j) (D.discrete j) (hU j) (hN j) (hE j) (D.loc j) (fun k => muT E (Dd j) k)

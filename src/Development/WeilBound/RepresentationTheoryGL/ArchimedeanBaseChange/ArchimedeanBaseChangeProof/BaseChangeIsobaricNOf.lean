@@ -33,7 +33,7 @@ structure IsBaseChangeN {E : Type} [Field E] [NumberField E] [IsCMField E] {n : 
   loc : ∀ i w, IsLocCompGL (V i) w (σ i w)
   inf : ∀ i τ, HasInfCharGL (V i) τ (m i τ)
   sub : ∀ w, GlobalTheory.SmGL.IsSubquotient (P w).ρ (locProd h w (σ · w))
-  unram : ∀ w, IsUnramU π w → GlobalTheory.LGrp.IsSpherical (P w).ρ (GlobalTheory.LFun.KGL w n)
+  unram : ∀ w, IsUnramU π w → GlobalTheory.LGrp.IsSpherical (P w).ρ (GlobalTheory.LFun.KGL w (n := n))
   inert : ∀ (w : HeightOneSpectrum (𝓞 E)) (s : w.adicCompletion E →+* w.adicCompletion E) (ϖ : w.adicCompletion E)
     (q : ℕ), (∀ x : E, s (algebraMap E _ x) = algebraMap E _ (IsCMField.complexConj E x)) → IsUnramInv ϖ s q →
     ∀ α, HasSatAt π w s ϖ q α → GlobalTheory.LFun.HasSatGL w (P w).ρ (GlobalTheory.LGrp.bcParam n α)

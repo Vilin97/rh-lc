@@ -24,8 +24,8 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 theorem UpperTheory.V.Z.J.D.Dc.int_conj (x : UA E n) (u : Pl E)
-    (h : cLoc (conjSrc (GlobalTheory.SplitPts.conjE E) u) x ∈ GlobalTheory.LFun.KGL (conjSrc (GlobalTheory.SplitPts.conjE E) u) n) :
-    cLoc u x ∈ GlobalTheory.LFun.KGL u n := by
+    (h : cLoc (conjSrc (GlobalTheory.SplitPts.conjE E) u) x ∈ GlobalTheory.LFun.KGL (conjSrc (GlobalTheory.SplitPts.conjE E) u) (n := n)) :
+    cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n) := by
   have h1 := GlobalTheory.BCT.LocGlue.intst E n _ u (conjLoc (GlobalTheory.SplitPts.conjE E) u) (conjLoc_spec _ u).2.2 _ h
   have e : cLoc u x = GlobalTheory.CuspRep.invT n _ (GeneralLinearGroup.map (conjLoc (GlobalTheory.SplitPts.conjE E) u)
       (cLoc (conjSrc (GlobalTheory.SplitPts.conjE E) u) x)) := by
@@ -47,14 +47,14 @@ theorem UpperTheory.V.Z.J.D.Dc.int_conj (x : UA E n) (u : Pl E)
 
 theorem UpperTheory.V.Z.J.D.Dc.int_over {w u : Pl E}
     (hu : u.under (𝓞 (maximalRealSubfield E)) = w.under (𝓞 (maximalRealSubfield E))) (x : UA E n)
-    (h : cLoc w x ∈ GlobalTheory.LFun.KGL w n) : cLoc u x ∈ GlobalTheory.LFun.KGL u n := by
+    (h : cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n)) : cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n) := by
   by_cases e : u = w
   · subst e
     exact h
   · rcases (GlobalTheory.SplitPts.over_split (w := w) ⟨u, e, hu⟩).2.2 u hu with rfl | rfl
     · exact h
     · refine UpperTheory.V.Z.J.D.Dc.int_conj x _ ?_
-      have e2 : ∀ v, v = w → cLoc v x ∈ GlobalTheory.LFun.KGL v n := by
+      have e2 : ∀ v, v = w → cLoc v x ∈ GlobalTheory.LFun.KGL v (n := n) := by
         rintro v rfl
         exact h
       exact e2 _ (GlobalTheory.SplitPts.conjSrc_conjSrc_cm w)
@@ -108,14 +108,14 @@ theorem secRange (s : HidaSetting l L Ω) : GlobalTheory.BCT.IsSection (Set.rang
 
 
 def Pc (s : HidaSetting l L Ω) (n c : ℕ) (w : Plc L) : Subgroup (GLw n w) :=
-  if w ∈ s.w '' s.S then Kc _ n c else GlobalTheory.LFun.KGL w n
+  if w ∈ s.w '' s.S then Kc _ n c else GlobalTheory.LFun.KGL w (n := n)
 
 def Kf (s : HidaSetting l L Ω) (n c : ℕ) (w : GlobalTheory.BCT.Pl L) : Subgroup (GlobalTheory.BCT.UL n w) :=
   (Pc s n c w).subgroupOf (GlobalTheory.BCT.UL n w)
 
 variable (s : HidaSetting l L Ω) (n c : ℕ)
 
-theorem Pc_le (w : Plc L) : Pc s n c w ≤ GlobalTheory.LFun.KGL w n := by
+theorem Pc_le (w : Plc L) : Pc s n c w ≤ GlobalTheory.LFun.KGL w (n := n) := by
   unfold Pc
   split_ifs
   · rw [GlobalTheory.CohomologicalConjSelfDualTempered.UnrModel.kgl_eq_ko]
@@ -131,7 +131,7 @@ theorem Pc_open (w : Plc L) : IsOpen (Pc s n c w : Set (GLw n w)) := by
 
 variable {s n c}
 
-theorem Pc_notS {w : Plc L} (hw : w.under (𝓞 (Lp L)) ∉ s.S) : Pc s n c w = GlobalTheory.LFun.KGL w n := by
+theorem Pc_notS {w : Plc L} (hw : w.under (𝓞 (Lp L)) ∉ s.S) : Pc s n c w = GlobalTheory.LFun.KGL w (n := n) := by
   unfold Pc
   refine if_neg ?_
   rintro ⟨v, hv, rfl⟩

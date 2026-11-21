@@ -37,9 +37,9 @@ def ev {v : PlF E} (w : Above v) : GL (Fin n) (Av v) →* GLw n w.1 :=
   GeneralLinearGroup.map (Pi.evalRingHom (fun w : Above v => w.1.adicCompletion E) w)
 
 def Kn (n : ℕ) (v : PlF E) : Subgroup (GL (Fin n) (Av v)) :=
-  ⨅ w : Above v, (GlobalTheory.LFun.KGL w.1 n).comap (ev w)
+  ⨅ w : Above v, (GlobalTheory.LFun.KGL w.1 (n := n)).comap (ev w)
 
-theorem mem_Kn {v : PlF E} {y : GL (Fin n) (Av v)} : y ∈ Kn n v ↔ ∀ w : Above v, ev w y ∈ GlobalTheory.LFun.KGL w.1 n := by
+theorem mem_Kn {v : PlF E} {y : GL (Fin n) (Av v)} : y ∈ Kn n v ↔ ∀ w : Above v, ev w y ∈ GlobalTheory.LFun.KGL w.1 (n := n) := by
   simp only [Kn, Subgroup.mem_iInf, Subgroup.mem_comap]
 
 theorem ev_pn {v : PlF E} (w : Above v) (g : GL (Fin n) (Af E)) :
@@ -50,7 +50,7 @@ theorem mem_Kv {a b : ℕ} {v : PlF E} {y : Yv a b v} : y ∈ Kv a b v ↔ y.1 �
   rfl
 
 theorem mem_Kf_iff {g : GL (Fin n) (Af E)} : g ∈ Kf E n ↔ ∀ v : PlF E, pn n v g ∈ Kn n v := by
-  have h : g ∈ Kf E n ↔ ∀ w : Pl E, GeneralLinearGroup.map (pLoc E w) g ∈ GlobalTheory.LFun.KGL w n := by
+  have h : g ∈ Kf E n ↔ ∀ w : Pl E, GeneralLinearGroup.map (pLoc E w) g ∈ GlobalTheory.LFun.KGL w (n := n) := by
     simp only [Kf, Subgroup.mem_iInf, Subgroup.mem_comap]
   rw [h]
   refine ⟨fun H v => mem_Kn.2 fun w => H w.1, fun H w => ?_⟩
@@ -80,7 +80,7 @@ theorem eventually_mem_Kn (g : GL (Fin n) (Af E)) : ∀ᶠ v : PlF E in cofinite
     eventually_all.2 fun i => eventually_all.2 fun j => (g.1 i j).2
   have h2 : ∀ᶠ w : Pl E in cofinite, ∀ i j, pLoc E w ((g⁻¹).1 i j) ∈ w.adicCompletionIntegers E :=
     eventually_all.2 fun i => eventually_all.2 fun j => ((g⁻¹).1 i j).2
-  have hx : ∀ᶠ w : Pl E in cofinite, GeneralLinearGroup.map (pLoc E w) g ∈ GlobalTheory.LFun.KGL w n := by
+  have hx : ∀ᶠ w : Pl E in cofinite, GeneralLinearGroup.map (pLoc E w) g ∈ GlobalTheory.LFun.KGL w (n := n) := by
     filter_upwards [h1, h2] with w h1 h2
     exact GlobalTheory.EulerTwRestr.mem_KGL_iff.2 ⟨fun i j => by rw [GlobalTheory.EulerTwRestr.loc_val]; exact h1 i j,
       fun i j => by rw [GlobalTheory.EulerTwRestr.loc_inv_val]; exact h2 i j⟩
@@ -95,7 +95,7 @@ theorem exists_lift (y : ∀ v : PlF E, GL (Fin n) (Av v)) (hy : ∀ᶠ v : PlF 
     ∃ x : GL (Fin n) (Af E), ∀ v, pn n v x = y v := by
   let un : Pl E → PlF E := fun w => w.under (𝓞 (maximalRealSubfield E))
   let Y : ∀ w : Pl E, GLw n w := fun w => ev (⟨w, rfl⟩ : Above (un w)) (y (un w))
-  have hc : ∀ᶠ w : Pl E in cofinite, Y w ∈ GlobalTheory.LFun.KGL w n := by
+  have hc : ∀ᶠ w : Pl E in cofinite, Y w ∈ GlobalTheory.LFun.KGL w (n := n) := by
     have hB := eventually_cofinite.1 hy
     refine eventually_cofinite.2 ((hB.biUnion fun v _ => Set.finite_coe_iff.1 (finite_above v)).subset ?_)
     intro w hw

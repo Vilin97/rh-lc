@@ -28,7 +28,7 @@ theorem GlobalTheory.CellDec.lastRow_sub_notMem_latt : ∀ (E : Type) [Field E] 
   have hwT : w ∉ T := fun h => by rw [l.2 w h] at hlw; simp at hlw
   set a := l.1 w (Fin.last m) with ha
   set K := GlobalTheory.CellDec.compV E (m+1) w k with hKdef
-  have hK : K ∈ GlobalTheory.LFun.KGL w (m+1) := GlobalTheory.CellDec.mem_US.1 hk w hwT
+  have hK : K ∈ GlobalTheory.LFun.KGL w (n := (m+1)) := GlobalTheory.CellDec.mem_US.1 hk w hwT
   obtain ⟨-, hK2⟩ := GlobalTheory.AdelicU.mem_GLint_iff.1 hK
   have hU := (GlobalTheory.SmGL.mem_unipB _).1 (GlobalTheory.CellDec.compV_mem_unipB w hu)
   have hent : ∀ i, (pFin E ((GlobalTheory.CellDec.tl (m + 1) ϖ l.1 * (u * k)).val (Fin.last m) i)) w =

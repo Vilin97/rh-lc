@@ -15,7 +15,7 @@ namespace GlobalTheory.CompanionTheory.SatakeBound
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 def IsFix (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) (v : π.V) : Prop :=
-  ∀ k ∈ KGL w a, π.locRep w k v = v
+  ∀ k ∈ KGL w (n := a), π.locRep w k v = v
 
 def sphSpan (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) : Submodule ℂ (Sm E a) :=
   Submodule.span ℂ {φ | ∃ (g : GL (Fin a) (w.adicCompletion E)) (v : π.V), IsFix π w v ∧ φ = (π.locRep w g v).1}

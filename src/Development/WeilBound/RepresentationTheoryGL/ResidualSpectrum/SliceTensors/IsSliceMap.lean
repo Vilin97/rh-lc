@@ -63,7 +63,7 @@ def RegInt (V : Submodule ℂ (Sm E N)) (τ : E →+* ℂ) : Prop :=
 
 def SatV (V : Submodule ℂ (Sm E N)) (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ) : Prop :=
   (∃ φ ∈ V, GlobalTheory.LFun.IsSatVecGL w ((finRep E N).comp (locGL E N w)) φ B) ∧
-    ∀ φ ∈ V, (∀ k ∈ GlobalTheory.LFun.KGL w N, finRep E N (locGL E N w k) φ = φ) → φ ≠ 0 →
+    ∀ φ ∈ V, (∀ k ∈ GlobalTheory.LFun.KGL w (n := N), finRep E N (locGL E N w k) φ = φ) → φ ≠ 0 →
       GlobalTheory.LFun.IsSatVecGL w ((finRep E N).comp (locGL E N w)) φ B
 
 def satTw (w : HeightOneSpectrum (𝓞 E)) (z : ℂ) (B : Multiset ℂˣ) : Multiset ℂ :=

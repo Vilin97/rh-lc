@@ -37,10 +37,10 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ}
 
 theorem conjFin_locGL_mem (w : HeightOneSpectrum (𝓞 E))
     (hw : conjSrc (IsCMField.complexConj E).toRingEquiv w = w) (k : GL (Fin a) (w.adicCompletion E))
-    (hk : k ∈ GlobalTheory.LFun.KGL w a) : ∃ k' ∈ GlobalTheory.LFun.KGL w a,
+    (hk : k ∈ GlobalTheory.LFun.KGL w (n := a)) : ∃ k' ∈ GlobalTheory.LFun.KGL w (n := a),
       Matrix.GeneralLinearGroup.map (conjFin (IsCMField.complexConj E).toRingEquiv) (locGL E a w k) = locGL E a w k' := by
   have key : ∀ u (h : conjSrc (IsCMField.complexConj E).toRingEquiv w = u) (k : GL (Fin a) (u.adicCompletion E)),
-      k ∈ GlobalTheory.LFun.KGL u a → ∃ k' ∈ GlobalTheory.LFun.KGL w a,
+      k ∈ GlobalTheory.LFun.KGL u (n := a) → ∃ k' ∈ GlobalTheory.LFun.KGL w (n := a),
         Matrix.GeneralLinearGroup.map (conjFin (IsCMField.complexConj E).toRingEquiv) (locGL E a u k) = locGL E a w k' := by
     intro u h k hk
     subst h
@@ -61,7 +61,7 @@ theorem conjFin_locGL_mem (w : HeightOneSpectrum (𝓞 E))
 end GlobalTheory.ContraPair.SphTwist
 
 
-theorem GlobalTheory.ContraPair.isSpherical_twist_of_dualIsConjBy : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ), 1 ≤ a → ∀ (π : CuspSub E a) (ψ : HChar E), GlobalTheory.ContraPair.DualIsConjBy π ψ → ∀ w : HeightOneSpectrum (𝓞 E), ¬ GlobalTheory.UnitaryBC.IsSplitAt w → (∃ B, (CG.mk π).HasSat w B) → GlobalTheory.LGrp.IsSpherical ((π.twist ψ⁻¹).locRep w) (GlobalTheory.LFun.KGL w a) := by
+theorem GlobalTheory.ContraPair.isSpherical_twist_of_dualIsConjBy : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ), 1 ≤ a → ∀ (π : CuspSub E a) (ψ : HChar E), GlobalTheory.ContraPair.DualIsConjBy π ψ → ∀ w : HeightOneSpectrum (𝓞 E), ¬ GlobalTheory.UnitaryBC.IsSplitAt w → (∃ B, (CG.mk π).HasSat w B) → GlobalTheory.LGrp.IsSpherical ((π.twist ψ⁻¹).locRep w) (GlobalTheory.LFun.KGL w (n := a)) := by
   intro E _ _ _ a _ π ψ hP w hns hS
   obtain ⟨B0, hB0⟩ := hS
   obtain ⟨B, -, hB2, hfin, -, -⟩ := hP
@@ -74,7 +74,7 @@ theorem GlobalTheory.ContraPair.isSpherical_twist_of_dualIsConjBy : ∀ (E : Typ
   have hw : conjSrc (IsCMField.complexConj E).toRingEquiv w = w := by
     by_contra h
     exact hns ⟨_, h, GlobalTheory.DefU.LocRet.under_conjSrc w⟩
-  have hL : ∀ k ∈ GlobalTheory.LFun.KGL w a, B.flip x ((π.twist ψ⁻¹).locRep w k y) = B.flip x y := by
+  have hL : ∀ k ∈ GlobalTheory.LFun.KGL w (n := a), B.flip x ((π.twist ψ⁻¹).locRep w k y) = B.flip x y := by
     intro k hk
     obtain ⟨k', hk', e⟩ := conjFin_locGL_mem w hw k hk
     have hx' : π.op (.fin (locGL E a w k')) x = x := GlobalTheory.LGrp.mem_fixed.1 hx k' hk'

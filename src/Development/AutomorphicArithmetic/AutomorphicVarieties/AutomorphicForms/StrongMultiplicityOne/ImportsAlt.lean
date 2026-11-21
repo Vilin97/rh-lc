@@ -38,7 +38,7 @@ theorem UpperTheory.V.Af.StrongMultiplicityOne.proj :
     have ev : ∀ (φ : cuspForms E n) k g, (finRepCusp E n k φ).1 g = φ.1 (g * finGL E n k) := fun φ k g => by
       rw [← Fb.finEmb_eq]
       rfl
-    have key : ∀ k ∈ GlobalTheory.LFun.KGL w n, finRepCusp E n (locGL E n w k) u = u ∧ finRepCusp E n (locGL E n w k) x = x := by
+    have key : ∀ k ∈ GlobalTheory.LFun.KGL w (n := n), finRepCusp E n (locGL E n w k) u = u ∧ finRepCusp E n (locGL E n w k) x = x := by
       intro k hk
       have e : finRepCusp E n (locGL E n w k) (u + x) = u + x :=
         Subtype.ext (funext fun g => (ev _ _ g).trans (hK g k hk))

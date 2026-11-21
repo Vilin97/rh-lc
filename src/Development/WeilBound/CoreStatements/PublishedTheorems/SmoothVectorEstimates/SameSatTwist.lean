@@ -28,7 +28,7 @@ theorem val_eq_prod {π : CuspSub E a} {ω : HChar E} (hω : π.HasCentChar ω) 
   have h0 : (u : w.adicCompletion E) ≠ 0 := u.ne_zero
 
   have hTn : Tj ℂ a (Ov E w) (u : w.adicCompletion E) a =
-      dosetInd ℂ (KGL w a) (GlobalTheory.WeylGL.tor h0 fun _ => 1) := by
+      dosetInd ℂ (KGL w (n := a)) (GlobalTheory.WeylGL.tor h0 fun _ => 1) := by
     rw [GlobalTheory.WeylGL.Tj_eq h0]; simp
   have h1 := hx.2.2.2 _ hu a le_rfl
   rw [hTn, heckeVec_dosetInd (R := {GlobalTheory.WeylGL.tor h0 fun _ => 1}) hx.2.1, Finset.sum_singleton] at h1

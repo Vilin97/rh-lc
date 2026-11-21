@@ -232,8 +232,8 @@ theorem glSplit_theta (hC : CjEx) (n : ℕ) {w : Above v} (hs : IsSplitAt w.1) (
     rw [glSplit_fst, glSplit_snd, ev, map_thetaGL_comp, evb_comp_cjv hC hs]
 
 theorem map_conjLoc_mem {n : ℕ} (w : Pl E) (g : GLw n (conjSrc (conjE E) w)) :
-    GeneralLinearGroup.map (conjLoc (conjE E) w) g ∈ GlobalTheory.LFun.KGL w n ↔
-      g ∈ GlobalTheory.LFun.KGL (conjSrc (conjE E) w) n := by
+    GeneralLinearGroup.map (conjLoc (conjE E) w) g ∈ GlobalTheory.LFun.KGL w (n := n) ↔
+      g ∈ GlobalTheory.LFun.KGL (conjSrc (conjE E) w) (n := n) := by
   have e1 : ∀ (h : GLw n (conjSrc (conjE E) w)) (i j : Fin n),
       Valued.v ((GeneralLinearGroup.map (conjLoc (conjE E) w) h).val i j) = Valued.v (h.val i j) :=
     fun h i j => (conjLoc_spec (conjE E) w).2.2 _
@@ -241,11 +241,11 @@ theorem map_conjLoc_mem {n : ℕ} (w : Pl E) (g : GLw n (conjSrc (conjE E) w)) :
   simp only [e1]
 
 theorem map_sA_mem {n : ℕ} (w : Above v) (g : GLw n (conjAbove w).1) :
-    GeneralLinearGroup.map (sA w) g ∈ GlobalTheory.LFun.KGL w.1 n ↔ g ∈ GlobalTheory.LFun.KGL (conjAbove w).1 n :=
+    GeneralLinearGroup.map (sA w) g ∈ GlobalTheory.LFun.KGL w.1 (n := n) ↔ g ∈ GlobalTheory.LFun.KGL (conjAbove w).1 n :=
   map_conjLoc_mem w.1 g
 
 theorem mem_Kn_iff {n : ℕ} {w : Above v} (hs : IsSplitAt w.1) (g : GL (Fin n) (Av v)) :
-    g ∈ Kn n v ↔ (glSplit n w hs g).1 ∈ GlobalTheory.LFun.KGL w.1 n ∧ (glSplit n w hs g).2 ∈ GlobalTheory.LFun.KGL w.1 n := by
+    g ∈ Kn n v ↔ (glSplit n w hs g).1 ∈ GlobalTheory.LFun.KGL w.1 (n := n) ∧ (glSplit n w hs g).2 ∈ GlobalTheory.LFun.KGL w.1 (n := n) := by
   have e : (glSplit n w hs g).2 = GeneralLinearGroup.map (sA w) (ev (conjAbove w) g) := by
     apply Units.ext
     ext i j

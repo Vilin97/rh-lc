@@ -68,7 +68,7 @@ theorem expToSat : PositivityTheory.Rg.BcB.F.Tail.PExp.ExpToSat := by
   have hu0 : u ≠ 0 := by
     rintro rfl
     exact hx.1 (by rw [← hfu, map_zero])
-  have hfix : u.1 ∈ fixed (locProd h w σ) (GlobalTheory.LFun.KGL w n) :=
+  have hfix : u.1 ∈ fixed (locProd h w σ) (GlobalTheory.LFun.KGL w (n := n)) :=
     GlobalTheory.LGrp.mem_fixed.2 fun g hg => congrArg Subtype.val (GlobalTheory.LGrp.mem_fixed.1 hu g hg)
   have hne : u.1 ≠ 0 := fun e => hu0 (Subtype.ext e)
   obtain ⟨B, hB, hBv⟩ := GlobalTheory.SatInd.exists_sat_multiProd h (π := fun i => (σ i).ρ)

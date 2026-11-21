@@ -59,7 +59,7 @@ theorem indN_lastRow_tl : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCom
       GlobalTheory.RSJ.indN N (fun i => GlobalTheory.RSJ.pFin E (GlobalTheory.ZEul.lastRow (GlobalTheory.CellDec.tl (m + 1) ϖ l.1 * g) i)) = 0) := by
   intro E _ _ _ m S ϖ hϖ N hlat hloc l g hg
   obtain ⟨u, hu, k, hk, rfl⟩ := hg
-  have hk' : ∀ v ∉ S, compV E (m + 1) v k ∈ GlobalTheory.LFun.KGL v (m + 1) := by
+  have hk' : ∀ v ∉ S, compV E (m + 1) v k ∈ GlobalTheory.LFun.KGL v (n := (m + 1)) := by
     simpa only [US, Subgroup.mem_iInf, Subgroup.mem_comap] using hk
   set c : (Af E)ˣ := adl ϖ (Finsupp.mapRange (fun x : Fin (m + 1) → ℤ => x (Fin.last m)) rfl l.1) with hc
   have hev : ∀ (x : Af E) v, x v = pLoc E v x := fun _ _ => rfl

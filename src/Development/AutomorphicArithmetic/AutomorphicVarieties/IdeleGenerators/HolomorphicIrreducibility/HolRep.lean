@@ -119,14 +119,14 @@ private theorem cap_all (π : TR.CuspSub F a) {ψ : TR.Sm F a} (h : ψ ∈ π.V)
   · exact fun x hx => Module.End.mem_eigenspace_iff.1 (e.ge hx).2
 
 private theorem exists_sat (P : Af.Hypotheses₂) (π : TR.CuspSub F a) (w : HeightOneSpectrum (𝓞 F))
-    (h : HasFixed (π.locRep w) (GlobalTheory.LFun.KGL w a)) : ∃ B, π.HasSat w B := by
+    (h : HasFixed (π.locRep w) (GlobalTheory.LFun.KGL w (n := a))) : ∃ B, π.HasSat w B := by
   obtain ⟨⟨σ, hσ⟩, h2⟩ := locCompR P F a π w
   have hi := h2 σ hσ
   obtain ⟨h3, h4⟩ := satLoc P F a w σ
   obtain ⟨x, hx0, hx⟩ := h
   obtain ⟨B, hB⟩ := h3 (GlobalTheory.CuspRep.LocSph.exists_fixed_of_mem_iSup (π.locRep w) σ.ρ σ.irred
     (fun f : {f : σ.V →ₗ[ℂ] π.V // ∀ g v, f (σ.ρ g v) = π.finPart (locGL F a w g) (f v)} => f.1) (fun f => f.2)
-    (GlobalTheory.LFun.KGL w a : Set _) x hx0 hx (hi.2 ▸ Submodule.mem_top))
+    (GlobalTheory.LFun.KGL w (n := a) : Set _) x hx0 hx (hi.2 ▸ Submodule.mem_top))
   exact ⟨B, (h4 _ _ hi B).2 hB⟩
 
 end Proj
@@ -151,7 +151,7 @@ private theorem hecke_eq_dc {G V : Type} [Group G] [AddCommGroup V] [Module ℂ 
 
 variable {F : Type} [Field F] [NumberField F] (w : HeightOneSpectrum (𝓞 F))
 
-private theorem iwahori_level_zero_eq : K1 w 0 = KGL w 2 := by
+private theorem iwahori_level_zero_eq : K1 w 0 = KGL w (n := 2) := by
   ext g
   refine ⟨fun ⟨k, _, e⟩ => ⟨k, e⟩, fun ⟨k, e⟩ => ⟨k, ?_, e⟩⟩
   haveI : Subsingleton (w.adicCompletionIntegers F ⧸ IsLocalRing.maximalIdeal (w.adicCompletionIntegers F) ^ 0) :=
@@ -160,11 +160,11 @@ private theorem iwahori_level_zero_eq : K1 w 0 = KGL w 2 := by
 
 private theorem hecke_Tj {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ (GL (Fin 2) (w.adicCompletion F)) V)
     (j : ℕ) (a : GL (Fin 2) (w.adicCompletion F)) (ha : a.val = diagJ 2 (atFin w (unif w) : w.adicCompletion F) j) (x : V) :
-    heckeVec ρ (KGL w 2) (Tj ℂ 2 (Ov F w) (atFin w (unif w) : w.adicCompletion F) j) x = Hi.dc ρ (KGL w 2) (KGL w 2) a x := by
+    heckeVec ρ (KGL w (n := 2)) (Tj ℂ 2 (Ov F w) (atFin w (unif w) : w.adicCompletion F) j) x = Hi.dc ρ (KGL w (n := 2)) (KGL w (n := 2)) a x := by
   refine hecke_eq_dc ρ _ a _ (fun g hg => ?_) (fun g hg => ?_)
     (Formalism.UG.P.finite_support_cosets (Final.GLintComm F w 2) (Tj_mem_hecke (unif_spec w) j).2) x
   · obtain ⟨k, hk⟩ := hg
-    have h : ((k : GL (Fin 2) (w.adicCompletion F)) * a)⁻¹ * g ∈ KGL w 2 := QuotientGroup.eq.1 hk
+    have h : ((k : GL (Fin 2) (w.adicCompletion F)) * a)⁻¹ * g ∈ KGL w (n := 2) := QuotientGroup.eq.1 hk
     rw [Tj, Set.indicator_of_mem, Pi.one_apply]
     refine ⟨k, k.2, _, h, ?_⟩
     rw [← ha, ← Units.val_mul, ← Units.val_mul, mul_inv_cancel_left]
@@ -191,9 +191,9 @@ private theorem sat_two {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Represe
   · have h2 := h.2.2.2 _ (unif_spec w) 2 le_rfl
     set z := GeneralLinearGroup.scalar (Fin 2) (atFin w (unif w))
     rw [hecke_Tj w ρ 2 z (by ext i j; fin_cases i <;> fin_cases j <;> simp [z, diagJ])] at h2
-    have ho : ∀ q ∈ MulAction.orbit (KGL w 2) (z : _ ⧸ KGL w 2), q = z := by
+    have ho : ∀ q ∈ MulAction.orbit (KGL w (n := 2)) (z : _ ⧸ KGL w (n := 2)), q = z := by
       rintro _ ⟨k, rfl⟩
-      change (((k : GL (Fin 2) (w.adicCompletion F)) * z : GL (Fin 2) (w.adicCompletion F)) : _ ⧸ KGL w 2) = _
+      change (((k : GL (Fin 2) (w.adicCompletion F)) * z : GL (Fin 2) (w.adicCompletion F)) : _ ⧸ KGL w (n := 2)) = _
       rw [← GlobalTheory.CuspRep.scalar_comm]
       exact QuotientGroup.mk_mul_of_mem _ k.2
     rw [(Hi.dcSum ℂ _ V ρ _ _ z ((Set.finite_singleton _).subset ho)).1 {z}
@@ -417,7 +417,7 @@ theorem UpperTheory.V.Sd.holRep :
       show GeneralLinearGroup.det (GeneralLinearGroup.scalar (Fin 2) (atFin w (unif w))) =
         atFin w (unif w) * atFin w (unif w) from Units.ext (by simp [sq]), map_mul, mul_comm, ← Units.val_mul, ← mul_assoc]
     rfl
-  have hsat : ∀ w, (∀ u ∈ GlobalTheory.LFun.KGL w 2, π.locRep w u (T x₀) = T x₀) → ∃ α β : ℂˣ, π.HasSat w {α, β} ∧
+  have hsat : ∀ w, (∀ u ∈ GlobalTheory.LFun.KGL w (n := 2), π.locRep w u (T x₀) = T x₀) → ∃ α β : ℂˣ, π.HasSat w {α, β} ∧
       Uop w (π.locRep w) 0 (T x₀) = ((((normV w : ℝ) ^ (1 / 2 : ℝ) : ℝ) : ℂ) * (α + β)) • T x₀ ∧
       α * β = (ω * ν * ν).val w := fun w h => by
     obtain ⟨B, hB⟩ := exists_sat P.toClassicalTheorems π w ⟨_, hx0, h⟩

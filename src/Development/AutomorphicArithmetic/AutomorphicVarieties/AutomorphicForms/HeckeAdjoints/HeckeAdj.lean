@@ -9,7 +9,7 @@ open NumberField IsDedekindDomain Matrix Formalism.L2.Host UpperTheory.V UpperTh
 theorem UpperTheory.V.Af.Gk.heckeAdj :
     UpperTheory.V.Af.Gk.HeckeAdj := by
   intro F _ _ a w V _ _ ρ H hH x hx ϖ hϖ j
-  have hK : ∀ k ∈ GlobalTheory.LFun.KGL w a, GlobalTheory.CuspRep.invT a _ k ∈ GlobalTheory.LFun.KGL w a := by
+  have hK : ∀ k ∈ GlobalTheory.LFun.KGL w (n := a), GlobalTheory.CuspRep.invT a _ k ∈ GlobalTheory.LFun.KGL w (n := a) := by
     rintro _ ⟨k, rfl⟩
     exact ⟨GlobalTheory.CuspRep.invT a _ k, InvT.map_invT _ k⟩
   have hfix := GlobalTheory.LGrp.mem_fixed.1 hx

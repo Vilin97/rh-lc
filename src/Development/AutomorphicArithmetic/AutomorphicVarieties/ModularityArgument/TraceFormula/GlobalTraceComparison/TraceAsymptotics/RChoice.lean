@@ -53,7 +53,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm.rChoice :
     rcases (hm w₀).2 with e | e <;> rwa [e]
   choose! B hB using fun w (h : ∃ B, (CG.mk π).HasSat w B) => h
   choose τ hτ using fun w => GlobalTheory.CuspRep.LocEx.exists_isLocComp hF E n π w
-  have hf : ∀ w : Pl E, ∃ g : GLw n w → ℂ, Lc (KGL w n) g ∧ trc (τ w).ρ (KGL w n) g ≠ 0 ∧
+  have hf : ∀ w : Pl E, ∃ g : GLw n w → ℂ, Lc (KGL w (n := n)) g ∧ trc (τ w).ρ (KGL w (n := n)) g ≠ 0 ∧
       (w = w₁ → ∀ y, g y ≠ 0 → y.val.charpoly.Separable) := fun w => by
     by_cases h : w = w₁
     · subst h

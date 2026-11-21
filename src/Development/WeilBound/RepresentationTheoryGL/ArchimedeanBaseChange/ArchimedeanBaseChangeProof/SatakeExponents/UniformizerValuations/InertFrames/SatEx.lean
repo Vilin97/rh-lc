@@ -55,9 +55,9 @@ theorem satEx : SatEx := by
   have hs' : GlobalTheory.LGrp.IsSpherical σ'.ρ (KU (cj w) n) := by
     obtain ⟨v, hv, h0⟩ := (Submodule.ne_bot_iff _).1 hfix
     refine (Submodule.ne_bot_iff _).2 ⟨v, (hfx _ v).2 (GlobalTheory.LGrp.mem_fixed.2 fun k hk => ?_), h0⟩
-    have hk1 : (p k).1 ∈ GlobalTheory.LFun.KGL w n := (Subgroup.mem_subgroupOf.1 (Subgroup.mem_comap.1 hk)).2
+    have hk1 : (p k).1 ∈ GlobalTheory.LFun.KGL w (n := n) := (Subgroup.mem_subgroupOf.1 (Subgroup.mem_comap.1 hk)).2
     have e : k.1 = b * (p k).1 * b⁻¹ := by rw [hp]; group
-    have hk2 : k.1 ∈ GlobalTheory.LFun.KGL w n := by
+    have hk2 : k.1 ∈ GlobalTheory.LFun.KGL w (n := n) := by
       rw [e]
       exact mul_mem (mul_mem hb.1 hk1) (inv_mem hb.1)
     exact GlobalTheory.LGrp.mem_fixed.1 hv k (Subgroup.mem_subgroupOf.2 hk2)

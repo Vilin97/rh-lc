@@ -193,7 +193,7 @@ private theorem kS_vec {n : ℕ} {s : HidaSetting l L Ω} (V : s.Lev) (hV : V.S'
     ∃ φ ∈ σ, φ ≠ 0 ∧ ∀ k ∈ kS n s, RU L n k φ = φ := by
   obtain ⟨hund, hspl⟩ := UpperTheory.under_chosen_place_and_isSplitAt_of_decomp_le l L Ω s
   have hsplit : ∀ w : Plc L, w.under (𝓞 (Lp L)) ∈ s.S → IsSplitAt w := fun w hw => hspl w (V.split _ (hV ▸ hw))
-  have hKO : ∀ u : Plc L, KO (u.adicCompletion L) (Fin n) = GlobalTheory.LFun.KGL u n :=
+  have hKO : ∀ u : Plc L, KO (u.adicCompletion L) (Fin n) = GlobalTheory.LFun.KGL u (n := n) :=
     fun u => GlobalTheory.SmGL.SphCompletion.KO_completion u n
   have hT : ((fun w : Plc L => w.under (𝓞 (Lp L))) ⁻¹' s.S).Finite := by
     refine (hV ▸ V.fin : s.S.Finite).preimage' fun v _ => ?_

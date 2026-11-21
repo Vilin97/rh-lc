@@ -116,7 +116,7 @@ theorem isFrameAt_bc (h2 : ∀ x : E, ψ (τ x) = algebraMap E _ x) (h3 : ∀ a,
 
 omit [Algebra F E] in
 theorem bc_mem_KGL_iff (h3 : ∀ a, Valued.v (ψ a) = Valued.v a) {x : GL (Fin n) (Fv F v)} :
-    bc ψ.toRingHom x ∈ KGL w n ↔ x ∈ GLint (Fin n) (v.adicCompletionIntegers F).toSubring := by
+    bc ψ.toRingHom x ∈ KGL w (n := n) ↔ x ∈ GLint (Fin n) (v.adicCompletionIntegers F).toSubring := by
   rw [mem_GLint_iff, mem_GLint_iff]
   exact and_congr (forall₂_congr fun _ _ => map_mem_Ov_iff h3) (forall₂_congr fun _ _ => map_mem_Ov_iff h3)
 

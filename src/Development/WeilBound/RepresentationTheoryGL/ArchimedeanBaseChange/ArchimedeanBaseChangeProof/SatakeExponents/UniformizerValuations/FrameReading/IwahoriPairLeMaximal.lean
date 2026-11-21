@@ -27,7 +27,7 @@ theorem maximal_pair_isCompact (a b : ℕ) (w : Pl E) : IsCompact (K2 a b w : Se
   rw [K2, Subgroup.coe_prod]
   exact (GlobalTheory.CompanionTheory.IwLevels.isCompact_KGL w a).prod (GlobalTheory.CompanionTheory.IwLevels.isCompact_KGL w b)
 
-theorem KGL_open (w : Pl E) (m : ℕ) : IsOpen (GlobalTheory.LFun.KGL w m : Set (GLw m w)) := by
+theorem KGL_open (w : Pl E) (m : ℕ) : IsOpen (GlobalTheory.LFun.KGL w (n := m) : Set (GLw m w)) := by
   rw [GlobalTheory.CompanionTheory.IwLevels.KGL_eq_KO]
   exact GlobalTheory.SplitFlip.isOpen_KO
 

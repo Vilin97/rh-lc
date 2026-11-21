@@ -14,7 +14,7 @@ open scoped Classical
 
 private noncomputable def fixW {E : Type} [Field E] [NumberField E] [IsCMField E] (n : ℕ)
     (w : HeightOneSpectrum (𝓞 E)) : Submodule ℂ (UA E n → ℂ) where
-  carrier := {ψ | ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w n → RU E n y ψ = ψ}
+  carrier := {ψ | ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n y ψ = ψ}
   add_mem' ha hb y hy hk := by rw [map_add (f := _), ha y hy hk, hb y hy hk]
   zero_mem' _ _ _ := map_zero _
   smul_mem' c _ ha y hy hk := by rw [map_smul, ha y hy hk]
@@ -46,7 +46,7 @@ theorem UpperTheory.V.Z.Int.vecForm :
   let π : GlobalTheory.DefU.AutSub E n := ⟨V, hV⟩
   let N : Submodule ℂ (UA E n → ℂ) := V ⊓ fixW n w
   have hNV : N ≤ V := inf_le_left
-  have hmemN : ∀ ψ, ψ ∈ N ↔ ψ ∈ V ∧ ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w n → RU E n y ψ = ψ :=
+  have hmemN : ∀ ψ, ψ ∈ N ↔ ψ ∈ V ∧ ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n y ψ = ψ :=
     fun _ => Iff.rfl
   have hst : ∀ (x : infU E n), ∀ ψ ∈ N, ((RU E n).comp (infU E n).subtype) x ψ ∈ N := by
     intro x ψ hψ

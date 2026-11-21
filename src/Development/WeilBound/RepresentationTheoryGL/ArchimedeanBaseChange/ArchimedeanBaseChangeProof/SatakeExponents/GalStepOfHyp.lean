@@ -31,7 +31,7 @@ structure Pre (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) where
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 def Pre.Sat (D : Pre E n) (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ) : Prop :=
-  ∃ b : Fin D.c → Multiset ℂˣ, (∀ i, GlobalTheory.LGrp.IsSpherical (D.σ i w).ρ (GlobalTheory.LFun.KGL w (D.N i)) ∧
+  ∃ b : Fin D.c → Multiset ℂˣ, (∀ i, GlobalTheory.LGrp.IsSpherical (D.σ i w).ρ (GlobalTheory.LFun.KGL w (n := (D.N i))) ∧
     GlobalTheory.LFun.HasSatGL w (D.σ i w).ρ (b i)) ∧ ∑ i, b i = B
 
 def Pre.Reg (D : Pre E n) : Prop := ∀ τ, ∃ lam : DomWeight n, ∑ i, D.m i τ = infOfWeight lam

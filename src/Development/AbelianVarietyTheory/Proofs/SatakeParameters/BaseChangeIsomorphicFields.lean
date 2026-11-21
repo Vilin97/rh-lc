@@ -79,7 +79,7 @@ theorem hasSatGL_of_ringEquiv (c : v.adicCompletion K ≃+* w.adicCompletion M) 
   have hO : ∀ x, c x ∈ Ov M w ↔ x ∈ Ov K v := fun x => by
     change Valued.v (c x) ≤ 1 ↔ Valued.v x ≤ 1
     rw [hc]
-  have hK : ∀ g, g ∈ KGL v n ↔ G g ∈ KGL w n := fun g => by
+  have hK : ∀ g, g ∈ KGL v (n := n) ↔ G g ∈ KGL w (n := n) := fun g => by
     simp only [KGL, GlobalTheory.AdelicU.mem_GLint_iff, ← map_inv, hGv, hO]
   have hf : ∀ g y, T.toLinearMap ((ρ.comp G.symm.toMonoidHom) g y) = ρ' g (T.toLinearMap y) := fun g y => by
     change T (ρ (G.symm g) y) = ρ' g (T y)

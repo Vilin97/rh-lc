@@ -12,7 +12,7 @@ open scoped TensorProduct Classical
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 private theorem cong_conj_iff (hG : CongGrpEx) {E : Type} [Field E] [NumberField E] [IsCMField E] (n N : ℕ) (hN : 0 < N)
-    (u : Plc E) (a : GLw n u) (ha : a ∈ GlobalTheory.LFun.KGL u n) (y : GLw n u) :
+    (u : Plc E) (a : GLw n u) (ha : a ∈ GlobalTheory.LFun.KGL u (n := n)) (y : GLw n u) :
     (Cong1 N u (a * y * a⁻¹) ∧ Cong1 N u (a * y * a⁻¹)⁻¹) ↔ Cong1 N u y ∧ Cong1 N u y⁻¹ := by
   obtain ⟨K, hc, -, -, -, hn, -, -⟩ := hG E n N hN u
   rw [← hc, ← hc]

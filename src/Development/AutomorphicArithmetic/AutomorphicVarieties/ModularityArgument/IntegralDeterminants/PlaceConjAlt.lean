@@ -69,8 +69,8 @@ def VecForm : Prop :=
     (∀ v, InfinitePlace.mk (φ v) = v) → ∀ lam : InfinitePlace E → DomWeight n, (∀ v, HasWeightAt σ (φ v) (lam v)) →
     ∀ w : HeightOneSpectrum (𝓞 E), IsUnramU σ w → ∃ (f : MultilinearMap ℂ (fun v => nablaSq ℂ n (lam v)) (UA E n → ℂ)) (K : Subgroup (finU E n)),
       f ≠ 0 ∧ (∀ x, f x ∈ σ) ∧ (∀ g ∈ infU E n, ∀ x, f (fun v => GlobalTheory.Branching.sqRep ℂ n (lam v) (cEmb (φ v) g) (x v)) = RU E n g (f x)) ∧
-      IsOpen (K : Set (finU E n)) ∧ (∀ k ∈ K, ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u n) ∧ (∀ k ∈ K, ∀ x, RU E n k.1 (f x) = f x) ∧
-      ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w n → ∀ x, RU E n y (f x) = f x
+      IsOpen (K : Set (finU E n)) ∧ (∀ k ∈ K, ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := n)) ∧ (∀ k ∈ K, ∀ x, RU E n k.1 (f x) = f x) ∧
+      ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) → ∀ x, RU E n y (f x) = f x
 
 def EigAll : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (σ : Submodule ℂ (UA E n → ℂ)), IsAutRepU σ → ∀ w : HeightOneSpectrum (𝓞 E), IsSplitAt w →
@@ -78,7 +78,7 @@ def EigAll : Prop :=
     GlobalTheory.LFun.HasSatGL w τ.ρ B → IsUnramU σ w ∧ B.card = n ∧ ∀ j ≤ n, ∃ s s' : Finset (UA E n),
       (∀ x ∈ s, x ∈ locU n w ∧ (∀ a b, Valued.v ((cLoc w x).val a b) ≤ 1) ∧ Valued.v (cLoc w x).val.det = WithZero.exp (-(j : ℤ))) ∧
       (∀ x ∈ s', x ∈ locU n w ∧ (∀ a b, Valued.v ((cLoc w x⁻¹).val a b) ≤ 1) ∧ Valued.v (cLoc w x⁻¹).val.det = WithZero.exp (-(j : ℤ))) ∧
-      ∀ f ∈ σ, (∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w n → RU E n y f = f) →
+      ∀ f ∈ σ, (∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n y f = f) →
         (normV w : ℂ) ^ j.choose 2 • ∑ x ∈ s, RU E n x f = (algSat n (normV w) B).esymm j • f ∧
         (normV w : ℂ) ^ j.choose 2 • ∑ x ∈ s', RU E n x f = (algSat n (normV w) (B.map (·⁻¹))).esymm j • f
 
@@ -86,7 +86,7 @@ def OpBound : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ), 1 ≤ n → ∀ σ : Submodule ℂ (UA E n → ℂ), IsAutRepU σ →
     ∀ lam : (E →+* ℂ) → DomWeight n, (∀ τ, HasWeightAt σ τ (lam τ)) → ∀ w : HeightOneSpectrum (𝓞 E), IsSplitAt w → IsUnramU σ w →
     ∀ lo hi : (E →+* ℂ) → ℤ, (∀ τ i, lo τ ≤ (lam τ).w i ∧ (lam τ).w i ≤ hi τ) → ∀ (j : ℕ) (s : Finset (UA E n)) (a : ℂ),
-    (∀ f ∈ σ, (∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w n → RU E n y f = f) → ∑ x ∈ s, RU E n x f = a • f) →
+    (∀ f ∈ σ, (∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n y f = f) → ∑ x ∈ s, RU E n x f = a • f) →
     ((∀ x ∈ s, x ∈ locU n w ∧ (∀ a b, Valued.v ((cLoc w x).val a b) ≤ 1) ∧ Valued.v (cLoc w x).val.det = WithZero.exp (-(j : ℤ))) →
       nu ι a ≤ (∏ τ ∈ Ov ι w, nu ι (τ (unif w : E)) ^ (-hi τ)) ^ j) ∧
     ((∀ x ∈ s, x ∈ locU n w ∧ (∀ a b, Valued.v ((cLoc w x⁻¹).val a b) ≤ 1) ∧ Valued.v (cLoc w x⁻¹).val.det = WithZero.exp (-(j : ℤ))) →

@@ -27,7 +27,7 @@ private theorem hasSat_iff {K : Type} [Field K] [NumberField K] [IsTotallyComple
   have hB' : GlobalTheory.LFun.HasSatGL v (π.locRep v) B := hB
   obtain ⟨x, hx, hx0⟩ := (Submodule.ne_bot_iff _).1 hB'.1
   obtain ⟨y, hy0, hy⟩ := LocSph.exists_fixed_of_mem_iSup ((finRep K n).comp (locGL K n v)) τ.ρ τ.irred
-    (fun f : LocSph.Maps π v τ => f.1) (fun f => f.2.2) (GlobalTheory.LFun.KGL v n : Set _) x.1 (fun e => hx0 (Subtype.ext e))
+    (fun f : LocSph.Maps π v τ => f.1) (fun f => f.2.2) (GlobalTheory.LFun.KGL v (n := n) : Set _) x.1 (fun e => hx0 (Subtype.ext e))
     (fun k hk => congrArg Subtype.val (GlobalTheory.LGrp.mem_fixed.1 hx k hk))
     (by rw [LocSph.iSup_range_eq π v τ hτ]; exact x.2)
   obtain ⟨B', hB''⟩ := GlobalTheory.SatInd.exists_hasSatGL_of_isIrreducible τ.smooth τ.irred
@@ -36,7 +36,7 @@ private theorem hasSat_iff {K : Type} [Field K] [NumberField K] [IsTotallyComple
 
 private theorem isSpherical_iff {K : Type} [Field K] [NumberField K] {n : ℕ} (v : HeightOneSpectrum (𝓞 K))
     (τ : SmIrr (GL (Fin n) (v.adicCompletion K))) :
-    IsSpherical τ.ρ ↔ GlobalTheory.PRep.fixed τ.ρ (GlobalTheory.LFun.KGL v n) ≠ ⊥ := by
+    IsSpherical τ.ρ ↔ GlobalTheory.PRep.fixed τ.ρ (GlobalTheory.LFun.KGL v (n := n)) ≠ ⊥ := by
   have hK := GlobalTheory.SmGL.SphCompletion.KO_completion (F := K) v n
   unfold GlobalTheory.SmGL.IsSpherical GlobalTheory.SmGL.IsSphericalFor
   rw [hK]

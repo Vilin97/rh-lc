@@ -143,7 +143,7 @@ theorem heckeVec_divInd {D : D7} [IsCMField D.host.E] {V : HSp D}
     (hφ : ∀ x ∈ KP V.rank P, RU D.host.E V.rank x φ = φ) {d : List ℤ} {R : Finset (GA D V)}
     (hR : GlobalTheory.Hk3.SphOp V P d R) :
     GlobalTheory.LFun.heckeVec ((RU D.host.E V.rank).comp (locU V.rank P).subtype)
-      ((GlobalTheory.LFun.KGL P V.rank).comap ((cLoc P).comp (locU V.rank P).subtype))
+      ((GlobalTheory.LFun.KGL P (n := V.rank)).comap ((cLoc P).comp (locU V.rank P).subtype))
       (fun x => divInd (Ov D.host.E P) d (((cLoc P).comp (locU V.rank P).subtype) x)) φ =
       ∑ γ ∈ R, RU D.host.E V.rank ((cj j h₀).symm γ) φ := by
   classical
@@ -177,7 +177,7 @@ theorem heckeVec_divInd {D : D7} [IsCMField D.host.E] {V : HSp D}
   · intro y hy
     obtain ⟨γ, ⟨a1, a2⟩, a3⟩ := h2 y.val y.2 hy
     refine ⟨γ, ⟨a1, ?_⟩, fun δ hδ => a3 δ ⟨hδ.1, ?_⟩⟩
-    · change cLoc P ((g γ).val⁻¹ * y.val) ∈ GlobalTheory.LFun.KGL P V.rank
+    · change cLoc P ((g γ).val⁻¹ * y.val) ∈ GlobalTheory.LFun.KGL P (n := V.rank)
       rw [hg γ a1]
       exact a2.2
     · rw [← hg δ hδ.1]

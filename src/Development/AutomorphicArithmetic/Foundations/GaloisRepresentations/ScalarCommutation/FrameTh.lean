@@ -40,9 +40,9 @@ private theorem frame_th {E : Type} [Field E] [NumberField E] [IsCMField E] {A :
 
 private theorem th_mem {E : Type} [Field E] [NumberField E] [IsCMField E] {n p : ℕ} (hn : 0 < n) (w₀ : Plc E) (S₀ : Finset (Plc E))
     (Kw : ∀ w : Plc E, Subgroup (GLw n w)) (hS : ∀ u ∈ S₀, (p : 𝓞 E) ∉ u.asIdeal) (k : GUf E n)
-    (h1 : ∀ w : Plc E, (p : 𝓞 E) ∉ w.asIdeal → comp w k = 1) (h2 : ∀ w : Plc E, (p : 𝓞 E) ∈ w.asIdeal → comp w k ∈ KGL w n) :
+    (h1 : ∀ w : Plc E, (p : 𝓞 E) ∉ w.asIdeal → comp w k = 1) (h2 : ∀ w : Plc E, (p : 𝓞 E) ∈ w.asIdeal → comp w k ∈ KGL w (n := n)) :
     th k ∈ lev S₀ Kw := by
-  have hall : ∀ w : Plc E, comp w k ∈ KGL w n := fun w => by
+  have hall : ∀ w : Plc E, comp w k ∈ KGL w (n := n) := fun w => by
     by_cases hw : (p : 𝓞 E) ∈ w.asIdeal
     · exact h2 w hw
     · rw [h1 w hw]; exact one_mem _

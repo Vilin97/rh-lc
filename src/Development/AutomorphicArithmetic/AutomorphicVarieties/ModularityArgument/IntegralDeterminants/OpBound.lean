@@ -136,7 +136,7 @@ private theorem intDet_mul {w : HeightOneSpectrum (𝓞 E)} {a b : ℕ} {g h : G
     ring
 
 private theorem intDet_of_KGL {w : HeightOneSpectrum (𝓞 E)} {g : GL (Fin n) (w.adicCompletion E)}
-    (hg : g ∈ GlobalTheory.LFun.KGL w n) : IntDet w 0 g :=
+    (hg : g ∈ GlobalTheory.LFun.KGL w (n := n)) : IntDet w 0 g :=
   ⟨((GlobalTheory.BCT.GlobLev.mem_KGL_iff_val w g).1 hg).1, by
     simpa using GlobalTheory.HenQ.valued_det_of_KGL hg⟩
 
@@ -324,7 +324,7 @@ private def RB {u : HeightOneSpectrum (𝓞 E)} (ψ : u.adicCompletion E →+* �
 private theorem core (hn : 1 ≤ n) (σ : Submodule ℂ (UA E n → ℂ)) (hσ : IsAutRepU σ) (lam : (E →+* ℂ) → DomWeight n)
     (hlam : ∀ τ, HasWeightAt σ τ (lam τ)) (w : HeightOneSpectrum (𝓞 E)) (hw : IsSplitAt w) (hU : IsUnramU σ w)
     (lo hi : (E →+* ℂ) → ℤ) (hlh : ∀ τ i, lo τ ≤ (lam τ).w i ∧ (lam τ).w i ≤ hi τ) (s : Finset (UA E n)) (a : ℂ)
-    (hs : ∀ f ∈ σ, (∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w n → RU E n y f = f) → ∑ x ∈ s, RU E n x f = a • f)
+    (hs : ∀ f ∈ σ, (∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n y f = f) → ∑ x ∈ s, RU E n x f = a • f)
     (hsU : ∀ x ∈ s, x ∈ locU n w) (B : (E →+* ℂ) → ℝ) (hB : ∀ τ, 0 ≤ B τ)
     (hW : ∀ L : List (UA E n), (∀ x ∈ L, x ∈ s) → ∀ (u : HeightOneSpectrum (𝓞 E)), u = w → ∀ τ ∈ Ov ι w,
       ∀ ψ : u.adicCompletion E →+* ℂ, (∀ x : E, ψ (algebraMap E _ x) = τ x) → (∀ x, nu ι (ψ x) ≤ 1 ↔ Valued.v x ≤ 1) →

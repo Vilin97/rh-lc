@@ -127,12 +127,12 @@ theorem UpperTheory.V.Z.Mult.Pi.seenTrA :
   obtain ⟨-, -, hKo, hKc, -⟩ := UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm.unitHecke E n 0 0 w
   have hNc : IsCompact (N : Set (GLw n w)) :=
     hKc.of_isClosed_subset (Subgroup.isClosed_of_isOpen N hNo) hNK
-  haveI : Finite ((KGL w n : Subgroup (GLw n w)) ⧸ N.subgroupOf (KGL w n)) :=
-    GlobalTheory.TwTrLevel.finite_quot (KGL w n) (KGL w n) N hKc hKo hNo le_rfl
-  have hi : N.relIndex (KGL w n) ≠ 0 := Subgroup.index_ne_zero_of_finite
-  have hiC : ((N.relIndex (KGL w n) : ℕ) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr hi
+  haveI : Finite ((KGL w (n := n) : Subgroup (GLw n w)) ⧸ N.subgroupOf (KGL w (n := n))) :=
+    GlobalTheory.TwTrLevel.finite_quot (KGL w (n := n)) (KGL w (n := n)) N hKc hKo hNo le_rfl
+  have hi : N.relIndex (KGL w (n := n)) ≠ 0 := Subgroup.index_ne_zero_of_finite
+  have hiC : ((N.relIndex (KGL w (n := n)) : ℕ) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr hi
   intro φ₁ φ₂ hb
-  refine tr_core hTr hCv τ.ρ (KGL w n) N hKo hKc hNo hNc hNK hiC (hAdm E n w τ N hNo) _ _ _ (hb false) (hb true) ?_
+  refine tr_core hTr hCv τ.ρ (KGL w (n := n)) N hKo hKc hNo hNc hNK hiC (hAdm E n w τ N hNo) _ _ _ (hb false) (hb true) ?_
   funext g
   have h₁ := hb false
   have h₂ := hb true
@@ -151,7 +151,7 @@ theorem UpperTheory.V.Z.Mult.Pi.seenTrA :
   rw [hcv]
   unfold PositivityTheory.Rg.BcB.G8.seen
   rw [if_pos hw]
-  rw [hint_fst (KGL w n) N (KGL w 0) _ hNK ?_ hi]
+  rw [hint_fst (KGL w (n := n)) N (KGL w (n := 0)) _ hNK ?_ hi]
   · congr 1
     refine finsum_congr fun q => ?_
     rw [hpr]

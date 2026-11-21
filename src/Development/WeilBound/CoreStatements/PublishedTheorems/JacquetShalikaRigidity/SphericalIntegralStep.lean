@@ -33,7 +33,7 @@ theorem mem_Ov (w : Pl E) {x : w.adicCompletion E} (h : x ∈ (ValuativeRel.valu
   (le_one w x).1 ((Valuation.mem_integer_iff _ _).1 h)
 
 theorem int_KGL (w : Pl E) {x : GL (Fin k) (w.adicCompletion E)}
-    (hx : x ∈ GLnLocal.integralGL (w.adicCompletion E) k) : x ∈ KGL w k := by
+    (hx : x ∈ GLnLocal.integralGL (w.adicCompletion E) k) : x ∈ KGL w (n := k) := by
   obtain ⟨h1, h2⟩ := (GLnLocal.mem_integralGL_iff _ _).1 hx
   have hi : Function.Injective fun A : Matrix (Fin k) (Fin k) (Ov E w) => A.map (Ov E w).subtype :=
     Matrix.map_injective Subtype.val_injective

@@ -60,14 +60,14 @@ private theorem mc_fix {G V H : Type} [Group G] [AddCommGroup V] [Module ℂ V] 
   exact this
 
 private theorem tj_fin {K : Type} [Field K] [NumberField K] (w : P K) (n : ℕ) {ϖ : Kv w} (hϖ : Formalism.UG.IsUnifV K w ϖ) (j : ℕ) :
-    (Function.support fun c : GL (Fin n) (Kv w) ⧸ GlobalTheory.LFun.KGL w n => Formalism.UG.Tj ℂ n (Formalism.UG.Ov K w) ϖ j c.out).Finite := by
+    (Function.support fun c : GL (Fin n) (Kv w) ⧸ GlobalTheory.LFun.KGL w (n := n) => Formalism.UG.Tj ℂ n (Formalism.UG.Ov K w) ϖ j c.out).Finite := by
   have := GlobalTheory.LFun.finite_heckeVec (Formalism.UG.Final.GLintComm K w n) (GlobalTheory.LFun.Tj_mem_hecke hϖ j)
     (1 : Representation ℂ (GL (Fin n) (Kv w)) ℂ) (1 : ℂ)
   simpa using this
 
 private theorem tj_sum {K : Type} [Field K] [NumberField K] (w : P K) (n : ℕ) {ϖ : Kv w} (hϖ : Formalism.UG.IsUnifV K w ϖ) (j : ℕ)
     (W : GL (Fin n) (Kv w) → ℂ) (g : GL (Fin n) (Kv w)) :
-    ∑ᶠ c : GL (Fin n) (Kv w) ⧸ GlobalTheory.LFun.KGL w n, Formalism.UG.Tj ℂ n (Formalism.UG.Ov K w) ϖ j c.out * W (g * c.out) =
+    ∑ᶠ c : GL (Fin n) (Kv w) ⧸ GlobalTheory.LFun.KGL w (n := n), Formalism.UG.Tj ℂ n (Formalism.UG.Ov K w) ϖ j c.out * W (g * c.out) =
       ∑ c ∈ (tj_fin w n hϖ j).toFinset, Formalism.UG.Tj ℂ n (Formalism.UG.Ov K w) ϖ j c.out * W (g * c.out) := by
   refine finsum_eq_sum_of_support_subset _ fun c hc => ?_
   simp only [Set.Finite.coe_toFinset, Function.mem_support] at hc ⊢
@@ -76,7 +76,7 @@ private theorem tj_sum {K : Type} [Field K] [NumberField K] (w : P K) (n : ℕ) 
 private theorem eig_span {K : Type} [Field K] [NumberField K] (w : P K) {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (ρ : Representation ℂ (GL (Fin n) (Kv w)) V) {B : Multiset ℂˣ} (hB : GlobalTheory.LFun.HasSatGL w ρ B)
     {c : GL (Fin n) (Kv w) → ℂ}
-    (hc : c ∈ Submodule.span ℂ {c | ∃ (Λ : V →ₗ[ℂ] ℂ) (f : V), (∀ k ∈ GlobalTheory.LFun.KGL w n, ρ k f = f) ∧ c = fun x => Λ (ρ x f)}) :
+    (hc : c ∈ Submodule.span ℂ {c | ∃ (Λ : V →ₗ[ℂ] ℂ) (f : V), (∀ k ∈ GlobalTheory.LFun.KGL w (n := n), ρ k f = f) ∧ c = fun x => Λ (ρ x f)}) :
     Eig w B c := by
   induction hc using Submodule.span_induction with
   | mem c h =>
@@ -113,7 +113,7 @@ private theorem eig_span {K : Type} [Field K] [NumberField K] (w : P K) {n : ℕ
 
 private theorem kgl_map {K M : Type} [Field K] [NumberField K] [Field M] [NumberField M] {n : ℕ} {v : P K} {w : P M}
     (c : Kv v ≃+* Kv w) (hc : ∀ x, Valued.v (c x) = Valued.v x) (g : GL (Fin n) (Kv v)) :
-    g ∈ GlobalTheory.LFun.KGL v n ↔ Matrix.GeneralLinearGroup.map c.toRingHom g ∈ GlobalTheory.LFun.KGL w n := by
+    g ∈ GlobalTheory.LFun.KGL v (n := n) ↔ Matrix.GeneralLinearGroup.map c.toRingHom g ∈ GlobalTheory.LFun.KGL w (n := n) := by
   have hO : ∀ x, c x ∈ Formalism.UG.Ov M w ↔ x ∈ Formalism.UG.Ov K v := fun x => by
     change Valued.v (c x) ≤ 1 ↔ Valued.v x ≤ 1
     rw [hc]
@@ -135,20 +135,20 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.splitEig :
     ext a b
     simp [gm, gi]
   let c : GL (Fin 2) (Kv v) → ℂ := fun x => WE D Φ.1 (g * lc w (gm x))
-  have hinv : ∀ x (k : GlobalTheory.LFun.KGL v 2), c (x * (GlobalTheory.LFun.KGL v 2).subtype k) = c x := by
+  have hinv : ∀ x (k : GlobalTheory.LFun.KGL v (n := 2)), c (x * (GlobalTheory.LFun.KGL v (n := 2)).subtype k) = c x := by
     intro x k
-    have hk : gm k.1 ∈ GlobalTheory.LFun.KGL w 2 := (kgl_map i hv k.1).1 k.2
+    have hk : gm k.1 ∈ GlobalTheory.LFun.KGL w (n := 2) := (kgl_map i hv k.1).1 k.2
     change WE D Φ.1 (g * lc w (gm (x * k.1))) = WE D Φ.1 (g * lc w (gm x))
     unfold WE
     refine integral_congr_ae (Filter.Eventually.of_forall fun z => ?_)
     beta_reduce
     rw [map_mul, map_mul, ← mul_assoc g, ← mul_assoc _ _ (lc w (gm k.1)), hFix _ _ hk]
-  haveI : CompactSpace (GlobalTheory.LFun.KGL v 2) :=
+  haveI : CompactSpace (GlobalTheory.LFun.KGL v (n := 2)) :=
     isCompact_iff_compactSpace.mp (GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL v 2).2
-  have hsm : ∀ f, ∀ᶠ h in 𝓝 (1 : GlobalTheory.LFun.KGL v 2), π.locRep v ((GlobalTheory.LFun.KGL v 2).subtype h) f = f := fun f =>
-    (continuous_subtype_val.tendsto (1 : GlobalTheory.LFun.KGL v 2)).eventually
+  have hsm : ∀ f, ∀ᶠ h in 𝓝 (1 : GlobalTheory.LFun.KGL v (n := 2)), π.locRep v ((GlobalTheory.LFun.KGL v (n := 2)).subtype h) f = f := fun f =>
+    (continuous_subtype_val.tendsto (1 : GlobalTheory.LFun.KGL v (n := 2))).eventually
       (((UpperTheory.ConvolutionTheory.R2.I.locSm ℚ π v).1 f).mem_nhds (by simp))
-  have h1 := mc_fix (π.locRep v) (GlobalTheory.LFun.KGL v 2).subtype hsm hmc hinv
+  have h1 := mc_fix (π.locRep v) (GlobalTheory.LFun.KGL v (n := 2)).subtype hsm hmc hinv
   let ρ' : Representation ℂ (GL (Fin 2) (Kv w)) π.V := (π.locRep v).comp gi
   have hq' : Formalism.UG.qV E w = Formalism.UG.qV ℚ v := by
     simpa [Formalism.UG.qV, Ideal.absNorm_apply, Submodule.cardQuot_apply, normV] using hq
@@ -165,5 +165,5 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.splitEig :
   refine eig_span w ρ' hB' ((Submodule.map_span_le _ _ _).2 ?_ (Submodule.mem_map_of_mem h1))
   rintro _ ⟨Λ, f, hf, rfl⟩
   refine Submodule.subset_span ⟨Λ, f, fun k hk => ?_, rfl⟩
-  have : gi k ∈ GlobalTheory.LFun.KGL v 2 := (kgl_map i hv (gi k)).2 (by rwa [hgm])
+  have : gi k ∈ GlobalTheory.LFun.KGL v (n := 2) := (kgl_map i hv (gi k)).2 (by rwa [hgm])
   exact hf ⟨gi k, this⟩

@@ -89,7 +89,7 @@ private theorem isUnit_nat (w : HeightOneSpectrum (𝓞 F)) {M : ℕ} (hM : (M :
   · simpa using mul_inv_cancel₀ h0
 
 theorem locGL_mem_KLev (n : ℕ) (w : HeightOneSpectrum (𝓞 F)) {M : ℕ} (hM : (M : 𝓞 F) ∉ w.asIdeal)
-    {k : GL (Fin n) (w.adicCompletion F)} (hk : k ∈ GlobalTheory.LFun.KGL w n) : locGL F n w k ∈ KLev F n M := by
+    {k : GL (Fin n) (w.adicCompletion F)} (hk : k ∈ GlobalTheory.LFun.KGL w (n := n)) : locGL F n w k ∈ KLev F n M := by
   obtain ⟨k, rfl⟩ := hk
   refine ⟨cornerGL n (sInt w) k, map_cornerGL_of_zero _ _ (fun x => ?_) k, ?_⟩
   · obtain ⟨y, rfl⟩ := (isUnit_nat w hM).dvd (a := x)
@@ -111,7 +111,7 @@ theorem sat_of_isotypic (hS : SatLoc) {n M : ℕ} {V : Type} [AddCommGroup V] [M
     ∃ B, GlobalTheory.LFun.HasSatGL w (ρ.comp (locGL F n w)) B := by
   obtain ⟨h1, h2⟩ := hS F n w σ
   obtain ⟨x, hx0, hx⟩ := hρ
-  have hK : IsCompact (GlobalTheory.LFun.KGL w n : Set (GL (Fin n) (w.adicCompletion F))) :=
+  have hK : IsCompact (GlobalTheory.LFun.KGL w (n := n) : Set (GL (Fin n) (w.adicCompletion F))) :=
     GlobalTheory.LFun.IntPtsUnitary.isCompact_GLint _ (PI.AdicCompletionValuation.isCompact_adicCompletionIntegers F w)
   obtain ⟨B, hB⟩ := h1 (hasFixed_of_sum σ.ρ σ.smooth (ρ.comp (locGL F n w)) _ hK hi.2
     ⟨x, hx0, fun u hu => hx _ (locGL_mem_KLev n w hw hu)⟩)

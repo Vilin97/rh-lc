@@ -17,7 +17,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.fixTr :
   intro K _ _ v f d hd
   have hl := (lcLaws K v).2.2.2.2.2.2 d
   set x := Matrix.GeneralLinearGroup.map (cp v) d with hx
-  have hd' : x ∈ GlobalTheory.LFun.KGL v 2 := hd
+  have hd' : x ∈ GlobalTheory.LFun.KGL v (n := 2) := hd
   refine ⟨fun hf g k hk => ?_, fun B hB g => ?_⟩
   · show f (g * lc v k * d) = f (g * d)
     rw [mul_assoc, hl, ← mul_assoc, hf _ _ (mul_mem (mul_mem (inv_mem hd') hk) hd')]

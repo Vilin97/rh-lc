@@ -61,7 +61,7 @@ theorem UpperTheory.V.Hi.partU :
   have hwt := partUR2Wt l L Ω s n hn V Q c ι m τ₀ lam d e ξ hb σ hσ hY
   have hex : ∀ w : Plc L, IsSplitAt w → ∃ τ : SmIrr (GLw n w),
       IsCompAlong σ (locU n w) ((cLoc w).comp (locU n w).subtype) τ.ρ ∧
-        (IsUnramU σ w → Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w n)) := fun w hw => by
+        (IsUnramU σ w → Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w (n := n))) := fun w hw => by
     obtain ⟨τ, -, h1, h2⟩ := GlobalTheory.DefU.exists_locComp_split L n ⟨σ, hσ⟩ w hw
     refine ⟨τ, h1, fun h => ?_⟩
     obtain ⟨v, hv, h0⟩ := (Submodule.ne_bot_iff _).1 (h2.1 h)

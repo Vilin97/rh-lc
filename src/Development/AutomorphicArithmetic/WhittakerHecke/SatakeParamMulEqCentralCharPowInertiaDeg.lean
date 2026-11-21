@@ -101,7 +101,7 @@ theorem UpperTheory.satake_param_mul_eq_central_char_pow_inertiaDeg :
   obtain ⟨g, hg⟩ : ∃ g, x.1.1 g ≠ 0 := by
     by_contra! hn
     exact hx.1 (Subtype.ext (Subtype.ext (funext hn)))
-  have hfix : ∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w 2, x.1.1 (g * finGL E 2 (locGL E 2 w k)) = x.1.1 g := fun g k hk =>
+  have hfix : ∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w (n := 2), x.1.1 (g * finGL E 2 (locGL E 2 w k)) = x.1.1 g := fun g k hk =>
     congrFun (congrArg (fun y : P.V => y.1.1) (GlobalTheory.LGrp.mem_fixed.1 hx.2.1 k hk)) g
   have hEig : UpperTheory.V.Af.Smo.EigAt w {α, β} x.1.1 := UpperTheory.V.Af.StrongMultiplicityOne.eigOfSat E 2 P w _ hB x.1 x.2 hfix
   obtain ⟨R, -, -, hR⟩ := H.heckeExpl E w _ hϖ

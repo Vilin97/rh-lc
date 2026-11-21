@@ -33,14 +33,14 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ}
 
 theorem integral_iff (x : UA E a) :
     GeneralLinearGroup.map (pFin E) (x : GA E a) ∈ AdelicGLn.integralFiniteGL E a ↔
-      ∀ u, cLoc u x ∈ GlobalTheory.LFun.KGL u a := by
+      ∀ u, cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a) := by
   rw [AdelicGLn.mem_integralFiniteGL_iff, ← map_inv]
   simp only [mem_KGL_iff_val, ← map_inv, GroundTheory.Global.mem_integralFiniteAdeles]
   exact ⟨fun h u => ⟨fun i j => h.1 i j u, fun i j => h.2 i j u⟩,
     fun h => ⟨fun i j u => (h u).1 i j, fun i j u => (h u).2 i j⟩⟩
 
 theorem exists_compact_integral : ∃ C : Set (UA E a), IsCompact C ∧
-    ∀ x ∈ finU E a, (∀ u, cLoc u x ∈ GlobalTheory.LFun.KGL u a) → x ∈ C := by
+    ∀ x ∈ finU E a, (∀ u, cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a)) → x ∈ C := by
   let Kf : Subgroup (finU E a) := (AdelicGLn.integralFiniteGL E a).comap (finPart E a)
   have hO : IsOpen (Kf : Set (finU E a)) := (AdelicGLn.isOpen_integralFiniteGL E a).preimage continuous_finPart
   have hc : IsCompact (Kf : Set (finU E a)) := by
@@ -107,7 +107,7 @@ theorem isClosed_levelOf (w₀ : HeightOneSpectrum (𝓞 E)) (H : HeightOneSpect
 
 theorem exists_compact_of_finset (H : HeightOneSpectrum (𝓞 E) → Subgroup (UA E a)) (hle : ∀ w, H w ≤ locU a w)
     (hc : ∀ w, IsCompact (H w : Set (UA E a))) (R : Finset (HeightOneSpectrum (𝓞 E))) :
-    ∃ C : Set (UA E a), IsCompact C ∧ ∀ x ∈ finU E a, (∀ u, (∀ r ∈ R, Apart u r) → cLoc u x ∈ GlobalTheory.LFun.KGL u a) →
+    ∃ C : Set (UA E a), IsCompact C ∧ ∀ x ∈ finU E a, (∀ u, (∀ r ∈ R, Apart u r) → cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a)) →
       (∀ r ∈ R, ∃ y ∈ H r, cLoc r y = cLoc r x) → x ∈ C := by
   classical
   induction R using Finset.induction_on with
@@ -130,7 +130,7 @@ theorem exists_compact_of_finset (H : HeightOneSpectrum (𝓞 E) → Subgroup (U
           rcases Finset.mem_insert.1 hr' with rfl | h
           · exact hur
           · exact hu r' h
-        · have hz : cLoc r (x * y⁻¹) ∈ GlobalTheory.LFun.KGL r a := by
+        · have hz : cLoc r (x * y⁻¹) ∈ GlobalTheory.LFun.KGL r (n := a) := by
             rw [map_mul, map_inv, hyx, mul_inv_cancel]; exact one_mem _
           rcases eq_or_eq_conjSrc (not_not.1 hur) with rfl | rfl
           · exact hz

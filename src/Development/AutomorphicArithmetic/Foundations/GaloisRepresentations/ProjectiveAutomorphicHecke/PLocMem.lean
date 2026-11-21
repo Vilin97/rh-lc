@@ -26,7 +26,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pLocMem_of :
   · intro u hu hcu
     have h1 : u ≠ w := fun h => hu (h ▸ hwS)
     have h2 : u ≠ cj w := fun h => hcu (by rw [h, hcc]; exact hwS)
-    rw [hone u h1 h2]; exact (GlobalTheory.LFun.KGL u n).one_mem
+    rw [hone u h1 h2]; exact (GlobalTheory.LFun.KGL u (n := n)).one_mem
   · intro u hu
     have h1 : u ≠ w := fun h => hwS (h ▸ hu)
     have h2 : u ≠ cj w := fun h => hcw (h ▸ hu)
@@ -38,4 +38,4 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pLocMem_of :
     · by_cases h2 : u = cj w
       · subst h2
         exact hIC E n (loc hw y) w hsim (by rw [comp_loc]; exact hy)
-      · rw [hone u h1 h2]; exact (GlobalTheory.LFun.KGL u n).one_mem
+      · rw [hone u h1 h2]; exact (GlobalTheory.LFun.KGL u (n := n)).one_mem

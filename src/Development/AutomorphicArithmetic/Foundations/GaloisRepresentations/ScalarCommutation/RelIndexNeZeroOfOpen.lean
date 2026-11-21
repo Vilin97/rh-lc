@@ -100,7 +100,7 @@ private theorem mul_lt_right {w : Plc E} {A B : Matrix (Fin n) (Fin n) (w.adicCo
   rw [map_mul]
   exact lt_of_le_of_lt (mul_le_mul' le_rfl (hB _ _)) (by simpa using hA i l)
 
-private theorem sub_lt_of_conj {w : Plc E} (a g : GLw n w) (ha : a ∈ KGL w n)
+private theorem sub_lt_of_conj {w : Plc E} (a g : GLw n w) (ha : a ∈ KGL w (n := n))
     (h : ∀ i k, Valued.v (((a * g * a⁻¹).val - 1) i k) < 1) (i k : Fin n) : Valued.v ((g.val - 1) i k) < 1 := by
   have hK := ((GlobalTheory.CompanionTheory.IwEntries.iwGL_KGL_entries E w n a).2).1 ha
   have e : g.val - 1 = (a⁻¹).val * ((a * g * a⁻¹).val - 1) * a.val := by
@@ -120,7 +120,7 @@ private theorem le_one_of_sub_lt {w : Plc E} {g : GLw n w} (h : ∀ i k, Valued.
   refine (Valuation.map_add _ _ _).trans (max_le (h i k).le ?_)
   by_cases hik : i = k <;> simp [hik, Matrix.one_apply]
 
-private theorem iw_of_cong {w : Plc E} (a g : GLw n w) (ha : a ∈ KGL w n)
+private theorem iw_of_cong {w : Plc E} (a g : GLw n w) (ha : a ∈ KGL w (n := n))
     (h : ∀ i k, Valued.v (((a * g * a⁻¹).val - 1) i k) < 1)
     (h' : ∀ i k, Valued.v (((a * g⁻¹ * a⁻¹).val - 1) i k) < 1) : g ∈ Iw n w := by
   have c1 := sub_lt_of_conj a g ha h

@@ -20,7 +20,7 @@ open scoped Classical
 
 private theorem memK {K : Type} [Field K] [NumberField K] (v : P K)
     (x : Matrix.SpecialLinearGroup (Fin 2) (Kv v)) (h : ∀ i j, IsInt (x i j)) :
-    Matrix.SpecialLinearGroup.toGL x ∈ GlobalTheory.LFun.KGL v 2 := by
+    Matrix.SpecialLinearGroup.toGL x ∈ GlobalTheory.LFun.KGL v (n := 2) := by
   let a : Matrix (Fin 2) (Fin 2) (Formalism.UG.Ov K v) := fun i j => ⟨x i j, h i j⟩
   have ha : a.det = 1 := by
     apply Subtype.ext
@@ -115,7 +115,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.eigenvalue_sum_mul_thetaConstantTerm_
   obtain ⟨R, -, hRi, hR⟩ := heckeExpl F v ϖ hϖ
   obtain ⟨⟨j, hj⟩, hjj⟩ := jEx F v
   obtain ⟨-, hAt, hInt, -⟩ := hjj j hj
-  have hFix : ∀ (G : GL (Fin 2) (A F)), ∀ z ∈ GlobalTheory.LFun.KGL v 2, f.1 (G * lc v z * dM (nu F h)) = f.1 (G * dM (nu F h)) := by
+  have hFix : ∀ (G : GL (Fin 2) (A F)), ∀ z ∈ GlobalTheory.LFun.KGL v (n := 2), f.1 (G * lc v z * dM (nu F h)) = f.1 (G * dM (nu F h)) := by
     intro G z hz
     have h1 : f.1 (G * lc v (1 * z) * dM (nu F h)) = f.1 (G * lc v 1 * dM (nu F h)) := (hE₁ G).inv 1 z hz
     rwa [one_mul, map_one, mul_one] at h1
@@ -149,7 +149,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.eigenvalue_sum_mul_thetaConstantTerm_
   have hI : ∫ g in M.D, U g ∂M.μ = 0 := by
     refine integral_thetaRowZero_eq_zero_of_iwahori_invariant F E D W M v ϖ hϖ hG hA j hj (fun g => f.1 (gl g * lc v (dL ϖ 1) * dM (nu F h))) (W.L h φ) hl1 ?_ hUi
     intro g x h00 h11 h01 h10
-    have hz : Matrix.SpecialLinearGroup.toGL (xC ϖ x) ∈ GlobalTheory.LFun.KGL v 2 := by
+    have hz : Matrix.SpecialLinearGroup.toGL (xC ϖ x) ∈ GlobalTheory.LFun.KGL v (n := 2) := by
       refine memK v _ fun i k => ?_
       fin_cases i <;> fin_cases k
       exacts [h00, h01, h10, h11]

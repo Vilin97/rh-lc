@@ -52,7 +52,7 @@ private theorem fst_eq (x : finU L n) : (prodEquiv L n ((x : UA L n) : GA L n)).
   · simp [Matrix.one_apply_ne h]
 
 private theorem mem_Kall {x : UA L n} :
-    x ∈ Kall L n ↔ x ∈ finU L n ∧ ∀ w : Plc L, cLoc w x ∈ GlobalTheory.LFun.KGL w n := by
+    x ∈ Kall L n ↔ x ∈ finU L n ∧ ∀ w : Plc L, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) := by
   simp [Kall, Subgroup.mem_inf, Subgroup.mem_iInf]
 
 private theorem exists_open {U : Subgroup (UA L n)} (hU : IsOpen {x : finU L n | (x : UA L n) ∈ U}) :
@@ -103,7 +103,7 @@ private theorem nbhd {O : Set (GL (Fin n) (Af L))} (hO : IsOpen O) (h1 : 1 ∈ O
   rw [this]
   exact (hu v hv).2
 
-private theorem fp_mem {x : UA L n} (hx : ∀ w : Plc L, cLoc w x ∈ GlobalTheory.LFun.KGL w n) :
+private theorem fp_mem {x : UA L n} (hx : ∀ w : Plc L, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n)) :
     fp x ∈ integralFiniteGL L n :=
   (mem_integralFiniteGL_iff_forall L n).2 fun v => by
     rw [e_apply]

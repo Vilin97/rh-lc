@@ -58,7 +58,7 @@ theorem mem_GLint {L : Type} [Field L] (O : Subring L) (g : GL (Fin n) L)
     exact g.inv_mul
 
 theorem eventually_pc_ratF_mem (g : GL (Fin n) E) : ∀ᶠ v : Pl E in cofinite,
-    GeneralLinearGroup.map (pLoc E v) (ratF E n g) ∈ GlobalTheory.LFun.KGL v n := by
+    GeneralLinearGroup.map (pLoc E v) (ratF E n g) ∈ GlobalTheory.LFun.KGL v (n := n) := by
   have h : ∀ g : GL (Fin n) E, ∀ᶠ w : Pl E in cofinite, ∀ i j,
       algebraMap E (w.adicCompletion E) (g.val i j) ∈ w.adicCompletionIntegers E := fun g => by
     simp only [Filter.eventually_all]; exact fun i j => eventually_int _

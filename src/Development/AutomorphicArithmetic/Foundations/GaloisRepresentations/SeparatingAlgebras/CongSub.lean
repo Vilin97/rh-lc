@@ -156,7 +156,7 @@ private theorem isOpen_Jc {d : w.adicCompletion E} (hd : d ≠ 0) (hc : Valued.v
   · exact (isOpen_ball w hd).preimage ((Units.continuous_coe_inv.matrix_elem i j).sub continuous_const)
 
 private theorem Jc_le_KGL {c : WithZero (Multiplicative ℤ)} (hc : c ≤ 1) :
-    Jc (a := a) (Valued.v : Valuation (w.adicCompletion E) (WithZero (Multiplicative ℤ))) c hc ≤ GlobalTheory.LFun.KGL w a := by
+    Jc (a := a) (Valued.v : Valuation (w.adicCompletion E) (WithZero (Multiplicative ℤ))) c hc ≤ GlobalTheory.LFun.KGL w (n := a) := by
   intro g hg
   have h1 := Mt_of_sub hc hg.1
   have h2 := Mt_of_sub hc hg.2

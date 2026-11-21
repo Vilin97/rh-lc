@@ -56,7 +56,7 @@ theorem eq_zero_of_not_antitone : ∀ (E : Type) [Field E] [NumberField E] [IsTo
     change GlobalTheory.CellDec.compV E (m + 1) w t' = 1
     rw [ht', map_mul, map_inv, GlobalTheory.CellDec.compV_finGL_locGL_same, ← hD, mul_inv_cancel]
   have htt : t' * finGL E (m + 1) (locGL E (m + 1) w D) = t := by rw [ht', inv_mul_cancel_right]
-  have hlev : ∀ k ∈ GlobalTheory.LFun.KGL w (m + 1), locGL E (m + 1) w k ∈ GlobalTheory.RSLocalPart.levelAt (m + 1) S J := by
+  have hlev : ∀ k ∈ GlobalTheory.LFun.KGL w (n := (m + 1)), locGL E (m + 1) w k ∈ GlobalTheory.RSLocalPart.levelAt (m + 1) S J := by
     intro k hk
     refine ⟨fun v => ?_, fun v hv i j => ?_⟩
     · by_cases hvw : v = w
@@ -86,7 +86,7 @@ theorem eq_zero_of_not_antitone : ∀ (E : Type) [Field E] [NumberField E] [IsTo
     rw [map_mul, map_mul, ← mul_assoc (p * t'), GlobalTheory.JSW.commute_finGL_locGL w hpt, mul_assoc,
       hWN _ (GlobalTheory.JSW.CutTransfer.finGL_locGL_mem_NA' w hu), GlobalTheory.JSW.CutTransfer.psiN_finGL_locGL]
     rfl
-  have hfK : ∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w (m + 1), f (g * k) = f g := by
+  have hfK : ∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w (n := (m + 1)), f (g * k) = f g := by
     intro g k hk
     simp only [f]
     rw [map_mul, map_mul, ← mul_assoc]

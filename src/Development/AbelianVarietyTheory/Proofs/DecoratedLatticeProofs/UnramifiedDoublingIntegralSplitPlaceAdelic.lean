@@ -93,7 +93,7 @@ theorem localZetaOn_split : GlobalTheory.Published.UnramifiedDoublingGL →
     have hk' : ioAt A v k ∈ KFin D.sp.cm.sig (dblSp A).gram L v :=
       (ioH_mem_KFin (gram_hdbl A)).2 ⟨hk, one_mem _⟩
     rw [e1, hφ.2.1 _ hk', hcx, hcx, map_mul, Module.End.mul_apply, hfix k hk]
-  have hsum' := GlobalTheory.T.hasSum_quotient_of_hasSum_mulEquiv_quotient _ _ e (stabLoc D.sp.cm.sig A.gram L v) (KGL w A.rank) he.2
+  have hsum' := GlobalTheory.T.hasSum_quotient_of_hasSum_mulEquiv_quotient _ _ e (stabLoc D.sp.cm.sig A.gram L v) (KGL w (n := A.rank)) he.2
     (fun y => φ (ioAt A v y) * c y) hinv _ (by
       refine hsum.congr_fun ?_
       intro a

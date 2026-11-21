@@ -90,11 +90,11 @@ theorem isSpherical_twist_of_unr {E : Type} [Field E] [NumberField E] [IsTotally
     (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (κ : HChar E) (hκ : κ.UnrAt w)
     (h : GlobalTheory.SmGL.IsSpherical σ.ρ) :
     GlobalTheory.SmGL.IsSpherical (σ.twist (CuspSub.locDet a κ w) (CuspSub.isOpen_ker_locDet κ w)).ρ := by
-  have hK : GlobalTheory.SplitWeil.KO (w.adicCompletion E) (Fin a) = GlobalTheory.LFun.KGL w a :=
+  have hK : GlobalTheory.SplitWeil.KO (w.adicCompletion E) (Fin a) = GlobalTheory.LFun.KGL w (n := a) :=
     GlobalTheory.SmGL.SphCompletion.KO_completion w a
   obtain ⟨v, hv, hv0⟩ := (Submodule.ne_bot_iff _).1 h
   refine (Submodule.ne_bot_iff _).2 ⟨v, fun g => ?_, hv0⟩
-  have hg : g.1 ∈ GlobalTheory.LFun.KGL w a := hK ▸ g.2
+  have hg : g.1 ∈ GlobalTheory.LFun.KGL w (n := a) := hK ▸ g.2
   have h1 : CuspSub.locDet a κ w g.1 = 1 := hκ _ (GlobalTheory.SphGal.isUnitAt_det_of_mem hg)
   have h3 := hv g
   show ((CuspSub.locDet a κ w g.1 : ℂˣ) : ℂ) • σ.ρ g.1 v = _

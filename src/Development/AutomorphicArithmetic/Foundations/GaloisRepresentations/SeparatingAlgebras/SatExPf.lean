@@ -17,11 +17,11 @@ theorem UpperTheory.Gal.Gen.satEx_pf :
   classical
   intro E _ _ _ a K w hw hK U hU ⟨φ, hφU, hφ0, hφK⟩
   obtain ⟨ho, hc⟩ := GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL w a
-  obtain ⟨σ, hcomp, v, hv0, hv⟩ := GlobalTheory.T.exists_localComponent_eigenvector_splitPlace E a U hU w hw (GlobalTheory.LFun.KGL w a) ho hc 1 φ hφU hφ0
+  obtain ⟨σ, hcomp, v, hv0, hv⟩ := GlobalTheory.T.exists_localComponent_eigenvector_splitPlace E a U hU w hw (GlobalTheory.LFun.KGL w (n := a)) ho hc 1 φ hφU hφ0
     (fun x hx hxJ => by
       have := hφK x ((hK x hx).2 hxJ)
       simpa using this)
-  have hfix : GlobalTheory.PRep.fixed σ.ρ (GlobalTheory.LFun.KGL w a) ≠ ⊥ :=
+  have hfix : GlobalTheory.PRep.fixed σ.ρ (GlobalTheory.LFun.KGL w (n := a)) ≠ ⊥ :=
     (Submodule.ne_bot_iff _).2 ⟨v, GlobalTheory.LGrp.mem_fixed.2 (fun k hk => by
       have := hv ⟨k, hk⟩
       simpa using this), hv0⟩

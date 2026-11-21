@@ -138,7 +138,7 @@ theorem UpperTheory.V.Z.Sym.So.torUA :
   have hg1 : ∀ w, Matrix.GeneralLinearGroup.det (g w) = 1 := fun w => by
     simp only [g, e, map_mul, map_inv, det_diagonal_two]
     simp [δ]
-  have hgK : ∀ w ∈ S, g w ∈ GlobalTheory.LFun.KGL w 2 := fun w hw => by
+  have hgK : ∀ w ∈ S, g w ∈ GlobalTheory.LFun.KGL w (n := 2) := fun w hw => by
     refine mul_mem (inv_mem ?_) ?_
     · exact Subgroup.mem_iInf.1 (Subgroup.mem_inf.1 huK).2 w
     · rw [← GlobalTheory.HeckeEigConj.KO_eq_KGL]

@@ -77,7 +77,7 @@ def Supp (k : ℕ) (m : (E →+* ℂ) → Multiset ℂ) (B : Pl E → Multiset �
 
 
 abbrev Ix (T : Set (Pl E)) : Type :=
-  ((E →+* ℂ) × ℂ) ⊕ (Σ w : {w : Pl E // w ∉ T}, {h : GL (Fin a) (w.1.adicCompletion E) → ℂ // h ∈ Hecke ℂ (KGL w.1 a)})
+  ((E →+* ℂ) × ℂ) ⊕ (Σ w : {w : Pl E // w ∉ T}, {h : GL (Fin a) (w.1.adicCompletion E) → ℂ // h ∈ Hecke ℂ (KGL w.1 (n := a))})
 
 def opIx {T : Set (Pl E)} : Ix a T → Module.End ℂ (Sm E a)
   | .inl p => cap p.1 p.2
@@ -149,8 +149,8 @@ def MatBlock : Prop :=
 def HkSum : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (w : Pl E) (n : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V]
     (ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) (ϖ : w.adicCompletion E) (hϖ : ϖ ∈ Ov E w)
-    (hu : IsUnifV E w ϖ) [Fintype (satakeRes (Ov E w) ⟨ϖ, hϖ⟩)] (j : ℕ), j ≤ n → ∀ x ∈ fixed ρ (KGL w n),
-    heckeVec ρ (KGL w n) (Tj ℂ n (Ov E w) ϖ j) x = ∑ i : SatakeIdx w hϖ (n := n) j, ρ (satakeB w hϖ hu i) x
+    (hu : IsUnifV E w ϖ) [Fintype (satakeRes (Ov E w) ⟨ϖ, hϖ⟩)] (j : ℕ), j ≤ n → ∀ x ∈ fixed ρ (KGL w (n := n)),
+    heckeVec ρ (KGL w (n := n)) (Tj ℂ n (Ov E w) ϖ j) x = ∑ i : SatakeIdx w hϖ (n := n) j, ρ (satakeB w hϖ hu i) x
 
 def HkLocal : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (w : Pl E) (r s : ℕ) (ϖ : w.adicCompletion E) (hϖ : ϖ ∈ Ov E w)
@@ -164,8 +164,8 @@ def HkLocal : Prop :=
 
 def SatOfEig : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (w : Pl E) (n : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V]
-    (ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) (x : V), x ≠ 0 → x ∈ fixed ρ (KGL w n) →
-    (∀ h ∈ Hecke ℂ (KGL w n), ∃ c : ℂ, heckeVec ρ (KGL w n) h x = c • x) → ∃ B, IsSatVecGL w ρ x B
+    (ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) (x : V), x ≠ 0 → x ∈ fixed ρ (KGL w (n := n)) →
+    (∀ h ∈ Hecke ℂ (KGL w (n := n)), ∃ c : ℂ, heckeVec ρ (KGL w (n := n)) h x = c • x) → ∃ B, IsSatVecGL w ρ x B
 
 def HeckeLocalBlock : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (w : Pl E) (r s : ℕ),
@@ -175,7 +175,7 @@ def HeckeLocalBlock : Prop :=
       finGL E (r + s) (locGL E (r + s) w (unipGL X)) = unipGL Y) ∧
     (∀ (x : GA E r) (y : GA E s) (Y : UPos (r + s) r → Ad E), ∃ Y' : UPos (r + s) r → Ad E,
       blk x y * unipGL Y = unipGL Y' * blk x y) ∧
-    ∀ k₁ ∈ KGL w r, ∀ k₂ ∈ KGL w s, blk k₁ k₂ ∈ KGL w (r + s)
+    ∀ k₁ ∈ KGL w (n := r), ∀ k₂ ∈ KGL w (n := s), blk k₁ k₂ ∈ KGL w (n := (r + s))
 
 def TauSat : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (τ : SmIrr (GL (Fin a) (Af E))) (v : τ.V), v ≠ 0 →
@@ -184,8 +184,8 @@ def TauSat : Prop :=
 def LevelSplit : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) →
     ∃ L' : Subgroup (GL (Fin a) (Af E)), IsOpen (L' : Set (GL (Fin a) (Af E))) ∧ L' ≤ L ∧ ∃ T : Set (Pl E), T.Finite ∧
-      ∀ w ∉ T, (∀ k ∈ KGL w a, locGL E a w k ∈ L') ∧
-        ∀ u ∈ L', ∃ k ∈ KGL w a, ∃ u' ∈ L', GeneralLinearGroup.map (pLoc E w) u' = 1 ∧ u = locGL E a w k * u'
+      ∀ w ∉ T, (∀ k ∈ KGL w (n := a), locGL E a w k ∈ L') ∧
+        ∀ u ∈ L', ∃ k ∈ KGL w (n := a), ∃ u' ∈ L', GeneralLinearGroup.map (pLoc E w) u' = 1 ∧ u = locGL E a w k * u'
 
 def CapAct : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (t : E →+* ℂ) (u : ℂ),
@@ -213,11 +213,11 @@ def HullOps : Prop :=
 def StabSp : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (S : Submodule ℂ (Sm E a)), BddS S →
     ∃ T : Set (Pl E), T.Finite ∧ ∃ V : Submodule ℂ (Sm E a), S ≤ V ∧ FiniteDimensional ℂ V ∧ (∀ φ ∈ V, IsAutForm φ) ∧
-      (∀ w ∉ T, V ≤ fixed (fL a w) (KGL w a)) ∧ ∀ i : Ix a T, ∀ φ ∈ V, opIx i φ ∈ V
+      (∀ w ∉ T, V ≤ fixed (fL a w) (KGL w (n := a))) ∧ ∀ i : Ix a T, ∀ φ ∈ V, opIx i φ ∈ V
 
 def OpComm : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (T : Set (Pl E)) (i i' : Ix a T) (φ : Sm E a),
-    (∀ w ∉ T, φ ∈ fixed (fL a w) (KGL w a)) → opIx i (opIx i' φ) = opIx i' (opIx i φ)
+    (∀ w ∉ T, φ ∈ fixed (fL a w) (KGL w (n := a))) → opIx i (opIx i' φ) = opIx i' (opIx i φ)
 
 def SingleBdd : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a), IsAutForm φ →
@@ -259,7 +259,7 @@ def CapRel : Prop :=
 
 def HkRel : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (ψ : Sm E (r + s)), NI r ψ.1 →
-    ∀ w : Pl E, ψ ∈ fixed (fL (r + s) w) (KGL w (r + s)) → ∀ (ϖ : w.adicCompletion E) (hu : IsUnifV E w ϖ), ∀ j ≤ r + s,
+    ∀ w : Pl E, ψ ∈ fixed (fL (r + s) w) (KGL w (n := (r + s))) → ∀ (ϖ : w.adicCompletion E) (hu : IsUnifV E w ϖ), ∀ j ≤ r + s,
     ∃ G : Fin (r + 1) × Fin (s + 1) → GA E r → GA E s → ℂ,
       (∀ p, Act2 (tOp r w hu p.1) (tOp s w hu p.2) (res ψ.1) (G p)) ∧
       ∀ x y, ∑ p, coef (qV E w) r s j p * G p x y = res (tOp (r + s) w hu j ψ).1 x y

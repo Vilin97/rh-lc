@@ -71,9 +71,9 @@ def ConjSub : Prop :=
 def HeckeAdj : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (a : ℕ) (w : HeightOneSpectrum (𝓞 F)) (V : Type) [AddCommGroup V] [Module ℂ V]
     (ρ : Representation ℂ (GL (Fin a) (w.adicCompletion F)) V) (H : V →ₗ⋆[ℂ] V →ₗ[ℂ] ℂ),
-    (∀ g x y, H (ρ g x) (ρ g y) = H x y) → ∀ x ∈ GlobalTheory.PRep.fixed ρ (GlobalTheory.LFun.KGL w a), ∀ ϖ, Formalism.UG.IsUnifV F w ϖ → ∀ j : ℕ,
-      H (GlobalTheory.LFun.heckeVec ρ (GlobalTheory.LFun.KGL w a) (Formalism.UG.Tj ℂ a (Formalism.UG.Ov F w) ϖ j) x) x =
-        H x (GlobalTheory.LFun.heckeVec (ρ.comp (invT a (w.adicCompletion F))) (GlobalTheory.LFun.KGL w a) (Formalism.UG.Tj ℂ a (Formalism.UG.Ov F w) ϖ j) x)
+    (∀ g x y, H (ρ g x) (ρ g y) = H x y) → ∀ x ∈ GlobalTheory.PRep.fixed ρ (GlobalTheory.LFun.KGL w (n := a)), ∀ ϖ, Formalism.UG.IsUnifV F w ϖ → ∀ j : ℕ,
+      H (GlobalTheory.LFun.heckeVec ρ (GlobalTheory.LFun.KGL w (n := a)) (Formalism.UG.Tj ℂ a (Formalism.UG.Ov F w) ϖ j) x) x =
+        H x (GlobalTheory.LFun.heckeVec (ρ.comp (invT a (w.adicCompletion F))) (GlobalTheory.LFun.KGL w (n := a)) (Formalism.UG.Tj ℂ a (Formalism.UG.Ov F w) ϖ j) x)
 
 def SatConj : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (a : ℕ) (w : HeightOneSpectrum (𝓞 F)) (V W : Type) [AddCommGroup V] [Module ℂ V]

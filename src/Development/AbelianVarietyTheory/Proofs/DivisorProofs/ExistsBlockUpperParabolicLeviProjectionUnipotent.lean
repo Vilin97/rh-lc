@@ -190,8 +190,8 @@ theorem blk_ent (m : GLw a w × GLw b w) (X : Matrix (Fin a) (Fin b) (w.adicComp
   · simp
   · simpa using H2 x y
 
-theorem sH_mem (k : GLw a w × GLw b w) (hk : k ∈ (GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b)) :
-    sH h w k ∈ (GlobalTheory.LFun.KGL w n).subgroupOf (parP a n w) := by
+theorem sH_mem (k : GLw a w × GLw b w) (hk : k ∈ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))) :
+    sH h w k ∈ (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (parP a n w) := by
   rw [Subgroup.mem_subgroupOf, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val]
   rw [Subgroup.mem_prod, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val] at hk
   obtain ⟨⟨a1, a2⟩, b1, b2⟩ := hk
@@ -200,8 +200,8 @@ theorem sH_mem (k : GLw a w × GLw b w) (hk : k ∈ (GlobalTheory.LFun.KGL w a).
   rw [e]
   exact blk_ent h w k⁻¹ 0 a2 b2 (by simp)
 
-theorem piH_mem (k : parP a n w) (hk : k ∈ (GlobalTheory.LFun.KGL w n).subgroupOf (parP a n w)) :
-    piH h w k ∈ (GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b) := by
+theorem piH_mem (k : parP a n w) (hk : k ∈ (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (parP a n w)) :
+    piH h w k ∈ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)) := by
   rw [Subgroup.mem_subgroupOf, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val] at hk
   obtain ⟨k1, k2⟩ := hk
   have e : (piH h w k)⁻¹ = piH h w k⁻¹ := (map_inv _ _).symm
@@ -213,7 +213,7 @@ theorem piH_mem (k : parP a n w) (hk : k ∈ (GlobalTheory.LFun.KGL w n).subgrou
   · rw [← Prod.snd_inv, e, piH_snd_val]; exact k2 (ix h (Sum.inr i)) (ix h (Sum.inr j))
 
 theorem uH_mem_iff (X : Multiplicative (Matrix (Fin a) (Fin b) (w.adicCompletion E))) :
-    uH h w X ∈ (GlobalTheory.LFun.KGL w n).subgroupOf (parP a n w) ↔ X ∈ intMat a b w := by
+    uH h w X ∈ (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (parP a n w) ↔ X ∈ intMat a b w := by
   rw [mem_intMat_iff, Subgroup.mem_subgroupOf, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val]
   constructor
   · rintro ⟨H, -⟩ i j
@@ -230,7 +230,7 @@ end GlobalTheory.LeviDesc.LeviHoms
 
 namespace GlobalTheory.LeviDesc.LeviHoms
 
-theorem levi_homs : ∀ (E : Type) [Field E] [NumberField E] (n a b : ℕ) (h : a + b = n) (w : Pl E), ∃ (s : GLw a w × GLw b w →* GlobalTheory.LeviDesc.parP a n w) (π : GlobalTheory.LeviDesc.parP a n w →* GLw a w × GLw b w) (u : Multiplicative (Matrix (Fin a) (Fin b) (w.adicCompletion E)) →* GlobalTheory.LeviDesc.parP a n w), (∀ m, (s m : GLw n w) = blk h w m 0) ∧ (∀ X, (u X : GLw n w) = blk h w 1 (Multiplicative.toAdd X)) ∧ (∀ m, π (s m) = m) ∧ Function.Injective u ∧ (∀ p, π p = 1 ↔ ∃ X, u X = p) ∧ (∀ k ∈ (GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b), s k ∈ (GlobalTheory.LFun.KGL w n).subgroupOf (GlobalTheory.LeviDesc.parP a n w)) ∧ (∀ k ∈ (GlobalTheory.LFun.KGL w n).subgroupOf (GlobalTheory.LeviDesc.parP a n w), π k ∈ (GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b)) ∧ (∀ X, u X ∈ (GlobalTheory.LFun.KGL w n).subgroupOf (GlobalTheory.LeviDesc.parP a n w) ↔ X ∈ intMat a b w) := by
+theorem levi_homs : ∀ (E : Type) [Field E] [NumberField E] (n a b : ℕ) (h : a + b = n) (w : Pl E), ∃ (s : GLw a w × GLw b w →* GlobalTheory.LeviDesc.parP a n w) (π : GlobalTheory.LeviDesc.parP a n w →* GLw a w × GLw b w) (u : Multiplicative (Matrix (Fin a) (Fin b) (w.adicCompletion E)) →* GlobalTheory.LeviDesc.parP a n w), (∀ m, (s m : GLw n w) = blk h w m 0) ∧ (∀ X, (u X : GLw n w) = blk h w 1 (Multiplicative.toAdd X)) ∧ (∀ m, π (s m) = m) ∧ Function.Injective u ∧ (∀ p, π p = 1 ↔ ∃ X, u X = p) ∧ (∀ k ∈ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)), s k ∈ (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (GlobalTheory.LeviDesc.parP a n w)) ∧ (∀ k ∈ (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (GlobalTheory.LeviDesc.parP a n w), π k ∈ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))) ∧ (∀ X, u X ∈ (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (GlobalTheory.LeviDesc.parP a n w) ↔ X ∈ intMat a b w) := by
   intro E _ _ n a b h w
   exact ⟨sH h w, piH h w, uH h w, fun m => rfl, fun X => rfl, piH_sH h w, uH_injective h w, piH_eq_one_iff h w,
     fun k hk => sH_mem h w k hk, fun k hk => piH_mem h w k hk, uH_mem_iff h w⟩

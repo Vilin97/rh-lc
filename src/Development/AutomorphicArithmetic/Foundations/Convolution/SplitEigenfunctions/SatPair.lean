@@ -74,10 +74,10 @@ private theorem sat_eq_of_eig {E : Type} [Field E] [NumberField E] {n : ℕ} {w 
     (hσ : IsSmooth σ) (β : V →ₗ[ℂ] W →ₗ[ℂ] ℂ)
     (hi : ∀ g x y, β (σ (GlobalTheory.LFun.ConjPlace.invT (RingEquiv.refl _) n g) x) (ρ g y) = β x y)
     {Y : W} {C C' : Multiset ℂˣ} (hY : IsSatVecGL w ρ Y C') {x₀ : V} (hx₀ : β x₀ Y ≠ 0)
-    (hE : ∀ x ∈ fixed σ (KGL w n), C.card = n ∧ ∀ ϖ, IsUnifV E w ϖ → ∀ j ≤ n,
-      β (heckeVec σ (KGL w n) (Tj ℂ n (Ov E w) ϖ j) x) Y = satEig (qV E w) n C j * β x Y) : C = C' := by
+    (hE : ∀ x ∈ fixed σ (KGL w (n := n)), C.card = n ∧ ∀ ϖ, IsUnifV E w ϖ → ∀ j ≤ n,
+      β (heckeVec σ (KGL w (n := n)) (Tj ℂ n (Ov E w) ϖ j) x) Y = satEig (qV E w) n C j * β x Y) : C = C' := by
   classical
-  have hKc : IsCompact (KGL w n : Set (GL (Fin n) (w.adicCompletion E))) :=
+  have hKc : IsCompact (KGL w (n := n) : Set (GL (Fin n) (w.adicCompletion E))) :=
     GlobalTheory.LFun.IntPtsUnitary.isCompact_GLint _ (PI.AdicCompletionValuation.isCompact_adicCompletionIntegers E w)
   let c := RingEquiv.refl (w.adicCompletion E)
   have hc : ∀ a, Valued.v (c a) = Valued.v a := fun _ => rfl
@@ -189,7 +189,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.satPair :
   have hfin := sat_eq_of_eig (n := 2) hsmooth β hi hY hx₀ (fun x hx => by
     have hfix : Fix w x.1.1 := fun g k hk => congrArg (fun u : V => u.1.1 g) (GlobalTheory.LGrp.mem_fixed.1 hx k hk)
     refine ⟨(hC x hfix 1).card, fun ϖ hϖ j hj => ?_⟩
-    have hTz : ∀ g, T (GlobalTheory.LFun.heckeVec σ (GlobalTheory.LFun.KGL w 2) (Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ j) x) g =
+    have hTz : ∀ g, T (GlobalTheory.LFun.heckeVec σ (GlobalTheory.LFun.KGL w (n := 2)) (Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ j) x) g =
         GlobalTheory.LFun.satEig (Formalism.UG.qV E w) 2 C j * T x g := by
       intro g
       let L : V →+ ℂ := (Pi.evalAddMonoidHom _ g).comp T.toAddMonoidHom
@@ -200,7 +200,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.satPair :
         rw [map_smul, Pi.smul_apply, smul_eq_mul, heq x (σ c.out x) c.out (fun _ => rfl) g, one_mul]
         rfl
       · simp
-    have hz : T (GlobalTheory.LFun.heckeVec σ (GlobalTheory.LFun.KGL w 2) (Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ j) x -
+    have hz : T (GlobalTheory.LFun.heckeVec σ (GlobalTheory.LFun.KGL w (n := 2)) (Formalism.UG.Tj ℂ 2 (Formalism.UG.Ov E w) ϖ j) x -
         GlobalTheory.LFun.satEig (Formalism.UG.qV E w) 2 C j • x) = 0 := by
       funext g
       simp [map_sub, hTz]

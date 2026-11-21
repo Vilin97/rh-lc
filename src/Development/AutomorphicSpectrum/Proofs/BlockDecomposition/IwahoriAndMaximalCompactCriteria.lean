@@ -30,8 +30,8 @@ theorem rel_lt_one_iff (w : Pl E) (x : w.adicCompletion E) :
   exact (ValuativeRel.isEquiv (ValuativeRel.valuation _) Valued.v).lt_one_iff_lt_one
 
 theorem mem_KGL_iff (w : Pl E) (n : ℕ) (g : GLw n w) :
-    g ∈ GlobalTheory.LFun.KGL w n ↔ (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1 := by
-  have key : ∀ x : GLw n w, x ∈ GlobalTheory.LFun.KGL w n → ∀ i j, Valued.v (x.val i j) ≤ 1 := by
+    g ∈ GlobalTheory.LFun.KGL w (n := n) ↔ (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1 := by
+  have key : ∀ x : GLw n w, x ∈ GlobalTheory.LFun.KGL w (n := n) → ∀ i j, Valued.v (x.val i j) ≤ 1 := by
     rintro x ⟨u, rfl⟩ i j
     exact (u.val i j).2
   constructor
@@ -67,7 +67,7 @@ theorem mem_KO_iff (w : Pl E) (n : ℕ) (g : GLw n w) :
     · simp only [Matrix.map_mul, Matrix.map_one _ (map_zero _) (map_one _)]
       exact g.inv_mul
 
-theorem iwGL_KGL_entries : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (w : Pl E) (n : ℕ) (g : GLw n w), (g ∈ iwGL n w ↔ (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ (∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1) ∧ ∀ i j, j < i → Valued.v (g.val i j) < 1) ∧ (g ∈ GlobalTheory.LFun.KGL w n ↔ (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1) := by
+theorem iwGL_KGL_entries : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (w : Pl E) (n : ℕ) (g : GLw n w), (g ∈ iwGL n w ↔ (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ (∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1) ∧ ∀ i j, j < i → Valued.v (g.val i j) < 1) ∧ (g ∈ GlobalTheory.LFun.KGL w (n := n) ↔ (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1) := by
   intro E _ _ _ w n g
   refine ⟨?_, mem_KGL_iff w n g⟩
   show g ∈ GlobalTheory.SmGL.iwahori (w.adicCompletion E) (Fin n) ↔ _

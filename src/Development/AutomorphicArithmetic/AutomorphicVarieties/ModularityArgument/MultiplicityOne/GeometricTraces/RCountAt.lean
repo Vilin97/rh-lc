@@ -51,8 +51,8 @@ theorem UpperTheory.V.Z.Mult.rCountAt :
       have hcs : IsSplitAt (cPl w) := (hc (cPl w)).2.2 (by rw [(hc w).1]; exact ((hc w).2.1 hs).symm)
       have ho : Off Z (cPl w) := ⟨hb, by rwa [(hc w).1]⟩
       rw [hEq i h w ⟨ha, hb⟩ hs, hEq i h _ ho hcs]
-    have hterm : ∀ i, (∏ w ∈ Z, trc (t i w).ρ (KGL w n) (f w)) * val1 T e₁ e₂ (Bi i) ^ k =
-        (if At π (σ i) then 1 else 0) * ∏ w ∈ Z, trc (τ w).ρ (KGL w n) (f w) := fun i => by
+    have hterm : ∀ i, (∏ w ∈ Z, trc (t i w).ρ (KGL w (n := n)) (f w)) * val1 T e₁ e₂ (Bi i) ^ k =
+        (if At π (σ i) then 1 else 0) * ∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) (f w) := fun i => by
       by_cases h : At π (σ i)
       · rw [if_pos h, hval i h, one_pow, mul_one, one_mul]
         refine Finset.prod_congr rfl fun w hw => ?_

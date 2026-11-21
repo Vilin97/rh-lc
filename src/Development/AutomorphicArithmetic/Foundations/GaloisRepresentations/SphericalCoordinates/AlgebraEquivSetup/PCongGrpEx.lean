@@ -57,7 +57,7 @@ private theorem cong_mul {N : ℕ} {w : Plc E} {x y : GL (Fin n) (w.adicCompleti
   exact (entry_mul_le hx hy i k).trans (mul_le_of_le_one_left' h)
 
 private theorem cong_conj {N : ℕ} {w : Plc E} {a y : GL (Fin n) (w.adicCompletion E)}
-    (ha : a ∈ KGL w n) (hy : Cong1 N w y) : Cong1 N w (a * y * a⁻¹) := fun i k => by
+    (ha : a ∈ KGL w (n := n)) (hy : Cong1 N w y) : Cong1 N w (a * y * a⁻¹) := fun i k => by
   have e : (a * y * a⁻¹).val - 1 = a.val * (y.val - 1) * (a⁻¹).val := by
     have h : a.val * (a⁻¹).val = 1 := by rw [← Units.val_mul]; simp
     rw [Units.val_mul, Units.val_mul, mul_sub, sub_mul, mul_one, h]
@@ -116,7 +116,7 @@ private theorem isOpen_congGrp {N : ℕ} (hN : 0 < N) (w : Plc E) :
     IsOpen (congGrp (n := n) N w : Set (GL (Fin n) (w.adicCompletion E))) :=
   (isOpen_cong hN w).inter ((isOpen_cong hN w).preimage continuous_inv)
 
-private theorem congGrp_le (N : ℕ) (w : Plc E) : congGrp (n := n) N w ≤ KGL w n := fun _ hy =>
+private theorem congGrp_le (N : ℕ) (w : Plc E) : congGrp (n := n) N w ≤ KGL w (n := n) := fun _ hy =>
   GlobalTheory.AdelicU.mem_GLint_iff.2 ⟨cong_int hy.1, cong_int hy.2⟩
 
 private theorem congGrp_le_iw {N : ℕ} (w : Plc E) (hN : (N : 𝓞 E) ∈ w.asIdeal) : congGrp (n := n) N w ≤ Iw n w := by
@@ -141,7 +141,7 @@ theorem pCongGrpEx : CongGrpEx := by
   · exact (GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL w n).2.of_isClosed_subset
       (Subgroup.isClosed_of_isOpen _ (isOpen_congGrp hN w)) (congGrp_le N w)
   · intro a ha y
-    have key : ∀ a ∈ KGL w n, ∀ y, y ∈ congGrp N w → a * y * a⁻¹ ∈ congGrp N w := fun a ha y hy =>
+    have key : ∀ a ∈ KGL w (n := n), ∀ y, y ∈ congGrp N w → a * y * a⁻¹ ∈ congGrp N w := fun a ha y hy =>
       ⟨cong_conj ha hy.1, by
         have : (a * y * a⁻¹)⁻¹ = a * y⁻¹ * a⁻¹ := by group
         rw [this]; exact cong_conj ha hy.2⟩

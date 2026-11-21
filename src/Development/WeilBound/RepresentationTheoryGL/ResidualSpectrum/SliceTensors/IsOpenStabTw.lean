@@ -72,7 +72,7 @@ theorem satInd2_holds : SatInd2 := by
       Subtype.val_injective hsat
   have hFB : GlobalTheory.LFun.IsSatVecGL w ((finRep E (r + s)).comp (locGL E (r + s) w)) (f φ) B :=
     hsatD.map (f ∘ₗ V.subtype) (fun g v => hfe (.fin (locGL E (r + s) w g)) v.1 v.2) hF0
-  have hFK : ∀ k ∈ GlobalTheory.LFun.KGL w (r + s), finRep E (r + s) (locGL E (r + s) w k) (f φ) = f φ := fun k hk =>
+  have hFK : ∀ k ∈ GlobalTheory.LFun.KGL w (n := (r + s)), finRep E (r + s) (locGL E (r + s) w k) (f φ) = f φ := fun k hk =>
     GlobalTheory.LGrp.mem_fixed.1 hFB.2.1 k hk
   have h : ∑ i, (![r, s] : Fin 2 → ℕ) i = r + s := GlobalTheory.CompanionTheory.CTFin.CapFactor.two_sum _
   have hcore := isSatVecGL_of_ind (n := ![r, s]) h (blkV (tw V₁ z₁) (tw V₂ z₂))

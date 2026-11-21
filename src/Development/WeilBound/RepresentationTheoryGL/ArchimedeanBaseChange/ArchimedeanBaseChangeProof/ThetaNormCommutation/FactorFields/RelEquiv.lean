@@ -57,8 +57,8 @@ theorem PositivityTheory.Rg.BcB.G3.count2_pf (h1 : Count1) : Count2 := by
   intro E _ _ _ hU a b S hS P₁ hP₁ P₂ hP₂ y hy hint
   obtain ⟨zz, hzz, hzK⟩ : ∃ zz : ∀ w : Pl E, GLw a w × GLw b w,
       (∀ w, (Quot.mk _ (zz w) : TwCl ((thL a w).prodMap (thL b w))) = y w) ∧
-        ∀ᶠ w in cofinite, zz w ∈ (GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b) := by
-    refine ⟨fun w => if h : ∃ z ∈ ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b)),
+        ∀ᶠ w in cofinite, zz w ∈ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)) := by
+    refine ⟨fun w => if h : ∃ z ∈ ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))),
         y w = Quot.mk _ z then h.choose else (y w).rep, fun w => ?_, hint.mono fun w hw => ?_⟩
     · dsimp only
       split_ifs with h

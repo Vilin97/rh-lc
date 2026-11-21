@@ -146,7 +146,7 @@ theorem UpperTheory.V.Z.Mult.levInd :
   have hU : UL n w = ⊤ := if_pos hw
   let H : Subgroup (GLw n w) := K.map (UL n w).subtype
   have hHo : IsOpen (H : Set (GLw n w)) := map_top_open _ hU K hKo
-  have hle : H ≤ GlobalTheory.LFun.KGL w n := by
+  have hle : H ≤ GlobalTheory.LFun.KGL w (n := n) := by
     rintro _ ⟨u, hu, rfl⟩
     exact Subgroup.mem_subgroupOf.1 (hKle hu)
   have hHc : IsCompact (H : Set (GLw n w)) := hc.of_isClosed_subset (H.isClosed_of_isOpen hHo) hle
@@ -157,11 +157,11 @@ theorem UpperTheory.V.Z.Mult.levInd :
       have : u = x := Subtype.ext hux
       exact this ▸ hu
     · exact fun hx => ⟨x, hx, rfl⟩
-  have hi : H.relIndex (GlobalTheory.LFun.KGL w n) ≠ 0 := by
-    haveI : CompactSpace (GlobalTheory.LFun.KGL w n) := isCompact_iff_compactSpace.1 hc
-    haveI : Finite ((GlobalTheory.LFun.KGL w n) ⧸ H.subgroupOf (GlobalTheory.LFun.KGL w n)) :=
+  have hi : H.relIndex (GlobalTheory.LFun.KGL w (n := n)) ≠ 0 := by
+    haveI : CompactSpace (GlobalTheory.LFun.KGL w (n := n)) := isCompact_iff_compactSpace.1 hc
+    haveI : Finite ((GlobalTheory.LFun.KGL w (n := n)) ⧸ H.subgroupOf (GlobalTheory.LFun.KGL w (n := n))) :=
       Subgroup.quotient_finite_of_isOpen _ (hHo.preimage continuous_subtype_val)
-    exact (Subgroup.finiteIndex_of_finite_quotient (H := H.subgroupOf (GlobalTheory.LFun.KGL w n))).index_ne_zero
+    exact (Subgroup.finiteIndex_of_finite_quotient (H := H.subgroupOf (GlobalTheory.LFun.KGL w (n := n)))).index_ne_zero
   refine ⟨ind H, ⟨H, hHo, hle, ?_, ?_⟩, ?_, ?_⟩
   · exact HasCompactSupport.intro' hHc (H.isClosed_of_isOpen hHo) fun x hx => ind_notMem hx
   · exact fun k hk x => ⟨ind_mul_left H hk x, ind_mul_right H hk x⟩

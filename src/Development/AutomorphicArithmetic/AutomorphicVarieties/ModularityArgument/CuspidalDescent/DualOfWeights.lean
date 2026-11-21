@@ -210,7 +210,7 @@ private theorem jumps_eq (h : IsPlaceOver A w) (hw : ((l : ℕ) : 𝓞 L) ∈ w.
 
 private theorem spherical (P : Af.Hypotheses₂) {ρ : G L Ω →* GL (Fin n) (Qbar l)} (hρ : Continuous ρ) (h : IsPlaceOver A w)
     (hw : ((l : ℕ) : 𝓞 L) ∉ w.asIdeal) (hI : ∀ g ∈ Ine (F := L) A, ρ g = 1) {τ : SmIrr (GLw n w)} (H : Af.LocGlob ι ρ w τ) :
-    Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w n) := by
+    Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w (n := n)) := by
   obtain ⟨rc, hrc⟩ := P.exists_rec h
   obtain ⟨v, hv, hf⟩ := Af.locFixed P L Ω n 1 le_rfl w A h rc hrc τ (Af.wdAway P L Ω l ι n 1 le_rfl ρ hρ w hw A h 1
     (fun _ _ _ => rfl) ⟨1, fun g hg => by simp [hI g hg]⟩ _ ((H A h rc hrc).1 hw))
@@ -288,7 +288,7 @@ private theorem conj_of_split [IsCMField L]
 
 private theorem unram_of_fixed [IsCMField L] {σ : Submodule ℂ (UA L n → ℂ)} {τ : SmIrr (GLw n w)}
     (hτ : IsCompAlong σ (locU n w) ((cLoc w).comp (locU n w).subtype) τ.ρ)
-    (hs : Function.Surjective ((cLoc w).comp (locU n w).subtype)) (hf : Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w n)) : IsUnramU σ w := by
+    (hs : Function.Surjective ((cLoc w).comp (locU n w).subtype)) (hf : Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w (n := n))) : IsUnramU σ w := by
   obtain ⟨hi, f, f0, fm, fe⟩ := hτ
   obtain ⟨z, hz, hf⟩ := hf
   refine ⟨f z, fm z, fun h0 => ?_, fun x hx hk => ?_⟩

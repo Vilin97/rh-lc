@@ -210,7 +210,7 @@ private theorem above [IsCMField L] (P : _root_.UpperTheory.V.Af.Hypotheses') (h
   exact add_lt_add_of_le_of_lt ((lam t).anti (Fin.rev_le_rev.2 hij.le)) (by exact_mod_cast hij)
 private theorem unram_of_fixed [IsCMField L] {σ : Submodule ℂ (UA L n → ℂ)} {τ : SmIrr (GLw n w)}
     (hτ : IsCompAlong σ (locU n w) ((cLoc w).comp (locU n w).subtype) τ.ρ)
-    (hs : Function.Surjective ((cLoc w).comp (locU n w).subtype)) (hf : Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w n)) : IsUnramU σ w := by
+    (hs : Function.Surjective ((cLoc w).comp (locU n w).subtype)) (hf : Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w (n := n))) : IsUnramU σ w := by
   obtain ⟨hi, f, f0, fm, fe⟩ := hτ
   obtain ⟨z, hz, hf⟩ := hf
   refine ⟨f z, fm z, fun h0 => ?_, fun x hx hk => ?_⟩
@@ -267,7 +267,7 @@ theorem UpperTheory.V.Z.Desc.W.jPT_of_alt :
       ∀ τ, π.IsLocComp w τ → IsWDOf ι ρ (rc (algNorm τ)) := fun w hw A hA rc hrc τ hτ =>
     (((hLG w τ hτ).1 A hA rc hrc).1 hw).isWDOf (guard_of hPl hreg hatt (hW hc) (Or.inl hw) hrc hτ).2
   have hsph : ∀ (w : Plc L), ((l : ℕ) : 𝓞 L) ∉ w.asIdeal → ∀ (A : ValuationSubring Ω), IsPlaceOver A w →
-      (∀ g ∈ Ine (F := L) A, ρ g = 1) → ∀ τ, π.IsLocComp w τ → Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w n) := fun w hw A hA hI τ hτ => by
+      (∀ g ∈ Ine (F := L) A, ρ g = 1) → ∀ τ, π.IsLocComp w τ → Af.HasFixed τ.ρ (GlobalTheory.LFun.KGL w (n := n)) := fun w hw A hA hI τ hτ => by
     obtain ⟨rc, hrc⟩ := hEx L Ω A w hA
     exact hSph P.litN L Ω l ι n ρ hc w hw A hA hI rc hrc τ (guard_of hPl hreg hatt (hW hc) (Or.inl hw) hrc hτ).1
       (heq w hw A hA rc hrc τ hτ)

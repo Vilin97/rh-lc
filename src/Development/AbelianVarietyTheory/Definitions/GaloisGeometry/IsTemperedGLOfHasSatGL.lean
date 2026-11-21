@@ -24,7 +24,7 @@ theorem range_eq {K : Type} [Field K] {A B : Subring K} (h : A = B) (n : ℕ) :
     (Formalism.UG.bc (n := Fin n) B.subtype).range = (Matrix.GeneralLinearGroup.map (n := Fin n) (algebraMap A K)).range := by
   subst h; rfl
 
-theorem kgl_eq_ko (n : ℕ) : GlobalTheory.LFun.KGL w n = GlobalTheory.SplitWeil.KO (w.adicCompletion E) (Fin n) :=
+theorem kgl_eq_ko (n : ℕ) : GlobalTheory.LFun.KGL w (n := n) = GlobalTheory.SplitWeil.KO (w.adicCompletion E) (Fin n) :=
   range_eq (SetLike.ext fun x => mem_integer_iff w x) n
 
 theorem isSpherical_of_hasSatGL (n : ℕ) {V : Type} [AddCommGroup V] [Module ℂ V]

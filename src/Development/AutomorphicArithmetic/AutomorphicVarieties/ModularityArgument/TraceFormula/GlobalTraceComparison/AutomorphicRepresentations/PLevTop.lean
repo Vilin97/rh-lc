@@ -17,7 +17,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.levTop_pf :
     intro M x
     simp only [Lev, Subgroup.mem_iInf, Subgroup.mem_comap, Subtype.forall]
   have hKq : ∀ k ∈ PositivityTheory.Rg.BcB.G8.Kf E n, ∀ i : GlobalTheory.BCT.Pl E × Bool, Sl S i →
-      qw n i.1 i.2 k ∈ GlobalTheory.LFun.KGL i.1 n := fun k hk => (mem _ k).1 ((hK k).2 hk)
+      qw n i.1 i.2 k ∈ GlobalTheory.LFun.KGL i.1 (n := n) := fun k hk => (mem _ k).1 ((hK k).2 hk)
   have hsub : (Lev S N : Set (GF E n)) ⊆ (PositivityTheory.Rg.BcB.G8.Kf E n : Set (GF E n)) := by
     intro x hx
     exact (hK x).1 ((mem _ x).2 fun i hi => (hG i.1).2.1 ((mem N x).1 hx i hi))

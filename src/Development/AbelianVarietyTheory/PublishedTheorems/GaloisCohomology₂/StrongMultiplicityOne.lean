@@ -151,7 +151,7 @@ theorem loc_eq_zpow {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (h : χ.UnrA
 
 theorem hasSat_ofChar {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (h : χ.UnrAt w) : (ofChar χ).HasSat w {χ.val w} := by
   let π : CuspSub E 1 := (CuspSub.triv E le_rfl).twist χ
-  have hK : ∀ k ∈ KGL w 1, CuspSub.locDet 1 χ w k = 1 := by
+  have hK : ∀ k ∈ KGL w (n := 1), CuspSub.locDet 1 χ w k = 1 := by
     rintro _ ⟨k, rfl⟩
     refine h _ ?_
     have e : ((GeneralLinearGroup.det (GeneralLinearGroup.map (Formalism.UG.Ov E w).subtype k) : (w.adicCompletion E)ˣ) :

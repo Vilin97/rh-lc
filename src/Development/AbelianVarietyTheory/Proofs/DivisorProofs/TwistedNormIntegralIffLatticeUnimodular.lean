@@ -219,7 +219,7 @@ theorem mem_Ov_iff {E : Type} [Field E] [NumberField E] (w : Pl E) (x : w.adicCo
   show x ∈ (w.adicCompletionIntegers E) ↔ _
   exact IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers _ _ _
 
-theorem unimodular_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (w : Pl E), ¬ IsSplitAt w → ∀ (K : GlobalTheory.UnitLemma.UQ) (e : K.E ≃+* w.adicCompletion E), (∀ x, e (K.c x) = cj w (e x)) → (∀ x, x ∈ (algebraMap K.O K.E).range ↔ Valued.v (e x) ≤ 1) → (∀ x, GlobalTheory.UnitLemma.val K.O x = ordL (e x)) → ∀ (B : GlobalTheory.UnitLemma.InvAlg K) (m : ℕ) (b : Module.Basis (Fin m) K.E B.A), ∀ β : B.A, IsUnit (GlobalTheory.TwLat.gram e b β) → ∀ g : GLw m w, (g⁻¹ * GlobalTheory.TwLat.dlt e b β * thL m w g ∈ GlobalTheory.LFun.KGL w m ↔ ∀ z, z ∈ GlobalTheory.TwLat.lat e b g ↔ ∀ y ∈ GlobalTheory.TwLat.lat e b g, B.herm β y z ∈ (algebraMap K.O K.E).range) := by
+theorem unimodular_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (w : Pl E), ¬ IsSplitAt w → ∀ (K : GlobalTheory.UnitLemma.UQ) (e : K.E ≃+* w.adicCompletion E), (∀ x, e (K.c x) = cj w (e x)) → (∀ x, x ∈ (algebraMap K.O K.E).range ↔ Valued.v (e x) ≤ 1) → (∀ x, GlobalTheory.UnitLemma.val K.O x = ordL (e x)) → ∀ (B : GlobalTheory.UnitLemma.InvAlg K) (m : ℕ) (b : Module.Basis (Fin m) K.E B.A), ∀ β : B.A, IsUnit (GlobalTheory.TwLat.gram e b β) → ∀ g : GLw m w, (g⁻¹ * GlobalTheory.TwLat.dlt e b β * thL m w g ∈ GlobalTheory.LFun.KGL w (n := m) ↔ ∀ z, z ∈ GlobalTheory.TwLat.lat e b g ↔ ∀ y ∈ GlobalTheory.TwLat.lat e b g, B.herm β y z ∈ (algebraMap K.O K.E).range) := by
   intro E _ _ _ _ w hw K e hc hv _ B m b β hG g
   set R := (algebraMap K.O K.E).range with hR
   set v : Fin m → B.A := fun j => ∑ i, e.symm (g.val i j) • b i with hvdef
@@ -231,7 +231,7 @@ theorem unimodular_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E],
     simp only [thetaGL, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, MulAut.conj_apply]
     group
 
-  have hmemX : (g⁻¹ * dlt e b β * thL m w g ∈ GlobalTheory.LFun.KGL w m) ↔ M ∈ GLint (Fin m) (Ov E w) := by
+  have hmemX : (g⁻¹ * dlt e b β * thL m w g ∈ GlobalTheory.LFun.KGL w (n := m)) ↔ M ∈ GLint (Fin m) (Ov E w) := by
     rw [hX, Subgroup.mul_mem_cancel_right _ (inv_mem (PhiU_mem _ m))]
     exact invT_mem_iff _ M
 

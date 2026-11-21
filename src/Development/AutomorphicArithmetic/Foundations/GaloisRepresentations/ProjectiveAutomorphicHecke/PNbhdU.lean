@@ -87,7 +87,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pNbhdU_of :
     · simp only [Kw, dif_pos hw, Subgroup.coe_inf, Subgroup.coe_comap]
       exact (hK₀ w).1.inter ((hK₀ (cj w)).1.preimage (continuous_th hw))
     · simp only [Kw, dif_neg hw]; exact (hK₀ w).1
-  have hKKGL : ∀ w, Kw w ≤ GlobalTheory.LFun.KGL w n := fun w => (hKle w).trans (hK₀ w).2
+  have hKKGL : ∀ w, Kw w ≤ GlobalTheory.LFun.KGL w (n := n) := fun w => (hKle w).trans (hK₀ w).2
   have hmemS : ∀ w, w ∈ T → (IsSplitAt w → Top lt Up w₀ w) → w ∈ S := fun w h h' => Finset.mem_filter.2 ⟨h, h'⟩
   refine ⟨S, Kw, ⟨?_, fun w _ => hKopen w, fun w _ => ?_, fun w _ _ => hKKGL w, fun w hw hs => ?_⟩, ?_⟩
   · exact hmemS _ (Finset.mem_insert_self _ _) fun _ => ⟨hu₀, fun _ => Or.inl rfl⟩
@@ -97,13 +97,13 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pNbhdU_of :
     exact ⟨hw'.1, fun hc => not_both hlt2 (hne w hs) hw' ((Finset.mem_filter.1 hc).2 (hsp w hs))⟩
   · intro u hu
     obtain ⟨hz, hS, hout⟩ := mem_lev.1 hu
-    have hint : ∀ w, cLoc w u.1 ∈ GlobalTheory.LFun.KGL w n := by
+    have hint : ∀ w, cLoc w u.1 ∈ GlobalTheory.LFun.KGL w (n := n) := by
       intro w
       by_cases h1 : w ∈ S
       · exact hKKGL w (hS w h1)
       · by_cases h2 : cj w ∈ S
         · have h3 := hI E n (ofU u) (cj w) hz (hKKGL _ (hS _ h2))
-          have key : ∀ v : Plc E, v = w → comp v (ofU u) ∈ GlobalTheory.LFun.KGL v n → cLoc w u.1 ∈ GlobalTheory.LFun.KGL w n := by
+          have key : ∀ v : Plc E, v = w → comp v (ofU u) ∈ GlobalTheory.LFun.KGL v (n := n) → cLoc w u.1 ∈ GlobalTheory.LFun.KGL w (n := n) := by
             rintro v rfl h; exact h
           exact key _ (cj_cj w) h3
         · exact hout w h1 h2

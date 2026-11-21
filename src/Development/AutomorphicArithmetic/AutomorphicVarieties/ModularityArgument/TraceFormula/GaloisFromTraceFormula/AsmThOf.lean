@@ -65,7 +65,7 @@ theorem UpperTheory.V.Z.Tf.GaloisFromTraceFormula.asmTh_of :
     funext w; simp [un]
   let Φ := fun (a b : ℕ) (h : a + b = n) (k : ℕ) =>
     fam Z T (ct0 μ h f) (fun w => (e₁ w).bind (t a b h w)) (fun w => (e₂ w).bind (t a b h w)) k
-  set P : ℂ := c * ∏ w ∈ Z, trc (τ w).ρ (KGL w n) fun g => ct0 μ (Nat.add_zero n) f w (g, 1) with hPdef
+  set P : ℂ := c * ∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) fun g => ct0 μ (Nat.add_zero n) f w (g, 1) with hPdef
   have hP0 : P ≠ 0 := mul_ne_zero hc (Finset.prod_ne_zero_iff.2 fun w hw => by
     rw [hTr E n w (hZ w hw).2 μ (τ w) f (hf w hw).2.1]; exact (hf w hw).2.2)
   have hSt : Tendsto (fun k => geomSt2 S lam l₀ (Φ n 0 (Nat.add_zero n) k)) atTop (𝓝 P) := by

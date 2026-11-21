@@ -458,7 +458,7 @@ theorem hasSatGL_of_equiv {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectru
   have hO : ∀ x, c x ∈ Ov E w ↔ x ∈ Ov F v := fun x => by
     change Valued.v (c x) ≤ 1 ↔ Valued.v x ≤ 1
     rw [hc]
-  have hK : ∀ g, g ∈ KGL v a ↔ e g ∈ KGL w a := mem_iff_mapEquiv c hO
+  have hK : ∀ g, g ∈ KGL v (n := a) ↔ e g ∈ KGL w (n := a) := mem_iff_mapEquiv c hO
   have hTj : ∀ (ϖ : (v.adicCompletion F)ˣ) (i : ℕ) g, Tj ℂ a (Ov E w) (c ϖ) i (e g) = Tj ℂ a (Ov F v) ϖ i g :=
     Tj_mapEquiv c hO
   clear_value e

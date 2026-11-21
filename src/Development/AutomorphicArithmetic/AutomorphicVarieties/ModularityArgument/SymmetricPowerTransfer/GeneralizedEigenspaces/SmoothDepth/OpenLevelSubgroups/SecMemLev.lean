@@ -34,7 +34,7 @@ private theorem sec_mem_lev {U : Subgroup (UA L n)} {S : Finset (Plc L)} (hP : P
     (hj : j ∈ (iw w).J n) : secW n w j ∈ lev U S iw := by
   obtain ⟨h1, h2, -, -⟩ := secSpec L n w (hP.split w (Finset.mem_coe.2 hw))
   have hK : secW n w j ∈ Kall L n := ((factor L n w).2.2.2.2.1 _ (h1 j)).2 (by
-    have hKO : GlobalTheory.SplitWeil.KO (w.adicCompletion L) (Fin n) = GlobalTheory.LFun.KGL w n := GlobalTheory.SmGL.SphCompletion.KO_completion w n
+    have hKO : GlobalTheory.SplitWeil.KO (w.adicCompletion L) (Fin n) = GlobalTheory.LFun.KGL w (n := n) := GlobalTheory.SmGL.SphCompletion.KO_completion w n
     rw [h2, ← hKO]
     exact ((Sig.finFacts _ (iw w)).2.2.2.2.2 n).2.2.2 hj)
   refine Subgroup.mem_inf.2 ⟨hS w hw ⟨h1 j, hK⟩, ?_⟩

@@ -49,7 +49,7 @@ private theorem good_neg {K : Type} [Field K] [NumberField K] {v : P K} {χ : Kv
     fun x hx => h.2.2 x fun c hc => by simpa using hx (-c) (by simpa [IsInt] using hc)⟩
 
 private theorem kat_of_int {K : Type} [Field K] [NumberField K] {v : P K} {g : G1 K} (h : IntAt v g) :
-    Matrix.GeneralLinearGroup.map (cp v) (gl g) ∈ GlobalTheory.LFun.KGL v 2 := by
+    Matrix.GeneralLinearGroup.map (cp v) (gl g) ∈ GlobalTheory.LFun.KGL v (n := 2) := by
   refine GlobalTheory.AdelicU.mem_GLint_iff.2 ⟨fun i j => h i j, fun i j => ?_⟩
   rw [← map_inv, ← map_inv, Matrix.SpecialLinearGroup.SL2_inv_expl]
   have hn : ∀ i j, cp v (-g i j) ∈ Formalism.UG.Ov K v := fun i j => by

@@ -60,7 +60,7 @@ def intMat (a b : ℕ) (w : Pl E) : Subgroup (Multiplicative (Matrix (Fin a) (Fi
 
 def ct {a b : ℕ} (h : a + b = n) (w : Pl E) (f : GLw n w → ℂ) (m : GLw a w × GLw b w) : ℂ :=
   absHalf w (m.1.val.det ^ b / m.2.val.det ^ a) *
-    hint (intMat a b w) fun X => avg fun k : GlobalTheory.LFun.KGL w n => f ((k : GLw n w)⁻¹ * blk h w m (Multiplicative.toAdd X) * k)
+    hint (intMat a b w) fun X => avg fun k : GlobalTheory.LFun.KGL w (n := n) => f ((k : GLw n w)⁻¹ * blk h w m (Multiplicative.toAdd X) * k)
 
 def ctMu {a b : ℕ} (h : a + b = n) (w : Pl E) (μ : (w.adicCompletion E)ˣ →* ℂˣ) (f : UL n w → ℂ)
     (m : GLw a w × GLw b w) : ℂ :=
@@ -78,7 +78,7 @@ def dcos (n : ℕ) (w : Pl E) (t : GLw n w) : GLw n w → ℂ :=
 def IsUnifAt {w : Pl E} (ϖ : (w.adicCompletion E)ˣ) : Prop := ordL (ϖ : w.adicCompletion E) = 1 ∧ cj w ϖ = ϖ
 
 def IsWitt (n : ℕ) (w : Pl E) (b : GLw n w) : Prop :=
-  b ∈ GlobalTheory.LFun.KGL w n ∧ (b.val.map (cj w))ᵀ * b.val = antiJ (w.adicCompletion E) n
+  b ∈ GlobalTheory.LFun.KGL w (n := n) ∧ (b.val.map (cj w))ᵀ * b.val = antiJ (w.adicCompletion E) n
 
 def iwU (n : ℕ) (w : Pl E) (b : GLw n w) : Subgroup (UL n w) :=
   ((iwGL n w).map (MulAut.conj b).toMonoidHom).subgroupOf (UL n w)

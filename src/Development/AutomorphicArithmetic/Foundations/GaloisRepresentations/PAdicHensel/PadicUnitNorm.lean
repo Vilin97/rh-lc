@@ -61,7 +61,7 @@ def IsoEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A : 
   ∃ a : GL (Fin n) (FiniteAdeleRing (𝓞 E) E),
     (a.val.map (cF E))ᵀ * (Matrix.diagonal fun i => ((A.dg n i : 𝓞 E) : E)).map (algebraMap E (FiniteAdeleRing (𝓞 E) E)) * a.val = 1 ∧
     ∀ (w : HeightOneSpectrum (𝓞 E)) (q : ℕ), q.Prime → A.Good q → (q : 𝓞 E) ∈ w.asIdeal →
-      GeneralLinearGroup.map (pLoc E w) a ∈ GlobalTheory.LFun.KGL w n
+      GeneralLinearGroup.map (pLoc E w) a ∈ GlobalTheory.LFun.KGL w (n := n)
 
 def PadMap : Prop := ∀ (F : Type) [Field F] [NumberField F] (w : HeightOneSpectrum (𝓞 F)),
   ∃ (v : HeightOneSpectrum ℤ) (_ : v.adicCompletion ℚ →+* w.adicCompletion F),

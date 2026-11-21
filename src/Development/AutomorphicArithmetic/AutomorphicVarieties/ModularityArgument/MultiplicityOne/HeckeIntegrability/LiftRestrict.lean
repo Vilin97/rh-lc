@@ -112,7 +112,7 @@ theorem UpperTheory.V.Z.Mult.Pi.zTrA :
     UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm.admitted → PfHecke → ProdOp → LocComm → YLoc → ZSimple → YSwap → Isot → SimpleFix → UpperTheory.V.Z.Mult.Pi.AbsCoreA → UpperTheory.V.Z.Mult.Pi.ZTrA := by
   intro hAdm hPf hPO hLC hYL hZS hYS hIs hSF hAC E _ _ _ n S Z N hS hZ hG π y τ hτ
   have hNo : ∀ w, IsOpen (N w : Set (GLw n w)) := fun w => (hG w).1
-  have hNl : ∀ w, N w ≤ KGL w n := fun w => (hG w).2.1
+  have hNl : ∀ w, N w ≤ KGL w (n := n) := fun w => (hG w).2.1
   have hSl : ∀ w ∈ Z, ∀ b, Sl S (w, b) := fun w hw b => ⟨(hZ w hw).1, fun _ => (hZ w hw).2⟩
   have hZero : ∀ w, IsHecke (N w) (0 : GLw n w → ℂ) := fun w => ⟨HasCompactSupport.zero, fun _ _ _ => ⟨rfl, rfl⟩⟩
   have hLoc := hLC E n S Z N hS hZ hG

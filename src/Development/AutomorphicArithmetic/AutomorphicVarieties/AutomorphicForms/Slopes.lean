@@ -81,7 +81,7 @@ theorem slopesOf (hP : Hypotheses₂) {F : Type} [Field F] [NumberField F] {n : 
     SlopesIn (normV w) m (algSat n (normV w) B) := by
   have hK := GlobalTheory.SmGL.SphCompletion.KO_completion w n
   obtain ⟨x, hx0, hx, -⟩ := hB.exists_vec
-  have hfix : ∀ U, U ≤ GlobalTheory.LFun.KGL w n → GlobalTheory.PRep.fixed σ.ρ U ≠ ⊥ := fun U hU =>
+  have hfix : ∀ U, U ≤ GlobalTheory.LFun.KGL w (n := n) → GlobalTheory.PRep.fixed σ.ρ U ≠ ⊥ := fun U hU =>
     (Submodule.ne_bot_iff _).2 ⟨x, GlobalTheory.LGrp.mem_fixed.2 fun k hk => GlobalTheory.LGrp.mem_fixed.1 hx k (hU hk), hx0⟩
   have hsph : GlobalTheory.SmGL.IsSpherical σ.ρ := hfix _ hK.le
   have hiw := hfix _ ((GlobalTheory.SmGL.iwahori_le_KO _ _).trans hK.le)

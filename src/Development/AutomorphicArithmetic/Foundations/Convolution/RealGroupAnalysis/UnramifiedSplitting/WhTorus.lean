@@ -29,7 +29,7 @@ private lemma dL_nL {K : Type} [Field K] [NumberField K] {v : P K} (a : (Kv v)ˣ
   fin_cases i <;> fin_cases j <;> simp [dL, nL, Matrix.mul_apply, Fin.sum_univ_two]
 
 private lemma nL_mem {K : Type} [Field K] [NumberField K] {v : P K} {c : Kv v} (hc : IsInt c) :
-    nL c ∈ GlobalTheory.LFun.KGL v 2 := by
+    nL c ∈ GlobalTheory.LFun.KGL v (n := 2) := by
   have hc' : c ∈ v.adicCompletionIntegers K := hc
   have hn : -c ∈ v.adicCompletionIntegers K := neg_mem hc'
   rw [GlobalTheory.LFun.KGL, GlobalTheory.AdelicU.mem_GLint_iff]

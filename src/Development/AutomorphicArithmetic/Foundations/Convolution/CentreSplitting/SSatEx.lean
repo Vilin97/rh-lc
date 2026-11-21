@@ -28,21 +28,21 @@ theorem UpperTheory.ConvolutionTheory.Dp.sSatEx :
     change ‖RG μ (finGL E n (locGL E n w g)) (v : LL μ)‖ = ‖(v : LL μ)‖
     exact UnitaryRep.norm_map _ _ _
   have hK := (GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL (E := E) w n).2
-  have hdense := UpperTheory.ConvolutionTheory.Dp.fixedDense _ _ _ (locOn h.summand w) (π.locRep w) J (GlobalTheory.LFun.KGL w n) hK hρ
+  have hdense := UpperTheory.ConvolutionTheory.Dp.fixedDense _ _ _ (locOn h.summand w) (π.locRep w) J (GlobalTheory.LFun.KGL w (n := n)) hK hρ
     (π.isSmooth_locRep w) (hJ' w) hd
   obtain ⟨v, hv, h0⟩ := (Submodule.ne_bot_iff _).1 hne
-  have hfix : ∀ u ∈ GlobalTheory.LFun.KGL w n, locOn h.summand w u ⟨v, hv.1⟩ = ⟨v, hv.1⟩ := fun u hu => by
+  have hfix : ∀ u ∈ GlobalTheory.LFun.KGL w (n := n), locOn h.summand w u ⟨v, hv.1⟩ = ⟨v, hv.1⟩ := fun u hu => by
     refine Subtype.ext ?_
     change localRepresentationL2 μ w u v = v
     rw [← rhoLoc E n μ w u v]
     have h2 := hv.2
     simp only [UpperTheory.ConvolutionTheory.fixL, UpperTheory.ConvolutionTheory.fixF, SetLike.mem_coe, Submodule.mem_iInf] at h2
     exact h2 _ ⟨u, by exact (PositivityTheory.JacquetShalikaLocal.SatakeEigenvalues.KGL_eq w n).le hu, rfl⟩
-  have hs : GlobalTheory.LGrp.IsSpherical (π.locRep w) (GlobalTheory.LFun.KGL w n) := by
+  have hs : GlobalTheory.LGrp.IsSpherical (π.locRep w) (GlobalTheory.LFun.KGL w (n := n)) := by
     refine (Submodule.ne_bot_iff _).2 ?_
     by_contra hno
     push_neg at hno
-    have hsub : J '' {x | ∀ u ∈ GlobalTheory.LFun.KGL w n, π.locRep w u x = x} ⊆ {0} := by
+    have hsub : J '' {x | ∀ u ∈ GlobalTheory.LFun.KGL w (n := n), π.locRep w u x = x} ⊆ {0} := by
       rintro _ ⟨x, hx, rfl⟩
       rw [hno x (GlobalTheory.LGrp.mem_fixed.2 hx), map_zero]
       rfl

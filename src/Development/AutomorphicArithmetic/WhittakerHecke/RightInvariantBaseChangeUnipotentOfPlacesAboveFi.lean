@@ -15,7 +15,7 @@ open UpperTheory.V.Af.Smo (EigAt)
 open scoped ComplexOrder
 
 private lemma nL_memK {K : Type} [Field K] [NumberField K] {v : H.P K} {c : H.Kv v} (hc : Valued.v c ≤ 1) :
-    H.nL c ∈ GlobalTheory.LFun.KGL v 2 := by
+    H.nL c ∈ GlobalTheory.LFun.KGL v (n := 2) := by
   have hc' : c ∈ v.adicCompletionIntegers K := hc
   have hn : -c ∈ v.adicCompletionIntegers K := neg_mem hc'
   rw [GlobalTheory.LFun.KGL, GlobalTheory.AdelicU.mem_GLint_iff]

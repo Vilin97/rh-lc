@@ -13,14 +13,14 @@ open private kgl_eq loc_comm from Development.AutomorphicArithmetic.AutomorphicV
 
 private theorem rt_eig {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ} {bad : Set (UpperTheory.V.Cj.S.Pl E)}
     {K K' : Subgroup (GL (Fin a) (Af E))} {W W' : Submodule ℂ (Kinf E a → ℂ)} (hle : K' ≤ K)
-    (hn : ∀ c : GL (Fin a) (Af E), (∀ w, GeneralLinearGroup.map (pLoc E w) c ∈ KGL w a) → ∀ u ∈ K', c⁻¹ * u * c ∈ K')
+    (hn : ∀ c : GL (Fin a) (Af E), (∀ w, GeneralLinearGroup.map (pLoc E w) c ∈ KGL w (n := a)) → ∀ u ∈ K', c⁻¹ * u * c ∈ K')
     (hT : ∀ f : Kinf E a → ℂ, (∀ a, (fun k => f (a * k)) ∈ W) → ∀ b, (fun k => f (k * b)) ∈ W') {φ m B} (h : EigT bad K W φ m B)
     {k : GA E a} (hk : k ∈ Reduction.maxCompact (K := E) (n := a)) : EigT bad K' W' (rt E a k φ) m B := by
   have hne : rt E a k φ ≠ 0 := fun e => h.ne (by
     have := congrArg (rt E a k⁻¹) e
     rwa [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, map_zero, Module.End.one_apply] at this)
   set kf := GeneralLinearGroup.map (pFin E) k with hkf
-  have hmem : ∀ w, GeneralLinearGroup.map (pLoc E w) kf ∈ KGL w a := fun w => by
+  have hmem : ∀ w, GeneralLinearGroup.map (pLoc E w) kf ∈ KGL w (n := a) := fun w => by
     rw [← kgl_eq]
     have e : GeneralLinearGroup.map (pLoc E w) kf = Reduction.finAt w k := by
       ext i j : 2

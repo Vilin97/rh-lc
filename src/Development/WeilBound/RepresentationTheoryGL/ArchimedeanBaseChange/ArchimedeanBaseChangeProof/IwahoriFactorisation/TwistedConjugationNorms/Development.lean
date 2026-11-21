@@ -108,9 +108,9 @@ theorem r2 (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (ϖ : (w.adicCompletion
     | (apply le_and_half_le_prod_one_sub_exp_neg_of_bounds <;> assumption)
 
 theorem iw_facts (w : Pl E) (hw : ¬ IsSplitAt w) (a : ℕ) (t : GLw a w) :
-    IsOpen (GlobalTheory.LFun.KGL w a : Set (GLw a w)) ∧ IsCompact (GlobalTheory.LFun.KGL w a : Set (GLw a w)) ∧
-    (∀ k ∈ GlobalTheory.LFun.KGL w a, thL a w k ∈ GlobalTheory.LFun.KGL w a) ∧ IsLevel (thL a w) (GlobalTheory.LFun.KGL w a) (iwGL a w) ∧
-    IsLevel (MonoidHom.id _) (GlobalTheory.LFun.KGL w a) (iwGL a w) ∧ (iwGL a w).relIndex (GlobalTheory.LFun.KGL w a) ≠ 0 ∧
+    IsOpen (GlobalTheory.LFun.KGL w (n := a) : Set (GLw a w)) ∧ IsCompact (GlobalTheory.LFun.KGL w (n := a) : Set (GLw a w)) ∧
+    (∀ k ∈ GlobalTheory.LFun.KGL w (n := a), thL a w k ∈ GlobalTheory.LFun.KGL w (n := a)) ∧ IsLevel (thL a w) (GlobalTheory.LFun.KGL w (n := a)) (iwGL a w) ∧
+    IsLevel (MonoidHom.id _) (GlobalTheory.LFun.KGL w (n := a)) (iwGL a w) ∧ (iwGL a w).relIndex (GlobalTheory.LFun.KGL w (n := a)) ≠ 0 ∧
     IsCompact {g : GLw a w | dcos a w t g ≠ 0} := by
   first
     | exact iw_facts_pf
@@ -354,7 +354,7 @@ end S1
 theorem s1 (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (ϖ : (w.adicCompletion E)ˣ) (hϖ : IsUnifAt ϖ) (a : ℕ) (y : Fin a → ℤ)
     (hy : StrictAnti y) (δ : GLw a w) (hP : ∃ p : GLw a w, dcos a w (tdiag ϖ y) (p⁻¹ * δ * thL a w p) ≠ 0) :
     (∃ p₀, OneCoset (thL a w) (iwGL a w) δ {g | dcos a w (tdiag ϖ y) g ≠ 0} p₀) ∧
-      CentOK (thL a w) (GlobalTheory.LFun.KGL w a) (iwGL a w) δ ∧ HasVals (nrmL a w δ).val.charpoly (nv y) := by
+      CentOK (thL a w) (GlobalTheory.LFun.KGL w (n := a)) (iwGL a w) δ ∧ HasVals (nrmL a w δ).val.charpoly (nv y) := by
   obtain ⟨p, hp⟩ := hP
   obtain ⟨m, hm, τ, hτ, hmτ⟩ := contr_tw hU w hw ϖ hϖ a y hy _ hp
   obtain ⟨hKo, hKc, -, hIlev, -, -, -⟩ := iw_facts w hw a (tdiag ϖ y)
@@ -436,10 +436,10 @@ theorem s1 (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (ϖ : (w.adicCompletion
     rintro g ⟨hg1, hg2⟩
     apply Subgroup.subset_closure
     refine ⟨hg1, ?_⟩
-    have hC : IsCompact ((GlobalTheory.LFun.KGL w a).map (MulAut.conj x).toMonoidHom : Set (GLw a w)) := by
+    have hC : IsCompact ((GlobalTheory.LFun.KGL w (n := a)).map (MulAut.conj x).toMonoidHom : Set (GLw a w)) := by
       rw [Subgroup.coe_map]
       exact hKc.image (continuous_conj x)
-    have hsub : (Subgroup.zpowers g : Set (GLw a w)) ⊆ ((GlobalTheory.LFun.KGL w a).map (MulAut.conj x).toMonoidHom : Set _) :=
+    have hsub : (Subgroup.zpowers g : Set (GLw a w)) ⊆ ((GlobalTheory.LFun.KGL w (n := a)).map (MulAut.conj x).toMonoidHom : Set _) :=
       Subgroup.zpowers_le.2 hg2
     exact hC.of_isClosed_subset isClosed_closure (closure_minimal hsub hC.isClosed)
   ·
@@ -713,10 +713,10 @@ theorem aL_orb_val (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (a b : ℕ) (ϖ
     (δ : GLw a w × GLw b w)
     (hP : ∃ p : GLw a w × GLw b w, p⁻¹ * δ * (thL a w).prodMap (thL b w) p ∈
       ({g | dcos a w (tdiag ϖ y₁) g ≠ 0} ×ˢ {g | dcos b w (tdiag ϖ y₂) g ≠ 0} : Set (GLw a w × GLw b w))) :
-    twOrb ((thL a w).prodMap (thL b w)) ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b)) δ
+    twOrb ((thL a w).prodMap (thL b w)) ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))) δ
       (({g | dcos a w (tdiag ϖ y₁) g ≠ 0} ×ˢ {g | dcos b w (tdiag ϖ y₂) g ≠ 0} :
         Set (GLw a w × GLw b w)).indicator 1) =
-      (((iwGL a w).relIndex (GlobalTheory.LFun.KGL w a) * (iwGL b w).relIndex (GlobalTheory.LFun.KGL w b) : ℕ) : ℂ)⁻¹ := by
+      (((iwGL a w).relIndex (GlobalTheory.LFun.KGL w (n := a)) * (iwGL b w).relIndex (GlobalTheory.LFun.KGL w (n := b)) : ℕ) : ℂ)⁻¹ := by
   obtain ⟨δ₁, δ₂⟩ := δ
   obtain ⟨⟨p₁, p₂⟩, hp⟩ := hP
   have hp₁ : dcos a w (tdiag ϖ y₁) (p₁⁻¹ * δ₁ * thL a w p₁) ≠ 0 := hp.1
@@ -725,17 +725,17 @@ theorem aL_orb_val (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (a b : ℕ) (ϖ
   obtain ⟨⟨q₂, hq₂⟩, hC₂, -⟩ := s1 hU w hw ϖ hϖ b y₂ hy₂ δ₂ ⟨p₂, hp₂⟩
   obtain ⟨ho₁, hk₁, hθ₁, hI₁, -, -, hX₁⟩ := iw_facts w hw a (tdiag ϖ y₁)
   obtain ⟨ho₂, hk₂, hθ₂, hI₂, -, -, hX₂⟩ := iw_facts w hw b (tdiag ϖ y₂)
-  have hpr := g1prod (thL a w) (thL b w) (GlobalTheory.LFun.KGL w a) (iwGL a w) (GlobalTheory.LFun.KGL w b) (iwGL b w) δ₁ δ₂
+  have hpr := g1prod (thL a w) (thL b w) (GlobalTheory.LFun.KGL w (n := a)) (iwGL a w) (GlobalTheory.LFun.KGL w (n := b)) (iwGL b w) δ₁ δ₂
     {g | dcos a w (tdiag ϖ y₁) g ≠ 0} {g | dcos b w (tdiag ϖ y₂) g ≠ 0} q₁ q₂
-  have hKo : IsOpen (((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b) : Subgroup _) : Set (GLw a w × GLw b w)) := by
+  have hKo : IsOpen (((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)) : Subgroup _) : Set (GLw a w × GLw b w)) := by
     rw [Subgroup.coe_prod]; exact ho₁.prod ho₂
-  have hKc : IsCompact (((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b) : Subgroup _) :
+  have hKc : IsCompact (((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)) : Subgroup _) :
       Set (GLw a w × GLw b w)) := by
     rw [Subgroup.coe_prod]; exact hk₁.prod hk₂
-  have hθK : ∀ k ∈ (GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b),
-      (thL a w).prodMap (thL b w) k ∈ (GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b) := fun k hk =>
+  have hθK : ∀ k ∈ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)),
+      (thL a w).prodMap (thL b w) k ∈ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)) := fun k hk =>
     Subgroup.mem_prod.mpr ⟨hθ₁ _ (Subgroup.mem_prod.mp hk).1, hθ₂ _ (Subgroup.mem_prod.mp hk).2⟩
-  have hI : IsLevel ((thL a w).prodMap (thL b w)) ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b))
+  have hI : IsLevel ((thL a w).prodMap (thL b w)) ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)))
       ((iwGL a w).prod (iwGL b w)) := by
     refine ⟨?_, Subgroup.prod_mono hI₁.2.1 hI₂.2.1, fun k hk =>
       Subgroup.mem_prod.mpr ⟨hI₁.2.2 _ (Subgroup.mem_prod.mp hk).1, hI₂.2.2 _ (Subgroup.mem_prod.mp hk).2⟩⟩
@@ -766,7 +766,7 @@ theorem aL_phiX_val (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (n a : ℕ) (b
     (hy : (nrmL a w y.1).val.charpoly = Q₁) :
     phiX n w b ϖ x a y =
       (-qh w) ^ (-vRes n a (lOf x) s) * (((iwU n w b).relIndex (KL n w) : ℕ) : ℂ)⁻¹ *
-        ((iwGL a w).relIndex (GlobalTheory.LFun.KGL w a) : ℕ) * ((iwGL (n - a) w).relIndex (GlobalTheory.LFun.KGL w (n - a)) : ℕ) *
+        ((iwGL a w).relIndex (GlobalTheory.LFun.KGL w (n := a)) : ℕ) * ((iwGL (n - a) w).relIndex (GlobalTheory.LFun.KGL w (n := (n - a))) : ℕ) *
         (dcos a w (tdiag ϖ (restr x _ h₁)) y.1 * dcos (n - a) w (tdiag ϖ (restr x _ h₂)) y.2) := by
   unfold phiX
   rw [Finset.sum_eq_single s]
@@ -825,12 +825,12 @@ theorem asmL_A (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (n a : ℕ) (ha : a
     exact ⟨(nrm_twconj w hw a g.1 δ.1).trans e1, (nrm_twconj w hw (n - a) g.2 δ.2).trans e2⟩
   have hval : ∀ y ∈ S, phiX n w b ϖ x a y =
       (-qh w) ^ (-vRes n a (lOf x) s) * (((iwU n w b).relIndex (KL n w) : ℕ) : ℂ)⁻¹ *
-        ((iwGL a w).relIndex (GlobalTheory.LFun.KGL w a) : ℕ) *
-        ((iwGL (n - a) w).relIndex (GlobalTheory.LFun.KGL w (n - a)) : ℕ) * X.indicator 1 y := by
+        ((iwGL a w).relIndex (GlobalTheory.LFun.KGL w (n := a)) : ℕ) *
+        ((iwGL (n - a) w).relIndex (GlobalTheory.LFun.KGL w (n := (n - a))) : ℕ) * X.indicator 1 y := by
     intro y hy
     rw [aL_phiX_val hU w hw n a b ϖ hϖ x hx Q₁ s ⟨hsh1, hsh2, hsh3⟩ h₁ h₂ hv₁ y hy.1, aL_dcos_mul]
   have horb : ∀ δ ∈ S, (∃ p, p⁻¹ * δ * θ p ∈ X) →
-      twOrb θ ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w (n - a))) δ (phiX n w b ϖ x a) =
+      twOrb θ ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := (n - a)))) δ (phiX n w b ϖ x a) =
         (-qh w) ^ (-vRes n a (lOf x) s) * (((iwU n w b).relIndex (KL n w) : ℕ) : ℂ)⁻¹ := by
     intro δ hδ hP
     rw [g3 _ _ δ _ (X.indicator 1) _ (fun p => hval _ (hinv δ hδ p)),

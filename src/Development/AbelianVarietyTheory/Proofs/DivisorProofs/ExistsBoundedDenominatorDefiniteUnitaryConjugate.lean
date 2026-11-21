@@ -32,11 +32,11 @@ theorem exists_nat_denom {ι : Type} [Fintype ι] (a : ι → Af E) :
 theorem cLoc_val (k : finU E n) (w : Pl E) (i j : Fin n) :
     (cLoc w (k : UA E n)).val i j = pLoc E w ((FinPart.pU k).val i j) := rfl
 
-theorem exists_denom : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (S : Set (Pl E)), IsSection S → ∀ x : finU E n, ∃ d : ℕ, 0 < d ∧ ∀ g : finU E n, (∀ w ∈ S, cLoc w ((x⁻¹ * g * x : finU E n) : UA E n) ∈ GlobalTheory.LFun.KGL w n) → ∀ (w : Pl E) (i j : Fin n), (d : w.adicCompletion E) * (cLoc w (g : UA E n)).val i j ∈ w.adicCompletionIntegers E := by
+theorem exists_denom : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (S : Set (Pl E)), IsSection S → ∀ x : finU E n, ∃ d : ℕ, 0 < d ∧ ∀ g : finU E n, (∀ w ∈ S, cLoc w ((x⁻¹ * g * x : finU E n) : UA E n) ∈ GlobalTheory.LFun.KGL w (n := n)) → ∀ (w : Pl E) (i j : Fin n), (d : w.adicCompletion E) * (cLoc w (g : UA E n)).val i j ∈ w.adicCompletionIntegers E := by
   intro E _ _ _ n S hS x
   obtain ⟨D₁, hD₁, h₁⟩ := exists_nat_denom (E := E) (ι := Fin n × Fin n) fun k => (FinPart.pU x).val k.1 k.2
   obtain ⟨D₂, hD₂, h₂⟩ := exists_nat_denom (E := E) (ι := Fin n × Fin n) fun k => (FinPart.pU x⁻¹).val k.1 k.2
-  have key : ∀ (h : finU E n) (w : Pl E), cLoc w ((x⁻¹ * h * x : finU E n) : UA E n) ∈ GlobalTheory.LFun.KGL w n →
+  have key : ∀ (h : finU E n) (w : Pl E), cLoc w ((x⁻¹ * h * x : finU E n) : UA E n) ∈ GlobalTheory.LFun.KGL w (n := n) →
       ∀ i j, ((D₁ * D₂ : ℕ) : w.adicCompletion E) * (cLoc w (h : UA E n)).val i j ∈ w.adicCompletionIntegers E := by
     intro h w hk i j
     have e : (h : UA E n) = (x : UA E n) * ((x⁻¹ * h * x : finU E n) : UA E n) * ((x⁻¹ : finU E n) : UA E n) := by
@@ -61,10 +61,10 @@ theorem exists_denom : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n
   rcases GlobalTheory.BCT.LocCpt.mem_or_conj_mem hS w with hw | hw
   · exact key g w (hg w hw) i j
   · have hinv : cLoc (conjSrc (GlobalTheory.SplitPts.conjE E) w) ((x⁻¹ * g⁻¹ * x : finU E n) : UA E n) ∈
-        GlobalTheory.LFun.KGL (conjSrc (GlobalTheory.SplitPts.conjE E) w) n := by
+        GlobalTheory.LFun.KGL (conjSrc (GlobalTheory.SplitPts.conjE E) w) (n := n) := by
       have : (x⁻¹ * g⁻¹ * x : finU E n) = (x⁻¹ * g * x)⁻¹ := by group
       rw [this, Subgroup.coe_inv, map_inv]
-      exact (GlobalTheory.LFun.KGL _ n).inv_mem (hg _ hw)
+      exact (GlobalTheory.LFun.KGL _ (n := n)).inv_mem (hg _ hw)
     have h1 := key g⁻¹ _ hinv j i
     have e2 : (cLoc w (g : UA E n)).val i j = conjLoc (GlobalTheory.SplitPts.conjE E) w
         ((cLoc (conjSrc (GlobalTheory.SplitPts.conjE E) w) ((g⁻¹ : finU E n) : UA E n)).val j i) := by

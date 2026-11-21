@@ -24,7 +24,7 @@ theorem eventually_mem_integers {E : Type} [Field E] [NumberField E] (a : E) :
 
 theorem mem_KGL_of_entries {E : Type} [Field E] [NumberField E] {n : ℕ} (w : Pl E) (g : GLw n w)
     (h1 : ∀ a b, g.val a b ∈ w.adicCompletionIntegers E)
-    (h2 : ∀ a b, (g⁻¹).val a b ∈ w.adicCompletionIntegers E) : g ∈ GlobalTheory.LFun.KGL w n := by
+    (h2 : ∀ a b, (g⁻¹).val a b ∈ w.adicCompletionIntegers E) : g ∈ GlobalTheory.LFun.KGL w (n := n) := by
   let O : Subring (w.adicCompletion E) := Ov E w
   have inj : Function.Injective (O.subtype.mapMatrix (m := Fin n)) :=
     fun A B h => funext fun i => funext fun j => Subtype.ext (congrFun (congrFun h i) j)
@@ -53,7 +53,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
   · have hloc : ((locPt w γ : UL n w) : GLw n w) = y := by
       simp only [locPt, toSub]
       rw [dite_eq_left hmem]
-    have hyK : y ∈ GlobalTheory.LFun.KGL w n := by
+    have hyK : y ∈ GlobalTheory.LFun.KGL w (n := n) := by
       apply mem_KGL_of_entries
       · intro a b; exact (hw a b).1
       · intro a b

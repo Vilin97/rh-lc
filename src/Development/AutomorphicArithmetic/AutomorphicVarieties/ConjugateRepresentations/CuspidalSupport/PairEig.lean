@@ -12,7 +12,7 @@ open scoped TensorProduct
 
 private theorem UpperTheory.V.Cj.S.eig_of_joint (hS : SatOfEig) (hC : CapOfEig)
     {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {T : Set (Pl E)} (hT : T.Finite)
-    (φ : Sm E a) (h0 : φ ≠ 0) (haut : IsAutForm φ) (hfix : ∀ w ∉ T, φ ∈ fixed (fL a w) (KGL w a))
+    (φ : Sm E a) (h0 : φ ≠ 0) (haut : IsAutForm φ) (hfix : ∀ w ∉ T, φ ∈ fixed (fL a w) (KGL w (n := a)))
     (l : Ix a T → ℂ) (hl : ∀ i, opIx i φ = l i • φ) :
     ∃ (m : (E →+* ℂ) → Multiset ℂ) (B : Pl E → Multiset ℂˣ), Eig φ m B ∧
       (∀ t u, l (.inl (t, u)) = ((m t).map (u + ·)).prod) ∧

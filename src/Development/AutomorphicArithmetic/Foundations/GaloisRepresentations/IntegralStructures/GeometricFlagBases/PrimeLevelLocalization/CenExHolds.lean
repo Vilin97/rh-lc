@@ -49,7 +49,7 @@ theorem tjIdx_of (h1 : Sides) (h2 : Dict) (h3 : LevBasic) : TjIdx := by
   obtain ⟨l1, l2, l3⟩ := levLoc h1 h2 h3 E A n p S F x hx N w σ i hi g s
   rw [← locIdx E n w i hi _ s.at_w, Subgroup.inf_relIndex_left]
   have e1 : (σ.K₀.comap F.j).map F.j = σ.K₀ := Subgroup.map_comap_eq_self_of_surjective F.surj _
-  have e2 : (σ.K₀.comap F.j).map (comp w) = KGL w n :=
+  have e2 : (σ.K₀.comap F.j).map (comp w) = KGL w (n := n) :=
     le_antisymm (by rintro _ ⟨k, hk, rfl⟩; exact l1 k hk) fun κ hκ => l2 κ hκ
   conv_lhs => rw [← e1]
   conv_rhs => rw [← e2]

@@ -29,7 +29,7 @@ theorem O_eq : 𝒪[w.adicCompletion E] = Formalism.UG.Ov E w := by
   ext x
   exact GroundTheory.Global.mem_valuationInteger_iff w x
 
-theorem KGL_eq (n : ℕ) : KGL w n = integralGL (w.adicCompletion E) n :=
+theorem KGL_eq (n : ℕ) : KGL w (n := n) = integralGL (w.adicCompletion E) n :=
   (congrArg (Formalism.UG.GLint (Fin n)) (O_eq w)).symm.trans rfl
 
 theorem isUnifV_uniformizer :

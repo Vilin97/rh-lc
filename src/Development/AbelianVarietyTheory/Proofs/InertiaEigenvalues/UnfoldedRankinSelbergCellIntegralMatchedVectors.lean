@@ -51,11 +51,11 @@ theorem unfolded_cells_eq : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyC
       φ ∈ GlobalTheory.JSW.mspanR π → φ' ∈ GlobalTheory.JSW.mspanR π' →
       (∃ U : Subgroup (GL (Fin (m + r + 1 + 1)) (Af E)), IsOpen (U : Set (GL (Fin (m + r + 1 + 1)) (Af E))) ∧
         ∀ u ∈ U, ∀ g, φ (g * finGL E (m + r + 1 + 1) u) = φ g) →
-      (∀ w ∉ S, ∀ k ∈ KGL w (m + r + 1 + 1), ∀ g,
+      (∀ w ∉ S, ∀ k ∈ KGL w (n := (m + r + 1 + 1)), ∀ g,
         φ (g * finGL E (m + r + 1 + 1) (locGL E (m + r + 1 + 1) w k)) = φ g) →
       (∃ U : Subgroup (GL (Fin (m + 1)) (Af E)), IsOpen (U : Set (GL (Fin (m + 1)) (Af E))) ∧
         ∀ u ∈ U, ∀ g, φ' (g * finGL E (m + 1) u) = φ' g) →
-      (∀ w ∉ S, ∀ k ∈ KGL w (m + 1), ∀ g, φ' (g * finGL E (m + 1) (locGL E (m + 1) w k)) = φ' g) →
+      (∀ w ∉ S, ∀ k ∈ KGL w (n := (m + 1)), ∀ g, φ' (g * finGL E (m + 1) (locGL E (m + 1) w k)) = φ' g) →
       (∀ (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ), (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) →
         ∀ l : HeightOneSpectrum (𝓞 E) →₀ (Fin (m + 1) → ℕ), (∀ w ∈ l.support, w ∉ S) →
         ∀ h ∈ GlobalTheory.JSW.supS E (m + 1) S,
@@ -114,8 +114,8 @@ theorem unfolded_cells_eq : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyC
   have hWc' := GlobalTheory.JSW.WhitCont.continuous_whit E _ φ' hc'.cont hc'.bdd
   have hRI : ∀ {a : ℕ} (Φ : GA E a → ℂ), (∃ U : Subgroup (GL (Fin a) (Af E)), IsOpen (U : Set (GL (Fin a) (Af E))) ∧
         ∀ u ∈ U, ∀ g, Φ (g * finGL E a u) = Φ g) →
-      (∀ w ∉ S, ∀ k ∈ KGL w a, ∀ g, Φ (g * finGL E a (locGL E a w k)) = Φ g) →
-      ∀ k : GL (Fin a) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v a) →
+      (∀ w ∉ S, ∀ k ∈ KGL w (n := a), ∀ g, Φ (g * finGL E a (locGL E a w k)) = Φ g) →
+      ∀ k : GL (Fin a) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := a)) →
       (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) → ∀ g, GlobalTheory.JSW.whit Φ (g * finGL E a k) = GlobalTheory.JSW.whit Φ g := by
     intro a Φ ⟨U, hUo, hUi⟩ hKi k hk1 hk2 g
     let stab : Subgroup (GL (Fin a) (Af E)) :=
@@ -125,13 +125,13 @@ theorem unfolded_cells_eq : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyC
         inv_mem' := fun {a'} ha g => by
           rw [← ha (g * finGL E a a'⁻¹), mul_assoc, ← map_mul, inv_mul_cancel, map_one, mul_one] }
     let V : Subgroup (GL (Fin a) (Af E)) := U ⊔ Subgroup.closure
-      {k | ∃ w ∉ S, ∃ k' ∈ KGL w a, locGL E a w k' = k}
+      {k | ∃ w ∉ S, ∃ k' ∈ KGL w (n := a), locGL E a w k' = k}
     have hVle : V ≤ stab := by
       refine sup_le (fun k hk => hUi k hk) (Subgroup.closure_le _ |>.2 ?_)
       rintro _ ⟨w, hw, k, hk, rfl⟩
       exact hKi w hw k hk
     have hVo : IsOpen (V : Set (GL (Fin a) (Af E))) := Subgroup.isOpen_mono (le_sup_left : U ≤ V) hUo
-    have hVK : ∀ w ∉ S, ∀ k ∈ KGL w a, locGL E a w k ∈ V := fun w hw k hk =>
+    have hVK : ∀ w ∉ S, ∀ k ∈ KGL w (n := a), locGL E a w k ∈ V := fun w hw k hk =>
       (le_sup_right : Subgroup.closure _ ≤ V) (Subgroup.subset_closure ⟨w, hw, k, hk, rfl⟩)
     obtain ⟨J, -, -, hJV⟩ := GlobalTheory.RSLocalPart.exists_levelAt_subset S V hVo hVK
     have hkJ : k ∈ GlobalTheory.RSLocalPart.levelAt a S J := by

@@ -130,7 +130,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.unrInert :
   have hp0 : p ≠ 0 := fun h0 => by simp [Formalism.UG.IsUnifV, h0] at hp
   obtain ⟨ϖ', hϖ', hz, hnz⟩ := hin.unif (Units.mk0 p hp0) hp
   obtain ⟨r1, r2⟩ := hrel v hv hu hval α β hB (Units.mk0 p hp0) (idl w ϖ') hp hz hnz
-  have hfix' : ∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w 2, y.1 (g * finGL E 2 (locGL E 2 w k)) = y.1 g := fun g k hk =>
+  have hfix' : ∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w (n := 2), y.1 (g * finGL E 2 (locGL E 2 w k)) = y.1 g := fun g k hk =>
     congrFun (congrArg (fun x : Q.V => x.1.1) (GlobalTheory.LGrp.mem_fixed.1 hfix k hk)) g
   have hEig : EigAt w {α', β'} y.1 := UpperTheory.V.Af.StrongMultiplicityOne.eigOfSat E 2 Q w _ hB' y hy hfix'
   have hEw := (weEig F E D y.1 hcont).2.1 w _ hEig

@@ -91,9 +91,9 @@ theorem cloc_symm_v (y : x.adicCompletion E) : Valued.v ((cloc x).symm y) = Valu
   rw [e] at h
   exact h.symm
 
-theorem mem_fx_iff (g : GLw n x) : g ∈ KGL x n ↔ fx x n g ∈ KGL (cw x) n := by
+theorem mem_fx_iff (g : GLw n x) : g ∈ KGL x (n := n) ↔ fx x n g ∈ KGL (cw x) (n := n) := by
   have hO := map_mem_Ov_iff (cloc x).symm (cloc_symm_v x)
-  have hΦ : PhiU n (x.adicCompletion E) ∈ KGL x n := phiU_mem _ n
+  have hΦ : PhiU n (x.adicCompletion E) ∈ KGL x (n := n) := phiU_mem _ n
   change _ ↔ GlobalTheory.LFun.ConjPlace.invT (cloc x).symm n ((MulAut.conj (PhiU n (x.adicCompletion E))).symm g) ∈ _
   rw [← mem_iff_invT (cloc x).symm hO, MulAut.conj_symm_apply, Subgroup.mul_mem_cancel_right _ hΦ,
     Subgroup.mul_mem_cancel_left _ (inv_mem hΦ)]
@@ -103,7 +103,7 @@ theorem Tj_fx {p : x.adicCompletion E} (hp : IsUnifV E x p) (hp0 : p ≠ 0) {j :
       Tj ℂ n (Ov E x) ((Units.mk0 p hp0 : (x.adicCompletion E)ˣ) : x.adicCompletion E) (n - j)
         (dGL n (Units.mk0 p hp0) n * g) := by
   have hO := map_mem_Ov_iff (cloc x).symm (cloc_symm_v x)
-  have hΦ : PhiU n (x.adicCompletion E) ∈ KGL x n := phiU_mem _ n
+  have hΦ : PhiU n (x.adicCompletion E) ∈ KGL x (n := n) := phiU_mem _ n
   change Tj ℂ n (Ov E (cw x)) ((cloc x).symm ((Units.mk0 p hp0 : (x.adicCompletion E)ˣ) : x.adicCompletion E)) j
     (GlobalTheory.LFun.ConjPlace.invT (cloc x).symm n ((MulAut.conj (PhiU n (x.adicCompletion E))).symm g)) = _
   rw [Tj_invT (cloc x).symm hO _ hj, MulAut.conj_symm_apply]
@@ -139,7 +139,7 @@ theorem thetaSat2_holds : ThetaSat2 := by
   obtain rfl : u = x := (GlobalTheory.CompanionTheory.OneExDatum.eq_cw_of_conjPl hwu).trans (GlobalTheory.ThetaPull.conjSrc_conjSrc x)
   rw [pairRtT_cw]
   refine saturation_transport_pair _ (fun g => ?_) (absNorm_cw u) (fun ϖ' hϖ' => ?_) hs
-  · show g ∈ (KGL u a).prod (KGL u b) ↔ ((fx u a).prodCongr (fx u b)) g ∈ (KGL (cw u) a).prod (KGL (cw u) b)
+  · show g ∈ (KGL u (n := a)).prod (KGL u (n := b)) ↔ ((fx u a).prodCongr (fx u b)) g ∈ (KGL (cw u) (n := a)).prod (KGL (cw u) (n := b))
     rw [Subgroup.mem_prod, Subgroup.mem_prod]
     exact and_congr (mem_fx_iff u a g.1) (mem_fx_iff u b g.2)
   · obtain ⟨p, rfl⟩ := (cloc u).symm.surjective ϖ'

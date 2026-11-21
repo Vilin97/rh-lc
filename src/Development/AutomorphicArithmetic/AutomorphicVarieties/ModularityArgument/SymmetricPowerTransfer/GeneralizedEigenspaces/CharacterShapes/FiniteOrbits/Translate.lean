@@ -135,7 +135,7 @@ private theorem int_of_Uo (w : Plc L) (x : (Kw w)ˣ) (h : x ∈ Uo (Kw w)) : (x 
   haveI : (Valued.v : Valuation (Kw w) (WithZero (Multiplicative ℤ))).Compatible := Valuation.Compatible.ofValuation _
   exact (ValuativeRel.isEquiv (valuation (Kw w)) Valued.v).le_one_iff_le_one.1 h1.le
 
-private theorem dg_KGL (w : Plc L) (d : Fin 2 → (Kw w)ˣ) (hd : ∀ i, d i ∈ Uo (Kw w)) : dg d ∈ GlobalTheory.LFun.KGL w 2 := by
+private theorem dg_KGL (w : Plc L) (d : Fin 2 → (Kw w)ˣ) (hd : ∀ i, d i ∈ Uo (Kw w)) : dg d ∈ GlobalTheory.LFun.KGL w (n := 2) := by
   have key : ∀ (e : Fin 2 → (Kw w)ˣ), (∀ i, e i ∈ Uo (Kw w)) → ∀ a b, (dg e).val a b ∈ w.adicCompletionIntegers L := by
     intro e he a b
     rw [val_diagT, Matrix.diagonal_apply]
@@ -146,7 +146,7 @@ private theorem dg_KGL (w : Plc L) (d : Fin 2 → (Kw w)ˣ) (hd : ∀ i, d i ∈
   rw [← map_inv]
   exact key _ fun i => inv_mem (hd i)
 
-private theorem sec_Kall (w : Plc L) (hw : IsSplitAt w) (g : GL (Fin 2) (Kw w)) (hg : g ∈ GlobalTheory.LFun.KGL w 2) :
+private theorem sec_Kall (w : Plc L) (hw : IsSplitAt w) (g : GL (Fin 2) (Kw w)) (hg : g ∈ GlobalTheory.LFun.KGL w (n := 2)) :
     secW 2 w g ∈ Kall L 2 := by
   obtain ⟨hsec, -, -, -, -, -, -, hint⟩ := uaFacts L 2
   obtain ⟨h1, h2, -, -⟩ := hsec w hw

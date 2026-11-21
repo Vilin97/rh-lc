@@ -52,12 +52,12 @@ private theorem finiteRing_sq_sub_mul_sq_eq_of_card {D : D7} {L : SizeData₂ D}
       (∀ τ, ∃ lam : DomWeight N, (∀ a, lam.w a = (mu τ a : ℤ) + T.sh τ) ∧ HasWeightAt π (T.io.toRingHom.comp (inc τ)) lam ∧
         HasWeightAt π (T.io.toRingHom.comp (GlobalTheory.ExpFrame.cj (inc τ))) lam.dual) ∧
       ∃ φ ∈ π, φ ≠ 0 ∧
-        (∀ v, GlobalTheory.Hk3.Good p.R.toRealDat t v → ∀ x ∈ locU N v, cLoc v x ∈ GlobalTheory.LFun.KGL v N → RU D.host.E N x φ = φ) ∧
-        ∀ Q : (blk p j t).Pl, (∀ x ∈ locU N (labOf p j t Q), cLoc (labOf p j t Q) x ∈ GlobalTheory.LFun.KGL (labOf p j t Q) N →
+        (∀ v, GlobalTheory.Hk3.Good p.R.toRealDat t v → ∀ x ∈ locU N v, cLoc v x ∈ GlobalTheory.LFun.KGL v (n := N) → RU D.host.E N x φ = φ) ∧
+        ∀ Q : (blk p j t).Pl, (∀ x ∈ locU N (labOf p j t Q), cLoc (labOf p j t Q) x ∈ GlobalTheory.LFun.KGL (labOf p j t Q) (n := N) →
           RU D.host.E N x φ = φ) ∧
         ∀ i, (ix i).1 = Q →
           GlobalTheory.LFun.heckeVec ((RU D.host.E N).comp (locU N (labOf p j t Q)).subtype)
-            ((GlobalTheory.LFun.KGL (labOf p j t Q) N).comap ((cLoc (labOf p j t Q)).comp (locU N (labOf p j t Q)).subtype))
+            ((GlobalTheory.LFun.KGL (labOf p j t Q) (n := N)).comap ((cLoc (labOf p j t Q)).comp (locU N (labOf p j t Q)).subtype))
             (fun x => GlobalTheory.SphPar.divInd (Formalism.UG.Ov D.host.E (labOf p j t Q))
               (Formalism.IndefR.Mult.dualLab (Formalism.IndefR.Mult.splitLab N (ix i).2))
               ((cLoc (labOf p j t Q)).comp (locU N (labOf p j t Q)).subtype x)) φ = T.io (θ i) • φ := by

@@ -133,7 +133,7 @@ end LevelFixedParabolic
 open LevelFixedParabolic in
 theorem levelFactor : LevelFactor := by
   intro E _ _ _ w c n N h K hK
-  have hKO : ∀ m, GlobalTheory.LFun.KGL w m = KO (w.adicCompletion E) (Fin m) := fun m =>
+  have hKO : ∀ m, GlobalTheory.LFun.KGL w (n := m) = KO (w.adicCompletion E) (Fin m) := fun m =>
     (GlobalTheory.SmGL.SphCompletion.KO_completion w m).symm
   refine ⟨Ki (m := fun i => Fin (N i)) (w.adicCompletion E) (stdBlocks N h) (coreH (w.adicCompletion E) (Fin n) K),
     fun i => isOpen_Ki (stdBlocks N h) (isOpen_coreH hK) i, fun hle i => ?_, fun σ hσ i => ?_⟩

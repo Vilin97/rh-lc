@@ -30,8 +30,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 theorem sc_hasSatGL_of_isSubquotient {w : HeightOneSpectrum (𝓞 E)} {V W : Type} [AddCommGroup V] [Module ℂ V]
     [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) (hρs : IsSmooth ρ)
     (σ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) W) (hsub : GlobalTheory.SmGL.IsSubquotient σ ρ)
-    (hsph : GlobalTheory.LGrp.IsSpherical σ (GlobalTheory.LFun.KGL w n)) (B : Multiset ℂˣ)
-    (hsat : ∀ f ∈ fixed ρ (GlobalTheory.LFun.KGL w n), f ≠ 0 → GlobalTheory.LFun.IsSatVecGL w ρ f B) :
+    (hsph : GlobalTheory.LGrp.IsSpherical σ (GlobalTheory.LFun.KGL w (n := n))) (B : Multiset ℂˣ)
+    (hsat : ∀ f ∈ fixed ρ (GlobalTheory.LFun.KGL w (n := n)), f ≠ 0 → GlobalTheory.LFun.IsSatVecGL w ρ f B) :
     GlobalTheory.LFun.HasSatGL w σ B := by
   obtain ⟨S, q, hq⟩ := hsub
   obtain ⟨-, hKc⟩ := GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL w n
@@ -40,12 +40,12 @@ theorem sc_hasSatGL_of_isSubquotient {w : HeightOneSpectrum (𝓞 E)} {V W : Typ
     ext g
     exact Subtype.ext_iff
   refine ⟨hsph, fun x hx hx0 => ?_⟩
-  have hx' : x ∈ (fixed S.toRepresentation (GlobalTheory.LFun.KGL w n)).map q.toLinearMap := by
+  have hx' : x ∈ (fixed S.toRepresentation (GlobalTheory.LFun.KGL w (n := n))).map q.toLinearMap := by
     rw [GlobalTheory.LocGL.map_fixed_of_surjective hSs hKc (f := q) hq]
     exact hx
   obtain ⟨u, hu, hux⟩ := Submodule.mem_map.1 hx'
   have hu0 : u ≠ 0 := fun e => hx0 (by rw [← hux, e, map_zero])
-  have huK : u.1 ∈ fixed ρ (GlobalTheory.LFun.KGL w n) :=
+  have huK : u.1 ∈ fixed ρ (GlobalTheory.LFun.KGL w (n := n)) :=
     GlobalTheory.LGrp.mem_fixed.2 fun k hk => congrArg Subtype.val (GlobalTheory.LGrp.mem_fixed.1 hu k hk)
   have hu1 : GlobalTheory.LFun.IsSatVecGL w ρ u.1 B := hsat _ huK fun e => hu0 (Subtype.ext e)
   have hu2 : GlobalTheory.LFun.IsSatVecGL w S.toRepresentation u B :=
@@ -57,7 +57,7 @@ theorem sc_hasSatGL_of_isSubquotient {w : HeightOneSpectrum (𝓞 E)} {V W : Typ
   exact hu3
 
 theorem sc_satVec (X : Pre E n) (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ) (h : X.Sat w B) :
-    ∀ f ∈ fixed (locProd X.h w (X.σ · w)) (GlobalTheory.LFun.KGL w n), f ≠ 0 →
+    ∀ f ∈ fixed (locProd X.h w (X.σ · w)) (GlobalTheory.LFun.KGL w (n := n)), f ≠ 0 →
       GlobalTheory.LFun.IsSatVecGL w (locProd X.h w (X.σ · w)) f B := by
   obtain ⟨b, hb, rfl⟩ := h
   intro f hf hf0

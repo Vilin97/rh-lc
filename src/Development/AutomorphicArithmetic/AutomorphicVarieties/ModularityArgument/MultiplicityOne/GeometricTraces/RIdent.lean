@@ -70,8 +70,8 @@ theorem UpperTheory.V.Z.Mult.rIdent :
     funext w; simp [un]
   let Φ := fun (a b : ℕ) (h : a + b = n) (k : ℕ) =>
     fam Z T (ct0 μ h f) (fun w => (e₁ w).bind (t a b h w)) (fun w => (e₂ w).bind (t a b h w)) k
-  set P : ℂ := c * ∏ w ∈ Z, trc (τ w).ρ (KGL w n) fun g => ct0 μ (Nat.add_zero n) f w (g, 1) with hPdef
-  set Q : ℂ := ∏ w ∈ Z, trc (τ w).ρ (KGL w n) (f w) with hQdef
+  set P : ℂ := c * ∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) fun g => ct0 μ (Nat.add_zero n) f w (g, 1) with hPdef
+  set Q : ℂ := ∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) (f w) with hQdef
   have hQ0 : Q ≠ 0 := Finset.prod_ne_zero_iff.2 fun w hw => (hf w hw).2.2
   have hPQ : P = c * Q := congrArg (c * ·) (Finset.prod_congr rfl fun w hw => hTr E n w (hZ w hw).2 μ (τ w) f (hf w hw).2.1)
   have hU := hUv f hK2 T hT hTZ e₁ e₂ hv1 fun j => hv0 (.inl j)

@@ -113,7 +113,7 @@ theorem mem_ker_iff (w : Pl E) (n k : ℕ) (h : GL (Fin n) (Ov E w)) :
     rfl
 
 theorem mem_congSub_iff (w : Pl E) (n k : ℕ) (g : GLw n w) :
-    g ∈ congSub w n k ↔ g ∈ GlobalTheory.LFun.KGL w n ∧ ∀ i j, Valued.v (g.val i j -
+    g ∈ congSub w n k ↔ g ∈ GlobalTheory.LFun.KGL w (n := n) ∧ ∀ i j, Valued.v (g.val i j -
       (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) i j) ≤ WithZero.exp (-(k : ℤ)) := by
   constructor
   · rintro ⟨h, hh, rfl⟩
@@ -173,7 +173,7 @@ theorem exists_ball_subset (w : Pl E) {U : Set (w.adicCompletion E)} {x : w.adic
   omega
 
 theorem isOpen_congSub (w : Pl E) (n k : ℕ) : IsOpen (congSub w n k : Set (GLw n w)) := by
-  have hs : (congSub w n k : Set (GLw n w)) = (GlobalTheory.LFun.KGL w n : Set (GLw n w)) ∩
+  have hs : (congSub w n k : Set (GLw n w)) = (GlobalTheory.LFun.KGL w (n := n) : Set (GLw n w)) ∩
       ⋂ i, ⋂ j, {g : GLw n w | Valued.v (g.val i j - (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) i j) ≤
         WithZero.exp (-(k : ℤ))} := by
     ext g

@@ -257,7 +257,7 @@ theorem exists_isUnramInv (hσ : IsCMExt F E σ) (hw : IsInertAt F E v w) (hc : 
 variable {n : ℕ}
 
 theorem exists_norm {ϖ : w.adicCompletion E} {q : ℕ} (hU : IsUnramInv ϖ c q) {B : GL (Fin n) (w.adicCompletion E)}
-    (hB : B ∈ KGL w n) (hB' : cT c B.1 = B.1) : ∃ k ∈ KGL w n, cT c k.1 * k.1 = B.1 := by
+    (hB : B ∈ KGL w (n := n)) (hB' : cT c B.1 = B.1) : ∃ k ∈ KGL w (n := n), cT c k.1 * k.1 = B.1 := by
   obtain ⟨hcc, hv, -, -, ⟨x, hx1, hx2⟩, -⟩ := hU
   obtain ⟨B, rfl⟩ := hB
   have := GlobalTheory.SelfDualGenus.isAdicComplete_adicCompletionIntegers w
@@ -283,8 +283,8 @@ theorem exists_norm {ϖ : w.adicCompletion E} {q : ℕ} (hU : IsUnramInv ϖ c q)
   rw [GlobalTheory.UnitaryDoubleCoset.cT_map ι (c := d) (fun _ => rfl), ← Matrix.map_mul, hp]
 
 theorem exists_congr_antiJ {ϖ : w.adicCompletion E} {q : ℕ} (hU : IsUnramInv ϖ c q)
-    {B : GL (Fin n) (w.adicCompletion E)} (hB : B ∈ KGL w n) (hB' : cT c B.1 = B.1) :
-    ∃ k ∈ KGL w n, cT c k.1 * B.1 * k.1 = antiJ _ n := by
+    {B : GL (Fin n) (w.adicCompletion E)} (hB : B ∈ KGL w (n := n)) (hB' : cT c B.1 = B.1) :
+    ∃ k ∈ KGL w (n := n), cT c k.1 * B.1 * k.1 = antiJ _ n := by
   have hint : ∀ i j, antiJ (w.adicCompletion E) n i j ∈ Ov E w := fun i j => by
     unfold antiJ; split_ifs
     exacts [one_mem _, zero_mem _]
@@ -349,9 +349,9 @@ theorem exists_isFrameAt (hw : IsInertAt F E v w) (hL : L.FG) (hL' : Submodule.s
   rw [← comp_mulVec, ← mem_latLoc_iff hw, ← Frames.frame_of_rational b h1 h2]
   exact forall_congr' fun i => (mem_intLoc_iff hw h _).symm
 
-theorem isFrameAt_mul {a k : GL (Fin n) (w.adicCompletion E)} (ha : IsFrameAt w L a) (hk : k ∈ KGL w n) :
+theorem isFrameAt_mul {a k : GL (Fin n) (w.adicCompletion E)} (ha : IsFrameAt w L a) (hk : k ∈ KGL w (n := n)) :
     IsFrameAt w L (a * k) ∧ ∀ g : GL (Fin n) (w.adicCompletion E),
-      (∀ z, z ∈ latAt w L ↔ g.1 *ᵥ z ∈ latAt w L) ↔ a⁻¹ * g * a ∈ KGL w n := by
+      (∀ z, z ∈ latAt w L ↔ g.1 *ᵥ z ∈ latAt w L) ↔ a⁻¹ * g * a ∈ KGL w (n := n) := by
   have e := Final.StabStd (w.adicCompletion E) (Ov E w) (Fin n) Subtype.val_injective
   have hm : ∀ y : Fin n → w.adicCompletion E, y ∈ stdLat (n := Fin n) (Ov E w) ↔ ∀ i, y i ∈ Ov E w := fun y =>
     ⟨fun h i => by obtain ⟨r, hr⟩ := h i trivial; exact hr ▸ r.2, fun h i _ => ⟨⟨_, h i⟩, rfl⟩⟩
@@ -396,7 +396,7 @@ theorem mem_latAt_iff (hw : IsInertAt F E v w) (hc : IsConjAt σ h c) (hL : IsSe
 
 theorem exists_gram (hw : IsInertAt F E v w) (hc : IsConjAt σ h c) (hJ : J.det ≠ 0) (hL : IsSelfDualAt σ J L v)
     {a : GL (Fin n) (w.adicCompletion E)} (ha : IsFrameAt w L a) :
-    ∃ B ∈ KGL w n, B.1 = cT c a.1 * J.map (algebraMap E _) * a.1 := by
+    ∃ B ∈ KGL w (n := n), B.1 = cT c a.1 * J.map (algebraMap E _) * a.1 := by
   set B := cT c a.1 * J.map (algebraMap E (w.adicCompletion E)) * a.1 with hB
   have hu : IsUnit B := by
     refine (IsUnit.mul (IsUnit.of_mul_eq_one (cT c (a⁻¹).1) ?_) ?_).mul a.isUnit

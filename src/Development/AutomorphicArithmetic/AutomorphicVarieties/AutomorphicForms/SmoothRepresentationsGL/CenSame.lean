@@ -52,7 +52,7 @@ theorem UpperTheory.V.Af.Smo.cenSame :
   have key : ∀ ψ : TR.Sm E n, TR.IsCuspForm ψ → Continuous ψ.1 ∧ IsLeftInvariant ψ.1 := fun ψ hψ => by
     obtain ⟨x, rfl⟩ := Fb.mem_range_ofCusp.2 hψ
     exact ⟨x.2.1.continuous, x.2.1.isLeftInvariant⟩
-  have loc : ∀ w ∉ S, ∀ k ∈ GlobalTheory.LFun.KGL w n, InKS S (locGL E n w k) := by
+  have loc : ∀ w ∉ S, ∀ k ∈ GlobalTheory.LFun.KGL w (n := n), InKS S (locGL E n w k) := by
     intro w hw k hkk
     refine ⟨fun x hx => GlobalTheory.CuspRep.pLoc_locGL_of_ne (show x ≠ w from fun e => hw (e ▸ hx)) _, fun x => ?_⟩
     by_cases e : x = w

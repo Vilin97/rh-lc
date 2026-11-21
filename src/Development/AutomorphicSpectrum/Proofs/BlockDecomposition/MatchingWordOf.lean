@@ -90,11 +90,11 @@ theorem isHecke_ctMu {a b : ℕ} (h : a + b = n) {w : Pl E} (hU : UL n w = ⊤) 
     (hf : IsHecke (KL n w) f) : IsHecke (K2 a b w) (ctMu h w μ f) := by
   have hH := GlobalTheory.CompanionTheory.CtMulSplit.isHk_of_isHecke hU hf
   set F : GLw n w → ℂ := fun y => f (toSub (UL n w) y) with hF
-  have hb : ∀ u ∈ GlobalTheory.LFun.KGL w n, ∀ g, F (u * g) = F g ∧ F (g * u) = F g := fun u hu g =>
+  have hb : ∀ u ∈ GlobalTheory.LFun.KGL w (n := n), ∀ g, F (u * g) = F g ∧ F (g * u) = F g := fun u hu g =>
     ⟨by simpa using hH.2.2.2 u hu 1 (Subgroup.one_mem _) g, by simpa using hH.2.2.2 1 (Subgroup.one_mem _) u hu g⟩
-  have hbi := GlobalTheory.CompanionTheory.GL3BlockMatrixLocal.constant_term_bi_invariant (a := a) (b := b) h w (GlobalTheory.LFun.KGL w n) le_rfl
+  have hbi := GlobalTheory.CompanionTheory.GL3BlockMatrixLocal.constant_term_bi_invariant (a := a) (b := b) h w (GlobalTheory.LFun.KGL w (n := n)) le_rfl
     (fun k hk k' hk' => mul_mem (mul_mem hk hk') (inv_mem hk)) F hH.2.2.2 1 1 (one_mem _) (one_mem _)
-  have hone : (1 : GLw a w × GLw b w) ∈ leviOf h w (GlobalTheory.LFun.KGL w n) := GlobalTheory.CompanionTheory.CtHecke.blk_zero_mem h w (one_mem _)
+  have hone : (1 : GLw a w × GLw b w) ∈ leviOf h w (GlobalTheory.LFun.KGL w (n := n)) := GlobalTheory.CompanionTheory.CtHecke.blk_zero_mem h w (one_mem _)
   have e : ctMu h w μ f = fun m => GlobalTheory.CompanionTheory.CtHecke.cMu μ m * phi3 h w F 1 1 m := by
     funext m
     show GlobalTheory.CompanionTheory.CtHecke.cMu μ m * ct h w F m = _

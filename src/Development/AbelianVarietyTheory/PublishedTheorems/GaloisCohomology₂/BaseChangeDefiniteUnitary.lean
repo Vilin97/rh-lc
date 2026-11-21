@@ -121,11 +121,11 @@ def IsSplitAt (w : HeightOneSpectrum (𝓞 E)) : Prop :=
     u.under (𝓞 (maximalRealSubfield E)) = w.under (𝓞 (maximalRealSubfield E))
 
 def IsUnramU (π : Submodule ℂ (UA E n → ℂ)) (w : HeightOneSpectrum (𝓞 E)) : Prop :=
-  ∃ φ ∈ π, φ ≠ 0 ∧ ∀ x ∈ locU n w, cLoc w x ∈ GlobalTheory.LFun.KGL w n → RU E n x φ = φ
+  ∃ φ ∈ π, φ ≠ 0 ∧ ∀ x ∈ locU n w, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n x φ = φ
 
 def HasSatAt (π : Submodule ℂ (UA E n → ℂ)) (w : HeightOneSpectrum (𝓞 E))
     (s : w.adicCompletion E →+* w.adicCompletion E) (ϖ : w.adicCompletion E) (q : ℕ) (α : Fin (n / 2) → ℂˣ) : Prop :=
-  ∃ b ∈ GlobalTheory.LFun.KGL w n, cT s b.val * b.val = antiJ (w.adicCompletion E) n ∧
+  ∃ b ∈ GlobalTheory.LFun.KGL w (n := n), cT s b.val * b.val = antiJ (w.adicCompletion E) n ∧
     ∃ p : locU n w →* GU s n, (∀ x, (p x).val = b⁻¹ * cLoc w x.val * b) ∧
       ∃ σ : SmIrr (GU s n), IsCompAlong π (locU n w) p σ.ρ ∧ GlobalTheory.LFun.HasSatU ϖ q σ.ρ α
 
@@ -145,7 +145,7 @@ structure IsBaseChange (π : Submodule ℂ (UA E n → ℂ)) {c : ℕ} {N : Fin 
   loc : ∀ i w, IsLocCompGL (V i) w (σ i w)
   inf : ∀ i τ, HasInfCharGL (V i) τ (m i τ)
 
-  unram : ∀ w, IsUnramU π w → GlobalTheory.LGrp.IsSpherical (locProd h w (σ · w)) (GlobalTheory.LFun.KGL w n)
+  unram : ∀ w, IsUnramU π w → GlobalTheory.LGrp.IsSpherical (locProd h w (σ · w)) (GlobalTheory.LFun.KGL w (n := n))
 
   inert : ∀ (w : HeightOneSpectrum (𝓞 E)) (s : w.adicCompletion E →+* w.adicCompletion E) (ϖ : w.adicCompletion E)
     (q : ℕ), (∀ x : E, s (algebraMap E _ x) = algebraMap E _ (IsCMField.complexConj E x)) → IsUnramInv ϖ s q →

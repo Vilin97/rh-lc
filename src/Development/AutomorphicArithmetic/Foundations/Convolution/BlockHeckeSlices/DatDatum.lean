@@ -27,7 +27,7 @@ variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
 def RepOps : Prop := ∀ (n : ℕ) (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure], 0 < n → ∀ (v : LL μ) (φ : Sm E n), Rep μ v φ →
   (∀ ψ, Rep μ v ψ → φ = ψ) ∧ (∀ (v' : LL μ) ψ (c : ℂ), Rep μ v' ψ → Rep μ (c • v + v') (c • φ + ψ)) ∧
   (Cusp φ.1 → v ∈ cuspidalL2 μ) ∧
-  ∀ (w : Pl E) (i : Fin n), (∀ k ∈ GlobalTheory.LFun.KGL w n, rw n w k φ = φ) → Rep μ (Tsph μ w i v) (hk n w (i + 1) φ)
+  ∀ (w : Pl E) (i : Fin n), (∀ k ∈ GlobalTheory.LFun.KGL w (n := n), rw n w k φ = φ) → Rep μ (Tsph μ w i v) (hk n w (i + 1) φ)
 
 def AmpRep : Prop := ∀ (n : ℕ) (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (𝔞 : Amp μ), 0 < n →
   ∃ (ρ : Typ E n) (N : ℕ) (L : LL μ →ₗ[ℂ] Sm E n),

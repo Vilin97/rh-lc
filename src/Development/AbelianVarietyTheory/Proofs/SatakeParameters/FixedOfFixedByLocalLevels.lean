@@ -41,15 +41,15 @@ theorem eq_one_of_forall_cLoc {x : UA E a} (hx : x ∈ finU E a) (h : ∀ u, cLo
     split_ifs with hij <;> simp [hij]
 
 theorem isCompact_integral :
-    IsCompact {k : finU E a | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u a} := by
+    IsCompact {k : finU E a | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} := by
   have e' : ∀ k : finU E a, k ∈ (GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E a).comap
-      (GlobalTheory.BCT.GlobLev.finPart E a) ↔ ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u a := by
+      (GlobalTheory.BCT.GlobLev.finPart E a) ↔ ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a) := by
     intro k
     rw [Subgroup.mem_comap, GroundTheory.Automorphic.AdelicGLn.mem_integralFiniteGL_iff, ← map_inv]
     simp only [GlobalTheory.BCT.GlobLev.mem_KGL_iff_val, ← map_inv, GroundTheory.Global.mem_integralFiniteAdeles]
     exact ⟨fun h u => ⟨fun i j => h.1 i j u, fun i j => h.2 i j u⟩,
       fun h => ⟨fun i j u => (h u).1 i j, fun i j u => (h u).2 i j⟩⟩
-  have e : {k : finU E a | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u a} =
+  have e : {k : finU E a | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} =
       ((GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E a).comap (GlobalTheory.BCT.GlobLev.finPart E a) :
         Set (finU E a)) := by
     ext k
@@ -65,12 +65,12 @@ theorem isCompact_integral :
   exact ga_ext (by rw [pInf_finGL, h1]) (by rw [pFin_finGL]; rfl)
 
 theorem exists_finite_fix {φ : UA E a → ℂ} (hφ : IsAutFormU φ) :
-    ∃ t : Finset (HeightOneSpectrum (𝓞 E)), ∀ k ∈ finU E a, (∀ u, cLoc u k ∈ GlobalTheory.LFun.KGL u a) →
+    ∃ t : Finset (HeightOneSpectrum (𝓞 E)), ∀ k ∈ finU E a, (∀ u, cLoc u k ∈ GlobalTheory.LFun.KGL u (n := a)) →
       (∀ u ∈ t, cLoc u k = 1) → RU E a k φ = φ := by
   haveI : ∀ u : HeightOneSpectrum (𝓞 E), T2Space (GL (Fin a) (u.adicCompletion E)) := fun u =>
     Units.isEmbedding_embedProduct.t2Space
   have hc := (isCompact_integral (E := E) (a := a)).diff hφ.level
-  have hcov : {k : finU E a | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u a} \ {k : finU E a | RU E a k φ = φ} ⊆
+  have hcov : {k : finU E a | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} \ {k : finU E a | RU E a k φ = φ} ⊆
       ⋃ u, {k : finU E a | cLoc u k.1 ≠ 1} := by
     rintro k ⟨-, hk⟩
     simp only [Set.mem_iUnion, Set.mem_setOf_eq]
@@ -98,9 +98,9 @@ theorem one_of_cLoc_eq_one {q : HeightOneSpectrum (𝓞 E)} {z : UA E a} (h : cL
     exact h
 
 theorem peel (φ : UA E a → ℂ) (S : Set (HeightOneSpectrum (𝓞 E)))
-    (hS : ∀ k ∈ finU E a, (∀ u, cLoc u k ∈ GlobalTheory.LFun.KGL u a) → (∀ u ∈ S, cLoc u k = 1) → RU E a k φ = φ)
+    (hS : ∀ k ∈ finU E a, (∀ u, cLoc u k ∈ GlobalTheory.LFun.KGL u (n := a)) → (∀ u ∈ S, cLoc u k = 1) → RU E a k φ = φ)
     (Q : Finset (HeightOneSpectrum (𝓞 E))) :
-    ∀ x ∈ finU E a, (∀ u, (∀ q ∈ Q, Apart u q) → (u ∈ S → cLoc u x = 1) ∧ cLoc u x ∈ GlobalTheory.LFun.KGL u a) →
+    ∀ x ∈ finU E a, (∀ u, (∀ q ∈ Q, Apart u q) → (u ∈ S → cLoc u x = 1) ∧ cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a)) →
       (∀ q ∈ Q, ∃ y ∈ locU a q, RU E a y φ = φ ∧ cLoc q y = cLoc q x) → RU E a x φ = φ := by
   classical
   induction Q using Finset.induction_on with

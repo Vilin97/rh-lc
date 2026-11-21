@@ -66,8 +66,8 @@ private theorem rep_rt (h : Rep μ v φ) (g : GA E n) : Rep μ (RG μ g v) (rt E
     rw [e]
     exact (cont_of h).translate (retractOne g)
 
-private theorem rep_hecke (h : Rep μ v φ) (w : Pl E) {T : GL (Fin n) (w.adicCompletion E) → ℂ} (hT : T ∈ Hecke ℂ (KGL w n)) :
-    Rep μ (heckeVec (localRepresentationL2 μ w) (KGL w n) T v) (heckeVec (rw n w) (KGL w n) T φ) := by
+private theorem rep_hecke (h : Rep μ v φ) (w : Pl E) {T : GL (Fin n) (w.adicCompletion E) → ℂ} (hT : T ∈ Hecke ℂ (KGL w (n := n))) :
+    Rep μ (heckeVec (localRepresentationL2 μ w) (KGL w (n := n)) T v) (heckeVec (rw n w) (KGL w (n := n)) T φ) := by
   classical
   have hf := Formalism.UG.P.finite_support_cosets (Final.GLintComm E w n) hT.2
   rw [heckeVec, heckeVec, finsum_eq_sum_of_support_subset (s := hf.toFinset) _ fun c hc => by
@@ -96,7 +96,7 @@ theorem UpperTheory.ConvolutionTheory.BW.repOps :
     filter_upwards [ae_ctFun_congr μ r e] with y hy
     rw [constantTermL2, hy]
     exact hc r hr hrn y
-  · have hv : v ∈ fixL μ w (KGL w n) := (mem_fixL μ w _ v).2 fun k hk => by
+  · have hv : v ∈ fixL μ w (KGL w (n := n)) := (mem_fixL μ w _ v).2 fun k hk => by
       have h1 := rep_rt h (finGL E n (locGL E n w k))
       have e : rt E n (finGL E n (locGL E n w k)) φ = φ := hw k hk
       rw [e] at h1

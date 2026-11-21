@@ -45,9 +45,9 @@ theorem UpperTheory.ConvolutionTheory.Dp.satIff :
     rw [e]
     exact (Cm.carrierEq π).injective.eq_iff
   have hK := (GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL (E := E) w n).2
-  have hdense := UpperTheory.ConvolutionTheory.Dp.fixedDense _ _ _ (locOn h.summand w) (π.locRep w) J (GlobalTheory.LFun.KGL w n) hK hρ hτ hJ hd
+  have hdense := UpperTheory.ConvolutionTheory.Dp.fixedDense _ _ _ (locOn h.summand w) (π.locRep w) J (GlobalTheory.LFun.KGL w (n := n)) hK hρ hτ hJ hd
   have hcl : ∀ ϖ, Formalism.UG.IsUnifV E w ϖ → ∀ (j : ℕ) (c : ℂ), IsClosed {v : V |
-      GlobalTheory.LFun.heckeVec (locOn h.summand w) (GlobalTheory.LFun.KGL w n) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) v = c • v} :=
+      GlobalTheory.LFun.heckeVec (locOn h.summand w) (GlobalTheory.LFun.KGL w (n := n)) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) v = c • v} :=
     fun ϖ hϖ j c => isClosed_eq (continuous_heckeVec hρ (Formalism.UG.Final.GLintComm E w n) (GlobalTheory.LFun.Tj_mem_hecke hϖ j))
       (continuous_const_smul c)
   change GlobalTheory.LFun.HasSatGL w (π.locRep w) B ↔ _
@@ -72,11 +72,11 @@ theorem UpperTheory.ConvolutionTheory.Dp.satIff :
     refine ⟨(Submodule.ne_bot_iff _).2 ?_, fun x hx h0 => ?_⟩
     · by_contra hno
       push_neg at hno
-      have hsub : J '' {x | ∀ u ∈ GlobalTheory.LFun.KGL w n, π.locRep w u x = x} ⊆ {0} := by
+      have hsub : J '' {x | ∀ u ∈ GlobalTheory.LFun.KGL w (n := n), π.locRep w u x = x} ⊆ {0} := by
         rintro _ ⟨x, hx, rfl⟩
         rw [hno x (GlobalTheory.LGrp.mem_fixed.2 hx), map_zero]
         rfl
       exact hv.1 (closure_minimal hsub isClosed_singleton hv')
-    · have hJx : J x ∈ GlobalTheory.PRep.fixed (locOn h.summand w) (GlobalTheory.LFun.KGL w n) :=
+    · have hJx : J x ∈ GlobalTheory.PRep.fixed (locOn h.summand w) (GlobalTheory.LFun.KGL w (n := n)) :=
         GlobalTheory.LGrp.mem_fixed.2 fun k hk => by rw [← hJ, GlobalTheory.LGrp.mem_fixed.1 hx k hk]
       exact GlobalTheory.LFun.IsSatVecGL.of_map J hJ hi (hB.2 _ hJx fun e => h0 (hi (by rw [e, map_zero])))

@@ -100,11 +100,11 @@ private theorem hasFixed_of_iso {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneS
     {ρ : Representation ℂ (GL (Fin n) (v.adicCompletion F)) V}
     {ρ' : Representation ℂ (GL (Fin n) (w.adicCompletion E)) W}
     (e : V ≃ₗ[ℂ] W) (he : ∀ g x, e (ρ g x) = ρ' (GeneralLinearGroup.map i.toRingHom g) (e x))
-    (h : HasFixed ρ (GlobalTheory.LFun.KGL v n)) : HasFixed ρ' (GlobalTheory.LFun.KGL w n) := by
+    (h : HasFixed ρ (GlobalTheory.LFun.KGL v (n := n))) : HasFixed ρ' (GlobalTheory.LFun.KGL w (n := n)) := by
   obtain ⟨x, h0, hx⟩ := h
   refine ⟨e x, (map_ne_zero_iff e e.injective).2 h0, fun u hu => ?_⟩
   obtain ⟨h1, h2⟩ := GlobalTheory.AdelicU.mem_GLint_iff.1 hu
-  have hm : GeneralLinearGroup.map (n := Fin n) i.symm.toRingHom u ∈ GlobalTheory.LFun.KGL v n := by
+  have hm : GeneralLinearGroup.map (n := Fin n) i.symm.toRingHom u ∈ GlobalTheory.LFun.KGL v (n := n) := by
     refine GlobalTheory.AdelicU.mem_GLint_iff.2 ⟨fun a b => integers_symm i hi' (h1 a b), fun a b => ?_⟩
     rw [← map_inv]
     exact integers_symm i hi' (h2 a b)
@@ -141,7 +141,7 @@ theorem UpperTheory.V.Z.Win.splitTr :
     obtain ⟨e, he⟩ := hsplit σ σ' hσ hσ'
     have h1 := ((satLocFree F n v σ).2 _ π.finPart (UpperTheory.V.Af.RealLocalComponent.isotypic π v σ hσ) B).1 hB
     obtain ⟨x, hx⟩ := h1.exists_vec
-    have h2 : HasFixed σ.ρ (GlobalTheory.LFun.KGL v n) := by
+    have h2 : HasFixed σ.ρ (GlobalTheory.LFun.KGL v (n := n)) := by
       obtain ⟨y, hy, hy0⟩ := (Submodule.ne_bot_iff _).1 h1.1
       exact ⟨y, hy0, fun k hk => GlobalTheory.LGrp.mem_fixed.1 hy k hk⟩
     obtain ⟨B', hB'⟩ := (satLocFree E n w σ').1 (hasFixed_of_iso i hi' e he h2)

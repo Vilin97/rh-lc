@@ -20,8 +20,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
 structure Lev (bad : Set (Pl E)) (K : Subgroup (GL (Fin N) (Af E))) : Prop where
   isOpen : IsOpen (K : Set (GL (Fin N) (Af E)))
-  int : ∀ u ∈ K, ∀ w, GeneralLinearGroup.map (pLoc E w) u ∈ KGL w N
-  loc : ∀ w ∉ bad, ∀ k ∈ KGL w N, locGL E N w k ∈ K
+  int : ∀ u ∈ K, ∀ w, GeneralLinearGroup.map (pLoc E w) u ∈ KGL w (n := N)
+  loc : ∀ w ∉ bad, ∀ k ∈ KGL w (n := N), locGL E N w k ∈ K
 
 structure EigT (bad : Set (Pl E)) (K : Subgroup (GL (Fin N) (Af E))) (W : Submodule ℂ (Kinf E N → ℂ)) (φ : Sm E N)
     (m : (E →+* ℂ) → Multiset ℂ) (B : Pl E → Multiset ℂˣ) : Prop where
@@ -43,8 +43,8 @@ def Excl (X : Set (CuspSub E N)) (φ : Sm E N) : Prop :=
 end
 
 def LevShrink : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) (bad : Set (Pl E))
-  (K : Subgroup (GL (Fin N) (Af E))), IsOpen (K : Set (GL (Fin N) (Af E))) → (∀ w ∉ bad, ∀ k ∈ KGL w N, locGL E N w k ∈ K) →
-    ∃ K' ≤ K, Lev bad K' ∧ ∀ c : GL (Fin N) (Af E), (∀ w, GeneralLinearGroup.map (pLoc E w) c ∈ KGL w N) → ∀ u ∈ K', c⁻¹ * u * c ∈ K'
+  (K : Subgroup (GL (Fin N) (Af E))), IsOpen (K : Set (GL (Fin N) (Af E))) → (∀ w ∉ bad, ∀ k ∈ KGL w (n := N), locGL E N w k ∈ K) →
+    ∃ K' ≤ K, Lev bad K' ∧ ∀ c : GL (Fin N) (Af E), (∀ w, GeneralLinearGroup.map (pLoc E w) c ∈ KGL w (n := N)) → ∀ u ∈ K', c⁻¹ * u * c ∈ K'
 
 def TypeSat : Prop := ∀ (G : Type) [Group G] (W : Submodule ℂ (G → ℂ)), FiniteDimensional ℂ W →
   ∃ W' : Submodule ℂ (G → ℂ), FiniteDimensional ℂ W' ∧ ∀ f : G → ℂ, (∀ a, (fun k => f (a * k)) ∈ W) → ∀ b, (fun k => f (k * b)) ∈ W'
@@ -65,7 +65,7 @@ def SliceT : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r s
 def StabT : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) (bad : Set (Pl E))
   (K : Subgroup (GL (Fin N) (Af E))) (W : Submodule ℂ (Kinf E N → ℂ)), Lev bad K → FiniteDimensional ℂ W →
     ∀ S : Submodule ℂ (Sm E N), BddS S → (∀ φ ∈ S, TypeB K W φ) → ∃ V : Submodule ℂ (Sm E N), S ≤ V ∧ FiniteDimensional ℂ V ∧
-      (∀ φ ∈ V, IsAutForm φ ∧ TypeB K W φ) ∧ (∀ w ∉ bad, V ≤ fixed (fL N w) (KGL w N)) ∧ ∀ i : Ix N bad, ∀ φ ∈ V, opIx i φ ∈ V
+      (∀ φ ∈ V, IsAutForm φ ∧ TypeB K W φ) ∧ (∀ w ∉ bad, V ≤ fixed (fL N w) (KGL w (n := N))) ∧ ∀ i : Ix N bad, ∀ φ ∈ V, opIx i φ ∈ V
 
 def StepT : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r s : ℕ) (bad : Set (Pl E))
   (K : Subgroup (GL (Fin (r + s)) (Af E))) (W : Submodule ℂ (Kinf E (r + s) → ℂ)), Lev bad K → FiniteDimensional ℂ W →

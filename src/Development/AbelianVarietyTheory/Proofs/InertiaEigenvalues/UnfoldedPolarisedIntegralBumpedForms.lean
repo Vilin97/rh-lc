@@ -41,9 +41,9 @@ theorem unfolded_bump_eq :
   ∀ φ φ' : GA E (m + 1) → ℂ, φ ∈ GlobalTheory.JSW.mspanR π → φ' ∈ GlobalTheory.JSW.mspanR π' →
   (∃ U : Subgroup (GL (Fin (m + 1)) (Af E)), IsOpen (U : Set (GL (Fin (m + 1)) (Af E))) ∧
       ∀ u ∈ U, ∀ g, φ (g * finGL E (m + 1) u) = φ g) →
-  (∀ w ∉ S, ∀ k ∈ KGL w (m + 1), ∀ g, φ (g * finGL E (m + 1) (locGL E (m + 1) w k)) = φ g) → (∃ U : Subgroup (GL (Fin (m + 1)) (Af E)), IsOpen (U : Set (GL (Fin (m + 1)) (Af E))) ∧
+  (∀ w ∉ S, ∀ k ∈ KGL w (n := (m + 1)), ∀ g, φ (g * finGL E (m + 1) (locGL E (m + 1) w k)) = φ g) → (∃ U : Subgroup (GL (Fin (m + 1)) (Af E)), IsOpen (U : Set (GL (Fin (m + 1)) (Af E))) ∧
       ∀ u ∈ U, ∀ g, φ' (g * finGL E (m + 1) u) = φ' g) →
-  (∀ w ∉ S, ∀ k ∈ KGL w (m + 1), ∀ g, φ' (g * finGL E (m + 1) (locGL E (m + 1) w k)) = φ' g) →
+  (∀ w ∉ S, ∀ k ∈ KGL w (n := (m + 1)), ∀ g, φ' (g * finGL E (m + 1) (locGL E (m + 1) w k)) = φ' g) →
   (∀ (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ), (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) →
     ∀ l : HeightOneSpectrum (𝓞 E) →₀ (Fin (m + 1) → ℕ), (∀ w ∈ l.support, w ∉ S) → ∀ p ∈ GlobalTheory.JSW.mirS E S m,
       GlobalTheory.JSW.whit φ (p * GlobalTheory.JSW.tl ϖ l) = b p * ∏ w ∈ l.support, GlobalTheory.JSW.sphW (qV E w) (fun i => (α w i : ℂ)) (l w)) →
@@ -95,9 +95,9 @@ theorem unfolded_bump_eq :
       inv_mem' := fun {a} ha g => by
         rw [← ha (g * finGL E (m + 1) a⁻¹), mul_assoc, ← map_mul, inv_mul_cancel, map_one, mul_one] }
   let V : Subgroup (GL (Fin (m + 1)) (Af E)) := (U ⊓ U') ⊔ Subgroup.closure
-    {k | ∃ w ∉ S, ∃ k' ∈ KGL w (m + 1), locGL E (m + 1) w k' = k}
+    {k | ∃ w ∉ S, ∃ k' ∈ KGL w (n := (m + 1)), locGL E (m + 1) w k' = k}
   have hVle : ∀ F : GA E (m + 1) → ℂ, (∀ u ∈ U ⊓ U', ∀ g, F (g * finGL E (m + 1) u) = F g) →
-      (∀ w ∉ S, ∀ k ∈ KGL w (m + 1), ∀ g, F (g * finGL E (m + 1) (locGL E (m + 1) w k)) = F g) → V ≤ stab F := by
+      (∀ w ∉ S, ∀ k ∈ KGL w (n := (m + 1)), ∀ g, F (g * finGL E (m + 1) (locGL E (m + 1) w k)) = F g) → V ≤ stab F := by
     intro F h1 h2
     refine sup_le (fun k hk => h1 k hk) (Subgroup.closure_le _ |>.2 ?_)
     rintro _ ⟨w, hw, k, hk, rfl⟩
@@ -106,7 +106,7 @@ theorem unfolded_bump_eq :
   have hVφ' := hVle φ' (fun u hu => hUi' u hu.2) hK'
   have hVo : IsOpen (V : Set (GL (Fin (m + 1)) (Af E))) :=
     Subgroup.isOpen_mono (le_sup_left : U ⊓ U' ≤ V) (by rw [Subgroup.coe_inf]; exact hUo.inter hUo')
-  have hVK : ∀ w ∉ S, ∀ k ∈ KGL w (m + 1), locGL E (m + 1) w k ∈ V := fun w hw k hk =>
+  have hVK : ∀ w ∉ S, ∀ k ∈ KGL w (n := (m + 1)), locGL E (m + 1) w k ∈ V := fun w hw k hk =>
     (le_sup_right : Subgroup.closure _ ≤ V) (Subgroup.subset_closure ⟨w, hw, k, hk, rfl⟩)
   obtain ⟨N, J, Φ, hN, hΦs, hΦc, hΦt, hΦr, hΦe, hJ, hJV, hn1, hn2, hn3⟩ := GlobalTheory.T.exists_level_nat_bump_rankinSelbergCell E m S hsat V hVo hVK
   have hWJ : ∀ κ ∈ GlobalTheory.RSLocalPart.levelAt (m + 1) S J, ∀ g,

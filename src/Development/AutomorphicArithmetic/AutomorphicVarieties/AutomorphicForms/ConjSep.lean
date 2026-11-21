@@ -134,8 +134,8 @@ variable {E : Type} [Field E] [NumberField E] {w : HeightOneSpectrum (𝓞 E)} {
 
 private theorem map_heckeTj {σ : ℂ ≃+* ℂ} (p : V →+ V') (h1 : ∀ (c : ℂ) v, p (c • v) = σ c • p v)
     (h2 : ∀ g v, p (ρ g v) = ρ' g (p v)) {ϖ : w.adicCompletion E} (hϖ : Formalism.UG.IsUnifV E w ϖ) (j : ℕ) (x : V) :
-    p (heckeVec ρ (KGL w n) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) x) =
-      heckeVec ρ' (KGL w n) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) (p x) := by
+    p (heckeVec ρ (KGL w (n := n)) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) x) =
+      heckeVec ρ' (KGL w (n := n)) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) (p x) := by
   refine (p.map_finsum (finite_heckeVec (Formalism.UG.Final.GLintComm E w n) (Tj_mem_hecke hϖ j) ρ x)).trans
     (finsum_congr fun c => ?_)
   rw [h1, h2]

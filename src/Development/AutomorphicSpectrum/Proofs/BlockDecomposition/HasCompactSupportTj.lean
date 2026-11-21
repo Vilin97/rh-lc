@@ -48,7 +48,7 @@ theorem det_mem {w : Pl E} {n : ℕ} {M : Matrix (Fin n) (Fin n) (w.adicCompleti
   exact Subring.sum_mem _ fun σ _ => Subring.mul_mem _ (intCast_mem _ _)
     (Subring.prod_mem _ fun i _ => hM _ _)
 
-theorem v_det {w : Pl E} {n : ℕ} {g : GLw n w} (hg : g ∈ GlobalTheory.LFun.KGL w n) : Valued.v g.val.det = 1 := by
+theorem v_det {w : Pl E} {n : ℕ} {g : GLw n w} (hg : g ∈ GlobalTheory.LFun.KGL w (n := n)) : Valued.v g.val.det = 1 := by
   obtain ⟨h1, h2⟩ := GlobalTheory.AdelicU.mem_GLint_iff.1 hg
   have d1 : Valued.v g.val.det ≤ 1 := det_mem h1
   have d2 : Valued.v (g⁻¹).val.det ≤ 1 := det_mem h2
@@ -106,7 +106,7 @@ theorem hasCompactSupport_Tj {w : Pl E} {n : ℕ} {ϖ : w.adicCompletion E} (h0 
   set t : GLw n w := GeneralLinearGroup.mkOfDetNeZero (diagJ n ϖ k) hdet with ht
   have hI := GlobalTheory.CompanionTheory.IwLevels.isCompact_KGL w n
   have hS : IsCompact ((fun p : GLw n w × GLw n w => p.1 * t * p.2) ''
-      ((GlobalTheory.LFun.KGL w n : Set (GLw n w)) ×ˢ (GlobalTheory.LFun.KGL w n : Set (GLw n w)))) :=
+      ((GlobalTheory.LFun.KGL w (n := n) : Set (GLw n w)) ×ˢ (GlobalTheory.LFun.KGL w (n := n) : Set (GLw n w)))) :=
     (hI.prod hI).image ((continuous_fst.mul continuous_const).mul continuous_snd)
   refine HasCompactSupport.intro' hS hS.isClosed fun g hg => ?_
   unfold Tj
@@ -115,14 +115,14 @@ theorem hasCompactSupport_Tj {w : Pl E} {n : ℕ} {ϖ : w.adicCompletion E} (h0 
   exact hg ⟨(x, y), ⟨hx, hy⟩, Units.ext (by simpa [ht] using e.symm)⟩
 
 theorem blk_zero_mem {a b n : ℕ} (h : a + b = n) (w : Pl E) {κ : GLw a w × GLw b w} (hκ : κ ∈ K2 a b w) :
-    blk h w κ 0 ∈ GlobalTheory.LFun.KGL w n := by
+    blk h w κ 0 ∈ GlobalTheory.LFun.KGL w (n := n) := by
   obtain ⟨h1, h2⟩ := Subgroup.mem_prod.1 hκ
   obtain ⟨l1, l2⟩ := GlobalTheory.BCT.CtLevel.lev_KGL_of_unram E a b n h w 1 (fun _ _ => rfl)
-  have d1 : GlobalTheory.BCT.CtLevel.dgM h w (κ.1, 1) ∈ GlobalTheory.LFun.KGL w n := by
-    have : κ.1 ∈ GlobalTheory.BCT.CtLevel.lev₁ h w (GlobalTheory.LFun.KGL w n) 1 := by rw [l1]; exact h1
+  have d1 : GlobalTheory.BCT.CtLevel.dgM h w (κ.1, 1) ∈ GlobalTheory.LFun.KGL w (n := n) := by
+    have : κ.1 ∈ GlobalTheory.BCT.CtLevel.lev₁ h w (GlobalTheory.LFun.KGL w (n := n)) 1 := by rw [l1]; exact h1
     exact this.1.2
-  have d2 : GlobalTheory.BCT.CtLevel.dgM h w (1, κ.2) ∈ GlobalTheory.LFun.KGL w n := by
-    have : κ.2 ∈ GlobalTheory.BCT.CtLevel.lev₂ h w (GlobalTheory.LFun.KGL w n) 1 := by rw [l2]; exact h2
+  have d2 : GlobalTheory.BCT.CtLevel.dgM h w (1, κ.2) ∈ GlobalTheory.LFun.KGL w (n := n) := by
+    have : κ.2 ∈ GlobalTheory.BCT.CtLevel.lev₂ h w (GlobalTheory.LFun.KGL w (n := n)) 1 := by rw [l2]; exact h2
     exact this.1.2
   rw [GlobalTheory.CompanionTheory.GL3BlockMatrixLocal.blk_zero_eq]
   have e : κ = (κ.1, 1) * (1, κ.2) := by simp
@@ -141,12 +141,12 @@ theorem isHecke_ctT : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n 
   have h0 : (ϖ : w.adicCompletion E) ≠ 0 := ϖ.ne_zero
   have hϖ : IsUnifV E w (ϖ : w.adicCompletion E) := isUnifV_of_ordL h0 hord
   have hT := Tj_mem_hecke (n := n) hϖ k
-  have hf : ∀ k₁ ∈ GlobalTheory.LFun.KGL w n, ∀ k₂ ∈ GlobalTheory.LFun.KGL w n, ∀ g : GLw n w,
+  have hf : ∀ k₁ ∈ GlobalTheory.LFun.KGL w (n := n), ∀ k₂ ∈ GlobalTheory.LFun.KGL w (n := n), ∀ g : GLw n w,
       Tj ℂ n (Ov E w) (ϖ : w.adicCompletion E) k (k₁ * g * k₂) = Tj ℂ n (Ov E w) (ϖ : w.adicCompletion E) k g :=
     fun k₁ h₁ k₂ h₂ g => hT.1 ⟨k₁, h₁⟩ ⟨k₂, h₂⟩ g
-  have hbi := GlobalTheory.CompanionTheory.GL3BlockMatrixLocal.constant_term_bi_invariant (a := a) (b := b) h w (GlobalTheory.LFun.KGL w n) le_rfl
+  have hbi := GlobalTheory.CompanionTheory.GL3BlockMatrixLocal.constant_term_bi_invariant (a := a) (b := b) h w (GlobalTheory.LFun.KGL w (n := n)) le_rfl
     (fun k hk k' hk' => mul_mem (mul_mem hk hk') (inv_mem hk)) _ hf 1 1 (one_mem _) (one_mem _)
-  have hone : (1 : GLw a w × GLw b w) ∈ leviOf h w (GlobalTheory.LFun.KGL w n) := blk_zero_mem h w (one_mem _)
+  have hone : (1 : GLw a w × GLw b w) ∈ leviOf h w (GlobalTheory.LFun.KGL w (n := n)) := blk_zero_mem h w (one_mem _)
   rw [ctT_eq h hw μ hϖ k]
   refine ⟨?_, fun κ hκ x => ⟨?_, ?_⟩⟩
   · exact (GlobalTheory.CompanionTheory.GL3BlockMatrixLocal.constant_term_compact_support h w _ (hasCompactSupport_Tj h0 k) 1 1).mul_left

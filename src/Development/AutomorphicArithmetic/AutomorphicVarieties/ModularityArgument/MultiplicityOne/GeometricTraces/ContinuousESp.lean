@@ -180,11 +180,11 @@ private def toGL (hs : IsSplitAt w) (σ : SmIrr (UL n w)) : SmIrr (GLw n w) :=
     smooth := fun v => (σ.smooth v).preimage (continuous_eSp hs)
     irred := GlobalTheory.BCT.LocCompU.isIrreducible_comp_of_surjective σ.ρ _ (eSp hs).surjective σ.irred }
 
-private theorem comap_KL (hs : IsSplitAt w) : (KL n w).comap (eSp hs).toMonoidHom = KGL w n :=
+private theorem comap_KL (hs : IsSplitAt w) : (KL n w).comap (eSp hs).toMonoidHom = KGL w (n := n) :=
   Subgroup.ext fun _ => Iff.rfl
 
 private theorem fixed_toGL (hs : IsSplitAt w) (σ : SmIrr (UL n w)) :
-    fixed (toGL hs σ).ρ (KGL w n) = fixed σ.ρ (KL n w) := by
+    fixed (toGL hs σ).ρ (KGL w (n := n)) = fixed σ.ρ (KL n w) := by
   rw [← comap_KL hs]
   exact fixed_comap (eSp hs) σ.ρ (KL n w)
 
@@ -198,7 +198,7 @@ private theorem cp_toGL (hs : IsSplitAt w) {π : Submodule ℂ (UA E n → ℂ)}
 private theorem tr_Z (hs : IsSplitAt w) (σ : SmIrr (UL n w)) (K' : Subgroup (UL n w))
     (hKo : IsOpen (K' : Set (UL n w))) (hKle : K' ≤ KL n w) (f : GLw n w → ℂ)
     (hf : IsHecke K' fun x : UL n w => f x.1) (hfd : FiniteDimensional ℂ (fixed σ.ρ K')) :
-    twTr σ.ρ (KL n w) K' (fun x => f x.1) LinearMap.id = trc (toGL hs σ).ρ (KGL w n) f := by
+    twTr σ.ρ (KL n w) K' (fun x => f x.1) LinearMap.id = trc (toGL hs σ).ρ (KGL w (n := n)) f := by
   have h1 := twTr_tr (eSp hs) σ.ρ (KL n w) K' (fun x => f x.1) (fun k hk x => (hf.2 k hk x).2)
     (finite_cosets K' hKo _ hf.1)
   rw [comap_KL hs] at h1
@@ -208,7 +208,7 @@ private theorem tr_Z (hs : IsSplitAt w) (σ : SmIrr (UL n w)) (K' : Subgroup (UL
       hf.1.comp_homeomorph _
     exact h2
   obtain ⟨ho, hcK⟩ := GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL (E := E) w n
-  refine trc_at (KGL w n) ho hcK (toGL hs σ).ρ f (K'.comap (eSp hs).toMonoidHom)
+  refine trc_at (KGL w (n := n)) ho hcK (toGL hs σ).ρ f (K'.comap (eSp hs).toMonoidHom)
     (hKo.preimage (continuous_eSp hs)) (fun k hk => hKle hk) ⟨hc, fun k hk x => ?_⟩ ?_
   · exact ⟨(hf.2 _ hk (eSp hs x)).1, (hf.2 _ hk (eSp hs x)).2⟩
   · have h3 : fixed (toGL hs σ).ρ (K'.comap (eSp hs).toMonoidHom) = fixed σ.ρ K' := fixed_comap (eSp hs) σ.ρ K'

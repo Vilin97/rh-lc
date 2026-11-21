@@ -97,13 +97,13 @@ theorem satEig_self_ne_zero (hB : B.card = n) : satEig (qV E w) n B n ≠ 0 := b
   simp [satEig, Multiset.esymm, hp]
 
 theorem exists_eigenvalue_GL {x : V} {y : W} (hx : IsSatVecGL w π x B) (hy : IsSatVecGL w ρ y B) :
-    ∀ f ∈ Hecke ℂ (KGL w n), ∃ c : ℂ, heckeVec π (KGL w n) f x = c • x ∧ heckeVec ρ (KGL w n) f y = c • y := by
-  have hK : IsCommensurated (KGL w n) := Final.GLintComm E w n
+    ∀ f ∈ Hecke ℂ (KGL w (n := n)), ∃ c : ℂ, heckeVec π (KGL w (n := n)) f x = c • x ∧ heckeVec ρ (KGL w (n := n)) f y = c • y := by
+  have hK : IsCommensurated (KGL w (n := n)) := Final.GLintComm E w n
   obtain ⟨ϖ, hu⟩ := exists_isUnifV w
   have h0 := ne_zero_of_isUnifV hu
   let A : Submodule ℂ (GL (Fin n) (w.adicCompletion E) → ℂ) :=
-    { carrier := {f | f ∈ Hecke ℂ (KGL w n) ∧
-        ∃ c : ℂ, heckeVec π (KGL w n) f x = c • x ∧ heckeVec ρ (KGL w n) f y = c • y}
+    { carrier := {f | f ∈ Hecke ℂ (KGL w (n := n)) ∧
+        ∃ c : ℂ, heckeVec π (KGL w (n := n)) f x = c • x ∧ heckeVec ρ (KGL w (n := n)) f y = c • y}
       zero_mem' := ⟨zero_mem _, 0, by simp [heckeVec_zero_left]⟩
       add_mem' := by
         rintro f f' ⟨hf, c, e1, e2⟩ ⟨hf', c', e1', e2'⟩
@@ -115,18 +115,18 @@ theorem exists_eigenvalue_GL {x : V} {y : W} (hx : IsSatVecGL w π x B) (hy : Is
           by rw [heckeVec_smul_left hK hf, e2, mul_smul]⟩ }
   have hT : ∀ j ≤ n, Tj ℂ n (Ov E w) ϖ j ∈ A := fun j hj =>
     ⟨Tj_mem_hecke hu j, _, hx.2.2.2 ϖ hu j hj, hy.2.2.2 ϖ hu j hj⟩
-  have hc : ∀ f ∈ A, ∀ f' ∈ A, conv (KGL w n) f f' ∈ A := by
+  have hc : ∀ f ∈ A, ∀ f' ∈ A, conv (KGL w (n := n)) f f' ∈ A := by
     rintro f ⟨hf, c, e1, e2⟩ f' ⟨hf', c', e1', e2'⟩
     exact ⟨Final.HeckeConvMem _ _ ℂ hK _ hf _ hf', c' * c,
       by rw [heckeVec_conv hK hf hf' hx.2.1, e1', heckeVec_smul hK hf, e1, mul_smul],
       by rw [heckeVec_conv hK hf hf' hy.2.1, e2', heckeVec_smul hK hf, e2, mul_smul]⟩
-  have hTn : Tj ℂ n (Ov E w) ϖ n = dosetInd ℂ (KGL w n) (tor h0 fun _ => 1) := by
+  have hTn : Tj ℂ n (Ov E w) ϖ n = dosetInd ℂ (KGL w (n := n)) (tor h0 fun _ => 1) := by
     rw [Tj_eq h0]; simp
-  have shift : ∀ g, dosetInd ℂ (KGL w n) (tor h0 (fun _ => 1) * g) ∈ A → dosetInd ℂ (KGL w n) g ∈ A := by
+  have shift : ∀ g, dosetInd ℂ (KGL w (n := n)) (tor h0 (fun _ => 1) * g) ∈ A → dosetInd ℂ (KGL w (n := n)) g ∈ A := by
     intro g hg
-    have hz := Final.DosetIndMem _ (KGL w n) ℂ (tor h0 fun _ => 1)
-    have hg' := Final.DosetIndMem _ (KGL w n) ℂ g
-    have hcv : conv (KGL w n) (dosetInd ℂ (KGL w n) g) (dosetInd ℂ (KGL w n) (tor h0 fun _ => 1)) ∈ A := by
+    have hz := Final.DosetIndMem _ (KGL w (n := n)) ℂ (tor h0 fun _ => 1)
+    have hg' := Final.DosetIndMem _ (KGL w (n := n)) ℂ g
+    have hcv : conv (KGL w (n := n)) (dosetInd ℂ (KGL w (n := n)) g) (dosetInd ℂ (KGL w (n := n)) (tor h0 fun _ => 1)) ∈ A := by
       refine mem_of_supp A (Final.HeckeConvMem _ _ ℂ hK _ hg' _ hz) fun x hx => ?_
       obtain ⟨y, z, ⟨a, ha, b, hb, rfl⟩, ⟨c, hc, d, hd, rfl⟩, rfl⟩ := conv_supp hK hx
       rwa [dosetInd_congr ⟨a, ha, b * c * d, mul_mem (mul_mem hb hc) hd, ?_⟩]
@@ -140,7 +140,7 @@ theorem exists_eigenvalue_GL {x : V} {y : W} (hx : IsSatVecGL w π x B) (hy : Is
     exact ⟨hg', (satEig (qV E w) n B n)⁻¹ * c, by rw [mul_smul, ← e1, inv_smul_smul₀ hne],
       by rw [mul_smul, ← e2, inv_smul_smul₀ hne]⟩
   have hall : ∀ (N : ℕ) (a : Fin n → ℤ), Antitone a → (∀ i, 0 ≤ a i + N) →
-      dosetInd ℂ (KGL w n) (tor h0 a) ∈ A := by
+      dosetInd ℂ (KGL w (n := n)) (tor h0 a) ∈ A := by
     intro N
     induction N with
     | zero =>
@@ -166,8 +166,8 @@ theorem exists_eigenvalue_GL {x : V} {y : W} (hx : IsSatVecGL w π x B) (hy : Is
   omega
 
 variable (w n) in
-theorem isOpen_isCompact_KGL : IsOpen (KGL w n : Set (GL (Fin n) (w.adicCompletion E))) ∧
-    IsCompact (KGL w n : Set (GL (Fin n) (w.adicCompletion E))) := by
+theorem isOpen_isCompact_KGL : IsOpen (KGL w (n := n) : Set (GL (Fin n) (w.adicCompletion E))) ∧
+    IsCompact (KGL w (n := n) : Set (GL (Fin n) (w.adicCompletion E))) := by
   letI := GlobalTheory.LocalData.complRel w
   haveI := GlobalTheory.LocalData.isLocalField w
   rw [KGL, ← GlobalTheory.SmGL.SphCompletion.KO_completion w n]
@@ -177,7 +177,7 @@ theorem isSphericalGL_iff (α : Fin n → ℂˣ) (φ : GL (Fin n) (w.adicComplet
     letI := GlobalTheory.LocalData.complRel w
     haveI := GlobalTheory.LocalData.isLocalField w
     Formalism.UG.IsSpherical E w (fun i => (α i : ℂ)) φ ↔
-      ∀ (b : (borelGL (w.adicCompletion E) (Fin n)).Q) g, ∀ k ∈ KGL w n, φ (b * g * k) =
+      ∀ (b : (borelGL (w.adicCompletion E) (Fin n)).Q) g, ∀ k ∈ KGL w (n := n), φ (b * g * k) =
         ((borelGL (w.adicCompletion E) (Fin n)).deltaHalf b : ℂ) *
           unrTorus (vZ (w.adicCompletion E)) α ((borelGL (w.adicCompletion E) (Fin n)).p b) * φ g := by
   letI := GlobalTheory.LocalData.complRel w
@@ -238,16 +238,16 @@ theorem hasSatakeGL_iff :
     obtain ⟨x, hx⟩ := h.2.exists_vec
     exact hasSatakeGL_of_isSatVecGL h.1 hx⟩
 
-theorem exists_hasSatGL (hπ : IsIrrSmooth π) (hf : FiniteDimensional ℂ (fixed π (KGL w n)))
-    (hs : LGrp.IsSpherical π (KGL w n)) : ∃ B, HasSatGL w π B := by
-  have hK : IsCommensurated (KGL w n) := Final.GLintComm E w n
+theorem exists_hasSatGL (hπ : IsIrrSmooth π) (hf : FiniteDimensional ℂ (fixed π (KGL w (n := n))))
+    (hs : LGrp.IsSpherical π (KGL w (n := n))) : ∃ B, HasSatGL w π B := by
+  have hK : IsCommensurated (KGL w (n := n)) := Final.GLintComm E w n
   obtain ⟨ϖ, hu⟩ := exists_isUnifV w
   have h0 := ne_zero_of_isUnifV hu
   obtain ⟨x, hx, hx0⟩ := (Submodule.ne_bot_iff _).1 hs
   choose c hc using fun j => GlobalTheory.T.commutative_hecke_acts_by_scalar_on_fixed_vectors _ _ π _ (isOpen_isCompact_KGL w n).2 hK (Final.HeckeCommGL E w n ℂ) hπ hf _
     (Tj_mem_hecke hu j)
   have c0 : c 0 = 1 := by
-    have e : Tj ℂ n (Ov E w) ϖ 0 = dosetInd ℂ (KGL w n) 1 := by
+    have e : Tj ℂ n (Ov E w) ϖ 0 = dosetInd ℂ (KGL w (n := n)) 1 := by
       rw [Tj_eq h0]
       congr 1
     refine smul_left_injective ℂ hx0 ?_
@@ -255,7 +255,7 @@ theorem exists_hasSatGL (hπ : IsIrrSmooth π) (hf : FiniteDimensional ℂ (fixe
   have cn : c n ≠ 0 := by
     intro e
     have h1 := hc n x hx
-    have hTn : Tj ℂ n (Ov E w) ϖ n = dosetInd ℂ (KGL w n) (tor h0 fun _ => 1) := by
+    have hTn : Tj ℂ n (Ov E w) ϖ n = dosetInd ℂ (KGL w (n := n)) (tor h0 fun _ => 1) := by
       rw [Tj_eq h0]; simp
     rw [e, zero_smul, hTn, heckeVec_dosetInd (R := {tor h0 fun _ => 1}) hx, Finset.sum_singleton] at h1
     · exact hx0 (by simpa [← Module.End.mul_apply, ← map_mul] using congrArg (π (tor h0 fun _ => 1)⁻¹) h1)

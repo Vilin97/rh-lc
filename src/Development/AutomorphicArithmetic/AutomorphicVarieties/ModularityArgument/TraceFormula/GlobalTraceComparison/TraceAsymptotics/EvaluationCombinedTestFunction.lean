@@ -180,8 +180,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 private theorem stTw2_swap (a b : ℕ) (w : Pl E) (Q₁ Q₂ : (w.adicCompletion E)[X]) (φ : GLw a w × GLw b w → ℂ)
     (φ' : GLw b w × GLw a w → ℂ) (h : ∀ y, φ y = φ' (y.2, y.1)) :
     stTw2 a b w Q₁ Q₂ φ = stTw2 b a w Q₂ Q₁ φ' := by
-  have hK : (KGL w b).prod (KGL w a) =
-      ((KGL w a).prod (KGL w b)).map (MulEquiv.prodComm : GLw a w × GLw b w ≃* GLw b w × GLw a w).toMonoidHom := by
+  have hK : (KGL w (n := b)).prod (KGL w (n := a)) =
+      ((KGL w (n := a)).prod (KGL w (n := b))).map (MulEquiv.prodComm : GLw a w × GLw b w ≃* GLw b w × GLw a w).toMonoidHom := by
     ext ⟨x, y⟩
     rw [Subgroup.mem_map_equiv]
     simp [Subgroup.mem_prod, and_comm]
@@ -190,7 +190,7 @@ private theorem stTw2_swap (a b : ℕ) (w : Pl E) (Q₁ Q₂ : (w.adicCompletion
   have hc : Continuous (MulEquiv.prodComm : GLw a w × GLw b w ≃* GLw b w × GLw a w) := continuous_swap
   have hc' : Continuous (MulEquiv.prodComm : GLw a w × GLw b w ≃* GLw b w × GLw a w).symm := continuous_swap
   refine clSum_map (MulEquiv.prodComm : GLw a w × GLw b w ≃* GLw b w × GLw a w) hc hc'
-    ((thL a w).prodMap (thL b w)) ((thL b w).prodMap (thL a w)) (fun _ => rfl) ((KGL w a).prod (KGL w b))
+    ((thL a w).prodMap (thL b w)) ((thL b w).prodMap (thL a w)) (fun _ => rfl) ((KGL w (n := a)).prod (KGL w (n := b)))
     {y | (nrmL a w y.1).val.charpoly = Q₁ ∧ (nrmL b w y.2).val.charpoly = Q₂}
     {y | (nrmL b w y.1).val.charpoly = Q₂ ∧ (nrmL a w y.2).val.charpoly = Q₁} (fun x => ?_) ?_ φ φ' h
   · exact and_comm

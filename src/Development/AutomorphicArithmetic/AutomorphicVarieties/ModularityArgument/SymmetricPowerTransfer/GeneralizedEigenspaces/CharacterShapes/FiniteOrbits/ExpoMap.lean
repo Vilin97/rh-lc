@@ -46,12 +46,12 @@ private theorem map_inj {k k' : Type} [Field k] [Field k'] {n : ℕ} (i : k ≃+
 
 private theorem levCore (hF : Fit T S VL A) {n : ℕ} (x : UA L n) (hx : x ∈ finU L n)
     (P : Pl (Lp L) → Prop) (E : ∀ v, v ∈ A.Sg → GL (Fin n) (Kv v))
-    (hK : ∀ v, P v ↔ ∀ w, un w = v → cLoc w x ∈ GlobalTheory.LFun.KGL w n)
+    (hK : ∀ v, P v ↔ ∀ w, un w = v → cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n))
     (hE : ∀ w (_ : w ∈ S) (h : IsSplitAt w) (hv : un w ∈ A.Sg),
       cLoc w x = Matrix.GeneralLinearGroup.map ((T w h).i : Kv (un w) →+* Kw w) (E (un w) hv)) :
     ((∀ v (h : v ∈ A.Sg), E v h ∈ (A.V v).J n) ∧ ∀ v ∉ A.Sg, P v) ↔ x ∈ lev (Kall L n) S VL := by
   have memL : x ∈ lev (Kall L n) S VL ↔
-      (x ∈ finU L n ∧ ∀ w, cLoc w x ∈ GlobalTheory.LFun.KGL w n) ∧ ∀ w ∈ S, cLoc w x ∈ (VL w).J n := by
+      (x ∈ finU L n ∧ ∀ w, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n)) ∧ ∀ w ∈ S, cLoc w x ∈ (VL w).J n := by
     simp [lev, Kall, Subgroup.mem_inf, Subgroup.mem_iInf]
   rw [memL]
   have loc : ∀ w (hw : w ∈ S) (h : IsSplitAt w) (hv : un w ∈ A.Sg),
@@ -66,7 +66,7 @@ private theorem levCore (hF : Fit T S VL A) {n : ℕ} (x : UA L n) (hx : x ∈ f
       · obtain ⟨w0, hw0, e⟩ := (hF.sg _).1 hv
         have sp := hF.pl.split w0 hw0
         have hv0 : un w0 ∈ A.Sg := e ▸ hv
-        have hk : cLoc w0 x ∈ GlobalTheory.LFun.KGL w0 n := by
+        have hk : cLoc w0 x ∈ GlobalTheory.LFun.KGL w0 (n := n) := by
           rw [hE w0 hw0 sp hv0]
           exact ((T w0 sp).K n _).2 (((Sig.finFacts _ (A.V (un w0))).2.2.2.2.2 n).2.2.2 (h1 _ hv0))
         exact (Br.uaFacts L n).2.2.2.2.2.2.2 w0 sp x hk w e.symm

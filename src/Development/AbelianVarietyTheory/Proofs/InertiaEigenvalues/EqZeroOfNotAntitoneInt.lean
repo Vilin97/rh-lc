@@ -32,7 +32,7 @@ theorem eq_zero_of_not_antitone_int (E : Type) [Field E] [NumberField E] (w : He
     (hψ : ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, ψ (x * y) = 1) ↔ x ∈ Ov E w)
     (W : GL (Fin n) (w.adicCompletion E) → ℂ)
     (hWN : ∀ u ∈ unipB (w.adicCompletion E) (Fin n), ∀ g, W (u * g) = ψ (superDiag u) * W g)
-    (hWK : ∀ g, ∀ k ∈ KGL w n, W (g * k) = W g)
+    (hWK : ∀ g, ∀ k ∈ KGL w (n := n), W (g * k) = W g)
     (ϖ : (w.adicCompletion E)ˣ) (hϖ : IsUnifV E w (ϖ : w.adicCompletion E)) (l : Fin n → ℤ) (hl : ¬ Antitone l)
     (D : GL (Fin n) (w.adicCompletion E))
     (hDv : (D : Matrix (Fin n) (Fin n) (w.adicCompletion E)) =
@@ -109,7 +109,7 @@ theorem eq_zero_of_not_antitone_int (E : Type) [Field E] [NumberField E] (w : He
       rw [hT, hentry, if_neg (fun h => by rw [← h] at hb'; omega), if_neg (fun h => hai h.1.symm), add_zero]
     · intro h
       exact absurd (Finset.mem_univ i) h
-  have hk : T c ∈ KGL w n := by
+  have hk : T c ∈ KGL w (n := n) := by
     refine ⟨⟨Matrix.transvection i j ⟨c, hcO⟩, Matrix.transvection i j (-⟨c, hcO⟩),
       by rw [Matrix.transvection_mul_transvection_same i j hne, add_neg_cancel, Matrix.transvection_zero],
       by rw [Matrix.transvection_mul_transvection_same i j hne, neg_add_cancel, Matrix.transvection_zero]⟩, ?_⟩

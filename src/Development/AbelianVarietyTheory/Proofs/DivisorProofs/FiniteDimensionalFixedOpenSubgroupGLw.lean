@@ -40,9 +40,9 @@ theorem finiteDimensional_fixed_openSubgroup_GLw : ∀ (E : Type) [Field E] [Num
   have hadm : IsAdmissible σ.ρ :=
     GlobalTheory.FourClauses.irreducibleAdmissibleGL (w.adicCompletion E) n σ.V σ.ρ σ.smooth σ.irred
   obtain ⟨ho, hc⟩ := GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL (E := E) w n
-  have hK : FiniteDimensional ℂ (fixed σ.ρ (U ⊓ GlobalTheory.LFun.KGL w n)) :=
+  have hK : FiniteDimensional ℂ (fixed σ.ρ (U ⊓ GlobalTheory.LFun.KGL w (n := n))) :=
     hadm.2 _ (hU.inter ho) (hc.inter_left (U.isClosed_of_isOpen hU))
-  have hle : fixed σ.ρ U ≤ fixed σ.ρ (U ⊓ GlobalTheory.LFun.KGL w n) := fun v hv h => hv ⟨h.1, h.2.1⟩
+  have hle : fixed σ.ρ U ≤ fixed σ.ρ (U ⊓ GlobalTheory.LFun.KGL w (n := n)) := fun v hv h => hv ⟨h.1, h.2.1⟩
   exact Submodule.finiteDimensional_of_le hle
 
 end GlobalTheory.BCT

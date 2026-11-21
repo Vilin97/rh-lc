@@ -203,7 +203,7 @@ def SuppIn (S : Finset (HeightOneSpectrum (𝓞 E))) (k : GL (Fin n) (Af E)) : P
 def Away (S : Finset (HeightOneSpectrum (𝓞 E))) (k : GL (Fin n) (Af E)) : Prop := ∀ w ∈ S, cmp w k = 1
 
 def InKS (S : Finset (HeightOneSpectrum (𝓞 E))) (k : GL (Fin n) (Af E)) : Prop :=
-  Away S k ∧ ∀ w, cmp w k ∈ GlobalTheory.LFun.KGL w n
+  Away S k ∧ ∀ w, cmp w k ∈ GlobalTheory.LFun.KGL w (n := n)
 
 theorem cmp_ext {k k' : GL (Fin n) (Af E)} (h : ∀ w, cmp w k = cmp w k') : k = k' := by
   refine Units.ext (Matrix.ext fun i j => ?_)
@@ -215,9 +215,9 @@ def GoodAt (w : HeightOneSpectrum (𝓞 E)) (ψ : AddChar (w.adicCompletion E) �
 
 structure Eig (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ) (W : GL (Fin n) (w.adicCompletion E) → ℂ) : Prop where
   card : B.card = n
-  inv : ∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w n, W (g * k) = W g
+  inv : ∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w (n := n), W (g * k) = W g
   eig : ∀ ϖ, Formalism.UG.IsUnifV E w ϖ → ∀ j ≤ n, ∀ g,
-    ∑ᶠ c : GL (Fin n) (w.adicCompletion E) ⧸ GlobalTheory.LFun.KGL w n,
+    ∑ᶠ c : GL (Fin n) (w.adicCompletion E) ⧸ GlobalTheory.LFun.KGL w (n := n),
       Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j c.out * W (g * c.out) = GlobalTheory.LFun.satEig (Formalism.UG.qV E w) n B j * W g
 
 def EigAt (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ) (f : GA E n → ℂ) : Prop :=
@@ -331,7 +331,7 @@ def InjP : Prop :=
 def EigOfSat : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (π : CuspSub E n) (w : HeightOneSpectrum (𝓞 E))
     (B : Multiset ℂˣ), π.HasSat w B → ∀ φ ∈ π.V,
-    (∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w n, φ.1 (g * finGL E n (locGL E n w k)) = φ.1 g) → EigAt w B φ.1
+    (∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w (n := n), φ.1 (g * finGL E n (locGL E n w k)) = φ.1 g) → EigAt w B φ.1
 
 def EigMap : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ)

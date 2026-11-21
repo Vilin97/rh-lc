@@ -20,7 +20,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : D7}
 
 def KP [IsCMField D.host.E] (n : ℕ) (P : HeightOneSpectrum (𝓞 D.host.E)) : Set (UA D.host.E n) :=
-  {x | x ∈ locU n P ∧ cLoc P x ∈ GlobalTheory.LFun.KGL P n}
+  {x | x ∈ locU n P ∧ cLoc P x ∈ GlobalTheory.LFun.KGL P (n := n)}
 
 def cj [IsCMField D.host.E] {V : HSp D} (j : UA D.host.E V.rank ≃ₜ* GA D V) (h₀ : GA D V) :
     UA D.host.E V.rank ≃* GA D V :=

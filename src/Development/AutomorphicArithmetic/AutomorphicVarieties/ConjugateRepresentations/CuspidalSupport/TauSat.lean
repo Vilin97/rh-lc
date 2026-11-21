@@ -54,7 +54,7 @@ theorem UpperTheory.V.Cj.S.tauSat :
   change V at v
   have hr := rank_le_aleph0_of_irred hs hi hv
   filter_upwards [LocSph.eventually_mem ((hs v).mem_nhds (by simp))] with w hw
-  have hfix : v ∈ fixed (locOf ρ w) (KGL w a) := by
+  have hfix : v ∈ fixed (locOf ρ w) (KGL w (n := a)) := by
     refine GlobalTheory.LGrp.mem_fixed.2 fun k hk => ?_
     obtain ⟨g, rfl⟩ := hk
     exact hw g

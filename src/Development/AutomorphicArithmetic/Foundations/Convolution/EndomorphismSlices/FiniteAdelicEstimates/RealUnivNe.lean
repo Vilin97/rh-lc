@@ -91,10 +91,10 @@ theorem cmbPi : PiTerm → TwTrSum → CmbPi := by
     funext g
     simp only [seen, if_pos (hZ w hw).2]
     exact congrFun h (g, 1)
-  have hX : (∏ w ∈ Z, trc (τ w).ρ (KGL w n) fun g => seen φ L.ln w (g, 1)) =
-      ∏ w ∈ Z, trc (τ w).ρ (KGL w n) fun g => φ w (g, 1) :=
+  have hX : (∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) fun g => seen φ L.ln w (g, 1)) =
+      ∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) fun g => φ w (g, 1) :=
     Finset.prod_congr rfl fun w hw => by rw [hseen w hw]
-  generalize (∏ w ∈ Z, trc (τ w).ρ (KGL w n) fun g => φ w (g, 1)) = X at hX ⊢
+  generalize (∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) fun g => φ w (g, 1)) = X at hX ⊢
   have term : ∀ j ∈ C.s, IsTestH (trM (C.t j).Φ A.tw) ∧ IsTwTr D.μ π (trM (C.t j).Φ A.tw)
       (c₀ * A.blk.vol⁻¹ * (m⁻¹) ^ Fintype.card (InfinitePlace E) * (C.t j).val (chi l) (chi l₂) * X * val T e₁ e₂ B 0) := by
     intro j hj

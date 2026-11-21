@@ -23,7 +23,7 @@ def compV (v : HeightOneSpectrum (𝓞 E)) : GA E n →* GL (Fin n) (v.adicCompl
   GeneralLinearGroup.map ((pLoc E v).comp (pFin E))
 
 def US (S : Finset (HeightOneSpectrum (𝓞 E))) : Subgroup (GA E n) :=
-  ⨅ (v : HeightOneSpectrum (𝓞 E)) (_ : v ∉ S), (GlobalTheory.LFun.KGL v n).comap (compV E n v)
+  ⨅ (v : HeightOneSpectrum (𝓞 E)) (_ : v ∉ S), (GlobalTheory.LFun.KGL v (n := n)).comap (compV E n v)
 
 def C0 (S : Finset (HeightOneSpectrum (𝓞 E))) : Set (GA E n) :=
   {g | ∃ u ∈ NA E n, ∃ k ∈ US E n S, g = u * k}

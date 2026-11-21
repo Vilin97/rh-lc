@@ -51,11 +51,11 @@ theorem exists_blocks_of_upper {K : Type} [Field K] {n a b : ℕ} (h : a + b = n
 
 theorem iwasawa_parabolic : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n a b : ℕ) (h : a + b = n) (w : Pl E)
     (g : GLw n w), ∃ (m : GLw a w × GLw b w) (Y : Matrix (Fin a) (Fin b) (w.adicCompletion E)),
-      ∃ k ∈ GlobalTheory.LFun.KGL w n, g = blk h w m Y * k := by
+      ∃ k ∈ GlobalTheory.LFun.KGL w (n := n), g = blk h w m Y * k := by
   intro E _ _ _ n a b h w g
   obtain ⟨k, c, hc, hg⟩ := GlobalTheory.ValIwasawa.iwasawa (w.adicCompletionIntegers E) (w.adicCompletion E) n g⁻¹
   have hk : Matrix.GeneralLinearGroup.map (algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E)) k ∈
-      GlobalTheory.LFun.KGL w n := ⟨k, rfl⟩
+      GlobalTheory.LFun.KGL w (n := n) := ⟨k, rfl⟩
   have hc' : (c⁻¹).1.BlockTriangular id := by
     haveI : Invertible c.1 := Units.invertible c
     rw [Matrix.coe_units_inv]

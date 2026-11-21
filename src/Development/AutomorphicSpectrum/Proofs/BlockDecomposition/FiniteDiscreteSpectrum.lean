@@ -26,7 +26,7 @@ variable {E : Type} [Field E] [NumberField E] {n : ℕ}
 
 theorem mem_glSub_iff (k : GL (Fin n) (Af E)) :
     k ∈ GlobalTheory.GLIntegral.glSub (GlobalTheory.GLIntegral.intSubring E) ↔
-      ∀ v, GeneralLinearGroup.map (pLoc E v) k ∈ GlobalTheory.LFun.KGL v n := by
+      ∀ v, GeneralLinearGroup.map (pLoc E v) k ∈ GlobalTheory.LFun.KGL v (n := n) := by
   constructor
   · rintro ⟨h1, h2⟩ v
     obtain ⟨U, hU, e⟩ := GlobalTheory.DualDivU.exists_glint (Ov E v)
@@ -44,7 +44,7 @@ theorem mem_glSub_iff (k : GL (Fin n) (Af E)) :
 
 theorem exists_finset_of_isOpen (L : Set (GL (Fin n) (Af E))) (hL : IsOpen L) (h1 : 1 ∈ L) :
     ∃ T : Finset (HeightOneSpectrum (𝓞 E)), ∀ k : GL (Fin n) (Af E),
-      (∀ v, GeneralLinearGroup.map (pLoc E v) k ∈ GlobalTheory.LFun.KGL v n) →
+      (∀ v, GeneralLinearGroup.map (pLoc E v) k ∈ GlobalTheory.LFun.KGL v (n := n)) →
       (∀ w ∈ T, GeneralLinearGroup.map (pLoc E w) k = 1) → k ∈ L := by
   by_contra h
   push Not at h
@@ -116,7 +116,7 @@ section Level
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
 def locLevel (Kf : ∀ w : HeightOneSpectrum (𝓞 E), Subgroup (GL (Fin N) (w.adicCompletion E)))
-    (w : HeightOneSpectrum (𝓞 E)) : Subgroup (GL (Fin N) (w.adicCompletion E)) := GlobalTheory.LFun.KGL w N ⊓ Kf w
+    (w : HeightOneSpectrum (𝓞 E)) : Subgroup (GL (Fin N) (w.adicCompletion E)) := GlobalTheory.LFun.KGL w (n := N) ⊓ Kf w
 
 def adLevel (Kf : ∀ w : HeightOneSpectrum (𝓞 E), Subgroup (GL (Fin N) (w.adicCompletion E))) :
     Subgroup (GL (Fin N) (Af E)) := ⨅ v, (locLevel Kf v).comap (GeneralLinearGroup.map (pLoc E v))
@@ -132,7 +132,7 @@ theorem isCompact_locLevel {Kf : ∀ w : HeightOneSpectrum (𝓞 E), Subgroup (G
 
 theorem isOpen_adLevel {Kf : ∀ w : HeightOneSpectrum (𝓞 E), Subgroup (GL (Fin N) (w.adicCompletion E))}
     (hK : PositivityTheory.Rg.BcB.F.F5.IsLevel Kf) : IsOpen (adLevel Kf : Set (GL (Fin N) (Af E))) := by
-  have hB : {w | ¬ GlobalTheory.LFun.KGL w N ≤ Kf w}.Finite := hK.2
+  have hB : {w | ¬ GlobalTheory.LFun.KGL w (n := N) ≤ Kf w}.Finite := hK.2
   have e : (adLevel Kf : Set (GL (Fin N) (Af E))) =
       (GlobalTheory.GLIntegral.glSub (ι := Fin N) (GlobalTheory.GLIntegral.intSubring E) : Set (GL (Fin N) (Af E))) ∩
         ⋂ w ∈ hB.toFinset, (GeneralLinearGroup.map (pLoc E w) : GL (Fin N) (Af E) → _) ⁻¹' (Kf w : Set _) := by
@@ -140,7 +140,7 @@ theorem isOpen_adLevel {Kf : ∀ w : HeightOneSpectrum (𝓞 E), Subgroup (GL (F
     simp only [SetLike.mem_coe, mem_adLevel, Set.mem_inter_iff, Set.mem_iInter, mem_glSub_iff, Set.mem_preimage,
       Set.Finite.mem_toFinset, Set.mem_setOf_eq]
     refine ⟨fun h => ⟨fun v => (h v).1, fun w _ => (h w).2⟩, fun h v => ⟨h.1 v, ?_⟩⟩
-    by_cases hv : GlobalTheory.LFun.KGL v N ≤ Kf v
+    by_cases hv : GlobalTheory.LFun.KGL v (n := N) ≤ Kf v
     · exact hv (h.1 v)
     · exact h.2 v hv
   rw [e]

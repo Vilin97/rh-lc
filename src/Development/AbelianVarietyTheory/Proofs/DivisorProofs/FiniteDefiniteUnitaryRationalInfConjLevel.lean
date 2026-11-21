@@ -25,7 +25,7 @@ theorem cLoc_finPt (γ : UE E n) (w : Pl E) (i j : Fin n) :
 theorem cLoc_conj_mem_KGL {S : Set (Pl E)} {K' : ∀ w : Pl E, Subgroup (UL n w)}
     (hK : IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K') (x g : finU E n)
     (hg : g ∈ (globLev S K').map (MulAut.conj x).toMonoidHom) :
-    ∀ w ∈ S, cLoc w ((x⁻¹ * g * x : finU E n) : UA E n) ∈ GlobalTheory.LFun.KGL w n := by
+    ∀ w ∈ S, cLoc w ((x⁻¹ * g * x : finU E n) : UA E n) ∈ GlobalTheory.LFun.KGL w (n := n) := by
   intro w hw
   obtain ⟨k, hk, e⟩ := Subgroup.mem_map.1 hg
   have e' : x⁻¹ * g * x = k := by

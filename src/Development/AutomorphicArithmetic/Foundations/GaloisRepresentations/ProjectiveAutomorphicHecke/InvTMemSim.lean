@@ -58,7 +58,7 @@ theorem th_rat (γ : Gam0 E n) : th (rat γ) = rat (th0 γ) :=
 theorem guf_ext {g g' : GUf E n} (h1 : sim g = sim g') (h2 : ∀ w, comp w g = comp w g') : g = g' :=
   Subtype.ext (Prod.ext (Units.ext (GlobalTheory.SplitPts.matAf_ext fun w => congrArg Units.val (h2 w))) h1)
 
-theorem invT_mem_KGL {w : Plc E} {y : GLw n w} (h : y ∈ KGL w n) : invT n _ y ∈ KGL w n := by
+theorem invT_mem_KGL {w : Plc E} {y : GLw n w} (h : y ∈ KGL w (n := n)) : invT n _ y ∈ KGL w (n := n) := by
   obtain ⟨z, rfl⟩ := h
   exact ⟨invT n _ z, GlobalTheory.SplitPts.invT_map _ z⟩
 

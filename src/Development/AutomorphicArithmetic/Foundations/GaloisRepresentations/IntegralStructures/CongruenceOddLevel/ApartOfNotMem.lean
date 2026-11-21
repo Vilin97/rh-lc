@@ -21,7 +21,7 @@ def CongUWG (Ty : UnitaryAutomorphicTypeClass) (Gen : ℕ → ℕ → Multiset �
     ∃ Kw : Levels E a, HasLevelOff w₀ v' Kw U ∧
       (∀ w, IsSplitAt w → Apart w w₀ → IsOpen (Kw w : Set (GL (Fin a) (w.adicCompletion E))) ∧
         IsCompact (Kw w : Set (GL (Fin a) (w.adicCompletion E)))) ∧
-      (∀ w, IsSplitAt w → Apart w w₀ → Apart w v' → (∃ B, SatU U w B) → Kw w = GlobalTheory.LFun.KGL w a) ∧
+      (∀ w, IsSplitAt w → Apart w w₀ → Apart w v' → (∃ B, SatU U w B) → Kw w = GlobalTheory.LFun.KGL w (n := a)) ∧
       ∀ (Z W : Finset (HeightOneSpectrum (𝓞 E))),
         (∀ z ∈ Z, IsSplitAt z ∧ Apart z w₀ ∧ Apart z v' ∧ ∃ B, SatU U z B) →
         (∀ w ∈ W, IsSplitAt w ∧ Apart w w₀ ∧ Apart w v' ∧ ∃ B, SatU U w B) →

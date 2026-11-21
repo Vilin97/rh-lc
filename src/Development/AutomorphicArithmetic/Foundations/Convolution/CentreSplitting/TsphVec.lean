@@ -19,7 +19,7 @@ open UpperTheory.ConvolutionTheory GlobalTheory.LFun Formalism.UG
 
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
-private theorem kgl_eq (w : Pl K) : GLnLocal.integralGL (w.adicCompletion K) n = KGL w n := by
+private theorem kgl_eq (w : Pl K) : GLnLocal.integralGL (w.adicCompletion K) n = KGL w (n := n) := by
   have h : ∀ O : Subring (w.adicCompletion K), O = (ValuativeRel.valuation (w.adicCompletion K)).integer →
       GLnLocal.integralGL (w.adicCompletion K) n = GLint (Fin n) O := by
     rintro _ rfl
@@ -36,7 +36,7 @@ private theorem diagJ_one {L : Type} [Field L] (j : ℕ) : diagJ n (1 : L) j = 1
   simp [diagJ]
 
 private theorem exists_unit (w : Pl K) {u : w.adicCompletion K} (hu : Valued.v u = 1) (j : ℕ) :
-    ∃ k ∈ KGL w n, (k : Matrix (Fin n) (Fin n) (w.adicCompletion K)) = diagJ n u j := by
+    ∃ k ∈ KGL w (n := n), (k : Matrix (Fin n) (Fin n) (w.adicCompletion K)) = diagJ n u j := by
   have h0 : u ≠ 0 := by rintro rfl; simp at hu
   have hm : ∀ x : w.adicCompletion K, Valued.v x = 1 → ∀ a b,
       diagJ n x j a b ∈ (ValuativeRel.valuation (w.adicCompletion K)).integer := fun x hx a b => by
@@ -52,7 +52,7 @@ private theorem exists_unit (w : Pl K) {u : w.adicCompletion K} (hu : Valued.v u
 
 private theorem tj_eq (w : Pl K) {ϖ ϖ₀ : w.adicCompletion K} (h : IsUnifV K w ϖ) (h₀ : IsUnifV K w ϖ₀) (j : ℕ)
     (x : GL (Fin n) (w.adicCompletion K)) (hx : (x : Matrix (Fin n) (Fin n) (w.adicCompletion K)) = diagJ n ϖ₀ j) :
-    Tj ℂ n (Ov K w) ϖ j = dosetInd ℂ (KGL w n) x := by
+    Tj ℂ n (Ov K w) ϖ j = dosetInd ℂ (KGL w (n := n)) x := by
   have h0 : ϖ₀ ≠ 0 := fun e => by simp [IsUnifV, e] at h₀
   obtain ⟨k, hk, hk'⟩ := exists_unit (n := n) w (u := ϖ₀⁻¹ * ϖ) (by
     rw [map_mul, map_inv₀, h, h₀]; exact inv_mul_cancel₀ WithZero.coe_ne_zero) j
@@ -130,7 +130,7 @@ private theorem tsph_iff {V : Submodule ℂ (LL μ)} (hV : IsSummand μ V) (B : 
     (hv : (v : LL μ) ∈ fixL μ w (GLnLocal.integralGL (w.adicCompletion K) n)) {ϖ : w.adicCompletion K}
     (h : IsUnifV K w ϖ) (i : Fin n) :
     Tsph μ w i v = (B.map fun b : ℂˣ => (b : ℂ)).esymm (i + 1) • (v : LL μ) ↔
-      heckeVec (locOn hV w) (KGL w n) (Tj ℂ n (Ov K w) ϖ (i + 1)) v = satEig (qV K w) n B (i + 1) • v := by
+      heckeVec (locOn hV w) (KGL w (n := n)) (Tj ℂ n (Ov K w) ϖ (i + 1)) v = satEig (qV K w) n B (i + 1) • v := by
   have e := map_heckeVec (ρ := locOn hV w) (ρ' := localRepresentationL2 μ w) (Final.GLintComm K w n) (Tj_mem_hecke h (i + 1))
     V.subtype (fun _ _ => rfl) v
   have ht := tj_eq w h (GroundTheory.BlockD.SatakeBound.valued_uniformizer_eq w) (i + 1)
@@ -150,7 +150,7 @@ end SlopeTestRemainingChoices
 theorem UpperTheory.ConvolutionTheory.Dp.tsphVec :
     UpperTheory.ConvolutionTheory.Dp.TsphVec := by
   intro K _ _ n μ _ w V hV B
-  have hf : ∀ v : V, v ∈ GlobalTheory.PRep.fixed (locOn hV w) (GlobalTheory.LFun.KGL w n) ↔
+  have hf : ∀ v : V, v ∈ GlobalTheory.PRep.fixed (locOn hV w) (GlobalTheory.LFun.KGL w (n := n)) ↔
       (v : LL μ) ∈ fixL μ w (GLnLocal.integralGL (w.adicCompletion K) n) := fun v => by
     rw [GlobalTheory.LGrp.mem_fixed, mem_fixL, kgl_eq]
     exact forall₂_congr fun k _ => Subtype.ext_iff

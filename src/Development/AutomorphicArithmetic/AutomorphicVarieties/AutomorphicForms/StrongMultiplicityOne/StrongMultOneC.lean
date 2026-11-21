@@ -28,7 +28,7 @@ def psiR (x : Cinf E) : ℂ := (𝐞 (-TG.tr E x) : ℂ)
 def conv [IsTotallyComplex E] (f : GA E n → ℂ) (α : Lie E n → ℂ) (g : GA E n) : ℂ := ∫ x, chart f g x * α x
 
 def Sat (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ) (U : Submodule ℂ (cuspForms E n)) : Prop :=
-  ∀ φ ∈ U, (∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w n, φ.1 (g * finGL E n (locGL E n w k)) = φ.1 g) → EigAt w B φ.1
+  ∀ φ ∈ U, (∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w (n := n), φ.1 (g * finGL E n (locGL E n w k)) = φ.1 g) → EigAt w B φ.1
 
 def SameSat (U U' : Submodule ℂ (cuspForms E n)) : Prop :=
   ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∃ B, Sat w B U ∧ Sat w B U'
@@ -202,7 +202,7 @@ def Carrier : Prop :=
 def EigOfSat : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (π : GlobalTheory.CuspRep.CuspSub E n)
     (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ), GlobalTheory.LFun.HasSatGL w (π.locRep w) B → ∀ φ ∈ π.V,
-    (∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w n, φ.1 (g * finGL E n (locGL E n w k)) = φ.1 g) → EigAt w B φ.1
+    (∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w (n := n), φ.1 (g * finGL E n (locGL E n w k)) = φ.1 g) → EigAt w B φ.1
 
 def NormTwist : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ), 1 ≤ n → ∀ π : GlobalTheory.CuspRep.CuspSub E n,

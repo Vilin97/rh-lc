@@ -60,7 +60,7 @@ def IsFrameAt (a : GL (Fin n) (w.adicCompletion E)) : Prop :=
   ∀ y : Fin n → w.adicCompletion E, (∀ i, y i ∈ Ov E w) ↔ a.1 *ᵥ y ∈ latAt w L
 
 def IsSplitChart (h : w.under (𝓞 F) = v) (e : GLoc σ J v ≃* GL (Fin n) (w.adicCompletion E)) : Prop :=
-  (∃ a, IsFrameAt w L a ∧ ∀ g, e g = a⁻¹ * locMat σ J h g * a) ∧ ∀ g, g ∈ stabLoc σ J L v ↔ e g ∈ KGL w n
+  (∃ a, IsFrameAt w L a ∧ ∀ g, e g = a⁻¹ * locMat σ J h g * a) ∧ ∀ g, g ∈ stabLoc σ J L v ↔ e g ∈ KGL w (n := n)
 
 def IsConjAt (h : w.under (𝓞 F) = v) (c : w.adicCompletion E →+* w.adicCompletion E) : Prop :=
   ∀ y, c (toCompl h y) = toCompl h (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ y)
@@ -75,7 +75,7 @@ def IsInertChart (h : w.under (𝓞 F) = v) (c : w.adicCompletion E →+* w.adic
 variable {σ J L}
 
 theorem IsFrameAt.inv_mul_mem {a b : GL (Fin n) (w.adicCompletion E)} (ha : IsFrameAt w L a) (hb : IsFrameAt w L b) :
-    a⁻¹ * b ∈ KGL w n := by
+    a⁻¹ * b ∈ KGL w (n := n) := by
   have e := Final.StabStd (w.adicCompletion E) (Ov E w) (Fin n) Subtype.val_injective
   have hm : ∀ y : Fin n → w.adicCompletion E, y ∈ stdLat (n := Fin n) (Ov E w) ↔ ∀ i, y i ∈ Ov E w := fun y =>
     ⟨fun h i => by obtain ⟨r, hr⟩ := h i trivial; exact hr ▸ r.2, fun h i _ => ⟨⟨_, h i⟩, rfl⟩⟩
@@ -83,7 +83,7 @@ theorem IsFrameAt.inv_mul_mem {a b : GL (Fin n) (w.adicCompletion E)} (ha : IsFr
   rw [hm, hm, hb, ha, Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel_left]
 
 theorem IsSplitChart.exists_conj {h : w.under (𝓞 F) = v} {e e' : GLoc σ J v ≃* GL (Fin n) (w.adicCompletion E)}
-    (he : IsSplitChart σ J L h e) (he' : IsSplitChart σ J L h e') : ∃ k ∈ KGL w n, ∀ g, e' g = k⁻¹ * e g * k := by
+    (he : IsSplitChart σ J L h e) (he' : IsSplitChart σ J L h e') : ∃ k ∈ KGL w (n := n), ∀ g, e' g = k⁻¹ * e g * k := by
   obtain ⟨⟨a, ha, e1⟩, -⟩ := he
   obtain ⟨⟨b, hb, e2⟩, -⟩ := he'
   exact ⟨_, ha.inv_mul_mem hb, fun g => by rw [e1, e2]; group⟩

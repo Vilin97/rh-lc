@@ -330,7 +330,7 @@ theorem Tj_apply (hϖ : IsUnifV E w ϖ) {N : ℕ} (j : ℕ) (g : GL (Fin N) (w.a
 theorem hecke_eq_sum (hϖ : IsUnifV E w ϖ) {V : Type} [AddCommGroup V] [Module ℂ V] {N : ℕ}
     (ρ : Representation ℂ (GL (Fin N) (w.adicCompletion E)) V) (x : V)
     (hx : ∀ κ ∈ GLint (Fin N) (Ov E w), ρ κ x = x) (j : ℕ) (hj : j ≤ N) :
-    GlobalTheory.LFun.heckeVec ρ (GlobalTheory.LFun.KGL w N) (Tj ℂ N (Ov E w) ϖ j) x =
+    GlobalTheory.LFun.heckeVec ρ (GlobalTheory.LFun.KGL w (n := N)) (Tj ℂ N (Ov E w) ϖ j) x =
       ∑ᶠ (M : Submodule (Res E w) (Fin N → Res E w)) (_ : finrank (Res E w) M + j = N), vv hϖ N ρ x M := by
   set K := GLint (Fin N) (Ov E w) with hK
   set T : Set (GL (Fin N) (w.adicCompletion E) ⧸ K) :=

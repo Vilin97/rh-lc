@@ -29,31 +29,31 @@ open GlobalTheory.BCT.GlobLev GroundTheory.Automorphic
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ}
 
 theorem finPart_mem_integral_iff (k : finU E a) :
-    finPart E a k ∈ AdelicGLn.integralFiniteGL E a ↔ ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u a := by
+    finPart E a k ∈ AdelicGLn.integralFiniteGL E a ↔ ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a) := by
   rw [AdelicGLn.mem_integralFiniteGL_iff, ← map_inv]
   simp only [mem_KGL_iff_val, ← map_inv, GroundTheory.Global.mem_integralFiniteAdeles]
   exact ⟨fun h u => ⟨fun i j => h.1 i j u, fun i j => h.2 i j u⟩,
     fun h => ⟨fun i j u => (h u).1 i j, fun i j u => (h u).2 i j⟩⟩
 
 theorem isOpen_KGL (w : HeightOneSpectrum (𝓞 E)) (a : ℕ) :
-    IsOpen (GlobalTheory.LFun.KGL w a : Set (GL (Fin a) (w.adicCompletion E))) := by
+    IsOpen (GlobalTheory.LFun.KGL w (n := a) : Set (GL (Fin a) (w.adicCompletion E))) := by
   have hK := GlobalTheory.SmGL.SphCompletion.KO_completion (F := E) w a
   have h : IsOpen (GlobalTheory.SplitWeil.KO (w.adicCompletion E) (Fin a) : Set (GL (Fin a) (w.adicCompletion E))) :=
     GlobalTheory.SplitFlip.isOpen_KO
   rwa [hK] at h
 
 theorem isClosed_KGL (w : HeightOneSpectrum (𝓞 E)) (a : ℕ) :
-    IsClosed (GlobalTheory.LFun.KGL w a : Set (GL (Fin a) (w.adicCompletion E))) :=
+    IsClosed (GlobalTheory.LFun.KGL w (n := a) : Set (GL (Fin a) (w.adicCompletion E))) :=
   Subgroup.isClosed_of_isOpen _ (isOpen_KGL w a)
 
 theorem mem_intU_iff_of_mem_locU {w : HeightOneSpectrum (𝓞 E)} {x : UA E a} (hx : x ∈ locU a w) :
-    x ∈ intU a w ↔ cLoc w x ∈ GlobalTheory.LFun.KGL w a :=
+    x ∈ intU a w ↔ cLoc w x ∈ GlobalTheory.LFun.KGL w (n := a) :=
   ⟨fun h => (mem_intU.1 h).2 w (fun h' => h' rfl), mem_intU_of hx⟩
 
 theorem isOpen_intU (w : HeightOneSpectrum (𝓞 E)) :
     IsOpen (((intU a w).subgroupOf (locU a w)) : Set (locU a w)) := by
   have e : (((intU a w).subgroupOf (locU a w)) : Set (locU a w)) =
-      (fun x : locU a w => cLoc w x.1) ⁻¹' (GlobalTheory.LFun.KGL w a : Set _) := by
+      (fun x : locU a w => cLoc w x.1) ⁻¹' (GlobalTheory.LFun.KGL w (n := a) : Set _) := by
     ext x
     simp only [SetLike.mem_coe, Subgroup.mem_subgroupOf, Set.mem_preimage]
     exact mem_intU_iff_of_mem_locU x.2
@@ -73,7 +73,7 @@ theorem isCompact_intU (w : HeightOneSpectrum (𝓞 E)) :
       finGL E a '' (AdelicGLn.integralFiniteGL E a : Set _)} := by
     intro x hx
     have hx' := mem_intU.1 hx
-    have hall : ∀ u, cLoc u x.1 ∈ GlobalTheory.LFun.KGL u a := by
+    have hall : ∀ u, cLoc u x.1 ∈ GlobalTheory.LFun.KGL u (n := a) := by
       intro u
       by_cases hu : Apart u w
       · rw [((GlobalTheory.Cong.LevelExt.mem_locU_iff x.1).1 hx'.1).2 u hu]
@@ -83,7 +83,7 @@ theorem isCompact_intU (w : HeightOneSpectrum (𝓞 E)) :
     have h1 : Matrix.GeneralLinearGroup.map (pInf E) ((x : UA E a) : GA E a) = 1 := x.2
     exact ga_ext (by rw [pInf_finGL, h1]) (by rw [pFin_finGL]; rfl)
   have hTe : T = (⋂ u, ⋂ (_ : Apart u w), {x : finU E a | cLoc u x.1 = 1}) ∩
-      ⋂ u, ⋂ (_ : ¬ Apart u w), {x : finU E a | cLoc u x.1 ∈ GlobalTheory.LFun.KGL u a} := by
+      ⋂ u, ⋂ (_ : ¬ Apart u w), {x : finU E a | cLoc u x.1 ∈ GlobalTheory.LFun.KGL u (n := a)} := by
     ext x
     simp only [T, Set.mem_setOf_eq, Set.mem_inter_iff, Set.mem_iInter, mem_intU,
       GlobalTheory.Cong.LevelExt.mem_locU_iff]

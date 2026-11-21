@@ -28,7 +28,7 @@ theorem rfull_finite_under_eq (u : HeightOneSpectrum (𝓞 E)) :
 theorem rfull_eventually_sat (D : Pre E n) :
     ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∃ B, D.Sat w B := by
   have h : ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite,
-      ∀ i, GlobalTheory.LGrp.IsSpherical (D.σ i w).ρ (GlobalTheory.LFun.KGL w (D.N i)) :=
+      ∀ i, GlobalTheory.LGrp.IsSpherical (D.σ i w).ρ (GlobalTheory.LFun.KGL w (n := (D.N i))) :=
     Filter.eventually_all.2 fun i =>
       (GlobalTheory.SpehPair.eventually_spherical (D.discrete i)).mono fun w hw => hw _ (D.loc i w)
   refine h.mono fun w hw => ?_

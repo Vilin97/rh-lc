@@ -132,7 +132,7 @@ theorem mem_lev_iff_proj (hS : IsSection S) (g : UA E n) : g ∈ lev S K' ↔ �
   rw [mem_lev]
   refine and_congr ⟨fun h v => by rw [h, map_one], fun h => gl_ext_evGL fun v => by rw [h, map_one]⟩ (by simp)
 
-theorem eventually_cLoc_mem (g : UA E n) : ∀ᶠ w : Pl E in cofinite, cLoc w g ∈ GlobalTheory.LFun.KGL w n := by
+theorem eventually_cLoc_mem (g : UA E n) : ∀ᶠ w : Pl E in cofinite, cLoc w g ∈ GlobalTheory.LFun.KGL w (n := n) := by
   have h : ∀ g : UA E n, ∀ᶠ w : Pl E in cofinite, ∀ i j, Valued.v ((cLoc w g).val i j) ≤ 1 := fun g => by
     simp only [Filter.eventually_all]
     exact fun i j => (pFin E (g.1.val i j)).2

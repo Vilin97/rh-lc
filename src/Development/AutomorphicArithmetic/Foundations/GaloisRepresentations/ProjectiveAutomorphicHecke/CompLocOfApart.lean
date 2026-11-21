@@ -128,10 +128,10 @@ def ZU : Subgroup AfQˣ where
     rwa [map_mul, ha v, one_mul] at h
 
 def lev (S : Finset (Plc E)) (Kw : ∀ w : Plc E, Subgroup (GL (Fin n) (w.adicCompletion E))) : Subgroup (GUf E n) :=
-  ZU.comap sim ⊓ (⨅ w ∈ S, (Kw w).comap (comp w)) ⊓ ⨅ (w : Plc E) (_ : w ∉ S ∧ cj w ∉ S), (KGL w n).comap (comp w)
+  ZU.comap sim ⊓ (⨅ w ∈ S, (Kw w).comap (comp w)) ⊓ ⨅ (w : Plc E) (_ : w ∉ S ∧ cj w ∉ S), (KGL w (n := n)).comap (comp w)
 
 theorem mem_lev {S : Finset (Plc E)} {Kw : ∀ w : Plc E, Subgroup (GL (Fin n) (w.adicCompletion E))} {k : GUf E n} :
-    k ∈ lev S Kw ↔ sim k ∈ ZU ∧ (∀ w ∈ S, comp w k ∈ Kw w) ∧ ∀ w, w ∉ S → cj w ∉ S → comp w k ∈ KGL w n := by
+    k ∈ lev S Kw ↔ sim k ∈ ZU ∧ (∀ w ∈ S, comp w k ∈ Kw w) ∧ ∀ w, w ∉ S → cj w ∉ S → comp w k ∈ KGL w (n := n) := by
   simp only [lev, Subgroup.mem_inf, Subgroup.mem_iInf, Subgroup.mem_comap, and_assoc, and_imp]
 
 def embAll (E : Type) [Field E] (n : ℕ) : GL (Fin n) E →* (InfinitePlace E → GL (Fin n) ℂ) :=

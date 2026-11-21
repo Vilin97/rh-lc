@@ -160,8 +160,8 @@ theorem main (σ : M ≃+* M) (s : Ad M ≃+* Ad M) (hs : IsGalAd σ s) {n : ℕ
     fun k => by ext i j; rfl
   have hK := GlobalTheory.LFun.SplitTie.mem_KGL_iff (n := n) h3
   let ρ'' := (P.locRep v).comp (GlobalTheory.LFun.SplitTie.glEquiv n ψ₀).symm.toMonoidHom
-  have hfix : ∀ x, x ∈ GlobalTheory.PRep.fixed ρ'' (GlobalTheory.LFun.KGL (conjSrc σ v) n) ↔
-      x ∈ GlobalTheory.PRep.fixed (P.locRep v) (GlobalTheory.LFun.KGL v n) := fun x => GlobalTheory.LFun.mem_fixed_comp_symm _ hK
+  have hfix : ∀ x, x ∈ GlobalTheory.PRep.fixed ρ'' (GlobalTheory.LFun.KGL (conjSrc σ v) (n := n)) ↔
+      x ∈ GlobalTheory.PRep.fixed (P.locRep v) (GlobalTheory.LFun.KGL v (n := n)) := fun x => GlobalTheory.LFun.mem_fixed_comp_symm _ hK
   have hB'' : GlobalTheory.LFun.HasSatGL (conjSrc σ v) ρ'' B := by
     refine ⟨?_, fun x hx h0 => (GlobalTheory.LFun.SplitTie.isSatVecGL_comp_symm h3 hq _ x B).2 (hB.2 x ((hfix x).1 hx) h0)⟩
     obtain ⟨x, hx⟩ := hB.exists_vec

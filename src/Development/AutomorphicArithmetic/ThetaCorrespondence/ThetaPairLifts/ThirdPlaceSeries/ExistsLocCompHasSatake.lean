@@ -45,7 +45,7 @@ theorem exists_locComp_hasSatake_alt : GlobalTheory.Published.AutomorphicFormsFi
     (fun κ ht h => by
       rw [MonoidHom.one_apply, Units.val_one, one_smul]
       exact hFfix κ ((GlobalTheory.HeckeScalarSph.loc_mem_GLint_iff sp ht).1 h) ht)
-  have hufix : u ∈ GlobalTheory.PRep.fixed σ.ρ (GlobalTheory.LFun.KGL sp.w D.R.nV) := by
+  have hufix : u ∈ GlobalTheory.PRep.fixed σ.ρ (GlobalTheory.LFun.KGL sp.w (n := D.R.nV)) := by
     refine GlobalTheory.LGrp.mem_fixed.2 fun A hA => ?_
     have hA' := (map_mem_KGL_iff hc hcL (Matrix.GeneralLinearGroup.map c.symm.toRingHom A)).1
       (by rw [map_map_symm]; exact hA)
@@ -61,7 +61,7 @@ theorem exists_locComp_hasSatake_alt : GlobalTheory.Published.AutomorphicFormsFi
   obtain ⟨e, he1, he2⟩ := GlobalTheory.SplitEmb.exists_hom_trivOutside_loc D.host.E D.R.nV sp
   have hspan := GlobalTheory.SpanLoc.main D.host.E D.R.nV (P.M.loc i).wt (P.H.av.S i Q) hirr sp σ hσ c hc hcL hFiso
   rw [iSup_subtype'] at hspan
-  have hFK : F ∈ GlobalTheory.PRep.fixed (locAct D.R.nV (P.M.loc i).wt.W sp c e) (GlobalTheory.LFun.KGL sp.w D.R.nV) := by
+  have hFK : F ∈ GlobalTheory.PRep.fixed (locAct D.R.nV (P.M.loc i).wt.W sp c e) (GlobalTheory.LFun.KGL sp.w (n := D.R.nV)) := by
     refine GlobalTheory.LGrp.mem_fixed.2 fun A hA => ?_
     rw [locAct_apply]
     refine hFfix _ ((GlobalTheory.HeckeScalarSph.loc_mem_GLint_iff sp (he1 _)).1 ?_) (he1 _)

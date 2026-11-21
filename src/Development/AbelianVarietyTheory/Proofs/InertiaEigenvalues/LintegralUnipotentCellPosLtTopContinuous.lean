@@ -201,11 +201,11 @@ def mirAt (ℓ : Fin a) (S : Finset (HeightOneSpectrum (𝓞 E))) : Set (GA E a)
 
 
 def levelAt (S : Finset (HeightOneSpectrum (𝓞 E))) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) : Set (GL (Fin a) (Af E)) :=
-  {κ | (∀ v, GeneralLinearGroup.map (pLoc E v) κ ∈ GlobalTheory.LFun.KGL v a) ∧ ∀ v ∈ S, ∀ i j,
+  {κ | (∀ v, GeneralLinearGroup.map (pLoc E v) κ ∈ GlobalTheory.LFun.KGL v (n := a)) ∧ ∀ v ∈ S, ∀ i j,
     Valued.v ((κ.val - 1) i j v) ≤ WithZero.exp (-FractionalIdeal.count E v (J : FractionalIdeal (𝓞 E)⁰ E))}
 
 theorem mem_integralFiniteGL_iff_KGL {κ : GL (Fin a) (Af E)} :
-    κ ∈ AdelicGLn.integralFiniteGL E a ↔ ∀ v, GeneralLinearGroup.map (pLoc E v) κ ∈ GlobalTheory.LFun.KGL v a := by
+    κ ∈ AdelicGLn.integralFiniteGL E a ↔ ∀ v, GeneralLinearGroup.map (pLoc E v) κ ∈ GlobalTheory.LFun.KGL v (n := a) := by
   simp only [AdelicGLn.mem_integralFiniteGL_iff, mem_integralFiniteAdeles, mem_GLint_iff_entries_cell, ← map_inv]
   exact ⟨fun h v => ⟨fun i j => h.1 i j v, fun i j => h.2 i j v⟩, fun h => ⟨fun i j v => (h v).1 i j, fun i j v => (h v).2 i j⟩⟩
 
@@ -213,7 +213,7 @@ theorem levelAt_subset (S : Finset (HeightOneSpectrum (𝓞 E))) (J : (Fractiona
     levelAt a S J ⊆ AdelicGLn.integralFiniteGL E a := fun _ hκ => mem_integralFiniteGL_iff_KGL.2 hκ.1
 
 theorem exists_levelAt_subset (S : Finset (HeightOneSpectrum (𝓞 E))) (U : Subgroup (GL (Fin a) (Af E)))
-    (hU : IsOpen (U : Set (GL (Fin a) (Af E)))) (hw : ∀ w ∉ S, ∀ k ∈ GlobalTheory.LFun.KGL w a, locGL E a w k ∈ U) :
+    (hU : IsOpen (U : Set (GL (Fin a) (Af E)))) (hw : ∀ w ∉ S, ∀ k ∈ GlobalTheory.LFun.KGL w (n := a), locGL E a w k ∈ U) :
     ∃ J : (FractionalIdeal (𝓞 E)⁰ E)ˣ, (∀ v ∈ S, 0 < FractionalIdeal.count E v (J : FractionalIdeal (𝓞 E)⁰ E)) ∧
       (∀ v ∉ S, FractionalIdeal.count E v (J : FractionalIdeal (𝓞 E)⁰ E) = 0) ∧ levelAt a S J ⊆ U := by
   classical
@@ -281,7 +281,7 @@ theorem exists_levelAt_subset (S : Finset (HeightOneSpectrum (𝓞 E))) (U : Sub
       simp
 
 theorem rowGL_mem_KGL {v : HeightOneSpectrum (𝓞 E)} {ℓ : Fin a} {y : Fin a → v.adicCompletion E}
-    (h : ∀ j, Valued.v (y j - if j = ℓ then 1 else 0) < 1) : IsUnit (y ℓ) ∧ rowGL ℓ y ∈ GlobalTheory.LFun.KGL v a := by
+    (h : ∀ j, Valued.v (y j - if j = ℓ then 1 else 0) < 1) : IsUnit (y ℓ) ∧ rowGL ℓ y ∈ GlobalTheory.LFun.KGL v (n := a) := by
   have h1 : Valued.v (y ℓ) = 1 := by
     have := h ℓ
     rw [if_pos rfl] at this
@@ -327,7 +327,7 @@ theorem exists_decomp {ℓ : Fin a} (hℓ : ∀ i, i ≤ ℓ) {S : Finset (Heigh
       g * (infGL E a (rowGL ℓ fun i => pInf E ((Pi.single ℓ 1 ᵥ* g.val) i)))⁻¹ = u * p * finGL E a κ := by
   obtain ⟨u, hu, k, hk, rfl⟩ := hg
   rw [single_vecMul_unip hℓ hu, single_one_vecMul] at hi hf ⊢
-  have hk' : ∀ v ∉ S, compV E a v k ∈ GlobalTheory.LFun.KGL v a := by
+  have hk' : ∀ v ∉ S, compV E a v k ∈ GlobalTheory.LFun.KGL v (n := a) := by
     simpa only [US, Subgroup.mem_iInf, Subgroup.mem_comap] using hk
   have hc : ∀ v (x : GA E a), compV E a v x = GeneralLinearGroup.map (pLoc E v) (GeneralLinearGroup.map (pFin E) x) :=
     fun _ _ => rfl

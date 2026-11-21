@@ -32,7 +32,7 @@ private theorem hasSat_pair {K : Type} [Field K] [NumberField K] (w : HeightOneS
     GlobalTheory.LFun.HasSatGL w (prod₂ (π 0) (π 1)) (S 0 + S 1) := by
   obtain ⟨E⟩ := GlobalTheory.LocGL.nonempty_prod₂_equiv_multiProd (Fin.sum_univ_two d) π
   refine GlobalTheory.PrinSat.hasSatGL_of_equiv E ?_
-  have hKO : ∀ m, GlobalTheory.LFun.KGL w m = KO (w.adicCompletion K) (Fin m) :=
+  have hKO : ∀ m, GlobalTheory.LFun.KGL w (n := m) = KO (w.adicCompletion K) (Fin m) :=
     fun m => (SphCompletion.KO_completion w m).symm
   constructor
   · choose x hx using fun a => (hS a).exists_vec

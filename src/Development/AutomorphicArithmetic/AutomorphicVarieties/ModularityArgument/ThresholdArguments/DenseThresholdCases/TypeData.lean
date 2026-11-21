@@ -179,7 +179,7 @@ theorem UpperTheory.V.Z.Win.T2.typeData_alt :
     refine and_congr_right fun _ => forall_congr' fun s => ?_
     rw [a3 E Ω A w h a ha n χ ho μ hμ G σ hG s]
   obtain ⟨hJK, h1J, hmul, hinv, hne, hKCo, h1KC, hKCJ, hlam1, hst, hfin, hv0m, hv00, hv0e⟩ := cp (w.adicCompletion E) n G
-  have hK : KO (w.adicCompletion E) (Fin n) = GlobalTheory.LFun.KGL w n := SphCompletion.KO_completion w n
+  have hK : KO (w.adicCompletion E) (Fin n) = GlobalTheory.LFun.KGL w (n := n) := SphCompletion.KO_completion w n
   rw [← hK]
   let J : Subgroup ↥(KO (w.adicCompletion E) (Fin n)) :=
     { carrier := {j | (j : GL (Fin n) (w.adicCompletion E)) ∈ G.JSet}

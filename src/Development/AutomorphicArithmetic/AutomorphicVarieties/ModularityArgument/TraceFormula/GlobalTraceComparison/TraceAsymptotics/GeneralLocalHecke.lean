@@ -102,7 +102,7 @@ private theorem blk_zero {n : ℕ} (w : Pl E) (g : GLw n w) (m : GLw 0 w) (X : M
   exact key _ hM
 
 private theorem constant_term_parabolic_average {n : ℕ} (w : Pl E) (hw : IsSplitAt w) (μ : HChar E) (f : ∀ w : Pl E, GLw n w → ℂ) (g : GLw n w) :
-    ct0 μ (Nat.add_zero n) f w (g, 1) = avg fun k : KGL w n => f w ((k : GLw n w)⁻¹ * g * k) := by
+    ct0 μ (Nat.add_zero n) f w (g, 1) = avg fun k : KGL w (n := n) => f w ((k : GLw n w)⁻¹ * g * k) := by
   haveI : Subsingleton (Multiplicative (Matrix (Fin n) (Fin 0) (w.adicCompletion E))) :=
     ⟨fun a b => Multiplicative.toAdd.injective (by ext i j; exact j.elim0)⟩
   have hU : ∀ y : GLw n w, y ∈ UL n w := fun y => by
@@ -130,7 +130,7 @@ theorem trAvg : TrAvg := by
   have hfN : IsHecke N (f w) := ⟨hH.1, fun k hk x => hH.2 k (hNK₀ hk) x⟩
   obtain ⟨hFN, -, -, htr⟩ := GlobalTheory.ConjAvg.conjAvg E n w τ.V τ.ρ N hNo hNK hNn (f w) hfN
   have hct : (fun g => ct0 μ (Nat.add_zero n) f w (g, 1)) =
-      fun g => avg fun k : KGL w n => f w ((k : GLw n w)⁻¹ * g * k) :=
+      fun g => avg fun k : KGL w (n := n) => f w ((k : GLw n w)⁻¹ * g * k) :=
     funext fun g => constant_term_parabolic_average w hw μ f g
   rw [hct, trc_eq τ.ρ _ N hKc hNo hNK hfd _ hFN, trc_eq τ.ρ _ N hKc hNo hNK hfd _ hfN, htr]
 

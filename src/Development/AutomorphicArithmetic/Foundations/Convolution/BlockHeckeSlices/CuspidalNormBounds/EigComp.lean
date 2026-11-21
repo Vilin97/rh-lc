@@ -191,11 +191,11 @@ private theorem exists_form' {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeft
     exact hx y
 
 open GlobalTheory.CuspRep in
-private theorem loc_mem (w : Pl E) {k : GL (Fin n) (w.adicCompletion E)} (hk : k ∈ GlobalTheory.LFun.KGL w n) :
+private theorem loc_mem (w : Pl E) {k : GL (Fin n) (w.adicCompletion E)} (hk : k ∈ GlobalTheory.LFun.KGL w (n := n)) :
     finGL E n (locGL E n w k) ∈ KA E n := by
   rw [← Fb.finEmb_eq]
   refine finEmb_mem_maxCompact ?_
-  have h : ∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) (locGL E n w k) ∈ GlobalTheory.LFun.KGL v n := fun v => by
+  have h : ∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) (locGL E n w k) ∈ GlobalTheory.LFun.KGL v (n := n) := fun v => by
     by_cases h : v = w
     · subst h; rw [pLoc_locGL]; exact hk
     · rw [pLoc_locGL_of_ne h]; exact one_mem _
@@ -236,7 +236,7 @@ theorem UpperTheory.ConvolutionTheory.BW.eigComp :
   have hsat : ∀ w, ∃ B : Multiset ℂˣ, w ∉ S → GlobalTheory.LFun.IsSatVecGL w (rw r w) (Cm.ofCusp E r f) B := fun w => by
     by_cases hw : w ∈ S
     · exact ⟨0, fun h => absurd hw h⟩
-    have hfix : (⟨_, hfπ⟩ : π.V) ∈ GlobalTheory.PRep.fixed (π.locRep w) (GlobalTheory.LFun.KGL w r) := by
+    have hfix : (⟨_, hfπ⟩ : π.V) ∈ GlobalTheory.PRep.fixed (π.locRep w) (GlobalTheory.LFun.KGL w (n := r)) := by
       refine GlobalTheory.LGrp.mem_fixed.2 fun k hk => Subtype.ext (Subtype.ext (funext fun g => ?_))
       have key : ∀ φ : GA E r → ℂ, ∀ g, ((Finsupp.single (⟨_, loc_mem w hk⟩ : KA E r) (1 : ℂ) +
           Finsupp.single 1 (-1)).sum fun k c => c * φ (g * k)) = φ (g * finGL E r (locGL E r w k)) - φ g := fun φ g => by

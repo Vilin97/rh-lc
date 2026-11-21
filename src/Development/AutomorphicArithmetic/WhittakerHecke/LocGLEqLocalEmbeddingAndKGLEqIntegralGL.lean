@@ -13,7 +13,7 @@ open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalS
 theorem UpperTheory.locGL_eq_localEmbedding_and_KGL_eq_integralGL :
     ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) (w : HeightOneSpectrum (𝓞 E)),
           (∀ g, GlobalTheory.CuspRep.locGL E n w g = AdelicGLn.localEmbedding w g) ∧
-          GlobalTheory.LFun.KGL w n = GLnLocal.integralGL (w.adicCompletion E) n := by
+          GlobalTheory.LFun.KGL w (n := n) = GLnLocal.integralGL (w.adicCompletion E) n := by
   intro E _ _ n w
   refine ⟨fun g => ?_, ?_⟩
   · obtain ⟨-, h1, h2, -⟩ := UpperTheory.ConvolutionTheory.Tf.locEmb E n w

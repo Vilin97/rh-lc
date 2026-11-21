@@ -135,13 +135,13 @@ variable {σ J L} {h : w.under (𝓞 F) = v} {ρ : Representation ℂ (GLoc σ J
 theorem IsEigenSys.split (hc : IsEigenSys σ J L h ρ x c) (hx : x ∈ fixed ρ (stabLoc σ J L v))
     {e : GLoc σ J v ≃* GL (Fin n) (w.adicCompletion E)} (he : IsSplitChart σ J L h e) {ϖ : w.adicCompletion E}
     (hϖ : IsUnifV E w ϖ) {j : ℕ} (hj : j ≤ n) :
-    heckeVec (ρ.comp e.symm.toMonoidHom) (KGL w n) (Tj ℂ n (Ov E w) ϖ j) x =
+    heckeVec (ρ.comp e.symm.toMonoidHom) (KGL w (n := n)) (Tj ℂ n (Ov E w) ϖ j) x =
       c (List.replicate j 1 ++ List.replicate (n - j) 0) • x := by
   have h0 : ϖ ≠ 0 := fun h0 => by simp [IsUnifV, h0] at hϖ
   let t : GL (Fin n) (w.adicCompletion E) := Matrix.GeneralLinearGroup.mkOfDetNeZero (diagJ n ϖ j) (by
     rw [diagJ, Matrix.det_diagonal]
     exact Finset.prod_ne_zero_iff.2 fun i _ => by split_ifs <;> simp [h0])
-  have ht : Tj ℂ n (Ov E w) ϖ j = dosetInd ℂ (KGL w n) t := by
+  have ht : Tj ℂ n (Ov E w) ϖ j = dosetInd ℂ (KGL w (n := n)) t := by
     rw [Tj, dosetInd]
     congr 1
     ext g

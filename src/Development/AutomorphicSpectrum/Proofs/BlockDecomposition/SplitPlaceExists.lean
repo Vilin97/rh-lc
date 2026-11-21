@@ -45,7 +45,7 @@ theorem exists_reps {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGrou
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-theorem congSub_conj (w : Pl E) (n m : ℕ) : ∀ k ∈ GlobalTheory.LFun.KGL w n, ∀ k' ∈ GlobalTheory.PrincCong.congSub w n m,
+theorem congSub_conj (w : Pl E) (n m : ℕ) : ∀ k ∈ GlobalTheory.LFun.KGL w (n := n), ∀ k' ∈ GlobalTheory.PrincCong.congSub w n m,
     k * k' * k⁻¹ ∈ GlobalTheory.PrincCong.congSub w n m := by
   rintro _ ⟨h, rfl⟩ _ ⟨h', hh', rfl⟩
   refine ⟨h * h' * h⁻¹, ?_, by simp⟩
@@ -61,7 +61,7 @@ theorem continuous_det (w : Pl E) (b : ℕ) :
 
 theorem isLevel_lev (w : Pl E) (hw : IsSplitAt w) (μ : (w.adicCompletion E)ˣ →* ℂˣ)
     (hμ : IsOpen (μ.ker : Set (w.adicCompletion E)ˣ)) (m b : ℕ) :
-    GlobalTheory.BCT.IsLevel (thL b w) (GlobalTheory.LFun.KGL w b) (lev w μ m b) := by
+    GlobalTheory.BCT.IsLevel (thL b w) (GlobalTheory.LFun.KGL w (n := b)) (lev w μ m b) := by
   refine ⟨?_, fun g hg => ((GlobalTheory.PrincCong.mem_congSub_iff w b m g).1 hg.1).1, fun k hk => ?_⟩
   · exact (GlobalTheory.PrincCong.isOpen_congSub w b m).inter (hμ.preimage (continuous_det w b))
   · have ht : thL b w = MonoidHom.id _ := by unfold thL; rw [if_pos hw]
@@ -104,11 +104,11 @@ theorem splitEx : SplitEx := by
   intro E _ _ _ n w hw μ hμ m hm KB hKB
   have hKc := (GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL (E := E) w n).2
   have ho := GlobalTheory.PrincCong.isOpen_congSub w n m
-  have hle : GlobalTheory.PrincCong.congSub w n m ≤ GlobalTheory.LFun.KGL w n :=
+  have hle : GlobalTheory.PrincCong.congSub w n m ≤ GlobalTheory.LFun.KGL w (n := n) :=
     fun g hg => ((GlobalTheory.PrincCong.mem_congSub_iff w n m g).1 hg).1
   have hcl : IsClosed (GlobalTheory.PrincCong.congSub w n m : Set (GLw n w)) := Subgroup.isClosed_of_isOpen _ ho
   have hc : IsCompact (GlobalTheory.PrincCong.congSub w n m : Set (GLw n w)) := hKc.of_isClosed_subset hcl hle
-  obtain ⟨X, hX, hXu⟩ := exists_reps (GlobalTheory.LFun.KGL w n) (GlobalTheory.PrincCong.congSub w n m) hKc ho
+  obtain ⟨X, hX, hXu⟩ := exists_reps (GlobalTheory.LFun.KGL w (n := n)) (GlobalTheory.PrincCong.congSub w n m) hKc ho
   refine ⟨GlobalTheory.PrincCong.congSub w n m, X, (GlobalTheory.PrincCong.congSub w n m : Set (GLw n w)).indicator 1,
     fun a => (lev w μ m a).prod (lev w μ m (n - a)), ?_, ho, hle, congSub_conj w n m, hX, hXu, ?_, ?_⟩
   · ext k

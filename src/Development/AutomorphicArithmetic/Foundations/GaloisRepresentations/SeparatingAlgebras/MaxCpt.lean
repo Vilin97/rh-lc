@@ -77,4 +77,4 @@ theorem UpperTheory.Gal.Gen.maxCpt_pf :
     rw [Cartan.coe_diagPow, hμ]
     simp
   rw [hone, mul_one]
-  exact (GlobalTheory.LFun.KGL w a).mul_mem hk₁ hk₂
+  exact (GlobalTheory.LFun.KGL w (n := a)).mul_mem hk₁ hk₂

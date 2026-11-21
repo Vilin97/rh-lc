@@ -124,15 +124,15 @@ def chW {n : ℕ} (lam : InfinitePlace E → DomWeight n) (P : E[X]) : ℂ :=
   ∏ v : InfinitePlace E, (starRingEnd ℂ) (chAt (lam v) (P.map v.embedding))
 
 def stTw (n : ℕ) (w : Pl E) (Q : (w.adicCompletion E)[X]) (φ : GLw n w → ℂ) : ℂ :=
-  clSum (thL n w) (GlobalTheory.LFun.KGL w n) {y | (nrmL n w y).val.charpoly = Q} 1 φ
+  clSum (thL n w) (GlobalTheory.LFun.KGL w (n := n)) {y | (nrmL n w y).val.charpoly = Q} 1 φ
 
 def stTw2 (a b : ℕ) (w : Pl E) (Q₁ Q₂ : (w.adicCompletion E)[X]) (φ : GLw a w × GLw b w → ℂ) : ℂ :=
-  clSum ((thL a w).prodMap (thL b w)) ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b))
+  clSum ((thL a w).prodMap (thL b w)) ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)))
     {y | (nrmL a w y.1).val.charpoly = Q₁ ∧ (nrmL b w y.2).val.charpoly = Q₂} 1 φ
 
 def UL (n : ℕ) (w : Pl E) : Subgroup (GLw n w) := if IsSplitAt w then ⊤ else UJ (cj w) 1
 
-def KL (n : ℕ) (w : Pl E) : Subgroup (UL n w) := (GlobalTheory.LFun.KGL w n).subgroupOf (UL n w)
+def KL (n : ℕ) (w : Pl E) : Subgroup (UL n w) := (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (UL n w)
 
 def kapSign (n : ℕ) (w : Pl E) (Q₁ : (w.adicCompletion E)[X]) (γ : GLw n w) : ℂ :=
   if IsSplitAt w then 1 else
@@ -160,8 +160,8 @@ structure Term (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) : Ty
   bij : ∀ w, Function.Bijective (A w)
   split : ∀ w, IsSplitAt w → A w = LinearMap.id
   inter : ∀ w g, A w ∘ₗ (P w).ρ g = (P w).ρ (thL n w g) ∘ₗ A w
-  unit : ∀ᶠ w in cofinite, twTr (P w).ρ (GlobalTheory.LFun.KGL w n) (GlobalTheory.LFun.KGL w n)
-    ((GlobalTheory.LFun.KGL w n : Set (GLw n w)).indicator 1) (A w) = 1
+  unit : ∀ᶠ w in cofinite, twTr (P w).ρ (GlobalTheory.LFun.KGL w (n := n)) (GlobalTheory.LFun.KGL w (n := n))
+    ((GlobalTheory.LFun.KGL w (n := n) : Set (GLw n w)).indicator 1) (A w) = 1
 
 variable {n : ℕ}
 
@@ -185,7 +185,7 @@ def Unr (E : Type) [Field E] [NumberField E] [IsCMField E] : Prop :=
 
 def spec {ι : Type} [Fintype ι] (S : Set (Pl E)) (t : ι → Term E n) (C : ι → ℂ) (K' : ∀ w : Pl E, Subgroup (GLw n w))
     (φ : ∀ w : Pl E, GLw n w → ℂ) : ℂ :=
-  ∑ i, C i * ∏ᶠ w ∈ S, twTr ((t i).rep w) (GlobalTheory.LFun.KGL w n) (K' w) (φ w) ((t i).A w)
+  ∑ i, C i * ∏ᶠ w ∈ S, twTr ((t i).rep w) (GlobalTheory.LFun.KGL w (n := n)) (K' w) (φ w) ((t i).A w)
 
 def IsCompU (π : Submodule ℂ (UA E n → ℂ)) (w : Pl E) (σ : SmIrr (UL n w)) : Prop :=
   ∃ p : locU n w →* UL n w, (∀ x, (p x).1 = cLoc w x.1) ∧ IsCompAlong π (locU n w) p σ.ρ
@@ -229,7 +229,7 @@ def Match (n a b : ℕ) (w : Pl E) (μ : (w.adicCompletion E)ˣ →* ℂˣ) (f :
 
 def HasTransfer (n : ℕ) (w : Pl E) : Prop :=
   ∀ U : Subgroup (UL n w), IsOpen (U : Set (UL n w)) → ∃ K' ≤ U, IsLevel (MonoidHom.id _) (KL n w) K' ∧
-    ∀ a b, a + b = n → ∃ K₁ K₂ φ, IsLevel (thL a w) (GlobalTheory.LFun.KGL w a) K₁ ∧ IsLevel (thL b w) (GlobalTheory.LFun.KGL w b) K₂ ∧
+    ∀ a b, a + b = n → ∃ K₁ K₂ φ, IsLevel (thL a w) (GlobalTheory.LFun.KGL w (n := a)) K₁ ∧ IsLevel (thL b w) (GlobalTheory.LFun.KGL w (n := b)) K₂ ∧
       IsHecke (K₁.prod K₂) φ ∧ Match n a b w 1 ((K' : Set (UL n w)).indicator 1) φ
 
 def HasBC (π : Submodule ℂ (UA E n → ℂ)) : Prop :=

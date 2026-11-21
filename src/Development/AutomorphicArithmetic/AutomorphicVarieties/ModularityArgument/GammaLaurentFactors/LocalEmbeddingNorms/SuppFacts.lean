@@ -79,9 +79,9 @@ private theorem exists_fixed {π : CuspSub K n} {v : HeightOneSpectrum (𝓞 K)}
     (hσ : π.IsLocComp v σ) {B : Multiset ℂˣ} (hB : (CG.mk π).HasSat v B) :
     ∃ y : σ.V, y ≠ 0 ∧ ∀ g ∈ KO (v.adicCompletion K) (Fin n), σ.ρ g y = y := by
   obtain ⟨x, hx, hx0⟩ := (Submodule.ne_bot_iff _).1 ((CG.hasSat_mk π v B).1 hB).1
-  rw [show KO (v.adicCompletion K) (Fin n) = GlobalTheory.LFun.KGL v n from SphCompletion.KO_completion v n]
+  rw [show KO (v.adicCompletion K) (Fin n) = GlobalTheory.LFun.KGL v (n := n) from SphCompletion.KO_completion v n]
   exact LocSph.exists_fixed_of_mem_iSup ((finRep K n).comp (locGL K n v)) σ.ρ σ.irred
-    (fun f : LocSph.Maps π v σ => f.1) (fun f => f.2.2) (GlobalTheory.LFun.KGL v n : Set _) x.1 (fun e => hx0 (Subtype.ext e))
+    (fun f : LocSph.Maps π v σ => f.1) (fun f => f.2.2) (GlobalTheory.LFun.KGL v (n := n) : Set _) x.1 (fun e => hx0 (Subtype.ext e))
     (fun g hg => congrArg Subtype.val (GlobalTheory.LGrp.mem_fixed.1 hx g hg))
     ((LocSph.iSup_range_eq π v σ hσ).symm ▸ x.2)
 

@@ -123,7 +123,7 @@ theorem fixed_ne_bot_of_fix {U : Submodule ℂ (UA E a → ℂ)} (hU : IsAutRepU
   exact this
 
 theorem KGL_le_map {w : HeightOneSpectrum (𝓞 E)} (hw : IsSplitAt w) :
-    GlobalTheory.LFun.KGL w a ≤ (intU a w).map (cLoc w) := by
+    GlobalTheory.LFun.KGL w (n := a) ≤ (intU a w).map (cLoc w) := by
   obtain ⟨e, he⟩ := GlobalTheory.locU_equiv_GL E a w hw
   intro g hg
   have h1 : cLoc w ((e.symm g : locU a w) : UA E a) = g := by rw [← he, e.apply_symm_apply]

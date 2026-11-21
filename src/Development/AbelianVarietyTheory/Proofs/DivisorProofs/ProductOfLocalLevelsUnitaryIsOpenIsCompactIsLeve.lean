@@ -21,8 +21,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 
 theorem mem_KGL_iff_val (w : Pl E) (g : GLw n w) :
-    g ∈ GlobalTheory.LFun.KGL w n ↔ (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1 := by
-  have hO : GLnLocal.integralGL (w.adicCompletion E) n = GlobalTheory.LFun.KGL w n := by
+    g ∈ GlobalTheory.LFun.KGL w (n := n) ↔ (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1 := by
+  have hO : GLnLocal.integralGL (w.adicCompletion E) n = GlobalTheory.LFun.KGL w (n := n) := by
     have h : (ValuativeRel.valuation (w.adicCompletion E)).integer = Formalism.UG.Ov E w :=
       Subring.ext fun x => GroundTheory.Global.mem_valuationInteger_iff w x
     rw [GlobalTheory.LFun.KGL, ← h]; rfl
@@ -75,8 +75,8 @@ theorem val_inv_entry (x : UA E n) (u : Pl E) (i j : Fin n) :
   rw [e]
   exact (conjLoc_spec (conjE E) u).2.2 _
 
-theorem integral_conjSrc (x : UA E n) (u : Pl E) (h : cLoc u x ∈ GlobalTheory.LFun.KGL u n) :
-    cLoc (conjSrc (conjE E) u) x ∈ GlobalTheory.LFun.KGL (conjSrc (conjE E) u) n := by
+theorem integral_conjSrc (x : UA E n) (u : Pl E) (h : cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n)) :
+    cLoc (conjSrc (conjE E) u) x ∈ GlobalTheory.LFun.KGL (conjSrc (conjE E) u) (n := n) := by
   rw [mem_KGL_iff_val] at h ⊢
   refine ⟨fun i j => (val_inv_entry x u j i) ▸ h.2 j i, fun i j => ?_⟩
   have h2 := val_inv_entry x⁻¹ u j i
@@ -102,7 +102,7 @@ theorem continuous_finPart : Continuous (finPart E n) :=
 theorem globLev_KL_eq {S : Set (Pl E)} (hS : IsSection S) :
     globLev S (KL n) = (AdelicGLn.integralFiniteGL E n).comap (finPart E n) := by
   ext k
-  have e : k ∈ (AdelicGLn.integralFiniteGL E n).comap (finPart E n) ↔ ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u n := by
+  have e : k ∈ (AdelicGLn.integralFiniteGL E n).comap (finPart E n) ↔ ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := n) := by
     rw [Subgroup.mem_comap, AdelicGLn.mem_integralFiniteGL_iff, ← map_inv]
     simp only [mem_KGL_iff_val, ← map_inv, GroundTheory.Global.mem_integralFiniteAdeles]
     exact ⟨fun h u => ⟨fun i j => h.1 i j u, fun i j => h.2 i j u⟩,

@@ -58,7 +58,7 @@ theorem UpperTheory.V.Z.Kato.WeilSphericalRecords.local_k_of_printed_rec_compat_
   have hlev : IsLevelWD 1 2 (rc (algNorm σ)) := by
     rw [← hwd]
     exact _root_.UpperTheory.V.Af.weil_deligne_above_of_printed_results P K Ω l hl ι 2 1 le_rfl m r hc w A hA _ Bw hj κ hfa hpst (Or.inl hor)
-  have hK : HasFixed σ.ρ (GlobalTheory.LFun.KGL w 2) := hSph K Ω A w hA rc hrc 2 σ hpl hlev
+  have hK : HasFixed σ.ρ (GlobalTheory.LFun.KGL w (n := 2)) := hSph K Ω A w hA rc hrc 2 σ hpl hlev
   have hsat := _root_.UpperTheory.V.Af.satake_local_of_printed_results P K 2 w σ
   refine ⟨?_, fun B hBs τ hτ => ?_⟩
   · obtain ⟨B, hB'⟩ := hsat.1 hK

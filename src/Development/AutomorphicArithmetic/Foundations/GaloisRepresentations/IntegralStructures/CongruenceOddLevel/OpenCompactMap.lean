@@ -61,7 +61,7 @@ theorem exists_locLev {U : Submodule ℂ (UA E a → ℂ)} (hU : IsAutRepU U) (w
   · filter_upwards [GlobalTheory.T.autForm_fixed_by_integralPoints_almostAllPlaces E a φ₀ hφ₀aut] with w hw
     exact hint w ⟨φ₀, hφ₀U, hφ₀0, hw⟩
 
-theorem map_intU {w : HeightOneSpectrum (𝓞 E)} (hw : IsSplitAt w) : (intU a w).map (cLoc w) = GlobalTheory.LFun.KGL w a := by
+theorem map_intU {w : HeightOneSpectrum (𝓞 E)} (hw : IsSplitAt w) : (intU a w).map (cLoc w) = GlobalTheory.LFun.KGL w (n := a) := by
   refine le_antisymm ?_ (KGL_le_map hw)
   rintro _ ⟨x, hx, rfl⟩
   exact (mem_intU.1 hx).2 w (not_apart_self w)
@@ -82,11 +82,11 @@ theorem exists_level {T : Finset (HeightOneSpectrum (𝓞 E))} {U : Submodule �
     {w₀ v' : HeightOneSpectrum (𝓞 E)} (hw₀ : IsSplitAt w₀) (hv' : IsSplitAt v') (hap : Apart v' w₀) :
     ∃ (K : Subgroup (UA E a)) (Kw : Levels E a) (Kv : Subgroup (GL (Fin a) (v'.adicCompletion E))),
       IsLevelAway w₀ K ∧ IsOpen (Kv : Set (GL (Fin a) (v'.adicCompletion E))) ∧
-      (∃ φ ∈ U, φ ≠ 0 ∧ ∀ x ∈ K ⊓ Kv.comap (cLoc v'), RU E a x φ = φ) ∧ Kw v' = GlobalTheory.LFun.KGL v' a ∧
+      (∃ φ ∈ U, φ ≠ 0 ∧ ∀ x ∈ K ⊓ Kv.comap (cLoc v'), RU E a x φ = φ) ∧ Kw v' = GlobalTheory.LFun.KGL v' (n := a) ∧
       (∀ w, IsSplitAt w → Apart w w₀ → IsOpen (Kw w : Set (GL (Fin a) (w.adicCompletion E))) ∧
         IsCompact (Kw w : Set (GL (Fin a) (w.adicCompletion E)))) ∧
-      (∀ w, IsSplitAt w → Apart w v' → (∃ B, SatU U w B) → Kw w = GlobalTheory.LFun.KGL w a) ∧
-      (∀ w, ¬ IsSplitAt w → w ∉ T → ∀ x ∈ locU a w, cLoc w x ∈ GlobalTheory.LFun.KGL w a → x ∈ K) ∧
+      (∀ w, IsSplitAt w → Apart w v' → (∃ B, SatU U w B) → Kw w = GlobalTheory.LFun.KGL w (n := a)) ∧
+      (∀ w, ¬ IsSplitAt w → w ∉ T → ∀ x ∈ locU a w, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := a) → x ∈ K) ∧
       ∀ w, IsSplitAt w → Apart w w₀ → ∀ x ∈ locU a w, x ∈ K ↔ cLoc w x ∈ Kw w := by
   classical
   obtain ⟨H, hleI, hopen, hfib, hfix, hint, hae⟩ := exists_locLev hU.1 w₀

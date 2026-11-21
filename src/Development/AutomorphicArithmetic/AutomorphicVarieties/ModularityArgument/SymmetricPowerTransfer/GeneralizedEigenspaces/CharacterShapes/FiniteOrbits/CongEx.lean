@@ -19,7 +19,7 @@ namespace UpperTheory.V.Z.Sym.So.CongruenceExistence
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
-private theorem memK {w : Plc L} (h : GL (Fin n) (Kw w)) : h ∈ GlobalTheory.LFun.KGL w n ↔
+private theorem memK {w : Plc L} (h : GL (Fin n) (Kw w)) : h ∈ GlobalTheory.LFun.KGL w (n := n) ↔
     (∀ i j, h.1 i j ∈ w.adicCompletionIntegers L) ∧ ∀ i j, (h⁻¹).1 i j ∈ w.adicCompletionIntegers L := by
   rw [GlobalTheory.LFun.KGL, GlobalTheory.AdelicU.mem_GLint_iff]; rfl
 
@@ -56,7 +56,7 @@ private theorem mem_iff {m : ℕ} (hm : m ≠ 0) (x : UA L n) :
       refine ⟨pLoc L w y, memO.1 hy w, ?_⟩
       rw [hd, show (fp x).1 i j - (1 : Matrix (Fin n) (Fin n) (Af L)) i j = (m : Af L) * y from e, map_mul, map_natCast]
   · rintro ⟨⟨hf, hK⟩, hc⟩
-    have hK' : ∀ w : Plc L, cLoc w x ∈ GlobalTheory.LFun.KGL w n := fun w => Subgroup.mem_iInf.1 hK w
+    have hK' : ∀ w : Plc L, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) := fun w => Subgroup.mem_iInf.1 hK w
     have hm' : (m : L) ≠ 0 := Nat.cast_ne_zero.2 hm
     set u : Af L := algebraMap L (Af L) (m : L)⁻¹ with hu'
     have hu : u * (m : Af L) = 1 := by
@@ -101,7 +101,7 @@ private def el {w : Plc L} {i j : Fin n} (h : i ≠ j) : GL (Fin n) (Kw w) :=
     by rw [Matrix.transvection_mul_transvection_same _ _ h]; simp,
     by rw [Matrix.transvection_mul_transvection_same _ _ h]; simp⟩
 
-private theorem el_mem {w : Plc L} {i j : Fin n} (h : i ≠ j) : el (w := w) h ∈ GlobalTheory.LFun.KGL w n :=
+private theorem el_mem {w : Plc L} {i j : Fin n} (h : i ≠ j) : el (w := w) h ∈ GlobalTheory.LFun.KGL w (n := n) :=
   (memK _).2 ⟨fun a b => trans_int (one_mem _) a b, fun a b => trans_int (neg_mem (one_mem _)) a b⟩
 
 private theorem last {m : ℕ} (hn : 2 ≤ n) (w : Plc L) (hw : IsSplitAt w)

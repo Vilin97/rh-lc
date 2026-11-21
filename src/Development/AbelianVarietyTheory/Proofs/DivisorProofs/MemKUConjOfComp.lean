@@ -37,8 +37,8 @@ theorem map_thF (u : Pl E) (g : GL (Fin n) (FiniteAdeleRing (𝓞 E) E)) :
   rw [h, thAt_apply, map_mul, map_pow, map_neg, map_one, pLoc_conjFin]
   rfl
 
-theorem mem_KGL_of_thAt (u : Pl E) (k : GLw n (cPl E u)) (hk : thAt u k ∈ GlobalTheory.LFun.KGL u n) :
-    k ∈ GlobalTheory.LFun.KGL (cPl E u) n := by
+theorem mem_KGL_of_thAt (u : Pl E) (k : GLw n (cPl E u)) (hk : thAt u k ∈ GlobalTheory.LFun.KGL u (n := n)) :
+    k ∈ GlobalTheory.LFun.KGL (cPl E u) (n := n) := by
   have hv : ∀ (h : GLw n (cPl E u)) (i j : Fin n),
       Valued.v ((thAt u h).val i j) = Valued.v ((h⁻¹).val j.rev i.rev) := by
     intro h i j

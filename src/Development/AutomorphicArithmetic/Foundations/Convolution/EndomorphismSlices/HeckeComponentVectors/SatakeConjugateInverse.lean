@@ -61,8 +61,8 @@ private theorem satake_conjugate_inverse {a b : ℕ} (x : Pl E) {G : H E a b →
       simp
     rw [e] at h
     exact h
-  · show g ∈ (KGL (cw x) a).prod (KGL (cw x) b) ↔
-      ((fx x a).prodCongr (fx x b)).symm g ∈ (KGL x a).prod (KGL x b)
+  · show g ∈ (KGL (cw x) (n := a)).prod (KGL (cw x) (n := b)) ↔
+      ((fx x a).prodCongr (fx x b)).symm g ∈ (KGL x (n := a)).prod (KGL x (n := b))
     rw [Subgroup.mem_prod, Subgroup.mem_prod]
     have h1 := mem_fx_iff x a ((fx x a).symm g.1)
     have h2 := mem_fx_iff x b ((fx x b).symm g.2)

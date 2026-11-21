@@ -111,7 +111,7 @@ theorem UpperTheory.V.Z.Sym.Al.factor :
         (∀ x ∈ locU n w, ∀ y ∈ away n w, x * y = y * x) ∧
         (∀ g : UA L n, ∃ x ∈ locU n w, ∃ y ∈ away n w, g = x * y) ∧
         (∀ w' : Plc L, w'.under (𝓞 (Lp L)) ≠ w.under (𝓞 (Lp L)) → locU n w' ≤ away n w) ∧ infU L n ≤ away n w ∧
-        (∀ x ∈ locU n w, x ∈ Kall L n ↔ cLoc w x ∈ GlobalTheory.LFun.KGL w n) ∧
+        (∀ x ∈ locU n w, x ∈ Kall L n ↔ cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n)) ∧
         ∀ x ∈ locU n w, ∀ y ∈ away n w, (x * y ∈ Kall L n ↔ x ∈ Kall L n ∧ y ∈ Kall L n) := by
   intro L _ _ _ n w
   have hfin : ∀ {x : UA L n}, x ∈ locU n w → cInf x = 1 := fun hx => (Subgroup.mem_inf.1 hx).1
@@ -124,9 +124,9 @@ theorem UpperTheory.V.Z.Sym.Al.factor :
   have haway : ∀ {y : UA L n}, (∀ u : Plc L, u.under (𝓞 (Lp L)) = w.under (𝓞 (Lp L)) → cLoc u y = 1) →
       y ∈ away n w := fun h =>
     Subgroup.mem_iInf.2 fun u => Subgroup.mem_iInf.2 fun hu => MonoidHom.mem_ker.2 (h u hu)
-  have hK : ∀ {x : UA L n}, x ∈ Kall L n → ∀ u : Plc L, cLoc u x ∈ GlobalTheory.LFun.KGL u n := fun hx u =>
+  have hK : ∀ {x : UA L n}, x ∈ Kall L n → ∀ u : Plc L, cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n) := fun hx u =>
     Subgroup.mem_comap.1 (Subgroup.mem_iInf.1 (Subgroup.mem_inf.1 hx).2 u)
-  have hKmk : ∀ {x : UA L n}, x ∈ finU L n → (∀ u : Plc L, cLoc u x ∈ GlobalTheory.LFun.KGL u n) → x ∈ Kall L n :=
+  have hKmk : ∀ {x : UA L n}, x ∈ finU L n → (∀ u : Plc L, cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n)) → x ∈ Kall L n :=
     fun h1 h2 => Subgroup.mem_inf.2 ⟨h1, Subgroup.mem_iInf.2 fun u => Subgroup.mem_comap.2 (h2 u)⟩
   have hKf : ∀ {x : UA L n}, x ∈ Kall L n → x ∈ finU L n := fun hx => (Subgroup.mem_inf.1 hx).1
   refine ⟨fun x hx y hy => ?_, fun g => ?_, fun w' hw' x hx => ?_, fun x hx => ?_, fun x hx => ⟨fun h => hK h w, fun h => ?_⟩,

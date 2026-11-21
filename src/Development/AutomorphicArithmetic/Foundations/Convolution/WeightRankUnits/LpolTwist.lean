@@ -62,7 +62,7 @@ theorem UpperTheory.ConvolutionTheory.G2.stAA :
     GlobalTheory.BCT.ThBasic.charpoly_nrmL hU b w δ₂
   unfold stTw2 clSum
   refine UpperTheory.ConvolutionTheory.G2.sum_one ((thL a w).prodMap (thL b w)) _
-    (fun y => twOrb ((thL a w).prodMap (thL b w)) ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b)) y
+    (fun y => twOrb ((thL a w).prodMap (thL b w)) ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))) y
       (UpperTheory.ConvolutionTheory.G2.unit2 a b w)) (locEl a w δ₁, locEl b w δ₂) ?_ ?_
   · rintro ⟨k₁, k₂⟩
     exact ⟨(UpperTheory.ConvolutionTheory.G2.lpol_twist hU a w k₁ _).trans l₁, (UpperTheory.ConvolutionTheory.G2.lpol_twist hU b w k₂ _).trans l₂⟩

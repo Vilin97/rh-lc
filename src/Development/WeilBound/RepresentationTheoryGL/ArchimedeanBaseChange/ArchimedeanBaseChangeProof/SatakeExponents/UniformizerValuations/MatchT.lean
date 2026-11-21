@@ -23,7 +23,7 @@ open Formalism.UG (ordL)
 
 def lone2 (a b : ℕ) (w : Pl E) : GLw a w × GLw b w → ℂ :=
   (((iwGL a w).prod (iwGL b w) : Subgroup (GLw a w × GLw b w)) : Set (GLw a w × GLw b w)).indicator
-    fun _ => ((((iwGL a w).prod (iwGL b w)).relIndex ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b)) : ℕ) : ℂ)
+    fun _ => ((((iwGL a w).prod (iwGL b w)).relIndex ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))) : ℕ) : ℂ)
 
 def mpow (w : Pl E) (f : GLw a w × GLw b w → ℂ) : ℕ → GLw a w × GLw b w → ℂ
   | 0 => lone2 a b w
@@ -41,8 +41,8 @@ def entT (n : ℕ) (w : Pl E) (ϖ : (w.adicCompletion E)ˣ) (a : ℕ) {J : Type}
   else 0
 
 def cR (n a : ℕ) (w : Pl E) (b : GLw n w) : ℂ :=
-  (((iwU n w b).relIndex (KL n w) : ℕ) : ℂ)⁻¹ * ((iwGL a w).relIndex (GlobalTheory.LFun.KGL w a) : ℕ) *
-    ((iwGL (n - a) w).relIndex (GlobalTheory.LFun.KGL w (n - a)) : ℕ)
+  (((iwU n w b).relIndex (KL n w) : ℕ) : ℂ)⁻¹ * ((iwGL a w).relIndex (GlobalTheory.LFun.KGL w (n := a)) : ℕ) *
+    ((iwGL (n - a) w).relIndex (GlobalTheory.LFun.KGL w (n := (n - a))) : ℕ)
 
 def MatchT : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
@@ -62,7 +62,7 @@ def DcosMul : Prop :=
     ∀ (a b : ℕ) (x x' : Fin a → ℤ) (y y' : Fin b → ℤ), Antitone x → Antitone x' → Antitone y → Antitone y' →
       mconv (fun m : GLw a w × GLw b w => dcos a w (tdiag ϖ x) m.1 * dcos b w (tdiag ϖ y) m.2)
         (fun m => dcos a w (tdiag ϖ x') m.1 * dcos b w (tdiag ϖ y') m.2) =
-      fun m => ((((iwGL a w).prod (iwGL b w)).relIndex ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b)) : ℕ) : ℂ)⁻¹ *
+      fun m => ((((iwGL a w).prod (iwGL b w)).relIndex ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))) : ℕ) : ℂ)⁻¹ *
         (dcos a w (tdiag ϖ (x + x')) m.1 * dcos b w (tdiag ϖ (y + y')) m.2)
 
 def MatchLin : Prop :=

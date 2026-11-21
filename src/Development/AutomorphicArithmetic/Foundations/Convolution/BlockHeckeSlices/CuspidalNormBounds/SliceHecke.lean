@@ -32,7 +32,7 @@ private theorem zt_add (t v : ℝ) : zt E r (t + v) = zt E r t * zt E r v := by
 private theorem zt_comm (t : ℝ) (g : GA E r) : zt E r t * g = g * zt E r t := centralSection_mul_comm _ g
 
 private theorem tset_rel {w : Pl E} {ϖ : w.adicCompletion E} {a : ℕ} {x x' : GL (Fin r) (w.adicCompletion E)}
-    (h : x ∈ satakeTset w ϖ a) (h' : x' ∈ satakeTset w ϖ a) : ∃ k ∈ KGL w r, ∃ k' ∈ KGL w r, x' = k * x * k' := by
+    (h : x ∈ satakeTset w ϖ a) (h' : x' ∈ satakeTset w ϖ a) : ∃ k ∈ KGL w (n := r), ∃ k' ∈ KGL w (n := r), x' = k * x * k' := by
   obtain ⟨k₁, h₁, k₂, h₂, e⟩ := h
   obtain ⟨l₁, g₁, l₂, g₂, e'⟩ := h'
   refine ⟨l₁ * k₁⁻¹, mul_mem g₁ (inv_mem h₁), k₂⁻¹ * l₂, mul_mem (inv_mem h₂) g₂, Units.ext ?_⟩
@@ -80,7 +80,7 @@ private theorem move (b : Blo S r) {w : Pl E} {ϖ : w.adicCompletion E} (hu : Is
 
 private theorem kappa (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicCompletion E} (hu : IsUnifV E w ϖ) {a : ℕ}
     (ha : a ≤ r) : ∃ κ : ℂ, ∀ Φ : GA E r → ℂ, AutomorphicForm.IsLeftInvariant Φ →
-    (∀ k ∈ KGL w r, ∀ g, Φ (g * finGL E r (locGL E r w k)) = Φ g) →
+    (∀ k ∈ KGL w (n := r), ∀ g, Φ (g * finGL E r (locGL E r w k)) = Φ g) →
     (∀ g : GA E r, Integrable (fun y : RightCosetSpace (rationalGLOne E r) =>
       Φ (((Quotient.out y : normOneGL E r) : GA E r) * g) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r)))
       (quotientMeasure (rationalGLOne E r) (mu1 E r))) → ∀ t : ℝ, ∀ x ∈ satakeTset (n := r) w ϖ a,
@@ -91,7 +91,7 @@ private theorem kappa (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicComple
         ((Quotient.out y : normOneGL E r) : GA E r)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))
         ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
   obtain ⟨n, c, μ, hn, hc, hs⟩ := UpperTheory.exists_satakeTset_sum_eigenvector E w r a ϖ hu ha _ (rw r w) b.f _ (b.isSat w hw)
-  have hf : ∀ k ∈ KGL w r, ∀ g, b.f.1 (g * finGL E r (locGL E r w k)) = b.f.1 g := fun k hk g =>
+  have hf : ∀ k ∈ KGL w (n := r), ∀ g, b.f.1 (g * finGL E r (locGL E r w k)) = b.f.1 g := fun k hk g =>
     congrFun (congrArg Subtype.val (GlobalTheory.LGrp.mem_fixed.1 (b.isSat w hw).2.1 k hk)) g
   have hs' : ∀ g, ∑ i, b.f.1 (g * finGL E r (locGL E r w (c i))) = μ * b.f.1 g := fun g => by
     have := congrFun (congrArg Subtype.val hs) g
@@ -127,7 +127,7 @@ private theorem kappa (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicComple
 
 private theorem adj (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicCompletion E} (hϖ : ϖ ∈ Ov E w) (hu : IsUnifV E w ϖ)
     [Fintype (satakeRes (Ov E w) ⟨ϖ, hϖ⟩)] {a : ℕ} (ha : a ≤ r) (Φ : GA E r → ℂ) (hΦ : AutomorphicForm.IsLeftInvariant Φ)
-    (hK : ∀ k ∈ KGL w r, ∀ g, Φ (g * finGL E r (locGL E r w k)) = Φ g)
+    (hK : ∀ k ∈ KGL w (n := r), ∀ g, Φ (g * finGL E r (locGL E r w k)) = Φ g)
     (hI : ∀ g : GA E r, Integrable (fun y : RightCosetSpace (rationalGLOne E r) =>
       Φ (((Quotient.out y : normOneGL E r) : GA E r) * g) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r)))
       (quotientMeasure (rationalGLOne E r) (mu1 E r))) (t : ℝ) :
@@ -140,7 +140,7 @@ private theorem adj (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicCompleti
   obtain ⟨κ, hκ⟩ := kappa b hw hu ha
   obtain ⟨hi, h0⟩ := UpperTheory.integrable_translate_mul_conj_and_inner_self_ne_zero E S r b
   obtain ⟨-, hfix, -, heig⟩ := b.isSat w hw
-  have hf : ∀ k ∈ KGL w r, ∀ g, b.f.1 (g * finGL E r (locGL E r w k)) = b.f.1 g := fun k hk g =>
+  have hf : ∀ k ∈ KGL w (n := r), ∀ g, b.f.1 (g * finGL E r (locGL E r w k)) = b.f.1 g := fun k hk g =>
     congrFun (congrArg Subtype.val (GlobalTheory.LGrp.mem_fixed.1 hfix k hk)) g
   have hs : ∀ g, ∑ i : SatakeIdx w hϖ (n := r) a, b.f.1 (g * finGL E r (locGL E r w (satakeB w hϖ hu i))) =
       satEig (qV E w) r (b.sat w) a * b.f.1 g := fun g => by
@@ -186,7 +186,7 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceHecke :
   letI : Fintype (satakeRes (Ov E w) ⟨_, hϖ⟩) := Fintype.ofFinite _
   have hq : (qV E w : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (qV_ne_zero w)
   obtain ⟨F, hF, -, hL, -⟩ := ctOps E r s φ hU
-  have hψS : ∀ v, ψ v ∈ GlobalTheory.PRep.fixed (rw s w) (KGL w s) := fun v => by
+  have hψS : ∀ v, ψ v ∈ GlobalTheory.PRep.fixed (rw s w) (KGL w (n := s)) := fun v => by
     obtain ⟨ψ', h1, -, -, -, h2, -⟩ := sliceUmg E S r s b v φ hU
     rw [Subtype.ext ((hψ v).trans h1.symm)]
     exact GlobalTheory.LGrp.mem_fixed.2 (h2 hS w hw)
@@ -195,7 +195,7 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceHecke :
     have := hL (γ, 1) (lev (Ad E) r s (g, m))
     rw [← map_mul, hF, map_one, Prod.mk_mul_mk, one_mul] at this
     exact this
-  have hK : ∀ m : GA E s, ∀ k ∈ KGL w r, ∀ g : GA E r,
+  have hK : ∀ m : GA E s, ∀ k ∈ KGL w (n := r), ∀ g : GA E r,
       AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (g * finGL E r (locGL E r w k), m)) =
         AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (g, m)) := fun m k hk g => by
     obtain ⟨b1, -, -, b4⟩ := UpperTheory.V.Cj.S.gl2_local_to_adelic_embedding E w r s

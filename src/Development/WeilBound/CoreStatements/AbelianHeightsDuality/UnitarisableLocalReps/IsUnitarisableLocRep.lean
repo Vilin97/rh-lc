@@ -34,7 +34,7 @@ theorem star_Tj (ϖ : w.adicCompletion F) (j : ℕ) (g : GL (Fin n) (w.adicCompl
 theorem isSatVecGL_of_conj (ρ₁ : Representation ℂ (GL (Fin n) (w.adicCompletion F)) V₁)
     (ρ₂ : Representation ℂ (GL (Fin n) (w.adicCompletion F)) V₂) (D : V₂ →+ V₁) (hinj : Function.Injective D)
     (hsmul : ∀ (c : ℂ) v, D (c • v) = starRingEnd ℂ c • D v) (hρ : ∀ g v, D (ρ₂ g v) = ρ₁ g (D v)) {y : V₂}
-    {B : Multiset ℂˣ} (hy0 : y ≠ 0) (hyf : y ∈ fixed ρ₂ (KGL w n)) (h : IsSatVecGL w ρ₁ (D y) B) :
+    {B : Multiset ℂˣ} (hy0 : y ≠ 0) (hyf : y ∈ fixed ρ₂ (KGL w (n := n))) (h : IsSatVecGL w ρ₁ (D y) B) :
     IsSatVecGL w ρ₂ y (B.map star) := by
   refine ⟨hy0, hyf, by rw [Multiset.card_map, h.2.2.1], fun ϖ hϖ j hj => hinj ?_⟩
   have hfin := finite_heckeVec (Final.GLintComm F w n) (Tj_mem_hecke hϖ j) ρ₂ y
@@ -196,9 +196,9 @@ theorem hasSat_dual (hB : GlobalTheory.Published.CuspFormsBoundedGL) {π : CuspS
     rfl
   let c := RingEquiv.refl (w.adicCompletion E)
   have hc : ∀ a, Valued.v (c a) = Valued.v a := fun _ => rfl
-  have hK : ∀ g, g ∈ KGL w a ↔ invW w a g ∈ KGL w a :=
+  have hK : ∀ g, g ∈ KGL w (n := a) ↔ invW w a g ∈ KGL w (n := a) :=
     ConjPlace.mem_iff_invT (n := a) c (ConjPlace.map_mem_Ov_iff c hc)
-  have hfix : ∀ y : σ.V, y ∈ fixed (σ.locRep w) (KGL w a) ↔ D y ∈ fixed (π.locRep w) (KGL w a) := fun y => by
+  have hfix : ∀ y : σ.V, y ∈ fixed (σ.locRep w) (KGL w (n := a)) ↔ D y ∈ fixed (π.locRep w) (KGL w (n := a)) := fun y => by
     rw [GlobalTheory.LGrp.mem_fixed, GlobalTheory.LGrp.mem_fixed]
     constructor
     · intro hy k hk

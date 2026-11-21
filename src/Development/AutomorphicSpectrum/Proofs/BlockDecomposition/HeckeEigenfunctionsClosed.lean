@@ -25,8 +25,8 @@ theorem exists_closed_common_ker {X : Type} [NormedAddCommGroup X] [NormedSpace 
 
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
-theorem exists_heckeOp (w : Pl E) {h : GL (Fin a) (w.adicCompletion E) → ℂ} (hh : h ∈ Hecke ℂ (KGL w a)) :
-    ∃ T : XB E a →L[ℂ] XB E a, (∀ x, heckeVec (repW a w) (KGL w a) h x = T x) ∧
+theorem exists_heckeOp (w : Pl E) {h : GL (Fin a) (w.adicCompletion E) → ℂ} (hh : h ∈ Hecke ℂ (KGL w (n := a))) :
+    ∃ T : XB E a →L[ℂ] XB E a, (∀ x, heckeVec (repW a w) (KGL w (n := a)) h x = T x) ∧
       ∀ A : XB E a →L[ℂ] XB E a, (∀ u, Commute A (Rt E a (fl a w u))) → Commute A T := by
   classical
   have hs := Formalism.UG.P.finite_support_cosets (Final.GLintComm E w a) hh.2
@@ -46,7 +46,7 @@ theorem hecke_eigenfunctions_closed : G0 → G2c := by
   choose T hT hC using fun (p : {ϖ // IsUnifV E w ϖ}) (j : ℕ) =>
     exists_heckeOp (a := a) w (Tj_mem_hecke (n := a) p.2 j)
   obtain ⟨Y, hcl, hY⟩ := exists_closed_common_ker
-    ({R | (∃ k ∈ KGL w a, R = Rt E a (fl a w k) - 1) ∨
+    ({R | (∃ k ∈ KGL w (n := a), R = Rt E a (fl a w k) - 1) ∨
       ∃ (p : {ϖ // IsUnifV E w ϖ}) (j : ℕ), j ≤ a ∧ R = T p j - satEig (qV E w) a B j • 1} :
       Set (XB E a →L[ℂ] XB E a))
   refine ⟨Y, hcl, fun g hg φ hφ => ?_, fun φ => ?_⟩

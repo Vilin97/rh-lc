@@ -17,7 +17,7 @@ namespace UpperTheory.Gal.Gen
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ}
 
 def HypAt (K : Subgroup (UA E a)) (w : HeightOneSpectrum (𝓞 E)) : Prop :=
-  ∀ x ∈ locU a w, x ∈ K ↔ cLoc w x ∈ GlobalTheory.LFun.KGL w a
+  ∀ x ∈ locU a w, x ∈ K ↔ cLoc w x ∈ GlobalTheory.LFun.KGL w (n := a)
 
 def SatAt (U : Submodule ℂ (UA E a → ℂ)) (w : HeightOneSpectrum (𝓞 E)) (z : Fin a → ℂˣ) : Prop :=
   ∃ σ : SmIrr (GL (Fin a) (w.adicCompletion E)), IsCompAlong U (locU a w) ((cLoc w).comp (locU a w).subtype) σ.ρ ∧

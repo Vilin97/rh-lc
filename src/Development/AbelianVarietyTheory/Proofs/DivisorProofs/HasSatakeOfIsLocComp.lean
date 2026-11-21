@@ -25,7 +25,7 @@ theorem hasSatake_of_isLocComp : ∀ {E : Type} [Field E] [NumberField E] [IsTot
         have : u ∈ LinearMap.ker f := h ▸ Submodule.mem_top
         simpa using this
 
-  obtain ⟨v, hv0, hvK⟩ : ∃ v : σ.V, v ≠ 0 ∧ ∀ k ∈ (GlobalTheory.LFun.KGL w m : Set _), σ.ρ k v = v := by
+  obtain ⟨v, hv0, hvK⟩ : ∃ v : σ.V, v ≠ 0 ∧ ∀ k ∈ (GlobalTheory.LFun.KGL w (n := m) : Set _), σ.ρ k v = v := by
     refine GlobalTheory.CuspRep.LocSph.exists_fixed_of_mem_iSup ((GlobalTheory.CuspRep.finRep E m).comp (GlobalTheory.CuspRep.locGL E m w)) σ.ρ
       σ.irred (fun i : GlobalTheory.CuspRep.LocSph.Maps π w σ => i.1) (fun i g u => i.2.2 g u) _ (x : GlobalTheory.CuspRep.Sm E m)
       (fun h => hx.1 (Subtype.ext h)) (fun k hk => ?_) ?_

@@ -51,8 +51,8 @@ theorem matchTOf2 : MatchTOf2 := by
       isHecke_lc hoG (GlobalTheory.CompanionTheory.MatchPow.phiX_hecke n w b ϖ _ a), (GlobalTheory.CompanionTheory.MatchPow.phiX_hecke n w b ϖ _ a).1⟩)
     (fun j => (hM4 E hU w hw n a ha b hb ϖ hϖ (x' j) (hx' j).1 (hx' j).2).1)
   have hcon : cR n a w b * GlobalTheory.CompanionTheory.MatchPow.beta a (n - a) w = GlobalTheory.CompanionTheory.MatchPow.alpha n w b := by
-    have h1 : (((iwGL a w).relIndex (GlobalTheory.LFun.KGL w a) : ℕ) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (GlobalTheory.CompanionTheory.MatchPow.iw_idx a w)
-    have h2 : (((iwGL (n - a) w).relIndex (GlobalTheory.LFun.KGL w (n - a)) : ℕ) : ℂ) ≠ 0 :=
+    have h1 : (((iwGL a w).relIndex (GlobalTheory.LFun.KGL w (n := a)) : ℕ) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (GlobalTheory.CompanionTheory.MatchPow.iw_idx a w)
+    have h2 : (((iwGL (n - a) w).relIndex (GlobalTheory.LFun.KGL w (n := (n - a))) : ℕ) : ℂ) ≠ 0 :=
       Nat.cast_ne_zero.2 (GlobalTheory.CompanionTheory.MatchPow.iw_idx (n - a) w)
     unfold cR GlobalTheory.CompanionTheory.MatchPow.beta GlobalTheory.CompanionTheory.MatchPow.alpha
     rw [GlobalTheory.CompanionTheory.MatchPow.relIndex_prod, Nat.cast_mul]

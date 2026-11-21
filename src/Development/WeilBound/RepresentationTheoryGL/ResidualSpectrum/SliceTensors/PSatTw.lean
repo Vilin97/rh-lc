@@ -28,7 +28,7 @@ theorem satLike_map_mulChi {m : ℕ} {V : Submodule ℂ (Sm E m)} {w : HeightOne
     SatLike (V.map (mulChi m χ).toLinearMap) w (B.map (· * χ.val w)) := by
   intro ψ hψ hK h0
   obtain ⟨x, hx, rfl⟩ := Submodule.mem_map.1 hψ
-  have hxK : ∀ k ∈ KGL w m, finRep E m (locGL E m w k) x = x := fun k hk => by
+  have hxK : ∀ k ∈ KGL w (n := m), finRep E m (locGL E m w k) x = x := fun k hk => by
     have e := hK k hk
     rw [LinearEquiv.coe_coe, finRep_mulChi, hχ _ (GlobalTheory.SphGal.isUnitAt_det_of_mem hk), Units.val_one,
       one_smul] at e
@@ -40,7 +40,7 @@ theorem satLike_map_mulChi {m : ℕ} {V : Submodule ℂ (Sm E m)} {w : HeightOne
   rw [LinearEquiv.coe_coe, GlobalTheory.SphGal.satEig_map_mul, mul_smul, ← map_smul (mulChi m χ),
     ← hs.2.2.2 ϖ hϖ j hj, heckeVec, heckeVec]
   have e := (mulChi m χ).toAddEquiv.map_finsum
-    (fun c : _ ⧸ KGL w m => Tj ℂ m (Ov E w) ϖ j c.out • ((finRep E m).comp (locGL E m w)) c.out x)
+    (fun c : _ ⧸ KGL w (n := m) => Tj ℂ m (Ov E w) ϖ j c.out • ((finRep E m).comp (locGL E m w)) c.out x)
   rw [show (mulChi m χ) _ = _ from e, smul_finsum]
   refine finsum_congr fun c => ?_
   by_cases hc : Tj ℂ m (Ov E w) ϖ j c.out = 0

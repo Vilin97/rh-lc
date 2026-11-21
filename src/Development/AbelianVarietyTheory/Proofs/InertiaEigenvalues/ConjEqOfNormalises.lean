@@ -202,8 +202,8 @@ section Normaliser
 open NumberField IsDedekindDomain Formalism.UG GlobalTheory.LFun
 
 theorem conj_eq_of_normalises {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) {n : ℕ}
-    (a : GL (Fin n) (w.adicCompletion E)) (ha : ∀ g ∈ KGL w n, a⁻¹ * g * a ∈ KGL w n) :
-    ∃ k ∈ KGL w n, ∀ g, a⁻¹ * g * a = k⁻¹ * g * k := by
+    (a : GL (Fin n) (w.adicCompletion E)) (ha : ∀ g ∈ KGL w (n := n), a⁻¹ * g * a ∈ KGL w (n := n)) :
+    ∃ k ∈ KGL w (n := n), ∀ g, a⁻¹ * g * a = k⁻¹ * g * k := by
   classical
   have hm := @GlobalTheory.HeckeScalarSph.mem_GLint_iff n _ _ (Ov E w)
   by_cases hn : ∀ i j : Fin n, i = j
@@ -222,7 +222,7 @@ theorem conj_eq_of_normalises {E : Type} [Field E] [NumberField E] (w : HeightOn
       rw [Matrix.one_apply]; split_ifs; exacts [one_mem _, zero_mem _]
     have hs : ∀ p q, Matrix.single i j (1 : w.adicCompletion E) p q ∈ Ov E w := fun p q => by
       rw [Matrix.single_apply]; split_ifs; exacts [one_mem _, zero_mem _]
-    have hg : g ∈ KGL w n := hm.2 ⟨fun p q => add_mem (h1 p q) (hs p q), fun p q => sub_mem (h1 p q) (hs p q)⟩
+    have hg : g ∈ KGL w (n := n) := hm.2 ⟨fun p q => add_mem (h1 p q) (hs p q), fun p q => sub_mem (h1 p q) (hs p q)⟩
     have h3 := sub_mem ((hm.1 (ha g hg)).1 p q) (h1 p q)
     have e : (a⁻¹ * g * a).1 = 1 + (a⁻¹).1 * Matrix.single i j 1 * a.1 := by
       rw [Units.val_mul, Units.val_mul]
@@ -362,7 +362,7 @@ theorem eq_complMap (s : SplitPlace L) (i : s.v.adicCompletion (maximalRealSubfi
 theorem map_loc_mem_iff (s : SplitPlace L) (i : s.v.adicCompletion (maximalRealSubfield L) ≃+* s.w.adicCompletion L)
     (hi : Continuous i) (hic : ∀ x : L, i (s.i x) = algebraMap L (s.w.adicCompletion L) x) {x : GAf L n}
     (hx : TrivOutside {s.v} x) :
-    Matrix.GeneralLinearGroup.map i.toRingHom (s.loc n x) ∈ GlobalTheory.LFun.KGL s.w n ↔ x ∈ Umax L n := by
+    Matrix.GeneralLinearGroup.map i.toRingHom (s.loc n x) ∈ GlobalTheory.LFun.KGL s.w (n := n) ↔ x ∈ Umax L n := by
   refine ⟨fun h => ?_, fun h => ?_⟩
   · have key : ∀ y, i y ∈ Formalism.UG.Ov L s.w → Valued.v y ≤ 1 := fun y hy =>
       (GlobalTheory.CuspRep.ParLaws.valuation_le_one_iff s.v y).1 (GlobalTheory.SphLoc.le_one_of_map i.toRingHom hi

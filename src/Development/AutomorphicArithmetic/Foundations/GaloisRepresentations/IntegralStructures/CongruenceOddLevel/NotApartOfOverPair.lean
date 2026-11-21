@@ -40,7 +40,7 @@ def StepSt : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (a : ℕ), 1 ≤ a →
     ∀ (w₀ : HeightOneSpectrum (𝓞 E)), ((l : ℕ) : 𝓞 E) ∈ w₀.asIdeal → IsSplitAt w₀ →
     ∀ (v' : HeightOneSpectrum (𝓞 E)), ((l : ℕ) : 𝓞 E) ∈ v'.asIdeal → IsSplitAt v' → Apart v' w₀ →
-    ∀ (K : Subgroup (UA E a)), IsLevelAway w₀ K → (∀ x ∈ locU a v', cLoc v' x ∈ GlobalTheory.LFun.KGL v' a → x ∈ K) →
+    ∀ (K : Subgroup (UA E a)), IsLevelAway w₀ K → (∀ x ∈ locU a v', cLoc v' x ∈ GlobalTheory.LFun.KGL v' (n := a) → x ∈ K) →
     ∀ (Kv : Subgroup (GL (Fin a) (v'.adicCompletion E))), IsOpen (Kv : Set (GL (Fin a) (v'.adicCompletion E))) →
     ∀ (lam : (E →+* ℂ) → DomWeight a) (Jx : Type) (t : Jx → (UA E a →₀ ℂ)) (η : Submodule ℂ (UA E a → ℂ) → Jx → ℂ),
       (∀ j, IntW ι lam (t j) ∧ Loc.IntL ι lam (t j)) →
@@ -215,7 +215,7 @@ theorem congUWG_of (H : StepSt) (hFin : FinU) (D : ∀ a : ℕ, MvPolynomial (Fi
     show cz ⟨z, hz⟩ * ez ⟨z, hz⟩ U' ≠ 0 ↔ _
     simp [hcz0]
   obtain ⟨τ₀, hτ₀⟩ := exists_overPl ι v' hv'
-  have hKv : ∀ x ∈ locU a v', cLoc v' x ∈ GlobalTheory.LFun.KGL v' a → x ∈ K := fun x hx h => (hKs v' hsv hap x hx).2 (hKwv ▸ h)
+  have hKv : ∀ x ∈ locU a v', cLoc v' x ∈ GlobalTheory.LFun.KGL v' (n := a) → x ∈ K := fun x hx h => (hKs v' hsv hap x hx).2 (hKwv ▸ h)
   have h2 := combine_holds (Qbar l) _ _ _ _ Q h1 (by
     rintro _ ⟨U₁, g1, g2, rfl⟩
     exact ⟨(hQ U₁ g1.aut g1.fix).2 g2, H E l ι a ha w₀ hw₀ hs₀ v' hv' hsv hap K hK hKv Kv hKvo lam _ t η hint

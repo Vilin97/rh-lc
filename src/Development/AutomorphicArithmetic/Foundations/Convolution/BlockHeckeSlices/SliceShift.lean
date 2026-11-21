@@ -64,7 +64,7 @@ def BandOps : Prop := ∀ (n : ℕ) (C : ℝ), 0 ≤ C → Band C (0 : Sm E n) �
   (∀ c : ℂ, Band C (c • φ)) ∧ (∀ u, Band C (uC E n u φ)) ∧ (∀ g, Band C (rt E n g φ)) ∧ ∀ w j, Band C (hk n w j φ)
 
 def HkOps : Prop := ∀ (n : ℕ) (w : Pl E) (j : ℕ),
-  (∀ φ : Sm E n, hk n w j φ = (qc w ^ (((j : ℂ) * ((n : ℂ) - j)) / 2))⁻¹ • GlobalTheory.LFun.heckeVec (rw n w) (GlobalTheory.LFun.KGL w n)
+  (∀ φ : Sm E n, hk n w j φ = (qc w ^ (((j : ℂ) * ((n : ℂ) - j)) / 2))⁻¹ • GlobalTheory.LFun.heckeVec (rw n w) (GlobalTheory.LFun.KGL w (n := n))
     (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) (GlobalTheory.LFun.exists_isUnifV w).choose j) φ) ∧
   (∀ u, Commute (uC E n u) (hk n w j)) ∧ (∀ y, Commute (rt E n (infGL E n y)) (hk n w j)) ∧
   ∀ (S : Set (Pl E)) (φ : Sm E n), w ∉ S → Sph S φ → Sph S (hk n w j φ) ∧ hk n w 0 φ = φ ∧

@@ -82,7 +82,7 @@ theorem norm_le_of_isSatVecGL {E : Type} [Field E] [NumberField E] {w : HeightOn
   obtain ⟨φ, hφ, hφ1, -⟩ := Final.SphericalExists E w n (fun i => (α i : ℂ)) fun i => (α i).ne_zero
   have hφ0 : φ ≠ 0 := fun e => by simp [e] at hφ1
   have hy := isSatVecGL_of_isSpherical hφ hφ0
-  have hKO : KO (w.adicCompletion E) (Fin n) = KGL w n := SphCompletion.KO_completion w n
+  have hKO : KO (w.adicCompletion E) (Fin n) = KGL w (n := n) := SphCompletion.KO_completion w n
   have hb : HasBoundedSums (w.adicCompletion E) φ := by
     intro S hS
     have H := SatCompare.exists_eigenvalue_GL hx hy

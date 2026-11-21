@@ -40,7 +40,7 @@ private lemma v_le_of_inId {E : Type} [Field E] [NumberField E] (w : Plc E) (e :
     exact mul_le_of_le_one_of_le ha hb
 
 private lemma v_inv_sub_one_le {E : Type} [Field E] [NumberField E] {n : ℕ} (w : Plc E) (g : GLw n w)
-    (hg : g ∈ KGL w n) (γ : WithZero (Multiplicative ℤ))
+    (hg : g ∈ KGL w (n := n)) (γ : WithZero (Multiplicative ℤ))
     (h : ∀ i k, Valued.v ((g.val - 1) i k) ≤ γ) (i k : Fin n) :
     Valued.v (((g⁻¹).val - 1) i k) ≤ γ := by
   have hI := ((GlobalTheory.HenQ.Basic.mem_KGL_iff w g).1 hg).2

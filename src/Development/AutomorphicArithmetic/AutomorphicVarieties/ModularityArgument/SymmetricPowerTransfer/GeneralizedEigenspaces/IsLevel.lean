@@ -39,7 +39,7 @@ def secW (n : ℕ) (w : Plc L) : GL (Fin n) (Kw w) →* UA L n :=
 def infC (n : ℕ) : UA L n →* (InfinitePlace L → GL (Fin n) ℂ) := Pi.monoidHom fun v => cEmb v.embedding
 
 
-def Kall (n : ℕ) : Subgroup (UA L n) := finU L n ⊓ ⨅ w : Plc L, (GlobalTheory.LFun.KGL w n).comap (cLoc w)
+def Kall (n : ℕ) : Subgroup (UA L n) := finU L n ⊓ ⨅ w : Plc L, (GlobalTheory.LFun.KGL w (n := n)).comap (cLoc w)
 
 variable {n : ℕ}
 

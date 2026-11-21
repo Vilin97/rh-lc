@@ -27,7 +27,7 @@ theorem UpperTheory.Gal.Wt.neatLev_of :
       fun k hk ho => hJt _ (hcJ k hk) ho
     exact UpperTheory.Gal.CharacterCongruences.neatOfPlace_holds E a _ ⟨hLev.fin, hLev.compact, hLev.isOpen⟩ w₀ hT
       g γ hγ c hc x hx h
-  · have hKGL : GlobalTheory.LFun.KGL v' a ≤ (UpperTheory.Gal.Gen.lev K w₀ (J 0)).map (cLoc v') := by
+  · have hKGL : GlobalTheory.LFun.KGL v' (n := a) ≤ (UpperTheory.Gal.Gen.lev K w₀ (J 0)).map (cLoc v') := by
       intro y hy
       obtain ⟨e, he⟩ := GlobalTheory.locU_equiv_GL E a v' hv'
       have hy' : cLoc v' (e.symm y : UA E a) = y := by rw [← he]; simp

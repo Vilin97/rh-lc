@@ -81,9 +81,9 @@ theorem UpperTheory.satake_inv_mul_char_eq_of_similitude_pairing :
   intro E _ _ n w V _ _ ρ hρ χ hχ β hβ hi B hB
   classical
   obtain ⟨x, hx⟩ := hB.exists_vec
-  have hd : ∀ k ∈ KGL w n, ((χ.loc w (Matrix.GeneralLinearGroup.det k) : ℂˣ) : ℂ) = 1 := fun k hk => by
+  have hd : ∀ k ∈ KGL w (n := n), ((χ.loc w (Matrix.GeneralLinearGroup.det k) : ℂˣ) : ℂ) = 1 := fun k hk => by
     rw [hχ _ (GlobalTheory.SphGal.isUnitAt_det_of_mem hk), Units.val_one]
-  have hKc : IsCompact (KGL w n : Set (GL (Fin n) (w.adicCompletion E))) :=
+  have hKc : IsCompact (KGL w (n := n) : Set (GL (Fin n) (w.adicCompletion E))) :=
     GlobalTheory.LFun.IntPtsUnitary.isCompact_GLint _ (PI.AdicCompletionValuation.isCompact_adicCompletionIntegers E w)
   obtain ⟨y₀, hy₀⟩ : ∃ y, β x y ≠ 0 := by
     by_contra hn

@@ -38,7 +38,7 @@ abbrev rw (n : ℕ) (w : HeightOneSpectrum (𝓞 E)) : Representation ℂ (GL (F
 
 def hk (n : ℕ) (w : HeightOneSpectrum (𝓞 E)) (j : ℕ) : Module.End ℂ (Sm E n) :=
   (((Formalism.UG.qV E w : ℕ) : ℂ) ^ (((j : ℂ) * ((n : ℂ) - j)) / 2))⁻¹ •
-    ∑ᶠ c : GL (Fin n) (w.adicCompletion E) ⧸ GlobalTheory.LFun.KGL w n,
+    ∑ᶠ c : GL (Fin n) (w.adicCompletion E) ⧸ GlobalTheory.LFun.KGL w (n := n),
       Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) (GlobalTheory.LFun.exists_isUnifV w).choose j c.out • rw n w c.out
 
 variable {S : Set (HeightOneSpectrum (𝓞 E))}
@@ -49,7 +49,7 @@ def hmon (β : (HeightOneSpectrum (𝓞 E) × Fin n) →₀ ℕ) : Module.End �
 def app (G : MvPolynomial (HeightOneSpectrum (𝓞 E) × Fin n) (MvPolynomial ((E →+* ℂ) × Fin n) ℂ)) : Module.End ℂ (Sm E n) :=
   ∑ β ∈ G.support, zop (G.coeff β) * hmon β
 
-def Sph (S : Set (HeightOneSpectrum (𝓞 E))) (φ : Sm E n) : Prop := ∀ w ∉ S, ∀ k ∈ GlobalTheory.LFun.KGL w n, rw n w k φ = φ
+def Sph (S : Set (HeightOneSpectrum (𝓞 E))) (φ : Sm E n) : Prop := ∀ w ∉ S, ∀ k ∈ GlobalTheory.LFun.KGL w (n := n), rw n w k φ = φ
 
 structure Umg (φ : Sm E n) : Prop where
   left : AutomorphicForm.IsLeftInvariant φ.1

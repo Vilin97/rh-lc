@@ -23,7 +23,7 @@ theorem eventually_mem_integers (a : E) :
 
 theorem mem_KGL_of_entries (w : Pl E) (g : GLw n w)
     (h1 : ∀ a b, g.val a b ∈ w.adicCompletionIntegers E)
-    (h2 : ∀ a b, (g⁻¹).val a b ∈ w.adicCompletionIntegers E) : g ∈ GlobalTheory.LFun.KGL w n := by
+    (h2 : ∀ a b, (g⁻¹).val a b ∈ w.adicCompletionIntegers E) : g ∈ GlobalTheory.LFun.KGL w (n := n) := by
   let O : Subring (w.adicCompletion E) := Ov E w
   have inj : Function.Injective (O.subtype.mapMatrix (m := Fin n)) :=
     fun A B h => funext fun i => funext fun j => Subtype.ext (congrFun (congrFun h i) j)
@@ -35,7 +35,7 @@ theorem mem_KGL_of_entries (w : Pl E) (g : GLw n w)
   · rw [map_mul, hA, hB, map_one, Units.mul_inv]
   · rw [map_mul, hA, hB, map_one, Units.inv_mul]
 
-theorem entries_of_mem_KGL {w : Pl E} {k : GLw n w} (hk : k ∈ GlobalTheory.LFun.KGL w n) (i j : Fin n) :
+theorem entries_of_mem_KGL {w : Pl E} {k : GLw n w} (hk : k ∈ GlobalTheory.LFun.KGL w (n := n)) (i j : Fin n) :
     k.val i j ∈ w.adicCompletionIntegers E := by
   obtain ⟨a, rfl⟩ := hk
   exact (a.val i j).2
@@ -70,7 +70,7 @@ theorem local_step (hE : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (M G : Matrix (
       rw [← map_mul, Matrix.nonsing_inv_mul _ hdet, map_one]
     rw [Matrix.coe_units_inv, IsUnit.unit_spec]
     exact Matrix.inv_eq_left_inv h
-  have hgK : hGu.unit ∈ GlobalTheory.LFun.KGL w n :=
+  have hgK : hGu.unit ∈ GlobalTheory.LFun.KGL w (n := n) :=
     mem_KGL_of_entries w _ (fun a b => by rw [IsUnit.unit_spec]; exact hG1 a b)
       (fun a b => by rw [hginv]; exact hG2 a b)
   have hgh : cT (cj w) hGu.unit.val = hGu.unit.val := by

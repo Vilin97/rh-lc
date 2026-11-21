@@ -66,7 +66,7 @@ end Generic
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 theorem locEl_eventually_mem (n : ℕ) (δ : GL (Fin n) E) :
-    ∀ᶠ w : Pl E in cofinite, locEl n w δ ∈ GlobalTheory.LFun.KGL w n := by
+    ∀ᶠ w : Pl E in cofinite, locEl n w δ ∈ GlobalTheory.LFun.KGL w (n := n) := by
   filter_upwards [UnitStable.eventually_mem_KGL δ, UnitStable.eventually_mem_KGL (δ * thE E n δ)] with w h1 h2
   unfold locEl
   split_ifs

@@ -24,7 +24,7 @@ theorem norm_prod_sat_eq_one : ∀ (E : Type) [Field E] [NumberField E] [IsTotal
   have hϖ0 : ϖ ≠ 0 := fun h0 => by simp [IsUnifV, h0] at hϖ
   let u : (w.adicCompletion E)ˣ := Units.mk0 ϖ hϖ0
   let S : GL (Fin a) (w.adicCompletion E) := Matrix.GeneralLinearGroup.scalar (Fin a) u
-  let K := GlobalTheory.LFun.KGL w a
+  let K := GlobalTheory.LFun.KGL w (n := a)
   have hS : ((S : GL (Fin a) (w.adicCompletion E)) : Matrix (Fin a) (Fin a) (w.adicCompletion E)) = diagJ a ϖ a := by
     ext i j
     simp [S, u, diagJ, Matrix.GeneralLinearGroup.scalar, Matrix.diagonal_apply]

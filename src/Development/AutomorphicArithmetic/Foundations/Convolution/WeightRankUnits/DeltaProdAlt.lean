@@ -18,7 +18,7 @@ def phase (e : InfinitePlace E → ℤ) (R : E) (v : InfinitePlace E) : ℂ :=
   (v.embedding R / (‖v.embedding R‖ : ℂ)) ^ e v * ‖v.embedding R‖
 
 def unit2 (a b : ℕ) (w : Pl E) : GLw a w × GLw b w → ℂ :=
-  (((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b) : Subgroup (GLw a w × GLw b w)) : Set (GLw a w × GLw b w)).indicator 1
+  (((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)) : Subgroup (GLw a w × GLw b w)) : Set (GLw a w × GLw b w)).indicator 1
 
 def muAt (μ : HChar E) (w : Pl E) (x : E) : ℂ :=
   if h : algebraMap E (w.adicCompletion E) x ≠ 0 then (μ.loc w (Units.mk0 _ h) : ℂ) else 0

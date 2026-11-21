@@ -36,7 +36,7 @@ section Linear
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {w : HeightOneSpectrum (𝓞 E)}
 
 
-theorem isCompact_KGL : IsCompact (KGL w a : Set (GL (Fin a) (w.adicCompletion E))) :=
+theorem isCompact_KGL : IsCompact (KGL w (n := a) : Set (GL (Fin a) (w.adicCompletion E))) :=
   IntPtsUnitary.isCompact_GLint _
     (isCompact_iff_compactSpace.2 (GlobalTheory.AdelicUnitaryTop.compactSpace_adicCompletionIntegers E w))
 
@@ -54,14 +54,14 @@ theorem hasSat_iff {P : CuspSub E a} {σ : LocIrr w a} (h : P.IsLocComp w σ) (B
   rw [CG.hasSat_mk]
   obtain ⟨f, h0, hf⟩ := h
   have hi := injective_of_irred σ.irred (τ := fun g => P.locRep w g) (fun _ => map_zero _) h0 hf
-  have hfix : ∀ v ∈ fixed σ.ρ (KGL w a), f v ∈ fixed (P.locRep w) (KGL w a) := fun v hv =>
+  have hfix : ∀ v ∈ fixed σ.ρ (KGL w (n := a)), f v ∈ fixed (P.locRep w) (KGL w (n := a)) := fun v hv =>
     GlobalTheory.LGrp.mem_fixed.2 fun k hk => by rw [← hf, GlobalTheory.LGrp.mem_fixed.1 hv k hk]
   have hne : ∀ v, v ≠ 0 → f v ≠ 0 := fun v => (map_ne_zero_iff f hi).2
   constructor
   · intro hB
     refine ⟨?_, fun v hv hv0 => (hB.2 _ (hfix v hv) (hne v hv0)).of_map f hf hi⟩
     obtain ⟨φ, hφ, hφ0⟩ := (Submodule.ne_bot_iff _).1 hB.1
-    have h1 : LinearMap.range f ⊓ fixed (P.locRep w) (KGL w a) ≠ ⊥ := fun e =>
+    have h1 : LinearMap.range f ⊓ fixed (P.locRep w) (KGL w (n := a)) ≠ ⊥ := fun e =>
       h0 (LinearMap.range_eq_bot.1 (LocEx.eq_bot_of_fixed P w isCompact_KGL hφ0 hφ _
         (by rintro g _ ⟨v, rfl⟩; exact ⟨_, hf g v⟩) e))
     obtain ⟨_, ⟨⟨v, rfl⟩, hv⟩, hv0⟩ := (Submodule.ne_bot_iff _).1 h1
@@ -84,9 +84,9 @@ theorem hasSat_iff {P : CuspSub E a} {σ : LocIrr w a} (h : P.IsLocComp w σ) (B
     have hT := Tj_mem_hecke (n := a) hϖ j
     let e := LocGL.idem (P.isSmooth_locRep w) (isCompact_KGL (w := w) (a := a))
     have key : ∀ y ∈ LocUniq.isoPart σ.ρ (P.locRep w),
-        heckeVec (P.locRep w) (KGL w a) (Tj ℂ a (Ov E w) ϖ j) (e y) = satEig (qV E w) a B j • e y := fun y hy => by
+        heckeVec (P.locRep w) (KGL w (n := a)) (Tj ℂ a (Ov E w) ϖ j) (e y) = satEig (qV E w) a B j • e y := fun y hy => by
       refine Submodule.iSup_induction _ (motive := fun y =>
-        heckeVec (P.locRep w) (KGL w a) (Tj ℂ a (Ov E w) ϖ j) (e y) = satEig (qV E w) a B j • e y) hy ?_ ?_ ?_
+        heckeVec (P.locRep w) (KGL w (n := a)) (Tj ℂ a (Ov E w) ϖ j) (e y) = satEig (qV E w) a B j • e y) hy ?_ ?_ ?_
       · rintro g _ ⟨u, rfl⟩
         have h1 : e (g.toLinearMap u) = g.toLinearMap (LocGL.idem σ.smooth isCompact_KGL u) :=
           (LocGL.map_idem σ.smooth _ _ g u).symm
@@ -151,7 +151,7 @@ theorem isUnramU_of_hasSatAt {π : Submodule ℂ (UA E n → ℂ)} {s : w.adicCo
       rw [← h2, ht]
   refine ⟨f v, h1 v, (map_ne_zero_iff f hi).2 hv0, fun x hx hk => ?_⟩
   rw [← h2 ⟨x, hx⟩ v, GlobalTheory.LGrp.mem_fixed.1 hv _ ⟨(p _).2, ?_⟩]
-  change (p ⟨x, hx⟩).val ∈ KGL w n
+  change (p ⟨x, hx⟩).val ∈ KGL w (n := n)
   rw [hp]
   exact mul_mem (mul_mem (inv_mem hb) hk) hb
 

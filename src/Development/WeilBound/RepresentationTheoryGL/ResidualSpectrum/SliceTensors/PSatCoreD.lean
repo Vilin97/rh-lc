@@ -15,9 +15,9 @@ namespace PositivityTheory.Rg.Rs.SatakeVectors.Core
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 
 theorem heckeVec_apply {N : ℕ} (w : HeightOneSpectrum (𝓞 E)) {F : Sm E N}
-    {f : GL (Fin N) (w.adicCompletion E) → ℂ} (hf : f ∈ Hecke ℂ (KGL w N)) (y : GA E N) :
-    (heckeVec ((finRep E N).comp (locGL E N w)) (KGL w N) f F).1 y =
-      heckeVec (rightReg ℂ _ ℂ) (KGL w N) f (fun g => F.1 (y * finGL E N (locGL E N w g))) 1 := by
+    {f : GL (Fin N) (w.adicCompletion E) → ℂ} (hf : f ∈ Hecke ℂ (KGL w (n := N))) (y : GA E N) :
+    (heckeVec ((finRep E N).comp (locGL E N w)) (KGL w (n := N)) f F).1 y =
+      heckeVec (rightReg ℂ _ ℂ) (KGL w (n := N)) f (fun g => F.1 (y * finGL E N (locGL E N w g))) 1 := by
   have hK := Final.GLintComm E w N
   rw [heckeVec, heckeVec]
   have e1 := ((LinearMap.proj (R := ℂ) (φ := fun _ : GA E N => ℂ) y).comp (Sm E N).subtype).toAddMonoidHom.map_finsum

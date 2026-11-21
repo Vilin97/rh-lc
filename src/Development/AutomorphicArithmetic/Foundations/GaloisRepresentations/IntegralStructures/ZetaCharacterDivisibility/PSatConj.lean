@@ -33,10 +33,10 @@ theorem UpperTheory.Gal.Int.Div.satConj_of :
   have h0 : f x ≠ 0 := (map_ne_zero_iff f (LinearMap.ker_eq_bot.1 hker)).2 hx.1
   obtain ⟨hne, hund, -⟩ := GlobalTheory.SplitPts.over_split hw
   have hs : IsSplitAt (cpl w) := ⟨w, hne.symm, hund.symm⟩
-  have hfix : ∀ y ∈ locU a (cpl w), cLoc (cpl w) y ∈ GlobalTheory.LFun.KGL (cpl w) a → RU E a y (f x) = f x := by
+  have hfix : ∀ y ∈ locU a (cpl w), cLoc (cpl w) y ∈ GlobalTheory.LFun.KGL (cpl w) (n := a) → RU E a y (f x) = f x := by
     intro y hy hk
     have hy' : y ∈ locU a w := hloc ▸ hy
-    have hk' : cLoc w y ∈ GlobalTheory.LFun.KGL w a := by
+    have hk' : cLoc w y ∈ GlobalTheory.LFun.KGL w (n := a) := by
       rw [← hβ y]
       exact hK _ hk
     have h2 := GlobalTheory.LGrp.mem_fixed.1 hx.2.1 _ hk'

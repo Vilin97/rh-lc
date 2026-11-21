@@ -52,7 +52,7 @@ structure RingBr.Split (R : RingBr L) (w : Plc L) where
   J : ∀ (V : Sig.Lev (Kv (un w))) (V' : Sig.Lev (Kw w)), V.c = V'.c →
     (∀ a, Units.map (i : Kv (un w) →* Kw w) a ∈ V'.H ↔ a ∈ V.H) →
     ∀ (n : ℕ) (g : GL (Fin n) (Kv (un w))), GeneralLinearGroup.map (i : Kv (un w) →+* Kw w) g ∈ V'.J n ↔ g ∈ V.J n
-  K : ∀ (n : ℕ) (g : GL (Fin n) (Kv (un w))), GeneralLinearGroup.map (i : Kv (un w) →+* Kw w) g ∈ GlobalTheory.LFun.KGL w n ↔ g ∈ KO _ (Fin n)
+  K : ∀ (n : ℕ) (g : GL (Fin n) (Kv (un w))), GeneralLinearGroup.map (i : Kv (un w) →+* Kw w) g ∈ GlobalTheory.LFun.KGL w (n := n) ↔ g ∈ KO _ (Fin n)
 
 
 def SUA : Subgroup (UA L 2) := (GeneralLinearGroup.det.comp (UA L 2).subtype).ker
@@ -84,11 +84,11 @@ structure Ok : Prop where
     ∃ k ∈ infU L 3, (B.rG γ : UA L 3) = B.bG g * k ∧ ∀ τ, cEmb τ k = cEmb τ (B.rG γ : UA L 3)
   finS : ∀ (γ : SU B.Δ) (g : SA B.Δ), (∀ v, mt ((g : DA B.Δ).1 v) = (mt (γ : DX B.Δ)).map (lmap (cv v) B.Δ)) →
     ∃ k ∈ infU L 2 ⊓ SUA L, (B.rS γ : UA L 2) = B.bS g * k ∧ ∀ τ, cEmb τ k = cEmb τ (B.rS γ : UA L 2)
-  KG : ∀ (g : GA B.Δ) v, g.1 v ∈ KU (Ov v) _ ↔ ∀ w, un w = v → cLoc w (B.bG g : UA L 3) ∈ GlobalTheory.LFun.KGL w 3
+  KG : ∀ (g : GA B.Δ) v, g.1 v ∈ KU (Ov v) _ ↔ ∀ w, un w = v → cLoc w (B.bG g : UA L 3) ∈ GlobalTheory.LFun.KGL w (n := 3)
   oneG : ∀ (g : GA B.Δ) v, g.1 v = 1 ↔ ∀ w, un w = v → cLoc w (B.bG g : UA L 3) = 1
   splG : ∀ w (S : B.toRingBr.Split w) (g : GA B.Δ),
     cLoc w (B.bG g : UA L 3) = GeneralLinearGroup.map (S.i : Kv (un w) →+* Kw w) (Sig.eU S.hs (g.1 (un w)))
-  KS : ∀ (g : SA B.Δ) v, (g : DA B.Δ).1 v ∈ KD _ (Ov v) ↔ ∀ w, un w = v → cLoc w (B.bS g : UA L 2) ∈ GlobalTheory.LFun.KGL w 2
+  KS : ∀ (g : SA B.Δ) v, (g : DA B.Δ).1 v ∈ KD _ (Ov v) ↔ ∀ w, un w = v → cLoc w (B.bS g : UA L 2) ∈ GlobalTheory.LFun.KGL w (n := 2)
   oneS : ∀ (g : SA B.Δ) v, (g : DA B.Δ).1 v = 1 ↔ ∀ w, un w = v → cLoc w (B.bS g : UA L 2) = 1
   splS : ∀ w (S : B.toRingBr.Split w) (g : SA B.Δ),
     cLoc w (B.bS g : UA L 2) = GeneralLinearGroup.map (S.i : Kv (un w) →+* Kw w) (Sig.eD S.hs ((g : DA B.Δ).1 (un w)))
@@ -116,7 +116,7 @@ def UAFacts : Prop :=
     (∀ x y : UA L n, (∀ w, cLoc w x = cLoc w y) → (∀ τ, cEmb τ x = cEmb τ y) → x = y) ∧
     (∀ x : UA L n, (x ∈ finU L n ↔ ∀ τ, cEmb τ x = 1) ∧ (x ∈ infU L n ↔ ∀ w, cLoc w x = 1)) ∧
     (∀ (w : Plc L), ∀ x ∈ finU L n, ∃ a ∈ locU n w, ∀ u, un u = un w → cLoc u a = cLoc u x) ∧
-    ∀ w : Plc L, IsSplitAt w → ∀ x : UA L n, cLoc w x ∈ GlobalTheory.LFun.KGL w n → ∀ u, un u = un w → cLoc u x ∈ GlobalTheory.LFun.KGL u n
+    ∀ w : Plc L, IsSplitAt w → ∀ x : UA L n, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) → ∀ u, un u = un w → cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n)
 
 end UpperTheory.V.Z.Sym.Dict.Br
 

@@ -68,7 +68,7 @@ theorem sat_ae_of_smooth (hS : SatLoc) {F : Type} [Field F] [NumberField F] {n :
   filter_upwards [S.finite_toSet.eventually_cofinite_notMem] with w hw
   obtain ⟨σ, hσ⟩ := hi w
   obtain ⟨h1, h2⟩ := hS F n w σ
-  have hK : IsCompact (GlobalTheory.LFun.KGL w n : Set (GL (Fin n) (w.adicCompletion F))) :=
+  have hK : IsCompact (GlobalTheory.LFun.KGL w (n := n) : Set (GL (Fin n) (w.adicCompletion F))) :=
     GlobalTheory.LFun.IntPtsUnitary.isCompact_GLint _ (PI.AdicCompletionValuation.isCompact_adicCompletionIntegers F w)
   obtain ⟨B, hB⟩ := h1 (hasFixed_of_sum σ.ρ σ.smooth (ρ.comp (locGL F n w)) _ hK hσ.2
     ⟨v, hv, fun u hu => hS' (GlobalFixedVectors.mem_KAway.2 ⟨locGL_mem_KLev n w

@@ -105,7 +105,7 @@ theorem split_spherical2 {E : Type} [Field E] [NumberField E] [IsCMField E] {n :
     {π : Submodule ℂ (UA E n → ℂ)} (hπ : IsAutRepU π) {w : HeightOneSpectrum (𝓞 E)} (hw : IsSplitAt w)
     (P : GlobalTheory.CuspRep.SmIrr (GL (Fin n) (w.adicCompletion E)))
     (hc : IsCompAlong π (locU n w) ((cLoc w).comp (locU n w).subtype) P.ρ) (hu : IsUnramU π w) :
-    GlobalTheory.LGrp.IsSpherical P.ρ (GlobalTheory.LFun.KGL w n) := by
+    GlobalTheory.LGrp.IsSpherical P.ρ (GlobalTheory.LFun.KGL w (n := n)) := by
   let p : locU n w →* GL (Fin n) (w.adicCompletion E) := (cLoc w).comp (locU n w).subtype
   obtain ⟨e, he⟩ := GlobalTheory.locU_equiv_GL E n w hw
   have hp : Function.Surjective p := fun g => ⟨e.symm g, (he _).symm.trans (e.apply_symm_apply g)⟩
@@ -113,7 +113,7 @@ theorem split_spherical2 {E : Type} [Field E] [NumberField E] [IsCMField E] {n :
   obtain ⟨hσirr, f, hf0, hfm, hf⟩ := hc
   by_contra hns
 
-  have hfix : ∀ v, (∀ k ∈ GlobalTheory.LFun.KGL w n, P.ρ k v = v) → v = 0 := fun v hv => by
+  have hfix : ∀ v, (∀ k ∈ GlobalTheory.LFun.KGL w (n := n), P.ρ k v = v) → v = 0 := fun v hv => by
     by_contra hv0
     exact hns ((Submodule.ne_bot_iff _).2 ⟨v, GlobalTheory.LGrp.mem_fixed.2 hv, hv0⟩)
   let Ψ : GlobalTheory.DefU.AutSub E n := ⟨π, hπ⟩
@@ -134,7 +134,7 @@ theorem split_spherical2 {E : Type} [Field E] [NumberField E] [IsCMField E] {n :
   have key := fixed_eq_zero_of_mem_iSup (Ψ.rep.comp (locU n w).subtype) τ hirr
     (fun i : τ.IntertwiningMap (Ψ.rep.comp (locU n w).subtype) => i.toLinearMap)
     (fun i g x => Representation.IntertwiningMap.isIntertwining _ _ i g x)
-    (((GlobalTheory.LFun.KGL w n).comap p : Subgroup (locU n w)) : Set (locU n w))
+    (((GlobalTheory.LFun.KGL w (n := n)).comap p : Subgroup (locU n w)) : Set (locU n w))
     (fun v hv => hfix v fun k hk => by
       obtain ⟨x, rfl⟩ := hp k
       exact hv x hk)

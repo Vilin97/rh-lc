@@ -75,7 +75,7 @@ def CmbPiA : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Glo
     (∀ w, Off Z w → (CG.mk π).HasSat w (B w)) → (∀ w ∈ Z, π.IsLocComp w (τ w)) → ∃ c : ℂ, ‖c‖ = c₀ ∧
     ∀ (L : Lv n 0 Z) φ T (e₁ e₂ : Pl E → Ex (Fin (n + 1) × Fin (0 + 1))) (C : Cmb A.blk) (R : ℝ), L.Fix φ → TEv S T e₂ →
       Disjoint T Z → C.Ok (rt u₁ u₂ (A.fx S L T φ e₁ e₂)) R → IsTwTr D.μ π (trM C.Φ A.tw)
-        (c * C.val (chi l₁) (chi l₂) * (∏ w ∈ Z, trc (τ w).ρ (KGL w n) fun g => φ w (g, 1)) * val T e₁ e₂ B 0)
+        (c * C.val (chi l₁) (chi l₂) * (∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) fun g => φ w (g, 1)) * val T e₁ e₂ B 0)
 
 theorem cmbPiA : UpperTheory.V.Z.Mult.PiTermA → TwTrSum → CmbPiA := by
   intro hPi hSum E _ _ _ hU n hn l l₂ D A u₁ u₂ hu₁
@@ -105,10 +105,10 @@ theorem cmbPiA : UpperTheory.V.Z.Mult.PiTermA → TwTrSum → CmbPiA := by
     funext g
     simp only [seen, if_pos (hZ w hw).2]
     exact congrFun h (g, 1)
-  have hX : (∏ w ∈ Z, trc (τ w).ρ (KGL w n) fun g => seen φ L.ln w (g, 1)) =
-      ∏ w ∈ Z, trc (τ w).ρ (KGL w n) fun g => φ w (g, 1) :=
+  have hX : (∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) fun g => seen φ L.ln w (g, 1)) =
+      ∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) fun g => φ w (g, 1) :=
     Finset.prod_congr rfl fun w hw => by rw [hseen w hw]
-  generalize (∏ w ∈ Z, trc (τ w).ρ (KGL w n) fun g => φ w (g, 1)) = X at hX ⊢
+  generalize (∏ w ∈ Z, trc (τ w).ρ (KGL w (n := n)) fun g => φ w (g, 1)) = X at hX ⊢
   have term : ∀ j ∈ C.s, IsTestH (trM (C.t j).Φ A.tw) ∧ IsTwTr D.μ π (trM (C.t j).Φ A.tw)
       (c₀ * A.blk.vol⁻¹ * (m⁻¹) ^ Fintype.card (InfinitePlace E) * (C.t j).val (chi l) (chi l₂) * X * val T e₁ e₂ B 0) := by
     intro j hj

@@ -200,7 +200,7 @@ private theorem blo_of [IsTotallyComplex E] {S : Set (Pl E)} {τ : Submodule ℂ
     rw [hret, hret, BW.zt, retractOne_mul, retractOne_centralSection, one_mul]
   · rw [(hinf σ).2 u _ hΦπ, ← hΛ σ, Multiset.map_map]
     rfl
-  · have hfix : (⟨_, hΦπ⟩ : π.V) ∈ GlobalTheory.PRep.fixed (π.locRep w) (GlobalTheory.LFun.KGL w 2) := by
+  · have hfix : (⟨_, hΦπ⟩ : π.V) ∈ GlobalTheory.PRep.fixed (π.locRep w) (GlobalTheory.LFun.KGL w (n := 2)) := by
       refine GlobalTheory.LGrp.mem_fixed.2 fun k hk => Subtype.ext (Subtype.ext (funext fun g => ?_))
       show Φ.1 (g * GlobalTheory.CuspRep.finGL E 2 (GlobalTheory.CuspRep.locGL E 2 w k)) = Φ.1 g
       rw [hret, hret, retractOne_mul, ← UpperTheory.V.Fb.finEmb_eq, (UpperTheory.locGL_eq_localEmbedding_and_KGL_eq_integralGL E 2 w).1]

@@ -32,7 +32,7 @@ theorem ctT_split_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n
   have hv : ∀ y : GLw n w, ((toSub (UL n w) y : UL n w) : GLw n w) = y := fun y => by
     have hy : y ∈ UL n w := hT ▸ Subgroup.mem_top y
     simp [toSub, hy]
-  have hc : ∀ (x : GLw n w) (g : GlobalTheory.LFun.KGL w n),
+  have hc : ∀ (x : GLw n w) (g : GlobalTheory.LFun.KGL w (n := n)),
       Tj ℂ n (Ov E w) ϖ k ((g : GLw n w)⁻¹ * x * g) = Tj ℂ n (Ov E w) ϖ k x := fun x g =>
     (Tj_mem_hecke (n := n) hϖ k).1 g⁻¹ g x
   unfold ctT ctMu ct

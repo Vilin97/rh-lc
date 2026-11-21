@@ -85,7 +85,7 @@ def LocCompR : Prop :=
 
 def SatLoc : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (n : ℕ) (w : HeightOneSpectrum (𝓞 F)) (σ : SmIrr (GL (Fin n) (w.adicCompletion F))),
-    (HasFixed σ.ρ (GlobalTheory.LFun.KGL w n) → ∃ B, GlobalTheory.LFun.HasSatGL w σ.ρ B) ∧
+    (HasFixed σ.ρ (GlobalTheory.LFun.KGL w (n := n)) → ∃ B, GlobalTheory.LFun.HasSatGL w σ.ρ B) ∧
     ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ (GL (Fin n) (Af F)) V), LocIsotypic ρ w σ →
       ∀ B, GlobalTheory.LFun.HasSatGL w (ρ.comp (locGL F n w)) B ↔ GlobalTheory.LFun.HasSatGL w σ.ρ B
 

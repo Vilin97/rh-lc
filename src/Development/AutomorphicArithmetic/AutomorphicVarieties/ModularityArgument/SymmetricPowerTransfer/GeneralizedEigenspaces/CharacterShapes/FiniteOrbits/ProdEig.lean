@@ -127,7 +127,7 @@ theorem UpperTheory.V.Z.Sym.So.prodEig :
     have hu₀ : u ∈ U₀ := (Subgroup.mem_inf.1 hu).1
     have huJ : ∀ w' ∈ S, cLoc w' u ∈ (VL w').J n := fun w' hw' =>
       Subgroup.mem_comap.1 (Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 (Subgroup.mem_inf.1 hu).2 w') hw')
-    have huK : cLoc w u ∈ GlobalTheory.LFun.KGL w n :=
+    have huK : cLoc w u ∈ GlobalTheory.LFun.KGL w (n := n) :=
       Subgroup.mem_comap.1 (Subgroup.mem_iInf.1 (Subgroup.mem_inf.1 (hF.1 hu₀)).2 w)
     have htl := (hsec w hsp).1 (cLoc w u)
     have htc := (hsec w hsp).2.1 (cLoc w u)

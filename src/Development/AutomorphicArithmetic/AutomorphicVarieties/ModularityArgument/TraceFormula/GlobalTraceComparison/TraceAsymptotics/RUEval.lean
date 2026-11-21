@@ -146,8 +146,8 @@ private def toGL (hs : IsSplitAt w) (σ : SmIrr (UL n w)) : SmIrr (GLw n w) :=
     irred := GlobalTheory.BCT.LocCompU.isIrreducible_comp_of_surjective σ.ρ _ (eSp hs).surjective σ.irred }
 
 private theorem fixed_toGL (hs : IsSplitAt w) (σ : SmIrr (UL n w)) :
-    fixed (toGL hs σ).ρ (KGL w n) = fixed σ.ρ (KL n w) :=
-  fixed_comp (eSp hs) σ.ρ (KL n w) (KGL w n) fun _ => Iff.rfl
+    fixed (toGL hs σ).ρ (KGL w (n := n)) = fixed σ.ρ (KL n w) :=
+  fixed_comp (eSp hs) σ.ρ (KL n w) (KGL w (n := n)) fun _ => Iff.rfl
 
 private theorem comp_toGL (hs : IsSplitAt w) {π : Submodule ℂ (UA E n → ℂ)} {σ : SmIrr (UL n w)}
     (h : IsCompU π w σ) :
@@ -191,7 +191,7 @@ private theorem trace_test_function_eq (hE : ExAct) (hU : GlobalTheory.BCT.Unr E
   have hHU := isHecke_val hU _ _ hH (KL n w) fun k hk => hk
   have hop := hA _ (toGL hs σ).ρ x B hx
   refine twTr_line σ.ρ (KL n w) _ _ h1 hfix hx.1 ?_
-  rw [← levOp_comp (eSp hs) σ.ρ (KL n w) (KGL w n) (fun g => Iff.rfl) (fn1 n w e)
+  rw [← levOp_comp (eSp hs) σ.ρ (KL n w) (KGL w (n := n)) (fun g => Iff.rfl) (fn1 n w e)
     (fun y : UL n w => fn1 n w e y.1) (fun _ => rfl) (fun y k hk => (hHU.2 k hk y).2)
     (finite_supp _ (GlobalTheory.BCT.LocCompU.isOpen_isCompact_KL hU n w).1 _ hHU.1) hfix]
   exact hop
@@ -207,8 +207,8 @@ theorem rUEval : RUEval := by
     (hcc w).2.1 h ((hsec S hS w).2 hw hc)
 
   obtain ⟨Kz, hKo, hKle, hKf, hKn⟩ : ∃ Kz : ∀ w : Pl E, Subgroup (GLw n w), (∀ w, IsOpen (Kz w : Set (GLw n w))) ∧
-      (∀ w, Kz w ≤ KGL w n) ∧ (∀ w ∈ Z, IsHecke (Kz w) (f w)) ∧ ∀ w, w ∉ Z → Kz w = KGL w n := by
-    refine ⟨fun w => if h : w ∈ Z then (hf w h).choose else KGL w n, fun w => ?_, fun w => ?_, fun w h => ?_, fun w h => ?_⟩
+      (∀ w, Kz w ≤ KGL w (n := n)) ∧ (∀ w ∈ Z, IsHecke (Kz w) (f w)) ∧ ∀ w, w ∉ Z → Kz w = KGL w (n := n) := by
+    refine ⟨fun w => if h : w ∈ Z then (hf w h).choose else KGL w (n := n), fun w => ?_, fun w => ?_, fun w h => ?_, fun w h => ?_⟩
     · by_cases h : w ∈ Z
       · simpa [h] using (hf w h).choose_spec.1
       · simpa [h] using (GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL w n).1
@@ -261,7 +261,7 @@ theorem rUEval : RUEval := by
     obtain ⟨p, hp, -⟩ := ((hσ i).2.2.2 w hw).1
     refine ⟨φ, hφ, h0, fun x hx hk => hfix w hw x hx ⟨p ⟨x, hx⟩, ?_, hp ⟨x, hx⟩⟩⟩
     rw [hKL w hz]
-    change (p ⟨x, hx⟩).1 ∈ KGL w n
+    change (p ⟨x, hx⟩).1 ∈ KGL w (n := n)
     rw [hp ⟨x, hx⟩]
     exact hk
   ·

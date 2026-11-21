@@ -220,7 +220,7 @@ theorem exists_hasSatAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
         ∀ x g, cLoc w x = 1 → x * ι g = ι g * x) →
     ∀ π : Submodule ℂ (UA E n → ℂ), IsAutRepU π → IsUnramU π w → ∃ α, HasSatAt π w s ϖ q α := by
   intro E _ _ _ n w s ϖ q hs hU hfin ⟨ι, hιc, hιl, hι1, hι2⟩ π hπ ⟨φ, hφ, h0, hφK⟩
-  obtain ⟨b, hb, e⟩ : ∃ b ∈ GlobalTheory.LFun.KGL w n, cT s b.1 * b.1 = antiJ _ n := by
+  obtain ⟨b, hb, e⟩ : ∃ b ∈ GlobalTheory.LFun.KGL w (n := n), cT s b.1 * b.1 = antiJ _ n := by
     obtain ⟨k, hk, e⟩ := GlobalTheory.LFun.InertChart.exists_congr_antiJ (B := 1) hU (one_mem _) (cT_one s)
     exact ⟨k, hk, by simpa using e⟩
   let cU : UA E n →* UJ s (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) :=
@@ -252,7 +252,7 @@ theorem exists_hasSatAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     rw [h2]
     exact h1
   obtain ⟨hKo, hKc⟩ := GlobalTheory.T.isOpen_isCompact_unitaryIntegralPoints _ ϖ s q n hU
-  have hKb : ∀ k ∈ KU s n, k.1 ∈ GlobalTheory.LFun.KGL w n := fun k hk => (Subgroup.mem_subgroupOf.1 hk).2
+  have hKb : ∀ k ∈ KU s n, k.1 ∈ GlobalTheory.LFun.KGL w (n := n) := fun k hk => (Subgroup.mem_subgroupOf.1 hk).2
   have hφ' : (⟨φ, hφ⟩ : π) ∈ fixed (pull π hπ.stable j) (KU s n) := mem_fix.2 fun k hk => Subtype.ext
     (hφK _ (hjl k) (by
       rw [hcj]

@@ -25,14 +25,14 @@ theorem continuous_mapLoc (w : Pl E) : Continuous (GeneralLinearGroup.map (n := 
   Continuous.units_map _ (continuous_id.matrix_map (RestrictedProduct.continuous_eval w))
 
 omit [IsCMField E] in
-theorem entry_mem_of_mem_KGL {w : Pl E} {g : GL (Fin n) (w.adicCompletion E)} (hg : g ∈ GlobalTheory.LFun.KGL w n) (i j : Fin n) :
+theorem entry_mem_of_mem_KGL {w : Pl E} {g : GL (Fin n) (w.adicCompletion E)} (hg : g ∈ GlobalTheory.LFun.KGL w (n := n)) (i j : Fin n) :
     g.val i j ∈ (w.adicCompletionIntegers E : Set (w.adicCompletion E)) := by
   obtain ⟨k, rfl⟩ := hg
   exact (k.val i j).2
 
 
 theorem isCompact_box (D : ∀ w : Pl E, Set (GL (Fin n) (w.adicCompletion E))) (hD : ∀ w, IsCompact (D w))
-    (hDK : ∀ᶠ w in cofinite, D w ⊆ GlobalTheory.LFun.KGL w n) :
+    (hDK : ∀ᶠ w in cofinite, D w ⊆ GlobalTheory.LFun.KGL w (n := n)) :
     IsCompact {g : GL (Fin n) (Af E) | ∀ w, GeneralLinearGroup.map (pLoc E w) g ∈ D w} := by
   let Q : Fin n → Fin n → ∀ w : Pl E, Set (w.adicCompletion E) := fun i j w =>
     (fun g : GL (Fin n) (w.adicCompletion E) => g.val i j) '' D w
@@ -49,7 +49,7 @@ theorem isCompact_box (D : ∀ w : Pl E, Set (GL (Fin n) (w.adicCompletion E))) 
   have hQK' : ∀ i j, ∀ᶠ w in cofinite, Q' i j w ⊆ (w.adicCompletionIntegers E : Set (w.adicCompletion E)) :=
     fun i j => hDK.mono fun w hw => by
       rintro _ ⟨g, hg, rfl⟩
-      exact entry_mem_of_mem_KGL ((GlobalTheory.LFun.KGL w n).inv_mem (hw hg)) i j
+      exact entry_mem_of_mem_KGL ((GlobalTheory.LFun.KGL w (n := n)).inv_mem (hw hg)) i j
   let P : Set (Matrix (Fin n) (Fin n) (Af E)) :=
     Set.univ.pi fun i => Set.univ.pi fun j => {a : Af E | ∀ w, a w ∈ Q i j w}
   let P' : Set (Matrix (Fin n) (Fin n) (Af E)) :=
@@ -133,7 +133,7 @@ theorem GlobalTheory.BCT.LocCpt.loc_cpt : ∀ (E : Type) [Field E] [NumberField 
     by_cases hw : w ∈ S
     · simp only [D, if_pos hw]; exact (hC w).image continuous_subtype_val
     · simp only [D, if_neg hw]; exact ((hC _).image continuous_subtype_val).image (hφ w)
-  have hDK : ∀ᶠ w in cofinite, D w ⊆ GlobalTheory.LFun.KGL w n := by
+  have hDK : ∀ᶠ w in cofinite, D w ⊆ GlobalTheory.LFun.KGL w (n := n) := by
     have h1 : ∀ᶠ w in cofinite, C (conjSrc c w) = KL n (conjSrc c w) :=
       (conjSrc_injective c).tendsto_cofinite.eventually hCK
     filter_upwards [hCK, h1] with w hw hw'
@@ -143,14 +143,14 @@ theorem GlobalTheory.BCT.LocCpt.loc_cpt : ∀ (E : Type) [Field E] [NumberField 
       exact Subgroup.mem_subgroupOf.1 hk
     · simp only [D, if_neg hwS, hw']
       rintro _ ⟨_, ⟨k, hk, rfl⟩, rfl⟩
-      have hk' : (k : GL (Fin n) _) ∈ GlobalTheory.LFun.KGL (conjSrc c w) n := Subgroup.mem_subgroupOf.1 hk
+      have hk' : (k : GL (Fin n) _) ∈ GlobalTheory.LFun.KGL (conjSrc c w) (n := n) := Subgroup.mem_subgroupOf.1 hk
       have hO : ∀ y, y ∈ ((conjSrc c w).adicCompletionIntegers E : Set _) →
           conjLoc c w y ∈ (w.adicCompletionIntegers E : Set (w.adicCompletion E)) := fun y hy => by
         rw [SetLike.mem_coe, HeightOneSpectrum.mem_adicCompletionIntegers, (conjLoc_spec c w).2.2 y]
         exact (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 hy
       apply mem_GLint_of_entries'
       · intro a b
-        exact hO _ (entry_mem_of_mem_KGL ((GlobalTheory.LFun.KGL _ n).inv_mem hk') b a)
+        exact hO _ (entry_mem_of_mem_KGL ((GlobalTheory.LFun.KGL _ (n := n)).inv_mem hk') b a)
       · intro a b
         exact hO _ (entry_mem_of_mem_KGL hk' b a)
   have hB := isCompact_box D hD hDK

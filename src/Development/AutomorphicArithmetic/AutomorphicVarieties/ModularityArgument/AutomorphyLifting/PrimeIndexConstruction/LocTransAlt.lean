@@ -19,7 +19,7 @@ open private UpperTheory.V.Af.RealLocalComponent.exists_comp UpperTheory.V.Af.Re
 
 namespace UpperTheory.V.Z.Win.Birth
 
-private theorem level_zero_eq_maximal_compact {F : Type} [Field F] [NumberField F] (w : Pl F) : K1 w 0 = GlobalTheory.LFun.KGL w 2 := by
+private theorem level_zero_eq_maximal_compact {F : Type} [Field F] [NumberField F] (w : Pl F) : K1 w 0 = GlobalTheory.LFun.KGL w (n := 2) := by
   ext g
   refine ⟨fun ⟨k, _, e⟩ => ⟨k, e⟩, fun ⟨k, e⟩ => ⟨k, ?_, e⟩⟩
   haveI : Subsingleton (w.adicCompletionIntegers F ⧸ IsLocalRing.maximalIdeal (w.adicCompletionIntegers F) ^ 0) :=
@@ -59,7 +59,7 @@ theorem _root_.UpperTheory.V.Z.Win.Birth.locTrans : LocTrans := by
     have hi := UpperTheory.V.Af.RealLocalComponent.isotypic π w σ hσ
     obtain ⟨B, hB⟩ := (UpperTheory.V.Af.Nf.satLoc' F 2 w σ).1 (GlobalTheory.CuspRep.LocSph.exists_fixed_of_mem_iSup (π.locRep w) σ.ρ σ.irred
       (fun f : {f : σ.V →ₗ[ℂ] π.V // ∀ g v, f (σ.ρ g v) = π.finPart (locGL F 2 w g) (f v)} => f.1) (fun f => f.2)
-      (GlobalTheory.LFun.KGL w 2 : Set _) x hx0 (fun k hk => hx k (level_zero_eq_maximal_compact w ▸ hk)) (hi.2 ▸ Submodule.mem_top))
+      (GlobalTheory.LFun.KGL w (n := 2) : Set _) x hx0 (fun k hk => hx k (level_zero_eq_maximal_compact w ▸ hk)) (hi.2 ▸ Submodule.mem_top))
     exact ⟨B, ((UpperTheory.V.Af.Nf.satLoc' F 2 w σ).2 _ _ hi B).2 hB⟩
   · have hi := UpperTheory.V.Af.RealLocalComponent.isotypic π w σ hσ
     obtain ⟨p, h0, hp⟩ := UpperTheory.V.Sd.Wc.sep_of_sum σ.ρ σ.irred (π.locRep w) hi.2 x hx0

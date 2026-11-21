@@ -17,7 +17,7 @@ noncomputable section
 
 namespace GlobalTheory.DefU
 
-theorem exists_locComp_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (π : AutSub E n) (w : HeightOneSpectrum (𝓞 E)), IsSplitAt w → ∃ σ : SmIrr (GL (Fin n) (w.adicCompletion E)), IsAdmissible σ.ρ ∧ π.IsLocComp w σ ∧ (IsUnramU π.V w ↔ GlobalTheory.LGrp.IsSpherical σ.ρ (GlobalTheory.LFun.KGL w n)) := by
+theorem exists_locComp_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (π : AutSub E n) (w : HeightOneSpectrum (𝓞 E)), IsSplitAt w → ∃ σ : SmIrr (GL (Fin n) (w.adicCompletion E)), IsAdmissible σ.ρ ∧ π.IsLocComp w σ ∧ (IsUnramU π.V w ↔ GlobalTheory.LGrp.IsSpherical σ.ρ (GlobalTheory.LFun.KGL w (n := n))) := by
   intro E _ _ _ n π w hw
   obtain ⟨e, he⟩ := GlobalTheory.T.splitPlace_unitaryLocalPoints_equiv_GL E n w hw
   obtain ⟨σ₀, hadm, hirr, f, hf0, hfm, hf⟩ := GlobalTheory.T.exists_admissible_localComponent_definiteUnitary E n π w
@@ -48,18 +48,18 @@ theorem exists_locComp_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     obtain ⟨v, hv0, hv⟩ := GlobalTheory.CuspRep.LocSph.exists_fixed_of_mem_iSup (π.rep.comp (locU n w).subtype) σ₀.ρ σ₀.irred
       (fun h : σ₀.ρ.IntertwiningMap (π.rep.comp (locU n w).subtype) => h.toLinearMap)
       (fun h g u => LinearMap.congr_fun (h.isIntertwining' g) u)
-      {k | cLoc w (k : UA E n) ∈ GlobalTheory.LFun.KGL w n} ⟨φ, hφ⟩
+      {k | cLoc w (k : UA E n) ∈ GlobalTheory.LFun.KGL w (n := n)} ⟨φ, hφ⟩
       (fun h => h0 (congrArg Subtype.val h)) (fun k hk => Subtype.ext (hK k k.2 hk))
       (hsup ▸ Submodule.mem_top)
     intro hb
-    have hmem : v ∈ fixed ρ (GlobalTheory.LFun.KGL w n) := fun g => by
+    have hmem : v ∈ fixed ρ (GlobalTheory.LFun.KGL w (n := n)) := fun g => by
       have h1 : σ₀.ρ (e.symm g.1) v = v := hv _ (by
-        have h2 : cLoc w ((e.symm g.1 : locU n w) : UA E n) ∈ GlobalTheory.LFun.KGL w n := by
+        have h2 : cLoc w ((e.symm g.1 : locU n w) : UA E n) ∈ GlobalTheory.LFun.KGL w (n := n) := by
           rw [hcl]
           exact g.2
         exact h2)
       simpa [hρ] using h1
-    have hb' : fixed ρ (GlobalTheory.LFun.KGL w n) = ⊥ := hb
+    have hb' : fixed ρ (GlobalTheory.LFun.KGL w (n := n)) = ⊥ := hb
     rw [hb'] at hmem
     exact hv0 ((Submodule.mem_bot _).1 hmem)
   · intro hsph

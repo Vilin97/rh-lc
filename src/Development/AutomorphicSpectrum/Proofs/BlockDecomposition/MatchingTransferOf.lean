@@ -266,15 +266,15 @@ theorem iwahori_pair_open (a b : ℕ) (w : Pl E) : IsOpen (((iwGL a w).prod (iwG
     (GlobalTheory.SmGL.IwahoriOnto.isOpen_iwahori (w.adicCompletion E) (Fin b))
 
 theorem iwahori_pair_le_maximal (a b : ℕ) (w : Pl E) :
-    (iwGL a w).prod (iwGL b w) ≤ (GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b) :=
+    (iwGL a w).prod (iwGL b w) ≤ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)) :=
   Subgroup.prod_mono (GlobalTheory.CompanionTheory.IwLevels.iwGL_le_KGL w a) (GlobalTheory.CompanionTheory.IwLevels.iwGL_le_KGL w b)
 
-theorem iw_idx (a : ℕ) (w : Pl E) : (iwGL a w).relIndex (GlobalTheory.LFun.KGL w a) ≠ 0 :=
+theorem iw_idx (a : ℕ) (w : Pl E) : (iwGL a w).relIndex (GlobalTheory.LFun.KGL w (n := a)) ≠ 0 :=
   GlobalTheory.CompanionTheory.IwLevels.relIndex_ne_zero (GlobalTheory.SmGL.IwahoriOnto.isOpen_iwahori (w.adicCompletion E) (Fin a))
     (GlobalTheory.CompanionTheory.IwLevels.isCompact_KGL w a)
 
 theorem iwahori_pair_index_ne_zero (a b : ℕ) (w : Pl E) :
-    ((iwGL a w).prod (iwGL b w)).relIndex ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b)) ≠ 0 := by
+    ((iwGL a w).prod (iwGL b w)).relIndex ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))) ≠ 0 := by
   rw [relIndex_prod]
   exact mul_ne_zero (iw_idx a w) (iw_idx b w)
 
@@ -362,7 +362,7 @@ theorem entT_adm (n : ℕ) (w : Pl E) (ϖ : (w.adicCompletion E)ˣ) (a : ℕ) {J
   ring
 
 abbrev beta (a b : ℕ) (w : Pl E) : ℂ :=
-  ((((iwGL a w).prod (iwGL b w)).relIndex ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b)) : ℕ) : ℂ)⁻¹
+  ((((iwGL a w).prod (iwGL b w)).relIndex ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))) : ℕ) : ℂ)⁻¹
 
 abbrev alpha (n : ℕ) (w : Pl E) (b : GLw n w) : ℂ := (((iwU n w b).relIndex (KL n w) : ℕ) : ℂ)⁻¹
 
@@ -385,7 +385,7 @@ theorem mconv_entT (hD : DcosMul) {w : Pl E} (n : ℕ) (ϖ : (w.adicCompletion E
         dd a (n - a) w (tdiag ϖ (restr (x' j) _ h.2.2.2.1)) (tdiag ϖ (restr (x' j) _ h.2.2.2.2)) z :=
       funext (entT_adm n w ϖ a c' x' h)
     have s1 : mconv (entT n w ϖ a c x s) (fun y => r * entT n w ϖ a c' x' s y) y =
-        r * hint ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w (n - a)))
+        r * hint ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := (n - a))))
           (fun z => entT n w ϖ a c x s z * entT n w ϖ a c' x' s (z⁻¹ * y)) :=
       conv_const ho hle hidx (entT_hecke n w ϖ a c x s) (entT_hecke n w ϖ a c' x' s) r y
     have s2 := conv_sum_sum ho hle hidx (fun j => c j * (-qh w) ^ (-vRes n a (lOf (x j)) s))
@@ -393,7 +393,7 @@ theorem mconv_entT (hD : DcosMul) {w : Pl E} (n : ℕ) (ϖ : (w.adicCompletion E
       (fun j => c' j * (-qh w) ^ (-vRes n a (lOf (x' j)) s))
       (fun j => dd a (n - a) w (tdiag ϖ (restr (x' j) _ h.2.2.2.1)) (tdiag ϖ (restr (x' j) _ h.2.2.2.2)))
       (fun j => dd_hecke _ _ _ _ _) (fun j => dd_hecke _ _ _ _ _) y
-    have s3 : ∀ j j', hint ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w (n - a))) (fun z =>
+    have s3 : ∀ j j', hint ((GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := (n - a)))) (fun z =>
           dd a (n - a) w (tdiag ϖ (restr (x j) _ h.2.2.2.1)) (tdiag ϖ (restr (x j) _ h.2.2.2.2)) z *
           dd a (n - a) w (tdiag ϖ (restr (x' j') _ h.2.2.2.1)) (tdiag ϖ (restr (x' j') _ h.2.2.2.2)) (z⁻¹ * y)) =
         beta a (n - a) w * dd a (n - a) w (tdiag ϖ (restr (x j + x' j') _ h.2.2.2.1))

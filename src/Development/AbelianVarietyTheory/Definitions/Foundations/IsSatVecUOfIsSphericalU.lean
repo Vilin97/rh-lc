@@ -116,11 +116,11 @@ variable {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) {
 abbrev KGL : Subgroup (GL (Fin n) (w.adicCompletion E)) := GLint (Fin n) (Ov E w)
 
 def IsSatVecGL (ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) (x : V) (B : Multiset ℂˣ) : Prop :=
-  x ≠ 0 ∧ x ∈ fixed ρ (KGL w n) ∧ B.card = n ∧
-    ∀ ϖ, IsUnifV E w ϖ → ∀ j ≤ n, heckeVec ρ (KGL w n) (Tj ℂ n (Ov E w) ϖ j) x = satEig (qV E w) n B j • x
+  x ≠ 0 ∧ x ∈ fixed ρ (KGL w (n := n)) ∧ B.card = n ∧
+    ∀ ϖ, IsUnifV E w ϖ → ∀ j ≤ n, heckeVec ρ (KGL w (n := n)) (Tj ℂ n (Ov E w) ϖ j) x = satEig (qV E w) n B j • x
 
 def HasSatGL (ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) (B : Multiset ℂˣ) : Prop :=
-  GlobalTheory.LGrp.IsSpherical ρ (KGL w n) ∧ ∀ x ∈ fixed ρ (KGL w n), x ≠ 0 → IsSatVecGL w ρ x B
+  GlobalTheory.LGrp.IsSpherical ρ (KGL w (n := n)) ∧ ∀ x ∈ fixed ρ (KGL w (n := n)), x ≠ 0 → IsSatVecGL w ρ x B
 
 theorem exists_isUnifV : ∃ ϖ, IsUnifV E w ϖ := ⟨_, Formalism.L2.Host.unif_spec w⟩
 
@@ -134,7 +134,7 @@ theorem mem_Ov_of_isUnifV {ϖ : w.adicCompletion E} (h : IsUnifV E w ϖ) : ϖ �
   exact (by decide : ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) ≤ 1)
 
 theorem Tj_mem_hecke {ϖ : w.adicCompletion E} (h : IsUnifV E w ϖ) (j : ℕ) :
-    Tj ℂ n (Ov E w) ϖ j ∈ Hecke ℂ (KGL w n) :=
+    Tj ℂ n (Ov E w) ϖ j ∈ Hecke ℂ (KGL w (n := n)) :=
   Final.TjMem _ _ ϖ ℂ n j fun h0 => by simp [IsUnifV, h0] at h
 
 variable {ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V} {x : V} {B B' : Multiset ℂˣ}

@@ -65,7 +65,7 @@ theorem blockGL_finGL {j n : ℕ} (hj : j ≤ n) (k : GL (Fin j) (Af E)) :
   split_ifs with h1 h2 h3 <;> simp only [hf, Matrix.one_apply, Fin.ext_iff] <;> split_ifs <;> first | (simp; done) | (exfalso; omega) | (exfalso; simp_all; done) | (simp only [map_zero]; abel)
 
 theorem blockGL_mem_KGL (w : HeightOneSpectrum (𝓞 E)) {j n : ℕ} (hj : j ≤ n) {y : GL (Fin j) (w.adicCompletion E)}
-    (hy : y ∈ KGL w j) : blockGL hj y ∈ KGL w n := by
+    (hy : y ∈ KGL w (n := j)) : blockGL hj y ∈ KGL w (n := n) := by
   rw [GlobalTheory.HenQ.Basic.mem_KGL_iff] at hy ⊢
   refine ⟨fun a b => ?_, fun a b => ?_⟩
   · rw [coe_blockGL, blockMat_apply]
@@ -92,7 +92,7 @@ theorem eq_zero_of_comp_diag (E : Type) [Field E] [NumberField E] [IsTotallyComp
     (hψ : ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, GlobalTheory.JSW.psiLoc w (x * y) = 1) ↔ x ∈ Ov E w)
     (ϖw : (w.adicCompletion E)ˣ) (hϖ : IsUnifV E w (ϖw : w.adicCompletion E)) (W : GA E N → ℂ)
     (hWN : ∀ u ∈ GlobalTheory.JSW.NA E N, ∀ g, W (u * g) = GlobalTheory.JSW.psiN u * W g)
-    (hWK : ∀ k ∈ KGL w N, ∀ g, W (g * finGL E N (locGL E N w k)) = W g)
+    (hWK : ∀ k ∈ KGL w (n := N), ∀ g, W (g * finGL E N (locGL E N w k)) = W g)
     (e : Fin N → ℤ) (he : ¬ Antitone e) (P : GA E N)
     (hP : ((GlobalTheory.CellDec.compV E N w P : GL (Fin N) (w.adicCompletion E)) : Matrix (Fin N) (Fin N) (w.adicCompletion E)) =
       Matrix.diagonal fun a => ((ϖw ^ e a : (w.adicCompletion E)ˣ) : w.adicCompletion E)) :
@@ -112,7 +112,7 @@ theorem eq_zero_of_comp_diag (E : Type) [Field E] [NumberField E] [IsTotallyComp
     rw [map_mul, map_mul, ← mul_assoc P', GlobalTheory.JSW.commute_finGL_locGL w hP'w, mul_assoc,
       hWN _ (GlobalTheory.JSW.CutTransfer.finGL_locGL_mem_NA' w hu), GlobalTheory.JSW.CutTransfer.psiN_finGL_locGL]
     rfl
-  have hfK : ∀ g, ∀ k ∈ KGL w N, f (g * k) = f g := by
+  have hfK : ∀ g, ∀ k ∈ KGL w (n := N), f (g * k) = f g := by
     intro g k hk
     simp only [f]
     rw [map_mul, map_mul, ← mul_assoc]
@@ -129,7 +129,7 @@ theorem lastRow_diag_mul {m : ℕ} (d : Fin (m + 1) → (Ad E)ˣ) (g : GA E (m +
   simp only [GlobalTheory.ZEul.lastRow, Units.val_mul, GlobalTheory.SmGL.val_diagT, Matrix.diagonal_mul]
 
 theorem exists_val_lastRow_eq_one (w : HeightOneSpectrum (𝓞 E)) {m : ℕ} {k : GL (Fin (m + 1)) (w.adicCompletion E)}
-    (hk : k ∈ KGL w (m + 1)) : ∃ j, Valued.v ((k : Matrix (Fin (m + 1)) (Fin (m + 1)) (w.adicCompletion E)) (Fin.last m) j) = 1 := by
+    (hk : k ∈ KGL w (n := (m + 1))) : ∃ j, Valued.v ((k : Matrix (Fin (m + 1)) (Fin (m + 1)) (w.adicCompletion E)) (Fin.last m) j) = 1 := by
   rw [GlobalTheory.HenQ.Basic.mem_KGL_iff] at hk
   by_contra hne
   push_neg at hne
@@ -283,7 +283,7 @@ theorem cell_values (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N
     (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ) (hϖ : ∀ w, IsUnifV E w (ϖ w : w.adicCompletion E))
     (g : GA E N) (hg : g ∈ GlobalTheory.CellDec.C0 E N S) (l : GlobalTheory.CellDec.abelian₂ E N S) :
     ∃ c : ℂ, ‖c‖ = 1 ∧ ∀ V : GA E N → ℂ, (∀ u ∈ GlobalTheory.JSW.NA E N, ∀ g, V (u * g) = GlobalTheory.JSW.psiN u * V g) →
-      (∀ k : GL (Fin N) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v N) →
+      (∀ k : GL (Fin N) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := N)) →
         (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) → ∀ g, V (g * finGL E N k) = V g) →
       ((∃ w, ¬ Antitone (l.1 w)) → V (GlobalTheory.CellDec.tl N ϖ l.1 * g) = 0) ∧
       ∀ p : HeightOneSpectrum (𝓞 E) → (Fin N → ℕ) → ℂ,
@@ -339,7 +339,7 @@ theorem lastRow_prim (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (
       ∃ j, Valued.v (pLoc E w (pFin E (GlobalTheory.ZEul.lastRow g j))) = 1 := by
   obtain ⟨u, hu, k, hk, rfl⟩ := hg
   rw [GlobalTheory.ZEulProps.lastRow_unip hu]
-  have hkw : GlobalTheory.CellDec.compV E (m + 1) w k ∈ KGL w (m + 1) := by
+  have hkw : GlobalTheory.CellDec.compV E (m + 1) w k ∈ KGL w (n := (m + 1)) := by
     simp only [GlobalTheory.CellDec.US, Subgroup.mem_iInf, Subgroup.mem_comap] at hk
     exact hk w hw
   have he : ∀ j, pLoc E w (pFin E (GlobalTheory.ZEul.lastRow k j)) = ((GlobalTheory.CellDec.compV E (m + 1) w k : GL (Fin (m + 1)) (w.adicCompletion E)) :
@@ -360,9 +360,9 @@ theorem GlobalTheory.CellEvalNM.uIntNM_cell_eval : ∀ (E : Type) [Field E] [Num
       (φ : GA E (m + r + 1 + 1) → ℂ) (φ' : GA E (m + 1) → ℂ) (F : (Fin (m + 1) → Ad E) → ℂ),
     (∀ u ∈ GlobalTheory.JSW.NA E (m + r + 1 + 1), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →
     (∀ u ∈ GlobalTheory.JSW.NA E (m + 1), ∀ g, GlobalTheory.JSW.whit φ' (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ' g) →
-    (∀ k : GL (Fin (m + r + 1 + 1)) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (m + r + 1 + 1)) →
+    (∀ k : GL (Fin (m + r + 1 + 1)) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := (m + r + 1 + 1))) →
       (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) → ∀ g, GlobalTheory.JSW.whit φ (g * finGL E (m + r + 1 + 1) k) = GlobalTheory.JSW.whit φ g) →
-    (∀ k : GL (Fin (m + 1)) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (m + 1)) →
+    (∀ k : GL (Fin (m + 1)) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := (m + 1))) →
       (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) → ∀ g, GlobalTheory.JSW.whit φ' (g * finGL E (m + 1) k) = GlobalTheory.JSW.whit φ' g) →
     (∀ l : HeightOneSpectrum (𝓞 E) →₀ (Fin (m + 1) → ℕ), (∀ w ∈ l.support, w ∉ S) →
       ∀ h ∈ GlobalTheory.JSW.supS E (m + 1) S,

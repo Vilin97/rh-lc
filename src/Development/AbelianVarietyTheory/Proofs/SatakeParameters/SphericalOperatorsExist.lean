@@ -161,7 +161,7 @@ theorem sphOps : SphOps := by
     OpPoly.conv (Finsupp.single 1 ((qV E w : ℂ) ^ j.choose 2)) (T j)
   have hfP : ∀ j g, fP j g ∈ S := fun j => conv_mem S _ _ (single_mem S 1 (natPow_mem_zq hq _)) (hT j)
   have actP : ∀ (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (B : Multiset ℂˣ), HasSatGL w σ.ρ B →
-      ∀ v ∈ fixed σ.ρ (KGL w a), ∀ j ≤ a, opOf σ.ρ (fP j) v = (UpperTheory.V.Af.algSat a (qV E w) B).esymm j • v := by
+      ∀ v ∈ fixed σ.ρ (KGL w (n := a)), ∀ j ≤ a, opOf σ.ρ (fP j) v = (UpperTheory.V.Af.algSat a (qV E w) B).esymm j • v := by
     intro σ B hB v hv j hj
     by_cases h0 : v = 0
     · subst h0; rw [opOf_zero_vec, smul_zero]
@@ -172,7 +172,7 @@ theorem sphOps : SphOps := by
     OpPoly.conv (Finsupp.single (ConjPlace.dGL a ϖ a)⁻¹ ((qV E w : ℂ) ^ a.choose 2)⁻¹) (fP (a - j))
   have hfN : ∀ j g, fN j g ∈ S := fun j => conv_mem S _ _ (single_mem S _ (inv_natPow_mem_zq hq _)) (hfP _)
   have actN : ∀ (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (B : Multiset ℂˣ), HasSatGL w σ.ρ B →
-      ∀ v ∈ fixed σ.ρ (KGL w a), ∀ j : Fin (a + 1),
+      ∀ v ∈ fixed σ.ρ (KGL w (n := a)), ∀ j : Fin (a + 1),
         opOf σ.ρ (fN j) v = ((UpperTheory.V.Af.algSat a (qV E w) B).map (·⁻¹)).esymm j • v := by
     intro σ B hB v hv j
     by_cases h0 : v = 0

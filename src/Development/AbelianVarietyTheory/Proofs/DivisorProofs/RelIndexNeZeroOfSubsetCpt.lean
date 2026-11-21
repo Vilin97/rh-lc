@@ -82,9 +82,9 @@ theorem isClosed_UL {E : Type} [Field E] [NumberField E] [IsCMField E] (n : ℕ)
 theorem isCompact_KL {E : Type} [Field E] [NumberField E] [IsCMField E] (n : ℕ) (w : Pl E) :
     IsCompact (KL n w : Set (UL n w)) := by
   rw [Subtype.isCompact_iff]
-  have hK : IsCompact (GlobalTheory.LFun.KGL w n : Set (GLw n w)) :=
+  have hK : IsCompact (GlobalTheory.LFun.KGL w (n := n) : Set (GLw n w)) :=
     GlobalTheory.LFun.IntPtsUnitary.isCompact_GLint _ (PI.AdicCompletionValuation.isCompact_adicCompletionIntegers E w)
-  have : (Subtype.val '' (KL n w : Set (UL n w))) = (GlobalTheory.LFun.KGL w n : Set (GLw n w)) ∩ (UL n w : Set (GLw n w)) := by
+  have : (Subtype.val '' (KL n w : Set (UL n w))) = (GlobalTheory.LFun.KGL w (n := n) : Set (GLw n w)) ∩ (UL n w : Set (GLw n w)) := by
     ext g
     constructor
     · rintro ⟨x, hx, rfl⟩

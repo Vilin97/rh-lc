@@ -79,7 +79,7 @@ theorem invT_mem_iff {L : Type} [Field L] {n : ℕ} (O : Subring L) (g : GL (Fin
 
 
 theorem invT_mem_doset (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ)
-    (g : GL (Fin n) (w.adicCompletion E)) : ∃ a ∈ KGL w n, ∃ b ∈ KGL w n,
+    (g : GL (Fin n) (w.adicCompletion E)) : ∃ a ∈ KGL w (n := n), ∃ b ∈ KGL w (n := n),
       invT (RingEquiv.refl _) n g = a * g⁻¹ * b := by
   obtain ⟨ϖ, hϖ⟩ := GlobalTheory.LFun.exists_isUnifV (E := E) w
   have hϖO : ϖ ∈ Formalism.UG.Ov E w := by
@@ -96,8 +96,8 @@ theorem invT_mem_doset (E : Type) [Field E] [NumberField E] (w : HeightOneSpectr
     rw [hdv, Formalism.UG.diagPow, Matrix.diagonal_transpose]
   have hgd : g = k₁ * d * k₂ := by rw [hd]; group
   set θ := invT (RingEquiv.refl (w.adicCompletion E)) n
-  refine ⟨θ k₁ * k₂, (KGL w n).mul_mem ((invT_mem_iff _ _).2 hk₁) hk₂,
-    k₁ * θ k₂, (KGL w n).mul_mem hk₁ ((invT_mem_iff _ _).2 hk₂), ?_⟩
+  refine ⟨θ k₁ * k₂, (KGL w (n := n)).mul_mem ((invT_mem_iff _ _).2 hk₁) hk₂,
+    k₁ * θ k₂, (KGL w (n := n)).mul_mem hk₁ ((invT_mem_iff _ _).2 hk₂), ?_⟩
   have hθd : θ d = d⁻¹ := invT_of_symm d hsym
   rw [hgd, map_mul, map_mul, hθd, hd]
   group
@@ -105,6 +105,6 @@ theorem invT_mem_doset (E : Type) [Field E] [NumberField E] (w : HeightOneSpectr
 end GlobalTheory.ChainOnto.CosetSymGL
 
 
-theorem GlobalTheory.ChainOnto.kGL_commensurated_cosetSym : ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ), IsCommensurated (KGL w n) ∧ CosetSym (KGL w n) := fun E _ _ w n =>
+theorem GlobalTheory.ChainOnto.kGL_commensurated_cosetSym : ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ), IsCommensurated (KGL w (n := n)) ∧ CosetSym (KGL w (n := n)) := fun E _ _ w n =>
   ⟨Formalism.UG.Final.GLintComm E w n, cosetSym_of_aut _ (invT (RingEquiv.refl _) n) (fun x => invT_mem_iff _ x)
     (invT_mem_doset E w n)⟩

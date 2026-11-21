@@ -52,7 +52,7 @@ theorem mem_Ov_iff {s : SplitPlace L} {c : s.v.adicCompletion L⁺ ≃+* s.w.adi
 
 theorem map_mem_KGL_iff {s : SplitPlace L} {c : s.v.adicCompletion L⁺ ≃+* s.w.adicCompletion L} (hc : Continuous c) (hcL : ∀ x : L, c (s.i x) = algebraMap L (s.w.adicCompletion L) x) {n : ℕ}
     (g : GL (Fin n) (s.v.adicCompletion L⁺)) :
-    Matrix.GeneralLinearGroup.map c.toRingHom g ∈ GlobalTheory.LFun.KGL s.w n ↔
+    Matrix.GeneralLinearGroup.map c.toRingHom g ∈ GlobalTheory.LFun.KGL s.w (n := n) ↔
       g ∈ Formalism.UG.GLint (Fin n) (s.v.adicCompletionIntegers L⁺).toSubring := by
   rw [GlobalTheory.LFun.KGL, GlobalTheory.HeckeScalarSph.mem_GLint_iff, GlobalTheory.HeckeScalarSph.mem_GLint_iff, ← map_inv]
   simp only [Matrix.GeneralLinearGroup.map_apply, RingEquiv.toRingHom_eq_coe, RingHom.coe_coe, mem_Ov_iff hc hcL]
@@ -97,7 +97,7 @@ theorem heckeD_eq_heckeVec {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] 
     (hJ : ∀ κ, TrivOutside {s.v} κ → (κ ∈ J ↔ κ ∈ Umax L n)) {ϖ : s.v.adicCompletion L⁺} (hϖ : IsUnif L s.v ϖ)
     (k : ℕ) {F : GAf L n → W} (hF : ∀ κ ∈ Umax L n, TrivOutside {s.v} κ → NG.rt L n κ F = F) :
     NG.heckeD J (tSet L n s ϖ k) F =
-      GlobalTheory.LFun.heckeVec (locAct n W s c e) (GlobalTheory.LFun.KGL s.w n) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov L s.w) (c ϖ) k) F := by
+      GlobalTheory.LFun.heckeVec (locAct n W s c e) (GlobalTheory.LFun.KGL s.w (n := n)) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov L s.w) (c ϖ) k) F := by
   classical
   have hψφ : ∀ g : GL (Fin n) (s.v.adicCompletion L⁺),
       Matrix.GeneralLinearGroup.map c.symm.toRingHom
@@ -114,9 +114,9 @@ theorem heckeD_eq_heckeVec {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] 
   have hU := isUnifV_map hc hcL hϖ
   rw [GlobalTheory.SatHecke.Tj_eq_dosetInd hU k]
   have hK : ∀ x, TrivOutside {s.v} x →
-      (Matrix.GeneralLinearGroup.map c.toRingHom (s.loc n x) ∈ GlobalTheory.LFun.KGL s.w n ↔ x ∈ Umax L n) := fun x hx =>
+      (Matrix.GeneralLinearGroup.map c.toRingHom (s.loc n x) ∈ GlobalTheory.LFun.KGL s.w (n := n) ↔ x ∈ Umax L n) := fun x hx =>
     (map_mem_KGL_iff hc hcL _).trans (GlobalTheory.HeckeScalarSph.loc_mem_GLint_iff s hx)
-  have hFK : F ∈ GlobalTheory.PRep.fixed (locAct n W s c e) (GlobalTheory.LFun.KGL s.w n) := by
+  have hFK : F ∈ GlobalTheory.PRep.fixed (locAct n W s c e) (GlobalTheory.LFun.KGL s.w (n := n)) := by
     refine GlobalTheory.LGrp.mem_fixed.2 fun A hA => ?_
     rw [locAct_apply]
     refine hF _ ((hK _ (he1 _)).1 ?_) (he1 _)
@@ -141,17 +141,17 @@ theorem heckeD_eq_heckeVec {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] 
     exact GlobalTheory.SplitLocEq.eq_of_trivOutside_of_loc_eq L n s γ δ (hD γ (hR1' γ hγ)) (hD δ (hR1' δ hδ)) h'
   have hmem : ∀ γ ∈ R, (Matrix.GeneralLinearGroup.map c.toRingHom (s.loc n γ) : GL (Fin n) (s.w.adicCompletion L)) ∈
       DoubleCoset.doubleCoset (Matrix.GeneralLinearGroup.mkOfDetNeZero (Formalism.UG.diagJ n (c ϖ) k)
-        (GlobalTheory.SatHecke.diagJ_det_ne hU k)) (GlobalTheory.LFun.KGL s.w n : Set (GL (Fin n) (s.w.adicCompletion L)))
-        (GlobalTheory.LFun.KGL s.w n) := by
+        (GlobalTheory.SatHecke.diagJ_det_ne hU k)) (GlobalTheory.LFun.KGL s.w (n := n) : Set (GL (Fin n) (s.w.adicCompletion L)))
+        (GlobalTheory.LFun.KGL s.w (n := n)) := by
     intro γ hγ
     obtain ⟨-, a, ha, b, hb, h⟩ := hR1' γ hγ
     exact DoubleCoset.mem_doubleCoset.2 ⟨_, (map_mem_KGL_iff hc hcL a).2 ha, _, (map_mem_KGL_iff hc hcL b).2 hb,
       hdiag a b _ h⟩
   have huniq : ∀ g ∈ DoubleCoset.doubleCoset (Matrix.GeneralLinearGroup.mkOfDetNeZero (Formalism.UG.diagJ n (c ϖ) k)
-        (GlobalTheory.SatHecke.diagJ_det_ne hU k)) (GlobalTheory.LFun.KGL s.w n : Set (GL (Fin n) (s.w.adicCompletion L)))
-        (GlobalTheory.LFun.KGL s.w n),
+        (GlobalTheory.SatHecke.diagJ_det_ne hU k)) (GlobalTheory.LFun.KGL s.w (n := n) : Set (GL (Fin n) (s.w.adicCompletion L)))
+        (GlobalTheory.LFun.KGL s.w (n := n)),
       ∃! r, r ∈ R.image (fun γ => (Matrix.GeneralLinearGroup.map c.toRingHom (s.loc n γ) :
-        GL (Fin n) (s.w.adicCompletion L))) ∧ r⁻¹ * g ∈ GlobalTheory.LFun.KGL s.w n := by
+        GL (Fin n) (s.w.adicCompletion L))) ∧ r⁻¹ * g ∈ GlobalTheory.LFun.KGL s.w (n := n) := by
     intro g hg
     obtain ⟨y, hy, z, hz, rfl⟩ := DoubleCoset.mem_doubleCoset.1 hg
     obtain ⟨x, hx⟩ : ∃ x, x = e (Matrix.GeneralLinearGroup.map c.symm.toRingHom (y *
@@ -170,7 +170,7 @@ theorem heckeD_eq_heckeVec {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] 
     obtain ⟨γ, ⟨hγR, hγx⟩, hγu⟩ := hR2' x hxT
     have hkey : ∀ δ ∈ R, ((Matrix.GeneralLinearGroup.map c.toRingHom (s.loc n δ) :
         GL (Fin n) (s.w.adicCompletion L))⁻¹ * (y * Matrix.GeneralLinearGroup.mkOfDetNeZero (Formalism.UG.diagJ n (c ϖ) k)
-          (GlobalTheory.SatHecke.diagJ_det_ne hU k) * z) ∈ GlobalTheory.LFun.KGL s.w n ↔ δ⁻¹ * x ∈ Umax L n) := by
+          (GlobalTheory.SatHecke.diagJ_det_ne hU k) * z) ∈ GlobalTheory.LFun.KGL s.w (n := n) ↔ δ⁻¹ * x ∈ Umax L n) := by
       intro δ hδ
       have e1 : (Matrix.GeneralLinearGroup.map c.toRingHom (s.loc n δ) : GL (Fin n) (s.w.adicCompletion L))⁻¹ *
           (y * Matrix.GeneralLinearGroup.mkOfDetNeZero (Formalism.UG.diagJ n (c ϖ) k) (GlobalTheory.SatHecke.diagJ_det_ne hU k) * z) =

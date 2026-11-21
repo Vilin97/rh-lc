@@ -66,7 +66,7 @@ private theorem satVec_of_mem {σ : Submodule ℂ (UA E n → ℂ)} (hσ : IsAut
     (he : ∀ x : locU n w, e x = cLoc w (x : UA E n))
     (τ : SmIrr (GL (Fin n) (w.adicCompletion E))) {B : Multiset ℂˣ}
     (hc : IsCompAlong σ (locU n w) ((cLoc w).comp (locU n w).subtype) τ.ρ) (hB : HasSatGL w τ.ρ B)
-    {φ : UA E n → ℂ} (hφ : φ ∈ σ) (hK : ∀ y ∈ locU n w, cLoc w y ∈ KGL w n → RU E n y φ = φ) (h0 : φ ≠ 0) :
+    {φ : UA E n → ℂ} (hφ : φ ∈ σ) (hK : ∀ y ∈ locU n w, cLoc w y ∈ KGL w (n := n) → RU E n y φ = φ) (h0 : φ ≠ 0) :
     IsSatVecGL w (repG e) φ B := by
   obtain ⟨hirr, f, hf0, hfσ, hfe⟩ := hc
   have hpe : ∀ g, cLoc w ((e.symm g : locU n w) : UA E n) = g := fun g => by
@@ -119,7 +119,7 @@ private theorem satVec_of_mem {σ : Submodule ℂ (UA E n → ℂ)} (hσ : IsAut
   have hφS : φ ∈ S := hS.symm ▸ hφ
   refine GlobalTheory.HeightCounting.Blocks.isSatVecGL_of_mem_iSup hirr hB F hFe hφS
     (GlobalTheory.LGrp.mem_fixed.2 fun k hk => hK _ (e.symm k).2 ?_) h0
-  show cLoc w ((e.symm k : locU n w) : UA E n) ∈ KGL w n
+  show cLoc w ((e.symm k : locU n w) : UA E n) ∈ KGL w (n := n)
   rw [hpe]
   exact hk
 
@@ -131,7 +131,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pSatVal_of :
   obtain ⟨τ, hc, hS⟩ := hB
   have hmem := AutSub.mem_finPart.1 hf
   have hval : ∀ (k : finU E n) v, (algRep W k f).1 v = RU E n k.1 (f.1 v) := fun _ _ => rfl
-  have hfix : ∀ v, ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w n → RU E n y (f.1 v) = f.1 v := by
+  have hfix : ∀ v, ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n y (f.1 v) = f.1 v := by
     intro v y hy hk
     have h1 : ((locF hw (cLoc w y)).1 : UA E n) = y := by
       have h2 : locE hw ⟨y, hy⟩ = cLoc w y := locE_apply hw ⟨y, hy⟩
@@ -150,7 +150,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pSatVal_of :
   refine ⟨hf0, GlobalTheory.LGrp.mem_fixed.2 fun k hk => hK k hk, (hsat v₀ hv₀).2.2.1, fun ϖ hϖ j hj => ?_⟩
   have hcm := Formalism.UG.Final.GLintComm E w n
   have hT := GlobalTheory.LFun.Tj_mem_hecke (n := n) hϖ j
-  obtain ⟨R, -, hRe⟩ := hecke_eq_sum (GlobalTheory.LFun.KGL w n) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) tj_one
+  obtain ⟨R, -, hRe⟩ := hecke_eq_sum (GlobalTheory.LFun.KGL w (n := n)) (Formalism.UG.Tj ℂ n (Formalism.UG.Ov E w) ϖ j) tj_one
     (Formalism.UG.P.finite_support_cosets hcm hT.2)
   rw [hRe]
   refine Subtype.ext (LinearMap.ext fun v => ?_)

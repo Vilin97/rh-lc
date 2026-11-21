@@ -60,7 +60,7 @@ private theorem exS (w : HeightOneSpectrum (𝓞 E)) (c : 𝓞 E) (hc : c ≠ 0)
     exact Ideal.IsMaximal.coprime_of_ne u.isMaximal w.isMaximal (fun h => hu (HeightOneSpectrum.ext h))
   exact Ideal.le_of_dvd (hcop.dvd_of_dvd_mul_left hdvd) hsQ
 
-private theorem conj_int [IsCMField E] {n : ℕ} (u : HeightOneSpectrum (𝓞 E)) (a h : GL (Fin n) (u.adicCompletion E)) (ha : a ∈ KGL u n)
+private theorem conj_int [IsCMField E] {n : ℕ} (u : HeightOneSpectrum (𝓞 E)) (a h : GL (Fin n) (u.adicCompletion E)) (ha : a ∈ KGL u (n := n))
     (t : u.adicCompletion E) (ht : ∀ i k, (t • h.val) i k ∈ u.adicCompletionIntegers E) (i k : Fin n) :
     t * (a * h * a⁻¹).val i k ∈ u.adicCompletionIntegers E := by
   obtain ⟨h1, h2⟩ := GlobalTheory.EulerTwRestr.mem_KGL_iff.1 ha

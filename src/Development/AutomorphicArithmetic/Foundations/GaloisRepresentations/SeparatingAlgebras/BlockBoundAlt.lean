@@ -101,7 +101,7 @@ def FrameW : Prop :=
 def MaxCpt : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (a : ℕ) (H : Subgroup (GL (Fin a) (w.adicCompletion E)))
     (Z : Set (GL (Fin a) (w.adicCompletion E))), IsCompact Z → (H : Set (GL (Fin a) (w.adicCompletion E))) ⊆ Z →
-    GlobalTheory.LFun.KGL w a ≤ H → H ≤ GlobalTheory.LFun.KGL w a
+    GlobalTheory.LFun.KGL w (n := a) ≤ H → H ≤ GlobalTheory.LFun.KGL w (n := a)
 
 def PowNhds : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (a N : ℕ), N ≠ 0 →

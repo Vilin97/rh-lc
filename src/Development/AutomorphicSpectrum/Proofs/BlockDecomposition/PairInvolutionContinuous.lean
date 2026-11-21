@@ -19,7 +19,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.LocalHypotheses
 
 theorem thetaGL_id_mem {E : Type} [Field E] [NumberField E] (n : ℕ) (w : Pl E) {g : GLw n w}
-    (hg : g ∈ GlobalTheory.LFun.KGL w n) : thetaGL n (RingHom.id _) g ∈ GlobalTheory.LFun.KGL w n := by
+    (hg : g ∈ GlobalTheory.LFun.KGL w (n := n)) : thetaGL n (RingHom.id _) g ∈ GlobalTheory.LFun.KGL w (n := n) := by
   have hid : GeneralLinearGroup.map (RingHom.id (w.adicCompletion E)) g = g :=
     Units.ext (Matrix.ext fun _ _ => rfl)
   change PhiU n _ * invT n _ (GeneralLinearGroup.map (RingHom.id _) g) * (PhiU n _)⁻¹ ∈ _
