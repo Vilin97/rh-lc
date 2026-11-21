@@ -10,7 +10,7 @@ namespace GlobalTheory
 
 
 theorem wittVector_iterate_frobenius_of_eq_pow {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O]
-    (y : WittVector l O) (h : frobenius y = y ^ l) (k : ℕ) :
+    (y : WittVector l O) (h : (WittVector.frobenius (p := l) (R := O)) y = y ^ l) (k : ℕ) :
     (WittVector.frobenius (p := l) (R := O))^[k] y = y ^ l ^ k := by
   induction k with
   | zero => simp

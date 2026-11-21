@@ -55,3 +55,5 @@ theorem resultant_phase_unit_circle :
   rw [this, hu]
   field_simp
   linear_combination (D ^ k) * hsq
+
+end GlobalTheory

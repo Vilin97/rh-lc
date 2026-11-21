@@ -150,7 +150,7 @@ theorem Formalism.KernelCokernelLengths.cokernel_torsion_holds : Formalism.Kerne
       have := congrArg Subtype.val hs
       simpa [dS] using this
     have hs2 : aeval d Q (s : M) = 0 := s.2
-    rw [hsplit, hcommR, hs1, map_zero, add_zero] at hs2
+    rw [hsplit, hcommR, hs1, map_zero (aeval d Q.divX), add_zero] at hs2
     exact Subtype.ext ((smul_eq_zero.mp hs2).resolve_left hQc)
   have hdet : LinearMap.det dS ≠ 0 := fun h => (LinearMap.det_eq_zero_iff_ker_ne_bot.mp h) hker
   have hPc : dS.charpoly.coeff 0 ≠ 0 := by

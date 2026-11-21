@@ -76,7 +76,7 @@ private theorem smGL_ord_pow_eq_mul (x : kˣ) (m : ℕ) :
   induction m with
   | zero =>
     simp only [pow_zero, Nat.cast_zero, zero_mul]
-    exact _root_.GlobalTheory.SmGL.ord_eq_zero (by simp)
+    exact _root_.GlobalTheory.SmGL.ord_eq_zero k (by simp only [Units.val_one, map_one])
   | succ m ih =>
     rw [pow_succ, _root_.GlobalTheory.SmGL.ord_mul, ih]
     push_cast
@@ -110,9 +110,9 @@ private theorem exists_unit_ord_eq_one_and_nabs_eq_inv_resCard :
     exact u.ne_zero (Subtype.ext h)
   refine ⟨Units.mk0 (p : k) hp0, ?_, _root_.GlobalTheory.SplitWeil.nabs_uniformiser hp rfl⟩
   have hyo : _root_.GlobalTheory.SmGL.ord k (Units.mk0 y hy0) = 1 :=
-    _root_.GlobalTheory.SmGL.ord_eq_one hy
+    _root_.GlobalTheory.SmGL.ord_eq_one k hy
   have huo : _root_.GlobalTheory.SmGL.ord k (Units.mk0 _ hu0) = 0 := by
-    apply _root_.GlobalTheory.SmGL.ord_eq_zero
+    apply _root_.GlobalTheory.SmGL.ord_eq_zero k
     exact (Valuation.integer.integers (valuation k)).one_of_isUnit u.isUnit
   have hsplit : Units.mk0 y hy0 = Units.mk0 _ hu0 * Units.mk0 (p : k) hp0 ^ m := by
     ext
@@ -139,7 +139,7 @@ theorem _root_.GlobalTheory.LGrp.nabs_eq_zpow (x : kˣ) :
   have oinv : _root_.GlobalTheory.SmGL.ord k ϖ⁻¹ = -1 := by
     have h := _root_.GlobalTheory.SmGL.ord_mul k ϖ ϖ⁻¹
     rw [mul_inv_cancel, hord,
-      _root_.GlobalTheory.SmGL.ord_eq_zero (x := (1 : kˣ)) (by simp)] at h
+      _root_.GlobalTheory.SmGL.ord_eq_zero k (x := (1 : kˣ)) (by simp only [Units.val_one, map_one])] at h
     omega
   have key : ∀ m : ℤ, _root_.GlobalTheory.SplitWeil.nabs k (ϖ ^ m) =
       (_root_.GlobalTheory.SplitWeil.resCard k : ℝ) ^ (-m) ∧ _root_.GlobalTheory.SmGL.ord k (ϖ ^ m) = m := by
@@ -147,7 +147,7 @@ theorem _root_.GlobalTheory.LGrp.nabs_eq_zpow (x : kˣ) :
     refine Int.induction_on m ?_ ?_ ?_
     · refine ⟨by simp [_root_.GlobalTheory.SplitWeil.nabs_one], ?_⟩
       rw [zpow_zero]
-      exact _root_.GlobalTheory.SmGL.ord_eq_zero (by simp)
+      exact _root_.GlobalTheory.SmGL.ord_eq_zero k (by simp only [Units.val_one, map_one])
     · intro i ih
       rw [_root_.zpow_add_one, _root_.GlobalTheory.SplitWeil.nabs_mul, _root_.GlobalTheory.SmGL.ord_mul,
         ih.1, ih.2, habs, hord]
@@ -164,7 +164,7 @@ theorem _root_.GlobalTheory.LGrp.nabs_eq_zpow (x : kˣ) :
     ring
   have hy1 : _root_.GlobalTheory.SplitWeil.nabs k (x * ϖ ^ (-o)) = 1 :=
     _root_.GlobalTheory.SmGL.nabs_eq_one k
-      (_root_.GlobalTheory.SmGL.ord_eq_zero_iff.mp hy)
+      (_root_.GlobalTheory.SmGL.ord_eq_zero_iff k |>.mp hy)
   have hx : x * ϖ ^ (-o) * ϖ ^ o = x := by
     rw [mul_assoc, ← _root_.zpow_add, neg_add_cancel, zpow_zero, mul_one]
   calc _root_.GlobalTheory.SplitWeil.nabs k x

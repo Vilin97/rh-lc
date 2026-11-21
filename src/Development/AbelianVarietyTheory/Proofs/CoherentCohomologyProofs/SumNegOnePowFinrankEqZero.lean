@@ -96,14 +96,8 @@ end ExactSeq
 variable {X : Scheme.{u}}
 
 theorem shortExact_toAbSheaf {S : ShortComplex X.Modules} (hS : S.ShortExact) :
-    (S.map (toAbSheaf X)).ShortExact :=
+    (S.map (toAbSheaf (X := X))).ShortExact :=
   SheafLES.shortExact_map_toSheaf X.ringCatSheaf hS
-
-  τ₁ := smulHom S.X₁ r
-  τ₂ := smulHom S.X₂ r
-  τ₃ := smulHom S.X₃ r
-  comm₁₂ := smulHom_comp S.f r
-  comm₂₃ := smulHom_comp S.g r
 
 namespace cohOn
 
@@ -114,8 +108,16 @@ def δ (U : X.Opens) (n : ℕ) : cohOn S.X₃ U n →ₗ[R] cohOn S.X₁ U (n + 
   WithAction.linearMap (action S.X₃ U n) (action S.X₁ U (n + 1)) R
     (SheafLES.δ.{u} (shortExact_toAbSheaf hS) n U) fun r x ↦ by
       rw [action_apply, action_apply]
-      exact (SheafLES.δ_naturality.{u} (shortExact_toAbSheaf hS) (shortExact_toAbSheaf hS)
-        ((toAbSheaf X).mapShortComplex.map (smulShortComplexHom S r)) n U x).symm
+      let φ : S ⟶ S :=
+        { τ₁ := smulHom S.X₁ r
+          τ₂ := smulHom S.X₂ r
+          τ₃ := smulHom S.X₃ r
+          comm₁₂ := smulHom_comp r S.f
+          comm₂₃ := smulHom_comp r S.g }
+      simpa only [SheafLES.map, Functor.mapShortComplex_map_τ₁,
+        Functor.mapShortComplex_map_τ₃, φ] using
+        (SheafLES.δ_naturality.{u} (shortExact_toAbSheaf hS) (shortExact_toAbSheaf hS)
+          ((toAbSheaf (X := X)).mapShortComplex.map φ) n U x).symm
 
 variable (U : X.Opens) (n : ℕ)
 
@@ -124,6 +126,7 @@ lemma toH'_δ (x : cohOn S.X₃ U n) :
       SheafLES.δ.{u} (shortExact_toAbSheaf hS) n U (toH' S.X₃ U n x) := rfl
 
 
+include hS in
 theorem exact₂ : Function.Exact (map R S.f U n) (map R S.g U n) :=
   SheafLES.exact₂.{u} (shortExact_toAbSheaf hS) n U
 
@@ -135,9 +138,10 @@ theorem exact₁ : Function.Exact (δ R hS U n) (map R S.f U (n + 1)) :=
 
 theorem map_zero_injective_of_mono {F G : X.Modules} (φ : F ⟶ G) [Mono φ] :
     Function.Injective (map R φ U 0) :=
-  SheafLES.map_zero_injective_of_mono.{u} ((toAbSheaf X).map φ) U
+  SheafLES.map_zero_injective_of_mono.{u} ((toAbSheaf (X := X)).map φ) U
 
 
+include hS in
 theorem injective_zero : Function.Injective (map R S.f U 0) :=
   SheafLES.injective_zero.{u} (shortExact_toAbSheaf hS) U
 
@@ -257,6 +261,7 @@ theorem sum_neg_one_pow_hdim_eq_add (N : ℕ) (h₁ : ∀ i < N, Module.Finite k
   cohOn.sum_neg_one_pow_finrank_eq_add hS ⊤ k N h₁ h₃ (Function.injective_of_subsingleton _)
 
 
+omit hS in
 theorem finsum_neg_one_pow_hdim_eq_sum (F : X.Modules) (N : ℕ)
     (hN : ∀ i, N ≤ i → Subsingleton (coh F i)) :
     ∑ᶠ i, (-1 : ℤ) ^ i * hdim k F i = ∑ i ∈ Finset.range N, (-1 : ℤ) ^ i * hdim k F i := by

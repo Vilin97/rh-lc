@@ -883,8 +883,8 @@ variable (F ρ) in
 theorem flat_sections_iff_stalk [F.IsQuasicoherent] (hU : IsAffineOpen U) :
     (letI := baseModule F U ρ
      Module.Flat R Γ(F, U)) ↔ ∀ x ∈ U,
-      letI := baseModuleStalk F ρ x
-      Module.Flat R (F.presheaf.stalk x :) := by
+      (letI := baseModuleStalk F ρ x
+       Module.Flat R (F.presheaf.stalk x :)) := by
   letI := baseModule F U ρ
   letI := (baseHom U ρ).toAlgebra
   haveI : IsScalarTower R Γ(X, U) Γ(F, U) := .of_algebraMap_smul fun _ _ ↦ rfl
@@ -910,8 +910,8 @@ theorem flat_sections_iff_stalk [F.IsQuasicoherent] (hU : IsAffineOpen U) :
 
 theorem isFlatOver_iff_stalk [F.IsQuasicoherent] :
     IsFlatOver F ρ ↔ ∀ x : X,
-      letI := baseModuleStalk F ρ x
-      Module.Flat R (F.presheaf.stalk x :) := by
+      (letI := baseModuleStalk F ρ x
+       Module.Flat R (F.presheaf.stalk x :)) := by
   refine ⟨fun h x ↦ ?_, fun h U hU ↦ (flat_sections_iff_stalk F ρ hU).2 fun x _ ↦ h x⟩
   obtain ⟨U, hU, hx⟩ := exists_affine_mem x
   exact (flat_sections_iff_stalk F ρ hU).1 (h U hU) x hx

@@ -157,7 +157,7 @@ theorem locOrder_free : ∀ (F B : Type) [Field F] [NumberField F] [Ring B] [Alg
     (hΛ : ∀ a : NumberField.RingOfIntegers F, algebraMap F B (a : F) ∈ Λ),
     Module.Finite ℤ Λ → (∀ b : B, ∃ m : ℕ, 0 < m ∧ (m : B) * b ∈ Λ) →
     ∃ N : ℕ, 0 < N ∧ ∀ (ℓ : ℕ) [Fact ℓ.Prime], ¬ ℓ ∣ N →
-      letI := GlobalTheory.LocMatrix.cenAlgebra ℓ F B Λ hΛ
+      letI := GlobalTheory.LocMatrix.cenAlgebra ℓ F B Λ hΛ;
       Module.Free (cenOrder ℓ F) (locOrder ℓ Λ) ∧
         Module.finrank (cenOrder ℓ F) (locOrder ℓ Λ) = Module.finrank F B := by
   intro F B _ _ _ _ _ _ _ Λ hΛ hfin hspan

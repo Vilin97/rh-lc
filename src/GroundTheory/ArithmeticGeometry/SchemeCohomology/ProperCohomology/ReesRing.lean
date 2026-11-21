@@ -24,15 +24,15 @@ abbrev polyRing (I : Ideal A) (V : X.Opens) : CommRingCat.{u} :=
 abbrev polyInl (I : Ideal A) (V : X.Opens) : Γ(X, V) ⟶ polyRing I V :=
   (reesPr I X).app V ≫ (reesPolyMap I X).app _
 
-lemma polyDesc_w : CommRingCat.ofHom (algV X V) ≫ CommRingCat.ofHom Polynomial.C =
+lemma polyDesc_w : CommRingCat.ofHom (algV (A := A) V) ≫ CommRingCat.ofHom Polynomial.C =
     CommRingCat.ofHom (Polynomial.C (R := A)) ≫
-      CommRingCat.ofHom (Polynomial.mapRingHom (algV X V)) := by
+      CommRingCat.ofHom (Polynomial.mapRingHom (algV (A := A) V)) := by
   ext a
   simp
 
 def polyRingHom : polyRing I V →+* Polynomial Γ(X, V) :=
   ((isPushout_reesPoly (I := I) hV).desc (CommRingCat.ofHom Polynomial.C)
-    (CommRingCat.ofHom (Polynomial.mapRingHom (algV X V))) polyDesc_w).hom
+    (CommRingCat.ofHom (Polynomial.mapRingHom (algV (A := A) V))) polyDesc_w).hom
 
 lemma polyRingHom_inl (c : Γ(X, V)) : polyRingHom hV (polyInl I V c) = Polynomial.C c := by
   have := congrArg (fun f : Γ(X, V) ⟶ CommRingCat.of (Polynomial Γ(X, V)) => f.hom c)
@@ -40,21 +40,23 @@ lemma polyRingHom_inl (c : Γ(X, V)) : polyRingHom hV (polyInl I V c) = Polynomi
   exact this
 
 lemma polyRingHom_inr (p : Polynomial A) :
-    polyRingHom hV (polyInr I V p) = p.map (algV X V) := by
+    polyRingHom hV (polyInr (I := I) V p) = p.map (algV (A := A) V) := by
   have := congrArg
     (fun f : CommRingCat.of (Polynomial A) ⟶ CommRingCat.of (Polynomial Γ(X, V)) => f.hom p)
     (IsPushout.inr_desc (isPushout_reesPoly (I := I) hV) _ _ polyDesc_w)
   exact this
 
 def polyRingInv : Polynomial Γ(X, V) →+* polyRing I V :=
-  Polynomial.eval₂RingHom (polyInl I V).hom (polyInr I V Polynomial.X)
+  Polynomial.eval₂RingHom (polyInl I V).hom (polyInr (I := I) V Polynomial.X)
 
 include hV in
 lemma polyInr_eq_eval₂ (p : Polynomial A) :
-    polyInr I V p = p.eval₂ ((polyInl I V).hom.comp (algV X V)) (polyInr I V Polynomial.X) := by
+    polyInr (I := I) V p =
+      p.eval₂ ((polyInl I V).hom.comp (algV (A := A) V)) (polyInr (I := I) V Polynomial.X) := by
   have hw := (isPushout_reesPoly (I := I) hV).w
-  have h : (polyInr I V).hom = Polynomial.eval₂RingHom ((polyInl I V).hom.comp (algV X V))
-      (polyInr I V Polynomial.X) := by
+  have h : (polyInr (I := I) V).hom =
+      Polynomial.eval₂RingHom ((polyInl I V).hom.comp (algV (A := A) V))
+        (polyInr (I := I) V Polynomial.X) := by
     apply Polynomial.ringHom_ext
     · intro a
       have := congrArg (fun f => f.hom a) hw
@@ -81,15 +83,17 @@ def polyRingEquiv : polyRing I V ≃+* Polynomial Γ(X, V) :=
           change (polyRingInv (I := I) (V := V)) (polyRingHom hV (polyInl I V c)) = polyInl I V c
           rw [polyRingHom_inl, polyRingInv, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_C]) (by
           refine CommRingCat.hom_ext (RingHom.ext fun p => ?_)
-          change (polyRingInv (I := I) (V := V)) (polyRingHom hV (polyInr I V p)) = polyInr I V p
+          change (polyRingInv (I := I) (V := V)) (polyRingHom hV (polyInr (I := I) V p)) =
+            polyInr (I := I) V p
           rw [polyRingHom_inr, polyRingInv, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_map]
           exact (polyInr_eq_eval₂ hV p).symm)
       exact congrArg CommRingCat.Hom.hom h)
 
 
+include hV in
 lemma reesInr_comp :
-    reesInr I V ≫ (reesPolyMap I X).app _ =
-      CommRingCat.ofHom (algebraMap (reesAlgebra I) (Polynomial A)) ≫ polyInr I V := by
+    reesInr (I := I) V ≫ (reesPolyMap I X).app _ =
+      CommRingCat.ofHom (algebraMap (reesAlgebra I) (Polynomial A)) ≫ polyInr (I := I) V := by
   have hw := (isPushout_app_of_isPullback (isPullback_reesPoly I X) (hV.preimage (reesPr I X))).w
   rw [reesInr, polyInr, Category.assoc, hw, ← Category.assoc, ← Category.assoc,
     Scheme.ΓSpecIso_inv_naturality]
@@ -101,16 +105,17 @@ lemma reesRingHom_inl (c : Γ(X, V)) : reesRingHom hV ((reesPr I X).app V c) = P
   polyRingHom_inl hV c
 
 lemma reesRingHom_inr (r : reesAlgebra I) :
-    reesRingHom hV (reesInr I V r) = (r : Polynomial A).map (algV X V) := by
+    reesRingHom hV (reesInr (I := I) V r) = (r : Polynomial A).map (algV (A := A) V) := by
   have := congrArg (fun f : CommRingCat.of (reesAlgebra I) ⟶ polyRing I V => f.hom r)
     (reesInr_comp (I := I) hV)
-  change polyRingHom hV (((reesInr I V ≫ (reesPolyMap I X).app _)).hom r) = _
+  change polyRingHom hV (((reesInr (I := I) V ≫ (reesPolyMap I X).app _)).hom r) = _
   rw [this]
   exact polyRingHom_inr hV _
 
 
+variable (I X V) in
 def reesCoeffRing : Subring (Polynomial Γ(X, V)) where
-  carrier := {p | ∀ n, p.coeff n ∈ (I.map (algV X V)) ^ n}
+  carrier := {p | ∀ n, p.coeff n ∈ (I.map (algV (A := A) V)) ^ n}
   one_mem' n := by
     change _root_.AddMonoidAlgebra.coeff (M := ℕ) 1 n ∈ _
     rw [Polynomial.coeff_one]
@@ -144,7 +149,7 @@ lemma C_mem_reesCoeffRing (c : Γ(X, V)) : Polynomial.C c ∈ reesCoeffRing I X 
   · exact zero_mem _
 
 lemma map_mem_reesCoeffRing (r : reesAlgebra I) :
-    (r : Polynomial A).map (algV X V) ∈ reesCoeffRing I X V := by
+    (r : Polynomial A).map (algV (A := A) V) ∈ reesCoeffRing I X V := by
   intro n
   rw [Polynomial.coeff_map, ← Ideal.map_pow]
   exact Ideal.mem_map_of_mem _ ((mem_reesAlgebra_iff I _).1 r.2 n)
@@ -154,9 +159,9 @@ theorem reesRingHom_mem (s : Γ(reesScheme I X, reesPr I X ⁻¹ᵁ V)) :
   let l : Γ(X, V) ⟶ CommRingCat.of (reesCoeffRing I X V) :=
     CommRingCat.ofHom ((Polynomial.C).codRestrict (reesCoeffRing I X V) C_mem_reesCoeffRing)
   let r : CommRingCat.of (reesAlgebra I) ⟶ CommRingCat.of (reesCoeffRing I X V) :=
-    CommRingCat.ofHom (((Polynomial.mapRingHom (algV X V)).comp (reesAlgebra I).val.toRingHom)
+    CommRingCat.ofHom (((Polynomial.mapRingHom (algV (A := A) V)).comp (reesAlgebra I).val.toRingHom)
       |>.codRestrict (reesCoeffRing I X V) map_mem_reesCoeffRing)
-  have hw' : CommRingCat.ofHom (algV X V) ≫ l =
+  have hw' : CommRingCat.ofHom (algV (A := A) V) ≫ l =
       CommRingCat.ofHom (algebraMap A (reesAlgebra I)) ≫ r := by
     refine CommRingCat.hom_ext (RingHom.ext fun a => Subtype.ext ?_)
     simp [l, r]

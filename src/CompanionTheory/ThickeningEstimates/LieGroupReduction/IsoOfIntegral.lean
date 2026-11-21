@@ -55,6 +55,8 @@ theorem ph_apply (S : Eu l →L[ℝ] Eu l) (f : Sch l) (x : Eu l) :
     (Function.HasTemperateGrowth.const _).mul (temperate_quad S)
   have h3 : Function.HasTemperateGrowth fun x : Eu l => exp (((-π * ⟪x, S x⟫ : ℝ) : ℂ) * I) := by
     convert GlobalTheory.Published.Metaplectic.hasTemperateGrowth_eChar.comp h2 using 1
+    funext y
+    rw [Function.comp_apply, GlobalTheory.Published.Metaplectic.eChar_apply]
     congr 1
     push_cast
     ring
@@ -89,6 +91,7 @@ theorem intw_ph {S : Eu l →L[ℝ] Eu l} (hS : ∀ x y, ⟪x, S y⟫ = ⟪y, S 
     ring
 
 
+open Classical in
 def dil (B : Eu l →L[ℝ] Eu l) : Sch l →L[ℂ] Sch l :=
   if h : IsUnit B then compCLMOfContinuousLinearEquiv ℂ (ContinuousLinearEquiv.ofUnit h.unit) else 0
 

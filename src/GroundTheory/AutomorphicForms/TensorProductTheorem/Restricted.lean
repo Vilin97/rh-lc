@@ -146,8 +146,9 @@ theorem restrictedIndicator_of_not {ξ x : ∀ v, V v} (h : ¬ IsRestricted ξ x
   simp [restrictedIndicator, h]
 
 def restrictedLift (ξ : ∀ v, V v) (T : Finset ι) (l : ∀ v, Dual ℂ (V v))
-    (hl : ∀ᶠ v in cofinite, l v (ξ v) = 1) (f : MultilinearMap ℂ (fun v : T => V v) N) :
-    MultilinearMap ℂ V N where
+    (hl : ∀ᶠ v in cofinite, l v (ξ v) = 1)
+    (f : MultilinearMap (RingHom.id ℂ) (fun v : T => V v) N) :
+    MultilinearMap (RingHom.id ℂ) V N where
   toFun x := restrictedIndicator ξ x • (∏ᶠ v, weight T l x v) • f (fun v => x v)
   map_update_add' := by
     intro inst x i a b
@@ -182,6 +183,7 @@ def restrictedLift (ξ : ∀ v, V v) (T : Finset ι) (l : ∀ v, Dual ℂ (V v))
         have hw := finite_mulSupport_weight hx T hl
         rw [finprod_update_eq_mul _ hw (c := l i (c • a)), finprod_update_eq_mul _ hw (c := l i a),
           map_smul, smul_eq_mul, mul_assoc, mul_smul]
+        rfl
     · have h1 : ∀ c : V i, ¬ IsRestricted ξ (@Function.update _ _ inst x i c) := fun c h => by
         apply hx
         have := @IsRestricted.update _ _ _ _ inst ξ _ h i (x i)
@@ -189,7 +191,8 @@ def restrictedLift (ξ : ∀ v, V v) (T : Finset ι) (l : ∀ v, Dual ℂ (V v))
       simp [restrictedIndicator_of_not (h1 _)]
 
 theorem restrictedLift_apply_of {ξ : ∀ v, V v} {T : Finset ι} {l : ∀ v, Dual ℂ (V v)}
-    {hl : ∀ᶠ v in cofinite, l v (ξ v) = 1} (f : MultilinearMap ℂ (fun v : T => V v) N)
+    {hl : ∀ᶠ v in cofinite, l v (ξ v) = 1}
+    (f : MultilinearMap (RingHom.id ℂ) (fun v : T => V v) N)
     {x : ∀ v, V v} (hx : IsRestricted ξ x) :
     restrictedLift ξ T l hl f x = (∏ᶠ v, weight T l x v) • f (fun v => x v) := by
   show restrictedIndicator ξ x • ((∏ᶠ v, weight T l x v) • f (fun v => x v)) = _
@@ -197,7 +200,7 @@ theorem restrictedLift_apply_of {ξ : ∀ v, V v} {T : Finset ι} {l : ∀ v, Du
 
 def evalForm (ξ : ∀ v, V v) (l : ∀ v, Dual ℂ (V v)) (hl : ∀ᶠ v in cofinite, l v (ξ v) = 1) :
     (⨂[ℂ] v, V v) →ₗ[ℂ] ℂ :=
-  lift (restrictedLift ξ ∅ l hl (MultilinearMap.constOfIsEmpty ℂ _ 1))
+  lift (restrictedLift ξ ∅ l hl (MultilinearMap.constOfIsEmpty (RingHom.id ℂ) _ 1))
 
 theorem evalForm_tprod {ξ : ∀ v, V v} {l : ∀ v, Dual ℂ (V v)}
     {hl : ∀ᶠ v in cofinite, l v (ξ v) = 1} {x : ∀ v, V v} (hx : IsRestricted ξ x) :
@@ -250,15 +253,15 @@ def tensorRep (π : ∀ v, Representation ℂ (G v) (V v)) :
 
 theorem tensorRep_tprod (π : ∀ v, Representation ℂ (G v) (V v)) (g : Πʳ v, [G v, K v])
     (x : ∀ v, V v) :
-    tensorRep K π g (tprod ℂ x) = tprod ℂ fun v => π v (g v) (x v) :=
+    tensorRep (K := K) π g (tprod ℂ x) = tprod ℂ fun v => π v (g v) (x v) :=
   PiTensorProduct.map_tprod _ _
 
 def restrictedSubrep (π : ∀ v, Representation ℂ (G v) (V v)) (ξ : ∀ v, V v)
     (hξ : ∀ᶠ v in cofinite, ξ v ∈ fixedVectors (π v) (K v)) :
-    Subrepresentation (tensorRep K π) where
+    Subrepresentation (tensorRep (K := K) π) where
   toSubmodule := restrictedTensor ξ
   apply_mem_toSubmodule g t ht := by
-    have : restrictedTensor ξ ≤ (restrictedTensor ξ).comap (tensorRep K π g) := by
+    have : restrictedTensor ξ ≤ (restrictedTensor ξ).comap (tensorRep (K := K) π g) := by
       refine Submodule.span_le.2 ?_
       rintro _ ⟨x, hx, rfl⟩
       rw [SetLike.mem_coe, Submodule.mem_comap, tensorRep_tprod]
@@ -276,7 +279,7 @@ def restrictedTensorRep (π : ∀ v, Representation ℂ (G v) (V v)) (ξ : ∀ v
 theorem coe_restrictedTensorRep_apply (π : ∀ v, Representation ℂ (G v) (V v)) (ξ : ∀ v, V v)
     (hξ : ∀ᶠ v in cofinite, ξ v ∈ fixedVectors (π v) (K v)) (g : Πʳ v, [G v, K v])
     (t : restrictedTensor ξ) :
-    (restrictedTensorRep π ξ hξ g t : ⨂[ℂ] v, V v) = tensorRep K π g t :=
+    (restrictedTensorRep π ξ hξ g t : ⨂[ℂ] v, V v) = tensorRep (K := K) π g t :=
   rfl
 
 end Rep

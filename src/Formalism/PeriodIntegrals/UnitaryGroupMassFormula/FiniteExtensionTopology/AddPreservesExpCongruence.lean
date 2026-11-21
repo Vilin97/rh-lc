@@ -58,9 +58,11 @@ theorem exists_pow_mul_mem {ϖ : O'} (hϖ : Irreducible ϖ) (a : FractionRing O'
   linear_combination (-(a * algebraMap O' (FractionRing O') (↑u⁻¹))) * hy' +
     (-(algebraMap O' (FractionRing O') (ϖ ^ n) * a)) * hu1
 
-theorem fracB_basis {ϖ : O'} (hϖ : Irreducible ϖ) : SubmodulesRingBasis (fracB ϖ) where
-  inter i j := ⟨max i j, le_inf (fracB_anti ϖ (le_max_left _ _)) (fracB_anti ϖ (le_max_right _ _))⟩
-  leftMul a i := by
+theorem fracB_basis {ϖ : O'} (hϖ : Irreducible ϖ) : SubmodulesRingBasis (fracB ϖ) := by
+  constructor
+  · intro i j
+    exact ⟨max i j, le_inf (fracB_anti ϖ (le_max_left _ _)) (fracB_anti ϖ (le_max_right _ _))⟩
+  · intro a i
     obtain ⟨n, c, hc⟩ := exists_pow_mul_mem hϖ a
     refine ⟨i + n, ?_⟩
     rintro _ ⟨x, hx, rfl⟩
@@ -74,11 +76,12 @@ theorem fracB_basis {ϖ : O'} (hϖ : Irreducible ϖ) : SubmodulesRingBasis (frac
       ← map_mul]
     congr 1
     ring
-  mul i := ⟨i, by
+  · intro i
+    refine ⟨i, ?_⟩
     rintro _ ⟨x, hx, y, hy, rfl⟩
     obtain ⟨c, rfl⟩ := mem_fracB.1 hx
     obtain ⟨d, rfl⟩ := mem_fracB.1 hy
-    exact mem_fracB.2 ⟨c * d * ϖ ^ i, by show _ * _ = _; rw [← map_mul]; congr 1; ring⟩⟩
+    exact mem_fracB.2 ⟨c * d * ϖ ^ i, by show _ * _ = _; rw [← map_mul]; congr 1; ring⟩
 
 end
 

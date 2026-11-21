@@ -251,22 +251,22 @@ def stdSplit {a a' d₁ d₂ : ℕ} (h : a + a' = d₁ + d₂) : Fin a ⊕ Fin a
 
 
 theorem frameMatrixFirstColumnBlock_mul_apply {B : Type*} (σ : A ⊕ A' ≃ D) (M : Matrix D B k) (i : A) (j : B) :
-    (X0 k σ * M) i j = M (σ (Sum.inl i)) j := by simp [X0, Matrix.mul_apply]
+    (X0 (k := k) σ * M) i j = M (σ (Sum.inl i)) j := by simp [X0, Matrix.mul_apply]
 
 
 theorem frameMatrixSecondColumnBlock_mul_apply {B : Type*} (σ : A ⊕ A' ≃ D) (M : Matrix D B k) (i : A') (j : B) :
-    (Y0 k σ * M) i j = M (σ (Sum.inr i)) j := by simp [Y0, Matrix.mul_apply]
+    (Y0 (k := k) σ * M) i j = M (σ (Sum.inr i)) j := by simp [Y0, Matrix.mul_apply]
 
 
 theorem frameSecondBlock_mul_frameFirstBlock_transpose_eq_zero (σ : A ⊕ A' ≃ D) (h : GL D k) :
-    (Y0 k σ * h.val) * (X0 k σ * (invT h).val)ᵀ = 0 := by
+    (Y0 (k := k) σ * h.val) * (X0 (k := k) σ * (invT h).val)ᵀ = 0 := by
   rw [transpose_mul, invT_val, transpose_transpose, Matrix.mul_assoc, ← Matrix.mul_assoc h.val, Units.mul_inv,
     Matrix.one_mul]
   ext i j; simp [frameMatrixSecondColumnBlock_mul_apply, X0]
 
 
 theorem rank_eq_card_iff_exists_frameMatrixFirstColumnBlock (σ : A ⊕ A' ≃ D) (X : Matrix A D k) :
-    X.rank = Fintype.card A ↔ ∃ h : GL D k, X = X0 k σ * (invT h).val := by
+    X.rank = Fintype.card A ↔ ∃ h : GL D k, X = X0 (k := k) σ * (invT h).val := by
   have hli : X.rank = Fintype.card A ↔ LinearIndependent k X.row := by
     rw [rank_eq_finrank_span_row, linearIndependent_iff_card_eq_finrank_span, eq_comm]; rfl
   rw [hli]
@@ -310,7 +310,7 @@ def matLat (Λ : Submodule 𝒪[k] (D → k)) : Submodule 𝒪[k] (Matrix A D k)
   zero_mem' _ := Λ.zero_mem
   smul_mem' c _ hX i := Λ.smul_mem c (hX i)
 
-theorem mem_matLat {Λ : Submodule 𝒪[k] (D → k)} {X : Matrix A D k} : X ∈ matLat A Λ ↔ ∀ i, X.row i ∈ Λ := Iff.rfl
+theorem mem_matLat {Λ : Submodule 𝒪[k] (D → k)} {X : Matrix A D k} : X ∈ matLat Λ ↔ ∀ i, X.row i ∈ Λ := Iff.rfl
 
 def diagLat (c : D → kˣ) : Submodule 𝒪[k] (D → k) where
   carrier := {x | ∀ j, valuation k (x j) ≤ valuation k (c j : k)}
@@ -326,10 +326,10 @@ theorem mem_diagLat {c : D → kˣ} {x : D → k} :
 
 def stdLat : Submodule 𝒪[k] (D → k) := diagLat 1
 
-theorem mem_stdLat {x : D → k} : x ∈ stdLat k D ↔ ∀ j, x j ∈ 𝒪[k] := by
+theorem mem_stdLat {x : D → k} : x ∈ stdLat ↔ ∀ j, x j ∈ 𝒪[k] := by
   simp [stdLat, mem_diagLat, Valuation.mem_integer_iff]
 
-theorem mem_matLat_stdLat {X : Matrix A D k} : X ∈ matLat A (stdLat k D) ↔ ∀ i j, X i j ∈ 𝒪[k] :=
+theorem mem_matLat_stdLat {X : Matrix A D k} : X ∈ matLat (stdLat) ↔ ∀ i j, X i j ∈ 𝒪[k] :=
   forall_congr' fun _ => mem_stdLat
 
 theorem smul_diagLat (u : kˣ) (c : D → kˣ) : u • diagLat c = diagLat fun j => u * c j := by
@@ -393,7 +393,7 @@ theorem dualLat_diagLat (c : D → kˣ) : dualLat (diagLat c) = diagLat fun j =>
     exact (mul_le_mul' (h j) (hy j)).trans (inv_mul_cancel₀ (h0 j).ne').le
 
 def IsPrimFrame [Fintype A] (Λ : Submodule 𝒪[k] (D → k)) (X : Matrix A D k) : Prop :=
-  X.rank = Fintype.card A ∧ X ∈ matLat A Λ ∧
+  X.rank = Fintype.card A ∧ X ∈ matLat Λ ∧
     Submodule.span 𝒪[k] (Set.range X.row) = (Submodule.span k (Set.range X.row)).restrictScalars 𝒪[k] ⊓ Λ
 
 variable [DecidableEq D]
@@ -419,8 +419,8 @@ def glLatCong (c : kˣ) (Λ : Submodule 𝒪[k] (D → k)) : Subgroup (GL D k) w
       vecMul_neg, ← vecMul_vecMul]
     exact neg_mem (hh' _ (((glLat Λ).inv_mem hh x).2 hx))
 
-theorem glLat_stdLat : glLat (stdLat k D) = KO k D := by
-  have key : ∀ h : GL D k, (∀ x ∈ stdLat k D, x ᵥ* h.val ∈ stdLat k D) ↔ ∀ i j, h.val i j ∈ 𝒪[k] := fun h => by
+theorem glLat_stdLat : glLat (stdLat) = KO k D := by
+  have key : ∀ h : GL D k, (∀ x ∈ stdLat, x ᵥ* h.val ∈ stdLat) ↔ ∀ i j, h.val i j ∈ 𝒪[k] := fun h => by
     constructor
     · intro hh i j
       simpa using mem_stdLat.1 (hh (Pi.single i 1) (mem_stdLat.2 fun l => by
@@ -443,7 +443,7 @@ def blockLat (ϖ : kˣ) (e : ℕ) (P : Finset D) : Submodule 𝒪[k] (D → k) :
 def blockScale (ϖ : kˣ) (e : ℕ) (P : Finset D) : GL D k := diagGL (blockUnits ϖ e P)
 
 theorem vecMul_blockScale_mem (ϖ : kˣ) (e : ℕ) (P : Finset D) (x : D → k) :
-    x ᵥ* (blockScale ϖ e P).val ∈ blockLat ϖ e P ↔ x ∈ stdLat k D := by
+    x ᵥ* (blockScale ϖ e P).val ∈ blockLat ϖ e P ↔ x ∈ stdLat := by
   rw [mem_stdLat]
   refine forall_congr' fun j => ?_
   have h0 : 0 < valuation k (blockUnits ϖ e P j : k) := zero_lt_iff.2 (by simp)
@@ -463,7 +463,7 @@ theorem latA_blockLat (ϖ : kˣ) (e : ℕ) (P : Finset D) : latA ϖ e (blockLat 
 omit [Fintype D] [DecidableEq D]
 
 def HasDepth (ϖ : kˣ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) (Φ : Matrix A D k → ℂ) : Prop :=
-  (∀ X, X ∉ matLat A Λ → Φ X = 0) ∧ ∀ X, ∀ Z ∈ matLat A (ϖ ^ e • Λ), Φ (X + Z) = Φ X
+  (∀ X, X ∉ matLat Λ → Φ X = 0) ∧ ∀ X, ∀ Z ∈ matLat (ϖ ^ e • Λ), Φ (X + Z) = Φ X
 
 
 def depthSpace (ϖ : kˣ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) : Submodule ℂ (Matrix A D k → ℂ) where
@@ -472,7 +472,7 @@ def depthSpace (ϖ : kˣ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) : Submodu
   zero_mem' := ⟨fun _ _ => rfl, fun _ _ _ => rfl⟩
   smul_mem' c _ h := ⟨fun X hX => by simp [h.1 X hX], fun X Z hZ => by simp [h.2 X Z hZ]⟩
 
-def IsNatDatum (ϖ : kˣ) (e : ℕ) (Φ : Matrix A D k → ℂ) : Prop := HasDepth ϖ e (stdLat k D) Φ
+def IsNatDatum (ϖ : kˣ) (e : ℕ) (Φ : Matrix A D k → ℂ) : Prop := HasDepth ϖ e (stdLat) Φ
 
 theorem pow_smul_le {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) : ϖ ^ e • Λ ≤ Λ := by
   intro x hx
@@ -483,10 +483,10 @@ theorem pow_smul_le {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ) (Λ : Submodule 𝒪[
   exact Λ.smul_mem ⟨_, h⟩ hy
 
 theorem hasDepth_indicator {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) :
-    HasDepth ϖ e Λ ((matLat A Λ : Set (Matrix A D k)).indicator 1) := by
+    HasDepth ϖ e Λ ((matLat Λ : Set (Matrix A D k)).indicator 1) := by
   refine ⟨fun X hX => Set.indicator_of_notMem hX _, fun X Z hZ => ?_⟩
-  have hZ' : Z ∈ matLat A Λ := fun i => pow_smul_le hϖ e Λ (hZ i)
-  by_cases hX : X ∈ matLat A Λ
+  have hZ' : Z ∈ matLat Λ := fun i => pow_smul_le hϖ e Λ (hZ i)
+  by_cases hX : X ∈ matLat Λ
   · rw [Set.indicator_of_mem (add_mem hX hZ'), Set.indicator_of_mem hX]; rfl
   · rw [Set.indicator_of_notMem hX, Set.indicator_of_notMem (fun h => hX ((add_mem_cancel_right hZ').1 h))]
 
@@ -498,16 +498,16 @@ variable {A D : Type*}
 
 abbrev Res (e : ℕ) : Type _ := 𝒪[k] ⧸ IsLocalRing.maximalIdeal 𝒪[k] ^ e
 
-instance finite_Res (e : ℕ) : Finite (Res k e) :=
+instance finite_Res (e : ℕ) : Finite (Res (k := k) e) :=
   haveI : Finite (𝒪[k] ⧸ IsLocalRing.maximalIdeal 𝒪[k]) := inferInstanceAs (Finite 𝓀[k])
   Ideal.finite_quotient_pow (IsNoetherian.noetherian _) e
 
-instance fintype_Res (e : ℕ) : Fintype (Res k e) := Fintype.ofFinite _
+instance fintype_Res (e : ℕ) : Fintype (Res (k := k) e) := Fintype.ofFinite _
 
-def liftRes {B : Type*} {e : ℕ} (T : A → B → Res k e) : Matrix A B k :=
+def liftRes {B : Type*} {e : ℕ} (T : A → B → Res (k := k) e) : Matrix A B k :=
   Matrix.of fun i j => ((Quotient.out (T i j) : 𝒪[k]) : k)
 
-theorem liftRes_mem {B : Type*} {e : ℕ} (T : A → B → Res k e) (i : A) (j : B) : liftRes T i j ∈ 𝒪[k] :=
+theorem liftRes_mem {B : Type*} {e : ℕ} (T : A → B → Res (k := k) e) (i : A) (j : B) : liftRes T i j ∈ 𝒪[k] :=
   (Quotient.out (T i j) : 𝒪[k]).2
 
 variable [DecidableEq D]
@@ -537,7 +537,7 @@ def fourierSum (ψ : AddChar k Circle) (ϖ : kˣ) (e : ℕ) (P : Finset D) :
     (Matrix A D k → ℂ) →ₗ[ℂ] (Matrix A D k → ℂ) where
   toFun Φ Y := if ∀ i, ∀ j ∈ P, ((ϖ ^ e : kˣ) : k) * Y i j ∈ 𝒪[k] then
     ((resCard k : ℂ) ^ (e * Fintype.card A * P.card))⁻¹ *
-      ∑ T : A → P → Res k e, Φ (setCols P Y (liftRes T)) * (ψ (pairCols P Y (liftRes T)) : ℂ) else 0
+      ∑ T : A → P → Res (k := k) e, Φ (setCols P Y (liftRes T)) * (ψ (pairCols P Y (liftRes T)) : ℂ) else 0
   map_add' Φ Φ' := by
     funext Y; simp only [Pi.add_apply]; split_ifs <;> simp [add_mul, Finset.sum_add_distrib, mul_add]
   map_smul' c Φ := by
@@ -550,7 +550,7 @@ def fourierSum (ψ : AddChar k Circle) (ϖ : kˣ) (e : ℕ) (P : Finset D) :
 def invFourierSum (ψ : AddChar k Circle) (ϖ : kˣ) (e : ℕ) (P : Finset D) :
     (Matrix A D k → ℂ) →ₗ[ℂ] (Matrix A D k → ℂ) where
   toFun Ψ T := if ∀ i, ∀ j ∈ P, T i j ∈ 𝒪[k] then
-    ∑ S : A → P → Res k e, Ψ (setCols P T ((ϖ ^ e)⁻¹ • liftRes S)) *
+    ∑ S : A → P → Res (k := k) e, Ψ (setCols P T ((ϖ ^ e)⁻¹ • liftRes S)) *
       (ψ (-pairCols P T ((ϖ ^ e)⁻¹ • liftRes S)) : ℂ) else 0
   map_add' Φ Φ' := by
     funext Y; simp only [Pi.add_apply]; split_ifs <;> simp [add_mul, Finset.sum_add_distrib]
@@ -564,18 +564,18 @@ def invFourierSum (ψ : AddChar k Circle) (ϖ : kˣ) (e : ℕ) (P : Finset D) :
 theorem fourierSum_apply (ψ : AddChar k Circle) (ϖ : kˣ) (e : ℕ) (P : Finset D) (Φ : Matrix A D k → ℂ)
     (Y : Matrix A D k) : fourierSum ψ ϖ e P Φ Y = if ∀ i, ∀ j ∈ P, ((ϖ ^ e : kˣ) : k) * Y i j ∈ 𝒪[k] then
     ((resCard k : ℂ) ^ (e * Fintype.card A * P.card))⁻¹ *
-      ∑ T : A → P → Res k e, Φ (setCols P Y (liftRes T)) * (ψ (pairCols P Y (liftRes T)) : ℂ) else 0 := rfl
+      ∑ T : A → P → Res (k := k) e, Φ (setCols P Y (liftRes T)) * (ψ (pairCols P Y (liftRes T)) : ℂ) else 0 := rfl
 
 
 theorem invFourierSum_apply (ψ : AddChar k Circle) (ϖ : kˣ) (e : ℕ) (P : Finset D) (Ψ : Matrix A D k → ℂ)
     (T : Matrix A D k) : invFourierSum ψ ϖ e P Ψ T = if ∀ i, ∀ j ∈ P, T i j ∈ 𝒪[k] then
-    ∑ S : A → P → Res k e, Ψ (setCols P T ((ϖ ^ e)⁻¹ • liftRes S)) *
+    ∑ S : A → P → Res (k := k) e, Ψ (setCols P T ((ϖ ^ e)⁻¹ • liftRes S)) *
       (ψ (-pairCols P T ((ϖ ^ e)⁻¹ • liftRes S)) : ℂ) else 0 := rfl
 
 
 theorem invFourierSum_inv_apply (ψ : AddChar k Circle) (ϖ : kˣ) (e : ℕ) (P : Finset D) (Ψ : Matrix A D k → ℂ)
     (T : Matrix A D k) : invFourierSum ψ⁻¹ ϖ e P Ψ T = if ∀ i, ∀ j ∈ P, T i j ∈ 𝒪[k] then
-    ∑ S : A → P → Res k e, Ψ (setCols P T ((ϖ ^ e)⁻¹ • liftRes S)) *
+    ∑ S : A → P → Res (k := k) e, Ψ (setCols P T ((ϖ ^ e)⁻¹ • liftRes S)) *
       (ψ (pairCols P T ((ϖ ^ e)⁻¹ • liftRes S)) : ℂ) else 0 := by
   simp only [invFourierSum_apply, AddChar.inv_apply, neg_neg]
 
@@ -615,10 +615,10 @@ def smallF (μ : Measure (GL A' k)) (ν : kˣ →* ℂˣ) (Ψ : Matrix A' D k �
 
 def bigP {a : ℕ} (μ : Measure (GL (Fin a) k)) (ϖ : kˣ) (σ : Fin a ⊕ A' ≃ D) (ν β : kˣ →* ℂˣ)
     (Φ : Matrix (Fin a) D k → ℂ) (h : GL D k) : ℂ :=
-  bigF μ ϖ ν (omA ν β 1 h Φ) (X0 k σ)
+  bigF μ ϖ ν (omA ν β 1 h Φ) (X0 (k := k) σ)
 
 def smallP (μ : Measure (GL A' k)) (σ : A ⊕ A' ≃ D) (ν α : kˣ →* ℂˣ) (Ψ : Matrix A' D k → ℂ) (h : GL D k) : ℂ :=
-  (α (gdet h) : ℂ) * apow (gdet h) ((Fintype.card A' : ℂ) / 2) * smallF μ ν Ψ (Y0 k σ * h.val)
+  (α (gdet h) : ℂ) * apow (gdet h) ((Fintype.card A' : ℂ) / 2) * smallF μ ν Ψ (Y0 (k := k) σ * h.val)
 
 
 theorem shellSum_smul {a : ℕ} (μ : Measure (GL (Fin a) k)) (ϖ : kˣ) (ν : kˣ →* ℂˣ) (z c : ℂ)
@@ -628,12 +628,12 @@ theorem shellSum_smul {a : ℕ} (μ : Measure (GL (Fin a) k)) (ϖ : kˣ) (ν : k
 
 theorem bigZetaIntegral_eq {a : ℕ} (μ : Measure (GL (Fin a) k)) (ϖ : kˣ) (σ : Fin a ⊕ A' ≃ D) (ν β : kˣ →* ℂˣ)
     (Φ : Matrix (Fin a) D k → ℂ) (h : GL D k) : bigP μ ϖ σ ν β Φ h =
-      (β (gdet h) : ℂ) * apow (gdet h) (-(a : ℂ) / 2) * bigF μ ϖ ν Φ (X0 k σ * (invT h).val) := by
+      (β (gdet h) : ℂ) * apow (gdet h) (-(a : ℂ) / 2) * bigF μ ϖ ν Φ (X0 (k := k) σ * (invT h).val) := by
   simp [bigP, bigF, omA, ← shellSum_smul, Matrix.mul_assoc]
 
 
 theorem smallP_eq (μ : Measure (GL A' k)) (σ : A ⊕ A' ≃ D) (ν α : kˣ →* ℂˣ) (Ψ : Matrix A' D k → ℂ) (h : GL D k) :
-    smallP μ σ ν α Ψ h = smallF μ ν (omB ν α 1 h Ψ) (Y0 k σ) := by
+    smallP μ σ ν α Ψ h = smallF μ ν (omB ν α 1 h Ψ) (Y0 (k := k) σ) := by
   simp [smallP, smallF, omB, Matrix.mul_assoc, mul_assoc, integral_const_mul]
 
 
@@ -648,15 +648,15 @@ theorem smallF_mul_left (μ : Measure (GL A' k)) [μ.IsHaarMeasure] (ν : kˣ �
 
 
 def fFun (μ : Measure (GL A' k)) (σ : A ⊕ A' ≃ D) (ν : kˣ →* ℂˣ) (Ψ : Matrix A' D k → ℂ) (X : Matrix A D k) : ℂ :=
-  if hX : ∃ h : GL D k, X = X0 k σ * (invT h).val then
+  if hX : ∃ h : GL D k, X = X0 (k := k) σ * (invT h).val then
     (ν (gdet hX.choose) : ℂ) * apow (gdet hX.choose) ((Fintype.card D : ℂ) / 2) *
-      smallF μ ν Ψ (Y0 k σ * hX.choose.val) else 0
+      smallF μ ν Ψ (Y0 (k := k) σ * hX.choose.val) else 0
 
 
-theorem exists_secondBlock_of_frameFirstBlock_eq (σ : A ⊕ A' ≃ D) {h h' : GL D k} (H : X0 k σ * (invT h').val = X0 k σ * (invT h).val) :
-    ∃ C : GL A' k, Y0 k σ * h'.val = C.val * (Y0 k σ * h.val) ∧ gdet h' = gdet C * gdet h := by
+theorem exists_secondBlock_of_frameFirstBlock_eq (σ : A ⊕ A' ≃ D) {h h' : GL D k} (H : X0 (k := k) σ * (invT h').val = X0 (k := k) σ * (invT h).val) :
+    ∃ C : GL A' k, Y0 (k := k) σ * h'.val = C.val * (Y0 (k := k) σ * h.val) ∧ gdet h' = gdet C * gdet h := by
   obtain ⟨u, rfl⟩ : ∃ u, h' = u * h := ⟨h' * h⁻¹, by simp⟩
-  have H1 : X0 k σ * u.valᵀ = X0 k σ := by
+  have H1 : X0 (k := k) σ * u.valᵀ = X0 (k := k) σ := by
     have h1 := congrArg (· * ((invT h)⁻¹).val) H
     simp only [map_mul, Units.val_mul, Matrix.mul_assoc, Units.mul_inv, Matrix.mul_one] at h1
     rw [← invT_inv_val]
@@ -680,11 +680,11 @@ theorem exists_secondBlock_of_frameFirstBlock_eq (σ : A ⊕ A' ≃ D) {h h' : G
   · rw [gdet_mul]; congr 1; exact Units.ext hdet
 
 theorem splitTheta_fFun_frameFirstBlock_mul (μ : Measure (GL A' k)) [μ.IsHaarMeasure] (σ : A ⊕ A' ≃ D) (ν : kˣ →* ℂˣ)
-    (Ψ : Matrix A' D k → ℂ) (h : GL D k) : fFun μ σ ν Ψ (X0 k σ * (invT h).val) =
-      (ν (gdet h) : ℂ) * apow (gdet h) ((Fintype.card D : ℂ) / 2) * smallF μ ν Ψ (Y0 k σ * h.val) := by
-  have hX : ∃ h' : GL D k, X0 k σ * (invT h).val = X0 k σ * (invT h').val := ⟨h, rfl⟩
+    (Ψ : Matrix A' D k → ℂ) (h : GL D k) : fFun μ σ ν Ψ (X0 (k := k) σ * (invT h).val) =
+      (ν (gdet h) : ℂ) * apow (gdet h) ((Fintype.card D : ℂ) / 2) * smallF μ ν Ψ (Y0 (k := k) σ * h.val) := by
+  have hX : ∃ h' : GL D k, X0 (k := k) σ * (invT h).val = X0 (k := k) σ * (invT h').val := ⟨h, rfl⟩
   obtain ⟨C, h1, h2⟩ := exists_secondBlock_of_frameFirstBlock_eq σ hX.choose_spec.symm
-  rw [fFun, dite_eq_left hX, h1, h2, ← smallF_mul_left μ ν Ψ C (Y0 k σ * h.val), map_mul, apow_mul, Units.val_mul]
+  rw [fFun, dite_eq_left hX, h1, h2, ← smallF_mul_left μ ν Ψ C (Y0 (k := k) σ * h.val), map_mul, apow_mul, Units.val_mul]
   ring
 
 
@@ -777,7 +777,7 @@ structure Grid where
   eta : kˣ →* ℂˣ
 
 namespace Grid
-variable (G : Grid k)
+variable (G : Grid (k := k))
 
 section
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
@@ -835,8 +835,8 @@ theorem pathAct_mul (s : Assignment) (γ : List Edge) (g g' : G.VertexGroup) (T 
   simp only [pathAct, h1, h2, List.prod_map_mul, mul_assoc]
 
 def IsTensor (ϖ : kˣ) (e : ℕ) (γ : List Edge) (T : G.Args → ℂ) : Prop :=
-  DependsOn T {b | b ∈ γ} ∧ (∀ x : G.Args, ∀ b ∈ γ, x b ∉ matLat _ (stdLat k _) → T x = 0) ∧
-    ∀ x z : G.Args, (∀ b, z b ∈ matLat _ (ϖ ^ e • stdLat k _)) → T (x + z) = T x
+  DependsOn T {b | b ∈ γ} ∧ (∀ x : G.Args, ∀ b ∈ γ, x b ∉ matLat (stdLat) → T x = 0) ∧
+    ∀ x z : G.Args, (∀ b, z b ∈ matLat (ϖ ^ e • stdLat)) → T (x + z) = T x
 
 
 def lines₂ (γ : List Edge) (φ : ∀ b : Edge, Matrix (Fin (G.rank b.tgt)) (Fin (G.rank b.src)) k → ℂ) :
@@ -921,9 +921,9 @@ theorem isOpen_detCong (c : kˣ) (n : Type*) [Fintype n] [DecidableEq n] : IsOpe
 
 theorem mul_mul_mem_matLat_iff {m n : Type*} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
     {g : GL m k} {h : GL n k} (hg : g ∈ KO k m) (hh : h ∈ KO k n) (X : Matrix m n k) :
-    g.val * X * h.val ∈ matLat m (stdLat k n) ↔ X ∈ matLat m (stdLat k n) := by
-  have key : ∀ {g : GL m k} {h : GL n k}, g ∈ KO k m → h ∈ KO k n → ∀ X ∈ matLat m (stdLat k n),
-      g.val * X * h.val ∈ matLat m (stdLat k n) := fun hg hh X hX =>
+    g.val * X * h.val ∈ matLat (stdLat) ↔ X ∈ matLat (stdLat) := by
+  have key : ∀ {g : GL m k} {h : GL n k}, g ∈ KO k m → h ∈ KO k n → ∀ X ∈ matLat (stdLat),
+      g.val * X * h.val ∈ matLat (stdLat) := fun hg hh X hX =>
     mem_matLat_stdLat.2 fun i j => Subring.sum_mem _ fun l _ => mul_mem (Subring.sum_mem _ fun l' _ =>
       mul_mem (((mem_KO_iff _).1 hg).1 _ _) (mem_matLat_stdLat.1 hX _ _)) (((mem_KO_iff _).1 hh).1 _ _)
   refine ⟨fun H => ?_, key hg hh X⟩

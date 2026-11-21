@@ -49,7 +49,8 @@ open scoped TensorProduct
 theorem isIntegral_normForm (A K L : Type) [CommRing A] [Field K] [Field L] [Algebra A K]
     [Algebra K L] [FiniteDimensional K L] [Algebra A L] [IsScalarTower A K L] {m : ℕ}
     (x : Fin m → L) (hx : ∀ i, IsIntegral A (x i)) :
-    letI : Algebra (MvPolynomial (Fin m) A) (MvPolynomial (Fin m) K) := MvPolynomial.algebraMvPolynomial
+    letI : Algebra (MvPolynomial (Fin m) A) (MvPolynomial (Fin m) K) :=
+      MvPolynomial.algebraMvPolynomial;
     IsIntegral (MvPolynomial (Fin m) A) (GlobalTheory.NormSheaf.normForm K L x) := by
   classical
   letI : Algebra (MvPolynomial (Fin m) A) (MvPolynomial (Fin m) K) := MvPolynomial.algebraMvPolynomial

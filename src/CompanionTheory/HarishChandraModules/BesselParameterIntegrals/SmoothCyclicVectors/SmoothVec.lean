@@ -216,16 +216,18 @@ theorem dsW_add (h : RepOn G σ) {v v' : H} (hv : IsSm G σ v) (hv' : IsSm G σ 
   | [], _ => rfl
   | X :: W, hW => by
     have hW' : LieW G W := fun Y hY => hW Y (List.mem_cons_of_mem _ hY)
-    exact (congrArg (ds σ X) (dsW_add h hv hv' hW')).trans
-      (ds_add h (hW X List.mem_cons_self) (hv.dsW h hW') (hv'.dsW h hW'))
+    simp only [dsW_cons]
+    rw [dsW_add h hv hv' (W := W) hW']
+    exact ds_add h (hW X List.mem_cons_self) (hv.dsW h hW') (hv'.dsW h hW')
 
 theorem dsW_smul (h : RepOn G σ) {v : H} (hv : IsSm G σ v) (c : ℂ) :
     ∀ {W : List (Mat n)}, LieW G W → dsW σ W (c • v) = c • dsW σ W v
   | [], _ => rfl
   | X :: W, hW => by
     have hW' : LieW G W := fun Y hY => hW Y (List.mem_cons_of_mem _ hY)
-    exact (congrArg (ds σ X) (dsW_smul h hv c hW')).trans
-      (ds_smul h (hW X List.mem_cons_self) (hv.dsW h hW') c)
+    simp only [dsW_cons]
+    rw [dsW_smul h hv c (W := W) hW']
+    exact ds_smul h (hW X List.mem_cons_self) (hv.dsW h hW') c
 
 theorem dsW_sub (h : RepOn G σ) {v v' : H} (hv : IsSm G σ v) (hv' : IsSm G σ v')
     {W : List (Mat n)} (hW : LieW G W) : dsW σ W (v - v') = dsW σ W v - dsW σ W v' := by

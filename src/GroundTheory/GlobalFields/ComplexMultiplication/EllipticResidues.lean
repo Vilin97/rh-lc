@@ -29,7 +29,7 @@ lemma IsPeriodic.residue_eq_of_mk_eq {f : ℂ → ℂ} (hp : IsPeriodic L f) (hf
   rwa [add_sub_cancel] at this
 
 
-def torusResidue (f : ℂ → ℂ) (x : Torus L) : ℂ :=
+def torusResidue (L : PeriodPair) (f : ℂ → ℂ) (x : Torus L) : ℂ :=
   residue f x.out
 
 lemma torusResidue_mk {f : ℂ → ℂ} (hf : IsEllipticFunction L f) (z : ℂ) :

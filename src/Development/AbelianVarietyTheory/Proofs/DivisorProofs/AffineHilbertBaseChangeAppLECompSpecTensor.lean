@@ -66,7 +66,21 @@ theorem bc_appLE_comp_psi : ∀ (A B C : Type) [CommRing A] [CommRing B] [Algebr
     have hc : φ c = secAlg C h U c := congrArg (fun f => f c) hφ
     rw [RingHom.comp_apply, hpsi, map_mul, hF, hS, RingHom.comp_apply]
     rw [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
-      theta_tmul, hc, secAlg, RingHom.comp_apply, mul_comm]
+      hc, mul_comm]
+    have hθ : theta A B (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U
+        (secAlg C h U c ⊗ₜ[A] b) =
+        ((pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))).app U).hom
+          (secAlg C h U c) *
+        ((pullback.fst (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))).appLE ⊤
+          ((pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))) ⁻¹ᵁ U)
+          (by simp)).hom ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b) := by
+      letI : Algebra A Γ(pullback (str A B)
+          (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))),
+          (pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))) ⁻¹ᵁ U) :=
+        (((pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))).app U).hom.comp
+          (secAlg A (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U)).toAlgebra
+      exact Algebra.TensorProduct.lift_tmul _ _ _ _ _
+    rw [hθ, mul_comm]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.HilbAff

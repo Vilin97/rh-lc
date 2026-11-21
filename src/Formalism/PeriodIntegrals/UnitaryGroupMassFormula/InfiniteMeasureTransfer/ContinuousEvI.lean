@@ -28,7 +28,9 @@ theorem evI_apply (v : InfinitePlace I.F) (a : Formalism.MainNotions.GlobalTheor
 theorem evI_algebraMap (v : InfinitePlace I.F) (a : I.F) :
     evI I v (algebraMap I.F (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Ainf I.F) a) = v.embedding a := by
   change InfinitePlace.Completion.extensionEmbedding v (algebraMap I.F v.Completion a) = _
-  exact InfinitePlace.Completion.extensionEmbedding_coe v ((WithAbs.equiv v.1).symm a)
+  rw [AbsoluteValue.Completion.algebraMap_def, InfinitePlace.Completion.extensionEmbedding_coe,
+    WithAbs.algebraMap_right_apply, Algebra.algebraMap_self_apply, WithAbs.equiv_apply,
+    WithAbs.ofAbs_toAbs]
 
 def thI (v : InfinitePlace I.F) : TI I →+* ℂ :=
   letI : Algebra I.F ℂ := v.embedding.toAlgebra

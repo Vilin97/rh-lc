@@ -104,7 +104,8 @@ theorem deriv_analytic {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiffAt ℂ ω �
   (hθ.fderiv_right (by simp)).clm_apply contDiffAt_const
 
 theorem pderiv_tay {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiffAt ℂ ω θ 0) (j : Fin g) :
-    pderiv ℂ ((0 : Fin 1), j) (tay θ 0) = tay (fun y => fderiv ℂ θ y (Pi.single j 1)) 0 := by
+    MvPowerSeries.pderiv ((0 : Fin 1), j) (tay θ 0) =
+      tay (fun y => fderiv ℂ θ y (Pi.single j 1)) 0 := by
   ext n
   rw [MvPowerSeries.coeff_pderiv]
   show mD θ 0 (dirs (n + Finsupp.single ((0 : Fin 1), j) 1) + 0) / fct (n + Finsupp.single ((0 : Fin 1), j) 1) * ((n ((0 : Fin 1), j) : ℂ) + 1) =
@@ -166,7 +167,8 @@ theorem taylor_mul_coeff_low_degree (N : ℕ) : ∀ (f h : (Fin g → ℂ) → �
           rw [hnm, map_add (f := _), Finsupp.degree_single]
         omega
       have key : ∀ F : MvPowerSeries (Fin 1 × Fin g) ℂ,
-          coeff m (pderiv ℂ ((0 : Fin 1), j) F) = coeff n F * ((m ((0 : Fin 1), j) : ℂ) + 1) := fun F => by
+          coeff m (MvPowerSeries.pderiv ((0 : Fin 1), j) F) =
+            coeff n F * ((m ((0 : Fin 1), j) : ℂ) + 1) := fun F => by
         rw [MvPowerSeries.coeff_pderiv, ← hnm]
       have hc : ((m ((0 : Fin 1), j) : ℂ) + 1) ≠ 0 := Nat.cast_add_one_ne_zero _
       apply mul_right_cancel₀ hc

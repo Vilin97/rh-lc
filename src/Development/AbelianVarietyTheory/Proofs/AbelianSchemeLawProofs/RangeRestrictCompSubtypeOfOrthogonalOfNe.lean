@@ -369,8 +369,8 @@ theorem exists_retraction_tensor_ranges {f : ℕ → Module.End K V} {g : ℕ �
     simp only [LinearMap.comp_apply, LinearMap.proj_apply, LinearMap.pi_apply]
     rw [TensorProduct.map_map]
     rfl
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [LinearMap.sum_apply, LinearMap.pi_apply, map_sum, Finset.sum_eq_single x]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, LinearMap.pi_apply, map_sum, Finset.sum_eq_single x]
     · simp only [LinearMap.comp_apply, LinearMap.proj_apply]
       rw [TensorProduct.map_map, rangeRestrict_comp_subtype_of_orthogonal hf,
         rangeRestrict_comp_subtype_of_orthogonal hg, TensorProduct.map_id, LinearMap.id_apply]
@@ -457,7 +457,7 @@ noncomputable def totalTensorEquiv [Finite ι] [Finite κ] (A : Cube.{v} ι K) (
     (LinearEquiv.piCongrRight fun s => TensorProduct.piRight K K (A.obj s) fun t => B.obj t) ≪≫ₗ
     (LinearEquiv.piCurry K fun (s : Finset ι) (t : Finset κ) => A.obj s ⊗[K] B.obj t).symm ≪≫ₗ
     (LinearEquiv.piCongrLeft K (fun x : Σ _ : Finset ι, Finset κ => A.obj x.1 ⊗[K] B.obj x.2)
-      (partsEquiv ι κ)).symm
+      partsEquiv).symm
 
 variable [Finite ι] [Finite κ] (A : Cube.{v} ι K) (B : Cube.{v} κ K)
 

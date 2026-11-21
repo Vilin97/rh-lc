@@ -49,13 +49,12 @@ theorem exists_mul_algebraMap_eq (x : K♭) :
     IsLocalization.sec_spec (nonZeroDivisors 𝒪♭) x⟩
 
 
-def tiltSharpFun (K : Type*) [NontriviallyNormedField K] [IsUltrametricDist K]
-    (p : ℕ) [Fact p.Prime] [IsPerfectoidField K p] (x : K♭) : K :=
+def tiltSharpFun (x : K♭) : K :=
   ♮(IsLocalization.sec (nonZeroDivisors 𝒪♭) x).1 /
     ♮((IsLocalization.sec (nonZeroDivisors 𝒪♭) x).2 : 𝒪♭)
 
 theorem tiltSharpFun_eq {x : K♭} {a b : 𝒪♭} (hb : b ≠ 0)
-    (h : x * algebraMap 𝒪♭ K♭ b = algebraMap 𝒪♭ K♭ a) : tiltSharpFun K p x = ♮a / ♮b := by
+    (h : x * algebraMap 𝒪♭ K♭ b = algebraMap 𝒪♭ K♭ a) : tiltSharpFun (K := K) (p := p) x = ♮a / ♮b := by
   have hs := IsLocalization.sec_spec (nonZeroDivisors 𝒪♭) x
   set a' := (IsLocalization.sec (nonZeroDivisors 𝒪♭) x).1
   set b' : 𝒪♭ := ((IsLocalization.sec (nonZeroDivisors 𝒪♭) x).2 : 𝒪♭) with hb'def
@@ -70,9 +69,8 @@ theorem tiltSharpFun_eq {x : K♭} {a b : 𝒪♭} (hb : b ≠ 0)
   rw [div_eq_div_iff (untiltK_ne_zero hb') (untiltK_ne_zero hb), key']
 
 
-def tiltSharp (K : Type*) [NontriviallyNormedField K] [IsUltrametricDist K]
-    (p : ℕ) [Fact p.Prime] [IsPerfectoidField K p] : K♭ →*₀ K where
-  toFun := tiltSharpFun K p
+def tiltSharp : K♭ →*₀ K where
+  toFun := tiltSharpFun (K := K) (p := p)
   map_zero' := by
     rw [tiltSharpFun_eq (a := 0) (b := 1) one_ne_zero (by simp)]
     simp
@@ -88,14 +86,14 @@ def tiltSharp (K : Type*) [NontriviallyNormedField K] [IsUltrametricDist K]
       untiltK_mul, untiltK_mul, div_mul_div_comm]
 
 theorem tiltSharp_eq {x : K♭} {a b : 𝒪♭} (hb : b ≠ 0)
-    (h : x * algebraMap 𝒪♭ K♭ b = algebraMap 𝒪♭ K♭ a) : tiltSharp K p x = ♮a / ♮b :=
+    (h : x * algebraMap 𝒪♭ K♭ b = algebraMap 𝒪♭ K♭ a) : tiltSharp (K := K) (p := p) x = ♮a / ♮b :=
   tiltSharpFun_eq hb h
 
 @[simp]
-theorem tiltSharp_algebraMap (a : 𝒪♭) : tiltSharp K p (algebraMap 𝒪♭ K♭ a) = ♮a := by
+theorem tiltSharp_algebraMap (a : 𝒪♭) : tiltSharp (K := K) (p := p) (algebraMap 𝒪♭ K♭ a) = ♮a := by
   rw [tiltSharp_eq (a := a) (b := 1) one_ne_zero (by simp), untiltK_one, div_one]
 
-theorem tiltSharp_eq_zero_iff {x : K♭} : tiltSharp K p x = 0 ↔ x = 0 := by
+theorem tiltSharp_eq_zero_iff {x : K♭} : tiltSharp (K := K) (p := p) x = 0 ↔ x = 0 := by
   obtain ⟨a, b, hb, h⟩ := exists_mul_algebraMap_eq x
   rw [tiltSharp_eq hb h, div_eq_zero_iff, or_iff_left (untiltK_ne_zero hb)]
   constructor
@@ -110,7 +108,7 @@ theorem tiltSharp_eq_zero_iff {x : K♭} : tiltSharp K p x = 0 ↔ x = 0 := by
     rw [h, untilt_zero, ZeroMemClass.coe_zero]
 
 theorem norm_tiltSharp_add_le (x y : K♭) :
-    ‖tiltSharp K p (x + y)‖ ≤ max ‖tiltSharp K p x‖ ‖tiltSharp K p y‖ := by
+    ‖tiltSharp (K := K) (p := p) (x + y)‖ ≤ max ‖tiltSharp (K := K) (p := p) x‖ ‖tiltSharp (K := K) (p := p) y‖ := by
   obtain ⟨a, b, hb, h⟩ := exists_mul_algebraMap_eq x
   obtain ⟨c, d, hd, h'⟩ := exists_mul_algebraMap_eq y
   have hbd : b * d ≠ 0 := mul_ne_zero hb hd
@@ -129,16 +127,16 @@ section Norm
 
 
 def tiltAbv : AbsoluteValue K♭ ℝ where
-  toFun x := ‖tiltSharp K p x‖
+  toFun x := ‖tiltSharp (K := K) (p := p) x‖
   map_mul' x y := by simp only [map_mul, norm_mul]
   nonneg' x := norm_nonneg _
   eq_zero' x := by rw [norm_eq_zero, tiltSharp_eq_zero_iff]
   add_le' x y := (norm_tiltSharp_add_le x y).trans
     (max_le_add_of_nonneg (norm_nonneg _) (norm_nonneg _))
 
-instance normedFieldTilt : NormedField K♭ := (tiltAbv K p).toNormedField
+instance normedFieldTilt : NormedField K♭ := (tiltAbv (K := K) (p := p)).toNormedField
 
-theorem norm_tiltSharp (x : K♭) : ‖tiltSharp K p x‖ = ‖x‖ := rfl
+theorem norm_tiltSharp (x : K♭) : ‖tiltSharp (K := K) (p := p) x‖ = ‖x‖ := rfl
 
 @[simp]
 theorem norm_algebraMap_preTilt (a : 𝒪♭) : ‖algebraMap 𝒪♭ K♭ a‖ = ‖a‖ := by
@@ -188,6 +186,7 @@ instance nontriviallyNormedFieldTilt : NontriviallyNormedField K♭ where
     exact one_lt_inv₀ hx0 |>.2 hx1
 
 instance completeSpace_tilt : CompleteSpace K♭ := by
+  letI : TopologicalSpace K♭ := PseudoMetricSpace.toUniformSpace.toTopologicalSpace
   refine Metric.complete_of_cauchySeq_tendsto fun u hu => ?_
   obtain ⟨N, hN⟩ := Metric.cauchySeq_iff'.1 hu 1 one_pos
   have hmem : ∀ m : ℕ, ∃ a : 𝒪♭, algebraMap 𝒪♭ K♭ a = u (m + N) - u N := fun m =>

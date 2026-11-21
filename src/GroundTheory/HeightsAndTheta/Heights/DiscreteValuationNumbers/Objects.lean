@@ -47,14 +47,14 @@ variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 def multAt (J W : Ideal (MRing ι R)) [W.IsPrime] : ℕ∞ :=
   Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (MRing ι R ⧸ J))
 
-
+open scoped Classical in
 def divCycle (P : Ideal (MRing ι R)) (f : MRing ι R) (W : Ideal (MRing ι R)) : ℤ :=
   if h : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W then
     haveI : W.IsPrime := h.1.1.1
     ((multAt (P ⊔ Ideal.span {f}) W).toNat : ℤ)
   else 0
 
-def ratDiv (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) : ℤ :=
+def ratDiv (P : Ideal (MRing ι R)) (f g : MRing ι R) (W : Ideal (MRing ι R)) : ℤ :=
   divCycle P f W - divCycle P g W
 
 def cycEval (n : Ideal (MRing ι R) → ℤ) (Z : Ideal (MRing ι R) → ℤ) : ℤ :=
@@ -69,7 +69,7 @@ variable {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
 def gradedPiece (P : Ideal (MRing ι F)) (m : K → ℕ) : Submodule F (MRing ι F ⧸ P) :=
   (weightedHomogeneousSubmodule F (blockWeight ι) m).map (Ideal.Quotient.mkₐ F P).toLinearMap
 
-
+open scoped Classical in
 def hilbFn (P : Ideal (MRing ι F)) (m : K → ℤ) : ℤ :=
   if ∀ k, 0 ≤ m k then (Module.finrank F (gradedPiece P (fun k => (m k).toNat)) : ℤ) else 0
 
@@ -79,7 +79,7 @@ def diffStep (b : K → ℤ) (h : (K → ℤ) → ℤ) : (K → ℤ) → ℤ :=
 def mixedDiff {n : ℕ} (bs : Fin n → K → ℤ) (h : (K → ℤ) → ℤ) : (K → ℤ) → ℤ :=
   (List.ofFn bs).foldr diffStep h
 
-
+open scoped Classical in
 def eventualValue (f : (K → ℤ) → ℤ) : ℤ :=
   if h : ∃ c, ∀ᶠ m in Filter.atTop, f m = c then h.choose else 0
 

@@ -14,8 +14,9 @@ open WeierstrassCurve OnePoint ShortWeierstrass
 variable {F : Type*} [Field F]
 
 
-noncomputable def automorphismOrder (W : WeierstrassCurve F) : ℕ :=
-  if W.a₆ = 0 then 4 else if W.a₄ = 0 then 6 else 2
+noncomputable def automorphismOrder (W : WeierstrassCurve F) : ℕ := by
+  classical
+  exact if W.a₆ = 0 then 4 else if W.a₄ = 0 then 6 else 2
 
 def automorphismScale (W : WeierstrassCurve F) :
     MulAction.stabilizer (VariableChange F) W →* Fˣ where
@@ -179,10 +180,10 @@ theorem weberFunction_eq_iff [IsAlgClosed F] (hW : IsShortForm W) (P Q : W.toAff
     | zero =>
       cases Q with
       | zero => exact ⟨1, rfl⟩
-      | some x y h => simp at hPQ
+      | some x y h => simp [weberFunction] at hPQ
     | some x₁ y₁ h₁ =>
       cases Q with
-      | zero => simp at hPQ
+      | zero => simp [weberFunction] at hPQ
       | some x₂ y₂ h₂ =>
         simp only [weberFunction_some] at hPQ
         have hx : weberValue W x₁ = weberValue W x₂ := Option.some_injective _ hPQ

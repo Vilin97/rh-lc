@@ -58,8 +58,9 @@ theorem exists_henselisation : ∀ (R : Type) [CommRing R] [IsLocalRing R], ∃ 
     obtain ⟨i, b, rfl⟩ := hexists s
     obtain ⟨r, hr⟩ := GlobalTheory.T.exists_sub_mem_maximalIdeal_pointedEtaleNeighbourhood R i b
     refine ⟨residue R r, ?_⟩
-    rw [ResidueField.map_residue, eq_comm, ← sub_eq_zero, ← map_sub, residue_eq_zero_iff,
-      ← GlobalTheory.T.etaleNbhdLocalRingToHenselisation_algebraMap R i r, ← map_sub]
+    rw [ResidueField.map_residue, eq_comm, ← sub_eq_zero,
+      ← (residue (Hens R)).map_sub, residue_eq_zero_iff,
+      ← GlobalTheory.T.etaleNbhdLocalRingToHenselisation_algebraMap R i r, ← (Hens.of i).map_sub]
     exact map_nonunit (Hens.of i) _ hr
   refine ⟨Hens R, inferInstance, inferInstance, inferInstance, inferInstance, GlobalTheory.T.flat_hens' R, hmax, hres,
     EtNbhd R, inferInstance, inferInstance, inferInstance, fun i => (ofA i).range, ?_, ?_, ?_⟩

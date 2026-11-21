@@ -40,7 +40,5 @@ theorem relAmple_of_cover : ∀ (S : Scheme.{0}) (I : Type) (U : I → S.Opens) 
       (chartPullPull (M i) φ φ rfl) (hiso i).symm
   refine relAmple_pull (A' := Over.mk (A.hom ∣_ V)) H (hM i) (pull_isLB hL _) ((isGen_iff w).1 hw) ((U i).ι ⁻¹ᵁ V)
     (hV.preimage_of_isOpenImmersion _ (by simpa using hle')) (fun y => ?_) (hamp i)
-  show (U i).ι (S.homOfLE hle' y) ∈ V
-  rw [← Scheme.Hom.comp_apply, hf]
 
 end GlobalTheory.CoverGlue

@@ -52,23 +52,27 @@ abbrev ProjCycle (R : Type*) [CommRing R] (n : ℕ) := Ideal (MvPolynomial (Fin 
 
 
 def localMult {A : Type*} [CommRing A] (J W : Ideal A) : ℕ :=
-  if h : W.IsPrime then
-    haveI := h
-    (Module.length (Localization.AtPrime W)
-      (Localization.AtPrime W ⧸ J.map (algebraMap A (Localization.AtPrime W)))).toNat
-  else 0
+  by
+    classical
+    exact if h : W.IsPrime then
+      haveI := h
+      (Module.length (Localization.AtPrime W)
+        (Localization.AtPrime W ⧸ J.map (algebraMap A (Localization.AtPrime W)))).toNat
+    else 0
 
 def relComps (J : Ideal (MvPolynomial (Fin n) R)) : Set (Ideal (MvPolynomial (Fin n) R)) :=
   {W | W ∈ J.minimalPrimes ∧ IsRelevant W}
 
 
 def fundCycle [IsNoetherianRing R] (J : Ideal (MvPolynomial (Fin n) R)) : ProjCycle R n :=
-  Finsupp.onFinset (J.finite_minimalPrimes_of_isNoetherianRing _).toFinset
-    (fun W => if W ∈ relComps J then localMult J W else 0)
-    (fun W hW => by
-      rw [Set.Finite.mem_toFinset]
-      by_contra h
-      exact hW (if_neg fun h' => h h'.1))
+  by
+    classical
+    exact Finsupp.onFinset (J.finite_minimalPrimes_of_isNoetherianRing _).toFinset
+      (fun W => if W ∈ relComps J then localMult J W else 0)
+      (fun W hW => by
+        rw [Set.Finite.mem_toFinset]
+        by_contra h
+        exact hW (if_neg fun h' => h h'.1))
 
 def divCycle [IsNoetherianRing R] (I : Ideal (MvPolynomial (Fin n) R)) (u : Fin n → R) :
     ProjCycle R n :=
@@ -268,7 +272,7 @@ theorem X_dvd_iff_constantCoeff_eq_zero {R : Type*} [CommRing R]
     simpa [constantCoeff_eq] using h0
   · intro h
     ext s
-    rw [coeff_zero]
+    rw [AddMonoidAlgebra.coeff_zero]
     by_cases hs : Finsupp.single ((0 : Fin 1), (0 : Fin 1)) 1 ≤ s
     · exact coeff_modMonomial_of_le _ hs
     · rw [coeff_modMonomial_of_not_le _ hs]
@@ -300,7 +304,8 @@ theorem mem_incidence_point {F : Type*} [Field F] (u : Fin 1 × Fin 1 → Algebr
 theorem isProjPrime_point (F : Type*) [Field F] :
     IsProjPrime (⊥ : Ideal (MvPolynomial (Fin 1) F)) where
   isPrime := Ideal.isPrime_bot
-  isHomog f hf d := by
+  isHomog := by
+    intro f hf d
     rw [Ideal.mem_bot] at hf ⊢
     simp [hf]
   isRelevant := ⟨0, by rw [Ideal.mem_bot]; exact X_ne_zero 0⟩

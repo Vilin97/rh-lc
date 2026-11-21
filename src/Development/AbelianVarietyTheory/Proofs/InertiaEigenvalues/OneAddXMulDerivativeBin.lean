@@ -150,7 +150,7 @@ open PowerSeries in
 variable {l : ℕ} [Fact l.Prime] (O : Type) [CommRing O] [Algebra ℤ_[l] O] in
 variable {O} in
 theorem _root_.GlobalTheory.CycFr.derivative_bin (c : ℤ_[l]) :
-    derivative O (_root_.GlobalTheory.CycFr.bin O c) = C (algebraMap ℤ_[l] O c) * _root_.GlobalTheory.CycFr.bin O (c - 1) := by
+    PowerSeries.derivative (_root_.GlobalTheory.CycFr.bin O c) = C (algebraMap ℤ_[l] O c) * _root_.GlobalTheory.CycFr.bin O (c - 1) := by
   ext n
   have key : ((n : ℤ_[l]) + 1) * Ring.choose c (n + 1) = c * Ring.choose (c - 1) n := by
     have h := Ring.choose_smul_choose c (n := n + 1) (k := 1) (by omega)
@@ -173,7 +173,7 @@ open PowerSeries in
 variable {l : ℕ} [Fact l.Prime] (O : Type) [CommRing O] [Algebra ℤ_[l] O] in
 variable {O} in
 theorem _root_.GlobalTheory.CycFr.one_add_X_mul_derivative_bin (c : ℤ_[l]) :
-    (1 + X : O⟦X⟧) * derivative O (_root_.GlobalTheory.CycFr.bin O c) =
+    (1 + X : O⟦X⟧) * PowerSeries.derivative (_root_.GlobalTheory.CycFr.bin O c) =
       C (algebraMap ℤ_[l] O c) * _root_.GlobalTheory.CycFr.bin O c := by
   rw [_root_.GlobalTheory.CycFr.derivative_bin, mul_left_comm,
     one_add_X_mul_bin_sub_one_eq_bin]
@@ -185,13 +185,13 @@ variable {l : ℕ} [Fact l.Prime] (O : Type) [CommRing O] [Algebra ℤ_[l] O] in
 variable {O} in
 variable [IsDomain O] [CharZero O] in
 private theorem eq_of_one_add_X_mul_derivative_eq_C_mul {F H : O⟦X⟧} (a : O)
-    (hF : (1 + X) * derivative O F = C a * F) (hH : (1 + X) * derivative O H = C a * H)
+    (hF : (1 + X) * PowerSeries.derivative F = C a * F) (hH : (1 + X) * PowerSeries.derivative H = C a * H)
     (h0 : constantCoeff F = constantCoeff H) : F = H := by
-  have hD : (1 + X) * derivative O (F - H) = C a * (F - H) := by
+  have hD : (1 + X) * PowerSeries.derivative (F - H) = C a * (F - H) := by
     rw [map_sub, mul_sub, mul_sub, hF, hH]
   have hD0 : coeff 0 (F - H) = 0 := by
     rw [coeff_zero_eq_constantCoeff_apply, map_sub, h0, sub_self]
-  have key : ∀ n, coeff n (F - H) = 0 ∧ coeff n (derivative O (F - H)) = 0 := by
+  have key : ∀ n, coeff n (F - H) = 0 ∧ coeff n (PowerSeries.derivative (F - H)) = 0 := by
     intro n
     induction n with
     | zero =>
@@ -219,9 +219,9 @@ variable [IsDomain O] [CharZero O] in
 theorem _root_.GlobalTheory.CycFr.act_bin (c d : ℤ_[l]) :
     _root_.GlobalTheory.CycFr.act O c (_root_.GlobalTheory.CycFr.bin O d) =
       _root_.GlobalTheory.CycFr.bin O (c * d) := by
-  have hG : derivative O (_root_.GlobalTheory.CycFr.act O c (_root_.GlobalTheory.CycFr.bin O d)) =
-      _root_.GlobalTheory.CycFr.act O c (derivative O (_root_.GlobalTheory.CycFr.bin O d)) *
-        derivative O (_root_.GlobalTheory.CycFr.bin O c) := by
+  have hG : PowerSeries.derivative (_root_.GlobalTheory.CycFr.act O c (_root_.GlobalTheory.CycFr.bin O d)) =
+      _root_.GlobalTheory.CycFr.act O c (PowerSeries.derivative (_root_.GlobalTheory.CycFr.bin O d)) *
+        PowerSeries.derivative (_root_.GlobalTheory.CycFr.bin O c) := by
     rw [_root_.GlobalTheory.CycFr.act_apply, _root_.GlobalTheory.CycFr.act_apply,
       derivative_subst (_root_.GlobalTheory.CycFr.hasSubst_bin O c), map_sub,
       Derivation.map_one_eq_zero, sub_zero]
@@ -326,8 +326,8 @@ theorem _root_.GlobalTheory.CycFr.dvd_bin_sub (k : ℕ) (c d : ℤ_[l]) (h : (l 
 
 theorem _root_.GlobalTheory.CycFr.dvd_algHom_sub [IsNoetherianRing O] (f g : O⟦X⟧ →ₐ[O] O⟦X⟧) (hf : (X : O⟦X⟧) ∣ f X)
     (hg : (X : O⟦X⟧) ∣ g X) (h : O⟦X⟧) (hh : h ∣ f X - g X) (a : O⟦X⟧) : h ∣ f a - g a := by
-  have hX : Ideal.span {(X : O⟦X⟧)} ≤ (⊥ : Ideal O⟦X⟧).jacobson := by
-    rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, Ideal.mem_jacobson_bot]
+  have hX : Ideal.span {(X : O⟦X⟧)} ≤ Ring.jacobson O⟦X⟧ := by
+    rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, Ring.mem_jacobson_iff]
     intro y
     rw [isUnit_iff_constantCoeff]
     simp

@@ -74,21 +74,21 @@ private theorem mem_span_image_iff_pr1_pr2_mem_span {ι : Type} [Fintype ι] (s 
   constructor
   · rintro ⟨c, rfl⟩
     refine ⟨⟨fun i => (θ (c i)).1, ?_⟩, ⟨fun i => (θ (c i)).2, ?_⟩⟩
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum]
-      simp only [h1]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum]
-      simp only [h2]
+    · rw [map_sum]
+      apply Finset.sum_congr rfl
+      intro i hi
+      exact (h1 (c i) (u ↑i)).symm
+    · rw [map_sum]
+      apply Finset.sum_congr rfl
+      intro i hi
+      exact (h2 (c i) (u ↑i)).symm
   · rintro ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
     refine ⟨fun i => θ.symm (a i, b i), ?_⟩
     apply hinj
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum]
+    · rw [map_sum]
       simp only [h1, AlgEquiv.apply_symm_apply]
       exact ha
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum]
+    · rw [map_sum]
       simp only [h2, AlgEquiv.apply_symm_apply]
       exact hb
 

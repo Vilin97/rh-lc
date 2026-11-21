@@ -55,7 +55,7 @@ theorem SymplReducePosDef.proof : SymplReducePosDef.Statement := by
     have hL : symplCons (-(S / h)) 0 x ⬝ᵥ (H *ᵥ symplCons (-(S / h)) 0 x) =
         (h * (-(S / h)) + S) * (-(S / h)) + (-(S / h)) * S + Q := by
       rw [dotProduct_comm]
-      simp only [dotProduct, mulVec, sum_mul_symplCons]
+      simp only [dotProduct, mulVec, PSymplReducePosDef.sum_mul_symplCons]
       rw [← hh, ← hS]
       simp only [add_mul, Finset.sum_add_distrib]
       rw [← hQ]

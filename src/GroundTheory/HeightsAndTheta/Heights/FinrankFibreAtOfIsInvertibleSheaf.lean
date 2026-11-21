@@ -32,7 +32,8 @@ end Via
 variable {X : Scheme.{u}} (L : X.Modules)
 
 
-abbrev locRing (p : X) : CommRingCat.{u} := TopCat.Presheaf.stalk (X := X.toTopCat) X.sheaf.obj p
+abbrev locRing (X : Scheme.{u}) (p : X) : CommRingCat.{u} :=
+  TopCat.Presheaf.stalk (X := X.toTopCat) X.sheaf.obj p
 
 abbrev modStalk (p : X) : Type u :=
   TopCat.Presheaf.stalk (X := X.toTopCat) (C := Ab.{u}) ((preMod X).obj L).presheaf p
@@ -123,7 +124,7 @@ def fibreMk (c : Via φ) (m : modStalk L p) : fibreAt L p φ :=
 
 
 def value {U : X.Opens} (hp : p ∈ U) (s : ((preMod X).obj L).obj (op U)) : fibreAt L p φ :=
-  fibreMk L φ 1 (germM hp s)
+  fibreMk (L := L) (φ := φ) 1 (germM hp s)
 
 
 def fibreEquiv {U : X.Opens} (hp : p ∈ U) {e : ((preMod X).obj L).obj (op U)}

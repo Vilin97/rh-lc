@@ -16,8 +16,9 @@ namespace GlobalTheory.SBRestrict
 variable {k : Type} [Field k] {Y Y' : Type}
 
 
-def ext (I : Set (Y × Y')) (s : Matrix {p : Y × Y' // p ∉ I} Unit k) : Matrix Y Y' k :=
-  fun r q => if h : (r, q) ∈ I then 0 else s ⟨(r, q), h⟩ ()
+def ext (I : Set (Y × Y')) (s : Matrix {p : Y × Y' // p ∉ I} Unit k) : Matrix Y Y' k := by
+  classical
+  exact fun r q => if h : (r, q) ∈ I then 0 else s ⟨(r, q), h⟩ ()
 
 def proj (I : Set (Y × Y')) (t : Matrix Y Y' k) : Matrix {p : Y × Y' // p ∉ I} Unit k :=
   fun j _ => t j.1.1 j.1.2
@@ -78,6 +79,7 @@ theorem eq_SB_of_restrict : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologic
     (∀ z : Matrix Y Y' k, ∀ φ ∈ S, (fun t => ψ0 (∑ r, ∑ q, t r q * z r q) * φ t) ∈ S) →
     ∀ φ₀ ∈ S, ∀ t₀ : Matrix Y Y' k, (∀ r q, (r, q) ∈ I → t₀ r q = 0) → φ₀ t₀ ≠ 0 → S = GlobalTheory.WeilM.SB (Matrix Y Y' k) := by
   intro k _ _ _ _ _ Y Y' _ _ _ _ ψ0 hc h1 hne I S hS hV hT hM φ₀ hφ₀ t₀ ht₀ hne₀
+  classical
   let ψk : AddChar k Circle :=
     { toFun := fun x => ⟨ψ0 x, mem_sphere_zero_iff_norm.2 (h1 x)⟩
       map_zero_eq_one' := Circle.ext (by simp)

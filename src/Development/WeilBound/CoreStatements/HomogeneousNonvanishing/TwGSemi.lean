@@ -15,21 +15,23 @@ theorem semi_complete {A : Type} [CommRing A] [IsNoetherianRing A] [IsLocalRing 
     [IsAdicComplete (maximalIdeal A) A] (M : Type) [AddCommGroup M] [Module A M] [Module.Finite A M] :
     IsAdicComplete (maximalIdeal A) M where
   toIsHausdorff := inferInstance
-  toIsPrecomplete := by
-    rw [← AdicCompletion.of_surjective_iff]
-    intro y
-    obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite (maximalIdeal A) M y
-    induction t using TensorProduct.induction_on with
-    | zero => exact ⟨0, by simp⟩
-    | tmul r x =>
-      obtain ⟨r, rfl⟩ := AdicCompletion.of_surjective (maximalIdeal A) A r
-      refine ⟨r • x, ?_⟩
-      rw [AdicCompletion.ofTensorProduct_tmul, map_smul]
-      exact (algebraMap_smul (AdicCompletion (maximalIdeal A) A) r _).symm
-    | add x y hx hy =>
-      obtain ⟨a, ha⟩ := hx
-      obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
+  prec' := by
+    letI : IsPrecomplete (maximalIdeal A) M := by
+      rw [← AdicCompletion.of_surjective_iff]
+      intro y
+      obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite (maximalIdeal A) M y
+      induction t using TensorProduct.induction_on with
+      | zero => exact ⟨0, by simp⟩
+      | tmul r x =>
+        obtain ⟨r, rfl⟩ := AdicCompletion.of_surjective (maximalIdeal A) A r
+        refine ⟨r • x, ?_⟩
+        rw [AdicCompletion.ofTensorProduct_tmul, map_smul]
+        exact (algebraMap_smul (AdicCompletion (maximalIdeal A) A) r _).symm
+      | add x y hx hy =>
+        obtain ⟨a, ha⟩ := hx
+        obtain ⟨b, hb⟩ := hy
+        exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
+    exact IsPrecomplete.prec' (I := maximalIdeal A) (M := M)
 
 theorem semi_unit_or_nil {Q : Type} [CommRing Q] [Finite Q] (h : ∀ e : Q, e * e = e → e = 0 ∨ e = 1) (x : Q) :
     IsUnit x ∨ IsNilpotent x := by
@@ -53,7 +55,7 @@ theorem semi_unit_or_nil {Q : Type} [CommRing Q] [Finite Q] (h : ∀ e : Q, e * 
 theorem semi_hensel {S : Type} [CommRing S] [Nontrivial S] (I : Ideal S) [hI : HenselianRing S I] [Finite (S ⧸ I)]
     (h : ∀ e : S, e * e = e → e = 0 ∨ e = 1) :
     ∃ _ : HenselianLocalRing S, Finite (ResidueField S) := by
-  have hloc : IsLocalHom (Ideal.Quotient.mk I) := isLocalHom_of_le_jacobson_bot I hI.jac
+  have hloc : IsLocalHom (Ideal.Quotient.mk I) := isLocalHom_of_le_jacobson hI.jac
   have hQ : ∀ e : S ⧸ I, e * e = e → e = 0 ∨ e = 1 := by
     intro e he
     obtain ⟨e, rfl⟩ := Ideal.Quotient.mk_surjective e
@@ -79,7 +81,7 @@ theorem semi_hensel {S : Type} [CommRing S] [Nontrivial S] (I : Ideal S) [hI : H
     (hun a).imp_right fun hn => IsUnit.of_map (Ideal.Quotient.mk I) _ (by
       rw [map_sub, map_one]; exact hn.isUnit_one_sub)
   have hle : I ≤ maximalIdeal S := by
-    rw [← jacobson_eq_maximalIdeal ⊥ bot_ne_top]; exact hI.jac
+    rw [← IsLocalRing.ringJacobson_eq_maximalIdeal S]; exact hI.jac
   have hnt : Nontrivial (S ⧸ I) :=
     Ideal.Quotient.nontrivial_iff.2 fun h => (maximalIdeal.isMaximal S).ne_top (top_le_iff.1 (h ▸ hle))
   have hnil : ∀ x : S, IsNilpotent (Ideal.Quotient.mk I x) → x ∈ maximalIdeal S := fun x hx hu =>

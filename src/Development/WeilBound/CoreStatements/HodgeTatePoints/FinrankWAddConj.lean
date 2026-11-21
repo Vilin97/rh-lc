@@ -19,12 +19,19 @@ theorem eigQuot_lattice {C : Type} [Field C] {v : Valuation C NNReal} {O : Type}
     {Ω : Type} [AddCommGroup Ω] [Module C Ω] [Module O Ω] [IsScalarTower O C Ω]
     (ρ : 𝓞 E →+* Module.End C Ω) (σ : E →+* C) (X : Submodule O Ω) (hX : X.IsLattice C) :
     (latIn (eigQuot ρ σ X) (eigSp ρ σ)).IsLattice C := by
-  refine latIn_isLattice C v O hv Ω _ _ (hX.fg.map _) fun x hx => ?_
-  rw [← LatBasic.eigProj_of_mem hx]
-  have h : x ∈ Submodule.span C (X : Set Ω) := by rw [hX.span_eq_top]; trivial
-  have h2 := Submodule.mem_map_of_mem (f := eigProj ρ σ) h
-  rw [Submodule.map_span] at h2
-  exact h2
+  let f : Ω →ₗ[O] eigSp ρ σ :=
+    ((eigProj ρ σ).codRestrict (eigSp ρ σ) (LatBasic.eigProj_mem ρ σ)).restrictScalars O
+  have hmap : latIn (eigQuot ρ σ X) (eigSp ρ σ) = X.map f := by
+    ext x
+    change (∃ y ∈ X, eigProj ρ σ y = (x : Ω)) ↔ ∃ y ∈ X, f y = x
+    constructor
+    · rintro ⟨y, hy, h⟩
+      exact ⟨y, hy, Subtype.ext h⟩
+    · rintro ⟨y, hy, h⟩
+      exact ⟨y, hy, congrArg Subtype.val h⟩
+  haveI : IsFractionRing O C := hv.isFractionRing
+  rw [hmap]
+  exact Submodule.IsLattice.of_fg C (hX.fg.map f)
 
 theorem pt_om_block : ∀ (C : Type) [Field C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C] (hv : v.Integers O) [IsAlgClosed C] [CharZero C] (E : Type) [Field E] [NumberField E] (c : E ≃+* E) (hc : ∀ x, c (c x) = x) (κ : O) (N : ℕ) (V : Type) [AddCommGroup V] [Module C V] [Module O V] [IsScalarTower O C V] (Ω : Type) [AddCommGroup Ω] [Module C Ω] [Module O Ω] [IsScalarTower O C Ω] (P : HTPoint C O c κ N V Ω) (σ : E →+* C), P.omHT σ ≤ P.omRec σ ∧ (∀ x ∈ P.omRec σ, κ • x ∈ P.omHT σ) ∧ (latIn (P.omHT σ) (P.Ωsp σ)).IsLattice C ∧ (latIn (P.omRec σ) (P.Ωsp σ)).IsLattice C := by
   intro C _ v O _ _ hv _ _ E _ _ c hc κ N V _ _ _ _ Ω _ _ _ _ P σ

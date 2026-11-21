@@ -33,6 +33,7 @@ theorem ulim_sub_dvd {s : ℕ → K⟦X⟧} (h : ∀ n, (X : K⟦X⟧) ^ (n + 1)
   rw [ulim, coeff_mk, ← neg_sub, this, neg_zero]
 
 
+variable (K a ι) in
 def uPow (m : ℕ) : Submodule K⟦X⟧ (Vec K a ι) where
   carrier := {v | ∀ τ i, (X : K⟦X⟧) ^ m ∣ v τ i}
   add_mem' hv hw τ i := dvd_add (hv τ i) (hw τ i)
@@ -110,7 +111,7 @@ theorem geom_eq {T : Module.End K (Vec K a ι)} (hT : Raises T) {w : Vec K a ι}
   have := sub_mem (geom_sub_mem hT hw (m + 1)) (hT m _ (geom_sub_mem hT hw m))
   convert this using 1
   simp only [Finset.sum_range_succ', pow_succ', ← Finset.mul_sum, LinearMap.add_apply,
-    Module.End.mul_apply, map_sub, pow_zero, Module.End.one_apply]
+    mul_apply_eq_comp, map_sub, pow_zero, one_apply_eq_self]
   abel
 
 def cst : (ZMod a → ι → K) →ₗ[K] Vec K a ι where
@@ -123,14 +124,14 @@ def cst : (ZMod a → ι → K) →ₗ[K] Vec K a ι where
 @[simp] theorem red_cst (d : ZMod a → ι → K) : red (cst d) = d := by ext τ i; simp
 
 def derV : Module.End K (Vec K a ι) where
-  toFun v τ i := PowerSeries.derivative K (v τ i)
+  toFun v τ i := PowerSeries.derivative (v τ i)
   map_add' v w := by ext τ i : 2; simp
   map_smul' c v := by ext τ i : 2; simp
 
 @[simp] theorem derV_apply (v : Vec K a ι) (τ : ZMod a) (i : ι) :
-    derV v τ i = PowerSeries.derivative K (v τ i) := rfl
+    derV v τ i = PowerSeries.derivative (v τ i) := rfl
 
-def derTot (f : ZMod a → K⟦X⟧) : ZMod a → K⟦X⟧ := fun τ => PowerSeries.derivative K (f τ)
+def derTot (f : ZMod a → K⟦X⟧) : ZMod a → K⟦X⟧ := fun τ => PowerSeries.derivative (f τ)
 
 def NTot (f : ZMod a → K⟦X⟧) : ZMod a → K⟦X⟧ := fun τ => N K (f τ)
 
@@ -285,6 +286,7 @@ theorem phi_xi (d : P.D) : P.phi (P.xi d) = P.xi (P.phiD d) := by
   simp [phiD_apply, Matrix.mulVec, dotProduct]
 
 
+variable {P} in
 theorem map_xi {Q : PhiMod O K l e a κ} {g : Vec K a ι → Vec K a κ}
     (hg : ∀ v, g (P.phi v) = Q.phi (g v)) (d : P.D) : g (P.xi d) = Q.xi (red (g (P.xi d))) := by
   rw [← sub_eq_zero]
@@ -358,6 +360,7 @@ theorem conn_phi (v : Vec K a ι) : P.conn (P.phi v) = (l : K) • P.phi (P.conn
     map_natCast]
 
 
+variable {P} in
 theorem map_conn {Q : PhiMod O K l e a κ} (g : Vec K a ι →+ Vec K a κ)
     (σ : (ZMod a → K⟦X⟧) → ZMod a → K⟦X⟧) (hσ : ∀ f, σ (NTot f) = NTot (σ f))
     (hs : ∀ f v, g (f • v) = σ f • g v) (hg : ∀ v, g (P.phi v) = Q.phi (g v)) (v : Vec K a ι) :
@@ -454,6 +457,7 @@ theorem zeta_phi_sub (m : Vec K a ι) : P.zeta (P.phi m - m) = P.conn (P.phi m) 
     rw [map_sub P.conn, sub_sub_cancel, lphi_apply, conn_phi])).symm
 
 
+variable {P} in
 theorem map_zeta {Q : PhiMod O K l e a κ} (g : Vec K a ι →ₗ[K] Vec K a κ)
     (h1 : ∀ v ∈ uPow K a ι 1, g v ∈ uPow K a κ 1) (hg : ∀ v, g (P.phi v) = Q.phi (g v))
     (hN : ∀ v, g (P.conn v) = Q.conn (g v)) (y : Vec K a ι) : g (P.zeta y) = Q.zeta (g y) :=
@@ -517,7 +521,7 @@ def plus : PhiMod O K l e a (ι ⊕ Unit) :=
       simp [← Matrix.replicateCol_add]
 
 theorem plus_phi_join (v : Vec K a ι) (f : ZMod a → K⟦X⟧) :
-    (P.plus hy).phi (join v f) = join (P.phi v + frobTot K a l f • y) (frobTot K a l f) := by
+    (P.plus hy).phi (join v f) = join (P.phi v + frobTot l f • y) (frobTot l f) := by
   ext1 τ
   rw [phi_apply, plus, mx_ofMatrix]
   ext1 i
@@ -557,15 +561,15 @@ theorem plus_conn_xVec_eq : (P.plus hy).conn xVec = (P.plusInl hy).app (P.zeta y
 
 variable [NormedAlgebra ℚ_[l] K] [NeZero e]
 
-def plusProj : Hom (P.plus hy) (rankOne O K l e fun _ => 0) where
+def plusProj : Hom (P.plus hy) (rankOne O K l e a fun _ => 0) where
   mat _ := Matrix.fromCols 0 1
   mem := by
     rintro τ i (j | j)
     exacts [zero_mem _, one_mem _]
   comm τ := by
-    have h : (rankOne O K l e fun _ : ZMod a => 0).mx τ = 1 := by
+    have h : (rankOne O K l e a fun _ => 0).mx τ = 1 := by
       ext1 i j
-      exact (mx_rankOne (n := 0) rfl).trans (pow_zero _)
+      simp [mx, rankOne]
     rw [h, plus, mx_ofMatrix, Matrix.fromCols_map, Matrix.map_one _ (map_zero _) (map_one _),
       Matrix.map_zero _ (map_zero _), Matrix.fromCols_mul_fromBlocks]
     simp

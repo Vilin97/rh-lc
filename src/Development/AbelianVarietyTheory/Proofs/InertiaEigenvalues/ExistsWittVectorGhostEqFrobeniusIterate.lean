@@ -10,10 +10,11 @@ open Finset
 namespace GlobalTheory.DworkGhost
 
 
+open scoped Classical in
 noncomputable def coeff {A : Type} [CommRing A] (l : ℕ) (φ : A →+* A) (a : A) : ℕ → A
   | n => if h : ((l : A) ^ n ∣ φ^[n] a - ∑ i : Fin n, (l : A) ^ (i : ℕ) * coeff l φ a i ^ l ^ (n - i))
       then h.choose else 0
-decreasing_by all_goals exact i.isLt
+decreasing_by exact i.isLt
 
 theorem coeff_spec {A : Type} [CommRing A] (l : ℕ) (φ : A →+* A) (a : A) (n : ℕ)
     (h : (l : A) ^ n ∣ φ^[n] a - ∑ i ∈ range n, (l : A) ^ i * coeff l φ a i ^ l ^ (n - i)) :
@@ -53,6 +54,5 @@ theorem exists_witt_ghost_iterate : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [Com
   intro l _ A _ φ hφ a
   refine ⟨WittVector.mk l (coeff l φ a), fun n => ?_⟩
   rw [WittVector.ghostComponent_apply, aeval_wittPolynomial, ghost_eq l φ hφ a n]
-  rfl
 
 end GlobalTheory.DworkGhost

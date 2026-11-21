@@ -126,6 +126,9 @@ section General
 variable (R : Type*) [CommRing R] (p : ℕ) [Fact p.Prime] [Fact ¬IsUnit (p : R)]
   [IsAdicComplete (span {(p : R)}) R]
 
+local notation "𝕎R♭" => WittVector p (PreTilt R p)
+local notation "𝔸" => Localization.Away (p : 𝕎R♭)
+
 def toBDeRhamPlus : 𝔸 →+* BDeRhamPlus R p :=
   algebraMap 𝔸 (AdicCompletion (RingHom.ker (fontaineThetaInvertP R p)) 𝔸)
 
@@ -272,13 +275,6 @@ theorem eq_zero_of_algebraMap_mul_eq_zero {x : 𝕎R♭} (hx : x ∈ nonZeroDivi
   rw [← hm]
   ring
 
-end General
-
-section DVR
-
-variable {R : Type*} [CommRing R] {p : ℕ} [Fact p.Prime] [Fact ¬IsUnit (p : R)]
-  [IsAdicComplete (span {(p : R)}) R]
-
 theorem isMaximal_ker_thetaBDeRhamPlus (hF : Function.Surjective (frobenius (ModP R p) p))
     (hK : IsField (Localization.Away (p : R))) : (RingHom.ker (thetaBDeRhamPlus R p)).IsMaximal :=
   Ideal.Quotient.maximal_of_isField _ (MulEquiv.isField hK
@@ -357,12 +353,17 @@ theorem maximalIdeal_bDeRhamPlus_eq_span {ξ : 𝕎R♭}
     maximalIdeal (BDeRhamPlus R p) = span {wittToBDeRhamPlus R p ξ} :=
   (maximalIdeal_bDeRhamPlus hξ hF hK).trans (ker_thetaBDeRhamPlus hξ)
 
-end DVR
+end General
 
 namespace IsPerfectoidField
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable (p : ℕ) [Fact p.Prime] [IsPerfectoidField K p]
+
+local notation "𝒪" => normInteger K
+local notation "𝕎𝒪♭" => WittVector p (PreTilt 𝒪 p)
+local notation "θ" => fontaineTheta 𝒪 p
+local notation "𝔹" => BDeRhamPlus 𝒪 p
 
 theorem isLocalization_away [CharZero K] : IsLocalization.Away (p : 𝒪) K := by
   rw [IsLocalization.Away, isLocalization_iff]
@@ -424,11 +425,13 @@ theorem mem_nonZeroDivisors_of_ker_eq_span {ξ : 𝕎𝒪♭} (hξ : RingHom.ker
   exact not_isUnit_zero h1
 
 
+variable (K p) in
 def kerThetaGenerator : 𝕎𝒪♭ :=
   haveI := isPrincipal_ker_fontaineTheta K p
   Submodule.IsPrincipal.generator (RingHom.ker θ)
 
 
+variable (K p) in
 theorem ker_fontaineTheta_eq_span_kerThetaGenerator : RingHom.ker θ = span {kerThetaGenerator K p} :=
   haveI := isPrincipal_ker_fontaineTheta K p
   (Submodule.IsPrincipal.span_singleton_generator (RingHom.ker θ)).symm

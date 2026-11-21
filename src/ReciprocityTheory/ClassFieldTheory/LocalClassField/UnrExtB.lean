@@ -102,13 +102,14 @@ noncomputable def resMod {L : IntermediateField ℚ_[p] (PadicAlgCl p)} (hKL : K
     rw [Subfield.smul_def, smul_eq_mul]
     exact (resK p L).mul_mem (resK_mono hKL c.2) hx
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem exists_lifts {L : IntermediateField ℚ_[p] (PadicAlgCl p)}
     (hL : FiniteDimensional ℚ_[p] L) (hKL : K ≤ L) :
     ∃ f : ℕ, 0 < f ∧ qK p L = qK p K ^ f ∧ ∃ ω : Fin f → Obar p, (∀ j, (ω j : PadicAlgCl p) ∈ L) ∧
       LinearIndependent (resK p K) (fun i => IsLocalRing.residue (Obar p) (ω i)) := by
   have hfL : Finite (resK p L) := finite_resK L hL
   have hfW : Finite (resMod hKL) := hfL
-  have hMF : Module.Finite (resK p K) (resMod hKL) := Module.Finite.of_finite
+  letI : Module.Finite (resK p K) (resMod hKL) := Module.Finite.of_finite
   have hcard : Nat.card (resMod hKL) = Nat.card (resK p K) ^ Module.finrank (resK p K) (resMod hKL) :=
     Module.natCard_eq_pow_finrank
   have hnt : Nontrivial (resMod hKL) :=

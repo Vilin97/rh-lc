@@ -143,8 +143,8 @@ private theorem eig_lemma_5 (χ' : E →+* S) (ρ : 𝓞 E →+* Module.End S M)
     (hθ : IntermediateField.adjoin ℚ {(θ : E)} = ⊤) (v : M) (hv : ρ θ v = χ' (θ : E) • v) (a : 𝓞 E) :
     ρ a v = χ' (a : E) • v := by
   obtain ⟨p, hp⟩ := poly_lemma (θ : E) hθ (a : E)
-  obtain ⟨b, hb⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) p
-  have hb0 : ((b : ℤ) : S) ≠ 0 := Int.cast_ne_zero.mpr (nonZeroDivisors.ne_zero b.prop)
+  obtain ⟨b, hb_mem, hb⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) p
+  have hb0 : (b : S) ≠ 0 := Int.cast_ne_zero.mpr (nonZeroDivisors.ne_zero hb_mem)
   have hE : aeval (θ : E) (IsLocalization.integerNormalization (nonZeroDivisors ℤ) p) = (b : ℤ) • (a : E) := by
     rw [← Polynomial.aeval_map_algebraMap (A := ℚ), hb, map_zsmul, hp]
   have hO : (b : ℤ) • a = aeval θ (IsLocalization.integerNormalization (nonZeroDivisors ℤ) p) := by

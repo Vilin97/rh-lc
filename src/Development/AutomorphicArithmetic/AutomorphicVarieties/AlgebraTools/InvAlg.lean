@@ -43,11 +43,18 @@ def Ext.ev (z : Φ.Ext) : B := Prod.fst z
 
 def Ext.od (z : Φ.Ext) : N := Prod.snd z
 
+@[ext] theorem ext {z w : Φ.Ext} (hev : z.ev = w.ev) (hod : z.od = w.od) : z = w :=
+  Prod.ext hev hod
+
 instance : One Φ.Ext := ⟨Φ.el 1 0⟩
 instance : Mul Φ.Ext := ⟨fun z w => Φ.el (z.ev * w.ev + Φ.be z.od w.od) (z.ev • w.od + w.ev • z.od)⟩
 
 @[simp] theorem ev_one : (1 : Φ.Ext).ev = 1 := rfl
 @[simp] theorem od_one : (1 : Φ.Ext).od = 0 := rfl
+@[simp] theorem ev_zero : (0 : Φ.Ext).ev = 0 := rfl
+@[simp] theorem od_zero : (0 : Φ.Ext).od = 0 := rfl
+@[simp] theorem ev_add (z w : Φ.Ext) : (z + w).ev = z.ev + w.ev := rfl
+@[simp] theorem od_add (z w : Φ.Ext) : (z + w).od = z.od + w.od := rfl
 @[simp] theorem ev_smul (c : B) (z : Φ.Ext) : (c • z).ev = c * z.ev := rfl
 @[simp] theorem od_smul (c : B) (z : Φ.Ext) : (c • z).od = c • z.od := rfl
 @[simp] theorem ev_mul (z w : Φ.Ext) : (z * w).ev = z.ev * w.ev + Φ.be z.od w.od := rfl

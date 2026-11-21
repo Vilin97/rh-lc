@@ -13,7 +13,7 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι] {R : Type*} [CommRing R] {σ
   {J : Matrix ι ι R}
 
 
-def tor (e f : ι → R) (l m : R) : Matrix ι ι R :=
+def tor (σ : R →+* R) (J : Matrix ι ι R) (e f : ι → R) (l m : R) : Matrix ι ι R :=
   1 + (l - 1) • vecMulVec e (J *ᵥ (σ ∘ f)) + (m - 1) • vecMulVec f (J *ᵥ (σ ∘ e))
 
 variable (σ J) in

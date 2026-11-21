@@ -135,7 +135,7 @@ theorem basisLoc : ∀ (F B : Type) [Field F] [NumberField F] [Ring B] [Algebra 
     (hΛ : ∀ a : NumberField.RingOfIntegers F, algebraMap F B (a : F) ∈ Λ), Module.Finite ℤ Λ →
     ∀ (ι : Type) [Fintype ι] (e : Module.Basis ι F B), (∀ i, e i ∈ Λ) →
     ∃ D : ℕ, 0 < D ∧ ∀ (ℓ : ℕ) [Fact ℓ.Prime], ¬ ℓ ∣ D →
-      letI := GlobalTheory.LocMatrix.cenAlgebra ℓ F B Λ hΛ
+      letI := GlobalTheory.LocMatrix.cenAlgebra ℓ F B Λ hΛ;
       ∃ f : Module.Basis ι (cenOrder ℓ F) (locOrder ℓ Λ),
         (∀ i, (f i : ℚ_[ℓ] ⊗[ℚ] B) = (1 : ℚ_[ℓ]) ⊗ₜ[ℚ] e i) ∧
         ∀ (y : locOrder ℓ Λ) (b : B), (y : ℚ_[ℓ] ⊗[ℚ] B) = (1 : ℚ_[ℓ]) ⊗ₜ[ℚ] b →
@@ -225,13 +225,13 @@ theorem locOrder_isAzumaya : ∀ (F B : Type) [Field F] [NumberField F] [Ring B]
     (Λ : Subring B) (hΛ : ∀ a : NumberField.RingOfIntegers F, algebraMap F B (a : F) ∈ Λ),
     Module.Finite ℤ Λ → (∀ b : B, ∃ m : ℕ, 0 < m ∧ (m : B) * b ∈ Λ) →
     ∃ N : ℕ, 0 < N ∧ ∀ (ℓ : ℕ) [Fact ℓ.Prime], ¬ ℓ ∣ N →
-      letI := GlobalTheory.LocMatrix.cenAlgebra ℓ F B Λ hΛ
+      letI := GlobalTheory.LocMatrix.cenAlgebra ℓ F B Λ hΛ;
       IsAzumaya (cenOrder ℓ F) (locOrder ℓ Λ) := by
   intro F B _ _ _ _ _ _ _ _ _ Λ hΛ hfin hspan
   classical
   obtain ⟨e, he⟩ := exists_basis_mem (F := F) Λ hspan
   have hδ : IsUnit (structMat e).det :=
-    (bijective_iff_isUnit_det e).1 (GroundTheory.Brauer.mulLeftRight_bijective F B)
+    (bijective_iff_isUnit_det e).1 GroundTheory.Brauer.mulLeftRight_bijective
   obtain ⟨m, hm, hmint⟩ := GlobalTheory.SepModel.exists_nat_integral ({((structMat e).det)⁻¹} : Finset F)
   obtain ⟨D, hD, hbasis⟩ := basisLoc F B Λ hΛ hfin _ e he
   refine ⟨D * m, by positivity, fun ℓ _ hℓ => ?_⟩
@@ -263,8 +263,8 @@ theorem locOrder_isAzumaya : ∀ (F B : Type) [Field F] [NumberField F] [Ring B]
   haveI : FaithfulSMul (cenOrder ℓ F) (locOrder ℓ Λ) := by
     rw [faithfulSMul_iff_algebraMap_injective]
     intro a b hab
-    have h := congrArg (fun x : locOrder ℓ Λ => (x : ℚ_[ℓ] ⊗[ℚ] B)) hab
-    simp only [GlobalTheory.LocMatrix.algebraMap_cenAlgebra, GlobalTheory.LocMatrix.coe_cenIncl] at h
+    have h : cenMap ℓ F B a = cenMap ℓ F B b :=
+      congrArg (fun x : locOrder ℓ Λ => (x : ℚ_[ℓ] ⊗[ℚ] B)) hab
     exact Subtype.ext (cenMap_injective ℓ F B h)
   haveI := Module.Projective.of_basis f
   haveI := Module.Finite.of_basis f

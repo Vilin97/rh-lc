@@ -166,6 +166,7 @@ def IsSlantMap (R : Type) [CommRing R] (Γ : Type) [Group Γ] (X : Scheme.{0}) (
     S (groupHomology.π (Rep.trivial R Γ R) m c) = HK.pre R z F (m + n) n (by ring)
 
 
+open scoped Classical in
 def slantR (R : Type) [CommRing R] (Γ : Type) [Group Γ] (X : Scheme.{0}) (F : Shv R) (m : ℕ) (n : ℤ) :
     groupHomology (Rep.trivial R Γ R) m →+ H R (cst (SingleObj Γ) ⨯ sch.obj X) F (m + n) →+ H R (sch.obj X) F n :=
   if h : ∃ S, IsSlantMap R Γ X F m n S then h.choose else 0

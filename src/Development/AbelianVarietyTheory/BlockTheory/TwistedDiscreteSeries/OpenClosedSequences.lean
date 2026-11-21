@@ -100,22 +100,22 @@ def omega (μ : kˣ →* ℂˣ) : Representation ℂ (GL a k × GL b k) (SB (Mat
 
 abbrev RankIn (s : Set ℕ) : Type := {x : Matrix b a k // x.rank ∈ s}
 
-def omegaOn (μ : kˣ →* ℂˣ) (s : Set ℕ) : Representation ℂ (GL a k × GL b k) (SB (RankIn k a b s)) :=
+def omegaOn (μ : kˣ →* ℂˣ) (s : Set ℕ) : Representation ℂ (GL a k × GL b k) (SB (RankIn (k := k) (a := a) (b := b) s)) :=
   twist (sbRep (fun x γ => ⟨act x.1 γ, by rw [rank_act]; exact x.2⟩)
     (fun x => Subtype.ext (act_one x.1)) (fun x γ δ => Subtype.ext (act_mul x.1 γ δ))
     (fun γ => ((continuous_act γ).comp continuous_subtype_val).subtype_mk _)) (omChar a b μ)
 
 variable {a b}
 
-theorem omegaOn_apply (μ : kˣ →* ℂˣ) (s : Set ℕ) (γ : GL a k × GL b k) (Φ : SB (RankIn k a b s))
-    (x : RankIn k a b s) :
+theorem omegaOn_apply (μ : kˣ →* ℂˣ) (s : Set ℕ) (γ : GL a k × GL b k) (Φ : SB (RankIn (k := k) (a := a) (b := b) s))
+    (x : RankIn (k := k) (a := a) (b := b) s) :
     (omegaOn a b μ s γ Φ).1 x =
       (omChar a b μ γ : ℂ) * Φ.1 ⟨act x.1 γ, by rw [rank_act]; exact x.2⟩ := rfl
 
 
 def filt (μ : kˣ →* ℂˣ) (s : Set ℕ) (κ : ℕ) : Subrepresentation (omegaOn a b μ s) where
   toSubmodule :=
-    { carrier := {Φ | ∀ x : RankIn k a b s, x.1.rank < κ → Φ.1 x = 0}
+    { carrier := {Φ | ∀ x : RankIn (k := k) (a := a) (b := b) s, x.1.rank < κ → Φ.1 x = 0}
       add_mem' := fun {f g} hf hg x hx => by
         show f.1 x + g.1 x = 0
         rw [hf x hx, hg x hx, add_zero]

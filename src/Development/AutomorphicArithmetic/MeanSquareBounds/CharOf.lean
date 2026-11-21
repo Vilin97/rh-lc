@@ -170,7 +170,7 @@ theorem stage2 :
         rw [(Nat.prime_dvd_prime_iff_eq hp hqp).mp h]
         exact hqK
       · left
-        obtain ⟨r, hr, hpr⟩ := (Prime.dvd_finset_prod_iff hp.prime _).mp h
+        obtain ⟨r, hr, hpr⟩ := (Prime.dvd_finsetProd_iff hp.prime _).mp h
         simp only [Finset.mem_filter, Finset.mem_Icc] at hr
         have hpr' := (Nat.prime_dvd_prime_iff_eq hp hr.2).mp hpr
         subst hpr'

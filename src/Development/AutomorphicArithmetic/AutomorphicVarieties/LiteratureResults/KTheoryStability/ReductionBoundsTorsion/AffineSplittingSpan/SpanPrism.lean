@@ -57,10 +57,12 @@ theorem prism_sub (φ : Y → Y) : ∀ {n : ℕ} (F G : (Fin (n + 1) → Y) → 
   | n + 1, F, G => by
     funext y
     simp only [prism_succ, Pi.sub_apply]
-    have := prism_sub φ (n := n) (fun w => F (Fin.cons (y 0) w)) (fun w => G (Fin.cons (y 0) w))
+    have hsub : prism φ (fun w => F (Fin.cons (y 0) w) - G (Fin.cons (y 0) w)) =
+        prism φ (fun w => F (Fin.cons (y 0) w)) - prism φ (fun w => G (Fin.cons (y 0) w)) :=
+      prism_sub φ (n := n) _ _
     have h2 : (fun w => F (Fin.cons (y 0) w) - G (Fin.cons (y 0) w)) =
         (fun w => F (Fin.cons (y 0) w)) - (fun w => G (Fin.cons (y 0) w)) := rfl
-    rw [h2, this, Pi.sub_apply]
+    rw [hsub, Pi.sub_apply]
     ring
 
 theorem prism_dc (φ : Y → Y) : ∀ (m : ℕ) (F : (Fin (m + 2) → Y) → ℝ) (y : Fin (m + 2) → Y),
@@ -138,7 +140,7 @@ theorem prism_eq_zero_of_set (φ : Y → Y) (S : Set Y) (hφ : ∀ z ∈ S, φ z
     have h2 := prism_eq_zero_of_set φ S hφ (n := n) (fun w => F (Fin.cons (y 0) w)) (Fin.tail y)
       (fun z hz => hF _ (fun i => Fin.cases (by simpa using hy 0) (fun k => by simpa using hz k) i))
       (fun i => hy _)
-    rw [h1, h2, sub_zero]
+    simp [h1, h2]
 
 end PositivityTheory.KB.SplitAffineSpectral.PrismSpan
 

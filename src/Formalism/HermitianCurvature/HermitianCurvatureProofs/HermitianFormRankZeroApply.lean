@@ -367,7 +367,7 @@ theorem cont_extC (z : Fin (2 * r + k + 1) → ℂ) : Continuous (extC (k := k) 
   refine Fin.lastCases ?_ (fun i => ?_) v
   · simp only [extC, Fin.lastCases_last, lastRow]
     refine (Continuous.neg ?_).div_const _
-    exact continuous_finset_sum _ fun i _ => (continuous_apply_apply i a).mul continuous_const
+    exact continuous_finsetSum _ fun i _ => (continuous_apply_apply i a).mul continuous_const
   · simp only [extC, Fin.lastCases_castSucc]
     exact continuous_apply_apply i a
 
@@ -825,7 +825,7 @@ theorem disint {z : Fin (2 * r + k + 1) → ℂ} (hz : C2.StdZ k r z) {μ0 μN :
     refine (Measure.map_ne_zero_iff hPm.aemeasurable).mpr ?_
     intro h
     have := congrArg (fun μ : Measure ((G.UT (r + 1) → ℂ) × Mt k r) => μ Set.univ) h
-    simp only [Measure.coe_zero, Pi.zero_apply] at this
+    simp only [FunLike.coe_zero, Pi.zero_apply] at this
     rw [← Set.univ_prod_univ, Measure.prod_prod] at this
     have hv : (volume : Measure (G.UT (r + 1) → ℂ)) Set.univ ≠ 0 :=
       (Measure.IsOpenPosMeasure.open_pos Set.univ isOpen_univ Set.univ_nonempty)

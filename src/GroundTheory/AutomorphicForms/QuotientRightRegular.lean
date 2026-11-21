@@ -130,9 +130,10 @@ theorem tendsto_rightRegular_of_continuous {ψ : RightCosetSpace Γ → ℂ} (hc
   have heq : ∀ g, eLpNorm (⇑(rightRegular Γ μ g (hψ.toLp ψ)) - ⇑(rightRegular Γ μ g₀ (hψ.toLp ψ)))
       2 (quotientMeasure Γ μ) = (∫⁻ x, ‖ψ (rightMul Γ g x) - ψ (rightMul Γ g₀ x)‖ₑ ^ (2 : ℝ)
         ∂quotientMeasure Γ μ) ^ (1 / (2 : ℝ)) := fun g ↦ by
-    rw [eLpNorm_congr_ae ((hae g).sub (hae g₀)),
-      eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num)]
-    simp only [Pi.sub_apply, ENNReal.toReal_ofNat]
+    rw [eLpNorm_congr_ae ((hae g).sub (hae g₀))]
+    exact eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num)
+      (((hc.comp (continuous_rightMul Γ g)).sub
+        (hc.comp (continuous_rightMul Γ g₀))).measurable.aestronglyMeasurable)
   simp_rw [heq]
   have := ((ENNReal.continuous_rpow_const (y := 1 / (2 : ℝ))).tendsto 0).comp
     (tendsto_lintegral_rightMul_sub Γ μ hc hs g₀)

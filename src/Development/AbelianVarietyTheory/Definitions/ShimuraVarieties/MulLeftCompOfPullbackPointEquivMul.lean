@@ -149,14 +149,14 @@ def grpObjOfIsPullback [GrpObj G] (h : IsPullback φ G'.hom G.hom f) : GrpObj G'
 
 theorem pullbackPointEquiv_mul [GrpObj G] (h : IsPullback φ G'.hom G.hom f) {T : Over S'}
     (x y : T ⟶ G') :
-    letI := grpObjOfIsPullback h
+    letI : GrpObj G' := grpObjOfIsPullback h;
     pullbackPointEquiv h T (x * y) = pullbackPointEquiv h T x * pullbackPointEquiv h T y := by
   exact ((yonedaGrpObjIsoOfRepresentableBy G' _ (pullbackRepresentableBy h)).hom.app
     (Opposite.op T)).hom.map_mul x y
 
 theorem isCommMonObj_of_isPullback [GrpObj G] [IsCommMonObj G]
     (h : IsPullback φ G'.hom G.hom f) :
-    letI := grpObjOfIsPullback h
+    letI : GrpObj G' := grpObjOfIsPullback h;
     IsCommMonObj G' := by
   letI := grpObjOfIsPullback h
   letI : CommMonoid ((Over.map f).obj (G' ⊗ G') ⟶ G) := Hom.commMonoid

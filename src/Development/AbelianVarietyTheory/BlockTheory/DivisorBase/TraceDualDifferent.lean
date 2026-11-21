@@ -56,10 +56,12 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_
     (Ne.symm (FractionalIdeal.absNorm_eq_zero_iff.not.2 hM))
 
 
+open scoped Classical in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_eq_covolume [IsTotallyReal F]
     (M : (FractionalIdeal (𝓞 F)⁰ F)ˣ) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol (M : FractionalIdeal (𝓞 F)⁰ F) =
-      ZLattice.covolume (mixedEmbedding.idealLattice F M) := by
+      ZLattice.covolume (E := mixedEmbedding.mixedSpace F)
+        (mixedEmbedding.idealLattice F M) MeasureTheory.volume := by
   rw [mixedEmbedding.covolume_idealLattice, IsTotallyReal.nrComplexPlaces_eq_zero, pow_zero,
     mul_one, mul_comm]
   rfl

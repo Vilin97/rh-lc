@@ -63,7 +63,7 @@ private lemma continuous_bOf :
     intro k
     unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.FrameDegreeData.dOf _root_.ReciprocityTheory.ChartRestriction.G.FD.gram _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC _root_.ReciprocityTheory.ChartRestriction.G.FD.col
     simp only [Matrix.of_apply]
-    exact continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ =>
+    exact continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ =>
       ((hent a k).mul continuous_const).mul (Complex.continuous_conj.comp (hent b k))
   have hs : Continuous fun p : X.dom => _root_.ReciprocityTheory.ChartRestriction.G.FD.FrameDegreeData.sOf X p.1 τ := by
     unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.FrameDegreeData.sOf
@@ -96,7 +96,7 @@ theorem _root_.GlobalTheory.Ker.exists_orthonormalisation : ∀ (E : Type) [Fiel
   have hTri : ∀ x ∈ X.dom, _root_.GlobalTheory.Ker.Ortho.tri X x ∈ _root_.ReciprocityTheory.ChartRestriction.G.FD.Bor X.Ψ r := by
     intro x hx
     unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.Bor
-    simp only [Set.mem_setOf_eq]
+    simp only [Set.mem_ofPred_eq]
     intro τ
     have hu := hdetB x hx τ
     haveI := Matrix.invertibleOfIsUnitDet _ hu
@@ -131,7 +131,7 @@ theorem _root_.GlobalTheory.Ker.exists_orthonormalisation : ∀ (E : Type) [Fiel
     refine ⟨?_, ?_⟩
     · have hx' := hx
       unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.dom _root_.ReciprocityTheory.ChartRestriction.G.FD.GG at hx' ⊢
-      simp only [Set.mem_setOf_eq] at hx' ⊢
+      simp only [Set.mem_ofPred_eq] at hx' ⊢
       intro τ
       obtain ⟨-, hpos⟩ := hx' τ
       refine ⟨fun h0 => ?_, fun i => by rw [hdm τ i]; exact hpos i⟩

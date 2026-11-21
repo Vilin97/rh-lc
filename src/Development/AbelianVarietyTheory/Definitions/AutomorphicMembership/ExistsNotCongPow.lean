@@ -194,6 +194,7 @@ theorem deg_eq {σ : Weil h} {a b : ℕ} (hσ : ActsAs A (normV w) (σ : G E Ω)
   rw [mul_inv_cancel, deg_one] at this; omega
 
 
+variable (h) in
 def degHom : Weil h →* Multiplicative ℤ where
   toFun σ := Multiplicative.ofAdd (deg σ)
   map_one' := by simp
@@ -230,6 +231,7 @@ theorem deg_eq_one_iff {σ : Weil h} : deg σ = 1 ↔ IsFrob A (normV w) (σ : G
   deg_eq_zero_iff.mpr σ.2
 
 
+variable (h) in
 def frob : Weil h := ⟨(exists_isFrob h).choose, mem_Weil_of_isFrob h (exists_isFrob h).choose_spec⟩
 
 theorem isFrob_frob : IsFrob A (normV w) (frob h : G E Ω) := (exists_isFrob h).choose_spec
@@ -247,11 +249,13 @@ theorem exists_eq_zpow_mul {φ : Weil h} (hφ : deg φ = 1) (σ : Weil h) :
   rfl
 
 
+variable (h) in
 def unrChar (c : ℂˣ) : Weil h →* ℂˣ := (zpowersHom ℂˣ c).comp (degHom h)
 
 @[simp] theorem unrChar_apply (c : ℂˣ) (σ : Weil h) : unrChar h c σ = c ^ deg σ := rfl
 
 
+variable (w) in
 def qPow (s : ℝ) : ℂˣ :=
   Units.mk0 (((normV w : ℕ) : ℂ) ^ ((s : ℝ) : ℂ)) (by
     rw [Ne, Complex.cpow_eq_zero_iff, not_and_or]

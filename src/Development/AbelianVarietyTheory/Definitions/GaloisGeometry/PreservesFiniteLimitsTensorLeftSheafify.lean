@@ -101,8 +101,7 @@ theorem tensorLeft_sheaf_additive (F : Sheaf J (ModuleCat.{1} S)) : (tensorLeft 
   exact Functor.additive_of_iso e.symm
 
 theorem tensorLeft_sheaf_linear (F : Sheaf J (ModuleCat.{1} S)) :
-    letI := tensorLeft_sheaf_additive J S F
-    (tensorLeft F).Linear S := by
+    (letI := tensorLeft_sheaf_additive J S F; (tensorLeft F).Linear S) := by
   letI := tensorLeft_sheaf_additive J S F
   have e : tensorLeft F ≅ sheafToPresheaf J _ ⋙ tensorLeft F.obj ⋙ presheafToSheaf J _ :=
     (tensoringLeft _).mapIso (asIso ((sheafificationAdjunction J _).counit.app F)).symm ≪≫

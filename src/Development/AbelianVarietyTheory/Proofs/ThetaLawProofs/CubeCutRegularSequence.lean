@@ -45,7 +45,10 @@ theorem ExactMod.mem_empty {A : Cube.{0} I K} {J : ∀ s, Submodule K (A.obj s)}
     obtain ⟨s, hs⟩ := s
     obtain ⟨a, rfl⟩ := Finset.card_eq_one.1 hs
     exact hy a) ⟨∅, rfl⟩
-  simpa using h1
+  have heval : (Cube.termZeroEquiv A).symm y ⟨∅, rfl⟩ = y := by
+    simp [Cube.termZeroEquiv]
+  rw [heval] at h1
+  exact h1
 
 theorem ExactMod.exists_glue {A : Cube.{0} I K} {J : ∀ s, Submodule K (A.obj s)}
     (h : ExactMod A J) (y : ∀ a : I, A.obj {a})

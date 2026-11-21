@@ -66,7 +66,7 @@ theorem ae_eval_circleMap_ne_zero : ∀ (m : ℕ) (f : MvPolynomial (Fin m) ℂ)
       have hc : (fun i => circleMap 0 1 ((e.symm (y, s) : Fin (m + 1) → ℝ) i)) =
           Fin.cons (circleMap 0 1 y) w := by
         have : (e.symm (y, s) : Fin (m + 1) → ℝ) = Fin.cons y s := by
-          simp [e, MeasurableEquiv.piFinSuccAbove_symm_apply]; rfl
+          simp [e, MeasurableEquiv.piFinSuccAbove_symm_apply]
         rw [this]
         funext i
         cases i using Fin.cases <;> simp [hw]

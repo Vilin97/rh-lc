@@ -73,7 +73,7 @@ theorem exists_fixed {G V : Type} [AddCommGroup G] [AddCommGroup V] [Module ℂ 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y']
 
-
+variable (Y Y') in
 def box (a : kˣ) : AddSubgroup (Matrix Y Y' k) where
   carrier := {x | ∀ r q, valuation k (x r q) ≤ valuation k (a : k)}
   zero_mem' := fun r q => by simp
@@ -114,11 +114,16 @@ def pairing (ψ : AddChar k Circle) (t b : Matrix Y Y' k) : ℂ := ψ (∑ r, �
 theorem pairing_comm (ψ : AddChar k Circle) (t b : Matrix Y Y' k) : pairing ψ t b = pairing ψ b t := by
   simp only [pairing, mul_comm]
 
-theorem isBichar_pairing (ψ : AddChar k Circle) : IsBichar (pairing (Y := Y) (Y' := Y') ψ) where
-  left a b y := by simp [pairing, mul_add, Finset.sum_add_distrib, AddChar.map_add_eq_mul]
-  right a b y := by simp [pairing, add_mul, Finset.sum_add_distrib, AddChar.map_add_eq_mul]
-  zero_left y := by simp [pairing]
-  zero_right y := by simp [pairing]
+theorem isBichar_pairing (ψ : AddChar k Circle) : IsBichar (pairing (Y := Y) (Y' := Y') ψ) := by
+  constructor
+  · intro a b y
+    simp [pairing, Matrix.add_apply, mul_add, Finset.sum_add_distrib, AddChar.map_add_eq_mul]
+  · intro a y z
+    simp [pairing, Matrix.add_apply, add_mul, Finset.sum_add_distrib, AddChar.map_add_eq_mul]
+  · intro y
+    simp [pairing]
+  · intro a
+    simp [pairing]
 
 theorem pairing_single (ψ : AddChar k Circle) (t : Matrix Y Y' k) (r : Y) (q : Y') (c : k) :
     pairing ψ t (Matrix.single r q c) = ψ (c * t r q) := by

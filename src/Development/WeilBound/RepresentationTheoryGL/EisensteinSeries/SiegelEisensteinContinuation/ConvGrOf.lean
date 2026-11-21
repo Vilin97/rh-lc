@@ -42,11 +42,13 @@ def stab (R : Type) [CommRing R] (s : Set ι) : Subgroup (GL ι R) where
 
 
 def bdet (s : Set ι) (g : GL ι R) : Rˣ :=
-  if h : IsUnit ((g : Matrix ι ι R).submatrix (Subtype.val : s → ι) Subtype.val).det then h.unit else 1
+  by classical
+    exact if h : IsUnit ((g : Matrix ι ι R).submatrix (Subtype.val : s → ι) Subtype.val).det then h.unit else 1
 
 
 def ext {G : Type} [Group G] (K P : Subgroup G) (f : G → ℝ) (g : G) : ℝ :=
-  if h : ∃ k : K, g * (k : G)⁻¹ ∈ P then f (g * (h.choose : G)⁻¹) else 0
+  by classical
+    exact if h : ∃ k : K, g * (k : G)⁻¹ ∈ P then f (g * (h.choose : G)⁻¹) else 0
 
 namespace Ad
 
@@ -194,7 +196,8 @@ def LeviS : Prop := ForAd fun {_} {R} _ _ _ _ A => ∀ (ι : Type) [Fintype ι] 
     ∀ s : Set ι, PullHt (A.uK ε ι) (A.uQ ε Set.univ) π (A.uH ε s) (A.htGL s)
 
 
-def LeviQ : Prop := ForAd fun {_} {_} _ _ _ _ A => ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (ε : ℤˣ) (s : Set ι),
+def LeviQ : Prop := by classical
+  exact ForAd fun {_} {_} _ _ _ _ A => ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (ε : ℤˣ) (s : Set ι),
   Iwa (A.uQ ε s ⊓ A.uQ ε Set.univ) (A.uK ε ι) →
   ∃ (π : A.uQ ε s →* A.U ε (sᶜ : Set ι)) (j : A.U ε (sᶜ : Set ι) →* A.uQ ε s) (c₀ : A.U ε ι → ℂ),
     IsLevi (A.uΓ ε ι) (A.uK ε ι) (A.uQ ε s) (A.uΓ ε _) (A.uK ε _) π j c₀ ∧

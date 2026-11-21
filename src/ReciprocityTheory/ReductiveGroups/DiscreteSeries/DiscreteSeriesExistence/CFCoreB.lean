@@ -19,10 +19,11 @@ variable {M M' : Type*} [AddCommGroup M] [Module ℂ M] [AddCommGroup M'] [Modul
 
 theorem layer_map_le (f : M →ₗ[ℂ] M') (hf : ∀ a b x, f (E a b x) = E' a b (f x)) {V : Submodule ℂ M}
     {V' : Submodule ℂ M'} (hV : ∀ x ∈ V, f x ∈ V') :
-    ∀ k, ∀ x ∈ layer ε E V k, f x ∈ layer ε E' V' k
-  | 0 => hV
-  | k + 1 => by
-    have ih := layer_map_le f hf hV k
+    ∀ k, ∀ x ∈ layer ε E V k, f x ∈ layer ε E' V' k := by
+  intro k
+  induction k with
+  | zero => exact hV
+  | succ k ih =>
     have hle : layer ε E V (k + 1) ≤ (layer ε E' V' (k + 1)).comap f := by
       show layer ε E V k ⊔ _ ≤ _
       refine sup_le (fun x hx => ?_) (iSup_le fun a => iSup_le fun b => iSup_le fun hab => ?_)
@@ -42,7 +43,7 @@ theorem khw_map (f : M →ₗ[ℂ] M') (hf : ∀ a b x, f (E a b x) = E' a b (f 
 theorem casimir_map (f : M →ₗ[ℂ] M') (hf : ∀ a b x, f (E a b x) = E' a b (f x)) (x : M) :
     f (casimir E x) = casimir E' (f x) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hf]
+    simp [casimir, LinearMap.sum_apply, map_sum, hf]
 
 end Intertwine
 
@@ -71,15 +72,15 @@ theorem isGlRep_prod (hE₁ : IsGlRep E₁) (hE₂ : IsGlRep E₂) : IsGlRep (pr
   intro a b c d
   refine LinearMap.ext fun x => prod_ext ?_ ?_
   · have h := congrArg (fun X : Module.End ℂ M₁ => X (prFst x)) (hE₁ a b c d)
-    simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
+    simp only [LinearMap.sub_apply, mul_apply_eq_comp] at h
     change prFst _ = prFst _
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, map_sub, prFst_prodE]
+    simp only [LinearMap.sub_apply, mul_apply_eq_comp, map_sub, prFst_prodE]
     rw [h]
     split_ifs <;> (try simp) <;> rfl
   · have h := congrArg (fun X : Module.End ℂ M₂ => X (prSnd x)) (hE₂ a b c d)
-    simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
+    simp only [LinearMap.sub_apply, mul_apply_eq_comp] at h
     change prSnd _ = prSnd _
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, map_sub, prSnd_prodE]
+    simp only [LinearMap.sub_apply, mul_apply_eq_comp, map_sub, prSnd_prodE]
     rw [h]
     split_ifs <;> (try simp) <;> rfl
 

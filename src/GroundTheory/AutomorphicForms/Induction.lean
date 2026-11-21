@@ -80,8 +80,8 @@ theorem rightTranslation_mem_indSpace {f : G → W} (hf : f ∈ indSpace H σ) (
 
 
 def indRep : Representation ℂ G (indSpace H σ) :=
-  (rightTranslation (W := W)).subrepresentation (indSpace H σ) fun g _ hf =>
-    rightTranslation_mem_indSpace hf g
+  (rightTranslation (W := W)).subrepresentation (indSpace H σ) fun g f hf =>
+    rightTranslation_mem_indSpace (H := H) (σ := σ) (f := f) hf g
 
 @[simp]
 theorem coe_indRep_apply (g : G) (f : indSpace H σ) (x : G) :

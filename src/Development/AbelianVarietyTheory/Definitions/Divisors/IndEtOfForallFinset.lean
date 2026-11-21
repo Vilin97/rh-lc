@@ -90,12 +90,14 @@ def Hyp {T : Type 1} [Category.{0} T] (Φ : T ⥤ Spcᵒᵖ) {U : T} {X : Cosimp
   ∀ k : SimplexCategoryᵒᵖ, QuasiIso ((chains R).map (lev (Φ ⋙ ((evaluation _ PSh).obj k).op) a))
 
 
+variable {R} in
 def onRings (F : Shv R) : CommRingCat.{0} ⥤ ModuleCat.{1} (ULift.{1} R) := Scheme.Spec.rightOp ⋙ F.obj
 
 
 def Finitary (F : Shv R) : Prop := PreservesFilteredColimitsOfSize.{0, 0} (onRings F)
 
 
+variable {R} in
 abbrev Sec.pull {F : Shv R} {U V : Scheme.{0}} (j : V ⟶ U) (x : Sec F U) : Sec F V := (F.obj.map j.op).hom x
 
 def ContCone (F : Shv R) {I : Type} [SmallCategory I] [IsCofiltered I] {G : I ⥤ Spc} (c : Cone G) : Prop :=
@@ -119,16 +121,18 @@ theorem indFEt_of_finite_etale (A O : Type) [CommRing A] [CommRing O] [Algebra A
     IndFEt A O :=
   MorphismProperty.le_ind _ _ ⟨RingHom.etale_algebraMap.2 inferInstance, RingHom.finite_algebraMap.2 inferInstance⟩
 
+set_option synthInstance.maxHeartbeats 200000 in
 def bc {E : Spc} {S : Scheme.{0}} (p : E ⟶ sch.obj S) : Over S ⥤ Spc where
   obj U := pullback p (sch.map U.hom)
   map {U V} g := pullback.map p (sch.map U.hom) p (sch.map V.hom) (𝟙 _) (sch.map g.left) (𝟙 _) (by simp)
     (by rw [Category.comp_id, ← sch.map_comp, Over.w g])
   map_id U := by apply pullback.hom_ext <;> simp
-  map_comp f g := by apply pullback.hom_ext <;> simp [pullback.map, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
+  map_comp f g := by apply pullback.hom_ext <;> simp [pullback.map]
 
+set_option synthInstance.maxHeartbeats 200000 in
 def bcMap {E E' : Spc} {S : Scheme.{0}} (α : E ⟶ E') (p : E' ⟶ sch.obj S) : bc (α ≫ p) ⟶ bc p where
   app U := pullback.map (α ≫ p) (sch.map U.hom) p (sch.map U.hom) α (𝟙 _) (𝟙 _) (by simp) (by simp)
-  naturality U V g := by apply pullback.hom_ext <;> simp [bc, pullback.map, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
+  naturality U V g := by apply pullback.hom_ext <;> simp [bc, pullback.map]
 
 def QcqsOver {E : Spc} {S : Scheme.{0}} (p : E ⟶ sch.obj S) : Prop :=
   ∀ k : SimplexCategoryᵒᵖ, ∃ (X : Scheme.{0}) (r : X ⟶ S) (e : yoneda.obj X ≅ E.obj k),

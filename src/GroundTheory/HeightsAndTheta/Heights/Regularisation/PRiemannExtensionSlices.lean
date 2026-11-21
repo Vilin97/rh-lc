@@ -63,7 +63,7 @@ theorem cauchy_torus_off_axes : ∀ (n : ℕ) (G : (Fin n → ℂ) → ℂ),
       refine Continuous.mul ?_ (continuous_comp_torusMap_zero hd hr0 hr1)
       refine continuous_finsetProd _ fun i _ => Continuous.inv₀ ?_ fun θ => torusMap_sub_ne hr0 hz θ i
       exact ((continuous_apply i).comp (continuous_torusMap 0 r)).sub continuous_const
-    rw [torusIntegral_succ hint]
+    refine (torusIntegral_succ hint).trans ?_
     have hz1 : z ∈ ball (0 : Fin (n + 1) → ℂ) 1 := ball_subset_ball hr1.le hz
     have hz' : Fin.tail z ∈ ball (0 : Fin n → ℂ) r :=
       (mem_ball_pi_iff hr0).mpr fun i => by simpa [Fin.tail] using (mem_ball_pi_iff hr0).mp hz i.succ

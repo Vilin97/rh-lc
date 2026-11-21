@@ -273,6 +273,7 @@ theorem contDiff_smul_of_tsupport {V F : Type*} [NormedAddCommGroup V] [NormedSp
     exact contDiffAt_const.congr_of_eventuallyEq this
 
 
+open MeasureTheory in
 theorem contDiff_integral_comp_of_hasCompactSupport {X : Type*} [MeasurableSpace X]
     [TopologicalSpace X] [OpensMeasurableSpace X] [SecondCountableTopology X] (ν : Measure X)
     [IsFiniteMeasure ν] {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V] {u : X → V}

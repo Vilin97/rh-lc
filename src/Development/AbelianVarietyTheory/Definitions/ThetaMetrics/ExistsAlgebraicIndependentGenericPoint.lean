@@ -47,6 +47,7 @@ end Dimension
 
 section Principal
 
+attribute [local instance] Polynomial.algebra Polynomial.isLocalization
 
 theorem isPrincipal_of_forall_C_mem {R : Type*} [CommRing R] [IsDomain R]
     [UniqueFactorizationMonoid R] (E : Ideal (Polynomial R)) [hE : E.IsPrime]
@@ -174,7 +175,8 @@ variable {K : Type u} [Field K] {σ β : Type} [Fintype σ] [Fintype β]
 
 theorem elimIdeal_ne_bot {p : Ideal (MvPolynomial σ K)} [hP : p.IsPrime]
     (hp : p.IsHomogeneous (homogeneousSubmodule σ K)) (hX : ∃ j, X j ∉ p)
-    (hdim : ringKrullDim (MvPolynomial σ K ⧸ p) ≤ (Fintype.card β : ℕ)) : elimIdeal β p ≠ ⊥ := by
+    (hdim : ringKrullDim (MvPolynomial σ K ⧸ p) ≤ (Fintype.card β : ℕ)) :
+    elimIdeal (β := β) p ≠ ⊥ := by
   classical
   intro hE
   have hne := genericPoint_ne_zero hX
@@ -281,7 +283,7 @@ theorem exists_algebraicIndependent_genericPoint [Finite σ] {p : Ideal (MvPolyn
 
 theorem isPrincipal_elimIdeal [Nonempty β] {p : Ideal (MvPolynomial σ K)} [p.IsPrime]
     (hdim : ringKrullDim (MvPolynomial σ K ⧸ p) = (Fintype.card β : ℕ)) :
-    (elimIdeal β p).IsPrincipal := by
+    (elimIdeal (β := β) p).IsPrincipal := by
   classical
   obtain ⟨κ, hκ⟩ := exists_algebraicIndependent_genericPoint hdim
   obtain ⟨i₀⟩ := ‹Nonempty β›

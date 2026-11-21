@@ -154,7 +154,7 @@ theorem dvr_of_generators {R S F : Type*} [CommRing R] [IsDomain R] [IsDiscreteV
   have hall : ∀ M : Ideal S, M.IsMaximal → x - 1 ∈ M := by
     intro M hM
     have hc : M.comap (algebraMap R S) = IsLocalRing.maximalIdeal R :=
-      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M)
+      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal M)
     have hpM : (ℓ : S) ∈ M := by
       have : (ℓ : R) ∈ M.comap (algebraMap R S) := by
         rw [hc, hm]; exact Ideal.mem_span_singleton_self _
@@ -223,7 +223,7 @@ theorem dvr_of_generators {R S F : Type*} [CommRing R] [IsDomain R] [IsDiscreteV
         rw [this]; exact one_mem _
       · exact ⟨AdjoinRoot.root f, AdjoinRoot.lift_root hroot⟩
     | algebraMap r => exact ⟨AdjoinRoot.of f (IsLocalRing.residue R r), AdjoinRoot.lift_of hroot⟩
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   have hfield : IsField (S ⧸ J) :=
     (RingEquiv.ofBijective θ ⟨θ.injective, hsurj⟩).symm.toMulEquiv.isField (Field.toIsField _)

@@ -306,12 +306,12 @@ theorem chain :
     Finset.sum_eq_zero fun s hs => if_neg (hc s (by simpa [Nat.lt_succ_iff] using hs))
   have main : ∀ c, OrdGe v (fun _ => ρ + σ) (t c - μ c) (1 + ρ) := by
     refine ord_of_step (by omega) al h0 t μ _ ht (fun c => ?_) hz _ ?_
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [μ, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [μ, map_sum]
       refine Finset.sum_eq_zero fun s _ => ?_
       split_ifs
-      set_option synthInstance.maxHeartbeats 100000 in
-        · simp only [pure, map_sum, map_mul, map_pow, constantCoeff_X]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          simp only [pure, map_sum, map_mul, map_pow, constantCoeff_X]
         refine Finset.sum_eq_zero fun j _ => ?_
         rw [zero_pow (by positivity), mul_zero]
       · simp

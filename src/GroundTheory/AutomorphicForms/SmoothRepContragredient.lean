@@ -20,6 +20,7 @@ theorem dual_apply_apply (g : G) (f : Module.Dual ℂ V) (v : V) :
     Representation.dual ρ g f v = f (ρ g⁻¹ v) := rfl
 
 
+variable {ρ} in
 theorem mem_fixedVectors_dual {H : Subgroup G} {f : Module.Dual ℂ V} :
     f ∈ fixedVectors (Representation.dual ρ) H ↔ ∀ h ∈ H, ∀ v, f (ρ h v) = f v := by
   constructor
@@ -34,6 +35,7 @@ theorem mem_fixedVectors_dual {H : Subgroup G} {f : Module.Dual ℂ V} :
 variable [TopologicalSpace G] [IsTopologicalGroup G]
 
 
+variable {ρ} in
 theorem mem_smoothVectors_of_mem_fixedVectors {H : Subgroup G} (hH : IsOpen (H : Set G))
     {v : V} (hv : v ∈ fixedVectors ρ H) : v ∈ smoothVectors ρ :=
   Subgroup.isOpen_mono (mem_fixedVectors_iff_le.1 hv) hH
@@ -77,6 +79,7 @@ theorem evalSmooth_apply (v : V) (x : smoothVectors (Representation.dual ρ)) :
     evalSmooth ρ v x = (x : Module.Dual ℂ V) v := rfl
 
 
+variable {ρ} in
 theorem evalSmooth_mem {v : V} (hv : v ∈ smoothVectors ρ) :
     evalSmooth ρ v ∈ smoothVectors (Representation.dual (contragredient ρ)) := by
   refine Subgroup.isOpen_mono (H₁ := stabilizerOf ρ v) (fun g hg => ?_) hv
@@ -86,6 +89,7 @@ theorem evalSmooth_mem {v : V} (hv : v ∈ smoothVectors ρ) :
     hg]
 
 
+variable {ρ} in
 def toDoubleContragredient (hρ : IsSmooth ρ) :
     Representation.IntertwiningMap ρ (contragredient (contragredient ρ)) where
   toLinearMap := (evalSmooth ρ).codRestrict _ fun v => evalSmooth_mem (hρ v)

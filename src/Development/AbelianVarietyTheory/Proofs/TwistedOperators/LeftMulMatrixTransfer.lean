@@ -89,7 +89,8 @@ theorem exists_cyclic_field {K : Type} [Field K] {r : ℕ} (g : Matrix (Fin r) (
   apply hw0
   ext j
   have := congrArg (fun p => p.coeff j) hq0
-  simpa [q, Polynomial.finsetSum_coeff, coeff_monomial, Fin.val_inj] using this
+  simpa only [q, Polynomial.finsetSum_coeff, coeff_monomial_apply, Fin.val_inj,
+    Fintype.sum_ite_eq', coeff_zero, Pi.zero_apply] using this
 
 theorem exists_cyclic {A : Type} [CommRing A] [IsArtinianRing A] {r : ℕ}
     (g : Matrix (Fin r) (Fin r) A) (hs : g.charpoly.Separable) :

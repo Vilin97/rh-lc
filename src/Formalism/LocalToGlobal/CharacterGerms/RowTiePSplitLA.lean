@@ -140,8 +140,8 @@ theorem coeff_extract [CharZero K] {ι : Type} [Fintype ι] [DecidableEq ι] (B 
       refine Set.Infinite.mono ?_ (Set.infinite_range_of_injective (Nat.cast_injective (R := K)))
       rintro _ ⟨t, rfl⟩
       exact hroot t
-    have hc1 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) hq0
-    simp only [hq, finsetSum_coeff, coeff_monomial, Finset.sum_ite_eq', Finset.mem_range, coeff_zero] at hc1
+    have hc1 := congrArg (fun p : K[X] => p.coeff 1) hq0
+    simp only [hq, finsetSum_coeff, coeff_monomial_apply, Finset.sum_ite_eq', Finset.mem_range, coeff_zero] at hc1
     rw [if_pos (by omega)] at hc1
     exact hc1
   have hR1 : R.coeff 1 = (X - Polynomial.C (μ c)) * Polynomial.C (∏ c' ∈ Finset.univ.erase c, a c') := by
@@ -184,7 +184,9 @@ theorem split_holds : SplitSt := by
 
   have hXL : (X - Polynomial.C (em c x0)) * Lagrange.basis Finset.univ (fun c => em c x0) c =
       Polynomial.C (Lagrange.nodalWeight Finset.univ (fun c => em c x0) c) * ∏ c', (X - Polynomial.C (em c' x0)) :=
-    X_sub_mul_basis (Finset.mem_univ c)
+    by
+      simpa only [Lagrange.nodal_eq] using
+        (X_sub_mul_basis (v := fun c' => em c' x0) (Finset.mem_univ c))
   have hE0 : (M x0 - algebraMap K _ (em c x0)) *
       (P * aeval (M x0) (Lagrange.basis Finset.univ (fun c => em c x0) c)) = 0 := by
     have e1 : M x0 - algebraMap K (Matrix (Fin n) (Fin n) K) (em c x0) = aeval (M x0) (X - Polynomial.C (em c x0)) := by

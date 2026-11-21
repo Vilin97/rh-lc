@@ -64,7 +64,7 @@ theorem hilb_reduction_le : (∀ (O K J : Type) [CommRing O] [IsDomain O] [Valua
   intro O K J _ _ _ _ _ _ _ C C' h d
   rw [hilb_eq_finrank_span, hilb_eq_finrank_span]
   haveI : Finite {m : J →₀ ℕ // m.degree = d} :=
-    ((Finsupp.finite_of_degree_le d).subset fun m (hm : m.degree = d) => hm.le).to_subtype
+    (Finsupp.finite_of_degree_eq d).to_subtype
   apply finrank_span_reduction_le
   rintro ⟨v', hv'⟩
   obtain ⟨w, hw, rfl⟩ := h v' hv'

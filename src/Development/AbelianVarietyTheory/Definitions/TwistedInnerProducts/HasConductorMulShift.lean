@@ -16,6 +16,7 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
 section Forms
 
 
+variable (k n) in
 abbrev Form (M : Type*) : Type _ := Pair k n → M
 
 variable {M : Type*} [AddCommGroup M] [Module ℂ M]
@@ -44,7 +45,7 @@ def Nm : Module.End ℂ (Form k n M) :=
   letI := Fintype.ofFinite 𝓀[k]ˣ
   ∑ c : 𝓀[k]ˣ, dia c
 
-
+variable (k n M) in
 def Mram : Submodule ℂ (Form k n M) := LinearMap.ker Nm
 
 def trLat (L : Submodule 𝒪[k] (n → k)) : Form k n M →ₗ[ℂ] M := ∑ P ∈ withLat L, LinearMap.proj P
@@ -55,13 +56,13 @@ def tr : Module.End ℂ (Form k n M) := LinearMap.pi fun P => trLat P.lat
 
 def tr' : Module.End ℂ (Form k n M) := LinearMap.pi fun P => trKer P.ker
 
-
+open Classical in
 def Da (q : Unif k) (a : 𝓀[k]) : Module.End ℂ (Form k n M) :=
   sumOp (fun P₁ => (withLat P₁.ker).filter fun P => cross q P₁ P = a) fun _ _ => 1
 
 def D (q : Unif k) : Module.End ℂ (Form k n M) := Da q 1
 
-
+open Classical in
 def U (q : Unif k) : Module.End ℂ (Form k n M) :=
   sumOp (fun P => (withKer P.lat).filter fun P₁ => cross q P₁ P = 1) fun _ _ => 1
 
@@ -108,14 +109,14 @@ theorem tr_apply (P : Pair k n) : tr φ P = ∑ Q ∈ withLat P.lat, φ Q := trL
 
 theorem tr'_apply (P : Pair k n) : tr' φ P = ∑ Q ∈ withKer P.ker, φ Q := trKer_apply φ _
 
-
+open Classical in
 theorem Da_apply (a : 𝓀[k]) (P₁ : Pair k n) :
     Da q a φ P₁ = ∑ P ∈ withLat P₁.ker with cross q P₁ P = a, φ P := by simp [Da, sumOp_apply]
 
-
+open Classical in
 theorem D_apply (P₁ : Pair k n) : D q φ P₁ = ∑ P ∈ withLat P₁.ker with cross q P₁ P = 1, φ P := Da_apply q φ 1 P₁
 
-
+open Classical in
 theorem U_apply (P : Pair k n) : U q φ P = ∑ P₁ ∈ withKer P.lat with cross q P₁ P = 1, φ P₁ := by
   simp [U, sumOp_apply]
 
@@ -124,7 +125,7 @@ theorem FF_apply (P₁ : Pair k n) : FF q χ φ P₁ = ∑ P ∈ withLat P₁.ke
 theorem FFStar_apply (P : Pair k n) : FFStar q χ φ P = ∑ P₁ ∈ withKer P.lat, χ (-cross q P₁ P) • φ P₁ := rfl
 
 section Formulas
-variable (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
+variable (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k]
 
 theorem FF_up [Fintype {f : Module.Dual 𝓀[k] (Red L) // f ≠ 0}] (x : {x : Red L // x ≠ 0}) :
     FF q χ φ (up L q x) = ∑ f : {f : Module.Dual 𝓀[k] (Red L) // f ≠ 0}, χ (f.1 x.1) • φ (ofDual L f) := by
@@ -297,14 +298,14 @@ end Character
 section Kernel
 variable [Fintype n']
 
-
+open Classical in
 def latInd (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) (x : Matrix n n' k) : ℂ :=
   if ∀ y ∈ S, x *ᵥ y ∈ L then 1 else 0
 
 def Maps (P : Pair k n') (Q : Pair k n) (x : Matrix n n' k) : Prop :=
   ∃ h : ∀ y ∈ P.lat, x *ᵥ y ∈ Q.lat, ∀ y : P.lat, Q.fn ⟨x *ᵥ y, h y y.2⟩ = P.fn y
 
-
+open Classical in
 def phiOne (P : Pair k n') (Q : Pair k n) (x : Matrix n n' k) : ℂ := if Maps P Q x then 1 else 0
 
 variable {P : Pair k n'} {Q : Pair k n} {x : Matrix n n' k}
@@ -326,9 +327,9 @@ theorem maps_dia (c : 𝓀[k]ˣ) : Maps (c • P) (c • Q) x ↔ Maps P Q x := 
   exact ⟨fun h y a => by simpa using h y (c * a), fun h y a => h y _⟩
 
 theorem phiOne_dia (c : 𝓀[k]ˣ) : phiOne (c • P) (c • Q) = phiOne P Q := by
-  ext x
   classical
-  exact if_congr (maps_dia c) rfl rfl
+  funext x
+  exact if_congr (maps_dia (x := x) c) rfl rfl
 
 variable [DecidableEq n'] [Fintype n] [DecidableEq n]
 
@@ -358,16 +359,16 @@ end Kernel
 section Glued
 variable {c : ℕ}
 
-
+variable (k n) in
 def inX (c : ℕ) : (n → k) →ₗ[𝒪[k]] (n ⊕ Fin c → k) where
   toFun x := Sum.elim x 0
   map_add' x y := by ext (i | i) <;> simp
   map_smul' s x := by ext (i | i) <;> simp
 
-
+variable (k n) in
 def avec (c p : ℕ) : n ⊕ Fin c → k := Sum.elim 0 fun i => if i.val + 1 = p then 1 else 0
 
-
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem sum_smul_avec (z : Fin c → k) : ∑ i : Fin c, z i • avec k n c (i.val + 1) = Sum.elim (0 : n → k) z := by
   ext (j | j) <;> simp [avec, Fin.val_inj]
 
@@ -492,12 +493,13 @@ theorem inX_mem_gluedLat {q : Unif k} {p : ℕ} (h1 : 1 ≤ p) (hp : p ≤ c) {L
     simpa [this, inX] using hs
   · exact fun hx => ⟨0, by simpa [inX] using hx, fun i => by simp [inX]⟩
 
-instance gluedLat_isLattice (q : Unif k) (c p : ℕ) (L : Submodule 𝒪[k] (n → k)) [hL : L.IsLattice k] (f : n → k) :
-    (gluedLat q c p L f).IsLattice k := by
-  refine ⟨(((hL.fg.map _).sup (Submodule.fg_span_singleton _)).sup (Submodule.fg_span ?_)).sup
-    (Submodule.fg_span ?_), ?_⟩
-  · exact ((Set.finite_le_nat c).image (avec k n c)).subset fun _ ⟨i, _, _, h, e⟩ => ⟨i, h, e.symm⟩
-  · exact ((Set.finite_le_nat c).image (q.inv • avec k n c ·)).subset fun _ ⟨i, _, h, e⟩ => ⟨i, h, e.symm⟩
+instance gluedLat_isLattice (q : Unif k) (c p : ℕ) (L : Submodule 𝒪[k] (n → k)) [hL : L.IsFullLattice k] (f : n → k) :
+    (gluedLat q c p L f).IsFullLattice k := by
+  refine { toIsLattice := Submodule.IsLattice.of_fg k ?_, span_eq_top := ?_ }
+  · refine (((hL.toIsLattice.fg.map _).sup (Submodule.fg_span_singleton _)).sup
+      (Submodule.fg_span ?_)).sup (Submodule.fg_span ?_)
+    · exact ((Set.finite_le_nat c).image (avec k n c)).subset fun _ ⟨i, _, _, h, e⟩ => ⟨i, h, e.symm⟩
+    · exact ((Set.finite_le_nat c).image (q.inv • avec k n c ·)).subset fun _ ⟨i, _, h, e⟩ => ⟨i, h, e.symm⟩
   · set W := Submodule.span k (gluedLat q c p L f : Set (n ⊕ Fin c → k))
     have hX : ∀ x, inX k n c x ∈ W := fun x => by
       have hx : x ∈ Submodule.span k (L : Set (n → k)) := hL.span_eq_top ▸ trivial
@@ -525,8 +527,8 @@ instance gluedLat_isLattice (q : Unif k) (c p : ℕ) (L : Submodule 𝒪[k] (n �
     rw [hy]
     exact add_mem (hX _) (sum_mem fun i _ => W.smul_mem _ (hA i))
 
-instance gluedS_isLattice (q : Unif k) (c : ℕ) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] (f : n → k) :
-    (gluedS q c L f).IsLattice k := gluedLat_one q c L f ▸ inferInstance
+instance gluedS_isLattice (q : Unif k) (c : ℕ) (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k] (f : n → k) :
+    (gluedS q c L f).IsFullLattice k := gluedLat_one q c L f ▸ inferInstance
 
 def Pair.glued (P : Pair k n) (q : Unif k) (c p : ℕ) : Submodule 𝒪[k] (n ⊕ Fin c → k) := gluedLat q c p P.ker P.vec
 
@@ -549,10 +551,14 @@ end Glued
 section Spherical
 variable [Fintype n] [DecidableEq n]
 
-theorem exists_smul_lat (L L' : Submodule 𝒪[k] (n → k)) [L.IsLattice k] [L'.IsLattice k] :
+theorem exists_smul_lat (L L' : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k] [L'.IsFullLattice k] :
     ∃ g : GL n k, g • L = L' := by
+  have := Submodule.IsLattice.free k L
+  have := Submodule.IsLattice.free k L'
+  have := Submodule.IsLattice.finite k L
+  have := Submodule.IsLattice.finite k L'
   let e : L ≃ₗ[𝒪[k]] L' := LinearEquiv.ofFinrankEq _ _ (by
-    rw [Submodule.IsLattice.finrank_of_pi k, Submodule.IsLattice.finrank_of_pi k])
+    rw [Submodule.IsFullLattice.finrank_eq k L, Submodule.IsFullLattice.finrank_eq k L'])
   obtain ⟨g, hg⟩ := exists_gl_of_equiv e
   refine ⟨g, Submodule.ext fun x => mem_smul_iff.trans ⟨fun h => ?_, fun h => ?_⟩⟩
   · rw [← smul_inv_smul g x, hg ⟨_, h⟩]
@@ -570,7 +576,7 @@ def sphVecs (L₀ : Submodule 𝒪[k] (n → k)) : Submodule ℂ A where
   zero_mem' g _ := by simp
   smul_mem' c v h g hg := by simp [h g hg]
 
-variable {L₀ : Submodule 𝒪[k] (n → k)} [L₀.IsLattice k] (v : sphVecs σ L₀)
+variable {L₀ : Submodule 𝒪[k] (n → k)} [L₀.IsFullLattice k] (v : sphVecs σ L₀)
 
 end Spherical
 

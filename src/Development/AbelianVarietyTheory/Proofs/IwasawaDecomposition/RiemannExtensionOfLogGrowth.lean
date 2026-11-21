@@ -152,7 +152,8 @@ private theorem exists_differentiableOn_ball_of_log_bound {ψ h : ℂ → ℂ} {
         hs₀ hz (mem_ball_self hρ)
       exact h0 (by simpa using this)
     · exact hz
-  refine exists_differentiableOn_of_locally_extends isOpen_ball (fun s hs => hs.1) ?_ h ?_
+  refine exists_differentiableOn_of_locally_extends
+    (S := {s ∈ ball (0 : ℂ) ρ | ψ s ≠ 0}) isOpen_ball (fun s hs => hs.1) ?_ h ?_
   · intro s₀ hs₀
     rw [mem_closure_iff_frequently]
     have hev : ∀ᶠ s in 𝓝[≠] s₀, s ∈ {s ∈ ball (0 : ℂ) ρ | ψ s ≠ 0} :=
@@ -186,7 +187,8 @@ theorem _root_.GlobalTheory.LogExt.riemann_extension_log (V : Type) [NormedAddCo
     ∃ u' : V → ℂ, DifferentiableOn ℂ u' U ∧ Set.EqOn u' u {b ∈ U | φ b ≠ 0} := by
   have hSo : IsOpen {b ∈ U | φ b ≠ 0} :=
     hφ.continuousOn.isOpen_inter_preimage hU isOpen_compl_singleton
-  refine exists_differentiableOn_of_locally_extends hU (fun b hb => hb.1) hd u ?_
+  refine exists_differentiableOn_of_locally_extends
+    (S := {b ∈ U | φ b ≠ 0}) hU (fun b hb => hb.1) hd u ?_
   intro b₀ hb₀
   by_cases h0 : φ b₀ ≠ 0
   · exact ⟨_, hSo.mem_nhds ⟨hb₀, h0⟩, u, hu, fun x hx => rfl⟩

@@ -78,12 +78,15 @@ theorem exists_addEquiv_of_splitTorus_iso :
       ∃ xe : X' ≃+ X, ∀ x : X',
         θ.hom.left.appTop.hom (charUnit S X (xe x)).val = (charUnit S X' x).val := by
   intro S _ X X' _ _ θ hθ
-  obtain ⟨φ, hφ⟩ := exists_addMonoidHom θ.hom
-  obtain ⟨ψ, hψ⟩ := exists_addMonoidHom θ.inv
-  have h1 (x : X') : φ (ψ x) = x := charUnit_injective (S := S) (by
-    rw [← hφ, ← hψ, ← appTop_comp, Iso.hom_inv_id, appTop_id])
-  have h2 (x : X) : ψ (φ x) = x := charUnit_injective (S := S) (by
-    rw [← hψ, ← hφ, ← appTop_comp, Iso.inv_hom_id, appTop_id])
+  letI : IsMonHom θ.hom := hθ
+  obtain ⟨φ, hφ⟩ := SplitTorusHom.exists_addMonoidHom θ.hom
+  obtain ⟨ψ, hψ⟩ := SplitTorusHom.exists_addMonoidHom θ.inv
+  have h1 (x : X') : φ (ψ x) = x := SplitTorusHom.charUnit_injective (S := S) (by
+    rw [← hφ, ← hψ, ← SplitTorusHom.appTop_comp, Iso.hom_inv_id,
+      SplitTorusHom.appTop_id])
+  have h2 (x : X) : ψ (φ x) = x := SplitTorusHom.charUnit_injective (S := S) (by
+    rw [← hψ, ← hφ, ← SplitTorusHom.appTop_comp, Iso.inv_hom_id,
+      SplitTorusHom.appTop_id])
   refine ⟨{ ψ with invFun := φ, left_inv := h1, right_inv := h2 }, fun x => ?_⟩
   rw [hφ]
   exact congrArg (fun z => (charUnit S X' z).val) (h1 x)

@@ -94,20 +94,22 @@ theorem fock_translation_laws {ι : Type} [Fintype ι] (U : ℕ → EuclideanSpa
     simp only [hU, Pi.smul_apply, smul_eq_mul]
     rw [← mul_assoc, ← mul_assoc, ← Complex.exp_add, ← Complex.exp_add, sub_sub]
     congr 2
-    simp only [herm_add_left, herm_add_right, herm_sub_left]
-    rw [herm_sub_swap a b]
+    simp only [FockTranslation.herm_add_left, FockTranslation.herm_add_right,
+      FockTranslation.herm_sub_left]
+    rw [FockTranslation.herm_sub_swap a b]
     ring
   have h2 : ∀ F, U q 0 F = F := by
     intro F
     funext v
-    simp [hU, herm_zero_right]
+    simp [hU, FockTranslation.herm_zero_right]
   have h6 : ∀ (Y : GT ι) F, F ∈ Y.Sec q ↔
       Differentiable ℂ F ∧ ∀ γ ∈ lat Y.b, Y.ka γ • U q γ F = F := by
     intro Y F
     have key : ∀ γ v, (Y.ka γ • U q γ F) (v + γ) =
         Y.ka γ * cexp (q * Real.pi * Hf v γ + q * Real.pi * Hf γ γ / 2) * F v := by
       intro γ v
-      simp only [hU, Pi.smul_apply, smul_eq_mul, add_sub_cancel_right, herm_add_left]
+      simp only [hU, Pi.smul_apply, smul_eq_mul, add_sub_cancel_right,
+        FockTranslation.herm_add_left]
       rw [← mul_assoc]
       congr 3
       ring
@@ -120,7 +122,7 @@ theorem fock_translation_laws {ι : Type} [Fintype ι] (U : ℕ → EuclideanSpa
   refine ⟨h1, h2, ?_, ?_, ?_, h6, ?_, ?_⟩
   · intro a F
     funext v
-    simp only [hU, herm_neg_left, herm_neg_right, neg_neg]
+    simp only [hU, FockTranslation.herm_neg_left, FockTranslation.herm_neg_right, neg_neg]
     congr 2
     abel
   · intro a F M
@@ -129,8 +131,8 @@ theorem fock_translation_laws {ι : Type} [Fintype ι] (U : ℕ → EuclideanSpa
     | succ M ih =>
       rw [Function.iterate_succ_apply', ih, h1]
       have : (Hf a ((M : ℂ) • a)).im = 0 := by
-        rw [herm_smul_right]
-        simp [herm_self_im]
+        rw [FockTranslation.herm_smul_right]
+        simp [FockTranslation.herm_self_im]
       rw [this]
       have e : a + (M : ℂ) • a = ((M + 1 : ℕ) : ℂ) • a := by
         push_cast
@@ -140,14 +142,14 @@ theorem fock_translation_laws {ι : Type} [Fintype ι] (U : ℕ → EuclideanSpa
     rw [hU, norm_mul, mul_pow, Complex.norm_exp, mul_comm (_ ^ 2) (‖F (v - a)‖ ^ 2), mul_assoc,
       ← Real.exp_nat_mul, ← Real.exp_add]
     congr 2
-    rw [← herm_self_re v, ← herm_self_re (v - a)]
+    rw [← FockTranslation.herm_self_re v, ← FockTranslation.herm_self_re (v - a)]
     have e : (q * Real.pi * Hf v a - q * Real.pi * Hf a a / 2 : ℂ) =
         ((q * Real.pi : ℝ) : ℂ) * Hf v a - ((q * Real.pi / 2 : ℝ) : ℂ) * Hf a a := by
       push_cast
       ring
     rw [e]
-    simp only [herm_sub_left, herm_sub_right, Complex.sub_re, Complex.re_ofReal_mul,
-      herm_re_swap v a]
+    simp only [FockTranslation.herm_sub_left, FockTranslation.herm_sub_right, Complex.sub_re,
+      Complex.re_ofReal_mul, FockTranslation.herm_re_swap v a]
     push_cast
     ring
   · intro Y a ha F hF
@@ -158,7 +160,7 @@ theorem fock_translation_laws {ι : Type} [Fintype ι] (U : ℕ → EuclideanSpa
           cexp (q * Real.pi * Hf v a - q * Real.pi * Hf a a / 2) * F (v - a) :=
         funext fun v => hU q a F v
       rw [e]
-      have := herm_differentiable a
+      have := FockTranslation.herm_differentiable a
       fun_prop
     · obtain ⟨k, hk⟩ := ha γ hγ
       have hk' : (q : ℂ) * ((Hf a γ).im : ℂ) = k := by exact_mod_cast hk
@@ -167,7 +169,7 @@ theorem fock_translation_laws {ι : Type} [Fintype ι] (U : ℕ → EuclideanSpa
         congr 1
         rw [Complex.exp_eq_exp_iff_exists_int]
         refine ⟨k, ?_⟩
-        rw [herm_im_swap a γ, ← hk']
+        rw [FockTranslation.herm_im_swap a γ, ← hk']
         push_cast
         ring
       rw [hc]

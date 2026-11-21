@@ -64,7 +64,7 @@ theorem exists_mem_valuation_eq {I : FractionalIdeal (𝓞 K)⁰ K} (hI : I ≠ 
     have := count_mono K v hI h
     rw [count_mul K v hI hP, hPdef, count_self] at this
     omega
-  obtain ⟨a, haI, haIP⟩ := SetLike.not_le_iff_exists.1 hne
+  obtain ⟨a, haI, haIP⟩ := IsConcreteLE.not_le_iff_exists.1 hne
   refine ⟨a, haI, le_antisymm ((mem_iff_forall_valuation_le hI).1 haI v) ?_⟩
   by_contra hlt
   rw [not_le] at hlt
@@ -138,6 +138,8 @@ theorem eventually_coe_mem_localIdeal {I : FractionalIdeal (𝓞 K)⁰ K} (hI : 
   exact hv2
 
 namespace IdeleGroup
+
+local notation "𝓘" => (FractionalIdeal (𝓞 K)⁰ K)ˣ
 
 theorem valued_eq_exp_neg_ord (v : HeightOneSpectrum (𝓞 K)) (s : IdeleGroup K) :
     Valued.v ((s : 𝔸[K]).2 v) = exp (-ord v s) := by

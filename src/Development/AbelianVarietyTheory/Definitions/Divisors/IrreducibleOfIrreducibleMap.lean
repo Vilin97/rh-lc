@@ -109,7 +109,7 @@ theorem unique (h : IsChowFormInt I e dl f) (h' : IsChowFormInt I e dl' f') :
 
 theorem span_eq_radical_elimIdeal (h : IsChowFormInt I e dl f)
     (hI : I.IsHomogeneous (homogeneousSubmodule (Fin N) k)) :
-    Ideal.span {f} = (GlobalTheory.Chow.elimIdeal (Fin (e + 1)) I).radical := by
+    Ideal.span {f} = (GlobalTheory.Chow.elimIdeal (β := Fin (e + 1)) I).radical := by
   rw [← vanishingIdeal_zeroLocus_eq_radical (K := AlgebraicClosure k)]
   refine le_antisymm ?_ fun p hp => ?_
   · rw [Ideal.span_singleton_le_iff_mem]
@@ -130,7 +130,7 @@ theorem zero_iff_of_isAlgClosed (h : IsChowFormInt I e dl f)
   · have : p ∈ Ideal.span {f} := hs ▸ Ideal.le_radical hp
     obtain ⟨a, rfl⟩ := Ideal.mem_span_singleton'.1 this
     rw [map_mul, hu, mul_zero]
-  · have : f ∈ (GlobalTheory.Chow.elimIdeal (Fin (e + 1)) I).radical := hs ▸ Ideal.subset_span rfl
+  · have : f ∈ (GlobalTheory.Chow.elimIdeal (β := Fin (e + 1)) I).radical := hs ▸ Ideal.subset_span rfl
     obtain ⟨n, hn⟩ := this
     have := hu _ hn
     rw [map_pow] at this

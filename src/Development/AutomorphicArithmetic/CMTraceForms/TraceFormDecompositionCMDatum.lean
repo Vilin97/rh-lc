@@ -48,6 +48,7 @@ private theorem exists_equiv (E : Type) [Field E] [NumberField E] (C : Type) [Fi
     have hg : Function.Injective g := by
       rw [RingHom.injective_iff_ker_eq_bot]
       apply Ideal.eq_bot_of_comap_eq_bot (R := ℤ)
+      change Ideal.comap (algebraMap ℤ (𝓞 E)) (RingHom.ker g) = ⊥
       rw [RingHom.comap_ker]
       have : g.comp (algebraMap ℤ (𝓞 E)) = Int.castRingHom C := RingHom.ext_int _ _
       rw [this]
@@ -101,7 +102,7 @@ theorem UpperTheory.trace_form_decomposition_CMDatum :
       Nonempty (Fin (Module.finrank ℤ_[p] (LinearMap.range (LinearMap.mulLeft ℤ_[p] e))) ≃ Emb (O := O) e) ∧ Nat.card (𝓞 E →+* O) = Module.finrank ℚ E := by
   intro E _ _ p _ C _ _ _ v O _ _ hv _ e he
   classical
-  obtain ⟨Φ, hΦ⟩ := exists_equiv E C v O hv
+  obtain ⟨Φ, hΦ⟩ := UpperTheory.TraceSumEquivalence.exists_equiv E C v O hv
   have hcard : Nat.card (𝓞 E →+* O) = Module.finrank ℚ E := by
     rw [← Nat.card_congr Φ, Nat.card_eq_fintype_card, AlgHom.card]
   refine ⟨?_, hcard⟩
@@ -113,7 +114,7 @@ theorem UpperTheory.trace_form_decomposition_CMDatum :
     simp [f, ← mul_assoc, he]
   have htr : LinearMap.trace ℤ_[p] _ f = (Module.finrank ℤ_[p] (LinearMap.range f) : ℤ_[p]) :=
     ((LinearMap.isProj_range_iff_isIdempotentElem f).mpr hf).trace
-  have hsum := trace_eq_sum E p C O Φ hΦ e
+  have hsum := UpperTheory.TraceSumEquivalence.trace_eq_sum E p C O Φ hΦ e
   have hval : ∀ σ, algebraMap O C (tauExt (Φ σ) e) = if Φ σ ∈ Emb (O := O) e then 1 else 0 := by
     intro σ
     have hid : IsIdempotentElem (tauExt (Φ σ) e) := by

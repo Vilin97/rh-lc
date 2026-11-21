@@ -45,8 +45,10 @@ def placesOver {F : Type} [Field F] [NumberField F] (E : Type) [Field E] [Number
 
 def quadSign {F : Type} [Field F] [NumberField F] (E : Type) [Field E] [NumberField E]
     [Algebra F E] (v : Place F) : ℂ :=
-  if (placesOver E ({v} : Set (Place F))).ncard = 2 then 1
-  else if (v.asIdeal.map (algebraMap (𝓞 F) (𝓞 E))).IsPrime then -1 else 0
+  by
+    classical
+    exact if (placesOver E ({v} : Set (Place F))).ncard = 2 then 1
+      else if (v.asIdeal.map (algebraMap (𝓞 F) (𝓞 E))).IsPrime then -1 else 0
 
 end
 

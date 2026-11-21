@@ -122,7 +122,7 @@ private lemma sum_coeff_lineDerivList_eq_lineDeriv_polyDeriv {σ W : Type*} [Nor
     hF.mono fun y hy => polyDeriv_eq_sum_coeff_lineDerivList_of_analyticAt A u hy
   have h1 := (_root_.GlobalTheory.lineDerivList_congr (𝕜 := ℂ) heq [z]).self_of_nhds
   have hl : lineDeriv ℂ (fun y => _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv A u F y) x z = _root_.GlobalTheory.lineDerivList ℂ [z] (fun y => _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv A u F y) x := by
-    simp [_root_.GlobalTheory.lineDerivList_cons, _root_.GlobalTheory.lineDerivList_nil]
+    simp [_root_.GlobalTheory.lineDerivList_cons, _root_.GlobalTheory.lineDerivList]
   rw [hl, h1, _root_.GlobalTheory.lineDerivList_sum A.support (F := fun m y => AddMonoidAlgebra.coeff A m * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u) F y) (fun m _ => analyticAt_const.mul (_root_.GlobalTheory.analyticAt_lineDerivList hFx _))]
   refine Finset.sum_congr rfl fun m _ => ?_
   have hc := congrFun (_root_.GlobalTheory.lineDerivList_const_smul (𝕜 := ℂ) [z] (AddMonoidAlgebra.coeff A m)
@@ -215,13 +215,13 @@ theorem _root_.GlobalTheory.SW.polyDeriv_pairing_eq_zero_of_isHeat : ∀ (E : Ty
         · rw [if_neg hσ]
           simp [Pi.single_apply, hσ]
     have l1 : _root_.GlobalTheory.lineDerivList ℂ [ez v] (fun p : ((Ψ → Fin N → Fin N → ℂ) × (Ψ → Fin n → Fin N → ℂ) × (Ψ → Fin n → Fin N → ℂ)) => D p.1 p.2.1 p.2.2) p = deriv (fun s : ℂ => D (fun σ => (show Ψ → Matrix (Fin N) (Fin N) ℂ from p.1) σ + if σ = v.1 then single v.2.1 v.2.2 s else 0) p.2.1 p.2.2) 0 := by
-      simp only [_root_.GlobalTheory.lineDerivList_cons, _root_.GlobalTheory.lineDerivList_nil, lineDeriv]
+      simp only [_root_.GlobalTheory.lineDerivList_cons, _root_.GlobalTheory.lineDerivList, lineDeriv]
       congr 1
       funext s
       rw [e1 s]
     have l2 : ∀ k : Fin n, _root_.GlobalTheory.lineDerivList ℂ [ew (v.1, false, k, v.2.1), ew (v.1, true, k, v.2.2)] (fun p : ((Ψ → Fin N → Fin N → ℂ) × (Ψ → Fin n → Fin N → ℂ) × (Ψ → Fin n → Fin N → ℂ)) => D p.1 p.2.1 p.2.2) p = deriv (fun s : ℂ => deriv (fun t : ℂ => D p.1 (fun σ => (show Ψ → Matrix (Fin n) (Fin N) ℂ from p.2.1) σ + if σ = v.1 then single k v.2.1 s else 0) fun σ => (show Ψ → Matrix (Fin n) (Fin N) ℂ from p.2.2) σ + if σ = v.1 then single k v.2.2 t else 0) 0) 0 := by
       intro k
-      simp only [_root_.GlobalTheory.lineDerivList_cons, _root_.GlobalTheory.lineDerivList_nil, lineDeriv]
+      simp only [_root_.GlobalTheory.lineDerivList_cons, _root_.GlobalTheory.lineDerivList, lineDeriv]
       congr 1
       funext s
       congr 1

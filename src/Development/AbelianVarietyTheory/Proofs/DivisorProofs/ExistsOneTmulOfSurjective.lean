@@ -177,19 +177,22 @@ theorem trans_injective (E F : Idx R Ω) (h : E ≤ F) : Function.Injective (tra
 
 def ofA (E : Idx R Ω) : Lift R Ω E →ₐ[R] SH R Ω := DirectLimit.Algebra.of (R := R) (Lift R Ω) (trans R Ω) E
 
-theorem ofA_injective (E : Idx R Ω) : Function.Injective (ofA R Ω E) :=
+theorem ofA_injective (E : Idx R Ω) : Function.Injective (ofA (R := R) (Ω := Ω) E) :=
   DirectLimit.mk_injective (trans R Ω) (fun i j h => trans_injective i j h) E
 
 theorem ofA_trans {E F : Idx R Ω} (h : E ≤ F) (a : Lift R Ω E) :
-    ofA R Ω F (trans R Ω E F h a) = ofA R Ω E a := DirectLimit.Algebra.of_f ..
+    ofA (R := R) (Ω := Ω) F (trans R Ω E F h a) = ofA (R := R) (Ω := Ω) E a :=
+      DirectLimit.Algebra.of_f ..
 
-theorem redSH_ofA (E : Idx R Ω) (a : Lift R Ω E) : redSH R Ω (ofA R Ω E a) = red R Ω E a := rfl
+theorem redSH_ofA (E : Idx R Ω) (a : Lift R Ω E) :
+    redSH R Ω (ofA (R := R) (Ω := Ω) E a) = red R Ω E a := rfl
 
-theorem exists_ofA (s : SH R Ω) : ∃ E a, ofA R Ω E a = s := by
-  obtain ⟨E, a, rfl⟩ := DirectLimit.exists_eq_mk _ s
+theorem exists_ofA (s : SH R Ω) : ∃ E a, ofA (R := R) (Ω := Ω) E a = s := by
+  obtain ⟨E, a, rfl⟩ := Ring.DirectLimit.exists_of s
   exact ⟨E, a, rfl⟩
 
-theorem exists_ofA_finset (s : Finset (SH R Ω)) : ∃ E, ∀ x ∈ s, ∃ a, ofA R Ω E a = x := by
+theorem exists_ofA_finset (s : Finset (SH R Ω)) :
+    ∃ E, ∀ x ∈ s, ∃ a, ofA (R := R) (Ω := Ω) E a = x := by
   classical
   induction s using Finset.induction_on with
   | empty => exact ⟨Classical.arbitrary _, by simp⟩
@@ -203,7 +206,8 @@ theorem exists_ofA_finset (s : Finset (SH R Ω)) : ∃ E, ∀ x ∈ s, ∃ a, of
     · obtain ⟨a, rfl⟩ := hE y hy
       exact ⟨trans R Ω E G hEG a, ofA_trans hEG a⟩
 
-theorem isUnit_ofA_iff (E : Idx R Ω) (a : Lift R Ω E) : IsUnit (ofA R Ω E a) ↔ IsUnit a := by
+theorem isUnit_ofA_iff (E : Idx R Ω) (a : Lift R Ω E) :
+    IsUnit (ofA (R := R) (Ω := Ω) E a) ↔ IsUnit a := by
   refine ⟨fun h => ?_, fun h => h.map _⟩
   rw [isUnit_iff_red_ne_zero, ← redSH_ofA]
   exact (h.map (redSH R Ω)).ne_zero
@@ -217,7 +221,7 @@ instance : IsLocalRing (SH R Ω) := by
     nontrivial_of_ne 1 0 (fun h => by simpa using congrArg (redSH R Ω) h)
   refine IsLocalRing.of_isUnit_or_isUnit_one_sub_self fun s => ?_
   obtain ⟨E, a, rfl⟩ := exists_ofA s
-  rw [← map_one (ofA R Ω E), ← map_sub, isUnit_ofA_iff, isUnit_ofA_iff]
+  rw [← map_one (ofA (R := R) (Ω := Ω) E), ← map_sub, isUnit_ofA_iff, isUnit_ofA_iff]
   exact IsLocalRing.isUnit_or_isUnit_one_sub_self a
 
 theorem mem_maximalIdeal_iff (s : SH R Ω) : s ∈ maximalIdeal (SH R Ω) ↔ redSH R Ω s = 0 := by
@@ -226,11 +230,13 @@ theorem mem_maximalIdeal_iff (s : SH R Ω) : s ∈ maximalIdeal (SH R Ω) ↔ re
 theorem ker_redSH : RingHom.ker (redSH R Ω) = maximalIdeal (SH R Ω) := by
   ext s; rw [mem_maximalIdeal_iff]; rfl
 
-instance isLocalHom_ofA (E : Idx R Ω) : IsLocalHom (ofA R Ω E : Lift R Ω E →+* SH R Ω) where
+instance isLocalHom_ofA (E : Idx R Ω) :
+    IsLocalHom (ofA (R := R) (Ω := Ω) E : Lift R Ω E →+* SH R Ω) where
   map_nonunit a h := (isUnit_ofA_iff E a).1 h
 
-theorem ofA_algebraMap (E : Idx R Ω) (r : R) : ofA R Ω E (algebraMap R _ r) = algebraMap R (SH R Ω) r :=
-  (ofA R Ω E).commutes r
+theorem ofA_algebraMap (E : Idx R Ω) (r : R) :
+    ofA (R := R) (Ω := Ω) E (algebraMap R _ r) = algebraMap R (SH R Ω) r :=
+  (ofA (R := R) (Ω := Ω) E).commutes r
 
 instance isLocalHom_algebraMap : IsLocalHom (algebraMap R (SH R Ω)) where
   map_nonunit r h := by
@@ -245,25 +251,25 @@ theorem map_maximalIdeal :
   have ha : a ∈ maximalIdeal (Lift R Ω E) := by
     rw [mem_maximalIdeal, mem_nonunits_iff, ← isUnit_ofA_iff]; exact hs
   rw [← map_maximalIdeal_lift] at ha
-  have := Ideal.mem_map_of_mem (ofA R Ω E : Lift R Ω E →+* SH R Ω) ha
-  rwa [Ideal.map_map, show ((ofA R Ω E : Lift R Ω E →+* SH R Ω)).comp (algebraMap R _) =
+  have := Ideal.mem_map_of_mem (ofA (R := R) (Ω := Ω) E : Lift R Ω E →+* SH R Ω) ha
+  rwa [Ideal.map_map, show ((ofA (R := R) (Ω := Ω) E : Lift R Ω E →+* SH R Ω)).comp (algebraMap R _) =
     algebraMap R (SH R Ω) from RingHom.ext (ofA_algebraMap E)] at this
 
 instance : HenselianLocalRing (SH R Ω) := by
     classical
     refine ⟨fun f hf a₀ h0 hu => ?_⟩
     obtain ⟨E, hE⟩ := exists_ofA_finset (insert a₀ f.coeffs)
-    let i : Lift R Ω E →+* SH R Ω := ofA R Ω E
+    let i : Lift R Ω E →+* SH R Ω := ofA (R := R) (Ω := Ω) E
     have hlift : f ∈ lifts i := by
       rw [lifts_iff_coeff_lifts]
       intro n
       by_cases hn : f.coeff n = 0
       · exact ⟨0, by simp [hn]⟩
       · obtain ⟨b, hb⟩ := hE _ (Finset.mem_insert_of_mem (coeff_mem_coeffs hn))
-        exact ⟨b, hb⟩
+        exact ⟨b, by simpa [i] using hb⟩
     obtain ⟨g, hg, -, hgm⟩ := lifts_and_natDegree_eq_and_monic hlift hf
     obtain ⟨b, hb⟩ := hE a₀ (Finset.mem_insert_self _ _)
-    change i b = a₀ at hb
+    change (ofA (R := R) (Ω := Ω) E) b = a₀ at hb
     subst hg hb
     rw [eval_map, eval₂_at_apply] at h0
     rw [derivative_map, eval_map, eval₂_at_apply] at hu
@@ -309,7 +315,7 @@ theorem redSH_surjective : Function.Surjective (redSH R Ω) := by
     IntermediateField.adjoin.finiteDimensional hi⟩
   obtain ⟨a, ha⟩ := exists_one_tmul E ((liftEquiv R Ω E).symm
     ⟨ω, IntermediateField.mem_adjoin_simple_self _ _⟩)
-  refine ⟨ofA R Ω E a, ?_⟩
+  refine ⟨ofA (R := R) (Ω := Ω) E a, ?_⟩
   rw [redSH_ofA, red_apply, ha, AlgEquiv.apply_symm_apply]
 
 def resRingEquiv : ResidueField (SH R Ω) ≃+* Ω :=
