@@ -275,12 +275,13 @@ theorem tL_rel (a b c d : Fin n) (l : Fin n × Fin n →₀ ℂ) :
 
 theorem TW_rel_word (a b c d : Fin n) : ∀ w : List (Fin n × Fin n),
     TW a b (TW c d (Finsupp.single w 1)) - TW c d (TW a b (Finsupp.single w 1)) =
-      (if b = c then TW a d (Finsupp.single w 1) else 0) - (if d = a then TW c b (Finsupp.single w 1) else 0)
-  | [] => by simp [TW_single, adLW]
-  | p :: w => by
+      (if b = c then TW a d (Finsupp.single w 1) else 0) - (if d = a then TW c b (Finsupp.single w 1) else 0) := by
+  intro w
+  induction w with
+  | nil => simp [TW_single, adLW]
+  | cons p w ih =>
     have hw : Finsupp.single (p :: w) (1 : ℂ) = kap (Finsupp.single p 1) (Finsupp.single w 1) := by
       rw [kap_single_single, mul_one]
-    have ih := TW_rel_word a b c d w
     have hl := tL_rel a b c d (Finsupp.single p 1)
     rw [hw]
     simp only [TW_kap, map_add (f := _)]

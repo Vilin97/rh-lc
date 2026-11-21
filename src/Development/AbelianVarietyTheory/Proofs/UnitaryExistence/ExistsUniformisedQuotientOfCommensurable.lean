@@ -121,6 +121,8 @@ theorem exists_uniformised_quotient_of_commensurable : Out.Laws → (∀ (E : Ty
         refine (hmem _).2 ⟨c • a, ?_⟩
         rw [← hlin]
         congr 1
+        ext i
+        simp only [Pi.smul_apply, smul_eq_mul, hP'.1]
         ring)
       (by
         intro x hx
@@ -178,6 +180,8 @@ theorem exists_uniformised_quotient_of_commensurable : Out.Laws → (∀ (E : Ty
   · beta_reduce
     rw [Category.assoc, ← hact, ← Category.assoc, ← hlin]
     congr 2
+    ext i
+    simp only [Pi.smul_apply, smul_eq_mul]
     ring
   · have hk' : (k : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hk.ne'
     have htor : ∀ a, (e ((N : ℂ)⁻¹ • (k : ℂ)⁻¹ • P' a) ≫ ψ) ^ k = 1 := fun a => by

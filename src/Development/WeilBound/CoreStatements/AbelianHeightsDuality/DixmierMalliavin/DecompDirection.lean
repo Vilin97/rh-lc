@@ -87,7 +87,7 @@ theorem decomp_iter {ε : ℝ} (hε : 0 < ε) : ∀ {d : ℕ} (X : Fin d → �
   | Nat.succ d, X, f, hf, hfc => by
     let := h.chartedSpace
     obtain ⟨f₁, hf₁, hf₁c, g, k, hg, hk, hgs, hks, hdec⟩ :=
-      decomp_direction h hf hfc (X 0) hε
+      decomp_direction h (f := f) hf hfc (X 0) hε
     obtain ⟨m₁, F₁, K₁, hF₁, hK₁, hd₁⟩ := decomp_iter hε (Fin.tail X) f₁ hf₁ (hfc.of_isClosed_subset (isClosed_tsupport _) hf₁c)
     obtain ⟨m₂, F₂, K₂, hF₂, hK₂, hd₂⟩ := decomp_iter hε (Fin.tail X) f hf hfc
     refine ⟨m₁ + m₂, Fin.append F₁ F₂,

@@ -10,7 +10,7 @@ namespace GlobalTheory.UnramifiedHilbertNinety
 open GlobalTheory.UnramifiedCrys
 
 theorem exists_mem_multilinear_ne_zero {R V ι : Type} [CommRing R] [AddCommGroup V] [Module R V]
-    [Fintype ι] [DecidableEq ι] (f : MultilinearMap R (fun _ : ι => V) R) (S : Set V)
+    [Fintype ι] [DecidableEq ι] (f : (ι → V) →ₘₗ[R] R) (S : Set V)
     (hS : ∀ l : V →ₗ[R] R, (∀ s ∈ S, l s = 0) → l = 0) (v₀ : ι → V) (h₀ : f v₀ ≠ 0) :
     ∃ v : ι → V, (∀ i, v i ∈ S) ∧ f v ≠ 0 := by
   have key : ∀ T : Finset ι, ∃ v : ι → V, (∀ i ∈ T, v i ∈ S) ∧ f v ≠ 0 := by

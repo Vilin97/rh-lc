@@ -22,7 +22,7 @@ structure WDTie where
 
   e : ∀ w : PlE H, A.LP w ≃ WD (E := H.E) (A := N.plOm.1 w) (w := w) (N.plOm.2 w)
   dim : ∀ w (a : A.LP w), (e w a).lpDim = A.lpDim a
-  zero : ∀ w, e w (A.lpZero w) = WD.lpZero _
+  zero : ∀ w, e w (A.lpZero w) = WD.lpZero
   sum : ∀ w (a b : A.LP w), e w (A.lpSum a b) = (e w a).lpSum (e w b)
   tw : ∀ w (a : A.LP w) (s : ℝ), e w (A.lpTw a s) = (e w a).lpTw s
   char : ∀ w (a χ : A.LP w), A.lpDim χ = 1 → e w (A.lpChar a χ) = (e w a).lpChar (e w χ)

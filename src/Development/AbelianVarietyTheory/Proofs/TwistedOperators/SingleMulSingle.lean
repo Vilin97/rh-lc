@@ -263,9 +263,9 @@ theorem isPure_of_facts (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D
         set_option synthInstance.maxHeartbeats 100000 in
           · rw [← addChar_sum, show symplO S T t (∑ i ∈ s, (xy i).2) = ∑ i ∈ s, symplO S T t (xy i).2 from
             map_sum (GlobalTheory.LatVac.symplHom S T t) _ _]
-          congr 1
-          refine Finset.sum_congr rfl fun i hi => ?_
-          rw [GlobalTheory.SplitScalar.symplO_smul, hY i hi]
+            apply congrArg ψ
+            refine Finset.sum_congr rfl fun i hi => ?_
+            rw [GlobalTheory.SplitScalar.symplO_smul, hY i hi]
         · have ht' := (GlobalTheory.SplitScalar.isHalf_iff _ _).1 ht
           have hsum : t + ∑ i ∈ s, (xy i).1 = ∑ i ∈ s, (a i • t + (xy i).1) := by
             rw [Finset.sum_add_distrib, ← Finset.sum_smul, ht']

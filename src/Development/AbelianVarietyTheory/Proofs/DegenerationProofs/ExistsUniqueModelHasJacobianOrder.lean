@@ -22,7 +22,7 @@ namespace GlobalTheory.SS.Ord
 section Algebra
 
 theorem multilinear_mem {S P Q I : Type} [CommRing S] [AddCommGroup P] [Module S P] [AddCommGroup Q]
-    [Module S Q] [Fintype I] [DecidableEq I] (f : MultilinearMap S (fun _ : I => P) Q) (G : Set P)
+    [Module S Q] [Fintype I] [DecidableEq I] (f : (I → P) →ₘₗ[S] Q) (G : Set P)
     (N : Submodule S Q) (h : ∀ v : I → P, (∀ i, v i ∈ G) → f v ∈ N) (v : I → P)
     (hv : ∀ i, v i ∈ Submodule.span S G) : f v ∈ N := by
   have key : ∀ s : Finset I, ∀ v : I → P, (∀ i, v i ∈ Submodule.span S G) → (∀ i, i ∉ s → v i ∈ G) → f v ∈ N := by
@@ -51,7 +51,7 @@ theorem det_mem {B S L I : Type} [CommRing B] [CommRing S] [CommRing L] [Fintype
     (Matrix.of fun i j => δ i (φ (t j))).det ∈ N := by
   letI := φ.toAlgebra
   let N' : Submodule S L := { N with smul_mem' := fun s x hx => hN s x hx }
-  let f : MultilinearMap S (fun _ : I => I → L) L :=
+  let f : (I → I → L) →ₘₗ[S] L :=
     (Matrix.detRowAlternating (n := I) (R := L)).toMultilinearMap.restrictScalars S
   have hf : ∀ v : I → I → L, f v = (Matrix.of fun i j => v j i).det := fun v =>
     (Matrix.det_transpose (Matrix.of v)).symm
@@ -349,8 +349,8 @@ theorem dvd_of_dvd_rs (hπ : Irreducible π) (M : Model R A) (hM : M.Irr) {U W :
     (hU : IsAffineOpen U) (hW : W ≤ U) (h : ((W : Set M.Y.left) ∩ M.sp).Nonempty) {b : Γ(M.Y.left, U)}
     (hb : cst M W π ∣ rs _ hW b) : cst M U π ∣ b := by
   by_contra hn
-  obtain ⟨x, hx, hx'⟩ := nonempty_basicOpen_inter hπ M hM hU (h.mono fun x hx => ⟨hW hx.1, hx.2⟩) hn
   obtain ⟨y, hy, hy'⟩ := h
+  obtain ⟨x, hx, hx'⟩ := nonempty_basicOpen_inter hπ M hM hU ⟨y, hW hy, hy'⟩ hn
   obtain ⟨z, hz, hz1, hz2⟩ := hM.2 _ _ (M.Y.left.basicOpen b).isOpen W.isOpen ⟨x, hx', hx⟩ ⟨y, hy', hy⟩
   have h1 : z ∈ M.Y.left.basicOpen (rs _ hW b) := (M.Y.left.basicOpen_res b (homOfLE hW).op).ge ⟨hz2, hz1⟩
   obtain ⟨c, hc⟩ := hb

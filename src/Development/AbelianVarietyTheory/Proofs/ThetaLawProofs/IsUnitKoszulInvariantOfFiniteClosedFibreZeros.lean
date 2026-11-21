@@ -562,10 +562,12 @@ theorem isUnit_of_finite_zeros : Out.Laws → ∀ (O : Type) [CommRing O] [IsDom
       (fun a => sec₃ n _ _ _ (hs' (a.cast hg₃)) (sec₂ n _ _ _ (hs (a.cast hg₁)) (hs₁ a))) ?_ E₁
       (fun a => (hu₃' _ _).1 (hz' a).symm) ?_
     · have hcl : IsClosed {t : x.P.A.left | x.P.A.hom t = IsLocalRing.closedPoint O ∧ ∀ a, t ∉ Out.nonzeroLocus (s a)} := by
-        refine IsClosed.inter ((IsLocalRing.isClosed_singleton_closedPoint O).preimage x.P.A.hom.continuous) ?_
-        change IsClosed {t : x.P.A.left | ∀ a, t ∉ Out.nonzeroLocus (s a)}
-        rw [Set.setOf_forall]
-        exact isClosed_iInter fun a => (Out.nonzeroLocus (s a)).isOpen.isClosed_compl
+        have hzero : IsClosed {t : x.P.A.left | ∀ a, t ∉ Out.nonzeroLocus (s a)} := by
+          rw [Set.setOf_forall]
+          exact isClosed_iInter fun a => (Out.nonzeroLocus (s a)).isOpen.isClosed_compl
+        convert ((IsLocalRing.isClosed_singleton_closedPoint O).preimage x.P.A.hom.continuous).inter hzero using 1
+        ext t
+        rfl
       refine (finite_preimage_fibre hp' hcl hfin (IsLocalRing.closedPoint O')).subset fun t ht => ⟨ht.1, ?_, fun a h => ?_⟩
       · exact (congrArg (fun q => q t) hp'.w).trans ((congrArg (spMap j) ht.1).trans (IsLocalRing.comap_closedPoint j))
       · exact ht.2 (a.cast hg'.symm) (EtBaseChange.mem_nonzeroLocus_via (hs' (a.cast hg'.symm)) t h)

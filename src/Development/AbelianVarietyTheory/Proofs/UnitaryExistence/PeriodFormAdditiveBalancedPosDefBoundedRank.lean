@@ -36,7 +36,7 @@ theorem norm_le_one_of_integral {x : C} (hx : IsIntegral ℤ x) : ‖x‖ ≤ 1 
   have h1 : ‖∑ i ∈ Finset.range q.natDegree, algebraMap ℤ C (q.coeff i) * x ^ i‖ < ‖x‖ ^ q.natDegree := by
     rcases Finset.eq_empty_or_nonempty (Finset.range q.natDegree) with he | he
     · rw [he]; simpa using pow_pos hx0 _
-    · obtain ⟨i, hi, hle⟩ := IsUltrametricDist.exists_norm_finset_sum_le_of_nonempty he
+    · obtain ⟨i, hi, hle⟩ := IsUltrametricDist.exists_norm_finsetSum_le_of_nonempty he
         (fun i => algebraMap ℤ C (q.coeff i) * x ^ i)
       refine hle.trans_lt ?_
       rw [norm_mul, norm_pow]

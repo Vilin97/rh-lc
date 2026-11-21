@@ -39,7 +39,16 @@ theorem GlobalTheory.VeryAmpleJet.veryAmpleBy_of_veryAmpleAt {R : Type} [CommRin
   obtain ⟨ψ, hiso, hψ⟩ : ∃ ψ : X ⟶ (A.hom ⁻¹ᵁ ⊤).toScheme, IsIso ψ ∧ ψ ≫ (A.hom ⁻¹ᵁ ⊤).ι = e :=
     ⟨e ≫ inv (A.hom ⁻¹ᵁ ⊤).ι, inferInstance, by simp⟩
   have hP := linComb_isLB L hL (K := Fin N) (fun _ => (A.hom ⁻¹ᵁ ⊤).ι) (fun _ => 1)
-  have hP' := isLB_pw hH N
+  have hP' : (pw H N).IsLB := {
+    cover := hH.cover
+    g_self := fun i => by
+      have h := congrArg (· ^ (N : ℤ)) (hH.g_self i)
+      simp only [one_zpow, ← map_zpow] at h
+      exact h
+    cocycle := fun i j k => by
+      have h := congrArg (· ^ (N : ℤ)) (hH.cocycle i j k)
+      simp only [mul_zpow, ← map_zpow] at h
+      exact h }
   obtain ⟨W, hW⟩ := LBIso.chartPull (chartPullPw H N)
     (chartPullOut L (fun _ : Fin N => (A.hom ⁻¹ᵁ ⊤).ι) (fun _ => 1) ψ _
       fun _ => (Category.id_comp _).trans hψ.symm)
@@ -240,7 +249,17 @@ theorem GlobalTheory.KeyKa.sections_separate_points_and_tangents : Out.Laws → 
         have e' : w d = w 0 := mul_left_cancel (Over.OverMorphism.ext e)
         exact (x.basis.2 _ (htan _ _ (hw 0))).unique (e' ▸ hw d) (hw 0)
     exact ⟨fun i => t (a i), fun i => ht _, ha⟩
-  · obtain ⟨σ, h₁, h₂⟩ := exists_separating x.P.A.hom (isLB_pw x.P.isLB n) hs z'.left z.left (Over.w z') (Over.w z)
+  · have hpow : (pw x.P.L n).IsLB := {
+      cover := x.P.isLB.cover
+      g_self := fun i => by
+        have h := congrArg (· ^ (n : ℤ)) (x.P.isLB.g_self i)
+        simp only [one_zpow, ← map_zpow] at h
+        exact h
+      cocycle := fun i j k => by
+        have h := congrArg (· ^ (n : ℤ)) (x.P.isLB.cocycle i j k)
+        simp only [mul_zpow, ← map_zpow] at h
+        exact h }
+    obtain ⟨σ, h₁, h₂⟩ := exists_separating x.P.A.hom hpow hs z'.left z.left (Over.w z') (Over.w z)
       fun e => hne (Over.OverMorphism.ext e.symm)
     refine ⟨σ, (valT_eq (T := K) z.left _ hc _).trans ?_, (valT_eq (T := K) z'.left _ hc' _).trans_ne ?_⟩
     · exact not_not.1 fun h => h₂ ((top_le_nonzeroLocus_iff σ z.left c hc).2 h)

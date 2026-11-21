@@ -132,8 +132,10 @@ theorem isSquare_completion {σ : K →+* ℝ} {δ : K} (h : IsSquare (σ δ)) :
     IsSquare (algebraMap K (realPlace σ).Completion δ) := by
   have hw := isReal_realPlace σ
   let f := InfinitePlace.Completion.ringEquivRealOfIsReal hw
-  have hf : f (algebraMap K (realPlace σ).Completion δ) = InfinitePlace.embedding_of_isReal hw δ :=
-    InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw ((WithAbs.equiv _).symm δ)
+  have hf : f (algebraMap K (realPlace σ).Completion δ) = InfinitePlace.embedding_of_isReal hw δ := by
+    rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+      Algebra.algebraMap_self_apply]
+    simpa [f] using InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw ((WithAbs.equiv _).symm δ)
   rw [embedding_realPlace] at hf
   rw [← hf] at h
   simpa using h.map f.symm

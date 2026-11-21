@@ -18,6 +18,7 @@ noncomputable section
 
 namespace GlobalTheory.RawChartBC
 
+open Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar (dualMap)
 open ReciprocityTheory.ChartRestriction.G.PullbackSections
 
 theorem spMap_spMap {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (f : R' →+* R'')
@@ -86,8 +87,7 @@ variable {S S' : Type} [CommRing S] [CommRing S'] (ψ : S →+* S') (x0 : Sp S �
 def baseMap : overAt (spMap ψ ≫ x0) S' ⟶ overAt x0 S :=
   Over.homMk (spMap ψ) (by
     show spMap ψ ≫ spMap (algebraMap S S) ≫ x0 = spMap (algebraMap S' S') ≫ spMap ψ ≫ x0
-    rw [← Category.assoc, ← Category.assoc, spMap_spMap, spMap_spMap]
-    first | done | rfl)
+    rw [← Category.assoc, ← Category.assoc, spMap_spMap, spMap_spMap])
 
 def dualPtMap : overAt (spMap ψ ≫ x0) (DualNumber S') ⟶ overAt x0 (DualNumber S) :=
   Over.homMk (spMap (dualMap ψ)) (by
@@ -127,7 +127,22 @@ theorem sq_tan (d : ℕ) (ℓ : Fin 1 × Fin d) :
   apply Over.OverMorphism.ext
   show spMap _ ≫ spMap (jetBC ψ _ (0 + 1)) = spMap (dualMap ψ) ≫ spMap _
   rw [spMap_spMap, spMap_spMap]
-  exact congrArg spMap (jetTan_comp_jetBC ψ ℓ 0)
+  have evalTan (T : Type) [CommRing T] (P : MvPolynomial (Fin 1 × Fin d) T) :
+      (jetTan ℓ : Jet T (Fin 1 × Fin d) (0 + 1) →ₐ[T] DualNumber T)
+          (Ideal.Quotient.mk (orig T (Fin 1 × Fin d) ^ (0 + 1 + 1)) P) =
+        MvPolynomial.aeval (fun i => if i = ℓ then (DualNumber.eps : DualNumber T) else 0) P := rfl
+  have hcomp :
+      (jetTan ℓ : Jet S' (Fin 1 × Fin d) (0 + 1) →ₐ[S'] DualNumber S').toRingHom.comp
+          (jetBC ψ (Fin 1 × Fin d) (0 + 1)) =
+        (dualMap ψ).comp (jetTan ℓ : Jet S (Fin 1 × Fin d) (0 + 1) →ₐ[S] DualNumber S).toRingHom := by
+    refine Ideal.Quotient.ringHom_ext (MvPolynomial.ringHom_ext (fun r => ?_) (fun i => ?_))
+    · simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, jetBC_mk, evalTan,
+        MvPolynomial.aeval_C, MvPolynomial.map_C]
+      ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    · simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, jetBC_mk, evalTan,
+        MvPolynomial.aeval_X, MvPolynomial.map_X]
+      split_ifs <;> ext <;> simp [dualMap]
+  exact congrArg spMap hcomp
 
 theorem jetMap_congr_fun {R κ κ' : Type} [CommRing R] {m : ℕ} {f g : κ → MvPolynomial κ' R} (e : f = g)
     (hf : ∀ i, f i ∈ orig R κ') (hg : ∀ i, g i ∈ orig R κ') : jetMap (m := m) f hf = jetMap (m := m) g hg := by

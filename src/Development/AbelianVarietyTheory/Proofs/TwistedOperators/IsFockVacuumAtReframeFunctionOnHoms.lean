@@ -40,7 +40,8 @@ theorem lineAt_reW {θ : InfFam D} (hθ : IsInfFam θ) (S T : HSp D) (b : Module
     (τ : D.what₂.Tau) (z : Matrix (Fin T.rank) (Fin S.rank) ℂ) (t : ℝ) :
     reW S T b (lineAt θ τ z t) = lineAt θ τ (z * (frPinv S b).map (tauE D τ)) t := by
   have hL := GlobalTheory.OrientedHeis.isLineAt_lineAt hθ τ z
-  let L : ℝ →+ WO S T := (reWHom S T b).comp (lineAt θ τ z)
+  let R : WO (reS S b) T →+ WO S T := AddMonoidHom.mk' (reW S T b) (fun x y => Matrix.add_mul x y _)
+  let L : ℝ →+ WO S T := R.comp (lineAt θ τ z)
   have hL' : IsLineAt θ τ (z * (frPinv S b).map (tauE D τ)) L := by
     refine ⟨(continuous_reW S T b).comp hL.1, fun t => ?_, fun t τ' => ?_⟩
     · show (reW S T b (lineAt θ τ z t)).map (finPart D) = 0
@@ -74,7 +75,10 @@ theorem dRho_reF (ψ : AddChar (AF D.host.F) ℂ) {θ : InfFam D} (hθ : IsInfFa
   unfold Formalism.IndefR.Datum.dRho
   congr 1
   funext t
-  rw [heisO_reF S T b ψ hs, reF_apply, lineAt_reW' hθ]
+  rw [← lineAt_reW' hθ]
+  have hadd (u v : WO (reS S b) T) : reW S T b (u + v) = reW S T b u + reW S T b v :=
+    Matrix.add_mul _ _ _
+  simp only [heisO, reF_apply, symplOH, hs, hadd]
 
 theorem isFockVacAt_reF : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D)
     (b : Module.Basis (Fin S.rank) D.host.E S.V), IsInfFam θ →

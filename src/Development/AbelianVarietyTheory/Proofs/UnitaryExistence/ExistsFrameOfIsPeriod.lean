@@ -86,7 +86,7 @@ theorem exists_frame {r q : ℕ} (G M Mi : Matrix (Fin r) (Fin r) ℂ) (hM : M *
         by_cases hq : (a : ℕ) < q
         · have : (A *ᵥ u) a = 0 := by simpa [N, mulVec, dotProduct, hq] using ha
           simp [sgnMat, mulVec_diagonal, this]
-        · have : u a = 0 := by simpa [N, mulVec, dotProduct, hq, one_apply] using ha
+        · have : u a = 0 := by simpa [N, mulVec, dotProduct, hq, Matrix.one_apply] using ha
           simp [this]
       exact h1.ne' h2
     intro u u' huu
@@ -135,7 +135,7 @@ theorem exists_frame {r q : ℕ} (G M Mi : Matrix (Fin r) (Fin r) ℂ) (hM : M *
         rw [(comm_sgnMat_iff _).mp hAY c a (by simp [hcq, ha])]
         simp [this]
     rw [h1, ← vecMul_vecMul, vecMul_transpose]
-    simp [vecMul, dotProduct, h2, one_apply]
+    simp [vecMul, dotProduct, h2, Matrix.one_apply]
   · rw [inv_eq_left_inv hinv, ← mulVec_mulVec]
     have h3 : ∀ c, (N.map conj) a c = if a = c then 1 else 0 := by
       intro c

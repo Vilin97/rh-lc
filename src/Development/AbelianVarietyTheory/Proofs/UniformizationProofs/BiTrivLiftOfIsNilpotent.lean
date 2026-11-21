@@ -53,7 +53,13 @@ private theorem exists_unit_ratio_of_isGen (c : CubicalStr G L) {W : Over (Spec 
   refine ⟨f, fun Z r z I hI => ?_⟩
   rw [hf Z r z I hI, v₃ _ _ z I hI, val_mul hI, val_inv, _root_.mul_inv_cancel, _root_.mul_one]
   have e1 : r ≫ (1 : W ⟶ G) = 1 := by simp
-  rw [e1, (isCub_cubV c hI).face₂, _root_.one_mul]
+  have hface : cubV c z I (r ≫ a) 1 (r ≫ x) = 1 := by
+    have e := val_corr hI (c.face 1) (lift (r ≫ a) (r ≫ x)).left
+    rw [val_one] at e
+    refine Eq.trans ?_ e
+    refine Eq.trans ?_ (val_cub c (lift (r ≫ a) (r ≫ x)) hI (x2 G 0) (pzero G _) (x2 G 1)).symm
+    congr 1 <;> simp [x2, pzero, Hom.one_def]
+  rw [e1, hface, _root_.one_mul]
 
 private theorem eq_mul_of_four_factorizations {U : Type} [CommGroup U] {F Ft Ft' B Bt Bt' C At At' Aq : U}
     (hA : Aq = F * B) (hAt : At = Ft * Bt) (hAt' : At' = Ft' * Bt') (lA : Aq = C * At * At')
@@ -207,7 +213,18 @@ theorem exists_lift_affine [IsMonHom i] (hJ : IsNilpotent J) {Y : Over (Spec (Co
     have E4 := hf Z t' t'' y z I hI
     rw [mul_assoc t t' t'', hmi] at E1
     rw [hmi] at E3
-    exact mul_eq_mul_of_cocycle_relations E1 E2 E3 E4 ((isCub_cubV c hI).coc (t ≫ i) (t' ≫ i) (t'' ≫ i) (y ≫ x))
+    have hcub : ∀ (u v w q : Z ⟶ G),
+        cubV c z I (u * v) w q * cubV c z I u v q =
+          cubV c z I u (v * w) q * cubV c z I v w q := by
+      intro u v w q
+      let p := lift u (lift v (lift w q))
+      have e := val_corr hI c.cocycle p.left
+      have e' := ((val_mul hI _ _ _).trans
+        (congrArg₂ (· * ·) (val_cub c p hI _ _ _) (val_cub c p hI _ _ _))).symm.trans
+        (e.trans ((val_mul hI _ _ _).trans (congrArg₂ (· * ·) (val_cub c p hI _ _ _) (val_cub c p hI _ _ _))))
+      have hpadd (a b : G4 G ⟶ G) : padd G a b = a * b := rfl
+      simpa [p, x4, hpadd, MonObj.comp_mul, Category.assoc] using e'
+    exact mul_eq_mul_of_cocycle_relations E1 E2 E3 E4 (hcub (t ≫ i) (t' ≫ i) (t'' ≫ i) (y ≫ x))
   have hred : ∀ (Z : Over (Spec (CommRingCat.of A))), (∃ s, s ≫ red J = Z.hom) →
       ∀ (t t' : Z ⟶ 𝕋) (y : Z ⟶ Y) (z : Z.left), gm (lift t (lift t' y)).left z ⊤ f = 1 := by
     intro Z hZ t t' y z
@@ -505,9 +522,34 @@ theorem nonempty_biTriv [IsMonHom i] (hJ : IsNilpotent J)
       have E6 := hf Z t' y z I hI
       rw [v₂ _ _ z I hI, v₂ _ _ z I hI, v₂ _ _ z I hI, MonObj.mul_comp] at E1
       rw [v₂ _ _ z I hI, v₂ _ _ z I hI, v₂ _ _ z I hI] at E5 E6
+      have hcub : IsCub (cubV c z I) := by
+        refine ⟨?_, ?_, ?_, ?_⟩
+        · intro u v
+          have e := val_corr hI (c.face 0) (lift u v).left
+          rw [val_one] at e
+          refine Eq.trans ?_ e
+          refine Eq.trans ?_ (val_cub c (lift u v) hI (pzero G _) (x2 G 0) (x2 G 1)).symm
+          congr 1 <;> simp [x2, pzero, Hom.one_def]
+        · intro u v w
+          let p := lift u (lift v w)
+          refine ((val_corr hI c.cubeSymmetric_swap_first p.left).trans (val_cub c p hI _ _ _)).trans ?_
+          congr 1 <;> simp [p, x3]
+        · intro u v w
+          let p := lift u (lift v w)
+          refine ((val_corr hI c.cubeSymmetric_swap_last p.left).trans (val_cub c p hI _ _ _)).trans ?_
+          congr 1 <;> simp [p, x3]
+        · intro u v w q
+          let p := lift u (lift v (lift w q))
+          have e := val_corr hI c.cocycle p.left
+          have e' := ((val_mul hI _ _ _).trans
+            (congrArg₂ (· * ·) (val_cub c p hI _ _ _) (val_cub c p hI _ _ _))).symm.trans
+            (e.trans ((val_mul hI _ _ _).trans
+              (congrArg₂ (· * ·) (val_cub c p hI _ _ _) (val_cub c p hI _ _ _))))
+          have hpadd (a b : G4 G ⟶ G) : padd G a b = a * b := rfl
+          simpa [p, x4, hpadd, MonObj.comp_mul, Category.assoc] using e'
       exact eq_mul_of_two_factorizations E1 (hlaw Z t t' (y ≫ fst G G) z I hI) (hlaw Z t t' (y ≫ snd G G) z I hI)
         (hlaw Z t t' (y ≫ fst G G * y ≫ snd G G) z I hI) E5 E6
-        ((isCub_cubV c hI).compat (t ≫ i) (t' ≫ i) (y ≫ fst G G) (y ≫ snd G G))
+        (hcub.compat (t ≫ i) (t' ≫ i) (y ≫ fst G G) (y ≫ snd G G))
     · intro Z hZ t y z
       obtain ⟨I, hI⟩ := exists_good_pt hL z
       obtain ⟨a, ha⟩ := exists_red_lift hZ (lift t (y ≫ fst G G * y ≫ snd G G))

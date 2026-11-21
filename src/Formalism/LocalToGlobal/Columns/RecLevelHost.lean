@@ -58,11 +58,12 @@ theorem rlh_fixed (hX : X.Ok) (a : X.E) : star a = a ↔ a ∈ (algebraMap X.F X
   · rintro ⟨x, rfl⟩
     exact hX.star_F x
 
-theorem cmData_of_totallyRealFieldsConditions (hX : X.AbelianUnramifiedExtensionConditions) : Formalism.BasicNotions.CMData X.F X.E where
-  cmUnram := cm_unramified_of_field_conditions hX
-  totReal := hX.ok.realF
-  deg2 := hX.ok.rankE
-  fixed := rlh_fixed hX.ok
+theorem cmData_of_totallyRealFieldsConditions (hX : X.AbelianUnramifiedExtensionConditions) :
+    Formalism.BasicNotions.CMData X.F X.E :=
+  { cmUnram := cm_unramified_of_field_conditions hX
+    totReal := hX.ok.realF
+    deg2 := hX.ok.rankE
+    fixed := rlh_fixed hX.ok }
 
 end CM
 

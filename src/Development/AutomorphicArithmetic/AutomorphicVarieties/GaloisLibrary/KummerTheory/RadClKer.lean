@@ -86,7 +86,7 @@ private theorem ordv_pow (v : HeightOneSpectrum (𝓞 K)) (b : Kˣ) (n : ℕ) : 
 end
 
 theorem UpperTheory.V.Kum.radClKer :
-    ∀ (K : Type) [Field K] [NumberField K] (S : Set (HeightOneSpectrum (𝓞 K))) (n : ℕ), n ≠ 0 → ∀ a ∈ SelK S n, (radCl n a ∈ clSub S ↔ a ∈ S.unit K ⊔ powK K n) := by
+    ∀ (K : Type) [Field K] [NumberField K] (S : Set (HeightOneSpectrum (𝓞 K))) (n : ℕ), n ≠ 0 → ∀ a ∈ SelK S n, (radCl n a ∈ clSub S ↔ a ∈ S.unit K ⊔ powK (K := K) n) := by
   intro K _ _ S n hn a ha
   constructor
   · intro h

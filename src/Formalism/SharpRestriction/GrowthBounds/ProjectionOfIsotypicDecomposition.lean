@@ -150,7 +150,7 @@ theorem rat_padicGe_cast {p : ℕ} (hp : p.Prime) (S : UniformizedDVR p O) [Char
   · subst hx; exact ⟨0, by simp⟩
   have hv : (c : ℤ) ≤ padicValRat p x := by exact_mod_cast h
   have hnum : x.num ≠ 0 := Rat.num_ne_zero.2 hx
-  have hdef : padicValRat p x = padicValInt p x.num - padicValNat p x.den := rfl
+  have hdef := padicValRat_def p x
   have hden : ¬ p ∣ x.den := by
     intro hd
     have hn : ¬ (p : ℤ) ∣ x.num := by
@@ -160,10 +160,10 @@ theorem rat_padicGe_cast {p : ℕ} (hp : p.Prime) (S : UniformizedDVR p O) [Char
       rw [x.reduced] at this
       exact hp.one_lt.ne' (Nat.dvd_one.1 this)
     have h0 : padicValInt p x.num = 0 := padicValInt.eq_zero_of_not_dvd hn
-    have h1 : 1 ≤ padicValNat p x.den := one_le_padicValNat_of_dvd x.den_nz hd
+    have h1 := one_le_multiplicity_of_dvd x.den_nz hd
     rw [hdef, h0] at hv
     omega
-  have hd0 : padicValNat p x.den = 0 := padicValNat.eq_zero_of_not_dvd hden
+  have hd0 := multiplicity_eq_zero_of_not_dvd hden
   have hc : c ≤ padicValInt p x.num := by
     rw [hdef, hd0] at hv
     simpa using hv
@@ -1573,11 +1573,14 @@ variable {e : (Fin r → ℤ) → Module.End K (MvPolynomial (ι × Fin r) K)}
 theorem decSys_of (he : ∀ mu, IsIsoProj (glOps K r LL S) mu (e mu))
     (hs : ∀ G : MvPolynomial (ι × Fin r) K, ∃ T : Finset (Fin r → ℤ),
       G = ∑ mu ∈ T, e mu G ∧ ∀ mu, e mu G ∈ isoSub (glOps K r LL S) mu) :
-    DecSys (fun mu => isoSub (glOps K r LL S) mu) e where
-  id_on mu x hx := (he mu).1 x hx
-  zero_on mu nu hne x hx := (he mu).2 nu hne x hx
-  cover x := by obtain ⟨T, h, _⟩ := hs x; exact ⟨T, h⟩
-  mem mu x := by obtain ⟨_, _, h⟩ := hs x; exact h mu
+    DecSys (fun mu => isoSub (glOps K r LL S) mu) e := by
+  refine ⟨fun mu => (he mu).1, fun mu => (he mu).2, ?_, ?_⟩
+  · intro x
+    obtain ⟨T, h, _⟩ := hs x
+    exact ⟨T, h⟩
+  · intro mu x
+    obtain ⟨_, _, h⟩ := hs x
+    exact h mu
 
 theorem e_mem_Pol (sys : DecSys (fun mu => isoSub (glOps K r LL S) mu) e) (d : ι → ℕ) (mu : Fin r → ℤ)
     (F : MvPolynomial (ι × Fin r) K) (hF : F ∈ Pol K r d) : e mu F ∈ Pol K r d := by

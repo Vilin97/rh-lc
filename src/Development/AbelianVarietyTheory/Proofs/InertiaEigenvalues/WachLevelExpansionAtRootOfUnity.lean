@@ -24,8 +24,8 @@ theorem simple_zero {L : Type} [Field L] (f : PowerSeries L) (h0 : constantCoeff
   simpa using h1
 
 theorem coeff_one_pow_of_deriv {L : Type} [Field L] (U : PowerSeries L)
-    (hU : derivative L U = U) (m : ℕ) : coeff 1 (U ^ m) = (m : L) * constantCoeff U ^ m := by
-  have h : derivative L (U ^ m) = (m : PowerSeries L) * U ^ m := by
+    (hU : derivative U = U) (m : ℕ) : coeff 1 (U ^ m) = (m : L) * constantCoeff U ^ m := by
+  have h : derivative (U ^ m) = (m : PowerSeries L) * U ^ m := by
     induction m with
     | zero => simp
     | succ m ih =>
@@ -103,7 +103,7 @@ theorem lev_values [CharZero LL] (i : ZMod n) (ζ : LL) (hζ : ∃ j : ℕ, IsPr
   have hζ0 : ζ ≠ 0 := hj.ne_zero (pow_ne_zero _ hp.ne_zero)
   set U : PowerSeries LL := C ζ * E with hUdef
   have hU0 : constantCoeff U = ζ := by simp [hUdef, hE0]
-  have hU1 : derivative LL U = U := by
+  have hU1 : derivative U = U := by
     rw [hUdef, Derivation.leibniz, hE1, derivative_C]
     simp
   have hlevU : W.lev i ζ (1 + letπ) = U := by rw [map_add (f := _), map_one, hE]

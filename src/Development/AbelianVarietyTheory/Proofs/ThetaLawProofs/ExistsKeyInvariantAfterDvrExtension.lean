@@ -71,7 +71,7 @@ theorem exists_finset_descend {O Ω : Type} [CommRing O] [Field Ω] {X : Scheme.
     induction hb using Algebra.adjoin_induction with
     | mem b hb => exact hS _ (Finset.mem_image_of_mem _ hb)
     | algebraMap a => exact ⟨t a, (RingHom.congr_fun ht a).trans (RingHom.congr_fun hcg a).symm⟩
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   let e : k ≃+* σ.range := RingEquiv.ofBijective σ.rangeRestrict
     ⟨fun a b h => σ.injective (congrArg Subtype.val h), σ.rangeRestrict_surjective⟩

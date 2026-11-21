@@ -31,6 +31,8 @@ theorem dRho_smul (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D)
   unfold Formalism.IndefR.Datum.dRho
   rw [Pi.smul_apply, smul_eq_mul, ← deriv_const_mul_field]
   congr 1
+  funext t
+  simp only [heisO, Pi.smul_apply, smul_eq_mul]
   ring
 
 theorem pureTensorO_smul (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) (sS sT BS BT) (c : ℂ)

@@ -41,7 +41,7 @@ theorem uniformiser_mem_jacobson (ϖ : 𝒪[F]) (h : Irreducible ϖ) (w : L.O)
   rintro P ⟨-, hP⟩
   haveI := hP
   have hmax : (P.comap (algebraMap 𝒪[F] L.O)).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := 𝒪[F]) P
   have hm : ϖ ∈ P.comap (algebraMap 𝒪[F] L.O) := by
     rw [IsLocalRing.eq_maximalIdeal hmax]
     exact (IsLocalRing.mem_maximalIdeal _).2 h.not_isUnit

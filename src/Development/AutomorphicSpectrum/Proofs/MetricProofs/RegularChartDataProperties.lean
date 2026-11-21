@@ -99,8 +99,9 @@ theorem continuousOn_r (R : RegChartData A) : ContinuousOn R.r R.Yo := by
     have h1 := R.r_chart k (R.chart k z) ⟨(R.chart k).map_source hz.1, hz.2⟩
     rw [(R.chart k).left_inv hz.1] at h1
     exact h1
-  have hcont := hg.comp ((R.chart k).continuousOn.mono Set.inter_subset_left)
-    (fun z hz => ⟨(R.chart k).map_source hz.1, hz.2⟩)
+  have hcont := hg.comp (s := (R.chart k).source ∩ (R.chart k) ⁻¹' (coordDiv (R.S k))ᶜ)
+    ((R.chart k).continuousOn.mono Set.inter_subset_left)
+    (fun _ hz => ⟨(R.chart k).map_source hz.1, hz.2⟩)
   exact ((hcont.congr heq).continuousAt (hUo.mem_nhds hxU)).continuousWithinAt
 
 theorem eventually_not_le_of_not_mem_Yo (R : RegChartData A) {x : X} (hx : x ∉ R.Yo) (l : ℝ) :

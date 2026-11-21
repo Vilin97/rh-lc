@@ -133,7 +133,8 @@ theorem dpow_idl (κ : DividedPowers I) {N : ℕ} (hN : NilExp κ (N + 2)) :
 theorem isSubDPIdeal (κ : DividedPowers I) {N : ℕ} (hN : NilExp κ (N + 2)) :
     IsSubDPIdeal κ (idl κ (N + 1) ⊓ I) where
   isSubideal := inf_le_right
-  dpow_mem n hn j hj := by
+  dpow_mem := by
+    intro n hn j hj
     rcases Nat.lt_or_ge n 2 with h | h
     · obtain rfl : n = 1 := by omega
       rw [κ.dpow_one hj.2]; exact hj

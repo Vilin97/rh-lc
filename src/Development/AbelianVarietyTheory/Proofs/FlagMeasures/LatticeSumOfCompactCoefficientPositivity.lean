@@ -147,7 +147,33 @@ theorem nPt_append (k r : ℕ) (TT : ℝ) (h L : C.LPt) (hh : D.ptSize h ≤ r) 
     TBB.nPt k r TT (h ++ L) =
       nHead k r h * C.nAux k r (D.ptGG TT (h ++ L)) (fun _ _ => 1) (1 + D.ptSize h) L := by
   unfold TBB.nPt nHead
-  rw [GermRateSplit.weight_product_append, GermRateSplit.weight_product_germ_indep k r _ 0 _ 1 h (by omega)]
+  have happ : ∀ (b : ℕ) (P Q : C.LPt), C.nAux k r (D.ptGG TT (h ++ L)) (fun _ _ => 1) b (P ++ Q) =
+      C.nAux k r (D.ptGG TT (h ++ L)) (fun _ _ => 1) b P *
+        C.nAux k r (D.ptGG TT (h ++ L)) (fun _ _ => 1) (b + D.ptSize P) Q := by
+    intro b P
+    induction P generalizing b with
+    | nil => intro Q; simp [C.nAux, D.ptSize]
+    | cons a rest ih =>
+      obtain ⟨s, t⟩ := a
+      intro Q
+      simp only [List.cons_append, C.nAux]
+      rw [ih, ← mul_assoc]
+      congr 2
+      simp [D.ptSize, Nat.add_assoc]
+  have hind : ∀ (b : ℕ) (P : C.LPt), b + D.ptSize P ≤ r + 1 →
+      C.nAux k r (D.ptGG TT (h ++ L)) (fun _ _ => 1) b P = C.nAux k r 0 (fun _ _ => 1) b P := by
+    intro b P
+    induction P generalizing b with
+    | nil => intro _; simp [C.nAux]
+    | cons a rest ih =>
+      obtain ⟨s, t⟩ := a
+      intro hb
+      have hs : D.ptSize ((s, t) :: rest) = s + D.ptSize rest := by simp [D.ptSize]
+      rw [hs] at hb
+      have hc : ¬ (b + s - 1 = r + 1 ∧ s = 1) := by omega
+      simp only [C.nAux, if_neg hc]
+      rw [ih (b + s) (by omega)]
+  rw [happ 1 h L, hind 1 h (by omega)]
 
 theorem sqrt_nPt_long (k r : ℕ) (TT : ℝ) (h : C.LPt) (m e : ℕ) (z : ℂ) (hh : D.ptSize h + (m + 2) ≤ r + 1)
     (he : (e : ℤ) = C.Mlev k r (D.ptSize h + (m + 2)) + m - 1) :
@@ -789,7 +815,8 @@ theorem exists_lattice_dual (ω₁ ω₂ : ℂ) (hω : (conj ω₁ * ω₂).im �
     field_simp
     linear_combination (-(σ * (a * ω₁ + b * ω₂))) * Complex.I_mul_I))
   convert h1 using 1
-  push_cast
+  ext x
+  simp only [Pi.smul_apply, Complex.real_smul, Complex.ofReal_neg, Complex.ofReal_mul, Complex.ofReal_ofNat]
   field_simp
 
 theorem mean_le_of_eventually {Λ : AddSubgroup (crystallineComparison.V 1)} {LIM : (Λ → ℂ) → ℂ} (hL : crystallineComparison.IsMeanInf Λ LIM)

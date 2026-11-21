@@ -261,7 +261,7 @@ private theorem tsum_principal_le_eq_tsum_mul_cutoff_span {K : Type} [Field K] [
       show (u : 𝓞 K) * gen J = β
       rw [mul_comm]; exact hu
   have hsub : ∑' β : B, g β = ∑' β : {β : B // (β : 𝓞 K) ≠ 0}, g β := by
-    refine (tsum_subtype_eq_of_support_subset ?_).symm
+    refine (tsum_subtype_eq_of_support_subset (f := g) (s := {β : B | (β : 𝓞 K) ≠ 0}) ?_).symm
     intro β hβ h0
     apply hβ
     simp only [hg]

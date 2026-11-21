@@ -248,7 +248,7 @@ theorem exists_K (c u : Fin r → EuclideanSpace ℂ (Fin (2 * r + k + 1))) (hc 
     convert h2 using 1
     · refine Finset.sum_congr rfl fun m _ => ?_
       simp [mulVec_single, mul_comm]
-    · simp [Pi.single_apply, eq_comm]
+    · simp [Pi.single_apply, eq_comm, Matrix.one_apply]
   have hv : ∀ v, κ *ᵥ (Hpk k r *ᵥ v) = Hpk k r *ᵥ (κ *ᵥ v) := by
     intro v
     have := hκH (WithLp.toLp 2 v)

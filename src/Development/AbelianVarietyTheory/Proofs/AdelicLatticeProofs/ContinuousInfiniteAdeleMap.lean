@@ -116,7 +116,7 @@ theorem bijective_toAdele {σ : E →ₐ[F] E} (h : IsCMExt F E σ) : Function.B
     induction z using TensorProduct.induction_on with
     | zero => rw [RingHom.map_zero, s.map_zero]; exact j.map_zero.symm
     | add x y hx hy =>
-      rw [RingHom.map_add (f := _), s.map_add (f := _)]
+      rw [RingHom.map_add (f := _), s.map_add]
       exact (congrArg₂ (· + ·) hx hy).trans (j.map_add _ _).symm
     | tmul a x =>
       rw [(hs _).1]

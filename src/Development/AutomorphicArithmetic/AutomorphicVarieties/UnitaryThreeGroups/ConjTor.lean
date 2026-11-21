@@ -7,21 +7,21 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThre
 open Matrix UpperTheory.V.U3
 
 private theorem sgnAct_tor {R : Type} [CommRing R] (s : ℤˣ) (t : Rˣ) :
-    sgnAct (m := 3) (R := R) s (tor t) = tor t := by
+    sgnAct (m := 3) (R := R) s (tor R t) = tor R t := by
   rcases Int.units_eq_one_or s with rfl | rfl <;> simp [theta_tor]
 
 private theorem conj_left {G R : Type} [Group G] [CommRing R] (r : G →* GG (m := 3) (R := R)) (t : Rˣ) (g : G) :
-    (conjBy (tor t) r g).left = tor t * (r g).left * tor t⁻¹ := by
+    (conjBy (tor R t) r g).left = tor R t * (r g).left * tor R t⁻¹ := by
   simp [conjBy, MulAut.conj_apply, SemidirectProduct.mul_left, SemidirectProduct.inv_left, sgnAct_tor, map_inv]
 
 private theorem conj_right {G R : Type} [Group G] [CommRing R] (r : G →* GG (m := 3) (R := R)) (t : Rˣ) (g : G) :
-    (conjBy (tor t) r g).right = (r g).right := by
+    (conjBy (tor R t) r g).right = (r g).right := by
   simp [conjBy, MulAut.conj_apply, SemidirectProduct.mul_right, SemidirectProduct.inv_right]
 
 private theorem conj_mat {G R : Type} [Group G] [CommRing R] (r : G →* GG (m := 3) (R := R)) (t : Rˣ) (g : G)
     (a b : Fin 3) :
-    (conjBy (tor t) r g).mat a b = ((t ^ wt a b : Rˣ) : R) * (r g).mat a b := by
-  show (((conjBy (tor t) r g).left : GL (Fin 3) R) : Matrix (Fin 3) (Fin 3) R) a b = _
+    (conjBy (tor R t) r g).mat a b = ((t ^ wt a b : Rˣ) : R) * (r g).mat a b := by
+  show (((conjBy (tor R t) r g).left : GL (Fin 3) R) : Matrix (Fin 3) (Fin 3) R) a b = _
   rw [conj_left, Units.val_mul, Units.val_mul, tor_val, tor_val, mul_diagonal, diagonal_mul]
   have key : ((t ^ wt1 a : Rˣ) : R) * ((t⁻¹ ^ wt1 b : Rˣ) : R) = ((t ^ wt a b : Rˣ) : R) := by
     rw [← Units.val_mul, wt, _root_.zpow_sub, _root_.inv_zpow]
@@ -30,14 +30,14 @@ private theorem conj_mat {G R : Type} [Group G] [CommRing R] (r : G →* GG (m :
 
 private theorem conj_zmat {G R : Type} [Group G] [CommRing R] (r : G →* GG (m := 3) (R := R)) (t : Rˣ) (c g₁ : G)
     (a b : Fin 3) :
-    zmat c g₁ (conjBy (tor t) r) a b = ((t ^ wt a b : Rˣ) : R) * zmat c g₁ r a b := by
+    zmat c g₁ (conjBy (tor R t) r) a b = ((t ^ wt a b : Rˣ) : R) * zmat c g₁ r a b := by
   simp only [zmat, Matrix.sub_apply, conj_mat, mul_sub]
 
 theorem UpperTheory.V.U3.conjBy_tor :
     ∀ {G R : Type} [Group G] [CommRing R] (r : G →* GG (m := 3) (R := R)) (t : Rˣ),
-    (∀ g a b, (conjBy (tor t) r g).mat a b = ((t ^ wt a b : Rˣ) : R) * (r g).mat a b) ∧ (∀ g, (conjBy (tor t) r g).right = (r g).right) ∧
-    (∀ c g₁, Normalised c g₁ r → Normalised c g₁ (conjBy (tor t) r)) ∧ (∀ c g₁, zeta c g₁ (conjBy (tor t) r) = zeta c g₁ r) ∧
-    ∀ (η : G →* ℤˣ) (Ψ : G →* Rˣ), conjBy (tor t) (r0 η Ψ) = r0 η Ψ := by
+    (∀ g a b, (conjBy (tor R t) r g).mat a b = ((t ^ wt a b : Rˣ) : R) * (r g).mat a b) ∧ (∀ g, (conjBy (tor R t) r g).right = (r g).right) ∧
+    (∀ c g₁, Normalised c g₁ r → Normalised c g₁ (conjBy (tor R t) r)) ∧ (∀ c g₁, zeta c g₁ (conjBy (tor R t) r) = zeta c g₁ r) ∧
+    ∀ (η : G →* ℤˣ) (Ψ : G →* Rˣ), conjBy (tor R t) (r0 η Ψ) = r0 η Ψ := by
   intro G R _ _ r t
   refine ⟨conj_mat r t, conj_right r t, ?_, ?_, ?_⟩
   · intro c g₁ h

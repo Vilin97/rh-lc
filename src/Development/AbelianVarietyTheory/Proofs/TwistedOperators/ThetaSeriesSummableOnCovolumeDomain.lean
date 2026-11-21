@@ -126,8 +126,7 @@ theorem summable_norm_of_lattice {Y : Type} {n : ℕ} (T : Y → ℂ) (ℓ : Y �
       have := (Real.summable_one_div_int_pow (p := 2)).2 one_lt_two
       refine this.congr fun k => ?_
       simp [sq_abs]
-    refine Summable.of_nonneg_of_le hg0 (fun k => ?_) (h2.add (summable_of_finite_support (f := fun k : ℤ => if k = 0 then (1 : ℝ) else 0)
-      ((Set.finite_singleton (0 : ℤ)).subset fun k hk => by simpa using hk)))
+    refine Summable.of_nonneg_of_le hg0 (fun k => ?_) (h2.add ((hasSum_ite_eq (0 : ℤ) (1 : ℝ)).summable))
     by_cases hk : k = 0
     · simp [g, hk]
     · have hpos : 0 < (k : ℝ) ^ 2 := by positivity

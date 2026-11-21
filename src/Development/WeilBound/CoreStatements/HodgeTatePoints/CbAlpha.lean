@@ -15,7 +15,7 @@ section
 
 variable {R : Type} [CommRing R] {d : ℕ}
 
-def Lz (j : Fin d) (f : PS R 2 d) : PS R 1 d := ev (n := 1) ![pt R d 0, 0] (pderiv R ((1 : Fin 2), j) f)
+def Lz (j : Fin d) (f : PS R 2 d) : PS R 1 d := ev (n := 1) ![pt R d 0, 0] (pderiv ((1 : Fin 2), j) f)
 
 theorem coeff_Lz (f : PS R 2 d) (i j : Fin d) :
     coeff (Finsupp.single ((0 : Fin 1), i) 1) (Lz j f) = bil f 1 1 i j := by
@@ -115,7 +115,7 @@ private theorem Lz_ev_ptPow_pt {R : Type} [CommRing R] {d : ℕ} (p : ℕ) [Fact
     Lz j (ev ![ptPow R d p 0, pt R d 1] g) = ev (n := 1) ![ptPow R d p 0] (Lz j g) := by
   have hb : ZZ (n := 1) ![pt R d 0, (0 : Pt R 1 d)] := ZZ_cons (Z_pt 0) (ZZ_cons Z_zero ZZ_nil)
   have hq : ZZ (n := 1) ![ptPow R d p 0] := ZZ_cons (Z_ptPow p 0) ZZ_nil
-  have hp0 : ∀ c, pderiv R ((1 : Fin 2), j) (ptPow R d p (0 : Fin 2) c) = 0 := fun c =>
+  have hp0 : ∀ c, pderiv ((1 : Fin 2), j) (ptPow R d p (0 : Fin 2) c) = 0 := fun c =>
     d_pow_p p _ (X ((0 : Fin 2), c))
   simp only [Lz]
   rw [d2 (Z_ptPow p 0) (Z_pt 1)]

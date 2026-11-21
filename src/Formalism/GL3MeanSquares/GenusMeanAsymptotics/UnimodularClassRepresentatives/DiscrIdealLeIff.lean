@@ -44,7 +44,7 @@ variable {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Modul
 def IsGen (L : Submodule (𝓞 K) V) (𝔭 : Ideal (𝓞 F)) (e : V) : Prop :=
   e ∈ L ∧ e ≠ 0 ∧ ∀ x ∈ L, ∃ t : 𝓞 F, t ∉ 𝔭 ∧ ∃ a : 𝓞 K, algebraMap (𝓞 F) (𝓞 K) t • x = a • e
 
-theorem exists_isGen {L : Submodule (𝓞 K) V} (hL : Submodule.IsLattice K L)
+theorem exists_isGen {L : Submodule (𝓞 K) V} (hL : Submodule.IsFullLattice K L)
     (h1 : finrank K V = 1) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) : ∃ e, IsGen L 𝔭 e := by
   obtain ⟨b, hb, hloc⟩ := LocalSpans.exists_basis_locF hL h𝔭
   have hsub : Subsingleton (Fin (finrank K V)) := by

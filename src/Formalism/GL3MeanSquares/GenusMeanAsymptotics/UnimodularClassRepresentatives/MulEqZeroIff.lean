@@ -16,6 +16,8 @@ open HermitianSublattices LocalSpans idealPowerSpanBounds localizedQuotients int
 
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+
 def rd (K : Type) {F : Type} [Field K] [Field F] [Algebra F K] (𝔭 : Ideal (𝓞 F)) (k j : ℕ) :
     (𝓞 K ⧸ extP K 𝔭 ^ k) →+* (𝓞 K ⧸ extP K 𝔭 ^ (k - j)) :=
   Ideal.Quotient.factor (Ideal.pow_le_pow_right (Nat.sub_le k j))
@@ -77,7 +79,10 @@ private theorem iota_mul_mem_extP_pow_iff_mem_pow_sub_vF {𝔭 : Ideal (𝓞 F)}
     have h3 := (hcopK.pow_left (m := k - vF 𝔭 c)).dvd_of_dvd_mul_left h2
     exact (Ideal.span_singleton_le_iff_mem _).mp (Ideal.dvd_iff_le.mp h3)
   · intro h
-    have h' := Ideal.mul_mem_mul (localizedQuotients.ι_mem_pow (K := K) (localValuationFiltration.mem_pow_vF h𝔭 hc)) h
+    have hc' : ι c ∈ extP K 𝔭 ^ vF 𝔭 c := by
+      rw [extP, ← Ideal.map_pow]
+      exact Ideal.mem_map_of_mem ι (localValuationFiltration.mem_pow_vF h𝔭 hc)
+    have h' := Ideal.mul_mem_mul hc' h
     rwa [← pow_add, show vF 𝔭 c + (k - vF 𝔭 c) = k by omega] at h'
 
 theorem mul_eq_zero_iff {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {c : 𝓞 F} (hc : c ≠ 0) {k : ℕ}

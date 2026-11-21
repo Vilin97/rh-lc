@@ -58,11 +58,35 @@ theorem _root_.GlobalTheory.SmGL.LeviInt.levi_integral_facts : ∀ (k : Type) [F
     have hinv : ∀ a, (g⁻¹) a = (g a)⁻¹ := fun a => rfl
     simp only [hinv, Subgroup.inv_mem_iff]
     exact and_comm
+  have hemb : ∀ g : _root_.GlobalTheory.SmGL.Levi k m,
+      _root_.GlobalTheory.SmGL.leviEmb k e g ∈ _root_.GlobalTheory.SmGL.parab k e := by
+    intro g
+    apply _root_.GlobalTheory.SmGL.mem_parab_iff.2
+    intro a b i j hab
+    classical
+    simp [_root_.GlobalTheory.SmGL.leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+  have hdec : ∀ p : _root_.GlobalTheory.SmGL.parab k e,
+      ∃ u ∈ _root_.GlobalTheory.SmGL.unipRad k e,
+        (p : GL n k) = _root_.GlobalTheory.SmGL.leviEmb k e (_root_.GlobalTheory.SmGL.leviProj k e p) * u := by
+    intro p
+    let L : _root_.GlobalTheory.SmGL.parab k e :=
+      ⟨_root_.GlobalTheory.SmGL.leviEmb k e (_root_.GlobalTheory.SmGL.leviProj k e p), hemb _⟩
+    have hL : _root_.GlobalTheory.SmGL.leviProj k e L = _root_.GlobalTheory.SmGL.leviProj k e p := by
+      funext a
+      ext i j
+      simp [_root_.GlobalTheory.SmGL.leviProj_apply, L, _root_.GlobalTheory.SmGL.leviEmb, Matrix.blockDiagonal'_apply_eq]
+    refine ⟨((L⁻¹ * p : _root_.GlobalTheory.SmGL.parab k e) : GL n k), ?_, ?_⟩
+    · unfold _root_.GlobalTheory.SmGL.unipRad
+      apply (Subgroup.mem_map_iff_mem (Subgroup.subtype_injective _)).2
+      change _root_.GlobalTheory.SmGL.leviProj k e (L⁻¹ * p) = 1
+      rw [map_mul, map_inv, hL, inv_mul_cancel]
+    · rw [Subgroup.coe_mul, Subgroup.coe_inv]
+      exact (mul_inv_cancel_left _ _).symm
   have hproj : ∀ p : _root_.GlobalTheory.SmGL.parab k e,
       (p : GL n k) ∈ _root_.GlobalTheory.SplitWeil.KO k n →
         ∀ a, _root_.GlobalTheory.SmGL.leviProj k e p a ∈ _root_.GlobalTheory.SplitWeil.KO k (m a) := by
     intro p hp a
-    obtain ⟨u, hu, hpu⟩ := _root_.GlobalTheory.SmGL.exists_levi_mul_unip k e p
+    obtain ⟨u, hu, hpu⟩ := hdec p
     rw [hpu] at hp
     exact ((hlevi _ u hu).1 hp).1 a
   have hmod : ∀ g : _root_.GlobalTheory.SmGL.Levi k m,
@@ -118,6 +142,6 @@ theorem _root_.GlobalTheory.SmGL.LeviInt.levi_integral_facts : ∀ (k : Type) [F
     hP, hN, fun g => ?_⟩
   obtain ⟨u, h, w, hw, rfl⟩ := _root_.GlobalTheory.SmGL.UnitInd.exists_iwasawa e g
   exact ⟨_, mul_mem (_root_.GlobalTheory.SmGL.unipRad_le_parab k e u.2)
-    (_root_.GlobalTheory.SmGL.leviEmb_mem_parab k e h), w, hw, rfl⟩
+    (hemb h), w, hw, rfl⟩
 
 end GlobalTheory.SmGL.LeviInt

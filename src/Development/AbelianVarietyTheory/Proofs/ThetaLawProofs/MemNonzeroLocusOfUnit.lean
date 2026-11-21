@@ -47,7 +47,20 @@ theorem exists_generator (hS : Out.SecBaseChangeSt) [IsLocalRing R] [IsNoetheria
   have i₀ : Fin (1 ^ P.g) := ⟨0, by simp⟩
   have su : ∀ {M : Type} [AddCommMonoid M] (q : Fin (1 ^ P.g) → M), ∑ i, q i = q i₀ := fun q =>
     Finset.sum_eq_single i₀ (fun a _ h => absurd (Fin.ext (by have := a.2; have := i₀.2; simp at *; omega)) h) (by simp)
-  obtain ⟨b, hb⟩ := KeyBasis.exists_pw (β i₀)
+  have exists_pw_local (β : Out.H0 P.L 1) : ∃ b : LB.Sec (AbLaw.pw P.L ((1 : ℕ) : ℤ)),
+      ∀ (Z : Scheme.{0}) (q : Z ⟶ P.A.left) (z : Z) (j : P.L.ι), q z ∈ P.L.U j →
+        gs q z (LB.wchart P.L (fun _ : Fin 1 => 𝟙 _) (fun _ => j)) (β.f fun _ => j) = gs q z (P.L.U j) (b.f j) := by
+    have le : ∀ j, P.L.U j ≤ LB.wchart P.L (fun _ : Fin 1 => 𝟙 _) (fun _ => j) := fun j y hy => mem_wc hy
+    refine ⟨⟨fun j => resG _ (le j) (β.f fun _ => j), fun j i => fn_ext fun y hy => ?_⟩,
+      fun Z q z j hj => (gs_res q z (le j) hj _).symm⟩
+    refine ((gs_res (𝟙 _) y _ hy _).trans (gs_res (𝟙 _) y (le j) hy.1 _)).trans
+      ((sec_trans β (𝟙 _) y (le j hy.1) (le i hy.2)).trans (Eq.trans ?_ (gs_mul (𝟙 _) y _ hy _ _).symm))
+    refine congrArg₂ (· * ·) ?_ ((gs_res (𝟙 _) y _ hy _).trans (gs_res (𝟙 _) y (le i) hy.2 _)).symm
+    refine Eq.trans ?_ ((gs_unit (𝟙 _) y _ hy _).trans (congrArg Units.val (map_zpow _ _ _))).symm
+    refine congrArg Units.val ((Fin.prod_univ_one _).trans ?_)
+    rw [Category.comp_id]
+    rfl
+  obtain ⟨b, hb⟩ := exists_pw_local (β i₀)
   have hv : ∀ (Z : Scheme.{0}) (q : Z ⟶ P.A.left) (z : Z) (J : (Z ⟶ P.A.left) → P.L.ι), Good P.L z J →
       sval (β i₀) q z J = gs q z (P.L.U (J q)) ((ofPow b).f (J q)) := fun Z q z J hJ =>
     (sval_of (β i₀) q z J (fun _ => J q) fun _ => by rw [Category.comp_id]).trans (hb Z q z _ (hJ q))
@@ -151,7 +164,11 @@ theorem main : Out.Laws → ∀ (R : Type) [CommRing R] [IsLocalRing R] [IsNoeth
       (isGrpPullback_of_iso (Iso.refl x.P.A)).congr e.symm rfl
     have he : eSec x.P.A ≫ 𝟙 _ = spMap (RingHom.id R) ≫ eSec x.P.A := PolBaseChange.eSec_comm h
     have := x.P.isAb.comm
-    obtain ⟨w, hw, hm⟩ := KeyPow.exists_rescale x.P.isLB x.P.isLB (isoPullId_pgen (idIso_isGen x.P.isLB) rfl)
+    have hgen : PGen (isoPullId (idIso x.P.L) (rfl : 𝟙 x.P.A.left = 𝟙 x.P.A.left)) := by
+      intro Y f y j j' k k' hj hj' hk hk'
+      rw [gw_isoPullId _ rfl f y j k hj hk, gw_isoPullId _ rfl f y j' k' hj' hk', Category.comp_id]
+      exact gm_isGen (idIso_isGen x.P.isLB) f y j j' k k' hj hj' hk hk'
+    obtain ⟨w, hw, hm⟩ := KeyPow.exists_rescale x.P.isLB x.P.isLB hgen
       (p := x.P.A.hom) (Over.w η[x.P.A]) he hr' x.rig_gen
     obtain ⟨s, hs⟩ := sec_pull_down hw x.P.isLB x.P.isLB x.th
     obtain ⟨a, ha⟩ := exists_unit hL.secBaseChange x.P s th'

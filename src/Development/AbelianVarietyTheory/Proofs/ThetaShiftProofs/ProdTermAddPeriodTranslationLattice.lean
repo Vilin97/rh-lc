@@ -17,10 +17,13 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor (hermForm eTwoPi)
 
 theorem summable_norm_pi_prod_and_tsum {R X : Type} [NormedField R] [CompleteSpace R] :
     ∀ (n : ℕ) (f : Fin n → X → R), (∀ i, Summable fun x => ‖f i x‖) →
-      (Summable fun m : Fin n → X => ‖∏ i, f i (m i)‖) ∧ ∑' m : Fin n → X, ∏ i, f i (m i) = ∏ i, ∑' x, f i x
-  | 0, f, _ => ⟨Summable.of_finite, by simp⟩
-  | n + 1, f, hf => by
-    obtain ⟨h1, h2⟩ := summable_norm_pi_prod_and_tsum n (fun i => f i.succ) fun i => hf i.succ
+      (Summable fun m : Fin n → X => ‖∏ i, f i (m i)‖) ∧ ∑' m : Fin n → X, ∏ i, f i (m i) = ∏ i, ∑' x, f i x := by
+  intro n
+  induction n with
+  | zero => exact fun _ _ => ⟨Summable.of_finite, by simp⟩
+  | succ n ih =>
+    intro f hf
+    obtain ⟨h1, h2⟩ := ih (fun i => f i.succ) fun i => hf i.succ
     let e : X × (Fin n → X) ≃ (Fin (n + 1) → X) := Fin.consEquiv fun _ => X
     have he : ∀ p : X × (Fin n → X), ∏ i, f i (e p i) = f 0 p.1 * ∏ i, f i.succ (p.2 i) := fun p => by
       rw [Fin.prod_univ_succ]; rfl

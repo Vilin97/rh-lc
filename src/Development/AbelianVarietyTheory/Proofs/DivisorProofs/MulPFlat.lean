@@ -13,7 +13,7 @@ set_option autoImplicit false
 
 namespace GlobalTheory.PDivGroup
 
-theorem mulP_flat : ∀ (p : ℕ) (R : Type) [CommRing R] (G : GlobalTheory.PDivGroup p R) (n : ℕ),
+theorem mulP_flat : ∀ (p : ℕ) (R : Type) [CommRing R] (G : _root_.GlobalTheory.PDivGroup p R) (n : ℕ),
     RingHom.Flat ((G.mulP n : G.A n →ₐ[R] G.A (n + 1)) : G.A n →+* G.A (n + 1)) := by
   intro p R _ G n
   obtain ⟨hassoc, hcounit, hsurj⟩ := G.transl_free n

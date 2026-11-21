@@ -200,10 +200,10 @@ theorem exists_conjugates : ∀ (D : D7) (Q : Par D) (χ₀ : (AE D)ˣ →* Circ
       (fun x hx => hN1 _ (hbu x) (by rw [(hb _).2]; exact hx.2.2))
     let A : (AE D)ˣ →* Circle := ∏ τ, angle D (θ (relab Q.c σ (tauE D τ))) ^ k τ
     have hA : ∀ x, A x = ∏ τ, angle D (θ (relab Q.c σ (tauE D τ))) x ^ k τ := fun x => by
-      simp only [A, MonoidHom.finset_prod_apply, MonoidHom.zpow_apply]
+      simp only [A, prod_apply, MonoidHom.zpow_apply]
     have Ac : Continuous A := by
       rw [show (A : _ → _) = _ from funext hA]
-      exact continuous_finset_prod _ fun τ _ => (continuous_angle D (θc _)).zpow _
+      exact continuous_finsetProd _ fun τ _ => (continuous_angle D (θc _)).zpow _
     obtain ⟨χ, χc, χ1, χ2⟩ := GlobalTheory.T.exists_continuous_circle_char_extension' (AE D)ˣ (intIdeles D)
       ((Units.map (incA D).toMonoidHom).range ⊔ (idF D).range) (A.comp (intIdeles D).subtype * ψ) Hopen
       ((Ac.comp continuous_subtype_val).mul ψc) (by

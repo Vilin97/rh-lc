@@ -110,6 +110,8 @@ theorem setIntegral_unitCube_tube {ι : Type*} [Fintype ι] [DecidableEq ι]
       congr 1
       funext x
       congr 1
+      funext i
+      simp only [Pi.add_apply, Complex.ofReal_add]
       ring) hw hw'
 
 theorem exists_tube_fourierCoeff {ι : Type*} [Fintype ι] [DecidableEq ι]
@@ -154,6 +156,8 @@ theorem exists_tube_fourierCoeff {ι : Type*} [Fintype ι] [DecidableEq ι]
       simp [Complex.mul_re, Complex.im_sum]
     rw [h, e, ← norm_mul, ← integral_mul_const]
     congr 2
+    funext x
+    simp only [hG]
     rw [mul_assoc (f _), ← Complex.exp_add]
     congr 2
     simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib]
@@ -275,8 +279,13 @@ theorem exists_siegel_fourierCoeff {g N : ℕ} (hN : 1 ≤ N) {F : Matrix (Fin g
     have h := hM fun q => (τ q.1 q.2).re / (2 * N)
     rw [← hsym τ hτ]
     convert h using 4
+    funext q
+    simp only [Pi.add_apply, hz]
     push_cast
-    rw [← add_div, mul_comm I, Complex.re_add_im]
+    rw [← add_div, mul_comm I]
+    have hy : (τ q.1 q.2).im = Y q.1 q.2 := by
+      simpa using congrFun (congrFun hτY q.1) q.2
+    rw [← hy, Complex.re_add_im]
   · obtain ⟨a, ha0, ha1, ha2⟩ := exists_tube_fourierCoeff hU hU' htube hf hp
     refine ⟨a, ha0, fun Y hY M hM m => ?_, fun τ hτ b hb hle => ?_⟩
     · set z : Fin g × Fin g → ℂ := fun q => I * Y q.1 q.2 with hz

@@ -84,6 +84,9 @@ section Tens
 
 variable (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
+local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
+local notation "𝒜" => E ⊗[F] 𝔸
+
 attribute [local instance] Algebra.TensorProduct.rightAlgebra
 
 @[reducible] def rlt_top : TopologicalSpace 𝒜 := Formalism.BasicNotions.tensTopL (F := F) (E := E) 𝔸
@@ -194,6 +197,8 @@ section Alg
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E))
 
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+
 theorem rlt_inv_eq {u : GL (Fin n) 𝒜} (hu : u ∈ UAd hc n) :
     ((u⁻¹ : GL (Fin n) 𝒜) : Matrix (Fin n) (Fin n) 𝒜) =
       Formalism.UG.cT (Formalism.UG.sigR hc.sig (Formalism.L2.Herm.Af F)) (u : Matrix (Fin n) (Fin n) 𝒜) := by
@@ -274,6 +279,8 @@ section GLTop
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
+
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
 
 attribute [local instance] rlt_top rlt_topRing adeles_t2Space
 

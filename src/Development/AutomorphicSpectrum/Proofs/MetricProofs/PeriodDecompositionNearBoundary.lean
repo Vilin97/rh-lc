@@ -138,7 +138,7 @@ theorem limit_of_data : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
       obtain ⟨x, hx, rfl⟩ := hx
       refine AddSubgroup.subset_closure ⟨c • x, I.smul_mem c hx, (hact c x).symm⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (L.B 0 c)]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   have hQpos : ∀ τ, 0 < (Qd τ 0).re := by
     intro τ
@@ -230,8 +230,40 @@ theorem limit_of_data : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     have e2 := congrArg Complex.re e1
     rw [Complex.mul_re, GlobalTheory.T.gram_det_im_eq_zero E g Λ R r (f τ z), zero_mul, sub_zero, Complex.re_ofReal_mul] at e2
     exact e2.symm
-  obtain ⟨hnz, hnzpos⟩ := GlobalTheory.T.nz_eq_nzOf_and_pos E g Λ Ψ R σ I r (fun a' => (y a' : Λ)) hσ (fun x hx y hy => hiso x hx y hy) hyI hyli
-    (by rw [← hidxdef]; exact hidx0)
+  have hnz_data : R.nz σ I = R.nzOf σ I (fun a' => (y a' : Λ)) ∧ 0 < R.nz σ I := by
+    by_cases hbot : I = ⊥
+    · subst I
+      have hr : r = 0 := by
+        by_contra h
+        let i : Fin r := ⟨0, Nat.pos_of_ne_zero h⟩
+        exact hyli.ne_zero i (by simpa using hyI i)
+      subst r
+      have hno : ¬ ∃ k v, IsNzFamily (⊥ : Submodule (𝓞 E) Λ) k v := by
+        rintro ⟨k, v, hk, hv, hli, -⟩
+        exact hli.ne_zero ⟨0, hk⟩ (by simpa using hv ⟨0, hk⟩)
+      simp [RiemLat.nz, hno, RiemLat.nzOf, Set.range_eq_empty]
+    · have hr : 1 ≤ r := by
+        by_contra h
+        have hr0 : r = 0 := by omega
+        subst r
+        have hs : Submodule.span (𝓞 E) (Set.range fun a' => (y a' : Λ)) = ⊥ := by
+          simp [Set.range_eq_empty]
+        have hfinite : Nat.card I.toAddSubgroup ≠ 0 := by
+          simpa only [hidxdef, hs, Submodule.bot_toAddSubgroup, AddSubgroup.relIndex_bot_left] using hidx0
+        have : Finite I.toAddSubgroup := Nat.finite_of_card_ne_zero hfinite
+        have := R.free
+        obtain ⟨x, hx, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hbot
+        obtain ⟨d, hd, hdx⟩ := isOfFinAddOrder_iff_nsmul_eq_zero.1
+          (isOfFinAddOrder_of_finite (⟨x, hx⟩ : I.toAddSubgroup))
+        have hzx : (d : ℤ) • x = 0 := by
+          rw [natCast_zsmul]
+          exact congrArg Subtype.val hdx
+        exact hx0 ((smul_eq_zero.1 hzx).resolve_left (by exact_mod_cast hd.ne'))
+      have hyfam : IsNzFamily I r (fun a' => (y a' : Λ)) := ⟨hr, hyI, hyli, hidx0⟩
+      obtain ⟨heq, hpos, _⟩ := (GlobalTheory.CompanionTheory.Relay.isotropic_sublattice_covolume_positive
+        E g Λ Ψ R σ I hσ hiso hbot).2 r _ hyfam
+      exact ⟨heq, hpos⟩
+  obtain ⟨hnz, hnzpos⟩ := hnz_data
   have hnz2 : R.nz σ I = (∏ τ, (R.gram (f τ z)).det.re) / (idx : ℝ) := by
     rw [hnz, RiemLat.nzOf]
     simp only [hfz]
@@ -306,14 +338,14 @@ theorem limit_at_centre : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     refine ⟨fun m k => if k.val < a then -(((m : ℝ) + 1 : ℝ) : ℂ) else 0, fun m => ⟨fun i => ?_, fun k hk => ?_⟩, ?_⟩
     · have hi : (Fin.castLE L.a_le i).val < a := i.2
       have hm : (0 : ℝ) ≤ m := Nat.cast_nonneg m
-      simp only [hi, if_true, Complex.neg_re, Complex.ofReal_re]
+      simp only [hi, ite_true, Complex.neg_re, Complex.ofReal_re]
       linarith
     · have hk' : ¬ k.val < a := not_lt.2 hk
       simp [hk']
     · rw [tendsto_pi_nhds]
       intro k
       by_cases hk : k.val < a
-      · simp only [expCover, hk, if_true, Pi.zero_apply]
+      · simp only [expCover, hk, ite_true, Pi.zero_apply]
         have h1 : Tendsto (fun m : ℕ => Real.exp (-((m : ℝ) + 1))) atTop (𝓝 0) :=
           Real.tendsto_exp_atBot.comp (tendsto_neg_atTop_atBot.comp
             (tendsto_atTop_add_const_right _ _ tendsto_natCast_atTop_atTop))

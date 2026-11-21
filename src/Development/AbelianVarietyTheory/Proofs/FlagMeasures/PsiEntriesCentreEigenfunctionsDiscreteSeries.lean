@@ -18,6 +18,8 @@ namespace GlobalTheory.Dec.PsiEig
 
 variable {n : ℕ}
 
+local notation "Mt" => Matrix (Fin n) (Fin n) ℂ
+
 section Linfty
 attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra
   Matrix.linftyOpNormedSpace
@@ -632,11 +634,13 @@ theorem inner_ps {ε : Fin n → Bool} (lam : Fin n → ℝ) {abelian₂ : Fin n
   have hInt' := hInt.apply_continuousLinearMap v
   show ⟪u, ((Module.finrank ℂ W : ℂ) • ∫ k : KG ε, Phi lam ((toMK k)⁻¹ * z * toMK k) •
       (innerSL ℂ (τ (toMK k) w)).smulRight (τ (toMK k) w) ∂(muK ε)) v⟫_ℂ = _
-  rw [ContinuousLinearMap.smul_apply, ContinuousLinearMap.integral_apply hInt, inner_smul_right,
+  rw [smul_apply, ContinuousLinearMap.integral_apply hInt, inner_smul_right,
     ← integral_inner hInt']
   simp only [intK]
   rw [← integral_const_mul]
   congr 1
+  funext k
+  simp only [smul_apply, ContinuousLinearMap.smulRight_apply, innerSL_apply_apply,
     inner_smul_right, pk]
   ring
 

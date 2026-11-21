@@ -40,10 +40,7 @@ theorem isSelfDualC_span_of_norm {D : D7} (S : HSp D) (hS : S.rank = 1) (ζ : Fi
   have hstar : ∀ a : 𝓞 D.host.E, IsIntegral ℤ (star (a : D.host.E)) := fun a =>
     (map_isIntegral_int (starRingEnd D.host.E) a.2 : )
   refine ⟨⟨Submodule.fg_span_singleton _, ?_⟩, fun y => ?_⟩
-  · rw [eq_top_iff]
-    intro y _
-    obtain ⟨c, rfl⟩ := hall y
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (Submodule.mem_span_singleton_self _))
+  · exact fun _ _ => (LinearIndependent.iff_fractionRing (𝓞 D.host.E) D.host.E).mp
   · obtain ⟨c, rfl⟩ := hall y
     constructor
     · intro hy x hx

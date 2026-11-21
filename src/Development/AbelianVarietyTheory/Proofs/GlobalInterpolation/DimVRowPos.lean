@@ -236,7 +236,9 @@ theorem dimV_row_pos {R : Ranks} (p : HCParam R) :
   linarith
 
 theorem f_pos (R : Ranks) : 0 < R.f := by
-  simp only [Ranks.f, Ranks.n]; positivity
+  unfold Ranks.f Ranks.n
+  have := R.ord_pos
+  omega
 
 def placeNo {R : Ranks} (H : Host R) (n : ℕ) : Tau R :=
   (Fintype.equivFinOfCardEq (card_Tau H)).symm ⟨n % R.f, Nat.mod_lt _ (f_pos R)⟩

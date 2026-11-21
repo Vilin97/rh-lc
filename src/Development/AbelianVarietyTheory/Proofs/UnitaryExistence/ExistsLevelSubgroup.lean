@@ -91,8 +91,9 @@ theorem finHom_inv_mulVec_mem {D : D7} (V : HSp D) (k : GA D V)
       exact ⟨a, ha, x, hx, rfl⟩
   have hfg : L.FG := V.standardTuple_isLattice.fg.map _
   have hsp : Submodule.span D.host.E (L : Set (Fin V.rank → D.host.E)) = ⊤ := by
-    have : (L : Set (Fin V.rank → D.host.E)) = V.frame.equivFun.toLinearMap '' (V.L0 : Set V.V) := rfl
-    rw [this, Submodule.span_image, V.standardTuple_isLattice.span_eq_top, Submodule.map_top, LinearEquiv.range]
+    have hset : (L : Set (Fin V.rank → D.host.E)) = V.frame.equivFun.toLinearMap '' (V.L0 : Set V.V) := rfl
+    haveI := V.standardTuple_isLattice
+    rw [hset, Submodule.span_image, Submodule.IsFullLattice.span_eq_top, Submodule.map_top, LinearEquiv.range]
   let c : D.host.E ≃ₐ[D.host.F] D.host.E :=
     AlgEquiv.ofBijective D.sp.cm.sig (D.sp.cm.sig.bijective)
   rw [hL] at hk ⊢

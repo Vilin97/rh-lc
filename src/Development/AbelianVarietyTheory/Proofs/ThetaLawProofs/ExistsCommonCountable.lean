@@ -148,11 +148,11 @@ theorem exists_common_countable {k K : Type} [Field k] [Countable k] [Field K] (
     rw [Category.assoc, gU₁'.1.w, ← Category.assoc, Over.w]
   generalize f₁.left ≫ ω = ψ at hψ hψ'
   have pz := z₁.P.isAb.proper
-  have lN := pull_isLB y₁.P.isLB ψ
+  have lN := LB.isLB_pull y₁.P.isLB ψ
   have iso₁ : LBIso (z₁.P.L.pull φ') ((y₁.P.L.pull ψ).pull φ') :=
-    LBIso.trans (pull_isLB z₁.P.isLB _) x.P.isLB (pull_isLB lN _)
+    LBIso.trans (LB.isLB_pull z₁.P.isLB _) x.P.isLB (LB.isLB_pull lN _)
       (LBIso.symm ⟨w', W'.choose_spec.choose_spec.choose_spec.2.1⟩)
-      (LBIso.trans x.P.isLB (pull_isLB y₁.P.isLB _) (pull_isLB lN _)
+      (LBIso.trans x.P.isLB (LB.isLB_pull y₁.P.isLB _) (LB.isLB_pull lN _)
         ⟨w₁, V₁.choose_spec.choose_spec.choose_spec.2.1⟩ (GenSpread.lbIso_pull_pull y₁.P.isLB φ' hψ.symm))
   obtain ⟨s', hs'⟩ := lbIso_descends_to_subfield_containing_finset k₁ K k₁.subtype z₁.P.A x.P.A φ' z₁.P.L (y₁.P.L.pull ψ) gW'.1 inferInstance
     inferInstance z₁.P.isLB lN iso₁
@@ -172,9 +172,9 @@ theorem exists_common_countable {k K : Type} [Field k] [Countable k] [Field K] (
     ((keyPB_iff _ _ _).2 ⟨_, _, U₂⟩), GlobalTheory.KeyDesc.keyPB_of_keyVia_field k k₂ K _ _ y₁ z₂ x φ'' w'' (χ₂ ≫ ψ) w₁ W'' V₁ ?_ ?_⟩
   · refine isGrpPullback_of_fpqc _ _ _ _ _ _ _ _ φ'' _ fl su inferInstance gW'' (G₁.congr (spMap_comp' _ _) rfl) ?_
     rw [Category.assoc, hψ', ← Category.assoc, gU₂.1.w, Category.assoc, spMap_comp']
-  · exact LBIso.trans z₂.P.isLB (pull_isLB z₁.P.isLB _) (pull_isLB y₁.P.isLB _)
+  · exact LBIso.trans z₂.P.isLB (LB.isLB_pull z₁.P.isLB _) (LB.isLB_pull y₁.P.isLB _)
       ⟨u₂, U₂.choose_spec.choose_spec.choose_spec.2.1⟩
-      (LBIso.trans (pull_isLB z₁.P.isLB _) (pull_isLB lN _) (pull_isLB y₁.P.isLB _) iso₂
+      (LBIso.trans (LB.isLB_pull z₁.P.isLB _) (LB.isLB_pull lN _) (LB.isLB_pull y₁.P.isLB _) iso₂
         (GenSpread.lbIso_pull_pull y₁.P.isLB χ₂ rfl).symm)
 
 def InFamilies (t : KeyIn ℂ → ℂ) : Prop :=

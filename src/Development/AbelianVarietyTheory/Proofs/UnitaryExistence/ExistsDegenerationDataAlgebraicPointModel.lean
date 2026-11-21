@@ -117,14 +117,11 @@ theorem exists_datAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     (by rw [hef, P.y_over]) (by
       rw [← P.ext, ← hfac, ← Category.assoc, spMap_spMap, ← Category.assoc, spMap_spMap, hring, ← Category.assoc,
         spMap_spMap])
-  obtain ⟨t, m⟩ : ∃ t : SAB H (Sp T₁.V), Nonempty (SABMap t Y.t (spMap φ₁ ≫ ιT)) := by
-    obtain ⟨PP', cub, sym, adj, prim, m, -⟩ := sabPull ReciprocityTheory.ChartRestriction.G.Out.CubePf.cubePull (spMap φ₁ ≫ ιT) Y.t
-    exact ⟨_, ⟨m⟩⟩
+  obtain ⟨t, m⟩ : ∃ t : SAB H (Sp T₁.V), Nonempty (SABMap t Y.t (spMap φ₁ ≫ ιT)) :=
+    GlobalTheory.ModFam.exists_sabPull (spMap φ₁ ≫ ιT) Y.t
   obtain ⟨m⟩ := m
-  obtain ⟨tK, mK⟩ : ∃ tK : SAB H (Sp T₁.Fr), Nonempty (SABMap tK t (spMap (algebraMap T₁.V T₁.Fr))) := by
-    obtain ⟨PP', cub, sym, adj, prim, m, -⟩ :=
-      sabPull ReciprocityTheory.ChartRestriction.G.Out.CubePf.cubePull (spMap (algebraMap T₁.V T₁.Fr)) t
-    exact ⟨_, ⟨m⟩⟩
+  obtain ⟨tK, mK⟩ : ∃ tK : SAB H (Sp T₁.Fr), Nonempty (SABMap tK t (spMap (algebraMap T₁.V T₁.Fr))) :=
+    GlobalTheory.ModFam.exists_sabPull (spMap (algebraMap T₁.V T₁.Fr)) t
   obtain ⟨mK⟩ := mK
   obtain ⟨n, -⟩ := sabComp pullCubComp E H _ _ _ Y.t t _ _ _ m mK
   have cancel : ∀ (q : Sp T₁.Fr ⟶ Y.X) (_ : q = z ≫ Y.j) (_ : SABMap tK Y.t q), Nonempty (SABMap tK Y.oF.t z) := by

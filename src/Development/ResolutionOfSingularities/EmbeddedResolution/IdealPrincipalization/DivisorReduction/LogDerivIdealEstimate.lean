@@ -137,7 +137,7 @@ theorem derivIdealSheafIterate_le_biSup_logDerivIdealSheafIterate_of_blowup
     (K' : ℕ → X₁.IdealSheafData)
     (hK' : ∀ l ≤ m, Blowup.exceptionalIdeal π Z ^ (m - l) * K' l = (K l).comap π)
     (n : ℕ) (hn : n < m) :
-    haveI : AlgebraicGeometry.Smooth (π ≫ p) := smooth_comp_of_isBlowupAlongIdealSheaf hsnc hπ
+    letI : AlgebraicGeometry.Smooth (π ≫ p) := smooth_comp_of_isBlowupAlongIdealSheaf hsnc hπ
     derivIdealSheafIterate k (π ≫ p) n (K' 0) ≤
       ⨆ l, ⨆ _ : l ≤ n,
         logDerivIdealSheafIterate k (π ≫ p) (Blowup.strictTransform π Z H) (n - l) (K' l) := by

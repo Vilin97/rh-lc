@@ -45,7 +45,7 @@ theorem finPart_mem_compact : ∀ (D : D7) (V W : HSp D) (a b : ℕ) (P : Matrix
   have hg : Continuous g := by
     refine continuous_matrix fun i j => ?_
     show Continuous fun z : Fin a × Fin b × Fin d → Af D.host.F => ∑ l, z (i, j, l) ⊗ₜ[D.host.F] e l
-    refine continuous_finset_sum _ fun l _ => ?_
+    refine continuous_finsetSum _ fun l _ => ?_
     have : (fun z : Fin a × Fin b × Fin d → Af D.host.F => z (i, j, l) ⊗ₜ[D.host.F] e l) =
         fun z => z (i, j, l) • ((1 : Af D.host.F) ⊗ₜ[D.host.F] e l) := by
       funext z; rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

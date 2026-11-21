@@ -37,7 +37,13 @@ theorem phase_sandwich (ψ : AddChar (AF D.host.F) ℂ) (W : HSp D) {r : ℕ} (h
   rw [phase_apply, phase_apply]
   congr 3
   have hu := GlobalTheory.MixModel.mt_unitary W h⁻¹
-  simp only [GlobalTheory.MixModel.adj_mul, GlobalTheory.MixModel.adj_adj]
+  have adj_mul_local {l m n : ℕ} (x : Mx D l m) (y : Mx D m n) :
+      GlobalTheory.MixModel.adj (x * y) = GlobalTheory.MixModel.adj y * GlobalTheory.MixModel.adj x := by
+    unfold GlobalTheory.MixModel.adj
+    rw [Matrix.map_mul, Matrix.transpose_mul]
+  change (GlobalTheory.MixModel.adj ((Formalism.L2.Theta.mt W h⁻¹) * y * (GlobalTheory.MixModel.adj (a⁻¹).val)) *
+    (GlobalTheory.MixModel.gA W * ((Formalism.L2.Theta.mt W h⁻¹) * u * a.val))).trace = _
+  simp only [adj_mul_local, GlobalTheory.MixModel.adj_adj]
   simp only [Matrix.mul_assoc]
   rw [← Matrix.mul_assoc (GlobalTheory.MixModel.gA W) (Formalism.L2.Theta.mt W h⁻¹),
     ← Matrix.mul_assoc (GlobalTheory.MixModel.adj (Formalism.L2.Theta.mt W h⁻¹)), hu, Matrix.trace_mul_comm]

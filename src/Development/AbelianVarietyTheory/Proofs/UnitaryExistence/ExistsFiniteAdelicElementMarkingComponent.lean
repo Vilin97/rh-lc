@@ -190,7 +190,7 @@ theorem exists_finite_mark : ∀ (D : D7) (H : ReciprocityTheory.ChartRestrictio
       change GlobalTheory.AdLat.fv D.host.F (C.M.φ k (C.F.t k a) : Fin V.rank → D.host.E) - _ = _
       have he' : (C.M.φ k (f l.M a) : Fin V.rank → D.host.E) =
           (C.M.φ k (C.F.t k a) : Fin V.rank → D.host.E) + l.M • (C.M.φ k e : Fin V.rank → D.host.E) := by
-        rw [he, (C.M.φ k).map_add (f := _), map_nsmul (C.M.φ k)]
+        rw [he, (C.M.φ k).map_add, map_nsmul (C.M.φ k)]
         rfl
       exact onto_marking_sub D.host.F he' hw'
 

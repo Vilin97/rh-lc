@@ -149,6 +149,8 @@ theorem exists_evalAway (c : σ) (p : σ → ℂ) (hp : ∀ F ∈ I, eval p F = 
     simp
   rw [h3, eval₂_id]
   congr 2
+  funext q
+  simp only [Function.comp_apply, map_mul, h1, hψA, h2, div_eq_mul_inv]
 
 attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem ringKrullDim_away_le (hI : I.IsHomogeneous (homogeneousSubmodule σ ℂ)) (hP : I.IsPrime) (c : σ) (g : ℕ)
@@ -200,7 +202,7 @@ theorem adjoin_coord_eq_top : Algebra.adjoin (quotGrading I 0) (Set.range (coord
   | C a =>
     exact Subalgebra.algebraMap_mem _ (⟨Ideal.Quotient.mk _ (C a),
       ⟨C a, (mem_homogeneousSubmodule 0 _).mpr (isHomogeneous_C _ a), rfl⟩⟩ : quotGrading I 0)
-  | add g h hg hh => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hg hh
+  | add g h hg hh => rw [RingHom.map_add (Ideal.Quotient.mk I)]; exact add_mem hg hh
   | mul_X g q hg => rw [map_mul]; exact mul_mem hg (Algebra.subset_adjoin ⟨q, rfl⟩)
 
 theorem isProper_toSpecC [Fintype σ] : IsProper (toSpecC I) := by
